@@ -2,139 +2,585 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BF60434FE47
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Mar 2021 12:47:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D922A34FE3A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Mar 2021 12:41:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234865AbhCaKq1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 31 Mar 2021 06:46:27 -0400
-Received: from mga18.intel.com ([134.134.136.126]:34992 "EHLO mga18.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229624AbhCaKqS (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 31 Mar 2021 06:46:18 -0400
-IronPort-SDR: Q+YJ1fhcwIK7A1weFGOmcBsSxUVoyajz6dbmC+fmrjGylvW8i9ETfyGijA5gdFA74JvKt1ZhqS
- xqgcwGJVgbgA==
-X-IronPort-AV: E=McAfee;i="6000,8403,9939"; a="179517114"
-X-IronPort-AV: E=Sophos;i="5.81,293,1610438400"; 
-   d="scan'208";a="179517114"
-Received: from orsmga003.jf.intel.com ([10.7.209.27])
-  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Mar 2021 03:46:16 -0700
-IronPort-SDR: VZYHvGzA6MpnfqL9sqggMz2wjiwYJpbtFWWMwNvkdsrAaLUc4rty1Ue1rwDjhK1BEETzFB78LK
- T5YmMv+6q+EQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.81,293,1610438400"; 
-   d="scan'208";a="377217187"
-Received: from black.fi.intel.com ([10.237.72.28])
-  by orsmga003.jf.intel.com with ESMTP; 31 Mar 2021 03:46:13 -0700
-Received: by black.fi.intel.com (Postfix, from userid 1003)
-        id 96F4A133; Wed, 31 Mar 2021 13:46:28 +0300 (EEST)
-From:   Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To:     Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-        Wolfram Sang <wsa@kernel.org>,
-        Serge Semin <Sergey.Semin@baikalelectronics.ru>,
-        Khalil Blaiech <kblaiech@nvidia.com>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Cc:     Jarkko Nikula <jarkko.nikula@linux.intel.com>,
-        Mika Westerberg <mika.westerberg@linux.intel.com>,
-        Robert Foss <robert.foss@linaro.org>,
-        Wolfram Sang <wsa@the-dreams.de>
-Subject: [PATCH v2 1/1] i2c: drivers: Use generic definitions for bus frequencies (part 2)
-Date:   Wed, 31 Mar 2021 13:46:22 +0300
-Message-Id: <20210331104622.84657-1-andriy.shevchenko@linux.intel.com>
-X-Mailer: git-send-email 2.30.2
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        id S235027AbhCaKk2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 31 Mar 2021 06:40:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52724 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234858AbhCaKj5 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 31 Mar 2021 06:39:57 -0400
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E84FBC061574
+        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Mar 2021 03:39:56 -0700 (PDT)
+Received: by mail-wm1-x32d.google.com with SMTP id d191so9911818wmd.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Mar 2021 03:39:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=VzAMDXX+VxTovVBApVcugf1ynbgJwatrqr+S/biMNTs=;
+        b=x9Rlrs/9lHFl6xtRkwGgs5Cz8zceIf+Gpx1YDZ2xmH0vhcx+eLehI91kXgxvSDU8lB
+         rJ63xeF6GPzPNCmKeT6ZNYYdZxIsopqTftwAwWxRS7D38v4IR55MMh44K/3YrJVf6MID
+         42U6T87w9WIdHBnzqEQcN88MXHx7x1wTrS5q6IHl4qQI2jT/kgUKznLQarktPZNSSJ1g
+         z3rLU1g8GpI5blTpFqUyLBPqD9cE7L5dw/aSBRsuPEjBZZaZmDOx9t3zCJLgqE0BUQyg
+         POQae8HlcA0iR6tNM0Xb/6ojRlpm2bd4l2r7Y43drU5vtJsxiTwxShy0yVn24dRTgWQK
+         WSAQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=VzAMDXX+VxTovVBApVcugf1ynbgJwatrqr+S/biMNTs=;
+        b=rLKGWcmMJzvtIHoiSjIiD6B9FT9UIVevoADUQ7aPXV8Ke0Vyvjn4mmRkCJmNRecVgZ
+         rmREcith7PUq2kj0tKB+ymrxg57vOtoNC3M28hSUysYf1ipPjze+sp41uRxVYpmZ2R+8
+         ggMXSc9gKp0o1IR7miytGWJhy0jKBRZ9KikLk86ly6U6k4IXWWEYVr4MFfsYmIkqyRKV
+         fTBC24z979pZkizVKmKECiGHOrUU4NOpkSBFerJqUhw78iLqA5+y4X6X7PyTsPJeeeZH
+         E0gq3yXWu/PZEWmAB04VkTRF+p531DJGc0029ch/BcwddA0LK+y/olhLXvZDj0nr6W2J
+         SLfQ==
+X-Gm-Message-State: AOAM531aW9ZqINqc7M9PcVYxVy+lYydYMCv4outBF/VuQhS3bBfOONpC
+        fSAltYdrOH9M2cf+O6NNnRDsCw5lE5zC+ncz
+X-Google-Smtp-Source: ABdhPJwwhZVkshECbc2NG/qT9NfJ5V19wYXtNdPJU1qAzsFD+7gDDjG8CpLMuEwSLbYpraWuqCsOAw==
+X-Received: by 2002:a7b:cbc4:: with SMTP id n4mr2633192wmi.153.1617187184990;
+        Wed, 31 Mar 2021 03:39:44 -0700 (PDT)
+Received: from localhost.localdomain ([2a01:e0a:82c:5f0:8ca0:fa3:7d12:167b])
+        by smtp.gmail.com with ESMTPSA id m3sm3772576wme.40.2021.03.31.03.39.43
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 31 Mar 2021 03:39:44 -0700 (PDT)
+From:   Loic Poulain <loic.poulain@linaro.org>
+To:     kuba@kernel.org, davem@davemloft.net, gregkh@linuxfoundation.org
+Cc:     netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        bjorn.andersson@linaro.org, manivannan.sadhasivam@linaro.org,
+        aleksander@aleksander.es, Loic Poulain <loic.poulain@linaro.org>
+Subject: [PATCH net-next v7 1/2] net: Add a WWAN subsystem
+Date:   Wed, 31 Mar 2021 12:48:26 +0200
+Message-Id: <1617187707-14229-1-git-send-email-loic.poulain@linaro.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Since we have generic definitions for bus frequencies, let's use them.
+This change introduces initial support for a WWAN subsystem. Given the
+complexity and heterogeneity of existing WWAN hardwares and interfaces,
+there is no strict definition of what a WWAN device is and how it should
+be represented. It's often a collection of multiple devices that perform
+the global WWAN feature (netdev, tty, chardev, etc).
 
-Cc: Wolfram Sang <wsa@the-dreams.de>
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Acked-by: Khalil Blaiech <kblaiech@nvidia.com>
+One usual way to expose modem controls and configuration is via high
+level protocols such as the well known AT command protocol, MBIM or
+QMI. The USB modems started to expose that as character devices, and
+user daemons such as ModemManager learnt how to deal with them. This
+initial version adds the concept of WWAN port, which can be created
+by any driver to expose one of these protocols. The WWAN core takes
+care of the generic part, including character device creation and lets
+the driver implementing access (fops) for the selected protocol.
+
+Since the different components/devices do no necesserarly know about
+each others, and can be created/removed in different orders, the
+WWAN core ensures that all WAN ports that contribute to the whole
+WWAN feature are grouped under the same virtual WWAN device, relying
+on the provided parent device (e.g. mhi controller, USB device). It's
+a 'trick' I copied from Johannes's earlier WWAN subsystem proposal.
+
+This initial version is purposely minimalist, it's essentially moving
+the generic part of the previously proposed mhi_wwan_ctrl driver inside
+a common WWAN framework, but the implementation is open and flexible
+enough to allow extension for further drivers.
+
+Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
 ---
-v2: added tag (Khalil), converted one missed place in DesignWare driver
- drivers/i2c/busses/i2c-designware-master.c |  2 +-
- drivers/i2c/busses/i2c-mlxbf.c             | 14 ++++----------
- drivers/i2c/busses/i2c-qcom-cci.c          |  4 ++--
- 3 files changed, 7 insertions(+), 13 deletions(-)
+ v2: not part of the series
+ v3: not part of the series
+ v4: Introduce WWAN framework/subsystem
+ v5: Specify WWAN_CORE module name in Kconfig
+ v6: - Move to unified wwan_core.c file
+     - Make wwan_port a device
+     - Get rid of useless various dev lists (use wwan class)
+     - Get rid of useless wwan dev usage counter and mutex
+     - do not expose wwan_create_device, it's indirectly called via create_port
+     - Increase minor count to the whole available minor range
+     - private_data as wwan_create_port parameter
+ v7: Fix change log (mixed up 1/2 and 2/2)
 
-diff --git a/drivers/i2c/busses/i2c-designware-master.c b/drivers/i2c/busses/i2c-designware-master.c
-index dd27b9dbe931..3f4d2124e0fc 100644
---- a/drivers/i2c/busses/i2c-designware-master.c
-+++ b/drivers/i2c/busses/i2c-designware-master.c
-@@ -78,7 +78,7 @@ static int i2c_dw_set_timings_master(struct dw_i2c_dev *dev)
- 	 * difference is the timing parameter values since the registers are
- 	 * the same.
- 	 */
--	if (t->bus_freq_hz == 1000000) {
-+	if (t->bus_freq_hz == I2C_MAX_FAST_MODE_PLUS_FREQ) {
- 		/*
- 		 * Check are Fast Mode Plus parameters available. Calculate
- 		 * SCL timing parameters for Fast Mode Plus if not set.
-diff --git a/drivers/i2c/busses/i2c-mlxbf.c b/drivers/i2c/busses/i2c-mlxbf.c
-index 2fb0532d8a16..80ab831df349 100644
---- a/drivers/i2c/busses/i2c-mlxbf.c
-+++ b/drivers/i2c/busses/i2c-mlxbf.c
-@@ -172,12 +172,6 @@
- #define MLXBF_I2C_SMBUS_THIGH_MAX_TBUF            0x14
- #define MLXBF_I2C_SMBUS_SCL_LOW_TIMEOUT           0x18
+ drivers/net/Kconfig          |   2 +
+ drivers/net/Makefile         |   1 +
+ drivers/net/wwan/Kconfig     |  22 +++
+ drivers/net/wwan/Makefile    |   7 +
+ drivers/net/wwan/wwan_core.c | 317 +++++++++++++++++++++++++++++++++++++++++++
+ include/linux/wwan.h         |  73 ++++++++++
+ 6 files changed, 422 insertions(+)
+ create mode 100644 drivers/net/wwan/Kconfig
+ create mode 100644 drivers/net/wwan/Makefile
+ create mode 100644 drivers/net/wwan/wwan_core.c
+ create mode 100644 include/linux/wwan.h
+
+diff --git a/drivers/net/Kconfig b/drivers/net/Kconfig
+index 5895905..74dc8e24 100644
+--- a/drivers/net/Kconfig
++++ b/drivers/net/Kconfig
+@@ -502,6 +502,8 @@ source "drivers/net/wan/Kconfig"
  
--enum {
--	MLXBF_I2C_TIMING_100KHZ = 100000,
--	MLXBF_I2C_TIMING_400KHZ = 400000,
--	MLXBF_I2C_TIMING_1000KHZ = 1000000,
--};
--
- /*
-  * Defines SMBus operating frequency and core clock frequency.
-  * According to ADB files, default values are compliant to 100KHz SMBus
-@@ -1202,7 +1196,7 @@ static int mlxbf_i2c_init_timings(struct platform_device *pdev,
+ source "drivers/net/ieee802154/Kconfig"
  
- 	ret = device_property_read_u32(dev, "clock-frequency", &config_khz);
- 	if (ret < 0)
--		config_khz = MLXBF_I2C_TIMING_100KHZ;
-+		config_khz = I2C_MAX_STANDARD_MODE_FREQ;
++source "drivers/net/wwan/Kconfig"
++
+ config XEN_NETDEV_FRONTEND
+ 	tristate "Xen network device frontend driver"
+ 	depends on XEN
+diff --git a/drivers/net/Makefile b/drivers/net/Makefile
+index 040e20b..7ffd2d0 100644
+--- a/drivers/net/Makefile
++++ b/drivers/net/Makefile
+@@ -68,6 +68,7 @@ obj-$(CONFIG_SUNGEM_PHY) += sungem_phy.o
+ obj-$(CONFIG_WAN) += wan/
+ obj-$(CONFIG_WLAN) += wireless/
+ obj-$(CONFIG_IEEE802154) += ieee802154/
++obj-$(CONFIG_WWAN) += wwan/
  
- 	switch (config_khz) {
- 	default:
-@@ -1210,15 +1204,15 @@ static int mlxbf_i2c_init_timings(struct platform_device *pdev,
- 		pr_warn("Illegal value %d: defaulting to 100 KHz\n",
- 			config_khz);
- 		fallthrough;
--	case MLXBF_I2C_TIMING_100KHZ:
-+	case I2C_MAX_STANDARD_MODE_FREQ:
- 		config_idx = MLXBF_I2C_TIMING_CONFIG_100KHZ;
- 		break;
- 
--	case MLXBF_I2C_TIMING_400KHZ:
-+	case I2C_MAX_FAST_MODE_FREQ:
- 		config_idx = MLXBF_I2C_TIMING_CONFIG_400KHZ;
- 		break;
- 
--	case MLXBF_I2C_TIMING_1000KHZ:
-+	case I2C_MAX_FAST_MODE_PLUS_FREQ:
- 		config_idx = MLXBF_I2C_TIMING_CONFIG_1000KHZ;
- 		break;
- 	}
-diff --git a/drivers/i2c/busses/i2c-qcom-cci.c b/drivers/i2c/busses/i2c-qcom-cci.c
-index 1c259b5188de..c63d5545fc2a 100644
---- a/drivers/i2c/busses/i2c-qcom-cci.c
-+++ b/drivers/i2c/busses/i2c-qcom-cci.c
-@@ -569,9 +569,9 @@ static int cci_probe(struct platform_device *pdev)
- 		cci->master[idx].mode = I2C_MODE_STANDARD;
- 		ret = of_property_read_u32(child, "clock-frequency", &val);
- 		if (!ret) {
--			if (val == 400000)
-+			if (val == I2C_MAX_FAST_MODE_FREQ)
- 				cci->master[idx].mode = I2C_MODE_FAST;
--			else if (val == 1000000)
-+			else if (val == I2C_MAX_FAST_MODE_PLUS_FREQ)
- 				cci->master[idx].mode = I2C_MODE_FAST_PLUS;
- 		}
- 
+ obj-$(CONFIG_VMXNET3) += vmxnet3/
+ obj-$(CONFIG_XEN_NETDEV_FRONTEND) += xen-netfront.o
+diff --git a/drivers/net/wwan/Kconfig b/drivers/net/wwan/Kconfig
+new file mode 100644
+index 0000000..545fe54
+--- /dev/null
++++ b/drivers/net/wwan/Kconfig
+@@ -0,0 +1,22 @@
++# SPDX-License-Identifier: GPL-2.0-only
++#
++# Wireless WAN device configuration
++#
++
++menuconfig WWAN
++	bool "Wireless WAN"
++	help
++	  This section contains Wireless WAN driver configurations.
++
++if WWAN
++
++config WWAN_CORE
++	tristate "WWAN Driver Core"
++	help
++	  Say Y here if you want to use the WWAN driver core. This driver
++	  provides a common framework for WWAN drivers.
++
++	  To compile this driver as a module, choose M here: the module will be
++	  called wwan.
++
++endif # WWAN
+diff --git a/drivers/net/wwan/Makefile b/drivers/net/wwan/Makefile
+new file mode 100644
+index 0000000..934590b
+--- /dev/null
++++ b/drivers/net/wwan/Makefile
+@@ -0,0 +1,7 @@
++# SPDX-License-Identifier: GPL-2.0
++#
++# Makefile for the Linux WWAN device drivers.
++#
++
++obj-$(CONFIG_WWAN_CORE) += wwan.o
++wwan-objs += wwan_core.o
+diff --git a/drivers/net/wwan/wwan_core.c b/drivers/net/wwan/wwan_core.c
+new file mode 100644
+index 0000000..7d9e2643
+--- /dev/null
++++ b/drivers/net/wwan/wwan_core.c
+@@ -0,0 +1,317 @@
++// SPDX-License-Identifier: GPL-2.0-only
++/* Copyright (c) 2021, Linaro Ltd <loic.poulain@linaro.org> */
++
++#include <linux/err.h>
++#include <linux/errno.h>
++#include <linux/fs.h>
++#include <linux/init.h>
++#include <linux/idr.h>
++#include <linux/kernel.h>
++#include <linux/module.h>
++#include <linux/slab.h>
++#include <linux/types.h>
++#include <linux/wwan.h>
++
++#define WWAN_MAX_MINORS 256 /* Allow the whole available cdev range of minors */
++
++static DEFINE_MUTEX(wwan_register_lock); /* WWAN device create|remove lock */
++static DEFINE_IDA(minors); /* minors for WWAN port chardevs */
++static DEFINE_IDA(wwan_dev_ids); /* for unique WWAN device IDs */
++static struct class *wwan_class;
++static int wwan_major;
++
++#define to_wwan_dev(d) container_of(d, struct wwan_device, dev)
++#define to_wwan_port(d) container_of(d, struct wwan_port, dev)
++
++/**
++ * struct wwan_device - The structure that defines a WWAN device
++ *
++ * @id: WWAN device unique ID.
++ * @dev: Underlying device.
++ * @port_id: Current available port ID to pick.
++ */
++struct wwan_device {
++	unsigned int id;
++	struct device dev;
++	atomic_t port_id;
++};
++
++static void wwan_dev_release(struct device *dev)
++{
++	struct wwan_device *wwandev = to_wwan_dev(dev);
++
++	ida_free(&wwan_dev_ids, wwandev->id);
++	kfree(wwandev);
++}
++
++static const struct device_type wwan_dev_type = {
++	.name    = "wwan_dev",
++	.release = wwan_dev_release,
++};
++
++static int wwan_dev_parent_match(struct device *dev, const void *parent)
++{
++	return (dev->type == &wwan_dev_type && dev->parent == parent);
++}
++
++static struct wwan_device *wwan_dev_get_by_parent(struct device *parent)
++{
++	struct device *dev;
++
++	dev = class_find_device(wwan_class, NULL, parent, wwan_dev_parent_match);
++	if (!dev)
++		return ERR_PTR(-ENODEV);
++
++	return to_wwan_dev(dev);
++}
++
++/* This function allocates and registers a new WWAN device OR if a WWAN device
++ * already exist for the given parent, it gets a reference and return it.
++ * This function is not exported (for now), it is called indirectly via
++ * wwan_create_port().
++ */
++static struct wwan_device *wwan_create_dev(struct device *parent)
++{
++	struct wwan_device *wwandev;
++	int err, id;
++
++	/* The 'find-alloc-register' operation must be protected against
++	 * concurrent execution, a WWAN device is possibly shared between
++	 * multiple callers or concurrently unregistered from wwan_remove_dev().
++	 */
++	mutex_lock(&wwan_register_lock);
++
++	/* If wwandev already exist, return it */
++	wwandev = wwan_dev_get_by_parent(parent);
++	if (!IS_ERR(wwandev))
++		goto done_unlock;
++
++	id = ida_alloc(&wwan_dev_ids, GFP_KERNEL);
++	if (id < 0)
++		goto done_unlock;
++
++	wwandev = kzalloc(sizeof(*wwandev), GFP_KERNEL);
++	if (!wwandev) {
++		ida_free(&wwan_dev_ids, id);
++		goto done_unlock;
++	}
++
++	wwandev->dev.parent = parent;
++	wwandev->dev.class = wwan_class;
++	wwandev->dev.type = &wwan_dev_type;
++	wwandev->id = id;
++	dev_set_name(&wwandev->dev, "wwan%d", wwandev->id);
++
++	err = device_register(&wwandev->dev);
++	if (err) {
++		put_device(&wwandev->dev);
++		wwandev = NULL;
++	}
++
++done_unlock:
++	mutex_unlock(&wwan_register_lock);
++
++	return wwandev;
++}
++
++static int is_wwan_child(struct device *dev, void *data)
++{
++	return dev->class == wwan_class;
++}
++
++static void wwan_remove_dev(struct wwan_device *wwandev)
++{
++	int ret;
++
++	/* Prevent concurrent picking from wwan_create_dev */
++	mutex_lock(&wwan_register_lock);
++
++	/* WWAN device is created and registered (get+add) along with its first
++	 * child port, and subsequent port registrations only grab a reference
++	 * (get). The WWAN device must then be unregistered (del+put) along with
++	 * its latest port, and reference simply dropped (put) otherwise.
++	 */
++	ret = device_for_each_child(&wwandev->dev, NULL, is_wwan_child);
++	if (!ret)
++		device_unregister(&wwandev->dev);
++	else
++		put_device(&wwandev->dev);
++
++	mutex_unlock(&wwan_register_lock);
++}
++
++/* ------- WWAN port management ------- */
++
++static void wwan_port_release(struct device *dev)
++{
++	struct wwan_port *port = to_wwan_port(dev);
++
++	ida_free(&minors, MINOR(port->dev.devt));
++	kfree(to_wwan_port(dev));
++}
++
++static const struct device_type wwan_port_dev_type = {
++	.name = "wwan_port",
++	.release = wwan_port_release,
++};
++
++static int wwan_port_minor_match(struct device *dev, const void *minor)
++{
++	return (dev->type == &wwan_port_dev_type &&
++		MINOR(dev->devt) == *(unsigned int *)minor);
++}
++
++static struct wwan_port *wwan_port_get_by_minor(unsigned int minor)
++{
++	struct device *dev;
++
++	dev = class_find_device(wwan_class, NULL, &minor, wwan_port_minor_match);
++	if (!dev)
++		return ERR_PTR(-ENODEV);
++
++	return to_wwan_port(dev);
++}
++
++/* Keep aligned with wwan_port_type enum */
++static const char * const wwan_port_type_str[] = {
++	"AT",
++	"MBIM",
++	"QMI",
++	"QCDM",
++	"FIREHOSE"
++};
++
++struct wwan_port *wwan_create_port(struct device *parent,
++				   enum wwan_port_type type,
++				   const struct file_operations *fops,
++				   void *private_data)
++{
++	struct wwan_device *wwandev;
++	struct wwan_port *port;
++	int minor, err = -ENOMEM;
++
++	if (type >= WWAN_PORT_MAX || !fops)
++		return ERR_PTR(-EINVAL);
++
++	/* A port is always a child of a WWAN device, retrieve (allocate or
++	 * pick) the WWAN device based on the provided parent device.
++	 */
++	wwandev = wwan_create_dev(parent);
++	if (IS_ERR(wwandev))
++		return ERR_PTR(PTR_ERR(wwandev));
++
++	/* A port is exposed as character device, get a minor */
++	minor = ida_alloc_range(&minors, 0, WWAN_MAX_MINORS, GFP_KERNEL);
++	if (minor < 0)
++		goto error_wwandev_remove;
++
++	port = kzalloc(sizeof(*port), GFP_KERNEL);
++	if (!port) {
++		ida_free(&minors, minor);
++		goto error_wwandev_remove;
++	}
++
++	port->type = type;
++	port->fops = fops;
++	port->dev.parent = &wwandev->dev;
++	port->dev.class = wwan_class;
++	port->dev.type = &wwan_port_dev_type;
++	port->dev.devt = MKDEV(wwan_major, minor);
++	dev_set_drvdata(&port->dev, private_data);
++
++	/* create unique name based on wwan device id, port index and type */
++	dev_set_name(&port->dev, "wwan%up%u%s", wwandev->id,
++		     atomic_inc_return(&wwandev->port_id),
++		     wwan_port_type_str[port->type]);
++
++	err = device_register(&port->dev);
++	if (err)
++		goto error_put_device;
++
++	return port;
++
++error_put_device:
++	put_device(&port->dev);
++error_wwandev_remove:
++	wwan_remove_dev(wwandev);
++
++	return ERR_PTR(err);
++}
++EXPORT_SYMBOL_GPL(wwan_create_port);
++
++void wwan_remove_port(struct wwan_port *port)
++{
++	struct wwan_device *wwandev = to_wwan_dev(port->dev.parent);
++
++	dev_set_drvdata(&port->dev, NULL);
++	device_unregister(&port->dev);
++
++	/* Release related wwan device */
++	wwan_remove_dev(wwandev);
++}
++EXPORT_SYMBOL_GPL(wwan_remove_port);
++
++static int wwan_port_open(struct inode *inode, struct file *file)
++{
++	const struct file_operations *new_fops;
++	struct wwan_port *port;
++	int err = 0;
++
++	port = wwan_port_get_by_minor(iminor(inode));
++	if (IS_ERR(port))
++		return PTR_ERR(port);
++
++	/* Place the port private data in the file's private_data so it can
++	 * be used by the file operations, including f_op->open below.
++	 */
++	file->private_data = dev_get_drvdata(&port->dev);
++	stream_open(inode, file);
++
++	/* For now, there is no wwan port ops API, so we simply let the wwan
++	 * port driver implements its own fops.
++	 */
++	new_fops = fops_get(port->fops);
++	replace_fops(file, new_fops);
++	if (file->f_op->open)
++		err = file->f_op->open(inode, file);
++
++	put_device(&port->dev); /* balance wwan_port_get_by_minor */
++
++	return err;
++}
++
++static const struct file_operations wwan_port_fops = {
++	/* these fops will be replaced by registered wwan_port fops */
++	.owner	= THIS_MODULE,
++	.open	= wwan_port_open,
++	.llseek = noop_llseek,
++};
++
++static int __init wwan_init(void)
++{
++	wwan_class = class_create(THIS_MODULE, "wwan");
++	if (IS_ERR(wwan_class))
++		return PTR_ERR(wwan_class);
++
++	/* chrdev used for wwan ports */
++	wwan_major = register_chrdev(0, "wwanport", &wwan_port_fops);
++	if (wwan_major < 0) {
++		class_destroy(wwan_class);
++		return wwan_major;
++	}
++
++	return 0;
++}
++
++static void __exit wwan_exit(void)
++{
++	unregister_chrdev(wwan_major, "wwanport");
++	class_destroy(wwan_class);
++}
++
++module_init(wwan_init);
++module_exit(wwan_exit);
++
++MODULE_AUTHOR("Loic Poulain <loic.poulain@linaro.org>");
++MODULE_DESCRIPTION("WWAN core");
++MODULE_LICENSE("GPL v2");
+diff --git a/include/linux/wwan.h b/include/linux/wwan.h
+new file mode 100644
+index 0000000..e8f2971
+--- /dev/null
++++ b/include/linux/wwan.h
+@@ -0,0 +1,73 @@
++/* SPDX-License-Identifier: GPL-2.0-only */
++/* Copyright (c) 2021, Linaro Ltd <loic.poulain@linaro.org> */
++
++#ifndef __WWAN_H
++#define __WWAN_H
++
++#include <linux/device.h>
++#include <linux/kernel.h>
++
++/**
++ * enum wwan_port_type - WWAN port types
++ * @WWAN_PORT_AT: AT commands
++ * @WWAN_PORT_MBIM: Mobile Broadband Interface Model control
++ * @WWAN_PORT_QMI: Qcom modem/MSM interface for modem control
++ * @WWAN_PORT_QCDM: Qcom Modem diagnostic interface
++ * @WWAN_PORT_FIREHOSE: XML based command protocol
++ * @WWAN_PORT_MAX
++ */
++enum wwan_port_type {
++	WWAN_PORT_AT,
++	WWAN_PORT_MBIM,
++	WWAN_PORT_QMI,
++	WWAN_PORT_QCDM,
++	WWAN_PORT_FIREHOSE,
++	WWAN_PORT_MAX,
++};
++
++/**
++ * struct wwan_port - The structure that defines a WWAN port
++ * @type: Port type
++ * @fops: Pointer to file operations
++ * @dev: Underlying device
++ */
++struct wwan_port {
++	enum wwan_port_type type;
++	const struct file_operations *fops;
++	struct device dev;
++};
++
++/**
++ * wwan_create_port - Add a new WWAN port
++ * @parent: Device to use as parent and shared by all WWAN ports
++ * @type: WWAN port type
++ * @fops: File operations
++ * @private_data: Pointer to caller private_data
++ *
++ * Allocate and register a new WWAN port. The port will be automatically exposed
++ * to user as a character device. The port will be automatically attached to the
++ * right WWAN device, based on the parent pointer. The parent pointer is the
++ * device shared by all components of a same WWAN modem (e.g. USB dev, PCI dev,
++ * MHI controller...).
++ *
++ * private_data will be placed in the file's private_data so it can be used by
++ * the port file operations.
++ *
++ * This function must be balanced with a call to wwan_destroy_port().
++ *
++ * Returns a valid pointer to wwan_port on success or PTR_ERR on failure
++ */
++struct wwan_port *wwan_create_port(struct device *parent,
++				   enum wwan_port_type type,
++				   const struct file_operations *fops,
++				   void *private_data);
++
++/**
++ * wwan_remove_port - Remove a WWAN port
++ * @port: WWAN port to remove
++ *
++ * Remove a previously created port.
++ */
++void wwan_remove_port(struct wwan_port *port);
++
++#endif /* __WWAN_H */
 -- 
-2.30.2
+2.7.4
 
