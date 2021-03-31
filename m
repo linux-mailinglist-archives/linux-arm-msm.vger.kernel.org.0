@@ -2,53 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0674534FF5A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Mar 2021 13:17:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C58EF34FF68
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Mar 2021 13:26:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234377AbhCaLRQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 31 Mar 2021 07:17:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60742 "EHLO
+        id S235197AbhCaLZo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 31 Mar 2021 07:25:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34070 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235140AbhCaLQt (ORCPT
+        with ESMTP id S235162AbhCaLYT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 31 Mar 2021 07:16:49 -0400
-Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F19DC061574
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Mar 2021 04:16:49 -0700 (PDT)
-Received: by mail-pf1-x434.google.com with SMTP id j25so14319182pfe.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Mar 2021 04:16:49 -0700 (PDT)
+        Wed, 31 Mar 2021 07:24:19 -0400
+Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com [IPv6:2607:f8b0:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67F80C061574
+        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Mar 2021 04:24:09 -0700 (PDT)
+Received: by mail-pg1-x530.google.com with SMTP id f10so13981509pgl.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Mar 2021 04:24:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=RgCZPHUwv958dBeV30UQOqhSoe3Lgk0n+l1EWY8sEdM=;
-        b=AGEh0K4JiqUMeXHjW8bBvgW0aCYbfFuDrq7Hgg0hvVj7q3cOX0zoxUT4gJZ3+n3z1n
-         2NMsdBUb/f54sNX12UAhAI8ZKPn2y31ubYLAR/TvfZQ3wnaLY6ltgfItyhJmsHPwB3yY
-         BbCrwAMgSUkc2fBlYPOOeZU/PYBZNdQX9yUCepkbKNImZ+TPoSrooBQMU0qUyFA4sKue
-         oQj/vHhxEahkRTTiNNj7AWVbr9M89TAC56wc7SETjU5x+FrXfCNjMMjntKmJGxE9KqrD
-         imDkOAG/M5WVlruLLcL1BpJfNeD6BUoJsw6T6ww0LUw0p8pPHi3TCFP7hTi8s9Q3byTk
-         lATw==
+        bh=sJBaCHwwIuvtPkiNIiI44cG7FfU3ForiEr6IkmHZGUA=;
+        b=FUCoXc+xa03mNs8QiV77/Vvcp94qGkwKJICyMNwfKrNKZdC7Nbp3cSKX3nZJhUWbvS
+         VH7IQrHaSxYqbkr9/HGzDZWAImxkQsTNuZBauEUZwwohdbhAZw2RDWnmGetzSzAewopi
+         P2+OEVe3dCboKX8MwJ7wg0TEdHRuESbD8c/kR0IYEwzZui1Jojsk62BQ3oFQh7w4Unij
+         KuObXu1+A+IPvGhcmjzPow9MlFkxwwIa6R7VKWLkFztyGaB3CMOiUL0b1ID2H66LWqNO
+         h0TkK8ZEpu9FGafCwLwWxLC99ceBkNkuibWRntUhePkh4tiIanbs0BPjpZ5rngrWiyLE
+         WHMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=RgCZPHUwv958dBeV30UQOqhSoe3Lgk0n+l1EWY8sEdM=;
-        b=UNEB/Su6kPRp6cQaWeyrma8u2K9R5v0nDaeM6l0YgMTAWNTwWcSNa/GPYzw0N26Z2S
-         OmGz9UseINN9YWwHijpQ5Hidm+ktBUykslotCyrj7Jr2h+p3OIkCbvH3zPO1KhiYo6ED
-         XCP85uxm/QQilOJtJHwfep+DNDB9AjGaqt8g9G6RHQr2Dgc02R95bOVXqL/gpJEJBU0G
-         /RMAbIRzX+gICIbDFMI+hYgpduv4KOQm8sRlMFe9DhOowCVj0qIShc89ruRG0bwr1GP5
-         0zC+LRFo1FTVJythrDs00064UpK8Wglt20W6YT8x4yCOtUoTgPaIjN/uGS1YKy9LnBpZ
-         RHUg==
-X-Gm-Message-State: AOAM533bRe+xtBcGeVZmpt1flJLzo7aHquIRG/PbK4UkaYAVKqgajkRN
-        e9JWqMeS1JU5xJTkGC0OaSL+
-X-Google-Smtp-Source: ABdhPJxVadqFwZRj6oyAqiMrm8WAA+oPMe4+xL24Ro7/USN5J9ffDo+TJLFtTjOnf4dfkNxKO2RQfg==
-X-Received: by 2002:a63:f506:: with SMTP id w6mr2737302pgh.367.1617189408600;
-        Wed, 31 Mar 2021 04:16:48 -0700 (PDT)
+        bh=sJBaCHwwIuvtPkiNIiI44cG7FfU3ForiEr6IkmHZGUA=;
+        b=rHFEX/z0CfmqPBa9/EkIbkO1F1SMTJ5YEJim5jM1SN4F/pckx+lH6ypjY/QeUIgJIY
+         4rmaSXZLPdM6EI8dW2f9RljvpqwSfDNSdE8kROrsR+C8UPvg8vCysgbhzeriMDZ1UrU3
+         qNbbry95zex+zKznpcymC7k0XP7ZFCTQVTidS45W36UJt1mYoONkusWT/x9vfRZKm5MB
+         kxqQYlvDf3VDCaLKglEGQb3oh8QUTY4RyZsyxZNtkI4P1A6aidCRyV1jd5Cp3Xjo7lvM
+         uyQzBsYQ7FnlAVkbbTl05AKcufKYOoKwS2pMTEJgJqqy9d5EZmII4KPlFwV184L9XquR
+         OU7A==
+X-Gm-Message-State: AOAM532VNaTQ1OgDDDVKr1DysMJl/BBYtoGWQ4RJnskx0lCndho/e4Uh
+        oxQHTj7JRNveO1KMJPUK6w5AkNbxxmkpsN0=
+X-Google-Smtp-Source: ABdhPJzr2k3zeeARoVMh7VMjADub05kwf4UnlJAfpGS5drrVveiOb4csqKWwpEKz8SPvgdG7GhvzHA==
+X-Received: by 2002:a62:3847:0:b029:202:ad05:4476 with SMTP id f68-20020a6238470000b0290202ad054476mr2437271pfa.67.1617189848843;
+        Wed, 31 Mar 2021 04:24:08 -0700 (PDT)
 Received: from work ([103.77.37.129])
-        by smtp.gmail.com with ESMTPSA id 67sm2191459pfb.148.2021.03.31.04.16.45
+        by smtp.gmail.com with ESMTPSA id t1sm2140094pfc.173.2021.03.31.04.24.05
         (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 31 Mar 2021 04:16:48 -0700 (PDT)
-Date:   Wed, 31 Mar 2021 16:46:44 +0530
+        Wed, 31 Mar 2021 04:24:08 -0700 (PDT)
+Date:   Wed, 31 Mar 2021 16:54:04 +0530
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     Bhaumik Bhatt <bbhatt@codeaurora.org>
 Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
@@ -57,7 +57,7 @@ Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
         loic.poulain@linaro.org, abickett@codeaurora.org
 Subject: Re: [PATCH v1 0/7] MHI Emergency download and flash programmer
  support
-Message-ID: <20210331111644.GE15610@work>
+Message-ID: <20210331112404.GF15610@work>
 References: <1617067704-28850-1-git-send-email-bbhatt@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -83,8 +83,7 @@ On Mon, Mar 29, 2021 at 06:28:17PM -0700, Bhaumik Bhatt wrote:
 > This patch series was tested on x86_64 architecture.
 > 
 
-These patches were part of a different series before. It is good that
-you splitted the patches but you should mention that here.
+Applied to mhi-next!
 
 Thanks,
 Mani
