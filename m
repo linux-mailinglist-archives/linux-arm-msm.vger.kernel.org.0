@@ -2,187 +2,233 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7252434F619
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Mar 2021 03:18:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D542C34F7B0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Mar 2021 06:04:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233127AbhCaBRy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 Mar 2021 21:17:54 -0400
-Received: from smtprelay-out1.synopsys.com ([149.117.73.133]:47828 "EHLO
-        smtprelay-out1.synopsys.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S233018AbhCaBR1 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 Mar 2021 21:17:27 -0400
-Received: from mailhost.synopsys.com (badc-mailhost2.synopsys.com [10.192.0.18])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
+        id S230073AbhCaEDu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 31 Mar 2021 00:03:50 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:32656 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229615AbhCaEDQ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 31 Mar 2021 00:03:16 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1617163396; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=Y0gZpO/bTBQSZaClWoDBw9n7Me+ef2gxANT4BhIqB5g=;
+ b=sJfZd15QqiQ+aIQepNoBID+efYgMSoaazaH3colKpBP3y5ibW6YQ+yRBtFfLenpjCgau64C5
+ FDrS4fl8gLBcEfiu6UOr36p5OeKG/2VxcrEG0oUGJLci0aRMGWKah3hf/qTisisfga5hQyxJ
+ f9qxpG0xirfHyeRj0ZQpZqHXQLY=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
+ 6063f47103cfff345244b554 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 31 Mar 2021 04:02:57
+ GMT
+Sender: mkrishn=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 80C9DC433ED; Wed, 31 Mar 2021 04:02:56 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        by smtprelay-out1.synopsys.com (Postfix) with ESMTPS id 782C24014A;
-        Wed, 31 Mar 2021 01:17:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=synopsys.com; s=mail;
-        t=1617153447; bh=PbLdDIIk/Z2voyJHqetXxG4i9iv9MZ8zKiEWX8kbU+4=;
-        h=From:To:CC:Subject:Date:References:In-Reply-To:From;
-        b=XoaVR+Kw3oS+18eOYoFsKkBD7QSJQQGcWEPv6Sobj4xKSE3k1YlHxMHs7vJJY7HVU
-         CBxaCo4liSllcd5sEP2roZQ77Bozxs7E7sRmN0eIZNst3W5qdD8tCCS/JeiI3l/LMN
-         UU4JmonYQldwSl7YVIFTpS0zTdWSSelN8MrI+M3eLJlPKP7QCnTSnjCA5ljvrj0UkD
-         /E8EnWLNYg1r/8r43KMMYrVOIbbx2dGVMfoimjGSIwvhNngKioyUMDaFx7pQN2/7/Y
-         +Rq+VXPy9FO6+SHRgc+vTGTsxQ8d86vkgxRhtdbCcpikjRG3LVE/HSaqy0JHZrNUIU
-         qn53quOZYVhMw==
-Received: from o365relay-in.synopsys.com (us03-o365relay3.synopsys.com [10.4.161.139])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mailhost.synopsys.com (Postfix) with ESMTPS id B168FA0067;
-        Wed, 31 Mar 2021 01:17:25 +0000 (UTC)
-Received: from NAM11-DM6-obe.outbound.protection.outlook.com (mail-dm6nam11lp2168.outbound.protection.outlook.com [104.47.57.168])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (Client CN "mail.protection.outlook.com", Issuer "DigiCert Cloud Services CA-1" (verified OK))
-        by o365relay-in.synopsys.com (Postfix) with ESMTPS id 19CEC80091;
-        Wed, 31 Mar 2021 01:17:22 +0000 (UTC)
-Authentication-Results: o365relay-in.synopsys.com; dmarc=pass (p=reject dis=none) header.from=synopsys.com
-Authentication-Results: o365relay-in.synopsys.com; spf=pass smtp.mailfrom=thinhn@synopsys.com
-Authentication-Results: o365relay-in.synopsys.com;
-        dkim=pass (1024-bit key; unprotected) header.d=synopsys.com header.i=@synopsys.com header.b="nKu78rjr";
-        dkim-atps=neutral
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=kKL45/KyaabQTpBmYbvrIZLdkI6SAZjMT3eHpUFRBnaad17LyAV12+YgtvTM28d1idSPlmuAVMeJrXo8UScixsyi15++G5bOYBYnMpMSJ1URYQ/vEDWmX5LrhfrwzQbUl6QF368amdZTh8wVsx7S9r1FRn4lNBtKFWX3IFUbWVyBH/Jgt4s3AXH4hfO+NoHTpFVgK0TAj5zvewhyeWARHS5Bhr2NoQiStYrHf8zJkyBXmLOjrPHm5s/TNqvPVfb/F6axtghyT3vafz8TRFVFLseyeHpQ0jjsuqbUPQTY/63WItzFC+EpEFIjbfll/2/ZCj/+YWl0ZOFBsu1pMfuthw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=PbLdDIIk/Z2voyJHqetXxG4i9iv9MZ8zKiEWX8kbU+4=;
- b=MDbwiVeW8ZFtAbpZEdZmklYZJxIbXdyEuYkhmm3xBm5LDw8gqScGxxPm7+xwb5pamPvjvkTYysatM+YV7rKUhX4tbPZaddPTR4cIcW/jKmnfW0NZnGKUhHzHu3/vcBspsVhiEFzcN5HBSMZibQZQbVQvArqE/bmCvBxUqPpgTG0zd0Vl/K55r1A5qCObYE14US9MYii13GON0dSQGa+RoFHeJhhzdj0tpk8AjlcOfJkh45CHrxF1SMKGctEyJL8bYv+KlFEPBlCbw7xLtZ9g1LDqvD+rnSu5UgWRJFQuXuxQ42bH/kY0tLSxsi79CrY70w3mvaE3ZzVrIijULzCpgg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=synopsys.com; dmarc=pass action=none header.from=synopsys.com;
- dkim=pass header.d=synopsys.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=synopsys.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=PbLdDIIk/Z2voyJHqetXxG4i9iv9MZ8zKiEWX8kbU+4=;
- b=nKu78rjrs8bGJNngqMzi2e1WmmvGm9qHmklin4njcrqAFM0w69qFM7+JEnKjZgYWKXDXHBVf5AwL4cKF2VWPfDERfHFCgcIT5Hh3+oH6PogdEpcPrQYIWXi1pmCdfOAd6fL2VKL/FaGbyXATHRMwIrXNfQL3FyIqdoje4hXO+Ik=
-Received: from BYAPR12MB4791.namprd12.prod.outlook.com (2603:10b6:a03:10a::12)
- by BYAPR12MB2949.namprd12.prod.outlook.com (2603:10b6:a03:12f::24) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3977.32; Wed, 31 Mar
- 2021 01:17:20 +0000
-Received: from BYAPR12MB4791.namprd12.prod.outlook.com
- ([fe80::7c97:6a33:14c4:dd8c]) by BYAPR12MB4791.namprd12.prod.outlook.com
- ([fe80::7c97:6a33:14c4:dd8c%6]) with mapi id 15.20.3977.033; Wed, 31 Mar 2021
- 01:17:20 +0000
-X-SNPS-Relay: synopsys.com
-From:   Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-To:     Baruch Siach <baruch@tkos.co.il>, Felipe Balbi <balbi@kernel.org>
-CC:     "linux-usb@vger.kernel.org" <linux-usb@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        Kathiravan T <kathirav@codeaurora.org>,
-        Balaji Prakash J <bjagadee@codeaurora.org>
-Subject: Re: [PATCH] usb: dwc3: reference clock configuration
-Thread-Topic: [PATCH] usb: dwc3: reference clock configuration
-Thread-Index: AQHW/eInRTRYpSizoUSSkIWQR33qw6qdm2uA
-Date:   Wed, 31 Mar 2021 01:17:20 +0000
-Message-ID: <f3042097-8569-5882-06db-ae56e05cac59@synopsys.com>
-References: <8fc38cb73afd31269f1ea0c28e73604c53cebb17.1612764006.git.baruch@tkos.co.il>
-In-Reply-To: <8fc38cb73afd31269f1ea0c28e73604c53cebb17.1612764006.git.baruch@tkos.co.il>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.9.0
-authentication-results: tkos.co.il; dkim=none (message not signed)
- header.d=none;tkos.co.il; dmarc=none action=none header.from=synopsys.com;
-x-originating-ip: [98.248.94.126]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 77a23dc4-2b96-4cf1-6840-08d8f3e2bb84
-x-ms-traffictypediagnostic: BYAPR12MB2949:
-x-microsoft-antispam-prvs: <BYAPR12MB29495064C148C1325D3744AEAA7C9@BYAPR12MB2949.namprd12.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:8882;
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: XR9w1tSwvHCpgOzyPlCOK26Mg8UWD9HekLeKMkI/whWK/eF5c7eRq2qYTNpPpfx5MLxC3IxtWJ9YUwOg8rrFIsvP6nlotz8OoHsQD0Kg9C7EI5+m9vkm6tXfp5epAjATmICol7aCfZ4RwGWG0nkCuQcZYORw0aNbja8Wn9zvYbo/jjHl0AAY+U66HLccQ1AwtHrkkypfw8RYKZb1e27bw+3sFDy0HOtiaFThuNMPtITOGlzIdhvjrJ+Mn1TeLH80/E7XRdnGbAOCyJhkTplfVJcenynpxrgbjQdH9sIhuf2+0t2mZoIE7lMZEkPkjWRKL6gYk8fkKg1veSi9fIsLEfIE5p20AkhyIVy+wopia1vPikgb9wTFiMFl7Gzk3S/NyeHMVB/XnP5KjFgjyP1sEJ5vLRbQpTco4sZzB0n4LX5YA0k4yuubkEzbmTjD4VIr0D4bLzw4Es7ENUCkHEr+C/C8TSAZXe33++22hJLL7QjceYOPL80mh6X8gGPsZi8GHyZ9zWO32+Id24SJ6gzF1DB9GVQ2Q/gYHOamWD5zMdS2rWBsVCcWgKEtR8tLYhTE3uS8zfNTP4lKGnWRMhnwz2Xd38jE9pDRzo/2uisE4KUAJU3cRN7OclgbfCGc9TtOvQrai7bCrV9g7KdesboNH/CJtVnZ8UxolJqGz9NMwHpM68P/4wisbTHMyrAmFq4j69/ZXcOM/NSHM+hUZxmrLnTw6Ix+9rk7kDpErfmTUZM=
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BYAPR12MB4791.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(366004)(376002)(346002)(39860400002)(136003)(396003)(4326008)(2616005)(8936002)(8676002)(36756003)(83380400001)(316002)(86362001)(2906002)(110136005)(186003)(26005)(66946007)(5660300002)(54906003)(76116006)(6512007)(31686004)(66476007)(66446008)(31696002)(6486002)(66556008)(478600001)(6506007)(38100700001)(64756008)(71200400001)(43740500002)(45980500001);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata: =?utf-8?B?OXJmYVk1Q3EwZUxZVm1yQzBaeXlvb0FBellNaTA1OHFHTSthTkpxUE5pZm81?=
- =?utf-8?B?U2VwOTVQajZvNkFnR0tIYzhya3dET0tLZ3hJODBZNGpaQVZHY2NUN1FNaXV0?=
- =?utf-8?B?b2s2VlZsY2Q3ejFXYTNFcGFnNllRTTNjQWhOaGZXMm9iWHdsQ0hjZUlVUFRm?=
- =?utf-8?B?QTEzdkdqMXc5S08ycFJScmZWN1YzRTE3YUp3YXRKbzVYOEpkRURwdXhsc3V6?=
- =?utf-8?B?RHY5c2Z6YlBIanZSYUgwS0ZvR243YUR3NzB6TE9wVlVBWUg5NGhoTjhma3NV?=
- =?utf-8?B?MlhlaFFvT3c3MVI4SVNYSGFHQWw2cEU3VUpYd0dnUi9DUEwzRFA0Y3Y1V2k0?=
- =?utf-8?B?THVVUWpCVDFVZzZJc05wbVpRdkZISEVzOFovZkx6a0xObU9BazkrcGNuZ1VT?=
- =?utf-8?B?Nm1nK2RYaWYxVlZCOFp6dWhra1h0eUc2ek5oNy93eUUzTzZTWkZIdDlXSDVV?=
- =?utf-8?B?dk9ZUFZPZ2xMN05yTHJQTVhpQWF3ZlYxUnBWekUwNy9IUzQ2VUtBV0RKNHh3?=
- =?utf-8?B?amdmU2ZNTUVzN0pqVmdEeHZkcldRdm1TdmhDUDBLWEtqejRXRE8rbEpmSDV0?=
- =?utf-8?B?WUJORFQ3SkJCUCsrMXhPTDZEVnlVOUxVV3JqU2wweXBvZkp0RXRHc3FOa21l?=
- =?utf-8?B?OTVGZHZ3TWprWUxZY2t1TnZPbWZ2azhJNko2Qnd6d3FCSTkraTVBc0hBbEJt?=
- =?utf-8?B?bktwVVpBNjRCL0x3OXBvWWp1cy9FeVJRa3Q5bEhiemRSSWgxRGdwVDFzS3B3?=
- =?utf-8?B?WHV1K0R5NnlRN3VZZC9GTlFkVDFBU21YMExILzVON2taNWpSUUZtc2Mxek1W?=
- =?utf-8?B?TElEYllWTFR0b2I4L2lnbUpNOE9mY29tVkt3cHg5a1F5RUc3SSsvTTFyOTlF?=
- =?utf-8?B?dEFZQ25zWEtMV21xT1pteDRQVUFzZzZ4a25yZm41cWJFZ1M5ZFd3MlYzOUNS?=
- =?utf-8?B?V0dkNU1lZVpuSzR6U2NWTXpSYm82RUN3SmpjYTJDclo1Z2thVDNLU0ZDZUtC?=
- =?utf-8?B?WStRZEVsQUtuUXBKYVFnYzRsVUQrRVdmWnJaNWpEMlJLOXRpdWp1ek4xdmlu?=
- =?utf-8?B?anpLL3U4OWZmYVlnOEE3dk5FWXB2WEtwM1UwUGY4Q0ZvUVp3UUZJbEdTKzJo?=
- =?utf-8?B?a1hINHd5QjdtQ28vMWlwd0lNVjBEWU1HTitrSVZyVVNrSFZ1UmVFcDUra0dL?=
- =?utf-8?B?ZHIvcXg3MU9KcW55ZEdzTEhleS9sOUE3dC8rSkxnOTRNSzl5ZWg5cDZhZzNB?=
- =?utf-8?B?cXJyVEFzVzhYZnF0clNRVHRPMHlQYUR5Z01jT0tEdFY5NDQ2VjhZZGFnUkhQ?=
- =?utf-8?B?d1pweDkxcUtoMnp1MTh0dXRPaEF6dnFhUHRMbG8wRDI5ckdmRUpXUU9UdFpr?=
- =?utf-8?B?Ny9aQ2RsL2RneTRkdjgrZ0tGSkV1RHc2Q0hGb1ZxQTZ1eUlFRm9DK1hWK0hD?=
- =?utf-8?B?TmFMVDJTTXMxTGh0U3hTNHhoNTU4dTlzcDVWOFV4OXpYNmdHY3UrNS90d1Ny?=
- =?utf-8?B?blZicXRob05ybUlvK2NGQ21kK3hWajBQSmVGQjJuRUVnNXNCNm0vdEZqYXpK?=
- =?utf-8?B?RXVRNFhpaENEUk81ZytzdFVyUjdEdTRUUFhtTWNQSzZqS0g5Uk1FaEY3ajQ3?=
- =?utf-8?B?bW84eTVIeHo4ZmZESDU2OFhrVzdWaXp6YUJSYytublAvL1ovQ0phMG9pV2o3?=
- =?utf-8?B?V3VBak5rMGZsdDBHSDB3ZXBwbDZGOFNHdWVDUzYyMThMUzZZWEllSWd4b09v?=
- =?utf-8?Q?A8+G1RMrdX93jGpjIaEIofxAhY722uutQZZ7YUH?=
-x-ms-exchange-transport-forked: True
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <40B5B268BCBB4B479CD0DF7E1B6A2E2A@namprd12.prod.outlook.com>
-Content-Transfer-Encoding: base64
+        (Authenticated sender: mkrishn)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 58C23C433CA;
+        Wed, 31 Mar 2021 04:02:55 +0000 (UTC)
 MIME-Version: 1.0
-X-OriginatorOrg: synopsys.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: BYAPR12MB4791.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 77a23dc4-2b96-4cf1-6840-08d8f3e2bb84
-X-MS-Exchange-CrossTenant-originalarrivaltime: 31 Mar 2021 01:17:20.5531
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: c33c9f88-1eb7-4099-9700-16013fd9e8aa
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: G/sUt04rWzrd38d7Pik3jKZZdeZXsQ+b9M4FQuCr975V2ZOgUi0Ko6vdKBOzSUWaJKGryts3aQrpppyD7tXlRg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BYAPR12MB2949
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Wed, 31 Mar 2021 09:32:55 +0530
+From:   mkrishn@codeaurora.org
+To:     Rob Herring <robh@kernel.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>, linux-arm-msm@vger.kernel.org,
+        kalyan_t@codeaurora.org, tanmay@codeaurora.org,
+        abhinavk@codeaurora.org, robdclark@gmail.com,
+        bjorn.andersson@linaro.org, vinod.koul@linaro.org,
+        rnayak@codeaurora.org, dianders@chromium.org, sibis@codeaurora.org,
+        khsieh@codeaurora.org
+Subject: Re: [PATCH v14 3/4] dt-bindings: msm: dsi: add yaml schemas for DSI
+ PHY bindings
+In-Reply-To: <20210330194221.GA588861@robh.at.kernel.org>
+References: <1616673661-20038-1-git-send-email-mkrishn@codeaurora.org>
+ <1616673661-20038-3-git-send-email-mkrishn@codeaurora.org>
+ <161671311714.3012082.4777798674596112311@swboyd.mtv.corp.google.com>
+ <81ea21602c74d2b18e4b013dda3a3213@codeaurora.org>
+ <161698798504.3012082.2821776620747041419@swboyd.mtv.corp.google.com>
+ <b41d57010d51356bdc4af1cd9d9c01ec@codeaurora.org>
+ <20210330194221.GA588861@robh.at.kernel.org>
+Message-ID: <ee04dc23421ab315d814bad56859eb2c@codeaurora.org>
+X-Sender: mkrishn@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-QmFydWNoIFNpYWNoIHdyb3RlOg0KPiBGcm9tOiBCYWxhamkgUHJha2FzaCBKIDxiamFnYWRlZUBj
-b2RlYXVyb3JhLm9yZz4NCj4gDQo+IERXQ19VU0IzX0dGTEFESiBhbmQgRFdDX1VTQjNfR1VDVEwg
-cmVnaXN0ZXJzIGNvbnRhaW4gb3B0aW9ucw0KPiB0byBjb250cm9sIHRoZSBiZWhhdmlvciBvZiBj
-b250cm9sbGVyIHdpdGggcmVzcGVjdCB0byBTT0YgYW5kIElUUC4NCj4gVGhlIHJlc2V0IHZhbHVl
-cyBvZiB0aGVzZSByZWdpc3RlcnMgYXJlIGFsaWduZWQgZm9yIDE5LjIgTUh6DQo+IHJlZmVyZW5j
-ZSBjbG9jayBzb3VyY2UuIFRoaXMgY2hhbmdlIHdpbGwgYWRkIG9wdGlvbiB0byBvdmVycmlkZQ0K
-PiB0aGVzZSBzZXR0aW5ncyBmb3IgcmVmZXJlbmNlIGNsb2NrIG90aGVyIHRoYW4gMTkuMiBNSHoN
-Cj4gDQo+IFRlc3RlZCBvbiBJUFE2MDE4IFNvQyBiYXNlZCBDUDAxIGJvYXJkIHdpdGggMjRNSHog
-cmVmZXJlbmNlIGNsb2NrLg0KPiANCj4gU2lnbmVkLW9mZi1ieTogQmFsYWppIFByYWthc2ggSiA8
-YmphZ2FkZWVAY29kZWF1cm9yYS5vcmc+DQo+IFsgYmFydWNoOiBtZW50aW9uIHRlc3RlZCBoYXJk
-d2FyZSBdDQo+IFNpZ25lZC1vZmYtYnk6IEJhcnVjaCBTaWFjaCA8YmFydWNoQHRrb3MuY28uaWw+
-DQo+IC0tLQ0KPiAgLi4uL2RldmljZXRyZWUvYmluZGluZ3MvdXNiL2R3YzMudHh0ICAgICAgICAg
-IHwgIDUgKysNCj4gIGRyaXZlcnMvdXNiL2R3YzMvY29yZS5jICAgICAgICAgICAgICAgICAgICAg
-ICB8IDUyICsrKysrKysrKysrKysrKysrKysNCj4gIGRyaXZlcnMvdXNiL2R3YzMvY29yZS5oICAg
-ICAgICAgICAgICAgICAgICAgICB8IDEyICsrKysrDQo+ICAzIGZpbGVzIGNoYW5nZWQsIDY5IGlu
-c2VydGlvbnMoKykNCj4gDQo+IGRpZmYgLS1naXQgYS9Eb2N1bWVudGF0aW9uL2RldmljZXRyZWUv
-YmluZGluZ3MvdXNiL2R3YzMudHh0IGIvRG9jdW1lbnRhdGlvbi9kZXZpY2V0cmVlL2JpbmRpbmdz
-L3VzYi9kd2MzLnR4dA0KPiBpbmRleCAxYWFlMmI2MTYwYzEuLjRmZmE4N2I2OTdkYyAxMDA2NDQN
-Cj4gLS0tIGEvRG9jdW1lbnRhdGlvbi9kZXZpY2V0cmVlL2JpbmRpbmdzL3VzYi9kd2MzLnR4dA0K
-PiArKysgYi9Eb2N1bWVudGF0aW9uL2RldmljZXRyZWUvYmluZGluZ3MvdXNiL2R3YzMudHh0DQo+
-IEBAIC04OSw2ICs4OSwxMSBAQCBPcHRpb25hbCBwcm9wZXJ0aWVzOg0KPiAgIC0gc25wcyxxdWly
-ay1mcmFtZS1sZW5ndGgtYWRqdXN0bWVudDogVmFsdWUgZm9yIEdGTEFESl8zME1IWiBmaWVsZCBv
-ZiBHRkxBREoNCj4gIAlyZWdpc3RlciBmb3IgcG9zdC1zaWxpY29uIGZyYW1lIGxlbmd0aCBhZGp1
-c3RtZW50IHdoZW4gdGhlDQo+ICAJZmxhZGpfMzBtaHpfc2RibmQgc2lnbmFsIGlzIGludmFsaWQg
-b3IgaW5jb3JyZWN0Lg0KPiArIC0gc25wcyxxdWlyay1yZWYtY2xvY2stYWRqdXN0bWVudDogVmFs
-dWUgZm9yIEdGTEFESl9SRUZDTEtfKiBmaWVsZHMgb2YgR0ZMQURKDQo+ICsJcmVnaXN0ZXIgZm9y
-IHJlZmVyZW5jZSBjbG9jayBvdGhlciB0aGFuIDE5LjIgTUh6IGlzIHVzZWQuDQo+ICsgLSBzbnBz
-LHF1aXJrLXJlZi1jbG9jay1wZXJpb2Q6IFZhbHVlIGZvciBSRUZDTEtQRVIgZmlsZWQgb2YgR1VD
-VEwuIFRoaXMgZmllbGQNCj4gKwlpbmRpY2F0ZXMgaW4gdGVybXMgb2YgbmFubyBzZWNvbmRzIHRo
-ZSBwZXJpb2Qgb2YgcmVmX2Nsay4gVG8gY2FsY3VsYXRlIHRoZQ0KPiArCWlkZWFsIHZhbHVlLCBS
-RUZDTEtQRVIgPSAoMS9yZWZfY2xrIGluIEh6KSoxMF45Lg0KDQpXaHkgaXMgdGhpcyBhIHF1aXJr
-PyBJdCdzIG5vdCBhIHF1aXJrLiBUaGUgdXNlciBjYW4gaW5mb3JtIHRoZSByZWZfY2xrDQpwZXJp
-b2QgdG8gdGhlIGNvbnRyb2xsZXIgaGVyZS4NCg0KVGhlIGRlZmF1bHQgdmFsdWUgZnJvbSBHVUNU
-TC5SRUZDTEtQRVIgaXMgYSB2YWx1ZSBmcm9tIGNvcmVDb25zdWx0YW50DQpzZXR0aW5nLiBUaGUg
-ZGVzaWduZXIga25vd3Mgd2hhdCBwZXJpb2QgaXQgc2hvdWxkIGJlIGFuZCBzaG91bGQgcHJvcGVy
-bHkNCnNldCBpdCBpZiB0aGUgZGVmYXVsdCBpcyBub3QgY29ycmVjdGx5IHNldC4NCg0KQlIsDQpU
-aGluaA0K
+On 2021-03-31 01:12, Rob Herring wrote:
+> On Tue, Mar 30, 2021 at 02:52:29PM +0530, mkrishn@codeaurora.org wrote:
+>> On 2021-03-29 08:49, Stephen Boyd wrote:
+>> > Quoting mkrishn@codeaurora.org (2021-03-26 03:36:30)
+>> > > On 2021-03-26 04:28, Stephen Boyd wrote:
+>> > > > Quoting Krishna Manikandan (2021-03-25 05:01:00)
+>> > > >> diff --git
+>> > > >> a/Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml
+>> > > >> b/Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml
+>> > > >> new file mode 100644
+>> > > >> index 0000000..4a26bef
+>> > > >> --- /dev/null
+>> > > >> +++ b/Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml
+>> > > >> @@ -0,0 +1,68 @@
+>> > > >> +# SPDX-License-Identifier: GPL-2.0-only or BSD-2-Clause
+>> > > >> +%YAML 1.2
+>> > > >> +---
+>> > > >> +$id: http://devicetree.org/schemas/display/msm/dsi-phy-10nm.yaml#
+>> > > >> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> > > >> +
+>> > > >> +title: Qualcomm Display DSI 10nm PHY
+>> > > >> +
+>> > > >> +maintainers:
+>> > > >> +  - Krishna Manikandan <mkrishn@codeaurora.org>
+>> > > >> +
+>> > > >> +allOf:
+>> > > >> +  - $ref: dsi-phy-common.yaml#
+>> > > >> +
+>> > > >> +properties:
+>> > > >> +  compatible:
+>> > > >> +    oneOf:
+>> > [..]
+>> > > >> and
+>> > > >> +      connected to VDDA_MIPI_DSI_0_PLL_0P9 pin for sdm845 target
+>> > > >> +
+>> > > >> +required:
+>> > > >> +  - compatible
+>> > > >> +  - reg
+>> > > >> +  - reg-names
+>> > > >> +  - vdds-supply
+>> > > >> +
+>> > > >> +unevaluatedProperties: false
+>> > > >
+>> > > > additionalProperties: false instead? This comment applies to the other
+>> > > > bindings in this patch.
+>> > >
+>> > > Hi Stephen,
+>> > > We are referencing dsi-phy-common.yaml in this file. Since the
+>> > > properties of dsi-phy-common.yaml are applicable to this file also, I
+>> > > added unevaluatedProperties: false. If we add additionalProperties:
+>> > > false instead, then the properties of dsi-phy-common.yaml will not be
+>> > > applicable here and this will throw an error if we add the properties
+>> > > from dsi-phy-common.yaml in the example.
+>> > >
+>> >
+>> > Does that matter? I was wondering about that and so I peeked at the
+>> > qcom pinctrl binding and it seems to follow a similar design but doesn't
+>> > have unevaluatedProperties: false. Instead it has additionalProperies:
+>> > false. See qcom,sc8180x-pinctrl.yaml for an example. So did you try it
+>> > or does something say you can't do this?
+>> 
+>> Hi Stephen,
+>> I had tried the same thing in one of my initial patches and I got a 
+>> comment
+>> from Rob that we have to use unevaluatedProperties when we are 
+>> referring
+>> another 
+>> file(https://patchwork.kernel.org/project/linux-arm-msm/patch/1589868421-30062-1-git-send-email-mkrishn@codeaurora.org/)
+> 
+> Maybe I had a wrong assumption that you needed the child nodes too?
+> 
+>> In latest dt-schema tool, we will get error if we try to change it to
+>> additionalProperties: false.
+>> For example, in this patch "#clock-cells' and '#phy-cells' are 
+>> mentioned in
+>> dsi-phy-common.yaml and I am referring this file in dsi-phy-10nm.yaml. 
+>> If I
+>> add
+>> additionalProperties: false instead of unevaluatedProperties: false, I 
+>> will
+>> get the error mentioned below.
+>> 
+>> I checked qcom,sc8180x-pinctrl.yaml that you had mentioned in the 
+>> comment
+>> and this file is compiling without any issues even though it is using
+>> additionalProperties: false. But I see that the properties mentioned 
+>> in the
+>> reference file (in this case, qcom,tlmm-common.yaml) are again 
+>> declared in
+>> the main file qcom,sc8180x-pinctrl.yaml even though these are 
+>> mentioned as
+>> required properties in the common yaml file. If I remove these 
+>> properties
+>> from qcom,sc8180x-pinctrl.yaml, I can see the same error that I am 
+>> getting
+>> for my file also if additionalProperties are used. If I follow the 
+>> same
+>> approach , ie define the properties again in dsi-phy-10nm.yaml and add
+>> additionalProperties: false, I dont see any errors during check 
+>> (working
+>> change mentioned below). Should I make this change for all the files?
+>> 
+>> Error logs:
+>> mkrishn@mkrishn-linux:/local/mnt/workspace/linux-next-latest/linux-next$
+>> make dt_binding_check 
+>> DT_SCHEMA_FILES=Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml
+>>   CHKDT   
+>> Documentation/devicetree/bindings/processed-schema-examples.json
+>>   SCHEMA  
+>> Documentation/devicetree/bindings/processed-schema-examples.json
+>>   DTEX
+>> Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.example.dts
+>>   DTC
+>> Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.example.dt.yaml
+>>   CHECK
+>> Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.example.dt.yaml
+>> /local/mnt/workspace/linux-next-latest/linux-next/Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.example.dt.yaml:
+>> dsi-phy@ae94400: '#clock-cells', '#phy-cells', 'clock-names', 'clocks' 
+>> do
+>> not match any of the regexes: 'pinctrl-[0-9]+'
+>>         From schema: 
+>> /local/mnt/workspace/linux-next-latest/linux-next/Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml
+>> 
+>> Working Change:
+>> --- a/Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml
+>> +++ b/Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml
+>> @@ -30,6 +30,11 @@ properties:
+>>        - const: dsi_phy_lane
+>>        - const: dsi_pll
+>> 
+>> +  '#clock-cells': true
+>> +  '#phy-cells': true
+>> +  clocks: true
+>> +  clock-names: true
+>> +
+>>    vdds-supply:
+>>      description: |
+>>        Connected to DSI0_MIPI_DSI_PLL_VDDA0P9 pin for sc7180 target 
+>> and
+>> @@ -41,7 +46,7 @@ required:
+>>    - reg-names
+>>    - vdds-supply
+>> 
+>> -unevaluatedProperties: false
+>> +additionalProperties: false
+> 
+> This works if you want to use some, but not all properties in a
+> referenced schema. If all apply or listing them all here is too much
+> duplication (such as child nodes, but that's a judgement call), then 
+> use
+> 'unevaluatedProperties'.
+> 
+> unevaluatedProperties is also currently a nop because the underlying
+> tools don't yet support it. So it won't catch any errors and those
+> errors will all have to be fixed when the tools add support.
+> 
+> Rob
+
+Thanks Rob for the clarification. I will make the changes accordingly.
+
+Thanks,
+Krishna
