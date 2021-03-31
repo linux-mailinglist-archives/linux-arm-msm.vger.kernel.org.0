@@ -2,168 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0EE5E3501EE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Mar 2021 16:10:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1D902350261
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Mar 2021 16:33:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235957AbhCaOKN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 31 Mar 2021 10:10:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41564 "EHLO
+        id S236157AbhCaOc7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 31 Mar 2021 10:32:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46376 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235995AbhCaOKG (ORCPT
+        with ESMTP id S236065AbhCaOca (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 31 Mar 2021 10:10:06 -0400
-Received: from mail-pf1-x42c.google.com (mail-pf1-x42c.google.com [IPv6:2607:f8b0:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93E40C06175F
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Mar 2021 07:10:05 -0700 (PDT)
-Received: by mail-pf1-x42c.google.com with SMTP id c17so14646936pfn.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Mar 2021 07:10:05 -0700 (PDT)
+        Wed, 31 Mar 2021 10:32:30 -0400
+Received: from mail-qt1-x833.google.com (mail-qt1-x833.google.com [IPv6:2607:f8b0:4864:20::833])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9141C061574
+        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Mar 2021 07:32:28 -0700 (PDT)
+Received: by mail-qt1-x833.google.com with SMTP id x9so14526587qto.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Mar 2021 07:32:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
+        d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=uMG7IEiavzSRE2X65Zsaw36Y4uyy2Xzq3ejd+JY938s=;
-        b=GHmHIPTSsfyLpfQNVBmNXMEoTEEoJBQCa6SHoFWfehh/SO3pVcMb35t+adcflzrdBa
-         LO1T9zk9wRSKcElAOxg9OSQEC2RkHt0uXE8zVSBp2phhiWVBPbixUGiz+NZU820xY10H
-         AJj5HoJ3R2Se45St+dHwoYNVckc34k2nMKl+duxIPGzuVCwj89B/CSR49fdI4CR5h/M9
-         XQ0OYnlhoqDUOHBMAnKRPAKC0DY2wsUMN7JZqQrH9k58dEJHPmt/LkYSSjbnnXhYTl+D
-         +NOMsjQFKhVD4a/F7GenIPOL69GnGO1oeqOTPHUgCY7VD6I9VkZUD5OhCP2QsOoAgz4f
-         rYXQ==
+        bh=i5wECuC5weZgjdPi3xLPpPAVwy9+CVkNbVRnPB22rV4=;
+        b=Cb1kQzuwRvV8yJG2PLXhPjMlw/q8NuMLEfvdtsAcm9Hb41ToBl/n+b4hL0HBxKy2i/
+         leYphrDJFXbTdKb8aRPx+K+wqzaQBnHyonEd1P1gmCBoIUhXmpdP/cI9wzWFC9LwNxHR
+         7eLWNY4hAwXmzzSt0QeXdkggESIdeZ5jlp/wQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=uMG7IEiavzSRE2X65Zsaw36Y4uyy2Xzq3ejd+JY938s=;
-        b=ZkToItt1mLixA/QNB5wTWwUbJKku2HRsKpnB3YOFNzu3hVWZtS0tQRdpyUeowiCJPW
-         nylK44ArzpLHmBZnQbMXxVqz/UIBt4llDP51sGqQNc2jAxSQYLLuuMEUNV8YimVnezic
-         8meFAcKKGjVamzjDG/SLM+JW18B+v1VlXGwq/KvD/xEaEligeKrfAKNWUxfpXFmeCn99
-         nrpkGcr3CqR0xPcTY2SvxljqDgEUlCpDySZZEjn3iBFD4ejTnDst3sqhYGLbCK3q7Q5s
-         0Lb9o5WtuivbYs97xGAfnY6V95yIie/13Hh1OnNI6eTpHPi7IjYFXMniJCt8oc63Rgt3
-         YJ6A==
-X-Gm-Message-State: AOAM532w8vpX0rR2SFLtp+nUj8MhCDE9bPw/HNxMVhKSEdn89ye3P575
-        85K4RnAHtQK5jdHmyoaY7sWMvv9sLLKe7dUglwn36Q==
-X-Google-Smtp-Source: ABdhPJzV2NlH20rN2slIH3t2yEuNNhBQjJpDqRJFy64EHQl/Nn2Dm+/keOoqb3l/wQYM8tURyLvI1RfnId1vEWlnN2E=
-X-Received: by 2002:a62:80cf:0:b029:1f3:1959:2e42 with SMTP id
- j198-20020a6280cf0000b02901f319592e42mr3171023pfd.39.1617199804922; Wed, 31
- Mar 2021 07:10:04 -0700 (PDT)
+        bh=i5wECuC5weZgjdPi3xLPpPAVwy9+CVkNbVRnPB22rV4=;
+        b=J9jWIroJ5JCDcHFw/YKgx2OZq0uDfJOh9qyQSZJKjC7ltpPx21WG+/7l8WS3mBxFHZ
+         2E2BaS67GWgfLhX+rlX1JoYlHxAK8v4kQWEZljVbsqY1D5X9dEEi6mRrrZvFm37BtDAS
+         AqoFqmJtumkPewNIg3Z9EH/G2FwoGb7boKrituQv5ke1feSnjtxZHWcbtR/PWacw3TnE
+         RPU28L3GlcsSJpetMydHL72PR3UjCI+0RWouNZpnH7akmaKb0LssxULU/ffA1yj3EyZa
+         M9I14TxCUL74fZ45xKVAjep41F9f4qvR/4JSHJkEvKG5cZgL0bGCyTXf+WkY5BuIldT1
+         8WHA==
+X-Gm-Message-State: AOAM533L0yLn6Vl51JsoCGV8w5OFnnIYkfpJhykcBuqY+7SVycNiIook
+        ASFm5CRKTHi5P3T88jSgdDl/VnAJdYbeXA==
+X-Google-Smtp-Source: ABdhPJwuz3fB2PGpH/5pHOJRtbTVqC5FaZ89QRCM6AUaKecoMP2qwZwTiMF8o13vvdl6N2GlPa4ByA==
+X-Received: by 2002:ac8:5510:: with SMTP id j16mr2636913qtq.339.1617201147913;
+        Wed, 31 Mar 2021 07:32:27 -0700 (PDT)
+Received: from mail-yb1-f180.google.com (mail-yb1-f180.google.com. [209.85.219.180])
+        by smtp.gmail.com with ESMTPSA id s13sm1548489qkg.17.2021.03.31.07.32.27
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 31 Mar 2021 07:32:27 -0700 (PDT)
+Received: by mail-yb1-f180.google.com with SMTP id i144so21407013ybg.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Mar 2021 07:32:27 -0700 (PDT)
+X-Received: by 2002:a25:4092:: with SMTP id n140mr5092311yba.276.1617201144211;
+ Wed, 31 Mar 2021 07:32:24 -0700 (PDT)
 MIME-Version: 1.0
-References: <20210331104622.84657-1-andriy.shevchenko@linux.intel.com>
-In-Reply-To: <20210331104622.84657-1-andriy.shevchenko@linux.intel.com>
-From:   Robert Foss <robert.foss@linaro.org>
-Date:   Wed, 31 Mar 2021 16:09:53 +0200
-Message-ID: <CAG3jFyufem_LrhmYar==qzWmEhOp_Q3LLErchzLBJeEjfRb0Zg@mail.gmail.com>
-Subject: Re: [PATCH v2 1/1] i2c: drivers: Use generic definitions for bus
- frequencies (part 2)
-To:     Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc:     Wolfram Sang <wsa@kernel.org>,
-        Serge Semin <Sergey.Semin@baikalelectronics.ru>,
-        Khalil Blaiech <kblaiech@nvidia.com>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        linux-i2c@vger.kernel.org,
-        linux-kernel <linux-kernel@vger.kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        Jarkko Nikula <jarkko.nikula@linux.intel.com>,
-        Mika Westerberg <mika.westerberg@linux.intel.com>,
-        Wolfram Sang <wsa@the-dreams.de>
+References: <20210330025345.3980086-1-dianders@chromium.org>
+ <CGME20210330025443eucas1p1e53f4fb8623c3dc2ae8ce514e3009bc5@eucas1p1.samsung.com>
+ <20210329195255.v2.10.Ida6151df6bfc71df77afee1d72bb7eb0a443f327@changeid> <26d73f36-e150-57ec-d957-4b7bda6b366e@samsung.com>
+In-Reply-To: <26d73f36-e150-57ec-d957-4b7bda6b366e@samsung.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Wed, 31 Mar 2021 07:32:12 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=W6SABggAaBbw9LXdf5sHOGGQzZJp8YFmYcWG1yf1rW5w@mail.gmail.com>
+Message-ID: <CAD=FV=W6SABggAaBbw9LXdf5sHOGGQzZJp8YFmYcWG1yf1rW5w@mail.gmail.com>
+Subject: Re: [PATCH v2 10/14] drm/bridge: ti-sn65dsi86: Stop caching the EDID ourselves
+To:     Andrzej Hajda <a.hajda@samsung.com>
+Cc:     Neil Armstrong <narmstrong@baylibre.com>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jernej Skrabec <jernej.skrabec@siol.net>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Rob Clark <robdclark@chromium.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        David Airlie <airlied@linux.ie>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Steev Klimaszewski <steev@kali.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>,
+        Robert Foss <robert.foss@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        LKML <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hey Andy,
+Hi,
 
-This patch looks good to me.
+On Wed, Mar 31, 2021 at 3:12 AM Andrzej Hajda <a.hajda@samsung.com> wrote:
+>
+>
+> W dniu 30.03.2021 o 04:53, Douglas Anderson pisze:
+> > Now that we have the patch ("drm/edid: Use the cached EDID in
+> > drm_get_edid() if eDP") we no longer need to maintain our own
+> > cache. Drop this code.
+> >
+> > Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> Reviewed-by: Andrzej Hajda <a.hajda@samsung.com>
 
-Reviewed-by: Robert Foss <robert.foss@linaro.org>
+Note that unless the advice given to me changes, I'm dropping
+${SUBJECT} patch on the next spin and putting the EDID cache back in
+the bridge driver. See:
 
-On Wed, 31 Mar 2021 at 12:46, Andy Shevchenko
-<andriy.shevchenko@linux.intel.com> wrote:
->
-> Since we have generic definitions for bus frequencies, let's use them.
->
-> Cc: Wolfram Sang <wsa@the-dreams.de>
-> Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-> Acked-by: Khalil Blaiech <kblaiech@nvidia.com>
-> ---
-> v2: added tag (Khalil), converted one missed place in DesignWare driver
->  drivers/i2c/busses/i2c-designware-master.c |  2 +-
->  drivers/i2c/busses/i2c-mlxbf.c             | 14 ++++----------
->  drivers/i2c/busses/i2c-qcom-cci.c          |  4 ++--
->  3 files changed, 7 insertions(+), 13 deletions(-)
->
-> diff --git a/drivers/i2c/busses/i2c-designware-master.c b/drivers/i2c/busses/i2c-designware-master.c
-> index dd27b9dbe931..3f4d2124e0fc 100644
-> --- a/drivers/i2c/busses/i2c-designware-master.c
-> +++ b/drivers/i2c/busses/i2c-designware-master.c
-> @@ -78,7 +78,7 @@ static int i2c_dw_set_timings_master(struct dw_i2c_dev *dev)
->          * difference is the timing parameter values since the registers are
->          * the same.
->          */
-> -       if (t->bus_freq_hz == 1000000) {
-> +       if (t->bus_freq_hz == I2C_MAX_FAST_MODE_PLUS_FREQ) {
->                 /*
->                  * Check are Fast Mode Plus parameters available. Calculate
->                  * SCL timing parameters for Fast Mode Plus if not set.
-> diff --git a/drivers/i2c/busses/i2c-mlxbf.c b/drivers/i2c/busses/i2c-mlxbf.c
-> index 2fb0532d8a16..80ab831df349 100644
-> --- a/drivers/i2c/busses/i2c-mlxbf.c
-> +++ b/drivers/i2c/busses/i2c-mlxbf.c
-> @@ -172,12 +172,6 @@
->  #define MLXBF_I2C_SMBUS_THIGH_MAX_TBUF            0x14
->  #define MLXBF_I2C_SMBUS_SCL_LOW_TIMEOUT           0x18
->
-> -enum {
-> -       MLXBF_I2C_TIMING_100KHZ = 100000,
-> -       MLXBF_I2C_TIMING_400KHZ = 400000,
-> -       MLXBF_I2C_TIMING_1000KHZ = 1000000,
-> -};
-> -
->  /*
->   * Defines SMBus operating frequency and core clock frequency.
->   * According to ADB files, default values are compliant to 100KHz SMBus
-> @@ -1202,7 +1196,7 @@ static int mlxbf_i2c_init_timings(struct platform_device *pdev,
->
->         ret = device_property_read_u32(dev, "clock-frequency", &config_khz);
->         if (ret < 0)
-> -               config_khz = MLXBF_I2C_TIMING_100KHZ;
-> +               config_khz = I2C_MAX_STANDARD_MODE_FREQ;
->
->         switch (config_khz) {
->         default:
-> @@ -1210,15 +1204,15 @@ static int mlxbf_i2c_init_timings(struct platform_device *pdev,
->                 pr_warn("Illegal value %d: defaulting to 100 KHz\n",
->                         config_khz);
->                 fallthrough;
-> -       case MLXBF_I2C_TIMING_100KHZ:
-> +       case I2C_MAX_STANDARD_MODE_FREQ:
->                 config_idx = MLXBF_I2C_TIMING_CONFIG_100KHZ;
->                 break;
->
-> -       case MLXBF_I2C_TIMING_400KHZ:
-> +       case I2C_MAX_FAST_MODE_FREQ:
->                 config_idx = MLXBF_I2C_TIMING_CONFIG_400KHZ;
->                 break;
->
-> -       case MLXBF_I2C_TIMING_1000KHZ:
-> +       case I2C_MAX_FAST_MODE_PLUS_FREQ:
->                 config_idx = MLXBF_I2C_TIMING_CONFIG_1000KHZ;
->                 break;
->         }
-> diff --git a/drivers/i2c/busses/i2c-qcom-cci.c b/drivers/i2c/busses/i2c-qcom-cci.c
-> index 1c259b5188de..c63d5545fc2a 100644
-> --- a/drivers/i2c/busses/i2c-qcom-cci.c
-> +++ b/drivers/i2c/busses/i2c-qcom-cci.c
-> @@ -569,9 +569,9 @@ static int cci_probe(struct platform_device *pdev)
->                 cci->master[idx].mode = I2C_MODE_STANDARD;
->                 ret = of_property_read_u32(child, "clock-frequency", &val);
->                 if (!ret) {
-> -                       if (val == 400000)
-> +                       if (val == I2C_MAX_FAST_MODE_FREQ)
->                                 cci->master[idx].mode = I2C_MODE_FAST;
-> -                       else if (val == 1000000)
-> +                       else if (val == I2C_MAX_FAST_MODE_PLUS_FREQ)
->                                 cci->master[idx].mode = I2C_MODE_FAST_PLUS;
->                 }
->
-> --
-> 2.30.2
->
+https://lore.kernel.org/r/YGMvO3PNDCiBmqov@intel.com/
+
+
+-Doug
