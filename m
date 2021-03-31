@@ -2,124 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 298BD34FFBC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Mar 2021 13:51:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5103134FFF2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Mar 2021 14:07:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235289AbhCaLuE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 31 Mar 2021 07:50:04 -0400
-Received: from mail.kernel.org ([198.145.29.99]:58328 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S235287AbhCaLty (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 31 Mar 2021 07:49:54 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id EC88860249;
-        Wed, 31 Mar 2021 11:49:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1617191393;
-        bh=9Tvk8pMagcUqHlxEfpmAq3P1z5xVSb6AxBC9iuF3UAo=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=kMlovUr/+JWR2ZHUYmDPMJ2ndHmdrz5lm7unGTt4nXLsAYiYuNHKr5e0oMkxx6fDz
-         QR2rHHP5l9HS5rEud3McAg/yhn1jEjy25vdtAyZhr/OaEDrBLA51RShgMt6ADFGgKk
-         uQaFZLkdzt19pPW2qgqzcDG9l8DRiLheZZlrvUgMDXhydKLRJqDVIU4Tnw+ks2cwPl
-         dKj97SK7OA1MiDUHwOiBDXkDUo1pSJ37y/5yx0ulUHqGh/GEBy/gsrfNl6Wm5GhbkI
-         DEukmD+vjCBTbLqtDliJ10g6+dV8RwrdEMhaaSt1c6K7yQWHZYOPwwIVQ8ExC6hyFf
-         jZwkG9F4BmZKw==
-Date:   Wed, 31 Mar 2021 12:49:47 +0100
-From:   Will Deacon <will@kernel.org>
-To:     Robin Murphy <robin.murphy@arm.com>
-Cc:     Christoph Hellwig <hch@lst.de>, Joerg Roedel <joro@8bytes.org>,
-        Li Yang <leoyang.li@nxp.com>,
-        Michael Ellerman <mpe@ellerman.id.au>,
-        David Woodhouse <dwmw2@infradead.org>,
-        Lu Baolu <baolu.lu@linux.intel.com>,
-        linuxppc-dev@lists.ozlabs.org, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        iommu@lists.linux-foundation.org,
-        linux-arm-kernel@lists.infradead.org, kvm@vger.kernel.org,
-        virtualization@lists.linux-foundation.org, netdev@vger.kernel.org
-Subject: Re: [PATCH 16/18] iommu: remove DOMAIN_ATTR_DMA_USE_FLUSH_QUEUE
-Message-ID: <20210331114947.GA7626@willie-the-truck>
-References: <20210316153825.135976-1-hch@lst.de>
- <20210316153825.135976-17-hch@lst.de>
- <20210330131149.GP5908@willie-the-truck>
- <a6952aa7-4d7e-54f0-339e-e15f88596dcc@arm.com>
- <20210330135801.GA6187@willie-the-truck>
- <578d6aa5-4239-f5d7-2e9f-686b18e52bba@arm.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <578d6aa5-4239-f5d7-2e9f-686b18e52bba@arm.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+        id S235014AbhCaMHA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 31 Mar 2021 08:07:00 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:8168 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235347AbhCaMGd (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 31 Mar 2021 08:06:33 -0400
+Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
+  by alexa-out.qualcomm.com with ESMTP; 31 Mar 2021 05:06:32 -0700
+X-QCInternal: smtphost
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 31 Mar 2021 05:06:31 -0700
+X-QCInternal: smtphost
+Received: from c-skakit-linux.ap.qualcomm.com (HELO c-skakit-linux.qualcomm.com) ([10.242.51.242])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 31 Mar 2021 17:35:59 +0530
+Received: by c-skakit-linux.qualcomm.com (Postfix, from userid 2344709)
+        id 76AB426F7; Wed, 31 Mar 2021 17:35:57 +0530 (IST)
+From:   satya priya <skakit@codeaurora.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>, rnayak@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, kgunda@codeaurora.org,
+        satya priya <skakit@codeaurora.org>
+Subject: [PATCH V3 0/5] Add PM7325/PM8350C/PMR735A regulator support 
+Date:   Wed, 31 Mar 2021 17:35:34 +0530
+Message-Id: <1617192339-3760-1-git-send-email-skakit@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Mar 30, 2021 at 05:28:19PM +0100, Robin Murphy wrote:
-> On 2021-03-30 14:58, Will Deacon wrote:
-> > On Tue, Mar 30, 2021 at 02:19:38PM +0100, Robin Murphy wrote:
-> > > On 2021-03-30 14:11, Will Deacon wrote:
-> > > > On Tue, Mar 16, 2021 at 04:38:22PM +0100, Christoph Hellwig wrote:
-> > > > > From: Robin Murphy <robin.murphy@arm.com>
-> > > > > 
-> > > > > Instead make the global iommu_dma_strict paramete in iommu.c canonical by
-> > > > > exporting helpers to get and set it and use those directly in the drivers.
-> > > > > 
-> > > > > This make sure that the iommu.strict parameter also works for the AMD and
-> > > > > Intel IOMMU drivers on x86.  As those default to lazy flushing a new
-> > > > > IOMMU_CMD_LINE_STRICT is used to turn the value into a tristate to
-> > > > > represent the default if not overriden by an explicit parameter.
-> > > > > 
-> > > > > Signed-off-by: Robin Murphy <robin.murphy@arm.com>.
-> > > > > [ported on top of the other iommu_attr changes and added a few small
-> > > > >    missing bits]
-> > > > > Signed-off-by: Christoph Hellwig <hch@lst.de>
-> > > > > ---
-> > > > >    drivers/iommu/amd/iommu.c                   | 23 +-------
-> > > > >    drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 50 +---------------
-> > > > >    drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h |  1 -
-> > > > >    drivers/iommu/arm/arm-smmu/arm-smmu.c       | 27 +--------
-> > > > >    drivers/iommu/dma-iommu.c                   |  9 +--
-> > > > >    drivers/iommu/intel/iommu.c                 | 64 ++++-----------------
-> > > > >    drivers/iommu/iommu.c                       | 27 ++++++---
-> > > > >    include/linux/iommu.h                       |  4 +-
-> > > > >    8 files changed, 40 insertions(+), 165 deletions(-)
-> > > > 
-> > > > I really like this cleanup, but I can't help wonder if it's going in the
-> > > > wrong direction. With SoCs often having multiple IOMMU instances and a
-> > > > distinction between "trusted" and "untrusted" devices, then having the
-> > > > flush-queue enabled on a per-IOMMU or per-domain basis doesn't sound
-> > > > unreasonable to me, but this change makes it a global property.
-> > > 
-> > > The intent here was just to streamline the existing behaviour of stuffing a
-> > > global property into a domain attribute then pulling it out again in the
-> > > illusion that it was in any way per-domain. We're still checking
-> > > dev_is_untrusted() before making an actual decision, and it's not like we
-> > > can't add more factors at that point if we want to.
-> > 
-> > Like I say, the cleanup is great. I'm just wondering whether there's a
-> > better way to express the complicated logic to decide whether or not to use
-> > the flush queue than what we end up with:
-> > 
-> > 	if (!cookie->fq_domain && (!dev || !dev_is_untrusted(dev)) &&
-> > 	    domain->ops->flush_iotlb_all && !iommu_get_dma_strict())
-> > 
-> > which is mixing up globals, device properties and domain properties. The
-> > result is that the driver code ends up just using the global to determine
-> > whether or not to pass IO_PGTABLE_QUIRK_NON_STRICT to the page-table code,
-> > which is a departure from the current way of doing things.
-> 
-> But previously, SMMU only ever saw the global policy piped through the
-> domain attribute by iommu_group_alloc_default_domain(), so there's no
-> functional change there.
+This series is dependent on below series which adds DT files for SC7280 SoC
+https://lore.kernel.org/patchwork/project/lkml/list/?series=488871
 
-For DMA domains sure, but I don't think that's the case for unmanaged
-domains such as those used by VFIO.
+satya priya (5):
+  regulator: qcom-rpmh: Add pmic5_ftsmps520 buck
+  regulator: qcom-rpmh: Add PM7325/PMR735A regulator support
+  arm64: dts: qcom: sc7280: Add RPMh regulators for sc7280-idp
+  dt-bindings: regulator: Convert RPMh regulator bindings to YAML
+  dt-bindings: regulator: Add compatibles for PM7325/PMR735A
 
-> Obviously some of the above checks could be factored out into some kind of
-> iommu_use_flush_queue() helper that IOMMU drivers can also call if they need
-> to keep in sync. Or maybe we just allow iommu-dma to set
-> IO_PGTABLE_QUIRK_NON_STRICT directly via iommu_set_pgtable_quirks() if we're
-> treating that as a generic thing now.
+ .../bindings/regulator/qcom,rpmh-regulator.txt     | 180 -----------------
+ .../bindings/regulator/qcom,rpmh-regulator.yaml    | 162 ++++++++++++++++
+ arch/arm64/boot/dts/qcom/sc7280-idp.dts            | 212 +++++++++++++++++++++
+ drivers/regulator/qcom-rpmh-regulator.c            |  62 +++++-
+ 4 files changed, 435 insertions(+), 181 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.txt
+ create mode 100644 Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml
 
-I think a helper that takes a domain would be a good starting point.
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
+of Code Aurora Forum, hosted by The Linux Foundation
 
-Will
