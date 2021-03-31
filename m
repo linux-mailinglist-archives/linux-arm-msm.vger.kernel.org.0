@@ -2,50 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 97A0D34FEAE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Mar 2021 12:58:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5DAAC34FEB1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Mar 2021 12:58:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235144AbhCaK6G (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S235137AbhCaK6G (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Wed, 31 Mar 2021 06:58:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56574 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56596 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235150AbhCaK5v (ORCPT
+        with ESMTP id S235153AbhCaK5w (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 31 Mar 2021 06:57:51 -0400
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 030ADC06175F
+        Wed, 31 Mar 2021 06:57:52 -0400
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C714BC061761
         for <linux-arm-msm@vger.kernel.org>; Wed, 31 Mar 2021 03:57:51 -0700 (PDT)
-Received: by mail-lj1-x22e.google.com with SMTP id r20so23327120ljk.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Mar 2021 03:57:50 -0700 (PDT)
+Received: by mail-lf1-x135.google.com with SMTP id m12so28490602lfq.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Mar 2021 03:57:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=DoN9UpXQ+NxJdISiIfI85ZTjA9yvZFQNixNYauSwkTY=;
-        b=kHXzHoBxp7/kwIYvnjBIfuEsrWBN5VFjk9BBVo6/uDJsVuzViCMj3blXMRh/uj63GX
-         D7MrWMHKGYySdx9MhtVlrQii/AfWUoRRYOQK69g3fYIBZsCVuGvGANMbEIJ7JRXrAAB1
-         PN1qzHCPLok1BX1bDzvTbEwDCQy6lmQeBE1us0ilVjGicRgtEc3fuU++mlhmzTuThTdB
-         RRi3hkHLUh5fSYObqINSzit/NrKcTequlFcZTWdxyNCBqcMvYMyVzAw261rrIpbSr0T9
-         8An5VLmyhWRE8UjMmCxRaKfGWoL6DCkmyhguOgxIWvE/MRztay9WD9grtfjzk86PHYGA
-         Z1Zg==
+        bh=24LsF/6oW5HLhGbrMso4ghJ48YFWrYItlbxPNj/3ct8=;
+        b=FI41BkrGLO4q6rZieS2DNj6k81jGZNIMnT/IPSCmqhtdmbO7wiS47zzDSPUB238Dca
+         799v+OB9oylpukfAOOEXaot0DX/ah9WDKdmoASvLHkqOOHP52Bs0cBAANNFDygYwRJI0
+         2shPNB6V3Z1nIJYHhR7dKNUI80kGZ54q65+OtTVjSxep8nNoV5TBqgfICScnOjc3zDUU
+         6H+AilVOMVyV0ccDK+f1ERBFcKZeVKGtysK5aYZUMK+ZkxYIU2ypYS+Wix2o/WPVl+U+
+         8oNNBy9dg5l84KLbn0WE+9UERVdjqkgrInLAAE/OBFdjV5P6IHBI+pKI2mLS2SwRimCb
+         hhpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=DoN9UpXQ+NxJdISiIfI85ZTjA9yvZFQNixNYauSwkTY=;
-        b=DNTkmS2BqJS8LyXk6mIFtTx/AGsoBbfaKRw3MDWa8mmhpwiujIN2VWTNckWDqPRN3A
-         gnsWq1GpNH78mQG1H8OEiWFJ7o7y5jqchFLkTRNdwLR+yfE7qXYQnZ1Ig41fB3cieabd
-         fE96b84fmmRR5BTiwmwZcv+AjWoNr53PkOpVTd3PwHTnNHz2pKnRkgjfTkoAidLEd6E8
-         bqDUX35bFhkit++2CMJU+wh1f9xEZPnjcHxy//iSO2TMsCn2z414IWA2h9wuur/CS3lQ
-         g2rwaiFrQje7tHK7M/hrjgz95oJNU0xgi78qogbzo4ceOo6T12+qDHoAQ4UeqH7QopN+
-         hLEg==
-X-Gm-Message-State: AOAM53214lopScvxHTof+jlgcz93MdTy5qY0RIb37ttd0x+2SKC+QNGa
-        MJwRBrcGdKdHVjG3X40HdGHLmA==
-X-Google-Smtp-Source: ABdhPJxXiBsz+spDV6S2bGwneZukT2StbCr+06xUStC3SMsp1wU9HXFy8EEXMxwW2LVNff+J0XHPdA==
-X-Received: by 2002:a2e:a554:: with SMTP id e20mr36205ljn.286.1617188269493;
-        Wed, 31 Mar 2021 03:57:49 -0700 (PDT)
+        bh=24LsF/6oW5HLhGbrMso4ghJ48YFWrYItlbxPNj/3ct8=;
+        b=mlB1tIWCPAHiFlFJj6EnLPC42BR2qtx8b2ixAt9Sl4/di3N2sJKwG9agIh227iHIey
+         iQ5QS28W9Bgpg8v+nfrPD+wbnAhRhG/l/7n9eaC6uH2io9BTSQsAHXAn+F4UlP/0YDjD
+         PFqCGV5wyhAadmX9QPgLA+g6Jmq2MdV6AFaVszFy1zKghin8nJwdRktR5bRH8vbHSC8W
+         8yruDxGft8rSG/jMg9Y1GWzOyi1eDrDFfZdPFMNy0FZHYSCQMj6nJwRTGLzkGjguoY9Q
+         T9iN41deGSUMXAmf7YmA2xHxR8dMoazHKhsPSEa0ci8FZfS/xHEnAsIfZI1a7AN9zpl6
+         l6pw==
+X-Gm-Message-State: AOAM533FWA3jXhaZ9+MqvubNyRLzdYywbHslNoD6Lc0vPLpEhyHoxBIf
+        Wsz9EqwolnprZSpMDByqtO1p1A==
+X-Google-Smtp-Source: ABdhPJwXXeCYYRDmlGZqRDma+CSssOi6hZviTr7hkFQpI+vSdKCVp/3tvA5SRf9MtUaPtgiGinbcGg==
+X-Received: by 2002:a19:8c19:: with SMTP id o25mr1883820lfd.547.1617188270370;
+        Wed, 31 Mar 2021 03:57:50 -0700 (PDT)
 Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id h3sm184359ljc.67.2021.03.31.03.57.48
+        by smtp.gmail.com with ESMTPSA id h3sm184359ljc.67.2021.03.31.03.57.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Wed, 31 Mar 2021 03:57:49 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
@@ -57,9 +57,9 @@ Cc:     Stephen Boyd <sboyd@kernel.org>, David Airlie <airlied@linux.ie>,
         Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
         dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
         linux-clk@vger.kernel.org, Stephen Boyd <swboyd@chromium.org>
-Subject: [PATCH v4 14/24] drm/msm/dsi: drop vco_delay setting from 7nm, 10nm, 14nm drivers
-Date:   Wed, 31 Mar 2021 13:57:25 +0300
-Message-Id: <20210331105735.3690009-15-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v4 15/24] drm/msm/dsi: simplify vco_delay handling in dsi_phy_28nm driver
+Date:   Wed, 31 Mar 2021 13:57:26 +0300
+Message-Id: <20210331105735.3690009-16-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20210331105735.3690009-1-dmitry.baryshkov@linaro.org>
 References: <20210331105735.3690009-1-dmitry.baryshkov@linaro.org>
@@ -69,82 +69,53 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-These drivers do not use vco_delay variable, so drop it from all of
-them.
+Instead of setting the variable and then using it just in the one place,
+determine vco_delay directly at the PLL configuration time.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Reviewed-by: Abhinav Kumar <abhinavk@codeaurora.org>
 Tested-by: Stephen Boyd <swboyd@chromium.org> # on sc7180 lazor
 ---
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c | 3 ---
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c | 4 ----
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c  | 3 ---
- 3 files changed, 10 deletions(-)
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c | 12 ++++--------
+ 1 file changed, 4 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c
-index d81cea661f5c..91ae0f8dbd88 100644
---- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c
-@@ -99,7 +99,6 @@ struct dsi_pll_10nm {
- 	/* protects REG_DSI_10nm_PHY_CMN_CLK_CFG0 register */
- 	spinlock_t postdiv_lock;
- 
--	int vco_delay;
- 	struct dsi_pll_config pll_configuration;
- 	struct dsi_pll_regs reg_setup;
- 
-@@ -771,8 +770,6 @@ static int dsi_pll_10nm_init(struct msm_dsi_phy *phy)
- 	pll = &pll_10nm->base;
- 	pll->cfg = phy->cfg;
- 
--	pll_10nm->vco_delay = 1;
--
- 	ret = pll_10nm_register(pll_10nm, phy->provided_clocks->hws);
- 	if (ret) {
- 		DRM_DEV_ERROR(&pdev->dev, "failed to register PLL: %d\n", ret);
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
-index 7fe7c8348b42..434d02ffa7fe 100644
---- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
-@@ -122,8 +122,6 @@ struct dsi_pll_14nm {
- 	void __iomem *phy_cmn_mmio;
+diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c
+index 3e9b7949b038..ed369eb18e9d 100644
+--- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c
++++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c
+@@ -72,8 +72,6 @@ struct dsi_pll_28nm {
+ 	struct platform_device *pdev;
  	void __iomem *mmio;
  
 -	int vco_delay;
 -
- 	struct dsi_pll_input in;
- 	struct dsi_pll_output out;
+ 	struct pll_28nm_cached_state cached_state;
+ };
  
-@@ -1012,8 +1010,6 @@ static int dsi_pll_14nm_init(struct msm_dsi_phy *phy)
- 	pll = &pll_14nm->base;
+@@ -212,8 +210,10 @@ static int dsi_pll_28nm_clk_set_rate(struct clk_hw *hw, unsigned long rate,
+ 	pll_write(base + REG_DSI_28nm_PHY_PLL_SDM_CFG4, 0x00);
+ 
+ 	/* Add hardware recommended delay for correct PLL configuration */
+-	if (pll_28nm->vco_delay)
+-		udelay(pll_28nm->vco_delay);
++	if (pll->cfg->quirks & DSI_PHY_28NM_QUIRK_PHY_LP)
++		udelay(1000);
++	else
++		udelay(1);
+ 
+ 	pll_write(base + REG_DSI_28nm_PHY_PLL_REFCLK_CFG, refclk_cfg);
+ 	pll_write(base + REG_DSI_28nm_PHY_PLL_PWRGEN_CFG, 0x00);
+@@ -580,10 +580,6 @@ static int dsi_pll_28nm_init(struct msm_dsi_phy *phy)
+ 
+ 	pll = &pll_28nm->base;
  	pll->cfg = phy->cfg;
+-	if (phy->cfg->quirks & DSI_PHY_28NM_QUIRK_PHY_LP)
+-		pll_28nm->vco_delay = 1000;
+-	else
+-		pll_28nm->vco_delay = 1;
  
--	pll_14nm->vco_delay = 1;
--
- 	ret = pll_14nm_register(pll_14nm, phy->provided_clocks->hws);
+ 	ret = pll_28nm_register(pll_28nm, phy->provided_clocks->hws);
  	if (ret) {
- 		DRM_DEV_ERROR(&pdev->dev, "failed to register PLL: %d\n", ret);
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-index d725ceb0b90c..321d23b3ed18 100644
---- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-@@ -99,7 +99,6 @@ struct dsi_pll_7nm {
- 	/* protects REG_DSI_7nm_PHY_CMN_CLK_CFG0 register */
- 	spinlock_t postdiv_lock;
- 
--	int vco_delay;
- 	struct dsi_pll_config pll_configuration;
- 	struct dsi_pll_regs reg_setup;
- 
-@@ -796,8 +795,6 @@ static int dsi_pll_7nm_init(struct msm_dsi_phy *phy)
- 	pll = &pll_7nm->base;
- 	pll->cfg = phy->cfg;
- 
--	pll_7nm->vco_delay = 1;
--
- 	ret = pll_7nm_register(pll_7nm, phy->provided_clocks->hws);
- 	if (ret) {
- 		DRM_DEV_ERROR(&pdev->dev, "failed to register PLL: %d\n", ret);
 -- 
 2.30.2
 
