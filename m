@@ -2,104 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5536C3504E2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Mar 2021 18:44:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0792135052F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Mar 2021 19:02:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234146AbhCaQnh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 31 Mar 2021 12:43:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46596 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233950AbhCaQnU (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 31 Mar 2021 12:43:20 -0400
-Received: from mail-qk1-x733.google.com (mail-qk1-x733.google.com [IPv6:2607:f8b0:4864:20::733])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2ED6C061574
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Mar 2021 09:43:19 -0700 (PDT)
-Received: by mail-qk1-x733.google.com with SMTP id c4so19972582qkg.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Mar 2021 09:43:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=VO+UUFNdki+F7xgaS2mK6aIBg7EST205oZYqbmljPz0=;
-        b=hJ5Ug+Pyr8mj+ETexnOPGtlGqIF72PVbEoX6nARIHgLbRfNVoOsorpNYDzXcrvjHZ0
-         HWDL2DOKo3VlO7/+6109vHwy15UC6IiiknGKCjWPkF1RwpL6wyPoFUsQo5DDz/fHwhLp
-         r/Ur43R+d5yVjMN6SXQZRnBeyt4M9Z/8sgRk0=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=VO+UUFNdki+F7xgaS2mK6aIBg7EST205oZYqbmljPz0=;
-        b=QMkLknWDtnuSzjnfCS+sYk79f7zPQQMHKHCDFWbJ1X1p/kny8HYFv9sP4YF81wtrYf
-         M9dbBckP1+MI+OQ1EWMIUQONS4eLNYnmozFB5Wi4NOo4H+CXWqDb2heIv4SDzC6Mz1MX
-         beeeCk+MXTCqS2bx1qwLOP9Ixkc9QWuNlEQsVNCH/ZxtK3WD4JcS0ncer2oSZacfG2m5
-         tFRZnmhFVtau31bgGtSdi/eE3K/s4/QGR3qB03sj2ZPiCAlGs65KOxwBis+33pID/WKc
-         S7Du11HzNhyefONI5qHYk+dnpIl864WFpxAKXSMaJsJl7jc3yWW31oydmjrmvALuAcvw
-         qvsA==
-X-Gm-Message-State: AOAM532ZtwwzNj0OPcJ0QhAyFybWwRfP6SyuEzwfWtHPf9oPFi3lM4+9
-        MB5d/DEZ2/ysSBkyYvhF3bYrE17l4YjkbA==
-X-Google-Smtp-Source: ABdhPJwq8UpEu9fjW34h/gDVrIadJ1xcHBuKZ3wKvbmPIWzYCIFs5gEVsUYOTaQNxTMUCniAVwDcEA==
-X-Received: by 2002:a37:b801:: with SMTP id i1mr4017970qkf.133.1617208998601;
-        Wed, 31 Mar 2021 09:43:18 -0700 (PDT)
-Received: from mail-yb1-f175.google.com (mail-yb1-f175.google.com. [209.85.219.175])
-        by smtp.gmail.com with ESMTPSA id v7sm1805263qkv.86.2021.03.31.09.43.17
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 31 Mar 2021 09:43:17 -0700 (PDT)
-Received: by mail-yb1-f175.google.com with SMTP id j2so21837183ybj.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Mar 2021 09:43:17 -0700 (PDT)
-X-Received: by 2002:a25:8712:: with SMTP id a18mr162712ybl.79.1617208996943;
- Wed, 31 Mar 2021 09:43:16 -0700 (PDT)
+        id S233946AbhCaRBn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 31 Mar 2021 13:01:43 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:20092 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S233735AbhCaRBI (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 31 Mar 2021 13:01:08 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1617210068; h=Message-ID: References: In-Reply-To: Reply-To:
+ Subject: Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=luXWFbhobJVfLtmEd8Rj4gUfk+q4LQMoS+mWmZpxdgA=;
+ b=xbgifMITgOsaVhzOi00U0+OLqj8eXiq+ZLBGo5/+Z2L7zByNw5JZngk5CZgnfxFY4cmjpKW6
+ T2EPOCutS8/qfrZQ0XlBj/lTr+h1xGOm92djBbAUzQcr/a4dB/qDlizeCqq3IRTPomqX1RFs
+ DZPqrMZ+i6bY6yqkRfOBWGq3aU8=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
+ 6064aad1e0e9c9a6b693eebd (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 31 Mar 2021 17:01:05
+ GMT
+Sender: bbhatt=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 5EE7AC433ED; Wed, 31 Mar 2021 17:01:05 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: bbhatt)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 9D642C433C6;
+        Wed, 31 Mar 2021 17:01:04 +0000 (UTC)
 MIME-Version: 1.0
-References: <20210330025345.3980086-1-dianders@chromium.org>
- <CGME20210330025417eucas1p29eca41bbcfc2550902cee87fd44b98e4@eucas1p2.samsung.com>
- <20210329195255.v2.5.I1a9275ffbde1d33ad7a3af819f5fbc0941b7ee02@changeid> <00fc2110-d30a-d8f2-b22b-a5c73b54127d@samsung.com>
-In-Reply-To: <00fc2110-d30a-d8f2-b22b-a5c73b54127d@samsung.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Wed, 31 Mar 2021 09:43:05 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=V9uMpPbXxoNd2DpvtX=nEb1RFdbZ5bV8ZGhNpOVMJtOg@mail.gmail.com>
-Message-ID: <CAD=FV=V9uMpPbXxoNd2DpvtX=nEb1RFdbZ5bV8ZGhNpOVMJtOg@mail.gmail.com>
-Subject: Re: [PATCH v2 05/14] drm/bridge: ti-sn65dsi86: Move MIPI detach() /
- unregister() to detach()
-To:     Andrzej Hajda <a.hajda@samsung.com>
-Cc:     Neil Armstrong <narmstrong@baylibre.com>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@siol.net>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Rob Clark <robdclark@chromium.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        David Airlie <airlied@linux.ie>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Steev Klimaszewski <steev@kali.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>,
-        Robert Foss <robert.foss@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Wed, 31 Mar 2021 10:01:04 -0700
+From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
+        jhugo@codeaurora.org, linux-kernel@vger.kernel.org,
+        carl.yin@quectel.com, naveen.kumar@quectel.com,
+        loic.poulain@linaro.org, abickett@codeaurora.org
+Subject: Re: [PATCH v1 0/7] MHI Emergency download and flash programmer
+ support
+Organization: Qualcomm Innovation Center, Inc.
+Reply-To: bbhatt@codeaurora.org
+Mail-Reply-To: bbhatt@codeaurora.org
+In-Reply-To: <20210331111644.GE15610@work>
+References: <1617067704-28850-1-git-send-email-bbhatt@codeaurora.org>
+ <20210331111644.GE15610@work>
+Message-ID: <6fcd439aa759d8cbc9bab1862d1d9a57@codeaurora.org>
+X-Sender: bbhatt@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Hi Mani,
+On 2021-03-31 04:16 AM, Manivannan Sadhasivam wrote:
+> On Mon, Mar 29, 2021 at 06:28:17PM -0700, Bhaumik Bhatt wrote:
+>> Allow handling EDL mode after SYS_ERROR occurs by reading the 
+>> execution
+>> environment post handling and move to power on reset state to 
+>> accommodate the
+>> scenario.
+>> Handle EDL mode properly and wait for ready instead of just exiting 
+>> from the
+>> firmware load.
+>> Allow use of the Flash Programmer execution environment as a mission 
+>> mode
+>> use case for a blank NAND power up scenario.
+>> Always attempt a wait for MHI ready state as device could be waiting 
+>> for the
+>> host to do so after pass through execution environment is seen.
+>> Introduce patch to improve state awareness and aid in debugging.
+>> 
+>> This patch series was tested on x86_64 architecture.
+>> 
+> 
+> These patches were part of a different series before. It is good that
+> you splitted the patches but you should mention that here.
+> 
+> Thanks,
+> Mani
+> 
+I will keep that in mind when submitting next time.
 
-On Wed, Mar 31, 2021 at 2:53 AM Andrzej Hajda <a.hajda@samsung.com> wrote:
->
->
-> W dniu 30.03.2021 o 04:53, Douglas Anderson pisze:
-> > The register() / attach() for MIPI happen in the bridge's
-> > attach(). That means that the inverse belongs in the bridge's
-> > detach().
->
->
-> As I commented in previous patch, it would be better to fix mipi/bridge
-> registration order in host and this driver.
->
-> Have you considered this?
+>> Bhaumik Bhatt (6):
+>>   bus: mhi: core: Rely on accurate method to determine EDL mode
+>>   bus: mhi: core: Wait for ready after an EDL firmware download
+>>   bus: mhi: core: Handle EDL mode entry appropriately
+>>   bus: mhi: core: Identify Flash Programmer as a mission mode use case
+>>   bus: mhi: core: Wait for MHI READY state in most scenarios
+>>   bus: mhi: core: Improve state strings for debug messages
+>> 
+>> Carl Yin (1):
+>>   bus: mhi: core: Add support for Flash Programmer execution 
+>> environment
+>> 
+>>  drivers/bus/mhi/core/boot.c     | 13 +++++++------
+>>  drivers/bus/mhi/core/init.c     | 34 
+>> ++++++++++++++++++----------------
+>>  drivers/bus/mhi/core/internal.h |  4 +++-
+>>  drivers/bus/mhi/core/main.c     |  3 +++
+>>  drivers/bus/mhi/core/pm.c       | 28 +++++++++++++++++++++++++---
+>>  include/linux/mhi.h             |  4 +++-
+>>  6 files changed, 59 insertions(+), 27 deletions(-)
+>> 
+>> --
+>> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
+>> Forum,
+>> a Linux Foundation Collaborative Project
+>> 
 
-Fair enough. How about I drop this patch at the moment? My series
-already has enough stuff in it right now and I don't believe anything
-in the series depends on this patch.
-
--Doug
+Thanks,
+Bhaumik
+---
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
+Forum,
+a Linux Foundation Collaborative Project
