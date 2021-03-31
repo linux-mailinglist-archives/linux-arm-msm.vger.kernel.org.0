@@ -2,57 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 40C1E34FC27
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Mar 2021 11:06:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5578734FC36
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Mar 2021 11:10:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234491AbhCaJGV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 31 Mar 2021 05:06:21 -0400
-Received: from mailout2.w1.samsung.com ([210.118.77.12]:53731 "EHLO
-        mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234492AbhCaJGL (ORCPT
+        id S234375AbhCaJJd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 31 Mar 2021 05:09:33 -0400
+Received: from mailout1.w1.samsung.com ([210.118.77.11]:55053 "EHLO
+        mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234231AbhCaJJ1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 31 Mar 2021 05:06:11 -0400
+        Wed, 31 Mar 2021 05:09:27 -0400
 Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
-        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20210331090610euoutp02e256e661d39517bcb12e1077ff38c096~xYhHlmOEI3266632666euoutp02r
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Mar 2021 09:06:10 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20210331090610euoutp02e256e661d39517bcb12e1077ff38c096~xYhHlmOEI3266632666euoutp02r
+        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20210331090925euoutp0194965e2b023be6c7ecd82407567b825b~xYj94HITY1869018690euoutp01D
+        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Mar 2021 09:09:25 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20210331090925euoutp0194965e2b023be6c7ecd82407567b825b~xYj94HITY1869018690euoutp01D
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1617181570;
-        bh=ffn6FNtzSxpCzKKziwCDBKV/FNlSkM5otmYsYdGu7Aw=;
+        s=mail20170921; t=1617181765;
+        bh=6dZgJ7+u2oNHcSEqdGB5HmhKWoHD6aPUWlKb9K/uY5U=;
         h=Date:Subject:To:Cc:From:In-Reply-To:References:From;
-        b=o9rMcvVaaqFnmqC0sTEtJyVgTTW+lyTBH+3oQfE2Chn4lhJqorfx5HnUQ73jqAVxg
-         6VVv6fwg+yt+QHdt39PLcgYR4XWbCe6ythTTR81QxJkri95m3RcxBQ0tSY3IKeAC0A
-         unhtBu9F73HT6G0BgNgjKkosKuz14NbRgiH+Tbb4=
+        b=pzv6QGI01PT8D5FTnWIMORywVGNptAx/h/Ew3EGoAU8OiPDylsJF6QU9uQoAmCgwZ
+         CN5jb1XnhTvc/NCMvyMSLuDfEtJVh35Fe/Qu8GwNZG0cPNwFQSQow4vuDk1ZH5KGXK
+         ExN2KMIq3DoCpYhFA8yXVZBtAYwJgCZ5g6dDiUn0=
 Received: from eusmges3new.samsung.com (unknown [203.254.199.245]) by
         eucas1p2.samsung.com (KnoxPortal) with ESMTP id
-        20210331090609eucas1p299156a55a7e4f17448dd05bc570500fb~xYhHMBDVA1890118901eucas1p27;
-        Wed, 31 Mar 2021 09:06:09 +0000 (GMT)
+        20210331090925eucas1p2bda3e34916b7508729c2a9e4803c9240~xYj9VWhyZ0330803308eucas1p2x;
+        Wed, 31 Mar 2021 09:09:25 +0000 (GMT)
 Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
-        eusmges3new.samsung.com (EUCPMTA) with SMTP id 78.4A.09439.18B34606; Wed, 31
-        Mar 2021 10:06:09 +0100 (BST)
-Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
+        eusmges3new.samsung.com (EUCPMTA) with SMTP id AB.EA.09439.54C34606; Wed, 31
+        Mar 2021 10:09:25 +0100 (BST)
+Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
         eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
-        20210331090609eucas1p25db032276eebb17b2c3564af3ab76c42~xYhGtZvni0598705987eucas1p2u;
-        Wed, 31 Mar 2021 09:06:09 +0000 (GMT)
+        20210331090924eucas1p2dc32b8a29be69272125bb0c16d64f865~xYj8zCGQ80378603786eucas1p2k;
+        Wed, 31 Mar 2021 09:09:24 +0000 (GMT)
 Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
-        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
-        20210331090609eusmtrp218be59a465ae840e350af8559cf8d4d6~xYhGsT_Ip0248902489eusmtrp2H;
-        Wed, 31 Mar 2021 09:06:09 +0000 (GMT)
-X-AuditID: cbfec7f5-c03ff700000024df-2f-60643b81fe35
-Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
-        eusmgms1.samsung.com (EUCPMTA) with SMTP id 8A.4D.08705.18B34606; Wed, 31
-        Mar 2021 10:06:09 +0100 (BST)
-Received: from localhost (unknown [106.210.131.79]) by eusmtip2.samsung.com
+        eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
+        20210331090924eusmtrp13f37a641a4fb089b626a5d0483cc7891~xYj8yEwgP2592125921eusmtrp1S;
+        Wed, 31 Mar 2021 09:09:24 +0000 (GMT)
+X-AuditID: cbfec7f5-c03ff700000024df-e8-60643c457ae8
+Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
+        eusmgms1.samsung.com (EUCPMTA) with SMTP id C8.ED.08705.44C34606; Wed, 31
+        Mar 2021 10:09:24 +0100 (BST)
+Received: from localhost (unknown [106.210.131.79]) by eusmtip1.samsung.com
         (KnoxPortal) with ESMTPA id
-        20210331090600eusmtip258dc8af4e87fdcbe64c487a5dc3ecbc3~xYg_x6AKQ1519215192eusmtip2M;
-        Wed, 31 Mar 2021 09:06:00 +0000 (GMT)
-Message-ID: <b308b17c-37fa-220d-d76b-9274054597e7@samsung.com>
-Date:   Wed, 31 Mar 2021 11:05:59 +0200
+        20210331090921eusmtip11f3d876c79f7500ba5e10fdb94d4188f~xYj55otVO1707417074eusmtip1P;
+        Wed, 31 Mar 2021 09:09:21 +0000 (GMT)
+Message-ID: <083f59ab-b67e-f574-12e7-5ef42f443e4e@samsung.com>
+Date:   Wed, 31 Mar 2021 11:09:20 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:88.0)
         Gecko/20100101 Thunderbird/88.0
-Subject: Re: [PATCH v2 01/14] drm/bridge: Fix the stop condition of
- drm_bridge_chain_pre_enable()
+Subject: Re: [PATCH v2 02/14] drm/bridge: ti-sn65dsi86: Simplify refclk
+ handling
 Content-Language: en-GB
 To:     Douglas Anderson <dianders@chromium.org>,
         Neil Armstrong <narmstrong@baylibre.com>,
@@ -61,104 +61,109 @@ To:     Douglas Anderson <dianders@chromium.org>,
         Jernej Skrabec <jernej.skrabec@siol.net>,
         Sam Ravnborg <sam@ravnborg.org>
 Cc:     robdclark@chromium.org, dri-devel@lists.freedesktop.org,
-        Thomas Zimmermann <tzimmermann@suse.de>,
         David Airlie <airlied@linux.ie>, linux-arm-msm@vger.kernel.org,
         Steev Klimaszewski <steev@kali.org>,
         Stephen Boyd <swboyd@chromium.org>,
         Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>,
-        Boris Brezillon <boris.brezillon@collabora.com>,
+        Robert Foss <robert.foss@linaro.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         linux-kernel@vger.kernel.org
 From:   Andrzej Hajda <a.hajda@samsung.com>
-In-Reply-To: <20210329195255.v2.1.If62a003f76a2bc4ccc6c53565becc05d2aad4430@changeid>
+In-Reply-To: <20210329195255.v2.2.Ic9c04f960190faad5290738b2a35d73661862735@changeid>
 Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA01SbUxbVRj23Ht7ua2WHAqEE/CLzm1hiaAyzFGQzC92B8YQPxZlMbQpF0ZW
-        YLbDwcgCoyuwKmPFRWlLMt1wq8CGg5YBwoD+sCsdFelg1aDVoePDDUQoBHRD2ttF/j15Pt7n
-        fU8OQ0rWBNFMfuEhTlUoV0ppEdX53arr6WPJObJnBuw7cK3LQWBn/xyFndeHCDx8fpDGN3zz
-        NB5bmSGx484YhU/om0Kwvn84BLt7GmlsO7kPj69Okti8agW4WpeCV29Wkdg+8QeBLXf0gl1h
-        7LxHG8KaKn6g2K6fmwBrqjEI2HO9MwTbeNZDstdOjRLsxHgvzV5Z/lXAej+2E2zTZ2M0O1D7
-        KcV2OMvYxfbHM0OzRCk5nDL/I06VkCoT7W8e333whKhkRucDFcDM6ICQQXAnWvL9JtABESOB
-        ZoB+avlE4BckcAkgwy0ZLywCdGP9DP0g4a4eInjhAkAa7dfB+PRGvHUu4BLDVFR7aQT4MQW3
-        IqetIciHIYfhd8qPI6EMNXsuEH4cDhWo8ux0oJqEUahyiR8aAe8D1KKfDNSRsIVEs39dCyRo
-        GIfudfwYmCqE76K6lT6CTz+BNFYT6Q8gOCtEnVoLwS/+GvL2Xw3hcTiatVuC+FG03n0m6ClH
-        XvPxYLgGIOs33SQvJKMJ19pGG7PREIfaehJ4+mU0OtQaoBEMRZ67YfwOoai+83OSp8WopkrC
-        u2ORd9gaHBiFvhrx0aeA1LjpXYyb7jduusb4f+8XgGoGUVyxuiCPUycWcofj1fICdXFhXryi
-        qKAdbHxP5327rwuYZxfibYBggA0ghpRGiMMH5DKJOEdeeoRTFWWripWc2gZiGEoaJe6xtmZL
-        YJ78EHeA4w5yqgcqwQijK4g3+uJ819Mi6tOnRmIkb5eOZ6QlNrrf+XOqbMqy6+He+NjBdE3Z
-        C1ZyvX771YujTPL5KfTqFmpBzb0n3q0yfj/X1va65rZ7yLjXnqA4/RxwLa4cycL3sn2a2LvH
-        t81J3vdOZ6Rm1jdM7Du3nLsYXXUluT9J2HGgIVoT2Qd/6dZ6J7cvb/kwXVZSbpnfpk0cUF4e
-        0X9bCcGxbuaRp0xjlxnsVijkVXg611MXucfxpu5o3ek20UmvihC/kjF4dCkzxVT9fPs/1rC0
-        D0oNSctfVmT/m39R+WJX1vCttxbyLznK19r7mm7vrC7Ke4ne21MS47qZ+3fK1idF1OHHxLUG
-        Q9Keh6SUer/82R2kSi3/D81VO4cNBAAA
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFuplleLIzCtJLcpLzFFi42I5/e/4Pd1G65QEg2MvWCx6z51ksji9/x2L
-        xekzp5gszi47yGZx5et7Nour318yW5x8c5XFonPiEnaLifvPsltc3jWHzeJQX7TFtZ+PmS1W
-        /NzKaNHeZWPx83obs8XxO0+ZLLa8mcjqIOjx/kYru8fshossHjvuLmH0mN0xk9Vj8Z6XTB5z
-        Ft1g9jgx4RKTx51re9g8tn97wOpxv/s4k8eSaVfZPA70Tmbx2Hy62uPzJrkAvig9m6L80pJU
-        hYz84hJbpWhDCyM9Q0sLPSMTSz1DY/NYKyNTJX07m5TUnMyy1CJ9uwS9jFXX3As6uSpedn1l
-        bGBcwdHFyMkhIWAicbn9FFMXIxeHkMBSRonzFxtZIRLiErvnv2WGsIUl/lzrYoMoesYocWnn
-        BXaQBK+AnUTvuguMIDaLgKrE6UMz2CDighInZz5hAbFFBRIkzn6YxwRiCwskSzQtegG2gBlo
-        QdOXlawgQ0UEGpgkLt1dDHYGs8BqZok9326DVQkJ3GaU6OngAbHZBDQl/m6+CbaBUyBUov/7
-        XiaISWYSXVu7GCFseYnmrbOZJzAKzUJyyCwkC2chaZmFpGUBI8sqRpHU0uLc9NxiQ73ixNzi
-        0rx0veT83E2MwHSx7djPzTsY5736qHeIkYmD8RCjBAezkgiv8IHEBCHelMTKqtSi/Pii0pzU
-        4kOMpsDQmMgsJZqcD0xYeSXxhmYGpoYmZpYGppZmxkrivFvnrokXEkhPLEnNTk0tSC2C6WPi
-        4JRqYFL9ptToG1lzMJPltIHLpKnCK46mTjb5/r9+10uVW2/1nmVMUNzKuWTqi0NnNZPWMipU
-        HvzAo71OhGvfp4rDM55dyrCMbpY693im3zyjv58Kijzvi3SLHnjVnN5xSVGB/5zav6mNhyyW
-        VphPPSmhuNjW78PEUz9r+C+cXeO8tzRqZ2Ex3+TSIIZZs9hcLaM5Xgtw/cs8+etrycGFM0Sn
-        mPy9sr7g8UJBxbyGX4L2Ke65Ei5G0Vt87y2ZeD995v8L76wl7d4/zarhufBps7va1WfMez/9
-        Pd99nc1vlhB3RrmTINOv9zFXtdS/ywY33EueFWu0uOzHexXTP2pyjEY7P21UknWVUgj3ZF40
-        XT4nPkqJpTgj0VCLuag4EQDBcjMVoAMAAA==
-X-CMS-MailID: 20210331090609eucas1p25db032276eebb17b2c3564af3ab76c42
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrLKsWRmVeSWpSXmKPExsWy7djPc7quNikJBt/28Fn0njvJZHF6/zsW
+        i7PLDrJZXPn6ns3i6veXzBYn31xlseicuITdYuL+s+wWl3fNYbM41Bdtce3nY2aLT7MeMlus
+        +LmV0aK9y8bi5/U2Zovjd54yOQh4vL/Ryu4xu+Eii8fsjpmsHov3vGTymLPoBrPHiQmXmDzu
+        XNvD5rH92wNWj/vdx5k8lky7yuZxoHcyi8fnTXIBPFFcNimpOZllqUX6dglcGT/m9jMV7OGt
+        WHz6L3MD42zuLkZODgkBE4ltizcxdjFycQgJrGCUeHqtjQ3C+cIosb6llRXC+cwosbFvNRtM
+        S/OMd1BVyxklFtxazAThvGCUmHN1F1gVr4CdxJ/vS5i7GDk4WARUJe4eKYAIC0qcnPmEBcQW
+        FUiQWHVjOROILSwQJDHxzBVWEJtZQFyi6ctKsM0iAv8YJVZPfAy2gFngM5PEpymHwDrYBDQl
+        /m6+CbaMUyBU4vqtJSwQ3fISzVtnM4M0SAjc4pT4/uE3K8TdLhIXJ15ghrCFJV4d38IOYctI
+        nJ7cwwJh10vcX9EC1dzBKLF1w06oBmuJO+d+sYG8wwy0ef0ufYiwo0T7hTZWkLCEAJ/EjbeC
+        EDfwSUzaNp0ZIswr0dEmBFGtKHH/7FaogeISSy98ZZvAqDQLKVxmIfl/FpJvZiHsXcDIsopR
+        PLW0ODc9tdg4L7Vcrzgxt7g0L10vOT93EyMwRZ7+d/zrDsYVrz7qHWJk4mA8xCjBwawkwit8
+        IDFBiDclsbIqtSg/vqg0J7X4EKM0B4uSOO+urWvihQTSE0tSs1NTC1KLYLJMHJxSDUxlIXFl
+        Kbrz41jmtkyfHL+UkVEh9OmnumsNuo2bNv9ruxNREjH5w5v5UR1OZf4eBa8TXNI/Tn+kt/jg
+        HQkfXtF50sWz/yxq+F7560OoK6/Gu+ldV6wib65Yv11nVqF6prrWBXedJUXPbhX6Vc19nb3/
+        zgJ5l27Gc01zNlwQ+za1Zz3ro/OBMx/+kJ3sq3JRQ/F7o/XWwu6q1F72Aun9N1xvMDX2XTzr
+        zlvTVnnK8nFbEodmRvzHZ49u+13f5LbYY67PovhfTsfOrpTuP/V5hu1h15Nz69duULVf8F+3
+        JzYwgPUqW9kfocVSm+RyIrze/iviZ2IQsdkrZhntlNazvlFH3nBD4gGznxPcJWq3/1ZiKc5I
+        NNRiLipOBADwpogEAAQAAA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrPIsWRmVeSWpSXmKPExsVy+t/xu7ouNikJBvuOalr0njvJZHF6/zsW
+        i7PLDrJZXPn6ns3i6veXzBYn31xlseicuITdYuL+s+wWl3fNYbM41Bdtce3nY2aLT7MeMlus
+        +LmV0aK9y8bi5/U2Zovjd54yOQh4vL/Ryu4xu+Eii8fsjpmsHov3vGTymLPoBrPHiQmXmDzu
+        XNvD5rH92wNWj/vdx5k8lky7yuZxoHcyi8fnTXIBPFF6NkX5pSWpChn5xSW2StGGFkZ6hpYW
+        ekYmlnqGxuaxVkamSvp2NimpOZllqUX6dgl6GT/m9jMV7OGtWHz6L3MD42zuLkZODgkBE4nm
+        Ge/Yuhi5OIQEljJKXLm2ix0iIS6xe/5bZghbWOLPtS6oomeMEtPaX7CBJHgF7CT+fF8CVMTB
+        wSKgKnH3SAFEWFDi5MwnLCC2qECCxNkP85hAbGGBIImJZ66wgtjMQPObvqxkBZkpItDAJHHp
+        7mImEIdZ4CuTRMurpWBXCAncZpTY3K4EYrMJaEr83XwTbDGnQKjE9VtLWCAmmUl0be1ihLDl
+        JZq3zmaewCg0C8khs5AsnIWkZRaSlgWMLKsYRVJLi3PTc4sN9YoTc4tL89L1kvNzNzECU8K2
+        Yz8372Cc9+qj3iFGJg7GQ4wSHMxKIrzCBxIThHhTEiurUovy44tKc1KLDzGaAgNjIrOUaHI+
+        MCnllcQbmhmYGpqYWRqYWpoZK4nzbp27Jl5IID2xJDU7NbUgtQimj4mDU6qBKW4/0+WHZTdv
+        z58tOfnek51vlv2esfV54ryzqXe6e+5seTA1/Cnn4U07fKvkt+i/2spiea0+aNnBL2nb1k+V
+        1f6RuClWw8tmoiKXY4eGx8Em6fzm5vtPXt0vcc/pV7uyp/zu4sj5f3ntr64OfJF9bf6M5+K/
+        zHflHHskInGN72yKjvGCdr3bF2zD1jBMm/3Mz3zqvD2LGMs3qi3WFZ3w/+bfJxdfp+znMhC8
+        mt0g8nFm/2fN+Iifqxbx9FTkrfl4NyHxmVOK7JFeN6tE7SkXJoZ8/fjoh497U0/PrPVZzzv8
+        Tay/rT36dYPg8ZyLzyclt1xfXzFZ/c+Fb/cPrfBMaph18NI33aMmMwrMqve2OT3aq8RSnJFo
+        qMVcVJwIAMtR7l2SAwAA
+X-CMS-MailID: 20210331090924eucas1p2dc32b8a29be69272125bb0c16d64f865
 X-Msg-Generator: CA
 Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20210330025413eucas1p1613dea9b53bcb06d93eb210c6dfd1254
+X-RootMTR: 20210330025415eucas1p1352aa392523853fe5207481597f3c32e
 X-EPHeader: CA
 CMS-TYPE: 201P
-X-CMS-RootMailID: 20210330025413eucas1p1613dea9b53bcb06d93eb210c6dfd1254
+X-CMS-RootMailID: 20210330025415eucas1p1352aa392523853fe5207481597f3c32e
 References: <20210330025345.3980086-1-dianders@chromium.org>
-        <CGME20210330025413eucas1p1613dea9b53bcb06d93eb210c6dfd1254@eucas1p1.samsung.com>
-        <20210329195255.v2.1.If62a003f76a2bc4ccc6c53565becc05d2aad4430@changeid>
+        <CGME20210330025415eucas1p1352aa392523853fe5207481597f3c32e@eucas1p1.samsung.com>
+        <20210329195255.v2.2.Ic9c04f960190faad5290738b2a35d73661862735@changeid>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Douglas,
 
 W dniu 30.03.2021 o 04:53, Douglas Anderson pisze:
-> The drm_bridge_chain_pre_enable() is not the proper opposite of
-> drm_bridge_chain_post_disable(). It continues along the chain to
-> _before_ the starting bridge. Let's fix that.
+> The clock framework makes it simple to deal with an optional clock.
+> You can call clk_get_optional() and if the clock isn't specified it'll
+> just return NULL without complaint. It's valid to pass NULL to
+> enable/disable/prepare/unprepare. Let's make use of this to simplify
+> things a tiny bit.
 >
-> Fixes: 05193dc38197 ("drm/bridge: Make the bridge chain a double-linked list")
 > Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> ---
->
-> (no changes since v1)
->
->   drivers/gpu/drm/drm_bridge.c | 3 +++
->   1 file changed, 3 insertions(+)
->
-> diff --git a/drivers/gpu/drm/drm_bridge.c b/drivers/gpu/drm/drm_bridge.c
-> index 64f0effb52ac..044acd07c153 100644
-> --- a/drivers/gpu/drm/drm_bridge.c
-> +++ b/drivers/gpu/drm/drm_bridge.c
-> @@ -522,6 +522,9 @@ void drm_bridge_chain_pre_enable(struct drm_bridge *bridge)
->   	list_for_each_entry_reverse(iter, &encoder->bridge_chain, chain_node) {
->   		if (iter->funcs->pre_enable)
->   			iter->funcs->pre_enable(iter);
-> +
-> +		if (iter == bridge)
-> +			break;
-
-
-Looking at the bridge chaining code always makes me sick :) but beside 
-this the change looks correct, and follows 
-drm_atomic_bridge_chain_pre_enable.
-
+> Reviewed-by: Robert Foss <robert.foss@linaro.org>
+> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+> Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 Reviewed-by: Andrzej Hajda <a.hajda@samsung.com>
 
 Regards
 Andrzej
-
+> ---
+>
+> Changes in v2:
+> - Removed 2nd paragraph in commit message.
+>
+>   drivers/gpu/drm/bridge/ti-sn65dsi86.c | 11 +++--------
+>   1 file changed, 3 insertions(+), 8 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+> index 88df4dd0f39d..96fe8f2c0ea9 100644
+> --- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+> +++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+> @@ -1275,14 +1275,9 @@ static int ti_sn_bridge_probe(struct i2c_client *client,
+>   		return ret;
 >   	}
->   }
->   EXPORT_SYMBOL(drm_bridge_chain_pre_enable);
+>   
+> -	pdata->refclk = devm_clk_get(pdata->dev, "refclk");
+> -	if (IS_ERR(pdata->refclk)) {
+> -		ret = PTR_ERR(pdata->refclk);
+> -		if (ret == -EPROBE_DEFER)
+> -			return ret;
+> -		DRM_DEBUG_KMS("refclk not found\n");
+> -		pdata->refclk = NULL;
+> -	}
+> +	pdata->refclk = devm_clk_get_optional(pdata->dev, "refclk");
+> +	if (IS_ERR(pdata->refclk))
+> +		return PTR_ERR(pdata->refclk);
+>   
+>   	ret = ti_sn_bridge_parse_dsi_host(pdata);
+>   	if (ret)
