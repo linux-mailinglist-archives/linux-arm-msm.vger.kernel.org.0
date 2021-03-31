@@ -2,149 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3F01E3500E5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Mar 2021 15:05:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B482F3500F8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Mar 2021 15:10:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235219AbhCaNE7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 31 Mar 2021 09:04:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55772 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235545AbhCaNE4 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 31 Mar 2021 09:04:56 -0400
-Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93BBDC061574
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Mar 2021 06:04:56 -0700 (PDT)
-Received: by mail-pl1-x62d.google.com with SMTP id y2so7865302plg.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Mar 2021 06:04:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=Y/W9j52bRCr34F2U4wtRCQZSzvkSWXnejRIXqaUQIjU=;
-        b=TJ/3dyaU8Ll0AQIdrQeYIH9i/ZllA53/kLp25rJCKy68x3rs/fGVAZPXcFfip0dnUm
-         93R3Rw63Qrmsny9GVkEcSfd4yux63lxs915vktqN45dJisJTUbLi/ktSwHamrfx7CZai
-         n5Fdf9hJfR9/G3G70ICUARXlzFdJHqgN4VgTa9Mn7tpyMXXz+rRbJFLGTFNL62flWNeO
-         M1GZ48NRdYY0y7ARgtLjgls7xOf1Ldvb3efRYhHr6omFe+jow2tStmVmYYadKWmE4NLO
-         TaggZwIPRxfSGS+rDLur7P8PP+hmhubjaHUMVJ0/iJ8+h2rQ8EXniYgOVfoiDUoLlUau
-         ckIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Y/W9j52bRCr34F2U4wtRCQZSzvkSWXnejRIXqaUQIjU=;
-        b=b909Z3W18JassefgE4ByUTRDks4L3d406NcNvahEkWMAubvxAaoTTg9LGYiOVEb9zJ
-         ameHJ5Q7gSI7LZoaN+R/I+JQbzH1qHI4bIDpkCf0Sjh4xj7TQbNHrIaoOLbQQ26/7Wrz
-         zo4jdsl3HfNzSY9jKmSQGqR+8t4R+91tBxJ0CI0IsYBes6v3DYx3JHVEgF1CwyI6/8GV
-         rQLoyqaEaIE0YijauwIvSosidcQGd3dQWAwbvAFmRu66jE4sIjX4HXMECSKl+nTOJk9U
-         OTtU3ixkw13Xevy1Og8pX8/cifDqHlcVqUc0+UGbTZAjgtAkgXOmkEHMSHI8JeTi7M3D
-         FKXg==
-X-Gm-Message-State: AOAM531FJEUIlN82ESSPa3mAt91nhIQm3UGtBqDndL93whJIz1+ufyzN
-        +KCc7oRUC/ghgGQflYCsRcO1
-X-Google-Smtp-Source: ABdhPJzfgUA7Zjbr70RsfGbELgXB1KoVfBYP3wj74cuoM90t+cKMJaJcT9+ADV9hS6SKMimCLM8tig==
-X-Received: by 2002:a17:902:aa87:b029:e5:e1fc:be6 with SMTP id d7-20020a170902aa87b02900e5e1fc0be6mr3210942plr.4.1617195895785;
-        Wed, 31 Mar 2021 06:04:55 -0700 (PDT)
-Received: from work ([103.77.37.129])
-        by smtp.gmail.com with ESMTPSA id t22sm2308006pjw.54.2021.03.31.06.04.52
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 31 Mar 2021 06:04:55 -0700 (PDT)
-Date:   Wed, 31 Mar 2021 18:34:51 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Bhaumik Bhatt <bbhatt@codeaurora.org>
-Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
-        jhugo@codeaurora.org, linux-kernel@vger.kernel.org,
-        carl.yin@quectel.com, naveen.kumar@quectel.com,
-        loic.poulain@linaro.org
-Subject: Re: [PATCH v5 2/2] bus: mhi: core: Move to polling method to wait
- for MHI ready
-Message-ID: <20210331130451.GJ15610@work>
-References: <1617047583-12104-1-git-send-email-bbhatt@codeaurora.org>
- <1617047583-12104-3-git-send-email-bbhatt@codeaurora.org>
+        id S235314AbhCaNJy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 31 Mar 2021 09:09:54 -0400
+Received: from foss.arm.com ([217.140.110.172]:41848 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S235733AbhCaNJp (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 31 Mar 2021 09:09:45 -0400
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 55658D6E;
+        Wed, 31 Mar 2021 06:09:44 -0700 (PDT)
+Received: from [10.57.24.208] (unknown [10.57.24.208])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 3D9523F694;
+        Wed, 31 Mar 2021 06:09:42 -0700 (PDT)
+Subject: Re: [PATCH 16/18] iommu: remove DOMAIN_ATTR_DMA_USE_FLUSH_QUEUE
+To:     Will Deacon <will@kernel.org>
+Cc:     freedreno@lists.freedesktop.org, kvm@vger.kernel.org,
+        Michael Ellerman <mpe@ellerman.id.au>,
+        linuxppc-dev@lists.ozlabs.org, dri-devel@lists.freedesktop.org,
+        Li Yang <leoyang.li@nxp.com>, iommu@lists.linux-foundation.org,
+        netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        virtualization@lists.linux-foundation.org,
+        David Woodhouse <dwmw2@infradead.org>,
+        Christoph Hellwig <hch@lst.de>,
+        linux-arm-kernel@lists.infradead.org
+References: <20210316153825.135976-1-hch@lst.de>
+ <20210316153825.135976-17-hch@lst.de>
+ <20210330131149.GP5908@willie-the-truck>
+ <a6952aa7-4d7e-54f0-339e-e15f88596dcc@arm.com>
+ <20210330135801.GA6187@willie-the-truck>
+ <578d6aa5-4239-f5d7-2e9f-686b18e52bba@arm.com>
+ <20210331114947.GA7626@willie-the-truck>
+From:   Robin Murphy <robin.murphy@arm.com>
+Message-ID: <ef895942-e115-7878-ab86-37e8a1614df5@arm.com>
+Date:   Wed, 31 Mar 2021 14:09:37 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:78.0) Gecko/20100101
+ Thunderbird/78.9.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1617047583-12104-3-git-send-email-bbhatt@codeaurora.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+In-Reply-To: <20210331114947.GA7626@willie-the-truck>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Mar 29, 2021 at 12:53:03PM -0700, Bhaumik Bhatt wrote:
-> In certain devices, it is likely that there is no incoming MHI
-> interrupt for a transition to MHI READY state. One such example
-> is the move from Pass Through to an SBL or AMSS execution
-> environment. In order to facilitate faster bootup times as there
-> is no need to wait until timeout_ms completes, MHI host can poll
-> every 25 milliseconds to check if device has entered MHI READY
-> until a maximum timeout of twice the timeout_ms is reached.
+On 2021-03-31 12:49, Will Deacon wrote:
+> On Tue, Mar 30, 2021 at 05:28:19PM +0100, Robin Murphy wrote:
+>> On 2021-03-30 14:58, Will Deacon wrote:
+>>> On Tue, Mar 30, 2021 at 02:19:38PM +0100, Robin Murphy wrote:
+>>>> On 2021-03-30 14:11, Will Deacon wrote:
+>>>>> On Tue, Mar 16, 2021 at 04:38:22PM +0100, Christoph Hellwig wrote:
+>>>>>> From: Robin Murphy <robin.murphy@arm.com>
+>>>>>>
+>>>>>> Instead make the global iommu_dma_strict paramete in iommu.c canonical by
+>>>>>> exporting helpers to get and set it and use those directly in the drivers.
+>>>>>>
+>>>>>> This make sure that the iommu.strict parameter also works for the AMD and
+>>>>>> Intel IOMMU drivers on x86.  As those default to lazy flushing a new
+>>>>>> IOMMU_CMD_LINE_STRICT is used to turn the value into a tristate to
+>>>>>> represent the default if not overriden by an explicit parameter.
+>>>>>>
+>>>>>> Signed-off-by: Robin Murphy <robin.murphy@arm.com>.
+>>>>>> [ported on top of the other iommu_attr changes and added a few small
+>>>>>>     missing bits]
+>>>>>> Signed-off-by: Christoph Hellwig <hch@lst.de>
+>>>>>> ---
+>>>>>>     drivers/iommu/amd/iommu.c                   | 23 +-------
+>>>>>>     drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 50 +---------------
+>>>>>>     drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h |  1 -
+>>>>>>     drivers/iommu/arm/arm-smmu/arm-smmu.c       | 27 +--------
+>>>>>>     drivers/iommu/dma-iommu.c                   |  9 +--
+>>>>>>     drivers/iommu/intel/iommu.c                 | 64 ++++-----------------
+>>>>>>     drivers/iommu/iommu.c                       | 27 ++++++---
+>>>>>>     include/linux/iommu.h                       |  4 +-
+>>>>>>     8 files changed, 40 insertions(+), 165 deletions(-)
+>>>>>
+>>>>> I really like this cleanup, but I can't help wonder if it's going in the
+>>>>> wrong direction. With SoCs often having multiple IOMMU instances and a
+>>>>> distinction between "trusted" and "untrusted" devices, then having the
+>>>>> flush-queue enabled on a per-IOMMU or per-domain basis doesn't sound
+>>>>> unreasonable to me, but this change makes it a global property.
+>>>>
+>>>> The intent here was just to streamline the existing behaviour of stuffing a
+>>>> global property into a domain attribute then pulling it out again in the
+>>>> illusion that it was in any way per-domain. We're still checking
+>>>> dev_is_untrusted() before making an actual decision, and it's not like we
+>>>> can't add more factors at that point if we want to.
+>>>
+>>> Like I say, the cleanup is great. I'm just wondering whether there's a
+>>> better way to express the complicated logic to decide whether or not to use
+>>> the flush queue than what we end up with:
+>>>
+>>> 	if (!cookie->fq_domain && (!dev || !dev_is_untrusted(dev)) &&
+>>> 	    domain->ops->flush_iotlb_all && !iommu_get_dma_strict())
+>>>
+>>> which is mixing up globals, device properties and domain properties. The
+>>> result is that the driver code ends up just using the global to determine
+>>> whether or not to pass IO_PGTABLE_QUIRK_NON_STRICT to the page-table code,
+>>> which is a departure from the current way of doing things.
+>>
+>> But previously, SMMU only ever saw the global policy piped through the
+>> domain attribute by iommu_group_alloc_default_domain(), so there's no
+>> functional change there.
 > 
-> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
-> ---
->  drivers/bus/mhi/core/pm.c | 32 +++++++++++++++-----------------
->  1 file changed, 15 insertions(+), 17 deletions(-)
+> For DMA domains sure, but I don't think that's the case for unmanaged
+> domains such as those used by VFIO.
+
+Eh? This is only relevant to DMA domains anyway. Flush queues are part 
+of the IOVA allocator that VFIO doesn't even use. It's always been the 
+case that unmanaged domains only use strict invalidation.
+
+>> Obviously some of the above checks could be factored out into some kind of
+>> iommu_use_flush_queue() helper that IOMMU drivers can also call if they need
+>> to keep in sync. Or maybe we just allow iommu-dma to set
+>> IO_PGTABLE_QUIRK_NON_STRICT directly via iommu_set_pgtable_quirks() if we're
+>> treating that as a generic thing now.
 > 
-> diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
-> index 681960c..dcc7fe0 100644
-> --- a/drivers/bus/mhi/core/pm.c
-> +++ b/drivers/bus/mhi/core/pm.c
-> @@ -153,34 +153,32 @@ static void mhi_toggle_dev_wake(struct mhi_controller *mhi_cntrl)
->  /* Handle device ready state transition */
->  int mhi_ready_state_transition(struct mhi_controller *mhi_cntrl)
->  {
-> -	void __iomem *base = mhi_cntrl->regs;
->  	struct mhi_event *mhi_event;
->  	enum mhi_pm_state cur_state;
->  	struct device *dev = &mhi_cntrl->mhi_dev->dev;
-> -	u32 reset = 1, ready = 0;
-> +	u32 interval_us = 25000; /* poll register field every 25 milliseconds */
->  	int ret, i;
->  
-> -	/* Wait for RESET to be cleared and READY bit to be set by the device */
-> -	wait_event_timeout(mhi_cntrl->state_event,
-> -			   MHI_PM_IN_FATAL_STATE(mhi_cntrl->pm_state) ||
-> -			   mhi_read_reg_field(mhi_cntrl, base, MHICTRL,
-> -					      MHICTRL_RESET_MASK,
-> -					      MHICTRL_RESET_SHIFT, &reset) ||
-> -			   mhi_read_reg_field(mhi_cntrl, base, MHISTATUS,
-> -					      MHISTATUS_READY_MASK,
-> -					      MHISTATUS_READY_SHIFT, &ready) ||
-> -			   (!reset && ready),
-> -			   msecs_to_jiffies(mhi_cntrl->timeout_ms));
-> -
->  	/* Check if device entered error state */
->  	if (MHI_PM_IN_FATAL_STATE(mhi_cntrl->pm_state)) {
->  		dev_err(dev, "Device link is not accessible\n");
->  		return -EIO;
->  	}
->  
-> -	/* Timeout if device did not transition to ready state */
-> -	if (reset || !ready) {
-> -		dev_err(dev, "Device Ready timeout\n");
-> +	/* Wait for RESET to be cleared and READY bit to be set by the device */
-> +	ret = mhi_poll_reg_field(mhi_cntrl, mhi_cntrl->regs, MHICTRL,
-> +				 MHICTRL_RESET_MASK, MHICTRL_RESET_SHIFT, 0,
-> +				 interval_us);
-> +	if (ret) {
-> +		dev_err(dev, "Device failed to clear MHI Reset\n");
-> +		return -ETIMEDOUT;
+> I think a helper that takes a domain would be a good starting point.
 
-You should return the actual error code since there are couple of error
-paths.
+You mean device, right? The one condition we currently have is at the 
+device level, and there's really nothing inherent to the domain itself 
+that matters (since the type is implicitly IOMMU_DOMAIN_DMA to even care 
+about this).
 
-Thanks,
-Mani
+Another idea that's just come to mind is now that IOMMU_DOMAIN_DMA has a 
+standard meaning, maybe we could split out a separate 
+IOMMU_DOMAIN_DMA_STRICT type such that it can all propagate from 
+iommu_get_def_domain_type()? That feels like it might be quite 
+promising, but I'd still do it as an improvement on top of this patch, 
+since it's beyond just cleaning up the abuse of domain attributes to 
+pass a command-line option around.
 
-> +	}
-> +
-> +	ret = mhi_poll_reg_field(mhi_cntrl, mhi_cntrl->regs, MHISTATUS,
-> +				 MHISTATUS_READY_MASK, MHISTATUS_READY_SHIFT, 1,
-> +				 interval_us);
-> +	if (ret) {
-> +		dev_err(dev, "Device failed to enter MHI Ready\n");
->  		return -ETIMEDOUT;
->  	}
->  
-> -- 
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
-> 
+Robin.
