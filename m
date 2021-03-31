@@ -2,138 +2,147 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B482F3500F8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Mar 2021 15:10:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 33C70350120
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Mar 2021 15:21:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235314AbhCaNJy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 31 Mar 2021 09:09:54 -0400
-Received: from foss.arm.com ([217.140.110.172]:41848 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S235733AbhCaNJp (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 31 Mar 2021 09:09:45 -0400
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 55658D6E;
-        Wed, 31 Mar 2021 06:09:44 -0700 (PDT)
-Received: from [10.57.24.208] (unknown [10.57.24.208])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 3D9523F694;
-        Wed, 31 Mar 2021 06:09:42 -0700 (PDT)
-Subject: Re: [PATCH 16/18] iommu: remove DOMAIN_ATTR_DMA_USE_FLUSH_QUEUE
-To:     Will Deacon <will@kernel.org>
-Cc:     freedreno@lists.freedesktop.org, kvm@vger.kernel.org,
-        Michael Ellerman <mpe@ellerman.id.au>,
-        linuxppc-dev@lists.ozlabs.org, dri-devel@lists.freedesktop.org,
-        Li Yang <leoyang.li@nxp.com>, iommu@lists.linux-foundation.org,
-        netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        virtualization@lists.linux-foundation.org,
-        David Woodhouse <dwmw2@infradead.org>,
-        Christoph Hellwig <hch@lst.de>,
-        linux-arm-kernel@lists.infradead.org
-References: <20210316153825.135976-1-hch@lst.de>
- <20210316153825.135976-17-hch@lst.de>
- <20210330131149.GP5908@willie-the-truck>
- <a6952aa7-4d7e-54f0-339e-e15f88596dcc@arm.com>
- <20210330135801.GA6187@willie-the-truck>
- <578d6aa5-4239-f5d7-2e9f-686b18e52bba@arm.com>
- <20210331114947.GA7626@willie-the-truck>
-From:   Robin Murphy <robin.murphy@arm.com>
-Message-ID: <ef895942-e115-7878-ab86-37e8a1614df5@arm.com>
-Date:   Wed, 31 Mar 2021 14:09:37 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:78.0) Gecko/20100101
- Thunderbird/78.9.0
+        id S235790AbhCaNVS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 31 Mar 2021 09:21:18 -0400
+Received: from mail-m121143.qiye.163.com ([115.236.121.143]:34660 "EHLO
+        mail-m121143.qiye.163.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235140AbhCaNVK (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 31 Mar 2021 09:21:10 -0400
+X-Greylist: delayed 468 seconds by postgrey-1.27 at vger.kernel.org; Wed, 31 Mar 2021 09:21:10 EDT
+Received: from ubuntu.localdomain (unknown [36.152.145.181])
+        by mail-m121143.qiye.163.com (Hmail) with ESMTPA id C105C5403BF;
+        Wed, 31 Mar 2021 21:13:19 +0800 (CST)
+From:   Bernard Zhao <bernard@vivo.com>
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Zhenzhong Duan <zhenzhong.duan@gmail.com>,
+        Lee Jones <lee.jones@linaro.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Cc:     opensource.kernel@vivo.com, Bernard Zhao <bernard@vivo.com>
+Subject: [PATCH] /msm/adreno: fix different address spaces warning
+Date:   Wed, 31 Mar 2021 06:13:11 -0700
+Message-Id: <20210331131313.60942-1-bernard@vivo.com>
+X-Mailer: git-send-email 2.31.0
 MIME-Version: 1.0
-In-Reply-To: <20210331114947.GA7626@willie-the-truck>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+X-HM-Spam-Status: e1kfGhgUHx5ZQUtXWQgYFAkeWUFZS1VLWVdZKFlBSE83V1ktWUFJV1kPCR
+        oVCBIfWUFZHU9MTUsZQ00aHkIaVkpNSkxKQk1PS0tLSEpVEwETFhoSFyQUDg9ZV1kWGg8SFR0UWU
+        FZT0tIVUpKS0hKTFVLWQY+
+X-HM-Sender-Digest: e1kMHhlZQR0aFwgeV1kSHx4VD1lBWUc6NyI6TTo4Tj8cDjVOCSg5Kzoy
+        Lx8aCjxVSlVKTUpMSkJNT0tLT0lMVTMWGhIXVRkeCRUaCR87DRINFFUYFBZFWVdZEgtZQVlITVVK
+        TklVSk9OVUpDSllXWQgBWUFMTkNPNwY+
+X-HM-Tid: 0a78886abd7eb038kuuuc105c5403bf
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-03-31 12:49, Will Deacon wrote:
-> On Tue, Mar 30, 2021 at 05:28:19PM +0100, Robin Murphy wrote:
->> On 2021-03-30 14:58, Will Deacon wrote:
->>> On Tue, Mar 30, 2021 at 02:19:38PM +0100, Robin Murphy wrote:
->>>> On 2021-03-30 14:11, Will Deacon wrote:
->>>>> On Tue, Mar 16, 2021 at 04:38:22PM +0100, Christoph Hellwig wrote:
->>>>>> From: Robin Murphy <robin.murphy@arm.com>
->>>>>>
->>>>>> Instead make the global iommu_dma_strict paramete in iommu.c canonical by
->>>>>> exporting helpers to get and set it and use those directly in the drivers.
->>>>>>
->>>>>> This make sure that the iommu.strict parameter also works for the AMD and
->>>>>> Intel IOMMU drivers on x86.  As those default to lazy flushing a new
->>>>>> IOMMU_CMD_LINE_STRICT is used to turn the value into a tristate to
->>>>>> represent the default if not overriden by an explicit parameter.
->>>>>>
->>>>>> Signed-off-by: Robin Murphy <robin.murphy@arm.com>.
->>>>>> [ported on top of the other iommu_attr changes and added a few small
->>>>>>     missing bits]
->>>>>> Signed-off-by: Christoph Hellwig <hch@lst.de>
->>>>>> ---
->>>>>>     drivers/iommu/amd/iommu.c                   | 23 +-------
->>>>>>     drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 50 +---------------
->>>>>>     drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h |  1 -
->>>>>>     drivers/iommu/arm/arm-smmu/arm-smmu.c       | 27 +--------
->>>>>>     drivers/iommu/dma-iommu.c                   |  9 +--
->>>>>>     drivers/iommu/intel/iommu.c                 | 64 ++++-----------------
->>>>>>     drivers/iommu/iommu.c                       | 27 ++++++---
->>>>>>     include/linux/iommu.h                       |  4 +-
->>>>>>     8 files changed, 40 insertions(+), 165 deletions(-)
->>>>>
->>>>> I really like this cleanup, but I can't help wonder if it's going in the
->>>>> wrong direction. With SoCs often having multiple IOMMU instances and a
->>>>> distinction between "trusted" and "untrusted" devices, then having the
->>>>> flush-queue enabled on a per-IOMMU or per-domain basis doesn't sound
->>>>> unreasonable to me, but this change makes it a global property.
->>>>
->>>> The intent here was just to streamline the existing behaviour of stuffing a
->>>> global property into a domain attribute then pulling it out again in the
->>>> illusion that it was in any way per-domain. We're still checking
->>>> dev_is_untrusted() before making an actual decision, and it's not like we
->>>> can't add more factors at that point if we want to.
->>>
->>> Like I say, the cleanup is great. I'm just wondering whether there's a
->>> better way to express the complicated logic to decide whether or not to use
->>> the flush queue than what we end up with:
->>>
->>> 	if (!cookie->fq_domain && (!dev || !dev_is_untrusted(dev)) &&
->>> 	    domain->ops->flush_iotlb_all && !iommu_get_dma_strict())
->>>
->>> which is mixing up globals, device properties and domain properties. The
->>> result is that the driver code ends up just using the global to determine
->>> whether or not to pass IO_PGTABLE_QUIRK_NON_STRICT to the page-table code,
->>> which is a departure from the current way of doing things.
->>
->> But previously, SMMU only ever saw the global policy piped through the
->> domain attribute by iommu_group_alloc_default_domain(), so there's no
->> functional change there.
-> 
-> For DMA domains sure, but I don't think that's the case for unmanaged
-> domains such as those used by VFIO.
+Fixes the following sparse warnings:
+drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c:189:9:    expected void [noderef] __iomem *addr
+drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c:189:9:    got void *
+drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c:190:9: warning: incorrect type in argument 2 (different address spaces)
+drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c:190:9:    expected void [noderef] __iomem *addr
+drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c:190:9:    got void *
+drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c:191:9: warning: incorrect type in argument 2 (different address spaces)
+drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c:191:9:    expected void [noderef] __iomem *addr
+drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c:191:9:    got void *
+drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c:192:9: warning: incorrect type in argument 2 (different address spaces)
+drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c:192:9:    expected void [noderef] __iomem *addr
+drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c:192:9:    got void *
+drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c:197:19: warning: incorrect type in argument 1 (different address spaces)
+drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c:197:19:    expected void const [noderef] __iomem *addr
+drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c:197:19:    got void *
+drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c:198:19: warning: incorrect type in argument 1 (different address spaces)
+drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c:198:19:    expected void const [noderef] __iomem *addr
+drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c:198:19:    got void *
+drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c:315:41: warning: incorrect type in argument 1 (different address spaces)
+drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c:315:41:    expected void *[noderef] __iomem cxdbg
+drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c:315:41:    got void [noderef] __iomem *cxdbg
+drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c:189:9: warning: dereference of noderef expression
+drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c:190:9: warning: dereference of noderef expression
+drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c:191:9: warning: dereference of noderef expression
+drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c:192:9: warning: dereference of noderef expression
+drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c:197:19: warning: dereference of noderef expression
+drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c:198:19: warning: dereference of noderef expression
 
-Eh? This is only relevant to DMA domains anyway. Flush queues are part 
-of the IOVA allocator that VFIO doesn't even use. It's always been the 
-case that unmanaged domains only use strict invalidation.
+Signed-off-by: Bernard Zhao <bernard@vivo.com>
+---
+ drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c | 36 ++++++++++-----------
+ 1 file changed, 18 insertions(+), 18 deletions(-)
 
->> Obviously some of the above checks could be factored out into some kind of
->> iommu_use_flush_queue() helper that IOMMU drivers can also call if they need
->> to keep in sync. Or maybe we just allow iommu-dma to set
->> IO_PGTABLE_QUIRK_NON_STRICT directly via iommu_set_pgtable_quirks() if we're
->> treating that as a generic thing now.
-> 
-> I think a helper that takes a domain would be a good starting point.
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+index c1699b4f9a89..e5558d09ddf9 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+@@ -186,16 +186,16 @@ static int cx_debugbus_read(void *__iomem cxdbg, u32 block, u32 offset,
+ 	u32 reg = A6XX_CX_DBGC_CFG_DBGBUS_SEL_A_PING_INDEX(offset) |
+ 		A6XX_CX_DBGC_CFG_DBGBUS_SEL_A_PING_BLK_SEL(block);
+ 
+-	cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_SEL_A, reg);
+-	cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_SEL_B, reg);
+-	cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_SEL_C, reg);
+-	cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_SEL_D, reg);
++	cxdbg_write(cxdbg, (void __iomem *)REG_A6XX_CX_DBGC_CFG_DBGBUS_SEL_A, reg);
++	cxdbg_write(cxdbg, (void __iomem *)REG_A6XX_CX_DBGC_CFG_DBGBUS_SEL_B, reg);
++	cxdbg_write(cxdbg, (void __iomem *)REG_A6XX_CX_DBGC_CFG_DBGBUS_SEL_C, reg);
++	cxdbg_write(cxdbg, (void __iomem *)REG_A6XX_CX_DBGC_CFG_DBGBUS_SEL_D, reg);
+ 
+ 	/* Wait 1 us to make sure the data is flowing */
+ 	udelay(1);
+ 
+-	data[0] = cxdbg_read(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_TRACE_BUF2);
+-	data[1] = cxdbg_read(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_TRACE_BUF1);
++	data[0] = cxdbg_read(cxdbg, (void __iomem *)REG_A6XX_CX_DBGC_CFG_DBGBUS_TRACE_BUF2);
++	data[1] = cxdbg_read(cxdbg, (void __iomem *)REG_A6XX_CX_DBGC_CFG_DBGBUS_TRACE_BUF1);
+ 
+ 	return 2;
+ }
+@@ -353,26 +353,26 @@ static void a6xx_get_debugbus(struct msm_gpu *gpu,
+ 		cxdbg = ioremap(res->start, resource_size(res));
+ 
+ 	if (cxdbg) {
+-		cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_CNTLT,
++		cxdbg_write(cxdbg, (void __iomem *)REG_A6XX_CX_DBGC_CFG_DBGBUS_CNTLT,
+ 			A6XX_DBGC_CFG_DBGBUS_CNTLT_SEGT(0xf));
+ 
+-		cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_CNTLM,
++		cxdbg_write(cxdbg, (void __iomem *)REG_A6XX_CX_DBGC_CFG_DBGBUS_CNTLM,
+ 			A6XX_DBGC_CFG_DBGBUS_CNTLM_ENABLE(0xf));
+ 
+-		cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_IVTL_0, 0);
+-		cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_IVTL_1, 0);
+-		cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_IVTL_2, 0);
+-		cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_IVTL_3, 0);
++		cxdbg_write(cxdbg, (void __iomem *)REG_A6XX_CX_DBGC_CFG_DBGBUS_IVTL_0, 0);
++		cxdbg_write(cxdbg, (void __iomem *)REG_A6XX_CX_DBGC_CFG_DBGBUS_IVTL_1, 0);
++		cxdbg_write(cxdbg, (void __iomem *)REG_A6XX_CX_DBGC_CFG_DBGBUS_IVTL_2, 0);
++		cxdbg_write(cxdbg, (void __iomem *)REG_A6XX_CX_DBGC_CFG_DBGBUS_IVTL_3, 0);
+ 
+-		cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_BYTEL_0,
++		cxdbg_write(cxdbg, (void __iomem *)REG_A6XX_CX_DBGC_CFG_DBGBUS_BYTEL_0,
+ 			0x76543210);
+-		cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_BYTEL_1,
++		cxdbg_write(cxdbg, (void __iomem *)REG_A6XX_CX_DBGC_CFG_DBGBUS_BYTEL_1,
+ 			0xFEDCBA98);
+ 
+-		cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_MASKL_0, 0);
+-		cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_MASKL_1, 0);
+-		cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_MASKL_2, 0);
+-		cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_MASKL_3, 0);
++		cxdbg_write(cxdbg, (void __iomem *)REG_A6XX_CX_DBGC_CFG_DBGBUS_MASKL_0, 0);
++		cxdbg_write(cxdbg, (void __iomem *)REG_A6XX_CX_DBGC_CFG_DBGBUS_MASKL_1, 0);
++		cxdbg_write(cxdbg, (void __iomem *)REG_A6XX_CX_DBGC_CFG_DBGBUS_MASKL_2, 0);
++		cxdbg_write(cxdbg, (void __iomem *)REG_A6XX_CX_DBGC_CFG_DBGBUS_MASKL_3, 0);
+ 	}
+ 
+ 	nr_debugbus_blocks = ARRAY_SIZE(a6xx_debugbus_blocks) +
+-- 
+2.31.0
 
-You mean device, right? The one condition we currently have is at the 
-device level, and there's really nothing inherent to the domain itself 
-that matters (since the type is implicitly IOMMU_DOMAIN_DMA to even care 
-about this).
-
-Another idea that's just come to mind is now that IOMMU_DOMAIN_DMA has a 
-standard meaning, maybe we could split out a separate 
-IOMMU_DOMAIN_DMA_STRICT type such that it can all propagate from 
-iommu_get_def_domain_type()? That feels like it might be quite 
-promising, but I'd still do it as an improvement on top of this patch, 
-since it's beyond just cleaning up the abuse of domain attributes to 
-pass a command-line option around.
-
-Robin.
