@@ -2,250 +2,149 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DC69F350070
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Mar 2021 14:35:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 17B303500DE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Mar 2021 15:04:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235457AbhCaMej (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 31 Mar 2021 08:34:39 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:26470 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235564AbhCaMeh (ORCPT
+        id S235639AbhCaNDz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 31 Mar 2021 09:03:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55540 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235711AbhCaNDw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 31 Mar 2021 08:34:37 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1617194077; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=j5B5EwLVasZ8T7PZjHACQf5N3DuDgkB0Cms6SnhEYPQ=;
- b=TFXSFl2tl7RzXQgMGLypCCRpvdcQqqHYRZJSPPNmFWzQa27BanWupUKr9GyyNHlZyBJYXhdi
- ept9LpeFIonq5smRLsA8dCVt+I0z8QpKeUg6WJvkLrio09yuGBRz+bbPGP0gCc9v1AngUpWt
- OZCkuNOtu84mgR9zJzGCjohqhr4=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
- 60646c519a9ff96d95e790a0 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 31 Mar 2021 12:34:25
- GMT
-Sender: kalyan_t=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 52496C43465; Wed, 31 Mar 2021 12:34:25 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: kalyan_t)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 8B388C433CA;
-        Wed, 31 Mar 2021 12:34:23 +0000 (UTC)
+        Wed, 31 Mar 2021 09:03:52 -0400
+Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4630C061574
+        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Mar 2021 06:03:52 -0700 (PDT)
+Received: by mail-pf1-x433.google.com with SMTP id x26so14554214pfn.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Mar 2021 06:03:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=u9XdrGG+Ss98tX0l+FbEmlYxAR7jNzWL0u/3NXi/FBI=;
+        b=WX58qYBBBOl7TA/HiAyQhDJ/8PIgS25qmAWus5LHysedw+51JR39iJ9vqrIIOS9EIY
+         WXwsmUJCKMQ3k38Z33k9KjjcNW2SSy0F/VXbF185gtr/YOOZEPMJjvpWQYPKqqoFHA+s
+         7/B5PdbbZAaDgvI12fyF4jfxxUf/k6pzQGr2tQqfRTOmawIjARL1KuDcKa6euA/+eg4M
+         FK6w2ykN12/qPTCmbJJ+ePzIK3C++3+DF7rM9NloxQrXyH1CLa7ObfwVVZuZW+tFcNTJ
+         ZneJqFCGJ/x1/tEyJCtl1khllFLO1VQldUjpktfHD3oRlWKWuaLf2EEtGK2Hrbla5dsn
+         8Heg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=u9XdrGG+Ss98tX0l+FbEmlYxAR7jNzWL0u/3NXi/FBI=;
+        b=q0MaX5MA8MbJr3nCA6EP+XIebi/GiviSs5EbBSHLHiw+GxUh0O3Lk51vOH0fmJ4GJs
+         KEGqtFGmIxSkgVV6o72+o4xjgVVEgyqyz6OyCWHaRHxJkrXaBEADUA/FWUAxxj75u8Ll
+         g/GOfKm7ws/0EkJZDssoad9lnN5mG//hl5Yy9gG9AciAfP4ey0KkZauIVobTkQArYz9a
+         68RbZ/CNV2IPHD5lUwbyhGgku+YMf6pq1gYApTf3F/oIxZ9/QPo15Mgu3jQgv1PxYJS1
+         MsQaumPy5q/8H6CfWhEy7bbwYHwqeyM9BKprqzayLahdXj9OmVsd2wP4XOUrXZ9VQDoL
+         ra7Q==
+X-Gm-Message-State: AOAM530ObYtlhajMEcPAF/FlWSw7sHGEEVFvTEBBKCwcyo8v41BKDpt7
+        TP16bHuV2FnjlOdEXfsFzYi2
+X-Google-Smtp-Source: ABdhPJxMYQtlgM51wPSpYjrVhGTFwWwSDGNm1NXZYpFnj9IOiNgKNpx71oc4wiCYmvXz5P3ItqlAYw==
+X-Received: by 2002:a62:e119:0:b029:1f8:9345:a099 with SMTP id q25-20020a62e1190000b02901f89345a099mr2976900pfh.21.1617195832196;
+        Wed, 31 Mar 2021 06:03:52 -0700 (PDT)
+Received: from work ([103.77.37.129])
+        by smtp.gmail.com with ESMTPSA id b17sm2284518pfp.136.2021.03.31.06.03.49
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 31 Mar 2021 06:03:51 -0700 (PDT)
+Date:   Wed, 31 Mar 2021 18:33:47 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Bhaumik Bhatt <bbhatt@codeaurora.org>
+Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
+        jhugo@codeaurora.org, linux-kernel@vger.kernel.org,
+        carl.yin@quectel.com, naveen.kumar@quectel.com,
+        loic.poulain@linaro.org
+Subject: Re: [PATCH v5 1/2] bus: mhi: core: Introduce internal register poll
+ helper function
+Message-ID: <20210331130347.GI15610@work>
+References: <1617047583-12104-1-git-send-email-bbhatt@codeaurora.org>
+ <1617047583-12104-2-git-send-email-bbhatt@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Wed, 31 Mar 2021 18:04:23 +0530
-From:   kalyan_t@codeaurora.org
-To:     Steev Klimaszewski <steev@kali.org>
-Cc:     y@qualcomm.com, dri-devel@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        devicetree@vger.kernel.org, mkrishn@codeaurora.org,
-        hywu@google.com, dianders@chromium.org,
-        linux-kernel@vger.kernel.org, mka@google.com, robdclark@gmail.com,
-        midean@google.com
-Subject: Re: [Freedreno] [v1] drm/msm/disp/dpu1: icc path needs to be set
- before dpu runtime resume
-In-Reply-To: <823f7f00-444e-8e22-e8d0-2ced97e4c291@kali.org>
-References: <y> <1616404632-13693-1-git-send-email-kalyan_t@codeaurora.org>
- <823f7f00-444e-8e22-e8d0-2ced97e4c291@kali.org>
-Message-ID: <9847b4af5331f86641eb7be5a932078b@codeaurora.org>
-X-Sender: kalyan_t@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1617047583-12104-2-git-send-email-bbhatt@codeaurora.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-03-31 00:04, Steev Klimaszewski wrote:
-> On 3/22/21 4:17 AM, Kalyan Thota wrote:
->> From: Kalyan Thota <kalyant@codeaurora.org>
->> 
->> DPU runtime resume will request for a min vote on the AXI bus as
->> it is a necessary step before turning ON the AXI clock.
->> 
->> The change does below
->> 1) Move the icc path set before requesting runtime get_sync.
->> 2) remove the dependency of hw catalog for min ib vote
->> as it is initialized at a later point.
->> 
->> Signed-off-by: Kalyan Thota <kalyan_t@codeaurora.org>
->> ---
->>  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 12 +++++++-----
->>  1 file changed, 7 insertions(+), 5 deletions(-)
->> 
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c 
->> b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
->> index ed636f1..cab387f 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
->> @@ -44,6 +44,8 @@
->>  #define DPU_DEBUGFS_DIR "msm_dpu"
->>  #define DPU_DEBUGFS_HWMASKNAME "hw_log_mask"
->> 
->> +#define MIN_IB_BW	400000000ULL /* Min ib vote 400MB */
->> +
->>  static int dpu_kms_hw_init(struct msm_kms *kms);
->>  static void _dpu_kms_mmu_destroy(struct dpu_kms *dpu_kms);
->> 
->> @@ -932,6 +934,9 @@ static int dpu_kms_hw_init(struct msm_kms *kms)
->>  		DPU_DEBUG("REG_DMA is not defined");
->>  	}
->> 
->> +	if (of_device_is_compatible(dev->dev->of_node, "qcom,sc7180-mdss"))
->> +		dpu_kms_parse_data_bus_icc_path(dpu_kms);
->> +
->>  	pm_runtime_get_sync(&dpu_kms->pdev->dev);
->> 
->>  	dpu_kms->core_rev = readl_relaxed(dpu_kms->mmio + 0x0);
->> @@ -1037,9 +1042,6 @@ static int dpu_kms_hw_init(struct msm_kms *kms)
->> 
->>  	dpu_vbif_init_memtypes(dpu_kms);
->> 
->> -	if (of_device_is_compatible(dev->dev->of_node, "qcom,sc7180-mdss"))
->> -		dpu_kms_parse_data_bus_icc_path(dpu_kms);
->> -
->>  	pm_runtime_put_sync(&dpu_kms->pdev->dev);
->> 
->>  	return 0;
->> @@ -1196,10 +1198,10 @@ static int __maybe_unused 
->> dpu_runtime_resume(struct device *dev)
->> 
->>  	ddev = dpu_kms->dev;
->> 
->> +	WARN_ON(!(dpu_kms->num_paths));
->>  	/* Min vote of BW is required before turning on AXI clk */
->>  	for (i = 0; i < dpu_kms->num_paths; i++)
->> -		icc_set_bw(dpu_kms->path[i], 0,
->> -			dpu_kms->catalog->perf.min_dram_ib);
->> +		icc_set_bw(dpu_kms->path[i], 0, Bps_to_icc(MIN_IB_BW));
->> 
->>  	rc = msm_dss_enable_clk(mp->clk_config, mp->num_clk, true);
->>  	if (rc) {
+On Mon, Mar 29, 2021 at 12:53:02PM -0700, Bhaumik Bhatt wrote:
+> Introduce helper function to allow MHI core driver to poll for
+> a value in a register field. This helps reach a common path to
+> read and poll register values along with a retry time interval.
 > 
-> With this patch now applied to 5.12-rc5, I am seeing the following when
-> booting the Lenovo Yoga C630 -
+> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+> ---
+>  drivers/bus/mhi/core/internal.h |  3 +++
+>  drivers/bus/mhi/core/main.c     | 23 +++++++++++++++++++++++
+>  2 files changed, 26 insertions(+)
 > 
-> Mar 30 13:16:03 c630 kernel: [    2.038491] ------------[ cut here 
-> ]------------
-> Mar 30 13:16:03 c630 kernel: [    2.038495] WARNING: CPU: 3 PID: 125
-> at drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c:1196
-> dpu_runtime_resume+0xc0/0xf0 [msm]
-> Mar 30 13:16:03 c630 kernel: [    2.038551] Modules linked in:
-> ti_sn65dsi86 i2c_hid_of crct10dif_ce msm rtc_pm8xxx llcc_qcom ocmem
-> drm_kms_helper i2c_qcom_geni phy_qcom_qusb2 ipa(+) qcom_common
-> qcom_glink_smem qmi_helpers mdt_loader panel_simple drm pwm_bl
-> Mar 30 13:16:03 c630 kernel: [    2.038599] CPU: 3 PID: 125 Comm:
-> kworker/3:1 Not tainted 5.12.0-rc5 #1
-> Mar 30 13:16:03 c630 kernel: [    2.038605] Hardware name: LENOVO
-> 81JL/LNVNB161216, BIOS 9UCN33WW(V2.06) 06/ 4/2019
-> Mar 30 13:16:03 c630 kernel: [    2.038610] Workqueue: events
-> deferred_probe_work_func
-> Mar 30 13:16:03 c630 kernel: [    2.038621] pstate: 60400005 (nZCv
-> daif +PAN -UAO -TCO BTYPE=--)
-> Mar 30 13:16:03 c630 kernel: [    2.038627] pc :
-> dpu_runtime_resume+0xc0/0xf0 [msm]
-> Mar 30 13:16:03 c630 kernel: [    2.038674] lr :
-> pm_generic_runtime_resume+0x30/0x50
-> Mar 30 13:16:03 c630 kernel: [    2.038683] sp : ffff800010b9b7e0
-> Mar 30 13:16:03 c630 kernel: [    2.038685] x29: ffff800010b9b7e0 x28:
-> 0000000000000000
-> Mar 30 13:16:03 c630 kernel: [    2.038692] x27: 0000000000000000 x26:
-> ffff6b42c0c16cf4
-> Mar 30 13:16:03 c630 kernel: [    2.038698] x25: 000000007965f7df x24:
-> 0000000000000001
-> Mar 30 13:16:03 c630 kernel: [    2.038705] x23: ffff6b42c0a34180 x22:
-> ffffda2e0cc5b3d0
-> Mar 30 13:16:03 c630 kernel: [    2.038712] x21: ffffda2e0b3ed6a0 x20:
-> ffff6b42c6845000
-> Mar 30 13:16:03 c630 kernel: [    2.038718] x19: ffff6b42c6851080 x18:
-> ffffda2e0cce1220
-> Mar 30 13:16:03 c630 kernel: [    2.038725] x17: ffffda2e0cce1238 x16:
-> ffffda2e0b23e5f0
-> Mar 30 13:16:03 c630 kernel: [    2.038731] x15: 0000000040000000 x14:
-> 0000000000000000
-> Mar 30 13:16:03 c630 kernel: [    2.038738] x13: ffff6b42c5f0b5b0 x12:
-> 0000000000000000
-> Mar 30 13:16:03 c630 kernel: [    2.038744] x11: 0000000000000001 x10:
-> 0000000000003fff
-> Mar 30 13:16:03 c630 kernel: [    2.038750] x9 : 0000000000000000 x8 :
-> 0000000000000000
-> Mar 30 13:16:03 c630 kernel: [    2.038755] x7 : 0000000000000000 x6 :
-> 000000000c473b7e
-> Mar 30 13:16:03 c630 kernel: [    2.038761] x5 : 00ffffffffffffff x4 :
-> 00221806fff8f800
-> Mar 30 13:16:03 c630 kernel: [    2.038768] x3 : 0000000000000018 x2 :
-> ffffda2dc3d34320
-> Mar 30 13:16:03 c630 kernel: [    2.038774] x1 : 0000000000000000 x0 :
-> 0000000000000000
-> Mar 30 13:16:03 c630 kernel: [    2.038781] Call trace:
-> Mar 30 13:16:03 c630 kernel: [    2.038784]  
-> dpu_runtime_resume+0xc0/0xf0 [msm]
-> Mar 30 13:16:03 c630 kernel: [    2.038831]  
-> pm_generic_runtime_resume+0x30/0x50
-> Mar 30 13:16:03 c630 kernel: [    2.038836]  
-> __genpd_runtime_resume+0x30/0xb0
-> Mar 30 13:16:03 c630 kernel: [    2.038842]  
-> genpd_runtime_resume+0x90/0x250
-> Mar 30 13:16:03 c630 kernel: [    2.038848]  __rpm_callback+0x90/0x160
-> Mar 30 13:16:03 c630 kernel: [    2.038854]  rpm_callback+0x24/0x84
-> Mar 30 13:16:03 c630 kernel: [    2.038859]  rpm_resume+0x450/0x6ec
-> Mar 30 13:16:03 c630 kernel: [    2.038865]  
-> __pm_runtime_resume+0x3c/0x90
-> Mar 30 13:16:03 c630 kernel: [    2.038870]  
-> dpu_kms_hw_init+0x124/0x5dc [msm]
-> Mar 30 13:16:03 c630 kernel: [    2.038918]  msm_drm_bind+0x468/0x594 
-> [msm]
-> Mar 30 13:16:03 c630 kernel: [    2.038965]  
-> try_to_bring_up_master+0x164/0x1d0
-> Mar 30 13:16:03 c630 kernel: [    2.038973]
-> component_master_add_with_match+0xb8/0x100
-> Mar 30 13:16:03 c630 kernel: [    2.038979]  msm_pdev_probe+0x260/0x300 
-> [msm]
-> Mar 30 13:16:03 c630 kernel: [    2.039026]  platform_probe+0x68/0xe0
-> Mar 30 13:16:03 c630 kernel: [    2.039032]  really_probe+0xe4/0x4c0
-> Mar 30 13:16:03 c630 kernel: [    2.039036]  
-> driver_probe_device+0x58/0xc0
-> Mar 30 13:16:03 c630 kernel: [    2.039040]  
-> __device_attach_driver+0xa8/0x104
-> Mar 30 13:16:03 c630 kernel: [    2.039045]  bus_for_each_drv+0x78/0xd0
-> Mar 30 13:16:03 c630 kernel: [    2.039051]  __device_attach+0xd8/0x17c
-> Mar 30 13:16:03 c630 kernel: [    2.039055]  
-> device_initial_probe+0x14/0x20
-> Mar 30 13:16:03 c630 kernel: [    2.039059]  bus_probe_device+0x9c/0xa4
-> Mar 30 13:16:03 c630 kernel: [    2.039065]  
-> deferred_probe_work_func+0x74/0xb0
-> Mar 30 13:16:03 c630 kernel: [    2.039069]  
-> process_one_work+0x1d0/0x494
-> Mar 30 13:16:03 c630 kernel: [    2.039076]  worker_thread+0x13c/0x470
-> Mar 30 13:16:03 c630 kernel: [    2.039080]  kthread+0x158/0x160
-> Mar 30 13:16:03 c630 kernel: [    2.039085]  ret_from_fork+0x10/0x34
-> Mar 30 13:16:03 c630 kernel: [    2.039093] ---[ end trace 
-> 65a4c9cc3f59c59a ]---
-> Mar 30 13:16:03 c630 kernel: [    2.039124] [drm:dpu_kms_hw_init:943]
-> dpu hardware revision:0x40000000
-> 
-Hi Steev,
+> diff --git a/drivers/bus/mhi/core/internal.h b/drivers/bus/mhi/core/internal.h
+> index 6f80ec3..005286b 100644
+> --- a/drivers/bus/mhi/core/internal.h
+> +++ b/drivers/bus/mhi/core/internal.h
+> @@ -643,6 +643,9 @@ int __must_check mhi_read_reg(struct mhi_controller *mhi_cntrl,
+>  int __must_check mhi_read_reg_field(struct mhi_controller *mhi_cntrl,
+>  				    void __iomem *base, u32 offset, u32 mask,
+>  				    u32 shift, u32 *out);
+> +int __must_check mhi_poll_reg_field(struct mhi_controller *mhi_cntrl,
+> +				    void __iomem *base, u32 offset, u32 mask,
+> +				    u32 shift, u32 val, u32 delayus);
+>  void mhi_write_reg(struct mhi_controller *mhi_cntrl, void __iomem *base,
+>  		   u32 offset, u32 val);
+>  void mhi_write_reg_field(struct mhi_controller *mhi_cntrl, void __iomem *base,
+> diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
+> index 4e0131b..6f4b630 100644
+> --- a/drivers/bus/mhi/core/main.c
+> +++ b/drivers/bus/mhi/core/main.c
+> @@ -4,6 +4,7 @@
+>   *
+>   */
+>  
+> +#include <linux/delay.h>
+>  #include <linux/device.h>
+>  #include <linux/dma-direction.h>
+>  #include <linux/dma-mapping.h>
+> @@ -37,6 +38,28 @@ int __must_check mhi_read_reg_field(struct mhi_controller *mhi_cntrl,
+>  	return 0;
+>  }
+>  
+> +int __must_check mhi_poll_reg_field(struct mhi_controller *mhi_cntrl,
+> +				    void __iomem *base, u32 offset,
+> +				    u32 mask, u32 shift, u32 val, u32 delayus)
+> +{
+> +	int ret;
+> +	u32 out, retry = (mhi_cntrl->timeout_ms * 1000) / delayus;
+> +
+> +	while (retry--) {
+> +		ret = mhi_read_reg_field(mhi_cntrl, base, offset, mask, shift,
+> +					 &out);
+> +		if (ret)
+> +			return ret;
+> +
+> +		if (out == val)
+> +			return 0;
+> +
+> +		fsleep(delayus);
+> +	}
+> +
+> +	return -ENOENT;
 
-The WARN_ON is true only for the device with compatible 
-"qcom,sc7180-mdss". For other devices its a
-false alarm. Can you please try with the below change ?
-
-https://patchwork.kernel.org/project/linux-arm-msm/patch/1617190020-7931-1-git-send-email-kalyan_t@codeaurora.org/
+Maybe I'm too late on this one, but I don't think -ENOENT is the correct
+error code here. The error code will be returned only when the reg field
+value didn't change as expected, so in that case it should be -EINVAL or
+-ETIMEDOUT, no?
 
 Thanks,
-Kalyan
+Mani
 
-> _______________________________________________
-> Freedreno mailing list
-> Freedreno@lists.freedesktop.org
-> https://lists.freedesktop.org/mailman/listinfo/freedreno
+> +}
+> +
+>  void mhi_write_reg(struct mhi_controller *mhi_cntrl, void __iomem *base,
+>  		   u32 offset, u32 val)
+>  {
+> -- 
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
+> 
