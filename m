@@ -2,57 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 546C934FD97
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Mar 2021 11:59:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5499D34FDD7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Mar 2021 12:13:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234825AbhCaJ6m (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 31 Mar 2021 05:58:42 -0400
-Received: from mailout2.w1.samsung.com ([210.118.77.12]:41142 "EHLO
+        id S229639AbhCaKM4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 31 Mar 2021 06:12:56 -0400
+Received: from mailout2.w1.samsung.com ([210.118.77.12]:53242 "EHLO
         mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234890AbhCaJ6I (ORCPT
+        with ESMTP id S229869AbhCaKMk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 31 Mar 2021 05:58:08 -0400
-Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
-        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20210331095806euoutp021e2bc8cdab7e6b56eefb43d12b9406d7~xZOeE3jhh2103321033euoutp02J
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Mar 2021 09:58:06 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20210331095806euoutp021e2bc8cdab7e6b56eefb43d12b9406d7~xZOeE3jhh2103321033euoutp02J
+        Wed, 31 Mar 2021 06:12:40 -0400
+Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
+        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20210331101238euoutp02a4b511bfd41b2610471c6e20824b0fe5~xZbKNURkI0646906469euoutp02J
+        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Mar 2021 10:12:38 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20210331101238euoutp02a4b511bfd41b2610471c6e20824b0fe5~xZbKNURkI0646906469euoutp02J
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1617184686;
-        bh=SJ8K9FtjJ7RXwx5dC7P6rkLLhFNehLE0d47oQ1bMEEU=;
+        s=mail20170921; t=1617185558;
+        bh=IuD+yxbAFDnUrs1IElAd4pJHc//IKV7VHIBWdBNLg1A=;
         h=Date:Subject:To:Cc:From:In-Reply-To:References:From;
-        b=l3g5K6wDRZLE59OQTWswhLxt2V2jNRF2Bu9W6pmb6XwX1VhnFfQYRc/2A7MrKDfGl
-         gs5CxLh/1brRIud4QU4O9AUoFX+5jPYA529APfOzgtIk8WL4GGResqkfQwauMJgDEP
-         BkWPthMzi5WTk4YK5C76r2nUaJbRy++kQ8/OCCi0=
+        b=N9jpzoGNeql5KyEj+t2QnpGC2aWUke8ulhOEy4IOr4sj8HAyvrrW2of+7iNzqKupe
+         hx1ik9gjHifGe+k03l2jgQlHzwQrBcKDG+H9JS0R+FRRWo0l/HHuVM43uk/OOoaN5m
+         q4keX8fqtUHIKTqYohk8xsRT13iCC57Wszm/aARg=
 Received: from eusmges2new.samsung.com (unknown [203.254.199.244]) by
         eucas1p2.samsung.com (KnoxPortal) with ESMTP id
-        20210331095806eucas1p27d08b0e29b83f6702629697cbb4e8c48~xZOdyu7uB2620526205eucas1p2O;
-        Wed, 31 Mar 2021 09:58:06 +0000 (GMT)
-Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
-        eusmges2new.samsung.com (EUCPMTA) with SMTP id DC.F3.09444.EA744606; Wed, 31
-        Mar 2021 10:58:06 +0100 (BST)
+        20210331101238eucas1p2057f863548fde34dbf2ba7bf546fafa9~xZbJyUt8m0678706787eucas1p2Y;
+        Wed, 31 Mar 2021 10:12:38 +0000 (GMT)
+Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
+        eusmges2new.samsung.com (EUCPMTA) with SMTP id 27.F6.09444.61B44606; Wed, 31
+        Mar 2021 11:12:38 +0100 (BST)
 Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
         eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
-        20210331095805eucas1p13f223cf8e3f6edb9a3df0a807952542e~xZOdZL0j10433504335eucas1p1f;
-        Wed, 31 Mar 2021 09:58:05 +0000 (GMT)
+        20210331101237eucas1p1ae152c11cd6959fa949a181a84a0a2b1~xZbJDxxPn3077430774eucas1p1O;
+        Wed, 31 Mar 2021 10:12:37 +0000 (GMT)
 Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
         eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
-        20210331095805eusmtrp13480f17caf3d30d8e66396394d2742b4~xZOdYStoz1997919979eusmtrp1E;
-        Wed, 31 Mar 2021 09:58:05 +0000 (GMT)
-X-AuditID: cbfec7f4-dd5ff700000024e4-5c-606447ae5f8a
-Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
-        eusmgms2.samsung.com (EUCPMTA) with SMTP id 51.87.08696.DA744606; Wed, 31
-        Mar 2021 10:58:05 +0100 (BST)
-Received: from localhost (unknown [106.210.131.79]) by eusmtip2.samsung.com
+        20210331101237eusmtrp1ee2a22286b721365132450f8d4bf6c73~xZbJC2_rQ2878428784eusmtrp13;
+        Wed, 31 Mar 2021 10:12:37 +0000 (GMT)
+X-AuditID: cbfec7f4-dbdff700000024e4-4d-60644b163bfc
+Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
+        eusmgms2.samsung.com (EUCPMTA) with SMTP id 33.4A.08696.51B44606; Wed, 31
+        Mar 2021 11:12:37 +0100 (BST)
+Received: from localhost (unknown [106.210.131.79]) by eusmtip1.samsung.com
         (KnoxPortal) with ESMTPA id
-        20210331095803eusmtip2643b0a2d8460058c9644fdf0ac9fe8eb~xZOax5KAY1195211952eusmtip22;
-        Wed, 31 Mar 2021 09:58:02 +0000 (GMT)
-Message-ID: <ee62dae9-b1bd-71ea-31e6-95ce5a528f34@samsung.com>
-Date:   Wed, 31 Mar 2021 11:58:02 +0200
+        20210331101232eusmtip1bb0d13edb05953affdffa10885f15017~xZbEq2HeB1360313603eusmtip1K;
+        Wed, 31 Mar 2021 10:12:32 +0000 (GMT)
+Message-ID: <26d73f36-e150-57ec-d957-4b7bda6b366e@samsung.com>
+Date:   Wed, 31 Mar 2021 12:12:31 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:88.0)
         Gecko/20100101 Thunderbird/88.0
-Subject: Re: [PATCH v2 08/14] drm/bridge: ti-sn65dsi86: Remove extra call:
- drm_connector_update_edid_property()
+Subject: Re: [PATCH v2 10/14] drm/bridge: ti-sn65dsi86: Stop caching the
+ EDID ourselves
 Content-Language: en-GB
 To:     Douglas Anderson <dianders@chromium.org>,
         Neil Armstrong <narmstrong@baylibre.com>,
@@ -69,63 +69,62 @@ Cc:     robdclark@chromium.org, dri-devel@lists.freedesktop.org,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         linux-kernel@vger.kernel.org
 From:   Andrzej Hajda <a.hajda@samsung.com>
-In-Reply-To: <20210329195255.v2.8.Ic14a7ab8035df89e19a25ad4fbf2004f9673f167@changeid>
+In-Reply-To: <20210329195255.v2.10.Ida6151df6bfc71df77afee1d72bb7eb0a443f327@changeid>
 Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrNKsWRmVeSWpSXmKPExsWy7djP87rr3FMSDDa/ErXoPXeSyeL0/ncs
-        FmeXHWSzuPL1PZvF1e8vmS1OvrnKYtE5cQm7xcT9Z9ktLu+aw2ZxqC/a4trPx8wWn2Y9ZLZY
-        8XMro0V7l43Fz+ttzBbH7zxlchDweH+jld1jdsNFFo/ZHTNZPRbvecnkMWfRDWaPExMuMXnc
-        ubaHzWP7twesHve7jzN5LJl2lc3jQO9kFo/Pm+QCeKK4bFJSczLLUov07RK4Ms6fmMpWsI2n
-        onfdKrYGxl6uLkZODgkBE4kjx6exdTFycQgJrGCU2PdzAjuE84VRYknHZ6jMZ0aJjl33gRwO
-        sJYXD4Qh4ssZJQ4dnMgE4bxglPgw4zk7yFxeATuJx3PPs4DYLAKqEk86TzFCxAUlTs58AhYX
-        FUiQWHVjOROILSxQKPH2zGqwGmYBcYmmLytZQYaKCPxjlFg98THYBmaBz0wSn6YcAutgE9CU
-        +Lv5JthJnAKhEhO/1kE0y0s0b53NDFIvIXCNU+LyivNsEJ+6SJyZuZURwhaWeHV8CzuELSNx
-        enIPC4RdL3F/RQtUcwejxNYNO5khEtYSd879AlvGDLR4/S59SFA4Ssx5bgBh8knceCsIcQKf
-        xKRt05khwrwSHW1CEDMUJe6f3Qo1T1xi6YWvbBMYlWYhhcosJN/PQvLMLIS1CxhZVjGKp5YW
-        56anFhvlpZbrFSfmFpfmpesl5+duYgSmx9P/jn/Zwbj81Ue9Q4xMHIyHGCU4mJVEeIUPJCYI
-        8aYkVlalFuXHF5XmpBYfYpTmYFES503asiZeSCA9sSQ1OzW1ILUIJsvEwSnVwJTnEbSP741y
-        6K7P01VfvObJLBLrL3/7+vGraQoBPHZvXrBMlVKck832ZFnHj8z4Bl/uxjM//B/2eC1SUr7w
-        /SsX2/GMXUyXHQ2/qJ60NyyetanimMhSjfNmhW3uYkn8MWZrl4bFJr74E9f3g+FBy29Hi0mb
-        9T+ti1jmvW532VsDt3Xfpq1icMo89ODZ6wym3Cmbomp/3ald/Vg782HpIxe31dLfXc+veyxZ
-        Uq1QeO/67KMTHv6Q+G5lPNmYi+lFlJmZ8tqUvISUM8/vHjwizj/76qNfwcw15icS3Vu5S20S
-        Ii8cjFGe98WQpT2t32EZC4Py+hc/tthejju0yPXx7uXzukyCQ26b/VJ/cG1bfqoSS3FGoqEW
-        c1FxIgBuZtGP/gMAAA==
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrHIsWRmVeSWpSXmKPExsVy+t/xe7pr3VMSDLomWlr0njvJZHF6/zsW
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrHKsWRmVeSWpSXmKPExsWy7djPc7pi3ikJBmdvcVj0njvJZHF6/zsW
         i7PLDrJZXPn6ns3i6veXzBYn31xlseicuITdYuL+s+wWl3fNYbM41Bdtce3nY2aLT7MeMlus
         +LmV0aK9y8bi5/U2Zovjd54yOQh4vL/Ryu4xu+Eii8fsjpmsHov3vGTymLPoBrPHiQmXmDzu
-        XNvD5rH92wNWj/vdx5k8lky7yuZxoHcyi8fnTXIBPFF6NkX5pSWpChn5xSW2StGGFkZ6hpYW
-        ekYmlnqGxuaxVkamSvp2NimpOZllqUX6dgl6GedPTGUr2MZT0btuFVsDYy9XFyMHh4SAicSL
-        B8JdjFwcQgJLGSVWnd3P0sXICRQXl9g9/y0zhC0s8edaFxtE0TNGiYaGD+wgCV4BO4nHc8+D
-        NbAIqEo86TzFCBEXlDg58wlYXFQgQeLsh3lMILawQKHE2zOrwWqYgRY0fVnJCjJURKCBSeLS
-        3cVMIA6zwFcmiZZXS8E2CAncZpTofZIPYrMJaEr83XyTDeRsToFQiYlf6yAGmUl0be2CGiov
-        0bx1NvMERqFZSO6YhWTfLCQts5C0LGBkWcUoklpanJueW2ykV5yYW1yal66XnJ+7iRGYELYd
-        +7llB+PKVx/1DjEycTAeYpTgYFYS4RU+kJggxJuSWFmVWpQfX1Sak1p8iNEUGBgTmaVEk/OB
-        KSmvJN7QzMDU0MTM0sDU0sxYSZzX5MiaeCGB9MSS1OzU1ILUIpg+Jg5OqQamee/zZu9f+WPG
-        ROblKidDWe6URM6YvEn2kdcav7UFf7Sdp35VmhMz/RHL9evPohkz+F/2GAR/Tz/6U6LONjn7
-        0brSmdvvrHbt1I/M4ElytD2czDRhVdpxnpk/ZgBD7f+5X1LeN3ZuqzOcZzFpezan6ur1B/7E
-        +Yh3KnPJtB1d7CbD0JkY5Pdxm4352oN7nsR/zwq5++Jt8662T/achUunTwhjz130YIvXcsll
-        L92vNvmxTBNSf9kf1NuYLJWV5n7maPJHhh/eTI59EadYbWbOizqRK85o4NGVaV5WIB5cnTCh
-        RO37txen+B5mfrnEXVa9984rDgMp2TU7hLsrUiP1LmlaefyV2rze3eEn+zIlluKMREMt5qLi
-        RADz3W/SkQMAAA==
-X-CMS-MailID: 20210331095805eucas1p13f223cf8e3f6edb9a3df0a807952542e
+        XNvD5rH92wNWj/vdx5k8lky7yuZxoHcyi8fnTXIBPFFcNimpOZllqUX6dglcGRN6j7IXXBCu
+        mNGzgrGBcRN/FyMnh4SAiURHxz7mLkYuDiGBFYwSU1qfsEM4XxglPh3dwAThfGaUuD2jlQWm
+        pWHuYaiq5YwS81duYoRwXjBKzNraywxSxStgJ3G5pxesg0VAVeLkjDusEHFBiZMzn4DFRQUS
+        JFbdWM4EYgsLREqsO/cCrIZZQFyi6ctKVpChIgL/GCVWT3wMdgezwGcmiU9TDoF1sAloSvzd
+        fJMNxOYUCJPYsegDM0S3vETz1tlgL0kIXOKUWLDoNzPE4S4SO5ZNh3pCWOLV8S3sELaMxOnJ
+        PVDxeon7K1qgmjsYJbZu2AnVbC1x59wvoG0cQBs0Jdbv0ocIO0q8aekEC0sI8EnceCsIcQOf
+        xKRt05khwrwSHW1CENWKEvfPboUaKC6x9MJXtgmMSrOQwmUWkv9nIflmFsLeBYwsqxjFU0uL
+        c9NTi43yUsv1ihNzi0vz0vWS83M3MQKT5Ol/x7/sYFz+6qPeIUYmDsZDjBIczEoivMIHEhOE
+        eFMSK6tSi/Lji0pzUosPMUpzsCiJ8yZtWRMvJJCeWJKanZpakFoEk2Xi4JRqYJpwguvRpv+f
+        GkJWxXed1//54iVPBN8MvaWtq2WS+AQur4nZlBNS3tF2PNaAxfph7sJrersDRByf8NzcMaHP
+        JftGMhdT3sW/u5wuL5/3I/4yp9xfNSfrRnVN4Y0/LYKWH4xPmmoX9eaAuFP+lW3CvnVWYibL
+        J52xWj7d85NznHp1wPRSF6G0ntRprlH2YnGHX7dNMm4OvClReCu3dsvMb7opqhsPaqQ/yuVa
+        a/Aub8X8f44J19wffjJUrzTbWGszZVU1x47b9mxn1KfNKZZZPn1ejqs609O+PF/bRPVg5ntL
+        Eksua09zmByQl98ktP+RTl6cp7qvZf41lz9bfNncQqJboz5f2PvEbePyruwWJZbijERDLeai
+        4kQAeqgr6QEEAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFmpgleLIzCtJLcpLzFFi42I5/e/4XV1R75QEg2c7JCx6z51ksji9/x2L
+        xdllB9ksrnx9z2Zx9ftLZouTb66yWHROXMJuMXH/WXaLy7vmsFkc6ou2uPbzMbPFp1kPmS1W
+        /NzKaNHeZWPx83obs8XxO0+ZHAQ83t9oZfeY3XCRxWN2x0xWj8V7XjJ5zFl0g9njxIRLTB53
+        ru1h89j+7QGrx/3u40weS6ZdZfM40DuZxePzJrkAnig9m6L80pJUhYz84hJbpWhDCyM9Q0sL
+        PSMTSz1DY/NYKyNTJX07m5TUnMyy1CJ9uwS9jAm9R9kLLghXzOhZwdjAuIm/i5GTQ0LARKJh
+        7mH2LkYuDiGBpYwSV7e0sEEkxCV2z3/LDGELS/y51gUWFxJ4xiix5moUiM0rYCdxuaeXBcRm
+        EVCVODnjDitEXFDi5MwnYHFRgQSJsx/mMYHYwgKREv3zroHFmYHmN31ZyQqyWESggUni0t3F
+        TCAOs8BXJomWV0uhTrrDKHFq/xSw1WwCmhJ/N98EszkFwiR2LPrADDHKTKJraxcjhC0v0bx1
+        NvMERqFZSC6ZhWTjLCQts5C0LGBkWcUoklpanJueW2ykV5yYW1yal66XnJ+7iRGYFLYd+7ll
+        B+PKVx/1DjEycTAeYpTgYFYS4RU+kJggxJuSWFmVWpQfX1Sak1p8iNEUGBwTmaVEk/OBaSmv
+        JN7QzMDU0MTM0sDU0sxYSZzX5MiaeCGB9MSS1OzU1ILUIpg+Jg5OqQYmq5DkrmrP2XWnZPvb
+        DuqlreGe8J3nrPnchxf9wjt7/ntHNNjbrmO/u/DxpZqPWg9ElvE4iF1ZaGieO7n6eUzYgwPt
+        bcH5+0XSHy+/1MP07c8Wo0PM77gjz1Y5RbxsEj7VHXswf8rSC5M3byjfej5HLKQsfuWhr+Hc
+        HOf4+X8Kr02YpXYmsSpO9PMBzulsMsXRS5geFD9Wcl13pWH1zHntzAabojxPpXLd2/Pl/Q/P
+        aTq6VzXP87+tiTk7rU+/M+lmTYbF2neGEfVGCf5xidVz/Ri2rZ1wauvRa2znvjBf9r6w60GU
+        6tSAZZsap9m2b/9uzjVH50kwj9syIameAyvvrNnfFq++hkWlwWj7zXORSizFGYmGWsxFxYkA
+        m6aZjZMDAAA=
+X-CMS-MailID: 20210331101237eucas1p1ae152c11cd6959fa949a181a84a0a2b1
 X-Msg-Generator: CA
 Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20210330025430eucas1p1a1405009766f65466cb0a2dd6f08ec3e
+X-RootMTR: 20210330025443eucas1p1e53f4fb8623c3dc2ae8ce514e3009bc5
 X-EPHeader: CA
 CMS-TYPE: 201P
-X-CMS-RootMailID: 20210330025430eucas1p1a1405009766f65466cb0a2dd6f08ec3e
+X-CMS-RootMailID: 20210330025443eucas1p1e53f4fb8623c3dc2ae8ce514e3009bc5
 References: <20210330025345.3980086-1-dianders@chromium.org>
-        <CGME20210330025430eucas1p1a1405009766f65466cb0a2dd6f08ec3e@eucas1p1.samsung.com>
-        <20210329195255.v2.8.Ic14a7ab8035df89e19a25ad4fbf2004f9673f167@changeid>
+        <CGME20210330025443eucas1p1e53f4fb8623c3dc2ae8ce514e3009bc5@eucas1p1.samsung.com>
+        <20210329195255.v2.10.Ida6151df6bfc71df77afee1d72bb7eb0a443f327@changeid>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 W dniu 30.03.2021 o 04:53, Douglas Anderson pisze:
-> As of commit 5186421cbfe2 ("drm: Introduce epoch counter to
-> drm_connector") the drm_get_edid() function calls
-> drm_connector_update_edid_property() for us. There's no reason for us
-> to call it again.
+> Now that we have the patch ("drm/edid: Use the cached EDID in
+> drm_get_edid() if eDP") we no longer need to maintain our own
+> cache. Drop this code.
 >
 > Signed-off-by: Douglas Anderson <dianders@chromium.org>
 Reviewed-by: Andrzej Hajda <a.hajda@samsung.com>
@@ -136,35 +135,62 @@ Andrzej
 >
 > (no changes since v1)
 >
->   drivers/gpu/drm/bridge/ti-sn65dsi86.c | 11 ++++-------
->   1 file changed, 4 insertions(+), 7 deletions(-)
+>   drivers/gpu/drm/bridge/ti-sn65dsi86.c | 22 +++++++++-------------
+>   1 file changed, 9 insertions(+), 13 deletions(-)
 >
 > diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-> index a0a00dd1187c..9577ebd58c4c 100644
+> index 9577ebd58c4c..c0398daaa4a6 100644
 > --- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
 > +++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-> @@ -270,7 +270,7 @@ static int ti_sn_bridge_connector_get_modes(struct drm_connector *connector)
+> @@ -121,7 +121,6 @@
+>    * @debugfs:      Used for managing our debugfs.
+>    * @host_node:    Remote DSI node.
+>    * @dsi:          Our MIPI DSI source.
+> - * @edid:         Detected EDID of eDP panel.
+>    * @refclk:       Our reference clock.
+>    * @panel:        Our panel.
+>    * @enable_gpio:  The GPIO we toggle to enable the bridge.
+> @@ -147,7 +146,6 @@ struct ti_sn_bridge {
+>   	struct drm_bridge		bridge;
+>   	struct drm_connector		connector;
+>   	struct dentry			*debugfs;
+> -	struct edid			*edid;
+>   	struct device_node		*host_node;
+>   	struct mipi_dsi_device		*dsi;
+>   	struct clk			*refclk;
+> @@ -269,17 +267,17 @@ connector_to_ti_sn_bridge(struct drm_connector *connector)
+>   static int ti_sn_bridge_connector_get_modes(struct drm_connector *connector)
 >   {
 >   	struct ti_sn_bridge *pdata = connector_to_ti_sn_bridge(connector);
->   	struct edid *edid = pdata->edid;
-> -	int num, ret;
-> +	int num;
+> -	struct edid *edid = pdata->edid;
+> -	int num;
+> +	struct edid *edid;
+> +	int num = 0;
 >   
->   	if (!edid) {
->   		pm_runtime_get_sync(pdata->dev);
-> @@ -279,12 +279,9 @@ static int ti_sn_bridge_connector_get_modes(struct drm_connector *connector)
+> -	if (!edid) {
+> -		pm_runtime_get_sync(pdata->dev);
+> -		edid = pdata->edid = drm_get_edid(connector, &pdata->aux.ddc);
+> -		pm_runtime_put(pdata->dev);
+> -	}
+> +	pm_runtime_get_sync(pdata->dev);
+> +	edid = drm_get_edid(connector, &pdata->aux.ddc);
+> +	pm_runtime_put(pdata->dev);
+>   
+> -	if (edid && drm_edid_is_valid(edid)) {
+> -		num = drm_add_edid_modes(connector, edid);
+> +	if (edid) {
+> +		if (drm_edid_is_valid(edid))
+> +			num = drm_add_edid_modes(connector, edid);
+> +		kfree(edid);
+>   		if (num)
+>   			return num;
 >   	}
+> @@ -1308,8 +1306,6 @@ static int ti_sn_bridge_remove(struct i2c_client *client)
+>   	if (!pdata)
+>   		return -EINVAL;
 >   
->   	if (edid && drm_edid_is_valid(edid)) {
-> -		ret = drm_connector_update_edid_property(connector, edid);
-> -		if (!ret) {
-> -			num = drm_add_edid_modes(connector, edid);
-> -			if (num)
-> -				return num;
-> -		}
-> +		num = drm_add_edid_modes(connector, edid);
-> +		if (num)
-> +			return num;
->   	}
+> -	kfree(pdata->edid);
+> -
+>   	ti_sn_debugfs_remove(pdata);
 >   
->   	return drm_panel_get_modes(pdata->panel, connector);
+>   	drm_bridge_remove(&pdata->bridge);
