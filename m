@@ -2,75 +2,250 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7C64A35002B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Mar 2021 14:28:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DC69F350070
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Mar 2021 14:35:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235434AbhCaM0f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 31 Mar 2021 08:26:35 -0400
-Received: from mail.kernel.org ([198.145.29.99]:37388 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S235289AbhCaM0E (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 31 Mar 2021 08:26:04 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 9AF7E6195C;
-        Wed, 31 Mar 2021 12:26:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1617193563;
-        bh=ZR5P2glaJuzqdi7xvnprsAnU8fByBTG5/hDGcSlFFPE=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=qqnHa8JtMOzCp+jw/yGJFqouYZ3faCYz6APNZ4JA3dqwQayoxsNUXbDowISfD8Udo
-         /KYfionaqlfr8365gV7cJfySOgzVIL+Ci8ZoQNRDmMUieeU9PHq3fw9QgkbTFtus9y
-         kGFrIVG5UaSQBiQYK86aTj5gKkYITzX44/0yFLffarzDaufHWNNCH34kOb1EkjT0XP
-         Er0Qisap94IstdIIBLhPNBXvoULMky3bZOMQGk4UEwmrSU0sSAwAK2HojtbFX7P20A
-         wtmhgtMvAEF0ium39Ce/AyyoJ+ABCx6wgLJZNJM8HguXjm8/52Zs0l/zV1GooFwZeC
-         S0OjJrz21zPTA==
-Date:   Wed, 31 Mar 2021 17:55:59 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Manu Gautam <mgautam@codeaurora.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH v5 0/7] phy: qcom-qmp: provide DP phy support for sm8250
-Message-ID: <YGRqV5pQ3Fj8Nk5s@vkoul-mobl.Dlink>
-References: <20210328205257.3348866-1-dmitry.baryshkov@linaro.org>
+        id S235457AbhCaMej (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 31 Mar 2021 08:34:39 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:26470 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235564AbhCaMeh (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 31 Mar 2021 08:34:37 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1617194077; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=j5B5EwLVasZ8T7PZjHACQf5N3DuDgkB0Cms6SnhEYPQ=;
+ b=TFXSFl2tl7RzXQgMGLypCCRpvdcQqqHYRZJSPPNmFWzQa27BanWupUKr9GyyNHlZyBJYXhdi
+ ept9LpeFIonq5smRLsA8dCVt+I0z8QpKeUg6WJvkLrio09yuGBRz+bbPGP0gCc9v1AngUpWt
+ OZCkuNOtu84mgR9zJzGCjohqhr4=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
+ 60646c519a9ff96d95e790a0 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 31 Mar 2021 12:34:25
+ GMT
+Sender: kalyan_t=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 52496C43465; Wed, 31 Mar 2021 12:34:25 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: kalyan_t)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 8B388C433CA;
+        Wed, 31 Mar 2021 12:34:23 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210328205257.3348866-1-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Wed, 31 Mar 2021 18:04:23 +0530
+From:   kalyan_t@codeaurora.org
+To:     Steev Klimaszewski <steev@kali.org>
+Cc:     y@qualcomm.com, dri-devel@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        devicetree@vger.kernel.org, mkrishn@codeaurora.org,
+        hywu@google.com, dianders@chromium.org,
+        linux-kernel@vger.kernel.org, mka@google.com, robdclark@gmail.com,
+        midean@google.com
+Subject: Re: [Freedreno] [v1] drm/msm/disp/dpu1: icc path needs to be set
+ before dpu runtime resume
+In-Reply-To: <823f7f00-444e-8e22-e8d0-2ced97e4c291@kali.org>
+References: <y> <1616404632-13693-1-git-send-email-kalyan_t@codeaurora.org>
+ <823f7f00-444e-8e22-e8d0-2ced97e4c291@kali.org>
+Message-ID: <9847b4af5331f86641eb7be5a932078b@codeaurora.org>
+X-Sender: kalyan_t@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 28-03-21, 23:52, Dmitry Baryshkov wrote:
-> Changes since v4:
->  - Fix typo in the qcom,sc7180-qmp-usb3-phy name in the first patch
+On 2021-03-31 00:04, Steev Klimaszewski wrote:
+> On 3/22/21 4:17 AM, Kalyan Thota wrote:
+>> From: Kalyan Thota <kalyant@codeaurora.org>
+>> 
+>> DPU runtime resume will request for a min vote on the AXI bus as
+>> it is a necessary step before turning ON the AXI clock.
+>> 
+>> The change does below
+>> 1) Move the icc path set before requesting runtime get_sync.
+>> 2) remove the dependency of hw catalog for min ib vote
+>> as it is initialized at a later point.
+>> 
+>> Signed-off-by: Kalyan Thota <kalyan_t@codeaurora.org>
+>> ---
+>>  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 12 +++++++-----
+>>  1 file changed, 7 insertions(+), 5 deletions(-)
+>> 
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c 
+>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+>> index ed636f1..cab387f 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+>> @@ -44,6 +44,8 @@
+>>  #define DPU_DEBUGFS_DIR "msm_dpu"
+>>  #define DPU_DEBUGFS_HWMASKNAME "hw_log_mask"
+>> 
+>> +#define MIN_IB_BW	400000000ULL /* Min ib vote 400MB */
+>> +
+>>  static int dpu_kms_hw_init(struct msm_kms *kms);
+>>  static void _dpu_kms_mmu_destroy(struct dpu_kms *dpu_kms);
+>> 
+>> @@ -932,6 +934,9 @@ static int dpu_kms_hw_init(struct msm_kms *kms)
+>>  		DPU_DEBUG("REG_DMA is not defined");
+>>  	}
+>> 
+>> +	if (of_device_is_compatible(dev->dev->of_node, "qcom,sc7180-mdss"))
+>> +		dpu_kms_parse_data_bus_icc_path(dpu_kms);
+>> +
+>>  	pm_runtime_get_sync(&dpu_kms->pdev->dev);
+>> 
+>>  	dpu_kms->core_rev = readl_relaxed(dpu_kms->mmio + 0x0);
+>> @@ -1037,9 +1042,6 @@ static int dpu_kms_hw_init(struct msm_kms *kms)
+>> 
+>>  	dpu_vbif_init_memtypes(dpu_kms);
+>> 
+>> -	if (of_device_is_compatible(dev->dev->of_node, "qcom,sc7180-mdss"))
+>> -		dpu_kms_parse_data_bus_icc_path(dpu_kms);
+>> -
+>>  	pm_runtime_put_sync(&dpu_kms->pdev->dev);
+>> 
+>>  	return 0;
+>> @@ -1196,10 +1198,10 @@ static int __maybe_unused 
+>> dpu_runtime_resume(struct device *dev)
+>> 
+>>  	ddev = dpu_kms->dev;
+>> 
+>> +	WARN_ON(!(dpu_kms->num_paths));
+>>  	/* Min vote of BW is required before turning on AXI clk */
+>>  	for (i = 0; i < dpu_kms->num_paths; i++)
+>> -		icc_set_bw(dpu_kms->path[i], 0,
+>> -			dpu_kms->catalog->perf.min_dram_ib);
+>> +		icc_set_bw(dpu_kms->path[i], 0, Bps_to_icc(MIN_IB_BW));
+>> 
+>>  	rc = msm_dss_enable_clk(mp->clk_config, mp->num_clk, true);
+>>  	if (rc) {
 > 
-> Changes since v3:
->  - Move qcom,sc7180-qmp-usb3-phy and qcom,sdm845-qmp-usb3-phy from
->    qcom,qmp-usb3-dp.yaml to qcom,qmp-phy.yaml
->  - Do not touch qcom,sm8250-qmp-usb3-phy compatible
+> With this patch now applied to 5.12-rc5, I am seeing the following when
+> booting the Lenovo Yoga C630 -
 > 
-> Changes since v2:
->  - Drop unused qmp_v4_usb3_rx_tbl
+> Mar 30 13:16:03 c630 kernel: [    2.038491] ------------[ cut here 
+> ]------------
+> Mar 30 13:16:03 c630 kernel: [    2.038495] WARNING: CPU: 3 PID: 125
+> at drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c:1196
+> dpu_runtime_resume+0xc0/0xf0 [msm]
+> Mar 30 13:16:03 c630 kernel: [    2.038551] Modules linked in:
+> ti_sn65dsi86 i2c_hid_of crct10dif_ce msm rtc_pm8xxx llcc_qcom ocmem
+> drm_kms_helper i2c_qcom_geni phy_qcom_qusb2 ipa(+) qcom_common
+> qcom_glink_smem qmi_helpers mdt_loader panel_simple drm pwm_bl
+> Mar 30 13:16:03 c630 kernel: [    2.038599] CPU: 3 PID: 125 Comm:
+> kworker/3:1 Not tainted 5.12.0-rc5 #1
+> Mar 30 13:16:03 c630 kernel: [    2.038605] Hardware name: LENOVO
+> 81JL/LNVNB161216, BIOS 9UCN33WW(V2.06) 06/ 4/2019
+> Mar 30 13:16:03 c630 kernel: [    2.038610] Workqueue: events
+> deferred_probe_work_func
+> Mar 30 13:16:03 c630 kernel: [    2.038621] pstate: 60400005 (nZCv
+> daif +PAN -UAO -TCO BTYPE=--)
+> Mar 30 13:16:03 c630 kernel: [    2.038627] pc :
+> dpu_runtime_resume+0xc0/0xf0 [msm]
+> Mar 30 13:16:03 c630 kernel: [    2.038674] lr :
+> pm_generic_runtime_resume+0x30/0x50
+> Mar 30 13:16:03 c630 kernel: [    2.038683] sp : ffff800010b9b7e0
+> Mar 30 13:16:03 c630 kernel: [    2.038685] x29: ffff800010b9b7e0 x28:
+> 0000000000000000
+> Mar 30 13:16:03 c630 kernel: [    2.038692] x27: 0000000000000000 x26:
+> ffff6b42c0c16cf4
+> Mar 30 13:16:03 c630 kernel: [    2.038698] x25: 000000007965f7df x24:
+> 0000000000000001
+> Mar 30 13:16:03 c630 kernel: [    2.038705] x23: ffff6b42c0a34180 x22:
+> ffffda2e0cc5b3d0
+> Mar 30 13:16:03 c630 kernel: [    2.038712] x21: ffffda2e0b3ed6a0 x20:
+> ffff6b42c6845000
+> Mar 30 13:16:03 c630 kernel: [    2.038718] x19: ffff6b42c6851080 x18:
+> ffffda2e0cce1220
+> Mar 30 13:16:03 c630 kernel: [    2.038725] x17: ffffda2e0cce1238 x16:
+> ffffda2e0b23e5f0
+> Mar 30 13:16:03 c630 kernel: [    2.038731] x15: 0000000040000000 x14:
+> 0000000000000000
+> Mar 30 13:16:03 c630 kernel: [    2.038738] x13: ffff6b42c5f0b5b0 x12:
+> 0000000000000000
+> Mar 30 13:16:03 c630 kernel: [    2.038744] x11: 0000000000000001 x10:
+> 0000000000003fff
+> Mar 30 13:16:03 c630 kernel: [    2.038750] x9 : 0000000000000000 x8 :
+> 0000000000000000
+> Mar 30 13:16:03 c630 kernel: [    2.038755] x7 : 0000000000000000 x6 :
+> 000000000c473b7e
+> Mar 30 13:16:03 c630 kernel: [    2.038761] x5 : 00ffffffffffffff x4 :
+> 00221806fff8f800
+> Mar 30 13:16:03 c630 kernel: [    2.038768] x3 : 0000000000000018 x2 :
+> ffffda2dc3d34320
+> Mar 30 13:16:03 c630 kernel: [    2.038774] x1 : 0000000000000000 x0 :
+> 0000000000000000
+> Mar 30 13:16:03 c630 kernel: [    2.038781] Call trace:
+> Mar 30 13:16:03 c630 kernel: [    2.038784]  
+> dpu_runtime_resume+0xc0/0xf0 [msm]
+> Mar 30 13:16:03 c630 kernel: [    2.038831]  
+> pm_generic_runtime_resume+0x30/0x50
+> Mar 30 13:16:03 c630 kernel: [    2.038836]  
+> __genpd_runtime_resume+0x30/0xb0
+> Mar 30 13:16:03 c630 kernel: [    2.038842]  
+> genpd_runtime_resume+0x90/0x250
+> Mar 30 13:16:03 c630 kernel: [    2.038848]  __rpm_callback+0x90/0x160
+> Mar 30 13:16:03 c630 kernel: [    2.038854]  rpm_callback+0x24/0x84
+> Mar 30 13:16:03 c630 kernel: [    2.038859]  rpm_resume+0x450/0x6ec
+> Mar 30 13:16:03 c630 kernel: [    2.038865]  
+> __pm_runtime_resume+0x3c/0x90
+> Mar 30 13:16:03 c630 kernel: [    2.038870]  
+> dpu_kms_hw_init+0x124/0x5dc [msm]
+> Mar 30 13:16:03 c630 kernel: [    2.038918]  msm_drm_bind+0x468/0x594 
+> [msm]
+> Mar 30 13:16:03 c630 kernel: [    2.038965]  
+> try_to_bring_up_master+0x164/0x1d0
+> Mar 30 13:16:03 c630 kernel: [    2.038973]
+> component_master_add_with_match+0xb8/0x100
+> Mar 30 13:16:03 c630 kernel: [    2.038979]  msm_pdev_probe+0x260/0x300 
+> [msm]
+> Mar 30 13:16:03 c630 kernel: [    2.039026]  platform_probe+0x68/0xe0
+> Mar 30 13:16:03 c630 kernel: [    2.039032]  really_probe+0xe4/0x4c0
+> Mar 30 13:16:03 c630 kernel: [    2.039036]  
+> driver_probe_device+0x58/0xc0
+> Mar 30 13:16:03 c630 kernel: [    2.039040]  
+> __device_attach_driver+0xa8/0x104
+> Mar 30 13:16:03 c630 kernel: [    2.039045]  bus_for_each_drv+0x78/0xd0
+> Mar 30 13:16:03 c630 kernel: [    2.039051]  __device_attach+0xd8/0x17c
+> Mar 30 13:16:03 c630 kernel: [    2.039055]  
+> device_initial_probe+0x14/0x20
+> Mar 30 13:16:03 c630 kernel: [    2.039059]  bus_probe_device+0x9c/0xa4
+> Mar 30 13:16:03 c630 kernel: [    2.039065]  
+> deferred_probe_work_func+0x74/0xb0
+> Mar 30 13:16:03 c630 kernel: [    2.039069]  
+> process_one_work+0x1d0/0x494
+> Mar 30 13:16:03 c630 kernel: [    2.039076]  worker_thread+0x13c/0x470
+> Mar 30 13:16:03 c630 kernel: [    2.039080]  kthread+0x158/0x160
+> Mar 30 13:16:03 c630 kernel: [    2.039085]  ret_from_fork+0x10/0x34
+> Mar 30 13:16:03 c630 kernel: [    2.039093] ---[ end trace 
+> 65a4c9cc3f59c59a ]---
+> Mar 30 13:16:03 c630 kernel: [    2.039124] [drm:dpu_kms_hw_init:943]
+> dpu hardware revision:0x40000000
 > 
-> Changes since v1:
->  - Provide dt bindings
->  - Split register renaming from sm8250-dp-phy patch
->  - Add respective changes to sm8250 device tree
-> 
-> The following changes since commit a38fd8748464831584a19438cbb3082b5a2dab15:
-> 
->   Linux 5.12-rc2 (2021-03-05 17:33:41 -0800)
+Hi Steev,
 
-This should be based on phy-next. This fails to apply for me. Can you
-please rebase and acks and resend
+The WARN_ON is true only for the device with compatible 
+"qcom,sc7180-mdss". For other devices its a
+false alarm. Can you please try with the below change ?
 
-Thanks
+https://patchwork.kernel.org/project/linux-arm-msm/patch/1617190020-7931-1-git-send-email-kalyan_t@codeaurora.org/
 
--- 
-~Vinod
+Thanks,
+Kalyan
+
+> _______________________________________________
+> Freedreno mailing list
+> Freedreno@lists.freedesktop.org
+> https://lists.freedesktop.org/mailman/listinfo/freedreno
