@@ -2,134 +2,261 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5D4B634FEE8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Mar 2021 13:01:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9438034FF45
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Mar 2021 13:09:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235155AbhCaLAJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 31 Mar 2021 07:00:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57052 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235308AbhCaK7t (ORCPT
+        id S234995AbhCaLJL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 31 Mar 2021 07:09:11 -0400
+Received: from mailout2.w1.samsung.com ([210.118.77.12]:42211 "EHLO
+        mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229624AbhCaLIo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 31 Mar 2021 06:59:49 -0400
-Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8B9FC06175F
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Mar 2021 03:59:48 -0700 (PDT)
-Received: by mail-pj1-x1029.google.com with SMTP id kr3-20020a17090b4903b02900c096fc01deso1022631pjb.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Mar 2021 03:59:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=PV/1w7wcR5EE54SMbXvfgl/+KIdSOavaMh3qdPHWkT4=;
-        b=xnCxl4xI7gJOzkzfbUOyvakSi2+liF2a2reHCvLFRCK/0VTHfd650+NmCj2axKS9l6
-         p60jY0xySGqlq4tbjyV1NSprPfDIj8Sau3A0rU0o8KyetydWcfd9Jmb7VWfO4xnvu9md
-         yBwt5GGiwVKTdVQKwPy2lc0kZnT3Zxi/DTi3syWq3J5qRtzovIYdc4Wq4I88BJIp4CUn
-         11pdsnzCznAi0+UiwLz5W9YoVb1gJzq4G9GwKheuT+R8+pJgi1jn92Zj0A5/Li+5BAJ/
-         JFiWzKEJbP9xJQgFgnUyJKhoPiUuQbtFKIK/i8GxdMbGZgRIBAxQkY+GOW+pbwvDAQj1
-         HRLA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=PV/1w7wcR5EE54SMbXvfgl/+KIdSOavaMh3qdPHWkT4=;
-        b=ff9FMwkPvKSCcgWGIpocTi7nAA63r5YIjTkp5iF+xd+xiIZNQuAKZiCEWANmpUxWkM
-         I/2o+IgjRfj2TxQJPLeQSUb7VCeijbEodSzcTEYaHHoErrm9IRHtHnVNbT+jokaXYpw3
-         BWkLXJO4+iG5We2rqX2p2i823AO8zt+uHkQgEiT6Qh6xsJu5QHRAAzpZ4/9neXlP2qgB
-         nTvBJvpqrVLltQnN3PfM5CPYeeqq/HOc/vdtlLZy3BBWcEL0LD7qpRKA7HORQdDGquYu
-         at4BHB4Q9ooxU4IqJUvzlcanSVbNf27vY9qW2FaWPiVPVmX3RPn9NVNi+MyzfypRzZPB
-         qQPQ==
-X-Gm-Message-State: AOAM531NROotPRvKnFYdzyhhbY9RlvlokNhZ388R35/3KWhWol98TxmB
-        0BM7DGhPzkKf7pX7uXumqCGJ
-X-Google-Smtp-Source: ABdhPJz0SbkgPFMCGPuS5aBBbWb/X08gINb0l3jm6SHM0ypo7KHZrmu64oBV58Fitx5HjIX5KEI7vw==
-X-Received: by 2002:a17:902:bf46:b029:e7:36be:9ce8 with SMTP id u6-20020a170902bf46b02900e736be9ce8mr2775395pls.34.1617188388144;
-        Wed, 31 Mar 2021 03:59:48 -0700 (PDT)
-Received: from work ([103.77.37.129])
-        by smtp.gmail.com with ESMTPSA id ft22sm1841624pjb.8.2021.03.31.03.59.45
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 31 Mar 2021 03:59:47 -0700 (PDT)
-Date:   Wed, 31 Mar 2021 16:29:43 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Bhaumik Bhatt <bbhatt@codeaurora.org>
-Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
-        jhugo@codeaurora.org, linux-kernel@vger.kernel.org,
-        carl.yin@quectel.com, naveen.kumar@quectel.com,
-        loic.poulain@linaro.org, abickett@codeaurora.org
-Subject: Re: [PATCH v1 3/7] bus: mhi: core: Handle EDL mode entry
- appropriately
-Message-ID: <20210331105943.GB15610@work>
-References: <1617067704-28850-1-git-send-email-bbhatt@codeaurora.org>
- <1617067704-28850-4-git-send-email-bbhatt@codeaurora.org>
+        Wed, 31 Mar 2021 07:08:44 -0400
+Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
+        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20210331110843euoutp0265bfa828ae3611966956330673d81412~xaMHta6mr0402204022euoutp02G
+        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Mar 2021 11:08:43 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20210331110843euoutp0265bfa828ae3611966956330673d81412~xaMHta6mr0402204022euoutp02G
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1617188923;
+        bh=j+UFKhaDTfw2uKkr/VQDaf1s66d3cV4S9KODX1UazYQ=;
+        h=Date:Subject:To:Cc:From:In-Reply-To:References:From;
+        b=PiVVIbjvluJBbF1JJNhQ9q6YeYiuRoZrXwgXjBuGLkDah0AI9ta3bEDAXjvzq4x0a
+         sfZnRWkw9HzpEQAHYjJBr6t2urNuJobS7turJBkqSbmsDXwO6XcSu5HDtuxKZdOQMt
+         /657S/ZDOX5Ww4WRKk7/zCpY0BL43dYTE0QEfkWk=
+Received: from eusmges2new.samsung.com (unknown [203.254.199.244]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
+        20210331110842eucas1p2ce1bf4d00cf2397f86bce5bc521972af~xaMHNsH791935019350eucas1p2B;
+        Wed, 31 Mar 2021 11:08:42 +0000 (GMT)
+Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
+        eusmges2new.samsung.com (EUCPMTA) with SMTP id 8A.B0.09444.A3854606; Wed, 31
+        Mar 2021 12:08:42 +0100 (BST)
+Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
+        eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
+        20210331110842eucas1p1576a6beef2125a458efc4db8c56819d2~xaMGlczxA2294722947eucas1p1R;
+        Wed, 31 Mar 2021 11:08:42 +0000 (GMT)
+Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
+        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
+        20210331110842eusmtrp2e24972c498edad3a5ba610be4a304d65~xaMGkSfha0192101921eusmtrp2X;
+        Wed, 31 Mar 2021 11:08:42 +0000 (GMT)
+X-AuditID: cbfec7f4-dd5ff700000024e4-05-6064583a52ef
+Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
+        eusmgms1.samsung.com (EUCPMTA) with SMTP id 60.A1.08705.93854606; Wed, 31
+        Mar 2021 12:08:41 +0100 (BST)
+Received: from localhost (unknown [106.210.131.79]) by eusmtip1.samsung.com
+        (KnoxPortal) with ESMTPA id
+        20210331110840eusmtip1a267e66273b8c6acbe8b5397b1cb6cd7~xaMEydLoj1360613606eusmtip1G;
+        Wed, 31 Mar 2021 11:08:39 +0000 (GMT)
+Message-ID: <8887ded7-d1ab-844c-e3a3-f39f6ef6264a@samsung.com>
+Date:   Wed, 31 Mar 2021 13:08:38 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1617067704-28850-4-git-send-email-bbhatt@codeaurora.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:88.0)
+        Gecko/20100101 Thunderbird/88.0
+Subject: Re: [PATCH v2 11/14] drm/bridge: ti-sn65dsi86: Power things
+ properly for reading the EDID
+Content-Language: en-GB
+To:     Douglas Anderson <dianders@chromium.org>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jernej Skrabec <jernej.skrabec@siol.net>,
+        Sam Ravnborg <sam@ravnborg.org>
+Cc:     robdclark@chromium.org, dri-devel@lists.freedesktop.org,
+        David Airlie <airlied@linux.ie>, linux-arm-msm@vger.kernel.org,
+        Steev Klimaszewski <steev@kali.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>,
+        Robert Foss <robert.foss@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-kernel@vger.kernel.org
+From:   Andrzej Hajda <a.hajda@samsung.com>
+In-Reply-To: <20210329195255.v2.11.Ied721dc895156046ac523baa55a71da241cd09c7@changeid>
+Content-Transfer-Encoding: 8bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrFKsWRmVeSWpSXmKPExsWy7djPc7pWESkJBte/aVv0njvJZHF6/zsW
+        i7PLDrJZXPn6ns3i6veXzBYn31xlseicuITdYuL+s+wWl3fNYbM41Bdtce3nY2aLT7MeMlus
+        +LmV0aK9y8bi5/U2Zovjd54yOQh4vL/Ryu4xu+Eii8fsjpmsHov3vGTymLPoBrPHiQmXmDzu
+        XNvD5rH92wNWj/vdx5k8lky7yuZxoHcyi8fnTXIBPFFcNimpOZllqUX6dglcGbd+nmEuOKZR
+        MWn2dPYGxs3yXYwcHBICJhI//4R1MXJxCAmsYJRYcugucxcjJ5DzhVHi/+lAiMRnRolPu/ex
+        gyRAGp68XcACkVjOKLH//zs2COcFo0TDyS9sIGN5Bewkti+UBTFZBFQllj7IB+nlFRCUODnz
+        CQuILSqQILHqxnImEFtYIEXi9aaTYIuZBcQlmr6sZAUZKSLwj1Fi9cTHTCAOs8BnJolPUw6B
+        dbAJaEr83XyTDcTmFAiTOL75JCNEt7xE89bZzCANEgKXOCV6dnyFOttF4t6pZ8wQtrDEq+Nb
+        oOIyEv93zmeCsOsl7q9ogWruYJTYumEnVIO1xJ1zv8A+YwbavH6XPkTYUWLam2WMkHDkk7jx
+        VhDiBj6JSdumM0OEeSU62oQgqhUl7p/dCjVQXGLpha9sExiVZiGFyywk/89C8s0shL0LGFlW
+        MYqnlhbnpqcWG+WllusVJ+YWl+al6yXn525iBCbH0/+Of9nBuPzVR71DjEwcjIcYJTiYlUR4
+        hQ8kJgjxpiRWVqUW5ccXleakFh9ilOZgURLnTdqyJl5IID2xJDU7NbUgtQgmy8TBKdXAZPlW
+        oGlG3LorNTL5C14lXL9Zt705UM/qePnpZ3aM98/xHX4ZX6fTePm5/UsFIbmMOxt1PARfMjdl
+        GkTuvCDx4qmAfVRdaCQLs3nS3LQzCw3unum6/7pCeNNrwXvnAmsKF27c3uN4z8xHcp1oxanz
+        S453t1YcO7SPT0E8jPtM7z/B+x3vu/bIHt5cWrR45bdt298anE0Izfz9Jf4ho+zrDKFN+nb6
+        1hdPra0LbyyL/vi3cJvG835l/uZN/2ZkX/A0eaNxtanTJsXfc1r84SOG50zfB3gp7c39bL1a
+        pNc/nplvwWvugwvNA37rfzM+Iasvulqczehox0652h2e+8WEXvTdm6r8xE7e3rJ+C98FJZbi
+        jERDLeai4kQAKzEsm/0DAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrHIsWRmVeSWpSXmKPExsVy+t/xu7pWESkJBp90LXrPnWSyOL3/HYvF
+        2WUH2SyufH3PZnH1+0tmi5NvrrJYdE5cwm4xcf9ZdovLu+awWRzqi7a49vMxs8WnWQ+ZLVb8
+        3Mpo0d5lY/HzehuzxfE7T5kcBDze32hl95jdcJHFY3bHTFaPxXteMnnMWXSD2ePEhEtMHneu
+        7WHz2P7tAavH/e7jTB5Lpl1l8zjQO5nF4/MmuQCeKD2bovzSklSFjPziElulaEMLIz1DSws9
+        IxNLPUNj81grI1MlfTublNSczLLUIn27BL2MWz/PMBcc06iYNHs6ewPjZvkuRk4OCQETiSdv
+        F7B0MXJxCAksZZT48P0VC0RCXGL3/LfMELawxJ9rXWwQRc8YJebf2cHaxcjBwStgJ7F9oSyI
+        ySKgKrH0QT5IOa+AoMTJmU/AxogKJEic/TCPCcQWFkiRaPy4khHEZgYa3/RlJSvISBGBBiaJ
+        S3cXM4E4zAJfmSRaXi1lh1h2h1Hi7OoFYO1sApoSfzffZAOxOQXCJI5vPgk1ykyia2sXlC0v
+        0bx1NvMERqFZSC6ZhWTjLCQts5C0LGBkWcUoklpanJueW2yoV5yYW1yal66XnJ+7iRGYELYd
+        +7l5B+O8Vx/1DjEycTAeYpTgYFYS4RU+kJggxJuSWFmVWpQfX1Sak1p8iNEUGBoTmaVEk/OB
+        KSmvJN7QzMDU0MTM0sDU0sxYSZx369w18UIC6YklqdmpqQWpRTB9TBycUg1Ms0tjYtikrp6K
+        0C2Pk8iLsYw+c7Az+4HjW77aylm6wQKznTpszkzK7RJZm/M0cnIVz9JNijZeGvdsr90rEX2T
+        8zQnsatgbcPTzuM9Bev5+f1alk1aXVX9L6x234En1dNt3n+fUagc+bP0TUr8iaCZ9hb7pxSd
+        ft7XIhAQr1okrvCjeWup/aaw9tlvpk490caYW7iQIc172l79yLDTYrOqRaUDBB+6Llij4Kxx
+        6MHz4OWsM3kD5kqFh/c/qvVjvBbgl7Bm70cTe+kMC6Pu34evN4eGfms6t5Q3MjWxQfDvzVZZ
+        PcEW/i/HrvT0P+UKnaz1QbVc93/VAp3uvYc/Orb4/VlTsUFno/jFi6sEOZRYijMSDbWYi4oT
+        AStYB3CRAwAA
+X-CMS-MailID: 20210331110842eucas1p1576a6beef2125a458efc4db8c56819d2
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-RootMTR: 20210330025435eucas1p12b96966451ee0691f6d5d99b64ac2c8b
+X-EPHeader: CA
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20210330025435eucas1p12b96966451ee0691f6d5d99b64ac2c8b
+References: <20210330025345.3980086-1-dianders@chromium.org>
+        <CGME20210330025435eucas1p12b96966451ee0691f6d5d99b64ac2c8b@eucas1p1.samsung.com>
+        <20210329195255.v2.11.Ied721dc895156046ac523baa55a71da241cd09c7@changeid>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Mar 29, 2021 at 06:28:20PM -0700, Bhaumik Bhatt wrote:
-> Device entering EDL or Emergency Download Mode will be in a
-> SYS_ERROR MHI state. This requires MHI host to proceed with the
-> EDL image download over BHI before device can enter an MHI READY
-> state and proceed with further bootup. Allow this to be handled
-> by relying on the execution environment check after SYS_ERROR
-> processing to determine whether to wait for an MHI READY or
-> download the EDL image over BHI after moving MHI PM state to
-> Power on Reset internally. This way handling is contained well
-> within the MHI core driver and helps pave the way for Flash
-> Programmer execution environment functionality.
-> 
-> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
 
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-
-Thanks,
-Mani
-
+W dniu 30.03.2021 o 04:53, Douglas Anderson pisze:
+> eDP panels won't provide their EDID unless they're powered on. Let's
+> chain a power-on before we read the EDID. This roughly matches what
+> was done in 'parade-ps8640.c'.
+>
+> NOTE: The old code attempted to call pm_runtime_get_sync() before
+> reading the EDID. While that was enough to power the bridge chip on,
+> it wasn't enough to talk to the panel for two reasons:
+> 1. Since we never ran the bridge chip's pre-enable then we never set
+>     the bit to ignore HPD. This meant the bridge chip didn't even _try_
+>     to go out on the bus and communicate with the panel.
+> 2. Even if we fixed things to ignore HPD, the EDID still wouldn't read
+>     if the panel wasn't on.
+>
+> One thing that's a bit odd here is taking advantage of the EDID that
+> the core might have cached for us. See the patch ("drm/edid: Use the
+> cached EDID in drm_get_edid() if eDP"). We manage to get at the cache
+> by:
+> - Instantly failing aux transfers if we're not powered.
+> - If the first read of the EDID fails we try again after powering.
+>
+> Fixes: 58074b08c04a ("drm/bridge: ti-sn65dsi86: Read EDID blob over DDC")
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
 > ---
->  drivers/bus/mhi/core/pm.c | 19 ++++++++++++++++++-
->  1 file changed, 18 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
-> index fbe9447..b65222e 100644
-> --- a/drivers/bus/mhi/core/pm.c
-> +++ b/drivers/bus/mhi/core/pm.c
-> @@ -564,6 +564,7 @@ static void mhi_pm_disable_transition(struct mhi_controller *mhi_cntrl)
->  static void mhi_pm_sys_error_transition(struct mhi_controller *mhi_cntrl)
->  {
->  	enum mhi_pm_state cur_state, prev_state;
-> +	enum dev_st_transition next_state;
->  	struct mhi_event *mhi_event;
->  	struct mhi_cmd_ctxt *cmd_ctxt;
->  	struct mhi_cmd *mhi_cmd;
-> @@ -677,7 +678,23 @@ static void mhi_pm_sys_error_transition(struct mhi_controller *mhi_cntrl)
->  		er_ctxt->wp = er_ctxt->rbase;
->  	}
->  
-> -	mhi_ready_state_transition(mhi_cntrl);
-> +	/* Transition to next state */
-> +	if (MHI_IN_PBL(mhi_get_exec_env(mhi_cntrl))) {
-> +		write_lock_irq(&mhi_cntrl->pm_lock);
-> +		cur_state = mhi_tryset_pm_state(mhi_cntrl, MHI_PM_POR);
-> +		write_unlock_irq(&mhi_cntrl->pm_lock);
-> +		if (cur_state != MHI_PM_POR) {
-> +			dev_err(dev, "Error moving to state %s from %s\n",
-> +				to_mhi_pm_state_str(MHI_PM_POR),
-> +				to_mhi_pm_state_str(cur_state));
-> +			goto exit_sys_error_transition;
-> +		}
-> +		next_state = DEV_ST_TRANSITION_PBL;
-> +	} else {
-> +		next_state = DEV_ST_TRANSITION_READY;
-> +	}
+> Depending on what people think of the other patches in this series,
+> some of this could change.
+> - If everyone loves the "runtime PM" in the panel driver then we
+>    could, in theory, put the pre-enable chaining straight in the "aux
+>    transfer" function.
+> - If everyone hates the EDID cache moving to the core then we can
+>    avoid some of the awkward flow of things and keep the EDID cache in
+>    the sn65dsi86 driver.
+
+
+I wonder if this shouldn't be solved in the core - ie caller of 
+get_modes callback should be responsible for powering up the pipeline, 
+otherwise we need to repeat this stuff in every bridge/panel driver.
+
+Any thoughts?
+
+
+Regards
+
+Andrzej
+
+
+>
+> (no changes since v1)
+>
+>   drivers/gpu/drm/bridge/ti-sn65dsi86.c | 39 +++++++++++++++++++++++++--
+>   1 file changed, 37 insertions(+), 2 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+> index c0398daaa4a6..673c9f1c2d8e 100644
+> --- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+> +++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+> @@ -128,6 +128,7 @@
+>    * @dp_lanes:     Count of dp_lanes we're using.
+>    * @ln_assign:    Value to program to the LN_ASSIGN register.
+>    * @ln_polrs:     Value for the 4-bit LN_POLRS field of SN_ENH_FRAME_REG.
+> + * @pre_enabled:  If true then pre_enable() has run.
+>    *
+>    * @gchip:        If we expose our GPIOs, this is used.
+>    * @gchip_output: A cache of whether we've set GPIOs to output.  This
+> @@ -155,6 +156,7 @@ struct ti_sn_bridge {
+>   	int				dp_lanes;
+>   	u8				ln_assign;
+>   	u8				ln_polrs;
+> +	bool				pre_enabled;
+>   
+>   #if defined(CONFIG_OF_GPIO)
+>   	struct gpio_chip		gchip;
+> @@ -268,11 +270,33 @@ static int ti_sn_bridge_connector_get_modes(struct drm_connector *connector)
+>   {
+>   	struct ti_sn_bridge *pdata = connector_to_ti_sn_bridge(connector);
+>   	struct edid *edid;
+> +	bool was_enabled;
+>   	int num = 0;
+>   
+> -	pm_runtime_get_sync(pdata->dev);
+> +	/*
+> +	 * Try to get the EDID first without anything special. There are
+> +	 * three things that could happen with this call.
+> +	 * a) It might just return from its cache.
+> +	 * b) It might try to initiate an AUX transfer which might work.
+> +	 * c) It might try to initiate an AUX transfer which might fail because
+> +	 *    we're not powered up.
+> +	 *
+> +	 * If we get a failure we'll assume case c) and try again. NOTE: we
+> +	 * don't want to power up every time because that's slow and we don't
+> +	 * have visibility into whether the data has already been cached.
+> +	 */
+>   	edid = drm_get_edid(connector, &pdata->aux.ddc);
+> -	pm_runtime_put(pdata->dev);
+> +	if (!edid) {
+> +		was_enabled = pdata->pre_enabled;
 > +
-> +	mhi_queue_state_transition(mhi_cntrl, next_state);
->  
->  exit_sys_error_transition:
->  	dev_dbg(dev, "Exiting with PM state: %s, MHI state: %s\n",
-> -- 
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
-> 
+> +		if (!was_enabled)
+> +			drm_bridge_chain_pre_enable(&pdata->bridge);
+> +
+> +		edid = drm_get_edid(connector, &pdata->aux.ddc);
+> +
+> +		if (!was_enabled)
+> +			drm_bridge_chain_post_disable(&pdata->bridge);
+> +	}
+>   
+>   	if (edid) {
+>   		if (drm_edid_is_valid(edid))
+> @@ -852,12 +876,16 @@ static void ti_sn_bridge_pre_enable(struct drm_bridge *bridge)
+>   			   HPD_DISABLE);
+>   
+>   	drm_panel_prepare(pdata->panel);
+> +
+> +	pdata->pre_enabled = true;
+>   }
+>   
+>   static void ti_sn_bridge_post_disable(struct drm_bridge *bridge)
+>   {
+>   	struct ti_sn_bridge *pdata = bridge_to_ti_sn_bridge(bridge);
+>   
+> +	pdata->pre_enabled = false;
+> +
+>   	drm_panel_unprepare(pdata->panel);
+>   
+>   	clk_disable_unprepare(pdata->refclk);
+> @@ -891,6 +919,13 @@ static ssize_t ti_sn_aux_transfer(struct drm_dp_aux *aux,
+>   	int ret;
+>   	u8 addr_len[SN_AUX_LENGTH_REG + 1 - SN_AUX_ADDR_19_16_REG];
+>   
+> +	/*
+> +	 * Things just won't work if the panel isn't powered. Return failure
+> +	 * right away.
+> +	 */
+> +	if (!pdata->pre_enabled)
+> +		return -EIO;
+> +
+>   	if (len > SN_AUX_MAX_PAYLOAD_BYTES)
+>   		return -EINVAL;
+>   
