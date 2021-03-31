@@ -2,170 +2,229 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 16EB83502D4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Mar 2021 16:56:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 187C23502CF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Mar 2021 16:55:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236023AbhCaOzk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 31 Mar 2021 10:55:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51344 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235758AbhCaOzV (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 31 Mar 2021 10:55:21 -0400
-Received: from mail-qk1-x736.google.com (mail-qk1-x736.google.com [IPv6:2607:f8b0:4864:20::736])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0BEAC06174A
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Mar 2021 07:55:20 -0700 (PDT)
-Received: by mail-qk1-x736.google.com with SMTP id o5so19607361qkb.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Mar 2021 07:55:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=3lwR7HXndtvl1w7O6ZpDHif+FQe2GlWLZc8UMd7kr0w=;
-        b=Q5gB522Cib9/yr2J2bN+e8A1FXsZWvmP2Me2QWawupdm+sCa3WkCW71rbPYdbEelXU
-         o3S3qH2G76n8cjtY2HV8faFVosUovgnrTf1IBz9Xn5ajC7Jm8KubPmM93fU+T3oL7RwE
-         5BrtIGKHxKZdSxirTzZE+F8UgLfdOrkDS6KjQ=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=3lwR7HXndtvl1w7O6ZpDHif+FQe2GlWLZc8UMd7kr0w=;
-        b=kcmsjrRM7N0W1Fk+7jebGuL22mhV6L1ePrLCIEGBGKZexGCcd3GDo6YjD1YleFTQaX
-         aNrPm1rod302zPvePWdzLV5fGQy+dypzlPQMm5cYH+8oXtYlgifMyFfmYG6/XWU9NG9X
-         D9ODnnXIhdPftVZ807j33Eb7T3zERppPC2af61mlo4ShCDh9hxz/98ZlRLtwXhJCWbtJ
-         MiI9ELQmEBMyrmrAac9roCTIOsjtwGhfP50Fz1EwO4YuAtopEE8TIGrxq+Z+VKjiGjGF
-         fv0O5OT9ztrqveNmekrH+HAvKGlr3XFB2nICoip1Xf7FqUhGQry8vJmCknmxiRrJLJXy
-         stkQ==
-X-Gm-Message-State: AOAM532TO0pjl/AWXNPcS2uIZG+deFjFWYpkur3IB2l7atrlfhswATyC
-        FLMX+xNnH1+P+VtCPm/wUoTvlYujKQW7cQ==
-X-Google-Smtp-Source: ABdhPJwx05Vd02pOdLHZsNp0U/Qg+UTPg2AxEm6vS+gtJ2cGzjx1MYyK2MXJqEd9RxB4a3ydkfJXHQ==
-X-Received: by 2002:a05:620a:699:: with SMTP id f25mr3526587qkh.249.1617202519798;
-        Wed, 31 Mar 2021 07:55:19 -0700 (PDT)
-Received: from mail-yb1-f174.google.com (mail-yb1-f174.google.com. [209.85.219.174])
-        by smtp.gmail.com with ESMTPSA id p8sm1542893qtu.8.2021.03.31.07.55.19
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 31 Mar 2021 07:55:19 -0700 (PDT)
-Received: by mail-yb1-f174.google.com with SMTP id x189so21470475ybg.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Mar 2021 07:55:19 -0700 (PDT)
-X-Received: by 2002:a25:2f4b:: with SMTP id v72mr4829154ybv.79.1617202097234;
- Wed, 31 Mar 2021 07:48:17 -0700 (PDT)
-MIME-Version: 1.0
-References: <20210330025345.3980086-1-dianders@chromium.org>
- <CGME20210330025435eucas1p12b96966451ee0691f6d5d99b64ac2c8b@eucas1p1.samsung.com>
- <20210329195255.v2.11.Ied721dc895156046ac523baa55a71da241cd09c7@changeid> <8887ded7-d1ab-844c-e3a3-f39f6ef6264a@samsung.com>
-In-Reply-To: <8887ded7-d1ab-844c-e3a3-f39f6ef6264a@samsung.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Wed, 31 Mar 2021 07:48:05 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=XJ5qtMDn5B431ObPS0JU3-P3755N7jzLZbbcc6XpqYtg@mail.gmail.com>
-Message-ID: <CAD=FV=XJ5qtMDn5B431ObPS0JU3-P3755N7jzLZbbcc6XpqYtg@mail.gmail.com>
-Subject: Re: [PATCH v2 11/14] drm/bridge: ti-sn65dsi86: Power things properly
- for reading the EDID
-To:     Andrzej Hajda <a.hajda@samsung.com>
-Cc:     Neil Armstrong <narmstrong@baylibre.com>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@siol.net>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Rob Clark <robdclark@chromium.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        David Airlie <airlied@linux.ie>,
+        id S235987AbhCaOyh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 31 Mar 2021 10:54:37 -0400
+Received: from mail.kernel.org ([198.145.29.99]:49140 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S236161AbhCaOyQ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 31 Mar 2021 10:54:16 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 698AA6008E;
+        Wed, 31 Mar 2021 14:54:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+        s=korg; t=1617202456;
+        bh=VKBC0u6SvzEz/hmDHlKXojSCcKDOokoLgPAaDdZq3x0=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=hxuZkrf+pTdHHfYZbTJuEwDjMSkia2OruNXnM1lE3IkgPouUk35W4bUOsu5tGj3Ql
+         UosSR5LnlpCXeJLj8bU5hGuLcpOJSsmV/zXOX8SqcFMQJaZMSFBuC60BBGODYCaljW
+         9YcIS0MOuF5o0XYAqrMcB9EQpz+is5MbNB8nU9Is=
+Date:   Wed, 31 Mar 2021 16:54:13 +0200
+From:   Greg KH <gregkh@linuxfoundation.org>
+To:     Loic Poulain <loic.poulain@linaro.org>
+Cc:     Jakub Kicinski <kuba@kernel.org>,
+        David Miller <davem@davemloft.net>,
+        Network Development <netdev@vger.kernel.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Steev Klimaszewski <steev@kali.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>,
-        Robert Foss <robert.foss@linaro.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Aleksander Morgado <aleksander@aleksander.es>
+Subject: Re: [PATCH net-next v6 1/2] net: Add a WWAN subsystem
+Message-ID: <YGSNFS5wl13L4OoU@kroah.com>
+References: <1617187150-13727-1-git-send-email-loic.poulain@linaro.org>
+ <YGRSdQxTuxIy0Qsc@kroah.com>
+ <CAMZdPi-f4wDiFSuib5h17SaFWgORv8q7jKdh8fS_C=iihc0a_A@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAMZdPi-f4wDiFSuib5h17SaFWgORv8q7jKdh8fS_C=iihc0a_A@mail.gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
-
-On Wed, Mar 31, 2021 at 4:08 AM Andrzej Hajda <a.hajda@samsung.com> wrote:
->
->
-> W dniu 30.03.2021 o 04:53, Douglas Anderson pisze:
-> > eDP panels won't provide their EDID unless they're powered on. Let's
-> > chain a power-on before we read the EDID. This roughly matches what
-> > was done in 'parade-ps8640.c'.
+On Wed, Mar 31, 2021 at 01:35:04PM +0200, Loic Poulain wrote:
+> Hi Greg,
+> 
+> On Wed, 31 Mar 2021 at 12:44, Greg KH <gregkh@linuxfoundation.org> wrote:
 > >
-> > NOTE: The old code attempted to call pm_runtime_get_sync() before
-> > reading the EDID. While that was enough to power the bridge chip on,
-> > it wasn't enough to talk to the panel for two reasons:
-> > 1. Since we never ran the bridge chip's pre-enable then we never set
-> >     the bit to ignore HPD. This meant the bridge chip didn't even _try_
-> >     to go out on the bus and communicate with the panel.
-> > 2. Even if we fixed things to ignore HPD, the EDID still wouldn't read
-> >     if the panel wasn't on.
+> > On Wed, Mar 31, 2021 at 12:39:09PM +0200, Loic Poulain wrote:
+> > > This change introduces initial support for a WWAN subsystem. Given the
+> > > complexity and heterogeneity of existing WWAN hardwares and interfaces,
+> > > there is no strict definition of what a WWAN device is and how it should
+> > > be represented. It's often a collection of multiple devices that perform
+> > > the global WWAN feature (netdev, tty, chardev, etc).
+> > >
+> > > One usual way to expose modem controls and configuration is via high
+> > > level protocols such as the well known AT command protocol, MBIM or
+> > > QMI. The USB modems started to expose that as character devices, and
+> > > user daemons such as ModemManager learnt how to deal with them. This
+> > > initial version adds the concept of WWAN port, which can be created
+> > > by any driver to expose one of these protocols. The WWAN core takes
+> > > care of the generic part, including character device creation and lets
+> > > the driver implementing access (fops) for the selected protocol.
+> > >
+> > > Since the different components/devices do no necesserarly know about
+> > > each others, and can be created/removed in different orders, the
+> > > WWAN core ensures that all WAN ports that contribute to the whole
+> > > WWAN feature are grouped under the same virtual WWAN device, relying
+> > > on the provided parent device (e.g. mhi controller, USB device). It's
+> > > a 'trick' I copied from Johannes's earlier WWAN subsystem proposal.
+> > >
+> > > This initial version is purposely minimalist, it's essentially moving
+> > > the generic part of the previously proposed mhi_wwan_ctrl driver inside
+> > > a common WWAN framework, but the implementation is open and flexible
+> > > enough to allow extension for further drivers.
+> > >
+> > > Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+> > > ---
+> > >  v2: update copyright (2021)
+> > >  v3: Move driver to dedicated drivers/net/wwan directory
+> > >  v4: Rework to use wwan framework instead of self cdev management
+> > >  v5: Fix errors/typos in Kconfig
+> > >  v6: - Move to new wwan interface, No need dedicated call to wwan_dev_create
+> > >      - Cleanup code (remove legacy from mhi_uci, unused defines/vars...)
+> > >      - Remove useless write_lock mutex
+> > >      - Add mhi_wwan_wait_writable and mhi_wwan_wait_dlqueue_lock_irq helpers
+> > >      - Rework locking
+> > >      - Add MHI_WWAN_TX_FULL flag
+> > >      - Add support for NONBLOCK read/write
+> > >
+> > >  drivers/net/Kconfig          |   2 +
+> > >  drivers/net/Makefile         |   1 +
+> > >  drivers/net/wwan/Kconfig     |  22 +++
+> > >  drivers/net/wwan/Makefile    |   7 +
+> > >  drivers/net/wwan/wwan_core.c | 317 +++++++++++++++++++++++++++++++++++++++++++
+> > >  include/linux/wwan.h         |  73 ++++++++++
+> > >  6 files changed, 422 insertions(+)
+> > >  create mode 100644 drivers/net/wwan/Kconfig
+> > >  create mode 100644 drivers/net/wwan/Makefile
+> > >  create mode 100644 drivers/net/wwan/wwan_core.c
+> > >  create mode 100644 include/linux/wwan.h
+> > >
+> > > diff --git a/drivers/net/Kconfig b/drivers/net/Kconfig
+> > > index 5895905..74dc8e24 100644
+> > > --- a/drivers/net/Kconfig
+> > > +++ b/drivers/net/Kconfig
+> > > @@ -502,6 +502,8 @@ source "drivers/net/wan/Kconfig"
+> > >
+> > >  source "drivers/net/ieee802154/Kconfig"
+> > >
+> > > +source "drivers/net/wwan/Kconfig"
+> > > +
+> > >  config XEN_NETDEV_FRONTEND
+> > >       tristate "Xen network device frontend driver"
+> > >       depends on XEN
+> > > diff --git a/drivers/net/Makefile b/drivers/net/Makefile
+> > > index 040e20b..7ffd2d0 100644
+> > > --- a/drivers/net/Makefile
+> > > +++ b/drivers/net/Makefile
+> > > @@ -68,6 +68,7 @@ obj-$(CONFIG_SUNGEM_PHY) += sungem_phy.o
+> > >  obj-$(CONFIG_WAN) += wan/
+> > >  obj-$(CONFIG_WLAN) += wireless/
+> > >  obj-$(CONFIG_IEEE802154) += ieee802154/
+> > > +obj-$(CONFIG_WWAN) += wwan/
+> > >
+> > >  obj-$(CONFIG_VMXNET3) += vmxnet3/
+> > >  obj-$(CONFIG_XEN_NETDEV_FRONTEND) += xen-netfront.o
+> > > diff --git a/drivers/net/wwan/Kconfig b/drivers/net/wwan/Kconfig
+> > > new file mode 100644
+> > > index 0000000..545fe54
+> > > --- /dev/null
+> > > +++ b/drivers/net/wwan/Kconfig
+> > > @@ -0,0 +1,22 @@
+> > > +# SPDX-License-Identifier: GPL-2.0-only
+> > > +#
+> > > +# Wireless WAN device configuration
+> > > +#
+> > > +
+> > > +menuconfig WWAN
+> > > +     bool "Wireless WAN"
+> > > +     help
+> > > +       This section contains Wireless WAN driver configurations.
+> > > +
+> > > +if WWAN
+> > > +
+> > > +config WWAN_CORE
+> > > +     tristate "WWAN Driver Core"
+> > > +     help
+> > > +       Say Y here if you want to use the WWAN driver core. This driver
+> > > +       provides a common framework for WWAN drivers.
+> > > +
+> > > +       To compile this driver as a module, choose M here: the module will be
+> > > +       called wwan.
+> > > +
+> > > +endif # WWAN
+> > > diff --git a/drivers/net/wwan/Makefile b/drivers/net/wwan/Makefile
+> > > new file mode 100644
+> > > index 0000000..934590b
+> > > --- /dev/null
+> > > +++ b/drivers/net/wwan/Makefile
+> > > @@ -0,0 +1,7 @@
+> > > +# SPDX-License-Identifier: GPL-2.0
+> > > +#
+> > > +# Makefile for the Linux WWAN device drivers.
+> > > +#
+> > > +
+> > > +obj-$(CONFIG_WWAN_CORE) += wwan.o
+> > > +wwan-objs += wwan_core.o
+> > > diff --git a/drivers/net/wwan/wwan_core.c b/drivers/net/wwan/wwan_core.c
+> > > new file mode 100644
+> > > index 0000000..7d9e2643
+> > > --- /dev/null
+> > > +++ b/drivers/net/wwan/wwan_core.c
+> > > @@ -0,0 +1,317 @@
+> > > +// SPDX-License-Identifier: GPL-2.0-only
+> > > +/* Copyright (c) 2021, Linaro Ltd <loic.poulain@linaro.org> */
+> > > +
+> > > +#include <linux/err.h>
+> > > +#include <linux/errno.h>
+> > > +#include <linux/fs.h>
+> > > +#include <linux/init.h>
+> > > +#include <linux/idr.h>
+> > > +#include <linux/kernel.h>
+> > > +#include <linux/module.h>
+> > > +#include <linux/slab.h>
+> > > +#include <linux/types.h>
+> > > +#include <linux/wwan.h>
+> > > +
+> > > +#define WWAN_MAX_MINORS 256 /* Allow the whole available cdev range of minors */
 > >
-> > One thing that's a bit odd here is taking advantage of the EDID that
-> > the core might have cached for us. See the patch ("drm/edid: Use the
-> > cached EDID in drm_get_edid() if eDP"). We manage to get at the cache
-> > by:
-> > - Instantly failing aux transfers if we're not powered.
-> > - If the first read of the EDID fails we try again after powering.
+> > That's not the "whole range of minors" at all...
+> 
+> Though minor is 20-bit wide, Is 256 not the maximum number of minors
+> when using register_chrdev()?
+
+Using that function, yes, but that is not the minor range allowed at
+all.  As you say, it's 20 bits wide.
+
+> > And what are you using this chardev for at all?  All you have is an
+> > open() call, but you have nothing to do with it after that.  What is it
+> > for?
 > >
-> > Fixes: 58074b08c04a ("drm/bridge: ti-sn65dsi86: Read EDID blob over DDC")
-> > Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> > ---
-> > Depending on what people think of the other patches in this series,
-> > some of this could change.
-> > - If everyone loves the "runtime PM" in the panel driver then we
-> >    could, in theory, put the pre-enable chaining straight in the "aux
-> >    transfer" function.
-> > - If everyone hates the EDID cache moving to the core then we can
-> >    avoid some of the awkward flow of things and keep the EDID cache in
-> >    the sn65dsi86 driver.
->
->
-> I wonder if this shouldn't be solved in the core - ie caller of
-> get_modes callback should be responsible for powering up the pipeline,
-> otherwise we need to repeat this stuff in every bridge/panel driver.
->
-> Any thoughts?
+> > confused,
+> 
+> The WWAN framework acts a bit like misc or sound frameworks here, the
+> fops are not directly implemented by WWAN core but passed by the port
+> driver as parameter on WWAN port registration.There is no real benefit
+> of having them implemented in WWAN core since it would mostly consist
+> in forwarding read/write to the 'port driver' (at least for now).
 
-Yeah, I did look at this a little bit. Presumably it would only make
-sense to do it for eDP connections since:
+So, you are going to have a common class and char device node, that
+could have any type of device behind it that handles
+open/read/write/ioctl/close in different ways?
 
-a) The concept of reading an EDID doesn't make sense for things like MIPI.
+That sounds like madness, userspace developers will be cursing your name
+for eons.  Don't do that, we try to learn from our mistakes, not
+duplicate them over and over.
 
-b) For something with an external connector (DP and HDMI) you don't
-even know they're inserted unless the EDID is ready to read (these
-devices are, essentially, always powered).
+Please make each major number you use, have all minor numbers in that
+range operate the same way.  Otherwise again, userspace is going to be
+cursing you for a very very long time.
 
-So I started off trying to do this in the core for eDP, but then it
-wasn't completely clear how to write this code in a way that was super
-generic. Specifically:
+As it is, the code you have here just implements the misc device layer,
+but with a new major number?  why???
 
-1. I don't think it's a 100% guarantee that everything is powered on
-in pre-enable and powered off in post-disable. In this bridge chip
-it's true, but maybe not every eDP driver? Would you want me to just
-assume this, or add a flag?
+thanks,
 
-2. It wasn't totally clear to me which state to use for telling if the
-bridge had already been pre-enabled so I could avoid double-calling
-it. I could dig more if need be but I spent a bit of time looking and
-was coming up empty. If you have advice I'd appreciate it, though.
-
-3. It wasn't clear to me if I should be using the atomic version
-(drm_atomic_bridge_chain_pre_enable) if I put this in the core and how
-exactly to do this, though I am a self-admitted DRM noob. I can do
-more digging if need be. Again, advice is appreciated.
-
-4. Since I got feedback that the EDID caching belongs in the driver,
-not in the core [1] then we might end up powering things up
-pointlessly since the core wouldn't know if the driver was going to
-return the cache or not.
-
-Given that this patch isn't too much code and not too complicated (and
-will be even less complicated if I move the EDID caching back into the
-driver), maybe we can land it and if we see the pattern repeat a bunch
-more times then think about moving it to the core?
-
-
-[1] https://lore.kernel.org/dri-devel/YGMvO3PNDCiBmqov@intel.com/
-
--Doug
+greg k-h
