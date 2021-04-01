@@ -2,61 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 47AF535207E
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Apr 2021 22:17:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6E9D53520B1
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Apr 2021 22:43:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234831AbhDAURR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Apr 2021 16:17:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35894 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234489AbhDAURR (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Apr 2021 16:17:17 -0400
-Received: from relay07.th.seeweb.it (relay07.th.seeweb.it [IPv6:2001:4b7a:2000:18::168])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41541C0613E6;
-        Thu,  1 Apr 2021 13:17:17 -0700 (PDT)
-Received: from [192.168.1.101] (abae153.neoplus.adsl.tpnet.pl [83.6.168.153])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id D33303F5DD;
-        Thu,  1 Apr 2021 22:17:12 +0200 (CEST)
-Subject: Re: [PATCH 1/9] dt-bindings: clk: qcom: Add bindings for MSM8994 GCC
- driver
-To:     Stephen Boyd <sboyd@kernel.org>,
-        ~postmarketos/upstreaming@lists.sr.ht
-Cc:     martin.botka@somainline.org,
-        angelogioacchino.delregno@somainline.org,
-        marijn.suijten@somainline.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
+        id S234594AbhDAUnc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Apr 2021 16:43:32 -0400
+Received: from mail.kernel.org ([198.145.29.99]:34038 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S234276AbhDAUnb (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 1 Apr 2021 16:43:31 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 57CFD610D0;
+        Thu,  1 Apr 2021 20:43:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1617309811;
+        bh=VlhQGoUOqdCIYNUihDA2mj8pdQI3cX+qCuRPl+Gh2eI=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=ExaDY6ycp4e5cUynKGmfkCpPML+X4JyMjj2woGnGRXhutch5+k5qBd5Y0tWO+OpO+
+         /B8MvQ9u2z9F8tt/1oBjKV2LX43DjQXdhL9L15aF1Go5r6S6HERvAUMcjJLK0zK3YP
+         JGkN7Hqs3Mf5Lgvs3pNsPs9eUmhQnPKh8Q7KBoaulOvUTrg3fTs5f6Mtxc2fLxRk5g
+         9RuEFOIGqnPymaF+boMWNtUdV9EgvAPe64II9Y41NfHmhMNAmt7QV2kyObNRdtxCGl
+         rSQtdH0QfdFjUZWGS9cfykfyIjhRk6swxt44kiMSBchWQsy0z2ZvCuJ3b+7x9Fwc0a
+         qki+hn5DCkIzw==
+From:   Mark Brown <broonie@kernel.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Taniya Das <tdas@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20210313021919.435332-1-konrad.dybcio@somainline.org>
- <161730597895.2260335.4437139498852095330@swboyd.mtv.corp.google.com>
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-Message-ID: <407789fb-bb43-874b-af4b-a3c1fa74a1bc@somainline.org>
-Date:   Thu, 1 Apr 2021 22:17:11 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.9.0
+        satya priya <skakit@codeaurora.org>
+Cc:     Mark Brown <broonie@kernel.org>, linux-kernel@vger.kernel.org,
+        rnayak@codeaurora.org, Liam Girdwood <lgirdwood@gmail.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        kgunda@codeaurora.org
+Subject: Re: [PATCH V3 0/5] Add PM7325/PM8350C/PMR735A regulator support
+Date:   Thu,  1 Apr 2021 21:43:17 +0100
+Message-Id: <161730974895.25526.12885475666064429104.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <1617192339-3760-1-git-send-email-skakit@codeaurora.org>
+References: <1617192339-3760-1-git-send-email-skakit@codeaurora.org>
 MIME-Version: 1.0
-In-Reply-To: <161730597895.2260335.4437139498852095330@swboyd.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Wed, 31 Mar 2021 17:35:34 +0530, satya priya wrote:
+> This series is dependent on below series which adds DT files for SC7280 SoC
+> https://lore.kernel.org/patchwork/project/lkml/list/?series=488871
+> 
+> satya priya (5):
+>   regulator: qcom-rpmh: Add pmic5_ftsmps520 buck
+>   regulator: qcom-rpmh: Add PM7325/PMR735A regulator support
+>   arm64: dts: qcom: sc7280: Add RPMh regulators for sc7280-idp
+>   dt-bindings: regulator: Convert RPMh regulator bindings to YAML
+>   dt-bindings: regulator: Add compatibles for PM7325/PMR735A
+> 
+> [...]
 
-> Isn't this already documented in
-> Documentation/devicetree/bindings/clock/qcom,gcc.yaml
+Applied to
 
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-next
 
-I wanted to document the custom property for the SONY SDHCI quirk, but if it's not necessary, we can just omit this patch.
+Thanks!
 
+[1/5] regulator: qcom-rpmh: Add pmic5_ftsmps520 buck
+      commit: 9405b4f7fa78b55fc83e5b5258f00e651aed5734
+[2/5] regulator: qcom-rpmh: Add PM7325/PMR735A regulator support
+      commit: c4e5aa3dbee56bde70dfa03debc49bf9494fb3d9
+[3/5] arm64: dts: qcom: sc7280: Add RPMh regulators for sc7280-idp
+      (no commit info)
+[4/5] dt-bindings: regulator: Convert RPMh regulator bindings to YAML
+      commit: 7255f98d08c73f0bcf1397d3060fdb776d7aa147
+[5/5] dt-bindings: regulator: Add compatibles for PM7325/PMR735A
+      commit: be724fd5b60dd083c8e39a4a2652e5017d2f7a20
 
-Konrad
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
 
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
