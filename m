@@ -2,84 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5C18E351FFA
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Apr 2021 21:38:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 146F0352006
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Apr 2021 21:39:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235219AbhDATi0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Apr 2021 15:38:26 -0400
-Received: from mail.kernel.org ([198.145.29.99]:39654 "EHLO mail.kernel.org"
+        id S234613AbhDATjl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Apr 2021 15:39:41 -0400
+Received: from mail.kernel.org ([198.145.29.99]:40320 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S235189AbhDATiZ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Apr 2021 15:38:25 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 9C6D960725;
-        Thu,  1 Apr 2021 19:38:25 +0000 (UTC)
+        id S234316AbhDATjk (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 1 Apr 2021 15:39:40 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 2588E60725;
+        Thu,  1 Apr 2021 19:39:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1617305905;
-        bh=QdvxlxtMyb8x4i3wfiSD/hvhgbhy1KUxJGkoBoITRYo=;
+        s=k20201202; t=1617305980;
+        bh=HnnPKXIu+Kt9kaxYUQGcL/XccprXnMk8lJbIJrdwHsI=;
         h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=gnkLU6buTian4CFVNSThr4NT7undfX+NSRwwaommL7PS+DE5P5HMuOqr2gc0lBX/9
-         G6+CTcAGLpx8Vd1ypcfs3taGmcGdZxjS89dzJupVNLWS6PYxCsu4G/g1paWc/ojraP
-         uqHdXDGTbo4/XiJs+5CuObzsJpvxZHReBtrNMBD0T63Jcb/WcUfeqcs0NtQjjVlmjZ
-         k1RI17sY7ZBNjMd48t3AADbInmlqLNn2bOtBatK2U7i0vY/xPO8VZWpLoDIBT+FB55
-         ARY0eNrkxHBuwdV7bcJ7AkqmAcVzdYN7z+R4P9cO3N8zUeoRmvmQX9g8l+lr0hJWlc
-         HIyid5fgq+X1Q==
+        b=mgRpQ4YfK/zy01EV8ShdcvTPoNnCGzM6xcgTrGXkqNA5Hi4ep6Gha02h1NolvomFj
+         fdx3P1uKTyUhCbg8pJRBemjyOfwIaldWtTKhvZ3RGV5DXKoRKyjW0PeBdgOLebUtS9
+         0eLREPNz6XG8OYGY+G/5rL2lQoMrwE3teUK+QuyR12TtEzPkwHbGeQUCZ0rQ9hXdSf
+         HPhKiLdnTYzwSQyN8DhZA9ZbOGn4VdFZaMYwjl+mQ0q8/BKhVeLpzHywDZeBdrvmeW
+         2Y6DZ2sErNF4xDJ4gDkK85P+xcjz8Id78VWtwRazjNmibI2hNK1D9G/3SVz9OXp027
+         1lVs24G4GvZSg==
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <3947caa6-71fb-371c-cf8e-78348435c830@somainline.org>
-References: <20210313021919.435332-1-konrad.dybcio@somainline.org> <20210313021919.435332-9-konrad.dybcio@somainline.org> <20210324171117.GA3260515@robh.at.kernel.org> <3947caa6-71fb-371c-cf8e-78348435c830@somainline.org>
-Subject: Re: [PATCH 9/9] clk: qcom: gcc-msm8994: Add a quirk for a different SDCC configuration
+In-Reply-To: <20210313021919.435332-1-konrad.dybcio@somainline.org>
+References: <20210313021919.435332-1-konrad.dybcio@somainline.org>
+Subject: Re: [PATCH 1/9] dt-bindings: clk: qcom: Add bindings for MSM8994 GCC driver
 From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, martin.botka@somainline.org,
+Cc:     martin.botka@somainline.org,
         angelogioacchino.delregno@somainline.org,
-        marijn.suijten@somainline.org, Andy Gross <agross@kernel.org>,
+        marijn.suijten@somainline.org,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>,
         Taniya Das <tdas@codeaurora.org>,
         linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 To:     Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh@kernel.org>
-Date:   Thu, 01 Apr 2021 12:38:24 -0700
-Message-ID: <161730590437.2260335.9611290766189379085@swboyd.mtv.corp.google.com>
+        ~postmarketos/upstreaming@lists.sr.ht
+Date:   Thu, 01 Apr 2021 12:39:38 -0700
+Message-ID: <161730597895.2260335.4437139498852095330@swboyd.mtv.corp.google.com>
 User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Konrad Dybcio (2021-03-24 10:12:34)
+Quoting Konrad Dybcio (2021-03-12 18:19:10)
+> Add documentation for the MSM8994 GCC driver.
 >=20
-> On 24.03.2021 18:11, Rob Herring wrote:
-> > On Sat, Mar 13, 2021 at 03:19:18AM +0100, Konrad Dybcio wrote:
-> >> Some devices come with a different SDCC clock configuration,
-> >> account for that.
-> >>
-> >> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-> >> ---
-> >>  .../bindings/clock/qcom,gcc-msm8994.yaml         |  4 ++++
-> >>  drivers/clk/qcom/gcc-msm8994.c                   | 16 ++++++++++++++++
-> >>  2 files changed, 20 insertions(+)
-> >>
-> >> diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-msm8994.=
-yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-msm8994.yaml
-> >> index f8067fb1bbd6..9db0800a4ee4 100644
-> >> --- a/Documentation/devicetree/bindings/clock/qcom,gcc-msm8994.yaml
-> >> +++ b/Documentation/devicetree/bindings/clock/qcom,gcc-msm8994.yaml
-> >> @@ -49,6 +49,10 @@ properties:
-> >>      description:
-> >>        Protected clock specifier list as per common clock binding.
-> >> =20
-> >> +  qcom,sdcc2-clk-src-40mhz:
-> >> +    description: SDCC2_APPS clock source runs at 40MHz.
-> >> +    type: boolean
-> > Why don't you have some input clock you can get the rate from?
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+> ---
+>  .../bindings/clock/qcom,gcc-msm8994.yaml      | 72 +++++++++++++++++++
+>  1 file changed, 72 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-msm8=
+994.yaml
 >=20
->=20
-> This is a SONY-custom hardware change and that's as much information as I=
- can get. Schematics are not available and it's solely based on the downstr=
-eam kernel source.
->=20
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-msm8994.yam=
+l b/Documentation/devicetree/bindings/clock/qcom,gcc-msm8994.yaml
+> new file mode 100644
+> index 000000000000..f8067fb1bbd6
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/clock/qcom,gcc-msm8994.yaml
+> @@ -0,0 +1,72 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: "http://devicetree.org/schemas/clock/qcom,gcc-msm8994.yaml#"
+> +$schema: "http://devicetree.org/meta-schemas/core.yaml#"
+> +
+> +title: Qualcomm Global Clock & Reset Controller Binding for MSM8994
+> +
+> +description: |
+> +  Qualcomm global clock control module which supports the clocks, resets=
+ and
+> +  power domains on MSM8994 and MSM8992.
 
-Presumably we can add the extra frequencies to the frequency plan array
-and not need this extra property in DT. The consumer driver should be
-able to pick the correct frequency.
+Isn't this already documented in
+Documentation/devicetree/bindings/clock/qcom,gcc.yaml
