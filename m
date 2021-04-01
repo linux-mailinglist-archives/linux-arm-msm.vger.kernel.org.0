@@ -2,86 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 89372352151
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Apr 2021 23:10:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4697835216A
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Apr 2021 23:16:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234400AbhDAVKK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Apr 2021 17:10:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47376 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234287AbhDAVKJ (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Apr 2021 17:10:09 -0400
-Received: from relay06.th.seeweb.it (relay06.th.seeweb.it [IPv6:2001:4b7a:2000:18::167])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CEE2FC06178A;
-        Thu,  1 Apr 2021 14:10:09 -0700 (PDT)
-Received: from [192.168.1.101] (abae153.neoplus.adsl.tpnet.pl [83.6.168.153])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        id S234520AbhDAVQd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Apr 2021 17:16:33 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:39061 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S234640AbhDAVQb (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 1 Apr 2021 17:16:31 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1617311791; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=N1rfetjGj9Mgpic0F4KnoNz3E55UZDt9FIL0P3fkZzU=; b=aVpMSimMTbYizwwQKuq6qFMzJEZT7lCG1ndyfhDB3TtXmTHqAXRunLUnlHSi8Ng7uivfVNzN
+ qyRjxWQxa2MICaM2YgOxQ2vDJ+Xxxe1L2vhpw/d7O0JePvY/BoxVRydlA4Qwq/ehpMLrygKF
+ rWz8PheGrX4TAYVvZwRZlSsYaqU=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
+ 6066382a74f773a66493f012 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 01 Apr 2021 21:16:26
+ GMT
+Sender: bbhatt=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 98ACBC43465; Thu,  1 Apr 2021 21:16:25 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from malabar-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 035EE3F5D2;
-        Thu,  1 Apr 2021 23:10:06 +0200 (CEST)
-Subject: Re: [PATCH 5/6] clk: qcom: gcc-sdm660: Account for needed adjustments
- in probe function
-To:     Stephen Boyd <sboyd@kernel.org>, phone-devel@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, martin.botka@somainline.org,
-        angelogioacchino.delregno@somainline.org,
-        marijn.suijten@somainline.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Taniya Das <tdas@codeaurora.org>,
-        Craig Tatlor <ctatlor97@gmail.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-References: <20210220155618.176559-1-konrad.dybcio@somainline.org>
- <20210220155618.176559-5-konrad.dybcio@somainline.org>
- <161404077336.1254594.15002572465360321874@swboyd.mtv.corp.google.com>
- <3917fba4-e5b0-911f-9220-f401a90aac38@somainline.org>
- <161724198675.2260335.14358880292682931985@swboyd.mtv.corp.google.com>
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-Message-ID: <abc821cc-ef43-3241-793a-cc4c85b72563@somainline.org>
-Date:   Thu, 1 Apr 2021 23:10:06 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.9.0
-MIME-Version: 1.0
-In-Reply-To: <161724198675.2260335.14358880292682931985@swboyd.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+        (Authenticated sender: bbhatt)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 7345FC433ED;
+        Thu,  1 Apr 2021 21:16:24 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 7345FC433ED
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=bbhatt@codeaurora.org
+From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
+To:     manivannan.sadhasivam@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
+        jhugo@codeaurora.org, linux-kernel@vger.kernel.org,
+        carl.yin@quectel.com, naveen.kumar@quectel.com,
+        loic.poulain@linaro.org, Bhaumik Bhatt <bbhatt@codeaurora.org>
+Subject: 
+Date:   Thu,  1 Apr 2021 14:16:09 -0700
+Message-Id: <1617311778-1254-1-git-send-email-bbhatt@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Subject: [PATCH v8 0/9] Updates to MHI channel handling
 
->>>> +
->>>> +       /* Keep bimc gfx clock port on all the time */
->>>> +       clk_prepare_enable(gcc_bimc_gfx_clk.clkr.hw.clk);
->>>> +
->>> Preferably just set these various bits with regmap_update_bits() during
->>> probe. Also, please do it before regsitering the clks, not after.
->> To be fair, now I think that simply adding CLK_IS_CRITICAL flag to the clocks in question is the smartest thing to do. Magic writes don't tell a whole lot.
-> This is how it's been done in various other qcom clk drivers. Usually
-> there is a comment about what is enabled, but really it's just setting
-> random bits that sadly aren't already set by default.
+MHI specification shows a state machine with support for STOP channel command
+and the validity of certain state transitions. MHI host currently does not
+provide any mechanism to stop a channel and restart it without resetting it.
+There are also times when the device moves on to a different execution
+environment while client drivers on the host are unaware of it and still
+attempt to reset the channels facing unnecessary timeouts.
 
-But why.. why should we give Linux less information about the hardware it's running on? It's a kernel after all, I know some parties would prefer to keep the hardware away from its users, but cmon, it's OSSLand out there!
+This series addresses the above areas to provide support for stopping an MHI
+channel, resuming it back, improved documentation and improving upon channel
+state machine handling in general.
 
-Allocating a few bytes more in memory is proooobably a good trade-off for keeping an eye on the state of various clocks instead of simply setting some seemingly random bits and hoping nothing bad happens under the hood.. This isn't only a case for this clock, but for all ones that are effectively pinky-promise-trusted to function properly with no way of checking if they're even still alive other than poking the registers manually.. As of v5.12-rc2, there are *46* such trust credits..
+This set of patches was tested on arm64 and x86_64 architecture.
 
-It's NOT easy to track down issues in big monolithic kernels, especially when people submitting changes to common code seem to think that only their hardware uses it (no hard feelings, but drm/msm broke on !a6xx *at least* two times within the last year) and since making sure the clocks are ticking properly is one of the most crucial things when looking into more complex issues, which may or may not randomly happen on a platform that is just being brought up for various reasons (e.g. half of mdm9607 hardware doesn't wanna play along without a ICC driver), I *really* think we should use CLK_IS_CRITICAL instead and give developers a way to check if everything's in tact with the clock, while still keeping the "never turn it off, don't touch it!" aspect.
+v8:
+-Split the state machine improvements patch to three patches as per review
 
+v7:
+-Tested on x86_64 architecture
+-Drop the patch "Do not clear channel context more than once" as issue is fixed
+differently using "bus: mhi: core: Fix double dma free()"
+-Update the commit text to better reflect changes on state machine improvements
 
->>>> +       /* Set the HMSS_GPLL0_SRC for 300MHz to CPU subsystem */
->>>> +       clk_set_rate(hmss_gpll0_clk_src.clkr.hw.clk, 300000000);
->>> Is this not already the case?
->>
->> This is a mission-critical clock and we cannot trust the bootloader with setting it. Otherwise dragons might appear.
->>
-> What does the bootloader set it to?
+v6:
+-Dropped the patch which introduced start/stop transfer APIs for lack of users
+-Updated error handling and debug prints on channel handling improvements patch
+-Improved commit text to better explain certain patches based on review comments
+-Removed references to new APIs from the documentation improvement patch
 
-Sorry but I can't check, nor do I remember right now. But we still shouldn't add a variable that might come from a lazy OEM not incorporating the fix into their release, especially since this one is used for clocking the AP.
+v5:
+-Added reviewed-by tags from Hemant I missed earlier
+-Added patch to prevent kernel warnings on clearing channel context twice
 
+v4:
+-Updated commit text/descriptions and addressed checkpatch checks
+-Added context validity check before starting/stopping channels from new API
+-Added patch to clear channel context configuration after reset/unprepare
 
-Konrad
+v3:
+-Updated documentation for channel transfer APIs to highlight differences
+-Create separate patch for "allowing channel to be disabled from stopped state"
+
+v2:
+-Renamed the newly introduced APIs to mhi_start_transfer() / mhi_stop_transfer()
+-Added improved documentation to avoid confusion with the new APIs
+-Removed the __ prefix from mhi_unprepare_channel() API for consistency.
+
+Bhaumik Bhatt (9):
+  bus: mhi: core: Allow sending the STOP channel command
+  bus: mhi: core: Clear context for stopped channels from remove()
+  bus: mhi: core: Improvements to the channel handling state machine
+  bus: mhi: core: Update debug messages to use client device
+  bus: mhi: core: Hold device wake for channel update commands
+  bus: mhi: core: Clear configuration from channel context during reset
+  bus: mhi: core: Check channel execution environment before issuing
+    reset
+  bus: mhi: core: Remove __ prefix for MHI channel unprepare function
+  bus: mhi: Improve documentation on channel transfer setup APIs
+
+ drivers/bus/mhi/core/init.c     |  22 ++++-
+ drivers/bus/mhi/core/internal.h |  12 +++
+ drivers/bus/mhi/core/main.c     | 190 ++++++++++++++++++++++++----------------
+ include/linux/mhi.h             |  18 +++-
+ 4 files changed, 162 insertions(+), 80 deletions(-)
+
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
