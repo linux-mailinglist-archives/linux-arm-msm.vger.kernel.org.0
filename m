@@ -2,110 +2,169 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8B8D4350F26
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Apr 2021 08:40:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F2CB935104D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Apr 2021 09:45:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233353AbhDAGju (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Apr 2021 02:39:50 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:20260 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233315AbhDAGjR (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Apr 2021 02:39:17 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1617259155; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=WTlV2xRuqBGN5yAQfQ5SfEWrU6o6mEBhlV6AOHQK0lI=;
- b=V4+0MlsHFfurvxacopLjaB/QYtw2Shx4rnOMWFuQ+zEK9cZn7am2ssdTYGyMVgl+87uXDqv+
- LNimgu2t+8F/AeDztrvP/er02UYp3RQcaBDkevUgK0B0k65rLR7D43Hg5gWtsbEQh2eVCUUF
- zY2MOfGq/WhNFuFknYTm73bnKQU=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
- 60656a938166b7eff7386474 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 01 Apr 2021 06:39:14
- GMT
-Sender: rojay=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 2E286C43461; Thu,  1 Apr 2021 06:39:14 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: rojay)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 7533DC433CA;
-        Thu,  1 Apr 2021 06:39:13 +0000 (UTC)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Thu, 01 Apr 2021 12:09:13 +0530
-From:   rojay@codeaurora.org
-To:     Ulf Hansson <ulf.hansson@linaro.org>
-Cc:     Viresh Kumar <viresh.kumar@linaro.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
+        id S233434AbhDAHpZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Apr 2021 03:45:25 -0400
+Received: from mga07.intel.com ([134.134.136.100]:2550 "EHLO mga07.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230284AbhDAHpK (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 1 Apr 2021 03:45:10 -0400
+IronPort-SDR: AozoHmkV2Kuj+SszmoaH6YXXMfIzJA/FuY+l0a7przeTicEXJZvrqRkd8WN52X6FhSm4Ms9Ir5
+ nBKnyh3W3xqA==
+X-IronPort-AV: E=McAfee;i="6000,8403,9940"; a="256160553"
+X-IronPort-AV: E=Sophos;i="5.81,296,1610438400"; 
+   d="scan'208";a="256160553"
+Received: from orsmga003.jf.intel.com ([10.7.209.27])
+  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Apr 2021 00:45:07 -0700
+IronPort-SDR: lsbWgO8aRTgEJJiGUMpmyaRbtmcauxhMmNapB9ei3jfvohdyrNPtGYFBZQe67fxtzdYtxYWhU7
+ 9g+tDZ9olIrw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.81,296,1610438400"; 
+   d="scan'208";a="377598402"
+Received: from ahunter-desktop.fi.intel.com (HELO [10.237.72.174]) ([10.237.72.174])
+  by orsmga003.jf.intel.com with ESMTP; 01 Apr 2021 00:45:00 -0700
+Subject: Re: [PATCH v14 1/2] scsi: ufs: Enable power management for wlun
+To:     "Asutosh Das (asd)" <asutoshd@codeaurora.org>, cang@codeaurora.org,
+        martin.petersen@oracle.com, linux-scsi@vger.kernel.org
+Cc:     linux-arm-msm@vger.kernel.org,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        Pedro Sousa <pedrom.sousa@synopsys.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Stanley Chu <stanley.chu@mediatek.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Wolfram Sang <wsa@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Matthias Kaehlcke <mka@chromium.org>, akashast@codeaurora.org,
-        msavaliy@qti.qualcomm.com, parashar@codeaurora.org,
-        Linux PM <linux-pm@vger.kernel.org>,
-        DTML <devicetree@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>, linux-i2c@vger.kernel.org
-Subject: Re: [PATCH 3/3] i2c: i2c-qcom-geni: Add support for
- 'assigned-performance-states'
-In-Reply-To: <29b30a2c0c4d7292747a073d23daaa70@codeaurora.org>
-References: <20201224111210.1214-1-rojay@codeaurora.org>
- <20201224111210.1214-4-rojay@codeaurora.org> <YAGqKfDfB7EEuZVn@builder.lan>
- <6bfec3e6-3d26-7ade-d836-032273856ce2@codeaurora.org>
- <CAPDyKFqF0NE3QRAEfiqj5QOXXH2om4CpyyeudeqoovANfvjsaQ@mail.gmail.com>
- <20210119110516.fgbbllyg7lxwwfdz@vireshk-i7>
- <CAPDyKFogrWt=K3VtEZVH5bPL_fYt7rgdm5wGgq+QHtzX-n0z7g@mail.gmail.com>
- <29b30a2c0c4d7292747a073d23daaa70@codeaurora.org>
-Message-ID: <cfd90d2a05aa0411ee7a976a89a361af@codeaurora.org>
-X-Sender: rojay@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+        Steven Rostedt <rostedt@goodmis.org>,
+        Ingo Molnar <mingo@redhat.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Lee Jones <lee.jones@linaro.org>,
+        Bean Huo <beanhuo@micron.com>,
+        Kiwoong Kim <kwmad.kim@samsung.com>,
+        Yue Hu <huyue2@yulong.com>,
+        Dan Carpenter <dan.carpenter@oracle.com>,
+        Wei Yongjun <weiyongjun1@huawei.com>,
+        Bart van Assche <bvanassche@acm.org>,
+        "Gustavo A. R. Silva" <gustavoars@kernel.org>,
+        Dinghao Liu <dinghao.liu@zju.edu.cn>,
+        Jaegeuk Kim <jaegeuk@kernel.org>,
+        Satya Tangirala <satyat@google.com>,
+        open list <linux-kernel@vger.kernel.org>,
+        "moderated list:ARM/SAMSUNG S3C, S5P AND EXYNOS ARM ARCHITECTURES" 
+        <linux-arm-kernel@lists.infradead.org>,
+        "open list:ARM/SAMSUNG S3C, S5P AND EXYNOS ARM ARCHITECTURES" 
+        <linux-samsung-soc@vger.kernel.org>,
+        "moderated list:UNIVERSAL FLASH STORAGE HOST CONTROLLER DRIVER..." 
+        <linux-mediatek@lists.infradead.org>
+References: <cover.1617143113.git.asutoshd@codeaurora.org>
+ <16f1bcf76ff411c70fe0e3e13f84e4b0fa7d9063.1617143113.git.asutoshd@codeaurora.org>
+ <a385141d-324b-680e-a19c-ab6121bd6c5d@intel.com>
+ <dbac8ce8-83c6-49a5-9f4d-f5ea19d7a883@codeaurora.org>
+From:   Adrian Hunter <adrian.hunter@intel.com>
+Organization: Intel Finland Oy, Registered Address: PL 281, 00181 Helsinki,
+ Business Identity Code: 0357606 - 4, Domiciled in Helsinki
+Message-ID: <612d0f35-89a2-947b-9fa4-608624c4c032@intel.com>
+Date:   Thu, 1 Apr 2021 10:45:10 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.8.1
+MIME-Version: 1.0
+In-Reply-To: <dbac8ce8-83c6-49a5-9f4d-f5ea19d7a883@codeaurora.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-02-12 14:51, rojay@codeaurora.org wrote:
-> On 2021-01-20 19:01, Ulf Hansson wrote:
->> On Tue, 19 Jan 2021 at 12:05, Viresh Kumar <viresh.kumar@linaro.org> 
->> wrote:
->>> 
->>> On 19-01-21, 12:02, Ulf Hansson wrote:
->>> > As a matter of fact this was quite recently discussed [1], which also
->>> > pointed out some issues when using the "required-opps" in combination,
->>> > but perhaps that got resolved? Viresh?
->>> 
->>> Perhaps we never did anything there ..
->> 
->> Okay. Looks like we should pick up that discussion again, to conclude
->> on how to move forward.
->> 
+On 1/04/21 4:40 am, Asutosh Das (asd) wrote:
+> On 3/31/2021 11:19 AM, Adrian Hunter wrote:
+>> On 31/03/21 1:31 am, Asutosh Das wrote:
+>>> During runtime-suspend of ufs host, the scsi devices are
+>>> already suspended and so are the queues associated with them.
+>>> But the ufs host sends SSU (START_STOP_UNIT) to wlun
+>>> during its runtime-suspend.
+>>> During the process blk_queue_enter checks if the queue is not in
+>>> suspended state. If so, it waits for the queue to resume, and never
+>>> comes out of it.
+>>> The commit
+>>> (d55d15a33: scsi: block: Do not accept any requests while suspended)
+>>> adds the check if the queue is in suspended state in blk_queue_enter().
+>>>
+>>> Call trace:
+>>>   __switch_to+0x174/0x2c4
+>>>   __schedule+0x478/0x764
+>>>   schedule+0x9c/0xe0
+>>>   blk_queue_enter+0x158/0x228
+>>>   blk_mq_alloc_request+0x40/0xa4
+>>>   blk_get_request+0x2c/0x70
+>>>   __scsi_execute+0x60/0x1c4
+>>>   ufshcd_set_dev_pwr_mode+0x124/0x1e4
+>>>   ufshcd_suspend+0x208/0x83c
+>>>   ufshcd_runtime_suspend+0x40/0x154
+>>>   ufshcd_pltfrm_runtime_suspend+0x14/0x20
+>>>   pm_generic_runtime_suspend+0x28/0x3c
+>>>   __rpm_callback+0x80/0x2a4
+>>>   rpm_suspend+0x308/0x614
+>>>   rpm_idle+0x158/0x228
+>>>   pm_runtime_work+0x84/0xac
+>>>   process_one_work+0x1f0/0x470
+>>>   worker_thread+0x26c/0x4c8
+>>>   kthread+0x13c/0x320
+>>>   ret_from_fork+0x10/0x18
+>>>
+>>> Fix this by registering ufs device wlun as a scsi driver and
+>>> registering it for block runtime-pm. Also make this as a
+>>> supplier for all other luns. That way, this device wlun
+>>> suspends after all the consumers and resumes after
+>>> hba resumes.
+>>>
+>>> Co-developed-by: Can Guo <cang@codeaurora.org>
+>>> Signed-off-by: Can Guo <cang@codeaurora.org>
+>>> Signed-off-by: Asutosh Das <asutoshd@codeaurora.org>
+>>> ---
+>>
+> Hi Adrian
+> Thanks for the comments.
+>> Looks good but still doesn't seem to based on the latest tree.
+>>
+> Umm, it's based on the below:
+> git://git.kernel.org/pub/scm/linux/kernel/git/mkp/scsi.git
+> Branch: refs/heads/for-next
 > 
-> Soft Reminder!
+> The top most change is e27f3c8 on 27th March'21.
+> Which tree are you referring to that'd be latest?
+
+Dunno, but that seems to be missing:
+
+  commit aa53f580e67b49ec5f4d9bd1de81eb9eb0dc079f
+  Author: Can Guo <cang@codeaurora.org>
+  Date:   Tue Feb 23 21:36:47 2021 -0800
+
+    scsi: ufs: Minor adjustments to error handling
+
+which is in v5.12-rc3
+
+> 
+>> Also came across the issue below:
+>>
+>> <SNIP>
+>>
+>>> +#ifdef CONFIG_PM_SLEEP
+>>> +static int ufshcd_wl_poweroff(struct device *dev)
+>>> +{
+>>> +    ufshcd_wl_shutdown(dev);
+>>
+>> This turned out to be wrong.  This is a PM op and SCSI has already
+>> quiesced the sdev's.  All that is needed isOk. I'll fix it in the next version.
+> 
+>>
+>>     __ufshcd_wl_suspend(hba, UFS_SHUTDOWN_PM);
+>>
+>>> +    return 0;
+>>> +}
+>>> +#endif
+> 
 > 
 
-Request Viresh, Uffe to discuss on the way forward.
-
->>> 
->>> --
->>> viresh
->> 
->> Kind regards
->> Uffe
-> 
-> - Roja
