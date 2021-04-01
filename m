@@ -2,122 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 121E2350BF0
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Apr 2021 03:27:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8E617350BDC
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Apr 2021 03:24:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232579AbhDAB0o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 31 Mar 2021 21:26:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46776 "EHLO
+        id S232951AbhDABYD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 31 Mar 2021 21:24:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46172 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232429AbhDAB0f (ORCPT
+        with ESMTP id S232763AbhDABXy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 31 Mar 2021 21:26:35 -0400
-Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 097F6C061574
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Mar 2021 18:26:35 -0700 (PDT)
-Received: by mail-pf1-x42f.google.com with SMTP id m11so265431pfc.11
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Mar 2021 18:26:35 -0700 (PDT)
+        Wed, 31 Mar 2021 21:23:54 -0400
+Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E99DEC061574;
+        Wed, 31 Mar 2021 18:23:53 -0700 (PDT)
+Received: by mail-pf1-x42d.google.com with SMTP id s11so293695pfm.1;
+        Wed, 31 Mar 2021 18:23:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=tDlj4kgFlWpxX5ZVv654Fo3s6ByCdkV+7+iH8bJxbWo=;
-        b=Y2bmJAAZ1L88j7Fq7ETNfSc1to4OpfmoSZzKcgtF3LX6Qv/4ZQxGHV5Brgca8Q4bmD
-         QoG61xEhEN/axcAyAxDNTkfBopbDEKi0F6P8mcakoqvupLUaFdG3wZkF/iBhSUy5rBqX
-         Xt6RyTt7eMAcM5xKTeBdpbRR3gR3jn/dILd6U=
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=+2jBkeo878G+FkmC1vjkk79rQNW00YDmS4BnvfJ2kYU=;
+        b=nn1RaRztiuPrmeG4Y6A4+Z9aCNsh96twt7rXm6MoLkf4wFBDpEoglnIrhQ1RL3dISV
+         DUtMy2J/5YiIZShK+V7U5YpTFXKMwBE1rwIITEM+0FDdpyi2d2UZacn1kDQDbW6BhtCY
+         S+FZz0v5qW3QOcW2RCEuuGTbqHTfnErxOIdPaAtWw+So2UF/oHHIwFd8cewV6TxpbtZ3
+         ZzZ0JxQ/8v2DUKx1Wa2oytsG42W/V2rZvQr/bzlHUcqrSstmX20gdZDBSN09kxvmHauw
+         uBm1StndG68O9XG6dj6Wv4O9SLiTfO1FM6QRsRCsFsSTt06PNKMeDjEgKtq2GScf76xg
+         mafw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=tDlj4kgFlWpxX5ZVv654Fo3s6ByCdkV+7+iH8bJxbWo=;
-        b=S5Ho2BA3OYetA9ax3uGQTHKsyU3XPDEcgDTq1W+KbibmZzX6x7oI1jv8ROd/IZvyvq
-         O0KaNvXPh7kmNC8P2I4PONYHrqDARIV2GLTHZbRoai3ixznI+bCWFiPG50veAemrVOrT
-         LCY0A524d7buQFofWoqsOVXy9tjo9snzU0mNE7qsJH/cxg7uhKqFSd3ECdlH68yPoISJ
-         IgOeacpEN3/7q8R3a+9c1PrA4n5YlezdqKbVMiQX07t350fQjCyWTCbe4W7kaAPt/1OK
-         IgvjJxazgAwnbdbpR7b8LhnBHkbG3IWD5cScTKe0MqdzJpiyTjEce/Xf+ZHbBPWQ0bSV
-         9NRA==
-X-Gm-Message-State: AOAM5314f1dTBY/Y++vF/Ih6MNHnR8hygxmxyUc8O0LVJOS9veyGq7Wb
-        bNgiWa9L7WHxdHOLE1k2TnD7lz2AW3hbGg==
-X-Google-Smtp-Source: ABdhPJwwTfEtXQITV+pDCnPPnBNonxYSo2tHMGeDp5oEqD13BD1KaVkiynE0bLTQCFc6nEaEkhpONA==
-X-Received: by 2002:a63:4502:: with SMTP id s2mr5745137pga.94.1617240394404;
-        Wed, 31 Mar 2021 18:26:34 -0700 (PDT)
-Received: from chromium.org ([2620:15c:202:201:7515:8c2e:1867:2767])
-        by smtp.gmail.com with ESMTPSA id o1sm3426212pjp.4.2021.03.31.18.26.33
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=+2jBkeo878G+FkmC1vjkk79rQNW00YDmS4BnvfJ2kYU=;
+        b=fiYQsPPsfN4ur/aC2csqwpl+aRzjG1rjRSSq4/SefSJmQLSVl6RZ8Bppx3PGRCx5fS
+         F68eKSfaxYejnAqeS4r/V5REK2D4L2N/PZ865ysqVFYDtwSIKQrKqV19c329e3tfYO4X
+         uFePI8fY5Hb3cw/QykfEmN0EoIuL7iH9r1bicWKynExOUTsXtbFrT4p3jh/syGeIGbPl
+         bISrf4hF8g88kMoeTXE3GzjkSXNjmrNqbYDmEIZ6qG1qmgINCyTzXrUZfgiCxQLSgvSi
+         3s8IIQcp0c3ncCLM/4Q5DyAtxhnOXfCLOZH+78MCeLxbWJjxjqKbp1EJ0ou9MGx+5TpW
+         AnxA==
+X-Gm-Message-State: AOAM533Zsjm+cT5/o7Atxj/BCeJQcz3ggTrSaX0dNJoN+I2sof0AtSCb
+        YzBDwfJgJM+F5jNOUTemKhg=
+X-Google-Smtp-Source: ABdhPJxpmKhVqceIQWiXrGGdLvcaLXzXdCmFiC3E3r6puxs07HbTGNDN+PC6hnUY+qLrnezZ75rs9g==
+X-Received: by 2002:a63:6d8a:: with SMTP id i132mr5567869pgc.82.1617240233466;
+        Wed, 31 Mar 2021 18:23:53 -0700 (PDT)
+Received: from localhost ([2601:1c0:5200:a6:307:a401:7b76:c6e5])
+        by smtp.gmail.com with ESMTPSA id ha8sm3270796pjb.6.2021.03.31.18.23.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 31 Mar 2021 18:26:33 -0700 (PDT)
-Content-Type: text/plain; charset="utf-8"
+        Wed, 31 Mar 2021 18:23:52 -0700 (PDT)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     Rob Clark <robdclark@chromium.org>,
+        freedreno@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
+        GPU), Jordan Crouse <jordan@cosmicpenguin.net>,
+        "Kristian H. Kristensen" <hoegsberg@google.com>,
+        linaro-mm-sig@lists.linaro.org (moderated list:DMA BUFFER SHARING
+        FRAMEWORK),
+        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
+        linux-kernel@vger.kernel.org (open list),
+        linux-media@vger.kernel.org (open list:DMA BUFFER SHARING FRAMEWORK)
+Subject: [PATCH v2 0/4] drm/msm: Shrinker (and related) fixes
+Date:   Wed, 31 Mar 2021 18:27:17 -0700
+Message-Id: <20210401012722.527712-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.30.2
+In-Reply-To: <20210331221630.488498-1-robdclark@gmail.com>
+References: <20210331221630.488498-1-robdclark@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20210323224336.1311783-1-swboyd@chromium.org>
-References: <20210323224336.1311783-1-swboyd@chromium.org>
-Subject: Re: [PATCH v2] firmware: qcom_scm: Only compile legacy calls on ARM
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Elliot Berman <eberman@codeaurora.org>,
-        Brian Masney <masneyb@onstation.org>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Jeffrey Hugo <jhugo@codeaurora.org>,
-        Douglas Anderson <dianders@chromium.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Date:   Wed, 31 Mar 2021 18:26:32 -0700
-Message-ID: <161724039222.2260335.7485766796063332304@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Stephen Boyd (2021-03-23 15:43:36)
-> These scm calls are never used outside of legacy ARMv7 based platforms.
-> That's because PSCI, mandated on arm64, implements them for modern SoCs
-> via the PSCI spec. Let's move them to the legacy file and only compile
-> the legacy file into the kernel when CONFIG_ARM=3Dy. Otherwise provide
-> stubs and fail the calls. This saves a little bit of space in an
-> arm64 allmodconfig.
->=20
->  $ ./scripts/bloat-o-meter vmlinux.before vmlinux.after
->  add/remove: 0/8 grow/shrink: 5/6 up/down: 509/-4401 (-3892)
->  Function                                     old     new   delta
->  __qcom_scm_set_dload_mode.constprop          312     452    +140
->  qcom_scm_qsmmu500_wait_safe_toggle           288     416    +128
->  qcom_scm_io_writel                           288     408    +120
->  qcom_scm_io_readl                            376     492    +116
->  __param_str_download_mode                     23      28      +5
->  __warned                                    4327    4326      -1
->  e843419@0b3f_00010432_324                      8       -      -8
->  qcom_scm_call                                228     208     -20
->  CSWTCH                                      5925    5877     -48
->  _sub_I_65535_1                            163100  163040     -60
->  _sub_D_65535_0                            163100  163040     -60
->  qcom_scm_wb                                   64       -     -64
->  qcom_scm_lock                                320     160    -160
->  qcom_scm_call_atomic                         212       -    -212
->  qcom_scm_cpu_power_down                      308       -    -308
->  scm_legacy_call_atomic                       520       -    -520
->  qcom_scm_set_warm_boot_addr                  720       -    -720
->  qcom_scm_set_cold_boot_addr                  728       -    -728
->  scm_legacy_call                             1492       -   -1492
->  Total: Before=3D66737606, After=3D66733714, chg -0.01%
->=20
-> Commit 9a434cee773a ("firmware: qcom_scm: Dynamically support SMCCC and
-> legacy conventions") didn't mention any motivating factors for keeping
-> the legacy code around on arm64 kernels, i.e. presumably that commit
-> wasn't trying to support these legacy APIs on arm64 kernels.
->=20
-> Cc: Elliot Berman <eberman@codeaurora.org>
-> Cc: Brian Masney <masneyb@onstation.org>
-> Cc: Stephan Gerhold <stephan@gerhold.net>
-> Cc: Jeffrey Hugo <jhugo@codeaurora.org>
-> Cc: Douglas Anderson <dianders@chromium.org>
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> ---
->=20
+From: Rob Clark <robdclark@chromium.org>
 
-Elliot, can you ack/review this?
+I've been spending some time looking into how things behave under high
+memory pressure.  The first patch is a random cleanup I noticed along
+the way.  The second improves the situation significantly when we are
+getting shrinker called from many threads in parallel.  And the last
+two are $debugfs/gem fixes I needed so I could monitor the state of GEM
+objects (ie. how many are active/purgable/purged) while triggering high
+memory pressure.
 
-> Followup to v1 (https://lore.kernel.org/r/20210223214539.1336155-7-swboyd=
-@chromium.org):
->  * Don't change the legacy file to use legacy calls only
->  * Wrap more things in CONFIG_ARM checks
->
+We could probably go a bit further with dropping the mm_lock in the
+shrinker->scan() loop, but this is already a pretty big improvement.
+The next step is probably actually to add support to unpin/evict
+inactive objects.  (We are part way there since we have already de-
+coupled the iova lifetime from the pages lifetime, but there are a
+few sharp corners to work through.)
+
+Rob Clark (4):
+  drm/msm: Remove unused freed llist node
+  drm/msm: Avoid mutex in shrinker_count()
+  drm/msm: Fix debugfs deadlock
+  drm/msm: Improved debugfs gem stats
+
+ drivers/gpu/drm/msm/msm_debugfs.c      | 14 ++---
+ drivers/gpu/drm/msm/msm_drv.c          |  4 ++
+ drivers/gpu/drm/msm/msm_drv.h          | 15 ++++--
+ drivers/gpu/drm/msm/msm_fb.c           |  3 +-
+ drivers/gpu/drm/msm/msm_gem.c          | 65 ++++++++++++++++++-----
+ drivers/gpu/drm/msm/msm_gem.h          | 72 +++++++++++++++++++++++---
+ drivers/gpu/drm/msm/msm_gem_shrinker.c | 28 ++++------
+ 7 files changed, 150 insertions(+), 51 deletions(-)
+
+-- 
+2.30.2
+
