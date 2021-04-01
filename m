@@ -2,214 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EDD42350B14
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Apr 2021 02:20:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 121E2350BF0
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Apr 2021 03:27:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229497AbhDAAOq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 31 Mar 2021 20:14:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59616 "EHLO
+        id S232579AbhDAB0o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 31 Mar 2021 21:26:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46776 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229486AbhDAAOf (ORCPT
+        with ESMTP id S232429AbhDAB0f (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 31 Mar 2021 20:14:35 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CCD1BC061574;
-        Wed, 31 Mar 2021 17:14:34 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id j18so60775wra.2;
-        Wed, 31 Mar 2021 17:14:34 -0700 (PDT)
+        Wed, 31 Mar 2021 21:26:35 -0400
+Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 097F6C061574
+        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Mar 2021 18:26:35 -0700 (PDT)
+Received: by mail-pf1-x42f.google.com with SMTP id m11so265431pfc.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Mar 2021 18:26:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=V7pbZwd1PhX2/AwLFayCSR6N/rQmYWfUQ0G1jI+nZkE=;
-        b=WrYdA3T+K5HrwEsK+br3K5lUmGHIyZVSvaImtul6PLIwUmcf/8rqhMpiMp56DrpJ6C
-         xcd6S+4wG7g/8aFUMf8L36jpwFPgMbXYFwsj98RjxXMrfr0g2ef9orRj3mdr4XEGl9S3
-         oVhAhMskSyMYrjdu46V/o2Fzy8P+dgn5bf+CsFCWqLA69DHb9OfqH7mSc2dFuGA5tjh8
-         r9PfC1kmqjrQSY17ROCdxSw8gHkW4XJfpgAyK78dNAxSjxngRe7S5Y2KPwnTk1VWM1FC
-         FmvZlvX1jXtyA+waHAWt42z+0n2N16zyBD579pK7hKhEfINsa9CrH5BQkzT07TGRrJcj
-         yKYw==
+        d=chromium.org; s=google;
+        h=mime-version:content-transfer-encoding:in-reply-to:references
+         :subject:from:cc:to:date:message-id:user-agent;
+        bh=tDlj4kgFlWpxX5ZVv654Fo3s6ByCdkV+7+iH8bJxbWo=;
+        b=Y2bmJAAZ1L88j7Fq7ETNfSc1to4OpfmoSZzKcgtF3LX6Qv/4ZQxGHV5Brgca8Q4bmD
+         QoG61xEhEN/axcAyAxDNTkfBopbDEKi0F6P8mcakoqvupLUaFdG3wZkF/iBhSUy5rBqX
+         Xt6RyTt7eMAcM5xKTeBdpbRR3gR3jn/dILd6U=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=V7pbZwd1PhX2/AwLFayCSR6N/rQmYWfUQ0G1jI+nZkE=;
-        b=sLP62limvs28CibtZeooAd/a+1/hFSx/3fp/mLmu3XvX90/p3WFlT4SYM9wjLxoWIZ
-         68LrHoctSmNVGh2aw8OmKBs0z6T1iI3U47RGo0uLBeX5nElufNpYIB4+T+aPxcobSsyL
-         v7AifTcsXO4h6ZhZ0qiH7ICDHtc1biNEtqsDD3SwP7DopI2uZAHuk/4Pifiz+W/+08mA
-         VlxmwCN9Nyq1kxHRSkQTIjFYhqDWKZ3i7+cfr88xQFeU9lgc/chObbmtAKA36pm4pDtX
-         EQc4urJxQ+lHelz865Tf/Zpuh1pytnWRZtK6hpMfNFqphCRvv0M1OdEI55c95EkOQtGH
-         TYow==
-X-Gm-Message-State: AOAM532gGunSpTtQyFoMBqGqAcRZ/ffBPJ7+Oenv6qqnNvpjjwSTjVNv
-        8hPDIRhe+PHj0wW4vPVbaS2gaqlyNn+MRTQsJkfMgVSBSzml+Q==
-X-Google-Smtp-Source: ABdhPJx62J7KCvYzqM+23/5e2Liu/ruQfBbq3kCCD9NmkgbebaANBF4gvolaV3xD8JIJWUhZTm8H6+12hXbKu1e+5eQ=
-X-Received: by 2002:a5d:640b:: with SMTP id z11mr6176244wru.327.1617236073408;
- Wed, 31 Mar 2021 17:14:33 -0700 (PDT)
+        h=x-gm-message-state:mime-version:content-transfer-encoding
+         :in-reply-to:references:subject:from:cc:to:date:message-id
+         :user-agent;
+        bh=tDlj4kgFlWpxX5ZVv654Fo3s6ByCdkV+7+iH8bJxbWo=;
+        b=S5Ho2BA3OYetA9ax3uGQTHKsyU3XPDEcgDTq1W+KbibmZzX6x7oI1jv8ROd/IZvyvq
+         O0KaNvXPh7kmNC8P2I4PONYHrqDARIV2GLTHZbRoai3ixznI+bCWFiPG50veAemrVOrT
+         LCY0A524d7buQFofWoqsOVXy9tjo9snzU0mNE7qsJH/cxg7uhKqFSd3ECdlH68yPoISJ
+         IgOeacpEN3/7q8R3a+9c1PrA4n5YlezdqKbVMiQX07t350fQjCyWTCbe4W7kaAPt/1OK
+         IgvjJxazgAwnbdbpR7b8LhnBHkbG3IWD5cScTKe0MqdzJpiyTjEce/Xf+ZHbBPWQ0bSV
+         9NRA==
+X-Gm-Message-State: AOAM5314f1dTBY/Y++vF/Ih6MNHnR8hygxmxyUc8O0LVJOS9veyGq7Wb
+        bNgiWa9L7WHxdHOLE1k2TnD7lz2AW3hbGg==
+X-Google-Smtp-Source: ABdhPJwwTfEtXQITV+pDCnPPnBNonxYSo2tHMGeDp5oEqD13BD1KaVkiynE0bLTQCFc6nEaEkhpONA==
+X-Received: by 2002:a63:4502:: with SMTP id s2mr5745137pga.94.1617240394404;
+        Wed, 31 Mar 2021 18:26:34 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:201:7515:8c2e:1867:2767])
+        by smtp.gmail.com with ESMTPSA id o1sm3426212pjp.4.2021.03.31.18.26.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 31 Mar 2021 18:26:33 -0700 (PDT)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-References: <20210331221630.488498-1-robdclark@gmail.com> <20210331221630.488498-3-robdclark@gmail.com>
- <CAD=FV=USXBm-ZLafNWbUK=Ny7_vwtyG164mQFs87SkXqim-Vpw@mail.gmail.com>
- <CAF6AEGutvjUQ-bQMsAYDLq5kdRo7rQ5XwWjGSRV27VT_UOuMTw@mail.gmail.com> <CAD=FV=VLzDW93COWPALyin3N-wM=a7uKG7WgttmMCncf7qRmKQ@mail.gmail.com>
-In-Reply-To: <CAD=FV=VLzDW93COWPALyin3N-wM=a7uKG7WgttmMCncf7qRmKQ@mail.gmail.com>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Wed, 31 Mar 2021 17:17:57 -0700
-Message-ID: <CAF6AEGtFVdE6O12kQg2+xbLmDni=1Ln_v+AhzMSqVqZ5YejGWw@mail.gmail.com>
-Subject: Re: [PATCH 2/4] drm/msm: Avoid mutex in shrinker_count()
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <freedreno@lists.freedesktop.org>,
-        open list <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20210323224336.1311783-1-swboyd@chromium.org>
+References: <20210323224336.1311783-1-swboyd@chromium.org>
+Subject: Re: [PATCH v2] firmware: qcom_scm: Only compile legacy calls on ARM
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Elliot Berman <eberman@codeaurora.org>,
+        Brian Masney <masneyb@onstation.org>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Jeffrey Hugo <jhugo@codeaurora.org>,
+        Douglas Anderson <dianders@chromium.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Date:   Wed, 31 Mar 2021 18:26:32 -0700
+Message-ID: <161724039222.2260335.7485766796063332304@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Mar 31, 2021 at 4:39 PM Doug Anderson <dianders@chromium.org> wrote:
->
-> Hi,
->
-> On Wed, Mar 31, 2021 at 4:23 PM Rob Clark <robdclark@gmail.com> wrote:
-> >
-> > On Wed, Mar 31, 2021 at 3:44 PM Doug Anderson <dianders@chromium.org> wrote:
-> > >
-> > > Hi,
-> > >
-> > > On Wed, Mar 31, 2021 at 3:14 PM Rob Clark <robdclark@gmail.com> wrote:
-> > > >
-> > > > @@ -818,11 +820,19 @@ static void update_inactive(struct msm_gem_object *msm_obj)
-> > > >         mutex_lock(&priv->mm_lock);
-> > > >         WARN_ON(msm_obj->active_count != 0);
-> > > >
-> > > > +       if (msm_obj->dontneed)
-> > > > +               mark_unpurgable(msm_obj);
-> > > > +
-> > > >         list_del_init(&msm_obj->mm_list);
-> > > > -       if (msm_obj->madv == MSM_MADV_WILLNEED)
-> > > > +       if (msm_obj->madv == MSM_MADV_WILLNEED) {
-> > > >                 list_add_tail(&msm_obj->mm_list, &priv->inactive_willneed);
-> > > > -       else
-> > > > +       } else if (msm_obj->madv == MSM_MADV_DONTNEED) {
-> > > >                 list_add_tail(&msm_obj->mm_list, &priv->inactive_dontneed);
-> > > > +               mark_purgable(msm_obj);
-> > > > +       } else {
-> > > > +               WARN_ON(msm_obj->madv != __MSM_MADV_PURGED);
-> > > > +               list_add_tail(&msm_obj->mm_list, &priv->inactive_purged);
-> > >
-> > > I'm probably being dense, but what's the point of adding it to the
-> > > "inactive_purged" list here? You never look at that list, right? You
-> > > already did a list_del_init() on this object's list pointer
-> > > ("mm_list"). I don't see how adding it to a bogus list helps with
-> > > anything.
-> >
-> > It preserves the "every bo is in one of these lists" statement, but
-> > other than that you are right we aren't otherwise doing anything with
-> > that list.  (Or we could replace the list_del_init() with list_del()..
-> > I tend to instinctively go for list_del_init())
->
-> If you really want this list, it wouldn't hurt to at least have a
-> comment saying that it's not used for anything so people like me doing
-> go trying to figure out what it's used for. ;-)
->
->
-> > > > @@ -198,6 +203,33 @@ static inline bool is_vunmapable(struct msm_gem_object *msm_obj)
-> > > >         return (msm_obj->vmap_count == 0) && msm_obj->vaddr;
-> > > >  }
-> > > >
-> > > > +static inline void mark_purgable(struct msm_gem_object *msm_obj)
-> > > > +{
-> > > > +       struct msm_drm_private *priv = msm_obj->base.dev->dev_private;
-> > > > +
-> > > > +       WARN_ON(!mutex_is_locked(&priv->mm_lock));
-> > > > +
-> > > > +       if (WARN_ON(msm_obj->dontneed))
-> > > > +               return;
-> > >
-> > > The is_purgeable() function also checks other things besides just
-> > > "MSM_MADV_DONTNEED". Do we need to check those too? Specifically:
-> > >
-> > >  msm_obj->sgt && !msm_obj->base.dma_buf && !msm_obj->base.import_attach
-> > >
-> > > ...or is it just being paranoid?
-> > >
-> > > I guess I'm just worried that if any of those might be important then
-> > > we'll consistently report back that we have a count of things that can
-> > > be purged but then scan() won't find anything to do. That wouldn't be
-> > > great.
-> >
-> > Hmm, I thought msm_gem_madvise() returned an error instead of allowing
-> > MSM_MADV_DONTNEED to be set on imported/exported dma-bufs.. it
-> > probably should to be complete (but userspace already knows not to
-> > madvise an imported/exported buffer for other reasons.. ie. we can't
-> > let a shared buffer end up in the bo cache).  I'll re-work that a bit.
-> >
-> > The msm_obj->sgt case is a bit more tricky.. that will be the case of
-> > a freshly allocated obj that does not have backing patches yet.  But
-> > it seems like enough of a corner case, that I'm happy to live with
-> > it.. ie. the tricky thing is not leaking decrements of
-> > priv->shrinkable_count or underflowing priv->shrinkable_count, and
-> > caring about the !msm_obj->sgt case doubles the number of states an
-> > object can be in, and the shrinker->count() return value is just an
-> > estimate.
->
-> I think it's equally important to make sure that we don't constantly
-> have a non-zero count and then have scan() do nothing.  If there's a
-> transitory blip then it's fine, but it's not OK if it can be steady
-> state. Then you end up with:
->
-> 1. How many objects do you have to free? 10
-> 2. OK, free some. How many did you free? 0
-> 3. Oh. You got more to do, I'll call you again.
-> 4. Goto #1
->
-> ...and it just keeps looping, right?
+Quoting Stephen Boyd (2021-03-23 15:43:36)
+> These scm calls are never used outside of legacy ARMv7 based platforms.
+> That's because PSCI, mandated on arm64, implements them for modern SoCs
+> via the PSCI spec. Let's move them to the legacy file and only compile
+> the legacy file into the kernel when CONFIG_ARM=3Dy. Otherwise provide
+> stubs and fail the calls. This saves a little bit of space in an
+> arm64 allmodconfig.
+>=20
+>  $ ./scripts/bloat-o-meter vmlinux.before vmlinux.after
+>  add/remove: 0/8 grow/shrink: 5/6 up/down: 509/-4401 (-3892)
+>  Function                                     old     new   delta
+>  __qcom_scm_set_dload_mode.constprop          312     452    +140
+>  qcom_scm_qsmmu500_wait_safe_toggle           288     416    +128
+>  qcom_scm_io_writel                           288     408    +120
+>  qcom_scm_io_readl                            376     492    +116
+>  __param_str_download_mode                     23      28      +5
+>  __warned                                    4327    4326      -1
+>  e843419@0b3f_00010432_324                      8       -      -8
+>  qcom_scm_call                                228     208     -20
+>  CSWTCH                                      5925    5877     -48
+>  _sub_I_65535_1                            163100  163040     -60
+>  _sub_D_65535_0                            163100  163040     -60
+>  qcom_scm_wb                                   64       -     -64
+>  qcom_scm_lock                                320     160    -160
+>  qcom_scm_call_atomic                         212       -    -212
+>  qcom_scm_cpu_power_down                      308       -    -308
+>  scm_legacy_call_atomic                       520       -    -520
+>  qcom_scm_set_warm_boot_addr                  720       -    -720
+>  qcom_scm_set_cold_boot_addr                  728       -    -728
+>  scm_legacy_call                             1492       -   -1492
+>  Total: Before=3D66737606, After=3D66733714, chg -0.01%
+>=20
+> Commit 9a434cee773a ("firmware: qcom_scm: Dynamically support SMCCC and
+> legacy conventions") didn't mention any motivating factors for keeping
+> the legacy code around on arm64 kernels, i.e. presumably that commit
+> wasn't trying to support these legacy APIs on arm64 kernels.
+>=20
+> Cc: Elliot Berman <eberman@codeaurora.org>
+> Cc: Brian Masney <masneyb@onstation.org>
+> Cc: Stephan Gerhold <stephan@gerhold.net>
+> Cc: Jeffrey Hugo <jhugo@codeaurora.org>
+> Cc: Douglas Anderson <dianders@chromium.org>
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> ---
+>=20
 
-Looking more closely at vmscan, it looks like we should return
-SHRINK_STOP instead of zero
+Elliot, can you ack/review this?
 
-BR,
--R
-
+> Followup to v1 (https://lore.kernel.org/r/20210223214539.1336155-7-swboyd=
+@chromium.org):
+>  * Don't change the legacy file to use legacy calls only
+>  * Wrap more things in CONFIG_ARM checks
 >
-> As long as you're confident that this case can't happen then we're
-> probably fine, but good to be careful. Is there any way we can make
-> sure that a "freshly allocated object" isn't ever in the "DONTNEED"
-> state?
->
->
-> > > > +       priv->shrinkable_count += msm_obj->base.size >> PAGE_SHIFT;
-> > > > +       msm_obj->dontneed = true;
-> > > > +}
-> > > > +
-> > > > +static inline void mark_unpurgable(struct msm_gem_object *msm_obj)
-> > > > +{
-> > > > +       struct msm_drm_private *priv = msm_obj->base.dev->dev_private;
-> > > > +
-> > > > +       WARN_ON(!mutex_is_locked(&priv->mm_lock));
-> > > > +
-> > > > +       if (WARN_ON(!msm_obj->dontneed))
-> > > > +               return;
-> > > > +
-> > > > +       priv->shrinkable_count -= msm_obj->base.size >> PAGE_SHIFT;
-> > > > +       WARN_ON(priv->shrinkable_count < 0);
-> > >
-> > > If you changed the order maybe you could make shrinkable_count
-> > > "unsigned long" to match the shrinker API?
-> > >
-> > >  new_shrinkable = msm_obj->base.size >> PAGE_SHIFT;
-> > >  WARN_ON(new_shrinkable > priv->shrinkable_count);
-> > >  priv->shrinkable_count -= new_shrinkable
-> > >
-> >
-> > True, although I've developed a preference for signed integers in
-> > cases where it can underflow if you mess up
->
-> Yeah, I guess it's fine since it's a count of pages and we really
-> can't have _that_ many pages worth of stuff to purge. It might not
-> hurt to at least declare it as a "long" instead of an "int" though to
-> match the shrinker API.
->
-> -Doug
