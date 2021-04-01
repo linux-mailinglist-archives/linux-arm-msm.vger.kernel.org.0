@@ -2,120 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F21AB3517B6
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Apr 2021 19:47:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B7E603517C2
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Apr 2021 19:47:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235378AbhDARml (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Apr 2021 13:42:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57200 "EHLO
+        id S235393AbhDARmn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Apr 2021 13:42:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57168 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234697AbhDARjP (ORCPT
+        with ESMTP id S234894AbhDARlD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Apr 2021 13:39:15 -0400
-Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93B3DC0225A2
-        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Apr 2021 08:26:31 -0700 (PDT)
-Received: by mail-ot1-x332.google.com with SMTP id v24-20020a9d69d80000b02901b9aec33371so2481595oto.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Apr 2021 08:26:31 -0700 (PDT)
+        Thu, 1 Apr 2021 13:41:03 -0400
+Received: from mail-qt1-x82c.google.com (mail-qt1-x82c.google.com [IPv6:2607:f8b0:4864:20::82c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 069ACC0225AB
+        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Apr 2021 08:34:43 -0700 (PDT)
+Received: by mail-qt1-x82c.google.com with SMTP id f12so1747653qtq.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Apr 2021 08:34:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=y1kLTUZ2DutDMLECPCDo/9HBwkSTm4jPer4fs/ISbQw=;
-        b=omBsYOeENt7SVjBE01WDqu8qkh6IuqJn18S0GxB8wH2g235QZGZzREfvWVIVJaIfO/
-         1TBmzjcHZeaLC1gXmZ6rI8Tlon9Hb6qxp1KLHxDAhJ20so+bIy87AGTfgQ+Q22cqtCJw
-         H4WvKG6fHJxtHglO3JEZM4qD/GaeefgOmd+tXSeqLdk4SklBHGNyWmy/0Hn/jBYf+HsX
-         pFbuUB1HhJH98ir9FIYsXxZb6i+xtPJzpKLENPuOd8GgAfqvlWooyCQaAIFJVGoEmGe0
-         EOqoltRJIhpiPjTBvaTbju0ULDdXLW5Hf688IH6WMu7qG0p1vO6emJ83VHxl7hPSfcP+
-         rkqg==
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=bgQ3XZ5ITKRGojF0eSgHx7BZvQ88/ghBhXwnDbKAV2I=;
+        b=YhJ7jkjScY7JdQhF/7Tt22mZk21tl8MbMM81VDTVwMeS/bumy1w9WGLvBQENfwcpeB
+         2ljIOmE/0b06jnmE6dkboTDAy94ze0X9i8gyWwaN4XMFw6NveMfupfnjzjWCFGiD4kIO
+         Z5Pg/KYuMKdSJP55scpo50bf+0976bJPooquI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=y1kLTUZ2DutDMLECPCDo/9HBwkSTm4jPer4fs/ISbQw=;
-        b=M1ZFxGjSOcRD2VhigYrUXgXyUq8wfdVkzty/+J8hudimqXcwJDfQ742LnYCQBczxXv
-         VxfdXOu4gaAMh2CA2YDuWNQ2wTjydrJjB7qx/46Y6IfAO7/KjgIRTvjcSxJviTCdTBhe
-         28zYYwwdam2u9mAqRl08r2aRj4a3hRf+jYb+HDtQABHwSVhLnKvMCVTVMB3VLbX4RAxd
-         jfcoQBBOBrJHFhwdXVmS8ZOvKEu+1pX1gAOdqmEXffwFYoFeoxrrZoO6wcmADZ4SWiXK
-         JvpYe8PvNK4GChRFD8cm2kGSPNLW1j/yJBD2l7V9inEjs2FJX1F+tEnKS67HJMSIvpAH
-         0qxw==
-X-Gm-Message-State: AOAM532ahiwjD88PsnxcyogVEs0O2PP+E4BV33TzqzvtDIEY3vy3/W+l
-        s0nEUlfthfyrkZQy8zXoVXwbaw==
-X-Google-Smtp-Source: ABdhPJwuxhgyUQPNdxqijp4NxdjFRqjeSz9/Ag+fpV3UkbEs/6cB1Wjoefn5mCAup82be648Kb/y8w==
-X-Received: by 2002:a9d:6013:: with SMTP id h19mr7353121otj.72.1617290791027;
-        Thu, 01 Apr 2021 08:26:31 -0700 (PDT)
-Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id m127sm1093411oib.32.2021.04.01.08.26.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Apr 2021 08:26:30 -0700 (PDT)
-Date:   Thu, 1 Apr 2021 10:26:28 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     satya priya <skakit@codeaurora.org>
-Cc:     Linus Walleij <linus.walleij@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>, kgunda@codeaurora.org,
-        linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH V2 2/3] dt-bindings: pinctrl: qcom-pmic-gpio: Update the
- binding to add four new variants
-Message-ID: <20210401152628.GQ904837@yoga>
-References: <1617280546-9583-1-git-send-email-skakit@codeaurora.org>
- <1617280546-9583-3-git-send-email-skakit@codeaurora.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=bgQ3XZ5ITKRGojF0eSgHx7BZvQ88/ghBhXwnDbKAV2I=;
+        b=QWY6QmxLPUvHmxKp5LK6iMnHz2SPgYk3UbQypNO83iTbniMbmYwlEABXlbcZwCp4Tu
+         6rbK79a8TrSUxSgo6TbzX7Ba/7bR9m1ZEF2oSVWvIX1bZD7E0w/KM2cUj/nfpb5ZOvNr
+         yC6NIxY/HfDJFnKXSQBhTczeVVw4IUa6DNAKcjNkxWKFylAL1XFWv9jgZ4/5OOVxkuzV
+         7OH06aX7W6ojJZZCG8laKCxfzA+D1gc6JQoEFo1VGflLk9k2i3LiIEK1FuMielYXuIBP
+         7AkzzVCrEwKKl9vlzgJyEk/Xqt753fEpuh1V8nKIpml5juCVdamhwslzCLaC0CRtvJFX
+         4VeQ==
+X-Gm-Message-State: AOAM530SPYiIwiemH5LhJ/ntSDvpqWo93SZOb0EqyKLW/PDJzwdaufRo
+        jD0j6wvOy5QIECZvGn70dH+rpUtshOlsNA==
+X-Google-Smtp-Source: ABdhPJwOrUHBIhgFTFspoJ1fGjQM0P9wUQwKWhYNY4Jr4oeB0D6Jttbieag6ZlWDfVO+VuUhw4a8hg==
+X-Received: by 2002:ac8:4e51:: with SMTP id e17mr7624932qtw.204.1617291281296;
+        Thu, 01 Apr 2021 08:34:41 -0700 (PDT)
+Received: from mail-yb1-f182.google.com (mail-yb1-f182.google.com. [209.85.219.182])
+        by smtp.gmail.com with ESMTPSA id j15sm3776785qtr.34.2021.04.01.08.34.40
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 01 Apr 2021 08:34:40 -0700 (PDT)
+Received: by mail-yb1-f182.google.com with SMTP id w8so2217320ybt.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Apr 2021 08:34:40 -0700 (PDT)
+X-Received: by 2002:a5b:54a:: with SMTP id r10mr12794123ybp.476.1617291280047;
+ Thu, 01 Apr 2021 08:34:40 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1617280546-9583-3-git-send-email-skakit@codeaurora.org>
+References: <20210331221630.488498-1-robdclark@gmail.com> <20210401012722.527712-1-robdclark@gmail.com>
+ <20210401012722.527712-2-robdclark@gmail.com>
+In-Reply-To: <20210401012722.527712-2-robdclark@gmail.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Thu, 1 Apr 2021 08:34:28 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=V1QUHYw-QkZO-bn+sS_K=KYRe83DfSqVow2RGFXu6nqg@mail.gmail.com>
+Message-ID: <CAD=FV=V1QUHYw-QkZO-bn+sS_K=KYRe83DfSqVow2RGFXu6nqg@mail.gmail.com>
+Subject: Re: [PATCH v2 1/4] drm/msm: Remove unused freed llist node
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <freedreno@lists.freedesktop.org>,
+        open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 01 Apr 07:35 CDT 2021, satya priya wrote:
+Hi,
 
-> Update the binding to add PM7325, PM8350C, PMK8350 and PMR735A GPIO support.
-> 
-> Signed-off-by: satya priya <skakit@codeaurora.org>
+On Wed, Mar 31, 2021 at 6:23 PM Rob Clark <robdclark@gmail.com> wrote:
+>
+> From: Rob Clark <robdclark@chromium.org>
+>
+> Unused since commit c951a9b284b9 ("drm/msm: Remove msm_gem_free_work")
+>
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
+> Tested-by: Douglas Anderson <dianders@chromium.org>
 > ---
-> Changes in V2:
->  - Placed this patch before conversion patch and updated commit text
->    to be more clear.
-> 
->  Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt | 8 ++++++++
->  1 file changed, 8 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt b/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt
-> index 7648ab0..da7c35e 100644
-> --- a/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt
-> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt
-> @@ -30,6 +30,10 @@ PMIC's from Qualcomm.
->  		    "qcom,pm6150-gpio"
->  		    "qcom,pm6150l-gpio"
->  		    "qcom,pmx55-gpio"
-> +		    "qcom,pm7325-gpio"
-> +		    "qcom,pm8350c-gpio"
-> +		    "qcom,pmk8350-gpio"
-> +		    "qcom,pmr735a-gpio"
+>  drivers/gpu/drm/msm/msm_gem.h | 2 --
+>  1 file changed, 2 deletions(-)
 
-As with the driver, please try to keep these sorted alphabetically and
-please rebase on linux-next, which already defines 2 of these.
-
-Regards,
-Bjorn
-
->  
->  		    And must contain either "qcom,spmi-gpio" or "qcom,ssbi-gpio"
->  		    if the device is on an spmi bus or an ssbi bus respectively
-> @@ -113,6 +117,10 @@ to specify in a pin configuration subnode:
->  		    gpio1-gpio12 for pm6150l
->  		    gpio1-gpio11 for pmx55 (holes on gpio3, gpio7, gpio10
->  					    and gpio11)
-> +		    gpio1-gpio10 for pm7325
-> +		    gpio1-gpio9 for pm8350c
-> +		    gpio1-gpio4 for pmk8350
-> +		    gpio1-gpio4 for pmr735a
->  
->  - function:
->  	Usage: required
-> -- 
-> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
-> of Code Aurora Forum, hosted by The Linux Foundation
-> 
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
