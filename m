@@ -2,175 +2,202 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4781B351EB0
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Apr 2021 20:55:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B88CD351CBE
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Apr 2021 20:47:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236648AbhDASpd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Apr 2021 14:45:33 -0400
-Received: from mail.kernel.org ([198.145.29.99]:32790 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S238357AbhDASh7 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Apr 2021 14:37:59 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id DF4D3610D0;
-        Thu,  1 Apr 2021 11:32:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1617276781;
-        bh=hfjvB9ERt7bvtAIEkjFz4Hvuc2oFEMjwZBh8Tsw4mdI=;
-        h=From:To:Cc:Subject:Date:From;
-        b=YOBsd9WVnLhP8AWR4lzPTOPl5RcODxd2bxg/z8jI0NG5w+uhlfyhIqCrCqOZfuh4t
-         zRfRcCTUpp7ZD0VoUdODDpX0avFN0ZpCP73Fxcr1F49rIp/WqAkONKDIniby1yFcu9
-         V3rKBjxRvVLK/hUk0b4Hv3UKSIhCNxSz3ZkdzFIVeuZL4iKjlPoadB9lhegO68Lkud
-         rNEFJvuuhT2LcMNh3VTN8xEwIDICZk00cm9LSYb8ZU0hK5ZVi2G8p+bKpZynFdL0Ve
-         HfaxgSYas6h0lt/vn1AhhiDRt4frwjd02hjWEtqZ9ynXjy3A+7ZcNykrgJdYAM6dTb
-         D5cG0nRRuX+VQ==
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] arm64: dts: qcom: sm8350: Add interconnects
-Date:   Thu,  1 Apr 2021 17:02:52 +0530
-Message-Id: <20210401113252.3078466-1-vkoul@kernel.org>
-X-Mailer: git-send-email 2.26.3
+        id S235608AbhDASVH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Apr 2021 14:21:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37122 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S239833AbhDASRC (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 1 Apr 2021 14:17:02 -0400
+Received: from mail-io1-xd30.google.com (mail-io1-xd30.google.com [IPv6:2607:f8b0:4864:20::d30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1813FC061221
+        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Apr 2021 05:26:25 -0700 (PDT)
+Received: by mail-io1-xd30.google.com with SMTP id r193so1979656ior.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Apr 2021 05:26:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=yzoc7dlOuPc3fxpeVRBd2xxNN+g9BpN8EdGoYo9aWVE=;
+        b=m5QiDBDooUfCNqfYQlVTwxVtvLK54ia5tZo6Wys7ChLrzR/J9dXdq7Pexaq2BrjoVV
+         bz09dEbLFywRSzfY3pWZnETz3jE/J1OpCQ0y2UvAg9cPwQPdZ9sCCyQIMzv6qzeQspij
+         gRmUY2LoFzHD29EWn0vUjYOEsd6KlWw17JzhLQEWPHXOrXlUa0fx8epVjIj069gYGUH9
+         QrSPV9b7mKtSWkQX0PClaYqdNSuOb5HwyVB3YtPRIuj3z7HEcLH2C2eoMEOuT0ZAPpXw
+         prdzXQ+vyGc1khcnnotPCu1aoM6ejtTVjokiJ7nVSZ319txyAyZNeWgZbFCqRU2NGXh0
+         AYVw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=yzoc7dlOuPc3fxpeVRBd2xxNN+g9BpN8EdGoYo9aWVE=;
+        b=FdExNVHYPfTRzcJmICi+wTC/bOzgZvQDRXLdHt50/boPopNuN+K0+gspxgigeswzuL
+         553/99HTrOhrHZVnYPGaOsmsEXi43iCORUuEPzP4cMoIGkkcoEiozXIr6pcq53zH8L7H
+         RWMpirI0K0CobNcPsNqfqAxzw8a8RyG1DwrvWj3TcxcTZKSQn5jt9J7VDMqdp4FlkBVX
+         GcTojWQ+BP2EaHT5ev69s88TWunCu8PY2gAzdHW5g+3IQNYKZ4Cx/QlNy7d0W4rvj/6C
+         4eniuaYedvXdtReZP4ykj6I9+s7Nm+ISMkUfLJOWjYHsGW1sufCP59dJWNqG71fkF7du
+         tvEg==
+X-Gm-Message-State: AOAM531y6kHc23xos0Tx7X0ruDloGj8voyJUerbMslmwWft/gHroWJp1
+        lFppDw6ngPJkZv3wr2718HofuAG+7ZXa3yo1
+X-Google-Smtp-Source: ABdhPJyE24mml/gnaveIp3qOdCpfL7fwfK5stVOa3qBN51+rH8IAcY9hD0/00XIwekootMyJpESaXg==
+X-Received: by 2002:a5d:9807:: with SMTP id a7mr6644491iol.7.1617279984396;
+        Thu, 01 Apr 2021 05:26:24 -0700 (PDT)
+Received: from [172.22.22.4] (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
+        by smtp.googlemail.com with ESMTPSA id w2sm132030iot.29.2021.04.01.05.26.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 01 Apr 2021 05:26:23 -0700 (PDT)
+Subject: Re: [PATCH] interconnect: qcom: sm8350: Use the correct ids
+To:     Georgi Djakov <georgi.djakov@linaro.org>, djakov@kernel.org,
+        vkoul@kernel.org
+Cc:     bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20210401094334.28871-1-georgi.djakov@linaro.org>
+From:   Alex Elder <elder@linaro.org>
+Message-ID: <ff0c1b21-7d83-cb29-17d5-06061f46006e@linaro.org>
+Date:   Thu, 1 Apr 2021 07:26:23 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.7.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20210401094334.28871-1-georgi.djakov@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add interconnect nodes and add them for modem and cdsp nodes
+On 4/1/21 4:43 AM, Georgi Djakov wrote:
+> For creating an array with the members for each NoC, we should be using
+> a local indexes, as otherwise unnecessary large arrays would be created.
+> Using an incorrect indexes will also result error for the consumers when
+> they try to find a valid path between the endpoints. Let's fix this and
+> use the correct ids.
+> 
+> Reported-by: Alex Elder <elder@linaro.org>
+> Signed-off-by: Georgi Djakov <georgi.djakov@linaro.org>
 
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
----
- arch/arm64/boot/dts/qcom/sm8350.dtsi | 79 ++++++++++++++++++++++++++++
- 1 file changed, 79 insertions(+)
+Looks good to me.
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-index a0d459069211..72cd3e7574a0 100644
---- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-@@ -4,6 +4,7 @@
-  */
- 
- #include <dt-bindings/interrupt-controller/arm-gic.h>
-+#include <dt-bindings/interconnect/qcom,sm8350.h>
- #include <dt-bindings/clock/qcom,gcc-sm8350.h>
- #include <dt-bindings/clock/qcom,rpmh.h>
- #include <dt-bindings/mailbox/qcom-ipcc.h>
-@@ -557,6 +558,62 @@ apps_smmu: iommu@15000000 {
- 					<GIC_SPI 707 IRQ_TYPE_LEVEL_HIGH>;
- 		};
- 
-+		config_noc: interconnect@1500000 {
-+			compatible = "qcom,sm8350-config-noc";
-+			reg = <0 0x01500000 0 0xa580>;
-+			#interconnect-cells = <1>;
-+			qcom,bcm-voters = <&apps_bcm_voter>;
-+		};
-+
-+		mc_virt: interconnect@1580000 {
-+			compatible = "qcom,sm8350-mc-virt";
-+			reg = <0 0x01580000 0 0x1000>;
-+			#interconnect-cells = <1>;
-+			qcom,bcm-voters = <&apps_bcm_voter>;
-+		};
-+
-+		system_noc: interconnect@1680000 {
-+			compatible = "qcom,sm8350-system-noc";
-+			reg = <0 0x01680000 0 0x1c200>;
-+			#interconnect-cells = <1>;
-+			qcom,bcm-voters = <&apps_bcm_voter>;
-+		};
-+
-+		aggre1_noc: interconnect@16e0000 {
-+			compatible = "qcom,sm8350-aggre1-noc";
-+			reg = <0 0x016e0000 0 0x1f180>;
-+			#interconnect-cells = <1>;
-+			qcom,bcm-voters = <&apps_bcm_voter>;
-+		};
-+
-+		aggre2_noc: interconnect@1700000 {
-+			compatible = "qcom,sm8350-aggre2-noc";
-+			reg = <0 0x01700000 0 0x33000>;
-+			#interconnect-cells = <1>;
-+			qcom,bcm-voters = <&apps_bcm_voter>;
-+		};
-+
-+		mmss_noc: interconnect@1740000 {
-+			compatible = "qcom,sm8350-mmss-noc";
-+			reg = <0 0x01740000 0 0x1f080>;
-+			#interconnect-cells = <1>;
-+			qcom,bcm-voters = <&apps_bcm_voter>;
-+		};
-+
-+		lpass_ag_noc: interconnect@3c40000 {
-+			compatible = "qcom,sm8350-lpass-ag-noc";
-+			reg = <0 0x03c40000 0 0xf080>;
-+			#interconnect-cells = <1>;
-+			qcom,bcm-voters = <&apps_bcm_voter>;
-+		};
-+
-+		compute_noc: interconnect@a0c0000{
-+			compatible = "qcom,sm8350-compute-noc";
-+			reg = <0 0x0a0c0000 0 0xa180>;
-+			#interconnect-cells = <1>;
-+			qcom,bcm-voters = <&apps_bcm_voter>;
-+		};
-+
- 		tcsr_mutex: hwlock@1f40000 {
- 			compatible = "qcom,tcsr-mutex";
- 			reg = <0x0 0x01f40000 0x0 0x40000>;
-@@ -584,6 +641,8 @@ mpss: remoteproc@4080000 {
- 					<&rpmhpd SM8350_MSS>;
- 			power-domain-names = "load_state", "cx", "mss";
- 
-+			interconnects = <&mc_virt 0 &mc_virt 1>;
-+
- 			memory-region = <&pil_modem_mem>;
- 
- 			qcom,smem-states = <&smp2p_modem_out 0>;
-@@ -787,6 +846,10 @@ rpmhpd_opp_turbo_l1: opp10 {
- 					};
- 				};
- 			};
-+
-+			apps_bcm_voter: bcm_voter {
-+				compatible = "qcom,bcm-voter";
-+			};
- 		};
- 
- 		ufs_mem_hc: ufshc@1d84000 {
-@@ -925,6 +988,8 @@ cdsp: remoteproc@98900000 {
- 					<&rpmhpd SM8350_MXC>;
- 			power-domain-names = "load_state", "cx", "mxc";
- 
-+			interconnects = <&compute_noc 1 &mc_virt 1>;
-+
- 			memory-region = <&pil_cdsp_mem>;
- 
- 			qcom,smem-states = <&smp2p_cdsp_out 0>;
-@@ -1036,6 +1101,20 @@ usb_2_ssphy: phy@88ebe00 {
- 			};
- 		};
- 
-+		dc_noc: interconnect@90e0000 {
-+			compatible = "qcom,sm8350-dc-noc";
-+			reg = <0 0x090c0000 0 0x4200>;
-+			#interconnect-cells = <1>;
-+			qcom,bcm-voters = <&apps_bcm_voter>;
-+		};
-+
-+		gem_noc: interconnect@9100000 {
-+			compatible = "qcom,sm8350-gem-noc";
-+			reg = <0 0x09100000 0 0xb4000>;
-+			#interconnect-cells = <1>;
-+			qcom,bcm-voters = <&apps_bcm_voter>;
-+		};
-+
- 		usb_1: usb@a6f8800 {
- 			compatible = "qcom,sm8350-dwc3", "qcom,dwc3";
- 			reg = <0 0x0a6f8800 0 0x400>;
--- 
-2.26.3
+Acked-by: Alex Elder <elder@linaro.org>
+
+> ---
+>   drivers/interconnect/qcom/sm8350.c | 80 +++++++++++++++---------------
+>   1 file changed, 40 insertions(+), 40 deletions(-)
+> 
+> diff --git a/drivers/interconnect/qcom/sm8350.c b/drivers/interconnect/qcom/sm8350.c
+> index f3aab02b8678..01202989a5b2 100644
+> --- a/drivers/interconnect/qcom/sm8350.c
+> +++ b/drivers/interconnect/qcom/sm8350.c
+> @@ -228,20 +228,20 @@ static struct qcom_icc_bcm *aggre2_noc_bcms[] = {
+>   };
+>   
+>   static struct qcom_icc_node *aggre2_noc_nodes[] = {
+> -	[SM8350_MASTER_QDSS_BAM] = &qhm_qdss_bam,
+> -	[SM8350_MASTER_QUP_0] = &qhm_qup0,
+> -	[SM8350_MASTER_QUP_2] = &qhm_qup2,
+> -	[SM8350_MASTER_A2NOC_CFG] = &qnm_a2noc_cfg,
+> -	[SM8350_MASTER_CRYPTO] = &qxm_crypto,
+> -	[SM8350_MASTER_IPA] = &qxm_ipa,
+> -	[SM8350_MASTER_PCIE_0] = &xm_pcie3_0,
+> -	[SM8350_MASTER_PCIE_1] = &xm_pcie3_1,
+> -	[SM8350_MASTER_QDSS_ETR] = &xm_qdss_etr,
+> -	[SM8350_MASTER_SDCC_2] = &xm_sdc2,
+> -	[SM8350_MASTER_UFS_CARD] = &xm_ufs_card,
+> -	[SM8350_SLAVE_A2NOC_SNOC] = &qns_a2noc_snoc,
+> -	[SM8350_SLAVE_ANOC_PCIE_GEM_NOC] = &qns_pcie_mem_noc,
+> -	[SM8350_SLAVE_SERVICE_A2NOC] = &srvc_aggre2_noc,
+> +	[MASTER_QDSS_BAM] = &qhm_qdss_bam,
+> +	[MASTER_QUP_0] = &qhm_qup0,
+> +	[MASTER_QUP_2] = &qhm_qup2,
+> +	[MASTER_A2NOC_CFG] = &qnm_a2noc_cfg,
+> +	[MASTER_CRYPTO] = &qxm_crypto,
+> +	[MASTER_IPA] = &qxm_ipa,
+> +	[MASTER_PCIE_0] = &xm_pcie3_0,
+> +	[MASTER_PCIE_1] = &xm_pcie3_1,
+> +	[MASTER_QDSS_ETR] = &xm_qdss_etr,
+> +	[MASTER_SDCC_2] = &xm_sdc2,
+> +	[MASTER_UFS_CARD] = &xm_ufs_card,
+> +	[SLAVE_A2NOC_SNOC] = &qns_a2noc_snoc,
+> +	[SLAVE_ANOC_PCIE_GEM_NOC] = &qns_pcie_mem_noc,
+> +	[SLAVE_SERVICE_A2NOC] = &srvc_aggre2_noc,
+>   };
+>   
+>   static struct qcom_icc_desc sm8350_aggre2_noc = {
+> @@ -414,10 +414,10 @@ static struct qcom_icc_bcm *mc_virt_bcms[] = {
+>   };
+>   
+>   static struct qcom_icc_node *mc_virt_nodes[] = {
+> -	[SM8350_MASTER_LLCC] = &llcc_mc,
+> -	[SM8350_SLAVE_EBI1] = &ebi,
+> -	[SM8350_MASTER_LLCC_DISP] = &llcc_mc_disp,
+> -	[SM8350_SLAVE_EBI1_DISP] = &ebi_disp,
+> +	[MASTER_LLCC] = &llcc_mc,
+> +	[SLAVE_EBI1] = &ebi,
+> +	[MASTER_LLCC_DISP] = &llcc_mc_disp,
+> +	[SLAVE_EBI1_DISP] = &ebi_disp,
+>   };
+>   
+>   static struct qcom_icc_desc sm8350_mc_virt = {
+> @@ -439,24 +439,24 @@ static struct qcom_icc_bcm *mmss_noc_bcms[] = {
+>   };
+>   
+>   static struct qcom_icc_node *mmss_noc_nodes[] = {
+> -	[SM8350_MASTER_CAMNOC_HF] = &qnm_camnoc_hf,
+> -	[SM8350_MASTER_CAMNOC_ICP] = &qnm_camnoc_icp,
+> -	[SM8350_MASTER_CAMNOC_SF] = &qnm_camnoc_sf,
+> -	[SM8350_MASTER_CNOC_MNOC_CFG] = &qnm_mnoc_cfg,
+> -	[SM8350_MASTER_VIDEO_P0] = &qnm_video0,
+> -	[SM8350_MASTER_VIDEO_P1] = &qnm_video1,
+> -	[SM8350_MASTER_VIDEO_PROC] = &qnm_video_cvp,
+> -	[SM8350_MASTER_MDP0] = &qxm_mdp0,
+> -	[SM8350_MASTER_MDP1] = &qxm_mdp1,
+> -	[SM8350_MASTER_ROTATOR] = &qxm_rot,
+> -	[SM8350_SLAVE_MNOC_HF_MEM_NOC] = &qns_mem_noc_hf,
+> -	[SM8350_SLAVE_MNOC_SF_MEM_NOC] = &qns_mem_noc_sf,
+> -	[SM8350_SLAVE_SERVICE_MNOC] = &srvc_mnoc,
+> -	[SM8350_MASTER_MDP0_DISP] = &qxm_mdp0_disp,
+> -	[SM8350_MASTER_MDP1_DISP] = &qxm_mdp1_disp,
+> -	[SM8350_MASTER_ROTATOR_DISP] = &qxm_rot_disp,
+> -	[SM8350_SLAVE_MNOC_HF_MEM_NOC_DISP] = &qns_mem_noc_hf_disp,
+> -	[SM8350_SLAVE_MNOC_SF_MEM_NOC_DISP] = &qns_mem_noc_sf_disp,
+> +	[MASTER_CAMNOC_HF] = &qnm_camnoc_hf,
+> +	[MASTER_CAMNOC_ICP] = &qnm_camnoc_icp,
+> +	[MASTER_CAMNOC_SF] = &qnm_camnoc_sf,
+> +	[MASTER_CNOC_MNOC_CFG] = &qnm_mnoc_cfg,
+> +	[MASTER_VIDEO_P0] = &qnm_video0,
+> +	[MASTER_VIDEO_P1] = &qnm_video1,
+> +	[MASTER_VIDEO_PROC] = &qnm_video_cvp,
+> +	[MASTER_MDP0] = &qxm_mdp0,
+> +	[MASTER_MDP1] = &qxm_mdp1,
+> +	[MASTER_ROTATOR] = &qxm_rot,
+> +	[SLAVE_MNOC_HF_MEM_NOC] = &qns_mem_noc_hf,
+> +	[SLAVE_MNOC_SF_MEM_NOC] = &qns_mem_noc_sf,
+> +	[SLAVE_SERVICE_MNOC] = &srvc_mnoc,
+> +	[MASTER_MDP0_DISP] = &qxm_mdp0_disp,
+> +	[MASTER_MDP1_DISP] = &qxm_mdp1_disp,
+> +	[MASTER_ROTATOR_DISP] = &qxm_rot_disp,
+> +	[SLAVE_MNOC_HF_MEM_NOC_DISP] = &qns_mem_noc_hf_disp,
+> +	[SLAVE_MNOC_SF_MEM_NOC_DISP] = &qns_mem_noc_sf_disp,
+>   };
+>   
+>   static struct qcom_icc_desc sm8350_mmss_noc = {
+> @@ -472,10 +472,10 @@ static struct qcom_icc_bcm *nsp_noc_bcms[] = {
+>   };
+>   
+>   static struct qcom_icc_node *nsp_noc_nodes[] = {
+> -	[SM8350_MASTER_CDSP_NOC_CFG] = &qhm_nsp_noc_config,
+> -	[SM8350_MASTER_CDSP_PROC] = &qxm_nsp,
+> -	[SM8350_SLAVE_CDSP_MEM_NOC] = &qns_nsp_gemnoc,
+> -	[SM8350_SLAVE_SERVICE_NSP_NOC] = &service_nsp_noc,
+> +	[MASTER_CDSP_NOC_CFG] = &qhm_nsp_noc_config,
+> +	[MASTER_CDSP_PROC] = &qxm_nsp,
+> +	[SLAVE_CDSP_MEM_NOC] = &qns_nsp_gemnoc,
+> +	[SLAVE_SERVICE_NSP_NOC] = &service_nsp_noc,
+>   };
+>   
+>   static struct qcom_icc_desc sm8350_compute_noc = {
+> 
 
