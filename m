@@ -2,94 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6E9D53520B1
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Apr 2021 22:43:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 98202352134
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Apr 2021 22:58:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234594AbhDAUnc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Apr 2021 16:43:32 -0400
-Received: from mail.kernel.org ([198.145.29.99]:34038 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S234276AbhDAUnb (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Apr 2021 16:43:31 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 57CFD610D0;
-        Thu,  1 Apr 2021 20:43:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1617309811;
-        bh=VlhQGoUOqdCIYNUihDA2mj8pdQI3cX+qCuRPl+Gh2eI=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=ExaDY6ycp4e5cUynKGmfkCpPML+X4JyMjj2woGnGRXhutch5+k5qBd5Y0tWO+OpO+
-         /B8MvQ9u2z9F8tt/1oBjKV2LX43DjQXdhL9L15aF1Go5r6S6HERvAUMcjJLK0zK3YP
-         JGkN7Hqs3Mf5Lgvs3pNsPs9eUmhQnPKh8Q7KBoaulOvUTrg3fTs5f6Mtxc2fLxRk5g
-         9RuEFOIGqnPymaF+boMWNtUdV9EgvAPe64II9Y41NfHmhMNAmt7QV2kyObNRdtxCGl
-         rSQtdH0QfdFjUZWGS9cfykfyIjhRk6swxt44kiMSBchWQsy0z2ZvCuJ3b+7x9Fwc0a
-         qki+hn5DCkIzw==
-From:   Mark Brown <broonie@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        satya priya <skakit@codeaurora.org>
-Cc:     Mark Brown <broonie@kernel.org>, linux-kernel@vger.kernel.org,
-        rnayak@codeaurora.org, Liam Girdwood <lgirdwood@gmail.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        kgunda@codeaurora.org
-Subject: Re: [PATCH V3 0/5] Add PM7325/PM8350C/PMR735A regulator support
-Date:   Thu,  1 Apr 2021 21:43:17 +0100
-Message-Id: <161730974895.25526.12885475666064429104.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <1617192339-3760-1-git-send-email-skakit@codeaurora.org>
-References: <1617192339-3760-1-git-send-email-skakit@codeaurora.org>
+        id S234400AbhDAU6l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Apr 2021 16:58:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44898 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233710AbhDAU6k (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 1 Apr 2021 16:58:40 -0400
+Received: from mail-qk1-x735.google.com (mail-qk1-x735.google.com [IPv6:2607:f8b0:4864:20::735])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53475C0613E6
+        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Apr 2021 13:58:40 -0700 (PDT)
+Received: by mail-qk1-x735.google.com with SMTP id c4so3634868qkg.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Apr 2021 13:58:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=NvVk82m6hhIQriolRhQ8Z203iWxsgnrRsbJQOs66SaI=;
+        b=Jp6vxVF8jtCYHT4xhyRLT1pBqz5GDZNABKErvGUTqaBEXVjovp2SdU6MbpSSRBmjcH
+         gJ8hOJzEpvdOYZkV/hWKf40idl3T2ENatYEuD06xHrmvb27MsmEUFsqs1bhGOrCJDhhK
+         fRtp8DUGhB4LRYsOA3XZqP9y9cAls0RiuNzZmnH8Q4+TNtYNxxL/L3ZaCsHUJZasXHO4
+         a1Le0gjAvp/ZH5vvlpWedEtVlNsh7YMBAi+Gl2i3ap+nhtMe5wr6+lq+FZfvnuKeJ5Vt
+         KlcIQa4rA9F1mZwjsjEQvrLtxvXwSVU7hF9govFej0Uh+/k/5nkGCsJr0eeh5LGMfsxL
+         HmjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=NvVk82m6hhIQriolRhQ8Z203iWxsgnrRsbJQOs66SaI=;
+        b=FSarrK7RXXhg1+9q+fM5lSqewXYMf/u4QEEFMuMid6KDhlyiKnOEVJNrrYsumTfZO9
+         JALQSl+pvDuSW9WqeLONTa2lCCJEJV2C1EDCYroI6Dxk9RLjHJVMp1mPbOIjD3zAL2uT
+         cJfqe/LJqWXjwsD/2Pn5IHrMaB2pUspLKdZxPWB2+Txr9uxVL7Ai/ahUUipG/DEW7CMU
+         46veFX6C3i9+5zsPpwvXwcVhhGI34dSZ+b/hbtuCALW7nwfy6hjq06ORNcEt1PtO/WfZ
+         1Ia6GJxKW0GHv2tSnDL3eJA8A1Z7dhrLKi4G4hDmrOV9NBnk/lffBwkItKu03wKb5f0J
+         9PBA==
+X-Gm-Message-State: AOAM533voiY3ZsrM3u/pUE/Mwhcu9ptMu/xyMSRVugHjFO3A9eZk8w9s
+        g3DZln3nLcvnPZsWGOwTnSxSR2wkQqgoqN59baNPNQ==
+X-Google-Smtp-Source: ABdhPJx1rpyYOOJdxKZQYFzQB+5i85Rx/659TiPzXswfiJPztzBFR+4XKyLpkO9bQ2aHwsg+kn8kW/Pj6TKqMaeS2mU=
+X-Received: by 2002:a37:a016:: with SMTP id j22mr10434149qke.486.1617310719561;
+ Thu, 01 Apr 2021 13:58:39 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+References: <20210325111144.2852594-1-dmitry.baryshkov@linaro.org>
+ <20210325111144.2852594-7-dmitry.baryshkov@linaro.org> <4217c4a2-cb15-ef08-8c39-9a5f164d2b41@codeaurora.org>
+ <CAA8EJpoNThCf-R8+CmjNWC9bGin8x60v-AjZrsm2x=ZE+UDjgw@mail.gmail.com> <161730706709.2260335.8947402948263904863@swboyd.mtv.corp.google.com>
+In-Reply-To: <161730706709.2260335.8947402948263904863@swboyd.mtv.corp.google.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Thu, 1 Apr 2021 23:58:28 +0300
+Message-ID: <CAA8EJprOTzjoN_Yz8M5qsdg-7FEsLaVnhN+xP3iwXxp5p6_2-A@mail.gmail.com>
+Subject: Re: [PATCH v1 06/15] clk: qcom: videocc-sc7180: drop unused enum entries
+To:     Stephen Boyd <sboyd@kernel.org>
+Cc:     Taniya Das <tdas@codeaurora.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        DRM DRIVER FOR MSM ADRENO GPU 
+        <linux-arm-msm@vger.kernel.org>,
+        "open list:COMMON CLK FRAMEWORK" <linux-clk@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 31 Mar 2021 17:35:34 +0530, satya priya wrote:
-> This series is dependent on below series which adds DT files for SC7280 SoC
-> https://lore.kernel.org/patchwork/project/lkml/list/?series=488871
-> 
-> satya priya (5):
->   regulator: qcom-rpmh: Add pmic5_ftsmps520 buck
->   regulator: qcom-rpmh: Add PM7325/PMR735A regulator support
->   arm64: dts: qcom: sc7280: Add RPMh regulators for sc7280-idp
->   dt-bindings: regulator: Convert RPMh regulator bindings to YAML
->   dt-bindings: regulator: Add compatibles for PM7325/PMR735A
-> 
-> [...]
+On Thu, 1 Apr 2021 at 22:57, Stephen Boyd <sboyd@kernel.org> wrote:
+>
+> Quoting Dmitry Baryshkov (2021-03-27 01:13:56)
+> > Hi Tanya,
+> >
+> > On Sat, 27 Mar 2021 at 04:49, Taniya Das <tdas@codeaurora.org> wrote:
+> > >
+> > > Hi Dmitry,
+> > >
+> > > Thanks for the patch for cleanup.
+> > > It is okay to remove TEST source, but you can still keep the sleep clock
+> > > source as it could be still connected to certain RCGs and could be used
+> > > to derive low frequencies if required.
+> > >
+> > > As these sources are generated from the HW plans it would be good if we
+> > > keep them as they are except the TEST source.
+> >
+> > Please note that I've barely removed the unused enum entry, which is
+> > not used in any of clock parent maps. So I'd suggest to either add it
+> > to relevant clock parent maps and to the videocc bindings or to drop
+> > unused enum entry.
+> >
+>
+> Is this going to be resent?
 
-Applied to
+Is there a reason to resend the patches?
+I'm not removing any actual clock sources, only unused(!) enum entries
+are removed. No functional changes.
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-next
 
-Thanks!
-
-[1/5] regulator: qcom-rpmh: Add pmic5_ftsmps520 buck
-      commit: 9405b4f7fa78b55fc83e5b5258f00e651aed5734
-[2/5] regulator: qcom-rpmh: Add PM7325/PMR735A regulator support
-      commit: c4e5aa3dbee56bde70dfa03debc49bf9494fb3d9
-[3/5] arm64: dts: qcom: sc7280: Add RPMh regulators for sc7280-idp
-      (no commit info)
-[4/5] dt-bindings: regulator: Convert RPMh regulator bindings to YAML
-      commit: 7255f98d08c73f0bcf1397d3060fdb776d7aa147
-[5/5] dt-bindings: regulator: Add compatibles for PM7325/PMR735A
-      commit: be724fd5b60dd083c8e39a4a2652e5017d2f7a20
-
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
+-- 
+With best wishes
+Dmitry
