@@ -2,69 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8E617350BDC
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Apr 2021 03:24:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 24B2C350BE0
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Apr 2021 03:24:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232951AbhDABYD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S233002AbhDABYD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Wed, 31 Mar 2021 21:24:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46172 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46182 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232763AbhDABXy (ORCPT
+        with ESMTP id S232782AbhDABX4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 31 Mar 2021 21:23:54 -0400
-Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E99DEC061574;
-        Wed, 31 Mar 2021 18:23:53 -0700 (PDT)
-Received: by mail-pf1-x42d.google.com with SMTP id s11so293695pfm.1;
-        Wed, 31 Mar 2021 18:23:53 -0700 (PDT)
+        Wed, 31 Mar 2021 21:23:56 -0400
+Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C6F7C061574;
+        Wed, 31 Mar 2021 18:23:56 -0700 (PDT)
+Received: by mail-pg1-x536.google.com with SMTP id w10so533068pgh.5;
+        Wed, 31 Mar 2021 18:23:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=+2jBkeo878G+FkmC1vjkk79rQNW00YDmS4BnvfJ2kYU=;
-        b=nn1RaRztiuPrmeG4Y6A4+Z9aCNsh96twt7rXm6MoLkf4wFBDpEoglnIrhQ1RL3dISV
-         DUtMy2J/5YiIZShK+V7U5YpTFXKMwBE1rwIITEM+0FDdpyi2d2UZacn1kDQDbW6BhtCY
-         S+FZz0v5qW3QOcW2RCEuuGTbqHTfnErxOIdPaAtWw+So2UF/oHHIwFd8cewV6TxpbtZ3
-         ZzZ0JxQ/8v2DUKx1Wa2oytsG42W/V2rZvQr/bzlHUcqrSstmX20gdZDBSN09kxvmHauw
-         uBm1StndG68O9XG6dj6Wv4O9SLiTfO1FM6QRsRCsFsSTt06PNKMeDjEgKtq2GScf76xg
-         mafw==
+        bh=2OZG+O20zktXv8NsZQbXT4tTLbC2WfocmfwxuY758Yw=;
+        b=W0nlURh/fdJ2uFh2SqFnYzWDiwK43B+uGadvn8W5L1ci6rFaDy+NdxT6/vKI7dxpY3
+         QmKbODoln6safTTbvOf1W/Gtp/k8Qso+Bdrgvzc0LJQJEeI1W5AyywQCcvi2D7Q/lTY5
+         0QRzjCapxDm4y2FroNsb49ga+WvyBhRKOrVnFarBIj6ug+ZQLxLp2BKMK7yjh2MhzKOq
+         89yjiVvxwn7Dh7fU9hl/tUI5Ytl8+A/TD/KHXZm6WM+SofNF1g5R0B/btRz1TxvcWH+F
+         wr9aMEtI12vmZaPzCyPWdgBNUJ5e2WXlsrHMHz85I7OsmwJJv/PI1qTVDmCej2pnw5Su
+         QPJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=+2jBkeo878G+FkmC1vjkk79rQNW00YDmS4BnvfJ2kYU=;
-        b=fiYQsPPsfN4ur/aC2csqwpl+aRzjG1rjRSSq4/SefSJmQLSVl6RZ8Bppx3PGRCx5fS
-         F68eKSfaxYejnAqeS4r/V5REK2D4L2N/PZ865ysqVFYDtwSIKQrKqV19c329e3tfYO4X
-         uFePI8fY5Hb3cw/QykfEmN0EoIuL7iH9r1bicWKynExOUTsXtbFrT4p3jh/syGeIGbPl
-         bISrf4hF8g88kMoeTXE3GzjkSXNjmrNqbYDmEIZ6qG1qmgINCyTzXrUZfgiCxQLSgvSi
-         3s8IIQcp0c3ncCLM/4Q5DyAtxhnOXfCLOZH+78MCeLxbWJjxjqKbp1EJ0ou9MGx+5TpW
-         AnxA==
-X-Gm-Message-State: AOAM533Zsjm+cT5/o7Atxj/BCeJQcz3ggTrSaX0dNJoN+I2sof0AtSCb
-        YzBDwfJgJM+F5jNOUTemKhg=
-X-Google-Smtp-Source: ABdhPJxpmKhVqceIQWiXrGGdLvcaLXzXdCmFiC3E3r6puxs07HbTGNDN+PC6hnUY+qLrnezZ75rs9g==
-X-Received: by 2002:a63:6d8a:: with SMTP id i132mr5567869pgc.82.1617240233466;
-        Wed, 31 Mar 2021 18:23:53 -0700 (PDT)
+        bh=2OZG+O20zktXv8NsZQbXT4tTLbC2WfocmfwxuY758Yw=;
+        b=EDL8zObCHcnQG5AE7pFLMkd1MGFAsWQCZr3Iy4FwSqbF4T6IY6vxLdFFKfpC9fGtHS
+         MF0M++f8jlsIybO0QUoKhYtzqEY3ExGlX+NG2WKLiyzGuvJizuKfG2idUirO4NNBqhA8
+         KNQBuNMi86AwdMMXjxR7enJKcAdbNj7W0MwAJov95fSyn2QYx4SUdP1oU6sXgV4FLVz7
+         4Xb7zni1pz2zJxtq8vBzpNDewTZSMFO8vjVd5b6wBGN5QxTDt1fSvhxcbKjBqiOjE+zw
+         jslUbG4usvq+8WUsGkk+ESiVvFw7fseAFqdPYUC/E0ScRXxxBIhTikfEt+vtUkUhSIVU
+         5iwg==
+X-Gm-Message-State: AOAM531b3y7TJ4q9yOJCOHMFRtgk7DlM+yoAW1B2+zRIAUdL67FKdLDt
+        BMbjLy8O9mtQOlLgI2oXNyLUKIaZC/TvHw==
+X-Google-Smtp-Source: ABdhPJxWNVCU8igKasbpVovJ1j4gGoVwVRMetgYIVXl1Uz4inRuJNKzWf3MODUk2A7/R07p/mphVSQ==
+X-Received: by 2002:a65:4046:: with SMTP id h6mr5408383pgp.345.1617240235769;
+        Wed, 31 Mar 2021 18:23:55 -0700 (PDT)
 Received: from localhost ([2601:1c0:5200:a6:307:a401:7b76:c6e5])
-        by smtp.gmail.com with ESMTPSA id ha8sm3270796pjb.6.2021.03.31.18.23.52
+        by smtp.gmail.com with ESMTPSA id m7sm3351081pjc.54.2021.03.31.18.23.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 31 Mar 2021 18:23:52 -0700 (PDT)
+        Wed, 31 Mar 2021 18:23:54 -0700 (PDT)
 From:   Rob Clark <robdclark@gmail.com>
 To:     dri-devel@lists.freedesktop.org
 Cc:     Rob Clark <robdclark@chromium.org>,
-        freedreno@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
-        GPU), Jordan Crouse <jordan@cosmicpenguin.net>,
-        "Kristian H. Kristensen" <hoegsberg@google.com>,
-        linaro-mm-sig@lists.linaro.org (moderated list:DMA BUFFER SHARING
-        FRAMEWORK),
+        Douglas Anderson <dianders@chromium.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
         linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
-        linux-kernel@vger.kernel.org (open list),
-        linux-media@vger.kernel.org (open list:DMA BUFFER SHARING FRAMEWORK)
-Subject: [PATCH v2 0/4] drm/msm: Shrinker (and related) fixes
-Date:   Wed, 31 Mar 2021 18:27:17 -0700
-Message-Id: <20210401012722.527712-1-robdclark@gmail.com>
+        freedreno@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
+        GPU), linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH v2 1/4] drm/msm: Remove unused freed llist node
+Date:   Wed, 31 Mar 2021 18:27:18 -0700
+Message-Id: <20210401012722.527712-2-robdclark@gmail.com>
 X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20210331221630.488498-1-robdclark@gmail.com>
+In-Reply-To: <20210401012722.527712-1-robdclark@gmail.com>
 References: <20210331221630.488498-1-robdclark@gmail.com>
+ <20210401012722.527712-1-robdclark@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
@@ -73,36 +73,27 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Rob Clark <robdclark@chromium.org>
 
-I've been spending some time looking into how things behave under high
-memory pressure.  The first patch is a random cleanup I noticed along
-the way.  The second improves the situation significantly when we are
-getting shrinker called from many threads in parallel.  And the last
-two are $debugfs/gem fixes I needed so I could monitor the state of GEM
-objects (ie. how many are active/purgable/purged) while triggering high
-memory pressure.
+Unused since commit c951a9b284b9 ("drm/msm: Remove msm_gem_free_work")
 
-We could probably go a bit further with dropping the mm_lock in the
-shrinker->scan() loop, but this is already a pretty big improvement.
-The next step is probably actually to add support to unpin/evict
-inactive objects.  (We are part way there since we have already de-
-coupled the iova lifetime from the pages lifetime, but there are a
-few sharp corners to work through.)
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+Tested-by: Douglas Anderson <dianders@chromium.org>
+---
+ drivers/gpu/drm/msm/msm_gem.h | 2 --
+ 1 file changed, 2 deletions(-)
 
-Rob Clark (4):
-  drm/msm: Remove unused freed llist node
-  drm/msm: Avoid mutex in shrinker_count()
-  drm/msm: Fix debugfs deadlock
-  drm/msm: Improved debugfs gem stats
-
- drivers/gpu/drm/msm/msm_debugfs.c      | 14 ++---
- drivers/gpu/drm/msm/msm_drv.c          |  4 ++
- drivers/gpu/drm/msm/msm_drv.h          | 15 ++++--
- drivers/gpu/drm/msm/msm_fb.c           |  3 +-
- drivers/gpu/drm/msm/msm_gem.c          | 65 ++++++++++++++++++-----
- drivers/gpu/drm/msm/msm_gem.h          | 72 +++++++++++++++++++++++---
- drivers/gpu/drm/msm/msm_gem_shrinker.c | 28 ++++------
- 7 files changed, 150 insertions(+), 51 deletions(-)
-
+diff --git a/drivers/gpu/drm/msm/msm_gem.h b/drivers/gpu/drm/msm/msm_gem.h
+index b3a0a880cbab..7a9107cf1818 100644
+--- a/drivers/gpu/drm/msm/msm_gem.h
++++ b/drivers/gpu/drm/msm/msm_gem.h
+@@ -78,8 +78,6 @@ struct msm_gem_object {
+ 
+ 	struct list_head vmas;    /* list of msm_gem_vma */
+ 
+-	struct llist_node freed;
+-
+ 	/* For physically contiguous buffers.  Used when we don't have
+ 	 * an IOMMU.  Also used for stolen/splashscreen buffer.
+ 	 */
 -- 
 2.30.2
 
