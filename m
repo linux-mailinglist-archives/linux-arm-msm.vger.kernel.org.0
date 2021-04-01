@@ -2,169 +2,153 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F2CB935104D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Apr 2021 09:45:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 119A43510C7
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Apr 2021 10:23:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233434AbhDAHpZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Apr 2021 03:45:25 -0400
-Received: from mga07.intel.com ([134.134.136.100]:2550 "EHLO mga07.intel.com"
+        id S232951AbhDAIWs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Apr 2021 04:22:48 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:32207 "EHLO m43-7.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230284AbhDAHpK (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Apr 2021 03:45:10 -0400
-IronPort-SDR: AozoHmkV2Kuj+SszmoaH6YXXMfIzJA/FuY+l0a7przeTicEXJZvrqRkd8WN52X6FhSm4Ms9Ir5
- nBKnyh3W3xqA==
-X-IronPort-AV: E=McAfee;i="6000,8403,9940"; a="256160553"
-X-IronPort-AV: E=Sophos;i="5.81,296,1610438400"; 
-   d="scan'208";a="256160553"
-Received: from orsmga003.jf.intel.com ([10.7.209.27])
-  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Apr 2021 00:45:07 -0700
-IronPort-SDR: lsbWgO8aRTgEJJiGUMpmyaRbtmcauxhMmNapB9ei3jfvohdyrNPtGYFBZQe67fxtzdYtxYWhU7
- 9g+tDZ9olIrw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.81,296,1610438400"; 
-   d="scan'208";a="377598402"
-Received: from ahunter-desktop.fi.intel.com (HELO [10.237.72.174]) ([10.237.72.174])
-  by orsmga003.jf.intel.com with ESMTP; 01 Apr 2021 00:45:00 -0700
-Subject: Re: [PATCH v14 1/2] scsi: ufs: Enable power management for wlun
-To:     "Asutosh Das (asd)" <asutoshd@codeaurora.org>, cang@codeaurora.org,
-        martin.petersen@oracle.com, linux-scsi@vger.kernel.org
-Cc:     linux-arm-msm@vger.kernel.org,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        Pedro Sousa <pedrom.sousa@synopsys.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Stanley Chu <stanley.chu@mediatek.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Steven Rostedt <rostedt@goodmis.org>,
-        Ingo Molnar <mingo@redhat.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Lee Jones <lee.jones@linaro.org>,
-        Bean Huo <beanhuo@micron.com>,
-        Kiwoong Kim <kwmad.kim@samsung.com>,
-        Yue Hu <huyue2@yulong.com>,
-        Dan Carpenter <dan.carpenter@oracle.com>,
-        Wei Yongjun <weiyongjun1@huawei.com>,
-        Bart van Assche <bvanassche@acm.org>,
-        "Gustavo A. R. Silva" <gustavoars@kernel.org>,
-        Dinghao Liu <dinghao.liu@zju.edu.cn>,
-        Jaegeuk Kim <jaegeuk@kernel.org>,
-        Satya Tangirala <satyat@google.com>,
-        open list <linux-kernel@vger.kernel.org>,
-        "moderated list:ARM/SAMSUNG S3C, S5P AND EXYNOS ARM ARCHITECTURES" 
-        <linux-arm-kernel@lists.infradead.org>,
-        "open list:ARM/SAMSUNG S3C, S5P AND EXYNOS ARM ARCHITECTURES" 
-        <linux-samsung-soc@vger.kernel.org>,
-        "moderated list:UNIVERSAL FLASH STORAGE HOST CONTROLLER DRIVER..." 
-        <linux-mediatek@lists.infradead.org>
-References: <cover.1617143113.git.asutoshd@codeaurora.org>
- <16f1bcf76ff411c70fe0e3e13f84e4b0fa7d9063.1617143113.git.asutoshd@codeaurora.org>
- <a385141d-324b-680e-a19c-ab6121bd6c5d@intel.com>
- <dbac8ce8-83c6-49a5-9f4d-f5ea19d7a883@codeaurora.org>
-From:   Adrian Hunter <adrian.hunter@intel.com>
-Organization: Intel Finland Oy, Registered Address: PL 281, 00181 Helsinki,
- Business Identity Code: 0357606 - 4, Domiciled in Helsinki
-Message-ID: <612d0f35-89a2-947b-9fa4-608624c4c032@intel.com>
-Date:   Thu, 1 Apr 2021 10:45:10 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.8.1
+        id S233394AbhDAIWK (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 1 Apr 2021 04:22:10 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1617265330; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=73kahUGG37r2p6wLbYlXpBi11gwXumfvlc37qLlQw/0=;
+ b=ZItyyMHMKjwX8I4FMCK2ZKkJpR6OKe3YnJTHyASupzeIAfGn5cTkNli5pjmexSeQDDR7XDT0
+ dcyDmTyfqaY9x+wucPltvLRyWeFRwM9ruFoGGRMNUJcG/qyj5Sh7mTvZmfhQiVal+YqqkMQu
+ yPENeUx+OAy76uGcPYPCUtEQlaA=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
+ 606582b18807bcde1d0d22fc (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 01 Apr 2021 08:22:09
+ GMT
+Sender: schowdhu=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 61D41C43466; Thu,  1 Apr 2021 08:22:09 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: schowdhu)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id B6CF3C433CA;
+        Thu,  1 Apr 2021 08:22:07 +0000 (UTC)
 MIME-Version: 1.0
-In-Reply-To: <dbac8ce8-83c6-49a5-9f4d-f5ea19d7a883@codeaurora.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Thu, 01 Apr 2021 13:52:07 +0530
+From:   schowdhu@codeaurora.org
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Sibi Sankar <sibis@codeaurora.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>, vkoul@kernel.org
+Subject: Re: [PATCH V2 1/5] dt-bindings: Added the yaml bindings for DCC
+In-Reply-To: <161704647819.3012082.13027529193947275446@swboyd.mtv.corp.google.com>
+References: <cover.1616651305.git.schowdhu@codeaurora.org>
+ <5cd274f98b38d4b85c1ce212720b6b680f4a00f0.1616651305.git.schowdhu@codeaurora.org>
+ <161704647819.3012082.13027529193947275446@swboyd.mtv.corp.google.com>
+Message-ID: <0e389c1a842e66db58f2d9371b23c4f3@codeaurora.org>
+X-Sender: schowdhu@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 1/04/21 4:40 am, Asutosh Das (asd) wrote:
-> On 3/31/2021 11:19 AM, Adrian Hunter wrote:
->> On 31/03/21 1:31 am, Asutosh Das wrote:
->>> During runtime-suspend of ufs host, the scsi devices are
->>> already suspended and so are the queues associated with them.
->>> But the ufs host sends SSU (START_STOP_UNIT) to wlun
->>> during its runtime-suspend.
->>> During the process blk_queue_enter checks if the queue is not in
->>> suspended state. If so, it waits for the queue to resume, and never
->>> comes out of it.
->>> The commit
->>> (d55d15a33: scsi: block: Do not accept any requests while suspended)
->>> adds the check if the queue is in suspended state in blk_queue_enter().
->>>
->>> Call trace:
->>>   __switch_to+0x174/0x2c4
->>>   __schedule+0x478/0x764
->>>   schedule+0x9c/0xe0
->>>   blk_queue_enter+0x158/0x228
->>>   blk_mq_alloc_request+0x40/0xa4
->>>   blk_get_request+0x2c/0x70
->>>   __scsi_execute+0x60/0x1c4
->>>   ufshcd_set_dev_pwr_mode+0x124/0x1e4
->>>   ufshcd_suspend+0x208/0x83c
->>>   ufshcd_runtime_suspend+0x40/0x154
->>>   ufshcd_pltfrm_runtime_suspend+0x14/0x20
->>>   pm_generic_runtime_suspend+0x28/0x3c
->>>   __rpm_callback+0x80/0x2a4
->>>   rpm_suspend+0x308/0x614
->>>   rpm_idle+0x158/0x228
->>>   pm_runtime_work+0x84/0xac
->>>   process_one_work+0x1f0/0x470
->>>   worker_thread+0x26c/0x4c8
->>>   kthread+0x13c/0x320
->>>   ret_from_fork+0x10/0x18
->>>
->>> Fix this by registering ufs device wlun as a scsi driver and
->>> registering it for block runtime-pm. Also make this as a
->>> supplier for all other luns. That way, this device wlun
->>> suspends after all the consumers and resumes after
->>> hba resumes.
->>>
->>> Co-developed-by: Can Guo <cang@codeaurora.org>
->>> Signed-off-by: Can Guo <cang@codeaurora.org>
->>> Signed-off-by: Asutosh Das <asutoshd@codeaurora.org>
->>> ---
->>
-> Hi Adrian
-> Thanks for the comments.
->> Looks good but still doesn't seem to based on the latest tree.
->>
-> Umm, it's based on the below:
-> git://git.kernel.org/pub/scm/linux/kernel/git/mkp/scsi.git
-> Branch: refs/heads/for-next
+On 2021-03-30 01:04, Stephen Boyd wrote:
+> Quoting Souradeep Chowdhury (2021-03-25 01:02:32)
+>> diff --git a/Documentation/devicetree/bindings/arm/msm/qcom,dcc.yaml 
+>> b/Documentation/devicetree/bindings/arm/msm/qcom,dcc.yaml
+>> new file mode 100644
+>> index 0000000..c6e0a9c
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/arm/msm/qcom,dcc.yaml
+>> @@ -0,0 +1,49 @@
+>> +# SPDX-License-Identifier: (GPL-2.0-or-later OR BSD-2-Clause)
+>> +%YAML 1.2
+>> +---
+>> +$id: http://devicetree.org/schemas/arm/msm/qcom,dcc.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: Data Capture and Compare
+>> +
+>> +maintainers:
+>> +  - Souradeep Chowdhury <schowdhu@codeaurora.org>
+>> +
+>> +description: |
+>> +    DCC (Data Capture and Compare) is a DMA engine which is used to 
+>> save
+>> +    configuration data or system memory contents during catastrophic 
+>> failure
+>> +    or SW trigger.DCC is used to capture and store data for debugging 
+>> purpose
 > 
-> The top most change is e27f3c8 on 27th March'21.
-> Which tree are you referring to that'd be latest?
+> Add space between trigger. and DCC?
 
-Dunno, but that seems to be missing:
-
-  commit aa53f580e67b49ec5f4d9bd1de81eb9eb0dc079f
-  Author: Can Guo <cang@codeaurora.org>
-  Date:   Tue Feb 23 21:36:47 2021 -0800
-
-    scsi: ufs: Minor adjustments to error handling
-
-which is in v5.12-rc3
+Ack
 
 > 
->> Also came across the issue below:
->>
->> <SNIP>
->>
->>> +#ifdef CONFIG_PM_SLEEP
->>> +static int ufshcd_wl_poweroff(struct device *dev)
->>> +{
->>> +    ufshcd_wl_shutdown(dev);
->>
->> This turned out to be wrong.  This is a PM op and SCSI has already
->> quiesced the sdev's.  All that is needed isOk. I'll fix it in the next version.
+>> +
+>> +
 > 
->>
->>     __ufshcd_wl_suspend(hba, UFS_SHUTDOWN_PM);
->>
->>> +    return 0;
->>> +}
->>> +#endif
-> 
-> 
+> Drop double newline?
 
+Ack
+
+> 
+>> +properties:
+>> +  compatible:
+>> +    items:
+>> +      - enum:
+>> +          - qcom,sm8150-dcc
+>> +      - const: qcom,dcc
+>> +
+>> +  reg:
+>> +    items:
+>> +      - description: DCC base register region
+>> +      - description: DCC RAM base register region
+>> +
+>> +  reg-names:
+>> +    items:
+>> +      - const: dcc
+>> +      - const: dcc-ram
+>> +
+>> +required:
+>> +  - compatible
+>> +  - reg
+>> +  - reg-names
+> 
+> Do we really need reg names? Seems like we can assume the ordering.
+
+Ack
+
+> 
+>> +
+>> +additionalProperties: false
+>> +
+>> +examples:
+>> +  - |
+>> +    dcc@10a2000{
+> 
+> dma@10a2000? Or debug@10a2000?
+
+Ack
+
+> 
+>> +                compatible = "qcom,sm8150-dcc","qcom,dcc";
+>> +                reg = <0x010a2000  0x1000>,
+>> +                      <0x010ad000  0x2000>;
+>> +                reg-names = "dcc", "dcc-ram";
+>> +    };
