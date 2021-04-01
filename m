@@ -2,138 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 496813517AC
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Apr 2021 19:47:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9C2C8351B3C
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Apr 2021 20:09:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235330AbhDARmg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Apr 2021 13:42:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57168 "EHLO
+        id S236233AbhDASHC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Apr 2021 14:07:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33956 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234626AbhDARi2 (ORCPT
+        with ESMTP id S234844AbhDASBg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Apr 2021 13:38:28 -0400
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A7CFC0319DB;
-        Thu,  1 Apr 2021 10:34:20 -0700 (PDT)
-Received: by mail-wr1-x432.google.com with SMTP id b9so2595119wrt.8;
-        Thu, 01 Apr 2021 10:34:20 -0700 (PDT)
+        Thu, 1 Apr 2021 14:01:36 -0400
+Received: from mail-il1-x136.google.com (mail-il1-x136.google.com [IPv6:2607:f8b0:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7621BC061223
+        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Apr 2021 05:27:16 -0700 (PDT)
+Received: by mail-il1-x136.google.com with SMTP id f5so1849015ilr.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Apr 2021 05:27:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=rK2LdS6ODAydJkNJDKUimZKMnsbdOM3cvA6asgW0c80=;
-        b=fbPIbSHJtsRAZcXnsol7EI9DCaFJZ9nwvBGgXN7up6EJ+E7CAhF1Ocm4pX77zRlF+8
-         iKer8GP+EWclFlHSRplim3szwZeCqo9UrNPQK+ESFU3xZx/mVuM36sWFCBPU02kN8Uq0
-         DrqxAh9Yelt//O5VEqVWrdz94ICrGpecJ2+v7/UoVs3x95tlMaCNyEElnc+zC12GyHtt
-         3QOyMFLgzT9duhlCILmgOvPRQhwbHAQWQOicexLPIm89xw1ppK5cpSIp43+b9tOWE5kU
-         GrihkfBolOIcGBgdosfKtjs1FoGncRGD0YlOxjPzUrt1qVQnOvspWi4etXScsO+R2xt6
-         rDug==
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=iWl62oGTxpsnb8MfsXXVQ5OE+zxxuQ8ZrjZT5mqhmk8=;
+        b=m3677M48tkn2V4ziKwwwBU2+rjUUc5Y3kj9IMK3hkZIsyEAd+wXLJPXp9d2zToyTZY
+         OtfzMXSxLpduWxLqZdB5iSGbld4WQ4wx09lwTchEkZim1b4qw598CREf3Cj8U5CrMJJZ
+         yWNUM3aYMlHDLxX9T6S0zoY30xB+V4HRp8h0996xITMmbP+CwG33gV5IGbnuSHwSFcNR
+         UpMROF7sOkhWtZZSrwV0YFKVy+2ta9KN79NWM+hB73LuOq3yVUbbkY1faeq8wh3RI8py
+         rEkjdFtpH6W3uwW45xeGv/oDcvlyw3ul7ACWkVz9KSVZeGxpK1Cy0RAvfonUTZqDCnxl
+         279g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=rK2LdS6ODAydJkNJDKUimZKMnsbdOM3cvA6asgW0c80=;
-        b=ZIr5ZSklDvEAgYwVG07300BdM5ck0HcVzAqhZScq8Li+BdpAcVsGrfWREjaY5ITD44
-         +5FulZbbHRfH4l6L8gNFl3ZIOSy5wA+eGjN5eWoc0HukWVsl8Wj0ue3cCw678hkVJjeu
-         2rOqdDOZ40hjWaBAx0FmM5iotUkkz2doZ2shxbWVPceVow11kvO31cho+OGnVzYggCCc
-         Rqrn84qp/wn06XI5hnX+3RdRjurhULmU+cmwfXsQ3bMpB1TuJuavv9yIARuKDMp+6ymS
-         ZYqpq8OfLNcmr2tsUchtFvEk/o5wug+mZf4ET4h3M60HdG/vfB0Wui4drI9pE1mXC2aW
-         CZYA==
-X-Gm-Message-State: AOAM5323/Lp/jaa6jnfzhjebjyRzbpGFxZKCFFmFKN0jF1rkVtLavFr3
-        CKnGetYVqXMtzZ40mT68eUYQo2D+MgJ58xb7vao=
-X-Google-Smtp-Source: ABdhPJzTzb75Zq5lVKxlXsLtahJ+rLK1yT4ChASxTdyK4VvEYKWc/dOfoDSRkP8SuHFCh33/CUU6oLC581EOnJ+bucE=
-X-Received: by 2002:adf:fb42:: with SMTP id c2mr11041823wrs.83.1617298459053;
- Thu, 01 Apr 2021 10:34:19 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=iWl62oGTxpsnb8MfsXXVQ5OE+zxxuQ8ZrjZT5mqhmk8=;
+        b=tlWZzO2QbDnQOnSU+AE5JrgQY/rV2Z34gU5sMoSweU/EEIIWX3fXpNAb+Qqif9uE9W
+         fQEBnV29utzlvwVi1se9WZeHDExJ6KwYuSSLdr+OiQnfIgwG+dXs4IUlT34IGX/9s4+T
+         HnHiUdngL2MMOf4FSRqu9Tutw8CT6VCbKkhw4oVkMBGWWHlYTOR1IdI5/rcQdXYxqkNP
+         Exddy/c1CjFN74CJdm4zb1t+ooIw3V7hgz79gNg6GMQ6Tu846iJk3WiMVXjR+7hqLh1l
+         EUC2nSEKIJ0F814eSTccAihNNQVpIdMtIsUSbtGuOmTitUmiu3it+mQJaO/Er/TcUDwt
+         qdOg==
+X-Gm-Message-State: AOAM532S5/fHI3San062DlS2cqxMj/+l7mgqzQE/GVG1s9zzf92GTuAz
+        fk8WBv0DNkRgW38dthjYVFuORg==
+X-Google-Smtp-Source: ABdhPJxz4i1NViOjDljoXKjIaTUxYrlyylEQ9VAbjNxwF2W8jdt1X3/G2E9h4ykpRvGW5oG6LbrB4Q==
+X-Received: by 2002:a05:6e02:1a45:: with SMTP id u5mr6717204ilv.4.1617280035922;
+        Thu, 01 Apr 2021 05:27:15 -0700 (PDT)
+Received: from [172.22.22.4] (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
+        by smtp.googlemail.com with ESMTPSA id k4sm2846785iol.18.2021.04.01.05.27.15
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 01 Apr 2021 05:27:15 -0700 (PDT)
+Subject: Re: [PATCH] interconnect: qcom: sm8350: Add missing link between
+ nodes
+To:     Georgi Djakov <georgi.djakov@linaro.org>, djakov@kernel.org,
+        vkoul@kernel.org
+Cc:     bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20210401094435.28937-1-georgi.djakov@linaro.org>
+From:   Alex Elder <elder@linaro.org>
+Message-ID: <7ab2be33-9269-8c28-71d7-1611e60c72fe@linaro.org>
+Date:   Thu, 1 Apr 2021 07:27:14 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.7.1
 MIME-Version: 1.0
-References: <20210331221630.488498-1-robdclark@gmail.com> <20210401012722.527712-1-robdclark@gmail.com>
- <20210401012722.527712-3-robdclark@gmail.com> <CAD=FV=XexfG9oQa8JndOgQ9JSNRmO4-xjmQdiA_9Rn9dJWxsow@mail.gmail.com>
-In-Reply-To: <CAD=FV=XexfG9oQa8JndOgQ9JSNRmO4-xjmQdiA_9Rn9dJWxsow@mail.gmail.com>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Thu, 1 Apr 2021 10:37:44 -0700
-Message-ID: <CAF6AEGvQ3Ep4O_SKGiptq1BiMK0tUjJ=U84M2otvQtVfWHEzoQ@mail.gmail.com>
-Subject: Re: [PATCH v2 2/4] drm/msm: Avoid mutex in shrinker_count()
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <freedreno@lists.freedesktop.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        "open list:DMA BUFFER SHARING FRAMEWORK" 
-        <linux-media@vger.kernel.org>,
-        "moderated list:DMA BUFFER SHARING FRAMEWORK" 
-        <linaro-mm-sig@lists.linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20210401094435.28937-1-georgi.djakov@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Apr 1, 2021 at 8:34 AM Doug Anderson <dianders@chromium.org> wrote:
->
-> Hi,
->
-> On Wed, Mar 31, 2021 at 6:24 PM Rob Clark <robdclark@gmail.com> wrote:
-> >
-> > @@ -45,6 +30,9 @@ msm_gem_shrinker_scan(struct shrinker *shrinker, struct shrink_control *sc)
-> >         list_for_each_entry(msm_obj, &priv->inactive_dontneed, mm_list) {
-> >                 if (freed >= sc->nr_to_scan)
-> >                         break;
-> > +               /* Use trylock, because we cannot block on a obj that
-> > +                * might be trying to acquire mm_lock
-> > +                */
->
-> nit: I thought the above multi-line commenting style was only for
-> "net" subsystem?
+On 4/1/21 4:44 AM, Georgi Djakov wrote:
+> There is a link between the GEM NoC and C NoC nodes, which is currently
+> missing from the topology. Let's add it to allow consumers request paths
+> that use this link.
+> 
+> Reported-by: Alex Elder <elder@linaro.org>
+> Signed-off-by: Georgi Djakov <georgi.djakov@linaro.org>
 
-we do use the "net" style a fair bit already.. (OTOH I tend to not
-really care what checkpatch says)
+Thanks Georgi.
 
-> >                 if (!msm_gem_trylock(&msm_obj->base))
-> >                         continue;
-> >                 if (is_purgeable(msm_obj)) {
-> > @@ -56,8 +44,11 @@ msm_gem_shrinker_scan(struct shrinker *shrinker, struct shrink_control *sc)
-> >
-> >         mutex_unlock(&priv->mm_lock);
-> >
-> > -       if (freed > 0)
-> > +       if (freed > 0) {
-> >                 trace_msm_gem_purge(freed << PAGE_SHIFT);
-> > +       } else {
-> > +               return SHRINK_STOP;
-> > +       }
->
-> It probably doesn't matter, but I wonder if we should still be
-> returning SHRINK_STOP if we got any trylock failures. It could
-> possibly be worth returning 0 in that case?
+Tested-by: Alex Elder <elder@linaro.org>
 
-On the surface, you'd think that, but there be mm dragons.. we can hit
-shrinker from the submit path when the obj is locked already and we
-are trying to allocate backing pages.  We don't want to tell vmscan to
-keep trying, because we'll keep failing to grab that objects lock
+> ---
+>   drivers/interconnect/qcom/sm8350.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/interconnect/qcom/sm8350.c b/drivers/interconnect/qcom/sm8350.c
+> index 01202989a5b2..579b6ce8e046 100644
+> --- a/drivers/interconnect/qcom/sm8350.c
+> +++ b/drivers/interconnect/qcom/sm8350.c
+> @@ -139,7 +139,7 @@ DEFINE_QNODE(qhs_llcc, SM8350_SLAVE_LLCC_CFG, 1, 4);
+>   DEFINE_QNODE(qns_gemnoc, SM8350_SLAVE_GEM_NOC_CFG, 1, 4);
+>   DEFINE_QNODE(qhs_mdsp_ms_mpu_cfg, SM8350_SLAVE_MSS_PROC_MS_MPU_CFG, 1, 4);
+>   DEFINE_QNODE(qhs_modem_ms_mpu_cfg, SM8350_SLAVE_MCDMA_MS_MPU_CFG, 1, 4);
+> -DEFINE_QNODE(qns_gem_noc_cnoc, SM8350_SLAVE_GEM_NOC_CNOC, 1, 16);
+> +DEFINE_QNODE(qns_gem_noc_cnoc, SM8350_SLAVE_GEM_NOC_CNOC, 1, 16, SM8350_MASTER_GEM_NOC_CNOC);
+>   DEFINE_QNODE(qns_llcc, SM8350_SLAVE_LLCC, 4, 16, SM8350_MASTER_LLCC);
+>   DEFINE_QNODE(qns_pcie, SM8350_SLAVE_MEM_NOC_PCIE_SNOC, 1, 8);
+>   DEFINE_QNODE(srvc_even_gemnoc, SM8350_SLAVE_SERVICE_GEM_NOC_1, 1, 4);
+> 
 
->
-> > @@ -75,6 +66,9 @@ vmap_shrink(struct list_head *mm_list)
-> >         unsigned unmapped = 0;
-> >
-> >         list_for_each_entry(msm_obj, mm_list, mm_list) {
-> > +               /* Use trylock, because we cannot block on a obj that
-> > +                * might be trying to acquire mm_lock
-> > +                */
->
-> If you end up changing the commenting style above, should also be here.
->
-> At this point this seems fine to land to me. Though I'm not an expert
-> on every interaction in this code, I've spent enough time starting at
-> it that I'm comfortable with:
->
-> Reviewed-by: Douglas Anderson <dianders@chromium.org>
-
-thanks
-
-BR,
--R
