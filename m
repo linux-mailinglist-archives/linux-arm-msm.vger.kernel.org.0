@@ -2,207 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id ED4BA352141
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Apr 2021 23:03:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 89372352151
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Apr 2021 23:10:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234145AbhDAVDc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Apr 2021 17:03:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45958 "EHLO
+        id S234400AbhDAVKK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Apr 2021 17:10:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47376 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234105AbhDAVDb (ORCPT
+        with ESMTP id S234287AbhDAVKJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Apr 2021 17:03:31 -0400
-Received: from mail-qv1-xf2c.google.com (mail-qv1-xf2c.google.com [IPv6:2607:f8b0:4864:20::f2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5838C061788
-        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Apr 2021 14:03:31 -0700 (PDT)
-Received: by mail-qv1-xf2c.google.com with SMTP id x27so1694867qvd.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Apr 2021 14:03:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ax0IM2LjBIVWt1ct8ruLFlZgjpZSUGTOxnEHCgkHEFA=;
-        b=V4FBSC5D+IX7wIxnmQdF5s+3q/t91ZYD12hB0873yrZPetSbNe7XLgvcnJ0/+IWOzb
-         56CnDJpEueg8lfQrunvjOaOieDsTNIqSXt0itCPsjpHyHRq4hiGmcCzfcLFKbq4cpE4F
-         F6Jv2e5LULq+CPa/mSYEbWry9WF7M8H5GkHzB5tnIIYRxIFd7nsIP/i0YKAtQkCt4uRn
-         9jQtb+0nTFwGLdo9QjA/zFFo4xXIIOkwDsYrkZ1H+VZeOr766xIVG2guVeoVSXdFeHBK
-         165K/4CvDnLY+QpwrwBpcnZ6OhSZNY9BcQC5MnOARhRnwikgYUWH2m8cMoIvAfEsdK3W
-         Qt6w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ax0IM2LjBIVWt1ct8ruLFlZgjpZSUGTOxnEHCgkHEFA=;
-        b=HTpC/TEPH+L+TbQ0HHSO8kOeTghiIO7cxUNcNRm+I6E9U84vcufZXl3mXXeB97gS6Z
-         G/8tZdz6ndaDp18B0ijViKLnIjncRfEn6FvPcfBQ4zZkPyUqLEF1IDmwttCQ4/uFe28j
-         8tb4Ibb//32wU4EQrbo+9WevaP3cWAaSSHftThemAwQFdB12kPCITouOu4vyr3nGlZhB
-         oUDmHgIaLdxZoK9feouPFOPjRlMSnLaHKFgNTk8kMGTavXnKb9Ag5R1DTeewwdrdqH5R
-         rl7ZasNPeIG30XlfQT343+sLuYbVpYRr1jo/Q0d+r9j5yxviTleBxufMwPWjRDMVwAIU
-         t7MA==
-X-Gm-Message-State: AOAM531HysekRFb3rIFjKrkRvMpOxUdfSJz+7s5+kxiQcqi6FuJQW7H+
-        StLQPGvC6CpwihkG9wXRXg+DHbIwBbk4VJmsHtHZUHh1OlQ=
-X-Google-Smtp-Source: ABdhPJxk5Usvd87vSA9PsIRzQlCGAjpyjIFHMxoAFRIgRHtf6URu93P8J2Nppmkh17qIP6kc+a9GsBL2utYWsErqZd0=
-X-Received: by 2002:a05:6214:1870:: with SMTP id eh16mr10024772qvb.23.1617311010984;
- Thu, 01 Apr 2021 14:03:30 -0700 (PDT)
+        Thu, 1 Apr 2021 17:10:09 -0400
+Received: from relay06.th.seeweb.it (relay06.th.seeweb.it [IPv6:2001:4b7a:2000:18::167])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CEE2FC06178A;
+        Thu,  1 Apr 2021 14:10:09 -0700 (PDT)
+Received: from [192.168.1.101] (abae153.neoplus.adsl.tpnet.pl [83.6.168.153])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 035EE3F5D2;
+        Thu,  1 Apr 2021 23:10:06 +0200 (CEST)
+Subject: Re: [PATCH 5/6] clk: qcom: gcc-sdm660: Account for needed adjustments
+ in probe function
+To:     Stephen Boyd <sboyd@kernel.org>, phone-devel@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, martin.botka@somainline.org,
+        angelogioacchino.delregno@somainline.org,
+        marijn.suijten@somainline.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Taniya Das <tdas@codeaurora.org>,
+        Craig Tatlor <ctatlor97@gmail.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+References: <20210220155618.176559-1-konrad.dybcio@somainline.org>
+ <20210220155618.176559-5-konrad.dybcio@somainline.org>
+ <161404077336.1254594.15002572465360321874@swboyd.mtv.corp.google.com>
+ <3917fba4-e5b0-911f-9220-f401a90aac38@somainline.org>
+ <161724198675.2260335.14358880292682931985@swboyd.mtv.corp.google.com>
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+Message-ID: <abc821cc-ef43-3241-793a-cc4c85b72563@somainline.org>
+Date:   Thu, 1 Apr 2021 23:10:06 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.9.0
 MIME-Version: 1.0
-References: <20210216200909.19039-1-jonathan@marek.ca> <CAF6AEGv53nnzqMgTfSA6t2YpHx1dDW8UqnH9Gw0w3p8bf0mTLw@mail.gmail.com>
- <775436ba-c94a-ab22-d65b-b2391047ec65@codeaurora.org> <20210217190820.GA2229@jcrouse1-lnx.qualcomm.com>
- <CAF6AEGsHws23ozeJ8G23LFQ8J=CVVrx5xvkSgBuE_uSwT4YurQ@mail.gmail.com>
- <74d1277e-295f-0996-91c3-05cfce8d3a0e@marek.ca> <e4b62857-bd4d-cca6-0d6b-b9cc960b52a2@codeaurora.org>
- <CAF6AEGsWCrkOgMVxnx53k8b_o7xy3KWv9VaNRoY44+4GfXtWdg@mail.gmail.com>
- <757b557a-b5f6-6018-caa4-34bffb1b60b7@codeaurora.org> <CAF6AEGv-A5=4z7ZO-SytmivZTfKPYxhAjmRLVsQnrT7_pYCDtQ@mail.gmail.com>
- <0f057c99-ec94-f3e3-796f-b73a609f735d@codeaurora.org> <CAF6AEGvXYmcj0YuciZATveALJEP6DdFiwmtnYevrK2SEOJNZGg@mail.gmail.com>
- <CAF6AEGs4sYOMgysg3FraKTDetqKTgMXT6RE700e-8uyE9Gs-9A@mail.gmail.com>
-In-Reply-To: <CAF6AEGs4sYOMgysg3FraKTDetqKTgMXT6RE700e-8uyE9Gs-9A@mail.gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Fri, 2 Apr 2021 00:03:19 +0300
-Message-ID: <CAA8EJpoL7Eox5WqnZQVvGF9M_4itA+2=U6QX=AreTk=AEfqyQg@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm/a6xx: fix for kernels without CONFIG_NVMEM
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     Akhil P Oommen <akhilpo@codeaurora.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Sean Paul <sean@poorly.run>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Eric Anholt <eric@anholt.net>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <dri-devel@lists.freedesktop.org>,
-        open list <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <161724198675.2260335.14358880292682931985@swboyd.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 1 Apr 2021 at 23:09, Rob Clark <robdclark@gmail.com> wrote:
->
-> On Mon, Feb 22, 2021 at 8:06 AM Rob Clark <robdclark@gmail.com> wrote:
-> >
-> > On Mon, Feb 22, 2021 at 7:45 AM Akhil P Oommen <akhilpo@codeaurora.org> wrote:
-> > >
-> > > On 2/19/2021 9:30 PM, Rob Clark wrote:
-> > > > On Fri, Feb 19, 2021 at 2:44 AM Akhil P Oommen <akhilpo@codeaurora.org> wrote:
-> > > >>
-> > > >> On 2/18/2021 9:41 PM, Rob Clark wrote:
-> > > >>> On Thu, Feb 18, 2021 at 4:28 AM Akhil P Oommen <akhilpo@codeaurora.org> wrote:
-> > > >>>>
-> > > >>>> On 2/18/2021 2:05 AM, Jonathan Marek wrote:
-> > > >>>>> On 2/17/21 3:18 PM, Rob Clark wrote:
-> > > >>>>>> On Wed, Feb 17, 2021 at 11:08 AM Jordan Crouse
-> > > >>>>>> <jcrouse@codeaurora.org> wrote:
-> > > >>>>>>>
-> > > >>>>>>> On Wed, Feb 17, 2021 at 07:14:16PM +0530, Akhil P Oommen wrote:
-> > > >>>>>>>> On 2/17/2021 8:36 AM, Rob Clark wrote:
-> > > >>>>>>>>> On Tue, Feb 16, 2021 at 12:10 PM Jonathan Marek <jonathan@marek.ca>
-> > > >>>>>>>>> wrote:
-> > > >>>>>>>>>>
-> > > >>>>>>>>>> Ignore nvmem_cell_get() EOPNOTSUPP error in the same way as a
-> > > >>>>>>>>>> ENOENT error,
-> > > >>>>>>>>>> to fix the case where the kernel was compiled without CONFIG_NVMEM.
-> > > >>>>>>>>>>
-> > > >>>>>>>>>> Fixes: fe7952c629da ("drm/msm: Add speed-bin support to a618 gpu")
-> > > >>>>>>>>>> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
-> > > >>>>>>>>>> ---
-> > > >>>>>>>>>>     drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 6 +++---
-> > > >>>>>>>>>>     1 file changed, 3 insertions(+), 3 deletions(-)
-> > > >>>>>>>>>>
-> > > >>>>>>>>>> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> > > >>>>>>>>>> b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> > > >>>>>>>>>> index ba8e9d3cf0fe..7fe5d97606aa 100644
-> > > >>>>>>>>>> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> > > >>>>>>>>>> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> > > >>>>>>>>>> @@ -1356,10 +1356,10 @@ static int a6xx_set_supported_hw(struct
-> > > >>>>>>>>>> device *dev, struct a6xx_gpu *a6xx_gpu,
-> > > >>>>>>>>>>
-> > > >>>>>>>>>>            cell = nvmem_cell_get(dev, "speed_bin");
-> > > >>>>>>>>>>            /*
-> > > >>>>>>>>>> -        * -ENOENT means that the platform doesn't support
-> > > >>>>>>>>>> speedbin which is
-> > > >>>>>>>>>> -        * fine
-> > > >>>>>>>>>> +        * -ENOENT means no speed bin in device tree,
-> > > >>>>>>>>>> +        * -EOPNOTSUPP means kernel was built without CONFIG_NVMEM
-> > > >>>>>>>>>
-> > > >>>>>>>>> very minor nit, it would be nice to at least preserve the gist of the
-> > > >>>>>>>>> "which is fine" (ie. some variation of "this is an optional thing and
-> > > >>>>>>>>> things won't catch fire without it" ;-))
-> > > >>>>>>>>>
-> > > >>>>>>>>> (which is, I believe, is true, hopefully Akhil could confirm.. if not
-> > > >>>>>>>>> we should have a harder dependency on CONFIG_NVMEM..)
-> > > >>>>>>>> IIRC, if the gpu opp table in the DT uses the 'opp-supported-hw'
-> > > >>>>>>>> property,
-> > > >>>>>>>> we will see some error during boot up if we don't call
-> > > >>>>>>>> dev_pm_opp_set_supported_hw(). So calling "nvmem_cell_get(dev,
-> > > >>>>>>>> "speed_bin")"
-> > > >>>>>>>> is a way to test this.
-> > > >>>>>>>>
-> > > >>>>>>>> If there is no other harm, we can put a hard dependency on
-> > > >>>>>>>> CONFIG_NVMEM.
-> > > >>>>>>>
-> > > >>>>>>> I'm not sure if we want to go this far given the squishiness about
-> > > >>>>>>> module
-> > > >>>>>>> dependencies. As far as I know we are the only driver that uses this
-> > > >>>>>>> seriously
-> > > >>>>>>> on QCOM SoCs and this is only needed for certain targets. I don't
-> > > >>>>>>> know if we
-> > > >>>>>>> want to force every target to build NVMEM and QFPROM on our behalf.
-> > > >>>>>>> But maybe
-> > > >>>>>>> I'm just saying that because Kconfig dependencies tend to break my
-> > > >>>>>>> brain (and
-> > > >>>>>>> then Arnd has to send a patch to fix it).
-> > > >>>>>>>
-> > > >>>>>>
-> > > >>>>>> Hmm, good point.. looks like CONFIG_NVMEM itself doesn't have any
-> > > >>>>>> other dependencies, so I suppose it wouldn't be the end of the world
-> > > >>>>>> to select that.. but I guess we don't want to require QFPROM
-> > > >>>>>>
-> > > >>>>>> I guess at the end of the day, what is the failure mode if you have a
-> > > >>>>>> speed-bin device, but your kernel config misses QFPROM (and possibly
-> > > >>>>>> NVMEM)?  If the result is just not having the highest clk rate(s)
-> > > >>>>
-> > > >>>> Atleast on sc7180's gpu, using an unsupported FMAX breaks gmu. It won't
-> > > >>>> be very obvious what went wrong when this happens!
-> > > >>>
-> > > >>> Ugg, ok..
-> > > >>>
-> > > >>> I suppose we could select NVMEM, but not QFPROM, and then the case
-> > > >>> where QFPROM is not enabled on platforms that have the speed-bin field
-> > > >>> in DT will fail gracefully and all other platforms would continue on
-> > > >>> happily?
-> > > >>>
-> > > >>> BR,
-> > > >>> -R
-> > > >>
-> > > >> Sounds good to me.
-> > > >>
-> > > >
-> > > > You probably should do a quick test with NVMEM enabled but QFPROM
-> > > > disabled to confirm my theory, but I *think* that should work
-> > > >
-> > > > BR,
-> > > > -R
-> > > >
-> > >
-> > > I tried it on an sc7180 device. The suggested combo (CONFIG_NVMEM + no
-> > > CONFIG_QCOM_QFPROM) makes the gpu probe fail with error "failed to read
-> > > speed-bin. Some OPPs may not be supported by hardware". This is good
-> > > enough clue for the developer that he should fix the broken speedbin
-> > > detection.
-> > >
-> >
-> > Ok, great.. then sounds like selecting NVMEM is a good approach
-> >
->
-> btw, did anyone ever send a patch to select NVMEM?  I'm not seeing one
-> but I could be overlooking something
 
-Judging by the amount of issues surrounding speed-bin, I might have a
-bold suggestion to revert these patches for now and get them once all
-the issues are sorted, so that we'd have a single working commit
-instead of scattered patch series breaking git bisect, having bad
-side-effects on non-sc7180 platforms, etc.
+>>>> +
+>>>> +       /* Keep bimc gfx clock port on all the time */
+>>>> +       clk_prepare_enable(gcc_bimc_gfx_clk.clkr.hw.clk);
+>>>> +
+>>> Preferably just set these various bits with regmap_update_bits() during
+>>> probe. Also, please do it before regsitering the clks, not after.
+>> To be fair, now I think that simply adding CLK_IS_CRITICAL flag to the clocks in question is the smartest thing to do. Magic writes don't tell a whole lot.
+> This is how it's been done in various other qcom clk drivers. Usually
+> there is a comment about what is enabled, but really it's just setting
+> random bits that sadly aren't already set by default.
+
+But why.. why should we give Linux less information about the hardware it's running on? It's a kernel after all, I know some parties would prefer to keep the hardware away from its users, but cmon, it's OSSLand out there!
+
+Allocating a few bytes more in memory is proooobably a good trade-off for keeping an eye on the state of various clocks instead of simply setting some seemingly random bits and hoping nothing bad happens under the hood.. This isn't only a case for this clock, but for all ones that are effectively pinky-promise-trusted to function properly with no way of checking if they're even still alive other than poking the registers manually.. As of v5.12-rc2, there are *46* such trust credits..
+
+It's NOT easy to track down issues in big monolithic kernels, especially when people submitting changes to common code seem to think that only their hardware uses it (no hard feelings, but drm/msm broke on !a6xx *at least* two times within the last year) and since making sure the clocks are ticking properly is one of the most crucial things when looking into more complex issues, which may or may not randomly happen on a platform that is just being brought up for various reasons (e.g. half of mdm9607 hardware doesn't wanna play along without a ICC driver), I *really* think we should use CLK_IS_CRITICAL instead and give developers a way to check if everything's in tact with the clock, while still keeping the "never turn it off, don't touch it!" aspect.
 
 
--- 
-With best wishes
-Dmitry
+>>>> +       /* Set the HMSS_GPLL0_SRC for 300MHz to CPU subsystem */
+>>>> +       clk_set_rate(hmss_gpll0_clk_src.clkr.hw.clk, 300000000);
+>>> Is this not already the case?
+>>
+>> This is a mission-critical clock and we cannot trust the bootloader with setting it. Otherwise dragons might appear.
+>>
+> What does the bootloader set it to?
+
+Sorry but I can't check, nor do I remember right now. But we still shouldn't add a variable that might come from a lazy OEM not incorporating the fix into their release, especially since this one is used for clocking the AP.
+
+
+Konrad
+
