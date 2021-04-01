@@ -2,65 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9813B351CC0
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Apr 2021 20:47:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DF9BC351DE6
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Apr 2021 20:52:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235931AbhDASVI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Apr 2021 14:21:08 -0400
-Received: from mail.kernel.org ([198.145.29.99]:46020 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S237010AbhDASSo (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Apr 2021 14:18:44 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id A058961241;
-        Thu,  1 Apr 2021 13:27:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1617283623;
-        bh=ZaHUJTjbwUns7JXT//LzMknWL6q18amExZVUaKXxS9s=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=tPQZOKwDhHIr5lXyEm/VCmT3W6pqy/ixtcnXbdgYlJ8ni/2f59nR0dso2anIOy/6D
-         yubGrVetOumTcaiZbHX4Olh4hsU0tjohQ7KZR1tENMpRhYzw95x7arHY4ue6E+9WkX
-         clEEoWENof9fvWzU58Ok8pHkvy7Zuy52OrSJHN1IH1arMaZPU9GF+HLzz4hGC+Inh/
-         buLk1kGm/5OBfSi+8kmpw9NgIzV3NCqRMNsuMHTzntbgKIkhS5WbnN8KMDtIFbQ5gR
-         Lneqrq3L7HQIkqlYg8jtbsLKJlGI3o+q19JOhoYOpbzuxTj5LL62tV804S9J+b0JeI
-         jTztNA2TZ9zgQ==
-Date:   Thu, 1 Apr 2021 14:26:58 +0100
-From:   Will Deacon <will@kernel.org>
-To:     Christoph Hellwig <hch@lst.de>
-Cc:     Robin Murphy <robin.murphy@arm.com>,
-        freedreno@lists.freedesktop.org, kvm@vger.kernel.org,
-        Michael Ellerman <mpe@ellerman.id.au>,
-        linuxppc-dev@lists.ozlabs.org, dri-devel@lists.freedesktop.org,
-        Li Yang <leoyang.li@nxp.com>, iommu@lists.linux-foundation.org,
-        netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        virtualization@lists.linux-foundation.org,
-        David Woodhouse <dwmw2@infradead.org>,
-        linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH 16/18] iommu: remove DOMAIN_ATTR_DMA_USE_FLUSH_QUEUE
-Message-ID: <20210401132657.GA8997@willie-the-truck>
-References: <20210316153825.135976-17-hch@lst.de>
- <20210330131149.GP5908@willie-the-truck>
- <a6952aa7-4d7e-54f0-339e-e15f88596dcc@arm.com>
- <20210330135801.GA6187@willie-the-truck>
- <578d6aa5-4239-f5d7-2e9f-686b18e52bba@arm.com>
- <20210331114947.GA7626@willie-the-truck>
- <ef895942-e115-7878-ab86-37e8a1614df5@arm.com>
- <20210331153256.GA7815@willie-the-truck>
- <81dd27fe-28ee-c800-fe5d-aaa64cb93513@arm.com>
- <20210401095945.GA6726@lst.de>
+        id S237063AbhDAScu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Apr 2021 14:32:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38304 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233786AbhDASVK (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 1 Apr 2021 14:21:10 -0400
+Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBF2BC022594
+        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Apr 2021 08:20:26 -0700 (PDT)
+Received: by mail-pj1-x1036.google.com with SMTP id nh23-20020a17090b3657b02900c0d5e235a8so1215980pjb.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Apr 2021 08:20:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=Ww076wtEw/l52B1eQC1HZmnMQQ8Ebtr9JfK+3ViX3so=;
+        b=KiGvVnSH66DmF8HdRytw6CJzuJoS03Rgw4NS/QOUBG/qyDfowjfjPJb4Uk9rl3tzSl
+         FrtcqDfXNAt03yv2ZbMWSkUtZVxgRqCp/FxjadzOmk0LdPRI0xK8SS0cmsm50tBLUV8D
+         LT2bSRIZNrc7c9mY8GZxdhUIy6Sv/F6+JsIxaTreMmGzoIVgcnJMnqibzvnhl7vEeCSS
+         l+h74kxjQjZ+K2aItGMz6rzYzSTuvOU31WEx5Tonk1xxdAIDZpUuj/fNFiz29q66gypd
+         vbgOy/k/jbxvAJwSS59FAbQ0k7tPzSO6eZoOEiGcRgHuJj++WFr95/LbkGkaTmvTBXB+
+         F9IQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=Ww076wtEw/l52B1eQC1HZmnMQQ8Ebtr9JfK+3ViX3so=;
+        b=rkOC7SDu+pESjExgwK3F6D8SKZRfLbSMoigGQQu23fTjlIKj8Du0VHjzE2GxXTq360
+         st+QkscCjwn8Aw2Z31dg3tgzGzf8BXNAM2iTKr+UAsgozAMdXqqZ8yCh+ul4wkWgMZu6
+         w3ibxKzdhuBMm16fqJGvxo1UiXvkfcbUS5abPXljcl0uS0GBxXvGzQpeB4UciE2sIzf6
+         X3JAHgKKSNmx7Y9fmY7vJLKQ5X0UuQeCbu3+YLIxD9DuGt+onyLXTWeTSPv/O8osoQtK
+         rye4C+lDPQkQ2jPUD5KQtFwrK7MdfesCp+2IjAVV+pH6pyqItPIGzsQZBp3L1uiH/FH9
+         gz7w==
+X-Gm-Message-State: AOAM5310xfzwSQHIiYc/KoFEUEUQHxKxJvfmLq07cgaLKu4Q7CWLhXCs
+        OHNsUCzuDl//QNZ3YKrUQKBA
+X-Google-Smtp-Source: ABdhPJxAqh+RohpPAzLbk35v/zOJ3CC1I1F2tWRwN3E0X6lfjAeYaDbNp7Smee2wXabf5ZYkF4rWoQ==
+X-Received: by 2002:a17:902:c14c:b029:e5:cd82:a0b with SMTP id 12-20020a170902c14cb02900e5cd820a0bmr8410255plj.34.1617290426225;
+        Thu, 01 Apr 2021 08:20:26 -0700 (PDT)
+Received: from localhost.localdomain ([103.77.37.138])
+        by smtp.gmail.com with ESMTPSA id l22sm6500919pjl.14.2021.04.01.08.20.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 01 Apr 2021 08:20:25 -0700 (PDT)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     miquel.raynal@bootlin.com, richard@nod.at, vigneshr@ti.com,
+        robh+dt@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-mtd@lists.infradead.org, linux-kernel@vger.kernel.org,
+        boris.brezillon@collabora.com, Daniele.Palmas@telit.com,
+        bjorn.andersson@linaro.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v10 4/4] mtd: rawnand: qcom: Add missing nand_cleanup() in error path
+Date:   Thu,  1 Apr 2021 20:49:55 +0530
+Message-Id: <20210401151955.143817-5-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20210401151955.143817-1-manivannan.sadhasivam@linaro.org>
+References: <20210401151955.143817-1-manivannan.sadhasivam@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210401095945.GA6726@lst.de>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Apr 01, 2021 at 11:59:45AM +0200, Christoph Hellwig wrote:
-> For now I'll just pass the iommu_domain to iommu_get_dma_strict,
-> so that we can check for it.  We can do additional cleanups on top
-> of that later.
+Add missing nand_cleanup() in the alloc_bam_transaction() error path
+to cleanup the resources properly.
 
-Sounds good to me, cheers!
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+---
+ drivers/mtd/nand/raw/qcom_nandc.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-Will
+diff --git a/drivers/mtd/nand/raw/qcom_nandc.c b/drivers/mtd/nand/raw/qcom_nandc.c
+index 87c23bb320bf..fe74cf3aece5 100644
+--- a/drivers/mtd/nand/raw/qcom_nandc.c
++++ b/drivers/mtd/nand/raw/qcom_nandc.c
+@@ -2882,6 +2882,7 @@ static int qcom_nand_host_init_and_register(struct qcom_nand_controller *nandc,
+ 		if (!nandc->bam_txn) {
+ 			dev_err(nandc->dev,
+ 				"failed to allocate bam transaction\n");
++			nand_cleanup(chip);
+ 			return -ENOMEM;
+ 		}
+ 	}
+-- 
+2.25.1
+
