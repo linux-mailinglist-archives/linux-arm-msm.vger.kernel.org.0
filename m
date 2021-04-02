@@ -2,111 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 47F953525E4
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Apr 2021 05:56:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9376E352683
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Apr 2021 08:18:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233665AbhDBD4T (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Apr 2021 23:56:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50550 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233786AbhDBD4T (ORCPT
+        id S229932AbhDBGSQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 2 Apr 2021 02:18:16 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:34924 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229553AbhDBGSP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Apr 2021 23:56:19 -0400
-Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FB1CC0613E6
-        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Apr 2021 20:56:19 -0700 (PDT)
-Received: by mail-pg1-x536.google.com with SMTP id f10so2837365pgl.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Apr 2021 20:56:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=3nQhD90sdJSzQdgo78ZKmX3OfUzD+szW/4QnSrBPjH4=;
-        b=P3kuftwOPyckZywrWcQWSfwihuGdzQTnGOBic65JfGR5wzUcOgpXw89JlKDQT7rkS0
-         RbqTYL/yLLalyBJs88wj5lqkVOya+/SIZptgBr18VHj4ZT/R4ZRnwaObwxukjsYcRe6f
-         jaoRNyNZx9awptdKzVQJvSLmvekEBrXYls+B3UMG5ECMPaXT7Mhh8gzK1KsHe28zv3+U
-         JBBmzgRn3GOTdrPevhVN2AclStD2Jxp0uJVW1Y0+DurvyijGHynD+AQyKBMps2aW6uYa
-         pyfbVa+8zVXyIuaElf+Pckvgf2rG1bbuSpmJacHa8FCMHUWuyL4YX+XbRJfGzykFAqJI
-         mYWQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=3nQhD90sdJSzQdgo78ZKmX3OfUzD+szW/4QnSrBPjH4=;
-        b=gxgVu7Np4m3DopuBpovn8/GaSXR6rBN+Nunjzhn4bqlJJXhZDEZF584n0QKFicbEl5
-         lfsOCbEdkD65sMGod7NVbcb/dCG0w9q3Hx501oEuKb7YCrBj0jgyj/XouaK7SH96Rqv0
-         NJrzalE+dcMbsT3P0lHVkSIqAVL+2hPUG78Z9LUALr8u/DJpaRwthmdxV3DQIdYQFeCQ
-         tt+lCRCcNHZJdoxxgJKFG+sDeIz5iuvyyJKNYKsE/y94yRSV1iTz9VKVI4KBVyRFcc9A
-         CoAhQh2pZC/2DfEaXR1AdeLYaSgwSsOeC6yUJY5ASCSHyHvNlFGV3DtLThECkJwoKxy0
-         /jwQ==
-X-Gm-Message-State: AOAM532bt7t7b347pJpOW5noL/nvOESk1ryUqu3hBft3mrWyuYLEnT7H
-        jCI7sD3HofMNvt0wV+AjsEiJ3Q==
-X-Google-Smtp-Source: ABdhPJy32aJ5h5W9VDt0+416R7LPGrBxJo/5XMIv4vXMiY/T97i7LwN6fp7RvRCavYrY/JMeod4r9A==
-X-Received: by 2002:a63:78cc:: with SMTP id t195mr10067403pgc.196.1617335778655;
-        Thu, 01 Apr 2021 20:56:18 -0700 (PDT)
-Received: from localhost.localdomain (80.251.214.228.16clouds.com. [80.251.214.228])
-        by smtp.gmail.com with ESMTPSA id 81sm6875972pfu.164.2021.04.01.20.56.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Apr 2021 20:56:18 -0700 (PDT)
-From:   Shawn Guo <shawn.guo@linaro.org>
-To:     Will Deacon <will@kernel.org>
-Cc:     Robin Murphy <robin.murphy@arm.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Hanjun Guo <guohanjun@huawei.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Mark Rutland <mark.rutland@arm.com>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, Shawn Guo <shawn.guo@linaro.org>
-Subject: [PATCH v2 3/3] iommu/arm-smmu-qcom: hook up qcom_smmu_impl for ACPI boot
-Date:   Fri,  2 Apr 2021 11:56:02 +0800
-Message-Id: <20210402035602.9484-4-shawn.guo@linaro.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20210402035602.9484-1-shawn.guo@linaro.org>
-References: <20210402035602.9484-1-shawn.guo@linaro.org>
+        Fri, 2 Apr 2021 02:18:15 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1617344295; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=BRGAfnHonTxlLPHrCIPTsd1xeD6kmB+irWeoxxxyels=; b=GRY+BLQMhgksfREq0Ac9COlzjdrqEqaszj+dpxgKdl8j4m+NQd3CyUPel2W9+eTV5K+YiaIr
+ oYUliPIFCU5bNhmlyy1ulbKplhcF80Ud8+v0xuCL1ONfS1r7Dqik9GIfsjm2YZua/ce4mfIm
+ WRYNHq4I5+VKzFJ1JbEGwABZEsM=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
+ 6066b71af34440a9d49cd4a6 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 02 Apr 2021 06:18:02
+ GMT
+Sender: deesin=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id D47C1C43462; Fri,  2 Apr 2021 06:18:01 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from deesin-linux.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: deesin)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 54482C433C6;
+        Fri,  2 Apr 2021 06:17:59 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 54482C433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=deesin@codeaurora.org
+From:   Deepak Kumar Singh <deesin@codeaurora.org>
+To:     bjorn.andersson@linaro.org, clew@codeaurora.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org,
+        Deepak Kumar Singh <deesin@codeaurora.org>
+Subject: [PATCH V1 0/2] soc: qcom: aoss: Expose send for generic usecase
+Date:   Fri,  2 Apr 2021 11:47:16 +0530
+Message-Id: <1617344238-12137-1-git-send-email-deesin@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The hookup with qcom_smmu_impl is required to do ACPI boot on SC8180X
-based devices like Lenovo Flex 5G laptop and Microsoft Surface Pro X.
-Check IORT SMMU model identifier and create qcom_smmu_impl accordingly.
+[Change from V0]
+Update qmp_get to parse qmp handle with binding qcom,qmp
 
-(np == NULL) is used to check ACPI boot, because fwnode of SMMU device
-is a static allocation and thus helpers like has_acpi_companion() don't
-work here.
+Deepak Kumar Singh (2):
+  soc: qcom: aoss: Expose send for generic usecase
+  soc: qcom: aoss: Add debugfs entry
 
-Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
----
- drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/soc/qcom/qcom_aoss.c | 77 +++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 76 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-index 82c7edc6e025..7ced0f93bc99 100644
---- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-+++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-@@ -3,6 +3,7 @@
-  * Copyright (c) 2019, The Linux Foundation. All rights reserved.
-  */
- 
-+#include <linux/acpi_iort.h>
- #include <linux/adreno-smmu-priv.h>
- #include <linux/of_device.h>
- #include <linux/qcom_scm.h>
-@@ -340,6 +341,14 @@ struct arm_smmu_device *qcom_smmu_impl_init(struct arm_smmu_device *smmu)
- {
- 	const struct device_node *np = smmu->dev->of_node;
- 
-+	if (np == NULL) {
-+		/* ACPI boot */
-+		struct iort_smmu_pdata *pdata = dev_get_platdata(smmu->dev);
-+
-+		if (pdata && pdata->model == IORT_SMMU_QCOM)
-+			return qcom_smmu_create(smmu, &qcom_smmu_impl);
-+	}
-+
- 	if (of_match_node(qcom_smmu_impl_of_match, np))
- 		return qcom_smmu_create(smmu, &qcom_smmu_impl);
- 
 -- 
-2.17.1
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
