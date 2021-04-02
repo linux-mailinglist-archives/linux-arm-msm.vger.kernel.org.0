@@ -2,108 +2,156 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 59D36352B74
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Apr 2021 16:42:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E6F85352BFA
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Apr 2021 18:09:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235789AbhDBO1h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 2 Apr 2021 10:27:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45510 "EHLO
+        id S234275AbhDBOuG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 2 Apr 2021 10:50:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50380 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235608AbhDBO1h (ORCPT
+        with ESMTP id S234207AbhDBOuF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 2 Apr 2021 10:27:37 -0400
-Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E61F0C0613E6
-        for <linux-arm-msm@vger.kernel.org>; Fri,  2 Apr 2021 07:27:35 -0700 (PDT)
-Received: by mail-pf1-x42a.google.com with SMTP id m11so1069748pfc.11
-        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Apr 2021 07:27:35 -0700 (PDT)
+        Fri, 2 Apr 2021 10:50:05 -0400
+Received: from mail-io1-xd2d.google.com (mail-io1-xd2d.google.com [IPv6:2607:f8b0:4864:20::d2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0720C0613E6
+        for <linux-arm-msm@vger.kernel.org>; Fri,  2 Apr 2021 07:50:04 -0700 (PDT)
+Received: by mail-io1-xd2d.google.com with SMTP id b10so5584009iot.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Apr 2021 07:50:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=T3DVNLHJQeSHfhXNKz9gWp+Tv1DR+kLOwzGQWhc+nWA=;
-        b=P7PnM9/F2Rzjf71XMFNGpkG+o4amPJ9qgD+JRcXsUoz805jFetgua3n/+Fqp6EggUt
-         VRLWl6TP2Wqr+yiujTkrQVaeDNyU9PVkvxtWRQNmecAoMARtvVOE2cmr33ke26IMPQoC
-         ONeD+8CXvvl5IQkINWc8dBBxsSpsNY+JsmW4gbxCIhDrVmkwoNmeyQ6HNoHqe50Add9y
-         etKmbMJVsYI/8KKCoH12VcRrwrBGbWzZuN7Z1PzZO1qY1D0J9dXWYSiJpWwCXfrPgDBr
-         MMYbeWXhev1YdG+Meukulm71mxAMMi9TLWgKLsrcegnKrxsA5tfTZevKmAYt9Gm+hRnH
-         s5Jg==
+        d=cosmicpenguin-net.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=l0HqcwAEcAzaa2RK+pZE6jtYY7XOgt5sS3E2spUn1Rk=;
+        b=Kmgr8cnyHkBCjw6d098vCcVagqVkv5JmDU91epU9ZWO7suSGeKnYW7wRpQBgsU6Kbs
+         bnC+FC9X9QMvN9rLnz4RSFfLGWy5STRsjKuf79o0DSdeBWwe22pySANiq314cu5fHMsT
+         LwlwRpJetf/3zwEbAAVcYSDBorIDUqEzt963OIKC9cjeW1e5f/iuxmTORJJiwtFhByU/
+         qDsDk4atEjJxiQaMqqmKjyBomzu8Vp1NXy0A/9nlO7/WGT9hnhIjfe1whBYjBBd6rWwk
+         /m8hrKnQDZT8IrRWrCv5bP7k0gu0lNtpu2yRbt9WN2SqVKz1J5cqLkBPhE+aqq2HAojn
+         OFRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=T3DVNLHJQeSHfhXNKz9gWp+Tv1DR+kLOwzGQWhc+nWA=;
-        b=gvRgkv6UxeXhiLbKTX3WcSza09zL7Yj60YPBGLxBtYMpxplD3BLw5vIyH20xooakjp
-         VAnpFxTJAbf6OJ2YMxOTsm5TD8pI94PMkeqFJ82T0xTGqeULrLWKXX3DdAWpSzBhJhel
-         Pjx1VY6YUleGQW1R89rv/vKF0qj2M8p9jKeiUDc9IoeWmJEuRSq7nlNSshmsr6zPZbeT
-         TRFtl2xkIF92ej3Tzykv7WloroWSzma6cA/zFq3JAnay2mXEKOYZnxfTSiw2MmKirHwI
-         jd7DKn9hoWiVIo5SpacrAC4tWWywfHMEEWjKtICwPJ/5WJbHPt9Z9vilLg9HQRQlj9J9
-         Nl6A==
-X-Gm-Message-State: AOAM5331Fg1cRO+KSZLhn4YwKVzz6r9xRe8dNqLJ5KgNenrfZeQmmFdR
-        zz3cheDAiD9Fw0x9hF/CYsG8
-X-Google-Smtp-Source: ABdhPJyg2TA0SpbCUUf/oOc4ML06NB7wRTSDPCziI9Y/12+4l5psy1DKY3L9m8r9PO487eIRbvnaGw==
-X-Received: by 2002:a63:d7:: with SMTP id 206mr12092114pga.30.1617373655350;
-        Fri, 02 Apr 2021 07:27:35 -0700 (PDT)
-Received: from work ([103.77.37.174])
-        by smtp.gmail.com with ESMTPSA id w4sm8187408pjk.55.2021.04.02.07.27.31
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 02 Apr 2021 07:27:34 -0700 (PDT)
-Date:   Fri, 2 Apr 2021 19:57:30 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Boris Brezillon <boris.brezillon@collabora.com>
-Cc:     miquel.raynal@bootlin.com, richard@nod.at, vigneshr@ti.com,
-        robh+dt@kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-mtd@lists.infradead.org,
-        linux-kernel@vger.kernel.org, Daniele.Palmas@telit.com,
-        bjorn.andersson@linaro.org
-Subject: Re: [PATCH v10 3/4] mtd: rawnand: Add support for secure regions in
- NAND memory
-Message-ID: <20210402142730.GA10498@work>
-References: <20210401151955.143817-1-manivannan.sadhasivam@linaro.org>
- <20210401151955.143817-4-manivannan.sadhasivam@linaro.org>
- <20210401175421.65db63bf@collabora.com>
- <20210401161622.GH14052@work>
- <20210402105154.0a2a3af5@collabora.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id
+         :mail-followup-to:references:mime-version:content-disposition
+         :in-reply-to;
+        bh=l0HqcwAEcAzaa2RK+pZE6jtYY7XOgt5sS3E2spUn1Rk=;
+        b=GSiM78EhWP0Ub41MFdPm/N5TUHn9KqrqnBm7lMHJ/qqmDaRbqkGvQaQwPiUfI7dJEP
+         gmoLrW/+84AJJ/LxHoc94s1mzUQrRA06WxhguYXT5BpzDEgKSSUvwm3FSQR7EA5kAWKW
+         pDWAhfOwmV4ebqIh00fTHp61e0cDsN6yGjr/iODNI073jFPRkuWywO2/PAHMTHmhREIg
+         xOgumEmfAYscpmZ2lSaKqYjm3vzPDFWPxHyT9GA1wJAOUGndq6PD7OfUIVDObnKs3pv8
+         Ss1/esF340432CbtWeaUd52zwV1/uCXOQ3n3jbkoJ+4Blb8YyqcDsszcYMqXxW+P5PcN
+         aZhA==
+X-Gm-Message-State: AOAM531XpOoGmNNcWhq4R9ZO0A2XFpYwpBAJvJkz7V3WQr3EP9YsVOIJ
+        cHy3c2mKKepjea/U7mcgZGqB7A==
+X-Google-Smtp-Source: ABdhPJyuvuBtNPl+yzzZ5Hm9a08vW6pett3RP0OPcCwvzWTKuV1JGe7ZTwSlG04ahbRO6oSo90Wecw==
+X-Received: by 2002:a6b:e20a:: with SMTP id z10mr10979620ioc.99.1617375004119;
+        Fri, 02 Apr 2021 07:50:04 -0700 (PDT)
+Received: from cosmicpenguin.net (c-71-237-100-236.hsd1.co.comcast.net. [71.237.100.236])
+        by smtp.gmail.com with ESMTPSA id y15sm3987161ilv.70.2021.04.02.07.50.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 02 Apr 2021 07:50:03 -0700 (PDT)
+Date:   Fri, 2 Apr 2021 08:50:01 -0600
+From:   Jordan Crouse <jordan@cosmicpenguin.net>
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     dri-devel@lists.freedesktop.org,
+        Rob Clark <robdclark@chromium.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <freedreno@lists.freedesktop.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        "Gustavo A. R. Silva" <gustavoars@kernel.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        David Airlie <airlied@linux.ie>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Sharat Masetty <smasetty@codeaurora.org>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Eric Anholt <eric@anholt.net>,
+        "Kristian H. Kristensen" <hoegsberg@google.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Sean Paul <sean@poorly.run>,
+        open list <linux-kernel@vger.kernel.org>,
+        Emil Velikov <emil.velikov@collabora.com>
+Subject: Re: [Freedreno] [PATCH 1/2] drm/msm: Fix a5xx/a6xx timestamps
+Message-ID: <20210402145001.n7upxwvyub2tyavz@cosmicpenguin.net>
+Mail-Followup-To: Rob Clark <robdclark@gmail.com>,
+        dri-devel@lists.freedesktop.org, Rob Clark <robdclark@chromium.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" <freedreno@lists.freedesktop.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        "Gustavo A. R. Silva" <gustavoars@kernel.org>,
+        Jonathan Marek <jonathan@marek.ca>, David Airlie <airlied@linux.ie>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Sharat Masetty <smasetty@codeaurora.org>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Eric Anholt <eric@anholt.net>,
+        "Kristian H. Kristensen" <hoegsberg@google.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" <linux-arm-msm@vger.kernel.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Sean Paul <sean@poorly.run>,
+        open list <linux-kernel@vger.kernel.org>,
+        Emil Velikov <emil.velikov@collabora.com>
+References: <20210325012358.1759770-1-robdclark@gmail.com>
+ <20210325012358.1759770-2-robdclark@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20210402105154.0a2a3af5@collabora.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+In-Reply-To: <20210325012358.1759770-2-robdclark@gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Apr 02, 2021 at 10:51:54AM +0200, Boris Brezillon wrote:
-> On Thu, 1 Apr 2021 21:46:22 +0530
-> Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> wrote:
+On Wed, Mar 24, 2021 at 06:23:52PM -0700, Rob Clark wrote:
+> From: Rob Clark <robdclark@chromium.org>
 > 
-> > On Thu, Apr 01, 2021 at 05:54:21PM +0200, Boris Brezillon wrote:
-> > > On Thu,  1 Apr 2021 20:49:54 +0530
-> > > Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> wrote:
-> > >   
-> > > > @@ -565,6 +608,11 @@ static int nand_block_isreserved(struct mtd_info *mtd, loff_t ofs)
-> > > >  
-> > > >  	if (!chip->bbt)
-> > > >  		return 0;
-> > > > +
-> > > > +	/* Check if the region is secured */
-> > > > +	if (nand_region_is_secured(chip, ofs, 0))
-> > > > +		return -EIO;  
-> > > 
-> > > That would is still wrong, you should never pass a 0 size to
-> > > nand_region_is_secured().
-> > >   
-> > 
-> > Size doesn't matter here, that's why I passed 0. Maybe 1 would be
-> > appropriate?
-> 
-> You're checking if a block is reserved, so I think passing the
-> eraseblock size would make more sense, but I actually don't understand
-> why you need to check if the region is secure here (looks like
-> nand_block_isreserved() does not access the flash).
-> 
+> They were reading a counter that was configured to ALWAYS_COUNT (ie.
+> cycles that the GPU is doing something) rather than ALWAYS_ON.  This
+> isn't the thing that userspace is looking for.
 
-Ah yes indeed, brain fade...
+Acked-by: Jordan Crouse <jordan@cosmicpenguin.net>
 
-Thanks,
-Mani
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
+> ---
+>  drivers/gpu/drm/msm/adreno/a5xx_gpu.c | 4 ++--
+>  drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 4 ++--
+>  2 files changed, 4 insertions(+), 4 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+> index a5af223eaf50..bb82fcd9df81 100644
+> --- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+> @@ -1241,8 +1241,8 @@ static int a5xx_pm_suspend(struct msm_gpu *gpu)
+>  
+>  static int a5xx_get_timestamp(struct msm_gpu *gpu, uint64_t *value)
+>  {
+> -	*value = gpu_read64(gpu, REG_A5XX_RBBM_PERFCTR_CP_0_LO,
+> -		REG_A5XX_RBBM_PERFCTR_CP_0_HI);
+> +	*value = gpu_read64(gpu, REG_A5XX_RBBM_ALWAYSON_COUNTER_LO,
+> +		REG_A5XX_RBBM_ALWAYSON_COUNTER_HI);
+>  
+>  	return 0;
+>  }
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> index 130661898546..59718c304488 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> @@ -1173,8 +1173,8 @@ static int a6xx_get_timestamp(struct msm_gpu *gpu, uint64_t *value)
+>  	/* Force the GPU power on so we can read this register */
+>  	a6xx_gmu_set_oob(&a6xx_gpu->gmu, GMU_OOB_GPU_SET);
+>  
+> -	*value = gpu_read64(gpu, REG_A6XX_RBBM_PERFCTR_CP_0_LO,
+> -		REG_A6XX_RBBM_PERFCTR_CP_0_HI);
+> +	*value = gpu_read64(gpu, REG_A6XX_CP_ALWAYS_ON_COUNTER_LO,
+> +		REG_A6XX_CP_ALWAYS_ON_COUNTER_HI);
+>  
+>  	a6xx_gmu_clear_oob(&a6xx_gpu->gmu, GMU_OOB_GPU_SET);
+>  	return 0;
+> -- 
+> 2.29.2
+> 
+> _______________________________________________
+> Freedreno mailing list
+> Freedreno@lists.freedesktop.org
+> https://lists.freedesktop.org/mailman/listinfo/freedreno
