@@ -2,49 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CCEE9353106
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 Apr 2021 00:29:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4F855353116
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 Apr 2021 00:30:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234161AbhDBW33 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 2 Apr 2021 18:29:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37200 "EHLO
+        id S231406AbhDBW3a (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 2 Apr 2021 18:29:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37208 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231577AbhDBW32 (ORCPT
+        with ESMTP id S235421AbhDBW3a (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 2 Apr 2021 18:29:28 -0400
-Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 319DFC061788
-        for <linux-arm-msm@vger.kernel.org>; Fri,  2 Apr 2021 15:29:27 -0700 (PDT)
-Received: by mail-pf1-x432.google.com with SMTP id 11so2662392pfn.9
-        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Apr 2021 15:29:27 -0700 (PDT)
+        Fri, 2 Apr 2021 18:29:30 -0400
+Received: from mail-pg1-x52d.google.com (mail-pg1-x52d.google.com [IPv6:2607:f8b0:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E13AC061788
+        for <linux-arm-msm@vger.kernel.org>; Fri,  2 Apr 2021 15:29:28 -0700 (PDT)
+Received: by mail-pg1-x52d.google.com with SMTP id h25so4342157pgm.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Apr 2021 15:29:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=ON9CSoAEnPg/WEZHphopZ5IRnDJ/6agQdPsBBenWtGU=;
-        b=WYn26BMcz3yEwP1DJXlf666yiWCvKw3heAG5lqx4UDpK4pkPo9S8A8uq9wHkp79ptX
-         HtWLWemjiurAQbKo2QNPn32UkGobrDER5QFmDVEvYQvVbg08AmPMLLOkXgmxuxa0oyn3
-         bwZHckjECdG3ztZRfluFiRFUWb6OVUPx8NTUg=
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=E5nLkVryU7c5AZ4g5Lt9PfA8bKCz/RpFTxCm4PjfuZs=;
+        b=gO+bEfipw3YrhMa3YXA8RgyPNuMRx6vX+IJGebJwUyxM4c2+fNY/VbWXvKQfAaOjUR
+         oUM6rQTx1YQLssV5Yi6d7k2M9/RGE9jYV3GFcPGPjtCYDgscCw1iQHXhFZ8H6VYpqyR1
+         VmAnuKqTR+IF1lNxxEqVovVLqVNr4dbFEFRAg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=ON9CSoAEnPg/WEZHphopZ5IRnDJ/6agQdPsBBenWtGU=;
-        b=EqijGy/4zwJJH2Ix57se8SBsAgfxBcOTAllzRfqxJOIIXzsREBoQXXpMhL+JPwn04R
-         V3b8xxSXSnzfmus8zNvYTf3zZQ/xh7IiFho9RfVa0l1/mNJvJ013HavrIRE17yl0Q/0I
-         jDOHv1a/WGxxoh7toEezA4tapJMm1ORSqngrbtNavc1rtrIVf0wq9Qk9hpyyMoyYfp5O
-         mOBu+23nmjTFiG9KohZPRWs0OH1n/8fcXnHKAWNv6nQCM6Low7pfPGUVNHu4/vUPqLrd
-         w1A2/YDSq8gE68qYowG7bJzN1enUWz5mhKQCwbDbSKdAdpF3tQxZPkpWMq9A27Oe9BhP
-         sKbA==
-X-Gm-Message-State: AOAM5331GPmmq0kF/X9FQyaZ+Dz/Ie3KFrSI0TF1g98FDJUqC74adI/L
-        3oXiDR2ZEwhPA2+rvdTf2cfZjg==
-X-Google-Smtp-Source: ABdhPJz/MKLIo+p9Jsg9Gej8nSjFSkKcq8Dmpmm4/rKRf0nNFYk9rmNUkc054Jiiu/Oq0+lV6XoVJA==
-X-Received: by 2002:a05:6a00:170c:b029:225:8851:5b3c with SMTP id h12-20020a056a00170cb029022588515b3cmr13980887pfc.0.1617402566637;
-        Fri, 02 Apr 2021 15:29:26 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=E5nLkVryU7c5AZ4g5Lt9PfA8bKCz/RpFTxCm4PjfuZs=;
+        b=HmBnsbfOygxNpXFAVLMjkNJj/e7quQCS26WO6wSvbmaC4WyuAfy8z5VinRHQO4NPrl
+         BorwDhHGAbGoG3hbYdceymuiNJkcfeREkD6E5+rav7F9nqTDTy3SokWWWSoNXzPLjBvS
+         uMSz8arV7BMp1l1SxzLEHgerw5jaYHkjhurwdI+fNvD2ZISvT+WEg8Cxh6y7Rxaui4Zt
+         ZzyM0aDyqAI4NDD9Rd9JCvqcroaZ8s6etvQ7XKz8ZHFYgPi1/Z7/+vgdqOsmgS5oK2ME
+         rAYwN9tzQFkDbPXMsTX9BkGfD33kzC00GGGzo0vNm+2IvjDBO/8e3MzyGWY/0fFDFV/9
+         96RQ==
+X-Gm-Message-State: AOAM530ZuyBqDGw3aFpbO471m3IHML/p7fSk1Yn3HuEVmy+Gy5l4HMes
+        /wbhtHdPPmWumvePr1GdUUK6pQ==
+X-Google-Smtp-Source: ABdhPJx5v38XJsBmc6qzOsS46/IrA38fKgvgpOkEPRe3xCg5rY9n+CELmCVv9HXlR7JiwYgavF0iZA==
+X-Received: by 2002:aa7:969d:0:b029:1f5:b02c:eed3 with SMTP id f29-20020aa7969d0000b02901f5b02ceed3mr13547896pfk.75.1617402567727;
+        Fri, 02 Apr 2021 15:29:27 -0700 (PDT)
 Received: from tictac2.mtv.corp.google.com ([2620:15c:202:201:6c58:fab2:c5e2:f2d7])
-        by smtp.gmail.com with ESMTPSA id t16sm9233094pfc.204.2021.04.02.15.29.25
+        by smtp.gmail.com with ESMTPSA id t16sm9233094pfc.204.2021.04.02.15.29.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Apr 2021 15:29:26 -0700 (PDT)
+        Fri, 02 Apr 2021 15:29:27 -0700 (PDT)
 From:   Douglas Anderson <dianders@chromium.org>
 To:     Andrzej Hajda <a.hajda@samsung.com>,
         Neil Armstrong <narmstrong@baylibre.com>,
@@ -65,82 +65,48 @@ Cc:     Linus W <linus.walleij@linaro.org>,
         David Airlie <airlied@linux.ie>,
         Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
         Maxime Ripard <mripard@kernel.org>,
-        Robert Foss <robert.foss@linaro.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
         Thomas Zimmermann <tzimmermann@suse.de>,
         dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v3 00/12] drm: Fix EDID reading on ti-sn65dsi86
-Date:   Fri,  2 Apr 2021 15:28:34 -0700
-Message-Id: <20210402222846.2461042-1-dianders@chromium.org>
+Subject: [PATCH v3 01/12] drm/bridge: Fix the stop condition of drm_bridge_chain_pre_enable()
+Date:   Fri,  2 Apr 2021 15:28:35 -0700
+Message-Id: <20210402152701.v3.1.If62a003f76a2bc4ccc6c53565becc05d2aad4430@changeid>
 X-Mailer: git-send-email 2.31.0.208.g409f899ff0-goog
+In-Reply-To: <20210402222846.2461042-1-dianders@chromium.org>
+References: <20210402222846.2461042-1-dianders@chromium.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The primary goal of this series is to try to properly fix EDID reading
-for eDP panels using the ti-sn65dsi86 bridge.
+The drm_bridge_chain_pre_enable() is not the proper opposite of
+drm_bridge_chain_post_disable(). It continues along the chain to
+_before_ the starting bridge. Let's fix that.
 
-Previously we had a patch that added EDID reading but it turned out
-not to work at bootup. This caused some extra churn at bootup as we
-tried (and failed) to read the EDID several times and also ended up
-forcing us to use the hardcoded mode at boot. With this patch series I
-believe EDID reading is reliable at boot now and we never use the
-hardcoded mode.
+Fixes: 05193dc38197 ("drm/bridge: Make the bridge chain a double-linked list")
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: Andrzej Hajda <a.hajda@samsung.com>
+---
 
-This series is the logical successor to the 3-part series containing
-the patch ("drm/bridge: ti-sn65dsi86: Properly get the EDID, but only
-if refclk") [1] though only one actual patch is the same between the
-two.
+(no changes since v1)
 
-This series starts out with some general / obvious fixes and moves on
-to some more specific and maybe controversial ones. I wouldn't object
-to some of the earlier ones landing if they look ready.
+ drivers/gpu/drm/drm_bridge.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-This patch was developed against drm-misc-next on a
-sc7180-trogdor-lazor device. To get things booting for me, I had to
-use Stephen's patch [2] to keep from crashing but otherwise all the
-patches I needed were here.
-
-Primary change between v2 and v3 is to stop doing the EDID caching in
-the core. I also added Andrzej's review tags.
-
-[1] https://lore.kernel.org/r/20210304155144.3.I60a7fb23ce4589006bc95c64ab8d15c74b876e68@changeid/
-[2] https://lore.kernel.org/r/161706912161.3012082.17313817257247946143@swboyd.mtv.corp.google.com/
-
-Changes in v3:
-- Removed "NOTES" from commit message.
-- Rebased now that we're not moving EDID caching to the core.
-- Separating out patch to block AUX channel when not powered.
-- Added note about boot speed implications.
-- ("Fail aux transfers right away if not powered") split out for v3.
-
-Changes in v2:
-- Removed 2nd paragraph in commit message.
-
-Douglas Anderson (12):
-  drm/bridge: Fix the stop condition of drm_bridge_chain_pre_enable()
-  drm/bridge: ti-sn65dsi86: Simplify refclk handling
-  drm/bridge: ti-sn65dsi86: Remove incorrectly tagged kerneldoc comment
-  drm/bridge: ti-sn65dsi86: Reorder remove()
-  drm/bridge: ti-sn65dsi86: Move drm_panel_unprepare() to post_disable()
-  drm/bridge: ti-sn65dsi86: Get rid of the useless detect() function
-  drm/bridge: ti-sn65dsi86: Remove extra call:
-    drm_connector_update_edid_property()
-  drm/bridge: ti-sn65dsi86: Power things properly for reading the EDID
-  drm/bridge: ti-sn65dsi86: Fail aux transfers right away if not powered
-  drm/bridge: ti-sn65dsi86: Read the EDID only if refclk was provided
-  drm/bridge: ti-sn65dsi86: Print an error if we fallback to panel modes
-  drm/panel: panel-simple: Use runtime pm to avoid excessive unprepare /
-    prepare
-
- drivers/gpu/drm/bridge/ti-sn65dsi86.c | 97 ++++++++++++++++-----------
- drivers/gpu/drm/drm_bridge.c          |  3 +
- drivers/gpu/drm/panel/Kconfig         |  1 +
- drivers/gpu/drm/panel/panel-simple.c  | 93 +++++++++++++++++++------
- 4 files changed, 134 insertions(+), 60 deletions(-)
-
+diff --git a/drivers/gpu/drm/drm_bridge.c b/drivers/gpu/drm/drm_bridge.c
+index 64f0effb52ac..044acd07c153 100644
+--- a/drivers/gpu/drm/drm_bridge.c
++++ b/drivers/gpu/drm/drm_bridge.c
+@@ -522,6 +522,9 @@ void drm_bridge_chain_pre_enable(struct drm_bridge *bridge)
+ 	list_for_each_entry_reverse(iter, &encoder->bridge_chain, chain_node) {
+ 		if (iter->funcs->pre_enable)
+ 			iter->funcs->pre_enable(iter);
++
++		if (iter == bridge)
++			break;
+ 	}
+ }
+ EXPORT_SYMBOL(drm_bridge_chain_pre_enable);
 -- 
 2.31.0.208.g409f899ff0-goog
 
