@@ -2,186 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B3654353097
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Apr 2021 23:08:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A256D3530C8
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Apr 2021 23:33:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231577AbhDBVIz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 2 Apr 2021 17:08:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48100 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235069AbhDBVIz (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 2 Apr 2021 17:08:55 -0400
-Received: from mail-pf1-x42c.google.com (mail-pf1-x42c.google.com [IPv6:2607:f8b0:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5494BC0613E6;
-        Fri,  2 Apr 2021 14:08:53 -0700 (PDT)
-Received: by mail-pf1-x42c.google.com with SMTP id x126so4255918pfc.13;
-        Fri, 02 Apr 2021 14:08:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=oLTaIOrTqKkHo1IVoAW0mlBLXAv0Dz4mdCieecndjsM=;
-        b=BmzNKXNDZ+83eZJE6CsakJeweXzOjOa/saT/0iK9Ie2/xNwYKrnMJ3Kvjb92zN/n6V
-         Ov+Am9UjRtmEiqZPkk57Fncbo2td+exEkQew4QK/avg06ketApNWrol8B0Fda6Gthkjl
-         5lXJacDda4uQ94Ix51VolNJ8AWz89tBVlzUwy8+NM+xD2yfiQo7MbBx/avM2/bNad/Vv
-         tCKNPhn6sZj48gTv/Y2H0O7hB2ZwhJdVeVB525lfj17YzPwVLIlB3dN1D2Kmcw1QjaLE
-         Ds3VZklM2+bBqSEK29lEL9cZmc+XmIisBovnDW4zN8gdnWhuPK4LOYeA6JMZA3oUMJfX
-         dHiw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=oLTaIOrTqKkHo1IVoAW0mlBLXAv0Dz4mdCieecndjsM=;
-        b=nPEu1/A37Z7RsRpUJfcxfc3ePVIOq8lRjBg1dJrAWSjEdWgFfUQij0duQ7JAuejrrZ
-         5SxlybVJpvz5Ha1dH2lyRY3WCUuJUCfxPJhcbVibp9fBzfleAL9nsk5vQTmafgdEH3DM
-         nugpv1NPDhh9Fxu3eSJxLFPJhFr/Xh+jNvqUjeu6JZYVmjWY/aJHOR5xx/z2lNGK3uiL
-         CjXc1zP2Sxz4g76ePYg3EwqNgept5DWB5PsQAwj9PA/Lhv3n/n519zSGAXXpG1w4dLbh
-         1F18AJfSdsQhRdJlcoZfjwMkymcQ0sXyMNsnhWAHhaUg7XRSCwhGd4FzJXSELhYEPm4l
-         ax4w==
-X-Gm-Message-State: AOAM532s+j+3ktUd6r6w6eqztaQWMZErivKpHki9Gdt4qEYUNpSIek/X
-        /BeCILs4lyEeWLgOxeAGwDAWqWvvKMU5jA==
-X-Google-Smtp-Source: ABdhPJxo1Mqx1ORQ+Y7GCG6EwpiBGuCpyJRRZzg0IklZb2e0zjRvQIJ4O9B2QGQmOuNDBxNPp5z3dw==
-X-Received: by 2002:a65:56cc:: with SMTP id w12mr13328411pgs.354.1617397732734;
-        Fri, 02 Apr 2021 14:08:52 -0700 (PDT)
-Received: from localhost ([2601:1c0:5200:a6:307:a401:7b76:c6e5])
-        by smtp.gmail.com with ESMTPSA id z14sm2811696pfn.48.2021.04.02.14.08.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Apr 2021 14:08:51 -0700 (PDT)
-From:   Rob Clark <robdclark@gmail.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     Jordan Crouse <jordan@cosmicpenguin.net>,
-        Rob Clark <robdclark@chromium.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
-        freedreno@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
-        GPU), linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v2] drm/msm: Drop mm_lock in scan loop
-Date:   Fri,  2 Apr 2021 14:12:26 -0700
-Message-Id: <20210402211226.875726-1-robdclark@gmail.com>
-X-Mailer: git-send-email 2.30.2
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        id S235538AbhDBVd2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 2 Apr 2021 17:33:28 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:31695 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S234619AbhDBVd2 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 2 Apr 2021 17:33:28 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1617399206; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=SNgmJCBq3tjYrxVHV8+VHM2aq1+r1qtAuIzokb9UuMo=; b=hhS/v+yGA1bdnFCZgwAgQvciTgE3J/uL9zH+7rh+6bEQdaOZjndJqCbgm7DooldfWhltdRkS
+ Nej3jj/Zr3qy3cre1c4LhKnKMGXkueAbUym0pg7ku0QkdpgKKce9MCONYYKPukF5OLeoQxf4
+ 0Q4Hme+oLWz65y+zymOK/u4Pa44=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
+ 60678da68807bcde1d9616c2 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 02 Apr 2021 21:33:26
+ GMT
+Sender: bbhatt=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 15A09C433C6; Fri,  2 Apr 2021 21:33:26 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from malabar-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: bbhatt)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 03C85C433C6;
+        Fri,  2 Apr 2021 21:33:24 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 03C85C433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=bbhatt@codeaurora.org
+From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
+To:     manivannan.sadhasivam@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
+        linux-kernel@vger.kernel.org, loic.poulain@linaro.org,
+        Bhaumik Bhatt <bbhatt@codeaurora.org>
+Subject: [PATCH] bus: mhi: pci_generic: Add SDX65 based modem support
+Date:   Fri,  2 Apr 2021 14:33:19 -0700
+Message-Id: <1617399199-35172-1-git-send-email-bbhatt@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+Add generic info for SDX65 based modems.
 
-lock_stat + mmm_donut[1] say that this reduces contention on mm_lock
-significantly (~350x lower waittime-max, and ~100x lower waittime-avg)
-
-[1] https://chromium.googlesource.com/chromiumos/platform/microbenchmarks/+/refs/heads/main/mmm_donut.py
-
-Signed-off-by: Rob Clark <robdclark@chromium.org>
+Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
 ---
- drivers/gpu/drm/msm/msm_drv.h          |  3 +-
- drivers/gpu/drm/msm/msm_gem.c          |  2 +-
- drivers/gpu/drm/msm/msm_gem_shrinker.c | 48 ++++++++++++++++++++++----
- 3 files changed, 45 insertions(+), 8 deletions(-)
+This patch was tested on SDX65 hardware with Ubuntu X86_64 PC as host.
 
-diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
-index c84e6f84cb6d..d8d64d34e6e3 100644
---- a/drivers/gpu/drm/msm/msm_drv.h
-+++ b/drivers/gpu/drm/msm/msm_drv.h
-@@ -184,7 +184,8 @@ struct msm_drm_private {
- 	/**
- 	 * Lists of inactive GEM objects.  Every bo is either in one of the
- 	 * inactive lists (depending on whether or not it is shrinkable) or
--	 * gpu->active_list (for the gpu it is active on[1])
-+	 * gpu->active_list (for the gpu it is active on[1]), or transiently
-+	 * on a temporary list as the shrinker is running.
- 	 *
- 	 * These lists are protected by mm_lock (which should be acquired
- 	 * before per GEM object lock).  One should *not* hold mm_lock in
-diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
-index 2ecf7f1cef25..75cea5b801da 100644
---- a/drivers/gpu/drm/msm/msm_gem.c
-+++ b/drivers/gpu/drm/msm/msm_gem.c
-@@ -719,7 +719,7 @@ void msm_gem_purge(struct drm_gem_object *obj)
- 	put_iova_vmas(obj);
+ drivers/bus/mhi/pci_generic.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
+
+diff --git a/drivers/bus/mhi/pci_generic.c b/drivers/bus/mhi/pci_generic.c
+index 5cf44bc..92a1b18 100644
+--- a/drivers/bus/mhi/pci_generic.c
++++ b/drivers/bus/mhi/pci_generic.c
+@@ -204,6 +204,15 @@ static struct mhi_controller_config modem_qcom_v1_mhiv_config = {
+ 	.event_cfg = modem_qcom_v1_mhi_events,
+ };
  
- 	msm_obj->madv = __MSM_MADV_PURGED;
--	mark_unpurgable(msm_obj);
-+	update_inactive(msm_obj);
++static const struct mhi_pci_dev_info mhi_qcom_sdx65_info = {
++	.name = "qcom-sdx65m",
++	.fw = "qcom/sdx65m/xbl.elf",
++	.edl = "qcom/sdx65m/edl.mbn",
++	.config = &modem_qcom_v1_mhiv_config,
++	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
++	.dma_data_width = 32
++};
++
+ static const struct mhi_pci_dev_info mhi_qcom_sdx55_info = {
+ 	.name = "qcom-sdx55m",
+ 	.fw = "qcom/sdx55m/sbl1.mbn",
+@@ -261,6 +270,8 @@ static const struct mhi_pci_dev_info mhi_quectel_em1xx_info = {
+ };
  
- 	drm_vma_node_unmap(&obj->vma_node, dev->anon_inode->i_mapping);
- 	drm_gem_free_mmap_offset(obj);
-diff --git a/drivers/gpu/drm/msm/msm_gem_shrinker.c b/drivers/gpu/drm/msm/msm_gem_shrinker.c
-index f3e948af01c5..33a49641ef30 100644
---- a/drivers/gpu/drm/msm/msm_gem_shrinker.c
-+++ b/drivers/gpu/drm/msm/msm_gem_shrinker.c
-@@ -22,26 +22,62 @@ msm_gem_shrinker_scan(struct shrinker *shrinker, struct shrink_control *sc)
- {
- 	struct msm_drm_private *priv =
- 		container_of(shrinker, struct msm_drm_private, shrinker);
--	struct msm_gem_object *msm_obj;
-+	struct list_head still_in_list;
- 	unsigned long freed = 0;
- 
-+	INIT_LIST_HEAD(&still_in_list);
-+
- 	mutex_lock(&priv->mm_lock);
- 
--	list_for_each_entry(msm_obj, &priv->inactive_dontneed, mm_list) {
--		if (freed >= sc->nr_to_scan)
-+	while (freed < sc->nr_to_scan) {
-+		struct msm_gem_object *msm_obj = list_first_entry_or_null(
-+				&priv->inactive_dontneed, typeof(*msm_obj), mm_list);
-+
-+		if (!msm_obj)
- 			break;
--		/* Use trylock, because we cannot block on a obj that
--		 * might be trying to acquire mm_lock
-+
-+		list_move_tail(&msm_obj->mm_list, &still_in_list);
-+
-+		/*
-+		 * If it is in the process of being freed, msm_gem_free_object
-+		 * can be blocked on mm_lock waiting to remove it.  So just
-+		 * skip it.
- 		 */
--		if (!msm_gem_trylock(&msm_obj->base))
-+		if (!kref_get_unless_zero(&msm_obj->base.refcount))
- 			continue;
-+
-+		/*
-+		 * Now that we own a reference, we can drop mm_lock for the
-+		 * rest of the loop body, to reduce contention with the
-+		 * retire_submit path (which could make more objects purgable)
-+		 */
-+
-+		mutex_unlock(&priv->mm_lock);
-+
-+		/*
-+		 * Note that this still needs to be trylock, since we can
-+		 * hit shrinker in response to trying to get backing pages
-+		 * for this obj (ie. while it's lock is already held)
-+		 */
-+		if (!msm_gem_trylock(&msm_obj->base))
-+			goto tail;
-+
- 		if (is_purgeable(msm_obj)) {
-+			/*
-+			 * This will move the obj out of still_in_list to
-+			 * the purged list
-+			 */
- 			msm_gem_purge(&msm_obj->base);
- 			freed += msm_obj->base.size >> PAGE_SHIFT;
- 		}
- 		msm_gem_unlock(&msm_obj->base);
-+
-+tail:
-+		drm_gem_object_put(&msm_obj->base);
-+		mutex_lock(&priv->mm_lock);
- 	}
- 
-+	list_splice_tail(&still_in_list, &priv->inactive_dontneed);
- 	mutex_unlock(&priv->mm_lock);
- 
- 	if (freed > 0) {
+ static const struct pci_device_id mhi_pci_id_table[] = {
++	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0308),
++		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx65_info },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0306),
+ 		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx55_info },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0304),
 -- 
-2.30.2
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
