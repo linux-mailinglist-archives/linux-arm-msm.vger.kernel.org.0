@@ -2,51 +2,51 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4484E3525E3
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Apr 2021 05:56:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 47F953525E4
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Apr 2021 05:56:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233841AbhDBD4R (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Apr 2021 23:56:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50538 "EHLO
+        id S233665AbhDBD4T (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Apr 2021 23:56:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50550 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233786AbhDBD4R (ORCPT
+        with ESMTP id S233786AbhDBD4T (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Apr 2021 23:56:17 -0400
-Received: from mail-pf1-x42c.google.com (mail-pf1-x42c.google.com [IPv6:2607:f8b0:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 189A3C0613E6
-        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Apr 2021 20:56:16 -0700 (PDT)
-Received: by mail-pf1-x42c.google.com with SMTP id v10so2846865pfn.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Apr 2021 20:56:16 -0700 (PDT)
+        Thu, 1 Apr 2021 23:56:19 -0400
+Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FB1CC0613E6
+        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Apr 2021 20:56:19 -0700 (PDT)
+Received: by mail-pg1-x536.google.com with SMTP id f10so2837365pgl.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Apr 2021 20:56:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=/1tfZ3KHdBRbQ7iOu9GTGKGQQTHAyTZW2kSrQXENCl0=;
-        b=xy6IMHoIjKIxBBq1kpYTDQkjsdBtbEb9bsTqof3z3+10iqaOGUpFsKODpR2BJE3V9l
-         GmHQkPX+aJ2RR3K3StqZLC8YUG97r6rnTP0DUEOCtlI45bDPntoC5EDK8/o/40jBt+f6
-         i4DpeVwqoXl/vTCrrToqU1FTaunO+/av8VfWuE9t5zC+ZIURcbT7dLpY27n5VNF1kIgE
-         oZ7+0JcvmhEF5Al57VnaIZ8tvVoUPybyc+uccsmJzhB1U2vxUeXO8ahOxWyIefHDk/YQ
-         v4rQbwt2snwgK37SuSn/xwWdY7/zh3Y2dIqm4pzm3G97MzEveVEI5ydK+0teBebf4qCo
-         rGFw==
+        bh=3nQhD90sdJSzQdgo78ZKmX3OfUzD+szW/4QnSrBPjH4=;
+        b=P3kuftwOPyckZywrWcQWSfwihuGdzQTnGOBic65JfGR5wzUcOgpXw89JlKDQT7rkS0
+         RbqTYL/yLLalyBJs88wj5lqkVOya+/SIZptgBr18VHj4ZT/R4ZRnwaObwxukjsYcRe6f
+         jaoRNyNZx9awptdKzVQJvSLmvekEBrXYls+B3UMG5ECMPaXT7Mhh8gzK1KsHe28zv3+U
+         JBBmzgRn3GOTdrPevhVN2AclStD2Jxp0uJVW1Y0+DurvyijGHynD+AQyKBMps2aW6uYa
+         pyfbVa+8zVXyIuaElf+Pckvgf2rG1bbuSpmJacHa8FCMHUWuyL4YX+XbRJfGzykFAqJI
+         mYWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=/1tfZ3KHdBRbQ7iOu9GTGKGQQTHAyTZW2kSrQXENCl0=;
-        b=j7aI31C17oHz75JYi6MSUZQOxafyqwyHeRnvstHP6rLlqsAa+VwDsXwc5zKQYqiXjC
-         0FaZz0zgNDGWhJ3WYxGpVNTHvgevu/ykvhKO1iY40U6kWXDff5VF/lpJKrXg28r8HLuv
-         AALbsfIsFZ/6LlMjQpsQv9PcBbU1SYgM8NY47k1r50Qj+6hL+cj/z4QniR+v/O9DfJvh
-         RZ7oT38zXkAikAA8lOMNHXz76asKJjlIGoIXJUzlOD/oLHO/qwa/liTN9fjWr8C6epWf
-         zgghaeLzVNWvfrBBIYO231/tL5Bk+kecOHBFm6oKdcxL1SO04/125ycuYm6+sg0I9IH+
-         u+pg==
-X-Gm-Message-State: AOAM531sVDDMVWkPWtMlL0cueT06arDEGvvG1mf6j8Cs5Nevv07V1FGj
-        0om36mifQzzF1ts/Og9e2hVqsw==
-X-Google-Smtp-Source: ABdhPJxq0/P3BZCjsJltqsSX1E8fe3pwGt3mKPGSYK3eBXms5/r6xe7yM/u4Bry3jlTaGPDMJyCnlw==
-X-Received: by 2002:a65:6a01:: with SMTP id m1mr10169543pgu.215.1617335775654;
-        Thu, 01 Apr 2021 20:56:15 -0700 (PDT)
+        bh=3nQhD90sdJSzQdgo78ZKmX3OfUzD+szW/4QnSrBPjH4=;
+        b=gxgVu7Np4m3DopuBpovn8/GaSXR6rBN+Nunjzhn4bqlJJXhZDEZF584n0QKFicbEl5
+         lfsOCbEdkD65sMGod7NVbcb/dCG0w9q3Hx501oEuKb7YCrBj0jgyj/XouaK7SH96Rqv0
+         NJrzalE+dcMbsT3P0lHVkSIqAVL+2hPUG78Z9LUALr8u/DJpaRwthmdxV3DQIdYQFeCQ
+         tt+lCRCcNHZJdoxxgJKFG+sDeIz5iuvyyJKNYKsE/y94yRSV1iTz9VKVI4KBVyRFcc9A
+         CoAhQh2pZC/2DfEaXR1AdeLYaSgwSsOeC6yUJY5ASCSHyHvNlFGV3DtLThECkJwoKxy0
+         /jwQ==
+X-Gm-Message-State: AOAM532bt7t7b347pJpOW5noL/nvOESk1ryUqu3hBft3mrWyuYLEnT7H
+        jCI7sD3HofMNvt0wV+AjsEiJ3Q==
+X-Google-Smtp-Source: ABdhPJy32aJ5h5W9VDt0+416R7LPGrBxJo/5XMIv4vXMiY/T97i7LwN6fp7RvRCavYrY/JMeod4r9A==
+X-Received: by 2002:a63:78cc:: with SMTP id t195mr10067403pgc.196.1617335778655;
+        Thu, 01 Apr 2021 20:56:18 -0700 (PDT)
 Received: from localhost.localdomain (80.251.214.228.16clouds.com. [80.251.214.228])
-        by smtp.gmail.com with ESMTPSA id 81sm6875972pfu.164.2021.04.01.20.56.13
+        by smtp.gmail.com with ESMTPSA id 81sm6875972pfu.164.2021.04.01.20.56.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Apr 2021 20:56:15 -0700 (PDT)
+        Thu, 01 Apr 2021 20:56:18 -0700 (PDT)
 From:   Shawn Guo <shawn.guo@linaro.org>
 To:     Will Deacon <will@kernel.org>
 Cc:     Robin Murphy <robin.murphy@arm.com>,
@@ -57,9 +57,9 @@ Cc:     Robin Murphy <robin.murphy@arm.com>,
         Mark Rutland <mark.rutland@arm.com>,
         linux-arm-kernel@lists.infradead.org,
         linux-arm-msm@vger.kernel.org, Shawn Guo <shawn.guo@linaro.org>
-Subject: [PATCH v2 2/3] ACPI/IORT: Add Qualcomm Snapdragon platforms to iort_plat_info[]
-Date:   Fri,  2 Apr 2021 11:56:01 +0800
-Message-Id: <20210402035602.9484-3-shawn.guo@linaro.org>
+Subject: [PATCH v2 3/3] iommu/arm-smmu-qcom: hook up qcom_smmu_impl for ACPI boot
+Date:   Fri,  2 Apr 2021 11:56:02 +0800
+Message-Id: <20210402035602.9484-4-shawn.guo@linaro.org>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20210402035602.9484-1-shawn.guo@linaro.org>
 References: <20210402035602.9484-1-shawn.guo@linaro.org>
@@ -67,49 +67,46 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The SMMU driver on Qualcomm Snapdragon platforms needs to hook up some
-QCOM specific arm_smmu_impl.  Define model identifier for QCOM SMMU and
-add Qualcomm SC8180X platform to iort_plat_info[], so that SMMU
-driver can detect the model and handle QCOM specific arm_smmu_impl.
+The hookup with qcom_smmu_impl is required to do ACPI boot on SC8180X
+based devices like Lenovo Flex 5G laptop and Microsoft Surface Pro X.
+Check IORT SMMU model identifier and create qcom_smmu_impl accordingly.
 
-Some device chooses to use manufacturer name in IORT table, like Lenovo
-Flex 5G, while others use SoC vendor name, such as Microsoft Surface Pro
-X and Samsung Galaxy Book S.
+(np == NULL) is used to check ACPI boot, because fwnode of SMMU device
+is a static allocation and thus helpers like has_acpi_companion() don't
+work here.
 
 Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
 ---
- drivers/acpi/arm64/iort.c | 5 +++++
- include/linux/acpi_iort.h | 1 +
- 2 files changed, 6 insertions(+)
+ drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/acpi/arm64/iort.c b/drivers/acpi/arm64/iort.c
-index e2a96d2d399a..f88b8c0a7d84 100644
---- a/drivers/acpi/arm64/iort.c
-+++ b/drivers/acpi/arm64/iort.c
-@@ -1467,6 +1467,11 @@ static struct acpi_platform_list iort_plat_info[] __initdata = {
- 	/* HiSilicon Hip08 Platform */
- 	{"HISI  ", "HIP08   ", 0, ACPI_SIG_IORT, greater_than_or_equal,
- 	 "Erratum #162001800", IORT_SMMU_V3_PMCG_HISI_HIP08},
-+	/* Qualcomm Snapdragon Platform */
-+	{ "LENOVO", "CB-01   ", 0x8180, ACPI_SIG_IORT, equal,
-+	  "QCOM SMMU", IORT_SMMU_QCOM },
-+	{ "QCOM  ", "QCOMEDK2", 0x8180, ACPI_SIG_IORT, equal,
-+	  "QCOM SMMU", IORT_SMMU_QCOM },
- 	{ }
- };
- 
-diff --git a/include/linux/acpi_iort.h b/include/linux/acpi_iort.h
-index 678cdf036948..66c859ea2abf 100644
---- a/include/linux/acpi_iort.h
-+++ b/include/linux/acpi_iort.h
-@@ -21,6 +21,7 @@
+diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+index 82c7edc6e025..7ced0f93bc99 100644
+--- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
++++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+@@ -3,6 +3,7 @@
+  * Copyright (c) 2019, The Linux Foundation. All rights reserved.
   */
- #define IORT_SMMU_GENERIC		0x00000000 /* Generic SMMU */
- #define IORT_SMMU_V3_PMCG_HISI_HIP08	0x00000001 /* HiSilicon HIP08 PMCG */
-+#define IORT_SMMU_QCOM			0x00000002 /* QCOM SMMU */
  
- struct iort_smmu_pdata {
- 	struct acpi_iort_node *node;
++#include <linux/acpi_iort.h>
+ #include <linux/adreno-smmu-priv.h>
+ #include <linux/of_device.h>
+ #include <linux/qcom_scm.h>
+@@ -340,6 +341,14 @@ struct arm_smmu_device *qcom_smmu_impl_init(struct arm_smmu_device *smmu)
+ {
+ 	const struct device_node *np = smmu->dev->of_node;
+ 
++	if (np == NULL) {
++		/* ACPI boot */
++		struct iort_smmu_pdata *pdata = dev_get_platdata(smmu->dev);
++
++		if (pdata && pdata->model == IORT_SMMU_QCOM)
++			return qcom_smmu_create(smmu, &qcom_smmu_impl);
++	}
++
+ 	if (of_match_node(qcom_smmu_impl_of_match, np))
+ 		return qcom_smmu_create(smmu, &qcom_smmu_impl);
+ 
 -- 
 2.17.1
 
