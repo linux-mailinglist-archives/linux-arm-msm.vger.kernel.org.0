@@ -2,336 +2,168 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1F5063529BE
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Apr 2021 12:29:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E2CE73529C9
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Apr 2021 12:32:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234908AbhDBK3C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 2 Apr 2021 06:29:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50572 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229553AbhDBK3B (ORCPT
+        id S234788AbhDBKcb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 2 Apr 2021 06:32:31 -0400
+Received: from mo4-p01-ob.smtp.rzone.de ([85.215.255.54]:30617 "EHLO
+        mo4-p01-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229605AbhDBKc3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 2 Apr 2021 06:29:01 -0400
-X-Greylist: delayed 598 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 02 Apr 2021 03:29:00 PDT
-Received: from relay04.th.seeweb.it (relay04.th.seeweb.it [IPv6:2001:4b7a:2000:18::165])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA51EC06178A
-        for <linux-arm-msm@vger.kernel.org>; Fri,  2 Apr 2021 03:29:00 -0700 (PDT)
-Received: from IcarusMOD.eternityproject.eu (unknown [2.237.20.237])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 6A4271F542;
-        Fri,  2 Apr 2021 12:19:00 +0200 (CEST)
-Subject: Re: [RFC PATCH 2/2] drivers: soc: qcom: Add SDPM clock monitor driver
-To:     Manaf Meethalavalappu Pallikunhi <manafm@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
+        Fri, 2 Apr 2021 06:32:29 -0400
+X-Greylist: delayed 853 seconds by postgrey-1.27 at vger.kernel.org; Fri, 02 Apr 2021 06:32:29 EDT
+ARC-Seal: i=1; a=rsa-sha256; t=1617359528; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=FPSSpG+MVQli7ePryvGW+Oo/I0dBjfL9hLU8bJ+c2m5hABaZDQuyvkuUTDSqP2cXec
+    5JO34V4Z3XZVAGYnaxREFPnPWq7pmqfhZEmpsp0LEvEVXMJ7oj6a7YEr9LtpMhlo+Cjw
+    ZeIej/kthdnS4soFQ8tfCdgkF8WWUg1/E9dTNqK49vGL2AVr5FGGWKsSnTvsC42upbIV
+    hwlCHYuuw+GVF+J5CVnEidO3zKCbNvzcDaVioB458IGLAWZaAJyUX2PeJw5pf+BLh1/x
+    j1o+3X+nnRj3tKCOSkf7hMig0oC/7pa4mKszeaYO6dEgi2dOtSk09VNoig58xfZZkoOR
+    epMQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1617359528;
+    s=strato-dkim-0002; d=strato.com;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=/RLjeiTGsAL2F3PsEpvQHXAR52emwi+CSPIQsS5l1Ek=;
+    b=RSa1skwwrm0jbzIvFd8Bh829Bh1XzuphVHC39s5GEkoWKPnh4dvUuEfOzehVZQNgE8
+    XkQwpeM8jaHCpWWhi8dSHd2sohMooZ2fq1TwFCCA8jXOm25qy9cfsEVAxUalolchaAob
+    sAkT6yDRHTwIY6iv37cK4+YyuAoxWGEDjSu/d4F+9kRt1RoLkmhCHsOWujf2UzUA1iyr
+    zWcPBtixIJ+yzF+3XgynXb2fy7Gw0EuyUTNmfqqidCIQ8jmJts5jTRTgmZbZmYilo1bt
+    b71dM2JgGPwWrKFRRI3ZVSus6pxejU1Vbrwlg3jcmLxx8IpRtPGwkmX7ypT3Lb11UJND
+    WZCQ==
+ARC-Authentication-Results: i=1; strato.com;
+    dkim=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1617359528;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=/RLjeiTGsAL2F3PsEpvQHXAR52emwi+CSPIQsS5l1Ek=;
+    b=FIwAlb7bORDEWvpp55amm/wFte0K3JuvFLdBp9yqoZj0ga2VspZxhdeaN04FQObbTv
+    oflo5D5mRlRf8tIXE9OpI6pOXKsfnXNB2bbVY0UiLuGY5qR0jPWdp6T68mB/bS4ddg+u
+    kB9ilc+vo47wXYcDN2jn+oJ4f75+eRLAOIkm3bE3k0ESUx6zTc0cnT1BmZbQz1fN15BR
+    6k6OvtY7uDSWO1Ljv/T/KVswNCYoVjALWAmWu/oFE8VazIlAKlgIHhvPGzuOSiMM7X+S
+    jENafn6ZlYrLVI6cEc225FZpASffm0H57a/f7N0sw2zWpb9C+qPX0P5KmfgYskZRoNpC
+    oE+g==
+Authentication-Results: strato.com;
+    dkim=none
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u26zEodhPgRDZ8j9Ic/GaYo="
+X-RZG-CLASS-ID: mo00
+Received: from gerhold.net
+    by smtp.strato.de (RZmta 47.23.1 DYNA|AUTH)
+    with ESMTPSA id q0a3c1x32AW8zfR
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Fri, 2 Apr 2021 12:32:08 +0200 (CEST)
+Date:   Fri, 2 Apr 2021 12:32:02 +0200
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Leo Yan <leo.yan@linaro.org>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Ram Chandrasekar <rkumbako@codeaurora.org>,
-        Taniya Das <tdas@codeaurora.org>,
-        Akhil P Oommen <akhilpo@codeaurora.org>
-References: <1617346747-8611-1-git-send-email-manafm@codeaurora.org>
- <1617346747-8611-3-git-send-email-manafm@codeaurora.org>
-From:   AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>
-Message-ID: <56471ee3-5bde-4169-2fb9-f33dd144ae48@somainline.org>
-Date:   Fri, 2 Apr 2021 12:19:00 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.7.0
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Coresight ML <coresight@lists.linaro.org>,
+        Georgi Djakov <georgi.djakov@linaro.org>
+Subject: Re: [PATCH v3] arm64: dts: msm8916: Enable CoreSight STM component
+Message-ID: <YGbyonw8mRd8tI8O@gerhold.net>
+References: <20210321124212.4253-1-leo.yan@linaro.org>
 MIME-Version: 1.0
-In-Reply-To: <1617346747-8611-3-git-send-email-manafm@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210321124212.4253-1-leo.yan@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Il 02/04/21 08:59, Manaf Meethalavalappu Pallikunhi ha scritto:
-> Add SDPM clock monitor driver, which will register for clock rate
-> change notification and write the clock rate into SDPM CSR register.
+On Sun, Mar 21, 2021 at 08:42:12PM +0800, Leo Yan wrote:
+> From: Georgi Djakov <georgi.djakov@linaro.org>
 > 
-> Signed-off-by: Ram Chandrasekar <rkumbako@codeaurora.org>
-> Signed-off-by: Manaf Meethalavalappu Pallikunhi <manafm@codeaurora.org>
+> Add DT binding for CoreSight System Trace Macrocell (STM) on msm8916,
+> which can benefit the CoreSight development on DB410c.
+> 
+> Signed-off-by: Georgi Djakov <georgi.djakov@linaro.org>
+> Signed-off-by: Leo Yan <leo.yan@linaro.org>
+
+Thanks for sending the new patch so quickly!
+
+The changes look good to me but I cannot really say if they are fully
+correct or work correctly. (Actually I have no idea how to use coresight
+or how it is useful! :D)
+
+FWIW:
+Acked-by: Stephan Gerhold <stephan@gerhold.net>
+
 > ---
->   drivers/soc/qcom/Kconfig            |   8 ++
->   drivers/soc/qcom/Makefile           |   1 +
->   drivers/soc/qcom/sdpm_clk_monitor.c | 217 ++++++++++++++++++++++++++++++++++++
->   3 files changed, 226 insertions(+)
->   create mode 100644 drivers/soc/qcom/sdpm_clk_monitor.c
 > 
-> diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
-> index 9464ff4..1f04d69 100644
-> --- a/drivers/soc/qcom/Kconfig
-> +++ b/drivers/soc/qcom/Kconfig
-> @@ -237,4 +237,12 @@ config QCOM_APR
->   	  used by audio driver to configure QDSP6
->   	  ASM, ADM and AFE modules.
->   
-> +config QCOM_SDPM_CLOCK_MONITOR
-> +	tristate "Qualcomm SDPM Clock Monitor"
-> +	depends on COMMON_CLK
-> +	help
-> +	    This enables the Qualcomm SDPM Clock Monitor. This driver can register
-> +	    for different clock rate change notifications and write the clock
-> +	    rate into the SDPM CSR register. This driver will receive the clock
-> +	    list and the CSR details from devicetree.
->   endmenu
-> diff --git a/drivers/soc/qcom/Makefile b/drivers/soc/qcom/Makefile
-> index d658a10..4eef767 100644
-> --- a/drivers/soc/qcom/Makefile
-> +++ b/drivers/soc/qcom/Makefile
-> @@ -29,3 +29,4 @@ obj-$(CONFIG_QCOM_RPMPD) += rpmpd.o
->   obj-$(CONFIG_QCOM_KRYO_L2_ACCESSORS) +=	kryo-l2-accessors.o
->   obj-$(CONFIG_QCOM_LLCC_PERFMON) += llcc_perfmon.o
->   obj-$(CONFIG_QCOM_MEMORY_DUMP_V2) += memory_dump_v2.o
-> +obj-$(CONFIG_QCOM_SDPM_CLOCK_MONITOR) += sdpm_clk_monitor.o
-> diff --git a/drivers/soc/qcom/sdpm_clk_monitor.c b/drivers/soc/qcom/sdpm_clk_monitor.c
-> new file mode 100644
-> index 00000000..1aee119
-> --- /dev/null
-> +++ b/drivers/soc/qcom/sdpm_clk_monitor.c
-> @@ -0,0 +1,217 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) 2021, The Linux Foundation. All rights reserved.
-> + */
-> +
-> +#define pr_fmt(fmt) "%s " fmt, KBUILD_MODNAME
-> +
-> +#include <linux/clk.h>
-> +#include <linux/err.h>
-> +#include <linux/module.h>
-> +#include <linux/of.h>
-> +#include <linux/of_address.h>
-> +#include <linux/platform_device.h>
-> +#include <linux/slab.h>
-> +
-> +#define SDPM_DRIVER		"sdpm-clk-monitor"
-> +#define CSR_MAX_VAL		7
-> +#define CSR_OFFSET		0xF00
-> +#define FREQ_HZ_TO_MHZ(f)	DIV_ROUND_UP((f), 1000000)
-> +#define SDPM_CSR_OFFSET(id)	(CSR_OFFSET + (id * 4))
-> +
-> +struct sdpm_clk_instance;
-> +struct sdpm_clk_data {
-> +	struct list_head		sdpm_node;
-> +	struct notifier_block		clk_rate_nb;
-> +	struct clk			*clk;
-> +	const char			*clock_name;
-> +	uint32_t			csr_id;
-> +	struct sdpm_clk_instance	*sdpm_inst;
-> +};
-> +
-> +struct sdpm_clk_instance {
-> +	struct device			*dev;
-> +	void __iomem			*regmap;
-> +	struct list_head		sdpm_instances;
-> +};
-> +
-> +static void sdpm_csr_write(struct sdpm_clk_data *sdpm_data,
-> +				unsigned long clk_rate)
-> +{
-> +	struct sdpm_clk_instance *sdpm_inst = sdpm_data->sdpm_inst;
-> +
-> +	writel_relaxed(clk_rate, sdpm_inst->regmap +
-> +			SDPM_CSR_OFFSET(sdpm_data->csr_id));
-> +	dev_dbg(sdpm_inst->dev, "clock:%s offset:0x%x frequency:%u\n",
-> +			sdpm_data->clock_name,
-> +			SDPM_CSR_OFFSET(sdpm_data->csr_id),
-> +			clk_rate);
-> +}
-> +
-> +static int sdpm_clock_notifier(struct notifier_block *nb,
-> +					unsigned long event, void *data)
-> +{
-> +	struct clk_notifier_data *ndata = data;
-> +	struct sdpm_clk_data *sdpm_data = container_of(nb,
-> +				struct sdpm_clk_data, clk_rate_nb);
-> +
-> +	dev_dbg(sdpm_data->sdpm_inst->dev, "clock:%s event:%lu\n",
-> +			sdpm_data->clock_name, event);
-> +	switch (event) {
-> +	case PRE_RATE_CHANGE:
-> +		if (ndata->new_rate > ndata->old_rate)
-> +			sdpm_csr_write(sdpm_data,
-> +					FREQ_HZ_TO_MHZ(ndata->new_rate));
-> +		return NOTIFY_DONE;
-> +	case POST_RATE_CHANGE:
-> +		if (ndata->new_rate < ndata->old_rate)
-> +			sdpm_csr_write(sdpm_data,
-> +					FREQ_HZ_TO_MHZ(ndata->new_rate));
-> +		return NOTIFY_DONE;
-> +	case ABORT_RATE_CHANGE:
-> +		if (ndata->new_rate > ndata->old_rate)
-> +			sdpm_csr_write(sdpm_data,
-> +					FREQ_HZ_TO_MHZ(ndata->old_rate));
-> +		return NOTIFY_DONE;
-> +	default:
-> +		return NOTIFY_DONE;
-> +	}
-> +}
-> +
-> +static int sdpm_clk_device_remove(struct platform_device *pdev)
-> +{
-> +	struct sdpm_clk_instance *sdpm_inst =
-> +		(struct sdpm_clk_instance *)dev_get_drvdata(&pdev->dev);
-> +	struct sdpm_clk_data *sdpm_data = NULL, *next = NULL;
-> +
-> +	list_for_each_entry_safe(sdpm_data, next,
-> +			&sdpm_inst->sdpm_instances, sdpm_node) {
-> +		clk_notifier_unregister(sdpm_data->clk,
-> +					&sdpm_data->clk_rate_nb);
-> +		list_del(&sdpm_data->sdpm_node);
-> +	}
-> +
-> +	return 0;
-> +}
-> +
-> +static int sdpm_clk_device_probe(struct platform_device *pdev)
-> +{
-> +	struct device *dev = &pdev->dev;
-> +	struct device_node *dev_node = dev->of_node;
-> +	int ret = 0, idx = 0, clk_ct = 0, csr = 0, csr_ct = 0;
-> +	struct sdpm_clk_instance *sdpm_inst = NULL;
-> +	struct sdpm_clk_data *sdpm_data = NULL;
-> +	struct resource *res;
-> +
-> +	sdpm_inst = devm_kzalloc(dev, sizeof(*sdpm_inst), GFP_KERNEL);
-> +	if (!sdpm_inst)
-> +		return -ENOMEM;
-> +	sdpm_inst->dev = dev;
-> +
-> +	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-> +	if (!res) {
-> +		dev_err(dev, "Couldn't get MEM resource\n");
-> +		return -EINVAL;
-> +	}
-> +	dev_dbg(dev, "sdpm@0x%x size:%d\n", res->start,
-> +			resource_size(res));
-> +	dev_set_drvdata(dev, sdpm_inst);
-> +
-> +	sdpm_inst->regmap = devm_ioremap_resource(dev, res);
-> +	if (!sdpm_inst->regmap) {
-> +		dev_err(dev, "Couldn't get regmap\n");
-> +		return -EINVAL;
-> +	}
-> +
-> +	ret = of_property_count_strings(dev_node, "clock-names");
-> +	if (ret <= 0) {
-> +		dev_err(dev, "Couldn't get clock names. %d\n", ret);
-> +		return ret;
-> +	}
-> +	clk_ct = ret;
-> +	ret = of_property_count_u32_elems(dev_node, "csr-id");
-> +	if (ret <= 0) {
-> +		dev_err(dev, "Couldn't get csr ID array. %d\n", ret);
-> +		return ret;
-> +	}
-> +	csr_ct = ret;
-> +
-> +	if (csr_ct != clk_ct) {
-> +		dev_err(dev, "Invalid csr:%d and clk:%d count.\n", csr_ct,
-> +				clk_ct);
-> +		return -EINVAL;
-> +	}
-> +
-> +	INIT_LIST_HEAD(&sdpm_inst->sdpm_instances);
-> +
-> +	for (idx = 0; idx < clk_ct; idx++) {
-> +
-> +		sdpm_data = devm_kzalloc(dev, sizeof(*sdpm_data), GFP_KERNEL);
-> +		if (!sdpm_data) {
-> +			ret = -ENOMEM;
-> +			goto clk_err_exit;
-> +		}
-> +
-> +		ret = of_property_read_string_index(dev_node, "clock-names",
-> +				idx, &sdpm_data->clock_name);
-> +		if (ret < 0) {
-> +			dev_err(dev, "Couldn't get clk name index:%d. %d\n",
-> +					idx, ret);
-> +			goto clk_err_exit;
-> +		}
-> +
-> +		sdpm_data->clk = devm_clk_get(dev, sdpm_data->clock_name);
-> +		if (IS_ERR(sdpm_data->clk)) {
-> +			ret = PTR_ERR(sdpm_data->clk);
-> +			goto clk_err_exit;
-> +		}
-> +
-> +		ret = of_property_read_u32_index(dev_node, "csr-id", idx, &csr);
-> +		if (ret < 0) {
-> +			dev_err(dev, "Couldn't get CSR for index:%d. %d\n",
-> +					idx, ret);
-> +			goto clk_err_exit;
-> +		}
-> +
-> +		if (ret > CSR_MAX_VAL) {
-> +			dev_err(dev, "Invalid CSR %d\n", csr);
-> +			ret = -EINVAL;
-> +			goto clk_err_exit;
-> +		}
-> +
-> +		dev_dbg(dev, "SDPM clock:%s csr:%d initialized\n",
-> +				sdpm_data->clock_name, csr);
-> +		sdpm_data->csr_id = csr;
-> +		sdpm_data->sdpm_inst = sdpm_inst;
-> +		sdpm_data->clk_rate_nb.notifier_call = sdpm_clock_notifier;
-> +		sdpm_csr_write(sdpm_data,
-> +			FREQ_HZ_TO_MHZ(clk_get_rate(sdpm_data->clk)));
-> +		clk_notifier_register(sdpm_data->clk, &sdpm_data->clk_rate_nb);
-> +		list_add(&sdpm_data->sdpm_node, &sdpm_inst->sdpm_instances);
-> +	}
-> +
-> +	return 0;
-> +
-> +clk_err_exit:
-> +	sdpm_clk_device_remove(pdev);
-> +
-> +	return ret;
-> +}
-> +
-> +static const struct of_device_id sdpm_clk_device_match[] = {
-> +	{.compatible = "qcom,sdpm"},
-> +	{}
-> +};
-> +
-> +static struct platform_driver sdpm_clk_device_driver = {
-> +	.probe          = sdpm_clk_device_probe,
-> +	.remove         = sdpm_clk_device_remove,
-> +	.driver         = {
-> +		.name   = SDPM_DRIVER,
-> +		.of_match_table = sdpm_clk_device_match,
-> +	},
-> +};
-> +module_platform_driver(sdpm_clk_device_driver);
-> +
-> +MODULE_DESCRIPTION("Qualcomm Technologies, Inc. SDPM Clock Monitor Driver");
-> +MODULE_LICENSE("GPL v2");
+> Changes from v2:
+> * Correct for author name.
 > 
-Hello!
-
-Thanks for the patch. A few things to point out:
-
-Before getting into a big lack of time situation, I have written a 
-functional driver for the Qualcomm System Performance Dynamic Monitoring 
-(SPDM), which has to yet be cleaned up before sending.
-This driver appears to be "SDPM" instead, but the finalities of this new 
-block seem to be very similar - if not the same - as the SPDM.
-
-My SPDM implementation was done as an interconnect driver, as that is 
-actually controlling the bandwidth of the CCI on the SoC.
-
-
-Is this block doing the same and/or anything similar?
-In case it does, I suggest to look at my *still a bit dirty* (sorry!) 
-driver for the SPDM-TZ.
-
-Please, look at the last three commits from this branch:
-https://github.com/SoMainline/linux/commits/angelo/v5.12-rc4-feat-spdmtz
-
-Yours,
-- Angelo
+> Changes from v1:
+> * alphabetically and address ordering for DT node; pad addresses with
+>   zeroes (Stephan Gerhold).
+> 
+>  arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi |  1 +
+>  arch/arm64/boot/dts/qcom/msm8916.dtsi     | 27 +++++++++++++++++++++++
+>  2 files changed, 28 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi b/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
+> index 3a9538e1ec97..2165b7415add 100644
+> --- a/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
+> @@ -410,6 +410,7 @@ &wcd_codec {
+>  &funnel0 { status = "okay"; };
+>  &funnel1 { status = "okay"; };
+>  &replicator { status = "okay"; };
+> +&stm { status = "okay"; };
+>  &tpiu { status = "okay"; };
+>  
+>  &smd_rpm_regulators {
+> diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
+> index 402e891a84ab..f02b976480d5 100644
+> --- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
+> @@ -489,6 +489,26 @@ snoc: interconnect@580000 {
+>  				 <&rpmcc RPM_SMD_SNOC_A_CLK>;
+>  		};
+>  
+> +		stm: stm@802000 {
+> +			compatible = "arm,coresight-stm", "arm,primecell";
+> +			reg = <0x00802000 0x1000>,
+> +			      <0x09280000 0x180000>;
+> +			reg-names = "stm-base", "stm-stimulus-base";
+> +
+> +			clocks = <&rpmcc RPM_QDSS_CLK>, <&rpmcc RPM_QDSS_A_CLK>;
+> +			clock-names = "apb_pclk", "atclk";
+> +
+> +			status = "disabled";
+> +
+> +			out-ports {
+> +				port {
+> +					stm_out: endpoint {
+> +						remote-endpoint = <&funnel0_in7>;
+> +					};
+> +				};
+> +			};
+> +		};
+> +
+>  		/* System CTIs */
+>  		/* CTI 0 - TMC connections */
+>  		cti0: cti@810000 {
+> @@ -562,6 +582,13 @@ funnel0_in4: endpoint {
+>  						remote-endpoint = <&funnel1_out>;
+>  					};
+>  				};
+> +
+> +				port@7 {
+> +					reg = <7>;
+> +					funnel0_in7: endpoint {
+> +						remote-endpoint = <&stm_out>;
+> +					};
+> +				};
+>  			};
+>  
+>  			out-ports {
+> -- 
+> 2.25.1
+> 
