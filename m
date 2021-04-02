@@ -2,113 +2,153 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 75297352E7B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Apr 2021 19:34:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0DE2F352E81
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Apr 2021 19:36:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235304AbhDBReq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 2 Apr 2021 13:34:46 -0400
-Received: from mail.kernel.org ([198.145.29.99]:46078 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S235299AbhDBReq (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 2 Apr 2021 13:34:46 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 52A8E6113E;
-        Fri,  2 Apr 2021 17:34:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1617384885;
-        bh=wMX4jU/oK8U7TlZYc9a3oh7NxXgMtjC7IUIKYogQpOs=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=aT2KE5BTHeOTKmbkFmq7P2d5SWsHO9el6gfoi0xRGUHzqbnF07tWlHUTrzj5dWbxM
-         1f13qa9HDrUSJLi6xZ5YZbpHEln1A7nQZ4ruSsXe7rN5S8HtKAzHaDhQUT6Qaxp6cl
-         Ded55YDbu6SfeyQ1KSoyMsvnohEyHjKo9F4GJYNB8j7WS0TZWPp4h8nkKQ8NK/sky0
-         Ni8byNK3ArmGTN82lSDFWI2r4r0WToRthhzmjxkywhkk2t+vayGGFXfYmXwe6zsWch
-         ud3MPPbWcfNBrbQGLBLDGIU0INnufiHS43J8zREi861UpJFdM1yU/6ejQ8Q3PPQKV5
-         GUHYPkd4ABodQ==
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <c92f7a04-f010-4c63-4b39-482a5581317a@linaro.org>
-References: <20210325111144.2852594-1-dmitry.baryshkov@linaro.org> <20210325111144.2852594-14-dmitry.baryshkov@linaro.org> <21bc5248-57b8-243d-300f-1bc39162c37f@codeaurora.org> <c92f7a04-f010-4c63-4b39-482a5581317a@linaro.org>
-Subject: Re: [PATCH v1 13/15] clk: qcom: videocc-sdm845: remove unsupported clock sources
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
-To:     Andy Gross <agross@kernel.org>,
+        id S235139AbhDBRf7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 2 Apr 2021 13:35:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58358 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234361AbhDBRf6 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 2 Apr 2021 13:35:58 -0400
+Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29B66C06178A
+        for <linux-arm-msm@vger.kernel.org>; Fri,  2 Apr 2021 10:35:56 -0700 (PDT)
+Received: by mail-pj1-x102e.google.com with SMTP id q6-20020a17090a4306b02900c42a012202so2854648pjg.5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Apr 2021 10:35:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=6yphnmbBHawP07rs28D4TVASXy1iDN0SAHVg/RCbgGw=;
+        b=fTSE0tGIVBQli5xgECb1c3YtQnQdzIATmTyASBCHwY0w1iUgAP1ZdVVk9VNC/Ipqud
+         KHG2toAPV40tAqSylh6q5r4w9BeTpgpUSlPYqMue19B8pIQ9jMAszXCMo4dpAeFRtyEf
+         awtOE63SQOs84KurOR87NM/Oi0I2RYYQv6MvI=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=6yphnmbBHawP07rs28D4TVASXy1iDN0SAHVg/RCbgGw=;
+        b=Yoyz/uhAJd4fs+xXN0Rsh9XVYS9hv1ilVlT65yo665+7qDq12MNyLTkfj0CJVCU2db
+         DaMTFye9XpHCyyN9OJSSdBSHLImSxY7D+KlNdDgitVFnxJR0E1/hyFR8DZOqBIDt+P2L
+         lZ9LVDcnmb7P7R9AEKCqvlQc0CKTcfdZ08+i7ro7/3xyULwPrbIJqMRBDeL76elTk/Dg
+         f+2ll2hLeSVgcmWP+pjmuBu5FnUN7fz0lcbGYYQ3CzoPS9JsomPQkZx/5V9OU2KQeSjU
+         JV2BusNpTZ8nlwek5etdtpRH1fqv7r2ZufGfzsPXW9oTBsShq4CffItYiTIIrCeUDK4t
+         6xkg==
+X-Gm-Message-State: AOAM532hkZHbD4dGy6+eL/QNOBvuJO4cd7Dqnnr8dmUdK1fRNgFhe8xq
+        HxkYef8xvRKkYoaA3hvGW4w3QQ==
+X-Google-Smtp-Source: ABdhPJwpJcfoesHMdZYbEaX7By1bca37GeS8xAKreb0w71K97U0cTJN+EJblwv84hCl+dUWtukw9tA==
+X-Received: by 2002:a17:90b:4a81:: with SMTP id lp1mr14756118pjb.154.1617384955602;
+        Fri, 02 Apr 2021 10:35:55 -0700 (PDT)
+Received: from localhost ([2620:15c:202:201:581c:e04f:7c08:c602])
+        by smtp.gmail.com with UTF8SMTPSA id a18sm9430381pfa.18.2021.04.02.10.35.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 02 Apr 2021 10:35:55 -0700 (PDT)
+Date:   Fri, 2 Apr 2021 10:35:54 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     satya priya <skakit@codeaurora.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Taniya Das <tdas@codeaurora.org>
-Date:   Fri, 02 Apr 2021 10:34:43 -0700
-Message-ID: <161738488399.2260335.10137992073962455023@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, kgunda@codeaurora.org
+Subject: Re: [PATCH V2 1/5] arm64: dts: qcom: pm7325: Add PMIC peripherals
+ for pm7325
+Message-ID: <YGdV+un4bGcF6jJH@google.com>
+References: <1617268396-1837-1-git-send-email-skakit@codeaurora.org>
+ <1617268396-1837-2-git-send-email-skakit@codeaurora.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1617268396-1837-2-git-send-email-skakit@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Dmitry Baryshkov (2021-04-01 18:49:37)
-> On 02/04/2021 04:23, Taniya Das wrote:
-> > Hi Dmitry,
-> >=20
-> > On 3/25/2021 4:41 PM, Dmitry Baryshkov wrote:
-> >> video_pll0_out_even/_odd are not supported neither in the upstream nor
-> >> in the downstream kernels, so drop those clock sources.
-> >>
-> >> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> >> ---
-> >> =C2=A0 drivers/clk/qcom/videocc-sdm845.c | 8 +-------
-> >> =C2=A0 1 file changed, 1 insertion(+), 7 deletions(-)
-> >>
-> >> diff --git a/drivers/clk/qcom/videocc-sdm845.c=20
-> >> b/drivers/clk/qcom/videocc-sdm845.c
-> >> index 5d6a7724a194..7153f044504f 100644
-> >> --- a/drivers/clk/qcom/videocc-sdm845.c
-> >> +++ b/drivers/clk/qcom/videocc-sdm845.c
-> >> @@ -21,24 +21,18 @@
-> >> =C2=A0 enum {
-> >> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 P_BI_TCXO,
-> >> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 P_CORE_BI_PLL_TEST_SE,
-> >> -=C2=A0=C2=A0=C2=A0 P_VIDEO_PLL0_OUT_EVEN,
-> >> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 P_VIDEO_PLL0_OUT_MAIN,
-> >> -=C2=A0=C2=A0=C2=A0 P_VIDEO_PLL0_OUT_ODD,
-> >> =C2=A0 };
-> >> =C2=A0 static const struct parent_map video_cc_parent_map_0[] =3D {
-> >> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 { P_BI_TCXO, 0 },
-> >> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 { P_VIDEO_PLL0_OUT_MAIN, 1 },
-> >> -=C2=A0=C2=A0=C2=A0 { P_VIDEO_PLL0_OUT_EVEN, 2 },
-> >> -=C2=A0=C2=A0=C2=A0 { P_VIDEO_PLL0_OUT_ODD, 3 },
-> >=20
-> > These are supported from the design, please do not remove them. It is=20
-> > just that in SW currently it is not being used.
-> > But SW can decide to use them as they want. As said earlier these are=20
-> > defined in the HW plans and thus do not want them to be updated manuall=
-y=20
-> > to create a mismatch.
->=20
-> The problem arises during conversion of these drivers to use parent_data =
+On Thu, Apr 01, 2021 at 02:43:12PM +0530, satya priya wrote:
 
-> instead of parent_names. You see, video_pll0_odd/_even are clocks which=20
-> should be referenced using .hw (and thus defined inside the videocc=20
-> driver) as we do for "video_pll0" parent. However there are no clk_hw=20
-> entities defined for those clocks. For now I'd just use the { .name =3D=20
-> video_pll0_out_odd" } entry for those clocks, however I still think this =
+> subject: arm64: dts: qcom: pm7325: Add PMIC peripherals for pm7325
 
-> is not correct.
->=20
+nit: maybe just 'arm64: dts: qcom: Add pm7325 support/.dtsi' or similar?
 
-Yes we shouldn't be adding .name anymore. Can we add the
-video_pll0_out_{even,odd} clks? Or if they're not used then can we
-remove them from the parent_data and leave some sort of comment
-indicating that they may be there?
+> Add temp-alarm and GPIO support for pm7325.
 
-> >=20
-> >> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 { P_CORE_BI_PLL_TEST_SE, 4 },
-> >> =C2=A0 };
-> >> =C2=A0 static const char * const video_cc_parent_names_0[] =3D {
-> >> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 "bi_tcxo",
-> >> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 "video_pll0",
-> >> -=C2=A0=C2=A0=C2=A0 "video_pll0_out_even",
-> >> -=C2=A0=C2=A0=C2=A0 "video_pll0_out_odd",
-> >> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 "core_bi_pll_test_se",
+nit: it's more than that, you are adding the .dtsi for the PMIC itself.
 
-Looks like in this case it would be OK because the array would be length
-2 instead of length 5.
+> Signed-off-by: satya priya <skakit@codeaurora.org>
+> ---
+>  arch/arm64/boot/dts/qcom/pm7325.dtsi | 53 ++++++++++++++++++++++++++++++++++++
+>  1 file changed, 53 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/pm7325.dtsi
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/pm7325.dtsi b/arch/arm64/boot/dts/qcom/pm7325.dtsi
+> new file mode 100644
+> index 0000000..1e0848a
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/pm7325.dtsi
+> @@ -0,0 +1,53 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +// Copyright (c) 2021, The Linux Foundation. All rights reserved.
+> +
+> +#include <dt-bindings/interrupt-controller/irq.h>
+> +#include <dt-bindings/spmi/spmi.h>
+> +
+> +&spmi_bus {
+> +	pm7325: pmic@1 {
+> +		compatible = "qcom,pm7325", "qcom,spmi-pmic";
 
-> >> =C2=A0 };
+I saw the patches that add the compatible strings for the GPIOs, but
+can't find those that add the strings for the PMICs themselves. Could
+you provide a link if they have been sent already?
+
+> +		reg = <0x1 SPMI_USID>;
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		pm7325_temp_alarm: temp-alarm@a00 {
+> +			compatible = "qcom,spmi-temp-alarm";
+> +			reg = <0xa00>;
+> +			interrupts = <0x1 0xa 0x0 IRQ_TYPE_EDGE_BOTH>;
+> +			#thermal-sensor-cells = <0>;
+> +		};
+> +
+> +		pm7325_gpios: gpios@8800 {
+> +			compatible = "qcom,pm7325-gpio", "qcom,spmi-gpio";
+> +			reg = <0x8800>;
+> +			gpio-controller;
+> +			gpio-ranges = <&pm7325_gpios 0 0 10>;
+> +			#gpio-cells = <2>;
+> +			interrupt-controller;
+> +			#interrupt-cells = <2>;
+> +		};
+> +	};
+> +};
+> +
+> +&thermal_zones {
+> +	pm7325_thermal: pm7325-thermal {
+> +		polling-delay-passive = <100>;
+> +		polling-delay = <0>;
+> +		thermal-sensors = <&pm7325_temp_alarm>;
+> +
+> +		trips {
+> +			pm7325_trip0: trip0 {
+> +				temperature = <95000>;
+> +				hysteresis = <0>;
+> +				type = "passive";
+> +			};
+> +
+> +			pm7325_trip1: trip1 {
+
+nit: the critical trip point is often named <name>-crit. One reason for
+this could be that it allows to add other non-critical trip points (in
+the .dtsi itself or the <board>.dts), without messing up the
+enumeration scheme.
+
+> +				temperature = <115000>;
+> +				hysteresis = <0>;
+> +				type = "critical";
+> +			};
+> +		};
+> +	};
+> +};
