@@ -2,153 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3196B352687
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Apr 2021 08:18:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 931F13526C1
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Apr 2021 08:58:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233938AbhDBGS0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 2 Apr 2021 02:18:26 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:24357 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233849AbhDBGSZ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 2 Apr 2021 02:18:25 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1617344305; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=+fGTIpJoMrZer2FW4wtM/kmw4106dhSKX2a1plXyCSI=; b=XMOiStNdxhDwXP+W8X2PvCCNseCG9HQSozMQS8Kgk8vViWyAZYSNxslxrJovo9Ngu3RiEdlQ
- 96Syp8T1SbcU7+RfmeASKJvoth0TZR6vSD/cVJrNvIvaKgevLL4Mu9jkvheWaZgWBID+QIgs
- xGLhONgVhXOo+rp4fOyDDj/g1yQ=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
- 6066b7308807bcde1d04b4fe (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 02 Apr 2021 06:18:24
- GMT
-Sender: deesin=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id D88C6C43463; Fri,  2 Apr 2021 06:18:23 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
-Received: from deesin-linux.qualcomm.com (unknown [202.46.22.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: deesin)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 7CF98C43462;
-        Fri,  2 Apr 2021 06:18:20 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 7CF98C43462
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=deesin@codeaurora.org
-From:   Deepak Kumar Singh <deesin@codeaurora.org>
-To:     bjorn.andersson@linaro.org, clew@codeaurora.org
+        id S229684AbhDBG6x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 2 Apr 2021 02:58:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33150 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229594AbhDBG6w (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 2 Apr 2021 02:58:52 -0400
+Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1ED34C0613E6
+        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Apr 2021 23:58:51 -0700 (PDT)
+Received: by mail-pf1-x431.google.com with SMTP id m11so427135pfc.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Apr 2021 23:58:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:content-transfer-encoding:in-reply-to:references
+         :subject:from:cc:to:date:message-id:user-agent;
+        bh=XZRZT667Wid4HC57Mpu8NBkTc3AaOv656vjU18nDRHw=;
+        b=BUlYZClbeEGqrEVrcqqqA1M4m9HriUGNVpMdA/UGitBCrU66v6s2DsgkOvimOcBe8C
+         a5tsbYuGCvxMgN8OFMpxDhpqxKY9Alc06P7o/8IvOjVwznvl+LjdT+1s6yCCYWVTzyaM
+         z2dscvHDDCakjPCLNgJUqp1RCyCEMqXQDztAM=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:content-transfer-encoding
+         :in-reply-to:references:subject:from:cc:to:date:message-id
+         :user-agent;
+        bh=XZRZT667Wid4HC57Mpu8NBkTc3AaOv656vjU18nDRHw=;
+        b=oklagrKoPjvdrnvGTkbjbG4aVnzwhJJMWUzTJSaX9r2bRtRRq0WCPPyo5auqCfA6FM
+         ECr2sVli3DIcMEFUotnOcNqUsyZ6X1H7ipNI2oejlJmTXZ+/ueyd/4Unf1XES/FLTLdu
+         cyo9NNu6tNpY96bJu2xCqIvh/KoIx+RoI4pNVrnzJwGLdIdRfM80Gegjn2NWHktSHQ6A
+         66qXzFljiKawWGcTFSc51r7h18E3ki86nQK03zfV2cx84YnyroZMppb+zR7NYODXrQdz
+         NGcKOQzCywAD8F9aKySErccfjGcgzKaaqZJiFcCPRATOcPn2hyoHuvykjhgzjOwpPgHS
+         1YXA==
+X-Gm-Message-State: AOAM532TcL8cgcxXZq+umL5bETfL47Db1DZY6Az9+747ubCxK8etLJzV
+        zeJC90Nt+twz4Wx5qPjKH0dYDg==
+X-Google-Smtp-Source: ABdhPJz+YaNMb1Tcnu8b63PmmSjWugBp6WusD+nJrsLIxEGp30CDb8f4CdGPQiT4zFrm1oHe8C8KFg==
+X-Received: by 2002:a62:ee09:0:b029:211:1113:2e7c with SMTP id e9-20020a62ee090000b029021111132e7cmr10839774pfi.49.1617346730567;
+        Thu, 01 Apr 2021 23:58:50 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:201:450:f2a9:b3ca:879f])
+        by smtp.gmail.com with ESMTPSA id e3sm7242297pfm.43.2021.04.01.23.58.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 01 Apr 2021 23:58:49 -0700 (PDT)
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <6ec0ca8d-85c7-53d6-acf2-22c4ac13e805@codeaurora.org>
+References: <20210323224336.1311783-1-swboyd@chromium.org> <6ec0ca8d-85c7-53d6-acf2-22c4ac13e805@codeaurora.org>
+Subject: Re: [PATCH v2] firmware: qcom_scm: Only compile legacy calls on ARM
+From:   Stephen Boyd <swboyd@chromium.org>
 Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org,
-        Deepak Kumar Singh <deesin@codeaurora.org>,
-        Andy Gross <agross@kernel.org>
-Subject: [PATCH V1 2/2] soc: qcom: aoss: Add debugfs entry
-Date:   Fri,  2 Apr 2021 11:47:18 +0530
-Message-Id: <1617344238-12137-3-git-send-email-deesin@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1617344238-12137-1-git-send-email-deesin@codeaurora.org>
-References: <1617344238-12137-1-git-send-email-deesin@codeaurora.org>
+        Brian Masney <masneyb@onstation.org>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Jeffrey Hugo <jhugo@codeaurora.org>,
+        Douglas Anderson <dianders@chromium.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Elliot Berman <eberman@codeaurora.org>
+Date:   Thu, 01 Apr 2021 23:58:48 -0700
+Message-ID: <161734672825.2260335.8472441215895199196@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-It can be useful to control the different power states of various
-parts of hardware for device testing. Add a debugfs node for qmp so
-messages can be sent to aoss for debugging and testing purposes.
+Quoting Elliot Berman (2021-04-01 18:12:14)
+>=20
+> It might be a good idea to wrap these lines from qcom_scm_call with #if=20
+> IS_ENABLED(CONFIG_ARM), and the corresponding ones in qcom_scm_call_atomi=
+c:
+>=20
+>    case SMC_CONVENTION_LEGACY:
+>        return scm_legacy_call(dev, desc, res);
+>=20
+> If something is wrong with loaded firmware and LEGACY convention is=20
+> incorrectly selected, you would get a better hint about the problem:=20
+> "Unknown current SCM calling convention." You would still get the hint=20
+> earlier from __get_convention, but that may not be obvious to someone=20
+> unfamiliar with the SCM driver.
+>=20
+> I'll defer to your/Bjorn's preference:
+>=20
+> Acked-by: Elliot Berman <eberman@codeaurora.org>
+>=20
+> with or without modifying qcom_scm_call{_atomic}.
+>=20
 
-Signed-off-by: Chris Lew <clew@codeaurora.org>
-Signed-off-by: Deepak Kumar Singh <deesin@codeaurora.org>
----
- drivers/soc/qcom/qcom_aoss.c | 41 +++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 41 insertions(+)
+Maybe it would be better to catch that problem at the source and force
+arm64 calling convention to be safe? I'm thinking of this patch, but it
+could be even more fine tuned and probably the sc7180 check could be
+removed in the process if the rest of this email makes sense.
 
-diff --git a/drivers/soc/qcom/qcom_aoss.c b/drivers/soc/qcom/qcom_aoss.c
-index 5c643f0..1789880 100644
---- a/drivers/soc/qcom/qcom_aoss.c
-+++ b/drivers/soc/qcom/qcom_aoss.c
-@@ -4,6 +4,7 @@
-  */
- #include <dt-bindings/power/qcom-aoss-qmp.h>
- #include <linux/clk-provider.h>
-+#include <linux/debugfs.h>
- #include <linux/interrupt.h>
- #include <linux/io.h>
- #include <linux/mailbox_client.h>
-@@ -86,6 +87,9 @@ struct qmp {
- 	struct clk_hw qdss_clk;
- 	struct genpd_onecell_data pd_data;
- 	struct qmp_cooling_device *cooling_devs;
-+#if IS_ENABLED(CONFIG_DEBUG_FS)
-+	struct dentry *debugfs_file;
-+#endif /* CONFIG_DEBUG_FS */
- };
- 
- struct qmp_pd {
-@@ -549,6 +553,34 @@ struct qmp *qmp_get(struct device *dev)
- }
- EXPORT_SYMBOL(qmp_get);
- 
-+#if IS_ENABLED(CONFIG_DEBUG_FS)
-+static ssize_t aoss_dbg_write(struct file *file, const char __user *userstr,
-+			      size_t len, loff_t *pos)
-+{
-+	struct qmp *qmp = file->private_data;
-+	char buf[QMP_MSG_LEN] = {};
-+	int ret;
-+
-+	if (!len || len >= QMP_MSG_LEN)
-+		return len;
-+
-+	ret  = copy_from_user(buf, userstr, len);
-+	if (ret) {
-+		dev_err(qmp->dev, "copy from user failed, ret:%d\n", ret);
-+		return len;
+If I understand correctly CONFIG_ARM64=3Dy should never use legacy
+convention (and never the 32-bit one either?), so we can figure that out
+pretty easily and just force it to use 64-bit if the architecture is
+arm64. If only the 64-bit convention is supported on arm64 then we
+really don't even need to call into the firmware to figure it out on
+arm64. We can do this convention detection stuff on arm32 (CONFIG_ARM)
+and always assume 64-bit convention on CONFIG_ARM64. Is that right?
+
+---8<---
+diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
+index 747808a8ddf4..22187ebc1678 100644
+--- a/drivers/firmware/qcom_scm.c
++++ b/drivers/firmware/qcom_scm.c
+@@ -140,7 +140,13 @@ static enum qcom_scm_convention __get_convention(void)
+ 	if (!ret && res.result[0] =3D=3D 1)
+ 		goto found;
+=20
+-	probed_convention =3D SMC_CONVENTION_LEGACY;
++	if (IS_ENABLED(CONFIG_ARM)) {
++		probed_convention =3D SMC_CONVENTION_LEGACY;
++	} else {
++		probed_convention =3D SMC_CONVENTION_ARM_64;
++		forced =3D true;
++		WARN(1, "qcom_scm: Detected legacy convention on arm64; firmware is brok=
+en\n");
 +	}
-+
-+	ret = qmp_send(qmp, buf, QMP_MSG_LEN);
-+
-+	return ret ? ret : len;
-+}
-+
-+static const struct file_operations aoss_dbg_fops = {
-+	.open = simple_open,
-+	.write = aoss_dbg_write,
-+};
-+#endif /* CONFIG_DEBUG_FS */
-+
- static int qmp_probe(struct platform_device *pdev)
- {
- 	struct resource *res;
-@@ -603,6 +635,11 @@ static int qmp_probe(struct platform_device *pdev)
- 
- 	platform_set_drvdata(pdev, qmp);
- 
-+#if IS_ENABLED(CONFIG_DEBUG_FS)
-+	qmp->debugfs_file = debugfs_create_file("aoss_send_message", 0220, NULL,
-+						qmp, &aoss_dbg_fops);
-+#endif /* CONFIG_DEBUG_FS */
-+
- 	return 0;
- 
- err_remove_qdss_clk:
-@@ -619,6 +656,10 @@ static int qmp_remove(struct platform_device *pdev)
- {
- 	struct qmp *qmp = platform_get_drvdata(pdev);
- 
-+#if IS_ENABLED(CONFIG_DEBUG_FS)
-+	debugfs_remove(qmp->debugfs_file);
-+#endif /* CONFIG_DEBUG_FS */
-+
- 	qmp_qdss_clk_remove(qmp);
- 	qmp_pd_remove(qmp);
- 	qmp_cooling_devices_remove(qmp);
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
-
+ found:
+ 	spin_lock_irqsave(&scm_query_lock, flags);
+ 	if (probed_convention !=3D qcom_scm_convention) {
