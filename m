@@ -2,94 +2,210 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D4CB7352F1D
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Apr 2021 20:20:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DA9F7352F61
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Apr 2021 20:45:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236001AbhDBSUw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 2 Apr 2021 14:20:52 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:52016 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235247AbhDBSUv (ORCPT
+        id S235617AbhDBSpf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 2 Apr 2021 14:45:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45246 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235256AbhDBSpf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 2 Apr 2021 14:20:51 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1617387650; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=KPgdLFSU5VWdJv96LkCBgqsMXn7vhM4Rp0QVozNLRHs=; b=MM7I38mDIJ95tUcjUyRjPjz4VTxiL0EQY3DTj5lgreE/VGrWzgO8hUfZ00gQjxyUpC6iN+su
- 9dl+Y4ALQkF6rM3W124I0bw7L6ivrIhhRhKEDtsdHSlXEpNHD8YwKSpCiRRtaN314ahbeLm7
- oEFXFAo32ZNQdEu2VDSySE6Udtw=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
- 6067606d8166b7eff76f5b2f (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 02 Apr 2021 18:20:29
- GMT
-Sender: hemantk=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id EA226C433ED; Fri,  2 Apr 2021 18:20:28 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
-Received: from [10.46.162.249] (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: hemantk)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id C6F64C433C6;
-        Fri,  2 Apr 2021 18:20:27 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org C6F64C433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=hemantk@codeaurora.org
-Subject: Re: [RESEND PATCH] bus: mhi: core: Remove pre_init flag used for
- power purposes
-To:     Bhaumik Bhatt <bbhatt@codeaurora.org>,
-        manivannan.sadhasivam@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, jhugo@codeaurora.org,
-        linux-kernel@vger.kernel.org, carl.yin@quectel.com,
-        loic.poulain@linaro.org, kvalo@codeaurora.org
-References: <1617313309-24035-1-git-send-email-bbhatt@codeaurora.org>
-From:   Hemant Kumar <hemantk@codeaurora.org>
-Message-ID: <efba8dbd-6c67-7e6f-9a39-27f594705faa@codeaurora.org>
-Date:   Fri, 2 Apr 2021 11:20:27 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        Fri, 2 Apr 2021 14:45:35 -0400
+Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE6F2C061788
+        for <linux-arm-msm@vger.kernel.org>; Fri,  2 Apr 2021 11:45:33 -0700 (PDT)
+Received: by mail-pj1-x1032.google.com with SMTP id a22-20020a17090aa516b02900c1215e9b33so4957541pjq.5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Apr 2021 11:45:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=lBknpnUfvW7Mp8L8MjbRdTTbJ2YiP+RrDtDZ87i1HWc=;
+        b=a1l1lme4++l+zuVvbvuPg11j5VRcaKdhH+EdpHF4zqEVznOydK8W+SNJwIXmze+azb
+         HQzCWQ38y+RONCzZiM5t2cA9IZD6bGbCwLv6Snpgm1DkOINWhdsYHZUkDkIdzqjMrXk7
+         hCQgYTWI++hjt7Xc2CkMjSYTR1DI7wt8SLw6g=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=lBknpnUfvW7Mp8L8MjbRdTTbJ2YiP+RrDtDZ87i1HWc=;
+        b=ahI4jzuWpj0nckY1wkHX70/Lcl4dxpdsbW9R8yFff5a/p28CPC/E12N/D8su9ZPSqt
+         9oqi+eymhiTk9Z5J3vDDgRgg6KQfBgoFghvQ0EA5vB/Pci5QUKvwDmwRzXepOvKS9xXn
+         aV6nAgvWZbFd/Sj9evBtfoLMOVpLvwaTXHcg0Oeny5F/5fmtNQGAm8ePuYjDIMPxcUVt
+         k9mGKuK6y03tHjZrcXiRJQjyjbGoESExw09tHsvc+9xkjv9KJtJ2D+VnIsZ1//t6uejn
+         uxvQDBxWDa5w7pskZPsx8RvpZ2LGDmJz0ca+NtRwzEXFEQ83atg1BDkYzsR7kFygxjtE
+         lHXg==
+X-Gm-Message-State: AOAM531bxp4N/lokLNZcdAAJ8SzSNyyazs3m2+2EKVepsFokE3I0XUQ9
+        Wo8JxJdNZ5mo+DABLIN+gxf5ww==
+X-Google-Smtp-Source: ABdhPJyqvR/GeA0hGMMS3fUELGKBLUJ3jxozyY1rdnFq7+JShRmPb9RGh1zy5AHLN03Qvq9gS6OOXQ==
+X-Received: by 2002:a17:90a:fa02:: with SMTP id cm2mr3055188pjb.171.1617389133265;
+        Fri, 02 Apr 2021 11:45:33 -0700 (PDT)
+Received: from localhost ([2620:15c:202:201:581c:e04f:7c08:c602])
+        by smtp.gmail.com with UTF8SMTPSA id l10sm8194972pfc.125.2021.04.02.11.45.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 02 Apr 2021 11:45:32 -0700 (PDT)
+Date:   Fri, 2 Apr 2021 11:45:31 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     satya priya <skakit@codeaurora.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, kgunda@codeaurora.org
+Subject: Re: [PATCH V2 3/5] arm64: dts: qcom: pmk8350: Add PMIC peripherals
+ for pmk8350
+Message-ID: <YGdmS8Ih5TGGMbdE@google.com>
+References: <1617268396-1837-1-git-send-email-skakit@codeaurora.org>
+ <1617268396-1837-4-git-send-email-skakit@codeaurora.org>
 MIME-Version: 1.0
-In-Reply-To: <1617313309-24035-1-git-send-email-bbhatt@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1617268396-1837-4-git-send-email-skakit@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Thu, Apr 01, 2021 at 02:43:14PM +0530, satya priya wrote:
+> subject: arm64: dts: qcom: pmk8350: Add PMIC peripherals for pmk8350
 
+same nit as for 1/5: maybe just 'arm64: dts: qcom: Add pml7350 support/.dtsi'
+or similar since this adds the initial .dtsi for the pmk8350?
 
-On 4/1/21 2:41 PM, Bhaumik Bhatt wrote:
-> Some controllers can choose to skip preparation for power up.
-> In that case, device context is initialized based on the pre_init
-> flag not being set during mhi_prepare_for_power_up(). There is no
-> reason MHI host driver should maintain and provide controllers
-> with two separate paths for preparing MHI.
-> 
-> Going forward, all controllers will be required to call the
-> mhi_prepare_for_power_up() API followed by their choice of sync
-> or async power up. This allows MHI host driver to get rid of the
-> pre_init flag and sets up a common way for all controllers to use
-> MHI. This also helps controllers fail early on during preparation
-> phase in some failure cases.
-> 
-> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+> Add PON, GPIO, RTC and other PMIC infra modules support for pmk8350.
+
+nit: also mention that it adds the pmk8350 .dtsi in the first place.
+
+> Signed-off-by: satya priya <skakit@codeaurora.org>
 > ---
-> This patch was tested on arm64 architecture.
+>  arch/arm64/boot/dts/qcom/pmk8350.dtsi | 100 ++++++++++++++++++++++++++++++++++
+>  1 file changed, 100 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/pmk8350.dtsi
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/pmk8350.dtsi b/arch/arm64/boot/dts/qcom/pmk8350.dtsi
+> new file mode 100644
+> index 0000000..13631f2
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/pmk8350.dtsi
+> @@ -0,0 +1,100 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +// Copyright (c) 2021, The Linux Foundation. All rights reserved.
+> +
+> +#include <dt-bindings/input/input.h>
+> +#include <dt-bindings/input/linux-event-codes.h>
+> +#include <dt-bindings/interrupt-controller/irq.h>
+> +#include <dt-bindings/spmi/spmi.h>
+> +#include <dt-bindings/iio/qcom,spmi-adc7-pm8350.h>
+> +#include <dt-bindings/iio/qcom,spmi-adc7-pmk8350.h>
+> +#include <dt-bindings/iio/qcom,spmi-adc7-pmr735a.h>
+> +#include <dt-bindings/iio/qcom,spmi-adc7-pmr735b.h>
+> +
+> +&spmi_bus {
+> +	pmk8350: pmic@0 {
+> +		compatible = "qcom,pmk8350", "qcom,spmi-pmic";
 
-Change looks good as current MHI controllers ath11k and pci generic are 
-not using pre_init.
+Please provide a link to the binding if it has been sent.
 
-Reviewed-by: Hemant Kumar <hemantk@codeaurora.org>
+> +		reg = <0x0 SPMI_USID>;
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		pmk8350_pon: pon@1300 {
+> +			compatible = "qcom,pm8998-pon";
+> +			reg = <0x1300>;
+> +
+> +			pwrkey {
+> +				compatible = "qcom,pmk8350-pwrkey";
+> +				interrupts = <0x0 0x13 0x7 IRQ_TYPE_EDGE_BOTH>;
+> +				linux,code = <KEY_POWER>;
+> +			};
+> +
+> +			resin {
+> +				compatible = "qcom,pmk8350-resin";
+> +				interrupts = <0x0 0x13 0x6 IRQ_TYPE_EDGE_BOTH>;
+> +				linux,code = <KEY_VOLUMEDOWN>;
+> +			};
 
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+Is the usage of this keys really universal across different boards?
+
+At least for the volume down key for most PMICs the config is in the
+board file, which seems to make more sense.
+
+> +		};
+> +
+> +		pmk8350_vadc: adc@3100 {
+> +			compatible = "qcom,spmi-adc7";
+> +			reg = <0x3100>;
+> +			#address-cells = <1>;
+> +			#size-cells = <0>;
+> +			interrupts = <0x0 0x31 0x0 IRQ_TYPE_EDGE_RISING>;
+> +			interrupt-names = "eoc-int-en-set";
+> +			#io-channel-cells = <1>;
+> +			io-channel-ranges;
+> +
+> +			pmk8350_die_temp {
+> +				reg = <PMK8350_ADC7_DIE_TEMP>;
+> +				label = "pmk8350_die_temp";
+> +				qcom,pre-scaling = <1 1>;
+> +			};
+> +
+> +			pm8350_die_temp {
+> +				reg = <PM8350_ADC7_DIE_TEMP>;
+> +				label = "pm8350_die_temp";
+> +				qcom,pre-scaling = <1 1>;
+> +			};
+
+nit: I think this should be 'alphabetical' order, so 'pm8350_die_temp' should
+be before 'pmk8350_die_temp'.
+
+> +
+> +			pmr735a_die_temp {
+> +				reg = <PMR735A_ADC7_DIE_TEMP>;
+> +				label = "pmr735a_die_temp";
+> +				qcom,pre-scaling = <1 1>;
+> +			};
+> +
+> +			pmr735b_die_temp {
+> +				reg = <PMR735B_ADC7_DIE_TEMP>;
+> +				label = "pmr735b_die_temp";
+> +				qcom,pre-scaling = <1 1>;
+> +			};
+
+Is it guaranteed that a board with the pmk8350 will always have the
+other 3 PMICs?
+
+> +		};
+> +
+> +		pmk8350_adc_tm: adc-tm@3400 {
+> +			compatible = "qcom,adc-tm7";
+> +			reg = <0x3400>;
+> +			interrupts = <0x0 0x34 0x0 IRQ_TYPE_EDGE_RISING>;
+> +			interrupt-names = "threshold";
+> +			#address-cells = <1>;
+> +			#size-cells = <0>;
+> +			#thermal-sensor-cells = <1>;
+> +			status = "disabled";
+> +		};
+> +
+> +		pmk8350_gpios: gpios@b000 {
+> +			compatible = "qcom,pmk8350-gpio", "qcom,spmi-gpio";
+> +			reg = <0xb000>;
+> +			gpio-controller;
+> +			gpio-ranges = <&pmk8350_gpios 0 0 4>;
+> +			#gpio-cells = <2>;
+> +			interrupt-controller;
+> +			#interrupt-cells = <2>;
+> +		};
+> +
+> +		pmk8350_rtc: rtc@6100 {
+
+nit: nodes should be ordered by address, hence 'rtc@6100' should be before
+'gpios@b000'.
+
+> +			compatible = "qcom,pmk8350-rtc";
+> +			reg = <0x6100>, <0x6200>;
+> +			reg-names = "rtc", "alarm";
+> +			interrupts = <0x0 0x62 0x1 IRQ_TYPE_EDGE_RISING>;
+> +		};
+> +	};
+> +};
