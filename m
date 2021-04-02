@@ -2,117 +2,186 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3717935308E
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Apr 2021 22:58:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B3654353097
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Apr 2021 23:08:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235279AbhDBU60 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 2 Apr 2021 16:58:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45808 "EHLO
+        id S231577AbhDBVIz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 2 Apr 2021 17:08:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48100 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234161AbhDBU6W (ORCPT
+        with ESMTP id S235069AbhDBVIz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 2 Apr 2021 16:58:22 -0400
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45932C0613E6
-        for <linux-arm-msm@vger.kernel.org>; Fri,  2 Apr 2021 13:58:20 -0700 (PDT)
-Received: by mail-lj1-x22c.google.com with SMTP id u9so6681986ljd.11
-        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Apr 2021 13:58:20 -0700 (PDT)
+        Fri, 2 Apr 2021 17:08:55 -0400
+Received: from mail-pf1-x42c.google.com (mail-pf1-x42c.google.com [IPv6:2607:f8b0:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5494BC0613E6;
+        Fri,  2 Apr 2021 14:08:53 -0700 (PDT)
+Received: by mail-pf1-x42c.google.com with SMTP id x126so4255918pfc.13;
+        Fri, 02 Apr 2021 14:08:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=u9guUMYwi/Hs6Fk7xZietB3RPyJNWsBhDz/fvMQWt14=;
-        b=gspVYbeWSBhiaLTWjyhi7MAkh6LTJfl/cZdUsfnz0r0rhiXblPdbdx0jTrVp+u4lJb
-         O5qoi4FI0mq4j0EfrdG057m18mBfTCy7QfNJjRr1+rAM187xtFSqkvOWQysbwBvUsjH/
-         fu0rwypLXetQCADaHzD8ZgwOSZo86YD0JHafziXO9Uz1hNeONQHq4LkJJD0hio94s2h5
-         0IJX+Ys9fRv1H/efTbFQfrT1hZTPU0LJEwAKBTpyTPFjona5BaezrnhxdC66fYD+AzuD
-         F1k/6a9zb3OOAveZDMZhbd+bJw4FrW7bSSU0YAFJAzp/3H/lafPK7SUK0UWt/VHKUveS
-         M0dw==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=oLTaIOrTqKkHo1IVoAW0mlBLXAv0Dz4mdCieecndjsM=;
+        b=BmzNKXNDZ+83eZJE6CsakJeweXzOjOa/saT/0iK9Ie2/xNwYKrnMJ3Kvjb92zN/n6V
+         Ov+Am9UjRtmEiqZPkk57Fncbo2td+exEkQew4QK/avg06ketApNWrol8B0Fda6Gthkjl
+         5lXJacDda4uQ94Ix51VolNJ8AWz89tBVlzUwy8+NM+xD2yfiQo7MbBx/avM2/bNad/Vv
+         tCKNPhn6sZj48gTv/Y2H0O7hB2ZwhJdVeVB525lfj17YzPwVLIlB3dN1D2Kmcw1QjaLE
+         Ds3VZklM2+bBqSEK29lEL9cZmc+XmIisBovnDW4zN8gdnWhuPK4LOYeA6JMZA3oUMJfX
+         dHiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=u9guUMYwi/Hs6Fk7xZietB3RPyJNWsBhDz/fvMQWt14=;
-        b=AsNWDzwxnoze6FcUOkr5C5B4sduSFdRy7Z/kw+Op/ZLoI0X2I1Gp2IAoD63eMoMHu7
-         pen9QFlcGmpLYG/RoRUw1yoU6gim9XZ8prpp3Y/r94InE/CNZftJ8CAxZL5HPLT7/t7T
-         EB52PogsetKtPy5faTGxUY0XA894cJ2i0+2WUmcvKNUeKnTn78EA7jOdYPPNp60GeCp9
-         EwSgTinyQEPnps9kUHInS3T0PheTob1bPYJbqsfH2ULnE4NJwWBaQULF8f2EV3MRKj9A
-         CFUd0/UQQOylI8fDQJF8QfNtf2JzIk9bT3wLscYh8VVmcVcJwEyAyP5nuIsmv5VnvGQ4
-         HfWw==
-X-Gm-Message-State: AOAM531+huSa/Pr9r5n93cCuCGp73nq3SjRneZdzOZxqAr6XLOJXOx/V
-        pHFC0fq3wSmeL6KeBm053h8iwA==
-X-Google-Smtp-Source: ABdhPJyZZKsT1pC0cUWhxRuq3LTGgK8FO2ILKn6pWSg5R1Rs6w8mwp579pUn6CrOWhR/bvguiY70hA==
-X-Received: by 2002:a05:651c:339:: with SMTP id b25mr9244325ljp.406.1617397098845;
-        Fri, 02 Apr 2021 13:58:18 -0700 (PDT)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id b17sm959076lfi.57.2021.04.02.13.58.18
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=oLTaIOrTqKkHo1IVoAW0mlBLXAv0Dz4mdCieecndjsM=;
+        b=nPEu1/A37Z7RsRpUJfcxfc3ePVIOq8lRjBg1dJrAWSjEdWgFfUQij0duQ7JAuejrrZ
+         5SxlybVJpvz5Ha1dH2lyRY3WCUuJUCfxPJhcbVibp9fBzfleAL9nsk5vQTmafgdEH3DM
+         nugpv1NPDhh9Fxu3eSJxLFPJhFr/Xh+jNvqUjeu6JZYVmjWY/aJHOR5xx/z2lNGK3uiL
+         CjXc1zP2Sxz4g76ePYg3EwqNgept5DWB5PsQAwj9PA/Lhv3n/n519zSGAXXpG1w4dLbh
+         1F18AJfSdsQhRdJlcoZfjwMkymcQ0sXyMNsnhWAHhaUg7XRSCwhGd4FzJXSELhYEPm4l
+         ax4w==
+X-Gm-Message-State: AOAM532s+j+3ktUd6r6w6eqztaQWMZErivKpHki9Gdt4qEYUNpSIek/X
+        /BeCILs4lyEeWLgOxeAGwDAWqWvvKMU5jA==
+X-Google-Smtp-Source: ABdhPJxo1Mqx1ORQ+Y7GCG6EwpiBGuCpyJRRZzg0IklZb2e0zjRvQIJ4O9B2QGQmOuNDBxNPp5z3dw==
+X-Received: by 2002:a65:56cc:: with SMTP id w12mr13328411pgs.354.1617397732734;
+        Fri, 02 Apr 2021 14:08:52 -0700 (PDT)
+Received: from localhost ([2601:1c0:5200:a6:307:a401:7b76:c6e5])
+        by smtp.gmail.com with ESMTPSA id z14sm2811696pfn.48.2021.04.02.14.08.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Apr 2021 13:58:18 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        Stephen Boyd <swboyd@chromium.org>
-Subject: [PATCH v3 16/16] clk: qcom: videocc-sdm845: get rid of the test clock
-Date:   Fri,  2 Apr 2021 23:58:04 +0300
-Message-Id: <20210402205804.96507-17-dmitry.baryshkov@linaro.org>
+        Fri, 02 Apr 2021 14:08:51 -0700 (PDT)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     Jordan Crouse <jordan@cosmicpenguin.net>,
+        Rob Clark <robdclark@chromium.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
+        freedreno@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
+        GPU), linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH v2] drm/msm: Drop mm_lock in scan loop
+Date:   Fri,  2 Apr 2021 14:12:26 -0700
+Message-Id: <20210402211226.875726-1-robdclark@gmail.com>
 X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20210402205804.96507-1-dmitry.baryshkov@linaro.org>
-References: <20210402205804.96507-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The test clock isn't in the bindings and apparently it's not used by
-anyone upstream.  Remove it.
+From: Rob Clark <robdclark@chromium.org>
 
-Suggested-by: Stephen Boyd <swboyd@chromium.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+lock_stat + mmm_donut[1] say that this reduces contention on mm_lock
+significantly (~350x lower waittime-max, and ~100x lower waittime-avg)
+
+[1] https://chromium.googlesource.com/chromiumos/platform/microbenchmarks/+/refs/heads/main/mmm_donut.py
+
+Signed-off-by: Rob Clark <robdclark@chromium.org>
 ---
- drivers/clk/qcom/videocc-sdm845.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ drivers/gpu/drm/msm/msm_drv.h          |  3 +-
+ drivers/gpu/drm/msm/msm_gem.c          |  2 +-
+ drivers/gpu/drm/msm/msm_gem_shrinker.c | 48 ++++++++++++++++++++++----
+ 3 files changed, 45 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/clk/qcom/videocc-sdm845.c b/drivers/clk/qcom/videocc-sdm845.c
-index ac808ed859f9..1c917cd60c6f 100644
---- a/drivers/clk/qcom/videocc-sdm845.c
-+++ b/drivers/clk/qcom/videocc-sdm845.c
-@@ -20,7 +20,6 @@
+diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
+index c84e6f84cb6d..d8d64d34e6e3 100644
+--- a/drivers/gpu/drm/msm/msm_drv.h
++++ b/drivers/gpu/drm/msm/msm_drv.h
+@@ -184,7 +184,8 @@ struct msm_drm_private {
+ 	/**
+ 	 * Lists of inactive GEM objects.  Every bo is either in one of the
+ 	 * inactive lists (depending on whether or not it is shrinkable) or
+-	 * gpu->active_list (for the gpu it is active on[1])
++	 * gpu->active_list (for the gpu it is active on[1]), or transiently
++	 * on a temporary list as the shrinker is running.
+ 	 *
+ 	 * These lists are protected by mm_lock (which should be acquired
+ 	 * before per GEM object lock).  One should *not* hold mm_lock in
+diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
+index 2ecf7f1cef25..75cea5b801da 100644
+--- a/drivers/gpu/drm/msm/msm_gem.c
++++ b/drivers/gpu/drm/msm/msm_gem.c
+@@ -719,7 +719,7 @@ void msm_gem_purge(struct drm_gem_object *obj)
+ 	put_iova_vmas(obj);
  
- enum {
- 	P_BI_TCXO,
--	P_CORE_BI_PLL_TEST_SE,
- 	P_VIDEO_PLL0_OUT_MAIN,
- 	/* P_VIDEO_PLL0_OUT_EVEN,
- 	P_VIDEO_PLL0_OUT_ODD, */
-@@ -51,7 +50,6 @@ static const struct parent_map video_cc_parent_map_0[] = {
- 	{ P_VIDEO_PLL0_OUT_MAIN, 1 },
- 	/* { P_VIDEO_PLL0_OUT_EVEN, 2 },
- 	{ P_VIDEO_PLL0_OUT_ODD, 3 }, */
--	{ P_CORE_BI_PLL_TEST_SE, 4 },
- };
+ 	msm_obj->madv = __MSM_MADV_PURGED;
+-	mark_unpurgable(msm_obj);
++	update_inactive(msm_obj);
  
- static const struct clk_parent_data video_cc_parent_data_0[] = {
-@@ -59,7 +57,6 @@ static const struct clk_parent_data video_cc_parent_data_0[] = {
- 	{ .hw = &video_pll0.clkr.hw },
- 	/* { .name = "video_pll0_out_even" },
- 	{ .name = "video_pll0_out_odd" }, */
--	{ .fw_name = "core_bi_pll_test_se", .name = "core_bi_pll_test_se" },
- };
+ 	drm_vma_node_unmap(&obj->vma_node, dev->anon_inode->i_mapping);
+ 	drm_gem_free_mmap_offset(obj);
+diff --git a/drivers/gpu/drm/msm/msm_gem_shrinker.c b/drivers/gpu/drm/msm/msm_gem_shrinker.c
+index f3e948af01c5..33a49641ef30 100644
+--- a/drivers/gpu/drm/msm/msm_gem_shrinker.c
++++ b/drivers/gpu/drm/msm/msm_gem_shrinker.c
+@@ -22,26 +22,62 @@ msm_gem_shrinker_scan(struct shrinker *shrinker, struct shrink_control *sc)
+ {
+ 	struct msm_drm_private *priv =
+ 		container_of(shrinker, struct msm_drm_private, shrinker);
+-	struct msm_gem_object *msm_obj;
++	struct list_head still_in_list;
+ 	unsigned long freed = 0;
  
- static const struct freq_tbl ftbl_video_cc_venus_clk_src[] = {
-@@ -81,7 +78,7 @@ static struct clk_rcg2 video_cc_venus_clk_src = {
- 	.clkr.hw.init = &(struct clk_init_data){
- 		.name = "video_cc_venus_clk_src",
- 		.parent_data = video_cc_parent_data_0,
--		.num_parents = 3,
-+		.num_parents = 2,
- 		.flags = CLK_SET_RATE_PARENT,
- 		.ops = &clk_rcg2_shared_ops,
- 	},
++	INIT_LIST_HEAD(&still_in_list);
++
+ 	mutex_lock(&priv->mm_lock);
+ 
+-	list_for_each_entry(msm_obj, &priv->inactive_dontneed, mm_list) {
+-		if (freed >= sc->nr_to_scan)
++	while (freed < sc->nr_to_scan) {
++		struct msm_gem_object *msm_obj = list_first_entry_or_null(
++				&priv->inactive_dontneed, typeof(*msm_obj), mm_list);
++
++		if (!msm_obj)
+ 			break;
+-		/* Use trylock, because we cannot block on a obj that
+-		 * might be trying to acquire mm_lock
++
++		list_move_tail(&msm_obj->mm_list, &still_in_list);
++
++		/*
++		 * If it is in the process of being freed, msm_gem_free_object
++		 * can be blocked on mm_lock waiting to remove it.  So just
++		 * skip it.
+ 		 */
+-		if (!msm_gem_trylock(&msm_obj->base))
++		if (!kref_get_unless_zero(&msm_obj->base.refcount))
+ 			continue;
++
++		/*
++		 * Now that we own a reference, we can drop mm_lock for the
++		 * rest of the loop body, to reduce contention with the
++		 * retire_submit path (which could make more objects purgable)
++		 */
++
++		mutex_unlock(&priv->mm_lock);
++
++		/*
++		 * Note that this still needs to be trylock, since we can
++		 * hit shrinker in response to trying to get backing pages
++		 * for this obj (ie. while it's lock is already held)
++		 */
++		if (!msm_gem_trylock(&msm_obj->base))
++			goto tail;
++
+ 		if (is_purgeable(msm_obj)) {
++			/*
++			 * This will move the obj out of still_in_list to
++			 * the purged list
++			 */
+ 			msm_gem_purge(&msm_obj->base);
+ 			freed += msm_obj->base.size >> PAGE_SHIFT;
+ 		}
+ 		msm_gem_unlock(&msm_obj->base);
++
++tail:
++		drm_gem_object_put(&msm_obj->base);
++		mutex_lock(&priv->mm_lock);
+ 	}
+ 
++	list_splice_tail(&still_in_list, &priv->inactive_dontneed);
+ 	mutex_unlock(&priv->mm_lock);
+ 
+ 	if (freed > 0) {
 -- 
 2.30.2
 
