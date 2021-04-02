@@ -2,62 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5AFC6352966
+	by mail.lfdr.de (Postfix) with ESMTP id F2CC4352968
 	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Apr 2021 12:05:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234856AbhDBKFm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 2 Apr 2021 06:05:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45492 "EHLO
+        id S234783AbhDBKFn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 2 Apr 2021 06:05:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45502 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234888AbhDBKFg (ORCPT
+        with ESMTP id S234902AbhDBKFg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Fri, 2 Apr 2021 06:05:36 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75854C0617A7
-        for <linux-arm-msm@vger.kernel.org>; Fri,  2 Apr 2021 03:05:33 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id i18so845083wrm.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Apr 2021 03:05:33 -0700 (PDT)
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5DBF4C0617AB
+        for <linux-arm-msm@vger.kernel.org>; Fri,  2 Apr 2021 03:05:34 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id b9so4302812wrt.8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Apr 2021 03:05:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=BBliiiy6w7709FtBAKPmWC2L64XC00IR7DOPG3X207w=;
-        b=KG0MSbpvHxIrbY8EA1yY8buEVvgrlrGyIs4CiBQaFpFCsWG+u9U9U7yAmNv129NLcD
-         cNwHMh64MoPgmobr+poynU16c680ESRcmbm5LQOQCuX1UUPSp1/eRC/Ll6Dv1RmTYjBF
-         qCO3He1a3yYE1WJy+7SeejmIvcc2UvMWxCziYcbt9MokKBb7BrWPyjaF4x3ANn+U+xu8
-         mtFd3vuy55d5cIVdcOpy7Db5spndhuMvwJIOSaKTQZodOXXbfk3q6+Ybsx0LGm1Nv2jG
-         5k3e+YBOK8uHtQHiV+MUaohAB89veDvUI96i4Axwq4vMR0TXI2Hkd5ksSo61JOiaaKxe
-         1ISw==
+        bh=71AYT/dhjnU5ojKUj2fRrnlRuQ44LYMjxMdvoAXboUM=;
+        b=c8tek5g8hUMygOAsHDoLz672nfpqYIcMeZBUeO7slAlFUTedUuy4OD5QlkbYfTdBDA
+         6o4a7Ybaf/OLmNG/TswYmqIEe85/DTNJLcctI6QHhOb7K+b2poo+5b5u4v3+gUylhq61
+         x/kAH7YPLhYzswz+tHlKiHa11vRBoFlpoL1UD/ao496KIX1U+VsCGxRxYdajVSSsrU5p
+         aLz0G/9fRwNlsD5HjOlJBfjOV/YzTcMt04BZ/QnDmvDNqttJO0UVztdmUmOI++N3/kTZ
+         OV+AgI+jfLeUdYRG/yoJTA+u5Rxsaq9k9TxThKHBSz9ti4qGzCyUDIWW87fdCwCrlviS
+         vnGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=BBliiiy6w7709FtBAKPmWC2L64XC00IR7DOPG3X207w=;
-        b=f36mktgGIWed6LroljorB1bpA4nVefSPiEhGXN8+KrNlvgoH6OxuuYbnVLlwyCyVMr
-         qy3gnYBHiB+3ifrnoY7pBImG1PpZxGX94lCBEmNickH4J+JDw2V9Chtdx4owBbaUxrRK
-         0dRX1ukXavDF78oaTNuBBK8+GeqAJsi++eiJ01U6HOIJk4Bc4EnbnRynlsmSMHw9vW9I
-         v9qrvXDO32Vmr6jy5BTjkDa7MRoRnaxCpq934LSqHG9lZUED7y1SDy83MDZFFu8aqrF4
-         5GCt+NVtXrchVnmEtEP6VXbteIeU5zWp8Xp82MST4VmfKrHZpeMLV5W816JBt+MXZ/jK
-         ieVA==
-X-Gm-Message-State: AOAM5330rFJqbq/+x1cRM7PtrVS00FmSv0l6PzpKVP9pyWnd42XeE1Rv
-        d3aI7lOR4mDLjk1zjspSZfKWoA==
-X-Google-Smtp-Source: ABdhPJw/VXStlt4TyQnG3hHqrPUAdTLeh3lDz5U9Cq+PJtegky2pPlshTj8IKNOtkW0ux+Bq2Bzkig==
-X-Received: by 2002:a5d:6dcc:: with SMTP id d12mr14096588wrz.136.1617357932182;
-        Fri, 02 Apr 2021 03:05:32 -0700 (PDT)
+        bh=71AYT/dhjnU5ojKUj2fRrnlRuQ44LYMjxMdvoAXboUM=;
+        b=YAJPGB/AXSK6XWaj5zRV7nzUNDSByTLWjVMlY7Gh6DdFzdoGfaCcmpyixZWSXcv2NH
+         zOjexgWbOp3FY3xVWRQKREn8QQ0Yz0bOAZ27rhCwg5t2qEAEVpFUBqSBiN7o2MuNNTCn
+         JNSKmafDKJXPlb2R4E3TRcdfLGLURCv+lGV2xXybapmGMX63ebaG+VsABj4Yx5wCLR22
+         YVTEZ5GZutfWstBy/LcuOuKFY2Aq1gegkT6pEtnts7PdqioDGlWMb2FNXe1+e1H/Tgmw
+         XPT9GOPSKNX4pGmZG0doJaNsLds4av10NrURJQglp19HPlp5up2SH3ZzibZS9ZemUio2
+         TC/A==
+X-Gm-Message-State: AOAM530NHi1jO/u+0NUyjR+BxIyXv1UipPJJlQ+wvsJWkmSYS2lqYHEx
+        pSYXA+dW+bXwi1ADGvc7Q7c5kA==
+X-Google-Smtp-Source: ABdhPJwG2/NVaXrpTWLuqjPPS40D4FXyj5cFZmjApNy0veyXDDQk5linTg4TxwGmZOoRdAga7ikAgQ==
+X-Received: by 2002:adf:9261:: with SMTP id 88mr14135510wrj.270.1617357933148;
+        Fri, 02 Apr 2021 03:05:33 -0700 (PDT)
 Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id v18sm15466618wrf.41.2021.04.02.03.05.31
+        by smtp.gmail.com with ESMTPSA id v18sm15466618wrf.41.2021.04.02.03.05.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Apr 2021 03:05:31 -0700 (PDT)
+        Fri, 02 Apr 2021 03:05:32 -0700 (PDT)
 From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 To:     stanimir.varbanov@linaro.org, agross@kernel.org,
         bjorn.andersson@linaro.org, mchehab@kernel.org,
         linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org
 Cc:     bryan.odonoghue@linaro.org, dikshita@codeaurora.org,
-        jonathan@marek.ca, vgarodia@codeaurora.org,
-        Dikshita Agarwal <dikshita@qti.qualcomm.com>
-Subject: [PATCH v3 15/25] media: venus: hfi, vdec: v6 Add IS_V6() to existing IS_V4() if locations
-Date:   Fri,  2 Apr 2021 11:06:38 +0100
-Message-Id: <20210402100648.1815854-16-bryan.odonoghue@linaro.org>
+        jonathan@marek.ca, vgarodia@codeaurora.org
+Subject: [PATCH v3 16/25] media: venus: pm: Hook 6xx pm ops into 4xx pm ops
+Date:   Fri,  2 Apr 2021 11:06:39 +0100
+Message-Id: <20210402100648.1815854-17-bryan.odonoghue@linaro.org>
 X-Mailer: git-send-email 2.30.1
 In-Reply-To: <20210402100648.1815854-1-bryan.odonoghue@linaro.org>
 References: <20210402100648.1815854-1-bryan.odonoghue@linaro.org>
@@ -67,93 +66,27 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In various places in the venus codebase we have if (IS_V4()) which takes
-the code down paths for 4xx silicon. This logic is broadly applicable to
-6xx silicon also. In this patch we add IS_V6() to various IS_V4() decision
-locations.
+At this time there is no need to differentiate between the two, we can
+reuse the 4xx pm ops callback structure for 6xx.
 
-Co-developed-by: Dikshita Agarwal <dikshita@qti.qualcomm.com>
-Signed-off-by: Dikshita Agarwal <dikshita@qti.qualcomm.com>
 Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 Acked-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
 ---
- drivers/media/platform/qcom/venus/helpers.c   | 5 ++---
- drivers/media/platform/qcom/venus/hfi_venus.c | 4 ++--
- drivers/media/platform/qcom/venus/vdec.c      | 6 +++---
- 3 files changed, 7 insertions(+), 8 deletions(-)
+ drivers/media/platform/qcom/venus/pm_helpers.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/platform/qcom/venus/helpers.c
-index 76ece2ff8d39..2515a2225614 100644
---- a/drivers/media/platform/qcom/venus/helpers.c
-+++ b/drivers/media/platform/qcom/venus/helpers.c
-@@ -488,7 +488,7 @@ static bool is_dynamic_bufmode(struct venus_inst *inst)
- 	 * v4 doesn't send BUFFER_ALLOC_MODE_SUPPORTED property and supports
- 	 * dynamic buffer mode by default for HFI_BUFFER_OUTPUT/OUTPUT2.
- 	 */
--	if (IS_V4(core))
-+	if (IS_V4(core) || IS_V6(core))
- 		return true;
- 
- 	caps = venus_caps_by_codec(core, inst->hfi_codec, inst->session_type);
-@@ -1084,11 +1084,10 @@ int venus_helper_set_work_mode(struct venus_inst *inst, u32 mode)
- 	const u32 ptype = HFI_PROPERTY_PARAM_WORK_MODE;
- 	struct hfi_video_work_mode wm;
- 
--	if (!IS_V4(inst->core))
-+	if (!IS_V4(inst->core) && !IS_V6(inst->core))
- 		return 0;
- 
- 	wm.video_work_mode = mode;
--
- 	return hfi_session_set_property(inst, ptype, &wm);
- }
- EXPORT_SYMBOL_GPL(venus_helper_set_work_mode);
-diff --git a/drivers/media/platform/qcom/venus/hfi_venus.c b/drivers/media/platform/qcom/venus/hfi_venus.c
-index dabff8654f97..24cf20f76e7f 100644
---- a/drivers/media/platform/qcom/venus/hfi_venus.c
-+++ b/drivers/media/platform/qcom/venus/hfi_venus.c
-@@ -897,7 +897,7 @@ static int venus_sys_set_default_properties(struct venus_hfi_device *hdev)
- 	 * enable it explicitly in order to make suspend functional by checking
- 	 * WFI (wait-for-interrupt) bit.
- 	 */
--	if (IS_V4(hdev->core))
-+	if (IS_V4(hdev->core) || IS_V6(hdev->core))
- 		venus_sys_idle_indicator = true;
- 
- 	ret = venus_sys_set_idle_message(hdev, venus_sys_idle_indicator);
-@@ -1577,7 +1577,7 @@ static int venus_suspend_3xx(struct venus_core *core)
- 
- static int venus_suspend(struct venus_core *core)
- {
--	if (IS_V3(core) || IS_V4(core))
-+	if (IS_V3(core) || IS_V4(core) || IS_V6(core))
- 		return venus_suspend_3xx(core);
- 
- 	return venus_suspend_1xx(core);
-diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
-index c20496a14a55..5cefa396f2b5 100644
---- a/drivers/media/platform/qcom/venus/vdec.c
-+++ b/drivers/media/platform/qcom/venus/vdec.c
-@@ -670,8 +670,8 @@ static int vdec_output_conf(struct venus_inst *inst)
- 	if (width > 1920 && height > ALIGN(1080, 32))
- 		ubwc = true;
- 
--	/* For Venus v4 UBWC format is mandatory */
--	if (IS_V4(core))
-+	/* For Venus v4/v6 UBWC format is mandatory */
-+	if (IS_V4(core) || IS_V6(core))
- 		ubwc = true;
- 
- 	ret = venus_helper_get_out_fmts(inst, inst->fmt_cap->pixfmt, &out_fmt,
-@@ -722,7 +722,7 @@ static int vdec_output_conf(struct venus_inst *inst)
- 			return ret;
+diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c b/drivers/media/platform/qcom/venus/pm_helpers.c
+index ccbbac2036d2..a23e490b6139 100644
+--- a/drivers/media/platform/qcom/venus/pm_helpers.c
++++ b/drivers/media/platform/qcom/venus/pm_helpers.c
+@@ -1122,6 +1122,7 @@ const struct venus_pm_ops *venus_pm_get(enum hfi_version version)
+ 	case HFI_VERSION_3XX:
+ 		return &pm_ops_v3;
+ 	case HFI_VERSION_4XX:
++	case HFI_VERSION_6XX:
+ 		return &pm_ops_v4;
  	}
  
--	if (IS_V3(core) || IS_V4(core)) {
-+	if (IS_V3(core) || IS_V4(core) || IS_V6(core)) {
- 		ret = venus_helper_get_bufreq(inst, HFI_BUFFER_OUTPUT, &bufreq);
- 		if (ret)
- 			return ret;
 -- 
 2.30.1
 
