@@ -2,82 +2,333 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D6559352EE3
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Apr 2021 20:04:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B0616352F13
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Apr 2021 20:18:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234488AbhDBSDn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 2 Apr 2021 14:03:43 -0400
-Received: from mga04.intel.com ([192.55.52.120]:18756 "EHLO mga04.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S235797AbhDBSDl (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 2 Apr 2021 14:03:41 -0400
-IronPort-SDR: ZEpGtzEbGitHKyCIZoNMcNEiDin8jG1dAOHTrdiAwO2Vt+1A3PhCH8FkV9/tobKACKMw8WrUEG
- LHEPizgoYW7Q==
-X-IronPort-AV: E=McAfee;i="6000,8403,9942"; a="190280282"
-X-IronPort-AV: E=Sophos;i="5.81,300,1610438400"; 
-   d="scan'208";a="190280282"
-Received: from fmsmga002.fm.intel.com ([10.253.24.26])
-  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Apr 2021 11:03:40 -0700
-IronPort-SDR: WumWdpleoF65p5ruzr1qyjb6z5Psmn/BDjvXG2Siymu/YdclJNW2Q/yBWJ7dtMdfOBbjc3vCUe
- y/FZqOLxOHJA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.81,300,1610438400"; 
-   d="scan'208";a="446891023"
-Received: from lkp-server01.sh.intel.com (HELO 69d8fcc516b7) ([10.239.97.150])
-  by fmsmga002.fm.intel.com with ESMTP; 02 Apr 2021 11:03:33 -0700
-Received: from kbuild by 69d8fcc516b7 with local (Exim 4.92)
-        (envelope-from <lkp@intel.com>)
-        id 1lSO8r-0007HQ-1u; Fri, 02 Apr 2021 18:03:33 +0000
-Date:   Sat, 3 Apr 2021 02:03:11 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Loic Poulain <loic.poulain@linaro.org>, gregkh@linuxfoundation.org,
-        kuba@kernel.org, davem@davemloft.net
-Cc:     kbuild-all@lists.01.org, linux-arm-msm@vger.kernel.org,
-        aleksander@aleksander.es, linux-kernel@vger.kernel.org,
-        netdev@vger.kernel.org, bjorn.andersson@linaro.org,
-        manivannan.sadhasivam@linaro.org,
-        Loic Poulain <loic.poulain@linaro.org>
-Subject: [PATCH] net: fix err_cast.cocci warnings
-Message-ID: <20210402180311.GA42695@0469b872480c>
-References: <1617372397-13988-1-git-send-email-loic.poulain@linaro.org>
+        id S236043AbhDBSSk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 2 Apr 2021 14:18:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39432 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235984AbhDBSSk (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 2 Apr 2021 14:18:40 -0400
+Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1C73C06178A
+        for <linux-arm-msm@vger.kernel.org>; Fri,  2 Apr 2021 11:18:38 -0700 (PDT)
+Received: by mail-pf1-x434.google.com with SMTP id h3so4040391pfr.12
+        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Apr 2021 11:18:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=gMxIAmle9WVJYEKuo7xpyoTW8swuhRGgp4Lsoqrp5NQ=;
+        b=qlYEN8VRlDf4BiCDkBm2CulaWbA08nvW4VYD8Ft9gQbpLuj5E6ZBFLxU7vTArwcbyI
+         ws+YBk2Au6SuLyxgnLgoWcn50Ugk8VbM6NboMsFZqxI/dr/cHQLOaPuNxH9xjapwRTIc
+         vXbf7c7/SHP/98K9i/7J96ZDXPVMFdnxtf1zNGGMVa4oK3FLWTauOl/1WZSavmsUnPKv
+         beOiN0aS4vz8j1ADAhSVzJS/MgWs5FBp1u2JVZaxzt+ETeBOEq8SjFgzduUXAmbw3Yta
+         T/D+YwA/o7dDX/adC8SREqNsH+hIG5JePE99oNZXNR+3/+jzGyIlqBulXzI4duuVANvK
+         kRVA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=gMxIAmle9WVJYEKuo7xpyoTW8swuhRGgp4Lsoqrp5NQ=;
+        b=dWKYOu5MFCxihOw+8dlxC5k5KTDA4bGNDPsLLmABcsuIEGey41rixXi4NdsV+XRDY+
+         U/sffU4wfoBEqYO6QXt+ti0CPJXmyY6vCR9IU8rxObDNwW2ZjAFx4DZaDQrzeY5l+feL
+         9n4pVSAdcDGhNXHQc0yrgdG1kLNI724v54j7NEb4Xs/gbQJEomHsSxuLD/Nlqj5s75lZ
+         CPrHkhr+Ha1WtUw/HlIm9yA8eP6bzkpQpDTOevfS1RyWN0HIN+fkagNHYPMaiW4VYj1z
+         zhAEN+/64dux7XfpTcWGWFYSLkWRoK8q/qSBnkbIeuUKw57FbFCa1cERJRlEWJi7BRQO
+         w9yA==
+X-Gm-Message-State: AOAM532V0aGaE1qaU/QdPKDn5doqmZ2YcVWAX9O4e4AnxH4QTCMHwBBe
+        f9473scRXmh3gzPHVmDTs/u3RJVngR8/KHY2I82NUg==
+X-Google-Smtp-Source: ABdhPJxk75V8FqlZqvS4hcREYRb4z+X8ygJ+EXw0zRgEwgueBDvvTiBt/faitthVttas8fk1WFKgvGEsgu2ZoLGcO0w=
+X-Received: by 2002:a63:f903:: with SMTP id h3mr12521640pgi.443.1617387517896;
+ Fri, 02 Apr 2021 11:18:37 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1617372397-13988-1-git-send-email-loic.poulain@linaro.org>
-X-Patchwork-Hint: ignore
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <1617372397-13988-1-git-send-email-loic.poulain@linaro.org>
+ <1617372397-13988-2-git-send-email-loic.poulain@linaro.org>
+ <YGckvGqSmmVjhZII@kroah.com> <CAMZdPi_yZARCzMcs1137UPWpLxjFzQfbMkmSMhuwnfKvAdKX6g@mail.gmail.com>
+ <YGc7j1tOyKWA++7U@kroah.com>
+In-Reply-To: <YGc7j1tOyKWA++7U@kroah.com>
+From:   Loic Poulain <loic.poulain@linaro.org>
+Date:   Fri, 2 Apr 2021 20:18:01 +0200
+Message-ID: <CAMZdPi_6rkpC=0GGS6TJ8SfL1kvUSwz4KYHmut-Uxu7fqVWdAA@mail.gmail.com>
+Subject: Re: [PATCH net-next v8 2/2] net: Add Qcom WWAN control driver
+To:     Greg KH <gregkh@linuxfoundation.org>
+Cc:     Jakub Kicinski <kuba@kernel.org>,
+        David Miller <davem@davemloft.net>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Aleksander Morgado <aleksander@aleksander.es>,
+        open list <linux-kernel@vger.kernel.org>,
+        Network Development <netdev@vger.kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: kernel test robot <lkp@intel.com>
+On Fri, 2 Apr 2021 at 17:43, Greg KH <gregkh@linuxfoundation.org> wrote:
+>
+> On Fri, Apr 02, 2021 at 05:41:01PM +0200, Loic Poulain wrote:
+> > On Fri, 2 Apr 2021 at 16:05, Greg KH <gregkh@linuxfoundation.org> wrote:
+> > >
+> > > On Fri, Apr 02, 2021 at 04:06:37PM +0200, Loic Poulain wrote:
+> > > > The MHI WWWAN control driver allows MHI QCOM-based modems to expose
+> > > > different modem control protocols/ports via the WWAN framework, so that
+> > > > userspace modem tools or daemon (e.g. ModemManager) can control WWAN
+> > > > config and state (APN config, SMS, provider selection...). A QCOM-based
+> > > > modem can expose one or several of the following protocols:
+> > > > - AT: Well known AT commands interactive protocol (microcom, minicom...)
+> > > > - MBIM: Mobile Broadband Interface Model (libmbim, mbimcli)
+> > > > - QMI: QCOM MSM/Modem Interface (libqmi, qmicli)
+> > > > - QCDM: QCOM Modem diagnostic interface (libqcdm)
+> > > > - FIREHOSE: XML-based protocol for Modem firmware management
+> > > >         (qmi-firmware-update)
+> > > >
+> > > > Note that this patch is mostly a rework of the earlier MHI UCI
+> > > > tentative that was a generic interface for accessing MHI bus from
+> > > > userspace. As suggested, this new version is WWAN specific and is
+> > > > dedicated to only expose channels used for controlling a modem, and
+> > > > for which related opensource userpace support exist.
+> > > >
+> > > > Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+> > > > ---
+> > > >  v2: update copyright (2021)
+> > > >  v3: Move driver to dedicated drivers/net/wwan directory
+> > > >  v4: Rework to use wwan framework instead of self cdev management
+> > > >  v5: Fix errors/typos in Kconfig
+> > > >  v6: - Move to new wwan interface, No need dedicated call to wwan_dev_create
+> > > >      - Cleanup code (remove legacy from mhi_uci, unused defines/vars...)
+> > > >      - Remove useless write_lock mutex
+> > > >      - Add mhi_wwan_wait_writable and mhi_wwan_wait_dlqueue_lock_irq helpers
+> > > >      - Rework locking
+> > > >      - Add MHI_WWAN_TX_FULL flag
+> > > >      - Add support for NONBLOCK read/write
+> > > >  v7: Fix change log (mixed up 1/2 and 2/2)
+> > > >  v8: - Implement wwan_port_ops (instead of fops)
+> > > >      - Remove all mhi wwan data obsolete members (kref, lock, waitqueues)
+> > > >      - Add tracking of RX buffer budget
+> > > >      - Use WWAN TX flow control function to stop TX when MHI queue is full
+> > > >
+> > > >  drivers/net/wwan/Kconfig         |  14 +++
+> > > >  drivers/net/wwan/Makefile        |   2 +
+> > > >  drivers/net/wwan/mhi_wwan_ctrl.c | 253 +++++++++++++++++++++++++++++++++++++++
+> > > >  3 files changed, 269 insertions(+)
+> > > >  create mode 100644 drivers/net/wwan/mhi_wwan_ctrl.c
+> > > >
+> > > > diff --git a/drivers/net/wwan/Kconfig b/drivers/net/wwan/Kconfig
+> > > > index 545fe54..ce0bbfb 100644
+> > > > --- a/drivers/net/wwan/Kconfig
+> > > > +++ b/drivers/net/wwan/Kconfig
+> > > > @@ -19,4 +19,18 @@ config WWAN_CORE
+> > > >         To compile this driver as a module, choose M here: the module will be
+> > > >         called wwan.
+> > > >
+> > > > +config MHI_WWAN_CTRL
+> > > > +     tristate "MHI WWAN control driver for QCOM-based PCIe modems"
+> > > > +     select WWAN_CORE
+> > > > +     depends on MHI_BUS
+> > > > +     help
+> > > > +       MHI WWAN CTRL allows QCOM-based PCIe modems to expose different modem
+> > > > +       control protocols/ports to userspace, including AT, MBIM, QMI, DIAG
+> > > > +       and FIREHOSE. These protocols can be accessed directly from userspace
+> > > > +       (e.g. AT commands) or via libraries/tools (e.g. libmbim, libqmi,
+> > > > +       libqcdm...).
+> > > > +
+> > > > +       To compile this driver as a module, choose M here: the module will be
+> > > > +       called mhi_wwan_ctrl
+> > > > +
+> > > >  endif # WWAN
+> > > > diff --git a/drivers/net/wwan/Makefile b/drivers/net/wwan/Makefile
+> > > > index 934590b..556cd90 100644
+> > > > --- a/drivers/net/wwan/Makefile
+> > > > +++ b/drivers/net/wwan/Makefile
+> > > > @@ -5,3 +5,5 @@
+> > > >
+> > > >  obj-$(CONFIG_WWAN_CORE) += wwan.o
+> > > >  wwan-objs += wwan_core.o
+> > > > +
+> > > > +obj-$(CONFIG_MHI_WWAN_CTRL) += mhi_wwan_ctrl.o
+> > > > diff --git a/drivers/net/wwan/mhi_wwan_ctrl.c b/drivers/net/wwan/mhi_wwan_ctrl.c
+> > > > new file mode 100644
+> > > > index 0000000..f2fab23
+> > > > --- /dev/null
+> > > > +++ b/drivers/net/wwan/mhi_wwan_ctrl.c
+> > > > @@ -0,0 +1,253 @@
+> > > > +// SPDX-License-Identifier: GPL-2.0-only
+> > > > +/* Copyright (c) 2021, Linaro Ltd <loic.poulain@linaro.org> */
+> > > > +#include <linux/kernel.h>
+> > > > +#include <linux/mhi.h>
+> > > > +#include <linux/mod_devicetable.h>
+> > > > +#include <linux/module.h>
+> > > > +#include <linux/wwan.h>
+> > > > +
+> > > > +/* MHI wwan flags */
+> > > > +#define MHI_WWAN_DL_CAP              BIT(0)
+> > > > +#define MHI_WWAN_UL_CAP              BIT(1)
+> > > > +#define MHI_WWAN_STARTED     BIT(2)
+> > > > +
+> > > > +#define MHI_WWAN_MAX_MTU     0x8000
+> > > > +
+> > > > +struct mhi_wwan_dev {
+> > > > +     /* Lower level is a mhi dev, upper level is a wwan port */
+> > > > +     struct mhi_device *mhi_dev;
+> > > > +     struct wwan_port *wwan_port;
+> > > > +
+> > > > +     /* State and capabilities */
+> > > > +     unsigned long flags;
+> > > > +     size_t mtu;
+> > > > +
+> > > > +     /* Protect against concurrent TX and TX-completion (bh) */
+> > > > +     spinlock_t tx_lock;
+> > > > +
+> > > > +     struct work_struct rx_refill;
+> > > > +     atomic_t rx_budget;
+> > >
+> > > Why is this atomic if you have a real lock already?
+> >
+> > Access to rx_budget value is not under any locking protection and can
+> > be modified (dec/inc) from different and possibly concurrent places.
+>
+> Then use the lock you have instead of creating a "fake lock" with the
+> atomic value.  If that's really even working (you can't check it and do
+> something based on it as it could change right afterward).
+>
+> > > > +};
+> > > > +
+> > > > +static bool mhi_wwan_ctrl_refill_needed(struct mhi_wwan_dev *mhiwwan)
+> > > > +{
+> > > > +     if (!test_bit(MHI_WWAN_STARTED, &mhiwwan->flags))
+> > > > +             return false;
+> > > > +
+> > > > +     if (!test_bit(MHI_WWAN_DL_CAP, &mhiwwan->flags))
+> > > > +             return false;
+> > >
+> > > What prevents these bits from being changed right after reading them?
+> >
+> > Nothing, I've think (maybe wrongly) it's not a problem in the current code.
+>
+> Why not?  Why isn't the lock being used here?
+>
+> Where is the lock used?
+>
+> > > > +
+> > > > +     if (!atomic_read(&mhiwwan->rx_budget))
+> > > > +             return false;
+> > >
+> > > Why is this atomic?  What happens if it changes right after returning?
+> >
+> >
+> > If rx_budget was null and becomes non-null, it has been incremented by
+> > __mhi_skb_destructor() which will anyway call
+> > mhi_wwan_ctrl_refill_needed() again, so that's not a problem. On the
+> > other hand, if rx_budget was non-null and becomes null, the
+> > refill_work that will be unnecessarily scheduled will check the value
+> > again and will just return without doing anything.
+>
+> You should document the heck out of this as it's not obvious :(
+>
+> > >
+> > > This feels really odd.
+> > >
+> > > > +
+> > > > +     return true;
+> > > > +}
+> > > > +
+> > > > +void __mhi_skb_destructor(struct sk_buff *skb)
+> > > > +{
+> > > > +     struct mhi_wwan_dev *mhiwwan = skb_shinfo(skb)->destructor_arg;
+> > > > +
+> > > > +     /* RX buffer has been consumed, increase the allowed budget */
+> > > > +     atomic_inc(&mhiwwan->rx_budget);
+> > >
+> > > So this is a reference count?  What is this thing?
+> >
+> > This represents the remaining number of buffers that can be allocated
+> > for RX. It is decremented When a buffer is allocated/queued and
+> > incremented when a buffer is consumed (e.g. on WWAN port reading).
+>
+> Why have any budget at all?
+>
+> That being said, budgets are fine, but properly lock things please.
+>
+> > > > +
+> > > > +     if (mhi_wwan_ctrl_refill_needed(mhiwwan))
+> > > > +             schedule_work(&mhiwwan->rx_refill);
+> > >
+> > > What if refill is needed right after this check?  Did you just miss the
+> > > call?
+> >
+> > In running condition, refill is allowed when rx_budget is non-zero,
+> > and __mhi_skb_destructor() is the only path that increments the budget
+> > (and so allow refill) and schedules the refill,  so for this scenario
+> > to happen it would mean that a parallel  __mhi_skb_destructor() is
+> > executed (and incremented rx_budget), so this second parallel call
+> > will schedule the refill.
+> >
+> > I realize it's probably odd, but I don't see any scenario in which we
+> > can end badly (e.g. missing refill scheduling, queueing too many
+> > buffers), but I admit it would be certainly simpler and less
+> > error-prone with regular locking.
+>
+> Document this all please.
+>
+> > > > +static const struct mhi_device_id mhi_wwan_ctrl_match_table[] = {
+> > > > +     { .chan = "DUN", .driver_data = WWAN_PORT_AT },
+> > > > +     { .chan = "MBIM", .driver_data = WWAN_PORT_MBIM },
+> > > > +     { .chan = "QMI", .driver_data = WWAN_PORT_QMI },
+> > > > +     { .chan = "DIAG", .driver_data = WWAN_PORT_QCDM },
+> > > > +     { .chan = "FIREHOSE", .driver_data = WWAN_PORT_FIREHOSE },
+> > >
+> > > Wait, I thought these were all going to be separate somehow.  Now they
+> > > are all muxed back together?
+> >
+> > A WWAN 'port driver' abstracts the method for accessing WWAN control
+> > protocols, so that userspace can e.g. talk MBIM to the port without
+> > knowledge of the underlying bus. Here this is just about abstracting
+> > the MHI/PCI transport, a  MHI modem can support one or several of
+> > these protocols. So this MHI driver binds all MHI control devices, and
+> > each one is registered as a WWAN port. Other 'port drivers' can be
+> > created for different busses or vendors.
+>
+> ok, feels odd, I'll review it again for your next submission as this
+> seems like just a "raw pipe" to the device and is not actually
+> standardizing anything, but I could be totally wrong.
 
-drivers/net/wwan/wwan_core.c:208:9-16: WARNING: ERR_CAST can be used with wwandev
+It's kind of a raw pipe since modems expose various high-level
+protocols that are directly accessed by user space tools (AT/MBIM...).
+There is really nothing to do from the kernel side here except using
+this class for standardizing the way these protocols are accessed
+(chardev read/write), and grouping them under the same 'virtual WWAN'
+node.
 
+Because of their history, modems are quite different from other pieces
+of hardware such as WiFi, Bluetooth, etc... that are usually
+represented through a unique device (e.g. wireless_dev, hci...) and a
+well-defined API.
+Modems were only voice at the beginning and only one
+simple serial/uart was necessary for control purpose (via AT
+commands), then data support was added (GPRS), using the existing
+or secondary serial to send network data (by attaching e.g. ppp line
+discipline),
+Next step was the USB WWAN devices (either as regular USB stick, or
+via PCMCIA with integrated USB), that initially re-used the existing
+architecture by simply exposing the serial(s)/tty(s) over USB.
+Later, some moved to more modern and optimized data and control
+interfaces/protocols (such as QMAP, MBIM, QMI....).
+At the end, it it's not surprising that you end today with several
+ttyUSB*/ttyACM*, character devices, and netdev when you
+plug a USB modem, all of them contributing to the whole WWAN feature,
+and it's up to the user (well... ModemManager) to deal with that.
+In the MHI/PCI case, the USB concept of interfaces/endpoints has simply
+been translated to 'MHI channels', and we also end with a bunch of MHI
+devices for network data (netdev) and controls (chardev)... How to
+expose these controls channels is the question, we can either go with a
+new bus specific MHI character driver (what we've tried with mhi_uci)
+or initiate a bus agnostic WWAN chardev driver via this new WWAN
+framework, which I agree is not much more than a factorized
+passthrough layer for now.
 
- Use ERR_CAST inlined function instead of ERR_PTR(PTR_ERR(...))
-
-Generated by: scripts/coccinelle/api/err_cast.cocci
-
-CC: Loic Poulain <loic.poulain@linaro.org>
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: kernel test robot <lkp@intel.com>
----
-
-url:    https://github.com/0day-ci/linux/commits/Loic-Poulain/net-Add-a-WWAN-subsystem/20210402-220002
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/davem/net-next.git bd78980be1a68d14524c51c4b4170782fada622b
-
- wwan_core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
---- a/drivers/net/wwan/wwan_core.c
-+++ b/drivers/net/wwan/wwan_core.c
-@@ -205,7 +205,7 @@ struct wwan_port *wwan_create_port(struc
- 	 */
- 	wwandev = wwan_create_dev(parent);
- 	if (IS_ERR(wwandev))
--		return ERR_PTR(PTR_ERR(wwandev));
-+		return ERR_CAST(wwandev);
- 
- 	/* A port is exposed as character device, get a minor */
- 	minor = ida_alloc_range(&minors, 0, WWAN_MAX_MINORS - 1, GFP_KERNEL);
+Regards,
+Loic
