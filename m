@@ -2,145 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A1E7E352542
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Apr 2021 03:49:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8F8FE35255E
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Apr 2021 04:21:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233258AbhDBBtl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Apr 2021 21:49:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51764 "EHLO
+        id S234008AbhDBCVP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Apr 2021 22:21:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58496 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231168AbhDBBtk (ORCPT
+        with ESMTP id S233894AbhDBCVO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Apr 2021 21:49:40 -0400
-Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 056CDC0613E6
-        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Apr 2021 18:49:39 -0700 (PDT)
-Received: by mail-lj1-x235.google.com with SMTP id y1so4192344ljm.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Apr 2021 18:49:39 -0700 (PDT)
+        Thu, 1 Apr 2021 22:21:14 -0400
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67279C0613E6
+        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Apr 2021 19:21:12 -0700 (PDT)
+Received: by mail-lj1-x231.google.com with SMTP id u4so4268647ljo.6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Apr 2021 19:21:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=j9RQT679vd506Q/98s/aT0/YHnrmdImyJeUqZ+dnfVs=;
-        b=zviu1i1ODoFigiZ1KJ8aTTF0jIT+/sjNMgujHZmrH9QIPiTDXxC8LVdS/qy89e/duh
-         StgEfRNRqX4b2OLZ4mMARerWhYJzH/HluCFwyuBAvY5IDQrY/f47CMCnwNWcacFFd/pv
-         GxjcsmquwI6X/tVuke3Y83duwIQvXm5jA3i2ISxNBMCCZREYizaO38b+NMNlvGVC+QMd
-         RdyYTZ13Cu3P/s626PI/8BzzSJ/biJx6hiTZ81kExUGxHTrFkcK17ntc1Oqt9tMWHzsY
-         8TLnrBXd4abClI3rG73UUOzvcNGl/5CgNtPfVe9bZOOm3wf8zhQk1BMEr/amcLBTxKww
-         T3pg==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=L925LIwX/AEyuqnRbSRg5dcDMuoq/xRmNPVHzWMF0Yc=;
+        b=NsriI1TT2YsTF0Z9rxrUGCPsIHq+cuxPYpd0NSHqqPJI2IcBXhAX4g/uFEBop/W5xK
+         mN/HKiTH4QJr564Jrv0Xy4zyoxjE0QwGWAaJ6myML3aikVjDqY4lM5YtfhpB+dYeRG8C
+         gv31lY8ZFhcCvRCHfURkHSXTMtcR2j1ZAHjQa2czJAOvRMyfIs6GdE19wmISsCvUJEwh
+         l5fWFXOvOGb0OlY0+i2JIs/Q3SvtQlRg0OA7aDmH3F9aF2WSzCKmYXvSCfostoZfpWwf
+         N1wp/k9Ow25A1ATX+14XYJ5JnrmpH8ugVqW7giIH0WP6lrtwux+Z8Fj33lkEuog7Hb+B
+         C+Kw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=j9RQT679vd506Q/98s/aT0/YHnrmdImyJeUqZ+dnfVs=;
-        b=qEhRKsF9fp2kAwYwRbYwEprqBEqqjKcWalHk7PV/07B7XmU9vxUARVaYiKdZO7+8RF
-         WKoKQmyILdSwGxuCwD5vurYarqDuevPefPmQyV+SSEYUd7t35LMU5SkMIXIazCrc1JTj
-         XSAz3JALc/5GItBcV0dRUb86g326R7WZCseGI0YL+Jao5+UMXexut1fAXQ+kGAGB40Y8
-         Hx7V50Aucom/64KBsTpHJrtnk+xH8OWYDycINfL5CHcmKqRBHG804dIlsSXC7uyHarla
-         tFreAhP5KxpzKwBGfUnatISXDIeeviphVTqcyluzH9XdzcqfOjLjH6+UAtEPGTo15nkB
-         QEEA==
-X-Gm-Message-State: AOAM533IFhpR+r0+zH2HYVEKR8cIfisFKmGVdMDLGkdSvJJG2FHa/BhO
-        k9z16KiNrCzQMDVIPpsq9o1RxDJoU+85KA==
-X-Google-Smtp-Source: ABdhPJxTzDGJJELTevLxL1omqsCZyRj/X18CZ50HdcHsz6uZ3Bp/bfAuF/cb6feI0vjC1tyZqWT/bQ==
-X-Received: by 2002:a2e:99ce:: with SMTP id l14mr7160785ljj.93.1617328178325;
-        Thu, 01 Apr 2021 18:49:38 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id n5sm705677lfh.173.2021.04.01.18.49.37
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 01 Apr 2021 18:49:37 -0700 (PDT)
-Subject: Re: [PATCH v1 13/15] clk: qcom: videocc-sdm845: remove unsupported
- clock sources
-To:     Taniya Das <tdas@codeaurora.org>, Andy Gross <agross@kernel.org>,
+        bh=L925LIwX/AEyuqnRbSRg5dcDMuoq/xRmNPVHzWMF0Yc=;
+        b=Mz2CTgpBANSLoiJop15NVWaN3PNnoPuGHy6b1ITpUzqgQoZcvCb95ZeDNen8LCWuPm
+         6gH+TvLu/m9ZhjLuqzX1G4L7vI8PeTW8LK85qal/p95twwfj1b2f8Ey/D3nuYAxnOAYB
+         H/SJ+aJGIdi7R7D3TAB0Ej41Xi0eWvpRBMYNcZMSKircq0o7RrVEV7YukDtxjaN41mCJ
+         QWAgyt5urAk7kMmsINMccPUhPVuRJVUAkx3JFnDcrFaTtQAtaAKjICLSaRg57H3yOdRm
+         m5EwiH8YvuVYLrJ/j2sln3JD2JQ+a9mSwTluElWjMN6QM++WWXRUbtmOPp9ghzx1FfvJ
+         LsPw==
+X-Gm-Message-State: AOAM532SUDixgi7kcQrvedWm7ELCfYWSGX7qie0iUTZ4JO1BBbGmZd3l
+        Q9pLamZOUGOilvikB3wNKkSSoQ==
+X-Google-Smtp-Source: ABdhPJyjS7IA5ZX7+ZwTZMBZG1bjjbO1CAJI7xfVUgMCc7jbUZ9nASs17OoBShUA5ruz5hOdFFTM4A==
+X-Received: by 2002:a2e:9143:: with SMTP id q3mr7158320ljg.378.1617330070773;
+        Thu, 01 Apr 2021 19:21:10 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id x74sm713634lff.145.2021.04.01.19.21.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 01 Apr 2021 19:21:10 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Stephen Boyd <sboyd@kernel.org>,
         Michael Turquette <mturquette@baylibre.com>
 Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
-References: <20210325111144.2852594-1-dmitry.baryshkov@linaro.org>
- <20210325111144.2852594-14-dmitry.baryshkov@linaro.org>
- <21bc5248-57b8-243d-300f-1bc39162c37f@codeaurora.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Message-ID: <c92f7a04-f010-4c63-4b39-482a5581317a@linaro.org>
-Date:   Fri, 2 Apr 2021 04:49:37 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.9.0
+Subject: [PATCH v2 00/16] clk: qcom: cleanup sm8250/sdm845/sc7180 clock drivers
+Date:   Fri,  2 Apr 2021 05:20:52 +0300
+Message-Id: <20210402022108.4183114-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
-In-Reply-To: <21bc5248-57b8-243d-300f-1bc39162c37f@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 02/04/2021 04:23, Taniya Das wrote:
-> Hi Dmitry,
-> 
-> On 3/25/2021 4:41 PM, Dmitry Baryshkov wrote:
->> video_pll0_out_even/_odd are not supported neither in the upstream nor
->> in the downstream kernels, so drop those clock sources.
->>
->> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> ---
->>   drivers/clk/qcom/videocc-sdm845.c | 8 +-------
->>   1 file changed, 1 insertion(+), 7 deletions(-)
->>
->> diff --git a/drivers/clk/qcom/videocc-sdm845.c 
->> b/drivers/clk/qcom/videocc-sdm845.c
->> index 5d6a7724a194..7153f044504f 100644
->> --- a/drivers/clk/qcom/videocc-sdm845.c
->> +++ b/drivers/clk/qcom/videocc-sdm845.c
->> @@ -21,24 +21,18 @@
->>   enum {
->>       P_BI_TCXO,
->>       P_CORE_BI_PLL_TEST_SE,
->> -    P_VIDEO_PLL0_OUT_EVEN,
->>       P_VIDEO_PLL0_OUT_MAIN,
->> -    P_VIDEO_PLL0_OUT_ODD,
->>   };
->>   static const struct parent_map video_cc_parent_map_0[] = {
->>       { P_BI_TCXO, 0 },
->>       { P_VIDEO_PLL0_OUT_MAIN, 1 },
->> -    { P_VIDEO_PLL0_OUT_EVEN, 2 },
->> -    { P_VIDEO_PLL0_OUT_ODD, 3 },
-> 
-> These are supported from the design, please do not remove them. It is 
-> just that in SW currently it is not being used.
-> But SW can decide to use them as they want. As said earlier these are 
-> defined in the HW plans and thus do not want them to be updated manually 
-> to create a mismatch.
+Cleanup several Qualcomm clock drivers by removing unused entries from
+parents map, removing test clock, etc.
 
-The problem arises during conversion of these drivers to use parent_data 
-instead of parent_names. You see, video_pll0_odd/_even are clocks which 
-should be referenced using .hw (and thus defined inside the videocc 
-driver) as we do for "video_pll0" parent. However there are no clk_hw 
-entities defined for those clocks. For now I'd just use the { .name = 
-video_pll0_out_odd" } entry for those clocks, however I still think this 
-is not correct.
+Changes since v1:
+ - Remove unused entries from gpucc-sc7180, gpucc-sdm845, videocc-sc7180
+   and videocc-sm8150 drivers
+ - Restore video_pll0_out_odd/_even entries in videocc-sdm845 driver as
+   requested by Taniya Das.
 
-> 
->>       { P_CORE_BI_PLL_TEST_SE, 4 },
->>   };
->>   static const char * const video_cc_parent_names_0[] = {
->>       "bi_tcxo",
->>       "video_pll0",
->> -    "video_pll0_out_even",
->> -    "video_pll0_out_odd",
->>       "core_bi_pll_test_se",
->>   };
->> @@ -79,7 +73,7 @@ static struct clk_rcg2 video_cc_venus_clk_src = {
->>       .clkr.hw.init = &(struct clk_init_data){
->>           .name = "video_cc_venus_clk_src",
->>           .parent_names = video_cc_parent_names_0,
->> -        .num_parents = 5,
->> +        .num_parents = 3,
->>           .flags = CLK_SET_RATE_PARENT,
->>           .ops = &clk_rcg2_shared_ops,
->>       },
->>
-> 
+The following changes since commit a38fd8748464831584a19438cbb3082b5a2dab15:
+
+  Linux 5.12-rc2 (2021-03-05 17:33:41 -0800)
+
+are available in the Git repository at:
+
+  https://git.linaro.org/people/dmitry.baryshkov/kernel.git qcom-clk-cleanup
+
+for you to fetch changes up to abb5f4ee34095483b5cc16d6b2f6eb683e69a78e:
+
+  clk: qcom: videocc-sdm845: get rid of the test clock (2021-04-02 05:03:06 +0300)
+
+----------------------------------------------------------------
+Dmitry Baryshkov (16):
+      clk: qcom: dispcc-sc7180: drop unused enum entries
+      clk: qcom: dispcc-sm8250: drop unused enum entries
+      clk: qcom: gcc-sm8250: drop unused enum entries
+      clk: qcom: gpucc-sc7180: drop unused enum entries
+      clk: qcom: gpucc-sdm845: drop unused enum entries
+      clk: qcom: gpucc-sm8150: drop unused enum entries
+      clk: qcom: gpucc-sm8250: drop unused enum entries
+      clk: qcom: videocc-sc7180: drop unused enum entries
+      clk: qcom: videocc-sm8150: drop unused enum entries
+      clk: qcom: videocc-sm8250: drop unused enum entries
+      clk: qcom: dispcc-sdm845: convert to parent data
+      clk: qcom: gpucc-sdm845: convert to parent data
+      clk: qcom: videocc-sdm845: convert to parent data
+      clk: qcom: gpucc-sdm845: get rid of the test clock
+      clk: qcom: dispcc-sdm845: get rid of the test clock
+      clk: qcom: videocc-sdm845: get rid of the test clock
+
+ drivers/clk/qcom/dispcc-sc7180.c  |   2 -
+ drivers/clk/qcom/dispcc-sdm845.c  | 217 ++++++++++++++++++--------------------
+ drivers/clk/qcom/dispcc-sm8250.c  |   8 --
+ drivers/clk/qcom/gcc-sm8250.c     |   1 -
+ drivers/clk/qcom/gpucc-sc7180.c   |   3 -
+ drivers/clk/qcom/gpucc-sdm845.c   |  45 ++++----
+ drivers/clk/qcom/gpucc-sm8150.c   |   1 -
+ drivers/clk/qcom/gpucc-sm8250.c   |   1 -
+ drivers/clk/qcom/videocc-sc7180.c |   4 -
+ drivers/clk/qcom/videocc-sdm845.c |  51 +++++----
+ drivers/clk/qcom/videocc-sm8150.c |   4 -
+ drivers/clk/qcom/videocc-sm8250.c |   2 -
+ 12 files changed, 150 insertions(+), 189 deletions(-)
 
 
--- 
-With best wishes
-Dmitry
