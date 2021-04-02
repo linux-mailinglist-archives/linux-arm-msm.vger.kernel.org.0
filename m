@@ -2,33 +2,32 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 02883352684
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Apr 2021 08:18:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3196B352687
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Apr 2021 08:18:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233665AbhDBGSQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 2 Apr 2021 02:18:16 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:60412 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229518AbhDBGSQ (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 2 Apr 2021 02:18:16 -0400
+        id S233938AbhDBGS0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 2 Apr 2021 02:18:26 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:24357 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S233849AbhDBGSZ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 2 Apr 2021 02:18:25 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1617344295; h=References: In-Reply-To: Message-Id: Date:
+ s=smtp; t=1617344305; h=References: In-Reply-To: Message-Id: Date:
  Subject: Cc: To: From: Sender;
- bh=EjTfGzwyqqIlw8zuqB55KZXyzBG/7WdOMaiO7whj+1s=; b=KhnFCShIZCDgl0ZhZ9Tqr2D1auZtChUM7IpQEojEAUc5TVnk6s9ib9ZRCmu2hdM/BUf611Gw
- 6vYWNMVpZhhZneTqmKl00W6vdBvEPcvIj6HZ+2Mkuv77KXsdwFnHtOPEra24YOz8GOlVeC9R
- 7LyHrBv1/LDEv4/k4cdvkj7aDC8=
-X-Mailgun-Sending-Ip: 198.61.254.9
+ bh=+fGTIpJoMrZer2FW4wtM/kmw4106dhSKX2a1plXyCSI=; b=XMOiStNdxhDwXP+W8X2PvCCNseCG9HQSozMQS8Kgk8vViWyAZYSNxslxrJovo9Ngu3RiEdlQ
+ 96Syp8T1SbcU7+RfmeASKJvoth0TZR6vSD/cVJrNvIvaKgevLL4Mu9jkvheWaZgWBID+QIgs
+ xGLhONgVhXOo+rp4fOyDDj/g1yQ=
+X-Mailgun-Sending-Ip: 69.72.43.7
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
- 6066b727febcffa80feff820 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 02 Apr 2021 06:18:15
+ smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
+ 6066b7308807bcde1d04b4fe (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 02 Apr 2021 06:18:24
  GMT
 Sender: deesin=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id D8ACEC433ED; Fri,  2 Apr 2021 06:18:14 +0000 (UTC)
+        id D88C6C43463; Fri,  2 Apr 2021 06:18:23 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -38,9 +37,9 @@ Received: from deesin-linux.qualcomm.com (unknown [202.46.22.19])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: deesin)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id C3198C433C6;
-        Fri,  2 Apr 2021 06:18:11 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org C3198C433C6
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 7CF98C43462;
+        Fri,  2 Apr 2021 06:18:20 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 7CF98C43462
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=deesin@codeaurora.org
 From:   Deepak Kumar Singh <deesin@codeaurora.org>
@@ -49,9 +48,9 @@ Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-remoteproc@vger.kernel.org,
         Deepak Kumar Singh <deesin@codeaurora.org>,
         Andy Gross <agross@kernel.org>
-Subject: [PATCH V1 1/2] soc: qcom: aoss: Expose send for generic usecase
-Date:   Fri,  2 Apr 2021 11:47:17 +0530
-Message-Id: <1617344238-12137-2-git-send-email-deesin@codeaurora.org>
+Subject: [PATCH V1 2/2] soc: qcom: aoss: Add debugfs entry
+Date:   Fri,  2 Apr 2021 11:47:18 +0530
+Message-Id: <1617344238-12137-3-git-send-email-deesin@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1617344238-12137-1-git-send-email-deesin@codeaurora.org>
 References: <1617344238-12137-1-git-send-email-deesin@codeaurora.org>
@@ -59,92 +58,96 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Not all upcoming usecases will have an interface to allow the aoss
-driver to hook onto. Expose the send api and create a get function to
-enable drivers to send their own messages to aoss.
+It can be useful to control the different power states of various
+parts of hardware for device testing. Add a debugfs node for qmp so
+messages can be sent to aoss for debugging and testing purposes.
 
 Signed-off-by: Chris Lew <clew@codeaurora.org>
 Signed-off-by: Deepak Kumar Singh <deesin@codeaurora.org>
 ---
- drivers/soc/qcom/qcom_aoss.c | 36 +++++++++++++++++++++++++++++++++++-
- 1 file changed, 35 insertions(+), 1 deletion(-)
+ drivers/soc/qcom/qcom_aoss.c | 41 +++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 41 insertions(+)
 
 diff --git a/drivers/soc/qcom/qcom_aoss.c b/drivers/soc/qcom/qcom_aoss.c
-index 53acb94..5c643f0 100644
+index 5c643f0..1789880 100644
 --- a/drivers/soc/qcom/qcom_aoss.c
 +++ b/drivers/soc/qcom/qcom_aoss.c
-@@ -8,10 +8,12 @@
+@@ -4,6 +4,7 @@
+  */
+ #include <dt-bindings/power/qcom-aoss-qmp.h>
+ #include <linux/clk-provider.h>
++#include <linux/debugfs.h>
+ #include <linux/interrupt.h>
  #include <linux/io.h>
  #include <linux/mailbox_client.h>
- #include <linux/module.h>
-+#include <linux/of_platform.h>
- #include <linux/platform_device.h>
- #include <linux/pm_domain.h>
- #include <linux/thermal.h>
- #include <linux/slab.h>
-+#include <linux/soc/qcom/qcom_aoss.h>
+@@ -86,6 +87,9 @@ struct qmp {
+ 	struct clk_hw qdss_clk;
+ 	struct genpd_onecell_data pd_data;
+ 	struct qmp_cooling_device *cooling_devs;
++#if IS_ENABLED(CONFIG_DEBUG_FS)
++	struct dentry *debugfs_file;
++#endif /* CONFIG_DEBUG_FS */
+ };
  
- #define QMP_DESC_MAGIC			0x0
- #define QMP_DESC_VERSION		0x4
-@@ -223,11 +225,14 @@ static bool qmp_message_empty(struct qmp *qmp)
-  *
-  * Return: 0 on success, negative errno on failure
-  */
--static int qmp_send(struct qmp *qmp, const void *data, size_t len)
-+int qmp_send(struct qmp *qmp, const void *data, size_t len)
- {
- 	long time_left;
- 	int ret;
- 
-+	if (!qmp || !data)
-+		return -EINVAL;
-+
- 	if (WARN_ON(len + sizeof(u32) > qmp->size))
- 		return -EINVAL;
- 
-@@ -261,6 +266,7 @@ static int qmp_send(struct qmp *qmp, const void *data, size_t len)
- 
- 	return ret;
+ struct qmp_pd {
+@@ -549,6 +553,34 @@ struct qmp *qmp_get(struct device *dev)
  }
-+EXPORT_SYMBOL(qmp_send);
+ EXPORT_SYMBOL(qmp_get);
  
- static int qmp_qdss_clk_prepare(struct clk_hw *hw)
- {
-@@ -515,6 +521,34 @@ static void qmp_cooling_devices_remove(struct qmp *qmp)
- 		thermal_cooling_device_unregister(qmp->cooling_devs[i].cdev);
- }
- 
-+/**
-+ * qmp_get() - get a qmp handle from a device
-+ * @dev: client device pointer
-+ *
-+ * Return: handle to qmp device on success, ERR_PTR() on failure
-+ */
-+struct qmp *qmp_get(struct device *dev)
++#if IS_ENABLED(CONFIG_DEBUG_FS)
++static ssize_t aoss_dbg_write(struct file *file, const char __user *userstr,
++			      size_t len, loff_t *pos)
 +{
-+	struct platform_device *pdev;
-+	struct device_node *np;
-+	struct qmp *qmp;
++	struct qmp *qmp = file->private_data;
++	char buf[QMP_MSG_LEN] = {};
++	int ret;
 +
-+	if (!dev || !dev->of_node)
-+		return ERR_PTR(-ENODEV);
++	if (!len || len >= QMP_MSG_LEN)
++		return len;
 +
-+	np = of_parse_phandle(dev->of_node, "qcom,qmp", 0);
-+	if (!np)
-+		return ERR_PTR(-ENODEV);
++	ret  = copy_from_user(buf, userstr, len);
++	if (ret) {
++		dev_err(qmp->dev, "copy from user failed, ret:%d\n", ret);
++		return len;
++	}
 +
-+	pdev = of_find_device_by_node(np);
-+	if (!pdev)
-+		return ERR_PTR(-EINVAL);
++	ret = qmp_send(qmp, buf, QMP_MSG_LEN);
 +
-+	qmp = platform_get_drvdata(pdev);
-+	return qmp ? qmp : ERR_PTR(-EPROBE_DEFER);
++	return ret ? ret : len;
 +}
-+EXPORT_SYMBOL(qmp_get);
++
++static const struct file_operations aoss_dbg_fops = {
++	.open = simple_open,
++	.write = aoss_dbg_write,
++};
++#endif /* CONFIG_DEBUG_FS */
 +
  static int qmp_probe(struct platform_device *pdev)
  {
  	struct resource *res;
+@@ -603,6 +635,11 @@ static int qmp_probe(struct platform_device *pdev)
+ 
+ 	platform_set_drvdata(pdev, qmp);
+ 
++#if IS_ENABLED(CONFIG_DEBUG_FS)
++	qmp->debugfs_file = debugfs_create_file("aoss_send_message", 0220, NULL,
++						qmp, &aoss_dbg_fops);
++#endif /* CONFIG_DEBUG_FS */
++
+ 	return 0;
+ 
+ err_remove_qdss_clk:
+@@ -619,6 +656,10 @@ static int qmp_remove(struct platform_device *pdev)
+ {
+ 	struct qmp *qmp = platform_get_drvdata(pdev);
+ 
++#if IS_ENABLED(CONFIG_DEBUG_FS)
++	debugfs_remove(qmp->debugfs_file);
++#endif /* CONFIG_DEBUG_FS */
++
+ 	qmp_qdss_clk_remove(qmp);
+ 	qmp_pd_remove(qmp);
+ 	qmp_cooling_devices_remove(qmp);
 -- 
 The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
 a Linux Foundation Collaborative Project
