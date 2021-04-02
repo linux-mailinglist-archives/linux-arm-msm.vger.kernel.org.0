@@ -2,187 +2,154 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 90B43352BFC
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Apr 2021 18:09:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 72828352C0B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Apr 2021 18:09:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234526AbhDBOuz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 2 Apr 2021 10:50:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50566 "EHLO
+        id S234652AbhDBPBr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 2 Apr 2021 11:01:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52924 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229553AbhDBOuz (ORCPT
+        with ESMTP id S229553AbhDBPBq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 2 Apr 2021 10:50:55 -0400
-Received: from mail-il1-x131.google.com (mail-il1-x131.google.com [IPv6:2607:f8b0:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95724C0613E6
-        for <linux-arm-msm@vger.kernel.org>; Fri,  2 Apr 2021 07:50:54 -0700 (PDT)
-Received: by mail-il1-x131.google.com with SMTP id p8so493525ilm.13
-        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Apr 2021 07:50:54 -0700 (PDT)
+        Fri, 2 Apr 2021 11:01:46 -0400
+Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFC2DC06178A
+        for <linux-arm-msm@vger.kernel.org>; Fri,  2 Apr 2021 08:01:43 -0700 (PDT)
+Received: by mail-pj1-x102a.google.com with SMTP id f2-20020a17090a4a82b02900c67bf8dc69so4727029pjh.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Apr 2021 08:01:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=cosmicpenguin-net.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=rGJLgTs/l2/MGpdEoc1r+xCFDRI912a08UTCUjCZJcM=;
-        b=12/JtV5J74usgV+61jnq39vygaGI0FceLpeazebIQHziSq3srw8jHXAssSvjAzYtGw
-         LloGO3KOJjWoZCLOxdPDDtKHNLDX0aQc7PUFx4bal+SbFCATuMcdiLYObnbgnLnZqpS+
-         hSTozvOMLnBM0jtYf07da4adYvdxEhXR66PDI3ZWwgjCOQ92eRGcRcCThJWpRIKZzv2J
-         dAJ3V+/G/NRiyjsJqaDbeI5mD/414OQI6KbwOn6Uf0+LVFV1RqlqJnmaRrYUs6m1IpY+
-         WtX8ptMr6rTYF1M95BzFHGwQ77ZGJAdpnIlr1PsSaTdrI7Hx6Qennkid+HYH6Qh3OJLa
-         0Wcg==
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ldZzMYp9rBIEkuelFhL1o+s+U9zYs7UBzeIApWLg0og=;
+        b=n6RIi2rOaJ2VF59xOiWxOs+AUToxL9jEvdKG47HKc6iG15nkn0+iwj7DezBguhzxZ+
+         JKO+naDulBdXIQyejCZ1GOKRxR7GzHxhUvEM/VOx0tpqj95rE3tt7Dv1MM6WPbIiKYhh
+         7th+iejlGRsQTYTzRQFUPiRPFHBGWhsj+FtKmqVlNBShm1m5D2Ssnn+ieyK3pY0Hdnph
+         sf2iQ18tsjcAYdnxeL8iTkLTlW7D4OkARNbWSH76eoaTck5nyF5yckrdIKtDyKu59R6f
+         wbZNPtsN/S9qRMJoKRVUxfymcM5FYvOY6Qqql7zlRFwgy4Os6GV7KXNL5W5B4iMIasAs
+         5xJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-disposition
-         :in-reply-to;
-        bh=rGJLgTs/l2/MGpdEoc1r+xCFDRI912a08UTCUjCZJcM=;
-        b=b+Yh0Trw9mk/kPsuvH6y4uLYilSKn8kBv8JCFO+i+5GWMxGy9NPm/GhTnSVbheXmp6
-         L5xTSGvXKu4O19YWjUYsIdfI8yTfM/dmkVX7D4+E92Q7J9JtBgBVg1QZExiTaJ3EdUNG
-         OMsnqbbFjG79qhxrg3jnOAyhhzP8e0krmJCsUgVvHU98OD4enqIuY7h+1jeqsmaw8t50
-         NuwF3CI7NYjT9/XyKilJzBTI0aN1SoMLtBxIza47Z4tvg4wnQSpgnriTcgV2ABMsX6hX
-         UWJ3KW3HAslAyFA9v5o9s5nmBaXdCqqYNejlbPlKuZJvnjtHQtKLlIhgifxzmXe39gjl
-         xuKg==
-X-Gm-Message-State: AOAM532TB8rz7/ifUn6OtXU1EcoNK+m2jmyJNqx8MP4CBoyysO3XSaq+
-        t65bzXu7EodGBBN6hI3f75ciEFB1WC8FcSlP
-X-Google-Smtp-Source: ABdhPJz0/LdzjBlr7ice5pFWBbXbg5Wcm4vvuQ2a1qOfESBnw1zkjaA5BKoyzuJ3aWS5JpDIkMQ/YQ==
-X-Received: by 2002:a05:6e02:1a65:: with SMTP id w5mr11357415ilv.5.1617375054056;
-        Fri, 02 Apr 2021 07:50:54 -0700 (PDT)
-Received: from cosmicpenguin.net (c-71-237-100-236.hsd1.co.comcast.net. [71.237.100.236])
-        by smtp.gmail.com with ESMTPSA id q207sm4724742iod.6.2021.04.02.07.50.53
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ldZzMYp9rBIEkuelFhL1o+s+U9zYs7UBzeIApWLg0og=;
+        b=NgX6mBrZZksd8pkkEDUDDqWH1BCZDDGy4LrJMzjML5CRkAqjDGgnsLMnOruqsk6cWK
+         lKHRXUecN6cel0ccj8PTKqGK/e1LuztLKZPc4NYoxLJEVEknaHDaOLxp1sHtI8Z2vC5W
+         KB2rsBf7NdQXDNDZDt3B7cjd3IVHBJo7fgH/IV01FEvQGbS9yqc3LYzm/9lY/OXL4HEM
+         STlFx4hPelJuXRq6j2Id/tDdHUK9V/N6HvJVHQooaszZkZI5OweC6MrP1JfTiMfBuyEQ
+         rm9udVvdWFEFM7KVf605VFEK9xwdaT4G+pH2E+nlU2GtT0sY5StoXYdpYKtvnssZiykP
+         vh1g==
+X-Gm-Message-State: AOAM530E5QARDKZcwxAxZwB0X7vJUulcKl1c8oCUgKnjBNAmcby8vAJi
+        SylFiAOkbf0fbt8+tV4sy7Op
+X-Google-Smtp-Source: ABdhPJzysKHkD5hPLLoXR+L/SXqkFq153ovg5+Vmyw8i0BA/UvbNYS6f/EmK3dcKK6n+aVLWn8gBQw==
+X-Received: by 2002:a17:902:bb8e:b029:e6:3b2:5834 with SMTP id m14-20020a170902bb8eb02900e603b25834mr13267915pls.38.1617375702769;
+        Fri, 02 Apr 2021 08:01:42 -0700 (PDT)
+Received: from localhost.localdomain ([103.77.37.174])
+        by smtp.gmail.com with ESMTPSA id x7sm8773647pff.12.2021.04.02.08.01.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Apr 2021 07:50:53 -0700 (PDT)
-Date:   Fri, 2 Apr 2021 08:50:51 -0600
-From:   Jordan Crouse <jordan@cosmicpenguin.net>
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     dri-devel@lists.freedesktop.org,
-        Rob Clark <robdclark@chromium.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <freedreno@lists.freedesktop.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        David Airlie <airlied@linux.ie>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        Sharat Masetty <smasetty@codeaurora.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Akhil P Oommen <akhilpo@codeaurora.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Dave Airlie <airlied@redhat.com>, Sean Paul <sean@poorly.run>,
-        open list <linux-kernel@vger.kernel.org>
-Subject: Re: [Freedreno] [PATCH 2/2] drm/msm: Add param for userspace to
- query suspend count
-Message-ID: <20210402145051.jcs23ssgkqkkmmtq@cosmicpenguin.net>
-Mail-Followup-To: Rob Clark <robdclark@gmail.com>,
-        dri-devel@lists.freedesktop.org, Rob Clark <robdclark@chromium.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" <freedreno@lists.freedesktop.org>,
-        Jonathan Marek <jonathan@marek.ca>, David Airlie <airlied@linux.ie>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" <linux-arm-msm@vger.kernel.org>,
-        Sharat Masetty <smasetty@codeaurora.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Akhil P Oommen <akhilpo@codeaurora.org>,
-        Daniel Vetter <daniel@ffwll.ch>, Dave Airlie <airlied@redhat.com>,
-        Sean Paul <sean@poorly.run>,
-        open list <linux-kernel@vger.kernel.org>
-References: <20210325012358.1759770-1-robdclark@gmail.com>
- <20210325012358.1759770-3-robdclark@gmail.com>
+        Fri, 02 Apr 2021 08:01:42 -0700 (PDT)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     miquel.raynal@bootlin.com, richard@nod.at, vigneshr@ti.com,
+        robh+dt@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-mtd@lists.infradead.org, linux-kernel@vger.kernel.org,
+        boris.brezillon@collabora.com, Daniele.Palmas@telit.com,
+        bjorn.andersson@linaro.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v11 0/4] Add support for secure regions in NAND
+Date:   Fri,  2 Apr 2021 20:31:24 +0530
+Message-Id: <20210402150128.29128-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210325012358.1759770-3-robdclark@gmail.com>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Mar 24, 2021 at 06:23:53PM -0700, Rob Clark wrote:
-> From: Rob Clark <robdclark@chromium.org>
-> 
-> Performance counts, and ALWAYS_ON counters used for capturing GPU
-> timestamps, lose their state across suspend/resume cycles.  Userspace
-> tooling for performance monitoring needs to be aware of this.  For
-> example, after a suspend userspace needs to recalibrate it's offset
-> between CPU and GPU time.
-> 
+On a typical end product, a vendor may choose to secure some regions in
+the NAND memory which are supposed to stay intact between FW upgrades.
+The access to those regions will be blocked by a secure element like
+Trustzone. So the normal world software like Linux kernel should not
+touch these regions (including reading).
 
-Acked-by: Jordan Crouse <jordan@cosmicpenguin.net>
+So this series adds a property for declaring such secure regions in DT
+so that the driver can skip touching them. While at it, the Qcom NANDc
+DT binding is also converted to YAML format.
 
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
-> ---
->  drivers/gpu/drm/msm/adreno/adreno_gpu.c | 3 +++
->  drivers/gpu/drm/msm/msm_drv.c           | 1 +
->  drivers/gpu/drm/msm/msm_gpu.c           | 2 ++
->  drivers/gpu/drm/msm/msm_gpu.h           | 2 ++
->  include/uapi/drm/msm_drm.h              | 1 +
->  5 files changed, 9 insertions(+)
-> 
-> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> index f09175698827..e473b7c9ff7f 100644
-> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> @@ -280,6 +280,9 @@ int adreno_get_param(struct msm_gpu *gpu, uint32_t param, uint64_t *value)
->  	case MSM_PARAM_FAULTS:
->  		*value = gpu->global_faults;
->  		return 0;
-> +	case MSM_PARAM_SUSPENDS:
-> +		*value = gpu->suspend_count;
-> +		return 0;
->  	default:
->  		DBG("%s: invalid param: %u", gpu->name, param);
->  		return -EINVAL;
-> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-> index b29e439eb299..4f9fa0189a07 100644
-> --- a/drivers/gpu/drm/msm/msm_drv.c
-> +++ b/drivers/gpu/drm/msm/msm_drv.c
-> @@ -39,6 +39,7 @@
->   *           GEM object's debug name
->   * - 1.5.0 - Add SUBMITQUERY_QUERY ioctl
->   * - 1.6.0 - Syncobj support
-> + * - 1.7.0 - Add MSM_PARAM_SUSPENDS to access suspend count
->   */
->  #define MSM_VERSION_MAJOR	1
->  #define MSM_VERSION_MINOR	6
-> diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
-> index 7bdb01f202f4..ab888d83b887 100644
-> --- a/drivers/gpu/drm/msm/msm_gpu.c
-> +++ b/drivers/gpu/drm/msm/msm_gpu.c
-> @@ -256,6 +256,8 @@ int msm_gpu_pm_suspend(struct msm_gpu *gpu)
->  	if (ret)
->  		return ret;
->  
-> +	gpu->suspend_count++;
-> +
->  	return 0;
->  }
->  
-> diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.h
-> index d7cd02cd2109..18baf935e143 100644
-> --- a/drivers/gpu/drm/msm/msm_gpu.h
-> +++ b/drivers/gpu/drm/msm/msm_gpu.h
-> @@ -152,6 +152,8 @@ struct msm_gpu {
->  		ktime_t time;
->  	} devfreq;
->  
-> +	uint32_t suspend_count;
-> +
->  	struct msm_gpu_state *crashstate;
->  	/* True if the hardware supports expanded apriv (a650 and newer) */
->  	bool hw_apriv;
-> diff --git a/include/uapi/drm/msm_drm.h b/include/uapi/drm/msm_drm.h
-> index a6c1f3eb2623..5596d7c37f9e 100644
-> --- a/include/uapi/drm/msm_drm.h
-> +++ b/include/uapi/drm/msm_drm.h
-> @@ -76,6 +76,7 @@ struct drm_msm_timespec {
->  #define MSM_PARAM_NR_RINGS   0x07
->  #define MSM_PARAM_PP_PGTABLE 0x08  /* => 1 for per-process pagetables, else 0 */
->  #define MSM_PARAM_FAULTS     0x09
-> +#define MSM_PARAM_SUSPENDS   0x0a
->  
->  struct drm_msm_param {
->  	__u32 pipe;           /* in, MSM_PIPE_x */
-> -- 
-> 2.29.2
-> 
-> _______________________________________________
-> Freedreno mailing list
-> Freedreno@lists.freedesktop.org
-> https://lists.freedesktop.org/mailman/listinfo/freedreno
+Thanks,
+Mani
+
+Changes in v11:
+
+* Removed unneeded check in nand_block_isreserved()
+* Used mtd->erasesize as the size in nand_isbad_bbm()
+
+Changes in v10:
+
+* Added Rob's review tag for binding
+
+Changes in v9:
+
+Based on review comments from Miquel:
+
+* Fixed the secure-regions check
+* Renamed the function to nand_region_is_secured() and used bool return
+* Moved the parsing function to nand_scan()
+
+* Added a patch to fix nand_cleanup in qcom driver
+
+Changes in v8:
+
+* Reworked the secure region check logic based on input from Boris
+* Removed the check where unnecessary in rawnand core.
+
+Changes in v7:
+
+* Made "size" u64 and fixed a warning reported by Kernel test bot
+
+Changes in v6:
+
+* Made use of "size" of the regions for comparision
+* Used "secure" instead of "sec"
+* Fixed the sizeof parameter in of_get_nand_secure_regions()
+
+Changes in v5:
+
+* Switched to "uint64-matrix" as suggested by Rob
+* Moved the whole logic from qcom driver to nand core as suggested by Boris
+
+Changes in v4:
+
+* Used "uint32-matrix" instead of "uint32-array" as per Rob's review.
+* Collected Rob's review tag for binding conversion patch
+
+Changes in v3:
+
+* Removed the nand prefix from DT property and moved the property parsing
+  logic before nand_scan() in driver.
+
+Changes in v2:
+
+* Moved the secure-regions property to generic NAND binding as a NAND
+  chip property and renamed it as "nand-secure-regions".
+
+Manivannan Sadhasivam (4):
+  dt-bindings: mtd: Convert Qcom NANDc binding to YAML
+  dt-bindings: mtd: Add a property to declare secure regions in NAND
+    chips
+  mtd: rawnand: Add support for secure regions in NAND memory
+  mtd: rawnand: qcom: Add missing nand_cleanup() in error path
+
+ .../bindings/mtd/nand-controller.yaml         |   7 +
+ .../devicetree/bindings/mtd/qcom,nandc.yaml   | 196 ++++++++++++++++++
+ .../devicetree/bindings/mtd/qcom_nandc.txt    | 142 -------------
+ drivers/mtd/nand/raw/nand_base.c              | 100 ++++++++-
+ drivers/mtd/nand/raw/qcom_nandc.c             |   1 +
+ include/linux/mtd/rawnand.h                   |  14 ++
+ 6 files changed, 317 insertions(+), 143 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/mtd/qcom,nandc.yaml
+ delete mode 100644 Documentation/devicetree/bindings/mtd/qcom_nandc.txt
+
+-- 
+2.25.1
+
