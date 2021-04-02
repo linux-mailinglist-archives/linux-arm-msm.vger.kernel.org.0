@@ -2,115 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1D711352978
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Apr 2021 12:06:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B182C3529A2
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Apr 2021 12:18:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235162AbhDBKFq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 2 Apr 2021 06:05:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45510 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235077AbhDBKFo (ORCPT
+        id S234448AbhDBKST (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 2 Apr 2021 06:18:19 -0400
+Received: from mo4-p01-ob.smtp.rzone.de ([85.215.255.53]:21038 "EHLO
+        mo4-p01-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229605AbhDBKSQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 2 Apr 2021 06:05:44 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7982AC0613E6
-        for <linux-arm-msm@vger.kernel.org>; Fri,  2 Apr 2021 03:05:43 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id x13so4293058wrs.9
-        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Apr 2021 03:05:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=mdYuWwgCAgpe/tpCk/WPHQPCQeWl/PCSYj7cNktgbbg=;
-        b=IQjVngtaEmv8R+bycJCfbeb4LCx60QpT0m+RAJ7LHyxaDRtdLhSMJhkSHcwO4e8XgA
-         qr/emy+/hycZKPNrpCfCLWFZ7C2KdgVGXEoJTuuISSotKViPbeDBZ21AmWYhZ+45p0vq
-         a+wo97dJNDZqIuflUgjpLT1sAu3WZT0y64ZyuweW5oyW3SFNCjLMrfX2hqf2zeOMkR3b
-         K0Vo7cD7WjFu46mC7zjzgnj9GjBsDSMyX9rXFf1FTmKe3ltntKD0T10mu3Cw/5g5b2W8
-         9lSL+1di3+oO+MKHIDOmaDQKTqpfstQXJH0vJD3oty4AfqU/WXthLzC8A5YcYrGHk/U6
-         /pZA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=mdYuWwgCAgpe/tpCk/WPHQPCQeWl/PCSYj7cNktgbbg=;
-        b=KvKOjeFrL0Zipo0E4pDkQKP6G23QEc8ot/et3KJ961DQSgGXr/0VVI0IZNdF0pTAcG
-         fkp4CTS49NpC1UnWUIEwPyKZC79WxKqlR/GS+2FAhqsIikVnoQrMeEbz+nvoen85XbIv
-         ToGCyublxoVpdIC9BepSHUuDaz0md+jY7fhg+FRfwnHCLQwcalanfiHtbjBG8fB4eDnT
-         sUUFTTadljPOevFqx16fR5K0iAfUX4ejcvf/HRtzZRhBNz6Ub9Y53e2u2BGUD+16hNSo
-         3mnhgLJixxHznbMrijHDTC8lOoPBFo8Qa4sBp/mInc5wDX3e4PDg09bWCBfYzVUrKv8c
-         DRiA==
-X-Gm-Message-State: AOAM531Q5Z9NqqhA1zv2wAAD2IjYbbTB9zqsaS8/qeB7LDWjevfACoeG
-        gYRrswF8YyNfS0ks5eXZSnob6Q==
-X-Google-Smtp-Source: ABdhPJzBaRKTuvXu72RbacAbK15IHL4Zj8LyA1VmGP4kKBs0i+dJ6YN2hBwFe6gky8aamXoVR1RB6A==
-X-Received: by 2002:a05:6000:1acd:: with SMTP id i13mr14378546wry.48.1617357942265;
-        Fri, 02 Apr 2021 03:05:42 -0700 (PDT)
-Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id v18sm15466618wrf.41.2021.04.02.03.05.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Apr 2021 03:05:41 -0700 (PDT)
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-To:     stanimir.varbanov@linaro.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, mchehab@kernel.org,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Cc:     bryan.odonoghue@linaro.org, dikshita@codeaurora.org,
-        jonathan@marek.ca, vgarodia@codeaurora.org
-Subject: [PATCH v3 25/25] media: venus: vdec: Fix decoder cmd STOP issue
-Date:   Fri,  2 Apr 2021 11:06:48 +0100
-Message-Id: <20210402100648.1815854-26-bryan.odonoghue@linaro.org>
-X-Mailer: git-send-email 2.30.1
-In-Reply-To: <20210402100648.1815854-1-bryan.odonoghue@linaro.org>
-References: <20210402100648.1815854-1-bryan.odonoghue@linaro.org>
+        Fri, 2 Apr 2021 06:18:16 -0400
+ARC-Seal: i=1; a=rsa-sha256; t=1617358690; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=lbhEVOyiP1K0Ai25xiA0D/u/eExjq+tLmls4X/2C1zWFup7ZFh2oqnwaujjvpx7RbC
+    6Uf84xdDOUMET/qZkfGfERIi8FjZ2gcpzCujZMQQTrsLoeNn/lyYH3qvlXxlnnsb0CaA
+    NElTU1Sq7cup82S/ADeeOoquzP/DZUNjgFtLD2JLjNYnYENCYIXW/R28O/4++rXM38RQ
+    jKDFixqpfs8iXmB85cFAUGxRp0cPCB8PCZHIZgz9qLWzDsKw2GcpwyiOYl9MfzgzU/v6
+    0tCPqQQ9KyY8xRJETKfjFezTgvAwC0XbKYhni1OjlJZAGP+b2sAlZLnxTD8fhn0pj2AP
+    yXGw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1617358690;
+    s=strato-dkim-0002; d=strato.com;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=Xis9t6GR3U5PdxpwNv74+ch9cRR+3YlXApYu66KrVdY=;
+    b=mQWpM6zBDlJYQIy4uYviT+GOpHXPUvLS38DqVlXVQnp3LjcyvoGRDEGZwx3x1Zkzth
+    si4tpEtSbyKJztGbY42ffTH81F7T48ByzAMYjJXEI4C7CrNw5x6GfcfOJwL8LoRLKSmD
+    9bAVFRoiQNXg9Cu+G19C4IqU8yDb3V9wPWWmPvxNc05+bu62rlbNLbSPlCL7PL1O5o77
+    l8XB+CieQMOiozPba060osbET+k2EJEAls9iAzLFniCYr/Uyy4hcQkZSUvrXMmqMRzdG
+    3y3Lx9RWNOxsmFhVvoO2Y5XQfDdgYR8syi6Dy7CJuGQxivsiVzXoZ91DjOk9oYw2VPmt
+    vncw==
+ARC-Authentication-Results: i=1; strato.com;
+    dkim=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1617358690;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=Xis9t6GR3U5PdxpwNv74+ch9cRR+3YlXApYu66KrVdY=;
+    b=XqiKXhYzxIGyi8lZ+iFKDgpf3/CPDz1XtvpLdslWAp/KkbHJjIzRSexFyUgkgMFuzI
+    iGMVAvq2qdyocGgiOleHKOa5TlRFHi6JjL7EXsZnDHco/M+oM09op9CnZ2r+DhnRXKT+
+    ppZ1Jsf7/AdCY5pSFD32ztLx/O4wYJfAwQaRNdu1awrYf6Yby9/FpIXXXvdDEW1peqpa
+    oeEqfqxfwyvchb3YQF1sGpvYSuhtEp5R8ZRuJ/8+Q8gSHtYFBFWfB77/9zYkjrCJKbg1
+    OLDEi6inVHWrNyqt/SF+3Hu60fEmWEMV5o9gWwjwvQIE4ETpa74F4D0C77DEVY+XhgDP
+    pfwg==
+Authentication-Results: strato.com;
+    dkim=none
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u26zEodhPgRDZ8j9Ic/GaYo="
+X-RZG-CLASS-ID: mo00
+Received: from gerhold.net
+    by smtp.strato.de (RZmta 47.23.1 DYNA|AUTH)
+    with ESMTPSA id q0a3c1x32AIAzbE
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Fri, 2 Apr 2021 12:18:10 +0200 (CEST)
+Date:   Fri, 2 Apr 2021 12:18:04 +0200
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Elliot Berman <eberman@codeaurora.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Brian Masney <masneyb@onstation.org>,
+        Jeffrey Hugo <jhugo@codeaurora.org>,
+        Douglas Anderson <dianders@chromium.org>
+Subject: Re: [PATCH v2] firmware: qcom_scm: Only compile legacy calls on ARM
+Message-ID: <YGbvXFrMg6X7q3qL@gerhold.net>
+References: <20210323224336.1311783-1-swboyd@chromium.org>
+ <6ec0ca8d-85c7-53d6-acf2-22c4ac13e805@codeaurora.org>
+ <161734672825.2260335.8472441215895199196@swboyd.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <161734672825.2260335.8472441215895199196@swboyd.mtv.corp.google.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+On Thu, Apr 01, 2021 at 11:58:48PM -0700, Stephen Boyd wrote:
+> Quoting Elliot Berman (2021-04-01 18:12:14)
+> > 
+> > It might be a good idea to wrap these lines from qcom_scm_call with #if 
+> > IS_ENABLED(CONFIG_ARM), and the corresponding ones in qcom_scm_call_atomic:
+> > 
+> >    case SMC_CONVENTION_LEGACY:
+> >        return scm_legacy_call(dev, desc, res);
+> > 
+> > If something is wrong with loaded firmware and LEGACY convention is 
+> > incorrectly selected, you would get a better hint about the problem: 
+> > "Unknown current SCM calling convention." You would still get the hint 
+> > earlier from __get_convention, but that may not be obvious to someone 
+> > unfamiliar with the SCM driver.
+> > 
+> > I'll defer to your/Bjorn's preference:
+> > 
+> > Acked-by: Elliot Berman <eberman@codeaurora.org>
+> > 
+> > with or without modifying qcom_scm_call{_atomic}.
+> > 
+> 
+> Maybe it would be better to catch that problem at the source and force
+> arm64 calling convention to be safe? I'm thinking of this patch, but it
+> could be even more fine tuned and probably the sc7180 check could be
+> removed in the process if the rest of this email makes sense.
+> 
+> If I understand correctly CONFIG_ARM64=y should never use legacy
+> convention (and never the 32-bit one either?), so we can figure that out
+> pretty easily and just force it to use 64-bit if the architecture is
+> arm64. If only the 64-bit convention is supported on arm64 then we
+> really don't even need to call into the firmware to figure it out on
+> arm64. We can do this convention detection stuff on arm32 (CONFIG_ARM)
+> and always assume 64-bit convention on CONFIG_ARM64. Is that right?
+> 
 
-Fixes an issue when issuing a stop command to the controller, negating the
-following firmware error.
+No, the detection is also needed on ARM64. On ARM32 there can be either
+legacy or SMC32, but on ARM64 there can be either SMC32 or SMC64.
+You cannot use SMC64 on 32-bit, but you can use SMC32 on ARM64 just
+fine. SMC32 is used on MSM8916 for example.
 
-"SFR message from FW: Exception: TID = Unknown IP = 0x3b7dc FA = 0x0
- cause = 0x6"
-
-Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Acked-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
----
- drivers/media/platform/qcom/venus/hfi_cmds.c | 2 +-
- drivers/media/platform/qcom/venus/vdec.c     | 5 ++++-
- 2 files changed, 5 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/media/platform/qcom/venus/hfi_cmds.c b/drivers/media/platform/qcom/venus/hfi_cmds.c
-index 0bcd434e7876..fb64046d1e35 100644
---- a/drivers/media/platform/qcom/venus/hfi_cmds.c
-+++ b/drivers/media/platform/qcom/venus/hfi_cmds.c
-@@ -254,7 +254,7 @@ int pkt_session_unset_buffers(struct hfi_session_release_buffer_pkt *pkt,
- int pkt_session_etb_decoder(struct hfi_session_empty_buffer_compressed_pkt *pkt,
- 			    void *cookie, struct hfi_frame_data *in_frame)
- {
--	if (!cookie || !in_frame->device_addr)
-+	if (!cookie)
- 		return -EINVAL;
- 
- 	pkt->shdr.hdr.size = sizeof(*pkt);
-diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
-index 0fe4863371e2..04f457cbf631 100644
---- a/drivers/media/platform/qcom/venus/vdec.c
-+++ b/drivers/media/platform/qcom/venus/vdec.c
-@@ -515,7 +515,10 @@ vdec_decoder_cmd(struct file *file, void *fh, struct v4l2_decoder_cmd *cmd)
- 
- 		fdata.buffer_type = HFI_BUFFER_INPUT;
- 		fdata.flags |= HFI_BUFFERFLAG_EOS;
--		fdata.device_addr = 0xdeadb000;
-+		if (IS_V6(inst->core))
-+			fdata.device_addr = 0;
-+		else
-+			fdata.device_addr = 0xdeadb000;
- 
- 		ret = hfi_session_process_buf(inst, &fdata);
- 
--- 
-2.30.1
-
+Stephan
