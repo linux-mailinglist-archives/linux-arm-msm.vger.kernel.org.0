@@ -2,127 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DE695353057
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Apr 2021 22:35:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3B731353072
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Apr 2021 22:58:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231443AbhDBUfq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 2 Apr 2021 16:35:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40860 "EHLO
+        id S235243AbhDBU6M (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 2 Apr 2021 16:58:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45738 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231406AbhDBUfq (ORCPT
+        with ESMTP id S235025AbhDBU6L (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 2 Apr 2021 16:35:46 -0400
-Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com [IPv6:2607:f8b0:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C57F1C0613E6
-        for <linux-arm-msm@vger.kernel.org>; Fri,  2 Apr 2021 13:35:42 -0700 (PDT)
-Received: by mail-pg1-x530.google.com with SMTP id j34so2188889pgj.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Apr 2021 13:35:42 -0700 (PDT)
+        Fri, 2 Apr 2021 16:58:11 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F0D5C0613E6
+        for <linux-arm-msm@vger.kernel.org>; Fri,  2 Apr 2021 13:58:08 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id i26so9076406lfl.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Apr 2021 13:58:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=bYNefTtueRtbK9O76WmEEWHha/LaZSXchRlV45JIZY8=;
-        b=ECzeFdIxkBHD3YuCPbITfi9978+nZyYdB2UVcft7Fw5RKrXyQLUz9marixQu3+5aui
-         Fgijkbi2pQCLb6wq23xYFNjKmrJxj6s4Qvkq4DRJ3VFJMxo5C02xxeQ2os/qLQNKyzqE
-         IWNIujy4eiu4ixYhTF43C8aUNJHDCUSs7h7vg=
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Lh6tlwGlVgsjPbfd4aPH/Z77SrxX/auFbVs6qPqa7sg=;
+        b=LwdaSBXvHjNJ55j9n67G0fDMnPv5DeXfWSEO2HnTWgZxyLimPHa+MAatCZxxyTmlYs
+         vibw8//CB3Uz6m24al0XmoQa1CBaiUy5OWj2tYPkSphd9wJMOykZuUU/Qrnbe5T2IJfE
+         /kAL8FqO1YueleLlMR5NDaXT23zTfLEuQ1EWTqVoDAIKjiu0LBAZiwyzZ/S6hefrh6qz
+         JU1hG7uNQa8my0AcMUnVI+lG8TRvXvQn31yoS0GSKG64ufsS5mT0kSiuwaSFKdV6AGd7
+         oJKpNltqOuysK+o593rc3l9ezrGXsEVWzj4EIAXnnwm9S6CBDBWZFtP3HQyKb+z3tfd4
+         QnIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=bYNefTtueRtbK9O76WmEEWHha/LaZSXchRlV45JIZY8=;
-        b=K/tuVaTrxUAUnkNbwxBpNuRm7cnJKGGHUoOgGOzS8qAnocVu672V3vrl4cO50gif0h
-         +RdUrd+/Ry6TZKdAaXv7bOVNS2SEgNQCg2ePnNRqGGO9lDzMuAHTOJXzg/JZII8oXsDP
-         JsvsLREIRJH+Ah7C0u6REROosGbcDWI2zjY8KMeF4T548JyRPQNtv/NqNfLOVyRDBa0U
-         CsFE4G5TnBxPm5eiv6i6VS0EVLYpHWndrxv0tZv/n6Vj/T1Qp/cwFJ+thk8nY9pFfa7o
-         w3w6MlLi03nvMwWPSit8gBohkUuVEztQliwYOZsCBHpV8Br7EEDWJO3Vmy5nknkdG2v6
-         r3cQ==
-X-Gm-Message-State: AOAM531/MpipVXz7d+beSn2pvGNszt6X7tSTEeNEwbJTe2Jp6WMrOtjP
-        nO6UJs6fVu3Bd9TuoooggubKMA==
-X-Google-Smtp-Source: ABdhPJxTz7TYSh6p4CoKhJAPlT3l2XcEh6VEdLMIe6/tWCfwXt3SK7RLev4FROoopZ5UmHf/w9E0xQ==
-X-Received: by 2002:a62:8ccc:0:b029:1f6:c5e2:69ff with SMTP id m195-20020a628ccc0000b02901f6c5e269ffmr13801935pfd.46.1617395742219;
-        Fri, 02 Apr 2021 13:35:42 -0700 (PDT)
-Received: from localhost ([2620:15c:202:201:581c:e04f:7c08:c602])
-        by smtp.gmail.com with UTF8SMTPSA id h18sm5277415pgj.51.2021.04.02.13.35.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 02 Apr 2021 13:35:41 -0700 (PDT)
-Date:   Fri, 2 Apr 2021 13:35:40 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     satya priya <skakit@codeaurora.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Lh6tlwGlVgsjPbfd4aPH/Z77SrxX/auFbVs6qPqa7sg=;
+        b=ofPr2g+WROYGg9zZoMjAnKl+8DrWMK//DGzbp7gSSRMjt7HiTULkCh7Oqz4oIQ6y23
+         xyU/PFVXEXLAA2ht/MaFM0t7jJzcp7d427BZS9EdF7kVuTETgPRUqvklKCfiIdEWHHIn
+         Oi7GcTynpqgiDi01u2ze0fucsNQWi83Jz76SeP1bKHVPX0IODhtW1RXPn3eT3vxzOUxo
+         Yp3OCR6JFt/9WptaCfsj2YfekVzAIXzEy52BHKIO0cvQ1n1qLJocTKiRV2D0Nagj287Y
+         B16rS08B3aGPj3Ue892F7EQEzQGdBPxx9QGRCko6OI/7xrGwVgW/RHiq8gkQ+7phQyHj
+         iAbw==
+X-Gm-Message-State: AOAM531PgmyE0/y3fAPsAsHcYGGjeEJ7L+F1Au0I/jYi8NTGUvgYmXUP
+        C6Bil5IwReGB74EnVvFrzO00LMgJM9qdRQ==
+X-Google-Smtp-Source: ABdhPJwfwmuDegn+wMJPwNB5jKPfcAxb8qAssfftTChaKVyIr40iI+qiNYhybnujlD2Qs0zEi3AyTw==
+X-Received: by 2002:a05:6512:c02:: with SMTP id z2mr10245023lfu.595.1617397087083;
+        Fri, 02 Apr 2021 13:58:07 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id b17sm959076lfi.57.2021.04.02.13.58.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 02 Apr 2021 13:58:06 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, kgunda@codeaurora.org
-Subject: Re: [PATCH V2 1/5] arm64: dts: qcom: pm7325: Add PMIC peripherals
- for pm7325
-Message-ID: <YGeAHKOq65WBr9Yr@google.com>
-References: <1617268396-1837-1-git-send-email-skakit@codeaurora.org>
- <1617268396-1837-2-git-send-email-skakit@codeaurora.org>
- <YGdV+un4bGcF6jJH@google.com>
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
+Subject: [PATCH v3 00/16] clk: qcom: cleanup sm8250/sdm845/sc7180 clock drivers
+Date:   Fri,  2 Apr 2021 23:57:48 +0300
+Message-Id: <20210402205804.96507-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <YGdV+un4bGcF6jJH@google.com>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Apr 02, 2021 at 10:35:54AM -0700, Matthias Kaehlcke wrote:
-> On Thu, Apr 01, 2021 at 02:43:12PM +0530, satya priya wrote:
-> 
-> > subject: arm64: dts: qcom: pm7325: Add PMIC peripherals for pm7325
-> 
-> nit: maybe just 'arm64: dts: qcom: Add pm7325 support/.dtsi' or similar?
-> 
-> > Add temp-alarm and GPIO support for pm7325.
-> 
-> nit: it's more than that, you are adding the .dtsi for the PMIC itself.
-> 
-> > Signed-off-by: satya priya <skakit@codeaurora.org>
-> > ---
-> >  arch/arm64/boot/dts/qcom/pm7325.dtsi | 53 ++++++++++++++++++++++++++++++++++++
-> >  1 file changed, 53 insertions(+)
-> >  create mode 100644 arch/arm64/boot/dts/qcom/pm7325.dtsi
-> > 
-> > diff --git a/arch/arm64/boot/dts/qcom/pm7325.dtsi b/arch/arm64/boot/dts/qcom/pm7325.dtsi
-> > new file mode 100644
-> > index 0000000..1e0848a
-> > --- /dev/null
-> > +++ b/arch/arm64/boot/dts/qcom/pm7325.dtsi
-> > @@ -0,0 +1,53 @@
-> > +// SPDX-License-Identifier: BSD-3-Clause
-> > +// Copyright (c) 2021, The Linux Foundation. All rights reserved.
-> > +
-> > +#include <dt-bindings/interrupt-controller/irq.h>
-> > +#include <dt-bindings/spmi/spmi.h>
-> > +
-> > +&spmi_bus {
-> > +	pm7325: pmic@1 {
-> > +		compatible = "qcom,pm7325", "qcom,spmi-pmic";
-> 
-> I saw the patches that add the compatible strings for the GPIOs, but
-> can't find those that add the strings for the PMICs themselves. Could
-> you provide a link if they have been sent already?
-> 
-> > +		reg = <0x1 SPMI_USID>;
-> > +		#address-cells = <1>;
-> > +		#size-cells = <0>;
-> > +
-> > +		pm7325_temp_alarm: temp-alarm@a00 {
-> > +			compatible = "qcom,spmi-temp-alarm";
-> > +			reg = <0xa00>;
-> > +			interrupts = <0x1 0xa 0x0 IRQ_TYPE_EDGE_BOTH>;
-> > +			#thermal-sensor-cells = <0>;
-> > +		};
-> > +
-> > +		pm7325_gpios: gpios@8800 {
-> > +			compatible = "qcom,pm7325-gpio", "qcom,spmi-gpio";
-> > +			reg = <0x8800>;
-> > +			gpio-controller;
-> > +			gpio-ranges = <&pm7325_gpios 0 0 10>;
+Cleanup several Qualcomm clock drivers by removing unused entries from
+parents map, removing test clock, etc.
 
-The GPIO enumeration is a bit confusing. The pm7325 has GPIO_01 to
-GPIO_10, however IIUC they are mapped such that under Linux
-enumeration starts with 0. I guess it makes sense to start with 0 and
-it's done consistently for 'qcom,spmi-gpio', but it's something that must
-be taken into account when using/configuring those GPIOs.
+Changes since v2:
+ - Comment out unsupported video_pll0_out_odd/_even clocks instead of
+   removing them or just using .name for them. The clocks are
+   unsupported, but mux values are provided for the future reference.
+
+Changes since v1:
+ - Remove unused entries from gpucc-sc7180, gpucc-sdm845, videocc-sc7180
+   and videocc-sm8150 drivers
+ - Restore video_pll0_out_odd/_even entries in videocc-sdm845 driver as
+   requested by Taniya Das.
+
+
