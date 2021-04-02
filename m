@@ -2,286 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 402A7352B0D
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Apr 2021 15:36:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DA8CC352B31
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Apr 2021 16:09:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229932AbhDBNg1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 2 Apr 2021 09:36:27 -0400
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:29722 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234161AbhDBNg1 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 2 Apr 2021 09:36:27 -0400
-Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
-  by alexa-out.qualcomm.com with ESMTP; 02 Apr 2021 06:36:26 -0700
-X-QCInternal: smtphost
-Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 02 Apr 2021 06:36:25 -0700
-X-QCInternal: smtphost
-Received: from mkrishn-linux.qualcomm.com ([10.204.66.35])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 02 Apr 2021 19:05:56 +0530
-Received: by mkrishn-linux.qualcomm.com (Postfix, from userid 438394)
-        id EF5742162F; Fri,  2 Apr 2021 19:05:54 +0530 (IST)
-From:   Krishna Manikandan <mkrishn@codeaurora.org>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     Krishna Manikandan <mkrishn@codeaurora.org>,
-        kalyan_t@codeaurora.org, tanmay@codeaurora.org,
-        abhinavk@codeaurora.org, robdclark@gmail.com, swboyd@chromium.org,
-        bjorn.andersson@linaro.org, vinod.koul@linaro.org,
-        dianders@chromium.org, khsieh@codeaurora.org, robh@kernel.org,
-        Chandan Uddaraju <chandanu@codeaurora.org>,
-        Vara Reddy <varar@codeaurora.org>
-Subject: [PATCH v15 4/4] dt-bindings: msm/dp: Add bindings of MSM DisplayPort controller
-Date:   Fri,  2 Apr 2021 19:05:51 +0530
-Message-Id: <1617370551-12143-4-git-send-email-mkrishn@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1617370551-12143-1-git-send-email-mkrishn@codeaurora.org>
-References: <1617370551-12143-1-git-send-email-mkrishn@codeaurora.org>
+        id S235285AbhDBOC5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 2 Apr 2021 10:02:57 -0400
+Received: from mail.kernel.org ([198.145.29.99]:42056 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S234161AbhDBOC5 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 2 Apr 2021 10:02:57 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 693C261057;
+        Fri,  2 Apr 2021 14:02:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+        s=korg; t=1617372174;
+        bh=s3K4Wdxl6b65FG3Udt8GNekVFtUvsnmMqMflAqm5g7w=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=pJA2uuHT69eee+pddHyNM1UuxGgq1lp1ToFfRh0pISLuoOCm28HRLy3otbwargDP5
+         tkEVbP/iL37RCbIidXMURFALeycf6nMjvvxQoUmLuohyk46xrWg6KjywY/ti9+AfZ4
+         jLobbHokKclYKwr8BBDaPUdEb/arB7kd2N5sWpwQ=
+Date:   Fri, 2 Apr 2021 16:02:52 +0200
+From:   Greg KH <gregkh@linuxfoundation.org>
+To:     Loic Poulain <loic.poulain@linaro.org>
+Cc:     kuba@kernel.org, davem@davemloft.net,
+        linux-arm-msm@vger.kernel.org, aleksander@aleksander.es,
+        linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
+        bjorn.andersson@linaro.org, manivannan.sadhasivam@linaro.org
+Subject: Re: [PATCH net-next v8 1/2] net: Add a WWAN subsystem
+Message-ID: <YGckDNXbeRoOBQPW@kroah.com>
+References: <1617372397-13988-1-git-send-email-loic.poulain@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1617372397-13988-1-git-send-email-loic.poulain@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add bindings for Snapdragon DisplayPort controller driver.
+On Fri, Apr 02, 2021 at 04:06:36PM +0200, Loic Poulain wrote:
+> This change introduces initial support for a WWAN framework. Given the
+> complexity and heterogeneity of existing WWAN hardwares and interfaces,
+> there is no strict definition of what a WWAN device is and how it should
+> be represented. It's often a collection of multiple devices that perform
+> the global WWAN feature (netdev, tty, chardev, etc).
+> 
+> One usual way to expose modem controls and configuration is via high
+> level protocols such as the well known AT command protocol, MBIM or
+> QMI. The USB modems started to expose that as character devices, and
+> user daemons such as ModemManager learnt how to deal with them. This
+> initial version adds the concept of WWAN port, which can be created
+> by any driver to expose one of these protocols. The WWAN core takes
+> care of the generic part, including character device management, and
+> rely on port operations to received and submit protocol data.
+> 
+> Since the different components/devices do no necesserarly know about
+> each others, and can be created/removed in different orders, the
+> WWAN core ensures that all WAN ports that contribute to the 'whole'
+> WWAN feature are grouped under the same virtual WWAN device, relying
+> on the provided parent device (e.g. mhi controller, USB device). It's
+> a 'trick' I copied from Johannes's earlier WWAN subsystem proposal.
+> 
+> This initial version is purposely minimalist, it's essentially moving
+> the generic part of the previously proposed mhi_wwan_ctrl driver inside
+> a common WWAN framework, but the implementation is open and flexible
+> enough to allow extension for further drivers.
+> 
+> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
 
-Signed-off-by: Chandan Uddaraju <chandanu@codeaurora.org>
-Signed-off-by: Vara Reddy <varar@codeaurora.org>
-Signed-off-by: Tanmay Shah <tanmay@codeaurora.org>
-Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
-Signed-off-by: Krishna Manikandan <mkrishn@codeaurora.org>
+Always run checkpatch before sending stuff off :(
 
-Changes in V2:
--Provide details about sel-gpio
+Anyway, one thing did stand out:
 
-Changes in V4:
--Provide details about max dp lanes
--Change the commit text
+> --- /dev/null
+> +++ b/include/linux/wwan.h
+> @@ -0,0 +1,127 @@
+> +/* SPDX-License-Identifier: GPL-2.0-only */
+> +/* Copyright (c) 2021, Linaro Ltd <loic.poulain@linaro.org> */
+> +
+> +#ifndef __WWAN_H
+> +#define __WWAN_H
+> +
+> +#include <linux/device.h>
+> +#include <linux/kernel.h>
+> +#include <linux/skbuff.h>
+> +
+> +/**
+> + * enum wwan_port_type - WWAN port types
+> + * @WWAN_PORT_AT: AT commands
+> + * @WWAN_PORT_MBIM: Mobile Broadband Interface Model control
+> + * @WWAN_PORT_QMI: Qcom modem/MSM interface for modem control
+> + * @WWAN_PORT_QCDM: Qcom Modem diagnostic interface
+> + * @WWAN_PORT_FIREHOSE: XML based command protocol
+> + * @WWAN_PORT_MAX
+> + */
+> +enum wwan_port_type {
+> +	WWAN_PORT_AT,
+> +	WWAN_PORT_MBIM,
+> +	WWAN_PORT_QMI,
+> +	WWAN_PORT_QCDM,
+> +	WWAN_PORT_FIREHOSE,
+> +	WWAN_PORT_MAX,
+> +};
+> +
+> +/**
+> + * struct wwan_port - The structure that defines a WWAN port
+> + * @type: Port type
+> + * @start_count: Port start counter
+> + * @flags: Store port state and capabilities
+> + * @ops: Pointer to WWAN port operations
+> + * @ops_lock: Protect port ops
+> + * @dev: Underlying device
+> + * @rxq: Buffer inbound queue
+> + * @waitqueue: The waitqueue for port fops (read/write/poll)
+> + */
+> +struct wwan_port {
+> +	enum wwan_port_type type;
+> +	unsigned int start_count;
+> +	unsigned long flags;
+> +	const struct wwan_port_ops *ops;
+> +	struct mutex ops_lock;
+> +	struct device dev;
+> +	struct sk_buff_head rxq;
+> +	wait_queue_head_t waitqueue;
+> +};
 
-Changes in V5:
--moved dp.txt to yaml file
+No need to put the actual definition of struct wwan_port in this .h
+file, keep it private in your .c file to keep wwan drivers from poking
+around in it where they shouldn't be :)
 
-Changes in v6:
-- Squash all AUX LUT properties into one pattern Property
-- Make aux-cfg[0-9]-settings properties optional
-- Remove PLL/PHY bindings from DP controller dts
-- Add DP clocks description
-- Remove _clk suffix from clock names
-- Rename pixel clock to stream_pixel
-- Remove redundant bindings (GPIO, PHY, HDCP clock, etc..)
-- Fix indentation
-- Add Display Port as interface of DPU in DPU bindings
-  and add port mapping accordingly.
+thanks,
 
-Chages in v7:
-- Add dp-controller.yaml file common between multiple SOC
-- Rename dp-sc7180.yaml to dp-controller-sc7180.yaml
-- change compatible string and add SOC name to it.
-- Remove Root clock generator for pixel clock
-- Add assigned-clocks and assigned-clock-parents bindings
-- Remove redundant properties, descriptions and blank lines
-- Add DP port in DPU bindings
-- Update depends-on tag in commit message and rebase change accordingly
-
-Changes in v8:
-- Add MDSS AHB clock in bindings
-
-Changes in v9:
-- Remove redundant reg-name property
-- Change assigned-clocks and assigned-clocks-parents counts to 2
-- Use IRQ flags in example dts
-
-Changes in v10:
-- Change title of this patch as it does not contain PLL bindings anymore
-- Remove redundant properties
-- Remove use of IRQ flag
-- Fix ports property
-
-Changes in v11:
-- add ports required of both #address-cells and  #size-cells
-- add required operating-points-v2
-- add required #sound-dai-cells
-- add required power-domains
-- update maintainer list
-
-Changes in v12:
-- remove soc node from examples (Stephen Boyd)
-- split dpu-sc7180.yaml changes to separate patch (Stephen Boyd)
-
-Changes in v13:
-- add assigned-clocks
-- add assigned-clock-parents
----
- .../bindings/display/msm/dp-controller.yaml        | 162 +++++++++++++++++++++
- 1 file changed, 162 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/display/msm/dp-controller.yaml
-
-diff --git a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
-new file mode 100644
-index 0000000..3a02c6c
---- /dev/null
-+++ b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
-@@ -0,0 +1,162 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: MSM Display Port Controller
-+
-+maintainers:
-+  - Kuogee Hsieh <khsieh@codeaurora.org>
-+
-+description: |
-+  Device tree bindings for DisplayPort host controller for MSM targets
-+  that are compatible with VESA DisplayPort interface specification.
-+
-+properties:
-+  compatible:
-+    enum:
-+      - qcom,sc7180-dp
-+
-+  reg:
-+    maxItems: 1
-+
-+  interrupts:
-+    maxItems: 1
-+
-+  clocks:
-+    items:
-+      - description: AHB clock to enable register access
-+      - description: Display Port AUX clock
-+      - description: Display Port Link clock
-+      - description: Link interface clock between DP and PHY
-+      - description: Display Port Pixel clock
-+
-+  clock-names:
-+    items:
-+      - const: core_iface
-+      - const: core_aux
-+      - const: ctrl_link
-+      - const: ctrl_link_iface
-+      - const: stream_pixel
-+
-+  assigned-clocks:
-+    items:
-+      - description: link clock source
-+      - description: pixel clock source
-+
-+  assigned-clock-parents:
-+    items:
-+      - description: phy 0 parent
-+      - description: phy 1 parent
-+
-+  phys:
-+    maxItems: 1
-+
-+  phy-names:
-+    items:
-+      - const: dp
-+
-+  operating-points-v2:
-+    maxItems: 1
-+
-+  power-domains:
-+    maxItems: 1
-+
-+  "#sound-dai-cells":
-+    const: 0
-+
-+  ports:
-+    type: object
-+    description: |
-+      A ports node with endpoint definitions as defined in
-+      Documentation/devicetree/bindings/media/video-interfaces.txt.
-+    properties:
-+      "#address-cells":
-+        const: 1
-+
-+      "#size-cells":
-+        const: 0
-+
-+      port@0:
-+        type: object
-+        description: Input endpoint of the controller
-+
-+      port@1:
-+        type: object
-+        description: Output endpoint of the controller
-+
-+    required:
-+      - "#address-cells"
-+      - "#size-cells"
-+
-+    additionalProperties: false
-+
-+
-+required:
-+  - compatible
-+  - reg
-+  - interrupts
-+  - clocks
-+  - clock-names
-+  - phys
-+  - phy-names
-+  - "#sound-dai-cells"
-+  - power-domains
-+  - ports
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/interrupt-controller/arm-gic.h>
-+    #include <dt-bindings/clock/qcom,dispcc-sc7180.h>
-+    #include <dt-bindings/power/qcom-aoss-qmp.h>
-+    #include <dt-bindings/power/qcom-rpmpd.h>
-+
-+    displayport-controller@ae90000 {
-+        compatible = "qcom,sc7180-dp";
-+        reg = <0xae90000 0x1400>;
-+        interrupt-parent = <&mdss>;
-+        interrupts = <12>;
-+        clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
-+                 <&dispcc DISP_CC_MDSS_DP_AUX_CLK>,
-+                 <&dispcc DISP_CC_MDSS_DP_LINK_CLK>,
-+                 <&dispcc DISP_CC_MDSS_DP_LINK_INTF_CLK>,
-+                 <&dispcc DISP_CC_MDSS_DP_PIXEL_CLK>;
-+        clock-names = "core_iface", "core_aux",
-+                      "ctrl_link",
-+                      "ctrl_link_iface", "stream_pixel";
-+
-+        assigned-clocks = <&dispcc DISP_CC_MDSS_DP_LINK_CLK_SRC>,
-+                          <&dispcc DISP_CC_MDSS_DP_PIXEL_CLK_SRC>;
-+
-+        assigned-clock-parents = <&dp_phy 0>, <&dp_phy 1>;
-+
-+        phys = <&dp_phy>;
-+        phy-names = "dp";
-+
-+        #sound-dai-cells = <0>;
-+
-+        power-domains = <&rpmhpd SC7180_CX>;
-+
-+        ports {
-+            #address-cells = <1>;
-+            #size-cells = <0>;
-+
-+            port@0 {
-+                reg = <0>;
-+                endpoint {
-+                    remote-endpoint = <&dpu_intf0_out>;
-+                };
-+            };
-+
-+            port@1 {
-+                reg = <1>;
-+                endpoint {
-+                    remote-endpoint = <&typec>;
-+                };
-+            };
-+        };
-+    };
-+...
--- 
-2.7.4
-
+greg k-h
