@@ -2,352 +2,190 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CCA80353127
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 Apr 2021 00:30:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5143935319B
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 Apr 2021 01:39:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236181AbhDBW3p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 2 Apr 2021 18:29:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37298 "EHLO
+        id S234821AbhDBXju (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 2 Apr 2021 19:39:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52358 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236105AbhDBW3n (ORCPT
+        with ESMTP id S235228AbhDBXjt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 2 Apr 2021 18:29:43 -0400
-Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6273EC061797
-        for <linux-arm-msm@vger.kernel.org>; Fri,  2 Apr 2021 15:29:40 -0700 (PDT)
-Received: by mail-pj1-x1035.google.com with SMTP id ha17so3280327pjb.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Apr 2021 15:29:40 -0700 (PDT)
+        Fri, 2 Apr 2021 19:39:49 -0400
+Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 894CDC0613E6
+        for <linux-arm-msm@vger.kernel.org>; Fri,  2 Apr 2021 16:39:47 -0700 (PDT)
+Received: by mail-lj1-x229.google.com with SMTP id o16so6971260ljp.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Apr 2021 16:39:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Bd7ZOcdLbggTkWq/b11t2tsonPi+tFBvbqHGCQY6R64=;
-        b=Y82Ifp58mbKXik+k+22lEwNmBxDnbi4EdOcUxNE4tS1v8FtKxAXjDKfbiCg1WQ1fwo
-         9m5VHOYO2zt2rDjV9NpyYNB5AaUcnKTAozlTmgHodqHfwDOnGzuV6pogLfdcuiiaB8C+
-         GfUTEIrZj4D0dVJE4meMDZmr4ij2391fcpK9o=
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=MqUyCQ8bApydwGreXPqVnRLc78HVU/m7ATGYH5tMkXg=;
+        b=CRV4wVaJgKNwAGzfnLsbhXrf3/5B0OdKHc/t5G3+AztIgYdXNASnYWvk+zZfNGxRA9
+         Pv3AmSbcvzkl8tFQUWb1fhhEniE/TIVl21lJ7WLosk/JLXrqpdE/oztF/LaPRaCITXHO
+         hKbPduoy7VoYEuR4SEla8ygjeKA1lsgnWvd+IvjkZHUZ8SldAjFxZtxA8spcO5pIWbsb
+         iWAPMoMF8zQZT98wHDWdwa4RXmuJTR7paQ4WYc+ar6VpVO07AQsFFzwQqDGPBQHwYNzS
+         iEcvmlaCMndVJDmRxlhKTZ4sdLqL1EYLaZB0TZgHtiqN4fLO85rb20ATEac39z6lcHl1
+         qmkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Bd7ZOcdLbggTkWq/b11t2tsonPi+tFBvbqHGCQY6R64=;
-        b=tkxBkyOSVH0Qbk2GAuqYyKbJ+x+mM1oB7bAlR/0xrguSgvgRQPDb/ZPO7+KdcnvCZr
-         fYnW4qRsMNEjVIP7oIa4kTgImN9J8+U9SCF0iu9L+pLNkbH1Dw5RIr7gG/fQLqjuZL2L
-         un90vk6H7kPkPyG2VU1lOkUMmd6agcI+XZYS274JtZwB3xrSzgtH/HFnwCrLMq7GQXZu
-         elu+TG4SJYE9Pj7J/9CNnFr4bGr/9USLXfAo2V7gIPmdjZuo1aReGy3OK5jjEyy2nxTp
-         LYyZDvHCt87NhwQJ2kV2F6i/AAjjTMn83T1rRSdk9vxH4oZpwqL5Sl1/1+qTGfcOnZx9
-         Faqw==
-X-Gm-Message-State: AOAM531fQIHab5XcA/qasBiS762Scld8sM03NBQMAGzpp8+qp4b3tnLI
-        mqXLBoMmgD3K+9X6TGysmKbymw==
-X-Google-Smtp-Source: ABdhPJxIVU3dtJ6L+VxCnlaevQ2t7j0kZEkmzIZuSwfT1L7CjV9b4QC3Izww+hVdZMWB+Q+O6j29oA==
-X-Received: by 2002:a17:902:e051:b029:e7:37d9:f32e with SMTP id x17-20020a170902e051b02900e737d9f32emr14488918plx.78.1617402579937;
-        Fri, 02 Apr 2021 15:29:39 -0700 (PDT)
-Received: from tictac2.mtv.corp.google.com ([2620:15c:202:201:6c58:fab2:c5e2:f2d7])
-        by smtp.gmail.com with ESMTPSA id t16sm9233094pfc.204.2021.04.02.15.29.38
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=MqUyCQ8bApydwGreXPqVnRLc78HVU/m7ATGYH5tMkXg=;
+        b=djq6e0MQ9umKtdz4z26lwIG1OwsUxSoH0NHRd2mX4ozN27o0IChJPyHyAxNoXlLYA6
+         ptliavFt8R3Q9SWy8fjqyzf9yRtn4kFfo3ATlA8txRk/LzWzYRFKvu28NK0HV6oubUfC
+         h4ika/CnqfSN/OrLh6mVXW2OAedBZns0OFx48MtmUws7dSkNYLDd1ulBLbk9i6j0bgn3
+         AyRTutddw1uMHKqMM4m6iftUwvaxdqdyTJdIiXrx8X8hidKSyo/CiqC/ajNaCR+dzs5m
+         Baa2S+zsOTuMxzu5Xp7wBHqkURanBcEqp/+OeObz3fYqJPw99+KIzd1XR2QiqYIZUVQv
+         UtSw==
+X-Gm-Message-State: AOAM533c5zk2pYM8QI4kr3VbLCN2JlzIDt0RDcJLOIaL/hStdPSO/uEo
+        fPCOld245Qa3L5KLSVEFKe2KuZPCwPKp5Q==
+X-Google-Smtp-Source: ABdhPJyFSpdNKrhaXLogMPPh4tFDp1fdxd0HOYG9LhFrVBtCNJ2uEagmXOd8XtRqY7ZnA7sT00/0PA==
+X-Received: by 2002:a2e:9b14:: with SMTP id u20mr9483055lji.463.1617406786121;
+        Fri, 02 Apr 2021 16:39:46 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id w30sm1013134lfq.210.2021.04.02.16.39.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Apr 2021 15:29:39 -0700 (PDT)
-From:   Douglas Anderson <dianders@chromium.org>
-To:     Andrzej Hajda <a.hajda@samsung.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@siol.net>,
-        Sam Ravnborg <sam@ravnborg.org>
-Cc:     Linus W <linus.walleij@linaro.org>,
+        Fri, 02 Apr 2021 16:39:45 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        robdclark@chromium.org, Stephen Boyd <swboyd@chromium.org>,
-        Steev Klimaszewski <steev@kali.org>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        linux-arm-msm@vger.kernel.org,
-        Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>,
-        Douglas Anderson <dianders@chromium.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v3 12/12] drm/panel: panel-simple: Use runtime pm to avoid excessive unprepare / prepare
-Date:   Fri,  2 Apr 2021 15:28:46 -0700
-Message-Id: <20210402152701.v3.12.I9e8bd33b49c496745bfac58ea9ab418bd3b6f5ce@changeid>
-X-Mailer: git-send-email 2.31.0.208.g409f899ff0-goog
-In-Reply-To: <20210402222846.2461042-1-dianders@chromium.org>
-References: <20210402222846.2461042-1-dianders@chromium.org>
+        Rob Herring <robh+dt@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-clk@vger.kernel.org
+Subject: [PATCH v1 1/4] dt-bindings: clock: separate SDM845 GCC clock bindings
+Date:   Sat,  3 Apr 2021 02:39:41 +0300
+Message-Id: <20210402233944.273275-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Unpreparing and re-preparing a panel can be a really heavy
-operation. Panels datasheets often specify something on the order of
-500ms as the delay you should insert after turning off the panel
-before turning it on again. In addition, turning on a panel can have
-delays on the order of 100ms - 200ms before the panel will assert HPD
-(AKA "panel ready"). The above means that we should avoid turning a
-panel off if we're going to turn it on again shortly.
+Separate qcom,gcc-sdm845 clock bindings, adding required clocks and
+clock-names properties.
 
-The above becomes a problem when we want to read the EDID of a
-panel. The way that ordering works is that userspace wants to read the
-EDID of the panel _before_ fully enabling it so that it can set the
-initial mode correctly. However, we can't read the EDID until we power
-it up. This leads to code that does this dance (like
-ps8640_bridge_get_edid()):
-
-1. When userspace requests EDID / the panel modes (through an ioctl),
-   we power on the panel just enough to read the EDID and then power
-   it off.
-2. Userspace then turns the panel on.
-
-There's likely not much time between step #1 and #2 and so we want to
-avoid powering the panel off and on again between those two steps.
-
-Let's use Runtime PM to help us. We'll move the existing prepare() and
-unprepare() to be runtime resume() and runtime suspend(). Now when we
-want to prepare() or unprepare() we just increment or decrement the
-refcount. We'll default to a 1 second autosuspend delay which seems
-sane given the typical delays we see for panels.
-
-A few notes:
-- It seems the existing unprepare() and prepare() are defined to be
-  no-ops if called extra times. We'll preserve that behavior.
-- This is a slight change in the ABI of simple panel. If something was
-  absolutely relying on the unprepare() to happen instantly that
-  simply won't be the case anymore. I'm not aware of anyone relying on
-  that behavior, but if there is someone then we'll need to figure out
-  how to enable (or disable) this new delayed behavior selectively.
-- In order for this to work we now have a hard dependency on
-  "PM". From memory this is a legit thing to assume these days and we
-  don't have to find some fallback to keep working if someone wants to
-  build their system without "PM".
-
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
+ .../bindings/clock/qcom,gcc-sdm845.yaml       | 84 +++++++++++++++++++
+ .../devicetree/bindings/clock/qcom,gcc.yaml   |  2 -
+ 2 files changed, 84 insertions(+), 2 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-sdm845.yaml
 
-(no changes since v1)
-
- drivers/gpu/drm/panel/Kconfig        |  1 +
- drivers/gpu/drm/panel/panel-simple.c | 93 +++++++++++++++++++++-------
- 2 files changed, 73 insertions(+), 21 deletions(-)
-
-diff --git a/drivers/gpu/drm/panel/Kconfig b/drivers/gpu/drm/panel/Kconfig
-index 4894913936e9..ef87d92cdf49 100644
---- a/drivers/gpu/drm/panel/Kconfig
-+++ b/drivers/gpu/drm/panel/Kconfig
-@@ -80,6 +80,7 @@ config DRM_PANEL_SIMPLE
- 	tristate "support for simple panels"
- 	depends on OF
- 	depends on BACKLIGHT_CLASS_DEVICE
-+	depends on PM
- 	select VIDEOMODE_HELPERS
- 	help
- 	  DRM panel driver for dumb panels that need at most a regulator and
-diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
-index be312b5c04dd..6b22872b3281 100644
---- a/drivers/gpu/drm/panel/panel-simple.c
-+++ b/drivers/gpu/drm/panel/panel-simple.c
-@@ -27,6 +27,7 @@
- #include <linux/module.h>
- #include <linux/of_platform.h>
- #include <linux/platform_device.h>
-+#include <linux/pm_runtime.h>
- #include <linux/regulator/consumer.h>
- 
- #include <video/display_timing.h>
-@@ -175,6 +176,8 @@ struct panel_simple {
- 	bool enabled;
- 	bool no_hpd;
- 
-+	bool prepared;
+diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-sdm845.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-sdm845.yaml
+new file mode 100644
+index 000000000000..4808fa7a6b8c
+--- /dev/null
++++ b/Documentation/devicetree/bindings/clock/qcom,gcc-sdm845.yaml
+@@ -0,0 +1,84 @@
++# SPDX-License-Identifier: GPL-2.0-only
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/clock/qcom,gcc-sdm845.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
 +
- 	ktime_t prepared_time;
- 	ktime_t unprepared_time;
- 
-@@ -334,19 +337,31 @@ static int panel_simple_disable(struct drm_panel *panel)
- 	return 0;
- }
- 
-+static int panel_simple_suspend(struct device *dev)
-+{
-+	struct panel_simple *p = dev_get_drvdata(dev);
++title: Qualcomm Global Clock & Reset Controller Binding
 +
-+	gpiod_set_value_cansleep(p->enable_gpio, 0);
-+	regulator_disable(p->supply);
-+	p->unprepared_time = ktime_get();
++maintainers:
++  - Stephen Boyd <sboyd@kernel.org>
++  - Taniya Das <tdas@codeaurora.org>
 +
-+	return 0;
-+}
++description: |
++  Qualcomm global clock control module which supports the clocks, resets and
++  power domains on SDM845
 +
- static int panel_simple_unprepare(struct drm_panel *panel)
- {
- 	struct panel_simple *p = to_panel_simple(panel);
-+	int ret;
- 
--	if (p->prepared_time == 0)
-+	/* Unpreparing when already unprepared is a no-op */
-+	if (!p->prepared)
- 		return 0;
- 
--	gpiod_set_value_cansleep(p->enable_gpio, 0);
--
--	regulator_disable(p->supply);
--
--	p->prepared_time = 0;
--	p->unprepared_time = ktime_get();
-+	pm_runtime_mark_last_busy(panel->dev);
-+	ret = pm_runtime_put_autosuspend(panel->dev);
-+	if (ret < 0)
-+		return ret;
-+	p->prepared = false;
- 
- 	return 0;
- }
-@@ -376,22 +391,19 @@ static int panel_simple_get_hpd_gpio(struct device *dev,
- 	return 0;
- }
- 
--static int panel_simple_prepare_once(struct drm_panel *panel)
-+static int panel_simple_prepare_once(struct panel_simple *p)
- {
--	struct panel_simple *p = to_panel_simple(panel);
-+	struct device *dev = p->base.dev;
- 	unsigned int delay;
- 	int err;
- 	int hpd_asserted;
- 	unsigned long hpd_wait_us;
- 
--	if (p->prepared_time != 0)
--		return 0;
--
- 	panel_simple_wait(p->unprepared_time, p->desc->delay.unprepare);
- 
- 	err = regulator_enable(p->supply);
- 	if (err < 0) {
--		dev_err(panel->dev, "failed to enable supply: %d\n", err);
-+		dev_err(dev, "failed to enable supply: %d\n", err);
- 		return err;
- 	}
- 
-@@ -405,7 +417,7 @@ static int panel_simple_prepare_once(struct drm_panel *panel)
- 
- 	if (p->hpd_gpio) {
- 		if (IS_ERR(p->hpd_gpio)) {
--			err = panel_simple_get_hpd_gpio(panel->dev, p, false);
-+			err = panel_simple_get_hpd_gpio(dev, p, false);
- 			if (err)
- 				goto error;
- 		}
-@@ -423,7 +435,7 @@ static int panel_simple_prepare_once(struct drm_panel *panel)
- 
- 		if (err) {
- 			if (err != -ETIMEDOUT)
--				dev_err(panel->dev,
-+				dev_err(dev,
- 					"error waiting for hpd GPIO: %d\n", err);
- 			goto error;
- 		}
-@@ -447,25 +459,46 @@ static int panel_simple_prepare_once(struct drm_panel *panel)
-  */
- #define MAX_PANEL_PREPARE_TRIES		5
- 
--static int panel_simple_prepare(struct drm_panel *panel)
-+static int panel_simple_resume(struct device *dev)
- {
-+	struct panel_simple *p = dev_get_drvdata(dev);
- 	int ret;
- 	int try;
- 
- 	for (try = 0; try < MAX_PANEL_PREPARE_TRIES; try++) {
--		ret = panel_simple_prepare_once(panel);
-+		ret = panel_simple_prepare_once(p);
- 		if (ret != -ETIMEDOUT)
- 			break;
- 	}
- 
- 	if (ret == -ETIMEDOUT)
--		dev_err(panel->dev, "Prepare timeout after %d tries\n", try);
-+		dev_err(dev, "Prepare timeout after %d tries\n", try);
- 	else if (try)
--		dev_warn(panel->dev, "Prepare needed %d retries\n", try);
-+		dev_warn(dev, "Prepare needed %d retries\n", try);
- 
- 	return ret;
- }
- 
-+static int panel_simple_prepare(struct drm_panel *panel)
-+{
-+	struct panel_simple *p = to_panel_simple(panel);
-+	int ret;
++  See also:
++  - dt-bindings/clock/qcom,gcc-sdm845.h
 +
-+	/* Preparing when already prepared is a no-op */
-+	if (p->prepared)
-+		return 0;
++properties:
++  compatible:
++    const: qcom,gcc-sdm845
 +
-+	ret = pm_runtime_get_sync(panel->dev);
-+	if (ret < 0) {
-+		pm_runtime_put_autosuspend(panel->dev);
-+		return ret;
-+	}
++  clocks:
++    items:
++      - description: Board XO source
++      - description: Board active XO source
++      - description: Sleep clock source
++      - description: PCIE 0 Pipe clock source (Optional clock)
++      - description: PCIE 1 Pipe clock source (Optional clock)
++    minItems: 3
++    maxItems: 5
 +
-+	p->prepared = true;
++  clock-names:
++    items:
++      - const: bi_tcxo
++      - const: bi_tcxo_ao
++      - const: sleep_clk
++      - const: pcie_0_pipe_clk # Optional clock
++      - const: pcie_1_pipe_clk # Optional clock
++    minItems: 3
++    maxItems: 5
 +
-+	return 0;
-+}
++  '#clock-cells':
++    const: 1
 +
- static int panel_simple_enable(struct drm_panel *panel)
- {
- 	struct panel_simple *p = to_panel_simple(panel);
-@@ -748,6 +781,18 @@ static int panel_simple_probe(struct device *dev, const struct panel_desc *desc)
- 		break;
- 	}
++  '#reset-cells':
++    const: 1
++
++  '#power-domain-cells':
++    const: 1
++
++  reg:
++    maxItems: 1
++
++  protected-clocks:
++    description:
++      Protected clock specifier list as per common clock binding.
++
++required:
++  - compatible
++  - reg
++  - '#clock-cells'
++  - '#reset-cells'
++  - '#power-domain-cells'
++
++additionalProperties: false
++
++examples:
++  # Example for GCC for MSM8960:
++  - |
++    #include <dt-bindings/clock/qcom,rpmh.h>
++    clock-controller@100000 {
++      compatible = "qcom,gcc-sdm845";
++      reg = <0x100000 0x1f0000>;
++      clocks = <&rpmhcc RPMH_CXO_CLK>,
++               <&rpmhcc RPMH_CXO_CLK_A>,
++               <&sleep_clk>;
++      clock-names = "bi_tcxo", "bi_tcxo_ao", "sleep_clk";
++      #clock-cells = <1>;
++      #reset-cells = <1>;
++      #power-domain-cells = <1>;
++    };
++...
+diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc.yaml
+index ee0467fb5e31..490edad25830 100644
+--- a/Documentation/devicetree/bindings/clock/qcom,gcc.yaml
++++ b/Documentation/devicetree/bindings/clock/qcom,gcc.yaml
+@@ -32,7 +32,6 @@ description: |
+   - dt-bindings/clock/qcom,gcc-mdm9615.h
+   - dt-bindings/reset/qcom,gcc-mdm9615.h
+   - dt-bindings/clock/qcom,gcc-sdm660.h  (qcom,gcc-sdm630 and qcom,gcc-sdm660)
+-  - dt-bindings/clock/qcom,gcc-sdm845.h
  
-+	dev_set_drvdata(dev, panel);
-+
-+	/*
-+	 * We use runtime PM for prepare / unprepare since those power the panel
-+	 * on and off and those can be very slow operations. This is important
-+	 * to optimize powering the panel on briefly to read the EDID before
-+	 * fully enabling the panel.
-+	 */
-+	pm_runtime_enable(dev);
-+	pm_runtime_set_autosuspend_delay(dev, 1000);
-+	pm_runtime_use_autosuspend(dev);
-+
- 	drm_panel_init(&panel->base, dev, &panel_simple_funcs, connector_type);
+ properties:
+   compatible:
+@@ -52,7 +51,6 @@ properties:
+       - qcom,gcc-mdm9615
+       - qcom,gcc-sdm630
+       - qcom,gcc-sdm660
+-      - qcom,gcc-sdm845
  
- 	err = drm_panel_of_backlight(&panel->base);
-@@ -756,8 +801,6 @@ static int panel_simple_probe(struct device *dev, const struct panel_desc *desc)
- 
- 	drm_panel_add(&panel->base);
- 
--	dev_set_drvdata(dev, panel);
--
- 	return 0;
- 
- free_ddc:
-@@ -4603,10 +4646,17 @@ static void panel_simple_platform_shutdown(struct platform_device *pdev)
- 	panel_simple_shutdown(&pdev->dev);
- }
- 
-+static const struct dev_pm_ops panel_simple_pm_ops = {
-+	SET_RUNTIME_PM_OPS(panel_simple_suspend, panel_simple_resume, NULL)
-+	SET_SYSTEM_SLEEP_PM_OPS(pm_runtime_force_suspend,
-+				pm_runtime_force_resume)
-+};
-+
- static struct platform_driver panel_simple_platform_driver = {
- 	.driver = {
- 		.name = "panel-simple",
- 		.of_match_table = platform_of_match,
-+		.pm = &panel_simple_pm_ops,
- 	},
- 	.probe = panel_simple_platform_probe,
- 	.remove = panel_simple_platform_remove,
-@@ -4901,6 +4951,7 @@ static struct mipi_dsi_driver panel_simple_dsi_driver = {
- 	.driver = {
- 		.name = "panel-simple-dsi",
- 		.of_match_table = dsi_of_match,
-+		.pm = &panel_simple_pm_ops,
- 	},
- 	.probe = panel_simple_dsi_probe,
- 	.remove = panel_simple_dsi_remove,
+   '#clock-cells':
+     const: 1
 -- 
-2.31.0.208.g409f899ff0-goog
+2.30.2
 
