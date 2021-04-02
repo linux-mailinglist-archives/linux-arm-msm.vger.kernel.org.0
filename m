@@ -2,152 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 06456353014
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Apr 2021 22:01:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DE695353057
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Apr 2021 22:35:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231149AbhDBUBm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 2 Apr 2021 16:01:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33556 "EHLO
+        id S231443AbhDBUfq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 2 Apr 2021 16:35:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40860 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229553AbhDBUBl (ORCPT
+        with ESMTP id S231406AbhDBUfq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 2 Apr 2021 16:01:41 -0400
-Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A648DC0613E6
-        for <linux-arm-msm@vger.kernel.org>; Fri,  2 Apr 2021 13:01:39 -0700 (PDT)
-Received: by mail-lj1-x230.google.com with SMTP id f16so6629225ljm.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Apr 2021 13:01:39 -0700 (PDT)
+        Fri, 2 Apr 2021 16:35:46 -0400
+Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com [IPv6:2607:f8b0:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C57F1C0613E6
+        for <linux-arm-msm@vger.kernel.org>; Fri,  2 Apr 2021 13:35:42 -0700 (PDT)
+Received: by mail-pg1-x530.google.com with SMTP id j34so2188889pgj.12
+        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Apr 2021 13:35:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=ggENvzBGhy5Uy3EO9ZvTQ8VoeyQCyEJdNWvfmoN10l8=;
-        b=wTgM79IKq+PFcpwa+/wEy6Lk0ReC0TXW1uoFbqarFQxko93+lHvjo5WXBB/KdNS9yO
-         xlvbebvm5ITjmDzQ7jDqAQOilDjrGh4cJyDEOO2lA258k8P4hf2elmG/QzaI9fHhUnQs
-         YroLb93aSlDFfYetzx3Vt20Z2cynxlX18/L9H7hsjadL1YB9+AQM2Kx8knvmrzn+X3ja
-         QTe35miSO8uqR3AmguKiPIvhylwZ0jcZp2j6/H4QgM3AWK61b6/g/J7SaFYBDRRAP1bV
-         fF05Pr1ZElI2rkyRqCMnbBNSJR8Z5Mdqrzh8CMyBzzqRgrJ23JFF+LPk7lO9byLZM9Qn
-         9FqA==
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=bYNefTtueRtbK9O76WmEEWHha/LaZSXchRlV45JIZY8=;
+        b=ECzeFdIxkBHD3YuCPbITfi9978+nZyYdB2UVcft7Fw5RKrXyQLUz9marixQu3+5aui
+         Fgijkbi2pQCLb6wq23xYFNjKmrJxj6s4Qvkq4DRJ3VFJMxo5C02xxeQ2os/qLQNKyzqE
+         IWNIujy4eiu4ixYhTF43C8aUNJHDCUSs7h7vg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=ggENvzBGhy5Uy3EO9ZvTQ8VoeyQCyEJdNWvfmoN10l8=;
-        b=VTi9k1ZdPkaZgz/MPOUXo6k1AwLdf1dNy3flWwMos3jrEbyarHkUYOWc/nxHfvN5uK
-         I8FcI0y1wRW8WQXkdp9/9XisV7vn2m/5aIJOIa/afvmZM7LlCYAxsIC0sRp6JHqyXK5y
-         7q55x13fDjFjTdOjzdaURJ2TWqgdr78/i9PRUKXrp2DNG9hr+71i6HnBNu3+B9aek2n9
-         lqYZEN2vYAEJ1SqW8tevGLAyEq2s/S4JjlDQiuMMYN6WUY8KnTCt6e71/z9ksFFdkD6X
-         2bkPv0MRHWRzH5oY8PrQmoBoWRy8mrr0CFTkr3ZSp8oOqErtoSEPtQ7HWvHfuxRmjtdr
-         rKJg==
-X-Gm-Message-State: AOAM531JXISDtwohUKpP4XIRjI+u6MFQrXEYQR1G1OT0OXfpoQhOb4pb
-        od6W8kt1MMMW+YIQDRQ6CPxLaI/j1oVHAQ==
-X-Google-Smtp-Source: ABdhPJx0OpqrG6kXuGq7wvYCQV2LeaY2f63PsbAFSxJRpGqh0DpJesEbBV4do7KK6tCrCytf6OTvEA==
-X-Received: by 2002:a2e:b0cd:: with SMTP id g13mr9255210ljl.166.1617393697738;
-        Fri, 02 Apr 2021 13:01:37 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id n5sm944883lfd.52.2021.04.02.13.01.36
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=bYNefTtueRtbK9O76WmEEWHha/LaZSXchRlV45JIZY8=;
+        b=K/tuVaTrxUAUnkNbwxBpNuRm7cnJKGGHUoOgGOzS8qAnocVu672V3vrl4cO50gif0h
+         +RdUrd+/Ry6TZKdAaXv7bOVNS2SEgNQCg2ePnNRqGGO9lDzMuAHTOJXzg/JZII8oXsDP
+         JsvsLREIRJH+Ah7C0u6REROosGbcDWI2zjY8KMeF4T548JyRPQNtv/NqNfLOVyRDBa0U
+         CsFE4G5TnBxPm5eiv6i6VS0EVLYpHWndrxv0tZv/n6Vj/T1Qp/cwFJ+thk8nY9pFfa7o
+         w3w6MlLi03nvMwWPSit8gBohkUuVEztQliwYOZsCBHpV8Br7EEDWJO3Vmy5nknkdG2v6
+         r3cQ==
+X-Gm-Message-State: AOAM531/MpipVXz7d+beSn2pvGNszt6X7tSTEeNEwbJTe2Jp6WMrOtjP
+        nO6UJs6fVu3Bd9TuoooggubKMA==
+X-Google-Smtp-Source: ABdhPJxTz7TYSh6p4CoKhJAPlT3l2XcEh6VEdLMIe6/tWCfwXt3SK7RLev4FROoopZ5UmHf/w9E0xQ==
+X-Received: by 2002:a62:8ccc:0:b029:1f6:c5e2:69ff with SMTP id m195-20020a628ccc0000b02901f6c5e269ffmr13801935pfd.46.1617395742219;
+        Fri, 02 Apr 2021 13:35:42 -0700 (PDT)
+Received: from localhost ([2620:15c:202:201:581c:e04f:7c08:c602])
+        by smtp.gmail.com with UTF8SMTPSA id h18sm5277415pgj.51.2021.04.02.13.35.41
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 02 Apr 2021 13:01:37 -0700 (PDT)
-Subject: Re: [PATCH v1 13/15] clk: qcom: videocc-sdm845: remove unsupported
- clock sources
-To:     Stephen Boyd <sboyd@kernel.org>, Andy Gross <agross@kernel.org>,
+        Fri, 02 Apr 2021 13:35:41 -0700 (PDT)
+Date:   Fri, 2 Apr 2021 13:35:40 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     satya priya <skakit@codeaurora.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Taniya Das <tdas@codeaurora.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
-References: <20210325111144.2852594-1-dmitry.baryshkov@linaro.org>
- <20210325111144.2852594-14-dmitry.baryshkov@linaro.org>
- <21bc5248-57b8-243d-300f-1bc39162c37f@codeaurora.org>
- <c92f7a04-f010-4c63-4b39-482a5581317a@linaro.org>
- <161738488399.2260335.10137992073962455023@swboyd.mtv.corp.google.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Message-ID: <228529e0-bf14-d272-7c61-9fe508bf92c6@linaro.org>
-Date:   Fri, 2 Apr 2021 23:01:36 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.9.0
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, kgunda@codeaurora.org
+Subject: Re: [PATCH V2 1/5] arm64: dts: qcom: pm7325: Add PMIC peripherals
+ for pm7325
+Message-ID: <YGeAHKOq65WBr9Yr@google.com>
+References: <1617268396-1837-1-git-send-email-skakit@codeaurora.org>
+ <1617268396-1837-2-git-send-email-skakit@codeaurora.org>
+ <YGdV+un4bGcF6jJH@google.com>
 MIME-Version: 1.0
-In-Reply-To: <161738488399.2260335.10137992073962455023@swboyd.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <YGdV+un4bGcF6jJH@google.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 02/04/2021 20:34, Stephen Boyd wrote:
-> Quoting Dmitry Baryshkov (2021-04-01 18:49:37)
->> On 02/04/2021 04:23, Taniya Das wrote:
->>> Hi Dmitry,
->>>
->>> On 3/25/2021 4:41 PM, Dmitry Baryshkov wrote:
->>>> video_pll0_out_even/_odd are not supported neither in the upstream nor
->>>> in the downstream kernels, so drop those clock sources.
->>>>
->>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>>> ---
->>>>    drivers/clk/qcom/videocc-sdm845.c | 8 +-------
->>>>    1 file changed, 1 insertion(+), 7 deletions(-)
->>>>
->>>> diff --git a/drivers/clk/qcom/videocc-sdm845.c
->>>> b/drivers/clk/qcom/videocc-sdm845.c
->>>> index 5d6a7724a194..7153f044504f 100644
->>>> --- a/drivers/clk/qcom/videocc-sdm845.c
->>>> +++ b/drivers/clk/qcom/videocc-sdm845.c
->>>> @@ -21,24 +21,18 @@
->>>>    enum {
->>>>        P_BI_TCXO,
->>>>        P_CORE_BI_PLL_TEST_SE,
->>>> -    P_VIDEO_PLL0_OUT_EVEN,
->>>>        P_VIDEO_PLL0_OUT_MAIN,
->>>> -    P_VIDEO_PLL0_OUT_ODD,
->>>>    };
->>>>    static const struct parent_map video_cc_parent_map_0[] = {
->>>>        { P_BI_TCXO, 0 },
->>>>        { P_VIDEO_PLL0_OUT_MAIN, 1 },
->>>> -    { P_VIDEO_PLL0_OUT_EVEN, 2 },
->>>> -    { P_VIDEO_PLL0_OUT_ODD, 3 },
->>>
->>> These are supported from the design, please do not remove them. It is
->>> just that in SW currently it is not being used.
->>> But SW can decide to use them as they want. As said earlier these are
->>> defined in the HW plans and thus do not want them to be updated manually
->>> to create a mismatch.
->>
->> The problem arises during conversion of these drivers to use parent_data
->> instead of parent_names. You see, video_pll0_odd/_even are clocks which
->> should be referenced using .hw (and thus defined inside the videocc
->> driver) as we do for "video_pll0" parent. However there are no clk_hw
->> entities defined for those clocks. For now I'd just use the { .name =
->> video_pll0_out_odd" } entry for those clocks, however I still think this
->> is not correct.
->>
+On Fri, Apr 02, 2021 at 10:35:54AM -0700, Matthias Kaehlcke wrote:
+> On Thu, Apr 01, 2021 at 02:43:12PM +0530, satya priya wrote:
 > 
-> Yes we shouldn't be adding .name anymore. Can we add the
-> video_pll0_out_{even,odd} clks? Or if they're not used then can we
-> remove them from the parent_data and leave some sort of comment
-> indicating that they may be there?
-
-Downstream kernel provides no information regarding these clocks. I'll 
-just leave them commented out (but inplace).
-
+> > subject: arm64: dts: qcom: pm7325: Add PMIC peripherals for pm7325
 > 
->>>
->>>>        { P_CORE_BI_PLL_TEST_SE, 4 },
->>>>    };
->>>>    static const char * const video_cc_parent_names_0[] = {
->>>>        "bi_tcxo",
->>>>        "video_pll0",
->>>> -    "video_pll0_out_even",
->>>> -    "video_pll0_out_odd",
->>>>        "core_bi_pll_test_se",
+> nit: maybe just 'arm64: dts: qcom: Add pm7325 support/.dtsi' or similar?
 > 
-> Looks like in this case it would be OK because the array would be length
-> 2 instead of length 5.
+> > Add temp-alarm and GPIO support for pm7325.
 > 
->>>>    };
+> nit: it's more than that, you are adding the .dtsi for the PMIC itself.
+> 
+> > Signed-off-by: satya priya <skakit@codeaurora.org>
+> > ---
+> >  arch/arm64/boot/dts/qcom/pm7325.dtsi | 53 ++++++++++++++++++++++++++++++++++++
+> >  1 file changed, 53 insertions(+)
+> >  create mode 100644 arch/arm64/boot/dts/qcom/pm7325.dtsi
+> > 
+> > diff --git a/arch/arm64/boot/dts/qcom/pm7325.dtsi b/arch/arm64/boot/dts/qcom/pm7325.dtsi
+> > new file mode 100644
+> > index 0000000..1e0848a
+> > --- /dev/null
+> > +++ b/arch/arm64/boot/dts/qcom/pm7325.dtsi
+> > @@ -0,0 +1,53 @@
+> > +// SPDX-License-Identifier: BSD-3-Clause
+> > +// Copyright (c) 2021, The Linux Foundation. All rights reserved.
+> > +
+> > +#include <dt-bindings/interrupt-controller/irq.h>
+> > +#include <dt-bindings/spmi/spmi.h>
+> > +
+> > +&spmi_bus {
+> > +	pm7325: pmic@1 {
+> > +		compatible = "qcom,pm7325", "qcom,spmi-pmic";
+> 
+> I saw the patches that add the compatible strings for the GPIOs, but
+> can't find those that add the strings for the PMICs themselves. Could
+> you provide a link if they have been sent already?
+> 
+> > +		reg = <0x1 SPMI_USID>;
+> > +		#address-cells = <1>;
+> > +		#size-cells = <0>;
+> > +
+> > +		pm7325_temp_alarm: temp-alarm@a00 {
+> > +			compatible = "qcom,spmi-temp-alarm";
+> > +			reg = <0xa00>;
+> > +			interrupts = <0x1 0xa 0x0 IRQ_TYPE_EDGE_BOTH>;
+> > +			#thermal-sensor-cells = <0>;
+> > +		};
+> > +
+> > +		pm7325_gpios: gpios@8800 {
+> > +			compatible = "qcom,pm7325-gpio", "qcom,spmi-gpio";
+> > +			reg = <0x8800>;
+> > +			gpio-controller;
+> > +			gpio-ranges = <&pm7325_gpios 0 0 10>;
 
-
--- 
-With best wishes
-Dmitry
+The GPIO enumeration is a bit confusing. The pm7325 has GPIO_01 to
+GPIO_10, however IIUC they are mapped such that under Linux
+enumeration starts with 0. I guess it makes sense to start with 0 and
+it's done consistently for 'qcom,spmi-gpio', but it's something that must
+be taken into account when using/configuring those GPIOs.
