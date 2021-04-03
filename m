@@ -2,81 +2,42 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 359B1353295
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 Apr 2021 06:40:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2C6CC353384
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 Apr 2021 12:58:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229491AbhDCEkS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 3 Apr 2021 00:40:18 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:58079 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229740AbhDCEkR (ORCPT
+        id S236496AbhDCK6r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 3 Apr 2021 06:58:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55964 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236484AbhDCK6q (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 3 Apr 2021 00:40:17 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1617424815; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=gK4A2K32D1Y3oWUpSLtjeRrORpZI1YsVu6fUh7M1kq0=; b=FlNUMVP5CUDdw+dzbXE6SOM5WxzS0WIANLFyKC/wB4XVDSf8ATYruqRYVC9VIAx3YwyAWlR3
- 0VPpqjkPIpZ2yxTgp0A8G3gA1ps1N0JvNtLYMHWpJjuLhjWVkadKCzrBmiW7CqtzzBjk5yfM
- VKq/rlZNRAZMaGc9FYvajajHey0=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
- 6067f19d8166b7eff7e1f301 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Sat, 03 Apr 2021 04:39:57
- GMT
-Sender: akhilpo=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 1F863C43463; Sat,  3 Apr 2021 04:39:56 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [192.168.1.105] (unknown [117.211.46.54])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        Sat, 3 Apr 2021 06:58:46 -0400
+Received: from relay04.th.seeweb.it (relay04.th.seeweb.it [IPv6:2001:4b7a:2000:18::165])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C2C0C061788
+        for <linux-arm-msm@vger.kernel.org>; Sat,  3 Apr 2021 03:58:42 -0700 (PDT)
+Received: from [10.0.20.3] (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        (Authenticated sender: akhilpo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id BE00CC433CA;
-        Sat,  3 Apr 2021 04:39:51 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org BE00CC433CA
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=akhilpo@codeaurora.org
-Subject: Re: [PATCH] drm/msm/a6xx: fix for kernels without CONFIG_NVMEM
-To:     Rob Clark <robdclark@gmail.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <dri-devel@lists.freedesktop.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>, Sean Paul <sean@poorly.run>
-References: <20210216200909.19039-1-jonathan@marek.ca>
- <CAF6AEGv53nnzqMgTfSA6t2YpHx1dDW8UqnH9Gw0w3p8bf0mTLw@mail.gmail.com>
- <775436ba-c94a-ab22-d65b-b2391047ec65@codeaurora.org>
- <20210217190820.GA2229@jcrouse1-lnx.qualcomm.com>
- <CAF6AEGsHws23ozeJ8G23LFQ8J=CVVrx5xvkSgBuE_uSwT4YurQ@mail.gmail.com>
- <74d1277e-295f-0996-91c3-05cfce8d3a0e@marek.ca>
- <e4b62857-bd4d-cca6-0d6b-b9cc960b52a2@codeaurora.org>
- <CAF6AEGsWCrkOgMVxnx53k8b_o7xy3KWv9VaNRoY44+4GfXtWdg@mail.gmail.com>
- <757b557a-b5f6-6018-caa4-34bffb1b60b7@codeaurora.org>
- <CAF6AEGv-A5=4z7ZO-SytmivZTfKPYxhAjmRLVsQnrT7_pYCDtQ@mail.gmail.com>
- <0f057c99-ec94-f3e3-796f-b73a609f735d@codeaurora.org>
- <CAF6AEGvXYmcj0YuciZATveALJEP6DdFiwmtnYevrK2SEOJNZGg@mail.gmail.com>
- <CAF6AEGs4sYOMgysg3FraKTDetqKTgMXT6RE700e-8uyE9Gs-9A@mail.gmail.com>
- <CAA8EJpoL7Eox5WqnZQVvGF9M_4itA+2=U6QX=AreTk=AEfqyQg@mail.gmail.com>
- <CAF6AEGu88VxfDYaMt1=FCYG0DVRfRT6=5QD78Qrk=S=M0gO+pw@mail.gmail.com>
-From:   Akhil P Oommen <akhilpo@codeaurora.org>
-Message-ID: <fed21bb2-77ee-107c-a7fc-1f0965334da1@codeaurora.org>
-Date:   Sat, 3 Apr 2021 10:09:49 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.8.1
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 46C832007C;
+        Sat,  3 Apr 2021 12:57:56 +0200 (CEST)
+Subject: Re: [PATCH v3 11/16] clk: qcom: dispcc-sdm845: convert to parent data
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
+References: <20210402205804.96507-1-dmitry.baryshkov@linaro.org>
+ <20210402205804.96507-12-dmitry.baryshkov@linaro.org>
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+Message-ID: <962cc7f2-715e-4646-5071-e620aa29d9f6@somainline.org>
+Date:   Sat, 3 Apr 2021 12:57:55 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.9.0
 MIME-Version: 1.0
-In-Reply-To: <CAF6AEGu88VxfDYaMt1=FCYG0DVRfRT6=5QD78Qrk=S=M0gO+pw@mail.gmail.com>
+In-Reply-To: <20210402205804.96507-12-dmitry.baryshkov@linaro.org>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -84,160 +45,54 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 4/2/2021 3:19 AM, Rob Clark wrote:
-> On Thu, Apr 1, 2021 at 2:03 PM Dmitry Baryshkov
-> <dmitry.baryshkov@linaro.org> wrote:
->>
->> On Thu, 1 Apr 2021 at 23:09, Rob Clark <robdclark@gmail.com> wrote:
->>>
->>> On Mon, Feb 22, 2021 at 8:06 AM Rob Clark <robdclark@gmail.com> wrote:
->>>>
->>>> On Mon, Feb 22, 2021 at 7:45 AM Akhil P Oommen <akhilpo@codeaurora.org> wrote:
->>>>>
->>>>> On 2/19/2021 9:30 PM, Rob Clark wrote:
->>>>>> On Fri, Feb 19, 2021 at 2:44 AM Akhil P Oommen <akhilpo@codeaurora.org> wrote:
->>>>>>>
->>>>>>> On 2/18/2021 9:41 PM, Rob Clark wrote:
->>>>>>>> On Thu, Feb 18, 2021 at 4:28 AM Akhil P Oommen <akhilpo@codeaurora.org> wrote:
->>>>>>>>>
->>>>>>>>> On 2/18/2021 2:05 AM, Jonathan Marek wrote:
->>>>>>>>>> On 2/17/21 3:18 PM, Rob Clark wrote:
->>>>>>>>>>> On Wed, Feb 17, 2021 at 11:08 AM Jordan Crouse
->>>>>>>>>>> <jcrouse@codeaurora.org> wrote:
->>>>>>>>>>>>
->>>>>>>>>>>> On Wed, Feb 17, 2021 at 07:14:16PM +0530, Akhil P Oommen wrote:
->>>>>>>>>>>>> On 2/17/2021 8:36 AM, Rob Clark wrote:
->>>>>>>>>>>>>> On Tue, Feb 16, 2021 at 12:10 PM Jonathan Marek <jonathan@marek.ca>
->>>>>>>>>>>>>> wrote:
->>>>>>>>>>>>>>>
->>>>>>>>>>>>>>> Ignore nvmem_cell_get() EOPNOTSUPP error in the same way as a
->>>>>>>>>>>>>>> ENOENT error,
->>>>>>>>>>>>>>> to fix the case where the kernel was compiled without CONFIG_NVMEM.
->>>>>>>>>>>>>>>
->>>>>>>>>>>>>>> Fixes: fe7952c629da ("drm/msm: Add speed-bin support to a618 gpu")
->>>>>>>>>>>>>>> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
->>>>>>>>>>>>>>> ---
->>>>>>>>>>>>>>>      drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 6 +++---
->>>>>>>>>>>>>>>      1 file changed, 3 insertions(+), 3 deletions(-)
->>>>>>>>>>>>>>>
->>>>>>>>>>>>>>> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
->>>>>>>>>>>>>>> b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
->>>>>>>>>>>>>>> index ba8e9d3cf0fe..7fe5d97606aa 100644
->>>>>>>>>>>>>>> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
->>>>>>>>>>>>>>> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
->>>>>>>>>>>>>>> @@ -1356,10 +1356,10 @@ static int a6xx_set_supported_hw(struct
->>>>>>>>>>>>>>> device *dev, struct a6xx_gpu *a6xx_gpu,
->>>>>>>>>>>>>>>
->>>>>>>>>>>>>>>             cell = nvmem_cell_get(dev, "speed_bin");
->>>>>>>>>>>>>>>             /*
->>>>>>>>>>>>>>> -        * -ENOENT means that the platform doesn't support
->>>>>>>>>>>>>>> speedbin which is
->>>>>>>>>>>>>>> -        * fine
->>>>>>>>>>>>>>> +        * -ENOENT means no speed bin in device tree,
->>>>>>>>>>>>>>> +        * -EOPNOTSUPP means kernel was built without CONFIG_NVMEM
->>>>>>>>>>>>>>
->>>>>>>>>>>>>> very minor nit, it would be nice to at least preserve the gist of the
->>>>>>>>>>>>>> "which is fine" (ie. some variation of "this is an optional thing and
->>>>>>>>>>>>>> things won't catch fire without it" ;-))
->>>>>>>>>>>>>>
->>>>>>>>>>>>>> (which is, I believe, is true, hopefully Akhil could confirm.. if not
->>>>>>>>>>>>>> we should have a harder dependency on CONFIG_NVMEM..)
->>>>>>>>>>>>> IIRC, if the gpu opp table in the DT uses the 'opp-supported-hw'
->>>>>>>>>>>>> property,
->>>>>>>>>>>>> we will see some error during boot up if we don't call
->>>>>>>>>>>>> dev_pm_opp_set_supported_hw(). So calling "nvmem_cell_get(dev,
->>>>>>>>>>>>> "speed_bin")"
->>>>>>>>>>>>> is a way to test this.
->>>>>>>>>>>>>
->>>>>>>>>>>>> If there is no other harm, we can put a hard dependency on
->>>>>>>>>>>>> CONFIG_NVMEM.
->>>>>>>>>>>>
->>>>>>>>>>>> I'm not sure if we want to go this far given the squishiness about
->>>>>>>>>>>> module
->>>>>>>>>>>> dependencies. As far as I know we are the only driver that uses this
->>>>>>>>>>>> seriously
->>>>>>>>>>>> on QCOM SoCs and this is only needed for certain targets. I don't
->>>>>>>>>>>> know if we
->>>>>>>>>>>> want to force every target to build NVMEM and QFPROM on our behalf.
->>>>>>>>>>>> But maybe
->>>>>>>>>>>> I'm just saying that because Kconfig dependencies tend to break my
->>>>>>>>>>>> brain (and
->>>>>>>>>>>> then Arnd has to send a patch to fix it).
->>>>>>>>>>>>
->>>>>>>>>>>
->>>>>>>>>>> Hmm, good point.. looks like CONFIG_NVMEM itself doesn't have any
->>>>>>>>>>> other dependencies, so I suppose it wouldn't be the end of the world
->>>>>>>>>>> to select that.. but I guess we don't want to require QFPROM
->>>>>>>>>>>
->>>>>>>>>>> I guess at the end of the day, what is the failure mode if you have a
->>>>>>>>>>> speed-bin device, but your kernel config misses QFPROM (and possibly
->>>>>>>>>>> NVMEM)?  If the result is just not having the highest clk rate(s)
->>>>>>>>>
->>>>>>>>> Atleast on sc7180's gpu, using an unsupported FMAX breaks gmu. It won't
->>>>>>>>> be very obvious what went wrong when this happens!
->>>>>>>>
->>>>>>>> Ugg, ok..
->>>>>>>>
->>>>>>>> I suppose we could select NVMEM, but not QFPROM, and then the case
->>>>>>>> where QFPROM is not enabled on platforms that have the speed-bin field
->>>>>>>> in DT will fail gracefully and all other platforms would continue on
->>>>>>>> happily?
->>>>>>>>
->>>>>>>> BR,
->>>>>>>> -R
->>>>>>>
->>>>>>> Sounds good to me.
->>>>>>>
->>>>>>
->>>>>> You probably should do a quick test with NVMEM enabled but QFPROM
->>>>>> disabled to confirm my theory, but I *think* that should work
->>>>>>
->>>>>> BR,
->>>>>> -R
->>>>>>
->>>>>
->>>>> I tried it on an sc7180 device. The suggested combo (CONFIG_NVMEM + no
->>>>> CONFIG_QCOM_QFPROM) makes the gpu probe fail with error "failed to read
->>>>> speed-bin. Some OPPs may not be supported by hardware". This is good
->>>>> enough clue for the developer that he should fix the broken speedbin
->>>>> detection.
->>>>>
->>>>
->>>> Ok, great.. then sounds like selecting NVMEM is a good approach
->>>>
->>>
->>> btw, did anyone ever send a patch to select NVMEM?  I'm not seeing one
->>> but I could be overlooking something
-I thought Jonathan would send it as the discussion was going on in his 
-patch. No problem, I will send it out. :)
+Hi Dmitry,
 
--Akhil.
+On 4/2/21 10:57 PM, Dmitry Baryshkov wrote:
+> Convert the clock driver to specify parent data rather than parent
+> names, to actually bind using 'clock-names' specified in the DTS rather
+> than global clock names.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>   drivers/clk/qcom/dispcc-sdm845.c | 188 ++++++++++++++++---------------
+>   1 file changed, 95 insertions(+), 93 deletions(-)
+> 
+> diff --git a/drivers/clk/qcom/dispcc-sdm845.c b/drivers/clk/qcom/dispcc-sdm845.c
+> index 5c932cd17b14..bf5e8a4a0230 100644
+> --- a/drivers/clk/qcom/dispcc-sdm845.c
+> +++ b/drivers/clk/qcom/dispcc-sdm845.c
+> @@ -122,7 +124,7 @@ static struct clk_rcg2 disp_cc_mdss_byte0_clk_src = {
+>   	.parent_map = disp_cc_parent_map_0,
+>   	.clkr.hw.init = &(struct clk_init_data){
+>   		.name = "disp_cc_mdss_byte0_clk_src",
+> -		.parent_names = disp_cc_parent_names_0,
+> +		.parent_data = disp_cc_parent_data_0,
+>   		.num_parents = 4,
 
->>
->> Judging by the amount of issues surrounding speed-bin, I might have a
->> bold suggestion to revert these patches for now and get them once all
->> the issues are sorted, so that we'd have a single working commit
->> instead of scattered patch series breaking git bisect, having bad
->> side-effects on non-sc7180 platforms, etc.
->>
-> 
-> We do really need some pre-merge CI like we have on the mesa side of
-> things (and we at least have 845 devices in our CI farm, but it would
-> be useful to add more generations)..  but other than the config issue,
-> I *think* this fixes the last of the speedbin fallout?
-> 
-> https://patchwork.freedesktop.org/patch/426538/?series=88558&rev=1
-> 
-> Planning to include that in a -fixes pull req in the next day or two.
-> (And please have a look at msm-next-staging and let me know if you see
-> anything other fixes that would be good to get in, speedbin related or
-> otherwise.)
-> 
-> BR,
-> -R
-> _______________________________________________
-> dri-devel mailing list
-> dri-devel@lists.freedesktop.org
-> https://lists.freedesktop.org/mailman/listinfo/dri-devel
-> 
+While changing the surrounding lines, isn't it common practice to use 
+ARRAY_SIZE(disp_cc_parent_data_0) here and below?
 
+>   		.flags = CLK_SET_RATE_PARENT,
+>   		.ops = &clk_byte2_ops,
+
+> @@ -381,8 +383,8 @@ static struct clk_branch disp_cc_mdss_byte0_clk = {
+>   		.enable_mask = BIT(0),
+>   		.hw.init = &(struct clk_init_data){
+>   			.name = "disp_cc_mdss_byte0_clk",
+> -			.parent_names = (const char *[]){
+> -				"disp_cc_mdss_byte0_clk_src",
+> +			.parent_data = &(const struct clk_parent_data){
+> +				.hw = &disp_cc_mdss_byte0_clk_src.clkr.hw,
+
+For this commit and all other "convert to parent data" commits in this 
+series:  It should be possible to use .parent_hws which is a little more 
+lightweight when only referencing parents that are internal to this clk 
+controller.  .parent_data is used to mix internal (.hw) parent clocks 
+with external (.name and .fw_name) clocks.
+
+>   			},
+>   			.num_parents = 1,
+>   			.flags = CLK_SET_RATE_PARENT,
+
+Thanks!
+Marijn
