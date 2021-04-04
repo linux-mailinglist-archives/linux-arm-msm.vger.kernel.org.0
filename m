@@ -2,93 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5C1AF353903
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Apr 2021 19:20:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C25EA353934
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Apr 2021 19:41:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231152AbhDDRUq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 4 Apr 2021 13:20:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50130 "EHLO
+        id S230494AbhDDRlx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 4 Apr 2021 13:41:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54722 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230237AbhDDRUo (ORCPT
+        with ESMTP id S229861AbhDDRlw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 4 Apr 2021 13:20:44 -0400
-Received: from mail-oo1-xc2e.google.com (mail-oo1-xc2e.google.com [IPv6:2607:f8b0:4864:20::c2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9B99C0613E6
-        for <linux-arm-msm@vger.kernel.org>; Sun,  4 Apr 2021 10:20:39 -0700 (PDT)
-Received: by mail-oo1-xc2e.google.com with SMTP id h3-20020a4ae8c30000b02901b68b39e2d3so2394506ooe.9
-        for <linux-arm-msm@vger.kernel.org>; Sun, 04 Apr 2021 10:20:39 -0700 (PDT)
+        Sun, 4 Apr 2021 13:41:52 -0400
+Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA17FC0613E6
+        for <linux-arm-msm@vger.kernel.org>; Sun,  4 Apr 2021 10:41:46 -0700 (PDT)
+Received: by mail-ot1-x32e.google.com with SMTP id y19-20020a0568301d93b02901b9f88a238eso9453275oti.11
+        for <linux-arm-msm@vger.kernel.org>; Sun, 04 Apr 2021 10:41:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=VXtcsMHNhwe+DVWvnO28yCAjs3uDsZfXK7wJO5SsYu0=;
-        b=oIEUyW6/LMXcWTeJ0Lp+zssNy06KzKsLrLhboHb3iPJESxZW4LUjnc6QhulLM9vWha
-         Izyjdvxl++DW90B7Ji1nU5+wLXBNGGsEkhx6nRJTFmF9V9XdR9D4VR6mpkr6EDqKJg5S
-         6yV7nRSxGd9TPOXFJDPnfoMlxJd1uJYqA3RKGdF7psQzc/qmSW2PeR3YHaNqvBshWh6W
-         mN5J6XUs8+01JW6u/KzMshNad7k4eVciW6IAxNjXUq0erWgSv2Lq59J3qmemjUXgdYSb
-         e1yMy/NO0VGiR2fKvHxWmM+EdUnOyzfd2u+FtiFCGlg38ycL4aFNFLngqPjN+GEHzNUj
-         99xg==
+        bh=Ti6WoHsz7Zlbgo2CzLLD8u2iAE4onCIPC/xc2UxmFJs=;
+        b=q7v/ZtoIP6tiq3K9PiNpnwNtZ7tXoCUN7Wsms2gM+yxytM2550C9QiP3fiZd6v20ug
+         TuoyppMtIhuGFOGdqcYNh08ib9q2Y7pDmim+rebTtYoKt1rOhnW0q/lMFh5GDu6W7nHp
+         BPjrgsqIwAKuFD3lny1YEauIWppCuZO1jahaJWxbyCOvbhE6PNdebjdrLCGQzhXyQDP3
+         aFidUd8qw50P/c0rU484OJkPwY1erBF57E+VEADiQlSZbNBkTif2lhWPBeT3xVTm0Oh9
+         IvxCJpujVcJ+BVv4WKm+6r17zkMf13L1GF4v/akRU+ed86aXP4X+DDWK92T1gTx/pJX8
+         J+jw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=VXtcsMHNhwe+DVWvnO28yCAjs3uDsZfXK7wJO5SsYu0=;
-        b=gcFO50AJjx87mwN5Z4XtJ+dNx2R2sALSb3jql+AT7xDfc8BRgVE5Q6mZ3C8NhQKaIm
-         0GZaTEdqtJnFZNkT7gMtgJ9jC+PNnmvaWEbBzvBvRoeyiv5R0gJ5/h2R6gT/0QgoDbeD
-         dznFEzz4CVXgpJOe5dWyDUjaYxKmhNzrNiy/HFCmiyJAOaepPdBIz4PMOe+mpzl1y2Lo
-         cm9jlJ5GcXqDzGl+mSwhAUPwOGQpskQ/DbXU8D9hfY/UqITwiox4Mb50AXCvhp1J/E5u
-         hGpmLKvQtMJ3KC3g9dNTch+GJ7SFpYKzI8aSFyYMEARlci6xiE1YMam49dzd1OSW4Pbd
-         JmMA==
-X-Gm-Message-State: AOAM531gXTtaU9Mi37FiQpPiYpy5yc2eCCUswb/iSkPU8XdkYvBfBA8h
-        ddXUG2/Lsy7/qS/DYfy7bzqNSA==
-X-Google-Smtp-Source: ABdhPJyy9fEwwBWOsR7NFOdeDfPPYeE4bhPGo7Chb9gFcAp+JQlbAEL9aOtlMz3l2T2iZLKJY90xsA==
-X-Received: by 2002:a4a:dd14:: with SMTP id m20mr19183701oou.47.1617556839119;
-        Sun, 04 Apr 2021 10:20:39 -0700 (PDT)
+        bh=Ti6WoHsz7Zlbgo2CzLLD8u2iAE4onCIPC/xc2UxmFJs=;
+        b=HU6D6gpSPaC8CaEk9ermF8ScSpta0lUDZiCI2KLW/fGjJ/sp5MtX6XYZQCZYknVfEL
+         Xg+7FgNPYUOL8iJHEVVvnKX+TvTTX8MQsHMuN+2GHaTPS7uSoCf1d4xcy6q/A/vInRUm
+         AvcpP6pfQKl987tiLne3GM80FV4GJpv84TK1PmTlssyrwl1+Pj262308uHJ3iHU3p8cz
+         PdcPGDe+V12N5w62ZFU/WWXlbEgEFXU2qklfrlke+6JLjGFW5JceZ1mD6ZTEGdSlc/ZV
+         x5GQTnCFszMc576f88S7LgG7T8P6vmVk5nbAD5STYwbNKsk1N8sxdz8XaTUF+0eqGHxu
+         NNRQ==
+X-Gm-Message-State: AOAM530Wiqk6Cgruca80i9qn1Cddg85FohezeEZkgIX53cgi9naclLL4
+        Pb2m+tjWGLX3ygkB0juyaNLV2Q==
+X-Google-Smtp-Source: ABdhPJz4dn7UOTKMDQfK19GfRDF9/qJYqjtbL8usgrR9XGnRSKr6pbZ1f8hG7SCNoqNAg0GYbLIxOQ==
+X-Received: by 2002:a05:6830:210e:: with SMTP id i14mr19342717otc.229.1617558106129;
+        Sun, 04 Apr 2021 10:41:46 -0700 (PDT)
 Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id x2sm3500140ote.47.2021.04.04.10.20.38
+        by smtp.gmail.com with ESMTPSA id 62sm3404698oto.60.2021.04.04.10.41.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 04 Apr 2021 10:20:38 -0700 (PDT)
-Date:   Sun, 4 Apr 2021 12:20:37 -0500
+        Sun, 04 Apr 2021 10:41:45 -0700 (PDT)
+Date:   Sun, 4 Apr 2021 12:41:43 -0500
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Deepak Kumar Singh <deesin@codeaurora.org>
-Cc:     clew@codeaurora.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org
-Subject: Re: [PATCH V1 0/2] soc: qcom: aoss: Expose send for generic usecase
-Message-ID: <YGn1ZXihsTyk4sIW@builder.lan>
-References: <1617344238-12137-1-git-send-email-deesin@codeaurora.org>
+To:     satya priya <skakit@codeaurora.org>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, kgunda@codeaurora.org
+Subject: Re: [PATCH V2 0/5] Add PMIC DT files for sc7280
+Message-ID: <YGn6V6/hhXb1WaIc@builder.lan>
+References: <1617268396-1837-1-git-send-email-skakit@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1617344238-12137-1-git-send-email-deesin@codeaurora.org>
+In-Reply-To: <1617268396-1837-1-git-send-email-skakit@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri 02 Apr 01:17 CDT 2021, Deepak Kumar Singh wrote:
+On Thu 01 Apr 04:13 CDT 2021, satya priya wrote:
 
-> [Change from V0]
-
-It's typical that the first patchset, without a version specified, is
-considered "version 1", and as such the second submission would be
-"v2".
-
-> Update qmp_get to parse qmp handle with binding qcom,qmp
+> Changes in V2:
+>  - As per Matthias's comments:
+>     - I've Split the patch into per-PMIC patches and one sc7280 patch
+>     - Removed 2nd critical point, thermal-governer property
+> 	- s/pm8325_tz/pm7325_temp_alarm and s/pm7325_temp_alarm/pm7325_thermal
+>     - Fixed few other minor errors.
 > 
+>  - As per Bjorn's comments, replaced '_' with '-' in node names and moved
+>    DT files inclusion to board dts.
+> 
+> This series is dependent on below series which adds DT files for SC7280 SoC
+> https://lore.kernel.org/patchwork/project/lkml/list/?series=488871
 
-I won't be able to merge this until we have a user of the API, so would
-it be possible to get at least one consumer introduced?
+No need to mention this dependency, as you posted this after said series
+had been picked up.
 
-Regards,
+However, also picked up are patches from Vinod adding initial pm8350c
+and pmk8350 files, so please rebase you changes onto linux-next - in
+addition to follow up on Matthias feedback.
+
+Thanks,
 Bjorn
 
-> Deepak Kumar Singh (2):
->   soc: qcom: aoss: Expose send for generic usecase
->   soc: qcom: aoss: Add debugfs entry
 > 
->  drivers/soc/qcom/qcom_aoss.c | 77 +++++++++++++++++++++++++++++++++++++++++++-
->  1 file changed, 76 insertions(+), 1 deletion(-)
+> satya priya (5):
+>   arm64: dts: qcom: pm7325: Add PMIC peripherals for pm7325
+>   arm64: dts: qcom: pm8350c: Add PMIC peripherals for pm8350c
+>   arm64: dts: qcom: pmk8350: Add PMIC peripherals for pmk8350
+>   arm64: dts: qcom: pmr735a: Add PMIC peripherals for pmr735a
+>   arm64: dts: sc7280: Include PMIC DT files for sc7280
+> 
+>  arch/arm64/boot/dts/qcom/pm7325.dtsi    |  53 +++++++++++++++++
+>  arch/arm64/boot/dts/qcom/pm8350c.dtsi   |  53 +++++++++++++++++
+>  arch/arm64/boot/dts/qcom/pmk8350.dtsi   | 100 ++++++++++++++++++++++++++++++++
+>  arch/arm64/boot/dts/qcom/pmr735a.dtsi   |  53 +++++++++++++++++
+>  arch/arm64/boot/dts/qcom/sc7280-idp.dts |   4 ++
+>  arch/arm64/boot/dts/qcom/sc7280.dtsi    |   3 +
+>  6 files changed, 266 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/pm7325.dtsi
+>  create mode 100644 arch/arm64/boot/dts/qcom/pm8350c.dtsi
+>  create mode 100644 arch/arm64/boot/dts/qcom/pmk8350.dtsi
+>  create mode 100644 arch/arm64/boot/dts/qcom/pmr735a.dtsi
 > 
 > -- 
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
+> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
+> of Code Aurora Forum, hosted by The Linux Foundation
 > 
