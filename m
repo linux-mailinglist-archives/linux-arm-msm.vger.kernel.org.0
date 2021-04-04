@@ -2,40 +2,40 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 85D6A353956
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Apr 2021 20:10:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CD98C353958
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Apr 2021 20:10:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229861AbhDDSKS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 4 Apr 2021 14:10:18 -0400
-Received: from mail.kernel.org ([198.145.29.99]:37278 "EHLO mail.kernel.org"
+        id S230169AbhDDSKV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 4 Apr 2021 14:10:21 -0400
+Received: from mail.kernel.org ([198.145.29.99]:37290 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229918AbhDDSKQ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        id S230495AbhDDSKQ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
         Sun, 4 Apr 2021 14:10:16 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPS id D18D56135D;
+Received: by mail.kernel.org (Postfix) with ESMTPS id E889161364;
         Sun,  4 Apr 2021 18:10:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1617559811;
-        bh=AbGdf39E0Vshy6gMJAzGonqMjvjLci+mbnrYLJsMlb0=;
+        bh=mL8/nKYmvhoPrgU0ZVKyEZ2Qefc5/EkBJDoavaLUxR4=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=NNiR1M9oAxxNxA95Do8yUQNgOiHo61uz+35PNw6Upr+BumaID12+Mn3DqiPxIxw6a
-         79ZcYVhdRkq+zhDuzyA/qtOpzpR81m3vh784MVBuBq4YQIVY/frU2fjSEBszFM8Ka2
-         nxRKGIi8dyeYhQEF8mFElO9d4iBFYlWpDx2rwuLaWYXuyLLQRp2j7F+rLOSkDx8/MA
-         Uub3vBhQvtKthzAnZAEwi02IiPljKYBJLtz7Ikc1DfjNrNmwL6fS9x6H1AMomJFCII
-         Ojt1/NAsXlKC7RHCq16zKkQsYhDMjbcOum6FVZTu4biKlpYR9OnO3k/0QQGL5Mrzak
-         5hpdli9zxk8uA==
+        b=EbwYeIZjFD+6lzFmIkjf/EQTp6rHV/TrUqcpCTR/IIR3Gw+tjjJD8Nse8tKzf0LJm
+         RArXUH54/5xxP7L2/RVhOehXJvxV0G2W4htm8yD3ZlZjZoCKgUDlwTQ45cHOTv7xCj
+         tBdantPeU3eY5+R0zIXXujILPuAzM6J+J1xfRkgxcUc0kuypxJ2U5wDpD45DxbjtZO
+         lAhYfJvKVu43IP0h8Dld2sGq6aXTelPh4Vr8AzqWDiFZ/KJnGXX/EVvQoTdsccdGsb
+         nJbiRDjmVSff0+vM1/FsvRVLS8nnUpbSp5T91wi23TGaWZ/zmasNmh10K2R21BtCBf
+         TSBB7K85SCcHg==
 Received: from pdx-korg-docbuild-2.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id C2AB5609FF;
+        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id DBA9C60A19;
         Sun,  4 Apr 2021 18:10:11 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH 0/2] kernel-doc and MAINTAINERS clean-up
+Subject: Re: [PATCH] arm64: dts: qcom: Move rmtfs memory region
 From:   patchwork-bot+linux-arm-msm@kernel.org
-Message-Id: <161755981179.6823.1282421826121358216.git-patchwork-notify@kernel.org>
+Message-Id: <161755981189.6823.12175460995264490654.git-patchwork-notify@kernel.org>
 Date:   Sun, 04 Apr 2021 18:10:11 +0000
-References: <20210327065642.11969-1-lukas.bulwahn@gmail.com>
-In-Reply-To: <20210327065642.11969-1-lukas.bulwahn@gmail.com>
-To:     Lukas Bulwahn <lukas.bulwahn@gmail.com>
+References: <20210330014610.1451198-1-sujitka@chromium.org>
+In-Reply-To: <20210330014610.1451198-1-sujitka@chromium.org>
+To:     Sujit Kautkar <sujitka@chromium.org>
 Cc:     linux-arm-msm@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -43,26 +43,22 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hello:
 
-This series was applied to qcom/linux.git (refs/heads/for-next):
+This patch was applied to qcom/linux.git (refs/heads/for-next):
 
-On Sat, 27 Mar 2021 07:56:40 +0100 you wrote:
-> Roughly 900 warnings of about 21.000 kernel-doc warnings in the kernel tree
-> warn with 'cannot understand function prototype:', i.e., the kernel-doc parser
-> cannot parse the function's signature. The majority, about 600 cases of those,
-> are just struct definitions following the kernel-doc description. Further,
-> spot-check investigations suggest that the authors of the specific kernel-doc
-> descriptions simply were not aware that the general format for a kernel-doc
-> description for a structure requires to prefix the struct name with the keyword
-> 'struct', as in 'struct struct_name - Brief description.'. Details on
-> kernel-doc are at the Link below.
+On Mon, 29 Mar 2021 18:46:10 -0700 you wrote:
+> Move rmtfs memory region so that it does not overlap with system
+> RAM (kernel data) when KAsan is enabled. This puts rmtfs right
+> after mba_mem which is not supposed to increase beyond 0x94600000
 > 
-> [...]
+> Signed-off-by: Sujit Kautkar <sujitka@chromium.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 2 +-
+>  arch/arm64/boot/dts/qcom/sc7180.dtsi         | 4 ++--
+>  2 files changed, 3 insertions(+), 3 deletions(-)
 
 Here is the summary with links:
-  - [1/2] MAINTAINERS: add another entry for ARM/QUALCOMM SUPPORT
-    https://git.kernel.org/qcom/c/99d52c872d34
-  - [2/2] soc: qcom: address kernel-doc warnings
-    https://git.kernel.org/qcom/c/8058dfa05ab7
+  - arm64: dts: qcom: Move rmtfs memory region
+    https://git.kernel.org/qcom/c/f66965b06b15
 
 You are awesome, thank you!
 --
