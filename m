@@ -2,155 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CD284354789
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Apr 2021 22:22:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 86E883547E8
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Apr 2021 22:58:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240779AbhDEUWq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Apr 2021 16:22:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32862 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235467AbhDEUWp (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Apr 2021 16:22:45 -0400
-Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com [IPv6:2607:f8b0:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28F9EC061793
-        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Apr 2021 13:22:38 -0700 (PDT)
-Received: by mail-pl1-x631.google.com with SMTP id v8so6221068plz.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Apr 2021 13:22:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=B5obkrFLYx+0aH/s+FuNLaF5WWutNw3wmJyEfHXrNTo=;
-        b=Dz1R38zeXda0R96wffR/yYYt3zYyxi+Sz2qq0KhUjm9AE+KvCSg+cH1pA2biRTyuNX
-         UkxMX5rVM4CugL75QdaNtdTZhBXQ1ksr/Tv7wDP5ZJxA5PjDESnws3lBidDp+tX3CbBB
-         DmDw7iYiII9YCgWTVo62HHorE//xEfyCU94ms=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=B5obkrFLYx+0aH/s+FuNLaF5WWutNw3wmJyEfHXrNTo=;
-        b=YX0Ykjv6ssYGOQ7+aaU7JE0N+9fRcXQAXVUBRd4B+S/H5OuXhKdn5JPLXbkYJz5arA
-         IgvZ4+TtzqqmbvDYxeXWeqsKrsTMok+ckFlXlw5IRFAnkNZAS7A1z8UZwGLCqxBooDzl
-         dDw9N8j3RQccb6xjP9hiNENrXKS5cfJeU2HRh6t1cgtx52YdrrvrlRsbpJQbGvNTwkf/
-         wkdUwoELa7xKPPNVQaK7kOJ+mEQIvv3ASNRHes6OHLvT7adhR9vR1cc+YGMLyqcToMia
-         uuW0xetiiMbj83rC/Ff2kdgXnStQMU2hNO+eVvSm0pZNJA0hqdMmd7y8KvRyB+j33S1F
-         kWbA==
-X-Gm-Message-State: AOAM530SzBZsRU+bsKnfpau7P+2fIZQ8T67mT6m1WfFmROgR1cQE/FgQ
-        PHZHy1ISr51xXOXins9/OkuQ7w==
-X-Google-Smtp-Source: ABdhPJzD3O4u2IkgUVX+KFcIcxgtRAUkqgLdyvujnFjbwIZdqfKnqvLrHlf7sI0xq5neSLulveWAxA==
-X-Received: by 2002:a17:90b:3cd:: with SMTP id go13mr866569pjb.148.1617654157581;
-        Mon, 05 Apr 2021 13:22:37 -0700 (PDT)
-Received: from localhost ([2620:15c:202:201:455e:b8cf:5939:67da])
-        by smtp.gmail.com with UTF8SMTPSA id e14sm9371544pga.14.2021.04.05.13.22.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 05 Apr 2021 13:22:37 -0700 (PDT)
-Date:   Mon, 5 Apr 2021 13:22:36 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Alan Stern <stern@rowland.harvard.edu>,
-        Rob Herring <robh+dt@kernel.org>,
-        Frank Rowand <frowand.list@gmail.com>
-Cc:     linux-kernel@vger.kernel.org,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Peter Chen <peter.chen@nxp.com>,
-        Michal Simek <michal.simek@xilinx.com>,
-        linux-usb@vger.kernel.org,
-        Ravi Chandra Sadineni <ravisadineni@chromium.org>,
-        Bastien Nocera <hadess@hadess.net>, devicetree@vger.kernel.org,
-        Stephen Boyd <swboyd@chromium.org>,
-        Al Cooper <alcooperx@gmail.com>,
-        "Alexander A. Klimov" <grandmaster@al2klimov.de>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Masahiro Yamada <masahiroy@kernel.org>,
-        Mathias Nyman <mathias.nyman@intel.com>,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v6 0/5] USB: misc: Add onboard_usb_hub driver
-Message-ID: <YGtxjBMe3YCnCYK4@google.com>
-References: <20210405201817.3977893-1-mka@chromium.org>
+        id S240951AbhDEU6W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Apr 2021 16:58:22 -0400
+Received: from mail.kernel.org ([198.145.29.99]:58860 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S237407AbhDEU6U (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 5 Apr 2021 16:58:20 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id EE36261074;
+        Mon,  5 Apr 2021 20:58:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1617656293;
+        bh=Aa7LKcliKxtEhM5X3AJRlYvCUetZMDK+/icmFpYxWUI=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=nq1Dmy26siYkrr9fdTQ4/W3Ee5AR8P+bAIhMh/mJuubQLSq5N5TwzAl0cFSU49jPr
+         TaeNQodU8H/hLlz6sKFA9OVj5a3BMu5YHWtpNvkXcut9PefykNZodam+SLdIAxYs+e
+         EUKTe2OLqpKR23E6cBCyxiKGRpmdV0Pmz7YJxWnkwGPNe+Feh+C7imUOkpceil3Chu
+         DNuLHQ/poVLuTWy8HhHtKg9Jq4lVCQkS4p6nW2mL91R3E3Hj3jacH5yL3Z/udi2sY6
+         XS3b8/wHdoN70DXxzfQFet2qy7TN3ugUzMzIFOvy7kC4JT0EWe698zAFGD4M3X1WI/
+         kyhhgrNi2gs1A==
+Date:   Mon, 5 Apr 2021 22:58:10 +0200
+From:   Wolfram Sang <wsa@kernel.org>
+To:     Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc:     Serge Semin <Sergey.Semin@baikalelectronics.ru>,
+        Khalil Blaiech <kblaiech@nvidia.com>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Jarkko Nikula <jarkko.nikula@linux.intel.com>,
+        Mika Westerberg <mika.westerberg@linux.intel.com>,
+        Robert Foss <robert.foss@linaro.org>
+Subject: Re: [PATCH v2 1/1] i2c: drivers: Use generic definitions for bus
+ frequencies (part 2)
+Message-ID: <20210405205810.GE3945@kunai>
+Mail-Followup-To: Wolfram Sang <wsa@kernel.org>,
+        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+        Serge Semin <Sergey.Semin@baikalelectronics.ru>,
+        Khalil Blaiech <kblaiech@nvidia.com>,
+        Loic Poulain <loic.poulain@linaro.org>, linux-i2c@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Jarkko Nikula <jarkko.nikula@linux.intel.com>,
+        Mika Westerberg <mika.westerberg@linux.intel.com>,
+        Robert Foss <robert.foss@linaro.org>
+References: <20210331104622.84657-1-andriy.shevchenko@linux.intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="M/SuVGWktc5uNpra"
 Content-Disposition: inline
-In-Reply-To: <20210405201817.3977893-1-mka@chromium.org>
+In-Reply-To: <20210331104622.84657-1-andriy.shevchenko@linux.intel.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-> Subject: [PATCH v6 0/5] USB: misc: Add onboard_usb_hub driver
 
-Argh, that should have been v7 :/ Not sure if it's worth/required to
-resend.
+--M/SuVGWktc5uNpra
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Apr 05, 2021 at 01:18:12PM -0700, Matthias Kaehlcke wrote:
-> This series adds:
-> - the onboard_usb_hub_driver
-> - glue in the xhci-plat driver to create the onboard_usb_hub
->   platform device if needed
-> - a device tree binding for the Realtek RTS5411 USB hub controller
-> - device tree changes that add RTS5411 entries for the QCA SC7180
->   based boards trogdor and lazor
-> - a couple of stubs for platform device functions to avoid
->   unresolved symbols with certain kernel configs
-> 
-> The main issue the driver addresses is that a USB hub needs to be
-> powered before it can be discovered. For discrete onboard hubs (an
-> example for such a hub is the Realtek RTS5411) this is often solved
-> by supplying the hub with an 'always-on' regulator, which is kind
-> of a hack. Some onboard hubs may require further initialization
-> steps, like changing the state of a GPIO or enabling a clock, which
-> requires even more hacks. This driver creates a platform device
-> representing the hub which performs the necessary initialization.
-> Currently it only supports switching on a single regulator, support
-> for multiple regulators or other actions can be added as needed.
-> Different initialization sequences can be supported based on the
-> compatible string.
-> 
-> Besides performing the initialization the driver can be configured
-> to power the hub off during system suspend. This can help to extend
-> battery life on battery powered devices which have no requirements
-> to keep the hub powered during suspend. The driver can also be
-> configured to leave the hub powered when a wakeup capable USB device
-> is connected when suspending, and power it off otherwise.
-> 
-> Changes in v7:
-> - series rebased on qcom/arm64-for-5.13
-> 
-> Changes in v6:
-> - updated summary
-> 
-> Changes in v5:
-> - cover letter added
-> 
-> Matthias Kaehlcke (5):
->   dt-bindings: usb: Add binding for Realtek RTS5411 hub controller
->   USB: misc: Add onboard_usb_hub driver
->   of/platform: Add stubs for of_platform_device_create/destroy()
->   usb: host: xhci-plat: Create platform device for onboard hubs in
->     probe()
->   arm64: dts: qcom: sc7180-trogdor: Add nodes for onboard USB hub
-> 
->  .../sysfs-bus-platform-onboard-usb-hub        |   8 +
->  .../bindings/usb/realtek,rts5411.yaml         |  59 +++
->  MAINTAINERS                                   |   7 +
->  .../boot/dts/qcom/sc7180-trogdor-lazor-r0.dts |  19 +-
->  .../boot/dts/qcom/sc7180-trogdor-lazor-r1.dts |  11 +-
->  .../arm64/boot/dts/qcom/sc7180-trogdor-r1.dts |  19 +-
->  arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi  |  21 +-
->  drivers/usb/host/xhci-plat.c                  |  16 +
->  drivers/usb/misc/Kconfig                      |  17 +
->  drivers/usb/misc/Makefile                     |   1 +
->  drivers/usb/misc/onboard_usb_hub.c            | 415 ++++++++++++++++++
->  include/linux/of_platform.h                   |  22 +-
->  include/linux/usb/hcd.h                       |   2 +
->  include/linux/usb/onboard_hub.h               |  15 +
->  14 files changed, 596 insertions(+), 36 deletions(-)
->  create mode 100644 Documentation/ABI/testing/sysfs-bus-platform-onboard-usb-hub
->  create mode 100644 Documentation/devicetree/bindings/usb/realtek,rts5411.yaml
->  create mode 100644 drivers/usb/misc/onboard_usb_hub.c
->  create mode 100644 include/linux/usb/onboard_hub.h
-> 
-> -- 
-> 2.31.0.208.g409f899ff0-goog
-> 
+On Wed, Mar 31, 2021 at 01:46:22PM +0300, Andy Shevchenko wrote:
+> Since we have generic definitions for bus frequencies, let's use them.
+>=20
+> Cc: Wolfram Sang <wsa@the-dreams.de>
+> Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+> Acked-by: Khalil Blaiech <kblaiech@nvidia.com>
+
+Applied to for-next, thanks!
+
+
+--M/SuVGWktc5uNpra
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmBreeIACgkQFA3kzBSg
+KbZfsA//Y0mzW9X4ck/8iaFbGK3GOSvEBerEoIkyxBCMNHvI1ajbpTMVtNkagY+w
+Dt95mYBNBrKADzA05Rf1ISleUvR7rA6cxjFzn4zti1mgaLbnGj0rwv4B7IQBGo7i
+20F/TPN2v2V83VJ7rOqDOBkPvKeD66uJqsD5eqTwh1/NQg5lnnZh2kAAXh1d8Qwb
+UupxyipUAV0oFQ6D0mbRdpQd5CRfdK6CxNQ+sBVGHMfJbGj/3BAa3PhUqweGRav4
+kpInPYCF+/4QL4lAjWxUUpU0nHSIzk4Gn+rtOI3AwiZDaKSKWlnLZVuw0yy7B38r
+37keOcGhZ5cQyxSpbrubKP9UPMY0tThn31dzV23AnuYJ+Vo3hu2CBo0ffLtNDQD/
+ctuYe/359HJB5MjmIah6p6BJehjHyh2R11DGuVWXRomihyio4uliAzaPYpQRkntk
+NhBb7Bq+JcfdMbXK/B8ff1q2SPu541nDjnuxNoPBBLTIyvY60Fcq7CzShpd3bI+W
+MFkW4Dpgl7sn7xU2BZPRMtSX40EnsmGtvQUYsWJwNKXskZzjAW649n2xJvXsvJGs
+wp70Lz8CQ7gQVDBOFpait9N79hKJiOMdb7Ox20iVMlbozWlnJn5QJLCveFiuyNYh
+m6hrzl5Z33x8lVLHPSL/np/9yAMqjtsZ24wZHIrMd8+NRGMDTwo=
+=U6iS
+-----END PGP SIGNATURE-----
+
+--M/SuVGWktc5uNpra--
