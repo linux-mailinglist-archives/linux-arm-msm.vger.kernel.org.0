@@ -2,123 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 68ED63546D1
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Apr 2021 20:51:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0FB8135474D
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Apr 2021 22:03:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234032AbhDESvc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Apr 2021 14:51:32 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:19138 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235442AbhDESvc (ORCPT
+        id S234545AbhDEUDR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Apr 2021 16:03:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56808 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233253AbhDEUDR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Apr 2021 14:51:32 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1617648685; h=Message-ID: References: In-Reply-To: Reply-To:
- Subject: Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=Um8t0peWpTZ291rX+7KLfjjfHsMnQ6CF6bYSIU8muug=;
- b=jFLlLM+oV7ufUl59jvBU7g+qMDDygLN5xYBePwg997GmLlItUBJtycdLSM9vAcqH4snPNE71
- odzpxoAzWgQ+Z7NTMxLgq1eg6/si+wKcv7ENbPdG5uUU6ttm2gVH9T8r2oy4vqqAJ5NMqqho
- QAzgLJ0T6DkE8zoERpFD1OdIr34=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
- 606b5c2a8807bcde1dc491a3 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 05 Apr 2021 18:51:22
- GMT
-Sender: bbhatt=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 142B1C433CA; Mon,  5 Apr 2021 18:51:22 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: bbhatt)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5B0BCC433C6;
-        Mon,  5 Apr 2021 18:51:21 +0000 (UTC)
+        Mon, 5 Apr 2021 16:03:17 -0400
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4BA17C061756;
+        Mon,  5 Apr 2021 13:03:10 -0700 (PDT)
+Received: by mail-ej1-x632.google.com with SMTP id w3so18406702ejc.4;
+        Mon, 05 Apr 2021 13:03:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=l2r5xpqBxPdoX4BFUkxb3XsKvWxRSxdMaDCbCTJRu1w=;
+        b=lTWnuxE61Y/JJoVGNQZFpyWzJJO3IaronmJ37ay78cq7PjoeeBWkr0yrmwwN2M/kO2
+         FL+hNmCbXG15B/q+TE59yEhe4K+F9ZS8oetROE9gE7BfU2xAaMKL8FGw2xdmuL48xcDO
+         Ox+kj5CXMioBCU1hGKYkjhuPeU5yziGdscVFD21Ad5YHMXJFve9qXVyWfkVTOv7HenW8
+         hISGAGRQVcRTuEsGHieJXRZr80OdFoOQMK4jCJN3855Qia8VlvoA+HNAQO8uYUDBkMsb
+         pJ2T5kVlqAvAO/GB0ojpnBVwuns+kY8jU8Y/h5A/DsPYMc3KfufJSLI9GMM8V0A4cll3
+         eRzQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=l2r5xpqBxPdoX4BFUkxb3XsKvWxRSxdMaDCbCTJRu1w=;
+        b=WK3G5Dc6/91EcsJiKSRtTi2bDhm7AMcI5boJygXeX5pKgu+2tkuSTIb6vWW65lQIWQ
+         uJxkp9t10pjv0H2id4lBUAwAv3QT0b6enwEdIBnesn27oVto8Jt7ucz3iBcZWbBGNg4e
+         xYEqfsTwoSJJN65hfR47qirdwyTVlcsFDNuREiPQtgXtM/8D7eV5Sc2PF24T2sE+daIu
+         SawTJ+flBtTxNCwvdoPuz70bFIb4PmTBwp6gDm6uYRvd6lJA7vw249RxwFwxnRsV5gzG
+         d+LUT7hZCAUe9rGty1lsVZ9Dkd0sqSwY9PUBMoE6MelPLQbwNw4g+5PSJgmZBD6ULwy7
+         Vgvw==
+X-Gm-Message-State: AOAM530rwMXvqcr46OsldRxlb2GB5/QTVfxpZEczqSMuDWmKifYr27vs
+        V4r0SyiYs1a1UMx3MaBArKdB45GkRMTgOA==
+X-Google-Smtp-Source: ABdhPJy41b0aFigVZSDGNT13cSHtum2FZcK0hKD5I1gZsD6MshQ5EyQo7/fBlNQ4BHDjaE9GiGCkZg==
+X-Received: by 2002:a17:907:105c:: with SMTP id oy28mr11849496ejb.552.1617652989026;
+        Mon, 05 Apr 2021 13:03:09 -0700 (PDT)
+Received: from localhost.localdomain ([62.201.25.198])
+        by smtp.gmail.com with ESMTPSA id bo19sm5203932edb.17.2021.04.05.13.03.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 05 Apr 2021 13:03:07 -0700 (PDT)
+From:   Petr Vorel <petr.vorel@gmail.com>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     Petr Vorel <petr.vorel@gmail.com>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Ricardo Ribalda <ribalda@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        devicetree@vger.kernel.org
+Subject: [PATCH 1/1] arm64: dts: qcom: msm8994: Reserve gpio ranges
+Date:   Mon,  5 Apr 2021 22:02:59 +0200
+Message-Id: <20210405200259.23525-1-petr.vorel@gmail.com>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Mon, 05 Apr 2021 11:51:21 -0700
-From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
-To:     Loic Poulain <loic.poulain@linaro.org>
-Cc:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 2/2] bus: mhi: pm: reduce PM state change verbosity
-Organization: Qualcomm Innovation Center, Inc.
-Reply-To: bbhatt@codeaurora.org
-Mail-Reply-To: bbhatt@codeaurora.org
-In-Reply-To: <1614963744-25962-2-git-send-email-loic.poulain@linaro.org>
-References: <1614963744-25962-1-git-send-email-loic.poulain@linaro.org>
- <1614963744-25962-2-git-send-email-loic.poulain@linaro.org>
-Message-ID: <1c2e88c2f4ba5c5fa1fbde8f1b06517e@codeaurora.org>
-X-Sender: bbhatt@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-03-05 09:02 AM, Loic Poulain wrote:
-> Since M3 can be entered/exited quite a lot when used for runtime PM,
-> keep the mhi suspend/resume transitions quiet.
-> 
-> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
-> ---
->  drivers/bus/mhi/core/pm.c | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
-> index edd7794..0cd6445 100644
-> --- a/drivers/bus/mhi/core/pm.c
-> +++ b/drivers/bus/mhi/core/pm.c
-> @@ -858,7 +858,7 @@ int mhi_pm_suspend(struct mhi_controller 
-> *mhi_cntrl)
->  		return -EBUSY;
->  	}
-> 
-> -	dev_info(dev, "Allowing M3 transition\n");
-> +	dev_dbg(dev, "Allowing M3 transition\n");
->  	new_state = mhi_tryset_pm_state(mhi_cntrl, MHI_PM_M3_ENTER);
->  	if (new_state != MHI_PM_M3_ENTER) {
->  		write_unlock_irq(&mhi_cntrl->pm_lock);
-> @@ -872,7 +872,7 @@ int mhi_pm_suspend(struct mhi_controller 
-> *mhi_cntrl)
->  	/* Set MHI to M3 and wait for completion */
->  	mhi_set_mhi_state(mhi_cntrl, MHI_STATE_M3);
->  	write_unlock_irq(&mhi_cntrl->pm_lock);
-> -	dev_info(dev, "Wait for M3 completion\n");
-> +	dev_dbg(dev, "Wait for M3 completion\n");
-> 
->  	ret = wait_event_timeout(mhi_cntrl->state_event,
->  				 mhi_cntrl->dev_state == MHI_STATE_M3 ||
-> @@ -906,7 +906,7 @@ int mhi_pm_resume(struct mhi_controller *mhi_cntrl)
->  	enum mhi_pm_state cur_state;
->  	int ret;
-> 
-> -	dev_info(dev, "Entered with PM state: %s, MHI state: %s\n",
-> +	dev_dbg(dev, "Entered with PM state: %s, MHI state: %s\n",
->  		 to_mhi_pm_state_str(mhi_cntrl->pm_state),
->  		 TO_MHI_STATE_STR(mhi_cntrl->dev_state));
-Since we go from 4 chars (info) to 3 chars (dbg), there is need to 
-adjust
-the two parameters here in the next two lines, right?
+Reserve pins 0-3 and 85-88 as these aren't meant to be accessible
+from the application CPUs. Fix similar to 9134586715e3.
 
-If that's needed and is done, you can add my tag for:
+Fixes: 3edfb7bd76bd ("gpiolib: Show correct direction from the beginning")
 
-Reviewed-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
-
-We can just push this patch as a standalone one not dependent on the 1/2
-in this series.
-
-Thanks,
-Bhaumik
+Signed-off-by: Petr Vorel <petr.vorel@gmail.com>
 ---
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
-Forum,
-a Linux Foundation Collaborative Project
+Hi,
+
+tested on latest qcom/for-next.
+
+Simple testing with /sys/class/gpio/export showed that 85-88.
+3 disables UART. I expect 0-2 are also reserved as on other msm8998.
+
+for i in $(seq 0 146); do echo $i > /sys/class/gpio/export; done
+
+I expect it's just angler specific, thus I haven't added it to msm8994.dtsi
+(otherwise Konrad would have fixed it).
+
+Kind regards,
+Petr
+
+ arch/arm64/boot/dts/qcom/msm8994-angler-rev-101.dts | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/qcom/msm8994-angler-rev-101.dts b/arch/arm64/boot/dts/qcom/msm8994-angler-rev-101.dts
+index baa55643b40f..0dc94101d5de 100644
+--- a/arch/arm64/boot/dts/qcom/msm8994-angler-rev-101.dts
++++ b/arch/arm64/boot/dts/qcom/msm8994-angler-rev-101.dts
+@@ -1,6 +1,7 @@
+ // SPDX-License-Identifier: GPL-2.0-only
+ /* Copyright (c) 2015, Huawei Inc. All rights reserved.
+  * Copyright (c) 2016, The Linux Foundation. All rights reserved.
++ * Copyright (c) 2021 Petr Vorel <petr.vorel@gmail.com>
+  */
+ 
+ /dts-v1/;
+@@ -32,3 +33,7 @@ serial@f991e000 {
+ 		};
+ 	};
+ };
++
++&tlmm {
++	gpio-reserved-ranges = <0 4>, <85 4>;
++};
+-- 
+2.30.2
+
