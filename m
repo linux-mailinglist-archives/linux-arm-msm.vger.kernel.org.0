@@ -2,181 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AC4253539E5
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Apr 2021 22:35:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B2703353A69
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Apr 2021 02:50:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231635AbhDDUfp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 4 Apr 2021 16:35:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35436 "EHLO
+        id S231728AbhDEAug (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 4 Apr 2021 20:50:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33322 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231639AbhDDUf3 (ORCPT
+        with ESMTP id S231539AbhDEAuf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 4 Apr 2021 16:35:29 -0400
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70805C061797;
-        Sun,  4 Apr 2021 13:35:21 -0700 (PDT)
-Received: by mail-ej1-x634.google.com with SMTP id ap14so14395069ejc.0;
-        Sun, 04 Apr 2021 13:35:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=21TRq5T7n/YlJzaiHd/rYW7/ONn9U06XAcWKZPDtNYI=;
-        b=M4eDEHA7l9wyZKJKdkZ3+WB+zAsyqVMa09C0V4FY+OtPURMur+wQEEu556G6Vr60aE
-         JHYzgsAezfJLn4gGjtWhb5HOtAsNhd4RKEaZJ7R72PJNNC5hv7+1jEBoTArQvhd5nv3o
-         d4/yEs0fGzaJGecJ0yYA8b/MjPUFNst42iBh1Vku40ntMYrw7SyUFbAJQuz0m1uawdwo
-         zSFXgjFfm7ChRDZ3prphxFwfglmu3y80bJJ295zfk8diP14mvMKOcvAfbddFAaNum2tI
-         3rnGtbyuJF0ZOXeFiWVr7x1jO7uEVo+7XExUfzmroDb+OsbfcEhox7RmWMHca/13+F3+
-         I5GQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=21TRq5T7n/YlJzaiHd/rYW7/ONn9U06XAcWKZPDtNYI=;
-        b=cqMlfzxDY+W3WIaamf7rik0PZ0ucZcXsqnpku7VwUzPI3Vzo5DFi30r6ykI/c7O5+8
-         Dx4tMILNceEJTKIWyCNw4YyckMHeUqSh1ixh5rLyWJ/cfYCIOKRI/iLx4zLfr5tfQsCN
-         ZdFp3ywQd+9TcPO6kI3dVFMEOS59+3rBaxuOEBX8mL6j6jcdlF+SMY3tkQhZxJNPXONY
-         xO2VOi04osvvF5JY3MrzZdn0J6C/As6KccGm6P0nyhSYAka0O0FH2rdS27XfB5m0e3dR
-         mylOS+Vhl63iXJp5AabKbIYis5fJZ88VH8Omll8guaGuafsiOEwGPOawctWzGKwn7GG0
-         oqgA==
-X-Gm-Message-State: AOAM531axKRuECrKuTQ0oB0Q6d2Rl9NY86dQxAvNC4KbublNaS1xCtw9
-        qKlAUDN7rL7qpslzCCMXuo8hHQzatkU=
-X-Google-Smtp-Source: ABdhPJyNXcRjlippyXIMc/+PnZGk2e+9H+1Uy7aUEKqxmoGDzV/o/WLhyc7AWbrwvZr1LTAO9WqoBw==
-X-Received: by 2002:a17:906:814a:: with SMTP id z10mr11054668ejw.476.1617568520142;
-        Sun, 04 Apr 2021 13:35:20 -0700 (PDT)
-Received: from Ansuel-xps.localdomain (host-79-52-251-187.retail.telecomitalia.it. [79.52.251.187])
-        by smtp.googlemail.com with ESMTPSA id s4sm7191140ejf.108.2021.04.04.13.35.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 04 Apr 2021 13:35:19 -0700 (PDT)
-From:   Ansuel Smith <ansuelsmth@gmail.com>
-To:     Daniel Lezcano <daniel.lezcano@linaro.org>
-Cc:     Ansuel Smith <ansuelsmth@gmail.com>, Rob Herring <robh@kernel.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Andy Gross <agross@kernel.org>,
+        Sun, 4 Apr 2021 20:50:35 -0400
+Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [IPv6:2001:4b98:dc2:55:216:3eff:fef7:d647])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CEDF7C061756;
+        Sun,  4 Apr 2021 17:50:28 -0700 (PDT)
+Received: from pendragon.ideasonboard.com (62-78-145-57.bb.dnainternet.fi [62.78.145.57])
+        by perceval.ideasonboard.com (Postfix) with ESMTPSA id D9351D40;
+        Mon,  5 Apr 2021 02:50:24 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
+        s=mail; t=1617583825;
+        bh=gBtmkYGClgERNSI4TslDSDr4bEyMle1yAbKvhAur19s=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=c4TsRYkjVzzNCstpAvd/2HQnB4iqOyeVvzQRymPS/eRcpxs1kqAkp7WKxS9FWUh37
+         f8Ybh1IbYAaS6S9hExP5kCQDa/4Atde89dfhGNTZ3Iep18DxzhUPUSxovZiwoqZxdF
+         YHGkEFxDxGqn2EQRbm+g8+UKmSzeg0OO8nHn97tg=
+Date:   Mon, 5 Apr 2021 03:49:39 +0300
+From:   Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+To:     Douglas Anderson <dianders@chromium.org>
+Cc:     Andrzej Hajda <a.hajda@samsung.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jernej Skrabec <jernej.skrabec@siol.net>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Linus W <linus.walleij@linaro.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Rob Herring <robh+dt@kernel.org>, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH v14 9/9] dt-bindings: thermal: tsens: Document ipq8064 bindings
-Date:   Sun,  4 Apr 2021 16:48:23 +0200
-Message-Id: <20210404144823.31867-10-ansuelsmth@gmail.com>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20210404144823.31867-1-ansuelsmth@gmail.com>
-References: <20210404144823.31867-1-ansuelsmth@gmail.com>
+        robdclark@chromium.org, Stephen Boyd <swboyd@chromium.org>,
+        Steev Klimaszewski <steev@kali.org>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        linux-arm-msm@vger.kernel.org,
+        Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>,
+        Boris Brezillon <boris.brezillon@collabora.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 01/12] drm/bridge: Fix the stop condition of
+ drm_bridge_chain_pre_enable()
+Message-ID: <YGpeo9LV4uAh1B7u@pendragon.ideasonboard.com>
+References: <20210402222846.2461042-1-dianders@chromium.org>
+ <20210402152701.v3.1.If62a003f76a2bc4ccc6c53565becc05d2aad4430@changeid>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20210402152701.v3.1.If62a003f76a2bc4ccc6c53565becc05d2aad4430@changeid>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Document the use of bindings used for msm8960 tsens based devices.
-msm8960 use the same gcc regs and is set as a child of the qcom gcc.
+Hi Doug,
 
-Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
-Reviewed-by: Rob Herring <robh@kernel.org>
----
- .../bindings/thermal/qcom-tsens.yaml          | 56 ++++++++++++++++---
- 1 file changed, 48 insertions(+), 8 deletions(-)
+Thank you for the patch.
 
-diff --git a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-index 95462e071ab4..1785b1c75a3c 100644
---- a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-+++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-@@ -19,6 +19,11 @@ description: |
- properties:
-   compatible:
-     oneOf:
-+      - description: msm9860 TSENS based
-+        items:
-+          - enum:
-+              - qcom,ipq8064-tsens
-+
-       - description: v0.1 of TSENS
-         items:
-           - enum:
-@@ -73,7 +78,9 @@ properties:
-     maxItems: 2
-     items:
-       - const: calib
--      - const: calib_sel
-+      - enum:
-+          - calib_backup
-+          - calib_sel
- 
-   "#qcom,sensors":
-     description:
-@@ -88,12 +95,20 @@ properties:
-       Number of cells required to uniquely identify the thermal sensors. Since
-       we have multiple sensors this is set to 1
- 
-+required:
-+  - compatible
-+  - interrupts
-+  - interrupt-names
-+  - "#thermal-sensor-cells"
-+  - "#qcom,sensors"
-+
- allOf:
-   - if:
-       properties:
-         compatible:
-           contains:
-             enum:
-+              - qcom,ipq8064-tsens
-               - qcom,msm8916-tsens
-               - qcom,msm8974-tsens
-               - qcom,msm8976-tsens
-@@ -114,17 +129,42 @@ allOf:
-         interrupt-names:
-           minItems: 2
- 
--required:
--  - compatible
--  - reg
--  - "#qcom,sensors"
--  - interrupts
--  - interrupt-names
--  - "#thermal-sensor-cells"
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            enum:
-+              - qcom,tsens-v0_1
-+              - qcom,tsens-v1
-+              - qcom,tsens-v2
-+
-+    then:
-+      required:
-+        - reg
- 
- additionalProperties: false
- 
- examples:
-+  - |
-+    #include <dt-bindings/interrupt-controller/arm-gic.h>
-+    // Example msm9860 based SoC (ipq8064):
-+    gcc: clock-controller {
-+
-+           /* ... */
-+
-+           tsens: thermal-sensor {
-+                compatible = "qcom,ipq8064-tsens";
-+
-+                 nvmem-cells = <&tsens_calib>, <&tsens_calib_backup>;
-+                 nvmem-cell-names = "calib", "calib_backup";
-+                 interrupts = <GIC_SPI 178 IRQ_TYPE_LEVEL_HIGH>;
-+                 interrupt-names = "uplow";
-+
-+                 #qcom,sensors = <11>;
-+                 #thermal-sensor-cells = <1>;
-+          };
-+    };
-+
-   - |
-     #include <dt-bindings/interrupt-controller/arm-gic.h>
-     // Example 1 (legacy: for pre v1 IP):
+On Fri, Apr 02, 2021 at 03:28:35PM -0700, Douglas Anderson wrote:
+> The drm_bridge_chain_pre_enable() is not the proper opposite of
+> drm_bridge_chain_post_disable(). It continues along the chain to
+> _before_ the starting bridge. Let's fix that.
+> 
+> Fixes: 05193dc38197 ("drm/bridge: Make the bridge chain a double-linked list")
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> Reviewed-by: Andrzej Hajda <a.hajda@samsung.com>
+> ---
+> 
+> (no changes since v1)
+> 
+>  drivers/gpu/drm/drm_bridge.c | 3 +++
+>  1 file changed, 3 insertions(+)
+> 
+> diff --git a/drivers/gpu/drm/drm_bridge.c b/drivers/gpu/drm/drm_bridge.c
+> index 64f0effb52ac..044acd07c153 100644
+> --- a/drivers/gpu/drm/drm_bridge.c
+> +++ b/drivers/gpu/drm/drm_bridge.c
+> @@ -522,6 +522,9 @@ void drm_bridge_chain_pre_enable(struct drm_bridge *bridge)
+>  	list_for_each_entry_reverse(iter, &encoder->bridge_chain, chain_node) {
+>  		if (iter->funcs->pre_enable)
+>  			iter->funcs->pre_enable(iter);
+> +
+> +		if (iter == bridge)
+> +			break;
+
+This looks good as it matches drm_atomic_bridge_chain_disable().
+
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+
+I'm curious though, given that the bridge passed to the function should
+be the one closest to the encoder, does this make a difference ?
+
+>  	}
+>  }
+>  EXPORT_SYMBOL(drm_bridge_chain_pre_enable);
+
 -- 
-2.30.2
+Regards,
 
+Laurent Pinchart
