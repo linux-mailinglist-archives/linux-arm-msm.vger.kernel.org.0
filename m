@@ -2,212 +2,225 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 366CC35463F
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Apr 2021 19:42:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4EF0A3546CF
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Apr 2021 20:46:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239291AbhDERmj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Apr 2021 13:42:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54604 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239474AbhDERm3 (ORCPT
+        id S235353AbhDESqy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Apr 2021 14:46:54 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:55028 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234032AbhDESqx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Apr 2021 13:42:29 -0400
-Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com [IPv6:2607:f8b0:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93B3DC061794;
-        Mon,  5 Apr 2021 10:42:21 -0700 (PDT)
-Received: by mail-pg1-x52c.google.com with SMTP id y32so5382693pga.11;
-        Mon, 05 Apr 2021 10:42:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=7MWEztFYREaj4EaJg4EzCQLWGTSCEwCslvK3LYOeVzE=;
-        b=HRjGZS1QILkvNMmvQmZn3S40Na/kBwIbA6WVXDpnPh/VerF7PjPRJvpl7/XN6W4A6M
-         a6HWcvDmChgM4WL36FgQdBqTKbrpTyboqYE4Xmyqz2Pn6p/U2nwbYpYx4imr9/9Vt9Jo
-         zGbSNQyGZlO4ootd5yQAv1i/dW4Z6+ljPnr9sODOK3Mw/0gywldqHIhPcpIMg74ctZA5
-         SMR/IzvOskt2Jmcru/JsesJCc+kr7QGaxjRDXPGDMqcdYYygeTWfjbQtl/44xeaUv4mr
-         yPI8790q3HzS5SHk29h+3MdFMPyGngH1C+67AN53DJzLb9x14igyzbSZX+k6UQ+hRhbT
-         Ha5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=7MWEztFYREaj4EaJg4EzCQLWGTSCEwCslvK3LYOeVzE=;
-        b=b4bMdsSG+eC8VugbmpFuD8xaOi18ngLRVEK2oryn2qKS/gYzs2AgxVQyTMjHfjChwx
-         dTYbg2JUw3wNgFh1OKti09S7qhrFqttQapqWXnS9/qUWzQDNzklLUYH7/D+/1Yv8ldiu
-         L7BOm24fXveO0kxvwP/Bu77UlwboDDhJS0DrkCgRSUsVtyrdXRsd5jlkjhVKcqFCwmH6
-         djyI2fMfZYIJs7gY7sA/ooDHmycXY1Z9IkLJ8wgs59sZkUQkqYEHZ7DBM+JAE1opR2XO
-         tqyKQY9VPbIFrZJXMofEK9ff7BOW+PUxsdqKj4KUGfcZz/4IA71AbZNEBe52IIxDR3E6
-         WRrQ==
-X-Gm-Message-State: AOAM532Fnm+tHtZvsFIW0z/tB05MZhsC8ANd35d7YmwtqklFdpkehBqg
-        0bS3hIgtYezfZvTAAsO88G8=
-X-Google-Smtp-Source: ABdhPJxibT+j7asrrFr4/LyBfYOx3cjIw334LA6mEIfzkJ/SSj8fWZ8XoVuGuulT8c8TGoH9q2eLPg==
-X-Received: by 2002:a65:68d3:: with SMTP id k19mr23989185pgt.44.1617644541208;
-        Mon, 05 Apr 2021 10:42:21 -0700 (PDT)
-Received: from localhost (c-73-25-156-94.hsd1.or.comcast.net. [73.25.156.94])
-        by smtp.gmail.com with ESMTPSA id b7sm2441194pgs.62.2021.04.05.10.42.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Apr 2021 10:42:19 -0700 (PDT)
-From:   Rob Clark <robdclark@gmail.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     Jordan Crouse <jordan@cosmicpenguin.net>,
-        Rob Clark <robdclark@chromium.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
-        freedreno@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
-        GPU), linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH 8/8] drm/msm: Support evicting GEM objects to swap
-Date:   Mon,  5 Apr 2021 10:45:31 -0700
-Message-Id: <20210405174532.1441497-9-robdclark@gmail.com>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20210405174532.1441497-1-robdclark@gmail.com>
-References: <20210405174532.1441497-1-robdclark@gmail.com>
+        Mon, 5 Apr 2021 14:46:53 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1617648407; h=Message-ID: References: In-Reply-To: Reply-To:
+ Subject: Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=Svgu08p5S1sVzyKEcr60eUGS2Un7/iA9DoqFSsQRPyo=;
+ b=gA+Zn9cgiBL/8gCzz2CXqZFsDBiEjd6ZpHqLJGIrMhTfdl38e+LG3pwSLgZN0hRBrDKOC8jl
+ ebXqd9LZCe1ryggtmONZkdI+Fsorizz9VmMrVpHxcTk9YrnNDfY68CE/NNiLaAs8MaRTgHgC
+ gznuqkWh6DAMN1jWEhpHIO3fySQ=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
+ 606b5b16febcffa80f6fa6c6 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 05 Apr 2021 18:46:46
+ GMT
+Sender: bbhatt=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 2BB19C433ED; Mon,  5 Apr 2021 18:46:46 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: bbhatt)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 36C8EC433CA;
+        Mon,  5 Apr 2021 18:46:45 +0000 (UTC)
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
 Content-Transfer-Encoding: 8bit
+Date:   Mon, 05 Apr 2021 11:46:45 -0700
+From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     Loic Poulain <loic.poulain@linaro.org>, hemantk@codeaurora.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 1/2] bus: mhi: core: Fix MHI runtime_pm behavior
+Organization: Qualcomm Innovation Center, Inc.
+Reply-To: bbhatt@codeaurora.org
+Mail-Reply-To: bbhatt@codeaurora.org
+In-Reply-To: <20210331182700.GL15610@work>
+References: <1614963744-25962-1-git-send-email-loic.poulain@linaro.org>
+ <20210331171252.GK15610@work>
+ <CAMZdPi-M5fYPs7QfsBx4Gy6ywCLue5yqJLn0XthGhTeON1wWfw@mail.gmail.com>
+ <20210331182700.GL15610@work>
+Message-ID: <fe857b91841caf67c53e6a9ad967eb84@codeaurora.org>
+X-Sender: bbhatt@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+On 2021-03-31 11:27 AM, Manivannan Sadhasivam wrote:
+> On Wed, Mar 31, 2021 at 07:38:55PM +0200, Loic Poulain wrote:
+>> Hi Mani,
+>> 
+>> Le mer. 31 mars 2021 à 19:12, Manivannan Sadhasivam <
+>> manivannan.sadhasivam@linaro.org> a écrit :
+>> 
+>> > On Fri, Mar 05, 2021 at 06:02:23PM +0100, Loic Poulain wrote:
+>> > > This change ensures that PM reference is always get during packet
+>> > > queueing and released either after queuing completion (RX) or once
+>> > > the buffer has been consumed (TX). This guarantees proper update for
+>> > > underlying MHI controller runtime status (e.g. last_busy timestamp)
+>> > > and prevents suspend to be triggered while TX packets are flying,
+>> > > or before we completed update of the RX ring.
+>> > >
+>> >
+>> > Any reason why you didn't wait for RX completion also?
+>> 
+>> 
+>> Because on TX we know the buffer completion is going to happen really
+>> quickly (we send data) whereas we never know when when RX packet will 
+>> be
+>> completed (we are waiting for data), so we want to be able to put the 
+>> MHI
+>> device in suspend while RX is pending (the device will wake up the 
+>> host on
+>> incoming data)
+>> 
+> 
+> Device wakeup will only happen for device initiated suspend (M1) but 
+> for
+> host initiated suspend (M3), device will check for pending data to host
+> and will initiate wakeup request before going for suspend. So I think 
+> it
+> is safe to wait for RX data.
+> 
+> Hemant/Bhaumik, any thoughts?
+> 
+> Thanks,
+> Mani
+> 
+Agree with Loic here. Let's not depend on the device to determine host 
+side
+behavior and instead, assume that the device may or may not be following
+protocol so as to reduce chances of higher power draw by host. Host 
+should
+not care when RX comes, but host should care about TX completion as 
+that's
+where our requirement ends.
 
-Now that tracking is wired up for potentially evictable GEM objects,
-wire up shrinker and the remaining GEM bits for unpinning backing pages
-of inactive objects.
+There have been instances of delayed RX and in some cases, no TX 
+completion
+from a certain client (I think DIAG), where device thinks they have 
+received
+garbage and decide not to respond with a TX completion.
 
-Signed-off-by: Rob Clark <robdclark@chromium.org>
+We want to be able to put device in suspend or at least initiate it 
+while
+host waits for incoming data. Once RX comes in, host will wake up to 
+process it.
+
+What Loic does in this patch is done in one way using patch [1]. 
+However, that
+does not update the last_busy timestamp. I am mostly in favor of this 
+patch
+going in but would like Loic to answer one question:
+
+In mhi_reset_data_chan(), why not do a runtime_put(mhi_cntrl) inside the
+pre-existing if (mhi_chan->dir == DMA_TO_DEVICE) at the start of the 
+while loop:
+while (tre_ring->rp != tre_ring->wp)? This would be balanced for each 
+TX.
+>> 
+>> >
+>> > Thanks,
+>> > Mani
+>> >
+>> > > Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+>> > > ---
+>> > >  drivers/bus/mhi/core/main.c | 20 ++++++++++++++++----
+>> > >  1 file changed, 16 insertions(+), 4 deletions(-)
+>> > >
+>> > > diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
+>> > > index c780234..16b9640 100644
+>> > > --- a/drivers/bus/mhi/core/main.c
+>> > > +++ b/drivers/bus/mhi/core/main.c
+>> > > @@ -584,8 +584,11 @@ static int parse_xfer_event(struct mhi_controller
+>> > *mhi_cntrl,
+>> > >                       /* notify client */
+>> > >                       mhi_chan->xfer_cb(mhi_chan->mhi_dev, &result);
+>> > >
+>> > > -                     if (mhi_chan->dir == DMA_TO_DEVICE)
+>> > > +                     if (mhi_chan->dir == DMA_TO_DEVICE) {
+>> > >                               atomic_dec(&mhi_cntrl->pending_pkts);
+>> > > +                             /* Release the reference got from
+>> > mhi_queue() */
+>> > > +                             mhi_cntrl->runtime_put(mhi_cntrl);
+>> > > +                     }
+>> > >
+>> > >                       /*
+>> > >                        * Recycle the buffer if buffer is pre-allocated,
+>> > > @@ -1021,9 +1024,11 @@ static int mhi_queue(struct mhi_device *mhi_dev,
+>> > struct mhi_buf_info *buf_info,
+>> > >       if (unlikely(ret))
+>> > >               goto exit_unlock;
+>> > >
+>> > > -     /* trigger M3 exit if necessary */
+>> > > -     if (MHI_PM_IN_SUSPEND_STATE(mhi_cntrl->pm_state))
+>> > > -             mhi_trigger_resume(mhi_cntrl);
+>> > > +     /* Packet is queued, take a usage ref to exit M3 if necessary
+>> > > +      * for host->device buffer, balanced put is done on buffer
+>> > completion
+>> > > +      * for device->host buffer, balanced put is after ringing the DB
+>> > > +      */
+>> > > +     mhi_cntrl->runtime_get(mhi_cntrl);
+>> > >
+>> > >       /* Assert dev_wake (to exit/prevent M1/M2)*/
+>> > >       mhi_cntrl->wake_toggle(mhi_cntrl);
+>> > > @@ -1034,6 +1039,9 @@ static int mhi_queue(struct mhi_device *mhi_dev,
+>> > struct mhi_buf_info *buf_info,
+>> > >       if (likely(MHI_DB_ACCESS_VALID(mhi_cntrl)))
+>> > >               mhi_ring_chan_db(mhi_cntrl, mhi_chan);
+>> > >
+>> > > +     if (dir == DMA_FROM_DEVICE)
+>> > > +             mhi_cntrl->runtime_put(mhi_cntrl);
+>> > > +
+>> > >  exit_unlock:
+>> > >       read_unlock_irqrestore(&mhi_cntrl->pm_lock, flags);
+>> > >
+>> > > @@ -1431,6 +1439,10 @@ static void mhi_reset_data_chan(struct
+>> > mhi_controller *mhi_cntrl,
+>> > >                       result.buf_addr = buf_info->cb_buf;
+>> > >                       mhi_chan->xfer_cb(mhi_chan->mhi_dev, &result);
+>> > >               }
+>> > > +
+>> > > +             /* Release the reference got from mhi_queue() */
+>> > > +             if (mhi_chan->dir == DMA_TO_DEVICE)
+>> > > +                     mhi_cntrl->runtime_put(mhi_cntrl);
+Can this runtime_put(mhi_cntrl); be moved to the if at the top of this 
+while
+loop?
+>> > >       }
+>> > >  }
+>> > >
+>> > > --
+>> > > 2.7.4
+>> > >
+>> >
+
+Thanks,
+Bhaumik
+
+[1] 
+https://lore.kernel.org/r/20200929175218.8178-4-manivannan.sadhasivam@linaro.org
 ---
- drivers/gpu/drm/msm/msm_gem.c          | 23 ++++++++++++++++
- drivers/gpu/drm/msm/msm_gem_shrinker.c | 37 +++++++++++++++++++++++++-
- drivers/gpu/drm/msm/msm_gpu_trace.h    | 13 +++++++++
- 3 files changed, 72 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
-index 163a1d30b5c9..2b731cf42294 100644
---- a/drivers/gpu/drm/msm/msm_gem.c
-+++ b/drivers/gpu/drm/msm/msm_gem.c
-@@ -759,6 +759,29 @@ void msm_gem_purge(struct drm_gem_object *obj)
- 			0, (loff_t)-1);
- }
- 
-+/**
-+ * Unpin the backing pages and make them available to be swapped out.
-+ */
-+void msm_gem_evict(struct drm_gem_object *obj)
-+{
-+	struct drm_device *dev = obj->dev;
-+	struct msm_gem_object *msm_obj = to_msm_bo(obj);
-+
-+	GEM_WARN_ON(!msm_gem_is_locked(obj));
-+	GEM_WARN_ON(is_unevictable(msm_obj));
-+	GEM_WARN_ON(!msm_obj->evictable);
-+	GEM_WARN_ON(msm_obj->active_count);
-+
-+	/* Get rid of any iommu mapping(s): */
-+	put_iova_spaces(obj, false);
-+
-+	drm_vma_node_unmap(&obj->vma_node, dev->anon_inode->i_mapping);
-+
-+	put_pages(obj);
-+
-+	update_inactive(msm_obj);
-+}
-+
- void msm_gem_vunmap(struct drm_gem_object *obj)
- {
- 	struct msm_gem_object *msm_obj = to_msm_bo(obj);
-diff --git a/drivers/gpu/drm/msm/msm_gem_shrinker.c b/drivers/gpu/drm/msm/msm_gem_shrinker.c
-index 38bf919f8508..52828028b9d4 100644
---- a/drivers/gpu/drm/msm/msm_gem_shrinker.c
-+++ b/drivers/gpu/drm/msm/msm_gem_shrinker.c
-@@ -9,12 +9,26 @@
- #include "msm_gpu.h"
- #include "msm_gpu_trace.h"
- 
-+bool enable_swap = true;
-+MODULE_PARM_DESC(enable_swap, "Enable swappable GEM buffers");
-+module_param(enable_swap, bool, 0600);
-+
-+static bool can_swap(void)
-+{
-+	return enable_swap && get_nr_swap_pages() > 0;
-+}
-+
- static unsigned long
- msm_gem_shrinker_count(struct shrinker *shrinker, struct shrink_control *sc)
- {
- 	struct msm_drm_private *priv =
- 		container_of(shrinker, struct msm_drm_private, shrinker);
--	return priv->shrinkable_count;
-+	unsigned count = priv->shrinkable_count;
-+
-+	if (can_swap())
-+		count += priv->evictable_count;
-+
-+	return count;
- }
- 
- static bool
-@@ -32,6 +46,17 @@ purge(struct msm_gem_object *msm_obj)
- 	return true;
- }
- 
-+static bool
-+evict(struct msm_gem_object *msm_obj)
-+{
-+	if (is_unevictable(msm_obj))
-+		return false;
-+
-+	msm_gem_evict(&msm_obj->base);
-+
-+	return true;
-+}
-+
- static unsigned long
- scan(struct msm_drm_private *priv, unsigned nr_to_scan, struct list_head *list,
- 		bool (*shrink)(struct msm_gem_object *msm_obj))
-@@ -104,6 +129,16 @@ msm_gem_shrinker_scan(struct shrinker *shrinker, struct shrink_control *sc)
- 	if (freed > 0)
- 		trace_msm_gem_purge(freed << PAGE_SHIFT);
- 
-+	if (can_swap() && freed < sc->nr_to_scan) {
-+		int evicted = scan(priv, sc->nr_to_scan - freed,
-+				&priv->inactive_willneed, evict);
-+
-+		if (evicted > 0)
-+			trace_msm_gem_evict(evicted << PAGE_SHIFT);
-+
-+		freed += evicted;
-+	}
-+
- 	return (freed > 0) ? freed : SHRINK_STOP;
- }
- 
-diff --git a/drivers/gpu/drm/msm/msm_gpu_trace.h b/drivers/gpu/drm/msm/msm_gpu_trace.h
-index 03e0c2536b94..ca0b08d7875b 100644
---- a/drivers/gpu/drm/msm/msm_gpu_trace.h
-+++ b/drivers/gpu/drm/msm/msm_gpu_trace.h
-@@ -128,6 +128,19 @@ TRACE_EVENT(msm_gem_purge,
- );
- 
- 
-+TRACE_EVENT(msm_gem_evict,
-+		TP_PROTO(u32 bytes),
-+		TP_ARGS(bytes),
-+		TP_STRUCT__entry(
-+			__field(u32, bytes)
-+			),
-+		TP_fast_assign(
-+			__entry->bytes = bytes;
-+			),
-+		TP_printk("Evicting %u bytes", __entry->bytes)
-+);
-+
-+
- TRACE_EVENT(msm_gem_purge_vmaps,
- 		TP_PROTO(u32 unmapped),
- 		TP_ARGS(unmapped),
--- 
-2.30.2
-
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
+Forum,
+a Linux Foundation Collaborative Project
