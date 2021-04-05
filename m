@@ -2,34 +2,34 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4EF0A3546CF
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Apr 2021 20:46:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 68ED63546D1
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Apr 2021 20:51:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235353AbhDESqy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Apr 2021 14:46:54 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:55028 "EHLO
+        id S234032AbhDESvc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Apr 2021 14:51:32 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:19138 "EHLO
         so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234032AbhDESqx (ORCPT
+        with ESMTP id S235442AbhDESvc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Apr 2021 14:46:53 -0400
+        Mon, 5 Apr 2021 14:51:32 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1617648407; h=Message-ID: References: In-Reply-To: Reply-To:
+ s=smtp; t=1617648685; h=Message-ID: References: In-Reply-To: Reply-To:
  Subject: Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=Svgu08p5S1sVzyKEcr60eUGS2Un7/iA9DoqFSsQRPyo=;
- b=gA+Zn9cgiBL/8gCzz2CXqZFsDBiEjd6ZpHqLJGIrMhTfdl38e+LG3pwSLgZN0hRBrDKOC8jl
- ebXqd9LZCe1ryggtmONZkdI+Fsorizz9VmMrVpHxcTk9YrnNDfY68CE/NNiLaAs8MaRTgHgC
- gznuqkWh6DAMN1jWEhpHIO3fySQ=
+ MIME-Version: Sender; bh=Um8t0peWpTZ291rX+7KLfjjfHsMnQ6CF6bYSIU8muug=;
+ b=jFLlLM+oV7ufUl59jvBU7g+qMDDygLN5xYBePwg997GmLlItUBJtycdLSM9vAcqH4snPNE71
+ odzpxoAzWgQ+Z7NTMxLgq1eg6/si+wKcv7ENbPdG5uUU6ttm2gVH9T8r2oy4vqqAJ5NMqqho
+ QAzgLJ0T6DkE8zoERpFD1OdIr34=
 X-Mailgun-Sending-Ip: 198.61.254.9
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
- 606b5b16febcffa80f6fa6c6 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 05 Apr 2021 18:46:46
+ smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
+ 606b5c2a8807bcde1dc491a3 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 05 Apr 2021 18:51:22
  GMT
 Sender: bbhatt=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 2BB19C433ED; Mon,  5 Apr 2021 18:46:46 +0000 (UTC)
+        id 142B1C433CA; Mon,  5 Apr 2021 18:51:22 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -39,187 +39,85 @@ Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
         (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
         (Authenticated sender: bbhatt)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 36C8EC433CA;
-        Mon,  5 Apr 2021 18:46:45 +0000 (UTC)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5B0BCC433C6;
+        Mon,  5 Apr 2021 18:51:21 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
+Content-Type: text/plain; charset=US-ASCII;
  format=flowed
-Content-Transfer-Encoding: 8bit
-Date:   Mon, 05 Apr 2021 11:46:45 -0700
+Content-Transfer-Encoding: 7bit
+Date:   Mon, 05 Apr 2021 11:51:21 -0700
 From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     Loic Poulain <loic.poulain@linaro.org>, hemantk@codeaurora.org,
+To:     Loic Poulain <loic.poulain@linaro.org>
+Cc:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org,
         linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 1/2] bus: mhi: core: Fix MHI runtime_pm behavior
+Subject: Re: [PATCH 2/2] bus: mhi: pm: reduce PM state change verbosity
 Organization: Qualcomm Innovation Center, Inc.
 Reply-To: bbhatt@codeaurora.org
 Mail-Reply-To: bbhatt@codeaurora.org
-In-Reply-To: <20210331182700.GL15610@work>
+In-Reply-To: <1614963744-25962-2-git-send-email-loic.poulain@linaro.org>
 References: <1614963744-25962-1-git-send-email-loic.poulain@linaro.org>
- <20210331171252.GK15610@work>
- <CAMZdPi-M5fYPs7QfsBx4Gy6ywCLue5yqJLn0XthGhTeON1wWfw@mail.gmail.com>
- <20210331182700.GL15610@work>
-Message-ID: <fe857b91841caf67c53e6a9ad967eb84@codeaurora.org>
+ <1614963744-25962-2-git-send-email-loic.poulain@linaro.org>
+Message-ID: <1c2e88c2f4ba5c5fa1fbde8f1b06517e@codeaurora.org>
 X-Sender: bbhatt@codeaurora.org
 User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-03-31 11:27 AM, Manivannan Sadhasivam wrote:
-> On Wed, Mar 31, 2021 at 07:38:55PM +0200, Loic Poulain wrote:
->> Hi Mani,
->> 
->> Le mer. 31 mars 2021 à 19:12, Manivannan Sadhasivam <
->> manivannan.sadhasivam@linaro.org> a écrit :
->> 
->> > On Fri, Mar 05, 2021 at 06:02:23PM +0100, Loic Poulain wrote:
->> > > This change ensures that PM reference is always get during packet
->> > > queueing and released either after queuing completion (RX) or once
->> > > the buffer has been consumed (TX). This guarantees proper update for
->> > > underlying MHI controller runtime status (e.g. last_busy timestamp)
->> > > and prevents suspend to be triggered while TX packets are flying,
->> > > or before we completed update of the RX ring.
->> > >
->> >
->> > Any reason why you didn't wait for RX completion also?
->> 
->> 
->> Because on TX we know the buffer completion is going to happen really
->> quickly (we send data) whereas we never know when when RX packet will 
->> be
->> completed (we are waiting for data), so we want to be able to put the 
->> MHI
->> device in suspend while RX is pending (the device will wake up the 
->> host on
->> incoming data)
->> 
+On 2021-03-05 09:02 AM, Loic Poulain wrote:
+> Since M3 can be entered/exited quite a lot when used for runtime PM,
+> keep the mhi suspend/resume transitions quiet.
 > 
-> Device wakeup will only happen for device initiated suspend (M1) but 
-> for
-> host initiated suspend (M3), device will check for pending data to host
-> and will initiate wakeup request before going for suspend. So I think 
-> it
-> is safe to wait for RX data.
+> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+> ---
+>  drivers/bus/mhi/core/pm.c | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
 > 
-> Hemant/Bhaumik, any thoughts?
+> diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
+> index edd7794..0cd6445 100644
+> --- a/drivers/bus/mhi/core/pm.c
+> +++ b/drivers/bus/mhi/core/pm.c
+> @@ -858,7 +858,7 @@ int mhi_pm_suspend(struct mhi_controller 
+> *mhi_cntrl)
+>  		return -EBUSY;
+>  	}
 > 
-> Thanks,
-> Mani
+> -	dev_info(dev, "Allowing M3 transition\n");
+> +	dev_dbg(dev, "Allowing M3 transition\n");
+>  	new_state = mhi_tryset_pm_state(mhi_cntrl, MHI_PM_M3_ENTER);
+>  	if (new_state != MHI_PM_M3_ENTER) {
+>  		write_unlock_irq(&mhi_cntrl->pm_lock);
+> @@ -872,7 +872,7 @@ int mhi_pm_suspend(struct mhi_controller 
+> *mhi_cntrl)
+>  	/* Set MHI to M3 and wait for completion */
+>  	mhi_set_mhi_state(mhi_cntrl, MHI_STATE_M3);
+>  	write_unlock_irq(&mhi_cntrl->pm_lock);
+> -	dev_info(dev, "Wait for M3 completion\n");
+> +	dev_dbg(dev, "Wait for M3 completion\n");
 > 
-Agree with Loic here. Let's not depend on the device to determine host 
-side
-behavior and instead, assume that the device may or may not be following
-protocol so as to reduce chances of higher power draw by host. Host 
-should
-not care when RX comes, but host should care about TX completion as 
-that's
-where our requirement ends.
+>  	ret = wait_event_timeout(mhi_cntrl->state_event,
+>  				 mhi_cntrl->dev_state == MHI_STATE_M3 ||
+> @@ -906,7 +906,7 @@ int mhi_pm_resume(struct mhi_controller *mhi_cntrl)
+>  	enum mhi_pm_state cur_state;
+>  	int ret;
+> 
+> -	dev_info(dev, "Entered with PM state: %s, MHI state: %s\n",
+> +	dev_dbg(dev, "Entered with PM state: %s, MHI state: %s\n",
+>  		 to_mhi_pm_state_str(mhi_cntrl->pm_state),
+>  		 TO_MHI_STATE_STR(mhi_cntrl->dev_state));
+Since we go from 4 chars (info) to 3 chars (dbg), there is need to 
+adjust
+the two parameters here in the next two lines, right?
 
-There have been instances of delayed RX and in some cases, no TX 
-completion
-from a certain client (I think DIAG), where device thinks they have 
-received
-garbage and decide not to respond with a TX completion.
+If that's needed and is done, you can add my tag for:
 
-We want to be able to put device in suspend or at least initiate it 
-while
-host waits for incoming data. Once RX comes in, host will wake up to 
-process it.
+Reviewed-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
 
-What Loic does in this patch is done in one way using patch [1]. 
-However, that
-does not update the last_busy timestamp. I am mostly in favor of this 
-patch
-going in but would like Loic to answer one question:
-
-In mhi_reset_data_chan(), why not do a runtime_put(mhi_cntrl) inside the
-pre-existing if (mhi_chan->dir == DMA_TO_DEVICE) at the start of the 
-while loop:
-while (tre_ring->rp != tre_ring->wp)? This would be balanced for each 
-TX.
->> 
->> >
->> > Thanks,
->> > Mani
->> >
->> > > Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
->> > > ---
->> > >  drivers/bus/mhi/core/main.c | 20 ++++++++++++++++----
->> > >  1 file changed, 16 insertions(+), 4 deletions(-)
->> > >
->> > > diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
->> > > index c780234..16b9640 100644
->> > > --- a/drivers/bus/mhi/core/main.c
->> > > +++ b/drivers/bus/mhi/core/main.c
->> > > @@ -584,8 +584,11 @@ static int parse_xfer_event(struct mhi_controller
->> > *mhi_cntrl,
->> > >                       /* notify client */
->> > >                       mhi_chan->xfer_cb(mhi_chan->mhi_dev, &result);
->> > >
->> > > -                     if (mhi_chan->dir == DMA_TO_DEVICE)
->> > > +                     if (mhi_chan->dir == DMA_TO_DEVICE) {
->> > >                               atomic_dec(&mhi_cntrl->pending_pkts);
->> > > +                             /* Release the reference got from
->> > mhi_queue() */
->> > > +                             mhi_cntrl->runtime_put(mhi_cntrl);
->> > > +                     }
->> > >
->> > >                       /*
->> > >                        * Recycle the buffer if buffer is pre-allocated,
->> > > @@ -1021,9 +1024,11 @@ static int mhi_queue(struct mhi_device *mhi_dev,
->> > struct mhi_buf_info *buf_info,
->> > >       if (unlikely(ret))
->> > >               goto exit_unlock;
->> > >
->> > > -     /* trigger M3 exit if necessary */
->> > > -     if (MHI_PM_IN_SUSPEND_STATE(mhi_cntrl->pm_state))
->> > > -             mhi_trigger_resume(mhi_cntrl);
->> > > +     /* Packet is queued, take a usage ref to exit M3 if necessary
->> > > +      * for host->device buffer, balanced put is done on buffer
->> > completion
->> > > +      * for device->host buffer, balanced put is after ringing the DB
->> > > +      */
->> > > +     mhi_cntrl->runtime_get(mhi_cntrl);
->> > >
->> > >       /* Assert dev_wake (to exit/prevent M1/M2)*/
->> > >       mhi_cntrl->wake_toggle(mhi_cntrl);
->> > > @@ -1034,6 +1039,9 @@ static int mhi_queue(struct mhi_device *mhi_dev,
->> > struct mhi_buf_info *buf_info,
->> > >       if (likely(MHI_DB_ACCESS_VALID(mhi_cntrl)))
->> > >               mhi_ring_chan_db(mhi_cntrl, mhi_chan);
->> > >
->> > > +     if (dir == DMA_FROM_DEVICE)
->> > > +             mhi_cntrl->runtime_put(mhi_cntrl);
->> > > +
->> > >  exit_unlock:
->> > >       read_unlock_irqrestore(&mhi_cntrl->pm_lock, flags);
->> > >
->> > > @@ -1431,6 +1439,10 @@ static void mhi_reset_data_chan(struct
->> > mhi_controller *mhi_cntrl,
->> > >                       result.buf_addr = buf_info->cb_buf;
->> > >                       mhi_chan->xfer_cb(mhi_chan->mhi_dev, &result);
->> > >               }
->> > > +
->> > > +             /* Release the reference got from mhi_queue() */
->> > > +             if (mhi_chan->dir == DMA_TO_DEVICE)
->> > > +                     mhi_cntrl->runtime_put(mhi_cntrl);
-Can this runtime_put(mhi_cntrl); be moved to the if at the top of this 
-while
-loop?
->> > >       }
->> > >  }
->> > >
->> > > --
->> > > 2.7.4
->> > >
->> >
+We can just push this patch as a standalone one not dependent on the 1/2
+in this series.
 
 Thanks,
 Bhaumik
-
-[1] 
-https://lore.kernel.org/r/20200929175218.8178-4-manivannan.sadhasivam@linaro.org
 ---
 The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
 Forum,
