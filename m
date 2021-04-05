@@ -2,97 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 051BB353C75
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Apr 2021 10:42:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 09879353DC0
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Apr 2021 12:32:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232288AbhDEImq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Apr 2021 04:42:46 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:23436 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232243AbhDEImp (ORCPT
+        id S237419AbhDEJCP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Apr 2021 05:02:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53618 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233790AbhDEJCM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Apr 2021 04:42:45 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1617612159; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=bpbemXH5VxCoagliWnNLvNlKKb6UJpDqoyP8WTf27uw=;
- b=rzDXE/p3z+rfRM0Qy2TRNjOj+0qyFfmqL5KHyVQ3s/kZpbfkzA9UC+7P0sW/F97h3/oQtjQV
- zfv7drwkowj2/anLDV+kNrS4uSN2T3ypM8CUctFunLLeLW4cZm0SW6TMzFjPKy/oL7qaw7Nk
- ztkUfyht5akLWrmf6Np4tGhDhO4=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
- 606acd69f34440a9d4723dfb (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 05 Apr 2021 08:42:17
- GMT
-Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 333ABC43462; Mon,  5 Apr 2021 08:42:17 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id A11C6C433C6;
-        Mon,  5 Apr 2021 08:42:16 +0000 (UTC)
+        Mon, 5 Apr 2021 05:02:12 -0400
+Received: from bhuna.collabora.co.uk (bhuna.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e3e3])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E9FEC0613A7
+        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Apr 2021 02:01:59 -0700 (PDT)
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+        (Authenticated sender: sre)
+        with ESMTPSA id C64CF1F44C1D
+Received: by earth.universe (Postfix, from userid 1000)
+        id 6D6193C0C96; Mon,  5 Apr 2021 11:01:55 +0200 (CEST)
+Date:   Mon, 5 Apr 2021 11:01:55 +0200
+From:   Sebastian Reichel <sebastian.reichel@collabora.com>
+To:     AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>
+Cc:     Jun Nie <jun.nie@linaro.org>, john.stultz@linaro.org,
+        bjorn.andersson@linaro.org, agross@kernel.org,
+        david.brown@linaro.org, amit.pundir@linaro.org, robh+dt@kernel.org,
+        mark.rutland@arm.com, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] power: reset: qcom-pon: Add power on/off reason info
+Message-ID: <20210405090155.5jwvp7luhpsp72av@earth.universe>
+References: <20210120040602.3966608-1-jun.nie@linaro.org>
+ <eab4d683-6a97-7b90-7549-54a940d8b487@somainline.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Mon, 05 Apr 2021 14:12:16 +0530
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Will Deacon <will@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     akhilpo@codeaurora.org, iommu@lists.linux-foundation.org,
-        jcrouse@codeaurora.org, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        robdclark@gmail.com, robin.murphy@arm.com,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Jordan Crouse <jordan@cosmicpenguin.net>
-Subject: Re: [PATCHv2 2/2] iommu/arm-smmu-qcom: Move the adreno smmu specific
- impl earlier
-In-Reply-To: <20210325150506.GD15172@willie-the-truck>
-References: <YDlIrjkfv16o4Nu3@builder.lan>
- <20210227135321.420-1-saiprakash.ranjan@codeaurora.org>
- <YEqn1SjsGgK0V8K4@builder.lan>
- <8cfaed1915ad6dd0c34ac7eb2391b410@codeaurora.org>
- <727fa9fe2e644f88ba35c2877d71788e@codeaurora.org>
- <20210325150506.GD15172@willie-the-truck>
-Message-ID: <118ced3153cd7fa5e8c16e5f0e2d5d19@codeaurora.org>
-X-Sender: saiprakash.ranjan@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="kdywh2x374mrcoz4"
+Content-Disposition: inline
+In-Reply-To: <eab4d683-6a97-7b90-7549-54a940d8b487@somainline.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bjorn,
 
-On 2021-03-25 20:35, Will Deacon wrote:
-> On Thu, Mar 25, 2021 at 01:10:12PM +0530, Sai Prakash Ranjan wrote:
+--kdywh2x374mrcoz4
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-<snip>...
+Hi,
 
->> 
->> I think there is consensus on this series. I can resend if required 
->> but it
->> still applies cleanly, let me know if you have any comments?
-> 
-> Please resend with the bindings patch, and I'd like Bjorn's Ack as 
-> well.
-> 
+In addition to Angelo's feedback (thanks!),
 
-Can we have your review/ack in case there is nothing pending here?
+On Wed, Jan 20, 2021 at 11:19:26AM +0100, AngeloGioacchino Del Regno wrote:
+> [...]
+> > +static const char * const pm8916_pon_reason[] =3D {
+> > +	[0] =3D "Triggered from Hard Reset",
+> > +	[1] =3D "Triggered from SMPL (sudden momentary power loss)",
+> > +	[2] =3D "Triggered from RTC (RTC alarm expiry)",
+> > +	[3] =3D "Triggered from DC (DC charger insertion)",
+> > +	[4] =3D "Triggered from USB (USB charger insertion)",
+> > +	[5] =3D "Triggered from PON1 (secondary PMIC)",
+> > +	[6] =3D "Triggered from CBL (external power supply)",
+> > +	[7] =3D "Triggered from KPD (power key press)",
+> > +};
+>=20
+> Triggered from =3D> Triggered by?
+>=20
+> > +
+> > +static const char * const pm8916_poff_reason[] =3D {
+> > +	[0] =3D "Triggered from SOFT (Software)",
+> > +	[1] =3D "Triggered from PS_HOLD (PS_HOLD/MSM controlled shutdown)",
+> > +	[2] =3D "Triggered from PMIC_WD (PMIC watchdog)",
+> > +	[3] =3D "Triggered from GP1 (Keypad_Reset1)",
+> > +	[4] =3D "Triggered from GP2 (Keypad_Reset2)",
+> > +	[5] =3D "Triggered from KPDPWR_AND_RESIN"
+> > +		"(Simultaneous power key and reset line)",
+> > +	[6] =3D "Triggered from RESIN_N (Reset line/Volume Down Key)",
+> > +	[7] =3D "Triggered from KPDPWR_N (Long Power Key hold)",
+> > +	[8] =3D "N/A",
+> > +	[9] =3D "N/A",
+> > +	[10] =3D "N/A",
+> > +	[11] =3D "Triggered from CHARGER (Charger ENUM_TIMER, BOOT_DONE)",
+> > +	[12] =3D "Triggered from TFT (Thermal Fault Tolerance)",
+> > +	[13] =3D "Triggered from UVLO (Under Voltage Lock Out)",
+> > +	[14] =3D "Triggered from OTST3 (Overtemp)",
+> > +	[15] =3D "Triggered from STAGE3 (Stage 3 reset)",
+> >   };
+> [...]
+
+Please don't add constant prefix into the reason array. Instead put
+the constant part to the message printing as required. E.g.:
+
+static const char * const pm8916_pon_reason[] =3D {
+    [0] =3D "Hard Reset",
+    [1] =3D "SMPL (sudden momentary power loss)",
+    ...
+};
+
+and printing looks like this:
+
+dev_info(dev, "Power on reason: %s\n", pm8916_pon_reason[reason]);
+dev_info(dev, "Power off reason: %s\n", pm8916_poff_reason[reason]);
 
 Thanks,
-Sai
 
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
-member
-of Code Aurora Forum, hosted by The Linux Foundation
+-- Sebastian
+
+--kdywh2x374mrcoz4
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEE72YNB0Y/i3JqeVQT2O7X88g7+poFAmBq0f4ACgkQ2O7X88g7
++ppH4RAAof2P+jfUKMmneL+p5NM/tzf6R5wQLvYmce9N64KEOKmfSumlhErqAeRQ
+u0ybBjak7Ra/lO+uGk9YxVb07FvcaVN18r+1z2E5qt2DQ07mvjUCdpbUWgmqXryZ
+lsbBwdymFSX5a4RIdFmjKPZfhTQWG48WHKasNszbuziwuIiByYOChFz32AE3ZLpf
+cPGSUAZHzPmxyj2E5BXbD/JOQXEM6IqW2cwwDGH00s/P+P6Or1LIdfo2RvcPzp8D
+N5Kug0ZKO8+Rqi9203aDzrH4Y179FsYiRnHet2jF2JZzSpXtitrSms/PB8/RODo1
+eSnrBwrwQH8ghNIOJYiRPuIQbipSHmeLC+qs+Nk+QsKgeGT/tO7nesQP6asftALc
++NBUkoTJ+V4XMkDIeayvWdRMyQXxdnPM1BojILX8rCS1p2nAXniRKKYnFn0xavCR
+qv45xwFkiOODvEpoQTKGIvI/KUWQlcHDW3OePffRqCRg/s9eQuwEhywKT/UGsjTp
+pGCOUmoBs5DEq3LM1BaJuXMwGtRKf6AKJxoKpe1jYTJPnDl3w/8VKu7xtCF4GBau
+sdgf4YbC7lKiROCUJqqDFsOqk/B8LfqVasXs4HUTHUQvNQjMGUvzQozWAlQi0J7U
+q88AJ0d4qH6siY5jInMHJiS6qIYZ3/k316pZHBjdUGH9U7BlxsI=
+=lSES
+-----END PGP SIGNATURE-----
+
+--kdywh2x374mrcoz4--
