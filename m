@@ -2,163 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EA3D23548F8
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Apr 2021 00:49:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C11163548FF
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Apr 2021 00:52:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236203AbhDEWt1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Apr 2021 18:49:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36436 "EHLO
+        id S236219AbhDEWwe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Apr 2021 18:52:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37100 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236204AbhDEWt1 (ORCPT
+        with ESMTP id S230437AbhDEWwd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Apr 2021 18:49:27 -0400
-Received: from mail-qk1-x735.google.com (mail-qk1-x735.google.com [IPv6:2607:f8b0:4864:20::735])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E8ABC061756
-        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Apr 2021 15:49:20 -0700 (PDT)
-Received: by mail-qk1-x735.google.com with SMTP id x14so13098306qki.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Apr 2021 15:49:20 -0700 (PDT)
+        Mon, 5 Apr 2021 18:52:33 -0400
+Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com [IPv6:2607:f8b0:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91F32C06174A
+        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Apr 2021 15:52:25 -0700 (PDT)
+Received: by mail-ot1-x32c.google.com with SMTP id 91-20020a9d08640000b0290237d9c40382so12808569oty.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Apr 2021 15:52:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=OkSbjhz6xE8syqTiE1aa5v0NU7tO6RjOafyM87apJUQ=;
-        b=cEZ0emlAnQ59lWZQ+CG0PzBqUiA3jMclJ9ifiMjgtnYA9n3YdWwLkIrPhOa5quYpnt
-         M68i+VH5GPO4Qf5To7C74KHAXG/1RoHeg3RH6+LYW/QU8o6nQJae0JV9l/0tF7tBGEPP
-         9tP9PXQucIn3DQAOfRH4ai8PfXUkwOcNabYio1qEzrkINIJ1MM+swD7lTJ8uV54m8Tvk
-         JL77Mbkehb8F8hPsEVCFJ9ednolHiRcQBU4V9OL4jLCRopJrH+FDfwOJAFlPujUXcGnK
-         CAHRkaZPy98ofjK6exIuEgnLoTw3A/0//qbkoWZlX7vo9Zs1HF2WMUh3LhHQqTKFE6yj
-         j64Q==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=k5GMqhkUGovABW/6dLiczI0yDUQVdhGyMGEk3hXdqkk=;
+        b=R8wU+6ucoSTOj00LOlpy2CLoMcmwoNKe6I5pY4T3QpClT4arSyT4c9J/2fQv8DZCYS
+         RbWxahXX9VVPsJt9/1Knnc9YrGR16U8IInaY9vk+MCmyBc8/WllxqaMXJ33VoZK4Og0G
+         tJZEWyaalpjGVXoNLeX4DNCVWFqQmsYE/M2IFdPaauFA1t4YoqeSj5xhrKjMGy+N1bcQ
+         XkFZPZgIWWrkCP2UYXQDv4Z8rmi2a5VqN+BQ8JekLgi5QDJV7Fh8OuR6BNpONy9ceRa7
+         siwU4v522PHOiXVlDAUCl90jzWfuiN4La4xvOZfWvdKch6nr/KdffEwermEHpxa+OMZo
+         DIsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=OkSbjhz6xE8syqTiE1aa5v0NU7tO6RjOafyM87apJUQ=;
-        b=I2d4JSoSVqdGpOM8xcwkpZoPopVuZXXa4pod+oSjWYOObLDC2hybhoYVKHh5rl1AH9
-         0VALec3XQ4hBCoxvkdSL48HeA5kcjRemW+TatFQv88YRpgvzPEXFNlcjMp9fODhLeHKP
-         jMAPN3+HzbqxEx3r6P/vl+xGyDmACNPDmYJfVVSc6X8ZibWbaZPHUoHj7xamaCNJH9q0
-         HXHOBvKa6GPysZ7oSLZ1cPb3bhMkBPhnmGjwGvIjam7Fx/vMaUJVZordpt1N6Gmx8gme
-         WHPKL5lX5FYJAivdVe/ay2iUGZByit2243+Lp6LNda+e0SHnmpMjUGV4kgH7VBrBN2bA
-         cBqg==
-X-Gm-Message-State: AOAM530j4G6jNtqJJa2+iyYp3l1KdWEbWYJxbiod99H3q8eGRh+tqQAH
-        ngzgUXmjQRENQIttk9jn1o7Q97NdsfHQ2kBcEAtlJw==
-X-Google-Smtp-Source: ABdhPJx7BfYrPo/9BY8xtRLwUPd2M1lLpiXx9DfiWItGCW0F3eDMebsFZhl6jfdyG8XUZUMEcrJgIMFewmGMt9H3vFQ=
-X-Received: by 2002:a37:a016:: with SMTP id j22mr26877448qke.486.1617662959432;
- Mon, 05 Apr 2021 15:49:19 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=k5GMqhkUGovABW/6dLiczI0yDUQVdhGyMGEk3hXdqkk=;
+        b=Xuy/Y5BKCzA0TEyMMF9t9fa7I3Lyc3to/rMXPeUVdmRBqVB1VvGXhMvvAoFVZYt/8K
+         oXKg3jp81Ci+o54D1VflyzbmKCyJLaAGCRXW89FhZ/OK0WjnC0A+NgZ5MFtZ81tYC/D9
+         KZBOkNvdb6rgWd0S1ogru91X8p103w+Q5pGa9mBLj74BD0MtFW+5h5jEQe3ogASE/0bX
+         2PcDlCk5v68j7UxEfoUg+9k/XCJnzgOvg/8uLYW2Z7rzxy4W1hVVkUixgME1zYj6lqco
+         7un/7KRmTpIsAicCFCJDzW/FAXNwJGTDnNAVL8213GRl69eh2ffRQap/EXWKt24JNJvo
+         T10A==
+X-Gm-Message-State: AOAM530jxOlYqcU3TvVCrlSCu4KYLIQLBq4k+ggWuhnA/My9AIc/KEN2
+        FPxWMcuiWMxTgwA8T8IyudGUdw==
+X-Google-Smtp-Source: ABdhPJw6GcbXUZaKVe2HBQSQJU7vnMkj3H9OR8XCdVx7cDpd8YbrSKNTmm0K1io0+sgwhCkfJ3pg+w==
+X-Received: by 2002:a05:6830:204e:: with SMTP id f14mr24755972otp.38.1617663144987;
+        Mon, 05 Apr 2021 15:52:24 -0700 (PDT)
+Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id 24sm3312099oij.58.2021.04.05.15.52.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 05 Apr 2021 15:52:24 -0700 (PDT)
+Date:   Mon, 5 Apr 2021 17:52:22 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Petr Vorel <petr.vorel@gmail.com>
+Cc:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Ricardo Ribalda <ribalda@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH 1/1] arm64: dts: qcom: msm8994: Reserve gpio ranges
+Message-ID: <20210405225222.GD904837@yoga>
+References: <20210405200259.23525-1-petr.vorel@gmail.com>
 MIME-Version: 1.0
-References: <20210405224743.590029-1-dmitry.baryshkov@linaro.org>
-In-Reply-To: <20210405224743.590029-1-dmitry.baryshkov@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 6 Apr 2021 01:49:08 +0300
-Message-ID: <CAA8EJpq_bTcAZUx0mcwFp4uURNoayVdGvbobt72hC2rrqRwGbA@mail.gmail.com>
-Subject: Re: [PATCH v4 00/33] clk: qcom: cleanup sm8250/sdm845/sc7180 clock drivers
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>
-Cc:     "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        "open list:COMMON CLK FRAMEWORK" <linux-clk@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210405200259.23525-1-petr.vorel@gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 6 Apr 2021 at 01:47, Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
->
-> Cleanup several Qualcomm clock drivers by removing unused entries from
-> parents map, removing test clock, etc.
->
-> Changes since v3:
->  - Use ARRAY_SIZE() for num_parents and parent_hws instead of
->    parent_data where applicable as suggested by Marijn Suijten
->    These changes are applied both as a part of 'convert ot parent data'
->    patches and as separate changes to respective clock drivers (which
->    already used parent_data).
->
-> Changes since v2:
->  - Comment out unsupported video_pll0_out_odd/_even clocks instead of
->    removing them or just using .name for them. The clocks are
->    unsupported, but mux values are provided for the future reference.
->
-> Changes since v1:
->  - Remove unused entries from gpucc-sc7180, gpucc-sdm845, videocc-sc7180
->    and videocc-sm8150 drivers
->  - Restore video_pll0_out_odd/_even entries in videocc-sdm845 driver as
->    requested by Taniya Das.
+On Mon 05 Apr 15:02 CDT 2021, Petr Vorel wrote:
 
-For your convenience:
+> Reserve pins 0-3 and 85-88 as these aren't meant to be accessible
+> from the application CPUs. Fix similar to 9134586715e3.
+> 
+> Fixes: 3edfb7bd76bd ("gpiolib: Show correct direction from the beginning")
+> 
+> Signed-off-by: Petr Vorel <petr.vorel@gmail.com>
+> ---
+> Hi,
+> 
+> tested on latest qcom/for-next.
+> 
+> Simple testing with /sys/class/gpio/export showed that 85-88.
+> 3 disables UART. I expect 0-2 are also reserved as on other msm8998.
+> 
 
-The following changes since commit a38fd8748464831584a19438cbb3082b5a2dab15:
+Are you saying that once you export these gpios the uart stops working?
 
-  Linux 5.12-rc2 (2021-03-05 17:33:41 -0800)
+We use gpio-reserved-ranges to denote GPIOs that are owned by TZ, so
+touching their registers causes the device to reboot. And per the
+gpiolib patch you reference, this would happen as we register the
+gpiochip.
 
-are available in the Git repository at:
+It sounds instead like what you want is to make sure that these pins are
+considered busy, muxing in the uart (i.e define a state for uart).
 
-  https://git.linaro.org/people/dmitry.baryshkov/kernel.git qcom-clk-cleanup
+Regards,
+Bjorn
 
-for you to fetch changes up to 576546d30f7df4813b0bb5874486f08f82f28ec1:
-
-  clk: qcom: gcc-sm8350: use ARRAY_SIZE instead of specifying
-num_parents (2021-04-05 23:48:03 +0300)
-
-----------------------------------------------------------------
-Dmitry Baryshkov (33):
-      clk: qcom: dispcc-sc7180: drop unused enum entries
-      clk: qcom: dispcc-sm8250: drop unused enum entries
-      clk: qcom: gcc-sm8250: drop unused enum entries
-      clk: qcom: gpucc-sc7180: drop unused enum entries
-      clk: qcom: gpucc-sdm845: drop unused enum entries
-      clk: qcom: gpucc-sm8150: drop unused enum entries
-      clk: qcom: gpucc-sm8250: drop unused enum entries
-      clk: qcom: videocc-sc7180: drop unused enum entries
-      clk: qcom: videocc-sm8150: drop unused enum entries
-      clk: qcom: videocc-sm8250: drop unused enum entries
-      clk: qcom: dispcc-sdm845: convert to parent data
-      clk: qcom: gpucc-sdm845: convert to parent data
-      clk: qcom: videocc-sdm845: convert to parent data
-      clk: qcom: gpucc-sdm845: get rid of the test clock
-      clk: qcom: dispcc-sdm845: get rid of the test clock
-      clk: qcom: videocc-sdm845: get rid of the test clock
-      clk: qcom: dispcc-sc7180: use parent_hws where possible
-      clk: qcom: dispcc-sm8250: use parent_hws where possible
-      clk: qcom: gcc-sc7180: use parent_hws where possible
-      clk: qcom: gcc-sc7280: use parent_hws where possible
-      clk: qcom: gcc-sdx55: use parent_hws where possible
-      clk: qcom: gcc-sm8150: use parent_hws where possible
-      clk: qcom: gcc-sm8250: use parent_hws where possible
-      clk: qcom: gcc-sm8350: use parent_hws where possible
-      clk: qcom: gpucc-sm8150: use parent_hws where possible
-      clk: qcom: gpucc-sm8250: use parent_hws where possible
-      clk: qcom: videocc-sm8150: use parent_hws where possible
-      clk: qcom: videocc-sm8250: use parent_hws where possible
-      clk: qcom: gcc-sc7180: use ARRAY_SIZE instead of specifying num_parents
-      clk: qcom: gcc-sc8180x: use ARRAY_SIZE instead of specifying num_parents
-      clk: qcom: gcc-sm8150: use ARRAY_SIZE instead of specifying num_parents
-      clk: qcom: gcc-sm8250: use ARRAY_SIZE instead of specifying num_parents
-      clk: qcom: gcc-sm8350: use ARRAY_SIZE instead of specifying num_parents
-
- drivers/clk/qcom/dispcc-sc7180.c  |  70 ++++---
- drivers/clk/qcom/dispcc-sdm845.c  | 217 ++++++++++----------
- drivers/clk/qcom/dispcc-sm8250.c  | 124 ++++++-----
- drivers/clk/qcom/gcc-sc7180.c     | 196 +++++++++---------
- drivers/clk/qcom/gcc-sc7280.c     | 248 +++++++++++-----------
- drivers/clk/qcom/gcc-sc8180x.c    | 122 +++++------
- drivers/clk/qcom/gcc-sdx55.c      |   8 +-
- drivers/clk/qcom/gcc-sm8150.c     | 100 ++++-----
- drivers/clk/qcom/gcc-sm8250.c     | 345 ++++++++++++++++---------------
- drivers/clk/qcom/gcc-sm8350.c     | 418 +++++++++++++++++++-------------------
- drivers/clk/qcom/gpucc-sc7180.c   |   3 -
- drivers/clk/qcom/gpucc-sdm845.c   |  45 ++--
- drivers/clk/qcom/gpucc-sm8150.c   |   9 +-
- drivers/clk/qcom/gpucc-sm8250.c   |   9 +-
- drivers/clk/qcom/videocc-sc7180.c |   4 -
- drivers/clk/qcom/videocc-sdm845.c |  55 +++--
- drivers/clk/qcom/videocc-sm8150.c |  20 +-
- drivers/clk/qcom/videocc-sm8250.c |  30 ++-
- 18 files changed, 991 insertions(+), 1032 deletions(-)
-
-
--- 
-With best wishes
-Dmitry
+> for i in $(seq 0 146); do echo $i > /sys/class/gpio/export; done
+> 
+> I expect it's just angler specific, thus I haven't added it to msm8994.dtsi
+> (otherwise Konrad would have fixed it).
+> 
+> Kind regards,
+> Petr
+> 
+>  arch/arm64/boot/dts/qcom/msm8994-angler-rev-101.dts | 5 +++++
+>  1 file changed, 5 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/msm8994-angler-rev-101.dts b/arch/arm64/boot/dts/qcom/msm8994-angler-rev-101.dts
+> index baa55643b40f..0dc94101d5de 100644
+> --- a/arch/arm64/boot/dts/qcom/msm8994-angler-rev-101.dts
+> +++ b/arch/arm64/boot/dts/qcom/msm8994-angler-rev-101.dts
+> @@ -1,6 +1,7 @@
+>  // SPDX-License-Identifier: GPL-2.0-only
+>  /* Copyright (c) 2015, Huawei Inc. All rights reserved.
+>   * Copyright (c) 2016, The Linux Foundation. All rights reserved.
+> + * Copyright (c) 2021 Petr Vorel <petr.vorel@gmail.com>
+>   */
+>  
+>  /dts-v1/;
+> @@ -32,3 +33,7 @@ serial@f991e000 {
+>  		};
+>  	};
+>  };
+> +
+> +&tlmm {
+> +	gpio-reserved-ranges = <0 4>, <85 4>;
+> +};
+> -- 
+> 2.30.2
+> 
