@@ -2,92 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A55B6354BC8
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Apr 2021 06:38:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6580A354C18
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Apr 2021 07:23:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243596AbhDFEi3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Apr 2021 00:38:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54984 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233796AbhDFEi2 (ORCPT
+        id S242477AbhDFFK1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Apr 2021 01:10:27 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:26087 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230073AbhDFFK1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Apr 2021 00:38:28 -0400
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E217C061574;
-        Mon,  5 Apr 2021 21:38:20 -0700 (PDT)
-Received: by mail-ed1-x52e.google.com with SMTP id e7so14848239edu.10;
-        Mon, 05 Apr 2021 21:38:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:reply-to:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=MsC5WijBlgfkgFy592W+ZSSEwoZPPcG0fLkOP+Z2XRQ=;
-        b=gnrlHDJLM16uZ3LTd7lfpAx+OaGwwcrTvf0WPKH+VnDRl+A52miHB/314ZeRMY34Ci
-         f01hDMsXkE+CmY1yckrosCGkKsFPQAue0tbVjDJs/XhKPXyuMnfYvTomWz16yJjzSklS
-         BjOJ49l3aZ8ZmOdpEuX+s+NmW66Y3hlcB/UWAzxP6B5k8eEg3yu9tpQ1ZP457f6sEs4l
-         +87NwKZr9N03Y01lHVhUYfR4WbpaUDqESSQZeYw4MaeQO9k1bsnk+yHyayp2XgLIWIih
-         bGWJzAygMR1FdUFNfXhCHOAHsxnQ53lZTZmufjRPBp2EZX/6lfcgimIIWQDQ4/K1a0Er
-         NlLQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:reply-to
-         :references:mime-version:content-disposition:in-reply-to;
-        bh=MsC5WijBlgfkgFy592W+ZSSEwoZPPcG0fLkOP+Z2XRQ=;
-        b=C0fgYPmpr7WVoNDxxGrQAC9Q9as05PP9UF2jXIxQ4lhnhBAfQyscRWWcNgy6vzN1cj
-         MoLQBdQTSjL/xggGgoJ36aSD7REgVgGJOenBr3UGa7zx2ybEiguKHTl+VS2Ftq5lTQIF
-         CnhM1JtSup0z9WqvOiUlKVuABln3n4gkGZ0Skos0D6tX7qy3Ni7JqstFIq5yVA8PNFKP
-         3xB/W16/cYTV3gM+xUtEC55pfSeyYtBJC+PekZrxs8e8olga792VQrC1AznJplWHEjxu
-         7Dg2NGTOjath++jESJ4jq1SQmLpPb5610dmPk62J2n/EGcG8Ne+zzPf3APLsmvc5MjdH
-         myiQ==
-X-Gm-Message-State: AOAM53198H+ut8BustMJjezC6f1E0ucB1qNi71pN6M1sGfv/GZU00i6O
-        jl26VRj3GoVLl0h+KPwykzE=
-X-Google-Smtp-Source: ABdhPJwJzyO12QJ2coz1pjHurWxj6aOF+6RNjeQm6J/vW6R2eBL7p7z38SxYzKN3mO6CXulsJ+xnIw==
-X-Received: by 2002:aa7:c952:: with SMTP id h18mr17466195edt.269.1617683899334;
-        Mon, 05 Apr 2021 21:38:19 -0700 (PDT)
-Received: from pevik ([62.201.25.198])
-        by smtp.gmail.com with ESMTPSA id p20sm4894882eds.92.2021.04.05.21.38.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Apr 2021 21:38:18 -0700 (PDT)
-Date:   Tue, 6 Apr 2021 06:38:16 +0200
-From:   Petr Vorel <petr.vorel@gmail.com>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Ricardo Ribalda <ribalda@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH 1/1] arm64: dts: qcom: msm8994: Reserve gpio ranges
-Message-ID: <YGvluI7A2D5Efmog@pevik>
-Reply-To: Petr Vorel <petr.vorel@gmail.com>
-References: <20210405200259.23525-1-petr.vorel@gmail.com>
- <20210405225222.GD904837@yoga>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210405225222.GD904837@yoga>
+        Tue, 6 Apr 2021 01:10:27 -0400
+Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
+  by alexa-out.qualcomm.com with ESMTP; 05 Apr 2021 22:10:19 -0700
+X-QCInternal: smtphost
+Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
+  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 05 Apr 2021 22:10:18 -0700
+X-QCInternal: smtphost
+Received: from mkrishn-linux.qualcomm.com ([10.204.66.35])
+  by ironmsg02-blr.qualcomm.com with ESMTP; 06 Apr 2021 10:39:58 +0530
+Received: by mkrishn-linux.qualcomm.com (Postfix, from userid 438394)
+        id 7B1C021B31; Tue,  6 Apr 2021 10:39:56 +0530 (IST)
+From:   Krishna Manikandan <mkrishn@codeaurora.org>
+To:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org
+Cc:     Krishna Manikandan <mkrishn@codeaurora.org>,
+        linux-kernel@vger.kernel.org, robdclark@gmail.com,
+        kalyan_t@codeaurora.org, dianders@chromium.org
+Subject: [PATCH v1 0/4] Add display support for SC7280 target 
+Date:   Tue,  6 Apr 2021 10:39:48 +0530
+Message-Id: <1617685792-14376-1-git-send-email-mkrishn@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+The changes in this series adds all the required support for display driver for
+SC7280 target. In addition to the basic catalog changes, changes are added to
+accommodate new registers for SC7280 target.
 
-> Are you saying that once you export these gpios the uart stops working?
-I'm sorry, I wasn't clear. Only exporting GPIO 3 disables UART. Exporting 85-88
-causes reboot. And I have no info about 0-2 (it just most of
-gpio-reserved-ranges diables 0-3). Therefore probably only <85 4> should go to
-gpio-reserved-ranges. I'll send v2.
+SC7280 target comes under next generation targets. The register differences in
+SC7280 when compared to SC7180 are mentioned below:
 
-Kind regards,
-Petr
+        - SC7280 uses UBWC3.0 and changes are added to program the ubwc static
+          registers properly
 
-> We use gpio-reserved-ranges to denote GPIOs that are owned by TZ, so
-> touching their registers causes the device to reboot. And per the
-> gpiolib patch you reference, this would happen as we register the
-> gpiochip.
+        - Pingpong dither block offset value has changed for SC7280 family. Separate
+          sub block is defined for sc7280 pingpong block and changes are added to
+          handle this.
 
-> It sounds instead like what you want is to make sure that these pins are
-> considered busy, muxing in the uart (i.e define a state for uart).
+        - Interface offsets are different for SC7280 family. These offset values are
+          used to access the interface irq registers. Changes are added to handle
+          this based on the target.
 
-> Regards,
-> Bjorn
+        - A new register called CTL_FETCH_PIPE_ACTIVE is introduced in SC7280 family,
+          which tells the HW about the active pipes in the CTL path. Changes are
+          added to program this register based on the active pipes in the
+          current composition.
+
+        - Changes are added to program INTF_CONFIG2 properly since the reset value
+          of this register has changed in SC7280 family and we need to explicitly program
+          it with correct values to avoid wrong interface configuration.
+
+        - INTF_5 is added to intf configuration to support EDP.
+
+Krishna Manikandan (4):
+  drm/msm/disp/dpu1: add support for display for SC7280 target
+  drm/msm/disp/dpu1: add intf offsets for SC7280 target
+  drm/msm/disp/dpu1: add support to program fetch active in ctl path
+  drm/msm/disp/dpu1: enable DATA_HCTL_EN for sc7280 target
+
+ drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c          |   7 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    | 176 ++++++++++++++++++++--
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |   8 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c        |  27 ++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h        |   3 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c |  20 ++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c       |  11 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c           |   4 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c          |   6 +-
+ drivers/gpu/drm/msm/msm_drv.c                     |   4 +-
+ 10 files changed, 242 insertions(+), 24 deletions(-)
+
+-- 
+2.7.4
+
