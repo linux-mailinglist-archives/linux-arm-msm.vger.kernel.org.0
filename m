@@ -2,66 +2,164 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 83971355A6B
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Apr 2021 19:30:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EEC7C355AC2
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Apr 2021 19:52:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235171AbhDFRaT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Apr 2021 13:30:19 -0400
-Received: from mail.kernel.org ([198.145.29.99]:55642 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230291AbhDFRaQ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Apr 2021 13:30:16 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPS id A0A58613BC;
-        Tue,  6 Apr 2021 17:30:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1617730208;
-        bh=04Gb+bYRkc4CIpTvXKHoQ6Fc5ajkyybu/IfWhaEdyvw=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=FRpmglVbzTOosO2xeI8A26r9nf5S8+MAAR3JGQpi4uHMKTlH3WEIp4FreYA6+C3ZY
-         Uu4hBTh6aiA1HlTjKAjA1Mg6McRWxl8tYTpacx30IbQT4c5+CZVAknQzOGTM1Y30jR
-         gP886YwhFaOJr+b0RSNnlVJlZij5W2I+QMN9Z35DavsX0yDJdxWDEiiiQQXEM2vf6g
-         TPiI88V+K0B43QudsLWMW1c2xryX5uxOgOqhbv8rNvTrShNzDMASKcC1X/0Oc3eXDE
-         5W75ALlMPd/zOHKEWJEzc9b8wLX49NrIYYemSiVAJAbkyBFXRkcQRoCO2L0qrChZcv
-         eBMqI4+eqDRWA==
-Received: from pdx-korg-docbuild-2.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id 90B7F60A19;
-        Tue,  6 Apr 2021 17:30:08 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH] arm64: dts: sdm845-db845c: make firmware filenames follow
- linux-firmware
-From:   patchwork-bot+linux-arm-msm@kernel.org
-Message-Id: <161773020858.5139.7579054729629456032.git-patchwork-notify@kernel.org>
-Date:   Tue, 06 Apr 2021 17:30:08 +0000
-References: <20210318201405.2244723-1-dmitry.baryshkov@linaro.org>
-In-Reply-To: <20210318201405.2244723-1-dmitry.baryshkov@linaro.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org
+        id S244562AbhDFRwy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Apr 2021 13:52:54 -0400
+Received: from labrats.qualcomm.com ([199.106.110.90]:29653 "EHLO
+        labrats.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233394AbhDFRwy (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 6 Apr 2021 13:52:54 -0400
+IronPort-SDR: PmDl00jSoJbqRsustapc991IGg+KzllORWlxLyzbsm8GsWRKsC3L1fUU6USK7ueNPaMRG3OJ6g
+ W0HmuMX7a36JrI5pyqk94aJ8wx2jIVl9Q0qc9g1N/1VMoeJcsEODpPugdxElMufyrPbWklj0O7
+ DjufTBZ+G1CJtk7DYvVlganlD3T/QkSmdL5i79yXuJKUUlxZ/9rX3IDWrJbfGrDsXE5u8zxEr0
+ dGW9/BL0agFGHkz4r0xobUa1xZ3OfL719abAp04A0WkjRTbPLhXiEfuCF31l2geOmE1W+5FwWS
+ lyY=
+X-IronPort-AV: E=Sophos;i="5.82,201,1613462400"; 
+   d="scan'208";a="29742115"
+Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
+  by labrats.qualcomm.com with ESMTP; 06 Apr 2021 10:52:46 -0700
+X-QCInternal: smtphost
+Received: from stor-presley.qualcomm.com ([192.168.140.85])
+  by ironmsg-SD-alpha.qualcomm.com with ESMTP; 06 Apr 2021 10:52:46 -0700
+Received: by stor-presley.qualcomm.com (Postfix, from userid 92687)
+        id 25D9D210FD; Tue,  6 Apr 2021 10:52:46 -0700 (PDT)
+From:   Asutosh Das <asutoshd@codeaurora.org>
+To:     cang@codeaurora.org, martin.petersen@oracle.com,
+        adrian.hunter@intel.com, linux-scsi@vger.kernel.org
+Cc:     Asutosh Das <asutoshd@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        linux-arm-kernel@lists.infradead.org (moderated list:ARM/Mediatek SoC
+        support),
+        linux-mediatek@lists.infradead.org (moderated list:ARM/Mediatek SoC
+        support)
+Subject: [PATCH v15 0/2] Enable power management for ufs wlun 
+Date:   Tue,  6 Apr 2021 10:52:41 -0700
+Message-Id: <cover.1617731442.git.asutoshd@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello:
+This patch attempts to fix a deadlock in ufs while sending SSU.
+Recently, blk_queue_enter() added a check to not process requests if the
+queue is suspended. That leads to a resume of the associated device which
+is suspended. In ufs, that device is ufs device wlun and it's parent is
+ufs_hba. This resume tries to resume ufs device wlun which in turn tries
+to resume ufs_hba, which is already in the process of suspending, thus
+causing a deadlock.
 
-This patch was applied to qcom/linux.git (refs/heads/for-next):
+This patch takes care of:
+* Suspending the ufs device lun only after all other luns are suspended
+* Sending SSU during ufs device wlun suspend
+* Clearing uac for rpmb and ufs device wlun
+* Not sending commands to the device during host suspend
 
-On Thu, 18 Mar 2021 23:14:05 +0300 you wrote:
-> Cange aDSP and cDSP firmware filenames to follow filenames merged into
-> linux-firmware tree. Switch from split .mdt files to merged .mbn files.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/sdm845-db845c.dts | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+v14 -> v15:
+- Rebased on 5.13/scsi-staging
 
-Here is the summary with links:
-  - arm64: dts: sdm845-db845c: make firmware filenames follow linux-firmware
-    https://git.kernel.org/qcom/c/7443ff06da45
+v13 -> v14:
+- Addressed Adrian's comments
+  * Rebased it on top of scsi-next
+  * Added scsi_autopm_[get/put] to ufs_debugfs[get/put]_user_access()
+  * Resume the device in ufshcd_remove()
+  * Unregister ufs_rpmb_wlun before ufs_dev_wlun
+  * hba->shutting_down moved to ufshcd_wl_shutdown()
 
-You are awesome, thank you!
---
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+v12 -> v13:
+- Addressed Adrian's comments
+  * Paired pm_runtime_get_noresume() with pm_runtime_put()
+  * no rpm_autosuspend for ufs device wlun
+  * Moved runtime-pm init functionality to ufshcd_wl_probe()
+- Addressed Bart's comments
+  * Expanded abbrevs in commit message
 
+v11 -> v12:
+- Addressed Adrian's comments
+  * Fixed ahit for Mediatek driver
+  * Fixed error handling in ufshcd_core_init()
+  * Tested this patch and the issue is still seen.
+
+v10 -> v11:
+- Fixed supplier suspending before consumer race
+- Addressed Adrian's comments
+  * Added proper resume/suspend cb to ufshcd_auto_hibern8_update()
+  * Cosmetic changes to ufshcd-pci.c
+  * Cleaned up ufshcd_system_suspend()
+  * Added ufshcd_debugfs_eh_exit to ufshcd_core_init()
+
+v9 -> v10:
+- Addressed Adrian's comments
+  * Moved suspend/resume vops to __ufshcd_wl_[suspend/resume]()
+  * Added correct resume in ufs_bsg
+
+v8 -> v9:
+- Addressed Adrian's comments
+  * Moved link transition to __ufshcd_wl_[suspend/resume]()
+  * Fixed the other minor comments
+
+v7 -> v8:
+- Addressed Adrian's comments
+  * Removed separate autosuspend delay for ufs-device lun
+  * Fixed the ee handler getting scheduled during pm
+  * Always runtime resume in suspend_prepare()
+  * Added CONFIG_PM_SLEEP where needed
+  
+v6 -> v7:
+  * Resume the ufs device before shutting it down
+
+v5 -> v6:
+- Addressed Adrian's comments
+  * Added complete() cb
+  * Added suspend_prepare() and complete() to all drivers
+  * Moved suspend_prepare() and complete() to ufshcd
+  * .poweroff() uses ufhcd_wl_poweroff()
+  * Removed several forward declarations
+  * Moved scsi_register_driver() to ufshcd_core_init()
+
+v4 -> v5:
+- Addressed Adrian's comments
+  * Used the rpmb driver contributed by Adrian
+  * Runtime-resume the ufs device during suspend to honor spm-lvl
+  * Unregister the scsi_driver in ufshcd_remove()
+  * Currently shutdown() puts the ufs device to power-down mode
+    so, just removed ufshcd_pci_poweroff()
+  * Quiesce the scsi device during shutdown instead of remove
+
+v3 RFC -> v4:
+- Addressed Bart's comments
+  * Except that I didn't get any checkpatch failures
+- Addressed Avri's comments
+- Addressed Adrian's comments
+  * Added a check for deepsleep power mode
+  * Removed a couple of forward declarations
+  * Didn't separate the scsi drivers because in rpmb case it just sends uac
+    in resume and it seemed pretty neat to me.
+- Added sysfs changes to resume the devices before accessing
+
+Asutosh Das (2):
+  scsi: ufs: Enable power management for wlun
+  ufs: sysfs: Resume the proper scsi device
+
+ drivers/scsi/ufs/cdns-pltfrm.c     |   2 +
+ drivers/scsi/ufs/tc-dwc-g210-pci.c |   2 +
+ drivers/scsi/ufs/ufs-debugfs.c     |   2 +-
+ drivers/scsi/ufs/ufs-debugfs.h     |   2 +-
+ drivers/scsi/ufs/ufs-exynos.c      |   2 +
+ drivers/scsi/ufs/ufs-hisi.c        |   2 +
+ drivers/scsi/ufs/ufs-mediatek.c    |  12 +-
+ drivers/scsi/ufs/ufs-qcom.c        |   2 +
+ drivers/scsi/ufs/ufs-sysfs.c       |  30 +-
+ drivers/scsi/ufs/ufs_bsg.c         |   6 +-
+ drivers/scsi/ufs/ufshcd-pci.c      |  36 +--
+ drivers/scsi/ufs/ufshcd.c          | 636 ++++++++++++++++++++++++++-----------
+ drivers/scsi/ufs/ufshcd.h          |   6 +
+ include/trace/events/ufs.h         |  20 ++
+ 14 files changed, 519 insertions(+), 241 deletions(-)
+
+-- 
+Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
 
