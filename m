@@ -2,25 +2,25 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 787B9355E27
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Apr 2021 23:47:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EC779355E26
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Apr 2021 23:47:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343748AbhDFVrx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Apr 2021 17:47:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54818 "EHLO
+        id S1343738AbhDFVrw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Apr 2021 17:47:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54816 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242129AbhDFVrw (ORCPT
+        with ESMTP id S1343733AbhDFVrw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Tue, 6 Apr 2021 17:47:52 -0400
-Received: from relay05.th.seeweb.it (relay05.th.seeweb.it [IPv6:2001:4b7a:2000:18::166])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07745C061756
+Received: from m-r2.th.seeweb.it (m-r2.th.seeweb.it [IPv6:2001:4b7a:2000:18::171])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E76ACC06174A
         for <linux-arm-msm@vger.kernel.org>; Tue,  6 Apr 2021 14:47:43 -0700 (PDT)
 Received: from Marijn-Arch-PC.localdomain (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 5DEF43F347;
-        Tue,  6 Apr 2021 23:47:38 +0200 (CEST)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id CB5CB3F3EF;
+        Tue,  6 Apr 2021 23:47:39 +0200 (CEST)
 From:   Marijn Suijten <marijn.suijten@somainline.org>
 To:     phone-devel@vger.kernel.org
 Cc:     ~postmarketos/upstreaming@lists.sr.ht,
@@ -35,41 +35,50 @@ Cc:     ~postmarketos/upstreaming@lists.sr.ht,
         Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 0/3] drm/msm/mdp5: Emit vsync signal often enough
-Date:   Tue,  6 Apr 2021 23:47:23 +0200
-Message-Id: <20210406214726.131534-1-marijn.suijten@somainline.org>
+Subject: [PATCH 1/3] drm/msm/mdp5: Configure PP_SYNC_HEIGHT to double the vtotal
+Date:   Tue,  6 Apr 2021 23:47:24 +0200
+Message-Id: <20210406214726.131534-2-marijn.suijten@somainline.org>
 X-Mailer: git-send-email 2.31.1
+In-Reply-To: <20210406214726.131534-1-marijn.suijten@somainline.org>
+References: <20210406214726.131534-1-marijn.suijten@somainline.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This set of patches corrects and improves VSync-related register setup
-on the MDP5 block.  Values written to the registers were way too high
-leading to the MDSS block counting way too many ticks on the vclk before
-emitting a vsync interrupt, resulting in significant update issues on
-command- and video-mode panels.  With lower values - that match those of
-downstream kernels - the panels on Sony devices (Xperia X, XA2 Ultra,
-and more) update at an acceptable rate without "pp_done" timeouts.
+Leaving this at a close-to-maximum register value 0xFFF0 means it takes
+very long for the MDSS to generate a software vsync interrupt when the
+hardware TE interrupt doesn't arrive.  Configuring this to double the
+vtotal (like some downstream kernels) leads to a frame to take at most
+twice before the vsync signal, until hardware TE comes up.
 
-The Driver-IC in these panels is also able to drive an interrupt line
-and a future patchset will enable the use of this "disp-te" GPIO beyond
-acquiring it in dsi_host.  This fixes panel framerate the correct way
-(instead of running at half the desired framerate), but these patches
-are still needed to aid development now and shorten lockup times when
-the TE interrupt misbehaves by not arriving at all.
+In this case the hardware interrupt responsible for providing this
+signal - "disp-te" gpio - is not hooked up to the mdp5 vsync/pp logic at
+all.  This solves severe panel update issues observed on at least the
+Xperia Loire and Tone series, until said gpio is properly hooked up to
+an irq.
 
-AngeloGioacchino Del Regno (1):
-  drm/msm/mdp5: Disable pingpong autorefresh at tearcheck init
+Suggested-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+---
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_cmd_encoder.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Marijn Suijten (2):
-  drm/msm/mdp5: Configure PP_SYNC_HEIGHT to double the vtotal
-  drm/msm/mdp5: Do not multiply vclk line count by 100
-
- drivers/gpu/drm/msm/disp/mdp5/mdp5_cmd_encoder.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
-
+diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_cmd_encoder.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_cmd_encoder.c
+index ff2c1d583c79..2d5ac03dbc17 100644
+--- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_cmd_encoder.c
++++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_cmd_encoder.c
+@@ -51,7 +51,7 @@ static int pingpong_tearcheck_setup(struct drm_encoder *encoder,
+ 
+ 	mdp5_write(mdp5_kms, REG_MDP5_PP_SYNC_CONFIG_VSYNC(pp_id), cfg);
+ 	mdp5_write(mdp5_kms,
+-		REG_MDP5_PP_SYNC_CONFIG_HEIGHT(pp_id), 0xfff0);
++		REG_MDP5_PP_SYNC_CONFIG_HEIGHT(pp_id), (2 * mode->vtotal));
+ 	mdp5_write(mdp5_kms,
+ 		REG_MDP5_PP_VSYNC_INIT_VAL(pp_id), mode->vdisplay);
+ 	mdp5_write(mdp5_kms, REG_MDP5_PP_RD_PTR_IRQ(pp_id), mode->vdisplay + 1);
 -- 
 2.31.1
 
