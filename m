@@ -2,84 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E54E8355917
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Apr 2021 18:23:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7BB8E355939
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Apr 2021 18:31:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346249AbhDFQXV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Apr 2021 12:23:21 -0400
-Received: from foss.arm.com ([217.140.110.172]:45526 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1346212AbhDFQXU (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Apr 2021 12:23:20 -0400
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 1CCE01063;
-        Tue,  6 Apr 2021 09:23:12 -0700 (PDT)
-Received: from lpieralisi (e121166-lin.cambridge.arm.com [10.1.196.255])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 2813C3F792;
-        Tue,  6 Apr 2021 09:23:11 -0700 (PDT)
-Date:   Tue, 6 Apr 2021 17:23:05 +0100
-From:   Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Will Deacon <will@kernel.org>, Shawn Guo <shawn.guo@linaro.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] iommu/arm-smmu-qcom: create qcom_smmu_impl for ACPI boot
-Message-ID: <20210406162305.GA28529@lpieralisi>
-References: <20210301074021.20059-1-shawn.guo@linaro.org>
- <20210325145914.GC15172@willie-the-truck>
- <20210325170256.GA904837@yoga>
+        id S244002AbhDFQcE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Apr 2021 12:32:04 -0400
+Received: from mail-oi1-f179.google.com ([209.85.167.179]:46841 "EHLO
+        mail-oi1-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S243985AbhDFQcD (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 6 Apr 2021 12:32:03 -0400
+Received: by mail-oi1-f179.google.com with SMTP id m13so15701784oiw.13;
+        Tue, 06 Apr 2021 09:31:55 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=YP3e4a3p21hXudocTBXWvAjnARys/nIu9ypDgjHtU/0=;
+        b=pfzYdy24paxOMB60LUD043jbJFWCPaJ6/DxofXYawGx1Be2kbNHX72n4yPlMK9RvNo
+         RUDN4RpWmsJYsC2Tzjckr9evaQtka2vOGCXH5ZH3WVJEaNo8xG3Lo//sDsO4lVpPFq/v
+         gJv9ZtVqM1VC6zesH20T1og2gfpiTrxNS6F92AzcJbXyOS3vnyJn99CPpQ7KlW6ZmKhO
+         +Zdibxt72YggyNHnwI29xfkslUCsVILd4cVvaztXtigUnEUe0pH4+2nFNHllxvmJS8o/
+         zSLpygXPkiHf77zIUvUtMAAGLot9P67wDvs6P5E3Vq7FdAaTihicDL8qHp41K3e0eXQW
+         nrqw==
+X-Gm-Message-State: AOAM531GopoldhQVjNM8LJqT1FM8Ww5NCuoQU1aeVswGd3zMVziRn425
+        r3HpwjM+Tph9vc616T90uQ==
+X-Google-Smtp-Source: ABdhPJwO1ar3Q3AELO4z6vtDhDYzr71jD2j5comjLfYe2J0Q90uxLsBEobt+OhPckaWtee8I7biRzg==
+X-Received: by 2002:aca:180c:: with SMTP id h12mr4132885oih.109.1617726714839;
+        Tue, 06 Apr 2021 09:31:54 -0700 (PDT)
+Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id 3sm4276319ood.46.2021.04.06.09.31.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 06 Apr 2021 09:31:54 -0700 (PDT)
+Received: (nullmailer pid 1920001 invoked by uid 1000);
+        Tue, 06 Apr 2021 16:31:52 -0000
+Date:   Tue, 6 Apr 2021 11:31:52 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     Daniele.Palmas@telit.com, robh+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org,
+        boris.brezillon@collabora.com, devicetree@vger.kernel.org,
+        vigneshr@ti.com, linux-mtd@lists.infradead.org,
+        miquel.raynal@bootlin.com, linux-kernel@vger.kernel.org,
+        richard@nod.at
+Subject: Re: [PATCH v9 2/4] dt-bindings: mtd: Add a property to declare
+ secure regions in NAND chips
+Message-ID: <20210406163152.GA1919684@robh.at.kernel.org>
+References: <20210401151508.143075-1-manivannan.sadhasivam@linaro.org>
+ <20210401151508.143075-3-manivannan.sadhasivam@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20210325170256.GA904837@yoga>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+In-Reply-To: <20210401151508.143075-3-manivannan.sadhasivam@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Mar 25, 2021 at 12:02:56PM -0500, Bjorn Andersson wrote:
-> On Thu 25 Mar 09:59 CDT 2021, Will Deacon wrote:
+On Thu, 01 Apr 2021 20:45:06 +0530, Manivannan Sadhasivam wrote:
+> On a typical end product, a vendor may choose to secure some regions in
+> the NAND memory which are supposed to stay intact between FW upgrades.
+> The access to those regions will be blocked by a secure element like
+> Trustzone. So the normal world software like Linux kernel should not
+> touch these regions (including reading).
 > 
-> > [+ Lorenzo]
-> > 
-> > On Mon, Mar 01, 2021 at 03:40:21PM +0800, Shawn Guo wrote:
-> > > Though qcom_adreno_smmu_impl is not used by ACPI boot right now,
-> > > qcom_smmu_impl is already required at least to boot up Lenovo Flex 5G
-> > > laptop.  Let's check asl_compiler_id in IORT header to ensure we are
-> > > running a QCOM SMMU and create qcom_smmu_impl for it.
-> > > 
-> > > !np is used to check ACPI boot, because fwnode of SMMU device is
-> > > a static allocation and thus has_acpi_companion() doesn't work here.
-> > > 
-> > > Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
-> > > ---
-> > >  drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 33 ++++++++++++++++++++++
-> > >  1 file changed, 33 insertions(+)
-> > 
-> > I don't know what a "asl_compiler_id" is, but it doesn't sound like it
-> > has an awful lot to do with the SMMU.
-> > 
+> So let's add a property for declaring such secure regions so that the
+> drivers can skip touching them.
 > 
-> I would prefer that we somehow relate this to the particular board,
-> rather than all Qualcomm-related ACPI tables. E.g. by relying on the
-> SMMU devices having a _HID of QCOM0409.
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> ---
+>  Documentation/devicetree/bindings/mtd/nand-controller.yaml | 7 +++++++
+>  1 file changed, 7 insertions(+)
 > 
-> Shawn, any reason for this wouldn't be possible?
-> 
-> > Lorenzo -- any idea what we should be doing here instead? Probably not
-> > using ACPI?
-> > 
-> 
-> The 8cx (aka sc8180x) platform comes with Qualcomm's usual SMMU
-> stream-mapping quirks and this is one of the patches needed to bring
-> enough ACPI support to run the Debian installer that Shawn has been
-> working on. After the installer we currently only boot this using DT -
-> which already enables the quirk.
 
-I am not sure I follow - can you explain please why this patch (and so
-the QCOM SMMU) is actually needed ? I don't get why getting the SMMU
-up and running with ACPI is mandatory to complete the process you describe
-above (but I am not sure I understood it entirely either - apologies).
 
-Thanks,
-Lorenzo
+Please add Acked-by/Reviewed-by tags when posting new versions. However,
+there's no need to repost patches *only* to add the tags. The upstream
+maintainer will do that for acks received on the version they apply.
+
+If a tag was not added on purpose, please state why and what changed.
+
