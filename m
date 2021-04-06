@@ -2,89 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 01BA03550DE
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Apr 2021 12:29:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1DCE235515C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Apr 2021 12:57:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245097AbhDFK3j (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Apr 2021 06:29:39 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:29518 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S245160AbhDFK3e (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Apr 2021 06:29:34 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1617704967; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=nyfR39YS9d0ddq6gGp1HgeCPZ3AbyyGE/uRsQOH66uQ=; b=PkRNwBDqqPZEOT+hFtAasizIkG15mEcNSidJO1fqUIAieZcJG7WTflsqcqS038MwE97U/nNR
- 0fnvCeCSVSsScrVKGVAHINTQHXxaS9q4Ki7muo0s/iTImixRH9J9dfcdw+8vF6n2nFHXdG3k
- iGo8448rRHLKD0FqGv3Fskr2b9g=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
- 606c37b98166b7eff720a1c9 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 06 Apr 2021 10:28:09
- GMT
-Sender: mkshah=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 969DDC433C6; Tue,  6 Apr 2021 10:28:08 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
-Received: from mkshah-linux.qualcomm.com (unknown [202.46.22.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: mkshah)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3C697C43461;
-        Tue,  6 Apr 2021 10:28:04 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 3C697C43461
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=mkshah@codeaurora.org
-From:   Maulik Shah <mkshah@codeaurora.org>
-To:     swboyd@chromium.org, mka@chromium.org, evgreen@chromium.org,
-        bjorn.andersson@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        agross@kernel.org, dianders@chromium.org, linux@roeck-us.net,
-        rnayak@codeaurora.org, lsrao@codeaurora.org,
-        Maulik Shah <mkshah@codeaurora.org>, devicetree@vger.kernel.org
-Subject: [PATCH v7 5/5] arm64: dts: qcom: sc7280: Enable SoC sleep stats
-Date:   Tue,  6 Apr 2021 15:57:37 +0530
-Message-Id: <1617704857-19620-6-git-send-email-mkshah@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1617704857-19620-1-git-send-email-mkshah@codeaurora.org>
-References: <1617704857-19620-1-git-send-email-mkshah@codeaurora.org>
+        id S238793AbhDFK5g (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Apr 2021 06:57:36 -0400
+Received: from mail-lf1-f48.google.com ([209.85.167.48]:42683 "EHLO
+        mail-lf1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231339AbhDFK5f (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 6 Apr 2021 06:57:35 -0400
+Received: by mail-lf1-f48.google.com with SMTP id o10so21995582lfb.9;
+        Tue, 06 Apr 2021 03:57:26 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:subject:from:reply-to:to:cc
+         :in-reply-to:references:mime-version:date:user-agent
+         :content-transfer-encoding;
+        bh=FEdQ8T8ShTnV7/KIWcPi8USauPRfwGV1+kSK+ns2ves=;
+        b=JNHp9EwP5r0jJ5ibhy4L5Sc91DPqgyFkxfJWO5xTHiBZwxtFtQJKGCf5m3YCNJLKxH
+         hb9+mAk+ATACSECk7WI+PNEEk0leO08mZ6k7KWLgJD5yXQgSVFgKbEp0RSxZ1xWntM0U
+         iKoq9WmtNdYtUg2Z8ybAElUKlvjOjze0yyO3NayqBg8qMGjzT3UKoG4mdKp12RO8zIM/
+         hF/L6CXmbnX+/ccUsb4MgHbQNdtnDX5E3GYtJvePByTZ30klpjrLQGCamlxws3OjFO2o
+         2gKHhzhIe5k1vuR+glo8KPkqF4V+YPdTAZFHDC2jd/XcSYA/wA58U3r+icFtxsr+bHy+
+         L2Rg==
+X-Gm-Message-State: AOAM533dBocIdPQ20bD8lm1OQu3iJRaKkTdTUElDJd4kAed21dR3Wtu9
+        uUiA7JUDtaylwaMxcFyoCiM=
+X-Google-Smtp-Source: ABdhPJxeuonh/Z3VwfyACpkl5uskYDC6lm8z4fgmTODQON9HCJp2hgEx5K8p5Ho+RQtehTUg+0twuA==
+X-Received: by 2002:ac2:4ed0:: with SMTP id p16mr20519333lfr.623.1617706645366;
+        Tue, 06 Apr 2021 03:57:25 -0700 (PDT)
+Received: from dc7vkhyyyyyyyyyyyyydy-3.rev.dnainternet.fi (dc7vkhyyyyyyyyyyyyydy-3.rev.dnainternet.fi. [2001:14ba:16e2:8300::6])
+        by smtp.gmail.com with ESMTPSA id h6sm2112464lfd.77.2021.04.06.03.57.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 06 Apr 2021 03:57:24 -0700 (PDT)
+Message-ID: <7706d59fe7120106e4695fd83da5b089d5a36d87.camel@fi.rohmeurope.com>
+Subject: Re: [PATCH v4 3/7] regulator: IRQ based event/error notification
+ helpers
+From:   Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>
+Reply-To: matti.vaittinen@fi.rohmeurope.com
+To:     kernel test robot <lkp@intel.com>
+Cc:     kbuild-all@lists.01.org, Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-power@fi.rohmeurope.com, linux-arm-msm@vger.kernel.org
+In-Reply-To: <202104061806.LUDNu0F6-lkp@intel.com>
+References: <2b87b4637fde2225006cc122bc855efca0dcd7f1.1617692184.git.matti.vaittinen@fi.rohmeurope.com>
+         <202104061806.LUDNu0F6-lkp@intel.com>
+Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+Date:   Tue, 06 Apr 2021 13:57:19 +0300
+User-Agent: Evolution 3.34.4 (3.34.4-1.fc31) 
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add device node for SoC sleep stats driver which provides various
-low power mode stats.
 
-Cc: devicetree@vger.kernel.org
-Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
----
- arch/arm64/boot/dts/qcom/sc7280.dtsi | 5 +++++
- 1 file changed, 5 insertions(+)
+On Tue, 2021-04-06 at 18:27 +0800, kernel test robot wrote:
+> If you fix the issue, kindly add following tag as appropriate
+> Reported-by: kernel test robot <lkp@intel.com>
+> 
+> All errors (new ones prefixed by >>):
+> 
+>    In file included from include/linux/kernel.h:16,
+>                     from arch/x86/include/asm/percpu.h:27,
+>                     from arch/x86/include/asm/current.h:6,
+>                     from include/linux/sched.h:12,
+>                     from include/linux/ratelimit.h:6,
+>                     from include/linux/dev_printk.h:16,
+>                     from include/linux/device.h:15,
+>                     from drivers/regulator/irq_helpers.c:10:
+>    drivers/regulator/irq_helpers.c: In function 'die_loudly':
+> > > drivers/regulator/irq_helpers.c:46:11: error: expected ')' before
+> > > 'msg'
+>       46 |  pr_emerg(msg);
+>          |           ^~~
+>    include/linux/printk.h:301:21: note: in definition of macro
+> 'pr_fmt'
+>      301 | #define pr_fmt(fmt) fmt
+>          |                     ^~~
+>    drivers/regulator/irq_helpers.c:46:2: note: in expansion of macro
+> 'pr_emerg'
+>       46 |  pr_emerg(msg);
+>          |  ^~~~~~~~
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index 39cf0be..197a925 100644
---- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -318,6 +318,11 @@
- 			interrupt-controller;
- 		};
- 
-+		rpmh-sleep-stats@c3f0000 {
-+			compatible = "qcom,rpmh-sleep-stats";
-+			reg = <0 0x0c3f0000 0 0x400>;
-+		};
-+
- 		spmi_bus: spmi@c440000 {
- 			compatible = "qcom,spmi-pmic-arb";
- 			reg = <0 0x0c440000 0 0x1100>,
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+Ouch. Feeling stupid now.
+I am sorry for the hassle folks. I'll fix this ASAP and resend.
+
+> 
+> vim +46 drivers/regulator/irq_helpers.c
+> 
+>     43	
+>     44	static void die_loudly(const char *msg)
+>     45	{
+>   > 46		pr_emerg(msg);
+>     47		BUG();
+>     48	}
+>     49	
+
+Best Regards
+	Matti Vaittinen
+
 
