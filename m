@@ -2,80 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 786853549ED
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Apr 2021 03:11:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A7DFC354B4B
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Apr 2021 05:40:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235680AbhDFBMB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Apr 2021 21:12:01 -0400
-Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:15255 "EHLO
-        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S232930AbhDFBMA (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Apr 2021 21:12:00 -0400
-Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 05 Apr 2021 18:11:53 -0700
-X-QCInternal: smtphost
-Received: from gurus-linux.qualcomm.com (HELO gurus-linux.localdomain) ([10.46.162.81])
-  by ironmsg04-sd.qualcomm.com with ESMTP; 05 Apr 2021 18:11:51 -0700
-Received: by gurus-linux.localdomain (Postfix, from userid 383780)
-        id F09911A3A; Mon,  5 Apr 2021 18:11:52 -0700 (PDT)
-Date:   Mon, 5 Apr 2021 18:11:52 -0700
-From:   Guru Das Srinagesh <gurus@codeaurora.org>
-To:     Mark Brown <broonie@kernel.org>
-Cc:     Lee Jones <lee.jones@linaro.org>, Rob Herring <robh+dt@kernel.org>,
-        Markus Elfring <Markus.Elfring@web.de>,
-        linux-arm-msm@vger.kernel.org,
-        Anirudh Ghayal <aghayal@codeaurora.org>,
-        Subbaraman Narayanamurthy <subbaram@codeaurora.org>,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg KH <gregkh@linuxfoundation.org>,
-        David Collins <collinsd@codeaurora.org>,
-        Joe Perches <joe@perches.com>,
-        Guenter Roeck <linux@roeck-us.net>
-Subject: Re: [PATCH v5 0/2] Add support for Qualcomm MFD PMIC register layout
-Message-ID: <20210406011152.GA27770@codeaurora.org>
-References: <cover.1616613838.git.gurus@codeaurora.org>
- <161726943419.2413.4844313396830856637.b4-ty@kernel.org>
+        id S233129AbhDFDkS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Apr 2021 23:40:18 -0400
+Received: from mail.kernel.org ([198.145.29.99]:49660 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232419AbhDFDkR (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 5 Apr 2021 23:40:17 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPS id 1456261399;
+        Tue,  6 Apr 2021 03:40:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1617680410;
+        bh=cf/mV6/zdP+kDW+aHQpc3Zlj43pGt+z/dszCut4Flec=;
+        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+        b=l9Bbuv1Qlg3ipIgcUrYTu5pkBEzaBlmcZgrDa/+EOT7Vdwr753LzWCBtcGxG3i3FI
+         an1Ma23HC+3PaGcvA+aB8AUtpSsNWjT67DgYVMPUb7hgxhDnBO940ghixV1F5wP1Nc
+         epaSIzuwILij2DvNhYt3D6sNc+IfEAgV/FE8NZ3DisADA6UlGlVapQpzUtf2NzwjfL
+         fYi8LjEfeb8pkHs4hVrgEAXahbVFJ0Kd2/fBt9SPHqFE1h20sM1gtImiIJF4hexd4P
+         jdZ290Gqu2o37yEmRfzvpG0hEL9lzAE18AFTzrXgXTvTmV+ZjfiEUKru6h9oTxFqOm
+         LDc4tysRqj6Jw==
+Received: from pdx-korg-docbuild-2.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id 047FC60A19;
+        Tue,  6 Apr 2021 03:40:10 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <161726943419.2413.4844313396830856637.b4-ty@kernel.org>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCHv2 0/4] Enable various hardware blocks on SC7280 SoC
+From:   patchwork-bot+linux-arm-msm@kernel.org
+Message-Id: <161768041001.22037.4820574424582485866.git-patchwork-notify@kernel.org>
+Date:   Tue, 06 Apr 2021 03:40:10 +0000
+References: <cover.1615832893.git.saiprakash.ranjan@codeaurora.org>
+In-Reply-To: <cover.1615832893.git.saiprakash.ranjan@codeaurora.org>
+To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Cc:     linux-arm-msm@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Apr 01, 2021 at 11:16:17AM +0100, Mark Brown wrote:
-> On Wed, 24 Mar 2021 12:28:52 -0700, Guru Das Srinagesh wrote:
-> > Changes from v4:
-> > - Only one cosmetic change: Moved the declaration of num_virt_regs under
-> >   num_type_reg instead of under num_main_regs in `struct regmap_irq_chip` so as
-> >   to reinforce the idea that it is related to the type setting of IRQs.
-> > - No other changes.
-> > 
-> > Changes from v3:
-> > - Implemented the scheme proposed in my response to Mark in [4].
-> > - Dropped the RFC tag from this patch series as this series has been tested on
-> >   target with a client driver utilizing these changes.
-> > 
-> > [...]
-> 
-> Applied to
-> 
->    https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regmap.git for-next
-> 
-> Thanks!
-> 
-> [1/2] regmap-irq: Introduce virtual regs to handle more config regs
->       commit: 4c5014456305482412b35a081ca0fb4fefd69764
-> [2/2] regmap-irq: Add driver callback to configure virtual regs
->       commit: 394409aafd017adfcffd075595cb01cc456a9327
-> 
+Hello:
 
-Thanks for accepting the patches. I'll send out the driver utilizing
-these changes after code cleanup in the next couple of weeks.
+This series was applied to qcom/linux.git (refs/heads/for-next):
 
-Thank you.
+On Tue, 16 Mar 2021 00:05:45 +0530 you wrote:
+> This series enables various hardware blocks such as LLCC, IPCC, AOSS QMP
+> and Coresight on SC7280 SoC.
+> 
+> Changes in v2:
+>  * Rename qmp to power-controller (Stephen)
+>  * Drop the ipcc mailbox dt-binding from this series and send it separately
+>  * Collect review tags
+> 
+> [...]
 
-Guru Das.
+Here is the summary with links:
+  - [PATCHv2,1/4] arm64: dts: qcom: sc7280: Add device tree node for LLCC
+    https://git.kernel.org/qcom/c/0392968dbe09
+  - [PATCHv2,2/4] arm64: dts: qcom: sc7280: Add IPCC for SC7280 SoC
+    https://git.kernel.org/qcom/c/2257fac94bc2
+  - [PATCHv2,3/4] arm64: dts: qcom: sc7280: Add AOSS QMP node
+    https://git.kernel.org/qcom/c/208979a8f9cb
+  - [PATCHv2,4/4] arm64: dts: qcom: sc7280: Add Coresight support
+    https://git.kernel.org/qcom/c/544cebe18956
+
+You are awesome, thank you!
+--
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
+
