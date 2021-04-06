@@ -2,97 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A467D35490A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Apr 2021 00:58:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A393B3549E4
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Apr 2021 03:09:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232750AbhDEW54 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Apr 2021 18:57:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38280 "EHLO
+        id S232990AbhDFBKB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Apr 2021 21:10:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38432 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232637AbhDEW5z (ORCPT
+        with ESMTP id S232868AbhDFBJ6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Apr 2021 18:57:55 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8624C061756
-        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Apr 2021 15:57:46 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id e18so12188753wrt.6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Apr 2021 15:57:46 -0700 (PDT)
+        Mon, 5 Apr 2021 21:09:58 -0400
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F693C06174A;
+        Mon,  5 Apr 2021 18:09:50 -0700 (PDT)
+Received: by mail-lf1-x12d.google.com with SMTP id g8so20031062lfv.12;
+        Mon, 05 Apr 2021 18:09:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=GsALzx0Rjvc16XQc7wuGcWWs8xedjpRc0kR3W8dinuE=;
-        b=mE3omOY/EFLMCJc3dDUmtHxXvkjrAkxlLz4C5kho710fWtkKrs6ZnjM8oPE3yIfemZ
-         nAdrNh3jOusTpcwmN1PxGMxadU2rImNXnLBV5kTnh0A4+8lcIAgARsmLkfeSUc7vYpux
-         Ot8/2TingupqyorxLkpeX0YUlKZM7PR8Uik+ttPgJzZMXa9UkpRN7kkvjjP0/r1zSqhg
-         h06zgNv0WDXi3DJP//DDOmhTghhWfl/+RTbqSW5NRKf8Sz8kP6UXadxiHcuBitO7EgrP
-         RsX4eBSJMkGdwuIR9icrUTB8HdBv9sfGDgfQu9ju+IT8ELS5BAFBp32+ZaYQiBHokiIR
-         Uzyg==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=kZ3de3tHen+IrX3s32+0iqjXHxQleXCQQZ+cp0UblkE=;
+        b=jxajCkzIrE8XykpxOIdp7IU4la7tB63+21UtPEbQA6zAIvhg1hM76GTOMCTU//IVjM
+         dGyp5wKw2TegtExUVrQFZHLhI+JBTDhQmjinK6IDH2c46knoCE4o56eXUWTNLycRaJ8E
+         9Y4Jxh/VKmNQy+oH5th4GF7aexIcS6LVkqWXJy8g0FkCUvRwO0IuhNmcpCyyCqPAnon4
+         h/+SthZpx/mBedvSJNWPI3ogWrZcmB7LZ2vDMgbCqhaX6zEjHW2DU6OgLcnjOdREtJJc
+         IlmOWApDJVPmoHAly/dCc5SVrAoqFXaoMtw6bn/8ZGCB/STwnk/D0QeGiqUEFltpCtSd
+         0j/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=GsALzx0Rjvc16XQc7wuGcWWs8xedjpRc0kR3W8dinuE=;
-        b=VvdhbPQnoGeT5BWrX/xf3TCzJu66A3MRkbFyoPNEXfe1qARezrqCJDfOgp8kKaelMY
-         1Q2KSiFq1Ea6lEfQgJlMMi67FDUF3WdQftiEwZ1MXCDoDIsApVGlbrpqQrG89G0c2l57
-         PimIhmMzduQigNXsK4Kc4VIMtvGHtGrrH+2JjDApHCsJq7qfVnM0M32RZl7aNjILciBl
-         RtIJpEhgkM7jV1atMiHlQlhXHbOVUtJPNJleX4KoMAOcU29aFVrzu4ECY69EX01Bs12E
-         ZZDr/AdwKdJwMD+PBBz8KRjZjszslihkOTCnWlrfYVBqM0rbOYrJpuK3gK6G/cHlF++9
-         aBMQ==
-X-Gm-Message-State: AOAM530QIoFlbGCZxGY9FNMuTbS7JXD94/1LBWVW8ptAov5pr85KMtP4
-        FOjdg76Mo1r/F6HYqDD06E8/Ig==
-X-Google-Smtp-Source: ABdhPJxB7LQBvAilsUzNItl26qAaZg+6/4Bbyj6m+LxE0fncKjRk1axkNV4VyzHNOL7bW6aOas0ypw==
-X-Received: by 2002:a05:6000:1209:: with SMTP id e9mr6545242wrx.36.1617663465585;
-        Mon, 05 Apr 2021 15:57:45 -0700 (PDT)
-Received: from ?IPv6:2a01:e34:ed2f:f020:d506:6f5d:adb6:da14? ([2a01:e34:ed2f:f020:d506:6f5d:adb6:da14])
-        by smtp.googlemail.com with ESMTPSA id c2sm910286wmr.22.2021.04.05.15.57.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 05 Apr 2021 15:57:44 -0700 (PDT)
-Subject: Re: [PATCH v14 0/9] Add support for ipq8064 tsens
-To:     Ansuel Smith <ansuelsmth@gmail.com>
-Cc:     Amit Kucheria <amitk@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Rob Herring <robh+dt@kernel.org>, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20210404144823.31867-1-ansuelsmth@gmail.com>
-From:   Daniel Lezcano <daniel.lezcano@linaro.org>
-Message-ID: <00314fdb-c9f4-03b0-5639-a8b8f5afbba2@linaro.org>
-Date:   Tue, 6 Apr 2021 00:57:43 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        bh=kZ3de3tHen+IrX3s32+0iqjXHxQleXCQQZ+cp0UblkE=;
+        b=ttvldcbxDg2WuOmwMWaErxO6Il9FSLoJ9WVmVCL9IE5JgMGoiJ+oK/VzY6P+ocCsxt
+         BZGaU7YW1nCDAFof/58lXuylITdCVApfJfxx2W6UviHBq7rMTxsWTnNl1KCmtC+Md908
+         Oo9rnkWXYpVdUtOh8j2kYKLcUa70O/JJTarOH0v87xBecBfMtFrpPGr00gQJ3vu5Inzx
+         Frq5jeU9e4x+hvLFlC9r/dxuKRA/vM4RLJTUpBL+KP/bawsl5C49XFJSNjB7R15LO01d
+         KEBgm4CGPm817Fr6Tntm/ZLCsiP/9bLgOOAP/hX5FWTnhfnmlOsA7qq/7l559SNRB2Gd
+         aHWQ==
+X-Gm-Message-State: AOAM532GK0YsDH6IXMnBoS2Hgvvee8tA8sKPAo78SWM608T/wIAGaM89
+        OL1x6gliRSQOeuBmP39QNJWV3jmzlvo=
+X-Google-Smtp-Source: ABdhPJxkecmgjPNtGBwQxxVaji6peqSnx34Qq6kwP9Sx63ty3AeECtOtSgI8ciRiOctgnXuhboFWtg==
+X-Received: by 2002:ac2:490b:: with SMTP id n11mr18511886lfi.491.1617671388853;
+        Mon, 05 Apr 2021 18:09:48 -0700 (PDT)
+Received: from Ryzen-Workstation.localdomain (df76-hyyyyyyyyyyyyyct-3.rev.dnainternet.fi. [2001:14ba:26f5:f300::5])
+        by smtp.googlemail.com with ESMTPSA id p24sm1948063lfj.76.2021.04.05.18.09.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 05 Apr 2021 18:09:48 -0700 (PDT)
+From:   Jami Kettunen <jamipkettunen@gmail.com>
+To:     phone-devel@vger.kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        keescook@chromium.org, anton@enomsg.org, ccross@android.com,
+        tony.luck@intel.com, ~postmarketos/upstreaming@lists.sr.ht,
+        konrad.dybcio@somainline.org, martin.botka@somainline.org,
+        angelogioacchino.delregno@somainline.org,
+        marijn.suijten@somainline.org
+Subject: OnePlus 5/5T support
+Date:   Tue,  6 Apr 2021 04:07:06 +0300
+Message-Id: <20210406010708.2376807-1-jamipkettunen@gmail.com>
+X-Mailer: git-send-email 2.31.1
 MIME-Version: 1.0
-In-Reply-To: <20210404144823.31867-1-ansuelsmth@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 04/04/2021 16:48, Ansuel Smith wrote:
-> This patchset convert msm8960 to reg_filed, use int_common instead 
-> of a custom function and fix wrong tsens get_temp function for msm8960.
-> Ipq8064 SoCs tsens driver is based on 8960 tsens driver. Ipq8064 needs
-> to be registered as a gcc child as the tsens regs on this platform are
-> shared with the controller.
-> This is based on work and code here
-> https://git.linaro.org/people/amit.kucheria/kernel.git/log/?h=wrk3/tsens-8960-breakage
+Add device trees for OnePlus 5 (cheeseburger) and 5T (dumpling)
+MSM8998 SoC smartphones.
 
-Applied, the series.
+v2:
+-License DT under BSD-3-Clause instead of GPL-2.0
+-Drop MSS remoteproc node in favor of disabling it by default (see patch 2/2)
+-Shorten and move Wi-Fi disable comment inside wifi node
 
-Fixed a minor conflict with patch 9/9 and "dt-bindings: thermal:
-qcom-tsens: Add compatible for sm8350"
+Jami Kettunen (2):
+  arm64: dts: qcom: Add support for OnePlus 5/5T
+  arm64: dts: qcom: msm8998: Disable MSS remoteproc by default
 
-Thanks
+ arch/arm64/boot/dts/qcom/Makefile             |   2 +
+ .../boot/dts/qcom/msm8998-clamshell.dtsi      |   4 +
+ arch/arm64/boot/dts/qcom/msm8998-mtp.dtsi     |   4 +
+ .../dts/qcom/msm8998-oneplus-cheeseburger.dts |  42 ++
+ .../boot/dts/qcom/msm8998-oneplus-common.dtsi | 514 ++++++++++++++++++
+ .../dts/qcom/msm8998-oneplus-dumpling.dts     |  25 +
+ arch/arm64/boot/dts/qcom/msm8998.dtsi         |   2 +
+ 7 files changed, 593 insertions(+)
 
-  -- Daniel
-
--- 
-<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
-
-Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
-<http://twitter.com/#!/linaroorg> Twitter |
-<http://www.linaro.org/linaro-blog/> Blog
