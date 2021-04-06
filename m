@@ -2,82 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7BB8E355939
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Apr 2021 18:31:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 48398355941
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Apr 2021 18:34:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244002AbhDFQcE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Apr 2021 12:32:04 -0400
-Received: from mail-oi1-f179.google.com ([209.85.167.179]:46841 "EHLO
-        mail-oi1-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243985AbhDFQcD (ORCPT
+        id S238941AbhDFQeT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Apr 2021 12:34:19 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:39451 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1346447AbhDFQeL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Apr 2021 12:32:03 -0400
-Received: by mail-oi1-f179.google.com with SMTP id m13so15701784oiw.13;
-        Tue, 06 Apr 2021 09:31:55 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=YP3e4a3p21hXudocTBXWvAjnARys/nIu9ypDgjHtU/0=;
-        b=pfzYdy24paxOMB60LUD043jbJFWCPaJ6/DxofXYawGx1Be2kbNHX72n4yPlMK9RvNo
-         RUDN4RpWmsJYsC2Tzjckr9evaQtka2vOGCXH5ZH3WVJEaNo8xG3Lo//sDsO4lVpPFq/v
-         gJv9ZtVqM1VC6zesH20T1og2gfpiTrxNS6F92AzcJbXyOS3vnyJn99CPpQ7KlW6ZmKhO
-         +Zdibxt72YggyNHnwI29xfkslUCsVILd4cVvaztXtigUnEUe0pH4+2nFNHllxvmJS8o/
-         zSLpygXPkiHf77zIUvUtMAAGLot9P67wDvs6P5E3Vq7FdAaTihicDL8qHp41K3e0eXQW
-         nrqw==
-X-Gm-Message-State: AOAM531GopoldhQVjNM8LJqT1FM8Ww5NCuoQU1aeVswGd3zMVziRn425
-        r3HpwjM+Tph9vc616T90uQ==
-X-Google-Smtp-Source: ABdhPJwO1ar3Q3AELO4z6vtDhDYzr71jD2j5comjLfYe2J0Q90uxLsBEobt+OhPckaWtee8I7biRzg==
-X-Received: by 2002:aca:180c:: with SMTP id h12mr4132885oih.109.1617726714839;
-        Tue, 06 Apr 2021 09:31:54 -0700 (PDT)
-Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id 3sm4276319ood.46.2021.04.06.09.31.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 Apr 2021 09:31:54 -0700 (PDT)
-Received: (nullmailer pid 1920001 invoked by uid 1000);
-        Tue, 06 Apr 2021 16:31:52 -0000
-Date:   Tue, 6 Apr 2021 11:31:52 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     Daniele.Palmas@telit.com, robh+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org,
-        boris.brezillon@collabora.com, devicetree@vger.kernel.org,
-        vigneshr@ti.com, linux-mtd@lists.infradead.org,
-        miquel.raynal@bootlin.com, linux-kernel@vger.kernel.org,
-        richard@nod.at
-Subject: Re: [PATCH v9 2/4] dt-bindings: mtd: Add a property to declare
- secure regions in NAND chips
-Message-ID: <20210406163152.GA1919684@robh.at.kernel.org>
-References: <20210401151508.143075-1-manivannan.sadhasivam@linaro.org>
- <20210401151508.143075-3-manivannan.sadhasivam@linaro.org>
+        Tue, 6 Apr 2021 12:34:11 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1617726843; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=lCg9rvBlInHgwDdIXHhE440G3KXq+dIQNfO49TSg3Tc=; b=CcW/FXKZ1BEQw9PzeGrx4TTboPikMAJf5q1EtsRHxNpL25B5d+p9258G0dy/CBp5ybJyN7eU
+ lrVTtiU9UR+O8IWlRrphWxMoudeakALiZZvBjEilq1HaJ6rqlNrDDdfAWGb5nTbYlGmRLW14
+ ASNK5Q0Hv5av9yiqi9YKCqPvBBI=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
+ 606c8d6b8166b7eff7210d40 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 06 Apr 2021 16:33:47
+ GMT
+Sender: srivasam=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 15A96C433CA; Tue,  6 Apr 2021 16:33:47 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from hyd-lnxbld210.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: srivasam)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id B9400C433CA;
+        Tue,  6 Apr 2021 16:33:41 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org B9400C433CA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=srivasam@codeaurora.org
+From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, rohitkr@codeaurora.org,
+        srinivas.kandagatla@linaro.org, dianders@chromium.org,
+        swboyd@chromium.org, judyhsiao@chromium.org
+Cc:     V Sujith Kumar Reddy <vsujithk@codeaurora.org>,
+        Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+Subject: [PATCH v2] arm64: dts: qcom: Update iommu property for simultaneous playback
+Date:   Tue,  6 Apr 2021 22:03:30 +0530
+Message-Id: <20210406163330.11996-1-srivasam@codeaurora.org>
+X-Mailer: git-send-email 2.29.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210401151508.143075-3-manivannan.sadhasivam@linaro.org>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 01 Apr 2021 20:45:06 +0530, Manivannan Sadhasivam wrote:
-> On a typical end product, a vendor may choose to secure some regions in
-> the NAND memory which are supposed to stay intact between FW upgrades.
-> The access to those regions will be blocked by a secure element like
-> Trustzone. So the normal world software like Linux kernel should not
-> touch these regions (including reading).
-> 
-> So let's add a property for declaring such secure regions so that the
-> drivers can skip touching them.
-> 
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> ---
->  Documentation/devicetree/bindings/mtd/nand-controller.yaml | 7 +++++++
->  1 file changed, 7 insertions(+)
-> 
+From: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
 
+Update iommu property in lpass cpu node for supporting
+simultaneous playback on headset and speaker.
 
-Please add Acked-by/Reviewed-by tags when posting new versions. However,
-there's no need to repost patches *only* to add the tags. The upstream
-maintainer will do that for acks received on the version they apply.
+Signed-off-by: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
+Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+---
+Changes since v1:
+   -- Commit messge header change
 
-If a tag was not added on purpose, please state why and what changed.
+ arch/arm64/boot/dts/qcom/sc7180.dtsi | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+index a6da78d31fdd..6228ba2d8513 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+@@ -3566,7 +3566,8 @@ lpass_cpu: lpass@62f00000 {
+ 			reg = <0 0x62f00000 0 0x29000>;
+ 			reg-names = "lpass-lpaif";
+ 
+-			iommus = <&apps_smmu 0x1020 0>;
++			iommus = <&apps_smmu 0x1020 0>,
++				<&apps_smmu 0x1021 0>;
+ 
+ 			power-domains = <&lpass_hm LPASS_CORE_HM_GDSCR>;
+ 
+-- 
+Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
+is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
 
