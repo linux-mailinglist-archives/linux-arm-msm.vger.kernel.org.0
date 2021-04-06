@@ -2,104 +2,160 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2E8EA354D9F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Apr 2021 09:16:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CF6A0354E6E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Apr 2021 10:21:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244194AbhDFHQs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Apr 2021 03:16:48 -0400
-Received: from mail-lj1-f179.google.com ([209.85.208.179]:44919 "EHLO
-        mail-lj1-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232063AbhDFHQs (ORCPT
+        id S234886AbhDFIV5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Apr 2021 04:21:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46966 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234590AbhDFIV5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Apr 2021 03:16:48 -0400
-Received: by mail-lj1-f179.google.com with SMTP id u9so15238274ljd.11;
-        Tue, 06 Apr 2021 00:16:39 -0700 (PDT)
+        Tue, 6 Apr 2021 04:21:57 -0400
+Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 950E7C06174A
+        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Apr 2021 01:21:48 -0700 (PDT)
+Received: by mail-pj1-x102c.google.com with SMTP id il9-20020a17090b1649b0290114bcb0d6c2so9257288pjb.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Apr 2021 01:21:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=TwFsFCNcW5vZCqfgf1dZfUUUxKaXxEhnbEAc8ax4O88=;
+        b=Z+48qpyvULt5yxcHpcIT3A57hY/9pg8jeWU6EpapPYdKvzpZ1kWxQxTJ/WFu71W4zj
+         aLbcmK1TFmCQOBR/c8DPbx9aB7L6AD6PAUim7IZTdH6/Q8EwV2/vkoSjsSo1yPsmvVWZ
+         UJmAeLRTb+Uhw7SGoTRzxbbFbWkJjoOorjkNGYB9MMzOTTJoYONpTnGCYFMhAKM02ftT
+         5pltxJoHMmvyZLxDmVdEeS2d0Pi7Gzhp0mGvOtOUvjHT3jofZYfSYnjn/34Iau/KBcEe
+         ZdUPSi7M5jnzdwyT9jc3xJ568/1BuvBziOQzfBlenoEaLgiKbZ+RE1P0PQqRstIq6DMd
+         r+RA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=NUTRKCAJSPIjCVadXlxVAs0WfP1mvGI0BilMH14WAU8=;
-        b=WTPLuJtZ//NAj1QCvebmCgsz+67WT1xTQHiZXJr3nmw+Cx65QJxri3f0tMhhQuJnl4
-         gnhh9avEWbpaSo0dyosAEp65ltola4y5zzKM9Za1zrT/iR5SWRuBXQbW37IFYV0laRPf
-         IOX4BkVQRW+1FZOZgPRxYoOWLAnPemLMqgg+cQL9TZiQcMBocIaR+ldF565Uql1oaI0L
-         VGBFStXcQtKF2nJstIB0SRZPdipLDHV8ncdNWdvdmbDp0ptP+10ZudhAbnV1UlmXJmDn
-         mhOql48aAyPbp0nfDGXsKstJHaug53ZcVfv8y54RP8KhBDeuUQ86s/uGt4VZ3zhYj2Bj
-         f/hA==
-X-Gm-Message-State: AOAM531jT/XTOz+sjpHywQyj3vylUvSgxTIeiqOp9sqUQorPjrMrQ39F
-        Ia5cKEHnI9GE0y55t/IbijrRVmren6E/lQ==
-X-Google-Smtp-Source: ABdhPJytLtkJgHYPWNa69nW42h6+4EDqID048rwy0Fy/M6zXpGyXsUkIwWqU4hdXbeH/ZG6a9HuxAg==
-X-Received: by 2002:a2e:8009:: with SMTP id j9mr18716165ljg.364.1617693399353;
-        Tue, 06 Apr 2021 00:16:39 -0700 (PDT)
-Received: from localhost.localdomain (dc7vkhyyyyyyyyyyyyydy-3.rev.dnainternet.fi. [2001:14ba:16e2:8300::6])
-        by smtp.gmail.com with ESMTPSA id v70sm2048789lfa.106.2021.04.06.00.16.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 Apr 2021 00:16:38 -0700 (PDT)
-Date:   Tue, 6 Apr 2021 10:16:33 +0300
-From:   Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>
-To:     Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>,
-        Matti Vaittinen <mazziesaccount@gmail.com>
-Cc:     Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-power@fi.rohmeurope.com, linux-arm-msm@vger.kernel.org,
-        linux-renesas-soc@vger.kernel.org
-Subject: [PATCH v4 7/7] regulator: bd9576: Fix the driver name in id table
-Message-ID: <6cf3d6462b339193a50bbc12b781010c545fd72b.1617690965.git.matti.vaittinen@fi.rohmeurope.com>
-References: <cover.1617690965.git.matti.vaittinen@fi.rohmeurope.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=TwFsFCNcW5vZCqfgf1dZfUUUxKaXxEhnbEAc8ax4O88=;
+        b=oiwnAERVE/Yb4fjZbba/8gWVLEpQ3YgA4JcicZ7ZZ2fCJakGKGNJFkprJeb3uICwHV
+         uudDVGKU9AVvM5fYqRkRrOlLVTC1rcYXZ4DufozxQVNco+xJ190xCIfOGnby3pjwc8xb
+         +6n92scGMjfM53b9R66YuuO4tKEYOEK0WFDFIAeFksm/U5gbikvDLs6Nq8Xxv9xX/MO5
+         LMp7NFlO1tsBbIdXgZqWpUDVgkKgMFO8Zgo5CtAGDCGSf2qvVD57XP2X3LUHZXrF/rXt
+         w+GiPEzfZ+7ZTpx8x0R+xhdr1z7Ajm6Zxcfjs5notq3InwNWLsqnmGRrN6bslcHqvEX2
+         wPXg==
+X-Gm-Message-State: AOAM532stf0e2wwrr5F/3kp3C0USg1L3Znn02jJTiyX+jq5s4xs2cF6b
+        TK+cZMlWcM6MYeYLoH2dC2A2gF0c7/rlaHb9AoAWMh8hmXLeag==
+X-Google-Smtp-Source: ABdhPJxnmhOYv2euY9ksI01F5gqolna2hRG133/GTQM60+Km/YtV5G3gA+e1829miYTAi2A47IEP1kOYwIr8UHDoaH4=
+X-Received: by 2002:a17:90a:e2ca:: with SMTP id fr10mr3351707pjb.18.1617697307888;
+ Tue, 06 Apr 2021 01:21:47 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1617690965.git.matti.vaittinen@fi.rohmeurope.com>
+References: <1614963744-25962-1-git-send-email-loic.poulain@linaro.org>
+ <20210331171252.GK15610@work> <CAMZdPi-M5fYPs7QfsBx4Gy6ywCLue5yqJLn0XthGhTeON1wWfw@mail.gmail.com>
+ <20210331182700.GL15610@work> <fe857b91841caf67c53e6a9ad967eb84@codeaurora.org>
+ <8456ccb0-f644-80b2-a555-af8d0ca4e351@codeaurora.org>
+In-Reply-To: <8456ccb0-f644-80b2-a555-af8d0ca4e351@codeaurora.org>
+From:   Loic Poulain <loic.poulain@linaro.org>
+Date:   Tue, 6 Apr 2021 10:29:58 +0200
+Message-ID: <CAMZdPi8STuK0Z=f5ykKLWxyrDqMoBkbYwN6K+e9ZJiQyQPBCrg@mail.gmail.com>
+Subject: Re: [PATCH 1/2] bus: mhi: core: Fix MHI runtime_pm behavior
+To:     Hemant Kumar <hemantk@codeaurora.org>
+Cc:     Bhaumik Bhatt <bbhatt@codeaurora.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Driver name was changed in MFD cell:
-https://lore.kernel.org/lkml/560b9748094392493ebf7af11b6cc558776c4fd5.1613031055.git.matti.vaittinen@fi.rohmeurope.com/
-Fix the ID table to match this.
+Hi Hemant, Bhaumik,
 
-Signed-off-by: Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>
----
-Please note - this patch is not really related to the series. This
-change is related to separate MFD driver change and was only added
-as part of this series to avoid the conflicts.
+On Tue, 6 Apr 2021 at 05:54, Hemant Kumar <hemantk@codeaurora.org> wrote:
+>
+> Hi Loic,
+>
+> On 4/5/21 11:46 AM, Bhaumik Bhatt wrote:
+> > On 2021-03-31 11:27 AM, Manivannan Sadhasivam wrote:
+> >> On Wed, Mar 31, 2021 at 07:38:55PM +0200, Loic Poulain wrote:
+> >>> Hi Mani,
+> >>>
+> >>> Le mer. 31 mars 2021 =C3=A0 19:12, Manivannan Sadhasivam <
+> >>> manivannan.sadhasivam@linaro.org> a =C3=A9crit :
+> >>>
+> >>> > On Fri, Mar 05, 2021 at 06:02:23PM +0100, Loic Poulain wrote:
+> >>> > > This change ensures that PM reference is always get during packet
+> >>> > > queueing and released either after queuing completion (RX) or onc=
+e
+> >>> > > the buffer has been consumed (TX). This guarantees proper update =
+for
+> >>> > > underlying MHI controller runtime status (e.g. last_busy timestam=
+p)
+> >>> > > and prevents suspend to be triggered while TX packets are flying,
+> >>> > > or before we completed update of the RX ring.
+> >>> > >
+> >>> >
+> >>> > Any reason why you didn't wait for RX completion also?
+> >>>
+> >>>
+> >>> Because on TX we know the buffer completion is going to happen really
+> >>> quickly (we send data) whereas we never know when when RX packet will=
+ be
+> >>> completed (we are waiting for data), so we want to be able to put the
+> >>> MHI
+> >>> device in suspend while RX is pending (the device will wake up the
+> >>> host on
+> >>> incoming data)
+> >>>
+> >>
+> >> Device wakeup will only happen for device initiated suspend (M1) but f=
+or
+> >> host initiated suspend (M3), device will check for pending data to hos=
+t
+> >> and will initiate wakeup request before going for suspend. So I think =
+it
+> >> is safe to wait for RX data.
+> >>
+> >> Hemant/Bhaumik, any thoughts?
+> >>
+> >> Thanks,
+> >> Mani
+> >>
+> > Agree with Loic here. Let's not depend on the device to determine host =
+side
+> > behavior and instead, assume that the device may or may not be followin=
+g
+> > protocol so as to reduce chances of higher power draw by host. Host sho=
+uld
+> > not care when RX comes, but host should care about TX completion as tha=
+t's
+> > where our requirement ends.
+> >
+> > There have been instances of delayed RX and in some cases, no TX comple=
+tion
+> > from a certain client (I think DIAG), where device thinks they have
+> > received
+> > garbage and decide not to respond with a TX completion.
+> >
+> > We want to be able to put device in suspend or at least initiate it whi=
+le
+> > host waits for incoming data. Once RX comes in, host will wake up to
+> > process it.
+> Agree with Bhaumik and Loic about not waiting for Rx data.
+> >
+> > What Loic does in this patch is done in one way using patch [1].
+> > However, that
+> > does not update the last_busy timestamp. I am mostly in favor of this p=
+atch
+> > going in but would like Loic to answer one question:
+> >
+> > In mhi_reset_data_chan(), why not do a runtime_put(mhi_cntrl) inside th=
+e
+> > pre-existing if (mhi_chan->dir =3D=3D DMA_TO_DEVICE) at the start of th=
+e
+> > while loop:
+> > while (tre_ring->rp !=3D tre_ring->wp)? This would be balanced for each=
+ TX.
+> I got same question when i looked at the patch.
 
-No changes since RFC-v2
+Very true, I've not seen any issue, because there is 'usually' not TX
+pending on reset/remove but we indeed need to take care of balancing
+that here as well. I'm going to follow up with a new patch.
 
- drivers/regulator/bd9576-regulator.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/regulator/bd9576-regulator.c b/drivers/regulator/bd9576-regulator.c
-index 0d55d383d2aa..aeb816cf9ad3 100644
---- a/drivers/regulator/bd9576-regulator.c
-+++ b/drivers/regulator/bd9576-regulator.c
-@@ -1117,8 +1117,8 @@ static int bd957x_probe(struct platform_device *pdev)
- }
- 
- static const struct platform_device_id bd957x_pmic_id[] = {
--	{ "bd9573-pmic", ROHM_CHIP_TYPE_BD9573 },
--	{ "bd9576-pmic", ROHM_CHIP_TYPE_BD9576 },
-+	{ "bd9573-regulator", ROHM_CHIP_TYPE_BD9573 },
-+	{ "bd9576-regulator", ROHM_CHIP_TYPE_BD9576 },
- 	{ },
- };
- MODULE_DEVICE_TABLE(platform, bd957x_pmic_id);
--- 
-2.25.4
-
-
--- 
-Matti Vaittinen, Linux device drivers
-ROHM Semiconductors, Finland SWDC
-Kiviharjunlenkki 1E
-90220 OULU
-FINLAND
-
-~~~ "I don't think so," said Rene Descartes. Just then he vanished ~~~
-Simon says - in Latin please.
-~~~ "non cogito me" dixit Rene Descarte, deinde evanescavit ~~~
-Thanks to Simon Glass for the translation =] 
+Thanks,
+Loic
