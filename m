@@ -2,166 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 63FF6355ACC
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Apr 2021 19:53:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 00956355CE1
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Apr 2021 22:29:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233394AbhDFRxm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Apr 2021 13:53:42 -0400
-Received: from labrats.qualcomm.com ([199.106.110.90]:62920 "EHLO
-        labrats.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244669AbhDFRxl (ORCPT
+        id S242842AbhDFUaD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Apr 2021 16:30:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37866 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231650AbhDFUaD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Apr 2021 13:53:41 -0400
-IronPort-SDR: YUbCRbb7K56xTeUv5CHgiKsjexFJ5EVLxiopRBPitq7MI7pyySATn1YYe9aurtB/W3VMfpWkBE
- iIGGxOXyEBgn7PylKh2Qth6zFH1IIMtqSLiX0wiZ+DtAQilOdfU+/qQddKXe6NhuzcYNaRHWIc
- wKqjl1OSRQdi04onaHeYgWJf0Czm2cj5Op6JQUHJZGWpV21oG6BJN+VSwYVq7t19N5xxkYd9f8
- i80m+V5H/p8plj9NVpKFWBausZgkOJ06oh7Xk/tpAcP8kIOX0BeaTxpwnxstKmFXS/R469asLb
- 5W8=
-X-IronPort-AV: E=Sophos;i="5.82,201,1613462400"; 
-   d="scan'208";a="29742117"
-Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
-  by labrats.qualcomm.com with ESMTP; 06 Apr 2021 10:53:32 -0700
-X-QCInternal: smtphost
-Received: from stor-presley.qualcomm.com ([192.168.140.85])
-  by ironmsg04-sd.qualcomm.com with ESMTP; 06 Apr 2021 10:53:32 -0700
-Received: by stor-presley.qualcomm.com (Postfix, from userid 92687)
-        id 724EE210FD; Tue,  6 Apr 2021 10:53:32 -0700 (PDT)
-From:   Asutosh Das <asutoshd@codeaurora.org>
-To:     cang@codeaurora.org, martin.petersen@oracle.com,
-        adrian.hunter@intel.com, linux-scsi@vger.kernel.org
-Cc:     Asutosh Das <asutoshd@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        Stanley Chu <stanley.chu@mediatek.com>,
-        Bean Huo <beanhuo@micron.com>,
-        Jaegeuk Kim <jaegeuk@kernel.org>,
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v15 2/2] ufs: sysfs: Resume the proper scsi device
-Date:   Tue,  6 Apr 2021 10:52:43 -0700
-Message-Id: <cc1d7dca1140e411e33c2f66258e5184928058ce.1617731442.git.asutoshd@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <cover.1617731442.git.asutoshd@codeaurora.org>
-References: <cover.1617731442.git.asutoshd@codeaurora.org>
-In-Reply-To: <cover.1617731442.git.asutoshd@codeaurora.org>
-References: <cover.1617731442.git.asutoshd@codeaurora.org>
+        Tue, 6 Apr 2021 16:30:03 -0400
+Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C589C06174A;
+        Tue,  6 Apr 2021 13:29:53 -0700 (PDT)
+Received: by mail-pj1-x102a.google.com with SMTP id bg21so5502297pjb.0;
+        Tue, 06 Apr 2021 13:29:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=2j7CLcad6ed96rIyV9YQHxN3DzjnAJyxSEvNXU02X20=;
+        b=nYUal0e85vIHS7aZRNgDglng+qm0qJNbkP5HRG0HaavzZxy1YeoJJfFLszSNBsJOJ3
+         7l1zFyXVZonWUYgDSnlmVgLwLS99tZfdfwJJqMX+H8QPJHz5wSqQuDvmwqF9YTABZkMi
+         PhR/GWFY1fQsDgoq/mDMgHUGE14wsY9ypMkjEC60wDCH6LL7O3tJD3I1PFzTc6qI18I+
+         fA0sG3FrA0QZoOJpyYpjoroSbNfLiph7XbBQVEfzbxeNVCUmppbZxwfqBIrJEkIVSKRs
+         gJROKbp2sN9X02bfYVBhJUXj9r0//MzDD8TujZiyZ0106e6BukA2/M60AKVUTqh2hWxJ
+         zTDQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=2j7CLcad6ed96rIyV9YQHxN3DzjnAJyxSEvNXU02X20=;
+        b=CeK2JIjCLhB942tr6CbkhVm93XKmjybxdLBy8Mnm+L0XqIMzLReFZwECvX95TyNq8P
+         DTuXh767OkCaMfQUWdKuPDV525v01RqvL6FWi7baec6OeCTdeRztXNpk0zL3Tj28MBVq
+         KJxvB4I4EHPnXtczxNz4YEgiZeI4Y3JdybXdoCoQwExEGNINsO6npcRmyFf5xijAQDmO
+         zK+ZEveFdbt4oIblFp47qE8SLPUzQ8clq3C8U+1MxAhtWMGBJygMrFlOyUZVc+f8Uh3x
+         R3DWX+Unvju70nvwG+9AwVVks44mbuTvR314CquaRn7O02ti5xKtFaKnktA78CkyMhIy
+         JiRg==
+X-Gm-Message-State: AOAM533d4BnnIrFmP9WjbOkuNBoHkJtqoOXMXSpPFDYFFtNKLqfN3g5n
+        vSEhH598UHpYTQ5uc1d+DKxmwn9BB+BRvw==
+X-Google-Smtp-Source: ABdhPJzBnFguFi88gpmuor8iHJxiRXt/MFPep7vFboCRsnlXbgdwOM+ls2m8kZboCUNU/tBINz5c8g==
+X-Received: by 2002:a17:902:7788:b029:e9:11:5334 with SMTP id o8-20020a1709027788b02900e900115334mr41037pll.70.1617740993171;
+        Tue, 06 Apr 2021 13:29:53 -0700 (PDT)
+Received: from dell5510.suse.de ([62.201.25.198])
+        by smtp.gmail.com with ESMTPSA id x13sm4921040pgf.13.2021.04.06.13.29.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 06 Apr 2021 13:29:52 -0700 (PDT)
+From:   Petr Vorel <petr.vorel@gmail.com>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     Petr Vorel <petr.vorel@gmail.com>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Ricardo Ribalda <ribalda@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        devicetree@vger.kernel.org
+Subject: [PATCH v2 1/1] arm64: dts: qcom: angler: Reserve GPIO ranges
+Date:   Tue,  6 Apr 2021 22:29:36 +0200
+Message-Id: <20210406202936.22500-1-petr.vorel@gmail.com>
+X-Mailer: git-send-email 2.30.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Resumes the actual scsi device the unit descriptor of which
-is being accessed instead of the hba alone.
+Reserve GPIO pins 85-88 as these aren't meant to be accessible from the
+application CPUs (causes reboot). Yet another fix similar to
+9134586715e3, 5f8d3ab136d0, which is needed to allow angler boot after
+3edfb7bd76bd ("gpiolib: Show correct direction from the beginning").
 
-Reviewed-by: Can Guo <cang@codeaurora.org>
-Signed-off-by: Asutosh Das <asutoshd@codeaurora.org>
+Signed-off-by: Petr Vorel <petr.vorel@gmail.com>
 ---
- drivers/scsi/ufs/ufs-sysfs.c | 30 +++++++++++++++++-------------
- 1 file changed, 17 insertions(+), 13 deletions(-)
+Changes v1->v2:
+* Remove <0 4> (not needed)
+* Remove from commit message: Fixes: 3edfb7bd76bd ("gpiolib: Show
+  correct direction from the beginning") - although fix is needed after
+  3edfb7bd76bd, I'm not sure if this commit is to blame commits which
+  added/modified DTS.
 
-diff --git a/drivers/scsi/ufs/ufs-sysfs.c b/drivers/scsi/ufs/ufs-sysfs.c
-index d7c3cff..fa57bac 100644
---- a/drivers/scsi/ufs/ufs-sysfs.c
-+++ b/drivers/scsi/ufs/ufs-sysfs.c
-@@ -245,9 +245,9 @@ static ssize_t wb_on_store(struct device *dev, struct device_attribute *attr,
- 		goto out;
- 	}
+Kind regards,
+Petr
+
+ arch/arm64/boot/dts/qcom/msm8994-angler-rev-101.dts | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/qcom/msm8994-angler-rev-101.dts b/arch/arm64/boot/dts/qcom/msm8994-angler-rev-101.dts
+index baa55643b40f..fd8e8e1cb2be 100644
+--- a/arch/arm64/boot/dts/qcom/msm8994-angler-rev-101.dts
++++ b/arch/arm64/boot/dts/qcom/msm8994-angler-rev-101.dts
+@@ -1,6 +1,7 @@
+ // SPDX-License-Identifier: GPL-2.0-only
+ /* Copyright (c) 2015, Huawei Inc. All rights reserved.
+  * Copyright (c) 2016, The Linux Foundation. All rights reserved.
++ * Copyright (c) 2021 Petr Vorel <petr.vorel@gmail.com>
+  */
  
--	pm_runtime_get_sync(hba->dev);
-+	scsi_autopm_get_device(hba->sdev_ufs_device);
- 	res = ufshcd_wb_toggle(hba, wb_enable);
--	pm_runtime_put_sync(hba->dev);
-+	scsi_autopm_put_device(hba->sdev_ufs_device);
- out:
- 	up(&hba->host_sem);
- 	return res < 0 ? res : count;
-@@ -297,10 +297,10 @@ static ssize_t ufs_sysfs_read_desc_param(struct ufs_hba *hba,
- 		goto out;
- 	}
- 
--	pm_runtime_get_sync(hba->dev);
-+	scsi_autopm_get_device(hba->sdev_ufs_device);
- 	ret = ufshcd_read_desc_param(hba, desc_id, desc_index,
- 				param_offset, desc_buf, param_size);
--	pm_runtime_put_sync(hba->dev);
-+	scsi_autopm_put_device(hba->sdev_ufs_device);
- 	if (ret) {
- 		ret = -EINVAL;
- 		goto out;
-@@ -678,7 +678,7 @@ static ssize_t _name##_show(struct device *dev,				\
- 		up(&hba->host_sem);					\
- 		return -ENOMEM;						\
- 	}								\
--	pm_runtime_get_sync(hba->dev);					\
-+	scsi_autopm_get_device(hba->sdev_ufs_device);			\
- 	ret = ufshcd_query_descriptor_retry(hba,			\
- 		UPIU_QUERY_OPCODE_READ_DESC, QUERY_DESC_IDN_DEVICE,	\
- 		0, 0, desc_buf, &desc_len);				\
-@@ -695,7 +695,7 @@ static ssize_t _name##_show(struct device *dev,				\
- 		goto out;						\
- 	ret = sysfs_emit(buf, "%s\n", desc_buf);			\
- out:									\
--	pm_runtime_put_sync(hba->dev);					\
-+	scsi_autopm_put_device(hba->sdev_ufs_device);			\
- 	kfree(desc_buf);						\
- 	up(&hba->host_sem);						\
- 	return ret;							\
-@@ -744,10 +744,10 @@ static ssize_t _name##_show(struct device *dev,				\
- 	}								\
- 	if (ufshcd_is_wb_flags(QUERY_FLAG_IDN##_uname))			\
- 		index = ufshcd_wb_get_query_index(hba);			\
--	pm_runtime_get_sync(hba->dev);					\
-+	scsi_autopm_get_device(hba->sdev_ufs_device);			\
- 	ret = ufshcd_query_flag(hba, UPIU_QUERY_OPCODE_READ_FLAG,	\
- 		QUERY_FLAG_IDN##_uname, index, &flag);			\
--	pm_runtime_put_sync(hba->dev);					\
-+	scsi_autopm_put_device(hba->sdev_ufs_device);			\
- 	if (ret) {							\
- 		ret = -EINVAL;						\
- 		goto out;						\
-@@ -813,10 +813,10 @@ static ssize_t _name##_show(struct device *dev,				\
- 	}								\
- 	if (ufshcd_is_wb_attrs(QUERY_ATTR_IDN##_uname))			\
- 		index = ufshcd_wb_get_query_index(hba);			\
--	pm_runtime_get_sync(hba->dev);					\
-+	scsi_autopm_get_device(hba->sdev_ufs_device);			\
- 	ret = ufshcd_query_attr(hba, UPIU_QUERY_OPCODE_READ_ATTR,	\
- 		QUERY_ATTR_IDN##_uname, index, 0, &value);		\
--	pm_runtime_put_sync(hba->dev);					\
-+	scsi_autopm_put_device(hba->sdev_ufs_device);			\
- 	if (ret) {							\
- 		ret = -EINVAL;						\
- 		goto out;						\
-@@ -899,11 +899,15 @@ static ssize_t _pname##_show(struct device *dev,			\
- 	struct scsi_device *sdev = to_scsi_device(dev);			\
- 	struct ufs_hba *hba = shost_priv(sdev->host);			\
- 	u8 lun = ufshcd_scsi_to_upiu_lun(sdev->lun);			\
-+	int ret;							\
- 	if (!ufs_is_valid_unit_desc_lun(&hba->dev_info, lun,		\
- 				_duname##_DESC_PARAM##_puname))		\
- 		return -EINVAL;						\
--	return ufs_sysfs_read_desc_param(hba, QUERY_DESC_IDN_##_duname,	\
-+	scsi_autopm_get_device(sdev);					\
-+	ret = ufs_sysfs_read_desc_param(hba, QUERY_DESC_IDN_##_duname,	\
- 		lun, _duname##_DESC_PARAM##_puname, buf, _size);	\
-+	scsi_autopm_put_device(sdev);					\
-+	return ret;							\
- }									\
- static DEVICE_ATTR_RO(_pname)
- 
-@@ -964,10 +968,10 @@ static ssize_t dyn_cap_needed_attribute_show(struct device *dev,
- 		goto out;
- 	}
- 
--	pm_runtime_get_sync(hba->dev);
-+	scsi_autopm_get_device(hba->sdev_ufs_device);
- 	ret = ufshcd_query_attr(hba, UPIU_QUERY_OPCODE_READ_ATTR,
- 		QUERY_ATTR_IDN_DYN_CAP_NEEDED, lun, 0, &value);
--	pm_runtime_put_sync(hba->dev);
-+	scsi_autopm_put_device(hba->sdev_ufs_device);
- 	if (ret) {
- 		ret = -EINVAL;
- 		goto out;
+ /dts-v1/;
+@@ -32,3 +33,7 @@ serial@f991e000 {
+ 		};
+ 	};
+ };
++
++&tlmm {
++	gpio-reserved-ranges = <85 4>;
++};
 -- 
-Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
+2.30.2
 
