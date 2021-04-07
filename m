@@ -2,118 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D2B6F355F5B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Apr 2021 01:19:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 95BEC356058
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Apr 2021 02:33:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244340AbhDFXT1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Apr 2021 19:19:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46458 "EHLO
+        id S1347367AbhDGAcg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Apr 2021 20:32:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34138 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244327AbhDFXTZ (ORCPT
+        with ESMTP id S236581AbhDGAcf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Apr 2021 19:19:25 -0400
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06612C061764
-        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Apr 2021 16:19:15 -0700 (PDT)
-Received: by mail-lf1-x134.google.com with SMTP id j18so1569453lfg.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Apr 2021 16:19:15 -0700 (PDT)
+        Tue, 6 Apr 2021 20:32:35 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 004E7C06174A
+        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Apr 2021 17:32:26 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id i18so12562198wrm.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Apr 2021 17:32:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=AmYo6XqX++v95q1RyeTSve0yN0GdRgCTRXoSLrb50KY=;
-        b=K9wFHrdtGCPomu0gWmIBmd5bbDUVz4j6Mxi5Pyah2VUcJRvwqotCpIihgEgf0gw2yK
-         3NkbUl4cMiGA+ZPlAFJXpJ6SqpsISBJNywa3pH9N3rImp9YH+1pBhy5UGJfX4qCYih40
-         9nmo5dmSXHvpOd7Bi/Lv1koNVritNxDbB8Wo1dP4GjDJpwt1AiE/vRfA/zDr59SPxzgx
-         T7wfbZXAjoUxPkOUW46m7uverZBS1gl0vP93TZaX/VJqMEP606NewOWE14BD6DR39c86
-         o33v0TKPJYBCccZ0VKEgfBikUeWiEc20zqObLapzD6AWgH5HmfnNqEApq6AFU07oUSvt
-         THdA==
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=TBcLhKjW+lNY/xHMeacy+VBYq5BuH339oLlIaOMVibo=;
+        b=IXhlNg1gk9Q3afzinJh5cGsiYymSXr6wkyTOm+Ds+w3bDDzzGycebedGuFeGt2igkF
+         UvnbwZQWL8+jz7ieuQRU3urPeeMbecrBx7c3m7UFt6CPsgzAA1ofZo1YCPBuq61Uoxwz
+         0p6yOSzuspqJxGLlok3vFVOyTvFUkVXiyf+ffLN+xBzfauX4lQ59J2b9WfTOxMB+PISB
+         671VIA7N3yYMy6fn21stzg8rpYnrMp7n6LDndN6nye5QH+M0JSpbSRZ15vN90kbQ4RxX
+         fOfQhp2IxS5nwJRqT3K43hxTvaHRmjQnOtk5ogFLQz3dUOwKhsZMYykLRXuVycBcbeD0
+         8Ttw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=AmYo6XqX++v95q1RyeTSve0yN0GdRgCTRXoSLrb50KY=;
-        b=n6ceimd87CfV3slbcltpZwmm2f/Vwyrgrn3TdF9eYnMgUrOJ5xy9iXs+CFQoD0mMZ6
-         IAJ2BVhooBUTs8aFcyOi311faOAb2EHjRSefDGKoDfrCEkd/VdXmBcf42dlceXufhTb+
-         A6gUMdTTamPXxEElK6iROGHjAkY3FqvNjyjKuKN+tJMze3WA243AT/hCbZg3AlwIhtHH
-         5tE4/bAETselJfJBkPqoPktsy/jYgARbgxzfGIqQpDFITQeg+Q/EyGdLzfnZWe6YA3ii
-         cjerSMx8NtYLn6/hl0Pe2AFGZyWVXbWRjusfN1T0GJNOh3YQO2oUD1Vxkb2wm6gbW3/V
-         g9GQ==
-X-Gm-Message-State: AOAM531mDcFLRuStiBHzYsDem27mb4fzRKyRtgakYk8pkpIoJu1l29X3
-        /zMVZz5HrOkJhFVKhx9TuAXAMQ==
-X-Google-Smtp-Source: ABdhPJwIEnReP04XmwMtjnPC0ylokTrU9GuBGCC1yDbdLzEVIunZ2Ptedm1mmuAxgedD3MK8ARayCA==
-X-Received: by 2002:a05:6512:3698:: with SMTP id d24mr357154lfs.217.1617751154337;
-        Tue, 06 Apr 2021 16:19:14 -0700 (PDT)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id u16sm2366565lja.48.2021.04.06.16.19.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 Apr 2021 16:19:14 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-clk@vger.kernel.org
-Subject: [PATCH v2 4/4] arm64: dts: qcom: sdm845: add required clocks on the gcc
-Date:   Wed,  7 Apr 2021 02:19:09 +0300
-Message-Id: <20210406231909.3035267-5-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20210406231909.3035267-1-dmitry.baryshkov@linaro.org>
-References: <20210406231909.3035267-1-dmitry.baryshkov@linaro.org>
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=TBcLhKjW+lNY/xHMeacy+VBYq5BuH339oLlIaOMVibo=;
+        b=ETaF0mVqa3NLXTRh0YkXXz4UGhAiDS8S7yu6e6Fwq80wnX7Ytl8XiSbJvn36FGNB1w
+         NnyPs7gIZ8iruZ9nXo/Ef9l4Wr1lc1t9pLxFaetbfU5BzpUJb8y6PVn5AtQ9Y/tUFLIw
+         3jBshb4lHCVuO+ITiisKdOUsGj4vQQa7fYXTimQa7LPxtzINWhAvIQopmCu+ewqVNuGk
+         /tp6AszgcXOm86qCg7l13lqVvksXCjtwyeFendihOCA+R3A2wO71TTiotl0+hDTUL795
+         /GhJGfIdrPo4ptzZVgLdTyFs8nUooaT+fBVBZFzsXO/zDgMQms/OJE6okf9vquUSeb0u
+         qQFg==
+X-Gm-Message-State: AOAM531Ff2evs2qcDC3RCddBSUuTCiQa7Ccf64JpXIfvMWwCVt+74d90
+        /giRmElII/6bWj6t8JS0sk4VsME5cK0Nx8KDWReUOc4Dr6c=
+X-Google-Smtp-Source: ABdhPJy1ZhlxVS19+Yc8gcG2+QL19bhVjKgeEE0UjD9U4MdOCxq8CxV73gq8KOJ9Vp1y1ok/zkwogk/hw1PvbAdNMT8=
+X-Received: by 2002:a5d:5612:: with SMTP id l18mr990419wrv.28.1617755545584;
+ Tue, 06 Apr 2021 17:32:25 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Tue, 6 Apr 2021 17:35:54 -0700
+Message-ID: <CAF6AEGvWq74nswoUWCMUcUGACDhZEs4BzCwuy18JrmR=NFPwTQ@mail.gmail.com>
+Subject: [Heads-up] drm/msm: msm-next-staging for v5.13
+To:     freedreno <freedreno@lists.freedesktop.org>
+Cc:     linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Specify input clocks to the SDM845's Global Clock Controller as required
-by the bindings.
+PSA: msm-next-staging[1] should have more or less what will be in
+msm-next for v5.13.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
- arch/arm64/boot/dts/qcom/sdm845.dtsi | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+I've done some testing on hw that I have with me, but I don't have
+everything, so this is a good time to test and let me know if you have
+any issues before the patches are merged.  And a good chance to double
+check that there isn't something important missing.
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-index 454f794af547..86f717d5bfb6 100644
---- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-@@ -1061,6 +1061,16 @@ soc: soc@0 {
- 		gcc: clock-controller@100000 {
- 			compatible = "qcom,gcc-sdm845";
- 			reg = <0 0x00100000 0 0x1f0000>;
-+			clocks = <&rpmhcc RPMH_CXO_CLK>,
-+				 <&rpmhcc RPMH_CXO_CLK_A>,
-+				 <&sleep_clk>,
-+				 <&pcie0_lane>,
-+				 <&pcie1_lane>;
-+			clock-names = "bi_tcxo",
-+				      "bi_tcxo_ao",
-+				      "sleep_clk",
-+				      "pcie_0_pipe_clk",
-+				      "pcie_1_pipe_clk";
- 			#clock-cells = <1>;
- 			#reset-cells = <1>;
- 			#power-domain-cells = <1>;
-@@ -2062,6 +2072,7 @@ pcie0_lane: lanes@1c06200 {
- 				clocks = <&gcc GCC_PCIE_0_PIPE_CLK>;
- 				clock-names = "pipe0";
- 
-+				#clock-cells = <0>;
- 				#phy-cells = <0>;
- 				clock-output-names = "pcie_0_pipe_clk";
- 			};
-@@ -2170,6 +2181,7 @@ pcie1_lane: lanes@1c06200 {
- 				clocks = <&gcc GCC_PCIE_1_PIPE_CLK>;
- 				clock-names = "pipe0";
- 
-+				#clock-cells = <0>;
- 				#phy-cells = <0>;
- 				clock-output-names = "pcie_1_pipe_clk";
- 			};
--- 
-2.30.2
+Also, I've pulled in (at least for now), the swappable GEM object
+support.  But compared to the patchset on list, I've flipped the
+default to disabled.  It can be enabled with msm.enable_eviction=1 in
+the kernel cmdline or:
 
+   echo 1 > /sys/module/msm/parameters/enable_eviction
+
+It won't do anything without some sort of swap enabled.  (On
+chromebooks, we use zram swap, that is what I recommend since it is
+not nearly as slow as disk backed swap, yet still gives a useful
+increase in usable memory.)  Since we have a lot of generations of
+devices supported, paired with a few different possible iommu's, it
+would be helpful if others could try enabling it and report issues.
+In the best case, it all "just works"(TM).. otherwise if at least the
+iommu is working properly, you may see new iommu faults.  In the worst
+case if the iommu is not working well, you'll get exciting random
+memory corruption!  A good way to test is, with something running on
+the gpu, run mmm_donut.py[2], ie. something like:
+
+  ./mmm_donut.py --free_swap=1024 --taste=20 --chew=20
+
+you want the free_swap param to not be more than half your swap size.
+You can get a summary of the state of gpu buffers with:
+
+  localhost ~ # tail -5 /sys/kernel/debug/dri/1/gem
+  Total:     5264 objects, 328941568 bytes
+  Active:       0 objects,         0 bytes
+  Resident:    11 objects,   8527872 bytes
+  Purgeable:   44 objects,   5591040 bytes
+  Purged:       0 objects,         0 bytes
+  localhost ~ #
+
+Total minus Resident will give a rough idea of what has been unpinned
+and swappable..  (it is normal for Resident to be *slightly* less than
+Active, because sometimes userspace allocates things that it doesn't
+use, or hasn't used yet, and newly allocated GEM objects do not have
+pages allocated until first use).
+
+BR,
+-R
+
+[1] https://gitlab.freedesktop.org/drm/msm/-/commits/msm-next-staging/
+[2] https://chromium.googlesource.com/chromiumos/platform/microbenchmarks/+/refs/heads/main/mmm_donut.py
