@@ -2,106 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CA768356CEC
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Apr 2021 15:07:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 82AEC356D00
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Apr 2021 15:13:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233590AbhDGNIH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Apr 2021 09:08:07 -0400
-Received: from mail-m121143.qiye.163.com ([115.236.121.143]:52458 "EHLO
-        mail-m121143.qiye.163.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233519AbhDGNIH (ORCPT
+        id S235572AbhDGNNJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Apr 2021 09:13:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59264 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232797AbhDGNNJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Apr 2021 09:08:07 -0400
-Received: from ubuntu.localdomain (unknown [36.152.145.181])
-        by mail-m121143.qiye.163.com (Hmail) with ESMTPA id D428254048C;
-        Wed,  7 Apr 2021 21:07:53 +0800 (CST)
-From:   Bernard Zhao <bernard@vivo.com>
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Kuogee Hsieh <khsieh@codeaurora.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Tanmay Shah <tanmay@codeaurora.org>,
-        Chandan Uddaraju <chandanu@codeaurora.org>,
-        Bernard Zhao <bernard@vivo.com>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] drm/msm: remove unneeded variable ret
-Date:   Wed,  7 Apr 2021 06:06:21 -0700
-Message-Id: <20210407130654.3387-1-bernard@vivo.com>
-X-Mailer: git-send-email 2.31.0
+        Wed, 7 Apr 2021 09:13:09 -0400
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC160C06175F
+        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Apr 2021 06:12:57 -0700 (PDT)
+Received: by mail-lj1-x22c.google.com with SMTP id 184so20607123ljf.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Apr 2021 06:12:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Z5cqK4hvOZb7E6bD/AeT0kN1Xy5Qj2MXLt/K/loAd68=;
+        b=Jl+PCE4F8u0LgGQ0yRKsEzjmEl7P0KW5+FTCeO0qTbr05aQhxTRBN6pUbNrRYH39lT
+         VcEam1jT8M+wuETXgtjaxqdSIayIdhHaIiFT08TJlgH7NZ8GHRvKeEYj/SliUcAvz8XT
+         14PU3dkcvy/RNkYRYHUWvU2CtmGYyaHyzduvo08fX0bQz6kAgC9lxAvLkmHZl4HhAsie
+         0Vitsx63bJ0Na1DeYIRebdWVNZNyEpy08KBuInb+7WzKScfqYmwa+u3nsYnSKBipDnQY
+         1WNkuR70SO59gE0ma3VtCRgWx9Ha0d6rQzXoZzCXm4PDa8p5ExVdSLspZR8MCOWRLbve
+         w/rA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Z5cqK4hvOZb7E6bD/AeT0kN1Xy5Qj2MXLt/K/loAd68=;
+        b=HWbQRsyqIVPO9EnmtcpAvDqcEGLVAbNV7tpSjxZHr5oZhvweNwmshG2ZZXYW9JuilQ
+         Gl4bYS7leIuddcbLW7V6NGePdxfFTK89odJc0E3R/FUdYcs5duzrY8EoSJXA0+1/hwGw
+         gMARz0XewUNpYvYaCYeo6OXM+GIgbp4+Cu5+OUB/ggFfj/43n4D1dIfrXljfBWK1KxLf
+         kRUkuC2d6fQ2Xxlguoi+xoZD8sckYn2tP/x6mwKF5QFL1iN/Sr3BbgEH1APu3RoA9bn0
+         UJMcyfCzkHRMeDcDktHz5cGpydhczY5epO69K7L+V7WSoseRrMDTav748IyKAtPw+ful
+         Mqsw==
+X-Gm-Message-State: AOAM530sNxwiIjx0TJhlpjKtPFmex06kC9abuJMbvlpEMyJgZgaFmEA2
+        PgNMyPpx/Tn8YJtJgmBlPjPx2Q==
+X-Google-Smtp-Source: ABdhPJzsJS23hBPUD6FfGLzc2mb6o8zaknb3dCcHg9tXK5Td5kDRG95ZCvVIf1v/BQi2PcdrkmxC4A==
+X-Received: by 2002:a2e:b811:: with SMTP id u17mr2141031ljo.324.1617801176361;
+        Wed, 07 Apr 2021 06:12:56 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id p13sm2572146ljc.72.2021.04.07.06.12.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 07 Apr 2021 06:12:55 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        linux-pci@vger.kernel.org, Hou Zhiqiang <Zhiqiang.Hou@nxp.com>
+Subject: [PATCH] PCI: dwc: move dw_pcie_iatu_detect() after host_init callback
+Date:   Wed,  7 Apr 2021 16:12:55 +0300
+Message-Id: <20210407131255.702054-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-HM-Spam-Status: e1kfGhgUHx5ZQUtXWQgYFAkeWUFZS1VLWVdZKFlBSE83V1ktWUFJV1kPCR
-        oVCBIfWUFZSUpMTUtIHUNIQ04dVkpNSkxDS0tDTE9JSE5VEwETFhoSFyQUDg9ZV1kWGg8SFR0UWU
-        FZT0tIVUpKS0hKQ1VLWQY+
-X-HM-Sender-Digest: e1kMHhlZQR0aFwgeV1kSHx4VD1lBWUc6MiI6OBw5Vj8OKCMQSSEIAU8Q
-        TB8aCQFVSlVKTUpMQ0tLQ0xPTktCVTMWGhIXVRkeCRUaCR87DRINFFUYFBZFWVdZEgtZQVlITVVK
-        TklVSk9OVUpDSllXWQgBWUFIT05LNwY+
-X-HM-Tid: 0a78ac7248b0b038kuuud428254048c
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This patch fix coccicheck warning:
-drivers/gpu/drm/msm/dp/dp_link.c:848:5-8: Unneeded variable: "ret". Return "0" on line 880
-Also remove unneeded function return value check.
+The commit 9ea483375ded ("PCI: dwc: Move forward the iATU detection
+process") broke PCIe support on Qualcomm SM8250 (and maybe other
+platforms) since it moves the call to dw_pcie_iatu_detect() at the
+beginning of the dw_pcie_host_init(), before ops->host_init() callback.
+Accessing PCIe registers at this point causes the board to reboot since
+not all clocks are enabled, making PCIe registers unavailable.
 
-Signed-off-by: Bernard Zhao <bernard@vivo.com>
+Move dw_pcie_iatu_detect() call after calling ops->host_init() callback,
+so that all register are accessible.
+
+Cc: Hou Zhiqiang <Zhiqiang.Hou@nxp.com>
+Fixes: 9ea483375ded ("PCI: dwc: Move forward the iATU detection process")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/dp/dp_link.c | 15 +++------------
- 1 file changed, 3 insertions(+), 12 deletions(-)
+ drivers/pci/controller/dwc/pcie-designware-host.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_link.c b/drivers/gpu/drm/msm/dp/dp_link.c
-index be986da78c4a..3395b08155a6 100644
---- a/drivers/gpu/drm/msm/dp/dp_link.c
-+++ b/drivers/gpu/drm/msm/dp/dp_link.c
-@@ -843,10 +843,8 @@ bool dp_link_send_edid_checksum(struct dp_link *dp_link, u8 checksum)
- 	return ret == 1;
- }
+diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
+index 52f6887179cd..24192b40e3a2 100644
+--- a/drivers/pci/controller/dwc/pcie-designware-host.c
++++ b/drivers/pci/controller/dwc/pcie-designware-host.c
+@@ -319,8 +319,6 @@ int dw_pcie_host_init(struct pcie_port *pp)
+ 			return PTR_ERR(pci->dbi_base);
+ 	}
  
--static int dp_link_parse_vx_px(struct dp_link_private *link)
-+static void dp_link_parse_vx_px(struct dp_link_private *link)
- {
--	int ret = 0;
+-	dw_pcie_iatu_detect(pci);
 -
- 	DRM_DEBUG_DP("vx: 0=%d, 1=%d, 2=%d, 3=%d\n",
- 		drm_dp_get_adjust_request_voltage(link->link_status, 0),
- 		drm_dp_get_adjust_request_voltage(link->link_status, 1),
-@@ -876,8 +874,6 @@ static int dp_link_parse_vx_px(struct dp_link_private *link)
- 	DRM_DEBUG_DP("Requested: v_level = 0x%x, p_level = 0x%x\n",
- 			link->dp_link.phy_params.v_level,
- 			link->dp_link.phy_params.p_level);
--
--	return ret;
- }
+ 	bridge = devm_pci_alloc_host_bridge(dev, 0);
+ 	if (!bridge)
+ 		return -ENOMEM;
+@@ -400,6 +398,7 @@ int dw_pcie_host_init(struct pcie_port *pp)
+ 		if (ret)
+ 			goto err_free_msi;
+ 	}
++	dw_pcie_iatu_detect(pci);
  
- /**
-@@ -891,8 +887,6 @@ static int dp_link_parse_vx_px(struct dp_link_private *link)
- static int dp_link_process_phy_test_pattern_request(
- 		struct dp_link_private *link)
- {
--	int ret = 0;
--
- 	if (!(link->request.test_requested & DP_TEST_LINK_PHY_TEST_PATTERN)) {
- 		DRM_DEBUG_DP("no phy test\n");
- 		return -EINVAL;
-@@ -918,12 +912,9 @@ static int dp_link_process_phy_test_pattern_request(
- 	link->dp_link.link_params.rate =
- 		drm_dp_bw_code_to_link_rate(link->request.test_link_rate);
- 
--	ret = dp_link_parse_vx_px(link);
--
--	if (ret)
--		DRM_ERROR("parse_vx_px failed. ret=%d\n", ret);
-+	dp_link_parse_vx_px(link);
- 
--	return ret;
-+	return 0;
- }
- 
- static u8 get_link_status(const u8 link_status[DP_LINK_STATUS_SIZE], int r)
+ 	dw_pcie_setup_rc(pp);
+ 	dw_pcie_msi_init(pp);
 -- 
-2.31.0
+2.30.2
 
