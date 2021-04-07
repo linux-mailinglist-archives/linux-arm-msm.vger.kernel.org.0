@@ -2,194 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4B9BB35724E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Apr 2021 18:41:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5B00F3572F0
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Apr 2021 19:19:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347398AbhDGQmE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Apr 2021 12:42:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49236 "EHLO
+        id S1354758AbhDGRTL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Apr 2021 13:19:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57512 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234029AbhDGQmD (ORCPT
+        with ESMTP id S1347857AbhDGRTL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Apr 2021 12:42:03 -0400
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D478BC061756
-        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Apr 2021 09:41:52 -0700 (PDT)
-Received: by mail-wr1-x42e.google.com with SMTP id f12so12690327wro.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Apr 2021 09:41:52 -0700 (PDT)
+        Wed, 7 Apr 2021 13:19:11 -0400
+Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com [IPv6:2607:f8b0:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0424AC06175F
+        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Apr 2021 10:19:00 -0700 (PDT)
+Received: by mail-ot1-x334.google.com with SMTP id h6-20020a0568300346b02901b71a850ab4so18787115ote.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Apr 2021 10:18:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id;
-        bh=K22TxkApdXHD7VpjFcZF79cdb4BhQ5CPxOENhBmjZKw=;
-        b=QZBtR/vTOZQs3uToJlvDCUu+kYZF/HIkY4hWVby67ODOCXP/zBYHyDOJVrVqCMiOJ/
-         xl2571+WJxBD+BJfVz9tDL1hmEPERl6cEnxwoMH4Ygvpvf2fx1lh8/8o4szHqXH6y9zA
-         yJ5iFzUVcpxG3gv1HVa1EpoiHL/ZfWywFSQxozEUJdY6JxzKpMopsNnKtjKQ/WxRYbe1
-         yX/X4DEGcgFVNXu0nFdH4RPwCI0ank9CHbwtbZA6UCS1YUjtO65X5rbpJK5jLLMEYPvt
-         dlRR4DxgnMMeAbq0y5lmhDsh554xMdAEpkIXZHym9eKOFeD1ULhzpNtVXkINlu+WjPOH
-         vt4Q==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=6bG6MXnNzHqKt7V9NvZUmgRlrh8FQWobqYuvxCIbdks=;
+        b=xNrWlng/vtSHN9+SsGSY/mE7PrdLnSx9Xv9HkriKgCjV1GW33KD1KxnhEuc9gFR/86
+         JUj9eGtjhKMRYRnQb4H8O2zaMEeYDIngSC3ivbyv+DB8s7QULKXPztpKRXcI2g5Q9ctG
+         tYzQaoQNC5+CnycY7L8LizQA8xs+DQlvnLXi9I6n1+Zjdu9A7SEDjhkswvBBiSs2LbzA
+         1rUUeIxDMa1sQwBBrkshsgq/zQqO2wRnoQRcuSyAsSGednzSRYSvTLSuEX3nX1f48QmN
+         +Zoe67OGQDib3y8ZoerPRhOnXHUSmUbnEsU8Ha/XSPnQvhgR+jBzKwquv7qs/PSWgTSd
+         jvgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=K22TxkApdXHD7VpjFcZF79cdb4BhQ5CPxOENhBmjZKw=;
-        b=eEz2Q2ifEHmV34d+qMliuDRln0W38kHgvxe/ctSO8+ZGzNTECdVpBt0229eXquVfSG
-         3J9oH2Cak92GXHyN1UWq9tYd3zu6tXIgXALsUlAjF9lY0Te36440ME7kTjBcA2dHBIhR
-         TIp+zdfPIe9Vg6bLL/SeG4JeMPoDyA64It31WirvcBfu7VaA+XjrOrIhP0pi17pE/fyp
-         OuE+eKzKUlQb5dlKo8JTo4hrPUizAO/KzvLo7oFK+pL5pyyWqlAXWU/AjBUX5819CGf3
-         A0XpCGbWFN6Nd0dsB/e64dkdit8W4YE0qao/0nrKPlk+LJ8qCQti+y1gpqhJzW8fxdf/
-         rUEw==
-X-Gm-Message-State: AOAM531mtkMBKBuxC9mFUQrnCSMd/u8EhAc5pKLg+zLMhplP22V9mnbh
-        AcQuwHPJL3RJypJs6o3Z9nvuH7U4g5hNWEty
-X-Google-Smtp-Source: ABdhPJyERs991GxeCa6AuZ+afneYHiQNNr2zTD5m3sSvbcQb5XwKfvXoIlRuCt2J2U/lqUZ55ysOvg==
-X-Received: by 2002:adf:f88a:: with SMTP id u10mr5539706wrp.162.1617813711196;
-        Wed, 07 Apr 2021 09:41:51 -0700 (PDT)
-Received: from localhost.localdomain ([2a01:e0a:82c:5f0:c4d8:afb9:68e4:d58e])
-        by smtp.gmail.com with ESMTPSA id o14sm29250335wrc.3.2021.04.07.09.41.50
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 07 Apr 2021 09:41:50 -0700 (PDT)
-From:   Loic Poulain <loic.poulain@linaro.org>
-To:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org
-Cc:     linux-arm-msm@vger.kernel.org,
-        Loic Poulain <loic.poulain@linaro.org>
-Subject: [RESEND PATCH] bus: mhi: Add inbound buffers allocation flag
-Date:   Wed,  7 Apr 2021 18:50:35 +0200
-Message-Id: <1617814235-25634-1-git-send-email-loic.poulain@linaro.org>
-X-Mailer: git-send-email 2.7.4
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=6bG6MXnNzHqKt7V9NvZUmgRlrh8FQWobqYuvxCIbdks=;
+        b=YIVZSh12/mKmO6UAbaJxR/SL0+1FuF46f55lOA03Uneteyiar21gsziHlpUjda+YOE
+         nT+8qwporA/Th1b+EgaaOOzkCa+X5B8cu6E1t94Xw6At864aX+apu4U8w/vMO0ksi+/V
+         Tk4KEVOrB6kBsK1JsbAeGxtn+V+6WfkcW4rPtkG8H4CSxE9W+693/+kPhewybpegPf4B
+         kD7R3/4UPhrIaq5yYm+Re1cbxpmPZxytbj/8GJE/3r4u89olDmgWkB938jeXuaagSnfB
+         0jnIpyKmmf48n8oPo3ej65pyXVJPu+tZ/ZeHwIVSW7HtHsYY4DcP440dF+OUaco3/uW0
+         Jjjw==
+X-Gm-Message-State: AOAM530oXDYe9lcdaHvhkcTkoK0cwYFjDjDb6I6autzX2i4Xr4mNiQvd
+        R22+z85QjMgkT3wLZSNKb1Fsug==
+X-Google-Smtp-Source: ABdhPJxQuNKLwGTdnpNpuWw34jdyS6QS32WXkWaWVsk/ollNf+28qh0obvL+DO5ZPMD20gI5MvljPQ==
+X-Received: by 2002:a05:6830:309c:: with SMTP id f28mr3780392ots.204.1617815939323;
+        Wed, 07 Apr 2021 10:18:59 -0700 (PDT)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id h9sm4905704ooi.22.2021.04.07.10.18.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 07 Apr 2021 10:18:58 -0700 (PDT)
+Date:   Wed, 7 Apr 2021 12:18:57 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Stephan Gerhold <stephan@gerhold.net>
+Cc:     Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, Marc Zyngier <maz@kernel.org>,
+        ~postmarketos/upstreaming@lists.sr.ht
+Subject: Re: [PATCH] arm64: dts: qcom: msm8916: Add GICv2 hypervisor
+ registers/interrupt
+Message-ID: <YG3pgYLxnxGf5/X2@builder.lan>
+References: <20210407163648.4708-1-stephan@gerhold.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210407163648.4708-1-stephan@gerhold.net>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Currently, the MHI controller driver defines which channels should
-have their inbound buffers allocated and queued. But ideally, this is
-something that should be decided by the MHI device driver instead,
-which actually deals with that buffers.
+On Wed 07 Apr 11:36 CDT 2021, Stephan Gerhold wrote:
 
-Add a flag parameter to mhi_prepare_for_transfer allowing to specify
-if buffers have to be allocated and queued by the MHI stack.
+> The ARM Cortex-A53 CPU cores and QGIC2 interrupt controller
+> (an implementation of the ARM GIC 2.0 specification) used in MSM8916
+> support virtualization, e.g. for KVM on Linux. However, so far it was
+> not possible to make use of this functionality, because Qualcomm's
+> proprietary "hyp" firmware blocks the EL2 mode of the CPU and only
+> allows booting Linux in EL1.
+> 
+> However, on devices without (firmware) secure boot there is no need
+> to rely on all of Qualcomm's firmware. The "hyp" firmware on MSM8916
+> seems simple enough that it can be replaced with an open-source
+> alternative created only based on trial and error - with some similar
+> EL2/EL1 initialization code adapted from Linux and U-Boot.
+> 
+> qhypstub [1] is such an open-source firmware for MSM8916 that
+> can be used as drop-in replacement for Qualcomm's "hyp" firmware.
+> It does not implement any hypervisor functionality.
+> Instead, it allows booting Linux/KVM (or other hypervisors) in EL2.
+> 
+> With Linux booting in EL2, KVM seems to be working just fine on MSM8916.
+> However, so far it is not possible to make use of the virtualization
+> features in the GICv2. To use KVM's VGICv2 code, the QGIC2 device tree
+> node needs additional resources (according to binding documentation):
+> 
+>   - The CPU interface region (second reg) must be at least 8 KiB large
+>     to access the GICC_DIR register (mapped at 0x1000 offset)
+>   - Virtual control/CPU interface register base and size
+>   - Hypervisor maintenance interrupt
+> 
+> Fortunately, the public APQ8016E TRM [2] provides the required information:
+> 
+>   - The CPU interface region (at 0x0B002000) actually has a size of 8 KiB
+>   - Virtual control/CPU interface register is at 0x0B001000/0x0B004000
+>   - Hypervisor maintenance interrupt is "PPI #0"
+>       Note: This is a bit strange since almost all other ARM SoCs use
+>             GIC_PPI 9 for this. However, I have verified that this is
+>             indeed the interrupt that fires when bits are set in GICH_HCR.
+> 
+> Add the additional resources to the QGIC2 device tree node in msm8916.dtsi.
+> There is no functional difference when Linux is started in EL1 since the
+> additional resources are ignored in that case.
+> 
+> With these changes (and qhypstub), KVM seems to be fully working on
+> the DragonBoard 410c (apq8016-sbc) and BQ Aquaris X5 (longcheer-l8910).
+> 
+> [1]: https://github.com/msm8916-mainline/qhypstub
+> [2]: https://developer.qualcomm.com/download/sd410/snapdragon-410e-technical-reference-manual.pdf
 
-Keep auto_queue flag for now, but should be removed at some point.
+This is awesome!
 
-Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
----
- drivers/bus/mhi/core/internal.h |  2 +-
- drivers/bus/mhi/core/main.c     | 11 ++++++++---
- drivers/net/mhi/net.c           |  2 +-
- include/linux/mhi.h             | 12 +++++++++++-
- net/qrtr/mhi.c                  |  2 +-
- 5 files changed, 22 insertions(+), 7 deletions(-)
+Thanks,
+Bjorn
 
-diff --git a/drivers/bus/mhi/core/internal.h b/drivers/bus/mhi/core/internal.h
-index 5b9ea66..672052f 100644
---- a/drivers/bus/mhi/core/internal.h
-+++ b/drivers/bus/mhi/core/internal.h
-@@ -682,7 +682,7 @@ void mhi_rddm_prepare(struct mhi_controller *mhi_cntrl,
- 		      struct image_info *img_info);
- void mhi_fw_load_handler(struct mhi_controller *mhi_cntrl);
- int mhi_prepare_channel(struct mhi_controller *mhi_cntrl,
--			struct mhi_chan *mhi_chan);
-+			struct mhi_chan *mhi_chan, enum mhi_chan_flags flags);
- int mhi_init_chan_ctxt(struct mhi_controller *mhi_cntrl,
- 		       struct mhi_chan *mhi_chan);
- void mhi_deinit_chan_ctxt(struct mhi_controller *mhi_cntrl,
-diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
-index 0f1febf..432b53b 100644
---- a/drivers/bus/mhi/core/main.c
-+++ b/drivers/bus/mhi/core/main.c
-@@ -1384,7 +1384,8 @@ static void mhi_unprepare_channel(struct mhi_controller *mhi_cntrl,
- }
- 
- int mhi_prepare_channel(struct mhi_controller *mhi_cntrl,
--			struct mhi_chan *mhi_chan)
-+			struct mhi_chan *mhi_chan,
-+			enum mhi_chan_flags flags)
- {
- 	int ret = 0;
- 	struct device *dev = &mhi_chan->mhi_dev->dev;
-@@ -1409,6 +1410,9 @@ int mhi_prepare_channel(struct mhi_controller *mhi_cntrl,
- 	if (ret)
- 		goto error_pm_state;
- 
-+	if (mhi_chan->dir == DMA_FROM_DEVICE)
-+		mhi_chan->pre_alloc = !!(flags & MHI_CH_INBOUND_ALLOC_BUFS);
-+
- 	/* Pre-allocate buffer for xfer ring */
- 	if (mhi_chan->pre_alloc) {
- 		int nr_el = get_nr_avail_ring_elements(mhi_cntrl,
-@@ -1555,7 +1559,8 @@ void mhi_reset_chan(struct mhi_controller *mhi_cntrl, struct mhi_chan *mhi_chan)
- }
- 
- /* Move channel to start state */
--int mhi_prepare_for_transfer(struct mhi_device *mhi_dev)
-+int mhi_prepare_for_transfer(struct mhi_device *mhi_dev,
-+			     enum mhi_chan_flags flags)
- {
- 	int ret, dir;
- 	struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
-@@ -1566,7 +1571,7 @@ int mhi_prepare_for_transfer(struct mhi_device *mhi_dev)
- 		if (!mhi_chan)
- 			continue;
- 
--		ret = mhi_prepare_channel(mhi_cntrl, mhi_chan);
-+		ret = mhi_prepare_channel(mhi_cntrl, mhi_chan, flags);
- 		if (ret)
- 			goto error_open_chan;
- 	}
-diff --git a/drivers/net/mhi/net.c b/drivers/net/mhi/net.c
-index 5ec7a29..06e1455 100644
---- a/drivers/net/mhi/net.c
-+++ b/drivers/net/mhi/net.c
-@@ -327,7 +327,7 @@ static int mhi_net_probe(struct mhi_device *mhi_dev,
- 	u64_stats_init(&mhi_netdev->stats.tx_syncp);
- 
- 	/* Start MHI channels */
--	err = mhi_prepare_for_transfer(mhi_dev);
-+	err = mhi_prepare_for_transfer(mhi_dev, 0);
- 	if (err)
- 		goto out_err;
- 
-diff --git a/include/linux/mhi.h b/include/linux/mhi.h
-index d095fba..9372acf 100644
---- a/include/linux/mhi.h
-+++ b/include/linux/mhi.h
-@@ -60,6 +60,14 @@ enum mhi_flags {
- };
- 
- /**
-+ * enum mhi_chan_flags - MHI channel flags
-+ * @MHI_CH_INBOUND_ALLOC_BUFS: Automatically allocate and queue inbound buffers
-+ */
-+enum mhi_chan_flags {
-+	MHI_CH_INBOUND_ALLOC_BUFS = BIT(0),
-+};
-+
-+/**
-  * enum mhi_device_type - Device types
-  * @MHI_DEVICE_XFER: Handles data transfer
-  * @MHI_DEVICE_CONTROLLER: Control device
-@@ -719,8 +727,10 @@ void mhi_device_put(struct mhi_device *mhi_dev);
-  *                            host and device execution environments match and
-  *                            channels are in a DISABLED state.
-  * @mhi_dev: Device associated with the channels
-+ * @flags: MHI channel flags
-  */
--int mhi_prepare_for_transfer(struct mhi_device *mhi_dev);
-+int mhi_prepare_for_transfer(struct mhi_device *mhi_dev,
-+			     enum mhi_chan_flags flags);
- 
- /**
-  * mhi_unprepare_from_transfer - Reset UL and DL channels for data transfer.
-diff --git a/net/qrtr/mhi.c b/net/qrtr/mhi.c
-index 2bf2b19..47afded 100644
---- a/net/qrtr/mhi.c
-+++ b/net/qrtr/mhi.c
-@@ -77,7 +77,7 @@ static int qcom_mhi_qrtr_probe(struct mhi_device *mhi_dev,
- 	int rc;
- 
- 	/* start channels */
--	rc = mhi_prepare_for_transfer(mhi_dev);
-+	rc = mhi_prepare_for_transfer(mhi_dev, MHI_CH_INBOUND_ALLOC_BUFS);
- 	if (rc)
- 		return rc;
- 
--- 
-2.7.4
-
+> 
+> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+> ---
+>  arch/arm64/boot/dts/qcom/msm8916.dtsi | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
+> index 4c155735fbc9..4f06c0a9c425 100644
+> --- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
+> @@ -1766,7 +1766,9 @@ intc: interrupt-controller@b000000 {
+>  			compatible = "qcom,msm-qgic2";
+>  			interrupt-controller;
+>  			#interrupt-cells = <3>;
+> -			reg = <0x0b000000 0x1000>, <0x0b002000 0x1000>;
+> +			reg = <0x0b000000 0x1000>, <0x0b002000 0x2000>,
+> +			      <0x0b001000 0x1000>, <0x0b004000 0x2000>;
+> +			interrupts = <GIC_PPI 0 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_HIGH)>;
+>  		};
+>  
+>  		apcs: mailbox@b011000 {
+> -- 
+> 2.31.1
+> 
