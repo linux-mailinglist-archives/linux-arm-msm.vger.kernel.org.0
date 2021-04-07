@@ -2,143 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 85F3B35647B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Apr 2021 08:47:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6A7DD356480
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Apr 2021 08:49:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242755AbhDGGrB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Apr 2021 02:47:01 -0400
-Received: from mail.kernel.org ([198.145.29.99]:53612 "EHLO mail.kernel.org"
+        id S243760AbhDGGty (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Apr 2021 02:49:54 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:61681 "EHLO m43-7.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1349258AbhDGGq5 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Apr 2021 02:46:57 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 8A884613CE;
-        Wed,  7 Apr 2021 06:46:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1617778008;
-        bh=q2gJoe3SBJsfyBFqWYPAgFT//ZxFTqmbSyDY6Pp5ZwM=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=SEGkIcZvDWC+/oDAu12M0Drl5gKrwxVAu9G/PAhGvnFLQi/oarOAysLSKhZrZl3bf
-         6sOic2KC16adDRK6lNl/b3IOP/Sq87B4EPukmuSAN8YQAEG+sfoVyKHniVBirnjO3o
-         rwar9VX/Tes3eAduoJ+y8oQyIAhMclDLwQ/PGOebRV7HC2o6UhgRLJMdu9rUcqQxPz
-         1kYcYBp8zcIDk3tEy/sXgQAsVZXC0733BbJJskevb2Cb3hBKRkeiUTsOAhI83uOsZ3
-         WPdIYcXIKN1mQYAJVMrAonDz1lsPjvxfpD7otAEx7kgLSZLduQ30nl5erpvcbYFG7A
-         GBi2Rjuax9E9Q==
-Date:   Wed, 7 Apr 2021 12:16:41 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Jarvis Jiang <jarvis.w.jiang@gmail.com>
-Cc:     hemantk@codeaurora.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, cchen50@lenovo.com,
-        mpearson@lenovo.com
-Subject: Re: [PATCH] bus: mhi: pci_generic: Introduce Foxconn T99W175 support
-Message-ID: <20210407064641.GH8675@work>
-References: <20210407025029.2616-1-jarvis.w.jiang@gmail.com>
+        id S231460AbhDGGty (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 7 Apr 2021 02:49:54 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1617778185; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=cd0Gp1x20P9Mw7cYRb83ofQFGuIztt4U9uVPCHpyoCk=; b=YHUecfniazlBvnwrzBOEOlyQs/QPtwj0MzBLDVnthE9EwhadDUxR5yyRsRDDAMhiihGROepq
+ gRsK3Dcg/LmBMnrol//3EPlw0PthLLhVmg7RzeG4pOdD/7A5FCzGT+tzKkc24ARHmxnZioFr
+ qAGwhyGbZ6SK8rIgddi7qSFhUPA=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
+ 606d5608c06dd10a2dfe2040 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 07 Apr 2021 06:49:44
+ GMT
+Sender: rnayak=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id D875EC43461; Wed,  7 Apr 2021 06:49:43 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [10.50.17.75] (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: rnayak)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id E459CC43461;
+        Wed,  7 Apr 2021 06:49:40 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org E459CC43461
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=rnayak@codeaurora.org
+Subject: Re: [PATCH 2/2] nvmem: qfprom: Add support for fuse blowing on sc7280
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+        Ravi Kumar Bokka <rbokka@codeaurora.org>
+References: <1616651056-11844-1-git-send-email-rnayak@codeaurora.org>
+ <1616651056-11844-2-git-send-email-rnayak@codeaurora.org>
+ <CAD=FV=VT6xUmUK7Kss8cpF1wjw9tLx67wJMtiV6yTDaVYXXrqA@mail.gmail.com>
+From:   Rajendra Nayak <rnayak@codeaurora.org>
+Message-ID: <758bab6a-834c-a83d-dada-813679202df8@codeaurora.org>
+Date:   Wed, 7 Apr 2021 12:19:38 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.8.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210407025029.2616-1-jarvis.w.jiang@gmail.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+In-Reply-To: <CAD=FV=VT6xUmUK7Kss8cpF1wjw9tLx67wJMtiV6yTDaVYXXrqA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Apr 06, 2021 at 07:50:29PM -0700, Jarvis Jiang wrote:
-> Add support for T99W175 modems, this modem series is based on SDX55
-> qcom chip. The modem is mainly based on MBIM protocol for both the
-> data and control path.
+
+On 3/31/2021 2:49 AM, Doug Anderson wrote:
+> Hi,
 > 
-
-List the modems whose support is being added.
-
-> This patch was tested with Ubuntu 20.04 X86_64 PC as host
+> On Wed, Mar 24, 2021 at 10:45 PM Rajendra Nayak <rnayak@codeaurora.org> wrote:
+>>
+>> @@ -111,6 +113,15 @@ static const struct qfprom_soc_compatible_data sc7180_qfprom = {
+>>          .nkeepout = ARRAY_SIZE(sc7180_qfprom_keepout)
+>>   };
+>>
+>> +static const struct nvmem_keepout sc7280_qfprom_keepout[] = {
+>> +       {.start = 0x128, .end = 0x148},
+>> +       {.start = 0x238, .end = 0x248}
+>> +};
+>> +
+>> +static const struct qfprom_soc_compatible_data sc7280_qfprom = {
+>> +       .keepout = sc7280_qfprom_keepout,
+>> +       .nkeepout = ARRAY_SIZE(sc7280_qfprom_keepout)
+>> +};
+>>   /**
 > 
-> Signed-off-by: Jarvis Jiang <jarvis.w.jiang@gmail.com>
-> ---
->  drivers/bus/mhi/pci_generic.c | 58 +++++++++++++++++++++++++++++++++++
->  1 file changed, 58 insertions(+)
+> nit: blank line between structure and comment?
 > 
-> diff --git a/drivers/bus/mhi/pci_generic.c b/drivers/bus/mhi/pci_generic.c
-> index 5cf44bcfe040..3e396c65a758 100644
-> --- a/drivers/bus/mhi/pci_generic.c
-> +++ b/drivers/bus/mhi/pci_generic.c
-> @@ -260,6 +260,52 @@ static const struct mhi_pci_dev_info mhi_quectel_em1xx_info = {
->  	.dma_data_width = 32
->  };
->  
-> +static const struct mhi_channel_config mhi_foxconn_sdx55_channels[] = {
-> +	MHI_CHANNEL_CONFIG_UL(0, "LOOPBACK", 32, 0),
-> +	MHI_CHANNEL_CONFIG_DL(1, "LOOPBACK", 32, 0),
-> +	MHI_CHANNEL_CONFIG_UL(4, "DIAG", 32, 1),
-> +	MHI_CHANNEL_CONFIG_DL(5, "DIAG", 32, 1),
-> +	MHI_CHANNEL_CONFIG_UL(12, "MBIM", 32, 0),
-> +	MHI_CHANNEL_CONFIG_DL(13, "MBIM", 32, 0),
-> +	MHI_CHANNEL_CONFIG_UL(14, "QMI", 32, 0),
-> +	MHI_CHANNEL_CONFIG_DL(15, "QMI", 32, 0),
-> +	MHI_CHANNEL_CONFIG_UL(16, "QMI1", 32, 0),
-> +	MHI_CHANNEL_CONFIG_DL(17, "QMI1", 32, 0),
-> +	MHI_CHANNEL_CONFIG_UL(18, "IP_CTRL", 32, 0),
-> +	MHI_CHANNEL_CONFIG_DL(19, "IP_CTRL", 32, 0),
-> +	MHI_CHANNEL_CONFIG_UL(20, "IPCR", 32, 0),
-> +	MHI_CHANNEL_CONFIG_DL(21, "IPCR", 32, 0),
-> +	MHI_CHANNEL_CONFIG_UL(32, "AT", 32, 0),
-> +	MHI_CHANNEL_CONFIG_DL(33, "AT", 32, 0),
-> +	MHI_CHANNEL_CONFIG_HW_UL(100, "IP_HW0_MBIM", 128, 2),
-> +	MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0_MBIM", 128, 3),
-> +};
-> +
-> +static struct mhi_event_config mhi_foxconn_sdx55_events[] = {
-> +	MHI_EVENT_CONFIG_CTRL(0, 128),
-> +	MHI_EVENT_CONFIG_DATA(1, 128),
-> +	MHI_EVENT_CONFIG_HW_DATA(2, 1024, 100),
-> +	MHI_EVENT_CONFIG_HW_DATA(3, 1024, 101)
-> +};
-> +
-> +static struct mhi_controller_config modem_foxconn_sdx55_config = {
-> +	.max_channels = 128,
-> +	.timeout_ms = 20000,
-> +	.num_channels = ARRAY_SIZE(mhi_foxconn_sdx55_channels),
-> +	.ch_cfg = mhi_foxconn_sdx55_channels,
-> +	.num_events = ARRAY_SIZE(mhi_foxconn_sdx55_events),
-> +	.event_cfg = mhi_foxconn_sdx55_events,
-> +};
-> +
-> +static const struct mhi_pci_dev_info mhi_foxconn_sdx55_info = {
-> +	.name = "foxconn-sdx55",
-> +	.fw = "qcom/sdx55m/sbl1.mbn",
-> +	.edl = "qcom/sdx55m/edl.mbn",
-> +	.config = &modem_foxconn_sdx55_config,
-> +	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
-> +	.dma_data_width = 32
-> +};
-> +
->  static const struct pci_device_id mhi_pci_id_table[] = {
->  	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0306),
->  		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx55_info },
-> @@ -269,6 +315,18 @@ static const struct pci_device_id mhi_pci_id_table[] = {
->  		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
->  	{ PCI_DEVICE(0x1eac, 0x1002), /* EM160R-GL (sdx24) */
->  		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
-> +	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0ab), /* T99W175 (sdx55) */
-> +		.driver_data = (kernel_ulong_t) &mhi_foxconn_sdx55_info },
-> +	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0b2), /* T99W175 (sdx55) */
-> +		.driver_data = (kernel_ulong_t) &mhi_foxconn_sdx55_info },
-> +	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0b3), /* T99W175 (sdx55) */
-> +		.driver_data = (kernel_ulong_t) &mhi_foxconn_sdx55_info },
-
-Please add a comment about these devices as you did below. Using T99W175 (sdx55)
-for all is not sufficient.
-
-Thanks,
-Mani
-
-> +	/* DW5930e (sdx55), With eSIM, It's also T99W175 */
-> +	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0b0),
-> +		.driver_data = (kernel_ulong_t) &mhi_foxconn_sdx55_info },
-> +	/* DW5930e (sdx55), Non-eSIM, It's also T99W175 */
-> +	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0b1),
-> +		.driver_data = (kernel_ulong_t) &mhi_foxconn_sdx55_info },
->  	{  }
->  };
->  MODULE_DEVICE_TABLE(pci, mhi_pci_id_table);
-> -- 
-> 2.25.1
 > 
+>> @@ -187,9 +199,9 @@ static int qfprom_enable_fuse_blowing(const struct qfprom_priv *priv,
+>>           * a rail shared do don't specify a max--regulator constraints
+>>           * will handle.
+>>           */
+>> -       ret = regulator_set_voltage(priv->vcc, 1800000, INT_MAX);
+>> +       ret = regulator_set_voltage(priv->vcc, qfprom_blow_uV, INT_MAX);
+>>          if (ret) {
+>> -               dev_err(priv->dev, "Failed to set 1.8 voltage\n");
+>> +               dev_err(priv->dev, "Failed to set %duV\n", qfprom_blow_uV);
+> 
+> nit: the comment above this block (not in the unified diff)
+> specifically calls out 1.8V. It'd be nice if you updated the comment
+> since it's no longer fixed at 1.8V.
+> 
+> 
+>> @@ -379,6 +399,8 @@ static int qfprom_probe(struct platform_device *pdev)
+>>
+>>                  if (major_version == 7 && minor_version == 8)
+>>                          priv->soc_data = &qfprom_7_8_data;
+>> +               if (major_version == 7 && minor_version == 15)
+>> +                       priv->soc_data = &qfprom_7_15_data;
+> 
+> nit: "else if" instead of "if"?
+> 
+> 
+> I guess I'm a little late since I think this already got applied, but
+> all the above are nits. Maybe you could send a follow-up patch to
+> address them?
+
+Thanks Doug for the review, yes, I'll send a follow-up patch since
+Srini already has these pulled in.
+  
+
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
