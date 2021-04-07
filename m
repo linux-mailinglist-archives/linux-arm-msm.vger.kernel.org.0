@@ -2,99 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5E0B3356AA1
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Apr 2021 12:56:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6AB6E356B63
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Apr 2021 13:38:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351720AbhDGK4Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Apr 2021 06:56:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57416 "EHLO
+        id S1347001AbhDGLhv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Apr 2021 07:37:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38284 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245237AbhDGK4O (ORCPT
+        with ESMTP id S1351859AbhDGLht (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Apr 2021 06:56:14 -0400
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09189C061760
-        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Apr 2021 03:56:05 -0700 (PDT)
-Received: by mail-ej1-x636.google.com with SMTP id b7so26947345ejv.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Apr 2021 03:56:04 -0700 (PDT)
+        Wed, 7 Apr 2021 07:37:49 -0400
+Received: from mail-qk1-x732.google.com (mail-qk1-x732.google.com [IPv6:2607:f8b0:4864:20::732])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1825DC06175F
+        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Apr 2021 04:37:39 -0700 (PDT)
+Received: by mail-qk1-x732.google.com with SMTP id y5so18210441qkl.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Apr 2021 04:37:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=QtzWXHJA+5FuG0p3JmasWDLoGcvseqdKJ8JMwmLlN90=;
-        b=PtVtBI5/56xbKIWUAYox6l24X0F9X7Tr5o8krgPEl0bgccWxp6Ex6Uo8j68Te4RwNj
-         Nsh7+O2mGSjjSB3gFyQpW+uHn2Dpu+mD/n9+aV8zA9ppzElfKQbzUXUXzZN9uzeafEtp
-         /bAwdxscF2JVXnpqjVdPIULWTcKrJwfp1RPwWYsK817zbo8uOdfoyFSw0JrKmbMnHUvp
-         8fx6LZGm1MgPO0fvPSTsmxyMAtesXQX0/cShSTlNtalWIBzphR2uzg9YZAoVZlWCtqFh
-         DJTsctFQCvrneV88lmE3Tuy7xr6mjSmEt+zDoVFpEiaQzCejgu7Mh6EPKooM09U0Rdyi
-         H86g==
+        d=0x0f.com; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=IW3oRRx99M57CpJG31OJ6s9cRTtaL0D26Vt6HdVUzpk=;
+        b=oopYu+YQ42DBdZzN3yOYVkLE34+WNijKBfVjcKw6QPwW/mRKOs2n2G4L1YfBrga8cx
+         220R9uTBCCRVSD1cy6bDEd7gA1lnF9TD+T4FpdSH5e6pDE7WFLCti3vaDYFyC2SgaM9z
+         dzLQKaRLpCgPt311J8OYBUcFJAbeRxPMkE31g=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=QtzWXHJA+5FuG0p3JmasWDLoGcvseqdKJ8JMwmLlN90=;
-        b=idMbq1PE9zj1x/BvQxkVV5zlaqNSi1eSybiALzg8bfjvG25NUNVHeSX7/4JGSlG08X
-         Loqqv7xssKqKytKsQUwnL4s206qJBHs3/cWEY8BN/nnHXT+dnNG2g/Ot4CP7ck+qzF6k
-         v0btaYgay5Rw9HdxlNWuTJVardQF4xOOSNornvIy/7dOcwio6NmGbtrjwaHk5RiZdFcW
-         FHevwXvP3V0BZkgP/zcrubjwftSKQszkfsMHvNRG8V+1lv8nWqRUqDcL2UCsTGjVkh6I
-         FQvAXNvpKnfP3p0avQ0//g1KUdkRe6Ea2IYxeMyEz3B2Tpxj9hiwCiGaoix5shTwtonV
-         4+jQ==
-X-Gm-Message-State: AOAM533udYOqxlgK1HAuaILfk3JHxowKP3X0TdeytJkBT3DoGRaWE189
-        TW544lmH9TMBBtw8ZWuxPAWHlw==
-X-Google-Smtp-Source: ABdhPJx17I9qRckGvBfZh2zuNpzz5BgPM41T6S0xyABoTLW5QKoXvtW81UIx0EQzavyt7VXkKeqM7Q==
-X-Received: by 2002:a17:906:e0b:: with SMTP id l11mr3089773eji.111.1617792963805;
-        Wed, 07 Apr 2021 03:56:03 -0700 (PDT)
-Received: from localhost.localdomain (hst-221-20.medicom.bg. [84.238.221.20])
-        by smtp.gmail.com with ESMTPSA id f9sm15400666eds.41.2021.04.07.03.56.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Apr 2021 03:56:03 -0700 (PDT)
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-To:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Cc:     Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Subject: [PATCH] venus: hfi_venus: Fix a warning in venus ISR
-Date:   Wed,  7 Apr 2021 13:56:00 +0300
-Message-Id: <20210407105600.348245-1-stanimir.varbanov@linaro.org>
-X-Mailer: git-send-email 2.25.1
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=IW3oRRx99M57CpJG31OJ6s9cRTtaL0D26Vt6HdVUzpk=;
+        b=SPRH+j9JXTEJDH1QPNVYpJSnBiRhZZNekQ6i5bU01IejZFnxJ2SPZ+x0sXefmLT2Zp
+         ZKsU2HBnaTiAR5L3CJ6E+lXqXTR13AGpzd6HdFY3kHxrrdgncCFmMUgHh9YQOAi8oD++
+         RSLT/9Xvv5piyqbGo4CsLIYFvjzpoxtEv+OTaJHOxE13c9gC4Y2rT27OuU/38RIPdLYY
+         Y/aMy52kMO13jEpBHjcdrgHjwWMF4D0brQZ85ynXurOt0PKQMBYW520P0alvTxl+M54J
+         Zpc4M6MptjQ2ps9Dtjz9tGKfSd0hQWhL3NyNVMAdr4S4Qc5injFtAtIZe3nooOPvEuNI
+         LezQ==
+X-Gm-Message-State: AOAM5301h51GnQ+zDUx1/EQHh+ugSN+4B9nYYuHfE9YrViFdPSsbp4K4
+        qL+dWvefI5a6dXfDD/w/fPblGE7A9V2cVrsZn3dOm3qtBsU=
+X-Google-Smtp-Source: ABdhPJyA5Hg5hcZK/lrBzsOg/7n5zpjnXNILiWuDcgO2g8kFHFN6fUKV9nWalWac9N9CBudJ/zH0+3dvbyRGFrd6m4Q=
+X-Received: by 2002:ae9:f70a:: with SMTP id s10mr2714172qkg.468.1617795457907;
+ Wed, 07 Apr 2021 04:37:37 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20210406230606.3007138-1-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20210406230606.3007138-1-dmitry.baryshkov@linaro.org>
+From:   Daniel Palmer <daniel@0x0f.com>
+Date:   Wed, 7 Apr 2021 20:38:56 +0900
+Message-ID: <CAFr9PXm9oStJ4oKNaGCGi9sXBTc-6iDZJZTWvumWHiFwwcRPnQ@mail.gmail.com>
+Subject: Re: [PATCH] clk: fixed: fix double free in resource managed
+ fixed-factor clock
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        linux-arm-msm@vger.kernel.org,
+        linux-clk <linux-clk@vger.kernel.org>,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        Rob Clark <robdclark@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Fix the following smatch warning:
+Hi Dmitry,
 
-hfi_venus.c:1100 venus_isr() warn: variable dereferenced before check 'hdev' (see line 1097)
+On Wed, 7 Apr 2021 at 08:06, Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
+>
+> devm_clk_hw_register_fixed_factor_release(), the release function for
+> the devm_clk_hw_register_fixed_factor(), calls
+> clk_hw_unregister_fixed_factor(), which will kfree() the clock. However
+> after that the devres functions will also kfree the allocated data,
+> resulting in double free/memory corruption. Just call
+> clk_hw_unregister() instead, leaving kfree() to devres code.
 
-Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
----
- drivers/media/platform/qcom/venus/hfi_venus.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+Doh.
+Sorry for not spotting this when I wrote the patch.
+Thank you for cleaning up after me.
 
-diff --git a/drivers/media/platform/qcom/venus/hfi_venus.c b/drivers/media/platform/qcom/venus/hfi_venus.c
-index cebb20cf371f..114fcb6ee9a0 100644
---- a/drivers/media/platform/qcom/venus/hfi_venus.c
-+++ b/drivers/media/platform/qcom/venus/hfi_venus.c
-@@ -1093,13 +1093,16 @@ static irqreturn_t venus_isr_thread(struct venus_core *core)
- static irqreturn_t venus_isr(struct venus_core *core)
- {
- 	struct venus_hfi_device *hdev = to_hfi_priv(core);
-+	void __iomem *cpu_cs_base;
-+	void __iomem *wrapper_base;
- 	u32 status;
--	void __iomem *cpu_cs_base = hdev->core->cpu_cs_base;
--	void __iomem *wrapper_base = hdev->core->wrapper_base;
- 
- 	if (!hdev)
- 		return IRQ_NONE;
- 
-+	cpu_cs_base = hdev->core->cpu_cs_base;
-+	wrapper_base = hdev->core->wrapper_base;
-+
- 	status = readl(wrapper_base + WRAPPER_INTR_STATUS);
- 	if (IS_V6(core)) {
- 		if (status & WRAPPER_INTR_STATUS_A2H_MASK ||
--- 
-2.25.1
+Cheers,
 
+Daniel
