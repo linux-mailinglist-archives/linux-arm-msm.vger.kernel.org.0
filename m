@@ -2,115 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 304713576BC
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Apr 2021 23:22:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A448B3576D6
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Apr 2021 23:30:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232849AbhDGVXC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Apr 2021 17:23:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54568 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232170AbhDGVXB (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Apr 2021 17:23:01 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47985C061760;
-        Wed,  7 Apr 2021 14:22:51 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id u11so7008869wrp.4;
-        Wed, 07 Apr 2021 14:22:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=YqC1MvbDb+PpI/oVtnbZYXRa+wI43UAIv4i3U4Q2Ho4=;
-        b=SZf0Pw4lDUzRtid00z08mx0iKP9kHkh9tZ4nw0LpmLTlXz9q8LBz6U3i9XKexOuYqV
-         ZSwqTlJhv2T6D2WQs5xDasRhmhUdnpsYbFdjiO+JR7Ghkb+2PcQJDL3W3OsUv+nZq6Mf
-         qIx8MLbkOYHw2L09a6TBSeqCpVlfq9Mhj/Od0Ydjyt7uZIyv/DMqlY0v5F7zJxUorqk1
-         Cvci8maDOnWX8zSlSvXPCSxtBsYwuABiSler9qw8iiDF6cciw8gN9p4bRrLcIVw2cQR/
-         GILKiAt/Fle6VThOPjGKgP6XhqxpSK/3g/zbEOOrBXmFg9LyD8BPMTjweZcsQJ+w2Vlo
-         07Ww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:user-agent:mime-version:content-transfer-encoding;
-        bh=YqC1MvbDb+PpI/oVtnbZYXRa+wI43UAIv4i3U4Q2Ho4=;
-        b=LZnbCgtNCMxAnzuwtFU9IZe/852SQ9owBqAGxrmP6h6A0yUE6CV6wEYHWvKHOX9JtB
-         LJlPjwImhmpcRWOiyy0ZjCXa/7qnjGGIBgK5lA02MwAJDYKkAu9C2QVOZ9PQxjKcm5GH
-         Kdomr3mEitk229pucDo1G3sW5dCXme37hzvSCQDXtct7c4ecfjPB4VEsjnuLZK/XbFYm
-         iVFAxZzoX1al5i6m8dy7IW2/ZD31wMFYa+/Fe8ymPXZQ5Fs55WZ2R3F1bJvNAhQVc1W7
-         UVT549WjApqNGq9XKnpZ3NdZB09T88Y6aN8prhSYGpI5CN2a5Wi0FPj/KMEEfa+zqwdl
-         FBpw==
-X-Gm-Message-State: AOAM531wqj22Dm0CI9vdoPBcrl/vPsZTaH7HNRj/Jkva+fkQ4QFDzbIP
-        qcRmKSotKOFGmp5RvpvUE5o=
-X-Google-Smtp-Source: ABdhPJw0LR/0N07bR1S+Ix97QolAIk1xlDpSQyO/2kV1hMwqR5bJWWafmdduSsH8NiQBWT9q1gg/lA==
-X-Received: by 2002:a05:6000:228:: with SMTP id l8mr6667127wrz.401.1617830570090;
-        Wed, 07 Apr 2021 14:22:50 -0700 (PDT)
-Received: from 192.168.10.5 ([39.46.7.73])
-        by smtp.gmail.com with ESMTPSA id n5sm21037581wrp.50.2021.04.07.14.22.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Apr 2021 14:22:49 -0700 (PDT)
-Message-ID: <5b1390ea12eb87c8180de61304d00a7d4bb66436.camel@gmail.com>
-Subject: Re: [PATCH][next] media: venus: hfi,pm,firmware: Fix dereference
- before null check on hdev
-From:   Muhammad Usama Anjum <musamaanjum@gmail.com>
-To:     Colin King <colin.king@canonical.com>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Dikshita Agarwal <dikshita@codeaurora.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Cc:     musamaanjum@gmail.com, kernel-janitors@vger.kernel.org,
+        id S233293AbhDGVaj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Apr 2021 17:30:39 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:54548 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232762AbhDGVai (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 7 Apr 2021 17:30:38 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1617831029; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=4+Mj/cJw6icDUdM4yXKtOvTYUr7STjEMtM145prku0g=; b=aqokiW54+ePKZHI4G826xILjqG7lyO1QvLw4mnY92h5S6stEIGf3no7yaIJFN9WOIkhi664P
+ YBZ78+djYE7OSd2zdy/cknkfKXKK/OKyCeUuSxjzhOusH89lysNdqfpe9A1x/jFEdLf0khYc
+ GIrtK6Iu7hPttvDu4rBIOCa515U=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
+ 606e246b8807bcde1d637efd (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 07 Apr 2021 21:30:19
+ GMT
+Sender: hemantk=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id DE174C43462; Wed,  7 Apr 2021 21:30:18 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [10.46.162.249] (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: hemantk)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id E638FC433CA;
+        Wed,  7 Apr 2021 21:30:17 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org E638FC433CA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=hemantk@codeaurora.org
+Subject: Re: [PATCH v3] bus: mhi: core: Sanity check values from remote device
+ before use
+To:     Jeffrey Hugo <jhugo@codeaurora.org>,
+        manivannan.sadhasivam@linaro.org
+Cc:     bbhatt@codeaurora.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Date:   Thu, 08 Apr 2021 02:22:43 +0500
-In-Reply-To: <20210407141004.495093-1-colin.king@canonical.com>
-References: <20210407141004.495093-1-colin.king@canonical.com>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.36.4-0ubuntu1 
+References: <1615411855-15053-1-git-send-email-jhugo@codeaurora.org>
+From:   Hemant Kumar <hemantk@codeaurora.org>
+Message-ID: <dda17db8-d2f4-bf9c-1ac0-1bcd35262b7d@codeaurora.org>
+Date:   Wed, 7 Apr 2021 14:30:17 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
+In-Reply-To: <1615411855-15053-1-git-send-email-jhugo@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 2021-04-07 at 15:10 +0100, Colin King wrote:
-> From: Colin Ian King <colin.king@canonical.com>
-> 
-> The pointer hdev is being dereferenced twice on the assignment of
-> pointers cpu_cs_base and wrapper_base before hdev is being null
-> checked.  Fix the potential null pointer dereference issues by
-> performing the null check of hdev before dereferencing it when
-> assigning cpu_cs_base and wrapper_base.
-> 
-> Addresses-Coverity: ("Dereference before null check")
-> Fixes: ff2a7013b3e6 ("media: venus: hfi,pm,firmware: Convert to block relative addressing")
-> Signed-off-by: Colin Ian King <colin.king@canonical.com>
-> ---
->  drivers/media/platform/qcom/venus/hfi_venus.c | 6 ++++--
->  1 file changed, 4 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/media/platform/qcom/venus/hfi_venus.c b/drivers/media/platform/qcom/venus/hfi_venus.c
-> index cebb20cf371f..3eabb2646572 100644
-> --- a/drivers/media/platform/qcom/venus/hfi_venus.c
-> +++ b/drivers/media/platform/qcom/venus/hfi_venus.c
-> @@ -1094,12 +1094,14 @@ static irqreturn_t venus_isr(struct venus_core *core)
->  {
->  	struct venus_hfi_device *hdev = to_hfi_priv(core);
->  	u32 status;
-> -	void __iomem *cpu_cs_base = hdev->core->cpu_cs_base;
-> -	void __iomem *wrapper_base = hdev->core->wrapper_base;
-> +	void __iomem *cpu_cs_base, *wrapper_base;
->  
->  	if (!hdev)
->  		return IRQ_NONE;
->  
-> +	cpu_cs_base = hdev->core->cpu_cs_base;
-> +	wrapper_base = hdev->core->wrapper_base;
-> +
->  	status = readl(wrapper_base + WRAPPER_INTR_STATUS);
->  	if (IS_V6(core)) {
->  		if (status & WRAPPER_INTR_STATUS_A2H_MASK ||
-
-Reviewed-by: Muhammad Usama Anjum <musamaanjum@gmail.com>
 
 
+On 3/10/21 1:30 PM, Jeffrey Hugo wrote:
+> When parsing the structures in the shared memory, there are values which
+> come from the remote device.  For example, a transfer completion event
+> will have a pointer to the tre in the relevant channel's transfer ring.
+> As another example, event ring elements may specify a channel in which
+> the event occurred, however the specified channel value may not be valid
+> as no channel is defined at that index even though the index may be less
+> than the maximum allowed index.  Such values should be considered to be
+> untrusted, and validated before use.  If we blindly use such values, we
+> may access invalid data or crash if the values are corrupted.
+> 
+> If validation fails, drop the relevant event.
+> 
+> Signed-off-by: Jeffrey Hugo <jhugo@codeaurora.org>
+
+Reviewed-by: Hemant Kumar <hemantk@codeaurora.org>
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
