@@ -2,103 +2,171 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 34728356FA4
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Apr 2021 17:02:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DEE71357025
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Apr 2021 17:24:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353254AbhDGPCT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Apr 2021 11:02:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55308 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349063AbhDGPCT (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Apr 2021 11:02:19 -0400
-Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F3E3C061760
-        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Apr 2021 08:02:08 -0700 (PDT)
-Received: by mail-lj1-x235.google.com with SMTP id r20so21095229ljk.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Apr 2021 08:02:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=UReEYo213vcg++rM9BnCxXvPAz9Gqu2yc6+O99aZXpU=;
-        b=t9yU4v5QFQrksboxmgqw9CMDc3UhgK8w4UHj6YAEjjuUlA3SO4xhp+ykJv0YgaITyz
-         3Pdf3NFCMzVvv0eypJIvSgnU+2f2n3Cq56lpUguxIW/KX92KPBXyQUDjViBk1wYvLklj
-         syAqMQK2rL79Ln/PLRrMFDLbMHGjMiNxJfhN2NeRyIWdgkFtReSHJmGsRg1F2ZNHXdgz
-         Lh9BkKyAD40vLGzi3lWY+kpDHuOxxg9n33ACAimjJTsat3A0eniO7TV8ZcQ4IKb+R5dK
-         Jyhzp/oN7XKwI4oyByu6BUEbiEOaECCXcLTTlNzIcDxMuSagrGUzNhSFIC29gX9sHplk
-         vxXw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=UReEYo213vcg++rM9BnCxXvPAz9Gqu2yc6+O99aZXpU=;
-        b=MzjWU/e1WOlmqRnOOj3+g1djxThOkkNApZvsXvUr294Qz0QBxdpmGcednZTuRb/EvN
-         85vU4QdJjwevYTYd3N1ulYdIcDsQmrChQwwvU6SUAV+dtszgMkDwxQQ2grWPQurfOdAo
-         StLHIKBcwQEhGLmo+NlFkDf3t6gRyP/tqNAhS7qNWMXslZe41MiqnloS/a2ggFeicmb7
-         r6ZPR+doCj+p7jodTWnqsLweMROYxuhNxLuXU4bWjp8YDDfYkuqVYqxJ7qiBMaGeaNmw
-         Csz/24U5IzZtlETktCdWi6SZFaK6Zv8hL/g8MWk9nenuo/h051iequCwUSZpCFrH0k+f
-         OK0Q==
-X-Gm-Message-State: AOAM532jlFyMDhRxwRY/QG3avUAoIR7S3Lv7Nv+CfSNiktaCucnqKdgl
-        vpNt7+uxtYjEBJqppX3F6Jghng==
-X-Google-Smtp-Source: ABdhPJxSlyf28SdfZfzsSLBQwJ0rK4f8aI77/+PnV7y9HKV9YtL3A4USpqOmNrcRfil2GQu8M9xpyw==
-X-Received: by 2002:a2e:a60a:: with SMTP id v10mr2479817ljp.267.1617807724545;
-        Wed, 07 Apr 2021 08:02:04 -0700 (PDT)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id o11sm2552142ljg.42.2021.04.07.08.02.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Apr 2021 08:02:04 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     Jonathan Marek <jonathan@marek.ca>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        devicetree@vger.kernel.org
-Subject: [PATCH v2 4/4] arm64: dts: sm8250: move bus clock to mdp node for sm8250 target
-Date:   Wed,  7 Apr 2021 18:01:57 +0300
-Message-Id: <20210407150157.801210-5-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20210407150157.801210-1-dmitry.baryshkov@linaro.org>
-References: <20210407150157.801210-1-dmitry.baryshkov@linaro.org>
+        id S235386AbhDGPYw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Apr 2021 11:24:52 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:16654 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S235542AbhDGPYv (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 7 Apr 2021 11:24:51 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1617809082; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=psl1A1ZEsRP4pkzzImQ/0PBt/vIS3ULOg0voZ57vuNE=;
+ b=nvc74S0geifNRPvTom5BGafed6qktDAXmM77kTZuZqXre+WHitBemsZfBDHKwNdL8o9NNUCI
+ 8yJksgay3p6hUKGV0WfAVUqZAa2E8B3+7L3+lTS9h8moPbzpRiTV2x80suwM9x6Mi5etiGOs
+ GVZSelqL4sx1U1CcBo3tgYQGlRQ=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
+ 606dceb78807bcde1df9c2e4 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 07 Apr 2021 15:24:39
+ GMT
+Sender: skakit=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id C8793C43463; Wed,  7 Apr 2021 15:24:38 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: skakit)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id D307CC433ED;
+        Wed,  7 Apr 2021 15:24:37 +0000 (UTC)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Wed, 07 Apr 2021 20:54:37 +0530
+From:   skakit@codeaurora.org
+To:     Matthias Kaehlcke <mka@chromium.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, kgunda@codeaurora.org
+Subject: Re: [PATCH V2 1/5] arm64: dts: qcom: pm7325: Add PMIC peripherals for
+ pm7325
+In-Reply-To: <YGdV+un4bGcF6jJH@google.com>
+References: <1617268396-1837-1-git-send-email-skakit@codeaurora.org>
+ <1617268396-1837-2-git-send-email-skakit@codeaurora.org>
+ <YGdV+un4bGcF6jJH@google.com>
+Message-ID: <10d26e4cc8888833298b0ebe7756e032@codeaurora.org>
+X-Sender: skakit@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Move the bus clock to mdp device node,in order to facilitate bus band
-width scaling on sm8250 target.
+Hi Matthias,
 
-The parent device MDSS will not vote for bus bw, instead the vote will
-be triggered by mdp device node. Since a minimum vote is required to
-turn on bus clock, move the clock node to mdp device from where the
-votes are requested.
+On 2021-04-02 23:05, Matthias Kaehlcke wrote:
+> On Thu, Apr 01, 2021 at 02:43:12PM +0530, satya priya wrote:
+> 
+>> subject: arm64: dts: qcom: pm7325: Add PMIC peripherals for pm7325
+> 
+> nit: maybe just 'arm64: dts: qcom: Add pm7325 support/.dtsi' or 
+> similar?
+> 
+>> Add temp-alarm and GPIO support for pm7325.
+> 
+> nit: it's more than that, you are adding the .dtsi for the PMIC itself.
+> 
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8250.dtsi | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+Okay, will change the commit text.
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index 394973e778f7..60fe2eaf06c5 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -2294,10 +2294,9 @@ mdss: mdss@ae00000 {
- 			power-domains = <&dispcc MDSS_GDSC>;
- 
- 			clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
--				 <&gcc GCC_DISP_HF_AXI_CLK>,
- 				 <&gcc GCC_DISP_SF_AXI_CLK>,
- 				 <&dispcc DISP_CC_MDSS_MDP_CLK>;
--			clock-names = "iface", "bus", "nrt_bus", "core";
-+			clock-names = "iface", "nrt_bus", "core";
- 
- 			assigned-clocks = <&dispcc DISP_CC_MDSS_MDP_CLK>;
- 			assigned-clock-rates = <460000000>;
--- 
-2.30.2
+>> Signed-off-by: satya priya <skakit@codeaurora.org>
+>> ---
+>>  arch/arm64/boot/dts/qcom/pm7325.dtsi | 53 
+>> ++++++++++++++++++++++++++++++++++++
+>>  1 file changed, 53 insertions(+)
+>>  create mode 100644 arch/arm64/boot/dts/qcom/pm7325.dtsi
+>> 
+>> diff --git a/arch/arm64/boot/dts/qcom/pm7325.dtsi 
+>> b/arch/arm64/boot/dts/qcom/pm7325.dtsi
+>> new file mode 100644
+>> index 0000000..1e0848a
+>> --- /dev/null
+>> +++ b/arch/arm64/boot/dts/qcom/pm7325.dtsi
+>> @@ -0,0 +1,53 @@
+>> +// SPDX-License-Identifier: BSD-3-Clause
+>> +// Copyright (c) 2021, The Linux Foundation. All rights reserved.
+>> +
+>> +#include <dt-bindings/interrupt-controller/irq.h>
+>> +#include <dt-bindings/spmi/spmi.h>
+>> +
+>> +&spmi_bus {
+>> +	pm7325: pmic@1 {
+>> +		compatible = "qcom,pm7325", "qcom,spmi-pmic";
+> 
+> I saw the patches that add the compatible strings for the GPIOs, but
+> can't find those that add the strings for the PMICs themselves. Could
+> you provide a link if they have been sent already?
+> 
 
+They are not sent yet, qcom,spmi-pmic.txt file conversion to yaml [1] is 
+currently on hold as all the child node bindings needs to be converted 
+to yaml first. Once that is done we can add these strings.
+
+[1] https://lore.kernel.org/patchwork/patch/1359552/
+
+>> +		reg = <0x1 SPMI_USID>;
+>> +		#address-cells = <1>;
+>> +		#size-cells = <0>;
+>> +
+>> +		pm7325_temp_alarm: temp-alarm@a00 {
+>> +			compatible = "qcom,spmi-temp-alarm";
+>> +			reg = <0xa00>;
+>> +			interrupts = <0x1 0xa 0x0 IRQ_TYPE_EDGE_BOTH>;
+>> +			#thermal-sensor-cells = <0>;
+>> +		};
+>> +
+>> +		pm7325_gpios: gpios@8800 {
+>> +			compatible = "qcom,pm7325-gpio", "qcom,spmi-gpio";
+>> +			reg = <0x8800>;
+>> +			gpio-controller;
+>> +			gpio-ranges = <&pm7325_gpios 0 0 10>;
+>> +			#gpio-cells = <2>;
+>> +			interrupt-controller;
+>> +			#interrupt-cells = <2>;
+>> +		};
+>> +	};
+>> +};
+>> +
+>> +&thermal_zones {
+>> +	pm7325_thermal: pm7325-thermal {
+>> +		polling-delay-passive = <100>;
+>> +		polling-delay = <0>;
+>> +		thermal-sensors = <&pm7325_temp_alarm>;
+>> +
+>> +		trips {
+>> +			pm7325_trip0: trip0 {
+>> +				temperature = <95000>;
+>> +				hysteresis = <0>;
+>> +				type = "passive";
+>> +			};
+>> +
+>> +			pm7325_trip1: trip1 {
+> 
+> nit: the critical trip point is often named <name>-crit. One reason for
+> this could be that it allows to add other non-critical trip points (in
+> the .dtsi itself or the <board>.dts), without messing up the
+> enumeration scheme.
+> 
+
+ok.
+
+>> +				temperature = <115000>;
+>> +				hysteresis = <0>;
+>> +				type = "critical";
+>> +			};
+>> +		};
+>> +	};
+>> +};
