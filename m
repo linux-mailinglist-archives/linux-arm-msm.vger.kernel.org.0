@@ -2,248 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 725973562D1
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Apr 2021 07:02:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 526583562D5
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Apr 2021 07:05:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344992AbhDGFCZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Apr 2021 01:02:25 -0400
-Received: from mail-lf1-f53.google.com ([209.85.167.53]:45708 "EHLO
-        mail-lf1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244465AbhDGFCY (ORCPT
+        id S244465AbhDGFF6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Apr 2021 01:05:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36496 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1348549AbhDGFF6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Apr 2021 01:02:24 -0400
-Received: by mail-lf1-f53.google.com with SMTP id g8so26347679lfv.12;
-        Tue, 06 Apr 2021 22:02:14 -0700 (PDT)
+        Wed, 7 Apr 2021 01:05:58 -0400
+Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55F90C06174A
+        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Apr 2021 22:05:48 -0700 (PDT)
+Received: by mail-pf1-x436.google.com with SMTP id l123so10523448pfl.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Apr 2021 22:05:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=v1EbD4K5+ZpWVviiRiexwAVWwPlInM5vPeGVWeHHASY=;
+        b=YBp9fyCEC8aVk/aQfLyQqYsm0CSq3/xmquVD+YjKYRMRWbPdk83zBZ/XEVmFdPr8fm
+         VIEdxoQ+lvgeoto4KE41aChQ/+a/RKijez0cM774a4CzCAVeVKEWOAhNKj61UOc/b217
+         vY0h9lLREemGIzzPLGKOP8FX2q4aUQKOQuWlUUy2xXnFQkG2IFdW7dgb9FRgRFcpZCg0
+         tVNE3a2ZYVbsQ4GH0aZ3PK06MfIkDp2qD4bk4txYrU7cEhZE/AmunZtiBxKthQSxGL5r
+         8fCDhBx4gjiZ49PsJZhAjTBZVpnYxHbdJ84SBgWl+nU/cmelDO1zdiCim0FUXFXz5U0X
+         wZTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:reply-to:to:cc
-         :in-reply-to:references:mime-version:date:user-agent
-         :content-transfer-encoding;
-        bh=Y660N962CfSq0r1Gv5yA7k9zDEwgph8j+14Pl9hIqdA=;
-        b=XvodzsqrEAJiKZB/PqqO3qA4ZRYxRpspOTT0RRWQzrUAJbQr8HjRhy3xye7CqTz2ZO
-         WjpQLYGi5U3YswtHXdYasH0sydYqabVpycw9AlQIDm9sR1fszfQUqahJl71IP8EwcMPz
-         YRXcVhHsi+D6u5coKH+vPye+GsU8Cdaf20t9MyuEGH9yzwYaZwVnwllx5fxUiAIHQRIs
-         qRAy0/L59sGjYAWPr/gJODiMP3gpO//AI7IiJfHsX9Q7aFiHtSAB2bFI6/Ai//QU9I3B
-         I/Now3tD0+MwqRcdsGZi1MU3jnOYvdH6PzpkF7VJk7gMs3r1cOsdHbUfN9JEl3Te2X17
-         8d6g==
-X-Gm-Message-State: AOAM531tiIq0POx5GMFips9YlEdG6MAWNmqEshY+ELiHJ8nLPPKofZ1S
-        rtXy/JnYEEafmaITfSriUx0=
-X-Google-Smtp-Source: ABdhPJxUDLjnSysUCjbwr6Gn6YxY6BUuP8kyDq9XwjAZkPvdnpLBkDrgShBuZTBq0hMIDhAX+AUZyw==
-X-Received: by 2002:a05:6512:130e:: with SMTP id x14mr1205143lfu.321.1617771733894;
-        Tue, 06 Apr 2021 22:02:13 -0700 (PDT)
-Received: from dc7vkhyyyyyyyyyyyyydy-3.rev.dnainternet.fi (dc7vkhyyyyyyyyyyyyydy-3.rev.dnainternet.fi. [2001:14ba:16e2:8300::6])
-        by smtp.gmail.com with ESMTPSA id m24sm2365395lfq.184.2021.04.06.22.02.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 Apr 2021 22:02:13 -0700 (PDT)
-Message-ID: <55397166b1c4107efc2a013635f63af142d9b187.camel@fi.rohmeurope.com>
-Subject: Re: [PATCH v4 3/7] regulator: IRQ based event/error notification
- helpers
-From:   Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>
-Reply-To: matti.vaittinen@fi.rohmeurope.com
-To:     Andy Shevchenko <andy.shevchenko@gmail.com>
-Cc:     Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
-        "linux-power@fi.rohmeurope.com" <linux-power@fi.rohmeurope.com>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "linux-renesas-soc@vger.kernel.org" 
-        <linux-renesas-soc@vger.kernel.org>
-In-Reply-To: <CAHp75VeoTVNDemV0qRA4BTVqOVfyR9UKGWhHgfeat8zVVGcu_Q@mail.gmail.com>
-References: <cover.1617690965.git.matti.vaittinen@fi.rohmeurope.com>
-         <2b87b4637fde2225006cc122bc855efca0dcd7f1.1617692184.git.matti.vaittinen@fi.rohmeurope.com>
-         <CAHp75VeoTVNDemV0qRA4BTVqOVfyR9UKGWhHgfeat8zVVGcu_Q@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=v1EbD4K5+ZpWVviiRiexwAVWwPlInM5vPeGVWeHHASY=;
+        b=GM+yOM0T0aTiSgQYFnOG6682ehQL+eTzl9uOH6Hxq54wlWO0+7+ZKIbDIGFelhL+4c
+         YCkk/38WQr0gubY9665TNfL6WvGPFEr4hqbQ7jRZoIwHuwlcrrYq/P5CwbzxCLmeDnmD
+         G2fi+u6p+uZnOvXJGpZ4oCQdjqzPWhPeQlQ1nrl8uBQxUk6+MBmcg+hiV4fz2VPjvzo7
+         eP1lkSRrW17MCVk5UCGEYSyQwqWmWsh2bbGVXSRoGArYvpO8gvEC3zkR+tEztxyn6YJK
+         7q7GRlTooJugb4sUuZkmXRNUYpyCXoOswJzij72OkrB8E8WFZCfSlrudK3ifOsE6kyvp
+         /R+g==
+X-Gm-Message-State: AOAM531XTzIpg0WU7L9L/AqZTKeY/NCOtuYtHPHuIprdK6QIk2szLsTk
+        FXNxXbFMVrckelEYPEF5y00rSUHiglF4
+X-Google-Smtp-Source: ABdhPJw+1h2A346rNL1K65aCM5og/W9kT11xWu3+Tvdm1KmrZhLjLPGDTaFYqn2N7wOVqKFfcaq2GQ==
+X-Received: by 2002:a62:bd03:0:b029:21d:b680:db15 with SMTP id a3-20020a62bd030000b029021db680db15mr1411811pff.25.1617771947787;
+        Tue, 06 Apr 2021 22:05:47 -0700 (PDT)
+Received: from work ([103.77.37.180])
+        by smtp.gmail.com with ESMTPSA id f2sm20353479pfq.129.2021.04.06.22.05.45
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 06 Apr 2021 22:05:46 -0700 (PDT)
+Date:   Wed, 7 Apr 2021 10:35:44 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Loic Poulain <loic.poulain@linaro.org>
+Cc:     hemantk@codeaurora.org, bbhatt@codeaurora.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2 1/2] bus: mhi: core: Fix MHI runtime_pm behavior
+Message-ID: <20210407050544.GB8675@work>
+References: <1617700315-12492-1-git-send-email-loic.poulain@linaro.org>
 MIME-Version: 1.0
-Date:   Wed, 07 Apr 2021 08:02:04 +0300
-User-Agent: Evolution 3.34.4 (3.34.4-1.fc31) 
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1617700315-12492-1-git-send-email-loic.poulain@linaro.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Morning Andy,
-
-Thanks for the review! By the way, is it me or did your mail-client
-spill this out using HTML?
-
-On Wed, 2021-04-07 at 01:44 +0300, Andy Shevchenko wrote:
-> On Tuesday, April 6, 2021, Matti Vaittinen <
-> matti.vaittinen@fi.rohmeurope.com> wrote:
-
-> > +static void die_loudly(const char *msg)
-> > +{
-> > +       pr_emerg(msg);
+On Tue, Apr 06, 2021 at 11:11:54AM +0200, Loic Poulain wrote:
+> This change ensures that PM reference is always get during packet
+> queueing and released either after queuing completion (RX) or once
+> the buffer has been consumed (TX). This guarantees proper update for
+> underlying MHI controller runtime status (e.g. last_busy timestamp)
+> and prevents suspend to be triggered while TX packets are flying,
+> or before we completed update of the RX ring.
 > 
-> Oh là là, besides build bot complaints, this has serious security
-> implications. Never do like this.
- 
-I'm not even trying to claim that was correct. And I did send a fixup -
-sorry for this. I don't intend to do this again.
+> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
 
-Now, when this is said - If you have a minute, please educate me.
-Assuming we know all the callers and that all the callers use this as
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-die_loudly("foobarfoo\n");
-- what is the exploit mechanism?
+Thanks,
+Mani
 
-> > +       BUG();
-> > +}
-> > +
-
-
-> > +/**
-> > + * regulator_irq_helper - register IRQ based regulator event/error
-> > notifier
-> > + *
-> > + * @dev:               device to which lifetime the helper's
-> > lifetime is
-> > + *                     bound.
-> > + * @d:                 IRQ helper descriptor.
-> > + * @irq:               IRQ used to inform events/errors to be
-> > notified.
-> > + * @irq_flags:         Extra IRQ flags to be OR's with the default
-> > IRQF_ONESHOT
-> > + *                     when requesting the (threaded) irq.
-> > + * @common_errs:       Errors which can be flagged by this IRQ for
-> > all rdevs.
-> > + *                     When IRQ is re-enabled these errors will be
-> > cleared
-> > + *                     from all associated regulators
-> > + * @per_rdev_errs:     Optional error flag array describing errors
-> > specific
-> > + *                     for only some of the regulators. These
-> > errors will be
-> > + *                     or'ed with common erros. If this is given
-> > the array
-> > + *                     should contain rdev_amount flags. Can be
-> > set to NULL
-> > + *                     if there is no regulator specific error
-> > flags for this
-> > + *                     IRQ.
-> > + * @rdev:              Array of regulators associated with this
-> > IRQ.
-> > + * @rdev_amount:       Amount of regulators associated wit this
-> > IRQ.
-> > + */
-> > +void *regulator_irq_helper(struct device *dev,
-> > +                           const struct regulator_irq_desc *d, int
-> > irq,
-> > +                           int irq_flags, int common_errs, int
-> > *per_rdev_errs,
-> > +                           struct regulator_dev **rdev, int
-> > rdev_amount)
-> > +{
-> > +       struct regulator_irq *h;
-> > +       int ret;
-> > +
-> > +       if (!rdev_amount || !d || !d->map_event || !d->name)
-> > +               return ERR_PTR(-EINVAL);
-> > +
-> > +       if (irq <= 0) {
-> > +               dev_err(dev, "No IRQ\n");
-> > +               return ERR_PTR(-EINVAL);
+> ---
+>  v2: mhi_reset_data_chan: move put under existing DMA_TO_DEVICE if block
 > 
-> Why shadowing error code? Negative IRQ is anything but “no IRQ”.
-
-This was a good point. The irq is passed here as parameter. From this
-function's perspective the negative irq is invalid parameter - we don't
-know how the caller has obtained it. Print could show the value
-contained in irq though.
-
-Now that you pointed this out I am unsure if this check is needed here.
-If we check it, then I still think we should report -EINVAL for invalid
-parameter. Other option is to just call the request_threaded_irq() -
-log the IRQ request failure and return what request_threaded_irq()
-returns. Do you think that would make sense?
-
-> > +
-> > +/**
-> > + * regulator_irq_helper_cancel - drop IRQ based regulator
-> > event/error notifier
-> > + *
-> > + * @handle:            Pointer to handle returned by a successful
-> > call to
-> > + *                     regulator_irq_helper(). Will be NULLed upon
-> > return.
-> > + *
-> > + * The associated IRQ is released and work is cancelled when the
-> > function
-> > + * returns.
-> > + */
-> > +void regulator_irq_helper_cancel(void **handle)
-> > +{
-> > +       if (handle && *handle) {
+>  drivers/bus/mhi/core/main.c | 21 ++++++++++++++++-----
+>  1 file changed, 16 insertions(+), 5 deletions(-)
 > 
-> Can handle ever be NULL here ? (Yes, I understand that you export
-> this)
-
-To tell the truth - I am not sure. I *guess* that if we allow this to
-be NULL, then one *could* implement a driver for IC where IRQs are
-optional, in a way that when IRQs are supported the pointer to handle
-is valid, when IRQs aren't supported the pointer is NULL. (Why) do you
-think we should skip the check?
-
+> diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
+> index c780234..6e72239 100644
+> --- a/drivers/bus/mhi/core/main.c
+> +++ b/drivers/bus/mhi/core/main.c
+> @@ -584,8 +584,11 @@ static int parse_xfer_event(struct mhi_controller *mhi_cntrl,
+>  			/* notify client */
+>  			mhi_chan->xfer_cb(mhi_chan->mhi_dev, &result);
 >  
-> > +               struct regulator_irq *h = *handle;
-> > +
-> > +               free_irq(h->irq, h);
-> > +               if (h->desc.irq_off_ms)
-> > +                       cancel_delayed_work_sync(&h->isr_work);
-> > +
-> > +               h = NULL;
-> > +       }
-> > +}
-> > +EXPORT_SYMBOL_GPL(regulator_irq_helper_cancel);
-> > +
-> > +static void regulator_irq_helper_drop(struct device *dev, void
-> > *res)
-> > +{
-> > +       regulator_irq_helper_cancel(res);
-> > +}
-> > +
-> > +void *devm_regulator_irq_helper(struct device *dev,
-> > +                                const struct regulator_irq_desc
-> > *d, int irq,
-> > +                                int irq_flags, int common_errs,
-> > +                                int *per_rdev_errs,
-> > +                                struct regulator_dev **rdev, int
-> > rdev_amount)
-> > +{
-> > +       void **ptr;
-> > +
-> > +       ptr = devres_alloc(regulator_irq_helper_drop, sizeof(*ptr),
-> > GFP_KERNEL);
-> > +       if (!ptr)
-> > +               return ERR_PTR(-ENOMEM);
-> > +
-> > +       *ptr = regulator_irq_helper(dev, d, irq, irq_flags,
-> > common_errs,
-> > +                                   per_rdev_errs, rdev,
-> > rdev_amount);
-> > +
-> > +       if (IS_ERR(*ptr))
-> > +               devres_free(ptr);
-> > +       else
-> > +               devres_add(dev, ptr);
-> > +
-> > +       return *ptr;
+> -			if (mhi_chan->dir == DMA_TO_DEVICE)
+> +			if (mhi_chan->dir == DMA_TO_DEVICE) {
+>  				atomic_dec(&mhi_cntrl->pending_pkts);
+> +				/* Release the reference got from mhi_queue() */
+> +				mhi_cntrl->runtime_put(mhi_cntrl);
+> +			}
+>  
+>  			/*
+>  			 * Recycle the buffer if buffer is pre-allocated,
+> @@ -1021,9 +1024,11 @@ static int mhi_queue(struct mhi_device *mhi_dev, struct mhi_buf_info *buf_info,
+>  	if (unlikely(ret))
+>  		goto exit_unlock;
+>  
+> -	/* trigger M3 exit if necessary */
+> -	if (MHI_PM_IN_SUSPEND_STATE(mhi_cntrl->pm_state))
+> -		mhi_trigger_resume(mhi_cntrl);
+> +	/* Packet is queued, take a usage ref to exit M3 if necessary
+> +	 * for host->device buffer, balanced put is done on buffer completion
+> +	 * for device->host buffer, balanced put is after ringing the DB
+> +	 */
+> +	mhi_cntrl->runtime_get(mhi_cntrl);
+>  
+>  	/* Assert dev_wake (to exit/prevent M1/M2)*/
+>  	mhi_cntrl->wake_toggle(mhi_cntrl);
+> @@ -1034,6 +1039,9 @@ static int mhi_queue(struct mhi_device *mhi_dev, struct mhi_buf_info *buf_info,
+>  	if (likely(MHI_DB_ACCESS_VALID(mhi_cntrl)))
+>  		mhi_ring_chan_db(mhi_cntrl, mhi_chan);
+>  
+> +	if (dir == DMA_FROM_DEVICE)
+> +		mhi_cntrl->runtime_put(mhi_cntrl);
+> +
+>  exit_unlock:
+>  	read_unlock_irqrestore(&mhi_cntrl->pm_lock, flags);
+>  
+> @@ -1416,8 +1424,11 @@ static void mhi_reset_data_chan(struct mhi_controller *mhi_cntrl,
+>  	while (tre_ring->rp != tre_ring->wp) {
+>  		struct mhi_buf_info *buf_info = buf_ring->rp;
+>  
+> -		if (mhi_chan->dir == DMA_TO_DEVICE)
+> +		if (mhi_chan->dir == DMA_TO_DEVICE) {
+>  			atomic_dec(&mhi_cntrl->pending_pkts);
+> +			/* Release the reference got from mhi_queue() */
+> +			mhi_cntrl->runtime_put(mhi_cntrl);
+> +		}
+>  
+>  		if (!buf_info->pre_mapped)
+>  			mhi_cntrl->unmap_single(mhi_cntrl, buf_info);
+> -- 
+> 2.7.4
 > 
-> Why not to use devm_add_action{_or_reset}()?
-
-I just followed the same approach that has been used in other regulator
-functions. (drivers/regulator/devres.c)
-OTOH, the devm_add_action makes this little bit simpler so I'll convert
-to use it.
-
-Mark, do you have a reason of not using devm_add_action() in devres.c?
-Should devm_add_action() be used in some other functions there? And
-should this be moved to devres.c?
-
-Best Regards
-	Matti Vaittinen
-
-
