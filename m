@@ -2,157 +2,192 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7D7B035695A
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Apr 2021 12:21:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1B6B6356A97
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Apr 2021 12:56:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237262AbhDGKVW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Apr 2021 06:21:22 -0400
-Received: from mga11.intel.com ([192.55.52.93]:20052 "EHLO mga11.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1350892AbhDGKVU (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Apr 2021 06:21:20 -0400
-IronPort-SDR: U/3ddTPUx789fZq2sfET88RxW7/CXO4jiBR8ougw4jtMbt0YWSKM1q3rEERxEtlvAOBgN94tqs
- wtNbBDDzObCQ==
-X-IronPort-AV: E=McAfee;i="6000,8403,9946"; a="190073289"
-X-IronPort-AV: E=Sophos;i="5.82,203,1613462400"; 
-   d="scan'208";a="190073289"
-Received: from fmsmga004.fm.intel.com ([10.253.24.48])
-  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Apr 2021 03:21:11 -0700
-IronPort-SDR: vW8zGoqm/s2nTUAFKkQ/Ai2NnD8T0kZb0zK95O2/dghnkBIc9kqcKW3yAjkXysbybq8Nt731Sc
- DRKQlDIDhfTw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.82,203,1613462400"; 
-   d="scan'208";a="441283571"
-Received: from ahunter-desktop.fi.intel.com (HELO [10.237.72.174]) ([10.237.72.174])
-  by fmsmga004.fm.intel.com with ESMTP; 07 Apr 2021 03:21:05 -0700
-Subject: Re: [PATCH v15 1/2] scsi: ufs: Enable power management for wlun
-To:     Asutosh Das <asutoshd@codeaurora.org>, cang@codeaurora.org,
-        martin.petersen@oracle.com, linux-scsi@vger.kernel.org
-Cc:     linux-arm-msm@vger.kernel.org,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        Pedro Sousa <pedrom.sousa@synopsys.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Stanley Chu <stanley.chu@mediatek.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Steven Rostedt <rostedt@goodmis.org>,
-        Ingo Molnar <mingo@redhat.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Lee Jones <lee.jones@linaro.org>,
-        Bean Huo <beanhuo@micron.com>,
-        Kiwoong Kim <kwmad.kim@samsung.com>,
-        Wei Yongjun <weiyongjun1@huawei.com>,
-        Yue Hu <huyue2@yulong.com>,
-        "Gustavo A. R. Silva" <gustavoars@kernel.org>,
-        Dinghao Liu <dinghao.liu@zju.edu.cn>,
-        Jaegeuk Kim <jaegeuk@kernel.org>,
-        Satya Tangirala <satyat@google.com>,
-        open list <linux-kernel@vger.kernel.org>,
-        "moderated list:ARM/SAMSUNG S3C, S5P AND EXYNOS ARM ARCHITECTURES" 
-        <linux-arm-kernel@lists.infradead.org>,
-        "open list:ARM/SAMSUNG S3C, S5P AND EXYNOS ARM ARCHITECTURES" 
-        <linux-samsung-soc@vger.kernel.org>,
-        "moderated list:UNIVERSAL FLASH STORAGE HOST CONTROLLER DRIVER..." 
-        <linux-mediatek@lists.infradead.org>
-References: <cover.1617731442.git.asutoshd@codeaurora.org>
- <5536f19fbbcfed1177a63458c6bd0b42ee6aa2e2.1617731442.git.asutoshd@codeaurora.org>
-From:   Adrian Hunter <adrian.hunter@intel.com>
-Organization: Intel Finland Oy, Registered Address: PL 281, 00181 Helsinki,
- Business Identity Code: 0357606 - 4, Domiciled in Helsinki
-Message-ID: <d1e694cb-e3ba-6066-d0c0-8c17120e7ba5@intel.com>
-Date:   Wed, 7 Apr 2021 13:21:25 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.8.1
+        id S241029AbhDGKzu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Apr 2021 06:55:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57296 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S241674AbhDGKzr (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 7 Apr 2021 06:55:47 -0400
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D895C06175F
+        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Apr 2021 03:55:37 -0700 (PDT)
+Received: by mail-ed1-x536.google.com with SMTP id p4so10016437edr.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Apr 2021 03:55:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=AqNQY1ixLetmewTjICsW+YaSFij9TTn42Daz5HdD3Pg=;
+        b=ETUqbaLUzbAE3Y8O3a2aWNuZM2fNtZXVOnTOTIvLJyTmLANl0Xlyq3xpmQC4ux+NV4
+         3HDoi63y6Ygcekx9uhF2052T6F+4Di4wGYcA0dYKPLmWHTSsQl4CvGc+c+lQ9MNk/cmL
+         p6nb35pX3EseVu2sdDqArH6EuA2dEbmCRJD+I0nqxr7z4rsOTpd9MdJebkdKiJOlU4Tf
+         zeYjseMmGUsXOoc8hpVZB4UxhDBQN8X0VHjOwKr+PUckDXcT7eqr6A9gGTIx4lzkzAvY
+         nWh5rRFJ4mCnMJOlfvdLAyzjrJofbtHdo2X+6a/xi8dhDgRROGCZLb9yqKknptOKduA7
+         P1FA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=AqNQY1ixLetmewTjICsW+YaSFij9TTn42Daz5HdD3Pg=;
+        b=FQDa0HBTI2o+jGy5ycBLfYzZVmHXOvHvETKZHw0CoKLbLOXQy+BpaJPyHJUcJsBpe8
+         adHK46N1UP5fwms0DxWQLY5t9/gXoZnfvfkv/2XI7v7mJU1tTaX3LpxrkJkYWNeBlytM
+         VKt+yn7MJ916x4Co3E+fT71UgtVSyUC1IfWAI1H4WLWO9WfwVePsq1V8AMLTfCHFZL6c
+         QXAumsh/j+giPG2PU3gQZ2SBGGpUylnYQhkYDkDLleg4j1KAOTU8X08kNinQvd2/wB+i
+         e+++QDpLIRHFrwDgwatorRk06d+8XnrLox9itOdundxJLK4bEXZ7IQb59kAMRvVseT5N
+         hTDw==
+X-Gm-Message-State: AOAM531Cl6gjauxhovuiL83GKI+/Pb3Fgyg5GGTNF1m2/+MYEhmjjy1/
+        d+T8llgxMv4hCbpHYEHXFkw1lA==
+X-Google-Smtp-Source: ABdhPJyAI/4AoBC0fEt/G7MG/ZMpDH4GqDWCh5w4iapkXMB13W/olZeYoIT+Zra5SSP3IhYjyEwqDw==
+X-Received: by 2002:a05:6402:51d0:: with SMTP id r16mr3638808edd.48.1617792936158;
+        Wed, 07 Apr 2021 03:55:36 -0700 (PDT)
+Received: from localhost.localdomain (hst-221-20.medicom.bg. [84.238.221.20])
+        by smtp.gmail.com with ESMTPSA id ka11sm4252365ejb.43.2021.04.07.03.55.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 07 Apr 2021 03:55:35 -0700 (PDT)
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+To:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Cc:     Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Subject: [PATCH] venus: core: Fix kerneldoc warnings
+Date:   Wed,  7 Apr 2021 13:55:02 +0300
+Message-Id: <20210407105502.348082-1-stanimir.varbanov@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-In-Reply-To: <5536f19fbbcfed1177a63458c6bd0b42ee6aa2e2.1617731442.git.asutoshd@codeaurora.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 6/04/21 8:52 pm, Asutosh Das wrote:
-> During runtime-suspend of ufs host, the scsi devices are
-> already suspended and so are the queues associated with them.
-> But the ufs host sends SSU (START_STOP_UNIT) to wlun
-> during its runtime-suspend.
-> During the process blk_queue_enter checks if the queue is not in
-> suspended state. If so, it waits for the queue to resume, and never
-> comes out of it.
-> The commit
-> (d55d15a33: scsi: block: Do not accept any requests while suspended)
-> adds the check if the queue is in suspended state in blk_queue_enter().
-> 
-> Call trace:
->  __switch_to+0x174/0x2c4
->  __schedule+0x478/0x764
->  schedule+0x9c/0xe0
->  blk_queue_enter+0x158/0x228
->  blk_mq_alloc_request+0x40/0xa4
->  blk_get_request+0x2c/0x70
->  __scsi_execute+0x60/0x1c4
->  ufshcd_set_dev_pwr_mode+0x124/0x1e4
->  ufshcd_suspend+0x208/0x83c
->  ufshcd_runtime_suspend+0x40/0x154
->  ufshcd_pltfrm_runtime_suspend+0x14/0x20
->  pm_generic_runtime_suspend+0x28/0x3c
->  __rpm_callback+0x80/0x2a4
->  rpm_suspend+0x308/0x614
->  rpm_idle+0x158/0x228
->  pm_runtime_work+0x84/0xac
->  process_one_work+0x1f0/0x470
->  worker_thread+0x26c/0x4c8
->  kthread+0x13c/0x320
->  ret_from_fork+0x10/0x18
-> 
-> Fix this by registering ufs device wlun as a scsi driver and
-> registering it for block runtime-pm. Also make this as a
-> supplier for all other luns. That way, this device wlun
-> suspends after all the consumers and resumes after
-> hba resumes.
-> 
-> Co-developed-by: Can Guo <cang@codeaurora.org>
-> Signed-off-by: Can Guo <cang@codeaurora.org>
-> Signed-off-by: Asutosh Das <asutoshd@codeaurora.org>
-> ---
+Fix kerneldoc warnings in description of venus_core and venus_inst
+structures
 
-v15 seems to be missing the updates to ufs_debugfs_get/put_user_access
-that were in v14:
+Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+---
+ drivers/media/platform/qcom/venus/core.h | 40 ++++++++++++++++++------
+ 1 file changed, 31 insertions(+), 9 deletions(-)
 
-
-@@ -60,14 +60,14 @@ __acquires(&hba->host_sem)
- 		up(&hba->host_sem);
- 		return -EBUSY;
- 	}
--	pm_runtime_get_sync(hba->dev);
-+	scsi_autopm_get_device(hba->sdev_ufs_device);
- 	return 0;
- }
- 
- static void ufs_debugfs_put_user_access(struct ufs_hba *hba)
- __releases(&hba->host_sem)
- {
--	pm_runtime_put_sync(hba->dev);
-+	scsi_autopm_put_device(hba->sdev_ufs_device);
- 	up(&hba->host_sem);
- }
- 
-
-Also from last comments, the issue below:
-
-<SNIP>
-
-> +#ifdef CONFIG_PM_SLEEP
-> +static int ufshcd_wl_poweroff(struct device *dev)
-> +{
-> +	ufshcd_wl_shutdown(dev);
-
-This turned out to be wrong.  This is a PM op and SCSI has already
-quiesced the sdev's.  All that is needed is:
-
-	__ufshcd_wl_suspend(hba, UFS_SHUTDOWN_PM);
-
+diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
+index 426e3a0c630e..745f226a523f 100644
+--- a/drivers/media/platform/qcom/venus/core.h
++++ b/drivers/media/platform/qcom/venus/core.h
+@@ -90,18 +90,25 @@ struct venus_format {
+  * struct venus_core - holds core parameters valid for all instances
+  *
+  * @base:	IO memory base address
+- * @vbif_base	IO memory vbif base address
+- * @cpu_base	IO memory cpu base address
+- * @cpu_cs_base	IO memory cpu_cs base address
+- * @cpu_ic_base	IO memory cpu_ic base address
+- * @wrapper_base	IO memory wrapper base address
+- * @wrapper_base	IO memory wrapper TZ base address
+- * @aon_base	AON base address
++ * @vbif_base:	IO memory vbif base address
++ * @cpu_base:	IO memory cpu base address
++ * @cpu_cs_base:	IO memory cpu_cs base address
++ * @cpu_ic_base:	IO memory cpu_ic base address
++ * @wrapper_base:	IO memory wrapper base address
++ * @wrapper_tz_base:	IO memory wrapper TZ base address
++ * @aon_base:	AON base address
+  * @irq:		Venus irq
+  * @clks:	an array of struct clk pointers
+  * @vcodec0_clks: an array of vcodec0 struct clk pointers
+  * @vcodec1_clks: an array of vcodec1 struct clk pointers
++ * @video_path: an interconnect handle to video to/from memory path
++ * @cpucfg_path: an interconnect handle to cpu configuration path
++ * @opp_table: an device OPP table handle
++ * @has_opp_table: does OPP table exist
+  * @pmdomains:	an array of pmdomains struct device pointers
++ * @opp_dl_venus: an device-link for device OPP
++ * @opp_pmdomain: an OPP power-domain
++ * @resets: an array of reset signals
+  * @vdev_dec:	a reference to video device structure for decoder instances
+  * @vdev_enc:	a reference to video device structure for encoder instances
+  * @v4l2_dev:	a holder for v4l2 device structure
+@@ -110,6 +117,7 @@ struct venus_format {
+  * @dev_dec:	convenience struct device pointer for decoder device
+  * @dev_enc:	convenience struct device pointer for encoder device
+  * @use_tz:	a flag that suggests presence of trustzone
++ * @fw:		structure of firmware parameters
+  * @lock:	a lock for this strucure
+  * @instances:	a list_head of all instances
+  * @insts_count:	num of instances
+@@ -118,6 +126,7 @@ struct venus_format {
+  * @error:	an error returned during last HFI sync operations
+  * @sys_error:	an error flag that signal system error event
+  * @core_ops:	the core operations
++ * @pm_ops:	a pointer to pm operations
+  * @pm_lock:	a lock for PM operations
+  * @enc_codecs:	encoders supported by this core
+  * @dec_codecs:	decoders supported by this core
+@@ -125,6 +134,10 @@ struct venus_format {
+  * @priv:	a private filed for HFI operations
+  * @ops:		the core HFI operations
+  * @work:	a delayed work for handling system fatal error
++ * @caps:	an array of supported HFI capabilities
++ * @codecs_count: platform codecs count
++ * @core0_usage_count: usage counter for core0
++ * @core1_usage_count: usage counter for core1
+  * @root:	debugfs root directory
+  */
+ struct venus_core {
+@@ -309,10 +322,11 @@ struct venus_ts_metadata {
+  * @list:	used for attach an instance to the core
+  * @lock:	instance lock
+  * @core:	a reference to the core struct
++ * @clk_data:	clock data per core ID
+  * @dpbbufs:	a list of decoded picture buffers
+  * @internalbufs:	a list of internal bufferes
+  * @registeredbufs:	a list of registered capture bufferes
+- * @delayed_process	a list of delayed buffers
++ * @delayed_process:	a list of delayed buffers
+  * @delayed_process_work:	a work_struct for process delayed buffers
+  * @ctrl_handler:	v4l control handler
+  * @controls:	a union of decoder and encoder control parameters
+@@ -321,22 +335,26 @@ struct venus_ts_metadata {
+  * @streamon_out: stream on flag for output queue
+  * @width:	current capture width
+  * @height:	current capture height
++ * @crop:	current crop rectangle
+  * @out_width:	current output width
+  * @out_height:	current output height
+  * @colorspace:	current color space
++ * @ycbcr_enc:	current YCbCr encoding
+  * @quantization:	current quantization
+  * @xfer_func:	current xfer function
+  * @codec_state:	current codec API state (see DEC/ENC_STATE_)
+  * @reconf_wait:	wait queue for resolution change event
+  * @subscriptions:	used to hold current events subscriptions
+  * @buf_count:		used to count number of buffers (reqbuf(0))
++ * @tss:		timestamp metadata
++ * @payloads:		cache plane payload to use it for clock/BW scaling
+  * @fps:		holds current FPS
+  * @timeperframe:	holds current time per frame structure
+  * @fmt_out:	a reference to output format structure
+  * @fmt_cap:	a reference to capture format structure
+  * @num_input_bufs:	holds number of input buffers
+  * @num_output_bufs:	holds number of output buffers
+- * @input_buf_size	holds input buffer size
++ * @input_buf_size:	holds input buffer size
+  * @output_buf_size:	holds output buffer size
+  * @output2_buf_size:	holds secondary decoder output buffer size
+  * @dpb_buftype:	decoded picture buffer type
+@@ -357,7 +375,11 @@ struct venus_ts_metadata {
+  * @priv:	a private for HFI operations callbacks
+  * @session_type:	the type of the session (decoder or encoder)
+  * @hprop:	a union used as a holder by get property
++ * @core_acquired:	the Core has been acquired
++ * @bit_depth:		current bitstream bit-depth
++ * @pic_struct:		bitstream progressive vs interlaced
+  * @next_buf_last: a flag to mark next queued capture buffer as last
++ * @drain_active:	Drain sequence is in progress
+  */
+ struct venus_inst {
+ 	struct list_head list;
+-- 
+2.25.1
 
