@@ -2,100 +2,157 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BEAE13568FF
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Apr 2021 12:07:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7D7B035695A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Apr 2021 12:21:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350466AbhDGKHI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Apr 2021 06:07:08 -0400
-Received: from mail-lj1-f169.google.com ([209.85.208.169]:46794 "EHLO
-        mail-lj1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244351AbhDGKGs (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Apr 2021 06:06:48 -0400
-Received: by mail-lj1-f169.google.com with SMTP id u20so19913572lja.13;
-        Wed, 07 Apr 2021 03:06:38 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=6Gvfrl9iHmqojQZyBLAUe+w/XFRz7PxAI+scFLNoAmw=;
-        b=qL4/aaWju8xmvWPw0q14oP5adfhjzhG8xyCMuUn78C+dYDF5r+WKcWtPOZtirAGUXy
-         JK8D1NjIu88PEPTYPXIU3xp8lNql3uX8mWUNLB4Zvw4RUKB4TCH+qIm78387WqiuQWfl
-         G5AB7/AgGj1ifsHs892F56pal/TDOzw+/NRDNmKDBUnVeSTPCIbvpfDQ9YuexmFQpXNc
-         DtDP664cfsyHKHrKsbvpUDVLPAK8kGVAgAWI1ukIdiQ0BwbIvaUpTEBTSmxuXDBinKgo
-         J6Kub15LPWsJ+awp/HiyK24w7ckbdvlzTJOpHF9zT0OiZIJH8uqM6fEsdyVoab4SroOH
-         YFkQ==
-X-Gm-Message-State: AOAM5319ZDcqftyW/YzSuTxxdvs7ZkTwu/vLJ/93YhetWdfYuwCRGqqe
-        nJ6dGlimgvfAgNUA6+9+tjA=
-X-Google-Smtp-Source: ABdhPJycG++GnnNSF9Uwa9U/sGNyEigoxCCBk7AwDXyL2fb7oHVEsK5bK3513bl3uA+G5yp5QxYFjw==
-X-Received: by 2002:a05:651c:3c3:: with SMTP id f3mr1632618ljp.105.1617789997624;
-        Wed, 07 Apr 2021 03:06:37 -0700 (PDT)
-Received: from localhost.localdomain (dc7vkhyyyyyyyyyyyyydy-3.rev.dnainternet.fi. [2001:14ba:16e2:8300::6])
-        by smtp.gmail.com with ESMTPSA id y24sm2428638lfj.54.2021.04.07.03.06.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Apr 2021 03:06:36 -0700 (PDT)
-Date:   Wed, 7 Apr 2021 13:06:31 +0300
-From:   Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>
-To:     Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>,
-        Matti Vaittinen <mazziesaccount@gmail.com>
-Cc:     Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>,
+        id S237262AbhDGKVW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Apr 2021 06:21:22 -0400
+Received: from mga11.intel.com ([192.55.52.93]:20052 "EHLO mga11.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1350892AbhDGKVU (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 7 Apr 2021 06:21:20 -0400
+IronPort-SDR: U/3ddTPUx789fZq2sfET88RxW7/CXO4jiBR8ougw4jtMbt0YWSKM1q3rEERxEtlvAOBgN94tqs
+ wtNbBDDzObCQ==
+X-IronPort-AV: E=McAfee;i="6000,8403,9946"; a="190073289"
+X-IronPort-AV: E=Sophos;i="5.82,203,1613462400"; 
+   d="scan'208";a="190073289"
+Received: from fmsmga004.fm.intel.com ([10.253.24.48])
+  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Apr 2021 03:21:11 -0700
+IronPort-SDR: vW8zGoqm/s2nTUAFKkQ/Ai2NnD8T0kZb0zK95O2/dghnkBIc9kqcKW3yAjkXysbybq8Nt731Sc
+ DRKQlDIDhfTw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.82,203,1613462400"; 
+   d="scan'208";a="441283571"
+Received: from ahunter-desktop.fi.intel.com (HELO [10.237.72.174]) ([10.237.72.174])
+  by fmsmga004.fm.intel.com with ESMTP; 07 Apr 2021 03:21:05 -0700
+Subject: Re: [PATCH v15 1/2] scsi: ufs: Enable power management for wlun
+To:     Asutosh Das <asutoshd@codeaurora.org>, cang@codeaurora.org,
+        martin.petersen@oracle.com, linux-scsi@vger.kernel.org
+Cc:     linux-arm-msm@vger.kernel.org,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        Pedro Sousa <pedrom.sousa@synopsys.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Stanley Chu <stanley.chu@mediatek.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-power@fi.rohmeurope.com, linux-arm-msm@vger.kernel.org,
-        linux-renesas-soc@vger.kernel.org
-Subject: [PATCH v6 8/8] MAINTAINERS: Add reviewer for regulator irq_helpers
-Message-ID: <2b744faf8441df8ca145450ba68c2086ba6c1052.1617789229.git.matti.vaittinen@fi.rohmeurope.com>
-References: <cover.1617789229.git.matti.vaittinen@fi.rohmeurope.com>
+        Steven Rostedt <rostedt@goodmis.org>,
+        Ingo Molnar <mingo@redhat.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Lee Jones <lee.jones@linaro.org>,
+        Bean Huo <beanhuo@micron.com>,
+        Kiwoong Kim <kwmad.kim@samsung.com>,
+        Wei Yongjun <weiyongjun1@huawei.com>,
+        Yue Hu <huyue2@yulong.com>,
+        "Gustavo A. R. Silva" <gustavoars@kernel.org>,
+        Dinghao Liu <dinghao.liu@zju.edu.cn>,
+        Jaegeuk Kim <jaegeuk@kernel.org>,
+        Satya Tangirala <satyat@google.com>,
+        open list <linux-kernel@vger.kernel.org>,
+        "moderated list:ARM/SAMSUNG S3C, S5P AND EXYNOS ARM ARCHITECTURES" 
+        <linux-arm-kernel@lists.infradead.org>,
+        "open list:ARM/SAMSUNG S3C, S5P AND EXYNOS ARM ARCHITECTURES" 
+        <linux-samsung-soc@vger.kernel.org>,
+        "moderated list:UNIVERSAL FLASH STORAGE HOST CONTROLLER DRIVER..." 
+        <linux-mediatek@lists.infradead.org>
+References: <cover.1617731442.git.asutoshd@codeaurora.org>
+ <5536f19fbbcfed1177a63458c6bd0b42ee6aa2e2.1617731442.git.asutoshd@codeaurora.org>
+From:   Adrian Hunter <adrian.hunter@intel.com>
+Organization: Intel Finland Oy, Registered Address: PL 281, 00181 Helsinki,
+ Business Identity Code: 0357606 - 4, Domiciled in Helsinki
+Message-ID: <d1e694cb-e3ba-6066-d0c0-8c17120e7ba5@intel.com>
+Date:   Wed, 7 Apr 2021 13:21:25 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.8.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1617789229.git.matti.vaittinen@fi.rohmeurope.com>
+In-Reply-To: <5536f19fbbcfed1177a63458c6bd0b42ee6aa2e2.1617731442.git.asutoshd@codeaurora.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add a reviewer entry for the regulator irq_helpers.
+On 6/04/21 8:52 pm, Asutosh Das wrote:
+> During runtime-suspend of ufs host, the scsi devices are
+> already suspended and so are the queues associated with them.
+> But the ufs host sends SSU (START_STOP_UNIT) to wlun
+> during its runtime-suspend.
+> During the process blk_queue_enter checks if the queue is not in
+> suspended state. If so, it waits for the queue to resume, and never
+> comes out of it.
+> The commit
+> (d55d15a33: scsi: block: Do not accept any requests while suspended)
+> adds the check if the queue is in suspended state in blk_queue_enter().
+> 
+> Call trace:
+>  __switch_to+0x174/0x2c4
+>  __schedule+0x478/0x764
+>  schedule+0x9c/0xe0
+>  blk_queue_enter+0x158/0x228
+>  blk_mq_alloc_request+0x40/0xa4
+>  blk_get_request+0x2c/0x70
+>  __scsi_execute+0x60/0x1c4
+>  ufshcd_set_dev_pwr_mode+0x124/0x1e4
+>  ufshcd_suspend+0x208/0x83c
+>  ufshcd_runtime_suspend+0x40/0x154
+>  ufshcd_pltfrm_runtime_suspend+0x14/0x20
+>  pm_generic_runtime_suspend+0x28/0x3c
+>  __rpm_callback+0x80/0x2a4
+>  rpm_suspend+0x308/0x614
+>  rpm_idle+0x158/0x228
+>  pm_runtime_work+0x84/0xac
+>  process_one_work+0x1f0/0x470
+>  worker_thread+0x26c/0x4c8
+>  kthread+0x13c/0x320
+>  ret_from_fork+0x10/0x18
+> 
+> Fix this by registering ufs device wlun as a scsi driver and
+> registering it for block runtime-pm. Also make this as a
+> supplier for all other luns. That way, this device wlun
+> suspends after all the consumers and resumes after
+> hba resumes.
+> 
+> Co-developed-by: Can Guo <cang@codeaurora.org>
+> Signed-off-by: Can Guo <cang@codeaurora.org>
+> Signed-off-by: Asutosh Das <asutoshd@codeaurora.org>
+> ---
 
-Signed-off-by: Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>
----
-Changelog:
- v6:
-  - New patch
----
- MAINTAINERS | 4 ++++
- 1 file changed, 4 insertions(+)
+v15 seems to be missing the updates to ufs_debugfs_get/put_user_access
+that were in v14:
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index c80ad735b384..8ed6af3e66f7 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -19211,6 +19211,10 @@ F:	include/dt-bindings/regulator/
- F:	include/linux/regulator/
- K:	regulator_get_optional
+
+@@ -60,14 +60,14 @@ __acquires(&hba->host_sem)
+ 		up(&hba->host_sem);
+ 		return -EBUSY;
+ 	}
+-	pm_runtime_get_sync(hba->dev);
++	scsi_autopm_get_device(hba->sdev_ufs_device);
+ 	return 0;
+ }
  
-+VOLTAGE AND CURRENT REGULATOR IRQ HELPERS
-+R:	Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>
-+F:	drivers/regulator/irq_helpers.c
-+
- VRF
- M:	David Ahern <dsahern@kernel.org>
- L:	netdev@vger.kernel.org
--- 
-2.25.4
+ static void ufs_debugfs_put_user_access(struct ufs_hba *hba)
+ __releases(&hba->host_sem)
+ {
+-	pm_runtime_put_sync(hba->dev);
++	scsi_autopm_put_device(hba->sdev_ufs_device);
+ 	up(&hba->host_sem);
+ }
+ 
+
+Also from last comments, the issue below:
+
+<SNIP>
+
+> +#ifdef CONFIG_PM_SLEEP
+> +static int ufshcd_wl_poweroff(struct device *dev)
+> +{
+> +	ufshcd_wl_shutdown(dev);
+
+This turned out to be wrong.  This is a PM op and SCSI has already
+quiesced the sdev's.  All that is needed is:
+
+	__ufshcd_wl_suspend(hba, UFS_SHUTDOWN_PM);
 
 
--- 
-Matti Vaittinen, Linux device drivers
-ROHM Semiconductors, Finland SWDC
-Kiviharjunlenkki 1E
-90220 OULU
-FINLAND
-
-~~~ "I don't think so," said Rene Descartes. Just then he vanished ~~~
-Simon says - in Latin please.
-~~~ "non cogito me" dixit Rene Descarte, deinde evanescavit ~~~
-Thanks to Simon Glass for the translation =] 
