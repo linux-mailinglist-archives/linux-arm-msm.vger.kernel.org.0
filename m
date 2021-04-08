@@ -2,143 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1C6E63584F4
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Apr 2021 15:41:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5F64A358520
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Apr 2021 15:49:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231719AbhDHNlF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Apr 2021 09:41:05 -0400
-Received: from mail.kernel.org ([198.145.29.99]:44662 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231601AbhDHNlE (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Apr 2021 09:41:04 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id C565F61130;
-        Thu,  8 Apr 2021 13:40:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1617889253;
-        bh=mBcEqmAZVT1QKBoR39KtP/gJRWbC4lWPZgNcHR3Hji4=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Zvn+Gvx/SFx0tBBV+C6ixit/7p9/aW7DS4O1xoJscnKY2UngCUxqScLDHMFVLbhHw
-         acpUpvxk3sQc8csEZ+g+ONgipgSN/lGRvMeKBc2ldp3ZwvwlI6oyYxRwobAdFsDM3e
-         nL9mSpMRNVsZowQBvJ2hkyc0yAFerkWX5JGgRWRLJUL/QUijTKf1kVNFY3cqetwVYV
-         m3Pe2ClTdFJavUdMf3TDRb9/PXhOQqZGxJQiEEhQggdoB2f+BKoxFD5vIbL3tcSy1b
-         OymF+JjxDaYoYOt8XdwWWVs5dz3T6D1VJz1PE3FNjxPuoq4ab9KW0Zy3VNC128I7de
-         CYQ0/gXih+voQ==
-Date:   Thu, 8 Apr 2021 19:10:47 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Jarvis Jiang <jarvis.w.jiang@gmail.com>
-Cc:     hemantk@codeaurora.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, cchen50@lenovo.com,
-        mpearson@lenovo.com
-Subject: Re: [PATCH 1/2] [v2] bus: mhi: pci_generic: Introduce Foxconn
- T99W175 support
-Message-ID: <20210408134047.GA32295@work>
-References: <20210408095524.3559-1-jarvis.w.jiang@gmail.com>
+        id S229964AbhDHNtR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Apr 2021 09:49:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43198 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231668AbhDHNtQ (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 8 Apr 2021 09:49:16 -0400
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C8D8C061761
+        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Apr 2021 06:49:05 -0700 (PDT)
+Received: by mail-lf1-x12d.google.com with SMTP id 12so4063417lfq.13
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Apr 2021 06:49:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=UTgjJ3FHb3vPYX9JqUC+Xv2zcOSZzBL4YmbnqLtgQjA=;
+        b=o4TSUSwHiiAAjF3VFtEcrQ4tpvWBkGs9ERxSNW5uZzLtvNG9jhjcMRPamT/5o9/e0W
+         BUsZ3k5gpkaZogfOl7aOj5p62Oese6YpCGS1rgrCXQfWePMOeL+xw7j2qYtwC3oGjanw
+         U84H3swzdTy5ppJvjX24OvmqblWycknA1u1OC2ULZTxrvia7LAa04EAJKyrkIYN3XSDk
+         jveX6QjfyaoRGwlXxWhn3whB5h8igUqUcgNjB3dLBmsU3D54LKOv4tZeNzCRB+YyTfnr
+         /kKlug35HLva8AbJEfxcKjzSsIIm3XucQlzZm3btrgmKxZs9G9ycKYJCdpfwr22w4m+f
+         LPeQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=UTgjJ3FHb3vPYX9JqUC+Xv2zcOSZzBL4YmbnqLtgQjA=;
+        b=HT4v7HlVGnw45LIs3U/XGcIcpR3fcMzzvDPkchkk8FYpQYFrn/+aF6c3Kfwz3uJpqi
+         TEDrgnhDsRIY95AWfMkjJ4rbJv5LK3ruqjlHkuQf/tJMDmkJekJT9wYu/4IBGtcOv/Tk
+         HL8CkcpvEa681jvFOlrqUX4+fmVTk9dv4tqU8NLfvn66EsQ73RNurjsPWNUTEC3EkehL
+         oMjw5WIu1DtdUoa7fEIj5zHbbfjO5azW5WP2DKfTor02El+X7wmuWQeQ3uLYPhQCj9Bb
+         RUJvTuo2FyUD1M3HD2Yan4kJ00eTGMTERjONvQmo7QbVl4sRrTBSR9FWphdbSimlNTcr
+         eh6w==
+X-Gm-Message-State: AOAM530HDZH3br0HB3uMeuWne5TNuid0PqjtDtFcsjQDMWEA2hAGxd1F
+        nsACsxCG4oNbtlWPbiPgQb8xoKjGSraGEK0riWrVhA==
+X-Google-Smtp-Source: ABdhPJydpnKNmcXAhArU85kHqM2ACtHCS13HM3NEI5XCdxT+1HfyDzLnwnpcyag83BGtGZUhP8Z6T0MKRnvupiqYS78=
+X-Received: by 2002:a19:ef18:: with SMTP id n24mr6305733lfh.291.1617889743784;
+ Thu, 08 Apr 2021 06:49:03 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210408095524.3559-1-jarvis.w.jiang@gmail.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+References: <1617280546-9583-1-git-send-email-skakit@codeaurora.org>
+In-Reply-To: <1617280546-9583-1-git-send-email-skakit@codeaurora.org>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Thu, 8 Apr 2021 15:48:52 +0200
+Message-ID: <CACRpkdbD6E3PY_JCEbwNiVfb8LoT6F5DzV7x71Us3Z7U3BaX=Q@mail.gmail.com>
+Subject: Re: [PATCH V2 0/3] Add GPIO support for PM7325, PM8350c, PMK8350 and PMR735A
+To:     satya priya <skakit@codeaurora.org>
+Cc:     Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Kiran Gunda <kgunda@codeaurora.org>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        linux-kernel <linux-kernel@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, MSM <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Apr 08, 2021 at 02:55:24AM -0700, Jarvis Jiang wrote:
-> Add support for T99W175 modems, this modem series is based on SDX55
-> qcom chip. The modem is mainly based on MBIM protocol for both the
-> data and control path.
-> 
-> This patch adds support for below modems:
-> 
->  - T99W175(based on sdx55), Both for eSIM and Non-eSIM
->  - DW5930e(based on sdx55), With eSIM, It's also T99W175
->  - DW5930e(based on sdx55), Non-eSIM, It's also T99W175
-> 
-> This patch was tested with Ubuntu 20.04 X86_64 PC as host
-> 
+On Thu, Apr 1, 2021 at 2:36 PM satya priya <skakit@codeaurora.org> wrote:
 
-The subject should be as below,
+> satya priya (3):
+>   pinctrl: qcom: spmi-gpio: Add support for four variants
+>   dt-bindings: pinctrl: qcom-pmic-gpio: Update the binding to add four
+>     new variants
+>   dt-bindings: pinctrl: qcom-pmic-gpio: Convert qcom pmic gpio bindings
+>     to YAML
 
-[PATCH v2] bus: mhi: pci_generic: Introduce Foxconn T99W175 support
+Please collect the ACKs and rebase like Bj=C3=B6rn says, sort stuff alphabe=
+tically
+and resend so I can try to apply it! The YAML conversion may need a nod fro=
+m
+the DT people as well.
 
-> Signed-off-by: Jarvis Jiang <jarvis.w.jiang@gmail.com>
-
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-
-Thanks,
-Mani
-
-> ---
-
-Also you need to add the changelog here.
-
->  drivers/bus/mhi/pci_generic.c | 47 +++++++++++++++++++++++++++++++++++
->  1 file changed, 47 insertions(+)
-> 
-> diff --git a/drivers/bus/mhi/pci_generic.c b/drivers/bus/mhi/pci_generic.c
-> index 544853c67e02..c66fb73e47ad 100644
-> --- a/drivers/bus/mhi/pci_generic.c
-> +++ b/drivers/bus/mhi/pci_generic.c
-> @@ -269,6 +269,44 @@ static const struct mhi_pci_dev_info mhi_quectel_em1xx_info = {
->  	.dma_data_width = 32
->  };
->  
-> +static const struct mhi_channel_config mhi_foxconn_sdx55_channels[] = {
-> +	MHI_CHANNEL_CONFIG_UL(0, "LOOPBACK", 32, 0),
-> +	MHI_CHANNEL_CONFIG_DL(1, "LOOPBACK", 32, 0),
-> +	MHI_CHANNEL_CONFIG_UL(4, "DIAG", 32, 1),
-> +	MHI_CHANNEL_CONFIG_DL(5, "DIAG", 32, 1),
-> +	MHI_CHANNEL_CONFIG_UL(12, "MBIM", 32, 0),
-> +	MHI_CHANNEL_CONFIG_DL(13, "MBIM", 32, 0),
-> +	MHI_CHANNEL_CONFIG_UL(32, "AT", 32, 0),
-> +	MHI_CHANNEL_CONFIG_DL(33, "AT", 32, 0),
-> +	MHI_CHANNEL_CONFIG_HW_UL(100, "IP_HW0_MBIM", 128, 2),
-> +	MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0_MBIM", 128, 3),
-> +};
-> +
-> +static struct mhi_event_config mhi_foxconn_sdx55_events[] = {
-> +	MHI_EVENT_CONFIG_CTRL(0, 128),
-> +	MHI_EVENT_CONFIG_DATA(1, 128),
-> +	MHI_EVENT_CONFIG_HW_DATA(2, 1024, 100),
-> +	MHI_EVENT_CONFIG_HW_DATA(3, 1024, 101)
-> +};
-> +
-> +static struct mhi_controller_config modem_foxconn_sdx55_config = {
-> +	.max_channels = 128,
-> +	.timeout_ms = 20000,
-> +	.num_channels = ARRAY_SIZE(mhi_foxconn_sdx55_channels),
-> +	.ch_cfg = mhi_foxconn_sdx55_channels,
-> +	.num_events = ARRAY_SIZE(mhi_foxconn_sdx55_events),
-> +	.event_cfg = mhi_foxconn_sdx55_events,
-> +};
-> +
-> +static const struct mhi_pci_dev_info mhi_foxconn_sdx55_info = {
-> +	.name = "foxconn-sdx55",
-> +	.fw = "qcom/sdx55m/sbl1.mbn",
-> +	.edl = "qcom/sdx55m/edl.mbn",
-> +	.config = &modem_foxconn_sdx55_config,
-> +	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
-> +	.dma_data_width = 32
-> +};
-> +
->  static const struct pci_device_id mhi_pci_id_table[] = {
->  	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0306),
->  		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx55_info },
-> @@ -280,6 +318,15 @@ static const struct pci_device_id mhi_pci_id_table[] = {
->  		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
->  	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0308),
->  		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx65_info },
-> +	/* T99W175 (sdx55), Both for eSIM and Non-eSIM */
-> +	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0ab),
-> +		.driver_data = (kernel_ulong_t) &mhi_foxconn_sdx55_info },
-> +	/* DW5930e (sdx55), With eSIM, It's also T99W175 */
-> +	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0b0),
-> +		.driver_data = (kernel_ulong_t) &mhi_foxconn_sdx55_info },
-> +	/* DW5930e (sdx55), Non-eSIM, It's also T99W175 */
-> +	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0b1),
-> +		.driver_data = (kernel_ulong_t) &mhi_foxconn_sdx55_info },
->  	{  }
->  };
->  MODULE_DEVICE_TABLE(pci, mhi_pci_id_table);
-> -- 
-> 2.25.1
-> 
+Yours,
+Linus Walleij
