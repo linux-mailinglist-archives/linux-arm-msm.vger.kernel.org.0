@@ -2,123 +2,248 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6F317357BBA
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Apr 2021 07:17:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 893CF357BC9
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Apr 2021 07:22:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229552AbhDHFRu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Apr 2021 01:17:50 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:52812 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229506AbhDHFRu (ORCPT
+        id S229579AbhDHFW6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Apr 2021 01:22:58 -0400
+Received: from mail-lf1-f54.google.com ([209.85.167.54]:36723 "EHLO
+        mail-lf1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229523AbhDHFW5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Apr 2021 01:17:50 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1617859059; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=rNM54h1kFxbzKZTRSekPMOTljmJgxx9lrWlM3GtgRsg=;
- b=mTFqVLf66KbjTWWkI8klivLfCZeRmld9vTh2u0YcA30Qt0A0AXQyl1/RBN3lms4Ak4ObrHCc
- I1iNrvbGBdpfeiwa8RShw1o0FbQ1WImVWwCzpQ+isqqMywQqKTX++eG6ZZxsg5vvo6bBDuD9
- 2kQjyS/HoxSMGGDkO2aYnCl5CXU=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
- 606e91e4febcffa80f8cc6d8 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 08 Apr 2021 05:17:24
- GMT
-Sender: sibis=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 6C146C433C6; Thu,  8 Apr 2021 05:17:24 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: sibis)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id B18F9C433CA;
-        Thu,  8 Apr 2021 05:17:23 +0000 (UTC)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Thu, 08 Apr 2021 10:47:23 +0530
-From:   Sibi Sankar <sibis@codeaurora.org>
-To:     Sujit Kautkar <sujitka@chromium.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Thu, 8 Apr 2021 01:22:57 -0400
+Received: by mail-lf1-f54.google.com with SMTP id n138so1858402lfa.3;
+        Wed, 07 Apr 2021 22:22:45 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:subject:from:reply-to:to:cc
+         :in-reply-to:references:mime-version:date:user-agent
+         :content-transfer-encoding;
+        bh=LwIkpBbg+hs9AAsq9S1MhcrqF1ZjzaswrunzqqDZ5p0=;
+        b=P1jZjeRqJDxuBN7lLfuo1UTNV7H03Q4eMGIVyLlgmD9+jXUleIzY28de6CwpVMw/3e
+         FSIMOhaub/SZEIFfnr8oO/2rB+/ee83TYdLAMr5DotOObkXjBWaICv35TwmlQEjXX9LB
+         36H0uLfMsxf41sJb2ZNk0DSDpirMvaqec9hAwoRIOPLhKZ6Y2cPGoDkCKMBWPJF3hu7A
+         UyT5g06mX1pHZOg9HTZaZUL0t2lRwkt6Mv79DJ706wiMiYJop7XOYrN84/PxKNPv+sjR
+         P+MzaWTEUa96niixOAfTz1yRARorBeYTQG6ZFSJBPxranbE/E0xprSbTa0uuZQzModHx
+         Ae7w==
+X-Gm-Message-State: AOAM531E/jVy4JpPRcmE+dhKrA1S+mlbuNFcddO7HgehncqgMQYQe4c0
+        BUclFnF+OEU5QN6e1Z38jyw=
+X-Google-Smtp-Source: ABdhPJyIg/bNU1H+W555nMnakz7CQrknh2ELCBr8mh+3eYxc2AoRqYtNnUjOFLTOeaucA6LvXb88dQ==
+X-Received: by 2002:a05:6512:3249:: with SMTP id c9mr4990577lfr.5.1617859364958;
+        Wed, 07 Apr 2021 22:22:44 -0700 (PDT)
+Received: from dc7vkhyyyyyyyyyyyyydy-3.rev.dnainternet.fi (dc7vkhyyyyyyyyyyyyydy-3.rev.dnainternet.fi. [2001:14ba:16e2:8300::6])
+        by smtp.gmail.com with ESMTPSA id x5sm2709152ljd.128.2021.04.07.22.22.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 07 Apr 2021 22:22:44 -0700 (PDT)
+Message-ID: <7ac9ab85553a5988e4a4db76d66261d01e865d31.camel@fi.rohmeurope.com>
+Subject: Re: [PATCH v6 3/8] regulator: IRQ based event/error notification
+ helpers
+From:   Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>
+Reply-To: matti.vaittinen@fi.rohmeurope.com
+To:     Andy Shevchenko <andy.shevchenko@gmail.com>
+Cc:     Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>
-Subject: Re: [PATCH] arm64: dts: qcom: Move rmtfs memory region
-In-Reply-To: <20210330014610.1451198-1-sujitka@chromium.org>
-References: <20210330014610.1451198-1-sujitka@chromium.org>
-Message-ID: <d38851ce189cd8555f719e5e38053b82@codeaurora.org>
-X-Sender: sibis@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        devicetree <devicetree@vger.kernel.org>,
+        linux-power <linux-power@fi.rohmeurope.com>,
+        linux-arm-msm@vger.kernel.org,
+        Linux-Renesas <linux-renesas-soc@vger.kernel.org>
+In-Reply-To: <CAHp75VcHeiQgvZ5e+Dz+gpKghCo5RSTQLsyHGGSgdVQbVu2t+g@mail.gmail.com>
+References: <cover.1617789229.git.matti.vaittinen@fi.rohmeurope.com>
+         <0862bbb6813891594f56700808d08160b6635bf4.1617789229.git.matti.vaittinen@fi.rohmeurope.com>
+         <CAHp75VcHeiQgvZ5e+Dz+gpKghCo5RSTQLsyHGGSgdVQbVu2t+g@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+Date:   Thu, 08 Apr 2021 08:22:37 +0300
+User-Agent: Evolution 3.34.4 (3.34.4-1.fc31) 
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hey Sujit,
-Thanks for the patch.
+Hello Andy, All.
 
-On 2021-03-30 07:16, Sujit Kautkar wrote:
-> Move rmtfs memory region so that it does not overlap with system
-> RAM (kernel data) when KAsan is enabled. This puts rmtfs right
-> after mba_mem which is not supposed to increase beyond 0x94600000
+On Wed, 2021-04-07 at 16:21 +0300, Andy Shevchenko wrote:
+> On Wed, Apr 7, 2021 at 1:04 PM Matti Vaittinen
+> <matti.vaittinen@fi.rohmeurope.com> wrote:
+> > Provide helper function for IC's implementing regulator
+> > notifications
+> > when an IRQ fires. The helper also works for IRQs which can not be
+> > acked.
+> > Helper can be set to disable the IRQ at handler and then re-
+> > enabling it
+> > on delayed work later. The helper also adds
+> > regulator_get_error_flags()
+> > errors in cache for the duration of IRQ disabling.
 > 
-> Signed-off-by: Sujit Kautkar <sujitka@chromium.org>
-> ---
->  arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 2 +-
->  arch/arm64/boot/dts/qcom/sc7180.dtsi         | 4 ++--
->  2 files changed, 3 insertions(+), 3 deletions(-)
+> Thanks for an update, my comments below. After addressing them, feel
+> free to add
+> Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-> b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-> index 07c8b2c926c0..fe052b477b72 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-> @@ -45,7 +45,7 @@ trips {
+> > Signed-off-by: Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>
+> > 
+> >  static int _regulator_get_error_flags(struct regulator_dev *rdev,
+> >                                         unsigned int *flags)
+> >  {
+> > -       int ret;
+> > +       int ret, tmpret;
+> > 
+> >         regulator_lock(rdev);
+> > 
+> > +       ret = rdev_get_cached_err_flags(rdev);
+> > +
+> >         /* sanity check */
+> > -       if (!rdev->desc->ops->get_error_flags) {
+> > +       if (rdev->desc->ops->get_error_flags) {
+> > +               tmpret = rdev->desc->ops->get_error_flags(rdev,
+> > flags);
+> > +               if (tmpret > 0)
+> > +                       ret |= tmpret;
 > 
->  /* Increase the size from 2MB to 8MB */
->  &rmtfs_mem {
-> -	reg = <0x0 0x84400000 0x0 0x800000>;
-> +	reg = <0x0 0x94600000 0x0 0x800000>;
+> Oh, I don't like this. Easy fix is to rename ret (okay, it's been
+> used
+> elsewhere, so adding then) to something meaningful, like error_flags,
+> then you can easily understand that value should be positive and
+> error
+> codes are negative.
 
-Sorry for the late comments. Can you
-please do the same for sc7180-idp
-as well?
+No wonder if this looks hairy. I think I have got this plain wrong. The
+rdev_get_cached_err_flags() is not updating the flags. Looks like just
+plain mistake from my side. I think I've mixed the returning flags via
+parameter and return value. This must be fixed. Well spotted.
 
-Reviewed-by: Sibi Sankar <sibis@codeaurora.org>
 
->  };
+> + */
+> > +void *devm_regulator_irq_helper(struct device *dev,
+> > +                               const struct regulator_irq_desc *d,
+> > int irq,
+> > +                               int irq_flags, int common_errs,
+> > +                               int *per_rdev_errs,
+> > +                               struct regulator_dev **rdev, int
+> > rdev_amount)
 > 
->  / {
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> index 1ea3344ab62c..ac956488908f 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> @@ -110,9 +110,9 @@ tz_mem: memory@80b00000 {
->  			no-map;
->  		};
-> 
-> -		rmtfs_mem: memory@84400000 {
-> +		rmtfs_mem: memory@94600000 {
->  			compatible = "qcom,rmtfs-mem";
-> -			reg = <0x0 0x84400000 0x0 0x200000>;
-> +			reg = <0x0 0x94600000 0x0 0x200000>;
->  			no-map;
-> 
->  			qcom,client-id = <1>;
+> I didn't get why you need the ** pointer instead of plain pointer.
 
--- 
-Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project.
+We have an array of pointers. And we give a pointer to the first
+pointer. Maybe it's the lack of coffee but I don't see why a single
+pointer would be correct? rdev structures are not in contagious memory,
+pointers to rdevs are. So we need address of first pointer, right?
++#include <linux/device.h>
+
+
+> > +#include <linux/err.h>
+> > +#include <linux/kernel.h>
+> > +#include <linux/of_irq.h>
+> 
+> Not sure how this header is used. I haven't found any direct users of
+> it. Perhaps you wanted interrupt.h?
+
+Thanks. I think this specific header may be a leftover from first draft
+where I thought I'll use named IRQs. The header was for
+ of_irq_get_byname(). That ended up as a mess for everything else but
+platform devices :) I'll check the headers, thanks.
+
+> > +#include <linux/regmap.h>
+> > +#include <linux/slab.h>
+> > +#include <linux/spinlock.h>
+> 
+> + Blank line? I would separate group of generic headers with
+> particular to the subsystem
+
+I don't see this being used in regulator subsystem - and to tell the
+truth, I don't really see the value.
+
+> > +#include <linux/regulator/driver.h>
+
+...
+
+> > +
+> > +reread:
+> > +       if (d->fatal_cnt && h->retry_cnt > d->fatal_cnt) {
+> > +               if (d->die)
+> > +                       ret = d->die(rid);
+> > +               else
+> > +                       die_loudly("Regulator HW failure? - no IC
+> > recovery");
+> > +
+> > +               /*
+> > +                * If the 'last resort' IC recovery failed we will
+> > have
+> > +                * nothing else left to do...
+> > +                */
+> > +               if (ret)
+> > +                       die_loudly("Regulator HW failure? - IC
+> > recovery failed");
+> 
+> Looking at the above code this will be executed if and only if
+> d->die() is defined, correct?
+> In that case, why not
+> 
+> if (d->die) {
+>   ret = ...
+>   if (ret)
+>    rdev_die_loudly(...);
+> } else
+>    rdev_die_loudly(...);
+> 
+> ?
+
+I think this should simply be:
+
+if (!d->die)
+	die_loudly("Regulator HW failure? - no IC recovery");
+
+ret = d->die(rdev);
+if (ret)
+	die_loudly(...);
+
+...
+
+> > +static void init_rdev_errors(struct regulator_irq *h)
+> > +{
+> > +       int i;
+> > +
+> > +       for (i = 0; i < h->rdata.num_states; i++) {
+> > +               if (h->rdata.states[i].possible_errs)
+> > +                       /* Can we trust writing this boolean is
+> > atomic? */
+> 
+> No. boolean is a compiler / platform specific and it may potentially
+> be written in a non-atomic way.
+
+Hmm.. I don't think this really is a problem here. We only use the
+use_cached_err for true/false evaluation - and if error getting api is
+called after the boolean is changed - then cached error is used, if
+before, then it is not used. Even if the value of the boolean was read
+in the middle of writing it, it will still evaluate either true or
+false - there is no 'maybe' state :)
+
+My point, I guess we can do the change without locking here. Please
+correct me if I am wrong. I'll just drop this comment.
+
+> 
+> re-enable / reenable
+> 
+> > + *             added to status. If that is the case it may be
+> > desirable to
+> > + *             return REGULATOR_ERROR_CLEARED and not
+> > REGULATOR_ERROR_ON to
+> > + *             allow IRQ fire again and to generate notifications
+> > also for
+> > + *             the new issues.
+> > + *
+> > + * This structure is passed to map_event and renable for reporting
+> > regulator
+> 
+> Ditto.
+
+the "renable" is referring to the callback function pointer which is
+named "renable".
+
+
+Best Regards
+-- Matti Vaittinen
+
