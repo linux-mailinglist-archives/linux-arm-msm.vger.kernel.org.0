@@ -2,204 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4F24A358F76
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Apr 2021 23:51:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5C946358F82
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Apr 2021 23:54:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232470AbhDHVvP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Apr 2021 17:51:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36258 "EHLO
+        id S232754AbhDHVxj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Apr 2021 17:53:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36782 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232350AbhDHVvP (ORCPT
+        with ESMTP id S232350AbhDHVxi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Apr 2021 17:51:15 -0400
-Received: from mail-qk1-x735.google.com (mail-qk1-x735.google.com [IPv6:2607:f8b0:4864:20::735])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25E6CC061760
-        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Apr 2021 14:51:03 -0700 (PDT)
-Received: by mail-qk1-x735.google.com with SMTP id q3so3868818qkq.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Apr 2021 14:51:03 -0700 (PDT)
+        Thu, 8 Apr 2021 17:53:38 -0400
+Received: from mail-qt1-x830.google.com (mail-qt1-x830.google.com [IPv6:2607:f8b0:4864:20::830])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23128C061760
+        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Apr 2021 14:53:24 -0700 (PDT)
+Received: by mail-qt1-x830.google.com with SMTP id s2so2674901qtx.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Apr 2021 14:53:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=k+Wsi7GpVsKLxsjf0wCLA/6InU/eraQK7xtB6V/7xvY=;
-        b=CcQkrP2akWpeGDSQyWsuIPtwDYQcrQF63dtU/b0poCiGi7XRucr8zY88+RpSbCHlBH
-         tQ35FRtxexNToj6wr63DmmWwwZeFwluDGgG82QJWINri2GPkZNvT6XvrApSDUNMDnKb3
-         0ikCWxFLjsX066d4aXdu2uGn4Ej2V8XlNeBYfG/Hsm6iRKMPUjZxctMq62SERwqPqbRD
-         3ZEwqh2lI30D6Bs27ePDEQK/UatuF3Wnh/NoBEaiTJF8YJYnWjKJ65Y0XQv2OcURyb+T
-         H9rCpPu1Fdj3ROTwgW+qom/BNy/ugvlLyYl13w4oxpyATaR8Ow5O673ZFbYJIl6LL5Bc
-         +uuw==
+        bh=i5g1l8xifarnGFKZcfnX8WD2aF8Apzj6HD5egcyeUh8=;
+        b=vaG2KBh189d7TZmUuvPHgxCJvrL7amxUPUc71iQ/utCzeDOi1HhJnVZZ1eT4/aKxQq
+         LcDpwKA/93MWV5MLbATVwcP9LygPP3KGNBj5JkRSvfCvqDpOQK9YnLIkrv4EkYlecESb
+         8eVkj882/feUO1nOujrywbsC+RxU5IGYfzzQOKNgf1YhjYSLBtN8ahzLXmhb2ib4s/G+
+         iz8LSf+gJeD92JDc1U0cSgXROYw7dx170PtdpH0hidMSm6GzWkzFa3h8U/9PmhE/M7Mr
+         bkcAGXSejjfmyxLMa9Y/9qBdrpLrOb03V+MzLUeyaouqBnRPsp/obm1EpL67KKT6/99M
+         /vhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=k+Wsi7GpVsKLxsjf0wCLA/6InU/eraQK7xtB6V/7xvY=;
-        b=sj8QeTFE/gtAqvYykApvnatqfxIJfits285ET47H2R2Ji8OEFvm3xxXfFq5mF2ikL9
-         jHdEY4YX3aLAGIg3osTlFg+GHi7sN43GkoXwc2nywVjVBz/WCc5wmoY5UTX8toOV0O5V
-         7g+j9yN8aKUSQurzvVAbzFE0MLo+6wuZ8lXWbLxY8SlGcazVXyrjgvAbXMcoHP1htSzO
-         fykDdcS1qfKI7kyxkk6qhqsu/qiz9ivlAcf8WdeQSQbRveLEZcar9QarEOKpjC8A0ZWQ
-         LaNL/ABDjpUvlcU1ir4rIiP240AwP2LNLAVWPxPAxKNuPY2EX8cZcSS6sCNrl2nr5jxt
-         LTbw==
-X-Gm-Message-State: AOAM533WJphFErMTJGPSuSiAKS7xw2hzDPF7BGcAcH9j6X9+pvNWLaiX
-        FNCwoXAye/aVozC/dbiG1y03WO0cNtgaCpJbBN3OKQ==
-X-Google-Smtp-Source: ABdhPJzM6WjaXDGzKu6COp/Zmi6FsjBlV/XmafidXKsKV8aq9TGMthF7mwVb1oJQGTk0WyLdkFGJ9vo2wfY79YeZ/7g=
-X-Received: by 2002:a37:9e50:: with SMTP id h77mr10773244qke.138.1617918662408;
- Thu, 08 Apr 2021 14:51:02 -0700 (PDT)
+        bh=i5g1l8xifarnGFKZcfnX8WD2aF8Apzj6HD5egcyeUh8=;
+        b=RMtBNh2awQ1Zt7d2CaaRG5FY0dlv6d2YkZ+68K+mYib3oVMHeuXUUvtikGFPjO5QJl
+         r3gN/jBYeHITc4yew4ITxWS7qPxLMfI87PE9UHseGlbCfY0GgXjfM2JQlga8ZLDO/xhE
+         k7LGNY3SrYcZCVCcpG+hDRZM7lPwlPwjUiX1Dy2cxNfMwscCtkGix9ypW3VABqWmhVBw
+         5mC1Q9mfq+Qlc6meuGp86k+4OhbvNAA6CYfQD37fLFvxGa9351ARn23NNaaUugkmJU3A
+         GSYLw0bG67WNeXX2GQlOCEPUQbeBljH5jhlYVqAyjAp/YcYK3KkG+be59e9d9/vn4rWC
+         Iu9A==
+X-Gm-Message-State: AOAM531Ax3dh4syYqDoWJEBP0WjEgIa6n8K9O+jW67Gq5P4odHTYsjD+
+        KDLePHuQR67wWkO+KVnsgBmLf/uON5Zn259um2aKkw==
+X-Google-Smtp-Source: ABdhPJwazj9FWuSPV9bHxG8ukv+3bBFs/5s4EePYj0/79a4vdUFo+2UxV8RU8gK+M9NIUTF1Ek/hqPP1sKhPeo53OuM=
+X-Received: by 2002:ac8:5f87:: with SMTP id j7mr9398597qta.135.1617918803348;
+ Thu, 08 Apr 2021 14:53:23 -0700 (PDT)
 MIME-Version: 1.0
-References: <20210408014737.955979-1-dmitry.baryshkov@linaro.org>
- <20210408014737.955979-2-dmitry.baryshkov@linaro.org> <20210408203849.GA1914405@robh.at.kernel.org>
-In-Reply-To: <20210408203849.GA1914405@robh.at.kernel.org>
+References: <20210404164914.712946-1-bjorn.andersson@linaro.org>
+ <161789462034.1629934.2631576576205147984.b4-ty@arndb.de> <YG8qIfFdY+As5tye@builder.lan>
+ <CAK8P3a2v6yUVi395ixJRer2wyNVNXB-uypCqw5ts327ST=fHPg@mail.gmail.com>
+In-Reply-To: <CAK8P3a2v6yUVi395ixJRer2wyNVNXB-uypCqw5ts327ST=fHPg@mail.gmail.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Fri, 9 Apr 2021 00:50:51 +0300
-Message-ID: <CAA8EJpq5tLxXPNH=tkLu9FPr0AGcp3W9aphSkQTO-685Wxsrsw@mail.gmail.com>
-Subject: Re: [PATCH v3 1/4] dt-bindings: clock: separate SDM845 GCC clock bindings
-To:     Rob Herring <robh@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        "open list:COMMON CLK FRAMEWORK" <linux-clk@vger.kernel.org>
+Date:   Fri, 9 Apr 2021 00:53:12 +0300
+Message-ID: <CAA8EJpq4r0-XTouJTxnNdO8tgydenb+LjDykWORSNeLb3vSqMg@mail.gmail.com>
+Subject: Re: [GIT PULL] Qualcomm ARM64 DT updates for 5.13
+To:     Arnd Bergmann <arnd@kernel.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        arm-soc <arm@kernel.org>, SoC Team <soc@kernel.org>,
+        Olof Johansson <olof@lixom.net>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Jack Pham <jackp@codeaurora.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Sandeep Maheswaram <sanm@codeaurora.org>,
+        Robert Foss <robert.foss@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        satya priya <skakit@codeaurora.org>,
+        Abhishek Kumar <kuabhs@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Shawn Guo <shawn.guo@linaro.org>,
+        Alexandru M Stan <amstan@chromium.org>,
+        Maulik Shah <mkshah@codeaurora.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 8 Apr 2021 at 23:38, Rob Herring <robh@kernel.org> wrote:
+On Thu, 8 Apr 2021 at 23:05, Arnd Bergmann <arnd@kernel.org> wrote:
 >
-> On Thu, Apr 08, 2021 at 04:47:35AM +0300, Dmitry Baryshkov wrote:
-> > Separate qcom,gcc-sdm845 clock bindings from the clock-less
-> > qcom,gcc.yaml, so that we can add required clocks and clock-names
-> > properties.
+> On Thu, Apr 8, 2021 at 6:06 PM Bjorn Andersson
+> <bjorn.andersson@linaro.org> wrote:
+> > On Thu 08 Apr 10:24 CDT 2021, Arnd Bergmann wrote:
+> > > Maybe see if you can address these in a follow-up, to avoid regressions.
+> > >
 > >
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> >  .../bindings/clock/qcom,gcc-sdm845.yaml       | 82 +++++++++++++++++++
-> >  .../devicetree/bindings/clock/qcom,gcc.yaml   |  2 -
-> >  2 files changed, 82 insertions(+), 2 deletions(-)
-> >  create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-sdm845.yaml
-> >
-> > diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-sdm845.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-sdm845.yaml
-> > new file mode 100644
-> > index 000000000000..4099b09ee9dd
-> > --- /dev/null
-> > +++ b/Documentation/devicetree/bindings/clock/qcom,gcc-sdm845.yaml
-> > @@ -0,0 +1,82 @@
-> > +# SPDX-License-Identifier: GPL-2.0-only
-> > +%YAML 1.2
-> > +---
-> > +$id: http://devicetree.org/schemas/clock/qcom,gcc-sdm845.yaml#
-> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> > +
-> > +title: Qualcomm Global Clock & Reset Controller Binding
-> > +
-> > +maintainers:
-> > +  - Stephen Boyd <sboyd@kernel.org>
-> > +  - Taniya Das <tdas@codeaurora.org>
-> > +
-> > +description: |
-> > +  Qualcomm global clock control module which supports the clocks, resets and
-> > +  power domains on SDM845
-> > +
-> > +  See also:
-> > +  - dt-bindings/clock/qcom,gcc-sdm845.h
-> > +
-> > +properties:
-> > +  compatible:
-> > +    const: qcom,gcc-sdm845
-> > +
-> > +  clocks:
-> > +    items:
-> > +      - description: Board XO source
-> > +      - description: Board active XO source
-> > +      - description: Sleep clock source
-> > +      - description: PCIE 0 Pipe clock source
-> > +      - description: PCIE 1 Pipe clock source
-> > +
-> > +  clock-names:
-> > +    items:
-> > +      - const: bi_tcxo
-> > +      - const: bi_tcxo_ao
-> > +      - const: sleep_clk
-> > +      - const: pcie_0_pipe_clk
-> > +      - const: pcie_1_pipe_clk
-> > +
-> > +  '#clock-cells':
-> > +    const: 1
-> > +
-> > +  '#reset-cells':
-> > +    const: 1
-> > +
-> > +  '#power-domain-cells':
-> > +    const: 1
-> > +
-> > +  reg:
-> > +    maxItems: 1
-> > +
-> > +  protected-clocks:
-> > +    description:
-> > +      Protected clock specifier list as per common clock binding.
-> > +
-> > +required:
-> > +  - compatible
-> > +  - reg
-> > +  - '#clock-cells'
-> > +  - '#reset-cells'
-> > +  - '#power-domain-cells'
-> > +
-> > +additionalProperties: false
-> > +
-> > +examples:
-> > +  # Example for GCC for MSM8960:
+> > I'm about to send you a another set of pull requests with some more
+> > goodies that was lingering on the list. I will take a look to see if I
+> > can follow up on that with some fixes for above warnings - and take
+> > another look at incorporating dtbs_check in my workflow.
 >
-> I've lost my QCom decoder ring. Is 8960 and 845 the same thing?
-
-No. Mea culpa.
-
+> Ok, sounds good. As I mentioned, I'm also just learning how to use
+> dtbs_check properly. Unfortunately, it takes ages to run on a
+> non-parallel build,
+> and using 'make -j32' as I normally do means the output gets reordered
+> with every run.
 >
-> > +  - |
-> > +    #include <dt-bindings/clock/qcom,rpmh.h>
-> > +    clock-controller@100000 {
-> > +      compatible = "qcom,gcc-sdm845";
-> > +      reg = <0x100000 0x1f0000>;
-> > +      clocks = <&rpmhcc RPMH_CXO_CLK>,
-> > +               <&rpmhcc RPMH_CXO_CLK_A>,
-> > +               <&sleep_clk>,
-> > +               <&pcie0_lane>,
-> > +               <&pcie1_lane>;
-> > +      clock-names = "bi_tcxo", "bi_tcxo_ao", "sleep_clk", "pcie_0_pipe_clk", "pcie_1_pipe_clk";
-> > +      #clock-cells = <1>;
-> > +      #reset-cells = <1>;
-> > +      #power-domain-cells = <1>;
-> > +    };
-> > +...
-> > diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc.yaml
-> > index ee0467fb5e31..490edad25830 100644
-> > --- a/Documentation/devicetree/bindings/clock/qcom,gcc.yaml
-> > +++ b/Documentation/devicetree/bindings/clock/qcom,gcc.yaml
-> > @@ -32,7 +32,6 @@ description: |
-> >    - dt-bindings/clock/qcom,gcc-mdm9615.h
-> >    - dt-bindings/reset/qcom,gcc-mdm9615.h
-> >    - dt-bindings/clock/qcom,gcc-sdm660.h  (qcom,gcc-sdm630 and qcom,gcc-sdm660)
-> > -  - dt-bindings/clock/qcom,gcc-sdm845.h
-> >
-> >  properties:
-> >    compatible:
-> > @@ -52,7 +51,6 @@ properties:
-> >        - qcom,gcc-mdm9615
-> >        - qcom,gcc-sdm630
-> >        - qcom,gcc-sdm660
-> > -      - qcom,gcc-sdm845
-> >
-> >    '#clock-cells':
-> >      const: 1
-> > --
-> > 2.30.2
-> >
+> It's probably ok if you figure out how to only run it for the files you
+> actually change in the Qualcomm tree.
 
-
+Disabling all non-Qualcomm arches makes `make dtbs_check` a little bit
+less painful.
 
 -- 
 With best wishes
