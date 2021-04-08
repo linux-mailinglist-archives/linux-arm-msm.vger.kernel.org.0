@@ -2,220 +2,158 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C6F8D3581EE
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Apr 2021 13:32:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 85F5735827E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Apr 2021 13:54:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231493AbhDHLce (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Apr 2021 07:32:34 -0400
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:3632 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231479AbhDHLca (ORCPT
+        id S231314AbhDHLyK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Apr 2021 07:54:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45822 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231244AbhDHLyK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Apr 2021 07:32:30 -0400
-Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
-  by alexa-out.qualcomm.com with ESMTP; 08 Apr 2021 04:32:20 -0700
-X-QCInternal: smtphost
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 08 Apr 2021 04:32:17 -0700
-X-QCInternal: smtphost
-Received: from c-skakit-linux.ap.qualcomm.com (HELO c-skakit-linux.qualcomm.com) ([10.242.51.242])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 08 Apr 2021 17:01:40 +0530
-Received: by c-skakit-linux.qualcomm.com (Postfix, from userid 2344709)
-        id 64340448F; Thu,  8 Apr 2021 17:01:39 +0530 (IST)
-From:   satya priya <skakit@codeaurora.org>
-To:     Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Sebastian Reichel <sre@kernel.org>
-Cc:     David Collins <collinsd@codeaurora.org>, kgunda@codeaurora.org,
-        Vinod Koul <vkoul@kernel.org>,
-        Courtney Cavin <courtney.cavin@sonymobile.com>,
-        linux-input@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org, satya priya <skakit@codeaurora.org>
-Subject: [PATCH V2 4/4] dt-bindings: input: pm8941-pwrkey: Convert pm8941 power key binding to yaml
-Date:   Thu,  8 Apr 2021 17:01:09 +0530
-Message-Id: <1617881469-31965-5-git-send-email-skakit@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1617881469-31965-1-git-send-email-skakit@codeaurora.org>
-References: <1617881469-31965-1-git-send-email-skakit@codeaurora.org>
+        Thu, 8 Apr 2021 07:54:10 -0400
+Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C0C5C061760
+        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Apr 2021 04:53:58 -0700 (PDT)
+Received: by mail-pg1-x536.google.com with SMTP id f29so1231724pgm.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Apr 2021 04:53:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=b8N5/slbOHKAsMgxg+NRLYuuOFp0gJPAj2masL5iJQo=;
+        b=M/4KlLXaQmDVKI5QcskXqIJ7oHrc6YdEGB8lSeS6LRMfvbwxSLDBgcIQmWDu+Cf0WS
+         EMCuik8LrSYeWHHWhdx9W3oMrQ6Ntcsq+lTm8WyNA4j2Un8sq2EHOQNcois4gnICluP7
+         OpcNYz4ByVanAVKY2wjQzxooLpp3f1O4XcU3MGADFxJXSM9pV4vDeNxkaSDVaiBR9Hwk
+         HsbR/Yy5ZzrWWkdhXgoa6GiMtgLV/vpwGYdiEUVDaLIw1mi3puVLtK1o/vjEny6kED+C
+         gCpeKBZSUyjlQ9u2dti7Ptt9gC6iWkYRB2M30X/sCwYzBwY3C3NpnmlsfSJBEBFf9q2U
+         QJBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=b8N5/slbOHKAsMgxg+NRLYuuOFp0gJPAj2masL5iJQo=;
+        b=gsphQYoqOqPYVkdeCTXMMdtADD74lAEoZx5OPymi7in/0lKHCAseCkYJc+HWuc6ayJ
+         VC5EIsqT0WR0kxMZVYknqvMkt3sdkbJ5Qt5Zn01eOzZchiA58mVgOodKRp0zspDhG84x
+         KoUDHKCq+21bjko6OTS9ZrmLb/mI1Sak6AVxHvF59EJGgckb06K4v60tpqwmxKh6v00g
+         EFrWey0XbVaI4vdsaQg25zucVfo/V4EKfVHu+ico7vAypVbWpGZzvBCkyaeT+8wq3HDm
+         IqOHEMTnHapl8pg6TLbguYw49v44pm2o/YTQcM52in+s+64uCOuEnLct/n4V893g+s1t
+         I2ig==
+X-Gm-Message-State: AOAM532Za+esRSD5K9v303YpdF2j5LCUVOLZBgPC28qlfaMUBECAKQij
+        pXVHLJGiTEgHJrU/t3jx9lJBvmeT93mneuJW9Ev7DQ==
+X-Google-Smtp-Source: ABdhPJz0qUkCKTy05reSZEe+kiUIPr/5B8Rtgl6DQI4KJWPoIg598td1fqF9xh9yKC3PLZwwfHc0SOhuvUNzF3gNKrA=
+X-Received: by 2002:a63:62c4:: with SMTP id w187mr7472449pgb.173.1617882837913;
+ Thu, 08 Apr 2021 04:53:57 -0700 (PDT)
+MIME-Version: 1.0
+References: <20210408095524.3559-1-jarvis.w.jiang@gmail.com>
+In-Reply-To: <20210408095524.3559-1-jarvis.w.jiang@gmail.com>
+From:   Loic Poulain <loic.poulain@linaro.org>
+Date:   Thu, 8 Apr 2021 14:02:07 +0200
+Message-ID: <CAMZdPi-qkQS7MW2Uc5EO7e_oraXvF6W8WxsWYfi4ydHyB15=-Q@mail.gmail.com>
+Subject: Re: [PATCH 1/2] [v2] bus: mhi: pci_generic: Introduce Foxconn T99W175 support
+To:     Jarvis Jiang <jarvis.w.jiang@gmail.com>
+Cc:     Manivannan Sadhasivam <mani@kernel.org>,
+        Hemant Kumar <hemantk@codeaurora.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        cchen50@lenovo.com, mpearson@lenovo.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Convert qcom pm8941 power key binding from .txt to .yaml format.
+On Thu, 8 Apr 2021 at 11:56, Jarvis Jiang <jarvis.w.jiang@gmail.com> wrote:
+>
+> Add support for T99W175 modems, this modem series is based on SDX55
+> qcom chip. The modem is mainly based on MBIM protocol for both the
+> data and control path.
+>
+> This patch adds support for below modems:
+>
+>  - T99W175(based on sdx55), Both for eSIM and Non-eSIM
+>  - DW5930e(based on sdx55), With eSIM, It's also T99W175
+>  - DW5930e(based on sdx55), Non-eSIM, It's also T99W175
+>
+> This patch was tested with Ubuntu 20.04 X86_64 PC as host
+>
+> Signed-off-by: Jarvis Jiang <jarvis.w.jiang@gmail.com>
 
-Signed-off-by: satya priya <skakit@codeaurora.org>
----
-Changes in V2:
- - Fixed bot errors, took reference from input.yaml for "linux,code"
- - Added one complete example for powerkey and resin, and referenced it
-   in main PON binding.
- - Moved this patch to the end of the series.
+It looks good, I assume that for now, you're relying on additional
+patches for the control path, like mhi_uci or mhi_wwan_ctrl.
 
- .../bindings/input/qcom,pm8941-pwrkey.txt          | 55 --------------
- .../bindings/input/qcom,pm8941-pwrkey.yaml         | 88 ++++++++++++++++++++++
- 2 files changed, 88 insertions(+), 55 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/input/qcom,pm8941-pwrkey.txt
- create mode 100644 Documentation/devicetree/bindings/input/qcom,pm8941-pwrkey.yaml
+Reviewed-by: Loic Poulain <loic.poulain@linaro.org>
 
-diff --git a/Documentation/devicetree/bindings/input/qcom,pm8941-pwrkey.txt b/Documentation/devicetree/bindings/input/qcom,pm8941-pwrkey.txt
-deleted file mode 100644
-index 6cd08bc..0000000
---- a/Documentation/devicetree/bindings/input/qcom,pm8941-pwrkey.txt
-+++ /dev/null
-@@ -1,55 +0,0 @@
--Qualcomm PM8941 PMIC Power Key
--
--PROPERTIES
--
--- compatible:
--	Usage: required
--	Value type: <string>
--	Definition: must be one of:
--		    "qcom,pm8941-pwrkey"
--		    "qcom,pm8941-resin"
--		    "qcom,pmk8350-pwrkey"
--		    "qcom,pmk8350-resin"
--
--- reg:
--	Usage: required
--	Value type: <prop-encoded-array>
--	Definition: base address of registers for block
--
--- interrupts:
--	Usage: required
--	Value type: <prop-encoded-array>
--	Definition: key change interrupt; The format of the specifier is
--		    defined by the binding document describing the node's
--		    interrupt parent.
--
--- debounce:
--	Usage: optional
--	Value type: <u32>
--	Definition: time in microseconds that key must be pressed or released
--		    for state change interrupt to trigger.
--
--- bias-pull-up:
--	Usage: optional
--	Value type: <empty>
--	Definition: presence of this property indicates that the KPDPWR_N pin
--		    should be configured for pull up.
--
--- linux,code:
--	Usage: optional
--	Value type: <u32>
--	Definition: The input key-code associated with the power key.
--		    Use the linux event codes defined in
--		    include/dt-bindings/input/linux-event-codes.h
--		    When property is omitted KEY_POWER is assumed.
--
--EXAMPLE
--
--	pwrkey@800 {
--		compatible = "qcom,pm8941-pwrkey";
--		reg = <0x800>;
--		interrupts = <0x0 0x8 0 IRQ_TYPE_EDGE_BOTH>;
--		debounce = <15625>;
--		bias-pull-up;
--		linux,code = <KEY_POWER>;
--	};
-diff --git a/Documentation/devicetree/bindings/input/qcom,pm8941-pwrkey.yaml b/Documentation/devicetree/bindings/input/qcom,pm8941-pwrkey.yaml
-new file mode 100644
-index 0000000..fb6cbe8
---- /dev/null
-+++ b/Documentation/devicetree/bindings/input/qcom,pm8941-pwrkey.yaml
-@@ -0,0 +1,88 @@
-+# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/input/qcom,pm8941-pwrkey.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Qualcomm PM8941 PMIC Power Key
-+
-+maintainers:
-+  - Courtney Cavin <courtney.cavin@sonymobile.com>
-+  - Vinod Koul <vkoul@kernel.org>
-+
-+properties:
-+  compatible:
-+    enum:
-+      - qcom,pm8941-pwrkey
-+      - qcom,pm8941-resin
-+      - qcom,pmk8350-pwrkey
-+      - qcom,pmk8350-resin
-+
-+  interrupts:
-+    description: |
-+          Key change interrupt; The format of the specifier is
-+          defined by the binding document describing the node's
-+          interrupt parent.
-+
-+  debounce:
-+    description: |
-+          Time in microseconds that key must be pressed or
-+          released for state change interrupt to trigger.
-+    $ref: /schemas/types.yaml#/definitions/uint32
-+
-+  bias-pull-up:
-+    description: |
-+           Presence of this property indicates that the KPDPWR_N
-+           pin should be configured for pull up.
-+    $ref: /schemas/types.yaml#/definitions/flag
-+
-+  linux,code:
-+    description: |
-+           The input key-code associated with the power key.
-+           Use the linux event codes defined in
-+           include/dt-bindings/input/linux-event-codes.h
-+           When property is omitted KEY_POWER is assumed.
-+    $ref: "input.yaml#"
-+
-+required:
-+  - compatible
-+  - interrupts
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+   #include <dt-bindings/interrupt-controller/irq.h>
-+   #include <dt-bindings/input/linux-event-codes.h>
-+   #include <dt-bindings/spmi/spmi.h>
-+   spmi_bus: spmi@c440000 {
-+     reg = <0x0c440000 0x1100>;
-+     #address-cells = <2>;
-+     #size-cells = <0>;
-+     pmk8350: pmic@0 {
-+       reg = <0x0 SPMI_USID>;
-+       #address-cells = <1>;
-+       #size-cells = <0>;
-+       pmk8350_pon: pon_hlos@1300 {
-+         reg = <0x1300>;
-+         compatible = "qcom,pm8998-pon";
-+
-+         pwrkey {
-+            compatible = "qcom,pm8941-pwrkey";
-+            interrupts = < 0x0 0x8 0 IRQ_TYPE_EDGE_BOTH >;
-+            debounce = <15625>;
-+            bias-pull-up;
-+            linux,code = <KEY_POWER>;
-+         };
-+
-+         resin {
-+            compatible = "qcom,pm8941-resin";
-+            interrupts = <0x0 0x8 1 IRQ_TYPE_EDGE_BOTH>;
-+            debounce = <15625>;
-+            bias-pull-up;
-+            linux,code = <KEY_VOLUMEDOWN>;
-+         };
-+       };
-+     };
-+   };
-+...
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
-of Code Aurora Forum, hosted by The Linux Foundation
 
+
+> ---
+>  drivers/bus/mhi/pci_generic.c | 47 +++++++++++++++++++++++++++++++++++
+>  1 file changed, 47 insertions(+)
+>
+> diff --git a/drivers/bus/mhi/pci_generic.c b/drivers/bus/mhi/pci_generic.c
+> index 544853c67e02..c66fb73e47ad 100644
+> --- a/drivers/bus/mhi/pci_generic.c
+> +++ b/drivers/bus/mhi/pci_generic.c
+> @@ -269,6 +269,44 @@ static const struct mhi_pci_dev_info mhi_quectel_em1xx_info = {
+>         .dma_data_width = 32
+>  };
+>
+> +static const struct mhi_channel_config mhi_foxconn_sdx55_channels[] = {
+> +       MHI_CHANNEL_CONFIG_UL(0, "LOOPBACK", 32, 0),
+> +       MHI_CHANNEL_CONFIG_DL(1, "LOOPBACK", 32, 0),
+> +       MHI_CHANNEL_CONFIG_UL(4, "DIAG", 32, 1),
+> +       MHI_CHANNEL_CONFIG_DL(5, "DIAG", 32, 1),
+> +       MHI_CHANNEL_CONFIG_UL(12, "MBIM", 32, 0),
+> +       MHI_CHANNEL_CONFIG_DL(13, "MBIM", 32, 0),
+> +       MHI_CHANNEL_CONFIG_UL(32, "AT", 32, 0),
+> +       MHI_CHANNEL_CONFIG_DL(33, "AT", 32, 0),
+> +       MHI_CHANNEL_CONFIG_HW_UL(100, "IP_HW0_MBIM", 128, 2),
+> +       MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0_MBIM", 128, 3),
+> +};
+> +
+> +static struct mhi_event_config mhi_foxconn_sdx55_events[] = {
+> +       MHI_EVENT_CONFIG_CTRL(0, 128),
+> +       MHI_EVENT_CONFIG_DATA(1, 128),
+> +       MHI_EVENT_CONFIG_HW_DATA(2, 1024, 100),
+> +       MHI_EVENT_CONFIG_HW_DATA(3, 1024, 101)
+> +};
+> +
+> +static struct mhi_controller_config modem_foxconn_sdx55_config = {
+> +       .max_channels = 128,
+> +       .timeout_ms = 20000,
+> +       .num_channels = ARRAY_SIZE(mhi_foxconn_sdx55_channels),
+> +       .ch_cfg = mhi_foxconn_sdx55_channels,
+> +       .num_events = ARRAY_SIZE(mhi_foxconn_sdx55_events),
+> +       .event_cfg = mhi_foxconn_sdx55_events,
+> +};
+> +
+> +static const struct mhi_pci_dev_info mhi_foxconn_sdx55_info = {
+> +       .name = "foxconn-sdx55",
+> +       .fw = "qcom/sdx55m/sbl1.mbn",
+> +       .edl = "qcom/sdx55m/edl.mbn",
+> +       .config = &modem_foxconn_sdx55_config,
+> +       .bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+> +       .dma_data_width = 32
+> +};
+> +
+>  static const struct pci_device_id mhi_pci_id_table[] = {
+>         { PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0306),
+>                 .driver_data = (kernel_ulong_t) &mhi_qcom_sdx55_info },
+> @@ -280,6 +318,15 @@ static const struct pci_device_id mhi_pci_id_table[] = {
+>                 .driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
+>         { PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0308),
+>                 .driver_data = (kernel_ulong_t) &mhi_qcom_sdx65_info },
+> +       /* T99W175 (sdx55), Both for eSIM and Non-eSIM */
+> +       { PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0ab),
+> +               .driver_data = (kernel_ulong_t) &mhi_foxconn_sdx55_info },
+> +       /* DW5930e (sdx55), With eSIM, It's also T99W175 */
+> +       { PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0b0),
+> +               .driver_data = (kernel_ulong_t) &mhi_foxconn_sdx55_info },
+> +       /* DW5930e (sdx55), Non-eSIM, It's also T99W175 */
+> +       { PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0b1),
+> +               .driver_data = (kernel_ulong_t) &mhi_foxconn_sdx55_info },
+>         {  }
+>  };
+>  MODULE_DEVICE_TABLE(pci, mhi_pci_id_table);
+> --
+> 2.25.1
+>
