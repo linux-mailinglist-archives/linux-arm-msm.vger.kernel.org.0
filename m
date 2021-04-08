@@ -2,83 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6034F357C8F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Apr 2021 08:24:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3C554357CBC
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Apr 2021 08:45:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229867AbhDHGYx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Apr 2021 02:24:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58492 "EHLO
+        id S229505AbhDHGqD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Apr 2021 02:46:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34806 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229512AbhDHGYv (ORCPT
+        with ESMTP id S229819AbhDHGqD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Apr 2021 02:24:51 -0400
-Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89FD7C061760;
-        Wed,  7 Apr 2021 23:24:40 -0700 (PDT)
-Received: by mail-pl1-x632.google.com with SMTP id d8so476083plh.11;
-        Wed, 07 Apr 2021 23:24:40 -0700 (PDT)
+        Thu, 8 Apr 2021 02:46:03 -0400
+Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32C87C061761
+        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Apr 2021 23:45:51 -0700 (PDT)
+Received: by mail-pl1-x636.google.com with SMTP id h20so513499plr.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Apr 2021 23:45:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=KRB+MP29i6N/LmWGaVeAvxO+5fLRMR6FbJkAYNaIpxs=;
-        b=BErOp91cY4J1oxkHp0oTkioGkJfTkXFzkrXSnxV4hbBq/9PpQ6bR7+bodwp2lqUA0z
-         peH4PUkdcpxPrzuOsloYjNztsa7C7vlQe+yjkcrDgBx0cgLF8TXtDdOBXD42LFqH0FGz
-         7cACSrIS0+Xg2Vr6syAsqZm/gdMlYhVWAIWzvlbuitReWSNWhkVG4VVmJ3rCmss2rcik
-         2TKLY9J2cw9LEXtFmw/7QbBra6/jNuQkwGKYIXgmCudmzGmmfb+5WK2640YOZrjvCrVa
-         ozXZFEl5twUJZF9pX6sCgCsd+SsBfbi+Hfc6taKr+mQlRCOnUFl5ddJT2YdRyQcR/Zmo
-         Rvug==
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ZIYfXAXPOp7ZatAz23o3vJ3662QuBOhC/c1rjTDCIu0=;
+        b=POhQHZ7X/bDZKkqiIHdXpytiko3Kg763WFx1IAWlLE676y/Kxj40Nksj6yvpi4tCKj
+         8BxHTQ4jAaf5OTRh3geuw4K0b0yedRVEdw0GuuBt0dxAgB19N7zIGi6jNm9Do77LEJ79
+         l5IGIZT8559uENOV9umiXVkt/gudM6BKg606+MsIHLl2dQEImGTSYHE2GnJtgqZxfBw6
+         fMMwlercmku+uNiwYHDI1pd5gTjT7EdBRvHmC6HZBVBswatcSX7E43PiprEp3G/kk2Xk
+         +NRTyMKzjFYGya89nu3a/NBDAnw3Ftb8TIlApZV8MEGecwK3jFOc/rIMZhRCy/GoUxhi
+         SKBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=KRB+MP29i6N/LmWGaVeAvxO+5fLRMR6FbJkAYNaIpxs=;
-        b=KJDu0yb8YYgnFN8YbMFd0Y3b5ELcN2zuiR2Sd4xwl1TuXZp9kJqi1gPbwnz8+QwDnN
-         31lxJoTz8U+2TmI5vyhqERHRMPE0y3Ppp00xZUKEg0FWtEUWtKZhkXqx/BvQ/pKfFDte
-         9ult/IYfXZtqRSaK0hcyyG4hZtFDr+TTc8zwUy+rfoyAk/FiaI4RWQLk4hnpDzDr/l1V
-         42nE2WyoXrfFsNe2HnDnxdKJRHmki0z1CqwgPzotIJzJI1kYn24WIi9wwZBy9l5GWZAc
-         OVRVYldNZhyzubUD1RxirjMHzKYk7hvqd2hR3zGSg+JWZm+nmb+WG3303lWcoWwZqcdo
-         ytow==
-X-Gm-Message-State: AOAM531OH3vGlmtnQxkRRXk2zCY1ixKSeP679mK1vEyuXR9l62AfBAcT
-        fiuVhsnnPAaeGbo7qTO/Pt8=
-X-Google-Smtp-Source: ABdhPJyvWQHavbi+JCfVXxFrbZTyn5sO7/L/HQRV4y1Sv0u8qjO/mgVavvJNDvl7T5FOE89JdkRJwA==
-X-Received: by 2002:a17:90b:4005:: with SMTP id ie5mr6691244pjb.195.1617863080044;
-        Wed, 07 Apr 2021 23:24:40 -0700 (PDT)
-Received: from google.com ([2620:15c:202:201:488:412e:a196:e28b])
-        by smtp.gmail.com with ESMTPSA id e1sm23659387pfi.175.2021.04.07.23.24.38
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ZIYfXAXPOp7ZatAz23o3vJ3662QuBOhC/c1rjTDCIu0=;
+        b=uTN3w1EncTy4RJTWLbhHHbvrSCAMe8gmSHENSTAsCX+7MA0uypoLyCHIwMFVo80Edr
+         i2s0gp5z+NhRuy1nplU0N7TyfDXD7SUXHXcVCBzxpmNd/c8s76zGegosMLl0cuSNuJHn
+         HcQnYrmCfGU9enNvhrcqXVvomDDGV7iGShOOQ1TUnedjNixB9BLogUVIegnNZJnJVDs7
+         429UOIRpjQEp/y4IEezocvdUcYW8aRchKiFTWMae037F9+oIzqYxJcCje5IbdxvDUH+Y
+         i34q24cKEN3aja/G77TzuB5AILknjKw3m+H2im4erjITRS275mot8JfqxLtDUpguulX+
+         UFIw==
+X-Gm-Message-State: AOAM532kT+Js5JukmPEOyHmZ6YC/cNmgsls2mdHzDoD1WIrphKBITMgp
+        0Ec+M2p7NaBM7m1k0UZlJjYmKDcFujmFWbo=
+X-Google-Smtp-Source: ABdhPJxHOQiNZBcpNPjaImrKRbHQdwqhh1CqIfZPknK4NLlBreFHuwDuXfN5EO08Pe0QcBTUY3pSNg==
+X-Received: by 2002:a17:902:748c:b029:e9:3d7e:7894 with SMTP id h12-20020a170902748cb02900e93d7e7894mr6609634pll.51.1617864350335;
+        Wed, 07 Apr 2021 23:45:50 -0700 (PDT)
+Received: from localhost.localdomain ([2409:4072:6e85:565f:2e19:9e93:4526:a814])
+        by smtp.gmail.com with ESMTPSA id q9sm4604672pfn.19.2021.04.07.23.45.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Apr 2021 23:24:39 -0700 (PDT)
-Date:   Wed, 7 Apr 2021 23:24:37 -0700
-From:   Dmitry Torokhov <dmitry.torokhov@gmail.com>
-To:     skakit@codeaurora.org
-Cc:     Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        David Collins <collinsd@codeaurora.org>, kgunda@codeaurora.org,
-        linux-input@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 1/3] input: pm8941-pwrkey: add support for PMK8350
- PON_HLOS PMIC peripheral
-Message-ID: <YG6hpRiNjcfT3gVw@google.com>
-References: <1614922721-1390-1-git-send-email-skakit@codeaurora.org>
- <1614922721-1390-2-git-send-email-skakit@codeaurora.org>
- <690456c09c433741900643eafad25beb@codeaurora.org>
+        Wed, 07 Apr 2021 23:45:49 -0700 (PDT)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     hemantk@codeaurora.org, linux-kernel@vger.kernel.org,
+        bbhatt@codeaurora.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH] bus: mhi: core: Fix shadow declarations
+Date:   Thu,  8 Apr 2021 12:15:42 +0530
+Message-Id: <20210408064542.22451-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <690456c09c433741900643eafad25beb@codeaurora.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Satya,
+This commit fixes below sparse warnings with W=2 about shadow
+declarations:
 
-On Wed, Apr 07, 2021 at 08:59:39PM +0530, skakit@codeaurora.org wrote:
-> Gentle Reminder!
+drivers/bus/mhi/core/main.c: In function ‘parse_xfer_event’:
+drivers/bus/mhi/core/main.c:667:17: warning: declaration of ‘flags’ shadows a previous local [-Wshadow]
+  667 |   unsigned long flags;
+      |                 ^~~~~
+drivers/bus/mhi/core/main.c:565:16: note: shadowed declaration is here
+  565 |  unsigned long flags = 0;
+      |                ^~~~~
+drivers/bus/mhi/core/main.c: In function ‘mhi_process_ctrl_ev_ring’:
+drivers/bus/mhi/core/main.c:856:23: warning: declaration of ‘new_state’ shadows a previous local [-Wshadow]
+  856 |     enum mhi_pm_state new_state;
+      |                       ^~~~~~~~~
+drivers/bus/mhi/core/main.c:837:19: note: shadowed declaration is here
+  837 |    enum mhi_state new_state;
+      |                   ^~~~~~~~~
 
-Sorry, please address Rob's comments on the bindings, the driver code
-looks OK to me.
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+---
+ drivers/bus/mhi/core/main.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
-Thanks.
-
+diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
+index b0c8afe16e3a..8e28e4a3ab4b 100644
+--- a/drivers/bus/mhi/core/main.c
++++ b/drivers/bus/mhi/core/main.c
+@@ -664,8 +664,6 @@ static int parse_xfer_event(struct mhi_controller *mhi_cntrl,
+ 	case MHI_EV_CC_OOB:
+ 	case MHI_EV_CC_DB_MODE:
+ 	{
+-		unsigned long flags;
+-
+ 		mhi_chan->db_cfg.db_mode = 1;
+ 		read_lock_irqsave(&mhi_cntrl->pm_lock, flags);
+ 		if (tre_ring->wp != tre_ring->rp &&
+@@ -853,8 +851,6 @@ int mhi_process_ctrl_ev_ring(struct mhi_controller *mhi_cntrl,
+ 				break;
+ 			case MHI_STATE_SYS_ERR:
+ 			{
+-				enum mhi_pm_state new_state;
+-
+ 				dev_dbg(dev, "System error detected\n");
+ 				write_lock_irq(&mhi_cntrl->pm_lock);
+ 				new_state = mhi_tryset_pm_state(mhi_cntrl,
 -- 
-Dmitry
+2.25.1
+
