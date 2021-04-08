@@ -2,92 +2,141 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7E04E358726
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Apr 2021 16:28:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AB9F135873C
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Apr 2021 16:34:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231672AbhDHO3B (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Apr 2021 10:29:01 -0400
-Received: from mail.kernel.org ([198.145.29.99]:35718 "EHLO mail.kernel.org"
+        id S231480AbhDHOfD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Apr 2021 10:35:03 -0400
+Received: from m12-11.163.com ([220.181.12.11]:39708 "EHLO m12-11.163.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231659AbhDHO3B (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Apr 2021 10:29:01 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id D91EE6113D;
-        Thu,  8 Apr 2021 14:28:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1617892130;
-        bh=2FuIUpNq5FIFplx4EeFCO4ieAf4OaROCW1udvxA38HM=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=q4+2HCpcV+rS5tQbc0ehHIFcU43mYM92ygvDGNdO61ec7U7uxl6z/g5VUuCahu1d7
-         tclDT/WHqPdalS2H/kvCw59rIEj1o0/NyKCgLxrewa2mIEtUgBjdtsKK2x81FzjliN
-         uw+jo1d/K4o/DLj5Xy+jU/mH+yercmiEO/1QVp6bBQaQnRHe+J7+YaOT0+95DCEF+J
-         cASgDaHb2prTzoCruYIXU+2JIyHemzG79APBJ3AyPtiBdDo1GAWEuaaV3V/Ci1JOum
-         qSBa6ANdwyb4B26pLZ/tFa1b2RZBtpfnmixCCsdP9XolNJxUCMuBNpZeja4RZb/2Cn
-         Zh+P3eorDIV0Q==
-Received: by mail-ed1-f53.google.com with SMTP id f8so2657838edd.11;
-        Thu, 08 Apr 2021 07:28:49 -0700 (PDT)
-X-Gm-Message-State: AOAM532z3GWc8H9CFlDJGH3d7jyujc0DqC59rp/ImRAtx8Cvm6NAG0jB
-        ooKDuKv1w3VGCXYww3Xikj0LyN33OXpSa/Dwyw==
-X-Google-Smtp-Source: ABdhPJz4i8EdGJ6gG+z3e0xfEVwHZQEAJpCAY2QsFcp9e1muisyWgXQMDwqQbL0LT7UVpYYGYEQjULRMZIZcSo7sitA=
-X-Received: by 2002:a50:fd12:: with SMTP id i18mr6127269eds.137.1617892128439;
- Thu, 08 Apr 2021 07:28:48 -0700 (PDT)
+        id S231370AbhDHOfC (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 8 Apr 2021 10:35:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+        s=s110527; h=From:Subject:Date:Message-Id:MIME-Version; bh=Cacx6
+        cwEprhq0gPa/mEYy1Brd/gFq94w3n5KIQaFV7M=; b=M4qysGFJ3kxt6PHjuGBLn
+        tmlGXwm3Szj3cXnsPAYi2fNQykqyPBF8PUCd3arfq+aLYCE46a/+ADR6Xj7+37+v
+        LQYPJAYGu4+xZCeP5HKlB6vv02qamXg5zO9fA6KPCRIhRGfuAJ5iQ56pl1jAljMH
+        mD8w4LbMZWmbbQ1hBcmphY=
+Received: from yangjunlin.ccdomain.com (unknown [119.137.53.45])
+        by smtp7 (Coremail) with SMTP id C8CowAD375diFG9gN7jrWA--.29003S2;
+        Thu, 08 Apr 2021 22:34:12 +0800 (CST)
+From:   angkery <angkery@163.com>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, ohad@wizery.com,
+        mathieu.poirier@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Junlin Yang <yangjunlin@yulong.com>
+Subject: [PATCH] remoteproc: qcom: wcss: Remove unnecessary PTR_ERR()
+Date:   Thu,  8 Apr 2021 22:33:22 +0800
+Message-Id: <20210408143322.1647-1-angkery@163.com>
+X-Mailer: git-send-email 2.24.0.windows.2
 MIME-Version: 1.0
-References: <1615447798-6959-1-git-send-email-skakit@codeaurora.org>
- <1615447798-6959-3-git-send-email-skakit@codeaurora.org> <YEpNV55KR2nlAXMP@builder.lan>
- <86f8d5dbdb8d5d6627b9deece1978d07@codeaurora.org> <20210408023656.GM904837@yoga>
-In-Reply-To: <20210408023656.GM904837@yoga>
-From:   Rob Herring <robh+dt@kernel.org>
-Date:   Thu, 8 Apr 2021 09:28:36 -0500
-X-Gmail-Original-Message-ID: <CAL_JsqJXaeuWPDAH30p_DKqkLm+tru8N8kqsgLaT1Y6pr6k-Lw@mail.gmail.com>
-Message-ID: <CAL_JsqJXaeuWPDAH30p_DKqkLm+tru8N8kqsgLaT1Y6pr6k-Lw@mail.gmail.com>
-Subject: Re: [PATCH 2/3] dt-bindings: mfd: Convert pm8xxx bindings to yaml
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     satya priya <skakit@codeaurora.org>,
-        Alessandro Zummo <a.zummo@towertech.it>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Andy Gross <agross@kernel.org>,
-        Lee Jones <lee.jones@linaro.org>,
-        "open list:REAL TIME CLOCK (RTC) SUBSYSTEM" 
-        <linux-rtc@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        devicetree@vger.kernel.org, Kiran Gunda <kgunda@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: C8CowAD375diFG9gN7jrWA--.29003S2
+X-Coremail-Antispam: 1Uf129KBjvJXoWxAr43KFykZryfuryrXryDGFg_yoW5tFy7p3
+        9ruFW5trykJrW8Gr9xZrs7Z3Wfuw1xJFW8Cw47Jas3Ca4Yyr4UAa15Xr10vFWFqrWrWay3
+        ZF48Z3yUC3W2gFJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+        9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07jjxRhUUUUU=
+X-Originating-IP: [119.137.53.45]
+X-CM-SenderInfo: 5dqjyvlu16il2tof0z/xtbBRgRuI13l-Mdu0gAAsw
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Apr 7, 2021 at 9:37 PM Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
->
-> On Wed 07 Apr 10:37 CDT 2021, skakit@codeaurora.org wrote:
->
-> > Hi Bjorn,
-> >
-> > On 2021-03-11 22:33, Bjorn Andersson wrote:
-> > > On Thu 11 Mar 01:29 CST 2021, satya priya wrote:
-> [..]
-> > > > +patternProperties:
-> > > > +  "rtc@[0-9a-f]+$":
-> > >
-> > > Can we somehow link this to individual binding docs instead of listing
-> > > all the possible functions here?
-> > >
-> >
-> > you mean we should split this into two:
-> > qcom-pm8xxx.yaml and qcom-pm8xxx-rtc.yaml
-> > Please correct me if wrong.
-> >
->
-> Right, I'm worried that it will be quite hard to maintain this document
-> once we start adding all the various pmic blocks to it. So if we somehow
-> can maintain a series of qcom-pm8xxx-<func>.yaml and just ref them into
-> the main PMIC definition.
->
-> @Rob, can you give us some guidance on how to structure this binding,
-> with the various PMICs described will have some defined subset of a
-> larger set of hardware blocks that's often shared between versions?
+From: Junlin Yang <yangjunlin@yulong.com>
 
-How you suggest is good. The only other thing is just 1 complete
-example rather than a bunch of <func> fragments.
+Remove unnecessary PTR_ERR(), it has been assigned to ret before,
+so return ret directly.
 
-Rob
+Signed-off-by: Junlin Yang <yangjunlin@yulong.com>
+---
+ drivers/remoteproc/qcom_q6v5_wcss.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
+
+diff --git a/drivers/remoteproc/qcom_q6v5_wcss.c b/drivers/remoteproc/qcom_q6v5_wcss.c
+index 71ec1a4..7581983 100644
+--- a/drivers/remoteproc/qcom_q6v5_wcss.c
++++ b/drivers/remoteproc/qcom_q6v5_wcss.c
+@@ -913,7 +913,7 @@ static int q6v5_wcss_init_clock(struct q6v5_wcss *wcss)
+ 		ret = PTR_ERR(wcss->gcc_abhs_cbcr);
+ 		if (ret != -EPROBE_DEFER)
+ 			dev_err(wcss->dev, "failed to get gcc abhs clock");
+-		return PTR_ERR(wcss->gcc_abhs_cbcr);
++		return ret;
+ 	}
+ 
+ 	wcss->gcc_axim_cbcr = devm_clk_get(wcss->dev, "gcc_axim_cbcr");
+@@ -921,7 +921,7 @@ static int q6v5_wcss_init_clock(struct q6v5_wcss *wcss)
+ 		ret = PTR_ERR(wcss->gcc_axim_cbcr);
+ 		if (ret != -EPROBE_DEFER)
+ 			dev_err(wcss->dev, "failed to get gcc axim clock\n");
+-		return PTR_ERR(wcss->gcc_axim_cbcr);
++		return ret;
+ 	}
+ 
+ 	wcss->ahbfabric_cbcr_clk = devm_clk_get(wcss->dev,
+@@ -930,7 +930,7 @@ static int q6v5_wcss_init_clock(struct q6v5_wcss *wcss)
+ 		ret = PTR_ERR(wcss->ahbfabric_cbcr_clk);
+ 		if (ret != -EPROBE_DEFER)
+ 			dev_err(wcss->dev, "failed to get ahbfabric clock\n");
+-		return PTR_ERR(wcss->ahbfabric_cbcr_clk);
++		return ret;
+ 	}
+ 
+ 	wcss->lcc_csr_cbcr = devm_clk_get(wcss->dev, "tcsr_lcc_cbc");
+@@ -938,7 +938,7 @@ static int q6v5_wcss_init_clock(struct q6v5_wcss *wcss)
+ 		ret = PTR_ERR(wcss->lcc_csr_cbcr);
+ 		if (ret != -EPROBE_DEFER)
+ 			dev_err(wcss->dev, "failed to get csr cbcr clk\n");
+-		return PTR_ERR(wcss->lcc_csr_cbcr);
++		return ret;
+ 	}
+ 
+ 	wcss->ahbs_cbcr = devm_clk_get(wcss->dev,
+@@ -947,7 +947,7 @@ static int q6v5_wcss_init_clock(struct q6v5_wcss *wcss)
+ 		ret = PTR_ERR(wcss->ahbs_cbcr);
+ 		if (ret != -EPROBE_DEFER)
+ 			dev_err(wcss->dev, "failed to get ahbs_cbcr clk\n");
+-		return PTR_ERR(wcss->ahbs_cbcr);
++		return ret;
+ 	}
+ 
+ 	wcss->tcm_slave_cbcr = devm_clk_get(wcss->dev,
+@@ -956,7 +956,7 @@ static int q6v5_wcss_init_clock(struct q6v5_wcss *wcss)
+ 		ret = PTR_ERR(wcss->tcm_slave_cbcr);
+ 		if (ret != -EPROBE_DEFER)
+ 			dev_err(wcss->dev, "failed to get tcm cbcr clk\n");
+-		return PTR_ERR(wcss->tcm_slave_cbcr);
++		return ret;
+ 	}
+ 
+ 	wcss->qdsp6ss_abhm_cbcr = devm_clk_get(wcss->dev, "lcc_abhm_cbc");
+@@ -964,7 +964,7 @@ static int q6v5_wcss_init_clock(struct q6v5_wcss *wcss)
+ 		ret = PTR_ERR(wcss->qdsp6ss_abhm_cbcr);
+ 		if (ret != -EPROBE_DEFER)
+ 			dev_err(wcss->dev, "failed to get abhm cbcr clk\n");
+-		return PTR_ERR(wcss->qdsp6ss_abhm_cbcr);
++		return ret;
+ 	}
+ 
+ 	wcss->qdsp6ss_axim_cbcr = devm_clk_get(wcss->dev, "lcc_axim_cbc");
+@@ -972,7 +972,7 @@ static int q6v5_wcss_init_clock(struct q6v5_wcss *wcss)
+ 		ret = PTR_ERR(wcss->qdsp6ss_axim_cbcr);
+ 		if (ret != -EPROBE_DEFER)
+ 			dev_err(wcss->dev, "failed to get axim cbcr clk\n");
+-		return PTR_ERR(wcss->qdsp6ss_abhm_cbcr);
++		return ret;
+ 	}
+ 
+ 	wcss->lcc_bcr_sleep = devm_clk_get(wcss->dev, "lcc_bcr_sleep");
+@@ -980,7 +980,7 @@ static int q6v5_wcss_init_clock(struct q6v5_wcss *wcss)
+ 		ret = PTR_ERR(wcss->lcc_bcr_sleep);
+ 		if (ret != -EPROBE_DEFER)
+ 			dev_err(wcss->dev, "failed to get bcr cbcr clk\n");
+-		return PTR_ERR(wcss->lcc_bcr_sleep);
++		return ret;
+ 	}
+ 
+ 	return 0;
+-- 
+1.9.1
+
