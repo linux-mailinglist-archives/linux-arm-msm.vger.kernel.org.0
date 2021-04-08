@@ -2,63 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2C539358F48
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Apr 2021 23:36:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DCE23358F62
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Apr 2021 23:41:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232350AbhDHVgM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Apr 2021 17:36:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32966 "EHLO
+        id S232470AbhDHVl2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Apr 2021 17:41:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34110 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232158AbhDHVgM (ORCPT
+        with ESMTP id S232628AbhDHVl0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Apr 2021 17:36:12 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F1D0C061761
-        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Apr 2021 14:35:59 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id o126so6485912lfa.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Apr 2021 14:35:59 -0700 (PDT)
+        Thu, 8 Apr 2021 17:41:26 -0400
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6966BC061761
+        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Apr 2021 14:41:10 -0700 (PDT)
+Received: by mail-lf1-x130.google.com with SMTP id n8so6447193lfh.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Apr 2021 14:41:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=Z8TlNQzjwY+e3eQo49/nxDRl9kQ4I8qHfrJKe3hE6K0=;
-        b=qn6O/pRGzJYGjjvYJ5RkpwSzjkRSkHF2R+9hnx435hNzJjX2gPJa77KXbYH6VcQK3S
-         1DhUMd1Flne8NOb6h2RA8ICY0P8UR9DlqLt3vqFgs4GxFyQ5TvTPV8yCPFN3OnWiPCPz
-         k4p2QTcNbV+58EnOk8dtXyAJ7nQ5qUJUVHXCy1YJbGtardZ5toaX4tfyRza9xJeam1lv
-         TOD9kkb8VNf5zDuryw/7SSGcyyBuYAUGXhGCxB7pOUIsPa7ux7m+rcccMPuAqdFLr+to
-         tbpC03huGuwX1zBOt+sz3UGvDU7WBQ3mfmKd1WJHP5hUaiD4ZTpd3ENE5rrhyww0ruDD
-         pe3Q==
+        bh=lovVRYDMCrmQr35MOmEQNArT8X6dRKP4z/7vuxFftj8=;
+        b=Zl5gQV8vF/H2Up0OGisn1jZyzmSAQmBLAyCjJr58ywKU6drNqMtx+3vFyntbkafr+J
+         sgHHVjhHlavHKCObbH3PxF6AD24N1bfVNLKsHtW2H+ZZL07kKug3XKtLjuUH/eOc+h8U
+         UD/MQe5/uXeasF1f6QPIYPhQ12wdQvvZLK6RZ9Ciwgz9Vs4r4++AU3BjvLBaUyhE0+F9
+         hNIGevuyRZtuq9H4ei+LL2Fa8zIiT3agwDB5NYVtX8xOg09gPydQH8iexb21QAr/Y6Wv
+         Ty6ueBC3Da/WiHdkvaC6Njdf0Ujbl4LqeBxHaycG/INaUdxKqKr9HXiLt03+JXb51s74
+         72EQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=Z8TlNQzjwY+e3eQo49/nxDRl9kQ4I8qHfrJKe3hE6K0=;
-        b=ZiWa0Poec7Csr58Q+XvsW2w5Yzd2F0O0Ssqtkhg5up7Uvx8TMMCWUCxMfeyFY06CcT
-         mAqDZLHglSEDtwG28+LKn/bFBGaZa+Qa22h7Yl1xBDG4en9LEUapASJCauiSIHdZxRUH
-         VBP5A6TidV/64rjDYN6UNhcvD1KJ675T57crsgocJV6ZxlMOyUbyB43XYlUer7VopGLS
-         y643EMI8wINLJHV9/SldfUQ4fOd88lA/3gkzomv4uD5vyZrP9AaojgKCh8fp+bz1NWWF
-         7Bugr2K+WydaVmQ2D/RdwwEB98f2ZwfPVsCPCXCBUWZjgFN+YvhlBEPdU//39uH6rJN9
-         NKXg==
-X-Gm-Message-State: AOAM531GOAnr9orRm4LFC61eD3vnM9nSV56oS3IVuAgAjiVCwJKBUxwm
-        q1sDR8wPGNms3EgKUB6hFZ4ajNMUJwlcu0gBUWGhZA==
-X-Google-Smtp-Source: ABdhPJzDMfqSKWlR/YXeaNn0JCru/668Jjn8/WGD12+iy0vSDZTGd2bhvSRxks9c8e+vra+bmO29y6HnwSUOEd5MK+4=
-X-Received: by 2002:a19:ef18:: with SMTP id n24mr8043129lfh.291.1617917757674;
- Thu, 08 Apr 2021 14:35:57 -0700 (PDT)
+        bh=lovVRYDMCrmQr35MOmEQNArT8X6dRKP4z/7vuxFftj8=;
+        b=WtWCczxOx9RA6gVSjIvHHjO88kwzyDrRa5sCebNyRdiBRWJcKRckyYjU0zu2tCWQbp
+         1zsRPfeRvWwIRWp8B65raUiugL5r2PTUlwJHlSqXKItU+z8rNL2L/d/BIfc/qp5MhOl7
+         Af98JrL5xEeVzFwEMFqGGRNreZ+fRTcViy0a+r7rl4kueLvrzy9hkJ0DNFb7JzgQz8SK
+         CUNdDFTvtaurbPEt1Rt15CzCTKVBq/o81hTLVOtyTQJKyuIOsBVT3FjStnloi9t0eg00
+         GhlQn4IDvVMu9rB2WYqIcwFACui7P3445yD93Dl6aBEQJIDEiG9Djaow01AdPYFfP+5m
+         AilQ==
+X-Gm-Message-State: AOAM531235MkuLg9zVrCcU5H5eQWCKFoHXUxo4KGdpvfOUcRfFjdG+o4
+        KuH1/NibSSakU4GkPRJzDELW2YAAlq7m2/KqhLUIDw==
+X-Google-Smtp-Source: ABdhPJxcGrzxNuMjWggN3LPX6qCyslPcVVy5TwyjrTf/E9/lbetDAeYjzYqp6RtE5WF3xgPZlLpT9B3d3HVmYJ4HGpk=
+X-Received: by 2002:a19:ef19:: with SMTP id n25mr792331lfh.157.1617918068947;
+ Thu, 08 Apr 2021 14:41:08 -0700 (PDT)
 MIME-Version: 1.0
 References: <20210405200259.23525-1-petr.vorel@gmail.com> <20210405225222.GD904837@yoga>
- <CACRpkdZQ8qiqFPa0X8deVjZ7nLn_E6s8fmJdr5Ji8AuyJms1ug@mail.gmail.com> <YG9TWEJlpDmNeeit@pevik>
-In-Reply-To: <YG9TWEJlpDmNeeit@pevik>
+ <CACRpkdZQ8qiqFPa0X8deVjZ7nLn_E6s8fmJdr5Ji8AuyJms1ug@mail.gmail.com>
+ <YG9TWEJlpDmNeeit@pevik> <ea376d51-cd6c-0028-9602-d007c2bba71e@gmail.com>
+In-Reply-To: <ea376d51-cd6c-0028-9602-d007c2bba71e@gmail.com>
 From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Thu, 8 Apr 2021 23:35:46 +0200
-Message-ID: <CACRpkdaP-yr6oAEpmDDqZUYcAd+-3vJRORepOtsRR4d2GsuqmA@mail.gmail.com>
+Date:   Thu, 8 Apr 2021 23:40:58 +0200
+Message-ID: <CACRpkdb249pKC7VvM6HxRKgwF36_9Qp8G9sD6Troa22fYznuXQ@mail.gmail.com>
 Subject: Re: [PATCH 1/1] arm64: dts: qcom: msm8994: Reserve gpio ranges
-To:     Petr Vorel <petr.vorel@gmail.com>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+To:     Konrad Dybcio <konradybcio@gmail.com>
+Cc:     Petr Vorel <petr.vorel@gmail.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         MSM <linux-arm-msm@vger.kernel.org>,
         Andy Gross <agross@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Ricardo Ribalda <ribalda@kernel.org>,
-        Konrad Dybcio <konradybcio@gmail.com>,
         "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
         <devicetree@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
@@ -66,12 +67,36 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Apr 8, 2021 at 9:02 PM Petr Vorel <petr.vorel@gmail.com> wrote:
+On Thu, Apr 8, 2021 at 10:05 PM Konrad Dybcio <konradybcio@gmail.com> wrote:
 
-> The real problem is that mainline kernel compiled with defconfig resets really
-> early, thus v2 of this patch [2] is needed.
+> On Qualcomm boards GPIOs that are used for "secure" (duh) peripherals,
+> like a fingerprint scanner, are not allowed to be controlled from Linux (the "non-secure world").
+> Trying to do so causes an immediate reboot due to "attempting to violate the security".
 
-Ugh OK I get it. That's a firm regression.
+OK I see. Yeah HW security is pretty neat, making it cause a reboot
+seems like maybe not the best choice, but hey we know for sure what
+is wrong when it happens so it gives a good feeling of having everything
+fully inder control. Which is nice, despite the annoyance.
+
+> The GPIOs seem to all be iterated over on boot, except for the ones specified in
+> "gpio-reserved-ranges".
+(...)
+> So, why did it work before!?
+
+We do things like read all direction registers to check if GPIO lines are set up
+as input or output. If that causes reset then, well.
+
+> As a result, if such "secure" GPIOs are not declared in the DT, the board essentially dies on TLMM (pinctrl) probe
+> (which happens veeeery early - so that all other peripherals can set the pins as they see fit)
+> and that's very unpleasant to debug. Without this patch, Petr's device will simply not boot.
+
+In a way specifying it is a very correct thing to do.
+
+When they were registered with the GPIO subsystem before they were,
+well registered with the GPIO subsystem which means they are supposedly
+available for general-purpose input-output. Which they were not.
+They seem highly special-purpose to me. So
+reserving them is the right thing to do.
 
 Yours,
 Linus Walleij
