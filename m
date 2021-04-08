@@ -2,149 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5E743358007
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Apr 2021 11:56:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D56DE35801C
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Apr 2021 11:58:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230506AbhDHJ5E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Apr 2021 05:57:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48456 "EHLO
+        id S231526AbhDHJ6f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Apr 2021 05:58:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48798 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229686AbhDHJ5E (ORCPT
+        with ESMTP id S231409AbhDHJ6e (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Apr 2021 05:57:04 -0400
-Received: from mail-pg1-x531.google.com (mail-pg1-x531.google.com [IPv6:2607:f8b0:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B12A7C061760;
-        Thu,  8 Apr 2021 02:56:53 -0700 (PDT)
-Received: by mail-pg1-x531.google.com with SMTP id t140so1024474pgb.13;
-        Thu, 08 Apr 2021 02:56:53 -0700 (PDT)
+        Thu, 8 Apr 2021 05:58:34 -0400
+Received: from mail-pg1-x529.google.com (mail-pg1-x529.google.com [IPv6:2607:f8b0:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5541BC061764;
+        Thu,  8 Apr 2021 02:58:22 -0700 (PDT)
+Received: by mail-pg1-x529.google.com with SMTP id g35so1037766pgg.9;
+        Thu, 08 Apr 2021 02:58:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=qjas6KXkAso9tZS0xachLDZT9jXyy102BfQigMLfs5Q=;
-        b=ZHfsAxlWuMoAC90JtmGXFDFhGet/a8iFMmxha3DYZVnKOgp0GBFKNRYK4qyQHjparV
-         2FNZMQskEX9xbZ++dpOT9/HD0yF8KiBYOSSMYhZadG92sbwpYp/guguvMHm0ynxZo2Nz
-         inlTakN9g+jPUvKulTFnnTWinBPmHpPqtwecmkDztdUIoq4Uvb5dpan+1ighyHZQIsAC
-         R/ngTnbtIq3nU71f/A690n+5SvX4gLkqDABfa7ZZ063raBPKvMjj3AC3aR5wfvnwcTLT
-         bIIiaXrmSsPR0Xv43kt5O9jsuKZUIT9dAZgH2hUfEzE7em47ZelG6MGN7v/6LVRPj9Uc
-         JzCQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=ue40ewHAI4uiQ6hRTjLSskTwbkPepkxZffVqOvWwGN4=;
+        b=VX75hB/d+8mMCu+ggSpvi07Uyq0zK9BR4PklvQ7ruLPi36idGsDdUPHfPOlCHA9VQ3
+         JJUJ7hwV81tIZHUOOaxjLJLt/MqaochvcFVikB9Mhtfo3xcRdtoeFJQfmN+HHAL7B7d3
+         X+dZIkmS8SLKm2S93v2ImIp+TLL1FGkxkHZ8jti2WFDQ9ohzdGRGOZmt/mXQZSCC6FBx
+         sZAHf0MJFFMG4tNjYwwvIhQom4WxjwcGEcfbvtWEEKqmJUJ0aGOhx5v/qbyGnn9dVzSy
+         CDlEQWlCu/TQ1EGEbu2XbAY2E5CoLuItZBiDojeuo3SMH+YhE/Ntr7khPCvvC46s/UqZ
+         9zog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=qjas6KXkAso9tZS0xachLDZT9jXyy102BfQigMLfs5Q=;
-        b=paqJf9aveQAJH9XW/+nk1MmqMoQZVZfLTjhN/UnyqX29BZvbzLdJa5VpudeCOIwLwz
-         Txq174mia5X3PZuKXUWC5genHKrT7uUO+b6bGwcSaOn2tUNvAt2l2jNNFNcNeD4MWKMM
-         gQR3NZU4Qv9549P3T0bpBgZNOiPZmrorcS5Y3t39h/vGKXWoNJ1wSq6OSt9/7bJtMpQm
-         uWVtPmXr+SboFLaUFSNmNvYiV4Nl75Vnr37Otek5AEgodrEQoeNVwAxKbkqI70TBp+Ur
-         kFNAFkUY5OlEHoAGPWSSsrMSb0e8hdHhNL5m8s6TdjyJ5AcJlyGnse5Ca+aW/R4uv46B
-         15Fg==
-X-Gm-Message-State: AOAM532Rt8mQ/SzRiyE0qeSOX3sxSMzmJFFDcYb1LqRgDr/xYdeIjwIN
-        378r5Id+BKkTMeUnOqPJfMM=
-X-Google-Smtp-Source: ABdhPJz/1NJOz5J+Ib5cVb+NUk6W79W7kt3rH3y4U6R8xQr8tyhvBBABRvUEBcKr4gZh8hkaPTsZQw==
-X-Received: by 2002:a05:6a00:2292:b029:214:7a33:7f08 with SMTP id f18-20020a056a002292b02902147a337f08mr6665544pfe.15.1617875813340;
-        Thu, 08 Apr 2021 02:56:53 -0700 (PDT)
-Received: from localhost.localdomain ([2.58.242.54])
-        by smtp.gmail.com with ESMTPSA id az9sm6481947pjb.54.2021.04.08.02.56.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Apr 2021 02:56:53 -0700 (PDT)
-From:   Jarvis Jiang <jarvis.w.jiang@gmail.com>
-To:     mani@kernel.org, hemantk@codeaurora.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        cchen50@lenovo.com, mpearson@lenovo.com,
-        Jarvis Jiang <jarvis.w.jiang@gmail.com>
-Subject: [PATCH 1/2] [v2] bus: mhi: pci_generic: Introduce Foxconn T99W175 support
-Date:   Thu,  8 Apr 2021 02:55:24 -0700
-Message-Id: <20210408095524.3559-1-jarvis.w.jiang@gmail.com>
-X-Mailer: git-send-email 2.25.1
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ue40ewHAI4uiQ6hRTjLSskTwbkPepkxZffVqOvWwGN4=;
+        b=pZNSL3OmZFUy7QxigNcD4WqPYxK+hMBlQS+D4zxOPw0mCBhj7kdYDriO7n6cS3K+Az
+         Puc2ryYH9Uyub9xUobtj/+pxyg+J/75ZJLijEhe2iouxx5Cr1RFH6NG0c0ZZdmQGnuAY
+         pGXIMvi0WyOFjHW85DCANclMb8qxqKkA0cEwH20INq0XrQRHNUVpUpTl3EB3jIZG4gZ8
+         AiJbUTOUOfChgE0rXbIOyhtAbSxwBxivb7vzCCGlj97HU3m/duEHT8zii4YtbYWJiLy6
+         HUX3Hu2N53+UiXXawigFg7Mt/AR2HMB8ANB/uWTH5e3WGSUwEbBPLgVPsCFx5I7dgqXM
+         CHvQ==
+X-Gm-Message-State: AOAM532nWkTgKCVQZYtGbCdvVTg4KKLSvc0WcugLJ/1+XazkkIlGCTBe
+        gJzKCXZXLQHIwtn30ukGJ3xFj1clSTfdZPkAyZFwkNrB6UKydQ==
+X-Google-Smtp-Source: ABdhPJx9AwLvhwo6wJE4rPBHzpfPbvHAuy9BGwJ0nE8DHgZJjggU7EWcYKPyDPQ3akekICOsHGK5x7y7uGZZ22sP3+Q=
+X-Received: by 2002:a63:c48:: with SMTP id 8mr7279097pgm.74.1617875901727;
+ Thu, 08 Apr 2021 02:58:21 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <cover.1617789229.git.matti.vaittinen@fi.rohmeurope.com>
+ <0862bbb6813891594f56700808d08160b6635bf4.1617789229.git.matti.vaittinen@fi.rohmeurope.com>
+ <CAHp75VcHeiQgvZ5e+Dz+gpKghCo5RSTQLsyHGGSgdVQbVu2t+g@mail.gmail.com> <23c73081365fddce2950c101a51fc2baaaa37aa5.camel@fi.rohmeurope.com>
+In-Reply-To: <23c73081365fddce2950c101a51fc2baaaa37aa5.camel@fi.rohmeurope.com>
+From:   Andy Shevchenko <andy.shevchenko@gmail.com>
+Date:   Thu, 8 Apr 2021 12:58:05 +0300
+Message-ID: <CAHp75VdYniyc8jovg9VDgwQ+_VjYOoAubB_QSokEN+REcnKTrw@mail.gmail.com>
+Subject: Re: [PATCH v6 3/8] regulator: IRQ based event/error notification helpers
+To:     Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>
+Cc:     Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        devicetree <devicetree@vger.kernel.org>,
+        linux-power <linux-power@fi.rohmeurope.com>,
+        linux-arm-msm@vger.kernel.org,
+        Linux-Renesas <linux-renesas-soc@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for T99W175 modems, this modem series is based on SDX55
-qcom chip. The modem is mainly based on MBIM protocol for both the
-data and control path.
+On Thu, Apr 8, 2021 at 11:21 AM Matti Vaittinen
+<matti.vaittinen@fi.rohmeurope.com> wrote:
+>
+> Hello Andy,
+>
+> On Wed, 2021-04-07 at 16:21 +0300, Andy Shevchenko wrote:
+> > On Wed, Apr 7, 2021 at 1:04 PM Matti Vaittinen
+> > <matti.vaittinen@fi.rohmeurope.com> wrote:
+> > > Provide helper function for IC's implementing regulator
+> > > notifications
+> > > when an IRQ fires. The helper also works for IRQs which can not be
+> > > acked.
+> > > Helper can be set to disable the IRQ at handler and then re-
+> > > enabling it
+> > > on delayed work later. The helper also adds
+> > > regulator_get_error_flags()
+> > > errors in cache for the duration of IRQ disabling.
+> >
+> > Thanks for an update, my comments below. After addressing them, feel
+> > free to add
+> > Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+>
+> I (eventually) disagreed with couple of points here and haven't changed
+> those. Please see list below.
+>
+> I still do think you did a really good job reviewing this - and you
+> should get the recognition from that work. Thus I'd nevertheless would
+> like to add your Reviewed-by to the next version. Please let me know if
+> you think it's ok. (I have the v7 ready but I'll wait until the next
+> Monday before sending it to see if this brings more discussion).
 
-This patch adds support for below modems:
+Looks OK to me.
+Just rename die_loudly() to rdev_die_loudly() and in any way of
+conditionals with that, please mark it with __noreturn attribute, so
+if (bla bla bla)
+  rdev_die_loudly();
 
- - T99W175(based on sdx55), Both for eSIM and Non-eSIM
- - DW5930e(based on sdx55), With eSIM, It's also T99W175
- - DW5930e(based on sdx55), Non-eSIM, It's also T99W175
+will be an understandable trap.
 
-This patch was tested with Ubuntu 20.04 X86_64 PC as host
-
-Signed-off-by: Jarvis Jiang <jarvis.w.jiang@gmail.com>
----
- drivers/bus/mhi/pci_generic.c | 47 +++++++++++++++++++++++++++++++++++
- 1 file changed, 47 insertions(+)
-
-diff --git a/drivers/bus/mhi/pci_generic.c b/drivers/bus/mhi/pci_generic.c
-index 544853c67e02..c66fb73e47ad 100644
---- a/drivers/bus/mhi/pci_generic.c
-+++ b/drivers/bus/mhi/pci_generic.c
-@@ -269,6 +269,44 @@ static const struct mhi_pci_dev_info mhi_quectel_em1xx_info = {
- 	.dma_data_width = 32
- };
- 
-+static const struct mhi_channel_config mhi_foxconn_sdx55_channels[] = {
-+	MHI_CHANNEL_CONFIG_UL(0, "LOOPBACK", 32, 0),
-+	MHI_CHANNEL_CONFIG_DL(1, "LOOPBACK", 32, 0),
-+	MHI_CHANNEL_CONFIG_UL(4, "DIAG", 32, 1),
-+	MHI_CHANNEL_CONFIG_DL(5, "DIAG", 32, 1),
-+	MHI_CHANNEL_CONFIG_UL(12, "MBIM", 32, 0),
-+	MHI_CHANNEL_CONFIG_DL(13, "MBIM", 32, 0),
-+	MHI_CHANNEL_CONFIG_UL(32, "AT", 32, 0),
-+	MHI_CHANNEL_CONFIG_DL(33, "AT", 32, 0),
-+	MHI_CHANNEL_CONFIG_HW_UL(100, "IP_HW0_MBIM", 128, 2),
-+	MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0_MBIM", 128, 3),
-+};
-+
-+static struct mhi_event_config mhi_foxconn_sdx55_events[] = {
-+	MHI_EVENT_CONFIG_CTRL(0, 128),
-+	MHI_EVENT_CONFIG_DATA(1, 128),
-+	MHI_EVENT_CONFIG_HW_DATA(2, 1024, 100),
-+	MHI_EVENT_CONFIG_HW_DATA(3, 1024, 101)
-+};
-+
-+static struct mhi_controller_config modem_foxconn_sdx55_config = {
-+	.max_channels = 128,
-+	.timeout_ms = 20000,
-+	.num_channels = ARRAY_SIZE(mhi_foxconn_sdx55_channels),
-+	.ch_cfg = mhi_foxconn_sdx55_channels,
-+	.num_events = ARRAY_SIZE(mhi_foxconn_sdx55_events),
-+	.event_cfg = mhi_foxconn_sdx55_events,
-+};
-+
-+static const struct mhi_pci_dev_info mhi_foxconn_sdx55_info = {
-+	.name = "foxconn-sdx55",
-+	.fw = "qcom/sdx55m/sbl1.mbn",
-+	.edl = "qcom/sdx55m/edl.mbn",
-+	.config = &modem_foxconn_sdx55_config,
-+	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
-+	.dma_data_width = 32
-+};
-+
- static const struct pci_device_id mhi_pci_id_table[] = {
- 	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0306),
- 		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx55_info },
-@@ -280,6 +318,15 @@ static const struct pci_device_id mhi_pci_id_table[] = {
- 		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
- 	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0308),
- 		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx65_info },
-+	/* T99W175 (sdx55), Both for eSIM and Non-eSIM */
-+	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0ab),
-+		.driver_data = (kernel_ulong_t) &mhi_foxconn_sdx55_info },
-+	/* DW5930e (sdx55), With eSIM, It's also T99W175 */
-+	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0b0),
-+		.driver_data = (kernel_ulong_t) &mhi_foxconn_sdx55_info },
-+	/* DW5930e (sdx55), Non-eSIM, It's also T99W175 */
-+	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0b1),
-+		.driver_data = (kernel_ulong_t) &mhi_foxconn_sdx55_info },
- 	{  }
- };
- MODULE_DEVICE_TABLE(pci, mhi_pci_id_table);
 -- 
-2.25.1
-
+With Best Regards,
+Andy Shevchenko
