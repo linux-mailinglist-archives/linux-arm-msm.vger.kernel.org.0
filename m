@@ -2,91 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AD9ED358E05
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Apr 2021 22:06:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7E7AB358E6D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Apr 2021 22:31:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232014AbhDHUGN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Apr 2021 16:06:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41638 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231451AbhDHUGM (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Apr 2021 16:06:12 -0400
-Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41F07C061761
-        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Apr 2021 13:06:01 -0700 (PDT)
-Received: by mail-ot1-x332.google.com with SMTP id 91-20020a9d08640000b0290237d9c40382so3492480oty.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Apr 2021 13:06:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=aleksander-es.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=tMNaMbTulZVWFzBX43p/fXwF2BC09PvT07FCozD76VU=;
-        b=wTQsR+4POzo16nXanctMMf2DY1pekJQorxnW8aa+rOq7fwPpmiyovyCeKhrHO0vpX/
-         7DQdwXurJvdQj+IkuBbgJAbDaLZV/QKWsUWQLYRsShywUzf1cY0J7fqpXZL0lmoJzRAG
-         tbW5zQC/IzJzksdHFL7gl5QH+uB4UrDJGlFfH9z3PrCQJb0hfA//fONntwDGLDc0NDME
-         +KGGwqrXbKmD0LFcYRYXWe/AwPsCTGSRRLTLQLwM/w8gfkMwZPOSp0MYxcDObVc7nPUu
-         ZazRA3CZOPqVHZOsfZH6IEC24WNXoOk60V7nBxRc1BJ6j2aKmAcbDBN4615xdM/jetri
-         c8Ng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=tMNaMbTulZVWFzBX43p/fXwF2BC09PvT07FCozD76VU=;
-        b=PDtjSN8/Q45A/U1f9ase9iZ8oXAWGcC3T9zhWg06+30D5zQaYNTjKIFlzPdmGQX5Sl
-         UwAans0uCuj14bsAPS1ivV1zP4ymgQEZj+cIjENbmeUcydDfDtKslhkRPEJ+FkBJ8Wq3
-         G7hsRSN43ot3ssLQPicT+noistssfo/euEKgBVg49hIDPiJ0Hhb0Myza7NksOJ3aToQ3
-         FdP8Ub/agVQaZjE84sHxlE7qhczhUZ8qVOIb2Ofi8CDPdZzJ7nTS1pkNBKxEyxIuyg6c
-         9TbbUSa4mjXeV8OqdzLDrdAlpAfVub+mlZZ+GXE3U0yL/sQBxxdwGFh2+BR9W1kXOJnt
-         vrDg==
-X-Gm-Message-State: AOAM530G8ftZq8sSLGuhCUmnXVYywq/OSiF+8Nvaw8Lo9kbG5VZcYqNa
-        /eMct/XvJkxd/fev5v8uJs3a9juPkgwhdhpuBpcv2Q==
-X-Google-Smtp-Source: ABdhPJyRKoCsX4sQ1CWsl/fOPRNr5iqIQ90bMlXwepNyYKYjPrwT0TgnjRxObEps047wJcjvKBb30Zd/x9HMMK+beJM=
-X-Received: by 2002:a05:6830:210e:: with SMTP id i14mr9235389otc.229.1617912360590;
- Thu, 08 Apr 2021 13:06:00 -0700 (PDT)
+        id S232252AbhDHUar (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Apr 2021 16:30:47 -0400
+Received: from mail.kernel.org ([198.145.29.99]:51586 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231897AbhDHUar (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 8 Apr 2021 16:30:47 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 0EC0361159;
+        Thu,  8 Apr 2021 20:30:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1617913833;
+        bh=J464dW0AKWMholSo1mjYDCNx096zmLCksHQ0LL/pQBc=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=sqV00UvbPo40W7FCMs6d+SrLnJD1arFSp0D3+CFTnIw7C7uMSnTK5aQ8khrFEPQBZ
+         JcfgAGOhZJqhOIQc7o4B3WlR7q4BNvOC0+BOTLqYVYz6Q/JnIvMBGug5biRlbTAjzr
+         kLpynLEpAO0vsW7xfZtbuPNSmX4BQliItwfEL4Qdcm7jEQDURjaY+FbPKHlYM0VhEF
+         GVxGcntBxsNUkvccUL6zcnWRs50Jv+obOrXZ7XjoFtwn2X9LMEckMWwmRKew0nPMwr
+         OINjslNg0HXyhDOaTQCUpLMA/5bmPMnAC1VeLEJ227IYQMZd3UJ4OnIU9fuC8LCH/E
+         hMNCdT1PMzw/w==
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-References: <1617616369-27305-1-git-send-email-loic.poulain@linaro.org>
- <ddc8cd0fd3212ccbba399b03a059bcf40abbc117.camel@redhat.com> <CAMZdPi_6hCYpiyf4=x1FdA2KHnVg6LFWnfEhCd8PMQP_yFXqCw@mail.gmail.com>
-In-Reply-To: <CAMZdPi_6hCYpiyf4=x1FdA2KHnVg6LFWnfEhCd8PMQP_yFXqCw@mail.gmail.com>
-From:   Aleksander Morgado <aleksander@aleksander.es>
-Date:   Thu, 8 Apr 2021 22:05:49 +0200
-Message-ID: <CAAP7ucL8Gc_w=BxFFY50XStJWghmdTWo2W2fdzdJjD3cfuWRRg@mail.gmail.com>
-Subject: Re: [PATCH net-next v9 1/2] net: Add a WWAN subsystem
-To:     Loic Poulain <loic.poulain@linaro.org>
-Cc:     Dan Williams <dcbw@redhat.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jakub Kicinski <kuba@kernel.org>,
-        David Miller <davem@davemloft.net>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        Network Development <netdev@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20210408135509.208921-1-clare.chenhui@huawei.com>
+References: <20210408135509.208921-1-clare.chenhui@huawei.com>
+Subject: Re: [PATCH -next] clk: qcom: Add missing MODULE_DEVICE_TABLE
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+To:     Chen Hui <clare.chenhui@huawei.com>, agross@kernel.org,
+        bjorn.andersson@linaro.org, mturquette@baylibre.com
+Date:   Thu, 08 Apr 2021 13:30:31 -0700
+Message-ID: <161791383177.3790633.17835417455437133606@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hey,
+Quoting Chen Hui (2021-04-08 06:55:09)
+> Add missing MODULE_DEVICE_TABLE entries to support module autoloading,
+> as these drivers can be compiled as external modules.
+>=20
+> Signed-off-by: Chen Hui <clare.chenhui@huawei.com>
 
->
-> * Note: Userspace tools like ModemManager are able to link control
-> ports and netdev by looking at the sysfs hierarchy, it's fine for
-> simple connection management, but probably not enough for 'multi PDN'
-> support for which devices may have multiple netdev and ports
-> targetting different 'PDN contexts'...
->
-
-ModemManager is happy with those devices exposing multiple netdevs
-(even connecting different net ports to different contexts/bearers and
-such), as long as we can bind all those ports together to the same
-"modem device". The sysfs hierarchy has been enough for now for that
-purpose; or better said, without the sysfs hierarchy it would not have
-worked properly. E.g. there are some drivers out there allowing to
-instantiate virtual net ports from a master net port; without proper
-links in sysfs to link those virtual net ports to the master net port,
-the setup would be extremely unstable.
-
--- 
-Aleksander
-https://aleksander.es
+Any fixes tag?
