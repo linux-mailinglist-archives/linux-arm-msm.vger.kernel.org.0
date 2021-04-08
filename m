@@ -2,138 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 45FF7358483
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Apr 2021 15:20:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B3F283584BC
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Apr 2021 15:31:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229964AbhDHNVF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Apr 2021 09:21:05 -0400
-Received: from out5-smtp.messagingengine.com ([66.111.4.29]:44867 "EHLO
-        out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229741AbhDHNVE (ORCPT
+        id S231534AbhDHNcD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Apr 2021 09:32:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39316 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230322AbhDHNb6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Apr 2021 09:21:04 -0400
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
-        by mailout.nyi.internal (Postfix) with ESMTP id D1EF85C005F;
-        Thu,  8 Apr 2021 09:20:52 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute6.internal (MEProxy); Thu, 08 Apr 2021 09:20:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cerno.tech; h=
-        date:from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm2; bh=0TFilmNYZpoCo33PfFme0OURG/N
-        +KN8UabeU9/+7fdE=; b=JI112mzVaWEoeArZuX4uv8DdTh+sQPcUOq4mlocAiB/
-        ywSiPJ0t7dU2uJgt8zuV1L0fK1AaUdLW8RrKIh06LkW7GGjazlogqsflLXkuxSQz
-        AtxUtF5UbTvSbHnL8uMxQpOwM/IUTmI7qL6QvCR/ZsURBUBtrk7GrwO1aLIFbxWd
-        8+m0wzek0sslQq/6PkVfFhguE1aRqP/WTsIisZ2BauUadj7BhNcv47TxcRdWSpVv
-        DibfZjJkWf9PqEyIwqgWUKw9lKPsgHSyCiAHF9A5rnF99ghcNJmSdUCl1bZ/zv2Z
-        IP8gR8JtDvbJKh+frZz/pJnVBz6GZrxtTXJrggIhzEg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-type:date:from:in-reply-to
-        :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=0TFilm
-        NYZpoCo33PfFme0OURG/N+KN8UabeU9/+7fdE=; b=X2mwxHCRyQhp861nPzs3aS
-        DUdsLY8C/9Up5AJn3IyXAnEmbPJgbIoSF9go/Aqh+0zPvMNWiYPx/fEZaC0MPN+a
-        9WSNvyA1yDMR5JUwf4fQ5ELoAq60fvu3aUh5FJYhJm48bWF/NDbGnSd3zyDuB+cn
-        tFcqYdSZHDtaBPp2h3TrJDBVAkLL2S6WjPxTnCCySIAfRoz7XdpikePk3drRkD6x
-        pF7ApzTfCJRU3+xBNq5RfgY2gNycYc/XFz4t+aYw3jedlGJukQmkZ1MdsdczyLFx
-        6fR3Mx1tCszPM9yqze2pYeqwFePb7brGKMIFi2RYGNqI3ETzrFd7BJGd55VRM2Kw
-        ==
-X-ME-Sender: <xms:MgNvYKMy6xq-oR3mEs4Im60uA9ibWOSM9UUx9zAZjWuOKRRjgWZvaA>
-    <xme:MgNvYI8d3RXB_b1Uk3NDIgJvqaundobV9yPFGucuP7akeO_BURR65QV1ecRnEYSYT
-    CXCj4mMBekIJcwRS1Y>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrudejledgieehucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvffukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpeforgigihhm
-    vgcutfhiphgrrhguuceomhgrgihimhgvsegtvghrnhhordhtvggthheqnecuggftrfgrth
-    htvghrnhepleekgeehhfdutdeljefgleejffehfffgieejhffgueefhfdtveetgeehieeh
-    gedunecukfhppeeltddrkeelrdeikedrjeeinecuvehluhhsthgvrhfuihiivgeptdenuc
-    frrghrrghmpehmrghilhhfrhhomhepmhgrgihimhgvsegtvghrnhhordhtvggthh
-X-ME-Proxy: <xmx:MgNvYBRo6DBc9fCN0qO8R9yPwaDArtYRtz_LbrLq2m9Nu2ezhcyBwA>
-    <xmx:MgNvYKu0yS-Zcep9szdpZZnwn-pydYYnuEm0gz00Kf0ZnLjJMSQ-ZQ>
-    <xmx:MgNvYCdTG6XDbAJ5AF3BOzJte0uiy6vMwEo4_nAjextLlpOafU-_pw>
-    <xmx:NANvYKSGZmk2OGsUVx1ahqu2K2zbyshSu5FONd7-borVPyj_Oj-IZQ>
-Received: from localhost (lfbn-tou-1-1502-76.w90-89.abo.wanadoo.fr [90.89.68.76])
-        by mail.messagingengine.com (Postfix) with ESMTPA id 9D08224005B;
-        Thu,  8 Apr 2021 09:20:50 -0400 (EDT)
-Date:   Thu, 8 Apr 2021 15:20:48 +0200
-From:   Maxime Ripard <maxime@cerno.tech>
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     dri-devel@lists.freedesktop.org,
-        Daniel Vetter <daniel.vetter@intel.com>,
-        David Airlie <airlied@linux.ie>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Rob Clark <robdclark@gmail.com>, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v3 10/11] drm: Use state helper instead of the plane
- state pointer
-Message-ID: <20210408132048.gifhgtkmoeuplhcz@gilmour>
-References: <20210219120032.260676-1-maxime@cerno.tech>
- <20210219120032.260676-10-maxime@cerno.tech>
- <161706912161.3012082.17313817257247946143@swboyd.mtv.corp.google.com>
- <20210330153527.gw33t4o2b35wwzbg@gilmour>
- <161713057558.2260335.5422873422021430866@swboyd.mtv.corp.google.com>
+        Thu, 8 Apr 2021 09:31:58 -0400
+Received: from mail-pg1-x532.google.com (mail-pg1-x532.google.com [IPv6:2607:f8b0:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1765AC061761
+        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Apr 2021 06:31:47 -0700 (PDT)
+Received: by mail-pg1-x532.google.com with SMTP id l76so1418140pga.6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Apr 2021 06:31:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=urweAOoUvm3tXo6To57HIW+uVzqmNXUWv/SU0VXhKJA=;
+        b=Z62HAkdrl2n13lTDc9ckxQfr2eg5n3b77K+5a4po+k0aeX190Ve3RWes/bT2Mrl2R+
+         vVAbzeU5RO95iHc/9vA7pkYqoEiNxnSvv/7mZ3Boy+0lN4LyrGeBSNyBN52ekXsv8I1b
+         rUjSCkWYmIFbz7gBRbwv5We4RlstcHicV/O6xn7ooR7cSk5X3WAWJyiYQDc6nANtN754
+         884CYGLfx/LrH0t30klmwbOTxjODf+gSGiTG8Ptwqk1vfs/PvZCDTNAZK0KM5+O8PIxX
+         fzEoTYsdSChYFOpE4tYCR1X+3+488EfJRtoFyqRjK5RKp+v+fQPUhx+LQwrL3ACS/p17
+         E+rw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=urweAOoUvm3tXo6To57HIW+uVzqmNXUWv/SU0VXhKJA=;
+        b=XawkTiHgoOEcbGe6MqoMdAc1yR+NbF0mewYhCxn2el0jjLsV4SktY06zKQYyt9lSOe
+         qp+zFzir2DKS7ablu71wDD2ydsHBHYfSLI52vt0VUm5R1OOQ/jlXWVfwfV4MCUlCaGBe
+         LSVVuYwzIz/6j+9r6pD7jl1C3Jj8+J5hEhdilAWTDnq3wfES7gWXY70qJsNfkYW5BaLE
+         Q8Rm71rETviKsaSLzAIsN99KMtCxmmwUR7VWO8VL9BbyCXCVKLkamSohUeomNN+PqttX
+         /J5GFtaLudFMiLcRg0DHi+2564RSUM3tkYPEAAnMtbYoVmwHHw60aZeqGj17VRe740OC
+         X5Yg==
+X-Gm-Message-State: AOAM533PUoNz+UugM213exTZMQMZxLDFwQc5m2/2yVcc5fkXbaarURsu
+        cX5QK+A3McBx1z3wL8uAVYiL698YFhxK
+X-Google-Smtp-Source: ABdhPJw6VeoUjWzfdkDkdYpakZInl1620WH3EjSslU9ezZ84HYlTva4y4uaGKqyrxXMrFi7OqTsNGw==
+X-Received: by 2002:a65:5cc2:: with SMTP id b2mr7917562pgt.280.1617888706197;
+        Thu, 08 Apr 2021 06:31:46 -0700 (PDT)
+Received: from localhost.localdomain ([103.77.37.173])
+        by smtp.gmail.com with ESMTPSA id f16sm22569038pfj.220.2021.04.08.06.31.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 08 Apr 2021 06:31:45 -0700 (PDT)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     hemantk@codeaurora.org, linux-kernel@vger.kernel.org,
+        bbhatt@codeaurora.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v2] bus: mhi: core: Fix shadow declarations
+Date:   Thu,  8 Apr 2021 19:01:34 +0530
+Message-Id: <20210408133134.6548-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="u3mz6ep45tw3nrcn"
-Content-Disposition: inline
-In-Reply-To: <161713057558.2260335.5422873422021430866@swboyd.mtv.corp.google.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+This commit fixes below sparse warnings with W=2 about shadow
+declarations:
 
---u3mz6ep45tw3nrcn
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+drivers/bus/mhi/core/main.c: In function ‘parse_xfer_event’:
+drivers/bus/mhi/core/main.c:667:17: warning: declaration of ‘flags’ shadows a previous local [-Wshadow]
+  667 |   unsigned long flags;
+      |                 ^~~~~
+drivers/bus/mhi/core/main.c:565:16: note: shadowed declaration is here
+  565 |  unsigned long flags = 0;
+      |                ^~~~~
+drivers/bus/mhi/core/main.c: In function ‘mhi_process_ctrl_ev_ring’:
+drivers/bus/mhi/core/main.c:856:23: warning: declaration of ‘new_state’ shadows a previous local [-Wshadow]
+  856 |     enum mhi_pm_state new_state;
+      |                       ^~~~~~~~~
+drivers/bus/mhi/core/main.c:837:19: note: shadowed declaration is here
+  837 |    enum mhi_state new_state;
+      |                   ^~~~~~~~~
 
-Hi Stephen,
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+---
 
-On Tue, Mar 30, 2021 at 11:56:15AM -0700, Stephen Boyd wrote:
-> Quoting Maxime Ripard (2021-03-30 08:35:27)
-> > Hi Stephen,
-> >=20
-> > On Mon, Mar 29, 2021 at 06:52:01PM -0700, Stephen Boyd wrote:
-> > > Trimming Cc list way down, sorry if that's too much.
-> > >=20
-> > > Quoting Maxime Ripard (2021-02-19 04:00:30)
-> > > > Many drivers reference the plane->state pointer in order to get the
-> > > > current plane state in their atomic_update or atomic_disable hooks,
-> > > > which would be the new plane state in the global atomic state since
-> > > > _swap_state happened when those hooks are run.
-> > >=20
-> > > Does this mean drm_atomic_helper_swap_state()?
-> >=20
-> > Yep. Previous to that call in drm_atomic_helper_commit, plane->state is
-> > the state currently programmed in the hardware, so the old state (that's
-> > the case you have with atomic_check for example)
-> >=20
-> > Once drm_atomic_helper_swap_state has run, plane->state is now the state
-> > that needs to be programmed into the hardware, so the new state.
->=20
-> Ok, and I suppose that is called by drm_atomic_helper_commit()?
+Changes in v2:
 
-Yep :)
+* Used a separate "mhi_pm_state" variable
 
-> So presumably a modeset is causing this? I get the NULL pointer around
-> the time we switch from the splash screen to the login screen. I think
-> there's a modeset during that transition.
+ drivers/bus/mhi/core/main.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-It's very likely yeah. I really don't get how that pointer could be null
-though :/
+diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
+index b0c8afe16e3a..47a8df550fe0 100644
+--- a/drivers/bus/mhi/core/main.c
++++ b/drivers/bus/mhi/core/main.c
+@@ -664,8 +664,6 @@ static int parse_xfer_event(struct mhi_controller *mhi_cntrl,
+ 	case MHI_EV_CC_OOB:
+ 	case MHI_EV_CC_DB_MODE:
+ 	{
+-		unsigned long flags;
+-
+ 		mhi_chan->db_cfg.db_mode = 1;
+ 		read_lock_irqsave(&mhi_cntrl->pm_lock, flags);
+ 		if (tre_ring->wp != tre_ring->rp &&
+@@ -853,14 +851,14 @@ int mhi_process_ctrl_ev_ring(struct mhi_controller *mhi_cntrl,
+ 				break;
+ 			case MHI_STATE_SYS_ERR:
+ 			{
+-				enum mhi_pm_state new_state;
++				enum mhi_pm_state pm_state;
+ 
+ 				dev_dbg(dev, "System error detected\n");
+ 				write_lock_irq(&mhi_cntrl->pm_lock);
+-				new_state = mhi_tryset_pm_state(mhi_cntrl,
++				pm_state = mhi_tryset_pm_state(mhi_cntrl,
+ 							MHI_PM_SYS_ERR_DETECT);
+ 				write_unlock_irq(&mhi_cntrl->pm_lock);
+-				if (new_state == MHI_PM_SYS_ERR_DETECT)
++				if (pm_state == MHI_PM_SYS_ERR_DETECT)
+ 					mhi_pm_sys_err_handler(mhi_cntrl);
+ 				break;
+ 			}
+-- 
+2.25.1
 
-Maxime
-
---u3mz6ep45tw3nrcn
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYIAB0WIQRcEzekXsqa64kGDp7j7w1vZxhRxQUCYG8DMAAKCRDj7w1vZxhR
-xY8YAPwM+ZLdEm9/yUl0l3VZZpCUYMChQiPmq+Q6C5PwcRmbbAD/XYf6+RRF3hq1
-do4BnroDx59ckCB5eKNUKMG9v46NUAI=
-=gzYE
------END PGP SIGNATURE-----
-
---u3mz6ep45tw3nrcn--
