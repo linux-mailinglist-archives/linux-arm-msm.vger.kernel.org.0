@@ -2,125 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 44E4A35792E
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Apr 2021 02:52:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 65CD635797A
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Apr 2021 03:17:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229497AbhDHAwY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Apr 2021 20:52:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43386 "EHLO
+        id S230494AbhDHBRS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Apr 2021 21:17:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48702 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229484AbhDHAwX (ORCPT
+        with ESMTP id S230467AbhDHBRR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Apr 2021 20:52:23 -0400
-Received: from mail-qt1-x832.google.com (mail-qt1-x832.google.com [IPv6:2607:f8b0:4864:20::832])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91434C061760
-        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Apr 2021 17:52:13 -0700 (PDT)
-Received: by mail-qt1-x832.google.com with SMTP id u8so193446qtq.12
-        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Apr 2021 17:52:13 -0700 (PDT)
+        Wed, 7 Apr 2021 21:17:17 -0400
+Received: from mail-qk1-x72d.google.com (mail-qk1-x72d.google.com [IPv6:2607:f8b0:4864:20::72d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A26C3C061761
+        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Apr 2021 18:17:06 -0700 (PDT)
+Received: by mail-qk1-x72d.google.com with SMTP id o5so699703qkb.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Apr 2021 18:17:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=L5yfAUGiZFJkNA9RfiOgP3uV3LeaPw6a590eKETYIu0=;
-        b=fKfNaOs7X82cJk1fgyRtmEvQVgCHBl4vm+WCkijF++iaQFxZGIqQYf0AkCsuPPInna
-         bkfvwcREPxlujfTS2Tk1M6Mm2sUTOt51YyqEIIglfDE1AdTSaFOWI54u/etx4yLeSfky
-         I7QlrtUKNhL3nks5nDLVI3QyMt6bBNanSmWK9DLb7BzBhro5tGm0QGxXcFRi5D7q2iFG
-         +rxJMAVw6LhH4tf3QdZ9vMgqf+kc4z45VM1jXJUQjhy9rESinejs9atGB7p8WLuQLPQB
-         mBcXVROzs5/D7OWCKO6VxY5hBscXJZbVdvZ5sM68I+DD3e1g0cHdYlLXkHnjGr4OrMEn
-         SpUQ==
+        bh=RponVH/n0pFWeAldVZ4sD08GNccWTnm59ZDslhoHoI8=;
+        b=iBGVFBxiMIY/WHY9U2+dk0mL9hmKnaVjUbryQlNgHHXCc+cZftQLQgTW3+vtrfj4cc
+         FI9ICgXJ2YllVjB/zIujnGYD5u7ODgjWg4R5yTb+IeFhu+IhdjKMRkE3+oECw8umIwLZ
+         2nuGUk7MJV8+Wsszk2EwJrPqUgrZkCri0TDtRN23nFN5NMvbjqocAQWhaguBejQJZptK
+         Vett4vHV07sEi1iEVMH52KkWcrjVcynhfnpDHgnr/HGaNbOXMb7ecxnUkbIEXS/LILee
+         IgdKLfOtZVk4toehA4Swe1AdlfPC3nBjsl5gOlR/ivUtEjvQIb4QrMdqeh97x9/OoyOU
+         HiAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=L5yfAUGiZFJkNA9RfiOgP3uV3LeaPw6a590eKETYIu0=;
-        b=MjwBCOlGzYt/FCJpTHvrLC3s68SQd24Lpc9svxpUPhL8MAUeYc+AUZiA6kWSHkrnj9
-         v15N58rGFFaEEPQzsyVA21Yc0piYsFqgMsPjoN2vevZMEmodMoCwDWM9O+7rykmbXcrk
-         QW9jCV4YAjmRbtaXbDjr9JGkjkWWomQ+vKTZSiqhbW7fzsvklxpMrRqYco1gYyNXR+Ul
-         YQUPzFA5MmqyqmLXaO6FmC8kGYu/gKtegfYtT3BmrCzx7QDZZqq4ALhLqgaM6+gURpf0
-         33iTW3YTWVvAfGlSLM0oDa5YtZYqqkp/VthIL36wPSFmJLCYXIS+TbaGUD5GsnFh/W0U
-         WySg==
-X-Gm-Message-State: AOAM5321yM/NGLE7HgsRuvxcbB8pNVkdgJfuDxvgH0l3pF4pt2f3gbA6
-        SI3EzUCySKbYG/YceLlvQKEjRhUnNFzlmpL2yJEQkg==
-X-Google-Smtp-Source: ABdhPJzJ8+guDK2jykRmIgjQKrxvpiLJtyPHjNkJrx3bJ09kkML0pQ5QsCxEFOsrCIYaODTl5cHqVcOJ7cG9vJrNs0A=
-X-Received: by 2002:ac8:5f87:: with SMTP id j7mr5037841qta.135.1617843132752;
- Wed, 07 Apr 2021 17:52:12 -0700 (PDT)
+        bh=RponVH/n0pFWeAldVZ4sD08GNccWTnm59ZDslhoHoI8=;
+        b=Sc0DzQgsx4WuYKlXzuxzsrJBDL5AcVBrDZdJhYoMNR205bJmA5gWfd+0iUveXjrE/X
+         15d0CJYSYrTBj+/SQGgXR2Fy6daCcalpxyel526qeudJxtSSGHyfjdzNlGAwNuxMpiEx
+         emf9X4kxh2Nw8+kgHOUbt172kzm2R/eedusk/HDKU5RbV8HWoxxdgS1A5K/52SWT47ev
+         0JV3ejzeGSKcPLUmzRGXp6ObAjmppWN/exVxQN63s/lHf7k4j09AoTOhB7m+W0fKRwG3
+         CaNefEqdDFGdom924HRijvor5tR7xToxILhQ/fZ4IqAKbW2xblXPWonaHOYmcda3RJmI
+         9U0w==
+X-Gm-Message-State: AOAM533r27ylAWV+l3hWJIDnr0tqbQ5+04v59wMaHG3mpZ8i9cKXC1t0
+        mkiNvNOwgvCth17WP9DtqIGVoRf5sD8AMkxjJqbChw==
+X-Google-Smtp-Source: ABdhPJz3UZBfJjNTlP+uGEGfQYh2yVI4kGW+LUjXTJj1Heanc3aJJRzfi/+eypiUVBdXr/0LZzRlJHcikVMKUlbnY/8=
+X-Received: by 2002:ae9:f312:: with SMTP id p18mr6207469qkg.162.1617844625938;
+ Wed, 07 Apr 2021 18:17:05 -0700 (PDT)
 MIME-Version: 1.0
-References: <20210406230606.3007138-1-dmitry.baryshkov@linaro.org>
- <161783530964.3790633.16412468884239960912@swboyd.mtv.corp.google.com>
- <CAA8EJppsM1sP=OTiMY8jsLLgU=+p3qgZDD7M+M5naJhfFEF_Zg@mail.gmail.com> <161783803315.3790633.10829887417379757624@swboyd.mtv.corp.google.com>
-In-Reply-To: <161783803315.3790633.10829887417379757624@swboyd.mtv.corp.google.com>
+References: <20210406231909.3035267-1-dmitry.baryshkov@linaro.org>
+ <20210406231909.3035267-2-dmitry.baryshkov@linaro.org> <161784119850.3790633.17698180700358661431@swboyd.mtv.corp.google.com>
+ <CAA8EJpqVJgj0eBm5m91MNqiBZg0y1v=iMAuLpW8H-i3ut8-q0A@mail.gmail.com> <161784413353.3790633.12158005058384470922@swboyd.mtv.corp.google.com>
+In-Reply-To: <161784413353.3790633.12158005058384470922@swboyd.mtv.corp.google.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Thu, 8 Apr 2021 03:52:01 +0300
-Message-ID: <CAA8EJprrQVPZxV7nhScgTCL7ZKU2c1AicNjOvd2YUEu8pCUxkQ@mail.gmail.com>
-Subject: Re: [PATCH] clk: fixed: fix double free in resource managed
- fixed-factor clock
+Date:   Thu, 8 Apr 2021 04:16:54 +0300
+Message-ID: <CAA8EJprRt=mx5k6cGO91nmH8e1QkKTAnPasveFY7kVhgBBb42w@mail.gmail.com>
+Subject: Re: [PATCH v2 1/4] dt-bindings: clock: separate SDM845 GCC clock bindings
 To:     Stephen Boyd <sboyd@kernel.org>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>,
         DRM DRIVER FOR MSM ADRENO GPU 
         <linux-arm-msm@vger.kernel.org>,
-        "open list:COMMON CLK FRAMEWORK <linux-clk@vger.kernel.org>, open
-        list:DRM DRIVER FOR MSM ADRENO GPU <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>, Rob Clark
-        <robdclark@chromium.org>, Daniel Palmer" <daniel@0x0f.com>
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS
+        <devicetree@vger.kernel.org>, open list:COMMON CLK FRAMEWORK" 
+        <linux-clk@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 8 Apr 2021 at 02:27, Stephen Boyd <sboyd@kernel.org> wrote:
+On Thu, 8 Apr 2021 at 04:08, Stephen Boyd <sboyd@kernel.org> wrote:
 >
-> Quoting Dmitry Baryshkov (2021-04-07 15:57:01)
-> > On Thu, 8 Apr 2021 at 01:41, Stephen Boyd <sboyd@kernel.org> wrote:
+> Quoting Dmitry Baryshkov (2021-04-07 17:38:06)
+> > Hello,
+> >
+> > On Thu, 8 Apr 2021 at 03:20, Stephen Boyd <sboyd@kernel.org> wrote:
 > > >
-> > > Quoting Dmitry Baryshkov (2021-04-06 16:06:06)
-> > > > devm_clk_hw_register_fixed_factor_release(), the release function for
-> > > > the devm_clk_hw_register_fixed_factor(), calls
-> > > > clk_hw_unregister_fixed_factor(), which will kfree() the clock. However
-> > > > after that the devres functions will also kfree the allocated data,
-> > > > resulting in double free/memory corruption. Just call
-> > > > clk_hw_unregister() instead, leaving kfree() to devres code.
-> > > >
-> > > > Reported-by: Rob Clark <robdclark@chromium.org>
-> > > > Cc: Daniel Palmer <daniel@0x0f.com>
-> > > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > > ---
-> > > >
-> > > > Stephen, this fix affects the DSI PHY rework. Do we have a chance of
-> > > > getting it into 5.12, otherwise there will be a cross-dependency between
-> > > > msm-next and clk-next.
+> > > Quoting Dmitry Baryshkov (2021-04-06 16:19:06)
+> > > > Separate qcom,gcc-sdm845 clock bindings, adding required clocks and
+> > > > clock-names properties.
 > > >
-> > > Think I can get this into the last fixes PR. One question though, I
-> > > think this follows the pattern that things like clk-divider.c use for
-> > > devm. Are those also broken?
+> > > Yes, but why?
 > >
-> > It looks so. See e.g. the devres_release() function. It calls
-> > (*release) callback, then it will kfree the resource.
-> > Also see Documentation/driver-api/driver-model/devres.rst, which does
-> > not kfree() in release functions.
-> >
-> > Do you wish for me to send all the fixes?
-> >
+> > Why separate or why add required clocks? Consider the rest of
 >
-> Yes please send more fixes. They're not high priority though so I'll
-> probably leave them to bake in next for a week or so.
+> Why separate the binding from the overall gcc one.
+>
+> > bindings, where qcom,gcc.yaml defines older bindings, which do not use
+> > clocks/clock-names and for newer bindings we have one file per binding
+> > (qcom,gcc-apq8064.yaml, qcom,gcc-qcs404.yaml, qcom,gcc-sdx55.yaml,
+> > qcom,gcc-sm8150.yaml, etc).
+> >
+> > Do you suggest merging all of them back into a single yaml file?
+>
+> No. Please add the "why" part to the commit text. The "how" and "what"
+> should be clear from the patch itself. I guess "so we can add required
+> clocks and clock-names properties to the binding" should be sufficient.
 
-Short story: no other patches needed.
-
-Long story:
-I've checked the rest of devres allocations in clk subsystem.
-Interesting, they use a bit different pattern: they devres_alloc a
-pointer to the clock, then they fill the pointer with the new clock
-data. The release callback would (correctly) free the clock pointer by
-the devres and then devres code would kfree the devres data (clock
-pointer).
-
-The fixed-factor is unique in this area, because it devres_alloc's a
-clock instance (rather than the pointer) and then fills it, so it
-should not be freed in the release callback (only unregistered) with
-the devres code kfreeing() the instance itself.
-
+Ah, got you. Sorry for the confusion. Will send v3 shortly.
 
 -- 
 With best wishes
