@@ -2,141 +2,173 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AB9F135873C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Apr 2021 16:34:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7C8FA35876E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Apr 2021 16:49:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231480AbhDHOfD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Apr 2021 10:35:03 -0400
-Received: from m12-11.163.com ([220.181.12.11]:39708 "EHLO m12-11.163.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231370AbhDHOfC (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Apr 2021 10:35:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-        s=s110527; h=From:Subject:Date:Message-Id:MIME-Version; bh=Cacx6
-        cwEprhq0gPa/mEYy1Brd/gFq94w3n5KIQaFV7M=; b=M4qysGFJ3kxt6PHjuGBLn
-        tmlGXwm3Szj3cXnsPAYi2fNQykqyPBF8PUCd3arfq+aLYCE46a/+ADR6Xj7+37+v
-        LQYPJAYGu4+xZCeP5HKlB6vv02qamXg5zO9fA6KPCRIhRGfuAJ5iQ56pl1jAljMH
-        mD8w4LbMZWmbbQ1hBcmphY=
-Received: from yangjunlin.ccdomain.com (unknown [119.137.53.45])
-        by smtp7 (Coremail) with SMTP id C8CowAD375diFG9gN7jrWA--.29003S2;
-        Thu, 08 Apr 2021 22:34:12 +0800 (CST)
-From:   angkery <angkery@163.com>
-To:     agross@kernel.org, bjorn.andersson@linaro.org, ohad@wizery.com,
-        mathieu.poirier@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Junlin Yang <yangjunlin@yulong.com>
-Subject: [PATCH] remoteproc: qcom: wcss: Remove unnecessary PTR_ERR()
-Date:   Thu,  8 Apr 2021 22:33:22 +0800
-Message-Id: <20210408143322.1647-1-angkery@163.com>
-X-Mailer: git-send-email 2.24.0.windows.2
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: C8CowAD375diFG9gN7jrWA--.29003S2
-X-Coremail-Antispam: 1Uf129KBjvJXoWxAr43KFykZryfuryrXryDGFg_yoW5tFy7p3
-        9ruFW5trykJrW8Gr9xZrs7Z3Wfuw1xJFW8Cw47Jas3Ca4Yyr4UAa15Xr10vFWFqrWrWay3
-        ZF48Z3yUC3W2gFJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-        9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07jjxRhUUUUU=
-X-Originating-IP: [119.137.53.45]
-X-CM-SenderInfo: 5dqjyvlu16il2tof0z/xtbBRgRuI13l-Mdu0gAAsw
+        id S231557AbhDHOte (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Apr 2021 10:49:34 -0400
+Received: from labrats.qualcomm.com ([199.106.110.90]:44218 "EHLO
+        labrats.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231370AbhDHOtd (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 8 Apr 2021 10:49:33 -0400
+IronPort-SDR: T4VoAZa5g9En8wWZE6GJwDXcYch+OWOrL0aVlauWATkaZLN0Ht3KwTmKNIZjKaMqswgtXscPN1
+ LkchsiUWCjvEElRYjhwx+u1CgC/iKVI2laWs3VGvGk60gsVFtNmx/nmCxLonkzZ5OFRpmg5MEU
+ tjx0FAkL2+wsXSwNu1rFj+ggNuq6dKnRNcDUyUGl0vH01Crr4C8DsWmjnKVhKgUmBMEnvJ1rlD
+ mc/LDEFE3Jt3V3+2ootmQwVAwA0wOvJEGK7Npoa5aEVKA8zZPAZoEJbVnRiusxwGTXer+QgNTe
+ B04=
+X-IronPort-AV: E=Sophos;i="5.82,206,1613462400"; 
+   d="scan'208";a="47840387"
+Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
+  by labrats.qualcomm.com with ESMTP; 08 Apr 2021 07:49:23 -0700
+X-QCInternal: smtphost
+Received: from wsp769891wss.qualcomm.com (HELO stor-presley.qualcomm.com) ([192.168.140.85])
+  by ironmsg01-sd.qualcomm.com with ESMTP; 08 Apr 2021 07:49:22 -0700
+Received: by stor-presley.qualcomm.com (Postfix, from userid 92687)
+        id 51A1520FA1; Thu,  8 Apr 2021 07:49:22 -0700 (PDT)
+From:   Asutosh Das <asutoshd@codeaurora.org>
+To:     cang@codeaurora.org, martin.petersen@oracle.com,
+        adrian.hunter@intel.com, linux-scsi@vger.kernel.org
+Cc:     Asutosh Das <asutoshd@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        linux-arm-kernel@lists.infradead.org (moderated list:ARM/Mediatek SoC
+        support),
+        linux-mediatek@lists.infradead.org (moderated list:ARM/Mediatek SoC
+        support)
+Subject: [PATCH v17 0/2] Enable power management for ufs wlun 
+Date:   Thu,  8 Apr 2021 07:49:18 -0700
+Message-Id: <cover.1617893198.git.asutoshd@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Junlin Yang <yangjunlin@yulong.com>
+This patch attempts to fix a deadlock in ufs while sending SSU.
+Recently, blk_queue_enter() added a check to not process requests if the
+queue is suspended. That leads to a resume of the associated device which
+is suspended. In ufs, that device is ufs device wlun and it's parent is
+ufs_hba. This resume tries to resume ufs device wlun which in turn tries
+to resume ufs_hba, which is already in the process of suspending, thus
+causing a deadlock.
 
-Remove unnecessary PTR_ERR(), it has been assigned to ret before,
-so return ret directly.
+This patch takes care of:
+* Suspending the ufs device lun only after all other luns are suspended
+* Sending SSU during ufs device wlun suspend
+* Clearing uac for rpmb and ufs device wlun
+* Not sending commands to the device during host suspend
 
-Signed-off-by: Junlin Yang <yangjunlin@yulong.com>
----
- drivers/remoteproc/qcom_q6v5_wcss.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+v16 -> v17:
+- Addressed Adrian's & Daejun's comments
 
-diff --git a/drivers/remoteproc/qcom_q6v5_wcss.c b/drivers/remoteproc/qcom_q6v5_wcss.c
-index 71ec1a4..7581983 100644
---- a/drivers/remoteproc/qcom_q6v5_wcss.c
-+++ b/drivers/remoteproc/qcom_q6v5_wcss.c
-@@ -913,7 +913,7 @@ static int q6v5_wcss_init_clock(struct q6v5_wcss *wcss)
- 		ret = PTR_ERR(wcss->gcc_abhs_cbcr);
- 		if (ret != -EPROBE_DEFER)
- 			dev_err(wcss->dev, "failed to get gcc abhs clock");
--		return PTR_ERR(wcss->gcc_abhs_cbcr);
-+		return ret;
- 	}
- 
- 	wcss->gcc_axim_cbcr = devm_clk_get(wcss->dev, "gcc_axim_cbcr");
-@@ -921,7 +921,7 @@ static int q6v5_wcss_init_clock(struct q6v5_wcss *wcss)
- 		ret = PTR_ERR(wcss->gcc_axim_cbcr);
- 		if (ret != -EPROBE_DEFER)
- 			dev_err(wcss->dev, "failed to get gcc axim clock\n");
--		return PTR_ERR(wcss->gcc_axim_cbcr);
-+		return ret;
- 	}
- 
- 	wcss->ahbfabric_cbcr_clk = devm_clk_get(wcss->dev,
-@@ -930,7 +930,7 @@ static int q6v5_wcss_init_clock(struct q6v5_wcss *wcss)
- 		ret = PTR_ERR(wcss->ahbfabric_cbcr_clk);
- 		if (ret != -EPROBE_DEFER)
- 			dev_err(wcss->dev, "failed to get ahbfabric clock\n");
--		return PTR_ERR(wcss->ahbfabric_cbcr_clk);
-+		return ret;
- 	}
- 
- 	wcss->lcc_csr_cbcr = devm_clk_get(wcss->dev, "tcsr_lcc_cbc");
-@@ -938,7 +938,7 @@ static int q6v5_wcss_init_clock(struct q6v5_wcss *wcss)
- 		ret = PTR_ERR(wcss->lcc_csr_cbcr);
- 		if (ret != -EPROBE_DEFER)
- 			dev_err(wcss->dev, "failed to get csr cbcr clk\n");
--		return PTR_ERR(wcss->lcc_csr_cbcr);
-+		return ret;
- 	}
- 
- 	wcss->ahbs_cbcr = devm_clk_get(wcss->dev,
-@@ -947,7 +947,7 @@ static int q6v5_wcss_init_clock(struct q6v5_wcss *wcss)
- 		ret = PTR_ERR(wcss->ahbs_cbcr);
- 		if (ret != -EPROBE_DEFER)
- 			dev_err(wcss->dev, "failed to get ahbs_cbcr clk\n");
--		return PTR_ERR(wcss->ahbs_cbcr);
-+		return ret;
- 	}
- 
- 	wcss->tcm_slave_cbcr = devm_clk_get(wcss->dev,
-@@ -956,7 +956,7 @@ static int q6v5_wcss_init_clock(struct q6v5_wcss *wcss)
- 		ret = PTR_ERR(wcss->tcm_slave_cbcr);
- 		if (ret != -EPROBE_DEFER)
- 			dev_err(wcss->dev, "failed to get tcm cbcr clk\n");
--		return PTR_ERR(wcss->tcm_slave_cbcr);
-+		return ret;
- 	}
- 
- 	wcss->qdsp6ss_abhm_cbcr = devm_clk_get(wcss->dev, "lcc_abhm_cbc");
-@@ -964,7 +964,7 @@ static int q6v5_wcss_init_clock(struct q6v5_wcss *wcss)
- 		ret = PTR_ERR(wcss->qdsp6ss_abhm_cbcr);
- 		if (ret != -EPROBE_DEFER)
- 			dev_err(wcss->dev, "failed to get abhm cbcr clk\n");
--		return PTR_ERR(wcss->qdsp6ss_abhm_cbcr);
-+		return ret;
- 	}
- 
- 	wcss->qdsp6ss_axim_cbcr = devm_clk_get(wcss->dev, "lcc_axim_cbc");
-@@ -972,7 +972,7 @@ static int q6v5_wcss_init_clock(struct q6v5_wcss *wcss)
- 		ret = PTR_ERR(wcss->qdsp6ss_axim_cbcr);
- 		if (ret != -EPROBE_DEFER)
- 			dev_err(wcss->dev, "failed to get axim cbcr clk\n");
--		return PTR_ERR(wcss->qdsp6ss_abhm_cbcr);
-+		return ret;
- 	}
- 
- 	wcss->lcc_bcr_sleep = devm_clk_get(wcss->dev, "lcc_bcr_sleep");
-@@ -980,7 +980,7 @@ static int q6v5_wcss_init_clock(struct q6v5_wcss *wcss)
- 		ret = PTR_ERR(wcss->lcc_bcr_sleep);
- 		if (ret != -EPROBE_DEFER)
- 			dev_err(wcss->dev, "failed to get bcr cbcr clk\n");
--		return PTR_ERR(wcss->lcc_bcr_sleep);
-+		return ret;
- 	}
- 
- 	return 0;
+v15 -> v16:
+- Brought back the missing changes
+  * Added scsi_autopm_[get/put] to ufs_debugfs[get/put]_user_access()
+  * Fix ufshcd_wl_poweroff()
+
+v14 -> v15:
+- Rebased on 5.13/scsi-staging
+
+v13 -> v14:
+- Addressed Adrian's comments
+  * Rebased it on top of scsi-next
+  * Added scsi_autopm_[get/put] to ufs_debugfs[get/put]_user_access()
+  * Resume the device in ufshcd_remove()
+  * Unregister ufs_rpmb_wlun before ufs_dev_wlun
+  * hba->shutting_down moved to ufshcd_wl_shutdown()
+
+v12 -> v13:
+- Addressed Adrian's comments
+  * Paired pm_runtime_get_noresume() with pm_runtime_put()
+  * no rpm_autosuspend for ufs device wlun
+  * Moved runtime-pm init functionality to ufshcd_wl_probe()
+- Addressed Bart's comments
+  * Expanded abbrevs in commit message
+
+v11 -> v12:
+- Addressed Adrian's comments
+  * Fixed ahit for Mediatek driver
+  * Fixed error handling in ufshcd_core_init()
+  * Tested this patch and the issue is still seen.
+
+v10 -> v11:
+- Fixed supplier suspending before consumer race
+- Addressed Adrian's comments
+  * Added proper resume/suspend cb to ufshcd_auto_hibern8_update()
+  * Cosmetic changes to ufshcd-pci.c
+  * Cleaned up ufshcd_system_suspend()
+  * Added ufshcd_debugfs_eh_exit to ufshcd_core_init()
+
+v9 -> v10:
+- Addressed Adrian's comments
+  * Moved suspend/resume vops to __ufshcd_wl_[suspend/resume]()
+  * Added correct resume in ufs_bsg
+
+v8 -> v9:
+- Addressed Adrian's comments
+  * Moved link transition to __ufshcd_wl_[suspend/resume]()
+  * Fixed the other minor comments
+
+v7 -> v8:
+- Addressed Adrian's comments
+  * Removed separate autosuspend delay for ufs-device lun
+  * Fixed the ee handler getting scheduled during pm
+  * Always runtime resume in suspend_prepare()
+  * Added CONFIG_PM_SLEEP where needed
+  
+v6 -> v7:
+  * Resume the ufs device before shutting it down
+
+v5 -> v6:
+- Addressed Adrian's comments
+  * Added complete() cb
+  * Added suspend_prepare() and complete() to all drivers
+  * Moved suspend_prepare() and complete() to ufshcd
+  * .poweroff() uses ufhcd_wl_poweroff()
+  * Removed several forward declarations
+  * Moved scsi_register_driver() to ufshcd_core_init()
+
+v4 -> v5:
+- Addressed Adrian's comments
+  * Used the rpmb driver contributed by Adrian
+  * Runtime-resume the ufs device during suspend to honor spm-lvl
+  * Unregister the scsi_driver in ufshcd_remove()
+  * Currently shutdown() puts the ufs device to power-down mode
+    so, just removed ufshcd_pci_poweroff()
+  * Quiesce the scsi device during shutdown instead of remove
+
+v3 RFC -> v4:
+- Addressed Bart's comments
+  * Except that I didn't get any checkpatch failures
+- Addressed Avri's comments
+- Addressed Adrian's comments
+  * Added a check for deepsleep power mode
+  * Removed a couple of forward declarations
+  * Didn't separate the scsi drivers because in rpmb case it just sends uac
+    in resume and it seemed pretty neat to me.
+- Added sysfs changes to resume the devices before accessing
+
+
+Asutosh Das (2):
+  scsi: ufs: Enable power management for wlun
+  ufs: sysfs: Resume the proper scsi device
+
+ drivers/scsi/ufs/cdns-pltfrm.c     |   2 +
+ drivers/scsi/ufs/tc-dwc-g210-pci.c |   2 +
+ drivers/scsi/ufs/ufs-debugfs.c     |   6 +-
+ drivers/scsi/ufs/ufs-debugfs.h     |   2 +-
+ drivers/scsi/ufs/ufs-exynos.c      |   2 +
+ drivers/scsi/ufs/ufs-hisi.c        |   2 +
+ drivers/scsi/ufs/ufs-mediatek.c    |  12 +-
+ drivers/scsi/ufs/ufs-qcom.c        |   2 +
+ drivers/scsi/ufs/ufs-sysfs.c       |  30 +-
+ drivers/scsi/ufs/ufs_bsg.c         |   6 +-
+ drivers/scsi/ufs/ufshcd-pci.c      |  36 +--
+ drivers/scsi/ufs/ufshcd.c          | 642 ++++++++++++++++++++++++++-----------
+ drivers/scsi/ufs/ufshcd.h          |   6 +
+ include/trace/events/ufs.h         |  20 ++
+ 14 files changed, 526 insertions(+), 244 deletions(-)
+
 -- 
-1.9.1
+Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
 
