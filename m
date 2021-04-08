@@ -2,136 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B1C10358AD7
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Apr 2021 19:06:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 57A32358AEA
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Apr 2021 19:09:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232665AbhDHRGX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Apr 2021 13:06:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58576 "EHLO
+        id S232023AbhDHRJ4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Apr 2021 13:09:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59508 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232566AbhDHRGA (ORCPT
+        with ESMTP id S231891AbhDHRJ4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Apr 2021 13:06:00 -0400
-Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B0A2C0613E0
-        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Apr 2021 10:05:48 -0700 (PDT)
-Received: by mail-pj1-x102e.google.com with SMTP id ep1-20020a17090ae641b029014d48811e37so1734695pjb.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Apr 2021 10:05:48 -0700 (PDT)
+        Thu, 8 Apr 2021 13:09:56 -0400
+Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB355C061761
+        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Apr 2021 10:09:44 -0700 (PDT)
+Received: by mail-pf1-x42f.google.com with SMTP id i190so2286206pfc.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Apr 2021 10:09:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=3x6NN0RMF6oM3dbqENncJ4pFgq9ZKIyr1RsN2Tb2XX8=;
-        b=NRAy4n+M8JIo/MIPJ7wWmm2Nghtrk0v0IMH60Z9LkBM0OhvUOLCE2X+4n7kq8hwPMb
-         Bj+/b314XEZAolws4BAfpOxjekvhUPwYwWK1fn6kzVkuYzSY/19802VFalFHExfnXfpE
-         pDU8KnMPR81IQqHQLnh8mFb0dA8MW/169NPaNGf+9qhTRThFiPNX05ZbYQlZD+MOYad3
-         KU3YgJOUTJXnX6DXaC9MlmS93lJVc07LfhnNXMpa3/PzRKvqzCD21fhqLMgPid3njDCG
-         7Syam/5V3PUREw9OSiFxOjXUjK7Cwk04TmCZiCmTuiBa16BNNpYGqGFi32wO61cDE50Z
-         VQEQ==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=iKP5uzY1vUJqutzVdh8HfO5V6lcloeop8soak6Xb7Ms=;
+        b=QBLbMFXhmM8mm2tuvskbVwyq01GaENaNKLjh8CAQ/tSEkvQAouisttLj/lijX7mi4l
+         flTgtPcdr/bj+cBZvSZkp5TW50zDvhtWz3rS1P5i/x+tALV+Lwqyr/yytRHA+7TDy0LQ
+         JqkrrP+n58z4VioGtjU+T0sDCXqiiIBOLrzdnGiZfhkGNkJ0CMsl8JgCfdca4cdrNb2g
+         QmZRBvTvj8gCSpQVgcHZdwPTsjhzb4hzlxQ0JSukbcw10rabHOTVPKAZdPygyuRsMTLA
+         brDXMmEzNvUVNBaJIcPlZOWVWoCJjrsnnNubCeHG/h8dYEywtCj+Xm35iIukla3Qx7nD
+         Vo1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=3x6NN0RMF6oM3dbqENncJ4pFgq9ZKIyr1RsN2Tb2XX8=;
-        b=i1zEd9k41idTHf1/0Nwd20CFEhwdYDI5pJhicyZG5kYA23txlP4JAn30qx8y9A2F//
-         Mu3WvtGa7swp649gAO5iooHfdYtbWNzlAW/FVWa0YihlFk6IEacUm43Aj/5iHuT9fyve
-         3dNGnWts4fpmZv/z5u3PK8CVU7/+7ZCTsku6yauD4tpyrSR9RA9zZEOsawkos0MwnBPj
-         9ax9W0WAa5vXvCACpWQ+q2eXbIjV7Q9upTytr4GWK55Le7mDw9Ivxpxh1W5BRQjgrXrL
-         5KYIRZxlnM+4dH73YXf/hPvc0qKm1Iac6P0RuKBAWG6yG5rZfWekANAI3qECrSxW9zzE
-         g4EQ==
-X-Gm-Message-State: AOAM530OlytrBaTqMZVF2lYMrKMSr5PjWLdirGgm3E358vVAMU5oGw0E
-        6Gmj/E8JWrSQGKAQpY+ZkT8I
-X-Google-Smtp-Source: ABdhPJxZ9ceevhue4KAsxMou2ASMZad2hEJM1+3mn4l2Mzr7yr6xD04auXkO1OvEXuoUV2P4XZ12Ug==
-X-Received: by 2002:a17:902:8bcb:b029:e6:a4a1:9d7e with SMTP id r11-20020a1709028bcbb02900e6a4a19d7emr8602380plo.25.1617901547954;
-        Thu, 08 Apr 2021 10:05:47 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=iKP5uzY1vUJqutzVdh8HfO5V6lcloeop8soak6Xb7Ms=;
+        b=MRfqlqUHS/xxJ1qMNoeydJFTlDESq2pMNk7786GAekA5ciqhbWh8RIldT4N4yR6nDG
+         PUzNIZr+0cSDGTI4druv4xrOKs4bOu+HavzD6/qLVJD5ewOqOAMisvNLG/CAsjvCtTBG
+         cjU9t8v6C8xT/5Ivpslx8rnZhBRsRy2V+Ri5l1dE/0J5/VSXUPI1ebiYWvoshCpVevs1
+         78KrL24ZJsAwC2bgbu1lYkhMBqsPlN2bqN2nmEUteD89T5rkcR7rwtmWzZr5CZvs6wOR
+         98L2XqGtrEY+3fdLWW15vBX39Wc4O1GSxgPMvogXUvMMTQgOdAqNVrxcclNSE4a1eunu
+         UIPg==
+X-Gm-Message-State: AOAM531AsfJghUj1fbQ2YvwIgsGQWr0VpC+ZpvpKu7FQqFopsu+2TOW4
+        KAt3j12juKsRryBg0NQdIpzc
+X-Google-Smtp-Source: ABdhPJyErrR5yuOzP5kpGYcwbqynHPO1ZHIWJc5W/k6EQCFviH0+gc+FFM+BIEHpL6NwuR0yH0s95g==
+X-Received: by 2002:a62:52d7:0:b029:224:6be5:ab22 with SMTP id g206-20020a6252d70000b02902246be5ab22mr8604010pfb.63.1617901784151;
+        Thu, 08 Apr 2021 10:09:44 -0700 (PDT)
 Received: from localhost.localdomain ([103.77.37.191])
-        by smtp.gmail.com with ESMTPSA id y194sm65183pfb.21.2021.04.08.10.05.45
+        by smtp.gmail.com with ESMTPSA id a191sm57921pfa.115.2021.04.08.10.09.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Apr 2021 10:05:47 -0700 (PDT)
+        Thu, 08 Apr 2021 10:09:38 -0700 (PDT)
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     bjorn.andersson@linaro.org
 Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH 15/15] ARM: dts: qcom: sdx55: Add Modem remoteproc node
-Date:   Thu,  8 Apr 2021 22:34:57 +0530
-Message-Id: <20210408170457.91409-16-manivannan.sadhasivam@linaro.org>
+Subject: [PATCH 0/7] SDX55 defconfig updates for v5.13
+Date:   Thu,  8 Apr 2021 22:39:23 +0530
+Message-Id: <20210408170930.91834-1-manivannan.sadhasivam@linaro.org>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20210408170457.91409-1-manivannan.sadhasivam@linaro.org>
-References: <20210408170457.91409-1-manivannan.sadhasivam@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add modem support to SDX55 using the PAS remoteproc driver.
+Hi Bjorn,
 
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
- .../boot/dts/qcom-sdx55-telit-fn980-tlb.dts   |  5 +++
- arch/arm/boot/dts/qcom-sdx55.dtsi             | 33 +++++++++++++++++++
- 2 files changed, 38 insertions(+)
+This series updates the qcom_defconfig by enabling the drivers required
+for the SDX55 platform.
 
-diff --git a/arch/arm/boot/dts/qcom-sdx55-telit-fn980-tlb.dts b/arch/arm/boot/dts/qcom-sdx55-telit-fn980-tlb.dts
-index 6da366ec15b3..3065f84634b8 100644
---- a/arch/arm/boot/dts/qcom-sdx55-telit-fn980-tlb.dts
-+++ b/arch/arm/boot/dts/qcom-sdx55-telit-fn980-tlb.dts
-@@ -255,6 +255,11 @@ nand@0 {
- 	};
- };
- 
-+&remoteproc_mpss {
-+	status = "okay";
-+	memory-region = <&mpss_adsp_mem>;
-+};
-+
- &usb_hsphy {
- 	status = "okay";
- 	vdda-pll-supply = <&vreg_l4e_bb_0p875>;
-diff --git a/arch/arm/boot/dts/qcom-sdx55.dtsi b/arch/arm/boot/dts/qcom-sdx55.dtsi
-index aa3edecf5810..bed83d1ddc29 100644
---- a/arch/arm/boot/dts/qcom-sdx55.dtsi
-+++ b/arch/arm/boot/dts/qcom-sdx55.dtsi
-@@ -328,6 +328,39 @@ sdhc_1: sdhci@8804000 {
- 			status = "disabled";
- 		};
- 
-+		remoteproc_mpss: remoteproc@4080000 {
-+			compatible = "qcom,sdx55-mpss-pas";
-+			reg = <0x04080000 0x4040>;
-+
-+			interrupts-extended = <&intc GIC_SPI 250 IRQ_TYPE_EDGE_RISING>,
-+					      <&modem_smp2p_in 0 IRQ_TYPE_EDGE_RISING>,
-+					      <&modem_smp2p_in 1 IRQ_TYPE_EDGE_RISING>,
-+					      <&modem_smp2p_in 2 IRQ_TYPE_EDGE_RISING>,
-+					      <&modem_smp2p_in 3 IRQ_TYPE_EDGE_RISING>,
-+					      <&modem_smp2p_in 7 IRQ_TYPE_EDGE_RISING>;
-+			interrupt-names = "wdog", "fatal", "ready", "handover",
-+					  "stop-ack", "shutdown-ack";
-+
-+			clocks = <&rpmhcc RPMH_CXO_CLK>;
-+			clock-names = "xo";
-+
-+			power-domains = <&rpmhpd SDX55_CX>,
-+					<&rpmhpd SDX55_MSS>;
-+			power-domain-names = "cx", "mss";
-+
-+			qcom,smem-states = <&modem_smp2p_out 0>;
-+			qcom,smem-state-names = "stop";
-+
-+			status = "disabled";
-+
-+			glink-edge {
-+				interrupts = <GIC_SPI 114 IRQ_TYPE_EDGE_RISING>;
-+				label = "mpss";
-+				qcom,remote-pid = <1>;
-+				mboxes = <&apcs 15>;
-+			};
-+		};
-+
- 		usb: usb@a6f8800 {
- 			compatible = "qcom,sdx55-dwc3", "qcom,dwc3";
- 			reg = <0x0a6f8800 0x400>;
+Please consider merging!
+
+Thanks,
+Mani
+
+Manivannan Sadhasivam (7):
+  ARM: configs: qcom_defconfig: Enable APCS IPC mailbox driver
+  ARM: configs: qcom_defconfig: Enable SDX55 A7 PLL and APCS clock
+    driver
+  ARM: configs: qcom_defconfig: Enable CPUFreq support
+  ARM: configs: qcom_defconfig: Enable Q6V5_PAS remoteproc driver
+  ARM: configs: qcom_defconfig: Enable SDX55 interconnect driver
+  ARM: configs: qcom_defconfig: Enable GLINK SMEM driver
+  ARM: configs: qcom_defconfig: Reduce CMA size to 64MB
+
+ arch/arm/configs/qcom_defconfig | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
+
 -- 
 2.25.1
 
