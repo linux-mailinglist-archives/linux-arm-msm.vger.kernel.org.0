@@ -2,115 +2,137 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9116A357E63
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Apr 2021 10:48:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4F7FB357F73
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Apr 2021 11:37:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229686AbhDHIsN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Apr 2021 04:48:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33104 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229618AbhDHIsN (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Apr 2021 04:48:13 -0400
-Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com [IPv6:2607:f8b0:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0118AC061762
-        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Apr 2021 01:48:01 -0700 (PDT)
-Received: by mail-pg1-x52c.google.com with SMTP id g35so916211pgg.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Apr 2021 01:48:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=/PMASeFAUbBI5JwV4L0k1lOX7888tIM9XHNKvH1RoPM=;
-        b=DGNyFvJNtCpXW5Bjt2K1X1fr0tN3IHOLkCmGwmhQl5vLaqgacthwvenRB6aGv/AAeQ
-         dUwql030rW4wIcVziIulvYiKbW40KunNuP3H5KxX0okrqVpKvITCe7SXjDaDAkjOEnXy
-         BEmVDDDTn5S+YlBPZIjx9agDX1FUYGV0AVbS3lejwSFGBq2vL5EpfmP34A9nrF8xsu/K
-         Dr1bTO1Zf/YLL8ACA1Y5V3eptwi/X0gocInmLAEjijbe6WWBn8Qvm/q4bcEdfCfc7mMA
-         KjmgyGfXyZco6XZUC26jFDkRRHBjNTxelYFZ1Oez0RWaQLP6kiMzr/LbemQ88jCbYRqG
-         nAng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=/PMASeFAUbBI5JwV4L0k1lOX7888tIM9XHNKvH1RoPM=;
-        b=Et0T8ogE+we4KBUOebBWJMD2iwRewgUGUo8rRpvyXv+U0DbS1GSZlbkUqWezg3v/MX
-         3C/oDUEK8YJKTLobB2Gb5ryRS4GnTAD23APb59XRisbXEWfn2IFyfubNoVNVjZ+x3Viy
-         QyRVXKKiomMB9oGxqzEBtUqJbq5D8Fge01aHq2U7j2qAdQznCO1TmnlK52kDWvlrI6lM
-         Lg3t2X6QwliPfjVcKIFrOv4CdMq5qIVcGV2xD4MJXOBf59XJb3swxSlquWuhMYpAbBSh
-         /KPzcAtx3q7HKQyy0ztvMqJiGKkpYNeFoqb/5677q408JmpPFbl4jlJsmpvLWt4eQWFu
-         b6kw==
-X-Gm-Message-State: AOAM531IwCBEVOLbj8VZmJSFvBsgZu7nSTL3brSQyvdbr81kHg0vMpQS
-        mPBkPQsG8U7LKW7jghbIlezA+M66Vve2Tfym3TvSUg==
-X-Google-Smtp-Source: ABdhPJxiutvnYlEKjdNdSYTwUE01MVBkq0+GFUlPeMifn5KRIHOroysMx2hSbJbYXz3P2FVZwY3uIsC8Pl5tKTZj1d4=
-X-Received: by 2002:a63:f903:: with SMTP id h3mr6882846pgi.443.1617871681332;
- Thu, 08 Apr 2021 01:48:01 -0700 (PDT)
-MIME-Version: 1.0
-References: <1617616369-27305-1-git-send-email-loic.poulain@linaro.org> <ddc8cd0fd3212ccbba399b03a059bcf40abbc117.camel@redhat.com>
-In-Reply-To: <ddc8cd0fd3212ccbba399b03a059bcf40abbc117.camel@redhat.com>
-From:   Loic Poulain <loic.poulain@linaro.org>
-Date:   Thu, 8 Apr 2021 10:56:11 +0200
-Message-ID: <CAMZdPi_6hCYpiyf4=x1FdA2KHnVg6LFWnfEhCd8PMQP_yFXqCw@mail.gmail.com>
-Subject: Re: [PATCH net-next v9 1/2] net: Add a WWAN subsystem
-To:     Dan Williams <dcbw@redhat.com>
-Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jakub Kicinski <kuba@kernel.org>,
-        David Miller <davem@davemloft.net>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Aleksander Morgado <aleksander@aleksander.es>,
-        open list <linux-kernel@vger.kernel.org>,
-        Network Development <netdev@vger.kernel.org>,
+        id S231239AbhDHJiA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Apr 2021 05:38:00 -0400
+Received: from mga03.intel.com ([134.134.136.65]:32279 "EHLO mga03.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229640AbhDHJiA (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 8 Apr 2021 05:38:00 -0400
+IronPort-SDR: PHOHjWaTwQxnYoNMfngO473e1wU5NJYAOYjE9cxopWxg+Wbxjiv/be5oKrour3Vsnkg2eLG8S8
+ w6lS3Z14qjNw==
+X-IronPort-AV: E=McAfee;i="6000,8403,9947"; a="193543909"
+X-IronPort-AV: E=Sophos;i="5.82,206,1613462400"; 
+   d="scan'208";a="193543909"
+Received: from orsmga001.jf.intel.com ([10.7.209.18])
+  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Apr 2021 02:37:48 -0700
+IronPort-SDR: BFpXzI0RXUfZATcKxM7hFx64JBR7Vk2GquUS4EhpRUOdB/vQoJXx3E7ConT8Lwt/z83n9oxCQn
+ yC8CBijdMkrw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.82,206,1613462400"; 
+   d="scan'208";a="458753841"
+Received: from ahunter-desktop.fi.intel.com (HELO [10.237.72.174]) ([10.237.72.174])
+  by orsmga001.jf.intel.com with ESMTP; 08 Apr 2021 02:37:42 -0700
+Subject: Re: [PATCH v16 1/2] scsi: ufs: Enable power management for wlun
+To:     Asutosh Das <asutoshd@codeaurora.org>, cang@codeaurora.org,
+        martin.petersen@oracle.com, linux-scsi@vger.kernel.org
+Cc:     linux-arm-msm@vger.kernel.org,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        Pedro Sousa <pedrom.sousa@synopsys.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Stanley Chu <stanley.chu@mediatek.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+        Steven Rostedt <rostedt@goodmis.org>,
+        Ingo Molnar <mingo@redhat.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Lee Jones <lee.jones@linaro.org>,
+        Bean Huo <beanhuo@micron.com>,
+        Kiwoong Kim <kwmad.kim@samsung.com>,
+        Wei Yongjun <weiyongjun1@huawei.com>,
+        Yue Hu <huyue2@yulong.com>,
+        "Gustavo A. R. Silva" <gustavoars@kernel.org>,
+        Dinghao Liu <dinghao.liu@zju.edu.cn>,
+        Jaegeuk Kim <jaegeuk@kernel.org>,
+        Satya Tangirala <satyat@google.com>,
+        open list <linux-kernel@vger.kernel.org>,
+        "moderated list:ARM/SAMSUNG S3C, S5P AND EXYNOS ARM ARCHITECTURES" 
+        <linux-arm-kernel@lists.infradead.org>,
+        "open list:ARM/SAMSUNG S3C, S5P AND EXYNOS ARM ARCHITECTURES" 
+        <linux-samsung-soc@vger.kernel.org>,
+        "moderated list:UNIVERSAL FLASH STORAGE HOST CONTROLLER DRIVER..." 
+        <linux-mediatek@lists.infradead.org>
+References: <cover.1617818557.git.asutoshd@codeaurora.org>
+ <7be92c0bc3e5f07d5e17bd3b78c01496686ef31e.1617818557.git.asutoshd@codeaurora.org>
+From:   Adrian Hunter <adrian.hunter@intel.com>
+Organization: Intel Finland Oy, Registered Address: PL 281, 00181 Helsinki,
+ Business Identity Code: 0357606 - 4, Domiciled in Helsinki
+Message-ID: <d30c2dc2-6334-1515-b548-a898939ec9ee@intel.com>
+Date:   Thu, 8 Apr 2021 12:38:00 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.8.1
+MIME-Version: 1.0
+In-Reply-To: <7be92c0bc3e5f07d5e17bd3b78c01496686ef31e.1617818557.git.asutoshd@codeaurora.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Dan,
+On 7/04/21 9:08 pm, Asutosh Das wrote:
+> During runtime-suspend of ufs host, the scsi devices are
+> already suspended and so are the queues associated with them.
+> But the ufs host sends SSU (START_STOP_UNIT) to wlun
+> during its runtime-suspend.
+> During the process blk_queue_enter checks if the queue is not in
+> suspended state. If so, it waits for the queue to resume, and never
+> comes out of it.
+> The commit
+> (d55d15a33: scsi: block: Do not accept any requests while suspended)
+> adds the check if the queue is in suspended state in blk_queue_enter().
+> 
+> Call trace:
+>  __switch_to+0x174/0x2c4
+>  __schedule+0x478/0x764
+>  schedule+0x9c/0xe0
+>  blk_queue_enter+0x158/0x228
+>  blk_mq_alloc_request+0x40/0xa4
+>  blk_get_request+0x2c/0x70
+>  __scsi_execute+0x60/0x1c4
+>  ufshcd_set_dev_pwr_mode+0x124/0x1e4
+>  ufshcd_suspend+0x208/0x83c
+>  ufshcd_runtime_suspend+0x40/0x154
+>  ufshcd_pltfrm_runtime_suspend+0x14/0x20
+>  pm_generic_runtime_suspend+0x28/0x3c
+>  __rpm_callback+0x80/0x2a4
+>  rpm_suspend+0x308/0x614
+>  rpm_idle+0x158/0x228
+>  pm_runtime_work+0x84/0xac
+>  process_one_work+0x1f0/0x470
+>  worker_thread+0x26c/0x4c8
+>  kthread+0x13c/0x320
+>  ret_from_fork+0x10/0x18
+> 
+> Fix this by registering ufs device wlun as a scsi driver and
+> registering it for block runtime-pm. Also make this as a
+> supplier for all other luns. That way, this device wlun
+> suspends after all the consumers and resumes after
+> hba resumes.
+> 
+> Co-developed-by: Can Guo <cang@codeaurora.org>
+> Signed-off-by: Can Guo <cang@codeaurora.org>
+> Signed-off-by: Asutosh Das <asutoshd@codeaurora.org>
+> ---
 
-On Wed, 7 Apr 2021 at 16:32, Dan Williams <dcbw@redhat.com> wrote:
->
-> On Mon, 2021-04-05 at 11:52 +0200, Loic Poulain wrote:
-> > This change introduces initial support for a WWAN framework. Given
-> > the
-> > complexity and heterogeneity of existing WWAN hardwares and
-> > interfaces,
-> > there is no strict definition of what a WWAN device is and how it
-> > should
-> > be represented. It's often a collection of multiple devices that
-> > perform
-> > the global WWAN feature (netdev, tty, chardev, etc).
->
-> Great to see the continued work on this.
->
-> Were you intending to follow-up with functionality to group netdevs
-> with the control ports?  From my quick look at v9 here it only deals
-> with MHI control ports (diag, QMI, AT, etc) which is great, but not the
-> full story.
->
-> I think that was a big part of the discussion around Johannes' earlier
-> series since it's often protocol-specific to tie a particular netdev
-> with a given control port, but that's something that's really necessary
-> for a good abstract userspace.
->
-> Thoughts here? I'd love to see that functionality too.
+<SNIP>
 
-Yes, though it's not in the scope for this initial series*, I plan to add that.
+> +#ifdef CONFIG_PM_SLEEP
+> +static int ufshcd_wl_poweroff(struct device *dev)
+> +{
+> +	struct ufs_hba *hba = dev_get_drvdata(dev);
 
-I was thinking about introducing a wwan_register_ndev or
-wwan_attach_ndev. Most of the time, netdev does not have reference to
-related existing (or future) control ports (they are different
-drivers), so we may need something like a 'context_id' for both ndev
-and control ports that can be used for linking them when necessary.
-Then, this relation could be represented as e.g a sysfs link to ndev
-device(s)... That's just a possible approach, I'll be happy to discuss
-this further.
+Should be:
 
-* Note: Userspace tools like ModemManager are able to link control
-ports and netdev by looking at the sysfs hierarchy, it's fine for
-simple connection management, but probably not enough for 'multi PDN'
-support for which devices may have multiple netdev and ports
-targetting different 'PDN contexts'...
+	struct scsi_device *sdev = to_scsi_device(dev);
+	struct ufs_hba *hba = shost_priv(sdev->host);
 
-Regards,
-Loic
+> +
+> +	__ufshcd_wl_suspend(hba, UFS_SHUTDOWN_PM);
+> +	return 0;
+> +}
+> +#endif
