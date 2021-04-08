@@ -2,248 +2,171 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 893CF357BC9
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Apr 2021 07:22:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 81AEA357C27
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Apr 2021 08:10:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229579AbhDHFW6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Apr 2021 01:22:58 -0400
-Received: from mail-lf1-f54.google.com ([209.85.167.54]:36723 "EHLO
-        mail-lf1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229523AbhDHFW5 (ORCPT
+        id S229534AbhDHGKs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Apr 2021 02:10:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55420 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229506AbhDHGKs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Apr 2021 01:22:57 -0400
-Received: by mail-lf1-f54.google.com with SMTP id n138so1858402lfa.3;
-        Wed, 07 Apr 2021 22:22:45 -0700 (PDT)
+        Thu, 8 Apr 2021 02:10:48 -0400
+Received: from mail-vs1-xe33.google.com (mail-vs1-xe33.google.com [IPv6:2607:f8b0:4864:20::e33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 633FDC061761;
+        Wed,  7 Apr 2021 23:10:37 -0700 (PDT)
+Received: by mail-vs1-xe33.google.com with SMTP id r12so550723vsj.5;
+        Wed, 07 Apr 2021 23:10:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=CUQ3cwp/ARSckTERs7Pr5Akk9wwQpgTRfXX9Y/FHi14=;
+        b=fU9JE0TCyFIucBVJnRwcGQ/I5/C2wkxeYG7SD3vZ8CHwfXKkDlrjczcT3xz6TXNxER
+         RvDc//LklJ1n4MVKTGNSisoYZoz2qOAnvzvi9OXUgGKq8l52ps4EpGw9GmTw7f2GdiXx
+         ozlBmLCS17U9jVkhsIy7O8M9OPngduJLGP1cycRdbG1nm9LbqXend244/U3+mZkUfqx/
+         /R3uTDIU0kb290sJHU1o8CO8VC0cJgvHrqjFMgUcTgGljUpdDhK/dNGYQYn62/RGvolF
+         XnXzlAFvxlwZC2ycK/jiyc5tqIatiJP3+SAGuXfgtofCi40D9hzImygWoY+od41qAG2O
+         jarA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:reply-to:to:cc
-         :in-reply-to:references:mime-version:date:user-agent
-         :content-transfer-encoding;
-        bh=LwIkpBbg+hs9AAsq9S1MhcrqF1ZjzaswrunzqqDZ5p0=;
-        b=P1jZjeRqJDxuBN7lLfuo1UTNV7H03Q4eMGIVyLlgmD9+jXUleIzY28de6CwpVMw/3e
-         FSIMOhaub/SZEIFfnr8oO/2rB+/ee83TYdLAMr5DotOObkXjBWaICv35TwmlQEjXX9LB
-         36H0uLfMsxf41sJb2ZNk0DSDpirMvaqec9hAwoRIOPLhKZ6Y2cPGoDkCKMBWPJF3hu7A
-         UyT5g06mX1pHZOg9HTZaZUL0t2lRwkt6Mv79DJ706wiMiYJop7XOYrN84/PxKNPv+sjR
-         P+MzaWTEUa96niixOAfTz1yRARorBeYTQG6ZFSJBPxranbE/E0xprSbTa0uuZQzModHx
-         Ae7w==
-X-Gm-Message-State: AOAM531E/jVy4JpPRcmE+dhKrA1S+mlbuNFcddO7HgehncqgMQYQe4c0
-        BUclFnF+OEU5QN6e1Z38jyw=
-X-Google-Smtp-Source: ABdhPJyIg/bNU1H+W555nMnakz7CQrknh2ELCBr8mh+3eYxc2AoRqYtNnUjOFLTOeaucA6LvXb88dQ==
-X-Received: by 2002:a05:6512:3249:: with SMTP id c9mr4990577lfr.5.1617859364958;
-        Wed, 07 Apr 2021 22:22:44 -0700 (PDT)
-Received: from dc7vkhyyyyyyyyyyyyydy-3.rev.dnainternet.fi (dc7vkhyyyyyyyyyyyyydy-3.rev.dnainternet.fi. [2001:14ba:16e2:8300::6])
-        by smtp.gmail.com with ESMTPSA id x5sm2709152ljd.128.2021.04.07.22.22.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Apr 2021 22:22:44 -0700 (PDT)
-Message-ID: <7ac9ab85553a5988e4a4db76d66261d01e865d31.camel@fi.rohmeurope.com>
-Subject: Re: [PATCH v6 3/8] regulator: IRQ based event/error notification
- helpers
-From:   Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>
-Reply-To: matti.vaittinen@fi.rohmeurope.com
-To:     Andy Shevchenko <andy.shevchenko@gmail.com>
-Cc:     Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        devicetree <devicetree@vger.kernel.org>,
-        linux-power <linux-power@fi.rohmeurope.com>,
-        linux-arm-msm@vger.kernel.org,
-        Linux-Renesas <linux-renesas-soc@vger.kernel.org>
-In-Reply-To: <CAHp75VcHeiQgvZ5e+Dz+gpKghCo5RSTQLsyHGGSgdVQbVu2t+g@mail.gmail.com>
-References: <cover.1617789229.git.matti.vaittinen@fi.rohmeurope.com>
-         <0862bbb6813891594f56700808d08160b6635bf4.1617789229.git.matti.vaittinen@fi.rohmeurope.com>
-         <CAHp75VcHeiQgvZ5e+Dz+gpKghCo5RSTQLsyHGGSgdVQbVu2t+g@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=CUQ3cwp/ARSckTERs7Pr5Akk9wwQpgTRfXX9Y/FHi14=;
+        b=HHKJPxLbEBaG2o/fHc2RNccL7MQCytzdQEjfZlKhCikxoVfp2WRR/lsxr2jHPzxi2n
+         5/FZvuj0L3S0B+oVbtmZ/zVHdKYGav1D5PJWg/nIN6zJgs7Xtmlsl+CyCj5dZgU6MgVQ
+         WJafjRF1q/jTj5t4nh2fgdAKRTemQKdAFiixt1MvY2gmXHdvIMn+V+1EIjLm3w+MhYdN
+         Upjb7+rwwwABEGMPxG7dWo19e0mCfNvIjCi5FIk45PTyD4b+OL6vm6gR6gsy14+NB0Af
+         uFhCB28hZHzeSfes4ryT2dqGENIR2mZpycTzQywjUqzGDm/xjKu30anG5uenSv5c9d09
+         QUNw==
+X-Gm-Message-State: AOAM533rLoPM9Dlf0FMXD9zc52fdTyYq83aCKzWJuyLeQdwxSXcuTOHj
+        Jkdi6M9NTbp5IN49el2jYWJaHwKxhAh3ACWvBiA=
+X-Google-Smtp-Source: ABdhPJztW4CSyXk2+ABsPhedrg6tFtBRt+cgHN0pE8VW7Y0ihwSfq/f49KmPR2e5IQcLwat01QPVt/kPDucXJWcRd08=
+X-Received: by 2002:a67:c783:: with SMTP id t3mr4796844vsk.5.1617862236390;
+ Wed, 07 Apr 2021 23:10:36 -0700 (PDT)
 MIME-Version: 1.0
-Date:   Thu, 08 Apr 2021 08:22:37 +0300
-User-Agent: Evolution 3.34.4 (3.34.4-1.fc31) 
-Content-Transfer-Encoding: 7bit
+References: <20210407025029.2616-1-jarvis.w.jiang@gmail.com> <CAMZdPi_CZG1e1H+kf7NDRWDxV9hiG-ZCLca7EXgKtsY_NEKatA@mail.gmail.com>
+In-Reply-To: <CAMZdPi_CZG1e1H+kf7NDRWDxV9hiG-ZCLca7EXgKtsY_NEKatA@mail.gmail.com>
+From:   Jarvis Jiang <jarvis.w.jiang@gmail.com>
+Date:   Thu, 8 Apr 2021 14:10:27 +0800
+Message-ID: <CAPncsNOk+3ke1fE=ns_-RTUhPftmq7CpJprMQ=v5Myr3Mr=2DA@mail.gmail.com>
+Subject: Re: [PATCH] bus: mhi: pci_generic: Introduce Foxconn T99W175 support
+To:     Loic Poulain <loic.poulain@linaro.org>
+Cc:     Manivannan Sadhasivam <mani@kernel.org>,
+        Hemant Kumar <hemantk@codeaurora.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        cchen50@lenovo.com, mpearson@lenovo.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello Andy, All.
+On Wed, Apr 7, 2021 at 4:22 PM Loic Poulain <loic.poulain@linaro.org> wrote:
+>
+> Hi Jarvis,
+>
+> On Wed, 7 Apr 2021 at 04:51, Jarvis Jiang <jarvis.w.jiang@gmail.com> wrote:
+> >
+> > Add support for T99W175 modems, this modem series is based on SDX55
+> > qcom chip. The modem is mainly based on MBIM protocol for both the
+> > data and control path.
+> >
+> > This patch was tested with Ubuntu 20.04 X86_64 PC as host
+> >
+> > Signed-off-by: Jarvis Jiang <jarvis.w.jiang@gmail.com>
+> > ---
+> >  drivers/bus/mhi/pci_generic.c | 58 +++++++++++++++++++++++++++++++++++
+> >  1 file changed, 58 insertions(+)
+> >
+> > diff --git a/drivers/bus/mhi/pci_generic.c b/drivers/bus/mhi/pci_generic.c
+> > index 5cf44bcfe040..3e396c65a758 100644
+> > --- a/drivers/bus/mhi/pci_generic.c
+> > +++ b/drivers/bus/mhi/pci_generic.c
+> > @@ -260,6 +260,52 @@ static const struct mhi_pci_dev_info mhi_quectel_em1xx_info = {
+> >         .dma_data_width = 32
+> >  };
+> >
+> > +static const struct mhi_channel_config mhi_foxconn_sdx55_channels[] = {
+> > +       MHI_CHANNEL_CONFIG_UL(0, "LOOPBACK", 32, 0),
+> > +       MHI_CHANNEL_CONFIG_DL(1, "LOOPBACK", 32, 0),
+> > +       MHI_CHANNEL_CONFIG_UL(4, "DIAG", 32, 1),
+> > +       MHI_CHANNEL_CONFIG_DL(5, "DIAG", 32, 1),
+> > +       MHI_CHANNEL_CONFIG_UL(12, "MBIM", 32, 0),
+> > +       MHI_CHANNEL_CONFIG_DL(13, "MBIM", 32, 0),
+> > +       MHI_CHANNEL_CONFIG_UL(14, "QMI", 32, 0),
+> > +       MHI_CHANNEL_CONFIG_DL(15, "QMI", 32, 0),
+> > +       MHI_CHANNEL_CONFIG_UL(16, "QMI1", 32, 0),
+> > +       MHI_CHANNEL_CONFIG_DL(17, "QMI1", 32, 0),
+>
+> Are these QMI channels need to be exposed, vendors usually expose
+> either QMI+QMAP or MBIM (for data and control), here you expose
+> IP_HW0_MBIM as 'data' channel, so I would expect that MBIM is all you
+> need for the 'control' channel.
 
-On Wed, 2021-04-07 at 16:21 +0300, Andy Shevchenko wrote:
-> On Wed, Apr 7, 2021 at 1:04 PM Matti Vaittinen
-> <matti.vaittinen@fi.rohmeurope.com> wrote:
-> > Provide helper function for IC's implementing regulator
-> > notifications
-> > when an IRQ fires. The helper also works for IRQs which can not be
-> > acked.
-> > Helper can be set to disable the IRQ at handler and then re-
-> > enabling it
-> > on delayed work later. The helper also adds
-> > regulator_get_error_flags()
-> > errors in cache for the duration of IRQ disabling.
-> 
-> Thanks for an update, my comments below. After addressing them, feel
-> free to add
-> Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
-> 
-> > Signed-off-by: Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>
-> > 
-> >  static int _regulator_get_error_flags(struct regulator_dev *rdev,
-> >                                         unsigned int *flags)
-> >  {
-> > -       int ret;
-> > +       int ret, tmpret;
-> > 
-> >         regulator_lock(rdev);
-> > 
-> > +       ret = rdev_get_cached_err_flags(rdev);
+Yes, the unnecessary channels will be removed in  the next patch.
+
+Thanks,
+Jarvis
+
+>
+> > +       MHI_CHANNEL_CONFIG_UL(18, "IP_CTRL", 32, 0),
+> > +       MHI_CHANNEL_CONFIG_DL(19, "IP_CTRL", 32, 0),
+> > +       MHI_CHANNEL_CONFIG_UL(20, "IPCR", 32, 0),
+> > +       MHI_CHANNEL_CONFIG_DL(21, "IPCR", 32, 0),
+> > +       MHI_CHANNEL_CONFIG_UL(32, "AT", 32, 0),
+> > +       MHI_CHANNEL_CONFIG_DL(33, "AT", 32, 0),
+> > +       MHI_CHANNEL_CONFIG_HW_UL(100, "IP_HW0_MBIM", 128, 2),
+> > +       MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0_MBIM", 128, 3),
+> > +};
 > > +
-> >         /* sanity check */
-> > -       if (!rdev->desc->ops->get_error_flags) {
-> > +       if (rdev->desc->ops->get_error_flags) {
-> > +               tmpret = rdev->desc->ops->get_error_flags(rdev,
-> > flags);
-> > +               if (tmpret > 0)
-> > +                       ret |= tmpret;
-> 
-> Oh, I don't like this. Easy fix is to rename ret (okay, it's been
-> used
-> elsewhere, so adding then) to something meaningful, like error_flags,
-> then you can easily understand that value should be positive and
-> error
-> codes are negative.
-
-No wonder if this looks hairy. I think I have got this plain wrong. The
-rdev_get_cached_err_flags() is not updating the flags. Looks like just
-plain mistake from my side. I think I've mixed the returning flags via
-parameter and return value. This must be fixed. Well spotted.
-
-
-> + */
-> > +void *devm_regulator_irq_helper(struct device *dev,
-> > +                               const struct regulator_irq_desc *d,
-> > int irq,
-> > +                               int irq_flags, int common_errs,
-> > +                               int *per_rdev_errs,
-> > +                               struct regulator_dev **rdev, int
-> > rdev_amount)
-> 
-> I didn't get why you need the ** pointer instead of plain pointer.
-
-We have an array of pointers. And we give a pointer to the first
-pointer. Maybe it's the lack of coffee but I don't see why a single
-pointer would be correct? rdev structures are not in contagious memory,
-pointers to rdevs are. So we need address of first pointer, right?
-+#include <linux/device.h>
-
-
-> > +#include <linux/err.h>
-> > +#include <linux/kernel.h>
-> > +#include <linux/of_irq.h>
-> 
-> Not sure how this header is used. I haven't found any direct users of
-> it. Perhaps you wanted interrupt.h?
-
-Thanks. I think this specific header may be a leftover from first draft
-where I thought I'll use named IRQs. The header was for
- of_irq_get_byname(). That ended up as a mess for everything else but
-platform devices :) I'll check the headers, thanks.
-
-> > +#include <linux/regmap.h>
-> > +#include <linux/slab.h>
-> > +#include <linux/spinlock.h>
-> 
-> + Blank line? I would separate group of generic headers with
-> particular to the subsystem
-
-I don't see this being used in regulator subsystem - and to tell the
-truth, I don't really see the value.
-
-> > +#include <linux/regulator/driver.h>
-
-...
-
+> > +static struct mhi_event_config mhi_foxconn_sdx55_events[] = {
+> > +       MHI_EVENT_CONFIG_CTRL(0, 128),
+> > +       MHI_EVENT_CONFIG_DATA(1, 128),
+> > +       MHI_EVENT_CONFIG_HW_DATA(2, 1024, 100),
+> > +       MHI_EVENT_CONFIG_HW_DATA(3, 1024, 101)
+> > +};
 > > +
-> > +reread:
-> > +       if (d->fatal_cnt && h->retry_cnt > d->fatal_cnt) {
-> > +               if (d->die)
-> > +                       ret = d->die(rid);
-> > +               else
-> > +                       die_loudly("Regulator HW failure? - no IC
-> > recovery");
+> > +static struct mhi_controller_config modem_foxconn_sdx55_config = {
+> > +       .max_channels = 128,
+> > +       .timeout_ms = 20000,
+> > +       .num_channels = ARRAY_SIZE(mhi_foxconn_sdx55_channels),
+> > +       .ch_cfg = mhi_foxconn_sdx55_channels,
+> > +       .num_events = ARRAY_SIZE(mhi_foxconn_sdx55_events),
+> > +       .event_cfg = mhi_foxconn_sdx55_events,
+> > +};
 > > +
-> > +               /*
-> > +                * If the 'last resort' IC recovery failed we will
-> > have
-> > +                * nothing else left to do...
-> > +                */
-> > +               if (ret)
-> > +                       die_loudly("Regulator HW failure? - IC
-> > recovery failed");
-> 
-> Looking at the above code this will be executed if and only if
-> d->die() is defined, correct?
-> In that case, why not
-> 
-> if (d->die) {
->   ret = ...
->   if (ret)
->    rdev_die_loudly(...);
-> } else
->    rdev_die_loudly(...);
-> 
-> ?
-
-I think this should simply be:
-
-if (!d->die)
-	die_loudly("Regulator HW failure? - no IC recovery");
-
-ret = d->die(rdev);
-if (ret)
-	die_loudly(...);
-
-...
-
-> > +static void init_rdev_errors(struct regulator_irq *h)
-> > +{
-> > +       int i;
+> > +static const struct mhi_pci_dev_info mhi_foxconn_sdx55_info = {
+> > +       .name = "foxconn-sdx55",
+> > +       .fw = "qcom/sdx55m/sbl1.mbn",
+> > +       .edl = "qcom/sdx55m/edl.mbn",
+> > +       .config = &modem_foxconn_sdx55_config,
+> > +       .bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+> > +       .dma_data_width = 32
+> > +};
 > > +
-> > +       for (i = 0; i < h->rdata.num_states; i++) {
-> > +               if (h->rdata.states[i].possible_errs)
-> > +                       /* Can we trust writing this boolean is
-> > atomic? */
-> 
-> No. boolean is a compiler / platform specific and it may potentially
-> be written in a non-atomic way.
-
-Hmm.. I don't think this really is a problem here. We only use the
-use_cached_err for true/false evaluation - and if error getting api is
-called after the boolean is changed - then cached error is used, if
-before, then it is not used. Even if the value of the boolean was read
-in the middle of writing it, it will still evaluate either true or
-false - there is no 'maybe' state :)
-
-My point, I guess we can do the change without locking here. Please
-correct me if I am wrong. I'll just drop this comment.
-
-> 
-> re-enable / reenable
-> 
-> > + *             added to status. If that is the case it may be
-> > desirable to
-> > + *             return REGULATOR_ERROR_CLEARED and not
-> > REGULATOR_ERROR_ON to
-> > + *             allow IRQ fire again and to generate notifications
-> > also for
-> > + *             the new issues.
-> > + *
-> > + * This structure is passed to map_event and renable for reporting
-> > regulator
-> 
-> Ditto.
-
-the "renable" is referring to the callback function pointer which is
-named "renable".
-
-
-Best Regards
--- Matti Vaittinen
-
+> >  static const struct pci_device_id mhi_pci_id_table[] = {
+> >         { PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0306),
+> >                 .driver_data = (kernel_ulong_t) &mhi_qcom_sdx55_info },
+> > @@ -269,6 +315,18 @@ static const struct pci_device_id mhi_pci_id_table[] = {
+> >                 .driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
+> >         { PCI_DEVICE(0x1eac, 0x1002), /* EM160R-GL (sdx24) */
+> >                 .driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
+> > +       { PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0ab), /* T99W175 (sdx55) */
+> > +               .driver_data = (kernel_ulong_t) &mhi_foxconn_sdx55_info },
+> > +       { PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0b2), /* T99W175 (sdx55) */
+> > +               .driver_data = (kernel_ulong_t) &mhi_foxconn_sdx55_info },
+> > +       { PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0b3), /* T99W175 (sdx55) */
+> > +               .driver_data = (kernel_ulong_t) &mhi_foxconn_sdx55_info },
+> > +       /* DW5930e (sdx55), With eSIM, It's also T99W175 */
+> > +       { PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0b0),
+> > +               .driver_data = (kernel_ulong_t) &mhi_foxconn_sdx55_info },
+> > +       /* DW5930e (sdx55), Non-eSIM, It's also T99W175 */
+> > +       { PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0b1),
+> > +               .driver_data = (kernel_ulong_t) &mhi_foxconn_sdx55_info },
+> >         {  }
+> >  };
+> >  MODULE_DEVICE_TABLE(pci, mhi_pci_id_table);
+> > --
+> > 2.25.1
+> >
