@@ -2,154 +2,165 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F1E4A358812
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Apr 2021 17:20:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A236135890B
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Apr 2021 17:57:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232077AbhDHPU1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Apr 2021 11:20:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35122 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232011AbhDHPU1 (ORCPT
+        id S232059AbhDHP6C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Apr 2021 11:58:02 -0400
+Received: from mo4-p00-ob.smtp.rzone.de ([85.215.255.24]:28261 "EHLO
+        mo4-p00-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231866AbhDHP6B (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Apr 2021 11:20:27 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB17FC061760;
-        Thu,  8 Apr 2021 08:20:15 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id y20-20020a1c4b140000b029011f294095d3so3144650wma.3;
-        Thu, 08 Apr 2021 08:20:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=v7qcvuTJQnTWwOB3Ha6/Syy7/aYA0Qf/BL1AwDzfuGU=;
-        b=e3ZNlpbpavIjcSN8dIxYOE/rXgDXvsXGNe5Ir4myMhVg15nZr9dHEFBzEJZ1RIJEHH
-         lFss/0FwJk6YqrYFGwcOwy4wxTXLv5vNP4drLHjRpIEj5c92ZGLzcM/1oJC8Bx2/ctsG
-         rxzJ05izioG/KGa1Ww9FJ4SyhfnA3BUCjaQoW6xHxdRDUq1Cfqihsu41kzj1x3DpZxB/
-         yVS6yKPyHbUKfUguXhrbdNChUuaTIm8RhsDhMO0YQ2KkmueNSFLJ7ukwaxtOLTg4tily
-         /W3vhMYNxmLGBpqInhUPtsU9kvqLmvBW3tARkD4gSP8nzP2i5ZNb79cE+dg0nwu5e0ZA
-         m0cA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=v7qcvuTJQnTWwOB3Ha6/Syy7/aYA0Qf/BL1AwDzfuGU=;
-        b=eNCFR/m5av5nG1NlN6Rxf07KFIxAZvbX7SzlUFTair6Oq9DGTLbNzQyhsx4Fr5IvJU
-         r5L4JzSryNoajG3cpb4MiYW97rt4Bl/oDWfU/SlTSgpE831Q1uRzISYvZ6V/v5mpBWs7
-         e2jDSS9j97VXLcnsFCuXI8o4abOF1IPTAsRMZuyLkoSqUCj69JxeVB2OZY639liIwVhf
-         KktRE2IcQHRJuM1Flz+ohhPkbzotP0L+onyf7N8SIbiqEfaxlqqesqd6BcphaaSbvKvq
-         Hi7mp0NANJjSDwRDUjsgz9qP+xrMEQqhoRe39BEtcvF8/sINTT6KirntsR3TV5A1s5VU
-         wz9g==
-X-Gm-Message-State: AOAM530wkEd0GajQ+NrDdXGvMaoSlvKJtJrUsh5xnp/wAMuQ4PLM6S54
-        ZTTvqk6OBeS17lEDKy1BzQLaZd3uEp7aPdOaD68=
-X-Google-Smtp-Source: ABdhPJwnEZiOVu05xL4G7IVf4f04NXBPNtQO9QG4ZKDgpvpOib9wUr5K++bP76nBv0xlgyUACj0JeK94OKvdYJeiSJA=
-X-Received: by 2002:a05:600c:4fd0:: with SMTP id o16mr9194147wmq.123.1617895214533;
- Thu, 08 Apr 2021 08:20:14 -0700 (PDT)
+        Thu, 8 Apr 2021 11:58:01 -0400
+ARC-Seal: i=1; a=rsa-sha256; t=1617897464; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=FrtupQqXNl41U2encBVhcG6lH1+Y9+xXBCe396IGRJjOqmNXo4AzRXywZz0LEWyEvo
+    wCSyCUQdm6LfP/0TIAkDePzwlpJmSqqcONajBu7bU9W3bTP6MWQqTAUmLSeI4MV2LzDm
+    F1m/RW9ECrPo5fAzComblg6GhQ2we9Y5CMSRddG8Nrw+MktjqQDFMu9PDMN+5/dI9DDw
+    YLlxu40nwwYmqq9jLlAj0+G1cdGMIaaRgpKzGFEvBx58WCk9JrGJ2AZcoy25D0T0s8KN
+    thJ3NKleUXIm5tWQKdnEQReZG9uIbQ3Bkrw1NJZxWK6kyfcRD3OLIA+gKn5QXY9J55oB
+    Re6Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1617897464;
+    s=strato-dkim-0002; d=strato.com;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=qJzrcEJtFtjqvzC/z2GlGG4ntM5V+mCgLo9FaKWsg+E=;
+    b=rxzlUoH+zeEocwCAFiVCPr6Hd/2jEWeFKpCBxRUifSpzp3Z9/A0TWJWyAn/0tkEsX6
+    MJaUqK66BGv2YCxvY8XeTbFQZrKWKTCTc5s+Q2d156jgUvORrYJTbUNtKOOhioEUenWl
+    N+SoDgTsTbxcHofNkRiUi+HH/jwq1ExQZi8cQoxRgmxySA/sx0+cr2aFSKajH/e4k0Se
+    B6v1Bp5OHXYzmTsQxbSKKKK+GMuSdGmunr81UGLmnI06pe2BYaYH3w2r9RMSKRb3tSnG
+    3YV1/U1Ng/lY83omii4swFB4eDAKyBGliE9W/V9imBF/CiZyTo7zGyWm6eWtwJAjMgBB
+    u3Mw==
+ARC-Authentication-Results: i=1; strato.com;
+    dkim=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1617897464;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=qJzrcEJtFtjqvzC/z2GlGG4ntM5V+mCgLo9FaKWsg+E=;
+    b=qyOd6wKuypQvwRk8X2fF/grVVxmcLceVO0WlxwKc5Cq2yRk78R9H5wR1giyIuD5R5D
+    P0d/ZMmaN0KoHC7YLwjWBPjSGbg7L8Dpb32Q1lJewQc59dPq9DM0psP6UeIyXOvxp6LR
+    Y6O9zjSSKsqGOGVuCBMQ8GxDekjCGieUhDyTAU7sKLUcSc4vjOd9tIAk3N1kVxduPqdP
+    0gF70ufST/q+4pROwl03oybUiDgjhRy4cHXruC62EEwWBKY83Gxy5K9jnAwxbfYEVfTj
+    PFi7S345AxnkF+ggLnr6HMHtwoA+RIRTu9eRKQ4VsXXpCNzrVoyHduyssipXgzn9rfZs
+    GqOQ==
+Authentication-Results: strato.com;
+    dkim=none
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u26zEodhPgRDZ8j6IczAaYo="
+X-RZG-CLASS-ID: mo00
+Received: from gerhold.net
+    by smtp.strato.de (RZmta 47.24.0 DYNA|AUTH)
+    with ESMTPSA id 409abax38FvhBew
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Thu, 8 Apr 2021 17:57:43 +0200 (CEST)
+Date:   Thu, 8 Apr 2021 17:57:39 +0200
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Marc Zyngier <maz@kernel.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
+Subject: Re: [PATCH] arm64: dts: qcom: msm8916: Add GICv2 hypervisor
+ registers/interrupt
+Message-ID: <YG8n83ckdeGKERA6@gerhold.net>
+References: <20210407163648.4708-1-stephan@gerhold.net>
+ <871rblorhy.wl-maz@kernel.org>
 MIME-Version: 1.0
-References: <20210405174532.1441497-1-robdclark@gmail.com> <YG7l0LwVQ2s4Y0Sa@phenom.ffwll.local>
-In-Reply-To: <YG7l0LwVQ2s4Y0Sa@phenom.ffwll.local>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Thu, 8 Apr 2021 08:23:42 -0700
-Message-ID: <CAF6AEGsH2gbKv-Q04gRbjz=ue1TF7S_6DXa06bvYPcmYvG684w@mail.gmail.com>
-Subject: Re: [PATCH 0/8] drm/msm: Swappable GEM objects
-To:     Rob Clark <robdclark@gmail.com>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        Rob Clark <robdclark@chromium.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <freedreno@lists.freedesktop.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <871rblorhy.wl-maz@kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Apr 8, 2021 at 4:15 AM Daniel Vetter <daniel@ffwll.ch> wrote:
->
-> On Mon, Apr 05, 2021 at 10:45:23AM -0700, Rob Clark wrote:
-> > From: Rob Clark <robdclark@chromium.org>
-> >
-> > One would normally hope not to be under enough memory pressure to need
-> > to swap GEM objects to disk backed swap.  But memory backed zram swap
-> > (as enabled on chromebooks, for example) can actually be quite fast
-> > and useful on devices with less RAM.  On a 4GB device, opening up ~4
-> > memory intensive web pages (in separate windows rather than tabs, to try
-> > and prevent tab discard), I see ~500MB worth of GEM objects, of which
-> > maybe only 10% are active at any time, and with unpin/evict enabled,
-> > only about half resident (which is a number that gets much lower if you
-> > simulate extreme memory pressure).  Assuming a 2:1 compression ratio (I
-> > see a bit higher in practice, but cannot isolate swapped out GEM pages
-> > vs other), that is like having an extra 100+MB of RAM, or more under
-> > higher memory pressure.
-> >
-> > Rob Clark (8):
-> >   drm/msm: ratelimit GEM related WARN_ON()s
-> >   drm/msm: Reorganize msm_gem_shrinker_scan()
-> >   drm/msm: Clear msm_obj->sgt in put_pages()
-> >   drm/msm: Split iova purge and close
-> >   drm/msm: Add $debugfs/gem stats on resident objects
-> >   drm/msm: Track potentially evictable objects
-> >   drm/msm: Small msm_gem_purge() fix
-> >   drm/msm: Support evicting GEM objects to swap
->
-> Given how much entertainement shrinkers are, should we aim for more common
-> code here?
->
-> Christian has tons of fun with adding something like this for ttm (well
-> different shades of grey). i915 is going to adopt ttm, at least for
-> discrete.
->
-> The locking is also an utter pain, and msm seems to still live a lot in
-> its own land here. I think as much as possible a standard approach here
-> would be really good, ideally maybe as building blocks shared between ttm
-> and gem-shmem drivers ...
+Hi Marc,
 
-I don't disagree.. but also replacing the engines on an airplane
-mid-flight isn't a great option either.. ;-)
+On Thu, Apr 08, 2021 at 02:06:17PM +0100, Marc Zyngier wrote:
+> Hi Stephan,
+> 
+> On Wed, 07 Apr 2021 17:36:48 +0100,
+> Stephan Gerhold <stephan@gerhold.net> wrote:
+> > 
+> > The ARM Cortex-A53 CPU cores and QGIC2 interrupt controller
+> > (an implementation of the ARM GIC 2.0 specification) used in MSM8916
+> > support virtualization, e.g. for KVM on Linux. However, so far it was
+> > not possible to make use of this functionality, because Qualcomm's
+> > proprietary "hyp" firmware blocks the EL2 mode of the CPU and only
+> > allows booting Linux in EL1.
+> > 
+> > However, on devices without (firmware) secure boot there is no need
+> > to rely on all of Qualcomm's firmware. The "hyp" firmware on MSM8916
+> > seems simple enough that it can be replaced with an open-source
+> > alternative created only based on trial and error - with some similar
+> > EL2/EL1 initialization code adapted from Linux and U-Boot.
+> 
+> Ay, Quaramba! That's great news!
+> 
+> > 
+> > qhypstub [1] is such an open-source firmware for MSM8916 that
+> > can be used as drop-in replacement for Qualcomm's "hyp" firmware.
+> > It does not implement any hypervisor functionality.
+> > Instead, it allows booting Linux/KVM (or other hypervisors) in EL2.
+> 
+> Do you happen to know if the same method would apply to other SoCs
+> from the same vendor? /me eyes the Lenovo c630 that is getting bored
+> with EL1 only...
+> 
 
-The hard part (esp. wrt to locking) is tracking the state of a given
-bo.. ie. is it active, active+purgable, inactive+purgable,
-inactive+unpinnable, etc.  Currently the shmem helpers don't really
-provide anything here.  If they did, I suppose they could provide some
-shrinker helpers as well.  Unfortunately these days I barely have
-enough time for drm/msm, let alone bolting this onto the shmem
-helpers.  I would recommend that if someone wanted to do this, that
-they look at recent drm/msm shrinker patches that I've sent (ie. make
-shrinker->count() lockless, and drop the locks in shrinker->scan()
-body.. when the system is under heavy memory pressure, you start
-getting shrinker called from all the threads so contention for mm_lock
-can be a really bad problem)
+I think there is still a separate "hyp" firmware on newer SoCs, which
+suggests that a similar approach should be possible. However, newer SoCs
+also seem to have "larger" hyp firmwares (just judging from the file
+size). This suggests that there is more functionality implemented there.
+Perhaps it's not important code or it can be replicated easily, but it
+would definitely require some investigation.
 
-(Well, the other potential problem is that drm/msm has a lot of
-different possible iommu pairings across the generations, so there is
-some potential here to uncover exciting new bugs.. the locking at
-least is the same for all the generations and pretty easy to test with
-and without lockdep with some tests that push essentially all memory
-into swap)
+However, I suspect the main problem for your Lenovo c630 is that it
+likely has (firmware) secure boot enabled, which means that all firmware
+must be signed with a private key from Lenovo. Unless you can somehow
+convince Lenovo to sign firmware for you it is pretty much impossible to
+tinker with the firmware there. Sorry :(
 
-BR,
--R
+This is even a problem for qhypstub; out of 20+ MSM8916 smartphones
+with mainline support (not all of them upstream yet), only ~5 can make
+use of my firmware, all others also have firmware secure boot enabled.
 
-> -Daniel
->
-> >
-> >  drivers/gpu/drm/msm/msm_drv.c          |   2 +-
-> >  drivers/gpu/drm/msm/msm_drv.h          |  13 ++-
-> >  drivers/gpu/drm/msm/msm_gem.c          | 155 +++++++++++++++++--------
-> >  drivers/gpu/drm/msm/msm_gem.h          |  68 +++++++++--
-> >  drivers/gpu/drm/msm/msm_gem_shrinker.c | 129 ++++++++++++--------
-> >  drivers/gpu/drm/msm/msm_gpu_trace.h    |  13 +++
-> >  6 files changed, 272 insertions(+), 108 deletions(-)
-> >
-> > --
-> > 2.30.2
-> >
-> > _______________________________________________
-> > dri-devel mailing list
-> > dri-devel@lists.freedesktop.org
-> > https://lists.freedesktop.org/mailman/listinfo/dri-devel
->
-> --
-> Daniel Vetter
-> Software Engineer, Intel Corporation
-> http://blog.ffwll.ch
+For MSM8916, this even means no PSCI support (= no SMP, no CPU idle)
+because Qualcomm never added support for that in firmwares used on
+Android devices. I have to workaround that with very annoying hacks... :(
+
+(To clarify this: Qualcomm made a PSCI firmware for the DragonBoard 410c,
+ but it can only be installed on devices without firmware secure boot.)
+
+> > 
+> > With Linux booting in EL2, KVM seems to be working just fine on MSM8916.
+> > However, so far it is not possible to make use of the virtualization
+> > features in the GICv2. To use KVM's VGICv2 code, the QGIC2 device tree
+> > node needs additional resources (according to binding documentation):
+> > 
+> >   - The CPU interface region (second reg) must be at least 8 KiB large
+> >     to access the GICC_DIR register (mapped at 0x1000 offset)
+> >   - Virtual control/CPU interface register base and size
+> >   - Hypervisor maintenance interrupt
+> > 
+> > Fortunately, the public APQ8016E TRM [2] provides the required information:
+> > 
+> >   - The CPU interface region (at 0x0B002000) actually has a size of 8 KiB
+> >   - Virtual control/CPU interface register is at 0x0B001000/0x0B004000
+> >   - Hypervisor maintenance interrupt is "PPI #0"
+> >       Note: This is a bit strange since almost all other ARM SoCs use
+> >             GIC_PPI 9 for this. However, I have verified that this is
+> >             indeed the interrupt that fires when bits are set in GICH_HCR.
+> 
+> Other SoCs have their maintenance interrupt wired to weird and
+> wonderful interrupts. Given QC's lack of appetite for standards, I'm
+> not totally surprised.
+> 
+
+To be honest, I was kind of positively surprised that Qualcomm
+implemented the standards well enough to make KVM and the GIC
+virtualization work without any quirks in the code. :)
+I doubt that the Qualcomm firmware makes use of the GIC virtualization
+functionality, so it is really nice that it works without any problems.
+
+Thanks for the review!
+Stephan
