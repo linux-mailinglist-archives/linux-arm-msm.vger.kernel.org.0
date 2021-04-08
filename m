@@ -2,113 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3CAA9358141
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Apr 2021 13:02:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 35973358178
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Apr 2021 13:15:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230344AbhDHLCc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Apr 2021 07:02:32 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:61989 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229803AbhDHLCc (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Apr 2021 07:02:32 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1617879741; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=EBCTzcCpiezgLCr+xr3ZuWx+g0smdSsuogy2SblDCSc=; b=O+ULg8IoDhOcdr1VR2d13nPdKBLFG2yFUU9IzwsxjYfdU6Qs9Z+5X4i6zv6+Iajs7WY2cGFr
- F5YH+YCk6muMw2cXb7wEHLpK/2EmGg4HfsQ2/wo0oeL480kvQzcvKCrFRKYwCwuI108w+vfr
- D27hPP5byBppG+ZbAPFSbhpeiTI=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
- 606ee29874f773a6640f5451 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 08 Apr 2021 11:01:44
- GMT
-Sender: sibis=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 6D557C43461; Thu,  8 Apr 2021 11:01:42 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
-Received: from [10.79.43.230] (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: sibis)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6F994C433ED;
-        Thu,  8 Apr 2021 11:01:39 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 6F994C433ED
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=sibis@codeaurora.org
-Subject: Re: [PATCH] soc: qcom: mdt_loader: Detect truncated read of segments
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Siddharth Gupta <sidgup@codeaurora.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20210107232526.716989-1-bjorn.andersson@linaro.org>
-From:   Sibi Sankar <sibis@codeaurora.org>
-Message-ID: <b26cbf35-0500-1e79-9de8-de447a69f78f@codeaurora.org>
-Date:   Thu, 8 Apr 2021 16:31:23 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        id S229721AbhDHLPq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Apr 2021 07:15:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37308 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231145AbhDHLPo (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 8 Apr 2021 07:15:44 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8EF73C061760
+        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Apr 2021 04:15:32 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id a12so1676946wrq.13
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Apr 2021 04:15:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ffwll.ch; s=google;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=AcAFUqp6UAoctTPigHac0GLdbrDMBzvgfm1w3MAPCVc=;
+        b=gGVo0KdtGQFzn+gxvhAI7/mbF2A4l4VfZBwtPQU6K9eV3ca1vm5pLoji6HAfVncZrs
+         1LLFVDeqlQleRFCHV19mRzY0GQCTbs4IrhypdEy/VGbI001vRiAYAJ/jqzBOz251K1Zl
+         4PeICtkXuYO/XR2Hil7Uer17XqYYN7+RcIUEM=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id
+         :mail-followup-to:references:mime-version:content-disposition
+         :in-reply-to;
+        bh=AcAFUqp6UAoctTPigHac0GLdbrDMBzvgfm1w3MAPCVc=;
+        b=EId9zlUJqLsaQSgI1VKlYtcBfEwdVIbeuAsIa4D0TEJf5jNqB667zWk6QF3kGWXySw
+         CNrbAjktCWLpsU3uZ/J6/FsTorWRMUxSeMpX9pWp0pgFLm5mUXXbuKm4Sob+YlJNNsXk
+         REf98rYoYHBncnb+8LAB9o5SPmP5qY+9LfqiMbZieWlEg/fJFfQaEoonrQ5ObAVS+AHm
+         2nzTgONVqBZsuOr+jt/dwgVj47T1856wQwQ4oxLSDfuidlccqqEZ7fQa+/nu8P+oWngE
+         2ko/Ry67CeMorQvA2O4ntPTlokpd99svCAFyBIJ7n7T5YdfLmsPVzC9o5XWZgiYQhOHM
+         MmEw==
+X-Gm-Message-State: AOAM533Uvc1llAMTd33x8OtJ+VgTHd57Oyrp4n3Q9Cfl0tJqEp5PO32d
+        NJucmwqtwbfnZJTJIgn+ZVYa/w==
+X-Google-Smtp-Source: ABdhPJxsrvJEP26+VkzvzCqzDNRxmHcvrkr2wjLdHOCmOy+nZZfHQ5wDk3KDW5f115ZZy75z4/ZORA==
+X-Received: by 2002:a5d:4f0e:: with SMTP id c14mr10713632wru.0.1617880530387;
+        Thu, 08 Apr 2021 04:15:30 -0700 (PDT)
+Received: from phenom.ffwll.local ([2a02:168:57f4:0:efd0:b9e5:5ae6:c2fa])
+        by smtp.gmail.com with ESMTPSA id o2sm18376833wry.4.2021.04.08.04.15.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 08 Apr 2021 04:15:29 -0700 (PDT)
+Date:   Thu, 8 Apr 2021 13:15:28 +0200
+From:   Daniel Vetter <daniel@ffwll.ch>
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     dri-devel@lists.freedesktop.org,
+        Rob Clark <robdclark@chromium.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <freedreno@lists.freedesktop.org>
+Subject: Re: [PATCH 0/8] drm/msm: Swappable GEM objects
+Message-ID: <YG7l0LwVQ2s4Y0Sa@phenom.ffwll.local>
+Mail-Followup-To: Rob Clark <robdclark@gmail.com>,
+        dri-devel@lists.freedesktop.org, Rob Clark <robdclark@chromium.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" <linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" <freedreno@lists.freedesktop.org>
+References: <20210405174532.1441497-1-robdclark@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20210107232526.716989-1-bjorn.andersson@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210405174532.1441497-1-robdclark@gmail.com>
+X-Operating-System: Linux phenom 5.7.0-1-amd64 
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-Hey Bjorn,
-
-Thanks for the patch!
-
-On 1/8/21 4:55 AM, Bjorn Andersson wrote:
-> Given that no validation of how much data the firmware loader read in
-> for a given segment truncated segment files would best case result in a
-> hash verification failure, without any indication of what went wrong.
+On Mon, Apr 05, 2021 at 10:45:23AM -0700, Rob Clark wrote:
+> From: Rob Clark <robdclark@chromium.org>
 > 
-> Improve this by validating that the firmware loader did return the
-> amount of data requested.
+> One would normally hope not to be under enough memory pressure to need
+> to swap GEM objects to disk backed swap.  But memory backed zram swap
+> (as enabled on chromebooks, for example) can actually be quite fast
+> and useful on devices with less RAM.  On a 4GB device, opening up ~4
+> memory intensive web pages (in separate windows rather than tabs, to try
+> and prevent tab discard), I see ~500MB worth of GEM objects, of which
+> maybe only 10% are active at any time, and with unpin/evict enabled,
+> only about half resident (which is a number that gets much lower if you
+> simulate extreme memory pressure).  Assuming a 2:1 compression ratio (I
+> see a bit higher in practice, but cannot isolate swapped out GEM pages
+> vs other), that is like having an extra 100+MB of RAM, or more under
+> higher memory pressure.
 > 
-> Fixes: 445c2410a449 ("soc: qcom: mdt_loader: Use request_firmware_into_buf()")
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
->   drivers/soc/qcom/mdt_loader.c | 8 ++++++++
->   1 file changed, 8 insertions(+)
+> Rob Clark (8):
+>   drm/msm: ratelimit GEM related WARN_ON()s
+>   drm/msm: Reorganize msm_gem_shrinker_scan()
+>   drm/msm: Clear msm_obj->sgt in put_pages()
+>   drm/msm: Split iova purge and close
+>   drm/msm: Add $debugfs/gem stats on resident objects
+>   drm/msm: Track potentially evictable objects
+>   drm/msm: Small msm_gem_purge() fix
+>   drm/msm: Support evicting GEM objects to swap
+
+Given how much entertainement shrinkers are, should we aim for more common
+code here?
+
+Christian has tons of fun with adding something like this for ttm (well
+different shades of grey). i915 is going to adopt ttm, at least for
+discrete.
+
+The locking is also an utter pain, and msm seems to still live a lot in
+its own land here. I think as much as possible a standard approach here
+would be really good, ideally maybe as building blocks shared between ttm
+and gem-shmem drivers ...
+-Daniel
+
 > 
-> diff --git a/drivers/soc/qcom/mdt_loader.c b/drivers/soc/qcom/mdt_loader.c
-> index 24cd193dec55..e01d18e9ad2b 100644
-> --- a/drivers/soc/qcom/mdt_loader.c
-> +++ b/drivers/soc/qcom/mdt_loader.c
-> @@ -253,6 +253,14 @@ static int __qcom_mdt_load(struct device *dev, const struct firmware *fw,
->   				break;
->   			}
->   
-> +			if (seg_fw->size != phdr->p_filesz) {
-> +				dev_err(dev,
-> +					"failed to load segment %d from truncated file %s\n",
-> +					i, fw_name);
-> +				ret = -EINVAL;
-> +				break;
-
-seg_fw has to be released on error condition as well.
-With ^^ fixed you can have my R-b.
-
-Reviewed-by: Sibi Sankar <sibis@codeaurora.org>
-
-> +			}
-> +
->   			release_firmware(seg_fw);
->   		}
->   
+>  drivers/gpu/drm/msm/msm_drv.c          |   2 +-
+>  drivers/gpu/drm/msm/msm_drv.h          |  13 ++-
+>  drivers/gpu/drm/msm/msm_gem.c          | 155 +++++++++++++++++--------
+>  drivers/gpu/drm/msm/msm_gem.h          |  68 +++++++++--
+>  drivers/gpu/drm/msm/msm_gem_shrinker.c | 129 ++++++++++++--------
+>  drivers/gpu/drm/msm/msm_gpu_trace.h    |  13 +++
+>  6 files changed, 272 insertions(+), 108 deletions(-)
 > 
+> -- 
+> 2.30.2
+> 
+> _______________________________________________
+> dri-devel mailing list
+> dri-devel@lists.freedesktop.org
+> https://lists.freedesktop.org/mailman/listinfo/dri-devel
 
 -- 
-Qualcomm Innovation Center, Inc.
-Qualcomm Innovation Center, Inc, is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project
+Daniel Vetter
+Software Engineer, Intel Corporation
+http://blog.ffwll.ch
