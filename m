@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 88D5A3579DB
+	by mail.lfdr.de (Postfix) with ESMTP id 176FF3579D9
 	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Apr 2021 03:47:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231325AbhDHBsC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S231359AbhDHBsC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Wed, 7 Apr 2021 21:48:02 -0400
 Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55314 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231344AbhDHBsB (ORCPT
+        with ESMTP id S230334AbhDHBsB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Wed, 7 Apr 2021 21:48:01 -0400
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D630C0613D8
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2CF10C061763
         for <linux-arm-msm@vger.kernel.org>; Wed,  7 Apr 2021 18:47:51 -0700 (PDT)
-Received: by mail-lj1-x22e.google.com with SMTP id f16so331283ljm.1
+Received: by mail-lj1-x231.google.com with SMTP id o16so322258ljp.3
         for <linux-arm-msm@vger.kernel.org>; Wed, 07 Apr 2021 18:47:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Mdh5NvSZNpel1YT/OpgDBwKJu+seO7F56lAGeiiRX4I=;
-        b=ewH8uoeAdnOoaCaXSC6E9olXCsgxh1TXcEaj5URQqxBvys1ZDOQIcFx9+5Kxk2Rfz3
-         oGi8viQGgMuFSZUVUfvjERRET6hTeyuaxoG8jzoo33L1e3yb5JHFl19J5vB0oJzjoT9w
-         qb4/400uDi/EELGVZUy2H9BQJNWQe9vhwIwtGDK8eBmgqVXkrmqsfs19Sx5zZD3MY1EX
-         YTEPYK60qlysfRpA2Q+c7e9leoKowgc6LpO7KcpVXEng77QOrLWyl79iTT87AAZuS6RQ
-         c4xmRQZeZPKRiJzTZ3dCP+EX4UD50nAtAomr/SJcIIywnJ2HceQUkCHW7zF2p8AIJKgI
-         DUCg==
+        bh=E3Z+Q+wmuUr0KYMXECLxkHWsFWhoDF0jH3lckJMwRAY=;
+        b=KM8+BbdRTlLusM2hMlQEQxZBDRLj1WI608H1MUXbvBF1mbUX5XgtNtQNNC7/5WeiGq
+         deil8UqGha9GzcdsS6shTB7HTvi/YMAO/rnmgAbBK1kF/ol70okFyxzF4RJwsCmcNzm7
+         r8c3kyTKb8GGRwocWmKqVhRxhtR7ukLahnJ5/hXHA3+RClUN6QjU5I+GMh5r7sWD/0Yq
+         Tp/f57Y8odgpXo52Z6SeFSaWDnRZBQsZ8oMwabi2sVeWlgKE06yGFybap/e499JnG9pV
+         4+hKfykxGap8nqxT3RV+DQVTGA6pYt4XQR1wgbglIWNtp35Rhk6XzFBraSV3CNIwqINJ
+         Mzyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Mdh5NvSZNpel1YT/OpgDBwKJu+seO7F56lAGeiiRX4I=;
-        b=AugHhmsE2wP0BWnOlMJ4RllzSTsSlrO8BM5p8uM9+njj29IesbPHmv685TZuws3XlN
-         w8qLsiNgMP3m8REtgVRy2o+24YtBVEmgeersL9INKjZqIgyKw7+uMyBJFLUA9RQ1j/YK
-         tDZktd736UDR9y582+h0dpTRmQ7ELOo1FMk+Oeqrj9hRbsMWdI005ndVVxUXGe4hmCfP
-         2mHWp63GCOt9Ay98DFkkPzng3EEMj0HhqYde5Y4J953oqnLZluC1Z0hxU79vedEf7Qk1
-         Tszq6R4cbLVDmS0YlWPtHHiE7zXw2ILnbOPQtkttF2RbW555mjeEWRkqjt8EVl7kW2d9
-         Vneg==
-X-Gm-Message-State: AOAM531i9hZqbZy/lWWAZPfip3RXqXFnqrZEJJq8Y0B0QtDAVruBwPWl
-        yHcU8GnpIxQ7j4W5+raV9q1dvQ==
-X-Google-Smtp-Source: ABdhPJxI6fR5PFr6TqG2xSpwLOsBrWf5SnE87ZFDx0YAjLL9bqVzRlV4HqktHF5ofEd2No1Eywg0/Q==
-X-Received: by 2002:a2e:98d1:: with SMTP id s17mr4008098ljj.349.1617846468876;
-        Wed, 07 Apr 2021 18:47:48 -0700 (PDT)
+        bh=E3Z+Q+wmuUr0KYMXECLxkHWsFWhoDF0jH3lckJMwRAY=;
+        b=Nz0/CAt07BI9FF6fHhEcxHgGbjU3QFipy9/g4P2UeJJ62eBfdmtMtv06MErmDlgvr9
+         XmPjDNH73xUl7P1YVcqZ5jgdOnWHW+NZ4xrTqTlfNrrvts8mHo2OuIHCpj8I0Ia171rb
+         F2V+xbDHwrzemnfeUiX3CF5zuHB+1iHmyi8wPWnTkRc58LI6rRIehW5/JfRFoVsDR26H
+         YYnwBl7cqkqVMtmnBZiPZLAiqcEaDxlDCXavZY3VHSNvArkM/ZnsdFn8RtGejOxLX37l
+         SdD9r1yc4eXn2iQwwZpBkM+Qc0zEnxiVRMjEUmdVv5cG1qcUtDgOT8yAJOx04LlIblyG
+         7liQ==
+X-Gm-Message-State: AOAM532cJDH7nyxfALJnwNM1EigXZE+/C3No/+iT1cXw5VdbIeL4dS8q
+        9Dkx2mJ6G+FiE9p4Ozi8N+4OWQ==
+X-Google-Smtp-Source: ABdhPJxYbOJF1ePOgpSOYy9nEldxcpdvl2WbQOJUqVyK6MDLF/HcTJTEHxEFrJQeYOWsGRqSTsJQHQ==
+X-Received: by 2002:a2e:a312:: with SMTP id l18mr4041558lje.106.1617846469666;
+        Wed, 07 Apr 2021 18:47:49 -0700 (PDT)
 Received: from eriador.lan ([37.153.55.125])
         by smtp.gmail.com with ESMTPSA id w24sm2686705ljh.19.2021.04.07.18.47.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Apr 2021 18:47:48 -0700 (PDT)
+        Wed, 07 Apr 2021 18:47:49 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -55,10 +55,10 @@ To:     Andy Gross <agross@kernel.org>,
         Stephen Boyd <sboyd@kernel.org>,
         Michael Turquette <mturquette@baylibre.com>
 Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-clk@vger.kernel.org, Stephen Boyd <swboyd@chromium.org>
-Subject: [PATCH v3 3/4] clk: qcom: gcc-sdm845: get rid of the test clock
-Date:   Thu,  8 Apr 2021 04:47:37 +0300
-Message-Id: <20210408014737.955979-4-dmitry.baryshkov@linaro.org>
+        linux-clk@vger.kernel.org
+Subject: [PATCH v3 4/4] arm64: dts: qcom: sdm845: add required clocks on the gcc
+Date:   Thu,  8 Apr 2021 04:47:38 +0300
+Message-Id: <20210408014737.955979-5-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20210408014737.955979-1-dmitry.baryshkov@linaro.org>
 References: <20210408014737.955979-1-dmitry.baryshkov@linaro.org>
@@ -68,125 +68,53 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The test clock isn't in the bindings and apparently it's not used by
-anyone upstream.  Remove it.
+Specify input clocks to the SDM845's Global Clock Controller as required
+by the bindings.
 
-Suggested-by: Stephen Boyd <swboyd@chromium.org>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Reviewed-by: Stephen Boyd <sboyd@kernel.org>
 ---
- drivers/clk/qcom/gcc-sdm845.c | 15 ---------------
- 1 file changed, 15 deletions(-)
+ arch/arm64/boot/dts/qcom/sdm845.dtsi | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/clk/qcom/gcc-sdm845.c b/drivers/clk/qcom/gcc-sdm845.c
-index 46be43a02bf6..58aa3ec9a7fc 100644
---- a/drivers/clk/qcom/gcc-sdm845.c
-+++ b/drivers/clk/qcom/gcc-sdm845.c
-@@ -28,7 +28,6 @@
- enum {
- 	P_BI_TCXO,
- 	P_AUD_REF_CLK,
--	P_CORE_BI_PLL_TEST_SE,
- 	P_GPLL0_OUT_EVEN,
- 	P_GPLL0_OUT_MAIN,
- 	P_GPLL4_OUT_MAIN,
-@@ -98,14 +97,12 @@ static const struct parent_map gcc_parent_map_0[] = {
- 	{ P_BI_TCXO, 0 },
- 	{ P_GPLL0_OUT_MAIN, 1 },
- 	{ P_GPLL0_OUT_EVEN, 6 },
--	{ P_CORE_BI_PLL_TEST_SE, 7 },
- };
+diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+index 454f794af547..86f717d5bfb6 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+@@ -1061,6 +1061,16 @@ soc: soc@0 {
+ 		gcc: clock-controller@100000 {
+ 			compatible = "qcom,gcc-sdm845";
+ 			reg = <0 0x00100000 0 0x1f0000>;
++			clocks = <&rpmhcc RPMH_CXO_CLK>,
++				 <&rpmhcc RPMH_CXO_CLK_A>,
++				 <&sleep_clk>,
++				 <&pcie0_lane>,
++				 <&pcie1_lane>;
++			clock-names = "bi_tcxo",
++				      "bi_tcxo_ao",
++				      "sleep_clk",
++				      "pcie_0_pipe_clk",
++				      "pcie_1_pipe_clk";
+ 			#clock-cells = <1>;
+ 			#reset-cells = <1>;
+ 			#power-domain-cells = <1>;
+@@ -2062,6 +2072,7 @@ pcie0_lane: lanes@1c06200 {
+ 				clocks = <&gcc GCC_PCIE_0_PIPE_CLK>;
+ 				clock-names = "pipe0";
  
- static const struct clk_parent_data gcc_parent_data_0[] = {
- 	{ .fw_name = "bi_tcxo", .name = "bi_tcxo" },
- 	{ .hw = &gpll0.clkr.hw },
- 	{ .hw = &gpll0_out_even.clkr.hw },
--	{ .fw_name = "core_bi_pll_test_se", .name = "core_bi_pll_test_se" },
- };
++				#clock-cells = <0>;
+ 				#phy-cells = <0>;
+ 				clock-output-names = "pcie_0_pipe_clk";
+ 			};
+@@ -2170,6 +2181,7 @@ pcie1_lane: lanes@1c06200 {
+ 				clocks = <&gcc GCC_PCIE_1_PIPE_CLK>;
+ 				clock-names = "pipe0";
  
- static const struct parent_map gcc_parent_map_1[] = {
-@@ -113,7 +110,6 @@ static const struct parent_map gcc_parent_map_1[] = {
- 	{ P_GPLL0_OUT_MAIN, 1 },
- 	{ P_SLEEP_CLK, 5 },
- 	{ P_GPLL0_OUT_EVEN, 6 },
--	{ P_CORE_BI_PLL_TEST_SE, 7 },
- };
- 
- static const struct clk_parent_data gcc_parent_data_1[] = {
-@@ -121,41 +117,34 @@ static const struct clk_parent_data gcc_parent_data_1[] = {
- 	{ .hw = &gpll0.clkr.hw },
- 	{ .fw_name = "sleep_clk", .name = "core_pi_sleep_clk" },
- 	{ .hw = &gpll0_out_even.clkr.hw },
--	{ .fw_name = "core_bi_pll_test_se", .name = "core_bi_pll_test_se" },
- };
- 
- static const struct parent_map gcc_parent_map_2[] = {
- 	{ P_BI_TCXO, 0 },
- 	{ P_SLEEP_CLK, 5 },
--	{ P_CORE_BI_PLL_TEST_SE, 7 },
- };
- 
- static const struct clk_parent_data gcc_parent_data_2[] = {
- 	{ .fw_name = "bi_tcxo", .name = "bi_tcxo" },
- 	{ .fw_name = "sleep_clk", .name = "core_pi_sleep_clk" },
--	{ .fw_name = "core_bi_pll_test_se", .name = "core_bi_pll_test_se" },
- };
- 
- static const struct parent_map gcc_parent_map_3[] = {
- 	{ P_BI_TCXO, 0 },
- 	{ P_GPLL0_OUT_MAIN, 1 },
--	{ P_CORE_BI_PLL_TEST_SE, 7 },
- };
- 
- static const struct clk_parent_data gcc_parent_data_3[] = {
- 	{ .fw_name = "bi_tcxo", .name = "bi_tcxo" },
- 	{ .hw = &gpll0.clkr.hw },
--	{ .fw_name = "core_bi_pll_test_se", .name = "core_bi_pll_test_se" },
- };
- 
- static const struct parent_map gcc_parent_map_4[] = {
- 	{ P_BI_TCXO, 0 },
--	{ P_CORE_BI_PLL_TEST_SE, 7 },
- };
- 
- static const struct clk_parent_data gcc_parent_data_4[] = {
- 	{ .fw_name = "bi_tcxo", .name = "bi_tcxo" },
--	{ .fw_name = "core_bi_pll_test_se", .name = "core_bi_pll_test_se" },
- };
- 
- static const struct parent_map gcc_parent_map_6[] = {
-@@ -163,7 +152,6 @@ static const struct parent_map gcc_parent_map_6[] = {
- 	{ P_GPLL0_OUT_MAIN, 1 },
- 	{ P_AUD_REF_CLK, 2 },
- 	{ P_GPLL0_OUT_EVEN, 6 },
--	{ P_CORE_BI_PLL_TEST_SE, 7 },
- };
- 
- static const struct clk_parent_data gcc_parent_data_6[] = {
-@@ -171,7 +159,6 @@ static const struct clk_parent_data gcc_parent_data_6[] = {
- 	{ .hw = &gpll0.clkr.hw },
- 	{ .fw_name = "aud_ref_clk", .name = "aud_ref_clk" },
- 	{ .hw = &gpll0_out_even.clkr.hw },
--	{ .fw_name = "core_bi_pll_test_se", .name = "core_bi_pll_test_se" },
- };
- 
- static const struct clk_parent_data gcc_parent_data_7_ao[] = {
-@@ -198,7 +185,6 @@ static const struct parent_map gcc_parent_map_10[] = {
- 	{ P_GPLL0_OUT_MAIN, 1 },
- 	{ P_GPLL4_OUT_MAIN, 5 },
- 	{ P_GPLL0_OUT_EVEN, 6 },
--	{ P_CORE_BI_PLL_TEST_SE, 7 },
- };
- 
- static const struct clk_parent_data gcc_parent_data_10[] = {
-@@ -206,7 +192,6 @@ static const struct clk_parent_data gcc_parent_data_10[] = {
- 	{ .hw = &gpll0.clkr.hw },
- 	{ .hw = &gpll4.clkr.hw },
- 	{ .hw = &gpll0_out_even.clkr.hw },
--	{ .fw_name = "core_bi_pll_test_se", .name = "core_bi_pll_test_se" },
- };
- 
- 
++				#clock-cells = <0>;
+ 				#phy-cells = <0>;
+ 				clock-output-names = "pcie_1_pipe_clk";
+ 			};
 -- 
 2.30.2
 
