@@ -2,137 +2,149 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4F7FB357F73
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Apr 2021 11:37:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5E743358007
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Apr 2021 11:56:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231239AbhDHJiA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Apr 2021 05:38:00 -0400
-Received: from mga03.intel.com ([134.134.136.65]:32279 "EHLO mga03.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229640AbhDHJiA (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Apr 2021 05:38:00 -0400
-IronPort-SDR: PHOHjWaTwQxnYoNMfngO473e1wU5NJYAOYjE9cxopWxg+Wbxjiv/be5oKrour3Vsnkg2eLG8S8
- w6lS3Z14qjNw==
-X-IronPort-AV: E=McAfee;i="6000,8403,9947"; a="193543909"
-X-IronPort-AV: E=Sophos;i="5.82,206,1613462400"; 
-   d="scan'208";a="193543909"
-Received: from orsmga001.jf.intel.com ([10.7.209.18])
-  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Apr 2021 02:37:48 -0700
-IronPort-SDR: BFpXzI0RXUfZATcKxM7hFx64JBR7Vk2GquUS4EhpRUOdB/vQoJXx3E7ConT8Lwt/z83n9oxCQn
- yC8CBijdMkrw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.82,206,1613462400"; 
-   d="scan'208";a="458753841"
-Received: from ahunter-desktop.fi.intel.com (HELO [10.237.72.174]) ([10.237.72.174])
-  by orsmga001.jf.intel.com with ESMTP; 08 Apr 2021 02:37:42 -0700
-Subject: Re: [PATCH v16 1/2] scsi: ufs: Enable power management for wlun
-To:     Asutosh Das <asutoshd@codeaurora.org>, cang@codeaurora.org,
-        martin.petersen@oracle.com, linux-scsi@vger.kernel.org
-Cc:     linux-arm-msm@vger.kernel.org,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        Pedro Sousa <pedrom.sousa@synopsys.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Stanley Chu <stanley.chu@mediatek.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Steven Rostedt <rostedt@goodmis.org>,
-        Ingo Molnar <mingo@redhat.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Lee Jones <lee.jones@linaro.org>,
-        Bean Huo <beanhuo@micron.com>,
-        Kiwoong Kim <kwmad.kim@samsung.com>,
-        Wei Yongjun <weiyongjun1@huawei.com>,
-        Yue Hu <huyue2@yulong.com>,
-        "Gustavo A. R. Silva" <gustavoars@kernel.org>,
-        Dinghao Liu <dinghao.liu@zju.edu.cn>,
-        Jaegeuk Kim <jaegeuk@kernel.org>,
-        Satya Tangirala <satyat@google.com>,
-        open list <linux-kernel@vger.kernel.org>,
-        "moderated list:ARM/SAMSUNG S3C, S5P AND EXYNOS ARM ARCHITECTURES" 
-        <linux-arm-kernel@lists.infradead.org>,
-        "open list:ARM/SAMSUNG S3C, S5P AND EXYNOS ARM ARCHITECTURES" 
-        <linux-samsung-soc@vger.kernel.org>,
-        "moderated list:UNIVERSAL FLASH STORAGE HOST CONTROLLER DRIVER..." 
-        <linux-mediatek@lists.infradead.org>
-References: <cover.1617818557.git.asutoshd@codeaurora.org>
- <7be92c0bc3e5f07d5e17bd3b78c01496686ef31e.1617818557.git.asutoshd@codeaurora.org>
-From:   Adrian Hunter <adrian.hunter@intel.com>
-Organization: Intel Finland Oy, Registered Address: PL 281, 00181 Helsinki,
- Business Identity Code: 0357606 - 4, Domiciled in Helsinki
-Message-ID: <d30c2dc2-6334-1515-b548-a898939ec9ee@intel.com>
-Date:   Thu, 8 Apr 2021 12:38:00 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.8.1
+        id S230506AbhDHJ5E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Apr 2021 05:57:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48456 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229686AbhDHJ5E (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 8 Apr 2021 05:57:04 -0400
+Received: from mail-pg1-x531.google.com (mail-pg1-x531.google.com [IPv6:2607:f8b0:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B12A7C061760;
+        Thu,  8 Apr 2021 02:56:53 -0700 (PDT)
+Received: by mail-pg1-x531.google.com with SMTP id t140so1024474pgb.13;
+        Thu, 08 Apr 2021 02:56:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=qjas6KXkAso9tZS0xachLDZT9jXyy102BfQigMLfs5Q=;
+        b=ZHfsAxlWuMoAC90JtmGXFDFhGet/a8iFMmxha3DYZVnKOgp0GBFKNRYK4qyQHjparV
+         2FNZMQskEX9xbZ++dpOT9/HD0yF8KiBYOSSMYhZadG92sbwpYp/guguvMHm0ynxZo2Nz
+         inlTakN9g+jPUvKulTFnnTWinBPmHpPqtwecmkDztdUIoq4Uvb5dpan+1ighyHZQIsAC
+         R/ngTnbtIq3nU71f/A690n+5SvX4gLkqDABfa7ZZ063raBPKvMjj3AC3aR5wfvnwcTLT
+         bIIiaXrmSsPR0Xv43kt5O9jsuKZUIT9dAZgH2hUfEzE7em47ZelG6MGN7v/6LVRPj9Uc
+         JzCQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=qjas6KXkAso9tZS0xachLDZT9jXyy102BfQigMLfs5Q=;
+        b=paqJf9aveQAJH9XW/+nk1MmqMoQZVZfLTjhN/UnyqX29BZvbzLdJa5VpudeCOIwLwz
+         Txq174mia5X3PZuKXUWC5genHKrT7uUO+b6bGwcSaOn2tUNvAt2l2jNNFNcNeD4MWKMM
+         gQR3NZU4Qv9549P3T0bpBgZNOiPZmrorcS5Y3t39h/vGKXWoNJ1wSq6OSt9/7bJtMpQm
+         uWVtPmXr+SboFLaUFSNmNvYiV4Nl75Vnr37Otek5AEgodrEQoeNVwAxKbkqI70TBp+Ur
+         kFNAFkUY5OlEHoAGPWSSsrMSb0e8hdHhNL5m8s6TdjyJ5AcJlyGnse5Ca+aW/R4uv46B
+         15Fg==
+X-Gm-Message-State: AOAM532Rt8mQ/SzRiyE0qeSOX3sxSMzmJFFDcYb1LqRgDr/xYdeIjwIN
+        378r5Id+BKkTMeUnOqPJfMM=
+X-Google-Smtp-Source: ABdhPJz/1NJOz5J+Ib5cVb+NUk6W79W7kt3rH3y4U6R8xQr8tyhvBBABRvUEBcKr4gZh8hkaPTsZQw==
+X-Received: by 2002:a05:6a00:2292:b029:214:7a33:7f08 with SMTP id f18-20020a056a002292b02902147a337f08mr6665544pfe.15.1617875813340;
+        Thu, 08 Apr 2021 02:56:53 -0700 (PDT)
+Received: from localhost.localdomain ([2.58.242.54])
+        by smtp.gmail.com with ESMTPSA id az9sm6481947pjb.54.2021.04.08.02.56.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 08 Apr 2021 02:56:53 -0700 (PDT)
+From:   Jarvis Jiang <jarvis.w.jiang@gmail.com>
+To:     mani@kernel.org, hemantk@codeaurora.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        cchen50@lenovo.com, mpearson@lenovo.com,
+        Jarvis Jiang <jarvis.w.jiang@gmail.com>
+Subject: [PATCH 1/2] [v2] bus: mhi: pci_generic: Introduce Foxconn T99W175 support
+Date:   Thu,  8 Apr 2021 02:55:24 -0700
+Message-Id: <20210408095524.3559-1-jarvis.w.jiang@gmail.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-In-Reply-To: <7be92c0bc3e5f07d5e17bd3b78c01496686ef31e.1617818557.git.asutoshd@codeaurora.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 7/04/21 9:08 pm, Asutosh Das wrote:
-> During runtime-suspend of ufs host, the scsi devices are
-> already suspended and so are the queues associated with them.
-> But the ufs host sends SSU (START_STOP_UNIT) to wlun
-> during its runtime-suspend.
-> During the process blk_queue_enter checks if the queue is not in
-> suspended state. If so, it waits for the queue to resume, and never
-> comes out of it.
-> The commit
-> (d55d15a33: scsi: block: Do not accept any requests while suspended)
-> adds the check if the queue is in suspended state in blk_queue_enter().
-> 
-> Call trace:
->  __switch_to+0x174/0x2c4
->  __schedule+0x478/0x764
->  schedule+0x9c/0xe0
->  blk_queue_enter+0x158/0x228
->  blk_mq_alloc_request+0x40/0xa4
->  blk_get_request+0x2c/0x70
->  __scsi_execute+0x60/0x1c4
->  ufshcd_set_dev_pwr_mode+0x124/0x1e4
->  ufshcd_suspend+0x208/0x83c
->  ufshcd_runtime_suspend+0x40/0x154
->  ufshcd_pltfrm_runtime_suspend+0x14/0x20
->  pm_generic_runtime_suspend+0x28/0x3c
->  __rpm_callback+0x80/0x2a4
->  rpm_suspend+0x308/0x614
->  rpm_idle+0x158/0x228
->  pm_runtime_work+0x84/0xac
->  process_one_work+0x1f0/0x470
->  worker_thread+0x26c/0x4c8
->  kthread+0x13c/0x320
->  ret_from_fork+0x10/0x18
-> 
-> Fix this by registering ufs device wlun as a scsi driver and
-> registering it for block runtime-pm. Also make this as a
-> supplier for all other luns. That way, this device wlun
-> suspends after all the consumers and resumes after
-> hba resumes.
-> 
-> Co-developed-by: Can Guo <cang@codeaurora.org>
-> Signed-off-by: Can Guo <cang@codeaurora.org>
-> Signed-off-by: Asutosh Das <asutoshd@codeaurora.org>
-> ---
+Add support for T99W175 modems, this modem series is based on SDX55
+qcom chip. The modem is mainly based on MBIM protocol for both the
+data and control path.
 
-<SNIP>
+This patch adds support for below modems:
 
-> +#ifdef CONFIG_PM_SLEEP
-> +static int ufshcd_wl_poweroff(struct device *dev)
-> +{
-> +	struct ufs_hba *hba = dev_get_drvdata(dev);
+ - T99W175(based on sdx55), Both for eSIM and Non-eSIM
+ - DW5930e(based on sdx55), With eSIM, It's also T99W175
+ - DW5930e(based on sdx55), Non-eSIM, It's also T99W175
 
-Should be:
+This patch was tested with Ubuntu 20.04 X86_64 PC as host
 
-	struct scsi_device *sdev = to_scsi_device(dev);
-	struct ufs_hba *hba = shost_priv(sdev->host);
+Signed-off-by: Jarvis Jiang <jarvis.w.jiang@gmail.com>
+---
+ drivers/bus/mhi/pci_generic.c | 47 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 47 insertions(+)
 
-> +
-> +	__ufshcd_wl_suspend(hba, UFS_SHUTDOWN_PM);
-> +	return 0;
-> +}
-> +#endif
+diff --git a/drivers/bus/mhi/pci_generic.c b/drivers/bus/mhi/pci_generic.c
+index 544853c67e02..c66fb73e47ad 100644
+--- a/drivers/bus/mhi/pci_generic.c
++++ b/drivers/bus/mhi/pci_generic.c
+@@ -269,6 +269,44 @@ static const struct mhi_pci_dev_info mhi_quectel_em1xx_info = {
+ 	.dma_data_width = 32
+ };
+ 
++static const struct mhi_channel_config mhi_foxconn_sdx55_channels[] = {
++	MHI_CHANNEL_CONFIG_UL(0, "LOOPBACK", 32, 0),
++	MHI_CHANNEL_CONFIG_DL(1, "LOOPBACK", 32, 0),
++	MHI_CHANNEL_CONFIG_UL(4, "DIAG", 32, 1),
++	MHI_CHANNEL_CONFIG_DL(5, "DIAG", 32, 1),
++	MHI_CHANNEL_CONFIG_UL(12, "MBIM", 32, 0),
++	MHI_CHANNEL_CONFIG_DL(13, "MBIM", 32, 0),
++	MHI_CHANNEL_CONFIG_UL(32, "AT", 32, 0),
++	MHI_CHANNEL_CONFIG_DL(33, "AT", 32, 0),
++	MHI_CHANNEL_CONFIG_HW_UL(100, "IP_HW0_MBIM", 128, 2),
++	MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0_MBIM", 128, 3),
++};
++
++static struct mhi_event_config mhi_foxconn_sdx55_events[] = {
++	MHI_EVENT_CONFIG_CTRL(0, 128),
++	MHI_EVENT_CONFIG_DATA(1, 128),
++	MHI_EVENT_CONFIG_HW_DATA(2, 1024, 100),
++	MHI_EVENT_CONFIG_HW_DATA(3, 1024, 101)
++};
++
++static struct mhi_controller_config modem_foxconn_sdx55_config = {
++	.max_channels = 128,
++	.timeout_ms = 20000,
++	.num_channels = ARRAY_SIZE(mhi_foxconn_sdx55_channels),
++	.ch_cfg = mhi_foxconn_sdx55_channels,
++	.num_events = ARRAY_SIZE(mhi_foxconn_sdx55_events),
++	.event_cfg = mhi_foxconn_sdx55_events,
++};
++
++static const struct mhi_pci_dev_info mhi_foxconn_sdx55_info = {
++	.name = "foxconn-sdx55",
++	.fw = "qcom/sdx55m/sbl1.mbn",
++	.edl = "qcom/sdx55m/edl.mbn",
++	.config = &modem_foxconn_sdx55_config,
++	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
++	.dma_data_width = 32
++};
++
+ static const struct pci_device_id mhi_pci_id_table[] = {
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0306),
+ 		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx55_info },
+@@ -280,6 +318,15 @@ static const struct pci_device_id mhi_pci_id_table[] = {
+ 		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0308),
+ 		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx65_info },
++	/* T99W175 (sdx55), Both for eSIM and Non-eSIM */
++	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0ab),
++		.driver_data = (kernel_ulong_t) &mhi_foxconn_sdx55_info },
++	/* DW5930e (sdx55), With eSIM, It's also T99W175 */
++	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0b0),
++		.driver_data = (kernel_ulong_t) &mhi_foxconn_sdx55_info },
++	/* DW5930e (sdx55), Non-eSIM, It's also T99W175 */
++	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0b1),
++		.driver_data = (kernel_ulong_t) &mhi_foxconn_sdx55_info },
+ 	{  }
+ };
+ MODULE_DEVICE_TABLE(pci, mhi_pci_id_table);
+-- 
+2.25.1
+
