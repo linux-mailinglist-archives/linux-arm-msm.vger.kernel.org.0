@@ -2,154 +2,161 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 53A343592F8
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Apr 2021 05:20:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D671C3592F9
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Apr 2021 05:20:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233049AbhDIDTq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Apr 2021 23:19:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50940 "EHLO
+        id S232990AbhDIDUb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Apr 2021 23:20:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51104 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232918AbhDIDTq (ORCPT
+        with ESMTP id S232918AbhDIDUa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Apr 2021 23:19:46 -0400
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8B79C061760;
-        Thu,  8 Apr 2021 20:19:33 -0700 (PDT)
-Received: by mail-ed1-x529.google.com with SMTP id 18so4832990edx.3;
-        Thu, 08 Apr 2021 20:19:33 -0700 (PDT)
+        Thu, 8 Apr 2021 23:20:30 -0400
+Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91666C061762
+        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Apr 2021 20:20:18 -0700 (PDT)
+Received: by mail-pg1-x536.google.com with SMTP id k8so2838996pgf.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Apr 2021 20:20:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:reply-to:references:mime-version
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=imT+PhNFQPkgZJ6XFq69pmBRhnDsKNZq5XiDQndTV+E=;
-        b=DECpiy3i0/XFLfIY5Am0Hj9hHoG3DAZvnIDCAzgS1PJ1GqgMmB4FTWZ6VLt4yavQdk
-         oNW+79W45GRHhoRhEgPniFlLtQwtDaNtH9/+lDkrC5VhzQJGZPFmz4d808RXOb+f2ZhJ
-         3GZJ7lJBWJ9jSwX3/EVRI56le0VTBY/OCE3S1sTdov2F7fB6nams44iLz8FcseZjJ0+A
-         v/BkdgSy8nKAV3obXCZbXYQYHwVuU5NfTC68U0g6Oh9k80dt0zxhwiCi0WSGveypUqnQ
-         6hm8doaBBk7atfMsOnM6QN+mjw74jfgnfbmEw7sXP/s5KDruUz29lWluy90YIaB/RNLV
-         oc5w==
+        bh=OCOuP77KzsERfjtLD3+g0QTNYiI6uzbUte1pk8VLigc=;
+        b=fs6OIzMHI1Ukfun/q5z5kfC91OWHpE3PcQFCPRODEkoEe2j/xEt8Lplg7E+tcAaQ97
+         0q9SYV703eJz04xUzhlXRrvjdcKy1rgUVEd5C+nwUNq4HN6QVapc45uVFOQMiG5UtaR0
+         IpVgH0IQ0TtYgrnVa/m3OwpnwYk1FsC6uHBjE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:reply-to
-         :references:mime-version:content-disposition
-         :content-transfer-encoding:in-reply-to;
-        bh=imT+PhNFQPkgZJ6XFq69pmBRhnDsKNZq5XiDQndTV+E=;
-        b=r8niGl2T/1XS+LG933fBlZu5Nc3Zh/6eMVrU6UAy4hUIAWOLog7Mx063Mv9aZb0dBi
-         CDr2/4HawopMiUT+raVTGOLWGZpn+5/0MgJZ3vvXp6s6Jo3+2PiRNXA/wWkW3duM39+6
-         6GpY27XeF3ISqTW8hjoMKASYXTvszkZ0ihoCJ7n/C1BkrvC30VLprt3ApAjffTORWbB/
-         4D/kqpg+4yNSq9ZTHzpCTR4HsiMzN3nFuBb74W0U8+9vJZn/00lMGZlMe55oGwq0bLK0
-         6Av+EjrBz2fqIUTerJ43oXJfQglqYkgVPu6Qs6SMK/M+up5YFvPp+ZADN1GqFfE6QP88
-         wEEw==
-X-Gm-Message-State: AOAM530ZeeKkCTJLMjtEXnWGWS4MMHEZPKs49qW6msZSmQHeSXvH36f8
-        wWFZ4hsSvpaQtHyIfa7fjZ0esuj4O67V5Q==
-X-Google-Smtp-Source: ABdhPJyaUhrr5lnZNOIgbs3xY3qx5NP4+YmmWZsqaHGOn++wYr2XUviQPGw6TYu7aQceaV3Yp797aw==
-X-Received: by 2002:a05:6402:397:: with SMTP id o23mr1413243edv.337.1617938372647;
-        Thu, 08 Apr 2021 20:19:32 -0700 (PDT)
-Received: from pevik ([62.201.25.198])
-        by smtp.gmail.com with ESMTPSA id jt18sm552773ejc.96.2021.04.08.20.19.31
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=OCOuP77KzsERfjtLD3+g0QTNYiI6uzbUte1pk8VLigc=;
+        b=L3hxdVEX/T9pGn9RFkUb8N1bH7QncozbitP9UXuPEEKj1vOlrZuZW5Vc0/sqjWPlmN
+         BtMlfjKF3pM11u01RI4q8QSj0ytTYwHGqSvqmdegrc4n+10rCzNj3l1K22JrtaI1xdNq
+         onyWeqLD/0Ub+c5OGrefSpQFYbrQdPaoueoWlC/86Kmj5cE5b3LgFitU5sFtU7VlEWg+
+         15fZZJo0nruh3wSbMEpIgO+SnSTkZJEPwPbgx/68+nvZ8W03en8H54J6dzPwOTovODz3
+         u9Lp0deiurNYy/yrzZR1RkxX7EYfdbHVYbzEktFI6PMzOj3MurUstsrTlBBmvwxuqTwX
+         y5yQ==
+X-Gm-Message-State: AOAM532amB32iAXkkIIxgfSpMFOOnmYGnFX7DG8DXSM8pEWrSQdxDK5e
+        eXvu8xtKBcRDLdSTO5q7kRWbbQ==
+X-Google-Smtp-Source: ABdhPJzC0bLiabjaxIzlhcuh3ox2ZRB+HbY3l9M8hv1k1EI9wdS1NnBB85gLT5oog9ql76p4icDRyw==
+X-Received: by 2002:a63:9dcb:: with SMTP id i194mr10564176pgd.87.1617938417994;
+        Thu, 08 Apr 2021 20:20:17 -0700 (PDT)
+Received: from www.outflux.net (smtp.outflux.net. [198.145.64.163])
+        by smtp.gmail.com with ESMTPSA id j205sm683087pfd.214.2021.04.08.20.20.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Apr 2021 20:19:31 -0700 (PDT)
-Date:   Fri, 9 Apr 2021 05:19:30 +0200
-From:   Petr Vorel <petr.vorel@gmail.com>
-To:     Konrad Dybcio <konradybcio@gmail.com>
-Cc:     Linus Walleij <linus.walleij@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Ricardo Ribalda <ribalda@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>
-Subject: Re: [PATCH 1/1] arm64: dts: qcom: msm8994: Reserve gpio ranges
-Message-ID: <YG/HwrzRcm7bwgFe@pevik>
-Reply-To: Petr Vorel <petr.vorel@gmail.com>
-References: <20210405200259.23525-1-petr.vorel@gmail.com>
- <20210405225222.GD904837@yoga>
- <CACRpkdZQ8qiqFPa0X8deVjZ7nLn_E6s8fmJdr5Ji8AuyJms1ug@mail.gmail.com>
- <YG9TWEJlpDmNeeit@pevik>
- <ea376d51-cd6c-0028-9602-d007c2bba71e@gmail.com>
+        Thu, 08 Apr 2021 20:20:17 -0700 (PDT)
+Date:   Thu, 8 Apr 2021 20:20:16 -0700
+From:   Kees Cook <keescook@chromium.org>
+To:     Andy Shevchenko <andy.shevchenko@gmail.com>
+Cc:     "Vaittinen, Matti" <Matti.Vaittinen@fi.rohmeurope.com>,
+        "agross@kernel.org" <agross@kernel.org>,
+        "broonie@kernel.org" <broonie@kernel.org>,
+        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+        linux-power <linux-power@fi.rohmeurope.com>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "linux-renesas-soc@vger.kernel.org" 
+        <linux-renesas-soc@vger.kernel.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "bjorn.andersson@linaro.org" <bjorn.andersson@linaro.org>,
+        "lgirdwood@gmail.com" <lgirdwood@gmail.com>,
+        "robh+dt@kernel.org" <robh+dt@kernel.org>
+Subject: Re: [PATCH v4 3/7] regulator: IRQ based event/error notification
+ helpers
+Message-ID: <202104082015.4DADF9DC48@keescook>
+References: <cover.1617690965.git.matti.vaittinen@fi.rohmeurope.com>
+ <2b87b4637fde2225006cc122bc855efca0dcd7f1.1617692184.git.matti.vaittinen@fi.rohmeurope.com>
+ <CAHp75VeoTVNDemV0qRA4BTVqOVfyR9UKGWhHgfeat8zVVGcu_Q@mail.gmail.com>
+ <55397166b1c4107efc2a013635f63af142d9b187.camel@fi.rohmeurope.com>
+ <CAHp75VeK+Oq9inOLcSSsq+FjaaPC5D=EMt4vLf97uR1BmpW2Zw@mail.gmail.com>
+ <42210c909c55f7672e4a4a9bfd34553a6f4c8146.camel@fi.rohmeurope.com>
+ <CAHp75VeX8H5E6GfVHxgu_6R+zbvmFV8fT9tO-nsm1nB3N4NF_A@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <ea376d51-cd6c-0028-9602-d007c2bba71e@gmail.com>
+In-Reply-To: <CAHp75VeX8H5E6GfVHxgu_6R+zbvmFV8fT9tO-nsm1nB3N4NF_A@mail.gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Konrad,
-> Hi,
+On Wed, Apr 07, 2021 at 03:50:15PM +0300, Andy Shevchenko wrote:
+> On Wed, Apr 7, 2021 at 12:49 PM Vaittinen, Matti
+> <Matti.Vaittinen@fi.rohmeurope.com> wrote:
+> > On Wed, 2021-04-07 at 12:10 +0300, Andy Shevchenko wrote:
+> > > On Wed, Apr 7, 2021 at 8:02 AM Matti Vaittinen
+> > > <matti.vaittinen@fi.rohmeurope.com> wrote:
+> > > > On Wed, 2021-04-07 at 01:44 +0300, Andy Shevchenko wrote:
+> > > > > On Tuesday, April 6, 2021, Matti Vaittinen <
+> > > > > matti.vaittinen@fi.rohmeurope.com> wrote:
+> 
+> Kees, there are two non-security guys discussing potential security
+> matters. Perhaps you may shed a light on this and tell which of our
+> stuff is risky and which is not and your recommendations on it.
 
-> to clear up some confusion:
+Hi!
 
+> > > > > > +       pr_emerg(msg);
+> > > > >
+> > > > > Oh là là, besides build bot complaints, this has serious security
+> > > > > implications. Never do like this.
+> > > >
+> > > > I'm not even trying to claim that was correct. And I did send a
+> > > > fixup -
+> > > > sorry for this. I don't intend to do this again.
+> > > >
+> > > > Now, when this is said - If you have a minute, please educate me.
+> > > > Assuming we know all the callers and that all the callers use this
+> > > > as
+> > > >
+> > > > die_loudly("foobarfoo\n");
+> > > > - what is the exploit mechanism?
 
-> On Qualcomm boards GPIOs that are used for "secure" (duh) peripherals,
-> like a fingerprint scanner, are not allowed to be controlled from Linux (the "non-secure world").
-> Trying to do so causes an immediate reboot due to "attempting to violate the security".
-Thanks for an explanation.
+I may not be following the thread exactly, here, but normally the issue
+is just one of robustness and code maintainability. You can't be sure all
+future callers will always pass in a const string, so better to always do:
 
-> The GPIOs seem to all be iterated over on boot, except for the ones specified in "gpio-reserved-ranges".
-> As a result, if such "secure" GPIOs are not declared in the DT, the board essentially dies on TLMM (pinctrl) probe
-> (which happens veeeery early - so that all other peripherals can set the pins as they see fit)
-> and that's very unpleasant to debug. Without this patch, Petr's device will simply not boot.
-Exactly.
+	pr_whatever("%s\n", string_var);
 
-> So, why did it work before!?
+> > > Not a security guy, but my understanding is that this code may be
+> > > used
+> > > as a gadget in ROP technique of attacks.
 
+The primary concern is with giving an attacker control over a format
+string (which can be used to expose kernel memory). It used to be much
+more serious when the kernel still implemented %n, which would turn such
+things into a potential memory _overwrite_. We removed %n a long time
+ago now. :)
 
-> Well, either the GPIOs weren't iterated over, or the TLMM (pinctrl) driver wasn't in place back then.
-I suppose GPIOs not being iterated over is the case for first fix (i.e. fixing
-3edfb7bd76bd "gpiolib: Show correct direction from the beginning").
+> > Thanks Andy. It'd be interesting to learn more details as I am not a
+> > security expert either :)
+> >
+> > > In that case msg can be anything. On top of that, somebody may
+> > > mistakenly (inadvertently) put the code that allows user controller
+> > > input to go to this path.
+> >
+> > Yes. This is a good reason to not to do this - but I was interested in
+> > knowing if there is a potential risk even if:
+> >
+> > > > all the callers use this
+> > > > as
+> > > >
+> > > > die_loudly("foobarfoo\n");
+> 
+> I don't see direct issues, only indirect ones, for example, if by some
+> reason the memory of this message appears writable. So, whoever
+> controls the format string of printf() controls a lot. That's why it's
+> preferable to spell out exact intentions in the explicit format
+> string.
 
-> As for the initrd crash.. perhaps you have an Android initrd which dies as soon as it doesn't detect SELINUX and a couple of other options.. You might want to try postmarketOS's one, or any other Linux distro's armv7/aarch64 initrd. To replace it, simply use abootimg like so:
-No, that's postmarketOS initrd which dies
+Right.
 
-before a99163e9e708d5d773b7de6da952fcddc341f977:
-[   17.421112] ALSA device list:
-[   17.426233]   No soundcard?[   17.436163] Freeing unused kernel memory: 5760K
-[   17.436462] Run /init as init process
-[   17.439499]   with arguments:
-[   17.443330]     /init
-[   17.446277]     PMOS_NO_OUTPUT_REDIRECT
-[   17.448535]   with environment:
-[   17.452172]     HOME=/
-[   17.455303]     TERM=linux
-### postmarketOS initramfs ###
-Configuring kernel firmware image search path
-/init: line 56: can't create /proc/sys/kernel/hotplug: nonexistent directory
-Trying to mount subpartitions for 10 seconds...
+> > > > > > +       BUG();
+> > > > > > +}
 
-after a99163e9e708d5d773b7de6da952fcddc341f977:
-[   17.383267] calling  regulator_init_complete+0x0/0x4c @ 1
-[   17.390129] initcall regulator_init_complete+0x0/0x4c returned 0 after 6 usecs
-[   17.395682] calling  of_platform_sync_state_init+0x0/0x18 @ 1
-[   17.402800] initcall of_platform_sync_state_init+0x0/0x18 returned 0 after 3 usecs
-[   17.408616] calling  alsa_sound_last_init+0x0/0x88 @ 1
-[   17.416077] ALSA device list:
-[   17.421198]   No soundcardû[   17.431360] Freeing unused kernel memory: 5824K
-[   17.431633] Run /init as init process
-[   17.434700]   with arguments:
-[   17.438535]     /init
-[   17.441477]     PMOS_NO_OUTPUT_REDIRECT
-[   17.443737]   with environment:
-[   17.447381]     HOME=/
-[   17.450496]     TERM=linux
-D -     15494 - pm_driver_init, Delta
+This, though, are you sure you want to use BUG()? Linus gets upset about
+such things:
+https://www.kernel.org/doc/html/latest/process/deprecated.html#bug-and-bug-on
 
-> abootimg -u boot.img -r ramdisk.img
-
-
-
-> If it says something something "too small", add
-
-
-> -c "bootsize=30000000"
-
-
-> to make the boot.img exactly 30 million bytes (or change it as you see fit).
-abootimg is really ok, this is not the issue.
-
-> Konrad
-
-Kind regards,
-Petr
+-- 
+Kees Cook
