@@ -2,97 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 688AA359E12
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Apr 2021 13:57:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3AAB2359F4A
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Apr 2021 14:52:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232469AbhDIL6G (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Apr 2021 07:58:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51620 "EHLO
+        id S231946AbhDIMwO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Apr 2021 08:52:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35264 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231611AbhDIL6F (ORCPT
+        with ESMTP id S231819AbhDIMwO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Apr 2021 07:58:05 -0400
-Received: from bhuna.collabora.co.uk (bhuna.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e3e3])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1B04C061760;
-        Fri,  9 Apr 2021 04:57:52 -0700 (PDT)
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-        (Authenticated sender: sre)
-        with ESMTPSA id A26831F4659F
-Received: by earth.universe (Postfix, from userid 1000)
-        id 0F1A63C0C96; Fri,  9 Apr 2021 13:57:48 +0200 (CEST)
-Date:   Fri, 9 Apr 2021 13:57:48 +0200
-From:   Sebastian Reichel <sebastian.reichel@collabora.com>
-To:     skakit@codeaurora.org
-Cc:     Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        David Collins <collinsd@codeaurora.org>, kgunda@codeaurora.org,
-        Vinod Koul <vkoul@kernel.org>,
-        Courtney Cavin <courtney.cavin@sonymobile.com>,
-        linux-input@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org
-Subject: Re: [PATCH V2 3/4] dt-bindings: power: reset: qcom-pon: Convert qcom
- PON binding to yaml
-Message-ID: <20210409115748.xfxukqgoyvscgpln@earth.universe>
-References: <1617881469-31965-1-git-send-email-skakit@codeaurora.org>
- <1617881469-31965-4-git-send-email-skakit@codeaurora.org>
- <20210408130001.k3qbq3vvwkiyykzv@earth.universe>
- <0cb9b3503000ac7206f4a3ef5fd16c17@codeaurora.org>
+        Fri, 9 Apr 2021 08:52:14 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2DDBC061760
+        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Apr 2021 05:51:59 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id g8so9490023lfv.12
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Apr 2021 05:51:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=NHKrFew97Pku2Mis5p+VLvYGFN67YcYrFQJKKFDgqBs=;
+        b=wIy/mHq2aMLYoIDzpXwzoZnpOZ4/tSf59LGJ00+4Pblp/7/3QYpnscpwmg3XDepSLU
+         Qg9JyQ1VlAtim3u4XcptgZEST1H8pXwy1bjrejAoaZRmzj6P3YIYObhVurdjrVcn5Mwf
+         /Nkt2Npiy9unla54V7ClsIoYu/QKGL+AmH1FmWVdwQ+NPDcB/YwYQgmdBgxhzBtumiFy
+         vqz20Xbhn0rb7NUIQdzxZqt7tYd1tJAp+/VYJO1QDcNUJ79+CBAz5aYvRiHE9Yvl3SPz
+         Pt+/riSQIPKpmbU8MipzTcXkIE8/Kui7I0O8oYWVQlJxEHRj2W/75oBCE9AKxL9aNp71
+         AbBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=NHKrFew97Pku2Mis5p+VLvYGFN67YcYrFQJKKFDgqBs=;
+        b=pSb1T34eK7ckewK8VqHi1t0/7OjrAOWdXwYaskTNnc8dvYE3PQWzYMJwd61KNq192i
+         7Ku6+fvK4C+rQwXev4cHQZXi1mAqE0lLJ1oZYyPeGk7n4BK2HqJe9fmzMSzVWjTckwCF
+         UuhLVsKQWecena8kCgloZsAJfuzAzWRBypgpPcdLox4pTTlDQcmG1p99nVVunr0YYeTi
+         KidFzS4eLZbk1YfSLLRhwdxOcsTSTIuqkli5Z8Yk87oS3f2bCQCDfrcMhfUIP4+H6RwE
+         eElw/sPX4aTtrdXQ9EnUu/KaUeHoCrOlzYpYO6FmzEHCodhZTyzrlTuLr5sCBbXX8tFb
+         w+CA==
+X-Gm-Message-State: AOAM530p3DoCsqMzCItTSWQOoTdobzOYWDWk5rSSJYJqjNErhDzEWCc3
+        klVdL6drwyDrdQvaySa0Ze9jPh9nuk81nXyy
+X-Google-Smtp-Source: ABdhPJzxseru43IFea5QDtzu95QQI0glf0FscdKUcwBZFu9gWjIQ+JwrdExLepDv8bNK9ZiXbTO6Kg==
+X-Received: by 2002:ac2:5a0b:: with SMTP id q11mr10391380lfn.391.1617972718137;
+        Fri, 09 Apr 2021 05:51:58 -0700 (PDT)
+Received: from localhost.localdomain (c-14cb225c.014-348-6c756e10.bbcust.telenor.se. [92.34.203.20])
+        by smtp.gmail.com with ESMTPSA id k8sm260510lfo.256.2021.04.09.05.51.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 09 Apr 2021 05:51:57 -0700 (PDT)
+From:   Linus Walleij <linus.walleij@linaro.org>
+To:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-arm-kernel@lists.infradead.org,
+        Linus Walleij <linus.walleij@linaro.org>
+Subject: [PATCH] ARM: dts: qcom: Fix up APQ8060 DragonBoard license
+Date:   Fri,  9 Apr 2021 14:49:54 +0200
+Message-Id: <20210409124954.320529-1-linus.walleij@linaro.org>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="ioziho372aqje6wl"
-Content-Disposition: inline
-In-Reply-To: <0cb9b3503000ac7206f4a3ef5fd16c17@codeaurora.org>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+This file is licensed in some kind of BSD manner, put it under
+the combined GPL+BSD license like what the bindings use, it
+seems most helpful.
 
---ioziho372aqje6wl
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I wrote the whole file so whatever. Those are my principles,
+if you don't like them: I have others.
 
-Hi,
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+---
+ .../arm/boot/dts/qcom-apq8060-dragonboard.dts | 23 +------------------
+ 1 file changed, 1 insertion(+), 22 deletions(-)
 
-On Fri, Apr 09, 2021 at 01:48:58PM +0530, skakit@codeaurora.org wrote:
->> Please do not drop the example :)
->=20
-> As per my understanding on Rob's comments [1] I have added one complete
-> example in qcom,pm8941-pwrkey.yaml (see patch 4/4) and dropped it here.
->=20
-> [1] https://lore.kernel.org/patchwork/patch/1390062/#1588027
+diff --git a/arch/arm/boot/dts/qcom-apq8060-dragonboard.dts b/arch/arm/boot/dts/qcom-apq8060-dragonboard.dts
+index dace8ffeb991..1be467124a70 100644
+--- a/arch/arm/boot/dts/qcom-apq8060-dragonboard.dts
++++ b/arch/arm/boot/dts/qcom-apq8060-dragonboard.dts
+@@ -1,25 +1,4 @@
+-/*
+- * Copyright 2016 Linaro Ltd
+- *
+- * Permission is hereby granted, free of charge, to any person obtaining a copy
+- * of this software and associated documentation files (the "Software"), to deal
+- * in the Software without restriction, including without limitation the rights
+- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+- * copies of the Software, and to permit persons to whom the Software is
+- * furnished to do so, subject to the following conditions:
+- *
+- * The above copyright notice and this permission notice shall be included in
+- * all copies or substantial portions of the Software.
+- *
+- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+- * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+- * THE SOFTWARE.
+- */
+-
++// SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+ #include <dt-bindings/input/input.h>
+ #include <dt-bindings/gpio/gpio.h>
+ #include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
+-- 
+2.30.2
 
-Ok, please add a note about this in the commit message.
-Something like:
-
-The example has been removed in favour of full example being
-available in the qcom,pm8941-pwrkey binding.
-
-Thanks,
-
--- Sebastian
-
---ioziho372aqje6wl
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEE72YNB0Y/i3JqeVQT2O7X88g7+poFAmBwQTsACgkQ2O7X88g7
-+ppvxA//ZDqA2HcgKmkY/5edbV1Mv2x1kz92+zc6n7n8g0HO5qCxbIDi0BVH+O9X
-OPP6eoyMRa2zTcKh9Z9j/KxRVNSx7ntnIm9CS/q8nDD6f99tyCCUTcNcHsd0QC0I
-Ff4T4FlGYVWwbyb3p5Qly2YaAAngd5C6zV1ln9RtKOUJs+eJxfy6lluJwSgyPPGq
-ssQtuRpUdq7Ql9vuxbHa5fMzFlwvibz9UYKMfNTxIc8KU/E8NtZVegtP0q1GDX0O
-Df9iNLTAYcN1olyG5gTo9223kPFwcuJtGAHMVrORjpXsmrY6kznRWtRVEB/YBZE6
-8pihnV01bgdalxXkn17VvBulRzUERYzXTaLUC0z90BI9/qg8ZeUgWAk7O4TGBiuF
-vo4TERUhwbI0KwOwaQ1F/qHVSlJN6XQiiq9MB5Pr7SxzNdvcCp6p6OBmGyjWhBwU
-jb/0XOBG9n6C8MNjwc6GGyM6W92Vd7jRca1RRvPQaXWTKX8zijFvdXKhKgY4DCAy
-yxtHKsxqUDi/uW6rQZYh1jDVKTjN4MbTJoXdlNfyHU2nkijBDKWJumtxHh5tetj4
-W+ouewINUSGbpzyeiHLHWXXnPXBetuh8OOA9J3IF39wFJzp2O5kAdnpcQ35QhvIz
-zc0tY9CRl4/dAl4UMezOF9RTtWIeuA0h0U0dmc6rnrnwGY4ibFc=
-=KCef
------END PGP SIGNATURE-----
-
---ioziho372aqje6wl--
