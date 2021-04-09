@@ -2,69 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4AB1435A630
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Apr 2021 20:51:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8480635A634
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Apr 2021 20:52:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234388AbhDISwA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Apr 2021 14:52:00 -0400
-Received: from mail-ot1-f54.google.com ([209.85.210.54]:43749 "EHLO
-        mail-ot1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233332AbhDISwA (ORCPT
+        id S234478AbhDISwN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Apr 2021 14:52:13 -0400
+Received: from mail-ot1-f41.google.com ([209.85.210.41]:40516 "EHLO
+        mail-ot1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233332AbhDISwN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Apr 2021 14:52:00 -0400
-Received: by mail-ot1-f54.google.com with SMTP id s16-20020a0568301490b02901b83efc84a0so6601954otq.10;
-        Fri, 09 Apr 2021 11:51:45 -0700 (PDT)
+        Fri, 9 Apr 2021 14:52:13 -0400
+Received: by mail-ot1-f41.google.com with SMTP id w31-20020a9d36220000b02901f2cbfc9743so6633693otb.7;
+        Fri, 09 Apr 2021 11:51:58 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=goXyba68Vq2ZcPnNdvCAyK2pXvjfWkY1wv3QLuidgZY=;
-        b=AtKWDy8sZd+Ft2dcc6eh3x+qKMjw1o6e8Po6RHg3BRBKp8v6Up2+o0WMlDkKeNeXS3
-         IYZ6Mv2YMbCiv9Zy16llrapaoNoY9Bgbq+d9FDO6QwndVu3gqRBwGmKczjLNUT7gmebH
-         3F0vMS9YmDyGTt75eZHKs8bs+MwPR13U9qSlLDgotfpb9+JD9PXc8f38iw8bDket56O4
-         Ng2QAY4kgk6XUWzv93S4URW5GxGGuDhHnIKJytRMF5eVvx+671/UNbjVSLNrydbkMyOO
-         WScN+hwW/sz9RetznBlGZ0gbknsauT+K+QQec+o+J97JTveYx8GbwoLTsH24tT7wMdq+
-         gvaA==
-X-Gm-Message-State: AOAM5308yMUv/QWEtDRptVYIVFXGyTvWD3yXsZ7a7cG7fPvHmrEE12JC
-        ibQhCBua8Y/18KOBoff/STNKnvmpag==
-X-Google-Smtp-Source: ABdhPJyptwoMjzrW0yFqTMlNFcyfZ+neI+EvoGA89Pkg+e3yVlVKSAjalGhlRDLZsfJdn1bfCbGwhw==
-X-Received: by 2002:a05:6830:164e:: with SMTP id h14mr13986993otr.200.1617994305459;
-        Fri, 09 Apr 2021 11:51:45 -0700 (PDT)
+        bh=NIrTfXnfmHsSq3bLGwV3nuEchCpnAAO5Sn0vt3rU7IE=;
+        b=CmKC13ftMUHDgfTUmVkGPOUDzk2uCCGZw9DBElnNfxrDJVYFqcq1Dl8M1T23L8VL94
+         8kOf8ltkhPLPBjRoizj8p2XKkczTJZzztM8YorpTTH2zUAEs+GVhAKBz15C8n4pT08Fu
+         vUARg4WGhhdmdau1V4myO7jNsvCvqMBd2N0QI9AoMoa2PDcAoeGX1teKCv6M57II5sFW
+         Kx4lDmo+5lBdlSRcTUmhkYIH2n45pXETOYNUtRSXFNPuDHykHGC9fcgwdk3qA2SHT1GZ
+         VXu3t/LeyXd40U/prd3adVtSzfvA8w2HOGV7QqCgJu81KxvSrVRwcY0OnI3McDdUuJby
+         ifvQ==
+X-Gm-Message-State: AOAM531fmAee9HDTmdYO6STWUFuAkVWYSiu4VPTze/uvpcbosR1oNNaw
+        6Ayt2Z++xxrSIp3WbEDUD0Q+3bHNOA==
+X-Google-Smtp-Source: ABdhPJydwvmEiEkCdUhlBibxbcMAuhfBIf8lXuYP9s/SWfw5brea3s4tJgho7A2VZS9q1cVXTjJL/Q==
+X-Received: by 2002:a9d:39ca:: with SMTP id y68mr13435243otb.84.1617994318369;
+        Fri, 09 Apr 2021 11:51:58 -0700 (PDT)
 Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id y11sm650098oiv.19.2021.04.09.11.51.44
+        by smtp.gmail.com with ESMTPSA id w2sm670324oov.23.2021.04.09.11.51.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 Apr 2021 11:51:44 -0700 (PDT)
-Received: (nullmailer pid 3951380 invoked by uid 1000);
-        Fri, 09 Apr 2021 18:51:43 -0000
-Date:   Fri, 9 Apr 2021 13:51:43 -0500
+        Fri, 09 Apr 2021 11:51:57 -0700 (PDT)
+Received: (nullmailer pid 3951777 invoked by uid 1000);
+        Fri, 09 Apr 2021 18:51:56 -0000
+Date:   Fri, 9 Apr 2021 13:51:56 -0500
 From:   Rob Herring <robh@kernel.org>
-To:     Caleb Connolly <caleb@connolly.tech>
-Cc:     linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Akash Asthana <akashast@codeaurora.org>,
-        phone-devel@vger.kernel.org,
-        Mukesh Savaliya <msavaliy@codeaurora.org>,
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     linux-kernel@vger.kernel.org, bjorn.andersson@linaro.org,
         devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        ~postmarketos/upstreaming@lists.sr.ht
-Subject: Re: [PATCH v2 3/3] dt-bindings: qcom: geni-se: document iommus
-Message-ID: <20210409185143.GA3951334@robh.at.kernel.org>
-References: <20210408161953.26298-4-caleb@connolly.tech>
+        Rob Herring <robh+dt@kernel.org>
+Subject: Re: [PATCH 06/15] dt-bindings: firmware: scm: Add compatible for
+ SDX55
+Message-ID: <20210409185156.GA3951730@robh.at.kernel.org>
+References: <20210408170457.91409-1-manivannan.sadhasivam@linaro.org>
+ <20210408170457.91409-7-manivannan.sadhasivam@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20210408161953.26298-4-caleb@connolly.tech>
+In-Reply-To: <20210408170457.91409-7-manivannan.sadhasivam@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 08 Apr 2021 16:21:14 +0000, Caleb Connolly wrote:
-> Document the iommus property for QCOM Geni SE.
+On Thu, 08 Apr 2021 22:34:48 +0530, Manivannan Sadhasivam wrote:
+> Add devicetree compatible for SCM present in SDX55 platform.
 > 
-> Signed-off-by: Caleb Connolly <caleb@connolly.tech>
+> Cc: Rob Herring <robh+dt@kernel.org>
+> Cc: devicetree@vger.kernel.org
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 > ---
->  Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml | 3 +++
->  1 file changed, 3 insertions(+)
+>  Documentation/devicetree/bindings/firmware/qcom,scm.txt | 1 +
+>  1 file changed, 1 insertion(+)
 > 
 
 Acked-by: Rob Herring <robh@kernel.org>
