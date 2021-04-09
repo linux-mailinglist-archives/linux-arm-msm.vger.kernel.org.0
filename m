@@ -2,90 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 829BE3590EE
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Apr 2021 02:34:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DAE4E3590F6
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Apr 2021 02:38:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232918AbhDIAeL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Apr 2021 20:34:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43248 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232426AbhDIAeK (ORCPT
+        id S233095AbhDIAis (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Apr 2021 20:38:48 -0400
+Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:59374 "EHLO
+        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S232996AbhDIAip (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Apr 2021 20:34:10 -0400
-Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C54A0C061760
-        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Apr 2021 17:33:58 -0700 (PDT)
-Received: by mail-lj1-x230.google.com with SMTP id a1so4427324ljp.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Apr 2021 17:33:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=GZsVvoVqEno9RF4WgOSVtDCPs4cSjvnH+qjloaqrTY8=;
-        b=xlR/BS+INgsAV0f8DOZ1uza4DDufXPz9smG45zz/8LD9CLfv2YsnZPw/8XLJAQgZw4
-         LPe+jFq5eeK65wGMg+jlE9B+kipg2AZ+1WnKbScaGxqwgCL64ThEDzmMcwUEmasT3qxG
-         2bDx8qDEWmOkEwKHlQ02lpGSQbwaAMs8YiLXVD+TGwrkyFXUUnd8nxnQINpy3udz9Phy
-         IqqyFDYIPKL09FPfqWtoWgUUfS0wlAh9io6marPtAVHH4D1217MGaFhj2lPOZO1m6jfm
-         DYoIg8UnSQKroDvqjNnnSl383mWJpWhuRDcv/DmIFmo6NdhvLZ3ELP7R5mT19+4UTyE8
-         EDiQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=GZsVvoVqEno9RF4WgOSVtDCPs4cSjvnH+qjloaqrTY8=;
-        b=nHuxSe3AHg0fhVHecez9XoZ9VLNmKTIN2NII9sf+K85vM1WgCDqSmGPFshTXLFCNb8
-         gLLlu4LkyVI7oWKAhbYZxR6jZ6jihnWjSPWrb5c2ePEoTKBHXxuQ/cSjtwM+4gPNv/1l
-         zBQk3/Xg7jzoEkEylbXucSvB+6pDx2v8LwotezUBHAeCTb3JI5Qfwkce1KeRfQlC7y6+
-         2cuBtgI2xTn8GUJpCpNdTWJ4ckcl8OYKHJGGjddospVqJ0mt6388YA6qH+wkMm7XBUdD
-         zPsINa8pXQk13NHnl4IQnksse9AltwDKLQrthqbRiBH8ofyfjVjWEDrImgfyr6utthE1
-         j3/A==
-X-Gm-Message-State: AOAM531PH0uRt7X2g24vcwxnU1JSsgFdkZlFz4iVomglTKjAul0knU8v
-        1dVpj1JILKcamHJ7HTQNHG+iWA==
-X-Google-Smtp-Source: ABdhPJzDVgWp9UixHC/Gx9UF5LMDFjTWiySCEpKgKdN2kVVP2AjHcy2rGvCMw3riRYVUip5TIpRKCg==
-X-Received: by 2002:a2e:9a96:: with SMTP id p22mr7502365lji.167.1617928437205;
-        Thu, 08 Apr 2021 17:33:57 -0700 (PDT)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id q14sm101741lfu.260.2021.04.08.17.33.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Apr 2021 17:33:56 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Dikshita Agarwal <dikshita@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org
-Subject: [PATCH] media: venus: core: correct firmware name for sm8250
-Date:   Fri,  9 Apr 2021 03:33:55 +0300
-Message-Id: <20210409003355.1129672-1-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.30.2
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Thu, 8 Apr 2021 20:38:45 -0400
+Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 08 Apr 2021 17:38:33 -0700
+X-QCInternal: smtphost
+Received: from gurus-linux.qualcomm.com (HELO gurus-linux.localdomain) ([10.46.162.81])
+  by ironmsg02-sd.qualcomm.com with ESMTP; 08 Apr 2021 17:38:32 -0700
+Received: by gurus-linux.localdomain (Postfix, from userid 383780)
+        id CE0C21A71; Thu,  8 Apr 2021 17:38:32 -0700 (PDT)
+From:   Guru Das Srinagesh <gurus@codeaurora.org>
+To:     Lee Jones <lee.jones@linaro.org>, Rob Herring <robh+dt@kernel.org>,
+        devicetree@vger.kernel.org
+Cc:     Mark Brown <broonie@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-kernel@vger.kernel.org,
+        Guru Das Srinagesh <gurus@codeaurora.org>
+Subject: [PATCH 0/3] Add Qualcomm Technologies, Inc. PM8008 MFD driver
+Date:   Thu,  8 Apr 2021 17:38:28 -0700
+Message-Id: <cover.1617927259.git.gurus@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Firmware name for venus should be qcom/vpu-1.0/venus.mdt, not
-qcom/sm8250/venus.mdt.
+This driver is dependent on changes that have been made to the regmap-irq
+framework that have currently been accepted [1][2] in regmap.git upstream by
+Mark Brown but haven't made it to Linus' tree yet. For this reason, this driver
+has been based on the tip of regmap.git and not mfd.git.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/media/platform/qcom/venus/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Those changes, and this driver, are the result of a rewrite effort that was
+promised a long ago [3]. The framework changes and this driver have been tested
+and verified end-to-end on an internal platform.
 
-diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
-index bef582470fa2..b7362706ad8e 100644
---- a/drivers/media/platform/qcom/venus/core.c
-+++ b/drivers/media/platform/qcom/venus/core.c
-@@ -701,7 +701,7 @@ static const struct venus_resources sm8250_res = {
- 	.vmem_size = 0,
- 	.vmem_addr = 0,
- 	.dma_mask = 0xe0000000 - 1,
--	.fwname = "qcom/sm8250/venus.mdt",
-+	.fwname = "qcom/vpu-1.0/venus.mdt",
- };
- 
- static const struct of_device_id venus_dt_match[] = {
+[1] https://lore.kernel.org/lkml/20210318183607.gFxO2hoTO274vl3jUuxWbi19rq9wQELzN-y3B4jvO10@z/
+[2] https://lore.kernel.org/lkml/161726943419.2413.4844313396830856637.b4-ty@kernel.org/
+[3] https://lore.kernel.org/lkml/20200519185757.GA13992@codeaurora.org/
+
+Guru Das Srinagesh (3):
+  dt-bindings: mfd: pm8008: Add IRQ listing
+  dt-bindings: mfd: pm8008: Add bindings
+  mfd: pm8008: Add driver for QCOM PM8008 PMIC
+
+ .../devicetree/bindings/mfd/qcom,pm8008.yaml       | 120 +++++++++
+ drivers/mfd/Kconfig                                |  15 ++
+ drivers/mfd/Makefile                               |   1 +
+ drivers/mfd/qcom-pm8008.c                          | 284 +++++++++++++++++++++
+ include/dt-bindings/mfd/qcom-pm8008.h              |  19 ++
+ 5 files changed, 439 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/mfd/qcom,pm8008.yaml
+ create mode 100644 drivers/mfd/qcom-pm8008.c
+ create mode 100644 include/dt-bindings/mfd/qcom-pm8008.h
+
 -- 
-2.30.2
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
