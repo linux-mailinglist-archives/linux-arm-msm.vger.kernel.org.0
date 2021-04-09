@@ -2,93 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DF5DA359796
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Apr 2021 10:20:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B9C603597A6
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Apr 2021 10:22:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232470AbhDIIUl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Apr 2021 04:20:41 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:40693 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232344AbhDIIUk (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Apr 2021 04:20:40 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1617956427; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=w6dPhZf528MpJVmtXWaO9JlPwrAlz6eGv9cUCZJ3hDk=;
- b=mOHzHrQXJ4nMSzIZ+wPcDp+5+18EGWwqGWyjPfgXT7I2BikO2KK75VCeomg8UUgauDWeRAU+
- Fz06k+Z8BsWcZ2O67RLXHB39+OYzGOkqF/6dEUNlPbtNQDyPM+VeMHdwm/pYT3ABahW9ph9N
- vd9nzn8X9f/+p/krEvtWruiPKhI=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
- 60700e488166b7eff7157e60 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 09 Apr 2021 08:20:24
- GMT
-Sender: skakit=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 60EE1C43461; Fri,  9 Apr 2021 08:20:23 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        id S232615AbhDIIWY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Apr 2021 04:22:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60278 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232358AbhDIIWX (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 9 Apr 2021 04:22:23 -0400
+Received: from relay01.th.seeweb.it (relay01.th.seeweb.it [IPv6:2001:4b7a:2000:18::162])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3CF4BC061760
+        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Apr 2021 01:22:11 -0700 (PDT)
+Received: from [10.0.20.3] (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        (Authenticated sender: skakit)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id B8D67C433CA;
-        Fri,  9 Apr 2021 08:20:22 +0000 (UTC)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 441D91FAF2;
+        Fri,  9 Apr 2021 10:22:06 +0200 (CEST)
+Subject: Re: [Freedreno] [PATCH 1/3] drm/msm/mdp5: Configure PP_SYNC_HEIGHT to
+ double the vtotal
+To:     Abhinav Kumar <abhinavk@codeaurora.org>,
+        Rob Clark <robdclark@gmail.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>
+Cc:     phone-devel@vger.kernel.org,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        David Airlie <airlied@linux.ie>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Daniel Vetter <daniel@ffwll.ch>, Sean Paul <sean@poorly.run>
+References: <20210406214726.131534-1-marijn.suijten@somainline.org>
+ <20210406214726.131534-2-marijn.suijten@somainline.org>
+ <6413863d04df9743e2d7e81beff5c3e8@codeaurora.org>
+ <04860f05-f79f-de0b-13d1-aba85065b4da@somainline.org>
+ <CAF6AEGuoLgBSZOou1TSb-d2o6tHS-L-E7AQLS5RM4aOogvRG7Q@mail.gmail.com>
+ <CAK7fi1aUXy2i8zY0Cb5Svq0s1H9cSAvY4hq+BsiWgdphwm-ebA@mail.gmail.com>
+ <CAF6AEGuSav210dMHa3+f-7W1Kgyjam7K7HhWFO4aXWbdjvPTLw@mail.gmail.com>
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+Message-ID: <408460b9-e150-c971-663f-5fa0bd40b873@somainline.org>
+Date:   Fri, 9 Apr 2021 10:22:05 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.9.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
-Date:   Fri, 09 Apr 2021 13:50:22 +0530
-From:   skakit@codeaurora.org
-To:     Linus Walleij <linus.walleij@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Kiran Gunda <kgunda@codeaurora.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        linux-kernel <linux-kernel@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, MSM <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH V2 0/3] Add GPIO support for PM7325, PM8350c, PMK8350 and
- PMR735A
-In-Reply-To: <CACRpkdbD6E3PY_JCEbwNiVfb8LoT6F5DzV7x71Us3Z7U3BaX=Q@mail.gmail.com>
-References: <1617280546-9583-1-git-send-email-skakit@codeaurora.org>
- <CACRpkdbD6E3PY_JCEbwNiVfb8LoT6F5DzV7x71Us3Z7U3BaX=Q@mail.gmail.com>
-Message-ID: <f035f30845abdc45363c30348ac5cae8@codeaurora.org>
-X-Sender: skakit@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+In-Reply-To: <CAF6AEGuSav210dMHa3+f-7W1Kgyjam7K7HhWFO4aXWbdjvPTLw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-04-08 19:18, Linus Walleij wrote:
-> On Thu, Apr 1, 2021 at 2:36 PM satya priya <skakit@codeaurora.org> 
-> wrote:
-> 
->> satya priya (3):
->>   pinctrl: qcom: spmi-gpio: Add support for four variants
->>   dt-bindings: pinctrl: qcom-pmic-gpio: Update the binding to add four
->>     new variants
->>   dt-bindings: pinctrl: qcom-pmic-gpio: Convert qcom pmic gpio 
->> bindings
->>     to YAML
-> 
-> Please collect the ACKs and rebase like Björn says, sort stuff 
-> alphabetically
-> and resend so I can try to apply it! The YAML conversion may need a nod 
-> from
-> the DT people as well.
-> 
+Hi Abhinav, Angelo, Rob,
 
-Sure, will address the comments and resend.
+On 4/9/21 2:08 AM, Rob Clark wrote:
+> On Thu, Apr 8, 2021 at 4:16 PM AngeloGioacchino Del Regno
+> <angelogioacchino.delregno@somainline.org> wrote:
+>>
+>>
+>> Il gio 8 apr 2021, 21:05 Rob Clark <robdclark@gmail.com> ha scritto:
+>>>
+>>> On Wed, Apr 7, 2021 at 12:11 PM AngeloGioacchino Del Regno
+>>> <angelogioacchino.delregno@somainline.org> wrote:
+>>>>
+>>>> Il 07/04/21 20:19, abhinavk@codeaurora.org ha scritto:
+>>>>> Hi Marijn
+>>>>>
+>>>>> On 2021-04-06 14:47, Marijn Suijten wrote:
+>>>>>> Leaving this at a close-to-maximum register value 0xFFF0 means it takes
+>>>>>> very long for the MDSS to generate a software vsync interrupt when the
+>>>>>> hardware TE interrupt doesn't arrive.  Configuring this to double the
+>>>>>> vtotal (like some downstream kernels) leads to a frame to take at most
+>>>>>> twice before the vsync signal, until hardware TE comes up.
+>>>>>>
+>>>>>> In this case the hardware interrupt responsible for providing this
+>>>>>> signal - "disp-te" gpio - is not hooked up to the mdp5 vsync/pp logic at
+>>>>>> all.  This solves severe panel update issues observed on at least the
+>>>>>> Xperia Loire and Tone series, until said gpio is properly hooked up to
+>>>>>> an irq.
+>>>>>
+>>>>> The reason the CONFIG_HEIGHT was at such a high value is to make sure that
+>>>>> we always get the TE only from the panel vsync and not false positives
+>>>>> coming
+>>>>> from the tear check logic itself.
 
-> Yours,
-> Linus Walleij
 
-Thanks,
-Satya Priya
+Correct, most CAF kernels mention such behaviour in comments, with
+fallbacks to vtotal*2 for safety or vtotal when an emulated panel does
+not support hardware TE at all.  We don't seem to (need to) support the 
+latter case but one might at some point want to configure the tearcheck 
+logic to emit a signal for every frame, by means of a DT property or 
+automatically when disp-te is not defined.
+
+>>>>>
+>>>>> When you say that disp-te gpio is not hooked up, is it something
+>>>>> incorrect with
+>>>>> the schematic OR panel is not generating the TE correctly?
+>>>>>
+
+
+The GPIO is currently not used at all by this kernel driver besides a
+call to devm_gpiod_get_optional.  As mentioned in the cover letter we
+have patches in progress to hook up this interrupt line to the pp_done
+infrastructure and complete vsync requests that way instead of waiting
+for this "simulated" interrupt from the MDP.
+
+>>> Currently I have this patch in msm-next-staging but I guess we need to
+>>> decide in the next day or so whether to drop it or smash in a comment?
+>>
+>> Marijn, can you please urgently throw a comment in, reminding that these timers are interacting with TE and send a fast V2?
+> 
+> Or just reply on list w/ a comment to smash in, if that is easier
+
+How about a comment along the lines of:
+
+Tearcheck emits a blanking signal every vclks_line * vtotal * 2 ticks on 
+the vsync_clk equating to roughly half the desired panel refresh rate. 
+This is only necessary as stability fallback if interrupts from the 
+panel arrive too late or not at all, but is currently used by default 
+because these panel interrupts are not wired up yet.
+
+I'd place this comment right above REG_MDP5_PP_SYNC_CONFIG_VSYNC, and 
+perhaps add a newline after REG_MDP5_PP_SYNC_CONFIG_HEIGHT to make it 
+clear this applies to those two registers specifically.  We can also 
+involve MDP5_PP_SYNC_CONFIG_VSYNC_COUNT(vclks_line) in the mix.
+
+Then, when the panel TE is wired up we can be smarter about the 
+situation and print warnings when the user has disp-te hooked up but is 
+receiving interrupts from the MDSS block instead of the panel directly 
+(except if incidentally).  This likely means that SET_TEAR_ON was not 
+sent to the panel or the GPIO is wrong.  In that sense this patch 
+(together with x100 removal) is concealing configuration mistakes, but 
+we might also revert back to 0xfff0 if the GPIO is specified in DT and 
+accept the timeout+recovery which did not seem to hamper devices on 
+downstream kernels anyway.
+
+- Marijn
