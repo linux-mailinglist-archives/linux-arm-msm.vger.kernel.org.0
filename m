@@ -2,126 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D781F35A07F
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Apr 2021 16:00:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6A4B635A076
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Apr 2021 15:59:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233441AbhDIOAa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Apr 2021 10:00:30 -0400
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:52694 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233577AbhDIOA3 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Apr 2021 10:00:29 -0400
-Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
-  by alexa-out.qualcomm.com with ESMTP; 09 Apr 2021 07:00:12 -0700
-X-QCInternal: smtphost
-Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 09 Apr 2021 07:00:09 -0700
-X-QCInternal: smtphost
-Received: from c-skakit-linux.ap.qualcomm.com (HELO c-skakit-linux.qualcomm.com) ([10.242.51.242])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 09 Apr 2021 19:29:40 +0530
-Received: by c-skakit-linux.qualcomm.com (Postfix, from userid 2344709)
-        id D92404EFA; Fri,  9 Apr 2021 19:29:39 +0530 (IST)
-From:   satya priya <skakit@codeaurora.org>
-To:     Alessandro Zummo <a.zummo@towertech.it>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Lee Jones <lee.jones@linaro.org>, linux-rtc@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, kgunda@codeaurora.org,
-        satya priya <skakit@codeaurora.org>
-Subject: [PATCH V2 4/4] dt-bindings: rtc: qcom-pm8xxx-rtc: Add qcom pm8xxx rtc bindings
-Date:   Fri,  9 Apr 2021 19:29:26 +0530
-Message-Id: <1617976766-7852-5-git-send-email-skakit@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1617976766-7852-1-git-send-email-skakit@codeaurora.org>
-References: <1617976766-7852-1-git-send-email-skakit@codeaurora.org>
+        id S231756AbhDIOAE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Apr 2021 10:00:04 -0400
+Received: from mail.kernel.org ([198.145.29.99]:48630 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231127AbhDIOAB (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 9 Apr 2021 10:00:01 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 9B10A61105;
+        Fri,  9 Apr 2021 13:59:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1617976788;
+        bh=aNHzWSjtlbHWhZmEp79W5Ym13lGIg/GnzFxAQTVFo5Y=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=B2jVLsPHwCUjchkzZ9Egps92NCJbqFbcJYW+C3nEqt1Mey5b8+moq8iAysOu6fVUb
+         P0SnKqlVB3uCcnmAYHu2m5m2qxTW7wjqvm9QGody2/2ckbJiG/eF0DeECnfvUcV7pz
+         Kp7Lwkdt5fXLc/SGHpYeiUr4uIKo5WGdoB5ZGHWU6p5l1Rj5x6lM4RsFzO0HyCSIRy
+         ZcZlW1Qz4euMIod+47f5301aiuvx2JzEuiwJPelKPpaSatGlj+CJGF+LFVXnk6dF44
+         SPQk0HoY2t3gq4uRLWyPQMTjOb0fDTx41Cc5pt5/XIrzgVRoVI3pYeEFgSd3ks5uI+
+         EUNKMV0xjBPBQ==
+Date:   Fri, 9 Apr 2021 19:29:43 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Jarvis Jiang <jarvis.w.jiang@gmail.com>
+Cc:     hemantk@codeaurora.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, cchen50@lenovo.com,
+        mpearson@lenovo.com
+Subject: Re: [PATCH 2/2] bus: mhi: fix typo in comments for struct
+ mhi_channel_config
+Message-ID: <20210409135943.GE31856@work>
+References: <20210408100220.3853-1-jarvis.w.jiang@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210408100220.3853-1-jarvis.w.jiang@gmail.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add binding doc for qcom pm8xxx rtc device.
+On Thu, Apr 08, 2021 at 03:02:20AM -0700, Jarvis Jiang wrote:
+> The word 'rung' is a typo in below comment, fix it.
+> * @event_ring: The event rung index that services this channel
+> 
+> Signed-off-by: Jarvis Jiang <jarvis.w.jiang@gmail.com>
 
-Signed-off-by: satya priya <skakit@codeaurora.org>
----
-Changes in V2:
- - Added this in V2 to have separate binding for rtc node.
+Applied to mhi-next!
 
- .../devicetree/bindings/rtc/qcom-pm8xxx-rtc.yaml   | 62 ++++++++++++++++++++++
- 1 file changed, 62 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/rtc/qcom-pm8xxx-rtc.yaml
+Thanks,
+Mani
 
-diff --git a/Documentation/devicetree/bindings/rtc/qcom-pm8xxx-rtc.yaml b/Documentation/devicetree/bindings/rtc/qcom-pm8xxx-rtc.yaml
-new file mode 100644
-index 0000000..4fba6db
---- /dev/null
-+++ b/Documentation/devicetree/bindings/rtc/qcom-pm8xxx-rtc.yaml
-@@ -0,0 +1,62 @@
-+# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/rtc/qcom-pm8xxx-rtc.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Qualcomm PM8xxx PMIC RTC device
-+
-+maintainers:
-+  - Satya Priya <skakit@codeaurora.org>
-+
-+properties:
-+  compatible:
-+    enum:
-+      - qcom,pm8058-rtc
-+      - qcom,pm8921-rtc
-+      - qcom,pm8941-rtc
-+      - qcom,pm8018-rtc
-+      - qcom,pmk8350-rtc
-+
-+  reg:
-+    maxItems: 1
-+
-+  interrupts:
-+    maxItems: 1
-+
-+  allow-set-time:
-+    $ref: /schemas/types.yaml#/definitions/flag
-+    description:
-+      Indicates that the setting of RTC time is allowed by the host CPU.
-+
-+required:
-+  - compatible
-+  - reg
-+  - interrupts
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/spmi/spmi.h>
-+    spmi_bus: spmi@c440000 {
-+      reg = <0x0c440000 0x1100>;
-+      #address-cells = <2>;
-+      #size-cells = <0>;
-+      pmicintc: pmic@0 {
-+        reg = <0x0 SPMI_USID>;
-+        compatible = "qcom,pm8921";
-+        interrupts = <104 8>;
-+        #interrupt-cells = <2>;
-+        interrupt-controller;
-+        #address-cells = <1>;
-+        #size-cells = <0>;
-+
-+        pm8921_rtc: rtc@11d {
-+          compatible = "qcom,pm8921-rtc";
-+          reg = <0x11d>;
-+          interrupts = <0x27 0>;
-+        };
-+      };
-+    };
-+...
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
-of Code Aurora Forum, hosted by The Linux Foundation
-
+> ---
+>  include/linux/mhi.h | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/include/linux/mhi.h b/include/linux/mhi.h
+> index d095fba37d1e..944aa3aa3035 100644
+> --- a/include/linux/mhi.h
+> +++ b/include/linux/mhi.h
+> @@ -205,7 +205,7 @@ enum mhi_db_brst_mode {
+>   * @num: The number assigned to this channel
+>   * @num_elements: The number of elements that can be queued to this channel
+>   * @local_elements: The local ring length of the channel
+> - * @event_ring: The event rung index that services this channel
+> + * @event_ring: The event ring index that services this channel
+>   * @dir: Direction that data may flow on this channel
+>   * @type: Channel type
+>   * @ee_mask: Execution Environment mask for this channel
+> -- 
+> 2.25.1
+> 
