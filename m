@@ -2,272 +2,270 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7A2C335A227
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Apr 2021 17:39:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B433E35A245
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Apr 2021 17:49:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231946AbhDIPkI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Apr 2021 11:40:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43890 "EHLO
+        id S233744AbhDIPtg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Apr 2021 11:49:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45960 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233713AbhDIPkH (ORCPT
+        with ESMTP id S233527AbhDIPtg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Apr 2021 11:40:07 -0400
-Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CDB2C061763
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Apr 2021 08:39:54 -0700 (PDT)
-Received: by mail-ot1-x332.google.com with SMTP id w31-20020a9d36220000b02901f2cbfc9743so6067399otb.7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Apr 2021 08:39:54 -0700 (PDT)
+        Fri, 9 Apr 2021 11:49:36 -0400
+Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C38FC061762
+        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Apr 2021 08:49:22 -0700 (PDT)
+Received: by mail-ot1-x32f.google.com with SMTP id s11-20020a056830124bb029021bb3524ebeso6167371otp.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Apr 2021 08:49:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=wBXCbSaC1Hxateqn/Ch5WAilYWAoC2JMMq7UEAHR1do=;
-        b=y/XdHrgvkAtzZG4AEcQgWJ2CwiXYpD1fnlwtOQEyXqzYlSYIKrCJIeG80oC52ceTuo
-         GpKSfBehqO9Ca7EDiS0O8CtX8s7xVc8OFZ03vEPINOBcZXGnsMAjuXg5i3EUfpbcHTh8
-         WjEUBL/LpwQpBEPtUHss4TwrxwLjzYqEUn5MNg4p7+l3zGmSiFLHDHcO99yZofocZy3k
-         0K1i8EQ29byWJ885cgVddwi5H/epqwQLwISzLoft7HYuMzTVBZSrM+K6UPKnKWgOsi5e
-         1z4NW9Ly2Lfm9xmlqAEgjtHvhSqTUiUZZM+ndDY1j7/88xQf5FiVBTOi6blV4wDzxLch
-         /nIg==
+        bh=EqS4x/8nPde7h4Zp3FMi4ziuMpkogzvhsdKDcJrUmtY=;
+        b=bZqdRC6HSjhMn/ei4MpP2ceGQc6M8X6Sp06NqZZxtxQ3Cf0kH7GHtoIuEx89ElC2bQ
+         zuaFeh0Jv0GgewWU2c2w61GCdBjywtymeTqj+l8CcWzt+RIIH5AKttPIw+6LOU1ihw7v
+         D9l1/Mo2jjKWZg0zdVkC87BCjxD6f3Qrr9QsK6S2PhabyjtKu+69tivwF3m948Q2lzEX
+         4vcpRRgv7qE9SzSQaTUCyeN4VkhCHzKY1KIkodGdHwPP2dPXtXq4u/Mn314jGvJGIqvB
+         VVlHPfDbvzFrOUAMyo07Mxr9k2m9Af/qR9/M25wuyi6tsCx+OlXfIGzlnLuNk8IhWjgW
+         Llug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=wBXCbSaC1Hxateqn/Ch5WAilYWAoC2JMMq7UEAHR1do=;
-        b=kbKSmXciqoE8hND83lqfeueSOppEY34+0a++6+Gkwso+xF/3sat0qdAMH9TOmUD0G8
-         tjrn/FKD5re1p4Cd3IXXp7GKpI47Jy+oR/H7eDX7kRgQDv3NPAGzSldF4xCN1D1Xe0Uz
-         xNyMY8Z0tQF3DAMLr/9oB0uCKIgbA/GC9jRZDiJt99fJpu6X9bhxv3D+qHtKF+mrD4E4
-         ZHm7plBZlkMe4sl0rlUKzLvQFLzgwtiXQXemhtKTlLHjH1z7c7SydwmjW9dZMeeD4ONB
-         C2tMXn01BNr67bkuPNAFMmsYIyDpRg15BKkqE5ekndaJoAXGeToRn7c7dMKFz0kv6/My
-         Cr1Q==
-X-Gm-Message-State: AOAM530Wyk8w0aIg+jj0FaT8P5A4fHOQ+7559wtt3DtEb2C6fehHdtZV
-        K4xdC7hudjPhyvaIHUVHyt4lww==
-X-Google-Smtp-Source: ABdhPJxW16/9QODLB8PSfvdHzKuZFOygXqK3suhuuOHQu2vj0b4/CucGEoBVjs8lW6qQh/bZy+rYEQ==
-X-Received: by 2002:a9d:4808:: with SMTP id c8mr12915189otf.181.1617982793540;
-        Fri, 09 Apr 2021 08:39:53 -0700 (PDT)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id v1sm653560otk.67.2021.04.09.08.39.52
+        bh=EqS4x/8nPde7h4Zp3FMi4ziuMpkogzvhsdKDcJrUmtY=;
+        b=stRUjIMRC4k5PGtniJLFnTHDZI3VsTzaVI8Nt0DtjCwOuGKsR3PkLqSNNy+mXDBEo2
+         FB9UwIFVBQn+FDp6f67JdYslTMwkiEoHh85UjO2GrXWCC+YreJwOREgK4jkBsz0zOzPt
+         sLhaFEeXI6g2eYqvJGiQEsyZ9fQcPdyngEEt0Jk4o+pe/aXqtsDbNq0nXjlVW+OLvTPC
+         ls6K4Or98J3GV81JMHgHRYqPZ9zJu+RAAG7aU/SlG0Avo0ZGBBuhuDNaFbJDl0xVuEE8
+         1Hv94fuXKimXi81/daJCTDCSHU9jTeLJU/XOCvMm5e5CCRRrkY05z5lsNQfuFvRHv8Mc
+         4J8A==
+X-Gm-Message-State: AOAM533v39u7BF5U/LdpJu33h4lG3jdlQPz4o30U85HgfUnXaOG/LX//
+        J4dim9Cn3NZfHsNwCxrZPianzw==
+X-Google-Smtp-Source: ABdhPJxG2ny1GyN6RJALA65wkWapPDKT1+U/1TgktO5O3yu93NCyquEeEs+Cfdjtrr+WBUJ5NrgrIA==
+X-Received: by 2002:a05:6830:802:: with SMTP id r2mr12260255ots.110.1617983361678;
+        Fri, 09 Apr 2021 08:49:21 -0700 (PDT)
+Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id 3sm668111otw.58.2021.04.09.08.49.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 Apr 2021 08:39:53 -0700 (PDT)
-Date:   Fri, 9 Apr 2021 10:39:51 -0500
+        Fri, 09 Apr 2021 08:49:21 -0700 (PDT)
+Date:   Fri, 9 Apr 2021 10:49:19 -0500
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Serge Semin <Sergey.Semin@baikalelectronics.ru>
-Cc:     Andy Gross <agross@kernel.org>, Felipe Balbi <balbi@kernel.org>,
-        Michael Ellerman <mpe@ellerman.id.au>,
-        Vladimir Zapolskiy <vz@mleia.com>,
-        Alexey Brodkin <abrodkin@synopsys.com>,
-        Vineet Gupta <vgupta@synopsys.com>,
+To:     satya priya <skakit@codeaurora.org>
+Cc:     Alessandro Zummo <a.zummo@towertech.it>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
         Rob Herring <robh+dt@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        linux-usb@vger.kernel.org, Serge Semin <fancer.lancer@gmail.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH RESEND v8 7/7] arm64: dts: qcom: Harmonize DWC USB3 DT
- nodes name
-Message-ID: <YHB1RxbkXYeLDiz5@builder.lan>
-References: <20210409113029.7144-1-Sergey.Semin@baikalelectronics.ru>
- <20210409113029.7144-8-Sergey.Semin@baikalelectronics.ru>
+        Andy Gross <agross@kernel.org>,
+        Lee Jones <lee.jones@linaro.org>, linux-rtc@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, kgunda@codeaurora.org
+Subject: Re: [PATCH V2 3/4] dt-bindings: mfd: Convert pm8xxx bindings to yaml
+Message-ID: <20210409154919.GV904837@yoga>
+References: <1617976766-7852-1-git-send-email-skakit@codeaurora.org>
+ <1617976766-7852-4-git-send-email-skakit@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20210409113029.7144-8-Sergey.Semin@baikalelectronics.ru>
+In-Reply-To: <1617976766-7852-4-git-send-email-skakit@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri 09 Apr 06:30 CDT 2021, Serge Semin wrote:
+On Fri 09 Apr 08:59 CDT 2021, satya priya wrote:
 
-> In accordance with the DWC USB3 bindings the corresponding node
-> name is suppose to comply with the Generic USB HCD DT schema, which
-> requires the USB nodes to have the name acceptable by the regexp:
-> "^usb(@.*)?" . Make sure the "snps,dwc3"-compatible nodes are correctly
-> named.
+> Convert pm8xxx bindings from .txt to .yaml format. Also,
+> split this binding into two: parent binding(qcom-pm8xxx.yaml)
+> and child node RTC binding(qcom-pm8xxx-rtc.yaml).
 > 
-> Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
-> Acked-by: Krzysztof Kozlowski <krzk@kernel.org>
-> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Signed-off-by: satya priya <skakit@codeaurora.org>
+> ---
+> Changes in V2:
+>  - As per Bjorn's comments, I've split this into two, one parent binding
+>    and one child node rtc binding.
+>  - Fixed bot errors and changed maintainer name.
+> 
+>  .../devicetree/bindings/mfd/qcom-pm8xxx.txt        | 100 ---------------------
+>  .../devicetree/bindings/mfd/qcom-pm8xxx.yaml       |  54 +++++++++++
+>  2 files changed, 54 insertions(+), 100 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/mfd/qcom-pm8xxx.txt
+>  create mode 100644 Documentation/devicetree/bindings/mfd/qcom-pm8xxx.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/mfd/qcom-pm8xxx.txt b/Documentation/devicetree/bindings/mfd/qcom-pm8xxx.txt
+> deleted file mode 100644
+> index 07f4925..0000000
+> --- a/Documentation/devicetree/bindings/mfd/qcom-pm8xxx.txt
+> +++ /dev/null
+> @@ -1,100 +0,0 @@
+> -Qualcomm PM8xxx PMIC multi-function devices
+> -
+> -The PM8xxx family of Power Management ICs are used to provide regulated
+> -voltages and other various functionality to Qualcomm SoCs.
+> -
+> -= PROPERTIES
+> -
+> -- compatible:
+> -	Usage: required
+> -	Value type: <string>
+> -	Definition: must be one of:
+> -		    "qcom,pm8058"
+> -		    "qcom,pm8821"
+> -		    "qcom,pm8921"
+> -
+> -- #address-cells:
+> -	Usage: required
+> -	Value type: <u32>
+> -	Definition: must be 1
+> -
+> -- #size-cells:
+> -	Usage: required
+> -	Value type: <u32>
+> -	Definition: must be 0
+> -
+> -- interrupts:
+> -	Usage: required
+> -	Value type: <prop-encoded-array>
+> -	Definition: specifies the interrupt that indicates a subdevice
+> -		    has generated an interrupt (summary interrupt). The
+> -		    format of the specifier is defined by the binding document
+> -		    describing the node's interrupt parent.
+> -
+> -- #interrupt-cells:
+> -	Usage: required
+> -	Value type : <u32>
+> -	Definition: must be 2. Specifies the number of cells needed to encode
+> -		    an interrupt source. The 1st cell contains the interrupt
+> -		    number. The 2nd cell is the trigger type and level flags
+> -		    encoded as follows:
+> -
+> -			1 = low-to-high edge triggered
+> -			2 = high-to-low edge triggered
+> -			4 = active high level-sensitive
+> -			8 = active low level-sensitive
+> -
+> -- interrupt-controller:
+> -	Usage: required
+> -	Value type: <empty>
+> -	Definition: identifies this node as an interrupt controller
+> -
+> -= SUBCOMPONENTS
+> -
+> -The PMIC contains multiple independent functions, each described in a subnode.
+> -The below bindings specify the set of valid subnodes.
+> -
+> -== Real-Time Clock
+> -
+> -- compatible:
+> -	Usage: required
+> -	Value type: <string>
+> -	Definition: must be one of:
+> -		    "qcom,pm8058-rtc"
+> -		    "qcom,pm8921-rtc"
+> -		    "qcom,pm8941-rtc"
+> -		    "qcom,pm8018-rtc"
+> -		    "qcom,pmk8350-rtc"
+> -
+> -- reg:
+> -	Usage: required
+> -	Value type: <prop-encoded-array>
+> -	Definition: single entry specifying the base address of the RTC registers
+> -
+> -- interrupts:
+> -	Usage: required
+> -	Value type: <prop-encoded-array>
+> -	Definition: single entry specifying the RTC's alarm interrupt
+> -
+> -- allow-set-time:
+> -	Usage: optional
+> -	Value type: <empty>
+> -	Definition: indicates that the setting of RTC time is allowed by
+> -		    the host CPU
+> -
+> -= EXAMPLE
+> -
+> -	pmicintc: pmic@0 {
+> -		compatible = "qcom,pm8921";
+> -		interrupts = <104 8>;
+> -		#interrupt-cells = <2>;
+> -		interrupt-controller;
+> -		#address-cells = <1>;
+> -		#size-cells = <0>;
+> -
+> -		rtc@11d {
+> -			compatible = "qcom,pm8921-rtc";
+> -			reg = <0x11d>;
+> -			interrupts = <0x27 0>;
+> -		};
+> -	};
+> diff --git a/Documentation/devicetree/bindings/mfd/qcom-pm8xxx.yaml b/Documentation/devicetree/bindings/mfd/qcom-pm8xxx.yaml
+> new file mode 100644
+> index 0000000..9065ec5
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/mfd/qcom-pm8xxx.yaml
+> @@ -0,0 +1,54 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/mfd/qcom-pm8xxx.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm PM8xxx PMIC multi-function devices
+> +
+> +maintainers:
+> +  - Satya Priya <skakit@codeaurora.org>
+> +
+> +description: |
+> +  The PM8xxx family of Power Management ICs are used to provide regulated
+> +  voltages and other various functionality to Qualcomm SoCs.
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,pm8058
+> +      - qcom,pm8821
+> +      - qcom,pm8921
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  '#address-cells':
+> +    const: 1
+> +
+> +  '#size-cells':
+> +    const: 0
+> +
+> +  interrupts:
+> +    maxItems: 1
+> +
+> +  '#interrupt-cells':
+> +    const: 2
+> +
+> +  interrupt-controller: true
+> +
+> +patternProperties:
+> +  "rtc@[0-9a-f]+$":
+> +    type: object
+> +    $ref: "../rtc/qcom-pm8xxx-rtc.yaml"
 
-As mentioned previously, I would like to merge this through the qcom soc
-tree to avoid conflicts with other activities, but need the driver code
-(patch 6) to land first.
+This doesn't exist, so patch 3 and 4 should come in opposite order...
+
+Apart from tat I think this looks good.
+
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
 Regards,
 Bjorn
 
-> ---
->  arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi | 4 ++--
->  arch/arm64/boot/dts/qcom/ipq8074.dtsi        | 4 ++--
->  arch/arm64/boot/dts/qcom/msm8996.dtsi        | 4 ++--
->  arch/arm64/boot/dts/qcom/msm8998.dtsi        | 2 +-
->  arch/arm64/boot/dts/qcom/qcs404-evb.dtsi     | 2 +-
->  arch/arm64/boot/dts/qcom/qcs404.dtsi         | 4 ++--
->  arch/arm64/boot/dts/qcom/sc7180.dtsi         | 2 +-
->  arch/arm64/boot/dts/qcom/sdm845.dtsi         | 4 ++--
->  arch/arm64/boot/dts/qcom/sm8150.dtsi         | 2 +-
->  9 files changed, 14 insertions(+), 14 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi b/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi
-> index defcbd15edf9..34e97da98270 100644
-> --- a/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi
-> @@ -1064,7 +1064,7 @@ &usb2 {
->  	status = "okay";
->  	extcon = <&usb2_id>;
->  
-> -	dwc3@7600000 {
-> +	usb@7600000 {
->  		extcon = <&usb2_id>;
->  		dr_mode = "otg";
->  		maximum-speed = "high-speed";
-> @@ -1075,7 +1075,7 @@ &usb3 {
->  	status = "okay";
->  	extcon = <&usb3_id>;
->  
-> -	dwc3@6a00000 {
-> +	usb@6a00000 {
->  		extcon = <&usb3_id>;
->  		dr_mode = "otg";
->  	};
-> diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-> index a32e5e79ab0b..7df4eb710aae 100644
-> --- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-> @@ -427,7 +427,7 @@ usb_0: usb@8af8800 {
->  			resets = <&gcc GCC_USB0_BCR>;
->  			status = "disabled";
->  
-> -			dwc_0: dwc3@8a00000 {
-> +			dwc_0: usb@8a00000 {
->  				compatible = "snps,dwc3";
->  				reg = <0x8a00000 0xcd00>;
->  				interrupts = <GIC_SPI 140 IRQ_TYPE_LEVEL_HIGH>;
-> @@ -468,7 +468,7 @@ usb_1: usb@8cf8800 {
->  			resets = <&gcc GCC_USB1_BCR>;
->  			status = "disabled";
->  
-> -			dwc_1: dwc3@8c00000 {
-> +			dwc_1: usb@8c00000 {
->  				compatible = "snps,dwc3";
->  				reg = <0x8c00000 0xcd00>;
->  				interrupts = <GIC_SPI 99 IRQ_TYPE_LEVEL_HIGH>;
-> diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-> index ce430ba9c118..9eb31b3e6ee7 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-> @@ -1772,7 +1772,7 @@ usb3: usb@6af8800 {
->  			power-domains = <&gcc USB30_GDSC>;
->  			status = "disabled";
->  
-> -			dwc3@6a00000 {
-> +			usb@6a00000 {
->  				compatible = "snps,dwc3";
->  				reg = <0x06a00000 0xcc00>;
->  				interrupts = <0 131 IRQ_TYPE_LEVEL_HIGH>;
-> @@ -1983,7 +1983,7 @@ usb2: usb@76f8800 {
->  			power-domains = <&gcc USB30_GDSC>;
->  			status = "disabled";
->  
-> -			dwc3@7600000 {
-> +			usb@7600000 {
->  				compatible = "snps,dwc3";
->  				reg = <0x07600000 0xcc00>;
->  				interrupts = <0 138 IRQ_TYPE_LEVEL_HIGH>;
-> diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-> index 1f2e93aa6553..9141c5d09b59 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-> @@ -1962,7 +1962,7 @@ usb3: usb@a8f8800 {
->  
->  			resets = <&gcc GCC_USB_30_BCR>;
->  
-> -			usb3_dwc3: dwc3@a800000 {
-> +			usb3_dwc3: usb@a800000 {
->  				compatible = "snps,dwc3";
->  				reg = <0x0a800000 0xcd00>;
->  				interrupts = <GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>;
-> diff --git a/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi b/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi
-> index a80c578484ba..f8a55307b855 100644
-> --- a/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi
-> @@ -337,7 +337,7 @@ &usb2_phy_sec {
->  &usb3 {
->  	status = "okay";
->  
-> -	dwc3@7580000 {
-> +	usb@7580000 {
->  		dr_mode = "host";
->  	};
->  };
-> diff --git a/arch/arm64/boot/dts/qcom/qcs404.dtsi b/arch/arm64/boot/dts/qcom/qcs404.dtsi
-> index 339790ba585d..9c4be020d568 100644
-> --- a/arch/arm64/boot/dts/qcom/qcs404.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/qcs404.dtsi
-> @@ -544,7 +544,7 @@ usb3: usb@7678800 {
->  			assigned-clock-rates = <19200000>, <200000000>;
->  			status = "disabled";
->  
-> -			dwc3@7580000 {
-> +			usb@7580000 {
->  				compatible = "snps,dwc3";
->  				reg = <0x07580000 0xcd00>;
->  				interrupts = <GIC_SPI 26 IRQ_TYPE_LEVEL_HIGH>;
-> @@ -573,7 +573,7 @@ usb2: usb@79b8800 {
->  			assigned-clock-rates = <19200000>, <133333333>;
->  			status = "disabled";
->  
-> -			dwc3@78c0000 {
-> +			usb@78c0000 {
->  				compatible = "snps,dwc3";
->  				reg = <0x078c0000 0xcc00>;
->  				interrupts = <GIC_SPI 44 IRQ_TYPE_LEVEL_HIGH>;
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> index 1ea3344ab62c..8b83ffbb5b2a 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> @@ -2869,7 +2869,7 @@ usb_1: usb@a6f8800 {
->  					<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_USB3 0>;
->  			interconnect-names = "usb-ddr", "apps-usb";
->  
-> -			usb_1_dwc3: dwc3@a600000 {
-> +			usb_1_dwc3: usb@a600000 {
->  				compatible = "snps,dwc3";
->  				reg = <0 0x0a600000 0 0xe000>;
->  				interrupts = <GIC_SPI 133 IRQ_TYPE_LEVEL_HIGH>;
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> index 454f794af547..809be2c67d7a 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> @@ -3769,7 +3769,7 @@ usb_1: usb@a6f8800 {
->  					<&gladiator_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_USB3_0 0>;
->  			interconnect-names = "usb-ddr", "apps-usb";
->  
-> -			usb_1_dwc3: dwc3@a600000 {
-> +			usb_1_dwc3: usb@a600000 {
->  				compatible = "snps,dwc3";
->  				reg = <0 0x0a600000 0 0xcd00>;
->  				interrupts = <GIC_SPI 133 IRQ_TYPE_LEVEL_HIGH>;
-> @@ -3817,7 +3817,7 @@ usb_2: usb@a8f8800 {
->  					<&gladiator_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_USB3_1 0>;
->  			interconnect-names = "usb-ddr", "apps-usb";
->  
-> -			usb_2_dwc3: dwc3@a800000 {
-> +			usb_2_dwc3: usb@a800000 {
->  				compatible = "snps,dwc3";
->  				reg = <0 0x0a800000 0 0xcd00>;
->  				interrupts = <GIC_SPI 138 IRQ_TYPE_LEVEL_HIGH>;
-> diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-> index e5bb17bc2f46..e4c3edc13676 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-> @@ -1719,7 +1719,7 @@ usb_1: usb@a6f8800 {
->  
->  			resets = <&gcc GCC_USB30_PRIM_BCR>;
->  
-> -			usb_1_dwc3: dwc3@a600000 {
-> +			usb_1_dwc3: usb@a600000 {
->  				compatible = "snps,dwc3";
->  				reg = <0 0x0a600000 0 0xcd00>;
->  				interrupts = <GIC_SPI 133 IRQ_TYPE_LEVEL_HIGH>;
+> +
+> +required:
+> +  - compatible
+> +  - '#address-cells'
+> +  - '#size-cells'
+> +  - interrupts
+> +  - '#interrupt-cells'
+> +  - interrupt-controller
+> +
+> +additionalProperties: false
+> +...
 > -- 
-> 2.30.1
+> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
+> of Code Aurora Forum, hosted by The Linux Foundation
 > 
