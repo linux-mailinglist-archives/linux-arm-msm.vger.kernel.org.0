@@ -2,123 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B45CA35931C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Apr 2021 05:38:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 87E58359415
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Apr 2021 06:40:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233176AbhDIDiL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Apr 2021 23:38:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54882 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233196AbhDIDiL (ORCPT
+        id S233196AbhDIEkW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Apr 2021 00:40:22 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:25658 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230375AbhDIEkW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Apr 2021 23:38:11 -0400
-Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4AF82C061763
-        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Apr 2021 20:37:29 -0700 (PDT)
-Received: by mail-oi1-x22c.google.com with SMTP id 25so2962050oiy.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Apr 2021 20:37:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=kpO9+Srd4oIvzWVPdKNdhhDxU1fj2TEEXiSYekg3+O4=;
-        b=AajZh8YY55sqks6QlcXguHQ/+brpwyvUTeoJebt7DSnbLvFJLMf2d1WDS6sHYmKrMW
-         /JpVTniCTchZEv6K33jNa5DHdhmFsKozdeGkprinsXo7r5heNHiDeHEDES0htkv+2dBr
-         iD7HIujRElbo6/rKB4EwOJ0XwxNS2lJnG0RSgNPWNbiKBA7vbhrWMlJ5hilCDHdAeMvZ
-         fMz7qlJ+0podVxWdTe/sM4/YHNudBoh94zszKUFnH15H1Hf34eZ6ftgXFabYjvrMyV0r
-         yYv0fpUUmqiN9yOJmajTr/HRsTiH1g+xjSxZ2fWWZno9Kbn+0tkh/dk2RygfB+z4A5Qb
-         3YBA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=kpO9+Srd4oIvzWVPdKNdhhDxU1fj2TEEXiSYekg3+O4=;
-        b=W9q3WPqpMR3Z8qx3F3kFMN4rIZs3V2b+MWdON83VyRtLi8Be5oYslhgmHVUWDLhpx3
-         V/DQPxZEqGGvxgv2vpSDjvf/aq17BTdizQnNM6gKZSqOa1ZLJZMCbTzWwIldEalKqWZ4
-         7FQ5DncN+9XYwluNm2TozGY5ERHqnIT7bXfbpLwL7devobpEiWgYdTvy6CnRd+3R78rs
-         lcgyqaGyLh5aVm6WwG9MQQs12uOD3bva1szSWf6X3T2OgFgDBb38krUzV9M196Mf+Uu7
-         tU8NtV8Pqcceqyw2qV/q8B1LunK8jfue8fSYmiVBdpj7AsZD0uzx2SgVea1THhjnv00F
-         L51g==
-X-Gm-Message-State: AOAM531qoaMNe09eDiwGdzvgzcjnWaNWiRP002fJ0b9cdR0K0HIqoZJn
-        Adt0im30N3nEC1p5gG9vpfbJ/A==
-X-Google-Smtp-Source: ABdhPJxyg5jFsWAKl52joGC4rhFbwO523ZKf7Sk0WGwP6QuzZcGFDCCy9TNVl2ntIn6hUArIIl/ToQ==
-X-Received: by 2002:aca:2b07:: with SMTP id i7mr8785439oik.66.1617939449149;
-        Thu, 08 Apr 2021 20:37:29 -0700 (PDT)
-Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id y10sm333546oto.18.2021.04.08.20.37.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Apr 2021 20:37:28 -0700 (PDT)
-Date:   Thu, 8 Apr 2021 22:37:26 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Petr Vorel <petr.vorel@gmail.com>
-Cc:     Konrad Dybcio <konradybcio@gmail.com>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Ricardo Ribalda <ribalda@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>
-Subject: Re: [PATCH 1/1] arm64: dts: qcom: msm8994: Reserve gpio ranges
-Message-ID: <20210409033726.GT904837@yoga>
-References: <20210405200259.23525-1-petr.vorel@gmail.com>
- <20210405225222.GD904837@yoga>
- <CACRpkdZQ8qiqFPa0X8deVjZ7nLn_E6s8fmJdr5Ji8AuyJms1ug@mail.gmail.com>
- <YG9TWEJlpDmNeeit@pevik>
- <ea376d51-cd6c-0028-9602-d007c2bba71e@gmail.com>
- <YG/HwrzRcm7bwgFe@pevik>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <YG/HwrzRcm7bwgFe@pevik>
+        Fri, 9 Apr 2021 00:40:22 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1617943209; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=AfxvbqMHx3+3QG7Ar/bHDpYEdDPHiToorKK88hjnsDI=; b=btfLu9BusbHiWVDlSL8Fz09zIXCl7bk9HE8nnNn2snuU24iG9TP3aZ1Csvne6tLjIu7M+EJT
+ JZpAQ7GiE/CwAhPZxAogfqI3j8bSJMvwNshHkYUJWyO+fSc6R+QAYdH+9O4RVXQSWtWb7IzD
+ Yjk/QbfmEOk5tJymzUA2Ju+kfJQ=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
+ 606fdaa82cc44d3aea05a3f2 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 09 Apr 2021 04:40:08
+ GMT
+Sender: deesin=qti.qualcomm.com@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 72FABC43462; Fri,  9 Apr 2021 04:40:08 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from deesin-linux.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: deesin)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6D089C433CA;
+        Fri,  9 Apr 2021 04:40:05 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 6D089C433CA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=fail (p=none dis=none) header.from=qti.qualcomm.com
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=deesin@qti.qualcomm.com
+From:   Deepak Kumar Singh <deesin@qti.qualcomm.com>
+To:     bjorn.andersson@linaro.org, clew@codeaurora.org,
+        sibis@codeaurora.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org,
+        Deepak Kumar Singh <deesin@qti.qualcomm.com>
+Subject: [PATCH V2 0/2] soc: qcom: aoss: Expose send for generic usecase
+Date:   Fri,  9 Apr 2021 10:09:46 +0530
+Message-Id: <1617943188-23278-1-git-send-email-deesin@qti.qualcomm.com>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 08 Apr 22:19 CDT 2021, Petr Vorel wrote:
+Change from V1
+Addressesed all review comments in previous set.
 
-> Hi Konrad,
-> > Hi,
-> 
-> > to clear up some confusion:
-> 
-> 
-> > On Qualcomm boards GPIOs that are used for "secure" (duh) peripherals,
-> > like a fingerprint scanner, are not allowed to be controlled from Linux (the "non-secure world").
-> > Trying to do so causes an immediate reboot due to "attempting to violate the security".
-> Thanks for an explanation.
-> 
-> > The GPIOs seem to all be iterated over on boot, except for the ones specified in "gpio-reserved-ranges".
-> > As a result, if such "secure" GPIOs are not declared in the DT, the board essentially dies on TLMM (pinctrl) probe
-> > (which happens veeeery early - so that all other peripherals can set the pins as they see fit)
-> > and that's very unpleasant to debug. Without this patch, Petr's device will simply not boot.
-> Exactly.
-> 
-> > So, why did it work before!?
-> 
-> 
-> > Well, either the GPIOs weren't iterated over, or the TLMM (pinctrl) driver wasn't in place back then.
-> I suppose GPIOs not being iterated over is the case for first fix (i.e. fixing
-> 3edfb7bd76bd "gpiolib: Show correct direction from the beginning").
-> 
+Deepak Kumar Singh (2):
+  soc: qcom: aoss: Expose send for generic usecase
+  soc: qcom: aoss: Add debugfs entry
 
-We had a long discussion about this in the past, and this resulted in
-gpio-reserved-ranges and flagging off GPIOs that shouldn't be touched.
+ drivers/soc/qcom/qcom_aoss.c       | 91 +++++++++++++++++++++++++++++++++++++-
+ include/linux/soc/qcom/qcom_aoss.h | 33 ++++++++++++++
+ 2 files changed, 123 insertions(+), 1 deletion(-)
+ create mode 100644 include/linux/soc/qcom/qcom_aoss.h
 
-It seems we introduced the angler dts prior to said changes in the
-gpiolib, so it's probably right to say that it's a regression. However,
-the introduction of this was done 3 years ago and we're happy with it on
-all other devices.
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
-There's no harm in introducing this property prior to the introduction
-of the related gpiolib patches, so if you really care about it being backported
-I would suggest you say:
-
-Fixes: feeaf56ac78d ("arm64: dts: msm8994 SoC and Huawei Angler (Nexus 6P) support")
-
-But I presume based on the awesome work you guys are putting into the
-8994 platform people shouldn't run "old" kernels anyways, so I think it
-would be fine with us just ignoring the Fixes as well...
-
-Regards,
-Bjorn
