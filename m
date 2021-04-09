@@ -2,110 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3AAB2359F4A
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Apr 2021 14:52:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A98B9359FA8
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Apr 2021 15:17:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231946AbhDIMwO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Apr 2021 08:52:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35264 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231819AbhDIMwO (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Apr 2021 08:52:14 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2DDBC061760
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Apr 2021 05:51:59 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id g8so9490023lfv.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Apr 2021 05:51:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=NHKrFew97Pku2Mis5p+VLvYGFN67YcYrFQJKKFDgqBs=;
-        b=wIy/mHq2aMLYoIDzpXwzoZnpOZ4/tSf59LGJ00+4Pblp/7/3QYpnscpwmg3XDepSLU
-         Qg9JyQ1VlAtim3u4XcptgZEST1H8pXwy1bjrejAoaZRmzj6P3YIYObhVurdjrVcn5Mwf
-         /Nkt2Npiy9unla54V7ClsIoYu/QKGL+AmH1FmWVdwQ+NPDcB/YwYQgmdBgxhzBtumiFy
-         vqz20Xbhn0rb7NUIQdzxZqt7tYd1tJAp+/VYJO1QDcNUJ79+CBAz5aYvRiHE9Yvl3SPz
-         Pt+/riSQIPKpmbU8MipzTcXkIE8/Kui7I0O8oYWVQlJxEHRj2W/75oBCE9AKxL9aNp71
-         AbBg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=NHKrFew97Pku2Mis5p+VLvYGFN67YcYrFQJKKFDgqBs=;
-        b=pSb1T34eK7ckewK8VqHi1t0/7OjrAOWdXwYaskTNnc8dvYE3PQWzYMJwd61KNq192i
-         7Ku6+fvK4C+rQwXev4cHQZXi1mAqE0lLJ1oZYyPeGk7n4BK2HqJe9fmzMSzVWjTckwCF
-         UuhLVsKQWecena8kCgloZsAJfuzAzWRBypgpPcdLox4pTTlDQcmG1p99nVVunr0YYeTi
-         KidFzS4eLZbk1YfSLLRhwdxOcsTSTIuqkli5Z8Yk87oS3f2bCQCDfrcMhfUIP4+H6RwE
-         eElw/sPX4aTtrdXQ9EnUu/KaUeHoCrOlzYpYO6FmzEHCodhZTyzrlTuLr5sCBbXX8tFb
-         w+CA==
-X-Gm-Message-State: AOAM530p3DoCsqMzCItTSWQOoTdobzOYWDWk5rSSJYJqjNErhDzEWCc3
-        klVdL6drwyDrdQvaySa0Ze9jPh9nuk81nXyy
-X-Google-Smtp-Source: ABdhPJzxseru43IFea5QDtzu95QQI0glf0FscdKUcwBZFu9gWjIQ+JwrdExLepDv8bNK9ZiXbTO6Kg==
-X-Received: by 2002:ac2:5a0b:: with SMTP id q11mr10391380lfn.391.1617972718137;
-        Fri, 09 Apr 2021 05:51:58 -0700 (PDT)
-Received: from localhost.localdomain (c-14cb225c.014-348-6c756e10.bbcust.telenor.se. [92.34.203.20])
-        by smtp.gmail.com with ESMTPSA id k8sm260510lfo.256.2021.04.09.05.51.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 Apr 2021 05:51:57 -0700 (PDT)
-From:   Linus Walleij <linus.walleij@linaro.org>
-To:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-arm-kernel@lists.infradead.org,
-        Linus Walleij <linus.walleij@linaro.org>
-Subject: [PATCH] ARM: dts: qcom: Fix up APQ8060 DragonBoard license
-Date:   Fri,  9 Apr 2021 14:49:54 +0200
-Message-Id: <20210409124954.320529-1-linus.walleij@linaro.org>
-X-Mailer: git-send-email 2.30.2
+        id S231819AbhDINRW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Apr 2021 09:17:22 -0400
+Received: from mail.kernel.org ([198.145.29.99]:55894 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231127AbhDINRV (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 9 Apr 2021 09:17:21 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 9828A61105;
+        Fri,  9 Apr 2021 13:17:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1617974228;
+        bh=aYDcN3mJtkzZVii0OX9VTNl2k3rutbr9vY3tMwSyRyc=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=WAr6u5IK+vrwoXwy52B/AwlsXFuv3xJRWejX83rKAmSS/qS6hf+wmmNW/2CCq3XhE
+         MC1jmxb0O3TrjcFPWP3Vjezlv4s2x4tpMF11b/2M/CNCUVJfpfq30aLJ4lJhFZR/LO
+         vUDKFvhluXvQuwE3UO2rAtjZyfWo3Wbm92+OuXqaDjE+spJbpSdnFeaGwNU9nVArQL
+         D0gFc36UvXVoXfX/EsBmU+zKqqfItEMMsZmwr0AR1iHSLsSx5eVt7i2kBUw0qejjeI
+         wAgyOulbE+zOu8W2onYsEz6OplqHrUqb0SU2u1X2Pv787DcaqKv1f6zSeuf6PxBYzI
+         vCejtPrGmH8CQ==
+Date:   Fri, 9 Apr 2021 18:47:03 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Jarvis Jiang <jarvis.w.jiang@gmail.com>
+Cc:     hemantk@codeaurora.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, cchen50@lenovo.com,
+        mpearson@lenovo.com
+Subject: Re: [PATCH 2/2] bus: mhi: fix typo in comments for struct
+ mhi_channel_config
+Message-ID: <20210409131703.GD31856@work>
+References: <20210408100220.3853-1-jarvis.w.jiang@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210408100220.3853-1-jarvis.w.jiang@gmail.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This file is licensed in some kind of BSD manner, put it under
-the combined GPL+BSD license like what the bindings use, it
-seems most helpful.
+On Thu, Apr 08, 2021 at 03:02:20AM -0700, Jarvis Jiang wrote:
+> The word 'rung' is a typo in below comment, fix it.
+> * @event_ring: The event rung index that services this channel
+> 
+> Signed-off-by: Jarvis Jiang <jarvis.w.jiang@gmail.com>
 
-I wrote the whole file so whatever. Those are my principles,
-if you don't like them: I have others.
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
----
- .../arm/boot/dts/qcom-apq8060-dragonboard.dts | 23 +------------------
- 1 file changed, 1 insertion(+), 22 deletions(-)
+Thanks,
+Mani
 
-diff --git a/arch/arm/boot/dts/qcom-apq8060-dragonboard.dts b/arch/arm/boot/dts/qcom-apq8060-dragonboard.dts
-index dace8ffeb991..1be467124a70 100644
---- a/arch/arm/boot/dts/qcom-apq8060-dragonboard.dts
-+++ b/arch/arm/boot/dts/qcom-apq8060-dragonboard.dts
-@@ -1,25 +1,4 @@
--/*
-- * Copyright 2016 Linaro Ltd
-- *
-- * Permission is hereby granted, free of charge, to any person obtaining a copy
-- * of this software and associated documentation files (the "Software"), to deal
-- * in the Software without restriction, including without limitation the rights
-- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-- * copies of the Software, and to permit persons to whom the Software is
-- * furnished to do so, subject to the following conditions:
-- *
-- * The above copyright notice and this permission notice shall be included in
-- * all copies or substantial portions of the Software.
-- *
-- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
-- * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-- * THE SOFTWARE.
-- */
--
-+// SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
- #include <dt-bindings/input/input.h>
- #include <dt-bindings/gpio/gpio.h>
- #include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
--- 
-2.30.2
-
+> ---
+>  include/linux/mhi.h | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/include/linux/mhi.h b/include/linux/mhi.h
+> index d095fba37d1e..944aa3aa3035 100644
+> --- a/include/linux/mhi.h
+> +++ b/include/linux/mhi.h
+> @@ -205,7 +205,7 @@ enum mhi_db_brst_mode {
+>   * @num: The number assigned to this channel
+>   * @num_elements: The number of elements that can be queued to this channel
+>   * @local_elements: The local ring length of the channel
+> - * @event_ring: The event rung index that services this channel
+> + * @event_ring: The event ring index that services this channel
+>   * @dir: Direction that data may flow on this channel
+>   * @type: Channel type
+>   * @ee_mask: Execution Environment mask for this channel
+> -- 
+> 2.25.1
+> 
