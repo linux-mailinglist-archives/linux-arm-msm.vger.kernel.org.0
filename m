@@ -2,84 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CF6B0359108
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Apr 2021 02:48:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BB2FE35910F
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Apr 2021 02:50:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233094AbhDIAs3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Apr 2021 20:48:29 -0400
-Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:16947 "EHLO
-        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S232426AbhDIAs2 (ORCPT
+        id S233095AbhDIAu5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Apr 2021 20:50:57 -0400
+Received: from szxga05-in.huawei.com ([45.249.212.191]:15986 "EHLO
+        szxga05-in.huawei.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232984AbhDIAu5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Apr 2021 20:48:28 -0400
-Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 08 Apr 2021 17:48:16 -0700
-X-QCInternal: smtphost
-Received: from gurus-linux.qualcomm.com (HELO gurus-linux.localdomain) ([10.46.162.81])
-  by ironmsg02-sd.qualcomm.com with ESMTP; 08 Apr 2021 17:48:15 -0700
-Received: by gurus-linux.localdomain (Postfix, from userid 383780)
-        id 8FB551A71; Thu,  8 Apr 2021 17:48:15 -0700 (PDT)
-Date:   Thu, 8 Apr 2021 17:48:15 -0700
-From:   Guru Das Srinagesh <gurus@codeaurora.org>
-To:     Mark Brown <broonie@kernel.org>
-Cc:     Lee Jones <lee.jones@linaro.org>, Rob Herring <robh+dt@kernel.org>,
-        Markus Elfring <Markus.Elfring@web.de>,
-        linux-arm-msm@vger.kernel.org,
-        Anirudh Ghayal <aghayal@codeaurora.org>,
-        Subbaraman Narayanamurthy <subbaram@codeaurora.org>,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg KH <gregkh@linuxfoundation.org>,
-        David Collins <collinsd@codeaurora.org>,
-        Joe Perches <joe@perches.com>,
-        Guenter Roeck <linux@roeck-us.net>
-Subject: Re: [PATCH v5 0/2] Add support for Qualcomm MFD PMIC register layout
-Message-ID: <20210409004815.GA4345@codeaurora.org>
-References: <cover.1616613838.git.gurus@codeaurora.org>
- <161726943419.2413.4844313396830856637.b4-ty@kernel.org>
- <20210406011152.GA27770@codeaurora.org>
+        Thu, 8 Apr 2021 20:50:57 -0400
+Received: from DGGEMS409-HUB.china.huawei.com (unknown [172.30.72.58])
+        by szxga05-in.huawei.com (SkyGuard) with ESMTP id 4FGfdC53zpzyNwN;
+        Fri,  9 Apr 2021 08:48:31 +0800 (CST)
+Received: from huawei.com (10.174.28.241) by DGGEMS409-HUB.china.huawei.com
+ (10.3.19.209) with Microsoft SMTP Server id 14.3.498.0; Fri, 9 Apr 2021
+ 08:50:32 +0800
+From:   Bixuan Cui <cuibixuan@huawei.com>
+To:     <linux-kernel@vger.kernel.org>, <agross@kernel.org>
+CC:     <john.wanghui@huawei.com>, <bjorn.andersson@linaro.org>,
+        <balbi@kernel.org>, <gregkh@linuxfoundation.org>,
+        <mgautam@codeaurora.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-usb@vger.kernel.org>, Bixuan Cui <cuibixuan@huawei.com>
+Subject: [PATCH] usb: dwc3: qcom: Fixed an issue that the ret value is incorrect in dwc3_qcom_probe()
+Date:   Fri, 9 Apr 2021 08:49:45 +0800
+Message-ID: <20210409004945.56776-1-cuibixuan@huawei.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210406011152.GA27770@codeaurora.org>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: text/plain
+X-Originating-IP: [10.174.28.241]
+X-CFilter-Loop: Reflected
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Apr 05, 2021 at 06:11:52PM -0700, Guru Das Srinagesh wrote:
-> On Thu, Apr 01, 2021 at 11:16:17AM +0100, Mark Brown wrote:
-> > On Wed, 24 Mar 2021 12:28:52 -0700, Guru Das Srinagesh wrote:
-> > > Changes from v4:
-> > > - Only one cosmetic change: Moved the declaration of num_virt_regs under
-> > >   num_type_reg instead of under num_main_regs in `struct regmap_irq_chip` so as
-> > >   to reinforce the idea that it is related to the type setting of IRQs.
-> > > - No other changes.
-> > > 
-> > > Changes from v3:
-> > > - Implemented the scheme proposed in my response to Mark in [4].
-> > > - Dropped the RFC tag from this patch series as this series has been tested on
-> > >   target with a client driver utilizing these changes.
-> > > 
-> > > [...]
-> > 
-> > Applied to
-> > 
-> >    https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regmap.git for-next
-> > 
-> > Thanks!
-> > 
-> > [1/2] regmap-irq: Introduce virtual regs to handle more config regs
-> >       commit: 4c5014456305482412b35a081ca0fb4fefd69764
-> > [2/2] regmap-irq: Add driver callback to configure virtual regs
-> >       commit: 394409aafd017adfcffd075595cb01cc456a9327
-> > 
-> 
-> Thanks for accepting the patches. I'll send out the driver utilizing
-> these changes after code cleanup in the next couple of weeks.
+There is a error message after devm_ioremap_resource failed, and the ret
+is needs to be obtained through PTR_ERR(qcom->qscratch_base).
+We need to move the dev_err() downwards to ensure that the ret value is
+correct.
 
-Here it is:
+Fixes: a4333c3a6ba9 ('usb: dwc3: Add Qualcomm DWC3 glue driver')
+Reported-by: Hulk Robot <hulkci@huawei.com>
+Signed-off-by: Bixuan Cui <cuibixuan@huawei.com>
+---
+ drivers/usb/dwc3/dwc3-qcom.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-https://lore.kernel.org/lkml/cover.1617927259.git.gurus@codeaurora.org/
+diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
+index e37cc58dfa55..4716ca8c753d 100644
+--- a/drivers/usb/dwc3/dwc3-qcom.c
++++ b/drivers/usb/dwc3/dwc3-qcom.c
+@@ -774,8 +774,8 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
+ 
+ 	qcom->qscratch_base = devm_ioremap_resource(dev, parent_res);
+ 	if (IS_ERR(qcom->qscratch_base)) {
+-		dev_err(dev, "failed to map qscratch, err=%d\n", ret);
+ 		ret = PTR_ERR(qcom->qscratch_base);
++		dev_err(dev, "failed to map qscratch, err=%d\n", ret);
+ 		goto clk_disable;
+ 	}
+ 
+-- 
+2.17.1
 
-Guru Das.
