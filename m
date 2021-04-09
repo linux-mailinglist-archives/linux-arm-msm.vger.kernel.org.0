@@ -2,176 +2,239 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 14F81359733
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Apr 2021 10:10:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 83091359788
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Apr 2021 10:19:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232376AbhDIIKO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Apr 2021 04:10:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57512 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232331AbhDIIKN (ORCPT
+        id S229545AbhDIITQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Apr 2021 04:19:16 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:38389 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229999AbhDIITQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Apr 2021 04:10:13 -0400
-Received: from mail-pg1-x532.google.com (mail-pg1-x532.google.com [IPv6:2607:f8b0:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA3D6C061762
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Apr 2021 01:09:57 -0700 (PDT)
-Received: by mail-pg1-x532.google.com with SMTP id d10so3299790pgf.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Apr 2021 01:09:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=GZEKNpc5NkiGkvi6lIHFrkThqi2fqlKkWIV3fYKJyuA=;
-        b=gc4UhQTrFpfRpAHfE+rHovxWUmxetzTRDbP0b3VohpspZz4bz9yJsZQ4pQyOHs3C2d
-         a709dWDa92NaLpGrJ9DsSOV8nIKRLQ9jk7kLH4DCSaIHD5rmHjCOopn5hOV7kGXF32Cd
-         GOebrQFDP9TOBqGJVBXWJ5kfJpI+FISCSP19cIZChRfEtU4fI/Gr0KwllL7dDwxRL/qj
-         U/BTDwGc52Kf/fJuKtyxW0J6QyBBP6dUXJDd+F5CJgnx3tLX2OJ8sXFzlPkoMFk+sci0
-         j1QqfQAjJ1SweYZ+BuFGN96FLx9ZiDrgNJPyzLuYN4vOAiivnOItRPr064c5E92spjg/
-         1VEg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=GZEKNpc5NkiGkvi6lIHFrkThqi2fqlKkWIV3fYKJyuA=;
-        b=BEbqkxpxWOBhwKIV/G6R1etRSwuspHOJo+8xR48Dnteu8HmOWUDuzt09LP8jh74I9K
-         SuZXv4g2LkLy35dbSYSNIX3w6KPIJkp1gobw8y1jr4ODRB2Op4d85j2cxr6Wxk6BelrT
-         YX23HLl0+Ig9OHiiydaejzrYI3iE51i79iXIi94Qju8tx2ourZZrEuKuwQEjlwAC3R2f
-         ME6lBXie1dWnioZwj+tS4v4GDmBant6rcklP4QZfuyYCPQmWIGJPA7Db2KjXQVyePf2Q
-         yi54vKoeh7xwGniNIIXA+unDSWhR0zAakFJ8m1p3Xpe1crCrjU8OU3/Q/d+HdHDuoaVo
-         NQeQ==
-X-Gm-Message-State: AOAM531R2Yb2F+JJ1+BQkwUPVgXZQM1glfHKYsWAPmHMh3Z97xTeDtoJ
-        PpnxT9wbG3e1dVZ+gsa5MV61
-X-Google-Smtp-Source: ABdhPJwR6Gd26b9J2YYANqvPzzJQy0KaCHFKuzWGlkClWsGSRpcsm/QdRe4aH+p/1u/5v6+z53O3ww==
-X-Received: by 2002:a63:3e4b:: with SMTP id l72mr11801928pga.203.1617955797234;
-        Fri, 09 Apr 2021 01:09:57 -0700 (PDT)
-Received: from work ([103.77.37.131])
-        by smtp.gmail.com with ESMTPSA id q9sm1805976pfn.19.2021.04.09.01.09.54
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 09 Apr 2021 01:09:56 -0700 (PDT)
-Date:   Fri, 9 Apr 2021 13:39:52 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Deepak Kumar Singh <deesin@qti.qualcomm.com>
-Cc:     bjorn.andersson@linaro.org, clew@codeaurora.org,
-        sibis@codeaurora.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        Deepak Kumar Singh <deesin@codeaurora.org>,
-        Andy Gross <agross@kernel.org>
-Subject: Re: [PATCH V2 2/2] soc: qcom: aoss: Add debugfs entry
-Message-ID: <20210409080952.GA17381@work>
-References: <1617943188-23278-1-git-send-email-deesin@qti.qualcomm.com>
- <1617943188-23278-3-git-send-email-deesin@qti.qualcomm.com>
+        Fri, 9 Apr 2021 04:19:16 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1617956344; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=UM9uhxnzJhVi5iLX05PsBl0YNEH1zzB5iVkmTJT1W5c=;
+ b=Wjt8iWZj+6LciZxjUABvpPnTarzfCAoT0w+YLH6QIwY8gDN88TQ0H2WY6A2rvIRvNOkGM3t6
+ /5+TEwsMYHGRHxBVMXjhLid/scW1hizkWlwq2SRcTviRojlOFBSy0pKV0rZ9/RMQBpTwQBo+
+ KrCx734QMx2HM67MsgCVR8jy2/Y=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
+ 60700df38807bcde1df43cb4 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 09 Apr 2021 08:18:59
+ GMT
+Sender: skakit=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id CF88CC43463; Fri,  9 Apr 2021 08:18:59 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: skakit)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 81100C433CA;
+        Fri,  9 Apr 2021 08:18:58 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1617943188-23278-3-git-send-email-deesin@qti.qualcomm.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Fri, 09 Apr 2021 13:48:58 +0530
+From:   skakit@codeaurora.org
+To:     Sebastian Reichel <sebastian.reichel@collabora.com>
+Cc:     Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        David Collins <collinsd@codeaurora.org>, kgunda@codeaurora.org,
+        Vinod Koul <vkoul@kernel.org>,
+        Courtney Cavin <courtney.cavin@sonymobile.com>,
+        linux-input@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org
+Subject: Re: [PATCH V2 3/4] dt-bindings: power: reset: qcom-pon: Convert qcom
+ PON binding to yaml
+In-Reply-To: <20210408130001.k3qbq3vvwkiyykzv@earth.universe>
+References: <1617881469-31965-1-git-send-email-skakit@codeaurora.org>
+ <1617881469-31965-4-git-send-email-skakit@codeaurora.org>
+ <20210408130001.k3qbq3vvwkiyykzv@earth.universe>
+Message-ID: <0cb9b3503000ac7206f4a3ef5fd16c17@codeaurora.org>
+X-Sender: skakit@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Apr 09, 2021 at 10:09:48AM +0530, Deepak Kumar Singh wrote:
-> It can be useful to control the different power states of various
-> parts of hardware for device testing. Add a debugfs node for qmp so
-> messages can be sent to aoss for debugging and testing purposes.
+Hi Sebastian,
+
+On 2021-04-08 18:30, Sebastian Reichel wrote:
+> Hi,
 > 
-> Signed-off-by: Chris Lew <clew@codeaurora.org>
-> Signed-off-by: Deepak Kumar Singh <deesin@codeaurora.org>
-> ---
->  drivers/soc/qcom/qcom_aoss.c | 41 +++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 41 insertions(+)
+> On Thu, Apr 08, 2021 at 05:01:08PM +0530, satya priya wrote:
+>> Convert qcom PON binding from .txt to .yaml format.
+>> 
+>> Signed-off-by: satya priya <skakit@codeaurora.org>
+>> ---
 > 
-> diff --git a/drivers/soc/qcom/qcom_aoss.c b/drivers/soc/qcom/qcom_aoss.c
-> index 0e397a7..6057bbe 100644
-> --- a/drivers/soc/qcom/qcom_aoss.c
-> +++ b/drivers/soc/qcom/qcom_aoss.c
-> @@ -4,6 +4,7 @@
->   */
->  #include <dt-bindings/power/qcom-aoss-qmp.h>
->  #include <linux/clk-provider.h>
-> +#include <linux/debugfs.h>
->  #include <linux/interrupt.h>
->  #include <linux/io.h>
->  #include <linux/mailbox_client.h>
-> @@ -88,6 +89,9 @@ struct qmp {
->  	struct clk_hw qdss_clk;
->  	struct genpd_onecell_data pd_data;
->  	struct qmp_cooling_device *cooling_devs;
-> +#if IS_ENABLED(CONFIG_DEBUG_FS)
-> +	struct dentry *debugfs_file;
-> +#endif /* CONFIG_DEBUG_FS */
->  };
->  
->  struct qmp_pd {
-> @@ -560,6 +564,34 @@ void qmp_put(struct platform_device *pdev)
->  }
->  EXPORT_SYMBOL(qmp_put);
->  
-> +#if IS_ENABLED(CONFIG_DEBUG_FS)
-> +static ssize_t aoss_dbg_write(struct file *file, const char __user *userstr,
-> +			      size_t len, loff_t *pos)
-> +{
-> +	struct qmp *qmp = file->private_data;
-> +	char buf[QMP_MSG_LEN] = {};
-> +	int ret;
-> +
-> +	if (!len || len >= QMP_MSG_LEN)
-> +		return -EINVAL;
-> +
-> +	ret  = copy_from_user(buf, userstr, len);
-> +	if (ret) {
-> +		dev_err(qmp->dev, "copy from user failed, ret:%d\n", ret);
+> Thanks for doing this.
+> 
+>> Changes in V2:
+>>  - As per Rob's comments, converted the main PON binding and added in 
+>> V2.
+>> 
+>>  .../devicetree/bindings/power/reset/qcom,pon.txt   | 49 
+>> ----------------------
+>>  .../devicetree/bindings/power/reset/qcom,pon.yaml  | 41 
+>> ++++++++++++++++++
+>>  2 files changed, 41 insertions(+), 49 deletions(-)
+>>  delete mode 100644 
+>> Documentation/devicetree/bindings/power/reset/qcom,pon.txt
+>>  create mode 100644 
+>> Documentation/devicetree/bindings/power/reset/qcom,pon.yaml
+>> 
+>> diff --git 
+>> a/Documentation/devicetree/bindings/power/reset/qcom,pon.txt 
+>> b/Documentation/devicetree/bindings/power/reset/qcom,pon.txt
+>> deleted file mode 100644
+>> index 0c0dc3a..0000000
+>> --- a/Documentation/devicetree/bindings/power/reset/qcom,pon.txt
+>> +++ /dev/null
+>> @@ -1,49 +0,0 @@
+>> -Qualcomm PON Device
+>> -
+>> -The Power On device for Qualcomm PM8xxx is MFD supporting pwrkey
+>> -and resin along with the Android reboot-mode.
+>> -
+>> -This DT node has pwrkey and resin as sub nodes.
+>> -
+>> -Required Properties:
+>> --compatible: Must be one of:
+>> -	"qcom,pm8916-pon"
+>> -	"qcom,pms405-pon"
+>> -	"qcom,pm8998-pon"
+>> -
+>> --reg: Specifies the physical address of the pon register
+>> -
+>> -Optional subnode:
+>> --pwrkey: Specifies the subnode pwrkey and should follow the
+>> - qcom,pm8941-pwrkey.txt description.
+>> --resin: Specifies the subnode resin and should follow the
+>> - qcom,pm8xxx-pwrkey.txt description.
+>> -
+>> -The rest of the properties should follow the generic reboot-mode 
+>> description
+>> -found in reboot-mode.txt
+>> -
+>> -Example:
+>> -
+>> -	pon@800 {
+>> -		compatible = "qcom,pm8916-pon";
+>> -
+>> -		reg = <0x800>;
+>> -		mode-bootloader = <0x2>;
+>> -		mode-recovery = <0x1>;
+>> -
+>> -		pwrkey {
+>> -			compatible = "qcom,pm8941-pwrkey";
+>> -			interrupts = <0x0 0x8 0 IRQ_TYPE_EDGE_BOTH>;
+>> -			debounce = <15625>;
+>> -			bias-pull-up;
+>> -			linux,code = <KEY_POWER>;
+>> -		};
+>> -
+>> -		resin {
+>> -			compatible = "qcom,pm8941-resin";
+>> -			interrupts = <0x0 0x8 1 IRQ_TYPE_EDGE_BOTH>;
+>> -			debounce = <15625>;
+>> -			bias-pull-up;
+>> -			linux,code = <KEY_VOLUMEDOWN>;
+>> -		};
+>> -	};
+>> diff --git 
+>> a/Documentation/devicetree/bindings/power/reset/qcom,pon.yaml 
+>> b/Documentation/devicetree/bindings/power/reset/qcom,pon.yaml
+>> new file mode 100644
+>> index 0000000..40eea5f1
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/power/reset/qcom,pon.yaml
+>> @@ -0,0 +1,41 @@
+>> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+>> +%YAML 1.2
+>> +---
+>> +$id: http://devicetree.org/schemas/power/reset/qcom,pon.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: Qualcomm PON Device
+>> +
+>> +maintainers:
+>> +  - Vinod Koul <vkoul@kernel.org>
+>> +
+>> +description: |
+>> +  The Power On device for Qualcomm PM8xxx is MFD supporting pwrkey
+>> +  and resin along with the Android reboot-mode.
+>> +
+>> +  This DT node has pwrkey and resin as sub nodes.
+>> +
+>> +properties:
+>> +  compatible:
+>> +    enum:
+>> +      - qcom,pm8916-pon
+>> +      - qcom,pms405-pon
+>> +      - qcom,pm8998-pon
+>> +
+>> +  reg:
+>> +    description: Specifies the physical address of the pon register
+> 
+> That description is obvious and pointless. Instead add
+> 
+> maxItems: 1
+> 
 
-Does the userspace need to know how many bytes were not copied? I don't
-think this is a useful information. So you could remove this err print.
+Okay.
 
-With that,
+>> +  pwrkey:
+>> +    type: object
+>> +    $ref: "../../input/qcom,pm8941-pwrkey.yaml#"
+>> +
+>> +  resin:
+>> +    type: object
+>> +    $ref: "../../input/qcom,pm8941-pwrkey.yaml#"
+>> +
+>> +required:
+>> +  - compatible
+>> +  - reg
+>> +
+>> +additionalProperties: true
+> 
+> Instead of allowing arbitrary properties, only valid modes
+> should be allowed. So drop additionalProperties and do this
+> instead:
+> 
+> allOf:
+>   - $ref: reboot-mode.yaml#
+> 
+> unevaluatedProperties: false
+> 
 
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Okay.
+
+>> +...
+> 
+> Please do not drop the example :)
+> 
+
+As per my understanding on Rob's comments [1] I have added one complete 
+example in qcom,pm8941-pwrkey.yaml (see patch 4/4) and dropped it here.
+
+[1] https://lore.kernel.org/patchwork/patch/1390062/#1588027
+
+> -- Sebastian
 
 Thanks,
-Mani
-
-> +		return -EFAULT;
-> +	}
-> +
-> +	ret = qmp_send(qmp, buf, QMP_MSG_LEN);
-> +
-> +	return ret ? ret : len;
-> +}
-> +
-> +static const struct file_operations aoss_dbg_fops = {
-> +	.open = simple_open,
-> +	.write = aoss_dbg_write,
-> +};
-> +#endif /* CONFIG_DEBUG_FS */
-> +
->  static int qmp_probe(struct platform_device *pdev)
->  {
->  	struct resource *res;
-> @@ -616,6 +648,11 @@ static int qmp_probe(struct platform_device *pdev)
->  
->  	atomic_set(&qmp->orphan, 0);
->  
-> +#if IS_ENABLED(CONFIG_DEBUG_FS)
-> +	qmp->debugfs_file = debugfs_create_file("aoss_send_message", 0220, NULL,
-> +						qmp, &aoss_dbg_fops);
-> +#endif /* CONFIG_DEBUG_FS */
-> +
->  	return 0;
->  
->  err_remove_qdss_clk:
-> @@ -632,6 +669,10 @@ static int qmp_remove(struct platform_device *pdev)
->  {
->  	struct qmp *qmp = platform_get_drvdata(pdev);
->  
-> +#if IS_ENABLED(CONFIG_DEBUG_FS)
-> +	debugfs_remove(qmp->debugfs_file);
-> +#endif /* CONFIG_DEBUG_FS */
-> +
->  	qmp_qdss_clk_remove(qmp);
->  	qmp_pd_remove(qmp);
->  	qmp_cooling_devices_remove(qmp);
-> -- 
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
-> 
+Satya Priya
