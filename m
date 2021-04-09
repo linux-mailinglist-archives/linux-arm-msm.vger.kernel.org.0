@@ -2,135 +2,165 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5C107359063
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Apr 2021 01:41:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 535673590BF
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Apr 2021 02:04:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232488AbhDHXmC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Apr 2021 19:42:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60192 "EHLO
+        id S232488AbhDIAFI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Apr 2021 20:05:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37026 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232426AbhDHXmC (ORCPT
+        with ESMTP id S232426AbhDIAFI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Apr 2021 19:42:02 -0400
-Received: from mail-qk1-x732.google.com (mail-qk1-x732.google.com [IPv6:2607:f8b0:4864:20::732])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2ADA9C061760
-        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Apr 2021 16:41:50 -0700 (PDT)
-Received: by mail-qk1-x732.google.com with SMTP id q26so4164365qkm.6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Apr 2021 16:41:50 -0700 (PDT)
+        Thu, 8 Apr 2021 20:05:08 -0400
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5111C061760;
+        Thu,  8 Apr 2021 17:04:55 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id a6so3844377wrw.8;
+        Thu, 08 Apr 2021 17:04:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
+        d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=8KRUudqQ7fiqiTO1h1nhjXIsFEoc1XK+L2rdZ1uxSAg=;
-        b=yHH1TguXIOLaBlQty2FkN1++Ql1LbpqyhCP/Bi9XQjCI+iCfX3544SZzo5Y7gLXcrB
-         c3vqh34BZjV/GX060haL1oSrlETmiX2GKL4Hc2D+QH2W7CTmlQuW06kq8qaVXqa3O+Ba
-         pYybh9dAQ//7dOoGPTLu//LBK0EntAPRBYR4TLyK2RFNRHKJUVYs3r8MG5f4IwzI31vS
-         WPlUBkat9NZq6QOv4mvJDKzSdfg7PV8sG1HwkXKR6Pa6TeNMlsplEoZLwPqcZWNYDYKP
-         lmZdS6usMKm8ISMpRX0aWzPtDxGcV+oWwI54ScYD6OcXFo8KBfrQ09Mvey00ZhcR93nV
-         myGQ==
+        bh=chwrUM2TWAanSXapc+0s3HHbpVYNPGMJlPMynyO4MaM=;
+        b=szk2C+Y8dkE91pdo9VDP/7HV6fvK7siaj/6cCuWj4tcHjhPN4kfhTtD7jmjp7OvM5T
+         9Jb58E0c7MzRYPJr7CMtogre39WPFU72gkBZbWQaTEGrXJgGCPMxDf5lSgsJc5f62vKp
+         MYCguHqb+dSN7vuYfpi0Q/mETAobLbif2QQF2J5C/UXqcn//KqU49kclNjong2JS1bsf
+         dgiP1vBAFs6apHS9kuRK8dFcB/iPu5+k4hHV/NCIp7eTSvdL5+fSyWkz5ssyqHPmb83O
+         bqUfoJFTLDByNGVMhk2wVSnANly7QXrCCvK7ga2yrNaTMkFMaas35JLDnZay0Ei/ML2v
+         BLbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=8KRUudqQ7fiqiTO1h1nhjXIsFEoc1XK+L2rdZ1uxSAg=;
-        b=DdvkaSzsy2u8e/SkOnaijX7pW8gqyqKvLcygjQsSfosGmLvTFBWD+L8ubMJnyaMlNC
-         PC/hBNTdBNywS/PCXEw8aVACI0eVehnab3e5HunOPPClWWKq1IHeHkBesl8k79rkNSOM
-         b6DyG8PhXdVYYI7pddSoIA26znVXG2QOjIrb17SQcVXedBFVoqX1L6rwN17QtOuynehH
-         8AENy0fD1/bnHoEmMtXOhuq0+K4FV9aV3qYxg48Nkl1TCxwk0J8CdaobIlvA/idnBjXu
-         2yQFZrCDgwwSE6m+6AtY0OOt6Tdo2643aa5W1tsG8Y/QTHFByXIJF68U4NF2Oy9p+r4W
-         53yA==
-X-Gm-Message-State: AOAM533HPSv7JOGyxxaKbLR/6ooD8Ntn/9tWiKdtlKitdXTcYZmqubJW
-        +Lcxmzv3fD5s7rg/N7/j6Im/LxuS4C8HwdqhW71pvQ==
-X-Google-Smtp-Source: ABdhPJyHPuE4navRPOijhLZmY/RoeCxFazCLQbKT5I8ozqsoCzXvOiMSY+ipZbh1hlP3lOdy4M8E0I0XN9PPmb1zcMM=
-X-Received: by 2002:ae9:f312:: with SMTP id p18mr11406022qkg.162.1617925309436;
- Thu, 08 Apr 2021 16:41:49 -0700 (PDT)
+        bh=chwrUM2TWAanSXapc+0s3HHbpVYNPGMJlPMynyO4MaM=;
+        b=XnzzzrFzqBaXwq9B3PnDxrZmN80h4DxxIJMhQyfXOKP7uTbyhGgT7+YOsXIIQ4sj4I
+         5b6ByQUZzmt81zCm1gx0pLT6sBZSlEsETNE0Vp4lXzKxYZR2/V2fBvsa8YLUHoyUbqtc
+         khUde2VX/5mXLk4IJDA6J8+bjNBKPJuDlNfBdcoDOnhbK5HS5IeRZRMcu99jLE4WjWDk
+         4MF3+v+eOunYJ/+PApcJEaZ2EjkpmC0TfBvgx/7+Ey6dkiIJ5FI9Hx2hr0bqb6EeqnV4
+         HHHZW3lgHgCpsEhkGje6Gq3KjEtK3dVa2xoG4lXhXQ/8ck5B5/Ro6va+AiWbGtI5xhJB
+         wwjw==
+X-Gm-Message-State: AOAM531NmSV8uyx4naS/YlVIFSN5i/21w85j6yWEzrm1oBbDFhHWoLVf
+        kEtOAfspAtOeielWOtYbk2rY6NRNYzKDD4Vhu2XjVFh8r08=
+X-Google-Smtp-Source: ABdhPJw9laeG7GHSofodaeepxEdFM1PXqK34zDwIWPQ4A7F8StT4xJmlDWNiu0iHq3HkyJwqEPg60Q59sfDkzgys1I0=
+X-Received: by 2002:adf:f108:: with SMTP id r8mr3451876wro.147.1617926694563;
+ Thu, 08 Apr 2021 17:04:54 -0700 (PDT)
 MIME-Version: 1.0
-References: <20210404164914.712946-1-bjorn.andersson@linaro.org>
- <161789462034.1629934.2631576576205147984.b4-ty@arndb.de> <YG8qIfFdY+As5tye@builder.lan>
- <CAK8P3a2v6yUVi395ixJRer2wyNVNXB-uypCqw5ts327ST=fHPg@mail.gmail.com>
- <CAA8EJpq4r0-XTouJTxnNdO8tgydenb+LjDykWORSNeLb3vSqMg@mail.gmail.com> <20210408230522.GS904837@yoga>
-In-Reply-To: <20210408230522.GS904837@yoga>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Fri, 9 Apr 2021 02:41:38 +0300
-Message-ID: <CAA8EJprO7jwqaKXXk70hzDJnTU6iX6i2Vk1OxkrwDKFFQQSyEw@mail.gmail.com>
-Subject: Re: [GIT PULL] Qualcomm ARM64 DT updates for 5.13
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Arnd Bergmann <arnd@kernel.org>, arm-soc <arm@kernel.org>,
-        SoC Team <soc@kernel.org>, Olof Johansson <olof@lixom.net>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+References: <20210406214726.131534-1-marijn.suijten@somainline.org>
+ <20210406214726.131534-2-marijn.suijten@somainline.org> <6413863d04df9743e2d7e81beff5c3e8@codeaurora.org>
+ <04860f05-f79f-de0b-13d1-aba85065b4da@somainline.org> <CAF6AEGuoLgBSZOou1TSb-d2o6tHS-L-E7AQLS5RM4aOogvRG7Q@mail.gmail.com>
+ <CAK7fi1aUXy2i8zY0Cb5Svq0s1H9cSAvY4hq+BsiWgdphwm-ebA@mail.gmail.com>
+In-Reply-To: <CAK7fi1aUXy2i8zY0Cb5Svq0s1H9cSAvY4hq+BsiWgdphwm-ebA@mail.gmail.com>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Thu, 8 Apr 2021 17:08:23 -0700
+Message-ID: <CAF6AEGuSav210dMHa3+f-7W1Kgyjam7K7HhWFO4aXWbdjvPTLw@mail.gmail.com>
+Subject: Re: [Freedreno] [PATCH 1/3] drm/msm/mdp5: Configure PP_SYNC_HEIGHT to
+ double the vtotal
+To:     AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>
+Cc:     Abhinav Kumar <abhinavk@codeaurora.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        phone-devel@vger.kernel.org,
+        freedreno <freedreno@lists.freedesktop.org>,
         Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Jack Pham <jackp@codeaurora.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Sandeep Maheswaram <sanm@codeaurora.org>,
-        Robert Foss <robert.foss@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
+        David Airlie <airlied@linux.ie>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        satya priya <skakit@codeaurora.org>,
-        Abhishek Kumar <kuabhs@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Shawn Guo <shawn.guo@linaro.org>,
-        Alexandru M Stan <amstan@chromium.org>,
-        Maulik Shah <mkshah@codeaurora.org>
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Daniel Vetter <daniel@ffwll.ch>, Sean Paul <sean@poorly.run>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 9 Apr 2021 at 02:05, Bjorn Andersson <bjorn.andersson@linaro.org> wrote:
+On Thu, Apr 8, 2021 at 4:16 PM AngeloGioacchino Del Regno
+<angelogioacchino.delregno@somainline.org> wrote:
 >
-> On Thu 08 Apr 16:53 CDT 2021, Dmitry Baryshkov wrote:
 >
-> > On Thu, 8 Apr 2021 at 23:05, Arnd Bergmann <arnd@kernel.org> wrote:
-> > >
-> > > On Thu, Apr 8, 2021 at 6:06 PM Bjorn Andersson
-> > > <bjorn.andersson@linaro.org> wrote:
-> > > > On Thu 08 Apr 10:24 CDT 2021, Arnd Bergmann wrote:
-> > > > > Maybe see if you can address these in a follow-up, to avoid regressions.
-> > > > >
-> > > >
-> > > > I'm about to send you a another set of pull requests with some more
-> > > > goodies that was lingering on the list. I will take a look to see if I
-> > > > can follow up on that with some fixes for above warnings - and take
-> > > > another look at incorporating dtbs_check in my workflow.
-> > >
-> > > Ok, sounds good. As I mentioned, I'm also just learning how to use
-> > > dtbs_check properly. Unfortunately, it takes ages to run on a
-> > > non-parallel build,
-> > > and using 'make -j32' as I normally do means the output gets reordered
-> > > with every run.
-> > >
-> > > It's probably ok if you figure out how to only run it for the files you
-> > > actually change in the Qualcomm tree.
-> >
-> > Disabling all non-Qualcomm arches makes `make dtbs_check` a little bit
-> > less painful.
-> >
+> Il gio 8 apr 2021, 21:05 Rob Clark <robdclark@gmail.com> ha scritto:
+>>
+>> On Wed, Apr 7, 2021 at 12:11 PM AngeloGioacchino Del Regno
+>> <angelogioacchino.delregno@somainline.org> wrote:
+>> >
+>> > Il 07/04/21 20:19, abhinavk@codeaurora.org ha scritto:
+>> > > Hi Marijn
+>> > >
+>> > > On 2021-04-06 14:47, Marijn Suijten wrote:
+>> > >> Leaving this at a close-to-maximum register value 0xFFF0 means it takes
+>> > >> very long for the MDSS to generate a software vsync interrupt when the
+>> > >> hardware TE interrupt doesn't arrive.  Configuring this to double the
+>> > >> vtotal (like some downstream kernels) leads to a frame to take at most
+>> > >> twice before the vsync signal, until hardware TE comes up.
+>> > >>
+>> > >> In this case the hardware interrupt responsible for providing this
+>> > >> signal - "disp-te" gpio - is not hooked up to the mdp5 vsync/pp logic at
+>> > >> all.  This solves severe panel update issues observed on at least the
+>> > >> Xperia Loire and Tone series, until said gpio is properly hooked up to
+>> > >> an irq.
+>> > >
+>> > > The reason the CONFIG_HEIGHT was at such a high value is to make sure that
+>> > > we always get the TE only from the panel vsync and not false positives
+>> > > coming
+>> > > from the tear check logic itself.
+>> > >
+>> > > When you say that disp-te gpio is not hooked up, is it something
+>> > > incorrect with
+>> > > the schematic OR panel is not generating the TE correctly?
+>> > >
+>> >
+>> > Sometimes, some panels aren't getting correctly configured by the
+>> > OEM/ODM in the first place: especially when porting devices from
+>> > downstream to upstream, developers often get in a situation in which
+>> > their TE line is either misconfigured or the DriverIC is not configured
+>> > to raise V-Sync interrupts.
+>> > Please remember: some DDICs need a "commands sequence" to enable
+>> > generating the TE interrupts, sometimes this is not standard, and
+>> > sometimes OEMs/ODMs are not even doing that in their downstream code
+>> > (but instead they work around it in creative ways "for reasons", even
+>> > though their DDIC supports indeed sending TE events).
+>> >
+>> > This mostly happens when bringing up devices that have autorefresh
+>> > enabled from the bootloader (when the bootloader sets up the splash
+>> > screen) by using simple-panel as a (hopefully) temporary solution to get
+>> > through the initial stages of porting.
+>> >
+>> > We are not trying to cover cases related to incorrect schematics or
+>> > hardware mistakes here, as the fix for that - as you know - is to just
+>> > fix your hardware.
+>> > What we're trying to do here is to stop freezes and, in some cases,
+>> > lockups, other than false positives making the developer go offroad when
+>> > the platform shows that something is wrong during early porting.
+>> >
+>> > Also, sometimes, some DDICs will not generate TE interrupts when
+>> > expected... in these cases we get a PP timeout and a MDP5 recovery: this
+>> > is totally avoidable if we rely on the 2*vtotal, as we wouldn't get
+>> > through the very time consuming task of recovering the entire MDP.
+>> >
+>> > Of course, if something is wrong in the MDP and the block really needs
+>> > recovery, this "trick" won't save anyone and the recovery will anyway be
+>> > triggered, as the PP-done will anyway timeout.
+>>
+>> So, is this (mostly) a workaround due to TE not wired up?  In which
+>> case I think it is ok, but maybe should have a comment about the
+>> interaction with TE?
 >
-> Yes, this is a trick I'm applying as well.
 >
-> It would however be nice if one didn't have to disable CONFIG_ARCH_* to
-> achieve this, or even better if one could run dtbs_check on a single
-> .dtb. In particular since many of the warnings are resolved by fixing
-> the bindings, which causes dtbs_check to recheck all files.
+> Mostly, yes.
+>
+>>
+>> Currently I have this patch in msm-next-staging but I guess we need to
+>> decide in the next day or so whether to drop it or smash in a comment?
+>>
+>> BR,
+>> -R
+>
+>
+> Marijn, can you please urgently throw a comment in, reminding that these timers are interacting with TE and send a fast V2?
+>
 
-As a quick hack: add the following rule to the top-level Makefile:
+Or just reply on list w/ a comment to smash in, if that is easier
 
-%.dt.yaml: include/config/kernel.release scripts_dtc
-        $(Q)$(MAKE) $(build)=Documentation/devicetree/bindings
-Documentation/devicetree/bindings/processed-schema.json
-        $(Q)$(MAKE) $(build)=$(dtstree) $(dtstree)/$@ CHECK_DTBS=y
-
-Now you can run checks for a single device tree by running 'make
-ARCH=arm64 ...... sdm845-db845.dy.yaml'
-
-I don't know if it's worth including this into the upstream source tree.
-
--- 
-With best wishes
-Dmitry
+BR,
+-R
