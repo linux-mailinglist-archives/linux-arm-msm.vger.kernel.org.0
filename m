@@ -2,111 +2,176 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B95C43596F4
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Apr 2021 09:56:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 14F81359733
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Apr 2021 10:10:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232452AbhDIH43 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Apr 2021 03:56:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54394 "EHLO
+        id S232376AbhDIIKO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Apr 2021 04:10:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57512 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232395AbhDIH42 (ORCPT
+        with ESMTP id S232331AbhDIIKN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Apr 2021 03:56:28 -0400
-Received: from mail-pf1-x42e.google.com (mail-pf1-x42e.google.com [IPv6:2607:f8b0:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C2B7C061760
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Apr 2021 00:56:12 -0700 (PDT)
-Received: by mail-pf1-x42e.google.com with SMTP id m11so3700376pfc.11
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Apr 2021 00:56:12 -0700 (PDT)
+        Fri, 9 Apr 2021 04:10:13 -0400
+Received: from mail-pg1-x532.google.com (mail-pg1-x532.google.com [IPv6:2607:f8b0:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA3D6C061762
+        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Apr 2021 01:09:57 -0700 (PDT)
+Received: by mail-pg1-x532.google.com with SMTP id d10so3299790pgf.12
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Apr 2021 01:09:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=/psdJdZhtQxPRqP2rSeIFW0LQiIDDkbIGdh0cvYadBU=;
-        b=L8z3g7hZW84h5nM/ti6IxvrqYNRpURr0QjluQ7kN299h4kGodN+i2ZqlpfZjmV2DcV
-         NJdHifRZQwCvGkuyszr116EZoWi70uHJWd65wtEWaWArXY1Rp4ZzN/9ZnXegyO3vKwFY
-         8NO2xJo3GGqSN9wCk+iD4DUDoM9a/YwA66QN74YGY2H1cW7vZrL5l7MdjKeR/QAsuZU2
-         Ucz/7XTFcdQzbM6d/fkAnUHCM65vVA1TvrS1EIy6gM9onyU/qKkNAl3l+WgxxEO0aPig
-         bhcP59/Ksf4qh7I609Y+3kN93l9mNb9wKPVKERjl2R9u6Ll9R8qVQKHkghUDQWZCnxm2
-         BPoA==
+        bh=GZEKNpc5NkiGkvi6lIHFrkThqi2fqlKkWIV3fYKJyuA=;
+        b=gc4UhQTrFpfRpAHfE+rHovxWUmxetzTRDbP0b3VohpspZz4bz9yJsZQ4pQyOHs3C2d
+         a709dWDa92NaLpGrJ9DsSOV8nIKRLQ9jk7kLH4DCSaIHD5rmHjCOopn5hOV7kGXF32Cd
+         GOebrQFDP9TOBqGJVBXWJ5kfJpI+FISCSP19cIZChRfEtU4fI/Gr0KwllL7dDwxRL/qj
+         U/BTDwGc52Kf/fJuKtyxW0J6QyBBP6dUXJDd+F5CJgnx3tLX2OJ8sXFzlPkoMFk+sci0
+         j1QqfQAjJ1SweYZ+BuFGN96FLx9ZiDrgNJPyzLuYN4vOAiivnOItRPr064c5E92spjg/
+         1VEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=/psdJdZhtQxPRqP2rSeIFW0LQiIDDkbIGdh0cvYadBU=;
-        b=efpeGK3BhxKGjAm4m4vnRLVqpZtWBM0oOMHWO5LnORWB2KyHukR986jYpob3UuCP5u
-         TmBjW9U+gH8KvGdfLwi92VXWROVAm3YeW7PjFSgt07NFE9Xasamekoi0MLMUl6O0btv1
-         peqnB5wIJHre08YEVgas9nYKu9ImbpO85n+5/o2POppcsfzIE9B11Ji7sxQMfOY8uPeT
-         xyKfd/v78zZ3wm3ac6uwQaaAXzkoPYOLi1b3x95qnoPMh3rOi8rqdJU+iV+fMSt2slRC
-         ObE6noltn5qJHd2YmZ7vosYhauOec0SmuGwiuknsHXcI6oGAPoaVTEoE1L1iDjHAPV0J
-         k/HQ==
-X-Gm-Message-State: AOAM530iWWsl1zImDG1Wtzbyw1ABA3hVvOpHjHnXQpkEhxoTjDFP5nyE
-        xJ81P+lBttTtlncWCARq47rE
-X-Google-Smtp-Source: ABdhPJw4y19qgIEed/3idRuicEXOdgw7PNQxmYE3f4snxddrL+3JBiwUbHv6mAxOeiF2tFwRzk92Iw==
-X-Received: by 2002:a63:5458:: with SMTP id e24mr11921129pgm.170.1617954971782;
-        Fri, 09 Apr 2021 00:56:11 -0700 (PDT)
+        bh=GZEKNpc5NkiGkvi6lIHFrkThqi2fqlKkWIV3fYKJyuA=;
+        b=BEbqkxpxWOBhwKIV/G6R1etRSwuspHOJo+8xR48Dnteu8HmOWUDuzt09LP8jh74I9K
+         SuZXv4g2LkLy35dbSYSNIX3w6KPIJkp1gobw8y1jr4ODRB2Op4d85j2cxr6Wxk6BelrT
+         YX23HLl0+Ig9OHiiydaejzrYI3iE51i79iXIi94Qju8tx2ourZZrEuKuwQEjlwAC3R2f
+         ME6lBXie1dWnioZwj+tS4v4GDmBant6rcklP4QZfuyYCPQmWIGJPA7Db2KjXQVyePf2Q
+         yi54vKoeh7xwGniNIIXA+unDSWhR0zAakFJ8m1p3Xpe1crCrjU8OU3/Q/d+HdHDuoaVo
+         NQeQ==
+X-Gm-Message-State: AOAM531R2Yb2F+JJ1+BQkwUPVgXZQM1glfHKYsWAPmHMh3Z97xTeDtoJ
+        PpnxT9wbG3e1dVZ+gsa5MV61
+X-Google-Smtp-Source: ABdhPJwR6Gd26b9J2YYANqvPzzJQy0KaCHFKuzWGlkClWsGSRpcsm/QdRe4aH+p/1u/5v6+z53O3ww==
+X-Received: by 2002:a63:3e4b:: with SMTP id l72mr11801928pga.203.1617955797234;
+        Fri, 09 Apr 2021 01:09:57 -0700 (PDT)
 Received: from work ([103.77.37.131])
-        by smtp.gmail.com with ESMTPSA id k17sm1475219pfa.68.2021.04.09.00.56.08
+        by smtp.gmail.com with ESMTPSA id q9sm1805976pfn.19.2021.04.09.01.09.54
         (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 09 Apr 2021 00:56:11 -0700 (PDT)
-Date:   Fri, 9 Apr 2021 13:26:07 +0530
+        Fri, 09 Apr 2021 01:09:56 -0700 (PDT)
+Date:   Fri, 9 Apr 2021 13:39:52 +0530
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Ye Bin <yebin10@huawei.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        "Martin K. Petersen" <martin.petersen@oracle.com>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
-        kernel-janitors@vger.kernel.org, Hulk Robot <hulkci@huawei.com>
-Subject: Re: [PATCH -next] scsi: ufs-qcom: Remove redundant dev_err call in
- ufs_qcom_init()
-Message-ID: <20210409075607.GF4376@work>
-References: <20210409075522.2111083-1-yebin10@huawei.com>
+To:     Deepak Kumar Singh <deesin@qti.qualcomm.com>
+Cc:     bjorn.andersson@linaro.org, clew@codeaurora.org,
+        sibis@codeaurora.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        Deepak Kumar Singh <deesin@codeaurora.org>,
+        Andy Gross <agross@kernel.org>
+Subject: Re: [PATCH V2 2/2] soc: qcom: aoss: Add debugfs entry
+Message-ID: <20210409080952.GA17381@work>
+References: <1617943188-23278-1-git-send-email-deesin@qti.qualcomm.com>
+ <1617943188-23278-3-git-send-email-deesin@qti.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20210409075522.2111083-1-yebin10@huawei.com>
+In-Reply-To: <1617943188-23278-3-git-send-email-deesin@qti.qualcomm.com>
 User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Apr 09, 2021 at 03:55:22PM +0800, Ye Bin wrote:
-> There is a error message within devm_ioremap_resource
+On Fri, Apr 09, 2021 at 10:09:48AM +0530, Deepak Kumar Singh wrote:
+> It can be useful to control the different power states of various
+> parts of hardware for device testing. Add a debugfs node for qmp so
+> messages can be sent to aoss for debugging and testing purposes.
 > 
-> already, so remove the dev_err call to avoid redundant
+> Signed-off-by: Chris Lew <clew@codeaurora.org>
+> Signed-off-by: Deepak Kumar Singh <deesin@codeaurora.org>
+> ---
+>  drivers/soc/qcom/qcom_aoss.c | 41 +++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 41 insertions(+)
 > 
-> error message.
-> 
-> Reported-by: Hulk Robot <hulkci@huawei.com>
-> Signed-off-by: Ye Bin <yebin10@huawei.com>
+> diff --git a/drivers/soc/qcom/qcom_aoss.c b/drivers/soc/qcom/qcom_aoss.c
+> index 0e397a7..6057bbe 100644
+> --- a/drivers/soc/qcom/qcom_aoss.c
+> +++ b/drivers/soc/qcom/qcom_aoss.c
+> @@ -4,6 +4,7 @@
+>   */
+>  #include <dt-bindings/power/qcom-aoss-qmp.h>
+>  #include <linux/clk-provider.h>
+> +#include <linux/debugfs.h>
+>  #include <linux/interrupt.h>
+>  #include <linux/io.h>
+>  #include <linux/mailbox_client.h>
+> @@ -88,6 +89,9 @@ struct qmp {
+>  	struct clk_hw qdss_clk;
+>  	struct genpd_onecell_data pd_data;
+>  	struct qmp_cooling_device *cooling_devs;
+> +#if IS_ENABLED(CONFIG_DEBUG_FS)
+> +	struct dentry *debugfs_file;
+> +#endif /* CONFIG_DEBUG_FS */
+>  };
+>  
+>  struct qmp_pd {
+> @@ -560,6 +564,34 @@ void qmp_put(struct platform_device *pdev)
+>  }
+>  EXPORT_SYMBOL(qmp_put);
+>  
+> +#if IS_ENABLED(CONFIG_DEBUG_FS)
+> +static ssize_t aoss_dbg_write(struct file *file, const char __user *userstr,
+> +			      size_t len, loff_t *pos)
+> +{
+> +	struct qmp *qmp = file->private_data;
+> +	char buf[QMP_MSG_LEN] = {};
+> +	int ret;
+> +
+> +	if (!len || len >= QMP_MSG_LEN)
+> +		return -EINVAL;
+> +
+> +	ret  = copy_from_user(buf, userstr, len);
+> +	if (ret) {
+> +		dev_err(qmp->dev, "copy from user failed, ret:%d\n", ret);
+
+Does the userspace need to know how many bytes were not copied? I don't
+think this is a useful information. So you could remove this err print.
+
+With that,
 
 Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
 Thanks,
 Mani
 
-> ---
->  drivers/scsi/ufs/ufs-qcom.c | 7 +------
->  1 file changed, 1 insertion(+), 6 deletions(-)
-> 
-> diff --git a/drivers/scsi/ufs/ufs-qcom.c b/drivers/scsi/ufs/ufs-qcom.c
-> index 9b711d6aac54..2a3dd21da6a6 100644
-> --- a/drivers/scsi/ufs/ufs-qcom.c
-> +++ b/drivers/scsi/ufs/ufs-qcom.c
-> @@ -1071,13 +1071,8 @@ static int ufs_qcom_init(struct ufs_hba *hba)
->  		if (res) {
->  			host->dev_ref_clk_ctrl_mmio =
->  					devm_ioremap_resource(dev, res);
-> -			if (IS_ERR(host->dev_ref_clk_ctrl_mmio)) {
-> -				dev_warn(dev,
-> -					"%s: could not map dev_ref_clk_ctrl_mmio, err %ld\n",
-> -					__func__,
-> -					PTR_ERR(host->dev_ref_clk_ctrl_mmio));
-> +			if (IS_ERR(host->dev_ref_clk_ctrl_mmio))
->  				host->dev_ref_clk_ctrl_mmio = NULL;
-> -			}
->  			host->dev_ref_clk_en_mask = BIT(5);
->  		}
->  	}
+> +		return -EFAULT;
+> +	}
+> +
+> +	ret = qmp_send(qmp, buf, QMP_MSG_LEN);
+> +
+> +	return ret ? ret : len;
+> +}
+> +
+> +static const struct file_operations aoss_dbg_fops = {
+> +	.open = simple_open,
+> +	.write = aoss_dbg_write,
+> +};
+> +#endif /* CONFIG_DEBUG_FS */
+> +
+>  static int qmp_probe(struct platform_device *pdev)
+>  {
+>  	struct resource *res;
+> @@ -616,6 +648,11 @@ static int qmp_probe(struct platform_device *pdev)
+>  
+>  	atomic_set(&qmp->orphan, 0);
+>  
+> +#if IS_ENABLED(CONFIG_DEBUG_FS)
+> +	qmp->debugfs_file = debugfs_create_file("aoss_send_message", 0220, NULL,
+> +						qmp, &aoss_dbg_fops);
+> +#endif /* CONFIG_DEBUG_FS */
+> +
+>  	return 0;
+>  
+>  err_remove_qdss_clk:
+> @@ -632,6 +669,10 @@ static int qmp_remove(struct platform_device *pdev)
+>  {
+>  	struct qmp *qmp = platform_get_drvdata(pdev);
+>  
+> +#if IS_ENABLED(CONFIG_DEBUG_FS)
+> +	debugfs_remove(qmp->debugfs_file);
+> +#endif /* CONFIG_DEBUG_FS */
+> +
+>  	qmp_qdss_clk_remove(qmp);
+>  	qmp_pd_remove(qmp);
+>  	qmp_cooling_devices_remove(qmp);
+> -- 
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
 > 
