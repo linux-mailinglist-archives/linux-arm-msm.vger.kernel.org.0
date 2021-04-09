@@ -2,119 +2,171 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5BB5A359DC0
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Apr 2021 13:47:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A1D4C359E05
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Apr 2021 13:55:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232469AbhDILrK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Apr 2021 07:47:10 -0400
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:34505 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231599AbhDILrK (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Apr 2021 07:47:10 -0400
-Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
-  by alexa-out.qualcomm.com with ESMTP; 09 Apr 2021 04:46:57 -0700
-X-QCInternal: smtphost
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/AES256-SHA; 09 Apr 2021 04:46:55 -0700
-X-QCInternal: smtphost
-Received: from dikshita-linux.qualcomm.com ([10.204.65.237])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 09 Apr 2021 17:16:33 +0530
-Received: by dikshita-linux.qualcomm.com (Postfix, from userid 347544)
-        id 1DEEE217A8; Fri,  9 Apr 2021 17:16:32 +0530 (IST)
-From:   Dikshita Agarwal <dikshita@codeaurora.org>
-To:     linux-media@vger.kernel.org, stanimir.varbanov@linaro.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        vgarodia@codeaurora.org, swboyd@chromium.org,
-        bjorn.andersson@linaro.org,
-        Dikshita Agarwal <dikshita@codeaurora.org>
-Subject: [PATCH v4] media: venus : hfi: add venus image info into smem
-Date:   Fri,  9 Apr 2021 17:16:19 +0530
-Message-Id: <1617968779-28526-1-git-send-email-dikshita@codeaurora.org>
+        id S233820AbhDILzO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Apr 2021 07:55:14 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:34463 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S233768AbhDILzN (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 9 Apr 2021 07:55:13 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1617969301; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=pwOyVsDSJZr2OlFw6nHHCdGFvhhwxrSHAgpVHaaW3kE=; b=VpJOw+Cnd2GmV21rn7++4t3+fgWtVTXGlqWxRe6j19oyPvueZ4oKyv0uZYhUeBVYM/xARYws
+ rccXxazX1Sid2fGFhkX5eXwGbpBeocK1Z41yycCUT/sGs7p0OHHHy5RvrgWE2G540wscPkG+
+ HUoL1SUGahesKyq3+wwYj8a6UX8=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
+ 6070408bf34440a9d4ec566d (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 09 Apr 2021 11:54:51
+ GMT
+Sender: tdas=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 1CF7EC433CA; Fri,  9 Apr 2021 11:54:51 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from tdas-linux.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: tdas)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id AAF08C433CA;
+        Fri,  9 Apr 2021 11:54:46 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org AAF08C433CA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=tdas@codeaurora.org
+From:   Taniya Das <tdas@codeaurora.org>
+To:     Stephen Boyd <sboyd@kernel.org>,
+        =?UTF-8?q?Michael=20Turquette=20=C2=A0?= <mturquette@baylibre.com>
+Cc:     Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, robh@kernel.org, robh+dt@kernel.org,
+        Taniya Das <tdas@codeaurora.org>
+Subject: [PATCH v1 1/2] dt-bindings: clock: Add YAML schemas for LPASS clocks on SC7280
+Date:   Fri,  9 Apr 2021 17:24:31 +0530
+Message-Id: <1617969272-10246-1-git-send-email-tdas@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Fill fw version info into smem to be printed as part of
-soc info.
+The LPASS(Low Power Audio Subsystem) clock provider have a bunch of generic
+properties that are needed in a device tree. Add the LPASS clock IDs for
+LPASS PIL client to request for the clocks.
 
-Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
-Reported-by: kernel test robot <lkp@intel.com>
-
-change since v3:
- added dependency on QCOM_SMEM (Stephen)
+Signed-off-by: Taniya Das <tdas@codeaurora.org>
 ---
- drivers/media/platform/Kconfig               |  2 +-
- drivers/media/platform/qcom/venus/hfi_msgs.c | 21 +++++++++++++++++++--
- 2 files changed, 20 insertions(+), 3 deletions(-)
+ .../bindings/clock/qcom,sc7280-lpasscc.yaml        | 69 ++++++++++++++++++++++
+ include/dt-bindings/clock/qcom,lpass-sc7280.h      | 16 +++++
+ 2 files changed, 85 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscc.yaml
+ create mode 100644 include/dt-bindings/clock/qcom,lpass-sc7280.h
 
-diff --git a/drivers/media/platform/Kconfig b/drivers/media/platform/Kconfig
-index fd1831e..9c75e88 100644
---- a/drivers/media/platform/Kconfig
-+++ b/drivers/media/platform/Kconfig
-@@ -543,7 +543,7 @@ config VIDEO_TI_VPE_DEBUG
- 
- config VIDEO_QCOM_VENUS
- 	tristate "Qualcomm Venus V4L2 encoder/decoder driver"
--	depends on VIDEO_DEV && VIDEO_V4L2
-+	depends on VIDEO_DEV && VIDEO_V4L2 && QCOM_SMEM
- 	depends on (ARCH_QCOM && IOMMU_DMA) || COMPILE_TEST
- 	select QCOM_MDT_LOADER if ARCH_QCOM
- 	select QCOM_SCM if ARCH_QCOM
-diff --git a/drivers/media/platform/qcom/venus/hfi_msgs.c b/drivers/media/platform/qcom/venus/hfi_msgs.c
-index 06a1908..74cfc4f 100644
---- a/drivers/media/platform/qcom/venus/hfi_msgs.c
-+++ b/drivers/media/platform/qcom/venus/hfi_msgs.c
-@@ -6,6 +6,7 @@
- #include <linux/hash.h>
- #include <linux/list.h>
- #include <linux/slab.h>
-+#include <linux/soc/qcom/smem.h>
- #include <media/videobuf2-v4l2.h>
- 
- #include "core.h"
-@@ -14,6 +15,10 @@
- #include "hfi_msgs.h"
- #include "hfi_parser.h"
- 
-+#define SMEM_IMG_VER_TBL 469
-+#define VER_STR_SZ	128
-+#define SMEM_IMG_OFFSET_VENUS (14 * 128)
+diff --git a/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscc.yaml b/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscc.yaml
+new file mode 100644
+index 0000000..7b62763
+--- /dev/null
++++ b/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscc.yaml
+@@ -0,0 +1,69 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/clock/qcom,sc7280-lpasscc.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
 +
- static void event_seq_changed(struct venus_core *core, struct venus_inst *inst,
- 			      struct hfi_msg_event_notify_pkt *pkt)
- {
-@@ -239,15 +244,27 @@ static void
- sys_get_prop_image_version(struct device *dev,
- 			   struct hfi_msg_sys_property_info_pkt *pkt)
- {
-+	u8 *smem_tbl_ptr;
-+	u8 *img_ver;
- 	int req_bytes;
-+	size_t smem_blk_sz;
- 
- 	req_bytes = pkt->hdr.size - sizeof(*pkt);
- 
--	if (req_bytes < 128 || !pkt->data[1] || pkt->num_properties > 1)
-+	if (req_bytes < VER_STR_SZ || !pkt->data[1] || pkt->num_properties > 1)
- 		/* bad packet */
- 		return;
- 
--	dev_dbg(dev, VDBGL "F/W version: %s\n", (u8 *)&pkt->data[1]);
-+	img_ver = (u8 *)&pkt->data[1];
++title: Qualcomm LPASS Core Clock Controller Binding for SC7280
 +
-+	dev_dbg(dev, VDBGL "F/W version: %s\n", img_ver);
++maintainers:
++  - Taniya Das <tdas@codeaurora.org>
 +
-+	smem_tbl_ptr = qcom_smem_get(QCOM_SMEM_HOST_ANY,
-+		SMEM_IMG_VER_TBL, &smem_blk_sz);
-+	if (smem_tbl_ptr &&
-+	    smem_blk_sz >= SMEM_IMG_OFFSET_VENUS + VER_STR_SZ)
-+		memcpy(smem_tbl_ptr + SMEM_IMG_OFFSET_VENUS,
-+		       img_ver, VER_STR_SZ);
- }
- 
- static void hfi_sys_property_info(struct venus_core *core,
--- 
-2.7.4
++description: |
++  Qualcomm LPASS core clock control module which supports the clocks and
++  power domains on SC7280.
++
++  See also:
++  - dt-bindings/clock/qcom,lpass-sc7280.h
++
++properties:
++  compatible:
++    enum:
++      - qcom,sc7280-lpasscc
++
++  clocks:
++    items:
++      - description: gcc_cfg_noc_lpass_clk from GCC
++
++  clock-names:
++    items:
++      - const: iface
++
++  '#clock-cells':
++    const: 1
++
++  reg:
++    minItems: 3
++    items:
++      - description: LPASS qdsp6ss register
++      - description: LPASS top-cc register
++      - description: LPASS cc register
++
++  reg-names:
++    items:
++      - const: qdsp6ss
++      - const: top_cc
++      - const: cc
++
++required:
++  - compatible
++  - reg
++  - clocks
++  - clock-names
++  - '#clock-cells'
++
++additionalProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/clock/qcom,gcc-sc7280.h>
++    #include <dt-bindings/clock/qcom,lpass-sc7280.h>
++    clock-controller@3000000 {
++      compatible = "qcom,sc7280-lpasscc";
++      reg = <0x03000000 0x40>, <0x03c04000 0x4>, <0x03389000 0x24>;
++      reg-names = "qdsp6ss", "top_cc", "cc";
++      clocks = <&gcc GCC_CFG_NOC_LPASS_CLK>;
++      clock-names = "iface";
++      #clock-cells = <1>;
++    };
++...
+diff --git a/include/dt-bindings/clock/qcom,lpass-sc7280.h b/include/dt-bindings/clock/qcom,lpass-sc7280.h
+new file mode 100644
+index 0000000..a259463
+--- /dev/null
++++ b/include/dt-bindings/clock/qcom,lpass-sc7280.h
+@@ -0,0 +1,16 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++/*
++ * Copyright (c) 2021, The Linux Foundation. All rights reserved.
++ */
++
++#ifndef _DT_BINDINGS_CLK_QCOM_LPASS_SC7280_H
++#define _DT_BINDINGS_CLK_QCOM_LPASS_SC7280_H
++
++#define LPASS_Q6SS_AHBM_CLK				0
++#define LPASS_Q6SS_AHBS_CLK				1
++#define LPASS_TOP_CC_LPI_Q6_AXIM_HS_CLK			2
++#define LPASS_QDSP6SS_XO_CLK				3
++#define LPASS_QDSP6SS_SLEEP_CLK				4
++#define LPASS_QDSP6SS_CORE_CLK				5
++
++#endif
+--
+Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc.is a member
+of the Code Aurora Forum, hosted by the  Linux Foundation.
 
