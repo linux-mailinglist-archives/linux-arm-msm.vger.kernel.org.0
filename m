@@ -2,129 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5AF5635A25F
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Apr 2021 17:53:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F1DE835A26A
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Apr 2021 17:55:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233954AbhDIPxK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Apr 2021 11:53:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46752 "EHLO
+        id S233674AbhDIPzg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Apr 2021 11:55:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47300 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233916AbhDIPxI (ORCPT
+        with ESMTP id S233577AbhDIPzf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Apr 2021 11:53:08 -0400
-Received: from mail-il1-x136.google.com (mail-il1-x136.google.com [IPv6:2607:f8b0:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6245C061762
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Apr 2021 08:52:54 -0700 (PDT)
-Received: by mail-il1-x136.google.com with SMTP id i22so415044ila.11
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Apr 2021 08:52:54 -0700 (PDT)
+        Fri, 9 Apr 2021 11:55:35 -0400
+Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com [IPv6:2607:f8b0:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A9BEC061762
+        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Apr 2021 08:55:22 -0700 (PDT)
+Received: by mail-oi1-x22a.google.com with SMTP id l131so1169928oih.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Apr 2021 08:55:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=6dw89kT43y0iwP7tVHfjK2c8fjHjZjh3ZGkx92mZsUo=;
-        b=vyy83tim/1kFkkganV1nCXVpFNQHJFLUyfRwJ8/rpvAk+qL1HauYxSlbaW6KEnyOUy
-         9i2twFrfFikR6jjUNqa1HauKGX/E2AZmHWwV/dPV9ujXy7Mv7QJTr4JkN+JZNMKr+mVH
-         i5AKTpPfTv2kGJrxj17Mt6MnI3dYHsqgy2PMrvuUrZvM6jp6mv12pDeiRQCnww/pMLhJ
-         aRanrjxtAm9HpI+7cN+8naBiv7W/Lxnq5Qc6LhKsAzttPZSsIL+FG34AKSEVTgAMdKUT
-         HsPGie6WCPHWg4pQaRcxlrHPzmdMWKhvfO/zY+zlzUBrQAa+nlfGE7YKL1cUdEChHHmX
-         uTBw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=7FhH3HxnPhik9wr89dR/sW0eRHTu8hPyuSyg+W7XtPs=;
+        b=dnk8I5QzyMjjItJpGxLSIwh4o4JkMyOpncSyroDFsJ1xGvGiZGFQoorYMliGZJzXZg
+         BKbNZA/c9tmuUwlG7u7WVtl5GpJF3u48HtvA9+TgVxb7+Q5yqE2npdQ+SFvqLIns3o82
+         17Hamlac8BB4PUMIksNM1+tw2v9h3iUAbfdRj4Uwa52itndgwIYRzYtrG+jIH4+q/Uew
+         WTqrCsQijhimidHjsvltK7l+/glCt0CONdkZ2/JTFDCRO9M3HGQh9lHscfRR61LbVwja
+         J2HM/J9T/YMYaAwDML0oNx3l1Zdupijh8XfaJK3mZOXTtCpN6ctcpXbZlIOkLBEayOOp
+         ntlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=6dw89kT43y0iwP7tVHfjK2c8fjHjZjh3ZGkx92mZsUo=;
-        b=engJQbXFwFOxUOfuo2LfnRU/6u42EOlUtx69AGHNVXtXAX7Lg2a6HmN6vdOnseq/zN
-         Tob8oZa0zTFG2rkFVjNjjr8IikfQRCRbYlxpHbguUuG8Muo/mdRJReYHiE2g8q5ntl3F
-         XoSWiUO8Lpb+zl26NhS+aFhR0PCzScM9s0pRVsPjWQ7rKak+kkPcdtndpnYzdpn4JSXE
-         GxMQKeIOSNVbPTqqWkbYa7yYGjgsYUanSTi7vTtARg9/z7L9302DvO8YzGfi5Zs2VRW3
-         6TUha71ruCg0PSOA0+kaBqqMVv+idwF0p8euoKjL8oGm1KBAMts7SOZRal8PgAHLk9TQ
-         PWcg==
-X-Gm-Message-State: AOAM533dsSijBCT97FLJg6UDTVvNejuED52YmaBxyxwTE9V0ziTMSfNh
-        aHRXrtgdVSUInDI4+PwOG+6GInt/PmDesXUs
-X-Google-Smtp-Source: ABdhPJywblXbxYPq4FTyBC85fSG0JwH6jwcI++TM4tDh8Iua7oW7JZk9pNJoKN9w5XEONBK8Amv07g==
-X-Received: by 2002:a05:6e02:198f:: with SMTP id g15mr11783408ilf.200.1617983574302;
-        Fri, 09 Apr 2021 08:52:54 -0700 (PDT)
-Received: from presto.localdomain (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
-        by smtp.gmail.com with ESMTPSA id k13sm1296725ilu.29.2021.04.09.08.52.53
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=7FhH3HxnPhik9wr89dR/sW0eRHTu8hPyuSyg+W7XtPs=;
+        b=k6zqPso4orDJJY2h1xdf6sjupTZXBJ8M8E4ICiu5WqjiLW+eFRlsIa1ji35Us1RrvK
+         QZlCNb7G0+DD8N+tFxLCBNuepXlmIdG8SjQFGJ0cOXWNQTu4x7f/ae7f2jAylYvwIL50
+         WUYbJAzlDrRhjMHUxqb9+TIdJ7Gw+IuYXKIIop1k1NcP+NJJa9iIS4yotSB0dD9EnZ9b
+         uCG9bt/vl6tXrZDsDygN1MCkHauwOUcecQUQLHaUaZwJb+6FOIL2MWfmaNyzWNYehCdm
+         /UX0e9fdZc1FIAoLFg1gwpmhAX3VMPrHWkWjPp+LNLal1dd06RkANc5bxMkjcsSDIcn5
+         Q/5g==
+X-Gm-Message-State: AOAM531NKEwkO5NWPlx/u4RtDuKYySjaoMZ607tFRkz0GDqguRtKQbrA
+        GZwCAcMyiZ1GioDzL71+u5E5aRZgOp0qIA==
+X-Google-Smtp-Source: ABdhPJz3Dh7G+iRZvpx0N80r9hJXBOQByK4B4InfbL8YiBVAUS7tQEets07umN9tgXMnbtswDzprlw==
+X-Received: by 2002:aca:de06:: with SMTP id v6mr10044632oig.91.1617983721822;
+        Fri, 09 Apr 2021 08:55:21 -0700 (PDT)
+Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id w199sm576723oif.41.2021.04.09.08.55.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 Apr 2021 08:52:53 -0700 (PDT)
-From:   Alex Elder <elder@linaro.org>
-To:     bjorn.andersson@linaro.org, agross@kernel.org, robh+dt@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Fri, 09 Apr 2021 08:55:21 -0700 (PDT)
+Date:   Fri, 9 Apr 2021 10:55:19 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Guru Das Srinagesh <gurus@codeaurora.org>
+Cc:     Lee Jones <lee.jones@linaro.org>, Rob Herring <robh+dt@kernel.org>,
+        devicetree@vger.kernel.org, Mark Brown <broonie@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
         linux-kernel@vger.kernel.org
-Subject: [PATCH] ARM: dts: qcom: sdx55: add IPA information
-Date:   Fri,  9 Apr 2021 10:52:51 -0500
-Message-Id: <20210409155251.955632-1-elder@linaro.org>
-X-Mailer: git-send-email 2.27.0
+Subject: Re: [PATCH 1/3] dt-bindings: mfd: pm8008: Add IRQ listing
+Message-ID: <20210409155519.GX904837@yoga>
+References: <cover.1617927259.git.gurus@codeaurora.org>
+ <2607ca31fce40ecdb1e8c96dac0fb688c26ad722.1617927259.git.gurus@codeaurora.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2607ca31fce40ecdb1e8c96dac0fb688c26ad722.1617927259.git.gurus@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add IPA-related nodes and definitions to "sdx55.dtsi".  The SMP2P
-nodes (ipa_smp2p_out and ipa_smp2p_in) are already present.
+On Thu 08 Apr 19:38 CDT 2021, Guru Das Srinagesh wrote:
 
-Signed-off-by: Alex Elder <elder@linaro.org>
----
-Note: This depends on this series posted by Mani Sadhasivam:
-  https://lore.kernel.org/linux-arm-msm/20210408170457.91409-1-manivannan.sadhasivam@linaro.org
+> Add a header file listing all of the IRQs that Qualcomm Technologies,
+> Inc. PM8008 supports. The constants defined in this file may be used in
+> the client device tree node to specify interrupts.
+> 
+> Change-Id: I13fb096da54458f2882e8d853a3ad9c379e7d5a9
 
- arch/arm/boot/dts/qcom-sdx55.dtsi | 41 +++++++++++++++++++++++++++++++
- 1 file changed, 41 insertions(+)
+Please remember to drop the Change-Id when posting to the mailing lists.
 
-diff --git a/arch/arm/boot/dts/qcom-sdx55.dtsi b/arch/arm/boot/dts/qcom-sdx55.dtsi
-index e4180bbc46555..0dc515dc5750d 100644
---- a/arch/arm/boot/dts/qcom-sdx55.dtsi
-+++ b/arch/arm/boot/dts/qcom-sdx55.dtsi
-@@ -215,6 +215,47 @@ qpic_nand: nand@1b30000 {
- 			status = "disabled";
- 		};
- 
-+		ipa: ipa@1e40000 {
-+			compatible = "qcom,sdx55-ipa";
-+
-+			iommus = <&apps_smmu 0x5e0 0x0>,
-+				 <&apps_smmu 0x5e2 0x0>;
-+			reg = <0x1e40000 0x7000>,
-+			      <0x1e50000 0x4b20>,
-+			      <0x1e04000 0x2c000>;
-+			reg-names = "ipa-reg",
-+				    "ipa-shared",
-+				    "gsi";
-+
-+			interrupts-extended = <&intc GIC_SPI 241 IRQ_TYPE_EDGE_RISING>,
-+					      <&intc GIC_SPI 47 IRQ_TYPE_LEVEL_HIGH>,
-+					      <&ipa_smp2p_in 0 IRQ_TYPE_EDGE_RISING>,
-+					      <&ipa_smp2p_in 1 IRQ_TYPE_EDGE_RISING>;
-+			interrupt-names = "ipa",
-+					  "gsi",
-+					  "ipa-clock-query",
-+					  "ipa-setup-ready";
-+
-+			clocks = <&rpmhcc RPMH_IPA_CLK>;
-+			clock-names = "core";
-+
-+			interconnects = <&system_noc MASTER_IPA &system_noc SLAVE_SNOC_MEM_NOC_GC>,
-+					<&mem_noc MASTER_SNOC_GC_MEM_NOC &mc_virt SLAVE_EBI_CH0>,
-+					<&system_noc MASTER_IPA &system_noc SLAVE_OCIMEM>,
-+					<&mem_noc MASTER_AMPSS_M0 &system_noc SLAVE_IPA_CFG>;
-+			interconnect-names = "memory-a",
-+					     "memory-b",
-+					     "imem",
-+					     "config";
-+
-+			qcom,smem-states = <&ipa_smp2p_out 0>,
-+					   <&ipa_smp2p_out 1>;
-+			qcom,smem-state-names = "ipa-clock-enabled-valid",
-+						"ipa-clock-enabled";
-+
-+			status = "disabled";
-+		};
-+
- 		tcsr_mutex: hwlock@1f40000 {
- 			compatible = "qcom,tcsr-mutex";
- 			reg = <0x01f40000 0x40000>;
--- 
-2.27.0
 
+We typically don't have defines for the IRQ numbers, but I don't mind.
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+
+Regards,
+Bjorn
+
+> Signed-off-by: Guru Das Srinagesh <gurus@codeaurora.org>
+> ---
+>  include/dt-bindings/mfd/qcom-pm8008.h | 19 +++++++++++++++++++
+>  1 file changed, 19 insertions(+)
+>  create mode 100644 include/dt-bindings/mfd/qcom-pm8008.h
+> 
+> diff --git a/include/dt-bindings/mfd/qcom-pm8008.h b/include/dt-bindings/mfd/qcom-pm8008.h
+> new file mode 100644
+> index 0000000..eca9448
+> --- /dev/null
+> +++ b/include/dt-bindings/mfd/qcom-pm8008.h
+> @@ -0,0 +1,19 @@
+> +/* SPDX-License-Identifier: GPL-2.0-only */
+> +/*
+> + * Copyright (c) 2021 The Linux Foundation. All rights reserved.
+> + */
+> +
+> +#ifndef __DT_BINDINGS_MFD_QCOM_PM8008_H
+> +#define __DT_BINDINGS_MFD_QCOM_PM8008_H
+> +
+> +/* PM8008 IRQ numbers */
+> +#define PM8008_IRQ_MISC_UVLO	0
+> +#define PM8008_IRQ_MISC_OVLO	1
+> +#define PM8008_IRQ_MISC_OTST2	2
+> +#define PM8008_IRQ_MISC_OTST3	3
+> +#define PM8008_IRQ_MISC_LDO_OCP	4
+> +#define PM8008_IRQ_TEMP_ALARM	5
+> +#define PM8008_IRQ_GPIO1	6
+> +#define PM8008_IRQ_GPIO2	7
+> +
+> +#endif
+> -- 
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
+> 
