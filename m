@@ -2,34 +2,33 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 83091359788
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Apr 2021 10:19:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DF5DA359796
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Apr 2021 10:20:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229545AbhDIITQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Apr 2021 04:19:16 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:38389 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229999AbhDIITQ (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Apr 2021 04:19:16 -0400
+        id S232470AbhDIIUl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Apr 2021 04:20:41 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:40693 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232344AbhDIIUk (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 9 Apr 2021 04:20:40 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1617956344; h=Message-ID: References: In-Reply-To: Subject:
+ s=smtp; t=1617956427; h=Message-ID: References: In-Reply-To: Subject:
  Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=UM9uhxnzJhVi5iLX05PsBl0YNEH1zzB5iVkmTJT1W5c=;
- b=Wjt8iWZj+6LciZxjUABvpPnTarzfCAoT0w+YLH6QIwY8gDN88TQ0H2WY6A2rvIRvNOkGM3t6
- /5+TEwsMYHGRHxBVMXjhLid/scW1hizkWlwq2SRcTviRojlOFBSy0pKV0rZ9/RMQBpTwQBo+
- KrCx734QMx2HM67MsgCVR8jy2/Y=
-X-Mailgun-Sending-Ip: 198.61.254.9
+ MIME-Version: Sender; bh=w6dPhZf528MpJVmtXWaO9JlPwrAlz6eGv9cUCZJ3hDk=;
+ b=mOHzHrQXJ4nMSzIZ+wPcDp+5+18EGWwqGWyjPfgXT7I2BikO2KK75VCeomg8UUgauDWeRAU+
+ Fz06k+Z8BsWcZ2O67RLXHB39+OYzGOkqF/6dEUNlPbtNQDyPM+VeMHdwm/pYT3ABahW9ph9N
+ vd9nzn8X9f/+p/krEvtWruiPKhI=
+X-Mailgun-Sending-Ip: 69.72.43.7
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
- 60700df38807bcde1df43cb4 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 09 Apr 2021 08:18:59
+ smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
+ 60700e488166b7eff7157e60 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 09 Apr 2021 08:20:24
  GMT
 Sender: skakit=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id CF88CC43463; Fri,  9 Apr 2021 08:18:59 +0000 (UTC)
+        id 60EE1C43461; Fri,  9 Apr 2021 08:20:23 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -39,202 +38,57 @@ Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
         (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
         (Authenticated sender: skakit)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 81100C433CA;
-        Fri,  9 Apr 2021 08:18:58 +0000 (UTC)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id B8D67C433CA;
+        Fri,  9 Apr 2021 08:20:22 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
+Content-Type: text/plain; charset=UTF-8;
  format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Fri, 09 Apr 2021 13:48:58 +0530
+Content-Transfer-Encoding: 8bit
+Date:   Fri, 09 Apr 2021 13:50:22 +0530
 From:   skakit@codeaurora.org
-To:     Sebastian Reichel <sebastian.reichel@collabora.com>
-Cc:     Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
+To:     Linus Walleij <linus.walleij@linaro.org>
+Cc:     Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        David Collins <collinsd@codeaurora.org>, kgunda@codeaurora.org,
-        Vinod Koul <vkoul@kernel.org>,
-        Courtney Cavin <courtney.cavin@sonymobile.com>,
-        linux-input@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org
-Subject: Re: [PATCH V2 3/4] dt-bindings: power: reset: qcom-pon: Convert qcom
- PON binding to yaml
-In-Reply-To: <20210408130001.k3qbq3vvwkiyykzv@earth.universe>
-References: <1617881469-31965-1-git-send-email-skakit@codeaurora.org>
- <1617881469-31965-4-git-send-email-skakit@codeaurora.org>
- <20210408130001.k3qbq3vvwkiyykzv@earth.universe>
-Message-ID: <0cb9b3503000ac7206f4a3ef5fd16c17@codeaurora.org>
+        Kiran Gunda <kgunda@codeaurora.org>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        linux-kernel <linux-kernel@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, MSM <linux-arm-msm@vger.kernel.org>
+Subject: Re: [PATCH V2 0/3] Add GPIO support for PM7325, PM8350c, PMK8350 and
+ PMR735A
+In-Reply-To: <CACRpkdbD6E3PY_JCEbwNiVfb8LoT6F5DzV7x71Us3Z7U3BaX=Q@mail.gmail.com>
+References: <1617280546-9583-1-git-send-email-skakit@codeaurora.org>
+ <CACRpkdbD6E3PY_JCEbwNiVfb8LoT6F5DzV7x71Us3Z7U3BaX=Q@mail.gmail.com>
+Message-ID: <f035f30845abdc45363c30348ac5cae8@codeaurora.org>
 X-Sender: skakit@codeaurora.org
 User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Sebastian,
-
-On 2021-04-08 18:30, Sebastian Reichel wrote:
-> Hi,
+On 2021-04-08 19:18, Linus Walleij wrote:
+> On Thu, Apr 1, 2021 at 2:36 PM satya priya <skakit@codeaurora.org> 
+> wrote:
 > 
-> On Thu, Apr 08, 2021 at 05:01:08PM +0530, satya priya wrote:
->> Convert qcom PON binding from .txt to .yaml format.
->> 
->> Signed-off-by: satya priya <skakit@codeaurora.org>
->> ---
+>> satya priya (3):
+>>   pinctrl: qcom: spmi-gpio: Add support for four variants
+>>   dt-bindings: pinctrl: qcom-pmic-gpio: Update the binding to add four
+>>     new variants
+>>   dt-bindings: pinctrl: qcom-pmic-gpio: Convert qcom pmic gpio 
+>> bindings
+>>     to YAML
 > 
-> Thanks for doing this.
-> 
->> Changes in V2:
->>  - As per Rob's comments, converted the main PON binding and added in 
->> V2.
->> 
->>  .../devicetree/bindings/power/reset/qcom,pon.txt   | 49 
->> ----------------------
->>  .../devicetree/bindings/power/reset/qcom,pon.yaml  | 41 
->> ++++++++++++++++++
->>  2 files changed, 41 insertions(+), 49 deletions(-)
->>  delete mode 100644 
->> Documentation/devicetree/bindings/power/reset/qcom,pon.txt
->>  create mode 100644 
->> Documentation/devicetree/bindings/power/reset/qcom,pon.yaml
->> 
->> diff --git 
->> a/Documentation/devicetree/bindings/power/reset/qcom,pon.txt 
->> b/Documentation/devicetree/bindings/power/reset/qcom,pon.txt
->> deleted file mode 100644
->> index 0c0dc3a..0000000
->> --- a/Documentation/devicetree/bindings/power/reset/qcom,pon.txt
->> +++ /dev/null
->> @@ -1,49 +0,0 @@
->> -Qualcomm PON Device
->> -
->> -The Power On device for Qualcomm PM8xxx is MFD supporting pwrkey
->> -and resin along with the Android reboot-mode.
->> -
->> -This DT node has pwrkey and resin as sub nodes.
->> -
->> -Required Properties:
->> --compatible: Must be one of:
->> -	"qcom,pm8916-pon"
->> -	"qcom,pms405-pon"
->> -	"qcom,pm8998-pon"
->> -
->> --reg: Specifies the physical address of the pon register
->> -
->> -Optional subnode:
->> --pwrkey: Specifies the subnode pwrkey and should follow the
->> - qcom,pm8941-pwrkey.txt description.
->> --resin: Specifies the subnode resin and should follow the
->> - qcom,pm8xxx-pwrkey.txt description.
->> -
->> -The rest of the properties should follow the generic reboot-mode 
->> description
->> -found in reboot-mode.txt
->> -
->> -Example:
->> -
->> -	pon@800 {
->> -		compatible = "qcom,pm8916-pon";
->> -
->> -		reg = <0x800>;
->> -		mode-bootloader = <0x2>;
->> -		mode-recovery = <0x1>;
->> -
->> -		pwrkey {
->> -			compatible = "qcom,pm8941-pwrkey";
->> -			interrupts = <0x0 0x8 0 IRQ_TYPE_EDGE_BOTH>;
->> -			debounce = <15625>;
->> -			bias-pull-up;
->> -			linux,code = <KEY_POWER>;
->> -		};
->> -
->> -		resin {
->> -			compatible = "qcom,pm8941-resin";
->> -			interrupts = <0x0 0x8 1 IRQ_TYPE_EDGE_BOTH>;
->> -			debounce = <15625>;
->> -			bias-pull-up;
->> -			linux,code = <KEY_VOLUMEDOWN>;
->> -		};
->> -	};
->> diff --git 
->> a/Documentation/devicetree/bindings/power/reset/qcom,pon.yaml 
->> b/Documentation/devicetree/bindings/power/reset/qcom,pon.yaml
->> new file mode 100644
->> index 0000000..40eea5f1
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/power/reset/qcom,pon.yaml
->> @@ -0,0 +1,41 @@
->> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
->> +%YAML 1.2
->> +---
->> +$id: http://devicetree.org/schemas/power/reset/qcom,pon.yaml#
->> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->> +
->> +title: Qualcomm PON Device
->> +
->> +maintainers:
->> +  - Vinod Koul <vkoul@kernel.org>
->> +
->> +description: |
->> +  The Power On device for Qualcomm PM8xxx is MFD supporting pwrkey
->> +  and resin along with the Android reboot-mode.
->> +
->> +  This DT node has pwrkey and resin as sub nodes.
->> +
->> +properties:
->> +  compatible:
->> +    enum:
->> +      - qcom,pm8916-pon
->> +      - qcom,pms405-pon
->> +      - qcom,pm8998-pon
->> +
->> +  reg:
->> +    description: Specifies the physical address of the pon register
-> 
-> That description is obvious and pointless. Instead add
-> 
-> maxItems: 1
+> Please collect the ACKs and rebase like Björn says, sort stuff 
+> alphabetically
+> and resend so I can try to apply it! The YAML conversion may need a nod 
+> from
+> the DT people as well.
 > 
 
-Okay.
+Sure, will address the comments and resend.
 
->> +  pwrkey:
->> +    type: object
->> +    $ref: "../../input/qcom,pm8941-pwrkey.yaml#"
->> +
->> +  resin:
->> +    type: object
->> +    $ref: "../../input/qcom,pm8941-pwrkey.yaml#"
->> +
->> +required:
->> +  - compatible
->> +  - reg
->> +
->> +additionalProperties: true
-> 
-> Instead of allowing arbitrary properties, only valid modes
-> should be allowed. So drop additionalProperties and do this
-> instead:
-> 
-> allOf:
->   - $ref: reboot-mode.yaml#
-> 
-> unevaluatedProperties: false
-> 
-
-Okay.
-
->> +...
-> 
-> Please do not drop the example :)
-> 
-
-As per my understanding on Rob's comments [1] I have added one complete 
-example in qcom,pm8941-pwrkey.yaml (see patch 4/4) and dropped it here.
-
-[1] https://lore.kernel.org/patchwork/patch/1390062/#1588027
-
-> -- Sebastian
+> Yours,
+> Linus Walleij
 
 Thanks,
 Satya Priya
