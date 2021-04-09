@@ -2,251 +2,157 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1EA383591FC
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Apr 2021 04:28:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 886B53592BC
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Apr 2021 05:13:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232789AbhDIC3K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Apr 2021 22:29:10 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:11179 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232616AbhDIC3H (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Apr 2021 22:29:07 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1617935335; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=pbsD/wKMaI68vm174fd2CAWgZFe43VrSk83pSMnRTkk=; b=FUp2OCzB8h5ZDmlROYsP6PXJWuw+gVh1HGGcbx+xhZRPeSI6rbDjAgfoxUBPWvz0gXjOgmP+
- zMaVUd18ayQ8IEev8/c7+KbENg5SjVeC8XYEYQ9W8DS6yuMsrMUvOu1K4uGThuBdM3xHVYPX
- xxmZTzgCtljLLg3ZhQHAcbco9hw=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
- 606fbbe774f773a6641179c1 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 09 Apr 2021 02:28:55
- GMT
-Sender: abhinavk=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id BA9F9C4346B; Fri,  9 Apr 2021 02:28:53 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from abhinavk-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: abhinavk)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id E89E0C433CA;
-        Fri,  9 Apr 2021 02:28:50 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org E89E0C433CA
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=abhinavk@codeaurora.org
-From:   Abhinav Kumar <abhinavk@codeaurora.org>
-To:     dri-devel@lists.freedesktop.org
-Cc:     Abhinav Kumar <abhinavk@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        robdclark@gmail.com, seanpaul@chromium.org, swboyd@chromium.org,
-        nganji@codeaurora.org, aravindh@codeaurora.org,
-        khsieh@codeaurora.org, daniel@ffwll.ch
-Subject: [PATCH v3 3/3] drm/msm/dpu: add dpu_dbg points across dpu driver
-Date:   Thu,  8 Apr 2021 19:28:37 -0700
-Message-Id: <1617935317-15571-4-git-send-email-abhinavk@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1617935317-15571-1-git-send-email-abhinavk@codeaurora.org>
-References: <1617935317-15571-1-git-send-email-abhinavk@codeaurora.org>
+        id S233207AbhDIDNS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Apr 2021 23:13:18 -0400
+Received: from mailout3.samsung.com ([203.254.224.33]:49934 "EHLO
+        mailout3.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233157AbhDIDNQ (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 8 Apr 2021 23:13:16 -0400
+Received: from epcas3p3.samsung.com (unknown [182.195.41.21])
+        by mailout3.samsung.com (KnoxPortal) with ESMTP id 20210409031302epoutp0323b6053d0115fd8fcf5b897d4ffac37e~0EgXmX9TO0796607966epoutp03U
+        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Apr 2021 03:13:02 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout3.samsung.com 20210409031302epoutp0323b6053d0115fd8fcf5b897d4ffac37e~0EgXmX9TO0796607966epoutp03U
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1617937982;
+        bh=W56ar/RkCbAlY+agUi8Yd9X8F+LYYJguXbtIXgcqiOQ=;
+        h=Subject:Reply-To:From:To:CC:In-Reply-To:Date:References:From;
+        b=lvHAhB/BpIhDUT8TU0bQMtmC2glwg547zywjiFMmBxt7zSbZEWfMSgxzfuiQ0STOv
+         uBCL/WfpDKgQrGkb0rVKtKiBkGkFdVtiPr2hA/sY9w1K+1WZpZDl1LJaPqzmgLr+Mj
+         BU7OGSEtDwJD3c9V5o2xsyUWlkHSoOwVO2V1A3gk=
+Received: from epsnrtp4.localdomain (unknown [182.195.42.165]) by
+        epcas3p4.samsung.com (KnoxPortal) with ESMTP id
+        20210409031301epcas3p472d94ea873f2bd32cf6e09b8e8913909~0EgWzy-Xa3080730807epcas3p48;
+        Fri,  9 Apr 2021 03:13:01 +0000 (GMT)
+Received: from epcpadp4 (unknown [182.195.40.18]) by epsnrtp4.localdomain
+        (Postfix) with ESMTP id 4FGjqx4pV3z4x9Q1; Fri,  9 Apr 2021 03:13:01 +0000
+        (GMT)
+Mime-Version: 1.0
+Subject: RE: [PATCH v17 1/2] scsi: ufs: Enable power management for wlun
+Reply-To: daejun7.park@samsung.com
+Sender: Daejun Park <daejun7.park@samsung.com>
+From:   Daejun Park <daejun7.park@samsung.com>
+To:     "cang@codeaurora.org" <cang@codeaurora.org>,
+        "martin.petersen@oracle.com" <martin.petersen@oracle.com>,
+        "adrian.hunter@intel.com" <adrian.hunter@intel.com>,
+        "linux-scsi@vger.kernel.org" <linux-scsi@vger.kernel.org>
+CC:     Asutosh Das <asutoshd@codeaurora.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        ALIM AKHTAR <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        Pedro Sousa <pedrom.sousa@synopsys.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Stanley Chu <stanley.chu@mediatek.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Steven Rostedt <rostedt@goodmis.org>,
+        Ingo Molnar <mingo@redhat.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Lee Jones <lee.jones@linaro.org>,
+        Bean Huo <beanhuo@micron.com>,
+        Kiwoong Kim <kwmad.kim@samsung.com>,
+        Wei Yongjun <weiyongjun1@huawei.com>,
+        Dan Carpenter <dan.carpenter@oracle.com>,
+        Yue Hu <huyue2@yulong.com>,
+        Dinghao Liu <dinghao.liu@zju.edu.cn>,
+        "Gustavo A. R. Silva" <gustavoars@kernel.org>,
+        Jaegeuk Kim <jaegeuk@kernel.org>,
+        Satya Tangirala <satyat@google.com>,
+        open list <linux-kernel@vger.kernel.org>
+X-Priority: 3
+X-Content-Kind-Code: NORMAL
+In-Reply-To: <1b3d53dad245a7166f3f67a4c65f3a731e6600b3.1617893198.git.asutoshd@codeaurora.org>
+X-CPGS-Detection: blocking_info_exchange
+X-Drm-Type: N,general
+X-Msg-Generator: Mail
+X-Msg-Type: PERSONAL
+X-Reply-Demand: N
+Message-ID: <1891546521.01617937981650.JavaMail.epsvc@epcpadp4>
+Date:   Fri, 09 Apr 2021 11:27:31 +0900
+X-CMS-MailID: 20210409022731epcms2p117b1a94665375910a2f9b6265acdb0fb
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+X-Sendblock-Type: AUTO_CONFIDENTIAL
+X-CPGSPASS: Y
+X-CPGSPASS: Y
+X-Hop-Count: 3
+X-CMS-RootMailID: 20210408145007epcas2p1accfbd653b2e1318b2722c1f5661c1e0
+References: <1b3d53dad245a7166f3f67a4c65f3a731e6600b3.1617893198.git.asutoshd@codeaurora.org>
+        <cover.1617893198.git.asutoshd@codeaurora.org>
+        <CGME20210408145007epcas2p1accfbd653b2e1318b2722c1f5661c1e0@epcms2p1>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add dpu_dbg points across dpu driver to trigger dumps when critical
-errors are hit.
+Hi Asutosh Das,
 
-changes in v3:
- - change the callers to also pass the drm device while triggering
-   the dump
+>During runtime-suspend of ufs host, the scsi devices are
+>already suspended and so are the queues associated with them.
+>But the ufs host sends SSU (START_STOP_UNIT) to wlun
+>during its runtime-suspend.
+>During the process blk_queue_enter checks if the queue is not in
+>suspended state. If so, it waits for the queue to resume, and never
+>comes out of it.
+>The commit
+>(d55d15a33: scsi: block: Do not accept any requests while suspended)
+>adds the check if the queue is in suspended state in blk_queue_enter().
+> 
+>Call trace:
+> __switch_to+0x174/0x2c4
+> __schedule+0x478/0x764
+> schedule+0x9c/0xe0
+> blk_queue_enter+0x158/0x228
+> blk_mq_alloc_request+0x40/0xa4
+> blk_get_request+0x2c/0x70
+> __scsi_execute+0x60/0x1c4
+> ufshcd_set_dev_pwr_mode+0x124/0x1e4
+> ufshcd_suspend+0x208/0x83c
+> ufshcd_runtime_suspend+0x40/0x154
+> ufshcd_pltfrm_runtime_suspend+0x14/0x20
+> pm_generic_runtime_suspend+0x28/0x3c
+> __rpm_callback+0x80/0x2a4
+> rpm_suspend+0x308/0x614
+> rpm_idle+0x158/0x228
+> pm_runtime_work+0x84/0xac
+> process_one_work+0x1f0/0x470
+> worker_thread+0x26c/0x4c8
+> kthread+0x13c/0x320
+> ret_from_fork+0x10/0x18
+> 
+>Fix this by registering ufs device wlun as a scsi driver and
+>registering it for block runtime-pm. Also make this as a
+>supplier for all other luns. That way, this device wlun
+>suspends after all the consumers and resumes after
+>hba resumes.
+> 
+>Co-developed-by: Can Guo <cang@codeaurora.org>
+>Signed-off-by: Can Guo <cang@codeaurora.org>
+>Signed-off-by: Asutosh Das <asutoshd@codeaurora.org>
+>---
+> drivers/scsi/ufs/cdns-pltfrm.c     |   2 +
+> drivers/scsi/ufs/tc-dwc-g210-pci.c |   2 +
+> drivers/scsi/ufs/ufs-debugfs.c     |   6 +-
+> drivers/scsi/ufs/ufs-debugfs.h     |   2 +-
+> drivers/scsi/ufs/ufs-exynos.c      |   2 +
+> drivers/scsi/ufs/ufs-hisi.c        |   2 +
+> drivers/scsi/ufs/ufs-mediatek.c    |  12 +-
+> drivers/scsi/ufs/ufs-qcom.c        |   2 +
+> drivers/scsi/ufs/ufs_bsg.c         |   6 +-
+> drivers/scsi/ufs/ufshcd-pci.c      |  36 +--
+> drivers/scsi/ufs/ufshcd.c          | 642 ++++++++++++++++++++++++++-----------
+> drivers/scsi/ufs/ufshcd.h          |   6 +
+> include/trace/events/ufs.h         |  20 ++
+> 13 files changed, 509 insertions(+), 231 deletions(-)
 
-Change-Id: I351514afe2f1c85232a1562253e5671588075197
-Signed-off-by: Abhinav Kumar <abhinavk@codeaurora.org>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c          | 18 +++++++++++++++---
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c | 14 +++++++++-----
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c |  8 +++++++-
- 3 files changed, 31 insertions(+), 9 deletions(-)
+In this patch, you changed pm_runtime_{get, put}_sync to scsi_autopm_{get, put}_device.
+But, scsi_autopm_get_device() calls pm_runtime_put_sync() in case of error
+of pm_runtime_get_sync(). So, pm_runtime_put_sync() can be called twice if
+scsi_autopm_get_device has error.
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-index 288e95e..d89c4e9 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-@@ -1,6 +1,6 @@
- // SPDX-License-Identifier: GPL-2.0-only
- /*
-- * Copyright (c) 2014-2018, The Linux Foundation. All rights reserved.
-+ * Copyright (c) 2014-2018, 2020-2021 The Linux Foundation. All rights reserved.
-  * Copyright (C) 2013 Red Hat
-  * Author: Rob Clark <robdclark@gmail.com>
-  */
-@@ -26,6 +26,7 @@
- #include "dpu_crtc.h"
- #include "dpu_trace.h"
- #include "dpu_core_irq.h"
-+#include "dpu_dbg.h"
- 
- #define DPU_DEBUG_ENC(e, fmt, ...) DPU_DEBUG("enc%d " fmt,\
- 		(e) ? (e)->base.base.id : -1, ##__VA_ARGS__)
-@@ -1306,6 +1307,13 @@ static void dpu_encoder_underrun_callback(struct drm_encoder *drm_enc,
- 
- 	DPU_ATRACE_BEGIN("encoder_underrun_callback");
- 	atomic_inc(&phy_enc->underrun_cnt);
-+
-+	/* trigger dump only on the first underrun */
-+	if (atomic_read(&phy_enc->underrun_cnt) == 1) {
-+		pr_err("triggering dump\n");
-+		DPU_DBG_DUMP(drm_enc->dev, "all");
-+	}
-+
- 	trace_dpu_enc_underrun_cb(DRMID(drm_enc),
- 				  atomic_read(&phy_enc->underrun_cnt));
- 	DPU_ATRACE_END("encoder_underrun_callback");
-@@ -1535,19 +1543,23 @@ static void dpu_encoder_helper_hw_reset(struct dpu_encoder_phys *phys_enc)
- 	struct dpu_encoder_virt *dpu_enc;
- 	struct dpu_hw_ctl *ctl;
- 	int rc;
-+	struct drm_encoder *drm_enc;
- 
- 	dpu_enc = to_dpu_encoder_virt(phys_enc->parent);
- 	ctl = phys_enc->hw_ctl;
-+	drm_enc = phys_enc->parent;
- 
- 	if (!ctl->ops.reset)
- 		return;
- 
--	DRM_DEBUG_KMS("id:%u ctl %d reset\n", DRMID(phys_enc->parent),
-+	DRM_DEBUG_KMS("id:%u ctl %d reset\n", DRMID(drm_enc),
- 		      ctl->idx);
- 
- 	rc = ctl->ops.reset(ctl);
--	if (rc)
-+	if (rc) {
- 		DPU_ERROR_ENC(dpu_enc, "ctl %d reset failure\n",  ctl->idx);
-+		DPU_DBG_DUMP(drm_enc->dev, "all");
-+	}
- 
- 	phys_enc->enable_state = DPU_ENC_ENABLED;
- }
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-index b2be39b..fd5ddcb 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-@@ -1,6 +1,6 @@
- // SPDX-License-Identifier: GPL-2.0-only
- /*
-- * Copyright (c) 2015-2018 The Linux Foundation. All rights reserved.
-+ * Copyright (c) 2015-2018, 2020-2021 The Linux Foundation. All rights reserved.
-  */
- 
- #define pr_fmt(fmt)	"[drm:%s:%d] " fmt, __func__, __LINE__
-@@ -11,6 +11,7 @@
- #include "dpu_core_irq.h"
- #include "dpu_formats.h"
- #include "dpu_trace.h"
-+#include "dpu_dbg.h"
- 
- #define DPU_DEBUG_CMDENC(e, fmt, ...) DPU_DEBUG("enc%d intf%d " fmt, \
- 		(e) && (e)->base.parent ? \
-@@ -191,10 +192,13 @@ static int _dpu_encoder_phys_cmd_handle_ppdone_timeout(
- 			to_dpu_encoder_phys_cmd(phys_enc);
- 	u32 frame_event = DPU_ENCODER_FRAME_EVENT_ERROR;
- 	bool do_log = false;
-+	struct drm_encoder *drm_enc;
- 
- 	if (!phys_enc->hw_pp)
- 		return -EINVAL;
- 
-+	drm_enc = phys_enc->parent;
-+
- 	cmd_enc->pp_timeout_report_cnt++;
- 	if (cmd_enc->pp_timeout_report_cnt == PP_TIMEOUT_MAX_TRIALS) {
- 		frame_event |= DPU_ENCODER_FRAME_EVENT_PANEL_DEAD;
-@@ -203,7 +207,7 @@ static int _dpu_encoder_phys_cmd_handle_ppdone_timeout(
- 		do_log = true;
- 	}
- 
--	trace_dpu_enc_phys_cmd_pdone_timeout(DRMID(phys_enc->parent),
-+	trace_dpu_enc_phys_cmd_pdone_timeout(DRMID(drm_enc),
- 		     phys_enc->hw_pp->idx - PINGPONG_0,
- 		     cmd_enc->pp_timeout_report_cnt,
- 		     atomic_read(&phys_enc->pending_kickoff_cnt),
-@@ -212,12 +216,12 @@ static int _dpu_encoder_phys_cmd_handle_ppdone_timeout(
- 	/* to avoid flooding, only log first time, and "dead" time */
- 	if (do_log) {
- 		DRM_ERROR("id:%d pp:%d kickoff timeout %d cnt %d koff_cnt %d\n",
--			  DRMID(phys_enc->parent),
-+			  DRMID(drm_enc),
- 			  phys_enc->hw_pp->idx - PINGPONG_0,
- 			  phys_enc->hw_ctl->idx - CTL_0,
- 			  cmd_enc->pp_timeout_report_cnt,
- 			  atomic_read(&phys_enc->pending_kickoff_cnt));
--
-+		DPU_DBG_DUMP(drm_enc->dev, "all");
- 		dpu_encoder_helper_unregister_irq(phys_enc, INTR_IDX_RDPTR);
- 	}
- 
-@@ -228,7 +232,7 @@ static int _dpu_encoder_phys_cmd_handle_ppdone_timeout(
- 
- 	if (phys_enc->parent_ops->handle_frame_done)
- 		phys_enc->parent_ops->handle_frame_done(
--				phys_enc->parent, phys_enc, frame_event);
-+				drm_enc, phys_enc, frame_event);
- 
- 	return -ETIMEDOUT;
- }
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-index 9a69fad..4909e65 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-@@ -1,5 +1,5 @@
- // SPDX-License-Identifier: GPL-2.0-only
--/* Copyright (c) 2015-2018, The Linux Foundation. All rights reserved.
-+/* Copyright (c) 2015-2018, 2020-2021 The Linux Foundation. All rights reserved.
-  */
- 
- #define pr_fmt(fmt)	"[drm:%s:%d] " fmt, __func__, __LINE__
-@@ -9,6 +9,7 @@
- #include "dpu_core_irq.h"
- #include "dpu_formats.h"
- #include "dpu_trace.h"
-+#include "dpu_dbg.h"
- 
- #define DPU_DEBUG_VIDENC(e, fmt, ...) DPU_DEBUG("enc%d intf%d " fmt, \
- 		(e) && (e)->parent ? \
-@@ -468,6 +469,7 @@ static void dpu_encoder_phys_vid_enable(struct dpu_encoder_phys *phys_enc)
- 		"update pending flush ctl %d intf %d\n",
- 		ctl->idx - CTL_0, phys_enc->hw_intf->idx);
- 
-+	atomic_set(&phys_enc->underrun_cnt, 0);
- 
- 	/* ctl_flush & timing engine enable will be triggered by framework */
- 	if (phys_enc->enable_state == DPU_ENC_DISABLED)
-@@ -537,6 +539,9 @@ static void dpu_encoder_phys_vid_prepare_for_kickoff(
- {
- 	struct dpu_hw_ctl *ctl;
- 	int rc;
-+	struct drm_encoder *drm_enc;
-+
-+	drm_enc = phys_enc->parent;
- 
- 	ctl = phys_enc->hw_ctl;
- 	if (!ctl->ops.wait_reset_status)
-@@ -550,6 +555,7 @@ static void dpu_encoder_phys_vid_prepare_for_kickoff(
- 	if (rc) {
- 		DPU_ERROR_VIDENC(phys_enc, "ctl %d reset failure: %d\n",
- 				ctl->idx, rc);
-+		DPU_DBG_DUMP(drm_enc->dev, "all");
- 		dpu_encoder_helper_unregister_irq(phys_enc, INTR_IDX_VSYNC);
- 	}
- }
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+Thanks,
+Daejun
 
