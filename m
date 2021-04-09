@@ -2,185 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5378635960C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Apr 2021 09:09:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 749C635966B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Apr 2021 09:32:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231630AbhDIHIU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Apr 2021 03:08:20 -0400
-Received: from mail-eopbgr60045.outbound.protection.outlook.com ([40.107.6.45]:43399
-        "EHLO EUR04-DB3-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S233499AbhDIHIT (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Apr 2021 03:08:19 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=QqJAIqIf8DLpXvVXJzpH6g1sV22ygb15YGlD7/6TbBPuytGfjwiETVEP1TmN9BmBPWKSzmpGThpAdbnqgrPJgx3Q2BD41cdZg4AM78r2SLYrmhGaRt3ckMcCvloKVIxtwHemZyyLZoWDXLpIN0/h9LSHKuCoqntU+xQwOagnpoF3QqVh3bPR7uSImEoZSAaGIDGtYb41dd6SPA2Gl5aZ33yu+ZBtb/K9RQNFk5w2Wrq07JXdWEDoasg4scxgAh0+RReAwqOH8et8MthQubqApPohStuZYKMRG+UUROvLy+OmRR0KFnKXs8ZXBvZ+Io033VkABqE55BB0+HUw76otJQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=3y6SxiQuDT4NS5zOE1IqqKRz/q1Mb2rxAJKRA+yStto=;
- b=Pq2xE+3z8vF3CJ02lwnviU0NLEmsH6BuGWijwr0iAH+ygimylk/l3lIDMiklw3kJsOXYIMYPjvhgQHgFqU/HgzAlp3eWw8L637aOZU7C+iZYkytitq9y4006uwacAzZTxEKhu0SamhYXRc/F7Adkr6kv/CRpJe/+T48NDR5q2HKsYxjfVt899usKPNiuCA5HVeDDhbiJEjHe1sqvhpiDVt17KBRj0YmXY0NNakI7z3T2Y12ICBpkH5HLXAq4PStFCleZ4RGHTu/XGJvk8hSakEIBwtt3QJTc9+5RxqHvq5+uIzSWlQHBiOnVNkkSkkkXTObf+uVx1WdzOelPZX1J/A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=fi.rohmeurope.com; dmarc=pass action=none
- header.from=fi.rohmeurope.com; dkim=pass header.d=fi.rohmeurope.com; arc=none
+        id S229803AbhDIHcL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Apr 2021 03:32:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49098 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229545AbhDIHcK (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 9 Apr 2021 03:32:10 -0400
+Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com [IPv6:2607:f8b0:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7528FC061761
+        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Apr 2021 00:31:58 -0700 (PDT)
+Received: by mail-pg1-x52c.google.com with SMTP id f29so3240859pgm.8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Apr 2021 00:31:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rohmsemiconductoreurope.onmicrosoft.com;
- s=selector1-rohmsemiconductoreurope-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=3y6SxiQuDT4NS5zOE1IqqKRz/q1Mb2rxAJKRA+yStto=;
- b=JEzVDmQPwhKa1/goOfUE310SxNe6CJPFZlPbYvcQyuny2hf/qVcmOlMeZOBgIwFZbXaZDOHpRlNLwkRli8JNMUTs/akNor1ujpJyAecJNIPNrh0MYbs2a4p2HmaT184K852v4zO989fP3USdg6Sm9sc71ZEiQnSE/sWXUakqkJo=
-Received: from HE1PR03MB3162.eurprd03.prod.outlook.com (2603:10a6:7:55::20) by
- HE1PR0301MB2172.eurprd03.prod.outlook.com (2603:10a6:3:1e::7) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.4020.17; Fri, 9 Apr 2021 07:08:02 +0000
-Received: from HE1PR03MB3162.eurprd03.prod.outlook.com
- ([fe80::f4d0:ee66:d5fb:9cdd]) by HE1PR03MB3162.eurprd03.prod.outlook.com
- ([fe80::f4d0:ee66:d5fb:9cdd%3]) with mapi id 15.20.3999.033; Fri, 9 Apr 2021
- 07:08:02 +0000
-From:   "Vaittinen, Matti" <Matti.Vaittinen@fi.rohmeurope.com>
-To:     "keescook@chromium.org" <keescook@chromium.org>,
-        "andy.shevchenko@gmail.com" <andy.shevchenko@gmail.com>
-CC:     "agross@kernel.org" <agross@kernel.org>,
-        "broonie@kernel.org" <broonie@kernel.org>,
-        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
-        linux-power <linux-power@fi.rohmeurope.com>,
-        "linux-renesas-soc@vger.kernel.org" 
-        <linux-renesas-soc@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "bjorn.andersson@linaro.org" <bjorn.andersson@linaro.org>,
-        "lgirdwood@gmail.com" <lgirdwood@gmail.com>,
-        "robh+dt@kernel.org" <robh+dt@kernel.org>
-Subject: Re: [PATCH v4 3/7] regulator: IRQ based event/error notification
- helpers
-Thread-Topic: [PATCH v4 3/7] regulator: IRQ based event/error notification
- helpers
-Thread-Index: AQHXKrRUz5e/K6qNQUGVKWIQIRdIZKqoF3GAgACvA7WAAArQAIAAMm+AgAKFaQCAAD+igA==
-Date:   Fri, 9 Apr 2021 07:08:02 +0000
-Message-ID: <dbd6a71b1b907de004d23d2ea4b15045320f1ae1.camel@fi.rohmeurope.com>
-References: <cover.1617690965.git.matti.vaittinen@fi.rohmeurope.com>
-         <2b87b4637fde2225006cc122bc855efca0dcd7f1.1617692184.git.matti.vaittinen@fi.rohmeurope.com>
-         <CAHp75VeoTVNDemV0qRA4BTVqOVfyR9UKGWhHgfeat8zVVGcu_Q@mail.gmail.com>
-         <55397166b1c4107efc2a013635f63af142d9b187.camel@fi.rohmeurope.com>
-         <CAHp75VeK+Oq9inOLcSSsq+FjaaPC5D=EMt4vLf97uR1BmpW2Zw@mail.gmail.com>
-         <42210c909c55f7672e4a4a9bfd34553a6f4c8146.camel@fi.rohmeurope.com>
-         <CAHp75VeX8H5E6GfVHxgu_6R+zbvmFV8fT9tO-nsm1nB3N4NF_A@mail.gmail.com>
-         <202104082015.4DADF9DC48@keescook>
-In-Reply-To: <202104082015.4DADF9DC48@keescook>
-Reply-To: "Vaittinen, Matti" <Matti.Vaittinen@fi.rohmeurope.com>
-Accept-Language: fi-FI, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-user-agent: Evolution 3.34.4 (3.34.4-1.fc31) 
-authentication-results: chromium.org; dkim=none (message not signed)
- header.d=none;chromium.org; dmarc=none action=none
- header.from=fi.rohmeurope.com;
-x-originating-ip: [213.255.186.46]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 51aff8ad-1415-49f9-8b75-08d8fb263735
-x-ms-traffictypediagnostic: HE1PR0301MB2172:
-x-ms-exchange-transport-forked: True
-x-microsoft-antispam-prvs: <HE1PR0301MB21721CFFF5AFB159525CF057AD739@HE1PR0301MB2172.eurprd03.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:7219;
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: w/lkRsGavJo/hBIIOL7fP3PiYDUjyptFBizt4BK+gaH9HZ1Pt+HaZMvSGY6Thf6vHVOPNDP2MJqRYZTdfMT3d63fW2hzq4O5oE0S3DRv5B0mWt7WGBvsPUY8PnkNurllA2i+1Pzf/LZjBPIp6C9wNIo/XzzTsl8UYR3E950zXt5DCCTJypASpP2G988pggOcEUP+sQ0/J2idxwXcYmX9561oPBeWNtu7aZ2J7avbJiaPNBJns6GlRZmY4lsEb3UyHwKt7piGaEK886vuQBO3OoG1DWBNDVZ8Nxo/2dnthKdEYPeiD0aImdhW7ZFzUJV7vY8JFa0WL9CmoTd2ZjvHd+ImEWvOovm/AdBMg/2lUzfizlU5jVKlGFR9LVXj1Q0+88qqhFWOTTpJ1hZNakFk6Tut5bsKBpLLQiFFfUb/fTsMcAOn3hhIEdPYehOfCGSQwB9f+IDHSQwDXnZQScatrodhGFPYIJfPtZ5lUeeps5WFoY6azii6x9VeFYPfqdTDass450bN8pZweVcU2d1oC6u3HizhU+o1YsHsR50UL5it1r4/VWWqUqvpbB0uqwCeoG4c/TZuNrNjSBkMLNKqZufPOCX2uJf69HIluJkmCmeb4wAJQmjZ4EQDvY/qpBb/Un/pDLjghY9G5OrGQ3ddcCdJRtBOj8/XhapbiiFOvg7EkP4HfLVNVuaJkkyuukldy2AOONWzUlEN4IsSmHWE680fervalyTLYcMZXXFWK6g=
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:HE1PR03MB3162.eurprd03.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(39850400004)(366004)(346002)(376002)(396003)(136003)(8676002)(7416002)(966005)(316002)(110136005)(53546011)(5660300002)(66476007)(64756008)(76116006)(8936002)(66446008)(2616005)(66556008)(6506007)(66946007)(6486002)(71200400001)(54906003)(3450700001)(478600001)(6512007)(26005)(4326008)(2906002)(83380400001)(38100700001)(86362001)(186003);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata: =?utf-8?B?L1l5b29BdkU1d3B1ZlBUZGFUVWlQbjVrVDEwVGJxd1h2ak9jNWpnOHB0UXpy?=
- =?utf-8?B?WGU5WkxiYnRSUGR1cExYTnZMRjY2U3pmbjVSQ29YcFJoSWZuTEwxY0duNWpt?=
- =?utf-8?B?K0ZrR3lYSmc4ZVNNaUVvbG96dVRscE9PWGFreWlCRWJ5Q2N3dnl0M0FWaG9D?=
- =?utf-8?B?U29ib3VtaE1XUVlGY1U5R1A1dEVBbUdleXdHWU00TFgzT1I2Q1BrbGF1T1VS?=
- =?utf-8?B?RENHd1o1cGlLTXJybFRWM0srUWtxRnhWTlJyNXZraXErWUsrUkRQM2d6cmFU?=
- =?utf-8?B?d3dVSWUyaVhoeE9wRXJPZUNHNzRXemM2ZENTSUNQUlhvT2RNZG1zTjN1OEpk?=
- =?utf-8?B?Q3BoYWtHOTY0WHdPZkxjanhDTjU3RnRpM3BzVkc3MWlaTWxpNXpiRjNmTjYx?=
- =?utf-8?B?UXArUWpiUnoxSjRRenNtcjlXZTF6OWxvZXRLN2ZtaHRkWE9DZWJkbDZFL2J1?=
- =?utf-8?B?clBLMnBNVmJHcWYxZFhWZzRrOG9Xdk1PMnFzUENDR0hmZEJVSlMzeVNzSWZ3?=
- =?utf-8?B?U2tLZWpLeC9QNmVtZzBJUzJna3Q2OEQ2TVFrWWU3d1FZQmwzeXAvQnl4SEZu?=
- =?utf-8?B?dXlaRkUzY005b1JBTEhUSEJxQm45L0xnRjNmUWRLcTc2RnZreSt5Qm01Ulhi?=
- =?utf-8?B?ZW0xdExwMktBcEF0NmZTQWsrN2ZqS1FQWGYvaWVIb3dzUzF5WThuT2NyWHc0?=
- =?utf-8?B?UmNidzYwdmZzSlk1N1B0eEhqTFhETEZISUFQYWVZTzQ2NUhRWmIwUUVBeWlF?=
- =?utf-8?B?eEo3eW96RXNZVlJDdmdvYkx0VWMxTEtHZ1hTSDBJRmZRbjk5VnhWcHBwazhi?=
- =?utf-8?B?R01sZStyZXNjMFhlSjFDMEpIbmhUUEZGMkJBSUJjN1NoTWswQTVBRGh5SEE5?=
- =?utf-8?B?QUErUThyMHR3U2R6Z3grRlc1MUg1eEVYV052aWgwaFRVUURNSGZub1hmU0lm?=
- =?utf-8?B?TkM4QUxxNEVEb3czVVZVYmNUR3BURE8ya2xNdXNwSzZIQTN4b1JEZTlsZUJo?=
- =?utf-8?B?U3ErdktPMU5DckxPamVVcmRxUXpBa2RwTFhwd1dDUlcyMU9Jc0hoS1Uyak9s?=
- =?utf-8?B?WE5ENGNVVDBUcnFYbUczaS90bFRaVGVxUUJjN3pSd2o5OXNtdzIyUng2dzBv?=
- =?utf-8?B?dXdRcEdhT2FhUGo1YWIxRjQzSjh2SEFYamx0dDIwZ3dUdWJtMkxVQnRhUk1m?=
- =?utf-8?B?THZSa0sveHArRG9JbDh6Y1lhZFBiRTdtUkdId0lhTjc5ai9NVlY5TllTc2Vz?=
- =?utf-8?B?WUZXMmJINUhGdkNxU1RNTUI1MERvQ3F6bzJoUmlaYXJLWnRCVmN1WmE1d0g2?=
- =?utf-8?B?WEQxbkdXanUveEdlbFRyWHhiT1Qxb1ZldXJzNW5UQ2thZVNPcVhxbUtubmhR?=
- =?utf-8?B?YzFOSno3Ky9zRERxRDVDMVhPY2o2NFhGL3hsZ3UzVGlHcEdNYnk0OEpudUZ5?=
- =?utf-8?B?OGxpR3lLUlVnTnJiTGR2ai9JVEJxQ3JienYzREh3dWZyQnRvalgxNmtDMGIx?=
- =?utf-8?B?WnR2TTJRZjkxb2JCSE1GK3BjcSs2R1IwZEdiTmx0RHh4ejB1c1ZOaHlPV0Ur?=
- =?utf-8?B?VkMrTytHWU0vN29QdUhndUtOT0E0Wko4YXNITXNwMmtYY2pXN041dTJkUXVu?=
- =?utf-8?B?V1Vvclg4aUxIYTVzT1IreE01WXZINUVEZjJBSVZNQ1FMenJ3MitLblNQYWtl?=
- =?utf-8?B?dXNubmRuenpyUnZVQndKZ3cyYXRNWE9pMXc5Q3haUWdBUDBLbjNVUTJ6bXFi?=
- =?utf-8?B?NWRrU1dYREcxRU5WOTlKNnoyQXJFRDVhV0JXQ3ZzSkw4RVh5VWQ1Q2JrMTFF?=
- =?utf-8?B?amNSTncxbU1ucFJIanlKQT09?=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <4F26DB8B59A40541A2121E2FDF1FAF27@eurprd03.prod.outlook.com>
-Content-Transfer-Encoding: base64
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=BF+Ynk25edmDGRQzllVeejrpjdoiXp/2zkQWTVrdN/I=;
+        b=g5TDCJpB6VHinqvDcni+7Djgn4WO1pCqA4mjyC4KtcE2/poU5PO98s871xwf0sdgFC
+         9sF/pL+L5BZlOuLm1KdnKdUHAgh8irK96w68V4c/hSK+/4SbjLfGFDmHzLJWBP2WTQPX
+         eek13SjDE84wxB1TZ+cApyigA4TNxI5SRVtkAfhrKbQy42p7I7A6yLWUDxWZNmdixlJ4
+         4feSMP/5ydPRwno+5OUPL1WXP3ty7Lgs/9FIhYIen7rRfcMwXUrhGJqtdqCe9SESWn8c
+         vmeoIckesF9dEwydL/pyrUP3yZBv7uJ9Uy7kEJKS4/YWQ6gvImwb8dTYG4krzQ5XNRqu
+         Mojw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=BF+Ynk25edmDGRQzllVeejrpjdoiXp/2zkQWTVrdN/I=;
+        b=TI0rEAv9pE/MNvpYjaTfOTl+mLTBwhfJjts7+TLLkv5JJHzT8BxRVLwJpCgCQqsiyb
+         wNgMMfCMsEKPG3E850OvWQkJKPogLtfGChhxAeiFNQstrXsHij2AY+czxV71q/fTBbzk
+         PUydkAfZesqtGaBOKwHGI0/U4ifwkI+jEupAbic/gENe8oc4cbjjW52zG/KkhWGgGF62
+         SNPenUN404V/X3od9anD8zQ7r+Y9sMU0j5QR2Fscr0Q4Hwjjfmw9P6jIo0WmcYLAye7L
+         F81zo16jnkk+0H//euMkXQfdkm6m/YRnzJ7uG37vtHne3sVsf5VrwRe59tAyHI8VwwRW
+         kBdw==
+X-Gm-Message-State: AOAM5330ln9Z69yjsTjq/IB/ia+mJ0Kp6t337BhibzZili8iVD6g3qZn
+        +GCotmW3oKGqlNZLsDz8thn4
+X-Google-Smtp-Source: ABdhPJzpSrEdAvXiTBAf4hBdLS6zlntm+U3O+7tXwn8kQBk+GYj5GAcg5B5h98Nx9AIZYqOx1wSNaw==
+X-Received: by 2002:a63:d242:: with SMTP id t2mr11789981pgi.431.1617953517730;
+        Fri, 09 Apr 2021 00:31:57 -0700 (PDT)
+Received: from work ([103.77.37.131])
+        by smtp.gmail.com with ESMTPSA id gk20sm1423565pjb.17.2021.04.09.00.31.54
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 09 Apr 2021 00:31:57 -0700 (PDT)
+Date:   Fri, 9 Apr 2021 13:01:53 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Deepak Kumar Singh <deesin@codeaurora.org>, clew@codeaurora.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org, Andy Gross <agross@kernel.org>
+Subject: Re: [PATCH V1 1/2] soc: qcom: aoss: Expose send for generic usecase
+Message-ID: <20210409073153.GE4376@work>
+References: <1617344238-12137-1-git-send-email-deesin@codeaurora.org>
+ <1617344238-12137-2-git-send-email-deesin@codeaurora.org>
+ <YGn0wBkOOILgaq5w@builder.lan>
 MIME-Version: 1.0
-X-OriginatorOrg: fi.rohmeurope.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: HE1PR03MB3162.eurprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 51aff8ad-1415-49f9-8b75-08d8fb263735
-X-MS-Exchange-CrossTenant-originalarrivaltime: 09 Apr 2021 07:08:02.4831
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 94f2c475-a538-4112-b5dd-63f17273d67a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: WOVN2FuIMEs9wPkUyJXeZs9Ll68J813n4riHm3Lm4YDX0xuku4qxey1ZmoHziAAw6IVXjeNgTLkqXzCd3+dFdkoPPZQ1HOl37B2qrDO8am4kFbxtvdpNyWshajg/vt97
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: HE1PR0301MB2172
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <YGn0wBkOOILgaq5w@builder.lan>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-DQpPbiBUaHUsIDIwMjEtMDQtMDggYXQgMjA6MjAgLTA3MDAsIEtlZXMgQ29vayB3cm90ZToNCj4g
-T24gV2VkLCBBcHIgMDcsIDIwMjEgYXQgMDM6NTA6MTVQTSArMDMwMCwgQW5keSBTaGV2Y2hlbmtv
-IHdyb3RlOg0KPiA+IE9uIFdlZCwgQXByIDcsIDIwMjEgYXQgMTI6NDkgUE0gVmFpdHRpbmVuLCBN
-YXR0aQ0KPiA+IDxNYXR0aS5WYWl0dGluZW5AZmkucm9obWV1cm9wZS5jb20+IHdyb3RlOg0KPiA+
-ID4gT24gV2VkLCAyMDIxLTA0LTA3IGF0IDEyOjEwICswMzAwLCBBbmR5IFNoZXZjaGVua28gd3Jv
-dGU6DQo+ID4gPiA+IE9uIFdlZCwgQXByIDcsIDIwMjEgYXQgODowMiBBTSBNYXR0aSBWYWl0dGlu
-ZW4NCj4gPiA+ID4gPG1hdHRpLnZhaXR0aW5lbkBmaS5yb2htZXVyb3BlLmNvbT4gd3JvdGU6DQo+
-ID4gPiA+ID4gT24gV2VkLCAyMDIxLTA0LTA3IGF0IDAxOjQ0ICswMzAwLCBBbmR5IFNoZXZjaGVu
-a28gd3JvdGU6DQo+ID4gPiA+ID4gPiBPbiBUdWVzZGF5LCBBcHJpbCA2LCAyMDIxLCBNYXR0aSBW
-YWl0dGluZW4gPA0KPiA+ID4gPiA+ID4gbWF0dGkudmFpdHRpbmVuQGZpLnJvaG1ldXJvcGUuY29t
-PiB3cm90ZToNCj4gPiA+ID4gPiA+ID4gKyAgICAgICBCVUcoKTsNCj4gPiA+ID4gPiA+ID4gK30N
-Cj4gDQo+IFRoaXMsIHRob3VnaCwgYXJlIHlvdSBzdXJlIHlvdSB3YW50IHRvIHVzZSBCVUcoKT8g
-TGludXMgZ2V0cyB1cHNldA0KPiBhYm91dA0KPiBzdWNoIHRoaW5nczoNCj4gaHR0cHM6Ly93d3cu
-a2VybmVsLm9yZy9kb2MvaHRtbC9sYXRlc3QvcHJvY2Vzcy9kZXByZWNhdGVkLmh0bWwjYnVnLWFu
-ZC1idWctb24NCj4gDQoNCkkgc2VlLiBJIGFtIHVuc3VyZSBvZiB3aGF0IHdvdWxkIGJlIHRoZSBi
-ZXN0IGFjdGlvbiBpbiB0aGUgcmVndWxhdG9yDQpjYXNlIHdlIGFyZSBoYW5kbGluZyBoZXJlLiBU
-byBnaXZlIHRoZSBjb250ZXh0LCB3ZSBhc3N1bWUgaGVyZSBhDQpzaXR1YXRpb24gd2hlcmUgcG93
-ZXIgaGFzIGdvbmUgb3V0IG9mIHJlZ3VsYXRpb24gYW5kIHRoZSBoYXJkd2FyZSBpcw0KcHJvYmFi
-bHkgZmFpbGluZy4gRmlyc3QgY291bnRlcm1lYXN1cmUgdG8gcHJvdGVjdCB3aGF0IGlzIGxlZnQg
-b2YgSFcgaXMNCnRvIHNodXQtZG93biB0aGUgZmFpbGluZyByZWd1bGF0b3IuIEJVRygpIHdhcyBj
-YWxsZWQgaGVyZSBhcyBhIGxhc3QNCnJlc29ydCBpZiBzaHV0dGluZyB0aGUgcG93ZXIgdmlhIHJl
-Z3VsYXRvciBpbnRlcmZhY2Ugd2FzIG5vdA0KaW1wbGVtZW50ZWQgb3Igd29ya2luZy4NCg0KRWcs
-IHdlIHRyeSB0byB0YWtlIHdoYXQgZXZlciBsYXN0IG1lYXN1cmUgd2UgY2FuIHRvIG1pbmltaXpl
-IHRoZSBIVw0KZGFtYWdlIC0gYW5kIEJVRygpIHdhcyB1c2VkIGZvciB0aGlzIGluIHRoZSBxY29t
-IGRyaXZlciB3aGVyZSBJIHN0b2xlDQp0aGUgaWRlYS4gSnVkZ2luZyB0aGUgY29tbWVudCByZWxh
-dGVkIHRvIEJVRygpIGluIGFzbS1nZW5lcmljL2J1Zy5oDQoNCi8qDQogKiBEb24ndCB1c2UgQlVH
-KCkgb3IgQlVHX09OKCkgdW5sZXNzIHRoZXJlJ3MgcmVhbGx5IG5vIHdheSBvdXQ7IG9uZQ0KIA0K
-KiBleGFtcGxlIG1pZ2h0IGJlIGRldGVjdGluZyBkYXRhIHN0cnVjdHVyZSBjb3JydXB0aW9uIGlu
-IHRoZSBtaWRkbGUNCiAqDQpvZiBhbiBvcGVyYXRpb24gdGhhdCBjYW4ndCBiZSBiYWNrZWQgb3V0
-IG9mLiAgSWYgdGhlIChzdWIpc3lzdGVtDQogKiBjYW4NCnNvbWVob3cgY29udGludWUgb3BlcmF0
-aW5nLCBwZXJoYXBzIHdpdGggcmVkdWNlZCBmdW5jdGlvbmFsaXR5LA0KICogaXQncw0KcHJvYmFi
-bHkgbm90IEJVRy13b3J0aHkuDQogKg0KICogSWYgeW91J3JlIHRlbXB0ZWQgdG8gQlVHKCksIHRo
-aW5rDQphZ2FpbjogIGlzIGNvbXBsZXRlbHkgZ2l2aW5nIHVwDQogKiByZWFsbHkgdGhlICpvbmx5
-KiBzb2x1dGlvbj8gIFRoZXJlDQphcmUgdXN1YWxseSBiZXR0ZXIgb3B0aW9ucywgd2hlcmUNCiAq
-IHVzZXJzIGRvbid0IG5lZWQgdG8gcmVib290IEFTQVAgYW5kDQpjYW4gbW9zdGx5IHNodXQgZG93
-biBjbGVhbmx5Lg0KICovDQpodHRwczovL2VsaXhpci5ib290bGluLmNvbS9saW51eC92NS4xMi1y
-YzYvc291cmNlL2luY2x1ZGUvYXNtLWdlbmVyaWMvYnVnLmgjTDU1DQoNCnRoaXMgcmVhbGx5IG1p
-Z2h0IGJlIHZhbGlkIHVzZS1jYXNlLg0KDQpUbyBtZSB0aGUgcmVhbCBxdWVzdGlvbiBpcyB3aGF0
-IGhhcHBlbnMgYWZ0ZXIgdGhlIEJVRygpIC0gYW5kIGlmIHRoZXJlDQppcyBhbnkgZ2VuZXJpYyBo
-YW5kbGluZyBvciBpZiBpdCBpcyBwbGF0Zm9ybS9ib2FyZCBzcGVjaWZpYz8gRG9lcyBpdA0KYWN0
-dWFsbHkgaGF2ZSBhbnkgY2hhbmNlIHRvIHNhdmUgdGhlIEhXPw0KDQpNYXJrIGFscmVhZHkgcG9p
-bnRlZCB0aGF0IHdlIG1pZ2h0IG5lZWQgdG8gZmlndXJlIGEgd2F5IHRvIHB1bnQgYQ0KImZhaWxp
-bmcgZXZlbnQiIHRvIHRoZSB1c2VyLXNwYWNlIHRvIGluaXRpYXRlIGJldHRlciAic2FmZXR5IHNo
-dXRkb3duIi4NClN1Y2ggZXZlbnQgZG9lcyBub3QgY3VycmVudGx5IGV4aXN0IHNvIEkgdGhpbmsg
-dGhlIG1haW4gdXNlLWNhc2UgaGVyZQ0KaXMgdG8gZG8gbG9nZ2luZyBhbmQgcG90ZW50aWFsbHkg
-cHJldmVudCBlbmFibGluZyBhbnkgZnVydGhlciBhY3Rpb25zDQppbiB0aGUgZmFpbGluZyBIVy4N
-Cg0KU28gLSBhbnkgYmV0dGVyIHN1Z2dlc3Rpb25zPw0KDQpCZXN0IFJlZ2FyZHMNCglNYXR0aSBW
-YWl0dGluZW4NCg0KDQo=
+On Sun, Apr 04, 2021 at 12:17:52PM -0500, Bjorn Andersson wrote:
+> On Fri 02 Apr 01:17 CDT 2021, Deepak Kumar Singh wrote:
+> 
+> > Not all upcoming usecases will have an interface to allow the aoss
+> > driver to hook onto. Expose the send api and create a get function to
+> > enable drivers to send their own messages to aoss.
+> > 
+> > Signed-off-by: Chris Lew <clew@codeaurora.org>
+> > Signed-off-by: Deepak Kumar Singh <deesin@codeaurora.org>
+> > ---
+> >  drivers/soc/qcom/qcom_aoss.c | 36 +++++++++++++++++++++++++++++++++++-
+> >  1 file changed, 35 insertions(+), 1 deletion(-)
+> > 
+> > diff --git a/drivers/soc/qcom/qcom_aoss.c b/drivers/soc/qcom/qcom_aoss.c
+> > index 53acb94..5c643f0 100644
+> > --- a/drivers/soc/qcom/qcom_aoss.c
+> > +++ b/drivers/soc/qcom/qcom_aoss.c
+> > @@ -8,10 +8,12 @@
+
+[...]
+
+> > +	pdev = of_find_device_by_node(np);
+> 
+> of_find_device_by_node() will increment the refcount of the underlying
+> struct device of pdev, so you need to platform_device_put() once you're
+> done with it.
+> 
+> As a side effect of not putting the struct device, the devm_kzalloc'ed
+> qmp pointer will remain valid. So care is needed to make sure that the
+> client doesn't end up with a dangling pointer if the qmp device is
+> removed.
+> 
+> My suggestion is that you add a "qmp_put()" function, which invokes
+> platform_device_put() and that you add some sort of tracking ("bool
+> orphan"?) to the struct qmp and make qmp_send() fail if this is set.
+> 
+
+I think this is a duplication of what the struct device offers. Why
+can't we use the generic infrastructure for this usecase?
+
+Like using device_initialize() in qmp_probe() along with a release
+callback for "struct device", then using get_device() in qmp_get().
+Then there should also be a qmp_put() API which calls put_device() to
+decrease the refcount.
+
+Ideally, the final refcount should be dropped in qmp_remove() and then
+the release callback will be called automatically to free "struct qmp".
+
+> That way if someone unbinds the aoss device, the client will still have
+> a "valid" pointer, but won't be able to qmp_send() after qmp_close() has
+> been called in the aoss remove function.
+> 
+
+How can someone remove the qmp device if a client is holding its reference?
+
+Thanks,
+Mani
+
+> Regards,
+> Bjorn
+> 
+> > +	if (!pdev)
+> > +		return ERR_PTR(-EINVAL);
+> > +
+> > +	qmp = platform_get_drvdata(pdev);
+> > +	return qmp ? qmp : ERR_PTR(-EPROBE_DEFER);
+> > +}
+> > +EXPORT_SYMBOL(qmp_get);
+> > +
+> >  static int qmp_probe(struct platform_device *pdev)
+> >  {
+> >  	struct resource *res;
+> > -- 
+> > The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> > a Linux Foundation Collaborative Project
+> > 
