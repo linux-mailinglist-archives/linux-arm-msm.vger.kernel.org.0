@@ -2,124 +2,148 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 366C935955C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Apr 2021 08:24:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6C2EA359588
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Apr 2021 08:32:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233384AbhDIGX0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Apr 2021 02:23:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34214 "EHLO
+        id S233439AbhDIGcX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Apr 2021 02:32:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36146 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233381AbhDIGX0 (ORCPT
+        with ESMTP id S233434AbhDIGcW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Apr 2021 02:23:26 -0400
-Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1AD1C061761
-        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Apr 2021 23:23:13 -0700 (PDT)
-Received: by mail-pj1-x1032.google.com with SMTP id mj7-20020a17090b3687b029014d162a65b6so4455712pjb.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Apr 2021 23:23:13 -0700 (PDT)
+        Fri, 9 Apr 2021 02:32:22 -0400
+Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 451F1C061762
+        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Apr 2021 23:32:10 -0700 (PDT)
+Received: by mail-pj1-x1030.google.com with SMTP id z22-20020a17090a0156b029014d4056663fso2688325pje.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Apr 2021 23:32:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=y7eM9NOxV0/YJgk1/+DqK+RAGiy7J8VSlaHOoYfGcZ0=;
-        b=xg1e2XKIJGCnu9rtT3vQ5jB8J47gAp+cBscH1HOv5eTTP1BtFeOJcrzQqSKQZko3Zt
-         1a1BkvQjmsGVUPKufSF9mVOi30trvnkjubP/h7LnZQZvpF3bs86nmmDhQS6j9WjzM4lH
-         diprXRbSl5n2iLYp+wFaEHHDAfYH2k3qG1+hor+iFtWHNKdbt91/0dkHb/KGw3kXyjz7
-         VVQxRzt6+cMQd0v6MG2MPT/kNA2Lm5wNl9owZI7YjPvhorRGAhAAeoaVpX10etZGsLjL
-         l0FKEQNjXheMWLj3h3fxm3fz64Devx/ZQLHvNcu3FmUa100ctkxJ01Tgy0Np6tRcc9Mq
-         YpHQ==
+        bh=28/bcnH/X+FO3xScorwIPxjziJdMECQ4SflmNRtuhf4=;
+        b=nnobsVWbu3INJH0G3qQfwEkWoUf9+e7bCTJcA3kHFGiLT6KMMyjWn1PC4z/qRpW3E1
+         pE2mVB0gQVKgQiX4CRqADVcHiV0C3O0jZYtBAAcoa+5mVaNZUMHVowdc2Zw3VOtTpvIR
+         TpSDYDnVwuLfGZCBAgItXh9NhOdQce0R/9noZYoS+G3G57HmsLEKOUkTyCLZu6fRWQFY
+         4W8XXWXKpqEyu1hG9/h9l82iE9AP0OZ7iGTsKNNjEucCuH543u3EkOioqWy+uF2Eoqah
+         yrZYYi7H1+zyis1a7lx3hsz8/4mBt87WjW22mXIV+4bu5pQQqXQgpyAFf/hm+CVTMZtd
+         0EHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=y7eM9NOxV0/YJgk1/+DqK+RAGiy7J8VSlaHOoYfGcZ0=;
-        b=U9YelJWNMsu1MA/RJmpIwBey6BrrETh3pdBK0qQGDZ41q4dNuwuMUlN2ugo0+hUvuU
-         70lP7V5+h1nSlmwG42XLpcz+8mKGOEpL9MSZwxXJ8O6tjxIWMU1Bg/iXrhOmLf0Ln1H/
-         PnS4FAZY1/nPuXtx7h7Z4k8dgqnhXR5XjOSVpJNL7qzTqswzGfvj0vbfyLOrwr9cOhB/
-         dFmowf1sF8Akcj1uxyV2F089lOqqMx1Uo8KIVbtUGmJ5oo4TwZoObdACuvHOlUoL00mI
-         ZwjcdwNsG80R5CSJahLJ4k/mVjmxGRHc5jfzsitH0yDb+VqL7pPLGwMF2UgXs5I/uP0g
-         LT6Q==
-X-Gm-Message-State: AOAM532UOUtqOHfEzak8y3nVLwCD8X8IAIsKQe6xEzTrADdWjDQeHCTK
-        k0i6jfWUxT6IkiUS8jznljl9
-X-Google-Smtp-Source: ABdhPJwqcPnHiZfVT81sTN1xfVUQ5KL2PK9I3uMYKi0LR7nqL97u0wRp8MFM4ZN00uHgga7iSwz6WA==
-X-Received: by 2002:a17:90b:1490:: with SMTP id js16mr11908041pjb.131.1617949393034;
-        Thu, 08 Apr 2021 23:23:13 -0700 (PDT)
+        bh=28/bcnH/X+FO3xScorwIPxjziJdMECQ4SflmNRtuhf4=;
+        b=h/Ve0wDGgxuMK4UA/EUGPDGBfdygu7i8y3PD0yzqKDQLrTbq20Hl/04O4JI0prVKfW
+         W3txuu7D5r89MxZCd+Lezd43oQ0IqMesXcMQqG7v1D2Lv397qjKkTOiau3blZPq2FCtm
+         CfEyY9kIyVMoRT1IS/8PAuEmVe3kobpz1aflfgIBltwW6cjje5xqY3qtkkVdZ4aR7+lE
+         Dn/Awanl0o31kKRCqoooFIUYMLYSHjokS3k4iJukHGqyYPgD75arzgUjO+PGN4iWdx0y
+         xJH+ULFAOs08J+WOLox9xNaVr6ta+J9AmOs2+/8FqP4zbyzXcDiWqQJGPWYI65571xux
+         S2Dg==
+X-Gm-Message-State: AOAM532wrkpJunB2DS0QBmRIjqUSJC+WPn+lHSBE1JxC+hFD7+7WBoPi
+        cWP+Uo+MFteAV99U83VVU/uR
+X-Google-Smtp-Source: ABdhPJzix94dGzGY3LxNVQhxzpy7L+sEbK4QOpLOA2Sfv46f0OsksuItNs6U/pFtB8lnPmwOd5v03g==
+X-Received: by 2002:a17:902:c643:b029:e7:3c10:4695 with SMTP id s3-20020a170902c643b02900e73c104695mr11511308pls.41.1617949929607;
+        Thu, 08 Apr 2021 23:32:09 -0700 (PDT)
 Received: from work ([103.77.37.131])
-        by smtp.gmail.com with ESMTPSA id d24sm1090136pjw.37.2021.04.08.23.23.10
+        by smtp.gmail.com with ESMTPSA id g26sm1359647pge.67.2021.04.08.23.32.07
         (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 08 Apr 2021 23:23:12 -0700 (PDT)
-Date:   Fri, 9 Apr 2021 11:53:08 +0530
+        Thu, 08 Apr 2021 23:32:08 -0700 (PDT)
+Date:   Fri, 9 Apr 2021 12:02:05 +0530
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Chen Hui <clare.chenhui@huawei.com>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
-        mturquette@baylibre.com, sboyd@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH -next] clk: qcom: Add missing MODULE_DEVICE_TABLE
-Message-ID: <20210409062308.GB4376@work>
-References: <20210408135509.208921-1-clare.chenhui@huawei.com>
+To:     Yang Yingliang <yangyingliang@huawei.com>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        agross@kernel.org, bjorn.andersson@linaro.org,
+        daniel.lezcano@linaro.org
+Subject: Re: [PATCH -next] clocksource/drivers/qcom: add missing iounmap() on
+ error in msm_dt_timer_init()
+Message-ID: <20210409063205.GC4376@work>
+References: <20210409045657.666888-1-yangyingliang@huawei.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20210408135509.208921-1-clare.chenhui@huawei.com>
+In-Reply-To: <20210409045657.666888-1-yangyingliang@huawei.com>
 User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Apr 08, 2021 at 09:55:09PM +0800, Chen Hui wrote:
-> Add missing MODULE_DEVICE_TABLE entries to support module autoloading,
-> as these drivers can be compiled as external modules.
+On Fri, Apr 09, 2021 at 12:56:57PM +0800, Yang Yingliang wrote:
+> base and cpu0_base are not unmapped on error path, add the missing
+> iounmap() before return msm_dt_timer_init() in the error handling
+> cases.
 > 
-> Signed-off-by: Chen Hui <clare.chenhui@huawei.com>
+> Fixes: 6e3321631ac2 ("ARM: msm: Add DT support to msm_timer")
+> Reported-by: Hulk Robot <hulkci@huawei.com>
+> Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+> ---
+>  drivers/clocksource/timer-qcom.c | 23 ++++++++++++++++++-----
+>  1 file changed, 18 insertions(+), 5 deletions(-)
+> 
+> diff --git a/drivers/clocksource/timer-qcom.c b/drivers/clocksource/timer-qcom.c
+> index b4afe3a67583..3488876198e0 100644
+> --- a/drivers/clocksource/timer-qcom.c
+> +++ b/drivers/clocksource/timer-qcom.c
+> @@ -213,7 +213,8 @@ static int __init msm_dt_timer_init(struct device_node *np)
+>  	irq = irq_of_parse_and_map(np, 1);
+>  	if (irq <= 0) {
+>  		pr_err("Can't get irq\n");
+> -		return -EINVAL;
+> +		ret = -EINVAL;
+> +		goto err_unmap_base;
+>  	}
+>  
+>  	/* We use CPU0's DGT for the clocksource */
+> @@ -223,18 +224,19 @@ static int __init msm_dt_timer_init(struct device_node *np)
+>  	ret = of_address_to_resource(np, 0, &res);
+>  	if (ret) {
+>  		pr_err("Failed to parse DGT resource\n");
+> -		return ret;
+> +		goto err_unmap_base;
+>  	}
+>  
+>  	cpu0_base = ioremap(res.start + percpu_offset, resource_size(&res));
+>  	if (!cpu0_base) {
+>  		pr_err("Failed to map source base\n");
+> -		return -EINVAL;
+
+Missing "ret = -EINVAL" assignment. With that fixed,
 
 Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
 Thanks,
 Mani
 
-> ---
->  drivers/clk/qcom/a53-pll.c      | 1 +
->  drivers/clk/qcom/a7-pll.c       | 1 +
->  drivers/clk/qcom/apss-ipq-pll.c | 1 +
->  3 files changed, 3 insertions(+)
-> 
-> diff --git a/drivers/clk/qcom/a53-pll.c b/drivers/clk/qcom/a53-pll.c
-> index 45cfc57bff92..af6ac17c7dae 100644
-> --- a/drivers/clk/qcom/a53-pll.c
-> +++ b/drivers/clk/qcom/a53-pll.c
-> @@ -93,6 +93,7 @@ static const struct of_device_id qcom_a53pll_match_table[] = {
->  	{ .compatible = "qcom,msm8916-a53pll" },
->  	{ }
->  };
-> +MODULE_DEVICE_TABLE(of, qcom_a53pll_match_table);
+> +		goto err_unmap_base;
+>  	}
 >  
->  static struct platform_driver qcom_a53pll_driver = {
->  	.probe = qcom_a53pll_probe,
-> diff --git a/drivers/clk/qcom/a7-pll.c b/drivers/clk/qcom/a7-pll.c
-> index e171d3caf2cf..c4a53e5db229 100644
-> --- a/drivers/clk/qcom/a7-pll.c
-> +++ b/drivers/clk/qcom/a7-pll.c
-> @@ -86,6 +86,7 @@ static const struct of_device_id qcom_a7pll_match_table[] = {
->  	{ .compatible = "qcom,sdx55-a7pll" },
->  	{ }
->  };
-> +MODULE_DEVICE_TABLE(of, qcom_a7pll_match_table);
+>  	if (of_property_read_u32(np, "clock-frequency", &freq)) {
+>  		pr_err("Unknown frequency\n");
+> -		return -EINVAL;
+> +		ret = -EINVAL;
+> +		goto err_unmap_cpu0_base;
+>  	}
 >  
->  static struct platform_driver qcom_a7pll_driver = {
->  	.probe = qcom_a7pll_probe,
-> diff --git a/drivers/clk/qcom/apss-ipq-pll.c b/drivers/clk/qcom/apss-ipq-pll.c
-> index 30be87fb222a..bef7899ad0d6 100644
-> --- a/drivers/clk/qcom/apss-ipq-pll.c
-> +++ b/drivers/clk/qcom/apss-ipq-pll.c
-> @@ -81,6 +81,7 @@ static const struct of_device_id apss_ipq_pll_match_table[] = {
->  	{ .compatible = "qcom,ipq6018-a53pll" },
->  	{ }
->  };
-> +MODULE_DEVICE_TABLE(of, apss_ipq_pll_match_table);
+>  	event_base = base + 0x4;
+> @@ -243,7 +245,18 @@ static int __init msm_dt_timer_init(struct device_node *np)
+>  	freq /= 4;
+>  	writel_relaxed(DGT_CLK_CTL_DIV_4, source_base + DGT_CLK_CTL);
 >  
->  static struct platform_driver apss_ipq_pll_driver = {
->  	.probe = apss_ipq_pll_probe,
+> -	return msm_timer_init(freq, 32, irq, !!percpu_offset);
+> +	ret = msm_timer_init(freq, 32, irq, !!percpu_offset);
+> +	if (ret)
+> +		goto err_unmap_cpu0_base;
+> +
+> +	return 0;
+> +
+> +err_unmap_cpu0_base:
+> +	iounmap(cpu0_base);
+> +err_unmap_base:
+> +	iounmap(base);
+> +
+> +	return ret;
+>  }
+>  TIMER_OF_DECLARE(kpss_timer, "qcom,kpss-timer", msm_dt_timer_init);
+>  TIMER_OF_DECLARE(scss_timer, "qcom,scss-timer", msm_dt_timer_init);
 > -- 
-> 2.17.1
+> 2.25.1
 > 
