@@ -2,16 +2,16 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8FC31359D67
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Apr 2021 13:30:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 78B2F359D65
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Apr 2021 13:30:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233363AbhDILa5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Apr 2021 07:30:57 -0400
-Received: from mail.baikalelectronics.com ([87.245.175.226]:49580 "EHLO
+        id S233300AbhDILa4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Apr 2021 07:30:56 -0400
+Received: from mail.baikalelectronics.com ([87.245.175.226]:49584 "EHLO
         mail.baikalelectronics.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232990AbhDILax (ORCPT
+        with ESMTP id S233009AbhDILay (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Apr 2021 07:30:53 -0400
+        Fri, 9 Apr 2021 07:30:54 -0400
 From:   Serge Semin <Sergey.Semin@baikalelectronics.ru>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -26,10 +26,11 @@ To:     Andy Gross <agross@kernel.org>,
         <linux-usb@vger.kernel.org>
 CC:     Serge Semin <Sergey.Semin@baikalelectronics.ru>,
         Serge Semin <fancer.lancer@gmail.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: [PATCH RESEND v8 6/7] usb: dwc3: qcom: Detect DWC3 DT-nodes using compatible string
-Date:   Fri, 9 Apr 2021 14:30:27 +0300
-Message-ID: <20210409113029.7144-7-Sergey.Semin@baikalelectronics.ru>
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: [PATCH RESEND v8 7/7] arm64: dts: qcom: Harmonize DWC USB3 DT nodes name
+Date:   Fri, 9 Apr 2021 14:30:28 +0300
+Message-ID: <20210409113029.7144-8-Sergey.Semin@baikalelectronics.ru>
 In-Reply-To: <20210409113029.7144-1-Sergey.Semin@baikalelectronics.ru>
 References: <20210409113029.7144-1-Sergey.Semin@baikalelectronics.ru>
 MIME-Version: 1.0
@@ -40,40 +41,189 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In accordance with the USB HCD/DRD schema all the USB controllers are
-supposed to have DT-nodes named with prefix "^usb(@.*)?". Since the
-existing DT-nodes will be renamed in a subsequent patch let's fix the DWC3
-Qcom-specific code to detect the DWC3 sub-node just by checking its
-compatible string to match the "snps,dwc3". The semantic of the code
-won't change seeing all the DWC USB3 nodes are supposed to have the
-compatible property with any of those strings set.
+In accordance with the DWC USB3 bindings the corresponding node
+name is suppose to comply with the Generic USB HCD DT schema, which
+requires the USB nodes to have the name acceptable by the regexp:
+"^usb(@.*)?" . Make sure the "snps,dwc3"-compatible nodes are correctly
+named.
 
 Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
-
+Acked-by: Krzysztof Kozlowski <krzk@kernel.org>
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 ---
+ arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi | 4 ++--
+ arch/arm64/boot/dts/qcom/ipq8074.dtsi        | 4 ++--
+ arch/arm64/boot/dts/qcom/msm8996.dtsi        | 4 ++--
+ arch/arm64/boot/dts/qcom/msm8998.dtsi        | 2 +-
+ arch/arm64/boot/dts/qcom/qcs404-evb.dtsi     | 2 +-
+ arch/arm64/boot/dts/qcom/qcs404.dtsi         | 4 ++--
+ arch/arm64/boot/dts/qcom/sc7180.dtsi         | 2 +-
+ arch/arm64/boot/dts/qcom/sdm845.dtsi         | 4 ++--
+ arch/arm64/boot/dts/qcom/sm8150.dtsi         | 2 +-
+ 9 files changed, 14 insertions(+), 14 deletions(-)
 
-Changelog v7:
-- Replace "of_get_child_by_name(np, "usb") ?: of_get_child_by_name(np, "dwc3");"
-  pattern with using of_get_compatible_child() method.
-- Discard Bjorn Andersson Reviewed-by tag since the patch content
-  has been changed.
----
- drivers/usb/dwc3/dwc3-qcom.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-index fcaf04483ad0..617a1be88371 100644
---- a/drivers/usb/dwc3/dwc3-qcom.c
-+++ b/drivers/usb/dwc3/dwc3-qcom.c
-@@ -644,7 +644,7 @@ static int dwc3_qcom_of_register_core(struct platform_device *pdev)
- 	struct device		*dev = &pdev->dev;
- 	int			ret;
+diff --git a/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi b/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi
+index defcbd15edf9..34e97da98270 100644
+--- a/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi
++++ b/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi
+@@ -1064,7 +1064,7 @@ &usb2 {
+ 	status = "okay";
+ 	extcon = <&usb2_id>;
  
--	dwc3_np = of_get_child_by_name(np, "dwc3");
-+	dwc3_np = of_get_compatible_child(np, "snps,dwc3");
- 	if (!dwc3_np) {
- 		dev_err(dev, "failed to find dwc3 core child\n");
- 		return -ENODEV;
+-	dwc3@7600000 {
++	usb@7600000 {
+ 		extcon = <&usb2_id>;
+ 		dr_mode = "otg";
+ 		maximum-speed = "high-speed";
+@@ -1075,7 +1075,7 @@ &usb3 {
+ 	status = "okay";
+ 	extcon = <&usb3_id>;
+ 
+-	dwc3@6a00000 {
++	usb@6a00000 {
+ 		extcon = <&usb3_id>;
+ 		dr_mode = "otg";
+ 	};
+diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
+index a32e5e79ab0b..7df4eb710aae 100644
+--- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
+@@ -427,7 +427,7 @@ usb_0: usb@8af8800 {
+ 			resets = <&gcc GCC_USB0_BCR>;
+ 			status = "disabled";
+ 
+-			dwc_0: dwc3@8a00000 {
++			dwc_0: usb@8a00000 {
+ 				compatible = "snps,dwc3";
+ 				reg = <0x8a00000 0xcd00>;
+ 				interrupts = <GIC_SPI 140 IRQ_TYPE_LEVEL_HIGH>;
+@@ -468,7 +468,7 @@ usb_1: usb@8cf8800 {
+ 			resets = <&gcc GCC_USB1_BCR>;
+ 			status = "disabled";
+ 
+-			dwc_1: dwc3@8c00000 {
++			dwc_1: usb@8c00000 {
+ 				compatible = "snps,dwc3";
+ 				reg = <0x8c00000 0xcd00>;
+ 				interrupts = <GIC_SPI 99 IRQ_TYPE_LEVEL_HIGH>;
+diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+index ce430ba9c118..9eb31b3e6ee7 100644
+--- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+@@ -1772,7 +1772,7 @@ usb3: usb@6af8800 {
+ 			power-domains = <&gcc USB30_GDSC>;
+ 			status = "disabled";
+ 
+-			dwc3@6a00000 {
++			usb@6a00000 {
+ 				compatible = "snps,dwc3";
+ 				reg = <0x06a00000 0xcc00>;
+ 				interrupts = <0 131 IRQ_TYPE_LEVEL_HIGH>;
+@@ -1983,7 +1983,7 @@ usb2: usb@76f8800 {
+ 			power-domains = <&gcc USB30_GDSC>;
+ 			status = "disabled";
+ 
+-			dwc3@7600000 {
++			usb@7600000 {
+ 				compatible = "snps,dwc3";
+ 				reg = <0x07600000 0xcc00>;
+ 				interrupts = <0 138 IRQ_TYPE_LEVEL_HIGH>;
+diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+index 1f2e93aa6553..9141c5d09b59 100644
+--- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+@@ -1962,7 +1962,7 @@ usb3: usb@a8f8800 {
+ 
+ 			resets = <&gcc GCC_USB_30_BCR>;
+ 
+-			usb3_dwc3: dwc3@a800000 {
++			usb3_dwc3: usb@a800000 {
+ 				compatible = "snps,dwc3";
+ 				reg = <0x0a800000 0xcd00>;
+ 				interrupts = <GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>;
+diff --git a/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi b/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi
+index a80c578484ba..f8a55307b855 100644
+--- a/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi
++++ b/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi
+@@ -337,7 +337,7 @@ &usb2_phy_sec {
+ &usb3 {
+ 	status = "okay";
+ 
+-	dwc3@7580000 {
++	usb@7580000 {
+ 		dr_mode = "host";
+ 	};
+ };
+diff --git a/arch/arm64/boot/dts/qcom/qcs404.dtsi b/arch/arm64/boot/dts/qcom/qcs404.dtsi
+index 339790ba585d..9c4be020d568 100644
+--- a/arch/arm64/boot/dts/qcom/qcs404.dtsi
++++ b/arch/arm64/boot/dts/qcom/qcs404.dtsi
+@@ -544,7 +544,7 @@ usb3: usb@7678800 {
+ 			assigned-clock-rates = <19200000>, <200000000>;
+ 			status = "disabled";
+ 
+-			dwc3@7580000 {
++			usb@7580000 {
+ 				compatible = "snps,dwc3";
+ 				reg = <0x07580000 0xcd00>;
+ 				interrupts = <GIC_SPI 26 IRQ_TYPE_LEVEL_HIGH>;
+@@ -573,7 +573,7 @@ usb2: usb@79b8800 {
+ 			assigned-clock-rates = <19200000>, <133333333>;
+ 			status = "disabled";
+ 
+-			dwc3@78c0000 {
++			usb@78c0000 {
+ 				compatible = "snps,dwc3";
+ 				reg = <0x078c0000 0xcc00>;
+ 				interrupts = <GIC_SPI 44 IRQ_TYPE_LEVEL_HIGH>;
+diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+index 1ea3344ab62c..8b83ffbb5b2a 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+@@ -2869,7 +2869,7 @@ usb_1: usb@a6f8800 {
+ 					<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_USB3 0>;
+ 			interconnect-names = "usb-ddr", "apps-usb";
+ 
+-			usb_1_dwc3: dwc3@a600000 {
++			usb_1_dwc3: usb@a600000 {
+ 				compatible = "snps,dwc3";
+ 				reg = <0 0x0a600000 0 0xe000>;
+ 				interrupts = <GIC_SPI 133 IRQ_TYPE_LEVEL_HIGH>;
+diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+index 454f794af547..809be2c67d7a 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+@@ -3769,7 +3769,7 @@ usb_1: usb@a6f8800 {
+ 					<&gladiator_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_USB3_0 0>;
+ 			interconnect-names = "usb-ddr", "apps-usb";
+ 
+-			usb_1_dwc3: dwc3@a600000 {
++			usb_1_dwc3: usb@a600000 {
+ 				compatible = "snps,dwc3";
+ 				reg = <0 0x0a600000 0 0xcd00>;
+ 				interrupts = <GIC_SPI 133 IRQ_TYPE_LEVEL_HIGH>;
+@@ -3817,7 +3817,7 @@ usb_2: usb@a8f8800 {
+ 					<&gladiator_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_USB3_1 0>;
+ 			interconnect-names = "usb-ddr", "apps-usb";
+ 
+-			usb_2_dwc3: dwc3@a800000 {
++			usb_2_dwc3: usb@a800000 {
+ 				compatible = "snps,dwc3";
+ 				reg = <0 0x0a800000 0 0xcd00>;
+ 				interrupts = <GIC_SPI 138 IRQ_TYPE_LEVEL_HIGH>;
+diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+index e5bb17bc2f46..e4c3edc13676 100644
+--- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+@@ -1719,7 +1719,7 @@ usb_1: usb@a6f8800 {
+ 
+ 			resets = <&gcc GCC_USB30_PRIM_BCR>;
+ 
+-			usb_1_dwc3: dwc3@a600000 {
++			usb_1_dwc3: usb@a600000 {
+ 				compatible = "snps,dwc3";
+ 				reg = <0 0x0a600000 0 0xcd00>;
+ 				interrupts = <GIC_SPI 133 IRQ_TYPE_LEVEL_HIGH>;
 -- 
 2.30.1
 
