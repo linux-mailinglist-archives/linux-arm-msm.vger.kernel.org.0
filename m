@@ -2,103 +2,188 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DB86F35A445
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Apr 2021 19:01:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 52D2E35A477
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Apr 2021 19:15:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234189AbhDIRBV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Apr 2021 13:01:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33588 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233929AbhDIRBT (ORCPT
+        id S234179AbhDIRPz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Apr 2021 13:15:55 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:63399 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234049AbhDIRPy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Apr 2021 13:01:19 -0400
-Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 938DCC061760
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Apr 2021 10:01:06 -0700 (PDT)
-Received: by mail-pg1-x536.google.com with SMTP id t140so4359720pgb.13
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Apr 2021 10:01:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=Y+dtVUQQoKBT4QD8w22iCkdT2lXFXX96rY1QL4XBEhk=;
-        b=Bj10EXFFti3jwrOObuKak/5UWWbOw1R+c5AYo7DIKOeibu1rV7jHUpBVMj6qft2LFm
-         AQfJE0xX0wLjCk404YBcawfGv81kIVqoZpvKGAcxmtSXjLPFadyG3/mqTU8/+vZ7IDw5
-         sTK4q33hDtHXEG6Mhw2K9NNml0ztOnLSvUhLE=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=Y+dtVUQQoKBT4QD8w22iCkdT2lXFXX96rY1QL4XBEhk=;
-        b=OBK0O4N7BWDnuEacWRWmbT/bqpen2MJlIwW5KdT1+ExEPvLyw6HkVDKgZ8vyFwcoiE
-         3sLvstn/eQBSEa3cU+AHnKIxOivF+y6wjVxp14x6K9UeqOJNikQhqldxZYvWiRsum9Bq
-         zQbFgK5Ofv3JkOsMQYaGhn8ZCdiPysq9TDzAYhEKr8DS+rUqCjd8Y1ZW/QiOMO04+h61
-         W5PDf1ATmLf6MyZknPKqY2MBtPcLDyS7IeOQY2y6BZ5qPPnvxkZR/Xf+kxt81/3T+iJN
-         BBbVa30D9Au9/G3wqeLHulLeiVYg7AedtLIwfiF4ExCk4zHqDXYBPcl0lwrETJbIzoJH
-         zIrQ==
-X-Gm-Message-State: AOAM5305CV7JBRQhg+isoi0ZhJD3LViJlvwtebdgZ0JaxIrfi8RP8yfE
-        YZt4idi36xOHpt35NZItqXP4lg==
-X-Google-Smtp-Source: ABdhPJyomjBj+/2DEtc/Q+SEr95sFJMVE8yo0USbDJj9yVPAfCRpXjjlOM0LFvT1nBq2QPjp6a/5Eg==
-X-Received: by 2002:a63:fc07:: with SMTP id j7mr14383423pgi.401.1617987666112;
-        Fri, 09 Apr 2021 10:01:06 -0700 (PDT)
-Received: from chromium.org ([2620:15c:202:201:44c3:3248:e7f5:1bbd])
-        by smtp.gmail.com with ESMTPSA id q5sm2621786pfj.131.2021.04.09.10.01.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 Apr 2021 10:01:05 -0700 (PDT)
-Content-Type: text/plain; charset="utf-8"
+        Fri, 9 Apr 2021 13:15:54 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1617988541; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=Q3jf/kUjs0jPspuB07nQ+W7pnLmva3qwq9uX7xtxT/c=; b=D804KUoMJJJ3Lfq97GEmFHWt4LDD5unj0v8ZvuPacXxTBzZ5rghl6LOxKKbV1xIXilbTg0dV
+ VhViaEVe2bjwCA3QZzi2nPW6+AeMQt3wmL1dUQyNjloD819sr5+40g9vpbAwpNkHJmDDikby
+ XRVu+nik6E4NgVBlDkqaXlOZerw=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
+ 60708bb59a9ff96d9576630d (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 09 Apr 2021 17:15:33
+ GMT
+Sender: asutoshd=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 86A76C433CA; Fri,  9 Apr 2021 17:15:33 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [192.168.8.168] (cpe-70-95-149-85.san.res.rr.com [70.95.149.85])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: asutoshd)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 8CE24C433CA;
+        Fri,  9 Apr 2021 17:15:30 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 8CE24C433CA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=asutoshd@codeaurora.org
+Subject: Re: [PATCH v17 1/2] scsi: ufs: Enable power management for wlun
+To:     Adrian Hunter <adrian.hunter@intel.com>, daejun7.park@samsung.com,
+        "cang@codeaurora.org" <cang@codeaurora.org>,
+        "martin.petersen@oracle.com" <martin.petersen@oracle.com>,
+        "linux-scsi@vger.kernel.org" <linux-scsi@vger.kernel.org>
+Cc:     "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        ALIM AKHTAR <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Stanley Chu <stanley.chu@mediatek.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Steven Rostedt <rostedt@goodmis.org>,
+        Ingo Molnar <mingo@redhat.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Lee Jones <lee.jones@linaro.org>,
+        Bean Huo <beanhuo@micron.com>,
+        Kiwoong Kim <kwmad.kim@samsung.com>,
+        Wei Yongjun <weiyongjun1@huawei.com>,
+        Dan Carpenter <dan.carpenter@oracle.com>,
+        Yue Hu <huyue2@yulong.com>,
+        Dinghao Liu <dinghao.liu@zju.edu.cn>,
+        "Gustavo A. R. Silva" <gustavoars@kernel.org>,
+        Jaegeuk Kim <jaegeuk@kernel.org>,
+        Satya Tangirala <satyat@google.com>,
+        open list <linux-kernel@vger.kernel.org>
+References: <1b3d53dad245a7166f3f67a4c65f3a731e6600b3.1617893198.git.asutoshd@codeaurora.org>
+ <cover.1617893198.git.asutoshd@codeaurora.org>
+ <CGME20210408145007epcas2p1accfbd653b2e1318b2722c1f5661c1e0@epcms2p1>
+ <1891546521.01617937981650.JavaMail.epsvc@epcpadp4>
+ <32b2327f-a34f-03ac-a110-e683ae416fdc@intel.com>
+From:   "Asutosh Das (asd)" <asutoshd@codeaurora.org>
+Message-ID: <8e8bd375-ed27-d1aa-430d-4f1d3d00cb9a@codeaurora.org>
+Date:   Fri, 9 Apr 2021 10:15:29 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.8.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20210406163330.11996-1-srivasam@codeaurora.org>
-References: <20210406163330.11996-1-srivasam@codeaurora.org>
-Subject: Re: [PATCH v2] arm64: dts: qcom: Update iommu property for simultaneous playback
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     V Sujith Kumar Reddy <vsujithk@codeaurora.org>,
-        Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
-        agross@kernel.org, bjorn.andersson@linaro.org,
-        devicetree@vger.kernel.org, dianders@chromium.org,
-        judyhsiao@chromium.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, robh+dt@kernel.org,
-        rohitkr@codeaurora.org, srinivas.kandagatla@linaro.org
-Date:   Fri, 09 Apr 2021 10:01:04 -0700
-Message-ID: <161798766423.3790633.3895809656191757415@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+In-Reply-To: <32b2327f-a34f-03ac-a110-e683ae416fdc@intel.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Srinivasa Rao Mandadapu (2021-04-06 09:33:30)
-> From: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
->=20
-> Update iommu property in lpass cpu node for supporting
-> simultaneous playback on headset and speaker.
->=20
-> Signed-off-by: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
-> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-> ---
-> Changes since v1:
->    -- Commit messge header change
->=20
->  arch/arm64/boot/dts/qcom/sc7180.dtsi | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
->=20
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/q=
-com/sc7180.dtsi
-> index a6da78d31fdd..6228ba2d8513 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> @@ -3566,7 +3566,8 @@ lpass_cpu: lpass@62f00000 {
->                         reg =3D <0 0x62f00000 0 0x29000>;
->                         reg-names =3D "lpass-lpaif";
-> =20
-> -                       iommus =3D <&apps_smmu 0x1020 0>;
-> +                       iommus =3D <&apps_smmu 0x1020 0>,
-> +                               <&apps_smmu 0x1021 0>;
+On 4/9/2021 3:07 AM, Adrian Hunter wrote:
+> On 9/04/21 5:27 am, Daejun Park wrote:
+>> Hi Asutosh Das,
+>>
+>>> During runtime-suspend of ufs host, the scsi devices are
+>>> already suspended and so are the queues associated with them.
+>>> But the ufs host sends SSU (START_STOP_UNIT) to wlun
+>>> during its runtime-suspend.
+>>> During the process blk_queue_enter checks if the queue is not in
+>>> suspended state. If so, it waits for the queue to resume, and never
+>>> comes out of it.
+>>> The commit
+>>> (d55d15a33: scsi: block: Do not accept any requests while suspended)
+>>> adds the check if the queue is in suspended state in blk_queue_enter().
+>>>
+>>> Call trace:
+>>> __switch_to+0x174/0x2c4
+>>> __schedule+0x478/0x764
+>>> schedule+0x9c/0xe0
+>>> blk_queue_enter+0x158/0x228
+>>> blk_mq_alloc_request+0x40/0xa4
+>>> blk_get_request+0x2c/0x70
+>>> __scsi_execute+0x60/0x1c4
+>>> ufshcd_set_dev_pwr_mode+0x124/0x1e4
+>>> ufshcd_suspend+0x208/0x83c
+>>> ufshcd_runtime_suspend+0x40/0x154
+>>> ufshcd_pltfrm_runtime_suspend+0x14/0x20
+>>> pm_generic_runtime_suspend+0x28/0x3c
+>>> __rpm_callback+0x80/0x2a4
+>>> rpm_suspend+0x308/0x614
+>>> rpm_idle+0x158/0x228
+>>> pm_runtime_work+0x84/0xac
+>>> process_one_work+0x1f0/0x470
+>>> worker_thread+0x26c/0x4c8
+>>> kthread+0x13c/0x320
+>>> ret_from_fork+0x10/0x18
+>>>
+>>> Fix this by registering ufs device wlun as a scsi driver and
+>>> registering it for block runtime-pm. Also make this as a
+>>> supplier for all other luns. That way, this device wlun
+>>> suspends after all the consumers and resumes after
+>>> hba resumes.
+>>>
+>>> Co-developed-by: Can Guo <cang@codeaurora.org>
+>>> Signed-off-by: Can Guo <cang@codeaurora.org>
+>>> Signed-off-by: Asutosh Das <asutoshd@codeaurora.org>
+>>> ---
+>>> drivers/scsi/ufs/cdns-pltfrm.c     |   2 +
+>>> drivers/scsi/ufs/tc-dwc-g210-pci.c |   2 +
+>>> drivers/scsi/ufs/ufs-debugfs.c     |   6 +-
+>>> drivers/scsi/ufs/ufs-debugfs.h     |   2 +-
+>>> drivers/scsi/ufs/ufs-exynos.c      |   2 +
+>>> drivers/scsi/ufs/ufs-hisi.c        |   2 +
+>>> drivers/scsi/ufs/ufs-mediatek.c    |  12 +-
+>>> drivers/scsi/ufs/ufs-qcom.c        |   2 +
+>>> drivers/scsi/ufs/ufs_bsg.c         |   6 +-
+>>> drivers/scsi/ufs/ufshcd-pci.c      |  36 +--
+>>> drivers/scsi/ufs/ufshcd.c          | 642 ++++++++++++++++++++++++++-----------
+>>> drivers/scsi/ufs/ufshcd.h          |   6 +
+>>> include/trace/events/ufs.h         |  20 ++
+>>> 13 files changed, 509 insertions(+), 231 deletions(-)
+>>
+>> In this patch, you changed pm_runtime_{get, put}_sync to scsi_autopm_{get, put}_device.
+>> But, scsi_autopm_get_device() calls pm_runtime_put_sync() in case of error
+>> of pm_runtime_get_sync(). So, pm_runtime_put_sync() can be called twice if
+>> scsi_autopm_get_device has error.
+> 
+> Also it might be tidy to make wrappers e.g.
+> 
+> static inline int ufshcd_rpm_get_sync(struct ufs_hba *hba)
+> {
+>      return pm_runtime_get_sync(&hba->sdev_ufs_device->sdev_gendev);
+> }
+>     
+> static inline int ufshcd_rpm_put(struct ufs_hba *hba)
+> {
+>      return pm_runtime_put(&hba->sdev_ufs_device->sdev_gendev);
+> }
+> 
+> static inline int ufshcd_rpm_put_sync(struct ufs_hba *hba)
+> {
+>      return pm_runtime_put_sync(&hba->sdev_ufs_device->sdev_gendev);
+> }
+> 
+> And also consider matching: e.g.
+> 
+> 	pm_runtime_put(hba->dev)	to	ufshcd_rpm_put(hba)
+> 	pm_runtime_put_sync(hba->dev)	to	ufshcd_rpm_put_sync(hba)
+> 
+> 
+> 
 
-The stream ID 0x1032 was also dropped in this version but there's no
-mention of that in the changelog. Why?
+Ok, I'll push the changes shortly.
 
-> =20
->                         power-domains =3D <&lpass_hm LPASS_CORE_HM_GDSCR>;
->
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+Linux Foundation Collaborative Project
