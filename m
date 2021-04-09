@@ -2,99 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 39532359FFF
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Apr 2021 15:39:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D4C8635A038
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Apr 2021 15:44:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232855AbhDINjT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Apr 2021 09:39:19 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:24314 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233568AbhDINjT (ORCPT
+        id S233803AbhDINo1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Apr 2021 09:44:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46774 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233706AbhDINo0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Apr 2021 09:39:19 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1617975546; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=nCLKJ3txbssGA/MS9THnoJcM1/EpV+VVOtQ0VWZ6Umc=;
- b=kcyIqRyAie57WJhAB+fXYVqOqRGz042lTbzTzrWPq8eeB82R1FZAmpwtH3RoZHd9LF+9YW0s
- 71vreTfHOR3MbZ3g2v6CmVrNh8dBAeZ+gEhJr4DQ2NZRkPRkPa/RaG+8R1aCLJo6Czgcd2Ob
- HiaL5fYEh2bLM8poXmxAYVtbIlI=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
- 607058ec8807bcde1de095c6 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 09 Apr 2021 13:38:52
- GMT
-Sender: skakit=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 3D8B1C43462; Fri,  9 Apr 2021 13:38:52 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: skakit)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 99624C43461;
-        Fri,  9 Apr 2021 13:38:51 +0000 (UTC)
+        Fri, 9 Apr 2021 09:44:26 -0400
+Received: from mail-io1-xd34.google.com (mail-io1-xd34.google.com [IPv6:2607:f8b0:4864:20::d34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FC35C061761
+        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Apr 2021 06:44:12 -0700 (PDT)
+Received: by mail-io1-xd34.google.com with SMTP id s16so701645iog.9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Apr 2021 06:44:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=dKNxnFnDqht8/+oHY0ADhH/7JS7Dn6qjf7CJC2LmBq8=;
+        b=gsMQK52zs364Cj0XsjgrJO84M/sRi65VAzzWLdQYxlKcNZQAAZzcsyT7B9UpP+QkZX
+         0vWxuEK34aPUWCH9i+LGFn39xiP7OC22Io2heYmepQ1aojosF+k3cpmZrUkrooxEyDv9
+         OjDzY2Ellot5CcX8xk6cQMTPDvChGr9+CGfjLNtTbD5P40w7DltUHp6Qo8OUkFXVWs5i
+         bW1Ybh3odHg1uBDC8NQohJSLbZR1SYL731R9y1PR85Ae0OLKQ3x/zyoiakt1sKjCEL/5
+         Mfsxa4e7vqKcN8euT/lMCt/PRer/bGJrI3EdH47UoRsMXD1MOov6vlYYEWWTaBLqF4EF
+         HaPA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=dKNxnFnDqht8/+oHY0ADhH/7JS7Dn6qjf7CJC2LmBq8=;
+        b=aXb43KHNoRxrYZ1RH5X8Or0Dxev2nFNypTsu63bTuFsTdns1U/sTYqInKB0PXAxqET
+         mVuggAmWlZg6ZQpdYLMRXySLLJXn7c+ES1GlwjGRWa0d2mVm6v+7oYycXPIogv0BD3J2
+         CPKa9wlk5Gvll4FdI3c5Y6suBH2ZSFRQcsiJutT41D8vaFgSE11jEkfDA2fBoYv/5ipD
+         c2JdyuTWx9I4aRta/qACGDpmhdY5n/qRjeMfLCWN/1SV9RbilgUOjF7cGUxHVU4ivypg
+         78ghLbDSqf4UTtBuGmiqT1m+KZ5KCkVLRuE2gV3THQR2UWQJZdN0giOrukL382AtDJ5W
+         fpTw==
+X-Gm-Message-State: AOAM533UriqIPk5UVB0jgFZkpKSf5rUpi/JujQPtCBA2uLGf9ZCoYXVt
+        ekAlz0gbEn8CmP2X9d5B3BbPGw==
+X-Google-Smtp-Source: ABdhPJypk5ROJa4u/Up63hr16bgFgFFvx1vaDxfvQRO75vqG85ZSYxWW31XgYUSQ3HMnu6+40JP1Cw==
+X-Received: by 2002:a5e:de0d:: with SMTP id e13mr11446604iok.208.1617975851998;
+        Fri, 09 Apr 2021 06:44:11 -0700 (PDT)
+Received: from presto.localdomain (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
+        by smtp.gmail.com with ESMTPSA id e6sm1303691iom.2.2021.04.09.06.44.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 09 Apr 2021 06:44:11 -0700 (PDT)
+From:   Alex Elder <elder@linaro.org>
+To:     bjorn.andersson@linaro.org, agross@kernel.org, sboyd@kernel.org,
+        mturquette@baylibre.com, manivannan.sadhasivam@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] clk: qcom: rpmh: add support for SDX55 rpmh IPA clock
+Date:   Fri,  9 Apr 2021 08:44:07 -0500
+Message-Id: <20210409134407.841137-1-elder@linaro.org>
+X-Mailer: git-send-email 2.27.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Fri, 09 Apr 2021 19:08:51 +0530
-From:   skakit@codeaurora.org
-To:     Sebastian Reichel <sebastian.reichel@collabora.com>
-Cc:     Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        David Collins <collinsd@codeaurora.org>, kgunda@codeaurora.org,
-        Vinod Koul <vkoul@kernel.org>,
-        Courtney Cavin <courtney.cavin@sonymobile.com>,
-        linux-input@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org
-Subject: Re: [PATCH V2 3/4] dt-bindings: power: reset: qcom-pon: Convert qcom
- PON binding to yaml
-In-Reply-To: <20210409115748.xfxukqgoyvscgpln@earth.universe>
-References: <1617881469-31965-1-git-send-email-skakit@codeaurora.org>
- <1617881469-31965-4-git-send-email-skakit@codeaurora.org>
- <20210408130001.k3qbq3vvwkiyykzv@earth.universe>
- <0cb9b3503000ac7206f4a3ef5fd16c17@codeaurora.org>
- <20210409115748.xfxukqgoyvscgpln@earth.universe>
-Message-ID: <ad5d04c2a806213e9922834e996da15a@codeaurora.org>
-X-Sender: skakit@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-04-09 17:27, Sebastian Reichel wrote:
-> Hi,
-> 
-> On Fri, Apr 09, 2021 at 01:48:58PM +0530, skakit@codeaurora.org wrote:
->>> Please do not drop the example :)
->> 
->> As per my understanding on Rob's comments [1] I have added one 
->> complete
->> example in qcom,pm8941-pwrkey.yaml (see patch 4/4) and dropped it 
->> here.
->> 
->> [1] https://lore.kernel.org/patchwork/patch/1390062/#1588027
-> 
-> Ok, please add a note about this in the commit message.
-> Something like:
-> 
-> The example has been removed in favour of full example being
-> available in the qcom,pm8941-pwrkey binding.
-> 
+The IPA core clock is required for SDX55.  Define it.
 
-Okay.
+Signed-off-by: Alex Elder <elder@linaro.org>
+---
+ drivers/clk/qcom/clk-rpmh.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-> Thanks,
-> 
-> -- Sebastian
+diff --git a/drivers/clk/qcom/clk-rpmh.c b/drivers/clk/qcom/clk-rpmh.c
+index c623ce9004063..552d1cbfea4c0 100644
+--- a/drivers/clk/qcom/clk-rpmh.c
++++ b/drivers/clk/qcom/clk-rpmh.c
+@@ -380,6 +380,7 @@ static const struct clk_rpmh_desc clk_rpmh_sdm845 = {
+ DEFINE_CLK_RPMH_VRM(sdx55, rf_clk1, rf_clk1_ao, "rfclkd1", 1);
+ DEFINE_CLK_RPMH_VRM(sdx55, rf_clk2, rf_clk2_ao, "rfclkd2", 1);
+ DEFINE_CLK_RPMH_BCM(sdx55, qpic_clk, "QP0");
++DEFINE_CLK_RPMH_BCM(sdx55, ipa, "IP0");
+ 
+ static struct clk_hw *sdx55_rpmh_clocks[] = {
+ 	[RPMH_CXO_CLK]		= &sdm845_bi_tcxo.hw,
+@@ -389,6 +390,7 @@ static struct clk_hw *sdx55_rpmh_clocks[] = {
+ 	[RPMH_RF_CLK2]		= &sdx55_rf_clk2.hw,
+ 	[RPMH_RF_CLK2_A]	= &sdx55_rf_clk2_ao.hw,
+ 	[RPMH_QPIC_CLK]		= &sdx55_qpic_clk.hw,
++	[RPMH_IPA_CLK]		= &sdx55_ipa.hw,
+ };
+ 
+ static const struct clk_rpmh_desc clk_rpmh_sdx55 = {
+-- 
+2.27.0
+
