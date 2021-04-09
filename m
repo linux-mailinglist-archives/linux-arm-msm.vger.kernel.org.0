@@ -2,74 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A98B9359FA8
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Apr 2021 15:17:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 39532359FFF
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Apr 2021 15:39:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231819AbhDINRW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Apr 2021 09:17:22 -0400
-Received: from mail.kernel.org ([198.145.29.99]:55894 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231127AbhDINRV (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Apr 2021 09:17:21 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 9828A61105;
-        Fri,  9 Apr 2021 13:17:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1617974228;
-        bh=aYDcN3mJtkzZVii0OX9VTNl2k3rutbr9vY3tMwSyRyc=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=WAr6u5IK+vrwoXwy52B/AwlsXFuv3xJRWejX83rKAmSS/qS6hf+wmmNW/2CCq3XhE
-         MC1jmxb0O3TrjcFPWP3Vjezlv4s2x4tpMF11b/2M/CNCUVJfpfq30aLJ4lJhFZR/LO
-         vUDKFvhluXvQuwE3UO2rAtjZyfWo3Wbm92+OuXqaDjE+spJbpSdnFeaGwNU9nVArQL
-         D0gFc36UvXVoXfX/EsBmU+zKqqfItEMMsZmwr0AR1iHSLsSx5eVt7i2kBUw0qejjeI
-         wAgyOulbE+zOu8W2onYsEz6OplqHrUqb0SU2u1X2Pv787DcaqKv1f6zSeuf6PxBYzI
-         vCejtPrGmH8CQ==
-Date:   Fri, 9 Apr 2021 18:47:03 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Jarvis Jiang <jarvis.w.jiang@gmail.com>
-Cc:     hemantk@codeaurora.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, cchen50@lenovo.com,
-        mpearson@lenovo.com
-Subject: Re: [PATCH 2/2] bus: mhi: fix typo in comments for struct
- mhi_channel_config
-Message-ID: <20210409131703.GD31856@work>
-References: <20210408100220.3853-1-jarvis.w.jiang@gmail.com>
+        id S232855AbhDINjT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Apr 2021 09:39:19 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:24314 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233568AbhDINjT (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 9 Apr 2021 09:39:19 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1617975546; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=nCLKJ3txbssGA/MS9THnoJcM1/EpV+VVOtQ0VWZ6Umc=;
+ b=kcyIqRyAie57WJhAB+fXYVqOqRGz042lTbzTzrWPq8eeB82R1FZAmpwtH3RoZHd9LF+9YW0s
+ 71vreTfHOR3MbZ3g2v6CmVrNh8dBAeZ+gEhJr4DQ2NZRkPRkPa/RaG+8R1aCLJo6Czgcd2Ob
+ HiaL5fYEh2bLM8poXmxAYVtbIlI=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
+ 607058ec8807bcde1de095c6 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 09 Apr 2021 13:38:52
+ GMT
+Sender: skakit=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 3D8B1C43462; Fri,  9 Apr 2021 13:38:52 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: skakit)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 99624C43461;
+        Fri,  9 Apr 2021 13:38:51 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210408100220.3853-1-jarvis.w.jiang@gmail.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Fri, 09 Apr 2021 19:08:51 +0530
+From:   skakit@codeaurora.org
+To:     Sebastian Reichel <sebastian.reichel@collabora.com>
+Cc:     Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        David Collins <collinsd@codeaurora.org>, kgunda@codeaurora.org,
+        Vinod Koul <vkoul@kernel.org>,
+        Courtney Cavin <courtney.cavin@sonymobile.com>,
+        linux-input@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org
+Subject: Re: [PATCH V2 3/4] dt-bindings: power: reset: qcom-pon: Convert qcom
+ PON binding to yaml
+In-Reply-To: <20210409115748.xfxukqgoyvscgpln@earth.universe>
+References: <1617881469-31965-1-git-send-email-skakit@codeaurora.org>
+ <1617881469-31965-4-git-send-email-skakit@codeaurora.org>
+ <20210408130001.k3qbq3vvwkiyykzv@earth.universe>
+ <0cb9b3503000ac7206f4a3ef5fd16c17@codeaurora.org>
+ <20210409115748.xfxukqgoyvscgpln@earth.universe>
+Message-ID: <ad5d04c2a806213e9922834e996da15a@codeaurora.org>
+X-Sender: skakit@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Apr 08, 2021 at 03:02:20AM -0700, Jarvis Jiang wrote:
-> The word 'rung' is a typo in below comment, fix it.
-> * @event_ring: The event rung index that services this channel
+On 2021-04-09 17:27, Sebastian Reichel wrote:
+> Hi,
 > 
-> Signed-off-by: Jarvis Jiang <jarvis.w.jiang@gmail.com>
-
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-
-Thanks,
-Mani
-
-> ---
->  include/linux/mhi.h | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> On Fri, Apr 09, 2021 at 01:48:58PM +0530, skakit@codeaurora.org wrote:
+>>> Please do not drop the example :)
+>> 
+>> As per my understanding on Rob's comments [1] I have added one 
+>> complete
+>> example in qcom,pm8941-pwrkey.yaml (see patch 4/4) and dropped it 
+>> here.
+>> 
+>> [1] https://lore.kernel.org/patchwork/patch/1390062/#1588027
 > 
-> diff --git a/include/linux/mhi.h b/include/linux/mhi.h
-> index d095fba37d1e..944aa3aa3035 100644
-> --- a/include/linux/mhi.h
-> +++ b/include/linux/mhi.h
-> @@ -205,7 +205,7 @@ enum mhi_db_brst_mode {
->   * @num: The number assigned to this channel
->   * @num_elements: The number of elements that can be queued to this channel
->   * @local_elements: The local ring length of the channel
-> - * @event_ring: The event rung index that services this channel
-> + * @event_ring: The event ring index that services this channel
->   * @dir: Direction that data may flow on this channel
->   * @type: Channel type
->   * @ee_mask: Execution Environment mask for this channel
-> -- 
-> 2.25.1
+> Ok, please add a note about this in the commit message.
+> Something like:
 > 
+> The example has been removed in favour of full example being
+> available in the qcom,pm8941-pwrkey binding.
+> 
+
+Okay.
+
+> Thanks,
+> 
+> -- Sebastian
