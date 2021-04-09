@@ -2,163 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DBD9235A24F
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Apr 2021 17:51:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5AF5635A25F
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Apr 2021 17:53:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233038AbhDIPvV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Apr 2021 11:51:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46348 "EHLO
+        id S233954AbhDIPxK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Apr 2021 11:53:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46752 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233775AbhDIPvU (ORCPT
+        with ESMTP id S233916AbhDIPxI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Apr 2021 11:51:20 -0400
-Received: from mail-oo1-xc2b.google.com (mail-oo1-xc2b.google.com [IPv6:2607:f8b0:4864:20::c2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3287C061760
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Apr 2021 08:51:07 -0700 (PDT)
-Received: by mail-oo1-xc2b.google.com with SMTP id 125-20020a4a1a830000b02901b6a144a417so1428530oof.13
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Apr 2021 08:51:07 -0700 (PDT)
+        Fri, 9 Apr 2021 11:53:08 -0400
+Received: from mail-il1-x136.google.com (mail-il1-x136.google.com [IPv6:2607:f8b0:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6245C061762
+        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Apr 2021 08:52:54 -0700 (PDT)
+Received: by mail-il1-x136.google.com with SMTP id i22so415044ila.11
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Apr 2021 08:52:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=yjz3RZlWmDnIdbGeqiIWT3LCNv9pDPUhAL9jkHODWaA=;
-        b=SwOqVBgqSt+JcynoMv7Ujr6TrdkjnuLZHQp7t35SNF73hPzBzw9x8tb1BLc69BbiNO
-         W7dLfPXDZfLkLdx0lrcyiVL6+jsQCM4NwdJm1lOVJmh8urAZ3zs2HoECWdFbcNWrt7Yc
-         OfCijvpq7WtT/xEbU0pY/IKhZoou4cqY0D9b9P1F8d7Dvyibi+qG5+gXBJYUS+WtcKMO
-         e7Tu2sKC45647/8w4lTihc0uMC+qvfFCXfpePS1UL6v9wNCnFwdNqRG9MgM6pOrFheuG
-         hRY1j+oco9SCJhjM4k2Wds5bxMO4QIqhjBJYBoFQFdWfj8RuARxqv5vjIq6U02wRjs/g
-         ykSQ==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=6dw89kT43y0iwP7tVHfjK2c8fjHjZjh3ZGkx92mZsUo=;
+        b=vyy83tim/1kFkkganV1nCXVpFNQHJFLUyfRwJ8/rpvAk+qL1HauYxSlbaW6KEnyOUy
+         9i2twFrfFikR6jjUNqa1HauKGX/E2AZmHWwV/dPV9ujXy7Mv7QJTr4JkN+JZNMKr+mVH
+         i5AKTpPfTv2kGJrxj17Mt6MnI3dYHsqgy2PMrvuUrZvM6jp6mv12pDeiRQCnww/pMLhJ
+         aRanrjxtAm9HpI+7cN+8naBiv7W/Lxnq5Qc6LhKsAzttPZSsIL+FG34AKSEVTgAMdKUT
+         HsPGie6WCPHWg4pQaRcxlrHPzmdMWKhvfO/zY+zlzUBrQAa+nlfGE7YKL1cUdEChHHmX
+         uTBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=yjz3RZlWmDnIdbGeqiIWT3LCNv9pDPUhAL9jkHODWaA=;
-        b=RqX5HRYzthIoirCP3NxQ23TWrAt1q2/gaqIieKBTN648WvxBYDTEf8yv6xtq+SmKuD
-         cyg7jR1L2/gweoeo1MIW1G90G1/6ht75qmznou++vYgVux256+zzM+RGJWo/gh9779EA
-         O3lfq+HLAr5PbHGl/J8H4/Fy0f7MiZtOVnDgmn/plGTGbFy7b8twEAhmJENoWRgXAROU
-         GpBFFOTMf6V9Ogb82bhmlNBqAQz2u99aYbsPLZt1xn+DtnsoZvcki5A+OQSyJkbkXC8a
-         ZboIzvPAs1qfQNJ2h+QLiuP03J4UBKWCM+jmWaWD2MWaS8imqpdqN4fuD2YBipt2/NzD
-         c9ew==
-X-Gm-Message-State: AOAM532AQT2rdsuRbGCs8M7o7MNjKPsVEzCjxanzE8YMI26tqDYlKkR3
-        M688FNF8cA9wG3ZNTj+1Xv53Kw==
-X-Google-Smtp-Source: ABdhPJyvjKrF8cPJGVvH9CRuffjHnJ2hFmA3Sg5thXznUR/rTeh6eMPqgmayYHLehk7FcY6WsyuEuw==
-X-Received: by 2002:a05:6820:129:: with SMTP id i9mr12437657ood.80.1617983467285;
-        Fri, 09 Apr 2021 08:51:07 -0700 (PDT)
-Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id f129sm586154oia.9.2021.04.09.08.51.06
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=6dw89kT43y0iwP7tVHfjK2c8fjHjZjh3ZGkx92mZsUo=;
+        b=engJQbXFwFOxUOfuo2LfnRU/6u42EOlUtx69AGHNVXtXAX7Lg2a6HmN6vdOnseq/zN
+         Tob8oZa0zTFG2rkFVjNjjr8IikfQRCRbYlxpHbguUuG8Muo/mdRJReYHiE2g8q5ntl3F
+         XoSWiUO8Lpb+zl26NhS+aFhR0PCzScM9s0pRVsPjWQ7rKak+kkPcdtndpnYzdpn4JSXE
+         GxMQKeIOSNVbPTqqWkbYa7yYGjgsYUanSTi7vTtARg9/z7L9302DvO8YzGfi5Zs2VRW3
+         6TUha71ruCg0PSOA0+kaBqqMVv+idwF0p8euoKjL8oGm1KBAMts7SOZRal8PgAHLk9TQ
+         PWcg==
+X-Gm-Message-State: AOAM533dsSijBCT97FLJg6UDTVvNejuED52YmaBxyxwTE9V0ziTMSfNh
+        aHRXrtgdVSUInDI4+PwOG+6GInt/PmDesXUs
+X-Google-Smtp-Source: ABdhPJywblXbxYPq4FTyBC85fSG0JwH6jwcI++TM4tDh8Iua7oW7JZk9pNJoKN9w5XEONBK8Amv07g==
+X-Received: by 2002:a05:6e02:198f:: with SMTP id g15mr11783408ilf.200.1617983574302;
+        Fri, 09 Apr 2021 08:52:54 -0700 (PDT)
+Received: from presto.localdomain (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
+        by smtp.gmail.com with ESMTPSA id k13sm1296725ilu.29.2021.04.09.08.52.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 Apr 2021 08:51:06 -0700 (PDT)
-Date:   Fri, 9 Apr 2021 10:51:04 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     satya priya <skakit@codeaurora.org>
-Cc:     Alessandro Zummo <a.zummo@towertech.it>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Lee Jones <lee.jones@linaro.org>, linux-rtc@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, kgunda@codeaurora.org
-Subject: Re: [PATCH V2 4/4] dt-bindings: rtc: qcom-pm8xxx-rtc: Add qcom
- pm8xxx rtc bindings
-Message-ID: <20210409155104.GW904837@yoga>
-References: <1617976766-7852-1-git-send-email-skakit@codeaurora.org>
- <1617976766-7852-5-git-send-email-skakit@codeaurora.org>
+        Fri, 09 Apr 2021 08:52:53 -0700 (PDT)
+From:   Alex Elder <elder@linaro.org>
+To:     bjorn.andersson@linaro.org, agross@kernel.org, robh+dt@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] ARM: dts: qcom: sdx55: add IPA information
+Date:   Fri,  9 Apr 2021 10:52:51 -0500
+Message-Id: <20210409155251.955632-1-elder@linaro.org>
+X-Mailer: git-send-email 2.27.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1617976766-7852-5-git-send-email-skakit@codeaurora.org>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri 09 Apr 08:59 CDT 2021, satya priya wrote:
+Add IPA-related nodes and definitions to "sdx55.dtsi".  The SMP2P
+nodes (ipa_smp2p_out and ipa_smp2p_in) are already present.
 
-> Add binding doc for qcom pm8xxx rtc device.
-> 
+Signed-off-by: Alex Elder <elder@linaro.org>
+---
+Note: This depends on this series posted by Mani Sadhasivam:
+  https://lore.kernel.org/linux-arm-msm/20210408170457.91409-1-manivannan.sadhasivam@linaro.org
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+ arch/arm/boot/dts/qcom-sdx55.dtsi | 41 +++++++++++++++++++++++++++++++
+ 1 file changed, 41 insertions(+)
 
-Regards,
-Bjorn
+diff --git a/arch/arm/boot/dts/qcom-sdx55.dtsi b/arch/arm/boot/dts/qcom-sdx55.dtsi
+index e4180bbc46555..0dc515dc5750d 100644
+--- a/arch/arm/boot/dts/qcom-sdx55.dtsi
++++ b/arch/arm/boot/dts/qcom-sdx55.dtsi
+@@ -215,6 +215,47 @@ qpic_nand: nand@1b30000 {
+ 			status = "disabled";
+ 		};
+ 
++		ipa: ipa@1e40000 {
++			compatible = "qcom,sdx55-ipa";
++
++			iommus = <&apps_smmu 0x5e0 0x0>,
++				 <&apps_smmu 0x5e2 0x0>;
++			reg = <0x1e40000 0x7000>,
++			      <0x1e50000 0x4b20>,
++			      <0x1e04000 0x2c000>;
++			reg-names = "ipa-reg",
++				    "ipa-shared",
++				    "gsi";
++
++			interrupts-extended = <&intc GIC_SPI 241 IRQ_TYPE_EDGE_RISING>,
++					      <&intc GIC_SPI 47 IRQ_TYPE_LEVEL_HIGH>,
++					      <&ipa_smp2p_in 0 IRQ_TYPE_EDGE_RISING>,
++					      <&ipa_smp2p_in 1 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "ipa",
++					  "gsi",
++					  "ipa-clock-query",
++					  "ipa-setup-ready";
++
++			clocks = <&rpmhcc RPMH_IPA_CLK>;
++			clock-names = "core";
++
++			interconnects = <&system_noc MASTER_IPA &system_noc SLAVE_SNOC_MEM_NOC_GC>,
++					<&mem_noc MASTER_SNOC_GC_MEM_NOC &mc_virt SLAVE_EBI_CH0>,
++					<&system_noc MASTER_IPA &system_noc SLAVE_OCIMEM>,
++					<&mem_noc MASTER_AMPSS_M0 &system_noc SLAVE_IPA_CFG>;
++			interconnect-names = "memory-a",
++					     "memory-b",
++					     "imem",
++					     "config";
++
++			qcom,smem-states = <&ipa_smp2p_out 0>,
++					   <&ipa_smp2p_out 1>;
++			qcom,smem-state-names = "ipa-clock-enabled-valid",
++						"ipa-clock-enabled";
++
++			status = "disabled";
++		};
++
+ 		tcsr_mutex: hwlock@1f40000 {
+ 			compatible = "qcom,tcsr-mutex";
+ 			reg = <0x01f40000 0x40000>;
+-- 
+2.27.0
 
-> Signed-off-by: satya priya <skakit@codeaurora.org>
-> ---
-> Changes in V2:
->  - Added this in V2 to have separate binding for rtc node.
-> 
->  .../devicetree/bindings/rtc/qcom-pm8xxx-rtc.yaml   | 62 ++++++++++++++++++++++
->  1 file changed, 62 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/rtc/qcom-pm8xxx-rtc.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/rtc/qcom-pm8xxx-rtc.yaml b/Documentation/devicetree/bindings/rtc/qcom-pm8xxx-rtc.yaml
-> new file mode 100644
-> index 0000000..4fba6db
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/rtc/qcom-pm8xxx-rtc.yaml
-> @@ -0,0 +1,62 @@
-> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/rtc/qcom-pm8xxx-rtc.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm PM8xxx PMIC RTC device
-> +
-> +maintainers:
-> +  - Satya Priya <skakit@codeaurora.org>
-> +
-> +properties:
-> +  compatible:
-> +    enum:
-> +      - qcom,pm8058-rtc
-> +      - qcom,pm8921-rtc
-> +      - qcom,pm8941-rtc
-> +      - qcom,pm8018-rtc
-> +      - qcom,pmk8350-rtc
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  interrupts:
-> +    maxItems: 1
-> +
-> +  allow-set-time:
-> +    $ref: /schemas/types.yaml#/definitions/flag
-> +    description:
-> +      Indicates that the setting of RTC time is allowed by the host CPU.
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - interrupts
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/spmi/spmi.h>
-> +    spmi_bus: spmi@c440000 {
-> +      reg = <0x0c440000 0x1100>;
-> +      #address-cells = <2>;
-> +      #size-cells = <0>;
-> +      pmicintc: pmic@0 {
-> +        reg = <0x0 SPMI_USID>;
-> +        compatible = "qcom,pm8921";
-> +        interrupts = <104 8>;
-> +        #interrupt-cells = <2>;
-> +        interrupt-controller;
-> +        #address-cells = <1>;
-> +        #size-cells = <0>;
-> +
-> +        pm8921_rtc: rtc@11d {
-> +          compatible = "qcom,pm8921-rtc";
-> +          reg = <0x11d>;
-> +          interrupts = <0x27 0>;
-> +        };
-> +      };
-> +    };
-> +...
-> -- 
-> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
-> of Code Aurora Forum, hosted by The Linux Foundation
-> 
