@@ -2,75 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9888A35A30B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Apr 2021 18:23:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0500635A312
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Apr 2021 18:24:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234160AbhDIQXw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Apr 2021 12:23:52 -0400
-Received: from mail.kernel.org ([198.145.29.99]:60132 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S234120AbhDIQXu (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Apr 2021 12:23:50 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 153676105A;
-        Fri,  9 Apr 2021 16:23:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1617985417;
-        bh=FC85rjP9iluvlNakgNyxCcfjQMrwMM/pqcP1lgIxhZ8=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=skIsBSVMH9Ofo9QjyMg82J638Ax7nCX9VpTtPTxr8nvHSuFRbbDaJVkZ5AxCVnE4w
-         7vToqRJrKz4yS3emLyyKOfWoKTNzpfSzSLRMC00Gs3640S0wVhjT2TrEAO47+h4VHF
-         hw6tadW/st7XMnVBGoDXoHJDe0YdKCUtAJJVheIRigF3uPdHtXF6TF8xKarUDrZcBl
-         FvL7HeyYVKMg5nDn3xBpNMk4yMJYtbZrrilqzF5uQBKBUFEtmNMe0aPwEoRYd6GE2X
-         3yg8cInPsSkEOjjP0WG44W93zWDsQXTsfojuq+vxn/RrNRlsYhqJR0t5MyevHkhin0
-         rF4inOrUmazCg==
-From:   Mark Brown <broonie@kernel.org>
-To:     bjorn.andersson@linaro.org, agross@kernel.org,
-        Wang Li <wangli74@huawei.com>
-Cc:     Mark Brown <broonie@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-spi@vger.kernel.org
-Subject: Re: [PATCH -next] spi: qup: fix PM reference leak in spi_qup_remove()
-Date:   Fri,  9 Apr 2021 17:22:46 +0100
-Message-Id: <161798356987.48466.11674282962470154203.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20210409095458.29921-1-wangli74@huawei.com>
-References: <20210409095458.29921-1-wangli74@huawei.com>
+        id S234011AbhDIQYY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Apr 2021 12:24:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53582 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234217AbhDIQYO (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 9 Apr 2021 12:24:14 -0400
+Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28CE2C061761
+        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Apr 2021 09:24:01 -0700 (PDT)
+Received: by mail-ot1-x32f.google.com with SMTP id t23-20020a0568301e37b02901b65ab30024so6231552otr.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Apr 2021 09:24:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ByB151TUOSTf2AoksdIDlwnxayEzo8uelQVntltKUxI=;
+        b=hZgYtwqOtVrF1pzF5T7/4V/VIp2inE0KuoTdLnWgd4iRf/mGWlTnb1O+/de+6KxLs/
+         3j8V6Zs8GGDzqDieeP04oA3ok9P5T3Hg2iPyDezkPUSe7BdkpvHjp1gIJSi7w1jn/qb0
+         T1tUwRVkTlgOAcv6fnY3PeDxKJLskGg/8a0iQ6Fzdb3cTDuVhs+a/yNNhLxuIQk+jfcH
+         oZpgIYZGHFCHK71fWTxNSuLo7aASY0zJ8P3/8FcgdP/QeAqiZ4fWeyfhko+cEM1rdrcd
+         x1GgAmtBrNH3r/AsQPGmpw1krdptjojrNWSCvnuSI8sGcplmyHVSsNPtoLtAHdGv5uKu
+         fBwg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ByB151TUOSTf2AoksdIDlwnxayEzo8uelQVntltKUxI=;
+        b=nYlunR/J1fRlQfK+dN8dKsNf62wuGga+vdWndA73/D9zT4eNZV1SvLBLsGZjf5lq/2
+         aWUVXBwKXwCbGgdc3PpsoeEcuVaV7R0ts43BxXTP3wFQ/QwYYND7suzqql/zpv6B5rY0
+         hqvTRNhSj720jahxbRkK3Iy8D2ojpaBfB/72pT6eRVWfNx+JXlJ+1IXK6XRZQIxT+nAL
+         MuMxuhkiHB95fNAxLEzHTRQ6ATfT1P+svUNnG3GR6dvubTfrHTsccZ09Wjtx+7ZC26e3
+         2/d+jI/ceXK7nrASLKJbalqez6HLu8nMnmRzMxWSbxUE+ZrYc0uJ+feWmtv/h2kqzI4y
+         Z5sg==
+X-Gm-Message-State: AOAM530PVq+P4RI050TgbLuliVTX6vIBhpEMdlypgCFf7y+YtpY/ZOP8
+        APxXkVyHAnETAZpVJU0VEwKQZC4BCPxPqQ==
+X-Google-Smtp-Source: ABdhPJzQGYVHkW5E8c3uvfg8c4PpdRxpEzWwlO+LYuXEFyNGtD4lDGhOJhYs7GqhzECZsUTCwZivIA==
+X-Received: by 2002:a9d:550f:: with SMTP id l15mr1059901oth.11.1617985440571;
+        Fri, 09 Apr 2021 09:24:00 -0700 (PDT)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id g21sm715196oti.19.2021.04.09.09.23.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 09 Apr 2021 09:24:00 -0700 (PDT)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     arm@kernel.org, soc@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        Andy Gross <agross@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
+        Olof Johansson <olof@lixom.net>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Alexey Minnekhanov <alexeymin@postmarketos.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Luca Weiss <luca@z3ntu.xyz>
+Subject: [GIT PULL] Qualcomm dts updates for v5.13
+Date:   Fri,  9 Apr 2021 11:23:59 -0500
+Message-Id: <20210409162359.776076-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.31.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 9 Apr 2021 09:54:58 +0000, Wang Li wrote:
-> pm_runtime_get_sync will increment pm usage counter even it failed.
-> Forgetting to putting operation will result in reference leak here.
-> Fix it by replacing it with pm_runtime_resume_and_get to keep usage
-> counter balanced.
+The following changes since commit a38fd8748464831584a19438cbb3082b5a2dab15:
 
-Applied to
+  Linux 5.12-rc2 (2021-03-05 17:33:41 -0800)
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/spi.git for-next
+are available in the Git repository at:
 
-Thanks!
+  https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-dts-for-5.13
 
-[1/1] spi: qup: fix PM reference leak in spi_qup_remove()
-      commit: cec77e0a249892ceb10061bf17b63f9fb111d870
+for you to fetch changes up to 885aae6860fae1eed38f5cc1ac09a40e4896a38c:
 
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
+  ARM: dts: qcom: msm8974-klte: Add bluetooth support (2021-04-06 11:53:16 -0500)
 
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
+----------------------------------------------------------------
+Qualcomm dts updates for v5.13
 
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
+This adds Bluetooth support on the Samsung Galaxy S5, corrects the mount
+matrix for the IMU on Nexus 5 and corrects the fuel gauge irq trigger
+for the two devices.
 
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
+----------------------------------------------------------------
+Alexey Minnekhanov (2):
+      ARM: dts: qcom: msm8974: add blsp2_uart8
+      ARM: dts: qcom: msm8974-klte: Add bluetooth support
 
-Thanks,
-Mark
+Krzysztof Kozlowski (2):
+      ARM: dts: qcom: msm8974-lge-nexus5: correct fuel gauge interrupt trigger level
+      ARM: dts: qcom: msm8974-samsung-klte: correct fuel gauge interrupt trigger level
+
+Luca Weiss (1):
+      ARM: dts: qcom: msm8974-hammerhead: add mount matrix for IMU
+
+ .../dts/qcom-msm8974-lge-nexus5-hammerhead.dts     |  6 ++-
+ arch/arm/boot/dts/qcom-msm8974-samsung-klte.dts    | 52 +++++++++++++++++++++-
+ arch/arm/boot/dts/qcom-msm8974.dtsi                |  9 ++++
+ 3 files changed, 65 insertions(+), 2 deletions(-)
