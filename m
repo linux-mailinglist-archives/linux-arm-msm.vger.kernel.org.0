@@ -2,161 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D671C3592F9
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Apr 2021 05:20:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B45CA35931C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Apr 2021 05:38:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232990AbhDIDUb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Apr 2021 23:20:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51104 "EHLO
+        id S233176AbhDIDiL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Apr 2021 23:38:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54882 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232918AbhDIDUa (ORCPT
+        with ESMTP id S233196AbhDIDiL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Apr 2021 23:20:30 -0400
-Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91666C061762
-        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Apr 2021 20:20:18 -0700 (PDT)
-Received: by mail-pg1-x536.google.com with SMTP id k8so2838996pgf.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Apr 2021 20:20:18 -0700 (PDT)
+        Thu, 8 Apr 2021 23:38:11 -0400
+Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4AF82C061763
+        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Apr 2021 20:37:29 -0700 (PDT)
+Received: by mail-oi1-x22c.google.com with SMTP id 25so2962050oiy.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Apr 2021 20:37:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
+        d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=OCOuP77KzsERfjtLD3+g0QTNYiI6uzbUte1pk8VLigc=;
-        b=fs6OIzMHI1Ukfun/q5z5kfC91OWHpE3PcQFCPRODEkoEe2j/xEt8Lplg7E+tcAaQ97
-         0q9SYV703eJz04xUzhlXRrvjdcKy1rgUVEd5C+nwUNq4HN6QVapc45uVFOQMiG5UtaR0
-         IpVgH0IQ0TtYgrnVa/m3OwpnwYk1FsC6uHBjE=
+         :content-disposition:in-reply-to;
+        bh=kpO9+Srd4oIvzWVPdKNdhhDxU1fj2TEEXiSYekg3+O4=;
+        b=AajZh8YY55sqks6QlcXguHQ/+brpwyvUTeoJebt7DSnbLvFJLMf2d1WDS6sHYmKrMW
+         /JpVTniCTchZEv6K33jNa5DHdhmFsKozdeGkprinsXo7r5heNHiDeHEDES0htkv+2dBr
+         iD7HIujRElbo6/rKB4EwOJ0XwxNS2lJnG0RSgNPWNbiKBA7vbhrWMlJ5hilCDHdAeMvZ
+         fMz7qlJ+0podVxWdTe/sM4/YHNudBoh94zszKUFnH15H1Hf34eZ6ftgXFabYjvrMyV0r
+         yYv0fpUUmqiN9yOJmajTr/HRsTiH1g+xjSxZ2fWWZno9Kbn+0tkh/dk2RygfB+z4A5Qb
+         3YBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=OCOuP77KzsERfjtLD3+g0QTNYiI6uzbUte1pk8VLigc=;
-        b=L3hxdVEX/T9pGn9RFkUb8N1bH7QncozbitP9UXuPEEKj1vOlrZuZW5Vc0/sqjWPlmN
-         BtMlfjKF3pM11u01RI4q8QSj0ytTYwHGqSvqmdegrc4n+10rCzNj3l1K22JrtaI1xdNq
-         onyWeqLD/0Ub+c5OGrefSpQFYbrQdPaoueoWlC/86Kmj5cE5b3LgFitU5sFtU7VlEWg+
-         15fZZJo0nruh3wSbMEpIgO+SnSTkZJEPwPbgx/68+nvZ8W03en8H54J6dzPwOTovODz3
-         u9Lp0deiurNYy/yrzZR1RkxX7EYfdbHVYbzEktFI6PMzOj3MurUstsrTlBBmvwxuqTwX
-         y5yQ==
-X-Gm-Message-State: AOAM532amB32iAXkkIIxgfSpMFOOnmYGnFX7DG8DXSM8pEWrSQdxDK5e
-        eXvu8xtKBcRDLdSTO5q7kRWbbQ==
-X-Google-Smtp-Source: ABdhPJzC0bLiabjaxIzlhcuh3ox2ZRB+HbY3l9M8hv1k1EI9wdS1NnBB85gLT5oog9ql76p4icDRyw==
-X-Received: by 2002:a63:9dcb:: with SMTP id i194mr10564176pgd.87.1617938417994;
-        Thu, 08 Apr 2021 20:20:17 -0700 (PDT)
-Received: from www.outflux.net (smtp.outflux.net. [198.145.64.163])
-        by smtp.gmail.com with ESMTPSA id j205sm683087pfd.214.2021.04.08.20.20.17
+         :mime-version:content-disposition:in-reply-to;
+        bh=kpO9+Srd4oIvzWVPdKNdhhDxU1fj2TEEXiSYekg3+O4=;
+        b=W9q3WPqpMR3Z8qx3F3kFMN4rIZs3V2b+MWdON83VyRtLi8Be5oYslhgmHVUWDLhpx3
+         V/DQPxZEqGGvxgv2vpSDjvf/aq17BTdizQnNM6gKZSqOa1ZLJZMCbTzWwIldEalKqWZ4
+         7FQ5DncN+9XYwluNm2TozGY5ERHqnIT7bXfbpLwL7devobpEiWgYdTvy6CnRd+3R78rs
+         lcgyqaGyLh5aVm6WwG9MQQs12uOD3bva1szSWf6X3T2OgFgDBb38krUzV9M196Mf+Uu7
+         tU8NtV8Pqcceqyw2qV/q8B1LunK8jfue8fSYmiVBdpj7AsZD0uzx2SgVea1THhjnv00F
+         L51g==
+X-Gm-Message-State: AOAM531qoaMNe09eDiwGdzvgzcjnWaNWiRP002fJ0b9cdR0K0HIqoZJn
+        Adt0im30N3nEC1p5gG9vpfbJ/A==
+X-Google-Smtp-Source: ABdhPJxyg5jFsWAKl52joGC4rhFbwO523ZKf7Sk0WGwP6QuzZcGFDCCy9TNVl2ntIn6hUArIIl/ToQ==
+X-Received: by 2002:aca:2b07:: with SMTP id i7mr8785439oik.66.1617939449149;
+        Thu, 08 Apr 2021 20:37:29 -0700 (PDT)
+Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id y10sm333546oto.18.2021.04.08.20.37.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Apr 2021 20:20:17 -0700 (PDT)
-Date:   Thu, 8 Apr 2021 20:20:16 -0700
-From:   Kees Cook <keescook@chromium.org>
-To:     Andy Shevchenko <andy.shevchenko@gmail.com>
-Cc:     "Vaittinen, Matti" <Matti.Vaittinen@fi.rohmeurope.com>,
-        "agross@kernel.org" <agross@kernel.org>,
-        "broonie@kernel.org" <broonie@kernel.org>,
-        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
-        linux-power <linux-power@fi.rohmeurope.com>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "linux-renesas-soc@vger.kernel.org" 
-        <linux-renesas-soc@vger.kernel.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "bjorn.andersson@linaro.org" <bjorn.andersson@linaro.org>,
-        "lgirdwood@gmail.com" <lgirdwood@gmail.com>,
-        "robh+dt@kernel.org" <robh+dt@kernel.org>
-Subject: Re: [PATCH v4 3/7] regulator: IRQ based event/error notification
- helpers
-Message-ID: <202104082015.4DADF9DC48@keescook>
-References: <cover.1617690965.git.matti.vaittinen@fi.rohmeurope.com>
- <2b87b4637fde2225006cc122bc855efca0dcd7f1.1617692184.git.matti.vaittinen@fi.rohmeurope.com>
- <CAHp75VeoTVNDemV0qRA4BTVqOVfyR9UKGWhHgfeat8zVVGcu_Q@mail.gmail.com>
- <55397166b1c4107efc2a013635f63af142d9b187.camel@fi.rohmeurope.com>
- <CAHp75VeK+Oq9inOLcSSsq+FjaaPC5D=EMt4vLf97uR1BmpW2Zw@mail.gmail.com>
- <42210c909c55f7672e4a4a9bfd34553a6f4c8146.camel@fi.rohmeurope.com>
- <CAHp75VeX8H5E6GfVHxgu_6R+zbvmFV8fT9tO-nsm1nB3N4NF_A@mail.gmail.com>
+        Thu, 08 Apr 2021 20:37:28 -0700 (PDT)
+Date:   Thu, 8 Apr 2021 22:37:26 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Petr Vorel <petr.vorel@gmail.com>
+Cc:     Konrad Dybcio <konradybcio@gmail.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Ricardo Ribalda <ribalda@kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>
+Subject: Re: [PATCH 1/1] arm64: dts: qcom: msm8994: Reserve gpio ranges
+Message-ID: <20210409033726.GT904837@yoga>
+References: <20210405200259.23525-1-petr.vorel@gmail.com>
+ <20210405225222.GD904837@yoga>
+ <CACRpkdZQ8qiqFPa0X8deVjZ7nLn_E6s8fmJdr5Ji8AuyJms1ug@mail.gmail.com>
+ <YG9TWEJlpDmNeeit@pevik>
+ <ea376d51-cd6c-0028-9602-d007c2bba71e@gmail.com>
+ <YG/HwrzRcm7bwgFe@pevik>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAHp75VeX8H5E6GfVHxgu_6R+zbvmFV8fT9tO-nsm1nB3N4NF_A@mail.gmail.com>
+In-Reply-To: <YG/HwrzRcm7bwgFe@pevik>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Apr 07, 2021 at 03:50:15PM +0300, Andy Shevchenko wrote:
-> On Wed, Apr 7, 2021 at 12:49 PM Vaittinen, Matti
-> <Matti.Vaittinen@fi.rohmeurope.com> wrote:
-> > On Wed, 2021-04-07 at 12:10 +0300, Andy Shevchenko wrote:
-> > > On Wed, Apr 7, 2021 at 8:02 AM Matti Vaittinen
-> > > <matti.vaittinen@fi.rohmeurope.com> wrote:
-> > > > On Wed, 2021-04-07 at 01:44 +0300, Andy Shevchenko wrote:
-> > > > > On Tuesday, April 6, 2021, Matti Vaittinen <
-> > > > > matti.vaittinen@fi.rohmeurope.com> wrote:
+On Thu 08 Apr 22:19 CDT 2021, Petr Vorel wrote:
+
+> Hi Konrad,
+> > Hi,
 > 
-> Kees, there are two non-security guys discussing potential security
-> matters. Perhaps you may shed a light on this and tell which of our
-> stuff is risky and which is not and your recommendations on it.
-
-Hi!
-
-> > > > > > +       pr_emerg(msg);
-> > > > >
-> > > > > Oh là là, besides build bot complaints, this has serious security
-> > > > > implications. Never do like this.
-> > > >
-> > > > I'm not even trying to claim that was correct. And I did send a
-> > > > fixup -
-> > > > sorry for this. I don't intend to do this again.
-> > > >
-> > > > Now, when this is said - If you have a minute, please educate me.
-> > > > Assuming we know all the callers and that all the callers use this
-> > > > as
-> > > >
-> > > > die_loudly("foobarfoo\n");
-> > > > - what is the exploit mechanism?
-
-I may not be following the thread exactly, here, but normally the issue
-is just one of robustness and code maintainability. You can't be sure all
-future callers will always pass in a const string, so better to always do:
-
-	pr_whatever("%s\n", string_var);
-
-> > > Not a security guy, but my understanding is that this code may be
-> > > used
-> > > as a gadget in ROP technique of attacks.
-
-The primary concern is with giving an attacker control over a format
-string (which can be used to expose kernel memory). It used to be much
-more serious when the kernel still implemented %n, which would turn such
-things into a potential memory _overwrite_. We removed %n a long time
-ago now. :)
-
-> > Thanks Andy. It'd be interesting to learn more details as I am not a
-> > security expert either :)
-> >
-> > > In that case msg can be anything. On top of that, somebody may
-> > > mistakenly (inadvertently) put the code that allows user controller
-> > > input to go to this path.
-> >
-> > Yes. This is a good reason to not to do this - but I was interested in
-> > knowing if there is a potential risk even if:
-> >
-> > > > all the callers use this
-> > > > as
-> > > >
-> > > > die_loudly("foobarfoo\n");
+> > to clear up some confusion:
 > 
-> I don't see direct issues, only indirect ones, for example, if by some
-> reason the memory of this message appears writable. So, whoever
-> controls the format string of printf() controls a lot. That's why it's
-> preferable to spell out exact intentions in the explicit format
-> string.
+> 
+> > On Qualcomm boards GPIOs that are used for "secure" (duh) peripherals,
+> > like a fingerprint scanner, are not allowed to be controlled from Linux (the "non-secure world").
+> > Trying to do so causes an immediate reboot due to "attempting to violate the security".
+> Thanks for an explanation.
+> 
+> > The GPIOs seem to all be iterated over on boot, except for the ones specified in "gpio-reserved-ranges".
+> > As a result, if such "secure" GPIOs are not declared in the DT, the board essentially dies on TLMM (pinctrl) probe
+> > (which happens veeeery early - so that all other peripherals can set the pins as they see fit)
+> > and that's very unpleasant to debug. Without this patch, Petr's device will simply not boot.
+> Exactly.
+> 
+> > So, why did it work before!?
+> 
+> 
+> > Well, either the GPIOs weren't iterated over, or the TLMM (pinctrl) driver wasn't in place back then.
+> I suppose GPIOs not being iterated over is the case for first fix (i.e. fixing
+> 3edfb7bd76bd "gpiolib: Show correct direction from the beginning").
+> 
 
-Right.
+We had a long discussion about this in the past, and this resulted in
+gpio-reserved-ranges and flagging off GPIOs that shouldn't be touched.
 
-> > > > > > +       BUG();
-> > > > > > +}
+It seems we introduced the angler dts prior to said changes in the
+gpiolib, so it's probably right to say that it's a regression. However,
+the introduction of this was done 3 years ago and we're happy with it on
+all other devices.
 
-This, though, are you sure you want to use BUG()? Linus gets upset about
-such things:
-https://www.kernel.org/doc/html/latest/process/deprecated.html#bug-and-bug-on
+There's no harm in introducing this property prior to the introduction
+of the related gpiolib patches, so if you really care about it being backported
+I would suggest you say:
 
--- 
-Kees Cook
+Fixes: feeaf56ac78d ("arm64: dts: msm8994 SoC and Huawei Angler (Nexus 6P) support")
+
+But I presume based on the awesome work you guys are putting into the
+8994 platform people shouldn't run "old" kernels anyways, so I think it
+would be fine with us just ignoring the Fixes as well...
+
+Regards,
+Bjorn
