@@ -2,244 +2,275 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D77DB35AB37
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Apr 2021 07:53:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AFCB435ABC8
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Apr 2021 10:05:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234219AbhDJFwb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 10 Apr 2021 01:52:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58866 "EHLO
+        id S233606AbhDJIFh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 10 Apr 2021 04:05:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58946 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233606AbhDJFwb (ORCPT
+        with ESMTP id S229472AbhDJIFg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 10 Apr 2021 01:52:31 -0400
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2106FC061762;
-        Fri,  9 Apr 2021 22:52:17 -0700 (PDT)
-Received: by mail-ed1-x52b.google.com with SMTP id m3so8920076edv.5;
-        Fri, 09 Apr 2021 22:52:17 -0700 (PDT)
+        Sat, 10 Apr 2021 04:05:36 -0400
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF3FAC061762;
+        Sat, 10 Apr 2021 01:05:21 -0700 (PDT)
+Received: by mail-lj1-x22c.google.com with SMTP id y1so9109223ljm.10;
+        Sat, 10 Apr 2021 01:05:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:reply-to:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=ZYOaVyBkrUpgFdOkrrPCPXje/e+nQsjc8jrXcFPI7Wo=;
-        b=S3ROlRJDA0CrI1j4yvDkFZuk67wASpNR7mPYOzPJuiGZcmuUhr1MgDTY6pIcjyx6GG
-         jZug5HHnhAJslGqgZHU2apaTQ8j8LBSEWHPcZJzauDVeCFiSAFVtOfWke9k5a7UV47Ny
-         8pyFy6OEQgH20NSvlX07S7bfIglYxBu6LMuva609cMI4yQ1N9zWvdrpZvOy5a6rARKHM
-         z/Bs5xsisl2vtVsatoWTNdMj2ACUde1oQQg1n6ZtI3iEiEznmF/z7IrdUv+LZHVqBQj2
-         G6DiplONSx8Jfr4N9Tfa0MeMc6JEl7YSHzWLnfQ3oMGhLat9j1/Yoo3ZoLpzjvk6FVfP
-         O+Sw==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=O1YTa0bl0npGeThfx55nacESkRL3fgkCwazh8Gv4zCU=;
+        b=bLYsja+bzd4hW1XugbxGSDeqC/Kdzc7AhiFr1umBmxXjVo77q4wYMMfwazmxs4ZJXx
+         YNEpmtNeoSPgJZOBt1nqJ9uhdTDJqpPU5u78n66fNyHPyUNaaottmBrPsJEZgIYei44D
+         wkgEBlQFMZCLOy/SdGaJ55aJBsv6iPcVJCz/EoP2cQlGrL/rL+54Q8hl5hcPTi5wdlJX
+         TJth4iJTjQm/h17L0j47pCLDEy3UWDpep+O7jKG/cuK8t07FOI749uTMhAMPCyUMDINA
+         qDfO2lqv/R6WqdHugAz82hdIsfNptGN/LYjjQTSIJNxj6pDuAm22zdqqUiXX2ModWhQt
+         M0vw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:reply-to
-         :references:mime-version:content-disposition:in-reply-to;
-        bh=ZYOaVyBkrUpgFdOkrrPCPXje/e+nQsjc8jrXcFPI7Wo=;
-        b=nQDWiSdtB2DEBP5/bO2SmzPq7xC5n8kM1+OMf8Ib8j5GTBGBgKxgwJCQ9uy+gL87vg
-         cQH4ZFqqDyh9Ja3FKVgKsNSH7A58Web98paUws5mxYo3P8wnWQJmwADVH1rzDhn2QmoX
-         krONlKW2hwFNT/FgwDyV9G+4i+buX+/sJF8JF26aqVWtjrZL4y9mJBuiYxfxKWmzNnV4
-         vHKadY0xIb5+WM8Y7Q9tkZVbRq6WyipDFLZvVFJsGPjhPtk/jkDHmIFtf8n+wdLw6ule
-         XtCFxLIZ9lqoJxjwbrNUNvpH/0rkCC2zcTC688AKb2QGOL84OIhAG5PgPj93pBwtuoop
-         9Ozw==
-X-Gm-Message-State: AOAM530U3WVYELS1ZQa5liyrNGPg7zCXRmtZIPQ31IKnfvPBo6THXCcd
-        qofQMKfATTD5KwFrUTMu1/U=
-X-Google-Smtp-Source: ABdhPJyJJaMOZlYGb5WCUVG+/EivFEAt5xSflzXs4aUkS26Q62YNAMdDmWC8kXBL6R7seOrzvuiAXQ==
-X-Received: by 2002:a05:6402:3486:: with SMTP id v6mr20434799edc.109.1618033935713;
-        Fri, 09 Apr 2021 22:52:15 -0700 (PDT)
-Received: from pevik ([62.201.25.198])
-        by smtp.gmail.com with ESMTPSA id 28sm2526881edw.82.2021.04.09.22.52.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 Apr 2021 22:52:15 -0700 (PDT)
-Date:   Sat, 10 Apr 2021 07:52:13 +0200
-From:   Petr Vorel <petr.vorel@gmail.com>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Konrad Dybcio <konradybcio@gmail.com>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Ricardo Ribalda <ribalda@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>
-Subject: Re: [PATCH 1/1] arm64: dts: qcom: msm8994: Reserve gpio ranges
-Message-ID: <YHE9Df/Ztq7VaoK2@pevik>
-Reply-To: Petr Vorel <petr.vorel@gmail.com>
-References: <20210405200259.23525-1-petr.vorel@gmail.com>
- <20210405225222.GD904837@yoga>
- <CACRpkdZQ8qiqFPa0X8deVjZ7nLn_E6s8fmJdr5Ji8AuyJms1ug@mail.gmail.com>
- <YG9TWEJlpDmNeeit@pevik>
- <ea376d51-cd6c-0028-9602-d007c2bba71e@gmail.com>
- <YG/HwrzRcm7bwgFe@pevik>
- <20210409033726.GT904837@yoga>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=O1YTa0bl0npGeThfx55nacESkRL3fgkCwazh8Gv4zCU=;
+        b=Mol3b0aPdFq7YGV52FV1zdsv+1p3V7ACvn9tg7+Te1wfxLNWHdKykClKOIvYjN9Aih
+         HaijF2XcH6jtV2CZ7TsZYYWSPCrkE9epkCXbL9927bmTKrYWAHh3WxKTAQfwygzPwYLB
+         5UQwz13mmYpNWZYOVI6SM/CN8kef1uzWxlpjzbVZ7URVTxx6wPZKCe7F1kZX0Y1QQk5U
+         +pMeESFcmBe1B35oO5Jv3JVizYt78/TCh4s1xcy5qCZdHmQMpmOlIf7Pgof4kSuRG55l
+         Rtl9v+qlE+Uh6w5QPG0FuKla48y0iNtFnHr/13eiEEVVsGlZCaJ8YbcH103IYyUOcmza
+         LYmw==
+X-Gm-Message-State: AOAM5301woKwqRgBpnjTkJdl8InKUZL5XAgWeugjwPQcyTaGALI33gEp
+        QfTynCWP6Ltp8qdfTjRUoi8QlYtu+XQ6VQ==
+X-Google-Smtp-Source: ABdhPJwua9bj/vBqsaUuuaK2REPEbsimVlyNEE3+tSqVv4HpX17uU6lOte0SzgNtTNsQyTk23MdlXw==
+X-Received: by 2002:a2e:2ac6:: with SMTP id q189mr8705814ljq.474.1618041919814;
+        Sat, 10 Apr 2021 01:05:19 -0700 (PDT)
+Received: from ?IPv6:2a01:540:23a1:ff00:6262:e20a:d993:49b3? ([2a01:540:23a1:ff00:6262:e20a:d993:49b3])
+        by smtp.gmail.com with ESMTPSA id f11sm868957lfm.230.2021.04.10.01.05.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 10 Apr 2021 01:05:19 -0700 (PDT)
+Subject: Re: [PATCH 1/2] dt-bindings: soc: qcom: Add bindings for Qualcomm
+ Memshare service
+To:     Rob Herring <robh@kernel.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20210319172321.22248-1-nikitos.tr@gmail.com>
+ <20210319172321.22248-2-nikitos.tr@gmail.com>
+ <20210330144048.GA264685@robh.at.kernel.org>
+From:   Nikita Travkin <nikitos.tr@gmail.com>
+Message-ID: <bf20ff4b-1765-2bc8-d0de-bea675a1d090@gmail.com>
+Date:   Sat, 10 Apr 2021 13:05:18 +0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.7.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210409033726.GT904837@yoga>
+In-Reply-To: <20210330144048.GA264685@robh.at.kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-> On Thu 08 Apr 22:19 CDT 2021, Petr Vorel wrote:
+Hi, sorry for a late reply but I couldn't answer earlier.
 
-> > Hi Konrad,
-> > > Hi,
+30.03.2021 19:40, Rob Herring пишет:
+> On Fri, Mar 19, 2021 at 10:23:20PM +0500, nikitos.tr@gmail.com wrote:
+>> From: Nikita Travkin <nikitos.tr@gmail.com>
+>>
+>> Add DT bindings for memshare: QMI service that allocates
+>> memory per remote processor request.
+>>
+>> Signed-off-by: Nikita Travkin <nikitos.tr@gmail.com>
+>> ---
+>>  .../bindings/soc/qcom/qcom,memshare.yaml      | 109 ++++++++++++++++++
+>>  include/dt-bindings/soc/qcom,memshare.h       |  10 ++
+>>  2 files changed, 119 insertions(+)
+>>  create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,memshare.yaml
+>>  create mode 100644 include/dt-bindings/soc/qcom,memshare.h
+>>
+>> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,memshare.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,memshare.yaml
+>> new file mode 100644
+>> index 000000000000..ebdf128b066c
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,memshare.yaml
+>> @@ -0,0 +1,109 @@
+>> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+>> +%YAML 1.2
+>> +---
+>> +$id: "http://devicetree.org/schemas/soc/qcom/qcom,memshare.yaml#"
+>> +$schema: "http://devicetree.org/meta-schemas/core.yaml#"
+>> +
+>> +title: Qualcomm QMI Shared Memory Service
+> How many shared memory interfaces does Qcom have...
+>
+>> +
+>> +description: |
+>> +  This driver provides a QMI service that allows remote processors (like modem)
+>> +  to request additional memory. It is used for applications like GPS in modem.
+> If the memory region is defined in reserved-memory, how are you 
+> allocating additional memory? 
 
-> > > to clear up some confusion:
+Initially remoteproc is loaded into it's own reserved-memory region
+but qcom decided that they sometimes need more memory than that.
+Memshare driver in msm8916 downstream tree seem to blindly allocate
+DMA region for every request that it gets. Additionally for those
+clients described in the DT, they do the DMA allocation on boot
+time and never free the region. They call it "guaranteed" allocation.
 
+On msm8916 only one "guaranteed" client seem to be used so I decided
+to implement it with reserved-memory node. On newer platforms they
+seem to have more clients but I think that the driver can be easily
+extended to support dynamic allocation if someone really needs it.
 
-> > > On Qualcomm boards GPIOs that are used for "secure" (duh) peripherals,
-> > > like a fingerprint scanner, are not allowed to be controlled from Linux (the "non-secure world").
-> > > Trying to do so causes an immediate reboot due to "attempting to violate the security".
-> > Thanks for an explanation.
+I tried to explain that in the cover letter but I think I made some
+mistake as I don't see it in the Patchwork.
 
-> > > The GPIOs seem to all be iterated over on boot, except for the ones specified in "gpio-reserved-ranges".
-> > > As a result, if such "secure" GPIOs are not declared in the DT, the board essentially dies on TLMM (pinctrl) probe
-> > > (which happens veeeery early - so that all other peripherals can set the pins as they see fit)
-> > > and that's very unpleasant to debug. Without this patch, Petr's device will simply not boot.
-> > Exactly.
+>> +
+>> +maintainers:
+>> +  - Nikita Travkin <nikitos.tr@gmail.com>
+>> +
+>> +properties:
+>> +  compatible:
+>> +    const: qcom,memshare
+>> +
+>> +  qcom,legacy-client:
+>> +    $ref: /schemas/types.yaml#/definitions/phandle
+>> +    description: Phandle to a memshare client node used for legacy requests.
+>> +
+>> +  "#address-cells":
+>> +    const: 1
+>> +
+>> +  "#size-cells":
+>> +    const: 0
+>> +
+>> +patternProperties:
+>> +  "^.*@[0-9]+$":
+>> +    type: object
+>> +
+>> +    properties:
+>> +      reg:
+>> +        description: Proc-ID for clients in this node.
+> What's Proc-ID?
 
-> > > So, why did it work before!?
+The requests from the remote nodes contain client-id and proc-id
+that are supposed to differentiate the clients. It's possible to
+find the values in downstream DT or by observing what messages
+are received by the memshare service (I left dev_dbg logging in
+the driver for that reason)
 
+I think I should reword it to make this more apparent, maybe
+"Proc-ID that clients in this node send."?
 
-> > > Well, either the GPIOs weren't iterated over, or the TLMM (pinctrl) driver wasn't in place back then.
-> > I suppose GPIOs not being iterated over is the case for first fix (i.e. fixing
-> > 3edfb7bd76bd "gpiolib: Show correct direction from the beginning").
+>
+>> +
+>> +      qcom,qrtr-node:
+>> +        $ref: /schemas/types.yaml#/definitions/uint32
+>> +        description: Node from which the requests are expected.
+>> +
+>> +      "#address-cells":
+>> +        const: 1
+>> +
+>> +      "#size-cells":
+>> +        const: 0
+>> +
+>> +    patternProperties:
+>> +      "^.*@[0-9]+$":
+>> +        type: object
+>> +
+>> +        properties:
+>> +          reg:
+>> +            description: ID of this client.
+> How does one determine the ID?
 
+As with proc-id, maybe reword to "ID that this client sends."?
 
-> We had a long discussion about this in the past, and this resulted in
-> gpio-reserved-ranges and flagging off GPIOs that shouldn't be touched.
+I will change those in v2, I still expect comments on the driver
+itself, so I'll wait for that before submitting it with just a
+couple lines changed.
 
-> It seems we introduced the angler dts prior to said changes in the
-> gpiolib, so it's probably right to say that it's a regression. However,
-> the introduction of this was done 3 years ago and we're happy with it on
-> all other devices.
+>
+>> +
+>> +          memory-region:
+>> +            $ref: /schemas/types.yaml#/definitions/phandle
+>> +            description: |
+>> +              Reserved memory region that should be used for allocation.
+>> +
+>> +        required:
+>> +          - reg
+>> +
+>> +    required:
+>> +      - reg
+>> +      - qcom,qrtr-node
+>> +
+>> +required:
+>> +  - compatible
+>> +
+>> +additionalProperties: false
+>> +
+>> +examples:
+>> +  - |
+>> +    #include <dt-bindings/soc/qcom,memshare.h>
+>> +
+>> +    reserved-memory {
+>> +
+>> +      #address-cells = <2>;
+>> +      #size-cells = <2>;
+>> +
+>> +      gps_mem: gps@93c00000 {
+>> +        reg = <0x0 0x93c00000 0x0 0x200000>;
+>> +        no-map;
+> We support 'compatible' in reserved-memory nodes, can you simplify the 
+> binding and put everything in here?
 
-> There's no harm in introducing this property prior to the introduction
-> of the related gpiolib patches, so if you really care about it being backported
-> I would suggest you say:
+If I understand this correctly, each reserved-memory node will
+then load a new instance of memshare. Since the driver registers a
+QMI service that handles multiple clients, there should be only one
+instance. Additionally, as I mentioned earlier, some clients may not
+need reserved-memory at all
 
-> Fixes: feeaf56ac78d ("arm64: dts: msm8994 SoC and Huawei Angler (Nexus 6P) support")
-You're right. I'd also note that the problem manifested only after 3edfb7bd76bd.
-But yes, that's a minor detail. Documenting precisely is good, because problem
-is not solved yet due that second reset.
+>> +      };
+>> +    };
+>> +
+>> +    memshare {
+>> +      compatible = "qcom,memshare";
+>> +      qcom,legacy-client = <&memshare_gps>;
+>> +
+>> +      #address-cells = <1>;
+>> +      #size-cells = <0>;
+>> +
+>> +      mpss@0 {
+>> +        reg = <MEMSHARE_PROC_MPSS_V01>;
+>> +        qcom,qrtr-node = <0>;
+>> +
+>> +        #address-cells = <1>;
+>> +        #size-cells = <0>;
+>> +
+>> +        memshare_gps: gps@0 {
+>> +          reg = <0>;
+>> +          memory-region = <&gps_mem>;
+>> +        };
+>> +      };
+>> +    };
+>> +
+>> +...
+>> diff --git a/include/dt-bindings/soc/qcom,memshare.h b/include/dt-bindings/soc/qcom,memshare.h
+>> new file mode 100644
+>> index 000000000000..4cef1ef75d09
+>> --- /dev/null
+>> +++ b/include/dt-bindings/soc/qcom,memshare.h
+>> @@ -0,0 +1,10 @@
+>> +/* SPDX-License-Identifier: GPL-2.0 */
+>> +
+>> +#ifndef __DT_QCOM_MEMSHARE_H__
+>> +#define __DT_QCOM_MEMSHARE_H__
+>> +
+>> +#define MEMSHARE_PROC_MPSS_V01 0
+>> +#define MEMSHARE_PROC_ADSP_V01 1
+>> +#define MEMSHARE_PROC_WCNSS_V01 2
+>> +
+>> +#endif /* __DT_QCOM_MEMSHARE_H__ */
+>> -- 
+>> 2.27.0
+>>
 
-Konrad, is there any public docs about GPIOs on this secure peripherals?
-It it somehow related to Chain of Trust? [1].  I guess it's not, because once we
-boot Linux all bootloader stuff is over.
-
-I guess with gpio-reserved-ranges = <85 4> I solved problems with gpiolib,
-which controls tlmm, right?
-
-Is there any other GPIO related setup?
-
-BTW downstream kernel (3.10.73) uses gpiochip:
-
-ls -la /sys/class/gpio/
-gpiochip0 -> ../../devices/soc.0/fd510000.pinctrl/gpio/gpiochip0
-gpiochip1005 -> ../../devices/soc.0/qpnp-pin-14/gpio/gpiochip1005
-gpiochip1006 -> ../../devices/soc.0/qpnp-pin-13/gpio/gpiochip1006
-gpiochip1008 -> ../../devices/soc.0/qpnp-pin-4/gpio/gpiochip1008
-gpiochip1011 -> ../../devices/soc.0/qpnp-pin-3/gpio/gpiochip1011
-gpiochip685 -> ../../devices/soc.0/qcom,smp2pgpio-ssr-smp2p-1-out.16/gpio/gpiochip685
-gpiochip717 -> ../../devices/soc.0/qcom,smp2pgpio-ssr-smp2p-1-in.15/gpio/gpiochip717
-gpiochip749 -> ../../devices/soc.0/qcom,smp2pgpio-ssr-smp2p-2-out.14/gpio/gpiochip749
-gpiochip781 -> ../../devices/soc.0/qcom,smp2pgpio-ssr-smp2p-2-in.13/gpio/gpiochip781
-gpiochip813 -> ../../devices/soc.0/qcom,smp2pgpio-smp2p-2-out.11/gpio/gpiochip813
-gpiochip845 -> ../../devices/soc.0/qcom,smp2pgpio-smp2p-2-in.9/gpio/gpiochip845
-gpiochip877 -> ../../devices/soc.0/qcom,smp2pgpio-smp2p-1-out.7/gpio/gpiochip877
-gpiochip909 -> ../../devices/soc.0/qcom,smp2pgpio-smp2p-1-in.5/gpio/gpiochip909
-gpiochip941 -> ../../devices/soc.0/qcom,smp2pgpio-smp2p-7-out.3/gpio/gpiochip941
-gpiochip973 -> ../../devices/soc.0/qcom,smp2pgpio-smp2p-7-in.1/gpio/gpiochip973
-
-After /sys/class/gpio/export of 0-2 5-84 89-146 it looks like:
-
-for i in $(seq 0 2) $(seq 5 84) $(seq 89 146); do echo $i > /sys/class/gpio/export; sleep 1; done
-ls -la /sys/class/gpio/
-gpio0 -> ../../devices/soc.0/fd510000.pinctrl/gpio/gpio0
-gpio1 -> ../../devices/soc.0/fd510000.pinctrl/gpio/gpio1
-gpio2 -> ../../devices/soc.0/fd510000.pinctrl/gpio/gpio2
-gpio5 -> ../../devices/soc.0/fd510000.pinctrl/gpio/gpio5
-gpio6 -> ../../devices/soc.0/fd510000.pinctrl/gpio/gpio6
-gpio7 -> ../../devices/soc.0/fd510000.pinctrl/gpio/gpio7
-gpio10 -> ../../devices/soc.0/fd510000.pinctrl/gpio/gpio10
-gpio11 -> ../../devices/soc.0/fd510000.pinctrl/gpio/gpio11
-gpio12 -> ../../devices/soc.0/fd510000.pinctrl/gpio/gpio12
-gpio13 -> ../../devices/soc.0/fd510000.pinctrl/gpio/gpio13
-gpio14 -> ../../devices/soc.0/fd510000.pinctrl/gpio/gpio14
-gpio15 -> ../../devices/soc.0/fd510000.pinctrl/gpio/gpio15
-gpio17 -> ../../devices/soc.0/fd510000.pinctrl/gpio/gpio17
-gpio18 -> ../../devices/soc.0/fd510000.pinctrl/gpio/gpio18
-gpio91 -> ../../devices/soc.0/fd510000.pinctrl/gpio/gpio91
-gpio92 -> ../../devices/soc.0/fd510000.pinctrl/gpio/gpio92
-gpio95 -> ../../devices/soc.0/fd510000.pinctrl/gpio/gpio95
-gpio97 -> ../../devices/soc.0/fd510000.pinctrl/gpio/gpio97
-gpio98 -> ../../devices/soc.0/fd510000.pinctrl/gpio/gpio98
-gpio99 -> ../../devices/soc.0/fd510000.pinctrl/gpio/gpio99
-gpio100 -> ../../devices/soc.0/fd510000.pinctrl/gpio/gpio100
-gpio101 -> ../../devices/soc.0/fd510000.pinctrl/gpio/gpio101
-gpio103 -> ../../devices/soc.0/fd510000.pinctrl/gpio/gpio103
-gpio104 -> ../../devices/soc.0/fd510000.pinctrl/gpio/gpio104
-gpio105 -> ../../devices/soc.0/fd510000.pinctrl/gpio/gpio105
-gpio106 -> ../../devices/soc.0/fd510000.pinctrl/gpio/gpio106
-gpio107 -> ../../devices/soc.0/fd510000.pinctrl/gpio/gpio107
-gpio109 -> ../../devices/soc.0/fd510000.pinctrl/gpio/gpio109
-gpio110 -> ../../devices/soc.0/fd510000.pinctrl/gpio/gpio110
-gpio111 -> ../../devices/soc.0/fd510000.pinctrl/gpio/gpio111
-gpio112 -> ../../devices/soc.0/fd510000.pinctrl/gpio/gpio112
-gpio114 -> ../../devices/soc.0/fd510000.pinctrl/gpio/gpio114
-gpio115 -> ../../devices/soc.0/fd510000.pinctrl/gpio/gpio115
-gpio116 -> ../../devices/soc.0/fd510000.pinctrl/gpio/gpio116
-gpio117 -> ../../devices/soc.0/fd510000.pinctrl/gpio/gpio117
-gpio118 -> ../../devices/soc.0/fd510000.pinctrl/gpio/gpio118
-gpio119 -> ../../devices/soc.0/fd510000.pinctrl/gpio/gpio119
-gpio120 -> ../../devices/soc.0/fd510000.pinctrl/gpio/gpio120
-gpio121 -> ../../devices/soc.0/fd510000.pinctrl/gpio/gpio121
-gpio122 -> ../../devices/soc.0/fd510000.pinctrl/gpio/gpio122
-gpio123 -> ../../devices/soc.0/fd510000.pinctrl/gpio/gpio123
-gpio124 -> ../../devices/soc.0/fd510000.pinctrl/gpio/gpio124
-gpio125 -> ../../devices/soc.0/fd510000.pinctrl/gpio/gpio125
-gpio126 -> ../../devices/soc.0/fd510000.pinctrl/gpio/gpio126
-gpio127 -> ../../devices/soc.0/fd510000.pinctrl/gpio/gpio127
-gpio128 -> ../../devices/soc.0/fd510000.pinctrl/gpio/gpio128
-gpio129 -> ../../devices/soc.0/fd510000.pinctrl/gpio/gpio129
-gpio130 -> ../../devices/soc.0/fd510000.pinctrl/gpio/gpio130
-gpio131 -> ../../devices/soc.0/fd510000.pinctrl/gpio/gpio131
-gpio132 -> ../../devices/soc.0/fd510000.pinctrl/gpio/gpio132
-gpio133 -> ../../devices/soc.0/fd510000.pinctrl/gpio/gpio133
-gpio134 -> ../../devices/soc.0/fd510000.pinctrl/gpio/gpio134
-gpio135 -> ../../devices/soc.0/fd510000.pinctrl/gpio/gpio135
-gpio136 -> ../../devices/soc.0/fd510000.pinctrl/gpio/gpio136
-gpio137 -> ../../devices/soc.0/fd510000.pinctrl/gpio/gpio137
-gpio138 -> ../../devices/soc.0/fd510000.pinctrl/gpio/gpio138
-gpio139 -> ../../devices/soc.0/fd510000.pinctrl/gpio/gpio139
-gpio140 -> ../../devices/soc.0/fd510000.pinctrl/gpio/gpio140
-gpio141 -> ../../devices/soc.0/fd510000.pinctrl/gpio/gpio141
-gpio142 -> ../../devices/soc.0/fd510000.pinctrl/gpio/gpio142
-gpio143 -> ../../devices/soc.0/fd510000.pinctrl/gpio/gpio143
-gpio144 -> ../../devices/soc.0/fd510000.pinctrl/gpio/gpio144
-gpio145 -> ../../devices/soc.0/fd510000.pinctrl/gpio/gpio145
-gpiochip0 -> ../../devices/soc.0/fd510000.pinctrl/gpio/gpiochip0
-gpiochip685 -> ../../devices/soc.0/qcom,smp2pgpio-ssr-smp2p-1-out.16/gpio/gpiochip685
-gpiochip717 -> ../../devices/soc.0/qcom,smp2pgpio-ssr-smp2p-1-in.15/gpio/gpiochip717
-gpiochip749 -> ../../devices/soc.0/qcom,smp2pgpio-ssr-smp2p-2-out.14/gpio/gpiochip749
-gpiochip781 -> ../../devices/soc.0/qcom,smp2pgpio-ssr-smp2p-2-in.13/gpio/gpiochip781
-gpiochip813 -> ../../devices/soc.0/qcom,smp2pgpio-smp2p-2-out.11/gpio/gpiochip813
-gpiochip845 -> ../../devices/soc.0/qcom,smp2pgpio-smp2p-2-in.9/gpio/gpiochip845
-gpiochip877 -> ../../devices/soc.0/qcom,smp2pgpio-smp2p-1-out.7/gpio/gpiochip877
-gpiochip909 -> ../../devices/soc.0/qcom,smp2pgpio-smp2p-1-in.5/gpio/gpiochip909
-gpiochip941 -> ../../devices/soc.0/qcom,smp2pgpio-smp2p-7-out.3/gpio/gpiochip941
-gpiochip973 -> ../../devices/soc.0/qcom,smp2pgpio-smp2p-7-in.1/gpio/gpiochip973
-gpiochip1005 -> ../../devices/soc.0/qpnp-pin-14/gpio/gpiochip1005
-gpiochip1006 -> ../../devices/soc.0/qpnp-pin-13/gpio/gpiochip1006
-gpiochip1008 -> ../../devices/soc.0/qpnp-pin-4/gpio/gpiochip1008
-gpiochip1011 -> ../../devices/soc.0/qpnp-pin-3/gpio/gpiochip1011
-
-Kind regards,
-Petr
-
-[1] https://lineageos.org/engineering/Qualcomm-Firmware/
-
-> But I presume based on the awesome work you guys are putting into the
-> 8994 platform people shouldn't run "old" kernels anyways, so I think it
-> would be fine with us just ignoring the Fixes as well...
-
-> Regards,
-> Bjorn
