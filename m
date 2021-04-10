@@ -2,349 +2,252 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2EACF35A84B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Apr 2021 23:21:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1C70235A971
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Apr 2021 02:14:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234580AbhDIVVT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Apr 2021 17:21:19 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:48500 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S234574AbhDIVVT (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Apr 2021 17:21:19 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1618003265; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=OFzAxc4AiEMD6iYfqi8DGnfdTbkUGmiVNkhtHquvZYc=;
- b=TZshO7/9X1emsDs0N3Es0ICHMqCZaKBjHz2cu89WPlymnmntTaZgVQ2KRGIBsrNuUrrgYb3i
- Bp1Vk7hoCBlsrMOda8E2s6Cqy1STHkEkl1+8PYjRLUV1KpVMinlmf+qctJLKwhAs9t6/DrtG
- kGMq0FnUH2qIhF5I9ylci3S78vw=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
- 6070c51cc06dd10a2da89a89 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 09 Apr 2021 21:20:26
- GMT
-Sender: abhinavk=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 1CAC8C43461; Fri,  9 Apr 2021 21:20:25 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: abhinavk)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 7AF01C433C6;
-        Fri,  9 Apr 2021 21:20:23 +0000 (UTC)
+        id S235214AbhDJAOr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Apr 2021 20:14:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43224 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235208AbhDJAOr (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 9 Apr 2021 20:14:47 -0400
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55D6EC061762
+        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Apr 2021 17:14:33 -0700 (PDT)
+Received: by mail-lf1-x136.google.com with SMTP id n8so12369456lfh.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Apr 2021 17:14:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=mmnAAlgWaQCqtmQHnAR63+Bi976uhQGIiII1nTF9pHQ=;
+        b=SACn2MprumfeM31nw/rmVvVuB4VMcavSVDJreD3WSFHomXc6llKKxEmejLS/HH9CbA
+         zQxLAXn5CwFaMu3GHe6o27J95Ewjv5uHx6F9ZDtt1sTnkczHNZrZnXdi2bDxESh7ZkgQ
+         AMguzIfSyavVp/lIOfmH6D1W+TNBp9D+BF2D1/gmyW+YRW5BacRDmvwZlM0RLqatwCk1
+         Xz3LLK0jmNQCbxknGfY8bPhhEIR2MACK2R9ylYJrY9gphXKbTGQwbJqYXmIGfnO7qd+4
+         eTXcU/Pwy6xubRXwPGzs7zLT8/I/5mUbv2l1zDW72pubtvolgc6or7/vJo27i19Vrmkf
+         g7Zg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=mmnAAlgWaQCqtmQHnAR63+Bi976uhQGIiII1nTF9pHQ=;
+        b=I6KrIJiDgb7PAwEwEOxWYexrRXiOVaA+CABAfEvCVwBf8QKe2YZPSQH8u6vlJQZVRD
+         D+JGh1NOnlIEN9JHlRQU80jl99u2ZxNMZ/EgUR0VmJ2So0y13HMtnN10rZLB2zZ+UrtV
+         Rgr9TnrqEw4ptfMK73y86bWqZDRrB4mbgpEV2eCi1JcVEliOff2wTbcL/nZGhLeOT+tp
+         ad7a3xSyP3yoH/zHhQK4Csr7R+pCXvDXtSijLEuJq4ri6Z2JMESfUStUdSKf3766u0vy
+         IYHVgaMVQUmSxr9WcsSqp2gDlsvTNb/CqI+3iBGCH1iHNgQSFyK9vjQbFJ0Elc1MLsQK
+         Vs1Q==
+X-Gm-Message-State: AOAM533i4Y7zvjIs21iklunBVT6vUXrq4Zi797sab/qq7iVkX/3+0fnQ
+        yT/EwY4izQXgq/8qFjsm/s/h5NKiiv6HJQ==
+X-Google-Smtp-Source: ABdhPJyVEOyxavkcYreXxNpo1PjnGAtOQp65dcJ3VAMUgnBYB72sbBn/5z6ZWZQYBYlIf4IG5cLUyw==
+X-Received: by 2002:a19:98f:: with SMTP id 137mr11610715lfj.149.1618013671877;
+        Fri, 09 Apr 2021 17:14:31 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id a17sm323360lfg.20.2021.04.09.17.14.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 09 Apr 2021 17:14:31 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Jonathan Marek <jonathan@marek.ca>
+Cc:     Stephen Boyd <sboyd@kernel.org>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+Subject: [RFC 1/3] drm/msm/dpu: merge dpu_hw_intr_get_interrupt_statuses into dpu_hw_intr_dispatch_irqs
+Date:   Sat, 10 Apr 2021 03:14:28 +0300
+Message-Id: <20210410001430.1732450-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Fri, 09 Apr 2021 14:20:23 -0700
-From:   abhinavk@codeaurora.org
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Sean Paul <seanpaul@chromium.org>,
-        Stephen Boyd <swboyd@chromium.org>, nganji@codeaurora.org,
-        aravindh@codeaurora.org, Kuogee Hsieh <khsieh@codeaurora.org>,
-        Daniel Vetter <daniel@ffwll.ch>
-Subject: Re: [PATCH v3 2/3] drm/msm/dpu: add support to dump dpu registers
-In-Reply-To: <CAF6AEGt+-XmP-diTwVWoSRNM0u3ehY8ZkeHDdK3ZbVzUcmxX4A@mail.gmail.com>
-References: <1617935317-15571-1-git-send-email-abhinavk@codeaurora.org>
- <1617935317-15571-3-git-send-email-abhinavk@codeaurora.org>
- <CAF6AEGt+-XmP-diTwVWoSRNM0u3ehY8ZkeHDdK3ZbVzUcmxX4A@mail.gmail.com>
-Message-ID: <cc00d0dcc5a299255121d45a3232b01d@codeaurora.org>
-X-Sender: abhinavk@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rob
+There is little sense in reading interrupt statuses and right after that
+going after the array of statuses to dispatch them. Merge both loops
+into single function doing read and dispatch.
 
-Thank you for the review.
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.c  | 10 +--
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c | 66 ++++++-------------
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h |  8 ---
+ 3 files changed, 20 insertions(+), 64 deletions(-)
 
-On 2021-04-09 13:38, Rob Clark wrote:
-> On Thu, Apr 8, 2021 at 7:28 PM Abhinav Kumar <abhinavk@codeaurora.org> 
-> wrote:
->> 
->> Add the dpu_dbg module which adds supports to dump dpu registers
->> which can be used in case of error conditions.
->> 
->> changes in v3:
->>  - Get rid of registration mechanism for sub-modules and instead get
->>    this information from the dpu catalog itself
->>  - Get rid of global dpu_dbg struct and instead store it in dpu_kms
->>  - delegate the power management of the sub-modules to the resp 
->> drivers
->>  - refactor and remove the linked list logic and simplify it to have
->>    just an array
->> 
->> Change-Id: Ide975ecf5d7952ae44daaa6eb611e27d09630be5
->> Reported-by: kernel test robot <lkp@intel.com>
->> Signed-off-by: Abhinav Kumar <abhinavk@codeaurora.org>
->> ---
->>  drivers/gpu/drm/msm/Makefile                   |   2 +
->>  drivers/gpu/drm/msm/disp/dpu1/dpu_dbg.c        | 221 
->> +++++++++++++++++++++
->>  drivers/gpu/drm/msm/disp/dpu1/dpu_dbg.h        | 200 
->> +++++++++++++++++++
->>  drivers/gpu/drm/msm/disp/dpu1/dpu_dbg_util.c   | 257 
->> +++++++++++++++++++++++++
->>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h |   2 +-
->>  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c        |  86 +++++++++
->>  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h        |   5 +
->>  drivers/gpu/drm/msm/dp/dp_catalog.c            |  10 +
->>  drivers/gpu/drm/msm/dp/dp_catalog.h            |   5 +
->>  drivers/gpu/drm/msm/dp/dp_display.c            |  37 ++++
->>  drivers/gpu/drm/msm/dp/dp_display.h            |   1 +
->>  drivers/gpu/drm/msm/dsi/dsi.c                  |   5 +
->>  drivers/gpu/drm/msm/dsi/dsi.h                  |   4 +
->>  drivers/gpu/drm/msm/dsi/dsi_host.c             |  25 +++
->>  drivers/gpu/drm/msm/msm_drv.c                  |  29 ++-
->>  drivers/gpu/drm/msm/msm_drv.h                  |   2 +
->>  16 files changed, 889 insertions(+), 2 deletions(-)
->>  create mode 100644 drivers/gpu/drm/msm/disp/dpu1/dpu_dbg.c
->>  create mode 100644 drivers/gpu/drm/msm/disp/dpu1/dpu_dbg.h
->>  create mode 100644 drivers/gpu/drm/msm/disp/dpu1/dpu_dbg_util.c
->> 
-> 
-> [snip]
-> 
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_dbg.h 
->> b/drivers/gpu/drm/msm/disp/dpu1/dpu_dbg.h
->> new file mode 100644
->> index 0000000..302205a
->> --- /dev/null
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_dbg.h
->> @@ -0,0 +1,200 @@
->> +/* SPDX-License-Identifier: GPL-2.0-only */
->> +/*
->> + * Copyright (c) 2020-2021, The Linux Foundation. All rights 
->> reserved.
->> + */
->> +
->> +#ifndef DPU_DBG_H_
->> +#define DPU_DBG_H_
->> +
->> +#include <drm/drm_atomic_helper.h>
->> +#include <drm/drm_device.h>
->> +#include "../../../drm_crtc_internal.h"
->> +#include <drm/drm_print.h>
->> +#include <drm/drm_atomic.h>
->> +#include <linux/debugfs.h>
->> +#include <linux/list.h>
->> +#include <linux/delay.h>
->> +#include <linux/spinlock.h>
->> +#include <linux/ktime.h>
->> +#include <linux/debugfs.h>
->> +#include <linux/uaccess.h>
->> +#include <linux/dma-buf.h>
->> +#include <linux/slab.h>
->> +#include <linux/list_sort.h>
->> +#include <linux/pm.h>
->> +#include <linux/pm_runtime.h>
->> +#include <linux/kthread.h>
->> +#include <linux/devcoredump.h>
->> +#include <stdarg.h>
->> +#include "dpu_hw_catalog.h"
->> +#include "dpu_kms.h"
->> +#include "dsi.h"
->> +
->> +#define DPU_DBG_DUMP_DATA_LIMITER (NULL)
->> +
->> +enum dpu_dbg_dump_flag {
->> +       DPU_DBG_DUMP_IN_LOG = BIT(0),
->> +       DPU_DBG_DUMP_IN_MEM = BIT(1),
->> +       DPU_DBG_DUMP_IN_COREDUMP = BIT(2),
->> +};
-> 
-> overall, I like this better, but..
-> 
-> I'm not completely convinced about the need for
-> DUMP_IN_LOG/DUMP_IN_MEM.. we haven't really needed it on the GPU side
-> of things, and the only case I can think of where it might be useful
-> is if you can't boot far enough to get to some minimal userspace..
-> once you have at least some minimal userspace, you can just pull out
-> and clear the devcore dump via sysfs.  That said, if state snapshot
-> and printing were better separated it would just take a few lines of
-> code to use a different drm_printer to print the state snapshot to
-> dmesg.
-> 
-> [snip]
-> 
-Yes, dumping the registers to log is just a debug feature and also 
-useful if
-CONFIG_DEVCOREDUMP is not enabled.
-Its also useful for developers who can just view the dumps in the logs.
-
-Yes, the way this is written it is already generic enough to just take a 
-different drm_printer.
-
-For the log i use this:
-
-+	if (DPU_DBG_DUMP_IN_CONSOLE) {
-+		p = drm_info_printer(dpu_dbg->drm_dev->dev);
-+		dpu_dbg->dpu_dbg_printer = &p;
-+		dpu_dbg_print_regs(dpu_dbg->drm_dev, DPU_DBG_DUMP_IN_LOG);
-+	}
-
-For the coredump I use this,
-
-p = drm_coredump_printer(&iter);
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.c
+index 84ea09d9692f..c977e8484174 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.c
+@@ -376,15 +376,6 @@ void dpu_core_irq_uninstall(struct dpu_kms *dpu_kms)
+ 
+ irqreturn_t dpu_core_irq(struct dpu_kms *dpu_kms)
+ {
+-	/*
+-	 * Read interrupt status from all sources. Interrupt status are
+-	 * stored within hw_intr.
+-	 * Function will also clear the interrupt status after reading.
+-	 * Individual interrupt status bit will only get stored if it
+-	 * is enabled.
+-	 */
+-	dpu_kms->hw_intr->ops.get_interrupt_statuses(dpu_kms->hw_intr);
+-
+ 	/*
+ 	 * Dispatch to HW driver to handle interrupt lookup that is being
+ 	 * fired. When matching interrupt is located, HW driver will call to
+@@ -392,6 +383,7 @@ irqreturn_t dpu_core_irq(struct dpu_kms *dpu_kms)
+ 	 * dpu_core_irq_callback_handler will perform the registered function
+ 	 * callback, and do the interrupt status clearing once the registered
+ 	 * callback is finished.
++	 * Function will also clear the interrupt status after reading.
+ 	 */
+ 	dpu_kms->hw_intr->ops.dispatch_irqs(
+ 			dpu_kms->hw_intr,
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
+index 5c521de71567..a8d463a8e8fe 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
+@@ -780,6 +780,7 @@ static void dpu_hw_intr_dispatch_irq(struct dpu_hw_intr *intr,
+ 	int start_idx;
+ 	int end_idx;
+ 	u32 irq_status;
++	u32 enable_mask;
+ 	unsigned long irq_flags;
+ 
+ 	if (!intr)
+@@ -792,8 +793,6 @@ static void dpu_hw_intr_dispatch_irq(struct dpu_hw_intr *intr,
+ 	 */
+ 	spin_lock_irqsave(&intr->irq_lock, irq_flags);
+ 	for (reg_idx = 0; reg_idx < ARRAY_SIZE(dpu_intr_set); reg_idx++) {
+-		irq_status = intr->save_irq_status[reg_idx];
+-
+ 		/*
+ 		 * Each Interrupt register has a range of 32 indexes, and
+ 		 * that is static for dpu_irq_map.
+@@ -805,6 +804,20 @@ static void dpu_hw_intr_dispatch_irq(struct dpu_hw_intr *intr,
+ 			start_idx >= ARRAY_SIZE(dpu_irq_map))
+ 			continue;
+ 
++		/* Read interrupt status */
++		irq_status = DPU_REG_READ(&intr->hw, dpu_intr_set[reg_idx].status_off);
 +
-+	drm_printf(&p, "---\n");
++		/* Read enable mask */
++		enable_mask = DPU_REG_READ(&intr->hw, dpu_intr_set[reg_idx].en_off);
 +
-+	drm_printf(&p, "module: " KBUILD_MODNAME "\n");
-+	drm_printf(&p, "dpu devcoredump\n");
-+	drm_printf(&p, "timestamp %lld\n", ktime_to_ns(dpu_dbg->timestamp));
++		/* and clear the interrupt */
++		if (irq_status)
++			DPU_REG_WRITE(&intr->hw, dpu_intr_set[reg_idx].clr_off,
++				     irq_status);
 +
-+	dpu_dbg->dpu_dbg_printer = &p;
++		/* Finally update IRQ status based on enable mask */
++		irq_status &= enable_mask;
 +
-+	dpu_dbg_print_regs(dpu_dbg->drm_dev, DPU_DBG_DUMP_IN_COREDUMP);
-
-
->> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c 
->> b/drivers/gpu/drm/msm/dsi/dsi_host.c
->> index ab281cb..d1675ee 100644
->> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
->> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
->> @@ -2489,3 +2489,28 @@ struct drm_bridge 
->> *msm_dsi_host_get_bridge(struct mipi_dsi_host *host)
->> 
->>         return of_drm_find_bridge(msm_host->device_node);
->>  }
->> +
->> +void msm_dsi_host_dump_regs(struct mipi_dsi_host *host)
->> +{
->> +       struct msm_dsi_host *msm_host = to_msm_dsi_host(host);
->> +       struct drm_device *dev = msm_host->dev;
->> +       struct dpu_dbg_base *dpu_dbg;
->> +
->> +       dpu_dbg = dpu_dbg_get(dev);
->> +
->> +       if (dpu_dbg_is_drm_printer_needed(dpu_dbg) &&
->> +                       !dpu_dbg->dpu_dbg_printer) {
->> +               pr_err("invalid drm printer\n");
->> +               return;
->> +       }
-> 
-> for example, here ^^^
-> 
-> why should the other blocks even care?  All they should know is that
-> they've been asked to snapshot their state..
-> 
-
-You are right, the printer check can be moved to one level up to 
-dpu_dbg_print_regs().
-That way it will avoid this redundant valid printer check in the 
-dump_regs() function of the sub-modules.
-The name of the function is xxx_xxx_dump_regs() but maybe I can just 
-rename this to capture_state().
-The reason for having the same function to capture the state and also 
-print it out is to avoid code duplication.
-
-
->> +       if (dpu_dbg->reg_dump_method == DPU_DBG_DUMP_IN_MEM)
->> +               pm_runtime_get_sync(&msm_host->pdev->dev);
->> +
->> +       dpu_dbg_dump_regs(&dpu_dbg->dsi_ctrl_regs[msm_host->id],
->> +                       msm_iomap_size(msm_host->pdev, "dsi_ctrl"), 
->> msm_host->ctrl_base,
->> +                       dpu_dbg->reg_dump_method, 
->> dpu_dbg->dpu_dbg_printer);
->> +
->> +       if (dpu_dbg->reg_dump_method == DPU_DBG_DUMP_IN_MEM)
->> +               pm_runtime_put_sync(&msm_host->pdev->dev);
->> +}
-> 
-> I'm thinking something more along the lines of (in drm/msm/disp so it
-> is a little less weird for dsi/dp/etc to be #include'ing header with
-> structs):
-Are you suggesting we move the dpu_dbg to drm/msm/disp? I am okay with 
-that.
-
-> 
-> struct msm_disp_state {
->     .. maybe a bit of generic information like kernel version, time, 
-> etc ...
-> 
->    struct list_head blocks;  /* list of msm_disp_state_block */
-> };
-> 
-> struct msm_disp_state_block {
->    const char *name;
->    struct list_head node;  /* node in msm_disp_state::blocks */
->    unsigned size;
->    uint32_t state[];
-> };
-> 
-> struct msm_disp_state * msm_disp_snapshot_state(struct drm_device *dev)
-> {
->    struct msm_disp_state *state = ...;
-> 
->    if (priv->kms)
->       priv->kms->snapshot(priv->kms, state);
-> 
->    for (i = 0; i < ARRAY_SIZE(priv->dsi); i++) {
->       msm_dsi_snapshot(priv->dsi[i], state);
-> 
->    if (priv->dp)
->       msm_dp_snapshot(priv->dp, state);
-> 
->    return state;
-> }
-
-This is essentially what the dpu_dbg_dump_regs does right now. It just 
-delegates the dumping to the respective modules.
-
-+{
-+	int i;
+ 		/*
+ 		 * Search through matching intr status from irq map.
+ 		 * start_idx and end_idx defined the search range in
+@@ -836,6 +849,10 @@ static void dpu_hw_intr_dispatch_irq(struct dpu_hw_intr *intr,
+ 				irq_status &= ~dpu_irq_map[irq_idx].irq_mask;
+ 			}
+ 	}
 +
-+	for (i = 0; i < DPU_DBG_BASE_MAX; i++) {
-+		if (dpu_dbg->blk_names[i] != NULL) {
-+			DRM_DEBUG("blk name is %s\n", dpu_dbg->blk_names[i]);
-+			if (!strcmp(dpu_dbg->blk_names[i], "all")) {
-+				dpu_dbg_dump_all_regs(dpu_dbg->drm_dev);
-+				break;
-+			} else if (!strcmp(dpu_dbg->blk_names[i], "mdp")) {
-+				dpu_dbg_dump_mdp_regs(dpu_dbg->drm_dev);
-+			} else if (!strcmp(dpu_dbg->blk_names[i], "dsi")) {
-+				dpu_dbg_dump_dsi_regs(dpu_dbg->drm_dev);
-+			} else if (!strcmp(dpu_dbg->blk_names[i], "dp")) {
-+				dpu_dbg_dump_dp_regs(dpu_dbg->drm_dev);
-+			} else {
-+				DRM_ERROR("blk name not found %s\n", dpu_dbg->blk_names[i]);
-+			}
-+		}
-+	}
-+}
++	/* ensure register writes go through */
++	wmb();
++
+ 	spin_unlock_irqrestore(&intr->irq_lock, irq_flags);
+ }
+ 
+@@ -987,41 +1004,6 @@ static int dpu_hw_intr_disable_irqs(struct dpu_hw_intr *intr)
+ 	return 0;
+ }
+ 
+-static void dpu_hw_intr_get_interrupt_statuses(struct dpu_hw_intr *intr)
+-{
+-	int i;
+-	u32 enable_mask;
+-	unsigned long irq_flags;
+-
+-	if (!intr)
+-		return;
+-
+-	spin_lock_irqsave(&intr->irq_lock, irq_flags);
+-	for (i = 0; i < ARRAY_SIZE(dpu_intr_set); i++) {
+-		if (!test_bit(i, &intr->irq_mask))
+-			continue;
+-
+-		/* Read interrupt status */
+-		intr->save_irq_status[i] = DPU_REG_READ(&intr->hw,
+-				dpu_intr_set[i].status_off);
+-
+-		/* Read enable mask */
+-		enable_mask = DPU_REG_READ(&intr->hw, dpu_intr_set[i].en_off);
+-
+-		/* and clear the interrupt */
+-		if (intr->save_irq_status[i])
+-			DPU_REG_WRITE(&intr->hw, dpu_intr_set[i].clr_off,
+-					intr->save_irq_status[i]);
+-
+-		/* Finally update IRQ status based on enable mask */
+-		intr->save_irq_status[i] &= enable_mask;
+-	}
+-
+-	/* ensure register writes go through */
+-	wmb();
+-
+-	spin_unlock_irqrestore(&intr->irq_lock, irq_flags);
+-}
+ 
+ static void dpu_hw_intr_clear_intr_status_nolock(struct dpu_hw_intr *intr,
+ 		int irq_idx)
+@@ -1080,7 +1062,6 @@ static void __setup_intr_ops(struct dpu_hw_intr_ops *ops)
+ 	ops->dispatch_irqs = dpu_hw_intr_dispatch_irq;
+ 	ops->clear_all_irqs = dpu_hw_intr_clear_irqs;
+ 	ops->disable_all_irqs = dpu_hw_intr_disable_irqs;
+-	ops->get_interrupt_statuses = dpu_hw_intr_get_interrupt_statuses;
+ 	ops->clear_intr_status_nolock = dpu_hw_intr_clear_intr_status_nolock;
+ 	ops->get_interrupt_status = dpu_hw_intr_get_interrupt_status;
+ }
+@@ -1117,14 +1098,6 @@ struct dpu_hw_intr *dpu_hw_intr_init(void __iomem *addr,
+ 		return ERR_PTR(-ENOMEM);
+ 	}
+ 
+-	intr->save_irq_status = kcalloc(ARRAY_SIZE(dpu_intr_set), sizeof(u32),
+-			GFP_KERNEL);
+-	if (intr->save_irq_status == NULL) {
+-		kfree(intr->cache_irq_mask);
+-		kfree(intr);
+-		return ERR_PTR(-ENOMEM);
+-	}
+-
+ 	intr->irq_mask = m->mdss_irqs;
+ 	spin_lock_init(&intr->irq_lock);
+ 
+@@ -1135,7 +1108,6 @@ void dpu_hw_intr_destroy(struct dpu_hw_intr *intr)
+ {
+ 	if (intr) {
+ 		kfree(intr->cache_irq_mask);
+-		kfree(intr->save_irq_status);
+ 		kfree(intr);
+ 	}
+ }
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h
+index fc9c98617281..d8b9d5fe6b8c 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h
+@@ -141,14 +141,6 @@ struct dpu_hw_intr_ops {
+ 			void (*cbfunc)(void *arg, int irq_idx),
+ 			void *arg);
+ 
+-	/**
+-	 * get_interrupt_statuses - Gets and store value from all interrupt
+-	 *                          status registers that are currently fired.
+-	 * @intr:	HW interrupt handle
+-	 */
+-	void (*get_interrupt_statuses)(
+-			struct dpu_hw_intr *intr);
+-
+ 	/**
+ 	 * clear_intr_status_nolock() - clears the HW interrupts without lock
+ 	 * @intr:	HW interrupt handle
+-- 
+2.30.2
 
-> 
-> ... maybe add a helper that can be used everywhere to allocate and
-> append a new state block.. Ie. pass it state/name/len/iomem
-> 
-> void msm_disp_state_free(struct msm_disp_state *state)
-> {
->    list_for_each_entry_safe (block, ...)
->      kfree(block);
->    kfree(state)
-> }
-> 
-> void msm_disp_state_print(struct drm_disp_state *state, drm_printer *p)
-> {
->    .. print generic state and loop over state->blocks printing them ..
-> }
-> 
-> ... if you do need to support printing to dmesg, you could re-use
-> msm_disp_state_print() with an drm_info printer in just a few lines of
-> code, rather than spreading the logic far and wide.
-> 
-> BR,
-> -R
