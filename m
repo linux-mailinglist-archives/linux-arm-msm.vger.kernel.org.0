@@ -2,131 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1F3D935AE7C
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Apr 2021 16:48:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A8C4035AF34
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Apr 2021 19:20:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234536AbhDJOsz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 10 Apr 2021 10:48:55 -0400
-Received: from mga17.intel.com ([192.55.52.151]:65199 "EHLO mga17.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S234392AbhDJOsy (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 10 Apr 2021 10:48:54 -0400
-IronPort-SDR: CBeyzvuF8RjPoDaVEhu1HAiXO7sw11Z/0FaRJ9L2VpISwq6sCOHq+GSQCY9SKzR3ZFT6RrJgg8
- ez18fnmljSww==
-X-IronPort-AV: E=McAfee;i="6000,8403,9950"; a="174023925"
-X-IronPort-AV: E=Sophos;i="5.82,212,1613462400"; 
-   d="scan'208";a="174023925"
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Apr 2021 07:48:32 -0700
-IronPort-SDR: /K0zYiG79dyb0W27hbgX9JJzhV7Dme9RiX8eF9yEmMPh2qk40XaXvo+imdoPtdSDpTqTjqXG/+
- lcyFGsAMNxhQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.82,212,1613462400"; 
-   d="scan'208";a="520621770"
-Received: from lkp-server01.sh.intel.com (HELO 69d8fcc516b7) ([10.239.97.150])
-  by fmsmga001.fm.intel.com with ESMTP; 10 Apr 2021 07:48:29 -0700
-Received: from kbuild by 69d8fcc516b7 with local (Exim 4.92)
-        (envelope-from <lkp@intel.com>)
-        id 1lVEuS-000ITS-S4; Sat, 10 Apr 2021 14:48:28 +0000
-Date:   Sat, 10 Apr 2021 22:47:56 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     satya priya <skakit@codeaurora.org>,
-        Alessandro Zummo <a.zummo@towertech.it>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Rob Herring <robh+dt@kernel.org>,
+        id S234668AbhDJRUZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 10 Apr 2021 13:20:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36696 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234392AbhDJRUY (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 10 Apr 2021 13:20:24 -0400
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0619C06138A;
+        Sat, 10 Apr 2021 10:20:09 -0700 (PDT)
+Received: by mail-ed1-x536.google.com with SMTP id g17so9378058edm.6;
+        Sat, 10 Apr 2021 10:20:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:reply-to:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=bmbgCj2muJKg7OduUvBJWXcT8/zIja0NVvmWyA9R5dM=;
+        b=J5OggRvv5r2vSHvy+8QVfSpNTo7Eq9AnbNEVpJx+k6qYl+giNt8mJS7jh8dp3FuGxg
+         1kRRC90g0kLjfIFD523X/ydl5EVJqYHgQ2lxTym79tC/qtc0IUwNJ4w4cXrzzMJNqQrz
+         bl0XFB+879tp89aetAtaLCmi15/OCzgIIrPPyuYjczNr3Bgo3qjanJq2gx7thSjZMBP5
+         mjGEAJx4SduTgwwgqMB818jXwT0O8nqrJL4aRNxNAGqSeJQTHmD8KFEUDZ5Bh3mcOCKs
+         /y1I61Nsr4P0mfzDyQW4zsaD9mwXKT7P6tLmao0t7aFlQ0geo7pN8SoD5XUVpGtLMUWd
+         DgOA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:reply-to
+         :references:mime-version:content-disposition:in-reply-to;
+        bh=bmbgCj2muJKg7OduUvBJWXcT8/zIja0NVvmWyA9R5dM=;
+        b=dkzvXE5jmu4zgQh0aNv+LBWkqvvvD6P5AUYM5GnvOkatOyouIzG+lZyaJ/Mmqfcbbv
+         N/A0TqJVE28YaEZo+oyZHmJBpeJ99+vBDNCQwM7uG9R5gn6VMT5r0UyfZv9U+ZyHgbm6
+         0N24xZD5kr6CY4FrmxXJSj3BFyumsEjvuD+5h7de9GyZg8yRW8F9DwkQVjKZlONlrxrM
+         6XNIm9W6ulLB2jgetIGtbslbO/oXrTj6FRvL8gkogKmexVsWpgu3/wW6mR0bmhnHbArg
+         n8lBeS+uDuxBDYXqBBdJD+vkcB3tUvE76FtkS/q38WzbdgRirBRm0egSZBWcC76QSYad
+         5nWA==
+X-Gm-Message-State: AOAM533M1nR1AIvg4LG9v31A/56e7Yr+TQc0Dora/+cNTMpN5Oo7gz0w
+        kqtJASnViN4btBLZw22mPu8=
+X-Google-Smtp-Source: ABdhPJwUut07PLJJchzC4Bq4JmjozB6Z3C1hcBMAxRRYPC1BvmlsymOMCOue6ZSljaFi171xY5drAg==
+X-Received: by 2002:a05:6402:40ca:: with SMTP id z10mr18091325edb.215.1618075208390;
+        Sat, 10 Apr 2021 10:20:08 -0700 (PDT)
+Received: from pevik ([62.201.25.198])
+        by smtp.gmail.com with ESMTPSA id e16sm3396836edu.94.2021.04.10.10.20.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 10 Apr 2021 10:20:07 -0700 (PDT)
+Date:   Sat, 10 Apr 2021 19:20:05 +0200
+From:   Petr Vorel <petr.vorel@gmail.com>
+To:     Konrad Dybcio <konradybcio@gmail.com>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     kbuild-all@lists.01.org, Lee Jones <lee.jones@linaro.org>,
-        linux-rtc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH V2 3/4] dt-bindings: mfd: Convert pm8xxx bindings to yaml
-Message-ID: <202104102224.0snQfjaj-lkp@intel.com>
-References: <1617976766-7852-4-git-send-email-skakit@codeaurora.org>
+        Rob Herring <robh+dt@kernel.org>,
+        Ricardo Ribalda <ribalda@kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>
+Subject: Re: [PATCH 1/1] arm64: dts: qcom: msm8994: Reserve gpio ranges
+Message-ID: <YHHeRfAWrrusE/gB@pevik>
+Reply-To: Petr Vorel <petr.vorel@gmail.com>
+References: <20210405200259.23525-1-petr.vorel@gmail.com>
+ <20210405225222.GD904837@yoga>
+ <CACRpkdZQ8qiqFPa0X8deVjZ7nLn_E6s8fmJdr5Ji8AuyJms1ug@mail.gmail.com>
+ <YG9TWEJlpDmNeeit@pevik>
+ <ea376d51-cd6c-0028-9602-d007c2bba71e@gmail.com>
+ <YG/HwrzRcm7bwgFe@pevik>
+ <20210409033726.GT904837@yoga>
+ <YHE9Df/Ztq7VaoK2@pevik>
+ <10d2cd96-3c35-2b06-82f7-98800888e244@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1617976766-7852-4-git-send-email-skakit@codeaurora.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <10d2cd96-3c35-2b06-82f7-98800888e244@gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi satya,
 
-Thank you for the patch! Perhaps something to improve:
+> > Konrad, is there any public docs about GPIOs on this secure peripherals?
+> > It it somehow related to Chain of Trust? [1].  I guess it's not, because once we
+> > boot Linux all bootloader stuff is over.
 
-[auto build test WARNING on abelloni/rtc-next]
-[also build test WARNING on lee-mfd/for-mfd-next robh/for-next v5.12-rc6 next-20210409]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch]
+> No, Qualcomm pretty much does security through obscurity. It's *probably* not even that very secure considering how big in size their TZ+HYP stack is - number of bugs rises exponentially with code size. But not many people tried breaking into it considering the complexity and QCOM's legal team size.
 
-url:    https://github.com/0day-ci/linux/commits/satya-priya/Add-RTC-support-for-PMIC-PMK8350/20210409-220149
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/abelloni/linux.git rtc-next
-compiler: arm-linux-gnueabi-gcc (GCC) 9.3.0
-reproduce: make ARCH=arm dtbs_check
+> There is no public documentation on that, and even if there were - you are not allowed to flash the "secure" partitions on *your device that you unlocked the bootloader of by choice* (which is absurd).
 
-If you fix the issue, kindly add following tag as appropriate
-Reported-by: kernel test robot <lkp@intel.com>
+> Also, while "all bootloader stuff is over", the platform is still under control of the proprietary hypervisor and the "Trust Zone". For example if you try to write to some IOMMU registers on certain platforms, the hypervisor will treat that as a security violation and shut down the entire device. 
 
+> This is essentially the same as your issue. You're trying to poke a thing that Qualcomm *really* doesn't want you to (the fingerprint SPI pins) and since *they* are in control, they say "nonono" and your device dies. All you can do is comply with that (or find a way to replace the blobs or politely ask Google to release a set of unsecure binaries for your Nexus - which they won't do).
 
-dtcheck warnings: (new ones prefixed by >>)
-   arch/arm/boot/dts/qcom-apq8064-cm-qs600.dt.yaml: power-controller@2099000: '#power-domain-cells' is a required property
-   	From schema: Documentation/devicetree/bindings/power/power-domain.yaml
-   arch/arm/boot/dts/qcom-apq8064-cm-qs600.dt.yaml: power-controller@20a9000: '#power-domain-cells' is a required property
-   	From schema: Documentation/devicetree/bindings/power/power-domain.yaml
-   arch/arm/boot/dts/qcom-apq8064-cm-qs600.dt.yaml: power-controller@20b9000: '#power-domain-cells' is a required property
-   	From schema: Documentation/devicetree/bindings/power/power-domain.yaml
-   arch/arm/boot/dts/qcom-apq8064-cm-qs600.dt.yaml: sps-sic-non-secure@12100000: compatible: 'anyOf' conditional failed, one must be fixed:
-   	['syscon'] is too short
-   	'syscon' is not one of ['allwinner,sun8i-a83t-system-controller', 'allwinner,sun8i-h3-system-controller', 'allwinner,sun8i-v3s-system-controller', 'allwinner,sun50i-a64-system-controller', 'hisilicon,dsa-subctrl', 'hisilicon,hi6220-sramctrl', 'hisilicon,pcie-sas-subctrl', 'hisilicon,peri-subctrl', 'microchip,sparx5-cpu-syscon', 'mstar,msc313-pmsleep', 'rockchip,px30-qos', 'rockchip,rk3066-qos', 'rockchip,rk3288-qos', 'rockchip,rk3399-qos', 'samsung,exynos3-sysreg', 'samsung,exynos4-sysreg', 'samsung,exynos5-sysreg', 'samsung,exynos5433-sysreg']
-   	From schema: Documentation/devicetree/bindings/mfd/syscon.yaml
->> arch/arm/boot/dts/qcom-apq8064-cm-qs600.dt.yaml: pmic@1: 'mpps@50' does not match any of the regexes: 'pinctrl-[0-9]+', 'rtc@[0-9a-f]+$'
-   	From schema: Documentation/devicetree/bindings/mfd/qcom-pm8xxx.yaml
-   Unknown file referenced: [Errno 2] No such file or directory: '/usr/local/lib/python3.9/dist-packages/dtschema/schemas/rtc/qcom-pm8xxx-rtc.yaml'
---
-   arch/arm/boot/dts/qcom-apq8064-ifc6410.dt.yaml: power-controller@2099000: '#power-domain-cells' is a required property
-   	From schema: Documentation/devicetree/bindings/power/power-domain.yaml
-   arch/arm/boot/dts/qcom-apq8064-ifc6410.dt.yaml: power-controller@20a9000: '#power-domain-cells' is a required property
-   	From schema: Documentation/devicetree/bindings/power/power-domain.yaml
-   arch/arm/boot/dts/qcom-apq8064-ifc6410.dt.yaml: power-controller@20b9000: '#power-domain-cells' is a required property
-   	From schema: Documentation/devicetree/bindings/power/power-domain.yaml
-   arch/arm/boot/dts/qcom-apq8064-ifc6410.dt.yaml: sps-sic-non-secure@12100000: compatible: 'anyOf' conditional failed, one must be fixed:
-   	['syscon'] is too short
-   	'syscon' is not one of ['allwinner,sun8i-a83t-system-controller', 'allwinner,sun8i-h3-system-controller', 'allwinner,sun8i-v3s-system-controller', 'allwinner,sun50i-a64-system-controller', 'hisilicon,dsa-subctrl', 'hisilicon,hi6220-sramctrl', 'hisilicon,pcie-sas-subctrl', 'hisilicon,peri-subctrl', 'microchip,sparx5-cpu-syscon', 'mstar,msc313-pmsleep', 'rockchip,px30-qos', 'rockchip,rk3066-qos', 'rockchip,rk3288-qos', 'rockchip,rk3399-qos', 'samsung,exynos3-sysreg', 'samsung,exynos4-sysreg', 'samsung,exynos5-sysreg', 'samsung,exynos5433-sysreg']
-   	From schema: Documentation/devicetree/bindings/mfd/syscon.yaml
->> arch/arm/boot/dts/qcom-apq8064-ifc6410.dt.yaml: pmic@1: 'mpps@50' does not match any of the regexes: 'pinctrl-[0-9]+', 'rtc@[0-9a-f]+$'
-   	From schema: Documentation/devicetree/bindings/mfd/qcom-pm8xxx.yaml
-   Unknown file referenced: [Errno 2] No such file or directory: '/usr/local/lib/python3.9/dist-packages/dtschema/schemas/rtc/qcom-pm8xxx-rtc.yaml'
---
-   arch/arm/boot/dts/qcom-apq8064-sony-xperia-yuga.dt.yaml: power-controller@2099000: '#power-domain-cells' is a required property
-   	From schema: Documentation/devicetree/bindings/power/power-domain.yaml
-   arch/arm/boot/dts/qcom-apq8064-sony-xperia-yuga.dt.yaml: power-controller@20a9000: '#power-domain-cells' is a required property
-   	From schema: Documentation/devicetree/bindings/power/power-domain.yaml
-   arch/arm/boot/dts/qcom-apq8064-sony-xperia-yuga.dt.yaml: power-controller@20b9000: '#power-domain-cells' is a required property
-   	From schema: Documentation/devicetree/bindings/power/power-domain.yaml
-   arch/arm/boot/dts/qcom-apq8064-sony-xperia-yuga.dt.yaml: sps-sic-non-secure@12100000: compatible: 'anyOf' conditional failed, one must be fixed:
-   	['syscon'] is too short
-   	'syscon' is not one of ['allwinner,sun8i-a83t-system-controller', 'allwinner,sun8i-h3-system-controller', 'allwinner,sun8i-v3s-system-controller', 'allwinner,sun50i-a64-system-controller', 'hisilicon,dsa-subctrl', 'hisilicon,hi6220-sramctrl', 'hisilicon,pcie-sas-subctrl', 'hisilicon,peri-subctrl', 'microchip,sparx5-cpu-syscon', 'mstar,msc313-pmsleep', 'rockchip,px30-qos', 'rockchip,rk3066-qos', 'rockchip,rk3288-qos', 'rockchip,rk3399-qos', 'samsung,exynos3-sysreg', 'samsung,exynos4-sysreg', 'samsung,exynos5-sysreg', 'samsung,exynos5433-sysreg']
-   	From schema: Documentation/devicetree/bindings/mfd/syscon.yaml
->> arch/arm/boot/dts/qcom-apq8064-sony-xperia-yuga.dt.yaml: pmic@1: 'mpps@50' does not match any of the regexes: 'pinctrl-[0-9]+', 'rtc@[0-9a-f]+$'
-   	From schema: Documentation/devicetree/bindings/mfd/qcom-pm8xxx.yaml
-   Unknown file referenced: [Errno 2] No such file or directory: '/usr/local/lib/python3.9/dist-packages/dtschema/schemas/rtc/qcom-pm8xxx-rtc.yaml'
---
-   arch/arm/boot/dts/qcom-apq8064-asus-nexus7-flo.dt.yaml: power-controller@2099000: '#power-domain-cells' is a required property
-   	From schema: Documentation/devicetree/bindings/power/power-domain.yaml
-   arch/arm/boot/dts/qcom-apq8064-asus-nexus7-flo.dt.yaml: power-controller@20a9000: '#power-domain-cells' is a required property
-   	From schema: Documentation/devicetree/bindings/power/power-domain.yaml
-   arch/arm/boot/dts/qcom-apq8064-asus-nexus7-flo.dt.yaml: power-controller@20b9000: '#power-domain-cells' is a required property
-   	From schema: Documentation/devicetree/bindings/power/power-domain.yaml
-   arch/arm/boot/dts/qcom-apq8064-asus-nexus7-flo.dt.yaml: sps-sic-non-secure@12100000: compatible: 'anyOf' conditional failed, one must be fixed:
-   	['syscon'] is too short
-   	'syscon' is not one of ['allwinner,sun8i-a83t-system-controller', 'allwinner,sun8i-h3-system-controller', 'allwinner,sun8i-v3s-system-controller', 'allwinner,sun50i-a64-system-controller', 'hisilicon,dsa-subctrl', 'hisilicon,hi6220-sramctrl', 'hisilicon,pcie-sas-subctrl', 'hisilicon,peri-subctrl', 'microchip,sparx5-cpu-syscon', 'mstar,msc313-pmsleep', 'rockchip,px30-qos', 'rockchip,rk3066-qos', 'rockchip,rk3288-qos', 'rockchip,rk3399-qos', 'samsung,exynos3-sysreg', 'samsung,exynos4-sysreg', 'samsung,exynos5-sysreg', 'samsung,exynos5433-sysreg']
-   	From schema: Documentation/devicetree/bindings/mfd/syscon.yaml
->> arch/arm/boot/dts/qcom-apq8064-asus-nexus7-flo.dt.yaml: pmic@1: 'mpps@50' does not match any of the regexes: 'pinctrl-[0-9]+', 'rtc@[0-9a-f]+$'
-   	From schema: Documentation/devicetree/bindings/mfd/qcom-pm8xxx.yaml
-   Unknown file referenced: [Errno 2] No such file or directory: '/usr/local/lib/python3.9/dist-packages/dtschema/schemas/rtc/qcom-pm8xxx-rtc.yaml'
+Again, thanks a lot for info. I looked into downstream sources to see that
+really pins 85-88 (which I've sent a patch to add into gpio-reserved-ranges) are
+used for fingerprint. I also wonder if downstream commit d45c35c7b586 ("angler:
+fingerprint: remove all the code about spi") [1] confirms that also downstream
+kernel would reset or it's a security (it would not reset, thus they removed
+the access). It's probably aosp issue tracker [2], but "Access denied" for me.
 
----
-0-DAY CI Kernel Test Service, Intel Corporation
-https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
+I also did some testing and this is maximum range which can be disabled:
+gpio-reserved-ranges = <0 4>, <6 139> and it does not help to solve second
+reset (in loop_init() or later when starting initramfs).
+Removing access to GPIO 4 or 5 causes reset right immediately (no message from
+kernel).
+
+I still don't understand what changed in a99163e9e708 ("Merge tag
+'devicetree-for-5.12' of git://git.kernel.org/pub/scm/linux/kernel/git/robh/linux")
+I checked both 882d6edfc45c cb8be8b4b27f, which it merges and they're ok.
+
+Kind regards,
+Petr
+
+[1] https://android.googlesource.com/kernel/msm/+/d45c35c7b586711e757eb7e3239db5c88d114e0e
+[2] https://issuetracker.google.com/issues/23756466
+
+> Konrad
