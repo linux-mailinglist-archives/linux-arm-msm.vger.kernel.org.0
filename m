@@ -2,117 +2,197 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A8C4035AF34
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Apr 2021 19:20:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 282B935B1DB
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 11 Apr 2021 07:56:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234668AbhDJRUZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 10 Apr 2021 13:20:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36696 "EHLO
+        id S230103AbhDKF4X (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 11 Apr 2021 01:56:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56214 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234392AbhDJRUY (ORCPT
+        with ESMTP id S229956AbhDKF4W (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 10 Apr 2021 13:20:24 -0400
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0619C06138A;
-        Sat, 10 Apr 2021 10:20:09 -0700 (PDT)
-Received: by mail-ed1-x536.google.com with SMTP id g17so9378058edm.6;
-        Sat, 10 Apr 2021 10:20:09 -0700 (PDT)
+        Sun, 11 Apr 2021 01:56:22 -0400
+Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56FD6C06138C
+        for <linux-arm-msm@vger.kernel.org>; Sat, 10 Apr 2021 22:56:06 -0700 (PDT)
+Received: by mail-pj1-x1031.google.com with SMTP id mj7-20020a17090b3687b029014d162a65b6so7011156pjb.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 10 Apr 2021 22:56:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:reply-to:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=bmbgCj2muJKg7OduUvBJWXcT8/zIja0NVvmWyA9R5dM=;
-        b=J5OggRvv5r2vSHvy+8QVfSpNTo7Eq9AnbNEVpJx+k6qYl+giNt8mJS7jh8dp3FuGxg
-         1kRRC90g0kLjfIFD523X/ydl5EVJqYHgQ2lxTym79tC/qtc0IUwNJ4w4cXrzzMJNqQrz
-         bl0XFB+879tp89aetAtaLCmi15/OCzgIIrPPyuYjczNr3Bgo3qjanJq2gx7thSjZMBP5
-         mjGEAJx4SduTgwwgqMB818jXwT0O8nqrJL4aRNxNAGqSeJQTHmD8KFEUDZ5Bh3mcOCKs
-         /y1I61Nsr4P0mfzDyQW4zsaD9mwXKT7P6tLmao0t7aFlQ0geo7pN8SoD5XUVpGtLMUWd
-         DgOA==
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:mime-version:content-disposition;
+        bh=47LAm/7nJvsrQPJk4C7Ih4f1i+BgMIeGRCBMkiUmnX4=;
+        b=yi53V2JDvrURz5jGwTbhufezF4Tc2j2G3SWaCJa076RtUd6afzMHrWq4Xq/y20ki9R
+         4viLKX7FI3NUBa0Z2fwgZNfALH07fl5JdtxlghUiXbOrsEpzUnCaGstSmoOwsxDsPy1m
+         XcGb4ogNAmnR+eHrkuop/U4YifZc3mV8HqcVq9jUk80BHPy/8nbTZ6jeWxgOBEda2iwd
+         1Wr5mrX6hscztJS5zgwtoDpCyTdgIEJHgEYA9CF3e4BSvcLYQ3We+khx9tP3wMQCZumw
+         Od3eIbo4Hpp/LGRXqa0TNB9aK33xbPRqsBM7k/zGAAFgNTlJM5Ym3VAHLqV4ZdpYo50D
+         1Esg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:reply-to
-         :references:mime-version:content-disposition:in-reply-to;
-        bh=bmbgCj2muJKg7OduUvBJWXcT8/zIja0NVvmWyA9R5dM=;
-        b=dkzvXE5jmu4zgQh0aNv+LBWkqvvvD6P5AUYM5GnvOkatOyouIzG+lZyaJ/Mmqfcbbv
-         N/A0TqJVE28YaEZo+oyZHmJBpeJ99+vBDNCQwM7uG9R5gn6VMT5r0UyfZv9U+ZyHgbm6
-         0N24xZD5kr6CY4FrmxXJSj3BFyumsEjvuD+5h7de9GyZg8yRW8F9DwkQVjKZlONlrxrM
-         6XNIm9W6ulLB2jgetIGtbslbO/oXrTj6FRvL8gkogKmexVsWpgu3/wW6mR0bmhnHbArg
-         n8lBeS+uDuxBDYXqBBdJD+vkcB3tUvE76FtkS/q38WzbdgRirBRm0egSZBWcC76QSYad
-         5nWA==
-X-Gm-Message-State: AOAM533M1nR1AIvg4LG9v31A/56e7Yr+TQc0Dora/+cNTMpN5Oo7gz0w
-        kqtJASnViN4btBLZw22mPu8=
-X-Google-Smtp-Source: ABdhPJwUut07PLJJchzC4Bq4JmjozB6Z3C1hcBMAxRRYPC1BvmlsymOMCOue6ZSljaFi171xY5drAg==
-X-Received: by 2002:a05:6402:40ca:: with SMTP id z10mr18091325edb.215.1618075208390;
-        Sat, 10 Apr 2021 10:20:08 -0700 (PDT)
-Received: from pevik ([62.201.25.198])
-        by smtp.gmail.com with ESMTPSA id e16sm3396836edu.94.2021.04.10.10.20.07
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition;
+        bh=47LAm/7nJvsrQPJk4C7Ih4f1i+BgMIeGRCBMkiUmnX4=;
+        b=ck9D4fKnN2TBoZ57HBTdb8/lqUIrC04bLRDXUI2RyHxKFxHauTbsokzODjXMoSL312
+         DqXzy3u/2iFdKO/mj+Hk7g/qJvjeEJLL7tUo+DS7McaGeNUu+4sKH1uEEbhCwDRwdENI
+         Npsv7DEOt7AgpjTpe/2dJBLxo8exB1WTfkIK8nT0x/7a4I/KF/j+jMdNQpvcOGasmw6p
+         TNoHUVp1UVGkugd/6bDvjAUjZcBBovFHSh2EsA741+kfx9dp9w7UYX9/qOyKRKywEkmu
+         wMquCG/zR3SWRG/GBymdydar3n15c+YPEHcfUgsbU7Yy5fiHtUYzKLaP7NeyrvMt3l2s
+         qbmg==
+X-Gm-Message-State: AOAM5318zBA/4w3JhJWthBusDuRXA2sUFjd3Kc0/2/R/aRKIGkKg99VP
+        LWDqPCnbuYBzAkOY/L+DAoUMpftlM+o2
+X-Google-Smtp-Source: ABdhPJxvo1xnUAWMhyv6R0S0hDuAv5tCn7GxQg3tlO3qYxRDrF2qRP5MKcawJPUklrhKRx3YYfLjiQ==
+X-Received: by 2002:a17:90b:e87:: with SMTP id fv7mr22029932pjb.27.1618120565642;
+        Sat, 10 Apr 2021 22:56:05 -0700 (PDT)
+Received: from thinkpad ([2409:4072:813:9a91:9cf0:36d8:f992:2089])
+        by smtp.gmail.com with ESMTPSA id g5sm6720022pfb.77.2021.04.10.22.56.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 10 Apr 2021 10:20:07 -0700 (PDT)
-Date:   Sat, 10 Apr 2021 19:20:05 +0200
-From:   Petr Vorel <petr.vorel@gmail.com>
-To:     Konrad Dybcio <konradybcio@gmail.com>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Ricardo Ribalda <ribalda@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>
-Subject: Re: [PATCH 1/1] arm64: dts: qcom: msm8994: Reserve gpio ranges
-Message-ID: <YHHeRfAWrrusE/gB@pevik>
-Reply-To: Petr Vorel <petr.vorel@gmail.com>
-References: <20210405200259.23525-1-petr.vorel@gmail.com>
- <20210405225222.GD904837@yoga>
- <CACRpkdZQ8qiqFPa0X8deVjZ7nLn_E6s8fmJdr5Ji8AuyJms1ug@mail.gmail.com>
- <YG9TWEJlpDmNeeit@pevik>
- <ea376d51-cd6c-0028-9602-d007c2bba71e@gmail.com>
- <YG/HwrzRcm7bwgFe@pevik>
- <20210409033726.GT904837@yoga>
- <YHE9Df/Ztq7VaoK2@pevik>
- <10d2cd96-3c35-2b06-82f7-98800888e244@gmail.com>
+        Sat, 10 Apr 2021 22:56:04 -0700 (PDT)
+Date:   Sun, 11 Apr 2021 11:25:59 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     gregkh@linuxfoundation.org
+Cc:     hemantk@codeaurora.org, bbhatt@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, jhugo@codeaurora.org,
+        linux-kernel@vger.kernel.org, jarvis.w.jiang@gmail.com,
+        loic.poulain@linaro.org
+Subject: MHI changes for v5.13
+Message-ID: <20210411055559.GA2068@thinkpad>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <10d2cd96-3c35-2b06-82f7-98800888e244@gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Greg,
 
-> > Konrad, is there any public docs about GPIOs on this secure peripherals?
-> > It it somehow related to Chain of Trust? [1].  I guess it's not, because once we
-> > boot Linux all bootloader stuff is over.
+Here is the MHI Pull request for the v5.13 cycle. I stayed with the PR as the
+number patches got increased.
 
-> No, Qualcomm pretty much does security through obscurity. It's *probably* not even that very secure considering how big in size their TZ+HYP stack is - number of bugs rises exponentially with code size. But not many people tried breaking into it considering the complexity and QCOM's legal team size.
+Details are in the signed tag, please consider merging!
 
-> There is no public documentation on that, and even if there were - you are not allowed to flash the "secure" partitions on *your device that you unlocked the bootloader of by choice* (which is absurd).
+Thanks,
+Mani
 
-> Also, while "all bootloader stuff is over", the platform is still under control of the proprietary hypervisor and the "Trust Zone". For example if you try to write to some IOMMU registers on certain platforms, the hypervisor will treat that as a security violation and shut down the entire device. 
+---
 
-> This is essentially the same as your issue. You're trying to poke a thing that Qualcomm *really* doesn't want you to (the fingerprint SPI pins) and since *they* are in control, they say "nonono" and your device dies. All you can do is comply with that (or find a way to replace the blobs or politely ask Google to release a set of unsecure binaries for your Nexus - which they won't do).
+The following changes since commit a38fd8748464831584a19438cbb3082b5a2dab15:
 
-Again, thanks a lot for info. I looked into downstream sources to see that
-really pins 85-88 (which I've sent a patch to add into gpio-reserved-ranges) are
-used for fingerprint. I also wonder if downstream commit d45c35c7b586 ("angler:
-fingerprint: remove all the code about spi") [1] confirms that also downstream
-kernel would reset or it's a security (it would not reset, thus they removed
-the access). It's probably aosp issue tracker [2], but "Access denied" for me.
+  Linux 5.12-rc2 (2021-03-05 17:33:41 -0800)
 
-I also did some testing and this is maximum range which can be disabled:
-gpio-reserved-ranges = <0 4>, <6 139> and it does not help to solve second
-reset (in loop_init() or later when starting initramfs).
-Removing access to GPIO 4 or 5 causes reset right immediately (no message from
-kernel).
+are available in the Git repository at:
 
-I still don't understand what changed in a99163e9e708 ("Merge tag
-'devicetree-for-5.12' of git://git.kernel.org/pub/scm/linux/kernel/git/robh/linux")
-I checked both 882d6edfc45c cb8be8b4b27f, which it merges and they're ok.
+  git://git.kernel.org/pub/scm/linux/kernel/git/mani/mhi.git tags/mhi-for-v5.13
 
-Kind regards,
-Petr
+for you to fetch changes up to a503d1628c9c341dc5e1a26272e38182dca3e823:
 
-[1] https://android.googlesource.com/kernel/msm/+/d45c35c7b586711e757eb7e3239db5c88d114e0e
-[2] https://issuetracker.google.com/issues/23756466
+  bus: mhi: fix typo in comments for struct mhi_channel_config (2021-04-09 18:48:22 +0530)
 
-> Konrad
+----------------------------------------------------------------
+MHI changes for v5.13
+
+core:
+
+- Added support for Flash Programmer execution environment which allows the
+  host machine (like x86) to flash the modem firmware to NAND or eMMC in the
+  modem. The MHI bus will expose EDL channels (34, 35) and then the opensource
+  QDL tool [1] can be used to flash the firmware from the host.
+- Added an internal helper for polling the MHI registers with a retry interval.
+  This helper is used now to poll for the MHI ready state in MHI STATUS
+  register.
+- Various fixes for issues found during the bringup of SDX24/SDX55 based Quectel
+  and Telit modems.
+- Updates to the Execution environment handling for proper downloading of the
+  AMSS image from SBL (Secondary Bootloader) mode.
+- Added support for sending STOP channel command to the MHI device and also made
+  changes to the MHI core for proper handling of stop and restart.
+- Fixed the runtime_pm handling in the core by forcing the device to be in wake
+  mode until TX completion and allowing it to suspend for RX.
+- Added sanity checks for values read from the device to avoid crash if those
+  are corrupted somehow.
+- Fixed warnings generated by sparse (W=2)
+- Couple of kernel doc cleanups in mhi.h
+
+pci_generic:
+
+- Added support for runtime PM and generic PM
+- Added Firehose channels for flashing the firmware
+- Added support for modems such as Quectel EM1XXGR-L, SDX24, SDX65, Foxconn
+  T99W175 exposing relevant channels.
+
+[1] https://git.linaro.org/landing-teams/working/qualcomm/qdl.git
+
+----------------------------------------------------------------
+Bhaumik Bhatt (25):
+      bus: mhi: core: Add missing checks for MMIO register entries
+      bus: mhi: core: Destroy SBL devices when moving to mission mode
+      bus: mhi: core: Download AMSS image from appropriate function
+      bus: mhi: core: Process execution environment changes serially
+      bus: mhi: core: Update debug prints to include local device state
+      bus: mhi: Make firmware image optional for controller
+      bus: mhi: core: Rely on accurate method to determine EDL mode
+      bus: mhi: core: Wait for ready after an EDL firmware download
+      bus: mhi: core: Handle EDL mode entry appropriately
+      bus: mhi: core: Identify Flash Programmer as a mission mode use case
+      bus: mhi: core: Wait for MHI READY state in most scenarios
+      bus: mhi: core: Improve state strings for debug messages
+      bus: mhi: core: Introduce internal register poll helper function
+      bus: mhi: core: Move to polling method to wait for MHI ready
+      bus: mhi: core: Remove pre_init flag used for power purposes
+      bus: mhi: pci_generic: Add SDX65 based modem support
+      bus: mhi: core: Allow sending the STOP channel command
+      bus: mhi: core: Clear context for stopped channels from remove()
+      bus: mhi: core: Improvements to the channel handling state machine
+      bus: mhi: core: Update debug messages to use client device
+      bus: mhi: core: Hold device wake for channel update commands
+      bus: mhi: core: Clear configuration from channel context during reset
+      bus: mhi: core: Check channel execution environment before issuing reset
+      bus: mhi: core: Remove __ prefix for MHI channel unprepare function
+      bus: mhi: Improve documentation on channel transfer setup APIs
+
+Carl Yin (1):
+      bus: mhi: core: Add support for Flash Programmer execution environment
+
+Colin Ian King (1):
+      bus: mhi: core: remove redundant initialization of variables state and ee
+
+Fan Wu (1):
+      bus: mhi: core: Return EAGAIN if MHI ring is full
+
+Jarvis Jiang (2):
+      bus: mhi: pci_generic: Introduce Foxconn T99W175 support
+      bus: mhi: fix typo in comments for struct mhi_channel_config
+
+Jeffrey Hugo (3):
+      bus: mhi: core: Fix check for syserr at power_up
+      bus: mhi: core: Check state before processing power_down
+      bus: mhi: core: Sanity check values from remote device before use
+
+Loic Poulain (14):
+      bus: mhi: pci_generic: Parametrable element count for events
+      bus: mhi: pci_generic: Introduce quectel EM1XXGR-L support
+      bus: mhi: pci_generic: Add SDX24 based modem support
+      bus: mhi: pci_generic: No-Op for device_wake operations
+      bus: mhi: pci_generic: Use generic PCI power management
+      bus: mhi: pci_generic: Add support for runtime PM
+      bus: mhi: pci_generic: Remove WQ_MEM_RECLAIM flag from state workqueue
+      bus: mhi: core: Fix invalid error returning in mhi_queue
+      bus: mhi: core: Rename debugfs directory name
+      bus: mhi: Early MHI resume failure in non M3 state
+      bus: mhi: core: Fix MHI runtime_pm behavior
+      bus: mhi: pm: reduce PM state change verbosity
+      bus: mhi: pci_generic: Implement PCI shutdown callback
+      bus: mhi: pci_generic: Add FIREHOSE channels
+
+Manivannan Sadhasivam (2):
+      bus: mhi: pci_generic: Constify mhi_controller_config struct definitions
+      bus: mhi: core: Fix shadow declarations
+
+ drivers/bus/mhi/core/boot.c     |  64 ++++++------
+ drivers/bus/mhi/core/debugfs.c  |   2 +-
+ drivers/bus/mhi/core/init.c     |  72 +++++++------
+ drivers/bus/mhi/core/internal.h |  20 +++-
+ drivers/bus/mhi/core/main.c     | 416 +++++++++++++++++++++++++++++++++++++++++++++++++++-----------------------
+ drivers/bus/mhi/core/pm.c       | 119 ++++++++++++---------
+ drivers/bus/mhi/pci_generic.c   | 330 +++++++++++++++++++++++++++++++++++++++++++++++++++++-----
+ include/linux/mhi.h             |  28 +++--
+ 8 files changed, 775 insertions(+), 276 deletions(-)
