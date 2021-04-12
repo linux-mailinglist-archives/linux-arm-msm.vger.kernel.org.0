@@ -2,224 +2,443 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5DE7F35B9FA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Apr 2021 08:05:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 63F5A35BA78
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Apr 2021 08:59:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229879AbhDLGGG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Apr 2021 02:06:06 -0400
-Received: from mail-lj1-f169.google.com ([209.85.208.169]:45718 "EHLO
-        mail-lj1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229448AbhDLGGF (ORCPT
+        id S236635AbhDLG7Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Apr 2021 02:59:24 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:13519 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229574AbhDLG7W (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Apr 2021 02:06:05 -0400
-Received: by mail-lj1-f169.google.com with SMTP id z8so13911095ljm.12;
-        Sun, 11 Apr 2021 23:05:47 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:reply-to:to:cc
-         :in-reply-to:references:mime-version:date:user-agent
-         :content-transfer-encoding;
-        bh=lcon2rmRARLmChe6kE+I9FLuhgI2av1Gb7xCDp3yuQ0=;
-        b=Xg7ciMM1TDIHe1d2ZcEC0pVpPz7APQvjkUw1AXjZls2wNPh4SjQEPwhBljcmpUEPFk
-         p/D3JLnwPN1vUkyXGwjPixBybVL86rtwoQ+JU7kS4hr5rJlvBAa2oqKpOhnMKA29UM7k
-         XcSslKEsxeyZlgE1At8ERwnKx1z9HaJUi8kjoJLFXBKDCWw5bMgG6KL+wI9QzCPWHGVd
-         H/WMLNTDqDhrUL5rjm2Z4wT+6fJkXtGkSRriUd99Z7NadhSq6CorYD4I70yMkRrLK5i4
-         p2tpYDUy1lOT15kXeuVlcWUhcTfzmKiGzbmeSr8KHDYsbZJgeobEDaX0Lw/UDJeNaqXf
-         peiw==
-X-Gm-Message-State: AOAM532IgKpSol9nd9oGtoo6TubEpesJlF6glyl11UEEVwjoEWBt8kU8
-        cHKkq/ujWfKfXtGIA4pGfUPtJAMsWdRSLQ==
-X-Google-Smtp-Source: ABdhPJyBUIynKa25iOasIiRQlPLnH6KH8qoGRt+hmACCB3+XZdckJI+CW20WJK3qTO5Ysj3j8+gY3A==
-X-Received: by 2002:a2e:9295:: with SMTP id d21mr13245670ljh.299.1618207546399;
-        Sun, 11 Apr 2021 23:05:46 -0700 (PDT)
-Received: from dc7vkhyyyyyyyyyyyyydy-3.rev.dnainternet.fi (dc7vkhyyyyyyyyyyyyydy-3.rev.dnainternet.fi. [2001:14ba:16e2:8300::6])
-        by smtp.gmail.com with ESMTPSA id f26sm416194lfj.37.2021.04.11.23.05.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 11 Apr 2021 23:05:45 -0700 (PDT)
-Message-ID: <4abddb76d87a2e6e0d2ad98da0b8349251456158.camel@fi.rohmeurope.com>
-Subject: Re: [RFC PATCH v3 1/3] regmap-irq: Extend sub-irq to support
- non-fixed reg strides
-From:   Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>
-Reply-To: matti.vaittinen@fi.rohmeurope.com
-To:     Guru Das Srinagesh <gurus@codeaurora.org>,
-        Mark Brown <broonie@kernel.org>,
-        Markus Elfring <Markus.Elfring@web.de>,
-        Lee Jones <lee.jones@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg KH <gregkh@linuxfoundation.org>,
-        Guenter Roeck <linux@roeck-us.net>,
-        Joe Perches <joe@perches.com>,
-        Subbaraman Narayanamurthy <subbaram@codeaurora.org>,
-        David Collins <collinsd@codeaurora.org>,
-        Anirudh Ghayal <aghayal@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-In-Reply-To: <526562423eaa58b4075362083f561841f1d6956c.1615423027.git.gurus@codeaurora.org>
-References: <cover.1615423027.git.gurus@codeaurora.org>
-         <526562423eaa58b4075362083f561841f1d6956c.1615423027.git.gurus@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
-MIME-Version: 1.0
-Date:   Mon, 12 Apr 2021 09:05:39 +0300
-User-Agent: Evolution 3.34.4 (3.34.4-1.fc31) 
-Content-Transfer-Encoding: 7bit
+        Mon, 12 Apr 2021 02:59:22 -0400
+Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
+  by alexa-out.qualcomm.com with ESMTP; 11 Apr 2021 23:59:05 -0700
+X-QCInternal: smtphost
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 11 Apr 2021 23:59:02 -0700
+X-QCInternal: smtphost
+Received: from dikshita-linux.qualcomm.com ([10.204.65.237])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 12 Apr 2021 12:28:45 +0530
+Received: by dikshita-linux.qualcomm.com (Postfix, from userid 347544)
+        id E927421913; Mon, 12 Apr 2021 12:28:44 +0530 (IST)
+From:   Dikshita Agarwal <dikshita@codeaurora.org>
+To:     linux-media@vger.kernel.org, stanimir.varbanov@linaro.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        vgarodia@codeaurora.org, Dikshita Agarwal <dikshita@codeaurora.org>
+Subject: [PATCH] media: venus: Enable low power setting for encoder
+Date:   Mon, 12 Apr 2021 12:28:43 +0530
+Message-Id: <1618210723-2310-1-git-send-email-dikshita@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi All,
+Set the FW to run in low power for encoder
+to accommodate more session without losing much on quality.
 
-On Wed, 2021-03-10 at 16:39 -0800, Guru Das Srinagesh wrote:
-> Qualcomm's MFD chips have a top level interrupt status register and
-> sub-irqs (peripherals).  When a bit in the main status register goes
-> high, it means that the peripheral corresponding to that bit has an
-> unserviced interrupt. If the bit is not set, this means that the
-> corresponding peripheral does not.
-> 
-> Commit a2d21848d9211d ("regmap: regmap-irq: Add main status register
-> support") introduced the sub-irq logic that is currently applied only
-> when reading status registers, but not for any other functions like
-> acking
-> or masking. Extend the use of sub-irq to all other functions, with
-> two
-> caveats regarding the specification of offsets:
-> 
-> - Each member of the sub_reg_offsets array should be of length 1
-> - The specified offsets should be the unequal strides for each sub-
-> irq
->   device.
-> 
-> In QCOM's case, all the *_base registers are to be configured to the
-> base addresses of the first sub-irq group, with offsets of each
-> subsequent group calculated as a difference from these addresses.
-> 
-> Continuing from the example mentioned in the cover letter:
-> 
-> 	/*
-> 	 * Address of MISC_INT_MASK		= 0x1011
-> 	 * Address of TEMP_ALARM_INT_MASK	= 0x2011
-> 	 * Address of GPIO01_INT_MASK		= 0x3011
-> 	 *
-> 	 * Calculate offsets as:
-> 	 * offset_0 = 0x1011 - 0x1011 = 0       (to access MISC's
-> 	 * 					 registers)
-> 	 * offset_1 = 0x2011 - 0x1011 = 0x1000
-> 	 * offset_2 = 0x3011 - 0x1011 = 0x2000
-> 	 */
-> 
-> 	static unsigned int sub_unit0_offsets[] = {0};
-> 	static unsigned int sub_unit1_offsets[] = {0x1000};
-> 	static unsigned int sub_unit2_offsets[] = {0x2000};
-> 
-> 	static struct regmap_irq_sub_irq_map chip_sub_irq_offsets[] = {
-> 		REGMAP_IRQ_MAIN_REG_OFFSET(sub_unit0_offsets),
-> 		REGMAP_IRQ_MAIN_REG_OFFSET(sub_unit0_offsets),
-> 		REGMAP_IRQ_MAIN_REG_OFFSET(sub_unit0_offsets),
-> 	};
-> 
-> 	static struct regmap_irq_chip chip_irq_chip = {
-> 	--------8<--------
-> 	.not_fixed_stride = true,
-> 	.mask_base	  = MISC_INT_MASK,
-> 	.type_base	  = MISC_INT_TYPE,
-> 	.ack_base	  = MISC_INT_ACK,
-> 	.sub_reg_offsets  = chip_sub_irq_offsets,
-> 	--------8<--------
-> 	};
-> 
-> Signed-off-by: Guru Das Srinagesh <gurus@codeaurora.org>
-> ---
->  drivers/base/regmap/regmap-irq.c | 81 ++++++++++++++++++++++++++--
-> ------------
->  include/linux/regmap.h           |  7 ++++
->  2 files changed, 60 insertions(+), 28 deletions(-)
-> 
-> diff --git a/drivers/base/regmap/regmap-irq.c
-> b/drivers/base/regmap/regmap-irq.c
-> index 19db764..e1d8fc9e 100644
-> --- a/drivers/base/regmap/regmap-irq.c
-> +++ b/drivers/base/regmap/regmap-irq.c
-> @@ -45,6 +45,27 @@ struct regmap_irq_chip_data {
->  	bool clear_status:1;
->  };
-> 
+Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
+---
+ drivers/media/platform/qcom/venus/core.h           |   6 ++
+ drivers/media/platform/qcom/venus/helpers.c        |   2 +
+ drivers/media/platform/qcom/venus/hfi_helper.h     |  10 +-
+ drivers/media/platform/qcom/venus/hfi_platform.c   |  16 +++
+ drivers/media/platform/qcom/venus/hfi_platform.h   |   4 +
+ .../media/platform/qcom/venus/hfi_platform_v4.c    |  28 ++++--
+ .../media/platform/qcom/venus/hfi_platform_v6.c    |  28 ++++--
+ drivers/media/platform/qcom/venus/pm_helpers.c     | 108 ++++++++++++++++++---
+ 8 files changed, 167 insertions(+), 35 deletions(-)
 
-Sorry that I am late with the "review" but I only now noticed this
-change when I was following the references from PM8008 PMIC patch mail.
-
-
->  
-> +static int sub_irq_reg(struct regmap_irq_chip_data *data,
-> +		       unsigned int base_reg, int i)
-
-Do I read this correctly - this function should map the main status bit
-(given in i) to the (sub)IRQ register, right? How does this work for
-cases where one bit corresponds to more than one sub-register? Or do I
-misunderstand the purpose of this function? (This is the case with both
-the BD70528 and BD71828).
-
-> +{
-> +	const struct regmap_irq_chip *chip = data->chip;
-> +	struct regmap *map = data->map;
-> +	struct regmap_irq_sub_irq_map *subreg;
-> +	unsigned int offset;
-> +	int reg = 0;
-> +
-> +	if (!chip->sub_reg_offsets || !chip->not_fixed_stride) {
-> +		/* Assume linear mapping */
-> +		reg = base_reg + (i * map->reg_stride * data-
-> >irq_reg_stride);
-> +	} else {
-> +		subreg = &chip->sub_reg_offsets[i];
-> +		offset = subreg->offset[0];
-> +		reg = base_reg + offset;
-> +	}
-> +
-> +	return reg;
-> +}
-> +
->  static inline const
->  struct regmap_irq *irq_to_regmap_irq(struct regmap_irq_chip_data
-> *data,
->  				     int irq)
-> @@ -87,8 +108,7 @@ static void regmap_irq_sync_unlock(struct irq_data
-> *data)
->  
->  	if (d->clear_status) {
->  		for (i = 0; i < d->chip->num_regs; i++) {
-> -			reg = d->chip->status_base +
-> -				(i * map->reg_stride * d-
-> >irq_reg_stride);
-> +			reg = sub_irq_reg(d, d->chip->status_base, i);
-
-How does this work with the case where we have many subregs pointed by
-single main-status register bit? If I read this correctly, then the
-chip->num_regs can be greater than amount of meaningful main-status
-bits and thus greater than amount of map entries.
-
-I don't have BD71828 or BD70528 at home so I haven't tested this. So
-hopefully I misunderstand something - but if I don't, then this change
-will break the existing main-IRQ functionality. I will visit the office
-later this week and I'll see if I have a chance to test this - but I
-hope you can check your change still supports the case where one main
-status IRQ bit signals more than one sub-register with active IRQs.
-
-Best Regards
-	Matti Vaittinen
-
-
---
-Matti Vaittinen, Linux device drivers
-ROHM Semiconductors, Finland SWDC
-K
-iviharjunlenkki 1E
-90220 OULU
-FINLAND
-
-~~~ "I don't think so," said Rene Descartes. Just then he vanished ~~~
-
-Simon says - in Latin please.
-"non cogito me" dixit Rene Descarte, deinde evanescavit
-
-(Thanks for the translation Simon)
-
+diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
+index 9451e54..9b5031f 100644
+--- a/drivers/media/platform/qcom/venus/core.h
++++ b/drivers/media/platform/qcom/venus/core.h
+@@ -257,6 +257,7 @@ struct clock_data {
+ 	unsigned long freq;
+ 	unsigned long vpp_freq;
+ 	unsigned long vsp_freq;
++	unsigned long low_power_freq;
+ };
+ 
+ #define to_venus_buffer(ptr)	container_of(ptr, struct venus_buffer, vb)
+@@ -280,6 +281,10 @@ struct venus_ts_metadata {
+ 	struct v4l2_timecode tc;
+ };
+ 
++enum venus_inst_modes {
++	VENUS_LOW_POWER = BIT(0),
++};
++
+ /**
+  * struct venus_inst - holds per instance parameters
+  *
+@@ -400,6 +405,7 @@ struct venus_inst {
+ 	unsigned int pic_struct;
+ 	bool next_buf_last;
+ 	bool drain_active;
++	enum venus_inst_modes flags;
+ };
+ 
+ #define IS_V1(core)	((core)->res->hfi_version == HFI_VERSION_1XX)
+diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/platform/qcom/venus/helpers.c
+index 76ece2f..c6b6a30 100644
+--- a/drivers/media/platform/qcom/venus/helpers.c
++++ b/drivers/media/platform/qcom/venus/helpers.c
+@@ -1566,6 +1566,8 @@ int venus_helper_session_init(struct venus_inst *inst)
+ 								  session_type);
+ 	inst->clk_data.vsp_freq = hfi_platform_get_codec_vsp_freq(version, codec,
+ 								  session_type);
++	inst->clk_data.low_power_freq = hfi_platform_get_codec_lp_freq(version, codec,
++								       session_type);
+ 
+ 	return 0;
+ }
+diff --git a/drivers/media/platform/qcom/venus/hfi_helper.h b/drivers/media/platform/qcom/venus/hfi_helper.h
+index 6b524c7..5621cdb 100644
+--- a/drivers/media/platform/qcom/venus/hfi_helper.h
++++ b/drivers/media/platform/qcom/venus/hfi_helper.h
+@@ -412,9 +412,6 @@
+ #define HFI_BUFFER_MODE_RING			0x1000002
+ #define HFI_BUFFER_MODE_DYNAMIC			0x1000003
+ 
+-#define HFI_VENC_PERFMODE_MAX_QUALITY		0x1
+-#define HFI_VENC_PERFMODE_POWER_SAVE		0x2
+-
+ /*
+  * HFI_PROPERTY_SYS_COMMON_START
+  * HFI_DOMAIN_BASE_COMMON + HFI_ARCH_COMMON_OFFSET + 0x0000
+@@ -815,6 +812,13 @@ struct hfi_framesize {
+ 	u32 height;
+ };
+ 
++#define HFI_VENC_PERFMODE_MAX_QUALITY		0x1
++#define HFI_VENC_PERFMODE_POWER_SAVE		0x2
++
++struct hfi_perf_mode {
++	u32 video_perf_mode;
++};
++
+ #define VIDC_CORE_ID_DEFAULT	0
+ #define VIDC_CORE_ID_1		1
+ #define VIDC_CORE_ID_2		2
+diff --git a/drivers/media/platform/qcom/venus/hfi_platform.c b/drivers/media/platform/qcom/venus/hfi_platform.c
+index 8f47804..f5b4e1f 100644
+--- a/drivers/media/platform/qcom/venus/hfi_platform.c
++++ b/drivers/media/platform/qcom/venus/hfi_platform.c
+@@ -50,6 +50,22 @@ hfi_platform_get_codec_vsp_freq(enum hfi_version version, u32 codec, u32 session
+ 	return freq;
+ }
+ 
++unsigned long
++hfi_platform_get_codec_lp_freq(enum hfi_version version, u32 codec, u32 session_type)
++{
++	const struct hfi_platform *plat;
++	unsigned long freq = 0;
++
++	plat = hfi_platform_get(version);
++	if (!plat)
++		return 0;
++
++	if (plat->codec_lp_freq)
++		freq = plat->codec_lp_freq(session_type, codec);
++
++	return freq;
++}
++
+ u8 hfi_platform_num_vpp_pipes(enum hfi_version version)
+ {
+ 	const struct hfi_platform *plat;
+diff --git a/drivers/media/platform/qcom/venus/hfi_platform.h b/drivers/media/platform/qcom/venus/hfi_platform.h
+index 3819bb2..2dbe608 100644
+--- a/drivers/media/platform/qcom/venus/hfi_platform.h
++++ b/drivers/media/platform/qcom/venus/hfi_platform.h
+@@ -43,11 +43,13 @@ struct hfi_platform_codec_freq_data {
+ 	u32 session_type;
+ 	unsigned long vpp_freq;
+ 	unsigned long vsp_freq;
++	unsigned long low_power_freq;
+ };
+ 
+ struct hfi_platform {
+ 	unsigned long (*codec_vpp_freq)(u32 session_type, u32 codec);
+ 	unsigned long (*codec_vsp_freq)(u32 session_type, u32 codec);
++	unsigned long (*codec_lp_freq)(u32 session_type, u32 codec);
+ 	void (*codecs)(u32 *enc_codecs, u32 *dec_codecs, u32 *count);
+ 	const struct hfi_plat_caps *(*capabilities)(unsigned int *entries);
+ 	u8 (*num_vpp_pipes)(void);
+@@ -63,5 +65,7 @@ unsigned long hfi_platform_get_codec_vpp_freq(enum hfi_version version, u32 code
+ 					      u32 session_type);
+ unsigned long hfi_platform_get_codec_vsp_freq(enum hfi_version version, u32 codec,
+ 					      u32 session_type);
++unsigned long hfi_platform_get_codec_lp_freq(enum hfi_version version, u32 codec,
++					     u32 session_type);
+ u8 hfi_platform_num_vpp_pipes(enum hfi_version version);
+ #endif
+diff --git a/drivers/media/platform/qcom/venus/hfi_platform_v4.c b/drivers/media/platform/qcom/venus/hfi_platform_v4.c
+index 3848bb6..3f7f527 100644
+--- a/drivers/media/platform/qcom/venus/hfi_platform_v4.c
++++ b/drivers/media/platform/qcom/venus/hfi_platform_v4.c
+@@ -262,14 +262,14 @@ static void get_codecs(u32 *enc_codecs, u32 *dec_codecs, u32 *count)
+ }
+ 
+ static const struct hfi_platform_codec_freq_data codec_freq_data[] =  {
+-	{ V4L2_PIX_FMT_H264, VIDC_SESSION_TYPE_ENC, 675, 10 },
+-	{ V4L2_PIX_FMT_HEVC, VIDC_SESSION_TYPE_ENC, 675, 10 },
+-	{ V4L2_PIX_FMT_VP8, VIDC_SESSION_TYPE_ENC, 675, 10 },
+-	{ V4L2_PIX_FMT_MPEG2, VIDC_SESSION_TYPE_DEC, 200, 10 },
+-	{ V4L2_PIX_FMT_H264, VIDC_SESSION_TYPE_DEC, 200, 10 },
+-	{ V4L2_PIX_FMT_HEVC, VIDC_SESSION_TYPE_DEC, 200, 10 },
+-	{ V4L2_PIX_FMT_VP8, VIDC_SESSION_TYPE_DEC, 200, 10 },
+-	{ V4L2_PIX_FMT_VP9, VIDC_SESSION_TYPE_DEC, 200, 10 },
++	{ V4L2_PIX_FMT_H264, VIDC_SESSION_TYPE_ENC, 675, 10, 320 },
++	{ V4L2_PIX_FMT_HEVC, VIDC_SESSION_TYPE_ENC, 675, 10, 320 },
++	{ V4L2_PIX_FMT_VP8, VIDC_SESSION_TYPE_ENC, 675, 10, 320 },
++	{ V4L2_PIX_FMT_MPEG2, VIDC_SESSION_TYPE_DEC, 200, 10, 200 },
++	{ V4L2_PIX_FMT_H264, VIDC_SESSION_TYPE_DEC, 200, 10, 200 },
++	{ V4L2_PIX_FMT_HEVC, VIDC_SESSION_TYPE_DEC, 200, 10, 200 },
++	{ V4L2_PIX_FMT_VP8, VIDC_SESSION_TYPE_DEC, 200, 10, 200 },
++	{ V4L2_PIX_FMT_VP9, VIDC_SESSION_TYPE_DEC, 200, 10, 200 },
+ };
+ 
+ static const struct hfi_platform_codec_freq_data *
+@@ -311,9 +311,21 @@ static unsigned long codec_vsp_freq(u32 session_type, u32 codec)
+ 	return 0;
+ }
+ 
++static unsigned long codec_lp_freq(u32 session_type, u32 codec)
++{
++	const struct hfi_platform_codec_freq_data *data;
++
++	data = get_codec_freq_data(session_type, codec);
++	if (data)
++		return data->low_power_freq;
++
++	return 0;
++}
++
+ const struct hfi_platform hfi_plat_v4 = {
+ 	.codec_vpp_freq = codec_vpp_freq,
+ 	.codec_vsp_freq = codec_vsp_freq,
++	.codec_lp_freq = codec_lp_freq,
+ 	.codecs = get_codecs,
+ 	.capabilities = get_capabilities,
+ };
+diff --git a/drivers/media/platform/qcom/venus/hfi_platform_v6.c b/drivers/media/platform/qcom/venus/hfi_platform_v6.c
+index 2278be1..15d0dc8 100644
+--- a/drivers/media/platform/qcom/venus/hfi_platform_v6.c
++++ b/drivers/media/platform/qcom/venus/hfi_platform_v6.c
+@@ -262,14 +262,14 @@ static void get_codecs(u32 *enc_codecs, u32 *dec_codecs, u32 *count)
+ }
+ 
+ static const struct hfi_platform_codec_freq_data codec_freq_data[] = {
+-	{ V4L2_PIX_FMT_H264, VIDC_SESSION_TYPE_ENC, 675, 25 },
+-	{ V4L2_PIX_FMT_HEVC, VIDC_SESSION_TYPE_ENC, 675, 25 },
+-	{ V4L2_PIX_FMT_VP8, VIDC_SESSION_TYPE_ENC, 675, 60 },
+-	{ V4L2_PIX_FMT_MPEG2, VIDC_SESSION_TYPE_DEC, 200, 25 },
+-	{ V4L2_PIX_FMT_H264, VIDC_SESSION_TYPE_DEC, 200, 25 },
+-	{ V4L2_PIX_FMT_HEVC, VIDC_SESSION_TYPE_DEC, 200, 25 },
+-	{ V4L2_PIX_FMT_VP8, VIDC_SESSION_TYPE_DEC, 200, 60 },
+-	{ V4L2_PIX_FMT_VP9, VIDC_SESSION_TYPE_DEC, 200, 60 },
++	{ V4L2_PIX_FMT_H264, VIDC_SESSION_TYPE_ENC, 675, 25, 320 },
++	{ V4L2_PIX_FMT_HEVC, VIDC_SESSION_TYPE_ENC, 675, 25, 320 },
++	{ V4L2_PIX_FMT_VP8, VIDC_SESSION_TYPE_ENC, 675, 60, 320 },
++	{ V4L2_PIX_FMT_MPEG2, VIDC_SESSION_TYPE_DEC, 200, 25, 200 },
++	{ V4L2_PIX_FMT_H264, VIDC_SESSION_TYPE_DEC, 200, 25, 200 },
++	{ V4L2_PIX_FMT_HEVC, VIDC_SESSION_TYPE_DEC, 200, 25, 200 },
++	{ V4L2_PIX_FMT_VP8, VIDC_SESSION_TYPE_DEC, 200, 60, 200 },
++	{ V4L2_PIX_FMT_VP9, VIDC_SESSION_TYPE_DEC, 200, 60, 200 },
+ };
+ 
+ static const struct hfi_platform_codec_freq_data *
+@@ -311,6 +311,17 @@ static unsigned long codec_vsp_freq(u32 session_type, u32 codec)
+ 	return 0;
+ }
+ 
++static unsigned long codec_lp_freq(u32 session_type, u32 codec)
++{
++	const struct hfi_platform_codec_freq_data *data;
++
++	data = get_codec_freq_data(session_type, codec);
++	if (data)
++		return data->low_power_freq;
++
++	return 0;
++}
++
+ static u8 num_vpp_pipes(void)
+ {
+ 	return 4;
+@@ -319,6 +330,7 @@ static u8 num_vpp_pipes(void)
+ const struct hfi_platform hfi_plat_v6 = {
+ 	.codec_vpp_freq = codec_vpp_freq,
+ 	.codec_vsp_freq = codec_vsp_freq,
++	.codec_lp_freq = codec_lp_freq,
+ 	.codecs = get_codecs,
+ 	.capabilities = get_capabilities,
+ 	.num_vpp_pipes = num_vpp_pipes,
+diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c b/drivers/media/platform/qcom/venus/pm_helpers.c
+index 43c4e3d..a3f3e31 100644
+--- a/drivers/media/platform/qcom/venus/pm_helpers.c
++++ b/drivers/media/platform/qcom/venus/pm_helpers.c
+@@ -492,8 +492,50 @@ static int poweron_coreid(struct venus_core *core, unsigned int coreid_mask)
+ 	return 0;
+ }
+ 
++static inline int power_save_mode_enable(struct venus_inst *inst,
++					 bool enable)
++{
++	struct venc_controls *enc_ctr = &inst->controls.enc;
++	const u32 ptype = HFI_PROPERTY_CONFIG_VENC_PERF_MODE;
++	u32 venc_mode;
++	int ret = 0;
++
++	if (inst->session_type != VIDC_SESSION_TYPE_ENC)
++		return 0;
++
++	if (enc_ctr->bitrate_mode == V4L2_MPEG_VIDEO_BITRATE_MODE_CQ)
++		enable = false;
++
++	venc_mode = enable ? HFI_VENC_PERFMODE_POWER_SAVE :
++		HFI_VENC_PERFMODE_MAX_QUALITY;
++
++	ret = hfi_session_set_property(inst, ptype, &venc_mode);
++	if (ret)
++		return ret;
++
++	inst->flags = enable ? inst->flags | VENUS_LOW_POWER :
++		inst->flags & ~VENUS_LOW_POWER;
++
++	return ret;
++}
++
++static int move_core_to_power_save_mode(struct venus_core *core,
++					u32 core_id)
++{
++	struct venus_inst *inst = NULL;
++
++	mutex_lock(&core->lock);
++	list_for_each_entry(inst, &core->instances, list) {
++		if (inst->clk_data.core_id == core_id &&
++		    inst->session_type == VIDC_SESSION_TYPE_ENC)
++			power_save_mode_enable(inst, true);
++	}
++	mutex_unlock(&core->lock);
++	return 0;
++}
++
+ static void
+-min_loaded_core(struct venus_inst *inst, u32 *min_coreid, u32 *min_load)
++min_loaded_core(struct venus_inst *inst, u32 *min_coreid, u32 *min_load, bool low_power)
+ {
+ 	u32 mbs_per_sec, load, core1_load = 0, core2_load = 0;
+ 	u32 cores_max = core_num_max(inst);
+@@ -511,7 +553,14 @@ min_loaded_core(struct venus_inst *inst, u32 *min_coreid, u32 *min_load)
+ 		if (inst_pos->state != INST_START)
+ 			continue;
+ 
+-		vpp_freq = inst_pos->clk_data.vpp_freq;
++		if (inst->session_type == VIDC_SESSION_TYPE_DEC)
++			vpp_freq = inst_pos->clk_data.vpp_freq;
++		else if (inst->session_type == VIDC_SESSION_TYPE_ENC)
++			vpp_freq = low_power ? inst_pos->clk_data.vpp_freq :
++				inst_pos->clk_data.low_power_freq;
++		else
++			continue;
++
+ 		coreid = inst_pos->clk_data.core_id;
+ 
+ 		mbs_per_sec = load_per_instance(inst_pos);
+@@ -543,9 +592,11 @@ static int decide_core(struct venus_inst *inst)
+ {
+ 	const u32 ptype = HFI_PROPERTY_CONFIG_VIDEOCORES_USAGE;
+ 	struct venus_core *core = inst->core;
+-	u32 min_coreid, min_load, inst_load;
++	u32 min_coreid, min_load, cur_inst_load;
++	u32 min_lp_coreid, min_lp_load, cur_inst_lp_load;
+ 	struct hfi_videocores_usage_type cu;
+ 	unsigned long max_freq;
++	int ret = 0;
+ 
+ 	if (legacy_binding) {
+ 		if (inst->session_type == VIDC_SESSION_TYPE_DEC)
+@@ -559,23 +610,43 @@ static int decide_core(struct venus_inst *inst)
+ 	if (inst->clk_data.core_id != VIDC_CORE_ID_DEFAULT)
+ 		return 0;
+ 
+-	inst_load = load_per_instance(inst);
+-	inst_load *= inst->clk_data.vpp_freq;
+-	max_freq = core->res->freq_tbl[0].freq;
++	cur_inst_load = load_per_instance(inst);
++	cur_inst_load *= inst->clk_data.vpp_freq;
++	/*TODO : divide this inst->load by work_route */
+ 
+-	min_loaded_core(inst, &min_coreid, &min_load);
++	cur_inst_lp_load = load_per_instance(inst);
++	cur_inst_lp_load *= inst->clk_data.low_power_freq;
++	/*TODO : divide this inst->load by work_route */
+ 
+-	if ((inst_load + min_load) > max_freq) {
+-		dev_warn(core->dev, "HW is overloaded, needed: %u max: %lu\n",
+-			 inst_load, max_freq);
++	max_freq = core->res->freq_tbl[0].freq;
++
++	min_loaded_core(inst, &min_coreid, &min_load, false);
++	min_loaded_core(inst, &min_lp_coreid, &min_lp_load, true);
++
++	if (cur_inst_load + min_load <= max_freq) {
++		inst->clk_data.core_id = min_coreid;
++		cu.video_core_enable_mask = min_coreid;
++	} else if (cur_inst_lp_load + min_load <= max_freq) {
++		/* Move current instance to LP and return */
++		inst->clk_data.core_id = min_coreid;
++		cu.video_core_enable_mask = min_coreid;
++		power_save_mode_enable(inst, true);
++	} else if (cur_inst_lp_load + min_lp_load <= max_freq) {
++		/* Move all instances to LP mode and return */
++		inst->clk_data.core_id = min_lp_coreid;
++		cu.video_core_enable_mask = min_lp_coreid;
++		move_core_to_power_save_mode(core, min_lp_coreid);
++	} else {
++		dev_warn(core->dev, "HW can't support this load");
+ 		return -EINVAL;
+ 	}
+ 
+-	inst->clk_data.core_id = min_coreid;
+-	cu.video_core_enable_mask = min_coreid;
+-
+ done:
+-	return hfi_session_set_property(inst, ptype, &cu);
++	ret = hfi_session_set_property(inst, ptype, &cu);
++	if (ret)
++		return ret;
++
++	return ret;
+ }
+ 
+ static int acquire_core(struct venus_inst *inst)
+@@ -936,7 +1007,7 @@ static int core_power_v4(struct device *dev, int on)
+ static unsigned long calculate_inst_freq(struct venus_inst *inst,
+ 					 unsigned long filled_len)
+ {
+-	unsigned long vpp_freq = 0, vsp_freq = 0;
++	unsigned long vpp_freq_per_mb = 0, vpp_freq = 0, vsp_freq = 0;
+ 	u32 fps = (u32)inst->fps;
+ 	u32 mbs_per_sec;
+ 
+@@ -945,7 +1016,12 @@ static unsigned long calculate_inst_freq(struct venus_inst *inst,
+ 	if (inst->state != INST_START)
+ 		return 0;
+ 
+-	vpp_freq = mbs_per_sec * inst->clk_data.vpp_freq;
++	if (inst->session_type == VIDC_SESSION_TYPE_ENC)
++		vpp_freq_per_mb = inst->flags & VENUS_LOW_POWER ?
++			inst->clk_data.low_power_freq :
++			inst->clk_data.vpp_freq;
++
++	vpp_freq = mbs_per_sec * vpp_freq_per_mb;
+ 	/* 21 / 20 is overhead factor */
+ 	vpp_freq += vpp_freq / 20;
+ 	vsp_freq = mbs_per_sec * inst->clk_data.vsp_freq;
+-- 
+2.7.4
 
