@@ -2,178 +2,156 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3BB7435CF2E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Apr 2021 19:04:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7E30A35CFC4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Apr 2021 19:48:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243558AbhDLRFH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Apr 2021 13:05:07 -0400
-Received: from mail-oi1-f178.google.com ([209.85.167.178]:45648 "EHLO
-        mail-oi1-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243708AbhDLRDz (ORCPT
+        id S244710AbhDLRsb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Apr 2021 13:48:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42160 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S244739AbhDLRsZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Apr 2021 13:03:55 -0400
-Received: by mail-oi1-f178.google.com with SMTP id d12so14074200oiw.12;
-        Mon, 12 Apr 2021 10:03:36 -0700 (PDT)
+        Mon, 12 Apr 2021 13:48:25 -0400
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B48CC061574;
+        Mon, 12 Apr 2021 10:48:06 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id p6so7109155wrn.9;
+        Mon, 12 Apr 2021 10:48:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:reply-to:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=7aCHD5WDPm5c82C8ZlURJklHVLxiB31MS7u9uRdey/A=;
+        b=q8AzcbnjP6y+/B3dqxMSnrIqZKukfZsMpBWmRViFvjNkSCP7JJ6HvnppUzwgMBdcWL
+         KnvXfpaNodpBD8Qqj4BDgX84+xvVqZC/PH7nwPiig+vBI+EiTeoc9yfUd5JO+Af5NJS2
+         PtpJHRWgjot6n8Nju1/rnpFzc0D2n7H/SzgH5EpEp4XD1QCiNrkCos/LFL7SuleCZHcg
+         l/5FD2oqftZ0a2jgKF95y4KtehGyuN9I/vubqa01hDMPtudJbFincZ76BOKibzaZs4mT
+         Q86L4vz0y2ZS6rxietVxlvPYrXSK3d59T6VEhU2JPjMJKIbLSnRCHw0KibV27SDiSQSI
+         5S0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Bk4HDeKR+toH2oCWOomBubb2tI7dn2Ufe/jMDW0e+EI=;
-        b=Up12KUhmMmixqdSNnU42srIuDmb0NoiLNZmi2X/7mXPa0IUZ9ZpBpPPHqiTr0aTX50
-         nsOIjnEtZYdoftoscML9zs9DQKljAirUzynkvP7QsZuDfUQC9ezgngYstwR5epTG8dny
-         YPT/PM0LuPFb+AmF0ZMLDB8ebL3dxUKLwExRslmGSwpWXfMj/oH5JbhGA+7ptnqdtv5w
-         /gnm4luuMycxRyr66uJwbcLVtxfmg49CnUhqqwCxaB9udqhUjca4ZpmpMxWfB8JiQ0Pf
-         Zvz6GoXvDp/o2aHtfFGwTDs17XyIXe62EaChz+VodQWL417U3reS5G9ytOvITfelku2J
-         vaVQ==
-X-Gm-Message-State: AOAM533OePjYI33eqKqPTkb735kNjp5Go4jaFSRdIU/aBC7z8O1ol5BG
-        SC/XSYev1RYBLnIVDPuxyw==
-X-Google-Smtp-Source: ABdhPJzaCMtbVP2hz7fdM7Un2vWUQwgynfH1W8jP6A19AA/xnu2qLRSJ+VRbIm/94kkBdX66ZgumHA==
-X-Received: by 2002:a05:6808:a8a:: with SMTP id q10mr69213oij.167.1618247016335;
-        Mon, 12 Apr 2021 10:03:36 -0700 (PDT)
-Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id 62sm2788817oto.60.2021.04.12.10.03.34
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:reply-to
+         :references:mime-version:content-disposition
+         :content-transfer-encoding:in-reply-to;
+        bh=7aCHD5WDPm5c82C8ZlURJklHVLxiB31MS7u9uRdey/A=;
+        b=OTJIp/RFgBk2FlNifT9bugR2HZGYBY/1aDirUoF4e2pe8PK+nqzNNHyOrs+eCMt6mQ
+         5jwO2HWsJW8Na/+39isRBOmUVwoZePG26MERRddt4UsdIjbGndKv5+G/Ck4NfGHZynQJ
+         e9pVTPNJhY1wnJpQLke8BVepG6xrSIu8Yo8VfiCZPPXIQf8E09nfyTJJoWDA2cZbFWqi
+         QMFK4YoqpYHRmXqUj4gb9tHv6FQst5NjVh0dbhnyTNAeTov7MN9D+3J3+yl83Xse3KY7
+         KhS7pH84Apd6OrMwQ+shXeQKptzt9Irl5JGtmIuBNwZuCCytHU+2eA+klftsEELwWy1x
+         9C1Q==
+X-Gm-Message-State: AOAM533aYpkmB2tS7YPNZOMvlCIXTxqhtYJh5k7PB0oQYJELI27a6zZf
+        1pwLNACc2DLODovXHvnepmM=
+X-Google-Smtp-Source: ABdhPJwur3aGWPQUt6Y/wj75hygTF4BHTQTNWucvxrpJantiBrpBK6J4+OmvMSCNbebmjE8fTnq5Ug==
+X-Received: by 2002:a5d:5642:: with SMTP id j2mr32398121wrw.172.1618249685081;
+        Mon, 12 Apr 2021 10:48:05 -0700 (PDT)
+Received: from pevik ([62.201.25.198])
+        by smtp.gmail.com with ESMTPSA id w7sm18882289wru.74.2021.04.12.10.48.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 Apr 2021 10:03:35 -0700 (PDT)
-Received: (nullmailer pid 4049154 invoked by uid 1000);
-        Mon, 12 Apr 2021 17:03:34 -0000
-Date:   Mon, 12 Apr 2021 12:03:34 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Taniya Das <tdas@codeaurora.org>
-Cc:     Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette =?iso-8859-1?Q?=A0?= 
-        <mturquette@baylibre.com>, Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH v1 1/2] dt-bindings: clock: Add YAML schemas for LPASS
- clocks on SC7280
-Message-ID: <20210412170334.GA3971998@robh.at.kernel.org>
-References: <1617969272-10246-1-git-send-email-tdas@codeaurora.org>
+        Mon, 12 Apr 2021 10:48:04 -0700 (PDT)
+Date:   Mon, 12 Apr 2021 19:48:02 +0200
+From:   Petr Vorel <petr.vorel@gmail.com>
+To:     Konrad Dybcio <konradybcio@gmail.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Ricardo Ribalda <ribalda@kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>
+Cc:     KarimAllah Ahmed <karahmed@amazon.de>
+Subject: Re: [PATCH 1/1] arm64: dts: qcom: msm8994: Reserve gpio ranges
+Message-ID: <YHSH0gLow2g3AQNu@pevik>
+Reply-To: Petr Vorel <petr.vorel@gmail.com>
+References: <20210405200259.23525-1-petr.vorel@gmail.com>
+ <20210405225222.GD904837@yoga>
+ <CACRpkdZQ8qiqFPa0X8deVjZ7nLn_E6s8fmJdr5Ji8AuyJms1ug@mail.gmail.com>
+ <YG9TWEJlpDmNeeit@pevik>
+ <ea376d51-cd6c-0028-9602-d007c2bba71e@gmail.com>
+ <YG/HwrzRcm7bwgFe@pevik>
+ <20210409033726.GT904837@yoga>
+ <YHE9Df/Ztq7VaoK2@pevik>
+ <10d2cd96-3c35-2b06-82f7-98800888e244@gmail.com>
+ <YHHeRfAWrrusE/gB@pevik>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-2
 Content-Disposition: inline
-In-Reply-To: <1617969272-10246-1-git-send-email-tdas@codeaurora.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <YHHeRfAWrrusE/gB@pevik>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Apr 09, 2021 at 05:24:31PM +0530, Taniya Das wrote:
-> The LPASS(Low Power Audio Subsystem) clock provider have a bunch of generic
-> properties that are needed in a device tree. Add the LPASS clock IDs for
-> LPASS PIL client to request for the clocks.
-> 
-> Signed-off-by: Taniya Das <tdas@codeaurora.org>
-> ---
->  .../bindings/clock/qcom,sc7280-lpasscc.yaml        | 69 ++++++++++++++++++++++
->  include/dt-bindings/clock/qcom,lpass-sc7280.h      | 16 +++++
->  2 files changed, 85 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscc.yaml
->  create mode 100644 include/dt-bindings/clock/qcom,lpass-sc7280.h
-> 
-> diff --git a/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscc.yaml b/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscc.yaml
-> new file mode 100644
-> index 0000000..7b62763
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscc.yaml
-> @@ -0,0 +1,69 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/clock/qcom,sc7280-lpasscc.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm LPASS Core Clock Controller Binding for SC7280
-> +
-> +maintainers:
-> +  - Taniya Das <tdas@codeaurora.org>
-> +
-> +description: |
-> +  Qualcomm LPASS core clock control module which supports the clocks and
-> +  power domains on SC7280.
-> +
-> +  See also:
-> +  - dt-bindings/clock/qcom,lpass-sc7280.h
-> +
-> +properties:
-> +  compatible:
-> +    enum:
-> +      - qcom,sc7280-lpasscc
-> +
-> +  clocks:
-> +    items:
-> +      - description: gcc_cfg_noc_lpass_clk from GCC
-> +
-> +  clock-names:
-> +    items:
-> +      - const: iface
-> +
-> +  '#clock-cells':
-> +    const: 1
-> +
-> +  reg:
-> +    minItems: 3
+Hi,
 
-You don't need minItems, as 3 is implied.
+[ Cc KarimAllah Ahmed, as the author of 86588296acbf; Rob merged it ]
 
-> +    items:
-> +      - description: LPASS qdsp6ss register
-> +      - description: LPASS top-cc register
-> +      - description: LPASS cc register
-> +
-> +  reg-names:
-> +    items:
-> +      - const: qdsp6ss
-> +      - const: top_cc
-> +      - const: cc
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - clocks
-> +  - clock-names
-> +  - '#clock-cells'
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/clock/qcom,gcc-sc7280.h>
-> +    #include <dt-bindings/clock/qcom,lpass-sc7280.h>
-> +    clock-controller@3000000 {
-> +      compatible = "qcom,sc7280-lpasscc";
-> +      reg = <0x03000000 0x40>, <0x03c04000 0x4>, <0x03389000 0x24>;
-> +      reg-names = "qdsp6ss", "top_cc", "cc";
-> +      clocks = <&gcc GCC_CFG_NOC_LPASS_CLK>;
-> +      clock-names = "iface";
-> +      #clock-cells = <1>;
-> +    };
-> +...
-> diff --git a/include/dt-bindings/clock/qcom,lpass-sc7280.h b/include/dt-bindings/clock/qcom,lpass-sc7280.h
-> new file mode 100644
-> index 0000000..a259463
-> --- /dev/null
-> +++ b/include/dt-bindings/clock/qcom,lpass-sc7280.h
-> @@ -0,0 +1,16 @@
-> +/* SPDX-License-Identifier: GPL-2.0 */
+> > > Konrad, is there any public docs about GPIOs on this secure peripherals?
+> > > It it somehow related to Chain of Trust? [1].  I guess it's not, because once we
+> > > boot Linux all bootloader stuff is over.
 
-What about non-GPL OS users?
+> > No, Qualcomm pretty much does security through obscurity. It's *probably* not even that very secure considering how big in size their TZ+HYP stack is - number of bugs rises exponentially with code size. But not many people tried breaking into it considering the complexity and QCOM's legal team size.
 
-> +/*
-> + * Copyright (c) 2021, The Linux Foundation. All rights reserved.
-> + */
-> +
-> +#ifndef _DT_BINDINGS_CLK_QCOM_LPASS_SC7280_H
-> +#define _DT_BINDINGS_CLK_QCOM_LPASS_SC7280_H
-> +
-> +#define LPASS_Q6SS_AHBM_CLK				0
-> +#define LPASS_Q6SS_AHBS_CLK				1
-> +#define LPASS_TOP_CC_LPI_Q6_AXIM_HS_CLK			2
-> +#define LPASS_QDSP6SS_XO_CLK				3
-> +#define LPASS_QDSP6SS_SLEEP_CLK				4
-> +#define LPASS_QDSP6SS_CORE_CLK				5
-> +
-> +#endif
-> --
-> Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc.is a member
-> of the Code Aurora Forum, hosted by the  Linux Foundation.
-> 
+> > There is no public documentation on that, and even if there were - you are not allowed to flash the "secure" partitions on *your device that you unlocked the bootloader of by choice* (which is absurd).
+
+> > Also, while "all bootloader stuff is over", the platform is still under control of the proprietary hypervisor and the "Trust Zone". For example if you try to write to some IOMMU registers on certain platforms, the hypervisor will treat that as a security violation and shut down the entire device. 
+
+> > This is essentially the same as your issue. You're trying to poke a thing that Qualcomm *really* doesn't want you to (the fingerprint SPI pins) and since *they* are in control, they say "nonono" and your device dies. All you can do is comply with that (or find a way to replace the blobs or politely ask Google to release a set of unsecure binaries for your Nexus - which they won't do).
+
+> Again, thanks a lot for info. I looked into downstream sources to see that
+> really pins 85-88 (which I've sent a patch to add into gpio-reserved-ranges) are
+> used for fingerprint. I also wonder if downstream commit d45c35c7b586 ("angler:
+> fingerprint: remove all the code about spi") [1] confirms that also downstream
+> kernel would reset or it's a security (it would not reset, thus they removed
+> the access). It's probably aosp issue tracker [2], but "Access denied" for me.
+
+> I also did some testing and this is maximum range which can be disabled:
+> gpio-reserved-ranges = <0 4>, <6 139> and it does not help to solve second
+> reset (in loop_init() or later when starting initramfs).
+> Removing access to GPIO 4 or 5 causes reset right immediately (no message from
+> kernel).
+
+> I still don't understand what changed in a99163e9e708 ("Merge tag
+> 'devicetree-for-5.12' of git://git.kernel.org/pub/scm/linux/kernel/git/robh/linux")
+> I checked both 882d6edfc45c cb8be8b4b27f, which it merges and they're ok.
+
+I've found the other problem preventing booting. Appart from v2 [3] is also needed
+to revert 86588296acbf ("fdt: Properly handle "no-map" field in the memory region").
+
+I'm pretty sure, that this commit is needed, but what should I change in
+arch/arm64/boot/dts/qcom/msm8994-angler-rev-101.dts in order to get my angler
+booting again? With it it reset again after loop_init:
+
+[   12.077756] initcall devcoredump_init+0x0/0x30 returned 0 after 22 usecs
+[   12.082425] calling  loop_init+0x0/0x158 @ 1
+
+And with disabled CONFIG_BLK_DEV_LOOP it get's reset before reaching initramfs:
+~/tmp/hackweek/loop_init.debug.a99163e9e708.disabled-CONFIG_BLK_DEV_LOOP/2021-04-07_21-01-34.log
+[   17.383267] calling  regulator_init_complete+0x0/0x4c @ 1
+[   17.390129] initcall regulator_init_complete+0x0/0x4c returned 0 after 6 usecs
+[   17.395682] calling  of_platform_sync_state_init+0x0/0x18 @ 1
+[   17.402800] initcall of_platform_sync_state_init+0x0/0x18 returned 0 after 3 usecs
+[   17.408616] calling  alsa_sound_last_init+0x0/0x88 @ 1
+[   17.416077] ALSA device list:
+[   17.421198]   No soundcardû[   17.431360] Freeing unused kernel memory: 5824K
+[   17.431633] Run /init as init process
+[   17.434700]   with arguments:
+[   17.438535]     /init
+[   17.441477]     PMOS_NO_OUTPUT_REDIRECT
+[   17.443737]   with environment:
+[   17.447381]     HOME=/
+[   17.450496]     TERM=linux
+D -     15494 - pm_driver_init, Delta
+
+Kind regards,
+Petr
+
+> Kind regards,
+> Petr
+
+> [1] https://android.googlesource.com/kernel/msm/+/d45c35c7b586711e757eb7e3239db5c88d114e0e
+> [2] https://issuetracker.google.com/issues/23756466
+[3] https://lore.kernel.org/linux-arm-msm/20210406202936.22500-1-petr.vorel@gmail.com/T/#u
+
+> > Konrad
