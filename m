@@ -2,111 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A587035BB68
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Apr 2021 09:53:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7EA0F35BBA1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Apr 2021 10:05:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237177AbhDLHxO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Apr 2021 03:53:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51950 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237064AbhDLHxO (ORCPT
+        id S237090AbhDLIFx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Apr 2021 04:05:53 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:3401 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237144AbhDLIFw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Apr 2021 03:53:14 -0400
-Received: from mail-vk1-xa2e.google.com (mail-vk1-xa2e.google.com [IPv6:2607:f8b0:4864:20::a2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FF61C06138D
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Apr 2021 00:52:56 -0700 (PDT)
-Received: by mail-vk1-xa2e.google.com with SMTP id x4so2669331vkx.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Apr 2021 00:52:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=haLPUNjjiZEhpuang/uo2eD4NXoYXG1RAvFa9+uUreg=;
-        b=Yd+oMly4aZU0RKWqWmoDzMZGGbTSIOObxH9Df5edGOBcyn+TT+oy82vFoB3KCA5FUF
-         gbz9MS+wKRCC9yZQ3GC8K+28fC+azQtKI6ANxEBI0Nkroqrh5Zogj2JUPHNiYHlRJBOm
-         32/+VHO5ypCk/O3HxSuV8tZEWftN+x8p06rgoHQDB97ymCZQAu/lUD7P+uH4WevWVb58
-         taeeww3l4g/8IlDR3eyuLYhbOrgbltz/hKSaeVJahzHiLVv4Rw1p1ZUA+XYBNFPyqVT2
-         nt2QTnp8RbI06/B4fkqdzi4jIjjS+4SM+fPOetmwniryNY1l01CZK8g7J0Z/rAzTH7pr
-         qGQA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=haLPUNjjiZEhpuang/uo2eD4NXoYXG1RAvFa9+uUreg=;
-        b=PE7HhLXVMxmudvvKQ5OjyHdAnCwRASFAd89wnpwKFFoumiZ0fBZEMS5lgl2Pxdczor
-         sruOBdhsQvnCYfsjOAJyysi4a8AozhtGwt0wzn84wESZ2xMCBpup/38UNh7UvvC3hsPJ
-         OBcc00beaMst8jJeZDUY+42ril8AvUrC5uK+oDe50kY/BwnMpQydRSGdHQ2yZdh2PTgF
-         MRj2X1VJ3JpKEyuyUWNYCNJWQVGofwptTnHtTOLPcxulr0Eg46m3FpAEDvc72JhcjqRh
-         y0Ufi8Su8NJBTKChWSFp6V963gakb4oKjA5KIalJg85yrFkM6njcCvHKAaU5JXYkC+vE
-         1ujA==
-X-Gm-Message-State: AOAM530Bp7I/UiSRwZ0zqMAGfItMioXpxJ5a+TViHU1vYjk5BZzFl766
-        dmVD7IYr2m/MLPPwIVI/m/wYNhluI/fOX2LYPTikcg==
-X-Google-Smtp-Source: ABdhPJwL5SnNlCfx9LXYsQGHy81G3AdoBCw3wKeAJ1c1igCwssy6W17LfihBqiSQUVRPDX7Y/lfn57u07HzAWF4nx18=
-X-Received: by 2002:a1f:2a95:: with SMTP id q143mr18761115vkq.8.1618213975747;
- Mon, 12 Apr 2021 00:52:55 -0700 (PDT)
-MIME-Version: 1.0
-References: <20210409015424.3277212-1-jiayang5@huawei.com>
-In-Reply-To: <20210409015424.3277212-1-jiayang5@huawei.com>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Mon, 12 Apr 2021 09:52:19 +0200
-Message-ID: <CAPDyKFrnaTuBPtGfeaDBxjdk5pgfnBUKz2Emg8MHLYsudit5cw@mail.gmail.com>
-Subject: Re: [PATCH -next] mmc: sdhci-msm: Remove unnecessary error log
-To:     Jia Yang <jiayang5@huawei.com>
-Cc:     Adrian Hunter <adrian.hunter@intel.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-mmc <linux-mmc@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Mon, 12 Apr 2021 04:05:52 -0400
+Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
+  by alexa-out.qualcomm.com with ESMTP; 12 Apr 2021 01:05:34 -0700
+X-QCInternal: smtphost
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 12 Apr 2021 01:05:32 -0700
+X-QCInternal: smtphost
+Received: from dikshita-linux.qualcomm.com ([10.204.65.237])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 12 Apr 2021 13:35:11 +0530
+Received: by dikshita-linux.qualcomm.com (Postfix, from userid 347544)
+        id 3DC3121936; Mon, 12 Apr 2021 13:35:10 +0530 (IST)
+From:   Dikshita Agarwal <dikshita@codeaurora.org>
+To:     linux-media@vger.kernel.org, stanimir.varbanov@linaro.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        vgarodia@codeaurora.org, swboyd@chromium.org,
+        bjorn.andersson@linaro.org,
+        Dikshita Agarwal <dikshita@codeaurora.org>
+Subject: [PATCH v5] media: venus : hfi: add venus image info into smem
+Date:   Mon, 12 Apr 2021 13:35:08 +0530
+Message-Id: <1618214708-28711-1-git-send-email-dikshita@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 9 Apr 2021 at 03:44, Jia Yang <jiayang5@huawei.com> wrote:
->
-> devm_ioremap_resource() has recorded error log, so it's
-> unnecessary to record log again.
->
-> Reported-by: Hulk Robot <hulkci@huawei.com>
-> Signed-off-by: Jia Yang <jiayang5@huawei.com>
+Fill fw version info into smem to be printed as part of
+soc info.
 
-Applied for next, thanks!
+Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+---
+ drivers/media/platform/Kconfig               |  2 +-
+ drivers/media/platform/qcom/venus/hfi_msgs.c | 20 ++++++++++++++++++--
+ 2 files changed, 19 insertions(+), 3 deletions(-)
 
-Kind regards
-Uffe
+diff --git a/drivers/media/platform/Kconfig b/drivers/media/platform/Kconfig
+index fd1831e..9c75e88 100644
+--- a/drivers/media/platform/Kconfig
++++ b/drivers/media/platform/Kconfig
+@@ -543,7 +543,7 @@ config VIDEO_TI_VPE_DEBUG
+ 
+ config VIDEO_QCOM_VENUS
+ 	tristate "Qualcomm Venus V4L2 encoder/decoder driver"
+-	depends on VIDEO_DEV && VIDEO_V4L2
++	depends on VIDEO_DEV && VIDEO_V4L2 && QCOM_SMEM
+ 	depends on (ARCH_QCOM && IOMMU_DMA) || COMPILE_TEST
+ 	select QCOM_MDT_LOADER if ARCH_QCOM
+ 	select QCOM_SCM if ARCH_QCOM
+diff --git a/drivers/media/platform/qcom/venus/hfi_msgs.c b/drivers/media/platform/qcom/venus/hfi_msgs.c
+index 06a1908..9f856a6 100644
+--- a/drivers/media/platform/qcom/venus/hfi_msgs.c
++++ b/drivers/media/platform/qcom/venus/hfi_msgs.c
+@@ -6,6 +6,7 @@
+ #include <linux/hash.h>
+ #include <linux/list.h>
+ #include <linux/slab.h>
++#include <linux/soc/qcom/smem.h>
+ #include <media/videobuf2-v4l2.h>
+ 
+ #include "core.h"
+@@ -14,6 +15,10 @@
+ #include "hfi_msgs.h"
+ #include "hfi_parser.h"
+ 
++#define SMEM_IMG_VER_TBL 469
++#define VER_STR_SZ	128
++#define SMEM_IMG_OFFSET_VENUS (14 * 128)
++
+ static void event_seq_changed(struct venus_core *core, struct venus_inst *inst,
+ 			      struct hfi_msg_event_notify_pkt *pkt)
+ {
+@@ -239,15 +244,26 @@ static void
+ sys_get_prop_image_version(struct device *dev,
+ 			   struct hfi_msg_sys_property_info_pkt *pkt)
+ {
++	u8 *smem_tbl_ptr;
++	u8 *img_ver;
+ 	int req_bytes;
++	size_t smem_blk_sz;
+ 
+ 	req_bytes = pkt->hdr.size - sizeof(*pkt);
+ 
+-	if (req_bytes < 128 || !pkt->data[1] || pkt->num_properties > 1)
++	if (req_bytes < VER_STR_SZ || !pkt->data[1] || pkt->num_properties > 1)
+ 		/* bad packet */
+ 		return;
+ 
+-	dev_dbg(dev, VDBGL "F/W version: %s\n", (u8 *)&pkt->data[1]);
++	img_ver = (u8 *)&pkt->data[1];
++
++	dev_dbg(dev, VDBGL "F/W version: %s\n", img_ver);
++
++	smem_tbl_ptr = qcom_smem_get(QCOM_SMEM_HOST_ANY,
++		SMEM_IMG_VER_TBL, &smem_blk_sz);
++	if (smem_tbl_ptr && smem_blk_sz >= SMEM_IMG_OFFSET_VENUS + VER_STR_SZ)
++		memcpy(smem_tbl_ptr + SMEM_IMG_OFFSET_VENUS,
++		       img_ver, VER_STR_SZ);
+ }
+ 
+ static void hfi_sys_property_info(struct venus_core *core,
+-- 
+2.7.4
 
-
-> ---
->  drivers/mmc/host/sdhci-msm.c | 8 ++------
->  1 file changed, 2 insertions(+), 6 deletions(-)
->
-> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-> index d170c919e6e4..e44b7a66b73c 100644
-> --- a/drivers/mmc/host/sdhci-msm.c
-> +++ b/drivers/mmc/host/sdhci-msm.c
-> @@ -1863,7 +1863,6 @@ static int sdhci_msm_ice_init(struct sdhci_msm_host *msm_host,
->         struct mmc_host *mmc = msm_host->mmc;
->         struct device *dev = mmc_dev(mmc);
->         struct resource *res;
-> -       int err;
->
->         if (!(cqhci_readl(cq_host, CQHCI_CAP) & CQHCI_CAP_CS))
->                 return 0;
-> @@ -1881,11 +1880,8 @@ static int sdhci_msm_ice_init(struct sdhci_msm_host *msm_host,
->         }
->
->         msm_host->ice_mem = devm_ioremap_resource(dev, res);
-> -       if (IS_ERR(msm_host->ice_mem)) {
-> -               err = PTR_ERR(msm_host->ice_mem);
-> -               dev_err(dev, "Failed to map ICE registers; err=%d\n", err);
-> -               return err;
-> -       }
-> +       if (IS_ERR(msm_host->ice_mem))
-> +               return PTR_ERR(msm_host->ice_mem);
->
->         if (!sdhci_msm_ice_supported(msm_host))
->                 goto disable;
-> --
-> 2.25.1
->
