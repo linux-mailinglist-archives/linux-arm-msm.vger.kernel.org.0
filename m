@@ -2,156 +2,185 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7E30A35CFC4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Apr 2021 19:48:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7C1DC35CFFF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Apr 2021 20:08:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244710AbhDLRsb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Apr 2021 13:48:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42160 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244739AbhDLRsZ (ORCPT
+        id S240777AbhDLSIZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Apr 2021 14:08:25 -0400
+Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:50288 "EHLO
+        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S240038AbhDLSIY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Apr 2021 13:48:25 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B48CC061574;
-        Mon, 12 Apr 2021 10:48:06 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id p6so7109155wrn.9;
-        Mon, 12 Apr 2021 10:48:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:reply-to:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=7aCHD5WDPm5c82C8ZlURJklHVLxiB31MS7u9uRdey/A=;
-        b=q8AzcbnjP6y+/B3dqxMSnrIqZKukfZsMpBWmRViFvjNkSCP7JJ6HvnppUzwgMBdcWL
-         KnvXfpaNodpBD8Qqj4BDgX84+xvVqZC/PH7nwPiig+vBI+EiTeoc9yfUd5JO+Af5NJS2
-         PtpJHRWgjot6n8Nju1/rnpFzc0D2n7H/SzgH5EpEp4XD1QCiNrkCos/LFL7SuleCZHcg
-         l/5FD2oqftZ0a2jgKF95y4KtehGyuN9I/vubqa01hDMPtudJbFincZ76BOKibzaZs4mT
-         Q86L4vz0y2ZS6rxietVxlvPYrXSK3d59T6VEhU2JPjMJKIbLSnRCHw0KibV27SDiSQSI
-         5S0w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:reply-to
-         :references:mime-version:content-disposition
-         :content-transfer-encoding:in-reply-to;
-        bh=7aCHD5WDPm5c82C8ZlURJklHVLxiB31MS7u9uRdey/A=;
-        b=OTJIp/RFgBk2FlNifT9bugR2HZGYBY/1aDirUoF4e2pe8PK+nqzNNHyOrs+eCMt6mQ
-         5jwO2HWsJW8Na/+39isRBOmUVwoZePG26MERRddt4UsdIjbGndKv5+G/Ck4NfGHZynQJ
-         e9pVTPNJhY1wnJpQLke8BVepG6xrSIu8Yo8VfiCZPPXIQf8E09nfyTJJoWDA2cZbFWqi
-         QMFK4YoqpYHRmXqUj4gb9tHv6FQst5NjVh0dbhnyTNAeTov7MN9D+3J3+yl83Xse3KY7
-         KhS7pH84Apd6OrMwQ+shXeQKptzt9Irl5JGtmIuBNwZuCCytHU+2eA+klftsEELwWy1x
-         9C1Q==
-X-Gm-Message-State: AOAM533aYpkmB2tS7YPNZOMvlCIXTxqhtYJh5k7PB0oQYJELI27a6zZf
-        1pwLNACc2DLODovXHvnepmM=
-X-Google-Smtp-Source: ABdhPJwur3aGWPQUt6Y/wj75hygTF4BHTQTNWucvxrpJantiBrpBK6J4+OmvMSCNbebmjE8fTnq5Ug==
-X-Received: by 2002:a5d:5642:: with SMTP id j2mr32398121wrw.172.1618249685081;
-        Mon, 12 Apr 2021 10:48:05 -0700 (PDT)
-Received: from pevik ([62.201.25.198])
-        by smtp.gmail.com with ESMTPSA id w7sm18882289wru.74.2021.04.12.10.48.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 Apr 2021 10:48:04 -0700 (PDT)
-Date:   Mon, 12 Apr 2021 19:48:02 +0200
-From:   Petr Vorel <petr.vorel@gmail.com>
-To:     Konrad Dybcio <konradybcio@gmail.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Ricardo Ribalda <ribalda@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>
-Cc:     KarimAllah Ahmed <karahmed@amazon.de>
-Subject: Re: [PATCH 1/1] arm64: dts: qcom: msm8994: Reserve gpio ranges
-Message-ID: <YHSH0gLow2g3AQNu@pevik>
-Reply-To: Petr Vorel <petr.vorel@gmail.com>
-References: <20210405200259.23525-1-petr.vorel@gmail.com>
- <20210405225222.GD904837@yoga>
- <CACRpkdZQ8qiqFPa0X8deVjZ7nLn_E6s8fmJdr5Ji8AuyJms1ug@mail.gmail.com>
- <YG9TWEJlpDmNeeit@pevik>
- <ea376d51-cd6c-0028-9602-d007c2bba71e@gmail.com>
- <YG/HwrzRcm7bwgFe@pevik>
- <20210409033726.GT904837@yoga>
- <YHE9Df/Ztq7VaoK2@pevik>
- <10d2cd96-3c35-2b06-82f7-98800888e244@gmail.com>
- <YHHeRfAWrrusE/gB@pevik>
+        Mon, 12 Apr 2021 14:08:24 -0400
+Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 12 Apr 2021 11:08:06 -0700
+X-QCInternal: smtphost
+Received: from gurus-linux.qualcomm.com (HELO gurus-linux.localdomain) ([10.46.162.81])
+  by ironmsg01-sd.qualcomm.com with ESMTP; 12 Apr 2021 11:08:05 -0700
+Received: by gurus-linux.localdomain (Postfix, from userid 383780)
+        id A274719F4; Mon, 12 Apr 2021 11:08:05 -0700 (PDT)
+Date:   Mon, 12 Apr 2021 11:08:05 -0700
+From:   Guru Das Srinagesh <gurus@codeaurora.org>
+To:     "Vaittinen, Matti" <Matti.Vaittinen@fi.rohmeurope.com>
+Cc:     "Markus.Elfring@web.de" <Markus.Elfring@web.de>,
+        "broonie@kernel.org" <broonie@kernel.org>,
+        "lee.jones@linaro.org" <lee.jones@linaro.org>,
+        "robh+dt@kernel.org" <robh+dt@kernel.org>,
+        "linux@roeck-us.net" <linux@roeck-us.net>,
+        "gregkh@linuxfoundation.org" <gregkh@linuxfoundation.org>,
+        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+        "subbaram@codeaurora.org" <subbaram@codeaurora.org>,
+        "collinsd@codeaurora.org" <collinsd@codeaurora.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "joe@perches.com" <joe@perches.com>,
+        "bjorn.andersson@linaro.org" <bjorn.andersson@linaro.org>,
+        "aghayal@codeaurora.org" <aghayal@codeaurora.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>
+Subject: Re: [RFC PATCH v3 1/3] regmap-irq: Extend sub-irq to support
+ non-fixed reg strides
+Message-ID: <20210412180805.GA18661@codeaurora.org>
+References: <cover.1615423027.git.gurus@codeaurora.org>
+ <526562423eaa58b4075362083f561841f1d6956c.1615423027.git.gurus@codeaurora.org>
+ <4abddb76d87a2e6e0d2ad98da0b8349251456158.camel@fi.rohmeurope.com>
+ <d78cefad64d528e7c894c153950e4b4d2a18b300.camel@fi.rohmeurope.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <YHHeRfAWrrusE/gB@pevik>
+In-Reply-To: <d78cefad64d528e7c894c153950e4b4d2a18b300.camel@fi.rohmeurope.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Hi Matti,
 
-[ Cc KarimAllah Ahmed, as the author of 86588296acbf; Rob merged it ]
+On Mon, Apr 12, 2021 at 11:08:49AM +0000, Vaittinen, Matti wrote:
+> Hi,
+> 
+> On Mon, 2021-04-12 at 09:05 +0300, Matti Vaittinen wrote:
+> > Hi All,
+> > 
+> > On Wed, 2021-03-10 at 16:39 -0800, Guru Das Srinagesh wrote:
+> > > Qualcomm's MFD chips have a top level interrupt status register and
+> > > sub-irqs (peripherals).  When a bit in the main status register
+> > > goes
+> > > high, it means that the peripheral corresponding to that bit has an
+> > > unserviced interrupt. If the bit is not set, this means that the
+> > > corresponding peripheral does not.
+> > > 
+> > > Commit a2d21848d9211d ("regmap: regmap-irq: Add main status
+> > > register
+> > > support") introduced the sub-irq logic that is currently applied
+> > > only
+> > > when reading status registers, but not for any other functions like
+> > > acking
+> > > or masking. Extend the use of sub-irq to all other functions, with
+> > > two
+> > > caveats regarding the specification of offsets:
+> > > 
+> > > - Each member of the sub_reg_offsets array should be of length 1
+> > > - The specified offsets should be the unequal strides for each sub-
+> > > irq
+> > >   device.
+> > > 
+> > > In QCOM's case, all the *_base registers are to be configured to
+> > > the
+> > > base addresses of the first sub-irq group, with offsets of each
+> > > subsequent group calculated as a difference from these addresses.
+> > > 
+> > > Continuing from the example mentioned in the cover letter:
+> > > 
+> > > 	/*
+> > > 	 * Address of MISC_INT_MASK		= 0x1011
+> > > 	 * Address of TEMP_ALARM_INT_MASK	= 0x2011
+> > > 	 * Address of GPIO01_INT_MASK		= 0x3011
+> > > 	 *
+> > > 	 * Calculate offsets as:
+> > > 	 * offset_0 = 0x1011 - 0x1011 = 0       (to access MISC's
+> > > 	 * 					 registers)
+> > > 	 * offset_1 = 0x2011 - 0x1011 = 0x1000
+> > > 	 * offset_2 = 0x3011 - 0x1011 = 0x2000
+> > > 	 */
+> > > 
+> > > 	static unsigned int sub_unit0_offsets[] = {0};
+> > > 	static unsigned int sub_unit1_offsets[] = {0x1000};
+> > > 	static unsigned int sub_unit2_offsets[] = {0x2000};
+> > > 
+> > > 	static struct regmap_irq_sub_irq_map chip_sub_irq_offsets[] = {
+> > > 		REGMAP_IRQ_MAIN_REG_OFFSET(sub_unit0_offsets),
+> > > 		REGMAP_IRQ_MAIN_REG_OFFSET(sub_unit0_offsets),
+> > > 		REGMAP_IRQ_MAIN_REG_OFFSET(sub_unit0_offsets),
+> > > 	};
+> > > 
+> > > 	static struct regmap_irq_chip chip_irq_chip = {
+> > > 	--------8<--------
+> > > 	.not_fixed_stride = true,
+> > > 	.mask_base	  = MISC_INT_MASK,
+> > > 	.type_base	  = MISC_INT_TYPE,
+> > > 	.ack_base	  = MISC_INT_ACK,
+> > > 	.sub_reg_offsets  = chip_sub_irq_offsets,
+> > > 	--------8<--------
+> > > 	};
+> > > 
+> > > Signed-off-by: Guru Das Srinagesh <gurus@codeaurora.org>
+> > > ---
+> > >  drivers/base/regmap/regmap-irq.c | 81 ++++++++++++++++++++++++++--
+> > > ------------
+> > >  include/linux/regmap.h           |  7 ++++
+> > >  2 files changed, 60 insertions(+), 28 deletions(-)
+> > > 
+> > > diff --git a/drivers/base/regmap/regmap-irq.c
+> > > b/drivers/base/regmap/regmap-irq.c
+> > > index 19db764..e1d8fc9e 100644
+> > > --- a/drivers/base/regmap/regmap-irq.c
+> > > +++ b/drivers/base/regmap/regmap-irq.c
+> > > @@ -45,6 +45,27 @@ struct regmap_irq_chip_data {
+> > >  	bool clear_status:1;
+> > >  };
+> > > 
+> > 
+> > Sorry that I am late with the "review" but I only now noticed this
+> > change when I was following the references from PM8008 PMIC patch
+> > mail.
+> > 
+> > 
+> > >  
+> > > +static int sub_irq_reg(struct regmap_irq_chip_data *data,
+> > > +		       unsigned int base_reg, int i)
+> > 
+> > Do I read this correctly - this function should map the main status
+> > bit
+> > (given in i) to the (sub)IRQ register, right? How does this work for
+> > cases where one bit corresponds to more than one sub-register? Or do
+> > I
+> > misunderstand the purpose of this function? (This is the case with
+> > both
+> > the BD70528 and BD71828).
+> 
+> I did some quick test with BD71815 which I had at home. And it seems to
+> be I did indeed misunderstand this :) This is not for converting the
+> main-IRQ bits to sub-irq registers - this is for getting the sub-IRQ
+> register address based on the 'sub IRQ register index'.
 
-> > > Konrad, is there any public docs about GPIOs on this secure peripherals?
-> > > It it somehow related to Chain of Trust? [1].  I guess it's not, because once we
-> > > boot Linux all bootloader stuff is over.
+Yes, that's right. With this change, the sub-irq concept which was
+initially introduced to map the main-irq bits to sub-irq registers is
+being extended and repurposed to cover the specific memory layout
+described in the commit message and cover letter. 
 
-> > No, Qualcomm pretty much does security through obscurity. It's *probably* not even that very secure considering how big in size their TZ+HYP stack is - number of bugs rises exponentially with code size. But not many people tried breaking into it considering the complexity and QCOM's legal team size.
+I've updated the comment block in the header file for `sub_reg_offsets`
+to make this clarification as well. 
 
-> > There is no public documentation on that, and even if there were - you are not allowed to flash the "secure" partitions on *your device that you unlocked the bootloader of by choice* (which is absurd).
+The sub_irq_reg() function will not break existing functionality because
+the crux of it will get executed only if not_fixed_stride is set.
 
-> > Also, while "all bootloader stuff is over", the platform is still under control of the proprietary hypervisor and the "Trust Zone". For example if you try to write to some IOMMU registers on certain platforms, the hypervisor will treat that as a security violation and shut down the entire device. 
+> 
+> So I do apologize the noise, it seems all is well and everything
+> (except my self confidence) keeps working as it did :)
+> 
+> Thanks for the improvement Guru Das!
 
-> > This is essentially the same as your issue. You're trying to poke a thing that Qualcomm *really* doesn't want you to (the fingerprint SPI pins) and since *they* are in control, they say "nonono" and your device dies. All you can do is comply with that (or find a way to replace the blobs or politely ask Google to release a set of unsecure binaries for your Nexus - which they won't do).
+Thanks for testing this out and providing confirmation, Matti :)
 
-> Again, thanks a lot for info. I looked into downstream sources to see that
-> really pins 85-88 (which I've sent a patch to add into gpio-reserved-ranges) are
-> used for fingerprint. I also wonder if downstream commit d45c35c7b586 ("angler:
-> fingerprint: remove all the code about spi") [1] confirms that also downstream
-> kernel would reset or it's a security (it would not reset, thus they removed
-> the access). It's probably aosp issue tracker [2], but "Access denied" for me.
+Thank you.
 
-> I also did some testing and this is maximum range which can be disabled:
-> gpio-reserved-ranges = <0 4>, <6 139> and it does not help to solve second
-> reset (in loop_init() or later when starting initramfs).
-> Removing access to GPIO 4 or 5 causes reset right immediately (no message from
-> kernel).
-
-> I still don't understand what changed in a99163e9e708 ("Merge tag
-> 'devicetree-for-5.12' of git://git.kernel.org/pub/scm/linux/kernel/git/robh/linux")
-> I checked both 882d6edfc45c cb8be8b4b27f, which it merges and they're ok.
-
-I've found the other problem preventing booting. Appart from v2 [3] is also needed
-to revert 86588296acbf ("fdt: Properly handle "no-map" field in the memory region").
-
-I'm pretty sure, that this commit is needed, but what should I change in
-arch/arm64/boot/dts/qcom/msm8994-angler-rev-101.dts in order to get my angler
-booting again? With it it reset again after loop_init:
-
-[   12.077756] initcall devcoredump_init+0x0/0x30 returned 0 after 22 usecs
-[   12.082425] calling  loop_init+0x0/0x158 @ 1
-
-And with disabled CONFIG_BLK_DEV_LOOP it get's reset before reaching initramfs:
-~/tmp/hackweek/loop_init.debug.a99163e9e708.disabled-CONFIG_BLK_DEV_LOOP/2021-04-07_21-01-34.log
-[   17.383267] calling  regulator_init_complete+0x0/0x4c @ 1
-[   17.390129] initcall regulator_init_complete+0x0/0x4c returned 0 after 6 usecs
-[   17.395682] calling  of_platform_sync_state_init+0x0/0x18 @ 1
-[   17.402800] initcall of_platform_sync_state_init+0x0/0x18 returned 0 after 3 usecs
-[   17.408616] calling  alsa_sound_last_init+0x0/0x88 @ 1
-[   17.416077] ALSA device list:
-[   17.421198]   No soundcardû[   17.431360] Freeing unused kernel memory: 5824K
-[   17.431633] Run /init as init process
-[   17.434700]   with arguments:
-[   17.438535]     /init
-[   17.441477]     PMOS_NO_OUTPUT_REDIRECT
-[   17.443737]   with environment:
-[   17.447381]     HOME=/
-[   17.450496]     TERM=linux
-D -     15494 - pm_driver_init, Delta
-
-Kind regards,
-Petr
-
-> Kind regards,
-> Petr
-
-> [1] https://android.googlesource.com/kernel/msm/+/d45c35c7b586711e757eb7e3239db5c88d114e0e
-> [2] https://issuetracker.google.com/issues/23756466
-[3] https://lore.kernel.org/linux-arm-msm/20210406202936.22500-1-petr.vorel@gmail.com/T/#u
-
-> > Konrad
+Guru Das.
