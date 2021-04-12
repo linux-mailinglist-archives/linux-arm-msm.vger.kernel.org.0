@@ -2,220 +2,178 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 07AB035CF30
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Apr 2021 19:04:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3BB7435CF2E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Apr 2021 19:04:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243785AbhDLRFI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Apr 2021 13:05:08 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:63408 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244125AbhDLREI (ORCPT
+        id S243558AbhDLRFH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Apr 2021 13:05:07 -0400
+Received: from mail-oi1-f178.google.com ([209.85.167.178]:45648 "EHLO
+        mail-oi1-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S243708AbhDLRDz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Apr 2021 13:04:08 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1618247030; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=3l8HW1rNzvaQs+RTHspb+EbKaL0TMdVmEqx1yLOrbCU=; b=jpC0+pNAizsb5moltP/ym8jelDDaIlWhbzSMbOkXhQxMgVjZORSrAsijEyuK3bbuMWTzhAVb
- wubNCaA/bh+jkn5mC2dkPRurBAOihMy6gCCjfXc3qeV4kg/nD2ynNJW6zTY0fkj8buk/jEhc
- 1RCaFeYAPu+h8/TvMM8DN/keZHY=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
- 60747d648166b7eff75d6e0b (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 12 Apr 2021 17:03:32
- GMT
-Sender: khsieh=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 76E3AC43465; Mon, 12 Apr 2021 17:03:31 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
-Received: from khsieh-linux1.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: khsieh)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 932BFC43461;
-        Mon, 12 Apr 2021 17:03:29 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 932BFC43461
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=khsieh@codeaurora.org
-From:   Kuogee Hsieh <khsieh@codeaurora.org>
-To:     robdclark@gmail.com, sean@poorly.run, swboyd@chromium.org
-Cc:     tanmay@codeaurora.org, abhinavk@codeaurora.org,
-        aravindh@codeaurora.org, khsieh@codeaurora.org, airlied@linux.ie,
-        daniel@ffwll.ch, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH 2/2] drm/msm/dp: do not re initialize of audio_comp
-Date:   Mon, 12 Apr 2021 10:03:23 -0700
-Message-Id: <1618247003-28821-1-git-send-email-khsieh@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        Mon, 12 Apr 2021 13:03:55 -0400
+Received: by mail-oi1-f178.google.com with SMTP id d12so14074200oiw.12;
+        Mon, 12 Apr 2021 10:03:36 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=Bk4HDeKR+toH2oCWOomBubb2tI7dn2Ufe/jMDW0e+EI=;
+        b=Up12KUhmMmixqdSNnU42srIuDmb0NoiLNZmi2X/7mXPa0IUZ9ZpBpPPHqiTr0aTX50
+         nsOIjnEtZYdoftoscML9zs9DQKljAirUzynkvP7QsZuDfUQC9ezgngYstwR5epTG8dny
+         YPT/PM0LuPFb+AmF0ZMLDB8ebL3dxUKLwExRslmGSwpWXfMj/oH5JbhGA+7ptnqdtv5w
+         /gnm4luuMycxRyr66uJwbcLVtxfmg49CnUhqqwCxaB9udqhUjca4ZpmpMxWfB8JiQ0Pf
+         Zvz6GoXvDp/o2aHtfFGwTDs17XyIXe62EaChz+VodQWL417U3reS5G9ytOvITfelku2J
+         vaVQ==
+X-Gm-Message-State: AOAM533OePjYI33eqKqPTkb735kNjp5Go4jaFSRdIU/aBC7z8O1ol5BG
+        SC/XSYev1RYBLnIVDPuxyw==
+X-Google-Smtp-Source: ABdhPJzaCMtbVP2hz7fdM7Un2vWUQwgynfH1W8jP6A19AA/xnu2qLRSJ+VRbIm/94kkBdX66ZgumHA==
+X-Received: by 2002:a05:6808:a8a:: with SMTP id q10mr69213oij.167.1618247016335;
+        Mon, 12 Apr 2021 10:03:36 -0700 (PDT)
+Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id 62sm2788817oto.60.2021.04.12.10.03.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 12 Apr 2021 10:03:35 -0700 (PDT)
+Received: (nullmailer pid 4049154 invoked by uid 1000);
+        Mon, 12 Apr 2021 17:03:34 -0000
+Date:   Mon, 12 Apr 2021 12:03:34 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Taniya Das <tdas@codeaurora.org>
+Cc:     Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette =?iso-8859-1?Q?=A0?= 
+        <mturquette@baylibre.com>, Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH v1 1/2] dt-bindings: clock: Add YAML schemas for LPASS
+ clocks on SC7280
+Message-ID: <20210412170334.GA3971998@robh.at.kernel.org>
+References: <1617969272-10246-1-git-send-email-tdas@codeaurora.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1617969272-10246-1-git-send-email-tdas@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-At dp_display_disable(), do not re initialize audio_comp if
-hdp_state == ST_DISCONNECT_PENDING (unplug event) to avoid
-race condition which cause 5 second timeout expired. Also
-add abort mechanism to reduce time spinning at dp_aux_transfer()
-during dpcd read if type-c connection had been broken.
+On Fri, Apr 09, 2021 at 05:24:31PM +0530, Taniya Das wrote:
+> The LPASS(Low Power Audio Subsystem) clock provider have a bunch of generic
+> properties that are needed in a device tree. Add the LPASS clock IDs for
+> LPASS PIL client to request for the clocks.
+> 
+> Signed-off-by: Taniya Das <tdas@codeaurora.org>
+> ---
+>  .../bindings/clock/qcom,sc7280-lpasscc.yaml        | 69 ++++++++++++++++++++++
+>  include/dt-bindings/clock/qcom,lpass-sc7280.h      | 16 +++++
+>  2 files changed, 85 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscc.yaml
+>  create mode 100644 include/dt-bindings/clock/qcom,lpass-sc7280.h
+> 
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscc.yaml b/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscc.yaml
+> new file mode 100644
+> index 0000000..7b62763
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscc.yaml
+> @@ -0,0 +1,69 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/clock/qcom,sc7280-lpasscc.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm LPASS Core Clock Controller Binding for SC7280
+> +
+> +maintainers:
+> +  - Taniya Das <tdas@codeaurora.org>
+> +
+> +description: |
+> +  Qualcomm LPASS core clock control module which supports the clocks and
+> +  power domains on SC7280.
+> +
+> +  See also:
+> +  - dt-bindings/clock/qcom,lpass-sc7280.h
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,sc7280-lpasscc
+> +
+> +  clocks:
+> +    items:
+> +      - description: gcc_cfg_noc_lpass_clk from GCC
+> +
+> +  clock-names:
+> +    items:
+> +      - const: iface
+> +
+> +  '#clock-cells':
+> +    const: 1
+> +
+> +  reg:
+> +    minItems: 3
 
-Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
----
- drivers/gpu/drm/msm/dp/dp_aux.c     | 18 ++++++++++++++++++
- drivers/gpu/drm/msm/dp/dp_aux.h     |  1 +
- drivers/gpu/drm/msm/dp/dp_display.c | 16 ++++++++++++----
- drivers/gpu/drm/msm/dp/dp_link.c    | 20 +++++++++++++++-----
- 4 files changed, 46 insertions(+), 9 deletions(-)
+You don't need minItems, as 3 is implied.
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_aux.c b/drivers/gpu/drm/msm/dp/dp_aux.c
-index 7c22bfe..e5ece8c 100644
---- a/drivers/gpu/drm/msm/dp/dp_aux.c
-+++ b/drivers/gpu/drm/msm/dp/dp_aux.c
-@@ -28,6 +28,7 @@ struct dp_aux_private {
- 	u32 offset;
- 	u32 segment;
- 	u32 isr;
-+	atomic_t aborted;
- 
- 	struct drm_dp_aux dp_aux;
- };
-@@ -343,6 +344,11 @@ static ssize_t dp_aux_transfer(struct drm_dp_aux *dp_aux,
- 
- 	mutex_lock(&aux->mutex);
- 
-+	if (atomic_read(&aux->aborted)) {
-+		ret = -ETIMEDOUT;
-+		goto unlock_exit;
-+	}
-+
- 	aux->native = msg->request & (DP_AUX_NATIVE_WRITE & DP_AUX_NATIVE_READ);
- 
- 	/* Ignore address only message */
-@@ -533,3 +539,15 @@ void dp_aux_put(struct drm_dp_aux *dp_aux)
- 
- 	devm_kfree(aux->dev, aux);
- }
-+
-+void dp_aux_abort(struct drm_dp_aux *dp_aux, bool abort)
-+{
-+	struct dp_aux_private *aux;
-+
-+	if (!dp_aux)
-+		return;
-+
-+	aux = container_of(dp_aux, struct dp_aux_private, dp_aux);
-+
-+	atomic_set(&aux->aborted, abort);
-+}
-diff --git a/drivers/gpu/drm/msm/dp/dp_aux.h b/drivers/gpu/drm/msm/dp/dp_aux.h
-index f8b8ba9..c17df7f 100644
---- a/drivers/gpu/drm/msm/dp/dp_aux.h
-+++ b/drivers/gpu/drm/msm/dp/dp_aux.h
-@@ -23,6 +23,7 @@ void dp_aux_isr(struct drm_dp_aux *dp_aux);
- void dp_aux_init(struct drm_dp_aux *dp_aux);
- void dp_aux_deinit(struct drm_dp_aux *dp_aux);
- void dp_aux_reconfig(struct drm_dp_aux *dp_aux);
-+void dp_aux_abort(struct drm_dp_aux *dp_aux, bool abort);
- 
- struct drm_dp_aux *dp_aux_get(struct device *dev, struct dp_catalog *catalog);
- void dp_aux_put(struct drm_dp_aux *aux);
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index 4992a049..8960333 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -898,8 +898,10 @@ static int dp_display_disable(struct dp_display_private *dp, u32 data)
- 	/* wait only if audio was enabled */
- 	if (dp_display->audio_enabled) {
- 		/* signal the disconnect event */
--		reinit_completion(&dp->audio_comp);
--		dp_display_handle_plugged_change(dp_display, false);
-+		if (dp->hpd_state != ST_DISCONNECT_PENDING) {
-+			reinit_completion(&dp->audio_comp);
-+			dp_display_handle_plugged_change(dp_display, false);
-+		}
- 		if (!wait_for_completion_timeout(&dp->audio_comp,
- 				HZ * 5))
- 			DRM_ERROR("audio comp timeout\n");
-@@ -1137,20 +1139,26 @@ static irqreturn_t dp_display_irq_handler(int irq, void *dev_id)
- 		/* hpd related interrupts */
- 		if (hpd_isr_status & DP_DP_HPD_PLUG_INT_MASK ||
- 			hpd_isr_status & DP_DP_HPD_REPLUG_INT_MASK) {
-+			dp_aux_abort(dp->aux, false);
- 			dp_add_event(dp, EV_HPD_PLUG_INT, 0, 0);
- 		}
- 
- 		if (hpd_isr_status & DP_DP_IRQ_HPD_INT_MASK) {
- 			/* stop sentinel connect pending checking */
-+			dp_aux_abort(dp->aux, false);
- 			dp_del_event(dp, EV_CONNECT_PENDING_TIMEOUT);
- 			dp_add_event(dp, EV_IRQ_HPD_INT, 0, 0);
- 		}
- 
--		if (hpd_isr_status & DP_DP_HPD_REPLUG_INT_MASK)
-+		if (hpd_isr_status & DP_DP_HPD_REPLUG_INT_MASK) {
-+			dp_aux_abort(dp->aux, false);
- 			dp_add_event(dp, EV_HPD_REPLUG_INT, 0, 0);
-+		}
- 
--		if (hpd_isr_status & DP_DP_HPD_UNPLUG_INT_MASK)
-+		if (hpd_isr_status & DP_DP_HPD_UNPLUG_INT_MASK) {
-+			dp_aux_abort(dp->aux, true);
- 			dp_add_event(dp, EV_HPD_UNPLUG_INT, 0, 0);
-+		}
- 	}
- 
- 	/* DP controller isr */
-diff --git a/drivers/gpu/drm/msm/dp/dp_link.c b/drivers/gpu/drm/msm/dp/dp_link.c
-index be986da..d35b18e 100644
---- a/drivers/gpu/drm/msm/dp/dp_link.c
-+++ b/drivers/gpu/drm/msm/dp/dp_link.c
-@@ -737,18 +737,25 @@ static int dp_link_parse_sink_count(struct dp_link *dp_link)
- 	return 0;
- }
- 
--static void dp_link_parse_sink_status_field(struct dp_link_private *link)
-+static int dp_link_parse_sink_status_field(struct dp_link_private *link)
- {
- 	int len = 0;
- 
- 	link->prev_sink_count = link->dp_link.sink_count;
--	dp_link_parse_sink_count(&link->dp_link);
-+	len = dp_link_parse_sink_count(&link->dp_link);
-+	if (len < 0) {
-+		DRM_ERROR("DP lparse sink count failed\n");
-+		return len;
-+	}
- 
- 	len = drm_dp_dpcd_read_link_status(link->aux,
- 		link->link_status);
--	if (len < DP_LINK_STATUS_SIZE)
-+	if (len < DP_LINK_STATUS_SIZE) {
- 		DRM_ERROR("DP link status read failed\n");
--	dp_link_parse_request(link);
-+		return len;
-+	}
-+
-+	return dp_link_parse_request(link);
- }
- 
- /**
-@@ -1032,7 +1039,10 @@ int dp_link_process_request(struct dp_link *dp_link)
- 
- 	dp_link_reset_data(link);
- 
--	dp_link_parse_sink_status_field(link);
-+	ret = dp_link_parse_sink_status_field(link);
-+	if (ret) {
-+		return ret;
-+	}
- 
- 	if (link->request.test_requested == DP_TEST_LINK_EDID_READ) {
- 		dp_link->sink_request |= DP_TEST_LINK_EDID_READ;
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+> +    items:
+> +      - description: LPASS qdsp6ss register
+> +      - description: LPASS top-cc register
+> +      - description: LPASS cc register
+> +
+> +  reg-names:
+> +    items:
+> +      - const: qdsp6ss
+> +      - const: top_cc
+> +      - const: cc
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - clocks
+> +  - clock-names
+> +  - '#clock-cells'
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/clock/qcom,gcc-sc7280.h>
+> +    #include <dt-bindings/clock/qcom,lpass-sc7280.h>
+> +    clock-controller@3000000 {
+> +      compatible = "qcom,sc7280-lpasscc";
+> +      reg = <0x03000000 0x40>, <0x03c04000 0x4>, <0x03389000 0x24>;
+> +      reg-names = "qdsp6ss", "top_cc", "cc";
+> +      clocks = <&gcc GCC_CFG_NOC_LPASS_CLK>;
+> +      clock-names = "iface";
+> +      #clock-cells = <1>;
+> +    };
+> +...
+> diff --git a/include/dt-bindings/clock/qcom,lpass-sc7280.h b/include/dt-bindings/clock/qcom,lpass-sc7280.h
+> new file mode 100644
+> index 0000000..a259463
+> --- /dev/null
+> +++ b/include/dt-bindings/clock/qcom,lpass-sc7280.h
+> @@ -0,0 +1,16 @@
+> +/* SPDX-License-Identifier: GPL-2.0 */
 
+What about non-GPL OS users?
+
+> +/*
+> + * Copyright (c) 2021, The Linux Foundation. All rights reserved.
+> + */
+> +
+> +#ifndef _DT_BINDINGS_CLK_QCOM_LPASS_SC7280_H
+> +#define _DT_BINDINGS_CLK_QCOM_LPASS_SC7280_H
+> +
+> +#define LPASS_Q6SS_AHBM_CLK				0
+> +#define LPASS_Q6SS_AHBS_CLK				1
+> +#define LPASS_TOP_CC_LPI_Q6_AXIM_HS_CLK			2
+> +#define LPASS_QDSP6SS_XO_CLK				3
+> +#define LPASS_QDSP6SS_SLEEP_CLK				4
+> +#define LPASS_QDSP6SS_CORE_CLK				5
+> +
+> +#endif
+> --
+> Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc.is a member
+> of the Code Aurora Forum, hosted by the  Linux Foundation.
+> 
