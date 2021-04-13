@@ -2,93 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 740BB35E344
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Apr 2021 17:57:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0E00635E34F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Apr 2021 17:58:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237358AbhDMP5b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Apr 2021 11:57:31 -0400
-Received: from lb1-smtp-cloud7.xs4all.net ([194.109.24.24]:45787 "EHLO
-        lb1-smtp-cloud7.xs4all.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S232257AbhDMP5a (ORCPT
+        id S238461AbhDMP7Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Apr 2021 11:59:16 -0400
+Received: from mail-ot1-f53.google.com ([209.85.210.53]:35458 "EHLO
+        mail-ot1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230329AbhDMP7Q (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Apr 2021 11:57:30 -0400
-Received: from cust-b5b5937f ([IPv6:fc0c:c16d:66b8:757f:c639:739b:9d66:799d])
-        by smtp-cloud7.xs4all.net with ESMTPA
-        id WLPVlG2piMxedWLPZljL3m; Tue, 13 Apr 2021 17:57:09 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=xs4all.nl; s=s2;
-        t=1618329429; bh=tMjh7Fx8g0mfEqYYJTUBaPBBWs0QJabhYBJ91ZY1qsk=;
-        h=Subject:To:From:Message-ID:Date:MIME-Version:Content-Type:From:
-         Subject;
-        b=GFjXltaZ6w0cMoF1yVUAXBtgKhhP6HE9ieFrKVRTVQvXk2eigY9A9D+NwrqiXFDhC
-         cUJvkrHH7vIEKWB4n1hgQsg0ta0jqF75rP+nXjY//edJgfI5fiVk27bDBN3pbex8Wi
-         AsIKAeIoJuWb7q+Eew2D+ObRlR5AFZEZQjcJ7yThzhc/eqfhnfHvNs2rIYHLI9fxa9
-         yrgfvD7057IfhVlR66AudFBs4I/iZ7lRsoY3fV3dhybOqZfBF7FL0ffXDzjFpy8YV2
-         wPUlikJoIc4rxsq//TXDmLps4udmJAJoQskBjEJcH16pP/iSLmxDvDFfx1zM9Tmrtp
-         7m0hu4L1hk+OQ==
-Subject: Re: [PATCH v3 0/2] Intra-refresh period control
-To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Cc:     Ezequiel Garcia <ezequiel@collabora.com>,
-        nicolas.dufresne@collabora.com
-References: <20210302095340.3584204-1-stanimir.varbanov@linaro.org>
- <3480b6ee-f442-57be-473f-c90966584d40@linaro.org>
-From:   Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Message-ID: <29fc026d-6ba3-dfc3-d57b-1dabce765dca@xs4all.nl>
-Date:   Tue, 13 Apr 2021 17:57:05 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Firefox/78.0 Thunderbird/78.9.0
+        Tue, 13 Apr 2021 11:59:16 -0400
+Received: by mail-ot1-f53.google.com with SMTP id v24-20020a9d69d80000b02901b9aec33371so16568909oto.2;
+        Tue, 13 Apr 2021 08:58:56 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=NCg6juRjawDZurZPMiPe5DGO2tjGv8Z93z5kbvheWfg=;
+        b=KXY9BnVgmGLTvk0WKM8lSacuVGV/P3n/JgpO8VBHmncuAREYpZNowOkWkWK68ULjwm
+         ECvC7LdFwjLHGlmWNqVA3kIeqXs0q0dfTEULjxQoK5u2B3u2U6rd4VVf6gLCN31FN3VX
+         U9B18XfQEA4NJ1lW1XBj1HLdVpSYfSw5klS/iU5vMEoNoRsTqO0JhqNPbdgJc1WjAGyS
+         QuQMmYf6E5S4L4jtUnZ1mRBybv7K53BnhGfKWUG94Q5YG5pGo1FTdycK72sAHVoUCuT4
+         YD86KVPMSDDKw3icVn3dTWjYC2jkbHVz5bPezL5BXXyOTYrXqEPcFR34tOZYB25iqjdD
+         VMhw==
+X-Gm-Message-State: AOAM531eP7ZlJ0enXzqBVwq0MllW0VcJvykoubkAH5lMB6uaHMSo5uVS
+        WeuqORAxa+FfDFlpNu75JQ==
+X-Google-Smtp-Source: ABdhPJxXk1vqV70OIkwKIF3fe5RrxTUT5VOgZ5gL/xcK6pbcL0ELeve5t75+q4h9TS9M6BSfNNVhHA==
+X-Received: by 2002:a9d:7699:: with SMTP id j25mr28921386otl.177.1618329536595;
+        Tue, 13 Apr 2021 08:58:56 -0700 (PDT)
+Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id w2sm2923588oov.23.2021.04.13.08.58.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 13 Apr 2021 08:58:55 -0700 (PDT)
+Received: (nullmailer pid 1747120 invoked by uid 1000);
+        Tue, 13 Apr 2021 15:58:54 -0000
+Date:   Tue, 13 Apr 2021 10:58:54 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Guru Das Srinagesh <gurus@codeaurora.org>
+Cc:     devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Lee Jones <lee.jones@linaro.org>,
+        Mark Brown <broonie@kernel.org>
+Subject: Re: [PATCH v3 2/3] dt-bindings: mfd: pm8008: Add bindings
+Message-ID: <20210413155854.GA1747055@robh.at.kernel.org>
+References: <cover.1618278453.git.gurus@codeaurora.org>
+ <3e126ba39cff60a66095911ceec08575dd658410.1618278453.git.gurus@codeaurora.org>
 MIME-Version: 1.0
-In-Reply-To: <3480b6ee-f442-57be-473f-c90966584d40@linaro.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4xfOGwePcNIn1fhjFclzjFpxNeors/OL9DTg1rh8hEueWxzhHoFCFp1LrQwZvNP/dUfNT0zxxLB2G2BIlAgPmCsqD7CQ7M9o9VhaddugI9qbD5SM1s5UZG
- PM1fmOr28RU1gQeKfoFaQodI96eOvhh/oAx6shy75jgFyYZVDfRfwaI1tyk98JpyezyWOihJ/nYQonlALMCPGfmHA9mpi30j5v4zk6st2c8Tjr65xnIkRypK
- BqfR54AnM4OLAXAktZriVOdwEqT4dIfD1D4ivCv71xOc0vDoDHYnX2M3Ei6GmkYBD7q487y6cfPg3c+1WLswV7RAgHr+wDg/Z06+9U6NKNSyuUQ1s50P946Y
- 2gtwPsYU9ikzmOAJ1pyEIn3/zmgYNlFy1Q6x8B3/Bi7lOY9dgx6463ItgZ2uQEMmptNhkEwj
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <3e126ba39cff60a66095911ceec08575dd658410.1618278453.git.gurus@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 13/04/2021 17:49, Stanimir Varbanov wrote:
-> Hi Hans,
+On Mon, 12 Apr 2021 19:00:26 -0700, Guru Das Srinagesh wrote:
+> Add bindings for the Qualcomm Technologies, Inc. PM8008 MFD driver.
 > 
-> Any comments?
-
-Thanks for the reminder, I replied to the patch.
-
-Regards,
-
-	Hans
-
-> 
-> On 3/2/21 11:53 AM, Stanimir Varbanov wrote:
->> Hi,
->>
->> This series add a new intra-refresh period control for encoders. The
->> series is a continuation of [1]. Comments addressed:
->>  * A typo in .rst (Hans)
->>  * Clarified the relationship with CYCLIC_INTRA_REFRESH_MB (Hans)
->>
->> Comments are welcome!
->>
->> regards,
->> Stan
->>
->> [1] https://www.spinics.net/lists/linux-media/msg183019.html
->>
->> Stanimir Varbanov (2):
->>   media: v4l2-ctrls: Add intra-refresh period control
->>   venus: venc: Add support for intra-refresh period
->>
->>  .../media/v4l/ext-ctrls-codec.rst             | 12 ++++++++
->>  drivers/media/platform/qcom/venus/core.h      |  1 +
->>  drivers/media/platform/qcom/venus/venc.c      | 28 +++++++++++++++++++
->>  .../media/platform/qcom/venus/venc_ctrls.c    | 13 ++++-----
->>  drivers/media/v4l2-core/v4l2-ctrls.c          |  2 ++
->>  include/uapi/linux/v4l2-controls.h            |  1 +
->>  6 files changed, 50 insertions(+), 7 deletions(-)
->>
+> Signed-off-by: Guru Das Srinagesh <gurus@codeaurora.org>
+> ---
+>  .../devicetree/bindings/mfd/qcom,pm8008.yaml       | 121 +++++++++++++++++++++
+>  1 file changed, 121 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/mfd/qcom,pm8008.yaml
 > 
 
+Reviewed-by: Rob Herring <robh@kernel.org>
