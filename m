@@ -2,122 +2,314 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1D3F435E80E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Apr 2021 23:13:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B49D635E865
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Apr 2021 23:39:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239012AbhDMVNT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Apr 2021 17:13:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34382 "EHLO
+        id S232431AbhDMVji (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Apr 2021 17:39:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40138 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231424AbhDMVNS (ORCPT
+        with ESMTP id S232397AbhDMVjh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Apr 2021 17:13:18 -0400
-Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EAE68C061574
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Apr 2021 14:12:57 -0700 (PDT)
-Received: by mail-oi1-x22d.google.com with SMTP id e66so3117477oif.11
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Apr 2021 14:12:57 -0700 (PDT)
+        Tue, 13 Apr 2021 17:39:37 -0400
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A0D6C061574
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Apr 2021 14:39:17 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id k26so1423695wrc.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Apr 2021 14:39:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
+        d=ffwll.ch; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=rQq0/16a4a5XNB8IdpzVyiNn7MWUMs5g3rEBnudJ4vo=;
-        b=Ln75BNotojOP6wyiKkOZYjqPMZ4Y0iT+YqvoPdFO+RLfEP15EEFWos1Eby/02ZMREp
-         FvL1YHlNPp9PAe/2xbe6U/UcKbza+4k/PNQcdB0yP7VWCy8tCTWC/IgLlALeePm5BMm4
-         yru1fbASD9kl5gf8cr9/YyKkyR3T8tMd9malilFm5IN6Cx2dWX7RUzaSl4dGGFw9+CN8
-         SB/FhRRpcEsCZ5/NzZE0rdWredM2Bdp+TSSMiTS4C7Sx/s+MnU0AYq77FxaSXByLnACM
-         RqUKYo4plYasBrUAcq8YWuqjweWriVGF0u6CWv6NTm9yczh16q48p5dxSQ1gkoeGXQIq
-         VnYQ==
+        bh=RKEsNHOFUnMxRuQp616dtdwmyGU0NgZDQjm0d2A9jsw=;
+        b=divXTn1P7LNtoFmPQUvXL5mGTKpFSQhgDuTg9O48mDwvcQU9EHHTc20br3TtFPrhom
+         mnomNF6lH8qxawxGYkJ0RZLiPWRg5zofUN0Z9vigPdYZqoLoKDqcXpspOPq0ANNvdD2s
+         gy0wXSHLtys0ZA4bkP5tpKw/BmN7dYCmStSVI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=rQq0/16a4a5XNB8IdpzVyiNn7MWUMs5g3rEBnudJ4vo=;
-        b=Ta5zf33xxI7aUScwCsLGGtWYEcm9d46GHfEk+NxO7mglr2jqTJn5oCpddHib5KdnZG
-         lJwZRoK0QUkXgaZTbQjRqoSDTdnsKaA9lQ7kvtiCr3cL3i7bvi3LmxhVUR9ROq9+M9WU
-         W2lZiIjg+zYJ8xzNwpVM/JNMj1cyc1FMqHEFJgVbrbyql6t7g3tt7PPxsUW/c2KXeWPs
-         JuJLJtlh7KqL8qIr4XrZ9v5VhzDKjsEXEY4Pe863mMrURysdUKEX0uf0+s81uUZ5XhEM
-         MVNSz0zdt50JI3GrEZPkBWcQQVS5T2ENcT9tysXLJOWL2N0Br/Cn1PS7LpqsVmgNagVI
-         oy+w==
-X-Gm-Message-State: AOAM5337Sn4m9uLPSwEChsuRUkbFCirHZlCYPBP4Pq9LGL2DUDjpheXv
-        NCFLzCTGJPfp8Emsi2o0OGdefuho9L1cyA==
-X-Google-Smtp-Source: ABdhPJy5AIluIQKxgfMZdF23/UEBa4cs19/OH/spwS2jU/GC1shnAaai9AxMu85CNOxvz3cSVYifTw==
-X-Received: by 2002:a05:6808:1142:: with SMTP id u2mr1453286oiu.124.1618348377208;
-        Tue, 13 Apr 2021 14:12:57 -0700 (PDT)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id v13sm1783497ote.74.2021.04.13.14.12.56
+        bh=RKEsNHOFUnMxRuQp616dtdwmyGU0NgZDQjm0d2A9jsw=;
+        b=tw/HA47cg3RoZV19hrnwpL1E3PTiZFfwWAI9Qbe/fLCCxp7H+oP7FtkiNNozUEs71Z
+         yd7uKXiEVeHdPQzUSfMkOJPZ+2BGPVOtWtQggXTIv5zJKLfC7UpoQR1L8dXo8pia6SGb
+         3LCvPFXuqF8SghH7mPH0pnA+ZqBu8ygB07lI2R6/3p2clNZKrPTVnGVeCsmGam0fqt5+
+         l/Dmacelvxv0Fmm1+JBtA8z/AtRHw19Y7KoRnM4Y77sOjsg7zHQfSwZ2ugPowCiikspu
+         M/7JPIm6HmaL2/mENgeV2nkWTlvXu7aXe2zhFPJuxDNKDKh9+w8uvdQEXzKrTEb1t7lP
+         ezCA==
+X-Gm-Message-State: AOAM5308SmjZYEB6AWR1wWy0wtgbg+fNNWLd3RSuBW1z8waXeZzp8+Gb
+        GIolkx4ZssD64Sxkqt/bXiWAWg==
+X-Google-Smtp-Source: ABdhPJzJeJ8Qn4Z1o2TIdrxQ/N0mbKTx/h2pTPJCQsuJeHVtQO1yZPPbnuHFtgQvj4RVU9ROT7PnjQ==
+X-Received: by 2002:a5d:6a08:: with SMTP id m8mr31463813wru.57.1618349956291;
+        Tue, 13 Apr 2021 14:39:16 -0700 (PDT)
+Received: from phenom.ffwll.local ([2a02:168:57f4:0:efd0:b9e5:5ae6:c2fa])
+        by smtp.gmail.com with ESMTPSA id w22sm3533594wmc.13.2021.04.13.14.39.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Apr 2021 14:12:56 -0700 (PDT)
-Date:   Tue, 13 Apr 2021 16:12:54 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Deepak Kumar Singh <deesin@qti.qualcomm.com>
-Cc:     clew@codeaurora.org, sibis@codeaurora.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org,
-        Deepak Kumar Singh <deesin@codeaurora.org>,
-        Andy Gross <agross@kernel.org>
-Subject: Re: [PATCH V2 1/2] soc: qcom: aoss: Expose send for generic usecase
-Message-ID: <YHYJVjvjUyXtrNmC@builder.lan>
-References: <1617943188-23278-1-git-send-email-deesin@qti.qualcomm.com>
- <1617943188-23278-2-git-send-email-deesin@qti.qualcomm.com>
+        Tue, 13 Apr 2021 14:39:15 -0700 (PDT)
+Date:   Tue, 13 Apr 2021 23:39:01 +0200
+From:   Daniel Vetter <daniel@ffwll.ch>
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     Dave Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Sean Paul <sean@poorly.run>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: Re: [pull] drm/msm: drm-msm-next for 5.13
+Message-ID: <YHYPdbO8ZZ676aTU@phenom.ffwll.local>
+References: <CAF6AEGvL=4aw15qoY8fbKG9FCgnx8Y-dCtf7xiFwTQSHopwSQg@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1617943188-23278-2-git-send-email-deesin@qti.qualcomm.com>
+In-Reply-To: <CAF6AEGvL=4aw15qoY8fbKG9FCgnx8Y-dCtf7xiFwTQSHopwSQg@mail.gmail.com>
+X-Operating-System: Linux phenom 5.7.0-1-amd64 
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 08 Apr 23:39 CDT 2021, Deepak Kumar Singh wrote:
-[..]
-> +/**
-> + * qmp_get() - get a qmp handle from a device
-> + * @dev: client device pointer
-> + *
-> + * Return: handle to qmp device on success, ERR_PTR() on failure
-> + */
-> +struct qmp *qmp_get(struct device *dev)
-> +{
-> +	struct platform_device *pdev;
-> +	struct device_node *np;
-> +	struct qmp *qmp;
-> +
-> +	if (!dev || !dev->of_node)
-> +		return ERR_PTR(-EINVAL);
-> +
-> +	np = of_parse_phandle(dev->of_node, "qcom,qmp", 0);
-> +	if (!np)
-> +		return ERR_PTR(-ENODEV);
-> +
-> +	pdev = of_find_device_by_node(np);
-> +	if (!pdev)
-> +		return ERR_PTR(-EINVAL);
-> +
-> +	qmp = platform_get_drvdata(pdev);
-> +	return qmp ? qmp : ERR_PTR(-EPROBE_DEFER);
-> +}
-> +EXPORT_SYMBOL(qmp_get);
-> +
-> +void qmp_put(struct platform_device *pdev)
-> +{
-> +	platform_device_put(pdev);
+On Sun, Apr 11, 2021 at 05:53:32PM -0700, Rob Clark wrote:
+> Hi Dave&Daniel,
+> 
+> This time around a bit larger than usual, but a large part of that is
+> Dmitry's dsi phy/pll refactor (which is itself a pretty large negative
+> diffstat).  The dsi phy/pll refactor includes a couple clk patches a-b
+> the maintainer.  (For folks actually trying to boot msm-next, there is
+> one clk fix required, which should hopefully land in 5.12 but not in
+> msm-next.. https://patchwork.freedesktop.org/patch/427412/)
+> 
+> * Big DSI phy/pll cleanup
+> * Initial support for sc7280
+> * compatibles fixes for sm8150/sm8250
+> * cleanups for all dpu gens to use same bandwidth scaling paths (\o/)
+> * various shrinker path lock contention optimizations
+> * unpin/swap support for GEM objects (disabled by default, enable with
+>   msm.enable_eviction=1 .. due to various combinations of iommu drivers
+>   with older gens I want to get more testing on hw I don't have in front
+>   of me before enabling by default)
+> * The usual assortment of misc fixes and cleanups
+> 
+> The following changes since commit 1e28eed17697bcf343c6743f0028cc3b5dd88bf0:
+> 
+>   Linux 5.12-rc3 (2021-03-14 14:41:02 -0700)
+> 
+> are available in the Git repository at:
+> 
+>   https://gitlab.freedesktop.org/drm/msm.git drm-msm-next-2021-04-11
+> 
+> for you to fetch changes up to a29c8c0241654d5f3165d52e9307e4feff955621:
+> 
+>   drm/msm/disp/dpu1: fix display underruns during modeset. (2021-04-09
 
-I was expecting that the devres allocated struct qmp would stick around
-until the struct device's release callback came. As described in my
-answer to Mani yesterday I was wrong.
+Pulled into drm-next, thanks for your pull. Maybe to make this even
+easier for us: Pull summary in the tag is nice :-)
 
-As such you need to make sure that struct qmp stays around until
-qmp_remove() and all qmp_put() calls has been made.
+Dave, I've done a backmerge of drm-fixes into drm-next first since this
+was on a newer baseline. I asked Alex to double-check the result just in
+case.
+-Daniel
 
-I presume a reasonable way to achieve this is to not use devm to
-allocate our struct qmp, add a kref to the object. So this would have to
-be a kref_put() on that instead of the platform_device_put() I asked you
-to implement here.
+> 12:02:35 -0700)
+> 
+> ----------------------------------------------------------------
+> Abhinav Kumar (3):
+>       drm/msm/dp: Fix indentation kbot warnings in DP driver
+>       drm/msm/dp: Fix incorrect NULL check kbot warnings in DP driver
+>       drm/msm/dp: delete unnecessary debugfs error handling
+> 
+> Akhil P Oommen (2):
+>       drm/msm/a6xx: Fix perfcounter oob timeout
+>       drm/msm: Select CONFIG_NVMEM
+> 
+> AngeloGioacchino Del Regno (2):
+>       drm/msm/dsi: Uncomment core_mmss clock for MSM8996
+>       drm/msm/mdp5: Disable pingpong autorefresh at tearcheck init
+> 
+> Bernard Zhao (1):
+>       gpu/drm/msm: remove redundant pr_err() when devm_kzalloc failed
+> 
+> Bhaskar Chowdhury (1):
+>       drivers: gpu: drm: msn: disp: dpu1: Fixed couple of spellings in
+> the file dpu_hw_top.h
+> 
+> Bjorn Andersson (1):
+>       drm/msm: Remove need for reiterating the compatibles
+> 
+> Colin Ian King (1):
+>       drm/msm: Fix spelling mistake "Purgable" -> "Purgeable"
+> 
+> Dmitry Baryshkov (32):
+>       drm/msm/dsi: fix check-before-set in the 7nm dsi_pll code
+>       drm/msm/dsi_pll_7nm: Solve TODO for multiplier frac_bits assignment
+>       drm/msm/dsi_pll_7nm: Fix variable usage for pll_lockdet_rate
+>       drm/msm: fix shutdown hook in case GPU components failed to bind
+>       drm/msm: a6xx: fix version check for the A650 SQE microcode
+>       clk: mux: provide devm_clk_hw_register_mux()
+>       clk: divider: add devm_clk_hw_register_divider
+>       drm/msm/dsi: replace PHY's init callback with configurable data
+>       drm/msm/dsi: fuse dsi_pll_* code into dsi_phy_* code
+>       drm/msm/dsi: drop multiple pll enable_seq support
+>       drm/msm/dsi: move all PLL callbacks into PHY config struct
+>       drm/msm/dsi: drop global msm_dsi_phy_type enumaration
+>       drm/msm/dsi: move min/max PLL rate to phy config
+>       drm/msm/dsi: remove msm_dsi_pll_set_usecase
+>       drm/msm/dsi: push provided clocks handling into a generic code
+>       drm/msm/dsi: use devm_clk_*register to registe DSI PHY clocks
+>       drm/msm/dsi: use devm_of_clk_add_hw_provider
+>       drm/msm/dsi: make save/restore_state phy-level functions
+>       drm/msm/dsi: drop vco_delay setting from 7nm, 10nm, 14nm drivers
+>       drm/msm/dsi: simplify vco_delay handling in dsi_phy_28nm driver
+>       drm/msi/dsi: inline msm_dsi_pll_helper_clk_prepare/unprepare
+>       drm/msm/dsi: make save_state/restore_state callbacks accept msm_dsi_phy
+>       drm/msm/dsi: drop msm_dsi_pll abstraction
+>       drm/msm/dsi: drop PLL accessor functions
+>       drm/msm/dsi: move ioremaps to dsi_phy_driver_probe
+>       drm/msm/dsi: remove duplicate fields from dsi_pll_Nnm instances
+>       drm/msm/dsi: remove temp data from global pll structure
+>       drm/msm/dsi: inline msm_dsi_phy_set_src_pll
+>       drm/msm/dsi: stop passing src_pll_id to the phy_enable call
+>       drm/msm/dpu: enable DPU_SSPP_QOS_8LVL for SM8250
+>       drm/msm/dpu: fill missing details in hw catalog for sdm845 and sm8[12]50
+>       drm/msm/dpu: always use mdp device to scale bandwidth
+> 
+> Douglas Anderson (1):
+>       drm/msm: Fix speed-bin support not to access outside valid memory
+> 
+> Fabio Estevam (1):
+>       drm/msm: Fix suspend/resume on i.MX5
+> 
+> John Stultz (1):
+>       drm/msm: Fix removal of valid error case when checking speed_bin
+> 
+> Jonathan Marek (2):
+>       drm/msm: fix a6xx_gmu_clear_oob
+>       drm/msm: add compatibles for sm8150/sm8250 display
+> 
+> Jordan Crouse (1):
+>       drm/msm: a6xx: Make sure the SQE microcode is safe
+> 
+> Kalyan Thota (4):
+>       drm/msm/disp/dpu1: icc path needs to be set before dpu runtime resume
+>       drm/msm/disp/dpu1: program 3d_merge only if block is attached
+>       drm/msm/disp/dpu1: turn off vblank irqs aggressively in dpu driver
+>       drm/msm/disp/dpu1: fix display underruns during modeset.
+> 
+> Konrad Dybcio (1):
+>       drm/msm/adreno: a5xx_power: Don't apply A540 lm_setup to other GPUs
+> 
+> Krishna Manikandan (7):
+>       drm/msm/disp/dpu1: add support for display for SC7280 target
+>       drm/msm/disp/dpu1: add intf offsets for SC7280 target
+>       drm/msm/disp/dpu1: add support to program fetch active in ctl path
+>       drm/msm/disp/dpu1: enable DATA_HCTL_EN for sc7280 target
+>       drm/msm/disp/dpu1: increase the range of interrupts in dpu_irq_map
+>       drm/msm/disp/dpu1: add vsync and underrun irqs for INTF_5
+>       drm/msm/disp/dpu1: add flags to indicate obsolete irqs
+> 
+> Marijn Suijten (2):
+>       drm/msm/mdp5: Configure PP_SYNC_HEIGHT to double the vtotal
+>       drm/msm/mdp5: Do not multiply vclk line count by 100
+> 
+> Rob Clark (18):
+>       drm/msm: Ratelimit invalid-fence message
+>       drm/msm: Fix a5xx/a6xx timestamps
+>       Merge tag 'drm-msm-fixes-2021-04-02' into msm-next
+>       drm/msm: Remove unused freed llist node
+>       drm/msm: Avoid mutex in shrinker_count()
+>       drm/msm: Fix debugfs deadlock
+>       drm/msm: Improved debugfs gem stats
+>       drm/msm: Drop mm_lock in scan loop
+>       drm/msm: Fix spelling "purgable" -> "purgeable"
+>       drm/msm: Add param for userspace to query suspend count
+>       drm/msm: ratelimit GEM related WARN_ON()s
+>       drm/msm: Reorganize msm_gem_shrinker_scan()
+>       drm/msm: Clear msm_obj->sgt in put_pages()
+>       drm/msm: Split iova purge and close
+>       drm/msm: Add $debugfs/gem stats on resident objects
+>       drm/msm: Track potentially evictable objects
+>       drm/msm: Small msm_gem_purge() fix
+>       drm/msm: Support evicting GEM objects to swap
+> 
+> Stephen Boyd (3):
+>       drm/msm/kms: Use nested locking for crtc lock instead of custom classes
+>       drm/msm/dp: Restore aux retry tuning logic
+>       drm/msm: Set drvdata to NULL when msm_drm_init() fails
+> 
+>  drivers/clk/clk-mux.c                              |   35 +
+>  drivers/gpu/drm/msm/Kconfig                        |    9 +-
+>  drivers/gpu/drm/msm/Makefile                       |    9 -
+>  drivers/gpu/drm/msm/adreno/a5xx_gpu.c              |    4 +-
+>  drivers/gpu/drm/msm/adreno/a5xx_power.c            |    2 +-
+>  drivers/gpu/drm/msm/adreno/a6xx_gmu.c              |   14 +-
+>  drivers/gpu/drm/msm/adreno/a6xx_gpu.c              |  108 +-
+>  drivers/gpu/drm/msm/adreno/adreno_gpu.c            |    3 +
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.c       |    4 +-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c      |    1 -
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c           |   88 +-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c        |   30 +
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h        |   11 +
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h   |    1 +
+>  .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c   |   26 +
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c     |  195 +++-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h     |   10 +-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c         |   31 +-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h         |    3 +
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c  |  793 ++++++++++++--
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h  |    5 +-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c        |   12 +-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h        |    1 +
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h         |    4 +-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            |   19 +-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c           |   54 +-
+>  drivers/gpu/drm/msm/disp/mdp5/mdp5_cmd_encoder.c   |   19 +-
+>  drivers/gpu/drm/msm/dp/dp_aux.c                    |    7 +
+>  drivers/gpu/drm/msm/dp/dp_debug.c                  |   33 +-
+>  drivers/gpu/drm/msm/dp/dp_hpd.c                    |    4 +-
+>  drivers/gpu/drm/msm/dp/dp_power.c                  |    2 +-
+>  drivers/gpu/drm/msm/dsi/dsi.h                      |   60 +-
+>  drivers/gpu/drm/msm/dsi/dsi_cfg.c                  |    6 +-
+>  drivers/gpu/drm/msm/dsi/dsi_host.c                 |    6 +-
+>  drivers/gpu/drm/msm/dsi/dsi_manager.c              |   30 +-
+>  drivers/gpu/drm/msm/dsi/phy/dsi_phy.c              |  161 +--
+>  drivers/gpu/drm/msm/dsi/phy/dsi_phy.h              |   41 +-
+>  drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c         |  747 ++++++++++++-
+>  drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c         |  939 ++++++++++++++++-
+>  drivers/gpu/drm/msm/dsi/phy/dsi_phy_20nm.c         |   16 +-
+>  drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c         |  654 +++++++++++-
+>  drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c    |  479 ++++++++-
+>  drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c          |  774 +++++++++++++-
+>  drivers/gpu/drm/msm/dsi/pll/dsi_pll.c              |  184 ----
+>  drivers/gpu/drm/msm/dsi/pll/dsi_pll.h              |  130 ---
+>  drivers/gpu/drm/msm/dsi/pll/dsi_pll_10nm.c         |  881 ----------------
+>  drivers/gpu/drm/msm/dsi/pll/dsi_pll_14nm.c         | 1096 --------------------
+>  drivers/gpu/drm/msm/dsi/pll/dsi_pll_28nm.c         |  643 ------------
+>  drivers/gpu/drm/msm/dsi/pll/dsi_pll_28nm_8960.c    |  526 ----------
+>  drivers/gpu/drm/msm/dsi/pll/dsi_pll_7nm.c          |  912 ----------------
+>  drivers/gpu/drm/msm/msm_atomic.c                   |    7 +-
+>  drivers/gpu/drm/msm/msm_debugfs.c                  |   14 +-
+>  drivers/gpu/drm/msm/msm_drv.c                      |   36 +-
+>  drivers/gpu/drm/msm/msm_drv.h                      |   29 +-
+>  drivers/gpu/drm/msm/msm_fb.c                       |    3 +-
+>  drivers/gpu/drm/msm/msm_fence.c                    |    2 +-
+>  drivers/gpu/drm/msm/msm_gem.c                      |  212 +++-
+>  drivers/gpu/drm/msm/msm_gem.h                      |  126 ++-
+>  drivers/gpu/drm/msm/msm_gem_shrinker.c             |  166 ++-
+>  drivers/gpu/drm/msm/msm_gpu.c                      |    2 +
+>  drivers/gpu/drm/msm/msm_gpu.h                      |    2 +
+>  drivers/gpu/drm/msm/msm_gpu_trace.h                |   13 +
+>  drivers/gpu/drm/msm/msm_kms.h                      |    8 +-
+>  include/linux/clk-provider.h                       |   30 +
+>  include/uapi/drm/msm_drm.h                         |    1 +
+>  65 files changed, 5402 insertions(+), 5071 deletions(-)
+>  delete mode 100644 drivers/gpu/drm/msm/dsi/pll/dsi_pll.c
+>  delete mode 100644 drivers/gpu/drm/msm/dsi/pll/dsi_pll.h
+>  delete mode 100644 drivers/gpu/drm/msm/dsi/pll/dsi_pll_10nm.c
+>  delete mode 100644 drivers/gpu/drm/msm/dsi/pll/dsi_pll_14nm.c
+>  delete mode 100644 drivers/gpu/drm/msm/dsi/pll/dsi_pll_28nm.c
+>  delete mode 100644 drivers/gpu/drm/msm/dsi/pll/dsi_pll_28nm_8960.c
+>  delete mode 100644 drivers/gpu/drm/msm/dsi/pll/dsi_pll_7nm.c
 
-Sorry about that.
-
-
-The rest of the patch looks good.
-
-Regards,
-Bjorn
+-- 
+Daniel Vetter
+Software Engineer, Intel Corporation
+http://blog.ffwll.ch
