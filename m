@@ -2,133 +2,171 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 01D6835DCFF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Apr 2021 12:59:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DF7D335E14D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Apr 2021 16:22:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344738AbhDMK7n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Apr 2021 06:59:43 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:38895 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344710AbhDMK7l (ORCPT
+        id S237911AbhDMOWv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Apr 2021 10:22:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57904 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231477AbhDMOWo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Apr 2021 06:59:41 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1618311561; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=m0BphGKv3ot9eovnDlG46kpvyBSpZUYgaoAjCjQNs8M=;
- b=mQrxWmMxcg0qEjQ4MsSDxRaxrHWpI8F8RtJBnaki/Mbi9IlkfGGu/4Uf6GG873jskcH1Bt41
- U9Te8kSIGpScNI1dfi1RMPnT8UYaaxQh0+EJkTGkMdP32yYI3+gB+QyFkdDP+8JRQJIsIYjp
- EWZuntBGimocM0h6lmRscrqLTqA=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
- 6075798574f773a6645a8d74 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 13 Apr 2021 10:59:17
- GMT
-Sender: sbhanu=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 40986C43462; Tue, 13 Apr 2021 10:59:17 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: sbhanu)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 2D468C433CA;
-        Tue, 13 Apr 2021 10:59:16 +0000 (UTC)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Tue, 13 Apr 2021 16:29:16 +0530
-From:   sbhanu@codeaurora.org
-To:     Doug Anderson <dianders@google.com>
-Cc:     Veerabhadrarao Badiganti <vbadigan@codeaurora.org>,
-        Adrian Hunter <adrian.hunter@intel.com>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
+        Tue, 13 Apr 2021 10:22:44 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7AE9C06175F
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Apr 2021 07:22:23 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id 12so27523232lfq.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Apr 2021 07:22:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=sSdkvcoRP/DLD226a2zcjxaqs8CSLLa63pnFVOEgkYc=;
+        b=CCZYPUChjpWx+NonKRNO2t2uLvncd+6QV5OYgzIv0mW7RUb2PXRzCrp9YvNG7NavmT
+         Hv4Q4buek8R1ReXrHv5tWDpVzDs9A9XkdPFSzNwSnAW63VqafrqUh4nt2lf+CSIVTzfJ
+         8RSlYD/yJc7ScBTWdXj6DTyAjBE+Sg7H2vwdAqxk/PGKVyTE6ZbyjnMaSoKx+dCerr8h
+         ZZphWWEVF29QQYmM9dNL7tOK3yTMcYe9Irwit5fIWJbzQOIwY1ATZ/bb4kodsEm8mXk5
+         riY/0u9CD9MUgnbtrR/xxiNeOto3j8fvNRvZ5BmEobzxNr2nJLv5w1VLD0tUqDqiaXsN
+         TMrg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=sSdkvcoRP/DLD226a2zcjxaqs8CSLLa63pnFVOEgkYc=;
+        b=PMb0sr7/iTj+FwlQ2yVluruWhe9H2o3TixaAPptMEB+Y6GAHuJ3GdsGNQPoe5PozR/
+         1zPue07u159eE5ULmlmNcPUpsGnpSUoCpdqzh0kMNjM4EWVtbezuyisE8cNtZ+zZ9EpL
+         T6fWpfM0j34IAe+IyNV9ECxCU5qcsaoUfzm5AHyaPNFXz9fUuW0c3acRZE1tlyMy21xZ
+         eSdsqOLas77766VO8kor6rOGdzoBpNmWnqxb9KaMqW+HrH2mHTwE6vfzyZ45tTsB4Lct
+         WyzNSmcLIt2MnOJd3LhoRI8/ciLXXI0eOxo/cMoQHbWFAP/CypBw28dIqYTcn5Pltib7
+         zrDQ==
+X-Gm-Message-State: AOAM530r4dg0kBa3U40e0aNmq0f/B+UU5ZQBXKHfn1tpzuTAURm2GqEh
+        QokdhkuAvILAhoTJPtKc4CSvgie9LVCsWA==
+X-Google-Smtp-Source: ABdhPJwWFZFUurHVGHK85bLZPRnJfU7A7DCmBmeM8JgP8wxpiCWeGBGIsnFMr+7bE6gxL9tu9LdRoQ==
+X-Received: by 2002:a19:c187:: with SMTP id r129mr7608474lff.457.1618323741124;
+        Tue, 13 Apr 2021 07:22:21 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id n7sm3397814lft.65.2021.04.13.07.22.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 13 Apr 2021 07:22:20 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Asutosh Das <asutoshd@codeaurora.org>,
-        Sahitya Tummala <stummala@codeaurora.org>,
-        Ram Prakash Gupta <rampraka@codeaurora.org>,
-        Sayali Lokhande <sayalil@codeaurora.org>,
-        sartgarg@codeaurora.org, Rajendra Nayak <rnayak@codeaurora.org>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Sibi Sankar <sibis@codeaurora.org>, cang@codeaurora.org,
-        pragalla@codeaurora.org, nitirawa@codeaurora.org,
-        Linux MMC List <linux-mmc@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Subject: Re: [PATCH V2] arm64: dts: qcom: sc7280: Add nodes for eMMC and SD
- card
-In-Reply-To: <CAD=FV=Wa4fT5wZgd0==8kLy_tzTLgdZ-HwdfOEAM9pMeMjjFyg@mail.gmail.com>
-References: <1616264220-25825-1-git-send-email-sbhanu@codeaurora.org>
- <CAD=FV=WLZCSd6D5VFyD+1KBp5n1qyszER2EVaEMwYjQfPSSDnA@mail.gmail.com>
- <b77f207b-2d90-3c8b-857f-625bd3867ed1@codeaurora.org>
- <6fdf704c4716f5873d413229ca8adc57@codeaurora.org>
- <CAD=FV=Wa4fT5wZgd0==8kLy_tzTLgdZ-HwdfOEAM9pMeMjjFyg@mail.gmail.com>
-Message-ID: <8126e130e5c0ea1e7ea867414f0510c0@codeaurora.org>
-X-Sender: sbhanu@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        linux-pci@vger.kernel.org, Hou Zhiqiang <Zhiqiang.Hou@nxp.com>,
+        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Rob Herring <robh@kernel.org>, stable@vger.kernel.org,
+        Marek Szyprowski <m.szyprowski@samsung.com>
+Subject: [PATCH v2] PCI: dwc: Move iATU detection earlier
+Date:   Tue, 13 Apr 2021 17:22:19 +0300
+Message-Id: <20210413142219.2301430-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.30.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-03-29 20:26, Doug Anderson wrote:
-> Hi,
-> 
-> On Thu, Mar 25, 2021 at 11:57 PM <sbhanu@codeaurora.org> wrote:
->> 
->> >>> +                       max-frequency = <192000000>;
->> >> Why do you need to specify this?
->> This helps to avoid lower speed modes running in high clock rate,
->> and As Veerabhadrarao Badiganti mentioned
-> 
-> Just to be clear, both Stephen and I agree that you should remove
-> "max-frequency" here (see previous discussion). Bjorn is, of course,
-> the file decision maker. However, unless he says "yeah, totally keep
-> it in" I'd suggest dropping it from the next version.
-> 
-sure will drop in next version.
-> 
->> >>> +                                       required-opps =
->> >>> <&rpmhpd_opp_low_svs>;
->> >>> +                                       opp-peak-kBps = <1200000
->> >>> 76000>;
->> >>> +                                       opp-avg-kBps = <1200000
->> >>> 50000>;
->> >> Why are the kBps numbers so vastly different than the ones on sc7180
->> >> for the same OPP point. That implies:
->> >>
->> >> a) sc7180 is wrong.
->> >>
->> >> b) This patch is wrong.
->> >>
->> >> c) The numbers are essentially random and don't really matter.
->> >>
->> >> Can you identify which of a), b), or c) is correct, or propose an
->> >> alternate explanation of the difference?
->> >>
->> 
->> We calculated bus votes values for both sc7180 and sc7280 with ICB 
->> tool,
->> above mentioned values we got for sc7280.
-> 
-> I don't know what an ICB tool is. Please clarify.
-> 
-> Also: just because a tool spits out numbers that doesn't mean it's
-> correct. Presumably the tool could be wrong or incorrectly configured.
-> We need to understand why these numbers are different.
-> 
-we checked with ICB tool team on this they conformed as Rennell & Kodiak 
-are different chipsets,
-we might see delta in ib/ab values due to delta in scaling factors.
+From: Hou Zhiqiang <Zhiqiang.Hou@nxp.com>
 
-> -Doug
+dw_pcie_ep_init() depends on the detected iATU region numbers to allocate
+the in/outbound window management bitmap.  It fails after 281f1f99cf3a
+("PCI: dwc: Detect number of iATU windows").
+
+Move the iATU region detection into a new function, move the detection to
+the very beginning of dw_pcie_host_init() and dw_pcie_ep_init().  Also
+remove it from the dw_pcie_setup(), since it's more like a software
+initialization step than hardware setup.
+
+Fixes: 281f1f99cf3a ("PCI: dwc: Detect number of iATU windows")
+Link: https://lore.kernel.org/r/20210125044803.4310-1-Zhiqiang.Hou@nxp.com
+Tested-by: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
+Signed-off-by: Hou Zhiqiang <Zhiqiang.Hou@nxp.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Rob Herring <robh@kernel.org>
+Cc: stable@vger.kernel.org	# v5.11+
+[DB: moved dw_pcie_iatu_detect to happen after host_init callback]
+Link: https://lore.kernel.org/linux-pci/20210407131255.702054-1-dmitry.baryshkov@linaro.org
+Cc: Marek Szyprowski <m.szyprowski@samsung.com>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ drivers/pci/controller/dwc/pcie-designware-ep.c   |  2 ++
+ drivers/pci/controller/dwc/pcie-designware-host.c |  1 +
+ drivers/pci/controller/dwc/pcie-designware.c      | 11 ++++++++---
+ drivers/pci/controller/dwc/pcie-designware.h      |  1 +
+ 4 files changed, 12 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/pci/controller/dwc/pcie-designware-ep.c b/drivers/pci/controller/dwc/pcie-designware-ep.c
+index 1c25d8337151..8d028a88b375 100644
+--- a/drivers/pci/controller/dwc/pcie-designware-ep.c
++++ b/drivers/pci/controller/dwc/pcie-designware-ep.c
+@@ -705,6 +705,8 @@ int dw_pcie_ep_init(struct dw_pcie_ep *ep)
+ 		}
+ 	}
+ 
++	dw_pcie_iatu_detect(pci);
++
+ 	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "addr_space");
+ 	if (!res)
+ 		return -EINVAL;
+diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
+index 7e55b2b66182..24192b40e3a2 100644
+--- a/drivers/pci/controller/dwc/pcie-designware-host.c
++++ b/drivers/pci/controller/dwc/pcie-designware-host.c
+@@ -398,6 +398,7 @@ int dw_pcie_host_init(struct pcie_port *pp)
+ 		if (ret)
+ 			goto err_free_msi;
+ 	}
++	dw_pcie_iatu_detect(pci);
+ 
+ 	dw_pcie_setup_rc(pp);
+ 	dw_pcie_msi_init(pp);
+diff --git a/drivers/pci/controller/dwc/pcie-designware.c b/drivers/pci/controller/dwc/pcie-designware.c
+index 004cb860e266..a945f0c0e73d 100644
+--- a/drivers/pci/controller/dwc/pcie-designware.c
++++ b/drivers/pci/controller/dwc/pcie-designware.c
+@@ -660,11 +660,9 @@ static void dw_pcie_iatu_detect_regions(struct dw_pcie *pci)
+ 	pci->num_ob_windows = ob;
+ }
+ 
+-void dw_pcie_setup(struct dw_pcie *pci)
++void dw_pcie_iatu_detect(struct dw_pcie *pci)
+ {
+-	u32 val;
+ 	struct device *dev = pci->dev;
+-	struct device_node *np = dev->of_node;
+ 	struct platform_device *pdev = to_platform_device(dev);
+ 
+ 	if (pci->version >= 0x480A || (!pci->version &&
+@@ -693,6 +691,13 @@ void dw_pcie_setup(struct dw_pcie *pci)
+ 
+ 	dev_info(pci->dev, "Detected iATU regions: %u outbound, %u inbound",
+ 		 pci->num_ob_windows, pci->num_ib_windows);
++}
++
++void dw_pcie_setup(struct dw_pcie *pci)
++{
++	u32 val;
++	struct device *dev = pci->dev;
++	struct device_node *np = dev->of_node;
+ 
+ 	if (pci->link_gen > 0)
+ 		dw_pcie_link_set_max_speed(pci, pci->link_gen);
+diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
+index 7247c8b01f04..7d6e9b7576be 100644
+--- a/drivers/pci/controller/dwc/pcie-designware.h
++++ b/drivers/pci/controller/dwc/pcie-designware.h
+@@ -306,6 +306,7 @@ int dw_pcie_prog_inbound_atu(struct dw_pcie *pci, u8 func_no, int index,
+ void dw_pcie_disable_atu(struct dw_pcie *pci, int index,
+ 			 enum dw_pcie_region_type type);
+ void dw_pcie_setup(struct dw_pcie *pci);
++void dw_pcie_iatu_detect(struct dw_pcie *pci);
+ 
+ static inline void dw_pcie_writel_dbi(struct dw_pcie *pci, u32 reg, u32 val)
+ {
+-- 
+2.30.2
+
