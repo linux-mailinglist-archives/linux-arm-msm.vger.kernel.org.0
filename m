@@ -2,73 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DE2E935E8CE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Apr 2021 00:11:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 95E8235E94E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Apr 2021 00:56:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348578AbhDMWKf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Apr 2021 18:10:35 -0400
-Received: from mail.kernel.org ([198.145.29.99]:55310 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1345154AbhDMWKb (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Apr 2021 18:10:31 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPS id E57C46135C;
-        Tue, 13 Apr 2021 22:10:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1618351811;
-        bh=u2WGsaI7HSrl3UlC9alGdJt7IjYDGWxPdZjzLmNm5lk=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=NCr/qfK46rxP2xuFHSaj4NgWyk4mheoqWqEX3BIw0mKGCED5oEBhjyRHerxxtIh+C
-         ElAl6ch9qdOsp7Fm8UorbRDQUxwczLrkOZw4tns1cjr8RlNuI57JnHn1LdIDRfebdi
-         naHSJMcmJnynKV1xz3yiFjXEtcB/9U8FlzKzR+KWEWkFqsm51dRVpq6K50evSGmob6
-         6qlkNVFEXXI5VOa8Rrx3euyrNWS8EvguBA6PSXd/1dSev3b7vpgHnXqhcPombkpD1D
-         Np7ByfHIE1whgaQLqTZK5dVAJEPfY1yRPYUQzNwFXwT0fl6ObgKuRaKoyWYTAapn0v
-         HaVPP0uXKczeQ==
-Received: from pdx-korg-docbuild-2.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id D8C0D60BD8;
-        Tue, 13 Apr 2021 22:10:10 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+        id S232866AbhDMW4w (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Apr 2021 18:56:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56884 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232807AbhDMW4t (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 13 Apr 2021 18:56:49 -0400
+Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1647DC061756
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Apr 2021 15:56:29 -0700 (PDT)
+Received: by mail-ot1-x330.google.com with SMTP id 101-20020a9d0d6e0000b02902816815ff62so11769321oti.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Apr 2021 15:56:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=05tcFWzhbtWsvn6Zxp27oA5RVQLTs+bfFK4lyYf+pGM=;
+        b=pliwmgsovw+yFwa/mMH2LoycsBcfgDmUzhL8qi3LrJW1iZ1dXo7trilveY0UtSAeAp
+         Ns2c3I4NsTX1p7Di1gVj3Pcnr/tjmJpLZ3DcdKJc9MQRNSPfuS6SkV9X5epK5hNlBLN9
+         sOA9SogmpP9duN0eCahKttyQlp8IeUlN6BL95KXwY19ioK2V+WSnhN3eKxHeBc17fIgK
+         NeFAeMYqhPPZwnq9t1W+Qoeem2w/P1Q1N5B29b8KJ/zEicUULJk+6MZegH9SaFMBnihF
+         eIe6XX6CiCM8Cs/EG6uiRHjdYuBZuAdApuMHuaLYMw8rv8K85vB3ED26/JgELsIvevOf
+         X6Tw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=05tcFWzhbtWsvn6Zxp27oA5RVQLTs+bfFK4lyYf+pGM=;
+        b=teMVRyHnUc4KSn7hvjdLptLZU+hvvyoO+0YvrytlKpb8fPKkAe5J+Ck4pBVB20Y6zn
+         wbZVYpHsBuYYhvP+1pcd92x4CUWk6ACX1jlr+GuyJghk7PoukXWX+wpabXHpXr2ls0M0
+         ZJzzlworG89lw0LGv6Woi1Wu57JEqWh3WVea60yyvzlu1edT3uXxwuRugWt96PysLpN3
+         LJK8M/V76dHBay3IXbF0ZXuC6WBTTX75yG9XpQ4/zaPuTRmRu5uUZXZcQnO9vXvqf2tM
+         WbwgMD2OAbbAe8MSCrfTBdrj2brwlNxn7cmQT1endTc/uKR1lMOH7oamMerngB19eGKc
+         Autg==
+X-Gm-Message-State: AOAM530VovhGijpWN2FMs24t5/Cn3oVw12RGCs0ioP6EPW1AJjGhtqyQ
+        NmzUVuUBkdg64lAT32+ipFBvtw==
+X-Google-Smtp-Source: ABdhPJxKzFDMgJaO10usW8e30+Jpx744w03sBogKaKo+QDQnMzyczHj74g+S3A/O77a/Y2s7cNyr7g==
+X-Received: by 2002:a05:6830:2117:: with SMTP id i23mr2174974otc.170.1618354588449;
+        Tue, 13 Apr 2021 15:56:28 -0700 (PDT)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id g5sm3113575oiy.24.2021.04.13.15.56.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 13 Apr 2021 15:56:28 -0700 (PDT)
+Date:   Tue, 13 Apr 2021 17:56:26 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
+        Ajit Pandey <ajitp@codeaurora.org>,
+        Judy Hsiao <judyhsiao@chromium.org>,
+        Cheng-Yi Chiang <cychiang@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v2 1/2] arm64: dts: qcom: Add "dmic_clk_en" for
+ sc7180-trogdor-coachz
+Message-ID: <YHYhmlniOVKkwy96@builder.lan>
+References: <20210315133924.v2.1.I601a051cad7cfd0923e55b69ef7e5748910a6096@changeid>
+ <CAD=FV=ViWgXzudGAiVLakaKuGK_gEnUxQ8nOkZjCrxQHjdGx9w@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH net-next 0/2] net: ipa: add support for the SM8350 SoC
-From:   patchwork-bot+netdevbpf@kernel.org
-Message-Id: <161835181088.31494.2378952390871808403.git-patchwork-notify@kernel.org>
-Date:   Tue, 13 Apr 2021 22:10:10 +0000
-References: <20210413163826.1770386-1-elder@linaro.org>
-In-Reply-To: <20210413163826.1770386-1-elder@linaro.org>
-To:     Alex Elder <elder@linaro.org>
-Cc:     robh+dt@kernel.org, davem@davemloft.net, kuba@kernel.org,
-        bjorn.andersson@linaro.org, evgreen@chromium.org,
-        cpratapa@codeaurora.org, subashab@codeaurora.org, elder@kernel.org,
-        netdev@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAD=FV=ViWgXzudGAiVLakaKuGK_gEnUxQ8nOkZjCrxQHjdGx9w@mail.gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello:
+On Mon 12 Apr 18:16 CDT 2021, Doug Anderson wrote:
 
-This series was applied to netdev/net-next.git (refs/heads/master):
-
-On Tue, 13 Apr 2021 11:38:24 -0500 you wrote:
-> This small series adds IPA driver support for the Qualcomm SM8350
-> SoC, which implements IPA v4.9.
+> Bjorn,
 > 
-> The first patch updates the DT binding, and depends on a previous
-> patch that has already been accepted into net-next.
+> On Mon, Mar 15, 2021 at 1:39 PM Douglas Anderson <dianders@chromium.org> wrote:
+> >
+> > This was present downstream. Add upstream too. NOTE: upstream I
+> > managed to get some sort of halfway state and got one pinctrl entry in
+> > the coachz-r1 device tree. Remove that as part of this since it's now
+> > in the dtsi.
+> >
+> > Cc: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+> > Cc: Ajit Pandey <ajitp@codeaurora.org>
+> > Cc: Judy Hsiao <judyhsiao@chromium.org>
+> > Cc: Cheng-Yi Chiang <cychiang@chromium.org>
+> > Cc: Stephen Boyd <swboyd@chromium.org>
+> > Cc: Matthias Kaehlcke <mka@chromium.org>
+> > Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> > ---
+> > This applies atop the patch ("arm64: dts: qcom: Add sound node for
+> > sc7180-trogdor-coachz") [1].
+> >
+> > NOTE: downstream this property was present in each of the board
+> > revisions. There's actually no longer any reason for this and I'll
+> > shortly post a downstream patch to fix this.
+> >
+> > [1] https://lore.kernel.org/r/20210313054654.11693-3-srivasam@codeaurora.org/
+> >
+> > Changes in v2:
+> > - Remove the pinctrl from the -r1
+> >
+> >  .../boot/dts/qcom/sc7180-trogdor-coachz-r1.dts   | 13 -------------
+> >  .../boot/dts/qcom/sc7180-trogdor-coachz.dtsi     | 16 ++++++++++++++++
+> >  2 files changed, 16 insertions(+), 13 deletions(-)
 > 
-> The second just defines the IPA v4.9 configuration data file.
+> I guess this patch missed the boat for 5.13? Can it get queued up for
+> 5.14 whenever that happens?
 > 
-> [...]
 
-Here is the summary with links:
-  - [net-next,1/2] dt-bindings: net: qcom,ipa: add support for SM8350
-    https://git.kernel.org/netdev/net-next/c/15c88e185eb9
-  - [net-next,2/2] net: ipa: add IPA v4.9 configuration data
-    https://git.kernel.org/netdev/net-next/c/e557dc82418d
+Meh, I scraped the inbox and thought I got everything that was ready
+picked up. I'll check with Arnd, otherwise it's staged for v5.14 now.
 
-You are awesome, thank you!
---
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
-
+Regards,
+Bjorn
