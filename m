@@ -2,180 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CC92435E210
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Apr 2021 16:58:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6EA5735E326
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Apr 2021 17:49:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239060AbhDMO6H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Apr 2021 10:58:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37466 "EHLO
+        id S1346010AbhDMPtl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Apr 2021 11:49:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48868 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345312AbhDMO5k (ORCPT
+        with ESMTP id S1345978AbhDMPtk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Apr 2021 10:57:40 -0400
-Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFF43C06138D
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Apr 2021 07:57:19 -0700 (PDT)
-Received: by mail-pf1-x42b.google.com with SMTP id d124so11557664pfa.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Apr 2021 07:57:19 -0700 (PDT)
+        Tue, 13 Apr 2021 11:49:40 -0400
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB9E0C061574
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Apr 2021 08:49:19 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id c15so7997851wro.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Apr 2021 08:49:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=CSgRgzubmTxt/v88qdNcpZFeicX9rDyswIgEAQYYcss=;
-        b=fQtJjAoJCntHet7/C4V7yKrYZknKDdR+yYNzxMoDR/+Z4P/RdDBleHKVfBauFWHSIj
-         TjPz9Z6n1uMhnafygBFxpYiCFxkNhHtz7CHqzTrH0KpLbsSpJHnSBoPzs9Uiu+b0uwN8
-         LeuI0Mcd1TFkJFLhe2fwEP6Px+zGg29/TPIECzusj2V/McN7Fc3mt/VNWOmp1B8MSDd2
-         ZtTJG5JPauheaMzlpoHrTVmmohCk4/TYqtsgD2BOlIyecydjW5X02UgdpHdlgZbsuqCh
-         oN4gmLY98tkvaz1QgX4oXawq1WPlxk3w7+ZdvXlUvpG1kZh+EJzrOTnnEElxFM8GfYkH
-         gA5g==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=PsW0LpLJ+OHoCMT5QibDiVjIFRIsSTW5mUVz9ROm9Ek=;
+        b=kO13z57w7JxN4GJv+mAA/cd9x7MNhDzUXMzD4qzANlHEYMc81/IARR+XeaIMbrbuBw
+         5VPrPQnEfsOwSQ1I4beRTSvSPSTBB7XZHiCZqzTpRDu2734ZpnUgBuEzgBJJ1/mYet5x
+         tTt7YhjEDC3+VxMOLCQCqZ1n98+pQh3NqWUcPAj8Pgb1rjUREYZ5UjSDo57/H5dT4ZGq
+         TMc+1Mn1sdHjeToyr6SdHc1XhWqx29JuBC+y0t2l9tTeBmdXfn8GqHTAbsXqmJSUkEZA
+         1EDFsXz7IhL09ZrRFadDBSNc6shVf8K8mZal1V5Su0BBQ4gbPMVV2LKyvKu99bXIvB3u
+         wzgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=CSgRgzubmTxt/v88qdNcpZFeicX9rDyswIgEAQYYcss=;
-        b=XtyZnRaIfrAtK8rhiO3/dOJWzbFavsDl5o19zl00WRLYe6RfxMceByuZov0gRzv4x3
-         uTfZc9xCZOdfB+OTRgkQmCD2p8Y00KindsQ4VjtSdjuQnA5L7GmGM+6X6K4F/UrKMVZm
-         iqY9FMh9RHnrkm2KjeGTlBjDypJYdbsK+RZl2zSMpohz5+9VdRCXlfCvEYlCeHqku/Ey
-         Rb/qHpxoZmNa9g4H6OhZOYkl3W6WBbNtnx8DxNenO+J/8Ztq0vu9UNRnHhxuzyn3U4tc
-         5giQFIW++yvSuIFIzDFzc63vz5I/SjPMsU0d8usLDLLoB78zTVWiJwQvE7bHRWssKf3Z
-         VHmg==
-X-Gm-Message-State: AOAM533Dd5uDNMWUGdZl/xF6lRqjiE8tw4SlPZVyxrFUU7pM346Dflj3
-        h0CPAq8sMPyd/gke/aXfoogY
-X-Google-Smtp-Source: ABdhPJy771UybKC1Cj1hoQBu8uJnBZUdSXMGa2LZwyZv/Ed+wdAYBoggN9HYoI5RPskIp6gegJ/K0Q==
-X-Received: by 2002:a63:4f08:: with SMTP id d8mr783253pgb.79.1618325839330;
-        Tue, 13 Apr 2021 07:57:19 -0700 (PDT)
-Received: from thinkpad ([2409:4072:188:336c:f8f0:1ccd:9421:e069])
-        by smtp.gmail.com with ESMTPSA id x19sm13076406pff.14.2021.04.13.07.57.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Apr 2021 07:57:18 -0700 (PDT)
-Date:   Tue, 13 Apr 2021 20:27:09 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        Hou Zhiqiang <Zhiqiang.Hou@nxp.com>,
-        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Rob Herring <robh@kernel.org>, stable@vger.kernel.org,
-        Marek Szyprowski <m.szyprowski@samsung.com>
-Subject: Re: [PATCH v2] PCI: dwc: Move iATU detection earlier
-Message-ID: <20210413145709.GA2967@thinkpad>
-References: <20210413142219.2301430-1-dmitry.baryshkov@linaro.org>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=PsW0LpLJ+OHoCMT5QibDiVjIFRIsSTW5mUVz9ROm9Ek=;
+        b=qlzXKI8vTdeG7uqVdM3pgnJj9f8EvetzIy+wBBEPcPjT0u0NCKZYs/IA3R4uiwC9Bj
+         AgkBD+Ifn0Vtd9bb1iyIDL3Ntdkh/RXrTA71wBYlk8nwWlf2OoFxRSHW7rJGVpR54Xrt
+         S8y/fbZcdZL2A9/KQwkhA0CpPbz6ikBAd75QHZyhx8CwWP3E1t8OZu5+PdYa6JiBjSm3
+         HMKQhdz7vT8IF28RDLNqJElJ2aKzgoWHLtRlGruUqZ20BAz6dZ+GQWLAS/C09/kOsKLR
+         1h8JSOIm6phMykehpLKefWp+Bs+jvfTfQmcbawBMF96Z98XRE8T+uktMHJ0tfv1FtYRL
+         2KUw==
+X-Gm-Message-State: AOAM533zg6Fc2EpXfGHsI0wU6hH4xgq8hC1to4MXRbrNF12EReM9OyzF
+        SwToFZkUrfm0z/UGA3qBI3VkM3skhqCMrA==
+X-Google-Smtp-Source: ABdhPJyF+9Nmae2A35E+099haCMQJXZr77AKTKeOy+sI2cM34f6b049fZ7TlZg95yExarpjoJJZSpQ==
+X-Received: by 2002:adf:db52:: with SMTP id f18mr31877255wrj.225.1618328958600;
+        Tue, 13 Apr 2021 08:49:18 -0700 (PDT)
+Received: from [192.168.1.14] ([195.24.90.54])
+        by smtp.googlemail.com with ESMTPSA id w7sm20814515wrt.15.2021.04.13.08.49.16
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 13 Apr 2021 08:49:17 -0700 (PDT)
+Subject: Re: [PATCH v3 0/2] Intra-refresh period control
+To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Cc:     Ezequiel Garcia <ezequiel@collabora.com>,
+        nicolas.dufresne@collabora.com,
+        Hans Verkuil <hverkuil-cisco@xs4all.nl>
+References: <20210302095340.3584204-1-stanimir.varbanov@linaro.org>
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Message-ID: <3480b6ee-f442-57be-473f-c90966584d40@linaro.org>
+Date:   Tue, 13 Apr 2021 18:49:15 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.7.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210413142219.2301430-1-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20210302095340.3584204-1-stanimir.varbanov@linaro.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Apr 13, 2021 at 05:22:19PM +0300, Dmitry Baryshkov wrote:
-> From: Hou Zhiqiang <Zhiqiang.Hou@nxp.com>
-> 
-> dw_pcie_ep_init() depends on the detected iATU region numbers to allocate
-> the in/outbound window management bitmap.  It fails after 281f1f99cf3a
-> ("PCI: dwc: Detect number of iATU windows").
-> 
-> Move the iATU region detection into a new function, move the detection to
-> the very beginning of dw_pcie_host_init() and dw_pcie_ep_init().  Also
-> remove it from the dw_pcie_setup(), since it's more like a software
-> initialization step than hardware setup.
-> 
-> Fixes: 281f1f99cf3a ("PCI: dwc: Detect number of iATU windows")
-> Link: https://lore.kernel.org/r/20210125044803.4310-1-Zhiqiang.Hou@nxp.com
-> Tested-by: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
-> Signed-off-by: Hou Zhiqiang <Zhiqiang.Hou@nxp.com>
-> Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-> Reviewed-by: Rob Herring <robh@kernel.org>
-> Cc: stable@vger.kernel.org	# v5.11+
-> [DB: moved dw_pcie_iatu_detect to happen after host_init callback]
-> Link: https://lore.kernel.org/linux-pci/20210407131255.702054-1-dmitry.baryshkov@linaro.org
-> Cc: Marek Szyprowski <m.szyprowski@samsung.com>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Hi Hans,
 
-Tested-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Any comments?
 
-Thanks,
-Mani
+On 3/2/21 11:53 AM, Stanimir Varbanov wrote:
+> Hi,
+> 
+> This series add a new intra-refresh period control for encoders. The
+> series is a continuation of [1]. Comments addressed:
+>  * A typo in .rst (Hans)
+>  * Clarified the relationship with CYCLIC_INTRA_REFRESH_MB (Hans)
+> 
+> Comments are welcome!
+> 
+> regards,
+> Stan
+> 
+> [1] https://www.spinics.net/lists/linux-media/msg183019.html
+> 
+> Stanimir Varbanov (2):
+>   media: v4l2-ctrls: Add intra-refresh period control
+>   venus: venc: Add support for intra-refresh period
+> 
+>  .../media/v4l/ext-ctrls-codec.rst             | 12 ++++++++
+>  drivers/media/platform/qcom/venus/core.h      |  1 +
+>  drivers/media/platform/qcom/venus/venc.c      | 28 +++++++++++++++++++
+>  .../media/platform/qcom/venus/venc_ctrls.c    | 13 ++++-----
+>  drivers/media/v4l2-core/v4l2-ctrls.c          |  2 ++
+>  include/uapi/linux/v4l2-controls.h            |  1 +
+>  6 files changed, 50 insertions(+), 7 deletions(-)
+> 
 
-> ---
->  drivers/pci/controller/dwc/pcie-designware-ep.c   |  2 ++
->  drivers/pci/controller/dwc/pcie-designware-host.c |  1 +
->  drivers/pci/controller/dwc/pcie-designware.c      | 11 ++++++++---
->  drivers/pci/controller/dwc/pcie-designware.h      |  1 +
->  4 files changed, 12 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/pci/controller/dwc/pcie-designware-ep.c b/drivers/pci/controller/dwc/pcie-designware-ep.c
-> index 1c25d8337151..8d028a88b375 100644
-> --- a/drivers/pci/controller/dwc/pcie-designware-ep.c
-> +++ b/drivers/pci/controller/dwc/pcie-designware-ep.c
-> @@ -705,6 +705,8 @@ int dw_pcie_ep_init(struct dw_pcie_ep *ep)
->  		}
->  	}
->  
-> +	dw_pcie_iatu_detect(pci);
-> +
->  	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "addr_space");
->  	if (!res)
->  		return -EINVAL;
-> diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
-> index 7e55b2b66182..24192b40e3a2 100644
-> --- a/drivers/pci/controller/dwc/pcie-designware-host.c
-> +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
-> @@ -398,6 +398,7 @@ int dw_pcie_host_init(struct pcie_port *pp)
->  		if (ret)
->  			goto err_free_msi;
->  	}
-> +	dw_pcie_iatu_detect(pci);
->  
->  	dw_pcie_setup_rc(pp);
->  	dw_pcie_msi_init(pp);
-> diff --git a/drivers/pci/controller/dwc/pcie-designware.c b/drivers/pci/controller/dwc/pcie-designware.c
-> index 004cb860e266..a945f0c0e73d 100644
-> --- a/drivers/pci/controller/dwc/pcie-designware.c
-> +++ b/drivers/pci/controller/dwc/pcie-designware.c
-> @@ -660,11 +660,9 @@ static void dw_pcie_iatu_detect_regions(struct dw_pcie *pci)
->  	pci->num_ob_windows = ob;
->  }
->  
-> -void dw_pcie_setup(struct dw_pcie *pci)
-> +void dw_pcie_iatu_detect(struct dw_pcie *pci)
->  {
-> -	u32 val;
->  	struct device *dev = pci->dev;
-> -	struct device_node *np = dev->of_node;
->  	struct platform_device *pdev = to_platform_device(dev);
->  
->  	if (pci->version >= 0x480A || (!pci->version &&
-> @@ -693,6 +691,13 @@ void dw_pcie_setup(struct dw_pcie *pci)
->  
->  	dev_info(pci->dev, "Detected iATU regions: %u outbound, %u inbound",
->  		 pci->num_ob_windows, pci->num_ib_windows);
-> +}
-> +
-> +void dw_pcie_setup(struct dw_pcie *pci)
-> +{
-> +	u32 val;
-> +	struct device *dev = pci->dev;
-> +	struct device_node *np = dev->of_node;
->  
->  	if (pci->link_gen > 0)
->  		dw_pcie_link_set_max_speed(pci, pci->link_gen);
-> diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
-> index 7247c8b01f04..7d6e9b7576be 100644
-> --- a/drivers/pci/controller/dwc/pcie-designware.h
-> +++ b/drivers/pci/controller/dwc/pcie-designware.h
-> @@ -306,6 +306,7 @@ int dw_pcie_prog_inbound_atu(struct dw_pcie *pci, u8 func_no, int index,
->  void dw_pcie_disable_atu(struct dw_pcie *pci, int index,
->  			 enum dw_pcie_region_type type);
->  void dw_pcie_setup(struct dw_pcie *pci);
-> +void dw_pcie_iatu_detect(struct dw_pcie *pci);
->  
->  static inline void dw_pcie_writel_dbi(struct dw_pcie *pci, u32 reg, u32 val)
->  {
-> -- 
-> 2.30.2
-> 
+-- 
+regards,
+Stan
