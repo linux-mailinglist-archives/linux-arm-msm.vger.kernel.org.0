@@ -2,279 +2,147 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 303F835D587
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Apr 2021 05:03:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7FE9635D5EB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Apr 2021 05:32:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244281AbhDMDBU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Apr 2021 23:01:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49698 "EHLO
+        id S245214AbhDMD2u (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Apr 2021 23:28:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55672 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237380AbhDMDBU (ORCPT
+        with ESMTP id S238029AbhDMD2t (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Apr 2021 23:01:20 -0400
-Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D108C061574
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Apr 2021 20:01:01 -0700 (PDT)
-Received: by mail-ot1-x32e.google.com with SMTP id i16-20020a9d68d00000b0290286edfdfe9eso4201092oto.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Apr 2021 20:01:01 -0700 (PDT)
+        Mon, 12 Apr 2021 23:28:49 -0400
+Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB8E9C061756
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Apr 2021 20:28:29 -0700 (PDT)
+Received: by mail-pj1-x1030.google.com with SMTP id nm3-20020a17090b19c3b029014e1bbf6c60so4076690pjb.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Apr 2021 20:28:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=Dmc0hZXmCrSXdyT5/+BGkfJc60KHiV2RT1PtaXLe5Bw=;
-        b=T6q6GhuwqN7A3KdhOF5AVGdnpPx5ePtwoQwax4QGqKNPuqCnCzmWx7Xc2zvZNLA4zw
-         vaWVs++vP4Y53aCeGS59FgjYf6jwZi5+tAcH6e2KCfepjvaujEFByGLFXodeBCAHms15
-         n06Fyqmo51EYaXN2AMozzYPIv3u0gm5xk7Wrk/de4TUjLuYJVEQ1hRSebmqFC1PbcU2C
-         dpgg9KSCjBCjOOpgtSH3DCQvQnRmvvEPrnNXmVgDcFXtNKHJH5Hz60BoLhbpL3RMfTgr
-         UHPE8N/nPoGFHpjQDVhAg0SrmPqDCGNs9uWSJbLWykuqskkUoTsYsLin9g8VznANsrY9
-         wlMA==
+        d=chromium.org; s=google;
+        h=mime-version:content-transfer-encoding:in-reply-to:references
+         :subject:from:cc:to:date:message-id:user-agent;
+        bh=5tAqdlQ65Xiy+ghk0KtAk1i63l3pg3LrUb/XYFsIE98=;
+        b=Nfix/WkJaJUAKI5kzwmzy6o8D/QWeDAJW9sMJF9vWnsyFpc8m2qPM5EWSmJNQdir1S
+         XN8xWkassirzbxD2RBEQoRrFuHo4mAz3CBSFijL8jhg5IrBQ5eF2KzC9jtgBBokqEmzk
+         YrumnjWs5OcgFJ5XcS0JMgbFuzR1kCjtwpSTM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Dmc0hZXmCrSXdyT5/+BGkfJc60KHiV2RT1PtaXLe5Bw=;
-        b=luSUU0mcQyoNXP1VgqLp3RNk7vLkf+UWpKejVlQyAsD2le3J6ZNfkQpkMuxPaDgYrv
-         XHG7REAkw+uBKq92xDxJiyvkES7eX3Vlc+L/QbT/n4oSkj79qGO1b6cusFeyR/vzA019
-         q1WfyhAhwOsXr7qkno7F1d716nvCxgMTHs4GoVit6EUysrXUj2Wbsr0xGKTBrXTG7SRh
-         V2ui7vU3lXu0lDiVaGPtrM59gau0TGI8Tz7AAJAKcxvTDyLWyWb+yeR5JnyFv/C2w1W7
-         j8IE2vzjlXowiBuWGuLwSz7d2CILeMulHWLhdwOoeKd/ozizJrT46dbohltgY6iChE3t
-         NXWw==
-X-Gm-Message-State: AOAM533SZxKdQvNJvxLjI40G4Lyh9CFkmKKOcVXycSvs6H8BPSKfqPzy
-        pQ+wc1UsFDqN3keGuU4MRP/YA4AykGS+gw==
-X-Google-Smtp-Source: ABdhPJzLEu/ne59rxKLrYKwS39IEy24zduSSC5TNViBz5Wb5iDoKEYf/g3Cma7Q3wf5RooKPWOn1uw==
-X-Received: by 2002:a9d:1a1:: with SMTP id e30mr2371575ote.283.1618282860923;
-        Mon, 12 Apr 2021 20:01:00 -0700 (PDT)
-Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id h59sm3115213otb.29.2021.04.12.20.00.59
+        h=x-gm-message-state:mime-version:content-transfer-encoding
+         :in-reply-to:references:subject:from:cc:to:date:message-id
+         :user-agent;
+        bh=5tAqdlQ65Xiy+ghk0KtAk1i63l3pg3LrUb/XYFsIE98=;
+        b=dC0WkP1HrBbgrUWxxs1ufvNE253eUhekVak9dREagAMBFrAk5CyCmgoHGPALSTFfGU
+         BYx/PrqyXfr7NbXxwgIBOO14Nj0qF+NpTlIO/NDM3jevXlesJkgXCT/EwcX8ncR0yySC
+         VfZjhFm2rSFIPnGkXKlr1NIo8BYY01cL9caRQEuP+sGhUw71CWtOb/yyzO8c3cHRPqGE
+         Xox/2On8tpfYq4gVmcfHvAuVLT7J5N1tv1U6gMcxgFJk+1vTPSEHU543boCg9MS2PWNI
+         uqZs6a3jUg/2oF7peENg6q5VbOv9vSM51eQy7GJgLn8M5dfqvwi+RCPOAMMa7Jzcdi2O
+         SCHQ==
+X-Gm-Message-State: AOAM531y6/ucTF5P+Y12fS+kdsl18TdS5wuyQfz6lvogYO8hl1VYs2Mk
+        WMiDJrdtoZsUb4VijCdG3SFVqA==
+X-Google-Smtp-Source: ABdhPJwA98EjR7+OT0INNOhv3xQakqX0UmgvB9kA2eTAH8O7BGt3i6R1pqXCVGJZFOjEtvyKvmJNkQ==
+X-Received: by 2002:a17:90b:b03:: with SMTP id bf3mr2544178pjb.223.1618284509395;
+        Mon, 12 Apr 2021 20:28:29 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:201:1d18:a339:7993:e548])
+        by smtp.gmail.com with ESMTPSA id ir3sm685864pjb.42.2021.04.12.20.28.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 Apr 2021 20:01:00 -0700 (PDT)
-Date:   Mon, 12 Apr 2021 22:00:58 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     satya priya <skakit@codeaurora.org>
-Cc:     Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Sebastian Reichel <sre@kernel.org>,
-        David Collins <collinsd@codeaurora.org>, kgunda@codeaurora.org,
-        Vinod Koul <vkoul@kernel.org>,
-        Courtney Cavin <courtney.cavin@sonymobile.com>,
-        linux-input@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org
-Subject: Re: [PATCH V2 1/4] input: pm8941-pwrkey: add support for PMK8350
- PON_HLOS PMIC peripheral
-Message-ID: <20210413030058.GK1538589@yoga>
-References: <1617881469-31965-1-git-send-email-skakit@codeaurora.org>
- <1617881469-31965-2-git-send-email-skakit@codeaurora.org>
+        Mon, 12 Apr 2021 20:28:28 -0700 (PDT)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1617881469-31965-2-git-send-email-skakit@codeaurora.org>
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <1618246971-28754-1-git-send-email-khsieh@codeaurora.org>
+References: <1618246971-28754-1-git-send-email-khsieh@codeaurora.org>
+Subject: Re: [PATCH 1/2] drm/msm/dp: check sink_count before update is_connected status
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     tanmay@codeaurora.org, abhinavk@codeaurora.org,
+        aravindh@codeaurora.org, khsieh@codeaurora.org, airlied@linux.ie,
+        daniel@ffwll.ch, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+To:     Kuogee Hsieh <khsieh@codeaurora.org>, robdclark@gmail.com,
+        sean@poorly.run
+Date:   Mon, 12 Apr 2021 20:28:26 -0700
+Message-ID: <161828450691.3764895.11632559645161458427@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 08 Apr 06:31 CDT 2021, satya priya wrote:
+Quoting Kuogee Hsieh (2021-04-12 10:02:51)
+> At pm_resume check link sisnk_count before update is_connected status
 
-> From: David Collins <collinsd@codeaurora.org>
-> 
-> On Qualcomm Technologies, Inc. PMIC PMK8350, the PON peripheral
-> is split into two peripherals: PON_HLOS and PON_PBS.  The
-> application processor only has write access to PON_HLOS which
-> limits it to only receiving PON interrupts.
-> 
-> Add support for the PMK8350 PON_HLOS peripheral so that its
-> KPDPWR_N and RESIN_N interrupts can be used to detect key
-> presses.
-> 
+s/sisnk_count/sink_count/
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> base on HPD real time link status. Also print out error message only
+> when either EV_CONNECT_PENDING_TIMEOUT or EV_DISCONNECT_PENDING_TIMEOUT
+> happen.
 
-Regards,
-Bjorn
+Can you add "why"? I think the why is something like "link status is
+different from display connected status in the case of something like an
+Apple dongle where the type-c plug can be connected, and therefore the
+link is connected, but no sink is connected until an HDMI cable is
+plugged into the dongle". This still doesn't explain why it's important
+to check at resume time though.
 
-> Signed-off-by: David Collins <collinsd@codeaurora.org>
-> Signed-off-by: satya priya <skakit@codeaurora.org>
+>=20
+> Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
 > ---
-> Changes in V2:
->  - No change.
-> 
->  drivers/input/misc/pm8941-pwrkey.c | 103 ++++++++++++++++++++++++++-----------
->  1 file changed, 72 insertions(+), 31 deletions(-)
-> 
-> diff --git a/drivers/input/misc/pm8941-pwrkey.c b/drivers/input/misc/pm8941-pwrkey.c
-> index cf81044..10e3fc0 100644
-> --- a/drivers/input/misc/pm8941-pwrkey.c
-> +++ b/drivers/input/misc/pm8941-pwrkey.c
-> @@ -1,6 +1,6 @@
->  // SPDX-License-Identifier: GPL-2.0-only
->  /*
-> - * Copyright (c) 2010-2011, Code Aurora Forum. All rights reserved.
-> + * Copyright (c) 2010-2011, 2020-2021, The Linux Foundation. All rights reserved.
->   * Copyright (c) 2014, Sony Mobile Communications Inc.
->   */
->  
-> @@ -22,6 +22,8 @@
->  #define PON_RT_STS			0x10
->  #define  PON_KPDPWR_N_SET		BIT(0)
->  #define  PON_RESIN_N_SET		BIT(1)
-> +#define  PON_GEN3_RESIN_N_SET		BIT(6)
-> +#define  PON_GEN3_KPDPWR_N_SET		BIT(7)
->  
->  #define PON_PS_HOLD_RST_CTL		0x5a
->  #define PON_PS_HOLD_RST_CTL2		0x5b
-> @@ -38,8 +40,12 @@
->  #define  PON_DBC_DELAY_MASK		0x7
->  
->  struct pm8941_data {
-> -	unsigned int pull_up_bit;
-> -	unsigned int status_bit;
-> +	unsigned int	pull_up_bit;
-> +	unsigned int	status_bit;
-> +	bool		supports_ps_hold_poff_config;
-> +	bool		supports_debounce_config;
-> +	const char	*name;
-> +	const char	*phys;
->  };
->  
->  struct pm8941_pwrkey {
-> @@ -231,34 +237,40 @@ static int pm8941_pwrkey_probe(struct platform_device *pdev)
->  
->  	input_set_capability(pwrkey->input, EV_KEY, pwrkey->code);
->  
-> -	pwrkey->input->name = "pm8941_pwrkey";
-> -	pwrkey->input->phys = "pm8941_pwrkey/input0";
-> -
-> -	req_delay = (req_delay << 6) / USEC_PER_SEC;
-> -	req_delay = ilog2(req_delay);
-> -
-> -	error = regmap_update_bits(pwrkey->regmap,
-> -				   pwrkey->baseaddr + PON_DBC_CTL,
-> -				   PON_DBC_DELAY_MASK,
-> -				   req_delay);
-> -	if (error) {
-> -		dev_err(&pdev->dev, "failed to set debounce: %d\n", error);
-> -		return error;
-> +	pwrkey->input->name = pwrkey->data->name;
-> +	pwrkey->input->phys = pwrkey->data->phys;
-> +
-> +	if (pwrkey->data->supports_debounce_config) {
-> +		req_delay = (req_delay << 6) / USEC_PER_SEC;
-> +		req_delay = ilog2(req_delay);
-> +
-> +		error = regmap_update_bits(pwrkey->regmap,
-> +					   pwrkey->baseaddr + PON_DBC_CTL,
-> +					   PON_DBC_DELAY_MASK,
-> +					   req_delay);
-> +		if (error) {
-> +			dev_err(&pdev->dev, "failed to set debounce: %d\n",
-> +				error);
-> +			return error;
-> +		}
->  	}
->  
-> -	error = regmap_update_bits(pwrkey->regmap,
-> -				   pwrkey->baseaddr + PON_PULL_CTL,
-> -				   pwrkey->data->pull_up_bit,
-> -				   pull_up ? pwrkey->data->pull_up_bit : 0);
-> -	if (error) {
-> -		dev_err(&pdev->dev, "failed to set pull: %d\n", error);
-> -		return error;
-> +	if (pwrkey->data->pull_up_bit) {
-> +		error = regmap_update_bits(pwrkey->regmap,
-> +					   pwrkey->baseaddr + PON_PULL_CTL,
-> +					   pwrkey->data->pull_up_bit,
-> +					   pull_up ? pwrkey->data->pull_up_bit :
-> +						     0);
-> +		if (error) {
-> +			dev_err(&pdev->dev, "failed to set pull: %d\n", error);
-> +			return error;
-> +		}
->  	}
->  
->  	error = devm_request_threaded_irq(&pdev->dev, pwrkey->irq,
->  					  NULL, pm8941_pwrkey_irq,
->  					  IRQF_ONESHOT,
-> -					  "pm8941_pwrkey", pwrkey);
-> +					  pwrkey->data->name, pwrkey);
->  	if (error) {
->  		dev_err(&pdev->dev, "failed requesting IRQ: %d\n", error);
->  		return error;
-> @@ -271,12 +283,14 @@ static int pm8941_pwrkey_probe(struct platform_device *pdev)
->  		return error;
->  	}
->  
-> -	pwrkey->reboot_notifier.notifier_call = pm8941_reboot_notify,
-> -	error = register_reboot_notifier(&pwrkey->reboot_notifier);
-> -	if (error) {
-> -		dev_err(&pdev->dev, "failed to register reboot notifier: %d\n",
-> -			error);
-> -		return error;
-> +	if (pwrkey->data->supports_ps_hold_poff_config) {
-> +		pwrkey->reboot_notifier.notifier_call = pm8941_reboot_notify,
-> +		error = register_reboot_notifier(&pwrkey->reboot_notifier);
-> +		if (error) {
-> +			dev_err(&pdev->dev, "failed to register reboot notifier: %d\n",
-> +				error);
-> +			return error;
-> +		}
->  	}
->  
->  	platform_set_drvdata(pdev, pwrkey);
-> @@ -289,7 +303,8 @@ static int pm8941_pwrkey_remove(struct platform_device *pdev)
->  {
->  	struct pm8941_pwrkey *pwrkey = platform_get_drvdata(pdev);
->  
-> -	unregister_reboot_notifier(&pwrkey->reboot_notifier);
-> +	if (pwrkey->data->supports_ps_hold_poff_config)
-> +		unregister_reboot_notifier(&pwrkey->reboot_notifier);
->  
->  	return 0;
->  }
-> @@ -297,16 +312,42 @@ static int pm8941_pwrkey_remove(struct platform_device *pdev)
->  static const struct pm8941_data pwrkey_data = {
->  	.pull_up_bit = PON_KPDPWR_PULL_UP,
->  	.status_bit = PON_KPDPWR_N_SET,
-> +	.name = "pm8941_pwrkey",
-> +	.phys = "pm8941_pwrkey/input0",
-> +	.supports_ps_hold_poff_config = true,
-> +	.supports_debounce_config = true,
->  };
->  
->  static const struct pm8941_data resin_data = {
->  	.pull_up_bit = PON_RESIN_PULL_UP,
->  	.status_bit = PON_RESIN_N_SET,
-> +	.name = "pm8941_resin",
-> +	.phys = "pm8941_resin/input0",
-> +	.supports_ps_hold_poff_config = true,
-> +	.supports_debounce_config = true,
-> +};
-> +
-> +static const struct pm8941_data pon_gen3_pwrkey_data = {
-> +	.status_bit = PON_GEN3_KPDPWR_N_SET,
-> +	.name = "pmic_pwrkey",
-> +	.phys = "pmic_pwrkey/input0",
-> +	.supports_ps_hold_poff_config = false,
-> +	.supports_debounce_config = false,
-> +};
-> +
-> +static const struct pm8941_data pon_gen3_resin_data = {
-> +	.status_bit = PON_GEN3_RESIN_N_SET,
-> +	.name = "pmic_resin",
-> +	.phys = "pmic_resin/input0",
-> +	.supports_ps_hold_poff_config = false,
-> +	.supports_debounce_config = false,
->  };
->  
->  static const struct of_device_id pm8941_pwr_key_id_table[] = {
->  	{ .compatible = "qcom,pm8941-pwrkey", .data = &pwrkey_data },
->  	{ .compatible = "qcom,pm8941-resin", .data = &resin_data },
-> +	{ .compatible = "qcom,pmk8350-pwrkey", .data = &pon_gen3_pwrkey_data },
-> +	{ .compatible = "qcom,pmk8350-resin", .data = &pon_gen3_resin_data },
->  	{ }
->  };
->  MODULE_DEVICE_TABLE(of, pm8941_pwr_key_id_table);
-> -- 
-> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
-> of Code Aurora Forum, hosted by The Linux Foundation
-> 
+
+Any Fixes tag?
+
+>  drivers/gpu/drm/msm/dp/dp_display.c | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
+>=20
+> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp=
+/dp_display.c
+> index 5a39da6..4992a049 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> @@ -587,7 +587,7 @@ static int dp_connect_pending_timeout(struct dp_displ=
+ay_private *dp, u32 data)
+> =20
+>         state =3D dp->hpd_state;
+>         if (state =3D=3D ST_CONNECT_PENDING) {
+> -               dp_display_enable(dp, 0);
+> +               DRM_ERROR("EV_CONNECT_PENDING_TIMEOUT error\n");
+
+Can we get rid of these messages?
+
+>                 dp->hpd_state =3D ST_CONNECTED;
+>         }
+> =20
+> @@ -670,7 +670,7 @@ static int dp_disconnect_pending_timeout(struct dp_di=
+splay_private *dp, u32 data
+> =20
+>         state =3D  dp->hpd_state;
+>         if (state =3D=3D ST_DISCONNECT_PENDING) {
+> -               dp_display_disable(dp, 0);
+> +               DRM_ERROR("EV_DISCONNECT_PENDING_TIMEOUT error\n");
+
+And this one? If it happens it will just sit in the logs when probably
+the user can't do anything about it. Timeouts are just a fact of life.
+
+>                 dp->hpd_state =3D ST_DISCONNECTED;
+>         }
+> =20
+> @@ -1272,7 +1272,7 @@ static int dp_pm_resume(struct device *dev)
+> =20
+>         status =3D dp_catalog_link_is_connected(dp->catalog);
+> =20
+> -       if (status)
+> +       if (status && dp->link->sink_count)
+
+Can we add a comment above this if? Otherwise it doesn't make much
+sense why sink_count is important.
+
+	/*
+	 * Only consider the display as connected, and send a connected
+	 * notification to userspace in
+	 * dp_display_send_hpd_notification(), if there's actually a
+	 * sink connected. Otherwise, the link could be up/connected or=20
+	 * in the process of being established, but there isn't actually
+	 * anything to display to on the other side yet.
+	 */
+
+>                 dp->dp_display.is_connected =3D true;
+>         else
+>                 dp->dp_display.is_connected =3D false;
