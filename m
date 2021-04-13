@@ -2,137 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 302A735D870
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Apr 2021 09:02:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0B23E35DC6C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Apr 2021 12:21:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237019AbhDMHCh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Apr 2021 03:02:37 -0400
-Received: from mx07-00178001.pphosted.com ([185.132.182.106]:34272 "EHLO
-        mx07-00178001.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S236895AbhDMHCg (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Apr 2021 03:02:36 -0400
-Received: from pps.filterd (m0241204.ppops.net [127.0.0.1])
-        by mx07-00178001.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id 13D6uM6d023631;
-        Tue, 13 Apr 2021 09:02:11 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foss.st.com; h=subject : to : cc :
- references : from : message-id : date : mime-version : in-reply-to :
- content-type : content-transfer-encoding; s=selector1;
- bh=7UbdKKMjXFg4ypYx825ZeIdiHUiAyvlWtyfpJeemBIk=;
- b=hF+dpteLGIselyWHyuc8KmnGvuTcVXR8dgMJzLQR5xuZOV9mAYmrs3t4jtdre29X/k9Z
- r+yoK338urOKQZlLKwHljlTzlWvZzkJJ9IExl1/8BtDnZpsgEUBjcGmXRfxrfa46BzLq
- i2XuzWYyhGas1ONEFDG0/DqoBul8DLccFK7YxIi83UPESI5M58chQlOOZy+TAENmhkcE
- 7UdCd8pKX/1L+qtUBHddvV1B5uJF+MtBGMXk2aUzcmniJ5uuZ5NfQAfQ8pe2juMB8Dbx
- cmr3emEBrYXlWqTZoWf1e/t58feYHJN+T7Rsjbha2T6SCejGoHCbIJPcnrze+4LwC0Bc 6A== 
-Received: from beta.dmz-eu.st.com (beta.dmz-eu.st.com [164.129.1.35])
-        by mx07-00178001.pphosted.com with ESMTP id 37vrp5bq84-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 13 Apr 2021 09:02:11 +0200
-Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
-        by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id 6EB5A10002A;
-        Tue, 13 Apr 2021 09:02:10 +0200 (CEST)
-Received: from Webmail-eu.st.com (sfhdag2node3.st.com [10.75.127.6])
-        by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id 5696B2196A6;
-        Tue, 13 Apr 2021 09:02:10 +0200 (CEST)
-Received: from lmecxl0889.lme.st.com (10.75.127.48) by SFHDAG2NODE3.st.com
- (10.75.127.6) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Tue, 13 Apr
- 2021 09:02:09 +0200
-Subject: Re: [PATCH 0/7] Restructure the rpmsg char and introduce the
- rpmsg-raw channel
-To:     Mathieu Poirier <mathieu.poirier@linaro.org>
-CC:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Ohad Ben-Cohen <ohad@wizery.com>,
-        Andy Gross <agross@kernel.org>,
-        <linux-remoteproc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-stm32@st-md-mailman.stormreply.com>,
-        <linux-arm-msm@vger.kernel.org>
-References: <20210323122737.23035-1-arnaud.pouliquen@foss.st.com>
- <20210412200245.GB582352@xps15>
-From:   Arnaud POULIQUEN <arnaud.pouliquen@foss.st.com>
-Message-ID: <5cd3bd32-1539-371e-c8e4-10870fc20d22@foss.st.com>
-Date:   Tue, 13 Apr 2021 09:02:09 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        id S241611AbhDMKVz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Apr 2021 06:21:55 -0400
+Received: from foss.arm.com ([217.140.110.172]:39938 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S241408AbhDMKVv (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 13 Apr 2021 06:21:51 -0400
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 562CE106F;
+        Tue, 13 Apr 2021 03:21:30 -0700 (PDT)
+Received: from lpieralisi (e121166-lin.cambridge.arm.com [10.1.196.255])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 3981D3F73B;
+        Tue, 13 Apr 2021 03:21:29 -0700 (PDT)
+Date:   Tue, 13 Apr 2021 11:21:24 +0100
+From:   Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        PCI <linux-pci@vger.kernel.org>,
+        Hou Zhiqiang <Zhiqiang.Hou@nxp.com>
+Subject: Re: [PATCH] PCI: dwc: move dw_pcie_iatu_detect() after host_init
+ callback
+Message-ID: <20210413102124.GA22755@lpieralisi>
+References: <20210407131255.702054-1-dmitry.baryshkov@linaro.org>
+ <CAA8EJpooq2-vw19YKeiFxWoM-=6DwnhjF+8M7sSACgjqdnHznw@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20210412200245.GB582352@xps15>
-Content-Type: text/plain; charset="utf-8"
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.75.127.48]
-X-ClientProxiedBy: SFHDAG3NODE2.st.com (10.75.127.8) To SFHDAG2NODE3.st.com
- (10.75.127.6)
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.391,18.0.761
- definitions=2021-04-13_03:2021-04-13,2021-04-13 signatures=0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAA8EJpooq2-vw19YKeiFxWoM-=6DwnhjF+8M7sSACgjqdnHznw@mail.gmail.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello Mathieu,
-
-On 4/12/21 10:02 PM, Mathieu Poirier wrote:
-> On Tue, Mar 23, 2021 at 01:27:30PM +0100, Arnaud Pouliquen wrote:
->> This series is the second step in the division of the series [1]: 
->> "Introducing a Generic IOCTL Interface for RPMsg Channel Management".
->>
->> The purpose of this patchset is to:
->> - split the control code related to the control
->>   and the endpoint. 
->> - define the rpmsg-raw channel, associated with the rpmsg char device to
->>   allow it to be instantiated using a name service announcement.
->>     
->> An important point to keep in mind for this patchset is that the concept of
->> channel is associated with a default endpoint. To facilitate communication
->> with the remote side, this default endpoint must have a fixed address.
->>
->> Consequently, for this series, I made a design choice to fix the endpoint
->> on the "rpmsg-raw" channel probe, and not allow to create/destroy an endpoint
->> on FS open/close.
->>
->> This is only applicable for channels probed by the rpmsg bus. The behavior,
->> using the RPMSG_CREATE_EPT_IOCTL and RPMSG_DESTROY_EPT_IOCTL controls, is
->> preserved.
->>   
->> The next steps should be to correct this:
->> Introduce the IOCTLs RPMSG_CREATE_DEV_IOCTL and RPMSG_DESTROY_DEV_IOCTL
->> to instantiate the rpmsg devices
->>
->> [1]: https://patchwork.kernel.org/project/linux-remoteproc/list/?series=435523
->>
->> Arnaud Pouliquen (7):
->>   rpmsg: char: Export eptdev create an destroy functions
->>   rpmsg: Move the rpmsg control device from rpmsg_char to rpmsg_ctrl
->>   rpmsg: Update rpmsg_chrdev_register_device function
->>   rpmsg: char: Introduce __rpmsg_chrdev_create_eptdev function
->>   rpmsg: char: Introduce a rpmsg driver for the rpmsg char device
->>   rpmsg: char: No dynamic endpoint management for the default one
->>   rpmsg: char: Return error if user try to destroy a default endpoint.
->>
+On Wed, Apr 07, 2021 at 04:37:15PM +0300, Dmitry Baryshkov wrote:
+> Hi,
 > 
-> I am done reviewing this set.
-
-Thanks for the review! I will integrate all your remarks in my next revision.
-Since I haven't seen any major problems, I hope to send it today or tomorrow.
-
-Regards,
-Arnaud
-
+> On Wed, 7 Apr 2021 at 16:12, Dmitry Baryshkov
+> <dmitry.baryshkov@linaro.org> wrote:
+> >
+> > The commit 9ea483375ded ("PCI: dwc: Move forward the iATU detection
+> > process") broke PCIe support on Qualcomm SM8250 (and maybe other
+> > platforms) since it moves the call to dw_pcie_iatu_detect() at the
+> > beginning of the dw_pcie_host_init(), before ops->host_init() callback.
+> > Accessing PCIe registers at this point causes the board to reboot since
+> > not all clocks are enabled, making PCIe registers unavailable.
+> >
+> > Move dw_pcie_iatu_detect() call after calling ops->host_init() callback,
+> > so that all register are accessible.
+> >
+> > Cc: Hou Zhiqiang <Zhiqiang.Hou@nxp.com>
+> > Fixes: 9ea483375ded ("PCI: dwc: Move forward the iATU detection process")
 > 
-> Thanks,
-> Mathieu
->  
->>  drivers/rpmsg/Kconfig             |   9 ++
->>  drivers/rpmsg/Makefile            |   1 +
->>  drivers/rpmsg/qcom_glink_native.c |   2 +-
->>  drivers/rpmsg/qcom_smd.c          |   2 +-
->>  drivers/rpmsg/rpmsg_char.c        | 221 +++++++++-------------------
->>  drivers/rpmsg/rpmsg_char.h        |  50 +++++++
->>  drivers/rpmsg/rpmsg_ctrl.c        | 233 ++++++++++++++++++++++++++++++
->>  drivers/rpmsg/rpmsg_internal.h    |   8 +-
->>  drivers/rpmsg/virtio_rpmsg_bus.c  |   2 +-
->>  9 files changed, 368 insertions(+), 160 deletions(-)
->>  create mode 100644 drivers/rpmsg/rpmsg_char.h
->>  create mode 100644 drivers/rpmsg/rpmsg_ctrl.c
->>
->> -- 
->> 2.17.1
->>
+> Please disregard the Fixes: tag here, the patch in question came to me
+> from a local tree, which I failed to notice.
+> The patch still applies on top of the previously dropped patch (and it
+> is the same fix as the one proposed for exynos by Marek Szyprowski at
+> https://lore.kernel.org/linux-pci/b777ab31-e0b9-bbc0-9631-72b93097919e@samsung.com/.
+
+Ok. Can you integrate Bjorn's changes (reported in the thread above) to
+the commit log and resend it with Marek in CC so that I can merge it
+please ?
+
+Thanks,
+Lorenzo
+
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> >  drivers/pci/controller/dwc/pcie-designware-host.c | 3 +--
+> >  1 file changed, 1 insertion(+), 2 deletions(-)
+> >
+> > diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
+> > index 52f6887179cd..24192b40e3a2 100644
+> > --- a/drivers/pci/controller/dwc/pcie-designware-host.c
+> > +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
+> > @@ -319,8 +319,6 @@ int dw_pcie_host_init(struct pcie_port *pp)
+> >                         return PTR_ERR(pci->dbi_base);
+> >         }
+> >
+> > -       dw_pcie_iatu_detect(pci);
+> > -
+> >         bridge = devm_pci_alloc_host_bridge(dev, 0);
+> >         if (!bridge)
+> >                 return -ENOMEM;
+> > @@ -400,6 +398,7 @@ int dw_pcie_host_init(struct pcie_port *pp)
+> >                 if (ret)
+> >                         goto err_free_msi;
+> >         }
+> > +       dw_pcie_iatu_detect(pci);
+> >
+> >         dw_pcie_setup_rc(pp);
+> >         dw_pcie_msi_init(pp);
+> > --
+> > 2.30.2
+> >
+> 
+> 
+> -- 
+> With best wishes
+> Dmitry
