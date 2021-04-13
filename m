@@ -2,171 +2,180 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DF7D335E14D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Apr 2021 16:22:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CC92435E210
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Apr 2021 16:58:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237911AbhDMOWv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Apr 2021 10:22:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57904 "EHLO
+        id S239060AbhDMO6H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Apr 2021 10:58:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37466 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231477AbhDMOWo (ORCPT
+        with ESMTP id S1345312AbhDMO5k (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Apr 2021 10:22:44 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7AE9C06175F
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Apr 2021 07:22:23 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id 12so27523232lfq.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Apr 2021 07:22:23 -0700 (PDT)
+        Tue, 13 Apr 2021 10:57:40 -0400
+Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFF43C06138D
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Apr 2021 07:57:19 -0700 (PDT)
+Received: by mail-pf1-x42b.google.com with SMTP id d124so11557664pfa.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Apr 2021 07:57:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=sSdkvcoRP/DLD226a2zcjxaqs8CSLLa63pnFVOEgkYc=;
-        b=CCZYPUChjpWx+NonKRNO2t2uLvncd+6QV5OYgzIv0mW7RUb2PXRzCrp9YvNG7NavmT
-         Hv4Q4buek8R1ReXrHv5tWDpVzDs9A9XkdPFSzNwSnAW63VqafrqUh4nt2lf+CSIVTzfJ
-         8RSlYD/yJc7ScBTWdXj6DTyAjBE+Sg7H2vwdAqxk/PGKVyTE6ZbyjnMaSoKx+dCerr8h
-         ZZphWWEVF29QQYmM9dNL7tOK3yTMcYe9Irwit5fIWJbzQOIwY1ATZ/bb4kodsEm8mXk5
-         riY/0u9CD9MUgnbtrR/xxiNeOto3j8fvNRvZ5BmEobzxNr2nJLv5w1VLD0tUqDqiaXsN
-         TMrg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=CSgRgzubmTxt/v88qdNcpZFeicX9rDyswIgEAQYYcss=;
+        b=fQtJjAoJCntHet7/C4V7yKrYZknKDdR+yYNzxMoDR/+Z4P/RdDBleHKVfBauFWHSIj
+         TjPz9Z6n1uMhnafygBFxpYiCFxkNhHtz7CHqzTrH0KpLbsSpJHnSBoPzs9Uiu+b0uwN8
+         LeuI0Mcd1TFkJFLhe2fwEP6Px+zGg29/TPIECzusj2V/McN7Fc3mt/VNWOmp1B8MSDd2
+         ZtTJG5JPauheaMzlpoHrTVmmohCk4/TYqtsgD2BOlIyecydjW5X02UgdpHdlgZbsuqCh
+         oN4gmLY98tkvaz1QgX4oXawq1WPlxk3w7+ZdvXlUvpG1kZh+EJzrOTnnEElxFM8GfYkH
+         gA5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=sSdkvcoRP/DLD226a2zcjxaqs8CSLLa63pnFVOEgkYc=;
-        b=PMb0sr7/iTj+FwlQ2yVluruWhe9H2o3TixaAPptMEB+Y6GAHuJ3GdsGNQPoe5PozR/
-         1zPue07u159eE5ULmlmNcPUpsGnpSUoCpdqzh0kMNjM4EWVtbezuyisE8cNtZ+zZ9EpL
-         T6fWpfM0j34IAe+IyNV9ECxCU5qcsaoUfzm5AHyaPNFXz9fUuW0c3acRZE1tlyMy21xZ
-         eSdsqOLas77766VO8kor6rOGdzoBpNmWnqxb9KaMqW+HrH2mHTwE6vfzyZ45tTsB4Lct
-         WyzNSmcLIt2MnOJd3LhoRI8/ciLXXI0eOxo/cMoQHbWFAP/CypBw28dIqYTcn5Pltib7
-         zrDQ==
-X-Gm-Message-State: AOAM530r4dg0kBa3U40e0aNmq0f/B+UU5ZQBXKHfn1tpzuTAURm2GqEh
-        QokdhkuAvILAhoTJPtKc4CSvgie9LVCsWA==
-X-Google-Smtp-Source: ABdhPJwWFZFUurHVGHK85bLZPRnJfU7A7DCmBmeM8JgP8wxpiCWeGBGIsnFMr+7bE6gxL9tu9LdRoQ==
-X-Received: by 2002:a19:c187:: with SMTP id r129mr7608474lff.457.1618323741124;
-        Tue, 13 Apr 2021 07:22:21 -0700 (PDT)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id n7sm3397814lft.65.2021.04.13.07.22.20
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=CSgRgzubmTxt/v88qdNcpZFeicX9rDyswIgEAQYYcss=;
+        b=XtyZnRaIfrAtK8rhiO3/dOJWzbFavsDl5o19zl00WRLYe6RfxMceByuZov0gRzv4x3
+         uTfZc9xCZOdfB+OTRgkQmCD2p8Y00KindsQ4VjtSdjuQnA5L7GmGM+6X6K4F/UrKMVZm
+         iqY9FMh9RHnrkm2KjeGTlBjDypJYdbsK+RZl2zSMpohz5+9VdRCXlfCvEYlCeHqku/Ey
+         Rb/qHpxoZmNa9g4H6OhZOYkl3W6WBbNtnx8DxNenO+J/8Ztq0vu9UNRnHhxuzyn3U4tc
+         5giQFIW++yvSuIFIzDFzc63vz5I/SjPMsU0d8usLDLLoB78zTVWiJwQvE7bHRWssKf3Z
+         VHmg==
+X-Gm-Message-State: AOAM533Dd5uDNMWUGdZl/xF6lRqjiE8tw4SlPZVyxrFUU7pM346Dflj3
+        h0CPAq8sMPyd/gke/aXfoogY
+X-Google-Smtp-Source: ABdhPJy771UybKC1Cj1hoQBu8uJnBZUdSXMGa2LZwyZv/Ed+wdAYBoggN9HYoI5RPskIp6gegJ/K0Q==
+X-Received: by 2002:a63:4f08:: with SMTP id d8mr783253pgb.79.1618325839330;
+        Tue, 13 Apr 2021 07:57:19 -0700 (PDT)
+Received: from thinkpad ([2409:4072:188:336c:f8f0:1ccd:9421:e069])
+        by smtp.gmail.com with ESMTPSA id x19sm13076406pff.14.2021.04.13.07.57.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Apr 2021 07:22:20 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+        Tue, 13 Apr 2021 07:57:18 -0700 (PDT)
+Date:   Tue, 13 Apr 2021 20:27:09 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        linux-pci@vger.kernel.org, Hou Zhiqiang <Zhiqiang.Hou@nxp.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        Hou Zhiqiang <Zhiqiang.Hou@nxp.com>,
         Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
         Bjorn Helgaas <bhelgaas@google.com>,
         Rob Herring <robh@kernel.org>, stable@vger.kernel.org,
         Marek Szyprowski <m.szyprowski@samsung.com>
-Subject: [PATCH v2] PCI: dwc: Move iATU detection earlier
-Date:   Tue, 13 Apr 2021 17:22:19 +0300
-Message-Id: <20210413142219.2301430-1-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.30.2
+Subject: Re: [PATCH v2] PCI: dwc: Move iATU detection earlier
+Message-ID: <20210413145709.GA2967@thinkpad>
+References: <20210413142219.2301430-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210413142219.2301430-1-dmitry.baryshkov@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Hou Zhiqiang <Zhiqiang.Hou@nxp.com>
+On Tue, Apr 13, 2021 at 05:22:19PM +0300, Dmitry Baryshkov wrote:
+> From: Hou Zhiqiang <Zhiqiang.Hou@nxp.com>
+> 
+> dw_pcie_ep_init() depends on the detected iATU region numbers to allocate
+> the in/outbound window management bitmap.  It fails after 281f1f99cf3a
+> ("PCI: dwc: Detect number of iATU windows").
+> 
+> Move the iATU region detection into a new function, move the detection to
+> the very beginning of dw_pcie_host_init() and dw_pcie_ep_init().  Also
+> remove it from the dw_pcie_setup(), since it's more like a software
+> initialization step than hardware setup.
+> 
+> Fixes: 281f1f99cf3a ("PCI: dwc: Detect number of iATU windows")
+> Link: https://lore.kernel.org/r/20210125044803.4310-1-Zhiqiang.Hou@nxp.com
+> Tested-by: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
+> Signed-off-by: Hou Zhiqiang <Zhiqiang.Hou@nxp.com>
+> Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+> Reviewed-by: Rob Herring <robh@kernel.org>
+> Cc: stable@vger.kernel.org	# v5.11+
+> [DB: moved dw_pcie_iatu_detect to happen after host_init callback]
+> Link: https://lore.kernel.org/linux-pci/20210407131255.702054-1-dmitry.baryshkov@linaro.org
+> Cc: Marek Szyprowski <m.szyprowski@samsung.com>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-dw_pcie_ep_init() depends on the detected iATU region numbers to allocate
-the in/outbound window management bitmap.  It fails after 281f1f99cf3a
-("PCI: dwc: Detect number of iATU windows").
+Tested-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-Move the iATU region detection into a new function, move the detection to
-the very beginning of dw_pcie_host_init() and dw_pcie_ep_init().  Also
-remove it from the dw_pcie_setup(), since it's more like a software
-initialization step than hardware setup.
+Thanks,
+Mani
 
-Fixes: 281f1f99cf3a ("PCI: dwc: Detect number of iATU windows")
-Link: https://lore.kernel.org/r/20210125044803.4310-1-Zhiqiang.Hou@nxp.com
-Tested-by: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
-Signed-off-by: Hou Zhiqiang <Zhiqiang.Hou@nxp.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Rob Herring <robh@kernel.org>
-Cc: stable@vger.kernel.org	# v5.11+
-[DB: moved dw_pcie_iatu_detect to happen after host_init callback]
-Link: https://lore.kernel.org/linux-pci/20210407131255.702054-1-dmitry.baryshkov@linaro.org
-Cc: Marek Szyprowski <m.szyprowski@samsung.com>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/pci/controller/dwc/pcie-designware-ep.c   |  2 ++
- drivers/pci/controller/dwc/pcie-designware-host.c |  1 +
- drivers/pci/controller/dwc/pcie-designware.c      | 11 ++++++++---
- drivers/pci/controller/dwc/pcie-designware.h      |  1 +
- 4 files changed, 12 insertions(+), 3 deletions(-)
-
-diff --git a/drivers/pci/controller/dwc/pcie-designware-ep.c b/drivers/pci/controller/dwc/pcie-designware-ep.c
-index 1c25d8337151..8d028a88b375 100644
---- a/drivers/pci/controller/dwc/pcie-designware-ep.c
-+++ b/drivers/pci/controller/dwc/pcie-designware-ep.c
-@@ -705,6 +705,8 @@ int dw_pcie_ep_init(struct dw_pcie_ep *ep)
- 		}
- 	}
- 
-+	dw_pcie_iatu_detect(pci);
-+
- 	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "addr_space");
- 	if (!res)
- 		return -EINVAL;
-diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
-index 7e55b2b66182..24192b40e3a2 100644
---- a/drivers/pci/controller/dwc/pcie-designware-host.c
-+++ b/drivers/pci/controller/dwc/pcie-designware-host.c
-@@ -398,6 +398,7 @@ int dw_pcie_host_init(struct pcie_port *pp)
- 		if (ret)
- 			goto err_free_msi;
- 	}
-+	dw_pcie_iatu_detect(pci);
- 
- 	dw_pcie_setup_rc(pp);
- 	dw_pcie_msi_init(pp);
-diff --git a/drivers/pci/controller/dwc/pcie-designware.c b/drivers/pci/controller/dwc/pcie-designware.c
-index 004cb860e266..a945f0c0e73d 100644
---- a/drivers/pci/controller/dwc/pcie-designware.c
-+++ b/drivers/pci/controller/dwc/pcie-designware.c
-@@ -660,11 +660,9 @@ static void dw_pcie_iatu_detect_regions(struct dw_pcie *pci)
- 	pci->num_ob_windows = ob;
- }
- 
--void dw_pcie_setup(struct dw_pcie *pci)
-+void dw_pcie_iatu_detect(struct dw_pcie *pci)
- {
--	u32 val;
- 	struct device *dev = pci->dev;
--	struct device_node *np = dev->of_node;
- 	struct platform_device *pdev = to_platform_device(dev);
- 
- 	if (pci->version >= 0x480A || (!pci->version &&
-@@ -693,6 +691,13 @@ void dw_pcie_setup(struct dw_pcie *pci)
- 
- 	dev_info(pci->dev, "Detected iATU regions: %u outbound, %u inbound",
- 		 pci->num_ob_windows, pci->num_ib_windows);
-+}
-+
-+void dw_pcie_setup(struct dw_pcie *pci)
-+{
-+	u32 val;
-+	struct device *dev = pci->dev;
-+	struct device_node *np = dev->of_node;
- 
- 	if (pci->link_gen > 0)
- 		dw_pcie_link_set_max_speed(pci, pci->link_gen);
-diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
-index 7247c8b01f04..7d6e9b7576be 100644
---- a/drivers/pci/controller/dwc/pcie-designware.h
-+++ b/drivers/pci/controller/dwc/pcie-designware.h
-@@ -306,6 +306,7 @@ int dw_pcie_prog_inbound_atu(struct dw_pcie *pci, u8 func_no, int index,
- void dw_pcie_disable_atu(struct dw_pcie *pci, int index,
- 			 enum dw_pcie_region_type type);
- void dw_pcie_setup(struct dw_pcie *pci);
-+void dw_pcie_iatu_detect(struct dw_pcie *pci);
- 
- static inline void dw_pcie_writel_dbi(struct dw_pcie *pci, u32 reg, u32 val)
- {
--- 
-2.30.2
-
+> ---
+>  drivers/pci/controller/dwc/pcie-designware-ep.c   |  2 ++
+>  drivers/pci/controller/dwc/pcie-designware-host.c |  1 +
+>  drivers/pci/controller/dwc/pcie-designware.c      | 11 ++++++++---
+>  drivers/pci/controller/dwc/pcie-designware.h      |  1 +
+>  4 files changed, 12 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-designware-ep.c b/drivers/pci/controller/dwc/pcie-designware-ep.c
+> index 1c25d8337151..8d028a88b375 100644
+> --- a/drivers/pci/controller/dwc/pcie-designware-ep.c
+> +++ b/drivers/pci/controller/dwc/pcie-designware-ep.c
+> @@ -705,6 +705,8 @@ int dw_pcie_ep_init(struct dw_pcie_ep *ep)
+>  		}
+>  	}
+>  
+> +	dw_pcie_iatu_detect(pci);
+> +
+>  	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "addr_space");
+>  	if (!res)
+>  		return -EINVAL;
+> diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
+> index 7e55b2b66182..24192b40e3a2 100644
+> --- a/drivers/pci/controller/dwc/pcie-designware-host.c
+> +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
+> @@ -398,6 +398,7 @@ int dw_pcie_host_init(struct pcie_port *pp)
+>  		if (ret)
+>  			goto err_free_msi;
+>  	}
+> +	dw_pcie_iatu_detect(pci);
+>  
+>  	dw_pcie_setup_rc(pp);
+>  	dw_pcie_msi_init(pp);
+> diff --git a/drivers/pci/controller/dwc/pcie-designware.c b/drivers/pci/controller/dwc/pcie-designware.c
+> index 004cb860e266..a945f0c0e73d 100644
+> --- a/drivers/pci/controller/dwc/pcie-designware.c
+> +++ b/drivers/pci/controller/dwc/pcie-designware.c
+> @@ -660,11 +660,9 @@ static void dw_pcie_iatu_detect_regions(struct dw_pcie *pci)
+>  	pci->num_ob_windows = ob;
+>  }
+>  
+> -void dw_pcie_setup(struct dw_pcie *pci)
+> +void dw_pcie_iatu_detect(struct dw_pcie *pci)
+>  {
+> -	u32 val;
+>  	struct device *dev = pci->dev;
+> -	struct device_node *np = dev->of_node;
+>  	struct platform_device *pdev = to_platform_device(dev);
+>  
+>  	if (pci->version >= 0x480A || (!pci->version &&
+> @@ -693,6 +691,13 @@ void dw_pcie_setup(struct dw_pcie *pci)
+>  
+>  	dev_info(pci->dev, "Detected iATU regions: %u outbound, %u inbound",
+>  		 pci->num_ob_windows, pci->num_ib_windows);
+> +}
+> +
+> +void dw_pcie_setup(struct dw_pcie *pci)
+> +{
+> +	u32 val;
+> +	struct device *dev = pci->dev;
+> +	struct device_node *np = dev->of_node;
+>  
+>  	if (pci->link_gen > 0)
+>  		dw_pcie_link_set_max_speed(pci, pci->link_gen);
+> diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
+> index 7247c8b01f04..7d6e9b7576be 100644
+> --- a/drivers/pci/controller/dwc/pcie-designware.h
+> +++ b/drivers/pci/controller/dwc/pcie-designware.h
+> @@ -306,6 +306,7 @@ int dw_pcie_prog_inbound_atu(struct dw_pcie *pci, u8 func_no, int index,
+>  void dw_pcie_disable_atu(struct dw_pcie *pci, int index,
+>  			 enum dw_pcie_region_type type);
+>  void dw_pcie_setup(struct dw_pcie *pci);
+> +void dw_pcie_iatu_detect(struct dw_pcie *pci);
+>  
+>  static inline void dw_pcie_writel_dbi(struct dw_pcie *pci, u32 reg, u32 val)
+>  {
+> -- 
+> 2.30.2
+> 
