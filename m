@@ -2,147 +2,150 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B2F5E35F915
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Apr 2021 18:42:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4B1E635FA1D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Apr 2021 19:55:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233919AbhDNQlq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Apr 2021 12:41:46 -0400
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:23985 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233828AbhDNQlq (ORCPT
+        id S234323AbhDNRzg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Apr 2021 13:55:36 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:37790 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234303AbhDNRzg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Apr 2021 12:41:46 -0400
-Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
-  by alexa-out.qualcomm.com with ESMTP; 14 Apr 2021 09:41:24 -0700
-X-QCInternal: smtphost
-Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 14 Apr 2021 09:41:22 -0700
-X-QCInternal: smtphost
-Received: from rajeevny-linux.qualcomm.com ([10.204.66.121])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 14 Apr 2021 22:11:12 +0530
-Received: by rajeevny-linux.qualcomm.com (Postfix, from userid 2363605)
-        id C4D7C21351; Wed, 14 Apr 2021 22:11:10 +0530 (IST)
-From:   Rajeev Nandan <rajeevny@codeaurora.org>
-To:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
-Cc:     Rajeev Nandan <rajeevny@codeaurora.org>,
-        linux-kernel@vger.kernel.org, robdclark@gmail.com,
-        dianders@chromium.org, mkrishn@codeaurora.org,
-        kalyan_t@codeaurora.org, hoegsberg@chromium.org,
-        abhinavk@codeaurora.org, seanpaul@chromium.org
-Subject: [v1 3/3] drm/bridge: ti-sn65dsi86: Add DisplayPort aux backlight support
-Date:   Wed, 14 Apr 2021 22:09:50 +0530
-Message-Id: <1618418390-15055-4-git-send-email-rajeevny@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1618418390-15055-1-git-send-email-rajeevny@codeaurora.org>
-References: <1618418390-15055-1-git-send-email-rajeevny@codeaurora.org>
+        Wed, 14 Apr 2021 13:55:36 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1618422915; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=3uShNxK5FJYLasDW+nrg03JrG9d+DonaEeEOaVhcnHk=;
+ b=XFE/DLBdtQ2xce4ZYfKMzVXwAicLD6AP85ESb68oi/24jJfutwr1TgwsnRuy/+LfGAhACCk/
+ LKvvDxMTGeG+lsSzWnPhDIacqVsbwRSN0evFkwhTVAaS5W4QsMZ5VltVoNQJlOPhYn1b0Wr0
+ b7jxL4UWBBlJljLfFp+rgwza/cE=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
+ 60772c7f8166b7eff763f95a (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 14 Apr 2021 17:55:11
+ GMT
+Sender: khsieh=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id D7F3AC433ED; Wed, 14 Apr 2021 17:55:10 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: khsieh)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id CE1CCC433CA;
+        Wed, 14 Apr 2021 17:55:09 +0000 (UTC)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Wed, 14 Apr 2021 10:55:09 -0700
+From:   khsieh@codeaurora.org
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     robdclark@gmail.com, sean@poorly.run, tanmay@codeaurora.org,
+        abhinavk@codeaurora.org, aravindh@codeaurora.org, airlied@linux.ie,
+        daniel@ffwll.ch, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 2/3] drm/msm/dp: do not re initialize of audio_comp at
+ display_disable()
+In-Reply-To: <161837022104.3764895.807226402876043006@swboyd.mtv.corp.google.com>
+References: <1618355490-5292-1-git-send-email-khsieh@codeaurora.org>
+ <161837022104.3764895.807226402876043006@swboyd.mtv.corp.google.com>
+Message-ID: <cf72c919404a5bb4d0bdf101a341b074@codeaurora.org>
+X-Sender: khsieh@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support to control the backlight of the eDP panel connected to
-the ti-sn65dsi86 bridge through aux channel.
+On 2021-04-13 20:17, Stephen Boyd wrote:
+> Quoting Kuogee Hsieh (2021-04-13 16:11:30)
+>> At dongle unplug, dp initializes audio_comp followed by sending 
+>> disconnect
+>> event notification to audio and to make sure audio had shutdown 
+>> completely
+>> by wait for audio completion notification at display_disable(). This 
+>> patch
+> 
+> Is this dp_display_disable()? Doubtful that display_disable() is the
+> function we're talking about.
+yes
+> 
+>> will not re initialize audio_comp at display_disable() if audio 
+>> shutdown
+>> is triggered by dongle unplugged.
+> 
+> This commit text seems to say the why before the what, where why is "dp
+> initializes audio_comp followed by sending disconnect.." and the what 
+> is
+> "this patch will no re-initialized audio_comp...". Can you reorder this
+> so the what comes before the why?
+> 
+ok
+>> 
+>> Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
+>> ---
+>>  drivers/gpu/drm/msm/dp/dp_display.c | 6 ++++--
+>>  1 file changed, 4 insertions(+), 2 deletions(-)
+>> 
+>> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c 
+>> b/drivers/gpu/drm/msm/dp/dp_display.c
+>> index 0ba71c7..1d71c95 100644
+>> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+>> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+>> @@ -894,8 +894,10 @@ static int dp_display_disable(struct 
+>> dp_display_private *dp, u32 data)
+>>         /* wait only if audio was enabled */
+>>         if (dp_display->audio_enabled) {
+>>                 /* signal the disconnect event */
+>> -               reinit_completion(&dp->audio_comp);
+>> -               dp_display_handle_plugged_change(dp_display, false);
+>> +               if (dp->hpd_state != ST_DISCONNECT_PENDING) {
+>> +                       reinit_completion(&dp->audio_comp);
+> 
+> Why is this reinitialized here at all? Wouldn't it make more sense to
+> initialize the completion once at cable plug in and then not initialize
+> the completion anywhere else? Or initialize the completion whenever
+> dp_display->audio_enabled is set to true and then only wait for the
+> completion here if that boolean is true? Or initialize the completion
+> when dp_display_handle_plugged_change() is passed true for the 
+> 'plugged'
+> argument?
+> yes, i think it is better approach, this will take care of both unplug 
+> and suspend.
 
-Signed-off-by: Rajeev Nandan <rajeevny@codeaurora.org>
----
- drivers/gpu/drm/bridge/Kconfig        |  1 +
- drivers/gpu/drm/bridge/ti-sn65dsi86.c | 26 ++++++++++++++++++++++++++
- 2 files changed, 27 insertions(+)
-
-diff --git a/drivers/gpu/drm/bridge/Kconfig b/drivers/gpu/drm/bridge/Kconfig
-index e4110d6..e556ec22 100644
---- a/drivers/gpu/drm/bridge/Kconfig
-+++ b/drivers/gpu/drm/bridge/Kconfig
-@@ -239,6 +239,7 @@ config DRM_TI_SN65DSI86
- 	select REGMAP_I2C
- 	select DRM_PANEL
- 	select DRM_MIPI_DSI
-+	select DRM_DP_AUX_BACKLIGHT
- 	help
- 	  Texas Instruments SN65DSI86 DSI to eDP Bridge driver
- 
-diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-index f27306c..813d067 100644
---- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-+++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-@@ -22,6 +22,7 @@
- #include <drm/drm_atomic.h>
- #include <drm/drm_atomic_helper.h>
- #include <drm/drm_bridge.h>
-+#include <drm/drm_dp_aux_backlight.h>
- #include <drm/drm_dp_helper.h>
- #include <drm/drm_mipi_dsi.h>
- #include <drm/drm_of.h>
-@@ -126,6 +127,7 @@
-  * @panel:        Our panel.
-  * @enable_gpio:  The GPIO we toggle to enable the bridge.
-  * @supplies:     Data for bulk enabling/disabling our regulators.
-+ * @backlight:    The DP aux backlight device.
-  * @dp_lanes:     Count of dp_lanes we're using.
-  * @ln_assign:    Value to program to the LN_ASSIGN register.
-  * @ln_polrs:     Value for the 4-bit LN_POLRS field of SN_ENH_FRAME_REG.
-@@ -154,6 +156,7 @@ struct ti_sn_bridge {
- 	struct drm_panel		*panel;
- 	struct gpio_desc		*enable_gpio;
- 	struct regulator_bulk_data	supplies[SN_REGULATOR_SUPPLY_NUM];
-+	struct drm_dp_aux_backlight	*backlight;
- 	int				dp_lanes;
- 	u8				ln_assign;
- 	u8				ln_polrs;
-@@ -431,6 +434,8 @@ static void ti_sn_bridge_disable(struct drm_bridge *bridge)
- {
- 	struct ti_sn_bridge *pdata = bridge_to_ti_sn_bridge(bridge);
- 
-+	drm_dp_aux_backlight_disable(pdata->backlight);
-+
- 	drm_panel_disable(pdata->panel);
- 
- 	/* disable video stream */
-@@ -819,6 +824,8 @@ static void ti_sn_bridge_enable(struct drm_bridge *bridge)
- 			   VSTREAM_ENABLE);
- 
- 	drm_panel_enable(pdata->panel);
-+
-+	drm_dp_aux_backlight_enable(pdata->backlight);
- }
- 
- static void ti_sn_bridge_pre_enable(struct drm_bridge *bridge)
-@@ -1215,6 +1222,7 @@ static int ti_sn_bridge_probe(struct i2c_client *client,
- 			      const struct i2c_device_id *id)
- {
- 	struct ti_sn_bridge *pdata;
-+	struct drm_dp_aux_backlight *aux_bl;
- 	int ret;
- 
- 	if (!i2c_check_functionality(client->adapter, I2C_FUNC_I2C)) {
-@@ -1294,9 +1302,27 @@ static int ti_sn_bridge_probe(struct i2c_client *client,
- 
- 	drm_bridge_add(&pdata->bridge);
- 
-+	if (of_find_property(pdata->dev->of_node, "use-aux-backlight", NULL)) {
-+		aux_bl = devm_kzalloc(pdata->dev, sizeof(*aux_bl), GFP_KERNEL);
-+		if (!aux_bl) {
-+			ret = -ENOMEM;
-+			goto out;
-+		}
-+		aux_bl->dev = pdata->dev;
-+		aux_bl->aux = &pdata->aux;
-+		ret = drm_dp_aux_backlight_register("ti-sn-aux-backlight", aux_bl);
-+		if (ret)
-+			goto out;
-+		pdata->backlight = aux_bl;
-+	}
-+
- 	ti_sn_debugfs_init(pdata);
- 
- 	return 0;
-+
-+out:
-+	pm_runtime_disable(pdata->dev);
-+	return ret;
- }
- 
- static int ti_sn_bridge_remove(struct i2c_client *client)
--- 
-2.7.4
-
+> I started reading the code and quickly got lost figuring out how
+> dp_display_handle_plugged_change() worked and the interaction between
+> the dp display code and the audio codec embedded in here. There seem to
+> be a couple of conditions that cut off things early, like
+> dp_display->audio_enabled and audio->engine_on. Why? Why does
+> dp_display_signal_audio_complete() call complete_all() vs. just
+> complete()? Please help! :(
+> 
+>> +                       dp_display_handle_plugged_change(dp_display, 
+>> false);
+> 
+> I think it's this way because dp_hpd_unplug_handle() is the function
+> that sets the hpd_state to ST_DISCONNECT_PENDING and then reinitializes
+> the completion (why?) and calls dp_display_handle_plugged_change(). So
+> the commit text could say that reinitializing the completion again here
+> at dp_display_disable() is racing with the audio code in the case that
+> dp_hpd_unplug_handle() already called
+> dp_display_handle_plugged_change() and it would make more sense. But 
+> the
+> question still stands why that race even exists in the first place vs.
+> initializing the completion variable in only one place unconditionally
+> when the cable is connected, in dp_hpd_plug_handle() or
+> dp_display_post_enable().
+> 
+>> +               }
+>>                 if (!wait_for_completion_timeout(&dp->audio_comp,
+>>                                 HZ * 5))
+>>                         DRM_ERROR("audio comp timeout\n");
