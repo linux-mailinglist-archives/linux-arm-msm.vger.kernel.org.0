@@ -2,85 +2,196 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9D27A35EF50
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Apr 2021 10:24:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5D4DE35EFCB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Apr 2021 10:46:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349954AbhDNIOt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Apr 2021 04:14:49 -0400
-Received: from mail.kernel.org ([198.145.29.99]:34440 "EHLO mail.kernel.org"
+        id S230160AbhDNIiE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Apr 2021 04:38:04 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:60414 "EHLO m43-7.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1348355AbhDNIOs (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Apr 2021 04:14:48 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id DA6D261222;
-        Wed, 14 Apr 2021 08:14:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1618388067;
-        bh=eyJvos0Ftnqm8tRluK8Dm6HkcCy4KxqjxYjQabzApjU=;
-        h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
-        b=ohPsIJtmb1nHNgk4p25enpaiSwEL5mVy8OlZyhSkK3KzL0pRHNAXNIPMy9acIS/nC
-         pJ8Uue1PJNxrrvC7YgoCOG8eJmKX0vpK576Jk6msgzgqhXY5stgDtPyF6TZAB4b8D/
-         FJQfygBdfM8cVnOSCxkJRX1tI7BhkoSmzGDxrJoRb4NYPWU3rD41exsEgOK2uo7QSG
-         BFy1g8Tgu6Ha+xyIVoQpjj5FswPUWNbKlYRApmldfX/7n3c43YKzUPwloMQbVh8r/v
-         8kwafZ/bRYlLkgsvQ71oKtbzWOvGega/jCmegWZZkJ4GJQMC4FvooKfa2X2BD6//0V
-         m+VSVezor1f9g==
-From:   Felipe Balbi <balbi@kernel.org>
-To:     Caleb Connolly <caleb@connolly.tech>, caleb@connolly.tech,
-        Andy Gross <agross@kernel.org>,
+        id S244679AbhDNIiD (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 14 Apr 2021 04:38:03 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1618389462; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=zvmLfy2zOuDt1knhI27tVpCTjEIg7wJV+/7ZdmOP24U=; b=vqdcr6aE/NQ81r5VXpT+L+Z9eA6gVk/5C9qr+Cu/Faen8Hz8n0I7nBQUURXWViSWPrcixBLX
+ LdmKvZ+GwY6GhJHnqTxU4ts71TUiX2ZtnGDVSy2s+OcE7m17rRF9AOKwAO/hFslE5I5NiRv4
+ o21t5L+AE6o/Ct7Yz2V/XkOgtp4=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
+ 6076a9ce8166b7eff76ce0e2 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 14 Apr 2021 08:37:34
+ GMT
+Sender: schowdhu=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 96CD3C433CA; Wed, 14 Apr 2021 08:37:33 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from blr-ubuntu-525.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: schowdhu)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 638D1C433C6;
+        Wed, 14 Apr 2021 08:37:28 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 638D1C433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=schowdhu@codeaurora.org
+From:   Souradeep Chowdhury <schowdhu@codeaurora.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 2/3] arm64: dts: qcom: sm8150: add i2c nodes
-In-Reply-To: <20210408161953.26298-3-caleb@connolly.tech>
-References: <20210408161953.26298-3-caleb@connolly.tech>
-Date:   Wed, 14 Apr 2021 11:14:19 +0300
-Message-ID: <874kg9p9k4.fsf@kernel.org>
-MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
-        micalg=pgp-sha256; protocol="application/pgp-signature"
+Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Sibi Sankar <sibis@codeaurora.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>, vkoul@kernel.org,
+        Souradeep Chowdhury <schowdhu@codeaurora.org>
+Subject: [PATCH V3 0/4] Add driver support for Data Capture and Compare Engine(DCC) for SM8150
+Date:   Wed, 14 Apr 2021 14:02:01 +0530
+Message-Id: <cover.1618387606.git.schowdhu@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
---=-=-=
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
+DCC(Data Capture and Compare) is a DMA engine designed for debugging purposes.In case of a system
+crash or manual software triggers by the user the DCC hardware stores the value at the register
+addresses which can be used for debugging purposes.The DCC driver provides the user with sysfs
+interface to configure the register addresses.The options that the DCC hardware provides include
+reading from registers,writing to registers,first reading and then writing to registers and looping
+through the values of the same register.
 
-Caleb Connolly <caleb@connolly.tech> writes:
+In certain cases a register write needs to be executed for accessing the rest of the registers,
+also the user might want to record the changing values of a register with time for which he has the
+option to use the loop feature.
 
-> Tested on the OnePlus 7 Pro (including DMA).
->
-> Signed-off-by: Caleb Connolly <caleb@connolly.tech>
-> Reviewed-by: Vinod Koul <vkoul@kernel.org>
-> Reviewed-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+The options mentioned above are exposed to the user by sysfs files once the driver is probed.The
+details and usage of this sysfs files are documented in Documentation/ABI/testing/sysfs-driver-dcc.
 
-Tested on Microsoft Surface Duo (DTS will be sent after -rc1)
+As an example let us consider a couple of debug scenarios where DCC has been proved to be effective
+for debugging purposes:-
 
-Tested-by: Felipe Balbi <balbi@kernel.org>
+i)TimeStamp Related Issue
 
-=2D-=20
-balbi
+On SC7180, there was a coresight timestamp issue where it would occasionally be all 0 instead of proper
+timestamp values.
 
---=-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
+Proper timestamp:
+Idx:3373; ID:10; I_TIMESTAMP : Timestamp.; Updated val = 0x13004d8f5b7aa; CC=0x9e
 
------BEGIN PGP SIGNATURE-----
+Zero timestamp:
+Idx:3387; ID:10; I_TIMESTAMP : Timestamp.; Updated val = 0x0; CC=0xa2
 
-iQJFBAEBCAAvFiEElLzh7wn96CXwjh2IzL64meEamQYFAmB2pFsRHGJhbGJpQGtl
-cm5lbC5vcmcACgkQzL64meEamQYJng//f6Mm+/zbynbZedGD4wKL8FFeaOV82DhY
-jNyxofB6UgLAUU2nj6hDGFJ+1Tt/+roi1SPfePBlh5xJkUW3osUZ9uHfBO1EdRHS
-NZ/0U2BVy6Rufzrf8xtXml8WBBnOHp3Qnh0TTyRR0dIPiCLlBFQnsNVs6qD2Kd4k
-1VCmSKE6r6RQecZUubED7wmPL2VuoewRuInuF4ICvO8lLS6GXLohI5vysDD96nK/
-AaWw/4hCnIwU6tXgKnl6GfZIRrfwI5G2rRyBJH9wr2/HhmRuKOuyX2y89AycNpBH
-J4lv2r8hALd0+wp9HkfctDEcT1TDuPWwm/A7x2b6XH5Uv6DPiqoo+1F5LMgzY4t9
-waDfdjtCXHa9Kd4OY8w5AnMdfbhmK/dHpRE6SS9D8K/UGeA8GHRlS9WKMyleC6HY
-DPtJqjJO6K9ma/TJKKONsGFr66nn6T1JzglMAcQ3RVP4gEbljfr6i3KPpGjHQ8ik
-aWL8azCk6qapafkWCJpaXeEKuCwj4NjY22wC1JfYSqXUWomll1V1qO17eQuAP80b
-ELZw8cqi4Pki70YjY2QWHFnMjw4ZuHrNN8m9YxgBWKPA82aNaejuJOoglOkgzuOT
-h10ZK7i9+nb4JIr1NZmrQf2dwKdR3HdeOPKEXCkq26W3q2tMe1kZVRR0YwWYaEy7
-v0sQpjls5OI=
-=vuvI
------END PGP SIGNATURE-----
---=-=-=--
+Now this is a non-fatal issue and doesn't need a system reset, but still needs
+to be rootcaused and fixed for those who do care about coresight etm traces.
+Since this is a timestamp issue, we would be looking for any timestamp related
+clocks and such.
+
+o we get all the clk register details from IP documentation and configure it
+via DCC config syfs node. Before that we set the current linked list.
+
+/* Set the current linked list */
+echo 3 > /sys/bus/platform/devices/10a2000.dcc/curr_list
+
+/* Program the linked list with the addresses */
+echo 0x10c004 > /sys/bus/platform/devices/10a2000.dcc/config
+echo 0x10c008 > /sys/bus/platform/devices/10a2000.dcc/config
+echo 0x10c00c > /sys/bus/platform/devices/10a2000.dcc/config
+echo 0x10c010 > /sys/bus/platform/devices/10a2000.dcc/config
+..... and so on for other timestamp related clk registers
+
+/* Other way of specifying is in "addr len" pair, in below case it
+specifies to capture 4 words starting 0x10C004 */
+
+echo 0x10C004 4 > /sys/bus/platform/devices/10a2000.dcc/config
+
+/* Enable DCC */
+echo 1 > /sys/bus/platform/devices/10a2000.dcc/enable
+
+/* Run the timestamp test for working case */
+
+/* Send SW trigger */
+echo 1 > /sys/bus/platform/devices/10a2000.dcc/trigger
+
+/* Read SRAM */
+cat /dev/dcc_sram > dcc_sram1.bin
+
+/* Run the timestamp test for non-working case */
+
+/* Send SW trigger */
+echo 1 > /sys/bus/platform/devices/10a2000.dcc/trigger
+
+/* Read SRAM */
+cat /dev/dcc_sram > dcc_sram2.bin
+
+Get the parser from [1] and checkout the latest branch.
+
+/* Parse the SRAM bin */
+python dcc_parser.py -s dcc_sram1.bin --v2 -o output/
+python dcc_parser.py -s dcc_sram2.bin --v2 -o output/
+
+Sample parsed output of dcc_sram1.bin:
+
+<hwioDump version="1">
+        <timestamp>03/14/21</timestamp>
+            <generator>Linux DCC Parser</generator>
+                <chip name="None" version="None">
+                <register address="0x0010c004" value="0x80000000" />
+                <register address="0x0010c008" value="0x00000008" />
+                <register address="0x0010c00c" value="0x80004220" />
+                <register address="0x0010c010" value="0x80000000" />
+            </chip>
+    <next_ll_offset>next_ll_offset : 0x1c </next_ll_offset>
+</hwioDump>
+
+ii)NOC register errors
+
+A particular class of registers called NOC which are functional registers was reporting
+errors while logging the values.To trace these errors the DCC has been used effectively.
+The steps followed were similar to the ones mentioned above.
+In addition to NOC registers a few other dependent registers were configured in DCC to
+monitor it's values during a crash. A look at the dependent register values revealed that
+the crash was happening due to a secured access to one of these dependent registers.
+All these debugging activity and finding the root cause was achieved using DCC.
+
+DCC parser is available at the following open source location
+
+https://source.codeaurora.org/quic/la/platform/vendor/qcom-opensource/tools/tree/dcc_parser
+
+Changes in v3:
+
+*Implement all the comments on V2 of the patch.
+*Merged the sysfs documentation along with the driver patch as suggested.
+*Collect the review tags from V2 of the patch.
+*Sorted the entries in drivers/soc/qcom/Makefile based on config name as suggested.
+
+Souradeep Chowdhury (4):
+  dt-bindings: Added the yaml bindings for DCC
+  soc: qcom: dcc:Add driver support for Data Capture and Compare
+    unit(DCC)
+  MAINTAINERS: Add the entry for DCC(Data Capture and Compare) driver
+    support
+  arm64: dts: qcom: sm8150: Add Data Capture and Compare(DCC) support
+    node
+
+ Documentation/ABI/testing/sysfs-driver-dcc         |  114 ++
+ .../devicetree/bindings/arm/msm/qcom,dcc.yaml      |   40 +
+ MAINTAINERS                                        |    8 +
+ arch/arm64/boot/dts/qcom/sm8150.dtsi               |    6 +
+ drivers/soc/qcom/Kconfig                           |    8 +
+ drivers/soc/qcom/Makefile                          |   19 +-
+ drivers/soc/qcom/dcc.c                             | 1539 ++++++++++++++++++++
+ 7 files changed, 1725 insertions(+), 9 deletions(-)
+ create mode 100644 Documentation/ABI/testing/sysfs-driver-dcc
+ create mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,dcc.yaml
+ create mode 100644 drivers/soc/qcom/dcc.c
+
+--
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
+
