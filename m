@@ -2,105 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B5B4435ECCE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Apr 2021 08:01:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 43EA235ECD8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Apr 2021 08:04:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349011AbhDNGAn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Apr 2021 02:00:43 -0400
-Received: from mail-lf1-f42.google.com ([209.85.167.42]:38733 "EHLO
-        mail-lf1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345214AbhDNGAm (ORCPT
+        id S1349174AbhDNGEg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Apr 2021 02:04:36 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:13775 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1349122AbhDNGEX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Apr 2021 02:00:42 -0400
-Received: by mail-lf1-f42.google.com with SMTP id j18so31240981lfg.5;
-        Tue, 13 Apr 2021 23:00:20 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=f4Q2DJD3DV7OkSynlanBwzkwssjVc6YxaICi84VA+UM=;
-        b=GzXOtX86BXEK5eU33ZzhWkwTVyiyu/enlgxl/SrAjfoZHK9ZP46dMovN2X0plumsln
-         0zvT9TmBmMv5ynh6lctYA/MMBmJ2F1b6hsHNNm102j+BLH039w2BrTntcY3hUOZCtFpD
-         srDlrmiMqM+x+GlbsLRpct8w9k7JV3opj9PCEwGc3JiH4mKyo3CDgbpZoZONA73wjJjy
-         gDhgWXfJXmvEKnaPNj+GcQVpw6KJhfuNhZnplQeieTUHYy+e/RjJtVGCj3YtWSqpnRBK
-         m+vC2V8CUwPBslDHGjWVB0V1wLCm6+iH7Zb9uXuZX81mLnm5AxgAgx+O6wbZBmsG6BZB
-         7nZQ==
-X-Gm-Message-State: AOAM531YTaVw7UueU6BUfUyio4JouUBXikoT1+nxMjt4OS07fq8QpEom
-        k9v7KbYgoW34JZx7363VK7c=
-X-Google-Smtp-Source: ABdhPJxKujG2wBrfUHPrlF/DdKRjT4FEXoJGh7s/PjOzpD3Sui6yZtGoMKr3dOoVNeNzWZ9WEYzYdg==
-X-Received: by 2002:a19:6906:: with SMTP id e6mr18423553lfc.385.1618380020330;
-        Tue, 13 Apr 2021 23:00:20 -0700 (PDT)
-Received: from localhost.localdomain (dc7vkhyyyyyyyyyyyyydy-3.rev.dnainternet.fi. [2001:14ba:16e2:8300::6])
-        by smtp.gmail.com with ESMTPSA id k9sm2285172lfg.64.2021.04.13.23.00.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Apr 2021 23:00:19 -0700 (PDT)
-Date:   Wed, 14 Apr 2021 09:00:13 +0300
-From:   Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>
-To:     Matti Vaittinen <mazziesaccount@gmail.com>,
-        Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>
-Cc:     Mark Brown <broonie@kernel.org>, Kees Cook <keescook@chromium.org>,
-        Andy Shevchenko <andy.shevchenko@gmail.com>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Guenter Roeck <linux@roeck-us.net>,
-        "agross@kernel.org" <agross@kernel.org>,
-        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
-        linux-power <linux-power@fi.rohmeurope.com>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "linux-renesas-soc@vger.kernel.org" 
-        <linux-renesas-soc@vger.kernel.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "bjorn.andersson@linaro.org" <bjorn.andersson@linaro.org>,
-        "lgirdwood@gmail.com" <lgirdwood@gmail.com>,
-        "robh+dt@kernel.org" <robh+dt@kernel.org>
-Subject: [PATCH v7 9/9] MAINTAINERS: Add reviewer for regulator irq_helpers
-Message-ID: <5a544430d447fb9a261eee8c5856a586dcab55f1.1618377272.git.matti.vaittinen@fi.rohmeurope.com>
-References: <cover.1618377272.git.matti.vaittinen@fi.rohmeurope.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1618377272.git.matti.vaittinen@fi.rohmeurope.com>
+        Wed, 14 Apr 2021 02:04:23 -0400
+Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
+  by alexa-out.qualcomm.com with ESMTP; 13 Apr 2021 23:04:02 -0700
+X-QCInternal: smtphost
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/AES256-SHA; 13 Apr 2021 23:03:59 -0700
+X-QCInternal: smtphost
+Received: from c-sanm-linux.qualcomm.com ([10.206.25.31])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 14 Apr 2021 11:33:33 +0530
+Received: by c-sanm-linux.qualcomm.com (Postfix, from userid 2343233)
+        id 71C2037A5; Wed, 14 Apr 2021 11:33:32 +0530 (IST)
+From:   Sandeep Maheswaram <sanm@codeaurora.org>
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Manu Gautam <mgautam@codeaurora.org>,
+        Sandeep Maheswaram <sanm@codeaurora.org>
+Subject: [PATCH v2] usb: dwc3: core: Add shutdown callback for dwc3
+Date:   Wed, 14 Apr 2021 11:33:29 +0530
+Message-Id: <1618380209-20114-1-git-send-email-sanm@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add a reviewer entry for the regulator irq_helpers.
+This patch adds a shutdown callback to USB DWC core driver to ensure that
+it is properly shutdown in reboot/shutdown path. This is required
+where SMMU address translation is enabled like on SC7180
+SoC and few others. If the hardware is still accessing memory after
+SMMU translation is disabled as part of SMMU shutdown callback in
+system reboot or shutdown path, then IOVAs(I/O virtual address)
+which it was using will go on the bus as the physical addresses which
+might result in unknown crashes (NoC/interconnect errors).
 
-Signed-off-by: Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>
+Signed-off-by: Sandeep Maheswaram <sanm@codeaurora.org>
 ---
-Changelog:
- v6:
-  - New patch
----
- MAINTAINERS | 4 ++++
- 1 file changed, 4 insertions(+)
+Changes in v2:
+        - As per Stephen's comment, calling dwc3_remove in dwc3_shutdown.
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 7fdc513392f4..c917d85feccd 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -19228,6 +19228,10 @@ F:	include/dt-bindings/regulator/
- F:	include/linux/regulator/
- K:	regulator_get_optional
+ drivers/usb/dwc3/core.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
+index 05e2e54c..2022d90 100644
+--- a/drivers/usb/dwc3/core.c
++++ b/drivers/usb/dwc3/core.c
+@@ -1658,6 +1658,11 @@ static int dwc3_remove(struct platform_device *pdev)
+ 	return 0;
+ }
  
-+VOLTAGE AND CURRENT REGULATOR IRQ HELPERS
-+R:	Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>
-+F:	drivers/regulator/irq_helpers.c
++static void dwc3_shutdown(struct platform_device *pdev)
++{
++	dwc3_remove(pdev);
++}
 +
- VRF
- M:	David Ahern <dsahern@kernel.org>
- L:	netdev@vger.kernel.org
+ #ifdef CONFIG_PM
+ static int dwc3_core_init_for_resume(struct dwc3 *dwc)
+ {
+@@ -1975,6 +1980,7 @@ MODULE_DEVICE_TABLE(acpi, dwc3_acpi_match);
+ static struct platform_driver dwc3_driver = {
+ 	.probe		= dwc3_probe,
+ 	.remove		= dwc3_remove,
++	.shutdown   = dwc3_shutdown,
+ 	.driver		= {
+ 		.name	= "dwc3",
+ 		.of_match_table	= of_match_ptr(of_dwc3_match),
 -- 
-2.25.4
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
 
-
--- 
-Matti Vaittinen, Linux device drivers
-ROHM Semiconductors, Finland SWDC
-Kiviharjunlenkki 1E
-90220 OULU
-FINLAND
-
-~~~ "I don't think so," said Rene Descartes. Just then he vanished ~~~
-Simon says - in Latin please.
-~~~ "non cogito me" dixit Rene Descarte, deinde evanescavit ~~~
-Thanks to Simon Glass for the translation =] 
