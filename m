@@ -2,100 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 755F335EFE1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Apr 2021 10:46:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 52BBE35F1FA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Apr 2021 13:14:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350170AbhDNIkR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Apr 2021 04:40:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41738 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350233AbhDNIj3 (ORCPT
+        id S1346548AbhDNLN5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Apr 2021 07:13:57 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:5632 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1346172AbhDNLN4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Apr 2021 04:39:29 -0400
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0037CC06134A
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Apr 2021 01:38:23 -0700 (PDT)
-Received: by mail-ej1-x62c.google.com with SMTP id r12so30168805ejr.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Apr 2021 01:38:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=vhZ72Xg0BjOB8Y+YSTZaT0YeKtDJ45/09IKX2ejXKzU=;
-        b=gaiStzZagd8zAkEqqAKTFG81x7D+nyIHgzl6IOJE8VyQCaPv9Iae8hpRTB6pt71rd0
-         rrF5QicWAEIMxLCAvXR88QdOcT6rQW+MogInjgTXdHt5a7WRU7Tt0IlKCMWuknUDo2iB
-         Cz6jvWZtpXex64fuEPfnwok8HyphGmagniPMJ9VXLuT2Kq5Ify8+RFJn6OBPvwWBsKKG
-         K7JAXvVIkrMbcVjibJ2Qwb3WcvdLQ2oalcuerPyLwS55SQ98W/4JAxUA5pG5eT56EgvF
-         ogDa+291qqrpmn4kfvIB5djabdzsH2ynqYEWNYpZ4y/4O3/AW1HfmZ+QRUbshgjFL6sZ
-         /36w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=vhZ72Xg0BjOB8Y+YSTZaT0YeKtDJ45/09IKX2ejXKzU=;
-        b=dM71QZnupi4vK6OoNFMykzx1nd0SzqAxGPf0xZwySTSLSCkFtLJNxy9MIJgVanOcOR
-         IaZIXAadRDdCZ6z4pphQ/rFsIxHDsfwtK3n5F7utg0ztzxcMFq6AUdrJ3V4XDj8i5UZJ
-         S8Rtc6WoPK5xO5PThA0CdsGQV4C/RPhd/I1LL3YS8i5CfvXJzhuh7hxZhDzKQEeyN9x8
-         TCOLuUpqxEUcJh+l2WS8fM2NRGBQ7W8z6hxt0dkzP/nGY/L24pKpw3wJt9dk1aw4uAMD
-         3gQpfE70Mqrt5C+93EVqucWAz8eEjwHi5k7OR8OQOS8cgZdgccY+KK8xGPNchQoCk0CD
-         Fx0A==
-X-Gm-Message-State: AOAM5329Tx3IbkwhSo+2//U97+Q8KAzbdG+Oh59IoyqJ9NzGzd8AZ4Ln
-        4Kx6aJrOLvJg13qESp0pZtewLw==
-X-Google-Smtp-Source: ABdhPJzQiYHdbxLZKSHPErRc+GwkdWizSUBzC7Y3CpNNw0NP18kwZPRTExKYXq+MLBKbjHipA6b0/A==
-X-Received: by 2002:a17:906:34da:: with SMTP id h26mr27108722ejb.496.1618389502585;
-        Wed, 14 Apr 2021 01:38:22 -0700 (PDT)
-Received: from dell ([91.110.221.215])
-        by smtp.gmail.com with ESMTPSA id q25sm476360ejd.9.2021.04.14.01.38.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 Apr 2021 01:38:22 -0700 (PDT)
-Date:   Wed, 14 Apr 2021 09:38:20 +0100
-From:   Lee Jones <lee.jones@linaro.org>
-To:     satya priya <skakit@codeaurora.org>
-Cc:     Alessandro Zummo <a.zummo@towertech.it>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
+        Wed, 14 Apr 2021 07:13:56 -0400
+Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
+  by alexa-out.qualcomm.com with ESMTP; 14 Apr 2021 04:13:35 -0700
+X-QCInternal: smtphost
+Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 14 Apr 2021 04:13:33 -0700
+X-QCInternal: smtphost
+Received: from c-skakit-linux.ap.qualcomm.com (HELO c-skakit-linux.qualcomm.com) ([10.242.51.242])
+  by ironmsg02-blr.qualcomm.com with ESMTP; 14 Apr 2021 16:43:06 +0530
+Received: by c-skakit-linux.qualcomm.com (Postfix, from userid 2344709)
+        id 3C86E47ED; Wed, 14 Apr 2021 16:43:05 +0530 (IST)
+From:   satya priya <skakit@codeaurora.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-rtc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     mka@chromium.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        kgunda@codeaurora.org
-Subject: Re: [PATCH V2 3/4] dt-bindings: mfd: Convert pm8xxx bindings to yaml
-Message-ID: <20210414083820.GH4869@dell>
-References: <1617976766-7852-1-git-send-email-skakit@codeaurora.org>
- <1617976766-7852-4-git-send-email-skakit@codeaurora.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <1617976766-7852-4-git-send-email-skakit@codeaurora.org>
+        kgunda@codeaurora.org, satya priya <skakit@codeaurora.org>
+Subject: [RESEND PATCH V3 0/5] Add PMIC DT files for sc7280
+Date:   Wed, 14 Apr 2021 16:42:58 +0530
+Message-Id: <1618398783-7834-1-git-send-email-skakit@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 09 Apr 2021, satya priya wrote:
+Hi All,
 
-> Convert pm8xxx bindings from .txt to .yaml format. Also,
-> split this binding into two: parent binding(qcom-pm8xxx.yaml)
-> and child node RTC binding(qcom-pm8xxx-rtc.yaml).
-> 
-> Signed-off-by: satya priya <skakit@codeaurora.org>
-> ---
-> Changes in V2:
->  - As per Bjorn's comments, I've split this into two, one parent binding
->    and one child node rtc binding.
->  - Fixed bot errors and changed maintainer name.
-> 
->  .../devicetree/bindings/mfd/qcom-pm8xxx.txt        | 100 ---------------------
->  .../devicetree/bindings/mfd/qcom-pm8xxx.yaml       |  54 +++++++++++
->  2 files changed, 54 insertions(+), 100 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/mfd/qcom-pm8xxx.txt
->  create mode 100644 Documentation/devicetree/bindings/mfd/qcom-pm8xxx.yaml
+Resending V3 as there was a mistake earlier, changes in patches 4 and 5
+got clubbed unknowingly. Apologies for that.
 
-Applied, thanks.
+Thanks,
+Satya Priya
+
+Add PM7325 DT file with gpio and temp-alarm nodes.
+For PM8350C, PMR735A and PMK8350 add the required peripherals
+as the base DT files are already added [1].
+[1] https://lore.kernel.org/patchwork/project/lkml/list/?series=489011&state=%2A&archive=both
+
+Changes in V2:
+ - As per Matthias comments:
+   - I've Split the patch into per-PMIC patches and one sc7280 patch
+   - Removed 2nd critical point, thermal-governer property
+   - s/pm8325_tz/pm7325_temp_alarm and s/pm7325_temp_alarm/pm7325_thermal
+   - Fixed few other minor errors.
+
+ - As per Bjorn's comments, replaced '_' with '-' in node names and moved
+   DT files inclusion to board dts.
+
+Changes in V3:
+ - As per Matthias comments, changed commit text, modified critical interrupt
+   node name like <name>-crit for all pmics.
+ - Moved pmk8350_vadc channel nodes to idp dts, as it is not guaranteed that
+   a board with the pmk8350 will always have the other 3 PMICs
+
+satya priya (5):
+  arm64: dts: qcom: pm7325: Add pm7325 base dts file
+  arm64: dts: qcom: pm8350c: Add temp-alarm support
+  arm64: dts: qcom: pmr735a: Add temp-alarm support
+  arm64: dts: qcom: pmk8350: Add PMIC peripherals for pmk8350
+  arm64: dts: qcom: sc7280: Include PMIC DT files for sc7280
+
+ arch/arm64/boot/dts/qcom/pm7325.dtsi    | 53 +++++++++++++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/pm8350c.dtsi   | 32 ++++++++++++++++++-
+ arch/arm64/boot/dts/qcom/pmk8350.dtsi   | 55 ++++++++++++++++++++++++++++++++-
+ arch/arm64/boot/dts/qcom/pmr735a.dtsi   | 32 ++++++++++++++++++-
+ arch/arm64/boot/dts/qcom/sc7280-idp.dts | 30 ++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sc7280.dtsi    |  3 ++
+ 6 files changed, 202 insertions(+), 3 deletions(-)
+ create mode 100644 arch/arm64/boot/dts/qcom/pm7325.dtsi
 
 -- 
-Lee Jones [李琼斯]
-Senior Technical Lead - Developer Services
-Linaro.org │ Open source software for Arm SoCs
-Follow Linaro: Facebook | Twitter | Blog
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
+of Code Aurora Forum, hosted by The Linux Foundation
+
