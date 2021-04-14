@@ -2,94 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C14A935EFE2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Apr 2021 10:46:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4DEA535EFB7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Apr 2021 10:46:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344304AbhDNIkR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Apr 2021 04:40:17 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:60414 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1350180AbhDNIir (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Apr 2021 04:38:47 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1618389506; h=References: In-Reply-To: References:
- In-Reply-To: Message-Id: Date: Subject: Cc: To: From: Sender;
- bh=jyUb42qJgomuB7pQkbu5JzcZ0Y3XJSuvxS8VVPF5vLU=; b=E0Cs0XIWdiYExgOr7oouF5nengQGEYU8JinT9wbIGLZ+Q9Zaw0JWACjz2xafBPO47Sh34o7q
- 1AIq3QMJ4YdC9pkKa+zPKYx5vAZeQM9RiD9or4d6VlWABFrw/PXD+SxGrHbfKnwNxei9qHnC
- pJwQVQjKrIp063D+R1oe9KBcA70=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
- 6076a9ee9a9ff96d95a070a5 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 14 Apr 2021 08:38:06
- GMT
-Sender: schowdhu=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id D3D30C433ED; Wed, 14 Apr 2021 08:38:06 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
-Received: from blr-ubuntu-525.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: schowdhu)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id AE6CCC433CA;
-        Wed, 14 Apr 2021 08:38:02 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org AE6CCC433CA
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=schowdhu@codeaurora.org
-From:   Souradeep Chowdhury <schowdhu@codeaurora.org>
+        id S1349698AbhDNIfT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Apr 2021 04:35:19 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:51686 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1348471AbhDNIfR (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 14 Apr 2021 04:35:17 -0400
+Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
+  by alexa-out.qualcomm.com with ESMTP; 14 Apr 2021 01:34:55 -0700
+X-QCInternal: smtphost
+Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
+  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 14 Apr 2021 01:34:53 -0700
+X-QCInternal: smtphost
+Received: from c-skakit-linux.ap.qualcomm.com (HELO c-skakit-linux.qualcomm.com) ([10.242.51.242])
+  by ironmsg02-blr.qualcomm.com with ESMTP; 14 Apr 2021 14:04:29 +0530
+Received: by c-skakit-linux.qualcomm.com (Postfix, from userid 2344709)
+        id 3693C47EC; Wed, 14 Apr 2021 14:04:28 +0530 (IST)
+From:   satya priya <skakit@codeaurora.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>
-Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Sibi Sankar <sibis@codeaurora.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>, vkoul@kernel.org,
-        Souradeep Chowdhury <schowdhu@codeaurora.org>
-Subject: [PATCH V3 4/4] arm64: dts: qcom: sm8150: Add Data Capture and Compare(DCC) support node
-Date:   Wed, 14 Apr 2021 14:02:05 +0530
-Message-Id: <ac5c413a4f2987a6812d6baaa95a3a83e53c5f43.1618387606.git.schowdhu@codeaurora.org>
+Cc:     mka@chromium.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        kgunda@codeaurora.org, satya priya <skakit@codeaurora.org>
+Subject: [PATCH V3 0/5] Add PMIC DT files for sc7280
+Date:   Wed, 14 Apr 2021 14:04:21 +0530
+Message-Id: <1618389266-5990-1-git-send-email-skakit@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
-In-Reply-To: <cover.1618387606.git.schowdhu@codeaurora.org>
-References: <cover.1618387606.git.schowdhu@codeaurora.org>
-In-Reply-To: <cover.1618387606.git.schowdhu@codeaurora.org>
-References: <cover.1618387606.git.schowdhu@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the DCC(Data Capture and Compare) device tree node entry along with
-the addresses for register regions.
+Add PM7325 DT file with gpio and temp-alarm nodes.
+For PM8350C, PMR735A and PMK8350 add the required peripherals
+as the base DT files are already added [1].
+[1] https://lore.kernel.org/patchwork/project/lkml/list/?series=489011&state=%2A&archive=both
 
-Signed-off-by: Souradeep Chowdhury <schowdhu@codeaurora.org>
----
- arch/arm64/boot/dts/qcom/sm8150.dtsi | 6 ++++++
- 1 file changed, 6 insertions(+)
+Changes in V2:
+ - As per Matthias comments:
+   - I've Split the patch into per-PMIC patches and one sc7280 patch
+   - Removed 2nd critical point, thermal-governer property
+   - s/pm8325_tz/pm7325_temp_alarm and s/pm7325_temp_alarm/pm7325_thermal
+   - Fixed few other minor errors.
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-index e5bb17b..7d4bb28 100644
---- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-@@ -654,6 +654,12 @@
- 			interrupts = <GIC_SPI 582 IRQ_TYPE_LEVEL_HIGH>;
- 		};
- 
-+		dma@10a2000 {
-+			compatible = "qcom,sm8150-dcc", "qcom,dcc";
-+			reg = <0x0 0x010a2000 0x0 0x1000>,
-+			      <0x0 0x010ad000 0x0 0x3000>;
-+		};
-+
- 		ufs_mem_hc: ufshc@1d84000 {
- 			compatible = "qcom,sm8150-ufshc", "qcom,ufshc",
- 				     "jedec,ufs-2.0";
+ - As per Bjorn's comments, replaced '_' with '-' in node names and moved
+   DT files inclusion to board dts.
+
+Changes in V3:
+ - As per Matthias comments, changed commit text, modified criticl interrupt
+   node name like <name>-crit for all pmics.
+ - Moved pmk8350_vadc channel nodes to idp dts, as it is not guaranteed that
+   a board with the pmk8350 will always have the other 3 PMICs
+
+satya priya (5):
+  arm64: dts: qcom: pm7325: Add pm7325 base dts file
+  arm64: dts: qcom: pm8350c: Add temp-alarm support
+  arm64: dts: qcom: pmr735a: Add temp-alarm support
+  arm64: dts: qcom: pmk8350: Add PMIC peripherals for pmk8350
+  arm64: dts: qcom: sc7280: Include PMIC DT files for sc7280
+
+ arch/arm64/boot/dts/qcom/pm7325.dtsi    | 53 +++++++++++++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/pm8350c.dtsi   | 32 ++++++++++++++++++-
+ arch/arm64/boot/dts/qcom/pmk8350.dtsi   | 55 ++++++++++++++++++++++++++++++++-
+ arch/arm64/boot/dts/qcom/pmr735a.dtsi   | 32 ++++++++++++++++++-
+ arch/arm64/boot/dts/qcom/sc7280-idp.dts | 30 ++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sc7280.dtsi    |  3 ++
+ 6 files changed, 202 insertions(+), 3 deletions(-)
+ create mode 100644 arch/arm64/boot/dts/qcom/pm7325.dtsi
+
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
 of Code Aurora Forum, hosted by The Linux Foundation
 
