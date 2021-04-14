@@ -2,140 +2,240 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 24F2B35EB64
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Apr 2021 05:17:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8279435EC7C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Apr 2021 07:51:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346904AbhDNDRZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Apr 2021 23:17:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56320 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346897AbhDNDRY (ORCPT
+        id S1347547AbhDNFwC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Apr 2021 01:52:02 -0400
+Received: from mail-lj1-f178.google.com ([209.85.208.178]:36557 "EHLO
+        mail-lj1-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232828AbhDNFwB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Apr 2021 23:17:24 -0400
-Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9ADCC061574
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Apr 2021 20:17:03 -0700 (PDT)
-Received: by mail-pj1-x102a.google.com with SMTP id nm3-20020a17090b19c3b029014e1bbf6c60so5878257pjb.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Apr 2021 20:17:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=UyWa4apo3TOwjYMjSQh4reAE84rIdbfCEBEygOg3904=;
-        b=dpee4gxvPllwyK85S+W/u7eMJLRfSQ+uwClt/aapdhbdlHZGhWOGPRlJePeQGICFEL
-         je7oTUk+b7fhD2sJ2AQTGcVkYsNvMoMyt05wpLo6FZv4lDwM3UhCzxvKiLBUWbWp6fMX
-         LuZuKnH3eWPDRtTUVlY7iNwkZDEuDuTNNirRc=
+        Wed, 14 Apr 2021 01:52:01 -0400
+Received: by mail-lj1-f178.google.com with SMTP id o16so22001345ljp.3;
+        Tue, 13 Apr 2021 22:51:40 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=UyWa4apo3TOwjYMjSQh4reAE84rIdbfCEBEygOg3904=;
-        b=jB+JUO1lggDGnsBoMdgU7YNNaGoFN7N7I9DUW0zulWB0g+Da44raPZ7NhHF1MTI8eA
-         3/HZ0K3nZHrYDVAPKOzJFn2x3UXMegPw3JMph1hx2tCJl25CoHWSGw4OuQRqsL2xQiKF
-         05b8u6W2aUmwsVyvLMVJILmX6GtHpOwPeNHTVdog9M3AACiZ3z7inPTC1cA1WNhEwvVH
-         6fZmdwGUmki5xQ++bBjplsPzIhAg9lfQhigo3Fjx9mCJXBIZiyhGSr7v0e/hI3EfKa2c
-         MdWBLJp2V8Sp0XAsJ8mAPsl7c0RwUgRMbozeE20UwsU74bMbSf55w7+Kis7c7dRHaRRL
-         HFHg==
-X-Gm-Message-State: AOAM530BpH1UENfXOz4JiYGZhQY/TNW19LEcAMLjSKAVvWtzPpHrXPSc
-        fkLRvaVGHsyebD9cgSSGScMo7Q==
-X-Google-Smtp-Source: ABdhPJxG8gJn4/9Tdm2GnwnYN6cg36Ox7phGHtV14+oMYkxG3dWfNU0i/W1zwe2CYbxOe2Z31HRSWQ==
-X-Received: by 2002:a17:902:8f8d:b029:ea:e059:84a6 with SMTP id z13-20020a1709028f8db02900eae05984a6mr17306846plo.35.1618370223402;
-        Tue, 13 Apr 2021 20:17:03 -0700 (PDT)
-Received: from chromium.org ([2620:15c:202:201:1d18:a339:7993:e548])
-        by smtp.gmail.com with ESMTPSA id u24sm128634pga.78.2021.04.13.20.17.02
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition;
+        bh=Doyc1lt05VOrNXozHzLk2uu5425SfA2G10eILYcXAXk=;
+        b=VZusmvHxw1/zkQh6iPRr1Bqh3lf+Vwkq8LZ6xQq1wqlycrfIyEa5UUK/ZPisb7BbIk
+         uEhQ9LmcYSrNv7k5uQm/iJdE2JSWQMiEpYMrmNRSbAboA7/MYXhy6Hnzx+grdRoOib7V
+         KvrIuKULxtQGKDtQkgvuOV3f4kaO8jWmRSTM+G9ftdluraiQIDLYuIbYNtmvkF5Ib2RQ
+         azfH9f/hCvGW6LpuOjiYTROsU/fj1Fg4pagX374MsQn77iX81hRPub8BkzyaKmLb1ax/
+         V5NMWiAPvwIVzBvsbR29Q48LQSYewmWq3e8IMK3eG80AYB1P48Cnmvk6sx0pOnOU+8oL
+         OfJQ==
+X-Gm-Message-State: AOAM532Rs8A/GhME6FnI100X3tSa0kcsxtz/k8MlTGrddKVtyJCtddGt
+        t4VZkfktUiliZuTDGr+9s+c=
+X-Google-Smtp-Source: ABdhPJzfX/I5ZRyUwYVgE9b7Rk092eyo5XB/LAegjYBr3KPtOUiOtqFRWsilW18oNTUG/V/mwgZWLQ==
+X-Received: by 2002:a2e:b4b4:: with SMTP id q20mr22643835ljm.45.1618379499206;
+        Tue, 13 Apr 2021 22:51:39 -0700 (PDT)
+Received: from localhost.localdomain (dc7vkhyyyyyyyyyyyyydy-3.rev.dnainternet.fi. [2001:14ba:16e2:8300::6])
+        by smtp.gmail.com with ESMTPSA id i9sm2681286lfu.86.2021.04.13.22.51.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Apr 2021 20:17:02 -0700 (PDT)
-Content-Type: text/plain; charset="utf-8"
+        Tue, 13 Apr 2021 22:51:38 -0700 (PDT)
+Date:   Wed, 14 Apr 2021 08:51:30 +0300
+From:   Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>
+To:     Matti Vaittinen <mazziesaccount@gmail.com>,
+        Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>
+Cc:     Mark Brown <broonie@kernel.org>, Kees Cook <keescook@chromium.org>,
+        Andy Shevchenko <andy.shevchenko@gmail.com>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Guenter Roeck <linux@roeck-us.net>,
+        "agross@kernel.org" <agross@kernel.org>,
+        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+        linux-power <linux-power@fi.rohmeurope.com>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "linux-renesas-soc@vger.kernel.org" 
+        <linux-renesas-soc@vger.kernel.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "bjorn.andersson@linaro.org" <bjorn.andersson@linaro.org>,
+        "lgirdwood@gmail.com" <lgirdwood@gmail.com>,
+        "robh+dt@kernel.org" <robh+dt@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Amit Kucheria <amitk@kernel.org>,
+        Matteo Croce <mcroce@microsoft.com>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Petr Mladek <pmladek@suse.com>,
+        "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+        Mike Rapoport <rppt@kernel.org>,
+        Josef Bacik <josef@toxicpanda.com>,
+        Kai-Heng Feng <kai.heng.feng@canonical.com>,
+        linux-pm@vger.kernel.org
+Subject: [PATCH v7 0/9] Extend regulator notification support
+Message-ID: <cover.1618377272.git.matti.vaittinen@fi.rohmeurope.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <1618355490-5292-1-git-send-email-khsieh@codeaurora.org>
-References: <1618355490-5292-1-git-send-email-khsieh@codeaurora.org>
-Subject: Re: [PATCH v2 2/3] drm/msm/dp: do not re initialize of audio_comp at display_disable()
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     tanmay@codeaurora.org, abhinavk@codeaurora.org,
-        aravindh@codeaurora.org, khsieh@codeaurora.org, airlied@linux.ie,
-        daniel@ffwll.ch, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
-To:     Kuogee Hsieh <khsieh@codeaurora.org>, robdclark@gmail.com,
-        sean@poorly.run
-Date:   Tue, 13 Apr 2021 20:17:01 -0700
-Message-ID: <161837022104.3764895.807226402876043006@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Kuogee Hsieh (2021-04-13 16:11:30)
-> At dongle unplug, dp initializes audio_comp followed by sending disconnect
-> event notification to audio and to make sure audio had shutdown completely
-> by wait for audio completion notification at display_disable(). This patch
+Extend regulator notification support
 
-Is this dp_display_disable()? Doubtful that display_disable() is the
-function we're talking about.
+This series extends the regulator notification and error flag support.
+Initial discussion on the topic can be found here:
+https://lore.kernel.org/lkml/6046836e22b8252983f08d5621c35ececb97820d.camel@fi.rohmeurope.com/
 
-> will not re initialize audio_comp at display_disable() if audio shutdown
-> is triggered by dongle unplugged.
+This series is built on top of the BD9576MUF support patch series v9
+which is currently in MFD tree at immutable branch ib-mfd-watchdog-5.13
+https://lore.kernel.org/lkml/cover.1615219345.git.matti.vaittinen@fi.rohmeurope.com/
+(The series should apply without those patches but there is compile time
+dependency to definitions brought in at the last patch of the BD9576
+series. This should be Ok though as there is a Kconfig dependency in
+BD9576 regulator driver)
 
-This commit text seems to say the why before the what, where why is "dp
-initializes audio_comp followed by sending disconnect.." and the what is
-"this patch will no re-initialized audio_comp...". Can you reorder this
-so the what comes before the why?
+In a nutshell - the series adds:
 
->=20
-> Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
-> ---
->  drivers/gpu/drm/msm/dp/dp_display.c | 6 ++++--
->  1 file changed, 4 insertions(+), 2 deletions(-)
->=20
-> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp=
-/dp_display.c
-> index 0ba71c7..1d71c95 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_display.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-> @@ -894,8 +894,10 @@ static int dp_display_disable(struct dp_display_priv=
-ate *dp, u32 data)
->         /* wait only if audio was enabled */
->         if (dp_display->audio_enabled) {
->                 /* signal the disconnect event */
-> -               reinit_completion(&dp->audio_comp);
-> -               dp_display_handle_plugged_change(dp_display, false);
-> +               if (dp->hpd_state !=3D ST_DISCONNECT_PENDING) {
-> +                       reinit_completion(&dp->audio_comp);
+1. WARNING level events/error flags. (Patch 3)
+  Current regulator 'ERROR' event notifications for over/under
+  voltage, over current and over temperature are used to indicate
+  condition where monitored entity is so badly "off" that it actually
+  indicates a hardware error which can not be recovered. The most
+  typical hanling for that is believed to be a (graceful)
+  system-shutdown. Here we add set of 'WARNING' level flags to allow
+  sending notifications to consumers before things are 'that badly off'
+  so that consumer drivers can implement recovery-actions.
+2. Device-tree properties for specifying limit values. (Patches 1, 5)
+  Add limits for above mentioned 'ERROR' and 'WARNING' levels (which
+  send notifications to consumers) and also for a 'PROTECTION' level
+  (which will be used to immediately shut-down the regulator(s) W/O
+  informing consumer drivers. Typically implemented by hardware).
+  Property parsing is implemented in regulator core which then calls
+  callback operations for limit setting from the IC drivers. A
+  warning is emitted if protection is requested by device tree but the
+  underlying IC does not support configuring requested protection.
+3. Helpers which can be registered by IC. (Patch 4)
+  Target is to avoid implementing IRQ handling and IRQ storm protection
+  in each IC driver. (Many of the ICs implementin these IRQs do not allow
+  masking or acking the IRQ but keep the IRQ asserted for the whole
+  duration of problem keeping the processor in IRQ handling loop).
+4. Emergency poweroff function (refactored out of the thermal_core to
+  kernel/reboot.c) which is called if IC fires error IRQs but IC reading
+  fails and given retry-count is exceeded. (Patches 2, 4)
+  Please note that the mutex in the emergency shutdown was replaced by a
+  spinlock to allow calls from any context.
 
-Why is this reinitialized here at all? Wouldn't it make more sense to
-initialize the completion once at cable plug in and then not initialize
-the completion anywhere else? Or initialize the completion whenever
-dp_display->audio_enabled is set to true and then only wait for the
-completion here if that boolean is true? Or initialize the completion
-when dp_display_handle_plugged_change() is passed true for the 'plugged'
-argument?
+The helper was attempted to be done so it could be used to implement
+roughly same logic as is used in qcom-labibb regulator. This means
+amongst other things a safety shut-down if IC registers are not readable.
+Using these shut-down retry counters are optional. The idea is that the
+helper could be also used by simpler ICs which do not provide status
+register(s) which can be used to check if error is still active.
 
-I started reading the code and quickly got lost figuring out how
-dp_display_handle_plugged_change() worked and the interaction between
-the dp display code and the audio codec embedded in here. There seem to
-be a couple of conditions that cut off things early, like
-dp_display->audio_enabled and audio->engine_on. Why? Why does
-dp_display_signal_audio_complete() call complete_all() vs. just
-complete()? Please help! :(
+ICs which do not have such status register can simply omit the 'renable'
+callback (and retry-counts etc) - and helper assumes the situation is Ok
+and re-enables IRQ after given time period. If problem persists the
+handler is ran again and another notification is sent - but at least the
+delay allows processor to avoid IRQ loop.
 
-> +                       dp_display_handle_plugged_change(dp_display, fals=
-e);
+Patch 7 takes this notification support in use at BD9576MUF.
+Patch 8 is related to MFD change which is not really related to the RFC
+here. It was added to this series in order to avoid potential conflicts.
+Patch 9 adds a maintainers entry.
 
-I think it's this way because dp_hpd_unplug_handle() is the function
-that sets the hpd_state to ST_DISCONNECT_PENDING and then reinitializes
-the completion (why?) and calls dp_display_handle_plugged_change(). So
-the commit text could say that reinitializing the completion again here
-at dp_display_disable() is racing with the audio code in the case that
-dp_hpd_unplug_handle() already called
-dp_display_handle_plugged_change() and it would make more sense. But the
-question still stands why that race even exists in the first place vs.
-initializing the completion variable in only one place unconditionally
-when the cable is connected, in dp_hpd_plug_handle() or
-dp_display_post_enable().
+Changelog v7:
+  general:
+   - rebased on v5.12-rc7
+   - new patch for refactoring the hw-failure reboot logic out of
+     thermal_core.c for others to use.
+  notification helpers:
+   - fix regulator error_flags query
+   - grammar/typos
+   - do not BUG() but attempt to shut-down the system
+   - use BITS_PER_TYPE()
 
-> +               }
->                 if (!wait_for_completion_timeout(&dp->audio_comp,
->                                 HZ * 5))
->                         DRM_ERROR("audio comp timeout\n");
+Changelog v6:
+  Add MAINTAINERS entry
+  Changes to IRQ notifiers
+   - move devm functions to drivers/regulator/devres.c
+   - drop irq validity check
+   - use devm_add_action_or_reset()
+   - fix styling issues
+   - fix kerneldocs
+
+Changelog v5:
+   - Fix the badly formatted pr_emerg() call.
+
+Changelog v4:
+   - rebased on v5.12-rc6
+   - dropped RFC
+   - fix external FET DT-binding.
+   - improve prints for cases when expecting HW failure.
+   - styling and typos
+
+Changelog v3:
+  Regulator core:
+   - Fix dangling pointer access at regulator_irq_helper()
+  stpmic1_regulator:
+   - fix function prototype (compile error)
+  bd9576-regulator:
+   - Update over current limits to what was given in new data-sheet
+     (REV00K)
+   - Allow over-current monitoring without external FET. Set limits to
+     values given in data-sheet (REV00K).
+
+Changelog v2:
+  Generic:
+  - rebase on v5.12-rc2 + BD9576 series
+  - Split devm variant of delayed wq to own series
+  Regulator framework:
+  - Provide non devm variant of IRQ notification helpers
+  - shorten dt-property names as suggested by Rob
+  - unconditionally call map_event in IRQ handling and require it to be
+    populated
+  BD9576 regulators:
+  - change the FET resistance property to micro-ohms
+  - fix voltage computation in OC limit setting
+
+--
+
+Matti Vaittinen (9):
+  dt_bindings: Add protection limit properties
+  reboot: thermal: Export hardware protection shutdown
+  regulator: add warning flags
+  regulator: IRQ based event/error notification helpers
+  regulator: add property parsing and callbacks to set protection limits
+  dt-bindings: regulator: bd9576 add FET ON-resistance for OCW
+  regulator: bd9576: Support error reporting
+  regulator: bd9576: Fix the driver name in id table
+  MAINTAINERS: Add reviewer for regulator irq_helpers
+
+ .../bindings/regulator/regulator.yaml         |   82 ++
+ .../regulator/rohm,bd9576-regulator.yaml      |    6 +
+ MAINTAINERS                                   |    4 +
+ drivers/regulator/Makefile                    |    2 +-
+ drivers/regulator/bd9576-regulator.c          | 1060 +++++++++++++++--
+ drivers/regulator/core.c                      |  151 ++-
+ drivers/regulator/devres.c                    |   52 +
+ drivers/regulator/irq_helpers.c               |  394 ++++++
+ drivers/regulator/of_regulator.c              |   58 +
+ drivers/regulator/qcom-labibb-regulator.c     |   10 +-
+ drivers/regulator/qcom_spmi-regulator.c       |    6 +-
+ drivers/regulator/stpmic1_regulator.c         |   20 +-
+ drivers/thermal/thermal_core.c                |   63 +-
+ include/linux/reboot.h                        |    1 +
+ include/linux/regulator/consumer.h            |   14 +
+ include/linux/regulator/driver.h              |  176 ++-
+ include/linux/regulator/machine.h             |   26 +
+ kernel/reboot.c                               |   86 ++
+ 18 files changed, 2006 insertions(+), 205 deletions(-)
+ create mode 100644 drivers/regulator/irq_helpers.c
+
+
+base-commit: d434405aaab7d0ebc516b68a8fc4100922d7f5ef
+-- 
+2.25.4
+
+
+-- 
+Matti Vaittinen, Linux device drivers
+ROHM Semiconductors, Finland SWDC
+Kiviharjunlenkki 1E
+90220 OULU
+FINLAND
+
+~~~ "I don't think so," said Rene Descartes. Just then he vanished ~~~
+Simon says - in Latin please.
+~~~ "non cogito me" dixit Rene Descarte, deinde evanescavit ~~~
+Thanks to Simon Glass for the translation =] 
