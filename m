@@ -2,183 +2,176 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4743235FA60
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Apr 2021 20:22:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0764435FB3A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Apr 2021 20:59:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234008AbhDNSK7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Apr 2021 14:10:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54590 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233954AbhDNSK5 (ORCPT
+        id S233446AbhDNS6z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Apr 2021 14:58:55 -0400
+Received: from labrats.qualcomm.com ([199.106.110.90]:7697 "EHLO
+        labrats.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233309AbhDNS6x (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Apr 2021 14:10:57 -0400
-Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7DEDFC061756
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Apr 2021 11:10:33 -0700 (PDT)
-Received: by mail-pj1-x102e.google.com with SMTP id s14so5836550pjl.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Apr 2021 11:10:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=mI3v9C6yt88wS1LOwc+lCFsWHWVb8SG6Vub87KGmR58=;
-        b=B3hrTTPLVyE/N8boQ+fUoZnC4axz4x0q8T4PUrXOm4hzoFHF1sQ1aCqlDtkkjVg0rI
-         n/dBPmkx/FZL4Ah3ASElJuCt3NwIgLN1M61TR86whK4hzADm/IK//67/SZc3lWocqdYd
-         zcJwSgUvp1zaqMNL16hudoiYYZLr17faZs/KQ=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=mI3v9C6yt88wS1LOwc+lCFsWHWVb8SG6Vub87KGmR58=;
-        b=RAJF9NLZ06SPvqoXYF+JzN73622TeyzFGDLGVhTTASDvoAT6MwfAnUec01s33bCMS/
-         VY+OWkTlq83yCLxy4gNz9TuXv+yQQbHWLLLDgKWOABZoR9WmSiiiM52+B/gXVFiyhRgt
-         UiQ1ZmjLSqyuhYehqAyoI4cIOnN7uyPra/Nf/HVzg+iez7aH1YJeTHS13PuyUFFqQIiF
-         KF1sn4mW2rgkCf/SOn7K7m01SCD7owvzSn/f8W4VviNuG8qcJfmrRA0YR5TkzdQZ8c5s
-         5r67LbwtGD+jAn0tgIo/LeTcvJuu9AhGrLRbP992wTU5U/Q5q87M5DqhXeli5TWSZ5tI
-         2p2A==
-X-Gm-Message-State: AOAM532736r5GBWH2Rhm7sq3Wv363Ts6FqbwaDP3nCMyJ+4zxDggVMv/
-        53rWGiZegPtrwKsQgDTGiIrKFw==
-X-Google-Smtp-Source: ABdhPJyoC5OqM9JR8Y4VvGkxSm8nglCKaVoCJG3w0pq+uPHsx3z/VZP09coiwWhunb2zt4H5egESzA==
-X-Received: by 2002:a17:903:114:b029:eb:3963:9d1a with SMTP id y20-20020a1709030114b02900eb39639d1amr8564248plc.79.1618423833013;
-        Wed, 14 Apr 2021 11:10:33 -0700 (PDT)
-Received: from localhost ([2620:15c:202:201:9c75:7205:3ec1:5280])
-        by smtp.gmail.com with UTF8SMTPSA id a9sm104421pfo.186.2021.04.14.11.10.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 14 Apr 2021 11:10:32 -0700 (PDT)
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Wed, 14 Apr 2021 14:58:53 -0400
+IronPort-SDR: qTpzh9gJaRVmfRvSlhcN6UWf1jpGhEVMQRhU9gLdMubLjfNRZzA0c0vwlMBZPF2KRDQVXx5p8P
+ 2FzzQFfjOgWPk0ot6Hz+QzU3Wjcp8oVsYztp4MsP3VVQm7qKWSb0SUbYrJi36hB3pzcVIf+1um
+ Z5K97gai6FoR8wJxwlgN9aZpQ8OXxwdjlxi3/fBXzBmxGo8ZRdgH6twXN7I7qXTFnqwBBdBIUn
+ 3hbkS1zM2aLt386d8GIBBc5PyMZFXmRxbIDa9NwgARe4gXbD3NlvfyA3ByU2eU8MiD8bbIbt+y
+ uks=
+X-IronPort-AV: E=Sophos;i="5.82,223,1613462400"; 
+   d="scan'208";a="29750616"
+Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
+  by labrats.qualcomm.com with ESMTP; 14 Apr 2021 11:58:31 -0700
+X-QCInternal: smtphost
+Received: from wsp769891wss.qualcomm.com (HELO stor-presley.qualcomm.com) ([192.168.140.85])
+  by ironmsg-SD-alpha.qualcomm.com with ESMTP; 14 Apr 2021 11:58:30 -0700
+Received: by stor-presley.qualcomm.com (Postfix, from userid 92687)
+        id 6C9B62115D; Wed, 14 Apr 2021 11:58:30 -0700 (PDT)
+From:   Asutosh Das <asutoshd@codeaurora.org>
+To:     cang@codeaurora.org, martin.petersen@oracle.com,
+        adrian.hunter@intel.com, linux-scsi@vger.kernel.org
+Cc:     Asutosh Das <asutoshd@codeaurora.org>,
         linux-arm-msm@vger.kernel.org,
-        Douglas Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>
-Subject: [PATCH v1] arm64: dts: qcom: sc7180: coachz: Add thermal config for skin temperature
-Date:   Wed, 14 Apr 2021 11:10:26 -0700
-Message-Id: <20210414111007.v1.1.I1a438604a79025307f177347d45815987b105cb5@changeid>
-X-Mailer: git-send-email 2.31.1.295.g9ea45b61b8-goog
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        linux-arm-kernel@lists.infradead.org (moderated list:ARM/Mediatek SoC
+        support),
+        linux-mediatek@lists.infradead.org (moderated list:ARM/Mediatek SoC
+        support)
+Subject: [PATCH v18 0/2] Enable power management for ufs wlun 
+Date:   Wed, 14 Apr 2021 11:58:26 -0700
+Message-Id: <cover.1618426513.git.asutoshd@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add ADC and thermal monitor configuration for skin temperature,
-plus a thermal zone that monitors the skin temperature and uses
-the big cores as cooling devices.
+This patch attempts to fix a deadlock in ufs while sending SSU.
+Recently, blk_queue_enter() added a check to not process requests if the
+queue is suspended. That leads to a resume of the associated device which
+is suspended. In ufs, that device is ufs device wlun and it's parent is
+ufs_hba. This resume tries to resume ufs device wlun which in turn tries
+to resume ufs_hba, which is already in the process of suspending, thus
+causing a deadlock.
 
-CoachZ rev1 is stuffed with an incompatible thermistor for the
-skin temperature, disable the thermal zone for rev1 to avoid
-the use of bogus temperature values.
+This patch takes care of:
+* Suspending the ufs device lun only after all other luns are suspended
+* Sending SSU during ufs device wlun suspend
+* Clearing uac for rpmb and ufs device wlun
+* Not sending commands to the device during host suspend
 
-Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
----
+v17 -> v18:
+- Addressed Adrian's comments
 
- .../dts/qcom/sc7180-trogdor-coachz-r1.dts     |  9 +++
- .../boot/dts/qcom/sc7180-trogdor-coachz.dtsi  | 63 +++++++++++++++++++
- 2 files changed, 72 insertions(+)
+v16 -> v17:
+- Addressed Adrian's & Daejun's comments
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r1.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r1.dts
-index 86619f6c1134..80bdc4d5b523 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r1.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r1.dts
-@@ -14,6 +14,15 @@ / {
- 	compatible = "google,coachz-rev1", "qcom,sc7180";
- };
- 
-+/*
-+ * CoachZ rev1 is stuffed with a 47k NTC as thermistor for skin temperature,
-+ * which currently is not supported by the PM6150 ADC driver. Disable the
-+ * skin temperature thermal zone to avoid using bogus temperature values.
-+ */
-+&skin_temp_thermal {
-+	status = "disabled";
-+};
-+
- &tlmm {
- 	gpio-line-names = "HUB_RST_L",
- 			  "AP_RAM_ID0",
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
-index e2ffe71c2d52..cabe5d6b981b 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
-@@ -25,6 +25,50 @@ adau7002: audio-codec-1 {
- 		IOVDD-supply = <&pp1800_l15a>;
- 		#sound-dai-cells = <0>;
- 	};
-+
-+	thermal-zones {
-+		skin_temp_thermal: skin-temp-thermal {
-+			polling-delay-passive = <250>;
-+			polling-delay = <0>;
-+
-+			thermal-sensors = <&pm6150_adc_tm 1>;
-+			sustainable-power = <814>;
-+
-+			trips {
-+				skin_temp_alert0: trip-point0 {
-+					temperature = <42000>;
-+					hysteresis = <1000>;
-+					type = "passive";
-+				};
-+
-+				skin_temp_alert1: trip-point1 {
-+					temperature = <45000>;
-+					hysteresis = <1000>;
-+					type = "passive";
-+				};
-+
-+				skin-temp-crit {
-+					temperature = <60000>;
-+					hysteresis = <1000>;
-+					type = "critical";
-+				};
-+			};
-+
-+			cooling-maps {
-+				map0 {
-+					trip = <&skin_temp_alert0>;
-+					cooling-device = <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-+				};
-+
-+				map1 {
-+					trip = <&skin_temp_alert1>;
-+					cooling-device = <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-+				};
-+			};
-+		};
-+	};
- };
- 
- &ap_spi_fp {
-@@ -77,6 +121,25 @@ &panel {
- 	compatible = "boe,nv110wtm-n61";
- };
- 
-+&pm6150_adc {
-+	skin-temp-thermistor@4e {
-+		reg = <ADC5_AMUX_THM2_100K_PU>;
-+		qcom,ratiometric;
-+		qcom,hw-settle-time = <200>;
-+	};
-+};
-+
-+&pm6150_adc_tm {
-+	status = "okay";
-+
-+	skin-temp-thermistor@1 {
-+		reg = <1>;
-+		io-channels = <&pm6150_adc ADC5_AMUX_THM2_100K_PU>;
-+		qcom,ratiometric;
-+		qcom,hw-settle-time-us = <200>;
-+	};
-+};
-+
- &pp3300_dx_edp {
- 	gpio = <&tlmm 67 GPIO_ACTIVE_HIGH>;
- };
+v15 -> v16:
+- Brought back the missing changes
+  * Added scsi_autopm_[get/put] to ufs_debugfs[get/put]_user_access()
+  * Fix ufshcd_wl_poweroff()
+
+v14 -> v15:
+- Rebased on 5.13/scsi-staging
+
+v13 -> v14:
+- Addressed Adrian's comments
+  * Rebased it on top of scsi-next
+  * Added scsi_autopm_[get/put] to ufs_debugfs[get/put]_user_access()
+  * Resume the device in ufshcd_remove()
+  * Unregister ufs_rpmb_wlun before ufs_dev_wlun
+  * hba->shutting_down moved to ufshcd_wl_shutdown()
+
+v12 -> v13:
+- Addressed Adrian's comments
+  * Paired pm_runtime_get_noresume() with pm_runtime_put()
+  * no rpm_autosuspend for ufs device wlun
+  * Moved runtime-pm init functionality to ufshcd_wl_probe()
+- Addressed Bart's comments
+  * Expanded abbrevs in commit message
+
+v11 -> v12:
+- Addressed Adrian's comments
+  * Fixed ahit for Mediatek driver
+  * Fixed error handling in ufshcd_core_init()
+  * Tested this patch and the issue is still seen.
+
+v10 -> v11:
+- Fixed supplier suspending before consumer race
+- Addressed Adrian's comments
+  * Added proper resume/suspend cb to ufshcd_auto_hibern8_update()
+  * Cosmetic changes to ufshcd-pci.c
+  * Cleaned up ufshcd_system_suspend()
+  * Added ufshcd_debugfs_eh_exit to ufshcd_core_init()
+
+v9 -> v10:
+- Addressed Adrian's comments
+  * Moved suspend/resume vops to __ufshcd_wl_[suspend/resume]()
+  * Added correct resume in ufs_bsg
+
+v8 -> v9:
+- Addressed Adrian's comments
+  * Moved link transition to __ufshcd_wl_[suspend/resume]()
+  * Fixed the other minor comments
+
+v7 -> v8:
+- Addressed Adrian's comments
+  * Removed separate autosuspend delay for ufs-device lun
+  * Fixed the ee handler getting scheduled during pm
+  * Always runtime resume in suspend_prepare()
+  * Added CONFIG_PM_SLEEP where needed
+  
+v6 -> v7:
+  * Resume the ufs device before shutting it down
+
+v5 -> v6:
+- Addressed Adrian's comments
+  * Added complete() cb
+  * Added suspend_prepare() and complete() to all drivers
+  * Moved suspend_prepare() and complete() to ufshcd
+  * .poweroff() uses ufhcd_wl_poweroff()
+  * Removed several forward declarations
+  * Moved scsi_register_driver() to ufshcd_core_init()
+
+v4 -> v5:
+- Addressed Adrian's comments
+  * Used the rpmb driver contributed by Adrian
+  * Runtime-resume the ufs device during suspend to honor spm-lvl
+  * Unregister the scsi_driver in ufshcd_remove()
+  * Currently shutdown() puts the ufs device to power-down mode
+    so, just removed ufshcd_pci_poweroff()
+  * Quiesce the scsi device during shutdown instead of remove
+
+v3 RFC -> v4:
+- Addressed Bart's comments
+  * Except that I didn't get any checkpatch failures
+- Addressed Avri's comments
+- Addressed Adrian's comments
+  * Added a check for deepsleep power mode
+  * Removed a couple of forward declarations
+  * Didn't separate the scsi drivers because in rpmb case it just sends uac
+    in resume and it seemed pretty neat to me.
+- Added sysfs changes to resume the devices before accessing
+
+
+Asutosh Das (2):
+  scsi: ufs: Enable power management for wlun
+  ufs: sysfs: Resume the proper scsi device
+
+ drivers/scsi/ufs/cdns-pltfrm.c     |   2 +
+ drivers/scsi/ufs/tc-dwc-g210-pci.c |   2 +
+ drivers/scsi/ufs/ufs-debugfs.c     |   6 +-
+ drivers/scsi/ufs/ufs-debugfs.h     |   2 +-
+ drivers/scsi/ufs/ufs-exynos.c      |   2 +
+ drivers/scsi/ufs/ufs-hisi.c        |   2 +
+ drivers/scsi/ufs/ufs-mediatek.c    |  12 +-
+ drivers/scsi/ufs/ufs-qcom.c        |   2 +
+ drivers/scsi/ufs/ufs-sysfs.c       |  24 +-
+ drivers/scsi/ufs/ufs_bsg.c         |   6 +-
+ drivers/scsi/ufs/ufshcd-pci.c      |  36 +-
+ drivers/scsi/ufs/ufshcd.c          | 692 +++++++++++++++++++++++++------------
+ drivers/scsi/ufs/ufshcd.h          |  21 ++
+ include/trace/events/ufs.h         |  20 ++
+ 14 files changed, 561 insertions(+), 268 deletions(-)
+
 -- 
-2.31.1.295.g9ea45b61b8-goog
+Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
 
