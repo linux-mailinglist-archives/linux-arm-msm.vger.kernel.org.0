@@ -2,150 +2,183 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4B1E635FA1D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Apr 2021 19:55:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4743235FA60
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Apr 2021 20:22:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234323AbhDNRzg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Apr 2021 13:55:36 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:37790 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234303AbhDNRzg (ORCPT
+        id S234008AbhDNSK7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Apr 2021 14:10:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54590 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233954AbhDNSK5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Apr 2021 13:55:36 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1618422915; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=3uShNxK5FJYLasDW+nrg03JrG9d+DonaEeEOaVhcnHk=;
- b=XFE/DLBdtQ2xce4ZYfKMzVXwAicLD6AP85ESb68oi/24jJfutwr1TgwsnRuy/+LfGAhACCk/
- LKvvDxMTGeG+lsSzWnPhDIacqVsbwRSN0evFkwhTVAaS5W4QsMZ5VltVoNQJlOPhYn1b0Wr0
- b7jxL4UWBBlJljLfFp+rgwza/cE=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
- 60772c7f8166b7eff763f95a (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 14 Apr 2021 17:55:11
- GMT
-Sender: khsieh=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id D7F3AC433ED; Wed, 14 Apr 2021 17:55:10 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: khsieh)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id CE1CCC433CA;
-        Wed, 14 Apr 2021 17:55:09 +0000 (UTC)
+        Wed, 14 Apr 2021 14:10:57 -0400
+Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7DEDFC061756
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Apr 2021 11:10:33 -0700 (PDT)
+Received: by mail-pj1-x102e.google.com with SMTP id s14so5836550pjl.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Apr 2021 11:10:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=mI3v9C6yt88wS1LOwc+lCFsWHWVb8SG6Vub87KGmR58=;
+        b=B3hrTTPLVyE/N8boQ+fUoZnC4axz4x0q8T4PUrXOm4hzoFHF1sQ1aCqlDtkkjVg0rI
+         n/dBPmkx/FZL4Ah3ASElJuCt3NwIgLN1M61TR86whK4hzADm/IK//67/SZc3lWocqdYd
+         zcJwSgUvp1zaqMNL16hudoiYYZLr17faZs/KQ=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=mI3v9C6yt88wS1LOwc+lCFsWHWVb8SG6Vub87KGmR58=;
+        b=RAJF9NLZ06SPvqoXYF+JzN73622TeyzFGDLGVhTTASDvoAT6MwfAnUec01s33bCMS/
+         VY+OWkTlq83yCLxy4gNz9TuXv+yQQbHWLLLDgKWOABZoR9WmSiiiM52+B/gXVFiyhRgt
+         UiQ1ZmjLSqyuhYehqAyoI4cIOnN7uyPra/Nf/HVzg+iez7aH1YJeTHS13PuyUFFqQIiF
+         KF1sn4mW2rgkCf/SOn7K7m01SCD7owvzSn/f8W4VviNuG8qcJfmrRA0YR5TkzdQZ8c5s
+         5r67LbwtGD+jAn0tgIo/LeTcvJuu9AhGrLRbP992wTU5U/Q5q87M5DqhXeli5TWSZ5tI
+         2p2A==
+X-Gm-Message-State: AOAM532736r5GBWH2Rhm7sq3Wv363Ts6FqbwaDP3nCMyJ+4zxDggVMv/
+        53rWGiZegPtrwKsQgDTGiIrKFw==
+X-Google-Smtp-Source: ABdhPJyoC5OqM9JR8Y4VvGkxSm8nglCKaVoCJG3w0pq+uPHsx3z/VZP09coiwWhunb2zt4H5egESzA==
+X-Received: by 2002:a17:903:114:b029:eb:3963:9d1a with SMTP id y20-20020a1709030114b02900eb39639d1amr8564248plc.79.1618423833013;
+        Wed, 14 Apr 2021 11:10:33 -0700 (PDT)
+Received: from localhost ([2620:15c:202:201:9c75:7205:3ec1:5280])
+        by smtp.gmail.com with UTF8SMTPSA id a9sm104421pfo.186.2021.04.14.11.10.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 14 Apr 2021 11:10:32 -0700 (PDT)
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Douglas Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>
+Subject: [PATCH v1] arm64: dts: qcom: sc7180: coachz: Add thermal config for skin temperature
+Date:   Wed, 14 Apr 2021 11:10:26 -0700
+Message-Id: <20210414111007.v1.1.I1a438604a79025307f177347d45815987b105cb5@changeid>
+X-Mailer: git-send-email 2.31.1.295.g9ea45b61b8-goog
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Wed, 14 Apr 2021 10:55:09 -0700
-From:   khsieh@codeaurora.org
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     robdclark@gmail.com, sean@poorly.run, tanmay@codeaurora.org,
-        abhinavk@codeaurora.org, aravindh@codeaurora.org, airlied@linux.ie,
-        daniel@ffwll.ch, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 2/3] drm/msm/dp: do not re initialize of audio_comp at
- display_disable()
-In-Reply-To: <161837022104.3764895.807226402876043006@swboyd.mtv.corp.google.com>
-References: <1618355490-5292-1-git-send-email-khsieh@codeaurora.org>
- <161837022104.3764895.807226402876043006@swboyd.mtv.corp.google.com>
-Message-ID: <cf72c919404a5bb4d0bdf101a341b074@codeaurora.org>
-X-Sender: khsieh@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-04-13 20:17, Stephen Boyd wrote:
-> Quoting Kuogee Hsieh (2021-04-13 16:11:30)
->> At dongle unplug, dp initializes audio_comp followed by sending 
->> disconnect
->> event notification to audio and to make sure audio had shutdown 
->> completely
->> by wait for audio completion notification at display_disable(). This 
->> patch
-> 
-> Is this dp_display_disable()? Doubtful that display_disable() is the
-> function we're talking about.
-yes
-> 
->> will not re initialize audio_comp at display_disable() if audio 
->> shutdown
->> is triggered by dongle unplugged.
-> 
-> This commit text seems to say the why before the what, where why is "dp
-> initializes audio_comp followed by sending disconnect.." and the what 
-> is
-> "this patch will no re-initialized audio_comp...". Can you reorder this
-> so the what comes before the why?
-> 
-ok
->> 
->> Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
->> ---
->>  drivers/gpu/drm/msm/dp/dp_display.c | 6 ++++--
->>  1 file changed, 4 insertions(+), 2 deletions(-)
->> 
->> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c 
->> b/drivers/gpu/drm/msm/dp/dp_display.c
->> index 0ba71c7..1d71c95 100644
->> --- a/drivers/gpu/drm/msm/dp/dp_display.c
->> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
->> @@ -894,8 +894,10 @@ static int dp_display_disable(struct 
->> dp_display_private *dp, u32 data)
->>         /* wait only if audio was enabled */
->>         if (dp_display->audio_enabled) {
->>                 /* signal the disconnect event */
->> -               reinit_completion(&dp->audio_comp);
->> -               dp_display_handle_plugged_change(dp_display, false);
->> +               if (dp->hpd_state != ST_DISCONNECT_PENDING) {
->> +                       reinit_completion(&dp->audio_comp);
-> 
-> Why is this reinitialized here at all? Wouldn't it make more sense to
-> initialize the completion once at cable plug in and then not initialize
-> the completion anywhere else? Or initialize the completion whenever
-> dp_display->audio_enabled is set to true and then only wait for the
-> completion here if that boolean is true? Or initialize the completion
-> when dp_display_handle_plugged_change() is passed true for the 
-> 'plugged'
-> argument?
-> yes, i think it is better approach, this will take care of both unplug 
-> and suspend.
+Add ADC and thermal monitor configuration for skin temperature,
+plus a thermal zone that monitors the skin temperature and uses
+the big cores as cooling devices.
 
-> I started reading the code and quickly got lost figuring out how
-> dp_display_handle_plugged_change() worked and the interaction between
-> the dp display code and the audio codec embedded in here. There seem to
-> be a couple of conditions that cut off things early, like
-> dp_display->audio_enabled and audio->engine_on. Why? Why does
-> dp_display_signal_audio_complete() call complete_all() vs. just
-> complete()? Please help! :(
-> 
->> +                       dp_display_handle_plugged_change(dp_display, 
->> false);
-> 
-> I think it's this way because dp_hpd_unplug_handle() is the function
-> that sets the hpd_state to ST_DISCONNECT_PENDING and then reinitializes
-> the completion (why?) and calls dp_display_handle_plugged_change(). So
-> the commit text could say that reinitializing the completion again here
-> at dp_display_disable() is racing with the audio code in the case that
-> dp_hpd_unplug_handle() already called
-> dp_display_handle_plugged_change() and it would make more sense. But 
-> the
-> question still stands why that race even exists in the first place vs.
-> initializing the completion variable in only one place unconditionally
-> when the cable is connected, in dp_hpd_plug_handle() or
-> dp_display_post_enable().
-> 
->> +               }
->>                 if (!wait_for_completion_timeout(&dp->audio_comp,
->>                                 HZ * 5))
->>                         DRM_ERROR("audio comp timeout\n");
+CoachZ rev1 is stuffed with an incompatible thermistor for the
+skin temperature, disable the thermal zone for rev1 to avoid
+the use of bogus temperature values.
+
+Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
+---
+
+ .../dts/qcom/sc7180-trogdor-coachz-r1.dts     |  9 +++
+ .../boot/dts/qcom/sc7180-trogdor-coachz.dtsi  | 63 +++++++++++++++++++
+ 2 files changed, 72 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r1.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r1.dts
+index 86619f6c1134..80bdc4d5b523 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r1.dts
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r1.dts
+@@ -14,6 +14,15 @@ / {
+ 	compatible = "google,coachz-rev1", "qcom,sc7180";
+ };
+ 
++/*
++ * CoachZ rev1 is stuffed with a 47k NTC as thermistor for skin temperature,
++ * which currently is not supported by the PM6150 ADC driver. Disable the
++ * skin temperature thermal zone to avoid using bogus temperature values.
++ */
++&skin_temp_thermal {
++	status = "disabled";
++};
++
+ &tlmm {
+ 	gpio-line-names = "HUB_RST_L",
+ 			  "AP_RAM_ID0",
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
+index e2ffe71c2d52..cabe5d6b981b 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
+@@ -25,6 +25,50 @@ adau7002: audio-codec-1 {
+ 		IOVDD-supply = <&pp1800_l15a>;
+ 		#sound-dai-cells = <0>;
+ 	};
++
++	thermal-zones {
++		skin_temp_thermal: skin-temp-thermal {
++			polling-delay-passive = <250>;
++			polling-delay = <0>;
++
++			thermal-sensors = <&pm6150_adc_tm 1>;
++			sustainable-power = <814>;
++
++			trips {
++				skin_temp_alert0: trip-point0 {
++					temperature = <42000>;
++					hysteresis = <1000>;
++					type = "passive";
++				};
++
++				skin_temp_alert1: trip-point1 {
++					temperature = <45000>;
++					hysteresis = <1000>;
++					type = "passive";
++				};
++
++				skin-temp-crit {
++					temperature = <60000>;
++					hysteresis = <1000>;
++					type = "critical";
++				};
++			};
++
++			cooling-maps {
++				map0 {
++					trip = <&skin_temp_alert0>;
++					cooling-device = <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
++							 <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
++				};
++
++				map1 {
++					trip = <&skin_temp_alert1>;
++					cooling-device = <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
++							 <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
++				};
++			};
++		};
++	};
+ };
+ 
+ &ap_spi_fp {
+@@ -77,6 +121,25 @@ &panel {
+ 	compatible = "boe,nv110wtm-n61";
+ };
+ 
++&pm6150_adc {
++	skin-temp-thermistor@4e {
++		reg = <ADC5_AMUX_THM2_100K_PU>;
++		qcom,ratiometric;
++		qcom,hw-settle-time = <200>;
++	};
++};
++
++&pm6150_adc_tm {
++	status = "okay";
++
++	skin-temp-thermistor@1 {
++		reg = <1>;
++		io-channels = <&pm6150_adc ADC5_AMUX_THM2_100K_PU>;
++		qcom,ratiometric;
++		qcom,hw-settle-time-us = <200>;
++	};
++};
++
+ &pp3300_dx_edp {
+ 	gpio = <&tlmm 67 GPIO_ACTIVE_HIGH>;
+ };
+-- 
+2.31.1.295.g9ea45b61b8-goog
+
