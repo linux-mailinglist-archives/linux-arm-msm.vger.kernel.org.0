@@ -2,83 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 415B735EE2D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Apr 2021 09:27:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 675DF35EF45
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Apr 2021 10:24:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232513AbhDNHMO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Apr 2021 03:12:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50570 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232489AbhDNHMO (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Apr 2021 03:12:14 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2365AC06175F
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Apr 2021 00:11:53 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id z13so14427331lfd.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Apr 2021 00:11:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=/CFTfILqfJh5uZk6ReeOGhwZDRZhRj/gI7BOPGIeuu4=;
-        b=Ih3QkoGW6dkE+rXyOwP4ao/9lIPJbwBxfFDiITcYDglNyNW4ozmCUE6sM+j4hXhtmt
-         1mTyXcRZftRi3EipiP5sIRj+x/JukCRPAQiB7sZpnFsigQ2DxAa1NokHVweKb2MLi2r1
-         91+5Rmj2tlfk9wQJRusvqaa0+d63OxThayYY+9cCHLhehRTPbEaxKLnfM8R5gG1tlqor
-         ACqJs5StaiB+ULWhBnL0if0KoglJmF9iN2VltskeaMx5X0cP0Aali/ptqcQ6ZwdP3rkb
-         YafI1n/DOffqqkgIMd7WuVyzmWZpxmrmHgAvgBjwEWQOdlpY5m1os6yxIwiWOUe3mRzX
-         yb3Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=/CFTfILqfJh5uZk6ReeOGhwZDRZhRj/gI7BOPGIeuu4=;
-        b=sByli9KL4Q4R3jlM6VE4VbQXv1DSAFZq9sKEREfD1TFRU8aX9xHyXM4VtO5J95ZgoL
-         qPtKN8hSy8fy6rbK1OwCXHMoN4VrNQgJavFszd3zfwxWRwJEma1bsaz+b9WBJ1u2WOag
-         d+It+Veo4HlNcJd+bsYOnI52uN56rUIUzUHTC12OBhQY6MEvCD1sXgTkYsBztJbH8ES4
-         Lon7TmdJPesADAJp5RTcV8XNxrMDXTJXIbsn7xBhFzCPnb+6IuSUnjbFVveS90WEawtp
-         +gDzkc7pHRTjNX4lgz9UjV3tBKxZJZVvWxMAwroB253/tjH0XVcqc7O50OYhXnZe8KXB
-         zNPw==
-X-Gm-Message-State: AOAM531I7+SybpjSMZtcbLSEzgyEs28dmrfO48lNZ3zK7BF1FgRDaCFN
-        6O3g6/M3hku/sv3jnsjjTjb6HE0SWrI2lOEdvWQNUw==
-X-Google-Smtp-Source: ABdhPJyRD6M9c5CzR26D4lnJ+lAfjNKiSfM3cwZUqVk5EHpM9X2TvdMGJJFd5lSQ8gWC+dHxSnOziysRgZ17wmp1mAk=
-X-Received: by 2002:ac2:529c:: with SMTP id q28mr13761428lfm.586.1618384311564;
- Wed, 14 Apr 2021 00:11:51 -0700 (PDT)
+        id S1349916AbhDNINT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Apr 2021 04:13:19 -0400
+Received: from mail.kernel.org ([198.145.29.99]:34018 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1349935AbhDNIMb (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 14 Apr 2021 04:12:31 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id BF3776128E;
+        Wed, 14 Apr 2021 08:12:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1618387929;
+        bh=qpvi9YgbSNvAK7mKvo9Ce2AsQoRwog9SLpIlnYd26ro=;
+        h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
+        b=Cn9jzUl1j1g5w/52kMhvjpy+gXwxrftO2H7TshFdp9JKTCFTZgKI2wIcki1tTF8T7
+         7lNnPaTXfEjpCn7CXUXYXsQp1PqC7+0mZOMAk+E1YqJCS1BtjorZ+wwP7x2SGdcmfi
+         cWtdLvApPh578SYlTbygHPvcQ98U+c/Wm2ggP4n2n0OFZQhH6ABPkatFDdHH/zIR69
+         xMxLez6nzbP0RWyIe6gbmRBHLLlrb5NtgLCiUJcHrAaa05JMqI6nxx+TZ7c63gOL8h
+         0X27EA9R0Dvxg71ByZX1cSqEQTf/PQpoLaz5Akp3UHpbHAbyrDSuaTbocKDFr+aOM3
+         yNa4faJ26lpxw==
+From:   Felipe Balbi <balbi@kernel.org>
+To:     Sandeep Maheswaram <sanm@codeaurora.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Manu Gautam <mgautam@codeaurora.org>,
+        Sandeep Maheswaram <sanm@codeaurora.org>
+Subject: Re: [PATCH v2] usb: dwc3: core: Add shutdown callback for dwc3
+In-Reply-To: <1618380209-20114-1-git-send-email-sanm@codeaurora.org>
+References: <1618380209-20114-1-git-send-email-sanm@codeaurora.org>
+Date:   Wed, 14 Apr 2021 11:12:02 +0300
+Message-ID: <877dl5p9nx.fsf@kernel.org>
 MIME-Version: 1.0
-References: <20210414025138.480085-1-julianbraha@gmail.com>
-In-Reply-To: <20210414025138.480085-1-julianbraha@gmail.com>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Wed, 14 Apr 2021 09:11:40 +0200
-Message-ID: <CACRpkdb3o+jA0EfRzz82zG-QdvU4=xZMVFRnJfs==LCtE93vOQ@mail.gmail.com>
-Subject: Re: [PATCH v2] drivers: pinctrl: qcom: fix Kconfig dependency on GPIOLIB
-To:     Julian Braha <julianbraha@gmail.com>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-kernel <linux-kernel@vger.kernel.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; boundary="=-=-=";
+        micalg=pgp-sha256; protocol="application/pgp-signature"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Apr 14, 2021 at 4:51 AM Julian Braha <julianbraha@gmail.com> wrote:
+--=-=-=
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
-> When PINCTRL_MSM is enabled, and GPIOLIB is disabled,
-> Kbuild gives the following warning:
->
-> WARNING: unmet direct dependencies detected for GPIOLIB_IRQCHIP
->   Depends on [n]: GPIOLIB [=n]
->   Selected by [y]:
->   - PINCTRL_MSM [=y] && PINCTRL [=y] && (ARCH_QCOM || COMPILE_TEST [=y])
->
-> This is because PINCTRL_MSM selects GPIOLIB_IRQCHIP,
-> without selecting or depending on GPIOLIB, despite
-> GPIOLIB_IRQCHIP depending on GPIOLIB. Having PINCTRL_MSM
-> select GPIOLIB will cause a recursive dependency error.
->
-> Signed-off-by: Julian Braha <julianbraha@gmail.com>
+Sandeep Maheswaram <sanm@codeaurora.org> writes:
 
-Patch applied.
+> This patch adds a shutdown callback to USB DWC core driver to ensure that
+> it is properly shutdown in reboot/shutdown path. This is required
+> where SMMU address translation is enabled like on SC7180
+> SoC and few others. If the hardware is still accessing memory after
+> SMMU translation is disabled as part of SMMU shutdown callback in
+> system reboot or shutdown path, then IOVAs(I/O virtual address)
+> which it was using will go on the bus as the physical addresses which
+> might result in unknown crashes (NoC/interconnect errors).
+>
+> Signed-off-by: Sandeep Maheswaram <sanm@codeaurora.org>
 
-Yours,
-Linus Walleij
+Acked-by: Felipe Balbi <balbi@kernel.org>
+
+=2D-=20
+balbi
+
+--=-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQJFBAEBCAAvFiEElLzh7wn96CXwjh2IzL64meEamQYFAmB2o9IRHGJhbGJpQGtl
+cm5lbC5vcmcACgkQzL64meEamQYSfg/+P7+iJzxCwEPMx+ioEmfCiBsenhqHbTgt
+w/9Bt0Z3tnGnc7QQgZn4ohQf/hVLWTZyG7+PGgNwFVJJxJx9lqY3U5l+GGpGFuQw
+burUM7tYGDuoIwHQfbNT6kNP5Q6xh1gxXOBVXsf0+5vDOgqVIfYDGW49bcNGLczq
+g6YsO8cWepCistHlB2i55i40d+GgZgwRGKgpjXKHPMUNzIQlgPphfoIWvgJGqAoG
+wTe1IKjuM8cGVYJkDYEzAsU6fons25j22mt5Z8KeN/tfEmzkUdvE2q5P7UyTzXeL
+xM1Q8AfzYp4VNbsVU4+VCLS1HfTK5GJMEHHTFuxhKbEKB0vb3xJI36bvEFerf/is
+jNPJGD5vSpjaPUXCJwdcXkNSXjSNYVtEO/GqsaxzGBRs1BtHUybSjkMFRtmeZTEi
+LNUpk11eXQRymb+XPE0FuuwuxSQtsvkT9A0qOg+Z6yPJM9Kv9XNNT9WY8NAbI/9l
+8ty47gH6yz4UXHSU5pDT2XXM/8zdQB69AU15swi/1ot9ZTM5ohqJ2asH8oZ6LTfG
+y4hFNZ4y+vbrTuOTbKBe6i6MknrCasVWAGIrJoK3Yvr3Az5PKzR31aNOdbnqw+9Z
+zCi/rVxV+itbVzATX9mJx5k1anEoR3bKOcpG52Ah2W2+CuI8VY8FD4AMeb0lf7kp
+p2NO7FCOvOY=
+=hQbm
+-----END PGP SIGNATURE-----
+--=-=-=--
