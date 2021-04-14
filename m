@@ -2,68 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B6A1835FE13
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Apr 2021 00:52:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D91E935FE3C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Apr 2021 01:11:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233885AbhDNWwo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Apr 2021 18:52:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59676 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233083AbhDNWwj (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Apr 2021 18:52:39 -0400
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 503AAC061574
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Apr 2021 15:52:17 -0700 (PDT)
-Received: by mail-wm1-x333.google.com with SMTP id y204so10042331wmg.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Apr 2021 15:52:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:from:mime-version:content-transfer-encoding
-         :content-description:subject:to:date:reply-to;
-        bh=FB9ffVgv9MGEJSSW+p7l1641ZpAhJ8oP7yeu0DFe398=;
-        b=W0+YMK96ikPZVidJbJ37Jdlx3PbEPWRRRlzJez35LfRyCZoHUOXJ7AlUf0anIzh9CM
-         1V/4SPAuY+UIK12cCgvQNM7SJW7acTS8yatAFt3bC0Ug9NEiej+4YoKLJ5ykz03Gy4iD
-         +k+Ov2bTrISyYuBbgt4IHZlBqwTqUFg+Rn9rbW3xpcUm2PHiESaR/cWuLr1+8yKfyhMz
-         vZk1t2riI2eo/g1yrMUFQu91NJ6sNv9c74RboMglB/7xSlrY7cI0FyBcJ3CxK5dhgIdJ
-         K0fxK47gW2KqFD0hyoU+FDusrl2nEzAJT84HJWjjy7oOrFFaWep9IDLWD50n5e0wuinK
-         /abQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:mime-version
-         :content-transfer-encoding:content-description:subject:to:date
-         :reply-to;
-        bh=FB9ffVgv9MGEJSSW+p7l1641ZpAhJ8oP7yeu0DFe398=;
-        b=K6W5aepjx1hQgvCsgxdG6MsmNVH5O7wdG0MRIF58iR5FEnA7lGT2d7IIvzPpu7UsVd
-         v4XQsOuMyJMJ6zK+aGMgfMn7ZEb9tVzJsH/Kly+gKXHzmrunbhbJ2Me5g8YPzWz74wxE
-         Of5OZviSva8ADjGrGHk5sTmTAqLKXN0q9jnIcZXHqsQZoYM7boTO540tX1nW4v58hEt3
-         1qYykGoLr5dflU3ltQVwNFDiNeVcH9hpB35HNOBNSb9oUPx5Eb1BSfkFvf8LPZEQU1eA
-         DRCCUKjsVBFfQxC4A2ybVfNcKPwZLISGDIHpmKd/6kat9yI+IviDzQ6NFzNJGxr0yH90
-         V9Kw==
-X-Gm-Message-State: AOAM530SgsxhZORkKnS0clwXQAUHK62L0AE6PvJjnW1GGXhkzjihWWdt
-        zcZ0hbvYkVL0vyPKsz2JKmQ=
-X-Google-Smtp-Source: ABdhPJySzerOfFmO6dFgNR0w92YNQFfWujeR/S1gKKvhlhJTikXMWZFTTEHMGcxruQMcExLwej8YBQ==
-X-Received: by 2002:a1c:87:: with SMTP id 129mr177592wma.131.1618440736186;
-        Wed, 14 Apr 2021 15:52:16 -0700 (PDT)
-Received: from [192.168.1.152] ([102.64.194.225])
-        by smtp.gmail.com with ESMTPSA id 7sm707161wry.60.2021.04.14.15.52.12
-        (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Wed, 14 Apr 2021 15:52:15 -0700 (PDT)
-Message-ID: <6077721f.1c69fb81.4ed71.2b86@mx.google.com>
-From:   Vanina curth <afalouvidodji4@gmail.com>
-X-Google-Original-From: Vanina curth
-Content-Type: text/plain; charset="iso-8859-1"
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Description: Mail message body
-Subject: Please reply to me
-To:     Recipients <Vanina@vger.kernel.org>
-Date:   Wed, 14 Apr 2021 22:52:03 +0000
-Reply-To: curtisvani9008@gmail.com
+        id S231786AbhDNXMP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Apr 2021 19:12:15 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:50599 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231859AbhDNXMN (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 14 Apr 2021 19:12:13 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1618441911; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=fwodgzOCL8qGE9ma8LbsgVs6uWRw/97IInh7NLij6oI=; b=TyiCgOen/6mndXEYQnkJYZ17jaI5B9704J+b+5KVMcJayaou/R6NeO073csKgEJ4CVd/C4GJ
+ TbEVVAevO5iLXVXOScBg6GCKhDMdIR8E+rLFm+uxWY7H45o9XVkyn3o5yY4QE0gdWvfRfqVy
+ yhtsXVur8EkaJjkTPTEsVUn/Uv4=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
+ 607776b187ce1fbb5606c67c (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 14 Apr 2021 23:11:45
+ GMT
+Sender: abhinavk=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 52601C43464; Wed, 14 Apr 2021 23:11:44 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from abhinavk-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: abhinavk)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0DFDBC433C6;
+        Wed, 14 Apr 2021 23:11:42 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 0DFDBC433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=abhinavk@codeaurora.org
+From:   Abhinav Kumar <abhinavk@codeaurora.org>
+To:     dri-devel@lists.freedesktop.org
+Cc:     Abhinav Kumar <abhinavk@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        robdclark@gmail.com, seanpaul@chromium.org, swboyd@chromium.org,
+        nganji@codeaurora.org, aravindh@codeaurora.org,
+        khsieh@codeaurora.org, daniel@ffwll.ch
+Subject: [PATCH v4 0/3] Add devcoredump support for DPU
+Date:   Wed, 14 Apr 2021 16:11:34 -0700
+Message-Id: <1618441897-17123-1-git-send-email-abhinavk@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-How are you? I'm Vanina C. I picked interest in you and I would like to kno=
-w more about you and establish relationship with you. i will wait for your =
-response. thank you.
+This series adds support to use devcoredump for DPU driver. It introduces
+the msm_disp_snapshot module which assists in the capturing of register dumps during
+error scenarios. When a display related error happens, the msm_disp_snapshot module
+captures all the relevant register dumps along with the snapshot of the drm
+atomic state and triggers a devcoredump.
+
+changes in v4:
+ - rename dpu_dbg to msm_disp_snapshot and move it to msm/disp
+ - start using a list of blocks to store the hardware block information
+ - cleanup block allocation and freeing logic to simplify it
+
+Abhinav Kumar (3):
+  drm: allow drm_atomic_print_state() to accept any drm_printer
+  drm/msm: add support to take dpu snapshot
+  drm/msm: add disp snapshot points across dpu driver
+
+ drivers/gpu/drm/drm_atomic.c                       |  28 +++-
+ drivers/gpu/drm/drm_atomic_uapi.c                  |   4 +-
+ drivers/gpu/drm/drm_crtc_internal.h                |   4 +-
+ drivers/gpu/drm/msm/Makefile                       |   2 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c        |  18 +-
+ .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c   |  14 +-
+ .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c   |   8 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h     |   2 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            |  61 +++++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h            |   5 +
+ drivers/gpu/drm/msm/disp/msm_disp_snapshot.c       | 161 ++++++++++++++++++
+ drivers/gpu/drm/msm/disp/msm_disp_snapshot.h       | 167 +++++++++++++++++++
+ drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c  | 181 +++++++++++++++++++++
+ drivers/gpu/drm/msm/dp/dp_catalog.c                |  12 ++
+ drivers/gpu/drm/msm/dp/dp_catalog.h                |   4 +
+ drivers/gpu/drm/msm/dp/dp_display.c                |  29 ++++
+ drivers/gpu/drm/msm/dp/dp_display.h                |   1 +
+ drivers/gpu/drm/msm/dsi/dsi.c                      |   5 +
+ drivers/gpu/drm/msm/dsi/dsi.h                      |   4 +
+ drivers/gpu/drm/msm/dsi/dsi_host.c                 |  19 +++
+ drivers/gpu/drm/msm/msm_drv.c                      |  29 +++-
+ drivers/gpu/drm/msm/msm_drv.h                      |   2 +
+ drivers/gpu/drm/selftests/test-drm_framebuffer.c   |   1 +
+ 23 files changed, 743 insertions(+), 18 deletions(-)
+ create mode 100644 drivers/gpu/drm/msm/disp/msm_disp_snapshot.c
+ create mode 100644 drivers/gpu/drm/msm/disp/msm_disp_snapshot.h
+ create mode 100644 drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c
+
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
