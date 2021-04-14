@@ -2,130 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0EAF735FCA2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Apr 2021 22:26:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1540835FCE7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Apr 2021 23:02:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349866AbhDNU0e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Apr 2021 16:26:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56150 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349848AbhDNU0d (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Apr 2021 16:26:33 -0400
-Received: from mail-yb1-xb31.google.com (mail-yb1-xb31.google.com [IPv6:2607:f8b0:4864:20::b31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79DD5C06175F
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Apr 2021 13:26:11 -0700 (PDT)
-Received: by mail-yb1-xb31.google.com with SMTP id o10so23568222ybb.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Apr 2021 13:26:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=uXB/h0HritpGaogqR4MZ0Syh5r+OFtVKW/hzSi9q7iw=;
-        b=gmTqsMWsFi+G0V3Us4qP+jMCjW/ogfkX9UIVn0orHc7UWb0Tdbd6S6ynCZhGYn9aB/
-         JeiCFwrlqgLREEJfzkhy0CThiuhlTxiASsKxMsaV5ccjx22BZVUAG0cPPFjIfLvyVPYw
-         Rm7x8aX3VOAZBSbD5Bu3gokPJUUyNB4VWJXC7FF3hkZQv3CZgqFG887jNDLndyiMd0iB
-         j5ryaMtSsP5zWVdGzfES+axDLqO5sTTnJDJXUzzVQxmGHsgsS7Ap99VjSQdFLbFf6MUf
-         vsC9bzC2+Ip+qx5eZj8PN7i5JJdQ0wDd7A8qQrDvgubwEhzZ/0IR29/WspIfz9gdP1IE
-         AOTg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=uXB/h0HritpGaogqR4MZ0Syh5r+OFtVKW/hzSi9q7iw=;
-        b=TloLDxKDodAMJQdA3JOwDSww4AEsQbjdG4zjkYQu8K1yVtxeXRBJzxW9Yu8/2tiGzt
-         UeVT6OpikM0FKQSOQVDIEy04IPL6BXJeft8TpKHyD1LaTLhrLcz5SnvrEphXeGgm63JL
-         x6FLydyoZrEdCDThvSHXd32X+pd7Ci/6vMwH2yAZvQxlyZ06zutvdxla9dCIbFaFDJIU
-         o0KLGq/W4lfW2Y+XG+0HI9JzAoEBXwuP1p58/L+moYoluSrmSfFm6I/JUKdh+47bBiXS
-         nm98REScBXlgQBDEARGCkm3a/PFF6L7tpite5odBSnLZ2OeSChBq3FgTE6HBYL6ThrZ5
-         Oo3w==
-X-Gm-Message-State: AOAM530X/9NrebiGeF9RdTnecLoP4emlT8ddLPQ4RBGSTNYu1jL3KC/A
-        XbQqrwOKY2GejsMAdwJDfsWYl2VcGzwdIHBrD0xD0Q==
-X-Google-Smtp-Source: ABdhPJy68/JQ2akezNu6ZdB4kqML+b9w63gefQDDXSh7QMIsi4KZSHn4ZxpYoICD3BhsO3PYRnXFJtwrAc0x2iTGIIg=
-X-Received: by 2002:a25:6088:: with SMTP id u130mr56279885ybb.257.1618431970036;
- Wed, 14 Apr 2021 13:26:10 -0700 (PDT)
-MIME-Version: 1.0
-References: <1616264220-25825-1-git-send-email-sbhanu@codeaurora.org>
- <CAD=FV=WLZCSd6D5VFyD+1KBp5n1qyszER2EVaEMwYjQfPSSDnA@mail.gmail.com>
- <b77f207b-2d90-3c8b-857f-625bd3867ed1@codeaurora.org> <6fdf704c4716f5873d413229ca8adc57@codeaurora.org>
- <CAD=FV=Wa4fT5wZgd0==8kLy_tzTLgdZ-HwdfOEAM9pMeMjjFyg@mail.gmail.com> <8126e130e5c0ea1e7ea867414f0510c0@codeaurora.org>
-In-Reply-To: <8126e130e5c0ea1e7ea867414f0510c0@codeaurora.org>
-From:   Doug Anderson <dianders@google.com>
-Date:   Wed, 14 Apr 2021 13:25:58 -0700
-Message-ID: <CAD=FV=XavWbf_b7-=JT6V5_RNA8CjdK4oRu7H719AaPDJ5tsqQ@mail.gmail.com>
-Subject: Re: [PATCH V2] arm64: dts: qcom: sc7280: Add nodes for eMMC and SD card
-To:     Shaik Sajida Bhanu <sbhanu@codeaurora.org>
-Cc:     Veerabhadrarao Badiganti <vbadigan@codeaurora.org>,
-        Adrian Hunter <adrian.hunter@intel.com>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Asutosh Das <asutoshd@codeaurora.org>,
-        Sahitya Tummala <stummala@codeaurora.org>,
-        Ram Prakash Gupta <rampraka@codeaurora.org>,
-        Sayali Lokhande <sayalil@codeaurora.org>,
-        sartgarg@codeaurora.org, Rajendra Nayak <rnayak@codeaurora.org>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Sibi Sankar <sibis@codeaurora.org>, cang@codeaurora.org,
-        pragalla@codeaurora.org, nitirawa@codeaurora.org,
-        Linux MMC List <linux-mmc@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Evan Green <evgreen@chromium.org>,
-        Georgi Djakov <georgi.djakov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+        id S229819AbhDNVDI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Apr 2021 17:03:08 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:38774 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229579AbhDNVDH (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 14 Apr 2021 17:03:07 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1618434166; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=NDFPUG8w+QVdc1ZKn+OX2p4Lkw+ii5Hbq+ynLwXvK3s=; b=kjSoBk9soBRvacb+oSQLCzAX/qi+0j3yiYy1dVoUkn5Qa+UDBzAwlInbEbmvROfr1IkPyOVM
+ V9whJlRowWtTS5fWJmbj8USsQwVdk8Yr9M6IHsyheSdnN+Shy9VmrucHI9wj/K65fkVWp9ep
+ VDBBeB8xn4RlNu/E68MSA9EwQNc=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
+ 60775875febcffa80fbcc2d8 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 14 Apr 2021 21:02:45
+ GMT
+Sender: khsieh=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 61032C43461; Wed, 14 Apr 2021 21:02:45 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from khsieh-linux1.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: khsieh)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6E1B8C433CA;
+        Wed, 14 Apr 2021 21:02:40 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 6E1B8C433CA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=khsieh@codeaurora.org
+From:   Kuogee Hsieh <khsieh@codeaurora.org>
+To:     robdclark@gmail.com, sean@poorly.run, swboyd@chromium.org
+Cc:     tanmay@codeaurora.org, abhinavk@codeaurora.org,
+        aravindh@codeaurora.org, khsieh@codeaurora.org, airlied@linux.ie,
+        daniel@ffwll.ch, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH v2 1/3] drm/msm/dp: check sink_count before update is_connected status
+Date:   Wed, 14 Apr 2021 14:02:34 -0700
+Message-Id: <1618434154-28255-1-git-send-email-khsieh@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Link status is different from display connected status in the case
+of something like an Apple dongle where the type-c plug can be
+connected, and therefore the link is connected, but no sink is
+connected until an HDMI cable is plugged into the dongle.
+The sink_count of DPCD of dongle will increase to 1 once an HDMI
+cable is plugged into the dongle so that display connected status
+will become true. This checking also apply at pm_resume.
 
-On Tue, Apr 13, 2021 at 3:59 AM <sbhanu@codeaurora.org> wrote:
->
-> >> >>> +                                       required-opps =
-> >> >>> <&rpmhpd_opp_low_svs>;
-> >> >>> +                                       opp-peak-kBps = <1200000
-> >> >>> 76000>;
-> >> >>> +                                       opp-avg-kBps = <1200000
-> >> >>> 50000>;
-> >> >> Why are the kBps numbers so vastly different than the ones on sc7180
-> >> >> for the same OPP point. That implies:
-> >> >>
-> >> >> a) sc7180 is wrong.
-> >> >>
-> >> >> b) This patch is wrong.
-> >> >>
-> >> >> c) The numbers are essentially random and don't really matter.
-> >> >>
-> >> >> Can you identify which of a), b), or c) is correct, or propose an
-> >> >> alternate explanation of the difference?
-> >> >>
-> >>
-> >> We calculated bus votes values for both sc7180 and sc7280 with ICB
-> >> tool,
-> >> above mentioned values we got for sc7280.
-> >
-> > I don't know what an ICB tool is. Please clarify.
-> >
-> > Also: just because a tool spits out numbers that doesn't mean it's
-> > correct. Presumably the tool could be wrong or incorrectly configured.
-> > We need to understand why these numbers are different.
-> >
-> we checked with ICB tool team on this they conformed as Rennell & Kodiak
-> are different chipsets,
-> we might see delta in ib/ab values due to delta in scaling factors.
+Fixes: 94e58e2d06e3 ("drm/msm/dp: reset dp controller only at boot up and pm_resume")
+Reported-by: Stephen Boyd <swboyd@chromium.org>
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Tested-by: Stephen Boyd <swboyd@chromium.org>
+Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
+---
+ drivers/gpu/drm/msm/dp/dp_display.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
-...but these numbers are in kbps, aren't they? As I understand it
-these aren't supposed to be random numbers spit out by a tool but are
-supposed to be understandable by how much bandwidth an IP block (like
-MMC) needs from the busses it's connected to. Since the MMC IP block
-on sc7180 and sc7280 is roughly the same there shouldn't be a big
-difference in numbers.
+diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+index 5a39da6..0ba71c7 100644
+--- a/drivers/gpu/drm/msm/dp/dp_display.c
++++ b/drivers/gpu/drm/msm/dp/dp_display.c
+@@ -586,10 +586,8 @@ static int dp_connect_pending_timeout(struct dp_display_private *dp, u32 data)
+ 	mutex_lock(&dp->event_mutex);
+ 
+ 	state = dp->hpd_state;
+-	if (state == ST_CONNECT_PENDING) {
+-		dp_display_enable(dp, 0);
++	if (state == ST_CONNECT_PENDING)
+ 		dp->hpd_state = ST_CONNECTED;
+-	}
+ 
+ 	mutex_unlock(&dp->event_mutex);
+ 
+@@ -669,10 +667,8 @@ static int dp_disconnect_pending_timeout(struct dp_display_private *dp, u32 data
+ 	mutex_lock(&dp->event_mutex);
+ 
+ 	state =  dp->hpd_state;
+-	if (state == ST_DISCONNECT_PENDING) {
+-		dp_display_disable(dp, 0);
++	if (state == ST_DISCONNECT_PENDING)
+ 		dp->hpd_state = ST_DISCONNECTED;
+-	}
+ 
+ 	mutex_unlock(&dp->event_mutex);
+ 
+@@ -1272,7 +1268,12 @@ static int dp_pm_resume(struct device *dev)
+ 
+ 	status = dp_catalog_link_is_connected(dp->catalog);
+ 
+-	if (status)
++	/*
++	 * can not declared display is connected unless
++	 * HDMI cable is plugged in and sink_count of
++	 * dongle become 1
++	 */
++	if (status && dp->link->sink_count)
+ 		dp->dp_display.is_connected = true;
+ 	else
+ 		dp->dp_display.is_connected = false;
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
-Something smells wrong.
-
-Adding a few people who understand interconnects better than I do, though.
-
--Doug
