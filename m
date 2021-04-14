@@ -2,14 +2,14 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 52BBE35F1FA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Apr 2021 13:14:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5417135F1FC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Apr 2021 13:14:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346548AbhDNLN5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Apr 2021 07:13:57 -0400
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:5632 "EHLO
+        id S1348119AbhDNLN6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Apr 2021 07:13:58 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:3948 "EHLO
         alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346172AbhDNLN4 (ORCPT
+        with ESMTP id S1346098AbhDNLN4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Wed, 14 Apr 2021 07:13:56 -0400
 Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
@@ -19,9 +19,9 @@ Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
   by ironmsg09-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 14 Apr 2021 04:13:33 -0700
 X-QCInternal: smtphost
 Received: from c-skakit-linux.ap.qualcomm.com (HELO c-skakit-linux.qualcomm.com) ([10.242.51.242])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 14 Apr 2021 16:43:06 +0530
+  by ironmsg02-blr.qualcomm.com with ESMTP; 14 Apr 2021 16:43:08 +0530
 Received: by c-skakit-linux.qualcomm.com (Postfix, from userid 2344709)
-        id 3C86E47ED; Wed, 14 Apr 2021 16:43:05 +0530 (IST)
+        id 2C36847ED; Wed, 14 Apr 2021 16:43:07 +0530 (IST)
 From:   satya priya <skakit@codeaurora.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -29,59 +29,83 @@ To:     Andy Gross <agross@kernel.org>,
 Cc:     mka@chromium.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
         kgunda@codeaurora.org, satya priya <skakit@codeaurora.org>
-Subject: [RESEND PATCH V3 0/5] Add PMIC DT files for sc7280
-Date:   Wed, 14 Apr 2021 16:42:58 +0530
-Message-Id: <1618398783-7834-1-git-send-email-skakit@codeaurora.org>
+Subject: [RESEND PATCH V3 1/5] arm64: dts: qcom: pm7325: Add pm7325 base dts file
+Date:   Wed, 14 Apr 2021 16:42:59 +0530
+Message-Id: <1618398783-7834-2-git-send-email-skakit@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
+In-Reply-To: <1618398783-7834-1-git-send-email-skakit@codeaurora.org>
+References: <1618398783-7834-1-git-send-email-skakit@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi All,
+Add base DTS file for pm7325 along with GPIOs and temp-alarm nodes.
 
-Resending V3 as there was a mistake earlier, changes in patches 4 and 5
-got clubbed unknowingly. Apologies for that.
-
-Thanks,
-Satya Priya
-
-Add PM7325 DT file with gpio and temp-alarm nodes.
-For PM8350C, PMR735A and PMK8350 add the required peripherals
-as the base DT files are already added [1].
-[1] https://lore.kernel.org/patchwork/project/lkml/list/?series=489011&state=%2A&archive=both
-
-Changes in V2:
- - As per Matthias comments:
-   - I've Split the patch into per-PMIC patches and one sc7280 patch
-   - Removed 2nd critical point, thermal-governer property
-   - s/pm8325_tz/pm7325_temp_alarm and s/pm7325_temp_alarm/pm7325_thermal
-   - Fixed few other minor errors.
-
- - As per Bjorn's comments, replaced '_' with '-' in node names and moved
-   DT files inclusion to board dts.
-
-Changes in V3:
- - As per Matthias comments, changed commit text, modified critical interrupt
-   node name like <name>-crit for all pmics.
- - Moved pmk8350_vadc channel nodes to idp dts, as it is not guaranteed that
-   a board with the pmk8350 will always have the other 3 PMICs
-
-satya priya (5):
-  arm64: dts: qcom: pm7325: Add pm7325 base dts file
-  arm64: dts: qcom: pm8350c: Add temp-alarm support
-  arm64: dts: qcom: pmr735a: Add temp-alarm support
-  arm64: dts: qcom: pmk8350: Add PMIC peripherals for pmk8350
-  arm64: dts: qcom: sc7280: Include PMIC DT files for sc7280
-
- arch/arm64/boot/dts/qcom/pm7325.dtsi    | 53 +++++++++++++++++++++++++++++++
- arch/arm64/boot/dts/qcom/pm8350c.dtsi   | 32 ++++++++++++++++++-
- arch/arm64/boot/dts/qcom/pmk8350.dtsi   | 55 ++++++++++++++++++++++++++++++++-
- arch/arm64/boot/dts/qcom/pmr735a.dtsi   | 32 ++++++++++++++++++-
- arch/arm64/boot/dts/qcom/sc7280-idp.dts | 30 ++++++++++++++++++
- arch/arm64/boot/dts/qcom/sc7280.dtsi    |  3 ++
- 6 files changed, 202 insertions(+), 3 deletions(-)
+Signed-off-by: satya priya <skakit@codeaurora.org>
+---
+ arch/arm64/boot/dts/qcom/pm7325.dtsi | 53 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 53 insertions(+)
  create mode 100644 arch/arm64/boot/dts/qcom/pm7325.dtsi
 
+diff --git a/arch/arm64/boot/dts/qcom/pm7325.dtsi b/arch/arm64/boot/dts/qcom/pm7325.dtsi
+new file mode 100644
+index 0000000..e7f64a9
+--- /dev/null
++++ b/arch/arm64/boot/dts/qcom/pm7325.dtsi
+@@ -0,0 +1,53 @@
++// SPDX-License-Identifier: BSD-3-Clause
++// Copyright (c) 2021, The Linux Foundation. All rights reserved.
++
++#include <dt-bindings/interrupt-controller/irq.h>
++#include <dt-bindings/spmi/spmi.h>
++
++&spmi_bus {
++	pm7325: pmic@1 {
++		compatible = "qcom,pm7325", "qcom,spmi-pmic";
++		reg = <0x1 SPMI_USID>;
++		#address-cells = <1>;
++		#size-cells = <0>;
++
++		pm7325_temp_alarm: temp-alarm@a00 {
++			compatible = "qcom,spmi-temp-alarm";
++			reg = <0xa00>;
++			interrupts = <0x1 0xa 0x0 IRQ_TYPE_EDGE_BOTH>;
++			#thermal-sensor-cells = <0>;
++		};
++
++		pm7325_gpios: gpios@8800 {
++			compatible = "qcom,pm7325-gpio", "qcom,spmi-gpio";
++			reg = <0x8800>;
++			gpio-controller;
++			gpio-ranges = <&pm7325_gpios 0 0 10>;
++			#gpio-cells = <2>;
++			interrupt-controller;
++			#interrupt-cells = <2>;
++		};
++	};
++};
++
++&thermal_zones {
++	pm7325_thermal: pm7325-thermal {
++		polling-delay-passive = <100>;
++		polling-delay = <0>;
++		thermal-sensors = <&pm7325_temp_alarm>;
++
++		trips {
++			pm7325_trip0: trip0 {
++				temperature = <95000>;
++				hysteresis = <0>;
++				type = "passive";
++			};
++
++			pm7325_crit: pm7325-crit {
++				temperature = <115000>;
++				hysteresis = <0>;
++				type = "critical";
++			};
++		};
++	};
++};
 -- 
 QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
 of Code Aurora Forum, hosted by The Linux Foundation
