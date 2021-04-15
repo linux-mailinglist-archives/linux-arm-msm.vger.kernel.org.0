@@ -2,249 +2,140 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C11B53615E3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Apr 2021 01:12:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1D8C8361632
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Apr 2021 01:27:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235285AbhDOXLv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Apr 2021 19:11:51 -0400
-Received: from mail-pf1-f176.google.com ([209.85.210.176]:45965 "EHLO
-        mail-pf1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234961AbhDOXLu (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Apr 2021 19:11:50 -0400
-Received: by mail-pf1-f176.google.com with SMTP id i190so17081259pfc.12;
-        Thu, 15 Apr 2021 16:11:27 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=rNjHSpqMp6OHOOifvMxrtpdA3iLbXLeekducnpNQE7w=;
-        b=MiSRwqvEqdl2VlZWjyVzbbS56nB2Q07WumuToSc0YC6/+CAqoucl2q6hG28HoV/X0u
-         HwYBrDp0C8IraA4Z/vkygnzGqGMNDiXH2e8piAJ+X74i9n86LZ4yG5+twIiL4twhSBOJ
-         sysNKprGW2kAJ/j+s9QbywkG3e4ulDCwVsQ9lmkQkL/hlC0WDwFvsj8e/oAaVtTiAkuk
-         /1cOmW9fHBXrOPYiwlRzlX5nftl8Q9Jt4vcalMoJTD2xpjnH7DoHWq2E7EqlxgXAkiGe
-         u5xNi+zcaOujswyBYebqTMe783EN9HuCRPueLsO8mGO8yT1D30Gc26nZSOBKh/UHQg78
-         4cAA==
-X-Gm-Message-State: AOAM530+q/hUfG/ZFbV/cGSiJ+hH7SdAnhteP3qTZQef4/jRHREnAUHU
-        C/plhRE9JjPLJRYptZqt7zI=
-X-Google-Smtp-Source: ABdhPJy84p+UP8x2TOnFbzVUyWQ0RVl+Q/N1HMNE6piAjW8rXbWFlCGcJH7JyP2QKJDL0IWfjfed+w==
-X-Received: by 2002:a63:7c59:: with SMTP id l25mr5632368pgn.224.1618528286855;
-        Thu, 15 Apr 2021 16:11:26 -0700 (PDT)
-Received: from ?IPv6:2601:647:4000:d7:f031:1d3a:7e95:2876? ([2601:647:4000:d7:f031:1d3a:7e95:2876])
-        by smtp.gmail.com with ESMTPSA id z23sm3375309pjh.45.2021.04.15.16.11.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 15 Apr 2021 16:11:25 -0700 (PDT)
-Subject: Re: [PATCH v18 1/2] scsi: ufs: Enable power management for wlun
-To:     Asutosh Das <asutoshd@codeaurora.org>, cang@codeaurora.org,
-        martin.petersen@oracle.com, adrian.hunter@intel.com,
-        linux-scsi@vger.kernel.org
-Cc:     linux-arm-msm@vger.kernel.org,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        Pedro Sousa <pedrom.sousa@synopsys.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Stanley Chu <stanley.chu@mediatek.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Steven Rostedt <rostedt@goodmis.org>,
-        Ingo Molnar <mingo@redhat.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Lee Jones <lee.jones@linaro.org>,
-        Bean Huo <beanhuo@micron.com>,
-        Kiwoong Kim <kwmad.kim@samsung.com>,
-        Yue Hu <huyue2@yulong.com>,
-        Wei Yongjun <weiyongjun1@huawei.com>,
-        "Gustavo A. R. Silva" <gustavoars@kernel.org>,
-        Dinghao Liu <dinghao.liu@zju.edu.cn>,
-        Jaegeuk Kim <jaegeuk@kernel.org>,
-        Satya Tangirala <satyat@google.com>,
-        open list <linux-kernel@vger.kernel.org>,
-        "moderated list:ARM/SAMSUNG S3C, S5P AND EXYNOS ARM ARCHITECTURES" 
-        <linux-arm-kernel@lists.infradead.org>,
-        "open list:ARM/SAMSUNG S3C, S5P AND EXYNOS ARM ARCHITECTURES" 
-        <linux-samsung-soc@vger.kernel.org>,
-        "moderated list:UNIVERSAL FLASH STORAGE HOST CONTROLLER DRIVER..." 
-        <linux-mediatek@lists.infradead.org>
-References: <cover.1618426513.git.asutoshd@codeaurora.org>
- <d1a6af736730b9d79f977100286c5d9325546ac2.1618426513.git.asutoshd@codeaurora.org>
-From:   Bart Van Assche <bvanassche@acm.org>
-Message-ID: <f111e363-c709-fe3c-65da-450c9e9e3408@acm.org>
-Date:   Thu, 15 Apr 2021 16:11:23 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.9.0
-MIME-Version: 1.0
-In-Reply-To: <d1a6af736730b9d79f977100286c5d9325546ac2.1618426513.git.asutoshd@codeaurora.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        id S236878AbhDOX11 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Apr 2021 19:27:27 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:31759 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S235906AbhDOX10 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 15 Apr 2021 19:27:26 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1618529223; h=References: In-Reply-To: Message-Id: Date:
+ Subject: Cc: To: From: Sender;
+ bh=Y3RdJh64f/A7Bekobz08o6R+GiE3qPBz/fdmi999ShQ=; b=WATLjAfoOuczL8dTgy9lQW4wiFfP8UDUgwF+Fpojjh02eutYiIRcJm95+j4CKGQQ0yTlUKOC
+ BO+i4MkPZRujEJpB9i20tOO6agak61X4UtmSlX0v+xzRsgo6WGzIln6nUqqHqfz9wvxizsjI
+ qEGOU6DbSJE8SyLsHZo1omy31i4=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
+ 6078cbbca817abd39a4ead03 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 15 Apr 2021 23:26:52
+ GMT
+Sender: khsieh=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 2CA00C43463; Thu, 15 Apr 2021 23:26:52 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from khsieh-linux1.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: khsieh)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 826F9C433ED;
+        Thu, 15 Apr 2021 23:26:50 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 826F9C433ED
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=khsieh@codeaurora.org
+From:   Kuogee Hsieh <khsieh@codeaurora.org>
+To:     robdclark@gmail.com, sean@poorly.run
+Cc:     abhinavk@codeaurora.org, aravindh@codeaurora.org,
+        khsieh@codeaurora.org, airlied@linux.ie, daniel@ffwll.ch,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v3 2/3] drm/msm/dp: initialize audio_comp when audio starts
+Date:   Thu, 15 Apr 2021 16:26:41 -0700
+Message-Id: <1618529201-26683-1-git-send-email-khsieh@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
+In-Reply-To: <161843546014.46595.17704484523118330586@swboyd.mtv.corp.google.com>
+References: <161843546014.46595.17704484523118330586@swboyd.mtv.corp.google.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 4/14/21 11:58 AM, Asutosh Das wrote:
-> [ ... ]
+Initialize audio_comp when audio starts and wait for audio_comp at
+dp_display_disable(). This will take care of both dongle unplugged
+and display off (suspend) cases.
 
-Patches sent to the SCSI mailing list should not have a "scsi: " prefix
-in the subject. That prefix is inserted before any SCSI patches go into
-Martin's tree.
+Changes in v2:
+-- add dp_display_signal_audio_start()
 
-> diff --git a/drivers/scsi/ufs/cdns-pltfrm.c b/drivers/scsi/ufs/cdns-pltfrm.c
-> index 13d9204..b9105e4 100644
-> --- a/drivers/scsi/ufs/cdns-pltfrm.c
-> +++ b/drivers/scsi/ufs/cdns-pltfrm.c
-> @@ -323,6 +323,8 @@ static const struct dev_pm_ops cdns_ufs_dev_pm_ops = {
->  	.runtime_suspend = ufshcd_pltfrm_runtime_suspend,
->  	.runtime_resume  = ufshcd_pltfrm_runtime_resume,
->  	.runtime_idle    = ufshcd_pltfrm_runtime_idle,
-> +	.prepare	 = ufshcd_suspend_prepare,
-> +	.complete	= ufshcd_resume_complete,
->  };
->  
->  static struct platform_driver cdns_ufs_pltfrm_driver = {
-> diff --git a/drivers/scsi/ufs/tc-dwc-g210-pci.c b/drivers/scsi/ufs/tc-dwc-g210-pci.c
-> index 67a6a61..b01db12 100644
-> --- a/drivers/scsi/ufs/tc-dwc-g210-pci.c
-> +++ b/drivers/scsi/ufs/tc-dwc-g210-pci.c
-> @@ -148,6 +148,8 @@ static const struct dev_pm_ops tc_dwc_g210_pci_pm_ops = {
->  	.runtime_suspend = tc_dwc_g210_pci_runtime_suspend,
->  	.runtime_resume  = tc_dwc_g210_pci_runtime_resume,
->  	.runtime_idle    = tc_dwc_g210_pci_runtime_idle,
-> +	.prepare	 = ufshcd_suspend_prepare,
-> +	.complete	= ufshcd_resume_complete,
->  };
+Changes in v3:
+-- restore dp_display_handle_plugged_change() at dp_hpd_unplug_handle().
 
-[ ... ]
+Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
+---
+ drivers/gpu/drm/msm/dp/dp_audio.c   |  1 +
+ drivers/gpu/drm/msm/dp/dp_display.c | 11 +++++++++--
+ drivers/gpu/drm/msm/dp/dp_display.h |  1 +
+ 3 files changed, 11 insertions(+), 2 deletions(-)
 
-> --- a/drivers/scsi/ufs/ufs-exynos.c
-> +++ b/drivers/scsi/ufs/ufs-exynos.c
-> @@ -1267,6 +1267,8 @@ static const struct dev_pm_ops exynos_ufs_pm_ops = {
->  	.runtime_suspend = ufshcd_pltfrm_runtime_suspend,
->  	.runtime_resume  = ufshcd_pltfrm_runtime_resume,
->  	.runtime_idle    = ufshcd_pltfrm_runtime_idle,
-> +	.prepare	 = ufshcd_suspend_prepare,
-> +	.complete	= ufshcd_resume_complete,
->  };
->  
->  static struct platform_driver exynos_ufs_pltform = {
-> diff --git a/drivers/scsi/ufs/ufs-hisi.c b/drivers/scsi/ufs/ufs-hisi.c
-> index 0aa5813..d463b44 100644
-> --- a/drivers/scsi/ufs/ufs-hisi.c
-> +++ b/drivers/scsi/ufs/ufs-hisi.c
-> @@ -574,6 +574,8 @@ static const struct dev_pm_ops ufs_hisi_pm_ops = {
->  	.runtime_suspend = ufshcd_pltfrm_runtime_suspend,
->  	.runtime_resume  = ufshcd_pltfrm_runtime_resume,
->  	.runtime_idle    = ufshcd_pltfrm_runtime_idle,
-> +	.prepare	 = ufshcd_suspend_prepare,
-> +	.complete	= ufshcd_resume_complete,
->  };
+diff --git a/drivers/gpu/drm/msm/dp/dp_audio.c b/drivers/gpu/drm/msm/dp/dp_audio.c
+index 82a8673..d7e4a39 100644
+--- a/drivers/gpu/drm/msm/dp/dp_audio.c
++++ b/drivers/gpu/drm/msm/dp/dp_audio.c
+@@ -527,6 +527,7 @@ int dp_audio_hw_params(struct device *dev,
+ 	dp_audio_setup_acr(audio);
+ 	dp_audio_safe_to_exit_level(audio);
+ 	dp_audio_enable(audio, true);
++	dp_display_signal_audio_start(dp_display);
+ 	dp_display->audio_enabled = true;
+ 
+ end:
+diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+index 0ba71c7..1784e11 100644
+--- a/drivers/gpu/drm/msm/dp/dp_display.c
++++ b/drivers/gpu/drm/msm/dp/dp_display.c
+@@ -178,6 +178,15 @@ static int dp_del_event(struct dp_display_private *dp_priv, u32 event)
+ 	return 0;
+ }
+ 
++void dp_display_signal_audio_start(struct msm_dp *dp_display)
++{
++	struct dp_display_private *dp;
++
++	dp = container_of(dp_display, struct dp_display_private, dp_display);
++
++	reinit_completion(&dp->audio_comp);
++}
++
+ void dp_display_signal_audio_complete(struct msm_dp *dp_display)
+ {
+ 	struct dp_display_private *dp;
+@@ -649,7 +658,6 @@ static int dp_hpd_unplug_handle(struct dp_display_private *dp, u32 data)
+ 	dp_add_event(dp, EV_DISCONNECT_PENDING_TIMEOUT, 0, DP_TIMEOUT_5_SECOND);
+ 
+ 	/* signal the disconnect event early to ensure proper teardown */
+-	reinit_completion(&dp->audio_comp);
+ 	dp_display_handle_plugged_change(g_dp_display, false);
+ 
+ 	dp_catalog_hpd_config_intr(dp->catalog, DP_DP_HPD_PLUG_INT_MASK |
+@@ -894,7 +902,6 @@ static int dp_display_disable(struct dp_display_private *dp, u32 data)
+ 	/* wait only if audio was enabled */
+ 	if (dp_display->audio_enabled) {
+ 		/* signal the disconnect event */
+-		reinit_completion(&dp->audio_comp);
+ 		dp_display_handle_plugged_change(dp_display, false);
+ 		if (!wait_for_completion_timeout(&dp->audio_comp,
+ 				HZ * 5))
+diff --git a/drivers/gpu/drm/msm/dp/dp_display.h b/drivers/gpu/drm/msm/dp/dp_display.h
+index 6092ba1..5173c89 100644
+--- a/drivers/gpu/drm/msm/dp/dp_display.h
++++ b/drivers/gpu/drm/msm/dp/dp_display.h
+@@ -34,6 +34,7 @@ int dp_display_get_modes(struct msm_dp *dp_display,
+ int dp_display_request_irq(struct msm_dp *dp_display);
+ bool dp_display_check_video_test(struct msm_dp *dp_display);
+ int dp_display_get_test_bpp(struct msm_dp *dp_display);
++void dp_display_signal_audio_start(struct msm_dp *dp_display);
+ void dp_display_signal_audio_complete(struct msm_dp *dp_display);
+ 
+ #endif /* _DP_DISPLAY_H_ */
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
-A minor comment about source code formatting: please make sure that the
-equality signs are aligned in struct dev_pm_ops definitions.
-
-> +static inline bool is_rpmb_wlun(struct scsi_device *sdev)
-> +{
-> +	return (sdev->lun == ufshcd_upiu_wlun_to_scsi_wlun(UFS_UPIU_RPMB_WLUN));
-> +}
-> +
-> +static inline bool is_device_wlun(struct scsi_device *sdev)
-> +{
-> +	return (sdev->lun ==
-> +		ufshcd_upiu_wlun_to_scsi_wlun(UFS_UPIU_UFS_DEVICE_WLUN));
-> +}
-
-The Linux kernel coding style requires not to surround expressions with
-parentheses in return statements.
-
->  /**
-> + * ufshcd_setup_links - associate link b/w device wlun and other luns
-> + * @sdev: pointer to SCSI device
-> + * @hba: pointer to ufs hba
-> + */
-> +static void ufshcd_setup_links(struct ufs_hba *hba, struct scsi_device *sdev)
-> +{
-> +	struct device_link *link;
-> +
-> +	/*
-> +	 * device wlun is the supplier & rest of the luns are consumers
-> +	 * This ensures that device wlun suspends after all other luns.
-> +	 */
-> +	if (hba->sdev_ufs_device) {
-> +		link = device_link_add(&sdev->sdev_gendev,
-> +				       &hba->sdev_ufs_device->sdev_gendev,
-> +				       DL_FLAG_PM_RUNTIME|DL_FLAG_RPM_ACTIVE);
-> +		if (!link) {
-> +			dev_err(&sdev->sdev_gendev, "Failed establishing link - %s\n",
-> +				dev_name(&hba->sdev_ufs_device->sdev_gendev));
-> +			return;
-> +		}
-> +		hba->luns_avail--;
-> +		/* Ignore REPORT_LUN wlun probing */
-> +		if (hba->luns_avail == 1) {
-> +			ufshcd_rpm_put(hba);
-> +			return;
-> +		}
-> +	} else {
-> +		/* device wlun is probed */
-> +		hba->luns_avail--;
-> +	}
-> +}
-
-Please add a comment that explains that it is assumed that the WLUNs are
-scanned before the other LUNs.
-
-> @@ -4862,8 +4913,13 @@ static int ufshcd_slave_configure(struct scsi_device *sdev)
->  	blk_queue_update_dma_pad(q, PRDT_DATA_BYTE_COUNT_PAD - 1);
->  	if (hba->quirks & UFSHCD_QUIRK_ALIGN_SG_WITH_PAGE_SIZE)
->  		blk_queue_update_dma_alignment(q, PAGE_SIZE - 1);
-> -
-> -	if (ufshcd_is_rpm_autosuspend_allowed(hba))
-> +	/*
-> +	 * Block runtime-pm until all consumers are added.
-> +	 * Refer ufshcd_setup_links().
-> +	 */
-> +	if (is_device_wlun(sdev))
-> +		pm_runtime_get_noresume(&sdev->sdev_gendev);
-> +	else if (ufshcd_is_rpm_autosuspend_allowed(hba))
->  		sdev->rpm_autosuspend = 1;
->  
->  	ufshcd_crypto_setup_rq_keyslot_manager(hba, q);
-
-The following code is executed before ufshcd_async_scan() is called:
-
-	dev = hba->dev;
-	[ ... ]
-	/* Hold auto suspend until async scan completes */
-	pm_runtime_get_sync(dev);
-
-and the following code occurs in ufshcd_add_lus():
-
-	pm_runtime_put_sync(hba->dev);
-
-Isn't that sufficient to postpone enabling of runtime PM until LUN
-scanning has finished? Or in other words, is adding a
-pm_runtime_get_noresume() call in ufshcd_slave_configure() really necessary?
-
-> @@ -4979,15 +5035,9 @@ ufshcd_transfer_rsp_status(struct ufs_hba *hba, struct ufshcd_lrb *lrbp)
->  			 */
->  			if (!hba->pm_op_in_progress &&
->  			    !ufshcd_eh_in_progress(hba) &&
-> -			    ufshcd_is_exception_event(lrbp->ucd_rsp_ptr) &&
-> -			    schedule_work(&hba->eeh_work)) {
-> -				/*
-> -				 * Prevent suspend once eeh_work is scheduled
-> -				 * to avoid deadlock between ufshcd_suspend
-> -				 * and exception event handler.
-> -				 */
-> -				pm_runtime_get_noresume(hba->dev);
-> -			}
-> +			    ufshcd_is_exception_event(lrbp->ucd_rsp_ptr))
-> +				/* Flushed in suspend */
-> +				schedule_work(&hba->eeh_work);
-
-What makes it safe to leave out the above pm_runtime_get_noresume() call?
-
-Thanks,
-
-Bart.
