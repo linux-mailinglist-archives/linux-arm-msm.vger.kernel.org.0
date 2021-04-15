@@ -2,172 +2,180 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B901036163A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Apr 2021 01:28:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 133DB361651
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Apr 2021 01:36:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237324AbhDOX3V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Apr 2021 19:29:21 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:23969 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S236110AbhDOX3U (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Apr 2021 19:29:20 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1618529337; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=piGppBojtqCVXDMpx0SlbAI0Ep5s6X3/HUnzkiklKDw=; b=gR1CXvg0+LP5+V1OLn218ZHHANNvqkFuBPiR6keaMd+sHryW2yosVEnR84mtfwq/h+bwEezt
- w/c9GUgCKQdWI7OGn5BorBxwwqeT65qdqfrYqrL3O1Q88v7p3ZtWR8dvphUORlxxs3Xhf+7c
- XXUMKA39nX2EPRiz7xTy49Tj+5c=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
- 6078cc39a817abd39a506a72 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 15 Apr 2021 23:28:57
- GMT
-Sender: khsieh=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 5F581C43464; Thu, 15 Apr 2021 23:28:56 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from khsieh-linux1.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: khsieh)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id B02C6C433CA;
-        Thu, 15 Apr 2021 23:28:54 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org B02C6C433CA
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=khsieh@codeaurora.org
-From:   Kuogee Hsieh <khsieh@codeaurora.org>
-To:     robdclark@gmail.com, sean@poorly.run
-Cc:     abhinavk@codeaurora.org, aravindh@codeaurora.org,
-        khsieh@codeaurora.org, airlied@linux.ie, daniel@ffwll.ch,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v3 3/3] drm/msm/dp: check main link status before start aux read
-Date:   Thu, 15 Apr 2021 16:28:46 -0700
-Message-Id: <1618529326-26883-1-git-send-email-khsieh@codeaurora.org>
+        id S236950AbhDOXgj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Apr 2021 19:36:39 -0400
+Received: from labrats.qualcomm.com ([199.106.110.90]:57294 "EHLO
+        labrats.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236686AbhDOXgi (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 15 Apr 2021 19:36:38 -0400
+IronPort-SDR: uWz1L6HhbTk6HJXpcOLw5AgL7TuhVZZFrxmGxFEur2+IPMFaIjbWtBU43NytsvZ+ZL4VSiUYbw
+ BO0J+ay47oXGkz5Uxq2BDHxzQlQmFyrSd0Nbl8g89TxE1o5TwfPbWDE+7+52OvRYj6lkr89Zck
+ iBR+NS0aE0uzz3Bb6LulHQ1jcJP2DlWiPVJZjzGqTDLfInNEzMN30J532HomUvMPqDNMEAjeLj
+ D+PCllAV2TzBJO4SMVqE9No6ovSqAClxADcwCpZknbUb1U2Fr0dWZmZuVFB/qdqdz4KnK25+/4
+ 4H0=
+X-IronPort-AV: E=Sophos;i="5.82,226,1613462400"; 
+   d="scan'208";a="29751640"
+Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
+  by labrats.qualcomm.com with ESMTP; 15 Apr 2021 16:36:13 -0700
+X-QCInternal: smtphost
+Received: from wsp769891wss.qualcomm.com (HELO stor-presley.qualcomm.com) ([192.168.140.85])
+  by ironmsg04-sd.qualcomm.com with ESMTP; 15 Apr 2021 16:36:12 -0700
+Received: by stor-presley.qualcomm.com (Postfix, from userid 92687)
+        id 32F1921BA5; Thu, 15 Apr 2021 16:36:12 -0700 (PDT)
+From:   Asutosh Das <asutoshd@codeaurora.org>
+To:     cang@codeaurora.org, martin.petersen@oracle.com,
+        adrian.hunter@intel.com, linux-scsi@vger.kernel.org
+Cc:     Asutosh Das <asutoshd@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        linux-arm-kernel@lists.infradead.org (moderated list:ARM/Mediatek SoC
+        support),
+        linux-mediatek@lists.infradead.org (moderated list:ARM/Mediatek SoC
+        support)
+Subject: [PATCH v19 0/2] Enable power management for ufs wlun 
+Date:   Thu, 15 Apr 2021 16:36:06 -0700
+Message-Id: <cover.1618529652.git.asutoshd@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
-In-Reply-To: <161852681935.46595.9941294298184495830@swboyd.mtv.corp.google.com>
-References: <161852681935.46595.9941294298184495830@swboyd.mtv.corp.google.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Maybe when the cable is disconnected the DP phy should be shutdown and
-some bit in the phy could effectively "cut off" the aux channel and then
-NAKs would start coming through here in the DP controller I/O register
-space. This patch have DP aux channel read/write to return NAK immediately
-if DP controller connection status is in unplugged state.
+This patch attempts to fix a deadlock in ufs while sending SSU.
+Recently, blk_queue_enter() added a check to not process requests if the
+queue is suspended. That leads to a resume of the associated device which
+is suspended. In ufs, that device is ufs device wlun and it's parent is
+ufs_hba. This resume tries to resume ufs device wlun which in turn tries
+to resume ufs_hba, which is already in the process of suspending, thus
+causing a deadlock.
 
-Changes in V3:
--- check core_initialized before handle irq_hpd
-Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
----
- drivers/gpu/drm/msm/dp/dp_aux.c     |  5 +++++
- drivers/gpu/drm/msm/dp/dp_display.c | 14 ++++++++++----
- drivers/gpu/drm/msm/dp/dp_link.c    | 20 +++++++++++++++-----
- 3 files changed, 30 insertions(+), 9 deletions(-)
+This patch takes care of:
+* Suspending the ufs device lun only after all other luns are suspended
+* Sending SSU during ufs device wlun suspend
+* Clearing uac for rpmb and ufs device wlun
+* Not sending commands to the device during host suspend
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_aux.c b/drivers/gpu/drm/msm/dp/dp_aux.c
-index 7c22bfe..fae3806 100644
---- a/drivers/gpu/drm/msm/dp/dp_aux.c
-+++ b/drivers/gpu/drm/msm/dp/dp_aux.c
-@@ -343,6 +343,11 @@ static ssize_t dp_aux_transfer(struct drm_dp_aux *dp_aux,
- 
- 	mutex_lock(&aux->mutex);
- 
-+	if (!dp_catalog_link_is_connected(aux->catalog)) {
-+		ret = -ETIMEDOUT;
-+		goto unlock_exit;
-+	}
-+
- 	aux->native = msg->request & (DP_AUX_NATIVE_WRITE & DP_AUX_NATIVE_READ);
- 
- 	/* Ignore address only message */
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index 1784e11..db3f45e 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -571,7 +571,7 @@ static int dp_hpd_plug_handle(struct dp_display_private *dp, u32 data)
- 		dp->hpd_state = ST_DISCONNECTED;
- 
- 		if (ret == -ECONNRESET) { /* cable unplugged */
--			dp->core_initialized = false;
-+			DRM_ERROR("dongle unplugged = %d\n", ret);
- 		}
- 
- 	} else {
-@@ -711,9 +711,15 @@ static int dp_irq_hpd_handle(struct dp_display_private *dp, u32 data)
- 		return 0;
- 	}
- 
--	ret = dp_display_usbpd_attention_cb(&dp->pdev->dev);
--	if (ret == -ECONNRESET) { /* cable unplugged */
--		dp->core_initialized = false;
-+	/*
-+	 * dp core (ahb/aux clks) must be initialized before
-+	 * irq_hpd be handled
-+	 */
-+	if (dp->core_initialized) {
-+		ret = dp_display_usbpd_attention_cb(&dp->pdev->dev);
-+		if (ret == -ECONNRESET) { /* cable unplugged */
-+			DRM_ERROR("dongle unplugged = %d\n", ret);
-+		}
- 	}
- 
- 	mutex_unlock(&dp->event_mutex);
-diff --git a/drivers/gpu/drm/msm/dp/dp_link.c b/drivers/gpu/drm/msm/dp/dp_link.c
-index be986da..53ecae6 100644
---- a/drivers/gpu/drm/msm/dp/dp_link.c
-+++ b/drivers/gpu/drm/msm/dp/dp_link.c
-@@ -737,18 +737,25 @@ static int dp_link_parse_sink_count(struct dp_link *dp_link)
- 	return 0;
- }
- 
--static void dp_link_parse_sink_status_field(struct dp_link_private *link)
-+static int dp_link_parse_sink_status_field(struct dp_link_private *link)
- {
- 	int len = 0;
- 
- 	link->prev_sink_count = link->dp_link.sink_count;
--	dp_link_parse_sink_count(&link->dp_link);
-+	len = dp_link_parse_sink_count(&link->dp_link);
-+	if (len < 0) {
-+		DRM_ERROR("DP parse sink count failed\n");
-+		return len;
-+	}
- 
- 	len = drm_dp_dpcd_read_link_status(link->aux,
- 		link->link_status);
--	if (len < DP_LINK_STATUS_SIZE)
-+	if (len < DP_LINK_STATUS_SIZE) {
- 		DRM_ERROR("DP link status read failed\n");
--	dp_link_parse_request(link);
-+		return len;
-+	}
-+
-+	return dp_link_parse_request(link);
- }
- 
- /**
-@@ -1032,7 +1039,10 @@ int dp_link_process_request(struct dp_link *dp_link)
- 
- 	dp_link_reset_data(link);
- 
--	dp_link_parse_sink_status_field(link);
-+	ret = dp_link_parse_sink_status_field(link);
-+	if (ret) {
-+		return ret;
-+	}
- 
- 	if (link->request.test_requested == DP_TEST_LINK_EDID_READ) {
- 		dp_link->sink_request |= DP_TEST_LINK_EDID_READ;
+v18 -> v19:
+- Addressed Adrian's comments
+- Fixed smatch warnings
+
+v17 -> v18:
+- Addressed Adrian's comments
+
+v16 -> v17:
+- Addressed Adrian's & Daejun's comments
+
+v15 -> v16:
+- Brought back the missing changes
+  * Added scsi_autopm_[get/put] to ufs_debugfs[get/put]_user_access()
+  * Fix ufshcd_wl_poweroff()
+
+v14 -> v15:
+- Rebased on 5.13/scsi-staging
+
+v13 -> v14:
+- Addressed Adrian's comments
+  * Rebased it on top of scsi-next
+  * Added scsi_autopm_[get/put] to ufs_debugfs[get/put]_user_access()
+  * Resume the device in ufshcd_remove()
+  * Unregister ufs_rpmb_wlun before ufs_dev_wlun
+  * hba->shutting_down moved to ufshcd_wl_shutdown()
+
+v12 -> v13:
+- Addressed Adrian's comments
+  * Paired pm_runtime_get_noresume() with pm_runtime_put()
+  * no rpm_autosuspend for ufs device wlun
+  * Moved runtime-pm init functionality to ufshcd_wl_probe()
+- Addressed Bart's comments
+  * Expanded abbrevs in commit message
+
+v11 -> v12:
+- Addressed Adrian's comments
+  * Fixed ahit for Mediatek driver
+  * Fixed error handling in ufshcd_core_init()
+  * Tested this patch and the issue is still seen.
+
+v10 -> v11:
+- Fixed supplier suspending before consumer race
+- Addressed Adrian's comments
+  * Added proper resume/suspend cb to ufshcd_auto_hibern8_update()
+  * Cosmetic changes to ufshcd-pci.c
+  * Cleaned up ufshcd_system_suspend()
+  * Added ufshcd_debugfs_eh_exit to ufshcd_core_init()
+
+v9 -> v10:
+- Addressed Adrian's comments
+  * Moved suspend/resume vops to __ufshcd_wl_[suspend/resume]()
+  * Added correct resume in ufs_bsg
+
+v8 -> v9:
+- Addressed Adrian's comments
+  * Moved link transition to __ufshcd_wl_[suspend/resume]()
+  * Fixed the other minor comments
+
+v7 -> v8:
+- Addressed Adrian's comments
+  * Removed separate autosuspend delay for ufs-device lun
+  * Fixed the ee handler getting scheduled during pm
+  * Always runtime resume in suspend_prepare()
+  * Added CONFIG_PM_SLEEP where needed
+  
+v6 -> v7:
+  * Resume the ufs device before shutting it down
+
+v5 -> v6:
+- Addressed Adrian's comments
+  * Added complete() cb
+  * Added suspend_prepare() and complete() to all drivers
+  * Moved suspend_prepare() and complete() to ufshcd
+  * .poweroff() uses ufhcd_wl_poweroff()
+  * Removed several forward declarations
+  * Moved scsi_register_driver() to ufshcd_core_init()
+
+v4 -> v5:
+- Addressed Adrian's comments
+  * Used the rpmb driver contributed by Adrian
+  * Runtime-resume the ufs device during suspend to honor spm-lvl
+  * Unregister the scsi_driver in ufshcd_remove()
+  * Currently shutdown() puts the ufs device to power-down mode
+    so, just removed ufshcd_pci_poweroff()
+  * Quiesce the scsi device during shutdown instead of remove
+
+v3 RFC -> v4:
+- Addressed Bart's comments
+  * Except that I didn't get any checkpatch failures
+- Addressed Avri's comments
+- Addressed Adrian's comments
+  * Added a check for deepsleep power mode
+  * Removed a couple of forward declarations
+  * Didn't separate the scsi drivers because in rpmb case it just sends uac
+    in resume and it seemed pretty neat to me.
+- Added sysfs changes to resume the devices before accessing
+
+
+Asutosh Das (2):
+  scsi: ufs: Enable power management for wlun
+  ufs: sysfs: Resume the proper scsi device
+
+ drivers/scsi/ufs/cdns-pltfrm.c     |   2 +
+ drivers/scsi/ufs/tc-dwc-g210-pci.c |   2 +
+ drivers/scsi/ufs/ufs-debugfs.c     |   6 +-
+ drivers/scsi/ufs/ufs-debugfs.h     |   2 +-
+ drivers/scsi/ufs/ufs-exynos.c      |   2 +
+ drivers/scsi/ufs/ufs-hisi.c        |   2 +
+ drivers/scsi/ufs/ufs-mediatek.c    |  12 +-
+ drivers/scsi/ufs/ufs-qcom.c        |   2 +
+ drivers/scsi/ufs/ufs-sysfs.c       |  24 +-
+ drivers/scsi/ufs/ufs_bsg.c         |   6 +-
+ drivers/scsi/ufs/ufshcd-pci.c      |  36 +-
+ drivers/scsi/ufs/ufshcd.c          | 691 ++++++++++++++++++++++++++-----------
+ drivers/scsi/ufs/ufshcd.h          |  21 ++
+ include/trace/events/ufs.h         |  20 ++
+ 14 files changed, 563 insertions(+), 265 deletions(-)
+
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
 
