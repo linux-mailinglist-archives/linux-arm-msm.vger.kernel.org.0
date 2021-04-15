@@ -2,285 +2,349 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9118435FF02
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Apr 2021 02:47:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9B63C35FF17
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Apr 2021 02:58:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229559AbhDOAsK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Apr 2021 20:48:10 -0400
-Received: from perceval.ideasonboard.com ([213.167.242.64]:39442 "EHLO
-        perceval.ideasonboard.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229551AbhDOAsK (ORCPT
+        id S229450AbhDOA6w (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Apr 2021 20:58:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58624 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229436AbhDOA6w (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Apr 2021 20:48:10 -0400
+        Wed, 14 Apr 2021 20:58:52 -0400
+Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [IPv6:2001:4b98:dc2:55:216:3eff:fef7:d647])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 937B3C061574;
+        Wed, 14 Apr 2021 17:58:29 -0700 (PDT)
 Received: from pendragon.ideasonboard.com (62-78-145-57.bb.dnainternet.fi [62.78.145.57])
-        by perceval.ideasonboard.com (Postfix) with ESMTPSA id 6F2F351E;
-        Thu, 15 Apr 2021 02:47:46 +0200 (CEST)
+        by perceval.ideasonboard.com (Postfix) with ESMTPSA id 63B3E51E;
+        Thu, 15 Apr 2021 02:58:26 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-        s=mail; t=1618447666;
-        bh=ilnDH2Tmo+0CqI9tBtv+n6dQ1b/F3Pcfu3i0iNkboSk=;
+        s=mail; t=1618448306;
+        bh=dT0dNdclklPiYApYQlXIEs77mjYEm26Y9+wMkOD0nvc=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=jqWiywpV6pua2IaL+cpO7jXIr2e6qz+0w/zCuO/nkxh/+WQRa2RvpCjIK4eQFZoIj
-         RMn1ufUmvv6VIBjfATZG9+wYUCaTLcf8thB1WmnUzpbKxyub/d24faMz7ZfJe0mt/x
-         ZN51/mbqBPGybTEDxsD0MNudiF0tBDQHcsxgXyW8=
-Date:   Thu, 15 Apr 2021 03:47:45 +0300
+        b=RxLAeseP/5Pdt5JDnRvWf/rt6evuAn133rWeH6zaj1mKSEUlv64P8LNG/QdY52rXj
+         kAZ9ksbDJQbfOkAFg7j5b+4VSSoOPa3I2w9S5KrUpQy8BqA705FFPZTDiBtU/g82el
+         Lknu/tWvcMyEHaLL+ZO6r8+4faZeq4oA+AMYXOlk=
+Date:   Thu, 15 Apr 2021 03:58:25 +0300
 From:   Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-To:     Andrzej Hajda <a.hajda@samsung.com>
-Cc:     Doug Anderson <dianders@chromium.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Jernej Skrabec <jernej.skrabec@siol.net>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        David Airlie <airlied@linux.ie>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+To:     Douglas Anderson <dianders@chromium.org>
+Cc:     Andrzej Hajda <a.hajda@samsung.com>,
         Neil Armstrong <narmstrong@baylibre.com>,
-        LKML <linux-kernel@vger.kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>,
-        Robert Foss <robert.foss@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jernej Skrabec <jernej.skrabec@siol.net>,
         Sam Ravnborg <sam@ravnborg.org>,
-        Steev Klimaszewski <steev@kali.org>
-Subject: Re: [PATCH v2 11/14] drm/bridge: ti-sn65dsi86: Power things properly
- for reading the EDID
-Message-ID: <YHeNMcUU3c9br2Am@pendragon.ideasonboard.com>
-References: <20210330025345.3980086-1-dianders@chromium.org>
- <CGME20210330025435eucas1p12b96966451ee0691f6d5d99b64ac2c8b@eucas1p1.samsung.com>
- <20210329195255.v2.11.Ied721dc895156046ac523baa55a71da241cd09c7@changeid>
- <8887ded7-d1ab-844c-e3a3-f39f6ef6264a@samsung.com>
- <CAD=FV=XJ5qtMDn5B431ObPS0JU3-P3755N7jzLZbbcc6XpqYtg@mail.gmail.com>
- <b3c08808-204c-6a3c-3e58-a2766985b5ef@samsung.com>
- <CAD=FV=WS8=hi07tA=t_5xOfPkb8TqY63A712uhJg4H8pUPCRJw@mail.gmail.com>
- <7bc4ce04-4110-8b8a-067b-824296b52480@samsung.com>
+        Linus W <linus.walleij@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        robdclark@chromium.org, Stephen Boyd <swboyd@chromium.org>,
+        Steev Klimaszewski <steev@kali.org>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        linux-arm-msm@vger.kernel.org,
+        Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 12/12] drm/panel: panel-simple: Use runtime pm to
+ avoid excessive unprepare / prepare
+Message-ID: <YHePsQgqOau1V5lD@pendragon.ideasonboard.com>
+References: <20210402222846.2461042-1-dianders@chromium.org>
+ <20210402152701.v3.12.I9e8bd33b49c496745bfac58ea9ab418bd3b6f5ce@changeid>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <7bc4ce04-4110-8b8a-067b-824296b52480@samsung.com>
+In-Reply-To: <20210402152701.v3.12.I9e8bd33b49c496745bfac58ea9ab418bd3b6f5ce@changeid>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Andrzej,
+Hi Doug,
 
-On Tue, Apr 06, 2021 at 06:52:07PM +0200, Andrzej Hajda wrote:
-> Hello again after easter,
-> 
-> I have looked little bit more at sn65* driver and its application to 
-> have better background.
-> 
-> I miss only info what panel do you have, how it is enabled/power controlled.
-> 
-> W dniu 01.04.2021 o 16:57, Doug Anderson pisze:
-> > On Thu, Apr 1, 2021 at 4:12 AM Andrzej Hajda <a.hajda@samsung.com> wrote:
-> >> W dniu 31.03.2021 o 16:48, Doug Anderson pisze:
-> >>> On Wed, Mar 31, 2021 at 4:08 AM Andrzej Hajda <a.hajda@samsung.com> wrote:
-> >>>> W dniu 30.03.2021 o 04:53, Douglas Anderson pisze:
-> >>>>> eDP panels won't provide their EDID unless they're powered on. Let's
-> >>>>> chain a power-on before we read the EDID. This roughly matches what
-> >>>>> was done in 'parade-ps8640.c'.
-> >>>>>
-> >>>>> NOTE: The old code attempted to call pm_runtime_get_sync() before
-> >>>>> reading the EDID. While that was enough to power the bridge chip on,
-> >>>>> it wasn't enough to talk to the panel for two reasons:
-> >>>>> 1. Since we never ran the bridge chip's pre-enable then we never set
-> >>>>>       the bit to ignore HPD. This meant the bridge chip didn't even _try_
-> >>>>>       to go out on the bus and communicate with the panel.
-> >>>>> 2. Even if we fixed things to ignore HPD, the EDID still wouldn't read
-> >>>>>       if the panel wasn't on.
-> >>>>>
-> >>>>> One thing that's a bit odd here is taking advantage of the EDID that
-> >>>>> the core might have cached for us. See the patch ("drm/edid: Use the
-> >>>>> cached EDID in drm_get_edid() if eDP"). We manage to get at the cache
-> >>>>> by:
-> >>>>> - Instantly failing aux transfers if we're not powered.
-> >>>>> - If the first read of the EDID fails we try again after powering.
-> >>>>>
-> >>>>> Fixes: 58074b08c04a ("drm/bridge: ti-sn65dsi86: Read EDID blob over DDC")
-> >>>>> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> >>>>> ---
-> >>>>> Depending on what people think of the other patches in this series,
-> >>>>> some of this could change.
-> >>>>> - If everyone loves the "runtime PM" in the panel driver then we
-> >>>>>      could, in theory, put the pre-enable chaining straight in the "aux
-> >>>>>      transfer" function.
-> >>>>> - If everyone hates the EDID cache moving to the core then we can
-> >>>>>      avoid some of the awkward flow of things and keep the EDID cache in
-> >>>>>      the sn65dsi86 driver.
-> >>>>
-> >>>> I wonder if this shouldn't be solved in the core - ie caller of
-> >>>> get_modes callback should be responsible for powering up the pipeline,
-> >>>> otherwise we need to repeat this stuff in every bridge/panel driver.
-> >>>>
-> >>>> Any thoughts?
-> >>>
-> >>> Yeah, I did look at this a little bit. Presumably it would only make
-> >>> sense to do it for eDP connections since:
-> >>>
-> >>> a) The concept of reading an EDID doesn't make sense for things like MIPI.
-> >>
-> >> I guess you mean MIPI DSI
-> >
-> > Yes, sorry! I'll try to be more clear.
-> >
-> >> and yes I agree, more generally it usually(!)
-> >> doesn't make sense for any setup with fixed display panel.
-> >>
-> >> On the other hand there are DSI/HDMI or DSI/DP adapters which usually
-> >> have EDID reading logic.
-> >>
-> >> And the concept makes sense for most connectors accepting external
-> >> displays: HDMI, DP, MHL, VGA...
-> >
-> > So, actually, IMO the concept doesn't make sense for anything with an
-> > external connector. Here's the logic for a handful of connectors:
-> >
-> > 1. MIPI DSI: there is no EDID so this doesn't make sense.
-> >
-> > 2. An external connector (HDMI, DP, etc): the display that's plugged
-> > in is externally powered so doesn't need us to power it up to read the
-> > EDID. By definition, when the HPD signal is asserted then it's OK to
-> > read the EDID and we don't even know if a display is plugged in until
-> > HPD is asserted. Thus no special power sequencing is needed to read
-> > the EDID.  (Yes, we need to make sure that the eDP controller itself
-> > is powered, but that doesn't seem like it's the core's business).
-> 
-> Not true IMO, even if external device is powered on, you must enable 
-> EDID-reader logic.
+Thank you for the patch.
 
-Sure, but I think Doug was referring to powering up the device connected
-to the SN65DSI86 output. When that device (from a DT and DRM bridge
-point of view) is an external connector, it means that the hardware
-device is an external HDMI/DP sink, and we have no way to control its
-power. The SN65DSI86 itself of course needs to be powered.
-
-> I guess it is not uncommon to have different power states for EDID 
-> reading and bridge/panel pre-enablement (especially in embedded world). 
-> In fact there are setups where EDID-reader is totally different device 
-> than the bridge itself, and these devices should be 
-> powered/enabled/operational only for time of EDID reading.
+On Fri, Apr 02, 2021 at 03:28:46PM -0700, Douglas Anderson wrote:
+> Unpreparing and re-preparing a panel can be a really heavy
+> operation. Panels datasheets often specify something on the order of
+> 500ms as the delay you should insert after turning off the panel
+> before turning it on again. In addition, turning on a panel can have
+> delays on the order of 100ms - 200ms before the panel will assert HPD
+> (AKA "panel ready"). The above means that we should avoid turning a
+> panel off if we're going to turn it on again shortly.
 > 
-> > 3. eDP: this is where it matters. This is because:
-> >
-> > 3a) eDP displays aren't powered all the time. If you just boot up or
-> > you blank your screen, likely the display has no power at all.
-> >
-> > 3b) Because the display has no power, the "HPD" signal doesn't assert.
-> > In fact, for eDP the "HPD" signal really should mean "display ready"
-> > or "display finished powering up".
-> >
-> > 3c) Even though we never get a HPD signal, we still simply assume that
-> > a display is present because this is an "embedded" device.
-> >
-> > So eDP is unique (as far as I know) in that it's a type of display
-> > that has an EDID but that we will report "a display is here" before
-> > we've powered up the display and before we can read the EDID.
-> >
-> >>> b) For something with an external connector (DP and HDMI) you don't
-> >>> even know they're inserted unless the EDID is ready to read (these
-> >>> devices are, essentially, always powered).
-> >>
-> >> Usually there are two elements which are not the same:
-> >>
-> >> 1. HotPlug signal/wire.
-> >>
-> >> 2. EDID reading logic.
-> >>
-> >> The logic responsible for reading EDID needs to be enabled only for time
-> >> required for EDID reading :) So it's power state often must be
-> >> controlled explicitly by the bridge driver. So even if in many cases
-> >> pre_enable powers on the logic for EDID reading it does not make it the
-> >> rule, so I must step back from my claim that it is up to caller :)
-> >
-> > OK, I'll plan to keep it in the bridge chip driver now.
-> >
-> >>> So I started off trying to do this in the core for eDP, but then it
-> >>> wasn't completely clear how to write this code in a way that was super
-> >>> generic. Specifically:
-> >>>
-> >>> 1. I don't think it's a 100% guarantee that everything is powered on
-> >>> in pre-enable and powered off in post-disable. In this bridge chip
-> >>> it's true, but maybe not every eDP driver? Would you want me to just
-> >>> assume this, or add a flag?
-> >>
-> >> Ok, pre_enable should power on the chip, but for performing
-> >> initialization of video transport layer. Assumption it will power on
-> >> EDID logic is incorrect, so my claim seems wrong, but also this patch
-> >> looks incorrect :)
-> >>
-> >> In general only device containing EDID logic knows how to power it up.
-> >
-> > I still believe my patch is correct. Specifically I don't need to make
-> > any assumptions about display elements upstream of me (sources of the
-> > bridge chip). I only need to make assumptions about the pre-enable of
-> > the bridge driver itself and anything downstream of it.
-> >
-> > At the moment downstream of this particular bridge chip is always a
-> > panel device. Even further, all known downstream devices are
-> > "simple-panel". That is known to power up the panel enough to read the
-> > EDID in the "prepare" stage.
-> >
-> > Sure, someone _could_ add another bridge downstream in some design,
-> > but it would be up to that person to either fix that downstream driver
-> > to power itself in pre-enable or to add some type of quirk disabling
-> > the EDID reading.
-> >
-> >> Since I do not know your particular case I can propose few possible ways
-> >> to investigate:
-> >>
-> >> - call bridge.next->get_modes - you leave responsibility for powering up
-> >> to the downstream device.
-> >
-> > The "next" bridge is the panel, so I don't think this works.
+> The above becomes a problem when we want to read the EDID of a
+> panel. The way that ordering works is that userspace wants to read the
+> EDID of the panel _before_ fully enabling it so that it can set the
+> initial mode correctly. However, we can't read the EDID until we power
+> it up. This leads to code that does this dance (like
+> ps8640_bridge_get_edid()):
 > 
-> Then drm_panel_get_modes will work then.
-
-Not if the panel exposes modes through EDID, in that case it's the
-responsibility of the device connected to the DDC/AUX port to read the
-EDID and provide modes. The panel driver won't be able to handle it on
-its own.
-
-> >> - ddc driver on i2c request should power up the panel - seems also correct,
-> >
-> > Right, so I could put the
-> > "drm_bridge_chain_pre_enable(&pdata->bridge)" into the
-> > ti_sn_aux_transfer() function. I talked about that a little bit "after
-> > the cut" in my post where I said:
-> >
-> >> - If everyone loves the "runtime PM" in the panel driver then we
-> >>   could, in theory, put the pre-enable chaining straight in the "aux
-> >>   transfer" function.
-> >
-> > The reason for the dependence on "runtime PM" in the panel driver is
-> > that we are doing DDC over AUX and it breaks the EDID reading into
-> > lots of chunks so if we did the powering up and powering down there it
-> > would be crazy slow without the delayed poweroff.
+> 1. When userspace requests EDID / the panel modes (through an ioctl),
+>    we power on the panel just enough to read the EDID and then power
+>    it off.
+> 2. Userspace then turns the panel on.
 > 
-> OK, it resembles to me DSI-controlled panel - to query/configure panel 
-> panel driver asks DSI-host to transfer some bytes to the panel and/or 
-> back via DSI-bus.
+> There's likely not much time between step #1 and #2 and so we want to
+> avoid powering the panel off and on again between those two steps.
 > 
-> In case of eDP panels we could do similar thing to read edid - we call 
-> drm_panel_get_modes - it calls drm_panel_funcs.get_modes callback and it 
-> decides (based on DT) if it should fill modes according to hardcoded 
-> info into the driver or to ask the physical panel via DP-controller - 
-> this way all the players (the panel, AUX/DDC device) will know what to 
-> power-up.
+> Let's use Runtime PM to help us. We'll move the existing prepare() and
+> unprepare() to be runtime resume() and runtime suspend(). Now when we
+> want to prepare() or unprepare() we just increment or decrement the
+> refcount. We'll default to a 1 second autosuspend delay which seems
+> sane given the typical delays we see for panels.
 > 
-> I guess there is missing pieces - there is no DP bus :), I am not sure 
-> if there is straight way to access panel's aux/ddc from the panel 
-> driver, maybe somehow via drm_connector ???
+> A few notes:
+> - It seems the existing unprepare() and prepare() are defined to be
+>   no-ops if called extra times. We'll preserve that behavior.
 
-If the SN65DSI86 has to call drm_panel_get_modes(), which will then call
-back into the SN65DSI86 driver to perform the EDID read, it seems to me
-that the panel driver shouldn't be involved at all.
+The prepare and unprepare calls are supposed to be balanced, which
+should allow us to drop this check. Do you have a reason to suspect that
+it may not be the case ?
 
-DRM bridges have "recently" gained new operations to retrieve EDID, and
-there's a helper (drm_bridge_connector) that creates a connector for a
-chain of bridges, delegating connector operations to the appropriate
-bridge in the chain. This seems a better way forward to me (but I'm
-biased, as I've authored that code :-)).
+> - This is a slight change in the ABI of simple panel. If something was
+>   absolutely relying on the unprepare() to happen instantly that
+>   simply won't be the case anymore. I'm not aware of anyone relying on
+>   that behavior, but if there is someone then we'll need to figure out
+>   how to enable (or disable) this new delayed behavior selectively.
+> - In order for this to work we now have a hard dependency on
+>   "PM". From memory this is a legit thing to assume these days and we
+>   don't have to find some fallback to keep working if someone wants to
+>   build their system without "PM".
 
-> Of course this only my idea - to be discussed with others.
+Sounds fine to me.
+
+The code looks good to me. Possibly with the prepared check removed,
+
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> ---
+> 
+> (no changes since v1)
+> 
+>  drivers/gpu/drm/panel/Kconfig        |  1 +
+>  drivers/gpu/drm/panel/panel-simple.c | 93 +++++++++++++++++++++-------
+>  2 files changed, 73 insertions(+), 21 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/panel/Kconfig b/drivers/gpu/drm/panel/Kconfig
+> index 4894913936e9..ef87d92cdf49 100644
+> --- a/drivers/gpu/drm/panel/Kconfig
+> +++ b/drivers/gpu/drm/panel/Kconfig
+> @@ -80,6 +80,7 @@ config DRM_PANEL_SIMPLE
+>  	tristate "support for simple panels"
+>  	depends on OF
+>  	depends on BACKLIGHT_CLASS_DEVICE
+> +	depends on PM
+>  	select VIDEOMODE_HELPERS
+>  	help
+>  	  DRM panel driver for dumb panels that need at most a regulator and
+> diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
+> index be312b5c04dd..6b22872b3281 100644
+> --- a/drivers/gpu/drm/panel/panel-simple.c
+> +++ b/drivers/gpu/drm/panel/panel-simple.c
+> @@ -27,6 +27,7 @@
+>  #include <linux/module.h>
+>  #include <linux/of_platform.h>
+>  #include <linux/platform_device.h>
+> +#include <linux/pm_runtime.h>
+>  #include <linux/regulator/consumer.h>
+>  
+>  #include <video/display_timing.h>
+> @@ -175,6 +176,8 @@ struct panel_simple {
+>  	bool enabled;
+>  	bool no_hpd;
+>  
+> +	bool prepared;
+> +
+>  	ktime_t prepared_time;
+>  	ktime_t unprepared_time;
+>  
+> @@ -334,19 +337,31 @@ static int panel_simple_disable(struct drm_panel *panel)
+>  	return 0;
+>  }
+>  
+> +static int panel_simple_suspend(struct device *dev)
+> +{
+> +	struct panel_simple *p = dev_get_drvdata(dev);
+> +
+> +	gpiod_set_value_cansleep(p->enable_gpio, 0);
+> +	regulator_disable(p->supply);
+> +	p->unprepared_time = ktime_get();
+> +
+> +	return 0;
+> +}
+> +
+>  static int panel_simple_unprepare(struct drm_panel *panel)
+>  {
+>  	struct panel_simple *p = to_panel_simple(panel);
+> +	int ret;
+>  
+> -	if (p->prepared_time == 0)
+> +	/* Unpreparing when already unprepared is a no-op */
+> +	if (!p->prepared)
+>  		return 0;
+>  
+> -	gpiod_set_value_cansleep(p->enable_gpio, 0);
+> -
+> -	regulator_disable(p->supply);
+> -
+> -	p->prepared_time = 0;
+> -	p->unprepared_time = ktime_get();
+> +	pm_runtime_mark_last_busy(panel->dev);
+> +	ret = pm_runtime_put_autosuspend(panel->dev);
+> +	if (ret < 0)
+> +		return ret;
+> +	p->prepared = false;
+>  
+>  	return 0;
+>  }
+> @@ -376,22 +391,19 @@ static int panel_simple_get_hpd_gpio(struct device *dev,
+>  	return 0;
+>  }
+>  
+> -static int panel_simple_prepare_once(struct drm_panel *panel)
+> +static int panel_simple_prepare_once(struct panel_simple *p)
+>  {
+> -	struct panel_simple *p = to_panel_simple(panel);
+> +	struct device *dev = p->base.dev;
+>  	unsigned int delay;
+>  	int err;
+>  	int hpd_asserted;
+>  	unsigned long hpd_wait_us;
+>  
+> -	if (p->prepared_time != 0)
+> -		return 0;
+> -
+>  	panel_simple_wait(p->unprepared_time, p->desc->delay.unprepare);
+>  
+>  	err = regulator_enable(p->supply);
+>  	if (err < 0) {
+> -		dev_err(panel->dev, "failed to enable supply: %d\n", err);
+> +		dev_err(dev, "failed to enable supply: %d\n", err);
+>  		return err;
+>  	}
+>  
+> @@ -405,7 +417,7 @@ static int panel_simple_prepare_once(struct drm_panel *panel)
+>  
+>  	if (p->hpd_gpio) {
+>  		if (IS_ERR(p->hpd_gpio)) {
+> -			err = panel_simple_get_hpd_gpio(panel->dev, p, false);
+> +			err = panel_simple_get_hpd_gpio(dev, p, false);
+>  			if (err)
+>  				goto error;
+>  		}
+> @@ -423,7 +435,7 @@ static int panel_simple_prepare_once(struct drm_panel *panel)
+>  
+>  		if (err) {
+>  			if (err != -ETIMEDOUT)
+> -				dev_err(panel->dev,
+> +				dev_err(dev,
+>  					"error waiting for hpd GPIO: %d\n", err);
+>  			goto error;
+>  		}
+> @@ -447,25 +459,46 @@ static int panel_simple_prepare_once(struct drm_panel *panel)
+>   */
+>  #define MAX_PANEL_PREPARE_TRIES		5
+>  
+> -static int panel_simple_prepare(struct drm_panel *panel)
+> +static int panel_simple_resume(struct device *dev)
+>  {
+> +	struct panel_simple *p = dev_get_drvdata(dev);
+>  	int ret;
+>  	int try;
+>  
+>  	for (try = 0; try < MAX_PANEL_PREPARE_TRIES; try++) {
+> -		ret = panel_simple_prepare_once(panel);
+> +		ret = panel_simple_prepare_once(p);
+>  		if (ret != -ETIMEDOUT)
+>  			break;
+>  	}
+>  
+>  	if (ret == -ETIMEDOUT)
+> -		dev_err(panel->dev, "Prepare timeout after %d tries\n", try);
+> +		dev_err(dev, "Prepare timeout after %d tries\n", try);
+>  	else if (try)
+> -		dev_warn(panel->dev, "Prepare needed %d retries\n", try);
+> +		dev_warn(dev, "Prepare needed %d retries\n", try);
+>  
+>  	return ret;
+>  }
+>  
+> +static int panel_simple_prepare(struct drm_panel *panel)
+> +{
+> +	struct panel_simple *p = to_panel_simple(panel);
+> +	int ret;
+> +
+> +	/* Preparing when already prepared is a no-op */
+> +	if (p->prepared)
+> +		return 0;
+> +
+> +	ret = pm_runtime_get_sync(panel->dev);
+> +	if (ret < 0) {
+> +		pm_runtime_put_autosuspend(panel->dev);
+> +		return ret;
+> +	}
+> +
+> +	p->prepared = true;
+> +
+> +	return 0;
+> +}
+> +
+>  static int panel_simple_enable(struct drm_panel *panel)
+>  {
+>  	struct panel_simple *p = to_panel_simple(panel);
+> @@ -748,6 +781,18 @@ static int panel_simple_probe(struct device *dev, const struct panel_desc *desc)
+>  		break;
+>  	}
+>  
+> +	dev_set_drvdata(dev, panel);
+> +
+> +	/*
+> +	 * We use runtime PM for prepare / unprepare since those power the panel
+> +	 * on and off and those can be very slow operations. This is important
+> +	 * to optimize powering the panel on briefly to read the EDID before
+> +	 * fully enabling the panel.
+> +	 */
+> +	pm_runtime_enable(dev);
+> +	pm_runtime_set_autosuspend_delay(dev, 1000);
+> +	pm_runtime_use_autosuspend(dev);
+> +
+>  	drm_panel_init(&panel->base, dev, &panel_simple_funcs, connector_type);
+>  
+>  	err = drm_panel_of_backlight(&panel->base);
+> @@ -756,8 +801,6 @@ static int panel_simple_probe(struct device *dev, const struct panel_desc *desc)
+>  
+>  	drm_panel_add(&panel->base);
+>  
+> -	dev_set_drvdata(dev, panel);
+> -
+>  	return 0;
+>  
+>  free_ddc:
+> @@ -4603,10 +4646,17 @@ static void panel_simple_platform_shutdown(struct platform_device *pdev)
+>  	panel_simple_shutdown(&pdev->dev);
+>  }
+>  
+> +static const struct dev_pm_ops panel_simple_pm_ops = {
+> +	SET_RUNTIME_PM_OPS(panel_simple_suspend, panel_simple_resume, NULL)
+> +	SET_SYSTEM_SLEEP_PM_OPS(pm_runtime_force_suspend,
+> +				pm_runtime_force_resume)
+> +};
+> +
+>  static struct platform_driver panel_simple_platform_driver = {
+>  	.driver = {
+>  		.name = "panel-simple",
+>  		.of_match_table = platform_of_match,
+> +		.pm = &panel_simple_pm_ops,
+>  	},
+>  	.probe = panel_simple_platform_probe,
+>  	.remove = panel_simple_platform_remove,
+> @@ -4901,6 +4951,7 @@ static struct mipi_dsi_driver panel_simple_dsi_driver = {
+>  	.driver = {
+>  		.name = "panel-simple-dsi",
+>  		.of_match_table = dsi_of_match,
+> +		.pm = &panel_simple_pm_ops,
+>  	},
+>  	.probe = panel_simple_dsi_probe,
+>  	.remove = panel_simple_dsi_remove,
 
 -- 
 Regards,
