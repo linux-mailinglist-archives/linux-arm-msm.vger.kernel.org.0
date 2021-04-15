@@ -2,96 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 89A123612F9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Apr 2021 21:37:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 68376361300
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Apr 2021 21:39:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234954AbhDOTh0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Apr 2021 15:37:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49598 "EHLO
+        id S234805AbhDOTjq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Apr 2021 15:39:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50130 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234735AbhDOThZ (ORCPT
+        with ESMTP id S234735AbhDOTjp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Apr 2021 15:37:25 -0400
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF8DCC061574;
-        Thu, 15 Apr 2021 12:37:00 -0700 (PDT)
-Received: by mail-ej1-x62d.google.com with SMTP id g5so31907805ejx.0;
-        Thu, 15 Apr 2021 12:37:00 -0700 (PDT)
+        Thu, 15 Apr 2021 15:39:45 -0400
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42E11C061574;
+        Thu, 15 Apr 2021 12:39:22 -0700 (PDT)
+Received: by mail-ed1-x52a.google.com with SMTP id h10so29456939edt.13;
+        Thu, 15 Apr 2021 12:39:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:reply-to:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=c/4p+bM0zLAP+YrYdOZMh9h6ZkPLtIwjMdXaY4pWQho=;
-        b=UbRZt36f9qc1Gg0WDrGVuQCqzirT5lXduGLLis5SG9EzwTfHRwNCeap6WR/Pw+S4kz
-         LYqmN7NMKEttfPb8HMCycyRvVIiol1cwTBHtVLwV+4QsF9Za9+csAHnyWBlsLEAO+fK1
-         PeVuMaZEXXM43/BoR/oiZprVNN87jROK+BiRqIUXBhe3ikimr2z78IYLwyRvYhlfHWu7
-         4SOgWQoQP720+Ag6YnPyYq0zKf5WrUAIs26V5Q5aL2M8YRoiVYnR0+zoJ0sRHC0R6tUG
-         Q0GD8htKTV/O8KEw7Y11RG+2G6Ekd26jSPEHKunigUf6fGCo7vfFpsMyZkOMqrXrdMk7
-         0lug==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=n+D/n+l0+FskD3wUHX3DO3Hv/ed1drB5Hu8PQhsSGBA=;
+        b=hzy168UUqnYftNbG7NwmgUF3y4PEGRQ6dZAUhJMT1Ivux2b36OkDkf14y90KYZ7m73
+         P3o0YVEOEwYrpLX/U4TxjMZpkb7vo6Vb33HJXIJlLakjvqCoSHUnY+ezxxPj7+7wUzgx
+         0fR9Y6L3S1GHAzz+1+97vhmnfbdKsEyTSRmGWGK/WAzfHe2GQ6OHtk4hC3Xgmg78kgcv
+         qJskU++cDXyqMlRjGN0+2si3GVUO2IEl4UU3oaapKj/a3zbbbxUdtlDgi4Bzc6OH/FKo
+         C/CZblCpUvbYfKn7UbubmfItGr4Ts7wXQ6QzpgbkIWgGQOuLOqRHOowpux3qpnOWbtjP
+         ZZnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:reply-to
-         :references:mime-version:content-disposition:in-reply-to;
-        bh=c/4p+bM0zLAP+YrYdOZMh9h6ZkPLtIwjMdXaY4pWQho=;
-        b=QvVGxCralAxQUZ3X6LUTh1lousGgy4m8j/t6HVzqgclOq/GYVKFZ5Xw0bXq1J+Ajzm
-         U8hwF0KF60LaUJ4f6gcyOnqHR50N6NmpQy5banKncy0pMn+IJpnrh50jVxVijBJ7ANyM
-         xe7//hEcwmrLeNN6kZZ3repPTG4b1tDbUf2z3bCPLjgAP/JLlfKFF2xuJxaLfFkG7OaE
-         4G0DK7WzLRAuxJ3RZ4YM5pg/H1C/1AMsQYM4ZVZodbtsuGwEzRJE72v+vmPgsO5IBU9U
-         xPpBT3ZsyPjb1DtE7EE1LPUe47uldt90gbfoe1+sibS0DxsEZn4XJ7lxUh452thx2Rob
-         Pdlw==
-X-Gm-Message-State: AOAM532VnzSJYZaBlZv7D4aOywHZ4424DG7DyrHRXAtYatePx1EFiVy2
-        naGmMrbJkhGcgmHTDpmasaNbCYfRpw838A==
-X-Google-Smtp-Source: ABdhPJwS2DutvBEFm0jdgX/UPQ1vdccmi41tOuia3FifYvH7xOPLyQzpmbD6LnunztEkn+gdpigQxQ==
-X-Received: by 2002:a17:906:5fce:: with SMTP id k14mr5217128ejv.9.1618515419524;
-        Thu, 15 Apr 2021 12:36:59 -0700 (PDT)
-Received: from pevik ([62.201.25.198])
-        by smtp.gmail.com with ESMTPSA id li16sm2554953ejb.101.2021.04.15.12.36.57
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=n+D/n+l0+FskD3wUHX3DO3Hv/ed1drB5Hu8PQhsSGBA=;
+        b=Qr+ZUB808VItuh0Qc+uVp2n1B5w175rqlStVTQWG/0x5NFOlQrrLg+RLbRrcr+3jpt
+         Fp8K4GNazlnBKE/NtNGlN7yoggJ0SLVejRFW6V2dARQd+6AR7ytUvavRxba6prdR+mow
+         EGm5tBVNQiTKDtILrB5as3Xy0qnQULpU75DRbwCv4y5lgKmLj+npw/aB49fOlU0rnrVy
+         3espk4j0NhtUeYpqKySui3HmwhdvY0DsvKOlzvE/9r22JIwM6nssuX6/KTLRCwdrBSUa
+         CWFvn5hd/Yfazh3eBfYgAmskM/lwHrZOhuXgZeII6nr/avjm4S7UKkw+rNhrfViwdb/S
+         VNFA==
+X-Gm-Message-State: AOAM532toyI193sZvY8o0ZwbRjBjgLq6MPlkVykrdOxthLz/A2vUK2me
+        cAK5pwjkkmtjL66Vyw0t3nYe1KVNT3WOOg==
+X-Google-Smtp-Source: ABdhPJz4ULr8ZOPK74PtzO73ocoIXMZI9gKd8YMmcbmwIa+C9nM3rH03Uv7X75IkcloV7GM9l+r6Ew==
+X-Received: by 2002:a50:f29a:: with SMTP id f26mr6185661edm.13.1618515560993;
+        Thu, 15 Apr 2021 12:39:20 -0700 (PDT)
+Received: from localhost.localdomain ([62.201.25.198])
+        by smtp.gmail.com with ESMTPSA id q12sm2547455ejy.91.2021.04.15.12.39.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Apr 2021 12:36:58 -0700 (PDT)
-Date:   Thu, 15 Apr 2021 21:36:55 +0200
+        Thu, 15 Apr 2021 12:39:20 -0700 (PDT)
 From:   Petr Vorel <petr.vorel@gmail.com>
-To:     Konrad Dybcio <konradybcio@gmail.com>
-Cc:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
+To:     linux-arm-msm@vger.kernel.org
+Cc:     Petr Vorel <petr.vorel@gmail.com>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Ricardo Ribalda <ribalda@kernel.org>,
         Linus Walleij <linus.walleij@linaro.org>,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH v3 1/1] nexus: Fix gpio-reserved-ranges 85-88
-Message-ID: <YHiV12+om0h16f3t@pevik>
-Reply-To: Petr Vorel <petr.vorel@gmail.com>
-References: <20210415173957.28533-1-petr.vorel@gmail.com>
- <c55fc341-244f-9f77-4ba6-06f4ab7cd07b@gmail.com>
+        Konrad Dybcio <konradybcio@gmail.com>,
+        devicetree@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@somainline.org>
+Subject: [PATCH v4 1/1] arm64: dts: qcom: msm8994-angler: Fix gpio-reserved-ranges 85-88
+Date:   Thu, 15 Apr 2021 21:39:13 +0200
+Message-Id: <20210415193913.1836153-1-petr.vorel@gmail.com>
+X-Mailer: git-send-email 2.31.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <c55fc341-244f-9f77-4ba6-06f4ab7cd07b@gmail.com>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Konrad,
+Reserve GPIO pins 85-88 as these aren't meant to be accessible from the
+application CPUs (causes reboot). Yet another fix similar to
+9134586715e3, 5f8d3ab136d0, which is needed to allow angler to boot after
+3edfb7bd76bd ("gpiolib: Show correct direction from the beginning").
 
-> Hi,
+Fixes: feeaf56ac78d ("arm64: dts: msm8994 SoC and Huawei Angler (Nexus 6P) support")
 
-> the patch title should be:
+Signed-off-by: Petr Vorel <petr.vorel@gmail.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+---
+Changes v3->v4:
+* Fix patch title
 
-> arm64: dts: qcom: angler: <blurb>
-
-> or
-
-> arm64: dts: qcom: msm8994-angler:
-I'm sorry for this error, I'll send v4. Thanks for spotting this.
-
-> But that's a nit, that could probably be fixed when applying. Otherwise, if the device now works:
-
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-Well, as I wrote, it works till 86588296acbf (from v5.12-rc1-dontuse), which
-will take me some time to figure out why. But this commit is valid, thus I dare
-to add your Reviewed-by in that v4.
+Sorry for so much noise with this simple patch.
 
 Kind regards,
 Petr
 
+ arch/arm64/boot/dts/qcom/msm8994-angler-rev-101.dts | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-> Konrad
+diff --git a/arch/arm64/boot/dts/qcom/msm8994-angler-rev-101.dts b/arch/arm64/boot/dts/qcom/msm8994-angler-rev-101.dts
+index baa55643b40f..ffe1a9bd8f70 100644
+--- a/arch/arm64/boot/dts/qcom/msm8994-angler-rev-101.dts
++++ b/arch/arm64/boot/dts/qcom/msm8994-angler-rev-101.dts
+@@ -32,3 +32,7 @@ serial@f991e000 {
+ 		};
+ 	};
+ };
++
++&tlmm {
++	gpio-reserved-ranges = <85 4>;
++};
+-- 
+2.31.0
+
