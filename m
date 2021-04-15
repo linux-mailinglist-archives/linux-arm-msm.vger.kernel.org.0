@@ -2,36 +2,36 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B22C136074D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Apr 2021 12:39:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 996DF360759
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Apr 2021 12:42:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232271AbhDOKjY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Apr 2021 06:39:24 -0400
-Received: from mail.kernel.org ([198.145.29.99]:46690 "EHLO mail.kernel.org"
+        id S231590AbhDOKmb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Apr 2021 06:42:31 -0400
+Received: from mail.kernel.org ([198.145.29.99]:47050 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229481AbhDOKjX (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Apr 2021 06:39:23 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 682716137D;
-        Thu, 15 Apr 2021 10:38:59 +0000 (UTC)
+        id S229943AbhDOKm1 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 15 Apr 2021 06:42:27 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id D38C361139;
+        Thu, 15 Apr 2021 10:42:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1618483141;
-        bh=v8dUQB7Nhpu3clOps11W5xDEuDFQsfS13Rjlm3WCrBI=;
+        s=k20201202; t=1618483324;
+        bh=2pQTfHj/Du3zeuQ7Utlk5OmobjMmKO+qxFAZEAzKALY=;
         h=From:To:Cc:Subject:Date:From;
-        b=HydcR5rEC+KHqIEVa6oHH6kG4c3bozhKmcOv7V+6O4E6ZYnp3SAQKi5uX99Am2LvA
-         I+r6hCOqBt3yiqj5G/kPkL8BQRnbrI0grDxrbJikPQeqHm0OTI6WmSZEDsdr7MJVwu
-         FZ1/fnT0MVDwRmUdRE6xZ8M1CQwuaFMTqrUOyLbGMq/m3NMNbJciyYGwM2ZE4zb2CO
-         uR9ZqyjQvY3yaWMGyOjyg3yZghXom8DciokXhAJ0pHaSuaud+7RSBgYkWDTJF4lFpA
-         ol3lag8Lw2Bn4GeqAqBgjsQUpZRY8YUF1AWe/jIrMgKaCIsOEiHl7eFHUIp3XWvbfj
-         XyBaKMDEWI6Dg==
+        b=IMX6Bc3tE3CHqDqsm1PJ0j8R0wTGdDf272JwIStQRXQIG8sf5Prw6OKRubziIUuVz
+         G3HvDjGSchYWuulXw2n/wlN13YFpMFmOqSmxm16kwG6iPTxQLUpxZmVhwn4V6BNnw/
+         lTGFXq4qqBXP2300Hfi6FO+Cq09mqPq9HsVl2+mSXPxqKuCEyH4cblExkHUrVkn+Yo
+         1mR64e0LUQBtf20nlm40ZTOGkdFjUcOlW2KsH4YCkh3xDH3nEDT2oJGAvWnTkxyB1N
+         ASkOHxfpdvJHnb/Txo3tM8Kw6qAok1LnOveP8sn86YyDFvamfDYapmdxBLG4qGRQ0P
+         4IxBp+/hvIyQA==
 From:   Felipe Balbi <balbi@kernel.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>
 Cc:     Rob Herring <robh+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org, Caleb Connolly <caleb@connolly.tech>,
         Felipe Balbi <felipe.balbi@microsoft.com>
-Subject: [PATCH] arm64: boot: dts: qcom: sm8150: add SPI nodes
-Date:   Thu, 15 Apr 2021 13:38:54 +0300
-Message-Id: <20210415103854.1810788-1-balbi@kernel.org>
+Subject: [PATCH v2] arm64: boot: dts: qcom: sm8150: add SPI nodes
+Date:   Thu, 15 Apr 2021 13:41:59 +0300
+Message-Id: <20210415104159.1811077-1-balbi@kernel.org>
 X-Mailer: git-send-email 2.31.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -46,14 +46,19 @@ Add missing SPI nodes for SM8150.
 Signed-off-by: Felipe Balbi <felipe.balbi@microsoft.com>
 ---
 
+Changes since v1:
+
+	- avoid modifying drive strength on i2c. No functional
+          changes, just keeping 0x02 instead of 2
+
 Tested on Microsoft Surface Duo (DTS will be sent after -rc1). This
 patch also depends on i2c nodes patch by Caleb Connolly
 
- arch/arm64/boot/dts/qcom/sm8150.dtsi | 601 ++++++++++++++++++++++++++-
- 1 file changed, 599 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/sm8150.dtsi | 597 +++++++++++++++++++++++++++
+ 1 file changed, 597 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-index 7207a3689d9d..97007e1a6533 100644
+index 7207a3689d9d..ee43c4337f68 100644
 --- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
 +++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
 @@ -602,6 +602,21 @@ i2c0: i2c@880000 {
@@ -61,7 +66,7 @@ index 7207a3689d9d..97007e1a6533 100644
  			};
  
 +			spi0: spi@880000 {
-+				compatible = "qcom,spi-geni";
++				compatible = "qcom,geni-spi";
 +				reg = <0 0x880000 0 0x4000>;
 +				reg-names = "se";
 +				clock-names = "se";
@@ -83,7 +88,7 @@ index 7207a3689d9d..97007e1a6533 100644
  			};
  
 +			spi1: spi@884000 {
-+				compatible = "qcom,spi-geni";
++				compatible = "qcom,geni-spi";
 +				reg = <0 0x884000 0 0x4000>;
 +				reg-names = "se";
 +				clock-names = "se";
@@ -105,7 +110,7 @@ index 7207a3689d9d..97007e1a6533 100644
  			};
  
 +			spi2: spi@888000 {
-+				compatible = "qcom,spi-geni";
++				compatible = "qcom,geni-spi";
 +				reg = <0 0x888000 0 0x4000>;
 +				reg-names = "se";
 +				clock-names = "se";
@@ -127,7 +132,7 @@ index 7207a3689d9d..97007e1a6533 100644
  			};
  
 +			spi3: spi@88c000 {
-+				compatible = "qcom,spi-geni";
++				compatible = "qcom,geni-spi";
 +				reg = <0 0x88c000 0 0x4000>;
 +				reg-names = "se";
 +				clock-names = "se";
@@ -149,7 +154,7 @@ index 7207a3689d9d..97007e1a6533 100644
  			};
  
 +			spi4: spi@890000 {
-+				compatible = "qcom,spi-geni";
++				compatible = "qcom,geni-spi";
 +				reg = <0 0x890000 0 0x4000>;
 +				reg-names = "se";
 +				clock-names = "se";
@@ -171,7 +176,7 @@ index 7207a3689d9d..97007e1a6533 100644
  			};
  
 +			spi5: spi@894000 {
-+				compatible = "qcom,spi-geni";
++				compatible = "qcom,geni-spi";
 +				reg = <0 0x894000 0 0x4000>;
 +				reg-names = "se";
 +				clock-names = "se";
@@ -193,7 +198,7 @@ index 7207a3689d9d..97007e1a6533 100644
  			};
  
 +			spi6: spi@898000 {
-+				compatible = "qcom,spi-geni";
++				compatible = "qcom,geni-spi";
 +				reg = <0 0x898000 0 0x4000>;
 +				reg-names = "se";
 +				clock-names = "se";
@@ -215,7 +220,7 @@ index 7207a3689d9d..97007e1a6533 100644
  			};
  
 +			spi7: spi@89c000 {
-+				compatible = "qcom,spi-geni";
++				compatible = "qcom,geni-spi";
 +				reg = <0 0x89c000 0 0x4000>;
 +				reg-names = "se";
 +				clock-names = "se";
@@ -236,7 +241,7 @@ index 7207a3689d9d..97007e1a6533 100644
  			};
  
 +			spi8: spi@a80000 {
-+				compatible = "qcom,spi-geni";
++				compatible = "qcom,geni-spi";
 +				reg = <0 0xa80000 0 0x4000>;
 +				reg-names = "se";
 +				clock-names = "se";
@@ -258,7 +263,7 @@ index 7207a3689d9d..97007e1a6533 100644
  			};
  
 +			spi9: spi@a84000 {
-+				compatible = "qcom,spi-geni";
++				compatible = "qcom,geni-spi";
 +				reg = <0 0xa84000 0 0x4000>;
 +				reg-names = "se";
 +				clock-names = "se";
@@ -280,7 +285,7 @@ index 7207a3689d9d..97007e1a6533 100644
  			};
  
 +			spi10: spi@a88000 {
-+				compatible = "qcom,spi-geni";
++				compatible = "qcom,geni-spi";
 +				reg = <0 0xa88000 0 0x4000>;
 +				reg-names = "se";
 +				clock-names = "se";
@@ -302,7 +307,7 @@ index 7207a3689d9d..97007e1a6533 100644
  			};
  
 +			spi11: spi@a8c000 {
-+				compatible = "qcom,spi-geni";
++				compatible = "qcom,geni-spi";
 +				reg = <0 0xa8c000 0 0x4000>;
 +				reg-names = "se";
 +				clock-names = "se";
@@ -324,7 +329,7 @@ index 7207a3689d9d..97007e1a6533 100644
  			};
  
 +			spi12: spi@a90000 {
-+				compatible = "qcom,spi-geni";
++				compatible = "qcom,geni-spi";
 +				reg = <0 0xa90000 0 0x4000>;
 +				reg-names = "se";
 +				clock-names = "se";
@@ -347,7 +352,7 @@ index 7207a3689d9d..97007e1a6533 100644
  			};
 +
 +			spi16: spi@a94000 {
-+				compatible = "qcom,spi-geni";
++				compatible = "qcom,geni-spi";
 +				reg = <0 0xa94000 0 0x4000>;
 +				reg-names = "se";
 +				clock-names = "se";
@@ -368,7 +373,7 @@ index 7207a3689d9d..97007e1a6533 100644
  			};
  
 +			spi17: spi@c80000 {
-+				compatible = "qcom,spi-geni";
++				compatible = "qcom,geni-spi";
 +				reg = <0 0xc80000 0 0x4000>;
 +				reg-names = "se";
 +				clock-names = "se";
@@ -390,7 +395,7 @@ index 7207a3689d9d..97007e1a6533 100644
  			};
  
 +			spi18: spi@c84000 {
-+				compatible = "qcom,spi-geni";
++				compatible = "qcom,geni-spi";
 +				reg = <0 0xc84000 0 0x4000>;
 +				reg-names = "se";
 +				clock-names = "se";
@@ -412,7 +417,7 @@ index 7207a3689d9d..97007e1a6533 100644
  			};
  
 +			spi19: spi@c88000 {
-+				compatible = "qcom,spi-geni";
++				compatible = "qcom,geni-spi";
 +				reg = <0 0xc88000 0 0x4000>;
 +				reg-names = "se";
 +				clock-names = "se";
@@ -434,7 +439,7 @@ index 7207a3689d9d..97007e1a6533 100644
  			};
  
 +			spi13: spi@c8c000 {
-+				compatible = "qcom,spi-geni";
++				compatible = "qcom,geni-spi";
 +				reg = <0 0xc8c000 0 0x4000>;
 +				reg-names = "se";
 +				clock-names = "se";
@@ -456,7 +461,7 @@ index 7207a3689d9d..97007e1a6533 100644
  			};
  
 +			spi14: spi@c90000 {
-+				compatible = "qcom,spi-geni";
++				compatible = "qcom,geni-spi";
 +				reg = <0 0xc90000 0 0x4000>;
 +				reg-names = "se";
 +				clock-names = "se";
@@ -479,7 +484,7 @@ index 7207a3689d9d..97007e1a6533 100644
  			};
 +
 +			spi15: spi@c94000 {
-+				compatible = "qcom,spi-geni";
++				compatible = "qcom,geni-spi";
 +				reg = <0 0xc94000 0 0x4000>;
 +				reg-names = "se";
 +				clock-names = "se";
@@ -603,16 +608,10 @@ index 7207a3689d9d..97007e1a6533 100644
  			qup_i2c5_default: qup-i2c5-default {
  				mux {
  					pins = "gpio121", "gpio122";
-@@ -1282,7 +1654,22 @@ mux {
+@@ -1287,6 +1659,21 @@ config {
+ 				};
+ 			};
  
- 				config {
- 					pins = "gpio121", "gpio122";
--					drive-strength = <0x02>;
-+					drive-strength = <2>;
-+					bias-disable;
-+				};
-+			};
-+
 +			qup_spi5_default: qup-spi5-default {
 +				mux {
 +					pins = "gpio119", "gpio120", "gpio121",
@@ -624,19 +623,17 @@ index 7207a3689d9d..97007e1a6533 100644
 +					pins = "gpio119", "gpio120", "gpio121",
 +						"gpio122";
 +					drive-strength = <6>;
- 					bias-disable;
- 				};
- 			};
-@@ -1295,7 +1682,22 @@ mux {
- 
- 				config {
- 					pins = "gpio6", "gpio7";
--					drive-strength = <0x02>;
-+					drive-strength = <2>;
 +					bias-disable;
 +				};
 +			};
 +
+ 			qup_i2c6_default: qup-i2c6-default {
+ 				mux {
+ 					pins = "gpio6", "gpio7";
+@@ -1300,6 +1687,21 @@ config {
+ 				};
+ 			};
+ 
 +			qup_spi6_default: qup-spi6_default {
 +				mux {
 +					pins = "gpio4", "gpio5", "gpio6",
@@ -648,9 +645,13 @@ index 7207a3689d9d..97007e1a6533 100644
 +					pins = "gpio4", "gpio5", "gpio6",
 +						"gpio7";
 +					drive-strength = <6>;
- 					bias-disable;
- 				};
- 			};
++					bias-disable;
++				};
++			};
++
+ 			qup_i2c7_default: qup-i2c7-default {
+ 				mux {
+ 					pins = "gpio98", "gpio99";
 @@ -1313,6 +1715,21 @@ config {
  				};
  			};
