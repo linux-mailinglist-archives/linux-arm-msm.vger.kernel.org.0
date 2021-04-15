@@ -2,1086 +2,287 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A4C3B35FEC3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Apr 2021 02:16:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9118435FF02
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Apr 2021 02:47:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231248AbhDOAQ5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Apr 2021 20:16:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49576 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231234AbhDOAQ5 (ORCPT
+        id S229559AbhDOAsK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Apr 2021 20:48:10 -0400
+Received: from perceval.ideasonboard.com ([213.167.242.64]:39442 "EHLO
+        perceval.ideasonboard.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229551AbhDOAsK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Apr 2021 20:16:57 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09D8BC061574
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Apr 2021 17:16:35 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id w8so27692589lfr.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Apr 2021 17:16:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=IE88L0fVOCeVuxvoVorGjnKAwSB5oO6MP/8IOKkmjsA=;
-        b=Szjrcl9AoAT5tVHn6AQiA0HL9DPGEYfj4LeMeKIccbVblNKZNKOGyOWYLj9ZQxMpbF
-         vESzJXC+4YV3We7dMfdNaOswlWe2s8R5fLkFSG3APnN+OqTDgrb+0LLarbmbRgsUPSaW
-         X6PsUpuzpbudpTJdtnHR+1jOeqmBK5DBsoS/u9UwJ3SdSnIMknuO8H8QlGU/9cr0IkL7
-         Z5grpvP57cw6/y/KrHvjXBYVYwC9nrhmCc51Bh82IeiQ+UuthJ1gex8sg6CMyAjg1SFM
-         XryuGLX63sWBubTORMordKKO8Q3qzRfVtGsI/RaeaeBZIgrB/CeJkq0Koqa4rJQkFgmQ
-         nzUQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=IE88L0fVOCeVuxvoVorGjnKAwSB5oO6MP/8IOKkmjsA=;
-        b=Hq0wOfatjbBZ1Tx1P+0aSb+bDl9J/f/BGyeenhgmgB2l1VxIZRN+63zMneOgtECD7h
-         wcyzc3mW87rQxb3zMt0F0d/jcwoSaFTPbrb21NyVz3h/Awo8QEgHKetOur8YXjra+T6V
-         yLhfj0IrN8dGXB14qp0FBc96goRGHqXU4ONq4jhbqiD9avwZ+GKfpj7JtgL7GNqWt6u3
-         o8N6oDCdizCYeyJUeriop68Mab4TQoZFoiSYxQAg9QI3VaPKiSDIgUoV9RwLYQ7lhbJy
-         Mh42Qc9ZAvaxfewY4czo+Z8ViH4KlQPSvnMiudUgDNkaRuFgMy5vRWkG4bxKd/Isk3J0
-         z1uw==
-X-Gm-Message-State: AOAM532OYeza6ZE5lLju5UHhIthONK9x6OyBEzFSt6s2XuNQ7ktbggtL
-        5p6j1qyShAOq2XC862zqi5ExsA==
-X-Google-Smtp-Source: ABdhPJznZEcB3QJNTXv/uT8udR0Ux1LqcAoEA3ozwGk/Z+wyltHbvI/g3zQ5ebrCALLoN+3Vqoq4aQ==
-X-Received: by 2002:ac2:4e98:: with SMTP id o24mr491410lfr.353.1618445793250;
-        Wed, 14 Apr 2021 17:16:33 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id f11sm368555lfr.119.2021.04.14.17.16.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 14 Apr 2021 17:16:32 -0700 (PDT)
-Subject: Re: [PATCH v4 2/3] drm/msm: add support to take dpu snapshot
-To:     Abhinav Kumar <abhinavk@codeaurora.org>,
-        dri-devel@lists.freedesktop.org
-Cc:     linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        robdclark@gmail.com, seanpaul@chromium.org, swboyd@chromium.org,
-        nganji@codeaurora.org, aravindh@codeaurora.org,
-        khsieh@codeaurora.org, daniel@ffwll.ch
-References: <1618441897-17123-1-git-send-email-abhinavk@codeaurora.org>
- <1618441897-17123-3-git-send-email-abhinavk@codeaurora.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Message-ID: <b087fd6f-9307-d31a-ee21-75e5adf8a20b@linaro.org>
-Date:   Thu, 15 Apr 2021 03:16:31 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.9.0
+        Wed, 14 Apr 2021 20:48:10 -0400
+Received: from pendragon.ideasonboard.com (62-78-145-57.bb.dnainternet.fi [62.78.145.57])
+        by perceval.ideasonboard.com (Postfix) with ESMTPSA id 6F2F351E;
+        Thu, 15 Apr 2021 02:47:46 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
+        s=mail; t=1618447666;
+        bh=ilnDH2Tmo+0CqI9tBtv+n6dQ1b/F3Pcfu3i0iNkboSk=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=jqWiywpV6pua2IaL+cpO7jXIr2e6qz+0w/zCuO/nkxh/+WQRa2RvpCjIK4eQFZoIj
+         RMn1ufUmvv6VIBjfATZG9+wYUCaTLcf8thB1WmnUzpbKxyub/d24faMz7ZfJe0mt/x
+         ZN51/mbqBPGybTEDxsD0MNudiF0tBDQHcsxgXyW8=
+Date:   Thu, 15 Apr 2021 03:47:45 +0300
+From:   Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+To:     Andrzej Hajda <a.hajda@samsung.com>
+Cc:     Doug Anderson <dianders@chromium.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Jernej Skrabec <jernej.skrabec@siol.net>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        David Airlie <airlied@linux.ie>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        LKML <linux-kernel@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>,
+        Robert Foss <robert.foss@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Steev Klimaszewski <steev@kali.org>
+Subject: Re: [PATCH v2 11/14] drm/bridge: ti-sn65dsi86: Power things properly
+ for reading the EDID
+Message-ID: <YHeNMcUU3c9br2Am@pendragon.ideasonboard.com>
+References: <20210330025345.3980086-1-dianders@chromium.org>
+ <CGME20210330025435eucas1p12b96966451ee0691f6d5d99b64ac2c8b@eucas1p1.samsung.com>
+ <20210329195255.v2.11.Ied721dc895156046ac523baa55a71da241cd09c7@changeid>
+ <8887ded7-d1ab-844c-e3a3-f39f6ef6264a@samsung.com>
+ <CAD=FV=XJ5qtMDn5B431ObPS0JU3-P3755N7jzLZbbcc6XpqYtg@mail.gmail.com>
+ <b3c08808-204c-6a3c-3e58-a2766985b5ef@samsung.com>
+ <CAD=FV=WS8=hi07tA=t_5xOfPkb8TqY63A712uhJg4H8pUPCRJw@mail.gmail.com>
+ <7bc4ce04-4110-8b8a-067b-824296b52480@samsung.com>
 MIME-Version: 1.0
-In-Reply-To: <1618441897-17123-3-git-send-email-abhinavk@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <7bc4ce04-4110-8b8a-067b-824296b52480@samsung.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 15/04/2021 02:11, Abhinav Kumar wrote:
-> Add the msm_disp_snapshot module which adds supports to dump dpu
-> registers and capture the drm atomic state which can be used in
-> case of error conditions.
+Hi Andrzej,
+
+On Tue, Apr 06, 2021 at 06:52:07PM +0200, Andrzej Hajda wrote:
+> Hello again after easter,
 > 
-> changes in v4:
->   - rename dpu_dbg to msm_disp_snapshot and move it to msm/disp
->   - start using a list of blocks to store the hardware block information
->   - cleanup block allocation and freeing logic to simplify it
+> I have looked little bit more at sn65* driver and its application to 
+> have better background.
 > 
-> Reported-by: kernel test robot <lkp@intel.com>
-> Signed-off-by: Abhinav Kumar <abhinavk@codeaurora.org>
-> ---
->   drivers/gpu/drm/msm/Makefile                      |   2 +
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |   2 +-
->   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c           |  61 ++++++++
->   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h           |   5 +
->   drivers/gpu/drm/msm/disp/msm_disp_snapshot.c      | 161 +++++++++++++++++++
->   drivers/gpu/drm/msm/disp/msm_disp_snapshot.h      | 167 ++++++++++++++++++++
->   drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c | 181 ++++++++++++++++++++++
->   drivers/gpu/drm/msm/dp/dp_catalog.c               |  12 ++
->   drivers/gpu/drm/msm/dp/dp_catalog.h               |   4 +
->   drivers/gpu/drm/msm/dp/dp_display.c               |  29 ++++
->   drivers/gpu/drm/msm/dp/dp_display.h               |   1 +
->   drivers/gpu/drm/msm/dsi/dsi.c                     |   5 +
->   drivers/gpu/drm/msm/dsi/dsi.h                     |   4 +
->   drivers/gpu/drm/msm/dsi/dsi_host.c                |  19 +++
->   drivers/gpu/drm/msm/msm_drv.c                     |  29 +++-
->   drivers/gpu/drm/msm/msm_drv.h                     |   2 +
-
-Generic suggestion: Could you please split this patch, separating core 
-snapshotting functionality, dpu1, dsi and dp changes? This would ease 
-reviewing.
-
->   16 files changed, 682 insertions(+), 2 deletions(-)
->   create mode 100644 drivers/gpu/drm/msm/disp/msm_disp_snapshot.c
->   create mode 100644 drivers/gpu/drm/msm/disp/msm_disp_snapshot.h
->   create mode 100644 drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c
+> I miss only info what panel do you have, how it is enabled/power controlled.
 > 
-> diff --git a/drivers/gpu/drm/msm/Makefile b/drivers/gpu/drm/msm/Makefile
-> index 610d630..65d86ce 100644
-> --- a/drivers/gpu/drm/msm/Makefile
-> +++ b/drivers/gpu/drm/msm/Makefile
-> @@ -77,6 +77,8 @@ msm-y := \
->   	disp/dpu1/dpu_plane.o \
->   	disp/dpu1/dpu_rm.o \
->   	disp/dpu1/dpu_vbif.o \
-> +	disp/msm_disp_snapshot.o \
-> +	disp/msm_disp_snapshot_util.o \
-
-If snapshotting is going to be used by dsi/dp, what about landing it 
-into the top drivers/gpu/drm/msm dir? This way we'd point that it is a 
-generic piece of code shared between all drm/msm drivers.
-
->   	msm_atomic.o \
->   	msm_atomic_tracepoints.o \
->   	msm_debugfs.o \
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> index 4dfd8a2..0f9f0a5 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> @@ -1,5 +1,5 @@
->   /* SPDX-License-Identifier: GPL-2.0-only */
-> -/* Copyright (c) 2015-2018, The Linux Foundation. All rights reserved.
-> +/* Copyright (c) 2015-2018, 2020 The Linux Foundation. All rights reserved.
->    */
->   
->   #ifndef _DPU_HW_CATALOG_H
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> index 88e9cc3..7529566 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> @@ -798,6 +798,67 @@ static void dpu_irq_uninstall(struct msm_kms *kms)
->   	dpu_core_irq_uninstall(dpu_kms);
->   }
->   
-> +void dpu_kms_mdp_snapshot(struct drm_device *dev)
-> +{
-> +	int i;
-> +	struct msm_drm_private *priv;
-> +	struct dpu_kms *dpu_kms;
-> +	struct dpu_mdss_cfg *cat;
-> +	struct dpu_hw_mdp *top;
-> +	struct msm_disp_state *disp_state;
-> +	char name[SZ_128];
-> +
-> +	priv = dev->dev_private;
-> +	dpu_kms = to_dpu_kms(priv->kms);
-> +	disp_state = dpu_kms->disp_state;
-> +
-> +	cat = dpu_kms->catalog;
-> +	top = dpu_kms->hw_mdp;
-> +
-> +	pm_runtime_get_sync(&dpu_kms->pdev->dev);
-> +
-> +	/* dump CTL sub-blocks HW regs info */
-> +	for (i = 0; i < cat->ctl_count; i++) {
-> +		snprintf(name, SZ_128, "ctl_%d", i);
-
-snprintf(name, sizeof(name), "ctl_%d", i);
-(the same bellow)
-
-> +		msm_disp_snapshot_add_block(disp_state, name, cat->ctl[i].len,
-> +				dpu_kms->mmio + cat->ctl[i].base);
-> +	}
-> +
-> +	/* dump DSPP sub-blocks HW regs info */
-> +	for (i = 0; i < cat->dspp_count; i++) {
-> +		snprintf(name, SZ_128, "dspp_%d", i);
-> +		msm_disp_snapshot_add_block(disp_state, name, cat->dspp[i].len,
-> +				dpu_kms->mmio + cat->dspp[i].base);
-> +	}
-> +
-> +	/* dump INTF sub-blocks HW regs info */
-> +	for (i = 0; i < cat->intf_count; i++) {
-> +		snprintf(name, SZ_128, "intf_%d", i);
-> +		msm_disp_snapshot_add_block(disp_state, name, cat->intf[i].len,
-> +				dpu_kms->mmio + cat->intf[i].base);
-> +	}
-> +
-> +	/* dump PP sub-blocks HW regs info */
-> +	for (i = 0; i < cat->pingpong_count; i++) {
-> +		snprintf(name, SZ_128, "ping-pong_%d", i);
-
-Just a nitpick: we usually call it pp or pingpong, without dash.
-
-> +		msm_disp_snapshot_add_block(disp_state, name, cat->pingpong[i].len,
-> +				dpu_kms->mmio + cat->pingpong[i].base);
-> +	}
-> +
-> +	/* dump SSPP sub-blocks HW regs info */
-> +	for (i = 0; i < cat->sspp_count; i++) {
-> +		snprintf(name, SZ_128, "sspp_%d", i);
-> +		msm_disp_snapshot_add_block(disp_state, name, cat->sspp[i].len,
-> +				dpu_kms->mmio + cat->sspp[i].base);
-> +	}
-> +
-> +	snprintf(name, SZ_128, "top");
-> +	msm_disp_snapshot_add_block(disp_state, name, top->hw.length,
-> +			dpu_kms->mmio + top->hw.blk_off);
-> +
-> +	pm_runtime_put_sync(&dpu_kms->pdev->dev);
-> +}
-> +
->   static const struct msm_kms_funcs kms_funcs = {
->   	.hw_init         = dpu_kms_hw_init,
->   	.irq_preinstall  = dpu_irq_preinstall,
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
-> index d6717d6..74b6ce6 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
-> @@ -13,6 +13,7 @@
->   #include <drm/drm_drv.h>
->   
->   #include "msm_drv.h"
-> +#include "disp/msm_disp_snapshot.h"
->   #include "msm_kms.h"
->   #include "msm_mmu.h"
->   #include "msm_gem.h"
-> @@ -132,6 +133,8 @@ struct dpu_kms {
->   
->   	struct opp_table *opp_table;
->   
-> +	struct msm_disp_state *disp_state;
-> +
->   	struct dss_module_power mp;
->   
->   	/* reference count bandwidth requests, so we know when we can
-> @@ -265,4 +268,6 @@ void dpu_kms_encoder_enable(struct drm_encoder *encoder);
->    */
->   u64 dpu_kms_get_clk_rate(struct dpu_kms *dpu_kms, char *clock_name);
->   
-> +void dpu_kms_mdp_snapshot(struct drm_device *dev);
-> +
->   #endif /* __dpu_kms_H__ */
-> diff --git a/drivers/gpu/drm/msm/disp/msm_disp_snapshot.c b/drivers/gpu/drm/msm/disp/msm_disp_snapshot.c
-> new file mode 100644
-> index 0000000..1bdad16
-> --- /dev/null
-> +++ b/drivers/gpu/drm/msm/disp/msm_disp_snapshot.c
-> @@ -0,0 +1,161 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) 2020-2021, The Linux Foundation. All rights reserved.
-> + */
-> +
-> +#define pr_fmt(fmt)	"[drm:%s:%d] " fmt, __func__, __LINE__
-> +
-> +#include "msm_disp_snapshot.h"
-> +
-> +#ifdef CONFIG_DEV_COREDUMP
-> +static ssize_t disp_devcoredump_read(char *buffer, loff_t offset,
-> +		size_t count, void *data, size_t datalen)
-> +{
-> +	struct drm_print_iterator iter;
-> +	struct drm_printer p;
-> +	struct msm_disp_state *disp_state;
-> +
-> +	disp_state = data;
-> +
-> +	iter.data = buffer;
-> +	iter.offset = 0;
-> +	iter.start = offset;
-> +	iter.remain = count;
-> +
-> +	p = drm_coredump_printer(&iter);
-> +
-> +	msm_disp_state_print(disp_state, &p, MSM_DISP_SNAPSHOT_IN_COREDUMP);
-> +
-> +	return count - iter.remain;
-> +}
-> +
-> +static void disp_devcoredump_free(void *data)
-> +{
-> +	struct msm_disp_state *disp_state;
-> +
-> +	disp_state = data;
-> +
-> +	msm_disp_state_free(disp_state);
-> +
-> +	disp_state->coredump_pending = false;
-> +}
-> +#endif /* CONFIG_DEV_COREDUMP */
-> +
-> +static void _msm_disp_snapshot_work(struct kthread_work *work)
-> +{
-> +	struct msm_disp_state *disp_state = container_of(work, struct msm_disp_state, dump_work);
-> +	struct drm_printer p;
-> +
-> +	mutex_lock(&disp_state->mutex);
-> +
-> +	msm_disp_snapshot_capture_state(disp_state);
-> +
-> +	if (MSM_DISP_SNAPSHOT_DUMP_IN_CONSOLE) {
-> +		p = drm_info_printer(disp_state->drm_dev->dev);
-> +		msm_disp_state_print(disp_state, &p, MSM_DISP_SNAPSHOT_IN_LOG);
-> +	}
-> +
-> +	/*
-> +	 * if devcoredump is not defined free the state immediately
-> +	 * otherwise it will be freed in the free handler.
-> +	 */
-> +#ifdef CONFIG_DEV_COREDUMP
-> +	dev_coredumpm(disp_state->dev, THIS_MODULE, disp_state, 0, GFP_KERNEL,
-> +			disp_devcoredump_read, disp_devcoredump_free);
-> +	disp_state->coredump_pending = true;
-> +#else
-> +	msm_disp_state_free(disp_state);
-> +#endif
-> +
-> +	mutex_unlock(&disp_state->mutex);
-> +}
-> +
-> +void msm_disp_snapshot_state(struct drm_device *drm_dev)
-> +{
-> +	struct msm_drm_private *priv;
-> +	struct dpu_kms *dpu_kms;
-> +	struct msm_disp_state *disp_state;
-> +
-> +	if (!drm_dev) {
-> +		DRM_ERROR("invalid params\n");
-> +		return;
-> +	}
-> +
-> +	priv = drm_dev->dev_private;
-> +	dpu_kms = to_dpu_kms(priv->kms);
-
-If we are outside of disp/dpu1, we shouldn't reference dpu_kms 
-internals. Probably this can be changed to use msm_drm_private, msm_kms 
-or msm_mdss?
-
-> +	disp_state = dpu_kms->disp_state;
-> +
-> +	if (!disp_state) {
-> +		DRM_ERROR("invalid params\n");
-> +		return;
-> +	}
-> +
-> +	/*
-> +	 * if there is a coredump pending return immediately till dump
-> +	 * if read by userspace or timeout happens
-
-Where do we handle the timeout? Stale comment or did I miss something?
-
-> +	 */
-> +	if (disp_state->coredump_pending) {
-> +		DRM_DEBUG("coredump is pending read\n");
-> +		return;
-> +	}
-> +
-> +	kthread_queue_work(disp_state->dump_worker,
-> +			&disp_state->dump_work);
-> +}
-> +
-> +int msm_disp_snapshot_init(struct drm_device *drm_dev)
-> +{
-> +	struct dpu_kms *dpu_kms;
-> +	struct msm_drm_private *priv;
-> +	struct msm_disp_state *disp_state;
-> +
-> +	if (!drm_dev) {
-> +		DRM_ERROR("invalid params\n");
-> +		return -EINVAL;
-> +	}
-> +
-> +	priv = drm_dev->dev_private;
-> +	dpu_kms = to_dpu_kms(priv->kms);
-> +
-> +	disp_state = devm_kzalloc(drm_dev->dev, sizeof(struct msm_disp_state), GFP_KERNEL);
-> +
-> +	mutex_init(&disp_state->mutex);
-> +
-> +	disp_state->dev = drm_dev->dev;
-> +	disp_state->drm_dev = drm_dev;
-> +
-> +	INIT_LIST_HEAD(&disp_state->blocks);
-> +
-> +	disp_state->dump_worker = kthread_create_worker(0, "%s", "disp_snapshot");
-> +	if (IS_ERR(disp_state->dump_worker))
-> +		DRM_ERROR("failed to create disp state task\n");
-> +
-> +	kthread_init_work(&disp_state->dump_work, _msm_disp_snapshot_work);
-> +
-> +	dpu_kms->disp_state = disp_state;
-
-Judging from this code, I think it should be possible to push disp_state 
-directly into struct msm_drm_private.
-
-> +
-> +	return 0;
-> +}
-> +
-> +void msm_disp_snapshot_destroy(struct drm_device *drm_dev)
-> +{
-> +	struct dpu_kms *dpu_kms;
-> +	struct msm_drm_private *priv;
-> +	struct msm_disp_state *disp_state;
-> +
-> +	if (!drm_dev) {
-> +		DRM_ERROR("invalid params\n");
-> +		return;
-> +	}
-> +
-> +	priv = drm_dev->dev_private;
-> +	dpu_kms = to_dpu_kms(priv->kms);
-> +	disp_state = dpu_kms->disp_state;
-> +
-> +	if (disp_state->dump_worker)
-> +		kthread_destroy_worker(disp_state->dump_worker);
-> +
-> +	list_del(&disp_state->blocks);
-> +
-> +	mutex_destroy(&disp_state->mutex);
-> +}
-> diff --git a/drivers/gpu/drm/msm/disp/msm_disp_snapshot.h b/drivers/gpu/drm/msm/disp/msm_disp_snapshot.h
-> new file mode 100644
-> index 0000000..0ccb7e7
-> --- /dev/null
-> +++ b/drivers/gpu/drm/msm/disp/msm_disp_snapshot.h
-> @@ -0,0 +1,167 @@
-> +/* SPDX-License-Identifier: GPL-2.0-only */
-> +/*
-> + * Copyright (c) 2020-2021, The Linux Foundation. All rights reserved.
-> + */
-> +
-> +#ifndef MSM_DISP_SNAPSHOT_H_
-> +#define MSM_DISP_SNAPSHOT_H_
-> +
-> +#include <drm/drm_atomic_helper.h>
-> +#include <drm/drm_device.h>
-> +#include "../../../drm_crtc_internal.h"
-> +#include <drm/drm_print.h>
-> +#include <drm/drm_atomic.h>
-> +#include <linux/debugfs.h>
-> +#include <linux/list.h>
-> +#include <linux/delay.h>
-> +#include <linux/spinlock.h>
-> +#include <linux/ktime.h>
-> +#include <linux/debugfs.h>
-> +#include <linux/uaccess.h>
-> +#include <linux/dma-buf.h>
-> +#include <linux/slab.h>
-> +#include <linux/list_sort.h>
-> +#include <linux/pm.h>
-> +#include <linux/pm_runtime.h>
-> +#include <linux/kthread.h>
-> +#include <linux/devcoredump.h>
-> +#include <stdarg.h>
-> +#include "dpu_hw_catalog.h"
-> +#include "dpu_kms.h"
-> +#include "dsi.h"
-> +
-> +enum msm_disp_snapshot_dump_flag {
-> +	MSM_DISP_SNAPSHOT_IN_LOG = BIT(0),
-> +	MSM_DISP_SNAPSHOT_IN_MEM = BIT(1),
-> +	MSM_DISP_SNAPSHOT_IN_COREDUMP = BIT(2),
-
-Are they mutually exclusive or can they be specified in parallel?	
-
-> +};
-> +
-> +#define MSM_DISP_SNAPSHOT_MAX_BLKS		10
-> +
-> +/* debug option to print the registers in logs */
-> +#define MSM_DISP_SNAPSHOT_DUMP_IN_CONSOLE 0
-> +
-> +/* print debug ranges in groups of 4 u32s */
-> +#define REG_DUMP_ALIGN		16
-> +
-> +/**
-> + * struct msm_disp_state - structure to store current dpu state
-> + * @dev: device pointer
-> + * @drm_dev: drm device pointer
-> + * @mutex: mutex to serialize access to serialze dumps, debugfs access
-> + * @coredump_pending: coredump is pending read from userspace
-> + * @atomic_state: atomic state duplicated at the time of the error
-> + * @dump_worker: kworker thread which runs the dump work
-> + * @dump_work: kwork which dumps the registers and drm state
-> + * @timestamp: timestamp at which the coredump was captured
-> + */
-> +struct msm_disp_state {
-> +	struct device *dev;
-> +	struct drm_device *drm_dev;
-> +	struct mutex mutex;
-> +
-> +	bool coredump_pending;
-> +
-> +	struct list_head blocks;
-> +
-> +	struct drm_atomic_state *atomic_state;
-> +
-> +	struct kthread_worker *dump_worker;
-> +	struct kthread_work dump_work;
-> +	ktime_t timestamp;
-> +};
-> +
-> +/**
-> + * struct msm_disp_state_block - structure to store each hardware block state
-> + * @name: name of the block
-> + * @drm_dev: handle to the linked list head
-> + * @size: size of the register space of this hardware block
-> + * @state: array holding the register dump of this hardware block
-> + * @base_addr: starting address of this hardware block's register space
-> + */
-> +struct msm_disp_state_block {
-> +	char name[SZ_128];
-> +	struct list_head node;
-> +	unsigned int size;
-> +	u32 *state;
-> +	void __iomem *base_addr;
-> +};
-> +
-> +/**
-> + * MSM_DISP_SNAPSHOT - trigger to dump the display snapshot
-> + * @drm_dev:	handle to drm device
-> + */
-> +#define MSM_DISP_SNAPSHOT(drm_dev) msm_disp_snapshot_state(drm_dev)
-
-Why do you need it?
-
-> +
-> +/**
-> + * msm_disp_snapshot_init - initialize global sde debug facilities: evtlog, regdump
-
-Just a nitpick here and below: there is no sde in the upstream. And no 
-evtlog.
-
-> + * @drm_dev:	drm device handle
-> + *
-> + * Returns:		0 or -ERROR
-> + */
-> +int msm_disp_snapshot_init(struct drm_device *drm_dev);
-> +
-> +/**
-> + * msm_disp_snapshot_destroy - destroy the global sde debug facilities
-> + * @drm_dev:    drm device handle
-> + *
-> + * Returns:	none
-> + */
-> +void msm_disp_snapshot_destroy(struct drm_device *drm_dev);
-> +
-> +/**
-> + * msm_disp_snapshot_state - trigger to dump the display snapshot
-> + * @drm_dev:	handle to drm device
-> +
-> + * Returns:	none
-> + */
-> +void msm_disp_snapshot_state(struct drm_device *drm_dev);
-> +
-> +/**
-> + * msm_disp_state_get - get the handle to msm_disp_state struct from the drm device
-> + * @drm:	    handle to drm device
-> +
-> + * Returns:	handle to the msm_disp_state struct
-> + */
-> +struct msm_disp_state *msm_disp_state_get(struct drm_device *drm);
-> +
-> +/**
-> + * msm_disp_state_print - print out the current dpu state
-> + * @disp_state:	    handle to drm device
-> + * @p:	    handle to drm printer
-> + * @reg_dump_method: tells whether the state has to be dumped in log or coredump
-> + *
-> + * Returns:	none
-> + */
-> +void msm_disp_state_print(struct msm_disp_state *disp_state, struct drm_printer *p,
-> +		u8 reg_dump_method);
-> +
-> +/**
-> + * msm_disp_snapshot_capture_state - utility to capture atomic state and hw registers
-> + * @disp_state:	    handle to msm_disp_state struct
-> +
-> + * Returns:	none
-> + */
-> +void msm_disp_snapshot_capture_state(struct msm_disp_state *disp_state);
-> +
-> +/**
-> + * msm_disp_state_free - free the memory after the coredump has been read
-> + * @disp_state:	    handle to struct msm_disp_state
-> +
-> + * Returns: none
-> + */
-> +void msm_disp_state_free(struct msm_disp_state *disp_state);
-> +
-> +/**
-> + * msm_disp_snapshot_add_block - add a hardware block with its register dump
-> + * @disp_state:	    handle to struct msm_disp_state
-> + * @name:           name of the hardware block
-> + * @len:            size of the register space of the hardware block
-> + * @base_addr:      starting address of the register space of the hardware block
-> + *
-> + * Returns: none
-> + */
-> +void msm_disp_snapshot_add_block(struct msm_disp_state *disp_state, char *name, u32 len,
-> +		void __iomem *base_addr);
-> +
-> +#endif /* MSM_DISP_SNAPSHOT_H_ */
-> diff --git a/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c b/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c
-> new file mode 100644
-> index 0000000..383f225
-> --- /dev/null
-> +++ b/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c
-> @@ -0,0 +1,181 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) 2020-2021, The Linux Foundation. All rights reserved.
-> + */
-> +
-> +#define pr_fmt(fmt)	"[drm:%s:%d] " fmt, __func__, __LINE__
-> +
-> +#include "msm_disp_snapshot.h"
-> +
-> +static void msm_disp_state_dump_regs(u32 **reg, u32 len, void __iomem *base_addr,
-> +		u32 dump_op, struct drm_printer *p)
-> +{
-> +	u32 len_aligned, len_padded;
-> +	u32 x0, x4, x8, xc;
-> +	void __iomem *addr;
-> +	u32 *dump_addr = NULL;
-> +	void __iomem *end_addr;
-> +	int i;
-> +	bool in_drm_printer = false;
-> +
-> +	len_aligned = (len + REG_DUMP_ALIGN - 1) / REG_DUMP_ALIGN;
-> +	len_padded = len_aligned * REG_DUMP_ALIGN;
-> +
-> +	addr = base_addr;
-> +	end_addr = base_addr + len;
-> +
-> +	if ((dump_op == MSM_DISP_SNAPSHOT_IN_COREDUMP) ||
-> +		(dump_op == MSM_DISP_SNAPSHOT_IN_LOG))
-> +		in_drm_printer = true;
-> +
-> +	if (in_drm_printer && !p) {
-> +		DRM_ERROR("invalid drm printer\n");
-> +		return;
-> +	}
-> +
-> +	if (dump_op == MSM_DISP_SNAPSHOT_IN_MEM && !(*reg))
-> +		*reg = kzalloc(len_padded, GFP_KERNEL);
-> +
-> +	if (*reg)
-> +		dump_addr = *reg;
-> +
-> +	for (i = 0; i < len_aligned; i++) {
-> +		if (dump_op == MSM_DISP_SNAPSHOT_IN_MEM) {
-> +			x0 = (addr < end_addr) ? readl_relaxed(addr + 0x0) : 0;
-> +			x4 = (addr + 0x4 < end_addr) ? readl_relaxed(addr + 0x4) : 0;
-> +			x8 = (addr + 0x8 < end_addr) ? readl_relaxed(addr + 0x8) : 0;
-> +			xc = (addr + 0xc < end_addr) ? readl_relaxed(addr + 0xc) : 0;
-> +		}
-> +
-> +		if (dump_addr) {
-> +			if (dump_op == MSM_DISP_SNAPSHOT_IN_MEM) {
-> +				dump_addr[i * 4] = x0;
-> +				dump_addr[i * 4 + 1] = x4;
-> +				dump_addr[i * 4 + 2] = x8;
-> +				dump_addr[i * 4 + 3] = xc;
-> +			} else if (in_drm_printer) {
-> +				drm_printf(p, "0x%lx : %08x %08x %08x %08x\n",
-> +						(unsigned long)(addr - base_addr),
-> +						dump_addr[i * 4], dump_addr[i * 4 + 1],
-> +						dump_addr[i * 4 + 2], dump_addr[i * 4 + 3]);
-> +			}
-> +		}
-> +
-> +		addr += REG_DUMP_ALIGN;
-> +	}
-> +}
-
-I'd just split this function into two different cases, IN_MEM and 
-DRM_PRINTER.
-
-> +
-> +struct msm_disp_state *msm_disp_state_get(struct drm_device *drm)
-> +{
-> +	struct msm_drm_private *priv;
-> +	struct dpu_kms *dpu_kms;
-> +
-> +	priv = drm->dev_private;
-> +	dpu_kms = to_dpu_kms(priv->kms);
-> +
-> +	return dpu_kms->disp_state;
-> +}
-> +
-> +void msm_disp_state_print(struct msm_disp_state *state, struct drm_printer *p,
-> +		u8 reg_dump_method)
-> +{
-> +	struct msm_disp_state_block *block, *tmp;
-> +
-> +	if (!p) {
-> +		DRM_ERROR("invalid drm printer\n");
-> +		return;
-> +	}
-> +
-> +	drm_printf(p, "---\n");
-> +
-> +	drm_printf(p, "module: " KBUILD_MODNAME "\n");
-> +	drm_printf(p, "dpu devcoredump\n");
-> +	drm_printf(p, "timestamp %lld\n", ktime_to_ns(state->timestamp));
-> +
-> +	list_for_each_entry_safe(block, tmp, &state->blocks, node) {
-> +		drm_printf(p, "====================%s================\n", block->name);
-> +		msm_disp_state_dump_regs(&block->state, block->size, block->base_addr,
-> +				reg_dump_method, p);
-> +	}
-> +
-> +	drm_printf(p, "===================dpu drm state================\n");
-> +
-> +	if (state->atomic_state)
-> +		drm_atomic_print_new_state(state->atomic_state, p);
-> +}
-> +
-> +static void msm_disp_capture_atomic_state(struct msm_disp_state *disp_state)
-> +{
-> +	struct drm_device *ddev;
-> +	struct drm_modeset_acquire_ctx ctx;
-> +
-> +	disp_state->timestamp = ktime_get();
-> +
-> +	ddev = disp_state->drm_dev;
-> +
-> +	drm_modeset_acquire_init(&ctx, 0);
-> +
-> +	while (drm_modeset_lock_all_ctx(ddev, &ctx) != 0)
-> +		drm_modeset_backoff(&ctx);
-> +
-> +	disp_state->atomic_state = drm_atomic_helper_duplicate_state(ddev,
-> +			&ctx);
-> +	drm_modeset_drop_locks(&ctx);
-> +	drm_modeset_acquire_fini(&ctx);
-> +}
-> +
-> +void msm_disp_snapshot_capture_state(struct msm_disp_state *disp_state)
-> +{
-> +	struct msm_drm_private *priv;
-> +	int i;
-> +	struct drm_device *drm_dev;
-> +
-> +	drm_dev = disp_state->drm_dev;
-> +	priv = drm_dev->dev_private;
-> +
-> +	msm_disp_capture_atomic_state(disp_state);
-> +
-> +	if (priv->dp)
-> +		msm_dp_snapshot(priv->dp);
-> +
-> +	for (i = 0; i < ARRAY_SIZE(priv->dsi); i++) {
-> +		if (!priv->dsi[i])
-> +			continue;
-> +
-> +		msm_dsi_snapshot(priv->dsi[i]);
-> +	}
-> +
-> +	dpu_kms_mdp_snapshot(drm_dev);
-
-Hmm, I now see why do you need the dpu_kms. Can we have a check for the 
-mdp version here? The rest of the code seems generic enough, so we can 
-at least dump the dsi/dp (and hopefully eDP/HDMI) data for MDP4/5.
-
-Ideally subdrivers should be able to report back to the core, which 
-regions are available, so that we won't have this static code. But this 
-might look like an overkill. Not to mention that it might lead to the 
-not-so-static sequence of dumps. (As you can judge, I quite liked the 
-previous approach, when the drivers registered the dumping regions and 
-then the dumper would go through them.)
-
-Let's have the static config in place with the version check.
-
-> +}
-> +
-> +void msm_disp_state_free(struct msm_disp_state *disp_state)
-> +{
-> +	struct msm_disp_state_block *block, *tmp;
-> +
-> +	if (disp_state->atomic_state) {
-> +		drm_atomic_state_put(disp_state->atomic_state);
-> +		disp_state->atomic_state = NULL;
-> +	}
-> +
-> +	list_for_each_entry_safe(block, tmp, &disp_state->blocks, node) {
-> +		kfree(block->state);
-> +		list_del(&block->node);
-
-I'd swap these two lines, so while the block is in the list, its state 
-is coherent.
-
-> +		kfree(block);
-> +	}
-> +}
-> +
-> +void msm_disp_snapshot_add_block(struct msm_disp_state *disp_state, char *name, u32 len,
-> +		void __iomem *base_addr)
-> +{
-> +	struct msm_disp_state_block *new_blk;
-> +
-> +	new_blk = kzalloc(sizeof(struct msm_disp_state_block), GFP_KERNEL);
-> +
-> +	strscpy(new_blk->name, name, sizeof(new_blk->name));
-> +	INIT_LIST_HEAD(&new_blk->node);
-> +	new_blk->size = len;
-> +	new_blk->base_addr = base_addr;
-> +	msm_disp_state_dump_regs(&new_blk->state, len, base_addr,
-> +			MSM_DISP_SNAPSHOT_IN_MEM, NULL);
-> +	list_add(&new_blk->node, &disp_state->blocks);
-> +}
-> diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.c b/drivers/gpu/drm/msm/dp/dp_catalog.c
-> index b1a9b1b..ce8d19a 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_catalog.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_catalog.c
-> @@ -62,6 +62,18 @@ struct dp_catalog_private {
->   	u8 aux_lut_cfg_index[PHY_AUX_CFG_MAX];
->   };
->   
-> +void dp_catalog_snapshot(struct dp_catalog *dp_catalog, struct msm_disp_state *disp_state)
-> +{
-> +	struct dp_catalog_private *catalog = container_of(dp_catalog,
-> +			struct dp_catalog_private, dp_catalog);
-> +	char name[SZ_128];
-> +
-> +	snprintf(name, SZ_128, "dp_ctrl");
-> +
-> +	msm_disp_snapshot_add_block(disp_state, name, catalog->io->dp_controller.len,
-> +			catalog->io->dp_controller.base);
-> +}
-> +
->   static inline u32 dp_read_aux(struct dp_catalog_private *catalog, u32 offset)
->   {
->   	offset += MSM_DP_CONTROLLER_AUX_OFFSET;
-> diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.h b/drivers/gpu/drm/msm/dp/dp_catalog.h
-> index 176a902..e7e8b13 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_catalog.h
-> +++ b/drivers/gpu/drm/msm/dp/dp_catalog.h
-> @@ -9,6 +9,7 @@
->   #include <drm/drm_modes.h>
->   
->   #include "dp_parser.h"
-> +#include "disp/msm_disp_snapshot.h"
->   
->   /* interrupts */
->   #define DP_INTR_HPD		BIT(0)
-> @@ -71,6 +72,9 @@ struct dp_catalog {
->   	u32 audio_data;
->   };
->   
-> +/* Debug module */
-> +void dp_catalog_snapshot(struct dp_catalog *dp_catalog, struct msm_disp_state *disp_state);
-> +
->   /* AUX APIs */
->   u32 dp_catalog_aux_read_data(struct dp_catalog *dp_catalog);
->   int dp_catalog_aux_write_data(struct dp_catalog *dp_catalog);
-> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-> index 5a39da6..6670558 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_display.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-> @@ -1009,6 +1009,35 @@ int dp_display_get_test_bpp(struct msm_dp *dp)
->   		dp_display->link->test_video.test_bit_depth);
->   }
->   
-> +void msm_dp_snapshot(struct msm_dp *dp)
-> +{
-> +	struct dp_display_private *dp_display;
-> +	struct drm_device *drm;
-> +	struct msm_disp_state *disp_state;
-> +
-> +	dp_display = container_of(dp, struct dp_display_private, dp_display);
-> +	drm = dp->drm_dev;
-> +	disp_state = msm_disp_state_get(drm);
-> +
-> +	/*
-> +	 * if we are reading registers we need the link clocks to be on
-> +	 * however till DP cable is connected this will not happen as we
-> +	 * do not know the resolution to power up with. Hence check the
-> +	 * power_on status before dumping DP registers to avoid crash due
-> +	 * to unclocked access
-> +	 */
-> +	mutex_lock(&dp_display->event_mutex);
-> +
-> +	if (!dp->power_on) {
-> +		mutex_unlock(&dp_display->event_mutex);
-> +		return;
-> +	}
-> +
-> +	dp_catalog_snapshot(dp_display->catalog, disp_state);
-> +
-> +	mutex_unlock(&dp_display->event_mutex);
-> +}
-> +
->   static void dp_display_config_hpd(struct dp_display_private *dp)
->   {
->   
-> diff --git a/drivers/gpu/drm/msm/dp/dp_display.h b/drivers/gpu/drm/msm/dp/dp_display.h
-> index 6092ba1..4d39373 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_display.h
-> +++ b/drivers/gpu/drm/msm/dp/dp_display.h
-> @@ -8,6 +8,7 @@
->   
->   #include "dp_panel.h"
->   #include <sound/hdmi-codec.h>
-> +#include "disp/msm_disp_snapshot.h"
->   
->   struct msm_dp {
->   	struct drm_device *drm_dev;
-> diff --git a/drivers/gpu/drm/msm/dsi/dsi.c b/drivers/gpu/drm/msm/dsi/dsi.c
-> index 62704885..bccc006 100644
-> --- a/drivers/gpu/drm/msm/dsi/dsi.c
-> +++ b/drivers/gpu/drm/msm/dsi/dsi.c
-> @@ -266,3 +266,8 @@ int msm_dsi_modeset_init(struct msm_dsi *msm_dsi, struct drm_device *dev,
->   	return ret;
->   }
->   
-> +void msm_dsi_snapshot(struct msm_dsi *msm_dsi)
-> +{
-> +	msm_dsi_host_snapshot(msm_dsi->host);
-> +}
-> +
-> diff --git a/drivers/gpu/drm/msm/dsi/dsi.h b/drivers/gpu/drm/msm/dsi/dsi.h
-> index 7abfeab..bb39403 100644
-> --- a/drivers/gpu/drm/msm/dsi/dsi.h
-> +++ b/drivers/gpu/drm/msm/dsi/dsi.h
-> @@ -15,6 +15,7 @@
->   #include <drm/drm_panel.h>
->   
->   #include "msm_drv.h"
-> +#include "disp/msm_disp_snapshot.h"
->   
->   #define DSI_0	0
->   #define DSI_1	1
-> @@ -90,6 +91,8 @@ static inline bool msm_dsi_device_connected(struct msm_dsi *msm_dsi)
->   	return msm_dsi->panel || msm_dsi->external_bridge;
->   }
->   
-> +void msm_dsi_snapshot(struct msm_dsi *msm_dsi);
-> +
->   struct drm_encoder *msm_dsi_get_encoder(struct msm_dsi *msm_dsi);
->   
->   /* dsi host */
-> @@ -146,6 +149,7 @@ int dsi_clk_init_v2(struct msm_dsi_host *msm_host);
->   int dsi_clk_init_6g_v2(struct msm_dsi_host *msm_host);
->   int dsi_calc_clk_rate_v2(struct msm_dsi_host *msm_host, bool is_dual_dsi);
->   int dsi_calc_clk_rate_6g(struct msm_dsi_host *msm_host, bool is_dual_dsi);
-> +void msm_dsi_host_snapshot(struct mipi_dsi_host *host);
->   
->   /* dsi phy */
->   struct msm_dsi_phy;
-> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> index 8a10e43..d9fdc07 100644
-> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> @@ -2487,3 +2487,22 @@ struct drm_bridge *msm_dsi_host_get_bridge(struct mipi_dsi_host *host)
->   
->   	return of_drm_find_bridge(msm_host->device_node);
->   }
-> +
-> +void msm_dsi_host_snapshot(struct mipi_dsi_host *host)
-> +{
-> +	struct msm_dsi_host *msm_host = to_msm_dsi_host(host);
-> +	struct drm_device *dev = msm_host->dev;
-> +	struct msm_disp_state *disp_state;
-> +	char name[SZ_128];
-> +
-> +	disp_state = msm_disp_state_get(dev);
-> +
-> +	pm_runtime_get_sync(&msm_host->pdev->dev);
-> +
-> +	snprintf(name, SZ_128, "dsi%d_ctrl", msm_host->id);
-> +
-> +	msm_disp_snapshot_add_block(disp_state, name, msm_iomap_size(msm_host->pdev, "dsi_ctrl"),
-
-You can store the size into the msm_host, rather than querrying it on 
-each dump.
-
-> +			msm_host->ctrl_base);
-> +
-> +	pm_runtime_put_sync(&msm_host->pdev->dev);
-> +}
-> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-> index e1104d2..ebf9283 100644
-> --- a/drivers/gpu/drm/msm/msm_drv.c
-> +++ b/drivers/gpu/drm/msm/msm_drv.c
-> @@ -1,6 +1,6 @@
->   // SPDX-License-Identifier: GPL-2.0-only
->   /*
-> - * Copyright (c) 2016-2018, The Linux Foundation. All rights reserved.
-> + * Copyright (c) 2016-2018, 2020-2021 The Linux Foundation. All rights reserved.
->    * Copyright (C) 2013 Red Hat
->    * Author: Rob Clark <robdclark@gmail.com>
->    */
-> @@ -19,6 +19,7 @@
->   #include <drm/drm_of.h>
->   #include <drm/drm_vblank.h>
->   
-> +#include "disp/msm_disp_snapshot.h"
->   #include "msm_drv.h"
->   #include "msm_debugfs.h"
->   #include "msm_fence.h"
-> @@ -167,6 +168,24 @@ void __iomem *msm_ioremap_quiet(struct platform_device *pdev, const char *name,
->   	return _msm_ioremap(pdev, name, dbgname, true);
->   }
->   
-> +unsigned long msm_iomap_size(struct platform_device *pdev, const char *name)
-> +{
-> +	struct resource *res;
-> +
-> +	if (name)
-> +		res = platform_get_resource_byname(pdev, IORESOURCE_MEM, name);
-> +	else
-> +		res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-> +
-> +	if (!res) {
-> +		dev_dbg(&pdev->dev, "failed to get memory resource: %s\n",
-> +				name);
-> +		return 0;
-> +	}
-> +
-> +	return resource_size(res);
-> +}
-> +
->   void msm_writel(u32 data, void __iomem *addr)
->   {
->   	if (reglog)
-> @@ -278,6 +297,8 @@ static int msm_drm_uninit(struct device *dev)
->   		msm_fbdev_free(ddev);
->   #endif
->   
-> +	msm_disp_snapshot_destroy(ddev);
-> +
->   	drm_mode_config_cleanup(ddev);
->   
->   	pm_runtime_get_sync(dev);
-> @@ -550,6 +571,12 @@ static int msm_drm_init(struct device *dev, const struct drm_driver *drv)
->   	if (ret)
->   		goto err_msm_uninit;
->   
-> +	if (get_mdp_ver(pdev) == KMS_DPU) {
-> +		ret = msm_disp_snapshot_init(ddev);
-> +		if (ret)
-> +			DRM_DEV_ERROR(dev, "msm_disp_snapshot_init failed ret = %d\n", ret);
-> +	}
-> +
-
-Let's get it out of if (KMS_DPU), even if we do not dump mdp4/mdp5 
-registers for now.
-
->   	drm_mode_config_reset(ddev);
->   
->   #ifdef CONFIG_DRM_FBDEV_EMULATION
-> diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
-> index 2668941..9c40bac 100644
-> --- a/drivers/gpu/drm/msm/msm_drv.h
-> +++ b/drivers/gpu/drm/msm/msm_drv.h
-> @@ -367,6 +367,7 @@ void msm_dp_display_mode_set(struct msm_dp *dp, struct drm_encoder *encoder,
->   				struct drm_display_mode *mode,
->   				struct drm_display_mode *adjusted_mode);
->   void msm_dp_irq_postinstall(struct msm_dp *dp_display);
-> +void msm_dp_snapshot(struct msm_dp *dp_display);
->   
->   void msm_dp_debugfs_init(struct msm_dp *dp_display, struct drm_minor *minor);
->   
-> @@ -450,6 +451,7 @@ void __iomem *msm_ioremap(struct platform_device *pdev, const char *name,
->   		const char *dbgname);
->   void __iomem *msm_ioremap_quiet(struct platform_device *pdev, const char *name,
->   		const char *dbgname);
-> +unsigned long msm_iomap_size(struct platform_device *pdev, const char *name);
->   void msm_writel(u32 data, void __iomem *addr);
->   u32 msm_readl(const void __iomem *addr);
->   void msm_rmw(void __iomem *addr, u32 mask, u32 or);
+> W dniu 01.04.2021 o 16:57, Doug Anderson pisze:
+> > On Thu, Apr 1, 2021 at 4:12 AM Andrzej Hajda <a.hajda@samsung.com> wrote:
+> >> W dniu 31.03.2021 o 16:48, Doug Anderson pisze:
+> >>> On Wed, Mar 31, 2021 at 4:08 AM Andrzej Hajda <a.hajda@samsung.com> wrote:
+> >>>> W dniu 30.03.2021 o 04:53, Douglas Anderson pisze:
+> >>>>> eDP panels won't provide their EDID unless they're powered on. Let's
+> >>>>> chain a power-on before we read the EDID. This roughly matches what
+> >>>>> was done in 'parade-ps8640.c'.
+> >>>>>
+> >>>>> NOTE: The old code attempted to call pm_runtime_get_sync() before
+> >>>>> reading the EDID. While that was enough to power the bridge chip on,
+> >>>>> it wasn't enough to talk to the panel for two reasons:
+> >>>>> 1. Since we never ran the bridge chip's pre-enable then we never set
+> >>>>>       the bit to ignore HPD. This meant the bridge chip didn't even _try_
+> >>>>>       to go out on the bus and communicate with the panel.
+> >>>>> 2. Even if we fixed things to ignore HPD, the EDID still wouldn't read
+> >>>>>       if the panel wasn't on.
+> >>>>>
+> >>>>> One thing that's a bit odd here is taking advantage of the EDID that
+> >>>>> the core might have cached for us. See the patch ("drm/edid: Use the
+> >>>>> cached EDID in drm_get_edid() if eDP"). We manage to get at the cache
+> >>>>> by:
+> >>>>> - Instantly failing aux transfers if we're not powered.
+> >>>>> - If the first read of the EDID fails we try again after powering.
+> >>>>>
+> >>>>> Fixes: 58074b08c04a ("drm/bridge: ti-sn65dsi86: Read EDID blob over DDC")
+> >>>>> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> >>>>> ---
+> >>>>> Depending on what people think of the other patches in this series,
+> >>>>> some of this could change.
+> >>>>> - If everyone loves the "runtime PM" in the panel driver then we
+> >>>>>      could, in theory, put the pre-enable chaining straight in the "aux
+> >>>>>      transfer" function.
+> >>>>> - If everyone hates the EDID cache moving to the core then we can
+> >>>>>      avoid some of the awkward flow of things and keep the EDID cache in
+> >>>>>      the sn65dsi86 driver.
+> >>>>
+> >>>> I wonder if this shouldn't be solved in the core - ie caller of
+> >>>> get_modes callback should be responsible for powering up the pipeline,
+> >>>> otherwise we need to repeat this stuff in every bridge/panel driver.
+> >>>>
+> >>>> Any thoughts?
+> >>>
+> >>> Yeah, I did look at this a little bit. Presumably it would only make
+> >>> sense to do it for eDP connections since:
+> >>>
+> >>> a) The concept of reading an EDID doesn't make sense for things like MIPI.
+> >>
+> >> I guess you mean MIPI DSI
+> >
+> > Yes, sorry! I'll try to be more clear.
+> >
+> >> and yes I agree, more generally it usually(!)
+> >> doesn't make sense for any setup with fixed display panel.
+> >>
+> >> On the other hand there are DSI/HDMI or DSI/DP adapters which usually
+> >> have EDID reading logic.
+> >>
+> >> And the concept makes sense for most connectors accepting external
+> >> displays: HDMI, DP, MHL, VGA...
+> >
+> > So, actually, IMO the concept doesn't make sense for anything with an
+> > external connector. Here's the logic for a handful of connectors:
+> >
+> > 1. MIPI DSI: there is no EDID so this doesn't make sense.
+> >
+> > 2. An external connector (HDMI, DP, etc): the display that's plugged
+> > in is externally powered so doesn't need us to power it up to read the
+> > EDID. By definition, when the HPD signal is asserted then it's OK to
+> > read the EDID and we don't even know if a display is plugged in until
+> > HPD is asserted. Thus no special power sequencing is needed to read
+> > the EDID.  (Yes, we need to make sure that the eDP controller itself
+> > is powered, but that doesn't seem like it's the core's business).
 > 
+> Not true IMO, even if external device is powered on, you must enable 
+> EDID-reader logic.
 
+Sure, but I think Doug was referring to powering up the device connected
+to the SN65DSI86 output. When that device (from a DT and DRM bridge
+point of view) is an external connector, it means that the hardware
+device is an external HDMI/DP sink, and we have no way to control its
+power. The SN65DSI86 itself of course needs to be powered.
+
+> I guess it is not uncommon to have different power states for EDID 
+> reading and bridge/panel pre-enablement (especially in embedded world). 
+> In fact there are setups where EDID-reader is totally different device 
+> than the bridge itself, and these devices should be 
+> powered/enabled/operational only for time of EDID reading.
+> 
+> > 3. eDP: this is where it matters. This is because:
+> >
+> > 3a) eDP displays aren't powered all the time. If you just boot up or
+> > you blank your screen, likely the display has no power at all.
+> >
+> > 3b) Because the display has no power, the "HPD" signal doesn't assert.
+> > In fact, for eDP the "HPD" signal really should mean "display ready"
+> > or "display finished powering up".
+> >
+> > 3c) Even though we never get a HPD signal, we still simply assume that
+> > a display is present because this is an "embedded" device.
+> >
+> > So eDP is unique (as far as I know) in that it's a type of display
+> > that has an EDID but that we will report "a display is here" before
+> > we've powered up the display and before we can read the EDID.
+> >
+> >>> b) For something with an external connector (DP and HDMI) you don't
+> >>> even know they're inserted unless the EDID is ready to read (these
+> >>> devices are, essentially, always powered).
+> >>
+> >> Usually there are two elements which are not the same:
+> >>
+> >> 1. HotPlug signal/wire.
+> >>
+> >> 2. EDID reading logic.
+> >>
+> >> The logic responsible for reading EDID needs to be enabled only for time
+> >> required for EDID reading :) So it's power state often must be
+> >> controlled explicitly by the bridge driver. So even if in many cases
+> >> pre_enable powers on the logic for EDID reading it does not make it the
+> >> rule, so I must step back from my claim that it is up to caller :)
+> >
+> > OK, I'll plan to keep it in the bridge chip driver now.
+> >
+> >>> So I started off trying to do this in the core for eDP, but then it
+> >>> wasn't completely clear how to write this code in a way that was super
+> >>> generic. Specifically:
+> >>>
+> >>> 1. I don't think it's a 100% guarantee that everything is powered on
+> >>> in pre-enable and powered off in post-disable. In this bridge chip
+> >>> it's true, but maybe not every eDP driver? Would you want me to just
+> >>> assume this, or add a flag?
+> >>
+> >> Ok, pre_enable should power on the chip, but for performing
+> >> initialization of video transport layer. Assumption it will power on
+> >> EDID logic is incorrect, so my claim seems wrong, but also this patch
+> >> looks incorrect :)
+> >>
+> >> In general only device containing EDID logic knows how to power it up.
+> >
+> > I still believe my patch is correct. Specifically I don't need to make
+> > any assumptions about display elements upstream of me (sources of the
+> > bridge chip). I only need to make assumptions about the pre-enable of
+> > the bridge driver itself and anything downstream of it.
+> >
+> > At the moment downstream of this particular bridge chip is always a
+> > panel device. Even further, all known downstream devices are
+> > "simple-panel". That is known to power up the panel enough to read the
+> > EDID in the "prepare" stage.
+> >
+> > Sure, someone _could_ add another bridge downstream in some design,
+> > but it would be up to that person to either fix that downstream driver
+> > to power itself in pre-enable or to add some type of quirk disabling
+> > the EDID reading.
+> >
+> >> Since I do not know your particular case I can propose few possible ways
+> >> to investigate:
+> >>
+> >> - call bridge.next->get_modes - you leave responsibility for powering up
+> >> to the downstream device.
+> >
+> > The "next" bridge is the panel, so I don't think this works.
+> 
+> Then drm_panel_get_modes will work then.
+
+Not if the panel exposes modes through EDID, in that case it's the
+responsibility of the device connected to the DDC/AUX port to read the
+EDID and provide modes. The panel driver won't be able to handle it on
+its own.
+
+> >> - ddc driver on i2c request should power up the panel - seems also correct,
+> >
+> > Right, so I could put the
+> > "drm_bridge_chain_pre_enable(&pdata->bridge)" into the
+> > ti_sn_aux_transfer() function. I talked about that a little bit "after
+> > the cut" in my post where I said:
+> >
+> >> - If everyone loves the "runtime PM" in the panel driver then we
+> >>   could, in theory, put the pre-enable chaining straight in the "aux
+> >>   transfer" function.
+> >
+> > The reason for the dependence on "runtime PM" in the panel driver is
+> > that we are doing DDC over AUX and it breaks the EDID reading into
+> > lots of chunks so if we did the powering up and powering down there it
+> > would be crazy slow without the delayed poweroff.
+> 
+> OK, it resembles to me DSI-controlled panel - to query/configure panel 
+> panel driver asks DSI-host to transfer some bytes to the panel and/or 
+> back via DSI-bus.
+> 
+> In case of eDP panels we could do similar thing to read edid - we call 
+> drm_panel_get_modes - it calls drm_panel_funcs.get_modes callback and it 
+> decides (based on DT) if it should fill modes according to hardcoded 
+> info into the driver or to ask the physical panel via DP-controller - 
+> this way all the players (the panel, AUX/DDC device) will know what to 
+> power-up.
+> 
+> I guess there is missing pieces - there is no DP bus :), I am not sure 
+> if there is straight way to access panel's aux/ddc from the panel 
+> driver, maybe somehow via drm_connector ???
+
+If the SN65DSI86 has to call drm_panel_get_modes(), which will then call
+back into the SN65DSI86 driver to perform the EDID read, it seems to me
+that the panel driver shouldn't be involved at all.
+
+DRM bridges have "recently" gained new operations to retrieve EDID, and
+there's a helper (drm_bridge_connector) that creates a connector for a
+chain of bridges, delegating connector operations to the appropriate
+bridge in the chain. This seems a better way forward to me (but I'm
+biased, as I've authored that code :-)).
+
+> Of course this only my idea - to be discussed with others.
 
 -- 
-With best wishes
-Dmitry
+Regards,
+
+Laurent Pinchart
