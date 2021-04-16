@@ -2,49 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 10AA9362B40
+	by mail.lfdr.de (Postfix) with ESMTP id 8425C362B41
 	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Apr 2021 00:41:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235010AbhDPWlZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Apr 2021 18:41:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39846 "EHLO
+        id S234928AbhDPWl0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Apr 2021 18:41:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39854 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234928AbhDPWlX (ORCPT
+        with ESMTP id S234999AbhDPWlZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Apr 2021 18:41:23 -0400
-Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C599C061763
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Apr 2021 15:40:58 -0700 (PDT)
-Received: by mail-pf1-x433.google.com with SMTP id m11so19272216pfc.11
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Apr 2021 15:40:58 -0700 (PDT)
+        Fri, 16 Apr 2021 18:41:25 -0400
+Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20973C06138A
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Apr 2021 15:40:59 -0700 (PDT)
+Received: by mail-pf1-x430.google.com with SMTP id h11so1621557pfn.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Apr 2021 15:40:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Lu8AkZNDWlNH1fxgO+EV43zlL49xIkQqM7cXQa1E70s=;
-        b=boe3GraedXsJgeS77vtR2rV2V7UGXCxUaQcxH1b5+AOfv4z1Z27hGPMn2tDe6fhRsn
-         hvDtUo57zkdiGiJELJycymBwSweYrtJbTs6zoLwzgHftJlJQKjMQ99dXQxfQhkhTjAAh
-         u9n+/dhH6qEfJPbCP0XrOfmurcTC84gRst7uk=
+        bh=pcJHDcYMV/GNRvkYvCP6Y5GlcN4y2gUoiu2dtS69kIs=;
+        b=ZsInv2JReTrfjCgB8cC2jbctayfltBqBr0jOg/kNzrP6rbjJRuDO2ZT50ZjSe7P511
+         6Eiktjk1IJ+Z76JPjdunMQ7+1SGN9m+uWcMd0FXecfowEx7VHM5M9vo76px1rEqZTcAA
+         UF90B3xobn+6xQeKqzuNgiZBP9MVJxrOytsJ4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Lu8AkZNDWlNH1fxgO+EV43zlL49xIkQqM7cXQa1E70s=;
-        b=aUPu0P1KKybXtaZDg6Oola4jZqw1sahMgmXXb3m4v6t70ObMTO2dXAWF7Lv6z4fpf6
-         byqZeJp2bycgaEBxLjN+8tkjePDIr7itG6jHlmUGEt4RGBCnz9QlOlqmb1y1e3xfeSLz
-         71ap3f1P9r4AZCXakjGDRSDg21D85SKdODhmS9RyvXTCuMJJFQneY2eLseuHSCH9vUN7
-         oigMP7J0y/WncikPs7LFgpyH7drfKWnKiUv5dOkPJyZ6WhYash4MzgF5r9r763vNir/M
-         k8U67BrtA1w/nV8MQ/SpuVrTvVERWbRduKenofXtCS0vYmwTRgmQ74qpqeQcRAf5YVXl
-         v+SQ==
-X-Gm-Message-State: AOAM5333xLGZU5HfpsMEa9Y9oeKtqt3PQITMTt9s8+pCOkKY35GItXn6
-        3AyNExTVav5aZArsmy1CJBFxFg==
-X-Google-Smtp-Source: ABdhPJyTDqtz7UW4GkJ3AlSBpIPnxOnqUox/SqIrqnGsonE9KjngvVcmJxuRuSYBWLmdJQvyT8RIIg==
-X-Received: by 2002:aa7:904b:0:b029:250:991e:315 with SMTP id n11-20020aa7904b0000b0290250991e0315mr9708738pfo.70.1618612857697;
-        Fri, 16 Apr 2021 15:40:57 -0700 (PDT)
+        bh=pcJHDcYMV/GNRvkYvCP6Y5GlcN4y2gUoiu2dtS69kIs=;
+        b=eeknhKUsGi5i31AYwoC0YZQSTAf6ObPfO8dwGpBdBJsKwJCUXjYGEbLvbsGj54Ksz9
+         6JVqUGNg5n9kKvT/Izemsi3dTbxLZ0j9neGUQbnZX+GhaWftAueLqLbKcl7Tcz1sh9AB
+         G9pmaTkSAnZIIHSkcj5x1kl5mKvqh2nDfO02+O8M4tRpJEs+zBfH5bIo+/x3QYbivGJL
+         UIgpUOJcSR4zIas6ehiWBOHZ7KgNZfA8la6hJKPeu3t6GRFjO64QvNZF1aEPCp7/q3WP
+         JHZIiQoOKSGh2bH8UcRiYS/prw9i6f3KENNqiZ0yB2lr9z9M1nLRhhx4/6Jas6/OMP7v
+         YD1Q==
+X-Gm-Message-State: AOAM532X4rRygGSC4M7dwPdGetQX30efoloDcQpPRFmuX/XokyNJqCEb
+        7Wu16N0qP2M29GSzaRJJMITWiQ==
+X-Google-Smtp-Source: ABdhPJxsoX7eKSMm+cKUoiLIrtgFQTzsLXBKF76NDygdyZY1gzqdrBnHowzCGvB55KXccagYFL6tdQ==
+X-Received: by 2002:aa7:8608:0:b029:258:838a:23bb with SMTP id p8-20020aa786080000b0290258838a23bbmr7797618pfn.37.1618612858730;
+        Fri, 16 Apr 2021 15:40:58 -0700 (PDT)
 Received: from tictac2.mtv.corp.google.com ([2620:15c:202:201:dc8a:c9d0:aa5b:5386])
-        by smtp.gmail.com with ESMTPSA id r6sm5633659pgp.64.2021.04.16.15.40.56
+        by smtp.gmail.com with ESMTPSA id r6sm5633659pgp.64.2021.04.16.15.40.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 Apr 2021 15:40:57 -0700 (PDT)
+        Fri, 16 Apr 2021 15:40:58 -0700 (PDT)
 From:   Douglas Anderson <dianders@chromium.org>
 To:     Andrzej Hajda <a.hajda@samsung.com>,
         Neil Armstrong <narmstrong@baylibre.com>,
@@ -64,9 +64,9 @@ Cc:     Stephen Boyd <swboyd@chromium.org>, robdclark@chromium.org,
         David Airlie <airlied@linux.ie>,
         Robert Foss <robert.foss@linaro.org>,
         dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v4 04/27] drm/bridge: ti-sn65dsi86: Reorder remove()
-Date:   Fri, 16 Apr 2021 15:39:27 -0700
-Message-Id: <20210416153909.v4.4.Ifcf1deaa372eba7eeb4f8eb516c5d15b77a657a9@changeid>
+Subject: [PATCH v4 05/27] drm/bridge: ti-sn65dsi86: Move drm_panel_unprepare() to post_disable()
+Date:   Fri, 16 Apr 2021 15:39:28 -0700
+Message-Id: <20210416153909.v4.5.Ia75c9ffe2a2582393a8532d244da86f18b4c9b21@changeid>
 X-Mailer: git-send-email 2.31.1.368.gbe11c130af-goog
 In-Reply-To: <20210416223950.3586967-1-dianders@chromium.org>
 References: <20210416223950.3586967-1-dianders@chromium.org>
@@ -76,58 +76,42 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Let's make the remove() function strictly the reverse of the probe()
-function so it's easier to reason about.
-
-This patch was created by code inspection and should move us closer to
-a proper remove.
+We prepared the panel in pre_enable() so we should unprepare it in
+post_disable() to match.
 
 Signed-off-by: Douglas Anderson <dianders@chromium.org>
 Reviewed-by: Andrzej Hajda <a.hajda@samsung.com>
 Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 ---
 
-(no changes since v3)
+Changes in v4:
+- Reword commit mesage slightly.
 
-Changes in v3:
-- Removed "NOTES" from commit message.
-
- drivers/gpu/drm/bridge/ti-sn65dsi86.c | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/bridge/ti-sn65dsi86.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-index 76f43af6735d..c006678c9921 100644
+index c006678c9921..e30460002c48 100644
 --- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
 +++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-@@ -1315,20 +1315,21 @@ static int ti_sn_bridge_remove(struct i2c_client *client)
- 	if (!pdata)
- 		return -EINVAL;
- 
--	kfree(pdata->edid);
--	ti_sn_debugfs_remove(pdata);
+@@ -452,8 +452,6 @@ static void ti_sn_bridge_disable(struct drm_bridge *bridge)
+ 	regmap_write(pdata->regmap, SN_ML_TX_MODE_REG, 0);
+ 	/* disable DP PLL */
+ 	regmap_write(pdata->regmap, SN_PLL_ENABLE_REG, 0);
 -
--	of_node_put(pdata->host_node);
--
--	pm_runtime_disable(pdata->dev);
--
- 	if (pdata->dsi) {
- 		mipi_dsi_detach(pdata->dsi);
- 		mipi_dsi_device_unregister(pdata->dsi);
- 	}
- 
-+	kfree(pdata->edid);
-+
-+	ti_sn_debugfs_remove(pdata);
-+
- 	drm_bridge_remove(&pdata->bridge);
- 
-+	pm_runtime_disable(pdata->dev);
-+
-+	of_node_put(pdata->host_node);
-+
- 	return 0;
+-	drm_panel_unprepare(pdata->panel);
  }
  
+ static u32 ti_sn_bridge_get_dsi_freq(struct ti_sn_bridge *pdata)
+@@ -869,6 +867,8 @@ static void ti_sn_bridge_post_disable(struct drm_bridge *bridge)
+ {
+ 	struct ti_sn_bridge *pdata = bridge_to_ti_sn_bridge(bridge);
+ 
++	drm_panel_unprepare(pdata->panel);
++
+ 	clk_disable_unprepare(pdata->refclk);
+ 
+ 	pm_runtime_put_sync(pdata->dev);
 -- 
 2.31.1.368.gbe11c130af-goog
 
