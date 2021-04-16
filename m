@@ -2,57 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4ACCF362824
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Apr 2021 20:56:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6DFB33628AD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Apr 2021 21:31:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239985AbhDPS4b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Apr 2021 14:56:31 -0400
-Received: from relay08.th.seeweb.it ([5.144.164.169]:60977 "EHLO
-        relay08.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239904AbhDPS4b (ORCPT
+        id S231510AbhDPTcN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Apr 2021 15:32:13 -0400
+Received: from mslow1.mail.gandi.net ([217.70.178.240]:39381 "EHLO
+        mslow1.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235029AbhDPTcM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Apr 2021 14:56:31 -0400
-Received: from [192.168.1.101] (abae68.neoplus.adsl.tpnet.pl [83.6.168.68])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id C079C3E984;
-        Fri, 16 Apr 2021 20:56:03 +0200 (CEST)
-Subject: Re: [PATCH 2/2] arm64: boot: dts: qcom: sm8150: Add DMA nodes
-To:     Felipe Balbi <balbi@kernel.org>, Andy Gross <agross@kernel.org>,
+        Fri, 16 Apr 2021 15:32:12 -0400
+Received: from relay9-d.mail.gandi.net (unknown [217.70.183.199])
+        by mslow1.mail.gandi.net (Postfix) with ESMTP id E102BDF5A4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Apr 2021 19:17:27 +0000 (UTC)
+X-Originating-IP: 90.65.108.55
+Received: from localhost (lfbn-lyo-1-1676-55.w90-65.abo.wanadoo.fr [90.65.108.55])
+        (Authenticated sender: alexandre.belloni@bootlin.com)
+        by relay9-d.mail.gandi.net (Postfix) with ESMTPSA id 3D4F4FF803;
+        Fri, 16 Apr 2021 19:17:05 +0000 (UTC)
+Date:   Fri, 16 Apr 2021 21:17:04 +0200
+From:   Alexandre Belloni <alexandre.belloni@bootlin.com>
+To:     Rob Herring <robh+dt@kernel.org>
+Cc:     Lee Jones <lee.jones@linaro.org>,
+        satya priya <skakit@codeaurora.org>,
+        Alessandro Zummo <a.zummo@towertech.it>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>
-Cc:     Rob Herring <robh+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, dmaengine@vger.kernel.org,
-        Felipe Balbi <felipe.balbi@microsoft.com>
-References: <20210416133133.2067467-1-balbi@kernel.org>
- <20210416133133.2067467-3-balbi@kernel.org>
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-Message-ID: <0bb8e50d-9ea1-f616-6493-20fcb4e09e31@somainline.org>
-Date:   Fri, 16 Apr 2021 20:56:03 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.9.0
+        "open list:REAL TIME CLOCK (RTC) SUBSYSTEM" 
+        <linux-rtc@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        devicetree@vger.kernel.org, Kiran Gunda <kgunda@codeaurora.org>
+Subject: Re: [PATCH V2 3/4] dt-bindings: mfd: Convert pm8xxx bindings to yaml
+Message-ID: <YHnisFroaR1qWA0Y@piout.net>
+References: <1617976766-7852-1-git-send-email-skakit@codeaurora.org>
+ <1617976766-7852-4-git-send-email-skakit@codeaurora.org>
+ <20210414083820.GH4869@dell>
+ <CAL_JsqKYQ2EBgQJzKJSy-+D20Pmu_mzUQog03nAw=_PRY-uRjg@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20210416133133.2067467-3-balbi@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAL_JsqKYQ2EBgQJzKJSy-+D20Pmu_mzUQog03nAw=_PRY-uRjg@mail.gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
->one little note. This was for a quick test. I can either remove, keep it
->or complete with the rest of the SPIs in this same patch. Let me know
+Hi,
 
->what y'all prefer :-)
+On 16/04/2021 12:20:30-0500, Rob Herring wrote:
+> On Wed, Apr 14, 2021 at 3:38 AM Lee Jones <lee.jones@linaro.org> wrote:
+> >
+> > On Fri, 09 Apr 2021, satya priya wrote:
+> >
+> > > Convert pm8xxx bindings from .txt to .yaml format. Also,
+> > > split this binding into two: parent binding(qcom-pm8xxx.yaml)
+> > > and child node RTC binding(qcom-pm8xxx-rtc.yaml).
+> > >
+> > > Signed-off-by: satya priya <skakit@codeaurora.org>
+> > > ---
+> > > Changes in V2:
+> > >  - As per Bjorn's comments, I've split this into two, one parent binding
+> > >    and one child node rtc binding.
+> > >  - Fixed bot errors and changed maintainer name.
+> > >
+> > >  .../devicetree/bindings/mfd/qcom-pm8xxx.txt        | 100 ---------------------
+> > >  .../devicetree/bindings/mfd/qcom-pm8xxx.yaml       |  54 +++++++++++
+> > >  2 files changed, 54 insertions(+), 100 deletions(-)
+> > >  delete mode 100644 Documentation/devicetree/bindings/mfd/qcom-pm8xxx.txt
+> > >  create mode 100644 Documentation/devicetree/bindings/mfd/qcom-pm8xxx.yaml
+> >
+> > Applied, thanks.
+> 
+> You need to apply the rtc schema too. linux-next has an error on this one now.
+> 
+
+I'm going to apply it later tonight
 
 
-Yeah, please remove it from this one and send in a separate patch, preferably adding dmas to all the QUPs :)
-
-
-Aaand since I already asked you to re-send, you might as well fix up the properties order under the nodes (compatible first, then reg, with #dma-cells somewhere at the bottom) and the unit name (should be "dma-controller@...").
-
-
-Konrad
-
-
+-- 
+Alexandre Belloni, co-owner and COO, Bootlin
+Embedded Linux and Kernel engineering
+https://bootlin.com
