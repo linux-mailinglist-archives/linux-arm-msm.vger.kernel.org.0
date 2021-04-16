@@ -2,49 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E9F5B362B65
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Apr 2021 00:42:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C1AE7362B67
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Apr 2021 00:42:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235153AbhDPWlh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Apr 2021 18:41:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39880 "EHLO
+        id S235113AbhDPWli (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Apr 2021 18:41:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39906 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235043AbhDPWld (ORCPT
+        with ESMTP id S234839AbhDPWlg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Apr 2021 18:41:33 -0400
+        Fri, 16 Apr 2021 18:41:36 -0400
 Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFE93C06138A
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Apr 2021 15:41:07 -0700 (PDT)
-Received: by mail-pl1-x629.google.com with SMTP id m18so12520921plc.13
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Apr 2021 15:41:07 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2EEADC06138E
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Apr 2021 15:41:08 -0700 (PDT)
+Received: by mail-pl1-x629.google.com with SMTP id h20so14738368plr.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Apr 2021 15:41:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=DFM8liF/M0xdOJLWarwocCWEWNZPfb1MoRCxfTIdoG4=;
-        b=R1ZV6OrerC1010l29PrywmSUIvHfXf06HH7yhI1yG+h5k4X7/yLM+e9GkaeGj1Qz+H
-         a2A7fiV/+deWlVIRXkHUtUY7+p45jCy/DFVOTwfEG1ltxcpHdGMp+skwlySthUD0wojh
-         tRpIYmITlzuwj/MMBzpORlgsB3ccG6UXCHXw0=
+        bh=e0QEnKfzihSwkUCUDGgWB7m6oBMdGB/Jg6G+CQJIJ/k=;
+        b=BJEXFVrJglXTtCKWO5BcKDAJ8HiyFKWqH+mvRCmMjCmnkd3DLzlWhTn1fdIg5HQv3S
+         3Gql/hN0ZaLFfrfDU/TNvKV68ACKKuWZz2aooKWej1qeZNp5/NZar2/du0JSb+CBRiAk
+         G6z9GF+1B8SzhuORPXDFry43kuky8nLzbIT2E=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=DFM8liF/M0xdOJLWarwocCWEWNZPfb1MoRCxfTIdoG4=;
-        b=t5rvtZV5KcqvYfM7BXKnf3Q5ktLZ3nNQEzm1HDQinLudJU1yJRlO7H2mzymV8M4eoF
-         GheApTpLazkIAJVmQXmVjcg6ssksufT5GI4W0ADq1j377MpBrcnI7SP9dL2pUIYC37yK
-         n2p2NiHzacLNQ8qVRQYyO++MueKEAYp5eqcH/W+1DLkwE9UA22zBulo3Mb1L3sUrHsvk
-         rIn0UIudMrRSl6T5YtZv/o2YtXXq0p/Y9FBcPI8oC7PfAJOcejgDQD3qoNsLZk96Ah5M
-         9uk4rwC1x2GG2SQ2v1I95rW2KUaNq+jMVm85eyHCipQ96PC9E8+5UzU8N7mzdgW1cEsn
-         E74Q==
-X-Gm-Message-State: AOAM532z8eWQDHwkbOOCwHncN2j1kI3LW62aont05qlBbgA4eH4v3kFC
-        t61S51GCDrN54E+gUxzOTFTeaQ==
-X-Google-Smtp-Source: ABdhPJyvWWjd+DHCZICjcW8hN5oKKncQlVhyFnMlkZ6SzJVXeRjAeJrO14HIwCTmtT73LHzsKF8HAA==
-X-Received: by 2002:a17:902:c94f:b029:ec:85bd:1f24 with SMTP id i15-20020a170902c94fb02900ec85bd1f24mr2964510pla.4.1618612867526;
-        Fri, 16 Apr 2021 15:41:07 -0700 (PDT)
+        bh=e0QEnKfzihSwkUCUDGgWB7m6oBMdGB/Jg6G+CQJIJ/k=;
+        b=F7jTNOSv54a46YrcPMWEdv1z6KU1Q727rgzs7/jBGzLu7DKgn+DeMAjUpSJDkk97y7
+         lLWeiA+flEbA4LV6OVVi3w4Iv/t4HW/8ndDzP+fn8wAdIEWhodG1uXSqY6tEIWPcXgYz
+         EYlLWdlkgBsOL2CGGAwxXpia+/OJz1zwBSlGECZiwiACCZVuTEDegp5824YLKxAuY40z
+         265a7ouOsZWJioPgSqzrAhVxIFKDbWlwmk8VxotkAUBeXvub2fRbAhcFyflaZD65TrYF
+         kbn+/DBmlYz1unMD58SK7ji8JaucDVpvWADuuiZIUolePIT+luyA9mL7tUtgHdeoHu5N
+         2QKg==
+X-Gm-Message-State: AOAM531qdpGPSDI7Eo8FxQkDp20LUgAe7qpi+Y0Ac81XF5WwWqsGGmqe
+        Hl7Q1itdT/8mMdlyYVFh0wjn9w==
+X-Google-Smtp-Source: ABdhPJxVcP4GeB0Q80asqybNMgUJp0GMle4/sAyPnAkbN5/yDiouXth2EZvymAtPSU+eTKLwJl/oew==
+X-Received: by 2002:a17:90a:4381:: with SMTP id r1mr12486696pjg.214.1618612868578;
+        Fri, 16 Apr 2021 15:41:08 -0700 (PDT)
 Received: from tictac2.mtv.corp.google.com ([2620:15c:202:201:dc8a:c9d0:aa5b:5386])
-        by smtp.gmail.com with ESMTPSA id r6sm5633659pgp.64.2021.04.16.15.41.06
+        by smtp.gmail.com with ESMTPSA id r6sm5633659pgp.64.2021.04.16.15.41.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 Apr 2021 15:41:07 -0700 (PDT)
+        Fri, 16 Apr 2021 15:41:08 -0700 (PDT)
 From:   Douglas Anderson <dianders@chromium.org>
 To:     Andrzej Hajda <a.hajda@samsung.com>,
         Neil Armstrong <narmstrong@baylibre.com>,
@@ -63,9 +63,9 @@ Cc:     Stephen Boyd <swboyd@chromium.org>, robdclark@chromium.org,
         David Airlie <airlied@linux.ie>,
         Robert Foss <robert.foss@linaro.org>,
         dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v4 13/27] drm/bridge: ti-sn65dsi86: Use devm to do our runtime_disable
-Date:   Fri, 16 Apr 2021 15:39:36 -0700
-Message-Id: <20210416153909.v4.13.I1e627eb5f316c0cf6595b120e6e262f5bf890300@changeid>
+Subject: [PATCH v4 14/27] drm/bridge: ti-sn65dsi86: Move all the chip-related init to the start
+Date:   Fri, 16 Apr 2021 15:39:37 -0700
+Message-Id: <20210416153909.v4.14.Ide8ba40feb2e43bc98a11edbb08d696d62dcd83e@changeid>
 X-Mailer: git-send-email 2.31.1.368.gbe11c130af-goog
 In-Reply-To: <20210416223950.3586967-1-dianders@chromium.org>
 References: <20210416223950.3586967-1-dianders@chromium.org>
@@ -75,62 +75,83 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-There's no devm_runtime_enable(), but it's easy to use
-devm_add_action_or_reset() and means we don't need to worry about the
-disable in our remove() routine or in error paths.
+This is just code motion of the probe routine to move all the things
+that are for the "whole chip" (instead of the GPIO parts or the
+MIPI-to-eDP parts) together at the start of probe. This is in
+preparation for breaking the driver into sub-drivers.
 
-No functional changes intended by this change.
+Since we're using devm for all of the "whole chip" stuff this is
+actually quite easy now.
 
 Signed-off-by: Douglas Anderson <dianders@chromium.org>
 ---
 
 (no changes since v1)
 
- drivers/gpu/drm/bridge/ti-sn65dsi86.c | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/bridge/ti-sn65dsi86.c | 26 +++++++++++++-------------
+ 1 file changed, 13 insertions(+), 13 deletions(-)
 
 diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-index a200e88fd006..53f1f7b3022f 100644
+index 53f1f7b3022f..57bc489a0412 100644
 --- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
 +++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-@@ -1223,6 +1223,11 @@ static void ti_sn_bridge_parse_lanes(struct ti_sn65dsi86 *pdata,
- 	pdata->ln_polrs = ln_polrs;
+@@ -1253,12 +1253,6 @@ static int ti_sn65dsi86_probe(struct i2c_client *client,
+ 		return PTR_ERR(pdata->regmap);
+ 	}
+ 
+-	ret = drm_of_find_panel_or_bridge(dev->of_node, 1, 0, &pdata->panel, NULL);
+-	if (ret) {
+-		DRM_ERROR("could not find any panel node\n");
+-		return ret;
+-	}
+-
+ 	pdata->enable_gpio = devm_gpiod_get(dev, "enable", GPIOD_OUT_LOW);
+ 	if (IS_ERR(pdata->enable_gpio)) {
+ 		DRM_ERROR("failed to get enable gpio from DT\n");
+@@ -1266,8 +1260,6 @@ static int ti_sn65dsi86_probe(struct i2c_client *client,
+ 		return ret;
+ 	}
+ 
+-	ti_sn_bridge_parse_lanes(pdata, dev->of_node);
+-
+ 	ret = ti_sn65dsi86_parse_regulators(pdata);
+ 	if (ret) {
+ 		DRM_ERROR("failed to parse regulators\n");
+@@ -1278,12 +1270,22 @@ static int ti_sn65dsi86_probe(struct i2c_client *client,
+ 	if (IS_ERR(pdata->refclk))
+ 		return PTR_ERR(pdata->refclk);
+ 
+-	ret = ti_sn_bridge_parse_dsi_host(pdata);
++	pm_runtime_enable(dev);
++	ret = devm_add_action_or_reset(dev, ti_sn65dsi86_runtime_disable, dev);
+ 	if (ret)
+ 		return ret;
+ 
+-	pm_runtime_enable(dev);
+-	ret = devm_add_action_or_reset(dev, ti_sn65dsi86_runtime_disable, dev);
++	ti_sn65dsi86_debugfs_init(pdata);
++
++	ret = drm_of_find_panel_or_bridge(dev->of_node, 1, 0, &pdata->panel, NULL);
++	if (ret) {
++		DRM_ERROR("could not find any panel node\n");
++		return ret;
++	}
++
++	ti_sn_bridge_parse_lanes(pdata, dev->of_node);
++
++	ret = ti_sn_bridge_parse_dsi_host(pdata);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -1301,8 +1303,6 @@ static int ti_sn65dsi86_probe(struct i2c_client *client,
+ 
+ 	drm_bridge_add(&pdata->bridge);
+ 
+-	ti_sn65dsi86_debugfs_init(pdata);
+-
+ 	return 0;
  }
  
-+static void ti_sn65dsi86_runtime_disable(void *data)
-+{
-+	pm_runtime_disable(data);
-+}
-+
- static int ti_sn65dsi86_probe(struct i2c_client *client,
- 			      const struct i2c_device_id *id)
- {
-@@ -1278,12 +1283,13 @@ static int ti_sn65dsi86_probe(struct i2c_client *client,
- 		return ret;
- 
- 	pm_runtime_enable(dev);
-+	ret = devm_add_action_or_reset(dev, ti_sn65dsi86_runtime_disable, dev);
-+	if (ret)
-+		return ret;
- 
- 	ret = ti_sn_setup_gpio_controller(pdata);
--	if (ret) {
--		pm_runtime_disable(dev);
-+	if (ret)
- 		return ret;
--	}
- 
- 	pdata->aux.name = "ti-sn65dsi86-aux";
- 	pdata->aux.dev = dev;
-@@ -1316,8 +1322,6 @@ static int ti_sn65dsi86_remove(struct i2c_client *client)
- 
- 	drm_bridge_remove(&pdata->bridge);
- 
--	pm_runtime_disable(pdata->dev);
--
- 	of_node_put(pdata->host_node);
- 
- 	return 0;
 -- 
 2.31.1.368.gbe11c130af-goog
 
