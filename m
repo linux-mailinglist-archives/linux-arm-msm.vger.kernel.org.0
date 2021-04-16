@@ -2,149 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C2E9036279D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Apr 2021 20:22:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4A1C43627EB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Apr 2021 20:47:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244728AbhDPSWY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Apr 2021 14:22:24 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:19290 "EHLO
+        id S245105AbhDPSrr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Apr 2021 14:47:47 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:21684 "EHLO
         so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244671AbhDPSWY (ORCPT
+        with ESMTP id S237334AbhDPSrr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Apr 2021 14:22:24 -0400
+        Fri, 16 Apr 2021 14:47:47 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1618597319; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=kVxxHWGXgfHGZWYXemFNetuQ9QkDGOKq4KF+Razehig=; b=GD1Jh4rIZ20pgrmw1hDn47zqXQhgrltKEqsZy4nQIR+KNbqz2ui5VzKMjCkSWd0Ed5e50azy
- SJZoA4dI9h2uCQYu3cH+cEaD/w/Xz3tPXDNx7Nh8ttk7y3CcAKdBzZNYr2iKrzRBnv6fzE2y
- elb3M9x+Si1/G3Of3ovjiBNKc9g=
+ s=smtp; t=1618598842; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=WQvVexLWxw1M6NAH+Y9/0k5Les7MF2MKFVbtaZACYgw=; b=jYiTZjau9/mO0aX/yFuYamrNV/pqsUCNpkzUQgy9qPCYfPX/cvj7SGszQiUvVyOn5huhQfQY
+ J+EvJejdBeJsJAxfE9vmr+miSXTBcPtN0n8X267RLEUmEe633UGUQkI+ORyPO8NUv7CUIfDV
+ V8/yY+SUaHoi5wvgj28kUjfoEEo=
 X-Mailgun-Sending-Ip: 198.61.254.9
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
- 6079d5c12cc44d3aeadb8f58 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 16 Apr 2021 18:21:53
+ smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
+ 6079dbb5853c0a2c46db0c9e (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 16 Apr 2021 18:47:17
  GMT
-Sender: asutoshd=codeaurora.org@mg.codeaurora.org
+Sender: bbhatt=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 2E69BC43465; Fri, 16 Apr 2021 18:21:52 +0000 (UTC)
+        id A201FC433CA; Fri, 16 Apr 2021 18:47:16 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
-Received: from [192.168.8.168] (cpe-70-95-149-85.san.res.rr.com [70.95.149.85])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from malabar-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: asutoshd)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3F772C433CA;
-        Fri, 16 Apr 2021 18:21:49 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 3F772C433CA
+        (Authenticated sender: bbhatt)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 9D772C43461;
+        Fri, 16 Apr 2021 18:47:15 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 9D772C43461
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=asutoshd@codeaurora.org
-Subject: Re: [PATCH v18 1/2] scsi: ufs: Enable power management for wlun
-To:     Bart Van Assche <bvanassche@acm.org>, cang@codeaurora.org,
-        martin.petersen@oracle.com, adrian.hunter@intel.com,
-        linux-scsi@vger.kernel.org
-Cc:     linux-arm-msm@vger.kernel.org,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        Pedro Sousa <pedrom.sousa@synopsys.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Stanley Chu <stanley.chu@mediatek.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Steven Rostedt <rostedt@goodmis.org>,
-        Ingo Molnar <mingo@redhat.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Lee Jones <lee.jones@linaro.org>,
-        Bean Huo <beanhuo@micron.com>,
-        Kiwoong Kim <kwmad.kim@samsung.com>,
-        Yue Hu <huyue2@yulong.com>,
-        Wei Yongjun <weiyongjun1@huawei.com>,
-        "Gustavo A. R. Silva" <gustavoars@kernel.org>,
-        Dinghao Liu <dinghao.liu@zju.edu.cn>,
-        Jaegeuk Kim <jaegeuk@kernel.org>,
-        Satya Tangirala <satyat@google.com>,
-        open list <linux-kernel@vger.kernel.org>,
-        "moderated list:ARM/SAMSUNG S3C, S5P AND EXYNOS ARM ARCHITECTURES" 
-        <linux-arm-kernel@lists.infradead.org>,
-        "open list:ARM/SAMSUNG S3C, S5P AND EXYNOS ARM ARCHITECTURES" 
-        <linux-samsung-soc@vger.kernel.org>,
-        "moderated list:UNIVERSAL FLASH STORAGE HOST CONTROLLER DRIVER..." 
-        <linux-mediatek@lists.infradead.org>
-References: <cover.1618426513.git.asutoshd@codeaurora.org>
- <d1a6af736730b9d79f977100286c5d9325546ac2.1618426513.git.asutoshd@codeaurora.org>
- <f111e363-c709-fe3c-65da-450c9e9e3408@acm.org>
-From:   "Asutosh Das (asd)" <asutoshd@codeaurora.org>
-Message-ID: <9ae35c14-f8aa-a181-2259-2d32bd2c1f07@codeaurora.org>
-Date:   Fri, 16 Apr 2021 11:21:48 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.9.1
-MIME-Version: 1.0
-In-Reply-To: <f111e363-c709-fe3c-65da-450c9e9e3408@acm.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=bbhatt@codeaurora.org
+From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
+To:     manivannan.sadhasivam@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
+        jhugo@codeaurora.org, linux-kernel@vger.kernel.org,
+        loic.poulain@linaro.org, linux-wireless@vger.kernel.org,
+        kvalo@codeaurora.org, ath11k@lists.infradead.org,
+        Bhaumik Bhatt <bbhatt@codeaurora.org>
+Subject: [PATCH v1 0/6] BHI/BHIe improvements for MHI power purposes
+Date:   Fri, 16 Apr 2021 11:46:59 -0700
+Message-Id: <1618598825-18629-1-git-send-email-bbhatt@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 4/15/2021 4:11 PM, Bart Van Assche wrote:
-> On 4/14/21 11:58 AM, Asutosh Das wrote:
->> [ ... ]
-> 
-Hi Bart,
-Thanks for the comments. I will fix the comments in the next version.
+This patch series improves the power up behavior by allowing MHI host driver to
+set BHI and/or BHIe offsets early on in the preparation phase and fail pre-power
+up if offsets are not found or not within a limited MMIO region. This also
+allows MHI host to clean up the offsets in the unprepare after power down phase.
 
-> The following code is executed before ufshcd_async_scan() is called:
-> 
-> 	dev = hba->dev;
-> 	[ ... ]
-> 	/* Hold auto suspend until async scan completes */
-> 	pm_runtime_get_sync(dev);
-> 
-That would only keep the hba runtime resumed. At this point of time the 
-luns are not detected yet.
-> and the following code occurs in ufshcd_add_lus():
-> 
-> 	pm_runtime_put_sync(hba->dev);
-> 
-> Isn't that sufficient to postpone enabling of runtime PM until LUN
-> scanning has finished? Or in other words, is adding a
-> pm_runtime_get_noresume() call in ufshcd_slave_configure() really necessary?
-> 
-Yes, because the supplier (device wlun) may be suspended otherwise in 
-scsi_sysfs_add_sdev().
->> @@ -4979,15 +5035,9 @@ ufshcd_transfer_rsp_status(struct ufs_hba *hba, struct ufshcd_lrb *lrbp)
->>   			 */
->>   			if (!hba->pm_op_in_progress &&
->>   			    !ufshcd_eh_in_progress(hba) &&
->> -			    ufshcd_is_exception_event(lrbp->ucd_rsp_ptr) &&
->> -			    schedule_work(&hba->eeh_work)) {
->> -				/*
->> -				 * Prevent suspend once eeh_work is scheduled
->> -				 * to avoid deadlock between ufshcd_suspend
->> -				 * and exception event handler.
->> -				 */
->> -				pm_runtime_get_noresume(hba->dev);
->> -			}
->> +			    ufshcd_is_exception_event(lrbp->ucd_rsp_ptr))
->> +				/* Flushed in suspend */
->> +				schedule_work(&hba->eeh_work);
-> 
-> What makes it safe to leave out the above pm_runtime_get_noresume() call?
-> 
-The __ufshcd_wl_suspend() would flush this work so that it doesn't run 
-after suspend.
-> Thanks,
-> 
-> Bart.
-> 
+Going forward, controllers will be required to specify a reg_len field which
+will be used to check whether the BHI/BHIe offsets are in range or not.
 
+This series has been tested on X86_64 architecture with the PCI generic driver
+as controller and an SDX55 device.
+
+Bhaumik Bhatt (6):
+  bus: mhi: core: Set BHI/BHIe offsets on power up preparation
+  bus: mhi: core: Set BHI and BHIe pointers to NULL in clean-up
+  bus: mhi: Add MMIO region length to controller structure
+  ath11k: set register access length for MHI driver
+  bus: mhi: pci_generic: Set register access length for MHI driver
+  bus: mhi: core: Add range checks for BHI and BHIe
+
+ drivers/bus/mhi/core/init.c           | 58 +++++++++++++++++++++++------------
+ drivers/bus/mhi/core/pm.c             | 28 +++--------------
+ drivers/bus/mhi/pci_generic.c         |  1 +
+ drivers/net/wireless/ath/ath11k/mhi.c |  1 +
+ include/linux/mhi.h                   |  2 ++
+ 5 files changed, 47 insertions(+), 43 deletions(-)
 
 -- 
 The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-Linux Foundation Collaborative Project
+a Linux Foundation Collaborative Project
+
