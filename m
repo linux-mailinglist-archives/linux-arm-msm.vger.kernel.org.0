@@ -2,49 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 36CDD362B70
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Apr 2021 00:42:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 523B7362B73
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Apr 2021 00:42:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235138AbhDPWl5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Apr 2021 18:41:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39912 "EHLO
+        id S235176AbhDPWmA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Apr 2021 18:42:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39868 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235239AbhDPWll (ORCPT
+        with ESMTP id S235262AbhDPWlo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Apr 2021 18:41:41 -0400
-Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0DACC061574
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Apr 2021 15:41:16 -0700 (PDT)
-Received: by mail-pj1-x1029.google.com with SMTP id k23-20020a17090a5917b02901043e35ad4aso17167292pji.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Apr 2021 15:41:16 -0700 (PDT)
+        Fri, 16 Apr 2021 18:41:44 -0400
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BDC68C061760
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Apr 2021 15:41:17 -0700 (PDT)
+Received: by mail-pj1-x1035.google.com with SMTP id j21-20020a17090ae615b02901505b998b45so1854921pjy.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Apr 2021 15:41:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=G1oK3A+M8fg+nmJCwN6uSqjhfKVKHBhUTiK9rrQlAS4=;
-        b=bCeuEmR3HjXaHM41yzCpBTsW5gkiZWfz+buTmvLCoA3npH8nKGoWLVRFtmpaCOeNJv
-         BMKH1h0fbC4DBaiaaLumGYJPd1GONx5InTjlGMDSJPKVKkmdgRdG0VztUjk+WywnCBvC
-         OorkdjY52CQ8xbqIbH26D7ORN0pySvgdVIsRI=
+        bh=WRxEiBxo2TK9eYFaE6Z8QmjhtPKi2ZOYbG3MBiDbq5Q=;
+        b=dMXdGHRO1j71y2Iv2+48IjAI9YY8qkW+j1r2PquWxQUiBGEQRIkzBbRh2GOWbOacTc
+         MtacNteNbERfxUY2N6QuKbKfYAwXWwb9TlSzfQqVWzhYjzbrpdsxY/g5qnlaq+jX8Qtz
+         BJGuMy3uVZxA6SGPfmYi3n+73r1YGoNx1Fe1c=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=G1oK3A+M8fg+nmJCwN6uSqjhfKVKHBhUTiK9rrQlAS4=;
-        b=MmJgGCDdYFHsJttOilbFYIGS7ADZB1fcvn0SAOTQREMYD2RqB+sQKuTRH8ytx5UfEO
-         QMthxf+NQeijz6vPXKVPFI94CrtpC8jAdo+0GjZfmpXgrzI3VnKWGrmX/265tsXuoU4M
-         65R+nzsNJ+yJckmECMdCJqekTLb50h2zIDoVmT3QOnWifSYJ4wNNRpb2a/EJAYXSZHRi
-         eJ/nzjfonpxVoQ3pKyqsBPvR4uBDG7/yfZr/6cioEQgyVXkQ8KOj2OS/idBFUmUl0JNT
-         XrhzgtaTH5TlpZVOBqGjRYC19m1miX0W/SPYgREwAvFhjDSoZaHbUPtF5hjm6RQ/bCpx
-         QXnA==
-X-Gm-Message-State: AOAM530PkS6FimHlg9s6rKSmIhFMXNoCInPht+jcIELpAXba4x5V6WHH
-        LX37UkivEX4vXwHu81WR0cuD7Q==
-X-Google-Smtp-Source: ABdhPJy6EH6g0mXqfXc8j8Oj2eoiQmlxQ4rGLqmYwpa2F46snG4cU2uBdupfef6ToF02aiZj4Q8Osg==
-X-Received: by 2002:a17:902:c40c:b029:ea:af9e:b123 with SMTP id k12-20020a170902c40cb02900eaaf9eb123mr11667608plk.30.1618612876151;
-        Fri, 16 Apr 2021 15:41:16 -0700 (PDT)
+        bh=WRxEiBxo2TK9eYFaE6Z8QmjhtPKi2ZOYbG3MBiDbq5Q=;
+        b=bDw5Jxx7o6s0sSnZUUHDkSJ/udigTPc7gsAq8BDK+QfxWA/DlwSboTu6NSC/LX+Aoo
+         YLMx7UEcPszw5CbloqgG+3lsFyPoS/RLu4rJiZwPqtuHG52X0XC5RL+87LHn27dwf3Tm
+         zfs38pK5xM5+G8vWMtwcA3lWlW7tdopywLpO7SKyJDJU+ypKeGBx2FI6IJRFLx9TLF5o
+         9ifSt5VrazguQZELFEYGstt8G3L+HqlsJ1QUhQ/lY/jkpz8cmDfXntXF/t95bhzIaSX+
+         M2x3kFuZGzDK71uf6M++8YA5ONHmrrjsRMqNUcfEXw3Qg7tJrZDx7G0bRxfxhPVMBqCX
+         QorA==
+X-Gm-Message-State: AOAM533ryJErzUZpvd6B3v/cASQxArkSbw4zwG8cw1JftLpVXJXrDsjX
+        1HVjTPr/jMzs0Pg5Nc06CDrKvg==
+X-Google-Smtp-Source: ABdhPJyWnRznUdTyIvfS7dug/lUV2TaYTjzVaxsnEcIWBHeIiVhb9ryAZZH4fGMUWj2xhxmdm+R7Nw==
+X-Received: by 2002:a17:90b:344a:: with SMTP id lj10mr12317920pjb.101.1618612877403;
+        Fri, 16 Apr 2021 15:41:17 -0700 (PDT)
 Received: from tictac2.mtv.corp.google.com ([2620:15c:202:201:dc8a:c9d0:aa5b:5386])
-        by smtp.gmail.com with ESMTPSA id r6sm5633659pgp.64.2021.04.16.15.41.15
+        by smtp.gmail.com with ESMTPSA id r6sm5633659pgp.64.2021.04.16.15.41.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 Apr 2021 15:41:15 -0700 (PDT)
+        Fri, 16 Apr 2021 15:41:17 -0700 (PDT)
 From:   Douglas Anderson <dianders@chromium.org>
 To:     Andrzej Hajda <a.hajda@samsung.com>,
         Neil Armstrong <narmstrong@baylibre.com>,
@@ -59,10 +59,13 @@ Cc:     Stephen Boyd <swboyd@chromium.org>, robdclark@chromium.org,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         linux-arm-msm@vger.kernel.org, Linus W <linus.walleij@linaro.org>,
         Douglas Anderson <dianders@chromium.org>,
-        linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v4 21/27] i2c: i2c-core-of: Fix corner case of finding adapter by node
-Date:   Fri, 16 Apr 2021 15:39:44 -0700
-Message-Id: <20210416153909.v4.21.Ib7e3a4af2f3e2cb3bd8e4adbac3bcfc966f27791@changeid>
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v4 22/27] drm/panel: panel-simple: Remove extra call: drm_connector_update_edid_property()
+Date:   Fri, 16 Apr 2021 15:39:45 -0700
+Message-Id: <20210416153909.v4.22.Icb581b0273d95cc33ca38676c61ae6d7d2e75357@changeid>
 X-Mailer: git-send-email 2.31.1.368.gbe11c130af-goog
 In-Reply-To: <20210416223950.3586967-1-dianders@chromium.org>
 References: <20210416223950.3586967-1-dianders@chromium.org>
@@ -72,89 +75,37 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The of_find_i2c_adapter_by_node() could end up failing to find an
-adapter in certain conditions. Specifically it's possible that
-of_dev_or_parent_node_match() could end up finding an I2C client in
-the list and cause bus_find_device() to stop early even though an I2C
-adapter was present later in the list.
-
-Let's move the i2c_verify_adapter() into the predicate function to
-prevent this. Now we'll properly skip over the I2C client and be able
-to find the I2C adapter.
-
-This issue has always been a potential problem if a single device tree
-node could represent both an I2C client and an adapter. I believe this
-is a sane thing to do if, for instance, an I2C-connected DP bridge
-chip is present. The bridge chip is an I2C client but it can also
-provide an I2C adapter (DDC tunneled over AUX channel). We don't want
-to have to create a sub-node just so a panel can link to it with the
-"ddc-i2c-bus" property.
-
-I believe that this problem got worse, however, with commit
-e814e688413a ("i2c: of: Try to find an I2C adapter matching the
-parent"). Starting at that commit it would be even easier to
-accidentally miss finding the adapter.
+As of commit 5186421cbfe2 ("drm: Introduce epoch counter to
+drm_connector") the drm_get_edid() function calls
+drm_connector_update_edid_property() for us. There's no reason for us
+to call it again.
 
 Signed-off-by: Douglas Anderson <dianders@chromium.org>
 ---
-This commit is sorta just jammed into the middle of my series. It has
-no dependencies on the earlier patches in the series and I think it
-can land independently in the i2c tree. Later patches in the series
-won't work right without this one, but they won't crash. If we can't
-find the i2c bus we'll just fall back to the hardcoded panel modes
-which, at least today, all panels have.
+As Laurent pointed out [1] this is actually a pretty common
+problem. His suggestion to do this more broadly is a good idea but
+this series is probably a bit ambitious already so I would suggest
+that be taken up separately.
 
-I'll also note that part of me wonders if we should actually fix this
-further to run two passes through everything: first look to see if we
-find an exact match and only look at the parent pointer if there is no
-match. I don't currently have a need for that and it's a slightly
-bigger change, but it seems conceivable that it could affect someone?
+[1] https://lore.kernel.org/r/YGphgcESWsozCi1y@pendragon.ideasonboard.com
 
 (no changes since v1)
 
- drivers/i2c/i2c-core-of.c | 17 ++++++++++-------
- 1 file changed, 10 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/panel/panel-simple.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/i2c/i2c-core-of.c b/drivers/i2c/i2c-core-of.c
-index 3ed74aa4b44b..de0bf5fce3a2 100644
---- a/drivers/i2c/i2c-core-of.c
-+++ b/drivers/i2c/i2c-core-of.c
-@@ -124,6 +124,14 @@ static int of_dev_or_parent_node_match(struct device *dev, const void *data)
- 	return 0;
- }
+diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
+index 90a17ca79d06..c91e8aa108f7 100644
+--- a/drivers/gpu/drm/panel/panel-simple.c
++++ b/drivers/gpu/drm/panel/panel-simple.c
+@@ -512,7 +512,6 @@ static int panel_simple_get_modes(struct drm_panel *panel,
+ 	if (p->ddc) {
+ 		struct edid *edid = drm_get_edid(connector, p->ddc);
  
-+static int of_i2c_adapter_match(struct device *dev, const void *data)
-+{
-+	if (!of_dev_or_parent_node_match(dev, data))
-+		return 0;
-+
-+	return !!i2c_verify_adapter(dev);
-+}
-+
- /* must call put_device() when done with returned i2c_client device */
- struct i2c_client *of_find_i2c_device_by_node(struct device_node *node)
- {
-@@ -146,18 +154,13 @@ EXPORT_SYMBOL(of_find_i2c_device_by_node);
- struct i2c_adapter *of_find_i2c_adapter_by_node(struct device_node *node)
- {
- 	struct device *dev;
--	struct i2c_adapter *adapter;
- 
- 	dev = bus_find_device(&i2c_bus_type, NULL, node,
--			      of_dev_or_parent_node_match);
-+			      of_i2c_adapter_match);
- 	if (!dev)
- 		return NULL;
- 
--	adapter = i2c_verify_adapter(dev);
--	if (!adapter)
--		put_device(dev);
--
--	return adapter;
-+	return to_i2c_adapter(dev);
- }
- EXPORT_SYMBOL(of_find_i2c_adapter_by_node);
- 
+-		drm_connector_update_edid_property(connector, edid);
+ 		if (edid) {
+ 			num += drm_add_edid_modes(connector, edid);
+ 			kfree(edid);
 -- 
 2.31.1.368.gbe11c130af-goog
 
