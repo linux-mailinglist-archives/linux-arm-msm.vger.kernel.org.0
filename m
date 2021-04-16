@@ -2,78 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 94F353623EE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Apr 2021 17:30:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 62179362699
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Apr 2021 19:20:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243009AbhDPPaF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Apr 2021 11:30:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57382 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343665AbhDPPaF (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Apr 2021 11:30:05 -0400
-Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0649C061756
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Apr 2021 08:29:39 -0700 (PDT)
-Received: by mail-pl1-x634.google.com with SMTP id v13so574669ple.9
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Apr 2021 08:29:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=p+GVt4zFmKmqKxkmzGI4Q5a/DBpLPH80j/5btmM1LmY=;
-        b=xoRW3IYe922zO/lzORn0p+Xob3qxvdX+UnZ3jGlz/goun4RYxt/xKdSMkm+ZcSFGvp
-         OGQ+OJ4CFGN1ip7TcfW0wZVUd/evc/G8BPcQRXnDTmyAR2FyopuxFjIaEoIX2T2Bw2Xk
-         2GLFDgRt8NR98KcfxBvnOE1Zqmq1BCWh7C7nPX2TdU0zB5oGUhLpARKaF6BmGLTyqJGd
-         08+UDLagE5NHj4yQ538i0aEd/5p1dIghqOEpKJqOTyNo20j85WKmxtoCtPbSFhfWWjes
-         7LNszsmrpa4UfiVOCU2CmH/340pfVuDOMDJ1j6mBSTbuRC5Ese40W4vyPcpgLK7GlaKx
-         /RBg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=p+GVt4zFmKmqKxkmzGI4Q5a/DBpLPH80j/5btmM1LmY=;
-        b=q0QpJOBG4sAzx6ASEc7cSk4DrnM1O88vgV1VuzZkcLtuWQZljPkaiuePiR22WQFkiL
-         KVict5XHqNBgA4pezJPBH0a6dBwxKn6MpFUeeo4ZQY9CtoxkYOsnxIvlX1AnDSYMIhjB
-         9W5kc0XzOFrCtFwDMiLZGjuRnarw6DGum/KgZFL2BohXfk2Y1d0WQsCSU4q/uHqv2fjG
-         WNuWOzXtJSllPvIotLGEWdixiAhIapF73Gh7StF+QpINUlJZAuVoS8lt+vcQ2WZ8UsXV
-         6ry9+0R65/QQwKBDFunGFThNFmMIDcHdAeKo3koYOYc/j1l6Q9hEPYyCWFfU1Kt1WVUG
-         I2vw==
-X-Gm-Message-State: AOAM5313mUdmkpUf5DXj3JumnMxV5xPeofTf+fBDOk/G2mbez00DOcpa
-        H4Y++PkNi+XRHjBhGIrYwFq+OGxfmG5OsS8blrpwyw==
-X-Google-Smtp-Source: ABdhPJyZtucPw7kU6E7JEzddw3OxyuG6Na85DhOxrZ1BNc/ZLcHmt799YZYyVsyNY88iS5vemCAFByqQ4FRtUsBe4ns=
-X-Received: by 2002:a17:90a:b112:: with SMTP id z18mr10675954pjq.18.1618586979275;
- Fri, 16 Apr 2021 08:29:39 -0700 (PDT)
+        id S236029AbhDPRVJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Apr 2021 13:21:09 -0400
+Received: from mail.kernel.org ([198.145.29.99]:54132 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S233606AbhDPRVI (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 16 Apr 2021 13:21:08 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id E8CA6613BB;
+        Fri, 16 Apr 2021 17:20:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1618593643;
+        bh=DgqWTJb1Z+HKN9VW4qCZgJDVVwJytGX9V+66YuoSKXg=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=TVRsJBjKQ6RpS0XiwN92qJPEOSAxr8oYInJt+5l04dNdv59fY8aKTcRpm8AHdKAt1
+         CoVepH6JQ0zFRJd1IMUBcCwi2+CTYJMZrz+ghjbLyK03+EBPu5r9E3fmLZ8FOx6Ujb
+         mDPmrRI94Pz15BgHslmw9+W6IxwR8mDBdGr0HtRr5vZWdXGm76E7hAjMK5ra1whajb
+         4x6pMovjYS+H/sAH6B7MPvqVJttTsHmQdokN6XezdbVocjtP4pTSlT8Fpwe4wr1ViT
+         andoyMhzN9nczztk8TkscR1XVOTpZ4nwyn2DxbbRcPEjFZvM/IH7+EM/vmsJQ4EjlR
+         xMcKgZ2NjjELA==
+Received: by mail-ej1-f42.google.com with SMTP id w3so43250948ejc.4;
+        Fri, 16 Apr 2021 10:20:43 -0700 (PDT)
+X-Gm-Message-State: AOAM533heXkYeLEr5/e04TF2CtX/yZg17pnpnj+HflJutAd4Epev2TTM
+        Fjmsa0rKB9LBiWVf2XeacOVLiqmIOLUfxx1pNg==
+X-Google-Smtp-Source: ABdhPJyCFfax6nihY7mtSy1gIy1kLGf50Frz/52eDZ9jBaYGNWv32kco7rFKkOeYCtTf3SYQt5biMyijpQlfWkCYOQM=
+X-Received: by 2002:a17:906:4fcd:: with SMTP id i13mr9385535ejw.341.1618593642471;
+ Fri, 16 Apr 2021 10:20:42 -0700 (PDT)
 MIME-Version: 1.0
-References: <20210413160318.2003699-1-weiyongjun1@huawei.com>
-In-Reply-To: <20210413160318.2003699-1-weiyongjun1@huawei.com>
-From:   Loic Poulain <loic.poulain@linaro.org>
-Date:   Fri, 16 Apr 2021 17:38:11 +0200
-Message-ID: <CAMZdPi9c7L7_4Pzr82zfiYOXp128gnwMEpSex7S9-tQ=jWvNWA@mail.gmail.com>
-Subject: Re: [PATCH -next] bus: mhi: pci_generic: Fix possible use-after-free
- in mhi_pci_remove()
-To:     Wei Yongjun <weiyongjun1@huawei.com>
-Cc:     Manivannan Sadhasivam <mani@kernel.org>,
-        Hemant Kumar <hemantk@codeaurora.org>,
+References: <1617976766-7852-1-git-send-email-skakit@codeaurora.org>
+ <1617976766-7852-4-git-send-email-skakit@codeaurora.org> <20210414083820.GH4869@dell>
+In-Reply-To: <20210414083820.GH4869@dell>
+From:   Rob Herring <robh+dt@kernel.org>
+Date:   Fri, 16 Apr 2021 12:20:30 -0500
+X-Gmail-Original-Message-ID: <CAL_JsqKYQ2EBgQJzKJSy-+D20Pmu_mzUQog03nAw=_PRY-uRjg@mail.gmail.com>
+Message-ID: <CAL_JsqKYQ2EBgQJzKJSy-+D20Pmu_mzUQog03nAw=_PRY-uRjg@mail.gmail.com>
+Subject: Re: [PATCH V2 3/4] dt-bindings: mfd: Convert pm8xxx bindings to yaml
+To:     Lee Jones <lee.jones@linaro.org>
+Cc:     satya priya <skakit@codeaurora.org>,
+        Alessandro Zummo <a.zummo@towertech.it>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        "open list:REAL TIME CLOCK (RTC) SUBSYSTEM" 
+        <linux-rtc@vger.kernel.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        kernel-janitors@vger.kernel.org, Hulk Robot <hulkci@huawei.com>
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        devicetree@vger.kernel.org, Kiran Gunda <kgunda@codeaurora.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 13 Apr 2021 at 17:54, Wei Yongjun <weiyongjun1@huawei.com> wrote:
+On Wed, Apr 14, 2021 at 3:38 AM Lee Jones <lee.jones@linaro.org> wrote:
 >
-> This driver's remove path calls del_timer(). However, that function
-> does not wait until the timer handler finishes. This means that the
-> timer handler may still be running after the driver's remove function
-> has finished, which would result in a use-after-free.
+> On Fri, 09 Apr 2021, satya priya wrote:
 >
-> Fix by calling del_timer_sync(), which makes sure the timer handler
-> has finished, and unable to re-schedule itself.
+> > Convert pm8xxx bindings from .txt to .yaml format. Also,
+> > split this binding into two: parent binding(qcom-pm8xxx.yaml)
+> > and child node RTC binding(qcom-pm8xxx-rtc.yaml).
+> >
+> > Signed-off-by: satya priya <skakit@codeaurora.org>
+> > ---
+> > Changes in V2:
+> >  - As per Bjorn's comments, I've split this into two, one parent binding
+> >    and one child node rtc binding.
+> >  - Fixed bot errors and changed maintainer name.
+> >
+> >  .../devicetree/bindings/mfd/qcom-pm8xxx.txt        | 100 ---------------------
+> >  .../devicetree/bindings/mfd/qcom-pm8xxx.yaml       |  54 +++++++++++
+> >  2 files changed, 54 insertions(+), 100 deletions(-)
+> >  delete mode 100644 Documentation/devicetree/bindings/mfd/qcom-pm8xxx.txt
+> >  create mode 100644 Documentation/devicetree/bindings/mfd/qcom-pm8xxx.yaml
 >
-> Fixes: 8562d4fe34a3 ("mhi: pci_generic: Add health-check")
-> Reported-by: Hulk Robot <hulkci@huawei.com>
-> Signed-off-by: Wei Yongjun <weiyongjun1@huawei.com>
+> Applied, thanks.
 
-Reviewed-by: Loic Poulain <loic.poulain@linaro.org>
+You need to apply the rtc schema too. linux-next has an error on this one now.
+
+Rob
