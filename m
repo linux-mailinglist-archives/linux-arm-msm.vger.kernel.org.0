@@ -2,44 +2,45 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7BA03361F49
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Apr 2021 14:04:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B2D7C361F55
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Apr 2021 14:07:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237987AbhDPMEn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Apr 2021 08:04:43 -0400
+        id S241639AbhDPMFA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Apr 2021 08:05:00 -0400
 Received: from so254-9.mailgun.net ([198.61.254.9]:43730 "EHLO
         so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233955AbhDPMEk (ORCPT
+        with ESMTP id S241767AbhDPMFA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Apr 2021 08:04:40 -0400
+        Fri, 16 Apr 2021 08:05:00 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1618574655; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=2ykfzo43bdfME6vikSYhWqnN90ERJ9J2e6T9baSKjWE=; b=EOIuLZdn5am7faWeixIcDLkrRvryTNlEeG7k6ENyecdY0amOuCQgGwFQ/h/RVQJw8JBLbVKo
- mxQOOX0LRlB76blbg0nYYaaiWJkh7Rnjif63ju2Cx2po16WFiWGd6T/urh45HqN4D7cyz9pF
- f6oqK4xkZ/WOkvnfHyxSggTsB+o=
+ s=smtp; t=1618574675; h=References: In-Reply-To: Message-Id: Date:
+ Subject: Cc: To: From: Sender;
+ bh=3xjRLjyglUv7Ev/7X8kVNghZy7riIS9tW/aGdW89Baw=; b=FXROg7qXuV5VUSko/1oIjOVeJjcjuf8Gw/tGhLUxNHmBiMyuSlMzpOYd4z4EegEifs6y/WNv
+ i9Y+LTxOhFjLu8uT46WfG/l+13iSF8yQtB8H9A7ASzOa4ingF2XSebKxLNM5nAwUI/BjtlyX
+ n+Jux3f8pGrZE6nnq5Rk0bttKLM=
 X-Mailgun-Sending-Ip: 198.61.254.9
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
- 60797d3ce0e9c9a6b658fcae (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 16 Apr 2021 12:04:12
+ smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
+ 60797d412cbba88980f8d2cf (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 16 Apr 2021 12:04:17
  GMT
 Sender: sibis=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id ED746C43462; Fri, 16 Apr 2021 12:04:11 +0000 (UTC)
+        id AA76AC43462; Fri, 16 Apr 2021 12:04:16 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from blr-ubuntu-87.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: sibis)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id EB914C433C6;
-        Fri, 16 Apr 2021 12:04:06 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org EB914C433C6
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id C1A20C43461;
+        Fri, 16 Apr 2021 12:04:11 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org C1A20C43461
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=sibis@codeaurora.org
 From:   Sibi Sankar <sibis@codeaurora.org>
@@ -50,65 +51,71 @@ Cc:     rjw@rjwysocki.net, agross@kernel.org, ohad@wizery.com,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         dianders@chromium.org, rishabhb@codeaurora.org,
         sidgup@codeaurora.org, Sibi Sankar <sibis@codeaurora.org>
-Subject: [PATCH 00/12] Use qmp_send to update co-processor load state
-Date:   Fri, 16 Apr 2021 17:33:46 +0530
-Message-Id: <1618574638-5117-1-git-send-email-sibis@codeaurora.org>
+Subject: [PATCH 01/12] dt-bindings: soc: qcom: aoss: Drop power-domain bindings
+Date:   Fri, 16 Apr 2021 17:33:47 +0530
+Message-Id: <1618574638-5117-2-git-send-email-sibis@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
+In-Reply-To: <1618574638-5117-1-git-send-email-sibis@codeaurora.org>
+References: <1618574638-5117-1-git-send-email-sibis@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The power domains exposed by the AOSS QMP driver control the load state
-resources linked to modem, adsp, cdsp remoteprocs. These are used to
-notify the Always on Subsystem (AOSS) that a particular co-processor is
-up/down. AOSS uses this information to wait for the co-processors to
-suspend before starting its sleep sequence. These co-processors enter
-low-power modes independent to that of the application processor and
-the load state resources linked to them are expected to remain unaltered
-across system suspend/resume cycles. To achieve this behavior lets stop
-modeling them as power-domains and replace them with generic qmp_send
-interface instead.
+Drop power-domain bindings exposed by AOSS QMP node.
 
-https://lore.kernel.org/lkml/20200913034603.GV3715@yoga/
-Previous dicussion on dropping power-domain support from AOSS QMP driver
+Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+---
+ .../devicetree/bindings/soc/qcom/qcom,aoss-qmp.txt       | 16 ++--------------
+ 1 file changed, 2 insertions(+), 14 deletions(-)
 
-https://lore.kernel.org/lkml/1617943188-23278-2-git-send-email-deesin@qti.qualcomm.com/
-Depends on ^^
-
-Sibi Sankar (12):
-  dt-bindings: soc: qcom: aoss: Drop power-domain bindings
-  soc: qcom: aoss: Drop power domain support
-  dt-bindings: remoteproc: qcom: pas: Add QMP bindings
-  dt-bindings: remoteproc: qcom: Add QMP bindings
-  remoteproc: qcom: q6v5: Use qmp_send to update co-processor load state
-  arm64: dts: qcom: sc7180: Use QMP binding to control load state
-  arm64: dts: qcom: sc7280: Use QMP binding to control load state
-  arm64: dts: qcom: sdm845: Use QMP binding to control load state
-  arm64: dts: qcom: sm8150: Use QMP binding to control load state
-  arm64: dts: qcom: sm8250: Use QMP binding to control load state
-  arm64: dts: qcom: sm8350: Use QMP binding to control load state
-  dt-bindings: soc: qcom: aoss: Delete unused power-domain definitions
-
- .../devicetree/bindings/remoteproc/qcom,adsp.txt   |  11 ++-
- .../devicetree/bindings/remoteproc/qcom,q6v5.txt   |   7 +-
- .../devicetree/bindings/soc/qcom/qcom,aoss-qmp.txt |  16 +--
- arch/arm64/boot/dts/qcom/sc7180.dtsi               |   9 +-
- arch/arm64/boot/dts/qcom/sc7280.dtsi               |   2 -
- arch/arm64/boot/dts/qcom/sdm845.dtsi               |   8 +-
- arch/arm64/boot/dts/qcom/sm8150.dtsi               |  28 +++---
- arch/arm64/boot/dts/qcom/sm8250.dtsi               |  22 ++---
- arch/arm64/boot/dts/qcom/sm8350.dtsi               |  30 +++---
- drivers/remoteproc/qcom_q6v5.c                     |  57 ++++++++++-
- drivers/remoteproc/qcom_q6v5.h                     |   7 +-
- drivers/remoteproc/qcom_q6v5_adsp.c                |   7 +-
- drivers/remoteproc/qcom_q6v5_mss.c                 |  44 ++-------
- drivers/remoteproc/qcom_q6v5_pas.c                 |  80 ++++-----------
- drivers/remoteproc/qcom_q6v5_wcss.c                |   4 +-
- drivers/soc/qcom/qcom_aoss.c                       | 109 +--------------------
- include/dt-bindings/power/qcom-aoss-qmp.h          |  14 ---
- 17 files changed, 163 insertions(+), 292 deletions(-)
- delete mode 100644 include/dt-bindings/power/qcom-aoss-qmp.h
-
+diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,aoss-qmp.txt b/Documentation/devicetree/bindings/soc/qcom/qcom,aoss-qmp.txt
+index 783dc81b0f26..c0ae051a5b76 100644
+--- a/Documentation/devicetree/bindings/soc/qcom/qcom,aoss-qmp.txt
++++ b/Documentation/devicetree/bindings/soc/qcom/qcom,aoss-qmp.txt
+@@ -9,8 +9,7 @@ Messaging Protocol (QMP)
+ 
+ The AOSS side channel exposes control over a set of resources, used to control
+ a set of debug related clocks and to affect the low power state of resources
+-related to the secondary subsystems. These resources are exposed as a set of
+-power-domains.
++related to the secondary subsystems.
+ 
+ - compatible:
+ 	Usage: required
+@@ -46,14 +45,6 @@ power-domains.
+ 	Definition: must be 0
+ 		    The single clock represents the QDSS clock.
+ 
+-- #power-domain-cells:
+-	Usage: optional
+-	Value type: <u32>
+-	Definition: must be 1
+-		    The provided power-domains are:
+-		    CDSP state (0), LPASS state (1), modem state (2), SLPI
+-		    state (3), SPSS state (4) and Venus state (5).
+-
+ = SUBNODES
+ The AOSS side channel also provides the controls for three cooling devices,
+ these are expressed as subnodes of the QMP node. The name of the node is used
+@@ -66,8 +57,7 @@ to identify the resource and must therefor be "cx", "mx" or "ebi".
+ 
+ = EXAMPLE
+ 
+-The following example represents the AOSS side-channel message RAM and the
+-mechanism exposing the power-domains, as found in SDM845.
++The following example represents the AOSS side-channel message RAM as found in SDM845.
+ 
+   aoss_qmp: qmp@c300000 {
+ 	  compatible = "qcom,sdm845-aoss-qmp";
+@@ -75,8 +65,6 @@ mechanism exposing the power-domains, as found in SDM845.
+ 	  interrupts = <GIC_SPI 389 IRQ_TYPE_EDGE_RISING>;
+ 	  mboxes = <&apss_shared 0>;
+ 
+-	  #power-domain-cells = <1>;
+-
+ 	  cx_cdev: cx {
+ 		#cooling-cells = <2>;
+ 	  };
 -- 
 The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
 a Linux Foundation Collaborative Project
