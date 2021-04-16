@@ -2,435 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C2A56361B93
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Apr 2021 10:34:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 67679361C9E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Apr 2021 11:01:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240337AbhDPI2A (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Apr 2021 04:28:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47458 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240345AbhDPI17 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Apr 2021 04:27:59 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BCCF8C061760
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Apr 2021 01:27:33 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id h4so16793648wrt.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Apr 2021 01:27:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=cV0YDx0U6mhpglouL7SJ3CErlpAxZVnCVzNXWwDq/mI=;
-        b=FP65mnpInNzjg44zopYz0j1nsOCE1So0/Q0fIORdlywXypHq8vftwuaCqpFEaGlRIp
-         WLBTTq4DaEni7a6BGOkFV63SaYJP7od0+wLqplh8Lcc2/8H3bU+BFNxZ6KFmjU+ROcFk
-         av5KsEFsEyyz+pUaVu9i5cPppeSbbZEtz8/dXAmfAa4OzTfA1H2P/WuGLYTB7dx1livL
-         h+1CmmceW+DxWKy2idv+Rh5XZ/oZDgi5Ea+Jxla4qn6GoTwY7LyAntLXF9pW69uv5Mw1
-         MIxsbVcSfNFZQgLW67KfMPCBaKL6eXX8OBJJ19AJl3t6I4eDVlK2ddWa3pOlrhqWkaMD
-         uOWg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=cV0YDx0U6mhpglouL7SJ3CErlpAxZVnCVzNXWwDq/mI=;
-        b=Q4mLEGA1X/i57DpOHmWBixW+iPkRmaNY9FY64bHNR1b8PX0VqPTO5gRMebx6hSj/FJ
-         l+Ua0puswPhj7eoUUJeIlqgDq+3CaPIfw2ZJxJ5cPIoGndoHBoS7WeLBpDf/EtNoj8ol
-         n75Gyjw9NBGm2n6L636xWhqXV1mEkaFXRPMkg98tCT/mhvlRvEGLpZVC5WqbY0dBN+iV
-         qtxFdv8xcnDg8BNWeEMGLO/x+ic0+xrRIUtVGrfWxXbrsTYe2VmETpVvjyZOyUm67i9/
-         fQL2oMtNcRxo8E582hTVMGB1lZVbSEwFPslj51yBtKuuE6kehISNZALyPCFs0joAOSUS
-         GJcA==
-X-Gm-Message-State: AOAM530lnE0uy7IUysDYHfpl2UE7CzyvkMQyViKTIaGpTCeSm7Ztkdtm
-        cORzIS4QuXgonkzFsxdxeaKobg==
-X-Google-Smtp-Source: ABdhPJwTswBC2OP4KWIn76R0ATJX17rxwqXD28l0hs3f+pOUJMfugg7dabCeS8KVo6I/2mf55wA12g==
-X-Received: by 2002:a5d:6ace:: with SMTP id u14mr7671862wrw.322.1618561652445;
-        Fri, 16 Apr 2021 01:27:32 -0700 (PDT)
-Received: from localhost.localdomain ([2a01:e0a:82c:5f0:1f15:c761:691c:e326])
-        by smtp.gmail.com with ESMTPSA id b1sm9070838wru.90.2021.04.16.01.27.31
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 16 Apr 2021 01:27:31 -0700 (PDT)
-From:   Loic Poulain <loic.poulain@linaro.org>
-To:     kuba@kernel.org, davem@davemloft.net, gregkh@linuxfoundation.org
-Cc:     netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        bjorn.andersson@linaro.org, manivannan.sadhasivam@linaro.org,
-        aleksander@aleksander.es, dcbw@redhat.com, mpearson@lenovo.com,
-        Loic Poulain <loic.poulain@linaro.org>
-Subject: [PATCH net-next v11 2/2] net: Add Qcom WWAN control driver
-Date:   Fri, 16 Apr 2021 10:36:34 +0200
-Message-Id: <1618562194-31913-2-git-send-email-loic.poulain@linaro.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1618562194-31913-1-git-send-email-loic.poulain@linaro.org>
-References: <1618562194-31913-1-git-send-email-loic.poulain@linaro.org>
+        id S236823AbhDPJA7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Apr 2021 05:00:59 -0400
+Received: from mail.kernel.org ([198.145.29.99]:43808 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S235236AbhDPJA7 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 16 Apr 2021 05:00:59 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id DAE926115B;
+        Fri, 16 Apr 2021 09:00:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1618563634;
+        bh=7wmVpOqsaknh+P4FzEE06MYfMkAiP80y7LVM+GvJfiQ=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=JZWecCC70vkjElc81yiZgJS8UklIydW4O8zpob6+1MRlysFahpgFt6KH2yeocZdzC
+         /9TYaCUP9KTo+AuSYEFxw9ye09DHRdqnun4SzfLJC3RnqEDAnsaOjCBTMZ3HWgQXc8
+         BtOxLUpokHw30chVeZrNMJS8cR/j7aWhltCLFYXpdzITDOk0o2SSPEGqtiZtQJX6Cw
+         or95tE1eQofV9Xr6FNKeRU+2nkfoBeQGcq7ejyTya8q4kRjCvr8OwdK54LMJ48UKkr
+         19rJDF6a10OdNCdSWuPzNNFOTGWm2ycBM0V62cgJq1n52fQ5qoSS+bNj/dMkkmZxTI
+         ZP7EBahpTzpNQ==
+Received: by mail-ed1-f46.google.com with SMTP id e7so31275949edu.10;
+        Fri, 16 Apr 2021 02:00:34 -0700 (PDT)
+X-Gm-Message-State: AOAM532YvxZR7eSAn3wpSNKNkirZ/xjXZotDoWnLvuFASqS9U/JzAobw
+        wHNtlR3JGmvvHnA6w23E5lv244HKy0BsyeOfhUU=
+X-Google-Smtp-Source: ABdhPJyS0LWKxxT6wHKAww0y5cojiL8VJFRg4ktDZ0lY8VrMNI2SaQHOhE7kynmEUPwlzFWiNxKaMDM9HdJtbjYQm3k=
+X-Received: by 2002:a50:e607:: with SMTP id y7mr8957861edm.18.1618563633453;
+ Fri, 16 Apr 2021 02:00:33 -0700 (PDT)
+MIME-Version: 1.0
+References: <20210404043219.11334-1-zhuguangqing83@gmail.com>
+In-Reply-To: <20210404043219.11334-1-zhuguangqing83@gmail.com>
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+Date:   Fri, 16 Apr 2021 11:00:21 +0200
+X-Gmail-Original-Message-ID: <CAJKOXPcCiMCNKmP5TCLk9-qCJ=c4qP59Jr3B1sBZfxTqe4FuAw@mail.gmail.com>
+Message-ID: <CAJKOXPcCiMCNKmP5TCLk9-qCJ=c4qP59Jr3B1sBZfxTqe4FuAw@mail.gmail.com>
+Subject: Re: [PATCH] thermal/drivers/tsens: fix missing put_device error
+To:     zhuguangqing83@gmail.com
+Cc:     Amit Kucheria <amitk@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The MHI WWWAN control driver allows MHI QCOM-based modems to expose
-different modem control protocols/ports via the WWAN framework, so that
-userspace modem tools or daemon (e.g. ModemManager) can control WWAN
-config and state (APN config, SMS, provider selection...). A QCOM-based
-modem can expose one or several of the following protocols:
-- AT: Well known AT commands interactive protocol (microcom, minicom...)
-- MBIM: Mobile Broadband Interface Model (libmbim, mbimcli)
-- QMI: QCOM MSM/Modem Interface (libqmi, qmicli)
-- QCDM: QCOM Modem diagnostic interface (libqcdm)
-- FIREHOSE: XML-based protocol for Modem firmware management
-        (qmi-firmware-update)
+On Sun, 4 Apr 2021 at 06:34, <zhuguangqing83@gmail.com> wrote:
+>
+> From: Guangqing Zhu <zhuguangqing83@gmail.com>
+>
+> Fixes coccicheck error:
+>
+> drivers/thermal/qcom/tsens.c:759:4-10: ERROR: missing put_device; call
+> of_find_device_by_node on line 715, but without a corresponding object
+> release within this function.
+>
+> Fixes: a7ff82976122 ("drivers: thermal: tsens: Merge tsens-common.c into
+> tsens.c")
+>
+> Signed-off-by: Guangqing Zhu <zhuguangqing83@gmail.com>
+> ---
+>  drivers/thermal/qcom/tsens.c | 7 ++++---
+>  1 file changed, 4 insertions(+), 3 deletions(-)
+>
+> diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
+> index d8ce3a687b80..cc4c6a9853a4 100644
+> --- a/drivers/thermal/qcom/tsens.c
+> +++ b/drivers/thermal/qcom/tsens.c
+> @@ -755,9 +755,10 @@ int __init init_common(struct tsens_priv *priv)
+>                 for (i = VER_MAJOR; i <= VER_STEP; i++) {
+>                         priv->rf[i] = devm_regmap_field_alloc(dev, priv->srot_map,
+>                                                               priv->fields[i]);
+> -                       if (IS_ERR(priv->rf[i]))
+> -                               return PTR_ERR(priv->rf[i]);
+> -               }
+> +                       if (IS_ERR(priv->rf[i])) {
+> +                               ret = PTR_ERR(priv->rf[i]);
+> +                               goto err_put_device;
+> +                       }
 
-Note that this patch is mostly a rework of the earlier MHI UCI
-tentative that was a generic interface for accessing MHI bus from
-userspace. As suggested, this new version is WWAN specific and is
-dedicated to only expose channels used for controlling a modem, and
-for which related opensource userpace support exist.
+As kbuild robot pointed out - this does not even compile. Please at
+least build all your patches before sending.
 
-Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
----
- v2: update copyright (2021)
- v3: Move driver to dedicated drivers/net/wwan directory
- v4: Rework to use wwan framework instead of self cdev management
- v5: Fix errors/typos in Kconfig
- v6: - Move to new wwan interface, No need dedicated call to wwan_dev_create
-     - Cleanup code (remove legacy from mhi_uci, unused defines/vars...)
-     - Remove useless write_lock mutex
-     - Add mhi_wwan_wait_writable and mhi_wwan_wait_dlqueue_lock_irq helpers
-     - Rework locking
-     - Add MHI_WWAN_TX_FULL flag
-     - Add support for NONBLOCK read/write
- v7: Fix change log (mixed up 1/2 and 2/2)
- v8: - Implement wwan_port_ops instead of fops
-     - Remove all obsolete elements (kref, lock, waitqueues)
-     - Add tracking of RX buffer budget
-     - Use WWAN TX flow control function to stop TX when MHI queue is full
- v9: - Add proper locking for rx_budget + rx_refill scheduling
-     - Fix cocci errors (use-after-free, ERR_CAST)
- v10: Fix wwan_create_port() return value check
- v11: no change
-
- drivers/net/wwan/Kconfig         |  14 ++
- drivers/net/wwan/Makefile        |   2 +
- drivers/net/wwan/mhi_wwan_ctrl.c | 282 +++++++++++++++++++++++++++++++++++++++
- 3 files changed, 298 insertions(+)
- create mode 100644 drivers/net/wwan/mhi_wwan_ctrl.c
-
-diff --git a/drivers/net/wwan/Kconfig b/drivers/net/wwan/Kconfig
-index fc3f3a1..7ad1920 100644
---- a/drivers/net/wwan/Kconfig
-+++ b/drivers/net/wwan/Kconfig
-@@ -20,4 +20,18 @@ config WWAN_CORE
- 	  To compile this driver as a module, choose M here: the module will be
- 	  called wwan.
- 
-+config MHI_WWAN_CTRL
-+	tristate "MHI WWAN control driver for QCOM-based PCIe modems"
-+	select WWAN_CORE
-+	depends on MHI_BUS
-+	help
-+	  MHI WWAN CTRL allows QCOM-based PCIe modems to expose different modem
-+	  control protocols/ports to userspace, including AT, MBIM, QMI, DIAG
-+	  and FIREHOSE. These protocols can be accessed directly from userspace
-+	  (e.g. AT commands) or via libraries/tools (e.g. libmbim, libqmi,
-+	  libqcdm...).
-+
-+	  To compile this driver as a module, choose M here: the module will be
-+	  called mhi_wwan_ctrl.
-+
- endif # WWAN
-diff --git a/drivers/net/wwan/Makefile b/drivers/net/wwan/Makefile
-index 934590b..556cd90 100644
---- a/drivers/net/wwan/Makefile
-+++ b/drivers/net/wwan/Makefile
-@@ -5,3 +5,5 @@
- 
- obj-$(CONFIG_WWAN_CORE) += wwan.o
- wwan-objs += wwan_core.o
-+
-+obj-$(CONFIG_MHI_WWAN_CTRL) += mhi_wwan_ctrl.o
-diff --git a/drivers/net/wwan/mhi_wwan_ctrl.c b/drivers/net/wwan/mhi_wwan_ctrl.c
-new file mode 100644
-index 0000000..11475ad
---- /dev/null
-+++ b/drivers/net/wwan/mhi_wwan_ctrl.c
-@@ -0,0 +1,282 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/* Copyright (c) 2021, Linaro Ltd <loic.poulain@linaro.org> */
-+#include <linux/kernel.h>
-+#include <linux/mhi.h>
-+#include <linux/mod_devicetable.h>
-+#include <linux/module.h>
-+#include <linux/wwan.h>
-+
-+/* MHI wwan flags */
-+#define MHI_WWAN_DL_CAP		BIT(0)
-+#define MHI_WWAN_UL_CAP		BIT(1)
-+#define MHI_WWAN_RX_REFILL	BIT(2)
-+
-+#define MHI_WWAN_MAX_MTU	0x8000
-+
-+struct mhi_wwan_dev {
-+	/* Lower level is a mhi dev, upper level is a wwan port */
-+	struct mhi_device *mhi_dev;
-+	struct wwan_port *wwan_port;
-+
-+	/* State and capabilities */
-+	unsigned long flags;
-+	size_t mtu;
-+
-+	/* Protect against concurrent TX and TX-completion (bh) */
-+	spinlock_t tx_lock;
-+
-+	/* Protect RX budget and rx_refill scheduling */
-+	spinlock_t rx_lock;
-+	struct work_struct rx_refill;
-+
-+	/* RX budget is initially set to the size of the MHI RX queue and is
-+	 * used to limit the number of allocated and queued packets. It is
-+	 * decremented on data queueing and incremented on data release.
-+	 */
-+	unsigned int rx_budget;
-+};
-+
-+/* Increment RX budget and schedule RX refill if necessary */
-+static void mhi_wwan_rx_budget_inc(struct mhi_wwan_dev *mhiwwan)
-+{
-+	spin_lock(&mhiwwan->rx_lock);
-+
-+	mhiwwan->rx_budget++;
-+
-+	if (test_bit(MHI_WWAN_RX_REFILL, &mhiwwan->flags))
-+		schedule_work(&mhiwwan->rx_refill);
-+
-+	spin_unlock(&mhiwwan->rx_lock);
-+}
-+
-+/* Decrement RX budget if non-zero and return true on success */
-+static bool mhi_wwan_rx_budget_dec(struct mhi_wwan_dev *mhiwwan)
-+{
-+	bool ret = false;
-+
-+	spin_lock(&mhiwwan->rx_lock);
-+
-+	if (mhiwwan->rx_budget)
-+		mhiwwan->rx_budget--;
-+
-+	if (mhiwwan->rx_budget && test_bit(MHI_WWAN_RX_REFILL, &mhiwwan->flags))
-+		ret = true;
-+
-+	spin_unlock(&mhiwwan->rx_lock);
-+
-+	return ret;
-+}
-+
-+static void __mhi_skb_destructor(struct sk_buff *skb)
-+{
-+	/* RX buffer has been consumed, increase the allowed budget */
-+	mhi_wwan_rx_budget_inc(skb_shinfo(skb)->destructor_arg);
-+}
-+
-+static void mhi_wwan_ctrl_refill_work(struct work_struct *work)
-+{
-+	struct mhi_wwan_dev *mhiwwan = container_of(work, struct mhi_wwan_dev, rx_refill);
-+	struct mhi_device *mhi_dev = mhiwwan->mhi_dev;
-+
-+	while (mhi_wwan_rx_budget_dec(mhiwwan)) {
-+		struct sk_buff *skb;
-+
-+		skb = alloc_skb(mhiwwan->mtu, GFP_KERNEL);
-+		if (!skb) {
-+			mhi_wwan_rx_budget_inc(mhiwwan);
-+			break;
-+		}
-+
-+		/* To prevent unlimited buffer allocation if nothing consumes
-+		 * the RX buffers (passed to WWAN core), track their lifespan
-+		 * to not allocate more than allowed budget.
-+		 */
-+		skb->destructor = __mhi_skb_destructor;
-+		skb_shinfo(skb)->destructor_arg = mhiwwan;
-+
-+		if (mhi_queue_skb(mhi_dev, DMA_FROM_DEVICE, skb, mhiwwan->mtu, MHI_EOT)) {
-+			dev_err(&mhi_dev->dev, "Failed to queue buffer\n");
-+			kfree_skb(skb);
-+			break;
-+		}
-+	}
-+}
-+
-+static int mhi_wwan_ctrl_start(struct wwan_port *port)
-+{
-+	struct mhi_wwan_dev *mhiwwan = wwan_port_get_drvdata(port);
-+	int ret;
-+
-+	/* Start mhi device's channel(s) */
-+	ret = mhi_prepare_for_transfer(mhiwwan->mhi_dev);
-+	if (ret)
-+		return ret;
-+
-+	/* Don't allocate more buffers than MHI channel queue size */
-+	mhiwwan->rx_budget = mhi_get_free_desc_count(mhiwwan->mhi_dev, DMA_FROM_DEVICE);
-+
-+	/* Add buffers to the MHI inbound queue */
-+	if (test_bit(MHI_WWAN_DL_CAP, &mhiwwan->flags)) {
-+		set_bit(MHI_WWAN_RX_REFILL, &mhiwwan->flags);
-+		mhi_wwan_ctrl_refill_work(&mhiwwan->rx_refill);
-+	}
-+
-+	return 0;
-+}
-+
-+static void mhi_wwan_ctrl_stop(struct wwan_port *port)
-+{
-+	struct mhi_wwan_dev *mhiwwan = wwan_port_get_drvdata(port);
-+
-+	spin_lock(&mhiwwan->rx_lock);
-+	clear_bit(MHI_WWAN_RX_REFILL, &mhiwwan->flags);
-+	spin_unlock(&mhiwwan->rx_lock);
-+
-+	cancel_work_sync(&mhiwwan->rx_refill);
-+
-+	mhi_unprepare_from_transfer(mhiwwan->mhi_dev);
-+}
-+
-+static int mhi_wwan_ctrl_tx(struct wwan_port *port, struct sk_buff *skb)
-+{
-+	struct mhi_wwan_dev *mhiwwan = wwan_port_get_drvdata(port);
-+	int ret;
-+
-+	if (skb->len > mhiwwan->mtu)
-+		return -EMSGSIZE;
-+
-+	if (!test_bit(MHI_WWAN_UL_CAP, &mhiwwan->flags))
-+		return -EOPNOTSUPP;
-+
-+	/* Queue the packet for MHI transfer and check fullness of the queue */
-+	spin_lock_bh(&mhiwwan->tx_lock);
-+	ret = mhi_queue_skb(mhiwwan->mhi_dev, DMA_TO_DEVICE, skb, skb->len, MHI_EOT);
-+	if (mhi_queue_is_full(mhiwwan->mhi_dev, DMA_TO_DEVICE))
-+		wwan_port_txoff(port);
-+	spin_unlock_bh(&mhiwwan->tx_lock);
-+
-+	return ret;
-+}
-+
-+static const struct wwan_port_ops wwan_pops = {
-+	.start = mhi_wwan_ctrl_start,
-+	.stop = mhi_wwan_ctrl_stop,
-+	.tx = mhi_wwan_ctrl_tx,
-+};
-+
-+static void mhi_ul_xfer_cb(struct mhi_device *mhi_dev,
-+			   struct mhi_result *mhi_result)
-+{
-+	struct mhi_wwan_dev *mhiwwan = dev_get_drvdata(&mhi_dev->dev);
-+	struct wwan_port *port = mhiwwan->wwan_port;
-+	struct sk_buff *skb = mhi_result->buf_addr;
-+
-+	dev_dbg(&mhi_dev->dev, "%s: status: %d xfer_len: %zu\n", __func__,
-+		mhi_result->transaction_status, mhi_result->bytes_xferd);
-+
-+	/* MHI core has done with the buffer, release it */
-+	consume_skb(skb);
-+
-+	/* There is likely new slot available in the MHI queue, re-allow TX */
-+	spin_lock_bh(&mhiwwan->tx_lock);
-+	if (!mhi_queue_is_full(mhiwwan->mhi_dev, DMA_TO_DEVICE))
-+		wwan_port_txon(port);
-+	spin_unlock_bh(&mhiwwan->tx_lock);
-+}
-+
-+static void mhi_dl_xfer_cb(struct mhi_device *mhi_dev,
-+			   struct mhi_result *mhi_result)
-+{
-+	struct mhi_wwan_dev *mhiwwan = dev_get_drvdata(&mhi_dev->dev);
-+	struct wwan_port *port = mhiwwan->wwan_port;
-+	struct sk_buff *skb = mhi_result->buf_addr;
-+
-+	dev_dbg(&mhi_dev->dev, "%s: status: %d receive_len: %zu\n", __func__,
-+		mhi_result->transaction_status, mhi_result->bytes_xferd);
-+
-+	if (mhi_result->transaction_status &&
-+	    mhi_result->transaction_status != -EOVERFLOW) {
-+		kfree_skb(skb);
-+		return;
-+	}
-+
-+	/* MHI core does not update skb->len, do it before forward */
-+	skb_put(skb, mhi_result->bytes_xferd);
-+	wwan_port_rx(port, skb);
-+
-+	/* Do not increment rx budget nor refill RX buffers now, wait for the
-+	 * buffer to be consumed. Done from __mhi_skb_destructor().
-+	 */
-+}
-+
-+static int mhi_wwan_ctrl_probe(struct mhi_device *mhi_dev,
-+			       const struct mhi_device_id *id)
-+{
-+	struct mhi_controller *cntrl = mhi_dev->mhi_cntrl;
-+	struct mhi_wwan_dev *mhiwwan;
-+	struct wwan_port *port;
-+
-+	mhiwwan = kzalloc(sizeof(*mhiwwan), GFP_KERNEL);
-+	if (!mhiwwan)
-+		return -ENOMEM;
-+
-+	mhiwwan->mhi_dev = mhi_dev;
-+	mhiwwan->mtu = MHI_WWAN_MAX_MTU;
-+	INIT_WORK(&mhiwwan->rx_refill, mhi_wwan_ctrl_refill_work);
-+	spin_lock_init(&mhiwwan->tx_lock);
-+	spin_lock_init(&mhiwwan->rx_lock);
-+
-+	if (mhi_dev->dl_chan)
-+		set_bit(MHI_WWAN_DL_CAP, &mhiwwan->flags);
-+	if (mhi_dev->ul_chan)
-+		set_bit(MHI_WWAN_UL_CAP, &mhiwwan->flags);
-+
-+	dev_set_drvdata(&mhi_dev->dev, mhiwwan);
-+
-+	/* Register as a wwan port, id->driver_data contains wwan port type */
-+	port = wwan_create_port(&cntrl->mhi_dev->dev, id->driver_data,
-+				&wwan_pops, mhiwwan);
-+	if (IS_ERR(port)) {
-+		kfree(mhiwwan);
-+		return PTR_ERR(port);
-+	}
-+
-+	mhiwwan->wwan_port = port;
-+
-+	return 0;
-+};
-+
-+static void mhi_wwan_ctrl_remove(struct mhi_device *mhi_dev)
-+{
-+	struct mhi_wwan_dev *mhiwwan = dev_get_drvdata(&mhi_dev->dev);
-+
-+	wwan_remove_port(mhiwwan->wwan_port);
-+	kfree(mhiwwan);
-+}
-+
-+static const struct mhi_device_id mhi_wwan_ctrl_match_table[] = {
-+	{ .chan = "DUN", .driver_data = WWAN_PORT_AT },
-+	{ .chan = "MBIM", .driver_data = WWAN_PORT_MBIM },
-+	{ .chan = "QMI", .driver_data = WWAN_PORT_QMI },
-+	{ .chan = "DIAG", .driver_data = WWAN_PORT_QCDM },
-+	{ .chan = "FIREHOSE", .driver_data = WWAN_PORT_FIREHOSE },
-+	{},
-+};
-+MODULE_DEVICE_TABLE(mhi, mhi_wwan_ctrl_match_table);
-+
-+static struct mhi_driver mhi_wwan_ctrl_driver = {
-+	.id_table = mhi_wwan_ctrl_match_table,
-+	.remove = mhi_wwan_ctrl_remove,
-+	.probe = mhi_wwan_ctrl_probe,
-+	.ul_xfer_cb = mhi_ul_xfer_cb,
-+	.dl_xfer_cb = mhi_dl_xfer_cb,
-+	.driver = {
-+		.name = "mhi_wwan_ctrl",
-+	},
-+};
-+
-+module_mhi_driver(mhi_wwan_ctrl_driver);
-+
-+MODULE_LICENSE("GPL v2");
-+MODULE_DESCRIPTION("MHI WWAN CTRL Driver");
-+MODULE_AUTHOR("Loic Poulain <loic.poulain@linaro.org>");
--- 
-2.7.4
-
+Best regards,
+Krzysztof
