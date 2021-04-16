@@ -2,33 +2,32 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F203D361F67
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Apr 2021 14:07:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A9337361F6C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Apr 2021 14:07:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243100AbhDPMFZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Apr 2021 08:05:25 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:56041 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241611AbhDPMFN (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Apr 2021 08:05:13 -0400
+        id S243186AbhDPMFj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Apr 2021 08:05:39 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:48711 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S243073AbhDPMFf (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 16 Apr 2021 08:05:35 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1618574689; h=References: In-Reply-To: Message-Id: Date:
+ s=smtp; t=1618574710; h=References: In-Reply-To: Message-Id: Date:
  Subject: Cc: To: From: Sender;
- bh=1Q9lGIorSgtvVf8T4mUeLfJwmDt66eiI57rSUJ3VUU8=; b=WyRGGMwNfWrGT2bnpN0pWcDcPbDq6OMrxIAwXqQ1ABGKdrbfccmAncNshkF3ttjk/zwP7c5x
- AUWIZTb0FsoB2PA2oLkSpiADHsxRWhmR+TnM25BnlNoVzEW7fEKN5eUoaSD36fMrraMPwwq+
- 2cQwbQfN5vFNtHQ1Yen2EpMztmE=
-X-Mailgun-Sending-Ip: 198.61.254.9
+ bh=+TbEmw9doi6VBXbcVp6URpydHwD9D/wkjBwXw3yz9hU=; b=LGEocMVP4E07yTaGv+T3DDLfhz+5QHXbkyHECLXMOIOuh/LN0BExchs/+RKpTzVp6u20JmbZ
+ bX+gNNWXnrwsspZDbvw77WTdo99Z8baRvjhK8qitLMY9zHbx3eXRwKXDfY7RsBWwUb8NjCiV
+ wruQV/idOV5/xj8qnNdwoT+ALME=
+X-Mailgun-Sending-Ip: 69.72.43.7
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
- 60797d5ff34440a9d43c98f6 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 16 Apr 2021 12:04:47
+ smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
+ 60797d642cbba88980f96ef7 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 16 Apr 2021 12:04:52
  GMT
 Sender: sibis=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id E5BCEC43465; Fri, 16 Apr 2021 12:04:46 +0000 (UTC)
+        id F3333C43469; Fri, 16 Apr 2021 12:04:51 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -38,9 +37,9 @@ Received: from blr-ubuntu-87.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outs
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: sibis)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id CE8A3C43468;
-        Fri, 16 Apr 2021 12:04:40 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org CE8A3C43468
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 37DD2C43464;
+        Fri, 16 Apr 2021 12:04:45 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 37DD2C43464
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=sibis@codeaurora.org
 From:   Sibi Sankar <sibis@codeaurora.org>
@@ -51,9 +50,9 @@ Cc:     rjw@rjwysocki.net, agross@kernel.org, ohad@wizery.com,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         dianders@chromium.org, rishabhb@codeaurora.org,
         sidgup@codeaurora.org, Sibi Sankar <sibis@codeaurora.org>
-Subject: [PATCH 07/12] arm64: dts: qcom: sc7280: Use QMP binding to control load state
-Date:   Fri, 16 Apr 2021 17:33:53 +0530
-Message-Id: <1618574638-5117-8-git-send-email-sibis@codeaurora.org>
+Subject: [PATCH 08/12] arm64: dts: qcom: sdm845: Use QMP binding to control load state
+Date:   Fri, 16 Apr 2021 17:33:54 +0530
+Message-Id: <1618574638-5117-9-git-send-email-sibis@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1618574638-5117-1-git-send-email-sibis@codeaurora.org>
 References: <1618574638-5117-1-git-send-email-sibis@codeaurora.org>
@@ -62,34 +61,49 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Use the Qualcomm Mailbox Protocol (QMP) binding to control the load
-state resources on SC7280 SoCs and drop deprecated power-domains exposed
+state resources on SDM845 SoCs and drop deprecated power-domains exposed
 by AOSS QMP node.
 
 Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
 ---
- arch/arm64/boot/dts/qcom/sc7280.dtsi | 2 --
- 1 file changed, 2 deletions(-)
+ arch/arm64/boot/dts/qcom/sdm845.dtsi | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index 2cc478553935..0ee0e492b183 100644
---- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -9,7 +9,6 @@
- #include <dt-bindings/clock/qcom,rpmh.h>
- #include <dt-bindings/interrupt-controller/arm-gic.h>
- #include <dt-bindings/mailbox/qcom-ipcc.h>
--#include <dt-bindings/power/qcom-aoss-qmp.h>
- #include <dt-bindings/power/qcom-rpmpd.h>
- #include <dt-bindings/soc/qcom,rpmh-rsc.h>
+diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+index 0a86fe71a66d..22bc69240d2b 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+@@ -2984,6 +2984,8 @@
+ 			clock-names = "iface", "bus", "mem", "gpll0_mss",
+ 				      "snoc_axi", "mnoc_axi", "prng", "xo";
  
-@@ -835,7 +834,6 @@
- 					IPCC_MPROC_SIGNAL_GLINK_QMP>;
++			qcom,qmp = <&aoss_qmp>;
++
+ 			qcom,smem-states = <&modem_smp2p_out 0>;
+ 			qcom,smem-state-names = "stop";
+ 
+@@ -2993,11 +2995,10 @@
+ 
+ 			qcom,halt-regs = <&tcsr_mutex_regs 0x23000 0x25000 0x24000>;
+ 
+-			power-domains = <&aoss_qmp 2>,
+-					<&rpmhpd SDM845_CX>,
++			power-domains = <&rpmhpd SDM845_CX>,
+ 					<&rpmhpd SDM845_MX>,
+ 					<&rpmhpd SDM845_MSS>;
+-			power-domain-names = "load_state", "cx", "mx", "mss";
++			power-domain-names = "cx", "mx", "mss";
+ 
+ 			mba {
+ 				memory-region = <&mba_region>;
+@@ -4582,7 +4583,6 @@
+ 			mboxes = <&apss_shared 0>;
  
  			#clock-cells = <0>;
 -			#power-domain-cells = <1>;
- 		};
  
- 		spmi_bus: spmi@c440000 {
+ 			cx_cdev: cx {
+ 				#cooling-cells = <2>;
 -- 
 The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
 a Linux Foundation Collaborative Project
