@@ -2,90 +2,290 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 67679361C9E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Apr 2021 11:01:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2E3BB361D3F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Apr 2021 12:09:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236823AbhDPJA7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Apr 2021 05:00:59 -0400
-Received: from mail.kernel.org ([198.145.29.99]:43808 "EHLO mail.kernel.org"
+        id S239838AbhDPJXO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Apr 2021 05:23:14 -0400
+Received: from mga17.intel.com ([192.55.52.151]:58379 "EHLO mga17.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S235236AbhDPJA7 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Apr 2021 05:00:59 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id DAE926115B;
-        Fri, 16 Apr 2021 09:00:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1618563634;
-        bh=7wmVpOqsaknh+P4FzEE06MYfMkAiP80y7LVM+GvJfiQ=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=JZWecCC70vkjElc81yiZgJS8UklIydW4O8zpob6+1MRlysFahpgFt6KH2yeocZdzC
-         /9TYaCUP9KTo+AuSYEFxw9ye09DHRdqnun4SzfLJC3RnqEDAnsaOjCBTMZ3HWgQXc8
-         BtOxLUpokHw30chVeZrNMJS8cR/j7aWhltCLFYXpdzITDOk0o2SSPEGqtiZtQJX6Cw
-         or95tE1eQofV9Xr6FNKeRU+2nkfoBeQGcq7ejyTya8q4kRjCvr8OwdK54LMJ48UKkr
-         19rJDF6a10OdNCdSWuPzNNFOTGWm2ycBM0V62cgJq1n52fQ5qoSS+bNj/dMkkmZxTI
-         ZP7EBahpTzpNQ==
-Received: by mail-ed1-f46.google.com with SMTP id e7so31275949edu.10;
-        Fri, 16 Apr 2021 02:00:34 -0700 (PDT)
-X-Gm-Message-State: AOAM532YvxZR7eSAn3wpSNKNkirZ/xjXZotDoWnLvuFASqS9U/JzAobw
-        wHNtlR3JGmvvHnA6w23E5lv244HKy0BsyeOfhUU=
-X-Google-Smtp-Source: ABdhPJyS0LWKxxT6wHKAww0y5cojiL8VJFRg4ktDZ0lY8VrMNI2SaQHOhE7kynmEUPwlzFWiNxKaMDM9HdJtbjYQm3k=
-X-Received: by 2002:a50:e607:: with SMTP id y7mr8957861edm.18.1618563633453;
- Fri, 16 Apr 2021 02:00:33 -0700 (PDT)
-MIME-Version: 1.0
-References: <20210404043219.11334-1-zhuguangqing83@gmail.com>
-In-Reply-To: <20210404043219.11334-1-zhuguangqing83@gmail.com>
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-Date:   Fri, 16 Apr 2021 11:00:21 +0200
-X-Gmail-Original-Message-ID: <CAJKOXPcCiMCNKmP5TCLk9-qCJ=c4qP59Jr3B1sBZfxTqe4FuAw@mail.gmail.com>
-Message-ID: <CAJKOXPcCiMCNKmP5TCLk9-qCJ=c4qP59Jr3B1sBZfxTqe4FuAw@mail.gmail.com>
-Subject: Re: [PATCH] thermal/drivers/tsens: fix missing put_device error
-To:     zhuguangqing83@gmail.com
-Cc:     Amit Kucheria <amitk@kernel.org>, Andy Gross <agross@kernel.org>,
+        id S234312AbhDPJXN (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 16 Apr 2021 05:23:13 -0400
+IronPort-SDR: WJS2rHIfUiPN7+MZwZZVyM1jvMgSkm79nbKMpLwQWe0I6KQdjqtnYQjerC0zTcOq5DX7JOwJLp
+ udv25I3wnf1A==
+X-IronPort-AV: E=McAfee;i="6200,9189,9955"; a="175122145"
+X-IronPort-AV: E=Sophos;i="5.82,226,1613462400"; 
+   d="scan'208";a="175122145"
+Received: from orsmga001.jf.intel.com ([10.7.209.18])
+  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Apr 2021 02:22:49 -0700
+IronPort-SDR: LTD0pPovf9LjGKkamh7GgF4XV/IKF+D+L90RasUrL15smP1ANlzLBKOzFST/j8Nljx+LMCUYWA
+ hnVETrRrlDAQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.82,226,1613462400"; 
+   d="scan'208";a="461914819"
+Received: from ahunter-desktop.fi.intel.com (HELO [10.237.72.174]) ([10.237.72.174])
+  by orsmga001.jf.intel.com with ESMTP; 16 Apr 2021 02:22:40 -0700
+Subject: Re: [PATCH v19 1/2] scsi: ufs: Enable power management for wlun
+To:     Asutosh Das <asutoshd@codeaurora.org>, cang@codeaurora.org,
+        martin.petersen@oracle.com, linux-scsi@vger.kernel.org
+Cc:     linux-arm-msm@vger.kernel.org,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Stanley Chu <stanley.chu@mediatek.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Steven Rostedt <rostedt@goodmis.org>,
+        Ingo Molnar <mingo@redhat.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Lee Jones <lee.jones@linaro.org>,
+        Bean Huo <beanhuo@micron.com>,
+        Kiwoong Kim <kwmad.kim@samsung.com>,
+        Colin Ian King <colin.king@canonical.com>,
+        Yue Hu <huyue2@yulong.com>,
+        Wei Yongjun <weiyongjun1@huawei.com>,
+        "Gustavo A. R. Silva" <gustavoars@kernel.org>,
+        Dinghao Liu <dinghao.liu@zju.edu.cn>,
+        Jaegeuk Kim <jaegeuk@kernel.org>,
+        Satya Tangirala <satyat@google.com>,
+        open list <linux-kernel@vger.kernel.org>,
+        "moderated list:ARM/SAMSUNG S3C, S5P AND EXYNOS ARM ARCHITECTURES" 
+        <linux-arm-kernel@lists.infradead.org>,
+        "open list:ARM/SAMSUNG S3C, S5P AND EXYNOS ARM ARCHITECTURES" 
+        <linux-samsung-soc@vger.kernel.org>,
+        "moderated list:UNIVERSAL FLASH STORAGE HOST CONTROLLER DRIVER..." 
+        <linux-mediatek@lists.infradead.org>
+References: <cover.1618529652.git.asutoshd@codeaurora.org>
+ <48ab92db5b0d3c11b8357f0faa99a4473465099d.1618529652.git.asutoshd@codeaurora.org>
+From:   Adrian Hunter <adrian.hunter@intel.com>
+Organization: Intel Finland Oy, Registered Address: PL 281, 00181 Helsinki,
+ Business Identity Code: 0357606 - 4, Domiciled in Helsinki
+Message-ID: <d28cb2d4-8f24-c2c4-e87e-bb51ac73af6e@intel.com>
+Date:   Fri, 16 Apr 2021 12:22:52 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.8.1
+MIME-Version: 1.0
+In-Reply-To: <48ab92db5b0d3c11b8357f0faa99a4473465099d.1618529652.git.asutoshd@codeaurora.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, 4 Apr 2021 at 06:34, <zhuguangqing83@gmail.com> wrote:
->
-> From: Guangqing Zhu <zhuguangqing83@gmail.com>
->
-> Fixes coccicheck error:
->
-> drivers/thermal/qcom/tsens.c:759:4-10: ERROR: missing put_device; call
-> of_find_device_by_node on line 715, but without a corresponding object
-> release within this function.
->
-> Fixes: a7ff82976122 ("drivers: thermal: tsens: Merge tsens-common.c into
-> tsens.c")
->
-> Signed-off-by: Guangqing Zhu <zhuguangqing83@gmail.com>
+On 16/04/21 2:36 am, Asutosh Das wrote:
+> During runtime-suspend of ufs host, the scsi devices are
+> already suspended and so are the queues associated with them.
+> But the ufs host sends SSU (START_STOP_UNIT) to wlun
+> during its runtime-suspend.
+> During the process blk_queue_enter checks if the queue is not in
+> suspended state. If so, it waits for the queue to resume, and never
+> comes out of it.
+> The commit
+> (d55d15a33: scsi: block: Do not accept any requests while suspended)
+> adds the check if the queue is in suspended state in blk_queue_enter().
+> 
+> Call trace:
+>  __switch_to+0x174/0x2c4
+>  __schedule+0x478/0x764
+>  schedule+0x9c/0xe0
+>  blk_queue_enter+0x158/0x228
+>  blk_mq_alloc_request+0x40/0xa4
+>  blk_get_request+0x2c/0x70
+>  __scsi_execute+0x60/0x1c4
+>  ufshcd_set_dev_pwr_mode+0x124/0x1e4
+>  ufshcd_suspend+0x208/0x83c
+>  ufshcd_runtime_suspend+0x40/0x154
+>  ufshcd_pltfrm_runtime_suspend+0x14/0x20
+>  pm_generic_runtime_suspend+0x28/0x3c
+>  __rpm_callback+0x80/0x2a4
+>  rpm_suspend+0x308/0x614
+>  rpm_idle+0x158/0x228
+>  pm_runtime_work+0x84/0xac
+>  process_one_work+0x1f0/0x470
+>  worker_thread+0x26c/0x4c8
+>  kthread+0x13c/0x320
+>  ret_from_fork+0x10/0x18
+> 
+> Fix this by registering ufs device wlun as a scsi driver and
+> registering it for block runtime-pm. Also make this as a
+> supplier for all other luns. That way, this device wlun
+> suspends after all the consumers and resumes after
+> hba resumes.
+> This also registers a new scsi driver for rpmb wlun.
+> This new driver is mostly used to clear rpmb uac.
+> With this design, the driver would always be runtime resumed
+> before system suspend.
+
+I thought some more about that and I think we can still support
+allowing runtime suspend to work with system suspend, without
+too much difficulty. See ufshcd_suspend_prepare() below.
+
+> 
+> Fixed smatch warnings:
+> Reported-by: kernel test robot <lkp@intel.com>
+> Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
+> 
+> Co-developed-by: Can Guo <cang@codeaurora.org>
+> Signed-off-by: Can Guo <cang@codeaurora.org>
+> Signed-off-by: Asutosh Das <asutoshd@codeaurora.org>
 > ---
->  drivers/thermal/qcom/tsens.c | 7 ++++---
->  1 file changed, 4 insertions(+), 3 deletions(-)
->
-> diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
-> index d8ce3a687b80..cc4c6a9853a4 100644
-> --- a/drivers/thermal/qcom/tsens.c
-> +++ b/drivers/thermal/qcom/tsens.c
-> @@ -755,9 +755,10 @@ int __init init_common(struct tsens_priv *priv)
->                 for (i = VER_MAJOR; i <= VER_STEP; i++) {
->                         priv->rf[i] = devm_regmap_field_alloc(dev, priv->srot_map,
->                                                               priv->fields[i]);
-> -                       if (IS_ERR(priv->rf[i]))
-> -                               return PTR_ERR(priv->rf[i]);
-> -               }
-> +                       if (IS_ERR(priv->rf[i])) {
-> +                               ret = PTR_ERR(priv->rf[i]);
-> +                               goto err_put_device;
-> +                       }
 
-As kbuild robot pointed out - this does not even compile. Please at
-least build all your patches before sending.
+<SNIP>
 
-Best regards,
-Krzysztof
+> -static int ufshcd_resume(struct ufs_hba *hba, enum ufs_pm_op pm_op)
+> +static int __ufshcd_wl_resume(struct ufs_hba *hba, enum ufs_pm_op pm_op)
+>  {
+>  	int ret;
+> -	enum uic_link_state old_link_state;
+> +	enum uic_link_state old_link_state = hba->uic_link_state;
+>  
+> -	hba->pm_op_in_progress = 1;
+> -	old_link_state = hba->uic_link_state;
+> -
+> -	ufshcd_hba_vreg_set_hpm(hba);
+> -	ret = ufshcd_vreg_set_hpm(hba);
+> -	if (ret)
+> -		goto out;
+> -
+> -	/* Make sure clocks are enabled before accessing controller */
+> -	ret = ufshcd_setup_clocks(hba, true);
+> -	if (ret)
+> -		goto disable_vreg;
+> -
+> -	/* enable the host irq as host controller would be active soon */
+> -	ufshcd_enable_irq(hba);
+> +	hba->pm_op_in_progress = true;
+>  
+>  	/*
+>  	 * Call vendor specific resume callback. As these callbacks may access
+> @@ -8868,7 +8858,7 @@ static int ufshcd_resume(struct ufs_hba *hba, enum ufs_pm_op pm_op)
+>  	 */
+>  	ret = ufshcd_vops_resume(hba, pm_op);
+>  	if (ret)
+> -		goto disable_irq_and_vops_clks;
+> +		goto out;
+>  
+>  	/* For DeepSleep, the only supported option is to have the link off */
+>  	WARN_ON(ufshcd_is_ufs_dev_deepsleep(hba) && !ufshcd_is_link_off(hba));
+> @@ -8916,42 +8906,219 @@ static int ufshcd_resume(struct ufs_hba *hba, enum ufs_pm_op pm_op)
+>  	if (hba->ee_usr_mask)
+>  		ufshcd_write_ee_control(hba);
+>  
+> -	hba->clk_gating.is_suspended = false;
+> -
+>  	if (ufshcd_is_clkscaling_supported(hba))
+> -		ufshcd_clk_scaling_suspend(hba, false);
+> -
+> -	/* Enable Auto-Hibernate if configured */
+> -	ufshcd_auto_hibern8_enable(hba);
+> +		ufshcd_resume_clkscaling(hba);
+
+This still doesn't look right. ufshcd_resume_clkscaling()
+doesn't update hba->clk_scaling.is_allowed whereas
+ufshcd_clk_scaling_suspend() does.
+
+>  
+>  	if (hba->dev_info.b_rpm_dev_flush_capable) {
+>  		hba->dev_info.b_rpm_dev_flush_capable = false;
+>  		cancel_delayed_work(&hba->rpm_dev_flush_recheck_work);
+>  	}
+>  
+> -	ufshcd_clear_ua_wluns(hba);
+> -
+> -	/* Schedule clock gating in case of no access to UFS device yet */
+> -	ufshcd_release(hba);
+> -
+> +	/* Enable Auto-Hibernate if configured */
+> +	ufshcd_auto_hibern8_enable(hba);
+>  	goto out;
+>  
+>  set_old_link_state:
+>  	ufshcd_link_state_transition(hba, old_link_state, 0);
+>  vendor_suspend:
+>  	ufshcd_vops_suspend(hba, pm_op);
+> -disable_irq_and_vops_clks:
+> +out:
+> +	if (ret)
+> +		ufshcd_update_evt_hist(hba, UFS_EVT_WL_RES_ERR, (u32)ret);
+> +	hba->clk_gating.is_suspended = false;
+> +	ufshcd_release(hba);
+> +	hba->pm_op_in_progress = false;
+> +	return ret;
+> +}
+
+<SNIP>
+
+> +void ufshcd_resume_complete(struct device *dev)
+> +{
+> +	struct ufs_hba *hba = dev_get_drvdata(dev);
+> +
+> +	ufshcd_rpm_put(hba);
+> +}
+> +EXPORT_SYMBOL_GPL(ufshcd_resume_complete);
+> +
+> +int ufshcd_suspend_prepare(struct device *dev)
+> +{
+> +	struct ufs_hba *hba = dev_get_drvdata(dev);
+> +
+> +	/*
+> +	 * SCSI assumes that runtime-pm and system-pm for scsi drivers
+> +	 * are same. And it doesn't wake up the device for system-suspend
+> +	 * if it's runtime suspended. But ufs doesn't follow that.
+> +	 * The rpm-lvl and spm-lvl can be different in ufs.
+> +	 * Force it to honor system-suspend.
+> +	 * Refer ufshcd_resume_complete()
+> +	 */
+> +	ufshcd_rpm_get_sync(hba);
+> +
+> +	return 0;
+> +}
+
+I think we can support allowing runtime suspend to work with
+system suspend.  ufshcd_resume_complete() remains the same,
+and ufshcd_suspend_prepare() is like this:
+
+
+/*
+ * SCSI assumes that runtime-pm and system-pm for scsi drivers are same, and it
+ * doesn't wake up the device for system-suspend if it's runtime suspended.
+ * However UFS doesn't follow that. The rpm-lvl and spm-lvl can be different in
+ * UFS, so special care is needed.
+ * Refer also ufshcd_resume_complete()
+ */
+int ufshcd_suspend_prepare(struct device *dev)
+{
+	struct ufs_hba *hba = dev_get_drvdata(dev);
+	struct device *ufs_dev = &hba->sdev_ufs_device->sdev_gendev;
+	enum ufs_dev_pwr_mode spm_pwr_mode;
+	enum uic_link_state spm_link_state;
+	unsigned long flags;
+	bool rpm_state_ok;
+
+	/*
+	 * First prevent runtime suspend. Note this does not prevent runtime
+	 * resume e.g. pm_runtime_get_sync() will still do the right thing.
+	 */
+	pm_runtime_get_noresume(ufs_dev);
+
+	/* Now check if the rpm state is ok to use for spm */
+	spin_lock_irqsave(&ufs_dev->power.lock, flags);
+
+	spm_pwr_mode = ufs_get_pm_lvl_to_dev_pwr_mode(hba->spm_lvl);
+	spm_link_state = ufs_get_pm_lvl_to_link_pwr_state(hba->spm_lvl);
+
+	rpm_state_ok = pm_runtime_suspended(ufs_dev) &&
+		       hba->curr_dev_pwr_mode == spm_pwr_mode &&
+		       hba->uic_link_state == spm_link_state &&
+		       !hba->dev_info.b_rpm_dev_flush_capable;
+
+	spin_unlock_irqrestore(&ufs_dev->power.lock, flags);
+
+	/* If is isn't, do a runtime resume */
+	if (!rpm_state_ok)
+		pm_runtime_resume(ufs_dev);
+
+	return 0;
+}
+
