@@ -2,158 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 64A61362B80
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Apr 2021 00:42:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 27A87362B30
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Apr 2021 00:40:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235613AbhDPWmT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Apr 2021 18:42:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39854 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234937AbhDPWlu (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Apr 2021 18:41:50 -0400
-Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com [IPv6:2607:f8b0:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09082C061347
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Apr 2021 15:41:23 -0700 (PDT)
-Received: by mail-pl1-x631.google.com with SMTP id u7so12920867plr.6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Apr 2021 15:41:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=YO52CfN8ObAfgZLp7u0yIiEJEMcw9jv84B9RSSd91cE=;
-        b=hA6/ZsuHqB3kmRjFkH5Jkmzrdy85gSWuR/4vaAHDMIE48BeNPayj8tRWKkTNZOoCUA
-         gRRUhNxWn4Q+CAFmmSoYepPODVh1Dg8VZqqI+TAzcrKuUTSCCor5HJ/2yiH3K07JuKWA
-         7Gbo7zdtWsX4PGODSqc8sfSuTvIpo5Wbl6XZE=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=YO52CfN8ObAfgZLp7u0yIiEJEMcw9jv84B9RSSd91cE=;
-        b=tBn9GCRQoLzFiKyDBSfH/U7/ol3uhsrqnst2mK6dFnvlUnJkF7KKMTfBNDNk+mlsIT
-         WPoUNBH1q3l3I8JmTgwr5JK7klzLk96ZpwDe+3njsaHqvb4/c/abDYXCWzCov403rVCI
-         osNXtjqm12b9BpicMHIkyN3nJdYiSdGhYOdgzJBaFIMmR1HcAdEwUwc/j/GE/jhRaVbu
-         inb9E073uFY3boTYBOYEOAYlhCRftEZ+c5qJKeZ97V51+zUtk2+v1DIrIDvpS9ibonOd
-         1eWP7gsJ0yD4ap2sufC4299ET+cY1CWMqEkgqtsYsLBSFbUVaRoQzgL2IbwsrdRtmBX7
-         qSqg==
-X-Gm-Message-State: AOAM532ZZSyEXID2/LR5tistbLTWqpuMkaur16wMsh/Z+R8ksxzLN78L
-        JsPcW/esOkHyStu3b1rQ/0oArw==
-X-Google-Smtp-Source: ABdhPJzVfbNwbQjph550fbIuOfgbviSQ03VrlkRSJ2bniftc4dglobcQ38N6Az75kI85FCVdC+w4lQ==
-X-Received: by 2002:a17:902:a406:b029:e6:78c4:71c8 with SMTP id p6-20020a170902a406b02900e678c471c8mr11524014plq.17.1618612882638;
-        Fri, 16 Apr 2021 15:41:22 -0700 (PDT)
-Received: from tictac2.mtv.corp.google.com ([2620:15c:202:201:dc8a:c9d0:aa5b:5386])
-        by smtp.gmail.com with ESMTPSA id r6sm5633659pgp.64.2021.04.16.15.41.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 Apr 2021 15:41:22 -0700 (PDT)
-From:   Douglas Anderson <dianders@chromium.org>
-To:     Andrzej Hajda <a.hajda@samsung.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@siol.net>,
-        Sam Ravnborg <sam@ravnborg.org>, Wolfram Sang <wsa@kernel.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>, robdclark@chromium.org,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>,
-        Steev Klimaszewski <steev@kali.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, Linus W <linus.walleij@linaro.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v4 27/27] drm/panel: panel-simple: Prepare/unprepare are refcounted, not forced
-Date:   Fri, 16 Apr 2021 15:39:50 -0700
-Message-Id: <20210416153909.v4.27.I502f2a92ddd36c3d28d014dd75e170c2d405a0a5@changeid>
-X-Mailer: git-send-email 2.31.1.368.gbe11c130af-goog
-In-Reply-To: <20210416223950.3586967-1-dianders@chromium.org>
-References: <20210416223950.3586967-1-dianders@chromium.org>
+        id S231898AbhDPWkh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Apr 2021 18:40:37 -0400
+Received: from mail.kernel.org ([198.145.29.99]:50468 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230258AbhDPWkg (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 16 Apr 2021 18:40:36 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPS id E6FD1613C1;
+        Fri, 16 Apr 2021 22:40:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1618612811;
+        bh=aKl6tQkOqJGaq1pJDw+YSJmiWZuLO14doD1YlqmapTQ=;
+        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+        b=OwfqydL9zmPTTj67/Swwg1aPyDBXNjHiOER/LDsam332+EEzSnw8574C6gnFPe/g2
+         vlBVqeNtDuTWboaJA2c+ZgVpiEb4I2/kbTfdIvtJny/BrnLfUXW2Xex+xRpL2PUJPd
+         SIx49HuFxf97nhABHNa/6POht6h2McMpMZ7nWDnQ4WWhK5uqhQ2nLDQ0qI6yHUOBck
+         gQsfV7wgVa75fWu/f2JVLNCDxO2vXFMOy28hbqUt96ztjAeCnyXAf66hTp33iUvE+d
+         j8TNqGI6qttWGOrCqv3JfS+6eXAfuEJQHDAaeWjtnvaS/JgvVKIUkGRQnzXRHas0dB
+         wYSqITyUI+PpQ==
+Received: from pdx-korg-docbuild-2.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id D5BE060CD8;
+        Fri, 16 Apr 2021 22:40:10 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH net-next v11 1/2] net: Add a WWAN subsystem
+From:   patchwork-bot+netdevbpf@kernel.org
+Message-Id: <161861281087.23739.8947719236426723975.git-patchwork-notify@kernel.org>
+Date:   Fri, 16 Apr 2021 22:40:10 +0000
+References: <1618562194-31913-1-git-send-email-loic.poulain@linaro.org>
+In-Reply-To: <1618562194-31913-1-git-send-email-loic.poulain@linaro.org>
+To:     Loic Poulain <loic.poulain@linaro.org>
+Cc:     kuba@kernel.org, davem@davemloft.net, gregkh@linuxfoundation.org,
+        netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        bjorn.andersson@linaro.org, manivannan.sadhasivam@linaro.org,
+        aleksander@aleksander.es, dcbw@redhat.com, mpearson@lenovo.com
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Historically simple-panel had code to make sure that if prepare() was
-called on an already-prepared panel that it was a no-op. Similarly if
-unprepare() was called on an already-unprepared panel it was also a
-no-op. Essentially it means that these functions always "forced" the
-value to be whatever the caller wanted it to be. You can see that the
-forcing behavior dates back at least as far as 2014 by looking at
-commit 613a633e7a56 ("drm/panel: simple: Add proper definition for
-prepare and unprepare").
+Hello:
 
-Apparently the code supporting the historical behavior may not be
-needed [1] and prepare() / unprepare() are supposed to be
-balanced. Let's try removing it and see if anyone breaks! If they do
-then we can have a debate about whether we should change that code or
-revert this patch. :-) If nobody breaks then we've nicely saved a few
-lines of code and some complexity.
+This series was applied to netdev/net-next.git (refs/heads/master):
 
-[1] https://lore.kernel.org/r/YHePsQgqOau1V5lD@pendragon.ideasonboard.com
+On Fri, 16 Apr 2021 10:36:33 +0200 you wrote:
+> This change introduces initial support for a WWAN framework. Given the
+> complexity and heterogeneity of existing WWAN hardwares and interfaces,
+> there is no strict definition of what a WWAN device is and how it should
+> be represented. It's often a collection of multiple devices that perform
+> the global WWAN feature (netdev, tty, chardev, etc).
+> 
+> One usual way to expose modem controls and configuration is via high
+> level protocols such as the well known AT command protocol, MBIM or
+> QMI. The USB modems started to expose them as character devices, and
+> user daemons such as ModemManager learnt to use them.
+> 
+> [...]
 
-Suggested-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
----
+Here is the summary with links:
+  - [net-next,v11,1/2] net: Add a WWAN subsystem
+    https://git.kernel.org/netdev/net-next/c/9a44c1cc6388
+  - [net-next,v11,2/2] net: Add Qcom WWAN control driver
+    https://git.kernel.org/netdev/net-next/c/fa588eba632d
 
-(no changes since v1)
+You are awesome, thank you!
+--
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
 
- drivers/gpu/drm/panel/panel-simple.c | 14 --------------
- 1 file changed, 14 deletions(-)
-
-diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
-index 5a2953c4ca44..a2c3008af7e5 100644
---- a/drivers/gpu/drm/panel/panel-simple.c
-+++ b/drivers/gpu/drm/panel/panel-simple.c
-@@ -176,8 +176,6 @@ struct panel_simple {
- 	bool enabled;
- 	bool no_hpd;
- 
--	bool prepared;
--
- 	ktime_t prepared_time;
- 	ktime_t unprepared_time;
- 
-@@ -355,18 +353,12 @@ static int panel_simple_suspend(struct device *dev)
- 
- static int panel_simple_unprepare(struct drm_panel *panel)
- {
--	struct panel_simple *p = to_panel_simple(panel);
- 	int ret;
- 
--	/* Unpreparing when already unprepared is a no-op */
--	if (!p->prepared)
--		return 0;
--
- 	pm_runtime_mark_last_busy(panel->dev);
- 	ret = pm_runtime_put_autosuspend(panel->dev);
- 	if (ret < 0)
- 		return ret;
--	p->prepared = false;
- 
- 	return 0;
- }
-@@ -475,18 +467,12 @@ static int panel_simple_prepare(struct drm_panel *panel)
- 	struct panel_simple *p = to_panel_simple(panel);
- 	int ret;
- 
--	/* Preparing when already prepared is a no-op */
--	if (p->prepared)
--		return 0;
--
- 	ret = pm_runtime_get_sync(panel->dev);
- 	if (ret < 0) {
- 		pm_runtime_put_autosuspend(panel->dev);
- 		return ret;
- 	}
- 
--	p->prepared = true;
--
- 	return 0;
- }
- 
--- 
-2.31.1.368.gbe11c130af-goog
 
