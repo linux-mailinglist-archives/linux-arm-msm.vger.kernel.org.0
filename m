@@ -2,49 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8425C362B41
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Apr 2021 00:41:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 772CF362B43
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Apr 2021 00:41:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234928AbhDPWl0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S234999AbhDPWl0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Fri, 16 Apr 2021 18:41:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39854 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39830 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234999AbhDPWlZ (ORCPT
+        with ESMTP id S234996AbhDPWlZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Fri, 16 Apr 2021 18:41:25 -0400
-Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20973C06138A
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Apr 2021 15:40:59 -0700 (PDT)
-Received: by mail-pf1-x430.google.com with SMTP id h11so1621557pfn.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Apr 2021 15:40:59 -0700 (PDT)
+Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com [IPv6:2607:f8b0:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 338E2C061574
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Apr 2021 15:41:00 -0700 (PDT)
+Received: by mail-pf1-x429.google.com with SMTP id 10so10387702pfl.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Apr 2021 15:41:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=pcJHDcYMV/GNRvkYvCP6Y5GlcN4y2gUoiu2dtS69kIs=;
-        b=ZsInv2JReTrfjCgB8cC2jbctayfltBqBr0jOg/kNzrP6rbjJRuDO2ZT50ZjSe7P511
-         6Eiktjk1IJ+Z76JPjdunMQ7+1SGN9m+uWcMd0FXecfowEx7VHM5M9vo76px1rEqZTcAA
-         UF90B3xobn+6xQeKqzuNgiZBP9MVJxrOytsJ4=
+        bh=J5nOteFgoZnowwkTipxkWtE08iX9sY3pl7ULi9yEyaI=;
+        b=W8hyzMu/n2h6P+btoPgO6hDZzVjhqexQbyYVYNXmEhPGuPi5s0RUkdrBz6VIbEPPV7
+         zG1o4lr9afuQGk8W+WKyYmlPegOotR2ux4/bMDggeTsMoSjsK8W8H6GyH9bnVFCVdo16
+         FXQUn08UWJTOaR8fX8Q5JzKcqPflvpRF2Y5+M=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=pcJHDcYMV/GNRvkYvCP6Y5GlcN4y2gUoiu2dtS69kIs=;
-        b=eeknhKUsGi5i31AYwoC0YZQSTAf6ObPfO8dwGpBdBJsKwJCUXjYGEbLvbsGj54Ksz9
-         6JVqUGNg5n9kKvT/Izemsi3dTbxLZ0j9neGUQbnZX+GhaWftAueLqLbKcl7Tcz1sh9AB
-         G9pmaTkSAnZIIHSkcj5x1kl5mKvqh2nDfO02+O8M4tRpJEs+zBfH5bIo+/x3QYbivGJL
-         UIgpUOJcSR4zIas6ehiWBOHZ7KgNZfA8la6hJKPeu3t6GRFjO64QvNZF1aEPCp7/q3WP
-         JHZIiQoOKSGh2bH8UcRiYS/prw9i6f3KENNqiZ0yB2lr9z9M1nLRhhx4/6Jas6/OMP7v
-         YD1Q==
-X-Gm-Message-State: AOAM532X4rRygGSC4M7dwPdGetQX30efoloDcQpPRFmuX/XokyNJqCEb
-        7Wu16N0qP2M29GSzaRJJMITWiQ==
-X-Google-Smtp-Source: ABdhPJxsoX7eKSMm+cKUoiLIrtgFQTzsLXBKF76NDygdyZY1gzqdrBnHowzCGvB55KXccagYFL6tdQ==
-X-Received: by 2002:aa7:8608:0:b029:258:838a:23bb with SMTP id p8-20020aa786080000b0290258838a23bbmr7797618pfn.37.1618612858730;
-        Fri, 16 Apr 2021 15:40:58 -0700 (PDT)
+        bh=J5nOteFgoZnowwkTipxkWtE08iX9sY3pl7ULi9yEyaI=;
+        b=OigMvS8/qwHAjSs7/8v/+vVdWKQu2SXifTmflFjPmbIxYdfbUZbtnHkpUp9oFar1Z9
+         ubBA+oJoRJC81dsqOO5FVQ8FEApNb9Zn/Z3EfEH8uNK0oyLME6ZzxXkH26QA76MWWFUP
+         2Xz26vmdmkl9PmE5c9YNjAwg5XNqXiB3vHl0VmmZ7KjgTg9eSHG8pfP/LDSBO/D3n4xY
+         Z+bNE/45HpDMoORAMj4HDwNhLMphL0TFNNQSCYncEP6uk4Ml4Kjm6t1RMi4qUUXmBC5o
+         jnLO/WZ1COpu3pq6RqjSKv38qyTblyEjBgQvF4YNHbExfNyKxJ+oBBKnMIQf5P3ni1Es
+         G1Sg==
+X-Gm-Message-State: AOAM531tR/eVDg6RSvP7mn5SlflMCWg7GSBt1IoaDN3sxdqsrw+moYN7
+        5V2/PiwE0xdtojJbGN69wGsTrw==
+X-Google-Smtp-Source: ABdhPJyj5GBW4RdGlaUXoToWPg882VwpJn8Yf5HvBP+mLu4qvhhDBwIkpFlvogSUcDSesiRyd++BrA==
+X-Received: by 2002:a63:c847:: with SMTP id l7mr1102468pgi.445.1618612859778;
+        Fri, 16 Apr 2021 15:40:59 -0700 (PDT)
 Received: from tictac2.mtv.corp.google.com ([2620:15c:202:201:dc8a:c9d0:aa5b:5386])
-        by smtp.gmail.com with ESMTPSA id r6sm5633659pgp.64.2021.04.16.15.40.57
+        by smtp.gmail.com with ESMTPSA id r6sm5633659pgp.64.2021.04.16.15.40.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 Apr 2021 15:40:58 -0700 (PDT)
+        Fri, 16 Apr 2021 15:40:59 -0700 (PDT)
 From:   Douglas Anderson <dianders@chromium.org>
 To:     Andrzej Hajda <a.hajda@samsung.com>,
         Neil Armstrong <narmstrong@baylibre.com>,
@@ -64,9 +64,9 @@ Cc:     Stephen Boyd <swboyd@chromium.org>, robdclark@chromium.org,
         David Airlie <airlied@linux.ie>,
         Robert Foss <robert.foss@linaro.org>,
         dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v4 05/27] drm/bridge: ti-sn65dsi86: Move drm_panel_unprepare() to post_disable()
-Date:   Fri, 16 Apr 2021 15:39:28 -0700
-Message-Id: <20210416153909.v4.5.Ia75c9ffe2a2582393a8532d244da86f18b4c9b21@changeid>
+Subject: [PATCH v4 06/27] drm/bridge: ti-sn65dsi86: Get rid of the useless detect() function
+Date:   Fri, 16 Apr 2021 15:39:29 -0700
+Message-Id: <20210416153909.v4.6.I826adf4faeb7f39f560b387f6b380e639c6986c8@changeid>
 X-Mailer: git-send-email 2.31.1.368.gbe11c130af-goog
 In-Reply-To: <20210416223950.3586967-1-dianders@chromium.org>
 References: <20210416223950.3586967-1-dianders@chromium.org>
@@ -76,42 +76,44 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-We prepared the panel in pre_enable() so we should unprepare it in
-post_disable() to match.
+If we just leave the detect() function as NULL then the upper layers
+assume we're always connected. There's no reason for a stub.
 
 Signed-off-by: Douglas Anderson <dianders@chromium.org>
 Reviewed-by: Andrzej Hajda <a.hajda@samsung.com>
 Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 ---
 
-Changes in v4:
-- Reword commit mesage slightly.
+(no changes since v1)
 
- drivers/gpu/drm/bridge/ti-sn65dsi86.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/bridge/ti-sn65dsi86.c | 12 ------------
+ 1 file changed, 12 deletions(-)
 
 diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-index c006678c9921..e30460002c48 100644
+index e30460002c48..51db30d573c1 100644
 --- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
 +++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-@@ -452,8 +452,6 @@ static void ti_sn_bridge_disable(struct drm_bridge *bridge)
- 	regmap_write(pdata->regmap, SN_ML_TX_MODE_REG, 0);
- 	/* disable DP PLL */
- 	regmap_write(pdata->regmap, SN_PLL_ENABLE_REG, 0);
+@@ -306,20 +306,8 @@ static struct drm_connector_helper_funcs ti_sn_bridge_connector_helper_funcs = {
+ 	.mode_valid = ti_sn_bridge_connector_mode_valid,
+ };
+ 
+-static enum drm_connector_status
+-ti_sn_bridge_connector_detect(struct drm_connector *connector, bool force)
+-{
+-	/**
+-	 * TODO: Currently if drm_panel is present, then always
+-	 * return the status as connected. Need to add support to detect
+-	 * device state for hot pluggable scenarios.
+-	 */
+-	return connector_status_connected;
+-}
 -
--	drm_panel_unprepare(pdata->panel);
- }
- 
- static u32 ti_sn_bridge_get_dsi_freq(struct ti_sn_bridge *pdata)
-@@ -869,6 +867,8 @@ static void ti_sn_bridge_post_disable(struct drm_bridge *bridge)
- {
- 	struct ti_sn_bridge *pdata = bridge_to_ti_sn_bridge(bridge);
- 
-+	drm_panel_unprepare(pdata->panel);
-+
- 	clk_disable_unprepare(pdata->refclk);
- 
- 	pm_runtime_put_sync(pdata->dev);
+ static const struct drm_connector_funcs ti_sn_bridge_connector_funcs = {
+ 	.fill_modes = drm_helper_probe_single_connector_modes,
+-	.detect = ti_sn_bridge_connector_detect,
+ 	.destroy = drm_connector_cleanup,
+ 	.reset = drm_atomic_helper_connector_reset,
+ 	.atomic_duplicate_state = drm_atomic_helper_connector_duplicate_state,
 -- 
 2.31.1.368.gbe11c130af-goog
 
