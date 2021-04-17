@@ -2,99 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 974D5363043
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Apr 2021 15:26:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3AA4E363045
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Apr 2021 15:26:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236092AbhDQNZc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 17 Apr 2021 09:25:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33608 "EHLO
+        id S236356AbhDQNZd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 17 Apr 2021 09:25:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33612 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231772AbhDQNZb (ORCPT
+        with ESMTP id S231772AbhDQNZc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 17 Apr 2021 09:25:31 -0400
-Received: from mail-qk1-x72d.google.com (mail-qk1-x72d.google.com [IPv6:2607:f8b0:4864:20::72d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F149C061756
-        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Apr 2021 06:25:05 -0700 (PDT)
-Received: by mail-qk1-x72d.google.com with SMTP id e13so21845029qkl.6
-        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Apr 2021 06:25:05 -0700 (PDT)
+        Sat, 17 Apr 2021 09:25:32 -0400
+Received: from mail-qt1-x82b.google.com (mail-qt1-x82b.google.com [IPv6:2607:f8b0:4864:20::82b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B208C061574
+        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Apr 2021 06:25:06 -0700 (PDT)
+Received: by mail-qt1-x82b.google.com with SMTP id z25so155513qtn.8
+        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Apr 2021 06:25:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=BZm00Xc0p/94j6srLK1r3tkA4U5Cw6X9E6ocH2iLzlI=;
-        b=CWt1fRfAKh485gQO18embcRiO4WSeHn9EhQgKBOQ5P9ntIKFLrbpsVl3Vw2Punfh6t
-         /gaSBJLXqDoPzr6+GELua6LGj+syhSzbZsw6grMRstR73o86A88d6gfuLJ5lrnj6hm3n
-         Sqs7O4mNMkLOreVy7Er7Hc0deqdoX7C14ewhFAbDiZUoNfRJ4VHC/1SFXcYkxvWdVjoX
-         iKPdHuS0FlZ/c4CUpiIMbXJLJSvesp9n2F+rsei8b75YT7vraOWEmdm0qAGmtbGE93B1
-         sNCtCKV4eORY3LscHZ6822iEcXdQD9KlFarfRYoBOyQ8yzjC1NdRnuP8kye7v5MYspUU
-         75Pg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=VcMAQ1EGbeesv8V+7yaxgvD6ypjuKCvSWavQ5LbGTMA=;
+        b=HJklx3NmN3v5pM8kGfdNbm5n0eFqnc10Glfghb83pTbDpCrMYdPfZz4u4Bv2vHH83U
+         VMDX1shkqN4rrDBBmHtap2Cqyv2nTXbd4Lg5fEBujY+6YExQHpoEFXtc1z6FA2rsd5js
+         BQEjaQLOfkVpRyt5/v5p+yWUCgSw575N9FmQ5BtsB1qxb3rQHn8zvh4UUWTfTLUoGbz6
+         itIj34CECkk0qnPmcoYGn8dnrxxXauKMaJ3wu0SY9OYlqKmWCIf3U54S13EIDvtDsjUL
+         /5bof0+dO8U3AAsui0BDUKVVXdANhKngxPfGKPOcPO0I8iqTXHRAwHMdTS43BeF4uvgm
+         b5cA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=BZm00Xc0p/94j6srLK1r3tkA4U5Cw6X9E6ocH2iLzlI=;
-        b=djDg2/mwZ33oVSLhbSsQ6VQY9pI5ocQYc1Hfli/sYisGRenGNgz2gCkPit5KeSzmgA
-         hyTdYfQgYIIIIjsBTi6peOpNQVAVKVFtxXDusbgqWAKQ8M3uEr2BggpMkUX/cPsiJhBp
-         QAGq+9C1X3mdcrgQ/qK4JrIDSgg0IZEiLgi2BcTbxBU8kge9HYSm17HfobRTEyw4sSBh
-         +s8bzk9WCgpQIZimfL6YdtAiGml+kFyzQv2OFzz0a48uMZ2iqH0BwjvRvxckRYMfgS1e
-         yWOlCTa9xq0yWy2hc4iB8wazA+ck8smJicKh0eCzSZ6+WnmT58N3ipuyGxlzfontSKSj
-         urvA==
-X-Gm-Message-State: AOAM530CiUnENNoNCp/cGR0IIFN7YCfoh3KbioSGV7wAlwZWS4/quqI0
-        nXpHQRGXmfAeFaHTAfi4rIV1YA==
-X-Google-Smtp-Source: ABdhPJzQHrRYUSGCD23lP/9i2iV3V1jvYARwoyqHLWPYfeQZ0Qyd1v2CJSiUHu8Dr2S2zwO6dy5LDw==
-X-Received: by 2002:a05:620a:444f:: with SMTP id w15mr3829536qkp.437.1618665904339;
-        Sat, 17 Apr 2021 06:25:04 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=VcMAQ1EGbeesv8V+7yaxgvD6ypjuKCvSWavQ5LbGTMA=;
+        b=DaH/R56kAmIq+39IhVX4fnzHPE/8DSoQPIUFiZl0j9MMy1YWdXE6lXwIWn9JLQCLL7
+         7KJJprE0NuxW1uUP7umsBs526kzU4jMaoY/qzn1io6vmTDHXM56GHuRIZYKJ6xm/X5VE
+         i2VwcOoe7uz1IQ0wbMhQmzg5mvvIOxUJKds1NLnoo2itBevO8k7A+A7PJixUX5tlyYcR
+         5Y0lC0w2V/yE0VDCboDQC+FjgQ7jVLhyBmd6uwSIKuLF7bIPqx+nEKPHxkTSBW0MIlnW
+         +roS+LYggw63uGe3tpLimYB1oyO5b091KYScUZWD/HTeWiMchn/9vhrUCxU8FQ736NQf
+         3UZQ==
+X-Gm-Message-State: AOAM533ggpmKysbOh5u3u77emiS+HIbVK1Ag28mBPri2EZWnby77IlSk
+        5fwLRzr015faOWlqynCexbDoPmHvMUmn5g==
+X-Google-Smtp-Source: ABdhPJx3FdLlhpGerzeCsNZOVNq0P81zG6Q0EqRRgjQRfNuHkBtZCwi8z8rJg8QXx94c9+y7tjHyPQ==
+X-Received: by 2002:ac8:4411:: with SMTP id j17mr3793443qtn.109.1618665905302;
+        Sat, 17 Apr 2021 06:25:05 -0700 (PDT)
 Received: from pop-os.fios-router.home (pool-71-163-245-5.washdc.fios.verizon.net. [71.163.245.5])
-        by smtp.googlemail.com with ESMTPSA id o25sm1988327qtl.37.2021.04.17.06.25.03
+        by smtp.googlemail.com with ESMTPSA id o25sm1988327qtl.37.2021.04.17.06.25.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 17 Apr 2021 06:25:03 -0700 (PDT)
+        Sat, 17 Apr 2021 06:25:04 -0700 (PDT)
 From:   Thara Gopinath <thara.gopinath@linaro.org>
 To:     herbert@gondor.apana.org.au, davem@davemloft.net,
         bjorn.andersson@linaro.org
 Cc:     ebiggers@google.com, ardb@kernel.org, sivaprak@codeaurora.org,
         linux-crypto@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-arm-msm@vger.kernel.org
-Subject: [Patch v2 0/7] Add support for AEAD algorithms in Qualcomm Crypto Engine driver
-Date:   Sat, 17 Apr 2021 09:24:56 -0400
-Message-Id: <20210417132503.1401128-1-thara.gopinath@linaro.org>
+Subject: [Patch v2 1/7] crypto: qce: common: Add MAC failed error checking
+Date:   Sat, 17 Apr 2021 09:24:57 -0400
+Message-Id: <20210417132503.1401128-2-thara.gopinath@linaro.org>
 X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20210417132503.1401128-1-thara.gopinath@linaro.org>
+References: <20210417132503.1401128-1-thara.gopinath@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable support for AEAD algorithms in Qualcomm CE driver.  The first three
-patches in this series are cleanups and add a few missing pieces required
-to add support for AEAD algorithms.  Patch 4 introduces supported AEAD
-transformations on Qualcomm CE.  Patches 5 and 6 implements the h/w
-infrastructure needed to enable and run the AEAD transformations on
-Qualcomm CE.  Patch 7 adds support to queue fallback algorithms in case of
-unsupported special inputs.
+MAC_FAILED gets set in the status register if authenthication fails
+for ccm algorithms(during decryption). Add support to catch and flag
+this error.
 
-This patch series has been tested with in kernel crypto testing module
-tcrypt.ko with fuzz tests enabled as well.
+Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
+---
 
-Thara Gopinath (7):
-  crypto: qce: common: Add MAC failed error checking
-  crypto: qce: common: Make result dump optional
-  crypto: qce: Add mode for rfc4309
-  crypto: qce: Add support for AEAD algorithms
-  crypto: qce: common: Clean up qce_auth_cfg
-  crypto: qce: common: Add support for AEAD algorithms
-  crypto: qce: aead: Schedule fallback algorithm
+v1->v2:
+	- Split the error checking for -ENXIO and -EBADMSG into if-else clause
+	  so that the code is more readable as per Bjorn's review comment.
 
- drivers/crypto/Kconfig      |  15 +
- drivers/crypto/qce/Makefile |   1 +
- drivers/crypto/qce/aead.c   | 841 ++++++++++++++++++++++++++++++++++++
- drivers/crypto/qce/aead.h   |  56 +++
- drivers/crypto/qce/common.c | 198 ++++++++-
- drivers/crypto/qce/common.h |   9 +-
- drivers/crypto/qce/core.c   |   4 +
- 7 files changed, 1104 insertions(+), 20 deletions(-)
- create mode 100644 drivers/crypto/qce/aead.c
- create mode 100644 drivers/crypto/qce/aead.h
+ drivers/crypto/qce/common.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
+diff --git a/drivers/crypto/qce/common.c b/drivers/crypto/qce/common.c
+index dceb9579d87a..dd76175d5c62 100644
+--- a/drivers/crypto/qce/common.c
++++ b/drivers/crypto/qce/common.c
+@@ -419,6 +419,8 @@ int qce_check_status(struct qce_device *qce, u32 *status)
+ 	 */
+ 	if (*status & STATUS_ERRORS || !(*status & BIT(OPERATION_DONE_SHIFT)))
+ 		ret = -ENXIO;
++	else if (*status & BIT(MAC_FAILED_SHIFT))
++		ret = -EBADMSG;
+ 
+ 	return ret;
+ }
 -- 
 2.25.1
 
