@@ -2,55 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3B07F363534
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Apr 2021 14:30:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 13DEF36355D
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Apr 2021 15:00:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236562AbhDRMad (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 18 Apr 2021 08:30:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47252 "EHLO
+        id S230166AbhDRNBT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 18 Apr 2021 09:01:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53858 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235404AbhDRMa1 (ORCPT
+        with ESMTP id S229951AbhDRNBS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 18 Apr 2021 08:30:27 -0400
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FFDBC061344
-        for <linux-arm-msm@vger.kernel.org>; Sun, 18 Apr 2021 05:29:58 -0700 (PDT)
-Received: by mail-ej1-x635.google.com with SMTP id sd23so40093121ejb.12
-        for <linux-arm-msm@vger.kernel.org>; Sun, 18 Apr 2021 05:29:58 -0700 (PDT)
+        Sun, 18 Apr 2021 09:01:18 -0400
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3EC45C06174A
+        for <linux-arm-msm@vger.kernel.org>; Sun, 18 Apr 2021 06:00:49 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id l4so48766464ejc.10
+        for <linux-arm-msm@vger.kernel.org>; Sun, 18 Apr 2021 06:00:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=snejp.pl; s=gmail;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Povr2PCX17kPcIjpM7jFhMLFACkEG0pX0j9vA7ZmMlE=;
-        b=N2sdCUsAj7x9gsqUHEMfL4w6zOyWfcNQQPzfaxKL7lIEBqHT3zYA0LjL2pZjtzkRVA
-         7hLzpX+t5gKlt+I0dECXGu+/m/7c/qsqK6ctZxEnBqOzgH2Dpe60nb7c3mhuVcgPZ84T
-         rd5fyjkkqDDOlwxwRVHg4pI/iyRz4WD4XWWN8c8c8xR2HuoIEa4BIbHPIbCdZ7wKdYA7
-         U9iTCc/tEqZhTcnOq3ju8vgnXhZ4XbPHmgqbO/qAWzGvtsNifKAPHVb7TSk9JxkQmv0q
-         BJdyFywYCS6rOm7HHNnD1pjhSzqzuSXGaY6Xx+0yvhRXVL0oVXzVXguG/iCLGRv5dCZ8
-         qTSA==
+        h=date:from:to:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=6Ow1NlEM7DKtr4mIJK66YbpuR1k+LjlGbnW7/7eKM+w=;
+        b=ZAzrDKi0WrNy99E2xve9lRvUjc4y9pEfsTbOA8rOglKFYPdhSZpk9sn41KFyifW207
+         mNCMthaZUyAG4M3JuWBar9NVWdsjzL8m6XImXPr5eW79YHfWu11l37h66T1/G1dzr+4p
+         d2LnXEOzeQ4rwxCrOgBXAvCu2lJjfeIRBt8zhBIs+8MPUDoi/lwSlqcxVGTwyul8YqM/
+         ZtxAgrmNjcvb17Du8X6TWI0UUYuvwnE6oF9Cd6Z76pqffWCMifOe1iJHdTBRNiReagJo
+         GjODWwgQ7qZsBHXytLHXYNnEKuk2KUoWU6hxmj79hoOqCJaisYCe05el6SB6U9nd1Mcs
+         gU5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Povr2PCX17kPcIjpM7jFhMLFACkEG0pX0j9vA7ZmMlE=;
-        b=GzIw/z+yu8WqVu6rF+H9SXYUl/GUtGtQ/70voUumDJ/znvtu8FWkLsaC5biHg7Lt30
-         mUzccE1MZEl9oO5zInB2zy02Pt0kXd2lu24qYMIrVRkQjrOJxurAEsUgUcmO2UJEqDw7
-         X6LyXN1yX23eWZUHi5PBqOznC5mRm0uFB5JiOJoFStLkZGys8FqjoFaBa3jI1Q2M3uxZ
-         tghbI+Jb7MQwzFXaSQiPWQnZ0ODst8yUhQfOqzdndSHhaE1Mh1CgVQftEf4etMslE0L6
-         H0TXrxsRSDzFP2RKnYMUltnOKTBrrJ0UzFjHgKsGf/ILfwKOTlkwxvZfNCpKSIyHmMxK
-         jGvQ==
-X-Gm-Message-State: AOAM533i/+U3QDXz+pdlkbZHSMP6926oA2vJPVk0x//VF/kJIDswlOAD
-        lk4jaMt6oeizcl9YQE+xxIG3UA==
-X-Google-Smtp-Source: ABdhPJwz0rE2CDn2fqqk0+tJA02XvNTkLZp+/wGQZHn1H/gImMIuGi56clWZflH0EgKxzeUsfVSCgA==
-X-Received: by 2002:a17:906:8921:: with SMTP id fr33mr17141651ejc.151.1618748996975;
-        Sun, 18 Apr 2021 05:29:56 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=6Ow1NlEM7DKtr4mIJK66YbpuR1k+LjlGbnW7/7eKM+w=;
+        b=aayGjrXJfqEvXDLTZRKzEgcppV/zg3d7vyNq5V6u/a7mZMvj2pT1Imwc6ZkeVfxUQz
+         WZxQ45TKI6ykBDlGiA1c6EIvucfkoUyA2CAWIzb9nripSoYVS4wdEqqiQLCje2sp4mMZ
+         QsQK9DI23GG27i4YEqCelTKFXnExYmWsEFnWaDlVxUZY7Mn+YQ0H+diZ/0XKuIKHk8WA
+         x69Rn6YhYT60EU3k2XsalxfgobERJIAUMrclV5af9M3LvUC0PHbdSU2Ne0sLN/9+Li1Z
+         JEQCgyI7iZnGPhRTYT+yID8RiM5m1qOltxvhtRunV0Wjj34ZHoazBD75NWRdxek7IdjV
+         C5bQ==
+X-Gm-Message-State: AOAM532Hx1B7xukwMSr+WQrh1ufhBnedT9kdGu461erP9oC3u16dS65S
+        CDIXsccj+ORgnR8LXnGZ55DSCQ==
+X-Google-Smtp-Source: ABdhPJynk440pimUYGjeiYWc8ykH5SQkOAlqUmul4ohk1LNdpMwCBfj4JfqjQMI6VpxBPwNUI4EKaw==
+X-Received: by 2002:a17:907:76a7:: with SMTP id jw7mr17228065ejc.322.1618750847955;
+        Sun, 18 Apr 2021 06:00:47 -0700 (PDT)
 Received: from PackardBell (87-49-44-144-mobile.dk.customer.tdc.net. [87.49.44.144])
-        by smtp.googlemail.com with ESMTPSA id a27sm8213677ejk.80.2021.04.18.05.29.55
+        by smtp.googlemail.com with ESMTPSA id r10sm8436629ejd.112.2021.04.18.06.00.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 18 Apr 2021 05:29:56 -0700 (PDT)
+        Sun, 18 Apr 2021 06:00:47 -0700 (PDT)
 Received: from localhost (PackardBell [local])
-        by PackardBell (OpenSMTPD) with ESMTPA id 6b81955b;
-        Sun, 18 Apr 2021 12:29:50 +0000 (UTC)
+        by PackardBell (OpenSMTPD) with ESMTPA id 03f6b92d;
+        Sun, 18 Apr 2021 13:00:45 +0000 (UTC)
+Date:   Sun, 18 Apr 2021 15:00:45 +0200
 From:   Bartosz Dudziak <bartosz.dudziak@snejp.pl>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -59,72 +60,45 @@ To:     Andy Gross <agross@kernel.org>,
         Rob Herring <robh+dt@kernel.org>, linux-clk@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         devicetree@vger.kernel.org
-Cc:     Bartosz Dudziak <bartosz.dudziak@snejp.pl>
-Subject: [PATCH v2 5/5] arm: dts: qcom: Add initial DTS file for Samsung Galaxy S III Neo phone
-Date:   Sun, 18 Apr 2021 14:29:09 +0200
-Message-Id: <20210418122909.71434-6-bartosz.dudziak@snejp.pl>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20210418122909.71434-1-bartosz.dudziak@snejp.pl>
-References: <20210418122909.71434-1-bartosz.dudziak@snejp.pl>
+Subject: Re: [PATCH 0/5] Samsung Galaxy S III Neo Initial DTS
+Message-ID: <20210418130045.GA73531@PackardBell>
+References: <20210326145816.9758-1-bartosz.dudziak@snejp.pl>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210326145816.9758-1-bartosz.dudziak@snejp.pl>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add DTS support for the Samsung Galaxy S III Neo (codenamed s3ve3g) phone.
-Initial version have just a working serial console.
+On Fri, Mar 26, 2021 at 03:58:11PM +0100, Bartosz Dudziak wrote:
+> This series of patches enables to boot MSM8226 SoC in Samsung Galaxy S III Neo
+> mobile phone. Implemented clocks are on top of MSM8974 GCC driver because there
+> is really little difference between them. UART serial communication is working.
+> I have working patches for the regulators, EMMC, multithreading and Wifi for
+> this device but they are not clean and ready to submit.
+> 
+> Bartosz Dudziak (5):
+>   dt-bindings: clock: qcom: Add MSM8226 GCC clock bindings
+>   clk: qcom: gcc: Add support for Global Clock controller found on
+>     MSM8226
+>   arm: dts: qcom: Add support for MSM8226 SoC
+>   dt-bindings: arm: qcom: Document MSM8226 SoC binding
+>   arm: dts: qcom: Add initial DTS file for Samsung Galaxy S III Neo
+>     phone
+> 
+>  .../devicetree/bindings/arm/qcom.yaml         |   6 +
+>  .../devicetree/bindings/clock/qcom,gcc.yaml   |  13 +-
+>  arch/arm/boot/dts/Makefile                    |   1 +
+>  .../boot/dts/qcom-msm8226-samsung-s3ve3g.dts  |  25 +++
+>  arch/arm/boot/dts/qcom-msm8226.dtsi           | 152 ++++++++++++++
+>  drivers/clk/qcom/gcc-msm8974.c                | 185 ++++++++++++++++--
+>  6 files changed, 364 insertions(+), 18 deletions(-)
+>  create mode 100644 arch/arm/boot/dts/qcom-msm8226-samsung-s3ve3g.dts
+>  create mode 100644 arch/arm/boot/dts/qcom-msm8226.dtsi
+> 
+> -- 
+> 2.25.1
+> 
 
-Signed-off-by: Bartosz Dudziak <bartosz.dudziak@snejp.pl>
----
- arch/arm/boot/dts/Makefile                    |  1 +
- .../boot/dts/qcom-msm8226-samsung-s3ve3g.dts  | 25 +++++++++++++++++++
- 2 files changed, 26 insertions(+)
- create mode 100644 arch/arm/boot/dts/qcom-msm8226-samsung-s3ve3g.dts
-
-diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
-index 8e5d4ab4e7..080ff37fdb 100644
---- a/arch/arm/boot/dts/Makefile
-+++ b/arch/arm/boot/dts/Makefile
-@@ -920,6 +920,7 @@ dtb-$(CONFIG_ARCH_QCOM) += \
- 	qcom-ipq4019-ap.dk07.1-c2.dtb \
- 	qcom-ipq8064-ap148.dtb \
- 	qcom-ipq8064-rb3011.dtb \
-+	qcom-msm8226-samsung-s3ve3g.dtb \
- 	qcom-msm8660-surf.dtb \
- 	qcom-msm8960-cdp.dtb \
- 	qcom-msm8974-fairphone-fp2.dtb \
-diff --git a/arch/arm/boot/dts/qcom-msm8226-samsung-s3ve3g.dts b/arch/arm/boot/dts/qcom-msm8226-samsung-s3ve3g.dts
-new file mode 100644
-index 0000000000..d159188c8b
---- /dev/null
-+++ b/arch/arm/boot/dts/qcom-msm8226-samsung-s3ve3g.dts
-@@ -0,0 +1,25 @@
-+// SPDX-License-Identifier: BSD-3-Clause
-+/*
-+ * Copyright (c) 2020, The Linux Foundation. All rights reserved.
-+ */
-+
-+#include "qcom-msm8226.dtsi"
-+
-+/ {
-+	model = "Samsung Galaxy S III Neo";
-+	compatible = "samsung,s3ve3g", "qcom,msm8226";
-+
-+	aliases {
-+		serial0 = &blsp1_uart3;
-+	};
-+
-+	chosen {
-+		stdout-path = "serial0:115200n8";
-+	};
-+};
-+
-+&soc {
-+	serial@f991f000 {
-+		status = "ok";
-+	};
-+};
--- 
-2.25.1
-
+I have sent version V2 of the patches
