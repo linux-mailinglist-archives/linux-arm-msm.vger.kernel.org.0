@@ -2,217 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 474313637EF
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Apr 2021 23:54:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B765E363886
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Apr 2021 01:33:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232357AbhDRVzD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 18 Apr 2021 17:55:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55126 "EHLO
+        id S232288AbhDRXd5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 18 Apr 2021 19:33:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48070 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230258AbhDRVzD (ORCPT
+        with ESMTP id S231489AbhDRXd5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 18 Apr 2021 17:55:03 -0400
-Received: from m-r1.th.seeweb.it (m-r1.th.seeweb.it [IPv6:2001:4b7a:2000:18::170])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6857C06174A
-        for <linux-arm-msm@vger.kernel.org>; Sun, 18 Apr 2021 14:54:34 -0700 (PDT)
-Received: from [10.0.20.3] (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 96E351F60D;
-        Sun, 18 Apr 2021 23:54:32 +0200 (CEST)
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-Subject: Re: [PATCH v6 2/4] leds: Add driver for Qualcomm LPG
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Pavel Machek <pavel@ucw.cz>, Dan Murphy <dmurphy@ti.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        =?UTF-8?Q?Uwe_Kleine-K=c3=b6nig?= <u.kleine-koenig@pengutronix.de>,
-        Lee Jones <lee.jones@linaro.org>,
-        Martin Botka <martin.botka1@gmail.com>,
-        linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-pwm@vger.kernel.org
-References: <20201021201224.3430546-1-bjorn.andersson@linaro.org>
- <20201021201224.3430546-3-bjorn.andersson@linaro.org>
-Message-ID: <881fb5a3-fb51-3967-63de-a09950839855@somainline.org>
-Date:   Sun, 18 Apr 2021 23:54:32 +0200
+        Sun, 18 Apr 2021 19:33:57 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E0BCC06174A
+        for <linux-arm-msm@vger.kernel.org>; Sun, 18 Apr 2021 16:33:28 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id f17so46102857lfu.7
+        for <linux-arm-msm@vger.kernel.org>; Sun, 18 Apr 2021 16:33:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=p6q88clXaYisBITv7dBsQt4ObT4JagOd+ktijqQaoMw=;
+        b=T6Ny5ulI/3/RUwM8ZpQRpM4B04E+Vije3L5ujtaf5FpW2lViqohogoGrw/5bQoVlDS
+         75QpVhK+FCChKyg9/iLcwKUcl8SmKsRHr1QEj23LUl/jPim54WTe4VYkJsjCxbZB5OLU
+         5z5KIlHil7RVhK4UxC+Wg2DOEZbC9vpzrJXjNr4kGmnmJEPju0ax6Q9VDSJpvx1V3p+M
+         Buufd0OhoCjzMffvXkH8tNpzSpOOkLJlBIg9zJqq5+q9Iulcz4uTGVZnD2tzcoKw7rcO
+         H2kKimCyX8780XrBpc22udb4WLK/7HHRZQh8S82nQiGGlKvT3FirReh/Dc64LnFm3VBQ
+         JJ9A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=p6q88clXaYisBITv7dBsQt4ObT4JagOd+ktijqQaoMw=;
+        b=HAw0Ie3C9ERgOIu4ZRgpMhOzYJZVI87R86zSgSw+1tyZRgQF3AdMpSPT38mSF+KUdN
+         xTfe/oL7iubVH825zVy27Lh0Gervf1a1KUgXS31vl/N1oBL3jL/nYmjphbQ1OtSvb2Hv
+         CwFZroPzdSMA4x2NK4164xK+hu8roEH0h526A4j/Q622h2gHUZ7dTZuZkvxglp7U/I3Z
+         DCABo9VU5BvJptYBVFQDR/DOeSlAP4uFHv63ECGVN6Gr0VVS3FADazVjfyqWJF1/NklO
+         l/3Zt+by/0suGi6skwypE0aJXYN/SB8xQ79p0yW2E4KWvCFne0HrVDk5YLM6YbEbFSpQ
+         S1Ag==
+X-Gm-Message-State: AOAM533mLAtw8AHQAlYkTlAzaVkwnEu64j+tMcnMCds4idUoTwa6+6NE
+        oepRR+PEmjQS/NLzRyIr5j6TpwqOZAKXWg==
+X-Google-Smtp-Source: ABdhPJzrdwws1BxUqmCVK33yMgIRYUwSnNyWcB+DNPNdVrfLr/ggYzcljKi5sAbrRczeb3QhcGU5Mg==
+X-Received: by 2002:ac2:5cab:: with SMTP id e11mr10405726lfq.175.1618788805339;
+        Sun, 18 Apr 2021 16:33:25 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id 15sm1676389ljv.20.2021.04.18.16.33.24
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 18 Apr 2021 16:33:24 -0700 (PDT)
+Subject: Re: [PATCH v5 0/7] Add devcoredump support for DPU
+To:     Abhinav Kumar <abhinavk@codeaurora.org>,
+        dri-devel@lists.freedesktop.org
+Cc:     linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        robdclark@gmail.com, seanpaul@chromium.org, swboyd@chromium.org,
+        nganji@codeaurora.org, aravindh@codeaurora.org,
+        khsieh@codeaurora.org, daniel@ffwll.ch
+References: <1618606645-19695-1-git-send-email-abhinavk@codeaurora.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Message-ID: <71855992-47bf-e444-3ff6-2d97edb494f8@linaro.org>
+Date:   Mon, 19 Apr 2021 02:33:23 +0300
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.9.1
+ Thunderbird/78.9.0
 MIME-Version: 1.0
-In-Reply-To: <20201021201224.3430546-3-bjorn.andersson@linaro.org>
+In-Reply-To: <1618606645-19695-1-git-send-email-abhinavk@codeaurora.org>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+Content-Language: en-GB
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bjorn,
-
-On 10/21/20 10:12 PM, Bjorn Andersson wrote:
-> The Light Pulse Generator (LPG) is a PWM-block found in a wide range of
-> PMICs from Qualcomm. It can operate on fixed parameters or based on a
-> lookup-table, altering the duty cycle over time - which provides the
-> means for e.g. hardware assisted transitions of LED brightness.
+On 16/04/2021 23:57, Abhinav Kumar wrote:
+> This series adds support to use devcoredump for DPU driver. It introduces
+> the msm_disp_snapshot module which assists in the capturing of register dumps during
+> error scenarios. When a display related error happens, the msm_disp_snapshot module
+> captures all the relevant register dumps along with the snapshot of the drm
+> atomic state and triggers a devcoredump.
 > 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Tested-by: Luca Weiss <luca@z3ntu.xyz>
+> changes in v5:
+>   - move the storage of disp_state from dpu_kms to msm_kms
+>   - absorb snprintf into the snapshot core by accepting var args
+>   - initialize disp snapshot module even for non-DPU targets
+>   - split up the patches into dpu, dsi and dp pieces for easier review
+>   - get rid of MSM_DISP_SNAPSHOT_IN_* macros by simplifying function
+> 
+> 
+> Abhinav Kumar (7):
+>    drm: allow drm_atomic_print_state() to accept any drm_printer
+>    drm/msm: add support to take dpu snapshot
+>    drm/msm/dsi: add API to take DSI register snapshot
+>    drm/msm/dp: add API to take DP register snapshot
+>    drm/msm/disp/dpu1: add API to take DPU register snapshot
+>    drm/msm: add support to take dsi, dp and dpu snapshot
+>    drm/msm: add disp snapshot points across dpu driver
+
+All patches:
+
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+Thank you!
+
+> 
+>   drivers/gpu/drm/drm_atomic.c                       |  28 ++-
+>   drivers/gpu/drm/drm_atomic_uapi.c                  |   4 +-
+>   drivers/gpu/drm/drm_crtc_internal.h                |   4 +-
+>   drivers/gpu/drm/msm/Makefile                       |   2 +
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c        |  16 +-
+>   .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c   |  14 +-
+>   .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c   |   8 +-
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h     |   2 +-
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            |  50 ++++++
+>   drivers/gpu/drm/msm/disp/msm_disp_snapshot.c       | 161 +++++++++++++++++
+>   drivers/gpu/drm/msm/disp/msm_disp_snapshot.h       | 154 ++++++++++++++++
+>   drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c  | 195 +++++++++++++++++++++
+>   drivers/gpu/drm/msm/dp/dp_catalog.c                |   9 +
+>   drivers/gpu/drm/msm/dp/dp_catalog.h                |   4 +
+>   drivers/gpu/drm/msm/dp/dp_display.c                |  29 +++
+>   drivers/gpu/drm/msm/dp/dp_display.h                |   1 +
+>   drivers/gpu/drm/msm/dsi/dsi.c                      |   5 +
+>   drivers/gpu/drm/msm/dsi/dsi.h                      |   5 +-
+>   drivers/gpu/drm/msm/dsi/dsi_host.c                 |  16 ++
+>   drivers/gpu/drm/msm/msm_drv.c                      |  27 ++-
+>   drivers/gpu/drm/msm/msm_drv.h                      |   2 +
+>   drivers/gpu/drm/msm/msm_kms.h                      |   7 +
+>   drivers/gpu/drm/selftests/test-drm_framebuffer.c   |   1 +
+>   23 files changed, 725 insertions(+), 19 deletions(-)
+>   create mode 100644 drivers/gpu/drm/msm/disp/msm_disp_snapshot.c
+>   create mode 100644 drivers/gpu/drm/msm/disp/msm_disp_snapshot.h
+>   create mode 100644 drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c
+> 
 
 
-Thanks for these patches.  I have tested them successfully on the Sony 
-Xperia XA2 (Discovery, Nile platform) with the leds on the PM660l - feel 
-free to add my Tested-by.  Should I send the configuration your way for 
-inclusion in this patch, or submit them separately (either applied 
-after, or included as separate patches in the next version of this series)?
-
-> +/**
-> + * struct lpg_data - initialization data
-> + * @lut_base:		base address of LUT block
-> + * @lut_size:		number of entries in LUT
-> + * @triled_base:	base address of TRILED
-> + * @pwm_9bit_mask:	bitmask for switching from 6bit to 9bit pwm
-
-
-Our downstream kernel derives this from the "LPG subtype" for each 
-distinct channel, read from register offset +0x5.  A value of 0xb is 
-subtype "PWM" with a shift of 2, a value of 0x11 is subtype "LPG_LITE" 
-with a shift of 4.  Can we do the same here instead of hardcoding it for 
-all channels in the LPG at once?  How should we determine if the mask is 
-one or two bits wide, for the 3<<4 case?
-
-> + * @num_channels:	number of channels in LPG
-> + * @channels:		list of channel initialization data
-> + */
-
-> +	if (ping_pong) {
-> +		if (len % 2)
-> +			hi_pause = 0;
-> +		else
-> +			hi_pause = pattern[len + 1 / 2].delta_t;
-
-
-len + 1 should be wrapped in parentheses just like the reassignment to 
-len= below, otherwise this is always an out of bounds read (at len + 0).
-
-> +		lo_pause = pattern[len - 1].delta_t;
-> +
-> +		len = (len + 1) / 2;
-> +	} else {
-> +		hi_pause = pattern[len - 1].delta_t;
-> +		lo_pause = 0;
-> +	}
-> +
-> +	ret = lpg_lut_store(lpg, pattern, len, &lo_idx, &hi_idx);
-> +	if (ret < 0)
-> +		goto out;
-> +
-> +	for (i = 0; i < led->num_channels; i++) {
-> +		chan = led->channels[i];
-> +
-> +		chan->ramp_duration_ms = pattern[0].delta_t * len;
-
-
-Perhaps this could store the duration of a single step instead, since 
-the only use in lpg_apply_lut_control divides it by pattern length again?
-
-> +		chan->ramp_ping_pong = ping_pong;
-> +		chan->ramp_oneshot = repeat != -1;
-> +
-> +		chan->ramp_lo_pause_ms = lo_pause;
-> +		chan->ramp_hi_pause_ms = hi_pause;
-> +
-> +		chan->pattern_lo_idx = lo_idx;
-> +		chan->pattern_hi_idx = hi_idx;
-> +	}
-> +
-> +out:
-> +	return ret;
-> +}
-
-> +static int lpg_init_lut(struct lpg *lpg)
-> +{
-> +	const struct lpg_data *data = lpg->data;
-> +	size_t bitmap_size;
-> +
-> +	if (!data->lut_base)
-> +		return 0;
-> +
-> +	lpg->lut_base = data->lut_base;
-> +	lpg->lut_size = data->lut_size;
-> +
-> +	bitmap_size = BITS_TO_LONGS(lpg->lut_size) * sizeof(unsigned long);
-> +	lpg->lut_bitmap = devm_kzalloc(lpg->dev, bitmap_size, GFP_KERNEL);
-
-
-Would it be nicer to use BITS_TO_BYTES here, or otherwise 
-devm_kcalloc(..., bitmap_size, sizeof(long), ...) without mutiplying 
-with sizeof(unsigned long)?
-
-> +
-> +	bitmap_clear(lpg->lut_bitmap, 0, lpg->lut_size);
-> +	return lpg->lut_bitmap ? 0 : -ENOMEM;
-> +}
-> +
-> +static int lpg_probe(struct platform_device *pdev)
-> +{
-> +	struct device_node *np;
-> +	struct lpg *lpg;
-> +	int ret;
-> +	int i;
-> +
-> +	lpg = devm_kzalloc(&pdev->dev, sizeof(*lpg), GFP_KERNEL);
-> +	if (!lpg)
-> +		return -ENOMEM;
-> +
-> +	lpg->data = of_device_get_match_data(&pdev->dev);
-> +	if (!lpg->data)
-> +		return -EINVAL;
-> +
-> +	lpg->dev = &pdev->dev;
-> +
-> +	lpg->map = dev_get_regmap(pdev->dev.parent, NULL);
-> +	if (!lpg->map) {
-> +		dev_err(&pdev->dev, "parent regmap unavailable\n");
-> +		return -ENXIO;
-> +	}
-> +
-> +	ret = lpg_init_channels(lpg);
-> +	if (ret < 0)
-> +		return ret;
-> +
-> +	ret = lpg_init_triled(lpg);
-> +	if (ret < 0)
-> +		return ret;
-> +
-> +	ret = lpg_init_lut(lpg);
-> +	if (ret < 0)
-> +		return ret;
-
-
-How about turning these returns into dev_err_probe?  I'm not sure if 
-that's the expected way to go nowadays, but having some form of logging 
-when a driver fails to probe is always good to have.
-
-Thanks!
-Marijn
-
-> +
-> +	for_each_available_child_of_node(pdev->dev.of_node, np) {
-> +		ret = lpg_add_led(lpg, np);
-> +		if (ret)
-> +			return ret;
-> +	}
-> +
-> +	for (i = 0; i < lpg->num_channels; i++)
-> +		lpg_apply_dtest(&lpg->channels[i]);
-> +
-> +	ret = lpg_add_pwm(lpg);
-> +	if (ret)
-> +		return ret;
-> +
-> +	platform_set_drvdata(pdev, lpg);
-> +
-> +	return 0;
-> +}
+-- 
+With best wishes
+Dmitry
