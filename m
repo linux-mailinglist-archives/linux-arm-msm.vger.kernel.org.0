@@ -2,103 +2,217 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 13DEF36355D
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Apr 2021 15:00:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 474313637EF
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Apr 2021 23:54:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230166AbhDRNBT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 18 Apr 2021 09:01:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53858 "EHLO
+        id S232357AbhDRVzD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 18 Apr 2021 17:55:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55126 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229951AbhDRNBS (ORCPT
+        with ESMTP id S230258AbhDRVzD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 18 Apr 2021 09:01:18 -0400
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3EC45C06174A
-        for <linux-arm-msm@vger.kernel.org>; Sun, 18 Apr 2021 06:00:49 -0700 (PDT)
-Received: by mail-ej1-x62c.google.com with SMTP id l4so48766464ejc.10
-        for <linux-arm-msm@vger.kernel.org>; Sun, 18 Apr 2021 06:00:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=snejp.pl; s=gmail;
-        h=date:from:to:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=6Ow1NlEM7DKtr4mIJK66YbpuR1k+LjlGbnW7/7eKM+w=;
-        b=ZAzrDKi0WrNy99E2xve9lRvUjc4y9pEfsTbOA8rOglKFYPdhSZpk9sn41KFyifW207
-         mNCMthaZUyAG4M3JuWBar9NVWdsjzL8m6XImXPr5eW79YHfWu11l37h66T1/G1dzr+4p
-         d2LnXEOzeQ4rwxCrOgBXAvCu2lJjfeIRBt8zhBIs+8MPUDoi/lwSlqcxVGTwyul8YqM/
-         ZtxAgrmNjcvb17Du8X6TWI0UUYuvwnE6oF9Cd6Z76pqffWCMifOe1iJHdTBRNiReagJo
-         GjODWwgQ7qZsBHXytLHXYNnEKuk2KUoWU6hxmj79hoOqCJaisYCe05el6SB6U9nd1Mcs
-         gU5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=6Ow1NlEM7DKtr4mIJK66YbpuR1k+LjlGbnW7/7eKM+w=;
-        b=aayGjrXJfqEvXDLTZRKzEgcppV/zg3d7vyNq5V6u/a7mZMvj2pT1Imwc6ZkeVfxUQz
-         WZxQ45TKI6ykBDlGiA1c6EIvucfkoUyA2CAWIzb9nripSoYVS4wdEqqiQLCje2sp4mMZ
-         QsQK9DI23GG27i4YEqCelTKFXnExYmWsEFnWaDlVxUZY7Mn+YQ0H+diZ/0XKuIKHk8WA
-         x69Rn6YhYT60EU3k2XsalxfgobERJIAUMrclV5af9M3LvUC0PHbdSU2Ne0sLN/9+Li1Z
-         JEQCgyI7iZnGPhRTYT+yID8RiM5m1qOltxvhtRunV0Wjj34ZHoazBD75NWRdxek7IdjV
-         C5bQ==
-X-Gm-Message-State: AOAM532Hx1B7xukwMSr+WQrh1ufhBnedT9kdGu461erP9oC3u16dS65S
-        CDIXsccj+ORgnR8LXnGZ55DSCQ==
-X-Google-Smtp-Source: ABdhPJynk440pimUYGjeiYWc8ykH5SQkOAlqUmul4ohk1LNdpMwCBfj4JfqjQMI6VpxBPwNUI4EKaw==
-X-Received: by 2002:a17:907:76a7:: with SMTP id jw7mr17228065ejc.322.1618750847955;
-        Sun, 18 Apr 2021 06:00:47 -0700 (PDT)
-Received: from PackardBell (87-49-44-144-mobile.dk.customer.tdc.net. [87.49.44.144])
-        by smtp.googlemail.com with ESMTPSA id r10sm8436629ejd.112.2021.04.18.06.00.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 18 Apr 2021 06:00:47 -0700 (PDT)
-Received: from localhost (PackardBell [local])
-        by PackardBell (OpenSMTPD) with ESMTPA id 03f6b92d;
-        Sun, 18 Apr 2021 13:00:45 +0000 (UTC)
-Date:   Sun, 18 Apr 2021 15:00:45 +0200
-From:   Bartosz Dudziak <bartosz.dudziak@snejp.pl>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, linux-clk@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH 0/5] Samsung Galaxy S III Neo Initial DTS
-Message-ID: <20210418130045.GA73531@PackardBell>
-References: <20210326145816.9758-1-bartosz.dudziak@snejp.pl>
+        Sun, 18 Apr 2021 17:55:03 -0400
+Received: from m-r1.th.seeweb.it (m-r1.th.seeweb.it [IPv6:2001:4b7a:2000:18::170])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6857C06174A
+        for <linux-arm-msm@vger.kernel.org>; Sun, 18 Apr 2021 14:54:34 -0700 (PDT)
+Received: from [10.0.20.3] (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 96E351F60D;
+        Sun, 18 Apr 2021 23:54:32 +0200 (CEST)
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+Subject: Re: [PATCH v6 2/4] leds: Add driver for Qualcomm LPG
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Pavel Machek <pavel@ucw.cz>, Dan Murphy <dmurphy@ti.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        =?UTF-8?Q?Uwe_Kleine-K=c3=b6nig?= <u.kleine-koenig@pengutronix.de>,
+        Lee Jones <lee.jones@linaro.org>,
+        Martin Botka <martin.botka1@gmail.com>,
+        linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-pwm@vger.kernel.org
+References: <20201021201224.3430546-1-bjorn.andersson@linaro.org>
+ <20201021201224.3430546-3-bjorn.andersson@linaro.org>
+Message-ID: <881fb5a3-fb51-3967-63de-a09950839855@somainline.org>
+Date:   Sun, 18 Apr 2021 23:54:32 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.9.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210326145816.9758-1-bartosz.dudziak@snejp.pl>
+In-Reply-To: <20201021201224.3430546-3-bjorn.andersson@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Mar 26, 2021 at 03:58:11PM +0100, Bartosz Dudziak wrote:
-> This series of patches enables to boot MSM8226 SoC in Samsung Galaxy S III Neo
-> mobile phone. Implemented clocks are on top of MSM8974 GCC driver because there
-> is really little difference between them. UART serial communication is working.
-> I have working patches for the regulators, EMMC, multithreading and Wifi for
-> this device but they are not clean and ready to submit.
-> 
-> Bartosz Dudziak (5):
->   dt-bindings: clock: qcom: Add MSM8226 GCC clock bindings
->   clk: qcom: gcc: Add support for Global Clock controller found on
->     MSM8226
->   arm: dts: qcom: Add support for MSM8226 SoC
->   dt-bindings: arm: qcom: Document MSM8226 SoC binding
->   arm: dts: qcom: Add initial DTS file for Samsung Galaxy S III Neo
->     phone
-> 
->  .../devicetree/bindings/arm/qcom.yaml         |   6 +
->  .../devicetree/bindings/clock/qcom,gcc.yaml   |  13 +-
->  arch/arm/boot/dts/Makefile                    |   1 +
->  .../boot/dts/qcom-msm8226-samsung-s3ve3g.dts  |  25 +++
->  arch/arm/boot/dts/qcom-msm8226.dtsi           | 152 ++++++++++++++
->  drivers/clk/qcom/gcc-msm8974.c                | 185 ++++++++++++++++--
->  6 files changed, 364 insertions(+), 18 deletions(-)
->  create mode 100644 arch/arm/boot/dts/qcom-msm8226-samsung-s3ve3g.dts
->  create mode 100644 arch/arm/boot/dts/qcom-msm8226.dtsi
-> 
-> -- 
-> 2.25.1
-> 
+Hi Bjorn,
 
-I have sent version V2 of the patches
+On 10/21/20 10:12 PM, Bjorn Andersson wrote:
+> The Light Pulse Generator (LPG) is a PWM-block found in a wide range of
+> PMICs from Qualcomm. It can operate on fixed parameters or based on a
+> lookup-table, altering the duty cycle over time - which provides the
+> means for e.g. hardware assisted transitions of LED brightness.
+> 
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Tested-by: Luca Weiss <luca@z3ntu.xyz>
+
+
+Thanks for these patches.  I have tested them successfully on the Sony 
+Xperia XA2 (Discovery, Nile platform) with the leds on the PM660l - feel 
+free to add my Tested-by.  Should I send the configuration your way for 
+inclusion in this patch, or submit them separately (either applied 
+after, or included as separate patches in the next version of this series)?
+
+> +/**
+> + * struct lpg_data - initialization data
+> + * @lut_base:		base address of LUT block
+> + * @lut_size:		number of entries in LUT
+> + * @triled_base:	base address of TRILED
+> + * @pwm_9bit_mask:	bitmask for switching from 6bit to 9bit pwm
+
+
+Our downstream kernel derives this from the "LPG subtype" for each 
+distinct channel, read from register offset +0x5.  A value of 0xb is 
+subtype "PWM" with a shift of 2, a value of 0x11 is subtype "LPG_LITE" 
+with a shift of 4.  Can we do the same here instead of hardcoding it for 
+all channels in the LPG at once?  How should we determine if the mask is 
+one or two bits wide, for the 3<<4 case?
+
+> + * @num_channels:	number of channels in LPG
+> + * @channels:		list of channel initialization data
+> + */
+
+> +	if (ping_pong) {
+> +		if (len % 2)
+> +			hi_pause = 0;
+> +		else
+> +			hi_pause = pattern[len + 1 / 2].delta_t;
+
+
+len + 1 should be wrapped in parentheses just like the reassignment to 
+len= below, otherwise this is always an out of bounds read (at len + 0).
+
+> +		lo_pause = pattern[len - 1].delta_t;
+> +
+> +		len = (len + 1) / 2;
+> +	} else {
+> +		hi_pause = pattern[len - 1].delta_t;
+> +		lo_pause = 0;
+> +	}
+> +
+> +	ret = lpg_lut_store(lpg, pattern, len, &lo_idx, &hi_idx);
+> +	if (ret < 0)
+> +		goto out;
+> +
+> +	for (i = 0; i < led->num_channels; i++) {
+> +		chan = led->channels[i];
+> +
+> +		chan->ramp_duration_ms = pattern[0].delta_t * len;
+
+
+Perhaps this could store the duration of a single step instead, since 
+the only use in lpg_apply_lut_control divides it by pattern length again?
+
+> +		chan->ramp_ping_pong = ping_pong;
+> +		chan->ramp_oneshot = repeat != -1;
+> +
+> +		chan->ramp_lo_pause_ms = lo_pause;
+> +		chan->ramp_hi_pause_ms = hi_pause;
+> +
+> +		chan->pattern_lo_idx = lo_idx;
+> +		chan->pattern_hi_idx = hi_idx;
+> +	}
+> +
+> +out:
+> +	return ret;
+> +}
+
+> +static int lpg_init_lut(struct lpg *lpg)
+> +{
+> +	const struct lpg_data *data = lpg->data;
+> +	size_t bitmap_size;
+> +
+> +	if (!data->lut_base)
+> +		return 0;
+> +
+> +	lpg->lut_base = data->lut_base;
+> +	lpg->lut_size = data->lut_size;
+> +
+> +	bitmap_size = BITS_TO_LONGS(lpg->lut_size) * sizeof(unsigned long);
+> +	lpg->lut_bitmap = devm_kzalloc(lpg->dev, bitmap_size, GFP_KERNEL);
+
+
+Would it be nicer to use BITS_TO_BYTES here, or otherwise 
+devm_kcalloc(..., bitmap_size, sizeof(long), ...) without mutiplying 
+with sizeof(unsigned long)?
+
+> +
+> +	bitmap_clear(lpg->lut_bitmap, 0, lpg->lut_size);
+> +	return lpg->lut_bitmap ? 0 : -ENOMEM;
+> +}
+> +
+> +static int lpg_probe(struct platform_device *pdev)
+> +{
+> +	struct device_node *np;
+> +	struct lpg *lpg;
+> +	int ret;
+> +	int i;
+> +
+> +	lpg = devm_kzalloc(&pdev->dev, sizeof(*lpg), GFP_KERNEL);
+> +	if (!lpg)
+> +		return -ENOMEM;
+> +
+> +	lpg->data = of_device_get_match_data(&pdev->dev);
+> +	if (!lpg->data)
+> +		return -EINVAL;
+> +
+> +	lpg->dev = &pdev->dev;
+> +
+> +	lpg->map = dev_get_regmap(pdev->dev.parent, NULL);
+> +	if (!lpg->map) {
+> +		dev_err(&pdev->dev, "parent regmap unavailable\n");
+> +		return -ENXIO;
+> +	}
+> +
+> +	ret = lpg_init_channels(lpg);
+> +	if (ret < 0)
+> +		return ret;
+> +
+> +	ret = lpg_init_triled(lpg);
+> +	if (ret < 0)
+> +		return ret;
+> +
+> +	ret = lpg_init_lut(lpg);
+> +	if (ret < 0)
+> +		return ret;
+
+
+How about turning these returns into dev_err_probe?  I'm not sure if 
+that's the expected way to go nowadays, but having some form of logging 
+when a driver fails to probe is always good to have.
+
+Thanks!
+Marijn
+
+> +
+> +	for_each_available_child_of_node(pdev->dev.of_node, np) {
+> +		ret = lpg_add_led(lpg, np);
+> +		if (ret)
+> +			return ret;
+> +	}
+> +
+> +	for (i = 0; i < lpg->num_channels; i++)
+> +		lpg_apply_dtest(&lpg->channels[i]);
+> +
+> +	ret = lpg_add_pwm(lpg);
+> +	if (ret)
+> +		return ret;
+> +
+> +	platform_set_drvdata(pdev, lpg);
+> +
+> +	return 0;
+> +}
