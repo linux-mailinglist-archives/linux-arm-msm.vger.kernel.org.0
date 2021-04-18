@@ -2,105 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 350CB36319D
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Apr 2021 19:49:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E7B16363300
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Apr 2021 03:54:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236796AbhDQRtp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 17 Apr 2021 13:49:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34070 "EHLO
+        id S236811AbhDRBzA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 17 Apr 2021 21:55:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52846 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236643AbhDQRtp (ORCPT
+        with ESMTP id S230339AbhDRBy7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 17 Apr 2021 13:49:45 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51623C061574;
-        Sat, 17 Apr 2021 10:49:18 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id e7so20775797wrs.11;
-        Sat, 17 Apr 2021 10:49:18 -0700 (PDT)
+        Sat, 17 Apr 2021 21:54:59 -0400
+Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D7D3C06174A
+        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Apr 2021 18:54:31 -0700 (PDT)
+Received: by mail-pl1-x62a.google.com with SMTP id q11so2809558plx.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Apr 2021 18:54:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=gMhNbNGvJIy0W54t2+jjd5JvuAH30UWhJb9UCM3Fxt0=;
-        b=QNgw8v1ODQ3popOSFT98BMtFTy2lrtW8i48CVEVxG4v2bh5CEilJ1jDNmncMac5W0I
-         Vi0+aA3LiEpkCxZ3o3Lj2x+PdJbDstXZofauACi85ffINBtEybopFOnmAWndkzQBqumP
-         MYoKs2Ukz6kOE0m6VuFparSXUncmDhI2wAvt616JxLwJOmMRFns3Ok9u2D4bZepKfsML
-         yVJs8tcVNwKaDBDT/JdzseNlahAlNVs4Mg+UJiQImi7fjlvVoOaKehazrnpfwXfBfl8V
-         cQpkiYlCv77bl7rB8NtVwaoG8MPGftpq44WSgiaf/uyW+oGGNS2FzgDmIv0Z/O0xJEFJ
-         4Tcw==
+        d=chromium.org; s=google;
+        h=mime-version:content-transfer-encoding:in-reply-to:references
+         :subject:from:cc:to:date:message-id:user-agent;
+        bh=SbmkNJObxP9556wdW+xlQaE/Mp8r2OHG8tzhh7P27Xs=;
+        b=LhKV87qH3gAOImsHtS8QBPR1qLMUI4TzeYbUJi0VIMueON/LYIs1FZtncqgfHHMYEN
+         Wr4NoLqKLHgSEhbIHZK6XBXuuE4BMDE0QZxOfabkvABV0G9fZQ2Z8uEYd94VZpFThHbm
+         uGH0PihCTwxkuhw2y+zXOMbtHEfPsP7RdaLNo=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=gMhNbNGvJIy0W54t2+jjd5JvuAH30UWhJb9UCM3Fxt0=;
-        b=jXP1LqROayXCGIeAW9poAaskkLifU5xCLDV67LEeOdWNTqgfUy43HPEApA3B87XKvo
-         ATDXf39kST8+93gtC4iVmlPGI0Eb89ui3SycW6LGR32xyiHzqCHC+QJukxN+r7BaNGBn
-         LKg9A8itUCiEh8nl2xrIDHEgqrlP9sFbsRWFlb09rJZ3+ut29kQiMmG3RXrcr/4YxCZl
-         k6x2TT8VWslX+wTmCbBJmxpXoL6aGEligQlsFjTfnvd8xWV4EgstjPtBz7DG1NJRo3AJ
-         ZmZm4unDRSlBq+6e0fFavOMB6sAjLAyjkZlhD9zGbf+trU6NrxK8X2jEf0n43ieCOqKG
-         Di9A==
-X-Gm-Message-State: AOAM532TXs+0xoFqbesr6XI/nlrHWXWVc8jNU84B3DGk2097YQcDFLpY
-        /UZC+MR1crI8X+gtpP5bIq2tU5BB+VcVHmMxw/gW/4AYCsD7CQ==
-X-Google-Smtp-Source: ABdhPJzZ03PjLvSbr+EYaGObqqYd6gtKUzZhFhFFqRCVQqnl3bd+oCaXlHlIsjYz7jpf/2N8aX8WRprUkQrNrPegMV4=
-X-Received: by 2002:a5d:4412:: with SMTP id z18mr5508193wrq.28.1618681757094;
- Sat, 17 Apr 2021 10:49:17 -0700 (PDT)
+        h=x-gm-message-state:mime-version:content-transfer-encoding
+         :in-reply-to:references:subject:from:cc:to:date:message-id
+         :user-agent;
+        bh=SbmkNJObxP9556wdW+xlQaE/Mp8r2OHG8tzhh7P27Xs=;
+        b=m/ZUqQClssT31wUzGs73adoKTfPDEO4zWhZKcGe8ngalNsTWFRXxuGcVzv0p8BTV/l
+         IIJoAKGIJ2OFzo7SmUieS4elypN481GyZULSsAk79VJ9+yxh/MabP0CeIRDdOk+wXM9q
+         7a+WI5z2H4B5G+kG6IIoRmhL6ml2pEX+WjFp1iHcHwC38orYDu2v1XkOzF10v7uaSh1C
+         KVgcQ/tGq3qN2fL/YCoC9hbGiginOi7epEuagd1WIWEKxIeSJZPuBGsygMOYKT/Gu/my
+         VxF4GJcEDpp1iL0LJ23rMg96IzqT0F0GBfz3pgALtuZeskuTYu1x1t//a7iSPm5b8bOG
+         JYZg==
+X-Gm-Message-State: AOAM530RUeMjE7rl4crH4834G5SXizwXlfpAEMS7RJkPmtewS4aZ/50f
+        M3wFkCYfJGsoV2jwNQ7hWI0HVQ==
+X-Google-Smtp-Source: ABdhPJyemFBIhm9Dndl7HZBNNf1HHGiN+9UjdhBbcR/ZeXECMvMKe2/UdI9Wmi8AF9bqnYYeHjfsUA==
+X-Received: by 2002:a17:90b:1b0a:: with SMTP id nu10mr17597498pjb.118.1618710871167;
+        Sat, 17 Apr 2021 18:54:31 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:201:e47c:5232:82d9:6d3f])
+        by smtp.gmail.com with ESMTPSA id a16sm9039400pgl.12.2021.04.17.18.54.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 17 Apr 2021 18:54:30 -0700 (PDT)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-References: <20210417161912.62811-1-caleb@connolly.tech>
-In-Reply-To: <20210417161912.62811-1-caleb@connolly.tech>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Sat, 17 Apr 2021 10:52:49 -0700
-Message-ID: <CAF6AEGv2701e+FMKX12+rHYwLpv06-kAo364Us7wEw6pAoC7Dg@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm: always parse interconnects
-To:     Caleb Connolly <caleb@connolly.tech>
-Cc:     Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Kalyan Thota <kalyant@codeaurora.org>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Rob Clark <robdclark@chromium.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <1618574638-5117-2-git-send-email-sibis@codeaurora.org>
+References: <1618574638-5117-1-git-send-email-sibis@codeaurora.org> <1618574638-5117-2-git-send-email-sibis@codeaurora.org>
+Subject: Re: [PATCH 01/12] dt-bindings: soc: qcom: aoss: Drop power-domain bindings
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     rjw@rjwysocki.net, agross@kernel.org, ohad@wizery.com,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        dianders@chromium.org, rishabhb@codeaurora.org,
+        sidgup@codeaurora.org, Sibi Sankar <sibis@codeaurora.org>
+To:     Sibi Sankar <sibis@codeaurora.org>, bjorn.andersson@linaro.org,
+        mathieu.poirier@linaro.org, robh+dt@kernel.org,
+        ulf.hansson@linaro.org
+Date:   Sat, 17 Apr 2021 18:54:26 -0700
+Message-ID: <161871086661.46595.17217922888505535304@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Apr 17, 2021 at 9:21 AM Caleb Connolly <caleb@connolly.tech> wrote:
->
-> The WARN_ON in dpu_runtime_resume() fires constantly on non-SC7180
-> platforms. As SDM845 now has interconnects hooked up we should always
-> try and parse them.
->
-> Fixes: 627dc55c273d ("drm/msm/disp/dpu1: icc path needs to be set before dpu runtime resume")
-> Signed-off-by: Caleb Connolly <caleb@connolly.tech>
-
-I believe this series in msm-next already solves this
-
-https://patchwork.freedesktop.org/series/88644/
-
-BR,
--R
-
+Quoting Sibi Sankar (2021-04-16 05:03:47)
+> Drop power-domain bindings exposed by AOSS QMP node.
+>=20
+> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
 > ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 3 +--
->  1 file changed, 1 insertion(+), 2 deletions(-)
->
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> index 85f2c3564c96..fb061e666faa 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> @@ -933,8 +933,7 @@ static int dpu_kms_hw_init(struct msm_kms *kms)
->                 DPU_DEBUG("REG_DMA is not defined");
->         }
->
-> -       if (of_device_is_compatible(dev->dev->of_node, "qcom,sc7180-mdss"))
-> -               dpu_kms_parse_data_bus_icc_path(dpu_kms);
-> +       dpu_kms_parse_data_bus_icc_path(dpu_kms);
->
->         pm_runtime_get_sync(&dpu_kms->pdev->dev);
->
-> --
-> 2.30.2
->
->
+
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
