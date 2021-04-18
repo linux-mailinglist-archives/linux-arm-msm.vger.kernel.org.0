@@ -2,56 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E7B16363300
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Apr 2021 03:54:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 54008363304
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Apr 2021 03:55:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236811AbhDRBzA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 17 Apr 2021 21:55:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52846 "EHLO
+        id S231277AbhDRBzw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 17 Apr 2021 21:55:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53046 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230339AbhDRBy7 (ORCPT
+        with ESMTP id S235958AbhDRBzv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 17 Apr 2021 21:54:59 -0400
-Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D7D3C06174A
-        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Apr 2021 18:54:31 -0700 (PDT)
-Received: by mail-pl1-x62a.google.com with SMTP id q11so2809558plx.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Apr 2021 18:54:31 -0700 (PDT)
+        Sat, 17 Apr 2021 21:55:51 -0400
+Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B538CC06174A
+        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Apr 2021 18:55:22 -0700 (PDT)
+Received: by mail-pj1-x1029.google.com with SMTP id lt13so7145464pjb.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Apr 2021 18:55:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:content-transfer-encoding:in-reply-to:references
          :subject:from:cc:to:date:message-id:user-agent;
-        bh=SbmkNJObxP9556wdW+xlQaE/Mp8r2OHG8tzhh7P27Xs=;
-        b=LhKV87qH3gAOImsHtS8QBPR1qLMUI4TzeYbUJi0VIMueON/LYIs1FZtncqgfHHMYEN
-         Wr4NoLqKLHgSEhbIHZK6XBXuuE4BMDE0QZxOfabkvABV0G9fZQ2Z8uEYd94VZpFThHbm
-         uGH0PihCTwxkuhw2y+zXOMbtHEfPsP7RdaLNo=
+        bh=7GHsdqrlMVflwVFrBOZtxuiC9SiSpOvDXhaAOahe690=;
+        b=CMVMP8Q/+Xb+6lLEo9IsIPV1yw0R8pfENjultUzDJgcn7Ad5M7Hl4kVykdVCG/AumT
+         rJiYzWdP34nyTUUDLzKWoByJgT/l2GCb902Q0KBvGMfy2/NbN5wOLdUYgDR3n7Terytp
+         8fYhe304sFweYIvO2Grxwq+8cTyHAilTH6LdQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:content-transfer-encoding
          :in-reply-to:references:subject:from:cc:to:date:message-id
          :user-agent;
-        bh=SbmkNJObxP9556wdW+xlQaE/Mp8r2OHG8tzhh7P27Xs=;
-        b=m/ZUqQClssT31wUzGs73adoKTfPDEO4zWhZKcGe8ngalNsTWFRXxuGcVzv0p8BTV/l
-         IIJoAKGIJ2OFzo7SmUieS4elypN481GyZULSsAk79VJ9+yxh/MabP0CeIRDdOk+wXM9q
-         7a+WI5z2H4B5G+kG6IIoRmhL6ml2pEX+WjFp1iHcHwC38orYDu2v1XkOzF10v7uaSh1C
-         KVgcQ/tGq3qN2fL/YCoC9hbGiginOi7epEuagd1WIWEKxIeSJZPuBGsygMOYKT/Gu/my
-         VxF4GJcEDpp1iL0LJ23rMg96IzqT0F0GBfz3pgALtuZeskuTYu1x1t//a7iSPm5b8bOG
-         JYZg==
-X-Gm-Message-State: AOAM530RUeMjE7rl4crH4834G5SXizwXlfpAEMS7RJkPmtewS4aZ/50f
-        M3wFkCYfJGsoV2jwNQ7hWI0HVQ==
-X-Google-Smtp-Source: ABdhPJyemFBIhm9Dndl7HZBNNf1HHGiN+9UjdhBbcR/ZeXECMvMKe2/UdI9Wmi8AF9bqnYYeHjfsUA==
-X-Received: by 2002:a17:90b:1b0a:: with SMTP id nu10mr17597498pjb.118.1618710871167;
-        Sat, 17 Apr 2021 18:54:31 -0700 (PDT)
+        bh=7GHsdqrlMVflwVFrBOZtxuiC9SiSpOvDXhaAOahe690=;
+        b=hfVdXuCXWBktXU0XiS7zksdFWDLge4VyktgM7uCttgyROg2h6yAj+hCvxFis4jIu51
+         hEsHcW6PFQGZBKyufTL2Asoi/7CFemJsggtswarqKCBodXC1eDa509ztu27lxaOtAOeT
+         dlwoqLyjNkERHPqCip08kQyiTcbLPE6LInJU95ObKAMQi7TNtmNfdN7+53+QNdHThCCw
+         iaB/Cp1NYSA+ykTxMCt5mGd0HSpNSQ31KMcjU9EJHzj3KbN/INIGRlMRz3zwVwRKjrbR
+         W68xb43tcIFh3+4eEHdfU30bavRZl1n7RfUtKiQo/F63bv7YMOjOM8lP2ZdfLc0Rg/mB
+         wHHw==
+X-Gm-Message-State: AOAM532NRx/TqVg1ceg0MuGTk5t5ycNp3P122YeRVdcgzeWtT+V+0p2v
+        zjj7NXjtFrglMpKnVFCgxNU24w==
+X-Google-Smtp-Source: ABdhPJySFT82Ji4WeOETkW1pVIcayA0AhD90jgCrrz36SWCnCOPXEJvmQAh7o2rYCibfHOIBRmEQFQ==
+X-Received: by 2002:a17:90a:c281:: with SMTP id f1mr16948378pjt.58.1618710922403;
+        Sat, 17 Apr 2021 18:55:22 -0700 (PDT)
 Received: from chromium.org ([2620:15c:202:201:e47c:5232:82d9:6d3f])
-        by smtp.gmail.com with ESMTPSA id a16sm9039400pgl.12.2021.04.17.18.54.30
+        by smtp.gmail.com with ESMTPSA id gj13sm9990868pjb.57.2021.04.17.18.55.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 17 Apr 2021 18:54:30 -0700 (PDT)
+        Sat, 17 Apr 2021 18:55:21 -0700 (PDT)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <1618574638-5117-2-git-send-email-sibis@codeaurora.org>
-References: <1618574638-5117-1-git-send-email-sibis@codeaurora.org> <1618574638-5117-2-git-send-email-sibis@codeaurora.org>
-Subject: Re: [PATCH 01/12] dt-bindings: soc: qcom: aoss: Drop power-domain bindings
+In-Reply-To: <1618574638-5117-4-git-send-email-sibis@codeaurora.org>
+References: <1618574638-5117-1-git-send-email-sibis@codeaurora.org> <1618574638-5117-4-git-send-email-sibis@codeaurora.org>
+Subject: Re: [PATCH 03/12] dt-bindings: remoteproc: qcom: pas: Add QMP bindings
 From:   Stephen Boyd <swboyd@chromium.org>
 Cc:     rjw@rjwysocki.net, agross@kernel.org, ohad@wizery.com,
         linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
@@ -61,15 +61,16 @@ Cc:     rjw@rjwysocki.net, agross@kernel.org, ohad@wizery.com,
 To:     Sibi Sankar <sibis@codeaurora.org>, bjorn.andersson@linaro.org,
         mathieu.poirier@linaro.org, robh+dt@kernel.org,
         ulf.hansson@linaro.org
-Date:   Sat, 17 Apr 2021 18:54:26 -0700
-Message-ID: <161871086661.46595.17217922888505535304@swboyd.mtv.corp.google.com>
+Date:   Sat, 17 Apr 2021 18:55:19 -0700
+Message-ID: <161871091962.46595.17643804074579935893@swboyd.mtv.corp.google.com>
 User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Sibi Sankar (2021-04-16 05:03:47)
-> Drop power-domain bindings exposed by AOSS QMP node.
+Quoting Sibi Sankar (2021-04-16 05:03:49)
+> Add Qualcomm Mailbox Protocol (QMP) binding to replace the power domains
+> exposed by the AOSS QMP node.
 >=20
 > Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
 > ---
