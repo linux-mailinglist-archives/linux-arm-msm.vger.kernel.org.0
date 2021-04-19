@@ -2,117 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D5DE1363994
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Apr 2021 05:03:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 980533639A0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Apr 2021 05:11:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237316AbhDSDDk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 18 Apr 2021 23:03:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36494 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231921AbhDSDDj (ORCPT
+        id S233146AbhDSDMC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 18 Apr 2021 23:12:02 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:34071 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233126AbhDSDMC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 18 Apr 2021 23:03:39 -0400
-Received: from mail-oi1-x22b.google.com (mail-oi1-x22b.google.com [IPv6:2607:f8b0:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C876C061760
-        for <linux-arm-msm@vger.kernel.org>; Sun, 18 Apr 2021 20:03:10 -0700 (PDT)
-Received: by mail-oi1-x22b.google.com with SMTP id r186so6329490oif.8
-        for <linux-arm-msm@vger.kernel.org>; Sun, 18 Apr 2021 20:03:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=bqnvfHSQYNF4pvJ4mjc+HwtWh0C16GYEE3A80983hxI=;
-        b=B4ewnibF9EHh8ijqrdNx6zYdfJy2upFzbtR2KcxcPAQstGakUWk/Rj2RTbP8hpwDKP
-         S5p/gEaCCt5F5PP6blgoi9l7aYSYdCLMVT2aUbmKS6oTuXw9MWycD3P6te4Bf5SDfHB3
-         bTH5TZmVGW8K8dX3+/6LQh9nr0mNUNlNGZe/VCXInsfmP9Wef4C3W6W5QnHyX/9wIjpK
-         6tWxkW32M1cJwvRjPTiQ8uxpNgr7UthwhTM7c+qVlC5hCd5zNxKj4kkK66QQDU+cHxpQ
-         2NbEsKrC4kScpISxzxt93q1I0II0tMchCFdBNSNHE1PPP9hurBVNqe/j28Dyii53pUUr
-         fuCw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=bqnvfHSQYNF4pvJ4mjc+HwtWh0C16GYEE3A80983hxI=;
-        b=mCurF+8ojpXzFrSU/QSug5B6f3HCqdrXBM2lNYGBoh8MVQY5f+qlqVmMD8KBeBSOGv
-         t7nDcVZRhrPI2pQzMaTznZC/eRi4q+4IvL4wDoHEViya8hOmeVs3m6j7Qtu9onYKinR1
-         53NkwmgA7wkZWvp0ur3uMOuKEZWVa1gogBFSpz6hIEgRB6OUI/ek5M6PAGtcoLv2y1LB
-         eVaOkr9JyhgRf3HN8m+Nb8zssaCf/B6lHGcCHQ9kMTqrsIUvGvBT6DDl/6L0ZGg6vhTX
-         2SzxlRBddipN5CENsQwd9T/6c4Bdc1Kgc5MIfezvYRTCkCBK6OZ24jnQpZH9y9NeI52+
-         7D/A==
-X-Gm-Message-State: AOAM532NpenDqhIfxBsr2TcIbzmoIFxqyKsltnJhvKwkTJ4rAtMkhseD
-        mSQZVn81SFy8ymGONetyHboFBQ==
-X-Google-Smtp-Source: ABdhPJyICQDHV5hiccixkRQbqfwPNkvLfdThlqYZKYj5tImWfvauBoTI+1+1h39g1nRUIL+Z1SCeuw==
-X-Received: by 2002:a05:6808:60f:: with SMTP id y15mr13917092oih.23.1618801389231;
-        Sun, 18 Apr 2021 20:03:09 -0700 (PDT)
-Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id h25sm2656856oou.44.2021.04.18.20.03.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 18 Apr 2021 20:03:08 -0700 (PDT)
-Date:   Sun, 18 Apr 2021 22:03:05 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Thara Gopinath <thara.gopinath@linaro.org>
-Cc:     herbert@gondor.apana.org.au, davem@davemloft.net,
-        ebiggers@google.com, ardb@kernel.org, sivaprak@codeaurora.org,
-        linux-crypto@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [Patch v2 3/7] crypto: qce: Add mode for rfc4309
-Message-ID: <20210419030305.GJ1538589@yoga>
-References: <20210417132503.1401128-1-thara.gopinath@linaro.org>
- <20210417132503.1401128-4-thara.gopinath@linaro.org>
+        Sun, 18 Apr 2021 23:12:02 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1618801892; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=Ym5p8FkKGFp0PUrH5hq1AtaHT8k5PkOb5eh8el/aH/k=;
+ b=sPQSyPYReLUdgTVXr1aMKeiBOc82MI3B943M4usgX6l/S6lcyO8rvDWd25uL52zESFfGzgZn
+ dA+66wM5wJdL6F4CnnPlcq0LMbt42kPeWAHRYTtQ+ZrwEsLEoDNvk9wKQAs9FWDw9rMhjApa
+ f1KuA+rFF/RsVP+RhLXBjYjdQC8=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
+ 607cf4e4a817abd39a1b9546 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 19 Apr 2021 03:11:32
+ GMT
+Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 5EE11C4323A; Mon, 19 Apr 2021 03:11:31 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 13C79C433D3;
+        Mon, 19 Apr 2021 03:11:29 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210417132503.1401128-4-thara.gopinath@linaro.org>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Mon, 19 Apr 2021 08:41:29 +0530
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Will Deacon <will@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     akhilpo@codeaurora.org, iommu@lists.linux-foundation.org,
+        jcrouse@codeaurora.org, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        robdclark@gmail.com, robin.murphy@arm.com,
+        Jordan Crouse <jordan@cosmicpenguin.net>
+Subject: Re: [PATCHv2 2/2] iommu/arm-smmu-qcom: Move the adreno smmu specific
+ impl earlier
+In-Reply-To: <118ced3153cd7fa5e8c16e5f0e2d5d19@codeaurora.org>
+References: <YDlIrjkfv16o4Nu3@builder.lan>
+ <20210227135321.420-1-saiprakash.ranjan@codeaurora.org>
+ <YEqn1SjsGgK0V8K4@builder.lan>
+ <8cfaed1915ad6dd0c34ac7eb2391b410@codeaurora.org>
+ <727fa9fe2e644f88ba35c2877d71788e@codeaurora.org>
+ <20210325150506.GD15172@willie-the-truck>
+ <118ced3153cd7fa5e8c16e5f0e2d5d19@codeaurora.org>
+Message-ID: <daaa67d41f2760945ed3bf6ced11891f@codeaurora.org>
+X-Sender: saiprakash.ranjan@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat 17 Apr 08:24 CDT 2021, Thara Gopinath wrote:
-
-> rf4309 is the specification that uses aes ccm algorithms with IPsec
-> security packets. Add a submode to identify rfc4309 ccm(aes) algorithm
-> in the crypto driver.
+On 2021-04-05 14:12, Sai Prakash Ranjan wrote:
+> Hi Bjorn,
+> 
+> On 2021-03-25 20:35, Will Deacon wrote:
+>> On Thu, Mar 25, 2021 at 01:10:12PM +0530, Sai Prakash Ranjan wrote:
+> 
+> <snip>...
+> 
+>>> 
+>>> I think there is consensus on this series. I can resend if required 
+>>> but it
+>>> still applies cleanly, let me know if you have any comments?
+>> 
+>> Please resend with the bindings patch, and I'd like Bjorn's Ack as 
+>> well.
+>> 
+> 
+> Can we have your review/ack in case there is nothing pending here?
 > 
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Gentle Ping!
 
-> Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
-> ---
-> 
-> v1->v2:
-> 	- Moved up the QCE_ENCRYPT AND QCE_DECRYPT bit positions so that
-> 	  addition of other algorithms in future will not affect these
-> 	  macros.
-> 
->  drivers/crypto/qce/common.h | 7 +++++--
->  1 file changed, 5 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/crypto/qce/common.h b/drivers/crypto/qce/common.h
-> index 3bc244bcca2d..b135440bf72b 100644
-> --- a/drivers/crypto/qce/common.h
-> +++ b/drivers/crypto/qce/common.h
-> @@ -51,9 +51,11 @@
->  #define QCE_MODE_CCM			BIT(12)
->  #define QCE_MODE_MASK			GENMASK(12, 8)
->  
-> +#define QCE_MODE_CCM_RFC4309		BIT(13)
-> +
->  /* cipher encryption/decryption operations */
-> -#define QCE_ENCRYPT			BIT(13)
-> -#define QCE_DECRYPT			BIT(14)
-> +#define QCE_ENCRYPT			BIT(30)
-> +#define QCE_DECRYPT			BIT(31)
->  
->  #define IS_DES(flags)			(flags & QCE_ALG_DES)
->  #define IS_3DES(flags)			(flags & QCE_ALG_3DES)
-> @@ -73,6 +75,7 @@
->  #define IS_CTR(mode)			(mode & QCE_MODE_CTR)
->  #define IS_XTS(mode)			(mode & QCE_MODE_XTS)
->  #define IS_CCM(mode)			(mode & QCE_MODE_CCM)
-> +#define IS_CCM_RFC4309(mode)		((mode) & QCE_MODE_CCM_RFC4309)
->  
->  #define IS_ENCRYPT(dir)			(dir & QCE_ENCRYPT)
->  #define IS_DECRYPT(dir)			(dir & QCE_DECRYPT)
-> -- 
-> 2.25.1
-> 
+Thanks,
+Sai
+
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member
+of Code Aurora Forum, hosted by The Linux Foundation
