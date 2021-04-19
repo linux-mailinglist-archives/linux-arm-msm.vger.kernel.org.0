@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9AE613646EC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Apr 2021 17:16:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E9B423646FF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Apr 2021 17:21:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240871AbhDSPRL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Apr 2021 11:17:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56944 "EHLO
+        id S238029AbhDSPWQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Apr 2021 11:22:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58094 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240908AbhDSPRK (ORCPT
+        with ESMTP id S233733AbhDSPWQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Apr 2021 11:17:10 -0400
-Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com [IPv6:2607:f8b0:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0EF1C06174A
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Apr 2021 08:16:39 -0700 (PDT)
-Received: by mail-ot1-x32c.google.com with SMTP id 35-20020a9d05260000b029029c82502d7bso1468689otw.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Apr 2021 08:16:39 -0700 (PDT)
+        Mon, 19 Apr 2021 11:22:16 -0400
+Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22073C06174A
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Apr 2021 08:21:45 -0700 (PDT)
+Received: by mail-ot1-x32f.google.com with SMTP id 92-20020a9d02e50000b029028fcc3d2c9eso10413964otl.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Apr 2021 08:21:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=hUYb55vbsiGQBbuSQ1a5tSdTpqWWWh8+qc/85QHpA1M=;
-        b=qK8ZVxyb1cccHQVc9o2z+qY7KHg0bcdEBOIfJh6IVdSgxKOiEU2kqIyTjdbE5SB1+g
-         1lmzUiWqAD3t614GUtXyLoNnpXfPD8BJo1xAlvh77ialpsIJkzEzFw37QDaU6DsqWgd2
-         pG2HExBwN1RO1ehEAw3gywro8qPl5gcr+MWNE/SVjdE7rAxBCnFmRbDvUBWuAusr4YXE
-         LggGQ49k9/jtUmkItfjr8qmRyjEpuQ/dFZLUcmY9QpqlWr53SYki+JPgsxich089VHP8
-         OgGupZnKFT/mxZ24myOUFqiUa8nRC4ulH3IbimiRnzNZKYc7HKNqwHCOweH395hJqDAA
-         jR7w==
+        bh=7q7bqxk84+tZWLx+S3rG1WzdRlKLYf+MiQJMKigSFd8=;
+        b=lmsoshBWCDGMUKrNLB9AlLYCqcSmgLNDLL5NNR7cwYziJT6id/hqIJtURNpv6/t7gp
+         9m4UtjONinFZkMm+YVacJ6efnbcDxgkrtFvQwmu6vaNRP4jhAy+IiyCpYYsgJ/bti/gz
+         ZNs7gDhFXXNEk2ABZVcBqgbSnP3frwgkrBTVkeZbtlI+tQzSkTLz3EOiZtVxU5+Mx0vE
+         7e6SNQ9Ci7nhSvRgMuviMAVJQErhLDBUueAFTcgP1EQHE36JhnDEIHOcH9k4QB3K5+tR
+         Vk+yJusQaNXgTfGN7mYmrzZ/JMl/FZbdj5DqoJrWjfp4i/KXpyDXe3O3P8EfakPmngqz
+         E9tQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=hUYb55vbsiGQBbuSQ1a5tSdTpqWWWh8+qc/85QHpA1M=;
-        b=HCZYUavN2Yj+WnMcKnJQIaU7z/AKJtxFKwwr6fVPE2i97fkvjvEj/20GwO+Cqb5uOU
-         Mvaf3zPyUwxEqCEm5MBOk/P3FE2yLJICHa6NHkoGd2ec4GUgvVfa+KFCUfedcbI1fdDB
-         zfmE18TGUYEegIi707t4RksZXHxU5dSr/8j2jgFHfYhUJzMLQU5n2gL/k+q8Nhpz2jYI
-         G0TA5+n5BaoICvyUW2kCPzWK9RA+mL1b0Ji5JjLcgbRuR2HVgk95uScB3iX4OrlTI5kO
-         4LL7LbDxfxbPechf+VSXSDBuX0QsoCSsCuPlTGLDMQgKkZw7zfGj49gSqkbpB1WpzAst
-         GrFQ==
-X-Gm-Message-State: AOAM530Xk6bOiPgRJBNgACSloTNbVJCwxu3kMSZ7tMwaL8+gbd2soJRW
-        uTT+7kQ5pfvWjHkIdObk7A2+ZxECdrzV5Q==
-X-Google-Smtp-Source: ABdhPJzuOipDCJfrbVe//1UzrkYBYdbiB7EsZv1E5ZmnOoKZR56/O11HaIo0Z7WFKLdEhXGyJhGeMA==
-X-Received: by 2002:a9d:5a10:: with SMTP id v16mr15145401oth.187.1618845398855;
-        Mon, 19 Apr 2021 08:16:38 -0700 (PDT)
+        bh=7q7bqxk84+tZWLx+S3rG1WzdRlKLYf+MiQJMKigSFd8=;
+        b=rKgvvrimbXofGwXXdzjOnqtlA7EEGi2B5LFH+EqZhw2bIFTGY2Dpbm7CWO8GkPut3d
+         mUPf33pLYicwnPpe+3bUGeZWylalz5Klyk82ay1k9FMU3cyUOFoSJpr6EX8ac1ztXSs7
+         WvF+xptYeeEHXb9t1BSqcLF3Q61m6s+X3HBds4m3M5Eg+hFxrJ1kDEIy9KJZ3o75fkKd
+         MaWv9yULlHqe2EwVjivzKsC8TccrZeIPWxR1rkoBFn/gj0wkqs60qvhjxWx3mImGKS51
+         ELFhK+UIo0sQIXpxMA6WSNS+DobHIhuDqyXrihQt1CfmzRZliiLB6WVLwIb5zdoJMU0L
+         v3fA==
+X-Gm-Message-State: AOAM5314pcsxYjQPmT38KkZYlufivbiqQM/N51T2tmUQs303Yh3iqyIq
+        XjHL2uEjuXVJ0YQOXDphBggklQ==
+X-Google-Smtp-Source: ABdhPJwvTvnVMh2WJXmsPNvKt0j8k7ttDwSes8duCvTdlZhTFqE07cJvD154/leTHrPv6Rh2ogPGxg==
+X-Received: by 2002:a05:6830:1f12:: with SMTP id u18mr8412677otg.132.1618845704569;
+        Mon, 19 Apr 2021 08:21:44 -0700 (PDT)
 Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id u18sm3008660oor.15.2021.04.19.08.16.38
+        by smtp.gmail.com with ESMTPSA id t19sm3622469otm.40.2021.04.19.08.21.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Apr 2021 08:16:38 -0700 (PDT)
+        Mon, 19 Apr 2021 08:21:44 -0700 (PDT)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     arm@kernel.org, soc@kernel.org
 Cc:     linux-arm-msm@vger.kernel.org,
@@ -55,11 +55,10 @@ Cc:     linux-arm-msm@vger.kernel.org,
         Andy Gross <agross@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
         Olof Johansson <olof@lixom.net>,
         Kevin Hilman <khilman@baylibre.com>,
-        Douglas Anderson <dianders@chromium.org>,
-        V Sujith Kumar Reddy <vsujithk@codeaurora.org>
-Subject: [GIT PULL] Even more Qualcomm ARM64 updates for v5.13
-Date:   Mon, 19 Apr 2021 10:16:37 -0500
-Message-Id: <20210419151637.861409-1-bjorn.andersson@linaro.org>
+        Manivannan Sadhasivam <mani@kernel.org>
+Subject: [GIT PULL] Qualcomm ARM defconfig updates for 5.13
+Date:   Mon, 19 Apr 2021 10:21:43 -0500
+Message-Id: <20210419152143.861934-1-bjorn.andersson@linaro.org>
 X-Mailer: git-send-email 2.31.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -67,33 +66,34 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The following changes since commit 7178d4cc0702bfe6a7e0f21e37d6e3dfe8e40f11:
+The following changes since commit a38fd8748464831584a19438cbb3082b5a2dab15:
 
-  arm64: dts: qcom: update usb qmp phy clock-cells property (2021-04-08 10:23:25 -0500)
+  Linux 5.12-rc2 (2021-03-05 17:33:41 -0800)
 
 are available in the Git repository at:
 
-  https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-arm64-for-5.13-3
+  https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-defconfig-for-5.13
 
-for you to fetch changes up to 1b86cc7330895b11df0a7dc15fbbbef60be9f7bb:
+for you to fetch changes up to 7de91b665600c96b1fc66c4c5a679db275c0c674:
 
-  arm64: dts: qcom: sc7180: Update iommu property for simultaneous playback (2021-04-19 10:13:30 -0500)
-
-----------------------------------------------------------------
-Even more Qualcomm ARM64 updates for v5.13
-
-This contains three audio related fixes for the sc7180 Trogdor devices.
+  ARM: configs: qcom_defconfig: Reduce CMA size to 64MB (2021-04-13 21:21:22 -0500)
 
 ----------------------------------------------------------------
-Douglas Anderson (2):
-      arm64: dts: qcom: sc7180: coachz: Add "dmic_clk_en"
-      arm64: dts: qcom: sc7180: pompom: Add "dmic_clk_en" + sound model
+Qualcomm ARM defconfig updates for 5.13
 
-V Sujith Kumar Reddy (1):
-      arm64: dts: qcom: sc7180: Update iommu property for simultaneous playback
+This enables all the hardware support currently available for the
+Qualcomm SDX55 platform in the qcom_defconfig. Due to (current) size
+limitations these changes are not done in the multi-platform config.
 
- arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r1.dts | 13 -------------
- arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi   | 16 ++++++++++++++++
- arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi   |  7 +++++++
- arch/arm64/boot/dts/qcom/sc7180.dtsi                  |  3 ++-
- 4 files changed, 25 insertions(+), 14 deletions(-)
+----------------------------------------------------------------
+Manivannan Sadhasivam (7):
+      ARM: configs: qcom_defconfig: Enable APCS IPC mailbox driver
+      ARM: configs: qcom_defconfig: Enable SDX55 A7 PLL and APCS clock driver
+      ARM: configs: qcom_defconfig: Enable CPUFreq support
+      ARM: configs: qcom_defconfig: Enable Q6V5_PAS remoteproc driver
+      ARM: configs: qcom_defconfig: Enable SDX55 interconnect driver
+      ARM: configs: qcom_defconfig: Enable GLINK SMEM driver
+      ARM: configs: qcom_defconfig: Reduce CMA size to 64MB
+
+ arch/arm/configs/qcom_defconfig | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
