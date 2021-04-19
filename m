@@ -2,38 +2,38 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 65521364B5B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Apr 2021 22:44:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2F597364BA7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Apr 2021 22:46:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242286AbhDSUoZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Apr 2021 16:44:25 -0400
-Received: from mail.kernel.org ([198.145.29.99]:53768 "EHLO mail.kernel.org"
+        id S242798AbhDSUph (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Apr 2021 16:45:37 -0400
+Received: from mail.kernel.org ([198.145.29.99]:54402 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S242247AbhDSUoX (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Apr 2021 16:44:23 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 0797461369;
-        Mon, 19 Apr 2021 20:43:51 +0000 (UTC)
+        id S242616AbhDSUpB (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 19 Apr 2021 16:45:01 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 4E4AE61369;
+        Mon, 19 Apr 2021 20:44:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1618865032;
-        bh=fLGDTO4vZkaAfbFcATg/22G+9ZUgFi8xRlu4Z6L0ViQ=;
+        s=k20201202; t=1618865068;
+        bh=P20kHEYm4uUCgh052ecN3NDKkwWJw8kGBA9GgpWC6HE=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=VVBM4lXDR+8lWY5rD7s8abE43vkM0aZnihlDtZMYnUeVyhAsFHCmPW01XG59gsz0p
-         E3hEzlSMuLOnfcMU9xXi20FiWXX1vuw1spliVnlhCPOaviPCQy6oi+1WMomnE2oJl5
-         SUYVtyucRrMYXsMdz2xnpD7Kkcybhk+EMkPfXm8Efangafqna4Cjlw7Cp2yOcZ8/a4
-         lG8XIUQ09GB0FfGH9rh+iU3t1zNBagJ4yTpOTJK5klnTmO0bsDF9VlGbUpxgDoKQVE
-         iI7jLKAfSYDYZp8qTdtofcFEahWeZorS1vd6DCnrhzDhOVIsuh7MydLSfWGbxHVB1x
-         tyA9PXeg4uf1w==
+        b=PeuAInFTSKpJb1tYpdbwDvD2Uk5wQfpBC0lU9yLapUdaHCTeyBAOlHAI+m/J0wOsN
+         2jXnLkCnvnAO9wcS1xcbjTD0YkjKRi4ZzH9BCpQYeaREODAhVPyGhqu2Pr5Q3rAhQe
+         fZbfFi73xdXW/8SZVU+N7kzMo3QKqJHQqTCVLJo2aFoCWuGVe+N6d5IjravvHCkjOZ
+         QUYo4sW3wmPV0ZjLTptEIf5mPkuVenFs/L9GLv9/BsKymfEqOrlAFkL47dmEiZqE9N
+         boJCvo3GHiiDiqMF0U7QgE6s6ReY25J/aWWVLeQ+Ki22IbDXjUJE3CGo8xSYamQJxs
+         J3Qzm602jNFgA==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Shawn Guo <shawn.guo@linaro.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.11 06/23] soc: qcom: geni: shield geni_icc_get() for ACPI boot
-Date:   Mon, 19 Apr 2021 16:43:25 -0400
-Message-Id: <20210419204343.6134-6-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.10 05/21] soc: qcom: geni: shield geni_icc_get() for ACPI boot
+Date:   Mon, 19 Apr 2021 16:44:03 -0400
+Message-Id: <20210419204420.6375-5-sashal@kernel.org>
 X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20210419204343.6134-1-sashal@kernel.org>
-References: <20210419204343.6134-1-sashal@kernel.org>
+In-Reply-To: <20210419204420.6375-1-sashal@kernel.org>
+References: <20210419204420.6375-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -63,10 +63,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 3 insertions(+)
 
 diff --git a/drivers/soc/qcom/qcom-geni-se.c b/drivers/soc/qcom/qcom-geni-se.c
-index 1fd29f93ff6d..5bdfb1565c14 100644
+index be76fddbf524..0dbca679bd32 100644
 --- a/drivers/soc/qcom/qcom-geni-se.c
 +++ b/drivers/soc/qcom/qcom-geni-se.c
-@@ -756,6 +756,9 @@ int geni_icc_get(struct geni_se *se, const char *icc_ddr)
+@@ -741,6 +741,9 @@ int geni_icc_get(struct geni_se *se, const char *icc_ddr)
  	int i, err;
  	const char *icc_names[] = {"qup-core", "qup-config", icc_ddr};
  
