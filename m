@@ -2,135 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 090C5364E8F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Apr 2021 01:22:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BF1F2364EA9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Apr 2021 01:33:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229842AbhDSXXP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Apr 2021 19:23:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50924 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230333AbhDSXXP (ORCPT
+        id S232046AbhDSXeZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Apr 2021 19:34:25 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:57214 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232027AbhDSXeZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Apr 2021 19:23:15 -0400
-Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6FC6AC06174A
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Apr 2021 16:22:44 -0700 (PDT)
-Received: by mail-pl1-x62e.google.com with SMTP id p16so14665543plf.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Apr 2021 16:22:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=/fdThcIRrgscrujltUhnPe8L2i3scdC7Fzwjbgg461M=;
-        b=jwSp/gqHOdqZnEbozWAZEAN6sUBPw3p0kdBD4kEFPJ2qPbPIo0w5a1ro5wjXpOfv0c
-         dX5KAVPxGJQQchm/i53s/eCyaoX73fE0+kP9fUMaw8N7zFSz6rTl/tq2ox+KgplCAI7t
-         e+vNgJucfVRKqlMMFTZeHImcxrM+SCWphw5iU=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=/fdThcIRrgscrujltUhnPe8L2i3scdC7Fzwjbgg461M=;
-        b=kvyKyZJJWzAc6xr+c7wcaxRzSE07uYvuMiW3ijqQvS5QVKEaELvvJfnTVJQC3W9mVT
-         oQf7XG9v0ldaFkLpRVpd6/7XGd/82tUBW9hMv135K57oI6NchGhCFOiHm9C5a/yvRAiP
-         4YvRbT2DdgsLFQfpisfDSGMP+aCoWep2bO0NumSBGcqQZsmy20B//rwQb0JqmARkPC+f
-         kwRoJd5wJiCQ0s//2FsekRv83E87fZBpj8rSX/xdM4wq1XD5LRFd/zKXqFw9zh0XouWd
-         AqYlwtDnrfqkYm1bVTlit3OjNgVjM5tg33RfVsj1KbbqP+rcOMn2UPAvq+6pRkcmries
-         2SOg==
-X-Gm-Message-State: AOAM530SD40YTRfahu0k/6Mr/x6HmhK0VJy/wjOZRpmc3MGfQonVoNMR
-        ltOa2qfXIbSzrL6gIBEcCk6L4Q==
-X-Google-Smtp-Source: ABdhPJxQ5fQ5GWKmxooUG54M470t/m1Mqe6M7xJBCDcvAMUaaHiQkj5NrC5K1tpTVKOOVwnpqvEtLA==
-X-Received: by 2002:a17:902:a70f:b029:ea:d4a8:6a84 with SMTP id w15-20020a170902a70fb02900ead4a86a84mr26025712plq.42.1618874564051;
-        Mon, 19 Apr 2021 16:22:44 -0700 (PDT)
-Received: from localhost ([2620:15c:202:201:7401:678f:e510:6700])
-        by smtp.gmail.com with UTF8SMTPSA id f2sm13623847pfe.177.2021.04.19.16.22.43
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 19 Apr 2021 16:22:43 -0700 (PDT)
-Date:   Mon, 19 Apr 2021 16:22:42 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Sandeep Maheswaram <sanm@codeaurora.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Manu Gautam <mgautam@codeaurora.org>
-Subject: Re: [PATCH v6 4/5] usb: dwc3: qcom: Configure wakeup interrupts
- during suspend
-Message-ID: <YH4Qwjf0OH0+1BdB@google.com>
-References: <1618567313-25373-1-git-send-email-sanm@codeaurora.org>
- <1618567313-25373-5-git-send-email-sanm@codeaurora.org>
+        Mon, 19 Apr 2021 19:34:25 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1618875235; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=ZWzCdC+z5UyZhszG/8Haa1EIaXLOwOdaGyCo2LbFCaw=;
+ b=BToPZmG69zai8AMMpApFy8fwa8D6aUuwwq2FVa3OdHpwr/e/A7Ho+RnvYDNT/OANz1+STV3B
+ Pz9tOIHAPicxCGR9yf2ehUx0LQAXmjVaYbKXTg6RWrpkX+iVQmBFgiU567GGtI2pBWLCOF9r
+ zTyoxLIZIS2pv+t4HBVxbcLOx3o=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
+ 607e135287ce1fbb565948d1 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 19 Apr 2021 23:33:38
+ GMT
+Sender: abhinavk=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 680B2C433D3; Mon, 19 Apr 2021 23:33:37 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: abhinavk)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id BD889C433F1;
+        Mon, 19 Apr 2021 23:33:34 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1618567313-25373-5-git-send-email-sanm@codeaurora.org>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Mon, 19 Apr 2021 16:33:34 -0700
+From:   abhinavk@codeaurora.org
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, David Airlie <airlied@linux.ie>,
+        freedreno@lists.freedesktop.org
+Subject: Re: [PATCH] drm/msm/dsi: fix msm_dsi_phy_get_clk_provider return code
+In-Reply-To: <20210412000158.2049066-1-dmitry.baryshkov@linaro.org>
+References: <20210412000158.2049066-1-dmitry.baryshkov@linaro.org>
+Message-ID: <7ff8d6af018650a313842fa0470a5d5b@codeaurora.org>
+X-Sender: abhinavk@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Apr 16, 2021 at 03:31:52PM +0530, Sandeep Maheswaram wrote:
-> Configure interrupts based on hs_phy_mode to avoid triggering of
-> interrupts during system suspend and suspend the device successfully.
+On 2021-04-11 17:01, Dmitry Baryshkov wrote:
+> msm_dsi_phy_get_clk_provider() always returns two provided clocks, so
+> return 0 instead of returning incorrect -EINVAL error code.
 > 
-> Signed-off-by: Sandeep Maheswaram <sanm@codeaurora.org>
+> Fixes: 5d13459650b3 ("drm/msm/dsi: push provided clocks handling into
+> a generic code")
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Abhinav Kumar <abhinavk@codeaurora.org>
 > ---
->  drivers/usb/dwc3/dwc3-qcom.c | 26 ++++++++++++++++++++------
->  1 file changed, 20 insertions(+), 6 deletions(-)
+>  drivers/gpu/drm/msm/dsi/phy/dsi_phy.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-> index 66183c6..b1e9061 100644
-> --- a/drivers/usb/dwc3/dwc3-qcom.c
-> +++ b/drivers/usb/dwc3/dwc3-qcom.c
-> @@ -316,22 +316,36 @@ static void dwc3_qcom_disable_wakeup_irq(int irq)
->  
->  static void dwc3_qcom_disable_interrupts(struct dwc3_qcom *qcom)
->  {
-> -	dwc3_qcom_disable_wakeup_irq(qcom->hs_phy_irq);
-> +	struct dwc3 *dwc = platform_get_drvdata(qcom->dwc3);
->  
-> -	dwc3_qcom_disable_wakeup_irq(qcom->dp_hs_phy_irq);
-> +	dwc3_qcom_disable_wakeup_irq(qcom->hs_phy_irq);
->  
-> -	dwc3_qcom_disable_wakeup_irq(qcom->dm_hs_phy_irq);
-> +	if (dwc->hs_phy_mode & PHY_MODE_USB_HOST_LS)
-> +		dwc3_qcom_disable_wakeup_irq(qcom->dp_hs_phy_irq);
-> +	else if (dwc->hs_phy_mode & PHY_MODE_USB_HOST_HS)
-> +		dwc3_qcom_disable_wakeup_irq(qcom->dm_hs_phy_irq);
-> +	else {
-> +		dwc3_qcom_disable_wakeup_irq(qcom->dp_hs_phy_irq);
-> +		dwc3_qcom_disable_wakeup_irq(qcom->dm_hs_phy_irq);
-> +	}
-
-nit: 'if' and 'else if' branches should also have curly braces since
-'else' has them.
-
->  	dwc3_qcom_disable_wakeup_irq(qcom->ss_phy_irq);
+> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
+> b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
+> index f0a2ddf96a4b..ff7f2ec42030 100644
+> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
+> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
+> @@ -843,7 +843,7 @@ int msm_dsi_phy_get_clk_provider(struct msm_dsi_phy 
+> *phy,
+>  	if (pixel_clk_provider)
+>  		*pixel_clk_provider = 
+> phy->provided_clocks->hws[DSI_PIXEL_PLL_CLK]->clk;
+> 
+> -	return -EINVAL;
+> +	return 0;
 >  }
->  
->  static void dwc3_qcom_enable_interrupts(struct dwc3_qcom *qcom)
->  {
-> -	dwc3_qcom_enable_wakeup_irq(qcom->hs_phy_irq);
-> +	struct dwc3 *dwc = platform_get_drvdata(qcom->dwc3);
->  
-> -	dwc3_qcom_enable_wakeup_irq(qcom->dp_hs_phy_irq);
-> +	dwc3_qcom_enable_wakeup_irq(qcom->hs_phy_irq);
->  
-> -	dwc3_qcom_enable_wakeup_irq(qcom->dm_hs_phy_irq);
-> +	if (dwc->hs_phy_mode & PHY_MODE_USB_HOST_LS)
-> +		dwc3_qcom_enable_wakeup_irq(qcom->dp_hs_phy_irq);
-> +	else if (dwc->hs_phy_mode & PHY_MODE_USB_HOST_HS)
-> +		dwc3_qcom_enable_wakeup_irq(qcom->dm_hs_phy_irq);
-> +	else {
-> +		dwc3_qcom_enable_wakeup_irq(qcom->dp_hs_phy_irq);
-> +		dwc3_qcom_enable_wakeup_irq(qcom->dm_hs_phy_irq);
-> +	}
-
-ditto
-
->  	dwc3_qcom_enable_wakeup_irq(qcom->ss_phy_irq);
->  }
-
-Other than the nits:
-
-Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+> 
+>  void msm_dsi_phy_pll_save_state(struct msm_dsi_phy *phy)
