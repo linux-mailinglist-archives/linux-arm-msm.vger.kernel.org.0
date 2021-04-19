@@ -2,77 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E16CE364AAC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Apr 2021 21:37:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 65521364B5B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Apr 2021 22:44:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241782AbhDSTh6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Apr 2021 15:37:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58174 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241757AbhDSTh6 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Apr 2021 15:37:58 -0400
-Received: from mail-pg1-x52e.google.com (mail-pg1-x52e.google.com [IPv6:2607:f8b0:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D123FC06138A
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Apr 2021 12:37:26 -0700 (PDT)
-Received: by mail-pg1-x52e.google.com with SMTP id j7so15561461pgi.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Apr 2021 12:37:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=cRX2PnENKrp+Sre4G8DjBQEvzpPHZjO6ro3yvF7N1w8=;
-        b=FBireDUg9KAmKpls9A6Odw22Pn3dekJN9WQwfIu2Jz4ovycZv5q7bTV6LRdhhNRPWz
-         6kpInnms/P+Y9TpBcM+c8zD9rwK6S5gpI3RAxE9gfr77TpWqtRLKLAFtxdsDBrssKYnx
-         8JZh0NqTqYR3wlfErrGlK4GNier3AV3ggMF9A=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=cRX2PnENKrp+Sre4G8DjBQEvzpPHZjO6ro3yvF7N1w8=;
-        b=cqjIOYHBolK5+n3riYvgAEt/S2Fg98rmg9IznOKDCKnsRKquN/h8uX7F7K4Qce5ZUb
-         BfpLVLiKvcGItgv1DopNRu618mP67qPKC9zMPBHr9/5GXpkpG+GChTY9FDDlGg2FDZJv
-         ZcZQONbXihZjQuVNZ9wvlYoOq1kGIxO5qxbGB0RY14bloC2d2O5GtdX7CGydxUCifoem
-         vfbjzEU6xWYbQSuRdGOcxe9d3+gBsITIG6Fh9CiDJXsyR+1oz+gxA1C2x30U1J0QKBJd
-         cw/xHtI5GmZLqrfzTQmAvv8M5CUVjPrn+hZ6s/RwmPv+7tShKW+J8JxkHjRH7EmnXXx9
-         2j/g==
-X-Gm-Message-State: AOAM533+4OluCfmlacJuy00wSvD8oDg1YeWPJFvWLFJJqElz0bOGUs4b
-        UDSF5FhtCGxfRjk/GTKznRALBw==
-X-Google-Smtp-Source: ABdhPJz1Cq0t9hO02D3ZpKTW0FoURJAAOaUJ3pOIpMOk3nbB57RoSTKg6VWVjbjLaoyYY77inJAiLA==
-X-Received: by 2002:a63:2ec7:: with SMTP id u190mr13372245pgu.18.1618861046232;
-        Mon, 19 Apr 2021 12:37:26 -0700 (PDT)
-Received: from localhost ([2620:15c:202:201:7401:678f:e510:6700])
-        by smtp.gmail.com with UTF8SMTPSA id fw24sm233421pjb.21.2021.04.19.12.37.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 19 Apr 2021 12:37:25 -0700 (PDT)
-Date:   Mon, 19 Apr 2021 12:37:24 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Sandeep Maheswaram <sanm@codeaurora.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        id S242286AbhDSUoZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Apr 2021 16:44:25 -0400
+Received: from mail.kernel.org ([198.145.29.99]:53768 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S242247AbhDSUoX (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 19 Apr 2021 16:44:23 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 0797461369;
+        Mon, 19 Apr 2021 20:43:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1618865032;
+        bh=fLGDTO4vZkaAfbFcATg/22G+9ZUgFi8xRlu4Z6L0ViQ=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=VVBM4lXDR+8lWY5rD7s8abE43vkM0aZnihlDtZMYnUeVyhAsFHCmPW01XG59gsz0p
+         E3hEzlSMuLOnfcMU9xXi20FiWXX1vuw1spliVnlhCPOaviPCQy6oi+1WMomnE2oJl5
+         SUYVtyucRrMYXsMdz2xnpD7Kkcybhk+EMkPfXm8Efangafqna4Cjlw7Cp2yOcZ8/a4
+         lG8XIUQ09GB0FfGH9rh+iU3t1zNBagJ4yTpOTJK5klnTmO0bsDF9VlGbUpxgDoKQVE
+         iI7jLKAfSYDYZp8qTdtofcFEahWeZorS1vd6DCnrhzDhOVIsuh7MydLSfWGbxHVB1x
+         tyA9PXeg4uf1w==
+From:   Sasha Levin <sashal@kernel.org>
+To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Cc:     Shawn Guo <shawn.guo@linaro.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Manu Gautam <mgautam@codeaurora.org>
-Subject: Re: [PATCH v6 3/5] usb: dwc3: qcom: Add helper functions to
- enable,disable wake irqs
-Message-ID: <YH3b9J4Pl+4+wygb@google.com>
-References: <1618567313-25373-1-git-send-email-sanm@codeaurora.org>
- <1618567313-25373-4-git-send-email-sanm@codeaurora.org>
+        Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.11 06/23] soc: qcom: geni: shield geni_icc_get() for ACPI boot
+Date:   Mon, 19 Apr 2021 16:43:25 -0400
+Message-Id: <20210419204343.6134-6-sashal@kernel.org>
+X-Mailer: git-send-email 2.30.2
+In-Reply-To: <20210419204343.6134-1-sashal@kernel.org>
+References: <20210419204343.6134-1-sashal@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1618567313-25373-4-git-send-email-sanm@codeaurora.org>
+X-stable: review
+X-Patchwork-Hint: Ignore
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Apr 16, 2021 at 03:31:51PM +0530, Sandeep Maheswaram wrote:
-> Adding helper functions to enable,disable wake irqs to make
-> the code simple and readable.
-> 
-> Signed-off-by: Sandeep Maheswaram <sanm@codeaurora.org>
+From: Shawn Guo <shawn.guo@linaro.org>
 
-Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+[ Upstream commit 0c9fdcdba68208270ae85d39600ea97da1718344 ]
+
+Currently, GENI devices like i2c-qcom-geni fails to probe in ACPI boot,
+if interconnect support is enabled.  That's because interconnect driver
+only supports DT right now.  As interconnect is not necessarily required
+for basic function of GENI devices, let's shield geni_icc_get() call,
+and then all other ICC calls become nop due to NULL icc_path, so that
+GENI devices keep working for ACPI boot.
+
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+Link: https://lore.kernel.org/r/20210114112928.11368-1-shawn.guo@linaro.org
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/soc/qcom/qcom-geni-se.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/drivers/soc/qcom/qcom-geni-se.c b/drivers/soc/qcom/qcom-geni-se.c
+index 1fd29f93ff6d..5bdfb1565c14 100644
+--- a/drivers/soc/qcom/qcom-geni-se.c
++++ b/drivers/soc/qcom/qcom-geni-se.c
+@@ -756,6 +756,9 @@ int geni_icc_get(struct geni_se *se, const char *icc_ddr)
+ 	int i, err;
+ 	const char *icc_names[] = {"qup-core", "qup-config", icc_ddr};
+ 
++	if (has_acpi_companion(se->dev))
++		return 0;
++
+ 	for (i = 0; i < ARRAY_SIZE(se->icc_paths); i++) {
+ 		if (!icc_names[i])
+ 			continue;
+-- 
+2.30.2
+
