@@ -2,77 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4656E365DAA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Apr 2021 18:47:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7346B365DAE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Apr 2021 18:47:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232504AbhDTQrb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Apr 2021 12:47:31 -0400
-Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:44974 "EHLO
-        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S232473AbhDTQrb (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Apr 2021 12:47:31 -0400
-Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 20 Apr 2021 09:46:59 -0700
-X-QCInternal: smtphost
-Received: from gurus-linux.qualcomm.com (HELO gurus-linux.localdomain) ([10.46.162.81])
-  by ironmsg05-sd.qualcomm.com with ESMTP; 20 Apr 2021 09:46:59 -0700
-Received: by gurus-linux.localdomain (Postfix, from userid 383780)
-        id 6773219D9; Tue, 20 Apr 2021 09:46:59 -0700 (PDT)
-Date:   Tue, 20 Apr 2021 09:46:59 -0700
-From:   Guru Das Srinagesh <gurus@codeaurora.org>
-To:     Lee Jones <lee.jones@linaro.org>, Rob Herring <robh+dt@kernel.org>,
-        devicetree@vger.kernel.org
-Cc:     Mark Brown <broonie@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 0/3] Add Qualcomm Technologies, Inc. PM8008 MFD driver
-Message-ID: <20210420164659.GA21665@codeaurora.org>
-References: <cover.1618278453.git.gurus@codeaurora.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1618278453.git.gurus@codeaurora.org>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+        id S233119AbhDTQsG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Apr 2021 12:48:06 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:51852 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S233172AbhDTQsC (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 20 Apr 2021 12:48:02 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1618937251; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=EKChT1gTpuiNaclzIXzJQspOWuQ3ARaK4rg8YfgIlGM=; b=pegYnIAqZWMFn86pr9DFDJ/qxxOaI+60/e2G+EBRX1euFx5kNUqNArwUDp3dx0uv8r1OEQC+
+ yYtE8/a8MsDAGEtI9ruo1ggs7vkuoDkAkESxil/qZIEIuWuCvT9kSgwk0/ong+A08ckIBADP
+ YhzDDM6xn/hIG4Lhsj3q3hqjIgU=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
+ 607f059a853c0a2c4688e206 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 20 Apr 2021 16:47:22
+ GMT
+Sender: akhilpo=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id D8218C4323A; Tue, 20 Apr 2021 16:47:21 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from hyd-lnxbld559.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: akhilpo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id D5F3DC4338A;
+        Tue, 20 Apr 2021 16:47:19 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org D5F3DC4338A
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=akhilpo@codeaurora.org
+From:   Akhil P Oommen <akhilpo@codeaurora.org>
+To:     freedreno@lists.freedesktop.org, dri-devel@freedesktop.org
+Cc:     linux-arm-msm@vger.kernel.org, robdclark@gmail.com
+Subject: [PATCH] freedreno/a6xx: Add a few registers
+Date:   Tue, 20 Apr 2021 22:17:13 +0530
+Message-Id: <1618937233-14468-1-git-send-email-akhilpo@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Apr 12, 2021 at 07:00:24PM -0700, Guru Das Srinagesh wrote:
-> Changes from v2:
->   - Collected Rob Herring's Acked-by for the IRQ listing patch
->   - Addressed Rob's comments for the dt-bindings patch
-> 
-> Changes from v1:
->   - Removed errant Change-Id from dt-bindings IRQ patch and gathered Bjorn's
->     Reviewed-by
->   - Fixed up YAML errors using make dt_binding_check
-> 
-> This driver is dependent on changes that have been made to the regmap-irq
-> framework that have currently been accepted [1][2] in regmap.git upstream by
-> Mark Brown but haven't made it to Linus' tree yet. For this reason, this driver
-> has been based on the tip of regmap.git and not mfd.git.
-> 
-> Those changes, and this driver, are the result of a rewrite effort that was
-> promised a long ago [3]. The framework changes and this driver have been tested
-> and verified end-to-end on an internal platform.
-> 
-> [1] https://lore.kernel.org/lkml/20210318183607.gFxO2hoTO274vl3jUuxWbi19rq9wQELzN-y3B4jvO10@z/
-> [2] https://lore.kernel.org/lkml/161726943419.2413.4844313396830856637.b4-ty@kernel.org/
-> [3] https://lore.kernel.org/lkml/20200519185757.GA13992@codeaurora.org/
+Add a few new registers for a6xx gpu.
 
-Hi Lee, mfd reviewers,
+Signed-off-by: Akhil P Oommen <akhilpo@codeaurora.org>
+---
+ registers/adreno/a6xx.xml     | 2 ++
+ registers/adreno/a6xx_gmu.xml | 2 ++
+ 2 files changed, 4 insertions(+)
 
-This new driver depends on three regmap-irq framework changes that have
-been accepted by Mark (please see above) and hence will land only in the
-next rc-1 release. I just wanted to make sure that this patch series was
-on your radar [1]. The dt-bindings has been Acked by Rob already, and
-I'd be happy to address any review comments while patiently waiting for
-the dependencies to land.
+diff --git a/registers/adreno/a6xx.xml b/registers/adreno/a6xx.xml
+index 15314fb..3b04565 100644
+--- a/registers/adreno/a6xx.xml
++++ b/registers/adreno/a6xx.xml
+@@ -1107,6 +1107,7 @@ to upconvert to 32b float internally?
+ 	<reg32 offset="0x098D" name="CP_AHB_CNTL"/>
+ 	<reg32 offset="0x0A00" name="CP_APERTURE_CNTL_HOST"/>
+ 	<reg32 offset="0x0A03" name="CP_APERTURE_CNTL_CD"/>
++	<reg32 offset="0x0B34" name="CP_LPAC_PROG_FIFO_SIZE"/>
+ 	<reg32 offset="0x0C01" name="VSC_ADDR_MODE_CNTL" type="a5xx_address_mode"/>
+ 	<reg32 offset="0x0201" name="RBBM_INT_0_STATUS" type="A6XX_RBBM_INT_0_MASK"/>
+ 	<reg32 offset="0x0210" name="RBBM_STATUS">
+@@ -1740,6 +1741,7 @@ to upconvert to 32b float internally?
+ 	<reg32 offset="0x3119" name="VBIF_PERF_PWR_CNT_HIGH1"/>
+ 	<reg32 offset="0x311a" name="VBIF_PERF_PWR_CNT_HIGH2"/>
+ 
++	<reg32 offset="0x3c01" name="GBIF_SCACHE_CNTL0"/>
+ 	<reg32 offset="0x3c02" name="GBIF_SCACHE_CNTL1"/>
+ 	<reg32 offset="0x3c03" name="GBIF_QSB_SIDE0"/>
+ 	<reg32 offset="0x3c04" name="GBIF_QSB_SIDE1"/>
+diff --git a/registers/adreno/a6xx_gmu.xml b/registers/adreno/a6xx_gmu.xml
+index dbefd0c..f8bf1fd 100644
+--- a/registers/adreno/a6xx_gmu.xml
++++ b/registers/adreno/a6xx_gmu.xml
+@@ -112,6 +112,7 @@ xsi:schemaLocation="http://nouveau.freedesktop.org/ rules-ng.xsd">
+ 	<reg32 offset="0x50e9" name="GMU_RPMH_HYST_CTRL"/>
+ 	<reg32 offset="0x50ec" name="GPU_GMU_CX_GMU_RPMH_POWER_STATE"/>
+ 	<reg32 offset="0x50f0" name="GPU_GMU_CX_GMU_CX_FAL_INTF"/>
++	<reg32 offset="0x50f1" name="GPU_GMU_CX_GMU_CX_FALNEXT_INTF"/>
+ 	<reg32 offset="0x5100" name="GPU_GMU_CX_GMU_PWR_COL_CP_MSG"/>
+ 	<reg32 offset="0x5101" name="GPU_GMU_CX_GMU_PWR_COL_CP_RESP"/>
+ 	<reg32 offset="0x51f0" name="GMU_BOOT_KMD_LM_HANDSHAKE"/>
+@@ -193,6 +194,7 @@ xsi:schemaLocation="http://nouveau.freedesktop.org/ rules-ng.xsd">
+ 	<reg32 offset="0x9312" name="GMU_AHB_FENCE_RANGE_1"/>
+ 	<reg32 offset="0x9c03" name="GPU_CC_GX_GDSCR"/>
+ 	<reg32 offset="0x9d42" name="GPU_CC_GX_DOMAIN_MISC"/>
++	<reg32 offset="0xc001" name="GPU_CPR_FSM_CTL"/>
+ 
+ 	<!-- starts at offset 0x8c00 on most gpus -->
+ 	<reg32 offset="0x0004" name="GPU_RSCC_RSC_STATUS0_DRV0"/>
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation.
 
-[1] https://lore.kernel.org/lkml/20210419072229.GA4869@dell/
-
-Thank you.
-
-Guru Das.
