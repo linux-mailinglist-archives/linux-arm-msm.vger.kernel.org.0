@@ -2,74 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 74BE9365DBF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Apr 2021 18:50:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 80122365E4F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Apr 2021 19:16:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233285AbhDTQuc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Apr 2021 12:50:32 -0400
-Received: from youngberry.canonical.com ([91.189.89.112]:49813 "EHLO
-        youngberry.canonical.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233266AbhDTQub (ORCPT
+        id S233286AbhDTRQg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Apr 2021 13:16:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60568 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232473AbhDTRQg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Apr 2021 12:50:31 -0400
-Received: from 1.general.cking.uk.vpn ([10.172.193.212])
-        by youngberry.canonical.com with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
-        (Exim 4.86_2)
-        (envelope-from <colin.king@canonical.com>)
-        id 1lYtZW-0003WN-2v; Tue, 20 Apr 2021 16:49:58 +0000
-To:     Amit Kucheria <amit.kucheria@linaro.org>,
-        Andy Gross <andy.gross@linaro.org>,
-        David Brown <david.brown@linaro.org>
-Cc:     Zhang Rui <rui.zhang@intel.com>,
-        Eduardo Valentin <edubezval@gmail.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org
-From:   Colin Ian King <colin.king@canonical.com>
-Subject: incorrect mask/shift issue with qcom tsens thermal driver
-Message-ID: <aac16b20-12e7-5925-2c25-ee11b237a431@canonical.com>
-Date:   Tue, 20 Apr 2021 17:49:57 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.8.1
+        Tue, 20 Apr 2021 13:16:36 -0400
+Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A0C5C06174A
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Apr 2021 10:16:04 -0700 (PDT)
+Received: by mail-pl1-x62d.google.com with SMTP id v13so6438057ple.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Apr 2021 10:16:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=irTmuEe2pRr0Rl3uOVQJ+XhzXrvVBN56ZxLdfK0T+Z8=;
+        b=SCqmMaRSS1gGfkcJyngj89CG845AhRXkGK2F88BZk5KT1u/+c8BoliHPu42RtXIaml
+         8iugl8CuYxLqemFK5aOFf5DZYEjC+eiO5TfkbqxtZxDATPZ+aYB+W14vHXDVKGgQE/P7
+         wXRpK+/sPm8NdC1J6Hd0yPwtPFDMMpRQnxGFw=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=irTmuEe2pRr0Rl3uOVQJ+XhzXrvVBN56ZxLdfK0T+Z8=;
+        b=j6uX4q2zrF/9GDqgHcTfhBlgDilQZ85yp4HePn6gWl6MfXYo1aqstwOQoGl/BrgM+U
+         sZ1bTQfKou/PS7oxTR9eCh4FEU5URVYl+afroXYLsiLiN0E5WIkDlMH7LEggRTJC3DkE
+         aH42S2gKJebL1H7U7ZOn9nfVmShxGbQjZbjcO/i9VYjR+tXh+WcR3ofH4rU2H4Me7UqZ
+         1JabvZ57X6kpFhIHMiDRGAWnx0BtQxGP0mjEAvviSlOzgLp3vETgqK73UQtBiS9a2VCE
+         KxQZ5IeahA8KxlPx9+nTxVeHbqDqFQZOpfmI6uRY9pJL0u/BjhvTVdZ+zodA6ufqTuJR
+         aPFA==
+X-Gm-Message-State: AOAM531wAQBLa1zjq0pq9++QZlvNaPDxZZiP5iXBof+A3KsUYJNqN/rt
+        u2JulfPKig21oKndtR9yZxqsAg==
+X-Google-Smtp-Source: ABdhPJzFEFl6Idin15/xKtXbEuWZIi6Nr1FUejohVJutVMscIDnw3HwfW6EcMFACHdsyzlselUTI3Q==
+X-Received: by 2002:a17:90b:3646:: with SMTP id nh6mr6049573pjb.119.1618938964244;
+        Tue, 20 Apr 2021 10:16:04 -0700 (PDT)
+Received: from localhost ([2620:15c:202:201:7a9:7e56:e9c3:13e8])
+        by smtp.gmail.com with UTF8SMTPSA id a4sm10234479pff.140.2021.04.20.10.16.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 20 Apr 2021 10:16:03 -0700 (PDT)
+Date:   Tue, 20 Apr 2021 10:16:02 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     satya priya <skakit@codeaurora.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, kgunda@codeaurora.org
+Subject: Re: [RESEND PATCH V3 3/5] arm64: dts: qcom: pmr735a: Add temp-alarm
+ support
+Message-ID: <YH8MUkYJdZbkuXt/@google.com>
+References: <1618398783-7834-1-git-send-email-skakit@codeaurora.org>
+ <1618398783-7834-4-git-send-email-skakit@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+In-Reply-To: <1618398783-7834-4-git-send-email-skakit@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Wed, Apr 14, 2021 at 04:43:01PM +0530, satya priya wrote:
+> Add temp-alarm node for PMR735A pmic and also modify gpio
+> node to add gpio ranges and "qcom,spmi-gpio" compatible.
+> 
+> Signed-off-by: satya priya <skakit@codeaurora.org>
 
-Static analysis on drivers/thermal/qcom/tsens-v0_1.c has found an issue
-in function calibrate_8974 with an incorrect mask value used when
-shifting a value. The analysis by Coverity is as follows:
-
-
-400                        p1[5] = (bkp[1] & S5_P1_MASK) >> S5_P1_SHIFT;
-401                        p1[6] = (bkp[1] & S6_P1_MASK) >> S6_P1_SHIFT;
-402                        p1[7] = (bkp[1] & S7_P1_MASK) >> S7_P1_SHIFT;
-
-Operands don't affect result (CONSTANT_EXPRESSION_RESULT)
-result_independent_of_operands: (bkp[2] & 63) >> 24 is 0 regardless of
-the values of its operands. This occurs as the operand of assignment.
-
-403                        p1[8] = (bkp[2] & S8_P1_MASK_BKP) >> S8_P1_SHIFT;
-
-
-S8_P1_MASK_BKP is 0x3f
-S8_P1_SHIFT is 24
-
-so anything masked with 03f and right shifted 24 places will be zero, so
-this looks incorrect.  I suspect the mask should be 0x3f000000.
-
-My thinking is that this is a typo, and should be:
-
-	 p1[8] = (bkp[2] & S8_P1_MASK) >> S8_P1_SHIFT;
-
-since S8_P1_MASK is 0x3f000000. However, I'm not 100% sure as I don't
-have the EEPROM layout so it maybe that S8_P1_MASK_BKP is incorrectly
-#defined.
-
-Any thoughts?
-
-Colin
+Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
