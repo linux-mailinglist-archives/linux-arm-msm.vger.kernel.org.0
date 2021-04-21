@@ -2,109 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1FC76366674
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Apr 2021 09:51:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BDF583667CC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Apr 2021 11:16:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237399AbhDUHwA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Apr 2021 03:52:00 -0400
-Received: from mail-lf1-f45.google.com ([209.85.167.45]:43806 "EHLO
-        mail-lf1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237383AbhDUHv7 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 21 Apr 2021 03:51:59 -0400
-Received: by mail-lf1-f45.google.com with SMTP id y4so25304504lfl.10;
-        Wed, 21 Apr 2021 00:51:25 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:reply-to:to:cc
-         :in-reply-to:references:mime-version:date:user-agent
-         :content-transfer-encoding;
-        bh=Pae9yH+KaHgTqO+dxMFR9Vep9F1PrK7GQlrKbtuE/kI=;
-        b=CvAbYW+Bz8Sj728WpXFetqW6sVK536wmR4oKurUcMkA5erGaameUl3ZXR/dsx1IHVk
-         1/ziMfI6Fk7n6yt5RanH+ee6XkzzrH0AzzAqemNA0mVQL4ZYTTKMmunzDkWE474NHYfO
-         v6/k1OiWTPbtwQZkKrFe8z/QlKfsI5SMTT1kxa+0PM++P7m+HQBcxEdylz1HXYU3oKxr
-         x1XRtJehMNQ/qw1ybvAb8Wd2hPLhfz+HRWpDu1oVf0ABhThuSf8xSPXjI25XHEHcbM3l
-         2mQp+RtJv21wmYAYjOgOZkpX3UwG27lAgXPoODN5lpmXZLboiA5Fy9mAg9c4Wf0R81qh
-         YeKw==
-X-Gm-Message-State: AOAM533MPIw2QPOojvjLQv9Cf6tfDktk2az+9p0Qw+ac3LtqVaZHy3YF
-        hrIKN10BL5XtYdSoNNuEnco=
-X-Google-Smtp-Source: ABdhPJyamlH7tMymKn/NliNVTaRv5+NWeF4lqRMi91V4eNBUtbjHXg0IbpR8KG2YkoC6zBsccN0XWg==
-X-Received: by 2002:ac2:4e8c:: with SMTP id o12mr16152092lfr.211.1618991485123;
-        Wed, 21 Apr 2021 00:51:25 -0700 (PDT)
-Received: from dc7vkhyyyyyyyyyyyyydy-3.rev.dnainternet.fi (dc7vkhyyyyyyyyyyyyydy-3.rev.dnainternet.fi. [2001:14ba:16e2:8300::6])
-        by smtp.gmail.com with ESMTPSA id c18sm125078ljd.66.2021.04.21.00.51.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Apr 2021 00:51:24 -0700 (PDT)
-Message-ID: <da0233f3223d7c0816581afe0969caf0abe20378.camel@fi.rohmeurope.com>
-Subject: Re: [PATCH v3 2/8] MAINTAINERS: Add entry for devm helpers
-From:   Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>
-Reply-To: matti.vaittinen@fi.rohmeurope.com
-To:     Greg KH <gregkh@linuxfoundation.org>,
-        Hans de Goede <hdegoede@redhat.com>
-Cc:     MyungJoo Ham <myungjoo.ham@samsung.com>,
-        Chanwoo Choi <cw00.choi@samsung.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Jean Delvare <jdelvare@suse.com>,
-        Guenter Roeck <linux@roeck-us.net>,
-        Mark Gross <mgross@linux.intel.com>,
-        Sebastian Reichel <sre@kernel.org>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Wim Van Sebroeck <wim@linux-watchdog.org>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-hwmon@vger.kernel.org, platform-driver-x86@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-watchdog@vger.kernel.org
-In-Reply-To: <YFn5CSB1O3i+SzgR@kroah.com>
-References: <cover.1616506559.git.matti.vaittinen@fi.rohmeurope.com>
-         <eec1797734e3d080662aa732c565ed4a3c261799.1616506559.git.matti.vaittinen@fi.rohmeurope.com>
-         <e064fdd7-b276-6732-16fe-2eb2564b2179@redhat.com>
-         <YFn5CSB1O3i+SzgR@kroah.com>
-Content-Type: text/plain; charset="UTF-8"
-MIME-Version: 1.0
-Date:   Wed, 21 Apr 2021 10:51:13 +0300
-User-Agent: Evolution 3.34.4 (3.34.4-1.fc31) 
-Content-Transfer-Encoding: 7bit
+        id S237787AbhDUJRZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 21 Apr 2021 05:17:25 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:36090 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S235170AbhDUJRZ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 21 Apr 2021 05:17:25 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1618996612; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=C15zEg9lT28TsukmTZN4mMcIoCliTgr0gqXl4JqKaYA=; b=jM12FpWEvt60uPS2c5KQQDAL5+oIaG3rQWBwfdgzSpbH3kZ4qI/y1KLGrOpsw5mpZ83QeKQ2
+ FVgJ+bjhlGqaIDGF5my63ZnWys1Z6XWG7cHgpkn0et3Ym+g4MQlpN3Uk/fdLOG0MXh9x+/uD
+ 7trQTYbA9P3MsXpD0rGycwr1IQc=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
+ 607fed6f853c0a2c46c7a105 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 21 Apr 2021 09:16:31
+ GMT
+Sender: zijuhu=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id A7FFDC4323A; Wed, 21 Apr 2021 09:16:30 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from zijuhu-gv.qualcomm.com (unknown [180.166.53.21])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: zijuhu)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6475FC433D3;
+        Wed, 21 Apr 2021 09:16:27 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 6475FC433D3
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=zijuhu@codeaurora.org
+From:   Zijun Hu <zijuhu@codeaurora.org>
+To:     marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com
+Cc:     linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
+        c-hbandi@codeaurora.org, hemantg@codeaurora.org, mka@chromium.org,
+        rjliao@codeaurora.org, zijuhu@codeaurora.org, tjiang@codeaurora.org
+Subject: [PATCH v1] Bluetooth: btusb: use default nvm if boardID is 0 for wcn6855.
+Date:   Wed, 21 Apr 2021 17:16:16 +0800
+Message-Id: <1618996576-7743-1-git-send-email-zijuhu@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+From: Tim Jiang <tjiang@codeaurora.org>
 
-On Tue, 2021-03-23 at 15:19 +0100, Greg KH wrote:
-> On Tue, Mar 23, 2021 at 02:58:28PM +0100, Hans de Goede wrote:
-> > Hi,
-> > 
-> > On 3/23/21 2:56 PM, Matti Vaittinen wrote:
-> > > Devm helper header containing small inline helpers was added.
-> > > Hans promised to maintain it.
-> > > 
-> > > Add Hans as maintainer and myself as designated reviewer.
-> > > 
-> > Ultimately this is up to Greg though, so lets wait and see what
-> > Greg has to say about this.
-> 
-> Can we move some of the devm_* calls in include/device.h into here as
-> well so that you all can be in charge of them instead of me?
+if boardID is 0, will use the default nvm file without surfix.
 
-Seems like this was left w/o answer. I guess the question was pointed
-to Hans - but what comes to my (not always so humble) opinion - most of
-the devm functions in device.h are tightly related to the device
-interface or devres. Thus the device.h feels like appropriate place for
-most of those. OTOH, the kmalloc/kfree related functions, strdub and
-kmemdub might be candidates for move - those are not really "device
-things".
+Signed-off-by: Tim Jiang <tjiang@codeaurora.org>
+---
+ drivers/bluetooth/btusb.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-But this is really not my call :)
-
-Best Regards
-	Matti Vaittinen
-
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index 6f25337..61afea9 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -4138,9 +4138,14 @@ static int btusb_setup_qca_load_nvm(struct hci_dev *hdev,
+ 	int err;
+ 
+ 	if (((ver->flag >> 8) & 0xff) == QCA_FLAG_MULTI_NVM) {
+-		snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x_%04x.bin",
+-			 le32_to_cpu(ver->rom_version),
+-			 le16_to_cpu(ver->board_id));
++		if (le16_to_cpu(ver->board_id) == 0x0) { //if boardid equal 0, use default nvm.
++			snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x.bin",
++				 le32_to_cpu(ver->rom_version));
++		} else {
++			snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x_%04x.bin",
++				le32_to_cpu(ver->rom_version),
++				le16_to_cpu(ver->board_id));
++		}
+ 	} else {
+ 		snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x.bin",
+ 			 le32_to_cpu(ver->rom_version));
 -- 
-Matti Vaittinen, Linux device drivers
-ROHM Semiconductors, Finland SWDC
-Kiviharjunlenkki 1E
-90220 OULU
-FINLAND
-
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, a Linux Foundation Collaborative Project
 
