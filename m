@@ -2,248 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2F07A36649C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Apr 2021 06:45:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B0D1D36655C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Apr 2021 08:23:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234686AbhDUEpl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Apr 2021 00:45:41 -0400
-Received: from guitar.tcltek.co.il ([192.115.133.116]:43816 "EHLO
-        mx.tkos.co.il" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232146AbhDUEpj (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 21 Apr 2021 00:45:39 -0400
-Received: from tarshish (unknown [10.0.8.2])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S234072AbhDUGYP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 21 Apr 2021 02:24:15 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:42401 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S236013AbhDUGYO (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 21 Apr 2021 02:24:14 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1618986222; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=joVt7EiJpq5MpkTsFfA7/raYnftwlEGm8PrYlH6jj2I=;
+ b=DkbHvbE4w1MMfJu+bT6r5gh7em96MbTYBJLGvHcXMYrQnFT5u1ch9PogQIHECeD9549KgE50
+ cDWAPPc77nn0MRK3sh8rLoFryychDN9Wn0iIB+LnmGbxqTiJ1OA3CJfwy25kaP8lUaNphh4g
+ LTWN3/UHaaoQxgdXwivg+DlpBks=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
+ 607fc4db215b831afb7a20d6 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 21 Apr 2021 06:23:23
+ GMT
+Sender: skakit=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id C9C07C4338A; Wed, 21 Apr 2021 06:23:23 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        by mx.tkos.co.il (Postfix) with ESMTPS id 402D64405EB;
-        Wed, 21 Apr 2021 07:45:02 +0300 (IDT)
-References: <cover.1618916235.git.baruch@tkos.co.il>
- <c6ff03d1377ea9b5ff40ab283c884aeff6254dd9.1618916235.git.baruch@tkos.co.il>
- <20210420161855.GA3402221@robh.at.kernel.org>
-User-agent: mu4e 1.4.15; emacs 27.1
-From:   Baruch Siach <baruch@tkos.co.il>
-To:     Rob Herring <robh@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Selvam Sathappan Periakaruppan <speriaka@codeaurora.org>,
-        Kathiravan T <kathirav@codeaurora.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Vinod Koul <vkoul@kernel.org>, devicetree@vger.kernel.org,
-        linux-phy@lists.infradead.org, linux-pci@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH 1/5] PCI: qcom: add support for IPQ60xx PCIe controller
-In-reply-to: <20210420161855.GA3402221@robh.at.kernel.org>
-Date:   Wed, 21 Apr 2021 07:45:01 +0300
-Message-ID: <87r1j4kzzm.fsf@tarshish>
+        (Authenticated sender: skakit)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 73638C433D3;
+        Wed, 21 Apr 2021 06:23:21 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Wed, 21 Apr 2021 11:53:21 +0530
+From:   skakit@codeaurora.org
+To:     Rob Herring <robh@kernel.org>
+Cc:     Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Sebastian Reichel <sre@kernel.org>,
+        David Collins <collinsd@codeaurora.org>, kgunda@codeaurora.org,
+        Vinod Koul <vkoul@kernel.org>,
+        Courtney Cavin <courtney.cavin@sonymobile.com>,
+        linux-input@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org
+Subject: Re: [PATCH V2 4/4] dt-bindings: input: pm8941-pwrkey: Convert pm8941
+ power key binding to yaml
+In-Reply-To: <20210409185044.GA3946207@robh.at.kernel.org>
+References: <1617881469-31965-1-git-send-email-skakit@codeaurora.org>
+ <1617881469-31965-5-git-send-email-skakit@codeaurora.org>
+ <20210409185044.GA3946207@robh.at.kernel.org>
+Message-ID: <68095bad57e336c70b622c5b8d5870b1@codeaurora.org>
+X-Sender: skakit@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hi Rob,
 
-Thanks for your review.
-
-I have a few comments below.
-
-On Tue, Apr 20 2021, Rob Herring wrote:
-> On Tue, Apr 20, 2021 at 02:21:36PM +0300, Baruch Siach wrote:
->> From: Selvam Sathappan Periakaruppan <speriaka@codeaurora.org>
+On 2021-04-10 00:20, Rob Herring wrote:
+> On Thu, Apr 08, 2021 at 05:01:09PM +0530, satya priya wrote:
+>> Convert qcom pm8941 power key binding from .txt to .yaml format.
 >> 
->> IPQ60xx series of SoCs have one port of PCIe gen 3. Add support for that
->> platform.
->> 
->> The code is based on downstream Codeaurora kernel v5.4. Split out the
->> registers access part from .init into .post_init. Registers are only
->> accessible after phy_power_on().
->> 
->> Signed-off-by: Selvam Sathappan Periakaruppan <speriaka@codeaurora.org>
->> Signed-off-by: Baruch Siach <baruch@tkos.co.il>
->> ---
->>  drivers/pci/controller/dwc/pcie-qcom.c | 279 +++++++++++++++++++++++++
->>  1 file changed, 279 insertions(+)
->> 
->> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
->> index 8a7a300163e5..3e27de744738 100644
->> --- a/drivers/pci/controller/dwc/pcie-qcom.c
->> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
->> @@ -41,6 +41,31 @@
->>  #define L23_CLK_RMV_DIS				BIT(2)
->>  #define L1_CLK_RMV_DIS				BIT(1)
->>  
->> +#define PCIE_ATU_CR1_OUTBOUND_6_GEN3		0xC00
->> +#define PCIE_ATU_CR2_OUTBOUND_6_GEN3		0xC04
->> +#define PCIE_ATU_LOWER_BASE_OUTBOUND_6_GEN3	0xC08
->> +#define PCIE_ATU_UPPER_BASE_OUTBOUND_6_GEN3	0xC0C
->> +#define PCIE_ATU_LIMIT_OUTBOUND_6_GEN3		0xC10
->> +#define PCIE_ATU_LOWER_TARGET_OUTBOUND_6_GEN3	0xC14
->> +#define PCIE_ATU_UPPER_TARGET_OUTBOUND_6_GEN3	0xC18
+>> Signed-off-by: satya priya <skakit@codeaurora.org>
+[...]
 >> +
->> +#define PCIE_ATU_CR1_OUTBOUND_7_GEN3		0xE00
->> +#define PCIE_ATU_CR2_OUTBOUND_7_GEN3		0xE04
->> +#define PCIE_ATU_LOWER_BASE_OUTBOUND_7_GEN3	0xE08
->> +#define PCIE_ATU_UPPER_BASE_OUTBOUND_7_GEN3	0xE0C
->> +#define PCIE_ATU_LIMIT_OUTBOUND_7_GEN3		0xE10
->> +#define PCIE_ATU_LOWER_TARGET_OUTBOUND_7_GEN3	0xE14
->> +#define PCIE_ATU_UPPER_TARGET_OUTBOUND_7_GEN3 	0xE18
->
-> ATU registers are standard DWC registers. Plus upstream now dynamically 
-> detects how many ATU regions there are.
->
->> +#define PCIE20_COMMAND_STATUS			0x04
->> +#define BUS_MASTER_EN				0x7
->> +#define PCIE20_DEVICE_CONTROL2_STATUS2		0x98
->> +#define PCIE_CAP_CPL_TIMEOUT_DISABLE		0x10
->
-> All PCI standard registers.
+>> +properties:
+>> +  compatible:
+>> +    enum:
+>> +      - qcom,pm8941-pwrkey
+>> +      - qcom,pm8941-resin
+>> +      - qcom,pmk8350-pwrkey
+>> +      - qcom,pmk8350-resin
+>> +
+>> +  interrupts:
+> 
+> How many?
+> 
 
-PCIE20_COMMAND_STATUS is indeed the common PCI_COMMAND. I could not find
-anything that matches PCIE20_DEVICE_CONTROL2_STATUS2. Where should I
-look?
+ok, will add maxItems.
 
->
->> +#define PCIE30_GEN3_RELATED_OFF			0x890
->
-> Looks like a DWC port logic register. The define at a minimum goes in 
-> the common code. We probably already have one. Code touching the 
-> register should ideally be there too (hint: look at the other drivers). 
+>> +    description: |
+>> +          Key change interrupt; The format of the specifier is
+>> +          defined by the binding document describing the node's
+>> +          interrupt parent.
+> 
+> The 2nd sentence is every 'interrupts' property. Drop.
+> 
 
-pcie-tegra194.c uses the equivalent GEN3_RELATED_OFF. So I can move the
-definition to a common header. As for the code, I don't know. The tegra
-configuration sequence involves other registers as well.
-
-[snip]
-
->> +static int qcom_pcie_post_init_2_9_0(struct qcom_pcie *pcie)
->> +{
->> +	struct dw_pcie *pci = pcie->pci;
->> +	u16 offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
->> +	u32 val;
->> +	int i;
->> +
->> +	writel(SLV_ADDR_SPACE_SZ,
->> +		pcie->parf + PCIE20_v3_PARF_SLV_ADDR_SPACE_SIZE);
->> +
->> +	val = readl(pcie->parf + PCIE20_PARF_PHY_CTRL);
->> +	val &= ~BIT(0);
->
-> What's BIT(0)?
-
-I have no idea. I have no access to hardware documentation. I'm just
-porting working code from the Codeaurora tree.
-
->
->> +	writel(val, pcie->parf + PCIE20_PARF_PHY_CTRL);
->> +
->> +	writel(0, pcie->parf + PCIE20_PARF_DBI_BASE_ADDR);
->> +
->> +	writel(DEVICE_TYPE_RC, pcie->parf + PCIE20_PARF_DEVICE_TYPE);
->> +	writel(BYPASS | MSTR_AXI_CLK_EN | AHB_CLK_EN,
->> +		pcie->parf + PCIE20_PARF_MHI_CLOCK_RESET_CTRL);
->> +	writel(RXEQ_RGRDLESS_RXTS | GEN3_ZRXDC_NONCOMPL,
->> +		pci->dbi_base + PCIE30_GEN3_RELATED_OFF);
->> +
->> +	writel(MST_WAKEUP_EN | SLV_WAKEUP_EN | MSTR_ACLK_CGC_DIS
->> +		| SLV_ACLK_CGC_DIS | CORE_CLK_CGC_DIS |
->> +		AUX_PWR_DET | L23_CLK_RMV_DIS | L1_CLK_RMV_DIS,
->> +		pcie->parf + PCIE20_PARF_SYS_CTRL);
->> +
->> +	writel(0, pcie->parf + PCIE20_PARF_Q2A_FLUSH);
->> +
->> +	writel(BUS_MASTER_EN, pci->dbi_base + PCIE20_COMMAND_STATUS);
->
-> Pretty sure the DWC core or PCI core does this already.
->
->> +
->> +	writel(DBI_RO_WR_EN, pci->dbi_base + PCIE20_MISC_CONTROL_1_REG);
->> +	writel(PCIE_CAP_LINK1_VAL, pci->dbi_base + offset + PCI_EXP_SLTCAP);
->> +
->> +	/* Configure PCIe link capabilities for ASPM */
->> +	val = readl(pci->dbi_base + offset + PCI_EXP_LNKCAP);
->> +	val &= ~PCI_EXP_LNKCAP_ASPMS;
->> +	writel(val, pci->dbi_base + offset + PCI_EXP_LNKCAP);
->> +
->> +	writel(PCIE_CAP_CPL_TIMEOUT_DISABLE, pci->dbi_base +
->> +		PCIE20_DEVICE_CONTROL2_STATUS2);
->> +
->> +	writel(PCIE_CAP_CURR_DEEMPHASIS | SPEED_GEN3,
->> +			pci->dbi_base + offset + PCI_EXP_DEVCTL2);
->
-> This all looks like stuff that should be in the DWC core code. Maybe we 
-> need an ASPM disable quirk or something? That's probably somewhat 
-> common.
-
-Where in common code should that be? Which part is quirky?
+Will remove the description.
 
 >> +
->> +	for (i = 0;i < 256;i++)
->> +		writel(0x0, pcie->parf + PCIE20_PARF_BDF_TO_SID_TABLE_N
->> +				+ (4 * i));
+>> +  debounce:
+>> +    description: |
+>> +          Time in microseconds that key must be pressed or
+>> +          released for state change interrupt to trigger.
+>> +    $ref: /schemas/types.yaml#/definitions/uint32
 >> +
->
->> +	writel(0x4, pci->atu_base + PCIE_ATU_CR1_OUTBOUND_6_GEN3);
->> +	writel(0x90000000, pci->atu_base + PCIE_ATU_CR2_OUTBOUND_6_GEN3);
->> +	writel(0x0, pci->atu_base + PCIE_ATU_LOWER_BASE_OUTBOUND_6_GEN3);
->> +	writel(0x0, pci->atu_base + PCIE_ATU_UPPER_BASE_OUTBOUND_6_GEN3);
->> +	writel(0x00107FFFF, pci->atu_base + PCIE_ATU_LIMIT_OUTBOUND_6_GEN3);
->> +	writel(0x0, pci->atu_base + PCIE_ATU_LOWER_TARGET_OUTBOUND_6_GEN3);
->> +	writel(0x0, pci->atu_base + PCIE_ATU_UPPER_TARGET_OUTBOUND_6_GEN3);
->> +	writel(0x5, pci->atu_base + PCIE_ATU_CR1_OUTBOUND_7_GEN3);
->> +	writel(0x90000000, pci->atu_base + PCIE_ATU_CR2_OUTBOUND_7_GEN3);
->> +	writel(0x200000, pci->atu_base + PCIE_ATU_LOWER_BASE_OUTBOUND_7_GEN3);
->> +	writel(0x0, pci->atu_base + PCIE_ATU_UPPER_BASE_OUTBOUND_7_GEN3);
->> +	writel(0x7FFFFF, pci->atu_base + PCIE_ATU_LIMIT_OUTBOUND_7_GEN3);
->> +	writel(0x0, pci->atu_base + PCIE_ATU_LOWER_TARGET_OUTBOUND_7_GEN3);
->> +	writel(0x0, pci->atu_base + PCIE_ATU_UPPER_TARGET_OUTBOUND_7_GEN3);
->
-> This should all be coming from 'ranges' in the DT. If not, why not?
-
-I'll try to drop it and see if it works. I see that common code
-overwrites this area anyway.
-
->
-> If you haven't caught the theme yet, everything outside of PARF register 
-> accesses had better have a good explanation why they can't be in common 
-> code.
->
+>> +  bias-pull-up:
+>> +    description: |
+>> +           Presence of this property indicates that the KPDPWR_N
+>> +           pin should be configured for pull up.
+>> +    $ref: /schemas/types.yaml#/definitions/flag
 >> +
->> +	return 0;
->> +}
+>> +  linux,code:
+>> +    description: |
+>> +           The input key-code associated with the power key.
+>> +           Use the linux event codes defined in
+>> +           include/dt-bindings/input/linux-event-codes.h
+>> +           When property is omitted KEY_POWER is assumed.
+>> +    $ref: "input.yaml#"
+> 
+> You've just defined that 'linux,code' is a node with properties defined
+> in input.yaml. Need to move this up to the top level.
+> 
+
+allOf:
+   $ref: "input.yaml#"
+That means I should add like this at the beginning? please correct me if 
+wrong.
+
 >> +
->>  static int qcom_pcie_link_up(struct dw_pcie *pci)
->>  {
->>  	u16 offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
->> @@ -1456,6 +1720,15 @@ static const struct qcom_pcie_ops ops_1_9_0 = {
->>  	.config_sid = qcom_pcie_config_sid_sm8250,
->>  };
->>  
->> +/* Qcom IP rev.: 2.9.0  Synopsys IP rev.: 5.00a */
->> +static const struct qcom_pcie_ops ops_2_9_0 = {
->> +	.get_resources = qcom_pcie_get_resources_2_9_0,
->> +	.init = qcom_pcie_init_2_9_0,
->> +	.post_init = qcom_pcie_post_init_2_9_0,
->> +	.deinit = qcom_pcie_deinit_2_9_0,
->> +	.ltssm_enable = qcom_pcie_2_3_2_ltssm_enable,
->> +};
+>> +required:
+>> +  - compatible
+>> +  - interrupts
 >> +
->>  static const struct dw_pcie_ops dw_pcie_ops = {
->>  	.link_up = qcom_pcie_link_up,
->>  	.start_link = qcom_pcie_start_link,
->> @@ -1508,6 +1781,11 @@ static int qcom_pcie_probe(struct platform_device *pdev)
->>  		goto err_pm_runtime_put;
->>  	}
->>  
->> +	/* We need ATU for .post_init */
->> +	pci->atu_base = devm_platform_ioremap_resource_byname(pdev, "atu");
->
-> The DWC core handles this now.
+>> +additionalProperties: false
+[...]
 
-With ATU code in .post_init gone, we can remove this as well.
-
-baruch
-
--- 
-                                                     ~. .~   Tk Open Systems
-=}------------------------------------------------ooO--U--Ooo------------{=
-   - baruch@tkos.co.il - tel: +972.52.368.4656, http://www.tkos.co.il -
+Thanks,
+Satya Priya
