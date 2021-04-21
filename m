@@ -2,158 +2,155 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4D2FD367105
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Apr 2021 19:12:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 72EFE367145
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Apr 2021 19:26:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241719AbhDURMq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Apr 2021 13:12:46 -0400
-Received: from mail-oi1-f182.google.com ([209.85.167.182]:39636 "EHLO
-        mail-oi1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237498AbhDURMp (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 21 Apr 2021 13:12:45 -0400
-Received: by mail-oi1-f182.google.com with SMTP id i81so43109173oif.6;
-        Wed, 21 Apr 2021 10:12:12 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=bMd7N0rt3H2tWJcdwavdRNyVrQYmCrkPGZcBKF39zwI=;
-        b=l+JAxaGJdKRjIQeOKyetlQ/bup7k/1Gjcqmb3YtymN06Y+jL0t00Z2C6keudDhu14n
-         PHeplDEH0f8V8zx6aSIpzKkWnuD+98Sejg7byAD77zyx8g/bVyw7YUAJgyzKlTzG4L9M
-         Wn6COwtePyCsqlynHnfa8Y5ayqfZSdEq+XCz/YDx2pvA6MwxXtQYSS2Io0OBHZETYMGA
-         /TDup3cSADLPfnH7RBTaDszyOxdjrQ2owU8W495qqv6oETKKKYmZ1VCMKa54U3kMrn4C
-         yVUIc6enc1PEfDBVnEIPBecMreqpTSt8sC2J2Y/e7eLCeTIIdiGZeQAFB+aDZNMj5ZxN
-         TENg==
-X-Gm-Message-State: AOAM533IB6BToUqkIpnsMI3SGXXn4X2NSYqmtg0ZPPkIYkT8PQH6NIKN
-        HnndTucFWqeoQopdQn003w==
-X-Google-Smtp-Source: ABdhPJzi7CH4Rf+w3pIPiptNJi5mE9r2r/RXFC6iOAlcbnBfpnwUuNkHLSA6+1IsJ8DdgN04duoFyQ==
-X-Received: by 2002:aca:eb55:: with SMTP id j82mr7100835oih.93.1619025131673;
-        Wed, 21 Apr 2021 10:12:11 -0700 (PDT)
-Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id g84sm605470oia.45.2021.04.21.10.12.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Apr 2021 10:12:10 -0700 (PDT)
-Received: (nullmailer pid 1308964 invoked by uid 1000);
-        Wed, 21 Apr 2021 17:12:09 -0000
-Date:   Wed, 21 Apr 2021 12:12:09 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
-Cc:     marcel@holtmann.org, johan.hedberg@gmail.com,
-        devicetree@vger.kernel.org, mka@chromium.org,
-        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        hemantg@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        bgodavar@codeaurora.org, rjliao@codeaurora.org,
-        hbandi@codeaurora.org, abhishekpandit@chromium.org
-Subject: Re: [PATCH v2 3/3] dt-bindings: net: bluetooth: Add device tree
- bindings for QTI chip wcn6750
-Message-ID: <20210421171209.GA1307554@robh.at.kernel.org>
-References: <1618936010-16579-1-git-send-email-gubbaven@codeaurora.org>
- <1618936010-16579-4-git-send-email-gubbaven@codeaurora.org>
+        id S240330AbhDUR1B (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 21 Apr 2021 13:27:01 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:16422 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S235712AbhDUR1B (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 21 Apr 2021 13:27:01 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1619025988; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=bUrNF799xx1oKXdWzhByA5YNjTKF+oLeMXDyY+4kcb0=;
+ b=k659zLFBli6XiAZuxkzH3+oWv8P/IOC90t+NpXRIwMitORJfNqvrShVY8ghl6fzmnTz0G+GE
+ BuWNzKbtur1x/oj9afcglYf10ilGoobTYzs6mAsShZLmjmoC/1QNrYrPz+Bol/W8TtNJ7bPG
+ fVN1jEMgENI4F6CmGfgr8kkQ3Ds=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
+ 6080603efebcffa80fbed012 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 21 Apr 2021 17:26:22
+ GMT
+Sender: khsieh=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id D41C9C43460; Wed, 21 Apr 2021 17:26:22 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: khsieh)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id D9061C433F1;
+        Wed, 21 Apr 2021 17:26:21 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1618936010-16579-4-git-send-email-gubbaven@codeaurora.org>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Wed, 21 Apr 2021 10:26:21 -0700
+From:   khsieh@codeaurora.org
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     robdclark@gmail.com, sean@poorly.run, abhinavk@codeaurora.org,
+        aravindh@codeaurora.org, airlied@linux.ie, daniel@ffwll.ch,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/2] drm/msm/dp: service only one irq_hpd if there are
+ multiple irq_hpd pending
+In-Reply-To: <161895606268.46595.2841353121480638642@swboyd.mtv.corp.google.com>
+References: <1618604877-28297-1-git-send-email-khsieh@codeaurora.org>
+ <161895606268.46595.2841353121480638642@swboyd.mtv.corp.google.com>
+Message-ID: <e3c3ef96ac507da6f138106f70c78ed2@codeaurora.org>
+X-Sender: khsieh@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Apr 20, 2021 at 09:56:50PM +0530, Venkata Lakshmi Narayana Gubba wrote:
-> This patch enables regulators and gpios for the Qualcomm Bluetooth wcn6750
-> controller.
+On 2021-04-20 15:01, Stephen Boyd wrote:
+> Quoting Kuogee Hsieh (2021-04-16 13:27:57)
+>> Some dongle may generate more than one irq_hpd events in a short 
+>> period of
+>> time. This patch will treat those irq_hpd events as single one and 
+>> service
+>> only one irq_hpd event.
 > 
-> Signed-off-by: Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
-> ---
->  .../bindings/net/qualcomm-bluetooth.yaml           | 54 +++++++++++++++++++++-
->  1 file changed, 53 insertions(+), 1 deletion(-)
+> Why is it bad to get multiple irq_hpd events in a short period of time?
+> Please tell us here in the commit text.
 > 
-> diff --git a/Documentation/devicetree/bindings/net/qualcomm-bluetooth.yaml b/Documentation/devicetree/bindings/net/qualcomm-bluetooth.yaml
-> index 55cd995..1ceb02b 100644
-> --- a/Documentation/devicetree/bindings/net/qualcomm-bluetooth.yaml
-> +++ b/Documentation/devicetree/bindings/net/qualcomm-bluetooth.yaml
-> @@ -21,11 +21,17 @@ properties:
->        - qcom,wcn3990-bt
->        - qcom,wcn3991-bt
->        - qcom,wcn3998-bt
-> -      - qcom,qca6390-bt      
-> +      - qcom,qca6390-bt
-> +      - qcom,wcn6750-bt
->  
->    enable-gpios:
->      maxItems: 1
->      description: gpio specifier used to enable chip
-> +
-> +  swctrl-gpios:
-> +    maxItems: 1
-> +    description: gpio specifier is used to find status
-> +                 of clock supply to SoC
->     
->    clocks:
->      maxItems: 1
-> @@ -43,6 +49,30 @@ properties:
->    vddch0-supply:
->      description: VDD_CH0 supply regulator handle
->  
-> +  vddaon-supply:
-> +    description: VDD_AON supply regulator handle
-> +
-> +  vddbtcxmx-supply:
-> +    description: VDD_BT_CXMX supply regualtor handle
-
-typo
-
-> +
-> +  vddrfacmn-supply:
-> +    description: VDD_RFA_CMN supply regulator handle
-> +
-> +  vddrfa0p8-supply:
-> +    description: VDD_RFA_0P8 suppply regulator handle
-> +
-> +  vddrfa1p7-supply:
-> +    description: VDD_RFA_1P7 supply regulator handle
-> +
-> +  vddrfa1p2-supply:
-> +    description: VDD_RFA_1P2 supply regulator handle
-> +
-> +  vddrfa2p2-supply:
-> +    description: VDD_RFA_2P2 supply regulator handle
-> +
-> +  vddasd-supply:
-> +    description: VDD_ASD supply regulator handle
-> +
->    max-speed: 
->      description: see Documentation/devicetree/bindings/serial/serial.yaml
->  
-> @@ -85,3 +115,25 @@ examples:
->              firmware-name = "crnv21.bin";		
->          };
->      };
-> +  - |
-> +    uart {
-
-serial {
-
-> +
-> +        bluetooth {
-> +            compatible = "qcom,wcn6750-bt";
-> +            pinctrl-names = "default";
-> +            pinctrl-0 = <&bt_en_default>;
-> +            enable-gpios = <&tlmm 85 GPIO_ACTIVE_HIGH>;
-> +            swctrl-gpios = <&tlmm 86 GPIO_ACTIVE_HIGH>;
-> +            vddio-supply = <&vreg_l19b_1p8>;
-> +            vddaon-supply = <&vreg_s7b_0p9>;
-> +            vddbtcxmx-supply = <&vreg_s7b_0p9>;
-> +            vddrfacmn-supply = <&vreg_s7b_0p9>;
-> +            vddrfa0p8-supply = <&vreg_s7b_0p9>;
-> +            vddrfa1p7-supply = <&vreg_s1b_1p8>;
-> +            vddrfa1p2-supply = <&vreg_s8b_1p2>;
-> +            vddrfa2p2-supply = <&vreg_s1c_2p2>;
-> +            vddasd-supply = <&vreg_l11c_2p8>;
-> +            max-speed = <3200000>;
-> +            firmware-name = "msnv11.bin";
-> +        };
-> +    };
-> -- 
-> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
-> of Code Aurora Forum, hosted by The Linux Foundation
+>> 
+>> Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
+>> ---
+>>  drivers/gpu/drm/msm/dp/dp_display.c | 9 +++++++++
+>>  1 file changed, 9 insertions(+)
+>> 
+>> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c 
+>> b/drivers/gpu/drm/msm/dp/dp_display.c
+>> index 5a39da6..0a7d383 100644
+>> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+>> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+>> @@ -707,6 +707,9 @@ static int dp_irq_hpd_handle(struct 
+>> dp_display_private *dp, u32 data)
+>>                 return 0;
+>>         }
+>> 
+>> +       /* only handle first irq_hpd in case of multiple irs_hpd 
+>> pending */
+>> +       dp_del_event(dp, EV_IRQ_HPD_INT);
+>> +
+>>         ret = dp_display_usbpd_attention_cb(&dp->pdev->dev);
+>>         if (ret == -ECONNRESET) { /* cable unplugged */
+>>                 dp->core_initialized = false;
+>> @@ -1300,6 +1303,9 @@ static int dp_pm_suspend(struct device *dev)
+>>         /* host_init will be called at pm_resume */
+>>         dp->core_initialized = false;
+>> 
+>> +       /* system suspended, delete pending irq_hdps */
+>> +       dp_del_event(dp, EV_IRQ_HPD_INT);
 > 
+> What happens if I suspend my device and when this function is running I
+> toggle my monitor to use the HDMI input that is connected instead of 
+> some
+> other input, maybe the second HDMI input? Wouldn't that generate an HPD
+> interrupt to grab the attention of this device?
+no,
+At this time display is off. this mean dp controller is off and mainlink 
+has teared down.
+it will start with plug in interrupt to bring dp controller up and start 
+link training.
+irq_hpd can be generated only panel is at run time of operation mode and 
+need attention from host.
+If host is shutting down, then no need to service pending irq_hpd.
+
+> 
+>> +
+>>         mutex_unlock(&dp->event_mutex);
+>> 
+>>         return 0;
+>> @@ -1496,6 +1502,9 @@ int msm_dp_display_disable(struct msm_dp *dp, 
+>> struct drm_encoder *encoder)
+>>         /* stop sentinel checking */
+>>         dp_del_event(dp_display, EV_DISCONNECT_PENDING_TIMEOUT);
+>> 
+>> +       /* link is down, delete pending irq_hdps */
+>> +       dp_del_event(dp_display, EV_IRQ_HPD_INT);
+>> +
+> 
+> I'm becoming convinced that the whole kthread design and event queue is
+> broken. These sorts of patches are working around the larger problem
+> that the kthread is running independently of the driver and irqs can
+> come in at any time but the event queue is not checked from the irq
+> handler to debounce the irq event. Is the event queue necessary at all?
+> I wonder if it would be simpler to just use an irq thread and process
+> the hpd signal from there. Then we're guaranteed to not get an irq 
+> again
+> until the irq thread is done processing the event. This would naturally
+> debounce the irq hpd event that way.
+event q just like bottom half of irq handler. it turns irq into event 
+and handle them sequentially.
+irq_hpd is asynchronous event from panel to bring up attention of hsot 
+during run time of operation.
+Here, the dongle is unplugged and main link had teared down so that no 
+need to service pending irq_hpd if any.
+
+
+> 
+>>         dp_display_disable(dp_display, 0);
+>> 
+>>         rc = dp_display_unprepare(dp);
