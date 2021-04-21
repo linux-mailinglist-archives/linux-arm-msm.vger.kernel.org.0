@@ -2,155 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 72EFE367145
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Apr 2021 19:26:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 05E07367181
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Apr 2021 19:39:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240330AbhDUR1B (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Apr 2021 13:27:01 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:16422 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S235712AbhDUR1B (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 21 Apr 2021 13:27:01 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1619025988; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=bUrNF799xx1oKXdWzhByA5YNjTKF+oLeMXDyY+4kcb0=;
- b=k659zLFBli6XiAZuxkzH3+oWv8P/IOC90t+NpXRIwMitORJfNqvrShVY8ghl6fzmnTz0G+GE
- BuWNzKbtur1x/oj9afcglYf10ilGoobTYzs6mAsShZLmjmoC/1QNrYrPz+Bol/W8TtNJ7bPG
- fVN1jEMgENI4F6CmGfgr8kkQ3Ds=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
- 6080603efebcffa80fbed012 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 21 Apr 2021 17:26:22
- GMT
-Sender: khsieh=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id D41C9C43460; Wed, 21 Apr 2021 17:26:22 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: khsieh)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id D9061C433F1;
-        Wed, 21 Apr 2021 17:26:21 +0000 (UTC)
+        id S244812AbhDURka (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 21 Apr 2021 13:40:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43868 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S244754AbhDURk2 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 21 Apr 2021 13:40:28 -0400
+Received: from mail-oo1-xc35.google.com (mail-oo1-xc35.google.com [IPv6:2607:f8b0:4864:20::c35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3137AC06138B
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Apr 2021 10:39:54 -0700 (PDT)
+Received: by mail-oo1-xc35.google.com with SMTP id s1-20020a4ac1010000b02901cfd9170ce2so9370331oop.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Apr 2021 10:39:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=2NIvDL/pnxWG/XSWH6ctMJRwrsiMqVjZJOoDaRoJS8c=;
+        b=gOY34zMKpKy19sMBflS95m2MN3RgmXslX4/+ftWEiEVP1DHf+TSCC3zUfL4ROg23v+
+         9b3/+vRixP/giuz63hBEzXMciraTCQLIP7sMBwZc+bR/LBhqKDMNQiElzOgwKRSsnHNY
+         pHBIt8Jm4t4VOz9NC4qeX8ALH7ClGgjZFNpxCj0ykypTE4fuRxx+3DAKHmUIJ2DZHPjh
+         a9IeSzoKfhGotdS/TkbrXIQzwMPmfRn4jHDlOAy0rt+AdslndDxB6DvTjWHd0HzekQ77
+         zZh5bUv/SUye4oycQS0cgYTkQs3n+ZRKtvoVtgRZHmmRfoImqqF5XjCYAczktkeYD5HP
+         cjrg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=2NIvDL/pnxWG/XSWH6ctMJRwrsiMqVjZJOoDaRoJS8c=;
+        b=dHIy68ZaVvB/PlHZ+hv/n9C7GrTshn3fS0C+CbXDKISEWG/Gd2jsG8AZJO7TKRhgmS
+         iMcIiiSWpKt+8E4An9Ek9nzhdMnxGDbrSOgTkcenLVPnvXtHy+wVnpZgi/Kx/2wLm4lN
+         sYULitS+RojzSbKSbcpkcsb5saXadagTrlo9hlr8BHf57y1mRMO0QTtzlIzln7m7j66z
+         t+VYxVNI+gQNIG8E603FAxuybkzS8giZ80n4i/vbJS9B1o4D0GhJfHbwTGVZSUQe9fH4
+         a/xF0/knIYqC4j7bPqU0ksc8vyTeDRi+rsQQWcwii5pxoBTdb4X8qjQSOADcbXif/OFV
+         dX1Q==
+X-Gm-Message-State: AOAM533dOfW8Ge4lO1jEmCty+5Q2mA264Dtl4pg+RrN8hnn+dx/fviaJ
+        asqOF/V1ZfkeHjYeC0tLVsp85w==
+X-Google-Smtp-Source: ABdhPJx8BGLlHmozMfXwtB99k0C+w4yPut6QtEKNm6JL+RYogkPpgrqX1bIqExM1XjlhrOA9ZvY7nQ==
+X-Received: by 2002:a4a:dc11:: with SMTP id p17mr21288861oov.50.1619026793532;
+        Wed, 21 Apr 2021 10:39:53 -0700 (PDT)
+Received: from localhost.localdomain (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id q130sm595947oif.40.2021.04.21.10.39.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 21 Apr 2021 10:39:53 -0700 (PDT)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Manivannan Sadhasivam <mani@kernel.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] net: qrtr: Avoid potential use after free in MHI send
+Date:   Wed, 21 Apr 2021 10:40:07 -0700
+Message-Id: <20210421174007.2954194-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.29.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Wed, 21 Apr 2021 10:26:21 -0700
-From:   khsieh@codeaurora.org
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     robdclark@gmail.com, sean@poorly.run, abhinavk@codeaurora.org,
-        aravindh@codeaurora.org, airlied@linux.ie, daniel@ffwll.ch,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/2] drm/msm/dp: service only one irq_hpd if there are
- multiple irq_hpd pending
-In-Reply-To: <161895606268.46595.2841353121480638642@swboyd.mtv.corp.google.com>
-References: <1618604877-28297-1-git-send-email-khsieh@codeaurora.org>
- <161895606268.46595.2841353121480638642@swboyd.mtv.corp.google.com>
-Message-ID: <e3c3ef96ac507da6f138106f70c78ed2@codeaurora.org>
-X-Sender: khsieh@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-04-20 15:01, Stephen Boyd wrote:
-> Quoting Kuogee Hsieh (2021-04-16 13:27:57)
->> Some dongle may generate more than one irq_hpd events in a short 
->> period of
->> time. This patch will treat those irq_hpd events as single one and 
->> service
->> only one irq_hpd event.
-> 
-> Why is it bad to get multiple irq_hpd events in a short period of time?
-> Please tell us here in the commit text.
-> 
->> 
->> Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
->> ---
->>  drivers/gpu/drm/msm/dp/dp_display.c | 9 +++++++++
->>  1 file changed, 9 insertions(+)
->> 
->> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c 
->> b/drivers/gpu/drm/msm/dp/dp_display.c
->> index 5a39da6..0a7d383 100644
->> --- a/drivers/gpu/drm/msm/dp/dp_display.c
->> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
->> @@ -707,6 +707,9 @@ static int dp_irq_hpd_handle(struct 
->> dp_display_private *dp, u32 data)
->>                 return 0;
->>         }
->> 
->> +       /* only handle first irq_hpd in case of multiple irs_hpd 
->> pending */
->> +       dp_del_event(dp, EV_IRQ_HPD_INT);
->> +
->>         ret = dp_display_usbpd_attention_cb(&dp->pdev->dev);
->>         if (ret == -ECONNRESET) { /* cable unplugged */
->>                 dp->core_initialized = false;
->> @@ -1300,6 +1303,9 @@ static int dp_pm_suspend(struct device *dev)
->>         /* host_init will be called at pm_resume */
->>         dp->core_initialized = false;
->> 
->> +       /* system suspended, delete pending irq_hdps */
->> +       dp_del_event(dp, EV_IRQ_HPD_INT);
-> 
-> What happens if I suspend my device and when this function is running I
-> toggle my monitor to use the HDMI input that is connected instead of 
-> some
-> other input, maybe the second HDMI input? Wouldn't that generate an HPD
-> interrupt to grab the attention of this device?
-no,
-At this time display is off. this mean dp controller is off and mainlink 
-has teared down.
-it will start with plug in interrupt to bring dp controller up and start 
-link training.
-irq_hpd can be generated only panel is at run time of operation mode and 
-need attention from host.
-If host is shutting down, then no need to service pending irq_hpd.
+It is possible that the MHI ul_callback will be invoked immediately
+following the queueing of the skb for transmission, leading to the
+callback decrementing the refcount of the associated sk and freeing the
+skb.
 
-> 
->> +
->>         mutex_unlock(&dp->event_mutex);
->> 
->>         return 0;
->> @@ -1496,6 +1502,9 @@ int msm_dp_display_disable(struct msm_dp *dp, 
->> struct drm_encoder *encoder)
->>         /* stop sentinel checking */
->>         dp_del_event(dp_display, EV_DISCONNECT_PENDING_TIMEOUT);
->> 
->> +       /* link is down, delete pending irq_hdps */
->> +       dp_del_event(dp_display, EV_IRQ_HPD_INT);
->> +
-> 
-> I'm becoming convinced that the whole kthread design and event queue is
-> broken. These sorts of patches are working around the larger problem
-> that the kthread is running independently of the driver and irqs can
-> come in at any time but the event queue is not checked from the irq
-> handler to debounce the irq event. Is the event queue necessary at all?
-> I wonder if it would be simpler to just use an irq thread and process
-> the hpd signal from there. Then we're guaranteed to not get an irq 
-> again
-> until the irq thread is done processing the event. This would naturally
-> debounce the irq hpd event that way.
-event q just like bottom half of irq handler. it turns irq into event 
-and handle them sequentially.
-irq_hpd is asynchronous event from panel to bring up attention of hsot 
-during run time of operation.
-Here, the dongle is unplugged and main link had teared down so that no 
-need to service pending irq_hpd if any.
+As such the dereference of skb and the increment of the sk refcount must
+happen before the skb is queued, to avoid the skb to be used after free
+and potentially the sk to drop its last refcount..
 
+Fixes: 6e728f321393 ("net: qrtr: Add MHI transport layer")
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+---
+ net/qrtr/mhi.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-> 
->>         dp_display_disable(dp_display, 0);
->> 
->>         rc = dp_display_unprepare(dp);
+diff --git a/net/qrtr/mhi.c b/net/qrtr/mhi.c
+index 2bf2b1943e61..fa611678af05 100644
+--- a/net/qrtr/mhi.c
++++ b/net/qrtr/mhi.c
+@@ -50,6 +50,9 @@ static int qcom_mhi_qrtr_send(struct qrtr_endpoint *ep, struct sk_buff *skb)
+ 	struct qrtr_mhi_dev *qdev = container_of(ep, struct qrtr_mhi_dev, ep);
+ 	int rc;
+ 
++	if (skb->sk)
++		sock_hold(skb->sk);
++
+ 	rc = skb_linearize(skb);
+ 	if (rc)
+ 		goto free_skb;
+@@ -59,12 +62,11 @@ static int qcom_mhi_qrtr_send(struct qrtr_endpoint *ep, struct sk_buff *skb)
+ 	if (rc)
+ 		goto free_skb;
+ 
+-	if (skb->sk)
+-		sock_hold(skb->sk);
+-
+ 	return rc;
+ 
+ free_skb:
++	if (skb->sk)
++		sock_put(skb->sk);
+ 	kfree_skb(skb);
+ 
+ 	return rc;
+-- 
+2.29.2
+
