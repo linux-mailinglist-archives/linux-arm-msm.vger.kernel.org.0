@@ -2,202 +2,267 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CA6EA366289
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Apr 2021 01:39:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C21AC36632F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Apr 2021 02:50:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234440AbhDTXj0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Apr 2021 19:39:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60014 "EHLO
+        id S234424AbhDUAvP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Apr 2021 20:51:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47356 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234438AbhDTXjZ (ORCPT
+        with ESMTP id S234276AbhDUAvP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Apr 2021 19:39:25 -0400
-Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com [IPv6:2607:f8b0:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A4B8C061763
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Apr 2021 16:38:53 -0700 (PDT)
-Received: by mail-pg1-x52c.google.com with SMTP id p2so12507912pgh.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Apr 2021 16:38:53 -0700 (PDT)
+        Tue, 20 Apr 2021 20:51:15 -0400
+Received: from mail-pg1-x52b.google.com (mail-pg1-x52b.google.com [IPv6:2607:f8b0:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F051DC06138A
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Apr 2021 17:50:42 -0700 (PDT)
+Received: by mail-pg1-x52b.google.com with SMTP id b17so28116526pgh.7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Apr 2021 17:50:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=rUEcOAL+JdYx7iw/rsaYqBg6P/fDtNoMJwsAvdMr4k8=;
-        b=ZtpSHHCa3/J8Q01BlM9ud01JiqjG6VpT4jrLH7nfoh0ZpIi8KROK+UzYFdOnAHv64Y
-         CPOB9aO3tqTwU+EzkIGARznb+Fck3IRcGC/40Qx1xaqQSg93VSjQwgwG6CVyaSvLvI7Q
-         I9dscI7B21TE96Aa8oufyl1VbcaTs4vfL2n5k=
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=8YLOYTL9uFfTlsUBTt4KtFnsgrD3qMKDwpIsIQc1OzQ=;
+        b=GTHAWJyYH+TVJoASsZJVT+rFImVeTfbBdAU0ib1vxL3BQwDL7OWyZZRY+dVfY+CbpJ
+         teVIlUg3keh/0L70wBaEjFOe9F0jWuGp5A/2LL2L+QU1LNxy3sEJmhmPc3v7dSxnSngQ
+         I87A7TZRRHK9Zj4RcZGYcgJgbC3ctsHHRvmxI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=rUEcOAL+JdYx7iw/rsaYqBg6P/fDtNoMJwsAvdMr4k8=;
-        b=s4lOvJ7StbMa2LA1GB3dZvGJeoJ8NFeGBDeddJvsF0xaIIX+FDJzWgAVLOScIN6ZFJ
-         g5ZeXmc6qZYK/3OIhHJu9T9jI0Dlhr6RmrbvyWoyZYIulvmo9DFSWbDg+PBrJneb2o3Z
-         Lo21RTAxnWHKylEAN1NeAeX9t09/gOsMBwSr/UOvPMpGGFGzKi3nVsgldx+5ZtNGNavl
-         hbZTc5sYWko+zFQbsFSn2BCdmX6C/K39v4DxsgakJB6bWmYPnZ5cJC8fkYZJae01R9Ep
-         By41ia9/xEl67DCQr6P4XQf5dtOZt+nqLFBGCfo5gjK6p/zRVoZD1zCksYrr5NwEd+zi
-         Lgog==
-X-Gm-Message-State: AOAM532w4MMNTbRwM3lcorl3VLnXhIckDKiFoiAlXiHxpqxxm3mqsqZs
-        Zs1YBtYoUBL+MFETZPeqi3t6aA==
-X-Google-Smtp-Source: ABdhPJwaJs4WZDLFNWzbOxVCZx4k6HAurBhLbnuarykRH3zTa6CzwurH2yeUCrWudlUlo0Eph/iupQ==
-X-Received: by 2002:a17:90a:9509:: with SMTP id t9mr7754936pjo.3.1618961932968;
-        Tue, 20 Apr 2021 16:38:52 -0700 (PDT)
-Received: from chromium.org ([2620:15c:202:201:bf8b:4b8b:2315:3719])
-        by smtp.gmail.com with ESMTPSA id r3sm111567pfl.159.2021.04.20.16.38.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Apr 2021 16:38:52 -0700 (PDT)
-Content-Type: text/plain; charset="utf-8"
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=8YLOYTL9uFfTlsUBTt4KtFnsgrD3qMKDwpIsIQc1OzQ=;
+        b=g5/f7TBXvzJG0TglepbNP0DNdhE0v8ZMJjXwGQivVhIlZnqAq91nFcdgHhBF1PYe1w
+         cOtR63DC2XlcGv4ANJCKyjSFRgHhydoOX5toc7VcgaQ/M3UNN6nL8CIm/ayNCfgFPDnF
+         Hg74f6NfjhBNx+c0tFMRcNLkoEuJIDxTqczdroPFWUglTgF4Z+a1lvCMls1v60rXsC+V
+         DqeUNnw03s3+skCx3zVGjRTwP9+vfOTPIQQgcDIhUdt6ONtNcNOymEPlAW3+LyCfyjKw
+         C7O7HVaMlLYIRQ99SktDVwOBlsQuMEG2ZNDp9qpiQKgJ686QEj79ZPJiL+P3kyHj4If8
+         dGBQ==
+X-Gm-Message-State: AOAM532ZGr8b4ljDMaS10O5RBWPYlfr7EQVIjhmNRtIEHAfWTERibbik
+        LgVM4XIDLluc058QVirbGPo33g==
+X-Google-Smtp-Source: ABdhPJyqsXFJPEW53dgWZWzIl1MKNJhSGg4Hv/Awq+xELaEHiZszta5Vzv92f/tFkQR8imMYCtKe3w==
+X-Received: by 2002:a63:1a47:: with SMTP id a7mr19505511pgm.437.1618966242338;
+        Tue, 20 Apr 2021 17:50:42 -0700 (PDT)
+Received: from localhost ([2620:15c:202:201:b1f0:79e0:c1ca:fd1])
+        by smtp.gmail.com with UTF8SMTPSA id x38sm183812pfu.22.2021.04.20.17.50.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 20 Apr 2021 17:50:41 -0700 (PDT)
+Date:   Tue, 20 Apr 2021 17:50:40 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
+Cc:     marcel@holtmann.org, johan.hedberg@gmail.com,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-bluetooth@vger.kernel.org, hemantg@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
+        rjliao@codeaurora.org, hbandi@codeaurora.org,
+        abhishekpandit@chromium.org
+Subject: Re: [PATCH v2 2/3] dt-bindings: net: bluetooth: Convert to DT schema
+Message-ID: <YH924M62b7PDd/r6@google.com>
+References: <1618936010-16579-1-git-send-email-gubbaven@codeaurora.org>
+ <1618936010-16579-3-git-send-email-gubbaven@codeaurora.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <1618594731-556-1-git-send-email-khsieh@codeaurora.org>
-References: <1618594731-556-1-git-send-email-khsieh@codeaurora.org>
-Subject: Re: [PATCH v3 3/3] drm/msm/dp: check main link status before start aux read
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     abhinavk@codeaurora.org, aravindh@codeaurora.org,
-        khsieh@codeaurora.org, airlied@linux.ie, daniel@ffwll.ch,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-To:     Kuogee Hsieh <khsieh@codeaurora.org>, robdclark@gmail.com,
-        sean@poorly.run
-Date:   Tue, 20 Apr 2021 16:38:50 -0700
-Message-ID: <161896193053.46595.7590816467281538002@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1618936010-16579-3-git-send-email-gubbaven@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Kuogee Hsieh (2021-04-16 10:38:51)
-> Maybe when the cable is disconnected the DP phy should be shutdown and
-> some bit in the phy could effectively "cut off" the aux channel and then
-> NAKs would start coming through here in the DP controller I/O register
-> space. This patch have DP aux channel read/write to return NAK immediately
-> if DP controller connection status is in unplugged state.
->=20
-> Changes in V3:
-> -- check core_initialized before handle irq_hpd
-> Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
+On Tue, Apr 20, 2021 at 09:56:49PM +0530, Venkata Lakshmi Narayana Gubba wrote:
+
+> Subject: dt-bindings: net: bluetooth: Convert to DT schema
+
+This doesn't convert the generic binding or all bindings to DT schema
+as the subject suggests, but the Qualcomm BT binding.
+
+>
+> Converted Qualcomm Bluetooth binidings to DT schema.
+> 
+> Signed-off-by: Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
 > ---
->  drivers/gpu/drm/msm/dp/dp_aux.c     |  5 +++++
->  drivers/gpu/drm/msm/dp/dp_display.c | 14 ++++++++++----
->  drivers/gpu/drm/msm/dp/dp_link.c    | 20 +++++++++++++++-----
->  3 files changed, 30 insertions(+), 9 deletions(-)
->=20
-> diff --git a/drivers/gpu/drm/msm/dp/dp_aux.c b/drivers/gpu/drm/msm/dp/dp_=
-aux.c
-> index 7c22bfe..fae3806 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_aux.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_aux.c
-> @@ -343,6 +343,11 @@ static ssize_t dp_aux_transfer(struct drm_dp_aux *dp=
-_aux,
-> =20
->         mutex_lock(&aux->mutex);
-> =20
-> +       if (!dp_catalog_link_is_connected(aux->catalog)) {
-> +               ret =3D -ETIMEDOUT;
-> +               goto unlock_exit;
-> +       }
+>  .../devicetree/bindings/net/qualcomm-bluetooth.txt | 69 -----------------
+>  .../bindings/net/qualcomm-bluetooth.yaml           | 87 ++++++++++++++++++++++
+>  2 files changed, 87 insertions(+), 69 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/net/qualcomm-bluetooth.txt
+>  create mode 100644 Documentation/devicetree/bindings/net/qualcomm-bluetooth.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/net/qualcomm-bluetooth.txt b/Documentation/devicetree/bindings/net/qualcomm-bluetooth.txt
+> deleted file mode 100644
+> index 709ca6d..0000000
+> --- a/Documentation/devicetree/bindings/net/qualcomm-bluetooth.txt
+> +++ /dev/null
+> @@ -1,69 +0,0 @@
+> -Qualcomm Bluetooth Chips
+> ----------------------
+> -
+> -This documents the binding structure and common properties for serial
+> -attached Qualcomm devices.
+> -
+> -Serial attached Qualcomm devices shall be a child node of the host UART
+> -device the slave device is attached to.
+> -
+> -Required properties:
+> - - compatible: should contain one of the following:
+> -   * "qcom,qca6174-bt"
+> -   * "qcom,qca9377-bt"
+> -   * "qcom,wcn3990-bt"
+> -   * "qcom,wcn3991-bt"
+> -   * "qcom,wcn3998-bt"
+> -   * "qcom,qca6390-bt"
+> -
+> -Optional properties for compatible string qcom,qca6174-bt:
+> -
+> - - enable-gpios: gpio specifier used to enable chip
+> - - clocks: clock provided to the controller (SUSCLK_32KHZ)
+> - - firmware-name: specify the name of nvm firmware to load
+> -
+> -Optional properties for compatible string qcom,qca9377-bt:
+> -
+> - - max-speed: see Documentation/devicetree/bindings/serial/serial.yaml
+> -
+> -Required properties for compatible string qcom,wcn399x-bt:
+> -
+> - - vddio-supply: VDD_IO supply regulator handle.
+> - - vddxo-supply: VDD_XO supply regulator handle.
+> - - vddrf-supply: VDD_RF supply regulator handle.
+> - - vddch0-supply: VDD_CH0 supply regulator handle.
+> -
+> -Optional properties for compatible string qcom,wcn399x-bt:
+> -
+> - - max-speed: see Documentation/devicetree/bindings/serial/serial.yaml
+> - - firmware-name: specify the name of nvm firmware to load
+> - - clocks: clock provided to the controller
+> -
+> -Examples:
+> -
+> -serial@7570000 {
+> -	label = "BT-UART";
+> -	status = "okay";
+> -
+> -	bluetooth {
+> -		compatible = "qcom,qca6174-bt";
+> -
+> -		enable-gpios = <&pm8994_gpios 19 GPIO_ACTIVE_HIGH>;
+> -		clocks = <&divclk4>;
+> -		firmware-name = "nvm_00440302.bin";
+> -	};
+> -};
+> -
+> -serial@898000 {
+> -	bluetooth {
+> -		compatible = "qcom,wcn3990-bt";
+> -
+> -		vddio-supply = <&vreg_s4a_1p8>;
+> -		vddxo-supply = <&vreg_l7a_1p8>;
+> -		vddrf-supply = <&vreg_l17a_1p3>;
+> -		vddch0-supply = <&vreg_l25a_3p3>;
+> -		max-speed = <3200000>;
+> -		firmware-name = "crnv21.bin";
+> -		clocks = <&rpmhcc RPMH_RF_CLK2>;
+> -	};
+> -};
+> diff --git a/Documentation/devicetree/bindings/net/qualcomm-bluetooth.yaml b/Documentation/devicetree/bindings/net/qualcomm-bluetooth.yaml
+> new file mode 100644
+> index 0000000..55cd995
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/net/qualcomm-bluetooth.yaml
+> @@ -0,0 +1,87 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/net/qualcomm-bluetooth.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
 > +
-
-This still makes me concerned. Any possibility to not do this and have
-the phy cut the connection off and have this transfer timeout
-immediately?
-
->         aux->native =3D msg->request & (DP_AUX_NATIVE_WRITE & DP_AUX_NATI=
-VE_READ);
-> =20
->         /* Ignore address only message */
-> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp=
-/dp_display.c
-> index 1784e11..db3f45e 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_display.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-> @@ -571,7 +571,7 @@ static int dp_hpd_plug_handle(struct dp_display_priva=
-te *dp, u32 data)
->                 dp->hpd_state =3D ST_DISCONNECTED;
-> =20
->                 if (ret =3D=3D -ECONNRESET) { /* cable unplugged */
-> -                       dp->core_initialized =3D false;
-> +                       DRM_ERROR("dongle unplugged =3D %d\n", ret);
-
-Is this a debug message?
-
->                 }
-> =20
->         } else {
-> @@ -711,9 +711,15 @@ static int dp_irq_hpd_handle(struct dp_display_priva=
-te *dp, u32 data)
->                 return 0;
->         }
-> =20
-> -       ret =3D dp_display_usbpd_attention_cb(&dp->pdev->dev);
-> -       if (ret =3D=3D -ECONNRESET) { /* cable unplugged */
-> -               dp->core_initialized =3D false;
-> +       /*
-> +        * dp core (ahb/aux clks) must be initialized before
-> +        * irq_hpd be handled
-> +        */
-> +       if (dp->core_initialized) {
-> +               ret =3D dp_display_usbpd_attention_cb(&dp->pdev->dev);
-> +               if (ret =3D=3D -ECONNRESET) { /* cable unplugged */
-> +                       DRM_ERROR("dongle unplugged =3D %d\n", ret);
-
-Another debug message?
-
-> +               }
->         }
-> =20
->         mutex_unlock(&dp->event_mutex);
-> diff --git a/drivers/gpu/drm/msm/dp/dp_link.c b/drivers/gpu/drm/msm/dp/dp=
-_link.c
-> index be986da..53ecae6 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_link.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_link.c
-> @@ -737,18 +737,25 @@ static int dp_link_parse_sink_count(struct dp_link =
-*dp_link)
->         return 0;
->  }
-> =20
-> -static void dp_link_parse_sink_status_field(struct dp_link_private *link)
-> +static int dp_link_parse_sink_status_field(struct dp_link_private *link)
->  {
->         int len =3D 0;
-> =20
->         link->prev_sink_count =3D link->dp_link.sink_count;
-> -       dp_link_parse_sink_count(&link->dp_link);
-> +       len =3D dp_link_parse_sink_count(&link->dp_link);
-> +       if (len < 0) {
-> +               DRM_ERROR("DP parse sink count failed\n");
-> +               return len;
-> +       }
-> =20
->         len =3D drm_dp_dpcd_read_link_status(link->aux,
->                 link->link_status);
-> -       if (len < DP_LINK_STATUS_SIZE)
-> +       if (len < DP_LINK_STATUS_SIZE) {
->                 DRM_ERROR("DP link status read failed\n");
-> -       dp_link_parse_request(link);
-> +               return len;
-> +       }
+> +title: Qualcomm Bluetooth Chips
 > +
-> +       return dp_link_parse_request(link);
->  }
-> =20
->  /**
-> @@ -1032,7 +1039,10 @@ int dp_link_process_request(struct dp_link *dp_lin=
-k)
-> =20
->         dp_link_reset_data(link);
-> =20
-> -       dp_link_parse_sink_status_field(link);
-> +       ret =3D dp_link_parse_sink_status_field(link);
-> +       if (ret) {
-> +               return ret;
-> +       }
-> =20
->         if (link->request.test_requested =3D=3D DP_TEST_LINK_EDID_READ) {
->                 dp_link->sink_request |=3D DP_TEST_LINK_EDID_READ;
-> --=20
+> +maintainers:
+> +  - Rob Herring <robh@kernel.org>
+> +  - Marcel Holtmann <marcel@holtmann.org>
+> +
+> +description:
+> +  This binding describes Qualcomm UART-attached bluetooth chips.
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,qca6174-bt
+> +      - qcom,qca9377-bt
+> +      - qcom,wcn3990-bt
+> +      - qcom,wcn3991-bt
+> +      - qcom,wcn3998-bt
+> +      - qcom,qca6390-bt      
 
-Can you split this part off into another patch? It seems to stand on its
-own as it makes the code more robust to transfer errors in the sink
-parsing code.
+delete trailing blanks
+
+> +
+> +  enable-gpios:
+> +    maxItems: 1
+> +    description: gpio specifier used to enable chip
+> +   
+
+delete blanks
+
+> +  clocks:
+> +    maxItems: 1
+> +    description: clock provided to the controller (SUSCLK_32KHZ)
+> +
+> +  vddio-supply:
+> +    description: VDD_IO supply regulator handle
+> +
+> +  vddxo-supply:
+> +    description: VDD_XO supply regulator handle
+> +
+> +  vddrf-supply:
+> +    description: VDD_RF supply regulator handle
+> +
+> +  vddch0-supply:
+> +    description: VDD_CH0 supply regulator handle
+> +
+> +  max-speed: 
+
+delete trailing blank
+
+> +    description: see Documentation/devicetree/bindings/serial/serial.yaml
+> +
+> +  firmware-name:
+> +    description: specify the name of nvm firmware to load
+> +
+> +  local-bd-address:
+> +    description: see Documentation/devicetree/bindings/net/bluetooth.txt
+> +
+> +
+> +required:
+> +  - compatible
+
+it seems you could make the supplies conditionally required based on the
+compatible string. See Documentation/devicetree/bindings/connector/usb-connector.yaml
+for an example
+
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/gpio/gpio.h>
+> +    uart {
+> +        label = "BT-UART";
+> +        status = "okay";
+> +
+> +        bluetooth {
+> +            compatible = "qcom,qca6174-bt";
+> +            enable-gpios = <&pm8994_gpios 19 GPIO_ACTIVE_HIGH>;
+> +            clocks = <&divclk4>;
+> +            firmware-name = "nvm_00440302.bin";
+> +        };
+> +    };
+> +  - |
+> +    uart {
+> +
+> +        bluetooth {
+> +            compatible = "qcom,wcn3990-bt";
+> +            vddio-supply = <&vreg_s4a_1p8>;
+> +            vddxo-supply = <&vreg_l7a_1p8>;
+> +            vddrf-supply = <&vreg_l17a_1p3>;
+> +            vddch0-supply = <&vreg_l25a_3p3>;
+> +            max-speed = <3200000>;
+> +            firmware-name = "crnv21.bin";		
+
+delete trailing blanks
