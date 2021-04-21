@@ -2,222 +2,177 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 118013672C6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Apr 2021 20:45:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 208813672EF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Apr 2021 20:55:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245263AbhDUSqO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Apr 2021 14:46:14 -0400
-Received: from mail.kernel.org ([198.145.29.99]:57276 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S245261AbhDUSqN (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 21 Apr 2021 14:46:13 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 3DF7E6144D;
-        Wed, 21 Apr 2021 18:45:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1619030740;
-        bh=UKjUh24QqYmwHHSQuEySdCcJc2UvAvWPJoLiR3wCGKc=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=URABPCKSQG09ALSpWO9/iywOZvM0Llx/PBU5zWecpkWfgaSZuCQIfHbzBQPm2DZvG
-         UZ9CcDUUu2LviLN1OjO1D+0LPyViI3CgrPUSJuEPuqUsm2I0cH57MQiSCEOb9iNsWJ
-         bR06s9dMbze28GFon41XmlwIh79KKW9i93jloIbAmxkbBZPM3zvn17RcDgXqMraw9I
-         r1dFr5AV/8Qw+vFedr+Y6y+fEm6WCQ1jC2jiv/k0+TmqEDcYgzHQ5ZPHWM+sZ3QqFM
-         uG9t7sx9dez/I4XgiYON2ooCYT9kg3FkWwxE+pjRk2RcVAypv3CS9R2eo5qLfEY4N/
-         NygmfvynIDwpw==
-Received: by mail-ej1-f52.google.com with SMTP id x12so44222834ejc.1;
-        Wed, 21 Apr 2021 11:45:40 -0700 (PDT)
-X-Gm-Message-State: AOAM530FrYLa5kmmKT0U/QSbq3luJUHg+eTMyU/YMH3qcfEpiMXKhcID
-        /iNvUXV3zpO3teMuMocuc5NRrIOSMnBtWhWvxQ==
-X-Google-Smtp-Source: ABdhPJxGEGQ5XZOIN12a5/tf2rH4PRymOB2OCJQlg4vuUdHH5WJ4aW20jpXWygeIzqi8xAkH01TNnrppfzRQmPD+E3c=
-X-Received: by 2002:a17:906:1984:: with SMTP id g4mr33699798ejd.525.1619030738569;
- Wed, 21 Apr 2021 11:45:38 -0700 (PDT)
+        id S245317AbhDUS4S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 21 Apr 2021 14:56:18 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:22332 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235329AbhDUS4R (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 21 Apr 2021 14:56:17 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1619031344; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=y7qK94xUWLx6N7TlAKwTp7gAjHIxqzroU6QKac5T3Ag=;
+ b=Y9Wscw0A2Ms9jrQw24NTAjMQ/V2bUYd67e4cnyFDUxtBeTFd+97g4mwEKtwnTpLXj9Ce4+i2
+ WqeNXS6v/nOOoJENEoRrqQOGPzhPVfX1uVXYFExkva0WDUuWKShifmL9etoJkzSCqclViGfs
+ dPub5hha4lUFiullJ6ap8xMn4jQ=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
+ 6080751ba817abd39afe6b3f (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 21 Apr 2021 18:55:23
+ GMT
+Sender: aravindh=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 8E74DC43217; Wed, 21 Apr 2021 18:55:22 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: aravindh)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5FDBBC433F1;
+        Wed, 21 Apr 2021 18:55:21 +0000 (UTC)
 MIME-Version: 1.0
-References: <cover.1618916235.git.baruch@tkos.co.il> <c6ff03d1377ea9b5ff40ab283c884aeff6254dd9.1618916235.git.baruch@tkos.co.il>
- <20210420161855.GA3402221@robh.at.kernel.org> <87r1j4kzzm.fsf@tarshish>
-In-Reply-To: <87r1j4kzzm.fsf@tarshish>
-From:   Rob Herring <robh@kernel.org>
-Date:   Wed, 21 Apr 2021 13:45:26 -0500
-X-Gmail-Original-Message-ID: <CAL_JsqKP1hZ6UGEuevjcMC_ZLbojemZ7-X-koyaxViRHQOoN4g@mail.gmail.com>
-Message-ID: <CAL_JsqKP1hZ6UGEuevjcMC_ZLbojemZ7-X-koyaxViRHQOoN4g@mail.gmail.com>
-Subject: Re: [PATCH 1/5] PCI: qcom: add support for IPQ60xx PCIe controller
-To:     Baruch Siach <baruch@tkos.co.il>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Selvam Sathappan Periakaruppan <speriaka@codeaurora.org>,
-        Kathiravan T <kathirav@codeaurora.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Vinod Koul <vkoul@kernel.org>, devicetree@vger.kernel.org,
-        linux-phy@lists.infradead.org, PCI <linux-pci@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Wed, 21 Apr 2021 11:55:21 -0700
+From:   aravindh@codeaurora.org
+To:     khsieh@codeaurora.org
+Cc:     Stephen Boyd <swboyd@chromium.org>, robdclark@gmail.com,
+        sean@poorly.run, abhinavk@codeaurora.org, airlied@linux.ie,
+        daniel@ffwll.ch, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/2] drm/msm/dp: service only one irq_hpd if there are
+ multiple irq_hpd pending
+In-Reply-To: <e3c3ef96ac507da6f138106f70c78ed2@codeaurora.org>
+References: <1618604877-28297-1-git-send-email-khsieh@codeaurora.org>
+ <161895606268.46595.2841353121480638642@swboyd.mtv.corp.google.com>
+ <e3c3ef96ac507da6f138106f70c78ed2@codeaurora.org>
+Message-ID: <ddc1e372c5f864cd62c4e056ef2e6404@codeaurora.org>
+X-Sender: aravindh@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Apr 20, 2021 at 11:45 PM Baruch Siach <baruch@tkos.co.il> wrote:
->
-> Hi Rob,
->
-> Thanks for your review.
->
-> I have a few comments below.
->
-> On Tue, Apr 20 2021, Rob Herring wrote:
-> > On Tue, Apr 20, 2021 at 02:21:36PM +0300, Baruch Siach wrote:
-> >> From: Selvam Sathappan Periakaruppan <speriaka@codeaurora.org>
-> >>
-> >> IPQ60xx series of SoCs have one port of PCIe gen 3. Add support for that
-> >> platform.
-> >>
-> >> The code is based on downstream Codeaurora kernel v5.4. Split out the
-> >> registers access part from .init into .post_init. Registers are only
-> >> accessible after phy_power_on().
-> >>
-> >> Signed-off-by: Selvam Sathappan Periakaruppan <speriaka@codeaurora.org>
-> >> Signed-off-by: Baruch Siach <baruch@tkos.co.il>
-> >> ---
-> >>  drivers/pci/controller/dwc/pcie-qcom.c | 279 +++++++++++++++++++++++++
-> >>  1 file changed, 279 insertions(+)
-> >>
-> >> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> >> index 8a7a300163e5..3e27de744738 100644
-> >> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> >> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> >> @@ -41,6 +41,31 @@
-> >>  #define L23_CLK_RMV_DIS                             BIT(2)
-> >>  #define L1_CLK_RMV_DIS                              BIT(1)
-> >>
-> >> +#define PCIE_ATU_CR1_OUTBOUND_6_GEN3                0xC00
-> >> +#define PCIE_ATU_CR2_OUTBOUND_6_GEN3                0xC04
-> >> +#define PCIE_ATU_LOWER_BASE_OUTBOUND_6_GEN3 0xC08
-> >> +#define PCIE_ATU_UPPER_BASE_OUTBOUND_6_GEN3 0xC0C
-> >> +#define PCIE_ATU_LIMIT_OUTBOUND_6_GEN3              0xC10
-> >> +#define PCIE_ATU_LOWER_TARGET_OUTBOUND_6_GEN3       0xC14
-> >> +#define PCIE_ATU_UPPER_TARGET_OUTBOUND_6_GEN3       0xC18
-> >> +
-> >> +#define PCIE_ATU_CR1_OUTBOUND_7_GEN3                0xE00
-> >> +#define PCIE_ATU_CR2_OUTBOUND_7_GEN3                0xE04
-> >> +#define PCIE_ATU_LOWER_BASE_OUTBOUND_7_GEN3 0xE08
-> >> +#define PCIE_ATU_UPPER_BASE_OUTBOUND_7_GEN3 0xE0C
-> >> +#define PCIE_ATU_LIMIT_OUTBOUND_7_GEN3              0xE10
-> >> +#define PCIE_ATU_LOWER_TARGET_OUTBOUND_7_GEN3       0xE14
-> >> +#define PCIE_ATU_UPPER_TARGET_OUTBOUND_7_GEN3       0xE18
-> >
-> > ATU registers are standard DWC registers. Plus upstream now dynamically
-> > detects how many ATU regions there are.
-> >
-> >> +#define PCIE20_COMMAND_STATUS                       0x04
-> >> +#define BUS_MASTER_EN                               0x7
-> >> +#define PCIE20_DEVICE_CONTROL2_STATUS2              0x98
-> >> +#define PCIE_CAP_CPL_TIMEOUT_DISABLE                0x10
-> >
-> > All PCI standard registers.
->
-> PCIE20_COMMAND_STATUS is indeed the common PCI_COMMAND. I could not find
-> anything that matches PCIE20_DEVICE_CONTROL2_STATUS2. Where should I
-> look?
+On 2021-04-21 10:26, khsieh@codeaurora.org wrote:
+> On 2021-04-20 15:01, Stephen Boyd wrote:
+>> Quoting Kuogee Hsieh (2021-04-16 13:27:57)
+>>> Some dongle may generate more than one irq_hpd events in a short 
+>>> period of
+>>> time. This patch will treat those irq_hpd events as single one and 
+>>> service
+>>> only one irq_hpd event.
+>> 
+>> Why is it bad to get multiple irq_hpd events in a short period of 
+>> time?
+>> Please tell us here in the commit text.
+>> 
+>>> 
+>>> Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
+>>> ---
+>>>  drivers/gpu/drm/msm/dp/dp_display.c | 9 +++++++++
+>>>  1 file changed, 9 insertions(+)
+>>> 
+>>> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c 
+>>> b/drivers/gpu/drm/msm/dp/dp_display.c
+>>> index 5a39da6..0a7d383 100644
+>>> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+>>> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+>>> @@ -707,6 +707,9 @@ static int dp_irq_hpd_handle(struct 
+>>> dp_display_private *dp, u32 data)
+>>>                 return 0;
+>>>         }
+>>> 
+>>> +       /* only handle first irq_hpd in case of multiple irs_hpd 
+>>> pending */
+>>> +       dp_del_event(dp, EV_IRQ_HPD_INT);
+>>> +
+>>>         ret = dp_display_usbpd_attention_cb(&dp->pdev->dev);
+>>>         if (ret == -ECONNRESET) { /* cable unplugged */
+>>>                 dp->core_initialized = false;
+>>> @@ -1300,6 +1303,9 @@ static int dp_pm_suspend(struct device *dev)
+>>>         /* host_init will be called at pm_resume */
+>>>         dp->core_initialized = false;
+>>> 
+>>> +       /* system suspended, delete pending irq_hdps */
+>>> +       dp_del_event(dp, EV_IRQ_HPD_INT);
+>> 
+>> What happens if I suspend my device and when this function is running 
+>> I
+>> toggle my monitor to use the HDMI input that is connected instead of 
+>> some
+>> other input, maybe the second HDMI input? Wouldn't that generate an 
+>> HPD
+>> interrupt to grab the attention of this device?
+> no,
+> At this time display is off. this mean dp controller is off and
+> mainlink has teared down.
+> it will start with plug in interrupt to bring dp controller up and
+> start link training.
+> irq_hpd can be generated only panel is at run time of operation mode
+> and need attention from host.
+> If host is shutting down, then no need to service pending irq_hpd.
+> 
+>> 
+>>> +
+>>>         mutex_unlock(&dp->event_mutex);
+>>> 
+>>>         return 0;
+>>> @@ -1496,6 +1502,9 @@ int msm_dp_display_disable(struct msm_dp *dp, 
+>>> struct drm_encoder *encoder)
+>>>         /* stop sentinel checking */
+>>>         dp_del_event(dp_display, EV_DISCONNECT_PENDING_TIMEOUT);
+>>> 
+>>> +       /* link is down, delete pending irq_hdps */
+>>> +       dp_del_event(dp_display, EV_IRQ_HPD_INT);
+>>> +
+>> 
+>> I'm becoming convinced that the whole kthread design and event queue 
+>> is
+>> broken. These sorts of patches are working around the larger problem
+>> that the kthread is running independently of the driver and irqs can
+>> come in at any time but the event queue is not checked from the irq
+>> handler to debounce the irq event. Is the event queue necessary at 
+>> all?
+>> I wonder if it would be simpler to just use an irq thread and process
+>> the hpd signal from there. Then we're guaranteed to not get an irq 
+>> again
+>> until the irq thread is done processing the event. This would 
+>> naturally
+>> debounce the irq hpd event that way.
+> event q just like bottom half of irq handler. it turns irq into event
+> and handle them sequentially.
+> irq_hpd is asynchronous event from panel to bring up attention of hsot
+> during run time of operation.
+> Here, the dongle is unplugged and main link had teared down so that no
+> need to service pending irq_hpd if any.
+> 
 
-Looks like PCI_EXP_DEVCTL2 and PCI_EXP_DEVSTA2 to me. The register bit
-looks like PCI_EXP_DEVCTL2_COMP_TMOUT_DIS. Those are extended config
-registers so their offset is variable.
-
->
-> >
-> >> +#define PCIE30_GEN3_RELATED_OFF                     0x890
-> >
-> > Looks like a DWC port logic register. The define at a minimum goes in
-> > the common code. We probably already have one. Code touching the
-> > register should ideally be there too (hint: look at the other drivers).
->
-> pcie-tegra194.c uses the equivalent GEN3_RELATED_OFF. So I can move the
-> definition to a common header. As for the code, I don't know. The tegra
-> configuration sequence involves other registers as well.
-
-I'm sure the Tegra folks will be happy to tell you if anything breaks.
-
->
-> [snip]
->
-> >> +static int qcom_pcie_post_init_2_9_0(struct qcom_pcie *pcie)
-> >> +{
-> >> +    struct dw_pcie *pci = pcie->pci;
-> >> +    u16 offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
-> >> +    u32 val;
-> >> +    int i;
-> >> +
-> >> +    writel(SLV_ADDR_SPACE_SZ,
-> >> +            pcie->parf + PCIE20_v3_PARF_SLV_ADDR_SPACE_SIZE);
-> >> +
-> >> +    val = readl(pcie->parf + PCIE20_PARF_PHY_CTRL);
-> >> +    val &= ~BIT(0);
-> >
-> > What's BIT(0)?
->
-> I have no idea. I have no access to hardware documentation. I'm just
-> porting working code from the Codeaurora tree.
-
-Based on the 7 other existing modifications to that bit, it's 'enable
-PCIe clocks and resets'. Looks like we need some refactoring at least
-so there's not yet another copy.
-
-> >> +    writel(val, pcie->parf + PCIE20_PARF_PHY_CTRL);
-> >> +
-> >> +    writel(0, pcie->parf + PCIE20_PARF_DBI_BASE_ADDR);
-> >> +
-> >> +    writel(DEVICE_TYPE_RC, pcie->parf + PCIE20_PARF_DEVICE_TYPE);
-> >> +    writel(BYPASS | MSTR_AXI_CLK_EN | AHB_CLK_EN,
-> >> +            pcie->parf + PCIE20_PARF_MHI_CLOCK_RESET_CTRL);
-> >> +    writel(RXEQ_RGRDLESS_RXTS | GEN3_ZRXDC_NONCOMPL,
-> >> +            pci->dbi_base + PCIE30_GEN3_RELATED_OFF);
-> >> +
-> >> +    writel(MST_WAKEUP_EN | SLV_WAKEUP_EN | MSTR_ACLK_CGC_DIS
-> >> +            | SLV_ACLK_CGC_DIS | CORE_CLK_CGC_DIS |
-> >> +            AUX_PWR_DET | L23_CLK_RMV_DIS | L1_CLK_RMV_DIS,
-> >> +            pcie->parf + PCIE20_PARF_SYS_CTRL);
-> >> +
-> >> +    writel(0, pcie->parf + PCIE20_PARF_Q2A_FLUSH);
-> >> +
-> >> +    writel(BUS_MASTER_EN, pci->dbi_base + PCIE20_COMMAND_STATUS);
-> >
-> > Pretty sure the DWC core or PCI core does this already.
-> >
-> >> +
-> >> +    writel(DBI_RO_WR_EN, pci->dbi_base + PCIE20_MISC_CONTROL_1_REG);
-> >> +    writel(PCIE_CAP_LINK1_VAL, pci->dbi_base + offset + PCI_EXP_SLTCAP);
-
-I have to wonder if all the bits being set here are really true.
-Hotplug is really supported? There's an attention button? Power
-indicator? If anything, that's all board specific and would need to
-come from firmware (DT).
-
-> >> +
-> >> +    /* Configure PCIe link capabilities for ASPM */
-> >> +    val = readl(pci->dbi_base + offset + PCI_EXP_LNKCAP);
-> >> +    val &= ~PCI_EXP_LNKCAP_ASPMS;
-> >> +    writel(val, pci->dbi_base + offset + PCI_EXP_LNKCAP);
-> >> +
-> >> +    writel(PCIE_CAP_CPL_TIMEOUT_DISABLE, pci->dbi_base +
-> >> +            PCIE20_DEVICE_CONTROL2_STATUS2);
-> >> +
-> >> +    writel(PCIE_CAP_CURR_DEEMPHASIS | SPEED_GEN3,
-
-SPEED_GEN3 does not look right for PCI_EXP_DEVCTL2.
-
-> >> +                    pci->dbi_base + offset + PCI_EXP_DEVCTL2);
-> >
-> > This all looks like stuff that should be in the DWC core code. Maybe we
-> > need an ASPM disable quirk or something? That's probably somewhat
-> > common.
->
-> Where in common code should that be?
-
-If these registers are initialized elsewhere, in the same place.
-Otherwise, probably in dw_pcie_setup_rc().
-
-> Which part is quirky?
-
-Disabling ASPM. It's a bit strange that some of this is needed at all
-considering no other platform using the same IP needs it.
-
-Rob
+As Kuogee mentioned, IRQ_HPD is a message received from the panel and is 
+not like your typical HW generated IRQ. There is no guarantee that we 
+will not receive an IRQ_HPD until we are finished with processing of an 
+earlier HPD message or an IRQ_HPD message. For example - when you run 
+the protocol compliance, when we get a HPD from the sink, we are 
+expected to start reading DPCD, EDID and proceed with link training. As 
+soon as link training is finished (which is marked by a specific DPCD 
+register write), the sink is going to issue an IRQ_HPD. At this point, 
+we may not done with processing the HPD high as after link training we 
+would typically notify the user mode of the newly connected display, 
+etc.
+> 
+>> 
+>>>         dp_display_disable(dp_display, 0);
+>>> 
+>>>         rc = dp_display_unprepare(dp);
