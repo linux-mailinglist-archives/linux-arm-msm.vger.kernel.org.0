@@ -2,145 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B0D1D36655C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Apr 2021 08:23:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8A8A03665BD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Apr 2021 08:56:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234072AbhDUGYP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Apr 2021 02:24:15 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:42401 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S236013AbhDUGYO (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 21 Apr 2021 02:24:14 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1618986222; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=joVt7EiJpq5MpkTsFfA7/raYnftwlEGm8PrYlH6jj2I=;
- b=DkbHvbE4w1MMfJu+bT6r5gh7em96MbTYBJLGvHcXMYrQnFT5u1ch9PogQIHECeD9549KgE50
- cDWAPPc77nn0MRK3sh8rLoFryychDN9Wn0iIB+LnmGbxqTiJ1OA3CJfwy25kaP8lUaNphh4g
- LTWN3/UHaaoQxgdXwivg+DlpBks=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
- 607fc4db215b831afb7a20d6 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 21 Apr 2021 06:23:23
- GMT
-Sender: skakit=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id C9C07C4338A; Wed, 21 Apr 2021 06:23:23 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: skakit)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 73638C433D3;
-        Wed, 21 Apr 2021 06:23:21 +0000 (UTC)
+        id S235106AbhDUG5E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 21 Apr 2021 02:57:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41656 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229536AbhDUG5E (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 21 Apr 2021 02:57:04 -0400
+Received: from mail-vs1-xe30.google.com (mail-vs1-xe30.google.com [IPv6:2607:f8b0:4864:20::e30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60385C06174A;
+        Tue, 20 Apr 2021 23:56:31 -0700 (PDT)
+Received: by mail-vs1-xe30.google.com with SMTP id 2so20649264vsh.4;
+        Tue, 20 Apr 2021 23:56:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=RZ8OXikTKVlH7T8DQOt+y/7x4Zf4x2hsUuy/B/b14Io=;
+        b=oCPYmIbjutCHYviOt3jEMFwVnL5KhMF2d3lor2ct9X7/5OzSoQnoqIFUk5N52VV4Mp
+         YMY7WKFBBJzZuFs5mXTmrdmFUkXF4/3OvqzFACu8DC4gxZlp2X42fKUy+73m6C5VxNwy
+         wT+bGY/wUwLW5+z7oqzv1smkXVi3JZfd9mSaDSVl5JnPr84MuQdLQTlmgrlH8UUCbmgu
+         cwZGtQpHUkA9KGu3Okfy8NjILzOPkU0g+Xsh1VuYX2S4WsMJci7vg/hRCtv57zfiDnvl
+         vOJFSrsVOLoGDbVLQx89B3kNOlTeahyT5t/wKM3RgkiJIkSq1Iii2hIOY1vZxmeVoYCc
+         s9/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=RZ8OXikTKVlH7T8DQOt+y/7x4Zf4x2hsUuy/B/b14Io=;
+        b=W9mDMUlQv8t1kAapwcb6QSzVq3oYzlvPtelNpfRDwwjT3+3CAnOv4R3y0w4GvxuBI9
+         9H6vutk7nm5RPrEWD1tlLBlAUrRVxHEk6uoWMYhMxYC8htGlNIPwIRyAlLkqhzMCxFBm
+         MnVhs/cJTbTWIRuoOg05nfNL8MOnAJMD5mPgsvU6oUotuKw215AMxKb4a+MyNd7gPtjc
+         KwYS9Omey2cIBVB5FXjCDF7oH2OE140v6juCGeQkKcFYMvzkZz54QQhq/1HMyjoKMrsa
+         +UA6jO192PV0ErDlA8ZFvC5MiRwIvgsh7pPVu65xHwmlsgYBMpYFJAGTdkHBPO1FitRZ
+         WEGw==
+X-Gm-Message-State: AOAM533nrtOsXQ12WQOPZgynmRnaLmrzIP+Zdj983vJJF7E8e4FyCTUP
+        l5r1JPJ/7IoT1yQqjIe0To8=
+X-Google-Smtp-Source: ABdhPJx60kNBeC7ZiSHF0yhePo24lh1pqJbnxdBeQIzPxX1ATrIuiQAIoFE0dZnn0297q/Dqon5REQ==
+X-Received: by 2002:a05:6102:941:: with SMTP id a1mr12117241vsi.32.1618988190619;
+        Tue, 20 Apr 2021 23:56:30 -0700 (PDT)
+Received: from localhost.localdomain ([87.101.93.188])
+        by smtp.gmail.com with ESMTPSA id j23sm170173uak.19.2021.04.20.23.56.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 20 Apr 2021 23:56:30 -0700 (PDT)
+From:   Jarvis Jiang <jarvis.w.jiang@gmail.com>
+To:     mani@kernel.org, hemantk@codeaurora.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        cchen50@lenovo.com, mpearson@lenovo.com,
+        Jarvis Jiang <jarvis.w.jiang@gmail.com>
+Subject: [PATCH v1] bus: mhi: pci_generic: T99W175: update channel name from AT to DUN
+Date:   Tue, 20 Apr 2021 23:55:01 -0700
+Message-Id: <20210421065501.3134-1-jarvis.w.jiang@gmail.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Wed, 21 Apr 2021 11:53:21 +0530
-From:   skakit@codeaurora.org
-To:     Rob Herring <robh@kernel.org>
-Cc:     Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Sebastian Reichel <sre@kernel.org>,
-        David Collins <collinsd@codeaurora.org>, kgunda@codeaurora.org,
-        Vinod Koul <vkoul@kernel.org>,
-        Courtney Cavin <courtney.cavin@sonymobile.com>,
-        linux-input@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org
-Subject: Re: [PATCH V2 4/4] dt-bindings: input: pm8941-pwrkey: Convert pm8941
- power key binding to yaml
-In-Reply-To: <20210409185044.GA3946207@robh.at.kernel.org>
-References: <1617881469-31965-1-git-send-email-skakit@codeaurora.org>
- <1617881469-31965-5-git-send-email-skakit@codeaurora.org>
- <20210409185044.GA3946207@robh.at.kernel.org>
-Message-ID: <68095bad57e336c70b622c5b8d5870b1@codeaurora.org>
-X-Sender: skakit@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rob,
+According to MHI v1.1 specification, change the channel name of T99W175
+from "AT" to "DUN" (Dial-up networking) for both channel 32 and 33,
+so that the channels can be bound to the Qcom WWAN control driver, and
+device node such as /dev/wwan0p3AT will be generated, which is very useful
+for debugging modem
 
-On 2021-04-10 00:20, Rob Herring wrote:
-> On Thu, Apr 08, 2021 at 05:01:09PM +0530, satya priya wrote:
->> Convert qcom pm8941 power key binding from .txt to .yaml format.
->> 
->> Signed-off-by: satya priya <skakit@codeaurora.org>
-[...]
->> +
->> +properties:
->> +  compatible:
->> +    enum:
->> +      - qcom,pm8941-pwrkey
->> +      - qcom,pm8941-resin
->> +      - qcom,pmk8350-pwrkey
->> +      - qcom,pmk8350-resin
->> +
->> +  interrupts:
-> 
-> How many?
-> 
+Signed-off-by: Jarvis Jiang <jarvis.w.jiang@gmail.com>
+---
+ drivers/bus/mhi/pci_generic.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-ok, will add maxItems.
+diff --git a/drivers/bus/mhi/pci_generic.c b/drivers/bus/mhi/pci_generic.c
+index 7c810f02a2ef..8c7f6576e421 100644
+--- a/drivers/bus/mhi/pci_generic.c
++++ b/drivers/bus/mhi/pci_generic.c
+@@ -311,8 +311,8 @@ static const struct mhi_channel_config mhi_foxconn_sdx55_channels[] = {
+ 	MHI_CHANNEL_CONFIG_DL(5, "DIAG", 32, 1),
+ 	MHI_CHANNEL_CONFIG_UL(12, "MBIM", 32, 0),
+ 	MHI_CHANNEL_CONFIG_DL(13, "MBIM", 32, 0),
+-	MHI_CHANNEL_CONFIG_UL(32, "AT", 32, 0),
+-	MHI_CHANNEL_CONFIG_DL(33, "AT", 32, 0),
++	MHI_CHANNEL_CONFIG_UL(32, "DUN", 32, 0),
++	MHI_CHANNEL_CONFIG_DL(33, "DUN", 32, 0),
+ 	MHI_CHANNEL_CONFIG_HW_UL(100, "IP_HW0_MBIM", 128, 2),
+ 	MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0_MBIM", 128, 3),
+ };
+-- 
+2.25.1
 
->> +    description: |
->> +          Key change interrupt; The format of the specifier is
->> +          defined by the binding document describing the node's
->> +          interrupt parent.
-> 
-> The 2nd sentence is every 'interrupts' property. Drop.
-> 
-
-Will remove the description.
-
->> +
->> +  debounce:
->> +    description: |
->> +          Time in microseconds that key must be pressed or
->> +          released for state change interrupt to trigger.
->> +    $ref: /schemas/types.yaml#/definitions/uint32
->> +
->> +  bias-pull-up:
->> +    description: |
->> +           Presence of this property indicates that the KPDPWR_N
->> +           pin should be configured for pull up.
->> +    $ref: /schemas/types.yaml#/definitions/flag
->> +
->> +  linux,code:
->> +    description: |
->> +           The input key-code associated with the power key.
->> +           Use the linux event codes defined in
->> +           include/dt-bindings/input/linux-event-codes.h
->> +           When property is omitted KEY_POWER is assumed.
->> +    $ref: "input.yaml#"
-> 
-> You've just defined that 'linux,code' is a node with properties defined
-> in input.yaml. Need to move this up to the top level.
-> 
-
-allOf:
-   $ref: "input.yaml#"
-That means I should add like this at the beginning? please correct me if 
-wrong.
-
->> +
->> +required:
->> +  - compatible
->> +  - interrupts
->> +
->> +additionalProperties: false
-[...]
-
-Thanks,
-Satya Priya
