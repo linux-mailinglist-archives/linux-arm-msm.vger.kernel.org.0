@@ -2,97 +2,230 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D70303678AB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Apr 2021 06:26:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 266C4367BC9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Apr 2021 10:10:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229557AbhDVE0r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Apr 2021 00:26:47 -0400
-Received: from mail.kernel.org ([198.145.29.99]:51720 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229441AbhDVE0r (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Apr 2021 00:26:47 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id E640160698;
-        Thu, 22 Apr 2021 04:26:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1619065573;
-        bh=M9WEz3stHuTUGOfvNJEUfe/rwnc74K79vU61YmvGy0Y=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Q+rDhgjON4c6Nb4n2eD5hZDXOs2ZmfIz1ofKdwD4pMNcbPm7z5kZj5jSJX0iwsk8C
-         HeFzHgtv96tefEI7bFgKNMsNTNzId6f8MlUtXLpZ0anZc3UMSfzEfFgR5mWBGiLh4X
-         mOckdniayURhzzP2A41yXkTJEDxeWLffHa1xxB147y5g5vkl9uy7PX1lKAFB4ODiWP
-         /hJDOArWoWIkuK6CsSl6ff0WGhw5XpXYP7f0hXcBvuru8StEt8Mws15v7654fiCZkK
-         YJiD/u5d4+r7NtPD7MnnLN0RsQCZW1PfRMs2EpPYqQ5I5HPSKFHn7ZgcAV4OQVZW9f
-         p6ag06Tz8ERkA==
-Date:   Thu, 22 Apr 2021 09:56:04 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] net: qrtr: Avoid potential use after free in MHI send
-Message-ID: <20210422042604.GB14470@work>
-References: <20210421174007.2954194-1-bjorn.andersson@linaro.org>
+        id S235275AbhDVILV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Apr 2021 04:11:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37204 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235245AbhDVILU (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 22 Apr 2021 04:11:20 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74384C06138E
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Apr 2021 01:10:45 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id i21-20020a05600c3555b029012eae2af5d4so2690948wmq.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Apr 2021 01:10:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=uhXyqG4ZxdDjqBkhxOQCYD5Nv2NYVdHJqhq6nBUFFjA=;
+        b=peQPash9fIBmLfV68tEd9Ko7OwA7IV6eCox5z+H9i0paF3ymnAUJemE9GMsA41Cvis
+         UAbkuo+BpLfbYpIo5NYpWtv7RoPKn2bcRh0K6rzL267NKx+/892K9Wt//CGf+x1fWPV8
+         QZG+BujQyMxRY+DvGSoV6lSBzcI8uMNMCf4cvrNf1zlAjeJpi8+CGr0+pquPpIchbIAp
+         dBV1ONdjlfWd/ElAKgz/AycD9zrqxux+j0dk51vc2MysITnPA6PL56j8ytE1qgHShdJb
+         Q7vo4aAL+Wz8Ga9HjnpuVotTu0LD+h1iNPBtHig0Gahc77sU7TWuKej4IjIMFLPTy8ok
+         DMiA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=uhXyqG4ZxdDjqBkhxOQCYD5Nv2NYVdHJqhq6nBUFFjA=;
+        b=QXQcx497XLrcA5i8RzQaeZdSU8/4PMJDkwcOPZ+Zrd+Yc/7ImfCnbMU+VipmxJxVWZ
+         RVkTECL01WuW5vuKR3BMmpfh0Ae53xuv2qJ1SRrxMOV6RiChFjaqlpFRL1fzLAQg+zc5
+         bkLmkPbqzB49SsGcwxACf92d/VJUamyMkfU5QvgoLIbi1iLmsxsXPdO7g8bgEDtFj0D2
+         2heU90N+u9yT7CxMzb72d39LtIwa6e6ixy4ig4OECtva0/flOJ5laqtuZMB2MQ6YtWiv
+         RfI/Ya9kmw/ZFKWTClQvewDRlspQmy+X6w4rpQfm330P23qqWTwsSblukfMUPDRSVFTG
+         0ttw==
+X-Gm-Message-State: AOAM531g8JWiZNVAXxQqih8tp6lq1DVM2LTCiLB5QLcCk/urHz308ddf
+        D2k8diIIXzuoLetKOE4x07nV9Q==
+X-Google-Smtp-Source: ABdhPJy3MRve6nSvRcYP4R4E/S5ASqa10CVolMkQ95QtOHVjaJKShKsN4+WXAPZX3OX+dWzAqn6YhA==
+X-Received: by 2002:a1c:2646:: with SMTP id m67mr7810522wmm.71.1619079043796;
+        Thu, 22 Apr 2021 01:10:43 -0700 (PDT)
+Received: from ?IPv6:2a01:e34:ed2f:f020:e88d:2580:c20:b786? ([2a01:e34:ed2f:f020:e88d:2580:c20:b786])
+        by smtp.googlemail.com with ESMTPSA id k11sm5010954wmj.1.2021.04.22.01.10.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 22 Apr 2021 01:10:43 -0700 (PDT)
+Subject: Re: [PATCH v8 03/10] thermal: Use generic HW-protection shutdown API
+To:     Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>,
+        Matti Vaittinen <mazziesaccount@gmail.com>
+Cc:     Mark Brown <broonie@kernel.org>, Kees Cook <keescook@chromium.org>,
+        Andy Shevchenko <andy.shevchenko@gmail.com>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Guenter Roeck <linux@roeck-us.net>,
+        "agross@kernel.org" <agross@kernel.org>,
+        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+        linux-power <linux-power@fi.rohmeurope.com>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "linux-renesas-soc@vger.kernel.org" 
+        <linux-renesas-soc@vger.kernel.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "bjorn.andersson@linaro.org" <bjorn.andersson@linaro.org>,
+        "lgirdwood@gmail.com" <lgirdwood@gmail.com>,
+        "robh+dt@kernel.org" <robh+dt@kernel.org>,
+        Amit Kucheria <amitk@kernel.org>,
+        Matteo Croce <mcroce@microsoft.com>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Petr Mladek <pmladek@suse.com>,
+        "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+        Mike Rapoport <rppt@kernel.org>,
+        Josef Bacik <josef@toxicpanda.com>,
+        Kai-Heng Feng <kai.heng.feng@canonical.com>,
+        linux-pm@vger.kernel.org
+References: <cover.1618832466.git.matti.vaittinen@fi.rohmeurope.com>
+ <3b62226e320ab412357e102baf6d628e354a0b61.1618832466.git.matti.vaittinen@fi.rohmeurope.com>
+From:   Daniel Lezcano <daniel.lezcano@linaro.org>
+Message-ID: <c9b61f91-301b-92a2-f5e7-e8b8e2373040@linaro.org>
+Date:   Thu, 22 Apr 2021 10:10:41 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210421174007.2954194-1-bjorn.andersson@linaro.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+In-Reply-To: <3b62226e320ab412357e102baf6d628e354a0b61.1618832466.git.matti.vaittinen@fi.rohmeurope.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Apr 21, 2021 at 10:40:07AM -0700, Bjorn Andersson wrote:
-> It is possible that the MHI ul_callback will be invoked immediately
-> following the queueing of the skb for transmission, leading to the
-> callback decrementing the refcount of the associated sk and freeing the
-> skb.
+On 19/04/2021 13:49, Matti Vaittinen wrote:
+> The hardware shutdown function was exported from kernel/reboot for
+> other subsystems to use. Logic is copied from the thermal_core. The
+> protection mutex is replaced by an atomic_t to allow calls also from
+> an IRQ context.
 > 
-> As such the dereference of skb and the increment of the sk refcount must
-> happen before the skb is queued, to avoid the skb to be used after free
-> and potentially the sk to drop its last refcount..
+> Use the exported API instead of implementing own just for the
+> thermal_core.
+
+Can you update the documentation:
+
+Documentation/driver-api/thermal/sysfs-api.rst
+
+5. thermal_emergency_poweroff
+
+Thanks
+  -- Daniel
+
+
+> Signed-off-by: Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>
 > 
-> Fixes: 6e728f321393 ("net: qrtr: Add MHI transport layer")
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-
-Thanks,
-Mani
-
 > ---
->  net/qrtr/mhi.c | 8 +++++---
->  1 file changed, 5 insertions(+), 3 deletions(-)
+> Changelog:
+> v8:
+>  - new patch (change added in v7, splitted in own patch at v8)
 > 
-> diff --git a/net/qrtr/mhi.c b/net/qrtr/mhi.c
-> index 2bf2b1943e61..fa611678af05 100644
-> --- a/net/qrtr/mhi.c
-> +++ b/net/qrtr/mhi.c
-> @@ -50,6 +50,9 @@ static int qcom_mhi_qrtr_send(struct qrtr_endpoint *ep, struct sk_buff *skb)
->  	struct qrtr_mhi_dev *qdev = container_of(ep, struct qrtr_mhi_dev, ep);
->  	int rc;
+> Use the exported API instead
+> ---
+>  drivers/thermal/thermal_core.c | 63 +++-------------------------------
+>  1 file changed, 4 insertions(+), 59 deletions(-)
+> 
+> diff --git a/drivers/thermal/thermal_core.c b/drivers/thermal/thermal_core.c
+> index 996c038f83a4..b1444845af38 100644
+> --- a/drivers/thermal/thermal_core.c
+> +++ b/drivers/thermal/thermal_core.c
+> @@ -36,10 +36,8 @@ static LIST_HEAD(thermal_governor_list);
 >  
-> +	if (skb->sk)
-> +		sock_hold(skb->sk);
-> +
->  	rc = skb_linearize(skb);
->  	if (rc)
->  		goto free_skb;
-> @@ -59,12 +62,11 @@ static int qcom_mhi_qrtr_send(struct qrtr_endpoint *ep, struct sk_buff *skb)
->  	if (rc)
->  		goto free_skb;
+>  static DEFINE_MUTEX(thermal_list_lock);
+>  static DEFINE_MUTEX(thermal_governor_lock);
+> -static DEFINE_MUTEX(poweroff_lock);
 >  
-> -	if (skb->sk)
-> -		sock_hold(skb->sk);
+>  static atomic_t in_suspend;
+> -static bool power_off_triggered;
+>  
+>  static struct thermal_governor *def_governor;
+>  
+> @@ -327,70 +325,18 @@ static void handle_non_critical_trips(struct thermal_zone_device *tz, int trip)
+>  		       def_governor->throttle(tz, trip);
+>  }
+>  
+> -/**
+> - * thermal_emergency_poweroff_func - emergency poweroff work after a known delay
+> - * @work: work_struct associated with the emergency poweroff function
+> - *
+> - * This function is called in very critical situations to force
+> - * a kernel poweroff after a configurable timeout value.
+> - */
+> -static void thermal_emergency_poweroff_func(struct work_struct *work)
+> -{
+> -	/*
+> -	 * We have reached here after the emergency thermal shutdown
+> -	 * Waiting period has expired. This means orderly_poweroff has
+> -	 * not been able to shut off the system for some reason.
+> -	 * Try to shut down the system immediately using kernel_power_off
+> -	 * if populated
+> -	 */
+> -	WARN(1, "Attempting kernel_power_off: Temperature too high\n");
+> -	kernel_power_off();
 > -
->  	return rc;
+> -	/*
+> -	 * Worst of the worst case trigger emergency restart
+> -	 */
+> -	WARN(1, "Attempting emergency_restart: Temperature too high\n");
+> -	emergency_restart();
+> -}
+> -
+> -static DECLARE_DELAYED_WORK(thermal_emergency_poweroff_work,
+> -			    thermal_emergency_poweroff_func);
+> -
+> -/**
+> - * thermal_emergency_poweroff - Trigger an emergency system poweroff
+> - *
+> - * This may be called from any critical situation to trigger a system shutdown
+> - * after a known period of time. By default this is not scheduled.
+> - */
+> -static void thermal_emergency_poweroff(void)
+> +void thermal_zone_device_critical(struct thermal_zone_device *tz)
+>  {
+> -	int poweroff_delay_ms = CONFIG_THERMAL_EMERGENCY_POWEROFF_DELAY_MS;
+>  	/*
+>  	 * poweroff_delay_ms must be a carefully profiled positive value.
+> -	 * Its a must for thermal_emergency_poweroff_work to be scheduled
+> +	 * Its a must for forced_emergency_poweroff_work to be scheduled.
+>  	 */
+> -	if (poweroff_delay_ms <= 0)
+> -		return;
+> -	schedule_delayed_work(&thermal_emergency_poweroff_work,
+> -			      msecs_to_jiffies(poweroff_delay_ms));
+> -}
+> +	int poweroff_delay_ms = CONFIG_THERMAL_EMERGENCY_POWEROFF_DELAY_MS;
 >  
->  free_skb:
-> +	if (skb->sk)
-> +		sock_put(skb->sk);
->  	kfree_skb(skb);
+> -void thermal_zone_device_critical(struct thermal_zone_device *tz)
+> -{
+>  	dev_emerg(&tz->device, "%s: critical temperature reached, "
+>  		  "shutting down\n", tz->type);
 >  
->  	return rc;
-> -- 
-> 2.29.2
+> -	mutex_lock(&poweroff_lock);
+> -	if (!power_off_triggered) {
+> -		/*
+> -		 * Queue a backup emergency shutdown in the event of
+> -		 * orderly_poweroff failure
+> -		 */
+> -		thermal_emergency_poweroff();
+> -		orderly_poweroff(true);
+> -		power_off_triggered = true;
+> -	}
+> -	mutex_unlock(&poweroff_lock);
+> +	hw_protection_shutdown("Temperature too high", poweroff_delay_ms);
+>  }
+>  EXPORT_SYMBOL(thermal_zone_device_critical);
+>  
+> @@ -1549,7 +1495,6 @@ static int __init thermal_init(void)
+>  	ida_destroy(&thermal_cdev_ida);
+>  	mutex_destroy(&thermal_list_lock);
+>  	mutex_destroy(&thermal_governor_lock);
+> -	mutex_destroy(&poweroff_lock);
+>  	return result;
+>  }
+>  postcore_initcall(thermal_init);
 > 
+
+
+-- 
+<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
+
+Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
+<http://twitter.com/#!/linaroorg> Twitter |
+<http://www.linaro.org/linaro-blog/> Blog
