@@ -2,169 +2,137 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6F94B3696C0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Apr 2021 18:16:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 99EA23696E0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Apr 2021 18:30:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231345AbhDWQRb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Apr 2021 12:17:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38112 "EHLO
+        id S229691AbhDWQb2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Apr 2021 12:31:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41124 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229931AbhDWQRb (ORCPT
+        with ESMTP id S229456AbhDWQb2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Apr 2021 12:17:31 -0400
-Received: from mail-oi1-x22b.google.com (mail-oi1-x22b.google.com [IPv6:2607:f8b0:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63712C061574
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Apr 2021 09:16:53 -0700 (PDT)
-Received: by mail-oi1-x22b.google.com with SMTP id u16so32359074oiu.7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Apr 2021 09:16:53 -0700 (PDT)
+        Fri, 23 Apr 2021 12:31:28 -0400
+Received: from mail-qk1-x736.google.com (mail-qk1-x736.google.com [IPv6:2607:f8b0:4864:20::736])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69731C061574
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Apr 2021 09:30:50 -0700 (PDT)
+Received: by mail-qk1-x736.google.com with SMTP id x11so50103244qkp.11
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Apr 2021 09:30:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=nOQQqBqjHuvjx+mAlIOMyHNRurAecyF6kdkwHEmgzso=;
-        b=tLZ9DmttTeYtxODA8GpoGJD3f0Haev5OEYxrAoEu5x/meFKNZ67Xrn6E7wBOaPuifI
-         wNlvV52rK5Y2Mywj2ET9283Zs770zV7NHAs07XT9eYniS6gbUuIJBKyK+2B932VNi9sJ
-         RcIF2vnKJocRtzBB+uIaJGPbfUfBTaB1x5X3zXN7rIb/K/+YrxSv76g7tdXH/v7NLeJF
-         6y4fg0IDpP2fBw3zv4WDH7ovgaWgetiGIPsn2rRTZs8FHo9D9aURjU9P8iAYP8XWlk3D
-         AZrQ1Qqx6AtlJhlZdjsp8KQVqUuo45eacaZnE1gjIqpoB6PNVJ3i1CYRPq5KNULETOPN
-         QidQ==
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=bnPkOae3N3QNLfW2JXPw4qTg19P7LS7x3meffpeNsUc=;
+        b=oOWzIy3mWuS6BWg8Zy0+TynqeZAiE3ZSt8ELRuOz1uAEN4ySjH+jCi7+4wq42lLCf6
+         pWI21DpyBztpl1GpAjQ0VdUrs+7dOsKKgaUwYt3s0vy5q2UZ1TNduOSnPD4SoxJHEWfY
+         5OltXJXVHWMShT/LiT6ZbueZcaIHry68371Iw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=nOQQqBqjHuvjx+mAlIOMyHNRurAecyF6kdkwHEmgzso=;
-        b=JVZJ+hXXnfcJP6+RVyRx2mP1TsnaFlOUe8dfGll9ceTMgDioYKHb6ErD8JgwYlb8le
-         7n8rn0ynuSLZGUZfrTAzHE09xRa8Y1cJ1wt20ikK7uJBX77kVyW6To7ak01VwMWjaAYH
-         TnutCQqgZI6/Y/Hx6logyyIrj3xcBw/NhAo3ZFMihPgiqLV2WfpDPnuFxOjne8pePeV9
-         sPqZN+QZHlKRkH2e8wIClYDi8QNHv1GH+U7quVL9/82fVkmMIUyxZHIcgb6f/CH5Yvso
-         pxxJW2rHPIYFRwtAWdtp4A+Mo0BefQhPE3Wf2DQp8uNLmKcHqSlBDBxlb6zlmyvCqOc5
-         8XTg==
-X-Gm-Message-State: AOAM533cKe1Zf10aI/H7DyRr4dQnoljFFY9NbaGEZjIvRNOXiz12ASXQ
-        HszoSePX6vsNxliET6ZjnX2INg==
-X-Google-Smtp-Source: ABdhPJyxj8Hhn+123lQ/JT8X7RLjGQCf0dKzpHIzSwezdnqt5VNuPgWlbYaErNniQIPS+VIKQ6Nmvg==
-X-Received: by 2002:aca:db02:: with SMTP id s2mr4534138oig.100.1619194612825;
-        Fri, 23 Apr 2021 09:16:52 -0700 (PDT)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id h5sm1359874oth.20.2021.04.23.09.16.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Apr 2021 09:16:52 -0700 (PDT)
-Date:   Fri, 23 Apr 2021 11:16:50 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Douglas Anderson <dianders@chromium.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=bnPkOae3N3QNLfW2JXPw4qTg19P7LS7x3meffpeNsUc=;
+        b=jPFE215+QSSG6At8Q9PI5pdTplA7uzCSdktezBO51WUUULEeJJAi0i/hBiZQXRyzGR
+         sF83UL6FDqHkthhtOzTr8i2HOzwRTf8sQQbpOA26VE3zVLN+20GvSk7Ul38sRwbaJ2no
+         72s3KTFIHTXXfio7Jg3dA3rHI/PQ06RtAKqw1oJNphNkC5JR6j7NLGvsQqr9JiCTQ5nU
+         2stnuZ0LrFYEl86yYuPaIdwtkHSgVBuQS7IwnW5yHgxiMOC7EzXdQQ2xNOVMRUC0sYcW
+         9GGMFPvnojhbCtES5aizeKd3ypRGZA8qbvGytXnkpUrGyUAGzALr6gSDmeyefuyS7PbZ
+         tJOQ==
+X-Gm-Message-State: AOAM531XSMJjWLSqBENDS+7FO0DAMj4zwgaQzbl52VlmW6yhkIHEmyhM
+        GRjDkfnEMRgl1lcIR6k7UGXS/sSeGxpLuA==
+X-Google-Smtp-Source: ABdhPJwtJ57Mo7VwL66v86upnZJaPOvI7hnrCelG2RW9taTNXF8bTM6WDRTR8Rww85DiWmJlkCQcRA==
+X-Received: by 2002:a37:6f87:: with SMTP id k129mr4871541qkc.470.1619195449503;
+        Fri, 23 Apr 2021 09:30:49 -0700 (PDT)
+Received: from mail-yb1-f174.google.com (mail-yb1-f174.google.com. [209.85.219.174])
+        by smtp.gmail.com with ESMTPSA id t18sm4738217qkj.75.2021.04.23.09.30.48
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 23 Apr 2021 09:30:49 -0700 (PDT)
+Received: by mail-yb1-f174.google.com with SMTP id c195so56261402ybf.9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Apr 2021 09:30:48 -0700 (PDT)
+X-Received: by 2002:a25:2d0b:: with SMTP id t11mr2980774ybt.79.1619195448418;
+ Fri, 23 Apr 2021 09:30:48 -0700 (PDT)
+MIME-Version: 1.0
+References: <20210416223950.3586967-1-dianders@chromium.org>
+ <20210416153909.v4.24.If050957eaa85cf45b10bcf61e6f7fa61c9750ebf@changeid> <YILx/iODs+DFWWwm@builder.lan>
+In-Reply-To: <YILx/iODs+DFWWwm@builder.lan>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Fri, 23 Apr 2021 09:30:36 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=UhOKcSC5FPPZgXiqfFCYOu4iFGrhtrgfGz_ovT8Qi-6w@mail.gmail.com>
+Message-ID: <CAD=FV=UhOKcSC5FPPZgXiqfFCYOu4iFGrhtrgfGz_ovT8Qi-6w@mail.gmail.com>
+Subject: Re: [PATCH v4 24/27] drm/panel: panel-simple: Cache the EDID as long
+ as we retain power
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
 Cc:     Andrzej Hajda <a.hajda@samsung.com>,
         Neil Armstrong <narmstrong@baylibre.com>,
         Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
         Jonas Karlman <jonas@kwiboo.se>,
         Jernej Skrabec <jernej.skrabec@siol.net>,
         Sam Ravnborg <sam@ravnborg.org>, Wolfram Sang <wsa@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>, robdclark@chromium.org,
+        Stephen Boyd <swboyd@chromium.org>,
+        Rob Clark <robdclark@chromium.org>,
         Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
         Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>,
         Steev Klimaszewski <steev@kali.org>,
-        linux-arm-msm@vger.kernel.org, Linus W <linus.walleij@linaro.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linus W <linus.walleij@linaro.org>,
         Daniel Vetter <daniel@ffwll.ch>,
         David Airlie <airlied@linux.ie>,
         Thierry Reding <thierry.reding@gmail.com>,
-        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 27/27] drm/panel: panel-simple: Prepare/unprepare are
- refcounted, not forced
-Message-ID: <YILy8jbYcwAt4Bqw@builder.lan>
-References: <20210416223950.3586967-1-dianders@chromium.org>
- <20210416153909.v4.27.I502f2a92ddd36c3d28d014dd75e170c2d405a0a5@changeid>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210416153909.v4.27.I502f2a92ddd36c3d28d014dd75e170c2d405a0a5@changeid>
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri 16 Apr 17:39 CDT 2021, Douglas Anderson wrote:
+Hi,
 
-> Historically simple-panel had code to make sure that if prepare() was
-> called on an already-prepared panel that it was a no-op. Similarly if
-> unprepare() was called on an already-unprepared panel it was also a
-> no-op. Essentially it means that these functions always "forced" the
-> value to be whatever the caller wanted it to be. You can see that the
-> forcing behavior dates back at least as far as 2014 by looking at
-> commit 613a633e7a56 ("drm/panel: simple: Add proper definition for
-> prepare and unprepare").
-> 
-> Apparently the code supporting the historical behavior may not be
-> needed [1] and prepare() / unprepare() are supposed to be
-> balanced. Let's try removing it and see if anyone breaks! If they do
-> then we can have a debate about whether we should change that code or
-> revert this patch. :-) If nobody breaks then we've nicely saved a few
-> lines of code and some complexity.
-> 
-> [1] https://lore.kernel.org/r/YHePsQgqOau1V5lD@pendragon.ideasonboard.com
-> 
+On Fri, Apr 23, 2021 at 9:12 AM Bjorn Andersson
+<bjorn.andersson@linaro.org> wrote:
+>
+> On Fri 16 Apr 17:39 CDT 2021, Douglas Anderson wrote:
+>
+> > It doesn't make sense to go out to the bus and read the EDID over and
+> > over again. Let's cache it and throw away the cache when we turn power
+> > off from the panel. Autosuspend means that even if there are several
+> > calls to read the EDID before we officially turn the power on then we
+> > should get good use out of this cache.
+> >
+> > Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> > ---
+> >
+> > (no changes since v1)
+> >
+> >  drivers/gpu/drm/panel/panel-simple.c | 17 ++++++++++-------
+> >  1 file changed, 10 insertions(+), 7 deletions(-)
+> >
+> > diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
+> > index 40382c1be692..5a2953c4ca44 100644
+> > --- a/drivers/gpu/drm/panel/panel-simple.c
+> > +++ b/drivers/gpu/drm/panel/panel-simple.c
+> > @@ -189,6 +189,8 @@ struct panel_simple {
+> >       struct gpio_desc *enable_gpio;
+> >       struct gpio_desc *hpd_gpio;
+> >
+> > +     struct edid *edid;
+> > +
+> >       struct drm_display_mode override_mode;
+> >
+> >       enum drm_panel_orientation orientation;
+> > @@ -345,6 +347,9 @@ static int panel_simple_suspend(struct device *dev)
+> >       regulator_disable(p->supply);
+> >       p->unprepared_time = ktime_get();
+> >
+> > +     kfree(p->edid);
+> > +     p->edid = NULL;
+>
+> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+>
+>
+> But separate of this, shouldn't the driver have a pm_runtime_disable()
+> in the remove path to synchronize the autosleep? Or is that not how that
+> works?
 
-Acked-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Indeed! I'll add a patch to the start of my v5 (coming shortly) that
+fixes this. Thanks for catching!
 
-Regards,
-Bjorn
-
-> Suggested-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> ---
-> 
-> (no changes since v1)
-> 
->  drivers/gpu/drm/panel/panel-simple.c | 14 --------------
->  1 file changed, 14 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
-> index 5a2953c4ca44..a2c3008af7e5 100644
-> --- a/drivers/gpu/drm/panel/panel-simple.c
-> +++ b/drivers/gpu/drm/panel/panel-simple.c
-> @@ -176,8 +176,6 @@ struct panel_simple {
->  	bool enabled;
->  	bool no_hpd;
->  
-> -	bool prepared;
-> -
->  	ktime_t prepared_time;
->  	ktime_t unprepared_time;
->  
-> @@ -355,18 +353,12 @@ static int panel_simple_suspend(struct device *dev)
->  
->  static int panel_simple_unprepare(struct drm_panel *panel)
->  {
-> -	struct panel_simple *p = to_panel_simple(panel);
->  	int ret;
->  
-> -	/* Unpreparing when already unprepared is a no-op */
-> -	if (!p->prepared)
-> -		return 0;
-> -
->  	pm_runtime_mark_last_busy(panel->dev);
->  	ret = pm_runtime_put_autosuspend(panel->dev);
->  	if (ret < 0)
->  		return ret;
-> -	p->prepared = false;
->  
->  	return 0;
->  }
-> @@ -475,18 +467,12 @@ static int panel_simple_prepare(struct drm_panel *panel)
->  	struct panel_simple *p = to_panel_simple(panel);
->  	int ret;
->  
-> -	/* Preparing when already prepared is a no-op */
-> -	if (p->prepared)
-> -		return 0;
-> -
->  	ret = pm_runtime_get_sync(panel->dev);
->  	if (ret < 0) {
->  		pm_runtime_put_autosuspend(panel->dev);
->  		return ret;
->  	}
->  
-> -	p->prepared = true;
-> -
->  	return 0;
->  }
->  
-> -- 
-> 2.31.1.368.gbe11c130af-goog
-> 
+-Doug
