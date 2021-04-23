@@ -2,83 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 02FBF369AB6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Apr 2021 21:12:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 03BCA369ABB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Apr 2021 21:12:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243786AbhDWTMw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Apr 2021 15:12:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48842 "EHLO
+        id S243763AbhDWTMy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Apr 2021 15:12:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48850 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243763AbhDWTMv (ORCPT
+        with ESMTP id S243782AbhDWTMw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Apr 2021 15:12:51 -0400
-Received: from mail-qt1-x836.google.com (mail-qt1-x836.google.com [IPv6:2607:f8b0:4864:20::836])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF4A7C06174A
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Apr 2021 12:12:14 -0700 (PDT)
-Received: by mail-qt1-x836.google.com with SMTP id 1so37201261qtb.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Apr 2021 12:12:14 -0700 (PDT)
+        Fri, 23 Apr 2021 15:12:52 -0400
+Received: from mail-qk1-x734.google.com (mail-qk1-x734.google.com [IPv6:2607:f8b0:4864:20::734])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17027C061574
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Apr 2021 12:12:16 -0700 (PDT)
+Received: by mail-qk1-x734.google.com with SMTP id s5so41908415qkj.5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Apr 2021 12:12:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=marek-ca.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=hsSjtuHXUzVXrjNpljPImYq3qGMXxS9a3DZ+iKn3tAo=;
-        b=SFEXTgKFMyoXwKvR8hGBN2EqjhGKhAVeC2fSHN8LtZU3j8QwSuaezEOLHc0HBYlF77
-         +vmDdr7lfvp5mGYRQEkhQv1znIKGFGLyorirqodh02V2p/VkwfeZxVFFz/CseOYZamEg
-         JZ5WPzf66VAio2wP6tgW4aOG4ibCq5uM8PMZzM6BXjqs6fyKApv+4E9eX1BZ0Zc/RDeV
-         qSnbMlKNJvk9c2jAj0SLjO1nt7HIXWAozDxZ9CbpWsZ//RWCXEUPjwpXyR+4FsxGtsOx
-         +4bsKARPD8X5O/J7B+WV7fkGX74w9IsbhacxeepHPDi4b5z/TLjn4Ginf2jGtioaW+X0
-         ACLQ==
+        bh=5xJl3e5+bs5xqB+lF7D0IwdsLJO17snjwANXkX2D6wU=;
+        b=yFL1c6CkBYFO5JvUiub7cftnWbdO+hwi+wprHjCffpYFQ9zqO0puXavnOKEyKqE88M
+         Sz6qq1w8ugjMiCyhYwEETsIa6u5706n8155YOcMYS4yk1e9NBG1s5lIACSc1wTvDpqLt
+         kCNK2YVcA7BElhE1qHDkGM0bh5VtJjJ5B9LXxOp6m97rV906P64zWI1cci3mE+xpQhPM
+         oLOWM9D839/LDjt1Fih68q2xgwel149qbW9n+abS9DHT0KewIKCi+h2NT+ht+iiiIb4A
+         mweOQW8fEAA+pIN08b6Y3c/hPxkrTq8gLsgcxq1t5tmrC8dG1sCAfIwPrsLosyUz3/J9
+         VTQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=hsSjtuHXUzVXrjNpljPImYq3qGMXxS9a3DZ+iKn3tAo=;
-        b=iuAzrQKSOQMMCenj0xVK2mCDsWzvCXt8jPTCRTZGNUtvayoxmDnXTA3MtTJ5SDnlov
-         hShd5mOZkhUY+7SMdCnnA6ZaZN8AbYsVEAfyc1Iqtf6jGdvKexaDrcRRy4131vIASSSZ
-         hKDHfYntzbST/atb/P7rmJCKJD29kT5ikiKyem+7UnWDzoxy19U1Cvg5iiBHrypwnlqJ
-         DR35CXjiOQzVdMo9dXi7cUbRhpF96/RJSrPdVY2kLqsVLdOYenTxqG9X7rgcYzJGUjLj
-         n/TsPsMi+UFErNXQ+gmj9i58Ra48ovMVcajs1+5TaQxCS8c++uObaiuzQ2g0EbaJsFow
-         VymQ==
-X-Gm-Message-State: AOAM533KWSX8/xN4Pv6tSnLvXhzsC2melo7qlTVkHxoDMCSIy4ZwfevQ
-        jmCSevUCpLmhJEndCnLqS/kqYQ==
-X-Google-Smtp-Source: ABdhPJws23NrkTcrqMCUw+HPc2/jCj4j/EJ6kONToNrZm3DDUieqxomiZpJ2Eg0rUKjlrZVejMLBtA==
-X-Received: by 2002:ac8:6b58:: with SMTP id x24mr5368602qts.77.1619205134101;
-        Fri, 23 Apr 2021 12:12:14 -0700 (PDT)
+        bh=5xJl3e5+bs5xqB+lF7D0IwdsLJO17snjwANXkX2D6wU=;
+        b=ihiKLSD6kPrC+g8LGvCNajatd9mkchkjRZsfMMl4gCIhPyCFuCI//F6xDVO7guWcCu
+         fW2an/SeERlzM0Ds1nzImXrl2IVP3W58C7UerKI5P83OBkrHxzk06EdtVJh4w4Q/KBq9
+         lsrYNKSoT+ZgFdFGoNxR+ddsAAvLc+/k7ophroCo7kyzeIHndifwaXWB9FAzw0kqBz5A
+         YrCHsxIxdIr82kdFHIMea4Qsjndzd+l8EEzMFJfVyrMH+mblDUaPU5vv0LY3Ol5INNqa
+         kvhv/cupCEQULORpWX9O2D+mx5tbbZJXtXejIdcl/nKY81Me4ryI1hjOAgkP8vX6dGXq
+         hUBA==
+X-Gm-Message-State: AOAM533M5MxRbsc1zwIWkvhjqeHMWHsYB+6CQsba/e0bz6lF0B67edn3
+        GKKvOIiVZgZT4HFbTBHW2St5aw==
+X-Google-Smtp-Source: ABdhPJyTqUJ+yXOSnr85wWiD5YuFTJo/pB6G1Lp1vxTohgVnsCkkTbkKgoGO2WgJsu6VOogbUcIBAg==
+X-Received: by 2002:ae9:f404:: with SMTP id y4mr5460750qkl.500.1619205135351;
+        Fri, 23 Apr 2021 12:12:15 -0700 (PDT)
 Received: from localhost.localdomain (modemcable068.184-131-66.mc.videotron.ca. [66.131.184.68])
-        by smtp.gmail.com with ESMTPSA id a22sm4834630qtp.80.2021.04.23.12.12.12
+        by smtp.gmail.com with ESMTPSA id a22sm4834630qtp.80.2021.04.23.12.12.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Apr 2021 12:12:13 -0700 (PDT)
+        Fri, 23 Apr 2021 12:12:15 -0700 (PDT)
 From:   Jonathan Marek <jonathan@marek.ca>
 To:     freedreno@lists.freedesktop.org
 Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         David Airlie <airlied@linux.ie>,
         Daniel Vetter <daniel@ffwll.ch>,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        "Kristian H. Kristensen" <hoegsberg@google.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Eric Anholt <eric@anholt.net>,
-        Akhil P Oommen <akhilpo@codeaurora.org>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Sharat Masetty <smasetty@codeaurora.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Lee Jones <lee.jones@linaro.org>,
-        Zhenzhong Duan <zhenzhong.duan@gmail.com>,
-        Dave Airlie <airlied@redhat.com>,
-        Emil Velikov <emil.velikov@collabora.com>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Bernard Zhao <bernard@vivo.com>,
-        Rikard Falkeborn <rikard.falkeborn@gmail.com>,
         linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
         dri-devel@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
         GPU), linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH 2/5] drm/msm: replace MSM_BO_UNCACHED with MSM_BO_WC for internal objects
-Date:   Fri, 23 Apr 2021 15:08:18 -0400
-Message-Id: <20210423190833.25319-3-jonathan@marek.ca>
+Subject: [PATCH 3/5] drm/msm: use the right pgprot when mapping BOs in the kernel
+Date:   Fri, 23 Apr 2021 15:08:19 -0400
+Message-Id: <20210423190833.25319-4-jonathan@marek.ca>
 X-Mailer: git-send-email 2.26.1
 In-Reply-To: <20210423190833.25319-1-jonathan@marek.ca>
 References: <20210423190833.25319-1-jonathan@marek.ca>
@@ -88,130 +68,59 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-msm_gem_get_vaddr() currently always maps as writecombine, so use the right
-flag instead of relying on broken behavior (things don't actually work if
-they are mapped as uncached).
+Use the same logic as the userspace mapping.
+
+This fixes msm_rd with cached BOs.
 
 Signed-off-by: Jonathan Marek <jonathan@marek.ca>
 ---
- drivers/gpu/drm/msm/adreno/a5xx_gpu.c       | 4 ++--
- drivers/gpu/drm/msm/adreno/a5xx_power.c     | 2 +-
- drivers/gpu/drm/msm/adreno/a5xx_preempt.c   | 4 ++--
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c       | 2 +-
- drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c | 2 +-
- drivers/gpu/drm/msm/adreno/adreno_gpu.c     | 2 +-
- drivers/gpu/drm/msm/dsi/dsi_host.c          | 2 +-
- 7 files changed, 9 insertions(+), 9 deletions(-)
+ drivers/gpu/drm/msm/msm_gem.c | 19 +++++++++++--------
+ 1 file changed, 11 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-index ce13d49e615b..eb0f884eaf30 100644
---- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-@@ -902,7 +902,7 @@ static int a5xx_hw_init(struct msm_gpu *gpu)
- 		if (!a5xx_gpu->shadow_bo) {
- 			a5xx_gpu->shadow = msm_gem_kernel_new(gpu->dev,
- 				sizeof(u32) * gpu->nr_rings,
--				MSM_BO_UNCACHED | MSM_BO_MAP_PRIV,
-+				MSM_BO_WC | MSM_BO_MAP_PRIV,
- 				gpu->aspace, &a5xx_gpu->shadow_bo,
- 				&a5xx_gpu->shadow_iova);
+diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
+index 09abda42d764..0f58937be0a9 100644
+--- a/drivers/gpu/drm/msm/msm_gem.c
++++ b/drivers/gpu/drm/msm/msm_gem.c
+@@ -199,6 +199,15 @@ void msm_gem_put_pages(struct drm_gem_object *obj)
+ 	/* when we start tracking the pin count, then do something here */
+ }
  
-@@ -1407,7 +1407,7 @@ static int a5xx_crashdumper_init(struct msm_gpu *gpu,
- 		struct a5xx_crashdumper *dumper)
++static pgprot_t msm_gem_pgprot(struct msm_gem_object *msm_obj, pgprot_t prot)
++{
++	if (msm_obj->flags & MSM_BO_WC)
++		return pgprot_writecombine(prot);
++	if (msm_obj->flags & MSM_BO_UNCACHED)
++		return pgprot_noncached(prot);
++	return prot;
++}
++
+ int msm_gem_mmap_obj(struct drm_gem_object *obj,
+ 		struct vm_area_struct *vma)
  {
- 	dumper->ptr = msm_gem_kernel_new_locked(gpu->dev,
--		SZ_1M, MSM_BO_UNCACHED, gpu->aspace,
-+		SZ_1M, MSM_BO_WC, gpu->aspace,
- 		&dumper->bo, &dumper->iova);
+@@ -206,13 +215,7 @@ int msm_gem_mmap_obj(struct drm_gem_object *obj,
  
- 	if (!IS_ERR(dumper->ptr))
-diff --git a/drivers/gpu/drm/msm/adreno/a5xx_power.c b/drivers/gpu/drm/msm/adreno/a5xx_power.c
-index c35b06b46fcc..cdb165236a88 100644
---- a/drivers/gpu/drm/msm/adreno/a5xx_power.c
-+++ b/drivers/gpu/drm/msm/adreno/a5xx_power.c
-@@ -363,7 +363,7 @@ void a5xx_gpmu_ucode_init(struct msm_gpu *gpu)
- 	bosize = (cmds_size + (cmds_size / TYPE4_MAX_PAYLOAD) + 1) << 2;
+ 	vma->vm_flags &= ~VM_PFNMAP;
+ 	vma->vm_flags |= VM_MIXEDMAP;
+-
+-	if (msm_obj->flags & MSM_BO_WC)
+-		vma->vm_page_prot = pgprot_writecombine(vm_get_page_prot(vma->vm_flags));
+-	else if (msm_obj->flags & MSM_BO_UNCACHED)
+-		vma->vm_page_prot = pgprot_noncached(vm_get_page_prot(vma->vm_flags));
+-	else
+-		vma->vm_page_prot = vm_get_page_prot(vma->vm_flags);
++	vma->vm_page_prot = msm_gem_pgprot(msm_obj, vm_get_page_prot(vma->vm_flags));
  
- 	ptr = msm_gem_kernel_new_locked(drm, bosize,
--		MSM_BO_UNCACHED | MSM_BO_GPU_READONLY, gpu->aspace,
-+		MSM_BO_WC | MSM_BO_GPU_READONLY, gpu->aspace,
- 		&a5xx_gpu->gpmu_bo, &a5xx_gpu->gpmu_iova);
- 	if (IS_ERR(ptr))
- 		return;
-diff --git a/drivers/gpu/drm/msm/adreno/a5xx_preempt.c b/drivers/gpu/drm/msm/adreno/a5xx_preempt.c
-index 42eaef7ad7c7..ee72510ff8ce 100644
---- a/drivers/gpu/drm/msm/adreno/a5xx_preempt.c
-+++ b/drivers/gpu/drm/msm/adreno/a5xx_preempt.c
-@@ -230,7 +230,7 @@ static int preempt_init_ring(struct a5xx_gpu *a5xx_gpu,
- 
- 	ptr = msm_gem_kernel_new(gpu->dev,
- 		A5XX_PREEMPT_RECORD_SIZE + A5XX_PREEMPT_COUNTER_SIZE,
--		MSM_BO_UNCACHED | MSM_BO_MAP_PRIV, gpu->aspace, &bo, &iova);
-+		MSM_BO_WC | MSM_BO_MAP_PRIV, gpu->aspace, &bo, &iova);
- 
- 	if (IS_ERR(ptr))
- 		return PTR_ERR(ptr);
-@@ -238,7 +238,7 @@ static int preempt_init_ring(struct a5xx_gpu *a5xx_gpu,
- 	/* The buffer to store counters needs to be unprivileged */
- 	counters = msm_gem_kernel_new(gpu->dev,
- 		A5XX_PREEMPT_COUNTER_SIZE,
--		MSM_BO_UNCACHED, gpu->aspace, &counters_bo, &counters_iova);
-+		MSM_BO_WC, gpu->aspace, &counters_bo, &counters_iova);
- 	if (IS_ERR(counters)) {
- 		msm_gem_kernel_put(bo, gpu->aspace, true);
- 		return PTR_ERR(counters);
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-index 5214a15db95f..1716984c68a8 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -852,7 +852,7 @@ static int a6xx_hw_init(struct msm_gpu *gpu)
- 		if (!a6xx_gpu->shadow_bo) {
- 			a6xx_gpu->shadow = msm_gem_kernel_new_locked(gpu->dev,
- 				sizeof(u32) * gpu->nr_rings,
--				MSM_BO_UNCACHED | MSM_BO_MAP_PRIV,
-+				MSM_BO_WC | MSM_BO_MAP_PRIV,
- 				gpu->aspace, &a6xx_gpu->shadow_bo,
- 				&a6xx_gpu->shadow_iova);
- 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-index c1699b4f9a89..21c49c5b4519 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-@@ -113,7 +113,7 @@ static int a6xx_crashdumper_init(struct msm_gpu *gpu,
- 		struct a6xx_crashdumper *dumper)
- {
- 	dumper->ptr = msm_gem_kernel_new_locked(gpu->dev,
--		SZ_1M, MSM_BO_UNCACHED, gpu->aspace,
-+		SZ_1M, MSM_BO_WC, gpu->aspace,
- 		&dumper->bo, &dumper->iova);
- 
- 	if (!IS_ERR(dumper->ptr))
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-index 17f3e45fd5ff..c1332b2459ec 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-@@ -391,7 +391,7 @@ struct drm_gem_object *adreno_fw_create_bo(struct msm_gpu *gpu,
- 	void *ptr;
- 
- 	ptr = msm_gem_kernel_new_locked(gpu->dev, fw->size - 4,
--		MSM_BO_UNCACHED | MSM_BO_GPU_READONLY, gpu->aspace, &bo, iova);
-+		MSM_BO_WC | MSM_BO_GPU_READONLY, gpu->aspace, &bo, iova);
- 
- 	if (IS_ERR(ptr))
- 		return ERR_CAST(ptr);
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-index 055cd1c7c9fe..18c80744e331 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-@@ -1155,7 +1155,7 @@ int dsi_tx_buf_alloc_6g(struct msm_dsi_host *msm_host, int size)
- 	uint64_t iova;
- 	u8 *data;
- 
--	data = msm_gem_kernel_new(dev, size, MSM_BO_UNCACHED,
-+	data = msm_gem_kernel_new(dev, size, MSM_BO_WC,
- 					priv->kms->aspace,
- 					&msm_host->tx_gem_obj, &iova);
- 
+ 	return 0;
+ }
+@@ -632,7 +635,7 @@ static void *get_vaddr(struct drm_gem_object *obj, unsigned madv)
+ 			goto fail;
+ 		}
+ 		msm_obj->vaddr = vmap(pages, obj->size >> PAGE_SHIFT,
+-				VM_MAP, pgprot_writecombine(PAGE_KERNEL));
++				VM_MAP, msm_gem_pgprot(msm_obj, PAGE_KERNEL));
+ 		if (msm_obj->vaddr == NULL) {
+ 			ret = -ENOMEM;
+ 			goto fail;
 -- 
 2.26.1
 
