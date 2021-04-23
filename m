@@ -2,53 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2BF4C3695E4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Apr 2021 17:15:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C51573695E9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Apr 2021 17:16:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231320AbhDWPPz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Apr 2021 11:15:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52450 "EHLO
+        id S236938AbhDWPQy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Apr 2021 11:16:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52670 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229995AbhDWPPy (ORCPT
+        with ESMTP id S237082AbhDWPQw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Apr 2021 11:15:54 -0400
-Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27686C061574
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Apr 2021 08:15:18 -0700 (PDT)
-Received: by mail-oi1-x229.google.com with SMTP id n140so49457160oig.9
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Apr 2021 08:15:18 -0700 (PDT)
+        Fri, 23 Apr 2021 11:16:52 -0400
+Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8AFEAC06174A
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Apr 2021 08:16:15 -0700 (PDT)
+Received: by mail-ot1-x32a.google.com with SMTP id c8-20020a9d78480000b0290289e9d1b7bcso31524282otm.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Apr 2021 08:16:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=H20jNSQBl2MjyzyhkMYaw3Uy+F10G5cykrLW0bCJkBA=;
-        b=pbgHZ7XQhrdOvbvAEjMyl0uK0HMUgeZJJF+ej6t7BPq/nAAOkrIUydX+1QHj4u3KvE
-         pLJIkbIJwMGOu2yzI3poPk98hnq8bSFyQsAtWmghJefxSFUCF5GgUMakEzY/G52IecyX
-         N6vnUWZQjFjsNFgoTDl14F24ZjuyimIj9GRrfxpXByaXYg6s8L10Jnibgr7D8hc4giuF
-         9f9P1y+QA4CxKMKY70bvbYeAP0qqZg1jXldsiydJzBDv6EDSTapmYebrwv5u129V0FFd
-         m648IZf/e0ns6mu6mKhFtYsSa+kbirPQhcKZNtXvnLauhKVBdnelRFhMWp3L6ty0K8Yw
-         ck1w==
+        bh=BjzbYvHGDqNt1YrSCIFKFkhQqyjNhWk2rxPsi+B5Z3s=;
+        b=UzkHH4Za2rzrIPCUbRuGbPYHM4r9JlI4pOryZV93zkkwAN7aqG2i26EObLU6VO5xUL
+         eZzSjnwKZrDgKpkPR7aEHclOaavZGSKmhSw6MNRclEK9MTCcqJ/wbMpa2iJayhcllkx3
+         80fvTG4YREIStTYLYqJebwHp9baZtG5GbsKLMTlOg4lekOg6vq7aPWc31fTvkiNMqXmj
+         J8jobDoUcybkm6/WLG/SKILg4X2ogYknn1U+3AWt/EKHObA1xzN91PITatYhWz3niIfS
+         wE+7zMrdgklhMKbnVcVdbWSz+7/1nUE4rVp9yvNR3yVNXtoz58SuYF4kaOxKaEG5q+rr
+         +Ntg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=H20jNSQBl2MjyzyhkMYaw3Uy+F10G5cykrLW0bCJkBA=;
-        b=gZjbtEN+/Njs6SQnhO9C+O+xbqOb+b9K2LuVD4xldFmxKe7j45oQlYITrPKkAMqx4B
-         9qK05EO+WYn/Np/7kSKgAob0FBFY8uQ+w+CgJJ/TlVjEhtuCqewVHbQYZWNuWq/X2ZSC
-         1zc7U0olIpzSUxwpDG3GTBf2HwfVWsk7ucF3iRlX8LNAhlXUchplvq6t9jh3JoxvsLfL
-         IG7m7t7OxipHKVvvroPWLDtOyZ43KBCFe3N9r4DJN8lDKfBnq+8iu0pTz5nySN1o2lfJ
-         frljMlai3bF9gON4yGRwlRO3rEznaC2oK5xRKNw8utaABZF5T93Q6Z9aiVwRpVlZrD6r
-         BeaQ==
-X-Gm-Message-State: AOAM530ty/spED5+4UfdceyVE/yFj6i+sO5E5Hy0IEfLPxarrSWMzCrS
-        LCdO4VYWu06+1xSjiaFB3KZLxw==
-X-Google-Smtp-Source: ABdhPJweYNjzWUSWU6X45/xUm+r362Z1QMdsI+CBjPXjPS8ZOsGsSpPe5+cGwgePXKHxnPQi2QkCMg==
-X-Received: by 2002:aca:75cc:: with SMTP id q195mr4322750oic.88.1619190917554;
-        Fri, 23 Apr 2021 08:15:17 -0700 (PDT)
+        bh=BjzbYvHGDqNt1YrSCIFKFkhQqyjNhWk2rxPsi+B5Z3s=;
+        b=NQ4Kd9o0i6A6/8d2/tm7cgkKl7uEFK+tDhtggr25U/pPt4ngbFVFAEV8HxPLGgG/Jy
+         uA/QoLqOiY+/dWdIr6wjG1rEYRkSZ5nndWPVuMV6mSO98HfxkM4DpND8vW+wec0TwhDo
+         eaHTB64xmY0kYlFpJmPcySz+hyZgTP6l02Pcz63PgQwKDteQijx0TvqYF03U+2M2q2+U
+         Ydh1bUqV7TL+OY3qQjf2D8dTztcP5BuCd3VZRuoFUO4AVMk1ZcX7UV2Mf2elFd1R0P+5
+         QZck0g5+xBvU5NzGk2hGnmn4SDE64sXvD20CxIiGDcWsqZF60apCAfWWLmK1G9JDzeu4
+         1BYw==
+X-Gm-Message-State: AOAM530Ldg17MJVmYnzAVtNT9BSYsln5cpK6CtXQ87NTEYI4jHs1zuGI
+        WQFZ2O82MdKxxop5I3H5ejY22A==
+X-Google-Smtp-Source: ABdhPJx2mA/UkPjKOQEWBZn8yjTss/9rypijIbSfKKeR01z01ECtO/FDlU2BQR7ZN9tTWnK5pHWk7A==
+X-Received: by 2002:a9d:7003:: with SMTP id k3mr3876923otj.351.1619190974920;
+        Fri, 23 Apr 2021 08:16:14 -0700 (PDT)
 Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id 88sm1422029otx.2.2021.04.23.08.15.16
+        by smtp.gmail.com with ESMTPSA id s131sm1300317oib.14.2021.04.23.08.16.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Apr 2021 08:15:17 -0700 (PDT)
-Date:   Fri, 23 Apr 2021 10:15:15 -0500
+        Fri, 23 Apr 2021 08:16:14 -0700 (PDT)
+Date:   Fri, 23 Apr 2021 10:16:12 -0500
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Douglas Anderson <dianders@chromium.org>
 Cc:     Andrzej Hajda <a.hajda@samsung.com>,
@@ -66,55 +66,75 @@ Cc:     Andrzej Hajda <a.hajda@samsung.com>,
         David Airlie <airlied@linux.ie>,
         Thierry Reding <thierry.reding@gmail.com>,
         dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 22/27] drm/panel: panel-simple: Remove extra call:
- drm_connector_update_edid_property()
-Message-ID: <YILkg2ChCZChEqqu@builder.lan>
+Subject: Re: [PATCH v4 23/27] drm/panel: panel-simple: Power the panel when
+ reading the EDID
+Message-ID: <YILkvOs1abQ7WzdA@builder.lan>
 References: <20210416223950.3586967-1-dianders@chromium.org>
- <20210416153909.v4.22.Icb581b0273d95cc33ca38676c61ae6d7d2e75357@changeid>
+ <20210416153909.v4.23.Ibd31b8f7c73255d68c5c9f5b611b4bfaa036f727@changeid>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20210416153909.v4.22.Icb581b0273d95cc33ca38676c61ae6d7d2e75357@changeid>
+In-Reply-To: <20210416153909.v4.23.Ibd31b8f7c73255d68c5c9f5b611b4bfaa036f727@changeid>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Fri 16 Apr 17:39 CDT 2021, Douglas Anderson wrote:
 
-> As of commit 5186421cbfe2 ("drm: Introduce epoch counter to
-> drm_connector") the drm_get_edid() function calls
-> drm_connector_update_edid_property() for us. There's no reason for us
-> to call it again.
+> I don't believe that it ever makes sense to read the EDID when a panel
+> is not powered and the powering on of the panel is the job of
+> prepare(). Let's make sure that this happens before we try to read the
+> EDID. We use the pm_runtime functions directly rather than directly
+> calling the normal prepare() function because the pm_runtime functions
+> are definitely refcounted whereas it's less clear if the prepare() one
+> is.
+> 
+> NOTE: I'm not 100% sure how EDID reading was working for folks in the
+> past, but I can only assume that it was failing on the initial attempt
+> and then working only later. This patch, presumably, will fix that. If
+> some panel out there really can read the EDID without powering up and
+> it's a big advantage to preserve the old behavior we can add a
+> per-panel flag. It appears that providing the DDC bus to the panel in
+> the past was somewhat uncommon in any case.
 > 
 
 Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
+Regards,
+Bjorn
+
 > Signed-off-by: Douglas Anderson <dianders@chromium.org>
 > ---
-> As Laurent pointed out [1] this is actually a pretty common
-> problem. His suggestion to do this more broadly is a good idea but
-> this series is probably a bit ambitious already so I would suggest
-> that be taken up separately.
-> 
-> [1] https://lore.kernel.org/r/YGphgcESWsozCi1y@pendragon.ideasonboard.com
 > 
 > (no changes since v1)
 > 
->  drivers/gpu/drm/panel/panel-simple.c | 1 -
->  1 file changed, 1 deletion(-)
+>  drivers/gpu/drm/panel/panel-simple.c | 8 +++++++-
+>  1 file changed, 7 insertions(+), 1 deletion(-)
 > 
 > diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
-> index 90a17ca79d06..c91e8aa108f7 100644
+> index c91e8aa108f7..40382c1be692 100644
 > --- a/drivers/gpu/drm/panel/panel-simple.c
 > +++ b/drivers/gpu/drm/panel/panel-simple.c
-> @@ -512,7 +512,6 @@ static int panel_simple_get_modes(struct drm_panel *panel,
->  	if (p->ddc) {
->  		struct edid *edid = drm_get_edid(connector, p->ddc);
+> @@ -510,12 +510,18 @@ static int panel_simple_get_modes(struct drm_panel *panel,
 >  
-> -		drm_connector_update_edid_property(connector, edid);
+>  	/* probe EDID if a DDC bus is available */
+>  	if (p->ddc) {
+> -		struct edid *edid = drm_get_edid(connector, p->ddc);
+> +		struct edid *edid;
+>  
+> +		pm_runtime_get_sync(panel->dev);
+> +
+> +		edid = drm_get_edid(connector, p->ddc);
 >  		if (edid) {
 >  			num += drm_add_edid_modes(connector, edid);
 >  			kfree(edid);
+>  		}
+> +
+> +		pm_runtime_mark_last_busy(panel->dev);
+> +		pm_runtime_put_autosuspend(panel->dev);
+>  	}
+>  
+>  	/* add hard-coded panel modes */
 > -- 
 > 2.31.1.368.gbe11c130af-goog
 > 
