@@ -2,137 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 99EA23696E0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Apr 2021 18:30:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7A65C3696FA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Apr 2021 18:32:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229691AbhDWQb2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Apr 2021 12:31:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41124 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229456AbhDWQb2 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Apr 2021 12:31:28 -0400
-Received: from mail-qk1-x736.google.com (mail-qk1-x736.google.com [IPv6:2607:f8b0:4864:20::736])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69731C061574
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Apr 2021 09:30:50 -0700 (PDT)
-Received: by mail-qk1-x736.google.com with SMTP id x11so50103244qkp.11
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Apr 2021 09:30:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=bnPkOae3N3QNLfW2JXPw4qTg19P7LS7x3meffpeNsUc=;
-        b=oOWzIy3mWuS6BWg8Zy0+TynqeZAiE3ZSt8ELRuOz1uAEN4ySjH+jCi7+4wq42lLCf6
-         pWI21DpyBztpl1GpAjQ0VdUrs+7dOsKKgaUwYt3s0vy5q2UZ1TNduOSnPD4SoxJHEWfY
-         5OltXJXVHWMShT/LiT6ZbueZcaIHry68371Iw=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=bnPkOae3N3QNLfW2JXPw4qTg19P7LS7x3meffpeNsUc=;
-        b=jPFE215+QSSG6At8Q9PI5pdTplA7uzCSdktezBO51WUUULEeJJAi0i/hBiZQXRyzGR
-         sF83UL6FDqHkthhtOzTr8i2HOzwRTf8sQQbpOA26VE3zVLN+20GvSk7Ul38sRwbaJ2no
-         72s3KTFIHTXXfio7Jg3dA3rHI/PQ06RtAKqw1oJNphNkC5JR6j7NLGvsQqr9JiCTQ5nU
-         2stnuZ0LrFYEl86yYuPaIdwtkHSgVBuQS7IwnW5yHgxiMOC7EzXdQQ2xNOVMRUC0sYcW
-         9GGMFPvnojhbCtES5aizeKd3ypRGZA8qbvGytXnkpUrGyUAGzALr6gSDmeyefuyS7PbZ
-         tJOQ==
-X-Gm-Message-State: AOAM531XSMJjWLSqBENDS+7FO0DAMj4zwgaQzbl52VlmW6yhkIHEmyhM
-        GRjDkfnEMRgl1lcIR6k7UGXS/sSeGxpLuA==
-X-Google-Smtp-Source: ABdhPJwtJ57Mo7VwL66v86upnZJaPOvI7hnrCelG2RW9taTNXF8bTM6WDRTR8Rww85DiWmJlkCQcRA==
-X-Received: by 2002:a37:6f87:: with SMTP id k129mr4871541qkc.470.1619195449503;
-        Fri, 23 Apr 2021 09:30:49 -0700 (PDT)
-Received: from mail-yb1-f174.google.com (mail-yb1-f174.google.com. [209.85.219.174])
-        by smtp.gmail.com with ESMTPSA id t18sm4738217qkj.75.2021.04.23.09.30.48
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 23 Apr 2021 09:30:49 -0700 (PDT)
-Received: by mail-yb1-f174.google.com with SMTP id c195so56261402ybf.9
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Apr 2021 09:30:48 -0700 (PDT)
-X-Received: by 2002:a25:2d0b:: with SMTP id t11mr2980774ybt.79.1619195448418;
- Fri, 23 Apr 2021 09:30:48 -0700 (PDT)
+        id S231437AbhDWQdK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Apr 2021 12:33:10 -0400
+Received: from mail.kernel.org ([198.145.29.99]:54412 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229456AbhDWQdJ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 23 Apr 2021 12:33:09 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 22791611BF;
+        Fri, 23 Apr 2021 16:32:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1619195553;
+        bh=JLReUbDXIj+9jT5M93OOSVqRmda7uDufts3sqxqivvc=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=LvhbBQllXVBmmjd5WuFog6GhnOiPlL71eGKpcJotruFS4IRt5KmHeJehCzLX1ckbw
+         iar6k/GiRl2DBTVY5ZQaIoum7tndT+b0/efQRog3WNBlDOKJ87GDqbXz4ly4vQTsJi
+         pOD1emZm2UAGmkZY12WRjJrpKlMMNniC7uhw+KYOJwEgGNYckWb2IyO+/8wkSbHVQ0
+         K4sd0TYKVjNNdnVexNVNlT3cd/2znSVzqdioS6oh6s1+7pFI6ELp/TyM8N9wfd1IMf
+         mxdrEgGTJmoHXhCCKo7ZzCNKaoVzctAoZGOkIlzbi2EhBf95jAblNV9VweUomv1DFD
+         WEsHwdbAxMfXQ==
+Date:   Fri, 23 Apr 2021 17:32:03 +0100
+From:   Mark Brown <broonie@kernel.org>
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        wcheng@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        dmitry.baryshkov@linaro.org
+Subject: Re: [PATCH] regulator: Fix current limit for QCOM PMIC VBUS
+Message-ID: <20210423163203.GF5507@sirena.org.uk>
+References: <20210423160658.1542090-1-bryan.odonoghue@linaro.org>
 MIME-Version: 1.0
-References: <20210416223950.3586967-1-dianders@chromium.org>
- <20210416153909.v4.24.If050957eaa85cf45b10bcf61e6f7fa61c9750ebf@changeid> <YILx/iODs+DFWWwm@builder.lan>
-In-Reply-To: <YILx/iODs+DFWWwm@builder.lan>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Fri, 23 Apr 2021 09:30:36 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=UhOKcSC5FPPZgXiqfFCYOu4iFGrhtrgfGz_ovT8Qi-6w@mail.gmail.com>
-Message-ID: <CAD=FV=UhOKcSC5FPPZgXiqfFCYOu4iFGrhtrgfGz_ovT8Qi-6w@mail.gmail.com>
-Subject: Re: [PATCH v4 24/27] drm/panel: panel-simple: Cache the EDID as long
- as we retain power
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andrzej Hajda <a.hajda@samsung.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@siol.net>,
-        Sam Ravnborg <sam@ravnborg.org>, Wolfram Sang <wsa@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>,
-        Steev Klimaszewski <steev@kali.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linus W <linus.walleij@linaro.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="Pgaa2uWPnPrfixyx"
+Content-Disposition: inline
+In-Reply-To: <20210423160658.1542090-1-bryan.odonoghue@linaro.org>
+X-Cookie: This is now.  Later is later.
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
 
-On Fri, Apr 23, 2021 at 9:12 AM Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
->
-> On Fri 16 Apr 17:39 CDT 2021, Douglas Anderson wrote:
->
-> > It doesn't make sense to go out to the bus and read the EDID over and
-> > over again. Let's cache it and throw away the cache when we turn power
-> > off from the panel. Autosuspend means that even if there are several
-> > calls to read the EDID before we officially turn the power on then we
-> > should get good use out of this cache.
-> >
-> > Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> > ---
-> >
-> > (no changes since v1)
-> >
-> >  drivers/gpu/drm/panel/panel-simple.c | 17 ++++++++++-------
-> >  1 file changed, 10 insertions(+), 7 deletions(-)
-> >
-> > diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
-> > index 40382c1be692..5a2953c4ca44 100644
-> > --- a/drivers/gpu/drm/panel/panel-simple.c
-> > +++ b/drivers/gpu/drm/panel/panel-simple.c
-> > @@ -189,6 +189,8 @@ struct panel_simple {
-> >       struct gpio_desc *enable_gpio;
-> >       struct gpio_desc *hpd_gpio;
-> >
-> > +     struct edid *edid;
-> > +
-> >       struct drm_display_mode override_mode;
-> >
-> >       enum drm_panel_orientation orientation;
-> > @@ -345,6 +347,9 @@ static int panel_simple_suspend(struct device *dev)
-> >       regulator_disable(p->supply);
-> >       p->unprepared_time = ktime_get();
-> >
-> > +     kfree(p->edid);
-> > +     p->edid = NULL;
->
-> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
->
->
-> But separate of this, shouldn't the driver have a pm_runtime_disable()
-> in the remove path to synchronize the autosleep? Or is that not how that
-> works?
+--Pgaa2uWPnPrfixyx
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Indeed! I'll add a patch to the start of my v5 (coming shortly) that
-fixes this. Thanks for catching!
+On Fri, Apr 23, 2021 at 05:06:58PM +0100, Bryan O'Donoghue wrote:
 
--Doug
+> +	/* Set OTG current limit to 3000mA up from bootloader set 2000mA */
+> +	regmap_update_bits(regmap, base + OTG_CURRENT_LIMIT_CFG,
+> +			   OTG_CURRENT_LIMIT_MASK, OTG_CURRENT_LIMIT_3000MA);
+
+This seems like something that needs to be configured per system, the
+system may not be physically capable of delivering an additional amp
+(150% of the current defaults) safely.  It's going to be better to be
+out of spec for high current USB devices than to exceed safe physical
+limits, there's a good solid reason why the regulator API never touches
+the hardware without explicit constraints allowing it to do so.
+
+I also thought there was support in the USB specs for negotiating how
+much power is drawn (not that everything will DTRT there but still)?
+
+--Pgaa2uWPnPrfixyx
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmCC9oIACgkQJNaLcl1U
+h9BYLAf+ImhrF5tT7tD8RumX+O+pI1+35R4TEcnAsjFRDZ+PUFOCmT1iosEE53q4
+IOXS4g27Fa7mMbW11aS5ODzNms9YO5gVE6w6fpjImXIgOE8WEaEEblKtM6R2aAtq
+eSXzvss1gbCSh4I4AS/FF7nBaXzV3Z04WgGkfSkcMxgOftQu/am4IX3782r5wz/l
+sHKAsIRDQoa3wx9PGQNkM1B+QAjNO7m5n1IxeqwDZEiyHE8XhtE8YArR12IMjaLH
+rZSA2RQtggT7FLN6tCIv7aFb3sRwfcPSuWqjYTC+GAGA8n0j+nhgdEkhxmxthAJS
+NoJ4wxFgO8vKBM53Sxktoq07UEW4eQ==
+=2uiC
+-----END PGP SIGNATURE-----
+
+--Pgaa2uWPnPrfixyx--
