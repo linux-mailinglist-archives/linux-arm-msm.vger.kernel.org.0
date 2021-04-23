@@ -2,114 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1AC94368F70
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Apr 2021 11:33:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CB83F368FB5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Apr 2021 11:46:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241820AbhDWJeO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Apr 2021 05:34:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33386 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241770AbhDWJeM (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Apr 2021 05:34:12 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA00BC06174A
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Apr 2021 02:33:34 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id s7so47590433wru.6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Apr 2021 02:33:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=Y9sjCGRBeC9olD1ipL8CilaBrM51tepXMv+9DOr/vcA=;
-        b=IdByi7XRnG6bTBkYTyr4CaMa5Nfbl4pVA7Yx4gu/FsVVGIyqZP6SbSkqaUUOD3bU3y
-         UadZLBdrcoIatneM6gVlCPRzuyeUMR/m8ojc+WeqAbKIsTgXxfvepMOpEhHt1HXnPBv/
-         dewdHTevMuS4bCqms2tpztBfTIN5G6wQ4cgIIfK5Gq22J71Q5e8D5eBus10Ofw36zuGI
-         jFvmTru4QlpTaUkwI/d6IewwEK9/CucL9VhofbVJV832jVKprPyDWpq2vqgvU/q7aFgW
-         Cdm7oY2dBfUIJOb57+aouNSiEQeZnK2UiK6zZW2sZDRTZFWtWCvABVY12MB0cWwxw3ME
-         Kuaw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=Y9sjCGRBeC9olD1ipL8CilaBrM51tepXMv+9DOr/vcA=;
-        b=LY44jHsPaggZRwJH4T/eCteNbmlUF1dRcEgjCYUj/TSyu6fbTqxKYoH6uF02NRVWjB
-         w4hRLUlPO5wUOm0httYs3ovU477/TU914o27ij5KmiSrpuRz8Nxfhb8aNuv5qDXeS2UH
-         HJyD2FRGN3bjx4QO1zMmOZspQ/P5MWxjfF3t42TTJkDeDf9y5qga1ig6DwDyFaZHUe8Q
-         NiprI36XrKh16AQ1dt3JJVI5CZile5XPURJP1N8hirZxweindJf+5KyKEXk/WVgO+ELf
-         H7g4uISIYzYur5GVCQ86CHl9V1WXvMW6XYQz603pWRHFJQBm5Eld7fP89+GuBjTWMTfd
-         mvaQ==
-X-Gm-Message-State: AOAM53109b6GpuouWqxly235rtZaOVLo99bC/+lZ9Nr/oW9xmdS0Ea0C
-        iROhU1jLPmo9GFzG0Y84B0rDmw==
-X-Google-Smtp-Source: ABdhPJx/qWGko2tNm6hwMQwKav/UXX7Xf0wKSFXBriRhNUQxT2/YyVJKUtx2iyS7weGO1NGoXQ0fYA==
-X-Received: by 2002:adf:fbc8:: with SMTP id d8mr3560558wrs.94.1619170413462;
-        Fri, 23 Apr 2021 02:33:33 -0700 (PDT)
-Received: from dell ([91.110.221.215])
-        by smtp.gmail.com with ESMTPSA id a22sm8154282wrc.59.2021.04.23.02.33.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Apr 2021 02:33:32 -0700 (PDT)
-Date:   Fri, 23 Apr 2021 10:33:31 +0100
-From:   Lee Jones <lee.jones@linaro.org>
-To:     Guru Das Srinagesh <gurus@codeaurora.org>
-Cc:     Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        Mark Brown <broonie@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 0/3] Add Qualcomm Technologies, Inc. PM8008 MFD driver
-Message-ID: <20210423093331.GF6446@dell>
-References: <cover.1618278453.git.gurus@codeaurora.org>
- <20210420164659.GA21665@codeaurora.org>
+        id S241898AbhDWJrH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Apr 2021 05:47:07 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:46118 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S241818AbhDWJrE (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 23 Apr 2021 05:47:04 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1619171188; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=Y4r/sBksddih4An+rVdi9oFleJsyckug23va/2vBzpA=;
+ b=YO1NQJnRB19iJi6IVW8coBuapJT8sf08SpIxOHLYYtLZZP7477x6h4ZhCW8ddVv1SRlJRbIG
+ oduYVKEELXwVf4wPMla5Sr78f6vqdIByHxLZfoEdHo9CsgWmAQDPPyOTpe9mIEc1Dc5GQJ0u
+ Ry2ZGLUbFVbUNDhEXF7YHYk2CEI=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
+ 60829772215b831afb08e8da (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 23 Apr 2021 09:46:26
+ GMT
+Sender: rojay=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id E0E2EC43143; Fri, 23 Apr 2021 09:46:26 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: rojay)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id C3513C433F1;
+        Fri, 23 Apr 2021 09:46:24 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20210420164659.GA21665@codeaurora.org>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Fri, 23 Apr 2021 15:16:24 +0530
+From:   rojay@codeaurora.org
+To:     kernel test robot <lkp@intel.com>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        kbuild-all@lists.01.org, clang-built-linux@googlegroups.com,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        saiprakash.ranjan@codeaurora.org, msavaliy@qti.qualcomm.com
+Subject: Re: [PATCH V2] arm64: dts: sc7280: Add qspi, qupv3_0 and qupv3_1
+ nodes
+In-Reply-To: <202104230503.T7HqjQbJ-lkp@intel.com>
+References: <20210422150556.450-1-rojay@codeaurora.org>
+ <202104230503.T7HqjQbJ-lkp@intel.com>
+Message-ID: <6950c9c7b54892b2a8e81915743431ea@codeaurora.org>
+X-Sender: rojay@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 20 Apr 2021, Guru Das Srinagesh wrote:
-
-> On Mon, Apr 12, 2021 at 07:00:24PM -0700, Guru Das Srinagesh wrote:
-> > Changes from v2:
-> >   - Collected Rob Herring's Acked-by for the IRQ listing patch
-> >   - Addressed Rob's comments for the dt-bindings patch
-> > 
-> > Changes from v1:
-> >   - Removed errant Change-Id from dt-bindings IRQ patch and gathered Bjorn's
-> >     Reviewed-by
-> >   - Fixed up YAML errors using make dt_binding_check
-> > 
-> > This driver is dependent on changes that have been made to the regmap-irq
-> > framework that have currently been accepted [1][2] in regmap.git upstream by
-> > Mark Brown but haven't made it to Linus' tree yet. For this reason, this driver
-> > has been based on the tip of regmap.git and not mfd.git.
-> > 
-> > Those changes, and this driver, are the result of a rewrite effort that was
-> > promised a long ago [3]. The framework changes and this driver have been tested
-> > and verified end-to-end on an internal platform.
-> > 
-> > [1] https://lore.kernel.org/lkml/20210318183607.gFxO2hoTO274vl3jUuxWbi19rq9wQELzN-y3B4jvO10@z/
-> > [2] https://lore.kernel.org/lkml/161726943419.2413.4844313396830856637.b4-ty@kernel.org/
-> > [3] https://lore.kernel.org/lkml/20200519185757.GA13992@codeaurora.org/
+On 2021-04-23 02:52, kernel test robot wrote:
+> Hi Roja,
 > 
-> Hi Lee, mfd reviewers,
+> Thank you for the patch! Yet something to improve:
 > 
-> This new driver depends on three regmap-irq framework changes that have
-> been accepted by Mark (please see above) and hence will land only in the
-> next rc-1 release. I just wanted to make sure that this patch series was
-> on your radar [1]. The dt-bindings has been Acked by Rob already, and
-> I'd be happy to address any review comments while patiently waiting for
-> the dependencies to land.
+> [auto build test ERROR on next-20210422]
+> [cannot apply to robh/for-next v5.12-rc8 v5.12-rc7 v5.12-rc6 v5.12-rc8]
+> [If your patch is applied to the wrong git tree, kindly drop us a note.
+> And when submitting patch, we suggest to use '--base' as documented in
+> https://git-scm.com/docs/git-format-patch]
+> 
+> url:
+> https://github.com/0day-ci/linux/commits/Roja-Rani-Yarubandi/arm64-dts-sc7280-Add-qspi-qupv3_0-and-qupv3_1-nodes/20210422-230756
+> base:    c457d9676496f5a895509f9c510278beaaffc829
+> config: arm64-randconfig-r012-20210421 (attached as .config)
+> compiler: clang version 13.0.0 (https://github.com/llvm/llvm-project
+> f5446b769a7929806f72256fccd4826d66502e59)
+> reproduce (this is a W=1 build):
+>         wget
+> https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross
+> -O ~/bin/make.cross
+>         chmod +x ~/bin/make.cross
+>         # install arm64 cross compiling tool for clang build
+>         # apt-get install binutils-aarch64-linux-gnu
+>         #
+> https://github.com/0day-ci/linux/commit/78ed1b1d4c9f34dd06ae4494b78d70334fa8d7c1
+>         git remote add linux-review https://github.com/0day-ci/linux
+>         git fetch --no-tags linux-review
+> Roja-Rani-Yarubandi/arm64-dts-sc7280-Add-qspi-qupv3_0-and-qupv3_1-nodes/20210422-230756
+>         git checkout 78ed1b1d4c9f34dd06ae4494b78d70334fa8d7c1
+>         # save the attached .config to linux build tree
+>         COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1
+> ARCH=arm64
+> 
+> If you fix the issue, kindly add following tag as appropriate
+> Reported-by: kernel test robot <lkp@intel.com>
+> 
+> All errors (new ones prefixed by >>):
+> 
+>>> Error: arch/arm64/boot/dts/qcom/sc7280.dtsi:325.31-32 syntax error
+>    FATAL ERROR: Unable to parse input tree
+> 
 
-Yes, it's on my to-review list.
+This error is due to "clk_virt" node parse issue which will be defined 
+in ICC patches
+https://lore.kernel.org/patchwork/project/lkml/list/?series=488429
+I also mentioned the dependency in the patch.
 
-Linus is about to release v5.12.  I'll review this set in good time.
-
--- 
-Lee Jones [李琼斯]
-Senior Technical Lead - Developer Services
-Linaro.org │ Open source software for Arm SoCs
-Follow Linaro: Facebook | Twitter | Blog
+> ---
+> 0-DAY CI Kernel Test Service, Intel Corporation
+> https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
