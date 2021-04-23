@@ -2,118 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E7038369AAE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Apr 2021 21:12:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 161AE369AB3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Apr 2021 21:12:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232291AbhDWTMj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Apr 2021 15:12:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48784 "EHLO
+        id S243765AbhDWTMl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Apr 2021 15:12:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48790 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232212AbhDWTMj (ORCPT
+        with ESMTP id S243754AbhDWTMk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Apr 2021 15:12:39 -0400
-Received: from mail-qt1-x829.google.com (mail-qt1-x829.google.com [IPv6:2607:f8b0:4864:20::829])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58224C061574
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Apr 2021 12:12:02 -0700 (PDT)
-Received: by mail-qt1-x829.google.com with SMTP id q4so8830089qtn.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Apr 2021 12:12:02 -0700 (PDT)
+        Fri, 23 Apr 2021 15:12:40 -0400
+Received: from mail-qk1-x72e.google.com (mail-qk1-x72e.google.com [IPv6:2607:f8b0:4864:20::72e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85128C06174A
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Apr 2021 12:12:03 -0700 (PDT)
+Received: by mail-qk1-x72e.google.com with SMTP id 66so11110384qkf.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Apr 2021 12:12:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=marek-ca.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=kEaQvWN4Z8yVJOtNMFNTVQ5YEguXpuTG96s4DFICCJ0=;
-        b=kuLS0suPNfLfL/e8JYU0ZgCsM09iPvMie9U8PBPzCHE65hayjIIyW/c4VG+rtLVCSu
-         05TvT3RLM45wuNRjopgjY3Ors5GfQ3GgS4MzsYw0AROaDcmp3HGCEXLesOWJqNnwyUv/
-         KNMT2zM+KPa66AQGjuCtTmcxbdAnZZFMYgSIClJJe4aldjscpatDVowDz9PfHRWwzSvK
-         5ehh2Cv0Q2JZVupwoAxE/5tR84zK+L89u6vsLAHhgN95YQBxjXrULY0sjy5EImrS4d25
-         9KA8QFscriXuiQggAaZlQ3YITF3zntxWUoR5StcQnymT/ycSe8fELhGgl1gqMv0AD8dM
-         tXtw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=PiGI3myDVeLMq9GsTguuYbk0A7yStjg2eQhCDVfOEQY=;
+        b=DWzTq3eg0IbdDQvqfaFhQmhIGoIvmyqq6SW2iUme8FM7yZjWOixBh34TBi9My2y/cG
+         xYYjK+Y4scVUxuF79TXAPOxnyhucsXgaHzlJv0YzaQXhEe+3TQ9oO7obCCoCjoI7IlHZ
+         Vk0CLw0Isl2ZE9ZtHcawKjRZsWUixj+WM26qVsLinOQrozGuf7AnfzwBwkdqC3pkVv0j
+         pPpSx791zPpHZx9ACX+6oZtf8xyF7KaShxjG9ARa8QJNOCBb54nA5l2NC5UdjPeUGU4J
+         0qp3G65Q+VgzhA7XcxriT74sY/a+ShwNI9pV9HwAQQ27wdZXSZwCMO9xm9BM+GUrNrUv
+         5dYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=kEaQvWN4Z8yVJOtNMFNTVQ5YEguXpuTG96s4DFICCJ0=;
-        b=P1PX8W2faqTDhkiDRX+eGx/Y26Zh6UZowVEdY/Jeu0QbqRUtAt70gBMFP0VOFs47P5
-         1vpuwSHr/xibyc/AE6uxGrdLDoD8z00aPPoXK/3Wd3D1mtcYHXPGsxDLFQEYkG4FYppa
-         6UKh0ADIe9O0WFzOpP59BvPtKX9J15Z9Acf+Tj+CJOcXkKlspXKywFSFTCNFluS0gY5g
-         ODB85AE0VishYq/tMDr0WaQJUBBJlLqzYqRFOJy1FVVwq04+NVB5GhYyO7NWSDiob5nT
-         rNAECYepeE/0Euj275xfeh9yqiZZ2V+NapIwvlyiaXPKGqu7Guv30wuUzbFE0NsnJxWH
-         YstQ==
-X-Gm-Message-State: AOAM531oCMFLezlb8vaxCjqkP4ZRkKYH1S+pofOO9WX9DNcB7Z12N1UC
-        fa3rz0UONU1JFj8JpNIX5dqbyw==
-X-Google-Smtp-Source: ABdhPJyNFE1wEhOEH03d5WveOtjIevlxoZNdPt2fGHLKPGOwI4mNzLVERkLgfGOFwAeF0imWrkJqYA==
-X-Received: by 2002:ac8:7191:: with SMTP id w17mr5368523qto.199.1619205121519;
-        Fri, 23 Apr 2021 12:12:01 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=PiGI3myDVeLMq9GsTguuYbk0A7yStjg2eQhCDVfOEQY=;
+        b=eyMPdqkMX0GQYl3RBPEaxau0IfoDHPEXXi615IPeOtK20sRc5O6KRpS1Lm0bElS41B
+         pT0oAOGg2UbToS5f+sGfIk0UaOl5P89tnlODmJrwyQdPn0LwBOfMkZPneeVtrzzVfv0N
+         kYbCTvqcU2FPK1PtoQDrlHz39mXcNwBkHhluQKeoAAugBsjzID95PRvORG5LtFbvnyEW
+         E62CvLgfjat9pbCyChzlUPWLZqRHl8he9eRkO3owBxVQqaHhl8PoQMlyjcFWeqZC5I3L
+         u+tWeHY9gBjH/xWOLcMR2A/Cz+3hjJgssuPgnUXto0aZdSw7pzfucomcXvHOye98dxKn
+         CROg==
+X-Gm-Message-State: AOAM533zGJxY6U7SNG91Udb2MaestYp03cK0j8OCfdc0PGa0wC7TWL6S
+        6Bkpv0oCRRFBoRCVf7Z3hM7Lmw==
+X-Google-Smtp-Source: ABdhPJxw5CDCTryTzVXDnpMJOxRnGYQZZ8taSXNSMcv35dkh9kK80RXJyrGVHu6/4JO0czCsHoI80A==
+X-Received: by 2002:a37:b947:: with SMTP id j68mr5634704qkf.108.1619205122814;
+        Fri, 23 Apr 2021 12:12:02 -0700 (PDT)
 Received: from localhost.localdomain (modemcable068.184-131-66.mc.videotron.ca. [66.131.184.68])
-        by smtp.gmail.com with ESMTPSA id a22sm4834630qtp.80.2021.04.23.12.11.59
+        by smtp.gmail.com with ESMTPSA id a22sm4834630qtp.80.2021.04.23.12.12.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Apr 2021 12:12:01 -0700 (PDT)
+        Fri, 23 Apr 2021 12:12:02 -0700 (PDT)
 From:   Jonathan Marek <jonathan@marek.ca>
 To:     freedreno@lists.freedesktop.org
-Cc:     Akhil P Oommen <akhilpo@codeaurora.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Bernard Zhao <bernard@vivo.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Dave Airlie <airlied@redhat.com>,
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         David Airlie <airlied@linux.ie>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        dri-devel@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
-        GPU), Emil Velikov <emil.velikov@collabora.com>,
-        Eric Anholt <eric@anholt.net>,
-        Iskren Chernev <iskren.chernev@gmail.com>,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        "Kristian H. Kristensen" <hoegsberg@google.com>,
-        Lee Jones <lee.jones@linaro.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
         linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
-        linux-kernel@vger.kernel.org (open list),
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Rikard Falkeborn <rikard.falkeborn@gmail.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Sean Paul <sean@poorly.run>,
-        Sharat Masetty <smasetty@codeaurora.org>,
-        Shawn Guo <shawn.guo@linaro.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Zhenzhong Duan <zhenzhong.duan@gmail.com>
-Subject: [PATCH 0/5] drm/msm: add MSM_BO_CACHED_COHERENT (and related changes)
-Date:   Fri, 23 Apr 2021 15:08:16 -0400
-Message-Id: <20210423190833.25319-1-jonathan@marek.ca>
+        dri-devel@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
+        GPU), linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH 1/5] drm/msm: remove unnecessary mmap logic for cached BOs
+Date:   Fri, 23 Apr 2021 15:08:17 -0400
+Message-Id: <20210423190833.25319-2-jonathan@marek.ca>
 X-Mailer: git-send-email 2.26.1
+In-Reply-To: <20210423190833.25319-1-jonathan@marek.ca>
+References: <20210423190833.25319-1-jonathan@marek.ca>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for MSM_BO_CACHED_COHERENT, a coherent version of MSM_BO_CACHED
-which is implemented by setting the IOMMU_CACHE flag.
+No one knows what this is for anymore, so just remove it.
 
-Jonathan Marek (5):
-  drm/msm: remove unnecessary mmap logic for cached BOs
-  drm/msm: replace MSM_BO_UNCACHED with MSM_BO_WC for internal objects
-  drm/msm: use the right pgprot when mapping BOs in the kernel
-  drm/msm: add MSM_BO_CACHED_COHERENT
-  drm/msm: deprecate MSM_BO_UNCACHED (map as writecombine instead)
+Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+---
+ drivers/gpu/drm/msm/msm_gem.c | 15 +++------------
+ 1 file changed, 3 insertions(+), 12 deletions(-)
 
- drivers/gpu/drm/msm/adreno/a5xx_gpu.c       |  4 +--
- drivers/gpu/drm/msm/adreno/a5xx_power.c     |  2 +-
- drivers/gpu/drm/msm/adreno/a5xx_preempt.c   |  4 +--
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c       |  2 +-
- drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c |  2 +-
- drivers/gpu/drm/msm/adreno/adreno_device.c  |  1 +
- drivers/gpu/drm/msm/adreno/adreno_gpu.c     |  2 +-
- drivers/gpu/drm/msm/dsi/dsi_host.c          |  2 +-
- drivers/gpu/drm/msm/msm_drv.c               |  3 +-
- drivers/gpu/drm/msm/msm_drv.h               |  1 +
- drivers/gpu/drm/msm/msm_gem.c               | 34 ++++++++++-----------
- include/uapi/drm/msm_drm.h                  |  7 ++---
- 12 files changed, 33 insertions(+), 31 deletions(-)
-
+diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
+index b199942266a2..09abda42d764 100644
+--- a/drivers/gpu/drm/msm/msm_gem.c
++++ b/drivers/gpu/drm/msm/msm_gem.c
+@@ -207,21 +207,12 @@ int msm_gem_mmap_obj(struct drm_gem_object *obj,
+ 	vma->vm_flags &= ~VM_PFNMAP;
+ 	vma->vm_flags |= VM_MIXEDMAP;
+ 
+-	if (msm_obj->flags & MSM_BO_WC) {
++	if (msm_obj->flags & MSM_BO_WC)
+ 		vma->vm_page_prot = pgprot_writecombine(vm_get_page_prot(vma->vm_flags));
+-	} else if (msm_obj->flags & MSM_BO_UNCACHED) {
++	else if (msm_obj->flags & MSM_BO_UNCACHED)
+ 		vma->vm_page_prot = pgprot_noncached(vm_get_page_prot(vma->vm_flags));
+-	} else {
+-		/*
+-		 * Shunt off cached objs to shmem file so they have their own
+-		 * address_space (so unmap_mapping_range does what we want,
+-		 * in particular in the case of mmap'd dmabufs)
+-		 */
+-		vma->vm_pgoff = 0;
+-		vma_set_file(vma, obj->filp);
+-
++	else
+ 		vma->vm_page_prot = vm_get_page_prot(vma->vm_flags);
+-	}
+ 
+ 	return 0;
+ }
 -- 
 2.26.1
 
