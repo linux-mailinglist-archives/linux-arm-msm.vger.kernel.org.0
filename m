@@ -2,336 +2,188 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3CB54369C4A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Apr 2021 23:55:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CDDD4369D85
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Apr 2021 01:44:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244084AbhDWV41 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Apr 2021 17:56:27 -0400
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:56912 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244006AbhDWV40 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Apr 2021 17:56:26 -0400
-Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
-  by alexa-out.qualcomm.com with ESMTP; 23 Apr 2021 14:55:49 -0700
-X-QCInternal: smtphost
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/AES256-SHA; 23 Apr 2021 14:55:48 -0700
-X-QCInternal: smtphost
-Received: from rajeevny-linux.qualcomm.com ([10.204.66.121])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 24 Apr 2021 03:25:17 +0530
-Received: by rajeevny-linux.qualcomm.com (Postfix, from userid 2363605)
-        id 0D722212C3; Sat, 24 Apr 2021 03:25:15 +0530 (IST)
-From:   Rajeev Nandan <rajeevny@codeaurora.org>
-To:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
-Cc:     Rajeev Nandan <rajeevny@codeaurora.org>,
-        linux-kernel@vger.kernel.org, robdclark@gmail.com,
-        dianders@chromium.org, mkrishn@codeaurora.org,
-        kalyan_t@codeaurora.org, hoegsberg@chromium.org,
-        abhinavk@codeaurora.org, seanpaul@chromium.org
-Subject: [v2 2/2] backlight: Add DisplayPort aux backlight driver
-Date:   Sat, 24 Apr 2021 03:25:04 +0530
-Message-Id: <1619214904-10218-3-git-send-email-rajeevny@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1619214904-10218-1-git-send-email-rajeevny@codeaurora.org>
-References: <1619214904-10218-1-git-send-email-rajeevny@codeaurora.org>
+        id S232508AbhDWXpL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Apr 2021 19:45:11 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:53778 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229718AbhDWXpJ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 23 Apr 2021 19:45:09 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1619221472; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=1rAl4/SGpigHk/EP46KWRcz1cpKU6hDAhQ42+J5NZgM=; b=AM2+gIq8vSPxCgpWDjC0NRVHT2Hgv2zNf5cBhI7rOimIHtpau/uoGcqOezGH2UD1DSMpJGlD
+ XQPeZr7rZYdORMWI1SccDOdk5kESOac6UKo205bWkovZGPp42QeSbPZlNBl62ojlLi0BMWt9
+ CjDZoog6n/AV3LGRaePqPTKBlf8=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
+ 60835bde215b831afb965f69 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 23 Apr 2021 23:44:30
+ GMT
+Sender: asutoshd=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 27212C43145; Fri, 23 Apr 2021 23:44:29 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
+Received: from [192.168.8.168] (cpe-70-95-149-85.san.res.rr.com [70.95.149.85])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: asutoshd)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 40434C433D3;
+        Fri, 23 Apr 2021 23:44:27 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 40434C433D3
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=asutoshd@codeaurora.org
+Subject: Re: [PATCH v20 1/2] scsi: ufs: Enable power management for wlun
+To:     Adrian Hunter <adrian.hunter@intel.com>, cang@codeaurora.org,
+        martin.petersen@oracle.com, linux-scsi@vger.kernel.org
+Cc:     linux-arm-msm@vger.kernel.org,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Stanley Chu <stanley.chu@mediatek.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Steven Rostedt <rostedt@goodmis.org>,
+        Ingo Molnar <mingo@redhat.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Lee Jones <lee.jones@linaro.org>,
+        Bean Huo <beanhuo@micron.com>,
+        Kiwoong Kim <kwmad.kim@samsung.com>,
+        Colin Ian King <colin.king@canonical.com>,
+        Wei Yongjun <weiyongjun1@huawei.com>,
+        Yue Hu <huyue2@yulong.com>,
+        Bart van Assche <bvanassche@acm.org>,
+        "Gustavo A. R. Silva" <gustavoars@kernel.org>,
+        Dinghao Liu <dinghao.liu@zju.edu.cn>,
+        Jaegeuk Kim <jaegeuk@kernel.org>,
+        Satya Tangirala <satyat@google.com>,
+        open list <linux-kernel@vger.kernel.org>,
+        "moderated list:ARM/SAMSUNG S3C, S5P AND EXYNOS ARM ARCHITECTURES" 
+        <linux-arm-kernel@lists.infradead.org>,
+        "open list:ARM/SAMSUNG S3C, S5P AND EXYNOS ARM ARCHITECTURES" 
+        <linux-samsung-soc@vger.kernel.org>,
+        "moderated list:UNIVERSAL FLASH STORAGE HOST CONTROLLER DRIVER..." 
+        <linux-mediatek@lists.infradead.org>
+References: <cover.1618600985.git.asutoshd@codeaurora.org>
+ <d660b8d4e1fb192810abd09a8ff0ef4d9f6b96cd.1618600985.git.asutoshd@codeaurora.org>
+ <fdadd467-b613-d800-18c5-be064396fd10@intel.com>
+ <07e3ea07-e1c3-7b8c-e398-8b008f873e6d@codeaurora.org>
+ <90809796-1c32-3709-13d3-65e4d5c387cc@intel.com>
+ <1bc4a73e-b22a-6bad-2583-3a0ffa979414@intel.com>
+ <651f5d8a-5ab7-77dd-3fed-05feb3fd3e1a@codeaurora.org>
+ <efe71230-5b6a-22a8-1aef-f1cae046df22@intel.com>
+ <e6f3946a-dbe7-6b42-e43c-d3f8d705c732@intel.com>
+ <973e0bbb-ac2d-7196-2e25-37aee2b77b46@intel.com>
+From:   "Asutosh Das (asd)" <asutoshd@codeaurora.org>
+Message-ID: <a71d6ac3-0dc6-4fa8-3643-6d3473d08797@codeaurora.org>
+Date:   Fri, 23 Apr 2021 16:44:26 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.0
+MIME-Version: 1.0
+In-Reply-To: <973e0bbb-ac2d-7196-2e25-37aee2b77b46@intel.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add backlight driver for the panels supporting backlight control
-using DPCD registers on the DisplayPort aux channel.
+On 4/23/2021 1:01 AM, Adrian Hunter wrote:
+>>
+>>
+> 
 
-Changes in v2:
-- New (most of the code reused from drm_dp_aux_backlight.c of v1)
+Hi Adrian,
+Thanks for the help.
+I made the changes and tried to reproduce it.
+My setup becomes non-responsive and resets.
+I don't think it's related to this issue though.
 
-Signed-off-by: Rajeev Nandan <rajeevny@codeaurora.org>
----
- drivers/video/backlight/Kconfig            |   7 +
- drivers/video/backlight/Makefile           |   1 +
- drivers/video/backlight/dp_aux_backlight.c | 245 +++++++++++++++++++++++++++++
- 3 files changed, 253 insertions(+)
- create mode 100644 drivers/video/backlight/dp_aux_backlight.c
+I hadn't set rpm_lvl and spm_lvl to 0 while testing the other day.
+Setting those to 0, it proceeds further and now it becomes unresponsive. 
+So I still don't clearly see the issue that you're seeing. However, I'd 
+make the suggested changes and push it in next version.
 
-diff --git a/drivers/video/backlight/Kconfig b/drivers/video/backlight/Kconfig
-index d83c87b..82c88f0 100644
---- a/drivers/video/backlight/Kconfig
-+++ b/drivers/video/backlight/Kconfig
-@@ -456,6 +456,13 @@ config BACKLIGHT_LED
- 	  If you have a LCD backlight adjustable by LED class driver, say Y
- 	  to enable this driver.
- 
-+config BACKLIGHT_DP_AUX
-+       tristate "DisplayPort aux backlight driver"
-+       depends on DRM && DRM_KMS_HELPER
-+       help
-+         If you have a panel backlight controlled by DPCD registers
-+         on the DisplayPort aux channel, say Y to enable this driver.
-+
- endif # BACKLIGHT_CLASS_DEVICE
- 
- endmenu
-diff --git a/drivers/video/backlight/Makefile b/drivers/video/backlight/Makefile
-index 685f3f1..ba23c7c 100644
---- a/drivers/video/backlight/Makefile
-+++ b/drivers/video/backlight/Makefile
-@@ -57,3 +57,4 @@ obj-$(CONFIG_BACKLIGHT_WM831X)		+= wm831x_bl.o
- obj-$(CONFIG_BACKLIGHT_ARCXCNN) 	+= arcxcnn_bl.o
- obj-$(CONFIG_BACKLIGHT_RAVE_SP)		+= rave-sp-backlight.o
- obj-$(CONFIG_BACKLIGHT_LED)		+= led_bl.o
-+obj-$(CONFIG_BACKLIGHT_DP_AUX)		+= dp_aux_backlight.o
-diff --git a/drivers/video/backlight/dp_aux_backlight.c b/drivers/video/backlight/dp_aux_backlight.c
-new file mode 100644
-index 00000000..235fb42
---- /dev/null
-+++ b/drivers/video/backlight/dp_aux_backlight.c
-@@ -0,0 +1,245 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * Backlight driver to control the brightness over DisplayPort aux channel.
-+ */
-+
-+#include <linux/backlight.h>
-+#include <linux/err.h>
-+#include <linux/gpio/consumer.h>
-+#include <linux/kernel.h>
-+#include <linux/module.h>
-+#include <linux/platform_device.h>
-+#include <drm/drm_dp_helper.h>
-+
-+#define DP_AUX_MAX_BRIGHTNESS		0xffff
-+
-+/**
-+ * struct dp_aux_backlight - DisplayPort aux backlight data
-+ * @dev: pointer to our device.
-+ * @aux: the DisplayPort aux channel.
-+ * @enable_gpio: the backlight enable gpio.
-+ * @enabled: true if backlight is enabled else false.
-+ */
-+struct dp_aux_backlight {
-+	struct device *dev;
-+	struct drm_dp_aux *aux;
-+	struct gpio_desc *enable_gpio;
-+	bool enabled;
-+};
-+
-+static struct drm_dp_aux *i2c_to_aux(struct i2c_adapter *i2c)
-+{
-+	return container_of(i2c, struct drm_dp_aux, ddc);
-+}
-+
-+static int dp_aux_backlight_enable(struct dp_aux_backlight *aux_bl)
-+{
-+	u8 val = 0;
-+	int ret;
-+
-+	if (aux_bl->enabled)
-+		return 0;
-+
-+	/* Set backlight control mode */
-+	ret = drm_dp_dpcd_readb(aux_bl->aux, DP_EDP_BACKLIGHT_MODE_SET_REGISTER,
-+				&val);
-+	if (ret < 0)
-+		return ret;
-+
-+	val &= ~DP_EDP_BACKLIGHT_CONTROL_MODE_MASK;
-+	val |= DP_EDP_BACKLIGHT_CONTROL_MODE_DPCD;
-+	ret = drm_dp_dpcd_writeb(aux_bl->aux, DP_EDP_BACKLIGHT_MODE_SET_REGISTER,
-+				 val);
-+	if (ret < 0)
-+		return ret;
-+
-+	/* Enable backlight */
-+	ret = drm_dp_dpcd_readb(aux_bl->aux, DP_EDP_DISPLAY_CONTROL_REGISTER,
-+				&val);
-+	if (ret < 0)
-+		return ret;
-+
-+	val |= DP_EDP_BACKLIGHT_ENABLE;
-+	ret = drm_dp_dpcd_writeb(aux_bl->aux, DP_EDP_DISPLAY_CONTROL_REGISTER,
-+				 val);
-+	if (ret < 0)
-+		return ret;
-+
-+	if (aux_bl->enable_gpio)
-+		gpiod_set_value(aux_bl->enable_gpio, 1);
-+
-+	aux_bl->enabled = true;
-+
-+	return 0;
-+}
-+
-+static int dp_aux_backlight_disable(struct dp_aux_backlight *aux_bl)
-+{
-+	u8 val = 0;
-+	int ret;
-+
-+	if (!aux_bl->enabled)
-+		return 0;
-+
-+	if (aux_bl->enable_gpio)
-+		gpiod_set_value(aux_bl->enable_gpio, 0);
-+
-+	ret = drm_dp_dpcd_readb(aux_bl->aux, DP_EDP_DISPLAY_CONTROL_REGISTER,
-+				&val);
-+	if (ret < 0)
-+		return ret;
-+
-+	val &= ~DP_EDP_BACKLIGHT_ENABLE;
-+	ret = drm_dp_dpcd_writeb(aux_bl->aux, DP_EDP_DISPLAY_CONTROL_REGISTER,
-+				 val);
-+	if (ret < 0)
-+		return ret;
-+
-+	aux_bl->enabled = false;
-+
-+	return 0;
-+}
-+
-+static int dp_aux_backlight_update_status(struct backlight_device *bd)
-+{
-+	struct dp_aux_backlight *aux_bl = bl_get_data(bd);
-+	u16 brightness = backlight_get_brightness(bd);
-+	u8 val[2] = { 0x0 };
-+	int ret = 0;
-+
-+	if (brightness > 0) {
-+		val[0] = brightness >> 8;
-+		val[1] = brightness & 0xff;
-+		ret = drm_dp_dpcd_write(aux_bl->aux, DP_EDP_BACKLIGHT_BRIGHTNESS_MSB,
-+					val, sizeof(val));
-+		if (ret < 0)
-+			return ret;
-+
-+		dp_aux_backlight_enable(aux_bl);
-+	} else {
-+		dp_aux_backlight_disable(aux_bl);
-+	}
-+
-+	return 0;
-+}
-+
-+static int dp_aux_backlight_get_brightness(struct backlight_device *bd)
-+{
-+	struct dp_aux_backlight *aux_bl = bl_get_data(bd);
-+	u8 val[2] = { 0x0 };
-+	int ret = 0;
-+
-+	if (backlight_is_blank(bd))
-+		return 0;
-+
-+	ret = drm_dp_dpcd_read(aux_bl->aux, DP_EDP_BACKLIGHT_BRIGHTNESS_MSB,
-+			       &val, sizeof(val));
-+	if (ret < 0)
-+		return ret;
-+
-+	return (val[0] << 8 | val[1]);
-+}
-+
-+static const struct backlight_ops aux_bl_ops = {
-+	.update_status = dp_aux_backlight_update_status,
-+	.get_brightness = dp_aux_backlight_get_brightness,
-+};
-+
-+
-+static int dp_aux_backlight_probe(struct platform_device *pdev)
-+{
-+	struct dp_aux_backlight *aux_bl;
-+	struct backlight_device *bd;
-+	struct backlight_properties bl_props = { 0 };
-+	struct device_node *np;
-+	struct i2c_adapter *ddc;
-+	int ret = 0;
-+	u32 val;
-+
-+	aux_bl = devm_kzalloc(&pdev->dev, sizeof(*aux_bl), GFP_KERNEL);
-+	if (!aux_bl)
-+		return -ENOMEM;
-+
-+	aux_bl->dev = &pdev->dev;
-+
-+	np = of_parse_phandle(pdev->dev.of_node, "ddc-i2c-bus", 0);
-+	if (!np) {
-+		dev_err(&pdev->dev, "failed to get aux ddc I2C bus\n");
-+		return -ENODEV;
-+	}
-+
-+	ddc = of_find_i2c_adapter_by_node(np);
-+	of_node_put(np);
-+	if (!ddc)
-+		return -EPROBE_DEFER;
-+
-+	aux_bl->aux = i2c_to_aux(ddc);
-+	dev_dbg(&pdev->dev, "using dp aux %s\n", aux_bl->aux->name);
-+
-+	aux_bl->enable_gpio = devm_gpiod_get_optional(&pdev->dev, "enable",
-+					     GPIOD_OUT_LOW);
-+	if (IS_ERR(aux_bl->enable_gpio)) {
-+		ret = PTR_ERR(aux_bl->enable_gpio);
-+		goto free_ddc;
-+	}
-+
-+	val = DP_AUX_MAX_BRIGHTNESS;
-+	of_property_read_u32(pdev->dev.of_node, "max-brightness", &val);
-+	if (val > DP_AUX_MAX_BRIGHTNESS)
-+		val = DP_AUX_MAX_BRIGHTNESS;
-+
-+	bl_props.max_brightness = val;
-+	bl_props.brightness = val;
-+	bl_props.type = BACKLIGHT_RAW;
-+	bd = devm_backlight_device_register(&pdev->dev, dev_name(&pdev->dev),
-+					    &pdev->dev, aux_bl,
-+					    &aux_bl_ops, &bl_props);
-+	if (IS_ERR(bd)) {
-+		ret = PTR_ERR(bd);
-+		dev_err(&pdev->dev,
-+			      "failed to register backlight (%d)\n", ret);
-+		goto free_ddc;
-+	}
-+
-+	platform_set_drvdata(pdev, bd);
-+
-+	return 0;
-+
-+free_ddc:
-+	if (ddc)
-+		put_device(&ddc->dev);
-+
-+	return ret;
-+}
-+
-+static int dp_aux_backlight_remove(struct platform_device *pdev)
-+{
-+	struct backlight_device *bd = platform_get_drvdata(pdev);
-+	struct dp_aux_backlight *aux_bl = bl_get_data(bd);
-+	struct i2c_adapter *ddc = &aux_bl->aux->ddc;
-+
-+	if (ddc)
-+		put_device(&ddc->dev);
-+
-+	return 0;
-+}
-+
-+static const struct of_device_id dp_aux_bl_of_match_table[] = {
-+	{ .compatible = "dp-aux-backlight"},
-+	{},
-+}
-+MODULE_DEVICE_TABLE(of, dp_aux_bl_of_match_table);
-+
-+static struct platform_driver dp_aux_backlight_driver = {
-+	.driver = {
-+		.name = "dp-aux-backlight",
-+		.of_match_table = dp_aux_bl_of_match_table,
-+	},
-+	.probe = dp_aux_backlight_probe,
-+	.remove = dp_aux_backlight_remove,
-+
-+};
-+module_platform_driver(dp_aux_backlight_driver);
-+
-+MODULE_DESCRIPTION("DisplayPort aux backlight driver");
-+MODULE_LICENSE("GPL v2");
+> I think we also need to runtime resume RPMB WLUN before system suspend.
+> e.g.
+> 
+> +static int ufshcd_rpmb_rpm_get_sync(struct ufs_hba *hba)
+> +{
+> +	return pm_runtime_get_sync(&hba->sdev_rpmb->sdev_gendev);
+> +}
+> +
+> +static int ufshcd_rpmb_rpm_put(struct ufs_hba *hba)
+> +{
+> +	return pm_runtime_put(&hba->sdev_rpmb->sdev_gendev);
+> +}
+> +
+>   void ufshcd_resume_complete(struct device *dev)
+>   {
+>   	struct ufs_hba *hba = dev_get_drvdata(dev);
+>   
+> +	if (hba->rpmb_complete_put) {
+> +		hba->rpmb_complete_put = false;
+> +		ufshcd_rpmb_rpm_put(hba);
+> +	}
+>   	if (hba->complete_put) {
+>   		hba->complete_put = false;
+>   		ufshcd_rpm_put(hba);
+> @@ -9611,6 +9625,11 @@ int ufshcd_suspend_prepare(struct device *dev)
+>   		return ret;
+>   	}
+>   	hba->complete_put = true;
+> +
+> +	if (hba->sdev_rpmb) {
+> +		ufshcd_rpmb_rpm_get_sync(hba);
+> +		hba->rpmb_complete_put = true;
+> +	}
+>   	return 0;
+>   }
+> 
+> That also avoids another issue: if RPMB WLUN is runtime suspended at system resume, we have to skip clearing UAC, but SCSI PM will force the runtime status to RPM_ACTIVE after system resume, so the UAC never gets cleared in that case.
+> 
+> Furthermore, it seems better not to report errors from RPMB resume and instead let the error handler sort it out.
+> So, with the above change, we can simplify a bit:
+> 
+> -static int ufshcd_rpmb_runtime_resume(struct device *dev)
+> -{
+> -	struct ufs_hba *hba = wlun_dev_to_hba(dev);
+> -
+> -	if (hba->sdev_rpmb)
+> -		return ufshcd_clear_rpmb_uac(hba);
+> -	return 0;
+> -}
+> -
+>   static int ufshcd_rpmb_resume(struct device *dev)
+>   {
+>   	struct ufs_hba *hba = wlun_dev_to_hba(dev);
+>   
+> -	if (hba->sdev_rpmb && !pm_runtime_suspended(dev))
+> -		return ufshcd_clear_rpmb_uac(hba);
+> +	if (hba->sdev_rpmb)
+> +		ufshcd_clear_rpmb_uac(hba);
+>   	return 0;
+>   }
+>   
+>   static const struct dev_pm_ops ufs_rpmb_pm_ops = {
+> -	SET_RUNTIME_PM_OPS(NULL, ufshcd_rpmb_runtime_resume, NULL)
+> +	SET_RUNTIME_PM_OPS(NULL, ufshcd_rpmb_resume, NULL)
+>   	SET_SYSTEM_SLEEP_PM_OPS(NULL, ufshcd_rpmb_resume)
+>   };
+> 
+> 
+
+
 -- 
-2.7.4
-
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+Linux Foundation Collaborative Project
