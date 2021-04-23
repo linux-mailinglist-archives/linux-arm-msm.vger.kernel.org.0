@@ -2,256 +2,188 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8FBB73690E9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Apr 2021 13:13:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2E7753691A8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Apr 2021 13:58:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229942AbhDWLOQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Apr 2021 07:14:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55316 "EHLO
+        id S234439AbhDWL73 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Apr 2021 07:59:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37144 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229890AbhDWLOO (ORCPT
+        with ESMTP id S234417AbhDWL73 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Apr 2021 07:14:14 -0400
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EFA25C061574;
-        Fri, 23 Apr 2021 04:13:35 -0700 (PDT)
-Received: by mail-ej1-x634.google.com with SMTP id g5so66589162ejx.0;
-        Fri, 23 Apr 2021 04:13:35 -0700 (PDT)
+        Fri, 23 Apr 2021 07:59:29 -0400
+Received: from mail-qv1-xf31.google.com (mail-qv1-xf31.google.com [IPv6:2607:f8b0:4864:20::f31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 755B1C061574
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Apr 2021 04:58:51 -0700 (PDT)
+Received: by mail-qv1-xf31.google.com with SMTP id ef17so17934013qvb.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Apr 2021 04:58:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=YHPMnwS1dURi5l1HSs6lXsnAbBpe7PxogTJiMBTEHvw=;
-        b=oEpBq1Fuo/AIN23HrnGCnNKX5gSh7n0HPo0mODmYYtxzr9Ug6D8ohXWugDTsei9Gdz
-         iCgi5Q+CjmdJ4CV+di6aM6JAitf4mEUPccE8ISW87TwaJYu8Mtsiqttmr+cBOQoUY6CT
-         mHVJuLLG6wmiP/DRq0xg1NOtEHPoSlxJD0uQg/AWRiS+Kw7xVuJ5kuoZYDrp/01G57+K
-         1l8Tz3/pFGyCVageS2m6O29dxm+gr8XR+Akfn6WA97Y4OTG5rLhAB39NQelwkwE75Zov
-         QSSMbHwrBBkTjWiHdlR4BlQ3lKZRENOMC85hiaQqFtT22BoEm7ET3sZC1dIVHbdduiz+
-         CXMA==
+        d=ossystems-com-br.20150623.gappssmtp.com; s=20150623;
+        h=from:mime-version:date:message-id:subject:to;
+        bh=jr8jZmW3hWeOFIHhOThCMqo1kOiVcgfycAvoHOOzfOs=;
+        b=jd2ZSHi+A82UPBSdJfxVNxKNDia794DDn9zlNQU4hMLaZTLJtq8kDI7dtMRgqBYM4v
+         sFMWrsBHoMwWEekSxMNVKC0ZGrd1RLEMp3tNmq6eoRQFrhY35ZenFAr0F12sqngope9P
+         Ox0oOl7Mw1AClWBQfR2fhdjwEGTejjbmULWAPVxomQ/QW5YRNIRqRmhEOKsOyt8F9yQq
+         7arRaaJL8heG7ppTQgH24gTUvJlHZenYrA8zFou0xpnZkHi2nHFUlqTSRdqemKzQ2Cfy
+         2c0g2HrEuzGUlQAYRkUrEfJ5E5vtDvBvf+QjGl3tbl/v47JesPHeeGiklCM3u9ZTIzKK
+         DO5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=YHPMnwS1dURi5l1HSs6lXsnAbBpe7PxogTJiMBTEHvw=;
-        b=dvmRcG93J8F4kMhdsq+w+9BznqGur8vNxryhTEl3aGh1AkcF7O0g5kU94MtA8TCCjn
-         OQThz+t1baxZ4Odii0qga8aC7XQFYIgXATmYbgqRQ2IKqZ0tFFgu0zEZZDSUnMyXJVIr
-         nQqC4fbqIPAaGyBINMXF5YND5/NwttI5DzoJHc0koCFrFRDo5SixbbYD/4fXeUOEsDId
-         L00qvKnLOCBfALQTcqQZ1JSYekVGhhTx9Sm7n4lHBrG0MX1eVXlV0BZHsAwPWzIJJ0oL
-         UOYNMwMaVSnSrTMrwcWFQWj6WfUtB/TNjc8h655uVdCZRHTl5CuOnz7ewTuAMRJxkJ4+
-         7p7A==
-X-Gm-Message-State: AOAM531oLPPHqUzAflAa8aDyCRXTBX/jgD86yxV6WDlTKWIfWK2iX+fE
-        VTu2MHhEGcmQ+Yb8nJOkqDE=
-X-Google-Smtp-Source: ABdhPJzZgn3hc4mNrhwnJScJOT2r7t49AdvgebRp7aJZ9kjR/Un/7sPJtoB3t7RWb5jaaIofvaQ1aw==
-X-Received: by 2002:a17:906:c297:: with SMTP id r23mr3731783ejz.48.1619176414380;
-        Fri, 23 Apr 2021 04:13:34 -0700 (PDT)
-Received: from localhost ([62.96.65.119])
-        by smtp.gmail.com with ESMTPSA id g12sm4521920edr.83.2021.04.23.04.13.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Apr 2021 04:13:32 -0700 (PDT)
-Date:   Fri, 23 Apr 2021 13:14:22 +0200
-From:   Thierry Reding <thierry.reding@gmail.com>
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Rob Herring <robh@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        David Airlie <airlied@linux.ie>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, Stephen Boyd <swboyd@chromium.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Steev Klimaszewski <steev@kali.org>,
-        Enric Balletbo Serra <eballetbo@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Nicolas Boichat <drinkcat@chromium.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Subject: Re: [RFC PATCH 1/3] dt-bindings: display: simple: Add the panel on
- sc7180-trogdor-pompom
-Message-ID: <YIKsDtjcIHGNvW0u@orome.fritz.box>
-References: <20210316140707.RFC.1.I3a21995726282f1e9fcb70da5eb96f19ed96634f@changeid>
- <20210326000907.GA1965415@robh.at.kernel.org>
- <CAD=FV=XqG8oH5HCttKSNYJV2eHwLxq-tm1C+UFLn+cAHUrBaHg@mail.gmail.com>
- <CAD=FV=VZYOMPwQZzWdhJGh5cjJWw_EcM-wQVEivZ-bdGXjPrEQ@mail.gmail.com>
+        h=x-gm-message-state:from:mime-version:date:message-id:subject:to;
+        bh=jr8jZmW3hWeOFIHhOThCMqo1kOiVcgfycAvoHOOzfOs=;
+        b=RxqeFH3a/k1j7kJ/XhMlp68VVEdqqlEKRK56t29KuRbW0VvcrxgS80T4cEdQIJoa2S
+         8+BbWdJib2rK53prh7j/98JeBM8J64gdm8HCkelQmLufePuCzDBrs1QNJ6/Pc4nwCFir
+         hPwSfJfWJQ6SvJZFn/rHQZdBbZeNHW9gkAkZM2c+IXkDdkRquLXsZqNRZbAdtVy02veI
+         zdmUEMI+lNncD3b2BOZGtPHka5MuWmoWzi+wAKzpmidv8QWEVKm1k9DbUNtfwthPphhN
+         3LdXifSXYwVQcuz20KyPkfgORHdLvAlaiOcRvFqgJ2xNowBlX4Bs9nza2mUJZKoBvCaU
+         GiyA==
+X-Gm-Message-State: AOAM533fDlC9zvhmV1dO28ZGTBRDEU7J8RF56zH9FMcFKKLNhzBV1MiV
+        gqpcDwgd5oRNBwjVJTRAZsVoMqejC6Qxj5kk
+X-Google-Smtp-Source: ABdhPJyTix0AstQK1dA0oaq1PZ/JllvL5bpm8TyZMk4+k4luCH4YPm0l9LeJLZQY6pQr5wI7FPAdWA==
+X-Received: by 2002:ad4:5742:: with SMTP id q2mr3973415qvx.11.1619179130438;
+        Fri, 23 Apr 2021 04:58:50 -0700 (PDT)
+Received: from mail-qv1-f52.google.com (mail-qv1-f52.google.com. [209.85.219.52])
+        by smtp.gmail.com with ESMTPSA id e13sm4447762qtm.35.2021.04.23.04.58.49
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 23 Apr 2021 04:58:50 -0700 (PDT)
+From:   Otavio Salvador <otavio.salvador@ossystems.com.br>
+X-Google-Original-From: Otavio Salvador <otavio@ossystems.com.br>
+Received: by mail-qv1-f52.google.com with SMTP id bs7so23094891qvb.12
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Apr 2021 04:58:49 -0700 (PDT)
+X-Received: by 2002:a0c:c352:: with SMTP id j18mr4237446qvi.12.1619179129716;
+ Fri, 23 Apr 2021 04:58:49 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="pwwIyjYU7zT6YQlm"
-Content-Disposition: inline
-In-Reply-To: <CAD=FV=VZYOMPwQZzWdhJGh5cjJWw_EcM-wQVEivZ-bdGXjPrEQ@mail.gmail.com>
-User-Agent: Mutt/2.0.6 (98f8cb83) (2021-03-06)
+Date:   Fri, 23 Apr 2021 08:58:38 -0300
+X-Gmail-Original-Message-ID: <CAP9ODKpQxxnaX5DVSHmq4HJpCOpp_rOPwtOJ=ADRZgg20R6wPg@mail.gmail.com>
+Message-ID: <CAP9ODKpQxxnaX5DVSHmq4HJpCOpp_rOPwtOJ=ADRZgg20R6wPg@mail.gmail.com>
+Subject: i.MX53 error during GPU use
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        DRI mailing list <dri-devel@lists.freedesktop.org>,
+        freedreno@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hello all,
 
---pwwIyjYU7zT6YQlm
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+We found this error when using Freedreno driver on an i.MX53 device
+with Wayland. Any idea how to fix this?
 
-On Thu, Apr 22, 2021 at 03:08:48PM -0700, Doug Anderson wrote:
-> Hi,
->=20
-> On Mon, Mar 29, 2021 at 9:25 AM Doug Anderson <dianders@chromium.org> wro=
-te:
-> >
-> > Hi,
-> >
-> > On Thu, Mar 25, 2021 at 5:09 PM Rob Herring <robh@kernel.org> wrote:
-> > >
-> > > On Tue, Mar 16, 2021 at 02:08:19PM -0700, Douglas Anderson wrote:
-> > > > The sc7180-trogdor-pompom board might be attached to any number of a
-> > > > pile of eDP panels. At the moment I'm told that the list might incl=
-ude:
-> > > > - KD KD116N21-30NV-A010
-> > > > - KD KD116N09-30NH-A016
-> > > > - Starry 2081116HHD028001-51D
-> > > > - Sharp LQ116M1JW10
-> > > >
-> > > > It should be noted that while the EDID programmed in the first 3
-> > > > panels indicates that they should run with exactly the same timing =
-(to
-> > > > keep things simple), the 4th panel not only needs different timing =
-but
-> > > > has a different resolution.
-> > > >
-> > > > As is true in general with eDP panels, we can figure out which panel
-> > > > we have and all the info needed to drive its pixel clock by reading
-> > > > the EDID. However, we can do this only after we've powered the panel
-> > > > on. Powering on the panels requires following the timing diagram in
-> > > > each panel's datasheet which specifies delays between certain
-> > > > actions. This means that, while we can be quite dynamic about handl=
-ing
-> > > > things we can't just totally skip out on describing the panel like =
-we
-> > > > could do if it was connected to an external-facing DP port.
-> > >
-> > > Is this a 'standard' eDP connector? AFAICT, there does seem to be
-> > > such a thing.
-> >
-> > To answer this one: there's not any "standard" physical plug as far as
-> > I can tell. There's a connector on the board side for the LCD that has
-> > a whole hodgepodge of signals on it. Maybe USB for a camera. Some
-> > power signals. Maybe a PWM for a backlight. Maybe some DMIC signals.
-> > eDP signals which might be anywhere from 1 to 4 lanes. HPD (which is
-> > really a "panel ready" signal for eDP). The size / style of connector
-> > and the exact set of signals (and their ordering) is board specific.
-> > You then get a board-specific cable that splits things out. Some might
-> > go to a camera/MIC sub board. Some go to the panel and hook onto a
-> > panel-specific connector which has pin count and orderings defined by
-> > that panel. :-P
-> >
-> >
-> > > I've said in the past I'd be okay with a edp-connector
-> > > node. If that needs just the "HPD absent delay" property, I think that
-> > > would be okay. It's just a never ending stream of new properties with
-> > > each new panel that I don't want to see.
-> >
-> > Thinking about this we'd need at least one other property right now
-> > which is an enable delay. Specifically at least one panel I've
-> > supported recently lied about HPD for a short period after bootup.
-> > Specifically see commit 667d73d72f31 ("drm: panel: simple: Delay HPD
-> > checking on boe_nv133fhm_n61 for 15 ms"). ...and, of course, the
-> > existing power supply / enable signals that "simple-panel" already
-> > has.
-> >
-> > Also: if we weren't going to add the other delay properties in the
-> > device tree, we'd have to add the code right away that used the EDID
-> > to set other delays. That wouldn't be the end of the world, but it
-> > would be code to write.
-> >
-> >
-> > One last thought to add: I've looked at ~10 panels specs recently.
-> > Though they are all a little different from each other, I will say
-> > that almost every one of them seems to have the exact same timing
-> > diagram in it just with different numbers filled in. To me that backs
-> > up the idea that you can/should do the power sequence with a fairly
-> > standard (parameterized) driver. I can't link the datasheets I have
-> > but searching for "edp panel datasheet" finds me this random
-> > datasheet:
-> >
-> > https://www.data-modul.com/sites/default/files/products/NV156QUM-N72_sp=
-ecification_12039472.pdf
-> >
-> > See "8.0 POWER SEQUENCE" in that document. All the panels have a
-> > nearly identical diagram with different numbers filled in. You can
-> > kinda tell it was copied from some other panel since some numbers
-> > (like T4) aren't even defined.
->=20
-> So this thread has been quiet for a while, but the problem still exists.
->=20
-> Here's my current plan, but please yell if you disagree:
->=20
-> 1. See about adding a generic "eDP connector" node. Having stewed on
-> this for a while I think I'm convinced that even though there's not
-> really a single standard physical connector that is used everywhere
-> that there are at least a set of signals that can be collectively
-> thought about as the "eDP signals". Certainly I have a set of very
-> different panels from very different manufacturers that I can
-> "interchange" and they work fine assuming I have the right cable
-> "adapting" them from the connector on my board to the connector on the
-> panel. While different panels have different timings that they care
-> are enforced, there is a way to express it in a relatively common way
-> as evidenced by the fact that all panel datasheet timing diagrams look
-> similar and the fact that panel-simple handles so many different
-> panels (yes, we periodically add more timing constraints to handle
-> there but mostly that's because the code wasn't able to handle every
-> constraint that could be expressed in those standard-looking timing
-> diagrams in the datasheets).
->=20
->=20
-> 2. The "eDP connector" node will have all the same properties as
-> today's "panel-simple.yaml" with the addition of:
->=20
-> enable-delay
-> hpd-absent-delay
->=20
-> The idea is that you power on the panel, hardcode an enable-delay (to
-> handle early HPD glitches), and then wait for HPD (or wait
-> hpd-absent-delay if HPD isn't provided).
->=20
-> Note that "ddc-i2c-bus" will be a required node instead of optional.
->=20
->=20
-> 3. Once we power the panel on then we will query the EDID and set the
-> rest of the panel timings / modes based on the model specified in the
-> EDID. Potentially it could update the "enable-delay" and
-> "hpd-absent-delay" at this point too.
+[   32.414110] [drm:msm_ioctl_gem_submit] *ERROR* invalid cmdstream size: 0
+[   39.177075]
+[   39.178617] ======================================================
+[   39.184804] WARNING: possible circular locking dependency detected
+[   39.190997] 5.10.31+g7ae1de1d2bd3 #1 Not tainted
+[   39.195619] ------------------------------------------------------
+[   39.201805] kworker/u2:1/68 is trying to acquire lock:
+[   39.206953] c2b952fc (reservation_ww_class_mutex){+.+.}-{3:3}, at:
+dma_buf_detach+0xd0/0x1e0
+[   39.215448]
+[   39.215448] but task is already holding lock:
+[   39.221286] c2b957b0 (&msm_obj->lock){+.+.}-{3:3}, at:
+msm_gem_free_work+0x118/0x1b0
+[   39.229062]
+[   39.229062] which lock already depends on the new lock.
+[   39.229062]
+[   39.237243]
+[   39.237243] the existing dependency chain (in reverse order) is:
+[   39.244729]
+[   39.244729] -> #1 (&msm_obj->lock){+.+.}-{3:3}:
+[   39.250769]        mutex_lock_nested+0x1c/0x24
+[   39.255220]        msm_gem_get_and_pin_iova_range+0x38/0x170
+[   39.260885]        msm_gem_get_and_pin_iova+0x24/0x2c
+[   39.265946]        msm_ioctl_gem_submit+0x12c0/0x1964
+[   39.271008]        drm_ioctl+0x1f0/0x3e0
+[   39.274940]        sys_ioctl+0x3bc/0xbe0
+[   39.278873]        ret_fast_syscall+0x0/0x28
+[   39.283150]        0xbed4deac
+[   39.286122]
+[   39.286122] -> #0 (reservation_ww_class_mutex){+.+.}-{3:3}:
+[   39.293208]        lock_acquire+0x134/0x560
+[   39.297398]        __ww_mutex_lock.constprop.0+0xbc/0x1124
+[   39.302889]        ww_mutex_lock+0x68/0xb4
+[   39.306993]        dma_buf_detach+0xd0/0x1e0
+[   39.311271]        drm_prime_gem_destroy+0x2c/0x38
+[   39.316068]        msm_gem_free_work+0xa0/0x1b0
+[   39.320611]        process_one_work+0x2a8/0x7ec
+[   39.325149]        worker_thread+0x4c/0x554
+[   39.329339]        kthread+0x140/0x154
+[   39.333095]        ret_from_fork+0x14/0x20
+[   39.337196]        0x0
+[   39.339560]
+[   39.339560] other info that might help us debug this:
+[   39.339560]
+[   39.347568]  Possible unsafe locking scenario:
+[   39.347568]
+[   39.353491]        CPU0                    CPU1
+[   39.358025]        ----                    ----
+[   39.362557]   lock(&msm_obj->lock);
+[   39.366061]                                lock(reservation_ww_class_mutex);
+[   39.373123]                                lock(&msm_obj->lock);
+[   39.379143]   lock(reservation_ww_class_mutex);
+[   39.383689]
+[   39.383689]  *** DEADLOCK ***
+[   39.383689]
+[   39.389614] 4 locks held by kworker/u2:1/68:
+[   39.393888]  #0: c24138a8 ((wq_completion)msm){+.+.}-{0:0}, at:
+process_one_work+0x1f4/0x7ec
+[   39.402362]  #1: c26a1f20
+((work_completion)(&priv->free_work)){+.+.}-{0:0}, at:
+process_one_work+0x1f4/0x7ec
+[   39.412312]  #2: c24188a4 (&dev->struct_mutex){+.+.}-{3:3}, at:
+msm_gem_free_work+0x68/0x1b0
+[   39.420784]  #3: c2b957b0 (&msm_obj->lock){+.+.}-{3:3}, at:
+msm_gem_free_work+0x118/0x1b0
+[   39.428996]
+[   39.428996] stack backtrace:
+[   39.433363] CPU: 0 PID: 68 Comm: kworker/u2:1 Not tainted
+5.10.31+g7ae1de1d2bd3 #1
+[   39.440937] Hardware name: Freescale i.MX53 (Device Tree Support)
+[   39.447044] Workqueue: msm msm_gem_free_work
+[   39.451346] [<c0111258>] (unwind_backtrace) from [<c010ba00>]
+(show_stack+0x10/0x14)
+[   39.459107] [<c010ba00>] (show_stack) from [<c0e2b560>]
+(dump_stack+0xdc/0x104)
+[   39.466430] [<c0e2b560>] (dump_stack) from [<c01838d8>]
+(check_noncircular+0xf0/0x160)
+[   39.474358] [<c01838d8>] (check_noncircular) from [<c0187060>]
+(__lock_acquire+0x1628/0x2e04)
+[   39.482893] [<c0187060>] (__lock_acquire) from [<c01892e8>]
+(lock_acquire+0x134/0x560)
+[   39.490821] [<c01892e8>] (lock_acquire) from [<c0e3da60>]
+(__ww_mutex_lock.constprop.0+0xbc/0x1124)
+[   39.499877] [<c0e3da60>] (__ww_mutex_lock.constprop.0) from
+[<c0e3ebe4>] (ww_mutex_lock+0x68/0xb4)
+[   39.508844] [<c0e3ebe4>] (ww_mutex_lock) from [<c080e6a8>]
+(dma_buf_detach+0xd0/0x1e0)
+[   39.516771] [<c080e6a8>] (dma_buf_detach) from [<c0701d04>]
+(drm_prime_gem_destroy+0x2c/0x38)
+[   39.525305] [<c0701d04>] (drm_prime_gem_destroy) from [<c077d334>]
+(msm_gem_free_work+0xa0/0x1b0)
+[   39.534188] [<c077d334>] (msm_gem_free_work) from [<c0147588>]
+(process_one_work+0x2a8/0x7ec)
+[   39.542725] [<c0147588>] (process_one_work) from [<c0147b18>]
+(worker_thread+0x4c/0x554)
+[   39.550825] [<c0147b18>] (worker_thread) from [<c014ebb0>]
+(kthread+0x140/0x154)
+[   39.558229] [<c014ebb0>] (kthread) from [<c0100134>]
+(ret_from_fork+0x14/0x20)
+[   39.565457] Exception stack(0xc26a1fb0 to 0xc26a1ff8)
+[   39.570517] 1fa0:                                     00000000
+00000000 00000000 00000000
+[   39.578703] 1fc0: 00000000 00000000 00000000 00000000 00000000
+00000000 00000000 00000000
+[   39.586890] 1fe0: 00000000 00000000 00000000 00000000 00000013 00000000
 
-I think that sounds good. If ddc-i2c-bus is required, this basically
-implies that EDID needs to be available for these panels, too. If that's
-the case we can identify the panel based on information from the EDID.
-That would make panels "discoverable", so that we can describe them with
-a more generic compatible string that basically describes the interface
-needed to get at the discoverable information, much like we would do for
-a bus like PCI.
+This looks like a regression as it used to run fine on 5.4 Linux kernel.
 
-I don't know if the manufacturer ID and product code are enough to
-uniquely identify every panel, but maybe something like the DisplayID
-extension can be used to gather more identification data.
+Any idea of patch reference to test is welcome.
 
-Thierry
-
---pwwIyjYU7zT6YQlm
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEiOrDCAFJzPfAjcif3SOs138+s6EFAmCCrAsACgkQ3SOs138+
-s6FPTBAArVUbY8SmP4Hz12t546ddjfozLRZRVqY0+m8gwjjm74D4y6SfGyd47wKI
-Euy1fK+faHgm7J94Wc3e2dqe757ApzBw4vhRxgqGR6AwBIoovRE3MWdvgib+FFuj
-2f+/D9sYfsluGvHkWYUkgrnZ1VPGw9WjGK3L2VfnqE3jC42uZp7GBVaNqeQBDTVN
-vNY7sraJhyy62GLwQ0AWK+MZbDfauMTWJGhby4I2gyQpgID7JWEPiWrz0hEng5Px
-950+BAa0TltM/7aAt+KURkkJmjWGj5+LdKEBweQmyxancmi4vx4LSFQCNe+x0yEg
-G/uWVTH+71C5GJT+PA1JiSNP9ctartxRklIOak7GpBJlkz/aO56iDxbNQBFriFWW
-z/cneIzmi9H+f3zvg2Tq/NUqXZSFHxu2guu5dKJ7voRPyoIWMDQcSCsAI/9dIIxt
-mzc9hSX3wjD2uGB6Q7TGoLRFBrswTjMiMDmig/8xg7O/4evgmok4wWYLVo4dc82C
-C4U/2dxwAYd/Jg7iRQvWdewvCcz7U+T0WXZwuGV4OmQpDTPGf1V7U5m04anpiEXU
-Sk+WeJAdbd/kwo/JM0krqLeUnp28OUzJoTbQFH8aMR9XGPZ+Scu3rAVEG9TmIr9R
-LBKS5GaNib5Gnhmw6X+7NxCm8JZlEA22Qrf3K2BB1r2rX7FmpqQ=
-=XnhE
------END PGP SIGNATURE-----
-
---pwwIyjYU7zT6YQlm--
+-- 
+Otavio Salvador                             O.S. Systems
+http://www.ossystems.com.br        http://code.ossystems.com.br
+Mobile: +55 (53) 9 9981-7854          Mobile: +1 (347) 903-9750
