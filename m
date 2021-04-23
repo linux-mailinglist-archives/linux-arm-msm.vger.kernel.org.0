@@ -2,113 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 732E036958E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Apr 2021 17:05:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 27E7D3695A8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Apr 2021 17:08:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242842AbhDWPFp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Apr 2021 11:05:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50054 "EHLO
+        id S237082AbhDWPJV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Apr 2021 11:09:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50806 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242768AbhDWPFm (ORCPT
+        with ESMTP id S242861AbhDWPIz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Apr 2021 11:05:42 -0400
-Received: from mail-qv1-xf2d.google.com (mail-qv1-xf2d.google.com [IPv6:2607:f8b0:4864:20::f2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FC15C06174A
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Apr 2021 08:05:04 -0700 (PDT)
-Received: by mail-qv1-xf2d.google.com with SMTP id x14so597429qvr.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Apr 2021 08:05:04 -0700 (PDT)
+        Fri, 23 Apr 2021 11:08:55 -0400
+Received: from mail-qk1-x72c.google.com (mail-qk1-x72c.google.com [IPv6:2607:f8b0:4864:20::72c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 083BAC061574
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Apr 2021 08:08:18 -0700 (PDT)
+Received: by mail-qk1-x72c.google.com with SMTP id d19so14182514qkk.12
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Apr 2021 08:08:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=JVfcpr7bRZ6s3YruMjp8qVrxCIDgGdMtl+A9Aczl7R4=;
-        b=OmkoAWs02RMbBHLvV9IRy4MYyPogzVzCe/IRTZBe8Q8RQor+AxWdLtkaXkkm4yrXYF
-         yGeG9sWF2Ccr+0PFhaZ4Mh24QEurXCZ2iWDjymdhirsl2s05BCzWjakOwWgzHz0B3Alv
-         lFv4NZEY+l3uzW+HSGZ8PZOJcYNSDhfomjBjo=
+        d=marek-ca.20150623.gappssmtp.com; s=20150623;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=kMBt3oIwngeJeBnfmEyUsdAN7B1plm8CAX31M1jjWdw=;
+        b=XOkKKQbXZMkWcDYshtTtl3Sh5yWiva3sTa0AFxXsmvrvXjZf/atJ/JoRYC3Xts8BlV
+         x24uSpxfwlU+Iaiugh3ZBy6Em1Buzir/Ra1YhNj4PqxdGWvFFEglcbo0vRDdd+tlY+5t
+         4jI98v069K+8dRH1yXwmoHbEyw74tXNy6N6ivCjatW08mku/mqGSVpniDXVEKNq/3LkK
+         v+DhmSy9VbpjBKzTzcJXYZDhLzMSVASlrRfaIt0TQec3DTrCwa/jEmj3P3MFIHnQ9s3f
+         ZIUQyYTom/Dc1nFC9c/dgHRF2oISmsLcG64q+2+6FowSxj17c6vHT5KADrUjwyt5SiJ8
+         7/nw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=JVfcpr7bRZ6s3YruMjp8qVrxCIDgGdMtl+A9Aczl7R4=;
-        b=sW4sAiZoFVXbLN7M9Axuxo7dkrvzqCLldzzutYgOpCj4qcPzmnQx62nN43qaqnSWTH
-         h4gQagK6zn9YnMRPMdpzUWnDkuThwwH9MTVt4DlLXDHPc7+t7gGlDCpfV6WqHWmtN61p
-         ODmxO/qNoTZ7JTJ1t4VS3mQM6J5r6FoRkvSirKaO0n54r69c+4n7o6ttQ+FubGqSR+Ht
-         jWhgcWJs5sXHN2jf/kG8e05topjkhZ2jsjs8UL/GWjnL2Zb2Uk+u1b/714LTV+iNx53w
-         N2h6KCH4T6+mseVOOzVtdTawaJ1ZohTpOro7eBvb9vf4In1sqTOU3OwUpT9bGp/J3tgL
-         SRwg==
-X-Gm-Message-State: AOAM532uf3kT9KNKfUy3vpZh5PoK5HoR74dC7plhpL8G2Ep0RdCoyM5A
-        UWZpYY3QsrQ3wzJRk+S0UL+cAiCmp2oFsQ==
-X-Google-Smtp-Source: ABdhPJx3ZvMZWUT6V9wBiokTafJXPFsRMwkIpbd6A4aMQb4wtU71TeW3cckcyGpleT2vtIyt4QqJtg==
-X-Received: by 2002:ad4:4844:: with SMTP id t4mr4634749qvy.38.1619190303164;
-        Fri, 23 Apr 2021 08:05:03 -0700 (PDT)
-Received: from mail-yb1-f172.google.com (mail-yb1-f172.google.com. [209.85.219.172])
-        by smtp.gmail.com with ESMTPSA id o7sm4210796qkb.104.2021.04.23.08.05.02
-        for <linux-arm-msm@vger.kernel.org>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=kMBt3oIwngeJeBnfmEyUsdAN7B1plm8CAX31M1jjWdw=;
+        b=On8wjKNhOfqAaTumFlOkZ2qfwCfcBLZcabj6ww6i6D7qwuh76FRVXfxfPCKgWo+Ox8
+         8nP4nXlW64c3KF/7PGMWwK7/bbku2Pu0XVoOciLsxkForzOVG8cCNHhdQI9IBllEh7Cr
+         RQNT1uuDuAXCOzr7d3tyNhgnN3Gvfzv3FQOmLvbGKVwFo9BiPFj9XgIYdtS2FYGkE3iO
+         PqXxHRK0NrJSQ7DevFBd9hTLrzyVNr39ToLnoXuX431yhLBu81C3CAUTzfp2dxObDOqD
+         cUHFC0aivrCqBSX9wh2D4FbBHvI/y7TWdbG1NZEh5x1o4Ru6ZA2qTSHASE79CSuUfKL7
+         ktPA==
+X-Gm-Message-State: AOAM530cCwdF/Z1f2CmIe397hhOAvEub9cHxQVCL+mWlO2aa+exPSFEP
+        Lo+UcspgvMjPsD4gNBOENPdmdA==
+X-Google-Smtp-Source: ABdhPJyTywhnJyaB9YRYFW07GHm65WRhqKgMqmwDxOTsEt8/ukIP8gBQYati/quG/amJc+aBgYA/wA==
+X-Received: by 2002:a37:68d4:: with SMTP id d203mr4474732qkc.189.1619190497287;
+        Fri, 23 Apr 2021 08:08:17 -0700 (PDT)
+Received: from [192.168.0.189] (modemcable068.184-131-66.mc.videotron.ca. [66.131.184.68])
+        by smtp.gmail.com with ESMTPSA id y6sm4488489qkd.106.2021.04.23.08.08.15
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 23 Apr 2021 08:05:02 -0700 (PDT)
-Received: by mail-yb1-f172.google.com with SMTP id 82so55999823yby.7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Apr 2021 08:05:02 -0700 (PDT)
-X-Received: by 2002:a25:6088:: with SMTP id u130mr6500819ybb.257.1619190302321;
- Fri, 23 Apr 2021 08:05:02 -0700 (PDT)
+        Fri, 23 Apr 2021 08:08:16 -0700 (PDT)
+Subject: Re: [PATCH] drm/msm/dsi: fix msm_dsi_phy_get_clk_provider return code
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
+Cc:     Stephen Boyd <sboyd@kernel.org>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+References: <20210412000158.2049066-1-dmitry.baryshkov@linaro.org>
+From:   Jonathan Marek <jonathan@marek.ca>
+Message-ID: <589a5a1c-cb90-72ce-38df-4f497fd36f16@marek.ca>
+Date:   Fri, 23 Apr 2021 11:05:07 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.2.2
 MIME-Version: 1.0
-References: <1619161503-8784-1-git-send-email-rnayak@codeaurora.org>
-In-Reply-To: <1619161503-8784-1-git-send-email-rnayak@codeaurora.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Fri, 23 Apr 2021 08:04:50 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=VN+iP85D6dkEDE=C7Z9rX_-mQXU-u-Jo_5=s46tZcq0Q@mail.gmail.com>
-Message-ID: <CAD=FV=VN+iP85D6dkEDE=C7Z9rX_-mQXU-u-Jo_5=s46tZcq0Q@mail.gmail.com>
-Subject: Re: [PATCH] nvmem: qfprom: minor nit fixes, no functional change
-To:     Rajendra Nayak <rnayak@codeaurora.org>
-Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        "Ravi Kumar Bokka (Temp)" <rbokka@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20210412000158.2049066-1-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Tested-by: Jonathan Marek <jonathan@marek.ca>
 
-On Fri, Apr 23, 2021 at 12:05 AM Rajendra Nayak <rnayak@codeaurora.org> wrote:
->
-> Fix a missed newline, and update a comment which is stale
-> after the merge of '5a1bea2a: nvmem: qfprom: Add support for fuse
-> blowing on sc7280'
-> No other functional change in this patch.
->
-> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
+On 4/11/21 8:01 PM, Dmitry Baryshkov wrote:
+> msm_dsi_phy_get_clk_provider() always returns two provided clocks, so
+> return 0 instead of returning incorrect -EINVAL error code.
+> 
+> Fixes: 5d13459650b3 ("drm/msm/dsi: push provided clocks handling into a generic code")
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
-> Sending a follow-up patch for these nits since they came in after
-> the previous patch was already pulled in
-> https://lore.kernel.org/patchwork/patch/1401964/
->
->  drivers/nvmem/qfprom.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
->
-> diff --git a/drivers/nvmem/qfprom.c b/drivers/nvmem/qfprom.c
-> index d6d3f24..b7d2060 100644
-> --- a/drivers/nvmem/qfprom.c
-> +++ b/drivers/nvmem/qfprom.c
-> @@ -122,6 +122,7 @@ static const struct qfprom_soc_compatible_data sc7280_qfprom = {
->         .keepout = sc7280_qfprom_keepout,
->         .nkeepout = ARRAY_SIZE(sc7280_qfprom_keepout)
->  };
-> +
->  /**
->   * qfprom_disable_fuse_blowing() - Undo enabling of fuse blowing.
->   * @priv: Our driver data.
-> @@ -195,7 +196,7 @@ static int qfprom_enable_fuse_blowing(const struct qfprom_priv *priv,
->         }
->
->         /*
-> -        * Hardware requires 1.8V min for fuse blowing; this may be
-> +        * Hardware requires a min voltage for fuse blowing; this may be
->          * a rail shared do don't specify a max--regulator constraints
->          * will handle.
->          */
-
-Thanks for sending these! Is there a reason you didn't do the "else
-if" change too?
-
--Doug
+>   drivers/gpu/drm/msm/dsi/phy/dsi_phy.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
+> index f0a2ddf96a4b..ff7f2ec42030 100644
+> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
+> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
+> @@ -843,7 +843,7 @@ int msm_dsi_phy_get_clk_provider(struct msm_dsi_phy *phy,
+>   	if (pixel_clk_provider)
+>   		*pixel_clk_provider = phy->provided_clocks->hws[DSI_PIXEL_PLL_CLK]->clk;
+>   
+> -	return -EINVAL;
+> +	return 0;
+>   }
+>   
+>   void msm_dsi_phy_pll_save_state(struct msm_dsi_phy *phy)
+> 
