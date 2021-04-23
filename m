@@ -2,49 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3F3973697AC
+	by mail.lfdr.de (Postfix) with ESMTP id E0AC43697AF
 	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Apr 2021 19:00:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243458AbhDWRAj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Apr 2021 13:00:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47612 "EHLO
+        id S243462AbhDWRAk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Apr 2021 13:00:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47614 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243353AbhDWRA3 (ORCPT
+        with ESMTP id S243363AbhDWRAa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Apr 2021 13:00:29 -0400
-Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EFC79C06138B
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Apr 2021 09:59:52 -0700 (PDT)
-Received: by mail-pl1-x62e.google.com with SMTP id s20so9679665plr.13
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Apr 2021 09:59:52 -0700 (PDT)
+        Fri, 23 Apr 2021 13:00:30 -0400
+Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12205C06138D
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Apr 2021 09:59:54 -0700 (PDT)
+Received: by mail-pl1-x62f.google.com with SMTP id p16so21558528plf.12
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Apr 2021 09:59:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=gV3qYwahIARQiQrXn6qcnB2XNtIx8vMB6/KiYYZ2Nu0=;
-        b=ODW8f2PHl6os3mSPPZkE6MzhNedNFfpKM5Cll2rpPJj/CieenT2TJvOrCFLAddwT7H
-         h34InzeviKqXtD5UwhSUPmp7/7PwMZumIXib+w6JAqGZrl+xK93wv3tzjpFrL0kZZIXN
-         DVRIqdDSLKIzD/YTMGLJCvaciUqvedx6Ary0M=
+        bh=etZUcTt+rboV/or3vFs74Bup/+mjjab123G8taaBqvc=;
+        b=AjEor4mxpvSaZKgOdrkbk57bk1irf3vHm5XrDZmIsChLFe/TzhYz3WuroEtkAgRkea
+         tRsds8lsuix/DVYetdGQlcKyUiRRSBwZBOFGi78SMogB0CFOgQ+2uKEaxbM84R7y1xMB
+         5HO1Lwjjcjo63psNcpiAeGBrz7NlAuLp4pl58=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=gV3qYwahIARQiQrXn6qcnB2XNtIx8vMB6/KiYYZ2Nu0=;
-        b=Y0pMJ7KKLnrYAur6AO9rMUiTbio4nCUqvHuvQwBlY+ZC8GKICN9NvYdRXLYh3eHDik
-         Q0hJeD5kJqbMIbp3y1zOCp2PvrtYay6UaFV/QAZcKTLSK1zZ3gvulMUTGiVis7hRZwAV
-         sTP/p4nKvayH8JJ+pV1fG308u+Qxa7FQ+G2Jt4ygwDo4WopwJAVIU3gBcikXc3C7d9st
-         pNcwxUJqDk16p5xbEaCGJXwg2evXm+fn331Fy02xdl/MT3pO5Q9ruONMUFT3ZA365+Ax
-         GIXg5TjsciEp00mTAjdKkY1oPx6B5DG/toL4Ye4ijlT3uauZS7JPrU1PZvakSfjJIgHB
-         mfmw==
-X-Gm-Message-State: AOAM531zbWKlJstAAdQXkCom9hwCsOTIoSWmWuQ9lsDsSgYyuQcj9/kp
-        Lm+W4qJfwAZHS89lI56A+L9SUw==
-X-Google-Smtp-Source: ABdhPJxlBL9L1zQOEo1208W4LdTrk3u3cxg+rADQcsddskPPxY8toqxStFbKWD53qfQjCXP5FGOXDQ==
-X-Received: by 2002:a17:90a:88e:: with SMTP id v14mr5347003pjc.107.1619197192542;
-        Fri, 23 Apr 2021 09:59:52 -0700 (PDT)
+        bh=etZUcTt+rboV/or3vFs74Bup/+mjjab123G8taaBqvc=;
+        b=CO6FO2HCCoergs9sANLGvxdtQVQwaA39HLJFMk5Ec/Xc9SMQ5GXBKcsbN733dw1tAw
+         cL6Bs+fO4Py02VQ1RCPdynjEV/gX3UdIzM/GrCZ3TCzB3UcTbKNcUDPHMbhI/hKjPOUg
+         VSd7SRSH0vXeM5VFM6wXZk7l4yGs0cNERgUiwfFWmXU3aEQ1pp/K4uLRdRZMPczopKdM
+         DsyxM2Ftaf7Mvc3aHJSpFP+Bj4iyh+jyYFEmjDe7UHQ700XryaJQLdOLXyl8FEiZXbiu
+         fi6A/J21AAvs4yQ8ZybKfOvxeE0kBu+r46GayRbI12Urga9c9twAL9wuhBXUaBzObD2/
+         zM0A==
+X-Gm-Message-State: AOAM53073KbWiYKV6WkTXJmhIsx5eDUDE3eW0z16NZeBECT9ITIWz2zv
+        ObI2Ssd1QhQ86xSdSHaFVzHqNQ==
+X-Google-Smtp-Source: ABdhPJzqFVde8rjb9eQ+J8WUohhDAgHlL8Rzk3zMwNUD08f5LTwGlvvR+pOz3zdxGZJCJz2+ZLEeeQ==
+X-Received: by 2002:a17:90a:510d:: with SMTP id t13mr5199699pjh.97.1619197193678;
+        Fri, 23 Apr 2021 09:59:53 -0700 (PDT)
 Received: from tictac2.mtv.corp.google.com ([2620:15c:202:201:6d86:663d:71f8:6a11])
-        by smtp.gmail.com with ESMTPSA id v8sm5123607pfm.128.2021.04.23.09.59.51
+        by smtp.gmail.com with ESMTPSA id v8sm5123607pfm.128.2021.04.23.09.59.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Apr 2021 09:59:52 -0700 (PDT)
+        Fri, 23 Apr 2021 09:59:53 -0700 (PDT)
 From:   Douglas Anderson <dianders@chromium.org>
 To:     Andrzej Hajda <a.hajda@samsung.com>,
         Neil Armstrong <narmstrong@baylibre.com>,
@@ -66,9 +66,9 @@ Cc:     linux-arm-msm@vger.kernel.org, robdclark@chromium.org,
         David Airlie <airlied@linux.ie>,
         Robert Foss <robert.foss@linaro.org>,
         linux-kernel@vger.kernel.org
-Subject: [PATCH v5 11/20] drm/bridge: ti-sn65dsi86: Use pm_runtime autosuspend
-Date:   Fri, 23 Apr 2021 09:58:57 -0700
-Message-Id: <20210423095743.v5.11.I4c0b4a87e4dc19e5023b4d0a21bbfa6d9c09ebd8@changeid>
+Subject: [PATCH v5 12/20] drm/bridge: ti-sn65dsi86: Code motion of refclk management functions
+Date:   Fri, 23 Apr 2021 09:58:58 -0700
+Message-Id: <20210423095743.v5.12.I047b8c7c6a3fc60eaca473da7a374f171fb021c2@changeid>
 X-Mailer: git-send-email 2.31.1.498.g6c1eba8ee3d-goog
 In-Reply-To: <20210423165906.2504169-1-dianders@chromium.org>
 References: <20210423165906.2504169-1-dianders@chromium.org>
@@ -78,10 +78,8 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Let's make the bridge use autosuspend with a 500ms delay. This is in
-preparation for promoting DP AUX transfers to their own sub-driver so
-that we're not constantly powering up and down the device as we
-transfer all the chunks.
+No functional changes--this just makes the diffstat of a future change
+easier to understand.
 
 Signed-off-by: Douglas Anderson <dianders@chromium.org>
 Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
@@ -89,76 +87,143 @@ Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
 (no changes since v1)
 
- drivers/gpu/drm/bridge/ti-sn65dsi86.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/bridge/ti-sn65dsi86.c | 116 +++++++++++++-------------
+ 1 file changed, 58 insertions(+), 58 deletions(-)
 
 diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-index 0bd1a1d1453e..49b76b2ffe25 100644
+index 49b76b2ffe25..db367793cdff 100644
 --- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
 +++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-@@ -243,7 +243,7 @@ static int status_show(struct seq_file *s, void *data)
- 		seq_printf(s, "[0x%02x] = 0x%08x\n", reg, val);
- 	}
- 
--	pm_runtime_put(pdata->dev);
-+	pm_runtime_put_autosuspend(pdata->dev);
- 
- 	return 0;
+@@ -192,6 +192,64 @@ static void ti_sn65dsi86_write_u16(struct ti_sn65dsi86 *pdata,
+ 	regmap_write(pdata->regmap, reg + 1, val >> 8);
  }
-@@ -293,7 +293,7 @@ static int ti_sn_bridge_connector_get_modes(struct drm_connector *connector)
- 	if (!edid) {
- 		pm_runtime_get_sync(pdata->dev);
- 		edid = pdata->edid = drm_get_edid(connector, &pdata->aux.ddc);
--		pm_runtime_put(pdata->dev);
-+		pm_runtime_put_autosuspend(pdata->dev);
- 	}
  
- 	if (edid && drm_edid_is_valid(edid)) {
-@@ -419,7 +419,7 @@ static int ti_sn_bridge_attach(struct drm_bridge *bridge,
- 	/* check if continuous dsi clock is required or not */
- 	pm_runtime_get_sync(pdata->dev);
- 	regmap_read(pdata->regmap, SN_DPPLL_SRC_REG, &val);
--	pm_runtime_put(pdata->dev);
-+	pm_runtime_put_autosuspend(pdata->dev);
- 	if (!(val & DPPLL_CLK_SRC_DSICLK))
- 		dsi->mode_flags |= MIPI_DSI_CLOCK_NON_CONTINUOUS;
- 
-@@ -1050,7 +1050,7 @@ static int ti_sn_bridge_gpio_get(struct gpio_chip *chip, unsigned int offset)
- 	 */
- 	pm_runtime_get_sync(pdata->dev);
- 	ret = regmap_read(pdata->regmap, SN_GPIO_IO_REG, &val);
--	pm_runtime_put(pdata->dev);
-+	pm_runtime_put_autosuspend(pdata->dev);
- 
- 	if (ret)
- 		return ret;
-@@ -1101,7 +1101,7 @@ static int ti_sn_bridge_gpio_direction_input(struct gpio_chip *chip,
- 	 * it off and when it comes back it will have lost all state, but
- 	 * that's OK because the default is input and we're now an input.
- 	 */
--	pm_runtime_put(pdata->dev);
-+	pm_runtime_put_autosuspend(pdata->dev);
- 
- 	return 0;
++static u32 ti_sn_bridge_get_dsi_freq(struct ti_sn65dsi86 *pdata)
++{
++	u32 bit_rate_khz, clk_freq_khz;
++	struct drm_display_mode *mode =
++		&pdata->bridge.encoder->crtc->state->adjusted_mode;
++
++	bit_rate_khz = mode->clock *
++			mipi_dsi_pixel_format_to_bpp(pdata->dsi->format);
++	clk_freq_khz = bit_rate_khz / (pdata->dsi->lanes * 2);
++
++	return clk_freq_khz;
++}
++
++/* clk frequencies supported by bridge in Hz in case derived from REFCLK pin */
++static const u32 ti_sn_bridge_refclk_lut[] = {
++	12000000,
++	19200000,
++	26000000,
++	27000000,
++	38400000,
++};
++
++/* clk frequencies supported by bridge in Hz in case derived from DACP/N pin */
++static const u32 ti_sn_bridge_dsiclk_lut[] = {
++	468000000,
++	384000000,
++	416000000,
++	486000000,
++	460800000,
++};
++
++static void ti_sn_bridge_set_refclk_freq(struct ti_sn65dsi86 *pdata)
++{
++	int i;
++	u32 refclk_rate;
++	const u32 *refclk_lut;
++	size_t refclk_lut_size;
++
++	if (pdata->refclk) {
++		refclk_rate = clk_get_rate(pdata->refclk);
++		refclk_lut = ti_sn_bridge_refclk_lut;
++		refclk_lut_size = ARRAY_SIZE(ti_sn_bridge_refclk_lut);
++		clk_prepare_enable(pdata->refclk);
++	} else {
++		refclk_rate = ti_sn_bridge_get_dsi_freq(pdata) * 1000;
++		refclk_lut = ti_sn_bridge_dsiclk_lut;
++		refclk_lut_size = ARRAY_SIZE(ti_sn_bridge_dsiclk_lut);
++	}
++
++	/* for i equals to refclk_lut_size means default frequency */
++	for (i = 0; i < refclk_lut_size; i++)
++		if (refclk_lut[i] == refclk_rate)
++			break;
++
++	regmap_update_bits(pdata->regmap, SN_DPPLL_SRC_REG, REFCLK_FREQ_MASK,
++			   REFCLK_FREQ(i));
++}
++
+ static int __maybe_unused ti_sn65dsi86_resume(struct device *dev)
+ {
+ 	struct ti_sn65dsi86 *pdata = dev_get_drvdata(dev);
+@@ -460,64 +518,6 @@ static void ti_sn_bridge_disable(struct drm_bridge *bridge)
+ 	regmap_write(pdata->regmap, SN_PLL_ENABLE_REG, 0);
  }
-@@ -1127,7 +1127,7 @@ static int ti_sn_bridge_gpio_direction_output(struct gpio_chip *chip,
- 				 SN_GPIO_MUX_OUTPUT << shift);
- 	if (ret) {
- 		clear_bit(offset, pdata->gchip_output);
--		pm_runtime_put(pdata->dev);
-+		pm_runtime_put_autosuspend(pdata->dev);
- 	}
  
- 	return ret;
-@@ -1418,6 +1418,8 @@ static int ti_sn65dsi86_probe(struct i2c_client *client,
- 	ret = devm_add_action_or_reset(dev, ti_sn65dsi86_runtime_disable, dev);
- 	if (ret)
- 		return ret;
-+	pm_runtime_set_autosuspend_delay(pdata->dev, 500);
-+	pm_runtime_use_autosuspend(pdata->dev);
- 
- 	ti_sn65dsi86_debugfs_init(pdata);
- 
+-static u32 ti_sn_bridge_get_dsi_freq(struct ti_sn65dsi86 *pdata)
+-{
+-	u32 bit_rate_khz, clk_freq_khz;
+-	struct drm_display_mode *mode =
+-		&pdata->bridge.encoder->crtc->state->adjusted_mode;
+-
+-	bit_rate_khz = mode->clock *
+-			mipi_dsi_pixel_format_to_bpp(pdata->dsi->format);
+-	clk_freq_khz = bit_rate_khz / (pdata->dsi->lanes * 2);
+-
+-	return clk_freq_khz;
+-}
+-
+-/* clk frequencies supported by bridge in Hz in case derived from REFCLK pin */
+-static const u32 ti_sn_bridge_refclk_lut[] = {
+-	12000000,
+-	19200000,
+-	26000000,
+-	27000000,
+-	38400000,
+-};
+-
+-/* clk frequencies supported by bridge in Hz in case derived from DACP/N pin */
+-static const u32 ti_sn_bridge_dsiclk_lut[] = {
+-	468000000,
+-	384000000,
+-	416000000,
+-	486000000,
+-	460800000,
+-};
+-
+-static void ti_sn_bridge_set_refclk_freq(struct ti_sn65dsi86 *pdata)
+-{
+-	int i;
+-	u32 refclk_rate;
+-	const u32 *refclk_lut;
+-	size_t refclk_lut_size;
+-
+-	if (pdata->refclk) {
+-		refclk_rate = clk_get_rate(pdata->refclk);
+-		refclk_lut = ti_sn_bridge_refclk_lut;
+-		refclk_lut_size = ARRAY_SIZE(ti_sn_bridge_refclk_lut);
+-		clk_prepare_enable(pdata->refclk);
+-	} else {
+-		refclk_rate = ti_sn_bridge_get_dsi_freq(pdata) * 1000;
+-		refclk_lut = ti_sn_bridge_dsiclk_lut;
+-		refclk_lut_size = ARRAY_SIZE(ti_sn_bridge_dsiclk_lut);
+-	}
+-
+-	/* for i equals to refclk_lut_size means default frequency */
+-	for (i = 0; i < refclk_lut_size; i++)
+-		if (refclk_lut[i] == refclk_rate)
+-			break;
+-
+-	regmap_update_bits(pdata->regmap, SN_DPPLL_SRC_REG, REFCLK_FREQ_MASK,
+-			   REFCLK_FREQ(i));
+-}
+-
+ static void ti_sn_bridge_set_dsi_rate(struct ti_sn65dsi86 *pdata)
+ {
+ 	unsigned int bit_rate_mhz, clk_freq_mhz;
 -- 
 2.31.1.498.g6c1eba8ee3d-goog
 
