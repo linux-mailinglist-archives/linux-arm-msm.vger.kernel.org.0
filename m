@@ -2,66 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0EBDD368977
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Apr 2021 01:46:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6F5CC368BD3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Apr 2021 06:10:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236851AbhDVXqr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Apr 2021 19:46:47 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:21374 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231605AbhDVXqr (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Apr 2021 19:46:47 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1619135172; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=+L9r1bo+j6idEjbq0Y2gXmoCkWQiDFq/43yyvz/MPDc=; b=UwtShHJ1NTCay7IQhvaTO0MXCWxdJuJMd2fDbePaCmuhw4eBzDpfQmpiB9YIdZgKSWhyqhRg
- Me/fdJi3bWalbXl85HbPwYiwcTpCJTP/L8eXs+QB5IVi6+qEMoIzUrGPP3yLtMXdz2KWw+Kp
- 9VGDAOxmbP+Hqdx+or0XK9ZTKqA=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
- 60820ac2c39407c327c3b604 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 22 Apr 2021 23:46:10
- GMT
-Sender: subbaram=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id DFF4EC433F1; Thu, 22 Apr 2021 23:46:09 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
-Received: from subbaram-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: subbaram)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id B75C8C433F1;
-        Thu, 22 Apr 2021 23:46:08 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org B75C8C433F1
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=subbaram@codeaurora.org
-From:   Subbaraman Narayanamurthy <subbaram@codeaurora.org>
-To:     mka@chromium.org
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, djakov@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, mdtipton@codeaurora.org,
-        stable@vger.kernel.org, subbaram@codeaurora.org
-Subject: Re: [PATCH] interconnect: qcom: bcm-voter: add a missing of_node_put()
-Date:   Thu, 22 Apr 2021 16:46:03 -0700
-Message-Id: <1619135163-32535-1-git-send-email-subbaram@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <YIHWmJPcoh4bFKNi@google.com>
-References: <YIHWmJPcoh4bFKNi@google.com>
+        id S229456AbhDWEKj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Apr 2021 00:10:39 -0400
+Received: from mail-wr1-f46.google.com ([209.85.221.46]:36722 "EHLO
+        mail-wr1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229454AbhDWEKi (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 23 Apr 2021 00:10:38 -0400
+Received: by mail-wr1-f46.google.com with SMTP id m9so34186899wrx.3;
+        Thu, 22 Apr 2021 21:10:01 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=NEAj7YFHV/fmMkK3zL2KqXVEqxafCEMmM3EwgPewYr4=;
+        b=ooliFFLZL3dusTWCTtlNdcIxIS7NcDqEsd13EhLpJXuGl5iIYjdZqVx8ht1Hk7+oZ1
+         0YNQJwWB21tCcivtnQ2JIgUmuUZlJJGVb/PtKlnj1oR9P+EMKKBcdtStO/4o1kZ7E2Pp
+         fBGWtORmNAfQ2EKiraZrQtk7I4O+kPpqBsfc2kaBV1ppwKU4zuaF50CNu7O8h/jon6ib
+         0MiYerj6P8PXL7Rp/cMLCvsbRcbvspYQ8XZ1A4HEi0aJTZov/7rAwAcT0FZ9OP+nJzRd
+         UvGcmjlqnj2Mwkb/dXtti5o4gOQUj8iELXVd8cUEYQ0QsNAUeHQQun/Rsdx9QDuh2y8X
+         A0Jw==
+X-Gm-Message-State: AOAM533971O1BudD7wHo1m9olCe+ZiKZYaIFhAbDIsP16cFZH7SZxMl3
+        pxgKqe+XlY3UQGmjHCw2I4M+KxX3qjg=
+X-Google-Smtp-Source: ABdhPJy91wnLa1xxDLsC3Osh347tC4UnSQSLN6RUdQnMnZwYRVXubw2xB6YOI/SVDdvTlA4H0L2Ikw==
+X-Received: by 2002:a5d:58fa:: with SMTP id f26mr1823482wrd.177.1619151000110;
+        Thu, 22 Apr 2021 21:10:00 -0700 (PDT)
+Received: from ?IPv6:2a0b:e7c0:0:107::70f? ([2a0b:e7c0:0:107::70f])
+        by smtp.gmail.com with ESMTPSA id l7sm7832051wrb.35.2021.04.22.21.09.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 22 Apr 2021 21:09:59 -0700 (PDT)
+Subject: Re: [PATCH] soc: qcom-geni-se: remove redundant initialization to
+ variable line
+To:     Colin King <colin.king@canonical.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org
+Cc:     kernel-janitors@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20210422125810.248166-1-colin.king@canonical.com>
+From:   Jiri Slaby <jirislaby@kernel.org>
+Message-ID: <06eab84e-db3d-44a5-44d8-5e09bd876283@kernel.org>
+Date:   Fri, 23 Apr 2021 06:09:58 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.9.1
+MIME-Version: 1.0
+In-Reply-To: <20210422125810.248166-1-colin.king@canonical.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
->> Signed-off-by: Subbaraman Narayanamurthy <subbaram@codeaurora.org>
->> Cc: stable@vger.kernel.org
+On 22. 04. 21, 14:58, Colin King wrote:
+> From: Colin Ian King <colin.king@canonical.com>
+> 
+> The variable line being initialized with a value that is never read
+> and it is being updated later with a new value. The initialization is
+> redundant and can be removed.
+> 
+> Addresses-Coverity: ("Unused value")
+> Signed-off-by: Colin Ian King <colin.king@canonical.com>
 
-> nit: I think you would typically put tags like 'Cc' or 'Fixed' before
-> the 'Signed-off-by' tag.
+Reviewed-by: Jiri Slaby <jirislaby@kernel.org>
 
-Sure noted. Thanks.
+> ---
+>   drivers/tty/serial/qcom_geni_serial.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
+> index 99375d99f6fa..c5f2a4fa2bb1 100644
+> --- a/drivers/tty/serial/qcom_geni_serial.c
+> +++ b/drivers/tty/serial/qcom_geni_serial.c
+> @@ -1338,7 +1338,7 @@ static const struct uart_ops qcom_geni_uart_pops = {
+>   static int qcom_geni_serial_probe(struct platform_device *pdev)
+>   {
+>   	int ret = 0;
+> -	int line = -1;
+> +	int line;
+>   	struct qcom_geni_serial_port *port;
+>   	struct uart_port *uport;
+>   	struct resource *res;
+> 
+
+
+-- 
+js
+suse labs
