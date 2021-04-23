@@ -2,125 +2,200 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CDAC0369771
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Apr 2021 18:53:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4C37C369786
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Apr 2021 18:59:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243229AbhDWQx7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Apr 2021 12:53:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46206 "EHLO
+        id S231339AbhDWRAR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Apr 2021 13:00:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47592 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229957AbhDWQx6 (ORCPT
+        with ESMTP id S229691AbhDWRAR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Apr 2021 12:53:58 -0400
-Received: from mail-qk1-x72f.google.com (mail-qk1-x72f.google.com [IPv6:2607:f8b0:4864:20::72f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D4BDC061574
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Apr 2021 09:53:21 -0700 (PDT)
-Received: by mail-qk1-x72f.google.com with SMTP id t17so21774857qkg.4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Apr 2021 09:53:21 -0700 (PDT)
+        Fri, 23 Apr 2021 13:00:17 -0400
+Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7CCAC061574
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Apr 2021 09:59:40 -0700 (PDT)
+Received: by mail-pj1-x1034.google.com with SMTP id y22-20020a17090a8b16b0290150ae1a6d2bso1620485pjn.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Apr 2021 09:59:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=DND1iGGPjngmHTVlV+c4Q20wbAG71cect3ZWcNu/fqM=;
-        b=HEvzLaXsM1O3YDF7kXj6cV9W3z/mj/YaZRnHFlBZ2rpsku/yo45gm9QY1TDQ+b0Q2Q
-         4QmACTulVrObY8AyQsXioItz4TGmlCVL/xhIo2hpFyVGQOkbET4Dy+zwn72r3lYZUfpH
-         +pv1WLGIP5dCOKj6dRBy4N34rssSE/rrgyn1c=
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=oEt1nC1vtPHTBUlkjSuaqYfP7TnDgwA9fiSeTkMzEbo=;
+        b=nJ25OmwHK0xgV1Yxcn7eERlrsniQVgjXEf/PXzbmZ4hNjQxGmYoMBzE7vpEjM/P1aM
+         H4tx549SAeAci0184uTjbd1jYMvy10KRUu9HUcAlXwPCpafmx5hL9heqj5cHAoNjkEc2
+         LljEjrYGSMHPz1P2WLeLC7UVr3tWGxV1yiwMQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=DND1iGGPjngmHTVlV+c4Q20wbAG71cect3ZWcNu/fqM=;
-        b=Hj3k4c+haAZ5ed0iPoUW5xZFx7DDOnhC5K9rURv683hMNFpBL6I+UTnkxGewR2qpwS
-         V8SQP4RFpw3nG/xd1miJrAtycr5vAeIa9ytFBcdQJml9AyK8uaR3rrTd3Lu7IEaCAAmg
-         sTVxnRNFKVGDTLVDfzO5edpVLL5gtVyhdBjK54tKS7PtoObAgCNsskmQGcsUh2G855Fk
-         8tBYvZYMG1c91M/q6mh3jNiYddyapriHeoLFheRotg17C3nyHBzsc7hdT7/xIQntihfL
-         mNHrmFR3HQCuSOhCv2d8W4DrcFQOWsLkROV6Z48X6V6epbhCHuShK8CsMiB2LbjYTSU0
-         1OCw==
-X-Gm-Message-State: AOAM5331I/XUZM5Rl9UQdvCBe+4csTE73chWb3X2VZtSabXo0cihiA4N
-        wK0iaOSA9dilUx3gSaPkg3tbW4DIflAyCQ==
-X-Google-Smtp-Source: ABdhPJyXAkJ/0ZNnuSqkvQhxoy4Fw/8wz3kW+gkrkk5n3V1kv+/8akXapvGb9iax2BzoOVSSVQahdw==
-X-Received: by 2002:a37:90a:: with SMTP id 10mr4978856qkj.396.1619196800232;
-        Fri, 23 Apr 2021 09:53:20 -0700 (PDT)
-Received: from mail-yb1-f174.google.com (mail-yb1-f174.google.com. [209.85.219.174])
-        by smtp.gmail.com with ESMTPSA id j13sm4647410qth.57.2021.04.23.09.53.20
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 23 Apr 2021 09:53:20 -0700 (PDT)
-Received: by mail-yb1-f174.google.com with SMTP id g38so56342349ybi.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Apr 2021 09:53:20 -0700 (PDT)
-X-Received: by 2002:a25:6088:: with SMTP id u130mr7214627ybb.257.1619196429157;
- Fri, 23 Apr 2021 09:47:09 -0700 (PDT)
-MIME-Version: 1.0
-References: <20210416223950.3586967-1-dianders@chromium.org> <20210416153909.v4.27.I502f2a92ddd36c3d28d014dd75e170c2d405a0a5@changeid>
-In-Reply-To: <20210416153909.v4.27.I502f2a92ddd36c3d28d014dd75e170c2d405a0a5@changeid>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Fri, 23 Apr 2021 09:46:57 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=XdAA4+U5=oW++6j84+=L88ViuKRpGkmgUShDYj0=SaoQ@mail.gmail.com>
-Message-ID: <CAD=FV=XdAA4+U5=oW++6j84+=L88ViuKRpGkmgUShDYj0=SaoQ@mail.gmail.com>
-Subject: Re: [PATCH v4 27/27] drm/panel: panel-simple: Prepare/unprepare are
- refcounted, not forced
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=oEt1nC1vtPHTBUlkjSuaqYfP7TnDgwA9fiSeTkMzEbo=;
+        b=fu5Wt/SJLJdbzXE/jSsPZsojvcx9naacJag8iJAteCpbNKCoNW/yAHPBxp5Se2ym+w
+         mWV7ZNK8RxIJz+Z7PwzUxQ2JpfmFKS7uSNsahlIy+Rxc0ExJnTX4aUQUiKzgS5oCVi95
+         Rcf/q5mr9ZwjE5Or9XDX63RtIshFuJLZzBU6LenSYHI21eb7YQSsdshOlt1PS9t+fdyI
+         9ojzRK4DQ193opy1rw7efDSREPj3keLG3bOqY+IyXQhrtMKDbH5y8n0Yk5leFqLt+ma7
+         1SKY9XYE4SsmD75n2PPeQ29dtGx2zab7M1iP5CnwIjx/le33/Fp4JdVGscQLhae7wZPC
+         /bDw==
+X-Gm-Message-State: AOAM530JaIxh1ggUaQQUy2Tg6YT6pbIObsPvgrzlXTbQ8GKqA18WsSmZ
+        5bmQeHkvyhfwjnAdBXDjIr/HCA==
+X-Google-Smtp-Source: ABdhPJx85Ux+CSi1e6wXxw8pebL9hhRFRe1hYA9OAx2AyjKiBCbjO3/fAm4QG7Nvv0ABtNa5huquMg==
+X-Received: by 2002:a17:90b:3656:: with SMTP id nh22mr6435855pjb.112.1619197180259;
+        Fri, 23 Apr 2021 09:59:40 -0700 (PDT)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:202:201:6d86:663d:71f8:6a11])
+        by smtp.gmail.com with ESMTPSA id v8sm5123607pfm.128.2021.04.23.09.59.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 23 Apr 2021 09:59:39 -0700 (PDT)
+From:   Douglas Anderson <dianders@chromium.org>
 To:     Andrzej Hajda <a.hajda@samsung.com>,
         Neil Armstrong <narmstrong@baylibre.com>,
         Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
         Jonas Karlman <jonas@kwiboo.se>,
         Jernej Skrabec <jernej.skrabec@siol.net>,
         Sam Ravnborg <sam@ravnborg.org>, Wolfram Sang <wsa@kernel.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+Cc:     linux-arm-msm@vger.kernel.org, robdclark@chromium.org,
         Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>,
+        Stephen Boyd <swboyd@chromium.org>,
         Steev Klimaszewski <steev@kali.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
         Linus W <linus.walleij@linaro.org>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        linux-i2c@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        dri-devel@lists.freedesktop.org,
+        Douglas Anderson <dianders@chromium.org>,
+        Andy Gross <agross@kernel.org>,
         Daniel Vetter <daniel@ffwll.ch>,
         David Airlie <airlied@linux.ie>,
+        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Robert Foss <robert.foss@linaro.org>,
         Thierry Reding <thierry.reding@gmail.com>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v5 00/20] drm: Fix EDID reading on ti-sn65dsi86; solve some chicken-and-egg problems
+Date:   Fri, 23 Apr 2021 09:58:46 -0700
+Message-Id: <20210423165906.2504169-1-dianders@chromium.org>
+X-Mailer: git-send-email 2.31.1.498.g6c1eba8ee3d-goog
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+The primary goal of this series is to try to properly fix EDID reading
+for eDP panels using the ti-sn65dsi86 bridge.
 
-On Fri, Apr 16, 2021 at 3:41 PM Douglas Anderson <dianders@chromium.org> wrote:
->
-> Historically simple-panel had code to make sure that if prepare() was
-> called on an already-prepared panel that it was a no-op. Similarly if
-> unprepare() was called on an already-unprepared panel it was also a
-> no-op. Essentially it means that these functions always "forced" the
-> value to be whatever the caller wanted it to be. You can see that the
-> forcing behavior dates back at least as far as 2014 by looking at
-> commit 613a633e7a56 ("drm/panel: simple: Add proper definition for
-> prepare and unprepare").
->
-> Apparently the code supporting the historical behavior may not be
-> needed [1] and prepare() / unprepare() are supposed to be
-> balanced. Let's try removing it and see if anyone breaks! If they do
-> then we can have a debate about whether we should change that code or
-> revert this patch. :-) If nobody breaks then we've nicely saved a few
-> lines of code and some complexity.
->
-> [1] https://lore.kernel.org/r/YHePsQgqOau1V5lD@pendragon.ideasonboard.com
->
-> Suggested-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> ---
->
-> (no changes since v1)
->
->  drivers/gpu/drm/panel/panel-simple.c | 14 --------------
->  1 file changed, 14 deletions(-)
+Previously we had a patch that added EDID reading but it turned out
+not to work at bootup. This caused some extra churn at bootup as we
+tried (and failed) to read the EDID several times and also ended up
+forcing us to use the hardcoded mode at boot. With this patch series I
+believe EDID reading is reliable at boot now and we never use the
+hardcoded mode.
 
-So it turns out that when looking at panel_simple_remove() I already
-found a case that's not necessarily refcounting. There I see
-drm_panel_unprepare() just simply hardcoded, but (as I understand it)
-there's no reason to believe that the panel has been prepared at
-remove() time. Yes, I could fix panel_simple_remove() but instead, for
-now, I think I'm going to drop this patch from the series. If someone
-wants to pick it up then I certainly won't object, but for now keeping
-the way things are seems the best way to keep from getting shouted at.
+This series is the logical successor to the 3-part series containing
+the patch ("drm/bridge: ti-sn65dsi86: Properly get the EDID, but only
+if refclk") [1] though only one actual patch is the same between the
+two.
 
--Doug
+This series starts out with some general / obvious fixes and moves on
+to some more specific and maybe controversial ones. I wouldn't object
+to some of the earlier ones landing if they look ready.
+
+This patch was developed agains linuxnext (next-20210416) with
+drm-misc-next (as of 20210423) merged in on a sc7180-trogdor-lazor
+device. To get things booting for me, I had to use Stephen's patch [2]
+to keep from crashing but otherwise all the patches I needed were
+here.
+
+Primary change between v2 and v3 is to stop doing the EDID caching in
+the core. I also added Andrzej's review tags.
+
+Between v3 and v4 this series grew a whole lot. I changed it so that
+the EDID reading is actually driven by the panel driver now as was
+suggested by Andrzej. While I still believe that the old approach
+wasn't too bad I'm still switching. Why?
+
+The main reason is that I think it's useful in general for the panel
+code to have access to the DDC bus and to be able to read the
+EDID. This may allow us to more easily have the panel code support
+multiple sources of panels--it can read the EDID and possibly adjust
+timings based on the model ID. It also allows the panel code (or
+perhaps backlight code?) to send DDC commands if they are need for a
+particular panel.
+
+At the moment, once the panel is provided the DDC bus then existing
+code will assume that it should be in charge of reading the
+EDID. While it doesn't have to work that way, it seems sane to build
+on what's already there.
+
+In order to expose the DDC bus to the panel, I had to solve a bunch of
+chicken-and-egg problems in terms of probe ordering between the bridge
+and the panel. I've broken the bridge driver into several sub drivers
+to make this happen. At the moment the sub-drivers are just there to
+solve the probe problem, but conceivably someone could use them to
+break the driver up in the future if need be.
+
+Between v4 and v5, high-level view of changes.
+- Some of the early patches landed, so dropped from series.
+- New pm_runtime_disable() fix (fixed a patch that already landed).
+- Added Bjorn's tags to most patches
+- Fixed problems when building as a module.
+- Reordered debugfs patch and fixed error handling there.
+- Dropped last patch. I'm not convinced it's safe w/out more work.
+
+I apologize in advance for the length of this series. Hopefully you
+can see that there are only so many because they're broken up into
+nice and reviewable bite-sized-chunks. :-)
+
+*** NOTE ***: my hope is to actually land patches that have been
+reviewed sometime mid-to-late next week. Please shout if you think
+this is too much of a rush and you know of someone who is planning to
+review that needs more time.
+
+[1] https://lore.kernel.org/r/20210304155144.3.I60a7fb23ce4589006bc95c64ab8d15c74b876e68@changeid/
+[2] https://lore.kernel.org/r/161706912161.3012082.17313817257247946143@swboyd.mtv.corp.google.com/
+
+Changes in v5:
+- Missing pm_runtime_disable() patch new for v5.
+- Reordered to debugfs change to avoid transient issue
+- Don't print debugfs creation errors.
+- Handle NULL from debugfs_create_dir() which is documented possible.
+- Rebased atop the pm_runtime patch, which got reordered.
+- Fix module compile problems (Bjorn + kbuild bot)
+- Remove useless MODULE_DEVICE_TABLE (Bjorn).
+- Fix module compile problems (Bjorn + kbuild bot)
+- Remove useless MODULE_DEVICE_TABLE (Bjorn).
+
+Douglas Anderson (20):
+  drm/panel: panel-simple: Add missing pm_runtime_disable() calls
+  drm/bridge: ti-sn65dsi86: Rename the main driver data structure
+  drm/bridge: ti-sn65dsi86: More renames in prep for sub-devices
+  drm/bridge: ti-sn65dsi86: Use devm to do our runtime_disable
+  drm/bridge: ti-sn65dsi86: Clean debugfs code
+  drm/bridge: ti-sn65dsi86: Add local var for "dev" to simplify probe
+  drm/bridge: ti-sn65dsi86: Cleanup managing of drvdata
+  drm/bridge: ti-sn65dsi86: Move all the chip-related init to the start
+  drm/bridge: ti-sn65dsi86: Break GPIO and MIPI-to-eDP bridge into
+    sub-drivers
+  drm/panel: panel-simple: Get rid of hacky HPD chicken-and-egg code
+  drm/bridge: ti-sn65dsi86: Use pm_runtime autosuspend
+  drm/bridge: ti-sn65dsi86: Code motion of refclk management functions
+  drm/bridge: ti-sn65dsi86: If refclk, DP AUX can happen w/out
+    pre-enable
+  drm/bridge: ti-sn65dsi86: Promote the AUX channel to its own sub-dev
+  i2c: i2c-core-of: Fix corner case of finding adapter by node
+  drm/panel: panel-simple: Remove extra call:
+    drm_connector_update_edid_property()
+  drm/panel: panel-simple: Power the panel when reading the EDID
+  drm/panel: panel-simple: Cache the EDID as long as we retain power
+  drm/bridge: ti-sn65dsi86: Don't read EDID blob over DDC
+  arm64: dts: qcom: Link the panel to the bridge's DDC bus
+
+ arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi |   1 +
+ drivers/gpu/drm/bridge/Kconfig               |   1 +
+ drivers/gpu/drm/bridge/ti-sn65dsi86.c        | 767 ++++++++++++-------
+ drivers/gpu/drm/panel/panel-simple.c         |  49 +-
+ drivers/i2c/i2c-core-of.c                    |  17 +-
+ 5 files changed, 538 insertions(+), 297 deletions(-)
+
+-- 
+2.31.1.498.g6c1eba8ee3d-goog
+
