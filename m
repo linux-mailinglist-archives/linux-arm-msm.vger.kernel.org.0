@@ -2,53 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 91B313696AC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Apr 2021 18:12:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 80B6B3696B0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Apr 2021 18:13:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229549AbhDWQN2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Apr 2021 12:13:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37218 "EHLO
+        id S229519AbhDWQOW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Apr 2021 12:14:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37406 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229456AbhDWQN1 (ORCPT
+        with ESMTP id S230355AbhDWQOQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Apr 2021 12:13:27 -0400
-Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E9FEC061574
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Apr 2021 09:12:49 -0700 (PDT)
-Received: by mail-ot1-x330.google.com with SMTP id e89-20020a9d01e20000b0290294134181aeso19931223ote.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Apr 2021 09:12:49 -0700 (PDT)
+        Fri, 23 Apr 2021 12:14:16 -0400
+Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDDBCC06174A
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Apr 2021 09:13:38 -0700 (PDT)
+Received: by mail-oi1-x232.google.com with SMTP id d25so12153773oij.5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Apr 2021 09:13:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=t2yrefWokbt33zTb8tmxj08fAqkU3+m9KUoV5do9LC0=;
-        b=PJ/zA3NEHcqEnhs54KzGFdXCkq4oVc/gAhKk8CPtOzBSe3RpJxzCnR8t0i5EWQ2rUn
-         cBvcR75IV7rT/nCF4fzK4L8JBnVnV4fvzgBFlVnTefFtn/sUFAydBkgugBPl4u093wYZ
-         UDBgcLOOuPdIfospceeYriu21HsVIX0XCEve5L1FragZ4PenxTOH+fi3cwYSG5rMeTin
-         LtV8ITJCs8Q93hancAReZ5D8emnlNbC2HuKZKWPu6z95xsaBrZUQkp97rZArr0f5ra/j
-         sXNPosDBmufG4qNw09oYtxTfSW/XWSxeGYTLVEb3D4jQD5sG/i5PvthnYHoL+Z7V9PIh
-         FDCw==
+        bh=VbXYKADdmwOH79L6ViVXTU8ZSxeTDRgadHJidgsTXTM=;
+        b=oWoxobZWaNhkJ4ZKI8Hr/eMLcZAgzZqlE8Kgg4FItYE4OZ7J+8m4F2VTX5vPoVSA3K
+         FdPEVmxBPvlD73fmPf0qTXMl/TNPv8QXT+qkL0NCa55U7haBFLcodjrTCRWRjNWjFX83
+         acAstwZExSckSRqfGmPAck/PtMEpLEK3oaHg3UjD5U1ni0VP+NMHbbwMeF9lWxZp/BP5
+         tCSoJC4PQM3dRiPz94F0vTRhUuJbZ+wothIRvjtcKXl0DZxaXf/zxCFDDBH/2x4GNmIg
+         Cx0t5aPTpU87rRGLz2PNFXEZg8uyLss1TKjkFuCvmlYX+tAeqRWajxxR5oLKKTVpYzab
+         XiMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=t2yrefWokbt33zTb8tmxj08fAqkU3+m9KUoV5do9LC0=;
-        b=aVO50sKkmgrO48sNASJqfeE1q+M3GBzlGU9lb2forCz4Zx76gdSXy1R8ied3NVp2wt
-         H4GYpLo+6CbslhrxoLyoXFGyk+XWXCk+oOKjZOfPYkT9AipNDPW7WuL9sIHQN9w4ETl7
-         l4FnaLmTteLCnJmA43BnA2bY6dBBJdMvwraATA5Ce/SwKmpOXmiUUf6typ3R1OHWCo0N
-         yMXmq2Oht+KJ6MmkCnAI3pkvSOT9BU4qWOW6c3efKcvy+U8fzNkOfiO4gaVGlI4xD1ZS
-         yzlS3tyx+Bqc9C7N23hf9wkTOwtNakNPNs3g9Jt/e6vjxXMnPuo6pmksU8yE8NiCr9Ey
-         NtFA==
-X-Gm-Message-State: AOAM530C+EYvEw4cY8BQqQcr7uGmZXbzmnLs8Sme2uYU5Z71FsrByRgY
-        AOB+FRc7b9sNq3v1bdIRYR0UuA==
-X-Google-Smtp-Source: ABdhPJz1tp/EQchiVjH4auFBqgFjc0Uz3XgKzC1NFD0VSi1F0QaLnrO+79sKOL4PwuCs206USDCV7A==
-X-Received: by 2002:a9d:5a1a:: with SMTP id v26mr4123172oth.50.1619194368866;
-        Fri, 23 Apr 2021 09:12:48 -0700 (PDT)
+        bh=VbXYKADdmwOH79L6ViVXTU8ZSxeTDRgadHJidgsTXTM=;
+        b=eizAY+IGCE0O/ODpR97mJeQDDzrC4rPrS89ajsw6vqNnpflhG1kfGfNVuv0HVMgpmW
+         GfoOTb3xOga4TPD7CVYCQOhVa7AEkZROPl0uvVy47AQMgfbOw9OlwQP2CyLp0jFhDv4M
+         W5qgliLz5ZBMkDgmbp1RqF5gniCXktOYTJQppdia2DWqjMExlxybl3m3r3d5fHarZSWZ
+         6y0jHXq40b/J6GgXRdwM0RVY9UzZOcI0dBwNkdeE6OhbHuKvcpDC2cJUfR759Jx15FFW
+         D0PHtiva16TUwH0CCsxXb/CiL3S0hZZfx2R0qyyVfPyP0Q07zOxMP/anMdftqpyhqBhA
+         cxpw==
+X-Gm-Message-State: AOAM530DSwdyHmxeLiT0046e/pO2Fj3hMYrYr31CiSS7oJ0qHSlm7Zea
+        P14FvuhsVAu4Pyifh2Z6JkfCeA==
+X-Google-Smtp-Source: ABdhPJzRUZLe7+UOtveCxOLUUqc//CIMtkno3xigvUsDgjkUmuug6YblE/W99gqm8UKVoUIvUrD0Iw==
+X-Received: by 2002:aca:f553:: with SMTP id t80mr4455681oih.149.1619194418219;
+        Fri, 23 Apr 2021 09:13:38 -0700 (PDT)
 Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id x24sm1465060otk.16.2021.04.23.09.12.47
+        by smtp.gmail.com with ESMTPSA id w2sm1272005oov.23.2021.04.23.09.13.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Apr 2021 09:12:48 -0700 (PDT)
-Date:   Fri, 23 Apr 2021 11:12:46 -0500
+        Fri, 23 Apr 2021 09:13:37 -0700 (PDT)
+Date:   Fri, 23 Apr 2021 11:13:35 -0500
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Douglas Anderson <dianders@chromium.org>
 Cc:     Andrzej Hajda <a.hajda@samsung.com>,
@@ -64,92 +64,133 @@ Cc:     Andrzej Hajda <a.hajda@samsung.com>,
         linux-arm-msm@vger.kernel.org, Linus W <linus.walleij@linaro.org>,
         Daniel Vetter <daniel@ffwll.ch>,
         David Airlie <airlied@linux.ie>,
-        Thierry Reding <thierry.reding@gmail.com>,
+        Robert Foss <robert.foss@linaro.org>,
         dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 24/27] drm/panel: panel-simple: Cache the EDID as long
- as we retain power
-Message-ID: <YILx/iODs+DFWWwm@builder.lan>
+Subject: Re: [PATCH v4 25/27] drm/bridge: ti-sn65dsi86: Don't read EDID blob
+ over DDC
+Message-ID: <YILyL+V4tgNX8mck@builder.lan>
 References: <20210416223950.3586967-1-dianders@chromium.org>
- <20210416153909.v4.24.If050957eaa85cf45b10bcf61e6f7fa61c9750ebf@changeid>
+ <20210416153909.v4.25.I9330684c25f65bb318eff57f0616500f83eac3cc@changeid>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20210416153909.v4.24.If050957eaa85cf45b10bcf61e6f7fa61c9750ebf@changeid>
+In-Reply-To: <20210416153909.v4.25.I9330684c25f65bb318eff57f0616500f83eac3cc@changeid>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Fri 16 Apr 17:39 CDT 2021, Douglas Anderson wrote:
 
-> It doesn't make sense to go out to the bus and read the EDID over and
-> over again. Let's cache it and throw away the cache when we turn power
-> off from the panel. Autosuspend means that even if there are several
-> calls to read the EDID before we officially turn the power on then we
-> should get good use out of this cache.
+> This is really just a revert of commit 58074b08c04a ("drm/bridge:
+> ti-sn65dsi86: Read EDID blob over DDC"), resolving conflicts.
 > 
+> The old code failed to read the EDID properly in a very important
+> case: before the bridge's pre_enable() was called. The way things need
+> to work:
+> 1. Read the EDID.
+> 2. Based on the EDID, decide on video settings and pixel clock.
+> 3. Enable the bridge w/ the desired settings.
+> 
+> The way things were working:
+> 1. Try to read the EDID but fail; fall back to hardcoded values.
+> 2. Based on hardcoded values, decide on video settings and pixel clock.
+> 3. Enable the bridge w/ the desired settings.
+> 4. Try again to read the EDID, it works now!
+> 5. Realize that the hardcoded settings weren't quite right.
+> 6. Disable / reenable the bridge w/ the right settings.
+> 
+> The reasons for the failures were twofold:
+> a) Since we never ran the bridge chip's pre-enable then we never set
+>    the bit to ignore HPD. This meant the bridge chip didn't even _try_
+>    to go out on the bus and communicate with the panel.
+> b) Even if we fixed things to ignore HPD, the EDID still wouldn't read
+>    if the panel wasn't on.
+> 
+> Instead of reverting the code, we could fix it to set the HPD bit and
+> also power on the panel. However, it also works nicely to just let the
+> panel code read the EDID. Now that we've split the driver up we can
+> expose the DDC AUX channel bus to the panel node. The panel can take
+> charge of reading the EDID.
+> 
+> NOTE: in order for things to work, anyone that needs to read the EDID
+> will need to add something that looks like this to their panel in the
+> dts:
+>   ddc-i2c-bus = <&sn65dsi86_bridge>;
+> 
+> Presumably it's OK to land this without waiting for users to add the
+> dts property since the EDID reading was a bit broken anyway, was
+> "recently" added, and we know we must have the fallback mode to use
+> (since the EDID reading was a bit broken).
+> 
+> Suggested-by: Andrzej Hajda <a.hajda@samsung.com>
 > Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> ---
-> 
-> (no changes since v1)
-> 
->  drivers/gpu/drm/panel/panel-simple.c | 17 ++++++++++-------
->  1 file changed, 10 insertions(+), 7 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
-> index 40382c1be692..5a2953c4ca44 100644
-> --- a/drivers/gpu/drm/panel/panel-simple.c
-> +++ b/drivers/gpu/drm/panel/panel-simple.c
-> @@ -189,6 +189,8 @@ struct panel_simple {
->  	struct gpio_desc *enable_gpio;
->  	struct gpio_desc *hpd_gpio;
->  
-> +	struct edid *edid;
-> +
->  	struct drm_display_mode override_mode;
->  
->  	enum drm_panel_orientation orientation;
-> @@ -345,6 +347,9 @@ static int panel_simple_suspend(struct device *dev)
->  	regulator_disable(p->supply);
->  	p->unprepared_time = ktime_get();
->  
-> +	kfree(p->edid);
-> +	p->edid = NULL;
 
 Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-
-
-But separate of this, shouldn't the driver have a pm_runtime_disable()
-in the remove path to synchronize the autosleep? Or is that not how that
-works?
 
 Regards,
 Bjorn
 
-> +
->  	return 0;
+> ---
+> 
+> (no changes since v1)
+> 
+>  drivers/gpu/drm/bridge/ti-sn65dsi86.c | 22 ----------------------
+>  1 file changed, 22 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+> index 8253098bcdbf..62904dfdee0a 100644
+> --- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+> +++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+> @@ -125,7 +125,6 @@
+>   * @connector:    Our connector.
+>   * @host_node:    Remote DSI node.
+>   * @dsi:          Our MIPI DSI source.
+> - * @edid:         Detected EDID of eDP panel.
+>   * @refclk:       Our reference clock.
+>   * @panel:        Our panel.
+>   * @enable_gpio:  The GPIO we toggle to enable the bridge.
+> @@ -156,7 +155,6 @@ struct ti_sn65dsi86 {
+>  	struct drm_dp_aux		aux;
+>  	struct drm_bridge		bridge;
+>  	struct drm_connector		connector;
+> -	struct edid			*edid;
+>  	struct device_node		*host_node;
+>  	struct mipi_dsi_device		*dsi;
+>  	struct clk			*refclk;
+> @@ -404,24 +402,6 @@ connector_to_ti_sn65dsi86(struct drm_connector *connector)
+>  static int ti_sn_bridge_connector_get_modes(struct drm_connector *connector)
+>  {
+>  	struct ti_sn65dsi86 *pdata = connector_to_ti_sn65dsi86(connector);
+> -	struct edid *edid = pdata->edid;
+> -	int num, ret;
+> -
+> -	if (!edid) {
+> -		pm_runtime_get_sync(pdata->dev);
+> -		edid = pdata->edid = drm_get_edid(connector, &pdata->aux.ddc);
+> -		pm_runtime_put_autosuspend(pdata->dev);
+> -	}
+> -
+> -	if (edid && drm_edid_is_valid(edid)) {
+> -		ret = drm_connector_update_edid_property(connector, edid);
+> -		if (!ret) {
+> -			num = drm_add_edid_modes(connector, edid);
+> -			if (num)
+> -				return num;
+> -		}
+> -	}
+> -
+>  	return drm_panel_get_modes(pdata->panel, connector);
 >  }
 >  
-> @@ -510,15 +515,13 @@ static int panel_simple_get_modes(struct drm_panel *panel,
+> @@ -1330,8 +1310,6 @@ static void ti_sn_bridge_remove(struct auxiliary_device *adev)
+>  		mipi_dsi_device_unregister(pdata->dsi);
+>  	}
 >  
->  	/* probe EDID if a DDC bus is available */
->  	if (p->ddc) {
-> -		struct edid *edid;
+> -	kfree(pdata->edid);
 > -
->  		pm_runtime_get_sync(panel->dev);
+>  	drm_bridge_remove(&pdata->bridge);
 >  
-> -		edid = drm_get_edid(connector, p->ddc);
-> -		if (edid) {
-> -			num += drm_add_edid_modes(connector, edid);
-> -			kfree(edid);
-> -		}
-> +		if (!p->edid)
-> +			p->edid = drm_get_edid(connector, p->ddc);
-> +
-> +		if (p->edid)
-> +			num += drm_add_edid_modes(connector, p->edid);
->  
->  		pm_runtime_mark_last_busy(panel->dev);
->  		pm_runtime_put_autosuspend(panel->dev);
+>  	of_node_put(pdata->host_node);
 > -- 
 > 2.31.1.368.gbe11c130af-goog
 > 
