@@ -2,330 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C96DE36A844
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Apr 2021 18:08:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2C52936A929
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Apr 2021 22:19:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230335AbhDYQIz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 25 Apr 2021 12:08:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34894 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230495AbhDYQIz (ORCPT
+        id S231317AbhDYUUM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 25 Apr 2021 16:20:12 -0400
+Received: from jabberwock.ucw.cz ([46.255.230.98]:47210 "EHLO
+        jabberwock.ucw.cz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230494AbhDYUUL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 25 Apr 2021 12:08:55 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91A03C061756
-        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Apr 2021 09:08:07 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id x19so54221504lfa.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Apr 2021 09:08:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=2bBYyBWfbK+wEYQbw8AaPxoPO8CIW68ow2PmqcM84eQ=;
-        b=QZNsTg/GLviItil3uPbGw5ywlauLi4QzZlLohHtzTp7VpSYjAAoL0PoVzxHSQUWZf+
-         NiesYTT23TdHhVb9mS6O0hcqadDd/PoI541MyrhqdWD/dHU1Y0v4KDtDdnb7pRqMHXpp
-         NnBxUnbX9xxjRWWPnnRuJL3v2VZrcFCum05AeLPQ0hXy/kFB5xj38Jo5wXFjEHijcAFy
-         SPJezhaVqCJUShtX4nzW+eawkmWiGYDLscbdqKp5ntOr/Fk6/AJzqJmxSBHHtkfMYW2a
-         pRvkXxFT+zNzQqV6jH1HHRp8w6X6r0buiguuYof6SJoS/sVyVYoH7+45dc+Gu7V2joHd
-         3Fhw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=2bBYyBWfbK+wEYQbw8AaPxoPO8CIW68ow2PmqcM84eQ=;
-        b=VJiq12TF3Gp1jriWVmPwniaY6rGWYg3rFzF+qHm3veldREZC6MbI3iJS31HBPflsCm
-         RKHCcBe2nqThw3om/Ki4oN8uLLYXApG2QjA0GaveXTtoprHFBhHUAvHg5UBrx2lmVzAu
-         HLd6Rnv1CLNtAlvPmN4T1XcAqpE0cknWPjkGAXYfkdcQBzlAaQ1NjYb1Qceu2XgXMpum
-         iuQ8rmTG0or/48fk266nu/eQQx0+CeP8JPwt9GDJ2XxbDzqOtXSjmJ7VV6VkWAwaiAwx
-         2NYn1dsoMQD2YvjGVyo/shOo9unuRJIN8HdW/gRTeJcfyMCAEVqob8y0QNnY61kPT2iR
-         at2g==
-X-Gm-Message-State: AOAM531g1BkA8dUEyKW7AgZrbqNR/IrnZJsTOU0bHuA8VRXzVZ7H/DBX
-        S6WfRyif6gOR+tqnrXh9ze/kIg==
-X-Google-Smtp-Source: ABdhPJxszE1EqzWKe5TN/602vRvJmUZlj7Z0UqhGhTg3AovEVkoRgJbBRQ2XVgsm0l3fxKBSA3bAig==
-X-Received: by 2002:a19:7e97:: with SMTP id z145mr10363453lfc.280.1619366886087;
-        Sun, 25 Apr 2021 09:08:06 -0700 (PDT)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id l24sm1141575lfc.23.2021.04.25.09.08.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 25 Apr 2021 09:08:05 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <abhinavk@codeaurora.org>
-Cc:     Jonathan Marek <jonathan@marek.ca>,
-        Stephen Boyd <sboyd@kernel.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: [PATCH 2/2] drm/msm: make msm_disp_state transient data struct
-Date:   Sun, 25 Apr 2021 19:08:00 +0300
-Message-Id: <20210425160800.1201337-3-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20210425160800.1201337-1-dmitry.baryshkov@linaro.org>
-References: <20210425160800.1201337-1-dmitry.baryshkov@linaro.org>
+        Sun, 25 Apr 2021 16:20:11 -0400
+Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
+        id CD4311C0B76; Sun, 25 Apr 2021 22:19:29 +0200 (CEST)
+Date:   Sun, 25 Apr 2021 22:19:28 +0200
+From:   Pavel Machek <pavel@ucw.cz>
+To:     Jacek Anaszewski <jacek.anaszewski@gmail.com>
+Cc:     =?iso-8859-1?Q?N=EDcolas_F=2E_R=2E_A=2E?= Prado 
+        <nfraprado@protonmail.com>, Dan Murphy <dmurphy@ti.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, linux-leds@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Brian Masney <masneyb@onstation.org>,
+        Luca Weiss <luca@z3ntu.xyz>,
+        Russell King <linux@armlinux.org.uk>,
+        Georgi Djakov <georgi.djakov@linaro.org>,
+        linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        lkcamp@lists.libreplanetbr.org, andrealmeid@collabora.com
+Subject: Re: [PATCH v2 2/4] leds: Add driver for QCOM SPMI Flash LEDs
+Message-ID: <20210425201928.GA10996@amd>
+References: <20210126140240.1517044-1-nfraprado@protonmail.com>
+ <20210126140240.1517044-3-nfraprado@protonmail.com>
+ <a26a1d40-1c7c-b97c-2970-58a2fda8f1cf@gmail.com>
+ <20210219110227.GG19207@duo.ucw.cz>
+ <7bb757c7-55af-66a4-aa12-fe646a19fcf6@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha1;
+        protocol="application/pgp-signature"; boundary="2fHTh5uZTiUOsy+g"
+Content-Disposition: inline
+In-Reply-To: <7bb757c7-55af-66a4-aa12-fe646a19fcf6@gmail.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Instead of allocating snapshotting structure at the driver probe time
-and later handling concurrent access, actual state, etc, make
-msm_disp_state transient struct. Allocate one when snapshotting happens
-and free it after coredump data is read by userspace.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/msm/disp/msm_disp_snapshot.c  | 87 ++++---------------
- drivers/gpu/drm/msm/disp/msm_disp_snapshot.h  | 13 +--
- .../gpu/drm/msm/disp/msm_disp_snapshot_util.c |  5 +-
- drivers/gpu/drm/msm/msm_kms.h                 |  5 +-
- 4 files changed, 28 insertions(+), 82 deletions(-)
+--2fHTh5uZTiUOsy+g
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/drivers/gpu/drm/msm/disp/msm_disp_snapshot.c b/drivers/gpu/drm/msm/disp/msm_disp_snapshot.c
-index 70fd5a1fe13e..371358893716 100644
---- a/drivers/gpu/drm/msm/disp/msm_disp_snapshot.c
-+++ b/drivers/gpu/drm/msm/disp/msm_disp_snapshot.c
-@@ -7,8 +7,7 @@
- 
- #include "msm_disp_snapshot.h"
- 
--#ifdef CONFIG_DEV_COREDUMP
--static ssize_t disp_devcoredump_read(char *buffer, loff_t offset,
-+static ssize_t __maybe_unused disp_devcoredump_read(char *buffer, loff_t offset,
- 		size_t count, void *data, size_t datalen)
- {
- 	struct drm_print_iterator iter;
-@@ -29,24 +28,21 @@ static ssize_t disp_devcoredump_read(char *buffer, loff_t offset,
- 	return count - iter.remain;
- }
- 
--static void disp_devcoredump_free(void *data)
-+static void _msm_disp_snapshot_work(struct kthread_work *work)
- {
-+	struct msm_kms *msm_kms = container_of(work, struct msm_kms, dump_work);
-+	struct drm_device *drm_dev = msm_kms->dev;
- 	struct msm_disp_state *disp_state;
-+	struct drm_printer p;
- 
--	disp_state = data;
--
--	msm_disp_state_free(disp_state);
--
--	disp_state->coredump_pending = false;
--}
--#endif /* CONFIG_DEV_COREDUMP */
-+	disp_state = kzalloc(sizeof(struct msm_disp_state), GFP_KERNEL);
-+	if (!disp_state)
-+		return;
- 
--static void _msm_disp_snapshot_work(struct kthread_work *work)
--{
--	struct msm_disp_state *disp_state = container_of(work, struct msm_disp_state, dump_work);
--	struct drm_printer p;
-+	disp_state->dev = drm_dev->dev;
-+	disp_state->drm_dev = drm_dev;
- 
--	mutex_lock(&disp_state->mutex);
-+	INIT_LIST_HEAD(&disp_state->blocks);
- 
- 	msm_disp_snapshot_capture_state(disp_state);
- 
-@@ -55,26 +51,15 @@ static void _msm_disp_snapshot_work(struct kthread_work *work)
- 		msm_disp_state_print(disp_state, &p);
- 	}
- 
--	/*
--	 * if devcoredump is not defined free the state immediately
--	 * otherwise it will be freed in the free handler.
--	 */
--#ifdef CONFIG_DEV_COREDUMP
-+	/* If COREDUMP is disabled, the stub will call the free function. */
- 	dev_coredumpm(disp_state->dev, THIS_MODULE, disp_state, 0, GFP_KERNEL,
--			disp_devcoredump_read, disp_devcoredump_free);
--	disp_state->coredump_pending = true;
--#else
--	msm_disp_state_free(disp_state);
--#endif
--
--	mutex_unlock(&disp_state->mutex);
-+			disp_devcoredump_read, msm_disp_state_free);
- }
- 
- void msm_disp_snapshot_state(struct drm_device *drm_dev)
- {
- 	struct msm_drm_private *priv;
- 	struct msm_kms *kms;
--	struct msm_disp_state *disp_state;
- 
- 	if (!drm_dev) {
- 		DRM_ERROR("invalid params\n");
-@@ -83,30 +68,13 @@ void msm_disp_snapshot_state(struct drm_device *drm_dev)
- 
- 	priv = drm_dev->dev_private;
- 	kms = priv->kms;
--	disp_state = kms->disp_state;
--
--	if (!disp_state) {
--		DRM_ERROR("invalid params\n");
--		return;
--	}
--
--	/*
--	 * if there is a coredump pending return immediately till dump
--	 * if read by userspace or timeout happens
--	 */
--	if (disp_state->coredump_pending) {
--		DRM_DEBUG("coredump is pending read\n");
--		return;
--	}
- 
--	kthread_queue_work(disp_state->dump_worker,
--			&disp_state->dump_work);
-+	kthread_queue_work(kms->dump_worker, &kms->dump_work);
- }
- 
- int msm_disp_snapshot_init(struct drm_device *drm_dev)
- {
- 	struct msm_drm_private *priv;
--	struct msm_disp_state *disp_state;
- 	struct msm_kms *kms;
- 
- 	if (!drm_dev) {
-@@ -117,22 +85,11 @@ int msm_disp_snapshot_init(struct drm_device *drm_dev)
- 	priv = drm_dev->dev_private;
- 	kms = priv->kms;
- 
--	disp_state = devm_kzalloc(drm_dev->dev, sizeof(struct msm_disp_state), GFP_KERNEL);
--
--	mutex_init(&disp_state->mutex);
--
--	disp_state->dev = drm_dev->dev;
--	disp_state->drm_dev = drm_dev;
--
--	INIT_LIST_HEAD(&disp_state->blocks);
--
--	disp_state->dump_worker = kthread_create_worker(0, "%s", "disp_snapshot");
--	if (IS_ERR(disp_state->dump_worker))
-+	kms->dump_worker = kthread_create_worker(0, "%s", "disp_snapshot");
-+	if (IS_ERR(kms->dump_worker))
- 		DRM_ERROR("failed to create disp state task\n");
- 
--	kthread_init_work(&disp_state->dump_work, _msm_disp_snapshot_work);
--
--	kms->disp_state = disp_state;
-+	kthread_init_work(&kms->dump_work, _msm_disp_snapshot_work);
- 
- 	return 0;
- }
-@@ -141,7 +98,6 @@ void msm_disp_snapshot_destroy(struct drm_device *drm_dev)
- {
- 	struct msm_kms *kms;
- 	struct msm_drm_private *priv;
--	struct msm_disp_state *disp_state;
- 
- 	if (!drm_dev) {
- 		DRM_ERROR("invalid params\n");
-@@ -150,12 +106,7 @@ void msm_disp_snapshot_destroy(struct drm_device *drm_dev)
- 
- 	priv = drm_dev->dev_private;
- 	kms = priv->kms;
--	disp_state = kms->disp_state;
--
--	if (disp_state->dump_worker)
--		kthread_destroy_worker(disp_state->dump_worker);
--
--	list_del(&disp_state->blocks);
- 
--	mutex_destroy(&disp_state->mutex);
-+	if (kms->dump_worker)
-+		kthread_destroy_worker(kms->dump_worker);
- }
-diff --git a/drivers/gpu/drm/msm/disp/msm_disp_snapshot.h b/drivers/gpu/drm/msm/disp/msm_disp_snapshot.h
-index 32f52799a1ba..c6174a366095 100644
---- a/drivers/gpu/drm/msm/disp/msm_disp_snapshot.h
-+++ b/drivers/gpu/drm/msm/disp/msm_disp_snapshot.h
-@@ -41,26 +41,17 @@
-  * struct msm_disp_state - structure to store current dpu state
-  * @dev: device pointer
-  * @drm_dev: drm device pointer
-- * @mutex: mutex to serialize access to serialze dumps, debugfs access
-- * @coredump_pending: coredump is pending read from userspace
-  * @atomic_state: atomic state duplicated at the time of the error
-- * @dump_worker: kworker thread which runs the dump work
-- * @dump_work: kwork which dumps the registers and drm state
-  * @timestamp: timestamp at which the coredump was captured
-  */
- struct msm_disp_state {
- 	struct device *dev;
- 	struct drm_device *drm_dev;
--	struct mutex mutex;
--
--	bool coredump_pending;
- 
- 	struct list_head blocks;
- 
- 	struct drm_atomic_state *atomic_state;
- 
--	struct kthread_worker *dump_worker;
--	struct kthread_work dump_work;
- 	ktime_t timestamp;
- };
- 
-@@ -123,11 +114,11 @@ void msm_disp_snapshot_capture_state(struct msm_disp_state *disp_state);
- 
- /**
-  * msm_disp_state_free - free the memory after the coredump has been read
-- * @disp_state:	    handle to struct msm_disp_state
-+ * @data:	    handle to struct msm_disp_state
- 
-  * Returns: none
-  */
--void msm_disp_state_free(struct msm_disp_state *disp_state);
-+void msm_disp_state_free(void *data);
- 
- /**
-  * msm_disp_snapshot_add_block - add a hardware block with its register dump
-diff --git a/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c b/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c
-index ca6632550337..cabe15190ec1 100644
---- a/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c
-+++ b/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c
-@@ -142,8 +142,9 @@ void msm_disp_snapshot_capture_state(struct msm_disp_state *disp_state)
- 	msm_disp_capture_atomic_state(disp_state);
- }
- 
--void msm_disp_state_free(struct msm_disp_state *disp_state)
-+void msm_disp_state_free(void *data)
- {
-+	struct msm_disp_state *disp_state = data;
- 	struct msm_disp_state_block *block, *tmp;
- 
- 	if (disp_state->atomic_state) {
-@@ -156,6 +157,8 @@ void msm_disp_state_free(struct msm_disp_state *disp_state)
- 		kfree(block->state);
- 		kfree(block);
- 	}
-+
-+	kfree(disp_state);
- }
- 
- void msm_disp_snapshot_add_block(struct msm_disp_state *disp_state, u32 len,
-diff --git a/drivers/gpu/drm/msm/msm_kms.h b/drivers/gpu/drm/msm/msm_kms.h
-index 146dcab123f4..529b9dacf7ca 100644
---- a/drivers/gpu/drm/msm/msm_kms.h
-+++ b/drivers/gpu/drm/msm/msm_kms.h
-@@ -156,8 +156,9 @@ struct msm_kms {
- 	/* mapper-id used to request GEM buffer mapped for scanout: */
- 	struct msm_gem_address_space *aspace;
- 
--	/* handle to disp snapshot state */
--	struct msm_disp_state *disp_state;
-+	/* disp snapshot support */
-+	struct kthread_worker *dump_worker;
-+	struct kthread_work dump_work;
- 
- 	/*
- 	 * For async commit, where ->flush_commit() and later happens
--- 
-2.30.2
+Hi!
 
+> >>>+#include <linux/kernel.h>
+> >>>+#include <linux/module.h>
+> >>>+#include <linux/spmi.h>
+> >>>+#include <linux/of_device.h>
+> >>>+#include <linux/device.h>
+> >>>+#include <linux/types.h>
+> >>>+#include <linux/string.h>
+> >>>+#include <linux/mutex.h>
+> >>>+#include <linux/sysfs.h>
+> >>>+#include <linux/led-class-flash.h>
+> >>>+#include <linux/regulator/consumer.h>
+> >>>+#include <linux/delay.h>
+> >>>+#include <linux/regmap.h>
+> >>>+#include <dt-bindings/leds/leds-qcom-spmi-flash.h>
+> >>
+> >>Please sort includes alphabetically.
+> >
+> >No need to do that.
+>=20
+> Keeping the includes sorted eliminates the risk of introducing duplicates
+> and allows for faster lookup.
+>=20
+> What gain is in having them unsorted?
+
+It is not there is gain in them unsorted; it is that keeping sorted
+order is not worth the effort.
+
+> >>>+#define FLASH_SAFETY_TIMER		0x40
+> >>
+> >>Namespacing prefix is needed for macros, e.g. QCOM_FLASH*.
+> >
+> >No need for that in .c files.
+>=20
+> In general it eliminates the risk of name clash with other subsystems
+> headers.
+>=20
+> And actually the prefix here should be QCOM_LED_FLASH to avoid ambiguity
+> with flash memory. If you dropped the vendor prefix then you'd get
+> possible name clash with led-class-flash.h namespace prefix.
+
+I believe the cost (longer macro names) outweights the benefits here.
+
+Best regards,
+								Pavel
+--=20
+http://www.livejournal.com/~pavelmachek
+
+--2fHTh5uZTiUOsy+g
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iEYEARECAAYFAmCFztAACgkQMOfwapXb+vKsAQCgwoITptPZoLauNTG8eGPnXx4k
+axkAnAlN7nrSYyNTLk7gonKmd2sqzFrb
+=QgY3
+-----END PGP SIGNATURE-----
+
+--2fHTh5uZTiUOsy+g--
