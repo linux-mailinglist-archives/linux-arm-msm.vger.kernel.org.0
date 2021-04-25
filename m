@@ -2,181 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5CC6236A544
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Apr 2021 09:09:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9CD8F36A717
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Apr 2021 14:20:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229837AbhDYHJo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 25 Apr 2021 03:09:44 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:45553 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229828AbhDYHJn (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 25 Apr 2021 03:09:43 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1619334544; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=M7/gztcsuqHr7jLZXwVGqGrB8iHlOwvthXDr81P5UP8=; b=Bt6P7Eqxp5TzGfcHvr50PeHZwpqyN/AK91JsLXWEuhTTtwdTp+Wb8HfF1Jtzzsvusdvx3Edz
- sqOKbNHhGyU74N4qsD96ihkuuRqPkKO28xApX6do6f2Xz3CsauaIK2DBEdt2Uxf7MiFY55E6
- xbhwQvxUTz5HKO9EIB0yg3yWQDA=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
- 6085157d2cc44d3aea6e6354 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Sun, 25 Apr 2021 07:08:45
- GMT
-Sender: tdas=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 9BAFFC433F1; Sun, 25 Apr 2021 07:08:45 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from tdas-linux.qualcomm.com (unknown [202.46.22.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: tdas)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 67954C433D3;
-        Sun, 25 Apr 2021 07:08:41 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 67954C433D3
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=tdas@codeaurora.org
-From:   Taniya Das <tdas@codeaurora.org>
-To:     Stephen Boyd <sboyd@kernel.org>,
-        =?UTF-8?q?Michael=20Turquette=20=C2=A0?= <mturquette@baylibre.com>
-Cc:     Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Taniya Das <tdas@codeaurora.org>
-Subject: [PATCH v3] clk: qcom: clk-rcg2: Add support for duty-cycle for RCG
-Date:   Sun, 25 Apr 2021 12:38:22 +0530
-Message-Id: <1619334502-9880-2-git-send-email-tdas@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1619334502-9880-1-git-send-email-tdas@codeaurora.org>
-References: <1619334502-9880-1-git-send-email-tdas@codeaurora.org>
+        id S229932AbhDYMU5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 25 Apr 2021 08:20:57 -0400
+Received: from mga06.intel.com ([134.134.136.31]:63546 "EHLO mga06.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229837AbhDYMU5 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 25 Apr 2021 08:20:57 -0400
+IronPort-SDR: hXMMJBpyXQYbj/nwX+ke0zvw8TQmmHfjvc2iHvABgg/+6NJTt8CDJPHxh1qbMWufkDJpXE7z/Y
+ QgMYZ5VcQduA==
+X-IronPort-AV: E=McAfee;i="6200,9189,9964"; a="257536042"
+X-IronPort-AV: E=Sophos;i="5.82,250,1613462400"; 
+   d="scan'208";a="257536042"
+Received: from fmsmga008.fm.intel.com ([10.253.24.58])
+  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Apr 2021 05:20:15 -0700
+IronPort-SDR: GxK5WXx/z622EJjt1X62nNHOczMp0htXHT9ESudgp9qLN//i2ptdHbhzT+AjYbgA8YexELGMTf
+ p+sz0c6acvZw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.82,250,1613462400"; 
+   d="scan'208";a="422296359"
+Received: from ahunter-desktop.fi.intel.com (HELO [10.237.72.174]) ([10.237.72.174])
+  by fmsmga008.fm.intel.com with ESMTP; 25 Apr 2021 05:20:06 -0700
+Subject: Re: [PATCH v21 1/2] scsi: ufs: Enable power management for wlun
+To:     Asutosh Das <asutoshd@codeaurora.org>, cang@codeaurora.org,
+        martin.petersen@oracle.com, linux-scsi@vger.kernel.org
+Cc:     linux-arm-msm@vger.kernel.org,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Stanley Chu <stanley.chu@mediatek.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Steven Rostedt <rostedt@goodmis.org>,
+        Ingo Molnar <mingo@redhat.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Lee Jones <lee.jones@linaro.org>,
+        Bean Huo <beanhuo@micron.com>,
+        Kiwoong Kim <kwmad.kim@samsung.com>,
+        Colin Ian King <colin.king@canonical.com>,
+        Wei Yongjun <weiyongjun1@huawei.com>,
+        Yue Hu <huyue2@yulong.com>,
+        Bart van Assche <bvanassche@acm.org>,
+        Dinghao Liu <dinghao.liu@zju.edu.cn>,
+        "Gustavo A. R. Silva" <gustavoars@kernel.org>,
+        Jaegeuk Kim <jaegeuk@kernel.org>,
+        Satya Tangirala <satyat@google.com>,
+        open list <linux-kernel@vger.kernel.org>,
+        "moderated list:ARM/SAMSUNG S3C, S5P AND EXYNOS ARM ARCHITECTURES" 
+        <linux-arm-kernel@lists.infradead.org>,
+        "open list:ARM/SAMSUNG S3C, S5P AND EXYNOS ARM ARCHITECTURES" 
+        <linux-samsung-soc@vger.kernel.org>,
+        "moderated list:UNIVERSAL FLASH STORAGE HOST CONTROLLER DRIVER..." 
+        <linux-mediatek@lists.infradead.org>
+References: <cover.1619223249.git.asutoshd@codeaurora.org>
+ <4662c462e79e3e7f541f54f88f8993f421026d83.1619223249.git.asutoshd@codeaurora.org>
+From:   Adrian Hunter <adrian.hunter@intel.com>
+Organization: Intel Finland Oy, Registered Address: PL 281, 00181 Helsinki,
+ Business Identity Code: 0357606 - 4, Domiciled in Helsinki
+Message-ID: <9e0655c3-42cf-d090-8aa5-2cb644b2e93c@intel.com>
+Date:   Sun, 25 Apr 2021 15:20:19 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.8.1
+MIME-Version: 1.0
+In-Reply-To: <4662c462e79e3e7f541f54f88f8993f421026d83.1619223249.git.asutoshd@codeaurora.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The root clock generators with MND divider has the capability to support
-change in duty-cycle by updating the 'D'. Add the clock ops which would
-check all the boundary conditions and enable setting the desired duty-cycle
-as per the consumer.
+On 24/04/21 3:20 am, Asutosh Das wrote:
+> During runtime-suspend of ufs host, the scsi devices are
+> already suspended and so are the queues associated with them.
+> But the ufs host sends SSU (START_STOP_UNIT) to wlun
+> during its runtime-suspend.
+> During the process blk_queue_enter checks if the queue is not in
+> suspended state. If so, it waits for the queue to resume, and never
+> comes out of it.
+> The commit
+> (d55d15a33: scsi: block: Do not accept any requests while suspended)
+> adds the check if the queue is in suspended state in blk_queue_enter().
+> 
+> Call trace:
+>  __switch_to+0x174/0x2c4
+>  __schedule+0x478/0x764
+>  schedule+0x9c/0xe0
+>  blk_queue_enter+0x158/0x228
+>  blk_mq_alloc_request+0x40/0xa4
+>  blk_get_request+0x2c/0x70
+>  __scsi_execute+0x60/0x1c4
+>  ufshcd_set_dev_pwr_mode+0x124/0x1e4
+>  ufshcd_suspend+0x208/0x83c
+>  ufshcd_runtime_suspend+0x40/0x154
+>  ufshcd_pltfrm_runtime_suspend+0x14/0x20
+>  pm_generic_runtime_suspend+0x28/0x3c
+>  __rpm_callback+0x80/0x2a4
+>  rpm_suspend+0x308/0x614
+>  rpm_idle+0x158/0x228
+>  pm_runtime_work+0x84/0xac
+>  process_one_work+0x1f0/0x470
+>  worker_thread+0x26c/0x4c8
+>  kthread+0x13c/0x320
+>  ret_from_fork+0x10/0x18
+> 
+> Fix this by registering ufs device wlun as a scsi driver and
+> registering it for block runtime-pm. Also make this as a
+> supplier for all other luns. That way, this device wlun
+> suspends after all the consumers and resumes after
+> hba resumes. This also registers a new scsi driver for rpmb wlun.
+> This new driver is mostly used to clear rpmb uac.
+> 
+> Fixed smatch warnings:
+> Reported-by: kernel test robot <lkp@intel.com>
+> Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
+> 
+> Co-developed-by: Can Guo <cang@codeaurora.org>
+> Signed-off-by: Can Guo <cang@codeaurora.org>
+> Signed-off-by: Asutosh Das <asutoshd@codeaurora.org>
 
-Signed-off-by: Taniya Das <tdas@codeaurora.org>
----
- drivers/clk/qcom/clk-rcg2.c | 81 +++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 81 insertions(+)
+Note we don't use regulators, clocks, clock scaling or gating.
+Although those things do look OK.
+Notwithstanding that:
 
-diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
-index 05ff3b0..aa03e31 100644
---- a/drivers/clk/qcom/clk-rcg2.c
-+++ b/drivers/clk/qcom/clk-rcg2.c
-@@ -357,6 +357,83 @@ static int clk_rcg2_set_floor_rate_and_parent(struct clk_hw *hw,
- 	return __clk_rcg2_set_rate(hw, rate, FLOOR);
- }
-
-+static int clk_rcg2_get_duty_cycle(struct clk_hw *hw, struct clk_duty *duty)
-+{
-+	struct clk_rcg2 *rcg = to_clk_rcg2(hw);
-+	u32 notn_m_val, n_val, m_val, d_val, not2d_val, mask;
-+
-+	if (!rcg->mnd_width) {
-+		/* 50 % duty-cycle for Non-MND RCGs */
-+		duty->num = 1;
-+		duty->den = 2;
-+		return 0;
-+	}
-+
-+	regmap_read(rcg->clkr.regmap, RCG_D_OFFSET(rcg), &not2d_val);
-+	regmap_read(rcg->clkr.regmap, RCG_M_OFFSET(rcg), &m_val);
-+	regmap_read(rcg->clkr.regmap, RCG_N_OFFSET(rcg), &notn_m_val);
-+
-+	if (!not2d_val && !m_val && !notn_m_val) {
-+		/* 50 % duty-cycle always */
-+		duty->num = 1;
-+		duty->den = 2;
-+		return 0;
-+	}
-+
-+	mask = BIT(rcg->mnd_width) - 1;
-+
-+	d_val = ~(not2d_val) & mask;
-+	d_val = DIV_ROUND_CLOSEST(d_val, 2);
-+
-+	n_val = (~(notn_m_val) + m_val) & mask;
-+
-+	duty->num = d_val;
-+	duty->den = n_val;
-+
-+	return 0;
-+}
-+
-+static int clk_rcg2_set_duty_cycle(struct clk_hw *hw, struct clk_duty *duty)
-+{
-+	struct clk_rcg2 *rcg = to_clk_rcg2(hw);
-+	u32 notn_m_val, n_val, m_val, d_val, not2d_val, mask, duty_per;
-+	int ret;
-+
-+	/* Duty-cycle cannot be modified for non-MND RCGs */
-+	if (!rcg->mnd_width)
-+		return -EINVAL;
-+
-+	mask = BIT(rcg->mnd_width) - 1;
-+
-+	regmap_read(rcg->clkr.regmap, RCG_N_OFFSET(rcg), &notn_m_val);
-+	regmap_read(rcg->clkr.regmap, RCG_M_OFFSET(rcg), &m_val);
-+
-+	n_val = (~(notn_m_val) + m_val) & mask;
-+
-+	duty_per = (duty->num * 100) / duty->den;
-+
-+	/* Calculate 2d value */
-+	d_val = DIV_ROUND_CLOSEST(n_val * duty_per * 2, 100);
-+
-+	 /* Check bit widths of 2d. If D is too big reduce duty cycle. */
-+	if (d_val > mask)
-+		d_val = mask;
-+
-+	if ((d_val / 2) > (n_val - m_val))
-+		d_val = (n_val - m_val) * 2;
-+	else if ((d_val / 2) < (m_val / 2))
-+		d_val = m_val;
-+
-+	not2d_val = ~d_val & mask;
-+
-+	ret = regmap_update_bits(rcg->clkr.regmap, RCG_D_OFFSET(rcg), mask,
-+				 not2d_val);
-+	if (ret)
-+		return ret;
-+
-+	return update_config(rcg);
-+}
-+
- const struct clk_ops clk_rcg2_ops = {
- 	.is_enabled = clk_rcg2_is_enabled,
- 	.get_parent = clk_rcg2_get_parent,
-@@ -365,6 +442,8 @@ const struct clk_ops clk_rcg2_ops = {
- 	.determine_rate = clk_rcg2_determine_rate,
- 	.set_rate = clk_rcg2_set_rate,
- 	.set_rate_and_parent = clk_rcg2_set_rate_and_parent,
-+	.get_duty_cycle = clk_rcg2_get_duty_cycle,
-+	.set_duty_cycle = clk_rcg2_set_duty_cycle,
- };
- EXPORT_SYMBOL_GPL(clk_rcg2_ops);
-
-@@ -376,6 +455,8 @@ const struct clk_ops clk_rcg2_floor_ops = {
- 	.determine_rate = clk_rcg2_determine_floor_rate,
- 	.set_rate = clk_rcg2_set_floor_rate,
- 	.set_rate_and_parent = clk_rcg2_set_floor_rate_and_parent,
-+	.get_duty_cycle = clk_rcg2_get_duty_cycle,
-+	.set_duty_cycle = clk_rcg2_set_duty_cycle,
- };
- EXPORT_SYMBOL_GPL(clk_rcg2_floor_ops);
-
---
-Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc.is a member
-of the Code Aurora Forum, hosted by the  Linux Foundation.
-
+Reviewed-by: Adrian Hunter <adrian.hunter@intel.com>
