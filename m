@@ -2,130 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9CD8F36A717
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Apr 2021 14:20:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7658C36A843
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Apr 2021 18:08:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229932AbhDYMU5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 25 Apr 2021 08:20:57 -0400
-Received: from mga06.intel.com ([134.134.136.31]:63546 "EHLO mga06.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229837AbhDYMU5 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 25 Apr 2021 08:20:57 -0400
-IronPort-SDR: hXMMJBpyXQYbj/nwX+ke0zvw8TQmmHfjvc2iHvABgg/+6NJTt8CDJPHxh1qbMWufkDJpXE7z/Y
- QgMYZ5VcQduA==
-X-IronPort-AV: E=McAfee;i="6200,9189,9964"; a="257536042"
-X-IronPort-AV: E=Sophos;i="5.82,250,1613462400"; 
-   d="scan'208";a="257536042"
-Received: from fmsmga008.fm.intel.com ([10.253.24.58])
-  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Apr 2021 05:20:15 -0700
-IronPort-SDR: GxK5WXx/z622EJjt1X62nNHOczMp0htXHT9ESudgp9qLN//i2ptdHbhzT+AjYbgA8YexELGMTf
- p+sz0c6acvZw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.82,250,1613462400"; 
-   d="scan'208";a="422296359"
-Received: from ahunter-desktop.fi.intel.com (HELO [10.237.72.174]) ([10.237.72.174])
-  by fmsmga008.fm.intel.com with ESMTP; 25 Apr 2021 05:20:06 -0700
-Subject: Re: [PATCH v21 1/2] scsi: ufs: Enable power management for wlun
-To:     Asutosh Das <asutoshd@codeaurora.org>, cang@codeaurora.org,
-        martin.petersen@oracle.com, linux-scsi@vger.kernel.org
-Cc:     linux-arm-msm@vger.kernel.org,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Stanley Chu <stanley.chu@mediatek.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Steven Rostedt <rostedt@goodmis.org>,
-        Ingo Molnar <mingo@redhat.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Lee Jones <lee.jones@linaro.org>,
-        Bean Huo <beanhuo@micron.com>,
-        Kiwoong Kim <kwmad.kim@samsung.com>,
-        Colin Ian King <colin.king@canonical.com>,
-        Wei Yongjun <weiyongjun1@huawei.com>,
-        Yue Hu <huyue2@yulong.com>,
-        Bart van Assche <bvanassche@acm.org>,
-        Dinghao Liu <dinghao.liu@zju.edu.cn>,
-        "Gustavo A. R. Silva" <gustavoars@kernel.org>,
-        Jaegeuk Kim <jaegeuk@kernel.org>,
-        Satya Tangirala <satyat@google.com>,
-        open list <linux-kernel@vger.kernel.org>,
-        "moderated list:ARM/SAMSUNG S3C, S5P AND EXYNOS ARM ARCHITECTURES" 
-        <linux-arm-kernel@lists.infradead.org>,
-        "open list:ARM/SAMSUNG S3C, S5P AND EXYNOS ARM ARCHITECTURES" 
-        <linux-samsung-soc@vger.kernel.org>,
-        "moderated list:UNIVERSAL FLASH STORAGE HOST CONTROLLER DRIVER..." 
-        <linux-mediatek@lists.infradead.org>
-References: <cover.1619223249.git.asutoshd@codeaurora.org>
- <4662c462e79e3e7f541f54f88f8993f421026d83.1619223249.git.asutoshd@codeaurora.org>
-From:   Adrian Hunter <adrian.hunter@intel.com>
-Organization: Intel Finland Oy, Registered Address: PL 281, 00181 Helsinki,
- Business Identity Code: 0357606 - 4, Domiciled in Helsinki
-Message-ID: <9e0655c3-42cf-d090-8aa5-2cb644b2e93c@intel.com>
-Date:   Sun, 25 Apr 2021 15:20:19 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.8.1
+        id S230331AbhDYQIz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 25 Apr 2021 12:08:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34876 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230335AbhDYQIx (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 25 Apr 2021 12:08:53 -0400
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F565C061574
+        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Apr 2021 09:08:06 -0700 (PDT)
+Received: by mail-lf1-x135.google.com with SMTP id r128so57606870lff.4
+        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Apr 2021 09:08:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=BaHT8V/mcxLWOXEuXr0m/0nbRyxmU4/sY+FrvJfYAIc=;
+        b=FQ8XwRGmGyroxh5yhIJSc/8pdrugxlFlizTLOSB/tV0/lKxsSpBqvapIvMV6ZvFgWo
+         Pq5P4KxsNrfPOSTm7I5M44YCPkl9fcYOhN6zyEsLZ4gK1WQLpsBcnmPkzxiRuUs6QRm4
+         KOJgvVmwabWR45Ys47h7Z7hLKLJrqCBPoq/NwCUFc5m+e7eTAQn6ftpi2MzsPP8kjQYe
+         zfGBC/jjDq5zIzeNpAG26+Y+EL3CDf+DvLPuXLYk5AgRUdNCMzQeZ3NQzPea+9rv/bbU
+         7L5bEbVO7mHjnlm8eaL43V3VWWaHc7SxWy3ZLsahnoc05HhChVceGHAZvQFBOOLOXYsQ
+         DyrA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=BaHT8V/mcxLWOXEuXr0m/0nbRyxmU4/sY+FrvJfYAIc=;
+        b=mm77agvTqZ6CZHbKwVOv3lX89k0fEv+SuDkRPQqsQGsu8TFOU5i/wUIQESXYhenT4C
+         VeNtmdXUtzOxIB4Wr/J1g5jqVvvwnkzI3FB+DgkiCQfLUXdYX8MF1sAXrqmoqrKxbFVz
+         zNZVjLnzBjKXJYpD9uOTsl1iukiML+2o+ZrOVXlHn7TCX8/yfC3FfzZcgKH4WkfYOj/d
+         xDJQFIv11Pn832OjYpfCh6QRjrlwiNiLHuCV0kP4VWQMAbDrkIDEnh1/9ZK8kXesPCgd
+         nvf6ffcUcDiu9zsIa09Oq0yQXyCwPGEHv9c4cTK/avsNTATUQG/iqa5lpDWmr4tPZLxf
+         y2NA==
+X-Gm-Message-State: AOAM530mIZz4MeyOuRDWEDU/SN/oeQHn4bWGs1LBf/lxxHnoGuwyh4xC
+        8EktBTceUlVk10e3anImxoFsfQ==
+X-Google-Smtp-Source: ABdhPJwR0OC3eZ1nEExUdGwKf2C7YlNgI311NFccZuynaT4rpm1HxqkOaitb81JnhFrCBOfwdZTc2Q==
+X-Received: by 2002:a19:ec08:: with SMTP id b8mr9714113lfa.149.1619366884485;
+        Sun, 25 Apr 2021 09:08:04 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id l24sm1141575lfc.23.2021.04.25.09.08.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 25 Apr 2021 09:08:03 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <abhinavk@codeaurora.org>
+Cc:     Jonathan Marek <jonathan@marek.ca>,
+        Stephen Boyd <sboyd@kernel.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+Subject: [PATCH 0/2] drm/msm: rework display snapshotting
+Date:   Sun, 25 Apr 2021 19:07:58 +0300
+Message-Id: <20210425160800.1201337-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
-In-Reply-To: <4662c462e79e3e7f541f54f88f8993f421026d83.1619223249.git.asutoshd@codeaurora.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 24/04/21 3:20 am, Asutosh Das wrote:
-> During runtime-suspend of ufs host, the scsi devices are
-> already suspended and so are the queues associated with them.
-> But the ufs host sends SSU (START_STOP_UNIT) to wlun
-> during its runtime-suspend.
-> During the process blk_queue_enter checks if the queue is not in
-> suspended state. If so, it waits for the queue to resume, and never
-> comes out of it.
-> The commit
-> (d55d15a33: scsi: block: Do not accept any requests while suspended)
-> adds the check if the queue is in suspended state in blk_queue_enter().
-> 
-> Call trace:
->  __switch_to+0x174/0x2c4
->  __schedule+0x478/0x764
->  schedule+0x9c/0xe0
->  blk_queue_enter+0x158/0x228
->  blk_mq_alloc_request+0x40/0xa4
->  blk_get_request+0x2c/0x70
->  __scsi_execute+0x60/0x1c4
->  ufshcd_set_dev_pwr_mode+0x124/0x1e4
->  ufshcd_suspend+0x208/0x83c
->  ufshcd_runtime_suspend+0x40/0x154
->  ufshcd_pltfrm_runtime_suspend+0x14/0x20
->  pm_generic_runtime_suspend+0x28/0x3c
->  __rpm_callback+0x80/0x2a4
->  rpm_suspend+0x308/0x614
->  rpm_idle+0x158/0x228
->  pm_runtime_work+0x84/0xac
->  process_one_work+0x1f0/0x470
->  worker_thread+0x26c/0x4c8
->  kthread+0x13c/0x320
->  ret_from_fork+0x10/0x18
-> 
-> Fix this by registering ufs device wlun as a scsi driver and
-> registering it for block runtime-pm. Also make this as a
-> supplier for all other luns. That way, this device wlun
-> suspends after all the consumers and resumes after
-> hba resumes. This also registers a new scsi driver for rpmb wlun.
-> This new driver is mostly used to clear rpmb uac.
-> 
-> Fixed smatch warnings:
-> Reported-by: kernel test robot <lkp@intel.com>
-> Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
-> 
-> Co-developed-by: Can Guo <cang@codeaurora.org>
-> Signed-off-by: Can Guo <cang@codeaurora.org>
-> Signed-off-by: Asutosh Das <asutoshd@codeaurora.org>
+Rework display subsystem snapshotting by making msm_disp_state transient
+data struct. This simplifies handling of data.
 
-Note we don't use regulators, clocks, clock scaling or gating.
-Although those things do look OK.
-Notwithstanding that:
+Dependencies:
+https://lore.kernel.org/linux-arm-msm/1618606645-19695-1-git-send-email-abhinavk@codeaurora.org/
 
-Reviewed-by: Adrian Hunter <adrian.hunter@intel.com>
+----------------------------------------------------------------
+Dmitry Baryshkov (2):
+      drm/msm: pass dump state as a function argument
+      drm/msm: make msm_disp_state transient data struct
+
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c           |  5 +-
+ drivers/gpu/drm/msm/disp/msm_disp_snapshot.c      | 87 +++++------------------
+ drivers/gpu/drm/msm/disp/msm_disp_snapshot.h      | 21 +-----
+ drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c | 22 ++----
+ drivers/gpu/drm/msm/dp/dp_display.c               |  4 +-
+ drivers/gpu/drm/msm/dsi/dsi.c                     |  4 +-
+ drivers/gpu/drm/msm/dsi/dsi.h                     |  4 +-
+ drivers/gpu/drm/msm/dsi/dsi_host.c                |  6 +-
+ drivers/gpu/drm/msm/msm_drv.h                     |  3 +-
+ drivers/gpu/drm/msm/msm_kms.h                     |  7 +-
+ 10 files changed, 41 insertions(+), 122 deletions(-)
+
+
