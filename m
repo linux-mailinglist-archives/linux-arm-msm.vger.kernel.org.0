@@ -2,442 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3551236BB84
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Apr 2021 00:14:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6CC7736BB7E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Apr 2021 00:13:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232295AbhDZWPd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Apr 2021 18:15:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37648 "EHLO
+        id S232062AbhDZWNz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Apr 2021 18:13:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37274 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232116AbhDZWPd (ORCPT
+        with ESMTP id S232116AbhDZWNy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Apr 2021 18:15:33 -0400
-Received: from mail-qt1-x82e.google.com (mail-qt1-x82e.google.com [IPv6:2607:f8b0:4864:20::82e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8BF0C061574
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Apr 2021 15:14:49 -0700 (PDT)
-Received: by mail-qt1-x82e.google.com with SMTP id f12so42854279qtf.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Apr 2021 15:14:49 -0700 (PDT)
+        Mon, 26 Apr 2021 18:13:54 -0400
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E776C061574
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Apr 2021 15:13:11 -0700 (PDT)
+Received: by mail-wm1-x332.google.com with SMTP id o21-20020a1c4d150000b029012e52898006so5806580wmh.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Apr 2021 15:13:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=3RAq8My4wjRjemL6tqurAH0uK5r/Dek/9oOnAphO7Mc=;
-        b=r7xTgbZOI8GNfclq/Lx7WRVw8ehrBu21S2md+JyeYuMN2dRjESxlMHeeJAAW7Lyk3k
-         43huRjVahswCdnHKejezj9B+VKEMF93fGkHXB7lCUz3tmGz6BQAaNMHYGXftOUftGUCj
-         N6RWbOIsuCoYQ82tKobLwPEO27v3uTQkwivrToqOPWtJOeNs3YRFSWljmPTcIQgJAD2h
-         YgwPxSjuP2BwHleENg177kTntzVHZuxTa9f9gOPXoLx/sXdrExDfgp/u5yCsaQ6cIsVV
-         9yDkyt2LbLwMZ84beM5HHBBUcKVS500EOXE8TxQr8pxelFWdNr42+k6dRIcEKcHovLU/
-         Po3A==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=rALIGRiBfkY3zLGEHGN+z0aJ6zoBl9h/Q3t595VB0VI=;
+        b=IbKVhu1C1PhwNnMaX8Kmb+sjm0Y890GztYm8ZJHOtTzkwt4BtuVta0YPjDM0nCusyE
+         sQQH03XChu5FPTrv7IzIgM3/JIJhYBbqqEXhDTHx/hqxP/djL7EL18txQNawd1I4VHeP
+         0Ryt6Erc+2RTPoIlzH0QiYxmv4oDWudHhMGEHQRLvOvrciUJeVBJ72JqmGkEAyXmNOT/
+         JOsvl2y8JiRT9/CQAO08IZ3+/y/TylLRPil2pnPD2pwvbIH1lsMiyQrYLIFSHtfSgf4o
+         BOp01bopP6NBZqmcGnxUL44LDwvWsO+oLHfBrX7sqP/xbqpoED0XarakuGdmY4pCtNut
+         E42Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=3RAq8My4wjRjemL6tqurAH0uK5r/Dek/9oOnAphO7Mc=;
-        b=TdI1EzIGEu3yQXMAGLtSlTH7ef1cUOdzL4qLc+2etkzvRbPhQoNv7ZpOXvzHsKq0OF
-         VxqHtNtmb4Bo+8MyHiPxjUwudQhLGJvakusH2y4Er8P2rdlDDWF4GKOhakMDyhSnsh4Z
-         kAjhz0TVX28oKF1D4kqMF7eQv7z3UtxyjklI3DdYEutO5Jd59w6lvJlufjqOJkGA3rbd
-         VpGd0b5DzO4vo3KMy7pZ1BgzIu/iaZM6UruWUTV0IFUShUtI/u1LYZ3otoVLLkzkS86m
-         If//3OzooOA1TcH3bXBbOv21dxuLAo3teeM9zhzWndOzfK4oboym0DW+iOcCr7yrsb7g
-         arlw==
-X-Gm-Message-State: AOAM531QBgTUG4RBmHHxD/gVMmGl4xmQ++d3zwvzcVcsmeuTCkO64JQx
-        jYTv5d1fSqYRjBghzAR4HHN7tB/o3+bXrHdxW48IDTETQYQ=
-X-Google-Smtp-Source: ABdhPJx+sbe+uIOgPmhI1UbrKb3qThOGoq3eXEEXslwcgK0UnFwFG2oOwnzXTNb3MyCtn21e4VBbdV3YzqDi3RCY1ec=
-X-Received: by 2002:a05:622a:54a:: with SMTP id m10mr19205883qtx.298.1619475288999;
- Mon, 26 Apr 2021 15:14:48 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=rALIGRiBfkY3zLGEHGN+z0aJ6zoBl9h/Q3t595VB0VI=;
+        b=SGGeTvBqAJoVenPWdjOM4qED4hsqgaxPK5ZOvSd3EjhrZayUxLqrthk+xKMRf2B0/C
+         42McF23BHum79rqRZnnBXBc+7WdAqIjbAsr5z7JZPJAssCQxGfctCdCdI8y3TGArrXvz
+         P+i+9DAwXQ1Vj23kiPuc2CA3m00LlEDHXeBEFKBrryVKrJH0hCgVpLiCdC32y2Itq25o
+         Sp6D+Ar/J4ltnJpX2+2WrQjIjhJ1rKoLGWKnD1L86Je5ka+2Y1I8PQxAS2G0TvY4YRax
+         W+BJwe77R9EVAimwqdV9fOraC5PbS8T52i4jncPTZo7xP65/8azAu39Zemavuz7LYl5J
+         8hbw==
+X-Gm-Message-State: AOAM532ZiUltdfyS4ce1MEZdGhBU87iosrN54TnwlHTpHkPVBLs+6gCP
+        ytralFDhEtOzyUseuEXKJK0KsA==
+X-Google-Smtp-Source: ABdhPJzLfgFXaydFM2Z3e0XnA/fXKcOBeb6LALR75pdfJDdq2sTVgiRCiTvNJRflVBrcT37N2Rb0Ng==
+X-Received: by 2002:a1c:7315:: with SMTP id d21mr21899639wmb.155.1619475189766;
+        Mon, 26 Apr 2021 15:13:09 -0700 (PDT)
+Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id x9sm1756042wrt.13.2021.04.26.15.13.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 26 Apr 2021 15:13:09 -0700 (PDT)
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        broonie@kernel.org, robh@kernel.org, devicetree@vger.kernel.org
+Cc:     wcheng@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        dmitry.baryshkov@linaro.org, bryan.odonoghue@linaro.org
+Subject: [PATCH v2 0/2] Enable VBUS current boost on pm8150b platforms
+Date:   Mon, 26 Apr 2021 23:14:44 +0100
+Message-Id: <20210426221446.1852572-1-bryan.odonoghue@linaro.org>
+X-Mailer: git-send-email 2.30.1
 MIME-Version: 1.0
-References: <20210425160800.1201337-1-dmitry.baryshkov@linaro.org>
- <20210425160800.1201337-3-dmitry.baryshkov@linaro.org> <30ed3860d33681e7904005265892f689@codeaurora.org>
- <a88fbf4c-aaa1-a144-dd08-0dd4890818bb@linaro.org> <1c465b53e200d0f07959d776ce8e1c10@codeaurora.org>
-In-Reply-To: <1c465b53e200d0f07959d776ce8e1c10@codeaurora.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 27 Apr 2021 01:14:37 +0300
-Message-ID: <CAA8EJpqaRx8gHOW4S6gvR0Xdwv4FeS_bRguLPDYDK_wbrGJpgQ@mail.gmail.com>
-Subject: Re: [Freedreno] [PATCH 2/2] drm/msm: make msm_disp_state transient
- data struct
-To:     Abhinav Kumar <abhinavk@codeaurora.org>
-Cc:     freedreno <freedreno@lists.freedesktop.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Stephen Boyd <sboyd@kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <dri-devel@lists.freedesktop.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        David Airlie <airlied@linux.ie>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 27 Apr 2021 at 01:03, <abhinavk@codeaurora.org> wrote:
->
-> On 2021-04-26 14:23, Dmitry Baryshkov wrote:
-> > On 26/04/2021 23:50, abhinavk@codeaurora.org wrote:
-> >> On 2021-04-25 09:08, Dmitry Baryshkov wrote:
-> >>> Instead of allocating snapshotting structure at the driver probe time
-> >>> and later handling concurrent access, actual state, etc, make
-> >>> msm_disp_state transient struct. Allocate one when snapshotting
-> >>> happens
-> >>> and free it after coredump data is read by userspace.
-> >>
-> >> the purpose of the mutex is that when there are two coredumps being
-> >> triggered
-> >> by two consecutive errors, we want to make sure that till one coredump
-> >> is completely
-> >> read and/or processed, we do not allow triggering of another one as we
-> >> want to capture
-> >> the accurate hardware/software state.
-> >>
-> >> So moving disp_state out of kms might be okay and just allocated it
-> >> when actually capturing the state
-> >> but we will need the mutex and some sort of pending flag in my
-> >> opinion.
-> >
-> > I'll return the mutex to the kms struct, so that we won't start
-> > another snapshot untill previous one is complete.
->
-> I think mutex should remain as part of snapshot so that they go
-> together. Since this mutex is not used
-> by any other module, I thought its better to keep it there.
+The first version of this patch set the current limit to 3 amps as was done
+in downstream. Mark indicated a preference to set this on a per-system
+basis instead of blitzing it, as in downstream.
 
-I don't think so: we will serialize access to the snapshot, but not
-dumping between snapshots. Note, that your code also serializes
-writing to snapshot, not reading from it.
-With disp_state being allocated on demand we do not have to protect
-its contents (since it is not available before registration using
-dev_codedumpm).
-I thought that you wanted to be sure that one snapshot is fully
-captured before next error triggers the next snapshot. And for  this
-we'd need 'global' mutex (in kms).
+Looking at what was upstream versus what was in my working tree I saw that
+in fact the VBUS boost driver had been upstreamed minus accompanying DTS in
+pm8150b.
 
-> > Concerning the pending flag, I think it is also handled by the
-> > coredump code: dev_coredumpm() will not create another device if there
-> > is one already associated with the device being dumped. I should
-> > probably mention this in the commit message.
->
-> Thats a good point, I checked that now as well but I still think we need
-> this flag because
-> it also makes sure devcoredump is taken and read together within our
-> driver itself instead of relying
-> on the devcoredump. Its not a strong preference.
->
-> But if you would like to go ahead with this, might have to retest its
-> robustness.
-> With the older logic how i verified this was that I relaxed the underrun
-> cnt check in this patch
-> ( https://patchwork.freedesktop.org/patch/429112/?series=89181&rev=1 )
-> here and simulated an error:
->
-> @@ -1336,6 +1337,11 @@  static void dpu_encoder_underrun_callback(struct
-> drm_encoder *drm_enc,
->
->         DPU_ATRACE_BEGIN("encoder_underrun_callback");
->         atomic_inc(&phy_enc->underrun_cnt);
-> +
-> +       /* trigger dump only on the first underrun */
-> +       if (atomic_read(&phy_enc->underrun_cnt) == 1)
-> +               msm_disp_snapshot_state(drm_enc->dev);
-> +
->
-> And verified that across various underrun interrupts, the devcoredump is
-> stable.
+So there's no need for a fixes as this driver doesn't appear to be in use.
+A subsequent patchset will enable the VBUS boost for the two relevant
+upstream platforms.
 
-I'll try testing it this way, thank you for the pointer!
+First thing though, is the driver + dts change.
 
->
-> >
-> > If you agree with this, I'll send v2 then (also adding plls dumping).
-> Looking fwd to seeing the pll dumping, that will be a great addition to
-> this.
-> >
-> >>
-> >>>
-> >>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> >>> ---
-> >>>  drivers/gpu/drm/msm/disp/msm_disp_snapshot.c  | 87
-> >>> ++++---------------
-> >>>  drivers/gpu/drm/msm/disp/msm_disp_snapshot.h  | 13 +--
-> >>>  .../gpu/drm/msm/disp/msm_disp_snapshot_util.c |  5 +-
-> >>>  drivers/gpu/drm/msm/msm_kms.h                 |  5 +-
-> >>>  4 files changed, 28 insertions(+), 82 deletions(-)
-> >>>
-> >>> diff --git a/drivers/gpu/drm/msm/disp/msm_disp_snapshot.c
-> >>> b/drivers/gpu/drm/msm/disp/msm_disp_snapshot.c
-> >>> index 70fd5a1fe13e..371358893716 100644
-> >>> --- a/drivers/gpu/drm/msm/disp/msm_disp_snapshot.c
-> >>> +++ b/drivers/gpu/drm/msm/disp/msm_disp_snapshot.c
-> >>> @@ -7,8 +7,7 @@
-> >>>
-> >>>  #include "msm_disp_snapshot.h"
-> >>>
-> >>> -#ifdef CONFIG_DEV_COREDUMP
-> >>> -static ssize_t disp_devcoredump_read(char *buffer, loff_t offset,
-> >>> +static ssize_t __maybe_unused disp_devcoredump_read(char *buffer,
-> >>> loff_t offset,
-> >>>          size_t count, void *data, size_t datalen)
-> >>>  {
-> >>>      struct drm_print_iterator iter;
-> >>> @@ -29,24 +28,21 @@ static ssize_t disp_devcoredump_read(char
-> >>> *buffer,
-> >>> loff_t offset,
-> >>>      return count - iter.remain;
-> >>>  }
-> >>>
-> >>> -static void disp_devcoredump_free(void *data)
-> >>> +static void _msm_disp_snapshot_work(struct kthread_work *work)
-> >>>  {
-> >>> +    struct msm_kms *msm_kms = container_of(work, struct msm_kms,
-> >>> dump_work);
-> >>> +    struct drm_device *drm_dev = msm_kms->dev;
-> >>>      struct msm_disp_state *disp_state;
-> >>> +    struct drm_printer p;
-> >>>
-> >>> -    disp_state = data;
-> >>> -
-> >>> -    msm_disp_state_free(disp_state);
-> >>> -
-> >>> -    disp_state->coredump_pending = false;
-> >>> -}
-> >>> -#endif /* CONFIG_DEV_COREDUMP */
-> >>> +    disp_state = kzalloc(sizeof(struct msm_disp_state), GFP_KERNEL);
-> >>> +    if (!disp_state)
-> >>> +        return;
-> >>>
-> >>> -static void _msm_disp_snapshot_work(struct kthread_work *work)
-> >>> -{
-> >>> -    struct msm_disp_state *disp_state = container_of(work, struct
-> >>> msm_disp_state, dump_work);
-> >>> -    struct drm_printer p;
-> >>> +    disp_state->dev = drm_dev->dev;
-> >>> +    disp_state->drm_dev = drm_dev;
-> >>>
-> >>> -    mutex_lock(&disp_state->mutex);
-> >>> +    INIT_LIST_HEAD(&disp_state->blocks);
-> >>>
-> >>>      msm_disp_snapshot_capture_state(disp_state);
-> >>>
-> >>> @@ -55,26 +51,15 @@ static void _msm_disp_snapshot_work(struct
-> >>> kthread_work *work)
-> >>>          msm_disp_state_print(disp_state, &p);
-> >>>      }
-> >>>
-> >>> -    /*
-> >>> -     * if devcoredump is not defined free the state immediately
-> >>> -     * otherwise it will be freed in the free handler.
-> >>> -     */
-> >>> -#ifdef CONFIG_DEV_COREDUMP
-> >>> +    /* If COREDUMP is disabled, the stub will call the free
-> >>> function. */
-> >> This is a good cleanup, I just checked that the free() is called even
-> >> if the config is not enabled
-> >>>      dev_coredumpm(disp_state->dev, THIS_MODULE, disp_state, 0,
-> >>> GFP_KERNEL,
-> >>> -            disp_devcoredump_read, disp_devcoredump_free);
-> >>> -    disp_state->coredump_pending = true;
-> >>> -#else
-> >>> -    msm_disp_state_free(disp_state);
-> >>> -#endif
-> >>> -
-> >>> -    mutex_unlock(&disp_state->mutex);
-> >>> +            disp_devcoredump_read, msm_disp_state_free);
-> >>>  }
-> >>>
-> >>>  void msm_disp_snapshot_state(struct drm_device *drm_dev)
-> >>>  {
-> >>>      struct msm_drm_private *priv;
-> >>>      struct msm_kms *kms;
-> >>> -    struct msm_disp_state *disp_state;
-> >>>
-> >>>      if (!drm_dev) {
-> >>>          DRM_ERROR("invalid params\n");
-> >>> @@ -83,30 +68,13 @@ void msm_disp_snapshot_state(struct drm_device
-> >>> *drm_dev)
-> >>>
-> >>>      priv = drm_dev->dev_private;
-> >>>      kms = priv->kms;
-> >>> -    disp_state = kms->disp_state;
-> >>> -
-> >>> -    if (!disp_state) {
-> >>> -        DRM_ERROR("invalid params\n");
-> >>> -        return;
-> >>> -    }
-> >>> -
-> >>> -    /*
-> >>> -     * if there is a coredump pending return immediately till dump
-> >>> -     * if read by userspace or timeout happens
-> >>> -     */
-> >>> -    if (disp_state->coredump_pending) {
-> >>> -        DRM_DEBUG("coredump is pending read\n");
-> >>> -        return;
-> >>> -    }
-> >>>
-> >>> -    kthread_queue_work(disp_state->dump_worker,
-> >>> -            &disp_state->dump_work);
-> >>> +    kthread_queue_work(kms->dump_worker, &kms->dump_work);
-> >>>  }
-> >>>
-> >>>  int msm_disp_snapshot_init(struct drm_device *drm_dev)
-> >>>  {
-> >>>      struct msm_drm_private *priv;
-> >>> -    struct msm_disp_state *disp_state;
-> >>>      struct msm_kms *kms;
-> >>>
-> >>>      if (!drm_dev) {
-> >>> @@ -117,22 +85,11 @@ int msm_disp_snapshot_init(struct drm_device
-> >>> *drm_dev)
-> >>>      priv = drm_dev->dev_private;
-> >>>      kms = priv->kms;
-> >>>
-> >>> -    disp_state = devm_kzalloc(drm_dev->dev, sizeof(struct
-> >>> msm_disp_state), GFP_KERNEL);
-> >>> -
-> >>> -    mutex_init(&disp_state->mutex);
-> >>> -
-> >>> -    disp_state->dev = drm_dev->dev;
-> >>> -    disp_state->drm_dev = drm_dev;
-> >>> -
-> >>> -    INIT_LIST_HEAD(&disp_state->blocks);
-> >>> -
-> >>> -    disp_state->dump_worker = kthread_create_worker(0, "%s",
-> >>> "disp_snapshot");
-> >>> -    if (IS_ERR(disp_state->dump_worker))
-> >>> +    kms->dump_worker = kthread_create_worker(0, "%s",
-> >>> "disp_snapshot");
-> >>> +    if (IS_ERR(kms->dump_worker))
-> >>>          DRM_ERROR("failed to create disp state task\n");
-> >>>
-> >>> -    kthread_init_work(&disp_state->dump_work,
-> >>> _msm_disp_snapshot_work);
-> >>> -
-> >>> -    kms->disp_state = disp_state;
-> >>> +    kthread_init_work(&kms->dump_work, _msm_disp_snapshot_work);
-> >>>
-> >>>      return 0;
-> >>>  }
-> >>> @@ -141,7 +98,6 @@ void msm_disp_snapshot_destroy(struct drm_device
-> >>> *drm_dev)
-> >>>  {
-> >>>      struct msm_kms *kms;
-> >>>      struct msm_drm_private *priv;
-> >>> -    struct msm_disp_state *disp_state;
-> >>>
-> >>>      if (!drm_dev) {
-> >>>          DRM_ERROR("invalid params\n");
-> >>> @@ -150,12 +106,7 @@ void msm_disp_snapshot_destroy(struct drm_device
-> >>> *drm_dev)
-> >>>
-> >>>      priv = drm_dev->dev_private;
-> >>>      kms = priv->kms;
-> >>> -    disp_state = kms->disp_state;
-> >>> -
-> >>> -    if (disp_state->dump_worker)
-> >>> -        kthread_destroy_worker(disp_state->dump_worker);
-> >>> -
-> >>> -    list_del(&disp_state->blocks);
-> >>>
-> >>> -    mutex_destroy(&disp_state->mutex);
-> >>> +    if (kms->dump_worker)
-> >>> +        kthread_destroy_worker(kms->dump_worker);
-> >>>  }
-> >>> diff --git a/drivers/gpu/drm/msm/disp/msm_disp_snapshot.h
-> >>> b/drivers/gpu/drm/msm/disp/msm_disp_snapshot.h
-> >>> index 32f52799a1ba..c6174a366095 100644
-> >>> --- a/drivers/gpu/drm/msm/disp/msm_disp_snapshot.h
-> >>> +++ b/drivers/gpu/drm/msm/disp/msm_disp_snapshot.h
-> >>> @@ -41,26 +41,17 @@
-> >>>   * struct msm_disp_state - structure to store current dpu state
-> >>>   * @dev: device pointer
-> >>>   * @drm_dev: drm device pointer
-> >>> - * @mutex: mutex to serialize access to serialze dumps, debugfs
-> >>> access
-> >>> - * @coredump_pending: coredump is pending read from userspace
-> >>>   * @atomic_state: atomic state duplicated at the time of the error
-> >>> - * @dump_worker: kworker thread which runs the dump work
-> >>> - * @dump_work: kwork which dumps the registers and drm state
-> >>>   * @timestamp: timestamp at which the coredump was captured
-> >>>   */
-> >>>  struct msm_disp_state {
-> >>>      struct device *dev;
-> >>>      struct drm_device *drm_dev;
-> >>> -    struct mutex mutex;
-> >>> -
-> >>> -    bool coredump_pending;
-> >>>
-> >>>      struct list_head blocks;
-> >>>
-> >>>      struct drm_atomic_state *atomic_state;
-> >>>
-> >>> -    struct kthread_worker *dump_worker;
-> >>> -    struct kthread_work dump_work;
-> >>>      ktime_t timestamp;
-> >>>  };
-> >>>
-> >>> @@ -123,11 +114,11 @@ void msm_disp_snapshot_capture_state(struct
-> >>> msm_disp_state *disp_state);
-> >>>
-> >>>  /**
-> >>>   * msm_disp_state_free - free the memory after the coredump has been
-> >>> read
-> >>> - * @disp_state:        handle to struct msm_disp_state
-> >>> + * @data:        handle to struct msm_disp_state
-> >>>
-> >>>   * Returns: none
-> >>>   */
-> >>> -void msm_disp_state_free(struct msm_disp_state *disp_state);
-> >>> +void msm_disp_state_free(void *data);
-> >>>
-> >>>  /**
-> >>>   * msm_disp_snapshot_add_block - add a hardware block with its
-> >>> register dump
-> >>> diff --git a/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c
-> >>> b/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c
-> >>> index ca6632550337..cabe15190ec1 100644
-> >>> --- a/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c
-> >>> +++ b/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c
-> >>> @@ -142,8 +142,9 @@ void msm_disp_snapshot_capture_state(struct
-> >>> msm_disp_state *disp_state)
-> >>>      msm_disp_capture_atomic_state(disp_state);
-> >>>  }
-> >>>
-> >>> -void msm_disp_state_free(struct msm_disp_state *disp_state)
-> >>> +void msm_disp_state_free(void *data)
-> >>>  {
-> >>> +    struct msm_disp_state *disp_state = data;
-> >>>      struct msm_disp_state_block *block, *tmp;
-> >>>
-> >>>      if (disp_state->atomic_state) {
-> >>> @@ -156,6 +157,8 @@ void msm_disp_state_free(struct msm_disp_state
-> >>> *disp_state)
-> >>>          kfree(block->state);
-> >>>          kfree(block);
-> >>>      }
-> >>> +
-> >>> +    kfree(disp_state);
-> >>>  }
-> >>>
-> >>>  void msm_disp_snapshot_add_block(struct msm_disp_state *disp_state,
-> >>> u32 len,
-> >>> diff --git a/drivers/gpu/drm/msm/msm_kms.h
-> >>> b/drivers/gpu/drm/msm/msm_kms.h
-> >>> index 146dcab123f4..529b9dacf7ca 100644
-> >>> --- a/drivers/gpu/drm/msm/msm_kms.h
-> >>> +++ b/drivers/gpu/drm/msm/msm_kms.h
-> >>> @@ -156,8 +156,9 @@ struct msm_kms {
-> >>>      /* mapper-id used to request GEM buffer mapped for scanout: */
-> >>>      struct msm_gem_address_space *aspace;
-> >>>
-> >>> -    /* handle to disp snapshot state */
-> >>> -    struct msm_disp_state *disp_state;
-> >>> +    /* disp snapshot support */
-> >>> +    struct kthread_worker *dump_worker;
-> >>> +    struct kthread_work dump_work;
-> >>>
-> >>>      /*
-> >>>       * For async commit, where ->flush_commit() and later happens
+- Use regulator_set_current_limit_regmap/regulator_get_current_limit_regmap
+  with a relevant current-to-bitmap lookup.
 
+- Add a parallel DTS entry to the pm8150b
+  It looks like this was submitted upstream but not followed up on
 
+  I've add regulator-min-microamp/regulator-max-microamp to Wesley's
+  original work.
+
+I've made sure to test that its possible to set the current to anything in
+the range of 500 mA to 3 A and confirmed the output on a scope.
+
+Once these two patches are in, I'll send out board enablement for the
+sm8150-mtp and qrb5165-rb5.
+
+https://lore.kernel.org/linux-arm-msm/8687acdb-75e9-5fc5-dd3e-9a19615676b5@linaro.org/T/#t
+
+Bryan O'Donoghue (1):
+  regulator: Add a routine to set the current limit for QCOM PMIC VBUS
+
+Wesley Cheng (1):
+  arm64: boot: dts: qcom: pm8150b: Add DTS node for PMIC VBUS booster
+
+ arch/arm64/boot/dts/qcom/pm8150b.dtsi       |  8 ++++++++
+ drivers/regulator/qcom_usb_vbus-regulator.c | 12 ++++++++++++
+ 2 files changed, 20 insertions(+)
 
 -- 
-With best wishes
-Dmitry
+2.30.1
+
