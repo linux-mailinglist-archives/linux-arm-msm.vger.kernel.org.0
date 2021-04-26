@@ -2,155 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6FE5836BC5D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Apr 2021 01:51:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8FE4C36BC67
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Apr 2021 01:59:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234387AbhDZXul (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Apr 2021 19:50:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58398 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232022AbhDZXul (ORCPT
+        id S235123AbhDZX77 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Apr 2021 19:59:59 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:45363 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234977AbhDZX76 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Apr 2021 19:50:41 -0400
-Received: from mail-pf1-x42c.google.com (mail-pf1-x42c.google.com [IPv6:2607:f8b0:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0872FC061574;
-        Mon, 26 Apr 2021 16:49:59 -0700 (PDT)
-Received: by mail-pf1-x42c.google.com with SMTP id w6so25571908pfc.8;
-        Mon, 26 Apr 2021 16:49:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=4Kj0SXA9vsOtoPJRmbl9kO6maA5cV9sB7CgScAwXMzI=;
-        b=PFvUwvqW69maGIZ5IE53RvvUM+/kvn8XSEdtYOjbhbPlzT0Riuw8w7Ts1JFVxIDqpQ
-         hkN+WE+9gKJKaxtoiRgHMpvs9sljBPxeoFTD8nkotwJ/goVrvSwQUvwMUdX0MB/hLWnu
-         MHDlhhg8N/JbcQAJZ2Db5qaoK6tdTEf1BouwU/gi3Jg6UZCryIRDm9+uZZRvWjQ+QUb2
-         +OMRwFtjC+RQpFVbk6gyUexFskpIjmkRZODzFO+vpHsN+PWjGIOYxdVwKcYgAWrvOR92
-         EyGQlT0paeIxMRnpQ59hRd6/qHmCbR/KDJxaMA02Q6ibFopq2uKIiC6xQzJoLcSwHQ+0
-         bIdw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=4Kj0SXA9vsOtoPJRmbl9kO6maA5cV9sB7CgScAwXMzI=;
-        b=qEzWEhmda9UHg/Ot595huQAWu/MH2ieyK2OdLNZtxjj219A/SNzyKYNDiCt8uh94/i
-         12HBXr2MmOwwZmSSoFtTCVbTxPvBjrNsBuBIWP5kmZEyXKK/m4DzxWcSahTKMOi1UCCc
-         rpF2W+SwZtiuy61pBEi1wEW0mpwG6vAm8Lz+B6qr+uoeyAEfLxJnhRFcW4hsOWfb+gX9
-         ZnFc+3zNA6Ak1cihOT8VTm3pKaWm0BYlBGIWzIvQvQCPuPi438+vY00VfW25YPHtQR9U
-         BPZyT5JSnGAZHioa8N3rNebQSAKWdyuaiQXqCP8qAwWLH6WBVtqNvU8AyoOGb7MWrg3M
-         fMPA==
-X-Gm-Message-State: AOAM532+hbRN7STcip4CfnF8QteAnc3u/bI4BiVl8sBaFc6XPCz7Mv0W
-        r40nmLXo7ewWnlDfc37UNRM=
-X-Google-Smtp-Source: ABdhPJzlJCZjMw1AMpMrqCCtVcFtp5ga8BJTa2+1W/jHgDQCNHWITvuZXAkIlz5HiSTjiD6+Kb+v/A==
-X-Received: by 2002:a63:eb46:: with SMTP id b6mr4060320pgk.199.1619480998570;
-        Mon, 26 Apr 2021 16:49:58 -0700 (PDT)
-Received: from localhost ([2601:1c0:5200:a6:307:a401:7b76:c6e5])
-        by smtp.gmail.com with ESMTPSA id w189sm646315pfc.31.2021.04.26.16.49.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Apr 2021 16:49:57 -0700 (PDT)
-From:   Rob Clark <robdclark@gmail.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     Rob Clark <robdclark@chromium.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
-        freedreno@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
-        GPU), linux-kernel@vger.kernel.org (open list),
-        linux-media@vger.kernel.org (open list:DMA BUFFER SHARING FRAMEWORK),
-        linaro-mm-sig@lists.linaro.org (moderated list:DMA BUFFER SHARING
-        FRAMEWORK)
-Subject: [PATCH] drm/msm: Do not unpin/evict exported dma-buf's
-Date:   Mon, 26 Apr 2021 16:53:25 -0700
-Message-Id: <20210426235326.1230125-1-robdclark@gmail.com>
-X-Mailer: git-send-email 2.30.2
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Mon, 26 Apr 2021 19:59:58 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1619481556; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=GcO9FSTs8okq7VxKnlYZ4hhkxpYDAKyTLpMyXAcIVm0=; b=gRHHMEsfbnCofrcWhFDJNUquHuWK0YaMHjLEbCC2dw1eA2MbcWWICd7XnwCI1LQ0F2WSg3tQ
+ lil8XBpN67Zxe/dv33fRkfLeuVSDFWkdLWCf7pFkhUDSU4iFc8rk9dXULvAWu6kS9HwZL78T
+ QqJZEphikgGM0FS7w6Al/L1RjTg=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
+ 608753cd853c0a2c46380393 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 26 Apr 2021 23:59:09
+ GMT
+Sender: bbhatt=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 8D479C43460; Mon, 26 Apr 2021 23:59:08 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from malabar-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: bbhatt)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 8576AC433F1;
+        Mon, 26 Apr 2021 23:59:07 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 8576AC433F1
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=bbhatt@codeaurora.org
+From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
+To:     manivannan.sadhasivam@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
+        jhugo@codeaurora.org, linux-kernel@vger.kernel.org,
+        loic.poulain@linaro.org, Bhaumik Bhatt <bbhatt@codeaurora.org>
+Subject: [PATCH] bus: mhi: core: Validate channel ID when processing command completions
+Date:   Mon, 26 Apr 2021 16:58:58 -0700
+Message-Id: <1619481538-4435-1-git-send-email-bbhatt@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+MHI reads the channel ID from the event ring element sent by the
+device which can be any value between 0 and 255. In order to
+prevent any out of bound accesses, add a check against the maximum
+number of channels supported by the controller and those channels
+not configured yet so as to skip processing of that event ring
+element.
 
-Our initial logic for excluding dma-bufs was not quite right.  In
-particular we want msm_gem_get/put_pages() path used for exported
-dma-bufs to increment/decrement the pin-count.
-
-Also, in case the importer is vmap'ing the dma-buf, we need to be
-sure to update the object's status, because it is now no longer
-potentially evictable.
-
-Fixes: 63f17ef83428 drm/msm: Support evicting GEM objects to swap
-Signed-off-by: Rob Clark <robdclark@chromium.org>
+Fixes: 1d3173a3bae7 ("bus: mhi: core: Add support for processing events from client device")
+Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
 ---
- drivers/gpu/drm/msm/msm_gem.c | 16 +++++++++++++++-
- drivers/gpu/drm/msm/msm_gem.h |  4 ++--
- 2 files changed, 17 insertions(+), 3 deletions(-)
+ drivers/bus/mhi/core/main.c | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
-index 09ef4ec6eb34..17f85d2f23ab 100644
---- a/drivers/gpu/drm/msm/msm_gem.c
-+++ b/drivers/gpu/drm/msm/msm_gem.c
-@@ -190,13 +190,25 @@ struct page **msm_gem_get_pages(struct drm_gem_object *obj)
- 	}
+diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
+index 22acde1..ed07421 100644
+--- a/drivers/bus/mhi/core/main.c
++++ b/drivers/bus/mhi/core/main.c
+@@ -773,11 +773,16 @@ static void mhi_process_cmd_completion(struct mhi_controller *mhi_cntrl,
+ 	cmd_pkt = mhi_to_virtual(mhi_ring, ptr);
  
- 	p = get_pages(obj);
+ 	chan = MHI_TRE_GET_CMD_CHID(cmd_pkt);
+-	mhi_chan = &mhi_cntrl->mhi_chan[chan];
+-	write_lock_bh(&mhi_chan->lock);
+-	mhi_chan->ccs = MHI_TRE_GET_EV_CODE(tre);
+-	complete(&mhi_chan->completion);
+-	write_unlock_bh(&mhi_chan->lock);
++	WARN_ON(chan >= mhi_cntrl->max_chan);
 +
-+	if (!IS_ERR(p)) {
-+		msm_obj->pin_count++;
-+		update_inactive(msm_obj);
++	if (chan < mhi_cntrl->max_chan &&
++	    mhi_cntrl->mhi_chan[chan].configured) {
++		mhi_chan = &mhi_cntrl->mhi_chan[chan];
++		write_lock_bh(&mhi_chan->lock);
++		mhi_chan->ccs = MHI_TRE_GET_EV_CODE(tre);
++		complete(&mhi_chan->completion);
++		write_unlock_bh(&mhi_chan->lock);
 +	}
-+
- 	msm_gem_unlock(obj);
- 	return p;
+ 
+ 	mhi_del_ring_element(mhi_cntrl, mhi_ring);
  }
- 
- void msm_gem_put_pages(struct drm_gem_object *obj)
- {
--	/* when we start tracking the pin count, then do something here */
-+	struct msm_gem_object *msm_obj = to_msm_bo(obj);
-+
-+	msm_gem_lock(obj);
-+	msm_obj->pin_count--;
-+	GEM_WARN_ON(msm_obj->pin_count < 0);
-+	update_inactive(msm_obj);
-+	msm_gem_unlock(obj);
- }
- 
- int msm_gem_mmap_obj(struct drm_gem_object *obj,
-@@ -646,6 +658,8 @@ static void *get_vaddr(struct drm_gem_object *obj, unsigned madv)
- 			ret = -ENOMEM;
- 			goto fail;
- 		}
-+
-+		update_inactive(msm_obj);
- 	}
- 
- 	return msm_obj->vaddr;
-diff --git a/drivers/gpu/drm/msm/msm_gem.h b/drivers/gpu/drm/msm/msm_gem.h
-index 1b519fcd8418..66fb40b87122 100644
---- a/drivers/gpu/drm/msm/msm_gem.h
-+++ b/drivers/gpu/drm/msm/msm_gem.h
-@@ -228,7 +228,7 @@ static inline bool is_active(struct msm_gem_object *msm_obj)
- /* imported/exported objects are not purgeable: */
- static inline bool is_unpurgeable(struct msm_gem_object *msm_obj)
- {
--	return msm_obj->base.dma_buf && msm_obj->base.import_attach;
-+	return msm_obj->base.import_attach || msm_obj->pin_count;
- }
- 
- static inline bool is_purgeable(struct msm_gem_object *msm_obj)
-@@ -278,7 +278,7 @@ static inline void mark_unpurgeable(struct msm_gem_object *msm_obj)
- 
- static inline bool is_unevictable(struct msm_gem_object *msm_obj)
- {
--	return is_unpurgeable(msm_obj) || msm_obj->pin_count || msm_obj->vaddr;
-+	return is_unpurgeable(msm_obj) || msm_obj->vaddr;
- }
- 
- static inline void mark_evictable(struct msm_gem_object *msm_obj)
 -- 
-2.30.2
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
