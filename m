@@ -2,212 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AC5F436B193
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Apr 2021 12:22:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7608436B21D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Apr 2021 13:11:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232584AbhDZKXH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Apr 2021 06:23:07 -0400
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:59722 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232194AbhDZKXH (ORCPT
+        id S232185AbhDZLMN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Apr 2021 07:12:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59148 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233170AbhDZLMI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Apr 2021 06:23:07 -0400
-Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
-  by alexa-out.qualcomm.com with ESMTP; 26 Apr 2021 03:22:26 -0700
-X-QCInternal: smtphost
-Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 26 Apr 2021 03:22:24 -0700
-X-QCInternal: smtphost
-Received: from dikshita-linux.qualcomm.com ([10.204.65.237])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 26 Apr 2021 15:51:59 +0530
-Received: by dikshita-linux.qualcomm.com (Postfix, from userid 347544)
-        id 1EF22218F3; Mon, 26 Apr 2021 15:51:58 +0530 (IST)
-From:   Dikshita Agarwal <dikshita@codeaurora.org>
-To:     andy.gross@linaro.org, david.brown@linaro.org, robh+dt@kernel.org,
-        mark.rutland@arm.com, devicetree@vger.kernel.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        vgarodia@codeaurora.org, stanimir.varbanov@linaro.org,
-        Dikshita Agarwal <dikshita@codeaurora.org>
-Subject: [PATCH] dt-bindings: media: venus: Add sc7280 dt schema
-Date:   Mon, 26 Apr 2021 15:51:55 +0530
-Message-Id: <1619432515-9060-1-git-send-email-dikshita@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        Mon, 26 Apr 2021 07:12:08 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C33EC06175F
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Apr 2021 04:11:25 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id c4so16525960wrt.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Apr 2021 04:11:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=uXYb6BcHq27B6ScYW5tJ2SsqBaNuDx8oA92+GxjafKM=;
+        b=xvUi/jFjSPOSvlz/BbBKn+ZE/Z9NzwrofgB+eXRzJYQ/2bL+Zb/2VVGEt/iCzyPK98
+         pL/9abpx2tk1hTgBG+JZESktFflsU17VR7wROE4/rrO1Cn4RyLqRP1YUNglHucbWC8S6
+         FOapPgutJJ9vKG0pgRhXNA4OuWK2cYA8x6XrJoQw07n1tJk9I5G+861+X0/z3Trj8pJQ
+         kkaZljXTsrsuiVJKyTtS7854orFz2eynPNELr27p9eMBR751mXIJXN/tFyxP64DI+96A
+         lCIcVSZgqJU9/c/usNiOESCKyIqI0DPDeryvlUzWHzdJyWfA9xJBsAnXo+zYDj1Y+++L
+         tx8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=uXYb6BcHq27B6ScYW5tJ2SsqBaNuDx8oA92+GxjafKM=;
+        b=BsQS70aGke543dkEZhpaMxidLZ/OzQxF047QClaXOnr2h2UNKi09XrdkzNqA5NIUpQ
+         wgMhpYdaywdgIanoOzVPsVIPSffGM0x1vUGVU49lMMY7/tJUabtXX3ljwVWjPNYsSTQG
+         YPd5mg4AFKw3c0Ohej4WDmk7NmBg+/J4SKz6b4/UNURyQwQi1m6Rx/lioUKHC6CwQOvD
+         lBGXg2fiy6cofuT1U39y72+oXMFMnbTJ1EK7Ua5Nwxe1tNb00MeIV2hCwZHr4ljeUS6j
+         lEUdeTp3hxZQhUVgiT/eBAoC/IW+Lscbt3nigFOvhWWJapRidsWxl3w9Mim3dNFL148I
+         scFg==
+X-Gm-Message-State: AOAM532OYpiJMX3cIlT22rc2NxtdkZjhsBq3jHdPY2oVTjgEjYBw5BKC
+        79luwLB1iCvJO11Df+9ENC0D1A==
+X-Google-Smtp-Source: ABdhPJzthkQ8A9dbPXyiOrcJp3qKrnW8BYa16c26OInVfMwwDZA1oulOtgOaJrtr56/7q3TzEzs6yw==
+X-Received: by 2002:adf:d1c3:: with SMTP id b3mr22233136wrd.367.1619435478756;
+        Mon, 26 Apr 2021 04:11:18 -0700 (PDT)
+Received: from maple.lan (cpc141216-aztw34-2-0-cust174.18-1.cable.virginm.net. [80.7.220.175])
+        by smtp.gmail.com with ESMTPSA id t20sm19529761wmi.35.2021.04.26.04.11.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 26 Apr 2021 04:11:18 -0700 (PDT)
+Date:   Mon, 26 Apr 2021 12:11:16 +0100
+From:   Daniel Thompson <daniel.thompson@linaro.org>
+To:     Rajeev Nandan <rajeevny@codeaurora.org>
+Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        mkrishn@codeaurora.org, linux-kernel@vger.kernel.org,
+        abhinavk@codeaurora.org, dianders@chromium.org,
+        seanpaul@chromium.org, kalyan_t@codeaurora.org,
+        hoegsberg@chromium.org, Lyude Paul <lyude@redhat.com>,
+        Jani Nikula <jani.nikula@linux.intel.com>
+Subject: Re: [v2 2/2] backlight: Add DisplayPort aux backlight driver
+Message-ID: <20210426111116.4lc3ekxjugjr3oho@maple.lan>
+References: <1619214904-10218-1-git-send-email-rajeevny@codeaurora.org>
+ <1619214904-10218-3-git-send-email-rajeevny@codeaurora.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1619214904-10218-3-git-send-email-rajeevny@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add a schema description for the venus video encoder/decoder on the sc7280.
+On Sat, Apr 24, 2021 at 03:25:04AM +0530, Rajeev Nandan wrote:
+> Add backlight driver for the panels supporting backlight control
+> using DPCD registers on the DisplayPort aux channel.
+> 
+> Changes in v2:
+> - New (most of the code reused from drm_dp_aux_backlight.c of v1)
 
-Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
----
- .../bindings/media/qcom,sc7280-venus.yaml          | 158 +++++++++++++++++++++
- 1 file changed, 158 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml
+Did you respond to Jani's feedback on the v1 posting (asking you to
+coordinate with Lyude's work on refactoring the i915 eDP helpers[1])?
+I can't find anything showing the outcome of that.
 
-diff --git a/Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml b/Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml
-new file mode 100644
-index 0000000..a258d97
---- /dev/null
-+++ b/Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml
-@@ -0,0 +1,158 @@
-+# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-+
-+%YAML 1.2
-+---
-+$id: "http://devicetree.org/schemas/media/qcom,sc7280-venus.yaml#"
-+$schema: "http://devicetree.org/meta-schemas/core.yaml#"
-+
-+title: Qualcomm Venus video encode and decode accelerators
-+
-+maintainers:
-+  - Stanimir Varbanov <stanimir.varbanov@linaro.org>
-+
-+description: |
-+  The Venus IP is a video encode and decode accelerator present
-+  on Qualcomm platforms
-+
-+properties:
-+  compatible:
-+    const: qcom,sc7280-venus
-+
-+  reg:
-+    maxItems: 1
-+
-+  interrupts:
-+    maxItems: 1
-+
-+  power-domains:
-+    minItems: 2
-+    maxItems: 3
-+
-+  power-domain-names:
-+    minItems: 2
-+    maxItems: 3
-+    items:
-+      - const: venus
-+      - const: vcodec0
-+
-+  clocks:
-+    maxItems: 5
-+
-+  clock-names:
-+    items:
-+      - const: core_clk
-+      - const: video_cc_mvsc_ctl_axi
-+      - const: iface_clk
-+      - const: vcodec_clk
-+      - const: video_cc_mvs0_ctl_axi
-+
-+  iommus:
-+    maxItems: 2
-+
-+  memory-region:
-+    maxItems: 1
-+
-+  interconnects:
-+    maxItems: 2
-+
-+  interconnect-names:
-+    items:
-+      - const: cpu-cfg
-+      - const: video-mem
-+
-+  video-decoder:
-+    type: object
-+
-+    properties:
-+      compatible:
-+        const: venus-decoder
-+
-+    required:
-+      - compatible
-+
-+    additionalProperties: false
-+
-+  video-encoder:
-+    type: object
-+
-+    properties:
-+      compatible:
-+        const: venus-encoder
-+
-+    required:
-+      - compatible
-+
-+    additionalProperties: false
-+
-+  video-firmware:
-+    type: object
-+
-+    description: |
-+      Firmware subnode is needed when the platform does not
-+      have TrustZone.
-+
-+    properties:
-+      iommus:
-+        maxItems: 1
-+
-+    required:
-+      - iommus
-+
-+required:
-+  - compatible
-+  - reg
-+  - interrupts
-+  - power-domains
-+  - power-domain-names
-+  - clocks
-+  - clock-names
-+  - iommus
-+  - memory-region
-+  - video-decoder
-+  - video-encoder
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+        #include <dt-bindings/clock/qcom,videocc-sc7280.h>
-+
-+        venus: video-codec@aa00000 {
-+                compatible = "qcom,sc7280-venus";
-+                reg = <0x0aa00000 0xd0600>;
-+                interrupts = <GIC_SPI 174 IRQ_TYPE_LEVEL_HIGH>;
-+
-+                clocks = <&videocc VIDEO_CC_MVSC_CORE_CLK>,
-+                         <&videocc VIDEO_CC_MVSC_CTL_AXI_CLK>,
-+                         <&videocc VIDEO_CC_VENUS_AHB_CLK>,
-+                         <&videocc VIDEO_CC_MVS0_CORE_CLK>,
-+                         <&videocc VIDEO_CC_MVS0_AXI_CLK>;
-+                clock-names = "core_clk", "video_cc_mvsc_ctl_axi",
-+                              "iface_clk", "vcodec_clk",
-+                              "video_cc_mvs0_ctl_axi";
-+
-+                power-domains = <&videocc MVSC_GDSC>,
-+                                <&videocc MVS0_GDSC>;
-+                power-domain-names = "venus", "vcodec0";
-+
-+                interconnects = <&gem_noc MASTER_APPSS_PROC 0 &cnoc2 SLAVE_VENUS_CFG 0>
-+                                <&mmss_noc MASTER_VIDEO_P0 0 &mc_virt SLAVE_EBI1 0>;
-+                interconnect-names = "cpu-cfg", "video-mem";
-+
-+                iommus = <&apps_smmu 0x2180 0x20>,
-+                         <&apps_smmu 0x2184 0x20>;
-+
-+                memory-region = <&video_mem>;
-+
-+                video-decoder {
-+                        compatible = "venus-decoder";
-+                };
-+
-+                video-encoder {
-+                        compatible = "venus-encoder";
-+                };
-+
-+                video-firmware {
-+                        iommus = <&apps_smmu 0x21a2 0x0>;
-+                };
-+        };
--- 
-2.7.4
+[1]: https://www.spinics.net/lists/dri-devel/msg295602.html
 
+
+> +static struct drm_dp_aux *i2c_to_aux(struct i2c_adapter *i2c)
+> +{
+> +	return container_of(i2c, struct drm_dp_aux, ddc);
+> +}
+
+[...]
+
+> +	np = of_parse_phandle(pdev->dev.of_node, "ddc-i2c-bus", 0);
+> +	if (!np) {
+> +		dev_err(&pdev->dev, "failed to get aux ddc I2C bus\n");
+> +		return -ENODEV;
+> +	}
+> +
+> +	ddc = of_find_i2c_adapter_by_node(np);
+> +	of_node_put(np);
+> +	if (!ddc)
+> +		return -EPROBE_DEFER;
+> +
+> +	aux_bl->aux = i2c_to_aux(ddc);
+> +	dev_dbg(&pdev->dev, "using dp aux %s\n", aux_bl->aux->name);
+
+It looks like this code "just knows" that the I2C controller it has
+looked up is a special one. That seems a little odd to me.
+
+If we "just know" this then I'd hope that is could either be modelled
+in the devicetree or that it would be possible for the backlight driver
+to be registered (possibly using helpers) by whatever it is that is
+setting up struct drm_dp_aux in the first place.
+
+
+Daniel.
