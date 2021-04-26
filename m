@@ -2,114 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2807136B5A2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Apr 2021 17:22:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BB0C436B6F5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Apr 2021 18:37:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234011AbhDZPXJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Apr 2021 11:23:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58606 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233829AbhDZPXJ (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Apr 2021 11:23:09 -0400
-Received: from mail-qt1-x834.google.com (mail-qt1-x834.google.com [IPv6:2607:f8b0:4864:20::834])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84EB3C061574
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Apr 2021 08:22:27 -0700 (PDT)
-Received: by mail-qt1-x834.google.com with SMTP id 1so41842869qtb.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Apr 2021 08:22:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=zuSjukxiCRyevuIEXMUCFXprO3MtbZtp2zyl9pqNUaQ=;
-        b=SIl7PMMijX8PUREe43mG9a3nM8E8+Iexl49edlsjepXdr/ncicugL1pQX9OdHPlLcQ
-         FEhOMkKBToxMTQEsUuoXRtAapJU7OLHb8yDZGyZv+cleBH5YoDgx4pTxwL8MCQi4rrYC
-         nzikqyDGf80rXwofWysSRzqHCGy0QW1o0/HQU=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=zuSjukxiCRyevuIEXMUCFXprO3MtbZtp2zyl9pqNUaQ=;
-        b=RKkyPkT7uRrgBK+meFCRNJXpY2mrMQZpXozKi7GJQ1VkUuznSrzqV6/XGp7FvL0r/m
-         zx7u+jbP/C3uEFFha9lQxl5ASkFcE0OVAvnQlu7njMqnsn36mzWHvTUnN2RUmSXK1+07
-         BI3aeup35Krwso+76dQ0GlxcYwwz9pBPP+3P1hbOSIjtYH0/jRx+tG2uNZNvYAk2hOCz
-         trghoH+BBgvfn65rm8MTlNSDY2ZMNOakqi1IMYnHW4goLhvUS/L3rYe5A+FLfsQXEM65
-         h2C4F8bX5mYHAPksev45uyTjhwJEqnQqlXR4sHrQUD/I3e05MBn3Slq4lG6FEIN9zl6s
-         oWNw==
-X-Gm-Message-State: AOAM53203VD41V0cZ51OLkbRf0+V5uvZGiqlq5AhvB0pHJnm5mHfMDIV
-        8yqe4h0b1/df1hkmY0iqgtQ1XZr1wYUWig==
-X-Google-Smtp-Source: ABdhPJw4S76yQR2g7pyz0vcC+xwU/Vqv00QZOvXZSNEpORlSqpEQss0ZA7RNBAvzPMn6VmedPq4Ddg==
-X-Received: by 2002:ac8:5b8f:: with SMTP id a15mr3390769qta.21.1619450546617;
-        Mon, 26 Apr 2021 08:22:26 -0700 (PDT)
-Received: from mail-yb1-f179.google.com (mail-yb1-f179.google.com. [209.85.219.179])
-        by smtp.gmail.com with ESMTPSA id r81sm248714qka.82.2021.04.26.08.22.25
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 26 Apr 2021 08:22:25 -0700 (PDT)
-Received: by mail-yb1-f179.google.com with SMTP id p3so44672137ybk.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Apr 2021 08:22:25 -0700 (PDT)
-X-Received: by 2002:a25:2d0b:: with SMTP id t11mr21536730ybt.79.1619450545324;
- Mon, 26 Apr 2021 08:22:25 -0700 (PDT)
+        id S234497AbhDZQij (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Apr 2021 12:38:39 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:43622 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S234466AbhDZQii (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 26 Apr 2021 12:38:38 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1619455077; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=MwZtQZwxYVMfvcMJM/LAQDKQUnmrTA2FuuaM3k/nD5U=; b=na7U4kHWilP8hbFXnw1Rv2zkrV9jiiN7upjMOeISH/4LmFeCRqHmlLCuYE/x+SlaPSJdWxbh
+ YM6IS2/I5HG7UgT9qjEVUYJZzkWihWfBsYgOHc50PVW0tCyfZJwc1Xehknkx/4SihqdsfuRi
+ FX/JSdGBuN5GCZ7qgufFJaUP6z4=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
+ 6086ec56853c0a2c4692ff94 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 26 Apr 2021 16:37:42
+ GMT
+Sender: rnayak=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 69833C4360C; Mon, 26 Apr 2021 16:37:41 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
+Received: from [10.50.4.30] (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: rnayak)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 8FE48C433D3;
+        Mon, 26 Apr 2021 16:37:37 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 8FE48C433D3
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=rnayak@codeaurora.org
+Subject: Re: [PATCH] dt-bindings: watchdog: Add compatible for SC7280 SoC
+To:     Guenter Roeck <linux@roeck-us.net>, wim@linux-watchdog.org
+Cc:     robh+dt@kernel.org, bjorn.andersson@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-watchdog@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+References: <1615788301-29891-1-git-send-email-rnayak@codeaurora.org>
+ <9f28f60b-379b-c384-6049-e5e5294b80b0@roeck-us.net>
+From:   Rajendra Nayak <rnayak@codeaurora.org>
+Message-ID: <89e34607-0b58-add7-7825-d85f32ab2cb2@codeaurora.org>
+Date:   Mon, 26 Apr 2021 22:07:34 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.0
 MIME-Version: 1.0
-References: <1619416452-6852-1-git-send-email-rnayak@codeaurora.org>
-In-Reply-To: <1619416452-6852-1-git-send-email-rnayak@codeaurora.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Mon, 26 Apr 2021 08:22:14 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=W=dGfp2qvDNSg8keGSrGsOf_pEqjRzabrEyr8OdeBARA@mail.gmail.com>
-Message-ID: <CAD=FV=W=dGfp2qvDNSg8keGSrGsOf_pEqjRzabrEyr8OdeBARA@mail.gmail.com>
-Subject: Re: [PATCH v2] nvmem: qfprom: minor nit fixes
-To:     Rajendra Nayak <rnayak@codeaurora.org>
-Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        "Ravi Kumar Bokka (Temp)" <rbokka@codeaurora.org>,
-        Joe Perches <joe@perches.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <9f28f60b-379b-c384-6049-e5e5294b80b0@roeck-us.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
 
-On Sun, Apr 25, 2021 at 10:54 PM Rajendra Nayak <rnayak@codeaurora.org> wrote:
->
-> Fix a missed newline, change an 'if' to 'else if' and update
-> a comment which is stale after the merge of '5a1bea2a: nvmem:
-> qfprom: Add support for fuseblowing on sc7280'
->
-> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
-> ---
-> v2: Added the change to move the 'if' to 'else if'
-> Sending a follow-up patch for these nits since they came in after
-> the previous patch was already pulled in
-> https://lore.kernel.org/patchwork/patch/1401964/
->
->  drivers/nvmem/qfprom.c | 5 +++--
->  1 file changed, 3 insertions(+), 2 deletions(-)
->
-> diff --git a/drivers/nvmem/qfprom.c b/drivers/nvmem/qfprom.c
-> index d6d3f24..1ba666b 100644
-> --- a/drivers/nvmem/qfprom.c
-> +++ b/drivers/nvmem/qfprom.c
-> @@ -122,6 +122,7 @@ static const struct qfprom_soc_compatible_data sc7280_qfprom = {
->         .keepout = sc7280_qfprom_keepout,
->         .nkeepout = ARRAY_SIZE(sc7280_qfprom_keepout)
->  };
-> +
->  /**
->   * qfprom_disable_fuse_blowing() - Undo enabling of fuse blowing.
->   * @priv: Our driver data.
-> @@ -195,7 +196,7 @@ static int qfprom_enable_fuse_blowing(const struct qfprom_priv *priv,
->         }
->
->         /*
-> -        * Hardware requires 1.8V min for fuse blowing; this may be
-> +        * Hardware requires a min voltage for fuse blowing; this may be
->          * a rail shared do don't specify a max--regulator constraints
+On 3/15/2021 8:25 PM, Guenter Roeck wrote:
+> On 3/14/21 11:05 PM, Rajendra Nayak wrote:
+>> From: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+>>
+>> Add compatible for watchdog timer on SC7280 SoC.
+>>
+>> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+>> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
+>> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+>> Acked-by: Rob Herring <robh@kernel.org>
+> 
+> Reviewed-by: Guenter Roeck <linux@roeck-us.net>
 
-Joe pointed out a typo in the original comment that "do" should be
-"so" [1], but that's not new to your patch so:
+I don;t see this in linux-next, any plans to pull this one in?
 
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+> 
+>> ---
+>> This was earlier posted as part of the entire DT series for sc7280 [1]
+>> Rest of the patches are now picked, posting this separately so it can
+>> be picked up via the WDT tree.
+>>
+>> [1] https://lore.kernel.org/patchwork/project/lkml/list/?series=488871
+>>
+>>   Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml | 1 +
+>>   1 file changed, 1 insertion(+)
+>>
+>> diff --git a/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml b/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
+>> index b8e4118..ba60bdf 100644
+>> --- a/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
+>> +++ b/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
+>> @@ -17,6 +17,7 @@ properties:
+>>       enum:
+>>         - qcom,apss-wdt-qcs404
+>>         - qcom,apss-wdt-sc7180
+>> +      - qcom,apss-wdt-sc7280
+>>         - qcom,apss-wdt-sdm845
+>>         - qcom,apss-wdt-sdx55
+>>         - qcom,apss-wdt-sm8150
+>>
+> 
 
-[1] https://lore.kernel.org/r/73945e7037ab61eb34a2a1af05aa3eef75c8f836.camel@perches.com
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
