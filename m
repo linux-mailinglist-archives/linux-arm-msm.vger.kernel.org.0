@@ -2,83 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B10F136B2C4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Apr 2021 14:12:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0C1D536B37A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Apr 2021 14:48:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231862AbhDZMN3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Apr 2021 08:13:29 -0400
-Received: from mail.kernel.org ([198.145.29.99]:41174 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231550AbhDZMN3 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Apr 2021 08:13:29 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id AE5BB610A5;
-        Mon, 26 Apr 2021 12:12:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1619439168;
-        bh=3mfWvtf3MvTXveZMvJipN7XiE9UeGtzIh/4sgDdjK6M=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=bWLFA3+f3cAJ5seUc6WwRMtqX7LuygsorGJykfU3mbBTvNMUvcmqLl1IHMA7W4SB6
-         0RiEq99DQV9O0iZWhwLNWIbBa2CVFiwUdNzd+KBIZRGidd8g9fMvKwuPfdYRrpUteH
-         /OXod35rGsNU2jETTXroSiixo87a+yilovmouPcdHv7avCiAII3gqTVlvOewGBa/kp
-         RbOY0m4RCleHYh5fBjthVZ8XW5t2jKq+MOS8eTipHxu/4tt91RslJm6zhrm/xCU8Um
-         cam9IyEQVJTIKb4SBGeVos2ptoBK3yJztGhhbNv6vSAHBJOC8ti9P6jvluwXkES6aq
-         o2XMXN+R5nOPQ==
-Date:   Mon, 26 Apr 2021 13:12:18 +0100
-From:   Mark Brown <broonie@kernel.org>
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+        id S233043AbhDZMtg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Apr 2021 08:49:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52606 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231876AbhDZMtg (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 26 Apr 2021 08:49:36 -0400
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C098C061574
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Apr 2021 05:48:54 -0700 (PDT)
+Received: by mail-wm1-x330.google.com with SMTP id a22-20020a05600c2256b029014294520f18so675221wmm.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Apr 2021 05:48:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=DgaYC5R2rUyDRNmCnqxAOo91HvCd3i2OwcZiQxe112s=;
+        b=xalZ1Zg0LEgSoahAddl++E3/jFKE+4Gzjf0wvGPemO8iuTzLan0YSJLGIJ3o94TSXj
+         BRKC/EXV1zNOOZZGU6pcManzKZOrqMIDCjGxR2CqdcLR1X7cQKbvxZSZsCe4hEQCDqzE
+         Ggx8nRAhSSbgfCh9x594eR1g4n7nbze182FlCpKpA0PEEM8E4AAbmjgc3wAmGdR8ygv3
+         7yUH/s5k9+GKQRzRPL2ju7mMRimGB3f6E9YHNQ0w4G0YhXbu28IlGQoqkGMYLJ0QRb/Q
+         y3a5a07pkLKdTUfF+J+H8vsYncfQQk7Is9f79SEcFuDluGdZLtDRRq+ufp0KM2spVWtv
+         ol1g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=DgaYC5R2rUyDRNmCnqxAOo91HvCd3i2OwcZiQxe112s=;
+        b=ZopBf0IabCf7ZW0r5eneJcpCs+bC/y39CDAOg5fu/Si47+8gdhm4JdiSlPBURH/BUV
+         19oKvjvfkymxdqzKeyzKIzgBkx3MM/hryxMPs5yoRZ6OalYb/ydtD/tPx6o0b/7KRnK6
+         l9yssvKOAgzHJTQZ1fsjBzvyv5nGjCbzisC2FRcloHE0qFkLWS2UiT8o1uwAiog3sPOG
+         8xJOySBbSbsKuon9LFGLDfSgRCQfV67gpVGyUEt44C8xYknvf3bOFD3U/prD2Xb+HZkw
+         Tp/3qJuVpbpaKwsEMet12zLjx+45v/lvTqQbVAWUKg8PJkpGTNO+EZFb4pQz2oe+XXdV
+         jJ4A==
+X-Gm-Message-State: AOAM532WUNoCMc5zF+aoXpa3pjrEFYmJByrnYuA7RVd8kTpdXAjocHTH
+        ucRa7QN8uojcGSoJRZhnn0kQoA==
+X-Google-Smtp-Source: ABdhPJzxItgVmxb6RYw1C4UWtl1tHF+ZsHeHFP3F1wViJl75vxhRuqrZWDhrVLCPy0TrNoMJAbEZEg==
+X-Received: by 2002:a1c:b342:: with SMTP id c63mr19704294wmf.162.1619441333365;
+        Mon, 26 Apr 2021 05:48:53 -0700 (PDT)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id h9sm17610909wmb.35.2021.04.26.05.48.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 26 Apr 2021 05:48:52 -0700 (PDT)
+Subject: Re: [PATCH] regulator: Fix current limit for QCOM PMIC VBUS
+To:     Mark Brown <broonie@kernel.org>
 Cc:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
         wcheng@codeaurora.org, linux-arm-msm@vger.kernel.org,
         dmitry.baryshkov@linaro.org
-Subject: Re: [PATCH] regulator: Fix current limit for QCOM PMIC VBUS
-Message-ID: <20210426121218.GC4590@sirena.org.uk>
 References: <20210423160658.1542090-1-bryan.odonoghue@linaro.org>
  <20210423163203.GF5507@sirena.org.uk>
  <a2152494-4e8f-27ef-07e7-e575ce3ee653@linaro.org>
  <20210426115548.GA4590@sirena.org.uk>
  <c7f797da-f5b9-5c95-4664-efadf4e7b86b@linaro.org>
+ <20210426121218.GC4590@sirena.org.uk>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Message-ID: <8687acdb-75e9-5fc5-dd3e-9a19615676b5@linaro.org>
+Date:   Mon, 26 Apr 2021 13:50:21 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.7.1
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="Fig2xvG2VGoz8o/s"
-Content-Disposition: inline
-In-Reply-To: <c7f797da-f5b9-5c95-4664-efadf4e7b86b@linaro.org>
-X-Cookie: Zeus gave Leda the bird.
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <20210426121218.GC4590@sirena.org.uk>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 26/04/2021 13:12, Mark Brown wrote:
+> To repeat my original feedback: this needs to be something that is
+> configured per system, please make it configured per system.
 
---Fig2xvG2VGoz8o/s
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Sure thing,
 
-On Mon, Apr 26, 2021 at 01:03:49PM +0100, Bryan O'Donoghue wrote:
+It doesn't look like a big problem to add a set_current_limit for this 
+regulator.
 
-> I get your point, however, the downstream kernel i.e. the kernel that ships
-> with the n-million qcom devices sets the limit to 3 amps.
-
-We've not traditionally used downstream kernels as a quality guide, nor
-can we assume that every system running upstream kernels is running
-unmodified downstream kernels.
-
-To repeat my original feedback: this needs to be something that is
-configured per system, please make it configured per system.  Simply
-repeating yourself over and over again is not going to accomplish
-anything constructive.
-
---Fig2xvG2VGoz8o/s
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmCGriEACgkQJNaLcl1U
-h9BodAf/bIz54VmBA036w7ZOOKgy3cqHQx/emgJXhInNerbm+z0kIDkDEFwjLPhx
-hzbIB/iLXAkWO98DKOnOvMWxXSx0GzTARt+93xR3AtI39iHfpOWnxtPn5N2ENipw
-fj7DA36D7awPLP9TTdDSOoi4P4rqmwYa91iGsCicEZDnisPzBXg1I305bQ4y83/V
-KYYKcV/H+ngp7H4mUF3w/BiTQDikf67O7MQFIbt/Gk3waNh3n5jUZHSfSxXiDZ0G
-5RkZoK0SEhBwVjQmfVsUS1OjU4PXf20O2v8V95P53EPEUBf12VsOZfdNSqZvurQy
-jzvjAplK8A0jrFHvVd5Lc3cvjm0nYA==
-=cpTO
------END PGP SIGNATURE-----
-
---Fig2xvG2VGoz8o/s--
+---
+bod
