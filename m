@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 20C6236BB7D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Apr 2021 00:13:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E376E36BB81
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Apr 2021 00:13:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232235AbhDZWNy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Apr 2021 18:13:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37280 "EHLO
+        id S233257AbhDZWN5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Apr 2021 18:13:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37290 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232062AbhDZWNy (ORCPT
+        with ESMTP id S232116AbhDZWN4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Apr 2021 18:13:54 -0400
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05952C061760
+        Mon, 26 Apr 2021 18:13:56 -0400
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5E21C061761
         for <linux-arm-msm@vger.kernel.org>; Mon, 26 Apr 2021 15:13:12 -0700 (PDT)
-Received: by mail-wm1-x335.google.com with SMTP id n4-20020a05600c4f84b029013151278decso5785051wmq.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Apr 2021 15:13:11 -0700 (PDT)
+Received: by mail-wm1-x32f.google.com with SMTP id f15-20020a05600c4e8fb029013f5599b8a9so3893144wmq.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Apr 2021 15:13:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=byleSoR3uVivo8lWUxItN76uGnD6h4WkxkvPblf1pgs=;
-        b=QNdRK6x1Vu5iyxHDPdpYUwhnDmIWWvcN9VR7TZg7xM1ZDisCReZJj3YfopGtBN1/cs
-         rowkW+8SpGTpEyeWWWUQAa1NYKNDvOKPhO2p7YJVVSL9TEfJIAXapqYJLvYKhiQ+H5uq
-         9x0TVH3ZsS30HWO81USMPJkuwuugeb1neFJc7d61h+CdjP/+yFBMewzUOL1BS7oYZW8G
-         oBY8SZanKfMd10bDU2zIu0KOGTVMcXb/MnwcyTlTUUFFeuxXVfB7KoUxzcCP5BcQgdpc
-         u2X7O00rV1j0YfVSE0AUYuQcreIiLqkZDsdJJQDc7hsl+4qywcDlkaseby/S9nll6xCj
-         qEfw==
+        bh=jlTbSEdZXfT6MxSN+IUIhlV19k9uBh2kVBWE92p9qiQ=;
+        b=t+9SLn2WTexSIDQ+Eivw4b3WL8F4mZxTT0TfsTpSb91Aq7ats0DQ2QAvUAyweRQJws
+         e5SpVVHUScBDAk8os26R6WgtDMXvJrE4FrNc/NYV4CNik07A9PSgJFtpmgsewP80Es02
+         2nBGGvOYayhbByzXYos4h4OO957bL2PgaOHgdu1Njid4RpNKX7ql7ChW2gDR8qfdqoZH
+         cMgs1bWHwEE2zGAFc0uDoEGiO+lM4JKBmhy4RGxPzc3e7OosajH8TpzsSIEWd101hXCb
+         bYmHYiZ1twYpXvCtRJP2fZBy+/0KC7XFuVhhqQlqBPn7ULuWarGyJYPJF7Xph1PrSTMw
+         e36A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=byleSoR3uVivo8lWUxItN76uGnD6h4WkxkvPblf1pgs=;
-        b=UKgujUlc0SJS7k0e9cHaVpWB5vEbVM62QIrZgrHVRntFX4Y6wldkvMjFyYCftVaNhM
-         qmbLbHcWN8Xn/bQHZ0z58Yz/uhfeZ3Jx4vFI/7Rob88uus6R6710GwbsfUM5jDkAPxiJ
-         PU9Ynye5Ll5iTf9tY2IFMWWwqalCU6PlyvqbcXMGaa1Y5dQulh7z+C/2qnZH6/yZbORG
-         uHpdoE4XwfXfIgkhEJFImJ6OnGMo3ep6c/WMmBOehDn56EDpVR21Zfv8BNi6Osx2YARP
-         T1djMKkuhsvYXmof+UI2Wo74WZK7R7yimM1vNSb/V5QOBC/TKYEnOGm1hh+MZxkTLyZ0
-         nBwg==
-X-Gm-Message-State: AOAM533cpwF6704QcB+C2y1vCitraYgg2cO4ugVwB8ImdibtXzhx0GOe
-        V/KrJXQEAAmd+c0qKJWEOWwEeg==
-X-Google-Smtp-Source: ABdhPJy1dkv5xxjAEym0tOdVzG2x1GsRCPWb+vN+7eBoVgGw6bSbuYAsKf/2bCJNdEY62G3PbaMEQw==
-X-Received: by 2002:a1c:740c:: with SMTP id p12mr3198068wmc.112.1619475190749;
-        Mon, 26 Apr 2021 15:13:10 -0700 (PDT)
+        bh=jlTbSEdZXfT6MxSN+IUIhlV19k9uBh2kVBWE92p9qiQ=;
+        b=ere3oHyWknZQoXjEqUAxp6M/Gnhltjd0MGjFW5d5L/FnldjJvQLeD5lfC+z25V4OzZ
+         Tf2EkzzKpo5K/0k4TqPezYyUeCJE2KRfrFfOMGDibdeLm5oVs7ekhcBHY7Q5CGsNUsuo
+         Mjt2kkhmxBQKG8oKiPCo21jUnBVHBdM7wNhJVfwcN98GcjFS+WuM5MWrwjU3XoR/phk5
+         +RXPaaIXjU3uh4G168rLMrpTQfE16jAuA0a3913lj4nNcui3HZVlwDRUX3T4mjHzrHF5
+         msBFwfOt3iQbXalKCDjoMbLPfyZI6CkeSFLpragN/tK6Lxc0xk7yt/mjx/vr0nVCAiWa
+         YWgQ==
+X-Gm-Message-State: AOAM531xjX5l9Oy0SjOrlfwkWAb/X+fHoKH3L55kW7oNTcKmbz1ckiMn
+        1uciZ+vJDLS6eQpm1gjlYrx82A==
+X-Google-Smtp-Source: ABdhPJwEg6ikkyu+r1tHk8sMCPf4jfjOdSVnajJO7Xa2WpXxtwVHvkay8he1Zr3Dcsw1+Dd7yMCJEw==
+X-Received: by 2002:a05:600c:35cf:: with SMTP id r15mr1014943wmq.183.1619475191681;
+        Mon, 26 Apr 2021 15:13:11 -0700 (PDT)
 Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id x9sm1756042wrt.13.2021.04.26.15.13.09
+        by smtp.gmail.com with ESMTPSA id x9sm1756042wrt.13.2021.04.26.15.13.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Apr 2021 15:13:10 -0700 (PDT)
+        Mon, 26 Apr 2021 15:13:11 -0700 (PDT)
 From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 To:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
         broonie@kernel.org, robh@kernel.org, devicetree@vger.kernel.org
 Cc:     wcheng@codeaurora.org, linux-arm-msm@vger.kernel.org,
         dmitry.baryshkov@linaro.org, bryan.odonoghue@linaro.org
-Subject: [PATCH v2 1/2] regulator: Add a routine to set the current limit for QCOM PMIC VBUS
-Date:   Mon, 26 Apr 2021 23:14:45 +0100
-Message-Id: <20210426221446.1852572-2-bryan.odonoghue@linaro.org>
+Subject: [PATCH v2 2/2] arm64: boot: dts: qcom: pm8150b: Add DTS node for PMIC VBUS booster
+Date:   Mon, 26 Apr 2021 23:14:46 +0100
+Message-Id: <20210426221446.1852572-3-bryan.odonoghue@linaro.org>
 X-Mailer: git-send-email 2.30.1
 In-Reply-To: <20210426221446.1852572-1-bryan.odonoghue@linaro.org>
 References: <20210426221446.1852572-1-bryan.odonoghue@linaro.org>
@@ -65,68 +65,41 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add hooks to regulator_get_current_limit_regmap() and
-regulator_set_current_limit_regmap() with an accompanying map of amperages.
+From: Wesley Cheng <wcheng@codeaurora.org>
 
-This lets us use the existing helper functions to map requested current
-settings to register bit-map/indicies.
+Add the required DTS node for the USB VBUS output regulator, which is
+available on PM8150B.  This will provide the VBUS source to connected
+peripherals.
 
-This change is required to elevate the default 2 Amps set by the bootloader
-to 3 Amps or indeed to constrain the value lower as the system design may
-dictate.
+bod: Add minimum and maximum amperage values for the VBUS current provided
+     by the pm8150b.
 
-The valid range is 500 mA to 3 A in increments of 500 mA.
-
-Cc: Mark Brown <broonie@kernel.org>
+Cc: Rob Herring <robh@kernel.org>
+Signed-off-by: Wesley Cheng <wcheng@codeaurora.org>
 Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 ---
- drivers/regulator/qcom_usb_vbus-regulator.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ arch/arm64/boot/dts/qcom/pm8150b.dtsi | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/regulator/qcom_usb_vbus-regulator.c b/drivers/regulator/qcom_usb_vbus-regulator.c
-index 457788b505720..2e627c2b6c512 100644
---- a/drivers/regulator/qcom_usb_vbus-regulator.c
-+++ b/drivers/regulator/qcom_usb_vbus-regulator.c
-@@ -16,13 +16,21 @@
+diff --git a/arch/arm64/boot/dts/qcom/pm8150b.dtsi b/arch/arm64/boot/dts/qcom/pm8150b.dtsi
+index b21e56a46145b..2a90d773810ad 100644
+--- a/arch/arm64/boot/dts/qcom/pm8150b.dtsi
++++ b/arch/arm64/boot/dts/qcom/pm8150b.dtsi
+@@ -53,6 +53,14 @@ power-on@800 {
+ 			status = "disabled";
+ 		};
  
- #define CMD_OTG				0x40
- #define OTG_EN				BIT(0)
-+#define OTG_CURRENT_LIMIT_CFG		0x52
-+#define OTG_CURRENT_LIMIT_MASK		GENMASK(2, 0)
- #define OTG_CFG				0x53
- #define OTG_EN_SRC_CFG			BIT(1)
- 
-+static const unsigned int curr_table[] = {
-+	500000, 1000000, 1500000, 2000000, 2500000, 3000000,
-+};
++		pm8150b_vbus: dcdc@1100 {
++			compatible = "qcom,pm8150b-vbus-reg";
++			regulator-min-microamp = <500000>;
++			regulator-max-microamp = <3000000>;
++			status = "disabled";
++			reg = <0x1100>;
++		};
 +
- static const struct regulator_ops qcom_usb_vbus_reg_ops = {
- 	.enable = regulator_enable_regmap,
- 	.disable = regulator_disable_regmap,
- 	.is_enabled = regulator_is_enabled_regmap,
-+	.get_current_limit = regulator_get_current_limit_regmap,
-+	.set_current_limit = regulator_set_current_limit_regmap,
- };
- 
- static struct regulator_desc qcom_usb_vbus_rdesc = {
-@@ -30,6 +38,8 @@ static struct regulator_desc qcom_usb_vbus_rdesc = {
- 	.ops = &qcom_usb_vbus_reg_ops,
- 	.owner = THIS_MODULE,
- 	.type = REGULATOR_VOLTAGE,
-+	.curr_table = curr_table,
-+	.n_current_limits = ARRAY_SIZE(curr_table),
- };
- 
- static int qcom_usb_vbus_regulator_probe(struct platform_device *pdev)
-@@ -61,6 +71,8 @@ static int qcom_usb_vbus_regulator_probe(struct platform_device *pdev)
- 
- 	qcom_usb_vbus_rdesc.enable_reg = base + CMD_OTG;
- 	qcom_usb_vbus_rdesc.enable_mask = OTG_EN;
-+	qcom_usb_vbus_rdesc.csel_reg = base + OTG_CURRENT_LIMIT_CFG;
-+	qcom_usb_vbus_rdesc.csel_mask = OTG_CURRENT_LIMIT_MASK;
- 	config.dev = dev;
- 	config.init_data = init_data;
- 	config.of_node = dev->of_node;
+ 		pm8150b_temp: temp-alarm@2400 {
+ 			compatible = "qcom,spmi-temp-alarm";
+ 			reg = <0x2400>;
 -- 
 2.30.1
 
