@@ -2,286 +2,354 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9308736C246
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Apr 2021 12:01:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9936736C279
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Apr 2021 12:14:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235334AbhD0KBr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Apr 2021 06:01:47 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:20606 "EHLO m43-7.mailgun.net"
+        id S235544AbhD0KOp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Apr 2021 06:14:45 -0400
+Received: from mail.kernel.org ([198.145.29.99]:34660 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230341AbhD0KBr (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Apr 2021 06:01:47 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1619517664; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=NKfzeOULH31HarPQwds4uvKSGi9L1F3w6RKo8oOHucQ=;
- b=pUDEXH5+K0KjnD8HkkhLNk755vtyHViET460YgaoQtYZX5vexjyFHW3SiaalBR6nBn4gS1jf
- jlVQjzNf6F3Ct5zug1Zy740jGTXwPG1dQVza5wJxwPR3AnMFdw4cI1j9qAmEC/dQd/9rOhjE
- Tm++d2PdQpXBGW4RpdKT9Sr8PB4=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
- 6087e0df215b831afb32ac88 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 27 Apr 2021 10:01:03
- GMT
-Sender: okukatla=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 8CAC9C43217; Tue, 27 Apr 2021 10:01:03 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: okukatla)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 2E6C9C433D3;
-        Tue, 27 Apr 2021 10:01:02 +0000 (UTC)
+        id S235420AbhD0KOg (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 27 Apr 2021 06:14:36 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id E2621613C7;
+        Tue, 27 Apr 2021 10:13:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1619518431;
+        bh=qwDrXziLd0wYa0ewaYbUQgnXX/81MfUZUDj4i+ZfQ3c=;
+        h=From:To:Cc:Subject:Date:From;
+        b=cgewf2WlhJEoRncqoUgtVjzA9f3sOoOfzHCQZACKQmDeO2jGaK4NZXObarBk6UJp2
+         pxno8Y1i3eGLAU+TZbYECXQBmz+vrUFi+U8LqG8YZ8UnwckxZzN0G7WZS8SIEhU9rV
+         d5x1zKEWBz7qkDq4BkR3OpmBPdJfos5Onw1MX0/RXzgmj0IjyYZH16/q1mBAqKRvpN
+         sUxncBirqBuIbH495UuBIh19eXEVgo0yj3zNcuYn9I7OOosbtUlzYNm4PEl3A3zOSB
+         WKYjFjjbgNWRQnszaz4w2QKIppoiqD5DhIt1clxJYx0h6Eaau5+BUGCvMrAgTQdX2N
+         Z7m70gj9X8Oow==
+Received: by mail.kernel.org with local (Exim 4.94)
+        (envelope-from <mchehab@kernel.org>)
+        id 1lbKiy-000j4b-6W; Tue, 27 Apr 2021 12:13:48 +0200
+From:   Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Cc:     linuxarm@huawei.com, mauro.chehab@huawei.com,
+        Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+        "Lad, Prabhakar" <prabhakar.csengg@gmail.com>,
+        "Paul J. Murphy" <paul.j.murphy@intel.com>,
+        Alexandre Torgue <alexandre.torgue@st.com>,
+        Andrzej Hajda <a.hajda@samsung.com>,
+        Andrzej Pietrasiewicz <andrzejtp2010@gmail.com>,
+        Andy Gross <agross@kernel.org>, Benoit Parrot <bparrot@ti.com>,
+        Bingbu Cao <bingbu.cao@intel.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Chiranjeevi Rapolu <chiranjeevi.rapolu@intel.com>,
+        Dafna Hirschfeld <dafna.hirschfeld@collabora.com>,
+        Dan Scally <djrscally@gmail.com>,
+        Daniele Alessandrelli <daniele.alessandrelli@intel.com>,
+        Dave Stevenson <dave.stevenson@raspberrypi.com>,
+        Dmitry Osipenko <digetx@gmail.com>,
+        Dongchun Zhu <dongchun.zhu@mediatek.com>,
+        Ezequiel Garcia <ezequiel@collabora.com>,
+        Fabio Estevam <festevam@gmail.com>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Helen Koike <helen.koike@collabora.com>,
+        Hyungwoo Yang <hyungwoo.yang@intel.com>,
+        Jacek Anaszewski <jacek.anaszewski@gmail.com>,
+        Jacob Chen <jacob-chen@iotwrt.com>,
+        Jacopo Mondi <jacopo@jmondi.org>,
+        Jernej Skrabec <jernej.skrabec@siol.net>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Leon Luo <leonl@leopardimaging.com>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Matt Ranostay <matt.ranostay@konsulko.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Paul Kocialkowski <paul.kocialkowski@bootlin.com>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Ricardo Ribalda <ribalda@kernel.org>,
+        Robert Foss <robert.foss@linaro.org>,
+        Rui Miguel Silva <rmfrfs@gmail.com>,
+        Sakari Ailus <sakari.ailus@linux.intel.com>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Shawn Tu <shawnx.tu@intel.com>,
+        Shunqian Zheng <zhengsq@rock-chips.com>,
+        Sowjanya Komatineni <skomatineni@nvidia.com>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Steve Longerbeam <slongerbeam@gmail.com>,
+        Sylwester Nawrocki <s.nawrocki@samsung.com>,
+        Sylwester Nawrocki <sylvester.nawrocki@gmail.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Tianshu Qiu <tian.shu.qiu@intel.com>,
+        Todor Tomov <todor.too@gmail.com>,
+        Wenyou Yang <wenyou.yang@microchip.com>,
+        Yong Zhi <yong.zhi@intel.com>, devel@driverdev.osuosl.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-media@vger.kernel.org, linux-mediatek@lists.infradead.org,
+        linux-renesas-soc@vger.kernel.org,
+        linux-rockchip@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-tegra@vger.kernel.org
+Subject: [PATCH v2 00/79] Address some issues with PM runtime at media subsystem
+Date:   Tue, 27 Apr 2021 12:12:27 +0200
+Message-Id: <cover.1619518193.git.mchehab+huawei@kernel.org>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Tue, 27 Apr 2021 15:31:02 +0530
-From:   okukatla@codeaurora.org
-To:     Rob Herring <robh@kernel.org>
-Cc:     georgi.djakov@linaro.org, bjorn.andersson@linaro.org,
-        evgreen@google.com, Andy Gross <agross@kernel.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        sboyd@kernel.org, ilina@codeaurora.org, seansw@qti.qualcomm.com,
-        elder@linaro.org, linux-arm-msm-owner@vger.kernel.org
-Subject: Re: [1/3] dt-bindings: interconnect: Add Qualcomm SC7280 DT bindings
-In-Reply-To: <20210316220925.GA3767772@robh.at.kernel.org>
-References: <1615290609-21009-1-git-send-email-okukatla@codeaurora.org>
- <1615290609-21009-2-git-send-email-okukatla@codeaurora.org>
- <20210316220925.GA3767772@robh.at.kernel.org>
-Message-ID: <d7f4827e511eb0e4df3fa662b290a0b0@codeaurora.org>
-X-Sender: okukatla@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Sender: Mauro Carvalho Chehab <mchehab@kernel.org>
+To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-03-17 03:39, Rob Herring wrote:
-> On Tue, Mar 09, 2021 at 05:20:07PM +0530, Odelu Kukatla wrote:
->> The Qualcomm SC7280 platform has several bus fabrics that could be
->> controlled and tuned dynamically according to the bandwidth demand.
->> 
->> Signed-off-by: Odelu Kukatla <okukatla@codeaurora.org>
->> ---
->>  .../bindings/interconnect/qcom,rpmh.yaml           |  12 ++
->>  include/dt-bindings/interconnect/qcom,sc7280.h     | 163 
->> +++++++++++++++++++++
->>  2 files changed, 175 insertions(+)
->>  create mode 100644 include/dt-bindings/interconnect/qcom,sc7280.h
->> 
->> diff --git 
->> a/Documentation/devicetree/bindings/interconnect/qcom,rpmh.yaml 
->> b/Documentation/devicetree/bindings/interconnect/qcom,rpmh.yaml
->> index 799e73cdb90..e65da19 100644
->> --- a/Documentation/devicetree/bindings/interconnect/qcom,rpmh.yaml
->> +++ b/Documentation/devicetree/bindings/interconnect/qcom,rpmh.yaml
->> @@ -37,6 +37,18 @@ properties:
->>        - qcom,sc7180-npu-noc
->>        - qcom,sc7180-qup-virt
->>        - qcom,sc7180-system-noc
->> +      - qcom,sc7280-aggre1-noc
->> +      - qcom,sc7280-aggre2-noc
->> +      - qcom,sc7280-clk-virt
->> +      - qcom,sc7280-cnoc2
->> +      - qcom,sc7280-cnoc3
->> +      - qcom,sc7280-dc-noc
->> +      - qcom,sc7280-gem-noc
->> +      - qcom,sc7280-lpass-ag-noc
->> +      - qcom,sc7280-mc-virt
->> +      - qcom,sc7280-mmss-noc
->> +      - qcom,sc7280-nsp-noc
->> +      - qcom,sc7280-system-noc
->>        - qcom,sdm845-aggre1-noc
->>        - qcom,sdm845-aggre2-noc
->>        - qcom,sdm845-config-noc
->> diff --git a/include/dt-bindings/interconnect/qcom,sc7280.h 
->> b/include/dt-bindings/interconnect/qcom,sc7280.h
->> new file mode 100644
->> index 0000000..75a243d
->> --- /dev/null
->> +++ b/include/dt-bindings/interconnect/qcom,sc7280.h
->> @@ -0,0 +1,163 @@
->> +/* SPDX-License-Identifier: GPL-2.0 */
-> 
-> Don't care about non-GPL users?
-> 
-Thanks Rob for review!
-Addressed this in new revision.
+During the review of the patches from unm.edu, one of the patterns
+I noticed is the amount of patches trying to fix pm_runtime_get_sync()
+calls.
 
->> +/*
->> + * Qualcomm SC7280 interconnect IDs
->> + *
->> + * Copyright (c) 2021, The Linux Foundation. All rights reserved.
->> + */
->> +
->> +#ifndef __DT_BINDINGS_INTERCONNECT_QCOM_SC7280_H
->> +#define __DT_BINDINGS_INTERCONNECT_QCOM_SC7280_H
->> +
->> +#define MASTER_QSPI_0			0
->> +#define MASTER_QUP_0			1
->> +#define MASTER_QUP_1			2
->> +#define MASTER_A1NOC_CFG			3
->> +#define MASTER_PCIE_0			4
->> +#define MASTER_PCIE_1			5
->> +#define MASTER_SDCC_1			6
->> +#define MASTER_SDCC_2			7
->> +#define MASTER_SDCC_4			8
->> +#define MASTER_UFS_MEM			9
->> +#define MASTER_USB3_0			10
->> +#define SLAVE_A1NOC_SNOC			11
->> +#define SLAVE_ANOC_PCIE_GEM_NOC			12
->> +#define SLAVE_SERVICE_A1NOC			13
->> +
->> +#define MASTER_QDSS_BAM			0
->> +#define MASTER_A2NOC_CFG			1
->> +#define MASTER_CNOC_A2NOC			2
->> +#define MASTER_CRYPTO			3
->> +#define MASTER_IPA			4
->> +#define MASTER_QDSS_ETR			5
->> +#define SLAVE_A2NOC_SNOC			6
->> +#define SLAVE_SERVICE_A2NOC			7
->> +
->> +#define MASTER_QUP_CORE_0			0
->> +#define MASTER_QUP_CORE_1		1
->> +#define SLAVE_QUP_CORE_0			2
->> +#define SLAVE_QUP_CORE_1			3
->> +
->> +#define MASTER_CNOC3_CNOC2			0
->> +#define MASTER_QDSS_DAP			1
->> +#define SLAVE_AHB2PHY_SOUTH			2
->> +#define SLAVE_AHB2PHY_NORTH			3
->> +#define SLAVE_CAMERA_CFG			4
->> +#define SLAVE_CLK_CTL			5
->> +#define SLAVE_CDSP_CFG			6
->> +#define SLAVE_RBCPR_CX_CFG			7
->> +#define SLAVE_RBCPR_MX_CFG			8
->> +#define SLAVE_CRYPTO_0_CFG			9
->> +#define SLAVE_CX_RDPM			10
->> +#define SLAVE_DCC_CFG			11
->> +#define SLAVE_DISPLAY_CFG			12
->> +#define SLAVE_GFX3D_CFG			13
->> +#define SLAVE_HWKM			14
->> +#define SLAVE_IMEM_CFG			15
->> +#define SLAVE_IPA_CFG			16
->> +#define SLAVE_IPC_ROUTER_CFG			17
->> +#define SLAVE_LPASS			18
->> +#define SLAVE_CNOC_MSS			19
->> +#define SLAVE_MX_RDPM			20
->> +#define SLAVE_PCIE_0_CFG			21
->> +#define SLAVE_PCIE_1_CFG			22
->> +#define SLAVE_PDM			23
->> +#define SLAVE_PIMEM_CFG			24
->> +#define SLAVE_PKA_WRAPPER_CFG			25
->> +#define SLAVE_PMU_WRAPPER_CFG			26
->> +#define SLAVE_QDSS_CFG			27
->> +#define SLAVE_QSPI_0			28
->> +#define SLAVE_QUP_0			29
->> +#define SLAVE_QUP_1			30
->> +#define SLAVE_SDCC_1			31
->> +#define SLAVE_SDCC_2			32
->> +#define SLAVE_SDCC_4			33
->> +#define SLAVE_SECURITY			34
->> +#define SLAVE_TCSR			35
->> +#define SLAVE_TLMM			36
->> +#define SLAVE_UFS_MEM_CFG			37
->> +#define SLAVE_USB3_0			38
->> +#define SLAVE_VENUS_CFG			39
->> +#define SLAVE_VSENSE_CTRL_CFG			40
->> +#define SLAVE_A1NOC_CFG			41
->> +#define SLAVE_A2NOC_CFG			42
->> +#define SLAVE_CNOC2_CNOC3			43
->> +#define SLAVE_CNOC_MNOC_CFG			44
->> +#define SLAVE_SNOC_CFG			45
->> +
->> +#define MASTER_CNOC2_CNOC3			0
->> +#define MASTER_GEM_NOC_CNOC			1
->> +#define MASTER_GEM_NOC_PCIE_SNOC			2
->> +#define SLAVE_AOSS			3
->> +#define SLAVE_APPSS			4
->> +#define SLAVE_CNOC3_CNOC2			5
->> +#define SLAVE_CNOC_A2NOC			6
->> +#define SLAVE_DDRSS_CFG			7
->> +#define SLAVE_BOOT_IMEM			8
->> +#define SLAVE_IMEM			9
->> +#define SLAVE_PIMEM			10
->> +#define SLAVE_PCIE_0			11
->> +#define SLAVE_PCIE_1			12
->> +#define SLAVE_QDSS_STM			13
->> +#define SLAVE_TCU			14
->> +
->> +#define MASTER_CNOC_DC_NOC			0
->> +#define SLAVE_LLCC_CFG			1
->> +#define SLAVE_GEM_NOC_CFG			2
->> +
->> +#define MASTER_GPU_TCU			0
->> +#define MASTER_SYS_TCU			1
->> +#define MASTER_APPSS_PROC			2
->> +#define MASTER_COMPUTE_NOC			3
->> +#define MASTER_GEM_NOC_CFG			4
->> +#define MASTER_GFX3D			5
->> +#define MASTER_MNOC_HF_MEM_NOC			6
->> +#define MASTER_MNOC_SF_MEM_NOC			7
->> +#define MASTER_ANOC_PCIE_GEM_NOC			8
->> +#define MASTER_SNOC_GC_MEM_NOC			9
->> +#define MASTER_SNOC_SF_MEM_NOC			10
->> +#define SLAVE_MSS_PROC_MS_MPU_CFG			11
->> +#define SLAVE_MCDMA_MS_MPU_CFG			12
->> +#define SLAVE_GEM_NOC_CNOC			13
->> +#define SLAVE_LLCC			14
->> +#define SLAVE_MEM_NOC_PCIE_SNOC			15
->> +#define SLAVE_SERVICE_GEM_NOC_1			16
->> +#define SLAVE_SERVICE_GEM_NOC_2			17
->> +#define SLAVE_SERVICE_GEM_NOC			18
->> +
->> +#define MASTER_CNOC_LPASS_AG_NOC			0
->> +#define SLAVE_LPASS_CORE_CFG			1
->> +#define SLAVE_LPASS_LPI_CFG			2
->> +#define SLAVE_LPASS_MPU_CFG			3
->> +#define SLAVE_LPASS_TOP_CFG			4
->> +#define SLAVE_SERVICES_LPASS_AML_NOC			5
->> +#define SLAVE_SERVICE_LPASS_AG_NOC			6
->> +
->> +#define MASTER_LLCC			0
->> +#define SLAVE_EBI1			1
->> +
->> +#define MASTER_CNOC_MNOC_CFG			0
->> +#define MASTER_VIDEO_P0			1
->> +#define MASTER_VIDEO_PROC			2
->> +#define MASTER_CAMNOC_HF			3
->> +#define MASTER_CAMNOC_ICP			4
->> +#define MASTER_CAMNOC_SF			5
->> +#define MASTER_MDP0			6
->> +#define SLAVE_MNOC_HF_MEM_NOC			7
->> +#define SLAVE_MNOC_SF_MEM_NOC			8
->> +#define SLAVE_SERVICE_MNOC			9
->> +
->> +#define MASTER_CDSP_NOC_CFG			0
->> +#define MASTER_CDSP_PROC			1
->> +#define SLAVE_CDSP_MEM_NOC			2
->> +#define SLAVE_SERVICE_NSP_NOC			3
->> +
->> +#define MASTER_A1NOC_SNOC			0
->> +#define MASTER_A2NOC_SNOC			1
->> +#define MASTER_SNOC_CFG			2
->> +#define MASTER_PIMEM			3
->> +#define MASTER_GIC			4
->> +#define SLAVE_SNOC_GEM_NOC_GC			5
->> +#define SLAVE_SNOC_GEM_NOC_SF			6
->> +#define SLAVE_SERVICE_SNOC			7
->> +
->> +#endif
->> --
->> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
->> Forum,
->> a Linux Foundation Collaborative Project
->> 
+After analyzing the feedback from version 1 of this series, I noticed
+a few other weird behaviors at the PM runtime resume code. So, this
+series start addressing some bugs and issues at the current code.
+Then, it gets rid of pm_runtime_get_sync() at the media subsystem
+(with 2 exceptions).
+
+It should be noticed that
+Commit dd8088d5a896 ("PM: runtime: Add pm_runtime_resume_and_get to deal with usage counter")
+added a new method to does a pm_runtime get, which increments
+the usage count only on success.
+
+The rationale of getting rid of pm_runtime_get_sync() is:
+
+1. despite its name, this is actually a PM runtime resume call,
+   but some developers didn't seem to realize that, as I got this
+   pattern on some drivers:
+
+        pm_runtime_get_sync(&client->dev);
+        pm_runtime_disable(&client->dev);
+        pm_runtime_set_suspended(&client->dev);
+        pm_runtime_put_noidle(&client->dev);
+
+   It makes no sense to resume PM just to suspend it again ;-)
+
+2. Usual *_get() methods only increment their use count on success,
+   but pm_runtime_get_sync() increments it unconditionally. Due to
+   that, several drivers were mistakenly not calling
+   pm_runtime_put_noidle() when it fails;
+
+3. The name of the new variant is a lot clearer:
+	pm_runtime_resume_and_get()
+    As its same clearly says that this is a PM runtime resume function,
+    that also increments the usage counter on success;
+
+4. Consistency: we did similar changes subsystem wide with
+   for instance strlcpy() and strcpy() that got replaced by
+   strscpy(). Having all drivers using the same known-to-be-safe
+   methods is a good thing;
+
+5. Prevent newer drivers to copy-and-paste a code that it would
+   be easier to break if they don't truly understand what's behind
+   the scenes.
+
+This series replace places  pm_runtime_get_sync(), by calling
+pm_runtime_resume_and_get() instead.
+
+This should help to avoid future mistakes like that, as people
+tend to use the existing drivers as examples for newer ones.
+
+compile-tested only.
+
+Patches 1 to 7 fix some issues that already exists at the current
+PM runtime code;
+
+patches 8 to 20 fix some usage_count problems that still exists
+at the media subsystem;
+
+patches 21 to 78 repaces pm_runtime_get_sync() by 
+pm_runtime_resume_and_get();
+
+Patch 79 (and a hunk on patch 78) documents the two exceptions
+where pm_runtime_get_sync() will still be used for now.
+
+Mauro Carvalho Chehab (79):
+  media: venus: fix PM runtime logic at venus_sys_error_handler()
+  media: i2c: ccs-core: return the right error code at suspend
+  media: i2c: mt9m001: don't resume at remove time
+  media: i2c: ov7740: don't resume at remove time
+  media: i2c: video-i2c: don't resume at remove time
+  media: exynos-gsc: don't resume at remove time
+  media: atmel: properly get pm_runtime
+  media: marvel-ccic: fix some issues when getting pm_runtime
+  media: mdk-mdp: fix pm_runtime_get_sync() usage count
+  media: rcar_fdp1: fix pm_runtime_get_sync() usage count
+  media: rga-buf: use pm_runtime_resume_and_get()
+  media: renesas-ceu: Properly check for PM errors
+  media: s5p: fix pm_runtime_get_sync() usage count
+  media: am437x: fix pm_runtime_get_sync() usage count
+  media: sh_vou: fix pm_runtime_get_sync() usage count
+  media: mtk-vcodec: fix pm_runtime_get_sync() usage count
+  media: s5p-jpeg: fix pm_runtime_get_sync() usage count
+  media: delta-v4l2: fix pm_runtime_get_sync() usage count
+  media: sun8i_rotate: fix pm_runtime_get_sync() usage count
+  staging: media: rkvdec: fix pm_runtime_get_sync() usage count
+  staging: media: atomisp_fops: use pm_runtime_resume_and_get()
+  staging: media: imx7-mipi-csis: use pm_runtime_resume_and_get()
+  staging: media: ipu3: use pm_runtime_resume_and_get()
+  staging: media: cedrus_video: use pm_runtime_resume_and_get()
+  staging: media: vde: use pm_runtime_resume_and_get()
+  staging: media: csi: use pm_runtime_resume_and_get()
+  staging: media: vi: use pm_runtime_resume_and_get()
+  media: i2c: ak7375: use pm_runtime_resume_and_get()
+  media: i2c: ccs-core: use pm_runtime_resume_and_get()
+  media: i2c: dw9714: use pm_runtime_resume_and_get()
+  media: i2c: dw9768: use pm_runtime_resume_and_get()
+  media: i2c: dw9807-vcm: use pm_runtime_resume_and_get()
+  media: i2c: hi556: use pm_runtime_resume_and_get()
+  media: i2c: imx214: use pm_runtime_resume_and_get()
+  media: i2c: imx219: use pm_runtime_resume_and_get()
+  media: i2c: imx258: use pm_runtime_resume_and_get()
+  media: i2c: imx274: use pm_runtime_resume_and_get()
+  media: i2c: imx290: use pm_runtime_resume_and_get()
+  media: i2c: imx319: use pm_runtime_resume_and_get()
+  media: i2c: imx334: use pm_runtime_resume_and_get()
+  media: i2c: imx355: use pm_runtime_resume_and_get()
+  media: i2c: mt9m001: use pm_runtime_resume_and_get()
+  media: i2c: ov02a10: use pm_runtime_resume_and_get()
+  media: i2c: ov13858: use pm_runtime_resume_and_get()
+  media: i2c: ov2659: use pm_runtime_resume_and_get()
+  media: i2c: ov2685: use pm_runtime_resume_and_get()
+  media: i2c: ov2740: use pm_runtime_resume_and_get()
+  media: i2c: ov5647: use pm_runtime_resume_and_get()
+  media: i2c: ov5648: use pm_runtime_resume_and_get()
+  media: i2c: ov5670: use pm_runtime_resume_and_get()
+  media: i2c: ov5675: use pm_runtime_resume_and_get()
+  media: i2c: ov5695: use pm_runtime_resume_and_get()
+  media: i2c: ov7740: use pm_runtime_resume_and_get()
+  media: i2c: ov8856: use pm_runtime_resume_and_get()
+  media: i2c: ov8865: use pm_runtime_resume_and_get()
+  media: i2c: ov9734: use pm_runtime_resume_and_get()
+  media: i2c: tvp5150: use pm_runtime_resume_and_get()
+  media: i2c: video-i2c: use pm_runtime_resume_and_get()
+  media: sti/hva: use pm_runtime_resume_and_get()
+  media: ipu3: use pm_runtime_resume_and_get()
+  media: coda: use pm_runtime_resume_and_get()
+  media: exynos4-is: use pm_runtime_resume_and_get()
+  media: exynos-gsc: use pm_runtime_resume_and_get()
+  media: mtk-jpeg: use pm_runtime_resume_and_get()
+  media: camss: use pm_runtime_resume_and_get()
+  media: venus: use pm_runtime_resume_and_get()
+  media: venus: vdec: use pm_runtime_resume_and_get()
+  media: venus: venc: use pm_runtime_resume_and_get()
+  media: rcar-fcp: use pm_runtime_resume_and_get()
+  media: rkisp1: use pm_runtime_resume_and_get()
+  media: s3c-camif: use pm_runtime_resume_and_get()
+  media: s5p-mfc: use pm_runtime_resume_and_get()
+  media: bdisp-v4l2: use pm_runtime_resume_and_get()
+  media: stm32: use pm_runtime_resume_and_get()
+  media: sunxi: use pm_runtime_resume_and_get()
+  media: ti-vpe: use pm_runtime_resume_and_get()
+  media: vsp1: use pm_runtime_resume_and_get()
+  media: rcar-vin: use pm_runtime_resume_and_get()
+  media: hantro: document the usage of pm_runtime_get_sync()
+
+ drivers/media/cec/platform/s5p/s5p_cec.c      |  5 +++-
+ drivers/media/i2c/ak7375.c                    | 10 +------
+ drivers/media/i2c/ccs/ccs-core.c              | 18 +++++-------
+ drivers/media/i2c/dw9714.c                    | 10 +------
+ drivers/media/i2c/dw9768.c                    | 10 +------
+ drivers/media/i2c/dw9807-vcm.c                | 10 +------
+ drivers/media/i2c/hi556.c                     |  3 +-
+ drivers/media/i2c/imx214.c                    |  6 ++--
+ drivers/media/i2c/imx219.c                    |  6 ++--
+ drivers/media/i2c/imx258.c                    |  6 ++--
+ drivers/media/i2c/imx274.c                    |  3 +-
+ drivers/media/i2c/imx290.c                    |  6 ++--
+ drivers/media/i2c/imx319.c                    |  6 ++--
+ drivers/media/i2c/imx334.c                    |  5 ++--
+ drivers/media/i2c/imx355.c                    |  6 ++--
+ drivers/media/i2c/mt9m001.c                   |  8 ++----
+ drivers/media/i2c/ov02a10.c                   |  6 ++--
+ drivers/media/i2c/ov13858.c                   |  6 ++--
+ drivers/media/i2c/ov2659.c                    |  6 ++--
+ drivers/media/i2c/ov2685.c                    |  7 ++---
+ drivers/media/i2c/ov2740.c                    |  6 ++--
+ drivers/media/i2c/ov5647.c                    |  9 +++---
+ drivers/media/i2c/ov5648.c                    |  6 ++--
+ drivers/media/i2c/ov5670.c                    |  6 ++--
+ drivers/media/i2c/ov5675.c                    |  3 +-
+ drivers/media/i2c/ov5695.c                    |  6 ++--
+ drivers/media/i2c/ov7740.c                    |  8 ++----
+ drivers/media/i2c/ov8856.c                    |  3 +-
+ drivers/media/i2c/ov8865.c                    |  6 ++--
+ drivers/media/i2c/ov9734.c                    |  3 +-
+ drivers/media/i2c/tvp5150.c                   | 16 ++---------
+ drivers/media/i2c/video-i2c.c                 | 14 +++-------
+ drivers/media/pci/intel/ipu3/ipu3-cio2-main.c |  3 +-
+ drivers/media/platform/am437x/am437x-vpfe.c   | 22 +++++++++++----
+ drivers/media/platform/atmel/atmel-isc-base.c | 27 +++++++++++++-----
+ drivers/media/platform/atmel/atmel-isi.c      | 19 ++++++++++---
+ drivers/media/platform/coda/coda-common.c     |  5 ++--
+ drivers/media/platform/exynos-gsc/gsc-core.c  |  3 --
+ drivers/media/platform/exynos-gsc/gsc-m2m.c   |  2 +-
+ .../media/platform/exynos4-is/fimc-capture.c  |  6 ++--
+ drivers/media/platform/exynos4-is/fimc-is.c   |  4 +--
+ .../platform/exynos4-is/fimc-isp-video.c      |  3 +-
+ drivers/media/platform/exynos4-is/fimc-isp.c  |  7 ++---
+ drivers/media/platform/exynos4-is/fimc-lite.c |  5 ++--
+ drivers/media/platform/exynos4-is/fimc-m2m.c  |  2 +-
+ drivers/media/platform/exynos4-is/media-dev.c |  8 ++----
+ drivers/media/platform/exynos4-is/mipi-csis.c |  8 ++----
+ .../media/platform/marvell-ccic/mcam-core.c   |  9 ++++--
+ .../media/platform/mtk-jpeg/mtk_jpeg_core.c   |  4 +--
+ drivers/media/platform/mtk-mdp/mtk_mdp_m2m.c  |  6 ++--
+ .../platform/mtk-vcodec/mtk_vcodec_dec_pm.c   |  4 +--
+ .../media/platform/qcom/camss/camss-csid.c    |  6 ++--
+ .../media/platform/qcom/camss/camss-csiphy.c  |  6 ++--
+ .../media/platform/qcom/camss/camss-ispif.c   |  6 ++--
+ drivers/media/platform/qcom/camss/camss-vfe.c |  5 ++--
+ drivers/media/platform/qcom/venus/core.c      | 28 +++++++++++--------
+ .../media/platform/qcom/venus/pm_helpers.c    | 10 +++----
+ drivers/media/platform/qcom/venus/vdec.c      |  4 +--
+ drivers/media/platform/qcom/venus/venc.c      |  5 ++--
+ drivers/media/platform/rcar-fcp.c             |  6 ++--
+ drivers/media/platform/rcar-vin/rcar-csi2.c   |  6 ++++
+ drivers/media/platform/rcar-vin/rcar-dma.c    |  6 ++--
+ drivers/media/platform/rcar-vin/rcar-v4l2.c   |  6 ++--
+ drivers/media/platform/rcar_fdp1.c            | 12 ++++++--
+ drivers/media/platform/renesas-ceu.c          |  4 +--
+ drivers/media/platform/rockchip/rga/rga-buf.c |  3 +-
+ drivers/media/platform/rockchip/rga/rga.c     |  4 ++-
+ .../platform/rockchip/rkisp1/rkisp1-capture.c |  3 +-
+ .../media/platform/s3c-camif/camif-capture.c  |  2 +-
+ drivers/media/platform/s3c-camif/camif-core.c |  5 ++--
+ drivers/media/platform/s5p-jpeg/jpeg-core.c   |  2 +-
+ drivers/media/platform/s5p-mfc/s5p_mfc_pm.c   |  6 ++--
+ drivers/media/platform/sh_vou.c               |  6 +++-
+ drivers/media/platform/sti/bdisp/bdisp-v4l2.c |  7 +++--
+ drivers/media/platform/sti/delta/delta-v4l2.c |  4 +--
+ drivers/media/platform/sti/hva/hva-hw.c       | 17 +++++------
+ drivers/media/platform/stm32/stm32-dcmi.c     |  5 ++--
+ .../platform/sunxi/sun4i-csi/sun4i_v4l2.c     |  6 ++--
+ .../sunxi/sun8i-rotate/sun8i_rotate.c         |  2 +-
+ drivers/media/platform/ti-vpe/cal-video.c     |  4 ++-
+ drivers/media/platform/ti-vpe/cal.c           |  8 ++++--
+ drivers/media/platform/ti-vpe/vpe.c           |  4 +--
+ drivers/media/platform/vsp1/vsp1_drv.c        |  6 ++--
+ .../staging/media/atomisp/pci/atomisp_fops.c  |  6 ++--
+ drivers/staging/media/hantro/hantro_drv.c     |  7 +++++
+ drivers/staging/media/imx/imx7-mipi-csis.c    |  7 ++---
+ drivers/staging/media/ipu3/ipu3.c             |  3 +-
+ drivers/staging/media/rkvdec/rkvdec.c         |  2 +-
+ .../staging/media/sunxi/cedrus/cedrus_video.c |  6 ++--
+ drivers/staging/media/tegra-vde/vde.c         | 16 +++++++----
+ drivers/staging/media/tegra-video/csi.c       |  3 +-
+ drivers/staging/media/tegra-video/vi.c        |  3 +-
+ 92 files changed, 298 insertions(+), 335 deletions(-)
+
+-- 
+2.30.2
+
+
