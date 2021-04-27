@@ -2,215 +2,391 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 38E6836CBAC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Apr 2021 21:30:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 933BE36CC43
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Apr 2021 22:29:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235719AbhD0Ta7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Apr 2021 15:30:59 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:44567 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235661AbhD0Ta7 (ORCPT
+        id S235412AbhD0UaF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Apr 2021 16:30:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49902 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235401AbhD0UaC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Apr 2021 15:30:59 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1619551815; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=4NRfExpJ8kID4r71hp3WbLS78R3BpUa+03CEb54sMuQ=;
- b=uNPWHm+wCjH9rK/5v/ZfChIJlsWkkNINFHtYYQ5LXYDzWl+FZ4m7g2PxSBKe0lbj9OIYMhW8
- Lc039Sab9CQKuzXeuTw1Cr+9LJXh8JJ2y7Rvu2KIvQGj/1VEdAdBefdRZsal3fJQgcee3+s/
- T3iyEGBLKHD2k/vJqM8J+xP65rU=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
- 608866352cc44d3aeabb9961 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 27 Apr 2021 19:29:57
- GMT
-Sender: abhinavk=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id E1C7EC433F1; Tue, 27 Apr 2021 19:29:57 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: abhinavk)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 72605C433D3;
-        Tue, 27 Apr 2021 19:29:53 +0000 (UTC)
+        Tue, 27 Apr 2021 16:30:02 -0400
+Received: from mail-qt1-x82f.google.com (mail-qt1-x82f.google.com [IPv6:2607:f8b0:4864:20::82f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B6D9C061574
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Apr 2021 13:29:17 -0700 (PDT)
+Received: by mail-qt1-x82f.google.com with SMTP id y12so45160227qtx.11
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Apr 2021 13:29:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=vfiIHDVMlVeESQIjaXmQJ983GJVYD/T5iw1l2CbiIBs=;
+        b=t5ljGeNgy8sor0vjWW9i2+OQL7YaQPKarZAIkJV1wsoOOAewOoN/BSW199tlHLzFgn
+         B5VbDXWcOwPtaRcz2kZ3w3keiRF9Sa3dVD12HIfl2aAK/PebZ04w+CKLnMcxVhIta5wQ
+         7KTmo/MXQ3HvMtCxgtQDDs1qceQRms3dcVzIY77cbbyWOlWaCmOBf5z/tsBrLiayyAIQ
+         RG0/SD3OGF4ercEAT7qqD9SdYnq2ZZhYYKN3BYU+w2/NKZeYhwCdBrjw1ob14nCf16BS
+         inWiY2gXff/ElRHgMpLeYeeOQ4AH5TOF7y383xtWT1+HTwvnSwyl3tBidaHjWdpc3oKO
+         8eQA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=vfiIHDVMlVeESQIjaXmQJ983GJVYD/T5iw1l2CbiIBs=;
+        b=YpmmnYTFW1c9bwaorbj1zdhAOZNhhOLWYI+texuocVDYFo/u0L53JxNck0CkSJT8/H
+         zwykJQC2U9gYzD5Ty0mF2K77W1Wbli4KhyrYjIpN0krV8/lepwtK8gZODDcEehs1uLkI
+         GU5qF3KXinDcCLCccafSUL9SQWzIh59QTeR8GKO3F7lzwn4DaSWmkEOjz9KxabU4JbJQ
+         +bTR0bdT0zb5LL2x35gDyi4Rud6413MXnDmIbCttMdA5QH42wMjDodjkXl/LOk2LaJVD
+         7+Z8dGJQ59pR5uILLrTgGHzdr4qQKEfo9BwLUoKqCwjxuW3Fky3AEOBqAUSIBxDxicP4
+         smIg==
+X-Gm-Message-State: AOAM530jxWAGQoDMAsn8gOxMeSXOd/SEeZ/jM0BlJ8Q3SVvaDPC4UPBR
+        QLq3GKgrth14IzN1UMIdmeMNEXRGdggT6JCVBpxVqw==
+X-Google-Smtp-Source: ABdhPJyEETtLs8I0S0NfrhT1eKaNSfaSe0nLhRAFPdL2082V5orYaLtzENC0KDOQpKtabDM5xzBq/7YQUu7zdEdMrQY=
+X-Received: by 2002:a05:622a:54a:: with SMTP id m10mr23894209qtx.298.1619555356255;
+ Tue, 27 Apr 2021 13:29:16 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Tue, 27 Apr 2021 12:29:53 -0700
-From:   abhinavk@codeaurora.org
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+References: <20210427001828.2375555-1-dmitry.baryshkov@linaro.org>
+ <20210427001828.2375555-3-dmitry.baryshkov@linaro.org> <64eb1a3343cc9530eecea6816d298ae0@codeaurora.org>
+In-Reply-To: <64eb1a3343cc9530eecea6816d298ae0@codeaurora.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Tue, 27 Apr 2021 23:29:05 +0300
+Message-ID: <CAA8EJpqpHqjWups3_fQfxjJhFXO+Z1Zr0LVwEy+8C-2GMj8oyw@mail.gmail.com>
+Subject: Re: [Freedreno] [PATCH v2 2/4] drm/msm: make msm_disp_state transient
+ data struct
+To:     Abhinav Kumar <abhinavk@codeaurora.org>
 Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Jonathan Marek <jonathan@marek.ca>,
-        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, David Airlie <airlied@linux.ie>,
+        Stephen Boyd <sboyd@kernel.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <dri-devel@lists.freedesktop.org>, David Airlie <airlied@linux.ie>,
         Daniel Vetter <daniel@ffwll.ch>,
-        freedreno@lists.freedesktop.org
-Subject: Re: [Freedreno] [PATCH v2 3/4] drm/msm: get rid of msm_iomap_size
-In-Reply-To: <20210427001828.2375555-4-dmitry.baryshkov@linaro.org>
-References: <20210427001828.2375555-1-dmitry.baryshkov@linaro.org>
- <20210427001828.2375555-4-dmitry.baryshkov@linaro.org>
-Message-ID: <f4a6a51ea5cc5bfbf747eb5544951076@codeaurora.org>
-X-Sender: abhinavk@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+        freedreno <freedreno@lists.freedesktop.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Dmitry
+On Tue, 27 Apr 2021 at 22:19, <abhinavk@codeaurora.org> wrote:
+>
+> Hi Dmitry
+>
+> On 2021-04-26 17:18, Dmitry Baryshkov wrote:
+> > Instead of allocating snapshotting structure at the driver probe time
+> > and later handling concurrent access, actual state, etc, make
+> > msm_disp_state transient struct. Allocate one when snapshotting happens
+> > and free it after coredump data is read by userspace.
+> >
+> Can you please check my previous comment on coredump_pending?
+>
+> https://lore.kernel.org/dri-devel/186825e2fb7bea8d45f33b5c1fa3509f@codeaurora.org/T/#u
+>
+> That helps to serialize read/write of coredump.
 
-On 2021-04-26 17:18, Dmitry Baryshkov wrote:
-> Instead of looping throught the resources each time to get the DSI CTRL
-> area size, get it at the ioremap time.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-We will have to call into the individual modules anyway everytime we
-take a snapshot as only they have access to the required clocks and the 
-base address.
+Regarding the serialization of read/write. As the disp_state becomes
+the transient object, the need for such serialization vanishes:
+ - Before the snapshot is complete, the object is not linked outside
+of msm_disp_snapshot functions.
+ - When the snapshot is complete, it becomes linked from the codedump
+subsystem. After this it is only read by the coredump, nobody will
+write to it.
+ - Next snapshot will allocate a new disp_state structure.
+ - If dev_coredumpm is called when the previous snapshot is still
+referenced (the device exists), the new snapshot is silently freed.
 
-So even though there is nothing wrong with this change, it still adds a 
-size member
-which can be avoided because we have to call into the module anyway.
+Thus there is no need to sync the read/write operations. They are now
+naturally serialized.
 
-Any strong preference to store the size as opposed to just getting it 
-when we take
-the snapshot?
+>
+> Rest of the changes on this one look fine to me.
+>
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> >  drivers/gpu/drm/msm/disp/msm_disp_snapshot.c  | 90 ++++++-------------
+> >  drivers/gpu/drm/msm/disp/msm_disp_snapshot.h  | 13 +--
+> >  .../gpu/drm/msm/disp/msm_disp_snapshot_util.c |  5 +-
+> >  drivers/gpu/drm/msm/msm_kms.h                 |  6 +-
+> >  4 files changed, 37 insertions(+), 77 deletions(-)
+> >
+> > diff --git a/drivers/gpu/drm/msm/disp/msm_disp_snapshot.c
+> > b/drivers/gpu/drm/msm/disp/msm_disp_snapshot.c
+> > index 70fd5a1fe13e..a4a7cb06bc87 100644
+> > --- a/drivers/gpu/drm/msm/disp/msm_disp_snapshot.c
+> > +++ b/drivers/gpu/drm/msm/disp/msm_disp_snapshot.c
+> > @@ -7,8 +7,7 @@
+> >
+> >  #include "msm_disp_snapshot.h"
+> >
+> > -#ifdef CONFIG_DEV_COREDUMP
+> > -static ssize_t disp_devcoredump_read(char *buffer, loff_t offset,
+> > +static ssize_t __maybe_unused disp_devcoredump_read(char *buffer,
+> > loff_t offset,
+> >               size_t count, void *data, size_t datalen)
+> >  {
+> >       struct drm_print_iterator iter;
+> > @@ -29,52 +28,47 @@ static ssize_t disp_devcoredump_read(char *buffer,
+> > loff_t offset,
+> >       return count - iter.remain;
+> >  }
+> >
+> > -static void disp_devcoredump_free(void *data)
+> > +static void _msm_disp_snapshot_work(struct kthread_work *work)
+> >  {
+> > +     struct msm_kms *kms = container_of(work, struct msm_kms, dump_work);
+> > +     struct drm_device *drm_dev = kms->dev;
+> >       struct msm_disp_state *disp_state;
+> > +     struct drm_printer p;
+> >
+> > -     disp_state = data;
+> > -
+> > -     msm_disp_state_free(disp_state);
+> > +     disp_state = kzalloc(sizeof(struct msm_disp_state), GFP_KERNEL);
+> > +     if (!disp_state)
+> > +             return;
+> >
+> > -     disp_state->coredump_pending = false;
+> > -}
+> > -#endif /* CONFIG_DEV_COREDUMP */
+> > +     disp_state->dev = drm_dev->dev;
+> > +     disp_state->drm_dev = drm_dev;
+> >
+> > -static void _msm_disp_snapshot_work(struct kthread_work *work)
+> > -{
+> > -     struct msm_disp_state *disp_state = container_of(work, struct
+> > msm_disp_state, dump_work);
+> > -     struct drm_printer p;
+> > +     INIT_LIST_HEAD(&disp_state->blocks);
+> >
+> > -     mutex_lock(&disp_state->mutex);
+> > +     /* Serialize dumping here */
+> > +     mutex_lock(&kms->dump_mutex);
+> >
+> >       msm_disp_snapshot_capture_state(disp_state);
+> >
+> > +     mutex_unlock(&kms->dump_mutex);
+> > +
+> >       if (MSM_DISP_SNAPSHOT_DUMP_IN_CONSOLE) {
+> >               p = drm_info_printer(disp_state->drm_dev->dev);
+> >               msm_disp_state_print(disp_state, &p);
+> >       }
+> >
+> >       /*
+> > -      * if devcoredump is not defined free the state immediately
+> > -      * otherwise it will be freed in the free handler.
+> > +      * If COREDUMP is disabled, the stub will call the free function.
+> > +      * If there is a codedump pending for the device, the dev_coredumpm()
+> > +      * will also free new coredump state.
+> >        */
+> > -#ifdef CONFIG_DEV_COREDUMP
+> >       dev_coredumpm(disp_state->dev, THIS_MODULE, disp_state, 0,
+> > GFP_KERNEL,
+> > -                     disp_devcoredump_read, disp_devcoredump_free);
+> > -     disp_state->coredump_pending = true;
+> > -#else
+> > -     msm_disp_state_free(disp_state);
+> > -#endif
+> > -
+> > -     mutex_unlock(&disp_state->mutex);
+> > +                     disp_devcoredump_read, msm_disp_state_free);
+> >  }
+> >
+> >  void msm_disp_snapshot_state(struct drm_device *drm_dev)
+> >  {
+> >       struct msm_drm_private *priv;
+> >       struct msm_kms *kms;
+> > -     struct msm_disp_state *disp_state;
+> >
+> >       if (!drm_dev) {
+> >               DRM_ERROR("invalid params\n");
+> > @@ -83,30 +77,13 @@ void msm_disp_snapshot_state(struct drm_device
+> > *drm_dev)
+> >
+> >       priv = drm_dev->dev_private;
+> >       kms = priv->kms;
+> > -     disp_state = kms->disp_state;
+> > -
+> > -     if (!disp_state) {
+> > -             DRM_ERROR("invalid params\n");
+> > -             return;
+> > -     }
+> >
+> > -     /*
+> > -      * if there is a coredump pending return immediately till dump
+> > -      * if read by userspace or timeout happens
+> > -      */
+> > -     if (disp_state->coredump_pending) {
+> > -             DRM_DEBUG("coredump is pending read\n");
+> > -             return;
+> > -     }
+> > -
+> > -     kthread_queue_work(disp_state->dump_worker,
+> > -                     &disp_state->dump_work);
+> > +     kthread_queue_work(kms->dump_worker, &kms->dump_work);
+> >  }
+> >
+> >  int msm_disp_snapshot_init(struct drm_device *drm_dev)
+> >  {
+> >       struct msm_drm_private *priv;
+> > -     struct msm_disp_state *disp_state;
+> >       struct msm_kms *kms;
+> >
+> >       if (!drm_dev) {
+> > @@ -117,22 +94,13 @@ int msm_disp_snapshot_init(struct drm_device
+> > *drm_dev)
+> >       priv = drm_dev->dev_private;
+> >       kms = priv->kms;
+> >
+> > -     disp_state = devm_kzalloc(drm_dev->dev, sizeof(struct
+> > msm_disp_state), GFP_KERNEL);
+> > -
+> > -     mutex_init(&disp_state->mutex);
+> > +     mutex_init(&kms->dump_mutex);
+> >
+> > -     disp_state->dev = drm_dev->dev;
+> > -     disp_state->drm_dev = drm_dev;
+> > -
+> > -     INIT_LIST_HEAD(&disp_state->blocks);
+> > -
+> > -     disp_state->dump_worker = kthread_create_worker(0, "%s",
+> > "disp_snapshot");
+> > -     if (IS_ERR(disp_state->dump_worker))
+> > +     kms->dump_worker = kthread_create_worker(0, "%s", "disp_snapshot");
+> > +     if (IS_ERR(kms->dump_worker))
+> >               DRM_ERROR("failed to create disp state task\n");
+> >
+> > -     kthread_init_work(&disp_state->dump_work, _msm_disp_snapshot_work);
+> > -
+> > -     kms->disp_state = disp_state;
+> > +     kthread_init_work(&kms->dump_work, _msm_disp_snapshot_work);
+> >
+> >       return 0;
+> >  }
+> > @@ -141,7 +109,6 @@ void msm_disp_snapshot_destroy(struct drm_device
+> > *drm_dev)
+> >  {
+> >       struct msm_kms *kms;
+> >       struct msm_drm_private *priv;
+> > -     struct msm_disp_state *disp_state;
+> >
+> >       if (!drm_dev) {
+> >               DRM_ERROR("invalid params\n");
+> > @@ -150,12 +117,9 @@ void msm_disp_snapshot_destroy(struct drm_device
+> > *drm_dev)
+> >
+> >       priv = drm_dev->dev_private;
+> >       kms = priv->kms;
+> > -     disp_state = kms->disp_state;
+> > -
+> > -     if (disp_state->dump_worker)
+> > -             kthread_destroy_worker(disp_state->dump_worker);
+> >
+> > -     list_del(&disp_state->blocks);
+> > +     if (kms->dump_worker)
+> > +             kthread_destroy_worker(kms->dump_worker);
+> >
+> > -     mutex_destroy(&disp_state->mutex);
+> > +     mutex_destroy(&kms->dump_mutex);
+> >  }
+> > diff --git a/drivers/gpu/drm/msm/disp/msm_disp_snapshot.h
+> > b/drivers/gpu/drm/msm/disp/msm_disp_snapshot.h
+> > index 32f52799a1ba..c6174a366095 100644
+> > --- a/drivers/gpu/drm/msm/disp/msm_disp_snapshot.h
+> > +++ b/drivers/gpu/drm/msm/disp/msm_disp_snapshot.h
+> > @@ -41,26 +41,17 @@
+> >   * struct msm_disp_state - structure to store current dpu state
+> >   * @dev: device pointer
+> >   * @drm_dev: drm device pointer
+> > - * @mutex: mutex to serialize access to serialze dumps, debugfs access
+> > - * @coredump_pending: coredump is pending read from userspace
+> >   * @atomic_state: atomic state duplicated at the time of the error
+> > - * @dump_worker: kworker thread which runs the dump work
+> > - * @dump_work: kwork which dumps the registers and drm state
+> >   * @timestamp: timestamp at which the coredump was captured
+> >   */
+> >  struct msm_disp_state {
+> >       struct device *dev;
+> >       struct drm_device *drm_dev;
+> > -     struct mutex mutex;
+> > -
+> > -     bool coredump_pending;
+> >
+> >       struct list_head blocks;
+> >
+> >       struct drm_atomic_state *atomic_state;
+> >
+> > -     struct kthread_worker *dump_worker;
+> > -     struct kthread_work dump_work;
+> >       ktime_t timestamp;
+> >  };
+> >
+> > @@ -123,11 +114,11 @@ void msm_disp_snapshot_capture_state(struct
+> > msm_disp_state *disp_state);
+> >
+> >  /**
+> >   * msm_disp_state_free - free the memory after the coredump has been
+> > read
+> > - * @disp_state:          handle to struct msm_disp_state
+> > + * @data:        handle to struct msm_disp_state
+> >
+> >   * Returns: none
+> >   */
+> > -void msm_disp_state_free(struct msm_disp_state *disp_state);
+> > +void msm_disp_state_free(void *data);
+> >
+> >  /**
+> >   * msm_disp_snapshot_add_block - add a hardware block with its
+> > register dump
+> > diff --git a/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c
+> > b/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c
+> > index ca6632550337..cabe15190ec1 100644
+> > --- a/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c
+> > +++ b/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c
+> > @@ -142,8 +142,9 @@ void msm_disp_snapshot_capture_state(struct
+> > msm_disp_state *disp_state)
+> >       msm_disp_capture_atomic_state(disp_state);
+> >  }
+> >
+> > -void msm_disp_state_free(struct msm_disp_state *disp_state)
+> > +void msm_disp_state_free(void *data)
+> >  {
+> > +     struct msm_disp_state *disp_state = data;
+> >       struct msm_disp_state_block *block, *tmp;
+> >
+> >       if (disp_state->atomic_state) {
+> > @@ -156,6 +157,8 @@ void msm_disp_state_free(struct msm_disp_state
+> > *disp_state)
+> >               kfree(block->state);
+> >               kfree(block);
+> >       }
+> > +
+> > +     kfree(disp_state);
+> >  }
+> >
+> >  void msm_disp_snapshot_add_block(struct msm_disp_state *disp_state,
+> > u32 len,
+> > diff --git a/drivers/gpu/drm/msm/msm_kms.h
+> > b/drivers/gpu/drm/msm/msm_kms.h
+> > index 146dcab123f4..086a2d59b8c8 100644
+> > --- a/drivers/gpu/drm/msm/msm_kms.h
+> > +++ b/drivers/gpu/drm/msm/msm_kms.h
+> > @@ -156,8 +156,10 @@ struct msm_kms {
+> >       /* mapper-id used to request GEM buffer mapped for scanout: */
+> >       struct msm_gem_address_space *aspace;
+> >
+> > -     /* handle to disp snapshot state */
+> > -     struct msm_disp_state *disp_state;
+> > +     /* disp snapshot support */
+> > +     struct kthread_worker *dump_worker;
+> > +     struct kthread_work dump_work;
+> > +     struct mutex dump_mutex;
+> >
+> >       /*
+> >        * For async commit, where ->flush_commit() and later happens
 
-> ---
->  drivers/gpu/drm/msm/dsi/dsi_host.c |  5 +++--
->  drivers/gpu/drm/msm/msm_drv.c      | 27 +++++++++------------------
->  drivers/gpu/drm/msm/msm_drv.h      |  3 ++-
->  3 files changed, 14 insertions(+), 21 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c
-> b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> index 1a63368c3912..b3ee5c0bce12 100644
-> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> @@ -102,6 +102,7 @@ struct msm_dsi_host {
->  	int id;
-> 
->  	void __iomem *ctrl_base;
-> +	phys_addr_t ctrl_size;
->  	struct regulator_bulk_data supplies[DSI_DEV_REGULATOR_MAX];
-> 
->  	struct clk *bus_clks[DSI_BUS_CLK_MAX];
-> @@ -1839,7 +1840,7 @@ int msm_dsi_host_init(struct msm_dsi *msm_dsi)
->  		goto fail;
->  	}
-> 
-> -	msm_host->ctrl_base = msm_ioremap(pdev, "dsi_ctrl", "DSI CTRL");
-> +	msm_host->ctrl_base = msm_ioremap_size(pdev, "dsi_ctrl", "DSI CTRL",
-> &msm_host->ctrl_size);
->  	if (IS_ERR(msm_host->ctrl_base)) {
->  		pr_err("%s: unable to map Dsi ctrl base\n", __func__);
->  		ret = PTR_ERR(msm_host->ctrl_base);
-> @@ -2494,7 +2495,7 @@ void msm_dsi_host_snapshot(struct msm_disp_state
-> *disp_state, struct mipi_dsi_ho
-> 
->  	pm_runtime_get_sync(&msm_host->pdev->dev);
-> 
-> -	msm_disp_snapshot_add_block(disp_state,
-> msm_iomap_size(msm_host->pdev, "dsi_ctrl"),
-> +	msm_disp_snapshot_add_block(disp_state, msm_host->ctrl_size,
->  			msm_host->ctrl_base, "dsi%d_ctrl", msm_host->id);
-> 
->  	pm_runtime_put_sync(&msm_host->pdev->dev);
-> diff --git a/drivers/gpu/drm/msm/msm_drv.c 
-> b/drivers/gpu/drm/msm/msm_drv.c
-> index 92fe844b517b..be578fc4e54f 100644
-> --- a/drivers/gpu/drm/msm/msm_drv.c
-> +++ b/drivers/gpu/drm/msm/msm_drv.c
-> @@ -124,7 +124,7 @@ struct clk *msm_clk_get(struct platform_device
-> *pdev, const char *name)
->  }
-> 
->  static void __iomem *_msm_ioremap(struct platform_device *pdev, const
-> char *name,
-> -				  const char *dbgname, bool quiet)
-> +				  const char *dbgname, bool quiet, phys_addr_t *psize)
->  {
->  	struct resource *res;
->  	unsigned long size;
-> @@ -153,37 +153,28 @@ static void __iomem *_msm_ioremap(struct
-> platform_device *pdev, const char *name
->  	if (reglog)
->  		printk(KERN_DEBUG "IO:region %s %p %08lx\n", dbgname, ptr, size);
-> 
-> +	if (psize)
-> +		*psize = size;
-> +
->  	return ptr;
->  }
-> 
->  void __iomem *msm_ioremap(struct platform_device *pdev, const char 
-> *name,
->  			  const char *dbgname)
->  {
-> -	return _msm_ioremap(pdev, name, dbgname, false);
-> +	return _msm_ioremap(pdev, name, dbgname, false, NULL);
->  }
-> 
->  void __iomem *msm_ioremap_quiet(struct platform_device *pdev, const 
-> char *name,
->  				const char *dbgname)
->  {
-> -	return _msm_ioremap(pdev, name, dbgname, true);
-> +	return _msm_ioremap(pdev, name, dbgname, true, NULL);
->  }
-> 
-> -unsigned long msm_iomap_size(struct platform_device *pdev, const char 
-> *name)
-> +void __iomem *msm_ioremap_size(struct platform_device *pdev, const 
-> char *name,
-> +			  const char *dbgname, phys_addr_t *psize)
->  {
-> -	struct resource *res;
-> -
-> -	if (name)
-> -		res = platform_get_resource_byname(pdev, IORESOURCE_MEM, name);
-> -	else
-> -		res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-> -
-> -	if (!res) {
-> -		dev_dbg(&pdev->dev, "failed to get memory resource: %s\n",
-> -				name);
-> -		return 0;
-> -	}
-> -
-> -	return resource_size(res);
-> +	return _msm_ioremap(pdev, name, dbgname, false, psize);
->  }
-> 
->  void msm_writel(u32 data, void __iomem *addr)
-> diff --git a/drivers/gpu/drm/msm/msm_drv.h 
-> b/drivers/gpu/drm/msm/msm_drv.h
-> index 15cb34451ded..c33fc1293789 100644
-> --- a/drivers/gpu/drm/msm/msm_drv.h
-> +++ b/drivers/gpu/drm/msm/msm_drv.h
-> @@ -450,9 +450,10 @@ struct clk *msm_clk_bulk_get_clock(struct
-> clk_bulk_data *bulk, int count,
->  	const char *name);
->  void __iomem *msm_ioremap(struct platform_device *pdev, const char 
-> *name,
->  		const char *dbgname);
-> +void __iomem *msm_ioremap_size(struct platform_device *pdev, const 
-> char *name,
-> +		const char *dbgname, phys_addr_t *size);
->  void __iomem *msm_ioremap_quiet(struct platform_device *pdev, const 
-> char *name,
->  		const char *dbgname);
-> -unsigned long msm_iomap_size(struct platform_device *pdev, const char 
-> *name);
->  void msm_writel(u32 data, void __iomem *addr);
->  u32 msm_readl(const void __iomem *addr);
->  void msm_rmw(void __iomem *addr, u32 mask, u32 or);
+
+
+-- 
+With best wishes
+Dmitry
