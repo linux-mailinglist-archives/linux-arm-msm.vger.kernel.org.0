@@ -2,188 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 95BDE36BC8E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Apr 2021 02:18:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5C02D36BCB3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Apr 2021 02:44:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234743AbhD0ATT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Apr 2021 20:19:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36312 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234700AbhD0ATS (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Apr 2021 20:19:18 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A58ABC061574
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Apr 2021 17:18:34 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id x19so60613388lfa.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Apr 2021 17:18:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=ajAD9eEucAq/1mj2QhjuXHx0IT7uBG4GS9vHJTuXZCg=;
-        b=veIkUjYbGsXFLfQzNqOMf3rMngJ8Yy5CmQ7h+rGuCVoJip6z3Y0JgAwqUiRgZ74X5m
-         zaio9b21O+I5ccOeoJ/qWXjybtpCu5n7mJSpt51gi/QTsYG10UdjLhepB+eGE8TrDwHX
-         COPXpCX6UDDXQVsjKRJwF84qDdkoOxyAhvp0Iuc3fwyGMwCrGITFoSOvG9y9DMPu4x8I
-         5FAcl4aWJkaGn/0ICC/p9am2jvZvttzC3rnSfoi6RWzOu4jaEadNmxMg44ftAGUubBeP
-         g4AWcVBjVCk+FPW5J1JOfQdvMJvw7bfT9Xz2HvpfBgA0O+epOXTfsNxc7RfrMqhYze0R
-         kElA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=ajAD9eEucAq/1mj2QhjuXHx0IT7uBG4GS9vHJTuXZCg=;
-        b=lc3n5m3uJWCFIwWhoEEBMWrBSXNgHiyFNI6Vvhw8TuxbaVkENOesfBqq2OxJcxzY4F
-         w8TqDnRdoEvCBzinVxR6eKpc9XGgYikdqFV3JSjIPq/tlG7zK7eYFtkYh01GYettIZVT
-         0Q1PMaNiBzem2wDMisaPXQfnW2pf67lsK5SbSqNhbLwnwRsiHeSOMUy59M5O831+FjI9
-         jtFN1Y/xCc1HPDJjFmg9f236vvrnFkwhyp2VmfFIEBGS5ejkCaSQqO0Lh0o/mjlgaqrS
-         GKmyab2ZuQmEZ067GTl4OXasoNBlky7FdL8OqrDDUtP7+/6pgSYYwfQgMC8NzFAuTCjs
-         yLyQ==
-X-Gm-Message-State: AOAM531dPcbjjlrHSYC74urJysUk2RuFzChDuUV6AUToxZJLm2j28adg
-        QEtft/aMG6xfvCWGt2gdSdOx2Q==
-X-Google-Smtp-Source: ABdhPJxZV0HGGPlqyi2YhEmskeLzfc5Ve8nNJAaPSP428Hqsh3aWBxgo51O1WYAMd71EXKvYduvvkw==
-X-Received: by 2002:ac2:58c6:: with SMTP id u6mr14274684lfo.419.1619482713215;
-        Mon, 26 Apr 2021 17:18:33 -0700 (PDT)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id d15sm1555100lfn.7.2021.04.26.17.18.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Apr 2021 17:18:32 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <abhinavk@codeaurora.org>
-Cc:     Jonathan Marek <jonathan@marek.ca>,
-        Stephen Boyd <sboyd@kernel.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: [PATCH v2 4/4] drm/msm/dsi: add DSI PHY registers to snapshot data
-Date:   Tue, 27 Apr 2021 03:18:28 +0300
-Message-Id: <20210427001828.2375555-5-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20210427001828.2375555-1-dmitry.baryshkov@linaro.org>
-References: <20210427001828.2375555-1-dmitry.baryshkov@linaro.org>
+        id S235031AbhD0Apb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Apr 2021 20:45:31 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:59468 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S234743AbhD0Apb (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 26 Apr 2021 20:45:31 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1619484289; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=2oFWwVlXd7oXH1Kc6McDOccmtkDTHXqlLlQPjQCAzwE=; b=Vw6IipRetjUPcdreQzaMpN4XmZtxrORNuNKk8lwFx0HIvqPS0KCcWUzK+CEBp1dKWhFj8Nqb
+ 3cQdhiy+jwZaZPrxA5/j+JcqY+Gio/EIMNLFsteB0qU82kIqsSW9v13Im+8+N1K4bAlWjDi2
+ O2G74RwMeAbdOqj4xIBAGWxVssY=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
+ 60875e7d74f773a6641ced91 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 27 Apr 2021 00:44:45
+ GMT
+Sender: hemantk=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 8A79BC4338A; Tue, 27 Apr 2021 00:44:44 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [10.46.162.249] (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: hemantk)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 9789EC433F1;
+        Tue, 27 Apr 2021 00:44:43 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 9789EC433F1
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=hemantk@codeaurora.org
+Subject: Re: [PATCH] bus: mhi: core: Validate channel ID when processing
+ command completions
+To:     Bhaumik Bhatt <bbhatt@codeaurora.org>,
+        manivannan.sadhasivam@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, jhugo@codeaurora.org,
+        linux-kernel@vger.kernel.org, loic.poulain@linaro.org
+References: <1619481538-4435-1-git-send-email-bbhatt@codeaurora.org>
+From:   Hemant Kumar <hemantk@codeaurora.org>
+Message-ID: <dc9cbecc-c868-09b5-6486-e9f0389e5d7b@codeaurora.org>
+Date:   Mon, 26 Apr 2021 17:44:43 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <1619481538-4435-1-git-send-email-bbhatt@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add DSI PHY registers to the msm state snapshots to be able to check
-their contents.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/msm/dsi/dsi.c         |  1 +
- drivers/gpu/drm/msm/dsi/dsi.h         |  1 +
- drivers/gpu/drm/msm/dsi/phy/dsi_phy.c | 31 +++++++++++++++++++++++----
- drivers/gpu/drm/msm/dsi/phy/dsi_phy.h |  4 ++++
- 4 files changed, 33 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi.c b/drivers/gpu/drm/msm/dsi/dsi.c
-index 322d2e535df0..75afc12a7b25 100644
---- a/drivers/gpu/drm/msm/dsi/dsi.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi.c
-@@ -269,5 +269,6 @@ int msm_dsi_modeset_init(struct msm_dsi *msm_dsi, struct drm_device *dev,
- void msm_dsi_snapshot(struct msm_disp_state *disp_state, struct msm_dsi *msm_dsi)
- {
- 	msm_dsi_host_snapshot(disp_state, msm_dsi->host);
-+	msm_dsi_phy_snapshot(disp_state, msm_dsi->phy);
- }
- 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi.h b/drivers/gpu/drm/msm/dsi/dsi.h
-index b5679cf89413..cea73f9c4be9 100644
---- a/drivers/gpu/drm/msm/dsi/dsi.h
-+++ b/drivers/gpu/drm/msm/dsi/dsi.h
-@@ -176,6 +176,7 @@ int msm_dsi_phy_get_clk_provider(struct msm_dsi_phy *phy,
- 	struct clk **byte_clk_provider, struct clk **pixel_clk_provider);
- void msm_dsi_phy_pll_save_state(struct msm_dsi_phy *phy);
- int msm_dsi_phy_pll_restore_state(struct msm_dsi_phy *phy);
-+void msm_dsi_phy_snapshot(struct msm_disp_state *disp_state, struct msm_dsi_phy *phy);
- 
- #endif /* __DSI_CONNECTOR_H__ */
- 
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-index f0a2ddf96a4b..bf7a4c20c13c 100644
---- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-@@ -658,14 +658,14 @@ static int dsi_phy_driver_probe(struct platform_device *pdev)
- 	phy->regulator_ldo_mode = of_property_read_bool(dev->of_node,
- 				"qcom,dsi-phy-regulator-ldo-mode");
- 
--	phy->base = msm_ioremap(pdev, "dsi_phy", "DSI_PHY");
-+	phy->base = msm_ioremap_size(pdev, "dsi_phy", "DSI_PHY", &phy->base_size);
- 	if (IS_ERR(phy->base)) {
- 		DRM_DEV_ERROR(dev, "%s: failed to map phy base\n", __func__);
- 		ret = -ENOMEM;
- 		goto fail;
- 	}
- 
--	phy->pll_base = msm_ioremap(pdev, "dsi_pll", "DSI_PLL");
-+	phy->pll_base = msm_ioremap_size(pdev, "dsi_pll", "DSI_PLL", &phy->pll_size);
- 	if (IS_ERR(phy->pll_base)) {
- 		DRM_DEV_ERROR(&pdev->dev, "%s: failed to map pll base\n", __func__);
- 		ret = -ENOMEM;
-@@ -673,7 +673,7 @@ static int dsi_phy_driver_probe(struct platform_device *pdev)
- 	}
- 
- 	if (phy->cfg->has_phy_lane) {
--		phy->lane_base = msm_ioremap(pdev, "dsi_phy_lane", "DSI_PHY_LANE");
-+		phy->lane_base = msm_ioremap_size(pdev, "dsi_phy_lane", "DSI_PHY_LANE", &phy->lane_size);
- 		if (IS_ERR(phy->lane_base)) {
- 			DRM_DEV_ERROR(&pdev->dev, "%s: failed to map phy lane base\n", __func__);
- 			ret = -ENOMEM;
-@@ -682,7 +682,7 @@ static int dsi_phy_driver_probe(struct platform_device *pdev)
- 	}
- 
- 	if (phy->cfg->has_phy_regulator) {
--		phy->reg_base = msm_ioremap(pdev, "dsi_phy_regulator", "DSI_PHY_REG");
-+		phy->reg_base = msm_ioremap_size(pdev, "dsi_phy_regulator", "DSI_PHY_REG", &phy->reg_size);
- 		if (IS_ERR(phy->reg_base)) {
- 			DRM_DEV_ERROR(&pdev->dev, "%s: failed to map phy regulator base\n", __func__);
- 			ret = -ENOMEM;
-@@ -868,3 +868,26 @@ int msm_dsi_phy_pll_restore_state(struct msm_dsi_phy *phy)
- 
- 	return 0;
- }
-+
-+void msm_dsi_phy_snapshot(struct msm_disp_state *disp_state, struct msm_dsi_phy *phy)
-+{
-+	msm_disp_snapshot_add_block(disp_state,
-+			phy->base_size, phy->base,
-+			"dsi%d_phy", phy->id);
-+
-+	/* Do not try accessing PLL registers if it is switched off */
-+	if (phy->pll_on)
-+		msm_disp_snapshot_add_block(disp_state,
-+			phy->pll_size, phy->pll_base,
-+			"dsi%d_pll", phy->id);
-+
-+	if (phy->lane_base)
-+		msm_disp_snapshot_add_block(disp_state,
-+			phy->lane_size, phy->lane_base,
-+			"dsi%d_lane", phy->id);
-+
-+	if (phy->reg_base)
-+		msm_disp_snapshot_add_block(disp_state,
-+			phy->reg_size, phy->reg_base,
-+			"dsi%d_reg", phy->id);
-+}
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
-index 94a77ac364d3..5b0feef87127 100644
---- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
-@@ -85,6 +85,10 @@ struct msm_dsi_phy {
- 	void __iomem *pll_base;
- 	void __iomem *reg_base;
- 	void __iomem *lane_base;
-+	phys_addr_t base_size;
-+	phys_addr_t pll_size;
-+	phys_addr_t reg_size;
-+	phys_addr_t lane_size;
- 	int id;
- 
- 	struct clk *ahb_clk;
+On 4/26/21 4:58 PM, Bhaumik Bhatt wrote:
+> MHI reads the channel ID from the event ring element sent by the
+> device which can be any value between 0 and 255. In order to
+> prevent any out of bound accesses, add a check against the maximum
+> number of channels supported by the controller and those channels
+> not configured yet so as to skip processing of that event ring
+> element.
+> 
+> Fixes: 1d3173a3bae7 ("bus: mhi: core: Add support for processing events from client device")
+> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+> ---
+Reviewed-by: Hemant Kumar <hemantk@codeaurora.org>
+
 -- 
-2.30.2
-
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
