@@ -2,86 +2,146 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6EF2136BD69
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Apr 2021 04:38:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7E60636BF28
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Apr 2021 08:15:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231958AbhD0Cio (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Apr 2021 22:38:44 -0400
-Received: from smtprelay0232.hostedemail.com ([216.40.44.232]:50332 "EHLO
-        smtprelay.hostedemail.com" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S230516AbhD0Cin (ORCPT
+        id S231788AbhD0GQb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Apr 2021 02:16:31 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:53908 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229978AbhD0GQa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Apr 2021 22:38:43 -0400
-Received: from omf19.hostedemail.com (clb03-v110.bra.tucows.net [216.40.38.60])
-        by smtprelay01.hostedemail.com (Postfix) with ESMTP id 33C11100E7B40;
-        Tue, 27 Apr 2021 02:38:00 +0000 (UTC)
-Received: from [HIDDEN] (Authenticated sender: joe@perches.com) by omf19.hostedemail.com (Postfix) with ESMTPA id 86D9220D75C;
-        Tue, 27 Apr 2021 02:37:58 +0000 (UTC)
-Message-ID: <561f49745182ce6a13a2456e263c1b0cc572ab27.camel@perches.com>
-Subject: Re: [PATCH] nvmem: qfprom: minor nit fixes, no functional change
-From:   Joe Perches <joe@perches.com>
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Rajendra Nayak <rnayak@codeaurora.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        "Ravi Kumar Bokka (Temp)" <rbokka@codeaurora.org>
-Date:   Mon, 26 Apr 2021 19:37:56 -0700
-In-Reply-To: <CAD=FV=WHqoeFsqq09fz_r_viBnKuwiTyAez7VaU5ZBFu71fWvg@mail.gmail.com>
-References: <1619161503-8784-1-git-send-email-rnayak@codeaurora.org>
-         <73945e7037ab61eb34a2a1af05aa3eef75c8f836.camel@perches.com>
-         <CAD=FV=WHqoeFsqq09fz_r_viBnKuwiTyAez7VaU5ZBFu71fWvg@mail.gmail.com>
-Content-Type: text/plain; charset="ISO-8859-1"
-User-Agent: Evolution 3.38.1-1 
+        Tue, 27 Apr 2021 02:16:30 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1619504148; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=iIaFHsC2q3y5q2pnS4HpSRkWmVmG0nqVEnAYVg4o9xA=;
+ b=wHBg71tzSKjgcdeaU8V09OpwSTeQxaNjacvq85Q4n+/iz9nLeCE6upnB0qyCQ23/IGt2l7dm
+ m3n9xh1yppbMfXx7QQ/znR0dF6Nj2G3dTFRJ9OjLI4i6dyWnFdoEmK1AwsaCmihNX+Llid/A
+ Tb2y5aSjaWQsA6AJ9NlE/MarRlU=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
+ 6087ac122cc44d3aea15661b (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 27 Apr 2021 06:15:46
+ GMT
+Sender: skakit=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id BFFD8C4323A; Tue, 27 Apr 2021 06:15:45 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: skakit)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id F2B30C433F1;
+        Tue, 27 Apr 2021 06:15:44 +0000 (UTC)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Rspamd-Server: rspamout04
-X-Rspamd-Queue-Id: 86D9220D75C
-X-Spam-Status: No, score=0.10
-X-Stat-Signature: igam89qcp9iuit83uui8a77ow3e636gd
-X-Session-Marker: 6A6F6540706572636865732E636F6D
-X-Session-ID: U2FsdGVkX19Vwk0sMy3DaV+hd2AEPXdA9q/yCizhwUc=
-X-HE-Tag: 1619491078-953317
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Tue, 27 Apr 2021 11:45:44 +0530
+From:   skakit@codeaurora.org
+To:     Sebastian Reichel <sebastian.reichel@collabora.com>
+Cc:     Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        David Collins <collinsd@codeaurora.org>, kgunda@codeaurora.org,
+        Vinod Koul <vkoul@kernel.org>,
+        Courtney Cavin <courtney.cavin@sonymobile.com>,
+        linux-input@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org
+Subject: Re: [PATCH V2 3/4] dt-bindings: power: reset: qcom-pon: Convert qcom
+ PON binding to yaml
+In-Reply-To: <0cb9b3503000ac7206f4a3ef5fd16c17@codeaurora.org>
+References: <1617881469-31965-1-git-send-email-skakit@codeaurora.org>
+ <1617881469-31965-4-git-send-email-skakit@codeaurora.org>
+ <20210408130001.k3qbq3vvwkiyykzv@earth.universe>
+ <0cb9b3503000ac7206f4a3ef5fd16c17@codeaurora.org>
+Message-ID: <322cbdbb022fec3f43c1cbe13c532dd3@codeaurora.org>
+X-Sender: skakit@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 2021-04-26 at 08:11 -0700, Doug Anderson wrote:
-> Hi,
+Hi Sebastian,
+
+On 2021-04-09 13:48, skakit@codeaurora.org wrote:
+> Hi Sebastian,
 > 
-> On Fri, Apr 23, 2021 at 8:13 AM Joe Perches <joe@perches.com> wrote:
-> > 
-> > On Fri, 2021-04-23 at 12:35 +0530, Rajendra Nayak wrote:
-> > > Fix a missed newline, and update a comment which is stale
-> > > after the merge of '5a1bea2a: nvmem: qfprom: Add support for fuse
-> > > blowing on sc7280'
-> > > No other functional change in this patch.
-> > []
-> > > diff --git a/drivers/nvmem/qfprom.c b/drivers/nvmem/qfprom.c
-> > []
-> > > @@ -195,7 +196,7 @@ static int qfprom_enable_fuse_blowing(const struct qfprom_priv *priv,
-> > >       }
-> > > 
-> > >       /*
-> > > -      * Hardware requires 1.8V min for fuse blowing; this may be
-> > > +      * Hardware requires a min voltage for fuse blowing; this may be
-> > >        * a rail shared do don't specify a max--regulator constraints
-> > 
-> >                          so don't?
-> > 
-> > >        * will handle.
-> > >        */
-> > 
-> > but the comment doesn't make much overall sense to me.
+> On 2021-04-08 18:30, Sebastian Reichel wrote:
+>> Hi,
+>> 
+>> On Thu, Apr 08, 2021 at 05:01:08PM +0530, satya priya wrote:
+>>> Convert qcom PON binding from .txt to .yaml format.
+>>> 
+>>> Signed-off-by: satya priya <skakit@codeaurora.org>
+>>> ---
+>> 
+>> Thanks for doing this.
+>> 
+>>> Changes in V2:
+>>>  - As per Rob's comments, converted the main PON binding and added in 
+>>> V2.
+>>> 
+[...]
+>>> +  reg:
+>>> +    description: Specifies the physical address of the pon register
+>> 
+>> That description is obvious and pointless. Instead add
+>> 
+>> maxItems: 1
+>> 
 > 
-> What part of it doesn't make sense, exactly?
+> Okay.
+> 
+>>> +  pwrkey:
+>>> +    type: object
+>>> +    $ref: "../../input/qcom,pm8941-pwrkey.yaml#"
+>>> +
+>>> +  resin:
+>>> +    type: object
+>>> +    $ref: "../../input/qcom,pm8941-pwrkey.yaml#"
+>>> +
+>>> +required:
+>>> +  - compatible
+>>> +  - reg
+>>> +
+>>> +additionalProperties: true
+>> 
+>> Instead of allowing arbitrary properties, only valid modes
+>> should be allowed. So drop additionalProperties and do this
+>> instead:
+>> 
+>> allOf:
+>>   - $ref: reboot-mode.yaml#
+>> 
+>> unevaluatedProperties: false
+>> 
+> 
+> Okay.
+> 
 
-max--regulator
+I am not able to use 'allOf' to refer reboot-mode.yaml as some of the 
+properties do not match with reboot-mode.yaml properties. Can we use 
+oneOf like below?
 
-I think that should be something like:
+oneOf:
+   - $ref: "reboot-mode.yaml#"
+   - $ref: "../../input/qcom,pm8941-pwrkey.yaml#"
 
-	Hardware requires a minimum voltage for fuse blowing.
-	This may be a shared rail so don't specify a maximum.
-	Regulator constraints will handle (what exactly, it?)
+Also, If I drop additionalProperties I am getting below error.
 
+kernel/Documentation/devicetree/bindings/power/reset/qcom,pon.yaml: 
+'additionalProperties' is a required property
 
+Thanks,
+Satya Priya
