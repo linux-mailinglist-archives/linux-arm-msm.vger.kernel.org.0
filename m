@@ -2,234 +2,483 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8777936CC4B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Apr 2021 22:32:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4658F36CD5B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Apr 2021 22:56:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235610AbhD0UdU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Apr 2021 16:33:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50624 "EHLO
+        id S237072AbhD0U47 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Apr 2021 16:56:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56058 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235416AbhD0UdU (ORCPT
+        with ESMTP id S239073AbhD0U46 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Apr 2021 16:33:20 -0400
-Received: from mail-qk1-x729.google.com (mail-qk1-x729.google.com [IPv6:2607:f8b0:4864:20::729])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4E61C061574
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Apr 2021 13:32:36 -0700 (PDT)
-Received: by mail-qk1-x729.google.com with SMTP id 8so27650877qkv.8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Apr 2021 13:32:36 -0700 (PDT)
+        Tue, 27 Apr 2021 16:56:58 -0400
+Received: from mail-qt1-x831.google.com (mail-qt1-x831.google.com [IPv6:2607:f8b0:4864:20::831])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E840C06175F
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Apr 2021 13:56:14 -0700 (PDT)
+Received: by mail-qt1-x831.google.com with SMTP id 1so45230687qtb.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Apr 2021 13:56:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
+        d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=MS2OKshcN9CSvcsL4kOUzkvKDXWvU+Khw/xmOoW8cW4=;
-        b=Y2KfOM9B7tcQyksUcZTgdHSTiQUSbkIxaACvwM8Qgl5LTTYUCUOOTMSOznIx3LHZat
-         f210Af5bhrCdExTxjdefK37x6wBWCpNmPdJn9lMb+6ocib4CQsccvop/VLQX/c92g8AH
-         AbVIrteY7C86ct1uByniufzia2nQWO1cR98TntIjtGq2aHBCFrKA0uzLK9IxqTpCF5Kk
-         UCEvFAioCQJuBXytGDIupg+rfso4IBKEx7v61hkPrsXDlNwDBx1I14mVxeft8riJjAlC
-         NHL4uqJFZcbvMT+ZyLx6V3IWZm4V/2O5hK7RjtyV6k1++g+HmkZf/eHOKXJsDCBdr676
-         wcpA==
+        bh=3vypzy7fVK4IlHmF+WrpN6jrxjTQ1LVGCPCz1r/WPgE=;
+        b=P/hB3ikWlPQ593P2IDLqm6gBV/X0ptvrzN9R6x2gRfb/8G9ST0aNikA5kSuoK4Fruu
+         zJP3K2nrI339KfEh1bUmWRykPkv3K9bZT8DrKyJOZk5W+4xSY4Ra1XDkXALKo/r8+2yR
+         Kr09aJESiQc8Znwn/ID6SDdoCElKUFXhJlW58=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=MS2OKshcN9CSvcsL4kOUzkvKDXWvU+Khw/xmOoW8cW4=;
-        b=PabUrQW8iSsPJT14kNXPdpb9N0ad13/BQkPaOs/z5C9uN8bT5Zf3FRhOirSSL9fGKX
-         OwSnHpFgF/IvprGWx+cnRKXyuSomqUy0vPAvk/52OZ92D74D+qefekr/Ppw7H7TmXxB7
-         hHi4zeMdzSjeAEfNEgZ044vMXayQcFBgYWImqG18E+wmH3od+N5Cf1AGrME50dHnX1pA
-         Q1S1jySAuhL6cvQv93FMb+asUWRnR21qKG6CfzVNLBFKpjX6CXGtmNoTtr+hp8gNX+oK
-         Hb6fVW2vPCc9GPPQ9YP3PpydQuaWIrlThORSGbEvb6mcZk2VD19rWzJwyei3CrmT3u+3
-         GA2w==
-X-Gm-Message-State: AOAM530GZkw64iDlcG7J4Czh6A328I+SoxguvHpH1ff5jgDu/m0gImbs
-        +HwybeRH56CiLTa2j8Dt4pFJd4gb5nhsaBXIMcPmqA==
-X-Google-Smtp-Source: ABdhPJw1EdEd6zejUOKbfHG+ZNTPCYNGSXF1R3iDGZDvIXz5bBFaf98cJhngTYHkwNE95OwNyXJw0VCHyWm59Qhyl6Y=
-X-Received: by 2002:ae9:c319:: with SMTP id n25mr25708607qkg.162.1619555556018;
- Tue, 27 Apr 2021 13:32:36 -0700 (PDT)
+        bh=3vypzy7fVK4IlHmF+WrpN6jrxjTQ1LVGCPCz1r/WPgE=;
+        b=H7R8VBzYgW6dXhZ0noFcnoNdq9xMmz7ND23eX3fd5lMb4Px6j+TzgyBC1LEBLxPWdT
+         QEQzzvEUlBsHoxYxdEF566HbkvK64F6cyXrCii29Su3EobYn8/kZycqLfCA5NFGicCoP
+         3Ev826Qa5hc67bybIlJtjuGu9bAc+JWKXwyTb0r5dC6HriQsUPAwxqrNiUMlxsq+Yyyb
+         Jvk6gWayEqDsfWFltAWr9+CXsZAhlJOnyB0+Vub2ViW/58K5qdPvA2vC/QR0sTMN9eHZ
+         0IJ2X+039CTBuPfbVDKNVHObSHDuhmVrIuVwoC+W2S8d59TdRrJ3ACrJj98CAFiz7QXf
+         hfWQ==
+X-Gm-Message-State: AOAM53112g2NG1lqxMUlZa65rs+3UuZMxFb3wkIf8jXr4jDJ8g0WFYcQ
+        gkutoXLN9V4LvOdRibHAx8jUyUUlnzIIAw==
+X-Google-Smtp-Source: ABdhPJyx4GzGVX7M80uH/rW/ma+1mxmIjZpO2cUSV5VeFj/txSsvvdTFbGKruhdXsBPevuV/S8E8eg==
+X-Received: by 2002:a05:622a:1049:: with SMTP id f9mr3486897qte.140.1619556972819;
+        Tue, 27 Apr 2021 13:56:12 -0700 (PDT)
+Received: from mail-yb1-f170.google.com (mail-yb1-f170.google.com. [209.85.219.170])
+        by smtp.gmail.com with ESMTPSA id n16sm740233qtl.48.2021.04.27.13.56.11
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 27 Apr 2021 13:56:11 -0700 (PDT)
+Received: by mail-yb1-f170.google.com with SMTP id j84so1416354ybj.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Apr 2021 13:56:11 -0700 (PDT)
+X-Received: by 2002:a25:b6c5:: with SMTP id f5mr33864390ybm.407.1619556970580;
+ Tue, 27 Apr 2021 13:56:10 -0700 (PDT)
 MIME-Version: 1.0
-References: <20210427001828.2375555-1-dmitry.baryshkov@linaro.org>
- <20210427001828.2375555-4-dmitry.baryshkov@linaro.org> <f4a6a51ea5cc5bfbf747eb5544951076@codeaurora.org>
-In-Reply-To: <f4a6a51ea5cc5bfbf747eb5544951076@codeaurora.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 27 Apr 2021 23:32:25 +0300
-Message-ID: <CAA8EJprcOVqoFK+e66rDZenjFeMOqREEP-LRfmuSkJc2F5u-2A@mail.gmail.com>
-Subject: Re: [Freedreno] [PATCH v2 3/4] drm/msm: get rid of msm_iomap_size
-To:     Abhinav Kumar <abhinavk@codeaurora.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Stephen Boyd <sboyd@kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <dri-devel@lists.freedesktop.org>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        freedreno <freedreno@lists.freedesktop.org>
+References: <1618210723-2310-1-git-send-email-dikshita@codeaurora.org>
+In-Reply-To: <1618210723-2310-1-git-send-email-dikshita@codeaurora.org>
+From:   Fritz Koenig <frkoenig@chromium.org>
+Date:   Tue, 27 Apr 2021 13:55:59 -0700
+X-Gmail-Original-Message-ID: <CAMfZQbzh+6VQ-Gw1smyPtP-pud2ZK+sG9vUm5ehedfjpBT_qnQ@mail.gmail.com>
+Message-ID: <CAMfZQbzh+6VQ-Gw1smyPtP-pud2ZK+sG9vUm5ehedfjpBT_qnQ@mail.gmail.com>
+Subject: Re: [PATCH] media: venus: Enable low power setting for encoder
+To:     Dikshita Agarwal <dikshita@codeaurora.org>
+Cc:     Linux Media Mailing List <linux-media@vger.kernel.org>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org,
+        Vikash Garodia <vgarodia@codeaurora.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 27 Apr 2021 at 22:30, <abhinavk@codeaurora.org> wrote:
+On Sun, Apr 11, 2021 at 11:59 PM Dikshita Agarwal
+<dikshita@codeaurora.org> wrote:
 >
-> Hi Dmitry
+> Set the FW to run in low power for encoder
+> to accommodate more session without losing much on quality.
 >
-> On 2021-04-26 17:18, Dmitry Baryshkov wrote:
-> > Instead of looping throught the resources each time to get the DSI CTRL
-> > area size, get it at the ioremap time.
-> >
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> We will have to call into the individual modules anyway everytime we
-> take a snapshot as only they have access to the required clocks and the
-> base address.
+> Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
+> ---
+>  drivers/media/platform/qcom/venus/core.h           |   6 ++
+>  drivers/media/platform/qcom/venus/helpers.c        |   2 +
+>  drivers/media/platform/qcom/venus/hfi_helper.h     |  10 +-
+>  drivers/media/platform/qcom/venus/hfi_platform.c   |  16 +++
+>  drivers/media/platform/qcom/venus/hfi_platform.h   |   4 +
+>  .../media/platform/qcom/venus/hfi_platform_v4.c    |  28 ++++--
+>  .../media/platform/qcom/venus/hfi_platform_v6.c    |  28 ++++--
+>  drivers/media/platform/qcom/venus/pm_helpers.c     | 108 ++++++++++++++++++---
+>  8 files changed, 167 insertions(+), 35 deletions(-)
 >
-> So even though there is nothing wrong with this change, it still adds a
-> size member
-> which can be avoided because we have to call into the module anyway.
+> diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
+> index 9451e54..9b5031f 100644
+> --- a/drivers/media/platform/qcom/venus/core.h
+> +++ b/drivers/media/platform/qcom/venus/core.h
+> @@ -257,6 +257,7 @@ struct clock_data {
+>         unsigned long freq;
+>         unsigned long vpp_freq;
+>         unsigned long vsp_freq;
+> +       unsigned long low_power_freq;
+>  };
 >
-> Any strong preference to store the size as opposed to just getting it
-> when we take
-> the snapshot?
-
-Locality. We ioremap the resource from one piece of code and then we
-get it's length from a completely different piece of code. If we ever
-change e.g. the ioremap'ed resource name, we'd have to also update
-snapshot users.
-With this patch these changes are done in a transparent way. Whichever
-we do with the regions in future, there is always a valid base + size
-combo.
-
+>  #define to_venus_buffer(ptr)   container_of(ptr, struct venus_buffer, vb)
+> @@ -280,6 +281,10 @@ struct venus_ts_metadata {
+>         struct v4l2_timecode tc;
+>  };
 >
-> > ---
-> >  drivers/gpu/drm/msm/dsi/dsi_host.c |  5 +++--
-> >  drivers/gpu/drm/msm/msm_drv.c      | 27 +++++++++------------------
-> >  drivers/gpu/drm/msm/msm_drv.h      |  3 ++-
-> >  3 files changed, 14 insertions(+), 21 deletions(-)
-> >
-> > diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c
-> > b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> > index 1a63368c3912..b3ee5c0bce12 100644
-> > --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-> > +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> > @@ -102,6 +102,7 @@ struct msm_dsi_host {
-> >       int id;
-> >
-> >       void __iomem *ctrl_base;
-> > +     phys_addr_t ctrl_size;
-> >       struct regulator_bulk_data supplies[DSI_DEV_REGULATOR_MAX];
-> >
-> >       struct clk *bus_clks[DSI_BUS_CLK_MAX];
-> > @@ -1839,7 +1840,7 @@ int msm_dsi_host_init(struct msm_dsi *msm_dsi)
-> >               goto fail;
-> >       }
-> >
-> > -     msm_host->ctrl_base = msm_ioremap(pdev, "dsi_ctrl", "DSI CTRL");
-> > +     msm_host->ctrl_base = msm_ioremap_size(pdev, "dsi_ctrl", "DSI CTRL",
-> > &msm_host->ctrl_size);
-> >       if (IS_ERR(msm_host->ctrl_base)) {
-> >               pr_err("%s: unable to map Dsi ctrl base\n", __func__);
-> >               ret = PTR_ERR(msm_host->ctrl_base);
-> > @@ -2494,7 +2495,7 @@ void msm_dsi_host_snapshot(struct msm_disp_state
-> > *disp_state, struct mipi_dsi_ho
-> >
-> >       pm_runtime_get_sync(&msm_host->pdev->dev);
-> >
-> > -     msm_disp_snapshot_add_block(disp_state,
-> > msm_iomap_size(msm_host->pdev, "dsi_ctrl"),
-> > +     msm_disp_snapshot_add_block(disp_state, msm_host->ctrl_size,
-> >                       msm_host->ctrl_base, "dsi%d_ctrl", msm_host->id);
-> >
-> >       pm_runtime_put_sync(&msm_host->pdev->dev);
-> > diff --git a/drivers/gpu/drm/msm/msm_drv.c
-> > b/drivers/gpu/drm/msm/msm_drv.c
-> > index 92fe844b517b..be578fc4e54f 100644
-> > --- a/drivers/gpu/drm/msm/msm_drv.c
-> > +++ b/drivers/gpu/drm/msm/msm_drv.c
-> > @@ -124,7 +124,7 @@ struct clk *msm_clk_get(struct platform_device
-> > *pdev, const char *name)
-> >  }
-> >
-> >  static void __iomem *_msm_ioremap(struct platform_device *pdev, const
-> > char *name,
-> > -                               const char *dbgname, bool quiet)
-> > +                               const char *dbgname, bool quiet, phys_addr_t *psize)
-> >  {
-> >       struct resource *res;
-> >       unsigned long size;
-> > @@ -153,37 +153,28 @@ static void __iomem *_msm_ioremap(struct
-> > platform_device *pdev, const char *name
-> >       if (reglog)
-> >               printk(KERN_DEBUG "IO:region %s %p %08lx\n", dbgname, ptr, size);
-> >
-> > +     if (psize)
-> > +             *psize = size;
-> > +
-> >       return ptr;
-> >  }
-> >
-> >  void __iomem *msm_ioremap(struct platform_device *pdev, const char
-> > *name,
-> >                         const char *dbgname)
-> >  {
-> > -     return _msm_ioremap(pdev, name, dbgname, false);
-> > +     return _msm_ioremap(pdev, name, dbgname, false, NULL);
-> >  }
-> >
-> >  void __iomem *msm_ioremap_quiet(struct platform_device *pdev, const
-> > char *name,
-> >                               const char *dbgname)
-> >  {
-> > -     return _msm_ioremap(pdev, name, dbgname, true);
-> > +     return _msm_ioremap(pdev, name, dbgname, true, NULL);
-> >  }
-> >
-> > -unsigned long msm_iomap_size(struct platform_device *pdev, const char
-> > *name)
-> > +void __iomem *msm_ioremap_size(struct platform_device *pdev, const
-> > char *name,
-> > +                       const char *dbgname, phys_addr_t *psize)
-> >  {
-> > -     struct resource *res;
-> > -
-> > -     if (name)
-> > -             res = platform_get_resource_byname(pdev, IORESOURCE_MEM, name);
-> > -     else
-> > -             res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-> > -
-> > -     if (!res) {
-> > -             dev_dbg(&pdev->dev, "failed to get memory resource: %s\n",
-> > -                             name);
-> > -             return 0;
-> > -     }
-> > -
-> > -     return resource_size(res);
-> > +     return _msm_ioremap(pdev, name, dbgname, false, psize);
-> >  }
-> >
-> >  void msm_writel(u32 data, void __iomem *addr)
-> > diff --git a/drivers/gpu/drm/msm/msm_drv.h
-> > b/drivers/gpu/drm/msm/msm_drv.h
-> > index 15cb34451ded..c33fc1293789 100644
-> > --- a/drivers/gpu/drm/msm/msm_drv.h
-> > +++ b/drivers/gpu/drm/msm/msm_drv.h
-> > @@ -450,9 +450,10 @@ struct clk *msm_clk_bulk_get_clock(struct
-> > clk_bulk_data *bulk, int count,
-> >       const char *name);
-> >  void __iomem *msm_ioremap(struct platform_device *pdev, const char
-> > *name,
-> >               const char *dbgname);
-> > +void __iomem *msm_ioremap_size(struct platform_device *pdev, const
-> > char *name,
-> > +             const char *dbgname, phys_addr_t *size);
-> >  void __iomem *msm_ioremap_quiet(struct platform_device *pdev, const
-> > char *name,
-> >               const char *dbgname);
-> > -unsigned long msm_iomap_size(struct platform_device *pdev, const char
-> > *name);
-> >  void msm_writel(u32 data, void __iomem *addr);
-> >  u32 msm_readl(const void __iomem *addr);
-> >  void msm_rmw(void __iomem *addr, u32 mask, u32 or);
+> +enum venus_inst_modes {
+> +       VENUS_LOW_POWER = BIT(0),
+> +};
+> +
+>  /**
+>   * struct venus_inst - holds per instance parameters
+>   *
+> @@ -400,6 +405,7 @@ struct venus_inst {
+>         unsigned int pic_struct;
+>         bool next_buf_last;
+>         bool drain_active;
+> +       enum venus_inst_modes flags;
+>  };
+>
+>  #define IS_V1(core)    ((core)->res->hfi_version == HFI_VERSION_1XX)
+> diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/platform/qcom/venus/helpers.c
+> index 76ece2f..c6b6a30 100644
+> --- a/drivers/media/platform/qcom/venus/helpers.c
+> +++ b/drivers/media/platform/qcom/venus/helpers.c
+> @@ -1566,6 +1566,8 @@ int venus_helper_session_init(struct venus_inst *inst)
+>                                                                   session_type);
+>         inst->clk_data.vsp_freq = hfi_platform_get_codec_vsp_freq(version, codec,
+>                                                                   session_type);
+> +       inst->clk_data.low_power_freq = hfi_platform_get_codec_lp_freq(version, codec,
+> +                                                                      session_type);
+>
+>         return 0;
+>  }
+> diff --git a/drivers/media/platform/qcom/venus/hfi_helper.h b/drivers/media/platform/qcom/venus/hfi_helper.h
+> index 6b524c7..5621cdb 100644
+> --- a/drivers/media/platform/qcom/venus/hfi_helper.h
+> +++ b/drivers/media/platform/qcom/venus/hfi_helper.h
+> @@ -412,9 +412,6 @@
+>  #define HFI_BUFFER_MODE_RING                   0x1000002
+>  #define HFI_BUFFER_MODE_DYNAMIC                        0x1000003
+>
+> -#define HFI_VENC_PERFMODE_MAX_QUALITY          0x1
+> -#define HFI_VENC_PERFMODE_POWER_SAVE           0x2
+> -
+>  /*
+>   * HFI_PROPERTY_SYS_COMMON_START
+>   * HFI_DOMAIN_BASE_COMMON + HFI_ARCH_COMMON_OFFSET + 0x0000
+> @@ -815,6 +812,13 @@ struct hfi_framesize {
+>         u32 height;
+>  };
+>
+> +#define HFI_VENC_PERFMODE_MAX_QUALITY          0x1
+> +#define HFI_VENC_PERFMODE_POWER_SAVE           0x2
+> +
+> +struct hfi_perf_mode {
+> +       u32 video_perf_mode;
+> +};
+> +
+>  #define VIDC_CORE_ID_DEFAULT   0
+>  #define VIDC_CORE_ID_1         1
+>  #define VIDC_CORE_ID_2         2
+> diff --git a/drivers/media/platform/qcom/venus/hfi_platform.c b/drivers/media/platform/qcom/venus/hfi_platform.c
+> index 8f47804..f5b4e1f 100644
+> --- a/drivers/media/platform/qcom/venus/hfi_platform.c
+> +++ b/drivers/media/platform/qcom/venus/hfi_platform.c
+> @@ -50,6 +50,22 @@ hfi_platform_get_codec_vsp_freq(enum hfi_version version, u32 codec, u32 session
+>         return freq;
+>  }
+>
+> +unsigned long
+> +hfi_platform_get_codec_lp_freq(enum hfi_version version, u32 codec, u32 session_type)
+> +{
+> +       const struct hfi_platform *plat;
+> +       unsigned long freq = 0;
+> +
+> +       plat = hfi_platform_get(version);
+> +       if (!plat)
+> +               return 0;
+> +
+> +       if (plat->codec_lp_freq)
+> +               freq = plat->codec_lp_freq(session_type, codec);
+> +
+> +       return freq;
+> +}
+> +
+>  u8 hfi_platform_num_vpp_pipes(enum hfi_version version)
+>  {
+>         const struct hfi_platform *plat;
+> diff --git a/drivers/media/platform/qcom/venus/hfi_platform.h b/drivers/media/platform/qcom/venus/hfi_platform.h
+> index 3819bb2..2dbe608 100644
+> --- a/drivers/media/platform/qcom/venus/hfi_platform.h
+> +++ b/drivers/media/platform/qcom/venus/hfi_platform.h
+> @@ -43,11 +43,13 @@ struct hfi_platform_codec_freq_data {
+>         u32 session_type;
+>         unsigned long vpp_freq;
+>         unsigned long vsp_freq;
+> +       unsigned long low_power_freq;
+>  };
+>
+>  struct hfi_platform {
+>         unsigned long (*codec_vpp_freq)(u32 session_type, u32 codec);
+>         unsigned long (*codec_vsp_freq)(u32 session_type, u32 codec);
+> +       unsigned long (*codec_lp_freq)(u32 session_type, u32 codec);
+>         void (*codecs)(u32 *enc_codecs, u32 *dec_codecs, u32 *count);
+>         const struct hfi_plat_caps *(*capabilities)(unsigned int *entries);
+>         u8 (*num_vpp_pipes)(void);
+> @@ -63,5 +65,7 @@ unsigned long hfi_platform_get_codec_vpp_freq(enum hfi_version version, u32 code
+>                                               u32 session_type);
+>  unsigned long hfi_platform_get_codec_vsp_freq(enum hfi_version version, u32 codec,
+>                                               u32 session_type);
+> +unsigned long hfi_platform_get_codec_lp_freq(enum hfi_version version, u32 codec,
+> +                                            u32 session_type);
+>  u8 hfi_platform_num_vpp_pipes(enum hfi_version version);
+>  #endif
+> diff --git a/drivers/media/platform/qcom/venus/hfi_platform_v4.c b/drivers/media/platform/qcom/venus/hfi_platform_v4.c
+> index 3848bb6..3f7f527 100644
+> --- a/drivers/media/platform/qcom/venus/hfi_platform_v4.c
+> +++ b/drivers/media/platform/qcom/venus/hfi_platform_v4.c
+> @@ -262,14 +262,14 @@ static void get_codecs(u32 *enc_codecs, u32 *dec_codecs, u32 *count)
+>  }
+>
+>  static const struct hfi_platform_codec_freq_data codec_freq_data[] =  {
+> -       { V4L2_PIX_FMT_H264, VIDC_SESSION_TYPE_ENC, 675, 10 },
+> -       { V4L2_PIX_FMT_HEVC, VIDC_SESSION_TYPE_ENC, 675, 10 },
+> -       { V4L2_PIX_FMT_VP8, VIDC_SESSION_TYPE_ENC, 675, 10 },
+> -       { V4L2_PIX_FMT_MPEG2, VIDC_SESSION_TYPE_DEC, 200, 10 },
+> -       { V4L2_PIX_FMT_H264, VIDC_SESSION_TYPE_DEC, 200, 10 },
+> -       { V4L2_PIX_FMT_HEVC, VIDC_SESSION_TYPE_DEC, 200, 10 },
+> -       { V4L2_PIX_FMT_VP8, VIDC_SESSION_TYPE_DEC, 200, 10 },
+> -       { V4L2_PIX_FMT_VP9, VIDC_SESSION_TYPE_DEC, 200, 10 },
+> +       { V4L2_PIX_FMT_H264, VIDC_SESSION_TYPE_ENC, 675, 10, 320 },
+> +       { V4L2_PIX_FMT_HEVC, VIDC_SESSION_TYPE_ENC, 675, 10, 320 },
+> +       { V4L2_PIX_FMT_VP8, VIDC_SESSION_TYPE_ENC, 675, 10, 320 },
+> +       { V4L2_PIX_FMT_MPEG2, VIDC_SESSION_TYPE_DEC, 200, 10, 200 },
+> +       { V4L2_PIX_FMT_H264, VIDC_SESSION_TYPE_DEC, 200, 10, 200 },
+> +       { V4L2_PIX_FMT_HEVC, VIDC_SESSION_TYPE_DEC, 200, 10, 200 },
+> +       { V4L2_PIX_FMT_VP8, VIDC_SESSION_TYPE_DEC, 200, 10, 200 },
+> +       { V4L2_PIX_FMT_VP9, VIDC_SESSION_TYPE_DEC, 200, 10, 200 },
+>  };
+>
+>  static const struct hfi_platform_codec_freq_data *
+> @@ -311,9 +311,21 @@ static unsigned long codec_vsp_freq(u32 session_type, u32 codec)
+>         return 0;
+>  }
+>
+> +static unsigned long codec_lp_freq(u32 session_type, u32 codec)
+> +{
+> +       const struct hfi_platform_codec_freq_data *data;
+> +
+> +       data = get_codec_freq_data(session_type, codec);
+> +       if (data)
+> +               return data->low_power_freq;
+> +
+> +       return 0;
+> +}
+> +
+>  const struct hfi_platform hfi_plat_v4 = {
+>         .codec_vpp_freq = codec_vpp_freq,
+>         .codec_vsp_freq = codec_vsp_freq,
+> +       .codec_lp_freq = codec_lp_freq,
+>         .codecs = get_codecs,
+>         .capabilities = get_capabilities,
+>  };
+> diff --git a/drivers/media/platform/qcom/venus/hfi_platform_v6.c b/drivers/media/platform/qcom/venus/hfi_platform_v6.c
+> index 2278be1..15d0dc8 100644
+> --- a/drivers/media/platform/qcom/venus/hfi_platform_v6.c
+> +++ b/drivers/media/platform/qcom/venus/hfi_platform_v6.c
+> @@ -262,14 +262,14 @@ static void get_codecs(u32 *enc_codecs, u32 *dec_codecs, u32 *count)
+>  }
+>
+>  static const struct hfi_platform_codec_freq_data codec_freq_data[] = {
+> -       { V4L2_PIX_FMT_H264, VIDC_SESSION_TYPE_ENC, 675, 25 },
+> -       { V4L2_PIX_FMT_HEVC, VIDC_SESSION_TYPE_ENC, 675, 25 },
+> -       { V4L2_PIX_FMT_VP8, VIDC_SESSION_TYPE_ENC, 675, 60 },
+> -       { V4L2_PIX_FMT_MPEG2, VIDC_SESSION_TYPE_DEC, 200, 25 },
+> -       { V4L2_PIX_FMT_H264, VIDC_SESSION_TYPE_DEC, 200, 25 },
+> -       { V4L2_PIX_FMT_HEVC, VIDC_SESSION_TYPE_DEC, 200, 25 },
+> -       { V4L2_PIX_FMT_VP8, VIDC_SESSION_TYPE_DEC, 200, 60 },
+> -       { V4L2_PIX_FMT_VP9, VIDC_SESSION_TYPE_DEC, 200, 60 },
+> +       { V4L2_PIX_FMT_H264, VIDC_SESSION_TYPE_ENC, 675, 25, 320 },
+> +       { V4L2_PIX_FMT_HEVC, VIDC_SESSION_TYPE_ENC, 675, 25, 320 },
+> +       { V4L2_PIX_FMT_VP8, VIDC_SESSION_TYPE_ENC, 675, 60, 320 },
+> +       { V4L2_PIX_FMT_MPEG2, VIDC_SESSION_TYPE_DEC, 200, 25, 200 },
+> +       { V4L2_PIX_FMT_H264, VIDC_SESSION_TYPE_DEC, 200, 25, 200 },
+> +       { V4L2_PIX_FMT_HEVC, VIDC_SESSION_TYPE_DEC, 200, 25, 200 },
+> +       { V4L2_PIX_FMT_VP8, VIDC_SESSION_TYPE_DEC, 200, 60, 200 },
+> +       { V4L2_PIX_FMT_VP9, VIDC_SESSION_TYPE_DEC, 200, 60, 200 },
+>  };
+>
+>  static const struct hfi_platform_codec_freq_data *
+> @@ -311,6 +311,17 @@ static unsigned long codec_vsp_freq(u32 session_type, u32 codec)
+>         return 0;
+>  }
+>
+> +static unsigned long codec_lp_freq(u32 session_type, u32 codec)
+> +{
+> +       const struct hfi_platform_codec_freq_data *data;
+> +
+> +       data = get_codec_freq_data(session_type, codec);
+> +       if (data)
+> +               return data->low_power_freq;
+> +
+> +       return 0;
+> +}
+> +
+>  static u8 num_vpp_pipes(void)
+>  {
+>         return 4;
+> @@ -319,6 +330,7 @@ static u8 num_vpp_pipes(void)
+>  const struct hfi_platform hfi_plat_v6 = {
+>         .codec_vpp_freq = codec_vpp_freq,
+>         .codec_vsp_freq = codec_vsp_freq,
+> +       .codec_lp_freq = codec_lp_freq,
+>         .codecs = get_codecs,
+>         .capabilities = get_capabilities,
+>         .num_vpp_pipes = num_vpp_pipes,
+> diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c b/drivers/media/platform/qcom/venus/pm_helpers.c
+> index 43c4e3d..a3f3e31 100644
+> --- a/drivers/media/platform/qcom/venus/pm_helpers.c
+> +++ b/drivers/media/platform/qcom/venus/pm_helpers.c
+> @@ -492,8 +492,50 @@ static int poweron_coreid(struct venus_core *core, unsigned int coreid_mask)
+>         return 0;
+>  }
+>
+> +static inline int power_save_mode_enable(struct venus_inst *inst,
+> +                                        bool enable)
+> +{
+> +       struct venc_controls *enc_ctr = &inst->controls.enc;
+> +       const u32 ptype = HFI_PROPERTY_CONFIG_VENC_PERF_MODE;
+> +       u32 venc_mode;
+> +       int ret = 0;
+> +
+> +       if (inst->session_type != VIDC_SESSION_TYPE_ENC)
+> +               return 0;
+> +
+> +       if (enc_ctr->bitrate_mode == V4L2_MPEG_VIDEO_BITRATE_MODE_CQ)
+> +               enable = false;
+> +
+> +       venc_mode = enable ? HFI_VENC_PERFMODE_POWER_SAVE :
+> +               HFI_VENC_PERFMODE_MAX_QUALITY;
+> +
+> +       ret = hfi_session_set_property(inst, ptype, &venc_mode);
+> +       if (ret)
+> +               return ret;
+> +
+> +       inst->flags = enable ? inst->flags | VENUS_LOW_POWER :
+> +               inst->flags & ~VENUS_LOW_POWER;
+> +
+> +       return ret;
+> +}
+> +
+> +static int move_core_to_power_save_mode(struct venus_core *core,
+> +                                       u32 core_id)
+> +{
+> +       struct venus_inst *inst = NULL;
+> +
+> +       mutex_lock(&core->lock);
+> +       list_for_each_entry(inst, &core->instances, list) {
+> +               if (inst->clk_data.core_id == core_id &&
+> +                   inst->session_type == VIDC_SESSION_TYPE_ENC)
+> +                       power_save_mode_enable(inst, true);
+> +       }
+> +       mutex_unlock(&core->lock);
+> +       return 0;
+> +}
+> +
+>  static void
+> -min_loaded_core(struct venus_inst *inst, u32 *min_coreid, u32 *min_load)
+> +min_loaded_core(struct venus_inst *inst, u32 *min_coreid, u32 *min_load, bool low_power)
+>  {
+>         u32 mbs_per_sec, load, core1_load = 0, core2_load = 0;
+>         u32 cores_max = core_num_max(inst);
+> @@ -511,7 +553,14 @@ min_loaded_core(struct venus_inst *inst, u32 *min_coreid, u32 *min_load)
+>                 if (inst_pos->state != INST_START)
+>                         continue;
+>
+> -               vpp_freq = inst_pos->clk_data.vpp_freq;
+> +               if (inst->session_type == VIDC_SESSION_TYPE_DEC)
+> +                       vpp_freq = inst_pos->clk_data.vpp_freq;
+> +               else if (inst->session_type == VIDC_SESSION_TYPE_ENC)
+> +                       vpp_freq = low_power ? inst_pos->clk_data.vpp_freq :
+> +                               inst_pos->clk_data.low_power_freq;
+> +               else
+> +                       continue;
+> +
+>                 coreid = inst_pos->clk_data.core_id;
+>
+>                 mbs_per_sec = load_per_instance(inst_pos);
+> @@ -543,9 +592,11 @@ static int decide_core(struct venus_inst *inst)
+>  {
+>         const u32 ptype = HFI_PROPERTY_CONFIG_VIDEOCORES_USAGE;
+>         struct venus_core *core = inst->core;
+> -       u32 min_coreid, min_load, inst_load;
+> +       u32 min_coreid, min_load, cur_inst_load;
+> +       u32 min_lp_coreid, min_lp_load, cur_inst_lp_load;
+>         struct hfi_videocores_usage_type cu;
+>         unsigned long max_freq;
+> +       int ret = 0;
+>
+>         if (legacy_binding) {
+>                 if (inst->session_type == VIDC_SESSION_TYPE_DEC)
+> @@ -559,23 +610,43 @@ static int decide_core(struct venus_inst *inst)
+>         if (inst->clk_data.core_id != VIDC_CORE_ID_DEFAULT)
+>                 return 0;
+>
+> -       inst_load = load_per_instance(inst);
+> -       inst_load *= inst->clk_data.vpp_freq;
+> -       max_freq = core->res->freq_tbl[0].freq;
+> +       cur_inst_load = load_per_instance(inst);
+> +       cur_inst_load *= inst->clk_data.vpp_freq;
+> +       /*TODO : divide this inst->load by work_route */
+>
+> -       min_loaded_core(inst, &min_coreid, &min_load);
+> +       cur_inst_lp_load = load_per_instance(inst);
+> +       cur_inst_lp_load *= inst->clk_data.low_power_freq;
+> +       /*TODO : divide this inst->load by work_route */
+>
+> -       if ((inst_load + min_load) > max_freq) {
+> -               dev_warn(core->dev, "HW is overloaded, needed: %u max: %lu\n",
+> -                        inst_load, max_freq);
+> +       max_freq = core->res->freq_tbl[0].freq;
+> +
+> +       min_loaded_core(inst, &min_coreid, &min_load, false);
+> +       min_loaded_core(inst, &min_lp_coreid, &min_lp_load, true);
+> +
+> +       if (cur_inst_load + min_load <= max_freq) {
+> +               inst->clk_data.core_id = min_coreid;
+> +               cu.video_core_enable_mask = min_coreid;
+> +       } else if (cur_inst_lp_load + min_load <= max_freq) {
+> +               /* Move current instance to LP and return */
+> +               inst->clk_data.core_id = min_coreid;
+> +               cu.video_core_enable_mask = min_coreid;
+> +               power_save_mode_enable(inst, true);
+> +       } else if (cur_inst_lp_load + min_lp_load <= max_freq) {
+> +               /* Move all instances to LP mode and return */
+> +               inst->clk_data.core_id = min_lp_coreid;
+> +               cu.video_core_enable_mask = min_lp_coreid;
+> +               move_core_to_power_save_mode(core, min_lp_coreid);
+> +       } else {
+> +               dev_warn(core->dev, "HW can't support this load");
+>                 return -EINVAL;
+>         }
+>
+> -       inst->clk_data.core_id = min_coreid;
+> -       cu.video_core_enable_mask = min_coreid;
+> -
+>  done:
+> -       return hfi_session_set_property(inst, ptype, &cu);
+> +       ret = hfi_session_set_property(inst, ptype, &cu);
+> +       if (ret)
+> +               return ret;
+> +
+> +       return ret;
+>  }
+>
+>  static int acquire_core(struct venus_inst *inst)
+> @@ -936,7 +1007,7 @@ static int core_power_v4(struct device *dev, int on)
+>  static unsigned long calculate_inst_freq(struct venus_inst *inst,
+>                                          unsigned long filled_len)
+>  {
+> -       unsigned long vpp_freq = 0, vsp_freq = 0;
+> +       unsigned long vpp_freq_per_mb = 0, vpp_freq = 0, vsp_freq = 0;
+>         u32 fps = (u32)inst->fps;
+>         u32 mbs_per_sec;
+>
+> @@ -945,7 +1016,12 @@ static unsigned long calculate_inst_freq(struct venus_inst *inst,
+>         if (inst->state != INST_START)
+>                 return 0;
+>
+> -       vpp_freq = mbs_per_sec * inst->clk_data.vpp_freq;
+> +       if (inst->session_type == VIDC_SESSION_TYPE_ENC)
+> +               vpp_freq_per_mb = inst->flags & VENUS_LOW_POWER ?
+> +                       inst->clk_data.low_power_freq :
+> +                       inst->clk_data.vpp_freq;
+> +
+> +       vpp_freq = mbs_per_sec * vpp_freq_per_mb;
+>         /* 21 / 20 is overhead factor */
+>         vpp_freq += vpp_freq / 20;
+>         vsp_freq = mbs_per_sec * inst->clk_data.vsp_freq;
+> --
+> 2.7.4
+>
 
-
-
--- 
-With best wishes
-Dmitry
+Tested-by: Fritz Koenig <frkoenig@chromium.org>
