@@ -2,83 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2210236C4AA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Apr 2021 13:12:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1A13936C50C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Apr 2021 13:27:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235351AbhD0LNJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Apr 2021 07:13:09 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:37561 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230270AbhD0LNI (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Apr 2021 07:13:08 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1619521945; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=8lv1OWsj+GVLo78cEr2hD2WbvjUDufklM8o8mR8l/P4=; b=cMreoxZR1IJOal3POx+DDNTJSBzssm5zZU8bSJVuhGpakz0G6bDsNmg4GTTKad6yvTeoXHm0
- XnZC2pW0P9BXceVGfSVNJ2tS6mF7jPLwjvyH0WfzhfUeWT+bSq0pECZES0QQ+3KSuTeAdiAM
- CBL0XBq+zkCaagnhw9gD2N6hrvE=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
- 6087f1992cc44d3aea1730d4 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 27 Apr 2021 11:12:25
- GMT
-Sender: tdas=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 2EF12C433D3; Tue, 27 Apr 2021 11:12:25 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from tdas-linux.qualcomm.com (unknown [202.46.22.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: tdas)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id A1345C433D3;
-        Tue, 27 Apr 2021 11:12:21 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A1345C433D3
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=tdas@codeaurora.org
-From:   Taniya Das <tdas@codeaurora.org>
-To:     Stephen Boyd <sboyd@kernel.org>,
-        =?UTF-8?q?Michael=20Turquette=20=C2=A0?= <mturquette@baylibre.com>
-Cc:     Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Taniya Das <tdas@codeaurora.org>
-Subject: [PATCH v1] clk: qcom: gcc: dd support for a new frequency for SC7280
-Date:   Tue, 27 Apr 2021 16:42:12 +0530
-Message-Id: <1619521932-18973-1-git-send-email-tdas@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        id S235911AbhD0L20 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Apr 2021 07:28:26 -0400
+Received: from mail.kernel.org ([198.145.29.99]:42476 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S235099AbhD0L20 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 27 Apr 2021 07:28:26 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id CFD3560C3D;
+        Tue, 27 Apr 2021 11:27:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1619522863;
+        bh=FPYw+5fREObHmocyQgyXFhUexDY82QdXJ/EQGuZCjUk=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=hF41E7GGZmbL845jqcaGYF8RX6YNCsCke3JZDimbP+mx+j61gl+rXL1U09Yx5FOw4
+         nxDUG4l9NBwqasQxDXCXQYgMUIiK8LQ8ZBM9ibCc843Ge8m7iO6/0SvTZp70N71NzV
+         SIEFR2Ua61tkaGOSz7s8veY1Hq+jnthDudwAUJNFHxeqUwmbTFXQ3Gr2jOZ0dZOwEH
+         Z3stSVh9Xzk46bgG/qzi6cvsvOGBkDvnHBNwekmATond8K3p68eDkbCNMaCzRqvLtk
+         Z6xL+dDC0WfxTbZLbFmUckThqSXBFkG6CKW8G3KBRRGVD0NHg/dFlhbfRHGWgSfBzi
+         hKixtzxmuKJeg==
+Date:   Tue, 27 Apr 2021 12:27:12 +0100
+From:   Mark Brown <broonie@kernel.org>
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        robh@kernel.org, devicetree@vger.kernel.org, wcheng@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, dmitry.baryshkov@linaro.org
+Subject: Re: [PATCH v2 2/2] arm64: boot: dts: qcom: pm8150b: Add DTS node for
+ PMIC VBUS booster
+Message-ID: <20210427112712.GG4605@sirena.org.uk>
+References: <20210426221446.1852572-1-bryan.odonoghue@linaro.org>
+ <20210426221446.1852572-3-bryan.odonoghue@linaro.org>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="w2JjAQZceEVGylhD"
+Content-Disposition: inline
+In-Reply-To: <20210426221446.1852572-3-bryan.odonoghue@linaro.org>
+X-Cookie: Don't feed the bats tonight.
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-There is a requirement to support 52MHz for qup clocks for bluetoothe
-usecase, thus update the frequency table to support the frequency.
 
-Fixes: a3cc092196ef ("clk: qcom: Add Global Clock controller (GCC) driver for SC7280")
-Signed-off-by: Taniya Das <tdas@codeaurora.org>
----
- drivers/clk/qcom/gcc-sc7280.c | 1 +
- 1 file changed, 1 insertion(+)
+--w2JjAQZceEVGylhD
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/drivers/clk/qcom/gcc-sc7280.c b/drivers/clk/qcom/gcc-sc7280.c
-index ef734db..6cefcdc 100644
---- a/drivers/clk/qcom/gcc-sc7280.c
-+++ b/drivers/clk/qcom/gcc-sc7280.c
-@@ -716,6 +716,7 @@ static const struct freq_tbl ftbl_gcc_qupv3_wrap0_s2_clk_src[] = {
- 	F(29491200, P_GCC_GPLL0_OUT_EVEN, 1, 1536, 15625),
- 	F(32000000, P_GCC_GPLL0_OUT_EVEN, 1, 8, 75),
- 	F(48000000, P_GCC_GPLL0_OUT_EVEN, 1, 4, 25),
-+	F(52174000, P_GCC_GPLL0_OUT_MAIN, 1, 2, 23),
- 	F(64000000, P_GCC_GPLL0_OUT_EVEN, 1, 16, 75),
- 	F(75000000, P_GCC_GPLL0_OUT_EVEN, 4, 0, 0),
- 	F(80000000, P_GCC_GPLL0_OUT_EVEN, 1, 4, 15),
---
-Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc.is a member
-of the Code Aurora Forum, hosted by the  Linux Foundation.
+On Mon, Apr 26, 2021 at 11:14:46PM +0100, Bryan O'Donoghue wrote:
 
+> --- a/arch/arm64/boot/dts/qcom/pm8150b.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/pm8150b.dtsi
+> @@ -53,6 +53,14 @@ power-on@800 {
+>  			status =3D "disabled";
+>  		};
+> =20
+> +		pm8150b_vbus: dcdc@1100 {
+> +			compatible =3D "qcom,pm8150b-vbus-reg";
+> +			regulator-min-microamp =3D <500000>;
+> +			regulator-max-microamp =3D <3000000>;
+> +			status =3D "disabled";
+> +			reg =3D <0x1100>;
+> +		};
+
+This appears to be a generic .dtsi for any system with this device, it's
+very much not idiomatic to be setting regulator constraints that allow
+things to be changed like this by default (even though the board does
+need to explicitly opt in to having the device).
+
+--w2JjAQZceEVGylhD
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmCH9Q8ACgkQJNaLcl1U
+h9AaVQgAgBs+fUXxel/aSQFoL3oVZRueDQWPp8XDY9D/dBGog+05LogwPXQTKdR4
+B+YSdWWKdC8TIDbuEmLQS570sixQYUJAQDqMOomQ0e3kfnhhCfjr1c/2GqqwUzBj
+rtW35VxlgXy4Vq/vUslzhrdKyroZinPoE8XAQrD+DLbCI3SGbtyzcErn8Aao/zV3
+F984mxvrhwK54iQZj2ZgI1ADuODrxh1fObpReNJxWtSayxPAD+i82MiKbBJoUDFL
+T43ssRpfUt3Y1d58oUsYm0kbS29fxCqzLocJ25mzajtc+8D08k6XW2WB+fqgIbK4
+d/9/vu0OB2U7VNzK/GIV/7OdcjtauA==
+=XCkF
+-----END PGP SIGNATURE-----
+
+--w2JjAQZceEVGylhD--
