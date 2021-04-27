@@ -2,99 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8FE4C36BC67
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Apr 2021 01:59:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4494936BC88
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Apr 2021 02:18:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235123AbhDZX77 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Apr 2021 19:59:59 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:45363 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234977AbhDZX76 (ORCPT
+        id S234612AbhD0ATQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Apr 2021 20:19:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36290 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232161AbhD0ATP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Apr 2021 19:59:58 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1619481556; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=GcO9FSTs8okq7VxKnlYZ4hhkxpYDAKyTLpMyXAcIVm0=; b=gRHHMEsfbnCofrcWhFDJNUquHuWK0YaMHjLEbCC2dw1eA2MbcWWICd7XnwCI1LQ0F2WSg3tQ
- lil8XBpN67Zxe/dv33fRkfLeuVSDFWkdLWCf7pFkhUDSU4iFc8rk9dXULvAWu6kS9HwZL78T
- QqJZEphikgGM0FS7w6Al/L1RjTg=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
- 608753cd853c0a2c46380393 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 26 Apr 2021 23:59:09
- GMT
-Sender: bbhatt=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 8D479C43460; Mon, 26 Apr 2021 23:59:08 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
-Received: from malabar-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: bbhatt)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 8576AC433F1;
-        Mon, 26 Apr 2021 23:59:07 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 8576AC433F1
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=bbhatt@codeaurora.org
-From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
-To:     manivannan.sadhasivam@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
-        jhugo@codeaurora.org, linux-kernel@vger.kernel.org,
-        loic.poulain@linaro.org, Bhaumik Bhatt <bbhatt@codeaurora.org>
-Subject: [PATCH] bus: mhi: core: Validate channel ID when processing command completions
-Date:   Mon, 26 Apr 2021 16:58:58 -0700
-Message-Id: <1619481538-4435-1-git-send-email-bbhatt@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        Mon, 26 Apr 2021 20:19:15 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AAC98C061574
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Apr 2021 17:18:31 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id x19so60613243lfa.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Apr 2021 17:18:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=pyVIHOwP3C4yhDRD5vW+wL3hfJcT2qqyYEtguOUdLeo=;
+        b=HEUzG7cLWHPmyhXWxkjwKsUmD2Y553flJc5Cl+8XnD/j0pFMe1gHrk7w5KiivdXpfY
+         4QWMwTfHLofC0tl5PiCAz5j7N3agfqRqmF8bZ4pUZ8VexOL23JEITw/jM0Ie1kaTHV5j
+         /cHNt3lqcNDy45mQRbO3oS4aCepXWp6/psJBMTrnYbpaaujwmPz/YK4PjWBMfaAX4nE/
+         YaDkBh6IQYGimhq6EQWWflBjvcM0X6xV8j1kedrLGiPwnhMIuhMLctqRtOnKG6AHqmLp
+         66EDeJXASJ+Nei71WwhI5Q0OyTXK4QxqwQ2ZrFKWmpxZPtntMu6f7J2zhx/ItsqF1kdT
+         I5PA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=pyVIHOwP3C4yhDRD5vW+wL3hfJcT2qqyYEtguOUdLeo=;
+        b=cc1+pocyhCBlC4JhF/XLfwHQa4gwPmj59B2MHZdLiGqbUmlifmyoQ3N3gVXqX9s8Xa
+         saPNGMgQ7zBQEu6/1+Y9zq9j5jBvQMRJPQj1DX3/n57evEkwSCsmEwt1FBrbyHjKzE7g
+         UYzKTlx0JMT6WSTMtatPlwF7QuiuAWIWRzP7Kv/3a0cipMyKJpAEUjVjNTKtmbuCGL47
+         WK2jKfJlsfxF61rUHkFRzPAPnNnS+GxQWKgFdUQtZmTIaG5GbvseqOllZF0RmDEM63KO
+         QpRPzPNWa3b8RAidYc6E3UOxQ2wxEqhWkgEggNDIUHq8q2A3PmNDFMQ22I27vIJ1GY2H
+         iw6Q==
+X-Gm-Message-State: AOAM532wuTf693CSFJmQfV+AS2x6ZYZgnXnMVQnx4nitW5cvfngA8sLm
+        lZaRa6Xv4wwFDWiTb1Vy/IVYtg==
+X-Google-Smtp-Source: ABdhPJwXwV9rUWZAKxG3qI1LphsTXd/PBKChmF56CmO/pfco0kRq8n7VYwUiuoorB8VYTGzOnm3K1Q==
+X-Received: by 2002:a19:ed11:: with SMTP id y17mr1944907lfy.117.1619482710265;
+        Mon, 26 Apr 2021 17:18:30 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id d15sm1555100lfn.7.2021.04.26.17.18.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 26 Apr 2021 17:18:29 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <abhinavk@codeaurora.org>
+Cc:     Jonathan Marek <jonathan@marek.ca>,
+        Stephen Boyd <sboyd@kernel.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+Subject: [PATCH v2 0/4] drm/msm: improve register snapshotting
+Date:   Tue, 27 Apr 2021 03:18:24 +0300
+Message-Id: <20210427001828.2375555-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.30.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-MHI reads the channel ID from the event ring element sent by the
-device which can be any value between 0 and 255. In order to
-prevent any out of bound accesses, add a check against the maximum
-number of channels supported by the controller and those channels
-not configured yet so as to skip processing of that event ring
-element.
+Rework MSM coredump support: add DSI PHY registers, simplify
+snapshotting code.
 
-Fixes: 1d3173a3bae7 ("bus: mhi: core: Add support for processing events from client device")
-Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
----
- drivers/bus/mhi/core/main.c | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+Changes since v1:
+ - Readd mutex serializing register snapshot calls
 
-diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
-index 22acde1..ed07421 100644
---- a/drivers/bus/mhi/core/main.c
-+++ b/drivers/bus/mhi/core/main.c
-@@ -773,11 +773,16 @@ static void mhi_process_cmd_completion(struct mhi_controller *mhi_cntrl,
- 	cmd_pkt = mhi_to_virtual(mhi_ring, ptr);
- 
- 	chan = MHI_TRE_GET_CMD_CHID(cmd_pkt);
--	mhi_chan = &mhi_cntrl->mhi_chan[chan];
--	write_lock_bh(&mhi_chan->lock);
--	mhi_chan->ccs = MHI_TRE_GET_EV_CODE(tre);
--	complete(&mhi_chan->completion);
--	write_unlock_bh(&mhi_chan->lock);
-+	WARN_ON(chan >= mhi_cntrl->max_chan);
-+
-+	if (chan < mhi_cntrl->max_chan &&
-+	    mhi_cntrl->mhi_chan[chan].configured) {
-+		mhi_chan = &mhi_cntrl->mhi_chan[chan];
-+		write_lock_bh(&mhi_chan->lock);
-+		mhi_chan->ccs = MHI_TRE_GET_EV_CODE(tre);
-+		complete(&mhi_chan->completion);
-+		write_unlock_bh(&mhi_chan->lock);
-+	}
- 
- 	mhi_del_ring_element(mhi_cntrl, mhi_ring);
- }
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+ - Add DSI PHY register dumping support
+
+----------------------------------------------------------------
+Dmitry Baryshkov (4):
+      drm/msm: pass dump state as a function argument
+      drm/msm: make msm_disp_state transient data struct
+      drm/msm: get rid of msm_iomap_size
+      drm/msm/dsi: add DSI PHY registers to snapshot data
+
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c           |  5 +-
+ drivers/gpu/drm/msm/disp/msm_disp_snapshot.c      | 90 +++++++----------------
+ drivers/gpu/drm/msm/disp/msm_disp_snapshot.h      | 21 +-----
+ drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c | 22 ++----
+ drivers/gpu/drm/msm/dp/dp_display.c               |  4 +-
+ drivers/gpu/drm/msm/dsi/dsi.c                     |  5 +-
+ drivers/gpu/drm/msm/dsi/dsi.h                     |  5 +-
+ drivers/gpu/drm/msm/dsi/dsi_host.c                | 11 +--
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy.c             | 31 +++++++-
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy.h             |  4 +
+ drivers/gpu/drm/msm/msm_drv.c                     | 27 +++----
+ drivers/gpu/drm/msm/msm_drv.h                     |  6 +-
+ drivers/gpu/drm/msm/msm_kms.h                     |  8 +-
+ 13 files changed, 97 insertions(+), 142 deletions(-)
+
 
