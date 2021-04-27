@@ -2,95 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E68BF36CA7E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Apr 2021 19:41:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 34FEF36CB7F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Apr 2021 21:11:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236172AbhD0Rl7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Apr 2021 13:41:59 -0400
-Received: from foss.arm.com ([217.140.110.172]:55394 "EHLO foss.arm.com"
+        id S235563AbhD0TLw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Apr 2021 15:11:52 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:34983 "EHLO m43-7.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230219AbhD0Rl6 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Apr 2021 13:41:58 -0400
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 9695731B;
-        Tue, 27 Apr 2021 10:41:14 -0700 (PDT)
-Received: from [10.57.61.101] (unknown [10.57.61.101])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 3EF583F694;
-        Tue, 27 Apr 2021 10:41:13 -0700 (PDT)
-Subject: Re: [PATCH v2 2/3] ACPI/IORT: Add Qualcomm Snapdragon platforms to
- iort_plat_info[]
-To:     Shawn Guo <shawn.guo@linaro.org>, Will Deacon <will@kernel.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Hanjun Guo <guohanjun@huawei.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Mark Rutland <mark.rutland@arm.com>,
-        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
-References: <20210402035602.9484-1-shawn.guo@linaro.org>
- <20210402035602.9484-3-shawn.guo@linaro.org>
-From:   Robin Murphy <robin.murphy@arm.com>
-Message-ID: <06a62dc7-f2d8-7b74-3240-adf8504c5063@arm.com>
-Date:   Tue, 27 Apr 2021 18:41:12 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:78.0) Gecko/20100101
- Thunderbird/78.10.0
+        id S230219AbhD0TLw (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 27 Apr 2021 15:11:52 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1619550668; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=v6eUGz19oOlUzlO97WvNXlGdx655IYIHReGP61Hna/U=;
+ b=DhFjYTDpfhjGk83ATcINGT4Y4lcw4GvhTWH9s6XqTRX3jVtYo+dJ8exvTBo6vbBU84BwZmxW
+ q2AsIkSHQlpF8Wc7TxXmHDHHF4u2W4GUN/yjsa2EBApMiMpbm5wNkifFtki2+2nNTykps1cD
+ lwo709yZynFqnd5xyIayNxwxDqE=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
+ 608861b7a817abd39a772594 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 27 Apr 2021 19:10:47
+ GMT
+Sender: abhinavk=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id D1E00C43460; Tue, 27 Apr 2021 19:10:46 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: abhinavk)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4DEC6C433D3;
+        Tue, 27 Apr 2021 19:10:45 +0000 (UTC)
 MIME-Version: 1.0
-In-Reply-To: <20210402035602.9484-3-shawn.guo@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
 Content-Transfer-Encoding: 7bit
+Date:   Tue, 27 Apr 2021 12:10:45 -0700
+From:   abhinavk@codeaurora.org
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, David Airlie <airlied@linux.ie>,
+        freedreno@lists.freedesktop.org
+Subject: Re: [PATCH v2 0/4] drm/msm: improve register snapshotting
+In-Reply-To: <20210427001828.2375555-1-dmitry.baryshkov@linaro.org>
+References: <20210427001828.2375555-1-dmitry.baryshkov@linaro.org>
+Message-ID: <cffa1baab24ae7dd6f292726abfaf4d5@codeaurora.org>
+X-Sender: abhinavk@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-04-02 04:56, Shawn Guo wrote:
-> The SMMU driver on Qualcomm Snapdragon platforms needs to hook up some
-> QCOM specific arm_smmu_impl.  Define model identifier for QCOM SMMU and
-> add Qualcomm SC8180X platform to iort_plat_info[], so that SMMU
-> driver can detect the model and handle QCOM specific arm_smmu_impl.
+On 2021-04-26 17:18, Dmitry Baryshkov wrote:
+> Rework MSM coredump support: add DSI PHY registers, simplify
+> snapshotting code.
 > 
-> Some device chooses to use manufacturer name in IORT table, like Lenovo
-> Flex 5G, while others use SoC vendor name, such as Microsoft Surface Pro
-> X and Samsung Galaxy Book S.
-
-Just to clarify, my expectation was that the relevant match table and 
-its usage would be private to arm-smmu-qcom. There didn't seem to be any 
-obvious reason that couldn't work, but please do enlighten me if I've 
-overlooked something.
-
-Robin.
-
-> Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
-> ---
->   drivers/acpi/arm64/iort.c | 5 +++++
->   include/linux/acpi_iort.h | 1 +
->   2 files changed, 6 insertions(+)
+> Changes since v1:
+>  - Readd mutex serializing register snapshot calls
 > 
-> diff --git a/drivers/acpi/arm64/iort.c b/drivers/acpi/arm64/iort.c
-> index e2a96d2d399a..f88b8c0a7d84 100644
-> --- a/drivers/acpi/arm64/iort.c
-> +++ b/drivers/acpi/arm64/iort.c
-> @@ -1467,6 +1467,11 @@ static struct acpi_platform_list iort_plat_info[] __initdata = {
->   	/* HiSilicon Hip08 Platform */
->   	{"HISI  ", "HIP08   ", 0, ACPI_SIG_IORT, greater_than_or_equal,
->   	 "Erratum #162001800", IORT_SMMU_V3_PMCG_HISI_HIP08},
-> +	/* Qualcomm Snapdragon Platform */
-> +	{ "LENOVO", "CB-01   ", 0x8180, ACPI_SIG_IORT, equal,
-> +	  "QCOM SMMU", IORT_SMMU_QCOM },
-> +	{ "QCOM  ", "QCOMEDK2", 0x8180, ACPI_SIG_IORT, equal,
-> +	  "QCOM SMMU", IORT_SMMU_QCOM },
->   	{ }
->   };
->   
-> diff --git a/include/linux/acpi_iort.h b/include/linux/acpi_iort.h
-> index 678cdf036948..66c859ea2abf 100644
-> --- a/include/linux/acpi_iort.h
-> +++ b/include/linux/acpi_iort.h
-> @@ -21,6 +21,7 @@
->    */
->   #define IORT_SMMU_GENERIC		0x00000000 /* Generic SMMU */
->   #define IORT_SMMU_V3_PMCG_HISI_HIP08	0x00000001 /* HiSilicon HIP08 PMCG */
-> +#define IORT_SMMU_QCOM			0x00000002 /* QCOM SMMU */
->   
->   struct iort_smmu_pdata {
->   	struct acpi_iort_node *node;
+>  - Add DSI PHY register dumping support
 > 
+Need to mention the dependency here , got missed from the prev patchset
+> ----------------------------------------------------------------
+> Dmitry Baryshkov (4):
+>       drm/msm: pass dump state as a function argument
+>       drm/msm: make msm_disp_state transient data struct
+>       drm/msm: get rid of msm_iomap_size
+>       drm/msm/dsi: add DSI PHY registers to snapshot data
+> 
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c           |  5 +-
+>  drivers/gpu/drm/msm/disp/msm_disp_snapshot.c      | 90 
+> +++++++----------------
+>  drivers/gpu/drm/msm/disp/msm_disp_snapshot.h      | 21 +-----
+>  drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c | 22 ++----
+>  drivers/gpu/drm/msm/dp/dp_display.c               |  4 +-
+>  drivers/gpu/drm/msm/dsi/dsi.c                     |  5 +-
+>  drivers/gpu/drm/msm/dsi/dsi.h                     |  5 +-
+>  drivers/gpu/drm/msm/dsi/dsi_host.c                | 11 +--
+>  drivers/gpu/drm/msm/dsi/phy/dsi_phy.c             | 31 +++++++-
+>  drivers/gpu/drm/msm/dsi/phy/dsi_phy.h             |  4 +
+>  drivers/gpu/drm/msm/msm_drv.c                     | 27 +++----
+>  drivers/gpu/drm/msm/msm_drv.h                     |  6 +-
+>  drivers/gpu/drm/msm/msm_kms.h                     |  8 +-
+>  13 files changed, 97 insertions(+), 142 deletions(-)
+> 
+> 
+> _______________________________________________
+> dri-devel mailing list
+> dri-devel@lists.freedesktop.org
+> https://lists.freedesktop.org/mailman/listinfo/dri-devel
