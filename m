@@ -2,483 +2,393 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4658F36CD5B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Apr 2021 22:56:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A321036CE78
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Apr 2021 00:12:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237072AbhD0U47 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Apr 2021 16:56:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56058 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239073AbhD0U46 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Apr 2021 16:56:58 -0400
-Received: from mail-qt1-x831.google.com (mail-qt1-x831.google.com [IPv6:2607:f8b0:4864:20::831])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E840C06175F
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Apr 2021 13:56:14 -0700 (PDT)
-Received: by mail-qt1-x831.google.com with SMTP id 1so45230687qtb.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Apr 2021 13:56:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=3vypzy7fVK4IlHmF+WrpN6jrxjTQ1LVGCPCz1r/WPgE=;
-        b=P/hB3ikWlPQ593P2IDLqm6gBV/X0ptvrzN9R6x2gRfb/8G9ST0aNikA5kSuoK4Fruu
-         zJP3K2nrI339KfEh1bUmWRykPkv3K9bZT8DrKyJOZk5W+4xSY4Ra1XDkXALKo/r8+2yR
-         Kr09aJESiQc8Znwn/ID6SDdoCElKUFXhJlW58=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=3vypzy7fVK4IlHmF+WrpN6jrxjTQ1LVGCPCz1r/WPgE=;
-        b=H7R8VBzYgW6dXhZ0noFcnoNdq9xMmz7ND23eX3fd5lMb4Px6j+TzgyBC1LEBLxPWdT
-         QEQzzvEUlBsHoxYxdEF566HbkvK64F6cyXrCii29Su3EobYn8/kZycqLfCA5NFGicCoP
-         3Ev826Qa5hc67bybIlJtjuGu9bAc+JWKXwyTb0r5dC6HriQsUPAwxqrNiUMlxsq+Yyyb
-         Jvk6gWayEqDsfWFltAWr9+CXsZAhlJOnyB0+Vub2ViW/58K5qdPvA2vC/QR0sTMN9eHZ
-         0IJ2X+039CTBuPfbVDKNVHObSHDuhmVrIuVwoC+W2S8d59TdRrJ3ACrJj98CAFiz7QXf
-         hfWQ==
-X-Gm-Message-State: AOAM53112g2NG1lqxMUlZa65rs+3UuZMxFb3wkIf8jXr4jDJ8g0WFYcQ
-        gkutoXLN9V4LvOdRibHAx8jUyUUlnzIIAw==
-X-Google-Smtp-Source: ABdhPJyx4GzGVX7M80uH/rW/ma+1mxmIjZpO2cUSV5VeFj/txSsvvdTFbGKruhdXsBPevuV/S8E8eg==
-X-Received: by 2002:a05:622a:1049:: with SMTP id f9mr3486897qte.140.1619556972819;
-        Tue, 27 Apr 2021 13:56:12 -0700 (PDT)
-Received: from mail-yb1-f170.google.com (mail-yb1-f170.google.com. [209.85.219.170])
-        by smtp.gmail.com with ESMTPSA id n16sm740233qtl.48.2021.04.27.13.56.11
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 27 Apr 2021 13:56:11 -0700 (PDT)
-Received: by mail-yb1-f170.google.com with SMTP id j84so1416354ybj.9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Apr 2021 13:56:11 -0700 (PDT)
-X-Received: by 2002:a25:b6c5:: with SMTP id f5mr33864390ybm.407.1619556970580;
- Tue, 27 Apr 2021 13:56:10 -0700 (PDT)
+        id S236360AbhD0WMU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Apr 2021 18:12:20 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:25595 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S236277AbhD0WMT (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 27 Apr 2021 18:12:19 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1619561495; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=t+FiMvec7pN8/ZASnZaDrlvx3QrMD6pR45D++jJAF6c=;
+ b=KT+892TWkwyE48M9+Ba1eQSbBNthsPc5Avy3q6LF+hXMKCLrzJVUW9P8NR2cJhivP5C4UVHZ
+ 06K4VF3jqR3f/mAZ5R0aw2Ca7xn+lb384k8XF4nyhprEp1RZuKZMqLAOFK1274srX1A+anCF
+ OFtXQbdc/212nV71kxPxiXcLXrw=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
+ 60888c16215b831afb663ccb (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 27 Apr 2021 22:11:34
+ GMT
+Sender: abhinavk=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id A02DAC43143; Tue, 27 Apr 2021 22:11:34 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: abhinavk)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id B7A5CC433D3;
+        Tue, 27 Apr 2021 22:11:32 +0000 (UTC)
 MIME-Version: 1.0
-References: <1618210723-2310-1-git-send-email-dikshita@codeaurora.org>
-In-Reply-To: <1618210723-2310-1-git-send-email-dikshita@codeaurora.org>
-From:   Fritz Koenig <frkoenig@chromium.org>
-Date:   Tue, 27 Apr 2021 13:55:59 -0700
-X-Gmail-Original-Message-ID: <CAMfZQbzh+6VQ-Gw1smyPtP-pud2ZK+sG9vUm5ehedfjpBT_qnQ@mail.gmail.com>
-Message-ID: <CAMfZQbzh+6VQ-Gw1smyPtP-pud2ZK+sG9vUm5ehedfjpBT_qnQ@mail.gmail.com>
-Subject: Re: [PATCH] media: venus: Enable low power setting for encoder
-To:     Dikshita Agarwal <dikshita@codeaurora.org>
-Cc:     Linux Media Mailing List <linux-media@vger.kernel.org>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org,
-        Vikash Garodia <vgarodia@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Tue, 27 Apr 2021 15:11:32 -0700
+From:   abhinavk@codeaurora.org
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Stephen Boyd <sboyd@kernel.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <dri-devel@lists.freedesktop.org>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        freedreno <freedreno@lists.freedesktop.org>
+Subject: Re: [Freedreno] [PATCH v2 2/4] drm/msm: make msm_disp_state transient
+ data struct
+In-Reply-To: <CAA8EJpqpHqjWups3_fQfxjJhFXO+Z1Zr0LVwEy+8C-2GMj8oyw@mail.gmail.com>
+References: <20210427001828.2375555-1-dmitry.baryshkov@linaro.org>
+ <20210427001828.2375555-3-dmitry.baryshkov@linaro.org>
+ <64eb1a3343cc9530eecea6816d298ae0@codeaurora.org>
+ <CAA8EJpqpHqjWups3_fQfxjJhFXO+Z1Zr0LVwEy+8C-2GMj8oyw@mail.gmail.com>
+Message-ID: <e2d378fb49b344724277f2e65794af46@codeaurora.org>
+X-Sender: abhinavk@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, Apr 11, 2021 at 11:59 PM Dikshita Agarwal
-<dikshita@codeaurora.org> wrote:
->
-> Set the FW to run in low power for encoder
-> to accommodate more session without losing much on quality.
->
-> Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
-> ---
->  drivers/media/platform/qcom/venus/core.h           |   6 ++
->  drivers/media/platform/qcom/venus/helpers.c        |   2 +
->  drivers/media/platform/qcom/venus/hfi_helper.h     |  10 +-
->  drivers/media/platform/qcom/venus/hfi_platform.c   |  16 +++
->  drivers/media/platform/qcom/venus/hfi_platform.h   |   4 +
->  .../media/platform/qcom/venus/hfi_platform_v4.c    |  28 ++++--
->  .../media/platform/qcom/venus/hfi_platform_v6.c    |  28 ++++--
->  drivers/media/platform/qcom/venus/pm_helpers.c     | 108 ++++++++++++++++++---
->  8 files changed, 167 insertions(+), 35 deletions(-)
->
-> diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
-> index 9451e54..9b5031f 100644
-> --- a/drivers/media/platform/qcom/venus/core.h
-> +++ b/drivers/media/platform/qcom/venus/core.h
-> @@ -257,6 +257,7 @@ struct clock_data {
->         unsigned long freq;
->         unsigned long vpp_freq;
->         unsigned long vsp_freq;
-> +       unsigned long low_power_freq;
->  };
->
->  #define to_venus_buffer(ptr)   container_of(ptr, struct venus_buffer, vb)
-> @@ -280,6 +281,10 @@ struct venus_ts_metadata {
->         struct v4l2_timecode tc;
->  };
->
-> +enum venus_inst_modes {
-> +       VENUS_LOW_POWER = BIT(0),
-> +};
-> +
->  /**
->   * struct venus_inst - holds per instance parameters
->   *
-> @@ -400,6 +405,7 @@ struct venus_inst {
->         unsigned int pic_struct;
->         bool next_buf_last;
->         bool drain_active;
-> +       enum venus_inst_modes flags;
->  };
->
->  #define IS_V1(core)    ((core)->res->hfi_version == HFI_VERSION_1XX)
-> diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/platform/qcom/venus/helpers.c
-> index 76ece2f..c6b6a30 100644
-> --- a/drivers/media/platform/qcom/venus/helpers.c
-> +++ b/drivers/media/platform/qcom/venus/helpers.c
-> @@ -1566,6 +1566,8 @@ int venus_helper_session_init(struct venus_inst *inst)
->                                                                   session_type);
->         inst->clk_data.vsp_freq = hfi_platform_get_codec_vsp_freq(version, codec,
->                                                                   session_type);
-> +       inst->clk_data.low_power_freq = hfi_platform_get_codec_lp_freq(version, codec,
-> +                                                                      session_type);
->
->         return 0;
->  }
-> diff --git a/drivers/media/platform/qcom/venus/hfi_helper.h b/drivers/media/platform/qcom/venus/hfi_helper.h
-> index 6b524c7..5621cdb 100644
-> --- a/drivers/media/platform/qcom/venus/hfi_helper.h
-> +++ b/drivers/media/platform/qcom/venus/hfi_helper.h
-> @@ -412,9 +412,6 @@
->  #define HFI_BUFFER_MODE_RING                   0x1000002
->  #define HFI_BUFFER_MODE_DYNAMIC                        0x1000003
->
-> -#define HFI_VENC_PERFMODE_MAX_QUALITY          0x1
-> -#define HFI_VENC_PERFMODE_POWER_SAVE           0x2
-> -
->  /*
->   * HFI_PROPERTY_SYS_COMMON_START
->   * HFI_DOMAIN_BASE_COMMON + HFI_ARCH_COMMON_OFFSET + 0x0000
-> @@ -815,6 +812,13 @@ struct hfi_framesize {
->         u32 height;
->  };
->
-> +#define HFI_VENC_PERFMODE_MAX_QUALITY          0x1
-> +#define HFI_VENC_PERFMODE_POWER_SAVE           0x2
-> +
-> +struct hfi_perf_mode {
-> +       u32 video_perf_mode;
-> +};
-> +
->  #define VIDC_CORE_ID_DEFAULT   0
->  #define VIDC_CORE_ID_1         1
->  #define VIDC_CORE_ID_2         2
-> diff --git a/drivers/media/platform/qcom/venus/hfi_platform.c b/drivers/media/platform/qcom/venus/hfi_platform.c
-> index 8f47804..f5b4e1f 100644
-> --- a/drivers/media/platform/qcom/venus/hfi_platform.c
-> +++ b/drivers/media/platform/qcom/venus/hfi_platform.c
-> @@ -50,6 +50,22 @@ hfi_platform_get_codec_vsp_freq(enum hfi_version version, u32 codec, u32 session
->         return freq;
->  }
->
-> +unsigned long
-> +hfi_platform_get_codec_lp_freq(enum hfi_version version, u32 codec, u32 session_type)
-> +{
-> +       const struct hfi_platform *plat;
-> +       unsigned long freq = 0;
-> +
-> +       plat = hfi_platform_get(version);
-> +       if (!plat)
-> +               return 0;
-> +
-> +       if (plat->codec_lp_freq)
-> +               freq = plat->codec_lp_freq(session_type, codec);
-> +
-> +       return freq;
-> +}
-> +
->  u8 hfi_platform_num_vpp_pipes(enum hfi_version version)
->  {
->         const struct hfi_platform *plat;
-> diff --git a/drivers/media/platform/qcom/venus/hfi_platform.h b/drivers/media/platform/qcom/venus/hfi_platform.h
-> index 3819bb2..2dbe608 100644
-> --- a/drivers/media/platform/qcom/venus/hfi_platform.h
-> +++ b/drivers/media/platform/qcom/venus/hfi_platform.h
-> @@ -43,11 +43,13 @@ struct hfi_platform_codec_freq_data {
->         u32 session_type;
->         unsigned long vpp_freq;
->         unsigned long vsp_freq;
-> +       unsigned long low_power_freq;
->  };
->
->  struct hfi_platform {
->         unsigned long (*codec_vpp_freq)(u32 session_type, u32 codec);
->         unsigned long (*codec_vsp_freq)(u32 session_type, u32 codec);
-> +       unsigned long (*codec_lp_freq)(u32 session_type, u32 codec);
->         void (*codecs)(u32 *enc_codecs, u32 *dec_codecs, u32 *count);
->         const struct hfi_plat_caps *(*capabilities)(unsigned int *entries);
->         u8 (*num_vpp_pipes)(void);
-> @@ -63,5 +65,7 @@ unsigned long hfi_platform_get_codec_vpp_freq(enum hfi_version version, u32 code
->                                               u32 session_type);
->  unsigned long hfi_platform_get_codec_vsp_freq(enum hfi_version version, u32 codec,
->                                               u32 session_type);
-> +unsigned long hfi_platform_get_codec_lp_freq(enum hfi_version version, u32 codec,
-> +                                            u32 session_type);
->  u8 hfi_platform_num_vpp_pipes(enum hfi_version version);
->  #endif
-> diff --git a/drivers/media/platform/qcom/venus/hfi_platform_v4.c b/drivers/media/platform/qcom/venus/hfi_platform_v4.c
-> index 3848bb6..3f7f527 100644
-> --- a/drivers/media/platform/qcom/venus/hfi_platform_v4.c
-> +++ b/drivers/media/platform/qcom/venus/hfi_platform_v4.c
-> @@ -262,14 +262,14 @@ static void get_codecs(u32 *enc_codecs, u32 *dec_codecs, u32 *count)
->  }
->
->  static const struct hfi_platform_codec_freq_data codec_freq_data[] =  {
-> -       { V4L2_PIX_FMT_H264, VIDC_SESSION_TYPE_ENC, 675, 10 },
-> -       { V4L2_PIX_FMT_HEVC, VIDC_SESSION_TYPE_ENC, 675, 10 },
-> -       { V4L2_PIX_FMT_VP8, VIDC_SESSION_TYPE_ENC, 675, 10 },
-> -       { V4L2_PIX_FMT_MPEG2, VIDC_SESSION_TYPE_DEC, 200, 10 },
-> -       { V4L2_PIX_FMT_H264, VIDC_SESSION_TYPE_DEC, 200, 10 },
-> -       { V4L2_PIX_FMT_HEVC, VIDC_SESSION_TYPE_DEC, 200, 10 },
-> -       { V4L2_PIX_FMT_VP8, VIDC_SESSION_TYPE_DEC, 200, 10 },
-> -       { V4L2_PIX_FMT_VP9, VIDC_SESSION_TYPE_DEC, 200, 10 },
-> +       { V4L2_PIX_FMT_H264, VIDC_SESSION_TYPE_ENC, 675, 10, 320 },
-> +       { V4L2_PIX_FMT_HEVC, VIDC_SESSION_TYPE_ENC, 675, 10, 320 },
-> +       { V4L2_PIX_FMT_VP8, VIDC_SESSION_TYPE_ENC, 675, 10, 320 },
-> +       { V4L2_PIX_FMT_MPEG2, VIDC_SESSION_TYPE_DEC, 200, 10, 200 },
-> +       { V4L2_PIX_FMT_H264, VIDC_SESSION_TYPE_DEC, 200, 10, 200 },
-> +       { V4L2_PIX_FMT_HEVC, VIDC_SESSION_TYPE_DEC, 200, 10, 200 },
-> +       { V4L2_PIX_FMT_VP8, VIDC_SESSION_TYPE_DEC, 200, 10, 200 },
-> +       { V4L2_PIX_FMT_VP9, VIDC_SESSION_TYPE_DEC, 200, 10, 200 },
->  };
->
->  static const struct hfi_platform_codec_freq_data *
-> @@ -311,9 +311,21 @@ static unsigned long codec_vsp_freq(u32 session_type, u32 codec)
->         return 0;
->  }
->
-> +static unsigned long codec_lp_freq(u32 session_type, u32 codec)
-> +{
-> +       const struct hfi_platform_codec_freq_data *data;
-> +
-> +       data = get_codec_freq_data(session_type, codec);
-> +       if (data)
-> +               return data->low_power_freq;
-> +
-> +       return 0;
-> +}
-> +
->  const struct hfi_platform hfi_plat_v4 = {
->         .codec_vpp_freq = codec_vpp_freq,
->         .codec_vsp_freq = codec_vsp_freq,
-> +       .codec_lp_freq = codec_lp_freq,
->         .codecs = get_codecs,
->         .capabilities = get_capabilities,
->  };
-> diff --git a/drivers/media/platform/qcom/venus/hfi_platform_v6.c b/drivers/media/platform/qcom/venus/hfi_platform_v6.c
-> index 2278be1..15d0dc8 100644
-> --- a/drivers/media/platform/qcom/venus/hfi_platform_v6.c
-> +++ b/drivers/media/platform/qcom/venus/hfi_platform_v6.c
-> @@ -262,14 +262,14 @@ static void get_codecs(u32 *enc_codecs, u32 *dec_codecs, u32 *count)
->  }
->
->  static const struct hfi_platform_codec_freq_data codec_freq_data[] = {
-> -       { V4L2_PIX_FMT_H264, VIDC_SESSION_TYPE_ENC, 675, 25 },
-> -       { V4L2_PIX_FMT_HEVC, VIDC_SESSION_TYPE_ENC, 675, 25 },
-> -       { V4L2_PIX_FMT_VP8, VIDC_SESSION_TYPE_ENC, 675, 60 },
-> -       { V4L2_PIX_FMT_MPEG2, VIDC_SESSION_TYPE_DEC, 200, 25 },
-> -       { V4L2_PIX_FMT_H264, VIDC_SESSION_TYPE_DEC, 200, 25 },
-> -       { V4L2_PIX_FMT_HEVC, VIDC_SESSION_TYPE_DEC, 200, 25 },
-> -       { V4L2_PIX_FMT_VP8, VIDC_SESSION_TYPE_DEC, 200, 60 },
-> -       { V4L2_PIX_FMT_VP9, VIDC_SESSION_TYPE_DEC, 200, 60 },
-> +       { V4L2_PIX_FMT_H264, VIDC_SESSION_TYPE_ENC, 675, 25, 320 },
-> +       { V4L2_PIX_FMT_HEVC, VIDC_SESSION_TYPE_ENC, 675, 25, 320 },
-> +       { V4L2_PIX_FMT_VP8, VIDC_SESSION_TYPE_ENC, 675, 60, 320 },
-> +       { V4L2_PIX_FMT_MPEG2, VIDC_SESSION_TYPE_DEC, 200, 25, 200 },
-> +       { V4L2_PIX_FMT_H264, VIDC_SESSION_TYPE_DEC, 200, 25, 200 },
-> +       { V4L2_PIX_FMT_HEVC, VIDC_SESSION_TYPE_DEC, 200, 25, 200 },
-> +       { V4L2_PIX_FMT_VP8, VIDC_SESSION_TYPE_DEC, 200, 60, 200 },
-> +       { V4L2_PIX_FMT_VP9, VIDC_SESSION_TYPE_DEC, 200, 60, 200 },
->  };
->
->  static const struct hfi_platform_codec_freq_data *
-> @@ -311,6 +311,17 @@ static unsigned long codec_vsp_freq(u32 session_type, u32 codec)
->         return 0;
->  }
->
-> +static unsigned long codec_lp_freq(u32 session_type, u32 codec)
-> +{
-> +       const struct hfi_platform_codec_freq_data *data;
-> +
-> +       data = get_codec_freq_data(session_type, codec);
-> +       if (data)
-> +               return data->low_power_freq;
-> +
-> +       return 0;
-> +}
-> +
->  static u8 num_vpp_pipes(void)
->  {
->         return 4;
-> @@ -319,6 +330,7 @@ static u8 num_vpp_pipes(void)
->  const struct hfi_platform hfi_plat_v6 = {
->         .codec_vpp_freq = codec_vpp_freq,
->         .codec_vsp_freq = codec_vsp_freq,
-> +       .codec_lp_freq = codec_lp_freq,
->         .codecs = get_codecs,
->         .capabilities = get_capabilities,
->         .num_vpp_pipes = num_vpp_pipes,
-> diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c b/drivers/media/platform/qcom/venus/pm_helpers.c
-> index 43c4e3d..a3f3e31 100644
-> --- a/drivers/media/platform/qcom/venus/pm_helpers.c
-> +++ b/drivers/media/platform/qcom/venus/pm_helpers.c
-> @@ -492,8 +492,50 @@ static int poweron_coreid(struct venus_core *core, unsigned int coreid_mask)
->         return 0;
->  }
->
-> +static inline int power_save_mode_enable(struct venus_inst *inst,
-> +                                        bool enable)
-> +{
-> +       struct venc_controls *enc_ctr = &inst->controls.enc;
-> +       const u32 ptype = HFI_PROPERTY_CONFIG_VENC_PERF_MODE;
-> +       u32 venc_mode;
-> +       int ret = 0;
-> +
-> +       if (inst->session_type != VIDC_SESSION_TYPE_ENC)
-> +               return 0;
-> +
-> +       if (enc_ctr->bitrate_mode == V4L2_MPEG_VIDEO_BITRATE_MODE_CQ)
-> +               enable = false;
-> +
-> +       venc_mode = enable ? HFI_VENC_PERFMODE_POWER_SAVE :
-> +               HFI_VENC_PERFMODE_MAX_QUALITY;
-> +
-> +       ret = hfi_session_set_property(inst, ptype, &venc_mode);
-> +       if (ret)
-> +               return ret;
-> +
-> +       inst->flags = enable ? inst->flags | VENUS_LOW_POWER :
-> +               inst->flags & ~VENUS_LOW_POWER;
-> +
-> +       return ret;
-> +}
-> +
-> +static int move_core_to_power_save_mode(struct venus_core *core,
-> +                                       u32 core_id)
-> +{
-> +       struct venus_inst *inst = NULL;
-> +
-> +       mutex_lock(&core->lock);
-> +       list_for_each_entry(inst, &core->instances, list) {
-> +               if (inst->clk_data.core_id == core_id &&
-> +                   inst->session_type == VIDC_SESSION_TYPE_ENC)
-> +                       power_save_mode_enable(inst, true);
-> +       }
-> +       mutex_unlock(&core->lock);
-> +       return 0;
-> +}
-> +
->  static void
-> -min_loaded_core(struct venus_inst *inst, u32 *min_coreid, u32 *min_load)
-> +min_loaded_core(struct venus_inst *inst, u32 *min_coreid, u32 *min_load, bool low_power)
->  {
->         u32 mbs_per_sec, load, core1_load = 0, core2_load = 0;
->         u32 cores_max = core_num_max(inst);
-> @@ -511,7 +553,14 @@ min_loaded_core(struct venus_inst *inst, u32 *min_coreid, u32 *min_load)
->                 if (inst_pos->state != INST_START)
->                         continue;
->
-> -               vpp_freq = inst_pos->clk_data.vpp_freq;
-> +               if (inst->session_type == VIDC_SESSION_TYPE_DEC)
-> +                       vpp_freq = inst_pos->clk_data.vpp_freq;
-> +               else if (inst->session_type == VIDC_SESSION_TYPE_ENC)
-> +                       vpp_freq = low_power ? inst_pos->clk_data.vpp_freq :
-> +                               inst_pos->clk_data.low_power_freq;
-> +               else
-> +                       continue;
-> +
->                 coreid = inst_pos->clk_data.core_id;
->
->                 mbs_per_sec = load_per_instance(inst_pos);
-> @@ -543,9 +592,11 @@ static int decide_core(struct venus_inst *inst)
->  {
->         const u32 ptype = HFI_PROPERTY_CONFIG_VIDEOCORES_USAGE;
->         struct venus_core *core = inst->core;
-> -       u32 min_coreid, min_load, inst_load;
-> +       u32 min_coreid, min_load, cur_inst_load;
-> +       u32 min_lp_coreid, min_lp_load, cur_inst_lp_load;
->         struct hfi_videocores_usage_type cu;
->         unsigned long max_freq;
-> +       int ret = 0;
->
->         if (legacy_binding) {
->                 if (inst->session_type == VIDC_SESSION_TYPE_DEC)
-> @@ -559,23 +610,43 @@ static int decide_core(struct venus_inst *inst)
->         if (inst->clk_data.core_id != VIDC_CORE_ID_DEFAULT)
->                 return 0;
->
-> -       inst_load = load_per_instance(inst);
-> -       inst_load *= inst->clk_data.vpp_freq;
-> -       max_freq = core->res->freq_tbl[0].freq;
-> +       cur_inst_load = load_per_instance(inst);
-> +       cur_inst_load *= inst->clk_data.vpp_freq;
-> +       /*TODO : divide this inst->load by work_route */
->
-> -       min_loaded_core(inst, &min_coreid, &min_load);
-> +       cur_inst_lp_load = load_per_instance(inst);
-> +       cur_inst_lp_load *= inst->clk_data.low_power_freq;
-> +       /*TODO : divide this inst->load by work_route */
->
-> -       if ((inst_load + min_load) > max_freq) {
-> -               dev_warn(core->dev, "HW is overloaded, needed: %u max: %lu\n",
-> -                        inst_load, max_freq);
-> +       max_freq = core->res->freq_tbl[0].freq;
-> +
-> +       min_loaded_core(inst, &min_coreid, &min_load, false);
-> +       min_loaded_core(inst, &min_lp_coreid, &min_lp_load, true);
-> +
-> +       if (cur_inst_load + min_load <= max_freq) {
-> +               inst->clk_data.core_id = min_coreid;
-> +               cu.video_core_enable_mask = min_coreid;
-> +       } else if (cur_inst_lp_load + min_load <= max_freq) {
-> +               /* Move current instance to LP and return */
-> +               inst->clk_data.core_id = min_coreid;
-> +               cu.video_core_enable_mask = min_coreid;
-> +               power_save_mode_enable(inst, true);
-> +       } else if (cur_inst_lp_load + min_lp_load <= max_freq) {
-> +               /* Move all instances to LP mode and return */
-> +               inst->clk_data.core_id = min_lp_coreid;
-> +               cu.video_core_enable_mask = min_lp_coreid;
-> +               move_core_to_power_save_mode(core, min_lp_coreid);
-> +       } else {
-> +               dev_warn(core->dev, "HW can't support this load");
->                 return -EINVAL;
->         }
->
-> -       inst->clk_data.core_id = min_coreid;
-> -       cu.video_core_enable_mask = min_coreid;
-> -
->  done:
-> -       return hfi_session_set_property(inst, ptype, &cu);
-> +       ret = hfi_session_set_property(inst, ptype, &cu);
-> +       if (ret)
-> +               return ret;
-> +
-> +       return ret;
->  }
->
->  static int acquire_core(struct venus_inst *inst)
-> @@ -936,7 +1007,7 @@ static int core_power_v4(struct device *dev, int on)
->  static unsigned long calculate_inst_freq(struct venus_inst *inst,
->                                          unsigned long filled_len)
->  {
-> -       unsigned long vpp_freq = 0, vsp_freq = 0;
-> +       unsigned long vpp_freq_per_mb = 0, vpp_freq = 0, vsp_freq = 0;
->         u32 fps = (u32)inst->fps;
->         u32 mbs_per_sec;
->
-> @@ -945,7 +1016,12 @@ static unsigned long calculate_inst_freq(struct venus_inst *inst,
->         if (inst->state != INST_START)
->                 return 0;
->
-> -       vpp_freq = mbs_per_sec * inst->clk_data.vpp_freq;
-> +       if (inst->session_type == VIDC_SESSION_TYPE_ENC)
-> +               vpp_freq_per_mb = inst->flags & VENUS_LOW_POWER ?
-> +                       inst->clk_data.low_power_freq :
-> +                       inst->clk_data.vpp_freq;
-> +
-> +       vpp_freq = mbs_per_sec * vpp_freq_per_mb;
->         /* 21 / 20 is overhead factor */
->         vpp_freq += vpp_freq / 20;
->         vsp_freq = mbs_per_sec * inst->clk_data.vsp_freq;
-> --
-> 2.7.4
->
+On 2021-04-27 13:29, Dmitry Baryshkov wrote:
+> On Tue, 27 Apr 2021 at 22:19, <abhinavk@codeaurora.org> wrote:
+>> 
+>> Hi Dmitry
+>> 
+>> On 2021-04-26 17:18, Dmitry Baryshkov wrote:
+>> > Instead of allocating snapshotting structure at the driver probe time
+>> > and later handling concurrent access, actual state, etc, make
+>> > msm_disp_state transient struct. Allocate one when snapshotting happens
+>> > and free it after coredump data is read by userspace.
+>> >
+>> Can you please check my previous comment on coredump_pending?
+>> 
+>> https://lore.kernel.org/dri-devel/186825e2fb7bea8d45f33b5c1fa3509f@codeaurora.org/T/#u
+>> 
+>> That helps to serialize read/write of coredump.
+> 
+> Regarding the serialization of read/write. As the disp_state becomes
+> the transient object, the need for such serialization vanishes:
+>  - Before the snapshot is complete, the object is not linked outside
+> of msm_disp_snapshot functions.
+>  - When the snapshot is complete, it becomes linked from the codedump
+> subsystem. After this it is only read by the coredump, nobody will
+> write to it.
+>  - Next snapshot will allocate a new disp_state structure.
+>  - If dev_coredumpm is called when the previous snapshot is still
+> referenced (the device exists), the new snapshot is silently freed.
+> 
+> Thus there is no need to sync the read/write operations. They are now
+> naturally serialized.
+Alright, just make sure to validate the robustness of this using the 
+method mentioned earlier.
+Apart from that,
 
-Tested-by: Fritz Koenig <frkoenig@chromium.org>
+Reviewed-by: Abhinav Kumar <abhinavk@codeaurora.org>
+> 
+>> 
+>> Rest of the changes on this one look fine to me.
+>> 
+>> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> > ---
+>> >  drivers/gpu/drm/msm/disp/msm_disp_snapshot.c  | 90 ++++++-------------
+>> >  drivers/gpu/drm/msm/disp/msm_disp_snapshot.h  | 13 +--
+>> >  .../gpu/drm/msm/disp/msm_disp_snapshot_util.c |  5 +-
+>> >  drivers/gpu/drm/msm/msm_kms.h                 |  6 +-
+>> >  4 files changed, 37 insertions(+), 77 deletions(-)
+>> >
+>> > diff --git a/drivers/gpu/drm/msm/disp/msm_disp_snapshot.c
+>> > b/drivers/gpu/drm/msm/disp/msm_disp_snapshot.c
+>> > index 70fd5a1fe13e..a4a7cb06bc87 100644
+>> > --- a/drivers/gpu/drm/msm/disp/msm_disp_snapshot.c
+>> > +++ b/drivers/gpu/drm/msm/disp/msm_disp_snapshot.c
+>> > @@ -7,8 +7,7 @@
+>> >
+>> >  #include "msm_disp_snapshot.h"
+>> >
+>> > -#ifdef CONFIG_DEV_COREDUMP
+>> > -static ssize_t disp_devcoredump_read(char *buffer, loff_t offset,
+>> > +static ssize_t __maybe_unused disp_devcoredump_read(char *buffer,
+>> > loff_t offset,
+>> >               size_t count, void *data, size_t datalen)
+>> >  {
+>> >       struct drm_print_iterator iter;
+>> > @@ -29,52 +28,47 @@ static ssize_t disp_devcoredump_read(char *buffer,
+>> > loff_t offset,
+>> >       return count - iter.remain;
+>> >  }
+>> >
+>> > -static void disp_devcoredump_free(void *data)
+>> > +static void _msm_disp_snapshot_work(struct kthread_work *work)
+>> >  {
+>> > +     struct msm_kms *kms = container_of(work, struct msm_kms, dump_work);
+>> > +     struct drm_device *drm_dev = kms->dev;
+>> >       struct msm_disp_state *disp_state;
+>> > +     struct drm_printer p;
+>> >
+>> > -     disp_state = data;
+>> > -
+>> > -     msm_disp_state_free(disp_state);
+>> > +     disp_state = kzalloc(sizeof(struct msm_disp_state), GFP_KERNEL);
+>> > +     if (!disp_state)
+>> > +             return;
+>> >
+>> > -     disp_state->coredump_pending = false;
+>> > -}
+>> > -#endif /* CONFIG_DEV_COREDUMP */
+>> > +     disp_state->dev = drm_dev->dev;
+>> > +     disp_state->drm_dev = drm_dev;
+>> >
+>> > -static void _msm_disp_snapshot_work(struct kthread_work *work)
+>> > -{
+>> > -     struct msm_disp_state *disp_state = container_of(work, struct
+>> > msm_disp_state, dump_work);
+>> > -     struct drm_printer p;
+>> > +     INIT_LIST_HEAD(&disp_state->blocks);
+>> >
+>> > -     mutex_lock(&disp_state->mutex);
+>> > +     /* Serialize dumping here */
+>> > +     mutex_lock(&kms->dump_mutex);
+>> >
+>> >       msm_disp_snapshot_capture_state(disp_state);
+>> >
+>> > +     mutex_unlock(&kms->dump_mutex);
+>> > +
+>> >       if (MSM_DISP_SNAPSHOT_DUMP_IN_CONSOLE) {
+>> >               p = drm_info_printer(disp_state->drm_dev->dev);
+>> >               msm_disp_state_print(disp_state, &p);
+>> >       }
+>> >
+>> >       /*
+>> > -      * if devcoredump is not defined free the state immediately
+>> > -      * otherwise it will be freed in the free handler.
+>> > +      * If COREDUMP is disabled, the stub will call the free function.
+>> > +      * If there is a codedump pending for the device, the dev_coredumpm()
+>> > +      * will also free new coredump state.
+>> >        */
+>> > -#ifdef CONFIG_DEV_COREDUMP
+>> >       dev_coredumpm(disp_state->dev, THIS_MODULE, disp_state, 0,
+>> > GFP_KERNEL,
+>> > -                     disp_devcoredump_read, disp_devcoredump_free);
+>> > -     disp_state->coredump_pending = true;
+>> > -#else
+>> > -     msm_disp_state_free(disp_state);
+>> > -#endif
+>> > -
+>> > -     mutex_unlock(&disp_state->mutex);
+>> > +                     disp_devcoredump_read, msm_disp_state_free);
+>> >  }
+>> >
+>> >  void msm_disp_snapshot_state(struct drm_device *drm_dev)
+>> >  {
+>> >       struct msm_drm_private *priv;
+>> >       struct msm_kms *kms;
+>> > -     struct msm_disp_state *disp_state;
+>> >
+>> >       if (!drm_dev) {
+>> >               DRM_ERROR("invalid params\n");
+>> > @@ -83,30 +77,13 @@ void msm_disp_snapshot_state(struct drm_device
+>> > *drm_dev)
+>> >
+>> >       priv = drm_dev->dev_private;
+>> >       kms = priv->kms;
+>> > -     disp_state = kms->disp_state;
+>> > -
+>> > -     if (!disp_state) {
+>> > -             DRM_ERROR("invalid params\n");
+>> > -             return;
+>> > -     }
+>> >
+>> > -     /*
+>> > -      * if there is a coredump pending return immediately till dump
+>> > -      * if read by userspace or timeout happens
+>> > -      */
+>> > -     if (disp_state->coredump_pending) {
+>> > -             DRM_DEBUG("coredump is pending read\n");
+>> > -             return;
+>> > -     }
+>> > -
+>> > -     kthread_queue_work(disp_state->dump_worker,
+>> > -                     &disp_state->dump_work);
+>> > +     kthread_queue_work(kms->dump_worker, &kms->dump_work);
+>> >  }
+>> >
+>> >  int msm_disp_snapshot_init(struct drm_device *drm_dev)
+>> >  {
+>> >       struct msm_drm_private *priv;
+>> > -     struct msm_disp_state *disp_state;
+>> >       struct msm_kms *kms;
+>> >
+>> >       if (!drm_dev) {
+>> > @@ -117,22 +94,13 @@ int msm_disp_snapshot_init(struct drm_device
+>> > *drm_dev)
+>> >       priv = drm_dev->dev_private;
+>> >       kms = priv->kms;
+>> >
+>> > -     disp_state = devm_kzalloc(drm_dev->dev, sizeof(struct
+>> > msm_disp_state), GFP_KERNEL);
+>> > -
+>> > -     mutex_init(&disp_state->mutex);
+>> > +     mutex_init(&kms->dump_mutex);
+>> >
+>> > -     disp_state->dev = drm_dev->dev;
+>> > -     disp_state->drm_dev = drm_dev;
+>> > -
+>> > -     INIT_LIST_HEAD(&disp_state->blocks);
+>> > -
+>> > -     disp_state->dump_worker = kthread_create_worker(0, "%s",
+>> > "disp_snapshot");
+>> > -     if (IS_ERR(disp_state->dump_worker))
+>> > +     kms->dump_worker = kthread_create_worker(0, "%s", "disp_snapshot");
+>> > +     if (IS_ERR(kms->dump_worker))
+>> >               DRM_ERROR("failed to create disp state task\n");
+>> >
+>> > -     kthread_init_work(&disp_state->dump_work, _msm_disp_snapshot_work);
+>> > -
+>> > -     kms->disp_state = disp_state;
+>> > +     kthread_init_work(&kms->dump_work, _msm_disp_snapshot_work);
+>> >
+>> >       return 0;
+>> >  }
+>> > @@ -141,7 +109,6 @@ void msm_disp_snapshot_destroy(struct drm_device
+>> > *drm_dev)
+>> >  {
+>> >       struct msm_kms *kms;
+>> >       struct msm_drm_private *priv;
+>> > -     struct msm_disp_state *disp_state;
+>> >
+>> >       if (!drm_dev) {
+>> >               DRM_ERROR("invalid params\n");
+>> > @@ -150,12 +117,9 @@ void msm_disp_snapshot_destroy(struct drm_device
+>> > *drm_dev)
+>> >
+>> >       priv = drm_dev->dev_private;
+>> >       kms = priv->kms;
+>> > -     disp_state = kms->disp_state;
+>> > -
+>> > -     if (disp_state->dump_worker)
+>> > -             kthread_destroy_worker(disp_state->dump_worker);
+>> >
+>> > -     list_del(&disp_state->blocks);
+>> > +     if (kms->dump_worker)
+>> > +             kthread_destroy_worker(kms->dump_worker);
+>> >
+>> > -     mutex_destroy(&disp_state->mutex);
+>> > +     mutex_destroy(&kms->dump_mutex);
+>> >  }
+>> > diff --git a/drivers/gpu/drm/msm/disp/msm_disp_snapshot.h
+>> > b/drivers/gpu/drm/msm/disp/msm_disp_snapshot.h
+>> > index 32f52799a1ba..c6174a366095 100644
+>> > --- a/drivers/gpu/drm/msm/disp/msm_disp_snapshot.h
+>> > +++ b/drivers/gpu/drm/msm/disp/msm_disp_snapshot.h
+>> > @@ -41,26 +41,17 @@
+>> >   * struct msm_disp_state - structure to store current dpu state
+>> >   * @dev: device pointer
+>> >   * @drm_dev: drm device pointer
+>> > - * @mutex: mutex to serialize access to serialze dumps, debugfs access
+>> > - * @coredump_pending: coredump is pending read from userspace
+>> >   * @atomic_state: atomic state duplicated at the time of the error
+>> > - * @dump_worker: kworker thread which runs the dump work
+>> > - * @dump_work: kwork which dumps the registers and drm state
+>> >   * @timestamp: timestamp at which the coredump was captured
+>> >   */
+>> >  struct msm_disp_state {
+>> >       struct device *dev;
+>> >       struct drm_device *drm_dev;
+>> > -     struct mutex mutex;
+>> > -
+>> > -     bool coredump_pending;
+>> >
+>> >       struct list_head blocks;
+>> >
+>> >       struct drm_atomic_state *atomic_state;
+>> >
+>> > -     struct kthread_worker *dump_worker;
+>> > -     struct kthread_work dump_work;
+>> >       ktime_t timestamp;
+>> >  };
+>> >
+>> > @@ -123,11 +114,11 @@ void msm_disp_snapshot_capture_state(struct
+>> > msm_disp_state *disp_state);
+>> >
+>> >  /**
+>> >   * msm_disp_state_free - free the memory after the coredump has been
+>> > read
+>> > - * @disp_state:          handle to struct msm_disp_state
+>> > + * @data:        handle to struct msm_disp_state
+>> >
+>> >   * Returns: none
+>> >   */
+>> > -void msm_disp_state_free(struct msm_disp_state *disp_state);
+>> > +void msm_disp_state_free(void *data);
+>> >
+>> >  /**
+>> >   * msm_disp_snapshot_add_block - add a hardware block with its
+>> > register dump
+>> > diff --git a/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c
+>> > b/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c
+>> > index ca6632550337..cabe15190ec1 100644
+>> > --- a/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c
+>> > +++ b/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c
+>> > @@ -142,8 +142,9 @@ void msm_disp_snapshot_capture_state(struct
+>> > msm_disp_state *disp_state)
+>> >       msm_disp_capture_atomic_state(disp_state);
+>> >  }
+>> >
+>> > -void msm_disp_state_free(struct msm_disp_state *disp_state)
+>> > +void msm_disp_state_free(void *data)
+>> >  {
+>> > +     struct msm_disp_state *disp_state = data;
+>> >       struct msm_disp_state_block *block, *tmp;
+>> >
+>> >       if (disp_state->atomic_state) {
+>> > @@ -156,6 +157,8 @@ void msm_disp_state_free(struct msm_disp_state
+>> > *disp_state)
+>> >               kfree(block->state);
+>> >               kfree(block);
+>> >       }
+>> > +
+>> > +     kfree(disp_state);
+>> >  }
+>> >
+>> >  void msm_disp_snapshot_add_block(struct msm_disp_state *disp_state,
+>> > u32 len,
+>> > diff --git a/drivers/gpu/drm/msm/msm_kms.h
+>> > b/drivers/gpu/drm/msm/msm_kms.h
+>> > index 146dcab123f4..086a2d59b8c8 100644
+>> > --- a/drivers/gpu/drm/msm/msm_kms.h
+>> > +++ b/drivers/gpu/drm/msm/msm_kms.h
+>> > @@ -156,8 +156,10 @@ struct msm_kms {
+>> >       /* mapper-id used to request GEM buffer mapped for scanout: */
+>> >       struct msm_gem_address_space *aspace;
+>> >
+>> > -     /* handle to disp snapshot state */
+>> > -     struct msm_disp_state *disp_state;
+>> > +     /* disp snapshot support */
+>> > +     struct kthread_worker *dump_worker;
+>> > +     struct kthread_work dump_work;
+>> > +     struct mutex dump_mutex;
+>> >
+>> >       /*
+>> >        * For async commit, where ->flush_commit() and later happens
