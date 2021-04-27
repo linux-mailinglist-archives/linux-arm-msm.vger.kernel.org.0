@@ -2,89 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1A13936C50C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Apr 2021 13:27:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CD14D36C68A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Apr 2021 14:57:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235911AbhD0L20 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Apr 2021 07:28:26 -0400
-Received: from mail.kernel.org ([198.145.29.99]:42476 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S235099AbhD0L20 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Apr 2021 07:28:26 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id CFD3560C3D;
-        Tue, 27 Apr 2021 11:27:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1619522863;
-        bh=FPYw+5fREObHmocyQgyXFhUexDY82QdXJ/EQGuZCjUk=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=hF41E7GGZmbL845jqcaGYF8RX6YNCsCke3JZDimbP+mx+j61gl+rXL1U09Yx5FOw4
-         nxDUG4l9NBwqasQxDXCXQYgMUIiK8LQ8ZBM9ibCc843Ge8m7iO6/0SvTZp70N71NzV
-         SIEFR2Ua61tkaGOSz7s8veY1Hq+jnthDudwAUJNFHxeqUwmbTFXQ3Gr2jOZ0dZOwEH
-         Z3stSVh9Xzk46bgG/qzi6cvsvOGBkDvnHBNwekmATond8K3p68eDkbCNMaCzRqvLtk
-         Z6xL+dDC0WfxTbZLbFmUckThqSXBFkG6CKW8G3KBRRGVD0NHg/dFlhbfRHGWgSfBzi
-         hKixtzxmuKJeg==
-Date:   Tue, 27 Apr 2021 12:27:12 +0100
-From:   Mark Brown <broonie@kernel.org>
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        robh@kernel.org, devicetree@vger.kernel.org, wcheng@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, dmitry.baryshkov@linaro.org
-Subject: Re: [PATCH v2 2/2] arm64: boot: dts: qcom: pm8150b: Add DTS node for
- PMIC VBUS booster
-Message-ID: <20210427112712.GG4605@sirena.org.uk>
-References: <20210426221446.1852572-1-bryan.odonoghue@linaro.org>
- <20210426221446.1852572-3-bryan.odonoghue@linaro.org>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="w2JjAQZceEVGylhD"
-Content-Disposition: inline
-In-Reply-To: <20210426221446.1852572-3-bryan.odonoghue@linaro.org>
-X-Cookie: Don't feed the bats tonight.
-User-Agent: Mutt/1.10.1 (2018-07-13)
+        id S236307AbhD0M5z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Apr 2021 08:57:55 -0400
+Received: from mail-oi1-f172.google.com ([209.85.167.172]:36641 "EHLO
+        mail-oi1-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236225AbhD0M5v (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 27 Apr 2021 08:57:51 -0400
+Received: by mail-oi1-f172.google.com with SMTP id i26so4290683oii.3;
+        Tue, 27 Apr 2021 05:57:06 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
+         :message-id;
+        bh=rFoPXvGb1JtyBzu9l/r6cY4fSMekVIRELQco4ayK1NI=;
+        b=CNAc+/18BknFkSuBWnSev6GhO9S8IyMddNeRoqD7gW8rQpnnqxCnFtXMfBBm0tvXC6
+         nB/OI90Kc4EUydXwQGWHMObpX6c3NKjWwZUFM+uEmTIIKlOpZlQ5ZE1PKYMzbYztVTxr
+         2an9WYy8C6d5UTpqICndG687WxS4nOmYcOEh58du8zTUN338pagbKu+YYzInb/fZQSaX
+         N/mPQM6wWaIC+25S29pftAH03WsyLMHSkC1gbQhnr94KaHyA6jB2cItHyU3KS8oP0DJ+
+         BUoFLAWNPzGfTbhwp1R5P9xfrJcqjG1eiW/I4Wb5C0TY5p8SEHsQ4hZb2UDJPIOVPk0u
+         UiZw==
+X-Gm-Message-State: AOAM533eAikCl54RpfNzx9VAxep5BFP7N2OW4SYvQPGk7ygJN4Dkfchj
+        bpRYjg/t28eFOkkgyphVXw==
+X-Google-Smtp-Source: ABdhPJwM44JxerROpT3ApIxLaKblGtdBJU69E/VgkkOIh7U3tZybzktLqkK+0Ia1ylvgSnPtle4f+w==
+X-Received: by 2002:a05:6808:1cc:: with SMTP id x12mr3296849oic.114.1619528226258;
+        Tue, 27 Apr 2021 05:57:06 -0700 (PDT)
+Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id z197sm3737837oia.3.2021.04.27.05.57.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 27 Apr 2021 05:57:05 -0700 (PDT)
+Received: (nullmailer pid 1346448 invoked by uid 1000);
+        Tue, 27 Apr 2021 12:57:01 -0000
+From:   Rob Herring <robh@kernel.org>
+To:     Fenglin Wu <fenglinw@codeaurora.org>
+Cc:     collinsd@codeaurora.org, linux-pwm@vger.kernel.org,
+        subbaram@codeaurora.org, linux-kernel@vger.kernel.org,
+        =?utf-8?q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+        Lee Jones <lee.jones@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, aghayal@codeaurora.org,
+        devicetree@vger.kernel.org,
+        Thierry Reding <thierry.reding@gmail.com>
+In-Reply-To: <20210427102247.822-2-fenglinw@codeaurora.org>
+References: <20210427102247.822-1-fenglinw@codeaurora.org> <20210427102247.822-2-fenglinw@codeaurora.org>
+Subject: Re: [PATCH 1/2] dt-bindings: pwm: add bindings for PWM modules inside QCOM PMICs
+Date:   Tue, 27 Apr 2021 07:57:01 -0500
+Message-Id: <1619528221.595166.1346447.nullmailer@robh.at.kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Tue, 27 Apr 2021 18:22:09 +0800, Fenglin Wu wrote:
+> Add bindings for QCOM PMIC PWM modules which are accessed through SPMI
+> bus.
+> 
+> Signed-off-by: Fenglin Wu <fenglinw@codeaurora.org>
+> ---
+>  .../devicetree/bindings/pwm/pwm-qcom.yaml          | 51 ++++++++++++++++++++++
+>  1 file changed, 51 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/pwm/pwm-qcom.yaml
+> 
 
---w2JjAQZceEVGylhD
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
-On Mon, Apr 26, 2021 at 11:14:46PM +0100, Bryan O'Donoghue wrote:
+yamllint warnings/errors:
+./Documentation/devicetree/bindings/pwm/pwm-qcom.yaml:29:6: [warning] wrong indentation: expected 4 but found 5 (indentation)
 
-> --- a/arch/arm64/boot/dts/qcom/pm8150b.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/pm8150b.dtsi
-> @@ -53,6 +53,14 @@ power-on@800 {
->  			status =3D "disabled";
->  		};
-> =20
-> +		pm8150b_vbus: dcdc@1100 {
-> +			compatible =3D "qcom,pm8150b-vbus-reg";
-> +			regulator-min-microamp =3D <500000>;
-> +			regulator-max-microamp =3D <3000000>;
-> +			status =3D "disabled";
-> +			reg =3D <0x1100>;
-> +		};
+dtschema/dtc warnings/errors:
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/pwm/pwm-qcom.yaml: Additional properties are not allowed ('Properties' was unexpected)
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/pwm/pwm-qcom.yaml: Additional properties are not allowed ('Properties' was unexpected)
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/pwm/pwm-qcom.yaml: 'anyOf' conditional failed, one must be fixed:
+	'properties' is a required property
+	'patternProperties' is a required property
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/pwm/pwm-qcom.yaml: ignoring, error in schema: 
+warning: no schema found in file: ./Documentation/devicetree/bindings/pwm/pwm-qcom.yaml
+Documentation/devicetree/bindings/pwm/pwm-qcom.example.dts:21.13-28: Warning (reg_format): /example-0/pwms@e800:reg: property has invalid length (4 bytes) (#address-cells == 1, #size-cells == 1)
+Documentation/devicetree/bindings/pwm/pwm-qcom.example.dt.yaml: Warning (pci_device_reg): Failed prerequisite 'reg_format'
+Documentation/devicetree/bindings/pwm/pwm-qcom.example.dt.yaml: Warning (pci_device_bus_num): Failed prerequisite 'reg_format'
+Documentation/devicetree/bindings/pwm/pwm-qcom.example.dt.yaml: Warning (simple_bus_reg): Failed prerequisite 'reg_format'
+Documentation/devicetree/bindings/pwm/pwm-qcom.example.dt.yaml: Warning (i2c_bus_reg): Failed prerequisite 'reg_format'
+Documentation/devicetree/bindings/pwm/pwm-qcom.example.dt.yaml: Warning (spi_bus_reg): Failed prerequisite 'reg_format'
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/pwm/pwm-qcom.example.dt.yaml: example-0: pwms@e800:reg:0: [59392] is too short
+	From schema: /usr/local/lib/python3.8/dist-packages/dtschema/schemas/reg.yaml
+Documentation/devicetree/bindings/pwm/pwm-qcom.example.dt.yaml:0:0: /example-0/pwms@e800: failed to match any schema with compatible: ['qcom,pwm']
 
-This appears to be a generic .dtsi for any system with this device, it's
-very much not idiomatic to be setting regulator constraints that allow
-things to be changed like this by default (even though the board does
-need to explicitly opt in to having the device).
+See https://patchwork.ozlabs.org/patch/1470623
 
---w2JjAQZceEVGylhD
-Content-Type: application/pgp-signature; name="signature.asc"
+This check can fail if there are any dependencies. The base for a patch
+series is generally the most recent rc1.
 
------BEGIN PGP SIGNATURE-----
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmCH9Q8ACgkQJNaLcl1U
-h9AaVQgAgBs+fUXxel/aSQFoL3oVZRueDQWPp8XDY9D/dBGog+05LogwPXQTKdR4
-B+YSdWWKdC8TIDbuEmLQS570sixQYUJAQDqMOomQ0e3kfnhhCfjr1c/2GqqwUzBj
-rtW35VxlgXy4Vq/vUslzhrdKyroZinPoE8XAQrD+DLbCI3SGbtyzcErn8Aao/zV3
-F984mxvrhwK54iQZj2ZgI1ADuODrxh1fObpReNJxWtSayxPAD+i82MiKbBJoUDFL
-T43ssRpfUt3Y1d58oUsYm0kbS29fxCqzLocJ25mzajtc+8D08k6XW2WB+fqgIbK4
-d/9/vu0OB2U7VNzK/GIV/7OdcjtauA==
-=XCkF
------END PGP SIGNATURE-----
+pip3 install dtschema --upgrade
 
---w2JjAQZceEVGylhD--
+Please check and re-submit.
+
