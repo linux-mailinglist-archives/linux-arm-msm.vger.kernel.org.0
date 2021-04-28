@@ -2,27 +2,27 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AA10C36D550
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Apr 2021 12:02:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2A82A36D562
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Apr 2021 12:04:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238304AbhD1KDK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Apr 2021 06:03:10 -0400
-Received: from mail.kernel.org ([198.145.29.99]:57902 "EHLO mail.kernel.org"
+        id S238705AbhD1KFg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Apr 2021 06:05:36 -0400
+Received: from mail.kernel.org ([198.145.29.99]:60914 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S238576AbhD1KC5 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Apr 2021 06:02:57 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id D409361428;
-        Wed, 28 Apr 2021 10:02:09 +0000 (UTC)
+        id S238345AbhD1KFg (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 28 Apr 2021 06:05:36 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id D7AAC61026;
+        Wed, 28 Apr 2021 10:04:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1619604132;
-        bh=4rKfuNxuT4bY7djH2rV77hgx7bS4JZfyV6crN8ofwZI=;
+        s=k20201202; t=1619604291;
+        bh=iFzCYsS6n50BVnPR76KE9p0OrirQuVhmOtuaCqfj4yk=;
         h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
-        b=g7Av8htmkt01vAK8/U/9xLLfL9SxwETJSdSP5L/qUByPEVW4ELVrARqQ8unxz3f3X
-         3u1CNi/Na1pWw+NeqLvuFCVw2iZTCBo4aqkuUvASUfNzLmIWFX8zZz3vCzdGjeCqRO
-         u0ztUqxPs0FU70cPpcnvNNpeah+1P/3D02bOOt6shvDbmYKMUu4gELJTkq5jCG/Jep
-         R/vuhQtciHRgJFe7mXSLkNBNw+DY2i5Xax0bHuzXtFaYgE7q0lRcjaNkxI0jSNniT9
-         Vg4Ha53dM6yd2K1zI/ZxATSxQi63vpNQWEG/SaYCy/Arx4jvCZk/HPJW+DvDsQZhcW
-         29rZ6ZpbVExRA==
+        b=E9PeTrMoeMTDdLMyEnrU5fJPiUmw8hEBRdhdxX6zsYeFu1lM+6MY5SbnNECCRNqHi
+         94UEFs9Vy5aokmh5e8WjCrz2A2fVVb393kl7mej6YkWZibHRhDkbbznLzr4cc9zy+n
+         7ZxSauru2kO1VjEVGjb1gqnGzl8jHBJ5tbU5TwBQnHnlAhAuuOd5US1GKycT7pJFug
+         pDDxTEnSera3KDkSqaGwiqya8SqOFFt8cDuRUjcTDcCYI9VtwCUiHsJU/74310T4+7
+         tBnpnAzAnP2b/8wZiwXh6l+py/VKl92jOJaNsqGzxH6OI4RjVm+nnseXnjmFPKnrZa
+         SOBqSsio6LnaA==
 From:   Felipe Balbi <balbi@kernel.org>
 To:     Sandeep Maheswaram <sanm@codeaurora.org>,
         Andy Gross <agross@kernel.org>,
@@ -34,13 +34,13 @@ To:     Sandeep Maheswaram <sanm@codeaurora.org>,
 Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
         linux-kernel@vger.kernel.org, Manu Gautam <mgautam@codeaurora.org>,
         Sandeep Maheswaram <sanm@codeaurora.org>
-Subject: Re: [PATCH v7 4/5] usb: dwc3: qcom: Configure wakeup interrupts
- during suspend
-In-Reply-To: <1619586716-8687-5-git-send-email-sanm@codeaurora.org>
+Subject: Re: [PATCH v7 5/5] usb: dwc3: qcom: Keep power domain on to support
+ wakeup
+In-Reply-To: <1619586716-8687-6-git-send-email-sanm@codeaurora.org>
 References: <1619586716-8687-1-git-send-email-sanm@codeaurora.org>
- <1619586716-8687-5-git-send-email-sanm@codeaurora.org>
-Date:   Wed, 28 Apr 2021 13:02:04 +0300
-Message-ID: <87o8dyk9r7.fsf@kernel.org>
+ <1619586716-8687-6-git-send-email-sanm@codeaurora.org>
+Date:   Wed, 28 Apr 2021 13:04:43 +0300
+Message-ID: <87lf92k9ms.fsf@kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; boundary="=-=-=";
         micalg=pgp-sha256; protocol="application/pgp-signature"
@@ -56,34 +56,55 @@ Content-Transfer-Encoding: quoted-printable
 Hi,
 
 Sandeep Maheswaram <sanm@codeaurora.org> writes:
-> Configure interrupts based on hs_phy_mode to avoid triggering of
-> interrupts during system suspend and suspend the device successfully.
+> If wakeup capable devices are connected to the controller (directly
+> or through hubs) at suspend time keep the power domain on in order
+> to support wakeup from these devices.
 >
 > Signed-off-by: Sandeep Maheswaram <sanm@codeaurora.org>
-> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
 > ---
->  drivers/usb/dwc3/dwc3-qcom.c | 26 ++++++++++++++++++++------
->  1 file changed, 20 insertions(+), 6 deletions(-)
+>  drivers/usb/dwc3/dwc3-qcom.c | 17 +++++++++++++++++
+>  1 file changed, 17 insertions(+)
 >
 > diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-> index 66183c6..82125bc 100644
+> index 82125bc..1e220af 100644
 > --- a/drivers/usb/dwc3/dwc3-qcom.c
 > +++ b/drivers/usb/dwc3/dwc3-qcom.c
-> @@ -316,22 +316,36 @@ static void dwc3_qcom_disable_wakeup_irq(int irq)
+> @@ -17,9 +17,11 @@
+>  #include <linux/of_platform.h>
+>  #include <linux/platform_device.h>
+>  #include <linux/phy/phy.h>
+> +#include <linux/pm_domain.h>
+>  #include <linux/usb/of.h>
+>  #include <linux/reset.h>
+>  #include <linux/iopoll.h>
+> +#include <linux/usb/hcd.h>
 >=20=20
->  static void dwc3_qcom_disable_interrupts(struct dwc3_qcom *qcom)
+>  #include "core.h"
+>=20=20
+> @@ -354,10 +356,19 @@ static int dwc3_qcom_suspend(struct dwc3_qcom *qcom)
 >  {
-> -	dwc3_qcom_disable_wakeup_irq(qcom->hs_phy_irq);
+>  	u32 val;
+>  	int i, ret;
 > +	struct dwc3 *dwc =3D platform_get_drvdata(qcom->dwc3);
+> +	struct usb_hcd  *hcd;
+> +	struct generic_pm_domain *genpd =3D pd_to_genpd(qcom->dev->pm_domain);
+>=20=20
+>  	if (qcom->is_suspended)
+>  		return 0;
+>=20=20
+> +	if (dwc->xhci) {
+> +		hcd =3D platform_get_drvdata(dwc->xhci);
+> +		if (usb_wakeup_enabled_descendants(hcd->self.root_hub))
+> +			genpd->flags |=3D GENPD_FLAG_ACTIVE_WAKEUP;
+> +	}
 
-and who's using this?
+wow, you really need to find a way to do these things generically
+instead of bypassing a bunch of layers and access stuff $this doesn't
+directly own.
 
->  static void dwc3_qcom_enable_interrupts(struct dwc3_qcom *qcom)
->  {
-> -	dwc3_qcom_enable_wakeup_irq(qcom->hs_phy_irq);
-> +	struct dwc3 *dwc =3D platform_get_drvdata(qcom->dwc3);
-
-or this?
+I'm gonna say 'no' to this, sorry. It looks like xhci should, directly,
+learn about much of this instead of hiding it 3-layers deep into the
+dwc3 glue layer for your specific SoC.
 
 =2D-=20
 balbi
@@ -93,19 +114,19 @@ Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQJFBAEBCAAvFiEElLzh7wn96CXwjh2IzL64meEamQYFAmCJMpwRHGJhbGJpQGtl
-cm5lbC5vcmcACgkQzL64meEamQY3WQ//egPFZ6rFOwMJN2z28acWg0qrBgOq4+zF
-LgHi7jAre4kEFG8383bfpklyCqyFQrtPCvOxgFEMqDUw+OQCMukYX6PTrfJYRjty
-L+Yir6Z47XRIaN/Li/AYXaf3Oze2kcsdTEFj0aWhgrd5QCa6q4Yq7KnXiYXQywy/
-2fWI5qLLoh9mK6H5RBNtNWv0eb2PFt+IjJz9NHFfVT1l3HvRJ+cxhSR9VGA+3f/n
-LqmL0XRfSYhgPWLsAeDDAVO6noJt68Gt4mk/IMD4hU3L5F3hJA5nKzXbgmA58m93
-kRbdgl8aY0SwsET1PGrlzstN3nVrMq8KQi7AuXggoRSSbtsshtsnxdZgLb+AYgxX
-TjRu3A9y4zqq5Q7g9l9wITsy0QLhUM/I+X5+jG/L3kuMtFaJTIqRMdj2oHpxv/dG
-z5725AkG408ZjJpABkGBC67ziWC56AYeRBveddhYgMv/R4rVAkmQNnYisBwbtUGI
-1kBehUikeWznIJwqJJ2sfnQlCL7Ji96zJwok9xdIK1CAllwMW0o4C6ouvhUy+c/v
-r+D8r/Z/HB7oVH9b6RIzYzQ92KurbcEcFPfgyAHvB8SlPL3UaTM5fb6eTa6Um4Qw
-0cBoZFTmMSjrD+tMCnBp7mr4UGQy6yi1RT1l+Thpsr13k8QhQDMeOmlwVhVwNVLl
-vqr+Z9xRqOg=
-=5e9z
+iQJFBAEBCAAvFiEElLzh7wn96CXwjh2IzL64meEamQYFAmCJMzsRHGJhbGJpQGtl
+cm5lbC5vcmcACgkQzL64meEamQYs/RAAo7Ph+w0Vcph7Me0lGNlH8SvYkjZx+0EU
+f9OM80JJTE5q+n/MvoyEXLY6b8Yab0lvMR4hhe+f6tvzGtqCUH6M2eA70RQGCVNu
+EJ35fOMJqtf0s8ZpswqGZti9S5anyvCJOW+hV95VqMgpFZeepSomHJjYWx7i8F2b
+rv7aiKDdxTkcx6zVpcqQCHOwpb5KFX5Lz4ZxqWuULqtS98VLfLvgY8o/UmYqMwW1
+QFPZ+ocgQNWUkM00kGEl3SI78ldOjvH1zQ8IELtadDMWwoSdz3ZqvkuBSq+nzg+E
+hNkbULcYrxDkI6E+ZR8HVNkKo07sRITrOw3UgOmjYPkdMYoRUcw5mnck4/KXmTE6
+gPOzVU3+8op5j9DbNbAcHJhsUypOMuB+hUFqOH5NW3DjAXLaefwEIE57bYWs11eV
+EuFSSWjbbAExEO0wCK0zBaZLnytOlwbmsdroyOthjETzX+K8or65JOZ/Sdb9Wvy5
+2y7en/vGvntFvMM2CEtThxzuGN9rfPtx5UO2+1V+WxIC7v5olbVCzCyEHdt74M2p
+0YZq+RtZqM40hgtFCmBes/A4aP92nwy7pjDiCRzHEQWULo0E05dWYSzgHDZGOuMv
+ydLgOWMpeR49uSkpn3ngxae6tvF3LPgyWvOFfsh31Tq+ALRfqQpI5ibIqO723tWd
++5L06YxxMLA=
+=lX8L
 -----END PGP SIGNATURE-----
 --=-=-=--
