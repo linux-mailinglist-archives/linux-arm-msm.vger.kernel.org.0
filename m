@@ -2,131 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2A82A36D562
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Apr 2021 12:04:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B188836D58B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Apr 2021 12:15:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238705AbhD1KFg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Apr 2021 06:05:36 -0400
-Received: from mail.kernel.org ([198.145.29.99]:60914 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S238345AbhD1KFg (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Apr 2021 06:05:36 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id D7AAC61026;
-        Wed, 28 Apr 2021 10:04:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1619604291;
-        bh=iFzCYsS6n50BVnPR76KE9p0OrirQuVhmOtuaCqfj4yk=;
-        h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
-        b=E9PeTrMoeMTDdLMyEnrU5fJPiUmw8hEBRdhdxX6zsYeFu1lM+6MY5SbnNECCRNqHi
-         94UEFs9Vy5aokmh5e8WjCrz2A2fVVb393kl7mej6YkWZibHRhDkbbznLzr4cc9zy+n
-         7ZxSauru2kO1VjEVGjb1gqnGzl8jHBJ5tbU5TwBQnHnlAhAuuOd5US1GKycT7pJFug
-         pDDxTEnSera3KDkSqaGwiqya8SqOFFt8cDuRUjcTDcCYI9VtwCUiHsJU/74310T4+7
-         tBnpnAzAnP2b/8wZiwXh6l+py/VKl92jOJaNsqGzxH6OI4RjVm+nnseXnjmFPKnrZa
-         SOBqSsio6LnaA==
-From:   Felipe Balbi <balbi@kernel.org>
-To:     Sandeep Maheswaram <sanm@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
+        id S239087AbhD1KPt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Apr 2021 06:15:49 -0400
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32]:7666 "EHLO
+        mx0b-00069f02.pphosted.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S238964AbhD1KPq (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 28 Apr 2021 06:15:46 -0400
+Received: from pps.filterd (m0246630.ppops.net [127.0.0.1])
+        by mx0b-00069f02.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id 13SACeBX007948;
+        Wed, 28 Apr 2021 10:14:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=date : from : to : cc
+ : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=corp-2020-01-29;
+ bh=I+MVSz17rMFhUANJ9vAyQofowEWDVcDjmcFL0J5BcrE=;
+ b=uaOHEwiNVwraQynnCPG2JzUVkXn9TRJB98bwFw0nuDEWf2bDE8FmmhWwy27Gv5J3VgGA
+ uewrbjmbZEziXm8mvrKV3ViaWtSgLiYoaaF42HTk3qioV7dpMwQvSgxqhLbQCkVd/3Fw
+ LVJdAJMwZzS019v20hv+Fmbni5XnEu+n0Zh32LH6VtypyYkOVAkTHzHoCZo9BAHC59iD
+ 2k+gys9jMuwtzx/BQy+ly/lwxGeCA/WDfXiZIQN9VANI6J5sGWPFV0QM9JmSbGHuQcE6
+ i6y9ZOrDpCpOAddMtZl/IOGGZmYnYPEWSyqoK+WyRvAh0cOfYCsePDN3Gw1Qw/s/HJKR fg== 
+Received: from oracle.com (aserp3020.oracle.com [141.146.126.70])
+        by mx0b-00069f02.pphosted.com with ESMTP id 385p7j97m9-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Wed, 28 Apr 2021 10:14:17 +0000
+Received: from aserp3020.oracle.com (aserp3020.oracle.com [127.0.0.1])
+        by pps.podrdrct (8.16.0.36/8.16.0.36) with SMTP id 13SAEHeS049706;
+        Wed, 28 Apr 2021 10:14:17 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by aserp3020.oracle.com with ESMTP id 384b5884gd-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Wed, 28 Apr 2021 10:14:17 +0000
+Received: from aserp3020.oracle.com (aserp3020.oracle.com [127.0.0.1])
+        by pps.reinject (8.16.0.36/8.16.0.36) with SMTP id 13SAA2xH035177;
+        Wed, 28 Apr 2021 10:14:15 GMT
+Received: from aserv0122.oracle.com (aserv0122.oracle.com [141.146.126.236])
+        by aserp3020.oracle.com with ESMTP id 384b5884e6-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Wed, 28 Apr 2021 10:14:15 +0000
+Received: from abhmp0008.oracle.com (abhmp0008.oracle.com [141.146.116.14])
+        by aserv0122.oracle.com (8.14.4/8.14.4) with ESMTP id 13SADmYk022121;
+        Wed, 28 Apr 2021 10:13:48 GMT
+Received: from kadam (/102.36.221.92)
+        by default (Oracle Beehive Gateway v4.0)
+        with ESMTP ; Wed, 28 Apr 2021 03:13:47 -0700
+Date:   Wed, 28 Apr 2021 13:13:25 +0300
+From:   Dan Carpenter <dan.carpenter@oracle.com>
+To:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Cc:     Shawn Tu <shawnx.tu@intel.com>,
+        Ricardo Ribalda <ribalda@kernel.org>,
+        Dafna Hirschfeld <dafna.hirschfeld@collabora.com>,
+        Heiko Stuebner <heiko@sntech.de>, linuxarm@huawei.com,
+        Todor Tomov <todor.too@gmail.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Manu Gautam <mgautam@codeaurora.org>,
-        Sandeep Maheswaram <sanm@codeaurora.org>
-Subject: Re: [PATCH v7 5/5] usb: dwc3: qcom: Keep power domain on to support
- wakeup
-In-Reply-To: <1619586716-8687-6-git-send-email-sanm@codeaurora.org>
-References: <1619586716-8687-1-git-send-email-sanm@codeaurora.org>
- <1619586716-8687-6-git-send-email-sanm@codeaurora.org>
-Date:   Wed, 28 Apr 2021 13:04:43 +0300
-Message-ID: <87lf92k9ms.fsf@kernel.org>
+        Andrzej Hajda <a.hajda@samsung.com>,
+        "Lad, Prabhakar" <prabhakar.csengg@gmail.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Dmitry Osipenko <digetx@gmail.com>,
+        linux-stm32@st-md-mailman.stormreply.com,
+        Andrzej Pietrasiewicz <andrzejtp2010@gmail.com>,
+        Leon Luo <leonl@leopardimaging.com>,
+        Paul Kocialkowski <paul.kocialkowski@bootlin.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Dave Stevenson <dave.stevenson@raspberrypi.com>,
+        Matt Ranostay <matt.ranostay@konsulko.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        linux-rockchip@lists.infradead.org, Chen-Yu Tsai <wens@csie.org>,
+        Andy Gross <agross@kernel.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Dongchun Zhu <dongchun.zhu@mediatek.com>,
+        Sakari Ailus <sakari.ailus@linux.intel.com>,
+        Bingbu Cao <bingbu.cao@intel.com>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Shunqian Zheng <zhengsq@rock-chips.com>,
+        Tianshu Qiu <tian.shu.qiu@intel.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        devel@driverdev.osuosl.org, Jacopo Mondi <jacopo@jmondi.org>,
+        Sylwester Nawrocki <s.nawrocki@samsung.com>,
+        linux-tegra@vger.kernel.org,
+        Alexandre Torgue <alexandre.torgue@st.com>,
+        Wenyou Yang <wenyou.yang@microchip.com>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        linux-arm-msm@vger.kernel.org,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Steve Longerbeam <slongerbeam@gmail.com>,
+        linux-media@vger.kernel.org, Maxime Ripard <mripard@kernel.org>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Benoit Parrot <bparrot@ti.com>,
+        Helen Koike <helen.koike@collabora.com>,
+        linux-samsung-soc@vger.kernel.org,
+        linux-mediatek@lists.infradead.org,
+        Jacek Anaszewski <jacek.anaszewski@gmail.com>,
+        mauro.chehab@huawei.com,
+        Sylwester Nawrocki <sylvester.nawrocki@gmail.com>,
+        "Paul J. Murphy" <paul.j.murphy@intel.com>,
+        Ezequiel Garcia <ezequiel@collabora.com>,
+        Daniele Alessandrelli <daniele.alessandrelli@intel.com>,
+        Chiranjeevi Rapolu <chiranjeevi.rapolu@intel.com>,
+        linux-arm-kernel@lists.infradead.org,
+        Jacob Chen <jacob-chen@iotwrt.com>,
+        Jernej Skrabec <jernej.skrabec@siol.net>,
+        Hyungwoo Yang <hyungwoo.yang@intel.com>,
+        linux-kernel@vger.kernel.org, Robert Foss <robert.foss@linaro.org>,
+        Dan Scally <djrscally@gmail.com>,
+        Sowjanya Komatineni <skomatineni@nvidia.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        linux-renesas-soc@vger.kernel.org, Yong Zhi <yong.zhi@intel.com>,
+        Shawn Guo <shawnguo@kernel.org>
+Subject: Re: [PATCH 00/78] media: use pm_runtime_resume_and_get() instead of
+ pm_runtime_get_sync()
+Message-ID: <20210428101325.GS1981@kadam>
+References: <cover.1619191723.git.mchehab+huawei@kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
-        micalg=pgp-sha256; protocol="application/pgp-signature"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <cover.1619191723.git.mchehab+huawei@kernel.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
+X-Proofpoint-GUID: Wh3TJZZgxDghGm9XGzqkDIkdKaJ9t1UU
+X-Proofpoint-ORIG-GUID: Wh3TJZZgxDghGm9XGzqkDIkdKaJ9t1UU
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
---=-=-=
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
+There was a Smatch check for these bugs.  This was a good source of
+recurring Reported-by tags for me.  ;)  Thanks for doing this.
 
+regards,
+dan carpenter
 
-Hi,
-
-Sandeep Maheswaram <sanm@codeaurora.org> writes:
-> If wakeup capable devices are connected to the controller (directly
-> or through hubs) at suspend time keep the power domain on in order
-> to support wakeup from these devices.
->
-> Signed-off-by: Sandeep Maheswaram <sanm@codeaurora.org>
-> ---
->  drivers/usb/dwc3/dwc3-qcom.c | 17 +++++++++++++++++
->  1 file changed, 17 insertions(+)
->
-> diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-> index 82125bc..1e220af 100644
-> --- a/drivers/usb/dwc3/dwc3-qcom.c
-> +++ b/drivers/usb/dwc3/dwc3-qcom.c
-> @@ -17,9 +17,11 @@
->  #include <linux/of_platform.h>
->  #include <linux/platform_device.h>
->  #include <linux/phy/phy.h>
-> +#include <linux/pm_domain.h>
->  #include <linux/usb/of.h>
->  #include <linux/reset.h>
->  #include <linux/iopoll.h>
-> +#include <linux/usb/hcd.h>
->=20=20
->  #include "core.h"
->=20=20
-> @@ -354,10 +356,19 @@ static int dwc3_qcom_suspend(struct dwc3_qcom *qcom)
->  {
->  	u32 val;
->  	int i, ret;
-> +	struct dwc3 *dwc =3D platform_get_drvdata(qcom->dwc3);
-> +	struct usb_hcd  *hcd;
-> +	struct generic_pm_domain *genpd =3D pd_to_genpd(qcom->dev->pm_domain);
->=20=20
->  	if (qcom->is_suspended)
->  		return 0;
->=20=20
-> +	if (dwc->xhci) {
-> +		hcd =3D platform_get_drvdata(dwc->xhci);
-> +		if (usb_wakeup_enabled_descendants(hcd->self.root_hub))
-> +			genpd->flags |=3D GENPD_FLAG_ACTIVE_WAKEUP;
-> +	}
-
-wow, you really need to find a way to do these things generically
-instead of bypassing a bunch of layers and access stuff $this doesn't
-directly own.
-
-I'm gonna say 'no' to this, sorry. It looks like xhci should, directly,
-learn about much of this instead of hiding it 3-layers deep into the
-dwc3 glue layer for your specific SoC.
-
-=2D-=20
-balbi
-
---=-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQJFBAEBCAAvFiEElLzh7wn96CXwjh2IzL64meEamQYFAmCJMzsRHGJhbGJpQGtl
-cm5lbC5vcmcACgkQzL64meEamQYs/RAAo7Ph+w0Vcph7Me0lGNlH8SvYkjZx+0EU
-f9OM80JJTE5q+n/MvoyEXLY6b8Yab0lvMR4hhe+f6tvzGtqCUH6M2eA70RQGCVNu
-EJ35fOMJqtf0s8ZpswqGZti9S5anyvCJOW+hV95VqMgpFZeepSomHJjYWx7i8F2b
-rv7aiKDdxTkcx6zVpcqQCHOwpb5KFX5Lz4ZxqWuULqtS98VLfLvgY8o/UmYqMwW1
-QFPZ+ocgQNWUkM00kGEl3SI78ldOjvH1zQ8IELtadDMWwoSdz3ZqvkuBSq+nzg+E
-hNkbULcYrxDkI6E+ZR8HVNkKo07sRITrOw3UgOmjYPkdMYoRUcw5mnck4/KXmTE6
-gPOzVU3+8op5j9DbNbAcHJhsUypOMuB+hUFqOH5NW3DjAXLaefwEIE57bYWs11eV
-EuFSSWjbbAExEO0wCK0zBaZLnytOlwbmsdroyOthjETzX+K8or65JOZ/Sdb9Wvy5
-2y7en/vGvntFvMM2CEtThxzuGN9rfPtx5UO2+1V+WxIC7v5olbVCzCyEHdt74M2p
-0YZq+RtZqM40hgtFCmBes/A4aP92nwy7pjDiCRzHEQWULo0E05dWYSzgHDZGOuMv
-ydLgOWMpeR49uSkpn3ngxae6tvF3LPgyWvOFfsh31Tq+ALRfqQpI5ibIqO723tWd
-+5L06YxxMLA=
-=lX8L
------END PGP SIGNATURE-----
---=-=-=--
