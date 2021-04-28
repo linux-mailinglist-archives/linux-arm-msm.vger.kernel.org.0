@@ -2,325 +2,222 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 94B8936DC41
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Apr 2021 17:45:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1B5A936DC61
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Apr 2021 17:50:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240762AbhD1PqX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Apr 2021 11:46:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50452 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240964AbhD1Ppm (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Apr 2021 11:45:42 -0400
-Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A25A0C061574
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Apr 2021 08:40:21 -0700 (PDT)
-Received: from ptx.hi.pengutronix.de ([2001:67c:670:100:1d::c0])
-        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1lbmIV-000764-N8; Wed, 28 Apr 2021 17:40:19 +0200
-Received: from ukl by ptx.hi.pengutronix.de with local (Exim 4.92)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1lbmIU-0007KG-Is; Wed, 28 Apr 2021 17:40:18 +0200
-Date:   Wed, 28 Apr 2021 17:40:18 +0200
-From:   Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-To:     fenglinw@codeaurora.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        id S240645AbhD1Pup (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Apr 2021 11:50:45 -0400
+Received: from mail.kernel.org ([198.145.29.99]:52502 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S240429AbhD1Pum (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 28 Apr 2021 11:50:42 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id B3364610A2;
+        Wed, 28 Apr 2021 15:49:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1619624996;
+        bh=6/CoqHvXA5fOpA3A5RVJksN1jb3qc28vss2bW2Ps1h4=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=u/FPy0GSqykv7UbP1eGyuKva4OKLzag9Bw/Jd4D0kbJTEf9nFrUMmEvhv5EK6vzMK
+         BjB3VRHy0SWTGSvkxD+onAV4Fieqtf2ZXtTiexGI+RyxJutQZq8VxflGKixqYFOpUz
+         On6PoASK7Vh8yjg3wm62eMFNCYbQtk5gn6WgkeIV2oMUglcpz/AqBzcYM/M4tD51cu
+         QunLw6fSqD+ZQ8VF44WRxVz+8sqWccc8jGe1cZAgUj2axVmUS0f3tcXnA28yKRMb0f
+         56N8MN7/SJV9CcbdLHAoqFUGEthzX/mxeThJcNnMD8j9mKUhq91Kz9hVw+Gg5LOHLo
+         GhnW8kKeIOrcw==
+Received: from johan by xi.lan with local (Exim 4.93.0.4)
+        (envelope-from <johan@kernel.org>)
+        id 1lbmS0-000592-V7; Wed, 28 Apr 2021 17:50:09 +0200
+Date:   Wed, 28 Apr 2021 17:50:08 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Cc:     Shawn Tu <shawnx.tu@intel.com>,
+        Ricardo Ribalda <ribalda@kernel.org>,
+        Dafna Hirschfeld <dafna.hirschfeld@collabora.com>,
+        Heiko Stuebner <heiko@sntech.de>, linuxarm@huawei.com,
+        Todor Tomov <todor.too@gmail.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andrzej Hajda <a.hajda@samsung.com>,
+        "Lad, Prabhakar" <prabhakar.csengg@gmail.com>,
         Thierry Reding <thierry.reding@gmail.com>,
-        Lee Jones <lee.jones@linaro.org>, linux-pwm@vger.kernel.org,
-        subbaram@codeaurora.org, collinsd@codeaurora.org,
-        aghayal@codeaurora.org
-Subject: Re: [PATCH 2/2] pwm: pwm-qcom: add driver for PWM modules in QCOM
- PMICs
-Message-ID: <20210428154018.fiknoxraymestnnj@pengutronix.de>
-References: <20210427102247.822-1-fenglinw@codeaurora.org>
- <20210427102247.822-3-fenglinw@codeaurora.org>
- <20210427170748.wglupc6zwrndalxs@pengutronix.de>
- <6eccf4583cb1eb36775e50cdf069cdbc@codeaurora.org>
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Dmitry Osipenko <digetx@gmail.com>,
+        linux-stm32@st-md-mailman.stormreply.com,
+        Andrzej Pietrasiewicz <andrzejtp2010@gmail.com>,
+        Leon Luo <leonl@leopardimaging.com>,
+        Paul Kocialkowski <paul.kocialkowski@bootlin.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Dave Stevenson <dave.stevenson@raspberrypi.com>,
+        Matt Ranostay <matt.ranostay@konsulko.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        linux-rockchip@lists.infradead.org, Chen-Yu Tsai <wens@csie.org>,
+        Andy Gross <agross@kernel.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Dongchun Zhu <dongchun.zhu@mediatek.com>,
+        Sakari Ailus <sakari.ailus@linux.intel.com>,
+        Bingbu Cao <bingbu.cao@intel.com>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Shunqian Zheng <zhengsq@rock-chips.com>,
+        Tianshu Qiu <tian.shu.qiu@intel.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        devel@driverdev.osuosl.org, Jacopo Mondi <jacopo@jmondi.org>,
+        Sylwester Nawrocki <s.nawrocki@samsung.com>,
+        linux-tegra@vger.kernel.org,
+        Alexandre Torgue <alexandre.torgue@st.com>,
+        Wenyou Yang <wenyou.yang@microchip.com>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        linux-arm-msm@vger.kernel.org,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Steve Longerbeam <slongerbeam@gmail.com>,
+        linux-media@vger.kernel.org, Maxime Ripard <mripard@kernel.org>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Benoit Parrot <bparrot@ti.com>,
+        Helen Koike <helen.koike@collabora.com>,
+        linux-samsung-soc@vger.kernel.org,
+        linux-mediatek@lists.infradead.org,
+        Jacek Anaszewski <jacek.anaszewski@gmail.com>,
+        mauro.chehab@huawei.com,
+        Sylwester Nawrocki <sylvester.nawrocki@gmail.com>,
+        "Paul J. Murphy" <paul.j.murphy@intel.com>,
+        Ezequiel Garcia <ezequiel@collabora.com>,
+        Daniele Alessandrelli <daniele.alessandrelli@intel.com>,
+        Chiranjeevi Rapolu <chiranjeevi.rapolu@intel.com>,
+        linux-arm-kernel@lists.infradead.org,
+        Jacob Chen <jacob-chen@iotwrt.com>,
+        Jernej Skrabec <jernej.skrabec@siol.net>,
+        Hyungwoo Yang <hyungwoo.yang@intel.com>,
+        linux-kernel@vger.kernel.org, Robert Foss <robert.foss@linaro.org>,
+        Dan Scally <djrscally@gmail.com>,
+        Sowjanya Komatineni <skomatineni@nvidia.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        linux-renesas-soc@vger.kernel.org, Yong Zhi <yong.zhi@intel.com>,
+        Shawn Guo <shawnguo@kernel.org>
+Subject: Re: [PATCH v4 00/79] Address some issues with PM runtime at media
+ subsystem
+Message-ID: <YImEMN/POW5C8lG7@hovoldconsulting.com>
+References: <cover.1619621413.git.mchehab+huawei@kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="t5k3x7s7xr2lhlm7"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <6eccf4583cb1eb36775e50cdf069cdbc@codeaurora.org>
-X-SA-Exim-Connect-IP: 2001:67c:670:100:1d::c0
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
+In-Reply-To: <cover.1619621413.git.mchehab+huawei@kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Wed, Apr 28, 2021 at 04:51:21PM +0200, Mauro Carvalho Chehab wrote:
+> During the review of the patches from unm.edu, one of the patterns
+> I noticed is the amount of patches trying to fix pm_runtime_get_sync()
+> calls.
+> 
+> After analyzing the feedback from version 1 of this series, I noticed
+> a few other weird behaviors at the PM runtime resume code. So, this
+> series start addressing some bugs and issues at the current code.
+> Then, it gets rid of pm_runtime_get_sync() at the media subsystem
+> (with 2 exceptions).
+> 
+> It should be noticed that
+> Commit dd8088d5a896 ("PM: runtime: Add pm_runtime_resume_and_get to deal with usage counter")
+> added a new method to does a pm_runtime get, which increments
+> the usage count only on success.
+> 
+> The rationale of getting rid of pm_runtime_get_sync() is:
+> 
+> 1. despite its name, this is actually a PM runtime resume call,
+>    but some developers didn't seem to realize that, as I got this
+>    pattern on some drivers:
+> 
+>         pm_runtime_get_sync(&client->dev);
+>         pm_runtime_disable(&client->dev);
+>         pm_runtime_set_suspended(&client->dev);
+>         pm_runtime_put_noidle(&client->dev);
+> 
+>    It makes no sense to resume PM just to suspend it again ;-)
 
---t5k3x7s7xr2lhlm7
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+This is perfectly alright. Take a look at ov7740_remove() for example:
 
-Hello,
+	pm_runtime_get_sync(&client->dev);
+	pm_runtime_disable(&client->dev);
+	pm_runtime_set_suspended(&client->dev);
+	pm_runtime_put_noidle(&client->dev);
+	
+	ov7740_set_power(ov7740, 0);
 
-On Wed, Apr 28, 2021 at 08:42:58PM +0800, fenglinw@codeaurora.org wrote:
-> On 2021-04-28 01:07, Uwe Kleine-K=F6nig wrote:
-> > On Tue, Apr 27, 2021 at 06:22:10PM +0800, Fenglin Wu wrote:
-> >  - Does the hardware complete the currently running period when the PWM
-> >    is disabled?
->
-> No, the output stops immediately as soon as the PWM channel is disabled
+There's an explicit power-off after balancing the PM count and this will
+work regardless of the power state when entering this function.
 
-Is this only because you clear PWM_EN_GLITCH_REMOVAL on disable?
+So this has nothing to do with pm_runtime_get_sync() per se.
 
-> >  - Does the output pin pull to the inactive level when the PWM is
-> >    disabled?
->
-> Actually, the QCOM PMIC PWM module doesn't have physical pin out. Its out=
-put
-> is normally connected to other hardware module in the same PMIC as intern=
-al
-> signals, such as: control signal for LED module for scaling LED brightnes=
-s,
-> input signal for vibrator module for vibration strength control. It's out=
-put
-> can also be routed through PMIC GPIO or other pin using internal DTEST
-> lines, and that depends on HW connection, and it will also need addition
-> configuration in the GPIO module or the DTEST and that's outside of the
-> PWM module scope.
->
-> For the output signal itself, it's always inactive when the PWM module
-> is disabled.
+> 2. Usual *_get() methods only increment their use count on success,
+>    but pm_runtime_get_sync() increments it unconditionally. Due to
+>    that, several drivers were mistakenly not calling
+>    pm_runtime_put_noidle() when it fails;
 
-Inactive as in "outputs a 0" and not as in "driver is disabled", right?
-(Not sure this is a well defined term given that the output isn't
-normally externally visible.)
+Sure, but pm_runtime_get_async() also works this way. You just won't be
+notified if the async resume fails.
 
-> > > +static int qcom_pwm_channel_set_glitch_removal(
-> > > +		struct qcom_pwm_channel *pwm, bool en)
-> > > +{
-> > > +	u8 mask, val;
-> > > +
-> > > +	val =3D en ? PWM_EN_GLITCH_REMOVAL_MASK : 0;
-> > > +	mask =3D PWM_EN_GLITCH_REMOVAL_MASK;
-> > > +	return qcom_pwm_channel_masked_write(pwm,
-> > > +			REG_PWM_TYPE_CONFIG, mask, val);
-> >
-> > What is the effect of this setting?
->
-> As I explained at the beginning, enable this setting would garantee the P=
-WM
-> module complete current period before swtiching to the new settings.
+> 3. The name of the new variant is a lot clearer:
+> 	pm_runtime_resume_and_get()
+>     As its same clearly says that this is a PM runtime resume function,
+>     that also increments the usage counter on success;
 
-Then there is no reason to unset this bit when the PWM is disabled and
-the setting can better be done once in .probe()?
+It also introduced an inconsistency in the API and does not pair as well
+with the pm_runtime_put variants.
 
-> > > +static void __qcom_pwm_calc_pwm_period(u64 period_ns,
-> > > +			struct qcom_pwm_config *pwm_config)
-> > > +{
-> > > +	struct qcom_pwm_config configs[NUM_PWM_SIZE];
-> > > +	int i, j, m, n;
-> > > +	u64 tmp1, tmp2;
-> > > +	u64 clk_period_ns =3D 0, pwm_clk_period_ns;
-> > > +	u64 clk_delta_ns =3D U64_MAX, min_clk_delta_ns =3D U64_MAX;
-> > > +	u64 pwm_period_delta =3D U64_MAX, min_pwm_period_delta =3D U64_MAX;
-> > > +	int pwm_size_step;
-> > > +
-> > > +	/*
-> > > +	 *              (2^pwm_size) * (2^pwm_exp) * prediv * NSEC_PER_SEC
-> > > +	 * pwm_period =3D -------------------------------------------------=
---
-> > > +	 *                               clk_freq_hz
-> > > +	 *
-> > > +	 * Searching the closest settings for the requested PWM period.
-> >
-> > Please don't pick the nearest setting, but the next smallest one.
->
-> I am not quite sure here. You can see from the equation above, there are 4
-> settings can impact PWM period calculation and each setting has an array =
-of
-> values. We can't easily sort out the sequence of settings to achieve an
-> ascending
-> or descending PWM periods and choose the closest one or the next smallest
-> one,
-> instead, the logic below is to walk through all of the settings and find =
-the
-> closest one.
-> I am also confused about not choosing the nearest settings but the
-> next smallest one, let's say if we are trying to achieve 1ms PWM period, =
-and
-> there are three settings can get 0.90ms, 0.99ms, 1.05ms respectively
-> should we choose 0.99ms which is the closest one, or 1.05ms which is the
-> next
-> smallest one?
+> 4. Consistency: we did similar changes subsystem wide with
+>    for instance strlcpy() and strcpy() that got replaced by
+>    strscpy(). Having all drivers using the same known-to-be-safe
+>    methods is a good thing;
 
-My wording was bad, you should pick the biggest period not bigger than
-the requested period. So in your example you should pick 0.99ms.
+It's not known to be safe; there are ways to get also this interface
+wrong as for example this series has shown.
 
-And if your options are 0.90ms and 1.01 ms and the request is for 1 ms,
-pick 0.90ms. I'm working on a series that allows a consumer to make an
-informed choice. One precondition for that is that .apply picks a
-setting according to the above algorithm though.
+> 5. Prevent newer drivers to copy-and-paste a code that it would
+>    be easier to break if they don't truly understand what's behind
+>    the scenes.
 
-> > > +	 */
-> > > +
-> > > +	for (n =3D 0; n < ARRAY_SIZE(pwm_size); n++) {
-> > > +		pwm_clk_period_ns =3D period_ns >> pwm_size[n];
-> > > +		for (i =3D ARRAY_SIZE(clk_freq_hz) - 1; i >=3D 0; i--) {
-> > > +			for (j =3D 0; j < ARRAY_SIZE(clk_prediv); j++) {
-> > > +				for (m =3D 0; m < ARRAY_SIZE(pwm_exponent); m++) {
-> > > +					tmp1 =3D 1 << pwm_exponent[m];
-> > > +					tmp1 *=3D clk_prediv[j];
-> > > +					tmp2 =3D NSEC_PER_SEC;
-> > > +					do_div(tmp2, clk_freq_hz[i]);
-> > > +
-> > > +					clk_period_ns =3D tmp1 * tmp2;
-> > > +
-> > > +					clk_delta_ns =3D abs(pwm_clk_period_ns
-> > > +						- clk_period_ns);
-> > > +					/*
-> > > +					 * Find the closest setting for
-> > > +					 * PWM frequency predivide value
-> > > +					 */
-> > > +					if (clk_delta_ns < min_clk_delta_ns) {
-> > > +						min_clk_delta_ns
-> > > +							=3D clk_delta_ns;
-> > > +						configs[n].pwm_clk
-> > > +							=3D clk_freq_hz[i];
-> > > +						configs[n].prediv
-> > > +							=3D clk_prediv[j];
-> > > +						configs[n].clk_exp
-> > > +							=3D pwm_exponent[m];
-> > > +						configs[n].pwm_size
-> > > +							=3D pwm_size[n];
-> > > +						configs[n].best_period_ns
-> > > +							=3D clk_period_ns;
-> > > +					}
-> > > +				}
-> > > +			}
-> > > +		}
-> > > +
-> > > +		configs[n].best_period_ns *=3D 1 << pwm_size[n];
-> > > +		/* Find the closest setting for PWM period */
-> > > +		pwm_period_delta =3D min_clk_delta_ns << pwm_size[n];
-> > > +		if (pwm_period_delta < min_pwm_period_delta) {
-> > > +			min_pwm_period_delta =3D pwm_period_delta;
-> > > +			memcpy(pwm_config, &configs[n],
-> > > +					sizeof(struct qcom_pwm_config));
-> > > +		}
-> > > +	}
-> >
-> > Huh, this is complicated. It would be great if this could be simplified.
-> > If you provide a reference manual or at least a .get_state function, I
-> > can try to advise.
->
-> Hmm, I am not sure how to describe the HW implementation here, but as I
-> explained, there are four parameters impacting the PWM period calculation
-> with different way, so the code logic here is trying to walk through all
-> of the the settings and find the one which can achieve the closest PWM
-> period.
+Cargo-cult programming always runs that risk.
 
-OK, so we have:
+> This series replace places  pm_runtime_get_sync(), by calling
+> pm_runtime_resume_and_get() instead.
+> 
+> This should help to avoid future mistakes like that, as people
+> tend to use the existing drivers as examples for newer ones.
 
-              (2^pwm_size) * (2^pwm_exp) * prediv * NSEC_PER_SEC
- pwm_period =3D ---------------------------------------------------
-                               clk_freq_hz
+The only valid point about and use for pm_runtime_resume_and_get() is to
+avoid leaking a PM usage count reference in the unlikely case that
+resume fails (something which hardly any driver implements recovery
+from anyway).
 
-with pwm_size being either 6 or 9, pwm_exp is an integer in the range
-[0..7], prediv is one of 1, 3, 5, or 6 and clk_freq_hz is one of 1024,
-32768 or 19200000, right? And picking 9 for pwm_size has the advantage
-that the duty-cycle setting has a finer resolution, right?
+It's a convenience wrapper that saves you from writing one extra line in
+some cases (depending on how you implement runtime-pm support) and not a
+silver bullet against bugs.
+ 
+> compile-tested only.
+> 
+> Patches 1 to 7 fix some issues that already exists at the current
+> PM runtime code;
+> 
+> patches 8 to 20 fix some usage_count problems that still exists
+> at the media subsystem;
+> 
+> patches 21 to 78 repaces pm_runtime_get_sync() by 
+> pm_runtime_resume_and_get();
+> 
+> Patch 79 (and a hunk on patch 78) documents the two exceptions
+> where pm_runtime_get_sync() will still be used for now.
+> 
+> ---
+> 
+> v4:
+>     - Added a couple of additional fixes at existing PM runtime code;
+>     - Some patches are now more conservative in order to avoid causing
+>      regressions.
+> v3:
+>     - fix a compilation error;
+> v2:
+>     - addressed pointed issues and fixed a few other PM issues.
 
-(BTW, I wonder about the choice for prediv, one of the set {1, 3, 5, 7}
-would make more sense in my eyes and additionally it might even be a tad
-cheaper to implement in hardware.)
+This really doesn't say much more than "changed stuff" so kinda hard to
+track if review feedback has been taken into account for example.
 
-This is indeed a strange formula that hardly allows to implement the
-picking of parameters in a clever way.
-
-I wonder if the hardware can emit a 100% duty cycle.
-
-> > > +	for (i =3D 0; i < chip->num_channels; i++) {
-> > > +		chip->pwms[i].chip =3D chip;
-> > > +		chip->pwms[i].chan_idx =3D i;
-> > > +		chip->pwms[i].reg_base =3D base + i * REG_SIZE_PER_CHANN;
-> > > +		rc =3D qcom_pwm_channel_read(&chip->pwms[i], REG_PERPH_SUBTYPE,
-> > > +				&chip->pwms[i].subtype);
-> >
-> > Can a single device have channels with different sub-types?
->
-> Hmm, it has the possibility. Normally, in one PMIC, all PWM modules should
-> have the same sub-type of PWM modules. But since each PWM module is acces=
-sed
-> independantly, so we will need to check the sub-type here for each PWM
-> module.
-
-But if all channels are known to have the same subtype, you don't need
-to test them all individually and a single member in qcom_pwm_chip
-indicating the type would be enough.
-
-> > > +		if (rc < 0) {
-> > > +			dev_err(chip->dev, "Read PWM channel %d subtype failed, rc=3D%d\n=
-",
-> > > +					i, rc);
-> > > +			return rc;
-> > > +		}
-> > > +	}
-> > > +
-> > > +	return 0;
-> > > +}
-> > > +
-> > > +static int qcom_pwm_probe(struct platform_device *pdev)
-> > > +{
-> > > +	int rc;
-> > > +	struct qcom_pwm_chip *chip;
-> > > +
-> > > +	chip =3D devm_kzalloc(&pdev->dev, sizeof(*chip), GFP_KERNEL);
-> > > +	if (!chip)
-> > > +		return -ENOMEM;
-> >
-> > If you parse qcom,num-channels already before allocating driver data you
-> > can allocate driver and per channel data in a single chunk, making some
-> > operations simpler and maybe even save some memory.
->
-> In a single chunk do you mean by calling devm_zalloc() once?
-> Can you let me know how to do that? The per channel data is anothe pointer
-> which is different from the driver data, how can we make sure two differe=
-nt
-> pointers can be allocated in the same chunk of memory?
-
-You can do the following:
-
-	struct qcom_pwm_channel {
-		...
-	};
-
-	struct qcom_pwm_chip {
-		...
-		struct qcom_pwm_channel channel[];
-	};
-
-	qc =3D devm_kzalloc(&pdev->dev, sizeof(*qc) + num_channels * sizeof(struct=
- qcom_pwm_channel), GFP_KERNEL);
-
-Then the individual channels can be accessed using qc->channel[i].
-
-Best regards
-Uwe
-
---=20
-Pengutronix e.K.                           | Uwe Kleine-K=F6nig            |
-Industrial Linux Solutions                 | https://www.pengutronix.de/ |
-
---t5k3x7s7xr2lhlm7
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEfnIqFpAYrP8+dKQLwfwUeK3K7AkFAmCJgd8ACgkQwfwUeK3K
-7AkX0wf/UDJc+cNHkvYyD5dGuaUi1Pt/fHTs8S8QSl89VP6aE6iMAAYiVTKLozmV
-r9tFryY0ayAmD7GgstQxxOdCYNT1JVLO5BHsf5H0kjERPY6TIj72iapxHx9S5+Z/
-NCiVEQ39VRhxOG2BkLMnyzpDIkWE6+QGGJJgyKMVIWOx9vEw6Sz0/ZPfJFG6UuL0
-9pe7t6y+UkeB8AZek/DrHXFrRsGMzzpORyYQPM3upUdBgQB1FoSof16g46qr65tC
-kR89n9m7TWoIMN3HfV77YmR4sdbVAuRGwf2WTDg69v/CK4am4X8rOmGLtx+qUBry
-6SPki8A/z8WagFeScoGSNnh7X9oH7w==
-=2qL4
------END PGP SIGNATURE-----
-
---t5k3x7s7xr2lhlm7--
+Johan
