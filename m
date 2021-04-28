@@ -2,56 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A718E36D002
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Apr 2021 02:35:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3C2D736D0A6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Apr 2021 04:48:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235691AbhD1Agl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Apr 2021 20:36:41 -0400
-Received: from mail.kernel.org ([198.145.29.99]:60568 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230368AbhD1Agk (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Apr 2021 20:36:40 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 714B661402;
-        Wed, 28 Apr 2021 00:35:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1619570156;
-        bh=V9JXvGRNOedswhyMXA4l/r3YLbqKuGnw2SqrumNCfYA=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=QrVjdUNef5TUDv/i0n3YhvovSQzvoy6lsIzDna30Oui0yvP9Z8XI90oTBEqVS2YWk
-         5Jn1juFh4gwBpzAqXRrDYhqTfrfS28qpiSOsdK1CWFCx2gihtlG8OSRYqqvfNqrWRb
-         TnBL9W86+9vlMbWjFX7MV70hHbXK3471gqKIVdvTIj1Vk+Nuqyi1c4R/GCGZlFSDKG
-         mJ4JKeiILdYEZKyFRlbgDGrLwQUhLjiJjBNahqef5h1cKOBW2EGmB9zRCPpRIXAZtK
-         vvMNlVUrU1OKKgLa9aNP+HlWikVC+F78TxzMKyNC14nWE7bpCYUyAERVdv+8UOZskY
-         AIIzHkM9BWMLg==
-Content-Type: text/plain; charset="utf-8"
+        id S237111AbhD1Csp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Apr 2021 22:48:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48098 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235839AbhD1Cso (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 27 Apr 2021 22:48:44 -0400
+Received: from mail-oo1-xc2d.google.com (mail-oo1-xc2d.google.com [IPv6:2607:f8b0:4864:20::c2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9ADBC061574
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Apr 2021 19:48:00 -0700 (PDT)
+Received: by mail-oo1-xc2d.google.com with SMTP id i20-20020a4a8d940000b02901bc71746525so13528598ook.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Apr 2021 19:48:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=OmH6bqqM9Umuziq/ASGMVuY66RM06TYhOzF6GFYglyE=;
+        b=hsiFE+d3VwiSdA4Fpn5p9aAjePnWVILHTooTxE9/ag0yiLWn1uGXIfCc77N4U5ozhM
+         QRqIYR6TmGbz1AZCM222ECbkDxoUoA2O0o7j7qhldt0GQ6Hl6rEMSnJPTnnXsElcSw6/
+         e5JWuBo2aK3u/MYl5fkZdaOpbbAQn+Iy0s0+knVCOWj2kbIhOj/V/weM5X0OByI/YS/T
+         H4h8G5ljkdeLW1coWI1SsxeiXh6E9MQP+KXtHOOrucFi0rfSRauCpLjy/mItshkdd4tk
+         7oRBLUPL03HAXXmxHFPKJyI6MIHmeoTfREsMEZKA8KrdJs3nkJnAgZBEPjrgajz2zkEQ
+         rSdQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=OmH6bqqM9Umuziq/ASGMVuY66RM06TYhOzF6GFYglyE=;
+        b=Wi1Ya3KqnerAZxhEJFplPhv68oJaRr3kzRLSDOqRsgE0X3varfoZUYCUVCi2iRZCz3
+         bhGZe2WLw9UFqTKvfYPHZ8r8V/l1YcbDYhCG3kMWUzJtn647ezPMg9pH8JuyVu0EErHa
+         8Vz5Bk9Xa5B4vuGDuX31enjvl+ZPuNT0Em7ADuTy/7Omhc8SRKtSUOWF+dD2HHx1aysP
+         3d5pvuy+PenhqWnYUmPtl9bma9AKvfr+vPzlx/9o2U47KHZhBQSwW4NQGcu8d5GzvFlD
+         MG0gpm9YPrF2heHWZTEEBRNiUJNaZgWZysTdCo5drb3pM5N5WX1HF0qx3v0heN3pPzTC
+         0CVQ==
+X-Gm-Message-State: AOAM533UKtUGJlIECgqB/wQQbEhnOG+W8sUhDeuG2sHyW3QJ0cwsOpFO
+        vbZxm76F1yuCFjVOJbuZUxeVCg==
+X-Google-Smtp-Source: ABdhPJw+BDAPF5Ijg4kePS4aeXTm2iPsm7UphTIEXAEh45YVZHv1ZCNpir+NJS07PNWd1uZVngGUJg==
+X-Received: by 2002:a4a:960c:: with SMTP id q12mr20568629ooi.83.1619578078655;
+        Tue, 27 Apr 2021 19:47:58 -0700 (PDT)
+Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id u1sm431110otj.43.2021.04.27.19.47.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 27 Apr 2021 19:47:58 -0700 (PDT)
+Date:   Tue, 27 Apr 2021 21:47:55 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Stephen Boyd <sboyd@kernel.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+Subject: Re: [PATCH v2 3/4] drm/msm: get rid of msm_iomap_size
+Message-ID: <20210428024755.GJ1908499@yoga>
+References: <20210427001828.2375555-1-dmitry.baryshkov@linaro.org>
+ <20210427001828.2375555-4-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <1619521932-18973-1-git-send-email-tdas@codeaurora.org>
-References: <1619521932-18973-1-git-send-email-tdas@codeaurora.org>
-Subject: Re: [PATCH v1] clk: qcom: gcc: dd support for a new frequency for SC7280
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Taniya Das <tdas@codeaurora.org>
-To:     Michael Turquette <mturquette@baylibre.com>,
-        Taniya Das <tdas@codeaurora.org>
-Date:   Tue, 27 Apr 2021 17:35:55 -0700
-Message-ID: <161957015504.177949.13285002036192713660@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210427001828.2375555-4-dmitry.baryshkov@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Is the subject supposed to say "Add"?
+On Mon 26 Apr 19:18 CDT 2021, Dmitry Baryshkov wrote:
+[..]
+> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+> index 92fe844b517b..be578fc4e54f 100644
+> --- a/drivers/gpu/drm/msm/msm_drv.c
+> +++ b/drivers/gpu/drm/msm/msm_drv.c
+> @@ -124,7 +124,7 @@ struct clk *msm_clk_get(struct platform_device *pdev, const char *name)
+>  }
+>  
+>  static void __iomem *_msm_ioremap(struct platform_device *pdev, const char *name,
+> -				  const char *dbgname, bool quiet)
+> +				  const char *dbgname, bool quiet, phys_addr_t *psize)
 
-Quoting Taniya Das (2021-04-27 04:12:12)
-> There is a requirement to support 52MHz for qup clocks for bluetoothe
+size_t sounds like a better fit for psize...
 
-s/bluetoothe/bluetooth/
-
-> usecase, thus update the frequency table to support the frequency.
->=20
-> Fixes: a3cc092196ef ("clk: qcom: Add Global Clock controller (GCC) driver=
- for SC7280")
-> Signed-off-by: Taniya Das <tdas@codeaurora.org>
+Regards,
+Bjorn
