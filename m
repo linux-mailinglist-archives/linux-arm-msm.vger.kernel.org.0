@@ -2,236 +2,144 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0418C36DF20
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Apr 2021 20:42:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1D37E36DF2A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Apr 2021 20:49:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243836AbhD1Smk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Apr 2021 14:42:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33698 "EHLO
+        id S238918AbhD1Stp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Apr 2021 14:49:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35326 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243766AbhD1Smb (ORCPT
+        with ESMTP id S229474AbhD1Sto (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Apr 2021 14:42:31 -0400
-Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C442C0613ED
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Apr 2021 11:41:45 -0700 (PDT)
-Received: by mail-pf1-x433.google.com with SMTP id v191so2568918pfc.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Apr 2021 11:41:45 -0700 (PDT)
+        Wed, 28 Apr 2021 14:49:44 -0400
+Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7AB4C061573;
+        Wed, 28 Apr 2021 11:48:57 -0700 (PDT)
+Received: by mail-ej1-x636.google.com with SMTP id l4so96107491ejc.10;
+        Wed, 28 Apr 2021 11:48:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=E3bpmI3ij+s4Bn917zTcmrlUif0swDwuIuphF3U3VDI=;
-        b=mJltSIgnOlY8jLNsmR3q0qoNz5zbGh2PeZiJJflAqGaYQkmIg7eyIm8uHAkTHiYII2
-         cG5sOc/yl8pAStdkUTqBP85TcrWInHkCbr3TMf3IJ57MILFa3noyDD3DNPWO/+1oIM8X
-         Yc914H56Hd8eDJyHtklkPVyKFG3FECjx/DaX4=
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=g5s+0vEkHh19AESWjEx4If4aPHPR8MgDvb7TEbFK5BY=;
+        b=OHvfQHtTiNAmKmSIuWJk6lvXrEzqDTc28+ZlkQBSBMBdx6Qkrhu3XLDQfpsiqDrZ/p
+         5uMxaKYoH5ZxvgsnaT4wTS25qpWbeMznNZum/airlTozuk2cCasV7leNEHWtqedusrmS
+         aLflwojjEtKhw85Dm5LxVtgW+eB4Qzy4J759jZ2PsjLgYkhB+CuziqzQUs0mo3lYgUiT
+         mXPgj3H7Wd64eSDvWLxagpTPwSpsPS7DcnFamoyOx4ZsbgrjJKTQa5gta7qR4jRonn4Q
+         AK3cI6XOrYAWMpyFWpTohvIAoMaRDbgQhjjlO7pbZwGTNvNhDvSOmSfREf+bHIXO8TQS
+         1R5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=E3bpmI3ij+s4Bn917zTcmrlUif0swDwuIuphF3U3VDI=;
-        b=Dy+qRc9E8OraRo/wjmQPDE1MlHZ6ztPk82tAbiSJnrgyn5apnPbkfg0IXqVasmf083
-         bX33c7sgI7R46fu7xj10JmRBk/FkSn2IflQn8zTjTqGplxP54shnMAnGViL8MzM5pLkt
-         2rOqOaqPxdVhVRmNPKIkAgA3T73/w1m1Q91/MYJ+bD2mZehsHlpdfZ1UtogeWa19OUCV
-         /Zi7X0Iz9nMTxusLMjKw7uX8pelVbs5CVsx9izGTet6Uw2z8latAz25EYvXUt2SdPteR
-         zlk64BRyyjnzDDS8hIti5/JRbb+DOKd3g8mkKqV3LvMhCAlp+rRYUezeEu+mkUSIqNeQ
-         kSRw==
-X-Gm-Message-State: AOAM530bYXt8VdS4jra+4eFwKM+g3RJqbH2CDgxWVityxzRHNA7hQ0Rt
-        sqY+RvKSYxWh0L6oq14SHr7lcw==
-X-Google-Smtp-Source: ABdhPJzO/ZL8GUEuiu6USQy5QNLHChSc/k+S58EwJyltGsWyN+qBWrDGtCfP3AbEt2xtO1CbY8WfBA==
-X-Received: by 2002:a63:4550:: with SMTP id u16mr28341245pgk.440.1619635305127;
-        Wed, 28 Apr 2021 11:41:45 -0700 (PDT)
-Received: from localhost ([2620:15c:202:201:4c1a:a0a7:2b43:81b0])
-        by smtp.gmail.com with UTF8SMTPSA id t9sm373402pgg.6.2021.04.28.11.41.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 28 Apr 2021 11:41:44 -0700 (PDT)
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Alan Stern <stern@rowland.harvard.edu>,
-        Rob Herring <robh+dt@kernel.org>,
-        Frank Rowand <frowand.list@gmail.com>
-Cc:     linux-kernel@vger.kernel.org,
-        Ravi Chandra Sadineni <ravisadineni@chromium.org>,
-        Michal Simek <michal.simek@xilinx.com>,
-        Bastien Nocera <hadess@hadess.net>, linux-usb@vger.kernel.org,
-        Douglas Anderson <dianders@chromium.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>, devicetree@vger.kernel.org,
-        Peter Chen <peter.chen@nxp.com>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Andy Gross <agross@kernel.org>,
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=g5s+0vEkHh19AESWjEx4If4aPHPR8MgDvb7TEbFK5BY=;
+        b=Fz6iCndAmt653jIH9MotJeg1CLQzH1QVeOnzhgVdJHcunef9yEY1Nshr/u1g0iRaeW
+         cKyfdXSvp5ZZwrINe2nWNYjpd2uTK/ZBAhe6CaUCQLeQNswv4k6HNIc8a9qeZULcIzP9
+         /Mb/yKh1U3Zt9qtjevhzkMVB40y4NDZ/2TFup83sduWxgmH6Xeyz5NmYQiA3RCPPTZZy
+         EY/ufFWx+H0rHIrR6hGrPsxzfy0fL/zqYblUGRttIkBPnuhDHmTAcx8EHYsLRzCZcv0J
+         SdQXDcWW7THajlV4R25uFonQ2I31qR0ocNJ9ud5m5BPc94xjV2wCJazp2WKHlTiXcKJ4
+         tOTA==
+X-Gm-Message-State: AOAM5326sjUEL/nrkD2VKLtW/M2LqGAyp1GMpEwO/aW8RZ2OGuyQ15hl
+        8Lt8bm/Z67HjyzUGZZnDd0dGXHVK5WVB7w==
+X-Google-Smtp-Source: ABdhPJz4dooRCjDaCsA1y8Fg7AldM0+jPftpeeCXP7+AEXow1il2flmiGl1TRpelfO4Gtmfw7tMsZw==
+X-Received: by 2002:a17:906:1d0e:: with SMTP id n14mr30850884ejh.97.1619635736195;
+        Wed, 28 Apr 2021 11:48:56 -0700 (PDT)
+Received: from Ansuel-xps.localdomain (93-35-189-2.ip56.fastwebnet.it. [93.35.189.2])
+        by smtp.gmail.com with ESMTPSA id b8sm405698ejc.29.2021.04.28.11.48.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 28 Apr 2021 11:48:55 -0700 (PDT)
+Date:   Wed, 28 Apr 2021 20:48:54 +0200
+From:   Ansuel Smith <ansuelsmth@gmail.com>
+To:     Thara Gopinath <thara.gopinath@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH v8 5/5] arm64: dts: qcom: sc7180-trogdor: Add nodes for onboard USB hub
-Date:   Wed, 28 Apr 2021 11:41:32 -0700
-Message-Id: <20210428114109.v8.5.Ie0d2c1214b767bb5551dd4cad38398bd40e4466f@changeid>
-X-Mailer: git-send-email 2.31.1.498.g6c1eba8ee3d-goog
-In-Reply-To: <20210428184132.2184997-1-mka@chromium.org>
-References: <20210428184132.2184997-1-mka@chromium.org>
+        Amit Kucheria <amitk@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [thermal-next PATCH 2/2] thermal: qcom: tsens: simplify debugfs
+ init function
+Message-ID: <YImuFixa0iWtsU3k@Ansuel-xps.localdomain>
+References: <20210419012930.7727-1-ansuelsmth@gmail.com>
+ <20210419012930.7727-2-ansuelsmth@gmail.com>
+ <8e679407-07e7-244a-48fa-0d4d451d744d@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <8e679407-07e7-244a-48fa-0d4d451d744d@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add nodes for the onboard USB hub on trogdor devices. Remove the
-'always-on' and 'boot-on' properties from the hub regulator, since
-the regulator is now managed by the onboard_usb_hub driver.
+On Wed, Apr 28, 2021 at 12:47:30PM -0400, Thara Gopinath wrote:
+> Hi,
+> 
+> Please include a cover letter next time describing the patch series.
+>
 
-Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
----
+Yes sorry, I tought that for a small series (2 patch) it wasn't needed.
 
-Changes in v8:
-- none
+> On 4/18/21 9:29 PM, Ansuel Smith wrote:
+> > Simplify debugfs init function.
+> > - Drop useless variables
+> > - Add check for existing dev directory.
+> > - Fix wrong version in dbg_version_show (with version 0.0.0, 0.1.0 was
+> >    incorrectly reported)
+> > 
+> > Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+> > ---
+> >   drivers/thermal/qcom/tsens.c | 16 +++++++---------
+> >   1 file changed, 7 insertions(+), 9 deletions(-)
+> > 
+> > diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
+> > index f9d50a67e..b086d1496 100644
+> > --- a/drivers/thermal/qcom/tsens.c
+> > +++ b/drivers/thermal/qcom/tsens.c
+> > @@ -692,7 +692,7 @@ static int dbg_version_show(struct seq_file *s, void *data)
+> >   			return ret;
+> >   		seq_printf(s, "%d.%d.%d\n", maj_ver, min_ver, step_ver);
+> >   	} else {
+> > -		seq_puts(s, "0.1.0\n");
+> > +		seq_printf(s, "0.%d.0\n", priv->feat->ver_major);
+> >   	}
+> >   	return 0;
+> > @@ -704,21 +704,19 @@ DEFINE_SHOW_ATTRIBUTE(dbg_sensors);
+> >   static void tsens_debug_init(struct platform_device *pdev)
+> >   {
+> >   	struct tsens_priv *priv = platform_get_drvdata(pdev);
+> > -	struct dentry *root, *file;
+> > -	root = debugfs_lookup("tsens", NULL);
+> > -	if (!root)
+> > +	priv->debug_root = debugfs_lookup("tsens", NULL);
+> > +	if (!priv->debug_root)
+> >   		priv->debug_root = debugfs_create_dir("tsens", NULL);
+> > -	else
+> > -		priv->debug_root = root;
+> > -	file = debugfs_lookup("version", priv->debug_root);
+> > -	if (!file)
+> > +	if (!debugfs_lookup("version", priv->debug_root))
+> >   		debugfs_create_file("version", 0444, priv->debug_root,
+> >   				    pdev, &dbg_version_fops);
+> >   	/* A directory for each instance of the TSENS IP */
+> > -	priv->debug = debugfs_create_dir(dev_name(&pdev->dev), priv->debug_root);
+> 
+> Unconditionally creating priv->debug here is correct. The below if
+> (!priv->debug) will never be true because as per your patch 1, we call
+> tsens_debug_init once per instance of tsens.
+> 
 
-Changes in v7:
-- rebased on qcom/arm64-for-5.13 (with the rest of the series)
+You are right, will send a v2 if everything else is good. What do you
+think?
 
-Changes in v6:
-- added 'companion-hub' entry to both USB devices
-- added 'vdd-supply' also to hub@2
-
-Changes in v5:
-- patch added to the series
-
- .../boot/dts/qcom/sc7180-trogdor-lazor-r0.dts | 19 +++++++----------
- .../boot/dts/qcom/sc7180-trogdor-lazor-r1.dts | 11 ++++------
- .../arm64/boot/dts/qcom/sc7180-trogdor-r1.dts | 19 +++++++----------
- arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi  | 21 ++++++++++++++++---
- 4 files changed, 38 insertions(+), 32 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts
-index 5c997cd90069..bae85f6b2bfa 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts
-@@ -23,17 +23,6 @@ &charger_thermal {
- 	status = "disabled";
- };
- 
--&pp3300_hub {
--	/* pp3300_l7c is used to power the USB hub */
--	/delete-property/regulator-always-on;
--	/delete-property/regulator-boot-on;
--};
--
--&pp3300_l7c {
--	regulator-always-on;
--	regulator-boot-on;
--};
--
- &sn65dsi86_out {
- 	/*
- 	 * Lane 0 was incorrectly mapped on the cable, but we've now decided
-@@ -42,3 +31,11 @@ &sn65dsi86_out {
- 	 */
- 	lane-polarities = <1 0>;
- };
-+
-+&usb_hub_2_0 {
-+	 vdd-supply = <&pp3300_l7c>;
-+};
-+
-+&usb_hub_3_0 {
-+	 vdd-supply = <&pp3300_l7c>;
-+};
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts
-index d9fbcc7bc5bd..45f014c3539d 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts
-@@ -23,13 +23,10 @@ &charger_thermal {
- 	status = "disabled";
- };
- 
--&pp3300_hub {
--	/* pp3300_l7c is used to power the USB hub */
--	/delete-property/regulator-always-on;
--	/delete-property/regulator-boot-on;
-+&usb_hub_2_0 {
-+	 vdd-supply = <&pp3300_l7c>;
- };
- 
--&pp3300_l7c {
--	regulator-always-on;
--	regulator-boot-on;
-+&usb_hub_3_0 {
-+	 vdd-supply = <&pp3300_l7c>;
- };
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts
-index 2b522f9e0d8f..2f5263e3d1b9 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts
-@@ -42,17 +42,6 @@ &panel {
- 	compatible = "auo,b116xa01";
- };
- 
--&pp3300_hub {
--	/* pp3300_l7c is used to power the USB hub */
--	/delete-property/regulator-always-on;
--	/delete-property/regulator-boot-on;
--};
--
--&pp3300_l7c {
--	regulator-always-on;
--	regulator-boot-on;
--};
--
- &sdhc_2 {
- 	status = "okay";
- };
-@@ -61,6 +50,14 @@ &trackpad {
- 	interrupts = <58 IRQ_TYPE_EDGE_FALLING>;
- };
- 
-+&usb_hub_2_0 {
-+	 vdd-supply = <&pp3300_l7c>;
-+};
-+
-+&usb_hub_3_0 {
-+	 vdd-supply = <&pp3300_l7c>;
-+};
-+
- /* PINCTRL - modifications to sc7180-trogdor.dtsi */
- 
- &trackpad_int_1v8_odl {
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-index 192e2e424fde..54f9da9af376 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-@@ -206,9 +206,6 @@ pp3300_hub: pp3300-hub {
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&en_pp3300_hub>;
- 
--		regulator-always-on;
--		regulator-boot-on;
--
- 		vin-supply = <&pp3300_a>;
- 	};
- 
-@@ -848,6 +845,24 @@ &usb_1 {
- 
- &usb_1_dwc3 {
- 	dr_mode = "host";
-+	#address-cells = <1>;
-+	#size-cells = <0>;
-+
-+	/* 2.0 hub on port 1 */
-+	usb_hub_2_0: hub@1 {
-+		compatible = "usbbda,5411";
-+		reg = <1>;
-+		vdd-supply = <&pp3300_hub>;
-+		companion-hub = <&usb_hub_3_0>;
-+	};
-+
-+	/* 3.0 hub on port 2 */
-+	usb_hub_3_0: hub@2 {
-+		compatible = "usbbda,411";
-+		reg = <2>;
-+		vdd-supply = <&pp3300_hub>;
-+		companion-hub = <&usb_hub_2_0>;
-+	};
- };
- 
- &usb_1_hsphy {
--- 
-2.31.1.498.g6c1eba8ee3d-goog
-
+> > +	priv->debug = debugfs_lookup(dev_name(&pdev->dev), priv->debug_root);
+> > +	if (!priv->debug)
+> > +		priv->debug = debugfs_create_dir(dev_name(&pdev->dev), priv->debug_root);
+> >   	debugfs_create_file("sensors", 0444, priv->debug, pdev, &dbg_sensors_fops);
+> >   }
+> >   #else
+> > 
+> 
+> -- 
+> Warm Regards
+> Thara
