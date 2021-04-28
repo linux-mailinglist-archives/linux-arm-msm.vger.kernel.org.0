@@ -2,149 +2,143 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D896B36DD50
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Apr 2021 18:45:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7E67436DD69
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Apr 2021 18:47:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241122AbhD1QqQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Apr 2021 12:46:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36288 "EHLO
+        id S241228AbhD1QsS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Apr 2021 12:48:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36772 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231923AbhD1QqQ (ORCPT
+        with ESMTP id S231368AbhD1QsS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Apr 2021 12:46:16 -0400
-Received: from mail-qt1-x832.google.com (mail-qt1-x832.google.com [IPv6:2607:f8b0:4864:20::832])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0DE8DC061573
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Apr 2021 09:45:30 -0700 (PDT)
-Received: by mail-qt1-x832.google.com with SMTP id l1so7339820qtr.12
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Apr 2021 09:45:30 -0700 (PDT)
+        Wed, 28 Apr 2021 12:48:18 -0400
+Received: from mail-qk1-x733.google.com (mail-qk1-x733.google.com [IPv6:2607:f8b0:4864:20::733])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5112C061574
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Apr 2021 09:47:32 -0700 (PDT)
+Received: by mail-qk1-x733.google.com with SMTP id 190so7536538qkl.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Apr 2021 09:47:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=rrj3UlBlJ91qMWs4IlTPGuw8X2L/oNKhyyRLTCh8fWE=;
-        b=lf++hd/X6bQjKPClgG4WlPiLlx0SEPhHDHsu8w5ZyHb/uz+XduZNY+A0zluRDDQxjc
-         L2fOBYoKdVMfh8CB6Dxs6hGNXdaO+l98nAg/bwFcadAUV1wPG3qXuF3ERBWSvSCt0Zrg
-         UiDRc/2MnqpGGBT99Roig9k+c6ycmYY0gP8j8=
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=d5gcaLFkHTsHl3fSpK+mJvUIAigQB4OGxVY2NlUdHS4=;
+        b=lhlZvSJJsG9coISuaIljcJxg7ev6vBymOQm+7m1cfIRbaclhHHNe5Xsiy7TU7mtLAp
+         tW/EVQK+AWFdZ3fp9xF/i9t9OIV8pdGSqY4vdf04yp0O7L1Eq6sMAsNzDlfJVz6EQuwu
+         1ED2eQ8twnk4oJZuYdgJMyHRSBQFDUcY+SEZB2/vzN6wMzWBVymqA3MXJZTnvj+/fRTQ
+         d8sMzExvkZgLB2tYG/ObJTrvdo0BwXjcsOcARP5fcGuEZHztKPX2YvLd6D4T7WoZvCTi
+         FJmuDTwHwfE1tyPWk5d/9vNf3AaArOu/QZumDCCMs3ZutQ610xI998Lff5qzkZ3ET/4w
+         iH2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=rrj3UlBlJ91qMWs4IlTPGuw8X2L/oNKhyyRLTCh8fWE=;
-        b=JvIkhco3jN88e35yGRkat7lmQRM4s29xpxEzWy3BzyaqN/p+IWRvHjqinuNO5nHnVH
-         x32bVZoBxktdF8pzRA2KxL982jJ1KDkQdDie2nT+mAmw3ZWR+Y9t0JxOfjSqlMPkAle9
-         NEUzlibqHuBlJnpbc0w8ONwhneMrbKZ6UWGY4Oy5ll8sExv/QxP63EcSW8j4cNGvRYgf
-         1GRqbq3Y7Mk1g2ymj5RZ2yjAs+IT7De38UtliEtYjZT88B9Nq9WZClPxpW/89+IHbcZx
-         pduHRELj6aFimiB1xBP2VHlVKjTLIEUjGgoFJps9W0CWZuk6pvWSkK2TJnq6NOBEcNcF
-         TWCw==
-X-Gm-Message-State: AOAM531Up4lzh43HxIRUlyMn3uiMdvOHgLTUm6v/KzpsuOLB9hQyPmEL
-        RXZXXZFAUTVv5PBirxJx6hEzcVWIubRAyQ==
-X-Google-Smtp-Source: ABdhPJy24H1AfS5q40EKKeARPAcB+o20kiJvb8r+IRq44Roh67pksD3EHk6pnJXKv5OiCwqQXW7VvA==
-X-Received: by 2002:ac8:78b:: with SMTP id l11mr27512520qth.321.1619628329669;
-        Wed, 28 Apr 2021 09:45:29 -0700 (PDT)
-Received: from mail-yb1-f170.google.com (mail-yb1-f170.google.com. [209.85.219.170])
-        by smtp.gmail.com with ESMTPSA id c29sm357707qtv.93.2021.04.28.09.45.26
-        for <linux-arm-msm@vger.kernel.org>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=d5gcaLFkHTsHl3fSpK+mJvUIAigQB4OGxVY2NlUdHS4=;
+        b=I05XA2XvdhRU+GVjHMWYmPKNnsfLwaxI5V6pFaGTSCyZ6mvGeIFIpvDafHti7sg455
+         ao1PobjddEOj18kpo+aNe6zcSxyDgselIaikNvAT4xvnuUi0KLvWEqD5GhjD2B+qhY8H
+         bG/drS/HBULl0TBClXXVHA0uD5kYDMjknfKJKP2kQjmq2bz9OvwWnWSKIo9TqYbNH8Wp
+         lO3Az31rV7GzUXOMtyRpo/yZpUdi06AUPxvDUdY3Q9z6zkIrFyCf/Sld7w8yQK0ZrIOJ
+         HkSmwiOLTYJBieLLjZytIg7yzxWL4SVqYGG0of/0+XxVrlHgv9oBKKrWNQANCqdNb3wC
+         BA9A==
+X-Gm-Message-State: AOAM533lQvWduk1uTMWb/9Y6psagvuEOZS/PYVJe5a28PXE0gIanGHHm
+        008MgYwgR50COQP+uE6Pmrzs9Q==
+X-Google-Smtp-Source: ABdhPJwrZ/ARz760EsoZkEI7kPgF2Hv5R9DjyVFzafhWupMWPoCp5/6i7qZtp8Tys4gJ+GayIAslKw==
+X-Received: by 2002:a05:620a:49c:: with SMTP id 28mr30266953qkr.39.1619628452055;
+        Wed, 28 Apr 2021 09:47:32 -0700 (PDT)
+Received: from [192.168.1.93] (pool-71-163-245-5.washdc.fios.verizon.net. [71.163.245.5])
+        by smtp.gmail.com with ESMTPSA id d2sm397426qtg.85.2021.04.28.09.47.31
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 28 Apr 2021 09:45:27 -0700 (PDT)
-Received: by mail-yb1-f170.google.com with SMTP id s9so16394032ybe.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Apr 2021 09:45:26 -0700 (PDT)
-X-Received: by 2002:a25:7157:: with SMTP id m84mr42521872ybc.175.1619628324558;
- Wed, 28 Apr 2021 09:45:24 -0700 (PDT)
-MIME-Version: 1.0
-References: <20210423165906.2504169-1-dianders@chromium.org> <20210423095743.v5.17.Ibd31b8f7c73255d68c5c9f5b611b4bfaa036f727@changeid>
-In-Reply-To: <20210423095743.v5.17.Ibd31b8f7c73255d68c5c9f5b611b4bfaa036f727@changeid>
-From:   Sean Paul <seanpaul@chromium.org>
-Date:   Wed, 28 Apr 2021 12:44:45 -0400
-X-Gmail-Original-Message-ID: <CAOw6vbLqDgqhXH8pUZqfhKCZk68SfzLf76Z4au3g83=Uw_8z2Q@mail.gmail.com>
-Message-ID: <CAOw6vbLqDgqhXH8pUZqfhKCZk68SfzLf76Z4au3g83=Uw_8z2Q@mail.gmail.com>
-Subject: Re: [PATCH v5 17/20] drm/panel: panel-simple: Power the panel when
- reading the EDID
-To:     Douglas Anderson <dianders@chromium.org>
-Cc:     Andrzej Hajda <a.hajda@samsung.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@siol.net>,
-        Sam Ravnborg <sam@ravnborg.org>, Wolfram Sang <wsa@kernel.org>,
-        robdclark@chromium.org,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        David Airlie <airlied@linux.ie>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Steev Klimaszewski <steev@kali.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        linux-i2c@vger.kernel.org,
+        Wed, 28 Apr 2021 09:47:31 -0700 (PDT)
+Subject: Re: [thermal-next PATCH 2/2] thermal: qcom: tsens: simplify debugfs
+ init function
+To:     Ansuel Smith <ansuelsmth@gmail.com>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Amit Kucheria <amitk@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20210419012930.7727-1-ansuelsmth@gmail.com>
+ <20210419012930.7727-2-ansuelsmth@gmail.com>
+From:   Thara Gopinath <thara.gopinath@linaro.org>
+Message-ID: <8e679407-07e7-244a-48fa-0d4d451d744d@linaro.org>
+Date:   Wed, 28 Apr 2021 12:47:30 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
+MIME-Version: 1.0
+In-Reply-To: <20210419012930.7727-2-ansuelsmth@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Apr 23, 2021 at 1:00 PM Douglas Anderson <dianders@chromium.org> wrote:
->
-> I don't believe that it ever makes sense to read the EDID when a panel
-> is not powered and the powering on of the panel is the job of
-> prepare(). Let's make sure that this happens before we try to read the
-> EDID. We use the pm_runtime functions directly rather than directly
-> calling the normal prepare() function because the pm_runtime functions
-> are definitely refcounted whereas it's less clear if the prepare() one
-> is.
->
-> NOTE: I'm not 100% sure how EDID reading was working for folks in the
-> past, but I can only assume that it was failing on the initial attempt
-> and then working only later. This patch, presumably, will fix that. If
-> some panel out there really can read the EDID without powering up and
-> it's a big advantage to preserve the old behavior we can add a
-> per-panel flag. It appears that providing the DDC bus to the panel in
-> the past was somewhat uncommon in any case.
->
+Hi,
 
-Maybe some combination of drivers caching the EDID for panels while
-they're already powered and overly broad pm runtime references?
+Please include a cover letter next time describing the patch series.
 
-At any rate, this makes sense to me,
-
-Reviewed-by: Sean Paul <seanpaul@chromium.org>
-
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+On 4/18/21 9:29 PM, Ansuel Smith wrote:
+> Simplify debugfs init function.
+> - Drop useless variables
+> - Add check for existing dev directory.
+> - Fix wrong version in dbg_version_show (with version 0.0.0, 0.1.0 was
+>    incorrectly reported)
+> 
+> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
 > ---
->
-> (no changes since v1)
->
->  drivers/gpu/drm/panel/panel-simple.c | 8 +++++++-
->  1 file changed, 7 insertions(+), 1 deletion(-)
->
-> diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
-> index 4de33c929a59..a12dfe8b8d90 100644
-> --- a/drivers/gpu/drm/panel/panel-simple.c
-> +++ b/drivers/gpu/drm/panel/panel-simple.c
-> @@ -510,12 +510,18 @@ static int panel_simple_get_modes(struct drm_panel *panel,
->
->         /* probe EDID if a DDC bus is available */
->         if (p->ddc) {
-> -               struct edid *edid = drm_get_edid(connector, p->ddc);
-> +               struct edid *edid;
->
-> +               pm_runtime_get_sync(panel->dev);
-> +
-> +               edid = drm_get_edid(connector, p->ddc);
->                 if (edid) {
->                         num += drm_add_edid_modes(connector, edid);
->                         kfree(edid);
->                 }
-> +
-> +               pm_runtime_mark_last_busy(panel->dev);
-> +               pm_runtime_put_autosuspend(panel->dev);
->         }
->
->         /* add hard-coded panel modes */
-> --
-> 2.31.1.498.g6c1eba8ee3d-goog
->
-> _______________________________________________
-> dri-devel mailing list
-> dri-devel@lists.freedesktop.org
-> https://lists.freedesktop.org/mailman/listinfo/dri-devel
+>   drivers/thermal/qcom/tsens.c | 16 +++++++---------
+>   1 file changed, 7 insertions(+), 9 deletions(-)
+> 
+> diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
+> index f9d50a67e..b086d1496 100644
+> --- a/drivers/thermal/qcom/tsens.c
+> +++ b/drivers/thermal/qcom/tsens.c
+> @@ -692,7 +692,7 @@ static int dbg_version_show(struct seq_file *s, void *data)
+>   			return ret;
+>   		seq_printf(s, "%d.%d.%d\n", maj_ver, min_ver, step_ver);
+>   	} else {
+> -		seq_puts(s, "0.1.0\n");
+> +		seq_printf(s, "0.%d.0\n", priv->feat->ver_major);
+>   	}
+>   
+>   	return 0;
+> @@ -704,21 +704,19 @@ DEFINE_SHOW_ATTRIBUTE(dbg_sensors);
+>   static void tsens_debug_init(struct platform_device *pdev)
+>   {
+>   	struct tsens_priv *priv = platform_get_drvdata(pdev);
+> -	struct dentry *root, *file;
+>   
+> -	root = debugfs_lookup("tsens", NULL);
+> -	if (!root)
+> +	priv->debug_root = debugfs_lookup("tsens", NULL);
+> +	if (!priv->debug_root)
+>   		priv->debug_root = debugfs_create_dir("tsens", NULL);
+> -	else
+> -		priv->debug_root = root;
+>   
+> -	file = debugfs_lookup("version", priv->debug_root);
+> -	if (!file)
+> +	if (!debugfs_lookup("version", priv->debug_root))
+>   		debugfs_create_file("version", 0444, priv->debug_root,
+>   				    pdev, &dbg_version_fops);
+>   
+>   	/* A directory for each instance of the TSENS IP */
+> -	priv->debug = debugfs_create_dir(dev_name(&pdev->dev), priv->debug_root);
+
+Unconditionally creating priv->debug here is correct. The below if 
+(!priv->debug) will never be true because as per your patch 1, we call 
+tsens_debug_init once per instance of tsens.
+
+> +	priv->debug = debugfs_lookup(dev_name(&pdev->dev), priv->debug_root);
+> +	if (!priv->debug)
+> +		priv->debug = debugfs_create_dir(dev_name(&pdev->dev), priv->debug_root);
+>   	debugfs_create_file("sensors", 0444, priv->debug, pdev, &dbg_sensors_fops);
+>   }
+>   #else
+> 
+
+-- 
+Warm Regards
+Thara
