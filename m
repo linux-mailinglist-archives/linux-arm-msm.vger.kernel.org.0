@@ -2,34 +2,33 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E9A8236D5FD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Apr 2021 12:55:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6982836D712
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Apr 2021 14:14:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239596AbhD1Kzr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Apr 2021 06:55:47 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:61100 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229811AbhD1Kzq (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Apr 2021 06:55:46 -0400
+        id S232569AbhD1MO6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Apr 2021 08:14:58 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:55455 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229645AbhD1MO4 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 28 Apr 2021 08:14:56 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1619607302; h=Message-ID: References: In-Reply-To: Subject:
+ s=smtp; t=1619612051; h=Message-ID: References: In-Reply-To: Subject:
  Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=wM+iIS9aBiosy9WN+kXt89fq97297X7zgtANmIQf60U=;
- b=MVb+FU+tkuvinqYAHTVI5fLHJ58a8TQKcQyIDB2M8Tque5ih6Vm0IYnMW6dmmvTQUKrI5CZh
- g+G8OaXlck/AtUfLn/qQ+5f9C45sOi0z2/hQhSZYopgkDEivVlDN1kzeD2ZvonwW2P8BdePe
- I4tSy5hJnocN5n9x27aLzP6VTbc=
-X-Mailgun-Sending-Ip: 198.61.254.9
+ MIME-Version: Sender; bh=itp3bO0rSXlRMnGotgyM/EUgRDm0AtM7sGQbojFcAGA=;
+ b=M45fa1E1fjj9EXL0nisDeaHlRs93TKNiMs9gWoU/bmRF+IW+RkdAZ6bAL6RRP794HqFq+aTF
+ 2QgIOiRFTF2og+xC1rh+DlMz594os+hS800XgAX50GAomiiXK2whsCpE3b1rR2rLTVE5MStG
+ ffkDZDSQbQkxpruB+dH4ZbvbiMA=
+X-Mailgun-Sending-Ip: 69.72.43.7
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
- 60893eda87ce1fbb56353cf8 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 28 Apr 2021 10:54:18
+ smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
+ 6089517c74f773a664ac27ee (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 28 Apr 2021 12:13:48
  GMT
-Sender: fenglinw=codeaurora.org@mg.codeaurora.org
+Sender: dikshita=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 0A4F0C433D3; Wed, 28 Apr 2021 10:54:18 +0000 (UTC)
+        id BED7DC43460; Wed, 28 Apr 2021 12:13:47 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -38,93 +37,75 @@ X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
 Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
         (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: fenglinw)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 13AF5C433F1;
-        Wed, 28 Apr 2021 10:54:17 +0000 (UTC)
+        (Authenticated sender: dikshita)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6ED9FC433F1;
+        Wed, 28 Apr 2021 12:13:46 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII;
  format=flowed
 Content-Transfer-Encoding: 7bit
-Date:   Wed, 28 Apr 2021 18:54:16 +0800
-From:   fenglinw@codeaurora.org
+Date:   Wed, 28 Apr 2021 17:43:46 +0530
+From:   dikshita@codeaurora.org
 To:     Rob Herring <robh@kernel.org>
-Cc:     collinsd@codeaurora.org, linux-pwm@vger.kernel.org,
-        subbaram@codeaurora.org, linux-kernel@vger.kernel.org,
-        =?UTF-8?Q?Uwe_K?= =?UTF-8?Q?leine-K=C3=B6nig?= 
-        <u.kleine-koenig@pengutronix.de>, Lee Jones <lee.jones@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, aghayal@codeaurora.org,
-        devicetree@vger.kernel.org,
-        Thierry Reding <thierry.reding@gmail.com>
-Subject: Re: [PATCH 1/2] dt-bindings: pwm: add bindings for PWM modules inside
- QCOM PMICs
-In-Reply-To: <1619528221.595166.1346447.nullmailer@robh.at.kernel.org>
-References: <20210427102247.822-1-fenglinw@codeaurora.org>
- <20210427102247.822-2-fenglinw@codeaurora.org>
- <1619528221.595166.1346447.nullmailer@robh.at.kernel.org>
-Message-ID: <9f8c304696d12250293f88b3d6718eee@codeaurora.org>
-X-Sender: fenglinw@codeaurora.org
+Cc:     andy.gross@linaro.org, vgarodia@codeaurora.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, stanimir.varbanov@linaro.org,
+        robh+dt@kernel.org, mark.rutland@arm.com, david.brown@linaro.org
+Subject: Re: [PATCH] dt-bindings: media: venus: Add sc7280 dt schema
+In-Reply-To: <1619471083.458228.4086059.nullmailer@robh.at.kernel.org>
+References: <1619432515-9060-1-git-send-email-dikshita@codeaurora.org>
+ <1619471083.458228.4086059.nullmailer@robh.at.kernel.org>
+Message-ID: <d41482571e1ec6326d3f3ad665f18c81@codeaurora.org>
+X-Sender: dikshita@codeaurora.org
 User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-04-27 20:57, Rob Herring wrote:
-> On Tue, 27 Apr 2021 18:22:09 +0800, Fenglin Wu wrote:
->> Add bindings for QCOM PMIC PWM modules which are accessed through SPMI
->> bus.
+Hi Rob,
+Thanks for your comment.
+
+Actually, this change depends on 
+https://patchwork.kernel.org/project/linux-arm-msm/list/?series=473809
+which adds the file dt-bindings/clock/qcom,videocc-sc7280.h (v2 5/6)
+Missed adding the dependency in commit text.
+
+Thanks,
+Dikshita
+
+On 2021-04-27 02:34, Rob Herring wrote:
+> On Mon, 26 Apr 2021 15:51:55 +0530, Dikshita Agarwal wrote:
+>> Add a schema description for the venus video encoder/decoder on the 
+>> sc7280.
 >> 
->> Signed-off-by: Fenglin Wu <fenglinw@codeaurora.org>
+>> Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
 >> ---
->>  .../devicetree/bindings/pwm/pwm-qcom.yaml          | 51 
->> ++++++++++++++++++++++
->>  1 file changed, 51 insertions(+)
+>>  .../bindings/media/qcom,sc7280-venus.yaml          | 158 
+>> +++++++++++++++++++++
+>>  1 file changed, 158 insertions(+)
 >>  create mode 100644 
->> Documentation/devicetree/bindings/pwm/pwm-qcom.yaml
+>> Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml
 >> 
 > 
 > My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
 > on your patch (DT_CHECKER_FLAGS is new in v5.13):
 > 
 > yamllint warnings/errors:
-> ./Documentation/devicetree/bindings/pwm/pwm-qcom.yaml:29:6: [warning]
-> wrong indentation: expected 4 but found 5 (indentation)
 > 
 > dtschema/dtc warnings/errors:
-> /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/pwm/pwm-qcom.yaml:
-> Additional properties are not allowed ('Properties' was unexpected)
-> /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/pwm/pwm-qcom.yaml:
-> Additional properties are not allowed ('Properties' was unexpected)
-> /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/pwm/pwm-qcom.yaml:
-> 'anyOf' conditional failed, one must be fixed:
-> 	'properties' is a required property
-> 	'patternProperties' is a required property
-> /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/pwm/pwm-qcom.yaml:
-> ignoring, error in schema:
-> warning: no schema found in file:
-> ./Documentation/devicetree/bindings/pwm/pwm-qcom.yaml
-> Documentation/devicetree/bindings/pwm/pwm-qcom.example.dts:21.13-28:
-> Warning (reg_format): /example-0/pwms@e800:reg: property has invalid
-> length (4 bytes) (#address-cells == 1, #size-cells == 1)
-> Documentation/devicetree/bindings/pwm/pwm-qcom.example.dt.yaml:
-> Warning (pci_device_reg): Failed prerequisite 'reg_format'
-> Documentation/devicetree/bindings/pwm/pwm-qcom.example.dt.yaml:
-> Warning (pci_device_bus_num): Failed prerequisite 'reg_format'
-> Documentation/devicetree/bindings/pwm/pwm-qcom.example.dt.yaml:
-> Warning (simple_bus_reg): Failed prerequisite 'reg_format'
-> Documentation/devicetree/bindings/pwm/pwm-qcom.example.dt.yaml:
-> Warning (i2c_bus_reg): Failed prerequisite 'reg_format'
-> Documentation/devicetree/bindings/pwm/pwm-qcom.example.dt.yaml:
-> Warning (spi_bus_reg): Failed prerequisite 'reg_format'
-> /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/pwm/pwm-qcom.example.dt.yaml:
-> example-0: pwms@e800:reg:0: [59392] is too short
-> 	From schema: 
-> /usr/local/lib/python3.8/dist-packages/dtschema/schemas/reg.yaml
-> Documentation/devicetree/bindings/pwm/pwm-qcom.example.dt.yaml:0:0:
-> /example-0/pwms@e800: failed to match any schema with compatible:
-> ['qcom,pwm']
+> Documentation/devicetree/bindings/media/qcom,sc7280-venus.example.dts:19:18:
+> fatal error: dt-bindings/clock/qcom,videocc-sc7280.h: No such file or
+> directory
+>    19 |         #include <dt-bindings/clock/qcom,videocc-sc7280.h>
+>       |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> compilation terminated.
+> make[1]: *** [scripts/Makefile.lib:377:
+> Documentation/devicetree/bindings/media/qcom,sc7280-venus.example.dt.yaml]
+> Error 1
+> make[1]: *** Waiting for unfinished jobs....
+> make: *** [Makefile:1414: dt_binding_check] Error 2
 > 
-> See https://patchwork.ozlabs.org/patch/1470623
+> See https://patchwork.ozlabs.org/patch/1470241
 > 
 > This check can fail if there are any dependencies. The base for a patch
 > series is generally the most recent rc1.
@@ -136,8 +117,3 @@ On 2021-04-27 20:57, Rob Herring wrote:
 > pip3 install dtschema --upgrade
 > 
 > Please check and re-submit.
-
-Thanks for the information. It's my 1st time to write binding using yaml 
-format, I hadn't noticed there was a checker can be used for sanity 
-test. I will update and run the dt_binding_check at my side before 
-uploading new patchset.
