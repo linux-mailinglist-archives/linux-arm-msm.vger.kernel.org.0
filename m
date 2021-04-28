@@ -2,136 +2,207 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B188836D58B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Apr 2021 12:15:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3E41336D5EA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Apr 2021 12:47:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239087AbhD1KPt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Apr 2021 06:15:49 -0400
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32]:7666 "EHLO
-        mx0b-00069f02.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S238964AbhD1KPq (ORCPT
+        id S239537AbhD1KsQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Apr 2021 06:48:16 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:60996 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236052AbhD1KsP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Apr 2021 06:15:46 -0400
-Received: from pps.filterd (m0246630.ppops.net [127.0.0.1])
-        by mx0b-00069f02.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id 13SACeBX007948;
-        Wed, 28 Apr 2021 10:14:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=date : from : to : cc
- : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=corp-2020-01-29;
- bh=I+MVSz17rMFhUANJ9vAyQofowEWDVcDjmcFL0J5BcrE=;
- b=uaOHEwiNVwraQynnCPG2JzUVkXn9TRJB98bwFw0nuDEWf2bDE8FmmhWwy27Gv5J3VgGA
- uewrbjmbZEziXm8mvrKV3ViaWtSgLiYoaaF42HTk3qioV7dpMwQvSgxqhLbQCkVd/3Fw
- LVJdAJMwZzS019v20hv+Fmbni5XnEu+n0Zh32LH6VtypyYkOVAkTHzHoCZo9BAHC59iD
- 2k+gys9jMuwtzx/BQy+ly/lwxGeCA/WDfXiZIQN9VANI6J5sGWPFV0QM9JmSbGHuQcE6
- i6y9ZOrDpCpOAddMtZl/IOGGZmYnYPEWSyqoK+WyRvAh0cOfYCsePDN3Gw1Qw/s/HJKR fg== 
-Received: from oracle.com (aserp3020.oracle.com [141.146.126.70])
-        by mx0b-00069f02.pphosted.com with ESMTP id 385p7j97m9-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Wed, 28 Apr 2021 10:14:17 +0000
-Received: from aserp3020.oracle.com (aserp3020.oracle.com [127.0.0.1])
-        by pps.podrdrct (8.16.0.36/8.16.0.36) with SMTP id 13SAEHeS049706;
-        Wed, 28 Apr 2021 10:14:17 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-        by aserp3020.oracle.com with ESMTP id 384b5884gd-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Wed, 28 Apr 2021 10:14:17 +0000
-Received: from aserp3020.oracle.com (aserp3020.oracle.com [127.0.0.1])
-        by pps.reinject (8.16.0.36/8.16.0.36) with SMTP id 13SAA2xH035177;
-        Wed, 28 Apr 2021 10:14:15 GMT
-Received: from aserv0122.oracle.com (aserv0122.oracle.com [141.146.126.236])
-        by aserp3020.oracle.com with ESMTP id 384b5884e6-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Wed, 28 Apr 2021 10:14:15 +0000
-Received: from abhmp0008.oracle.com (abhmp0008.oracle.com [141.146.116.14])
-        by aserv0122.oracle.com (8.14.4/8.14.4) with ESMTP id 13SADmYk022121;
-        Wed, 28 Apr 2021 10:13:48 GMT
-Received: from kadam (/102.36.221.92)
-        by default (Oracle Beehive Gateway v4.0)
-        with ESMTP ; Wed, 28 Apr 2021 03:13:47 -0700
-Date:   Wed, 28 Apr 2021 13:13:25 +0300
-From:   Dan Carpenter <dan.carpenter@oracle.com>
-To:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Cc:     Shawn Tu <shawnx.tu@intel.com>,
-        Ricardo Ribalda <ribalda@kernel.org>,
-        Dafna Hirschfeld <dafna.hirschfeld@collabora.com>,
-        Heiko Stuebner <heiko@sntech.de>, linuxarm@huawei.com,
-        Todor Tomov <todor.too@gmail.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andrzej Hajda <a.hajda@samsung.com>,
-        "Lad, Prabhakar" <prabhakar.csengg@gmail.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Dmitry Osipenko <digetx@gmail.com>,
-        linux-stm32@st-md-mailman.stormreply.com,
-        Andrzej Pietrasiewicz <andrzejtp2010@gmail.com>,
-        Leon Luo <leonl@leopardimaging.com>,
-        Paul Kocialkowski <paul.kocialkowski@bootlin.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Dave Stevenson <dave.stevenson@raspberrypi.com>,
-        Matt Ranostay <matt.ranostay@konsulko.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        linux-rockchip@lists.infradead.org, Chen-Yu Tsai <wens@csie.org>,
-        Andy Gross <agross@kernel.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Dongchun Zhu <dongchun.zhu@mediatek.com>,
-        Sakari Ailus <sakari.ailus@linux.intel.com>,
-        Bingbu Cao <bingbu.cao@intel.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Shunqian Zheng <zhengsq@rock-chips.com>,
-        Tianshu Qiu <tian.shu.qiu@intel.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        devel@driverdev.osuosl.org, Jacopo Mondi <jacopo@jmondi.org>,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        linux-tegra@vger.kernel.org,
-        Alexandre Torgue <alexandre.torgue@st.com>,
-        Wenyou Yang <wenyou.yang@microchip.com>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        linux-arm-msm@vger.kernel.org,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Steve Longerbeam <slongerbeam@gmail.com>,
-        linux-media@vger.kernel.org, Maxime Ripard <mripard@kernel.org>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        Benoit Parrot <bparrot@ti.com>,
-        Helen Koike <helen.koike@collabora.com>,
-        linux-samsung-soc@vger.kernel.org,
-        linux-mediatek@lists.infradead.org,
-        Jacek Anaszewski <jacek.anaszewski@gmail.com>,
-        mauro.chehab@huawei.com,
-        Sylwester Nawrocki <sylvester.nawrocki@gmail.com>,
-        "Paul J. Murphy" <paul.j.murphy@intel.com>,
-        Ezequiel Garcia <ezequiel@collabora.com>,
-        Daniele Alessandrelli <daniele.alessandrelli@intel.com>,
-        Chiranjeevi Rapolu <chiranjeevi.rapolu@intel.com>,
-        linux-arm-kernel@lists.infradead.org,
-        Jacob Chen <jacob-chen@iotwrt.com>,
-        Jernej Skrabec <jernej.skrabec@siol.net>,
-        Hyungwoo Yang <hyungwoo.yang@intel.com>,
-        linux-kernel@vger.kernel.org, Robert Foss <robert.foss@linaro.org>,
-        Dan Scally <djrscally@gmail.com>,
-        Sowjanya Komatineni <skomatineni@nvidia.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        linux-renesas-soc@vger.kernel.org, Yong Zhi <yong.zhi@intel.com>,
-        Shawn Guo <shawnguo@kernel.org>
-Subject: Re: [PATCH 00/78] media: use pm_runtime_resume_and_get() instead of
- pm_runtime_get_sync()
-Message-ID: <20210428101325.GS1981@kadam>
-References: <cover.1619191723.git.mchehab+huawei@kernel.org>
+        Wed, 28 Apr 2021 06:48:15 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1619606851; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=ZuI/K9+NXDRWXfsFMoJzLU4sqRFnGeuqVbmpRUnN4cQ=;
+ b=j4XufHBAbi8RvPihFuMfyl16kuuM3q9Hbiv7/MKbzqJ+k2Ew+iVhmBEclacepq/qKWCBfkVK
+ Cmv/JfkEZWPVFOfoPvQInBsdV6S0ZylEW+ATxVJ6lWLtyMmrR4e57Q4HKzT7Cr5rWJEVZYnb
+ L9Eq+mtxSjbIqrkp7Ny+Xf+8CRc=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
+ 60893d3574f773a6645c15ca (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 28 Apr 2021 10:47:17
+ GMT
+Sender: sbhanu=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 9839CC433F1; Wed, 28 Apr 2021 10:47:16 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: sbhanu)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 84A91C433D3;
+        Wed, 28 Apr 2021 10:47:15 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1619191723.git.mchehab+huawei@kernel.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
-X-Proofpoint-GUID: Wh3TJZZgxDghGm9XGzqkDIkdKaJ9t1UU
-X-Proofpoint-ORIG-GUID: Wh3TJZZgxDghGm9XGzqkDIkdKaJ9t1UU
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Wed, 28 Apr 2021 16:17:15 +0530
+From:   sbhanu@codeaurora.org
+To:     Doug Anderson <dianders@google.com>
+Cc:     Veerabhadrarao Badiganti <vbadigan@codeaurora.org>,
+        Adrian Hunter <adrian.hunter@intel.com>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Asutosh Das <asutoshd@codeaurora.org>,
+        Sahitya Tummala <stummala@codeaurora.org>,
+        Ram Prakash Gupta <rampraka@codeaurora.org>,
+        Sayali Lokhande <sayalil@codeaurora.org>,
+        sartgarg@codeaurora.org, Rajendra Nayak <rnayak@codeaurora.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Sibi Sankar <sibis@codeaurora.org>, cang@codeaurora.org,
+        pragalla@codeaurora.org, nitirawa@codeaurora.org,
+        Linux MMC List <linux-mmc@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Evan Green <evgreen@chromium.org>,
+        Georgi Djakov <georgi.djakov@linaro.org>,
+        Odelu Kukatla <okukatla@codeaurora.org>
+Subject: Re: [PATCH V2] arm64: dts: qcom: sc7280: Add nodes for eMMC and SD
+ card
+In-Reply-To: <CAD=FV=U0zEDi1Xn3OmVFA3h3maVWS_o2FXOW9qDEzTf1Moja=A@mail.gmail.com>
+References: <1616264220-25825-1-git-send-email-sbhanu@codeaurora.org>
+ <CAD=FV=WLZCSd6D5VFyD+1KBp5n1qyszER2EVaEMwYjQfPSSDnA@mail.gmail.com>
+ <b77f207b-2d90-3c8b-857f-625bd3867ed1@codeaurora.org>
+ <6fdf704c4716f5873d413229ca8adc57@codeaurora.org>
+ <CAD=FV=Wa4fT5wZgd0==8kLy_tzTLgdZ-HwdfOEAM9pMeMjjFyg@mail.gmail.com>
+ <8126e130e5c0ea1e7ea867414f0510c0@codeaurora.org>
+ <CAD=FV=XavWbf_b7-=JT6V5_RNA8CjdK4oRu7H719AaPDJ5tsqQ@mail.gmail.com>
+ <32096a375966e1fcc149016df012c445@codeaurora.org>
+ <CAD=FV=U0zEDi1Xn3OmVFA3h3maVWS_o2FXOW9qDEzTf1Moja=A@mail.gmail.com>
+Message-ID: <7c6805abf9c1f590bc4d66d625152f22@codeaurora.org>
+X-Sender: sbhanu@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-There was a Smatch check for these bugs.  This was a good source of
-recurring Reported-by tags for me.  ;)  Thanks for doing this.
+On 2021-04-21 01:44, Doug Anderson wrote:
+> Hi,
+> 
+> On Tue, Apr 20, 2021 at 10:21 AM <sbhanu@codeaurora.org> wrote:
+>> 
+>> On 2021-04-15 01:55, Doug Anderson wrote:
+>> > Hi,
+>> >
+>> > On Tue, Apr 13, 2021 at 3:59 AM <sbhanu@codeaurora.org> wrote:
+>> >>
+>> >> >> >>> +                                       required-opps =
+>> >> >> >>> <&rpmhpd_opp_low_svs>;
+>> >> >> >>> +                                       opp-peak-kBps = <1200000
+>> >> >> >>> 76000>;
+>> >> >> >>> +                                       opp-avg-kBps = <1200000
+>> >> >> >>> 50000>;
+>> >> >> >> Why are the kBps numbers so vastly different than the ones on sc7180
+>> >> >> >> for the same OPP point. That implies:
+>> >> >> >>
+>> >> >> >> a) sc7180 is wrong.
+>> >> >> >>
+>> >> >> >> b) This patch is wrong.
+>> >> >> >>
+>> >> >> >> c) The numbers are essentially random and don't really matter.
+>> >> >> >>
+>> >> >> >> Can you identify which of a), b), or c) is correct, or propose an
+>> >> >> >> alternate explanation of the difference?
+>> >> >> >>
+>> >> >>
+>> >> >> We calculated bus votes values for both sc7180 and sc7280 with ICB
+>> >> >> tool,
+>> >> >> above mentioned values we got for sc7280.
+>> >> >
+>> >> > I don't know what an ICB tool is. Please clarify.
+>> >> >
+>> >> > Also: just because a tool spits out numbers that doesn't mean it's
+>> >> > correct. Presumably the tool could be wrong or incorrectly configured.
+>> >> > We need to understand why these numbers are different.
+>> >> >
+>> >> we checked with ICB tool team on this they conformed as Rennell &
+>> >> Kodiak
+>> >> are different chipsets,
+>> >> we might see delta in ib/ab values due to delta in scaling factors.
+>> >
+>> > ...but these numbers are in kbps, aren't they? As I understand it
+>> > these aren't supposed to be random numbers spit out by a tool but are
+>> > supposed to be understandable by how much bandwidth an IP block (like
+>> > MMC) needs from the busses it's connected to. Since the MMC IP block
+>> > on sc7180 and sc7280 is roughly the same there shouldn't be a big
+>> > difference in numbers.
+>> >
+>> > Something smells wrong.
+>> >
+>> > Adding a few people who understand interconnects better than I do,
+>> > though.
+>> >
+>> 
+>> ICB team has re-checked the Rennell ICB tool and they confirmed that
+>> some configs were wrong in Rennell ICB tool and they corrected it.With
+>> the new updated Rennell ICB tool below are the values :
+>> 
+>> 
+>> Rennell LC:(Sc7180)
+>> 
+>> opp-384000000 {
+>>               opp-hz = /bits/ 64 <384000000>;
+>>               required-opps = <&rpmhpd_opp_nom>;
+>>               opp-peak-kBps = <5400000 490000>;
+>>               opp-avg-kBps = <6600000 300000>;
+>> };
+>> 
+>> 
+>> And now, these values are near to Kodaik LC values:
+>> 
+>> Kodaik LC:(SC7280)
+>> 
+>> opp-384000000 {
+>>             opp-hz = /bits/ 64 <384000000>;
+>>             required-opps = <&rpmhpd_opp_nom>;
+>>             opp-peak-kBps = <5400000 399000>;
+>>             opp-avg-kBps = <6000000 300000>;
+>> };
+> 
+> This still isn't making sense to me.
+> 
+> * sc7180 and sc7280 are running at the same speed. I'm glad the
+> numbers are closer now, but I would have thought they'd be exactly the
+> same.
+> 
+> * Aren't these supposed to be sensible? This is eMMC that does max
+> transfer rates of 400 megabytes / second to the external device. You
+> have bandwidths listed here of 5,400,000 kBps = 5,400,000 kilobytes /
+> second = 5400 megabytes / second. I can imagine there being some
+> overhead where an internal bus might need to be faster but that seems
+> excessive. This is 13.5x!
+> 
 
-regards,
-dan carpenter
+These numbers are not related to SDCC bandwidth, these are the values 
+needed for the NOC's to run in nominal voltage corners (internal to 
+hardware) and
+thus it helps SDCC to run in nominal to get required through put 
+(384MBps).So above calculation mentioned by you is not applicable here.
 
+> * I can't see how it can make sense that "average" values are higher
+> than "peak" values.
+
+
+Here actual peak = peak number * 2
+actual average = average number
+
+and this multiplication is taken care by ICC driver, so technically 
+actual peak is still high than average.
+
+
+> 
+> It still feels like there's a misconfiguration somewhere.
+> 
+> -Doug
