@@ -2,110 +2,169 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3DD8636D3F8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Apr 2021 10:30:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 47F3B36D524
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Apr 2021 11:55:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236730AbhD1Iap (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Apr 2021 04:30:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38272 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229643AbhD1Iap (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Apr 2021 04:30:45 -0400
-Received: from mail-pg1-x531.google.com (mail-pg1-x531.google.com [IPv6:2607:f8b0:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D75CBC061574
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Apr 2021 01:30:00 -0700 (PDT)
-Received: by mail-pg1-x531.google.com with SMTP id t22so8963356pgu.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Apr 2021 01:30:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=X3yT5TmoSLSmrok+Crx8M3QcwMZEOV/qAXHZ0pyFZQQ=;
-        b=NmFsFFy4JyKRlWwG4SAGhGeyQ2DH/Sw3keP+7sjtOe1hFGk0zSokCAtxFiVKqQYuiY
-         R+vdts7oxhszAeMpNiYcY8IFwqoeHJ87M8qLs3zimY83kZRtsVQcW/BrX4FISaKLg6nz
-         CFil30c3r6NcjtKzFjtYYIfFFc0IYQhZNU7UgSxwC1eoxneA2BqilDwmSv72Y98Bfk6u
-         Fh87cmHE4/wMyVG8KtcdMkHe5+x8m6NHk2V+IMeONpBIcW/NzkOMy/WRkkHGNfrFnkd/
-         6C88XHDmUGmYmBTcXbmSukAnyE/qF42eBVi6cTyzi7T54amFd9uZndBILpH2cKLy9FJy
-         ePwQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=X3yT5TmoSLSmrok+Crx8M3QcwMZEOV/qAXHZ0pyFZQQ=;
-        b=JJJpeGnkpHIdrEqx/fwYVzHz10Ltkr2vguiDnj5cg493IQeWr6tw9EW4+iw9p3dNZ/
-         uNO3oepZYcJJn4as7WOq1oGfUTfsBINNc2qyoM+It4xcYHrK7xw5vGljDT5aUGziWCMi
-         +9pdJgrXfBe7YqWsXlS/XLQ3RuGqOUvWmlHYNVOVA7BLdEy4A0MYznvZ4PRYPS+EKu/s
-         w3Liy04fO93tqbtBphMXhKkYBtW9KBgNfUkWFDKIe+syWx+0oyWXSnPdC4vuXtrcUvUO
-         uNH7WFuWSfb81yQJyyCQ9JwMav7PT5Euy+2SVXjqiiPGmF0vMUaV6IPO/JdyqeQnyi90
-         IWtw==
-X-Gm-Message-State: AOAM53374kA9tvs7ue7oaxaBDvv4BWGwQz/4kVTfh4wP8Nsc92YcbvPy
-        cQBTKQuVNbjmIjqh/Ea8LbGj4LIZJYTxZQ83r9zY2Q==
-X-Google-Smtp-Source: ABdhPJzq32Kno41WvgEanKSTTJoP0HEse+GrqDt/mhwqt9SZ5cKbFQ8pOxTX89szqlPplDovLezTX8z1ZwCw4OEgCXk=
-X-Received: by 2002:a05:6a00:1494:b029:278:a4bc:957f with SMTP id
- v20-20020a056a001494b0290278a4bc957fmr10769930pfu.55.1619598600279; Wed, 28
- Apr 2021 01:30:00 -0700 (PDT)
+        id S238680AbhD1J4O (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Apr 2021 05:56:14 -0400
+Received: from mail.kernel.org ([198.145.29.99]:54254 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S238285AbhD1J4O (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 28 Apr 2021 05:56:14 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id BA71B613E8;
+        Wed, 28 Apr 2021 09:55:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1619603729;
+        bh=FUOG1GFp3PXPiB7KKWuN2ElWCqU3XTWRLgEUNNEWjyY=;
+        h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
+        b=mvY+hcxqgt9n+uxfqMKN/iqGvYSyaxuAY2H6cREnPpdMq8uMT2HSCYYfLZ9L07vOM
+         2Qbu9xQaCL0HYu5LfwCfcVnBJEsfbZNuJTkrOGpDp1gA6Q1PbkFmIePCwEwMYO0Q24
+         +A9mdkCUL4zxiHYhVY7eQhWG9K+Wpof6aXkLfXOQ/S4vCG/ol8QYqHkyBHC1lvpSJd
+         aQN/09/NRP9tblWM43EySG8yTcJ95pKqZ14T0W5s6KUNxiUoqPI+y0Y8eErAvbBVON
+         ug8WEbDzvCmgR6ruSmmHBPZeKFHuaUeAUjbLAzfX7f26bmtSzeVCNvVCGGIkWksQGS
+         P/aNzYEr4jnVg==
+From:   Felipe Balbi <balbi@kernel.org>
+To:     Sandeep Maheswaram <sanm@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Manu Gautam <mgautam@codeaurora.org>,
+        Sandeep Maheswaram <sanm@codeaurora.org>
+Subject: Re: [PATCH v7 1/5] usb: dwc3: host: Set PHY mode during suspend
+In-Reply-To: <1619586716-8687-2-git-send-email-sanm@codeaurora.org>
+References: <1619586716-8687-1-git-send-email-sanm@codeaurora.org>
+ <1619586716-8687-2-git-send-email-sanm@codeaurora.org>
+Date:   Wed, 28 Apr 2021 12:55:21 +0300
+Message-ID: <87tunqka2e.fsf@kernel.org>
 MIME-Version: 1.0
-References: <20210421065501.3134-1-jarvis.w.jiang@gmail.com>
-In-Reply-To: <20210421065501.3134-1-jarvis.w.jiang@gmail.com>
-From:   Loic Poulain <loic.poulain@linaro.org>
-Date:   Wed, 28 Apr 2021 10:38:40 +0200
-Message-ID: <CAMZdPi-H=mnH9SFQZ7XQ8fjb0VtYbaWKGFhoXYyurDAB+RpQ5w@mail.gmail.com>
-Subject: Re: [PATCH v1] bus: mhi: pci_generic: T99W175: update channel name
- from AT to DUN
-To:     Jarvis Jiang <jarvis.w.jiang@gmail.com>
-Cc:     Manivannan Sadhasivam <mani@kernel.org>,
-        Hemant Kumar <hemantk@codeaurora.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Chi-Wei Chen50 <cchen50@lenovo.com>,
-        Mark Pearson <mpearson@lenovo.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; boundary="=-=-=";
+        micalg=pgp-sha256; protocol="application/pgp-signature"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 21 Apr 2021 at 08:56, Jarvis Jiang <jarvis.w.jiang@gmail.com> wrote:
+--=-=-=
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
+
+
+Hi,
+
+Sandeep Maheswaram <sanm@codeaurora.org> writes:
+> During suspend read the status of all port and make sure the PHYs
+> are in the correct mode based on current speed.
+> Phy interrupt masks are set based on this mode. Keep track of the mode
+> of the HS PHY to be able to configure wakeup properly.
 >
-> According to MHI v1.1 specification, change the channel name of T99W175
-> from "AT" to "DUN" (Dial-up networking) for both channel 32 and 33,
-> so that the channels can be bound to the Qcom WWAN control driver, and
-> device node such as /dev/wwan0p3AT will be generated, which is very useful
-> for debugging modem
+> Also check during suspend if any wakeup capable devices are
+> connected to the controller (directly or through hubs), if there
+> are none set a flag to indicate that the PHY should be powered
+> down during suspend.
 >
-> Signed-off-by: Jarvis Jiang <jarvis.w.jiang@gmail.com>
-
-Ok, it seems the spec claims it's a DUN channel, but all vendors use
-it for AT protocol, so it's fine (and correctly handled by the
-mhi_wwan_ctrl driver).
-
-Could you please add a Fixes tag since it fixes your previous commit?
-
-with that
-
-Reviewed-by: Loic Poulain <loic.poulain@linaro.org>
-
-
-
+> Signed-off-by: Sandeep Maheswaram <sanm@codeaurora.org>
 > ---
->  drivers/bus/mhi/pci_generic.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+>  drivers/usb/dwc3/core.h |  3 +++
+>  drivers/usb/dwc3/host.c | 59 +++++++++++++++++++++++++++++++++++++++++++=
+++++++
+>  2 files changed, 62 insertions(+)
 >
-> diff --git a/drivers/bus/mhi/pci_generic.c b/drivers/bus/mhi/pci_generic.c
-> index 7c810f02a2ef..8c7f6576e421 100644
-> --- a/drivers/bus/mhi/pci_generic.c
-> +++ b/drivers/bus/mhi/pci_generic.c
-> @@ -311,8 +311,8 @@ static const struct mhi_channel_config mhi_foxconn_sdx55_channels[] = {
->         MHI_CHANNEL_CONFIG_DL(5, "DIAG", 32, 1),
->         MHI_CHANNEL_CONFIG_UL(12, "MBIM", 32, 0),
->         MHI_CHANNEL_CONFIG_DL(13, "MBIM", 32, 0),
-> -       MHI_CHANNEL_CONFIG_UL(32, "AT", 32, 0),
-> -       MHI_CHANNEL_CONFIG_DL(33, "AT", 32, 0),
-> +       MHI_CHANNEL_CONFIG_UL(32, "DUN", 32, 0),
-> +       MHI_CHANNEL_CONFIG_DL(33, "DUN", 32, 0),
->         MHI_CHANNEL_CONFIG_HW_UL(100, "IP_HW0_MBIM", 128, 2),
->         MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0_MBIM", 128, 3),
->  };
-> --
-> 2.25.1
->
+> diff --git a/drivers/usb/dwc3/core.h b/drivers/usb/dwc3/core.h
+> index b1e875c..cecd278 100644
+> --- a/drivers/usb/dwc3/core.h
+> +++ b/drivers/usb/dwc3/core.h
+> @@ -1123,6 +1123,9 @@ struct dwc3 {
+>=20=20
+>  	bool			phys_ready;
+>=20=20
+> +	unsigned int            hs_phy_mode;
+> +	bool			phy_power_off;
+> +
+>  	struct ulpi		*ulpi;
+>  	bool			ulpi_ready;
+>=20=20
+> diff --git a/drivers/usb/dwc3/host.c b/drivers/usb/dwc3/host.c
+> index f29a264..527f04c 100644
+> --- a/drivers/usb/dwc3/host.c
+> +++ b/drivers/usb/dwc3/host.c
+> @@ -11,6 +11,14 @@
+>  #include <linux/platform_device.h>
+>=20=20
+>  #include "core.h"
+> +#include "../host/xhci.h"
+> +#include "../host/xhci-plat.h"
+> +
+> +static int xhci_dwc3_suspend_quirk(struct usb_hcd *hcd);
+> +
+> +static const struct xhci_plat_priv xhci_plat_dwc3_xhci =3D {
+> +	.suspend_quirk =3D xhci_dwc3_suspend_quirk,
+> +};
+
+we're passing data using device_properties, why do you want this here?
+
+> @@ -115,6 +123,13 @@ int dwc3_host_init(struct dwc3 *dwc)
+>  		}
+>  	}
+>=20=20
+> +	ret =3D platform_device_add_data(xhci, &xhci_plat_dwc3_xhci,
+> +			sizeof(struct xhci_plat_priv));
+> +	if (ret) {
+> +		dev_err(dwc->dev, "failed to add data to xHCI\n");
+> +		goto err;
+> +	}
+> +
+>  	ret =3D platform_device_add(xhci);
+>  	if (ret) {
+>  		dev_err(dwc->dev, "failed to register xHCI device\n");
+> @@ -127,6 +142,50 @@ int dwc3_host_init(struct dwc3 *dwc)
+>  	return ret;
+>  }
+>=20=20
+> +static void dwc3_set_phy_mode(struct usb_hcd *hcd)
+> +{
+> +
+> +	int i, num_ports;
+> +	u32 reg;
+> +	unsigned int ss_phy_mode =3D 0;
+> +	struct dwc3 *dwc =3D dev_get_drvdata(hcd->self.controller->parent);
+> +	struct xhci_hcd	*xhci_hcd =3D hcd_to_xhci(hcd);
+> +
+> +	dwc->hs_phy_mode =3D 0;
+> +
+> +	reg =3D readl(&xhci_hcd->cap_regs->hcs_params1);
+> +	num_ports =3D HCS_MAX_PORTS(reg);
+
+there's a big assumption here that xhci is still alive. Why isn't this
+quirk implemented in xhci-plat itself?
+
+> +int xhci_dwc3_suspend_quirk(struct usb_hcd *hcd)
+
+who calls this?
+
+=2D-=20
+balbi
+
+--=-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQJFBAEBCAAvFiEElLzh7wn96CXwjh2IzL64meEamQYFAmCJMQkRHGJhbGJpQGtl
+cm5lbC5vcmcACgkQzL64meEamQYufhAA29wjgeiUd9qTG8j+ZL50E+nZgAAEw2BW
+Wh2tEwNVLQ7rKEYK9iUP5EgKcoIjM9R4e8FRODWuAldoUDaZr5v+HxmJxe+SVbg8
+fhgROeZEJOqyWtB+swWTztMttG0waE873M/jtbj3BSUDpPcmxvxrcc92TiNbIl9l
+qWoy/uKLGXYbeXLfKNavA5mqRAr26bGO1hg4eDgxB0p2aq18q+TpOEly93WkJa1z
+ne0bTC2uVu2hoNJ0aVhNx8Hjxu1LknCf6cyjMruzYqGrC+7dJhf3przRE6Fe09Sp
+hKP3c2BqVU7aqrVs8YETsb25JTrL0sGtLg8pZigR+xsd9PraavPVHbdeDBLeIpLv
+brWLHGBKPgevNDW5vQ9rXXntHjLsEgj3OqDsqrqH7/ewUYZxf1j0cYLK33d5sOVE
+t1d4j8W4A+TP3cTJgUY5mHVfcRrS8Oqz0OZ5tnrKou5kRTAkLThJGOa4EYziyflq
+U4qVJXD4MGbrQf/oCjPxrWdRT/7XXdf30Ch1wNSgEs4uKietWiG4HWi61yMbvZI1
+Y+9Uw1ikDfWUry6kbSlhbwUkGnhQXZVBdinn35yMH3f2nWLOqO2+mLsdl/ZIvaLF
+H3PltgGtLHayIKcEML0V2sy2oILWOPy/eUWgC3NzUZOnl3RBjBl4xyPuxOQ3/R6o
+cREYJI/3hTM=
+=6bfD
+-----END PGP SIGNATURE-----
+--=-=-=--
