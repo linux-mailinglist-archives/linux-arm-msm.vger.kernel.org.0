@@ -2,88 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3C2D736D0A6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Apr 2021 04:48:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 39A7C36D189
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Apr 2021 07:12:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237111AbhD1Csp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Apr 2021 22:48:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48098 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235839AbhD1Cso (ORCPT
+        id S234983AbhD1FNQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Apr 2021 01:13:16 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:55043 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234377AbhD1FNP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Apr 2021 22:48:44 -0400
-Received: from mail-oo1-xc2d.google.com (mail-oo1-xc2d.google.com [IPv6:2607:f8b0:4864:20::c2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9ADBC061574
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Apr 2021 19:48:00 -0700 (PDT)
-Received: by mail-oo1-xc2d.google.com with SMTP id i20-20020a4a8d940000b02901bc71746525so13528598ook.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Apr 2021 19:48:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=OmH6bqqM9Umuziq/ASGMVuY66RM06TYhOzF6GFYglyE=;
-        b=hsiFE+d3VwiSdA4Fpn5p9aAjePnWVILHTooTxE9/ag0yiLWn1uGXIfCc77N4U5ozhM
-         QRqIYR6TmGbz1AZCM222ECbkDxoUoA2O0o7j7qhldt0GQ6Hl6rEMSnJPTnnXsElcSw6/
-         e5JWuBo2aK3u/MYl5fkZdaOpbbAQn+Iy0s0+knVCOWj2kbIhOj/V/weM5X0OByI/YS/T
-         H4h8G5ljkdeLW1coWI1SsxeiXh6E9MQP+KXtHOOrucFi0rfSRauCpLjy/mItshkdd4tk
-         7oRBLUPL03HAXXmxHFPKJyI6MIHmeoTfREsMEZKA8KrdJs3nkJnAgZBEPjrgajz2zkEQ
-         rSdQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=OmH6bqqM9Umuziq/ASGMVuY66RM06TYhOzF6GFYglyE=;
-        b=Wi1Ya3KqnerAZxhEJFplPhv68oJaRr3kzRLSDOqRsgE0X3varfoZUYCUVCi2iRZCz3
-         bhGZe2WLw9UFqTKvfYPHZ8r8V/l1YcbDYhCG3kMWUzJtn647ezPMg9pH8JuyVu0EErHa
-         8Vz5Bk9Xa5B4vuGDuX31enjvl+ZPuNT0Em7ADuTy/7Omhc8SRKtSUOWF+dD2HHx1aysP
-         3d5pvuy+PenhqWnYUmPtl9bma9AKvfr+vPzlx/9o2U47KHZhBQSwW4NQGcu8d5GzvFlD
-         MG0gpm9YPrF2heHWZTEEBRNiUJNaZgWZysTdCo5drb3pM5N5WX1HF0qx3v0heN3pPzTC
-         0CVQ==
-X-Gm-Message-State: AOAM533UKtUGJlIECgqB/wQQbEhnOG+W8sUhDeuG2sHyW3QJ0cwsOpFO
-        vbZxm76F1yuCFjVOJbuZUxeVCg==
-X-Google-Smtp-Source: ABdhPJw+BDAPF5Ijg4kePS4aeXTm2iPsm7UphTIEXAEh45YVZHv1ZCNpir+NJS07PNWd1uZVngGUJg==
-X-Received: by 2002:a4a:960c:: with SMTP id q12mr20568629ooi.83.1619578078655;
-        Tue, 27 Apr 2021 19:47:58 -0700 (PDT)
-Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id u1sm431110otj.43.2021.04.27.19.47.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Apr 2021 19:47:58 -0700 (PDT)
-Date:   Tue, 27 Apr 2021 21:47:55 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Stephen Boyd <sboyd@kernel.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v2 3/4] drm/msm: get rid of msm_iomap_size
-Message-ID: <20210428024755.GJ1908499@yoga>
-References: <20210427001828.2375555-1-dmitry.baryshkov@linaro.org>
- <20210427001828.2375555-4-dmitry.baryshkov@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210427001828.2375555-4-dmitry.baryshkov@linaro.org>
+        Wed, 28 Apr 2021 01:13:15 -0400
+Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
+  by alexa-out.qualcomm.com with ESMTP; 27 Apr 2021 22:12:31 -0700
+X-QCInternal: smtphost
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 27 Apr 2021 22:12:29 -0700
+X-QCInternal: smtphost
+Received: from c-sanm-linux.qualcomm.com ([10.206.25.31])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 28 Apr 2021 10:41:59 +0530
+Received: by c-sanm-linux.qualcomm.com (Postfix, from userid 2343233)
+        id 961CF399E; Wed, 28 Apr 2021 10:41:58 +0530 (IST)
+From:   Sandeep Maheswaram <sanm@codeaurora.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Manu Gautam <mgautam@codeaurora.org>,
+        Sandeep Maheswaram <sanm@codeaurora.org>
+Subject: [PATCH v7 0/5] USB DWC3 host wake up support from system suspend
+Date:   Wed, 28 Apr 2021 10:41:51 +0530
+Message-Id: <1619586716-8687-1-git-send-email-sanm@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 26 Apr 19:18 CDT 2021, Dmitry Baryshkov wrote:
-[..]
-> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-> index 92fe844b517b..be578fc4e54f 100644
-> --- a/drivers/gpu/drm/msm/msm_drv.c
-> +++ b/drivers/gpu/drm/msm/msm_drv.c
-> @@ -124,7 +124,7 @@ struct clk *msm_clk_get(struct platform_device *pdev, const char *name)
->  }
->  
->  static void __iomem *_msm_ioremap(struct platform_device *pdev, const char *name,
-> -				  const char *dbgname, bool quiet)
-> +				  const char *dbgname, bool quiet, phys_addr_t *psize)
+Avoiding phy powerdown in host mode when wakeup capable devices are 
+connected, so that it can be wake up by devices.
+Set GENPD_FLAG_ACTIVE_WAKEUP flag to keep usb30_prim gdsc active
+when wakeup capable devices are connected to the host.
 
-size_t sounds like a better fit for psize...
 
-Regards,
-Bjorn
+Changes in v7:
+Change in commit text and message in PATCH 1/5 and PATCH 5/5
+as per Matthias suggestion.
+Added curly braces for if and else if sections in PATCH 4/5.
+
+Changes in v6:
+Addressed comments in host.c and core.c
+Separated the patches in dwc3-qcom.c to make it simple.
+Dropped wakeup-source change as it is not related to this series.
+
+Changes in v5:
+Added phy_power_off flag to check presence of wakeup capable devices.
+Dropped patch[v4,4/5] as it is present linux-next.
+Addressed comments in host.c and dwc3-qcom.c.
+
+Changes in v4:
+Addressed Matthias comments raised in v3.
+
+Changes in v3:
+Removed need_phy_for_wakeup flag and by default avoiding phy powerdown.
+Addressed Matthias comments and added entry for DEV_SUPERSPEED.
+Added suspend_quirk in dwc3 host and moved the dwc3_set_phy_speed_flags.
+Added wakeup-source dt entry and reading in dwc-qcom.c glue driver.
+
+Changes in v2:
+Dropped the patch in clock to set GENPD_FLAG_ACTIVE_WAKEUP flag and 
+setting in usb dwc3 driver.
+Separated the core patch and glue driver patch.
+Made need_phy_for_wakeup flag part of dwc structure and 
+hs_phy_flags as unsgined int.
+Adrressed the comment on device_init_wakeup call.
+Corrected offset for reading portsc register.
+Added pacth to support wakeup in xo shutdown case.
+
+Sandeep Maheswaram (5):
+  usb: dwc3: host: Set PHY mode during suspend
+  usb: dwc3: core: Host wake up support from system suspend
+  usb: dwc3: qcom: Add helper functions to enable,disable wake irqs
+  usb: dwc3: qcom: Configure wakeup interrupts during suspend
+  usb: dwc3: qcom: Keep power domain on to support wakeup
+
+ drivers/usb/dwc3/core.c      |  7 ++--
+ drivers/usb/dwc3/core.h      |  3 ++
+ drivers/usb/dwc3/dwc3-qcom.c | 85 ++++++++++++++++++++++++++++----------------
+ drivers/usb/dwc3/host.c      | 59 ++++++++++++++++++++++++++++++
+ 4 files changed, 122 insertions(+), 32 deletions(-)
+
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
+
