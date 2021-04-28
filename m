@@ -2,34 +2,34 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3E41336D5EA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Apr 2021 12:47:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E9A8236D5FD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Apr 2021 12:55:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239537AbhD1KsQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Apr 2021 06:48:16 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:60996 "EHLO
+        id S239596AbhD1Kzr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Apr 2021 06:55:47 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:61100 "EHLO
         so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236052AbhD1KsP (ORCPT
+        with ESMTP id S229811AbhD1Kzq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Apr 2021 06:48:15 -0400
+        Wed, 28 Apr 2021 06:55:46 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1619606851; h=Message-ID: References: In-Reply-To: Subject:
+ s=smtp; t=1619607302; h=Message-ID: References: In-Reply-To: Subject:
  Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=ZuI/K9+NXDRWXfsFMoJzLU4sqRFnGeuqVbmpRUnN4cQ=;
- b=j4XufHBAbi8RvPihFuMfyl16kuuM3q9Hbiv7/MKbzqJ+k2Ew+iVhmBEclacepq/qKWCBfkVK
- Cmv/JfkEZWPVFOfoPvQInBsdV6S0ZylEW+ATxVJ6lWLtyMmrR4e57Q4HKzT7Cr5rWJEVZYnb
- L9Eq+mtxSjbIqrkp7Ny+Xf+8CRc=
+ MIME-Version: Sender; bh=wM+iIS9aBiosy9WN+kXt89fq97297X7zgtANmIQf60U=;
+ b=MVb+FU+tkuvinqYAHTVI5fLHJ58a8TQKcQyIDB2M8Tque5ih6Vm0IYnMW6dmmvTQUKrI5CZh
+ g+G8OaXlck/AtUfLn/qQ+5f9C45sOi0z2/hQhSZYopgkDEivVlDN1kzeD2ZvonwW2P8BdePe
+ I4tSy5hJnocN5n9x27aLzP6VTbc=
 X-Mailgun-Sending-Ip: 198.61.254.9
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
- 60893d3574f773a6645c15ca (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 28 Apr 2021 10:47:17
+ smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
+ 60893eda87ce1fbb56353cf8 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 28 Apr 2021 10:54:18
  GMT
-Sender: sbhanu=codeaurora.org@mg.codeaurora.org
+Sender: fenglinw=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 9839CC433F1; Wed, 28 Apr 2021 10:47:16 +0000 (UTC)
+        id 0A4F0C433D3; Wed, 28 Apr 2021 10:54:18 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -38,171 +38,106 @@ X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
 Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
         (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: sbhanu)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 84A91C433D3;
-        Wed, 28 Apr 2021 10:47:15 +0000 (UTC)
+        (Authenticated sender: fenglinw)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 13AF5C433F1;
+        Wed, 28 Apr 2021 10:54:17 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII;
  format=flowed
 Content-Transfer-Encoding: 7bit
-Date:   Wed, 28 Apr 2021 16:17:15 +0530
-From:   sbhanu@codeaurora.org
-To:     Doug Anderson <dianders@google.com>
-Cc:     Veerabhadrarao Badiganti <vbadigan@codeaurora.org>,
-        Adrian Hunter <adrian.hunter@intel.com>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
+Date:   Wed, 28 Apr 2021 18:54:16 +0800
+From:   fenglinw@codeaurora.org
+To:     Rob Herring <robh@kernel.org>
+Cc:     collinsd@codeaurora.org, linux-pwm@vger.kernel.org,
+        subbaram@codeaurora.org, linux-kernel@vger.kernel.org,
+        =?UTF-8?Q?Uwe_K?= =?UTF-8?Q?leine-K=C3=B6nig?= 
+        <u.kleine-koenig@pengutronix.de>, Lee Jones <lee.jones@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Asutosh Das <asutoshd@codeaurora.org>,
-        Sahitya Tummala <stummala@codeaurora.org>,
-        Ram Prakash Gupta <rampraka@codeaurora.org>,
-        Sayali Lokhande <sayalil@codeaurora.org>,
-        sartgarg@codeaurora.org, Rajendra Nayak <rnayak@codeaurora.org>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Sibi Sankar <sibis@codeaurora.org>, cang@codeaurora.org,
-        pragalla@codeaurora.org, nitirawa@codeaurora.org,
-        Linux MMC List <linux-mmc@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Evan Green <evgreen@chromium.org>,
-        Georgi Djakov <georgi.djakov@linaro.org>,
-        Odelu Kukatla <okukatla@codeaurora.org>
-Subject: Re: [PATCH V2] arm64: dts: qcom: sc7280: Add nodes for eMMC and SD
- card
-In-Reply-To: <CAD=FV=U0zEDi1Xn3OmVFA3h3maVWS_o2FXOW9qDEzTf1Moja=A@mail.gmail.com>
-References: <1616264220-25825-1-git-send-email-sbhanu@codeaurora.org>
- <CAD=FV=WLZCSd6D5VFyD+1KBp5n1qyszER2EVaEMwYjQfPSSDnA@mail.gmail.com>
- <b77f207b-2d90-3c8b-857f-625bd3867ed1@codeaurora.org>
- <6fdf704c4716f5873d413229ca8adc57@codeaurora.org>
- <CAD=FV=Wa4fT5wZgd0==8kLy_tzTLgdZ-HwdfOEAM9pMeMjjFyg@mail.gmail.com>
- <8126e130e5c0ea1e7ea867414f0510c0@codeaurora.org>
- <CAD=FV=XavWbf_b7-=JT6V5_RNA8CjdK4oRu7H719AaPDJ5tsqQ@mail.gmail.com>
- <32096a375966e1fcc149016df012c445@codeaurora.org>
- <CAD=FV=U0zEDi1Xn3OmVFA3h3maVWS_o2FXOW9qDEzTf1Moja=A@mail.gmail.com>
-Message-ID: <7c6805abf9c1f590bc4d66d625152f22@codeaurora.org>
-X-Sender: sbhanu@codeaurora.org
+        linux-arm-msm@vger.kernel.org, aghayal@codeaurora.org,
+        devicetree@vger.kernel.org,
+        Thierry Reding <thierry.reding@gmail.com>
+Subject: Re: [PATCH 1/2] dt-bindings: pwm: add bindings for PWM modules inside
+ QCOM PMICs
+In-Reply-To: <1619528221.595166.1346447.nullmailer@robh.at.kernel.org>
+References: <20210427102247.822-1-fenglinw@codeaurora.org>
+ <20210427102247.822-2-fenglinw@codeaurora.org>
+ <1619528221.595166.1346447.nullmailer@robh.at.kernel.org>
+Message-ID: <9f8c304696d12250293f88b3d6718eee@codeaurora.org>
+X-Sender: fenglinw@codeaurora.org
 User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-04-21 01:44, Doug Anderson wrote:
-> Hi,
+On 2021-04-27 20:57, Rob Herring wrote:
+> On Tue, 27 Apr 2021 18:22:09 +0800, Fenglin Wu wrote:
+>> Add bindings for QCOM PMIC PWM modules which are accessed through SPMI
+>> bus.
+>> 
+>> Signed-off-by: Fenglin Wu <fenglinw@codeaurora.org>
+>> ---
+>>  .../devicetree/bindings/pwm/pwm-qcom.yaml          | 51 
+>> ++++++++++++++++++++++
+>>  1 file changed, 51 insertions(+)
+>>  create mode 100644 
+>> Documentation/devicetree/bindings/pwm/pwm-qcom.yaml
+>> 
 > 
-> On Tue, Apr 20, 2021 at 10:21 AM <sbhanu@codeaurora.org> wrote:
->> 
->> On 2021-04-15 01:55, Doug Anderson wrote:
->> > Hi,
->> >
->> > On Tue, Apr 13, 2021 at 3:59 AM <sbhanu@codeaurora.org> wrote:
->> >>
->> >> >> >>> +                                       required-opps =
->> >> >> >>> <&rpmhpd_opp_low_svs>;
->> >> >> >>> +                                       opp-peak-kBps = <1200000
->> >> >> >>> 76000>;
->> >> >> >>> +                                       opp-avg-kBps = <1200000
->> >> >> >>> 50000>;
->> >> >> >> Why are the kBps numbers so vastly different than the ones on sc7180
->> >> >> >> for the same OPP point. That implies:
->> >> >> >>
->> >> >> >> a) sc7180 is wrong.
->> >> >> >>
->> >> >> >> b) This patch is wrong.
->> >> >> >>
->> >> >> >> c) The numbers are essentially random and don't really matter.
->> >> >> >>
->> >> >> >> Can you identify which of a), b), or c) is correct, or propose an
->> >> >> >> alternate explanation of the difference?
->> >> >> >>
->> >> >>
->> >> >> We calculated bus votes values for both sc7180 and sc7280 with ICB
->> >> >> tool,
->> >> >> above mentioned values we got for sc7280.
->> >> >
->> >> > I don't know what an ICB tool is. Please clarify.
->> >> >
->> >> > Also: just because a tool spits out numbers that doesn't mean it's
->> >> > correct. Presumably the tool could be wrong or incorrectly configured.
->> >> > We need to understand why these numbers are different.
->> >> >
->> >> we checked with ICB tool team on this they conformed as Rennell &
->> >> Kodiak
->> >> are different chipsets,
->> >> we might see delta in ib/ab values due to delta in scaling factors.
->> >
->> > ...but these numbers are in kbps, aren't they? As I understand it
->> > these aren't supposed to be random numbers spit out by a tool but are
->> > supposed to be understandable by how much bandwidth an IP block (like
->> > MMC) needs from the busses it's connected to. Since the MMC IP block
->> > on sc7180 and sc7280 is roughly the same there shouldn't be a big
->> > difference in numbers.
->> >
->> > Something smells wrong.
->> >
->> > Adding a few people who understand interconnects better than I do,
->> > though.
->> >
->> 
->> ICB team has re-checked the Rennell ICB tool and they confirmed that
->> some configs were wrong in Rennell ICB tool and they corrected it.With
->> the new updated Rennell ICB tool below are the values :
->> 
->> 
->> Rennell LC:(Sc7180)
->> 
->> opp-384000000 {
->>               opp-hz = /bits/ 64 <384000000>;
->>               required-opps = <&rpmhpd_opp_nom>;
->>               opp-peak-kBps = <5400000 490000>;
->>               opp-avg-kBps = <6600000 300000>;
->> };
->> 
->> 
->> And now, these values are near to Kodaik LC values:
->> 
->> Kodaik LC:(SC7280)
->> 
->> opp-384000000 {
->>             opp-hz = /bits/ 64 <384000000>;
->>             required-opps = <&rpmhpd_opp_nom>;
->>             opp-peak-kBps = <5400000 399000>;
->>             opp-avg-kBps = <6000000 300000>;
->> };
+> My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+> on your patch (DT_CHECKER_FLAGS is new in v5.13):
 > 
-> This still isn't making sense to me.
+> yamllint warnings/errors:
+> ./Documentation/devicetree/bindings/pwm/pwm-qcom.yaml:29:6: [warning]
+> wrong indentation: expected 4 but found 5 (indentation)
 > 
-> * sc7180 and sc7280 are running at the same speed. I'm glad the
-> numbers are closer now, but I would have thought they'd be exactly the
-> same.
+> dtschema/dtc warnings/errors:
+> /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/pwm/pwm-qcom.yaml:
+> Additional properties are not allowed ('Properties' was unexpected)
+> /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/pwm/pwm-qcom.yaml:
+> Additional properties are not allowed ('Properties' was unexpected)
+> /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/pwm/pwm-qcom.yaml:
+> 'anyOf' conditional failed, one must be fixed:
+> 	'properties' is a required property
+> 	'patternProperties' is a required property
+> /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/pwm/pwm-qcom.yaml:
+> ignoring, error in schema:
+> warning: no schema found in file:
+> ./Documentation/devicetree/bindings/pwm/pwm-qcom.yaml
+> Documentation/devicetree/bindings/pwm/pwm-qcom.example.dts:21.13-28:
+> Warning (reg_format): /example-0/pwms@e800:reg: property has invalid
+> length (4 bytes) (#address-cells == 1, #size-cells == 1)
+> Documentation/devicetree/bindings/pwm/pwm-qcom.example.dt.yaml:
+> Warning (pci_device_reg): Failed prerequisite 'reg_format'
+> Documentation/devicetree/bindings/pwm/pwm-qcom.example.dt.yaml:
+> Warning (pci_device_bus_num): Failed prerequisite 'reg_format'
+> Documentation/devicetree/bindings/pwm/pwm-qcom.example.dt.yaml:
+> Warning (simple_bus_reg): Failed prerequisite 'reg_format'
+> Documentation/devicetree/bindings/pwm/pwm-qcom.example.dt.yaml:
+> Warning (i2c_bus_reg): Failed prerequisite 'reg_format'
+> Documentation/devicetree/bindings/pwm/pwm-qcom.example.dt.yaml:
+> Warning (spi_bus_reg): Failed prerequisite 'reg_format'
+> /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/pwm/pwm-qcom.example.dt.yaml:
+> example-0: pwms@e800:reg:0: [59392] is too short
+> 	From schema: 
+> /usr/local/lib/python3.8/dist-packages/dtschema/schemas/reg.yaml
+> Documentation/devicetree/bindings/pwm/pwm-qcom.example.dt.yaml:0:0:
+> /example-0/pwms@e800: failed to match any schema with compatible:
+> ['qcom,pwm']
 > 
-> * Aren't these supposed to be sensible? This is eMMC that does max
-> transfer rates of 400 megabytes / second to the external device. You
-> have bandwidths listed here of 5,400,000 kBps = 5,400,000 kilobytes /
-> second = 5400 megabytes / second. I can imagine there being some
-> overhead where an internal bus might need to be faster but that seems
-> excessive. This is 13.5x!
+> See https://patchwork.ozlabs.org/patch/1470623
 > 
-
-These numbers are not related to SDCC bandwidth, these are the values 
-needed for the NOC's to run in nominal voltage corners (internal to 
-hardware) and
-thus it helps SDCC to run in nominal to get required through put 
-(384MBps).So above calculation mentioned by you is not applicable here.
-
-> * I can't see how it can make sense that "average" values are higher
-> than "peak" values.
-
-
-Here actual peak = peak number * 2
-actual average = average number
-
-and this multiplication is taken care by ICC driver, so technically 
-actual peak is still high than average.
-
-
+> This check can fail if there are any dependencies. The base for a patch
+> series is generally the most recent rc1.
 > 
-> It still feels like there's a misconfiguration somewhere.
+> If you already ran 'make dt_binding_check' and didn't see the above
+> error(s), then make sure 'yamllint' is installed and dt-schema is up to
+> date:
 > 
-> -Doug
+> pip3 install dtschema --upgrade
+> 
+> Please check and re-submit.
+
+Thanks for the information. It's my 1st time to write binding using yaml 
+format, I hadn't noticed there was a checker can be used for sanity 
+test. I will update and run the dt_binding_check at my side before 
+uploading new patchset.
