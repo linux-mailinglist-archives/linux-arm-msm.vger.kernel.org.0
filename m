@@ -2,218 +2,153 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 09DF836DFAA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Apr 2021 21:39:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D7ACD36DFD1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Apr 2021 21:44:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244034AbhD1Te0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Apr 2021 15:34:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45094 "EHLO
+        id S239706AbhD1TpX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Apr 2021 15:45:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47602 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244021AbhD1TeW (ORCPT
+        with ESMTP id S238948AbhD1TpS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Apr 2021 15:34:22 -0400
-Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3598CC061573;
-        Wed, 28 Apr 2021 12:33:37 -0700 (PDT)
-Received: by mail-pf1-x436.google.com with SMTP id c3so25683023pfo.3;
-        Wed, 28 Apr 2021 12:33:37 -0700 (PDT)
+        Wed, 28 Apr 2021 15:45:18 -0400
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9BC26C061574
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Apr 2021 12:44:31 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id l2so12017910wrm.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Apr 2021 12:44:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=X+lmKItKrAdr+h8p3ruijedafGbkKyueE2AuvEgRCac=;
-        b=qYlJ2VEfyrAilXphT6LMQZseZ/Mg5kUYyif7CDgmad4LP/HJ5+wcOaAQkc5NDGURjj
-         R52xjlsMLr7H2z9n5xEwCwH5MSeTB+4dpzmp4xGb8/cvthxXyfHxscgjrbVSuWw7A9i1
-         JpzZzs/l9Gy0Qwb3CYGlq3rKu7pkOl+kK7c4NagP5txwplWxLwDXg1mKrItHBPZZu3Jq
-         TOI1VIjZQLRhC/eMvL9jlH06pHqnkir3g2UVjekzfcAHewCkWYwxf/k8ldFM1qZGcbHA
-         iP50zMau4LdHci3cGkpE5XdPPYJbi5LuzTq+T0xuP6oncccsBJovio4KBKqkn7iHkiGP
-         ky2A==
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=Sn7CSGIgmGn5VKzZbm8BRN6Y1B3vMVtXzAiBVY8ViXE=;
+        b=uv/K0P/Q182pdyPl5FpzzqZhMn45UrPIPQALeC9OD7sSme6UpfvHw0/R/1YCWlN2q2
+         CsnI3gnu3GZAwDve0cqzlzFNIHxFsdGEOEaibi21FxFoD3s43Qwbmp7tI3hWEaHztLxd
+         c0hDUzNY3G8xKjcx7mzp9kcjJCEVyMRn7iTADXAV3e/T/xfwVHuYv7COt2dDGXIpk+Hg
+         rzXPvmNFz8qIZJsCzv67dywANmiZ2SyEk0+QIGo2b38l4K3tUG4R9Mli88wUto9KblMW
+         g2NPN0vIxZdaj2rHJ2vQSa90VvsT4zm3FCvYLfuKgDSEm951TzlCkvKusd0yiIR5Jox7
+         82IA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=X+lmKItKrAdr+h8p3ruijedafGbkKyueE2AuvEgRCac=;
-        b=H1p3Lyy8cOuElw7nfYQGg3BzAKkQIC+UcDgz6+/NJNX6fGIiR0XFJ96Ttm2QBczmnf
-         c/+aILnMiICcmBcZvmUaWWwyKqw5cVpe6m4OAGo7lJEOO3ZlHTGClYoiFSaumi0EvYjy
-         GNXMtB3kpSWMAWgvYa3Re4bIVcGPIb6D5aa9ALLK7b0IJBhziTAVPnE3YV31h3b1FHJG
-         UBqZ8oktQXTJqk7QW7CHHEsyq7KaNq8m+K9luRIled91h2mI8XT9zhJAHScA3TY3hgbS
-         7CpKygvltLyTjIJlfEEPo5U9jmKoNhAD+9+QA2hQQIm/FIaPkOwClXAORnHzCbNmy5rG
-         N00Q==
-X-Gm-Message-State: AOAM5322PmGubxpWfyfypTxvNpUf78qnaTUGVswe3eQEeS0oqLOE8PjP
-        eGmAyCwm2FNwkTRQbR5G5OQ=
-X-Google-Smtp-Source: ABdhPJxTpx9iewlg3qxXZInGbpx750+kJ4lEWx5U3rs4GnaYqWU+mLe6Y8bPLPpkBeW+Zg8TLah2Ow==
-X-Received: by 2002:a05:6a00:2389:b029:261:abe:184 with SMTP id f9-20020a056a002389b02902610abe0184mr30234121pfc.52.1619638416806;
-        Wed, 28 Apr 2021 12:33:36 -0700 (PDT)
-Received: from localhost (c-73-25-156-94.hsd1.or.comcast.net. [73.25.156.94])
-        by smtp.gmail.com with ESMTPSA id nh10sm266238pjb.49.2021.04.28.12.33.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Apr 2021 12:33:35 -0700 (PDT)
-From:   Rob Clark <robdclark@gmail.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     Jordan Crouse <jordan@cosmicpenguin.net>,
-        Rob Clark <robdclark@chromium.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        "Kristian H. Kristensen" <hoegsberg@google.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Akhil P Oommen <akhilpo@codeaurora.org>,
-        Eric Anholt <eric@anholt.net>,
-        Sharat Masetty <smasetty@codeaurora.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
-        freedreno@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
-        GPU), linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH 2/2] drm/msm: Periodically update RPTR shadow
-Date:   Wed, 28 Apr 2021 12:36:49 -0700
-Message-Id: <20210428193654.1498482-3-robdclark@gmail.com>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20210428193654.1498482-1-robdclark@gmail.com>
-References: <20210428193654.1498482-1-robdclark@gmail.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=Sn7CSGIgmGn5VKzZbm8BRN6Y1B3vMVtXzAiBVY8ViXE=;
+        b=itMM53Dv1Z0LIuJwI1+EiH0IIICHUstc7fMHfe00YckOFbZz/VL0fA4zs9HJgUQYUl
+         DcbT4/MYSOMr98BdDdxF/7yB+OgCFnYoaO0rcttKyMFo09Tu3PxglFb+BdYAzbZ7Reho
+         6pAyvrp5XN9IFBiFV6TYHj4p0MCbs3CTEeqUAashTX2JDVemQ/6XpfD/dIsytv3MnzXA
+         BiSIH3PsXR2C54ekZ/smmRjtRiTFNv72PWuMsVp5sOy6gt5k47HJbZpkxkWcxS1l35GB
+         9vDaClSkmBgfx6ZIDP3o6JvzYw7OT8K/ix4qbKCPmDhfEwOI9QYkGE8fB3z2sXd8LTKU
+         vsyQ==
+X-Gm-Message-State: AOAM532gnIpNAI8sZ0uL8JFU9J5t34qRYk2aFY2obax5fJ5JgS9qfHJG
+        ARnVoSAonVzE903B9l0p3/szzA==
+X-Google-Smtp-Source: ABdhPJwwjzkfU75PzDn/R1kusWKNjG+LnE3S357agzvLt5nuHXVuDf1062RUlHvxyoT7V243QHMmaQ==
+X-Received: by 2002:adf:efca:: with SMTP id i10mr37850612wrp.316.1619639070055;
+        Wed, 28 Apr 2021 12:44:30 -0700 (PDT)
+Received: from ?IPv6:2a01:e34:ed2f:f020:c98e:c214:1762:12d3? ([2a01:e34:ed2f:f020:c98e:c214:1762:12d3])
+        by smtp.googlemail.com with ESMTPSA id 3sm9510689wma.45.2021.04.28.12.44.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 28 Apr 2021 12:44:29 -0700 (PDT)
+Subject: Re: [thermal-next PATCH 2/2] thermal: qcom: tsens: simplify debugfs
+ init function
+To:     Thara Gopinath <thara.gopinath@linaro.org>,
+        Ansuel Smith <ansuelsmth@gmail.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Amit Kucheria <amitk@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20210419012930.7727-1-ansuelsmth@gmail.com>
+ <20210419012930.7727-2-ansuelsmth@gmail.com>
+ <8e679407-07e7-244a-48fa-0d4d451d744d@linaro.org>
+From:   Daniel Lezcano <daniel.lezcano@linaro.org>
+Message-ID: <6c5208b3-8bbd-d00f-9147-c4a35ae202c7@linaro.org>
+Date:   Wed, 28 Apr 2021 21:44:27 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
+In-Reply-To: <8e679407-07e7-244a-48fa-0d4d451d744d@linaro.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+On 28/04/2021 18:47, Thara Gopinath wrote:
+> Hi,
+> 
+> Please include a cover letter next time describing the patch series.
 
-On a5xx and a6xx devices that are using CP_WHERE_AM_I to update a
-ringbuffer read-ptr shadow value, periodically emit a CP_WHERE_AM_I
-every 32 commands, so that a later submit waiting for ringbuffer
-space to become available sees partial progress, rather than not
-seeing rptr advance at all until the GPU gets to the end of the
-submit that it is currently chewing on.
+Yes, a cover letter helps for the understanding of a patch series but in
+this case the changes are simple enough to get rid of it.
 
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- drivers/gpu/drm/msm/adreno/a5xx_gpu.c | 29 ++++++++++++++++++++++-----
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 27 +++++++++++++++++++------
- 2 files changed, 45 insertions(+), 11 deletions(-)
+> On 4/18/21 9:29 PM, Ansuel Smith wrote:
+>> Simplify debugfs init function.
+>> - Drop useless variables
+>> - Add check for existing dev directory.
+>> - Fix wrong version in dbg_version_show (with version 0.0.0, 0.1.0 was
+>>    incorrectly reported)
+>>
+>> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+>> ---
+>>   drivers/thermal/qcom/tsens.c | 16 +++++++---------
+>>   1 file changed, 7 insertions(+), 9 deletions(-)
+>>
+>> diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
+>> index f9d50a67e..b086d1496 100644
+>> --- a/drivers/thermal/qcom/tsens.c
+>> +++ b/drivers/thermal/qcom/tsens.c
+>> @@ -692,7 +692,7 @@ static int dbg_version_show(struct seq_file *s,
+>> void *data)
+>>               return ret;
+>>           seq_printf(s, "%d.%d.%d\n", maj_ver, min_ver, step_ver);
+>>       } else {
+>> -        seq_puts(s, "0.1.0\n");
+>> +        seq_printf(s, "0.%d.0\n", priv->feat->ver_major);
+>>       }
+>>         return 0;
+>> @@ -704,21 +704,19 @@ DEFINE_SHOW_ATTRIBUTE(dbg_sensors);
+>>   static void tsens_debug_init(struct platform_device *pdev)
+>>   {
+>>       struct tsens_priv *priv = platform_get_drvdata(pdev);
+>> -    struct dentry *root, *file;
+>>   -    root = debugfs_lookup("tsens", NULL);
+>> -    if (!root)
+>> +    priv->debug_root = debugfs_lookup("tsens", NULL);
+>> +    if (!priv->debug_root)
+>>           priv->debug_root = debugfs_create_dir("tsens", NULL);
+>> -    else
+>> -        priv->debug_root = root;
+>>   -    file = debugfs_lookup("version", priv->debug_root);
+>> -    if (!file)
+>> +    if (!debugfs_lookup("version", priv->debug_root))
+>>           debugfs_create_file("version", 0444, priv->debug_root,
+>>                       pdev, &dbg_version_fops);
+>>         /* A directory for each instance of the TSENS IP */
+>> -    priv->debug = debugfs_create_dir(dev_name(&pdev->dev),
+>> priv->debug_root);
+> 
+> Unconditionally creating priv->debug here is correct. The below if
+> (!priv->debug) will never be true because as per your patch 1, we call
+> tsens_debug_init once per instance of tsens.
+> 
+>> +    priv->debug = debugfs_lookup(dev_name(&pdev->dev),
+>> priv->debug_root);
+>> +    if (!priv->debug)
+>> +        priv->debug = debugfs_create_dir(dev_name(&pdev->dev),
+>> priv->debug_root);
+>>       debugfs_create_file("sensors", 0444, priv->debug, pdev,
+>> &dbg_sensors_fops);
+>>   }
+>>   #else
+>>
+> 
 
-diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-index 0c8faad3b328..5202f1498a48 100644
---- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-@@ -18,6 +18,18 @@ static void a5xx_dump(struct msm_gpu *gpu);
- 
- #define GPU_PAS_ID 13
- 
-+static void update_shadow_rptr(struct msm_gpu *gpu, struct msm_ringbuffer *ring)
-+{
-+	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
-+	struct a5xx_gpu *a5xx_gpu = to_a5xx_gpu(adreno_gpu);
-+
-+	if (a5xx_gpu->has_whereami) {
-+		OUT_PKT7(ring, CP_WHERE_AM_I, 2);
-+		OUT_RING(ring, lower_32_bits(shadowptr(a5xx_gpu, ring)));
-+		OUT_RING(ring, upper_32_bits(shadowptr(a5xx_gpu, ring)));
-+	}
-+}
-+
- void a5xx_flush(struct msm_gpu *gpu, struct msm_ringbuffer *ring,
- 		bool sync)
- {
-@@ -30,11 +42,8 @@ void a5xx_flush(struct msm_gpu *gpu, struct msm_ringbuffer *ring,
- 	 * Most flush operations need to issue a WHERE_AM_I opcode to sync up
- 	 * the rptr shadow
- 	 */
--	if (a5xx_gpu->has_whereami && sync) {
--		OUT_PKT7(ring, CP_WHERE_AM_I, 2);
--		OUT_RING(ring, lower_32_bits(shadowptr(a5xx_gpu, ring)));
--		OUT_RING(ring, upper_32_bits(shadowptr(a5xx_gpu, ring)));
--	}
-+	if (sync)
-+		update_shadow_rptr(gpu, ring);
- 
- 	if (unlikely(ring->overflow))
- 		return;
-@@ -171,6 +180,16 @@ static void a5xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
- 			ibs++;
- 			break;
- 		}
-+
-+		/*
-+		 * Periodically update shadow-wptr if needed, so that we
-+		 * can see partial progress of submits with large # of
-+		 * cmds.. otherwise we could needlessly stall waiting for
-+		 * ringbuffer state, simply due to looking at a shadow
-+		 * rptr value that has not been updated
-+		 */
-+		if ((ibs % 32) == 0)
-+			update_shadow_rptr(gpu, ring);
- 	}
- 
- 	/*
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-index 4a4728a774c0..2986e36ffd8d 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -52,21 +52,25 @@ static bool a6xx_idle(struct msm_gpu *gpu, struct msm_ringbuffer *ring)
- 	return true;
- }
- 
--static void a6xx_flush(struct msm_gpu *gpu, struct msm_ringbuffer *ring)
-+static void update_shadow_rptr(struct msm_gpu *gpu, struct msm_ringbuffer *ring)
- {
- 	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
- 	struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
--	uint32_t wptr;
--	unsigned long flags;
- 
- 	/* Expanded APRIV doesn't need to issue the WHERE_AM_I opcode */
- 	if (a6xx_gpu->has_whereami && !adreno_gpu->base.hw_apriv) {
--		struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
--
- 		OUT_PKT7(ring, CP_WHERE_AM_I, 2);
- 		OUT_RING(ring, lower_32_bits(shadowptr(a6xx_gpu, ring)));
- 		OUT_RING(ring, upper_32_bits(shadowptr(a6xx_gpu, ring)));
- 	}
-+}
-+
-+static void a6xx_flush(struct msm_gpu *gpu, struct msm_ringbuffer *ring)
-+{
-+	uint32_t wptr;
-+	unsigned long flags;
-+
-+	update_shadow_rptr(gpu, ring);
- 
- 	if (unlikely(ring->overflow))
- 		return;
-@@ -148,7 +152,7 @@ static void a6xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
- 	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
- 	struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
- 	struct msm_ringbuffer *ring = submit->ring;
--	unsigned int i;
-+	unsigned int i, ibs = 0;
- 
- 	a6xx_set_pagetable(a6xx_gpu, ring, submit->queue->ctx);
- 
-@@ -184,8 +188,19 @@ static void a6xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
- 			OUT_RING(ring, lower_32_bits(submit->cmd[i].iova));
- 			OUT_RING(ring, upper_32_bits(submit->cmd[i].iova));
- 			OUT_RING(ring, submit->cmd[i].size);
-+			ibs++;
- 			break;
- 		}
-+
-+		/*
-+		 * Periodically update shadow-wptr if needed, so that we
-+		 * can see partial progress of submits with large # of
-+		 * cmds.. otherwise we could needlessly stall waiting for
-+		 * ringbuffer state, simply due to looking at a shadow
-+		 * rptr value that has not been updated
-+		 */
-+		if ((ibs % 32) == 0)
-+			update_shadow_rptr(gpu, ring);
- 	}
- 
- 	get_stats_counter(ring, REG_A6XX_RBBM_PERFCTR_CP_0_LO,
+
 -- 
-2.30.2
+<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
 
+Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
+<http://twitter.com/#!/linaroorg> Twitter |
+<http://www.linaro.org/linaro-blog/> Blog
