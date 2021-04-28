@@ -2,169 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B8E6336DF80
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Apr 2021 21:23:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9DC2436DFA6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Apr 2021 21:39:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239283AbhD1TYh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Apr 2021 15:24:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42980 "EHLO
+        id S237050AbhD1TeP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Apr 2021 15:34:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45042 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229794AbhD1TYg (ORCPT
+        with ESMTP id S243499AbhD1TeN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Apr 2021 15:24:36 -0400
-Received: from mail-qv1-xf35.google.com (mail-qv1-xf35.google.com [IPv6:2607:f8b0:4864:20::f35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97B2EC061574
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Apr 2021 12:23:50 -0700 (PDT)
-Received: by mail-qv1-xf35.google.com with SMTP id i8so1663562qvv.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Apr 2021 12:23:50 -0700 (PDT)
+        Wed, 28 Apr 2021 15:34:13 -0400
+Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42D2EC061573;
+        Wed, 28 Apr 2021 12:33:27 -0700 (PDT)
+Received: by mail-pg1-x535.google.com with SMTP id y32so45473236pga.11;
+        Wed, 28 Apr 2021 12:33:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=JUAxi53YLYxSALiXtiLsnMW2CLLKIGzodtsYi+jAxQ4=;
-        b=IGjbPNUKRQu3oFtUEG6u9EyCTfywe/U0H+J9gcOR9TwCttcNkkV+WRMJWqiofkgXi0
-         CvcC2WuSZNIodAQre8WBjIPo4WkrbTxMg0HRdQioWsXpkb284LmKx4/9yzqv/SONhoOC
-         0t/ADrZSwdR3y1H3cBIGeySQT8MtmZxA6mvhczbhxeskTOlWJn9vkb2hM7U76V872OTm
-         XZwKRdjTZNCmepwU03QKLBU/RLWZZLRktbbCRxdLdQ5ilH3QI3w24daErEk4FvE/Awi8
-         lvAe4pR85pdbvFttyfHvdrhKMZ1q3RY5KAqslfNNDe89cL1RIuW44STpUCZJFSPUKmTC
-         jryA==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=nIhpTOwyw9uU2y8Ldiu9V72cANVrbUwFZO9n58uo5jI=;
+        b=NJWSLemsb2j+BLaZx79NQ5gyXULgyE1EBGlozSvCBf+ynkelb3Nh4SkKqEbpl3GPlH
+         EWeHW0Pp5x/7S2fQI8azP+krCg4/YN46z4QmbCJOEapuJ5y27eDv5qa9ISh9fvAeX77+
+         4pK1dpcv3FRL1X1eK23yXhRkaS60i7/B68JfHXY77uB0Dsiy6qeqtZpVB3YjooKPke2z
+         J2t8sR2o0YzcO1xmLMXsbQCWB/qTwvnInd5hFDxJkC+StiM5Hpim8SIwd8q2vc/fMeJM
+         nujJmgo3CwO+ApXPZIZZ+mvcFgcwO9rVJV45PhgnLv1pd+dcZSq17swbLJmBirJN9Bqf
+         OLGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=JUAxi53YLYxSALiXtiLsnMW2CLLKIGzodtsYi+jAxQ4=;
-        b=lvWczb9sTBNroyTIh9RwZqUWiDDE1htRsmwH+QlBQRszBzepjQZBU0roMqst53EUiG
-         nWN8NIfCDXczH09iNPcMeRoE1hDhp0epkptZQYs1VoAu9uWa0ydNMrKLxsslqAuL3U6O
-         fcqhs4E/JBCm+Cvna/GSPBLLHakmvvQNisufkyPbxGudUjeC0UJRcJhUeUOWRSq9rAIH
-         vZsFCemJmB+CnLyfyzbkcL+A+tQBRxfh7mWBgpdYJil8Cz7+sg4F1F5SGDFYp8/AFOIo
-         Px0gqgdECQzFjqOVE37+a9gDQsWz4VbK0TqvEEySPjbP8I5r2N+/i24nBgQjcs9ZR5MA
-         4KCw==
-X-Gm-Message-State: AOAM5300+Zohom06D1uonZNWpaizQNAi+2se/KFy/gBBkEQRIGqhH95m
-        gWXFxmi4Wa7BEmBrwPPVhv/9OQ==
-X-Google-Smtp-Source: ABdhPJwlRyhl8UB1WQj42h4IlzJWlZPJXrdj37LSHTReHnqRnbXVQ4iFZdJRYWqpopmHIucWGcN3Dw==
-X-Received: by 2002:ad4:4eaa:: with SMTP id ed10mr2850782qvb.22.1619637829659;
-        Wed, 28 Apr 2021 12:23:49 -0700 (PDT)
-Received: from [192.168.1.93] (pool-71-163-245-5.washdc.fios.verizon.net. [71.163.245.5])
-        by smtp.gmail.com with ESMTPSA id d204sm531847qke.3.2021.04.28.12.23.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 28 Apr 2021 12:23:49 -0700 (PDT)
-Subject: Re: [thermal-next PATCH 2/2] thermal: qcom: tsens: simplify debugfs
- init function
-To:     Ansuel Smith <ansuelsmth@gmail.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20210419012930.7727-1-ansuelsmth@gmail.com>
- <20210419012930.7727-2-ansuelsmth@gmail.com>
- <8e679407-07e7-244a-48fa-0d4d451d744d@linaro.org>
- <YImuFixa0iWtsU3k@Ansuel-xps.localdomain>
- <fe7dff6b-0079-7fba-4982-a3422add83b5@linaro.org>
- <YIm1MdsOm754WtgD@Ansuel-xps.localdomain>
-From:   Thara Gopinath <thara.gopinath@linaro.org>
-Message-ID: <fe9fb953-c98c-b53c-6020-3652e9f47e75@linaro.org>
-Date:   Wed, 28 Apr 2021 15:23:47 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        bh=nIhpTOwyw9uU2y8Ldiu9V72cANVrbUwFZO9n58uo5jI=;
+        b=daNOZaILrhFc2V4ReMjXMSXsOVYNwpZQiEp0UiIJFYVBpLz/WUax5BmR7sddD0u5+K
+         lYr+Y1qFMB3fqO2a6ggqpU6AWSzrS7A/Sz+OQ+C4Kpb8V4Lqs6f89O4xwHABzGOPLakR
+         Pq8z90AhBJ2F7w8fVymG2usN4vHflZnbx+D3P+nMxCsS9FnMi5Z/QMQEcemDjiE5YcmQ
+         7/NMM4kALQj3O+0K2XVFRZKSRkG03CKODx1ues0smZU9p1hllrNJU/6zqJ6ei44gjd8y
+         IiZHOy80hM0U/tzImMx5IbAY4sFFXb8AufvLV2otPfYOtUcBkUDpkVuvg9zSdUOn1aR3
+         6Qpg==
+X-Gm-Message-State: AOAM531th7SWaoiRNCmHs4nEMBBZZh5Yz9OnDrNsJ62/w3EgPm8jGCq2
+        K2rGLkrZRYZGLDlXQ0Bipeo=
+X-Google-Smtp-Source: ABdhPJxTW6ITsgYJ7en/J7NHadpEgbEHdg9X22l8P7f1/wFTXDuAztqmD67uEppIvXmCbJl03aeoag==
+X-Received: by 2002:a05:6a00:8a:b029:260:e095:8581 with SMTP id c10-20020a056a00008ab0290260e0958581mr30404666pfj.43.1619638406750;
+        Wed, 28 Apr 2021 12:33:26 -0700 (PDT)
+Received: from localhost (c-73-25-156-94.hsd1.or.comcast.net. [73.25.156.94])
+        by smtp.gmail.com with ESMTPSA id q25sm390552pfs.152.2021.04.28.12.33.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 28 Apr 2021 12:33:25 -0700 (PDT)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     Jordan Crouse <jordan@cosmicpenguin.net>,
+        Rob Clark <robdclark@chromium.org>,
+        Akhil P Oommen <akhilpo@codeaurora.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Dave Airlie <airlied@redhat.com>,
+        Douglas Anderson <dianders@chromium.org>,
+        Eric Anholt <eric@anholt.net>,
+        freedreno@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
+        GPU), Jonathan Marek <jonathan@marek.ca>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        "Kristian H. Kristensen" <hoegsberg@google.com>,
+        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
+        linux-kernel@vger.kernel.org (open list),
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Sharat Masetty <smasetty@codeaurora.org>
+Subject: [PATCH 0/2] drm/msm: Smooth out ringbuffer-full handling
+Date:   Wed, 28 Apr 2021 12:36:47 -0700
+Message-Id: <20210428193654.1498482-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
-In-Reply-To: <YIm1MdsOm754WtgD@Ansuel-xps.localdomain>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+From: Rob Clark <robdclark@chromium.org>
 
+With some recent userspace work to allow more rendering to be merged
+into a single SUBMIT ioctl, I realized we have some sharp edges around
+running out of free ringbuffer space.
 
-On 4/28/21 3:19 PM, Ansuel Smith wrote:
-> On Wed, Apr 28, 2021 at 03:14:31PM -0400, Thara Gopinath wrote:
->>
->>
->> On 4/28/21 2:48 PM, Ansuel Smith wrote:
->>> On Wed, Apr 28, 2021 at 12:47:30PM -0400, Thara Gopinath wrote:
->>>> Hi,
->>>>
->>>> Please include a cover letter next time describing the patch series.
->>>>
->>>
->>> Yes sorry, I tought that for a small series (2 patch) it wasn't needed.
->>>
->>>> On 4/18/21 9:29 PM, Ansuel Smith wrote:
->>>>> Simplify debugfs init function.
->>>>> - Drop useless variables
->>>>> - Add check for existing dev directory.
->>>>> - Fix wrong version in dbg_version_show (with version 0.0.0, 0.1.0 was
->>>>>      incorrectly reported)
->>>>>
->>>>> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
->>>>> ---
->>>>>     drivers/thermal/qcom/tsens.c | 16 +++++++---------
->>>>>     1 file changed, 7 insertions(+), 9 deletions(-)
->>>>>
->>>>> diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
->>>>> index f9d50a67e..b086d1496 100644
->>>>> --- a/drivers/thermal/qcom/tsens.c
->>>>> +++ b/drivers/thermal/qcom/tsens.c
->>>>> @@ -692,7 +692,7 @@ static int dbg_version_show(struct seq_file *s, void *data)
->>>>>     			return ret;
->>>>>     		seq_printf(s, "%d.%d.%d\n", maj_ver, min_ver, step_ver);
->>>>>     	} else {
->>>>> -		seq_puts(s, "0.1.0\n");
->>>>> +		seq_printf(s, "0.%d.0\n", priv->feat->ver_major);
->>>>>     	}
->>>>>     	return 0;
->>>>> @@ -704,21 +704,19 @@ DEFINE_SHOW_ATTRIBUTE(dbg_sensors);
->>>>>     static void tsens_debug_init(struct platform_device *pdev)
->>>>>     {
->>>>>     	struct tsens_priv *priv = platform_get_drvdata(pdev);
->>>>> -	struct dentry *root, *file;
->>>>> -	root = debugfs_lookup("tsens", NULL);
->>>>> -	if (!root)
->>>>> +	priv->debug_root = debugfs_lookup("tsens", NULL);
->>>>> +	if (!priv->debug_root)
->>>>>     		priv->debug_root = debugfs_create_dir("tsens", NULL);
->>>>> -	else
->>>>> -		priv->debug_root = root;
->>>>> -	file = debugfs_lookup("version", priv->debug_root);
->>>>> -	if (!file)
->>>>> +	if (!debugfs_lookup("version", priv->debug_root))
->>>>>     		debugfs_create_file("version", 0444, priv->debug_root,
->>>>>     				    pdev, &dbg_version_fops);
->>>>>     	/* A directory for each instance of the TSENS IP */
->>>>> -	priv->debug = debugfs_create_dir(dev_name(&pdev->dev), priv->debug_root);
->>>>
->>>> Unconditionally creating priv->debug here is correct. The below if
->>>> (!priv->debug) will never be true because as per your patch 1, we call
->>>> tsens_debug_init once per instance of tsens.
->>>>
->>>
->>> You are right, will send a v2 if everything else is good. What do you
->>> think?
->>
->> I have not tested this yet. The clean up itself looks okay to me.
->> My question is have you tried this with 8960 tsens ? That is the only
->> version of tsens that does not use init_common and hence looks to me that a
->> debug interface is not created. I don't think this should be a problem
->> though. So if you can fix the above, it is a go ahead from me.
->>
-> 
-> Recent commits should have switched 8960 to init_common. Actually I
-> pushed this cause while testing 8960 I notice the warning about
-> double debugfs. Anyway thx for the review. Will send v2 ASAP.
+1) Currently we only flush once all the cmds (or rather IBs to the cmd
+   buffer) are written into the ringbuffer.  Which places a restriction
+   that the submit must fit in the rb.  Which means slightly less than
+   2k cmds per submit, after accounting for some of the other packets
+   needed.
+2) Currently, for devices that use RPTR shadow, we only write the
+   CP_WHERE_AM_I packet at the end of the submit, so we aren't seeing
+   partial progress that the GPU is making chewing through previous
+   large submits
+3) We spin for up to 1sec waiting for rb space, and then give up and
+   proceed to overwrite the packets that that CP is currently chewing
+   on.. which goes badly.  If userspace is submitting >1sec of work
+   per submit ioctl, this means we spin for a long time, and then
+   corrupt the rb anyways.
 
-Sounds good. Thanks.
+This patchset doesn't completely address #1.  And in general we don't
+want to be uninteruptably blocking for so much time.. but this will
+require some more extensive changes.
 
-> 
->>
->> -- 
->> Warm Regards
->> Thara
+What it does do is address #2 by periodically emitting a CP_WHERE_AM_I,
+and #3 by adding detection and error handling for rb overflow, returning
+-ENOSPC when that happens.
+
+Rob Clark (2):
+  drm/msm: Handle ringbuffer overflow
+  drm/msm: Periodically update RPTR shadow
+
+ drivers/gpu/drm/msm/adreno/a5xx_gpu.c   | 32 ++++++++++++++++++++----
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c   | 30 +++++++++++++++++-----
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c | 24 +++++++++++++++++-
+ drivers/gpu/drm/msm/msm_gem_submit.c    |  7 +++++-
+ drivers/gpu/drm/msm/msm_gpu.c           | 33 +++++++++++++++++++++++--
+ drivers/gpu/drm/msm/msm_gpu.h           |  2 +-
+ drivers/gpu/drm/msm/msm_ringbuffer.h    |  5 ++++
+ 7 files changed, 117 insertions(+), 16 deletions(-)
 
 -- 
-Warm Regards
-Thara
+2.30.2
+
