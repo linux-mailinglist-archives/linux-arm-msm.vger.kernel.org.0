@@ -2,63 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 618A436DD4D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Apr 2021 18:43:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B853236DD32
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Apr 2021 18:38:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241147AbhD1Qnq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Apr 2021 12:43:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35718 "EHLO
+        id S241066AbhD1Qjj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Apr 2021 12:39:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34706 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229931AbhD1Qnq (ORCPT
+        with ESMTP id S241055AbhD1Qji (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Apr 2021 12:43:46 -0400
-Received: from mail-qt1-x836.google.com (mail-qt1-x836.google.com [IPv6:2607:f8b0:4864:20::836])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3CB3AC061573
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Apr 2021 09:43:01 -0700 (PDT)
-Received: by mail-qt1-x836.google.com with SMTP id d12so9068195qtr.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Apr 2021 09:43:01 -0700 (PDT)
+        Wed, 28 Apr 2021 12:39:38 -0400
+Received: from mail-qv1-xf2e.google.com (mail-qv1-xf2e.google.com [IPv6:2607:f8b0:4864:20::f2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBFC2C061574
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Apr 2021 09:38:53 -0700 (PDT)
+Received: by mail-qv1-xf2e.google.com with SMTP id 3so6293119qvp.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Apr 2021 09:38:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=//UO2IjJqBIxaWSoAlfPA77HhIEosOhf6+vv78gfMgc=;
-        b=Sb32zysRjoegxCScU/eqzs7T0aXi9ZWfG28GsmoYSJM387iS073EN9yXEQDCWId+uZ
-         jsqHpX/Whj8LYUthaggplNBubdKnAh9Fxy+1nxIl/Dxe3W1PMsXoZjO4KnmBTLWuRfsq
-         n5ht2NKrpOqDV2SXNDLOXW2w8oUlIroGk2FWk=
+        bh=Ouf+5ZvIPbhOgiylW2yryEkXKmUKnkmHbAua9prhku0=;
+        b=OqgDSWd0iwEYtrbB/lTWLSzGXqCXPeg8wHFOtfFXOKuVb9Lh/xMAhwgSkqipouV8PI
+         4FONKugSbjATl2gMXT0mpO9v19lDf6J46Pfi+5MyjUpJYceeV9KnWXlFAnk+IYC5cDLv
+         Ljni0gGHvU3IbxcjFaToo/+d7k+7c8D+AbLTg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=//UO2IjJqBIxaWSoAlfPA77HhIEosOhf6+vv78gfMgc=;
-        b=oFi9OHaYWaC+ENvK1eQt18ejlckIDtdT09gsQU8LrQ7nrFUMPJTblPJskwWQ8hxb08
-         2kxJ+lrthE6BSbGnjESG8+7DNxiGMNv5/7b3u1pQPeA6CosdMKisTVl3gswYCWZLtU0H
-         p5A3CJE6nxcTbPReBRTVekHrJB9zI4/HgFcXkYVDrvRnR/q8raCn67N6Swm6FSnKk5Hd
-         ziSMSiw0v5DnZaK/A/OvGHjiRuhJO1WNEHGsDtCLdM5s7WwOpysGf9Bv4oG72jGdx/Ds
-         /wrCreOyt6sT5XCXOcHoVK9at5tH7tMMJksda7l4cNLiwXaneCBwT9PYM6eIWdn/t85A
-         hBBA==
-X-Gm-Message-State: AOAM5307J+bI9T4Pzpn2uDfw3lJ6TAOOzE/1uETAfqMV0kdrCcujfzFL
-        9nmCKO8xaBmLcvECqlPycEtWiwZGWdcmgw==
-X-Google-Smtp-Source: ABdhPJw1GhTMp2+nno7D+kRpS5qu4yknLRRG2jIfQDW4L2w3u4y+Fc+6bHJ50vabsLWF2Bb3+eFBQA==
-X-Received: by 2002:ac8:4896:: with SMTP id i22mr27978397qtq.114.1619628180224;
-        Wed, 28 Apr 2021 09:43:00 -0700 (PDT)
-Received: from mail-yb1-f182.google.com (mail-yb1-f182.google.com. [209.85.219.182])
-        by smtp.gmail.com with ESMTPSA id e15sm154124qkm.129.2021.04.28.09.42.59
+        bh=Ouf+5ZvIPbhOgiylW2yryEkXKmUKnkmHbAua9prhku0=;
+        b=A4gl5Q5bAO30gZxi0HazQRjgn36CiVpu3aphaeKinIEtHD12F1nMmpQNArldApkRFk
+         Rcflm31FpM/i1jwwt3Lovud0revp4VjraButVBO5F+bJo9J9XPjqr7S/Rm0cD3XIoUkZ
+         DF8QwpRGPXRuz/G6I4OmtM4W7WKlL1idsFsJWDWia995kMh/clXpSIVWULOoOW38FvpV
+         j1CbH4uuYq4Oy5D6brKUv0oLSxutdNEX+4WpXskSBYroFZ2lyZSgzWEfptvMYLXLwtaj
+         /uc/W4/UrPganntdG6LECyO12CT92kPsxucmvnbSQLNCXCQu2HVq+5eDzbZcoaI6tAbc
+         Fr7Q==
+X-Gm-Message-State: AOAM532a86cy4Q/9nWehAMGfyIZkFAUGUc91yWNXNxvsZYxHT+mkLrEg
+        Sp3KBtMOFLC+UhEobvyE3H+lkXjTGaTqLA==
+X-Google-Smtp-Source: ABdhPJzoF//uZc0nmiG/SUh44s9xot8mNnL5VcBx1vseoGhaTjDc2p7eoGQMZ4+I6nm/b1TClsMcFQ==
+X-Received: by 2002:a0c:de0d:: with SMTP id t13mr119917qvk.7.1619627932452;
+        Wed, 28 Apr 2021 09:38:52 -0700 (PDT)
+Received: from mail-yb1-f181.google.com (mail-yb1-f181.google.com. [209.85.219.181])
+        by smtp.gmail.com with ESMTPSA id i6sm153510qkf.96.2021.04.28.09.38.51
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 28 Apr 2021 09:43:00 -0700 (PDT)
-Received: by mail-yb1-f182.google.com with SMTP id q192so21065464ybg.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Apr 2021 09:42:59 -0700 (PDT)
-X-Received: by 2002:a25:382:: with SMTP id 124mr19716461ybd.25.1619627746944;
- Wed, 28 Apr 2021 09:35:46 -0700 (PDT)
+        Wed, 28 Apr 2021 09:38:51 -0700 (PDT)
+Received: by mail-yb1-f181.google.com with SMTP id q192so21047963ybg.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Apr 2021 09:38:51 -0700 (PDT)
+X-Received: by 2002:a25:6c0a:: with SMTP id h10mr40506121ybc.167.1619627930452;
+ Wed, 28 Apr 2021 09:38:50 -0700 (PDT)
 MIME-Version: 1.0
-References: <20210423165906.2504169-1-dianders@chromium.org> <20210423095743.v5.10.I40eeedc23459d1e3fc96fa6cdad775d88c6e706c@changeid>
-In-Reply-To: <20210423095743.v5.10.I40eeedc23459d1e3fc96fa6cdad775d88c6e706c@changeid>
+References: <20210423165906.2504169-1-dianders@chromium.org> <20210423095743.v5.16.Icb581b0273d95cc33ca38676c61ae6d7d2e75357@changeid>
+In-Reply-To: <20210423095743.v5.16.Icb581b0273d95cc33ca38676c61ae6d7d2e75357@changeid>
 From:   Sean Paul <seanpaul@chromium.org>
-Date:   Wed, 28 Apr 2021 12:35:09 -0400
-X-Gmail-Original-Message-ID: <CAOw6vbJj327Y0vtzwm=aOqwyHScE5XYG2LDw6TxCh_N+rCJ9kQ@mail.gmail.com>
-Message-ID: <CAOw6vbJj327Y0vtzwm=aOqwyHScE5XYG2LDw6TxCh_N+rCJ9kQ@mail.gmail.com>
-Subject: Re: [PATCH v5 10/20] drm/panel: panel-simple: Get rid of hacky HPD
- chicken-and-egg code
+Date:   Wed, 28 Apr 2021 12:38:12 -0400
+X-Gmail-Original-Message-ID: <CAOw6vbJOOEi9zyRnSMDL=qLMQPXU1uPwQ-K435_1uipcyqyUJQ@mail.gmail.com>
+Message-ID: <CAOw6vbJOOEi9zyRnSMDL=qLMQPXU1uPwQ-K435_1uipcyqyUJQ@mail.gmail.com>
+Subject: Re: [PATCH v5 16/20] drm/panel: panel-simple: Remove extra call: drm_connector_update_edid_property()
 To:     Douglas Anderson <dianders@chromium.org>
 Cc:     Andrzej Hajda <a.hajda@samsung.com>,
         Neil Armstrong <narmstrong@baylibre.com>,
@@ -84,18 +83,10 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Fri, Apr 23, 2021 at 1:00 PM Douglas Anderson <dianders@chromium.org> wrote:
 >
-> When I added support for the hpd-gpio to simple-panel in commit
-> 48834e6084f1 ("drm/panel-simple: Support hpd-gpios for delaying
-> prepare()"), I added a special case to handle a circular dependency I
-> was running into on the ti-sn65dsi86 bridge chip. On my board the
-> hpd-gpio is actually provided by the bridge chip. That was causing
-> some circular dependency problems that I had to work around by getting
-> the hpd-gpio late.
->
-> I've now reorganized the ti-sn65dsi86 bridge chip driver to be a
-> collection of sub-drivers. Now the GPIO part can probe separately and
-> that breaks the chain. Let's get rid of the old code to clean things
-> up.
+> As of commit 5186421cbfe2 ("drm: Introduce epoch counter to
+> drm_connector") the drm_get_edid() function calls
+> drm_connector_update_edid_property() for us. There's no reason for us
+> to call it again.
 >
 > Signed-off-by: Douglas Anderson <dianders@chromium.org>
 > Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
@@ -103,69 +94,30 @@ On Fri, Apr 23, 2021 at 1:00 PM Douglas Anderson <dianders@chromium.org> wrote:
 Reviewed-by: Sean Paul <seanpaul@chromium.org>
 
 > ---
+> As Laurent pointed out [1] this is actually a pretty common
+> problem. His suggestion to do this more broadly is a good idea but
+> this series is probably a bit ambitious already so I would suggest
+> that be taken up separately.
+>
+> [1] https://lore.kernel.org/r/YGphgcESWsozCi1y@pendragon.ideasonboard.com
 >
 > (no changes since v1)
 >
->  drivers/gpu/drm/panel/panel-simple.c | 24 +++++-------------------
->  1 file changed, 5 insertions(+), 19 deletions(-)
+>  drivers/gpu/drm/panel/panel-simple.c | 1 -
+>  1 file changed, 1 deletion(-)
 >
 > diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
-> index 9746eda6f675..bd208abcbf07 100644
+> index bd208abcbf07..4de33c929a59 100644
 > --- a/drivers/gpu/drm/panel/panel-simple.c
 > +++ b/drivers/gpu/drm/panel/panel-simple.c
-> @@ -366,8 +366,7 @@ static int panel_simple_unprepare(struct drm_panel *panel)
->         return 0;
->  }
+> @@ -512,7 +512,6 @@ static int panel_simple_get_modes(struct drm_panel *panel,
+>         if (p->ddc) {
+>                 struct edid *edid = drm_get_edid(connector, p->ddc);
 >
-> -static int panel_simple_get_hpd_gpio(struct device *dev,
-> -                                    struct panel_simple *p, bool from_probe)
-> +static int panel_simple_get_hpd_gpio(struct device *dev, struct panel_simple *p)
->  {
->         int err;
->
-> @@ -375,17 +374,10 @@ static int panel_simple_get_hpd_gpio(struct device *dev,
->         if (IS_ERR(p->hpd_gpio)) {
->                 err = PTR_ERR(p->hpd_gpio);
->
-> -               /*
-> -                * If we're called from probe we won't consider '-EPROBE_DEFER'
-> -                * to be an error--we'll leave the error code in "hpd_gpio".
-> -                * When we try to use it we'll try again.  This allows for
-> -                * circular dependencies where the component providing the
-> -                * hpd gpio needs the panel to init before probing.
-> -                */
-> -               if (err != -EPROBE_DEFER || !from_probe) {
-> +               if (err != -EPROBE_DEFER)
->                         dev_err(dev, "failed to get 'hpd' GPIO: %d\n", err);
-> -                       return err;
-> -               }
-> +
-> +               return err;
->         }
->
->         return 0;
-> @@ -416,12 +408,6 @@ static int panel_simple_prepare_once(struct panel_simple *p)
->                 msleep(delay);
->
->         if (p->hpd_gpio) {
-> -               if (IS_ERR(p->hpd_gpio)) {
-> -                       err = panel_simple_get_hpd_gpio(dev, p, false);
-> -                       if (err)
-> -                               goto error;
-> -               }
-> -
->                 if (p->desc->delay.hpd_absent_delay)
->                         hpd_wait_us = p->desc->delay.hpd_absent_delay * 1000UL;
->                 else
-> @@ -682,7 +668,7 @@ static int panel_simple_probe(struct device *dev, const struct panel_desc *desc)
->
->         panel->no_hpd = of_property_read_bool(dev->of_node, "no-hpd");
->         if (!panel->no_hpd) {
-> -               err = panel_simple_get_hpd_gpio(dev, panel, true);
-> +               err = panel_simple_get_hpd_gpio(dev, panel);
->                 if (err)
->                         return err;
->         }
+> -               drm_connector_update_edid_property(connector, edid);
+>                 if (edid) {
+>                         num += drm_add_edid_modes(connector, edid);
+>                         kfree(edid);
 > --
 > 2.31.1.498.g6c1eba8ee3d-goog
 >
