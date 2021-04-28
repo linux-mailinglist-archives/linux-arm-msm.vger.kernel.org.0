@@ -2,153 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D7ACD36DFD1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Apr 2021 21:44:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2DF9336E016
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Apr 2021 22:07:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239706AbhD1TpX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Apr 2021 15:45:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47602 "EHLO
+        id S237174AbhD1UIE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Apr 2021 16:08:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52546 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238948AbhD1TpS (ORCPT
+        with ESMTP id S239847AbhD1UIA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Apr 2021 15:45:18 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9BC26C061574
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Apr 2021 12:44:31 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id l2so12017910wrm.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Apr 2021 12:44:31 -0700 (PDT)
+        Wed, 28 Apr 2021 16:08:00 -0400
+Received: from mail-oi1-x22e.google.com (mail-oi1-x22e.google.com [IPv6:2607:f8b0:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBA7FC06138A
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Apr 2021 13:06:53 -0700 (PDT)
+Received: by mail-oi1-x22e.google.com with SMTP id u16so46953405oiu.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Apr 2021 13:06:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=Sn7CSGIgmGn5VKzZbm8BRN6Y1B3vMVtXzAiBVY8ViXE=;
-        b=uv/K0P/Q182pdyPl5FpzzqZhMn45UrPIPQALeC9OD7sSme6UpfvHw0/R/1YCWlN2q2
-         CsnI3gnu3GZAwDve0cqzlzFNIHxFsdGEOEaibi21FxFoD3s43Qwbmp7tI3hWEaHztLxd
-         c0hDUzNY3G8xKjcx7mzp9kcjJCEVyMRn7iTADXAV3e/T/xfwVHuYv7COt2dDGXIpk+Hg
-         rzXPvmNFz8qIZJsCzv67dywANmiZ2SyEk0+QIGo2b38l4K3tUG4R9Mli88wUto9KblMW
-         g2NPN0vIxZdaj2rHJ2vQSa90VvsT4zm3FCvYLfuKgDSEm951TzlCkvKusd0yiIR5Jox7
-         82IA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=vl7A1Bucz63bZ2sNuRyc6lFBD6YydDSFIrYy2XAFbW4=;
+        b=V+PDi+r9lcfd6nKjXBqXO7T4yGd0umuQaXFT35w2tV6DrX6On7FxjGWqdF3tS5MSE+
+         P+pX2ad6Mtyzf1c4KfvG0i9/O0LgZYK3O1gQjWOZFZDe3UpiaL5jPZ9HtwormPpB9AqP
+         Dd9pzkECFx19XuqHapvjUsFVxbCALKkus+6Gzmt7riMQJfy5QbldfUgIEg9y+93qAKO7
+         aO8sixH0nO+n5uEt3E9LaBcbDaEjV6aJfCQv0vtFQFhV2YscJemZjO4eIvOQ3Fhm0L6d
+         QLRpdqFumHBAi1ZJ98WtnZC4awoXEe8bu2/KJG5+VkeNdS0mEWyELY5ebkIwaupWcxxw
+         pZkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=Sn7CSGIgmGn5VKzZbm8BRN6Y1B3vMVtXzAiBVY8ViXE=;
-        b=itMM53Dv1Z0LIuJwI1+EiH0IIICHUstc7fMHfe00YckOFbZz/VL0fA4zs9HJgUQYUl
-         DcbT4/MYSOMr98BdDdxF/7yB+OgCFnYoaO0rcttKyMFo09Tu3PxglFb+BdYAzbZ7Reho
-         6pAyvrp5XN9IFBiFV6TYHj4p0MCbs3CTEeqUAashTX2JDVemQ/6XpfD/dIsytv3MnzXA
-         BiSIH3PsXR2C54ekZ/smmRjtRiTFNv72PWuMsVp5sOy6gt5k47HJbZpkxkWcxS1l35GB
-         9vDaClSkmBgfx6ZIDP3o6JvzYw7OT8K/ix4qbKCPmDhfEwOI9QYkGE8fB3z2sXd8LTKU
-         vsyQ==
-X-Gm-Message-State: AOAM532gnIpNAI8sZ0uL8JFU9J5t34qRYk2aFY2obax5fJ5JgS9qfHJG
-        ARnVoSAonVzE903B9l0p3/szzA==
-X-Google-Smtp-Source: ABdhPJwwjzkfU75PzDn/R1kusWKNjG+LnE3S357agzvLt5nuHXVuDf1062RUlHvxyoT7V243QHMmaQ==
-X-Received: by 2002:adf:efca:: with SMTP id i10mr37850612wrp.316.1619639070055;
-        Wed, 28 Apr 2021 12:44:30 -0700 (PDT)
-Received: from ?IPv6:2a01:e34:ed2f:f020:c98e:c214:1762:12d3? ([2a01:e34:ed2f:f020:c98e:c214:1762:12d3])
-        by smtp.googlemail.com with ESMTPSA id 3sm9510689wma.45.2021.04.28.12.44.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 28 Apr 2021 12:44:29 -0700 (PDT)
-Subject: Re: [thermal-next PATCH 2/2] thermal: qcom: tsens: simplify debugfs
- init function
-To:     Thara Gopinath <thara.gopinath@linaro.org>,
-        Ansuel Smith <ansuelsmth@gmail.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20210419012930.7727-1-ansuelsmth@gmail.com>
- <20210419012930.7727-2-ansuelsmth@gmail.com>
- <8e679407-07e7-244a-48fa-0d4d451d744d@linaro.org>
-From:   Daniel Lezcano <daniel.lezcano@linaro.org>
-Message-ID: <6c5208b3-8bbd-d00f-9147-c4a35ae202c7@linaro.org>
-Date:   Wed, 28 Apr 2021 21:44:27 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=vl7A1Bucz63bZ2sNuRyc6lFBD6YydDSFIrYy2XAFbW4=;
+        b=aAZd3PaPqPaWUWGW1LOJE0o9vere6dPilw9RtIzYSP0usyfPs03SHeF9H+SetOpWwm
+         3GIQWirniK23OEkHbteI54X5+a18oWMvQtJGmNM2RkIEQjJptuEk/rquQhUnu8x6r76d
+         V9xLKhfd8ZtuQ660yNqeHnpzzJw+aYCgUt0J/TuNAd5fyZk4BtYvA5zXC3CCbAbTatyl
+         gz2f+lp68QgbsDnNUPES5eS70ZTHSB1tTydk5NxtAr9Jw3VErQdrzq/y0/ZvgU4oHwB+
+         t3OcB+gpo5xtnhagazJBSw+bFjSUEacJnLD5A2T0qb2KPh6nYdVPyeP8S0kAHUZHVUbS
+         lvbA==
+X-Gm-Message-State: AOAM530rReOfP9jYbdo72HgBKaAQnCwl5GeRZVg14kWcUw2O6A3sG//R
+        kymcjJTAmFYJI5iaEzlXODTBDA==
+X-Google-Smtp-Source: ABdhPJzAsbDFCLgX6C6JhjCevrUavXR+5G/d1FZkQZ2elBaaEKg8pKvEarGLagSh2TswjmnxMNfDZw==
+X-Received: by 2002:a05:6808:18e:: with SMTP id w14mr21763329oic.159.1619640413040;
+        Wed, 28 Apr 2021 13:06:53 -0700 (PDT)
+Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id x45sm195564otr.35.2021.04.28.13.06.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 28 Apr 2021 13:06:52 -0700 (PDT)
+Date:   Wed, 28 Apr 2021 15:06:50 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Subbaraman Narayanamurthy <subbaram@codeaurora.org>
+Cc:     aghayal@codeaurora.org, collinsd@codeaurora.org,
+        fenglinw@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 0/2] Add QCOM PMIC PWM driver
+Message-ID: <20210428200650.GM1908499@yoga>
+References: <20210428155422.GL1908499@yoga>
+ <1619635777-2872-1-git-send-email-subbaram@codeaurora.org>
 MIME-Version: 1.0
-In-Reply-To: <8e679407-07e7-244a-48fa-0d4d451d744d@linaro.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1619635777-2872-1-git-send-email-subbaram@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 28/04/2021 18:47, Thara Gopinath wrote:
-> Hi,
-> 
-> Please include a cover letter next time describing the patch series.
+On Wed 28 Apr 13:49 CDT 2021, Subbaraman Narayanamurthy wrote:
 
-Yes, a cover letter helps for the understanding of a patch series but in
-this case the changes are simple enough to get rid of it.
-
-> On 4/18/21 9:29 PM, Ansuel Smith wrote:
->> Simplify debugfs init function.
->> - Drop useless variables
->> - Add check for existing dev directory.
->> - Fix wrong version in dbg_version_show (with version 0.0.0, 0.1.0 was
->>    incorrectly reported)
->>
->> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
->> ---
->>   drivers/thermal/qcom/tsens.c | 16 +++++++---------
->>   1 file changed, 7 insertions(+), 9 deletions(-)
->>
->> diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
->> index f9d50a67e..b086d1496 100644
->> --- a/drivers/thermal/qcom/tsens.c
->> +++ b/drivers/thermal/qcom/tsens.c
->> @@ -692,7 +692,7 @@ static int dbg_version_show(struct seq_file *s,
->> void *data)
->>               return ret;
->>           seq_printf(s, "%d.%d.%d\n", maj_ver, min_ver, step_ver);
->>       } else {
->> -        seq_puts(s, "0.1.0\n");
->> +        seq_printf(s, "0.%d.0\n", priv->feat->ver_major);
->>       }
->>         return 0;
->> @@ -704,21 +704,19 @@ DEFINE_SHOW_ATTRIBUTE(dbg_sensors);
->>   static void tsens_debug_init(struct platform_device *pdev)
->>   {
->>       struct tsens_priv *priv = platform_get_drvdata(pdev);
->> -    struct dentry *root, *file;
->>   -    root = debugfs_lookup("tsens", NULL);
->> -    if (!root)
->> +    priv->debug_root = debugfs_lookup("tsens", NULL);
->> +    if (!priv->debug_root)
->>           priv->debug_root = debugfs_create_dir("tsens", NULL);
->> -    else
->> -        priv->debug_root = root;
->>   -    file = debugfs_lookup("version", priv->debug_root);
->> -    if (!file)
->> +    if (!debugfs_lookup("version", priv->debug_root))
->>           debugfs_create_file("version", 0444, priv->debug_root,
->>                       pdev, &dbg_version_fops);
->>         /* A directory for each instance of the TSENS IP */
->> -    priv->debug = debugfs_create_dir(dev_name(&pdev->dev),
->> priv->debug_root);
+> >> Add PWM driver to support PWM modules inside QCOM PMIC chips which are accessed
+> >> through SPMI bus. Normally, there would be multiple PWM modules with adjacent
+> >> address spaces present in one PMIC chip, and each PWM module has 0x100 size of
+> >> address space. With this driver, a pwm_chip with multiple pwm_device individuals
+> >> is created, and each pwm_device individual is corresponding to one PWM module.
+> >> 
 > 
-> Unconditionally creating priv->debug here is correct. The below if
-> (!priv->debug) will never be true because as per your patch 1, we call
-> tsens_debug_init once per instance of tsens.
+> > Exposing this as individual pwm_chips will prevent us from enabling the
+> > LED related use cases (patterns and multicolor) that most versions of
+> > the hardware support.
 > 
->> +    priv->debug = debugfs_lookup(dev_name(&pdev->dev),
->> priv->debug_root);
->> +    if (!priv->debug)
->> +        priv->debug = debugfs_create_dir(dev_name(&pdev->dev),
->> priv->debug_root);
->>       debugfs_create_file("sensors", 0444, priv->debug, pdev,
->> &dbg_sensors_fops);
->>   }
->>   #else
->>
+> > I proposed [1] a while ago and think this is a better approach. I'll
+> > take some time to respin this and send out the next version.
+> 
+> > [1] https://lore.kernel.org/linux-arm-msm/20201021201224.3430546-1-bjorn.andersson@linaro.org/
+> 
+> Hi Bjorn,
+> Yes, we came across this patch series but this driver (leds-qcom-lpg) is a
+> combo one which provides support only for RGB LEDs (or TRI_LED module) along
+> with PWM/LPG channels allocated for it. Say, if we've additional PWM channels
+> on the same PMIC (that provides user-interface support) or another PMIC
+> (non user-interface) that has multiple PWM channels that are not used for LED
+> notifications, it would be good to have a separate PWM driver to support such
+> channels IMHO. There are couple of use cases we've come across recently.
+> 
+> 1. Using a PWM channel for controlling external LCD backlight controller
+> 2. Using a PWM channel for controlling a haptics actuator
 > 
 
+The LPG driver, as it's currently written, support using each channel as
+a LED, part of a multicolor LED or as a pwm_chip. It's been tested on
+pm8916 (which doesn't have triled or the lut), pm*8994, pmi8996 and
+pm8150* in various combinations.
 
--- 
-<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
+In particular the PWM-only modes that you describe here is how the
+driver has been used on db410c, for driving the "backlight GPIO" in the
+low-speed connector.
 
-Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
-<http://twitter.com/#!/linaroorg> Twitter |
-<http://www.linaro.org/linaro-blog/> Blog
+Regards,
+Bjorn
