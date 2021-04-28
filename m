@@ -2,109 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2DF9336E016
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Apr 2021 22:07:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9230936E01B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Apr 2021 22:09:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237174AbhD1UIE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Apr 2021 16:08:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52546 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239847AbhD1UIA (ORCPT
+        id S240101AbhD1UKo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Apr 2021 16:10:44 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:21207 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S239847AbhD1UKn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Apr 2021 16:08:00 -0400
-Received: from mail-oi1-x22e.google.com (mail-oi1-x22e.google.com [IPv6:2607:f8b0:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBA7FC06138A
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Apr 2021 13:06:53 -0700 (PDT)
-Received: by mail-oi1-x22e.google.com with SMTP id u16so46953405oiu.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Apr 2021 13:06:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=vl7A1Bucz63bZ2sNuRyc6lFBD6YydDSFIrYy2XAFbW4=;
-        b=V+PDi+r9lcfd6nKjXBqXO7T4yGd0umuQaXFT35w2tV6DrX6On7FxjGWqdF3tS5MSE+
-         P+pX2ad6Mtyzf1c4KfvG0i9/O0LgZYK3O1gQjWOZFZDe3UpiaL5jPZ9HtwormPpB9AqP
-         Dd9pzkECFx19XuqHapvjUsFVxbCALKkus+6Gzmt7riMQJfy5QbldfUgIEg9y+93qAKO7
-         aO8sixH0nO+n5uEt3E9LaBcbDaEjV6aJfCQv0vtFQFhV2YscJemZjO4eIvOQ3Fhm0L6d
-         QLRpdqFumHBAi1ZJ98WtnZC4awoXEe8bu2/KJG5+VkeNdS0mEWyELY5ebkIwaupWcxxw
-         pZkQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=vl7A1Bucz63bZ2sNuRyc6lFBD6YydDSFIrYy2XAFbW4=;
-        b=aAZd3PaPqPaWUWGW1LOJE0o9vere6dPilw9RtIzYSP0usyfPs03SHeF9H+SetOpWwm
-         3GIQWirniK23OEkHbteI54X5+a18oWMvQtJGmNM2RkIEQjJptuEk/rquQhUnu8x6r76d
-         V9xLKhfd8ZtuQ660yNqeHnpzzJw+aYCgUt0J/TuNAd5fyZk4BtYvA5zXC3CCbAbTatyl
-         gz2f+lp68QgbsDnNUPES5eS70ZTHSB1tTydk5NxtAr9Jw3VErQdrzq/y0/ZvgU4oHwB+
-         t3OcB+gpo5xtnhagazJBSw+bFjSUEacJnLD5A2T0qb2KPh6nYdVPyeP8S0kAHUZHVUbS
-         lvbA==
-X-Gm-Message-State: AOAM530rReOfP9jYbdo72HgBKaAQnCwl5GeRZVg14kWcUw2O6A3sG//R
-        kymcjJTAmFYJI5iaEzlXODTBDA==
-X-Google-Smtp-Source: ABdhPJzAsbDFCLgX6C6JhjCevrUavXR+5G/d1FZkQZ2elBaaEKg8pKvEarGLagSh2TswjmnxMNfDZw==
-X-Received: by 2002:a05:6808:18e:: with SMTP id w14mr21763329oic.159.1619640413040;
-        Wed, 28 Apr 2021 13:06:53 -0700 (PDT)
-Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id x45sm195564otr.35.2021.04.28.13.06.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Apr 2021 13:06:52 -0700 (PDT)
-Date:   Wed, 28 Apr 2021 15:06:50 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Subbaraman Narayanamurthy <subbaram@codeaurora.org>
-Cc:     aghayal@codeaurora.org, collinsd@codeaurora.org,
-        fenglinw@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 0/2] Add QCOM PMIC PWM driver
-Message-ID: <20210428200650.GM1908499@yoga>
-References: <20210428155422.GL1908499@yoga>
- <1619635777-2872-1-git-send-email-subbaram@codeaurora.org>
+        Wed, 28 Apr 2021 16:10:43 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1619640598; h=Message-ID: References: In-Reply-To: Reply-To:
+ Subject: Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=p89SAoyzwxCDxPEQDDBPo9LpbJQRJGGUarsHfOcJ8k0=;
+ b=Q5M0yXm8MLlWNUOhdBHTv5sh2/YEnfXZKuT0eBaXBe6PkCAIx+P2Yij8rrtcZTOgvz8LQjqa
+ 1FMvYEYGX3BkNkQzvGZ/gfksYsB1dZEWus+S3rA4KYIPm2kfd4BELCeL9UAQUEVfpBjYeLlJ
+ +AS4PdLwvzLqyS4mx0v0CNe4dmA=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
+ 6089c109a817abd39a6157ea (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 28 Apr 2021 20:09:45
+ GMT
+Sender: bbhatt=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 0B464C433D3; Wed, 28 Apr 2021 20:09:45 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: bbhatt)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 47067C4338A;
+        Wed, 28 Apr 2021 20:09:44 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1619635777-2872-1-git-send-email-subbaram@codeaurora.org>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Wed, 28 Apr 2021 13:09:44 -0700
+From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
+To:     Loic Poulain <loic.poulain@linaro.org>
+Cc:     mani@kernel.org, hemantk@codeaurora.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] bus: mhi: core: Fix power down latency
+Organization: Qualcomm Innovation Center, Inc.
+Reply-To: bbhatt@codeaurora.org
+Mail-Reply-To: bbhatt@codeaurora.org
+In-Reply-To: <1619598574-11928-1-git-send-email-loic.poulain@linaro.org>
+References: <1619598574-11928-1-git-send-email-loic.poulain@linaro.org>
+Message-ID: <57eb5579ca58e1e27a2022432d2ffc4c@codeaurora.org>
+X-Sender: bbhatt@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 28 Apr 13:49 CDT 2021, Subbaraman Narayanamurthy wrote:
+On 2021-04-28 01:29 AM, Loic Poulain wrote:
+> On gracefull power-down/disable transition, a MHI reset is performed,
+On _graceful_ power-down/disable transition, _when an_ MHI reset is 
+performed,
+> the MHI device then looses its context, including interrupt config.
+the MHI device _loses_ its context, including interrupt configuration.
+> However the current implementation is waiting for event(irq) driven
+However, the current implementation is waiting for event(irq) driven
+> state change to confirm reset has been completed, which never happens,
+> and causes reset timeout, leading to unexpected high latency of the
+> mhi_power_down procedure.
+> 
+> Fix that by moving to the recently introduced poll_reg_field method,
+> waiting for the reset bit to be cleared, in the same way as the
+> power_on procedure.
+> 
+> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+> ---
+>  drivers/bus/mhi/core/pm.c | 17 +++++------------
+>  1 file changed, 5 insertions(+), 12 deletions(-)
+> 
+> diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
+> index e2e59a3..9c61d3f 100644
+> --- a/drivers/bus/mhi/core/pm.c
+> +++ b/drivers/bus/mhi/core/pm.c
+> @@ -3,7 +3,6 @@
+>   * Copyright (c) 2018-2020, The Linux Foundation. All rights reserved.
+>   *
+>   */
+> -
+>  #include <linux/delay.h>
+>  #include <linux/device.h>
+>  #include <linux/dma-direction.h>
+> @@ -471,17 +470,11 @@ static void mhi_pm_disable_transition(struct
+> mhi_controller *mhi_cntrl)
+>  		dev_dbg(dev, "Triggering MHI Reset in device\n");
+>  		mhi_set_mhi_state(mhi_cntrl, MHI_STATE_RESET);
+> 
+> -		/* Wait for the reset bit to be cleared by the device */
+> -		ret = wait_event_timeout(mhi_cntrl->state_event,
+> -					 mhi_read_reg_field(mhi_cntrl,
+> -							    mhi_cntrl->regs,
+> -							    MHICTRL,
+> -							    MHICTRL_RESET_MASK,
+> -							    MHICTRL_RESET_SHIFT,
+> -							    &in_reset) ||
+> -					!in_reset, timeout);
+> -		if (!ret || in_reset)
+> -			dev_err(dev, "Device failed to exit MHI Reset state\n");
+> +		ret = mhi_poll_reg_field(mhi_cntrl, mhi_cntrl->regs, MHICTRL,
+> +				 MHICTRL_RESET_MASK, MHICTRL_RESET_SHIFT, 0,
+> +				 25000);
+> +		if (ret)
+> +			dev_err(dev, "Device failed to clear MHI Reset\n");
+> 
+>  		/*
+>  		 * Device will clear BHI_INTVEC as a part of RESET processing,
 
-> >> Add PWM driver to support PWM modules inside QCOM PMIC chips which are accessed
-> >> through SPMI bus. Normally, there would be multiple PWM modules with adjacent
-> >> address spaces present in one PMIC chip, and each PWM module has 0x100 size of
-> >> address space. With this driver, a pwm_chip with multiple pwm_device individuals
-> >> is created, and each pwm_device individual is corresponding to one PWM module.
-> >> 
-> 
-> > Exposing this as individual pwm_chips will prevent us from enabling the
-> > LED related use cases (patterns and multicolor) that most versions of
-> > the hardware support.
-> 
-> > I proposed [1] a while ago and think this is a better approach. I'll
-> > take some time to respin this and send out the next version.
-> 
-> > [1] https://lore.kernel.org/linux-arm-msm/20201021201224.3430546-1-bjorn.andersson@linaro.org/
-> 
-> Hi Bjorn,
-> Yes, we came across this patch series but this driver (leds-qcom-lpg) is a
-> combo one which provides support only for RGB LEDs (or TRI_LED module) along
-> with PWM/LPG channels allocated for it. Say, if we've additional PWM channels
-> on the same PMIC (that provides user-interface support) or another PMIC
-> (non user-interface) that has multiple PWM channels that are not used for LED
-> notifications, it would be good to have a separate PWM driver to support such
-> channels IMHO. There are couple of use cases we've come across recently.
-> 
-> 1. Using a PWM channel for controlling external LCD backlight controller
-> 2. Using a PWM channel for controlling a haptics actuator
-> 
-
-The LPG driver, as it's currently written, support using each channel as
-a LED, part of a multicolor LED or as a pwm_chip. It's been tested on
-pm8916 (which doesn't have triled or the lut), pm*8994, pmi8996 and
-pm8150* in various combinations.
-
-In particular the PWM-only modes that you describe here is how the
-driver has been used on db410c, for driving the "backlight GPIO" in the
-low-speed connector.
-
-Regards,
-Bjorn
+Thanks,
+Bhaumik
+---
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
+Forum,
+a Linux Foundation Collaborative Project
