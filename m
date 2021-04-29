@@ -2,144 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2F35236E521
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Apr 2021 08:52:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2F6EB36E52C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Apr 2021 08:55:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238877AbhD2GxH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Apr 2021 02:53:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51794 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237501AbhD2GxH (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Apr 2021 02:53:07 -0400
-Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3898C06138B
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Apr 2021 23:52:18 -0700 (PDT)
-Received: from ptx.hi.pengutronix.de ([2001:67c:670:100:1d::c0])
-        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1lc0X0-0002j9-JE; Thu, 29 Apr 2021 08:52:14 +0200
-Received: from ukl by ptx.hi.pengutronix.de with local (Exim 4.92)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1lc0Wz-0002AX-Ul; Thu, 29 Apr 2021 08:52:13 +0200
-Date:   Thu, 29 Apr 2021 08:52:13 +0200
-From:   Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-To:     Thierry Reding <thierry.reding@gmail.com>
-Cc:     Fenglin Wu <fenglinw@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Lee Jones <lee.jones@linaro.org>, linux-pwm@vger.kernel.org,
-        subbaram@codeaurora.org, collinsd@codeaurora.org,
-        aghayal@codeaurora.org
-Subject: Re: [PATCH 2/2] pwm: pwm-qcom: add driver for PWM modules in QCOM
- PMICs
-Message-ID: <20210429065213.inajpznvfxa2xsld@pengutronix.de>
-References: <20210427102247.822-1-fenglinw@codeaurora.org>
- <20210427102247.822-3-fenglinw@codeaurora.org>
- <20210427170748.wglupc6zwrndalxs@pengutronix.de>
- <YImfkM/ll1nCmopq@orome.fritz.box>
+        id S237080AbhD2G4M (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Apr 2021 02:56:12 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:40971 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S233767AbhD2G4L (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 29 Apr 2021 02:56:11 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1619679323; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=i6nhprnTP7+B3o9IhSRHaKC/LVUmcR5lx3xKcdEqRdI=; b=rxX0ULKilDLXfcY+s0l/4VqeaQrj3KD73GeEt2svXlEqwzZjlxLVuSlimhY4p2E5eNGeYEXJ
+ moOUN6Hp1bCod0TUKzUPjVGdGx4AALWFS/OPTGRNN6URoL7b6RGdlYybxb2Z0Puel6b+vJbT
+ UQTWKq820xfIxAwBScRWdZ9HEIU=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
+ 608a585a853c0a2c469bab89 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 29 Apr 2021 06:55:22
+ GMT
+Sender: tdas=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 0FEA9C433F1; Thu, 29 Apr 2021 06:55:22 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [192.168.0.103] (unknown [49.204.182.110])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: tdas)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id BD9C3C433F1;
+        Thu, 29 Apr 2021 06:55:18 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org BD9C3C433F1
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=tdas@codeaurora.org
+Subject: Re: [PATCH v3] Add support for duty-cycle for RCG
+To:     Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>
+Cc:     Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <1619334502-9880-1-git-send-email-tdas@codeaurora.org>
+ <161956919717.177949.9925740807826300314@swboyd.mtv.corp.google.com>
+From:   Taniya Das <tdas@codeaurora.org>
+Message-ID: <ed64fe46-361b-5bf9-88a6-d35cac2c98e7@codeaurora.org>
+Date:   Thu, 29 Apr 2021 12:25:16 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="y4s53szfi6y5jve3"
-Content-Disposition: inline
-In-Reply-To: <YImfkM/ll1nCmopq@orome.fritz.box>
-X-SA-Exim-Connect-IP: 2001:67c:670:100:1d::c0
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
+In-Reply-To: <161956919717.177949.9925740807826300314@swboyd.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Thank you for your review.
 
---y4s53szfi6y5jve3
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 4/28/2021 5:49 AM, Stephen Boyd wrote:
+> Quoting Taniya Das (2021-04-25 00:08:21)
+>> The root clock generators with MND divider has the capability to support
+>> change in duty-cycle by updating the 'D'. Add the clock ops which would
+>> check all the boundary conditions and enable setting the desired duty-cycle
+>> as per the consumer.
+>>
+>> [v3]
+>>    * Implement clockops for get_duty_cycle.
+>>    * Return -EINVAL for Non-MND or HID RCGs.
+> 
+> We don't need cover letters for single patches. Please add these details
+> after the dash before the diffstat on the single patch.
+> 
 
-Hello,
+Sure Stephen, will take care from next time. Let me know in case I need 
+to re-submit the patch again.
 
-On Wed, Apr 28, 2021 at 07:46:56PM +0200, Thierry Reding wrote:
-> On Tue, Apr 27, 2021 at 07:07:48PM +0200, Uwe Kleine-K=F6nig wrote:
-> > I would like to see the register definition to use a common prefix (like
-> > QCOM_PWM_) and that the names of bit fields include the register name.
-> > So something like:
-> >=20
-> > 	#define QCOM_PWM_PWM_SIZE_CLK		0x41
-> > 	#define QCOM_PWM_PWM_SIZE_CLK_FREQ_SEL 		GENMASK(1, 0)
-> >=20
-> > even if the names are quite long, its usage is less error prone. Maybe
-> > it makes sense to drop the duplicated PWM (but only if all or no
-> > register contains PWM in its name according to the reference manual).
-> > Also maybe QCOM_PWM_PWMSIZECLK_FREQSEL might be a good choice. I let you
-> > judge about the details.
->=20
-> Please stop requesting this. A common prefix is good for namespacing
-> symbols, but these defines are used only within this file, so there's no
-> need to namespace them.
+>>
+>> Taniya Das (1):
+>>    clk: qcom: clk-rcg2: Add support for duty-cycle for RCG
+>>
+>>   drivers/clk/qcom/clk-rcg2.c | 81 +++++++++++++++++++++++++++++++++++++++++++++
+>>   1 file changed, 81 insertions(+)
+>>
+>> --
+>> Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc.is a member
+>> of the Code Aurora Forum, hosted by the  Linux Foundation.
+>>
 
-I do consider it important. The goal of my review comments is to improve
-the drivers according to what I consider sensible even if that might not
-fit your metrics.=20
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation.
 
-Consistent name(space)ing is sensible because the names of static
-functions are used in backtraces. It is sensible because tools like
-ctags, etags and cscope work better when names are unique. It is
-sensible because it's harder than necessary to spot the error in
-
-	writel(PWM_EN_GLITCH_REMOVAL_MASK, base + REG_ENABLE_CONTROL);
-
-=2E It is sensible because the rule "Use namespacing for all symbols" is
-easier than "Use namespacing for symbols that might conflict with
-(present or future) names in the core or that might appear in user
-visible messages like backtraces or KASAN reports". It's sensible
-because then it's obvious when reading a code line that the symbol is
-driver specific. It is useful to have a common prefix for driver
-functions because that makes it easier to select them for tracing.
-
-> Forcing everyone to use a specific prefix is just going to add a bunch
-> of characters but doesn't actually add any value.
-
-That's your opinion and I disagree. I do see a value and the "burden" of
-these additional characters is quite worth its costs. In my bubble most
-people also see this value. This includes the coworkers I talked to,
-several other maintainers also insist on common prefixes[1] and it
-matches what my software engineering professor taught me during my
-studies. I also agree that longer names are more annoying than short
-ones, but that doesn't outweigh the advantages in my eyes and a good
-editor helps here.
-=20
-Best regards
-Uwe
-
-[1] A few posts that I found quickly:
-    https://lore.kernel.org/lkml/YH2k5xnD%2F+CKnMBQ@hovoldconsulting.com/
-    https://lore.kernel.org/lkml/CAPDyKFpg1qJD0r54sBC3hCoFey_+gwAL1n2o-aGwn=
-AzAan5p7w@mail.gmail.com/
-    https://lore.kernel.org/lkml/CAMpxmJW770v6JLdveEe1hkgNEJByVyArhorSyUZBY=
-OyFiVyOeg@mail.gmail.com/
-    https://lore.kernel.org/linux-can/fe0a8a9b-35c6-8f23-5968-0b14abb6078d@=
-pengutronix.de/
-    https://lore.kernel.org/netdev/20190327084422.4209-16-maxime.chevallier=
-@bootlin.com/
-
---=20
-Pengutronix e.K.                           | Uwe Kleine-K=F6nig            |
-Industrial Linux Solutions                 | https://www.pengutronix.de/ |
-
---y4s53szfi6y5jve3
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEfnIqFpAYrP8+dKQLwfwUeK3K7AkFAmCKV5kACgkQwfwUeK3K
-7AlmwQf/epeEtpmrZMHYRnU75vEFtSLuwbRwEWsSadMmTTP8gE82juELjPfqMZff
-aUHOX2IiZkMlBEsPUIUWQZIqY0tMnlpnrwg6ndugFlhACZXn1G7eIl0ojyeoTnB8
-tSjHCQOzL4S8+PWHyxshxFzG3eQJuEbK5LkcvZiENPM0LrIrh0OOHvCVVQedMeg4
-zrmAQ2jJgB4QQ4taTQ/n9HyJ07GZUZxEkU9c5SGVfYcwc2BXLLnTHg39K2FNVUW+
-qiqMTgLyXFUVv6pfOxUU0uGY87XOzG+pIUIm/2eO6eKnx45ewxaur5k9PSaNF9+3
-bYo8WAxns5T8PEg+r4UjeWlIwYj9yw==
-=sHLp
------END PGP SIGNATURE-----
-
---y4s53szfi6y5jve3--
+--
