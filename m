@@ -2,243 +2,254 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CFFDD36ED16
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Apr 2021 17:07:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 28CFD36ED37
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Apr 2021 17:17:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240611AbhD2PI2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Apr 2021 11:08:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49076 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240706AbhD2PIE (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Apr 2021 11:08:04 -0400
-Received: from mail-qk1-x735.google.com (mail-qk1-x735.google.com [IPv6:2607:f8b0:4864:20::735])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D2A6C061342
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Apr 2021 08:07:17 -0700 (PDT)
-Received: by mail-qk1-x735.google.com with SMTP id v20so12583467qkv.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Apr 2021 08:07:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=EAJclNu5gCfIMzIcfLRFLOY6aPCs84wagw7Ng4g4WPE=;
-        b=aHldvDBxe0q18B3BPRssa004Y8f+LA+eNfmC343d8B7v9zweaJYeO3v5lbbcpxpFdD
-         zxUVgiedCqBuWpYmo5ozuMTYfZtT8ncqy22fRs/ZNXYLu1597O4A8yp7X/ZuLePuZjYD
-         5RG6bm27Y1Gk8N5BjYq10sJVVNBnY46UzPkTepRGwdEuROlMnN6vRYk1unGfegeDh0SR
-         OpNPfeyWRwzTui61dDupg6K+10Z0FeVqiVON/PUXYusIaytQmg3LhtVrtP9YEZWbxf5P
-         lauDMl6M8Gw635e0e4Iuwp/8LaXwJvv77OOLVOqi2yEOIy1wM0PPghGbNv1Hmd3P0d8W
-         vmXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=EAJclNu5gCfIMzIcfLRFLOY6aPCs84wagw7Ng4g4WPE=;
-        b=Z2zF67tKbgbFyVVZ9vN9UB+nzM1zHd9Od2ibngfnQIwcsWhhbtpvIheAG12ADyfzMx
-         Ko1oBoSQbF4Xrh0mVK5hhX0L140XLcL48T8ZPSul/N83xtKuYNmFcVGrPBPSi4RQdzbI
-         xWZJ2YJrYHvxA0njIBkF2cbKEteO5yKOEunMUswdTkwZ40LdEGpKMbZbb9+RSnP3kcjg
-         gB1HHJA6HJZtijPE5n4PGv3m509UHwd6qFdt09JGu4/UCyJzEWV+V/3mA0VwaKh+slA5
-         /KFtNrQqbr+ec+czRvCRB4pWA5+R62loPB4kwm0cbuPIuSA0GcWJwbcOfUOrWZqno5qy
-         OCdg==
-X-Gm-Message-State: AOAM530S1xD8gmjnEoaRlz4tdWlxvoHJ2Uy2iOUZvJriW0EVJ9O1kzt0
-        a7XWDbu5y7z+4JC4bOcJeUw+6Q==
-X-Google-Smtp-Source: ABdhPJynTvhxR+rkdsECq11IqLL5FpLJSpryGxpvw+9lu+AtYYUuQ7KCw1ybLe4ADcT+GRZFglj2Qg==
-X-Received: by 2002:a37:f509:: with SMTP id l9mr129609qkk.172.1619708836520;
-        Thu, 29 Apr 2021 08:07:16 -0700 (PDT)
-Received: from pop-os.fios-router.home (pool-71-163-245-5.washdc.fios.verizon.net. [71.163.245.5])
-        by smtp.googlemail.com with ESMTPSA id j191sm2223822qke.131.2021.04.29.08.07.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Apr 2021 08:07:15 -0700 (PDT)
-From:   Thara Gopinath <thara.gopinath@linaro.org>
-To:     herbert@gondor.apana.org.au, davem@davemloft.net,
-        bjorn.andersson@linaro.org
-Cc:     ebiggers@google.com, ardb@kernel.org, sivaprak@codeaurora.org,
-        linux-crypto@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: [Patch v4 7/7] crypto: qce: aead: Schedule fallback algorithm
-Date:   Thu, 29 Apr 2021 11:07:07 -0400
-Message-Id: <20210429150707.3168383-8-thara.gopinath@linaro.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20210429150707.3168383-1-thara.gopinath@linaro.org>
-References: <20210429150707.3168383-1-thara.gopinath@linaro.org>
+        id S236698AbhD2PRv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Apr 2021 11:17:51 -0400
+Received: from mail.kernel.org ([198.145.29.99]:36092 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S233420AbhD2PRs (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 29 Apr 2021 11:17:48 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id DADC8613F8;
+        Thu, 29 Apr 2021 15:17:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1619709421;
+        bh=0TF/rgI+kIrUM4ucLgyoRQVNDZwjwMCttPCbdF1J2ts=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=TNblwH+As0w11JRNen3DEa/sKtquJO7N/ed+Wi2cPt5DPo/pzApjHeB4CYlT9czKN
+         RFJnIUjSlU/iXNkujkJ9GfUIBpZYvUPaxBLDLGXBQdVlv5qb6mSpE1DcETxlBJLjdH
+         3g63qgtE3JXAaoo4Aq3ZJQdiRo/RBYWmOp0+Glxzsc1YjsicyiOaSi7GIhQYDFx0Ss
+         xxX7tIodOuoDf+uK3PdOkr9EHdavuGSGLxTjoqehEjaUHaupkr1YkvsH7C4pSmGQvt
+         kJLY88R3n7qjm+eBETbZXRLROLJk7BZhgXtoeO/pKC8+dHkhcGgjRgK0xEL1TOs1c0
+         knRtXQpP0PexA==
+Received: from johan by xi.lan with local (Exim 4.93.0.4)
+        (envelope-from <johan@kernel.org>)
+        id 1lc8Ph-0006kM-4M; Thu, 29 Apr 2021 17:17:13 +0200
+Date:   Thu, 29 Apr 2021 17:17:13 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Cc:     Shawn Tu <shawnx.tu@intel.com>,
+        Ricardo Ribalda <ribalda@kernel.org>,
+        Dafna Hirschfeld <dafna.hirschfeld@collabora.com>,
+        Heiko Stuebner <heiko@sntech.de>, linuxarm@huawei.com,
+        Todor Tomov <todor.too@gmail.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andrzej Hajda <a.hajda@samsung.com>,
+        "Lad, Prabhakar" <prabhakar.csengg@gmail.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Dmitry Osipenko <digetx@gmail.com>,
+        linux-stm32@st-md-mailman.stormreply.com,
+        Andrzej Pietrasiewicz <andrzejtp2010@gmail.com>,
+        Leon Luo <leonl@leopardimaging.com>,
+        Paul Kocialkowski <paul.kocialkowski@bootlin.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Dave Stevenson <dave.stevenson@raspberrypi.com>,
+        Matt Ranostay <matt.ranostay@konsulko.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        linux-rockchip@lists.infradead.org, Chen-Yu Tsai <wens@csie.org>,
+        Andy Gross <agross@kernel.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Dongchun Zhu <dongchun.zhu@mediatek.com>,
+        Sakari Ailus <sakari.ailus@linux.intel.com>,
+        Bingbu Cao <bingbu.cao@intel.com>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Shunqian Zheng <zhengsq@rock-chips.com>,
+        Tianshu Qiu <tian.shu.qiu@intel.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        devel@driverdev.osuosl.org, Jacopo Mondi <jacopo@jmondi.org>,
+        Sylwester Nawrocki <s.nawrocki@samsung.com>,
+        linux-tegra@vger.kernel.org,
+        Alexandre Torgue <alexandre.torgue@st.com>,
+        Wenyou Yang <wenyou.yang@microchip.com>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        linux-arm-msm@vger.kernel.org,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Steve Longerbeam <slongerbeam@gmail.com>,
+        linux-media@vger.kernel.org, Maxime Ripard <mripard@kernel.org>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Benoit Parrot <bparrot@ti.com>,
+        Helen Koike <helen.koike@collabora.com>,
+        linux-samsung-soc@vger.kernel.org,
+        linux-mediatek@lists.infradead.org,
+        Jacek Anaszewski <jacek.anaszewski@gmail.com>,
+        mauro.chehab@huawei.com,
+        Sylwester Nawrocki <sylvester.nawrocki@gmail.com>,
+        "Paul J. Murphy" <paul.j.murphy@intel.com>,
+        Ezequiel Garcia <ezequiel@collabora.com>,
+        Daniele Alessandrelli <daniele.alessandrelli@intel.com>,
+        Chiranjeevi Rapolu <chiranjeevi.rapolu@intel.com>,
+        linux-arm-kernel@lists.infradead.org,
+        Jacob Chen <jacob-chen@iotwrt.com>,
+        Jernej Skrabec <jernej.skrabec@siol.net>,
+        Hyungwoo Yang <hyungwoo.yang@intel.com>,
+        linux-kernel@vger.kernel.org, Robert Foss <robert.foss@linaro.org>,
+        Dan Scally <djrscally@gmail.com>,
+        Sowjanya Komatineni <skomatineni@nvidia.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        linux-renesas-soc@vger.kernel.org, Yong Zhi <yong.zhi@intel.com>,
+        Shawn Guo <shawnguo@kernel.org>
+Subject: Re: [PATCH v4 00/79] Address some issues with PM runtime at media
+ subsystem
+Message-ID: <YIrN+VEY9Sf+eztR@hovoldconsulting.com>
+References: <cover.1619621413.git.mchehab+huawei@kernel.org>
+ <YImEMN/POW5C8lG7@hovoldconsulting.com>
+ <20210429121215.64a7cbdb@coco.lan>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210429121215.64a7cbdb@coco.lan>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Qualcomm crypto engine does not handle the following scenarios and
-will issue an abort. In such cases, pass on the transformation to
-a fallback algorithm.
+On Thu, Apr 29, 2021 at 12:18:16PM +0200, Mauro Carvalho Chehab wrote:
+> Em Wed, 28 Apr 2021 17:50:08 +0200
+> Johan Hovold <johan@kernel.org> escreveu:
+> 
+> > On Wed, Apr 28, 2021 at 04:51:21PM +0200, Mauro Carvalho Chehab wrote:
+> 
+> > > 1. despite its name, this is actually a PM runtime resume call,
+> > >    but some developers didn't seem to realize that, as I got this
+> > >    pattern on some drivers:
+> > > 
+> > >         pm_runtime_get_sync(&client->dev);
+> > >         pm_runtime_disable(&client->dev);
+> > >         pm_runtime_set_suspended(&client->dev);
+> > >         pm_runtime_put_noidle(&client->dev);
+> > > 
+> > >    It makes no sense to resume PM just to suspend it again ;-)  
+> > 
+> > This is perfectly alright. Take a look at ov7740_remove() for example:
+> > 
+> > 	pm_runtime_get_sync(&client->dev);
+> > 	pm_runtime_disable(&client->dev);
+> > 	pm_runtime_set_suspended(&client->dev);
+> > 	pm_runtime_put_noidle(&client->dev);
+> > 	
+> > 	ov7740_set_power(ov7740, 0);
+> > 
+> > There's an explicit power-off after balancing the PM count and this will
+> > work regardless of the power state when entering this function.
+> 
+> Ok, but this should equally work:
+> 
+>  	pm_runtime_disable(&client->dev);
+>  	pm_runtime_set_suspended(&client->dev);
+>  	
+>  	ov7740_set_power(ov7740, 0);
+> 
+> as there's no additional cleanup made on this particular driver
+> between pm_runtime_get_sync() and pm_runtime_put_noidle().
 
-- DES3 algorithms with all three keys same.
-- AES192 algorithms.
-- 0 length messages.
+No, that would break the driver as I pointed out to you yesterday:
 
-Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
----
- drivers/crypto/qce/aead.c | 64 ++++++++++++++++++++++++++++++++-------
- drivers/crypto/qce/aead.h |  3 ++
- 2 files changed, 56 insertions(+), 11 deletions(-)
+	https://lore.kernel.org/r/YImG1klSPkFSaS3a@hovoldconsulting.com
 
-diff --git a/drivers/crypto/qce/aead.c b/drivers/crypto/qce/aead.c
-index ef66ae21eae3..6d06a19b48e4 100644
---- a/drivers/crypto/qce/aead.c
-+++ b/drivers/crypto/qce/aead.c
-@@ -512,7 +512,23 @@ static int qce_aead_crypt(struct aead_request *req, int encrypt)
- 	/* CE does not handle 0 length messages */
- 	if (!rctx->cryptlen) {
- 		if (!(IS_CCM(rctx->flags) && IS_DECRYPT(rctx->flags)))
--			return -EINVAL;
-+			ctx->need_fallback = true;
-+	}
-+
-+	/* If fallback is needed, schedule and exit */
-+	if (ctx->need_fallback) {
-+		/* Reset need_fallback in case the same ctx is used for another transaction */
-+		ctx->need_fallback = false;
-+
-+		aead_request_set_tfm(&rctx->fallback_req, ctx->fallback);
-+		aead_request_set_callback(&rctx->fallback_req, req->base.flags,
-+					  req->base.complete, req->base.data);
-+		aead_request_set_crypt(&rctx->fallback_req, req->src,
-+				       req->dst, req->cryptlen, req->iv);
-+		aead_request_set_ad(&rctx->fallback_req, req->assoclen);
-+
-+		return encrypt ? crypto_aead_encrypt(&rctx->fallback_req) :
-+				 crypto_aead_decrypt(&rctx->fallback_req);
- 	}
- 
- 	/*
-@@ -553,7 +569,7 @@ static int qce_aead_ccm_setkey(struct crypto_aead *tfm, const u8 *key,
- 		memcpy(ctx->ccm4309_salt, key + keylen, QCE_CCM4309_SALT_SIZE);
- 	}
- 
--	if (keylen != AES_KEYSIZE_128 && keylen != AES_KEYSIZE_256)
-+	if (keylen != AES_KEYSIZE_128 && keylen != AES_KEYSIZE_256 && keylen != AES_KEYSIZE_192)
- 		return -EINVAL;
- 
- 	ctx->enc_keylen = keylen;
-@@ -562,7 +578,12 @@ static int qce_aead_ccm_setkey(struct crypto_aead *tfm, const u8 *key,
- 	memcpy(ctx->enc_key, key, keylen);
- 	memcpy(ctx->auth_key, key, keylen);
- 
--	return 0;
-+	if (keylen == AES_KEYSIZE_192)
-+		ctx->need_fallback = true;
-+
-+	return IS_CCM_RFC4309(flags) ?
-+		crypto_aead_setkey(ctx->fallback, key, keylen + QCE_CCM4309_SALT_SIZE) :
-+		crypto_aead_setkey(ctx->fallback, key, keylen);
- }
- 
- static int qce_aead_setkey(struct crypto_aead *tfm, const u8 *key, unsigned int keylen)
-@@ -593,20 +614,21 @@ static int qce_aead_setkey(struct crypto_aead *tfm, const u8 *key, unsigned int
- 		 * The crypto engine does not support any two keys
- 		 * being the same for triple des algorithms. The
- 		 * verify_skcipher_des3_key does not check for all the
--		 * below conditions. Return -EINVAL in case any two keys
--		 * are the same. Revisit to see if a fallback cipher
--		 * is needed to handle this condition.
-+		 * below conditions. Schedule fallback in this case.
- 		 */
- 		memcpy(_key, authenc_keys.enckey, DES3_EDE_KEY_SIZE);
- 		if (!((_key[0] ^ _key[2]) | (_key[1] ^ _key[3])) ||
- 		    !((_key[2] ^ _key[4]) | (_key[3] ^ _key[5])) ||
- 		    !((_key[0] ^ _key[4]) | (_key[1] ^ _key[5])))
--			return -EINVAL;
-+			ctx->need_fallback = true;
- 	} else if (IS_AES(flags)) {
- 		/* No random key sizes */
- 		if (authenc_keys.enckeylen != AES_KEYSIZE_128 &&
-+		    authenc_keys.enckeylen != AES_KEYSIZE_192 &&
- 		    authenc_keys.enckeylen != AES_KEYSIZE_256)
- 			return -EINVAL;
-+		if (authenc_keys.enckeylen == AES_KEYSIZE_192)
-+			ctx->need_fallback = true;
- 	}
- 
- 	ctx->enc_keylen = authenc_keys.enckeylen;
-@@ -617,7 +639,7 @@ static int qce_aead_setkey(struct crypto_aead *tfm, const u8 *key, unsigned int
- 	memset(ctx->auth_key, 0, sizeof(ctx->auth_key));
- 	memcpy(ctx->auth_key, authenc_keys.authkey, authenc_keys.authkeylen);
- 
--	return 0;
-+	return crypto_aead_setkey(ctx->fallback, key, keylen);
- }
- 
- static int qce_aead_setauthsize(struct crypto_aead *tfm, unsigned int authsize)
-@@ -632,15 +654,33 @@ static int qce_aead_setauthsize(struct crypto_aead *tfm, unsigned int authsize)
- 			return -EINVAL;
- 	}
- 	ctx->authsize = authsize;
--	return 0;
-+
-+	return crypto_aead_setauthsize(ctx->fallback, authsize);
- }
- 
- static int qce_aead_init(struct crypto_aead *tfm)
- {
--	crypto_aead_set_reqsize(tfm, sizeof(struct qce_aead_reqctx));
-+	struct qce_aead_ctx *ctx = crypto_aead_ctx(tfm);
-+
-+	ctx->need_fallback = false;
-+	ctx->fallback = crypto_alloc_aead(crypto_tfm_alg_name(&tfm->base),
-+					  0, CRYPTO_ALG_NEED_FALLBACK);
-+
-+	if (IS_ERR(ctx->fallback))
-+		return PTR_ERR(ctx->fallback);
-+
-+	crypto_aead_set_reqsize(tfm, sizeof(struct qce_aead_reqctx) +
-+				crypto_aead_reqsize(ctx->fallback));
- 	return 0;
- }
- 
-+static void qce_aead_exit(struct crypto_aead *tfm)
-+{
-+	struct qce_aead_ctx *ctx = crypto_aead_ctx(tfm);
-+
-+	crypto_free_aead(ctx->fallback);
-+}
-+
- struct qce_aead_def {
- 	unsigned long flags;
- 	const char *name;
-@@ -738,11 +778,13 @@ static int qce_aead_register_one(const struct qce_aead_def *def, struct qce_devi
- 	alg->encrypt			= qce_aead_encrypt;
- 	alg->decrypt			= qce_aead_decrypt;
- 	alg->init			= qce_aead_init;
-+	alg->exit			= qce_aead_exit;
- 
- 	alg->base.cra_priority		= 300;
- 	alg->base.cra_flags		= CRYPTO_ALG_ASYNC |
- 					  CRYPTO_ALG_ALLOCATES_MEMORY |
--					  CRYPTO_ALG_KERN_DRIVER_ONLY;
-+					  CRYPTO_ALG_KERN_DRIVER_ONLY |
-+					  CRYPTO_ALG_NEED_FALLBACK;
- 	alg->base.cra_ctxsize		= sizeof(struct qce_aead_ctx);
- 	alg->base.cra_alignmask		= 0;
- 	alg->base.cra_module		= THIS_MODULE;
-diff --git a/drivers/crypto/qce/aead.h b/drivers/crypto/qce/aead.h
-index 3d1f2039930b..efb8477cc088 100644
---- a/drivers/crypto/qce/aead.h
-+++ b/drivers/crypto/qce/aead.h
-@@ -19,6 +19,8 @@ struct qce_aead_ctx {
- 	unsigned int enc_keylen;
- 	unsigned int auth_keylen;
- 	unsigned int authsize;
-+	bool need_fallback;
-+	struct crypto_aead *fallback;
- };
- 
- struct qce_aead_reqctx {
-@@ -39,6 +41,7 @@ struct qce_aead_reqctx {
- 	u8 ccm_nonce[QCE_MAX_NONCE];
- 	u8 ccmresult_buf[QCE_BAM_BURST_SIZE];
- 	u8 ccm_rfc4309_iv[QCE_MAX_IV_SIZE];
-+	struct aead_request fallback_req;
- };
- 
- static inline struct qce_alg_template *to_aead_tmpl(struct crypto_aead *tfm)
--- 
-2.25.1
+If the device is already suspended when remove is called then you'll
+end up with an unbalanced call to ov7740_set_power() that will try to
+disable an already disabled clock.
 
+> > So this has nothing to do with pm_runtime_get_sync() per se.
+> 
+> Yes, but some patches on this series are cleaning up the driver release
+> logic.
+
+You mentioned this example as an argument against using
+pm_runtime_get_sync(), which I don't think makes sense.
+
+> > > 2. Usual *_get() methods only increment their use count on success,
+> > >    but pm_runtime_get_sync() increments it unconditionally. Due to
+> > >    that, several drivers were mistakenly not calling
+> > >    pm_runtime_put_noidle() when it fails;  
+> > 
+> > Sure, but pm_runtime_get_async() also works this way. You just won't be
+> > notified if the async resume fails.
+> 
+> Granted, it makes sense along the pm_runtime kAPI.
+> 
+> It is inconsistent with the behavior of kobject_get*() and other
+> *_get*() methods that are based or inspired on it, as, on those, the
+> operations are atomic: either everything succeeds and it doesn't return
+> an error, or the usage counter is not incremented and the object
+> state doesn't change after the call.
+
+Right, and I'm aware that some people have overlooked this. But its not
+the end of the world since hardly any driver can handle resume failures
+properly anyway. 
+
+This is mostly just an exercise to shut up static checkers.
+
+> > > 3. The name of the new variant is a lot clearer:
+> > > 	pm_runtime_resume_and_get()
+> > >     As its same clearly says that this is a PM runtime resume function,
+> > >     that also increments the usage counter on success;  
+> > 
+> > It also introduced an inconsistency in the API and does not pair as well
+> > with the pm_runtime_put variants.
+> 
+> Agreed. A name that would be more consistent with PM runtime would
+> probably be:
+> 
+> 	pm_runtime_resume_if_get()
+
+Naw, since the get part always succeeds.
+
+It should start with pm_runtime_get, but pm_runtime_get_sync() is
+unfortunately taken.
+
+> as there are already:
+> 
+> 	pm_runtime_get_if_in_use()
+> 	pm_runtime_get_if_active()
+> 
+> But any such discussions are out of the scope of this patchset ;-)
+
+Right.
+
+> > > 4. Consistency: we did similar changes subsystem wide with
+> > >    for instance strlcpy() and strcpy() that got replaced by
+> > >    strscpy(). Having all drivers using the same known-to-be-safe
+> > >    methods is a good thing;  
+> > 
+> > It's not known to be safe; there are ways to get also this interface
+> > wrong as for example this series has shown.
+> 
+> Very true. Yet, it is a lot simpler to use functions that won't change
+> the state of the objects when returning an error, as this is by far
+> the most common pattern within the Kernel.
+
+A resume failure does change the state (and needs to be recovered from),
+but I get what you're saying.
+
+> Human brains are trained to identify certain patterns. When there's
+> something using a similar pattern, but with a different behavior, 
+> our brains are more subject to fail identifying problems.
+
+Sure. But I'm not sure that having two interfaces with different
+semantics to do the job is doing us any favours here. But again, that
+discussion has already been had.
+
+And I realise that this is partly also your motive here (even if the old
+interface isn't going to go away).
+
+> > > compile-tested only.
+> > > Patches 1 to 7 fix some issues that already exists at the current
+> > > PM runtime code;
+> > > 
+> > > patches 8 to 20 fix some usage_count problems that still exists
+> > > at the media subsystem;
+> > > 
+> > > patches 21 to 78 repaces pm_runtime_get_sync() by 
+> > > pm_runtime_resume_and_get();
+> > > 
+> > > Patch 79 (and a hunk on patch 78) documents the two exceptions
+> > > where pm_runtime_get_sync() will still be used for now.
+
+80 patches in one series (posted to lkml) is a bit excessive. Perhaps
+you can break it up in a fixes part and one or more cleanups parts?
+
+Johan
