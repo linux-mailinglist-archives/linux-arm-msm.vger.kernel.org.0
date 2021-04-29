@@ -2,139 +2,155 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C172536E58E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Apr 2021 09:06:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1A51436E644
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Apr 2021 09:51:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237352AbhD2HHo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Apr 2021 03:07:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55288 "EHLO
+        id S239347AbhD2Hvo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Apr 2021 03:51:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36876 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237215AbhD2HHo (ORCPT
+        with ESMTP id S233375AbhD2Hvo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Apr 2021 03:07:44 -0400
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C0FBC06138D
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Apr 2021 00:06:57 -0700 (PDT)
-Received: by mail-wr1-x433.google.com with SMTP id h4so56584879wrt.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Apr 2021 00:06:57 -0700 (PDT)
+        Thu, 29 Apr 2021 03:51:44 -0400
+Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE1FEC06138F
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Apr 2021 00:50:57 -0700 (PDT)
+Received: by mail-pl1-x62f.google.com with SMTP id y1so18660626plg.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Apr 2021 00:50:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=kr8BmFndPx3gvcqViLkXwW6+aAE4CRPNFv47IW8MWfE=;
-        b=WOEzMDCC8eYunFMSsYUbqrepv32DAs+Z5JFboR/vBer0Jv4hmk1l6sXGM0jpgKUNDC
-         cosKRcBydCW4G2UkVVThs5Bv4HcAvhnMbotFoyiXxbwFyVm42p7nv17GIs8Ne1qZQLvh
-         rnqDN2tpZouZQpXfrxo9EmzzIJf7iXxoSX1j1gMp+6IxFHFwRSAbq2pM6qwgtiRwqO+s
-         A4s1T+8NOF7HMrynXvljhe6MUHQbcKQD9xiHx7s62uBnox8xygF4Lq6DZCxedy9IvEtE
-         Pu+cnn0XuKsunl/npoR9jzly7c7B8InC0QrvyF6iM5SMwlGGui2HdFNrahBIKFcXNf9g
-         KVew==
+         :content-disposition:in-reply-to:user-agent;
+        bh=XTx/thG4WPqLujG9OHbuc45ghslhD/DJHZfDs/oHSh0=;
+        b=oOKWpcEuBYKPRs26BuQsrMlUYswythWAXRWqRiEobuyNfwlILxiqnLBTq+qFKwQWPw
+         QzsAVsSnnSdNjPohWkmZns64Inbbl9ccZ2sLoWOnA6R5kUWZ08nwFdKt6uSuf4zOkOVc
+         oTTKkhNIEzcoFOPtIpVSYEb+e+EYgogDs+3ZNXCo6j9NFbkmGpTbrXW4z/oVeUVZb8BU
+         aEIIUfFTcjH6WBK4lPmBfTiaMdBRdy/oUxdY9MjkLWSSzH/MHRud5WK7fXwmhOhh+j1j
+         dsnlYTPdKgWKikICp0/5hOkDVFH7CuHzO0F/Iy2LPOTHJTs79t1IXwHqxb44Vkm4paNC
+         B2UA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=kr8BmFndPx3gvcqViLkXwW6+aAE4CRPNFv47IW8MWfE=;
-        b=Jf38UIDCcrwvAFX4bxfXBNDFTtyS4wjz7uyM1Dv/94vXTc1vF8x/bkD+ixEqugNRMg
-         GqvByuEp9A0zLCzImmgZrqMkGAhD7osCf/K6rqGT6XAeJyRePBQAsXSk8Bqrqw7ZWebU
-         6YCt/qnHPY0kJ9ehgPhNNbtg/NbwhXZ+DxtcJxYgnyA2frVi6vCD5OsqYvDhCV/bcdOm
-         8UoExTgzOmHx8QEH9vQzSff5ggcBt+uBRkyoDdoAxPF8lbs90GvpI3RDxnoWJ2Mqzppb
-         iLWuNNyrYemnh8XB3NbuM0cHiykQO7LbWHuiyHAX6gyxwwSn6gYYFpdJGdwNMGC8FADg
-         5+YQ==
-X-Gm-Message-State: AOAM532ck6Wf9D/kwu/G8t62mq6641IjfSOzepLhnq4dXnmP/Cruinkr
-        xY4roSdKyGLW7MuxkDIcZWB0Ag==
-X-Google-Smtp-Source: ABdhPJyDF0stlq20VtjLqRHuDkWygYgpAxi8Cw2UYWcVTzs9XuzSpk2MuIvbGFlujyQbW3yldBTJhw==
-X-Received: by 2002:adf:e98d:: with SMTP id h13mr26997701wrm.1.1619680016198;
-        Thu, 29 Apr 2021 00:06:56 -0700 (PDT)
-Received: from dell ([91.110.221.215])
-        by smtp.gmail.com with ESMTPSA id r18sm3658131wrs.90.2021.04.29.00.06.55
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=XTx/thG4WPqLujG9OHbuc45ghslhD/DJHZfDs/oHSh0=;
+        b=UT0iV6zCSY7L+ysGXNUAzwCj2x2C8+zm8jx27r0+Inf2qPegmWp1RvR58DN6XZi4pl
+         Or3/VY0qcyN468in1xpuQu5QrX9diHF8DQrVb70zUc3Tw6ES/QNPhUAK2mHY5uH4Cmqz
+         KUhgOt/JRMxKmSonvy1ZeT4QpeUL1Qh0UYSS2pGymFkJFVq76lw+vtHaToJLhINmc6Wh
+         lNwpME/ePfF1fZsY4KvdD9mQIYZGDa9XzPxRb9DjMEJC4T5hh+e/WKt9waW4tQYVDhZu
+         bji+tuh9Z8CX7b37zxSQjNwm9xVTEXj2euidTi1QPZ9kiTTVA+8yN3EfSRDW8/N0iZrV
+         Dn2Q==
+X-Gm-Message-State: AOAM5303kAlJdIyE04sMAytF6i2jHVuUAE7qGDeCONg8gx1DfZcNz6Jc
+        awEae5I4dcY7/DYZfGKUa68YwQ==
+X-Google-Smtp-Source: ABdhPJwwXEANuKHmnnDxb+3Y+tQzhO7ngCIEXVVT6C6z7FzUdn0wjWg/fZcqn9oaBUazh/6FS8HUOg==
+X-Received: by 2002:a17:90a:448b:: with SMTP id t11mr36831576pjg.21.1619682657146;
+        Thu, 29 Apr 2021 00:50:57 -0700 (PDT)
+Received: from localhost ([136.185.154.93])
+        by smtp.gmail.com with ESMTPSA id x2sm1653711pfu.77.2021.04.29.00.50.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Apr 2021 00:06:55 -0700 (PDT)
-Date:   Thu, 29 Apr 2021 08:06:53 +0100
-From:   Lee Jones <lee.jones@linaro.org>
-To:     Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-        <u.kleine-koenig@pengutronix.de>
-Cc:     Thierry Reding <thierry.reding@gmail.com>,
-        Fenglin Wu <fenglinw@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pwm@vger.kernel.org, subbaram@codeaurora.org,
-        collinsd@codeaurora.org, aghayal@codeaurora.org
-Subject: Re: [PATCH 2/2] pwm: pwm-qcom: add driver for PWM modules in QCOM
- PMICs
-Message-ID: <20210429070653.GJ6446@dell>
-References: <20210427102247.822-1-fenglinw@codeaurora.org>
- <20210427102247.822-3-fenglinw@codeaurora.org>
- <20210427170748.wglupc6zwrndalxs@pengutronix.de>
- <YImfkM/ll1nCmopq@orome.fritz.box>
- <20210429065213.inajpznvfxa2xsld@pengutronix.de>
+        Thu, 29 Apr 2021 00:50:56 -0700 (PDT)
+Date:   Thu, 29 Apr 2021 13:20:54 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Ulf Hansson <ulf.hansson@linaro.org>
+Cc:     Rajendra Nayak <rnayak@codeaurora.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Roja Rani Yarubandi <rojay@codeaurora.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Wolfram Sang <wsa@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Matthias Kaehlcke <mka@chromium.org>, akashast@codeaurora.org,
+        msavaliy@qti.qualcomm.com, parashar@codeaurora.org,
+        Linux PM <linux-pm@vger.kernel.org>,
+        DTML <devicetree@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Andy Gross <agross@kernel.org>, linux-i2c@vger.kernel.org
+Subject: Re: [PATCH 3/3] i2c: i2c-qcom-geni: Add support for
+ 'assigned-performance-states'
+Message-ID: <20210429075054.vrotcbldbaivfh2d@vireshk-i7>
+References: <20201224111210.1214-1-rojay@codeaurora.org>
+ <20201224111210.1214-4-rojay@codeaurora.org>
+ <YAGqKfDfB7EEuZVn@builder.lan>
+ <6bfec3e6-3d26-7ade-d836-032273856ce2@codeaurora.org>
+ <CAPDyKFqF0NE3QRAEfiqj5QOXXH2om4CpyyeudeqoovANfvjsaQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20210429065213.inajpznvfxa2xsld@pengutronix.de>
+In-Reply-To: <CAPDyKFqF0NE3QRAEfiqj5QOXXH2om4CpyyeudeqoovANfvjsaQ@mail.gmail.com>
+User-Agent: NeoMutt/20180716-391-311a52
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 29 Apr 2021, Uwe Kleine-König wrote:
+Sorry Roja for dragging this too long, unfortunately I didn't have a
+lot to add on. Lemme try start this thread again.
 
-> Hello,
+On 19-01-21, 12:02, Ulf Hansson wrote:
+> On Mon, 18 Jan 2021 at 06:36, Rajendra Nayak <rnayak@codeaurora.org> wrote:
+> >
+> >
+> > On 1/15/2021 8:13 PM, Bjorn Andersson wrote:
+> > > On Thu 24 Dec 05:12 CST 2020, Roja Rani Yarubandi wrote:
+> > >
+> > >> @@ -629,6 +658,16 @@ static int __maybe_unused geni_i2c_runtime_suspend(struct device *dev)
+> > >>      struct geni_i2c_dev *gi2c = dev_get_drvdata(dev);
+> > >>
+> > >>      disable_irq(gi2c->irq);
+> > >> +
+> > >> +    /* Drop the assigned performance state */
+> > >> +    if (gi2c->assigned_pstate) {
+> > >> +            ret = dev_pm_genpd_set_performance_state(dev, 0);
+> > >> +            if (ret) {
+> > >> +                    dev_err(dev, "Failed to set performance state\n");
+> > >> +                    return ret;
+> > >> +            }
+> > >> +    }
+> > >> +
+> > >
+> > > Ulf, Viresh, I think we discussed this at the time of introducing the
+> > > performance states.
+> > >
+> > > The client's state does not affect if its performance_state should
+> > > be included in the calculation of the aggregated performance_state, so
+> > > each driver that needs to keep some minimum performance state needs to
+> > > have these two snippets.
+> > >
+> > > Would it not make sense to on enable/disable re-evaluate the
+> > > performance_state and potentially reconfigure the hardware
+> > > automatically?
+> >
+> > I agree, this will be repeated across multiple drivers which would
+> > need some minimal vote while they are active, handling this during
+> > genpd enable/disable in genpd core makes sense.
 > 
-> On Wed, Apr 28, 2021 at 07:46:56PM +0200, Thierry Reding wrote:
-> > On Tue, Apr 27, 2021 at 07:07:48PM +0200, Uwe Kleine-König wrote:
-> > > I would like to see the register definition to use a common prefix (like
-> > > QCOM_PWM_) and that the names of bit fields include the register name.
-> > > So something like:
-> > > 
-> > > 	#define QCOM_PWM_PWM_SIZE_CLK		0x41
-> > > 	#define QCOM_PWM_PWM_SIZE_CLK_FREQ_SEL 		GENMASK(1, 0)
-> > > 
-> > > even if the names are quite long, its usage is less error prone. Maybe
-> > > it makes sense to drop the duplicated PWM (but only if all or no
-> > > register contains PWM in its name according to the reference manual).
-> > > Also maybe QCOM_PWM_PWMSIZECLK_FREQSEL might be a good choice. I let you
-> > > judge about the details.
-> > 
-> > Please stop requesting this. A common prefix is good for namespacing
-> > symbols, but these defines are used only within this file, so there's no
-> > need to namespace them.
+> Initially that's what we tried out, but we realized that it was
+> difficult to deal with this internally in genpd, but more importantly
+> it also removed some flexibility from consumers and providers. See
+> commit 68de2fe57a8f ("PM / Domains: Make genpd performance states
+> orthogonal to the idlestates").
 > 
-> I do consider it important. The goal of my review comments is to improve
-> the drivers according to what I consider sensible even if that might not
-> fit your metrics. 
-> 
-> Consistent name(space)ing is sensible because the names of static
-> functions are used in backtraces. It is sensible because tools like
-> ctags, etags and cscope work better when names are unique. It is
-> sensible because it's harder than necessary to spot the error in
-> 
-> 	writel(PWM_EN_GLITCH_REMOVAL_MASK, base + REG_ENABLE_CONTROL);
-> 
-> . It is sensible because the rule "Use namespacing for all symbols" is
-> easier than "Use namespacing for symbols that might conflict with
-> (present or future) names in the core or that might appear in user
-> visible messages like backtraces or KASAN reports". It's sensible
-> because then it's obvious when reading a code line that the symbol is
-> driver specific. It is useful to have a common prefix for driver
-> functions because that makes it easier to select them for tracing.
-> 
-> > Forcing everyone to use a specific prefix is just going to add a bunch
-> > of characters but doesn't actually add any value.
-> 
-> That's your opinion and I disagree. I do see a value and the "burden" of
-> these additional characters is quite worth its costs. In my bubble most
-> people also see this value. This includes the coworkers I talked to,
-> several other maintainers also insist on common prefixes[1] and it
-> matches what my software engineering professor taught me during my
-> studies. I also agree that longer names are more annoying than short
-> ones, but that doesn't outweigh the advantages in my eyes and a good
-> editor helps here.
+> As a matter of fact this was quite recently discussed [1], which also
+> pointed out some issues when using the "required-opps" in combination,
+> but perhaps that got resolved? Viresh?
 
-FWIW, I'm +1 for proper namespacing for the purposes of; tracing,
-logging and future proofing, even if it does add a few more chars.
-Less of a problem now the 80-char rule is waning.
+So I looked again at that thread in detail today. The basic idea was
+to enable/disable the genpd from within the OPP core and there were
+doubts on how to do that efficiently as there are cases where domains
+may be enabled for an OPP, but not for others.. etc. etc.
+
+I am not sure if I consider that thread as part of the discussion we
+are having here, they may be related, but that thread doesn't block
+anything to be done in the genpd core.
+
+> My concern is, if we would make this kind of change to the internals
+> of genpd, it would lead to the following limitation: A consumer driver
+> can no longer make its vote for its device to stick around, when the
+> device becomes runtime suspended - and how do we know that we never
+> need to support such a case?
+
+What about doing this just for the assigned-performance-state case as
+the clients don't want to play with it at all.
 
 -- 
-Lee Jones [李琼斯]
-Senior Technical Lead - Developer Services
-Linaro.org │ Open source software for Arm SoCs
-Follow Linaro: Facebook | Twitter | Blog
+viresh
