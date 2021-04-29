@@ -2,111 +2,166 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 906CA36F176
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Apr 2021 22:54:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0D0E836F185
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Apr 2021 23:03:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236695AbhD2Uz3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Apr 2021 16:55:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41132 "EHLO
+        id S233315AbhD2VEW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Apr 2021 17:04:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43060 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236355AbhD2Uz2 (ORCPT
+        with ESMTP id S233284AbhD2VEV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Apr 2021 16:55:28 -0400
-Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com [IPv6:2607:f8b0:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5318C06138F
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Apr 2021 13:54:40 -0700 (PDT)
-Received: by mail-ot1-x32b.google.com with SMTP id u21-20020a0568301195b02902a2119f7613so15708603otq.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Apr 2021 13:54:40 -0700 (PDT)
+        Thu, 29 Apr 2021 17:04:21 -0400
+Received: from mail-qk1-x735.google.com (mail-qk1-x735.google.com [IPv6:2607:f8b0:4864:20::735])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DCCBC06138B
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Apr 2021 14:03:32 -0700 (PDT)
+Received: by mail-qk1-x735.google.com with SMTP id t17so40219821qkg.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Apr 2021 14:03:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=cDEQYYCABMBKlLd20tFhLfZu2zu60qgD4qzCgh4a7Hs=;
-        b=DuAjdN32RcXze+taixHhxgfk+J8jEGyrIP07wW6CuRJlnkwYge0i/2pVD3UWE00LPu
-         2flBNq/HqM9PGCVOSQWWXLDOWL2LXZ+8OWH564Jz/f2/RuF7rOr3X+xmikVY9yjiXFHu
-         Uy5t2Ep3oGnuPCWrbpmv0BXDicBzrU7UYFgvFMEG6yYstAhpThE3oANFC9alPuOBjjN0
-         eOa4614uUoD7/6gx2klBruypLvTfZiCHOJx1aF1Fdz27XD8gyLUSkMpeT4o20YnIccPz
-         VdREWbe+js7q1E8RdxjeMb7FknGneURiYzQyhC6WXvxSVPdUNS3hPBZz4eRMuc0Jlsto
-         Bweg==
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=xRU2yBtauvlwmgJ+pf3kg4KpnBtBpDuxDmDITGaelXM=;
+        b=MxcB5px72C8+5vJCXXHc+ftOlbOvLaOIZCcSYXwDudiJ5T6uRWCF3IbA/q7i0v05H4
+         b5+Xhyg/FMAavwP1EiO0TTX+zk0MdwRoYHVLZbsieoDElYIszlwp9kC2cL2arlNwdmht
+         5eSBc+Cb7eohKUohNBZmGo0StBZWqhQKL+4x4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=cDEQYYCABMBKlLd20tFhLfZu2zu60qgD4qzCgh4a7Hs=;
-        b=ZtH1E5GgXbnpKPoT4DuGnX6rxF71wSERCcEMhAGsxbLsRsqjLCw/UIrapBNbHPHAjB
-         Ss442DkYy1COFslGLb0lpanrRfzh3AlOztXkIRrfCSpYE3XXrKq/ygprX1y0Ry62a/kt
-         wIAOOCXc+GTrw0jEH5/PamUObGX95+Epqgqj/0jt/OsFSR6GTF7Cf7sYiuTalMUHymlI
-         SrF8JWTB2uFT7A3Fyv2reMh3DDNLkJb/PZFnZejsDegtRKCvXoajG8Ta3LWO1OXWCNkl
-         2hw0aFaqbAhgP78KPL+C3KnlTxJDCkDdi90XZ0iex9X/ERehfeW4m115YrP1rheinZp4
-         CAcg==
-X-Gm-Message-State: AOAM533lK9l4gyKHWaqc7fjZsGwXOQ9JOHDAYinMtvzM8EzaT5ztcgpa
-        2kVmOVfW9rF8xK1tRxz0/apjIw==
-X-Google-Smtp-Source: ABdhPJwb1Us3vfLjZyNwGpHnKQtg+2ziIVzR4m/46fSQ3cNvwsZZhbPQrBPKVaThPYh2I7jxQRlUIA==
-X-Received: by 2002:a9d:17e9:: with SMTP id j96mr1019565otj.143.1619729679793;
-        Thu, 29 Apr 2021 13:54:39 -0700 (PDT)
-Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id i9sm200057otr.19.2021.04.29.13.54.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Apr 2021 13:54:39 -0700 (PDT)
-Date:   Thu, 29 Apr 2021 15:54:36 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     Pavel Machek <pavel@ucw.cz>, Dan Murphy <dmurphy@ti.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Uwe Kleine-K?nig <u.kleine-koenig@pengutronix.de>,
-        Lee Jones <lee.jones@linaro.org>,
-        Martin Botka <martin.botka1@gmail.com>,
-        linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-pwm@vger.kernel.org
-Subject: Re: [PATCH v6 2/4] leds: Add driver for Qualcomm LPG
-Message-ID: <20210429205436.GA2484@yoga>
-References: <20201021201224.3430546-1-bjorn.andersson@linaro.org>
- <20201021201224.3430546-3-bjorn.andersson@linaro.org>
- <881fb5a3-fb51-3967-63de-a09950839855@somainline.org>
- <20210428223939.GN1908499@yoga>
- <f7fa3d57-3541-130a-e5fc-0df31206598f@somainline.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=xRU2yBtauvlwmgJ+pf3kg4KpnBtBpDuxDmDITGaelXM=;
+        b=bVTplbC98mEZZAidNA7bQEPPC69qoi2Hb6gtsWQlwjCWnbevFRhH2zCUlImKxSo6nP
+         MvvrnGt0mJLU3hiHcxwFRX63uL3bna5qVSLcy4jCudDTySZDMDRmM0WsKiHMH3ZuuAI+
+         jvJwAQyt8+wUbjQpL+TZKKU2RSIBa53v2UvTES/ST8iBjDrZMEeJjuOU/Y+04kq4YBkW
+         PEWMGbA8675kGOfWnHoqAXuLQu767n1dd8VA4qCu/ofLaY+wXCi2tYrpHeTZblSS9GF4
+         ZN2IbNmExo2wjDaD6FIqN0+Ad4LJH0eAdlL14iNsjHguPJEYX6nc0dQeM05nG+jdUYSC
+         IEYw==
+X-Gm-Message-State: AOAM532HYola3/r+1kYCDfahUlOVicrsyheW5HsA8vur7daZnkOfoN38
+        OwBuqGkxfmrjGXBctkG1K0igLZ8nqI3zVA==
+X-Google-Smtp-Source: ABdhPJwMwVJsIP6I3D+UshTTaRV8doqkxIgk6Vg7PO3uWcKq25WyNtdA3EB75lhDLIzF/asWz10IQw==
+X-Received: by 2002:a37:6257:: with SMTP id w84mr313989qkb.158.1619730211547;
+        Thu, 29 Apr 2021 14:03:31 -0700 (PDT)
+Received: from mail-yb1-f169.google.com (mail-yb1-f169.google.com. [209.85.219.169])
+        by smtp.gmail.com with ESMTPSA id g185sm3059376qkf.62.2021.04.29.14.03.30
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 29 Apr 2021 14:03:30 -0700 (PDT)
+Received: by mail-yb1-f169.google.com with SMTP id i4so42759431ybe.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Apr 2021 14:03:30 -0700 (PDT)
+X-Received: by 2002:a05:6902:4e2:: with SMTP id w2mr2101815ybs.79.1619730210214;
+ Thu, 29 Apr 2021 14:03:30 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <f7fa3d57-3541-130a-e5fc-0df31206598f@somainline.org>
+References: <1619416756-3533-1-git-send-email-rajeevny@codeaurora.org>
+ <1619416756-3533-2-git-send-email-rajeevny@codeaurora.org> <20210429180435.GA1385465@robh.at.kernel.org>
+In-Reply-To: <20210429180435.GA1385465@robh.at.kernel.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Thu, 29 Apr 2021 14:03:18 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=V-kdySH5Pp-Fb-PRYk60Ha_UOTXJHcvMp+uV3P1oo7Uw@mail.gmail.com>
+Message-ID: <CAD=FV=V-kdySH5Pp-Fb-PRYk60Ha_UOTXJHcvMp+uV3P1oo7Uw@mail.gmail.com>
+Subject: Re: [v3 1/2] dt-bindings: backlight: add DisplayPort aux backlight
+To:     Rob Herring <robh@kernel.org>
+Cc:     Rajeev Nandan <rajeevny@codeaurora.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+        Rob Clark <robdclark@gmail.com>, mkrishn@codeaurora.org,
+        Kalyan Thota <kalyan_t@codeaurora.org>,
+        "Kristian H. Kristensen" <hoegsberg@chromium.org>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Sean Paul <seanpaul@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 29 Apr 14:31 CDT 2021, Marijn Suijten wrote:
+Hi,
 
-> On 4/29/21 12:39 AM, Bjorn Andersson wrote:
-> > On Sun 18 Apr 16:54 CDT 2021, Marijn Suijten wrote:
-[..]
-> > > > +	ret = lpg_init_lut(lpg);
-> > > > +	if (ret < 0)
-> > > > +		return ret;
-> > > 
-> > > 
-> > > How about turning these returns into dev_err_probe?  I'm not sure if that's
-> > > the expected way to go nowadays, but having some form of logging when a
-> > > driver fails to probe is always good to have.
-> > > 
-> > 
-> > The intention is that each code path through these functions will either
-> > pass or spit out an error in the log. I looked through them again and
-> > think I cover all paths...
-> 
-> 
-> That is true, all the errors not covered are extremely unlikely like
-> -ENOMEM.  I vaguely recall having to insert extra logging to get through
-> initial probe, but that might have been something inside lpg_add_led as
-> well.  Fine to leave this as it is.
-> 
+On Thu, Apr 29, 2021 at 11:04 AM Rob Herring <robh@kernel.org> wrote:
+>
+> On Mon, Apr 26, 2021 at 11:29:15AM +0530, Rajeev Nandan wrote:
+> > Add bindings for DisplayPort aux backlight driver.
+> >
+> > Changes in v2:
+> > - New
+> >
+> > Signed-off-by: Rajeev Nandan <rajeevny@codeaurora.org>
+> > ---
+> >  .../bindings/leds/backlight/dp-aux-backlight.yaml  | 49 ++++++++++++++++++++++
+> >  1 file changed, 49 insertions(+)
+> >  create mode 100644 Documentation/devicetree/bindings/leds/backlight/dp-aux-backlight.yaml
+> >
+> > diff --git a/Documentation/devicetree/bindings/leds/backlight/dp-aux-backlight.yaml b/Documentation/devicetree/bindings/leds/backlight/dp-aux-backlight.yaml
+> > new file mode 100644
+> > index 00000000..0fa8bf0
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/leds/backlight/dp-aux-backlight.yaml
+> > @@ -0,0 +1,49 @@
+> > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> > +%YAML 1.2
+> > +---
+> > +$id: http://devicetree.org/schemas/leds/backlight/dp-aux-backlight.yaml#
+> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> > +
+> > +title: DisplayPort aux backlight driver bindings
+> > +
+> > +maintainers:
+> > +  - Rajeev Nandan <rajeevny@codeaurora.org>
+> > +
+> > +description:
+> > +  Backlight driver to control the brightness over DisplayPort aux channel.
+> > +
+> > +allOf:
+> > +  - $ref: common.yaml#
+> > +
+> > +properties:
+> > +  compatible:
+> > +    const: dp-aux-backlight
+> > +
+> > +  ddc-i2c-bus:
+> > +    $ref: /schemas/types.yaml#/definitions/phandle
+> > +    description:
+> > +      A phandle to the system I2C controller connected to the DDC bus used
+> > +      for the DisplayPort AUX channel.
+> > +
+> > +  enable-gpios:
+> > +    maxItems: 1
+> > +    description: GPIO specifier for backlight enable pin.
+> > +
+> > +  max-brightness: true
+> > +
+> > +required:
+> > +  - compatible
+> > +  - ddc-i2c-bus
+> > +
+> > +additionalProperties: false
+> > +
+> > +examples:
+> > +  - |
+> > +    backlight {
+> > +        compatible = "dp-aux-backlight";
+> > +        ddc-i2c-bus = <&sn65dsi86_bridge>;
+> > +        enable-gpios = <&tlmm 12 GPIO_ACTIVE_HIGH>;
+>
+> So the DDC bus is connected to a backlight and also a panel? This
+> binding is not reflecting the h/w, but rather what you want for some
+> driver.
+>
+> There's only one thing here and that's an eDP panel which supports
+> backlight control via DP aux channel. You can figure all that out from
+> the panel's compatible and/or reading the EDID.
+>
+> You might also be interested in this thread:
+>
+> https://lore.kernel.org/lkml/YIKsDtjcIHGNvW0u@orome.fritz.box/
 
-When kzalloc et al returns -ENOMEM it will be done with an error print,
-so that does not need an additional print. That said, another pass
-through lpg_add_led() made me spot that if you get a parse error on
-the "color" property we would silently return -EINVAL. I've corrected
-this.
+I think Rajeev needs to rework everything anyway as per:
 
-Thanks,
-Bjorn
+https://lore.kernel.org/r/87zgxl5qar.fsf@intel.com
+
+...but you're right that it makes sense not to model the backlight as
+a separate node in the device tree. The panel driver can handle
+setting up the backlight.
+
+-Doug
