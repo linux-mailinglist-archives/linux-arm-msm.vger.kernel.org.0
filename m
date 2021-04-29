@@ -2,120 +2,167 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CCD1A36E941
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Apr 2021 12:58:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8B97136E94F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Apr 2021 13:04:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240587AbhD2K7R (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Apr 2021 06:59:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50192 "EHLO
+        id S235378AbhD2LFe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Apr 2021 07:05:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51584 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240530AbhD2K7N (ORCPT
+        with ESMTP id S237051AbhD2LFd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Apr 2021 06:59:13 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35D0DC061347
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Apr 2021 03:58:24 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id k14so16498007wrv.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Apr 2021 03:58:24 -0700 (PDT)
+        Thu, 29 Apr 2021 07:05:33 -0400
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F12BC06138C
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Apr 2021 04:04:45 -0700 (PDT)
+Received: by mail-wm1-x32d.google.com with SMTP id a22-20020a05600c2256b0290142870824e9so4098339wmm.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Apr 2021 04:04:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=yX68PnWt82JqqvaIeLqptsXuqqdgzkaoY2lNx9HH3fE=;
-        b=YnzwceP8U0S+indgF5DyHzwNq2c7+3xad5HCdpCKnt9ggc3qbEePi6z1EFXJw8euGh
-         NFrMIWqPIsbzGJRD38ByKvpOupj7Z1WYwU7/6mZQ4Y5izinBcVqtloOPrA69PGA0Grn+
-         nXejj9KUG8Sd2BuF0VPqQJiQ2SYDH1tS20jqgZ5nAwYv6fPNSO44jCUGxXhcGvw+3fUw
-         qysIYirnk50gA/MrIaAwR+F69aXvKVae9x28EomHs6q6xCp5pXKU6EU/ZU41saoMkoGm
-         AzLiZTUtsdoieqlqd2GGbaIWLwHo+IcwwlhmTBLKV602ZMe5aehkTnDbHJGQ1JkR+525
-         XMfQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=u9W0Vns7Qfc+W3lTNxIiq9z3pgtPdaqfch++QGz+ttk=;
+        b=wJjIKtzHsUz4kKIKs4ZBz/rqpF7WGfu8ZIeLf/+5K12N7XYD4bCBuFo1hShqUl5T+g
+         pvq8T+1dEJVJwfC2eUprlJJCCFdEVSqseeRASyfQotze+nsuxXjZHum1XOHKzCJB+ArP
+         G9jM2k/1CAIDMAqku/CtK6QblJck/0J8Txu0aoRk1wpcTr1WNflRJjADMurNJvyHFqBE
+         Gmkpi3mx0i6NQMheKmjkcGAtjdLdjsvd8NgZii+s+c6ZmoMuneU9mK1BG2zxWztrHoke
+         tyFVA9krVBvTpPFmT0zoEuKJnJvcWWQYFM9rS90NuH+I3d5lr8ntsOMxlKjmlZ46xZwf
+         BAug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=yX68PnWt82JqqvaIeLqptsXuqqdgzkaoY2lNx9HH3fE=;
-        b=dI4Y7fJKCTXuB97xBQ1f+tRhsK41EBftfbK46XT0YfV2WRElBHcV2LWVicLT/dv0IH
-         +DldfEhfUyKj3fKASUhmUkmXFcyJ/qipMYUEWw3ZsMe8jliWrH/TC13zm5t9O6mfAjNP
-         0Y5UyoI1xMQwqy0gukwT86/CE6hBKalKPqN3H24w8X9tKbD7f1qypWyoOzRRqIuYe5kT
-         XUeLYL27fwMQ9OxabUZ80u29f+zBO9Pl4k2BonVlZJA2sEPTI7Y2ZEIKuU91WfFr5Yng
-         dxUKQCdZ2F2PO1UIMHEgG2BtMtIjix2Eqt3CyYL99xQce2w4M+RZcktNUNu+AO014tvw
-         HlIA==
-X-Gm-Message-State: AOAM533JSylPt5mZ8+hDvbpd8e5iZXETQM7DQZtseqm5eAb37xvCHNIz
-        qZB/Gip35hPcs7CXNCNzqu4TMg==
-X-Google-Smtp-Source: ABdhPJxXJXDxOHijYlO7spKrJea1/3bsj+kN2SnW3zigQTep6fakuBiYSEjQQQxJWRqUb4UZBa/WWg==
-X-Received: by 2002:a5d:60cd:: with SMTP id x13mr21575236wrt.377.1619693902996;
-        Thu, 29 Apr 2021 03:58:22 -0700 (PDT)
-Received: from localhost.localdomain (hst-221-29.medicom.bg. [84.238.221.29])
-        by smtp.gmail.com with ESMTPSA id a9sm3372903wmj.1.2021.04.29.03.58.22
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=u9W0Vns7Qfc+W3lTNxIiq9z3pgtPdaqfch++QGz+ttk=;
+        b=spIO/PZHM8ZBuw8LwO9+7Cg7oN0PWgEsOLWCjTbZyPiB9V8cj42znAH/uU26dy4rkh
+         o1mqmz+d/KKXb/oHHtX2344SdNbBkdWjA3jAg6xDRTxaCqaI5VKxVz2ziDS5y4SbUO8U
+         oC6wYWzCk5740s1tCldgKhIXnfb9V5MgHrgsozw9mbWzn2ke7rtRMEvTYoCJ3HU+jiOY
+         I74tEXpm3LZ10Aaebwbd27vAr8sM7UrOkvU6HS2Web5Ey+98ebnQN1fi+wHi1hn1+MqR
+         QlVu2GUdVMZRm8HXUDm4eb3L/uuJq7DdFaHj43/dYoDv2in3ASV58wfbMceNoQyfiuH6
+         3VFQ==
+X-Gm-Message-State: AOAM5323vyHYTeNIejkB5qfTc9y5VhUQMpzdVTwzfafH5MiQ2cZHXiJb
+        8mWbscFPIsWq3W9MDx2pdzCtqg==
+X-Google-Smtp-Source: ABdhPJxApcK4ezeBO81ziSt/GeUMwscwM9IUnrpA8fKLa9Qt/TG7t4GbenXo2DO0TZidfePCzFcYug==
+X-Received: by 2002:a05:600c:4f86:: with SMTP id n6mr9684841wmq.33.1619694283766;
+        Thu, 29 Apr 2021 04:04:43 -0700 (PDT)
+Received: from dell ([91.110.221.215])
+        by smtp.gmail.com with ESMTPSA id f8sm3193743wmc.8.2021.04.29.04.04.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Apr 2021 03:58:22 -0700 (PDT)
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-To:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-api@vger.kernel.org
-Cc:     Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Subject: [PATCH 3/3] venus: Add a handling of QC10C compressed format
-Date:   Thu, 29 Apr 2021 13:58:15 +0300
-Message-Id: <20210429105815.2790770-4-stanimir.varbanov@linaro.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20210429105815.2790770-1-stanimir.varbanov@linaro.org>
-References: <20210429105815.2790770-1-stanimir.varbanov@linaro.org>
+        Thu, 29 Apr 2021 04:04:43 -0700 (PDT)
+Date:   Thu, 29 Apr 2021 12:04:33 +0100
+From:   Lee Jones <lee.jones@linaro.org>
+To:     Thierry Reding <thierry.reding@gmail.com>
+Cc:     Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+        <u.kleine-koenig@pengutronix.de>,
+        Fenglin Wu <fenglinw@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pwm@vger.kernel.org, subbaram@codeaurora.org,
+        collinsd@codeaurora.org, aghayal@codeaurora.org
+Subject: Re: [PATCH 2/2] pwm: pwm-qcom: add driver for PWM modules in QCOM
+ PMICs
+Message-ID: <20210429110433.GK6446@dell>
+References: <20210427102247.822-1-fenglinw@codeaurora.org>
+ <20210427102247.822-3-fenglinw@codeaurora.org>
+ <20210427170748.wglupc6zwrndalxs@pengutronix.de>
+ <YImfkM/ll1nCmopq@orome.fritz.box>
+ <20210429065213.inajpznvfxa2xsld@pengutronix.de>
+ <20210429070653.GJ6446@dell>
+ <YIqH/eimua/gwDW8@orome.fritz.box>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <YIqH/eimua/gwDW8@orome.fritz.box>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This adds QC10C compressed pixel format in the Venus driver, and
-make it enumeratable from v4l2 clients.
+On Thu, 29 Apr 2021, Thierry Reding wrote:
 
-Note: The QC10C format shouldn't be possible to enumerate by the
-client if the decoded bitstream is not 10bits. This is not
-implemented in this patch yet.
+> On Thu, Apr 29, 2021 at 08:06:53AM +0100, Lee Jones wrote:
+> > On Thu, 29 Apr 2021, Uwe Kleine-König wrote:
+> > 
+> > > Hello,
+> > > 
+> > > On Wed, Apr 28, 2021 at 07:46:56PM +0200, Thierry Reding wrote:
+> > > > On Tue, Apr 27, 2021 at 07:07:48PM +0200, Uwe Kleine-König wrote:
+> > > > > I would like to see the register definition to use a common prefix (like
+> > > > > QCOM_PWM_) and that the names of bit fields include the register name.
+> > > > > So something like:
+> > > > > 
+> > > > > 	#define QCOM_PWM_PWM_SIZE_CLK		0x41
+> > > > > 	#define QCOM_PWM_PWM_SIZE_CLK_FREQ_SEL 		GENMASK(1, 0)
+> > > > > 
+> > > > > even if the names are quite long, its usage is less error prone. Maybe
+> > > > > it makes sense to drop the duplicated PWM (but only if all or no
+> > > > > register contains PWM in its name according to the reference manual).
+> > > > > Also maybe QCOM_PWM_PWMSIZECLK_FREQSEL might be a good choice. I let you
+> > > > > judge about the details.
+> > > > 
+> > > > Please stop requesting this. A common prefix is good for namespacing
+> > > > symbols, but these defines are used only within this file, so there's no
+> > > > need to namespace them.
+> > > 
+> > > I do consider it important. The goal of my review comments is to improve
+> > > the drivers according to what I consider sensible even if that might not
+> > > fit your metrics. 
+> > > 
+> > > Consistent name(space)ing is sensible because the names of static
+> > > functions are used in backtraces. It is sensible because tools like
+> > > ctags, etags and cscope work better when names are unique. It is
+> > > sensible because it's harder than necessary to spot the error in
+> > > 
+> > > 	writel(PWM_EN_GLITCH_REMOVAL_MASK, base + REG_ENABLE_CONTROL);
+> > > 
+> > > . It is sensible because the rule "Use namespacing for all symbols" is
+> > > easier than "Use namespacing for symbols that might conflict with
+> > > (present or future) names in the core or that might appear in user
+> > > visible messages like backtraces or KASAN reports". It's sensible
+> > > because then it's obvious when reading a code line that the symbol is
+> > > driver specific. It is useful to have a common prefix for driver
+> > > functions because that makes it easier to select them for tracing.
+> > > 
+> > > > Forcing everyone to use a specific prefix is just going to add a bunch
+> > > > of characters but doesn't actually add any value.
+> > > 
+> > > That's your opinion and I disagree. I do see a value and the "burden" of
+> > > these additional characters is quite worth its costs. In my bubble most
+> > > people also see this value. This includes the coworkers I talked to,
+> > > several other maintainers also insist on common prefixes[1] and it
+> > > matches what my software engineering professor taught me during my
+> > > studies. I also agree that longer names are more annoying than short
+> > > ones, but that doesn't outweigh the advantages in my eyes and a good
+> > > editor helps here.
+> > 
+> > FWIW, I'm +1 for proper namespacing for the purposes of; tracing,
+> > logging and future proofing, even if it does add a few more chars.
+> > Less of a problem now the 80-char rule is waning.
+> 
+> I've mentioned this in other threads before, but in retrospect I suppose
+> I could've been more specific. For function names, even static ones,
+> yes, I agree a common prefix is better.
 
-Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
----
- drivers/media/platform/qcom/venus/helpers.c | 2 ++
- drivers/media/platform/qcom/venus/vdec.c    | 6 +++++-
- 2 files changed, 7 insertions(+), 1 deletion(-)
+I think you were very specific:
 
-diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/platform/qcom/venus/helpers.c
-index 3a0b07d237a5..58bf2e0654ce 100644
---- a/drivers/media/platform/qcom/venus/helpers.c
-+++ b/drivers/media/platform/qcom/venus/helpers.c
-@@ -563,6 +563,8 @@ static u32 to_hfi_raw_fmt(u32 v4l2_fmt)
- 		return HFI_COLOR_FORMAT_NV21;
- 	case V4L2_PIX_FMT_QC8C:
- 		return HFI_COLOR_FORMAT_NV12_UBWC;
-+	case V4L2_PIX_FMT_QC10C:
-+		return HFI_COLOR_FORMAT_YUV420_TP10_UBWC;
- 	default:
- 		break;
- 	}
-diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
-index d4cc51fc019c..7ad8cd66b8bc 100644
---- a/drivers/media/platform/qcom/venus/vdec.c
-+++ b/drivers/media/platform/qcom/venus/vdec.c
-@@ -35,6 +35,10 @@ static const struct venus_format vdec_formats[] = {
- 		.num_planes = 1,
- 		.type = V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE,
- 	}, {
-+		.pixfmt = V4L2_PIX_FMT_QC10C,
-+		.num_planes = 1,
-+		.type = V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE,
-+	},{
- 		.pixfmt = V4L2_PIX_FMT_NV12,
- 		.num_planes = 1,
- 		.type = V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE,
-@@ -1508,7 +1512,7 @@ static const struct hfi_inst_ops vdec_hfi_ops = {
- static void vdec_inst_init(struct venus_inst *inst)
- {
- 	inst->hfi_codec = HFI_VIDEO_CODEC_H264;
--	inst->fmt_out = &vdec_formats[6];
-+	inst->fmt_out = &vdec_formats[8];
- 	inst->fmt_cap = &vdec_formats[0];
- 	inst->width = frame_width_min(inst);
- 	inst->height = ALIGN(frame_height_min(inst), 32);
+ "Again, these are local symbols and there's no need for namespacing. The
+  only case where this would need to change is if the symbols started
+  conflicting with global ones, but until that happens, let's just keep
+  the names short and concise."
+
+:)
+
+> But there's absolutely no reason to enforce it for register
+> definitions or local variables because the symbols will never show
+> up anywhere.
+
+I personally like namespacing defines too since it makes local ones
+easily distinguishable from defines pulled in from API's header
+files.
+
+But at the end of the day, it's your train-set.
+
 -- 
-2.25.1
-
+Lee Jones [李琼斯]
+Senior Technical Lead - Developer Services
+Linaro.org │ Open source software for Arm SoCs
+Follow Linaro: Facebook | Twitter | Blog
