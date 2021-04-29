@@ -2,260 +2,177 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 10A3936E888
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Apr 2021 12:18:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 97F3736E882
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Apr 2021 12:17:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239984AbhD2KTV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Apr 2021 06:19:21 -0400
-Received: from mail.kernel.org ([198.145.29.99]:41606 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233219AbhD2KTV (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Apr 2021 06:19:21 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 42BDC61453;
-        Thu, 29 Apr 2021 10:18:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1619691514;
-        bh=DM4HV2lnx+GNXVL2Vu40xN6FyVMsrdNcY1mWzrPWhwk=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=Pr9yW9qY3yfN8RysVDFykRvqbdtpg/mq8Z8ntseE+Apk90jB4exflFSQEUBBScELm
-         a7ld4IIgvO4R6eWiSidptTL4lwtBCWonz6TbAcNnnqoa6UyWst1z2S2I8VEVUcmpmV
-         nOlA88vuZpSNIDERZynyGtFrV/G9CA2ydJch8het8EHNRS9pDSGyojVeQv7Zf36I15
-         nwNvmspeKTVHp5C5y6Ja++sVKcVISX7zsPP7MK/QQyFLiNnd3A7M4kFMo7E9Z0LUdf
-         UoRV6BlmzWqX0fnvJ3BmZ3dIXNZVJYIyCWUDCawrYqctcpCH6pyQiPangvHLt+Iuah
-         aPrgiYw8bEG+Q==
-Date:   Thu, 29 Apr 2021 12:18:16 +0200
-From:   Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To:     Johan Hovold <johan@kernel.org>
-Cc:     Shawn Tu <shawnx.tu@intel.com>,
-        Ricardo Ribalda <ribalda@kernel.org>,
-        Dafna Hirschfeld <dafna.hirschfeld@collabora.com>,
-        Heiko Stuebner <heiko@sntech.de>, linuxarm@huawei.com,
-        Todor Tomov <todor.too@gmail.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andrzej Hajda <a.hajda@samsung.com>,
-        "Lad, Prabhakar" <prabhakar.csengg@gmail.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Dmitry Osipenko <digetx@gmail.com>,
-        linux-stm32@st-md-mailman.stormreply.com,
-        Andrzej Pietrasiewicz <andrzejtp2010@gmail.com>,
-        Leon Luo <leonl@leopardimaging.com>,
-        Paul Kocialkowski <paul.kocialkowski@bootlin.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Dave Stevenson <dave.stevenson@raspberrypi.com>,
-        Matt Ranostay <matt.ranostay@konsulko.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        linux-rockchip@lists.infradead.org, Chen-Yu Tsai <wens@csie.org>,
-        Andy Gross <agross@kernel.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Dongchun Zhu <dongchun.zhu@mediatek.com>,
-        Sakari Ailus <sakari.ailus@linux.intel.com>,
-        Bingbu Cao <bingbu.cao@intel.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Shunqian Zheng <zhengsq@rock-chips.com>,
-        Tianshu Qiu <tian.shu.qiu@intel.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        devel@driverdev.osuosl.org, Jacopo Mondi <jacopo@jmondi.org>,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        linux-tegra@vger.kernel.org,
-        Alexandre Torgue <alexandre.torgue@st.com>,
-        Wenyou Yang <wenyou.yang@microchip.com>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        linux-arm-msm@vger.kernel.org,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Steve Longerbeam <slongerbeam@gmail.com>,
-        linux-media@vger.kernel.org, Maxime Ripard <mripard@kernel.org>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        Benoit Parrot <bparrot@ti.com>,
-        Helen Koike <helen.koike@collabora.com>,
-        linux-samsung-soc@vger.kernel.org,
-        linux-mediatek@lists.infradead.org,
-        Jacek Anaszewski <jacek.anaszewski@gmail.com>,
-        mauro.chehab@huawei.com,
-        Sylwester Nawrocki <sylvester.nawrocki@gmail.com>,
-        "Paul J. Murphy" <paul.j.murphy@intel.com>,
-        Ezequiel Garcia <ezequiel@collabora.com>,
-        Daniele Alessandrelli <daniele.alessandrelli@intel.com>,
-        Chiranjeevi Rapolu <chiranjeevi.rapolu@intel.com>,
-        linux-arm-kernel@lists.infradead.org,
-        Jacob Chen <jacob-chen@iotwrt.com>,
-        Jernej Skrabec <jernej.skrabec@siol.net>,
-        Hyungwoo Yang <hyungwoo.yang@intel.com>,
-        linux-kernel@vger.kernel.org, Robert Foss <robert.foss@linaro.org>,
-        Dan Scally <djrscally@gmail.com>,
-        Sowjanya Komatineni <skomatineni@nvidia.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        linux-renesas-soc@vger.kernel.org, Yong Zhi <yong.zhi@intel.com>,
-        Shawn Guo <shawnguo@kernel.org>
-Subject: Re: [PATCH v4 00/79] Address some issues with PM runtime at media
- subsystem
-Message-ID: <20210429121215.64a7cbdb@coco.lan>
-In-Reply-To: <YImEMN/POW5C8lG7@hovoldconsulting.com>
-References: <cover.1619621413.git.mchehab+huawei@kernel.org>
-        <YImEMN/POW5C8lG7@hovoldconsulting.com>
-X-Mailer: Claws Mail 3.17.8 (GTK+ 2.24.33; x86_64-redhat-linux-gnu)
+        id S240326AbhD2KSc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Apr 2021 06:18:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41156 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S238046AbhD2KSb (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 29 Apr 2021 06:18:31 -0400
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E4CDC06138B;
+        Thu, 29 Apr 2021 03:17:44 -0700 (PDT)
+Received: by mail-ed1-x533.google.com with SMTP id d14so14060805edc.12;
+        Thu, 29 Apr 2021 03:17:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=ImTMkw4U5vtlYvJP6g+MoBmtSzH32s9jNzhywlLI9q8=;
+        b=ZGRndCuRxRc7px6xkuB8MlKw2/zHecdpKlZIwJ0/jypH05+14aXbBR28GA/mpe4Um6
+         vbk0a5/iPkuRZV7S2ZlOGEnz6647deSOsdzDXeU5sQkuwu0cf+LnYlIzEeMxSJbhcCyH
+         dh3IFF5IOlV39fQ0bsHbHbN7vSrsE4h9NRwgQ7HdlXyFA45Pd1y+7es7dzYB6Rp2VFow
+         DTEPDR/zcUK1WhZu6z8xNmIFfVky2xXA2ojiP4ResUUCo2FJ3th+ErEtI8fUo3Arw5ru
+         vEe1XdT5EXrwf/f8ngk6ilQmON/D/Bl5UIMqzo6u0/SG78rhm7Z2nFEQ2EeNBW/HHyD2
+         k3+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=ImTMkw4U5vtlYvJP6g+MoBmtSzH32s9jNzhywlLI9q8=;
+        b=X8rHXzt+p3fYIj0eayiCSV0JU8LU38D/N/APGnd5IGyLgdaF2zF/k1eB0gz161wNth
+         uMwSilQ7IbrB3asnFyueo+ZlL0Y1hwR5HE8paRzRn308R5Firra5OOjplfLwN34BW4xK
+         KfpGJNbgqGPBCy0BNlizXmPpwn8+JeIFgCtWfaEUZbTrHUawLSFwvZ0/9TCRWvvkdkGe
+         qyqQMtXAh5wt0JItESAG6xDMTckRHEa3+zpED24e7rncpv1dz4klYInZaDaN3sHjSWAq
+         CuH+0ogeeqz4Iy5ByAZ0vYjH79VnLKaUlaJFe5kOlPtXC7D3T9B8obpnVZWK5G7TsAZ1
+         Aniw==
+X-Gm-Message-State: AOAM531eVZnFbJtR4wQenTPIAJc3ESBSABhXSmJlctvXPb23BGGEgkGC
+        SMCiPFv0VLwnejiM0d036OU=
+X-Google-Smtp-Source: ABdhPJwJdKyu6B3UXQoa7kFJqlmAR+7J2NX4I2qTcJh1EaMV9aQv0GG/kQAMbJIMUNo9NawMauOkaA==
+X-Received: by 2002:a05:6402:2d6:: with SMTP id b22mr17274816edx.274.1619691462944;
+        Thu, 29 Apr 2021 03:17:42 -0700 (PDT)
+Received: from localhost ([62.96.65.119])
+        by smtp.gmail.com with ESMTPSA id k12sm2006656edo.50.2021.04.29.03.17.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 29 Apr 2021 03:17:41 -0700 (PDT)
+Date:   Thu, 29 Apr 2021 12:18:37 +0200
+From:   Thierry Reding <thierry.reding@gmail.com>
+To:     Lee Jones <lee.jones@linaro.org>
+Cc:     Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
+        <u.kleine-koenig@pengutronix.de>,
+        Fenglin Wu <fenglinw@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pwm@vger.kernel.org, subbaram@codeaurora.org,
+        collinsd@codeaurora.org, aghayal@codeaurora.org
+Subject: Re: [PATCH 2/2] pwm: pwm-qcom: add driver for PWM modules in QCOM
+ PMICs
+Message-ID: <YIqH/eimua/gwDW8@orome.fritz.box>
+References: <20210427102247.822-1-fenglinw@codeaurora.org>
+ <20210427102247.822-3-fenglinw@codeaurora.org>
+ <20210427170748.wglupc6zwrndalxs@pengutronix.de>
+ <YImfkM/ll1nCmopq@orome.fritz.box>
+ <20210429065213.inajpznvfxa2xsld@pengutronix.de>
+ <20210429070653.GJ6446@dell>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha256;
+        protocol="application/pgp-signature"; boundary="J6I+xEPlKn2g3FMY"
+Content-Disposition: inline
+In-Reply-To: <20210429070653.GJ6446@dell>
+User-Agent: Mutt/2.0.6 (98f8cb83) (2021-03-06)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Em Wed, 28 Apr 2021 17:50:08 +0200
-Johan Hovold <johan@kernel.org> escreveu:
 
-> On Wed, Apr 28, 2021 at 04:51:21PM +0200, Mauro Carvalho Chehab wrote:
+--J6I+xEPlKn2g3FMY
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> > 1. despite its name, this is actually a PM runtime resume call,
-> >    but some developers didn't seem to realize that, as I got this
-> >    pattern on some drivers:
-> > 
-> >         pm_runtime_get_sync(&client->dev);
-> >         pm_runtime_disable(&client->dev);
-> >         pm_runtime_set_suspended(&client->dev);
-> >         pm_runtime_put_noidle(&client->dev);
-> > 
-> >    It makes no sense to resume PM just to suspend it again ;-)  
-> 
-> This is perfectly alright. Take a look at ov7740_remove() for example:
-> 
-> 	pm_runtime_get_sync(&client->dev);
-> 	pm_runtime_disable(&client->dev);
-> 	pm_runtime_set_suspended(&client->dev);
-> 	pm_runtime_put_noidle(&client->dev);
-> 	
-> 	ov7740_set_power(ov7740, 0);
-> 
-> There's an explicit power-off after balancing the PM count and this will
-> work regardless of the power state when entering this function.
+On Thu, Apr 29, 2021 at 08:06:53AM +0100, Lee Jones wrote:
+> On Thu, 29 Apr 2021, Uwe Kleine-K=C3=B6nig wrote:
+>=20
+> > Hello,
+> >=20
+> > On Wed, Apr 28, 2021 at 07:46:56PM +0200, Thierry Reding wrote:
+> > > On Tue, Apr 27, 2021 at 07:07:48PM +0200, Uwe Kleine-K=C3=B6nig wrote:
+> > > > I would like to see the register definition to use a common prefix =
+(like
+> > > > QCOM_PWM_) and that the names of bit fields include the register na=
+me.
+> > > > So something like:
+> > > >=20
+> > > > 	#define QCOM_PWM_PWM_SIZE_CLK		0x41
+> > > > 	#define QCOM_PWM_PWM_SIZE_CLK_FREQ_SEL 		GENMASK(1, 0)
+> > > >=20
+> > > > even if the names are quite long, its usage is less error prone. Ma=
+ybe
+> > > > it makes sense to drop the duplicated PWM (but only if all or no
+> > > > register contains PWM in its name according to the reference manual=
+).
+> > > > Also maybe QCOM_PWM_PWMSIZECLK_FREQSEL might be a good choice. I le=
+t you
+> > > > judge about the details.
+> > >=20
+> > > Please stop requesting this. A common prefix is good for namespacing
+> > > symbols, but these defines are used only within this file, so there's=
+ no
+> > > need to namespace them.
+> >=20
+> > I do consider it important. The goal of my review comments is to improve
+> > the drivers according to what I consider sensible even if that might not
+> > fit your metrics.=20
+> >=20
+> > Consistent name(space)ing is sensible because the names of static
+> > functions are used in backtraces. It is sensible because tools like
+> > ctags, etags and cscope work better when names are unique. It is
+> > sensible because it's harder than necessary to spot the error in
+> >=20
+> > 	writel(PWM_EN_GLITCH_REMOVAL_MASK, base + REG_ENABLE_CONTROL);
+> >=20
+> > . It is sensible because the rule "Use namespacing for all symbols" is
+> > easier than "Use namespacing for symbols that might conflict with
+> > (present or future) names in the core or that might appear in user
+> > visible messages like backtraces or KASAN reports". It's sensible
+> > because then it's obvious when reading a code line that the symbol is
+> > driver specific. It is useful to have a common prefix for driver
+> > functions because that makes it easier to select them for tracing.
+> >=20
+> > > Forcing everyone to use a specific prefix is just going to add a bunch
+> > > of characters but doesn't actually add any value.
+> >=20
+> > That's your opinion and I disagree. I do see a value and the "burden" of
+> > these additional characters is quite worth its costs. In my bubble most
+> > people also see this value. This includes the coworkers I talked to,
+> > several other maintainers also insist on common prefixes[1] and it
+> > matches what my software engineering professor taught me during my
+> > studies. I also agree that longer names are more annoying than short
+> > ones, but that doesn't outweigh the advantages in my eyes and a good
+> > editor helps here.
+>=20
+> FWIW, I'm +1 for proper namespacing for the purposes of; tracing,
+> logging and future proofing, even if it does add a few more chars.
+> Less of a problem now the 80-char rule is waning.
 
-Ok, but this should equally work:
+I've mentioned this in other threads before, but in retrospect I suppose
+I could've been more specific. For function names, even static ones,
+yes, I agree a common prefix is better. But there's absolutely no reason
+to enforce it for register definitions or local variables because the
+symbols will never show up anywhere.
 
- 	pm_runtime_disable(&client->dev);
- 	pm_runtime_set_suspended(&client->dev);
- 	
- 	ov7740_set_power(ov7740, 0);
+Thierry
 
-as there's no additional cleanup made on this particular driver
-between pm_runtime_get_sync() and pm_runtime_put_noidle().
+--J6I+xEPlKn2g3FMY
+Content-Type: application/pgp-signature; name="signature.asc"
 
-> So this has nothing to do with pm_runtime_get_sync() per se.
+-----BEGIN PGP SIGNATURE-----
 
-Yes, but some patches on this series are cleaning up the driver release
-logic.
+iQIzBAABCAAdFiEEiOrDCAFJzPfAjcif3SOs138+s6EFAmCKh/0ACgkQ3SOs138+
+s6Gd4Q//Tx9VahXAUfB9cMzMbyK+8akZj8xJgwRhL5iCR9XHAiacw67IXUcIUK4H
+jSN1zuwjMFQc5K5qWZ1f8U/E7tsQOD/xxYJqDnsMtOxrCDO2/pitCGOcvQOSvKp2
+fR9aQGI2Yj23uwOMZvgKF5dn0qrmDOIrrFvE2evZCncQIcHF8wf4i4VYBrebMlew
+9pZmFAe+GTWvc/Pyto3g2oDw9cakRcTixuURAs7Es+HyvASMtUUgtT28AVkoMlNi
+s/rF54/U4oJ6XBSbJMv+3FoXaLf6uhmp9ciH70piEW62eD9M9Ar50l+JfzokI04J
+kC4jozCaxgvLLRmwiHcHMLlOC7joWJab9XhOxZX1nGemuoKWSKgnVJnHnKaxGwCh
+bAh1jx4dDFwhpj+v/pCH3XHUcatpmfzPo9KTuIM+KmqecTGjYcKRDO0rwSmv4cLG
++98Sxpl5w6AlcpyZXXSc3F87K0qnpTjq+AA3lQ8g2dhjreCgxKrQcS4mOpfgi8k8
+5NDoGv5wWI624GfUhos0fOqzoORNqHpKKvtrvEV/kA6PPa7LUJp954LDRcm+7hW2
+g4QeV/BqjKyU8kM9MFGJMsKxiFetn6slzXgk3pUjAQxy3D9LEpmfL19El5wJcCrs
+wvUKt1Kxbx/JD+oaHwggZmCvSbTja5mmg1xQP8wM0wNMzXxar5k=
+=HT+U
+-----END PGP SIGNATURE-----
 
-> 
-> > 2. Usual *_get() methods only increment their use count on success,
-> >    but pm_runtime_get_sync() increments it unconditionally. Due to
-> >    that, several drivers were mistakenly not calling
-> >    pm_runtime_put_noidle() when it fails;  
-> 
-> Sure, but pm_runtime_get_async() also works this way. You just won't be
-> notified if the async resume fails.
-
-Granted, it makes sense along the pm_runtime kAPI.
-
-It is inconsistent with the behavior of kobject_get*() and other
-*_get*() methods that are based or inspired on it, as, on those, the
-operations are atomic: either everything succeeds and it doesn't return
-an error, or the usage counter is not incremented and the object
-state doesn't change after the call.
-
-> > 3. The name of the new variant is a lot clearer:
-> > 	pm_runtime_resume_and_get()
-> >     As its same clearly says that this is a PM runtime resume function,
-> >     that also increments the usage counter on success;  
-> 
-> It also introduced an inconsistency in the API and does not pair as well
-> with the pm_runtime_put variants.
-
-Agreed. A name that would be more consistent with PM runtime would
-probably be:
-
-	pm_runtime_resume_if_get()
-
-as there are already:
-
-	pm_runtime_get_if_in_use()
-	pm_runtime_get_if_active()
-
-But any such discussions are out of the scope of this patchset ;-)
-
-> 
-> > 4. Consistency: we did similar changes subsystem wide with
-> >    for instance strlcpy() and strcpy() that got replaced by
-> >    strscpy(). Having all drivers using the same known-to-be-safe
-> >    methods is a good thing;  
-> 
-> It's not known to be safe; there are ways to get also this interface
-> wrong as for example this series has shown.
-
-Very true. Yet, it is a lot simpler to use functions that won't change
-the state of the objects when returning an error, as this is by far
-the most common pattern within the Kernel.
-
-Human brains are trained to identify certain patterns. When there's
-something using a similar pattern, but with a different behavior, 
-our brains are more subject to fail identifying problems.
-
-> > 5. Prevent newer drivers to copy-and-paste a code that it would
-> >    be easier to break if they don't truly understand what's behind
-> >    the scenes.  
-> 
-> Cargo-cult programming always runs that risk.
-
-True.
-
-> > This series replace places  pm_runtime_get_sync(), by calling
-> > pm_runtime_resume_and_get() instead.
-> > 
-> > This should help to avoid future mistakes like that, as people
-> > tend to use the existing drivers as examples for newer ones.  
-> 
-> The only valid point about and use for pm_runtime_resume_and_get() is to
-> avoid leaking a PM usage count reference in the unlikely case that
-> resume fails (something which hardly any driver implements recovery
-> from anyway).
-> 
-> It's a convenience wrapper that saves you from writing one extra line in
-> some cases (depending on how you implement runtime-pm support) and not a
-> silver bullet against bugs.
->  
-> > compile-tested only.
-> > 
-> > Patches 1 to 7 fix some issues that already exists at the current
-> > PM runtime code;
-> > 
-> > patches 8 to 20 fix some usage_count problems that still exists
-> > at the media subsystem;
-> > 
-> > patches 21 to 78 repaces pm_runtime_get_sync() by 
-> > pm_runtime_resume_and_get();
-> > 
-> > Patch 79 (and a hunk on patch 78) documents the two exceptions
-> > where pm_runtime_get_sync() will still be used for now.
-> > 
-> > ---
-> > 
-> > v4:
-> >     - Added a couple of additional fixes at existing PM runtime code;
-> >     - Some patches are now more conservative in order to avoid causing
-> >      regressions.
-> > v3:
-> >     - fix a compilation error;
-> > v2:
-> >     - addressed pointed issues and fixed a few other PM issues.  
-> 
-> This really doesn't say much more than "changed stuff" so kinda hard to
-> track if review feedback has been taken into account for example.
-
-I addressed all review feedback I got (as far as I'm aware), and added
-all received reviewed-by/acked-by.
-
-Yeah, I could have written a more comprehensive changes description
-there.
-
-Thanks,
-Mauro
+--J6I+xEPlKn2g3FMY--
