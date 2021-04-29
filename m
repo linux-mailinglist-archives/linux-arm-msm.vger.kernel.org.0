@@ -2,48 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E1B7B36F09F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Apr 2021 22:02:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9176936F13C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Apr 2021 22:44:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229966AbhD2Tbz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Apr 2021 15:31:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50834 "EHLO
+        id S232539AbhD2UpA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Apr 2021 16:45:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38706 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229939AbhD2Tby (ORCPT
+        with ESMTP id S233097AbhD2Uo7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Apr 2021 15:31:54 -0400
-Received: from relay02.th.seeweb.it (relay02.th.seeweb.it [IPv6:2001:4b7a:2000:18::163])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CE46C06138B
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Apr 2021 12:31:06 -0700 (PDT)
-Received: from [10.0.20.3] (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id ACE66200F8;
-        Thu, 29 Apr 2021 21:31:01 +0200 (CEST)
-Subject: Re: [PATCH v6 2/4] leds: Add driver for Qualcomm LPG
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Pavel Machek <pavel@ucw.cz>, Dan Murphy <dmurphy@ti.com>,
+        Thu, 29 Apr 2021 16:44:59 -0400
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8B09C06138B
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Apr 2021 13:44:10 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id h4so59194927wrt.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Apr 2021 13:44:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=3FNuWJ2V7SfgCjlrVjDv7aIGD8kBMXXDl/W+oAPOJA4=;
+        b=OyuX2tpPaz5ft1BDTP29/+tNris6Wwgw6buwhXO2lpHIHsmHQrt+xYV6hrSSXWwEwt
+         MEHp5FBTaoENvty+71TT+qFnYfT3NmOTdjmIbH2PRpLpEbfIbBBo+Xn8YAFfmb+igWwW
+         1IywC4XZKP5NTRCLaOh8fcrfK0vv+qF5ETNFaNVzJZuUeuhB/PYW47MpPcUFYSvGLYhR
+         fOlIXdF6MKVyiicC+UQ5LaDARmluCcoEnOTv+tICqdj+pZb5thqlZ4/nroF08/I7Q4oW
+         qiPRC8P7mlyyHHKPEl2PCEf2RPE/4HgrHSFP+gqL+hTZWYr5CnCFo+w7uGZFxfBcc9Fp
+         xTnw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=3FNuWJ2V7SfgCjlrVjDv7aIGD8kBMXXDl/W+oAPOJA4=;
+        b=PrzTfH8ssxf97jyxkGzfDT0ks4Xw/qCphVFL++WCZCbieUH9x+jewpnZ3b72P1D/fM
+         dGPFnbd1KR7vHtdweps+xZ8absnngi5Oq+CytR4kUyRwdIhmP4JkGczl7y513D1jIN9/
+         yHqA5EApFlG3nSUlnb3hnIsGy2SQYyJL51zAudiu95z5E8CzJ4GQIa7TJ3i7jPx7ZXeu
+         KBBDfhZV6Kbt5N1BTN9W2XhVKJWmFQNpLS7W/qh5K1rM30+9X0SK7kuORqAE/Y8ZePYg
+         zo3FcLQgeklQbqRBinKo2M2NsBRNcA8+O2bzq78u4zM6+PHBIWY821a2BfNnKrMcLcz5
+         es3Q==
+X-Gm-Message-State: AOAM530BY8pU2eD1Zr8e7nH3wByioOWjbINS85e32q60vEwKK4uWzt48
+        auPa4xxYnXJNeFd77Z6w198raw==
+X-Google-Smtp-Source: ABdhPJwM/TzhB6JI4B+qHqyCFekjx9ZQ8GTcztQCOnd//DnP+WtU7WxVfF2pWrUkNS+XUGJcgSuFzg==
+X-Received: by 2002:adf:d223:: with SMTP id k3mr1807817wrh.99.1619729049177;
+        Thu, 29 Apr 2021 13:44:09 -0700 (PDT)
+Received: from macbook.lan ([212.45.67.2])
+        by smtp.googlemail.com with ESMTPSA id o13sm6187484wrf.91.2021.04.29.13.44.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 29 Apr 2021 13:44:08 -0700 (PDT)
+Subject: Re: [PATCH V2] arm64: dts: qcom: sc7280: Add nodes for eMMC and SD
+ card
+To:     Doug Anderson <dianders@google.com>,
+        Shaik Sajida Bhanu <sbhanu@codeaurora.org>
+Cc:     Veerabhadrarao Badiganti <vbadigan@codeaurora.org>,
+        Adrian Hunter <adrian.hunter@intel.com>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Uwe Kleine-K?nig <u.kleine-koenig@pengutronix.de>,
-        Lee Jones <lee.jones@linaro.org>,
-        Martin Botka <martin.botka1@gmail.com>,
-        linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-pwm@vger.kernel.org
-References: <20201021201224.3430546-1-bjorn.andersson@linaro.org>
- <20201021201224.3430546-3-bjorn.andersson@linaro.org>
- <881fb5a3-fb51-3967-63de-a09950839855@somainline.org>
- <20210428223939.GN1908499@yoga>
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-Message-ID: <f7fa3d57-3541-130a-e5fc-0df31206598f@somainline.org>
-Date:   Thu, 29 Apr 2021 21:31:01 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.10.0
+        Asutosh Das <asutoshd@codeaurora.org>,
+        Sahitya Tummala <stummala@codeaurora.org>,
+        Ram Prakash Gupta <rampraka@codeaurora.org>,
+        Sayali Lokhande <sayalil@codeaurora.org>,
+        sartgarg@codeaurora.org, Rajendra Nayak <rnayak@codeaurora.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Sibi Sankar <sibis@codeaurora.org>, cang@codeaurora.org,
+        pragalla@codeaurora.org, nitirawa@codeaurora.org,
+        Linux MMC List <linux-mmc@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Evan Green <evgreen@chromium.org>,
+        Odelu Kukatla <okukatla@codeaurora.org>
+References: <1616264220-25825-1-git-send-email-sbhanu@codeaurora.org>
+ <CAD=FV=WLZCSd6D5VFyD+1KBp5n1qyszER2EVaEMwYjQfPSSDnA@mail.gmail.com>
+ <b77f207b-2d90-3c8b-857f-625bd3867ed1@codeaurora.org>
+ <6fdf704c4716f5873d413229ca8adc57@codeaurora.org>
+ <CAD=FV=Wa4fT5wZgd0==8kLy_tzTLgdZ-HwdfOEAM9pMeMjjFyg@mail.gmail.com>
+ <8126e130e5c0ea1e7ea867414f0510c0@codeaurora.org>
+ <CAD=FV=XavWbf_b7-=JT6V5_RNA8CjdK4oRu7H719AaPDJ5tsqQ@mail.gmail.com>
+ <32096a375966e1fcc149016df012c445@codeaurora.org>
+ <CAD=FV=U0zEDi1Xn3OmVFA3h3maVWS_o2FXOW9qDEzTf1Moja=A@mail.gmail.com>
+ <7c6805abf9c1f590bc4d66d625152f22@codeaurora.org>
+ <CAD=FV=W8z2VgbP6mepVNXJ8ZO_Enb+ftwG1HQhq8HtEyG1ppOA@mail.gmail.com>
+From:   Georgi Djakov <georgi.djakov@linaro.org>
+Message-ID: <43fa4053-09e9-0d90-3b19-879ef94c9ec3@linaro.org>
+Date:   Thu, 29 Apr 2021 23:44:06 +0300
 MIME-Version: 1.0
-In-Reply-To: <20210428223939.GN1908499@yoga>
+In-Reply-To: <CAD=FV=W8z2VgbP6mepVNXJ8ZO_Enb+ftwG1HQhq8HtEyG1ppOA@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -51,116 +95,156 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 4/29/21 12:39 AM, Bjorn Andersson wrote:
-> On Sun 18 Apr 16:54 CDT 2021, Marijn Suijten wrote:
+On 28.04.21 18:13, Doug Anderson wrote:
+> Hi,
 > 
->> Hi Bjorn,
+> On Wed, Apr 28, 2021 at 3:47 AM <sbhanu@codeaurora.org> wrote:
 >>
->> On 10/21/20 10:12 PM, Bjorn Andersson wrote:
->>> The Light Pulse Generator (LPG) is a PWM-block found in a wide range of
->>> PMICs from Qualcomm. It can operate on fixed parameters or based on a
->>> lookup-table, altering the duty cycle over time - which provides the
->>> means for e.g. hardware assisted transitions of LED brightness.
+>> On 2021-04-21 01:44, Doug Anderson wrote:
+>>> Hi,
 >>>
->>> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
->>> Tested-by: Luca Weiss <luca@z3ntu.xyz>
+>>> On Tue, Apr 20, 2021 at 10:21 AM <sbhanu@codeaurora.org> wrote:
+>>>>
+>>>> On 2021-04-15 01:55, Doug Anderson wrote:
+>>>>> Hi,
+>>>>>
+>>>>> On Tue, Apr 13, 2021 at 3:59 AM <sbhanu@codeaurora.org> wrote:
+>>>>>>
+>>>>>>>>>>> +                                       required-opps =
+>>>>>>>>>>> <&rpmhpd_opp_low_svs>;
+>>>>>>>>>>> +                                       opp-peak-kBps = <1200000
+>>>>>>>>>>> 76000>;
+>>>>>>>>>>> +                                       opp-avg-kBps = <1200000
+>>>>>>>>>>> 50000>;
+>>>>>>>>>> Why are the kBps numbers so vastly different than the ones on sc7180
+>>>>>>>>>> for the same OPP point. That implies:
+>>>>>>>>>>
+>>>>>>>>>> a) sc7180 is wrong.
+>>>>>>>>>>
+>>>>>>>>>> b) This patch is wrong.
+>>>>>>>>>>
+>>>>>>>>>> c) The numbers are essentially random and don't really matter.
+>>>>>>>>>>
+>>>>>>>>>> Can you identify which of a), b), or c) is correct, or propose an
+>>>>>>>>>> alternate explanation of the difference?
+>>>>>>>>>>
+>>>>>>>>
+>>>>>>>> We calculated bus votes values for both sc7180 and sc7280 with ICB
+>>>>>>>> tool,
+>>>>>>>> above mentioned values we got for sc7280.
+>>>>>>>
+>>>>>>> I don't know what an ICB tool is. Please clarify.
+>>>>>>>
+>>>>>>> Also: just because a tool spits out numbers that doesn't mean it's
+>>>>>>> correct. Presumably the tool could be wrong or incorrectly configured.
+>>>>>>> We need to understand why these numbers are different.
+>>>>>>>
+>>>>>> we checked with ICB tool team on this they conformed as Rennell &
+>>>>>> Kodiak
+>>>>>> are different chipsets,
+>>>>>> we might see delta in ib/ab values due to delta in scaling factors.
+>>>>>
+>>>>> ...but these numbers are in kbps, aren't they? As I understand it
+>>>>> these aren't supposed to be random numbers spit out by a tool but are
+>>>>> supposed to be understandable by how much bandwidth an IP block (like
+>>>>> MMC) needs from the busses it's connected to. Since the MMC IP block
+>>>>> on sc7180 and sc7280 is roughly the same there shouldn't be a big
+>>>>> difference in numbers.
+>>>>>
+>>>>> Something smells wrong.
+>>>>>
+>>>>> Adding a few people who understand interconnects better than I do,
+>>>>> though.
+>>>>>
+>>>>
+>>>> ICB team has re-checked the Rennell ICB tool and they confirmed that
+>>>> some configs were wrong in Rennell ICB tool and they corrected it.With
+>>>> the new updated Rennell ICB tool below are the values :
+>>>>
+>>>>
+>>>> Rennell LC:(Sc7180)
+>>>>
+>>>> opp-384000000 {
+>>>>                opp-hz = /bits/ 64 <384000000>;
+>>>>                required-opps = <&rpmhpd_opp_nom>;
+>>>>                opp-peak-kBps = <5400000 490000>;
+>>>>                opp-avg-kBps = <6600000 300000>;
+>>>> };
+>>>>
+>>>>
+>>>> And now, these values are near to Kodaik LC values:
+>>>>
+>>>> Kodaik LC:(SC7280)
+>>>>
+>>>> opp-384000000 {
+>>>>              opp-hz = /bits/ 64 <384000000>;
+>>>>              required-opps = <&rpmhpd_opp_nom>;
+>>>>              opp-peak-kBps = <5400000 399000>;
+>>>>              opp-avg-kBps = <6000000 300000>;
+>>>> };
+>>>
+>>> This still isn't making sense to me.
+>>>
+>>> * sc7180 and sc7280 are running at the same speed. I'm glad the
+>>> numbers are closer now, but I would have thought they'd be exactly the
+>>> same.
+>>>
+>>> * Aren't these supposed to be sensible? This is eMMC that does max
+>>> transfer rates of 400 megabytes / second to the external device. You
+>>> have bandwidths listed here of 5,400,000 kBps = 5,400,000 kilobytes /
+>>> second = 5400 megabytes / second. I can imagine there being some
+>>> overhead where an internal bus might need to be faster but that seems
+>>> excessive. This is 13.5x!
+>>>
 >>
->>
->> Thanks for these patches.  I have tested them successfully on the Sony
->> Xperia XA2 (Discovery, Nile platform) with the leds on the PM660l - feel
->> free to add my Tested-by.  Should I send the configuration your way for
->> inclusion in this patch, or submit them separately (either applied after, or
->> included as separate patches in the next version of this series)?
->>
+>> These numbers are not related to SDCC bandwidth, these are the values
+>> needed for the NOC's to run in nominal voltage corners (internal to
+>> hardware) and
+>> thus it helps SDCC to run in nominal to get required through put
+>> (384MBps).So above calculation mentioned by you is not applicable here.
 > 
-> Thanks for testing, let's try to land this first iteration first and
-> then we can add PM660l and PM8150* definitions/support on top.
-
-
-I'll keep an eye out for when these patches land and send them on top. 
-Feel free to add me to the CC list for future revisions.
-
->>> +/**
->>> + * struct lpg_data - initialization data
->>> + * @lut_base:		base address of LUT block
->>> + * @lut_size:		number of entries in LUT
->>> + * @triled_base:	base address of TRILED
->>> + * @pwm_9bit_mask:	bitmask for switching from 6bit to 9bit pwm
->>
->>
->> Our downstream kernel derives this from the "LPG subtype" for each distinct
->> channel, read from register offset +0x5.  A value of 0xb is subtype "PWM"
->> with a shift of 2, a value of 0x11 is subtype "LPG_LITE" with a shift of 4.
->> Can we do the same here instead of hardcoding it for all channels in the LPG
->> at once?  How should we determine if the mask is one or two bits wide, for
->> the 3<<4 case?
->>
+> OK. I guess if everyone else understands this and it's just me that
+> doesn't then I won't stand in the way. In general, though, the device
+> tree is supposed to be describing the hardware in a way that makes
+> sense on its own. It's not a place to just dump in magic numbers.
+> These numbers must be somehow related to the transfer rate of the SD
+> card since otherwise they wouldn't scale up with faster card clocks.
+> Given that these numbers are expressed in "kBps" (since you're storing
+> them in a property that has "kBps" in the name), I would expect that
+> these numbers are expressing some type of bandwidth. I still haven't
+> really understood why you have to scale some bandwidth at over 10x the
+> card clock speed.
 > 
-> I don't see any obvious solution to the latter, so perhaps we should
-> just stick with defining this per compatible? Or am I reading your
-> suggestion wrong?
+> Said another way: you're saying that you need these numbers because
+> they make a whole bunch of math work out. I'm saying that these aren't
+> just supposed to be magic numbers. They're supposed to make sense on
+> their own and you should be able to describe to me how you arrived at
+> these numbers in a way that I could do the math on my own. Saying "we
+> plugged this into some program and it spit out these numbers" isn't
+> good enough.
 
+Agree.
 
-Assuming these devices have a different "LPG subtype" you should be able 
-to read their value and add it to the list as third option. 
-Alternatively, can you point out the driver this `3<<4` mask was based 
-on?  With all the information available it should be possible to derive 
-this from hardware for every channel instead of hardcoding it.
-
->>> +
->>> +	bitmap_clear(lpg->lut_bitmap, 0, lpg->lut_size);
->>> +	return lpg->lut_bitmap ? 0 : -ENOMEM;
->>> +}
->>> +
->>> +static int lpg_probe(struct platform_device *pdev)
->>> +{
->>> +	struct device_node *np;
->>> +	struct lpg *lpg;
->>> +	int ret;
->>> +	int i;
->>> +
->>> +	lpg = devm_kzalloc(&pdev->dev, sizeof(*lpg), GFP_KERNEL);
->>> +	if (!lpg)
->>> +		return -ENOMEM;
->>> +
->>> +	lpg->data = of_device_get_match_data(&pdev->dev);
->>> +	if (!lpg->data)
->>> +		return -EINVAL;
->>> +
->>> +	lpg->dev = &pdev->dev;
->>> +
->>> +	lpg->map = dev_get_regmap(pdev->dev.parent, NULL);
->>> +	if (!lpg->map) {
->>> +		dev_err(&pdev->dev, "parent regmap unavailable\n");
->>> +		return -ENXIO;
->>> +	}
->>> +
->>> +	ret = lpg_init_channels(lpg);
->>> +	if (ret < 0)
->>> +		return ret;
->>> +
->>> +	ret = lpg_init_triled(lpg);
->>> +	if (ret < 0)
->>> +		return ret;
->>> +
->>> +	ret = lpg_init_lut(lpg);
->>> +	if (ret < 0)
->>> +		return ret;
+>>> * I can't see how it can make sense that "average" values are higher
+>>> than "peak" values.
 >>
 >>
->> How about turning these returns into dev_err_probe?  I'm not sure if that's
->> the expected way to go nowadays, but having some form of logging when a
->> driver fails to probe is always good to have.
+>> Here actual peak = peak number * 2
+>> actual average = average number
 >>
+>> and this multiplication is taken care by ICC driver, so technically
+>> actual peak is still high than average.
 > 
-> The intention is that each code path through these functions will either
-> pass or spit out an error in the log. I looked through them again and
-> think I cover all paths...
+> Sorry, but that is really counter-intuitive. Georgi: is that how this
+> is normally expected to work?
 
+Average bandwidth being higher than peak does not make sense to me.
+The numbers in DT should reflect the real bandwidth that is being
+requested. If some links between nodes consist of multiple channels,
+or there is anything specific to the topology or the hardware platform
+(scaling factors, buswidth, etc), this should be handled in the
+interconnect provider driver. The goal is to use bandwidth values and
+not magic numbers.
 
-That is true, all the errors not covered are extremely unlikely like 
--ENOMEM.  I vaguely recall having to insert extra logging to get through 
-initial probe, but that might have been something inside lpg_add_led as 
-well.  Fine to leave this as it is.
-
-- Marijn
+Thanks,
+Georgi
