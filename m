@@ -2,107 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A3D2536E2AC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Apr 2021 02:46:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 955A736E2D6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Apr 2021 03:08:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234383AbhD2Aie (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Apr 2021 20:38:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55312 "EHLO
+        id S229888AbhD2BJU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Apr 2021 21:09:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33768 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231874AbhD2Aie (ORCPT
+        with ESMTP id S229479AbhD2BJU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Apr 2021 20:38:34 -0400
-Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83715C06138D
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Apr 2021 17:37:47 -0700 (PDT)
-Received: by mail-ot1-x329.google.com with SMTP id z25-20020a9d65d90000b02902a560806ca7so1310135oth.11
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Apr 2021 17:37:47 -0700 (PDT)
+        Wed, 28 Apr 2021 21:09:20 -0400
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B23FC06138B;
+        Wed, 28 Apr 2021 18:08:34 -0700 (PDT)
+Received: by mail-ej1-x62f.google.com with SMTP id mu3so6253867ejc.6;
+        Wed, 28 Apr 2021 18:08:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
+        d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=rzVBAT7fLNBdUBZLJQxVK1ZVpLgca3IdfSpNyGEzsn0=;
-        b=K0KwdJty6MIrAKG+FegIYHm0zfWgr1uKyaUrSLhlh/tDnJMEA2u06pRNJxSe3nflmF
-         3/BIhzdwil+l1pDc4/cpnFAoFXp1JbkJBXVXLvAD5s43u0wHo6jbveH5OyeilDC2Y384
-         XJbDU6s93q1BtIg7pVuTrew4U1I8Jrwdp13+8ioBhE4CNDKd6fX34brZ5KCSWndJ5y8h
-         n8Gy/rJT2Q58MN3032BjCoVissGrJFh9ZxjTh0R4z1E+cI/SGC8eqqBfVMf37WkL0EBk
-         /WHIioDg2u9HjdDLbchAe5LuQaWXl2hGyCVQEx9MU9wcVBlbcRUChI/gjJThvugLwLK9
-         0YFA==
+        bh=i3qk61v6/wN3MGlWoF+r4JwD22Y4XdPrwsgszsckLgU=;
+        b=jC7wpQgmfQ5JUXQFCrctkS1fxj+Vj2en1tUWBDEBIcmLcA4VONXVsZUPESP5lJVJXc
+         FSVcB/dBWvaA2THu4qghzHRd2unPdpB4K4IO1HYl1YovutjeN/nGKG/KpV4/d+z2B6L5
+         luC9IBEJMPlp4I0cmbgkAfoWonnpBDkXU2FloRS5b5XXvrJhCuqZgZqneEeIDynGlNlL
+         C5EIN19egyCdzbP8Jwy/5Dnwgw5ihhdC6loy9KfS+DLHOJI1AmfvB/a4SRt0u1X7gLH6
+         ZgWazqlSS0q9mtXbGSghcKbcuZACvqAxRkjrXxVYZxxz797uaCX8xcGtSnKUPsxvfUnJ
+         Pv0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=rzVBAT7fLNBdUBZLJQxVK1ZVpLgca3IdfSpNyGEzsn0=;
-        b=XqwPccc4JAhYf9Gsc6h7wI985wKRNznx4mNaH6PUcbdD+j+HVGqnL+vL8Z0VnzWwrZ
-         R0sTFC041XJ3p1sdT5rGdpSPe6VrImoMsF917H3BABI77et0LHx1MCjJul4swYHnRr/n
-         tNU5EWMEH0RsbktPq7mkSfIVT9I/MJbClvX9N+Jggck0tEgB+oID6kXoiytaUiNaG593
-         hdGc6bqrOfXsYGo42gKyC0uvmOrnHuXNys7E9zi1BM8WnVG6JmphNBN8v3oubCiSwF0G
-         ODvh5bQKxRnszShQ/qNhKsjQ5yOw3qdZMfNnYZRIN7MZqtD20dJ+N393iNxiVqm+OjW/
-         z18g==
-X-Gm-Message-State: AOAM532xmvG89wJ+2xpLAFwRz4fV9wg2VdS4pArrJlDY7dRatx3a8AvR
-        Hb6cLv7Bkhlh3CTB/4QJBTk6MQ==
-X-Google-Smtp-Source: ABdhPJyqMG44KHGTxh7hXcyD116UD+IX6SFca2bhJAL4JzBdZXEePILZGpGFFp8CFrGMcVVTJOqMaw==
-X-Received: by 2002:a9d:bc3:: with SMTP id 61mr25494742oth.7.1619656666762;
-        Wed, 28 Apr 2021 17:37:46 -0700 (PDT)
-Received: from localhost.localdomain (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id o64sm314893oif.50.2021.04.28.17.37.46
+        bh=i3qk61v6/wN3MGlWoF+r4JwD22Y4XdPrwsgszsckLgU=;
+        b=rcwUZ2eG8a0dGS6G081DChrgOdA5zLBn2ABlBBO6ajyU2Xe3s9pHJ2OM1Ggi23yBqF
+         cXZivS4vTrUguwqxJetlsfU4HfhIxKDKdhtqu5VMmoddwL2LDq6d8LvVhEWhG/lLFxKv
+         J/4Ky/N4ECuRufZDAmX8y4xv5SAGhZXe+Lok+TS9sPrd3JzTck7Nbvy/AJln9421AZ/p
+         3L/uTh/2L0AGjWj1kNqm0rcuYZwF2I16zP76MTDdeGlVgm2Py8upZ+ntVIqakrFXO6RI
+         fYwTHKpW9HnzwL4YCwEVi0YcpGQjTTJb5o/+LuCmWMmjNBi9DMEMtvpfoNyFsGm9Y2Ik
+         tXMg==
+X-Gm-Message-State: AOAM532yD1P7Pxh028lLOn36AN+fECjYbD5kLDK2en07wsa0PfwiyZZo
+        g6Bxyr/8cSmllYxSSEg1c/TaqDvbfwZMMA==
+X-Google-Smtp-Source: ABdhPJymZvUW8c5gDKYNY62IKRVxMZqMpSBuTd7MOPlAcy9YbqBq3M90wQ8wveOqcogHhnYooztOCg==
+X-Received: by 2002:a17:906:b253:: with SMTP id ce19mr16957336ejb.531.1619658512946;
+        Wed, 28 Apr 2021 18:08:32 -0700 (PDT)
+Received: from Ansuel-xps.localdomain (93-35-189-2.ip56.fastwebnet.it. [93.35.189.2])
+        by smtp.googlemail.com with ESMTPSA id d5sm1113398edt.49.2021.04.28.18.08.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Apr 2021 17:37:46 -0700 (PDT)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Wed, 28 Apr 2021 18:08:32 -0700 (PDT)
+From:   Ansuel Smith <ansuelsmth@gmail.com>
+To:     Thara Gopinath <thara.gopinath@linaro.org>
+Cc:     Ansuel Smith <ansuelsmth@gmail.com>,
         Andy Gross <agross@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH] pinctrl: qcom: spmi-mpp: Add compatible for pmi8994
-Date:   Wed, 28 Apr 2021 17:37:51 -0700
-Message-Id: <20210429003751.224232-1-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.29.2
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Amit Kucheria <amitk@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH v2 0/2] Minor fix for qcom tsens driver
+Date:   Thu, 29 Apr 2021 03:05:16 +0200
+Message-Id: <20210429010518.13319-1-ansuelsmth@gmail.com>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The PMI8994 has 4 multi-purpose-pins, add a compatible for this hardware
-block to the MPP driver.
+This is a small series to fix some warning arised testing the 8960 tsens
+driver. 8960 calibration function can return PROBE_DEFER and cause
+reregistration of debugfs. Move debugfs registration deeper in the probe
+function and fix a small problem with wrong tsens version reported. 
 
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
+v2:
+- Address review comments from Thara
 
-PS. I see that while the related gpio driver was converted to hierarchical IRQ
-chips the mpp driver didn't get the same treatment. We should fix this at some
-point...
+Ansuel Smith (2):
+  thermal: qcom: tsens: init debugfs only with successful probe
+  thermal: qcom: tsens: simplify debugfs init function
 
- Documentation/devicetree/bindings/pinctrl/qcom,pmic-mpp.txt | 1 +
- drivers/pinctrl/qcom/pinctrl-spmi-mpp.c                     | 1 +
- 2 files changed, 2 insertions(+)
+ drivers/thermal/qcom/tsens.c | 21 ++++++++++-----------
+ 1 file changed, 10 insertions(+), 11 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,pmic-mpp.txt b/Documentation/devicetree/bindings/pinctrl/qcom,pmic-mpp.txt
-index 0ba07bc96c55..5363d44cbb74 100644
---- a/Documentation/devicetree/bindings/pinctrl/qcom,pmic-mpp.txt
-+++ b/Documentation/devicetree/bindings/pinctrl/qcom,pmic-mpp.txt
-@@ -21,6 +21,7 @@ of PMIC's from Qualcomm.
- 		    "qcom,pmi8950-mpp",
- 		    "qcom,pm8994-mpp",
- 		    "qcom,pma8084-mpp",
-+		    "qcom,pmi8994-mpp",
- 
- 		    And must contain either "qcom,spmi-mpp" or "qcom,ssbi-mpp"
- 		    if the device is on an spmi bus or an ssbi bus respectively.
-diff --git a/drivers/pinctrl/qcom/pinctrl-spmi-mpp.c b/drivers/pinctrl/qcom/pinctrl-spmi-mpp.c
-index 3c213f799feb..2da9b5f68f3f 100644
---- a/drivers/pinctrl/qcom/pinctrl-spmi-mpp.c
-+++ b/drivers/pinctrl/qcom/pinctrl-spmi-mpp.c
-@@ -920,6 +920,7 @@ static const struct of_device_id pmic_mpp_of_match[] = {
- 	{ .compatible = "qcom,pmi8950-mpp" },	/* 4 MPP's */
- 	{ .compatible = "qcom,pm8994-mpp" },	/* 8 MPP's */
- 	{ .compatible = "qcom,pma8084-mpp" },	/* 8 MPP's */
-+	{ .compatible = "qcom,pmi8994-mpp" },	/* 4 MPP's */
- 	{ .compatible = "qcom,spmi-mpp" },	/* Generic */
- 	{ },
- };
 -- 
-2.29.2
+2.30.2
 
