@@ -2,159 +2,165 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 57E3136F062
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Apr 2021 21:25:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E1B7B36F09F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Apr 2021 22:02:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231800AbhD2TYa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Apr 2021 15:24:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46384 "EHLO
+        id S229966AbhD2Tbz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Apr 2021 15:31:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50834 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239556AbhD2TL0 (ORCPT
+        with ESMTP id S229939AbhD2Tby (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Apr 2021 15:11:26 -0400
-Received: from mail-qt1-x829.google.com (mail-qt1-x829.google.com [IPv6:2607:f8b0:4864:20::829])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9354C06138D
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Apr 2021 12:10:39 -0700 (PDT)
-Received: by mail-qt1-x829.google.com with SMTP id n22so10395156qtk.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Apr 2021 12:10:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ndufresne-ca.20150623.gappssmtp.com; s=20150623;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=ltkj3GwXMNWaqEgIRsYEcolYZKDxC8Ql9gepvrB9Q24=;
-        b=TaBriJpTEbcq6utoehleZ+bDiikQrmpNSJk00MCJpyDMZLKOyVSneUzbn7CH4f/qn3
-         FE1yimgmQ0EwoN8URvM9nU5Uvda1kkFueNohCj18W7thbi5clbQhHBwE3hQzUgPp2fJB
-         +YvpPQTKoOeAx+4wu1ZyUrXd/xHbqG6PZTZrE4k1/hg2zTSqMVaysYRKZY29qGUbpo00
-         xtHnnxqdp5jV/qFiADbiy6m9EHcrePboNKaCsSdRdB7pMQzuqaqt9xoqUyEm+YTh8LM7
-         dOAa10WdrQiqJdkNPsoDoz+umXwoXcx66oHDICInmvjRXr4/sLOWjeQOwGQVr+F9lm5f
-         QEbg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:user-agent:mime-version:content-transfer-encoding;
-        bh=ltkj3GwXMNWaqEgIRsYEcolYZKDxC8Ql9gepvrB9Q24=;
-        b=b6AbzrNe5nLh1VSqOgKB8tkXGkwen5+dIAbBy/x1uTnNmc6mzxhqQvmo7s/5L0YXu7
-         kVKYE0JO8vqhCNyU7k4jNJeWAsqulYK0yGz8J7ZgNtEv/uqeJna7EwMAW6t+KU1V1Dim
-         5MupZjv2/HqrRoDLzxMD1MEUOdSUgc0/H91+IbShyV5E+kDMb0YyEJV7kWYzKu6FsvZC
-         TB7rNUJVLH89p4x8NF7SzDPzyJFUKorVA47Sdfje4BEQlaQLQpQDlYRmEurfmv0hlWNv
-         xaYn8U/NQQsm8+uGO3BVDI81JbHZihz9hnV6mA19qKfMskZyXrgn+JyidaFOknqUEJcg
-         wRZQ==
-X-Gm-Message-State: AOAM530/JgCQCaJAd3YNic1FXP/JCDwyDG1VzFMQVbs4pZJVUcQ/mM7J
-        lNNhtGjAMOdCnuZgHYhQLngllmj3C1TQlA==
-X-Google-Smtp-Source: ABdhPJwZc2TDsodYdDvwl5OmNVUqcCm1bJyFDAHw3Z1GnVU7wF1KEyZShesHOjlg0t2Qjj5w0p+z7A==
-X-Received: by 2002:ac8:7774:: with SMTP id h20mr901414qtu.79.1619723438687;
-        Thu, 29 Apr 2021 12:10:38 -0700 (PDT)
-Received: from nicolas-tpx395.localdomain (173-246-12-168.qc.cable.ebox.net. [173.246.12.168])
-        by smtp.gmail.com with ESMTPSA id r81sm2824049qka.82.2021.04.29.12.10.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Apr 2021 12:10:37 -0700 (PDT)
-Message-ID: <d54b1bb7956e1e3bea47fde1216084c7f2eae87e.camel@ndufresne.ca>
-Subject: Re: [PATCH 1/3] v4l: Add Qualcomm custom compressed pixel formats
-From:   Nicolas Dufresne <nicolas@ndufresne.ca>
-To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-api@vger.kernel.org
-Cc:     Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>
-Date:   Thu, 29 Apr 2021 15:10:36 -0400
-In-Reply-To: <20210429105815.2790770-2-stanimir.varbanov@linaro.org>
-References: <20210429105815.2790770-1-stanimir.varbanov@linaro.org>
-         <20210429105815.2790770-2-stanimir.varbanov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.40.0 (3.40.0-1.fc34) 
+        Thu, 29 Apr 2021 15:31:54 -0400
+Received: from relay02.th.seeweb.it (relay02.th.seeweb.it [IPv6:2001:4b7a:2000:18::163])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CE46C06138B
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Apr 2021 12:31:06 -0700 (PDT)
+Received: from [10.0.20.3] (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id ACE66200F8;
+        Thu, 29 Apr 2021 21:31:01 +0200 (CEST)
+Subject: Re: [PATCH v6 2/4] leds: Add driver for Qualcomm LPG
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Pavel Machek <pavel@ucw.cz>, Dan Murphy <dmurphy@ti.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Uwe Kleine-K?nig <u.kleine-koenig@pengutronix.de>,
+        Lee Jones <lee.jones@linaro.org>,
+        Martin Botka <martin.botka1@gmail.com>,
+        linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-pwm@vger.kernel.org
+References: <20201021201224.3430546-1-bjorn.andersson@linaro.org>
+ <20201021201224.3430546-3-bjorn.andersson@linaro.org>
+ <881fb5a3-fb51-3967-63de-a09950839855@somainline.org>
+ <20210428223939.GN1908499@yoga>
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+Message-ID: <f7fa3d57-3541-130a-e5fc-0df31206598f@somainline.org>
+Date:   Thu, 29 Apr 2021 21:31:01 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20210428223939.GN1908499@yoga>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Le jeudi 29 avril 2021 à 13:58 +0300, Stanimir Varbanov a écrit :
-> Here we add custom Qualcomm raw compressed pixel formats. They are
-> used in Qualcomm SoCs to optimaize the interconnect bandwidth.
-
-Wasn't reviewing, just skimming the lists, but s/optimaize/optimize/
-
+On 4/29/21 12:39 AM, Bjorn Andersson wrote:
+> On Sun 18 Apr 16:54 CDT 2021, Marijn Suijten wrote:
 > 
-> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
-> ---
->  .../userspace-api/media/v4l/pixfmt-reserved.rst      | 12 ++++++++++++
->  drivers/media/v4l2-core/v4l2-ioctl.c                 |  2 ++
->  include/uapi/linux/videodev2.h                       |  2 ++
->  3 files changed, 16 insertions(+)
+>> Hi Bjorn,
+>>
+>> On 10/21/20 10:12 PM, Bjorn Andersson wrote:
+>>> The Light Pulse Generator (LPG) is a PWM-block found in a wide range of
+>>> PMICs from Qualcomm. It can operate on fixed parameters or based on a
+>>> lookup-table, altering the duty cycle over time - which provides the
+>>> means for e.g. hardware assisted transitions of LED brightness.
+>>>
+>>> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+>>> Tested-by: Luca Weiss <luca@z3ntu.xyz>
+>>
+>>
+>> Thanks for these patches.  I have tested them successfully on the Sony
+>> Xperia XA2 (Discovery, Nile platform) with the leds on the PM660l - feel
+>> free to add my Tested-by.  Should I send the configuration your way for
+>> inclusion in this patch, or submit them separately (either applied after, or
+>> included as separate patches in the next version of this series)?
+>>
 > 
-> diff --git a/Documentation/userspace-api/media/v4l/pixfmt-reserved.rst b/Documentation/userspace-api/media/v4l/pixfmt-reserved.rst
-> index 0b879c0da713..30b9cef4cbf0 100644
-> --- a/Documentation/userspace-api/media/v4l/pixfmt-reserved.rst
-> +++ b/Documentation/userspace-api/media/v4l/pixfmt-reserved.rst
-> @@ -260,6 +260,18 @@ please make a proposal on the linux-media mailing list.
->  	of tiles, resulting in 32-aligned resolutions for the luminance plane
->  	and 16-aligned resolutions for the chrominance plane (with 2x2
->  	subsampling).
-> +    * .. _V4L2-PIX-FMT-QC8C:
-> +
-> +      - ``V4L2_PIX_FMT_QC8C``
-> +      - 'QC8C'
-> +      - Compressed Macro-tile 8Bit YUV420 format used by Qualcomm platforms.
-> +	The compression is lossless. It contains four planes.
-
-Would be nice to document if the bytesperline is meaningful or not. Basically,
-what information need to be carried to other drivers ?
-
-> +    * .. _V4L2-PIX-FMT-QC10C:
-> +
-> +      - ``V4L2_PIX_FMT_QC10C``
-> +      - 'QC10C'
-> +      - Compressed Macro-tile 10Bit YUV420 format used by Qualcomm platforms.
-> +	The compression is lossless. It contains four planes.
->  
-> 
-> 
-> 
-> 
-> 
-> 
-> 
->  .. raw:: latex
->  
-> 
-> 
-> 
-> 
-> 
-> 
-> 
-> diff --git a/drivers/media/v4l2-core/v4l2-ioctl.c b/drivers/media/v4l2-core/v4l2-ioctl.c
-> index 6a5d1c6d11d6..33ee12b97aa0 100644
-> --- a/drivers/media/v4l2-core/v4l2-ioctl.c
-> +++ b/drivers/media/v4l2-core/v4l2-ioctl.c
-> @@ -1455,6 +1455,8 @@ static void v4l_fill_fmtdesc(struct v4l2_fmtdesc *fmt)
->  		case V4L2_PIX_FMT_S5C_UYVY_JPG:	descr = "S5C73MX interleaved UYVY/JPEG"; break;
->  		case V4L2_PIX_FMT_MT21C:	descr = "Mediatek Compressed Format"; break;
->  		case V4L2_PIX_FMT_SUNXI_TILED_NV12: descr = "Sunxi Tiled NV12 Format"; break;
-> +		case V4L2_PIX_FMT_QC8C:		descr = "QCOM Compressed 8bit Format"; break;
-> +		case V4L2_PIX_FMT_QC10C:	descr = "QCOM Compressed 10bit Format"; break;
->  		default:
->  			if (fmt->description[0])
->  				return;
-> diff --git a/include/uapi/linux/videodev2.h b/include/uapi/linux/videodev2.h
-> index 311a01cc5775..c57628a16cf4 100644
-> --- a/include/uapi/linux/videodev2.h
-> +++ b/include/uapi/linux/videodev2.h
-> @@ -737,6 +737,8 @@ struct v4l2_pix_format {
->  #define V4L2_PIX_FMT_SUNXI_TILED_NV12 v4l2_fourcc('S', 'T', '1', '2') /* Sunxi Tiled NV12 Format */
->  #define V4L2_PIX_FMT_CNF4     v4l2_fourcc('C', 'N', 'F', '4') /* Intel 4-bit packed depth confidence information */
->  #define V4L2_PIX_FMT_HI240    v4l2_fourcc('H', 'I', '2', '4') /* BTTV 8-bit dithered RGB */
-> +#define V4L2_PIX_FMT_QC8C     v4l2_fourcc('Q', '0', '8', 'C') /* Qualcomm 8-bit compressed */
-> +#define V4L2_PIX_FMT_QC10C    v4l2_fourcc('Q', '1', '0', 'C') /* Qualcomm 10-bit compresed */
->  
-> 
-> 
-> 
-> 
-> 
-> 
-> 
->  /* 10bit raw bayer packed, 32 bytes for every 25 pixels, last LSB 6 bits unused */
->  #define V4L2_PIX_FMT_IPU3_SBGGR10	v4l2_fourcc('i', 'p', '3', 'b') /* IPU3 packed 10-bit BGGR bayer */
+> Thanks for testing, let's try to land this first iteration first and
+> then we can add PM660l and PM8150* definitions/support on top.
 
 
+I'll keep an eye out for when these patches land and send them on top. 
+Feel free to add me to the CC list for future revisions.
+
+>>> +/**
+>>> + * struct lpg_data - initialization data
+>>> + * @lut_base:		base address of LUT block
+>>> + * @lut_size:		number of entries in LUT
+>>> + * @triled_base:	base address of TRILED
+>>> + * @pwm_9bit_mask:	bitmask for switching from 6bit to 9bit pwm
+>>
+>>
+>> Our downstream kernel derives this from the "LPG subtype" for each distinct
+>> channel, read from register offset +0x5.  A value of 0xb is subtype "PWM"
+>> with a shift of 2, a value of 0x11 is subtype "LPG_LITE" with a shift of 4.
+>> Can we do the same here instead of hardcoding it for all channels in the LPG
+>> at once?  How should we determine if the mask is one or two bits wide, for
+>> the 3<<4 case?
+>>
+> 
+> I don't see any obvious solution to the latter, so perhaps we should
+> just stick with defining this per compatible? Or am I reading your
+> suggestion wrong?
+
+
+Assuming these devices have a different "LPG subtype" you should be able 
+to read their value and add it to the list as third option. 
+Alternatively, can you point out the driver this `3<<4` mask was based 
+on?  With all the information available it should be possible to derive 
+this from hardware for every channel instead of hardcoding it.
+
+>>> +
+>>> +	bitmap_clear(lpg->lut_bitmap, 0, lpg->lut_size);
+>>> +	return lpg->lut_bitmap ? 0 : -ENOMEM;
+>>> +}
+>>> +
+>>> +static int lpg_probe(struct platform_device *pdev)
+>>> +{
+>>> +	struct device_node *np;
+>>> +	struct lpg *lpg;
+>>> +	int ret;
+>>> +	int i;
+>>> +
+>>> +	lpg = devm_kzalloc(&pdev->dev, sizeof(*lpg), GFP_KERNEL);
+>>> +	if (!lpg)
+>>> +		return -ENOMEM;
+>>> +
+>>> +	lpg->data = of_device_get_match_data(&pdev->dev);
+>>> +	if (!lpg->data)
+>>> +		return -EINVAL;
+>>> +
+>>> +	lpg->dev = &pdev->dev;
+>>> +
+>>> +	lpg->map = dev_get_regmap(pdev->dev.parent, NULL);
+>>> +	if (!lpg->map) {
+>>> +		dev_err(&pdev->dev, "parent regmap unavailable\n");
+>>> +		return -ENXIO;
+>>> +	}
+>>> +
+>>> +	ret = lpg_init_channels(lpg);
+>>> +	if (ret < 0)
+>>> +		return ret;
+>>> +
+>>> +	ret = lpg_init_triled(lpg);
+>>> +	if (ret < 0)
+>>> +		return ret;
+>>> +
+>>> +	ret = lpg_init_lut(lpg);
+>>> +	if (ret < 0)
+>>> +		return ret;
+>>
+>>
+>> How about turning these returns into dev_err_probe?  I'm not sure if that's
+>> the expected way to go nowadays, but having some form of logging when a
+>> driver fails to probe is always good to have.
+>>
+> 
+> The intention is that each code path through these functions will either
+> pass or spit out an error in the log. I looked through them again and
+> think I cover all paths...
+
+
+That is true, all the errors not covered are extremely unlikely like 
+-ENOMEM.  I vaguely recall having to insert extra logging to get through 
+initial probe, but that might have been something inside lpg_add_led as 
+well.  Fine to leave this as it is.
+
+- Marijn
