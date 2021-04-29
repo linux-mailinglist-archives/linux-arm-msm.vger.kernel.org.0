@@ -2,135 +2,159 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 20AC136EF4C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Apr 2021 20:04:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 57E3136F062
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Apr 2021 21:25:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241084AbhD2SFZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Apr 2021 14:05:25 -0400
-Received: from mail-oi1-f177.google.com ([209.85.167.177]:35513 "EHLO
-        mail-oi1-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232572AbhD2SFY (ORCPT
+        id S231800AbhD2TYa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Apr 2021 15:24:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46384 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S239556AbhD2TL0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Apr 2021 14:05:24 -0400
-Received: by mail-oi1-f177.google.com with SMTP id e25so37390916oii.2;
-        Thu, 29 Apr 2021 11:04:37 -0700 (PDT)
+        Thu, 29 Apr 2021 15:11:26 -0400
+Received: from mail-qt1-x829.google.com (mail-qt1-x829.google.com [IPv6:2607:f8b0:4864:20::829])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9354C06138D
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Apr 2021 12:10:39 -0700 (PDT)
+Received: by mail-qt1-x829.google.com with SMTP id n22so10395156qtk.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Apr 2021 12:10:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ndufresne-ca.20150623.gappssmtp.com; s=20150623;
+        h=message-id:subject:from:to:cc:date:in-reply-to:references
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=ltkj3GwXMNWaqEgIRsYEcolYZKDxC8Ql9gepvrB9Q24=;
+        b=TaBriJpTEbcq6utoehleZ+bDiikQrmpNSJk00MCJpyDMZLKOyVSneUzbn7CH4f/qn3
+         FE1yimgmQ0EwoN8URvM9nU5Uvda1kkFueNohCj18W7thbi5clbQhHBwE3hQzUgPp2fJB
+         +YvpPQTKoOeAx+4wu1ZyUrXd/xHbqG6PZTZrE4k1/hg2zTSqMVaysYRKZY29qGUbpo00
+         xtHnnxqdp5jV/qFiADbiy6m9EHcrePboNKaCsSdRdB7pMQzuqaqt9xoqUyEm+YTh8LM7
+         dOAa10WdrQiqJdkNPsoDoz+umXwoXcx66oHDICInmvjRXr4/sLOWjeQOwGQVr+F9lm5f
+         QEbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=BGXc8n8dJgWIvZ1rgn/mp/0YVMWp8ZgJFpSUhA1n/t0=;
-        b=VUmbolxsdBR7g59BJIa4Uxubh8AAezLYzNq8glcT3Szq0vGl3jmNQ7lGsOV7MeRWBl
-         Nr7FTDSvq90swnqtEQYQhU9hoh+OYIpOhlQUyvitwYoa6P2Pv0VxuhUxQWI/GLdo/6sQ
-         ulgRTMiCYMvCAtaLq0xp/JYTzB+AaLz1PyKw5uAHgXajwlJKskxoV19RZQdD2POaM595
-         qKiYwhk7xH4Rjs+2uyyywRF0ZWJp+/mQBwnR6t1imTybpMKAqk2dDHqGwmY7UgSFmNeo
-         TbP25PaYggqNksYU1aaXi9flUKqYG6w6RoRaIwhl9+v1HvYJSrQeyT2OtALS7sUxAtQt
-         lhlg==
-X-Gm-Message-State: AOAM531wWt+5M60u/at6fBBvtpUk1j9JQ3pQl8T9rZlTAHCyRp8hgP6Q
-        iWBhB3dUjTS+IIpPjhUPQw==
-X-Google-Smtp-Source: ABdhPJxsvgDl4cmyGSZAjcy3TO96h2Gk37C2SsrChdAtgKojOCkhhcJuqRmLaS8oiHIGCS+V5p6asA==
-X-Received: by 2002:aca:ed12:: with SMTP id l18mr7861083oih.24.1619719477238;
-        Thu, 29 Apr 2021 11:04:37 -0700 (PDT)
-Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id q1sm114127otm.26.2021.04.29.11.04.35
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:user-agent:mime-version:content-transfer-encoding;
+        bh=ltkj3GwXMNWaqEgIRsYEcolYZKDxC8Ql9gepvrB9Q24=;
+        b=b6AbzrNe5nLh1VSqOgKB8tkXGkwen5+dIAbBy/x1uTnNmc6mzxhqQvmo7s/5L0YXu7
+         kVKYE0JO8vqhCNyU7k4jNJeWAsqulYK0yGz8J7ZgNtEv/uqeJna7EwMAW6t+KU1V1Dim
+         5MupZjv2/HqrRoDLzxMD1MEUOdSUgc0/H91+IbShyV5E+kDMb0YyEJV7kWYzKu6FsvZC
+         TB7rNUJVLH89p4x8NF7SzDPzyJFUKorVA47Sdfje4BEQlaQLQpQDlYRmEurfmv0hlWNv
+         xaYn8U/NQQsm8+uGO3BVDI81JbHZihz9hnV6mA19qKfMskZyXrgn+JyidaFOknqUEJcg
+         wRZQ==
+X-Gm-Message-State: AOAM530/JgCQCaJAd3YNic1FXP/JCDwyDG1VzFMQVbs4pZJVUcQ/mM7J
+        lNNhtGjAMOdCnuZgHYhQLngllmj3C1TQlA==
+X-Google-Smtp-Source: ABdhPJwZc2TDsodYdDvwl5OmNVUqcCm1bJyFDAHw3Z1GnVU7wF1KEyZShesHOjlg0t2Qjj5w0p+z7A==
+X-Received: by 2002:ac8:7774:: with SMTP id h20mr901414qtu.79.1619723438687;
+        Thu, 29 Apr 2021 12:10:38 -0700 (PDT)
+Received: from nicolas-tpx395.localdomain (173-246-12-168.qc.cable.ebox.net. [173.246.12.168])
+        by smtp.gmail.com with ESMTPSA id r81sm2824049qka.82.2021.04.29.12.10.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Apr 2021 11:04:36 -0700 (PDT)
-Received: (nullmailer pid 1505463 invoked by uid 1000);
-        Thu, 29 Apr 2021 18:04:35 -0000
-Date:   Thu, 29 Apr 2021 13:04:35 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Rajeev Nandan <rajeevny@codeaurora.org>
-Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, robdclark@gmail.com,
-        dianders@chromium.org, mkrishn@codeaurora.org,
-        kalyan_t@codeaurora.org, hoegsberg@chromium.org,
-        abhinavk@codeaurora.org, seanpaul@chromium.org
-Subject: Re: [v3 1/2] dt-bindings: backlight: add DisplayPort aux backlight
-Message-ID: <20210429180435.GA1385465@robh.at.kernel.org>
-References: <1619416756-3533-1-git-send-email-rajeevny@codeaurora.org>
- <1619416756-3533-2-git-send-email-rajeevny@codeaurora.org>
+        Thu, 29 Apr 2021 12:10:37 -0700 (PDT)
+Message-ID: <d54b1bb7956e1e3bea47fde1216084c7f2eae87e.camel@ndufresne.ca>
+Subject: Re: [PATCH 1/3] v4l: Add Qualcomm custom compressed pixel formats
+From:   Nicolas Dufresne <nicolas@ndufresne.ca>
+To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-api@vger.kernel.org
+Cc:     Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>
+Date:   Thu, 29 Apr 2021 15:10:36 -0400
+In-Reply-To: <20210429105815.2790770-2-stanimir.varbanov@linaro.org>
+References: <20210429105815.2790770-1-stanimir.varbanov@linaro.org>
+         <20210429105815.2790770-2-stanimir.varbanov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.40.0 (3.40.0-1.fc34) 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1619416756-3533-2-git-send-email-rajeevny@codeaurora.org>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Apr 26, 2021 at 11:29:15AM +0530, Rajeev Nandan wrote:
-> Add bindings for DisplayPort aux backlight driver.
+Le jeudi 29 avril 2021 à 13:58 +0300, Stanimir Varbanov a écrit :
+> Here we add custom Qualcomm raw compressed pixel formats. They are
+> used in Qualcomm SoCs to optimaize the interconnect bandwidth.
+
+Wasn't reviewing, just skimming the lists, but s/optimaize/optimize/
+
 > 
-> Changes in v2:
-> - New
-> 
-> Signed-off-by: Rajeev Nandan <rajeevny@codeaurora.org>
+> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
 > ---
->  .../bindings/leds/backlight/dp-aux-backlight.yaml  | 49 ++++++++++++++++++++++
->  1 file changed, 49 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/leds/backlight/dp-aux-backlight.yaml
+>  .../userspace-api/media/v4l/pixfmt-reserved.rst      | 12 ++++++++++++
+>  drivers/media/v4l2-core/v4l2-ioctl.c                 |  2 ++
+>  include/uapi/linux/videodev2.h                       |  2 ++
+>  3 files changed, 16 insertions(+)
 > 
-> diff --git a/Documentation/devicetree/bindings/leds/backlight/dp-aux-backlight.yaml b/Documentation/devicetree/bindings/leds/backlight/dp-aux-backlight.yaml
-> new file mode 100644
-> index 00000000..0fa8bf0
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/leds/backlight/dp-aux-backlight.yaml
-> @@ -0,0 +1,49 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/leds/backlight/dp-aux-backlight.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> diff --git a/Documentation/userspace-api/media/v4l/pixfmt-reserved.rst b/Documentation/userspace-api/media/v4l/pixfmt-reserved.rst
+> index 0b879c0da713..30b9cef4cbf0 100644
+> --- a/Documentation/userspace-api/media/v4l/pixfmt-reserved.rst
+> +++ b/Documentation/userspace-api/media/v4l/pixfmt-reserved.rst
+> @@ -260,6 +260,18 @@ please make a proposal on the linux-media mailing list.
+>  	of tiles, resulting in 32-aligned resolutions for the luminance plane
+>  	and 16-aligned resolutions for the chrominance plane (with 2x2
+>  	subsampling).
+> +    * .. _V4L2-PIX-FMT-QC8C:
 > +
-> +title: DisplayPort aux backlight driver bindings
-> +
-> +maintainers:
-> +  - Rajeev Nandan <rajeevny@codeaurora.org>
-> +
-> +description:
-> +  Backlight driver to control the brightness over DisplayPort aux channel.
-> +
-> +allOf:
-> +  - $ref: common.yaml#
-> +
-> +properties:
-> +  compatible:
-> +    const: dp-aux-backlight
-> +
-> +  ddc-i2c-bus:
-> +    $ref: /schemas/types.yaml#/definitions/phandle
-> +    description:
-> +      A phandle to the system I2C controller connected to the DDC bus used
-> +      for the DisplayPort AUX channel.
-> +
-> +  enable-gpios:
-> +    maxItems: 1
-> +    description: GPIO specifier for backlight enable pin.
-> +
-> +  max-brightness: true
-> +
-> +required:
-> +  - compatible
-> +  - ddc-i2c-bus
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    backlight {
-> +        compatible = "dp-aux-backlight";
-> +        ddc-i2c-bus = <&sn65dsi86_bridge>;
-> +        enable-gpios = <&tlmm 12 GPIO_ACTIVE_HIGH>;
+> +      - ``V4L2_PIX_FMT_QC8C``
+> +      - 'QC8C'
+> +      - Compressed Macro-tile 8Bit YUV420 format used by Qualcomm platforms.
+> +	The compression is lossless. It contains four planes.
 
-So the DDC bus is connected to a backlight and also a panel? This 
-binding is not reflecting the h/w, but rather what you want for some 
-driver.
+Would be nice to document if the bytesperline is meaningful or not. Basically,
+what information need to be carried to other drivers ?
 
-There's only one thing here and that's an eDP panel which supports 
-backlight control via DP aux channel. You can figure all that out from 
-the panel's compatible and/or reading the EDID. 
+> +    * .. _V4L2-PIX-FMT-QC10C:
+> +
+> +      - ``V4L2_PIX_FMT_QC10C``
+> +      - 'QC10C'
+> +      - Compressed Macro-tile 10Bit YUV420 format used by Qualcomm platforms.
+> +	The compression is lossless. It contains four planes.
+>  
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+>  .. raw:: latex
+>  
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> diff --git a/drivers/media/v4l2-core/v4l2-ioctl.c b/drivers/media/v4l2-core/v4l2-ioctl.c
+> index 6a5d1c6d11d6..33ee12b97aa0 100644
+> --- a/drivers/media/v4l2-core/v4l2-ioctl.c
+> +++ b/drivers/media/v4l2-core/v4l2-ioctl.c
+> @@ -1455,6 +1455,8 @@ static void v4l_fill_fmtdesc(struct v4l2_fmtdesc *fmt)
+>  		case V4L2_PIX_FMT_S5C_UYVY_JPG:	descr = "S5C73MX interleaved UYVY/JPEG"; break;
+>  		case V4L2_PIX_FMT_MT21C:	descr = "Mediatek Compressed Format"; break;
+>  		case V4L2_PIX_FMT_SUNXI_TILED_NV12: descr = "Sunxi Tiled NV12 Format"; break;
+> +		case V4L2_PIX_FMT_QC8C:		descr = "QCOM Compressed 8bit Format"; break;
+> +		case V4L2_PIX_FMT_QC10C:	descr = "QCOM Compressed 10bit Format"; break;
+>  		default:
+>  			if (fmt->description[0])
+>  				return;
+> diff --git a/include/uapi/linux/videodev2.h b/include/uapi/linux/videodev2.h
+> index 311a01cc5775..c57628a16cf4 100644
+> --- a/include/uapi/linux/videodev2.h
+> +++ b/include/uapi/linux/videodev2.h
+> @@ -737,6 +737,8 @@ struct v4l2_pix_format {
+>  #define V4L2_PIX_FMT_SUNXI_TILED_NV12 v4l2_fourcc('S', 'T', '1', '2') /* Sunxi Tiled NV12 Format */
+>  #define V4L2_PIX_FMT_CNF4     v4l2_fourcc('C', 'N', 'F', '4') /* Intel 4-bit packed depth confidence information */
+>  #define V4L2_PIX_FMT_HI240    v4l2_fourcc('H', 'I', '2', '4') /* BTTV 8-bit dithered RGB */
+> +#define V4L2_PIX_FMT_QC8C     v4l2_fourcc('Q', '0', '8', 'C') /* Qualcomm 8-bit compressed */
+> +#define V4L2_PIX_FMT_QC10C    v4l2_fourcc('Q', '1', '0', 'C') /* Qualcomm 10-bit compresed */
+>  
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+>  /* 10bit raw bayer packed, 32 bytes for every 25 pixels, last LSB 6 bits unused */
+>  #define V4L2_PIX_FMT_IPU3_SBGGR10	v4l2_fourcc('i', 'p', '3', 'b') /* IPU3 packed 10-bit BGGR bayer */
 
-You might also be interested in this thread:
 
-https://lore.kernel.org/lkml/YIKsDtjcIHGNvW0u@orome.fritz.box/
-
-Rob
