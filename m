@@ -2,126 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 04F8E36FFD9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Apr 2021 19:44:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 40A0C370007
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Apr 2021 19:55:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230229AbhD3Rpo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Apr 2021 13:45:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34292 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230093AbhD3Rpn (ORCPT
+        id S229750AbhD3R4S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Apr 2021 13:56:18 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56]:2977 "EHLO
+        frasgout.his.huawei.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229954AbhD3R4S (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Apr 2021 13:45:43 -0400
-Received: from mail-oo1-xc2a.google.com (mail-oo1-xc2a.google.com [IPv6:2607:f8b0:4864:20::c2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2181AC06174A
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Apr 2021 10:44:55 -0700 (PDT)
-Received: by mail-oo1-xc2a.google.com with SMTP id w6-20020a4a9d060000b02901f9175244e7so3569993ooj.9
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Apr 2021 10:44:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=6g0Wub32949zlUmpDO6orwMigbfoDepmWih+zxo6Gik=;
-        b=Hwdg91N23Pzm+MhntYiriTtK3LzxwTdtud93fhi+6PsD2MGghl+QzB5fD/KE4E/UOH
-         rA+vVIVjaVzTOFbRvMMXkHYiDCWmryuId1VhGqaeOkuCUsxD1zdaAp83XrllM50f554B
-         YII/rfNuz5fJX4CecLZUPgYKNcAoSrTUw9Yg0=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=6g0Wub32949zlUmpDO6orwMigbfoDepmWih+zxo6Gik=;
-        b=Zw+pbsavXInTZk2k9CsJ20PNnPmOUHvTKIPxPBpfyZ3feRo0aU5fAPgU5ajYGOsG0r
-         /pcO0DiBBCtKahDEenirVMbF9agPRiou9MNaI2kh9NI6FPDdHml3jAb4nmO0qOftzhb4
-         RYfvwPtiHioD6Wr72Qbf66LY1NZ7jRCLr+uFaYJmCyRL2CJi300LsHJpizJL51QtbuAN
-         +P1HJX9qVHcPJncTpEN5cjfkjZoTz0RfGIGWljqFY/lwMCvTvfDmGtbK6Ak1XoHyvjAi
-         cHWo/ryw7WHpuRAu9wLjetNuI64KTzIOQqPP4jxqrEpNJuFBe3uy6WdLW7xJuENBs0TX
-         n1dQ==
-X-Gm-Message-State: AOAM5317fZxysxKtDL9x7hXcSuPApr8IBzJ1SEz9OTWxDlRXzwbJzHR2
-        Vm2xm1J0YGPiJcCiK5/PoI8Qgjh0MmAZDgG+q2URCTjGTB8=
-X-Google-Smtp-Source: ABdhPJyPyi4DIgMeRBNFsN/86pplbHjCV4+mrcMiD+kOFc0aF1HRvCFr6LF5hBxDNhe7lCnbhKeHNkeCcL52ICW+GsQ=
-X-Received: by 2002:a05:6820:381:: with SMTP id r1mr5451224ooj.79.1619804694545;
- Fri, 30 Apr 2021 10:44:54 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 30 Apr 2021 10:44:54 -0700
+        Fri, 30 Apr 2021 13:56:18 -0400
+Received: from fraeml712-chm.china.huawei.com (unknown [172.18.147.201])
+        by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4FX0FN6xJTz71fch;
+        Sat,  1 May 2021 01:47:36 +0800 (CST)
+Received: from lhreml710-chm.china.huawei.com (10.201.108.61) by
+ fraeml712-chm.china.huawei.com (10.206.15.61) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2176.2; Fri, 30 Apr 2021 19:55:28 +0200
+Received: from localhost (10.52.125.96) by lhreml710-chm.china.huawei.com
+ (10.201.108.61) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2176.2; Fri, 30 Apr
+ 2021 18:55:27 +0100
+Date:   Fri, 30 Apr 2021 18:53:52 +0100
+From:   Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+To:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+CC:     <linuxarm@huawei.com>, <mauro.chehab@huawei.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        "Mauro Carvalho Chehab" <mchehab@kernel.org>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-media@vger.kernel.org>
+Subject: Re: [PATCH v4 67/79] media: venus: vdec: use
+ pm_runtime_resume_and_get()
+Message-ID: <20210430185352.00003b27@Huawei.com>
+In-Reply-To: <8541040c4b0830bb2c2f015b8c26c890baa5918a.1619621413.git.mchehab+huawei@kernel.org>
+References: <cover.1619621413.git.mchehab+huawei@kernel.org>
+        <8541040c4b0830bb2c2f015b8c26c890baa5918a.1619621413.git.mchehab+huawei@kernel.org>
+Organization: Huawei Technologies Research and Development (UK) Ltd.
+X-Mailer: Claws Mail 3.17.8 (GTK+ 2.24.33; i686-w64-mingw32)
 MIME-Version: 1.0
-In-Reply-To: <20210430171744.1721408-1-robdclark@gmail.com>
-References: <20210430171744.1721408-1-robdclark@gmail.com>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.9.1
-Date:   Fri, 30 Apr 2021 10:44:53 -0700
-Message-ID: <CAE-0n513cwqs1c89PZpn0ojuDQ44nwxbRfaYssKHcGwKxK8JdA@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm/dpu: Delete bonkers code
-To:     Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org
-Cc:     Maxime Ripard <maxime@cerno.tech>,
-        Rob Clark <robdclark@chromium.org>,
-        John Stultz <john.stultz@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Kalyan Thota <kalyan_t@codeaurora.org>,
-        Hongbo Yao <yaohongbo@huawei.com>,
-        Qinglang Miao <miaoqinglang@huawei.com>,
-        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-        Lee Jones <lee.jones@linaro.org>,
-        =?UTF-8?B?VmlsbGUgU3lyasOkbMOk?= <ville.syrjala@linux.intel.com>,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.52.125.96]
+X-ClientProxiedBy: lhreml721-chm.china.huawei.com (10.201.108.72) To
+ lhreml710-chm.china.huawei.com (10.201.108.61)
+X-CFilter-Loop: Reflected
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Rob Clark (2021-04-30 10:17:39)
-> From: Rob Clark <robdclark@chromium.org>
->
-> dpu_crtc_atomic_flush() was directly poking it's attached planes in a
-> code path that ended up in dpu_plane_atomic_update(), even if the plane
-> was not involved in the current atomic update.  While a bit dubious,
-> this worked before because plane->state would always point to something
-> valid.  But now using drm_atomic_get_new_plane_state() we could get a
-> NULL state pointer instead, leading to:
->
->    [   20.873273] Call trace:
->    [   20.875740]  dpu_plane_atomic_update+0x5c/0xed0
->    [   20.880311]  dpu_plane_restore+0x40/0x88
->    [   20.884266]  dpu_crtc_atomic_flush+0xf4/0x208
->    [   20.888660]  drm_atomic_helper_commit_planes+0x150/0x238
->    [   20.894014]  msm_atomic_commit_tail+0x1d4/0x7a0
->    [   20.898579]  commit_tail+0xa4/0x168
->    [   20.902102]  drm_atomic_helper_commit+0x164/0x178
->    [   20.906841]  drm_atomic_commit+0x54/0x60
->    [   20.910798]  drm_atomic_connector_commit_dpms+0x10c/0x118
->    [   20.916236]  drm_mode_obj_set_property_ioctl+0x1e4/0x440
->    [   20.921588]  drm_connector_property_set_ioctl+0x60/0x88
->    [   20.926852]  drm_ioctl_kernel+0xd0/0x120
->    [   20.930807]  drm_ioctl+0x21c/0x478
->    [   20.934235]  __arm64_sys_ioctl+0xa8/0xe0
->    [   20.938193]  invoke_syscall+0x64/0x130
->    [   20.941977]  el0_svc_common.constprop.3+0x5c/0xe0
->    [   20.946716]  do_el0_svc+0x80/0xa0
->    [   20.950058]  el0_svc+0x20/0x30
->    [   20.953145]  el0_sync_handler+0x88/0xb0
->    [   20.957014]  el0_sync+0x13c/0x140
->
-> The reason for the codepath seems dubious, the atomic suspend/resume
-> heplers should handle the power-collapse case.  If not, the CRTC's
-> atomic_check() should be adding the planes to the atomic update.
->
-> Reported-by: Stephen Boyd <sboyd@kernel.org>
+On Wed, 28 Apr 2021 16:52:28 +0200
+Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
 
-Maybe better to use swboyd@chromium.org for this one.
+> Commit dd8088d5a896 ("PM: runtime: Add pm_runtime_resume_and_get to deal with usage counter")
+> added pm_runtime_resume_and_get() in order to automatically handle
+> dev->power.usage_count decrement on errors.
+> 
+> Use the new API, in order to cleanup the error check logic.
+> 
+> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+> ---
+>  drivers/media/platform/qcom/venus/vdec.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
+> index ddb7cd39424e..347e533ea673 100644
+> --- a/drivers/media/platform/qcom/venus/vdec.c
+> +++ b/drivers/media/platform/qcom/venus/vdec.c
+> @@ -568,7 +568,7 @@ static int vdec_pm_get(struct venus_inst *inst)
+>  	int ret;
+>  
+>  	mutex_lock(&core->pm_lock);
+> -	ret = pm_runtime_get_sync(dev);
+> +	ret = pm_runtime_resume_and_get(dev);
+>  	mutex_unlock(&core->pm_lock);
+>  
+>  	return ret < 0 ? ret : 0;
+Don't need this dance any more due to " Return 0 if the runtime PM usage counter of @dev has been
+ * incremented or a negative error code otherwise."
+return ret;
 
-> Reported-by: John Stultz <john.stultz@linaro.org>
-> Fixes: 37418bf14c13 drm: Use state helper instead of the plane state pointer
+> @@ -601,7 +601,7 @@ static int vdec_pm_get_put(struct venus_inst *inst)
+>  	mutex_lock(&core->pm_lock);
+>  
+>  	if (pm_runtime_suspended(dev)) {
+> -		ret = pm_runtime_get_sync(dev);
+> +		ret = pm_runtime_resume_and_get(dev);
+>  		if (ret < 0)
+>  			goto error;
+>  
 
-Should be
-
-Fixes: 37418bf14c13 ("drm: Use state helper instead of the plane state pointer")
-
-to match the preferred format.
-
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
-
-Otherwise looks good, thanks.
