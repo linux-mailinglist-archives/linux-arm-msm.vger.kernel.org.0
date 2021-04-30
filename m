@@ -2,61 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 82EC536FFBD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Apr 2021 19:37:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 04F8E36FFD9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Apr 2021 19:44:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230395AbhD3RiY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Apr 2021 13:38:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60918 "EHLO
+        id S230229AbhD3Rpo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Apr 2021 13:45:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34292 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230356AbhD3RiY (ORCPT
+        with ESMTP id S230093AbhD3Rpn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Apr 2021 13:38:24 -0400
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6307FC06138B
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Apr 2021 10:37:35 -0700 (PDT)
-Received: by mail-lf1-x135.google.com with SMTP id c11so7311902lfi.9
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Apr 2021 10:37:35 -0700 (PDT)
+        Fri, 30 Apr 2021 13:45:43 -0400
+Received: from mail-oo1-xc2a.google.com (mail-oo1-xc2a.google.com [IPv6:2607:f8b0:4864:20::c2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2181AC06174A
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Apr 2021 10:44:55 -0700 (PDT)
+Received: by mail-oo1-xc2a.google.com with SMTP id w6-20020a4a9d060000b02901f9175244e7so3569993ooj.9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Apr 2021 10:44:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=IyZoGH+lT+P8SU23gcGGsIVn6bGEnFnAdvfYbbDN9to=;
-        b=ryDFnWPDNEvnvXwTf0jcPPjjEXrVhjstRilHvsIA8HyK6O52T+H+wQ8OPQWWOwaWB8
-         CE9qwQA0/2kiylTlZnPXkbNG4DrQxLyX8gS5wTYZX0aMkmGTeckUGp+xCUcixrb7nKv0
-         z+mzVNUzvNKMXuro8JYl2HXNj2O20xvQLqllwQ5eYrlTm/Z/lpyJeVqbqW/9JsK2knKU
-         5LNmpveMyCCZbDUYFU695phQaFMgAMzzwWVCO2vUFO8DQAzgYvMxBI2ItJcnSrY6OYxp
-         SuRvUyWbEJIA/FcRCNQ5QW1ydXUp1tjV7ZyQmbNjtaVj15WO2SnS3LgH1s7CCIG1SPbZ
-         eMog==
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=6g0Wub32949zlUmpDO6orwMigbfoDepmWih+zxo6Gik=;
+        b=Hwdg91N23Pzm+MhntYiriTtK3LzxwTdtud93fhi+6PsD2MGghl+QzB5fD/KE4E/UOH
+         rA+vVIVjaVzTOFbRvMMXkHYiDCWmryuId1VhGqaeOkuCUsxD1zdaAp83XrllM50f554B
+         YII/rfNuz5fJX4CecLZUPgYKNcAoSrTUw9Yg0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=IyZoGH+lT+P8SU23gcGGsIVn6bGEnFnAdvfYbbDN9to=;
-        b=OoI8O47wNtSQl6i4qVFFcgb9dNnjtVLO/XjlkOGK4pD65syz+lc5K4Yip9xeTrV8+s
-         g1k5IXD47WVul+OEw9KliHTbBa7FZCTHF5BV8YjeS0qzeM80i75K47k1fAXCLlVF6Thg
-         d0Kde3n+Qmcj4Xc2C7OuOVQGmj1QAYeS6beMlkJC8Ql49x2A+TgJMhdmpbWaCChH0Ie9
-         eVlvmBBF6/z18w6xDsIKLxYsF0wUSDBZ600KR7XNpq16Qm7tzyAKlVJ1NyFGVnU4EvIZ
-         VbCRJBtgUF6Ypqb6J5w7/GtOPy3RlQoE+s6y/JnVAEm8QNAgRnvUEpuB8suCDJt3EaKn
-         RgkA==
-X-Gm-Message-State: AOAM5328zLIdU5UK21nk0JOxviAmPmYLK8aUC3PC5ArrulDjzNYK7g/R
-        6dbTgJ2cuSWyUhCKA/Tq/Lec7V51X0bmVHp3lFXNTIax2S0=
-X-Google-Smtp-Source: ABdhPJyrJphBLygkbPOqBlyI3KGd158lA8+tnQCVqwm0BWpVup5VBgWBQRQB0f1PP1xd/VB51Pqr4tiWIdyHtQCG6fQ=
-X-Received: by 2002:ac2:593b:: with SMTP id v27mr3358056lfi.204.1619804253808;
- Fri, 30 Apr 2021 10:37:33 -0700 (PDT)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=6g0Wub32949zlUmpDO6orwMigbfoDepmWih+zxo6Gik=;
+        b=Zw+pbsavXInTZk2k9CsJ20PNnPmOUHvTKIPxPBpfyZ3feRo0aU5fAPgU5ajYGOsG0r
+         /pcO0DiBBCtKahDEenirVMbF9agPRiou9MNaI2kh9NI6FPDdHml3jAb4nmO0qOftzhb4
+         RYfvwPtiHioD6Wr72Qbf66LY1NZ7jRCLr+uFaYJmCyRL2CJi300LsHJpizJL51QtbuAN
+         +P1HJX9qVHcPJncTpEN5cjfkjZoTz0RfGIGWljqFY/lwMCvTvfDmGtbK6Ak1XoHyvjAi
+         cHWo/ryw7WHpuRAu9wLjetNuI64KTzIOQqPP4jxqrEpNJuFBe3uy6WdLW7xJuENBs0TX
+         n1dQ==
+X-Gm-Message-State: AOAM5317fZxysxKtDL9x7hXcSuPApr8IBzJ1SEz9OTWxDlRXzwbJzHR2
+        Vm2xm1J0YGPiJcCiK5/PoI8Qgjh0MmAZDgG+q2URCTjGTB8=
+X-Google-Smtp-Source: ABdhPJyPyi4DIgMeRBNFsN/86pplbHjCV4+mrcMiD+kOFc0aF1HRvCFr6LF5hBxDNhe7lCnbhKeHNkeCcL52ICW+GsQ=
+X-Received: by 2002:a05:6820:381:: with SMTP id r1mr5451224ooj.79.1619804694545;
+ Fri, 30 Apr 2021 10:44:54 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 30 Apr 2021 10:44:54 -0700
 MIME-Version: 1.0
-References: <20210430171744.1721408-1-robdclark@gmail.com>
 In-Reply-To: <20210430171744.1721408-1-robdclark@gmail.com>
-From:   John Stultz <john.stultz@linaro.org>
-Date:   Fri, 30 Apr 2021 10:37:22 -0700
-Message-ID: <CALAqxLU=zsaMuBikeEzjtgNFAcxZGdqMhETBHvveNC_JZ=B7JA@mail.gmail.com>
+References: <20210430171744.1721408-1-robdclark@gmail.com>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.9.1
+Date:   Fri, 30 Apr 2021 10:44:53 -0700
+Message-ID: <CAE-0n513cwqs1c89PZpn0ojuDQ44nwxbRfaYssKHcGwKxK8JdA@mail.gmail.com>
 Subject: Re: [PATCH] drm/msm/dpu: Delete bonkers code
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
-        Maxime Ripard <maxime@cerno.tech>,
+To:     Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org
+Cc:     Maxime Ripard <maxime@cerno.tech>,
         Rob Clark <robdclark@chromium.org>,
-        Stephen Boyd <sboyd@kernel.org>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
+        John Stultz <john.stultz@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
         Daniel Vetter <daniel@ffwll.ch>,
         Abhinav Kumar <abhinavk@codeaurora.org>,
         Thomas Zimmermann <tzimmermann@suse.de>,
@@ -67,18 +66,14 @@ Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
         Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
         Lee Jones <lee.jones@linaro.org>,
         =?UTF-8?B?VmlsbGUgU3lyasOkbMOk?= <ville.syrjala@linux.intel.com>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <freedreno@lists.freedesktop.org>,
-        open list <linux-kernel@vger.kernel.org>
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Apr 30, 2021 at 10:14 AM Rob Clark <robdclark@gmail.com> wrote:
->
+Quoting Rob Clark (2021-04-30 10:17:39)
 > From: Rob Clark <robdclark@chromium.org>
 >
 > dpu_crtc_atomic_flush() was directly poking it's attached planes in a
@@ -113,10 +108,20 @@ On Fri, Apr 30, 2021 at 10:14 AM Rob Clark <robdclark@gmail.com> wrote:
 > The reason for the codepath seems dubious, the atomic suspend/resume
 > heplers should handle the power-collapse case.  If not, the CRTC's
 > atomic_check() should be adding the planes to the atomic update.
+>
+> Reported-by: Stephen Boyd <sboyd@kernel.org>
 
-Thanks! This patch gets things booting again!
+Maybe better to use swboyd@chromium.org for this one.
 
-Tested-by: John Stultz <john.stultz@linaro.org>
+> Reported-by: John Stultz <john.stultz@linaro.org>
+> Fixes: 37418bf14c13 drm: Use state helper instead of the plane state pointer
 
-thanks
--john
+Should be
+
+Fixes: 37418bf14c13 ("drm: Use state helper instead of the plane state pointer")
+
+to match the preferred format.
+
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
+
+Otherwise looks good, thanks.
