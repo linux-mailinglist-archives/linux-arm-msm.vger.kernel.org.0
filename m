@@ -2,74 +2,194 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 99A2C36FD4D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Apr 2021 17:05:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5623536FD5F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Apr 2021 17:10:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230121AbhD3PGQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Apr 2021 11:06:16 -0400
-Received: from mail-ot1-f49.google.com ([209.85.210.49]:37506 "EHLO
-        mail-ot1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229750AbhD3PGQ (ORCPT
+        id S229532AbhD3PLH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Apr 2021 11:11:07 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:35317 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229750AbhD3PLG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Apr 2021 11:06:16 -0400
-Received: by mail-ot1-f49.google.com with SMTP id c8-20020a9d78480000b0290289e9d1b7bcso50598589otm.4;
-        Fri, 30 Apr 2021 08:05:27 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=UtTHHLQsplee9C29Cg59LYjLb0qT4MBNWWXqLYYCrMk=;
-        b=fsv3+66RQ9eQEQQ6oDUobG1w7cqxTP9zGeXrL0Z136Ssl0Tz3oBAf+rMb0T1Brb8ek
-         tfhXzusSZqMZcLp9JrATuCE2wHoJd3RJbgmZDWScr65E4oxiwAeoGDP/qgFVZJj72mxs
-         MU+0Xz+vtF4mx1ICaelhQiweiucSpxvmgl+oh1sL2LvNG50KdJ9ZFSgROAlb/qDNJBBI
-         c79KfuNEG9PZU8HCsW+/lO2/th930kgiC4s17s8cRk9flA0dapvj1r3ebUJTxUDIC1aj
-         zzHWmcJnmsveQcnAcGVTSQ8zvtIcjaHfo6TuyqmYFM1tmPffD7pqIRDwFlbXAJL8Myyi
-         +piA==
-X-Gm-Message-State: AOAM531jRutYc8UUDSQFfTDMtLyU2fV748y3cKYbOkbePlFt8SxXjk1p
-        IuV1yjIXG/grazSYwOxf+g==
-X-Google-Smtp-Source: ABdhPJx1O2/+nZKt9VsdxpJqX6nGHemCbL49ftbKVxAnrCeSzCa7c/mPWvFZ64aU1ZwqfgyTwX8BnA==
-X-Received: by 2002:a05:6830:1db9:: with SMTP id z25mr1490915oti.220.1619795127585;
-        Fri, 30 Apr 2021 08:05:27 -0700 (PDT)
-Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id w13sm798615oop.0.2021.04.30.08.05.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 30 Apr 2021 08:05:26 -0700 (PDT)
-Received: (nullmailer pid 3323131 invoked by uid 1000);
-        Fri, 30 Apr 2021 15:05:25 -0000
-Date:   Fri, 30 Apr 2021 10:05:25 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Baruch Siach <baruch@tkos.co.il>
-Cc:     linux-pci@vger.kernel.org, Kishon Vijay Abraham I <kishon@ti.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Vinod Koul <vkoul@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-phy@lists.infradead.org, Rob Herring <robh+dt@kernel.org>,
-        Selvam Sathappan Periakaruppan <speriaka@codeaurora.org>,
-        Kathiravan T <kathirav@codeaurora.org>,
-        Andy Gross <agross@kernel.org>
-Subject: Re: [PATCH 5/5] dt-bindings: pci: qcom: Document PCIe bindings for
- IPQ6018 SoC
-Message-ID: <20210430150525.GA3323075@robh.at.kernel.org>
-References: <cover.1618916235.git.baruch@tkos.co.il>
- <e285d5041b8c19d4a7fab4d1a3ce9dd2b487cbad.1618916235.git.baruch@tkos.co.il>
+        Fri, 30 Apr 2021 11:11:06 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1619795418; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=+dVI3NdaeABnN/N1/ZkuDIQzB1RFAa3KmXh7BK9pWbs=;
+ b=O6jN+QiB27dBIRdH+QC0wISHIkjBiw+/pkm+XOHh8Mh8Vr+pHgZZKdqcX7aFJ7CGY2SAMsHJ
+ kc8TO+cbyEpAN/3yLFzEYHEm1IUlXb+tNzaS0I5z7DKclxwGu8Obxtw+31yjflrrKjJePXa+
+ +J3dIV7tvp+7I9l0Lyk/pjEe5F4=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
+ 608c1dd92cc44d3aeaa0c0b4 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 30 Apr 2021 15:10:17
+ GMT
+Sender: rajeevny=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id D38A0C43143; Fri, 30 Apr 2021 15:10:16 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: rajeevny)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 90E85C433D3;
+        Fri, 30 Apr 2021 15:10:15 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <e285d5041b8c19d4a7fab4d1a3ce9dd2b487cbad.1618916235.git.baruch@tkos.co.il>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Fri, 30 Apr 2021 20:40:15 +0530
+From:   rajeevny@codeaurora.org
+To:     Doug Anderson <dianders@chromium.org>,
+        Rob Herring <robh@kernel.org>
+Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+        Rob Clark <robdclark@gmail.com>, mkrishn@codeaurora.org,
+        Kalyan Thota <kalyan_t@codeaurora.org>,
+        "Kristian H. Kristensen" <hoegsberg@chromium.org>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Sean Paul <seanpaul@chromium.org>,
+        Jani Nikula <jani.nikula@linux.intel.com>,
+        Lyude Paul <lyude@redhat.com>,
+        "Lankhorst, Maarten" <maarten.lankhorst@intel.com>
+Subject: Re: [v3 1/2] dt-bindings: backlight: add DisplayPort aux backlight
+In-Reply-To: <CAD=FV=V-kdySH5Pp-Fb-PRYk60Ha_UOTXJHcvMp+uV3P1oo7Uw@mail.gmail.com>
+References: <1619416756-3533-1-git-send-email-rajeevny@codeaurora.org>
+ <1619416756-3533-2-git-send-email-rajeevny@codeaurora.org>
+ <20210429180435.GA1385465@robh.at.kernel.org>
+ <CAD=FV=V-kdySH5Pp-Fb-PRYk60Ha_UOTXJHcvMp+uV3P1oo7Uw@mail.gmail.com>
+Message-ID: <78c4bd291bd4a17ae2a1d02d0217de43@codeaurora.org>
+X-Sender: rajeevny@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 20 Apr 2021 14:21:40 +0300, Baruch Siach wrote:
-> Document qcom,pcie-ipq6018. This is similar to the ipq8074 with a few
-> different clock sources, and one additional reset.
+On 30-04-2021 02:33, Doug Anderson wrote:
+> Hi,
 > 
-> Signed-off-by: Baruch Siach <baruch@tkos.co.il>
-> ---
->  .../devicetree/bindings/pci/qcom,pcie.txt     | 24 +++++++++++++++++++
->  1 file changed, 24 insertions(+)
+> On Thu, Apr 29, 2021 at 11:04 AM Rob Herring <robh@kernel.org> wrote:
+>> 
+>> On Mon, Apr 26, 2021 at 11:29:15AM +0530, Rajeev Nandan wrote:
+>> > Add bindings for DisplayPort aux backlight driver.
+>> >
+>> > Changes in v2:
+>> > - New
+>> >
+>> > Signed-off-by: Rajeev Nandan <rajeevny@codeaurora.org>
+>> > ---
+>> >  .../bindings/leds/backlight/dp-aux-backlight.yaml  | 49 ++++++++++++++++++++++
+>> >  1 file changed, 49 insertions(+)
+>> >  create mode 100644 Documentation/devicetree/bindings/leds/backlight/dp-aux-backlight.yaml
+>> >
+>> > diff --git a/Documentation/devicetree/bindings/leds/backlight/dp-aux-backlight.yaml b/Documentation/devicetree/bindings/leds/backlight/dp-aux-backlight.yaml
+>> > new file mode 100644
+>> > index 00000000..0fa8bf0
+>> > --- /dev/null
+>> > +++ b/Documentation/devicetree/bindings/leds/backlight/dp-aux-backlight.yaml
+>> > @@ -0,0 +1,49 @@
+>> > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+>> > +%YAML 1.2
+>> > +---
+>> > +$id: http://devicetree.org/schemas/leds/backlight/dp-aux-backlight.yaml#
+>> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> > +
+>> > +title: DisplayPort aux backlight driver bindings
+>> > +
+>> > +maintainers:
+>> > +  - Rajeev Nandan <rajeevny@codeaurora.org>
+>> > +
+>> > +description:
+>> > +  Backlight driver to control the brightness over DisplayPort aux channel.
+>> > +
+>> > +allOf:
+>> > +  - $ref: common.yaml#
+>> > +
+>> > +properties:
+>> > +  compatible:
+>> > +    const: dp-aux-backlight
+>> > +
+>> > +  ddc-i2c-bus:
+>> > +    $ref: /schemas/types.yaml#/definitions/phandle
+>> > +    description:
+>> > +      A phandle to the system I2C controller connected to the DDC bus used
+>> > +      for the DisplayPort AUX channel.
+>> > +
+>> > +  enable-gpios:
+>> > +    maxItems: 1
+>> > +    description: GPIO specifier for backlight enable pin.
+>> > +
+>> > +  max-brightness: true
+>> > +
+>> > +required:
+>> > +  - compatible
+>> > +  - ddc-i2c-bus
+>> > +
+>> > +additionalProperties: false
+>> > +
+>> > +examples:
+>> > +  - |
+>> > +    backlight {
+>> > +        compatible = "dp-aux-backlight";
+>> > +        ddc-i2c-bus = <&sn65dsi86_bridge>;
+>> > +        enable-gpios = <&tlmm 12 GPIO_ACTIVE_HIGH>;
+>> 
+>> So the DDC bus is connected to a backlight and also a panel? This
+>> binding is not reflecting the h/w, but rather what you want for some
+>> driver.
+>> 
+>> There's only one thing here and that's an eDP panel which supports
+>> backlight control via DP aux channel. You can figure all that out from
+>> the panel's compatible and/or reading the EDID.
+>> 
+>> You might also be interested in this thread:
+>> 
+>> https://lore.kernel.org/lkml/YIKsDtjcIHGNvW0u@orome.fritz.box/
 > 
+> I think Rajeev needs to rework everything anyway as per:
+> 
+> https://lore.kernel.org/r/87zgxl5qar.fsf@intel.com
+> 
+> ...but you're right that it makes sense not to model the backlight as
+> a separate node in the device tree. The panel driver can handle
+> setting up the backlight.
+> 
+> -Doug
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+It was not a good idea to create a separate backlight driver and use
+ddc-i2c-bus to get access to DP aux. I am working to move the code
+to the panel driver and to utilize the new DRM helper functions
+(drm_edp_backlight_*) Lyude has added [1].
+
+To use these helper functions, the panel driver should have access to 
+the
+"struct drm_dp_aux *". The simple-panel has a "ddc-i2c-bus" property
+to give the panel access to the DDC bus and is currently being used to
+get the EDID from the panel. Can I use the same ddc bus i2c_adapter to 
+get
+the "struct drm_dp_aux *"?
+
+As per the suggestion [2], I get the "struct drm_dp_aux *" from the
+i2c_adapter of ddc bus (maybe I didn't understand the suggestion 
+correctly),
+and, it turned out, the way I have implemented is not the right way [3].
+So, I am afraid to use the same method in the panel driver.
+
+
+[1] https://lore.kernel.org/dri-devel/871rb5bcf9.fsf@intel.com/
+[2] https://www.spinics.net/lists/dri-devel/msg295429.html
+[3] 
+https://lore.kernel.org/dri-devel/20210426111116.4lc3ekxjugjr3oho@maple.lan/
+
+Thanks,
+Rajeev
