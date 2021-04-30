@@ -2,65 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C8BA936F37A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Apr 2021 03:25:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A88AD36F3AA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Apr 2021 03:28:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229807AbhD3BZ5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Apr 2021 21:25:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44290 "EHLO
+        id S229573AbhD3B2s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Apr 2021 21:28:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44978 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229519AbhD3BZ5 (ORCPT
+        with ESMTP id S229980AbhD3B2s (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Apr 2021 21:25:57 -0400
-Received: from mail-qk1-x733.google.com (mail-qk1-x733.google.com [IPv6:2607:f8b0:4864:20::733])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98D30C06138B
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Apr 2021 18:25:09 -0700 (PDT)
-Received: by mail-qk1-x733.google.com with SMTP id o5so69247862qkb.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Apr 2021 18:25:09 -0700 (PDT)
+        Thu, 29 Apr 2021 21:28:48 -0400
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A03FAC06138B
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Apr 2021 18:27:59 -0700 (PDT)
+Received: by mail-lf1-x12d.google.com with SMTP id h36so53559578lfv.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Apr 2021 18:27:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
+        d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=V1QnMHl1bv4GYjD2nKUUJjqSbgwtkE7PlJ3sqyWNs7Y=;
-        b=PtHlsQZOZ+E4ykn+R3l13RBajbWKW9bc5n0CxdJOHTPMz4PSUer/AJh9vCysr5UYOv
-         SuCTrQprrgY+vi68vThE0YH88YfY2vB8BtuvkvLHFzNcfsD3Qo++eWfTMmQBN66+qcZx
-         YA3c9pl9Lat5hMK3NWhl/lTgmlPl8zmEwFMKU=
+        bh=5nYrcPFaE9JozlbdUYcBvuc3knwcBJ+KRlPBwjPg/eY=;
+        b=mWr/LU95sxRmIHn3zRMbluegyGD2oe6oRt4d/eRVIdu7KE3Hz+geRyAZlmU7D5TMAP
+         hBhqnVuVTVgUAhM0ZWa+OwuRT9bQbE3RnlfSljIXyeQtbRVE3csRBOvTZ2UblLcRM1QC
+         xxs3hrrGH/TOp0oQcLOkEQIwojDLhahdEkZ6uo900/o8WZPZ19oj42KYditGQucez/as
+         vUnwQLP3c6V6Z++gJIjubVeNlKS9+vW3LkRRxu3vS1WvzgEP3ZR5H+scAq2iwSyMhr+x
+         AmUwvYqwpyzEIbU+VnqL+66wxLgWtk7TUMbBixNYKsUb9BMpCwEI2TAVauzbB6jQtiw3
+         Iexg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=V1QnMHl1bv4GYjD2nKUUJjqSbgwtkE7PlJ3sqyWNs7Y=;
-        b=fLIHAimlubQghVP93WK+nCSplvA+caBbHVnDUQWNlqO9/vK/MSfy+6f69OTBz9dWPb
-         LyG/B3zHD9hR9yupvVd3e4Mf+V/0Ip7zW9CyVPBpFHdpmcEVrLNlsC7MNTj5HJUFpKnr
-         /6K8U+nVMp1Hd7ECNyCXlMbHtdpuywkZ+xVxjkcDChs/hThD9DunZ+qg4v84PrPM0nBI
-         tGuAz3UxLVPrDp0+6O3033TFTFope43Y/LCufF5Wav2z8HKzKNbm1auDpIMpRhCjURmA
-         nt4ZL4MoqVSw2C8PpBeqInvg57EoSHvHHaRL/6G6ajlxVIAv1VSNpP6vs9nITQhtND9o
-         mhNw==
-X-Gm-Message-State: AOAM531nmo8lHJKnvrmS82VPzvwZrRB9ThfCh9Oj1Ij2n+corBE2P6cQ
-        re9bKTD1H4NdCJizMfde7bFxAMZTPf2pAQ==
-X-Google-Smtp-Source: ABdhPJyvThY5nnAM3Fn+ETGyv8iInhA1nBSdbGU2EG04WAnQnAc6EFNNhEBjvsy+vLX01SqHKU4ZHw==
-X-Received: by 2002:a37:5604:: with SMTP id k4mr2685018qkb.478.1619745908375;
-        Thu, 29 Apr 2021 18:25:08 -0700 (PDT)
-Received: from mail-yb1-f178.google.com (mail-yb1-f178.google.com. [209.85.219.178])
-        by smtp.gmail.com with ESMTPSA id k10sm257551qkh.17.2021.04.29.18.25.06
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 29 Apr 2021 18:25:07 -0700 (PDT)
-Received: by mail-yb1-f178.google.com with SMTP id z1so81006551ybf.6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Apr 2021 18:25:06 -0700 (PDT)
-X-Received: by 2002:a25:80d4:: with SMTP id c20mr3510159ybm.345.1619745906527;
- Thu, 29 Apr 2021 18:25:06 -0700 (PDT)
+        bh=5nYrcPFaE9JozlbdUYcBvuc3knwcBJ+KRlPBwjPg/eY=;
+        b=AY//bDkN1EQXTLGISOqev9+2ataFTaVVT50Sh1BOJqweUZGWMz3SPQxwpa/q86SL0q
+         211ys6B5e+sGrnBNAq8V9yCdS5Kb/VkWz004o9B6XIsSyjfPsicIUwGBkWvPlkpGZk+e
+         gpwLMMSs8SQnWwSnIjXokmcTTlsQaqxQPdW+N+UVbCvTvrbNOE6Zthuqaf8hIJCvsLvo
+         kmtHHEoOM+gmeof0Pcvsx1QzZs4SIX1+7K750j0CtVLd7D5wSY6GaPuxe2h6v7GoqkRh
+         ZAaB91buLfhCfeXQxNQOUJb1KKylpCbnPajd3Qd2drth74OvUTBcmWz5I0bODzVE5EY/
+         GmkA==
+X-Gm-Message-State: AOAM531dYo5RaAeU472vaRIrkbW6z65tl68aJ88tn2/dES6yC/7pDq7t
+        j46gknyaTUUcwnj9EOtQzm8PqUZIxfeitBFeB7p02A==
+X-Google-Smtp-Source: ABdhPJzFPmRotZN0fnw8kLXHW0mhRMJ6Y9pLJGkfe+X4ux0/23qoEes3nema+045FI+84RCCCXHVaXcNwdXLrns0we4=
+X-Received: by 2002:a05:6512:149:: with SMTP id m9mr1218659lfo.157.1619746078186;
+ Thu, 29 Apr 2021 18:27:58 -0700 (PDT)
 MIME-Version: 1.0
 References: <20210423165906.2504169-1-dianders@chromium.org>
- <20210423095743.v5.1.I9e6af2529d6c61e5daf86a15a1211121c5223b9a@changeid> <CACRpkdYkRFLvCRPSYNzYQG58QgPfhvjtHb+FBQZadyrnjC8=1A@mail.gmail.com>
-In-Reply-To: <CACRpkdYkRFLvCRPSYNzYQG58QgPfhvjtHb+FBQZadyrnjC8=1A@mail.gmail.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Thu, 29 Apr 2021 18:24:55 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=UX683grZ=poTwKXxSqYBCLdLAOCxOPhE_xVVgKbe36Mw@mail.gmail.com>
-Message-ID: <CAD=FV=UX683grZ=poTwKXxSqYBCLdLAOCxOPhE_xVVgKbe36Mw@mail.gmail.com>
+ <20210423095743.v5.1.I9e6af2529d6c61e5daf86a15a1211121c5223b9a@changeid>
+ <CACRpkdYkRFLvCRPSYNzYQG58QgPfhvjtHb+FBQZadyrnjC8=1A@mail.gmail.com> <CAD=FV=UX683grZ=poTwKXxSqYBCLdLAOCxOPhE_xVVgKbe36Mw@mail.gmail.com>
+In-Reply-To: <CAD=FV=UX683grZ=poTwKXxSqYBCLdLAOCxOPhE_xVVgKbe36Mw@mail.gmail.com>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Fri, 30 Apr 2021 03:27:47 +0200
+Message-ID: <CACRpkdYfugrJ4WGn=w+viGXE6s5cdHjLC++jHPLVy_QH09KA8Q@mail.gmail.com>
 Subject: Re: [PATCH v5 01/20] drm/panel: panel-simple: Add missing
  pm_runtime_disable() calls
-To:     Linus Walleij <linus.walleij@linaro.org>
+To:     Doug Anderson <dianders@chromium.org>
 Cc:     Andrzej Hajda <a.hajda@samsung.com>,
         Neil Armstrong <narmstrong@baylibre.com>,
         Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
@@ -85,34 +79,18 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Fri, Apr 30, 2021 at 3:25 AM Doug Anderson <dianders@chromium.org> wrote:
 
-On Thu, Apr 29, 2021 at 5:58 PM Linus Walleij <linus.walleij@linaro.org> wrote:
+> > I think pm_runtime_disable(); need to be added there?
 >
-> On Fri, Apr 23, 2021 at 6:59 PM Douglas Anderson <dianders@chromium.org> wrote:
->
-> > In commit 3235b0f20a0a ("drm/panel: panel-simple: Use runtime pm to
-> > avoid excessive unprepare / prepare") we started using pm_runtime, but
-> > my patch neglected to add the proper pm_runtime_disable(). Doh! Add
-> > them now.
-> >
-> > Fixes: 3235b0f20a0a ("drm/panel: panel-simple: Use runtime pm to avoid excessive unprepare / prepare")
-> > Reported-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > Signed-off-by: Douglas Anderson <dianders@chromium.org>
->
-> This patch as such:
-> Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
->
-> Notice however: you turn on pm runtime pm_runtime_enable()
-> in panel_simple_probe() but are you ever turning it off in
-> panel_simple_remove()?
->
-> I think pm_runtime_disable(); need to be added there?
+> I'm a bit confused. You're saying that I need to add
+> pm_runtime_disable() to panel_simple_remove()? Doesn't this patch do
+> that?
 
-I'm a bit confused. You're saying that I need to add
-pm_runtime_disable() to panel_simple_remove()? Doesn't this patch do
-that? This patch adds two calls to pm_runtime_disable(). One of those
-is in the probe error path and the other one is in
-panel_simple_remove().
+It does, sorry, too late at night :D
 
--Doug
+I was looking at the previous patch and mixed up which was the
+patch and the patch to the patch...
+
+Thanks, apply this!
+Linus Walleij
