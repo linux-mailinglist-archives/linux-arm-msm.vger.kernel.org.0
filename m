@@ -2,95 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A88AD36F3AA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Apr 2021 03:28:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E831036F400
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Apr 2021 04:21:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229573AbhD3B2s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Apr 2021 21:28:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44978 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229980AbhD3B2s (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Apr 2021 21:28:48 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A03FAC06138B
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Apr 2021 18:27:59 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id h36so53559578lfv.7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Apr 2021 18:27:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=5nYrcPFaE9JozlbdUYcBvuc3knwcBJ+KRlPBwjPg/eY=;
-        b=mWr/LU95sxRmIHn3zRMbluegyGD2oe6oRt4d/eRVIdu7KE3Hz+geRyAZlmU7D5TMAP
-         hBhqnVuVTVgUAhM0ZWa+OwuRT9bQbE3RnlfSljIXyeQtbRVE3csRBOvTZ2UblLcRM1QC
-         xxs3hrrGH/TOp0oQcLOkEQIwojDLhahdEkZ6uo900/o8WZPZ19oj42KYditGQucez/as
-         vUnwQLP3c6V6Z++gJIjubVeNlKS9+vW3LkRRxu3vS1WvzgEP3ZR5H+scAq2iwSyMhr+x
-         AmUwvYqwpyzEIbU+VnqL+66wxLgWtk7TUMbBixNYKsUb9BMpCwEI2TAVauzbB6jQtiw3
-         Iexg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=5nYrcPFaE9JozlbdUYcBvuc3knwcBJ+KRlPBwjPg/eY=;
-        b=AY//bDkN1EQXTLGISOqev9+2ataFTaVVT50Sh1BOJqweUZGWMz3SPQxwpa/q86SL0q
-         211ys6B5e+sGrnBNAq8V9yCdS5Kb/VkWz004o9B6XIsSyjfPsicIUwGBkWvPlkpGZk+e
-         gpwLMMSs8SQnWwSnIjXokmcTTlsQaqxQPdW+N+UVbCvTvrbNOE6Zthuqaf8hIJCvsLvo
-         kmtHHEoOM+gmeof0Pcvsx1QzZs4SIX1+7K750j0CtVLd7D5wSY6GaPuxe2h6v7GoqkRh
-         ZAaB91buLfhCfeXQxNQOUJb1KKylpCbnPajd3Qd2drth74OvUTBcmWz5I0bODzVE5EY/
-         GmkA==
-X-Gm-Message-State: AOAM531dYo5RaAeU472vaRIrkbW6z65tl68aJ88tn2/dES6yC/7pDq7t
-        j46gknyaTUUcwnj9EOtQzm8PqUZIxfeitBFeB7p02A==
-X-Google-Smtp-Source: ABdhPJzFPmRotZN0fnw8kLXHW0mhRMJ6Y9pLJGkfe+X4ux0/23qoEes3nema+045FI+84RCCCXHVaXcNwdXLrns0we4=
-X-Received: by 2002:a05:6512:149:: with SMTP id m9mr1218659lfo.157.1619746078186;
- Thu, 29 Apr 2021 18:27:58 -0700 (PDT)
+        id S229591AbhD3CWA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Apr 2021 22:22:00 -0400
+Received: from mail.kernel.org ([198.145.29.99]:43676 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229577AbhD3CV7 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 29 Apr 2021 22:21:59 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 70B24613EE;
+        Fri, 30 Apr 2021 02:21:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1619749272;
+        bh=ai/sj/47LFXF31eZSRetrDDH+VBnWkLmpdNbx7cy0kM=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=EoyLj6kLG/1nlo2L2O+xYbiTMuQ92j2snnXPguTYeX6Sy+wECS2U7lp/vk9hSNb0k
+         yKX5ENpmHW4Mzcqz0ObHBxg7NQfPf8fS5LQbIXEpGixMVTcFOA9oHOHx36Hkl25VF+
+         OX64XjT4Y4/ev8xIy3zoMRA9mLfFEhlS5f/3WCtXRym5ZCMxBbULTMpTD2wJJ0GMY4
+         EVu0j4c/HxqxQt3DfzXIjd3jvRz2aI/aaf6ivXQgE/U2kWDZlxVY8nldEdbKDK/6C8
+         gYmTV/bKEEgkVA+vEGtQIjSZ8oSHZFvDC++wxJ1dyFXJWVSl6koWW87FPfluhr0FIP
+         h/qXncpVFzq3Q==
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-References: <20210423165906.2504169-1-dianders@chromium.org>
- <20210423095743.v5.1.I9e6af2529d6c61e5daf86a15a1211121c5223b9a@changeid>
- <CACRpkdYkRFLvCRPSYNzYQG58QgPfhvjtHb+FBQZadyrnjC8=1A@mail.gmail.com> <CAD=FV=UX683grZ=poTwKXxSqYBCLdLAOCxOPhE_xVVgKbe36Mw@mail.gmail.com>
-In-Reply-To: <CAD=FV=UX683grZ=poTwKXxSqYBCLdLAOCxOPhE_xVVgKbe36Mw@mail.gmail.com>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Fri, 30 Apr 2021 03:27:47 +0200
-Message-ID: <CACRpkdYfugrJ4WGn=w+viGXE6s5cdHjLC++jHPLVy_QH09KA8Q@mail.gmail.com>
-Subject: Re: [PATCH v5 01/20] drm/panel: panel-simple: Add missing
- pm_runtime_disable() calls
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Andrzej Hajda <a.hajda@samsung.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@siol.net>,
-        Sam Ravnborg <sam@ravnborg.org>, Wolfram Sang <wsa@kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Steev Klimaszewski <steev@kali.org>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        linux-i2c <linux-i2c@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        linux-kernel <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <ed64fe46-361b-5bf9-88a6-d35cac2c98e7@codeaurora.org>
+References: <1619334502-9880-1-git-send-email-tdas@codeaurora.org> <161956919717.177949.9925740807826300314@swboyd.mtv.corp.google.com> <ed64fe46-361b-5bf9-88a6-d35cac2c98e7@codeaurora.org>
+Subject: Re: [PATCH v3] Add support for duty-cycle for RCG
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
+To:     Michael Turquette <mturquette@baylibre.com>,
+        Taniya Das <tdas@codeaurora.org>
+Date:   Thu, 29 Apr 2021 19:21:11 -0700
+Message-ID: <161974927117.177949.8019204674384480875@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Apr 30, 2021 at 3:25 AM Doug Anderson <dianders@chromium.org> wrote:
+Quoting Taniya Das (2021-04-28 23:55:16)
+> Thank you for your review.
+>=20
+> On 4/28/2021 5:49 AM, Stephen Boyd wrote:
+> > Quoting Taniya Das (2021-04-25 00:08:21)
+> >> The root clock generators with MND divider has the capability to suppo=
+rt
+> >> change in duty-cycle by updating the 'D'. Add the clock ops which would
+> >> check all the boundary conditions and enable setting the desired duty-=
+cycle
+> >> as per the consumer.
+> >>
+> >> [v3]
+> >>    * Implement clockops for get_duty_cycle.
+> >>    * Return -EINVAL for Non-MND or HID RCGs.
+> >=20
+> > We don't need cover letters for single patches. Please add these details
+> > after the dash before the diffstat on the single patch.
+> >=20
+>=20
+> Sure Stephen, will take care from next time. Let me know in case I need=20
+> to re-submit the patch again.
+>=20
 
-> > I think pm_runtime_disable(); need to be added there?
->
-> I'm a bit confused. You're saying that I need to add
-> pm_runtime_disable() to panel_simple_remove()? Doesn't this patch do
-> that?
-
-It does, sorry, too late at night :D
-
-I was looking at the previous patch and mixed up which was the
-patch and the patch to the patch...
-
-Thanks, apply this!
-Linus Walleij
+Don't think so. Merge window is open so I'll apply it in another week.
