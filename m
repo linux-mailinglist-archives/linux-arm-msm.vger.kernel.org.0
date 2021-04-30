@@ -2,103 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8D63C36F55C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Apr 2021 07:34:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DCA6936F5A2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Apr 2021 08:19:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230152AbhD3FfL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Apr 2021 01:35:11 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:31568 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230119AbhD3FfL (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Apr 2021 01:35:11 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1619760864; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=WyIiMnFBS/zDlAuBJ6dVpP5Wm6YrC+/il7PmxfKg7BE=;
- b=leaXCiyMf9FbmJ4zYthyycpV0hO3z75sRlRExcPVWACoex88OjlPpN3PR5F7gajTGv0VuLZB
- 0854XEQGyAWDw0bY9H3py18nIYZAUzPVWZrfvdn3DCAiNsO3U/5W4b1qkKbGFQxC7D25WF7E
- 0/OeQyIZ6wL8FEsqhmkhZwME5KQ=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
- 608b96da853c0a2c46e310dd (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 30 Apr 2021 05:34:18
- GMT
-Sender: sibis=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 7778BC4323A; Fri, 30 Apr 2021 05:34:17 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: sibis)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id AA03CC433F1;
-        Fri, 30 Apr 2021 05:34:16 +0000 (UTC)
+        id S229508AbhD3GUV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Apr 2021 02:20:21 -0400
+Received: from m12-16.163.com ([220.181.12.16]:41432 "EHLO m12-16.163.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229482AbhD3GUP (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 30 Apr 2021 02:20:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+        s=s110527; h=From:Subject:Date:Message-Id:MIME-Version; bh=KvHw+
+        KCns76RVhHDXsF2R42ufhs063wgmEGrav49uD0=; b=GYfMTYTqLIOYkcf8j9o4s
+        wLRtlD4V15VUMWQm4eFrQX0GNni7PapryjGHd/vgUM+ncaLnWY0RimmEYg3LW9vA
+        F6sONMvZCNVaGHp2t9atKLHkYGofU9dB4/y1xkdPygA9/f+/M9XqkxTNncJpKU5b
+        p/MTrBYfhDTNfU1JT522QI=
+Received: from COOL-20201222LC.ccdomain.com (unknown [218.94.48.178])
+        by smtp12 (Coremail) with SMTP id EMCowABnzUZeoYtgiLnUoQ--.999S2;
+        Fri, 30 Apr 2021 14:19:11 +0800 (CST)
+From:   dingsenjie@163.com
+To:     robert.foss@linaro.org, todor.too@gmail.com, agross@kernel.org,
+        bjorn.andersson@linaro.org, mchehab@kernel.org
+Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, dingsenjie <dingsenjie@yulong.com>
+Subject: [PATCH] media: qcom/camss: Use devm_platform_ioremap_resource_byname
+Date:   Fri, 30 Apr 2021 14:18:33 +0800
+Message-Id: <20210430061833.32960-1-dingsenjie@163.com>
+X-Mailer: git-send-email 2.21.0.windows.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Fri, 30 Apr 2021 11:04:16 +0530
-From:   Sibi Sankar <sibis@codeaurora.org>
-To:     Odelu Kukatla <okukatla@codeaurora.org>
-Cc:     georgi.djakov@linaro.org, bjorn.andersson@linaro.org,
-        evgreen@google.com, Andy Gross <agross@kernel.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        sboyd@kernel.org, ilina@codeaurora.org, seansw@qti.qualcomm.com,
-        elder@linaro.org, linux-arm-msm-owner@vger.kernel.org
-Subject: Re: [1/3] dt-bindings: interconnect: Add EPSS L3 DT binding on SC7280
-In-Reply-To: <1618556290-28303-2-git-send-email-okukatla@codeaurora.org>
-References: <1618556290-28303-1-git-send-email-okukatla@codeaurora.org>
- <1618556290-28303-2-git-send-email-okukatla@codeaurora.org>
-Message-ID: <825aca2d853e5dd577d61396df49f44a@codeaurora.org>
-X-Sender: sibis@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: EMCowABnzUZeoYtgiLnUoQ--.999S2
+X-Coremail-Antispam: 1Uf129KBjvJXoWxJw4rZrWfGF4DZr13Ww17ZFb_yoWrWw4fpr
+        WxGFWxur13GF4UC348Jw1DCF4rJF1F9ayUWr43Zw1fZa9xJr9rAw4UCa40yryqyFWjv3W7
+        Jr4SqFyUZa9Y9F7anT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+        9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07jbpnQUUUUU=
+X-Originating-IP: [218.94.48.178]
+X-CM-SenderInfo: 5glqw25hqmxvi6rwjhhfrp/1tbiHh+EyFSIuNfdOQAAsa
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hey Odelu,
-Thanks for the patch!
+From: dingsenjie <dingsenjie@yulong.com>
 
-On 2021-04-16 12:28, Odelu Kukatla wrote:
-> Add Epoch Subsystem (EPSS) L3 interconnect provider binding on SC7280
-> SoCs.
-> 
-> Signed-off-by: Odelu Kukatla <okukatla@codeaurora.org>
-> ---
->  Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git
-> a/Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml
-> b/Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml
-> index d6a95c3..98223f8 100644
-> --- a/Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml
-> +++ b/Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml
-> @@ -18,6 +18,7 @@ properties:
->    compatible:
->      enum:
->        - qcom,sc7180-osm-l3
-> +      - qcom,sc7280-epss-l3
->        - qcom,sdm845-osm-l3
->        - qcom,sm8150-osm-l3
->        - qcom,sm8250-epss-l3
+Use the devm_platform_ioremap_resource_byname() helper instead of
+calling platform_get_resource_byname() and devm_ioremap_resource()
+separately.
 
-Based on the driver/dts changes the
-reg property maxItems will no longer
-be just 1.
+Signed-off-by: dingsenjie <dingsenjie@yulong.com>
+---
+ drivers/media/platform/qcom/camss/camss-csid.c   | 3 +--
+ drivers/media/platform/qcom/camss/camss-csiphy.c | 6 ++----
+ drivers/media/platform/qcom/camss/camss-ispif.c  | 6 ++----
+ drivers/media/platform/qcom/camss/camss-vfe.c    | 3 +--
+ 4 files changed, 6 insertions(+), 12 deletions(-)
 
-
+diff --git a/drivers/media/platform/qcom/camss/camss-csid.c b/drivers/media/platform/qcom/camss/camss-csid.c
+index be3fe76..b62f6ae 100644
+--- a/drivers/media/platform/qcom/camss/camss-csid.c
++++ b/drivers/media/platform/qcom/camss/camss-csid.c
+@@ -1111,8 +1111,7 @@ int msm_csid_subdev_init(struct camss *camss, struct csid_device *csid,
+ 
+ 	/* Memory */
+ 
+-	r = platform_get_resource_byname(pdev, IORESOURCE_MEM, res->reg[0]);
+-	csid->base = devm_ioremap_resource(dev, r);
++	csid->base = devm_platform_ioremap_resource_byname(pdev, res->reg[0]);
+ 	if (IS_ERR(csid->base)) {
+ 		dev_err(dev, "could not map memory\n");
+ 		return PTR_ERR(csid->base);
+diff --git a/drivers/media/platform/qcom/camss/camss-csiphy.c b/drivers/media/platform/qcom/camss/camss-csiphy.c
+index 509c9a5..c46f4bf 100644
+--- a/drivers/media/platform/qcom/camss/camss-csiphy.c
++++ b/drivers/media/platform/qcom/camss/camss-csiphy.c
+@@ -563,15 +563,13 @@ int msm_csiphy_subdev_init(struct camss *camss,
+ 
+ 	/* Memory */
+ 
+-	r = platform_get_resource_byname(pdev, IORESOURCE_MEM, res->reg[0]);
+-	csiphy->base = devm_ioremap_resource(dev, r);
++	csiphy->base = devm_platform_ioremap_resource_byname(pdev, res->reg[0]);
+ 	if (IS_ERR(csiphy->base)) {
+ 		dev_err(dev, "could not map memory\n");
+ 		return PTR_ERR(csiphy->base);
+ 	}
+ 
+-	r = platform_get_resource_byname(pdev, IORESOURCE_MEM, res->reg[1]);
+-	csiphy->base_clk_mux = devm_ioremap_resource(dev, r);
++	csiphy->base_clk_mux = devm_platform_ioremap_resource_byname(pdev, res->reg[1]);
+ 	if (IS_ERR(csiphy->base_clk_mux)) {
+ 		dev_err(dev, "could not map memory\n");
+ 		return PTR_ERR(csiphy->base_clk_mux);
+diff --git a/drivers/media/platform/qcom/camss/camss-ispif.c b/drivers/media/platform/qcom/camss/camss-ispif.c
+index adeb928..de624fe 100644
+--- a/drivers/media/platform/qcom/camss/camss-ispif.c
++++ b/drivers/media/platform/qcom/camss/camss-ispif.c
+@@ -1131,15 +1131,13 @@ int msm_ispif_subdev_init(struct ispif_device *ispif,
+ 
+ 	/* Memory */
+ 
+-	r = platform_get_resource_byname(pdev, IORESOURCE_MEM, res->reg[0]);
+-	ispif->base = devm_ioremap_resource(dev, r);
++	ispif->base = devm_platform_ioremap_resource_byname(pdev, res->reg[0]);
+ 	if (IS_ERR(ispif->base)) {
+ 		dev_err(dev, "could not map memory\n");
+ 		return PTR_ERR(ispif->base);
+ 	}
+ 
+-	r = platform_get_resource_byname(pdev, IORESOURCE_MEM, res->reg[1]);
+-	ispif->base_clk_mux = devm_ioremap_resource(dev, r);
++	ispif->base_clk_mux = devm_platform_ioremap_resource_byname(pdev, res->reg[1]);
+ 	if (IS_ERR(ispif->base_clk_mux)) {
+ 		dev_err(dev, "could not map memory\n");
+ 		return PTR_ERR(ispif->base_clk_mux);
+diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/media/platform/qcom/camss/camss-vfe.c
+index fae2b51..54986cf 100644
+--- a/drivers/media/platform/qcom/camss/camss-vfe.c
++++ b/drivers/media/platform/qcom/camss/camss-vfe.c
+@@ -2008,8 +2008,7 @@ int msm_vfe_subdev_init(struct camss *camss, struct vfe_device *vfe,
+ 
+ 	/* Memory */
+ 
+-	r = platform_get_resource_byname(pdev, IORESOURCE_MEM, res->reg[0]);
+-	vfe->base = devm_ioremap_resource(dev, r);
++	vfe->base = devm_platform_ioremap_resource_byname(pdev, res->reg[0]);
+ 	if (IS_ERR(vfe->base)) {
+ 		dev_err(dev, "could not map memory\n");
+ 		return PTR_ERR(vfe->base);
 -- 
-Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project.
+1.9.1
+
+
