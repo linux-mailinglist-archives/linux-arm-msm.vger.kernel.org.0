@@ -2,257 +2,178 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F1D1C3701CA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Apr 2021 22:10:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B6B9D370298
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Apr 2021 23:04:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232996AbhD3UGe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Apr 2021 16:06:34 -0400
-Received: from mail-ot1-f49.google.com ([209.85.210.49]:36491 "EHLO
-        mail-ot1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232957AbhD3UGe (ORCPT
+        id S235918AbhD3VFp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Apr 2021 17:05:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50202 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231278AbhD3VFo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Apr 2021 16:06:34 -0400
-Received: by mail-ot1-f49.google.com with SMTP id n32-20020a9d1ea30000b02902a53d6ad4bdso10485975otn.3;
-        Fri, 30 Apr 2021 13:05:45 -0700 (PDT)
+        Fri, 30 Apr 2021 17:05:44 -0400
+Received: from mail-qt1-x832.google.com (mail-qt1-x832.google.com [IPv6:2607:f8b0:4864:20::832])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC122C06138B
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Apr 2021 14:04:55 -0700 (PDT)
+Received: by mail-qt1-x832.google.com with SMTP id o21so24505811qtp.7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Apr 2021 14:04:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Ydzc/UQSfGeVQNFG/QnxGDWnpFhecwtLoJxqG8ZG8Cg=;
+        b=Ov5R523poXhFI1+DTO58fwJyVG5rNJSwtnBjJkc2d0NfuddPNjyjVNuQDvPuV3xvSz
+         HvpREttduQPxVSPQAOIyOYBQxfZyhIf/3wphxaf8asWM5RUMbVBRfrz5KxXU54bvlJws
+         Xz7/VHZ58xLOEFJrCnt8mUt8eX7GqtBE7DXmA=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=T7ePI4bIX8CcnC5j3hUDE0qviNPb4HDFmqxhfLcKhzs=;
-        b=JYHPIFUIi4U/3CpgUtBQ7Rhnnyvk6THwNXM8+f97Y2NYapWSNgmEh+H63XzKdU6LI0
-         4ioATsTz4wZAxwb+dWpr83QvTcYE6iPvxWocro7exzBr2Grcn3p32XpFq1bSKNoAk2Om
-         zgy9gfL2BXDnUygWqBY40kJ+Ip2jzntedgak9by5c+rhdGOrkD339nrX5xw5mlgZ8ADx
-         kKabwfDeol4NC6ucynQvOX6/zxSISnxC4Rpp/c7N+TFhZ5qdvDUsf4egYmLGpgtf+h4X
-         1YBFHhAZAYRv8ubutJ1hoI5gWgcGuqdobsAVaXAbdhAuR+B72dwnBWH2E7fIIk0ehjDq
-         yNvA==
-X-Gm-Message-State: AOAM530bD32PuAi/SZyxZAHmOxndWRy+rrd+zFUciCyzOIM547r/moWJ
-        4BkFgi3ZP4NsQAy+fGsJVA==
-X-Google-Smtp-Source: ABdhPJzxQDEmXhTIvUDst9IPtWg/QKelSOh5zpecKai2g4sf9uXP5LZNFw8DZ3Kd7bh//H6TZ3gvQA==
-X-Received: by 2002:a05:6830:30ad:: with SMTP id g13mr4929721ots.272.1619813144488;
-        Fri, 30 Apr 2021 13:05:44 -0700 (PDT)
-Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id w3sm899112otg.78.2021.04.30.13.05.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 30 Apr 2021 13:05:43 -0700 (PDT)
-Received: (nullmailer pid 3796857 invoked by uid 1000);
-        Fri, 30 Apr 2021 20:05:42 -0000
-Date:   Fri, 30 Apr 2021 15:05:42 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Pavel Machek <pavel@ucw.cz>, Andy Gross <agross@kernel.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-        <u.kleine-koenig@pengutronix.de>, Lee Jones <lee.jones@linaro.org>,
-        linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-pwm@vger.kernel.org,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Yassine Oudjana <y.oudjana@protonmail.com>,
-        Luca Weiss <luca@z3ntu.xyz>,
-        Subbaraman Narayanamurthy <subbaram@codeaurora.org>
-Subject: Re: [PATCH v7 1/6] dt-bindings: leds: Add Qualcomm Light Pulse
- Generator binding
-Message-ID: <20210430200542.GA3779966@robh.at.kernel.org>
-References: <20210429211517.312792-1-bjorn.andersson@linaro.org>
- <20210429211517.312792-2-bjorn.andersson@linaro.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Ydzc/UQSfGeVQNFG/QnxGDWnpFhecwtLoJxqG8ZG8Cg=;
+        b=M/p1qczUmFL65A3C8ast1x0a74wkNy1PKlnt7mOOHRk7uv8PE67Be2URtvO/1hyp/E
+         n/lsmNEx3R1DxybEKA29JFXhGvnbifJ8Fa8AuG/xGKozDKs8GVNcTInQ3L0jXQ8FOB4R
+         l1bIfeRoMsRJwg+uW5gupd9Xz8E7LLEW3wmfInwJvVtXdFlyuHk54hTNIWTI8elUS/Ui
+         K2CpeY5pWu494lUGveoMj4NmYl1C31wKLZ34VcT8m8iln/hCclxd2t6jRtmeeuwhyOXf
+         Ck/qtHqO6cUQ2ISrd5lmBvBuWFMD1a1Xae6LLJ+gOXviOfB8i6r346g4BX7uR9Vw7yaq
+         lr7Q==
+X-Gm-Message-State: AOAM532fyVWMujOw9mQKXMj94/uAn58s/avbI4pTddGjJm0vl4bscVUl
+        U4cGb0WgWGGFdIRuMx8o1u2G6ATjxFgzzw==
+X-Google-Smtp-Source: ABdhPJzZB1I7JJxWXN+okLduRFgrKXc4wvVbziDtOaF1dWqKogkMvRoA8kjJzHRadCG44UxAHEK/fQ==
+X-Received: by 2002:ac8:6055:: with SMTP id k21mr6207603qtm.196.1619816694535;
+        Fri, 30 Apr 2021 14:04:54 -0700 (PDT)
+Received: from mail-yb1-f172.google.com (mail-yb1-f172.google.com. [209.85.219.172])
+        by smtp.gmail.com with ESMTPSA id h65sm2382668qkd.112.2021.04.30.14.04.52
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 30 Apr 2021 14:04:52 -0700 (PDT)
+Received: by mail-yb1-f172.google.com with SMTP id 82so84868857yby.7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Apr 2021 14:04:52 -0700 (PDT)
+X-Received: by 2002:a25:6088:: with SMTP id u130mr10217798ybb.257.1619816691670;
+ Fri, 30 Apr 2021 14:04:51 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210429211517.312792-2-bjorn.andersson@linaro.org>
+References: <20210423165906.2504169-1-dianders@chromium.org>
+ <20210423095743.v5.1.I9e6af2529d6c61e5daf86a15a1211121c5223b9a@changeid>
+ <CACRpkdYkRFLvCRPSYNzYQG58QgPfhvjtHb+FBQZadyrnjC8=1A@mail.gmail.com>
+ <CAD=FV=UX683grZ=poTwKXxSqYBCLdLAOCxOPhE_xVVgKbe36Mw@mail.gmail.com> <CACRpkdYfugrJ4WGn=w+viGXE6s5cdHjLC++jHPLVy_QH09KA8Q@mail.gmail.com>
+In-Reply-To: <CACRpkdYfugrJ4WGn=w+viGXE6s5cdHjLC++jHPLVy_QH09KA8Q@mail.gmail.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Fri, 30 Apr 2021 14:04:39 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=XXxTz8hi92y6p3hX7iVEHuqKHsrKPSnX_a__WCEQRAKw@mail.gmail.com>
+Message-ID: <CAD=FV=XXxTz8hi92y6p3hX7iVEHuqKHsrKPSnX_a__WCEQRAKw@mail.gmail.com>
+Subject: Re: [PATCH v5 01/20] drm/panel: panel-simple: Add missing
+ pm_runtime_disable() calls
+To:     Linus Walleij <linus.walleij@linaro.org>,
+        Andrzej Hajda <a.hajda@samsung.com>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Neil Armstrong <narmstrong@baylibre.com>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jernej Skrabec <jernej.skrabec@siol.net>,
+        Sam Ravnborg <sam@ravnborg.org>, Wolfram Sang <wsa@kernel.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Steev Klimaszewski <steev@kali.org>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        linux-i2c <linux-i2c@vger.kernel.org>,
+        "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        linux-kernel <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Apr 29, 2021 at 02:15:12PM -0700, Bjorn Andersson wrote:
-> This adds the binding document describing the three hardware blocks
-> related to the Light Pulse Generator found in a wide range of Qualcomm
-> PMICs.
-> 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
-> 
-> Changes since v6:
-> - Backed qcom,dtest out of the child nodes again, as it's useful to be able to
->   route pwm signals through dtest lines as well (and pwm channels aren't
->   described as children).
-> - Added pm8150[bl] compatibles
-> - Dropped quotes around qcom,dtest
-> - Fixed indentation errors in subnode definition
-> 
->  .../bindings/leds/leds-qcom-lpg.yaml          | 158 ++++++++++++++++++
->  1 file changed, 158 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml b/Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml
-> new file mode 100644
-> index 000000000000..2998598e8785
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml
-> @@ -0,0 +1,158 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/leds/leds-qcom-lpg.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm Light Pulse Generator
-> +
-> +maintainers:
-> +  - Bjorn Andersson <bjorn.andersson@linaro.org>
-> +
-> +description: >
-> +  The Qualcomm Light Pulse Generator consists of three different hardware blocks;
-> +  a ramp generator with lookup table, the light pulse generator and a three
-> +  channel current sink. These blocks are found in a wide range of Qualcomm PMICs.
-> +
-> +properties:
-> +  compatible:
-> +    enum:
-> +      - qcom,pm8150b-lpg
-> +      - qcom,pm8150l-lpg
-> +      - qcom,pm8916-pwm
-> +      - qcom,pm8941-lpg
-> +      - qcom,pm8994-lpg
-> +      - qcom,pmi8994-lpg
-> +      - qcom,pmi8998-lpg
-> +
-> +  "#pwm-cells":
-> +    const: 2
-> +
-> +  "#address-cells":
-> +    const: 1
-> +
-> +  "#size-cells":
-> +    const: 0
-> +
-> +  qcom,power-source:
-> +    $ref: /schemas/types.yaml#/definitions/uint32
-> +    description:
-> +      power-source used to drive the output, as defined in the datasheet.
-> +      Should be specified if the TRILED block is present
+Hi,
 
-constraints?
+On Thu, Apr 29, 2021 at 6:28 PM Linus Walleij <linus.walleij@linaro.org> wrote:
+>
+> On Fri, Apr 30, 2021 at 3:25 AM Doug Anderson <dianders@chromium.org> wrote:
+>
+> > > I think pm_runtime_disable(); need to be added there?
+> >
+> > I'm a bit confused. You're saying that I need to add
+> > pm_runtime_disable() to panel_simple_remove()? Doesn't this patch do
+> > that?
+>
+> It does, sorry, too late at night :D
+>
+> I was looking at the previous patch and mixed up which was the
+> patch and the patch to the patch...
+>
+> Thanks, apply this!
 
-> +
-> +  qcom,dtest:
-> +    $ref: /schemas/types.yaml#/definitions/uint32-array
-> +    description: >
-> +      A list of integer pairs, where each pair represent the dtest line the
-> +      particular channel should be connected to and the flags denoting how the
-> +      value should be outputed, as defined in the datasheet. The number of
-> +      pairs should be the same as the number of channels.
+Pushed this one patch. Rest of the series is pending adult
+supervision. Overall summary:
 
-Sounds like a matrix rather than array. Constraints on the values?
+1. I could probably push some of the early sn65dsi86 cleanup patches
+in this series since they have Bjorn's review and are pretty much
+no-ops / simple cleanups, but there's probably not tons gained for
+shoving those in early.
 
-> +
-> +  multi-led:
-> +    type: object
-> +    $ref: leds-class-multicolor.yaml#
-> +    properties:
-> +      "#address-cells":
-> +        const: 1
-> +
-> +      "#size-cells":
-> +        const: 0
-> +
-> +      "^led@[0-9a-f]$":
-> +        type: object
-> +        $ref: common.yaml#
-> +
-> +patternProperties:
-> +  "^led@[0-9a-f]$":
-> +    type: object
-> +    $ref: common.yaml#
-> +
-> +    properties:
-> +      reg: true
-> +
-> +    required:
-> +      - reg
-> +
-> +required:
-> +  - compatible
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/leds/common.h>
-> +
-> +    lpg {
-> +      compatible = "qcom,pmi8994-lpg";
-> +
-> +      #address-cells = <1>;
-> +      #size-cells = <0>;
-> +
-> +      qcom,power-source = <1>;
-> +
-> +      qcom,dtest = <0 0
-> +                    0 0
-> +                    0 0
-> +                    4 1>;
-> +
-> +      led@1 {
-> +        reg = <1>;
-> +        label = "green:user1";
-> +      };
-> +
-> +      led@2 {
-> +        reg = <2>;
-> +        label = "green:user0";
-> +        default-state = "on";
-> +      };
-> +
-> +      led@3 {
-> +        reg = <3>;
-> +        label = "green:user2";
-> +      };
-> +
-> +      led@4 {
-> +        reg = <4>;
-> +        label = "green:user3";
-> +      };
-> +    };
-> +  - |
-> +    #include <dt-bindings/leds/common.h>
-> +
-> +    lpg {
-> +      compatible = "qcom,pmi8994-lpg";
-> +
-> +      #address-cells = <1>;
-> +      #size-cells = <0>;
-> +
-> +      qcom,power-source = <1>;
-> +
-> +      multi-led {
-> +        color = <LED_COLOR_ID_MULTI>;
-> +        label = "rgb:notification";
-> +
-> +        #address-cells = <1>;
-> +        #size-cells = <0>;
-> +
-> +        led@1 {
-> +          reg = <1>;
-> +          color = <LED_COLOR_ID_RED>;
-> +        };
-> +
-> +        led@2 {
-> +          reg = <2>;
-> +          color = <LED_COLOR_ID_GREEN>;
-> +        };
-> +
-> +        led@3 {
-> +          reg = <3>;
-> +          color = <LED_COLOR_ID_BLUE>;
-> +        };
-> +      };
-> +    };
-> +  - |
-> +    lpg {
-> +      compatible = "qcom,pm8916-pwm";
-> +      #pwm-cells = <2>;
-> +    };
-> +...
-> -- 
-> 2.29.2
-> 
+2. The whole concept of breaking up the patch into sub-drivers has no
+official Reviewed-by tags yet. Presumably Bjorn will give those a
+re-review when he has time again. Assuming nobody is really upset
+about it, I could land those which might unblock some of Bjorn's
+future PWM work. It would probably be good to get an extra set of eyes
+on them, though, just so someone else agrees that they're not "too
+hacky" or anything. IMO it's actually a pretty nice solution, but I'm
+biased!
+
+3. Laurent and I had a big discussion on #dri-devel yesterday about
+the EDID reading. He's not totally convinced with the idea of doing
+this in the panel when the bridge could just do it by itself, but it
+sounded like he might be coming around. Right now this is waiting on
+Laurent to have time to get back to this.
+
+My summary of the IRC discussion with Laurent (please correct if I got
+this wrong):
+
+a) In general I argued that it was important to be able to provide the
+EDID and the DDC bus to the panel driver. Providing the EDID to the
+panel driver allows the panel driver is one of the prerequisites for
+my proposal for solving the "panel second sourcing" problem [1]. Being
+able to provide the DDC bus to the panel will likely be important in
+the eventual solution to Rajeev's problem [2].
+
+b) Today, if we provide the DDC bus to simple-panel then simple-panel
+will assume it's in charge of reading the EDID.
+
+c) Having the panel driver involved in reading the EDID feels like it
+makes sense to me. The panel driver knows how to power the panel on
+enough to read the EDID. It also might know extra quirks needed to
+read the EDID on a given panel. This feels a little cleaner (to me)
+than just re-using the panel's "prepare" and assuming that a prepared
+panel was ready for EDID read, though I can see that both may have
+their advantages.
+
+d) Laurent proposed that some eDP controllers might have special ways
+to read an EDID but might not be able to provide a DDC bus or an i2c
+bus. If we run into controllers like this then we would be painted
+into a corner and we'd have to come up with a new solution. This is
+definitely a good point, though it remains to be seen if this is
+common with eDP (like Laurent says it is for HDMI). Some eDP panels
+need custom DDC commands in order to be configured and so hopefully
+all eDP bridges out there at least provide a DDC bus. It does feel
+like this could be solved later, though. My patch series is leveraging
+the existing concept that the panel driver is in charge of reading the
+EDID if it's given the DDC bus, so it's not creating a new mechanism
+but instead just continuing to use the existing mechanism. If the
+existing mechanism doesn't work then it can be improved when there is
+a need.
+
+e) Laurent worried about circular dependencies and wanted to see my
+solution to the problem before deciding if it was too big of a hack.
+Hopefully it looks OK since it solves not only this problem but also
+the HPD GPIO problem and will be important for when Bjorn exports the
+PWM from the bridge chip.
+
+[1] https://lore.kernel.org/lkml/CAD=FV=VZYOMPwQZzWdhJGh5cjJWw_EcM-wQVEivZ-bdGXjPrEQ@mail.gmail.com/
+[2] https://lore.kernel.org/r/78c4bd291bd4a17ae2a1d02d0217de43@codeaurora.org
+
+OK, I'll shut up now. ;-)
+
+-Doug
