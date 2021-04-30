@@ -2,103 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A404C36F4D6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Apr 2021 06:19:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8D63C36F55C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Apr 2021 07:34:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229448AbhD3EUi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Apr 2021 00:20:38 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:36188 "EHLO
+        id S230152AbhD3FfL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Apr 2021 01:35:11 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:31568 "EHLO
         so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229591AbhD3EUh (ORCPT
+        with ESMTP id S230119AbhD3FfL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Apr 2021 00:20:37 -0400
+        Fri, 30 Apr 2021 01:35:11 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1619756390; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=p96M617M0cLXWMwRYD86v31l/3RAtWy/K/4ZMBXEbpM=; b=EwYXk8xSlDiSegxDIgoDlSUpVdnqBjB/Vdhd08sH3o7uAN5dQgMJheksBLMWijEWJWl+fTNq
- RtnUwXgVpd92E4FONzdfdfm0El0ekZDkVDsC/qp4DPPkxbE7bGtSkJsBAxhF9KsdDs3YnB9k
- bjVv+octbZJ9mpExhRwbgqRHYv8=
+ s=smtp; t=1619760864; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=WyIiMnFBS/zDlAuBJ6dVpP5Wm6YrC+/il7PmxfKg7BE=;
+ b=leaXCiyMf9FbmJ4zYthyycpV0hO3z75sRlRExcPVWACoex88OjlPpN3PR5F7gajTGv0VuLZB
+ 0854XEQGyAWDw0bY9H3py18nIYZAUzPVWZrfvdn3DCAiNsO3U/5W4b1qkKbGFQxC7D25WF7E
+ 0/OeQyIZ6wL8FEsqhmkhZwME5KQ=
 X-Mailgun-Sending-Ip: 198.61.254.9
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
- 608b8551a817abd39a570272 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 30 Apr 2021 04:19:29
+ smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
+ 608b96da853c0a2c46e310dd (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 30 Apr 2021 05:34:18
  GMT
-Sender: rnayak=codeaurora.org@mg.codeaurora.org
+Sender: sibis=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id F271BC4323A; Fri, 30 Apr 2021 04:19:28 +0000 (UTC)
+        id 7778BC4323A; Fri, 30 Apr 2021 05:34:17 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [192.168.1.15] (unknown [61.3.17.29])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: rnayak)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 8A251C433D3;
-        Fri, 30 Apr 2021 04:19:21 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 8A251C433D3
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=rnayak@codeaurora.org
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: sc7280: Add "google,senor" to the
- compatible
-To:     "Robert P. J. Day" <rpjday@crashcourse.ca>,
-        Doug Anderson <dianders@chromium.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>
-References: <1619674827-26650-1-git-send-email-rnayak@codeaurora.org>
- <1619674827-26650-2-git-send-email-rnayak@codeaurora.org>
- <CAD=FV=UUowpvn_2uPrOQG9hOCdX6GYZDojBdW+w8hg5q6PfvAQ@mail.gmail.com>
- <a26e7152-208e-3343-a9f8-8dfdeb222aeb@crashcourse.ca>
-From:   Rajendra Nayak <rnayak@codeaurora.org>
-Message-ID: <8391f7e4-b727-f369-2494-86609438012c@codeaurora.org>
-Date:   Fri, 30 Apr 2021 09:49:18 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.10.0
+        (Authenticated sender: sibis)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id AA03CC433F1;
+        Fri, 30 Apr 2021 05:34:16 +0000 (UTC)
 MIME-Version: 1.0
-In-Reply-To: <a26e7152-208e-3343-a9f8-8dfdeb222aeb@crashcourse.ca>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
 Content-Transfer-Encoding: 7bit
+Date:   Fri, 30 Apr 2021 11:04:16 +0530
+From:   Sibi Sankar <sibis@codeaurora.org>
+To:     Odelu Kukatla <okukatla@codeaurora.org>
+Cc:     georgi.djakov@linaro.org, bjorn.andersson@linaro.org,
+        evgreen@google.com, Andy Gross <agross@kernel.org>,
+        Georgi Djakov <djakov@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        sboyd@kernel.org, ilina@codeaurora.org, seansw@qti.qualcomm.com,
+        elder@linaro.org, linux-arm-msm-owner@vger.kernel.org
+Subject: Re: [1/3] dt-bindings: interconnect: Add EPSS L3 DT binding on SC7280
+In-Reply-To: <1618556290-28303-2-git-send-email-okukatla@codeaurora.org>
+References: <1618556290-28303-1-git-send-email-okukatla@codeaurora.org>
+ <1618556290-28303-2-git-send-email-okukatla@codeaurora.org>
+Message-ID: <825aca2d853e5dd577d61396df49f44a@codeaurora.org>
+X-Sender: sibis@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hey Odelu,
+Thanks for the patch!
 
-On 4/29/2021 7:13 PM, Robert P. J. Day wrote:
-> On Thu, 29 Apr 2021, Doug Anderson wrote:
+On 2021-04-16 12:28, Odelu Kukatla wrote:
+> Add Epoch Subsystem (EPSS) L3 interconnect provider binding on SC7280
+> SoCs.
 > 
->> Hi,
->>
->> On Wed, Apr 28, 2021 at 10:40 PM Rajendra Nayak <rnayak@codeaurora.org> wrote:
->>>
->>> The sc7280 IDP board is also called senor in the Chrome OS builds.
->>> Add the "google,senor" compatible so coreboot/depthcharge knows what
->>> device tree blob to pick
->>>
->>> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
->>> ---
->>>   arch/arm64/boot/dts/qcom/sc7280-idp.dts | 2 +-
->>>   1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> Reviewed-by: Douglas Anderson <dianders@chromium.org>
+> Signed-off-by: Odelu Kukatla <okukatla@codeaurora.org>
+> ---
+>  Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml | 1 +
+>  1 file changed, 1 insertion(+)
 > 
->    subject line contains "google,senor"
+> diff --git
+> a/Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml
+> b/Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml
+> index d6a95c3..98223f8 100644
+> --- a/Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml
+> +++ b/Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml
+> @@ -18,6 +18,7 @@ properties:
+>    compatible:
+>      enum:
+>        - qcom,sc7180-osm-l3
+> +      - qcom,sc7280-epss-l3
+>        - qcom,sdm845-osm-l3
+>        - qcom,sm8150-osm-l3
+>        - qcom,sm8250-epss-l3
 
-are you suggesting it should not?
+Based on the driver/dts changes the
+reg property maxItems will no longer
+be just 1.
 
-> 
-> rday
-> 
 
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project.
