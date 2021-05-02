@@ -2,72 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F29DE3709A1
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 May 2021 03:43:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 22108370B62
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 May 2021 13:53:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231593AbhEBBoL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 1 May 2021 21:44:11 -0400
-Received: from mail-40131.protonmail.ch ([185.70.40.131]:54276 "EHLO
-        mail-40131.protonmail.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232225AbhEBBoK (ORCPT
+        id S230120AbhEBLyg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 2 May 2021 07:54:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41570 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232166AbhEBLyf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 1 May 2021 21:44:10 -0400
-Date:   Sun, 02 May 2021 01:43:09 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=connolly.tech;
-        s=protonmail; t=1619919798;
-        bh=1twZjmk0G+fLgXmyNkb7Ue7rlpuc4SbKld7JI01l880=;
-        h=Date:To:From:Cc:Reply-To:Subject:From;
-        b=d9ixEQ8r4A9EW6+c68ryrPidt0XtsWGl8xbMqCK0iY/qtspbeJFU7APBqNkin5sM2
-         OkpNi9bb/2pLQTjFY45Z0U56BcM93xqbR0H+SCHIqAnl02TymP5OPKh7OUDspI4zBk
-         Lysis1ZfnbbSfBeQ0V+VdlbP/HEdcc3wgF7J57o0=
-To:     caleb@connolly.tech, Andy Gross <agross@kernel.org>,
+        Sun, 2 May 2021 07:54:35 -0400
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 243E9C06138B
+        for <linux-arm-msm@vger.kernel.org>; Sun,  2 May 2021 04:53:44 -0700 (PDT)
+Received: by mail-ed1-x536.google.com with SMTP id i3so3186345edt.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 02 May 2021 04:53:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=snejp.pl; s=gmail;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=gQhNcy2LNQytLGOWB93x3Yia/FlpQuGD9oTfRwaHwtc=;
+        b=YRDDjmMQ4uz6Yg8/UFaM1VFNIMQbNSCUy3AgtxJj0MM7IwRwPtLyffG1VCLA+P8NWj
+         G2Sv70kuzDojxXTB54ZXPKVAxJLCHR7W0AYRp4sOzcHag3jm7LNyyCrcel6KCTOjAt4R
+         fwr4zGmqS7SZzNbEVl6K7706mBt4tyb8grRYj9s1IFJQAmBAJYY2+7aWFYk1KWr/KwKn
+         PqF0cATKc0TStnGyelBsKwGHuIWvc86kl68HmShrxv/xnB0YdN2JHv2M164zU4PUJ7BK
+         gn92ZEbHHH/ESJPcn8ZZ/J8XMJVZ8mtyJWf0eG8dqPjiiwfgCU9v0pe81fBc+VXZY6RS
+         sMtw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=gQhNcy2LNQytLGOWB93x3Yia/FlpQuGD9oTfRwaHwtc=;
+        b=s+UdUcqZfdbYGfy7gW9uZ1ktrMz6+dGUoUiIh+2gzVJmvoCGteCGqY2VOSjmDlYD8N
+         EYpGyNE6qiS2N3tnT7pBphxHfrOwVunkD82erJoKrjHjtiXRR5pPd99jKexyMwIRTZv3
+         D7wgTP822G82KskGvySM2y7mFA57sCnlh3IkvubEit8RM9jgR75Bi9ckRquGfk6kjNQj
+         ILfikU3vQV9CsSDkUyNwwki6J0MMPlIn4vzyqOYBTi7vU5CeezBOb9UC3fTgscXHBSRI
+         lhJXIkTluNZI/uHWXghzElZEzbBvcnDwcgO6/p64idBOr13y65UdAWx+xHUx2Jl/zM7B
+         jK2Q==
+X-Gm-Message-State: AOAM530oeAfR73fG5gx/MncW7HpKs8RR+sXLf2SbVM+kkhb/7HKjL6BA
+        qV7SpAijdyPqVBMQ5cH13mlGGQ==
+X-Google-Smtp-Source: ABdhPJwTOA7f5PiQKmT2l38tfhrAv7+vdZZWlfvWVt2eyPOWrVYp9QdFdSUfYT2pM5omKhECTgZztg==
+X-Received: by 2002:a50:9e0b:: with SMTP id z11mr15389314ede.228.1619956420544;
+        Sun, 02 May 2021 04:53:40 -0700 (PDT)
+Received: from PackardBell (192038133011.mbb.telenor.dk. [192.38.133.11])
+        by smtp.googlemail.com with ESMTPSA id mp36sm8598075ejc.48.2021.05.02.04.53.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 02 May 2021 04:53:39 -0700 (PDT)
+Received: from localhost (PackardBell [local])
+        by PackardBell (OpenSMTPD) with ESMTPA id 1777edaa;
+        Sun, 2 May 2021 11:53:35 +0000 (UTC)
+From:   Bartosz Dudziak <bartosz.dudziak@snejp.pl>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-From:   Caleb Connolly <caleb@connolly.tech>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Reply-To: Caleb Connolly <caleb@connolly.tech>
-Subject: [PATCH 4/4] dts: arm64: sdm845-oneplus-common: enable ipa
-Message-ID: <20210502014146.85642-5-caleb@connolly.tech>
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Kathiravan T <kathirav@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+Cc:     Bartosz Dudziak <bartosz.dudziak@snejp.pl>
+Subject: [PATCH 1/2] dt-bindings: regulator: qcom: Document PM8226 smd regulator
+Date:   Sun,  2 May 2021 13:53:03 +0200
+Message-Id: <20210502115304.8570-1-bartosz.dudziak@snejp.pl>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-1.2 required=10.0 tests=ALL_TRUSTED,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF shortcircuit=no
-        autolearn=disabled version=3.4.4
-X-Spam-Checker-Version: SpamAssassin 3.4.4 (2020-01-24) on
-        mailout.protonmail.ch
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable the ipa node so that we can bring up mobile data.
+Document the PM8226 SMD-RPM regulator entry.
 
-Signed-off-by: Caleb Connolly <caleb@connolly.tech>
+Signed-off-by: Bartosz Dudziak <bartosz.dudziak@snejp.pl>
 ---
- arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi | 6 ++++++
- 1 file changed, 6 insertions(+)
+ .../bindings/regulator/qcom,smd-rpm-regulator.yaml           | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi b/arch/arm=
-64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-index 96c370b90550..a6ec1d0b4263 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-@@ -397,6 +397,12 @@ rmi4_f12: rmi4-f12@12 {
- =09};
- };
-=20
-+&ipa {
-+=09status =3D "okay";
+diff --git a/Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml b/Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml
+index a35c6cb9bf..83b53579f4 100644
+--- a/Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml
++++ b/Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml
+@@ -24,6 +24,10 @@ description:
+ 
+   For mp5496, s2
+ 
++  For pm8226, s1, s2, s3, s4, s5, l1, l2, l3, l4, l5, l6, l7, l8, l9, l10,
++  l11, l12, l13, l14, l15, l16, l17, l18, l19, l20, l21, l22, l23, l24, l25,
++  l26, l27, l28, lvs1
 +
-+=09memory-region =3D <&ipa_fw_mem>;
-+};
-+
- &mdss {
- =09status =3D "okay";
- };
---=20
-2.30.2
-
+   For pm8841, s1, s2, s3, s4, s5, s6, s7, s8
+ 
+   For pm8916, s1, s2, s3, s4, l1, l2, l3, l4, l5, l6, l7, l8, l9, l10, l11,
+@@ -68,6 +72,7 @@ properties:
+   compatible:
+     enum:
+       - qcom,rpm-mp5496-regulators
++      - qcom,rpm-pm8226-regulators
+       - qcom,rpm-pm8841-regulators
+       - qcom,rpm-pm8916-regulators
+       - qcom,rpm-pm8941-regulators
+-- 
+2.25.1
 
