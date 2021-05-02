@@ -2,34 +2,35 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C4EE7370997
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 May 2021 03:42:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E6B0737099A
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 May 2021 03:43:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231739AbhEBBnp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 1 May 2021 21:43:45 -0400
-Received: from mail2.protonmail.ch ([185.70.40.22]:64143 "EHLO
-        mail2.protonmail.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231593AbhEBBnp (ORCPT
+        id S232021AbhEBBnt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 1 May 2021 21:43:49 -0400
+Received: from mail-40133.protonmail.ch ([185.70.40.133]:55190 "EHLO
+        mail-40133.protonmail.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231593AbhEBBnt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 1 May 2021 21:43:45 -0400
-Date:   Sun, 02 May 2021 01:42:46 +0000
+        Sat, 1 May 2021 21:43:49 -0400
+Date:   Sun, 02 May 2021 01:42:52 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=connolly.tech;
-        s=protonmail; t=1619919772;
-        bh=CvSw3JV9plNu6EjH386w84c2cwf+Awbm2otRgqsgPUQ=;
+        s=protonmail; t=1619919776;
+        bh=Kl3Jo+OZEZzf10VJacbXDH3A1fF+G/d1ql1pz/OtWqI=;
         h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:From;
-        b=dN9RVqZmJBfWMbwKnGI8IWWQSBc7pf0hJTyjnWhFx2GuAZQ6vg+y9J/+NMXvX8nIa
-         KmAUg79QR0PnzaZEkbLFDl7wzpiQHGP2OUIGddVT0rZfc/5sxc3g56UXbe4LnJ6CY6
-         jd2Ab0D3Wra74E+jua9Q6ZHiQjof45bqyG3f9fIY=
-To:     caleb@connolly.tech, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
+        b=a29YV91YarPuYd+ZgiO2zQf9fSlWHiDHo8E62fQRNqW4dxw2rUuwV3k27xSeHIJun
+         fzVc8h5St4JjOlfqwfIbENSdGZft1O38P3GF9j4iUd65wI8WX/m5R7CxQpp7CTxILR
+         acqjI8EZtPl8usqMEeAjOf2ksUxdHtP7JYiAtLlM=
+To:     caleb@connolly.tech, Thierry Reding <thierry.reding@gmail.com>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>
 From:   Caleb Connolly <caleb@connolly.tech>
 Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         linux-kernel@vger.kernel.org
 Reply-To: Caleb Connolly <caleb@connolly.tech>
-Subject: [PATCH 1/4] arm64: dts: qcom: sdm845-oneplus-common: remove panel reset gpio
-Message-ID: <20210502014146.85642-2-caleb@connolly.tech>
+Subject: [PATCH 2/4] drm: panel: sofef00: remove reset GPIO handling
+Message-ID: <20210502014146.85642-3-caleb@connolly.tech>
 In-Reply-To: <20210502014146.85642-1-caleb@connolly.tech>
 References: <20210502014146.85642-1-caleb@connolly.tech>
 MIME-Version: 1.0
@@ -44,27 +45,88 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Resetting the panel causes issues on fajita, it is also completely
-unnecessary for normal use so lets just not bother.
+Resetting the panel on fajita causes it to never come back, we aren't
+quite sure why this is so for now lets remove reset handling as it is
+effectively broken. It is also not needed on enchilada.
 
 Signed-off-by: Caleb Connolly <caleb@connolly.tech>
 ---
- arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/gpu/drm/panel/panel-samsung-sofef00.c | 26 +++----------------
+ 1 file changed, 4 insertions(+), 22 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi b/arch/arm=
-64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-index 8f617f7b6d34..8f3f5c687b4a 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-@@ -314,8 +314,6 @@ display_panel: panel@0 {
+diff --git a/drivers/gpu/drm/panel/panel-samsung-sofef00.c b/drivers/gpu/dr=
+m/panel/panel-samsung-sofef00.c
+index 8cb1853574bb..cfc8b2a19742 100644
+--- a/drivers/gpu/drm/panel/panel-samsung-sofef00.c
++++ b/drivers/gpu/drm/panel/panel-samsung-sofef00.c
+@@ -23,7 +23,6 @@ struct sofef00_panel {
+ =09struct drm_panel panel;
+ =09struct mipi_dsi_device *dsi;
+ =09struct regulator *supply;
+-=09struct gpio_desc *reset_gpio;
+ =09const struct drm_display_mode *mode;
+ =09bool prepared;
+ };
+@@ -42,16 +41,6 @@ struct sofef00_panel *to_sofef00_panel(struct drm_panel =
+*panel)
+ =09=09=09return ret;=09=09=09=09=09\
+ =09} while (0)
 =20
- =09=09vddio-supply =3D <&vreg_l14a_1p88>;
-=20
--=09=09reset-gpios =3D <&tlmm 6 GPIO_ACTIVE_LOW>;
+-static void sofef00_panel_reset(struct sofef00_panel *ctx)
+-{
+-=09gpiod_set_value_cansleep(ctx->reset_gpio, 0);
+-=09usleep_range(5000, 6000);
+-=09gpiod_set_value_cansleep(ctx->reset_gpio, 1);
+-=09usleep_range(2000, 3000);
+-=09gpiod_set_value_cansleep(ctx->reset_gpio, 0);
+-=09usleep_range(12000, 13000);
+-}
 -
- =09=09pinctrl-names =3D "default";
- =09=09pinctrl-0 =3D <&panel_reset_pins &panel_te_pin &panel_esd_pin>;
+ static int sofef00_panel_on(struct sofef00_panel *ctx)
+ {
+ =09struct mipi_dsi_device *dsi =3D ctx->dsi;
+@@ -132,12 +121,9 @@ static int sofef00_panel_prepare(struct drm_panel *pan=
+el)
+ =09=09return ret;
+ =09}
+=20
+-=09sofef00_panel_reset(ctx);
+-
+ =09ret =3D sofef00_panel_on(ctx);
+ =09if (ret < 0) {
+ =09=09dev_err(dev, "Failed to initialize panel: %d\n", ret);
+-=09=09gpiod_set_value_cansleep(ctx->reset_gpio, 1);
+ =09=09return ret;
+ =09}
+=20
+@@ -155,8 +141,11 @@ static int sofef00_panel_unprepare(struct drm_panel *p=
+anel)
+ =09=09return 0;
+=20
+ =09ret =3D sofef00_panel_off(ctx);
+-=09if (ret < 0)
++
++=09if (ret < 0) {
+ =09=09dev_err(dev, "Failed to un-initialize panel: %d\n", ret);
++=09=09return ret;
++=09}
+=20
+ =09regulator_disable(ctx->supply);
+=20
+@@ -276,13 +265,6 @@ static int sofef00_panel_probe(struct mipi_dsi_device =
+*dsi)
+ =09=09return ret;
+ =09}
+=20
+-=09ctx->reset_gpio =3D devm_gpiod_get(dev, "reset", GPIOD_OUT_HIGH);
+-=09if (IS_ERR(ctx->reset_gpio)) {
+-=09=09ret =3D PTR_ERR(ctx->reset_gpio);
+-=09=09dev_warn(dev, "Failed to get reset-gpios: %d\n", ret);
+-=09=09return ret;
+-=09}
+-
+ =09ctx->dsi =3D dsi;
+ =09mipi_dsi_set_drvdata(dsi, ctx);
 =20
 --=20
 2.30.2
