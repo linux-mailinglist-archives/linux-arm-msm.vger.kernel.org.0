@@ -2,31 +2,36 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1016F370995
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 May 2021 03:42:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C4EE7370997
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 May 2021 03:42:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231670AbhEBBnh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 1 May 2021 21:43:37 -0400
-Received: from mail-40136.protonmail.ch ([185.70.40.136]:46222 "EHLO
-        mail-40136.protonmail.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231593AbhEBBng (ORCPT
+        id S231739AbhEBBnp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 1 May 2021 21:43:45 -0400
+Received: from mail2.protonmail.ch ([185.70.40.22]:64143 "EHLO
+        mail2.protonmail.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231593AbhEBBnp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 1 May 2021 21:43:36 -0400
-Date:   Sun, 02 May 2021 01:42:41 +0000
+        Sat, 1 May 2021 21:43:45 -0400
+Date:   Sun, 02 May 2021 01:42:46 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=connolly.tech;
-        s=protonmail; t=1619919764;
-        bh=3SxLseZTkFZ7tfPTsDwVPySMmxAXj/CfZ7wDf13aMR4=;
-        h=Date:To:From:Cc:Reply-To:Subject:From;
-        b=JqFWsVaeFByWFs4qKkz3Ydm8T2ZZxXpIT/8x2Mp+QYsfhZpc8HYltcHrmlD2vX23L
-         WNEe5zRBnLH9lweQCe8q4yY3GxuM6RIslMINHfUtXUP53u/z0Raud2J0L87IwC1iBZ
-         SLxFT+u6PZK1uEZasDKWqlrUSn7QWWYkgSgwkOnM=
-To:     caleb@connolly.tech
+        s=protonmail; t=1619919772;
+        bh=CvSw3JV9plNu6EjH386w84c2cwf+Awbm2otRgqsgPUQ=;
+        h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:From;
+        b=dN9RVqZmJBfWMbwKnGI8IWWQSBc7pf0hJTyjnWhFx2GuAZQ6vg+y9J/+NMXvX8nIa
+         KmAUg79QR0PnzaZEkbLFDl7wzpiQHGP2OUIGddVT0rZfc/5sxc3g56UXbe4LnJ6CY6
+         jd2Ab0D3Wra74E+jua9Q6ZHiQjof45bqyG3f9fIY=
+To:     caleb@connolly.tech, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>
 From:   Caleb Connolly <caleb@connolly.tech>
 Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
 Reply-To: Caleb Connolly <caleb@connolly.tech>
-Subject: OnePlus 6 fixups
-Message-ID: <20210502014146.85642-1-caleb@connolly.tech>
+Subject: [PATCH 1/4] arm64: dts: qcom: sdm845-oneplus-common: remove panel reset gpio
+Message-ID: <20210502014146.85642-2-caleb@connolly.tech>
+In-Reply-To: <20210502014146.85642-1-caleb@connolly.tech>
+References: <20210502014146.85642-1-caleb@connolly.tech>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -39,26 +44,29 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This series contains a few fixes for the OnePlus 6 and 6T.
+Resetting the panel causes issues on fajita, it is also completely
+unnecessary for normal use so lets just not bother.
 
-The display panel driver for the devices currently implements
-support for the reset pin.
-This behaviour is fine on the 6 but on the 6T it seems to break the
-panel. This suggests an issue with the initialisation sequence however
-we haven't been able to find a way to bring up the panel without this.
-In the mean time, removing the reset capabilities solves the issues for
-us and doesn't introduce any other problems.
+Signed-off-by: Caleb Connolly <caleb@connolly.tech>
+---
+ arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi | 2 --
+ 1 file changed, 2 deletions(-)
 
-We also add a guard around the RMTFS memory region, this is implemented
-by the msm_sharedmem driver in the vendor kernel, but not a feature
-supported by mainline just yet. This is to workaround limitations in
-Qualcomms XPU hardware which can trigger false violations and crash the
-device if memory is allocated close to the RMTFS region.
-
-Finally, enable the IPA node, modemmanager is gaining support for QRTR
-modems and with that we can have mobile data working on the device!
-
-=09^Caleb
-
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi b/arch/arm=
+64/boot/dts/qcom/sdm845-oneplus-common.dtsi
+index 8f617f7b6d34..8f3f5c687b4a 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
+@@ -314,8 +314,6 @@ display_panel: panel@0 {
+=20
+ =09=09vddio-supply =3D <&vreg_l14a_1p88>;
+=20
+-=09=09reset-gpios =3D <&tlmm 6 GPIO_ACTIVE_LOW>;
+-
+ =09=09pinctrl-names =3D "default";
+ =09=09pinctrl-0 =3D <&panel_reset_pins &panel_te_pin &panel_esd_pin>;
+=20
+--=20
+2.30.2
 
 
