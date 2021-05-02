@@ -2,40 +2,40 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 54ADA370C17
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 May 2021 16:05:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E079C370C96
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 May 2021 16:06:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232601AbhEBOFU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 2 May 2021 10:05:20 -0400
-Received: from mail.kernel.org ([198.145.29.99]:50454 "EHLO mail.kernel.org"
+        id S233282AbhEBOGp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 2 May 2021 10:06:45 -0400
+Received: from mail.kernel.org ([198.145.29.99]:50872 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232605AbhEBOFJ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 2 May 2021 10:05:09 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id E9E47613BB;
-        Sun,  2 May 2021 14:04:16 +0000 (UTC)
+        id S232953AbhEBOFz (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 2 May 2021 10:05:55 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 56979613D7;
+        Sun,  2 May 2021 14:05:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1619964257;
-        bh=DhCgvxZRBbQU9zJsuWFpde+VWzm1veVAoPYphzg9vSA=;
+        s=k20201202; t=1619964303;
+        bh=gx7YaaLG+/q2NLR1sJdc6IOzuJlWAKa4fh2qkLtGoMw=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=joM3iEiUGk4vZ5qSsNX25EpXeqxHNNg+KlM+zs6ka+Q7clHhKfqN3Z9tyc58H4h3/
-         RAjetdTOfBhvyHACOISF7Ye5wMBe7nYnQe7gdFB+QybpT2TkekJw0vCv/cLEEXOGdx
-         r4W+hG/WYpoZXV83HjgVT41JM9D0BCustVmUBmVXEBb2u1D2wVXqx1SRNnaKJq5uup
-         I022gOt6j1mZCL5cMfJVlbrbDPyD2YCrjOBZlXTFgwoKnHh8m6YEsCRRg/JsUjpQri
-         uvu8HTXHAFfOSNXf8pz8uvk2vYXdBW+E9m/sHJ9A1fxlI4pGDFxcQMRN6MC/O5DJhM
-         FhbeZBKczg7VQ==
+        b=uW2RBULYgPgeWPTRo2sS/54zifl41CBAMzBu1ZYOGnTE2ZWQhpd60/U2QIWddHn9N
+         guwzreR5SvTwd7sMwHlGcJaLPEg3NheR753haO6kNSdgTsQAFikUYFhyeutPDwj4yS
+         1Gn07zL0F8mpvqD5/sbcKMO+8s/Q7qYHeuA/nEYdLIUVut+6xN0ZyePFL2eV2ZgCck
+         IKUs8v6ogmginV6Nuc5ytCAM2rtIp89u7thFv/rvZO0YlLn7lzKl76zwPrPbqDMD6h
+         vaBv4rpY4BpKj8yMZqfHr/q9Al4x/vAUni6fflU8e/YvHeUfHzca77jHTDM2oep5LJ
+         +TD+ho7HmL/7Q==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Bhaumik Bhatt <bbhatt@codeaurora.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Hemant Kumar <hemantk@codeaurora.org>,
+Cc:     Wang Li <wangli74@huawei.com>, Hulk Robot <hulkci@huawei.com>,
         Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.10 05/66] bus: mhi: core: Destroy SBL devices when moving to mission mode
-Date:   Sun,  2 May 2021 10:03:10 -0400
-Message-Id: <20210502140411.2719301-5-sashal@kernel.org>
+        Mark Brown <broonie@kernel.org>,
+        Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-spi@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.4 23/34] spi: qup: fix PM reference leak in spi_qup_remove()
+Date:   Sun,  2 May 2021 10:04:23 -0400
+Message-Id: <20210502140434.2719553-23-sashal@kernel.org>
 X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20210502140411.2719301-1-sashal@kernel.org>
-References: <20210502140411.2719301-1-sashal@kernel.org>
+In-Reply-To: <20210502140434.2719553-1-sashal@kernel.org>
+References: <20210502140434.2719553-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -44,111 +44,38 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Bhaumik Bhatt <bbhatt@codeaurora.org>
+From: Wang Li <wangli74@huawei.com>
 
-[ Upstream commit 925089c1900f588615db5bf4e1d9064a5f2c18c7 ]
+[ Upstream commit cec77e0a249892ceb10061bf17b63f9fb111d870 ]
 
-Currently, client devices are created in SBL or AMSS (mission
-mode) and only destroyed after power down or SYS ERROR. When
-moving between certain execution environments, such as from SBL
-to AMSS, no clean-up is required. This presents an issue where
-SBL-specific channels are left open and client drivers now run in
-an execution environment where they cannot operate. Fix this by
-expanding the mhi_destroy_device() to do an execution environment
-specific clean-up if one is requested. Close the gap and destroy
-devices in such scenarios that allow SBL client drivers to clean
-up once device enters mission mode.
+pm_runtime_get_sync will increment pm usage counter even it failed.
+Forgetting to putting operation will result in reference leak here.
+Fix it by replacing it with pm_runtime_resume_and_get to keep usage
+counter balanced.
 
-Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
-Reviewed-by: Loic Poulain <loic.poulain@linaro.org>
-Reviewed-by: Hemant Kumar <hemantk@codeaurora.org>
+Reported-by: Hulk Robot <hulkci@huawei.com>
+Signed-off-by: Wang Li <wangli74@huawei.com>
 Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Link: https://lore.kernel.org/r/1614208985-20851-2-git-send-email-bbhatt@codeaurora.org
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Link: https://lore.kernel.org/r/20210409095458.29921-1-wangli74@huawei.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bus/mhi/core/main.c | 29 +++++++++++++++++++++++++----
- drivers/bus/mhi/core/pm.c   |  3 +++
- 2 files changed, 28 insertions(+), 4 deletions(-)
+ drivers/spi/spi-qup.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
-index 2cff5ddff225..984bcf9940fe 100644
---- a/drivers/bus/mhi/core/main.c
-+++ b/drivers/bus/mhi/core/main.c
-@@ -222,8 +222,10 @@ static void mhi_del_ring_element(struct mhi_controller *mhi_cntrl,
+diff --git a/drivers/spi/spi-qup.c b/drivers/spi/spi-qup.c
+index fa8079fbea77..d1dfb52008b4 100644
+--- a/drivers/spi/spi-qup.c
++++ b/drivers/spi/spi-qup.c
+@@ -1263,7 +1263,7 @@ static int spi_qup_remove(struct platform_device *pdev)
+ 	struct spi_qup *controller = spi_master_get_devdata(master);
+ 	int ret;
  
- int mhi_destroy_device(struct device *dev, void *data)
- {
-+	struct mhi_chan *ul_chan, *dl_chan;
- 	struct mhi_device *mhi_dev;
- 	struct mhi_controller *mhi_cntrl;
-+	enum mhi_ee_type ee = MHI_EE_MAX;
+-	ret = pm_runtime_get_sync(&pdev->dev);
++	ret = pm_runtime_resume_and_get(&pdev->dev);
+ 	if (ret < 0)
+ 		return ret;
  
- 	if (dev->bus != &mhi_bus_type)
- 		return 0;
-@@ -235,6 +237,17 @@ int mhi_destroy_device(struct device *dev, void *data)
- 	if (mhi_dev->dev_type == MHI_DEVICE_CONTROLLER)
- 		return 0;
- 
-+	ul_chan = mhi_dev->ul_chan;
-+	dl_chan = mhi_dev->dl_chan;
-+
-+	/*
-+	 * If execution environment is specified, remove only those devices that
-+	 * started in them based on ee_mask for the channels as we move on to a
-+	 * different execution environment
-+	 */
-+	if (data)
-+		ee = *(enum mhi_ee_type *)data;
-+
- 	/*
- 	 * For the suspend and resume case, this function will get called
- 	 * without mhi_unregister_controller(). Hence, we need to drop the
-@@ -242,11 +255,19 @@ int mhi_destroy_device(struct device *dev, void *data)
- 	 * be sure that there will be no instances of mhi_dev left after
- 	 * this.
- 	 */
--	if (mhi_dev->ul_chan)
--		put_device(&mhi_dev->ul_chan->mhi_dev->dev);
-+	if (ul_chan) {
-+		if (ee != MHI_EE_MAX && !(ul_chan->ee_mask & BIT(ee)))
-+			return 0;
- 
--	if (mhi_dev->dl_chan)
--		put_device(&mhi_dev->dl_chan->mhi_dev->dev);
-+		put_device(&ul_chan->mhi_dev->dev);
-+	}
-+
-+	if (dl_chan) {
-+		if (ee != MHI_EE_MAX && !(dl_chan->ee_mask & BIT(ee)))
-+			return 0;
-+
-+		put_device(&dl_chan->mhi_dev->dev);
-+	}
- 
- 	dev_dbg(&mhi_cntrl->mhi_dev->dev, "destroy device for chan:%s\n",
- 		 mhi_dev->name);
-diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
-index 3de7b1639ec6..f725d10325f7 100644
---- a/drivers/bus/mhi/core/pm.c
-+++ b/drivers/bus/mhi/core/pm.c
-@@ -376,6 +376,7 @@ static int mhi_pm_mission_mode_transition(struct mhi_controller *mhi_cntrl)
- {
- 	struct mhi_event *mhi_event;
- 	struct device *dev = &mhi_cntrl->mhi_dev->dev;
-+	enum mhi_ee_type current_ee = mhi_cntrl->ee;
- 	int i, ret;
- 
- 	dev_dbg(dev, "Processing Mission Mode transition\n");
-@@ -390,6 +391,8 @@ static int mhi_pm_mission_mode_transition(struct mhi_controller *mhi_cntrl)
- 
- 	wake_up_all(&mhi_cntrl->state_event);
- 
-+	device_for_each_child(&mhi_cntrl->mhi_dev->dev, &current_ee,
-+			      mhi_destroy_device);
- 	mhi_cntrl->status_cb(mhi_cntrl, MHI_CB_EE_MISSION_MODE);
- 
- 	/* Force MHI to be in M0 state before continuing */
 -- 
 2.30.2
 
