@@ -2,109 +2,168 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F1BF1371253
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 May 2021 10:13:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 08975371260
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 May 2021 10:20:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232988AbhECIOp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 May 2021 04:14:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51182 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233000AbhECIOm (ORCPT
+        id S230490AbhECIU4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 May 2021 04:20:56 -0400
+Received: from new3-smtp.messagingengine.com ([66.111.4.229]:50213 "EHLO
+        new3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S229817AbhECIU4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 May 2021 04:14:42 -0400
-Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8FB87C06138D
-        for <linux-arm-msm@vger.kernel.org>; Mon,  3 May 2021 01:13:49 -0700 (PDT)
-Received: by mail-pl1-x62a.google.com with SMTP id p17so2377381plf.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 May 2021 01:13:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=955BiMpV3PxxTlbeWzeYLgt/LzlJsdPGuHod6o4UA4E=;
-        b=X97vfRTMZSRPBomlNkjB6efr8TTBpOaW7naOI2DtIlaReTurqYZAocxryK+VOyENWm
-         WokG7Hh6F3+Q3L9dUHZbfIu0Xs30IPWFbVuKgUCLJaRhLFAb6p0+Eaintyl/gaCgL1il
-         43rCzqHquXIYf1CAvdy8niOMiQXKKMIKB0OH2tq4967WkTtB5HArAZC4tbFB38p0tiCc
-         +pZHj1tVB5h7nifN8gQJj74NVEAdXXI77kPDtb08qhSd4aWQKvpEhvB0NPYuYfj+5I06
-         r3lbaYaVIbHcqLVMryj116lYEXEcD2OYIPM5AWGsBg9YHdbBBE8d3ayVwWym/Mh+nNHJ
-         xmFw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=955BiMpV3PxxTlbeWzeYLgt/LzlJsdPGuHod6o4UA4E=;
-        b=t2a+XEtpvexH1V1flGu8sO5Kdp3tu/1SggdCJxqmX9ZmsSw81kjH07j/ijaTInG5HV
-         t2f1WIp0TP3GEkICTH2+I//o9oVDggi2mw/gcVzAlaFFshe6H9BFqLAFRQcGty8iuKmP
-         WNUcyiknE6YzCZNdCgD2aX346bTCn2jLlhhd/NfuMo67in71oNqZhq3BlEwnDP7631j+
-         +tu6Q6cFqM2GLUxCA5nqc7d/hObSnLnzsj/+U4L4YqT4CVWZcSSrEov0g3ehRrUjHWd0
-         67oDuKagDh8313m7GgSPpbKnJ24jNEP6jQtd5fEef8YlbJKWwKoY9dVvVjAVMowCpEJ3
-         jEnw==
-X-Gm-Message-State: AOAM5321aw+1dy0R6NIJ7FshYWP8/jHf9+o78ixMjKr24+ZJ9mlLiEY6
-        kdH7o4kI2KSU7FHPNiybBmCFjQ==
-X-Google-Smtp-Source: ABdhPJyS1dxcmHjCU/RIV2HqfxsE8XyNao1S0c4YGeqjmxUUsa5CTLQs6mQtUMlJ2MftWQ71cf1QCg==
-X-Received: by 2002:a17:90a:8b12:: with SMTP id y18mr391778pjn.153.1620029629129;
-        Mon, 03 May 2021 01:13:49 -0700 (PDT)
-Received: from localhost.localdomain (80.251.214.228.16clouds.com. [80.251.214.228])
-        by smtp.gmail.com with ESMTPSA id fa17sm12031939pjb.17.2021.05.03.01.13.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 May 2021 01:13:48 -0700 (PDT)
-From:   Shawn Guo <shawn.guo@linaro.org>
-To:     Jassi Brar <jassisinghbrar@gmail.com>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Sivaprakash Murugesan <sivaprak@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Benjamin Li <benl@squareup.com>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Shawn Guo <shawn.guo@linaro.org>
-Subject: [PATCH v2 2/2] mailbox: qcom: Add MSM8939 APCS support
-Date:   Mon,  3 May 2021 16:13:34 +0800
-Message-Id: <20210503081334.17143-3-shawn.guo@linaro.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20210503081334.17143-1-shawn.guo@linaro.org>
-References: <20210503081334.17143-1-shawn.guo@linaro.org>
+        Mon, 3 May 2021 04:20:56 -0400
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
+        by mailnew.nyi.internal (Postfix) with ESMTP id B6EB0580BBD;
+        Mon,  3 May 2021 04:20:02 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute2.internal (MEProxy); Mon, 03 May 2021 04:20:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cerno.tech; h=
+        date:from:to:cc:subject:message-id:references:mime-version
+        :content-type:in-reply-to; s=fm2; bh=ZZbw4zaMizJrDrM1TjO6/6x5vgu
+        yIVzvER1Undjdu/I=; b=Bcsr3W3Gqk0ypd8Zdc6LIqxdAWqQOLoyBNDbhzPyPFT
+        ivyPg0TCCln1kmTpGoENRBweah8m8UXclRPTCbznej572MsSINCFpqWXQExHntvg
+        z3rptIh7re/fAPEUOKOwnjI9sHflXVrtegVx7hsdSdh3aMJlHgtDBOOrQbSlqEpa
+        VUASdwwGySbA/lGmV/4PpBNGWDrmEtHGt+zHXAfW9fC+PpvT6+N/DDVjv8IsSzhu
+        EHqd3j5KG0ZlbvWzWcedMZwlkMqdLmiPuU6W9P2s4VwzyEvEZMliWjyNyEhjjUWk
+        UXrcUdsGIjPlgIw/Pikh9O4sFfc1LAWNSkQqLEfY+Iw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-type:date:from:in-reply-to
+        :message-id:mime-version:references:subject:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=ZZbw4z
+        aMizJrDrM1TjO6/6x5vguyIVzvER1Undjdu/I=; b=e0zX+A4VgmfixaP+9SwceH
+        8dWHq/maRcArZax5k5Mu7N4copJnf/CGXeu3DFZHRBtcXd6RnLgxIdbzGmE33/HI
+        a/sjlcm07J2oapmvhp6yjbSEyARNUHfVpAN8oaTVKD9BuW9t3ENZGaWJp/287vC3
+        HYWWU5X8lyqkhIU8Gb8lkganCI+Qn8vDvCkrB7M7LJ3iXo6UiLaV61dcI47s6ubQ
+        nEh9+k1JtU4wUEniqOUUsY66WAOqjNotLHxRZ0IaiNINjHVVKGN9C6bzeprl/Yoc
+        4v04r3mRV3ml8VFwZOwpFCIp7Yx31LcgJioKeIdvOpP28Qa+AYDvQqAqZp3lVxOQ
+        ==
+X-ME-Sender: <xms:MLKPYOBVzmY1SV1QLZroe0AUdjwebPxv5VGN0FThQfbGgx5_09aISA>
+    <xme:MLKPYIjsd9keR74cb3dzO0CUjnhiPexLLJKb1RwgxyqS7td0UXBHB3eZO-Zo0B1bp
+    U180Do29T0Ni9JWlP0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrvdefgedgtdefucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvffukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpeforgigihhm
+    vgcutfhiphgrrhguuceomhgrgihimhgvsegtvghrnhhordhtvggthheqnecuggftrfgrth
+    htvghrnhepleekgeehhfdutdeljefgleejffehfffgieejhffgueefhfdtveetgeehieeh
+    gedunecukfhppeeltddrkeelrdeikedrjeeinecuvehluhhsthgvrhfuihiivgeptdenuc
+    frrghrrghmpehmrghilhhfrhhomhepmhgrgihimhgvsegtvghrnhhordhtvggthh
+X-ME-Proxy: <xmx:MLKPYBk-Uku8MnewArZF-5vCOoIIuHYeRZ124Zkq_GhZm7a6I1_ECA>
+    <xmx:MLKPYMxSviduytGs5zKnNdieSu66vVjUjtPbSWkPWDUWDO0uwa2dQQ>
+    <xmx:MLKPYDRNwGJnpWcTnLesrE6tHMyRIb3I2dNKbPZ-xQ7kJnX9pdkl_w>
+    <xmx:MrKPYEDkFe29yEP2v37YHxsY7jHufsiPt4mR8AR5m74xGSYrvMG3mA>
+Received: from localhost (lfbn-tou-1-1502-76.w90-89.abo.wanadoo.fr [90.89.68.76])
+        by mail.messagingengine.com (Postfix) with ESMTPA;
+        Mon,  3 May 2021 04:20:00 -0400 (EDT)
+Date:   Mon, 3 May 2021 10:19:57 +0200
+From:   Maxime Ripard <maxime@cerno.tech>
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org,
+        Rob Clark <robdclark@chromium.org>,
+        John Stultz <john.stultz@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Kalyan Thota <kalyan_t@codeaurora.org>,
+        Hongbo Yao <yaohongbo@huawei.com>,
+        Qinglang Miao <miaoqinglang@huawei.com>,
+        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        Lee Jones <lee.jones@linaro.org>,
+        Ville =?utf-8?B?U3lyasOkbMOk?= <ville.syrjala@linux.intel.com>,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] drm/msm/dpu: Delete bonkers code
+Message-ID: <20210503081957.qj5kdbrk7y4dnhid@gilmour>
+References: <20210430171744.1721408-1-robdclark@gmail.com>
+ <CAE-0n513cwqs1c89PZpn0ojuDQ44nwxbRfaYssKHcGwKxK8JdA@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+        protocol="application/pgp-signature"; boundary="33yimouztyqtinrp"
+Content-Disposition: inline
+In-Reply-To: <CAE-0n513cwqs1c89PZpn0ojuDQ44nwxbRfaYssKHcGwKxK8JdA@mail.gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-MSM8939 has 3 APCS instances for Cluster0 (little cores), Cluster1 (big
-cores) and CCI (Cache Coherent Interconnect).  Although only APCS of
-Cluster0 and Cluster1 have IPC bits, each of 3 APCS has A53PLL clock
-control bits.  That said, we need to register 3 'qcom-apcs-msm8916-clk'
-devices to instantiate all 3 clocks.  Let's use PLATFORM_DEVID_AUTO
-rather than PLATFORM_DEVID_NONE for platform_device_register_data()
-call.  Otherwise, the second A53PLL clock registration will fail due
-to duplicate device name.
 
-[    0.519657] sysfs: cannot create duplicate filename '/bus/platform/devices/qcom-apcs-msm8916-clk'
-...
-[    0.661158] qcom_apcs_ipc b111000.mailbox: failed to register APCS clk
+--33yimouztyqtinrp
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
- drivers/mailbox/qcom-apcs-ipc-mailbox.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+Hi,
 
-diff --git a/drivers/mailbox/qcom-apcs-ipc-mailbox.c b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
-index f25324d03842..1699ec38bc3b 100644
---- a/drivers/mailbox/qcom-apcs-ipc-mailbox.c
-+++ b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
-@@ -132,7 +132,7 @@ static int qcom_apcs_ipc_probe(struct platform_device *pdev)
- 	if (apcs_data->clk_name) {
- 		apcs->clk = platform_device_register_data(&pdev->dev,
- 							  apcs_data->clk_name,
--							  PLATFORM_DEVID_NONE,
-+							  PLATFORM_DEVID_AUTO,
- 							  NULL, 0);
- 		if (IS_ERR(apcs->clk))
- 			dev_err(&pdev->dev, "failed to register APCS clk\n");
-@@ -158,6 +158,7 @@ static const struct of_device_id qcom_apcs_ipc_of_match[] = {
- 	{ .compatible = "qcom,ipq6018-apcs-apps-global", .data = &ipq6018_apcs_data },
- 	{ .compatible = "qcom,ipq8074-apcs-apps-global", .data = &ipq8074_apcs_data },
- 	{ .compatible = "qcom,msm8916-apcs-kpss-global", .data = &msm8916_apcs_data },
-+	{ .compatible = "qcom,msm8939-apcs-kpss-global", .data = &msm8916_apcs_data },
- 	{ .compatible = "qcom,msm8994-apcs-kpss-global", .data = &msm8994_apcs_data },
- 	{ .compatible = "qcom,msm8996-apcs-hmss-global", .data = &msm8996_apcs_data },
- 	{ .compatible = "qcom,msm8998-apcs-hmss-global", .data = &msm8998_apcs_data },
--- 
-2.17.1
+On Fri, Apr 30, 2021 at 10:44:53AM -0700, Stephen Boyd wrote:
+> Quoting Rob Clark (2021-04-30 10:17:39)
+> > From: Rob Clark <robdclark@chromium.org>
+> >
+> > dpu_crtc_atomic_flush() was directly poking it's attached planes in a
+> > code path that ended up in dpu_plane_atomic_update(), even if the plane
+> > was not involved in the current atomic update.  While a bit dubious,
+> > this worked before because plane->state would always point to something
+> > valid.  But now using drm_atomic_get_new_plane_state() we could get a
+> > NULL state pointer instead, leading to:
+> >
+> >    [   20.873273] Call trace:
+> >    [   20.875740]  dpu_plane_atomic_update+0x5c/0xed0
+> >    [   20.880311]  dpu_plane_restore+0x40/0x88
+> >    [   20.884266]  dpu_crtc_atomic_flush+0xf4/0x208
+> >    [   20.888660]  drm_atomic_helper_commit_planes+0x150/0x238
+> >    [   20.894014]  msm_atomic_commit_tail+0x1d4/0x7a0
+> >    [   20.898579]  commit_tail+0xa4/0x168
+> >    [   20.902102]  drm_atomic_helper_commit+0x164/0x178
+> >    [   20.906841]  drm_atomic_commit+0x54/0x60
+> >    [   20.910798]  drm_atomic_connector_commit_dpms+0x10c/0x118
+> >    [   20.916236]  drm_mode_obj_set_property_ioctl+0x1e4/0x440
+> >    [   20.921588]  drm_connector_property_set_ioctl+0x60/0x88
+> >    [   20.926852]  drm_ioctl_kernel+0xd0/0x120
+> >    [   20.930807]  drm_ioctl+0x21c/0x478
+> >    [   20.934235]  __arm64_sys_ioctl+0xa8/0xe0
+> >    [   20.938193]  invoke_syscall+0x64/0x130
+> >    [   20.941977]  el0_svc_common.constprop.3+0x5c/0xe0
+> >    [   20.946716]  do_el0_svc+0x80/0xa0
+> >    [   20.950058]  el0_svc+0x20/0x30
+> >    [   20.953145]  el0_sync_handler+0x88/0xb0
+> >    [   20.957014]  el0_sync+0x13c/0x140
+> >
+> > The reason for the codepath seems dubious, the atomic suspend/resume
+> > heplers should handle the power-collapse case.  If not, the CRTC's
+> > atomic_check() should be adding the planes to the atomic update.
+> >
+> > Reported-by: Stephen Boyd <sboyd@kernel.org>
+>=20
+> Maybe better to use swboyd@chromium.org for this one.
+>=20
+> > Reported-by: John Stultz <john.stultz@linaro.org>
+> > Fixes: 37418bf14c13 drm: Use state helper instead of the plane state po=
+inter
+>=20
+> Should be
+>=20
+> Fixes: 37418bf14c13 ("drm: Use state helper instead of the plane state po=
+inter")
+>=20
+> to match the preferred format.
+>=20
+> > Signed-off-by: Rob Clark <robdclark@chromium.org>
+>=20
+> Otherwise looks good, thanks.
 
+Thanks for figuring this out, I've applied it with your chromium address
+and the proper fixes format.
+
+Maxime
+
+--33yimouztyqtinrp
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYIAB0WIQRcEzekXsqa64kGDp7j7w1vZxhRxQUCYI+yLQAKCRDj7w1vZxhR
+xZRaAQDTPjjiUQFAFWgbNS7oRz3zrty/Iml8Ny6hby1mPZ/NFAEA3T3YH0IJPL4s
+Nx3/uC0n+0PWb2Dr5NHA3d2sPNWRwQU=
+=D+EX
+-----END PGP SIGNATURE-----
+
+--33yimouztyqtinrp--
