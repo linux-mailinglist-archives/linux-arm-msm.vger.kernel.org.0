@@ -2,27 +2,27 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EBFE4371D48
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 May 2021 19:01:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6B385371D49
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 May 2021 19:01:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233507AbhECQ6h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S233713AbhECQ6h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Mon, 3 May 2021 12:58:37 -0400
-Received: from mail.kernel.org ([198.145.29.99]:42992 "EHLO mail.kernel.org"
+Received: from mail.kernel.org ([198.145.29.99]:43304 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S235072AbhECQzq (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 May 2021 12:55:46 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 55B9061945;
-        Mon,  3 May 2021 16:42:44 +0000 (UTC)
+        id S235303AbhECQ4K (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 3 May 2021 12:56:10 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id B30A26195D;
+        Mon,  3 May 2021 16:43:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1620060165;
-        bh=qmsD5qUUJyw98XkWtIT0ula+AfFy+NCvsgRg8vdj1+E=;
+        s=k20201202; t=1620060203;
+        bh=vlx49QU1QQGlKbupeizmqSrhyNqst2dySJG2qWvuthA=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=FlZAJ7R1MnDu0WzmyL8bpwMWxjlt0FfG2/8JELfXSqwnhkvGB3lBxSpGZFpENDvWs
-         0JUT05im+j3hVda4Kjb/PguhOXBY0bx8wuU9Ivba2nAP4Ll8xSzy+RNFpYsY3ASC+K
-         xQZYfTPhahx6O9CwYdT+UJM5KeE8A2r/bwgZ80fqpK9QljHFUYOQMGFUb2X6WeklTD
-         dQgz6ICn/84HeAzL0xBlMMBRVvGGkZcCzS67iz5TyRBfJ7Xs2FXs8vgiQXIB/AW8oB
-         fXLrbf8jxZHylMIK12LkOMAniz6Dggs1EUyQGeCZGY/G8i+bzIDXN7SykDkw9gyKg3
-         1C2riOM/C/YdA==
+        b=Qv6HLUCiBu67xOdzIkUt5NNIBNaQghP5LrK1AY/42sCPY7QAICG+165YpJ93lmCDp
+         h2VGnQqx4p7XhYVNwWNmrsdnzQkmCw5VTufzH3IoIIZnIbvvmgWnc/0Wkcw+MShKrI
+         7rhSWRQs/Nd8JUWncZOZFWaj30mWfY5MxitnXUMHkHH4ZDwAf89iw3lzLLu7A1fbm0
+         OLrzJSPNBQeiv4Bq4GRYiIgONRtsDLYG8s42cmEoP/vqmskfR/S8jLGYzwU0og6uS3
+         JhDPUD2dp7GIfUVidAgd8Z03iYEJx8NYdcMdzNc17tVZ+h03I41JwVVGsJJN7o9pUd
+         SwWKGA26Bwurg==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
@@ -31,12 +31,12 @@ Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
         Rob Clark <robdclark@chromium.org>,
         Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
         dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 4.14 27/31] drm/msm/mdp5: Configure PP_SYNC_HEIGHT to double the vtotal
-Date:   Mon,  3 May 2021 12:42:00 -0400
-Message-Id: <20210503164204.2854178-27-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.9 21/24] drm/msm/mdp5: Configure PP_SYNC_HEIGHT to double the vtotal
+Date:   Mon,  3 May 2021 12:42:49 -0400
+Message-Id: <20210503164252.2854487-21-sashal@kernel.org>
 X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20210503164204.2854178-1-sashal@kernel.org>
-References: <20210503164204.2854178-1-sashal@kernel.org>
+In-Reply-To: <20210503164252.2854487-1-sashal@kernel.org>
+References: <20210503164252.2854487-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -72,10 +72,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 9 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/gpu/drm/msm/mdp/mdp5/mdp5_cmd_encoder.c b/drivers/gpu/drm/msm/mdp/mdp5/mdp5_cmd_encoder.c
-index 60790df91bfa..397e71481129 100644
+index c627ab6d0061..8ac54b9dcd39 100644
 --- a/drivers/gpu/drm/msm/mdp/mdp5/mdp5_cmd_encoder.c
 +++ b/drivers/gpu/drm/msm/mdp/mdp5/mdp5_cmd_encoder.c
-@@ -78,9 +78,17 @@ static int pingpong_tearcheck_setup(struct drm_encoder *encoder,
+@@ -128,9 +128,17 @@ static int pingpong_tearcheck_setup(struct drm_encoder *encoder,
  		| MDP5_PP_SYNC_CONFIG_VSYNC_IN_EN;
  	cfg |= MDP5_PP_SYNC_CONFIG_VSYNC_COUNT(vclks_line);
  
