@@ -2,184 +2,381 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0EE9D372047
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 May 2021 21:18:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DDE09372057
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 May 2021 21:23:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229646AbhECTTf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 May 2021 15:19:35 -0400
-Received: from mail-oi1-f169.google.com ([209.85.167.169]:39467 "EHLO
-        mail-oi1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229499AbhECTTe (ORCPT
+        id S229499AbhECTYd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 May 2021 15:24:33 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:24091 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229472AbhECTYc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 May 2021 15:19:34 -0400
-Received: by mail-oi1-f169.google.com with SMTP id i81so6435765oif.6;
-        Mon, 03 May 2021 12:18:40 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=b8N/TlRdWAZ9L/+h5q9FoCTxTuyKpkIVXey/8miQuVQ=;
-        b=BdnVu/2e5F6Mhoa/EnOiFGRKsE4ONp3opNKPdpb5jYhdXwMm7uKTmwnNTxXq1wi+x3
-         Oz8dVBqC/QXA43dbCr5uSrNNlqa3QJqf+PkhGDxQALg8befpBeplNwKKzFkoVCUgW+Db
-         /xndq45AsMPVf+pHt9B41rKd8O6rIFebOc03CQvkzokuuiOZRu1i/o8RtV+quOtSfPSs
-         g6+EV+OQt/pPCWCERSqnMkjYRTyvBMUZCpUj30/woqVkhlDkyFXYCxLwuAz6E7+M0V1u
-         Jnq8yqMxfqwdMKZcuZzS1So7G+73CYpQYadgpRlOLEm6rBi0RFbPG2Zq47cY3Rntbw1g
-         pebw==
-X-Gm-Message-State: AOAM531h++F/VJye7irypOtiuYckIqbEaO7tVY3aRi5toGeX0AM2z1Z/
-        MTbFiHN9v6EkM8q8yqt9sZhQ7kumoQ==
-X-Google-Smtp-Source: ABdhPJz4HIRxdrj6jbmbSz3F1g0tQTObZ+/Q2IG3irc0yGp2meJilfPa7b8h8KuJe6ZAiPrOaMR3zw==
-X-Received: by 2002:aca:da89:: with SMTP id r131mr8153435oig.3.1620069519822;
-        Mon, 03 May 2021 12:18:39 -0700 (PDT)
-Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id n37sm181424otn.9.2021.05.03.12.18.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 May 2021 12:18:38 -0700 (PDT)
-Received: (nullmailer pid 2226015 invoked by uid 1000);
-        Mon, 03 May 2021 19:18:37 -0000
-Date:   Mon, 3 May 2021 14:18:37 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Taniya Das <tdas@codeaurora.org>
-Cc:     Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette =?iso-8859-1?Q?=A0?= 
-        <mturquette@baylibre.com>, Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH v2 1/6] dt-bindings: clock: Add SC7280 DISPCC clock
- binding
-Message-ID: <20210503191837.GA2220566@robh.at.kernel.org>
-References: <1619519590-3019-1-git-send-email-tdas@codeaurora.org>
- <1619519590-3019-2-git-send-email-tdas@codeaurora.org>
+        Mon, 3 May 2021 15:24:32 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1620069819; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=zSbtczGrL5Klsa/uGQiQx/Y/vrfEEMLdvsxiLktthNg=;
+ b=pqTf+Lsyg5UxGTLPZXAD3FtksIV/DSXitNxFc3HGjbTSgyVw7HF0F1fYYFoYSHoAAA5LGCsN
+ Pt2QeanSEg6KkJTSNKCICoXrFrmBHsq8yPkrh2cSj/LZxrqdrD6lq+iTorPmrTWTfcL6vdgc
+ EzMwvk2C3aUpWjFDMT/qiDYtKJk=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
+ 60904db79a9ff96d95325f72 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 03 May 2021 19:23:35
+ GMT
+Sender: khsieh=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 37DD9C433F1; Mon,  3 May 2021 19:23:35 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: khsieh)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id B68B5C433D3;
+        Mon,  3 May 2021 19:23:31 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1619519590-3019-2-git-send-email-tdas@codeaurora.org>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Mon, 03 May 2021 12:23:31 -0700
+From:   khsieh@codeaurora.org
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     aravindh@codeaurora.org, robdclark@gmail.com, sean@poorly.run,
+        abhinavk@codeaurora.org, airlied@linux.ie, daniel@ffwll.ch,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/2] drm/msm/dp: service only one irq_hpd if there are
+ multiple irq_hpd pending
+In-Reply-To: <CAE-0n50J1JkaBa5XQmHS8Fe2W5R2fXKpLoTWbH0RshRZivGZWw@mail.gmail.com>
+References: <1618604877-28297-1-git-send-email-khsieh@codeaurora.org>
+ <161895606268.46595.2841353121480638642@swboyd.mtv.corp.google.com>
+ <e3c3ef96ac507da6f138106f70c78ed2@codeaurora.org>
+ <ddc1e372c5f864cd62c4e056ef2e6404@codeaurora.org>
+ <CAE-0n53JNCc3JdONogGNArnsYLDr9E2fXZ2ODKBy7Jy3yVMr6g@mail.gmail.com>
+ <9ccdef6e1a1b47bd8d99594831f51094@codeaurora.org>
+ <CAE-0n533ZCaQkP7+XN+Ee9CG-r7vJD7LHG7_H8v7sVpimmQabg@mail.gmail.com>
+ <d88cd3e0af511ed60c12ce616ce22415@codeaurora.org>
+ <CAE-0n50J1JkaBa5XQmHS8Fe2W5R2fXKpLoTWbH0RshRZivGZWw@mail.gmail.com>
+Message-ID: <9564c684fb1c14a1df0068d42c749a8e@codeaurora.org>
+X-Sender: khsieh@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Apr 27, 2021 at 04:03:05PM +0530, Taniya Das wrote:
-> Add device tree bindings for display clock controller subsystem for
-> Qualcomm Technology Inc's SC7280 SoCs.
+On 2021-04-29 20:11, Stephen Boyd wrote:
+> Quoting khsieh@codeaurora.org (2021-04-29 10:23:31)
+>> On 2021-04-29 02:26, Stephen Boyd wrote:
+>> > Quoting khsieh@codeaurora.org (2021-04-28 10:38:11)
+>> >> On 2021-04-27 17:00, Stephen Boyd wrote:
+>> >> > Quoting aravindh@codeaurora.org (2021-04-21 11:55:21)
+>> >> >> On 2021-04-21 10:26, khsieh@codeaurora.org wrote:
+>> >> >> >>
+>> >> >> >>> +
+>> >> >> >>>         mutex_unlock(&dp->event_mutex);
+>> >> >> >>>
+>> >> >> >>>         return 0;
+>> >> >> >>> @@ -1496,6 +1502,9 @@ int msm_dp_display_disable(struct msm_dp *dp,
+>> >> >> >>> struct drm_encoder *encoder)
+>> >> >> >>>         /* stop sentinel checking */
+>> >> >> >>>         dp_del_event(dp_display, EV_DISCONNECT_PENDING_TIMEOUT);
+>> >> >> >>>
+>> >> >> >>> +       /* link is down, delete pending irq_hdps */
+>> >> >> >>> +       dp_del_event(dp_display, EV_IRQ_HPD_INT);
+>> >> >> >>> +
+>> >> >> >>
+>> >> >> >> I'm becoming convinced that the whole kthread design and event queue
+>> >> >> >> is
+>> >> >> >> broken. These sorts of patches are working around the larger problem
+>> >> >> >> that the kthread is running independently of the driver and irqs can
+>> >> >> >> come in at any time but the event queue is not checked from the irq
+>> >> >> >> handler to debounce the irq event. Is the event queue necessary at
+>> >> >> >> all?
+>> >> >> >> I wonder if it would be simpler to just use an irq thread and process
+>> >> >> >> the hpd signal from there. Then we're guaranteed to not get an irq
+>> >> >> >> again
+>> >> >> >> until the irq thread is done processing the event. This would
+>> >> >> >> naturally
+>> >> >> >> debounce the irq hpd event that way.
+>> >> >> > event q just like bottom half of irq handler. it turns irq into event
+>> >> >> > and handle them sequentially.
+>> >> >> > irq_hpd is asynchronous event from panel to bring up attention of hsot
+>> >> >> > during run time of operation.
+>> >> >> > Here, the dongle is unplugged and main link had teared down so that no
+>> >> >> > need to service pending irq_hpd if any.
+>> >> >> >
+>> >> >>
+>> >> >> As Kuogee mentioned, IRQ_HPD is a message received from the panel and
+>> >> >> is
+>> >> >> not like your typical HW generated IRQ. There is no guarantee that we
+>> >> >> will not receive an IRQ_HPD until we are finished with processing of
+>> >> >> an
+>> >> >> earlier HPD message or an IRQ_HPD message. For example - when you run
+>> >> >> the protocol compliance, when we get a HPD from the sink, we are
+>> >> >> expected to start reading DPCD, EDID and proceed with link training.
+>> >> >> As
+>> >> >> soon as link training is finished (which is marked by a specific DPCD
+>> >> >> register write), the sink is going to issue an IRQ_HPD. At this point,
+>> >> >> we may not done with processing the HPD high as after link training we
+>> >> >> would typically notify the user mode of the newly connected display,
+>> >> >> etc.
 > 
-> Signed-off-by: Taniya Das <tdas@codeaurora.org>
-> ---
->  .../bindings/clock/qcom,sc7280-dispcc.yaml         | 94 ++++++++++++++++++++++
->  include/dt-bindings/clock/qcom,dispcc-sc7280.h     | 55 +++++++++++++
->  2 files changed, 149 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/clock/qcom,sc7280-dispcc.yaml
->  create mode 100644 include/dt-bindings/clock/qcom,dispcc-sc7280.h
+> I re-read this. I think you're saying that IRQ_HPD can come in after 
+> HPD
+> goes high and we finish link training? That sounds like we should 
+> enable
+> IRQ_HPD in the hardware once we finish link training, instead of having
+> it enabled all the time. Then we can finish the threaded irq handler 
+> and
+> the irq should be pending again once IRQ_HPD is sent over. Is there 
+> ever
+> a need to be processing some IRQ_HPD and then get another IRQ_HPD while
+> processing the first one?
+yes, for example
+1) plug dongle only
+2) plug hdmi monitor into dongle (generated irq_hpd with sinc_count = 1)
+3) unplug hdmi monitor out of the dongle (generate irq_hpd with 
+sinc_count = 0)
+4) go back to 2) for n times
+5) unplug dongle
+
+This patch is not fix this problem either.
+The existing code has major issue which is handle irq_hpd with 
+sink_count = 0 same way as handle of dongle unplugged.
+I think this cause external dp display failed to work and cause crash at 
+suspend/resume test case.
+I will drop this patch.
+I am working on handle irq_hpd with sink_count = 0 as asymmetric as 
+opposite to  irq_hpd with sink_count = 1.
+This means irq_hdp sink_count = 0 handle only tear down the main link 
+but keep phy/aux intact.
+I will re submit patch for review.
+
+
 > 
-> diff --git a/Documentation/devicetree/bindings/clock/qcom,sc7280-dispcc.yaml b/Documentation/devicetree/bindings/clock/qcom,sc7280-dispcc.yaml
-> new file mode 100644
-> index 0000000..2178666
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/clock/qcom,sc7280-dispcc.yaml
-> @@ -0,0 +1,94 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/clock/qcom,sc7280-dispcc.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm Display Clock & Reset Controller Binding for SC7280
-> +
-> +maintainers:
-> +  - Taniya Das <tdas@codeaurora.org>
-> +
-> +description: |
-> +  Qualcomm display clock control module which supports the clocks, resets and
-> +  power domains on SC7280.
-> +
-> +  See also dt-bindings/clock/qcom,dispcc-sc7280.h.
-> +
-> +properties:
-> +  compatible:
-> +    const: qcom,sc7280-dispcc
-> +
-> +  clocks:
-> +    items:
-> +      - description: Board XO source
-> +      - description: GPLL0 source from GCC
-> +      - description: Byte clock from DSI PHY
-> +      - description: Pixel clock from DSI PHY
-> +      - description: Link clock from DP PHY
-> +      - description: VCO DIV clock from DP PHY
-> +      - description: Link clock from EDP PHY
-> +      - description: VCO DIV clock from EDP PHY
-> +
-> +  clock-names:
-> +    items:
-> +      - const: bi_tcxo
-> +      - const: gcc_disp_gpll0_clk
-> +      - const: dsi0_phy_pll_out_byteclk
-> +      - const: dsi0_phy_pll_out_dsiclk
-> +      - const: dp_phy_pll_link_clk
-> +      - const: dp_phy_pll_vco_div_clk
-> +      - const: edp_phy_pll_link_clk
-> +      - const: edp_phy_pll_vco_div_clk
-> +
-> +  '#clock-cells':
-> +    const: 1
-> +
-> +  '#reset-cells':
-> +    const: 1
-> +
-> +  '#power-domain-cells':
-> +    const: 1
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - clocks
-> +  - clock-names
-> +  - '#clock-cells'
-> +  - '#reset-cells'
-> +  - '#power-domain-cells'
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/clock/qcom,gcc-sc7280.h>
-> +    #include <dt-bindings/clock/qcom,rpmh.h>
-> +    clock-controller@af00000 {
-> +      compatible = "qcom,sc7280-dispcc";
-> +      reg = <0x0af00000 0x200000>;
-> +      clocks = <&rpmhcc RPMH_CXO_CLK>,
-> +               <&gcc GCC_DISP_GPLL0_CLK_SRC>,
-> +               <&dsi_phy 0>,
-> +               <&dsi_phy 1>,
-> +               <&dp_phy 0>,
-> +               <&dp_phy 1>,
-> +               <&edp_phy 0>,
-> +               <&edp_phy 1>;
-> +      clock-names = "bi_tcxo",
-> +                    "gcc_disp_gpll0_clk",
-> +                    "dsi0_phy_pll_out_byteclk",
-> +                    "dsi0_phy_pll_out_dsiclk",
-> +                    "dp_phy_pll_link_clk",
-> +                    "dp_phy_pll_vco_div_clk",
-> +                    "edp_phy_pll_link_clk",
-> +                    "edp_phy_pll_vco_div_clk";
-> +      #clock-cells = <1>;
-> +      #reset-cells = <1>;
-> +      #power-domain-cells = <1>;
-> +    };
-> +...
-> diff --git a/include/dt-bindings/clock/qcom,dispcc-sc7280.h b/include/dt-bindings/clock/qcom,dispcc-sc7280.h
-> new file mode 100644
-> index 0000000..2074b30
-> --- /dev/null
-> +++ b/include/dt-bindings/clock/qcom,dispcc-sc7280.h
-> @@ -0,0 +1,55 @@
-> +/* SPDX-License-Identifier: GPL-2.0-only */
-
-Dual license please. I'm tired of telling the company that complained to 
-me about having dual licensing for DT stuff not dual license their
-stuff. Please pass that on to your coworkers.
-
-Rob
+>> >> >
+>> >> > Given that the irq comes in and is then forked off to processing at a
+>> >> > later time implies that IRQ_HPD can come in at practically anytime.
+>> >> > Case
+>> >> > in point, this patch, which is trying to selectively search through the
+>> >> > "event queue" and then remove the event that is no longer relevant
+>> >> > because the display is being turned off either by userspace or because
+>> >> > HPD has gone away. If we got rid of the queue and kthread and processed
+>> >> > irqs in a threaded irq handler I suspect the code would be simpler and
+>> >> > not have to search through an event queue when we disable the display.
+>> >> > Instead while disabling the display we would make sure that the irq
+>> >> > thread isn't running anymore with synchronize_irq() or even disable the
+>> >> > irq entirely, but really it would be better to just disable the irq in
+>> >> > the hardware with a register write to some irq mask register.
+>> >> >
+>> >> > This pushes more of the logic for HPD and connect/disconnect into the
+>> >> > hardware and avoids reimplementing that in software: searching through
+>> >> > the queue, checking for duplicate events, etc.
+>> >>
+>> >> I wish we can implemented as you suggested. but it more complicate
+>> >> than
+>> >> that.
+>> >> Let me explain below,
+>> >> we have 3 transactions defined as below,
+>> >>
+>> >> plugin transaction: irq handle do host dp ctrl initialization and link
+>> >> training. If sink_count = 0 or link train failed, then transaction
+>> >> ended. otherwise send display up uevent to frame work and wait for
+>> >> frame
+>> >> work thread to do mode set, start pixel clock and start video to end
+>> >> transaction.
+>> >
+>> > Why do we need to wait for userspace to start video? HPD is indicating
+>> > that we have something connected, so shouldn't we merely signal to
+>> > userspace that something is ready to display and then enable the irq
+>> > for
+>> > IRQ_HPD?
+>> >
+>> yes, it is correct.
+>> The problem is unplug happen after signal user space.
+>> if unplug happen before user space start mode set and video, then it 
+>> can
+>> just do nothing and return.
+>> but if unplugged happen at the middle of user space doing mode set and
+>> start video?
+> 
+> I expect the link training to fail, maybe slowly, but userspace should
+> still be notified that the state has changed to disconnected when the
+> irq comes in, around the same time that the cable is physically
+> disconnected.
+> 
+>> 
+>> remember we had run into problem system show in connect state when
+>> dongle unplugged, vice versa.
+>> 
+> 
+> These problems are still happening as far as I can tell. I've heard
+> reports that external panels are showing up as connected when no dongle
+> is there, implying that HPD handling is broken.
+> 
+>> 
+>> 
+>> 
+>> >>
+>> >> unplugged transaction: irq handle send display off uevent to frame
+>> >> work and wait for frame work to disable pixel clock ,tear down main
+>> >> link and dp ctrl host de initialization.
+>> >
+>> > What do we do if userspace is slow and doesn't disable the display
+>> > before the cable is physically plugged in again?
+>> >
+>> plugin is not handle (re enter back into event q) until unplugged 
+>> handle
+>> completed.
+>> >>
+>> >> irq_hpd transaction: This only happen after plugin transaction and
+>> >> before unplug transaction. irq handle read panel dpcd register and
+>> >> perform requesting action. Action including perform dp compliant
+>> >> phy/link testing.
+>> >>
+>> >> since dongle can be plugged/unplugged at ant time, three conditions
+>> >> have
+>> >> to be met to avoid race condition,
+>> >> 1) no irq lost
+>> >> 2) irq happen timing order enforced at execution
+>> >> 3) no irq handle done in the middle transaction
+>> >>
+>> >> for example we do not want to see
+>> >> plugin --> unplug --> plugin --> unplug become plugin --> plugin-->
+>> >> unplug
+>> >>
+>> >> The purpose of this patch is to not handle pending irq_hpd after
+>> >> either
+>> >> dongle or monitor had been unplugged until next plug in.
+>> >>
+>> >
+>> > I'm not suggesting to block irq handling entirely for long running
+>> > actions. A plug irq due to HPD could still notify userspace that the
+>> > display is connected but when an IRQ_HPD comes in we process it in the
+>> > irq thread instead of trying to figure out what sort of action is
+>> > necessary to quickly fork it off to a kthread to process later.
+>> >
+>> > The problem seems to be that this quick forking off of the real IRQ_HPD
+>> > processing is letting the event come in, and then an unplug to come in
+>> > after that, and then a plug in to come in after that, leading to the
+>> > event queue getting full of events that are no longer relevant but
+>> > still
+>> > need to be processed. If this used a workqueue instead of an open-coded
+>> > one, I'd say we should cancel any work items on the queue if an unplug
+>> > irq came in. That way we would make sure that we're not trying to do
+>> > anything with the link when it isn't present anymore.
+>> >
+>> is this same as we delete irq_hpd from event q?
+>> What happen if the workqueue had been launched?
+> 
+> Yes workqueues are basically functions you run on a kthread with 
+> various
+> ways to either make sure that the work has finished processing or to 
+> try
+> to cancel it out so that it either doesn't run at all because the
+> kthread hasn't picked it up or that it runs to completion before
+> continuing. The event queue should be replaced with a workqueue design,
+> but even better would be to use a threaded irq if possible so that
+> hardware can't raise more irqs while one is being handled.
+> 
+>> 
+>> > But even then it doesn't make much sense. Userspace could be heavily
+>> > delayed after the plug in irq, when HPD is asserted, and not display
+>> > anything. The user could physically unplug and plug during that time so
+>> > we really need to not wait at all or do anything besides note the state
+>> > of the HPD when this happens. The IRQ_HPD irq is different. I don't
+>> > think we care to keep getting them if we're not done processing the
+>> > previous irq. I view it as basically an "edge" irq that we see,
+>> > process,
+>> > and then if another one comes in during the processing time we ignore
+>> > it. There's only so much we can do, hence the suggestion to use a
+>> > threaded irq.
+>> >
+>> I do not think you can ignore irq_hpd.
+>> for example, you connect hdmi monitor to dongle then plug in dongle 
+>> into
+>> DUT and unplug hdmi monitor immediatly.
+>> DP driver will see plugin irq with sink_count=1 followed by irq_hpd 
+>> with
+>> sink_count= 0.
+>> Then we may end up you think it is in connect state but actually it
+>> shold be in disconnect state.
+> 
+> Yes I'm saying that we should be able to use the hardware to coalesce
+> multiple IRQ_HPDs so that we don't unmask the IRQ_HPD until a connect
+> irq tells us a cable is connected, and then we mask IRQ_HPD when a
+> disconnect irq happens, and ignore extra IRQ_HPDs by processing the
+> IRQ_HPD in a threaded irq handler.
+> 
+> Maybe this can't work because the same hardware irq is used for the HPD
+> high/low and IRQ_HPD? If that's true, we should be able to keep the
+> IRQ_HPD masked until the event is processed by calling
+> dp_catalog_hpd_config_intr() to disable DP_DP_IRQ_HPD_INT_MASK when we
+> see it in the irq handler and only enable the irq again once we've
+> processed it, which I guess would be the end of dp_irq_hpd_handle()?
+> 
+>> I do not think we can ignore irq_hpd but combine multiple irq_hpd into
+>> one and handle it.
+>> 
+>> 
+>> > This is why IRQ_HPD is yanking the HPD line down to get the attention
+>> > of
+>> > the source, but HPD high and HPD low for an extended period of time
+>> > means the cable has been plugged or unplugged. We really do care if the
+>> > line goes low for a long time, but if it only temporarily goes low for
+>> > an IRQ_HPD then we either saw it or we didn't have time to process it
+>> > yet.
+>> >
+>> > It's like a person at your door ringing the doorbell. They're there
+>> > (HPD
+>> > high), and they're ringing the doorbell over and over (IRQ_HPD) and
+>> > eventually they go away when you don't answer (HPD low). We don't have
+>> > to keep track of every single doorbell/IRQ_HPD event because it's
+>> > mostly
+>> > a ping from the sink telling us we need to go do something, i.e. a
+>> > transitory event. The IRQ_HPD should always work once HPD is there, but
+>> > once HPD is gone we should mask it and ignore that irq until we see an
+>> > HPD high again.
+>> 
+>> if amazon deliver ring the door bell 3 times, then we answer the door 
+>> at
+>> the third time. this mean the first and second door bell ring can be
+>> ignored.
+>> Also if door bell ring 3 times and left an package at door then 
+>> deliver
+>> left, you saw deliver left form window then you still need to answer 
+>> to
+>> find out there is package left at door. If you ignore doorbell, then 
+>> you
+>> will missed the package.
+> 
+> There isn't a package being left at the door. When HPD goes away,
+> there's nothing to do anymore. Stop going to the door to look for
+> anything. Maybe a better analogy is that the entire door and doorbell 
+> is
+> gone when HPD goes away.
+> 
+>> 
+>> 
+>> I believe both thread_irq and event q works.
+>> But I think event q give us more finer controller.
+> 
+> What sort of finer control? Opinions need supporting facts or they're
+> just opinions.
+> 
+>> We are trying to fix an extreme case which generate un expected number
+>> of irq_hpd at an unexpected timing.
+>> I believe other dp driver (not Qcom) will also failed on this 
+>> particular
+>> case.
+>> 
+> 
+> I don't understand why that matters. This driver being just as bad as
+> other drivers isn't a good quality.
