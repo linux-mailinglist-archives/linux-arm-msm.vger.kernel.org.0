@@ -2,130 +2,197 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C953B37142B
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 May 2021 13:20:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 57B69371910
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 May 2021 18:19:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232835AbhECLV2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 May 2021 07:21:28 -0400
-Received: from mail.kernel.org ([198.145.29.99]:43812 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230137AbhECLV1 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 May 2021 07:21:27 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id D3EE261221;
-        Mon,  3 May 2021 11:20:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1620040834;
-        bh=ZUgVwxzi7a3MtB6NcAHEykBjZMzggIkMTLCY+qPK52g=;
-        h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
-        b=uKxt34HmYmBfq5vBMhBmz3d/CTySSKuJYU1S0hznPEUkhjS1YP/wt+dsyxrl+QgBd
-         0Eowgk6D67u8gbziE5e40OMnDCKhkS6GL6sm047ezS5+y5m/QiIYw5wam0C3jzL/xV
-         MTRgJgZ7EIIRb74BNEiBqvRvlIgJBNzSIDQA3yh1YPUrcEDFJGGB6yTgyEKbkMQa3a
-         xiAgLmJ89+z6f3TB7XUlMkXMDpIlbUC5A6fmM8QugVrxGUuVbRMzwihu5TMZhuFZ/O
-         upJe1zWfc2Xo54st/24h3oloPZFmniV6TD+cgO80wcNYilR0+EZK7pgIjxRris425t
-         sMZu9UW8Lmq7g==
-From:   Felipe Balbi <balbi@kernel.org>
-To:     Sandeep Maheswaram <sanm@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
+        id S231185AbhECQUh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 May 2021 12:20:37 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:32325 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231158AbhECQUg (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 3 May 2021 12:20:36 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1620058783; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=uuqfiplscz8tL1AG85dsCVML65qyBq7VxtDx/MN6lAA=; b=OOsS3jndcQBdXcy3goAQPPAEhCS5B9/BryN91IobxkMsGT+Dry3/BSrzvp8ZeTVSZKrzCB3D
+ AT+PoPRKjlbwH24InEaH/kxiGGEGZtXgMXjdV/1+cKQqPfW5IzkAxsb9ITy6LvlHElqdKZKD
+ Ip5U3kcnBbuPBea70AkKwlPteAM=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
+ 6090229d8807bcde1dc45f8e (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 03 May 2021 16:19:41
+ GMT
+Sender: schowdhu=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id C5919C43460; Mon,  3 May 2021 16:19:41 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from blr-ubuntu-525.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: schowdhu)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 2AAD4C433F1;
+        Mon,  3 May 2021 16:19:35 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 2AAD4C433F1
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=schowdhu@codeaurora.org
+From:   Souradeep Chowdhury <schowdhu@codeaurora.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Manu Gautam <mgautam@codeaurora.org>
-Subject: Re: [PATCH v7 2/5] usb: dwc3: core: Host wake up support from
- system suspend
-In-Reply-To: <184ddea9-643f-91ea-6d1f-5bdd26373e53@codeaurora.org>
-References: <1619586716-8687-1-git-send-email-sanm@codeaurora.org>
- <1619586716-8687-3-git-send-email-sanm@codeaurora.org>
- <87r1iuk9vs.fsf@kernel.org>
- <184ddea9-643f-91ea-6d1f-5bdd26373e53@codeaurora.org>
-Date:   Mon, 03 May 2021 14:20:23 +0300
-Message-ID: <87h7jkhxmw.fsf@kernel.org>
-MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
-        micalg=pgp-sha256; protocol="application/pgp-signature"
+        Rob Herring <robh+dt@kernel.org>
+Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Sibi Sankar <sibis@codeaurora.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>, vkoul@kernel.org,
+        Souradeep Chowdhury <schowdhu@codeaurora.org>
+Subject: [PATCH V4 0/4] Add driver support for Data Capture and Compare Engine(DCC) for SM8150
+Date:   Mon,  3 May 2021 21:47:26 +0530
+Message-Id: <cover.1620056206.git.schowdhu@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
---=-=-=
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+DCC(Data Capture and Compare) is a DMA engine designed for debugging purposes.In case of a system
+crash or manual software triggers by the user the DCC hardware stores the value at the register
+addresses which can be used for debugging purposes.The DCC driver provides the user with sysfs
+interface to configure the register addresses.The options that the DCC hardware provides include
+reading from registers,writing to registers,first reading and then writing to registers and looping
+through the values of the same register.
 
+In certain cases a register write needs to be executed for accessing the rest of the registers,
+also the user might want to record the changing values of a register with time for which he has the
+option to use the loop feature.
 
-Hi,
+The options mentioned above are exposed to the user by sysfs files once the driver is probed.The
+details and usage of this sysfs files are documented in Documentation/ABI/testing/sysfs-driver-dcc.
 
-Sandeep Maheswaram <sanm@codeaurora.org> writes:
->> Sandeep Maheswaram <sanm@codeaurora.org> writes:
->>> Avoiding phy powerdown when wakeup capable devices are connected
->>> by checking phy_power_off flag.
->>> Phy should be on to wake up the device from suspend using wakeup capable
->>> devices such as keyboard and mouse.
->>>
->>> Signed-off-by: Sandeep Maheswaram <sanm@codeaurora.org>
->>> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
->>> ---
->>>   drivers/usb/dwc3/core.c | 7 +++++--
->>>   1 file changed, 5 insertions(+), 2 deletions(-)
->>>
->>> diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
->>> index b6e53d8..bb414c3 100644
->>> --- a/drivers/usb/dwc3/core.c
->>> +++ b/drivers/usb/dwc3/core.c
->>> @@ -1738,7 +1738,7 @@ static int dwc3_suspend_common(struct dwc3 *dwc, =
-pm_message_t msg)
->>>   		dwc3_core_exit(dwc);
->>>   		break;
->>>   	case DWC3_GCTL_PRTCAP_HOST:
->>> -		if (!PMSG_IS_AUTO(msg)) {
->>> +		if (!PMSG_IS_AUTO(msg) && dwc->phy_power_off) {
->> should be able to detect this generically, no? Shouldn't
->> device_may_wakeup() be valid here and give you the answer you want?
->
-> I think=C2=A0 device_may_wakeup() gives whether the controller is wake up=
-=20
-> capable or not.
+As an example let us consider a couple of debug scenarios where DCC has been proved to be effective
+for debugging purposes:-
 
-Yes, but it's a bit more than that. Looking at devices.rst we read:
+i)TimeStamp Related Issue
 
-If :c:func:`device_may_wakeup(dev)` returns ``true``, the device should be
-prepared for generating hardware wakeup signals to trigger a system wakeup =
-event
-when the system is in the sleep state.  For example, :c:func:`enable_irq_wa=
-ke()`
-might identify GPIO signals hooked up to a switch or other external hardwar=
-e,
-and :c:func:`pci_enable_wake()` does something similar for the PCI PME sign=
-al.
+On SC7180, there was a coresight timestamp issue where it would occasionally be all 0 instead of proper
+timestamp values.
 
-So, if there is a condition where $this device has to, somehow, deal
-with wakeup, it should be configured accordingly. This ->phy_power_off
-flag is telling us the same thing.
+Proper timestamp:
+Idx:3373; ID:10; I_TIMESTAMP : Timestamp.; Updated val = 0x13004d8f5b7aa; CC=0x9e
 
-> But we want to keep phy powered on only when some wakeup capable devices=
-=20
-> (eg:keyboard ,mouse ) are connected to controller.
+Zero timestamp:
+Idx:3387; ID:10; I_TIMESTAMP : Timestamp.; Updated val = 0x0; CC=0xa2
 
-Understood, it could be that we're missing some method for propagating
-that state (i.e. keyboard with PM support) up to the parent device, but
-that's no excuse to bypass driver boundaries. Wouldn't you agree?
+Now this is a non-fatal issue and doesn't need a system reset, but still needs
+to be rootcaused and fixed for those who do care about coresight etm traces.
+Since this is a timestamp issue, we would be looking for any timestamp related
+clocks and such.
 
-=2D-=20
-balbi
+o we get all the clk register details from IP documentation and configure it
+via DCC config syfs node. Before that we set the current linked list.
 
---=-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
+/* Set the current linked list */
+echo 3 > /sys/bus/platform/devices/10a2000.dcc/curr_list
 
------BEGIN PGP SIGNATURE-----
+/* Program the linked list with the addresses */
+echo 0x10c004 > /sys/bus/platform/devices/10a2000.dcc/config
+echo 0x10c008 > /sys/bus/platform/devices/10a2000.dcc/config
+echo 0x10c00c > /sys/bus/platform/devices/10a2000.dcc/config
+echo 0x10c010 > /sys/bus/platform/devices/10a2000.dcc/config
+..... and so on for other timestamp related clk registers
 
-iQFFBAEBCAAvFiEE9DumQ60WEZ09LIErzlfNM9wDzUgFAmCP3HcRHGJhbGJpQGtl
-cm5lbC5vcmcACgkQzlfNM9wDzUjGOQf+KlT69IuS8HqBmJV2X3nhuK2dRhbHPymW
-K3GcWSvNnMq0ayGT9JmHUzvAOU/WxWqhLb+WLC4F3q2Tyn1bsfM89lu1GNmUFM+w
-kybGYLlNU1c/91LbJfmSyENKgTGSqYNJobi+mu6ggaIu5Q2Vf5bbu+hT4dMPckQU
-yxBuY7zrIdXp44EGWz6CImE1Jz8aVSeL98fBbflbgkwFo23zDoXO7Te28CAHg9Hr
-c0WeaK+z2b4GxOI8SQeBq2o7T4ZLUPtyk0nL36VDZH00Q5uM/ClsmnoreT/xz4In
-IuEKIJOVjvgyLYD9VcQXIt3Vb22EjhkwEGa7Zv8BD4EA1PIg3qLx9g==
-=ihYt
------END PGP SIGNATURE-----
---=-=-=--
+/* Other way of specifying is in "addr len" pair, in below case it
+specifies to capture 4 words starting 0x10C004 */
+
+echo 0x10C004 4 > /sys/bus/platform/devices/10a2000.dcc/config
+
+/* Enable DCC */
+echo 1 > /sys/bus/platform/devices/10a2000.dcc/enable
+
+/* Run the timestamp test for working case */
+
+/* Send SW trigger */
+echo 1 > /sys/bus/platform/devices/10a2000.dcc/trigger
+
+/* Read SRAM */
+cat /dev/dcc_sram > dcc_sram1.bin
+
+/* Run the timestamp test for non-working case */
+
+/* Send SW trigger */
+echo 1 > /sys/bus/platform/devices/10a2000.dcc/trigger
+
+/* Read SRAM */
+cat /dev/dcc_sram > dcc_sram2.bin
+
+Get the parser from [1] and checkout the latest branch.
+
+/* Parse the SRAM bin */
+python dcc_parser.py -s dcc_sram1.bin --v2 -o output/
+python dcc_parser.py -s dcc_sram2.bin --v2 -o output/
+
+Sample parsed output of dcc_sram1.bin:
+
+<hwioDump version="1">
+        <timestamp>03/14/21</timestamp>
+            <generator>Linux DCC Parser</generator>
+                <chip name="None" version="None">
+                <register address="0x0010c004" value="0x80000000" />
+                <register address="0x0010c008" value="0x00000008" />
+                <register address="0x0010c00c" value="0x80004220" />
+                <register address="0x0010c010" value="0x80000000" />
+            </chip>
+    <next_ll_offset>next_ll_offset : 0x1c </next_ll_offset>
+</hwioDump>
+
+ii)NOC register errors
+
+A particular class of registers called NOC which are functional registers was reporting
+errors while logging the values.To trace these errors the DCC has been used effectively.
+The steps followed were similar to the ones mentioned above.
+In addition to NOC registers a few other dependent registers were configured in DCC to
+monitor it's values during a crash. A look at the dependent register values revealed that
+the crash was happening due to a secured access to one of these dependent registers.
+All these debugging activity and finding the root cause was achieved using DCC.
+
+DCC parser is available at the following open source location
+
+https://source.codeaurora.org/quic/la/platform/vendor/qcom-opensource/tools/tree/dcc_parser
+
+Changes in v4:
+
+*Implement all the comments on v3 of the patch.
+*Incorporate code change for handling multiple SoCs.
+*Incorporate code change for DCC_SRAM content to persist across warm reboots. 
+*Fixed the issue with the Makefile in v3 of the patch.
+
+Souradeep Chowdhury (4):
+  dt-bindings: Added the yaml bindings for DCC
+  soc: qcom: dcc:Add driver support for Data Capture and Compare
+    unit(DCC)
+  MAINTAINERS: Add the entry for DCC(Data Capture and Compare) driver
+    support
+  arm64: dts: qcom: sm8150: Add Data Capture and Compare(DCC) support
+    node
+
+ Documentation/ABI/testing/sysfs-driver-dcc         |  114 ++
+ .../devicetree/bindings/arm/msm/qcom,dcc.yaml      |   40 +
+ MAINTAINERS                                        |    8 +
+ arch/arm64/boot/dts/qcom/sm8150.dtsi               |    6 +
+ drivers/soc/qcom/Kconfig                           |    8 +
+ drivers/soc/qcom/Makefile                          |    1 +
+ drivers/soc/qcom/dcc.c                             | 1534 ++++++++++++++++++++
+ 7 files changed, 1711 insertions(+)
+ create mode 100644 Documentation/ABI/testing/sysfs-driver-dcc
+ create mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,dcc.yaml
+ create mode 100644 drivers/soc/qcom/dcc.c
+
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
+
