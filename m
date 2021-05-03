@@ -2,120 +2,297 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BD288371B2A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 May 2021 18:43:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 37C1C371A1D
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 May 2021 18:38:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232480AbhECQnj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 May 2021 12:43:39 -0400
-Received: from mail.kernel.org ([198.145.29.99]:39904 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231951AbhECQlp (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 May 2021 12:41:45 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id A77ED6142F;
-        Mon,  3 May 2021 16:37:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1620059879;
-        bh=bgsQ4C6uIetDSOq7p3giD0blDWPX1UU1oDNWpWVUFGc=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=jyzY4labV67mPeVkHedt08zDVtGuWkZXPtjWs9SF25jUwcNshOIzSROTn7PxlOGxl
-         sGrzryFzingFucudcHSIZ/uxIGfUp2lwFxxdZJsCiiraqPwedaqxocVaaGnnTNirvk
-         lhs+4zIR5nLzWb+AlAH7oYbkKf1CvQ0kUCwVw+XheWqj1XcWdE2zeZUa/j0CuwY40N
-         IzGildgYEroCfdCb8O3fwbZRltRr8k8bdjf9ypYewF2VRFbO+aefwH2d0wR27ZAF06
-         QOzqi0ES2+KQdcJZYtGSX7Abo1J8Co8QFEt6+5tEpWehTdnzZBNmDkr4pKPvZGRqaT
-         7dT0wUhysraIQ==
-From:   Sasha Levin <sashal@kernel.org>
-To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Kiran Gunda <kgunda@codeaurora.org>,
-        Daniel Thompson <daniel.thompson@linaro.org>,
-        Lee Jones <lee.jones@linaro.org>,
-        Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, linux-fbdev@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.11 039/115] backlight: qcom-wled: Fix FSC update issue for WLED5
-Date:   Mon,  3 May 2021 12:35:43 -0400
-Message-Id: <20210503163700.2852194-39-sashal@kernel.org>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20210503163700.2852194-1-sashal@kernel.org>
-References: <20210503163700.2852194-1-sashal@kernel.org>
+        id S232041AbhECQiy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 May 2021 12:38:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49950 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231535AbhECQhy (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 3 May 2021 12:37:54 -0400
+Received: from mail-pg1-x52e.google.com (mail-pg1-x52e.google.com [IPv6:2607:f8b0:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 075F5C061351
+        for <linux-arm-msm@vger.kernel.org>; Mon,  3 May 2021 09:36:07 -0700 (PDT)
+Received: by mail-pg1-x52e.google.com with SMTP id y32so4004902pga.11
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 May 2021 09:36:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=hoFXqCDljrfPhl8OhWKYJabFe89kk859lQwWFfRV5jk=;
+        b=J3mqNlu08uQn6JHtmGGJHnbH8eZlpqF1kBLHF5cwjptJynYRHpCNuVXFXQBX0QTf1j
+         5ylil1BnEQo8BGqUzCtCVzxq0A+wQ/xGaJ/+oz0FAyFi38mySvPu+3T1c/TeVLTwchcM
+         kSQdt0sznP4JQ3vzgKnBO9hwsXzt8xrUwzVrA=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=hoFXqCDljrfPhl8OhWKYJabFe89kk859lQwWFfRV5jk=;
+        b=SG4+10aQAV8MevgiGNHWUrjNeVrd/vwXM3l+U9cjKah80m8ockPhFRphzNyHAfWh2j
+         yuX49/ReZ0RfZO7Jmcm4WoRef8/dhP7GDhI4JJ3uBzlBqBzHrhHpfh0LT5QH7+AstBZc
+         Dr3KXQlfGA+zgQNSYjyb79soFGDTEqyRac4Lw9vB35RxHpRYcvXfAt+FLvb9JuYTmXJx
+         Y9cUq3yZFJSXFmgtoynzZBQ4yk2Uvy1ZHwMqQIWTAyOXc7qDbQcgZrE0RTHVW2F1vcd0
+         DNbM1ALfH2Fux0g/nlxlnbBVhOOw/jeWad+3jlWvYpcOAgx99yu2PrMDX8PZviso7D0r
+         20jQ==
+X-Gm-Message-State: AOAM531d43fH4c7XK74cEecJZmIGBk+EvwnqHN3k+CbySXYzs5P6nm+6
+        N+e4DL9hQukOtWKAcscvbu0Mh7w7XTdmTA==
+X-Google-Smtp-Source: ABdhPJz+6dpRIGYp+Fw0tZpohAELYLQRBoCCWBf3dIvf4VKQmprsU/2G9hHoAVG9ZDRHCcH9eNAwog==
+X-Received: by 2002:a65:6a08:: with SMTP id m8mr19082771pgu.146.1620059766601;
+        Mon, 03 May 2021 09:36:06 -0700 (PDT)
+Received: from localhost ([2620:15c:202:201:8584:3fd:2adf:a655])
+        by smtp.gmail.com with UTF8SMTPSA id n20sm10038260pjq.45.2021.05.03.09.36.05
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 03 May 2021 09:36:06 -0700 (PDT)
+Date:   Mon, 3 May 2021 09:36:04 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Sibi Sankar <sibis@codeaurora.org>
+Cc:     bjorn.andersson@linaro.org, viresh.kumar@linaro.org,
+        swboyd@chromium.org, agross@kernel.org, robh+dt@kernel.org,
+        rjw@rjwysocki.net, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, dianders@chromium.org
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: sc7280: Add cpu OPP tables
+Message-ID: <YJAmdIHYl0DKsKyq@google.com>
+References: <1619792901-32701-1-git-send-email-sibis@codeaurora.org>
+ <1619792901-32701-3-git-send-email-sibis@codeaurora.org>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1619792901-32701-3-git-send-email-sibis@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Kiran Gunda <kgunda@codeaurora.org>
+On Fri, Apr 30, 2021 at 07:58:21PM +0530, Sibi Sankar wrote:
+> Add OPP tables required to scale DDR/L3 per freq-domain on SC7280 SoCs.
+> 
+> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sc7280.dtsi | 135 +++++++++++++++++++++++++++++++++++
+>  1 file changed, 135 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> index 0bb835aeae33..90220cecb368 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> @@ -7,6 +7,7 @@
+>  
+>  #include <dt-bindings/clock/qcom,gcc-sc7280.h>
+>  #include <dt-bindings/clock/qcom,rpmh.h>
+> +#include <dt-bindings/interconnect/qcom,osm-l3.h>
+>  #include <dt-bindings/interconnect/qcom,sc7280.h>
+>  #include <dt-bindings/interrupt-controller/arm-gic.h>
+>  #include <dt-bindings/mailbox/qcom-ipcc.h>
+> @@ -71,6 +72,9 @@
+>  					   &LITTLE_CPU_SLEEP_1
+>  					   &CLUSTER_SLEEP_0>;
+>  			next-level-cache = <&L2_0>;
+> +			operating-points-v2 = <&cpu0_opp_table>;
+> +			interconnects = <&gem_noc MASTER_APPSS_PROC 3 &mc_virt SLAVE_EBI1 3>,
+> +					<&epss_l3 MASTER_EPSS_L3_APPS &epss_l3 SLAVE_EPSS_L3_SHARED>;
 
-[ Upstream commit 4d6e9cdff7fbb6bef3e5559596fab3eeffaf95ca ]
+This patch seems to depend on the 'Add SC7280 interconnect provider
+driver' series (https://patchwork.kernel.org/project/linux-arm-msm/list/?series=473747)
+and 'Add L3 provider support for SC7280' (https://patchwork.kernel.org/project/linux-arm-msm/list/?series=468285),
+none of them has landed yet. The dependencies should be mentioned in the
+commit notes (under '---').
 
-Currently, for WLED5, the FSC (Full scale current) setting is not
-updated properly due to driver toggling the wrong register after
-an FSC update.
+>  			qcom,freq-domain = <&cpufreq_hw 0>;
+>  			L2_0: l2-cache {
+>  				compatible = "cache";
+> @@ -90,6 +94,9 @@
+>  					   &LITTLE_CPU_SLEEP_1
+>  					   &CLUSTER_SLEEP_0>;
+>  			next-level-cache = <&L2_100>;
+> +			operating-points-v2 = <&cpu0_opp_table>;
+> +			interconnects = <&gem_noc MASTER_APPSS_PROC 3 &mc_virt SLAVE_EBI1 3>,
+> +					<&epss_l3 MASTER_EPSS_L3_APPS &epss_l3 SLAVE_EPSS_L3_SHARED>;
+>  			qcom,freq-domain = <&cpufreq_hw 0>;
+>  			L2_100: l2-cache {
+>  				compatible = "cache";
+> @@ -106,6 +113,9 @@
+>  					   &LITTLE_CPU_SLEEP_1
+>  					   &CLUSTER_SLEEP_0>;
+>  			next-level-cache = <&L2_200>;
+> +			operating-points-v2 = <&cpu0_opp_table>;
+> +			interconnects = <&gem_noc MASTER_APPSS_PROC 3 &mc_virt SLAVE_EBI1 3>,
+> +					<&epss_l3 MASTER_EPSS_L3_APPS &epss_l3 SLAVE_EPSS_L3_SHARED>;
+>  			qcom,freq-domain = <&cpufreq_hw 0>;
+>  			L2_200: l2-cache {
+>  				compatible = "cache";
+> @@ -122,6 +132,9 @@
+>  					   &LITTLE_CPU_SLEEP_1
+>  					   &CLUSTER_SLEEP_0>;
+>  			next-level-cache = <&L2_300>;
+> +			operating-points-v2 = <&cpu0_opp_table>;
+> +			interconnects = <&gem_noc MASTER_APPSS_PROC 3 &mc_virt SLAVE_EBI1 3>,
+> +					<&epss_l3 MASTER_EPSS_L3_APPS &epss_l3 SLAVE_EPSS_L3_SHARED>;
+>  			qcom,freq-domain = <&cpufreq_hw 0>;
+>  			L2_300: l2-cache {
+>  				compatible = "cache";
+> @@ -138,6 +151,9 @@
+>  					   &BIG_CPU_SLEEP_1
+>  					   &CLUSTER_SLEEP_0>;
+>  			next-level-cache = <&L2_400>;
+> +			operating-points-v2 = <&cpu4_opp_table>;
+> +			interconnects = <&gem_noc MASTER_APPSS_PROC 3 &mc_virt SLAVE_EBI1 3>,
+> +					<&epss_l3 MASTER_EPSS_L3_APPS &epss_l3 SLAVE_EPSS_L3_SHARED>;
+>  			qcom,freq-domain = <&cpufreq_hw 1>;
+>  			L2_400: l2-cache {
+>  				compatible = "cache";
+> @@ -154,6 +170,9 @@
+>  					   &BIG_CPU_SLEEP_1
+>  					   &CLUSTER_SLEEP_0>;
+>  			next-level-cache = <&L2_500>;
+> +			operating-points-v2 = <&cpu4_opp_table>;
+> +			interconnects = <&gem_noc MASTER_APPSS_PROC 3 &mc_virt SLAVE_EBI1 3>,
+> +					<&epss_l3 MASTER_EPSS_L3_APPS &epss_l3 SLAVE_EPSS_L3_SHARED>;
+>  			qcom,freq-domain = <&cpufreq_hw 1>;
+>  			L2_500: l2-cache {
+>  				compatible = "cache";
+> @@ -170,6 +189,9 @@
+>  					   &BIG_CPU_SLEEP_1
+>  					   &CLUSTER_SLEEP_0>;
+>  			next-level-cache = <&L2_600>;
+> +			operating-points-v2 = <&cpu4_opp_table>;
+> +			interconnects = <&gem_noc MASTER_APPSS_PROC 3 &mc_virt SLAVE_EBI1 3>,
+> +					<&epss_l3 MASTER_EPSS_L3_APPS &epss_l3 SLAVE_EPSS_L3_SHARED>;
+>  			qcom,freq-domain = <&cpufreq_hw 1>;
+>  			L2_600: l2-cache {
+>  				compatible = "cache";
+> @@ -186,6 +208,9 @@
+>  					   &BIG_CPU_SLEEP_1
+>  					   &CLUSTER_SLEEP_0>;
+>  			next-level-cache = <&L2_700>;
+> +			operating-points-v2 = <&cpu4_opp_table>;
+> +			interconnects = <&gem_noc MASTER_APPSS_PROC 3 &mc_virt SLAVE_EBI1 3>,
+> +					<&epss_l3 MASTER_EPSS_L3_APPS &epss_l3 SLAVE_EPSS_L3_SHARED>;
+>  			qcom,freq-domain = <&cpufreq_hw 2>;
+>  			L2_700: l2-cache {
+>  				compatible = "cache";
+> @@ -248,6 +273,116 @@
+>  		};
+>  	};
+>  
+> +	cpu0_opp_table: cpu0_opp_table {
 
-On WLED5 we should only toggle the MOD_SYNC bit after a brightness
-update. For an FSC update we need to toggle the SYNC bits instead.
+the node name should use dashes as separators instead of underscores, i.e.
+it should be 'cpu0-opp-table'.
 
-Fix it by adopting the common wled3_sync_toggle() for WLED5 and
-introducing new code to the brightness update path to compensate.
+> +		compatible = "operating-points-v2";
+> +		opp-shared;
+> +
+> +		cpu0_opp1: opp-300000000 {
+> +			opp-hz = /bits/ 64 <300000000>;
+> +			opp-peak-kBps = <800000 9600000>;
+> +		};
+> +
+> +		cpu0_opp2: opp-691200000 {
+> +			opp-hz = /bits/ 64 <691200000>;
+> +			opp-peak-kBps = <800000 17817600>;
+> +		};
+> +
+> +		cpu0_opp3: opp-806400000 {
+> +			opp-hz = /bits/ 64 <806400000>;
+> +			opp-peak-kBps = <800000 20889600>;
+> +		};
+> +
+> +		cpu0_opp4: opp-940800000 {
+> +			opp-hz = /bits/ 64 <940800000>;
+> +			opp-peak-kBps = <1804000 24576000>;
+> +		};
+> +
+> +		cpu0_opp5: opp-1152000000 {
+> +			opp-hz = /bits/ 64 <1152000000>;
+> +			opp-peak-kBps = <2188000 27033600>;
+> +		};
+> +
+> +		cpu0_opp6: opp-1324800000 {
+> +			opp-hz = /bits/ 64 <1324800000>;
+> +			opp-peak-kBps = <2188000 33792000>;
+> +		};
+> +
+> +		cpu0_opp7: opp-1516800000 {
+> +			opp-hz = /bits/ 64 <1516800000>;
+> +			opp-peak-kBps = <3072000 38092800>;
+> +		};
+> +
+> +		cpu0_opp8: opp-1651200000 {
+> +			opp-hz = /bits/ 64 <1651200000>;
+> +			opp-peak-kBps = <3072000 41779200>;
+> +		};
+> +
+> +		cpu0_opp9: opp-1804800000 {
+> +			opp-hz = /bits/ 64 <1804800000>;
+> +			opp-peak-kBps = <4068000 48537600>;
+> +		};
+> +
+> +		cpu0_opp10: opp-1958400000 {
+> +			opp-hz = /bits/ 64 <1958400000>;
+> +			opp-peak-kBps = <4068000 48537600>;
+> +		};
+> +	};
+> +
+> +	cpu4_opp_table: cpu4_opp_table {
 
-Signed-off-by: Kiran Gunda <kgunda@codeaurora.org>
-Reviewed-by: Daniel Thompson <daniel.thompson@linaro.org>
-Signed-off-by: Lee Jones <lee.jones@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/video/backlight/qcom-wled.c | 25 +++++++++++++++++++------
- 1 file changed, 19 insertions(+), 6 deletions(-)
+node name should be 'cpu4-opp-table'
 
-diff --git a/drivers/video/backlight/qcom-wled.c b/drivers/video/backlight/qcom-wled.c
-index 83a187fdaa1d..cd11c5776438 100644
---- a/drivers/video/backlight/qcom-wled.c
-+++ b/drivers/video/backlight/qcom-wled.c
-@@ -348,7 +348,7 @@ static int wled3_sync_toggle(struct wled *wled)
- 	return rc;
- }
- 
--static int wled5_sync_toggle(struct wled *wled)
-+static int wled5_mod_sync_toggle(struct wled *wled)
- {
- 	int rc;
- 	u8 val;
-@@ -445,10 +445,23 @@ static int wled_update_status(struct backlight_device *bl)
- 			goto unlock_mutex;
- 		}
- 
--		rc = wled->wled_sync_toggle(wled);
--		if (rc < 0) {
--			dev_err(wled->dev, "wled sync failed rc:%d\n", rc);
--			goto unlock_mutex;
-+		if (wled->version < 5) {
-+			rc = wled->wled_sync_toggle(wled);
-+			if (rc < 0) {
-+				dev_err(wled->dev, "wled sync failed rc:%d\n", rc);
-+				goto unlock_mutex;
-+			}
-+		} else {
-+			/*
-+			 * For WLED5 toggling the MOD_SYNC_BIT updates the
-+			 * brightness
-+			 */
-+			rc = wled5_mod_sync_toggle(wled);
-+			if (rc < 0) {
-+				dev_err(wled->dev, "wled mod sync failed rc:%d\n",
-+					rc);
-+				goto unlock_mutex;
-+			}
- 		}
- 	}
- 
-@@ -1459,7 +1472,7 @@ static int wled_configure(struct wled *wled)
- 		size = ARRAY_SIZE(wled5_opts);
- 		*cfg = wled5_config_defaults;
- 		wled->wled_set_brightness = wled5_set_brightness;
--		wled->wled_sync_toggle = wled5_sync_toggle;
-+		wled->wled_sync_toggle = wled3_sync_toggle;
- 		wled->wled_cabc_config = wled5_cabc_config;
- 		wled->wled_ovp_delay = wled5_ovp_delay;
- 		wled->wled_auto_detection_required =
--- 
-2.30.2
-
+> +		compatible = "operating-points-v2";
+> +		opp-shared;
+> +
+> +		cpu4_opp1: opp-691200000 {
+> +			opp-hz = /bits/ 64 <691200000>;
+> +			opp-peak-kBps = <1804000 9600000>;
+> +		};
+> +
+> +		cpu4_opp2: opp-940800000 {
+> +			opp-hz = /bits/ 64 <940800000>;
+> +			opp-peak-kBps = <2188000 17817600>;
+> +		};
+> +
+> +		cpu4_opp3: opp-1228800000 {
+> +			opp-hz = /bits/ 64 <1228800000>;
+> +			opp-peak-kBps = <4068000 24576000>;
+> +		};
+> +
+> +		cpu4_opp4: opp-1344000000 {
+> +			opp-hz = /bits/ 64 <1344000000>;
+> +			opp-peak-kBps = <4068000 24576000>;
+> +		};
+> +
+> +		cpu4_opp5: opp-1516800000 {
+> +			opp-hz = /bits/ 64 <1516800000>;
+> +			opp-peak-kBps = <4068000 24576000>;
+> +		};
+> +
+> +		cpu4_opp6: opp-1651200000 {
+> +			opp-hz = /bits/ 64 <1651200000>;
+> +			opp-peak-kBps = <6220000 38092800>;
+> +		};
+> +
+> +		cpu4_opp7: opp-1900800000 {
+> +			opp-hz = /bits/ 64 <1900800000>;
+> +			opp-peak-kBps = <6220000 44851200>;
+> +		};
+> +
+> +		cpu4_opp8: opp-2054400000 {
+> +			opp-hz = /bits/ 64 <2054400000>;
+> +			opp-peak-kBps = <6220000 44851200>;
+> +		};
+> +
+> +		cpu4_opp9: opp-2131200000 {
+> +			opp-hz = /bits/ 64 <2131200000>;
+> +			opp-peak-kBps = <6220000 44851200>;
+> +		};
+> +
+> +		cpu4_opp10: opp-2400000000 {
+> +			opp-hz = /bits/ 64 <2400000000>;
+> +			opp-peak-kBps = <6832000 48537600>;
+> +		};
+> +	};
+> +
+>  	memory@80000000 {
+>  		device_type = "memory";
+>  		/* We expect the bootloader to fill in the size */
