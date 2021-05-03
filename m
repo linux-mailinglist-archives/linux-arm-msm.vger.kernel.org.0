@@ -2,256 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 70E0F37107F
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 May 2021 04:18:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1DC003710ED
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 May 2021 06:33:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232855AbhECCTH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 2 May 2021 22:19:07 -0400
-Received: from mail-dm6nam10olkn2017.outbound.protection.outlook.com ([40.92.41.17]:24801
-        "EHLO NAM10-DM6-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S230368AbhECCTG (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 2 May 2021 22:19:06 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=fAGtuvyK6pfQ8oNBVurt8wkXN6lvmXZ2xLrRxmIk18MFHS5Qo6L03/X26Nrkz9Z2+upw0p3YPi4yr0b3nfSMGDZ+u89F0IgrOAJqw6BJuvdlP5JyLotWiXOqWN3zyrgjspRleeAJqiXQbi3qrlpUdW/HjcazmM/0eL3dKkqlPKmQChE9fVxACu/6fDShXSfJL9CF0AY7+EtS6zxCWYWNZnNBLjVG56ApGT6ydJYvaOnC1wEKLVg0UJMYM53DGo2rjgKXRz7+CxZDOelgQP/hrxkyNaF1OFZC6RzidSGLTEJ3tZegdd/lXjLVPya2uT+8gPlu2/AG0sipVWOeOQosgA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ijiz35zQFw5HLG79TT6dPlB/ajTeCKn2H22Jg2WjFik=;
- b=UFdxBRkoGhTRsccO1AfXuNngoRc2OwwkylMHVeYUIqU2eQfHpOL4R9OpAmUldY4M7KBE2/1/bWpGpgztOFPZeSwRPhwzynhFvptOBTq3p8HIQERhBJdRfXi15izXvgu2EGG/T8ekn+sjpWeMn3QksRjmjVvOFWG92ZZLL8x7jKFO/HRPNVrG9O+HMtGHx2H8DluLK9cc48pQ1a/BTNU6tDBA7x/4t1fj3YUNiRkhO2NfmNI9fjPMhKFEPB/N4nv7rHDXZT8EQNn1+gm1TDbNfP445mwtYByo0Mgy10uCpErlsoFGePw2SEJEaW/iGAFcJjpMjVIY4MzSHGkDy5QxZg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-Received: from DM6NAM10FT058.eop-nam10.prod.protection.outlook.com
- (2a01:111:e400:7e86::42) by
- DM6NAM10HT194.eop-nam10.prod.protection.outlook.com (2a01:111:e400:7e86::461)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4087.27; Mon, 3 May
- 2021 02:18:12 +0000
-Received: from BN6PR2001MB1796.namprd20.prod.outlook.com
- (2a01:111:e400:7e86::51) by DM6NAM10FT058.mail.protection.outlook.com
- (2a01:111:e400:7e86::304) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4087.27 via Frontend
- Transport; Mon, 3 May 2021 02:18:11 +0000
-X-IncomingTopHeaderMarker: OriginalChecksum:8BBC0D577B7A12E5B27C397C953B318931CC401512F006CFD1EBD8FB0AD60B17;UpperCasedChecksum:6BC8E063C97A9879EF6BA8B02CCF705F7CC9E96AC85524FE709A86EA56621C4B;SizeAsReceived:7757;Count:45
-Received: from BN6PR2001MB1796.namprd20.prod.outlook.com
- ([fe80::2560:2e3:5949:eac6]) by BN6PR2001MB1796.namprd20.prod.outlook.com
- ([fe80::2560:2e3:5949:eac6%7]) with mapi id 15.20.4087.043; Mon, 3 May 2021
- 02:18:11 +0000
-From:   Joel Selvaraj <jo@jsfamily.in>
-To:     Andy Gross <agross@kernel.org>,
+        id S231137AbhECEel (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 May 2021 00:34:41 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:57978 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229457AbhECEej (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 3 May 2021 00:34:39 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1620016427; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=8fqgfcxpLNEW6FbHlX0bNagmykdQF7/5MSAweBJIB9g=; b=EvSc3xHoyCh+dVEcgpv8P3xQw7MIWFc76009zEjsDk6xF87YVk+f690fIEQ7JcNbI+v8sKJ7
+ l85ycWoG0cTtvfAyfYs6mQLgmErXuc7/yoPJDV89vXxP/DLmByNVeN+V3dA5hkIxZdoHOp2B
+ Ece9oe0eY71eb3MkYtq0HLQeeDE=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
+ 608f7d27215b831afb991e3d (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 03 May 2021 04:33:43
+ GMT
+Sender: sanm=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id BDBEBC4323A; Mon,  3 May 2021 04:33:43 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [192.168.0.104] (unknown [124.123.183.153])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: sanm)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 192DFC433F1;
+        Mon,  3 May 2021 04:33:38 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 192DFC433F1
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=sanm@codeaurora.org
+Subject: Re: [PATCH v7 2/5] usb: dwc3: core: Host wake up support from system
+ suspend
+To:     Felipe Balbi <balbi@kernel.org>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Srini Kandagatla <srinivas.kandagatla@linaro.org>
-Cc:     linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        dt <devicetree@vger.kernel.org>,
-        lkml <linux-kernel@vger.kernel.org>, phone-devel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        Joel Selvaraj <jo@jsfamily.in>,
-        Amit Pundir <amit.pundir@linaro.org>
-Subject: [PATCH v2] arm64: dts: qcom: sdm845-xiaomi-beryllium: Add audio support
-Date:   Mon,  3 May 2021 07:47:31 +0530
-Message-ID: <BN6PR2001MB17966ED1D787FA3F4B90A1A7D95B9@BN6PR2001MB1796.namprd20.prod.outlook.com>
-X-Mailer: git-send-email 2.27.0
-Content-Transfer-Encoding: 7BIT
-Content-Type:   text/plain; charset=US-ASCII
-X-TMN:  [ZXuNYRZrsp7doQeDAFGaPig7/VfjX+RlRyjduOPzhvWMYKNq8H8PX4J3/MpnAyvN]
-X-ClientProxiedBy: MA1PR0101CA0039.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:a00:22::25) To BN6PR2001MB1796.namprd20.prod.outlook.com
- (2603:10b6:405:23::18)
-X-Microsoft-Original-Message-ID: <20210503021732.336902-1-jo@jsfamily.in>
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Manu Gautam <mgautam@codeaurora.org>
+References: <1619586716-8687-1-git-send-email-sanm@codeaurora.org>
+ <1619586716-8687-3-git-send-email-sanm@codeaurora.org>
+ <87r1iuk9vs.fsf@kernel.org>
+From:   Sandeep Maheswaram <sanm@codeaurora.org>
+Message-ID: <184ddea9-643f-91ea-6d1f-5bdd26373e53@codeaurora.org>
+Date:   Mon, 3 May 2021 10:03:36 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.0
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-Received: from localhost.localdomain (2405:201:e01d:6006:cb3b:84c4:2f17:1862) by MA1PR0101CA0039.INDPRD01.PROD.OUTLOOK.COM (2603:1096:a00:22::25) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4087.27 via Frontend Transport; Mon, 3 May 2021 02:18:07 +0000
-X-MS-PublicTrafficType: Email
-X-IncomingHeaderCount: 45
-X-EOPAttributedMessage: 0
-X-MS-Office365-Filtering-Correlation-Id: 8a824c39-68d2-4da3-c03d-08d90dd9b279
-X-MS-TrafficTypeDiagnostic: DM6NAM10HT194:
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: hknfANowpHlfWVhpsmsljNpqNFRWKGZpxpxdm4/5ijqhwABBXtoBN/rAiFCKF46Mif0esyFpr19xAZQIF7lErTioVojQVRXutAjl9q+iPzudZqtPTyD0EL90nWsPVVAV9uZtLruoxYaX3wkB7rDaPvTGwYmCo+/lTIidIt3FtxUjIb+7lU1Aeqj14+X0nlqlGGZOoSe7TMHtkezBaroRqPfeiqFuKZEfnAqry66xaVHHmJNpV8fT5TcLzMscwui/QX60Mbxiz7w0iImtnCQHLOjGrtknk9kk8ETDlWQzp4JlXFeRzuAtzkCW0xzZOuiId0NQ1l12+5JLuTzemEHgf837J6BNjhAWIRVNbmVo7gT62smcSSDc2dVph3kecLVw7a7K3noxpJmMaVYURmCzSg==
-X-MS-Exchange-AntiSpam-MessageData: 0gdPThaW30QKYCGr7linXXCPiJuc0NKRgkTjZjhy2kwykP0smCiy5EL51tFXwHIIr8aoi0ddaZjNOfRN1j4nX0l0WOMZj997fvsAzcct0XJjsPN9hZNmpI5nmtbjtLzOH0ErgyPQttLaNTdEWnKbIOQwPI8zuw2hxe2Vfq002jVYrnkrrt6CHyUTojDtQ7OaBe06Rd40tCDSSF65CGinIA==
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8a824c39-68d2-4da3-c03d-08d90dd9b279
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 May 2021 02:18:11.4248
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-AuthSource: DM6NAM10FT058.eop-nam10.prod.protection.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6NAM10HT194
+In-Reply-To: <87r1iuk9vs.fsf@kernel.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This patch adds audio support for Xiaomi Poco F1 phone. Phone's primary
-Mic and 3.5mm Headphone jack are handled through the SDM845 sound card
-and WCD9340 codec.
 
-Tested-by: Amit Pundir <amit.pundir@linaro.org>
-Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Signed-off-by: Joel Selvaraj <jo@jsfamily.in>
----
-v2: Removed redundant MM_DL/MM_UL audio routes as suggested
-    by Stephan Gerhold.
----
- .../boot/dts/qcom/sdm845-xiaomi-beryllium.dts | 114 ++++++++++++++++++
- 1 file changed, 114 insertions(+)
+On 4/28/2021 3:29 PM, Felipe Balbi wrote:
+> Hi,
+>
+> Sandeep Maheswaram <sanm@codeaurora.org> writes:
+>> Avoiding phy powerdown when wakeup capable devices are connected
+>> by checking phy_power_off flag.
+>> Phy should be on to wake up the device from suspend using wakeup capable
+>> devices such as keyboard and mouse.
+>>
+>> Signed-off-by: Sandeep Maheswaram <sanm@codeaurora.org>
+>> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+>> ---
+>>   drivers/usb/dwc3/core.c | 7 +++++--
+>>   1 file changed, 5 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
+>> index b6e53d8..bb414c3 100644
+>> --- a/drivers/usb/dwc3/core.c
+>> +++ b/drivers/usb/dwc3/core.c
+>> @@ -1738,7 +1738,7 @@ static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
+>>   		dwc3_core_exit(dwc);
+>>   		break;
+>>   	case DWC3_GCTL_PRTCAP_HOST:
+>> -		if (!PMSG_IS_AUTO(msg)) {
+>> +		if (!PMSG_IS_AUTO(msg) && dwc->phy_power_off) {
+> should be able to detect this generically, no? Shouldn't
+> device_may_wakeup() be valid here and give you the answer you want?
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
-index 86cbae63eaf7..71459e0f56c9 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
-@@ -5,6 +5,8 @@
- #include <dt-bindings/gpio/gpio.h>
- #include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
- #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
-+#include <dt-bindings/sound/qcom,q6afe.h>
-+#include <dt-bindings/sound/qcom,q6asm.h>
- #include "sdm845.dtsi"
- #include "pm8998.dtsi"
- #include "pmi8998.dtsi"
-@@ -240,6 +242,28 @@ resin {
- 	};
- };
- 
-+/* QUAT I2S Uses 1 I2S SD Line for audio on TAS2559/60 amplifiers */
-+&q6afedai {
-+	qi2s@22 {
-+		reg = <22>;
-+		qcom,sd-lines = <0>;
-+	};
-+};
-+
-+&q6asmdai {
-+	dai@0 {
-+		reg = <0>;
-+	};
-+
-+	dai@1 {
-+		reg = <1>;
-+	};
-+
-+	dai@2 {
-+		reg = <2>;
-+	};
-+};
-+
- &qupv3_id_0 {
- 	status = "okay";
- };
-@@ -257,6 +281,70 @@ &sdhc_2 {
- 	cd-gpios = <&tlmm 126 GPIO_ACTIVE_HIGH>;
- };
- 
-+&sound {
-+	compatible = "qcom,db845c-sndcard";
-+	pinctrl-0 = <&quat_mi2s_active
-+			&quat_mi2s_sd0_active>;
-+	pinctrl-names = "default";
-+	model = "Xiaomi Poco F1";
-+	audio-routing =
-+		"RX_BIAS", "MCLK",
-+		"AMIC1", "MIC BIAS1",
-+		"AMIC2", "MIC BIAS2",
-+		"AMIC3", "MIC BIAS3";
-+
-+	mm1-dai-link {
-+		link-name = "MultiMedia1";
-+		cpu {
-+			sound-dai = <&q6asmdai  MSM_FRONTEND_DAI_MULTIMEDIA1>;
-+		};
-+	};
-+
-+	mm2-dai-link {
-+		link-name = "MultiMedia2";
-+		cpu {
-+			sound-dai = <&q6asmdai  MSM_FRONTEND_DAI_MULTIMEDIA2>;
-+		};
-+	};
-+
-+	mm3-dai-link {
-+		link-name = "MultiMedia3";
-+		cpu {
-+			sound-dai = <&q6asmdai  MSM_FRONTEND_DAI_MULTIMEDIA3>;
-+		};
-+	};
-+
-+	slim-dai-link {
-+		link-name = "SLIM Playback";
-+		cpu {
-+			sound-dai = <&q6afedai SLIMBUS_0_RX>;
-+		};
-+
-+		platform {
-+			sound-dai = <&q6routing>;
-+		};
-+
-+		codec {
-+			sound-dai =  <&wcd9340 0>;
-+		};
-+	};
-+
-+	slimcap-dai-link {
-+		link-name = "SLIM Capture";
-+		cpu {
-+			sound-dai = <&q6afedai SLIMBUS_0_TX>;
-+		};
-+
-+		platform {
-+			sound-dai = <&q6routing>;
-+		};
-+
-+		codec {
-+			sound-dai = <&wcd9340 1>;
-+		};
-+	};
-+};
-+
- &tlmm {
- 	gpio-reserved-ranges = <0 4>, <81 4>;
- 
-@@ -285,6 +373,15 @@ sdc2_card_det_n: sd-card-det-n {
- 		function = "gpio";
- 		bias-pull-up;
- 	};
-+
-+	wcd_intr_default: wcd_intr_default {
-+		pins = <54>;
-+		function = "gpio";
-+
-+		input-enable;
-+		bias-pull-down;
-+		drive-strength = <2>;
-+	};
- };
- 
- &uart6 {
-@@ -345,6 +442,23 @@ &usb_1_qmpphy {
- 	vdda-pll-supply = <&vreg_l1a_0p875>;
- };
- 
-+&wcd9340{
-+	pinctrl-0 = <&wcd_intr_default>;
-+	pinctrl-names = "default";
-+	clock-names = "extclk";
-+	clocks = <&rpmhcc RPMH_LN_BB_CLK2>;
-+	reset-gpios = <&tlmm 64 0>;
-+	vdd-buck-supply = <&vreg_s4a_1p8>;
-+	vdd-buck-sido-supply = <&vreg_s4a_1p8>;
-+	vdd-tx-supply = <&vreg_s4a_1p8>;
-+	vdd-rx-supply = <&vreg_s4a_1p8>;
-+	vdd-io-supply = <&vreg_s4a_1p8>;
-+	qcom,micbias1-microvolt = <2700000>;
-+	qcom,micbias2-microvolt = <1800000>;
-+	qcom,micbias3-microvolt = <2700000>;
-+	qcom,micbias4-microvolt = <2700000>;
-+};
-+
- &wifi {
- 	status = "okay";
- 
--- 
-2.27.0
+I think  device_may_wakeup() gives whether the controller is wake up 
+capable or not.
+
+But we want to keep phy powered on only when some wakeup capable devices 
+(eg:keyboard ,mouse ) are connected to controller.
 
