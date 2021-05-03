@@ -2,85 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B1C9E372149
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 May 2021 22:27:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1E08F3721BE
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 May 2021 22:41:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229577AbhECU2Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 May 2021 16:28:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45674 "EHLO
+        id S229596AbhECUmQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 May 2021 16:42:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48778 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229472AbhECU2X (ORCPT
+        with ESMTP id S229594AbhECUmN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 May 2021 16:28:23 -0400
-Received: from mail-qk1-x72e.google.com (mail-qk1-x72e.google.com [IPv6:2607:f8b0:4864:20::72e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 029D4C06174A
-        for <linux-arm-msm@vger.kernel.org>; Mon,  3 May 2021 13:27:30 -0700 (PDT)
-Received: by mail-qk1-x72e.google.com with SMTP id q127so6468850qkb.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 May 2021 13:27:29 -0700 (PDT)
+        Mon, 3 May 2021 16:42:13 -0400
+Received: from mail-vs1-xe35.google.com (mail-vs1-xe35.google.com [IPv6:2607:f8b0:4864:20::e35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B09FEC061761
+        for <linux-arm-msm@vger.kernel.org>; Mon,  3 May 2021 13:41:19 -0700 (PDT)
+Received: by mail-vs1-xe35.google.com with SMTP id 66so3629882vsk.9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 May 2021 13:41:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=sXfHyvXsdLPfK14t8jsIufOFAbNJOVYacQ8xJhXokuY=;
-        b=GGhbF2KWKOjxUeuXFE0kuMeilBQgs774Rzy7nnZReRnuxKT8AayCNx6+DK55HUB8Ts
-         yKzYzXXL02g3TV4K0xSOcNKd1+QSTk0wSFCKz5mtTzKXgBamo1n5nCv6zNGqIe0gN+0a
-         ikyd6ZrkIasFnou00Q+VV63mjxKda/k2K+HZo=
+        bh=BVEWhYBD+xtNsbo3lAuegOEINH/TnK8x6KkSQvrHSkc=;
+        b=maWCCqkx0oH1zSZ/q/GRT9vao0fkAFsVj063WxGPB1qM8s/UjGnuJdKNRT6bMP4kiw
+         L4+J9CU69hnWD+bOSoUADl1jrTF4/psQ7Di/8qRinh3NO5KHgbf6pU9EjtVGOwIETAec
+         L/cXPywRZw9M6rUEbphDnPpsXBS7J0droG0iU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=sXfHyvXsdLPfK14t8jsIufOFAbNJOVYacQ8xJhXokuY=;
-        b=UkXIc3jier8UjudVQNQWCRMz63KoshpoHwH9B17FbkwEkXB6qtaMeNLExpuJZkMtLT
-         sMvxTx3+SDVz7OImnIWi1uRAoNfPAAeTw8JWfiKril2bO8SKGHyKERoG3cw2GApAyFEi
-         msz+wyvgmMZ/xau0gybu/RIJWnruEyR06ioYcmFaTKToR2gh0x1vPPglTrx7PQbEFTl/
-         yZ0pI7GBfanmlSDV+JHLju2K/l08M/Js62j2xqDPfM5q1W6NLgxUNwwhyQ1scHbu9mm9
-         pfYYDA2YxjXEzp28Xy/9Y/7X8JcDPQvLt92CxSw8G3Na7VMyT4KawIJjJMVKeia2o1nH
-         IlEg==
-X-Gm-Message-State: AOAM530pcg4AVJ9gjVBBx4vDUgaagrFdkhIo3ehCQA2D9O57GOS7yL7a
-        AVVyXnD3TIp1XJzd8CzBL/fCmHLQxk5kew==
-X-Google-Smtp-Source: ABdhPJyOGMpSpprwDsACrv9zTuhc+KvL7Un0xANVWznKmWykK+X/DREcUmWQrxKSwEHvkv+M/NLX/g==
-X-Received: by 2002:a37:30c:: with SMTP id 12mr8177308qkd.355.1620073648658;
-        Mon, 03 May 2021 13:27:28 -0700 (PDT)
-Received: from mail-yb1-f173.google.com (mail-yb1-f173.google.com. [209.85.219.173])
-        by smtp.gmail.com with ESMTPSA id s5sm6515968qkg.88.2021.05.03.13.27.27
+        bh=BVEWhYBD+xtNsbo3lAuegOEINH/TnK8x6KkSQvrHSkc=;
+        b=CsR+3n9OSljJRoaythxSi4ivSq8lliGkJKnuV8PMW9gcdXr15RYVwNJtTwmzNN0Deg
+         KPs7TZZ3Ef/qMMPYweGOSQc5Sm3RSzC75BKvtHyZORPKoMPIEsk1j7fjfh6Ia6jEUpJS
+         IElB0oIR216tx2ndJmC+0efZW6hg/5i4Dy0LbdAJQLb10IfNKwf7QYSbvpYaJcUgd0re
+         6vOpZAt7jVoMCVVH4wHeoy+ie/hHlUs0d/7K081pr7mf4bWv26rS9bL5MG2KM/4LM26G
+         Iv+uHIlVDn0qFU7CyGeaUqTQ2CJJQep/IkgS8FXge2m08YVQ8qKC9M5PdlvnX9/Fvy4y
+         NKWQ==
+X-Gm-Message-State: AOAM533zYT9Vi0eqpvnvEsKhAE94FjJsk1Bx0iY7ulXBvFZP8667WWlg
+        0pSdhh+W9r7GjJfJnH/ZEednYYEGD2IbYg==
+X-Google-Smtp-Source: ABdhPJwo3t/U8ODtcKlVuHhUUXRKxyU98+Vyy64EteCjzuhH7BT2QEsXWWuhiLlZrxtxKgqnB9Fjfw==
+X-Received: by 2002:a67:f353:: with SMTP id p19mr6733697vsm.56.1620074478110;
+        Mon, 03 May 2021 13:41:18 -0700 (PDT)
+Received: from mail-ua1-f44.google.com (mail-ua1-f44.google.com. [209.85.222.44])
+        by smtp.gmail.com with ESMTPSA id j12sm664250vsp.10.2021.05.03.13.41.16
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 03 May 2021 13:27:27 -0700 (PDT)
-Received: by mail-yb1-f173.google.com with SMTP id r8so9241170ybb.9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 May 2021 13:27:27 -0700 (PDT)
-X-Received: by 2002:a25:9c86:: with SMTP id y6mr29614256ybo.405.1620073646749;
- Mon, 03 May 2021 13:27:26 -0700 (PDT)
+        Mon, 03 May 2021 13:41:17 -0700 (PDT)
+Received: by mail-ua1-f44.google.com with SMTP id h1so2375520uar.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 May 2021 13:41:16 -0700 (PDT)
+X-Received: by 2002:a9f:2183:: with SMTP id 3mr17021447uac.0.1620074475074;
+ Mon, 03 May 2021 13:41:15 -0700 (PDT)
 MIME-Version: 1.0
-References: <20210423165906.2504169-1-dianders@chromium.org> <20210423095743.v5.14.Ie9daa320d907fff73f893f74b898197e399cce59@changeid>
-In-Reply-To: <20210423095743.v5.14.Ie9daa320d907fff73f893f74b898197e399cce59@changeid>
+References: <20210423165906.2504169-1-dianders@chromium.org>
+ <20210423095743.v5.1.I9e6af2529d6c61e5daf86a15a1211121c5223b9a@changeid>
+ <CACRpkdYkRFLvCRPSYNzYQG58QgPfhvjtHb+FBQZadyrnjC8=1A@mail.gmail.com>
+ <CAD=FV=UX683grZ=poTwKXxSqYBCLdLAOCxOPhE_xVVgKbe36Mw@mail.gmail.com>
+ <CACRpkdYfugrJ4WGn=w+viGXE6s5cdHjLC++jHPLVy_QH09KA8Q@mail.gmail.com>
+ <CAD=FV=XXxTz8hi92y6p3hX7iVEHuqKHsrKPSnX_a__WCEQRAKw@mail.gmail.com> <CACRpkdZVH=h37hSjvjcNmRwV-RoBB-nvUbrOT80DoLr7n81R3Q@mail.gmail.com>
+In-Reply-To: <CACRpkdZVH=h37hSjvjcNmRwV-RoBB-nvUbrOT80DoLr7n81R3Q@mail.gmail.com>
 From:   Doug Anderson <dianders@chromium.org>
-Date:   Mon, 3 May 2021 13:27:15 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=UTmOP8LDaf-Tyx17OORQK6pJH6O_w3cP0Bu-KRYaHkYw@mail.gmail.com>
-Message-ID: <CAD=FV=UTmOP8LDaf-Tyx17OORQK6pJH6O_w3cP0Bu-KRYaHkYw@mail.gmail.com>
-Subject: Re: [PATCH v5 14/20] drm/bridge: ti-sn65dsi86: Promote the AUX
- channel to its own sub-dev
-To:     Andrzej Hajda <a.hajda@samsung.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
+Date:   Mon, 3 May 2021 13:41:03 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=Vzn0ih_RqR_ySJzFtq0B0x_4a-Uwjk56GeLyUZtTEXrQ@mail.gmail.com>
+Message-ID: <CAD=FV=Vzn0ih_RqR_ySJzFtq0B0x_4a-Uwjk56GeLyUZtTEXrQ@mail.gmail.com>
+Subject: Re: [PATCH v5 01/20] drm/panel: panel-simple: Add missing
+ pm_runtime_disable() calls
+To:     Linus Walleij <linus.walleij@linaro.org>
+Cc:     Andrzej Hajda <a.hajda@samsung.com>,
         Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Neil Armstrong <narmstrong@baylibre.com>,
         Jonas Karlman <jonas@kwiboo.se>,
         Jernej Skrabec <jernej.skrabec@siol.net>,
-        Sam Ravnborg <sam@ravnborg.org>, Lyude Paul <lyude@redhat.com>,
-        Thierry Reding <treding@nvidia.com>,
-        Linus W <linus.walleij@linaro.org>
-Cc:     linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Sam Ravnborg <sam@ravnborg.org>, Wolfram Sang <wsa@kernel.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
         Rob Clark <robdclark@chromium.org>,
         Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>,
         Stephen Boyd <swboyd@chromium.org>,
         Steev Klimaszewski <steev@kali.org>,
         Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
         linux-i2c <linux-i2c@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
+        "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
         Daniel Vetter <daniel@ffwll.ch>,
         David Airlie <airlied@linux.ie>,
-        Robert Foss <robert.foss@linaro.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Wolfram Sang <wsa@kernel.org>
+        Thierry Reding <thierry.reding@gmail.com>,
+        linux-kernel <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -88,222 +91,85 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hi,
 
-On Fri, Apr 23, 2021 at 10:00 AM Douglas Anderson <dianders@chromium.org> wrote:
+On Sat, May 1, 2021 at 5:07 AM Linus Walleij <linus.walleij@linaro.org> wrote:
 >
-> We'd like to be able to expose the DDC-over-AUX channel bus to our
-> panel. This gets into a chicken-and-egg problem because:
-> - The panel wants to get its DDC at probe time.
-> - The ti-sn65dsi86 MIPI-to-eDP bridge code, which provides the DDC
->   bus, wants to get the panel at probe time.
+> Hi Doug,
 >
-> By using a sub device we can fully create the AUX channel bits so that
-> the panel can get them. Then the panel can finish probing and the
-> bridge can probe.
+> On Fri, Apr 30, 2021 at 11:04 PM Doug Anderson <dianders@chromium.org> wrote:
 >
-> To accomplish this, we also move registering the AUX channel out of
-> the bridge's attach code and do it right at probe time. We use devm to
-> manage cleanup.
+> > Pushed this one patch. Rest of the series is pending adult
+> > supervision. Overall summary:
+> >
+> > 1. I could probably push some of the early sn65dsi86 cleanup patches
+> > in this series since they have Bjorn's review and are pretty much
+> > no-ops / simple cleanups, but there's probably not tons gained for
+> > shoving those in early.
 >
-> NOTE: there's a little bit of a trick here. Though the AUX channel can
-> run without the MIPI-to-eDP bits of the code, the MIPI-to-eDP bits
-> can't run without the AUX channel. We could come up a complicated
-> signaling scheme (have the MIPI-to-eDP bits return EPROBE_DEFER for a
-> while or wait on some sort of completion), but it seems simple enough
-> to just not even bother creating the bridge device until the AUX
-> channel probes. That's what we'll do.
+> Those look good to me as well. I'd say just apply them.
 >
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> ---
+> To me it looks like up until and including patch 18?
+> Feel free to add my
+> Acked-by: Linus Walleij <linus.walleij@linaro.org>
 >
-> Changes in v5:
-> - Fix module compile problems (Bjorn + kbuild bot)
-> - Remove useless MODULE_DEVICE_TABLE (Bjorn).
->
->  drivers/gpu/drm/bridge/ti-sn65dsi86.c | 87 +++++++++++++++++++++------
->  1 file changed, 67 insertions(+), 20 deletions(-)
->
-> diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-> index 9dc3cd8e17df..3539ddf9d109 100644
-> --- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-> +++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-> @@ -116,6 +116,7 @@
->   * struct ti_sn65dsi86 - Platform data for ti-sn65dsi86 driver.
->   * @bridge_aux:   AUX-bus sub device for MIPI-to-eDP bridge functionality.
->   * @gpio_aux:     AUX-bus sub device for GPIO controller functionality.
-> + * @aux_aux:      AUX-bus sub device for eDP AUX channel functionality.
->   *
->   * @dev:          Pointer to the top level (i2c) device.
->   * @regmap:       Regmap for accessing i2c.
-> @@ -148,6 +149,7 @@
->  struct ti_sn65dsi86 {
->         struct auxiliary_device         bridge_aux;
->         struct auxiliary_device         gpio_aux;
-> +       struct auxiliary_device         aux_aux;
->
->         struct device                   *dev;
->         struct regmap                   *regmap;
-> @@ -484,18 +486,12 @@ static int ti_sn_bridge_attach(struct drm_bridge *bridge,
->                 return -EINVAL;
->         }
->
-> -       ret = drm_dp_aux_register(&pdata->aux);
-> -       if (ret < 0) {
-> -               drm_err(bridge->dev, "Failed to register DP AUX channel: %d\n", ret);
-> -               return ret;
-> -       }
-> -
->         ret = drm_connector_init(bridge->dev, &pdata->connector,
->                                  &ti_sn_bridge_connector_funcs,
->                                  DRM_MODE_CONNECTOR_eDP);
->         if (ret) {
->                 DRM_ERROR("Failed to initialize connector with drm\n");
-> -               goto err_conn_init;
-> +               return ret;
->         }
->
->         drm_connector_helper_add(&pdata->connector,
-> @@ -552,8 +548,6 @@ static int ti_sn_bridge_attach(struct drm_bridge *bridge,
->         mipi_dsi_device_unregister(dsi);
->  err_dsi_host:
->         drm_connector_cleanup(&pdata->connector);
-> -err_conn_init:
-> -       drm_dp_aux_unregister(&pdata->aux);
->         return ret;
->  }
->
-> @@ -1330,11 +1324,6 @@ static int ti_sn_bridge_probe(struct auxiliary_device *adev,
->         if (ret)
->                 return ret;
->
-> -       pdata->aux.name = "ti-sn65dsi86-aux";
-> -       pdata->aux.dev = pdata->dev;
-> -       pdata->aux.transfer = ti_sn_aux_transfer;
-> -       drm_dp_aux_init(&pdata->aux);
-> -
->         pdata->bridge.funcs = &ti_sn_bridge_funcs;
->         pdata->bridge.of_node = np;
->
-> @@ -1429,6 +1418,50 @@ static int ti_sn65dsi86_add_aux_device(struct ti_sn65dsi86 *pdata,
->         return ret;
->  }
->
-> +static void ti_sn65dsi86_unregister_dp_aux(void *data)
-> +{
-> +       drm_dp_aux_unregister(data);
-> +}
-> +
-> +static int ti_sn_aux_probe(struct auxiliary_device *adev,
-> +                          const struct auxiliary_device_id *id)
-> +{
-> +       struct ti_sn65dsi86 *pdata = dev_get_drvdata(adev->dev.parent);
-> +       int ret;
-> +
-> +       pdata->aux.name = "ti-sn65dsi86-aux";
-> +       pdata->aux.dev = pdata->dev;
-> +       pdata->aux.transfer = ti_sn_aux_transfer;
-> +       drm_dp_aux_init(&pdata->aux);
-> +
-> +       ret = drm_dp_aux_register(&pdata->aux);
-> +       if (ret < 0) {
-> +               drm_err(pdata, "Failed to register DP AUX channel: %d\n", ret);
-> +               return ret;
-> +       }
-> +       ret = devm_add_action_or_reset(&adev->dev,
-> +                                      ti_sn65dsi86_unregister_dp_aux, &pdata->aux);
-> +       if (ret)
-> +               return ret;
-> +
-> +       /*
-> +        * The eDP to MIPI bridge parts don't work until the AUX channel is
-> +        * setup so we don't add it in the main driver probe, we add it now.
-> +        */
-> +       return ti_sn65dsi86_add_aux_device(pdata, &pdata->bridge_aux, "bridge");
-> +}
-> +
-> +static const struct auxiliary_device_id ti_sn_aux_id_table[] = {
-> +       { .name = "ti_sn65dsi86.aux", },
-> +       {},
-> +};
-> +
-> +static struct auxiliary_driver ti_sn_aux_driver = {
-> +       .name = "aux",
-> +       .probe = ti_sn_aux_probe,
-> +       .id_table = ti_sn_aux_id_table,
-> +};
-> +
->  static int ti_sn65dsi86_probe(struct i2c_client *client,
->                               const struct i2c_device_id *id)
->  {
-> @@ -1487,10 +1520,11 @@ static int ti_sn65dsi86_probe(struct i2c_client *client,
->          * motiviation here is to solve the chicken-and-egg problem of probe
->          * ordering. The bridge wants the panel to be there when it probes.
->          * The panel wants its HPD GPIO (provided by sn65dsi86 on some boards)
-> -        * when it probes. There will soon be other devices (DDC I2C bus, PWM)
-> -        * that have the same problem. Having sub-devices allows the some sub
-> -        * devices to finish probing even if others return -EPROBE_DEFER and
-> -        * gets us around the problems.
-> +        * when it probes. The panel and maybe backlight might want the DDC
-> +        * bus. Soon the PWM provided by the bridge chip will have the same
-> +        * problem. Having sub-devices allows the some sub devices to finish
-> +        * probing even if others return -EPROBE_DEFER and gets us around the
-> +        * problems.
->          */
->
->         if (IS_ENABLED(CONFIG_OF_GPIO)) {
-> @@ -1499,7 +1533,13 @@ static int ti_sn65dsi86_probe(struct i2c_client *client,
->                         return ret;
->         }
->
-> -       return ti_sn65dsi86_add_aux_device(pdata, &pdata->bridge_aux, "bridge");
-> +       /*
-> +        * NOTE: At the end of the AUX channel probe we'll add the aux device
-> +        * for the bridge. This is because the bridge can't be used until the
-> +        * AUX channel is there and this is a very simple solution to the
-> +        * dependency problem.
-> +        */
-> +       return ti_sn65dsi86_add_aux_device(pdata, &pdata->aux_aux, "aux");
->  }
->
->  static struct i2c_device_id ti_sn65dsi86_id[] = {
-> @@ -1536,12 +1576,18 @@ static int __init ti_sn65dsi86_init(void)
->         if (ret)
->                 goto err_main_was_registered;
->
-> -       ret = auxiliary_driver_register(&ti_sn_bridge_driver);
-> +       ret = auxiliary_driver_register(&ti_sn_aux_driver);
->         if (ret)
->                 goto err_gpio_was_registered;
->
-> +       ret = auxiliary_driver_register(&ti_sn_bridge_driver);
-> +       if (ret)
-> +               goto err_aux_was_registered;
-> +
->         return 0;
->
-> +err_aux_was_registered:
-> +       auxiliary_driver_unregister(&ti_sn_aux_driver);
->  err_gpio_was_registered:
->         ti_sn_gpio_unregister();
->  err_main_was_registered:
-> @@ -1554,6 +1600,7 @@ module_init(ti_sn65dsi86_init);
->  static void __exit ti_sn65dsi86_exit(void)
->  {
->         auxiliary_driver_unregister(&ti_sn_bridge_driver);
-> +       auxiliary_driver_unregister(&ti_sn_aux_driver);
->         ti_sn_gpio_unregister();
->         i2c_del_driver(&ti_sn65dsi86_driver);
->  }
+> On these.
 
-Ugh, more fun! :(
+OK, thanks! I've just pushed these patches to drm-misc-next with your Ack:
 
-I tried rebasing this to the latest drm-misc-next and I found commit
-6cba3fe43341 ("drm/dp: Add backpointer to drm_device in drm_dp_aux").
-That commit makes it pretty explicit that we shouldn't call
-drm_dp_aux_register() until we actually have a "drm_dev" for the
-bridge.
+63358e24ee79 drm/panel: panel-simple: Cache the EDID as long as we retain power
+31e25395d8b7 drm/panel: panel-simple: Power the panel when reading the EDID
+4318ea406e02 drm/panel: panel-simple: Remove extra call:
+drm_connector_update_edid_property()
+b137406d9679 drm/bridge: ti-sn65dsi86: If refclk, DP AUX can happen
+w/out pre-enable
+f7a5ee2cd3e2 drm/bridge: ti-sn65dsi86: Code motion of refclk
+management functions
+9bede63127c6 drm/bridge: ti-sn65dsi86: Use pm_runtime autosuspend
+5c4381eeb709 drm/panel: panel-simple: Get rid of hacky HPD chicken-and-egg code
+bf73537f411b drm/bridge: ti-sn65dsi86: Break GPIO and MIPI-to-eDP
+bridge into sub-drivers
+bef236a5206c drm/bridge: ti-sn65dsi86: Move all the chip-related init
+to the start
+f94eb8a32863 drm/bridge: ti-sn65dsi86: Cleanup managing of drvdata
+3636fc25f760 drm/bridge: ti-sn65dsi86: Add local var for "dev" to simplify probe
+52d54819c8ae drm/bridge: ti-sn65dsi86: Clean debugfs code
+dea2500a820c drm/bridge: ti-sn65dsi86: Use devm to do our runtime_disable
+905d66d08d0f drm/bridge: ti-sn65dsi86: More renames in prep for sub-devices
+db0036db4851 drm/bridge: ti-sn65dsi86: Rename the main driver data structure
 
-I'm applying several of the other patches in this series but I won't
-apply this one or anything based on it. I'll do some digging and send
-out a proposed fix shortly.
+Things not pushed:
+
+[v5,15/20] i2c: i2c-core-of: Fix corner case of finding adapter by node
+-> Can't push i2c things
+
+[v5,14/20] drm/bridge: ti-sn65dsi86: Promote the AUX channel to its own sub-dev
+-> Won't work without rework. See [1]
+
+[v5,19/20] drm/bridge: ti-sn65dsi86: Don't read EDID blob over DDC
+-> Needs Laurent and also patch 14/20 to be resolved.
+
+[v5,20/20] arm64: dts: qcom: Link the panel to the bridge's DDC bus
+-> Needs all the rest resolved.
+
+Let me see if I can find a way to work around the AUX channel stuff
+and then I'll push a v6 of just what's left.
+
+> Just to keep you busy and make sure you don't run out of work
+> (haha) I noticed that the gpio_chip in this driver can use
+> the new GPIO_REGMAP helper library with the fixes just
+> landed in Torvald's tree.
+>
+> At your convenience and when you think there is too little
+> stuff in your sn65dsi86 TODO, check out
+> pinctrl-bcm63xx.c for an example of select GPIO_REGMAP
+> made very simple (this works fine as long as they are bit
+> offsets starting from 0).
+
+I seem to recall you mentioning something like this. When I looked at
+it in the past I wasn't convinced it would be easy. See my response
+[2]. The rough summary is that I didn't think the helpers were happy
+with the pm_runtime() model that I'm using. Did I get that wrong?
+
+[1] https://lore.kernel.org/dri-devel/CAD=FV=UTmOP8LDaf-Tyx17OORQK6pJH6O_w3cP0Bu-KRYaHkYw@mail.gmail.com/
+[2] https://lore.kernel.org/r/CAD=FV=VqD-dY=v23KYuTqy8aRNQJJzJ7h_UOcdEBYuK9X51MQQ@mail.gmail.com
 
 -Doug
