@@ -2,49 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F2B033722C0
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 May 2021 23:59:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2E8683722CE
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 May 2021 23:59:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229721AbhECWAM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 May 2021 18:00:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38112 "EHLO
+        id S229833AbhECWAT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 May 2021 18:00:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38126 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229781AbhECWAM (ORCPT
+        with ESMTP id S229886AbhECWAR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 May 2021 18:00:12 -0400
-Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5505AC06174A
-        for <linux-arm-msm@vger.kernel.org>; Mon,  3 May 2021 14:59:18 -0700 (PDT)
-Received: by mail-pf1-x431.google.com with SMTP id i13so5394034pfu.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 May 2021 14:59:18 -0700 (PDT)
+        Mon, 3 May 2021 18:00:17 -0400
+Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6687C061761
+        for <linux-arm-msm@vger.kernel.org>; Mon,  3 May 2021 14:59:19 -0700 (PDT)
+Received: by mail-pf1-x433.google.com with SMTP id 10so5407488pfl.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 May 2021 14:59:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=C70V1ep2OC0kZd3ksfbxSiRkqnQcxIJ5Zt5dguO6jEA=;
-        b=ddABHDYPpcDSWspsVe5JjaRfWW2WGzybj41mDN4dyyhwjLnvgl8JpgEMRrm0zl8014
-         sghhgQqUZi2bnSITlK49Sqef/89J5Z0uzWa29w7OYowYEtVZghumEDiQhCbYWYhRuDeL
-         8Ga3xvrQTHc+QoTZKO6w2zXurJ7km4LRNn3M8=
+        bh=OLRAd85FpiCGL7CjVpp3wCjW21owJByefcDimF6o1bg=;
+        b=ZKgdlah1kveIQ9x2aFXM3KuIDDChTMuTehQ0kFmNWwFr5kC1kQ/FLgHBOifnNrw/ap
+         J8iNIGQ7yYqR7es5TgP0Gc0jRKlPrJNAE/NGCe3oKBf/9/Y1vyXly4E++eVU16FBa6QT
+         X1i2/gHXu2Zhb+kGxQ5xuWct5i94o+zXup2Pk=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=C70V1ep2OC0kZd3ksfbxSiRkqnQcxIJ5Zt5dguO6jEA=;
-        b=T4kytsMUKvLe9TvbmRU22RCAArB9Ve+jrHkFSu1MVrW603Eo/pEuOh7l+8xr58E7z5
-         sy6AOlmAqm0EqAYH4MNupwSXbZrQVBFY++v4BDmPDhKjlAET280IfK6BBephXdRVwg8J
-         7KI0tAS9Vz6dNLx70Z84V8K4zsWzdYyc4iq+JtCsBR2vBPm/NG8CZfI0TK70fez4aCOx
-         lj8WTwYbi4FKAavBK7rVNnbyFGXUc5xgx5MizJjEDU5XUFzA18+cBHQLYk7dzD/YaTzu
-         RDK7Vu8yX1iK0EdTFpazmw10o72Qe1Eqa04PJv9xhfoJMiguB07D2jaZUPODXpNmea31
-         TVpg==
-X-Gm-Message-State: AOAM530zGhan5SXwPtDnKAH56E0dBjNfyOELb2gElsfwSqbq7itAWC32
-        ciw9UUWdY2hWK6UmCD9RfRZiFw==
-X-Google-Smtp-Source: ABdhPJxCffXNMJSO10RrlyG4KuAU0sSx6Cz3Lg0v+K+XZhSsqwIjdP9TiZSAgQzu7azyCwAucvUELg==
-X-Received: by 2002:a17:90b:3684:: with SMTP id mj4mr958049pjb.50.1620079157449;
-        Mon, 03 May 2021 14:59:17 -0700 (PDT)
+        bh=OLRAd85FpiCGL7CjVpp3wCjW21owJByefcDimF6o1bg=;
+        b=QmFdghtKiZh6qqXk+mgCAf5y1DlsH28IUhW/kI77eA2ed84jnWHXZ2ATqQ3bdjNkds
+         cjWnWqfmEVeaaCaeIUwOnI97qV/S+A0DiI18YCgoLDca7IysCCW/SZbGGOaZj+FBo2N/
+         ZIA4XV8/0X4Hr/bbgPqkSgOhhz/jPOnWMk8RZs0mPCPNcfBZTDBvdNqxxjFdZTkUTQKu
+         E8vx8x3gEagEdirfGanN2C7vAMLgARfLr0CY1czvUnLCRkMSpY3ZVz1DIWM1bD3iQCCi
+         mZyQvzK39r+zEalHyKhFCLG7c/BwXGZuX6jkjdXV8OVpEHbeEyINMbdhJPnapSDV7KB3
+         JUtw==
+X-Gm-Message-State: AOAM5329hgQDKrmErpaDADWQlSe2/RxUuSYXf2NM4oFnnwqKyqEFtnS2
+        r7grUMUyCm7vjQySytvaynPE4Q==
+X-Google-Smtp-Source: ABdhPJziERAcDvCaD51oo2Yz/xVTskdMxyYTmx9XU0nuCyMaLlBksQpPqh1APqYrMH6TD39N1TGa/Q==
+X-Received: by 2002:a17:90a:4404:: with SMTP id s4mr892137pjg.218.1620079159424;
+        Mon, 03 May 2021 14:59:19 -0700 (PDT)
 Received: from tictac2.mtv.corp.google.com ([2620:15c:202:201:a592:ac50:b17b:5c43])
-        by smtp.gmail.com with ESMTPSA id w1sm639186pgp.31.2021.05.03.14.59.15
+        by smtp.gmail.com with ESMTPSA id w1sm639186pgp.31.2021.05.03.14.59.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 May 2021 14:59:16 -0700 (PDT)
+        Mon, 03 May 2021 14:59:19 -0700 (PDT)
 From:   Douglas Anderson <dianders@chromium.org>
 To:     Andrzej Hajda <a.hajda@samsung.com>,
         Neil Armstrong <narmstrong@baylibre.com>,
@@ -62,10 +62,14 @@ Cc:     Lyude Paul <lyude@redhat.com>, Steev Klimaszewski <steev@kali.org>,
         Thierry Reding <treding@nvidia.com>, linux-i2c@vger.kernel.org,
         dri-devel@lists.freedesktop.org,
         Douglas Anderson <dianders@chromium.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
         linux-kernel@vger.kernel.org
-Subject: [PATCH v6 1/5] i2c: i2c-core-of: Fix corner case of finding adapter by node
-Date:   Mon,  3 May 2021 14:58:40 -0700
-Message-Id: <20210503145750.v6.1.Ib7e3a4af2f3e2cb3bd8e4adbac3bcfc966f27791@changeid>
+Subject: [PATCH v6 2/5] drm/dp: Allow an early call to register DDC i2c bus
+Date:   Mon,  3 May 2021 14:58:41 -0700
+Message-Id: <20210503145750.v6.2.Iff8f2957d86af40f2bfcfb5a7163928481fccea4@changeid>
 X-Mailer: git-send-email 2.31.1.527.g47e6f16901-goog
 In-Reply-To: <20210503215844.2996320-1-dianders@chromium.org>
 References: <20210503215844.2996320-1-dianders@chromium.org>
@@ -75,86 +79,140 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The of_find_i2c_adapter_by_node() could end up failing to find an
-adapter in certain conditions. Specifically it's possible that
-of_dev_or_parent_node_match() could end up finding an I2C client in
-the list and cause bus_find_device() to stop early even though an I2C
-adapter was present later in the list.
+It can be helpful to fully register the AUX channel as an i2c bus even
+before the bridge is created. Let's optionally allow bridges to do
+that.
 
-Let's move the i2c_verify_adapter() into the predicate function to
-prevent this. Now we'll properly skip over the I2C client and be able
-to find the I2C adapter.
+Specifically the case we're running into:
+- The panel driver wants to get its DDC bus at probe time.
+- The ti-sn65dsi86 MIPI-to-eDP bridge code, which provides the DDC
+  bus, wants to get the panel at probe time.
 
-This issue has always been a potential problem if a single device tree
-node could represent both an I2C client and an adapter. I believe this
-is a sane thing to do if, for instance, an I2C-connected DP bridge
-chip is present. The bridge chip is an I2C client but it can also
-provide an I2C adapter (DDC tunneled over AUX channel). We don't want
-to have to create a sub-node just so a panel can link to it with the
-"ddc-i2c-bus" property.
+The next patches ("drm/bridge: ti-sn65dsi86: Promote the AUX channel
+to its own sub-dev") solves the chicken-and-egg problem by breaking
+the ti-sn65dsi86 driver into sub-devices, but in order for it to
+actually work we need the i2c bus to get registered at probe time and
+not in bridge attach time.
 
-I believe that this problem got worse, however, with commit
-e814e688413a ("i2c: of: Try to find an I2C adapter matching the
-parent"). Starting at that commit it would be even easier to
-accidentally miss finding the adapter.
-
+Cc: Lyude Paul <lyude@redhat.com>
+Cc: Thierry Reding <treding@nvidia.com>
 Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 ---
-Later patches in this series won't work right without this one, but
-they won't crash. If we can't find the i2c bus we'll just fall back to
-the hardcoded panel modes which, at least today, all panels have.
 
-I'll also note that part of me wonders if we should actually fix this
-further to run two passes through everything: first look to see if we
-find an exact match and only look at the parent pointer if there is no
-match. I don't currently have a need for that and it's a slightly
-bigger change, but it seems conceivable that it could affect someone?
+Changes in v6:
+- ("drm/dp: Allow an early call to register DDC i2c bus") new for v6.
 
-(no changes since v1)
+ drivers/gpu/drm/drm_dp_helper.c | 67 +++++++++++++++++++++++++++------
+ include/drm/drm_dp_helper.h     |  2 +
+ 2 files changed, 57 insertions(+), 12 deletions(-)
 
- drivers/i2c/i2c-core-of.c | 17 ++++++++++-------
- 1 file changed, 10 insertions(+), 7 deletions(-)
-
-diff --git a/drivers/i2c/i2c-core-of.c b/drivers/i2c/i2c-core-of.c
-index 3ed74aa4b44b..de0bf5fce3a2 100644
---- a/drivers/i2c/i2c-core-of.c
-+++ b/drivers/i2c/i2c-core-of.c
-@@ -124,6 +124,14 @@ static int of_dev_or_parent_node_match(struct device *dev, const void *data)
- 	return 0;
+diff --git a/drivers/gpu/drm/drm_dp_helper.c b/drivers/gpu/drm/drm_dp_helper.c
+index cb56d74e9d38..830294f0b341 100644
+--- a/drivers/gpu/drm/drm_dp_helper.c
++++ b/drivers/gpu/drm/drm_dp_helper.c
+@@ -1757,6 +1757,49 @@ void drm_dp_aux_init(struct drm_dp_aux *aux)
  }
+ EXPORT_SYMBOL(drm_dp_aux_init);
  
-+static int of_i2c_adapter_match(struct device *dev, const void *data)
++/**
++ * drm_dp_aux_register_ddc() - register the DDC parts of the aux channel
++ * @aux: DisplayPort AUX channel
++ *
++ * This can be called after drm_dp_aux_init() to fully register the ddc bus
++ * as an i2c adapter with the rest of Linux.
++ *
++ * If you don't explicitly call this function it will be done implicitly as
++ * part of drm_dp_aux_register().
++ *
++ * Returns 0 on success or a negative error code on failure.
++ */
++int drm_dp_aux_register_ddc(struct drm_dp_aux *aux)
 +{
-+	if (!of_dev_or_parent_node_match(dev, data))
-+		return 0;
++	WARN_ON_ONCE(!aux->dev);
 +
-+	return !!i2c_verify_adapter(dev);
++	aux->ddc.class = I2C_CLASS_DDC;
++	aux->ddc.owner = THIS_MODULE;
++	aux->ddc.dev.parent = aux->dev;
++
++	strlcpy(aux->ddc.name, aux->name ? aux->name : dev_name(aux->dev),
++		sizeof(aux->ddc.name));
++
++	return i2c_add_adapter(&aux->ddc);
 +}
++EXPORT_SYMBOL(drm_dp_aux_register_ddc);
 +
- /* must call put_device() when done with returned i2c_client device */
- struct i2c_client *of_find_i2c_device_by_node(struct device_node *node)
- {
-@@ -146,18 +154,13 @@ EXPORT_SYMBOL(of_find_i2c_device_by_node);
- struct i2c_adapter *of_find_i2c_adapter_by_node(struct device_node *node)
- {
- 	struct device *dev;
--	struct i2c_adapter *adapter;
++/**
++ * drm_dp_aux_unregister_ddc() - unregister the DDC parts of the aux channel
++ *
++ * This is useful if you called drm_dp_aux_register_ddc(). If you let
++ * drm_dp_aux_register() implicitly register the DDC for you then you don't
++ * need to worry about calling this yourself.
++ *
++ * @aux: DisplayPort AUX channel
++ */
++void drm_dp_aux_unregister_ddc(struct drm_dp_aux *aux)
++{
++	i2c_del_adapter(&aux->ddc);
++	aux->ddc.dev.parent = NULL;
++}
++EXPORT_SYMBOL(drm_dp_aux_unregister_ddc);
++
+ /**
+  * drm_dp_aux_register() - initialise and register aux channel
+  * @aux: DisplayPort AUX channel
+@@ -1793,20 +1836,19 @@ int drm_dp_aux_register(struct drm_dp_aux *aux)
+ 	if (!aux->ddc.algo)
+ 		drm_dp_aux_init(aux);
  
- 	dev = bus_find_device(&i2c_bus_type, NULL, node,
--			      of_dev_or_parent_node_match);
-+			      of_i2c_adapter_match);
- 	if (!dev)
- 		return NULL;
- 
--	adapter = i2c_verify_adapter(dev);
--	if (!adapter)
--		put_device(dev);
+-	aux->ddc.class = I2C_CLASS_DDC;
+-	aux->ddc.owner = THIS_MODULE;
+-	aux->ddc.dev.parent = aux->dev;
 -
--	return adapter;
-+	return to_i2c_adapter(dev);
+-	strlcpy(aux->ddc.name, aux->name ? aux->name : dev_name(aux->dev),
+-		sizeof(aux->ddc.name));
++	/*
++	 * Implicitly register if drm_dp_aux_register_ddc() wasn't already
++	 * called (as evidenced by a NULL parent pointer).
++	 */
++	if (!aux->ddc.dev.parent) {
++		ret = drm_dp_aux_register_ddc(aux);
++		if (ret)
++			return ret;
++	}
+ 
+ 	ret = drm_dp_aux_register_devnode(aux);
+-	if (ret)
+-		return ret;
+-
+-	ret = i2c_add_adapter(&aux->ddc);
+ 	if (ret) {
+-		drm_dp_aux_unregister_devnode(aux);
++		drm_dp_aux_unregister_ddc(aux);
+ 		return ret;
+ 	}
+ 
+@@ -1821,7 +1863,8 @@ EXPORT_SYMBOL(drm_dp_aux_register);
+ void drm_dp_aux_unregister(struct drm_dp_aux *aux)
+ {
+ 	drm_dp_aux_unregister_devnode(aux);
+-	i2c_del_adapter(&aux->ddc);
++	if (aux->ddc.dev.parent)
++		drm_dp_aux_unregister_ddc(aux);
  }
- EXPORT_SYMBOL(of_find_i2c_adapter_by_node);
+ EXPORT_SYMBOL(drm_dp_aux_unregister);
+ 
+diff --git a/include/drm/drm_dp_helper.h b/include/drm/drm_dp_helper.h
+index e932b2c40095..d4d2d5e25bb7 100644
+--- a/include/drm/drm_dp_helper.h
++++ b/include/drm/drm_dp_helper.h
+@@ -2021,6 +2021,8 @@ bool drm_dp_lttpr_pre_emphasis_level_3_supported(const u8 caps[DP_LTTPR_PHY_CAP_
+ 
+ void drm_dp_remote_aux_init(struct drm_dp_aux *aux);
+ void drm_dp_aux_init(struct drm_dp_aux *aux);
++int drm_dp_aux_register_ddc(struct drm_dp_aux *aux);
++void drm_dp_aux_unregister_ddc(struct drm_dp_aux *aux);
+ int drm_dp_aux_register(struct drm_dp_aux *aux);
+ void drm_dp_aux_unregister(struct drm_dp_aux *aux);
  
 -- 
 2.31.1.527.g47e6f16901-goog
