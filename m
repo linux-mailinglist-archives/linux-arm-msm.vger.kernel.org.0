@@ -2,140 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4653D371E0F
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 May 2021 19:10:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EF6DC371E0E
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 May 2021 19:10:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232514AbhECRIw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 May 2021 13:08:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56094 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236700AbhECRHX (ORCPT
+        id S232311AbhECRIv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 May 2021 13:08:51 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:49177 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234940AbhECRDO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 May 2021 13:07:23 -0400
-Received: from mail-qk1-x72c.google.com (mail-qk1-x72c.google.com [IPv6:2607:f8b0:4864:20::72c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 357C7C06174A
-        for <linux-arm-msm@vger.kernel.org>; Mon,  3 May 2021 09:55:35 -0700 (PDT)
-Received: by mail-qk1-x72c.google.com with SMTP id 197so5422812qkl.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 May 2021 09:55:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=WTaPZJJAb+agZFdITzeXOjZnWTBVRqn0ZvSBSvsqyj8=;
-        b=KPPMi8esPiixHTvAdzjM1N0qW/guYzs1KzH9fDZI4345Xh0a+0njo5pRHf/sVYbNfp
-         PabktArLEDIdcVFhAkDgyadtRbNJDn4dafcTG2RtZl+LsjdNdxrriJeg5Ss619IEeUSn
-         rzhLOppLZScRfHHm9uhyiGH4PoNuoziso7orE=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=WTaPZJJAb+agZFdITzeXOjZnWTBVRqn0ZvSBSvsqyj8=;
-        b=XONVf6zvPCaQzd3JrTpahMoUhJ+MBDvcvgTgCR+9gWtplpN4G758+K+7eO8yGJplWt
-         kS+NwkzXMBAi8E+7hK/kF0DWFk09O1X0qbPMYqF4JARPpFtxaCLoZ8dPckvPR5VyN802
-         EWbXxJBavJdPsOLIhOmFfQwrJD0WoqPcdeNn2MWQFTiYxyXHW+t/HIO6wIvzo7Pk5np7
-         p1C77OOjGRIVyoYWUz4G5xmDiJ+PqZ3cf9gJ/Z21rIJvofyEUk3o2EydXa7UwTLMqTjv
-         S74KtA9y3lNWhmEu6GKaD37bQrvF89FDk3nsu+wfFHz/Y63lEdrp6stj9z8UhktP5JGj
-         mdog==
-X-Gm-Message-State: AOAM531ch6Mh9jIhM0mxYYBjSqt0uL5OakRhb7z8q9n6o+VS7fN86Hb9
-        YaY3qoerjdKOLJiJJDeno2hATv1JQH2R6A==
-X-Google-Smtp-Source: ABdhPJzbi3O3DXp0NYHepdLJI8f9Fa4HPYouEAUMLJDgoEW9TTE/CcO28XiV4/WVWQSihRYS8n7PlQ==
-X-Received: by 2002:a37:e94:: with SMTP id 142mr20096680qko.49.1620060934195;
-        Mon, 03 May 2021 09:55:34 -0700 (PDT)
-Received: from mail-yb1-f182.google.com (mail-yb1-f182.google.com. [209.85.219.182])
-        by smtp.gmail.com with ESMTPSA id n18sm285741qtv.70.2021.05.03.09.55.33
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 03 May 2021 09:55:33 -0700 (PDT)
-Received: by mail-yb1-f182.google.com with SMTP id t94so8413780ybi.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 May 2021 09:55:33 -0700 (PDT)
-X-Received: by 2002:a25:d9ce:: with SMTP id q197mr15755336ybg.276.1620060932851;
- Mon, 03 May 2021 09:55:32 -0700 (PDT)
+        Mon, 3 May 2021 13:03:14 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1620061339; h=Message-ID: References: In-Reply-To: Reply-To:
+ Subject: Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=IHgBKszPDfI9boQsp7/GZvBwgpgeZ+KI0dR7l18CnEY=;
+ b=kvtvcYf/sQJhNDA05tYpTh2WAVs5udfZsdgSX+a1DBPgiWUI8P9xIXuEMWd3GBdtOa3pCgF4
+ i+8Gj66GSgdCuRzcn8YNLKPaA7IgqFwd3UfpQOQt+R3/p1UCU9q6h0g7fDoiO/0KzeOE6DPb
+ Y8zwAm+w/w5PU0w0tpDHRHwM/38=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
+ 60902c748166b7eff7b9ed8d (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 03 May 2021 17:01:40
+ GMT
+Sender: bbhatt=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 5962EC28D92; Mon,  3 May 2021 17:01:39 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: bbhatt)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 99167C25359;
+        Mon,  3 May 2021 17:01:37 +0000 (UTC)
 MIME-Version: 1.0
-References: <20210423165906.2504169-1-dianders@chromium.org>
- <20210423095743.v5.9.I3e68fa38c4ccbdbdf145cad2b01e83a1e5eac302@changeid> <CACRpkdbZxauBFLvR_MMx4WD+K6DftK19Fivt_mkE=+Xr2EPUvQ@mail.gmail.com>
-In-Reply-To: <CACRpkdbZxauBFLvR_MMx4WD+K6DftK19Fivt_mkE=+Xr2EPUvQ@mail.gmail.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Mon, 3 May 2021 09:55:20 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=XGYHNasnqaFopUnuZNaBn+Nbf4+ak7vUoERaA8pRBTsw@mail.gmail.com>
-Message-ID: <CAD=FV=XGYHNasnqaFopUnuZNaBn+Nbf4+ak7vUoERaA8pRBTsw@mail.gmail.com>
-Subject: Re: [PATCH v5 09/20] drm/bridge: ti-sn65dsi86: Break GPIO and
- MIPI-to-eDP bridge into sub-drivers
-To:     Linus Walleij <linus.walleij@linaro.org>
-Cc:     Andrzej Hajda <a.hajda@samsung.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@siol.net>,
-        Sam Ravnborg <sam@ravnborg.org>, Wolfram Sang <wsa@kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Steev Klimaszewski <steev@kali.org>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        linux-i2c <linux-i2c@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Robert Foss <robert.foss@linaro.org>,
-        linux-kernel <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Mon, 03 May 2021 10:01:37 -0700
+From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
+To:     Loic Poulain <loic.poulain@linaro.org>
+Cc:     mani@kernel.org, hemantk@codeaurora.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2] bus: mhi: core: Fix power down latency
+Organization: Qualcomm Innovation Center, Inc.
+Reply-To: bbhatt@codeaurora.org
+Mail-Reply-To: bbhatt@codeaurora.org
+In-Reply-To: <1620029090-8975-1-git-send-email-loic.poulain@linaro.org>
+References: <1620029090-8975-1-git-send-email-loic.poulain@linaro.org>
+Message-ID: <6a871b31f4f5c7ab8f12b75eed9861d3@codeaurora.org>
+X-Sender: bbhatt@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On 2021-05-03 01:04 AM, Loic Poulain wrote:
+> On graceful power-down/disable transition, when an MHI reset is
+> performed, the MHI device loses its context, including interrupt
+> configuration. However, the current implementation is waiting for
+> event(irq) driven state change to confirm reset has been completed,
+> which never happens, and causes reset timeout, leading to unexpected
+> high latency of the mhi_power_down procedure (up to 45 seconds).
+> 
+> Fix that by moving to the recently introduced poll_reg_field method,
+> waiting for the reset bit to be cleared, in the same way as the
+> power_on procedure.
+> 
+> Fixes: a6e2e3522f29 ("bus: mhi: core: Add support for PM state 
+> transitions")
+> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+> ---
+Reviewed-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
 
-On Sat, May 1, 2021 at 4:59 AM Linus Walleij <linus.walleij@linaro.org> wrote:
->
-> On Fri, Apr 23, 2021 at 6:59 PM Douglas Anderson <dianders@chromium.org> wrote:
->
-> > Let's use the newly minted aux bus to break up the driver into sub
-> > drivers. We're not doing a full breakup here: all the code is still in
-> > the same file and remains largely untouched. The big goal here of
-> > using sub-drivers is to allow part of our code to finish probing even
-> > if some other code needs to defer. This can solve some chicken-and-egg
-> > problems. Specifically:
-> > - In commit 48834e6084f1 ("drm/panel-simple: Support hpd-gpios for
-> >   delaying prepare()") we had to add a bit of a hack to simpel-panel
-> >   to support HPD showing up late. We can get rid of that hack now
-> >   since the GPIO part of our driver can finish probing early.
-> > - We have a desire to expose our DDC bus to simple-panel (and perhaps
-> >   to a backlight driver?). That will end up with the same
-> >   chicken-and-egg problem. A future patch to move this to a sub-driver
-> >   will fix it.
-> > - If/when we support the PWM functionality present in the bridge chip
-> >   for a backlight we'll end up with another chicken-and-egg
-> >   problem. If we allow the PWM to be a sub-driver too then it solves
-> >   this problem.
-> >
-> > Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> > ---
-> >
-> > Changes in v5:
-> > - Fix module compile problems (Bjorn + kbuild bot)
-> > - Remove useless MODULE_DEVICE_TABLE (Bjorn).
->
-> This is generally a good idea. I have no idea when to use
-> auxbus or MFD
+>  drivers/bus/mhi/core/pm.c | 18 +++++-------------
+>  1 file changed, 5 insertions(+), 13 deletions(-)
+> 
+> diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
+> index e2e59a3..704a5e2 100644
+> --- a/drivers/bus/mhi/core/pm.c
+> +++ b/drivers/bus/mhi/core/pm.c
+> @@ -465,23 +465,15 @@ static void mhi_pm_disable_transition(struct
+> mhi_controller *mhi_cntrl)
+> 
+>  	/* Trigger MHI RESET so that the device will not access host memory 
+> */
+>  	if (!MHI_PM_IN_FATAL_STATE(mhi_cntrl->pm_state)) {
+> -		u32 in_reset = -1;
+> -		unsigned long timeout = msecs_to_jiffies(mhi_cntrl->timeout_ms);
+> -
+>  		dev_dbg(dev, "Triggering MHI Reset in device\n");
+>  		mhi_set_mhi_state(mhi_cntrl, MHI_STATE_RESET);
+> 
+>  		/* Wait for the reset bit to be cleared by the device */
+> -		ret = wait_event_timeout(mhi_cntrl->state_event,
+> -					 mhi_read_reg_field(mhi_cntrl,
+> -							    mhi_cntrl->regs,
+> -							    MHICTRL,
+> -							    MHICTRL_RESET_MASK,
+> -							    MHICTRL_RESET_SHIFT,
+> -							    &in_reset) ||
+> -					!in_reset, timeout);
+> -		if (!ret || in_reset)
+> -			dev_err(dev, "Device failed to exit MHI Reset state\n");
+> +		ret = mhi_poll_reg_field(mhi_cntrl, mhi_cntrl->regs, MHICTRL,
+> +				 MHICTRL_RESET_MASK, MHICTRL_RESET_SHIFT, 0,
+> +				 25000);
+> +		if (ret)
+> +			dev_err(dev, "Device failed to clear MHI Reset\n");
+> 
+>  		/*
+>  		 * Device will clear BHI_INTVEC as a part of RESET processing,
 
-It was a bit hard for me to figure out too. I think historically this
-could have been implemented by MFD but I believe that the point of
-introducing the AUX bus was that MFD wasn't a great fit for things
-like this. It's talked about a bit in
-"Documentation/driver-api/auxiliary_bus.rst". For me the important
-thing here is that we think of the bridge chip as one device, not a
-collection of IP blocks glued together in one package. As some
-evidence, the DT bindings don't have sub-nodes for this. There's a
-single DT node that says that this one device is the bridge, is a GPIO
-controller, and can provide a PWM.
-
-
-> but I trust that you researched that so:
-> Acked-by: Linus Walleij <linus.walleij@linaro.org>
-
-Thanks! I'll land it then to whittle the patch stack down to just the
-controversial EDID one.
-
--Doug
+Thanks,
+Bhaumik
+---
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
+Forum,
+a Linux Foundation Collaborative Project
