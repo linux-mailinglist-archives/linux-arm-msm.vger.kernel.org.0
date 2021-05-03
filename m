@@ -2,239 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E76B73720C1
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 May 2021 21:45:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 57F1E372106
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 May 2021 22:00:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229771AbhECTqC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 May 2021 15:46:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36300 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229657AbhECTpy (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 May 2021 15:45:54 -0400
-Received: from mail-pg1-x531.google.com (mail-pg1-x531.google.com [IPv6:2607:f8b0:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2579BC06138B
-        for <linux-arm-msm@vger.kernel.org>; Mon,  3 May 2021 12:44:55 -0700 (PDT)
-Received: by mail-pg1-x531.google.com with SMTP id t22so4499331pgu.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 May 2021 12:44:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=hja9auOn75p4aK0ghbKzd1MlJ8IVXPiCDnX4JLLyZX4=;
-        b=K8fe1s5w14YtqIEkb9Taxd6ax59egSJrRTd9/4yVIHEQ0uRMIhHvwJKZZZBJP+7nP7
-         G26ZT7ilTBJRYZFNBDc6lua+0HrmG6Bgct/HlcHj5STU8UAn1oQYWr5D7OLzNXLuoMzr
-         EOTRazuqbXNZJaIU1XzZiPilKtArcyzp7tUj8=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=hja9auOn75p4aK0ghbKzd1MlJ8IVXPiCDnX4JLLyZX4=;
-        b=A/eGUnhxawQcIxGOoKQc9iSfnf7E1ZodmzRHkWt5vB8i5/0Q+P7HfTXutSJeV/fmmx
-         fhRIBls6UJ2lnnPC0s5qWXNSXN2SD91eVzSMtL3ppW5rQwq7Qy8EqwflaRvpbNHzpApz
-         ToftEBnCKMXPfJz4R7LXadSeFcJpCrWPoTNHWm8PyhyXE9x27mmLbF9AbAIOLmksubY2
-         KyU9fn6p5MRqGN3dxCwmmUKgTsOqvf23VTPNz5EBIIFH4Vaqm//YBGkJP0YK4hUhTtiC
-         nxSG2kMm1dAcGza+RyCmLM46bV1MU/dvr0rE+yaf2sWKjdjNsVCNus64AqegdB5FOJ54
-         aCXQ==
-X-Gm-Message-State: AOAM530Uyw+GJHgOCaBivy3Tg1QzcJTkKBDM4BhAhiXHhptEAomY6LG1
-        8yHtJTIMjT4ZLeDufAeAGNWITQ==
-X-Google-Smtp-Source: ABdhPJy8GcUAyGSDv7zL2vGPqGDTyfS7Nu88oXV6pdwrq43s4xnukx4trHrQgyN5BYlXVQaD2W0/UQ==
-X-Received: by 2002:a65:6a08:: with SMTP id m8mr19838131pgu.146.1620071094758;
-        Mon, 03 May 2021 12:44:54 -0700 (PDT)
-Received: from localhost ([2620:15c:202:201:8584:3fd:2adf:a655])
-        by smtp.gmail.com with UTF8SMTPSA id r32sm382738pgm.49.2021.05.03.12.44.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 03 May 2021 12:44:54 -0700 (PDT)
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Alan Stern <stern@rowland.harvard.edu>,
-        Rob Herring <robh+dt@kernel.org>,
-        Frank Rowand <frowand.list@gmail.com>
-Cc:     Peter Chen <peter.chen@kernel.org>,
-        Bastien Nocera <hadess@hadess.net>, linux-usb@vger.kernel.org,
-        Stephen Boyd <swboyd@chromium.org>,
-        Ravi Chandra Sadineni <ravisadineni@chromium.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        devicetree@vger.kernel.org, Krzysztof Kozlowski <krzk@kernel.org>,
-        linux-kernel@vger.kernel.org,
-        Michal Simek <michal.simek@xilinx.com>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH v9 5/5] arm64: dts: qcom: sc7180-trogdor: Add nodes for onboard USB hub
-Date:   Mon,  3 May 2021 12:44:39 -0700
-Message-Id: <20210503124408.v9.5.Ie0d2c1214b767bb5551dd4cad38398bd40e4466f@changeid>
-X-Mailer: git-send-email 2.31.1.527.g47e6f16901-goog
-In-Reply-To: <20210503194439.3289065-1-mka@chromium.org>
-References: <20210503194439.3289065-1-mka@chromium.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        id S229577AbhECUBs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 May 2021 16:01:48 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:31785 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229570AbhECUBr (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 3 May 2021 16:01:47 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1620072054; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=Wuobg4eBDGvYUWgobsliNOV3/u1xddo8tZNEDxUkFTQ=; b=UYHNQ0YmeaG2Ws7CbnA996h4bO9YTnoGzlyUF5ZGW3yWgbvDGfO/zls5tDIxloew6XWjE9SX
+ Q6cmhuAKvSkcghogrXGzmLAKjV4gtYBwJU2aC/qtntD9jdXq/Jlz2vDn+sHTIXkNOQJWQzzQ
+ m3NlA10WLelMktsEk34engxXlLs=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
+ 609056708166b7eff7a4902e (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 03 May 2021 20:00:48
+ GMT
+Sender: bbhatt=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 872CEC433D3; Mon,  3 May 2021 20:00:47 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from malabar-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: bbhatt)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id A887AC433F1;
+        Mon,  3 May 2021 20:00:46 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A887AC433F1
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=bbhatt@codeaurora.org
+From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
+To:     manivannan.sadhasivam@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
+        jhugo@codeaurora.org, linux-kernel@vger.kernel.org,
+        loic.poulain@linaro.org, Bhaumik Bhatt <bbhatt@codeaurora.org>
+Subject: [PATCH v2] bus: mhi: core: Improve debug messages for power up
+Date:   Mon,  3 May 2021 13:00:38 -0700
+Message-Id: <1620072038-36160-1-git-send-email-bbhatt@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add nodes for the onboard USB hub on trogdor devices. Remove the
-'always-on' and 'boot-on' properties from the hub regulator, since
-the regulator is now managed by the onboard_usb_hub driver.
+Improve error message to be more descriptive if a failure occurs
+with an invalid power up execution environment. Additionally, add
+a debug log to print the execution environment and MHI state
+before a power up is attempted to confirm if the device is in an
+expected state. This helps clarify reasons for power up failures
+such as the device being found in a PBL or Emergency Download
+Mode execution environment and the host expected a full power up
+with Pass-Through and no image loading involved.
 
-Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
+Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
 ---
+v2: Use power up instead of power on and update commit text with an example.
 
-Changes in v9:
-- none
+ drivers/bus/mhi/core/pm.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-Changes in v8:
-- none
-
-Changes in v7:
-- rebased on qcom/arm64-for-5.13 (with the rest of the series)
-
-Changes in v6:
-- added 'companion-hub' entry to both USB devices
-- added 'vdd-supply' also to hub@2
-
-Changes in v5:
-- patch added to the series
-
- .../boot/dts/qcom/sc7180-trogdor-lazor-r0.dts | 19 +++++++----------
- .../boot/dts/qcom/sc7180-trogdor-lazor-r1.dts | 11 ++++------
- .../arm64/boot/dts/qcom/sc7180-trogdor-r1.dts | 19 +++++++----------
- arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi  | 21 ++++++++++++++++---
- 4 files changed, 38 insertions(+), 32 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts
-index 5c997cd90069..bae85f6b2bfa 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts
-@@ -23,17 +23,6 @@ &charger_thermal {
- 	status = "disabled";
- };
+diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
+index adf426c..f4a8b9a 100644
+--- a/drivers/bus/mhi/core/pm.c
++++ b/drivers/bus/mhi/core/pm.c
+@@ -1076,12 +1076,16 @@ int mhi_async_power_up(struct mhi_controller *mhi_cntrl)
  
--&pp3300_hub {
--	/* pp3300_l7c is used to power the USB hub */
--	/delete-property/regulator-always-on;
--	/delete-property/regulator-boot-on;
--};
--
--&pp3300_l7c {
--	regulator-always-on;
--	regulator-boot-on;
--};
--
- &sn65dsi86_out {
- 	/*
- 	 * Lane 0 was incorrectly mapped on the cable, but we've now decided
-@@ -42,3 +31,11 @@ &sn65dsi86_out {
- 	 */
- 	lane-polarities = <1 0>;
- };
+ 	/* Confirm that the device is in valid exec env */
+ 	if (!MHI_IN_PBL(current_ee) && current_ee != MHI_EE_AMSS) {
+-		dev_err(dev, "Not a valid EE for power on\n");
++		dev_err(dev, "%s is not a valid EE for power on\n",
++			TO_MHI_EXEC_STR(current_ee));
+ 		ret = -EIO;
+ 		goto error_async_power_up;
+ 	}
+ 
+ 	state = mhi_get_mhi_state(mhi_cntrl);
++	dev_dbg(dev, "Attempting power on with EE: %s, state: %s\n",
++		TO_MHI_EXEC_STR(current_ee), TO_MHI_STATE_STR(state));
 +
-+&usb_hub_2_0 {
-+	 vdd-supply = <&pp3300_l7c>;
-+};
-+
-+&usb_hub_3_0 {
-+	 vdd-supply = <&pp3300_l7c>;
-+};
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts
-index d9fbcc7bc5bd..45f014c3539d 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts
-@@ -23,13 +23,10 @@ &charger_thermal {
- 	status = "disabled";
- };
- 
--&pp3300_hub {
--	/* pp3300_l7c is used to power the USB hub */
--	/delete-property/regulator-always-on;
--	/delete-property/regulator-boot-on;
-+&usb_hub_2_0 {
-+	 vdd-supply = <&pp3300_l7c>;
- };
- 
--&pp3300_l7c {
--	regulator-always-on;
--	regulator-boot-on;
-+&usb_hub_3_0 {
-+	 vdd-supply = <&pp3300_l7c>;
- };
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts
-index 2b522f9e0d8f..2f5263e3d1b9 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts
-@@ -42,17 +42,6 @@ &panel {
- 	compatible = "auo,b116xa01";
- };
- 
--&pp3300_hub {
--	/* pp3300_l7c is used to power the USB hub */
--	/delete-property/regulator-always-on;
--	/delete-property/regulator-boot-on;
--};
--
--&pp3300_l7c {
--	regulator-always-on;
--	regulator-boot-on;
--};
--
- &sdhc_2 {
- 	status = "okay";
- };
-@@ -61,6 +50,14 @@ &trackpad {
- 	interrupts = <58 IRQ_TYPE_EDGE_FALLING>;
- };
- 
-+&usb_hub_2_0 {
-+	 vdd-supply = <&pp3300_l7c>;
-+};
-+
-+&usb_hub_3_0 {
-+	 vdd-supply = <&pp3300_l7c>;
-+};
-+
- /* PINCTRL - modifications to sc7180-trogdor.dtsi */
- 
- &trackpad_int_1v8_odl {
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-index 192e2e424fde..54f9da9af376 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-@@ -206,9 +206,6 @@ pp3300_hub: pp3300-hub {
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&en_pp3300_hub>;
- 
--		regulator-always-on;
--		regulator-boot-on;
--
- 		vin-supply = <&pp3300_a>;
- 	};
- 
-@@ -848,6 +845,24 @@ &usb_1 {
- 
- &usb_1_dwc3 {
- 	dr_mode = "host";
-+	#address-cells = <1>;
-+	#size-cells = <0>;
-+
-+	/* 2.0 hub on port 1 */
-+	usb_hub_2_0: hub@1 {
-+		compatible = "usbbda,5411";
-+		reg = <1>;
-+		vdd-supply = <&pp3300_hub>;
-+		companion-hub = <&usb_hub_3_0>;
-+	};
-+
-+	/* 3.0 hub on port 2 */
-+	usb_hub_3_0: hub@2 {
-+		compatible = "usbbda,411";
-+		reg = <2>;
-+		vdd-supply = <&pp3300_hub>;
-+		companion-hub = <&usb_hub_2_0>;
-+	};
- };
- 
- &usb_1_hsphy {
+ 	if (state == MHI_STATE_SYS_ERR) {
+ 		mhi_set_mhi_state(mhi_cntrl, MHI_STATE_RESET);
+ 		ret = wait_event_timeout(mhi_cntrl->state_event,
 -- 
-2.31.1.527.g47e6f16901-goog
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
