@@ -2,168 +2,178 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 08975371260
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 May 2021 10:20:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5D4113712CD
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 May 2021 11:00:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230490AbhECIU4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 May 2021 04:20:56 -0400
-Received: from new3-smtp.messagingengine.com ([66.111.4.229]:50213 "EHLO
-        new3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229817AbhECIU4 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 May 2021 04:20:56 -0400
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
-        by mailnew.nyi.internal (Postfix) with ESMTP id B6EB0580BBD;
-        Mon,  3 May 2021 04:20:02 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute2.internal (MEProxy); Mon, 03 May 2021 04:20:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cerno.tech; h=
-        date:from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm2; bh=ZZbw4zaMizJrDrM1TjO6/6x5vgu
-        yIVzvER1Undjdu/I=; b=Bcsr3W3Gqk0ypd8Zdc6LIqxdAWqQOLoyBNDbhzPyPFT
-        ivyPg0TCCln1kmTpGoENRBweah8m8UXclRPTCbznej572MsSINCFpqWXQExHntvg
-        z3rptIh7re/fAPEUOKOwnjI9sHflXVrtegVx7hsdSdh3aMJlHgtDBOOrQbSlqEpa
-        VUASdwwGySbA/lGmV/4PpBNGWDrmEtHGt+zHXAfW9fC+PpvT6+N/DDVjv8IsSzhu
-        EHqd3j5KG0ZlbvWzWcedMZwlkMqdLmiPuU6W9P2s4VwzyEvEZMliWjyNyEhjjUWk
-        UXrcUdsGIjPlgIw/Pikh9O4sFfc1LAWNSkQqLEfY+Iw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-type:date:from:in-reply-to
-        :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=ZZbw4z
-        aMizJrDrM1TjO6/6x5vguyIVzvER1Undjdu/I=; b=e0zX+A4VgmfixaP+9SwceH
-        8dWHq/maRcArZax5k5Mu7N4copJnf/CGXeu3DFZHRBtcXd6RnLgxIdbzGmE33/HI
-        a/sjlcm07J2oapmvhp6yjbSEyARNUHfVpAN8oaTVKD9BuW9t3ENZGaWJp/287vC3
-        HYWWU5X8lyqkhIU8Gb8lkganCI+Qn8vDvCkrB7M7LJ3iXo6UiLaV61dcI47s6ubQ
-        nEh9+k1JtU4wUEniqOUUsY66WAOqjNotLHxRZ0IaiNINjHVVKGN9C6bzeprl/Yoc
-        4v04r3mRV3ml8VFwZOwpFCIp7Yx31LcgJioKeIdvOpP28Qa+AYDvQqAqZp3lVxOQ
-        ==
-X-ME-Sender: <xms:MLKPYOBVzmY1SV1QLZroe0AUdjwebPxv5VGN0FThQfbGgx5_09aISA>
-    <xme:MLKPYIjsd9keR74cb3dzO0CUjnhiPexLLJKb1RwgxyqS7td0UXBHB3eZO-Zo0B1bp
-    U180Do29T0Ni9JWlP0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrvdefgedgtdefucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvffukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpeforgigihhm
-    vgcutfhiphgrrhguuceomhgrgihimhgvsegtvghrnhhordhtvggthheqnecuggftrfgrth
-    htvghrnhepleekgeehhfdutdeljefgleejffehfffgieejhffgueefhfdtveetgeehieeh
-    gedunecukfhppeeltddrkeelrdeikedrjeeinecuvehluhhsthgvrhfuihiivgeptdenuc
-    frrghrrghmpehmrghilhhfrhhomhepmhgrgihimhgvsegtvghrnhhordhtvggthh
-X-ME-Proxy: <xmx:MLKPYBk-Uku8MnewArZF-5vCOoIIuHYeRZ124Zkq_GhZm7a6I1_ECA>
-    <xmx:MLKPYMxSviduytGs5zKnNdieSu66vVjUjtPbSWkPWDUWDO0uwa2dQQ>
-    <xmx:MLKPYDRNwGJnpWcTnLesrE6tHMyRIb3I2dNKbPZ-xQ7kJnX9pdkl_w>
-    <xmx:MrKPYEDkFe29yEP2v37YHxsY7jHufsiPt4mR8AR5m74xGSYrvMG3mA>
-Received: from localhost (lfbn-tou-1-1502-76.w90-89.abo.wanadoo.fr [90.89.68.76])
-        by mail.messagingengine.com (Postfix) with ESMTPA;
-        Mon,  3 May 2021 04:20:00 -0400 (EDT)
-Date:   Mon, 3 May 2021 10:19:57 +0200
-From:   Maxime Ripard <maxime@cerno.tech>
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org,
-        Rob Clark <robdclark@chromium.org>,
-        John Stultz <john.stultz@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Kalyan Thota <kalyan_t@codeaurora.org>,
-        Hongbo Yao <yaohongbo@huawei.com>,
-        Qinglang Miao <miaoqinglang@huawei.com>,
-        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-        Lee Jones <lee.jones@linaro.org>,
-        Ville =?utf-8?B?U3lyasOkbMOk?= <ville.syrjala@linux.intel.com>,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] drm/msm/dpu: Delete bonkers code
-Message-ID: <20210503081957.qj5kdbrk7y4dnhid@gilmour>
-References: <20210430171744.1721408-1-robdclark@gmail.com>
- <CAE-0n513cwqs1c89PZpn0ojuDQ44nwxbRfaYssKHcGwKxK8JdA@mail.gmail.com>
+        id S232929AbhECJB1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 May 2021 05:01:27 -0400
+Received: from mail.kernel.org ([198.145.29.99]:42052 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231531AbhECJBY (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 3 May 2021 05:01:24 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 9D9E860FEB;
+        Mon,  3 May 2021 09:00:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1620032431;
+        bh=NM7OrmlALeZ32h6rHMv+l8Rr/iKbNjIkdTl15+pN+3s=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=KrMg7rZDAvuF8TSPaz3tHXjheVZ8VWJcWtxGSauCj+5vW2KabqwOdyeTgtGbqlfGF
+         8unLL3Kt+lb+2P0TATB03NT5m66Xgz6HD3tncDgwXLUKrdrUJ8QhTLmDK+yM8MLAMp
+         uv4KZQeiLzZyYpsnaevhEy2QLxVYPzYb5sNLoc6/FU034FCT0mDmPyKkICU4p4EGSK
+         gJNajfcvnz635r/XYPr7DQved2cUsTrhpgZIFhPKYKgo6dMDlt/BKcsw6AohW8LZTu
+         bLKgxm6rpBtgtkhXS/kkW9ChsK8hVxJ+L02Btp+3BITtue4jjDQPHDTVtoQR7L7xBG
+         rQoCFDRJSkkwQ==
+Date:   Mon, 3 May 2021 11:00:22 +0200
+From:   Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+To:     Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+Cc:     <linuxarm@huawei.com>, <mauro.chehab@huawei.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        "Hans Verkuil" <hans.verkuil@cisco.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-media@vger.kernel.org>
+Subject: Re: [PATCH v4 01/79] media: venus: fix PM runtime logic at
+ venus_sys_error_handler()
+Message-ID: <20210503110022.22503bfd@coco.lan>
+In-Reply-To: <20210430162110.000058e0@Huawei.com>
+References: <cover.1619621413.git.mchehab+huawei@kernel.org>
+        <6d463d21f0dd55c3d84db0458c7a5c4e0d7c5bc1.1619621413.git.mchehab+huawei@kernel.org>
+        <20210430162110.000058e0@Huawei.com>
+X-Mailer: Claws Mail 3.17.8 (GTK+ 2.24.33; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="33yimouztyqtinrp"
-Content-Disposition: inline
-In-Reply-To: <CAE-0n513cwqs1c89PZpn0ojuDQ44nwxbRfaYssKHcGwKxK8JdA@mail.gmail.com>
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Em Fri, 30 Apr 2021 16:21:10 +0100
+Jonathan Cameron <Jonathan.Cameron@Huawei.com> escreveu:
 
---33yimouztyqtinrp
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> On Wed, 28 Apr 2021 16:51:22 +0200
+> Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+> 
+> > The venus_sys_error_handler() assumes that pm_runtime was
+> > able to resume, as it does things like:
+> > 
+> > 	while (pm_runtime_active(core->dev_dec) || pm_runtime_active(core->dev_enc))
+> > 		msleep(10);
+> > 
+> > Well, if, for whatever reason, this won't happen, the routine
+> > won't do what's expected. So, check for the returned error
+> > condition, warning if it returns an error.
+> > 
+> > Fixes: af2c3834c8ca ("[media] media: venus: adding core part and helper functions")
+> > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+> > ---
+> >  drivers/media/platform/qcom/venus/core.c | 14 +++++++++++---
+> >  1 file changed, 11 insertions(+), 3 deletions(-)
+> > 
+> > diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
+> > index 54bac7ec14c5..c80c27c87ccc 100644
+> > --- a/drivers/media/platform/qcom/venus/core.c
+> > +++ b/drivers/media/platform/qcom/venus/core.c
+> > @@ -84,7 +84,11 @@ static void venus_sys_error_handler(struct work_struct *work)
+> >  			container_of(work, struct venus_core, work.work);
+> >  	int ret = 0;
+> >  
+> > -	pm_runtime_get_sync(core->dev);
+> > +	ret = pm_runtime_get_sync(core->dev);
+> > +	if (WARN_ON(ret < 0)) {
+> > +		pm_runtime_put_noidle(core->dev);
+> > +		return;
+> > +	}
+> >  
+> >  	hfi_core_deinit(core, true);
+> >  
+> > @@ -106,9 +110,13 @@ static void venus_sys_error_handler(struct work_struct *work)
+> >  
+> >  	hfi_reinit(core);
+> >  
+> > -	pm_runtime_get_sync(core->dev);
+> > +	ret = pm_runtime_get_sync(core->dev);
+> > +	if (WARN_ON(ret < 0)) {
+> > +		pm_runtime_put_noidle(core->dev);  
 
-Hi,
+Thanks for review!
 
-On Fri, Apr 30, 2021 at 10:44:53AM -0700, Stephen Boyd wrote:
-> Quoting Rob Clark (2021-04-30 10:17:39)
-> > From: Rob Clark <robdclark@chromium.org>
-> >
-> > dpu_crtc_atomic_flush() was directly poking it's attached planes in a
-> > code path that ended up in dpu_plane_atomic_update(), even if the plane
-> > was not involved in the current atomic update.  While a bit dubious,
-> > this worked before because plane->state would always point to something
-> > valid.  But now using drm_atomic_get_new_plane_state() we could get a
-> > NULL state pointer instead, leading to:
-> >
-> >    [   20.873273] Call trace:
-> >    [   20.875740]  dpu_plane_atomic_update+0x5c/0xed0
-> >    [   20.880311]  dpu_plane_restore+0x40/0x88
-> >    [   20.884266]  dpu_crtc_atomic_flush+0xf4/0x208
-> >    [   20.888660]  drm_atomic_helper_commit_planes+0x150/0x238
-> >    [   20.894014]  msm_atomic_commit_tail+0x1d4/0x7a0
-> >    [   20.898579]  commit_tail+0xa4/0x168
-> >    [   20.902102]  drm_atomic_helper_commit+0x164/0x178
-> >    [   20.906841]  drm_atomic_commit+0x54/0x60
-> >    [   20.910798]  drm_atomic_connector_commit_dpms+0x10c/0x118
-> >    [   20.916236]  drm_mode_obj_set_property_ioctl+0x1e4/0x440
-> >    [   20.921588]  drm_connector_property_set_ioctl+0x60/0x88
-> >    [   20.926852]  drm_ioctl_kernel+0xd0/0x120
-> >    [   20.930807]  drm_ioctl+0x21c/0x478
-> >    [   20.934235]  __arm64_sys_ioctl+0xa8/0xe0
-> >    [   20.938193]  invoke_syscall+0x64/0x130
-> >    [   20.941977]  el0_svc_common.constprop.3+0x5c/0xe0
-> >    [   20.946716]  do_el0_svc+0x80/0xa0
-> >    [   20.950058]  el0_svc+0x20/0x30
-> >    [   20.953145]  el0_sync_handler+0x88/0xb0
-> >    [   20.957014]  el0_sync+0x13c/0x140
-> >
-> > The reason for the codepath seems dubious, the atomic suspend/resume
-> > heplers should handle the power-collapse case.  If not, the CRTC's
-> > atomic_check() should be adding the planes to the atomic update.
-> >
-> > Reported-by: Stephen Boyd <sboyd@kernel.org>
->=20
-> Maybe better to use swboyd@chromium.org for this one.
->=20
-> > Reported-by: John Stultz <john.stultz@linaro.org>
-> > Fixes: 37418bf14c13 drm: Use state helper instead of the plane state po=
-inter
->=20
-> Should be
->=20
-> Fixes: 37418bf14c13 ("drm: Use state helper instead of the plane state po=
-inter")
->=20
-> to match the preferred format.
->=20
-> > Signed-off-by: Rob Clark <robdclark@chromium.org>
->=20
-> Otherwise looks good, thanks.
+> mutex_unlock(&core->lock);
+> (the unlock is currently just below the enable_irq() in 5.12)
 
-Thanks for figuring this out, I've applied it with your chromium address
-and the proper fixes format.
+Basically, this function assumes that the core->lock is not locked
+and that IRQs are disabled, as can be seen at the function which
+starts such work:
 
-Maxime
+    static void venus_event_notify(struct venus_core *core, u32 event)
+    {
+	struct venus_inst *inst;
 
---33yimouztyqtinrp
-Content-Type: application/pgp-signature; name="signature.asc"
+	switch (event) {
+	case EVT_SYS_WATCHDOG_TIMEOUT:
+	case EVT_SYS_ERROR:
+		break;
+	default:
+		return;
+	}
 
------BEGIN PGP SIGNATURE-----
+	mutex_lock(&core->lock);
+	core->sys_error = true;
+	list_for_each_entry(inst, &core->instances, list)
+		inst->ops->event_notify(inst, EVT_SESSION_ERROR, NULL);
+	mutex_unlock(&core->lock);
 
-iHUEABYIAB0WIQRcEzekXsqa64kGDp7j7w1vZxhRxQUCYI+yLQAKCRDj7w1vZxhR
-xZRaAQDTPjjiUQFAFWgbNS7oRz3zrty/Iml8Ny6hby1mPZ/NFAEA3T3YH0IJPL4s
-Nx3/uC0n+0PWb2Dr5NHA3d2sPNWRwQU=
-=D+EX
------END PGP SIGNATURE-----
+	disable_irq_nosync(core->irq);
+	schedule_delayed_work(&core->work, msecs_to_jiffies(10));
+    }
 
---33yimouztyqtinrp--
+The code inside it actually locks/unlocks two times the core->lock. 
+See, this is the original code:
+
+    static void venus_sys_error_handler(struct work_struct *work)
+    {
+	<not locked>
+
+        pm_runtime_get_sync(core->dev);
+
+        hfi_core_deinit(core, true);
+
+        dev_warn(core->dev, "system error has occurred, starting recovery!\n");
+
+        mutex_lock(&core->lock);
+	while (pm_runtime_active(core->dev_dec) || pm_runtime_active(core->dev_enc))
+                msleep(10);
+...
+        enable_irq(core->irq);
+        mutex_unlock(&core->lock);
+...
+	if (ret) {
+                disable_irq_nosync(core->irq);
+                dev_warn(core->dev, "recovery failed (%d)\n", ret);
+                schedule_delayed_work(&core->work, msecs_to_jiffies(10));
+                return;
+        }
+
+	mutex_lock(&core->lock);
+        core->sys_error = false;
+        mutex_unlock(&core->lock);
+    }
+
+It should be noticed that, once started, this delayed work re-starts
+itself, with IRQs disabled, trying to reboot the Venus IP hardware,
+until it stops failing [1].
+
+[1] IMHO, it seems a very bad idea to keep running the work forever,
+flooding syslog with error messages on every 10ms or so.
+
+That's said, my patch doesn't seem to fix all potential issues that
+could happen there.
+
+I'll propose a separate fix, outside this patch series, as the issues
+here are not only due to RPM, but the main issue is that both
+while loops inside this code can run forever with the core->lock
+hold.
+
+Thanks,
+Mauro
