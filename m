@@ -2,33 +2,33 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9A044373181
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 May 2021 22:36:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2A47637318D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 May 2021 22:40:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231715AbhEDUhg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 May 2021 16:37:36 -0400
-Received: from mail.z3ntu.xyz ([128.199.32.197]:44098 "EHLO mail.z3ntu.xyz"
+        id S229868AbhEDUl2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 May 2021 16:41:28 -0400
+Received: from mail.z3ntu.xyz ([128.199.32.197]:44178 "EHLO mail.z3ntu.xyz"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231258AbhEDUhf (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 May 2021 16:37:35 -0400
+        id S229542AbhEDUl2 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 4 May 2021 16:41:28 -0400
 Received: from localhost.localdomain (84-115-212-105.cable.dynamic.surfer.at [84.115.212.105])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 027D9C5BAA;
-        Tue,  4 May 2021 20:36:37 +0000 (UTC)
+        by mail.z3ntu.xyz (Postfix) with ESMTPSA id AB7DBC5BAA;
+        Tue,  4 May 2021 20:40:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1620160598; bh=v7KS54rjbA7c8/lAm9fiEi2aczYGkzowPPL9lMfTfo0=;
+        t=1620160830; bh=PR/taFycHZ/lZaX7btvVptzGdADHVliwvjATthdK7Fs=;
         h=From:To:Cc:Subject:Date;
-        b=FkylBnEvCXL5q8IDcQ+q4Jc9QoRSO4npwenCE+iIZaTo468GHhmeDS10jB1tL5Y9U
-         /OlljZ7/0Ro35fDtEkpwo187gewaYVXulQQB4rNZXn2mCSG3nCh0bLcS26zPdUi3Hp
-         0EZKp6DuM/LD0ehC8v+Ym19OnxXsEtQ58ZSnXvcw=
+        b=GO+8he/jd7tDdefP5raokotABSxFYWaBPmSdswHXqcnlkWp+2MHHYAMVii/PZ5p5m
+         Dq/Iq/yHNtMeDHrhW7HgjPnie7V+wwFJOu0eUkp2qptavfvmBv1EnUmRz4rqFqPGlm
+         4ER2E4M+gz0vT4aZh/rbhfvIaq14EXrJlwAiRdFs=
 From:   Luca Weiss <luca@z3ntu.xyz>
 To:     linux-arm-msm@vger.kernel.org
 Cc:     ~postmarketos/upstreaming@lists.sr.ht, Luca Weiss <luca@z3ntu.xyz>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         linux-kernel@vger.kernel.org
-Subject: [PATCH] soc: qcom: socinfo: Add more IDs
-Date:   Tue,  4 May 2021 22:36:13 +0200
-Message-Id: <20210504203612.95056-1-luca@z3ntu.xyz>
+Subject: [RFC PATCH] soc: qcom: socinfo: import PMIC IDs from pmic-spmi
+Date:   Tue,  4 May 2021 22:37:53 +0200
+Message-Id: <20210504203752.95555-1-luca@z3ntu.xyz>
 X-Mailer: git-send-email 2.31.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -36,63 +36,65 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the IDs for the following families of chips: 8064, 8226, 8610, 8625Q
+The driver in drivers/mfd/qcom-spmi-pmic.c has a more complete and more
+up-to-date list of PMICs with the respective IDs. Use those names for
+socinfo.
 
 Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
 ---
- drivers/soc/qcom/socinfo.c | 27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+I'm sending this as RFC because I'm not sure what names are correct for
+the IDs that I've replaced (13, 16, 17, 20, 21, 24).
+For PM8941, PM8841, PM8226 and PMA8084 I'm quite sure that the IDs are
+correct, but I don't have devices with the other PMICs. Please advise
+what to do.
+
+ drivers/soc/qcom/socinfo.c | 24 ++++++++++++++++++------
+ 1 file changed, 18 insertions(+), 6 deletions(-)
 
 diff --git a/drivers/soc/qcom/socinfo.c b/drivers/soc/qcom/socinfo.c
-index f6cfb79338f0..63f14a2a4ef2 100644
+index 63f14a2a4ef2..a802f330dbd4 100644
 --- a/drivers/soc/qcom/socinfo.c
 +++ b/drivers/soc/qcom/socinfo.c
-@@ -195,11 +195,30 @@ static const struct soc_id soc_id[] = {
- 	{ 139, "APQ8060AB" },
- 	{ 140, "MSM8260AB" },
- 	{ 141, "MSM8660AB" },
-+	{ 145, "MSM8626" },
-+	{ 147, "MSM8610" },
-+	{ 153, "APQ8064AB" },
-+	{ 158, "MSM8226" },
-+	{ 159, "MSM8526" },
-+	{ 161, "MSM8110" },
-+	{ 162, "MSM8210" },
-+	{ 163, "MSM8810" },
-+	{ 164, "MSM8212" },
-+	{ 165, "MSM8612" },
-+	{ 166, "MSM8112" },
-+	{ 168, "MSM8225Q" },
-+	{ 169, "MSM8625Q" },
-+	{ 170, "MSM8125Q" },
-+	{ 172, "APQ8064AA" },
- 	{ 178, "APQ8084" },
- 	{ 184, "APQ8074" },
- 	{ 185, "MSM8274" },
- 	{ 186, "MSM8674" },
- 	{ 194, "MSM8974PRO" },
-+	{ 198, "MSM8126" },
-+	{ 199, "APQ8026" },
-+	{ 200, "MSM8926" },
-+	{ 205, "MSM8326" },
- 	{ 206, "MSM8916" },
- 	{ 207, "MSM8994" },
- 	{ 208, "APQ8074-AA" },
-@@ -213,6 +232,14 @@ static const struct soc_id soc_id[] = {
- 	{ 216, "MSM8674PRO" },
- 	{ 217, "MSM8974-AA" },
- 	{ 218, "MSM8974-AB" },
-+	{ 219, "APQ8028" },
-+	{ 220, "MSM8128" },
-+	{ 221, "MSM8228" },
-+	{ 222, "MSM8528" },
-+	{ 223, "MSM8628" },
-+	{ 224, "MSM8928" },
-+	{ 225, "MSM8510" },
-+	{ 226, "MSM8512" },
- 	{ 233, "MSM8936" },
- 	{ 239, "MSM8939" },
- 	{ 240, "APQ8036" },
+@@ -70,21 +70,33 @@ static const char *const socinfo_image_names[] = {
+ 
+ static const char *const pmic_models[] = {
+ 	[0]  = "Unknown PMIC model",
++	[1]  = "PM8941",
++	[2]  = "PM8841",
++	[3]  = "PM8019",
++	[4]  = "PM8226",
++	[5]  = "PM8110",
++	[6]  = "PMA8084",
++	[7]  = "PMI8962",
++	[8]  = "PMD9635",
+ 	[9]  = "PM8994",
++	[10] = "PMI8994",
+ 	[11] = "PM8916",
+-	[13] = "PM8058",
++	[12] = "PM8004",
++	[13] = "PM8909",
+ 	[14] = "PM8028",
+ 	[15] = "PM8901",
+-	[16] = "PM8027",
+-	[17] = "ISL9519",
++	[16] = "PM8950",
++	[17] = "PMI8950",
+ 	[18] = "PM8921",
+ 	[19] = "PM8018",
+-	[20] = "PM8015",
+-	[21] = "PM8014",
++	[20] = "PM8998",
++	[21] = "PMI8998",
+ 	[22] = "PM8821",
+ 	[23] = "PM8038",
+-	[24] = "PM8922",
++	[24] = "PM8005",
+ 	[25] = "PM8917",
++	[26] = "PM660L",
++	[27] = "PM660",
+ 	[30] = "PM8150",
+ 	[31] = "PM8150L",
+ 	[32] = "PM8150B",
 -- 
 2.31.1
 
