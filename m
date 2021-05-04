@@ -2,131 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CE072373194
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 May 2021 22:42:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 37F1B373198
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 May 2021 22:46:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232702AbhEDUn1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 May 2021 16:43:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57442 "EHLO
+        id S229868AbhEDUrp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 May 2021 16:47:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58404 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231977AbhEDUn0 (ORCPT
+        with ESMTP id S231445AbhEDUro (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 May 2021 16:43:26 -0400
-Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4223AC061574
-        for <linux-arm-msm@vger.kernel.org>; Tue,  4 May 2021 13:42:28 -0700 (PDT)
-Received: by mail-pf1-x42a.google.com with SMTP id h127so203001pfe.9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 May 2021 13:42:28 -0700 (PDT)
+        Tue, 4 May 2021 16:47:44 -0400
+Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57E99C061763
+        for <linux-arm-msm@vger.kernel.org>; Tue,  4 May 2021 13:46:49 -0700 (PDT)
+Received: by mail-pl1-x62d.google.com with SMTP id n16so5907088plf.7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 May 2021 13:46:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=/TP/ojOa/Ek6gW+uOcPmzMHCY03xC5sD9r+Tt7fvvPk=;
-        b=FbCaQGqadb0WL3M5ebZa60H4dgsKFNigUohUSMJpShBJbcFoY+foepgohNE63oLsuc
-         e0jxmlcQgwqV71kH8tZegDwRcjNOn+yeotl3Wv0ioIOmEsp80YEDTmW/bqEvsG4N0G2F
-         ZGJkKSJH+mjgHSAw7hNWxzlUTJv0B5ulKxpkk=
+        bh=2a6/ygkzqCiFjkJMxmFt1kL/6eCE5jLq9rBe6PegP00=;
+        b=dgMyecZDYvD3M4Hgvkv4Eu1S1UQfVURdbejOrJeu/cZwL/dwCUBxxdFaEWnf0U0vJZ
+         +HWphRk3stxZ1S89xn0/ClD1xNWSAVt0dTge88IvveKgMbVDEndWvtKGAz/jx6rAgrya
+         7yvvFTqcqsMBT13EEWc6PPYrXE7WorzwgUOds=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=/TP/ojOa/Ek6gW+uOcPmzMHCY03xC5sD9r+Tt7fvvPk=;
-        b=B4dcKhWKxzRl721QQTsHHUnUEnhCkmNa7I71fOxOMdZ0AzQ5fRel8kfAO4Da5aqDEO
-         YLDOMqfobpnlZXIXavpT1sRTcvPH0d2NqiBkINA70fLeGL96E4YOrVwibX3BftoY7jcn
-         YBoP3I6a0bX116oF7F97yfNTFkXjPRSi7KQUVXcidd0Lgx3rAoSdWXescUFP9Gx+nrkT
-         w3iY38HLdssmwYsKyawF1sua1vgqF0BjcqLfD8eFxeHEU+V7VWStFCxePVWWaSA1nOqC
-         oeREaJ+Zb7Ew38JznBF+gKZvtkySfufyLpENmOmnNLiWPCOuJetFgHfukj2r3J/SJ6Vb
-         ydLQ==
-X-Gm-Message-State: AOAM531cx90bukDHO+KpFE+bKACXZ5Q43RV6No3cTll1JLwmiPOa91Da
-        5OddtcYyVn3nLC0QRheYbsgwWg==
-X-Google-Smtp-Source: ABdhPJwZ8maovlt0GmGT150u/qayfs/nvy3E+9zb0XG5DoR8u7YIG1A6I3RCFzaNce9wpv5yV+66vQ==
-X-Received: by 2002:a17:90a:bd89:: with SMTP id z9mr30354112pjr.4.1620160947899;
-        Tue, 04 May 2021 13:42:27 -0700 (PDT)
+        bh=2a6/ygkzqCiFjkJMxmFt1kL/6eCE5jLq9rBe6PegP00=;
+        b=XYPYePESXc+WdjMAWzTzrpTonN7Upw/7xIt8HNMvSr5fqG6oJ99D+5LDoZLur9SxQS
+         Kqc1ji8YXkCxb1D+x+5+ch/YzX0kkzCx+6cBCoE8hxr2RjBrOVO3pDzM+WmSB5Q/hGbi
+         yQfAMmvSYl1D1/XQA2czclT9xQ73KMbhF9YaV2/6viJjznCRP932F95ZUrvltyBed6bC
+         CSge0lpnD7aF3PMKCR379Uxz5kyIyvVDI+CzCpowEWf+QxRGEyBlkFeoa85PAh7MOgIX
+         fVet1r4nHEZiXEPJDW39SJp/wSMD42bLUA3FmPpkt9MM1/4+SpzBSeige8+E/PvqBNdT
+         PimA==
+X-Gm-Message-State: AOAM5320aPafTmc7rEsLDIif4jNjXjie4MMDSBX/lFGWUb+fbDpr2xU5
+        1C7zproMYKKHeDsld2o9Fmg73Q==
+X-Google-Smtp-Source: ABdhPJyfDVB4g3z0knD/LwR+gvIZ+Ero9hTSfnK7mpY7h82mp2xp8TGDseNPtwycdtUH1CxfgbvBYQ==
+X-Received: by 2002:a17:902:eac2:b029:ee:a909:4f9f with SMTP id p2-20020a170902eac2b02900eea9094f9fmr23875075pld.8.1620161208800;
+        Tue, 04 May 2021 13:46:48 -0700 (PDT)
 Received: from localhost ([2620:15c:202:201:4c2f:1f84:af45:6245])
-        by smtp.gmail.com with UTF8SMTPSA id g21sm14589874pjl.28.2021.05.04.13.42.27
+        by smtp.gmail.com with UTF8SMTPSA id w1sm4500412pgp.31.2021.05.04.13.46.47
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 04 May 2021 13:42:27 -0700 (PDT)
-Date:   Tue, 4 May 2021 13:42:26 -0700
+        Tue, 04 May 2021 13:46:48 -0700 (PDT)
+Date:   Tue, 4 May 2021 13:46:47 -0700
 From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Sandeep Maheswaram <sanm@codeaurora.org>
-Cc:     Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Manu Gautam <mgautam@codeaurora.org>
-Subject: Re: [PATCH v3 2/2] arm64: dts: qcom: sc7280: Add USB nodes for IDP
- board
-Message-ID: <YJGxsqGzNDbYO++O@google.com>
-References: <1620112135-1388-1-git-send-email-sanm@codeaurora.org>
- <1620112135-1388-3-git-send-email-sanm@codeaurora.org>
+To:     Rajeshwari <rkambl@codeaurora.org>
+Cc:     amitk@kernel.org, thara.gopinath@linaro.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, rui.zhang@intel.com,
+        daniel.lezcano@linaro.org, robh+dt@kernel.org,
+        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        sanm@codeaurora.org, manafm@codeaurora.org
+Subject: Re: [PATCH V3 2/3] arm64: dts: qcom: SC7280:  Add device node
+ support for TSENS
+Message-ID: <YJGyt/OBBVVzdX2+@google.com>
+References: <1619778592-8112-1-git-send-email-rkambl@codeaurora.org>
+ <1619778592-8112-3-git-send-email-rkambl@codeaurora.org>
+ <YJAz1iDM+cNAAcCX@google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <1620112135-1388-3-git-send-email-sanm@codeaurora.org>
+In-Reply-To: <YJAz1iDM+cNAAcCX@google.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, May 04, 2021 at 12:38:55PM +0530, Sandeep Maheswaram wrote:
-> Add USB nodes for sc7280 IDP board.
+On Mon, May 03, 2021 at 10:33:10AM -0700, Matthias Kaehlcke wrote:
+> On Fri, Apr 30, 2021 at 03:59:51PM +0530, Rajeshwari wrote:
+> > Adding device node for TSENS controller and critical interrupt support in SC7280.
+> > 
+> > Signed-off-by: Rajeshwari <rkambl@codeaurora.org>
 > 
-> Signed-off-by: Sandeep Maheswaram <sanm@codeaurora.org>
-> ---
->  arch/arm64/boot/dts/qcom/sc7280-idp.dts | 39 +++++++++++++++++++++++++++++++++
->  1 file changed, 39 insertions(+)
+> Please add tags from previous versions, like my 'Reviewed-by' from v2,
+> unless a patch underwent major changes.
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dts b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
-> index 54d2cb3..ff48d21 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dts
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
-> @@ -242,6 +242,45 @@
->  	status = "okay";
->  };
->  
-> +&usb_1 {
-> +	status = "okay";
-> +};
-> +
-> +&usb_1_dwc3 {
-> +	dr_mode = "host";
-> +};
-> +
-> +&usb_1_hsphy {
-> +	status = "okay";
-> +
-> +	vdda-pll-supply = <&vreg_l10c_0p8>;
-> +	vdda33-supply = <&vreg_l2b_3p0>;
-> +	vdda18-supply = <&vreg_l1c_1p8>;
-> +};
-> +
-> +&usb_1_qmpphy {
-> +	status = "okay";
-> +
-> +	vdda-phy-supply = <&vreg_l6b_1p2>;
-> +	vdda-pll-supply = <&vreg_l1b_0p8>;
-> +};
-> +
-> +&usb_2 {
-> +	status = "okay";
-> +};
-> +
-> +&usb_2_dwc3 {
-> +	dr_mode = "peripheral";
-> +};
-> +
-> +&usb_2_hsphy {
-> +	status = "okay";
-> +
-> +	vdda-pll-supply = <&vreg_l10c_0p8>;
-> +	vdda33-supply = <&vreg_l2b_3p0>;
-> +	vdda18-supply = <&vreg_l1c_1p8>;
-> +};
-> +
->  /* PINCTRL - additions to nodes defined in sc7280.dtsi */
->  
->  &qup_uart5_default {
+> Please also add a change log for v > 1, even if it just says 'no changes'
+> for some patches in the series.
+
+Forgot to re-add this:
 
 Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
