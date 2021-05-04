@@ -2,68 +2,189 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AF3A3372F3D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 May 2021 19:51:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 10F99372FAD
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 May 2021 20:25:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231845AbhEDRws (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 May 2021 13:52:48 -0400
-Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:43604 "EHLO
-        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S232102AbhEDRwr (ORCPT
+        id S231293AbhEDS0T (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 May 2021 14:26:19 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:39393 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230385AbhEDS0T (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 May 2021 13:52:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1620150713; x=1651686713;
-  h=subject:to:cc:references:from:message-id:date:
-   mime-version:in-reply-to:content-transfer-encoding;
-  bh=eg90j+rKLZIQEComJZMGMdEsMmldPTJdNagnfDTfAIs=;
-  b=V4qbecuui1oH3/tlDxIcfFUTadyykLfT5XVJf6lq/dVNccS2iOvjZsos
-   K+xpG2OevBrA12Gi5LTW3umIRf1WEptPDZBWX2xjbduRZvWedgcXWjrZY
-   gkS6X7Uw1UPbJw2NZFMIfKw5hXVzrReoPMQ2kMNDFA3b13QNTbZzVLhxd
-   w=;
-Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 04 May 2021 10:51:52 -0700
-X-QCInternal: smtphost
-Received: from nasanexm03e.na.qualcomm.com ([10.85.0.48])
-  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/AES256-SHA; 04 May 2021 10:51:52 -0700
-Received: from [10.226.59.216] (10.80.80.8) by nasanexm03e.na.qualcomm.com
- (10.85.0.48) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Tue, 4 May 2021
- 10:51:52 -0700
-Subject: Re: [PATCH v8 9/9] bus: mhi: Improve documentation on channel
- transfer setup APIs
-To:     Bhaumik Bhatt <bbhatt@codeaurora.org>,
-        <manivannan.sadhasivam@linaro.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <hemantk@codeaurora.org>,
-        <linux-kernel@vger.kernel.org>, <carl.yin@quectel.com>,
-        <naveen.kumar@quectel.com>, <loic.poulain@linaro.org>
-References: <1617311778-1254-1-git-send-email-bbhatt@codeaurora.org>
- <1617311778-1254-10-git-send-email-bbhatt@codeaurora.org>
-From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
-Message-ID: <134e6c31-3887-94e0-d33d-7e2a5c946742@quicinc.com>
-Date:   Tue, 4 May 2021 11:51:51 -0600
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.9.1
+        Tue, 4 May 2021 14:26:19 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1620152724; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=AGxnYvOgR2pNLyl/9J+8rJW0dfDmPrj1VhzVa4Wrq/c=;
+ b=OncNGsqqUxP2HQpEHkRIqo30FbVxjDmXl6msV8K/0jV2vyG9M3h9sKtOXd0SWIH1hvbknTlJ
+ B5/Bd6YgCDZM7u88z7bhWgbGSwp/875WS2qhIclNxPNErdoApwGHSRFcZrZePOTcyNpTPxky
+ lU4TXRaaB6l3po4LVpEyXh38KdE=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
+ 60919188c39407c327cff0ab (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 04 May 2021 18:25:12
+ GMT
+Sender: sibis=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 91604C433D3; Tue,  4 May 2021 18:25:11 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: sibis)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id BF320C433F1;
+        Tue,  4 May 2021 18:25:10 +0000 (UTC)
 MIME-Version: 1.0
-In-Reply-To: <1617311778-1254-10-git-send-email-bbhatt@codeaurora.org>
-Content-Type: text/plain; charset="utf-8"; format=flowed
-Content-Language: en-US
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanexm03g.na.qualcomm.com (10.85.0.49) To
- nasanexm03e.na.qualcomm.com (10.85.0.48)
+Date:   Tue, 04 May 2021 23:55:10 +0530
+From:   Sibi Sankar <sibis@codeaurora.org>
+To:     Sudeep Holla <sudeep.holla@arm.com>
+Cc:     bjorn.andersson@linaro.org, viresh.kumar@linaro.org,
+        swboyd@chromium.org, agross@kernel.org, robh+dt@kernel.org,
+        rjw@rjwysocki.net, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, dianders@chromium.org, mka@chromium.org
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: sc7280: Add cpu OPP tables
+In-Reply-To: <20210504144215.svmrmmsy4jtoixzv@bogus>
+References: <1619792901-32701-1-git-send-email-sibis@codeaurora.org>
+ <1619792901-32701-3-git-send-email-sibis@codeaurora.org>
+ <20210504144215.svmrmmsy4jtoixzv@bogus>
+Message-ID: <1fc9fb8d9a94909ff9b7b76d598bd266@codeaurora.org>
+X-Sender: sibis@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 4/1/2021 3:16 PM, Bhaumik Bhatt wrote:
-> The mhi_prepare_for_transfer() and mhi_unprepare_from_transfer()
-> APIs could use better explanation. Add details on what MHI does
-> when these APIs are used.
-> 
-> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
-> Reviewed-by: Hemant Kumar <hemantk@codeaurora.org>
-> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> ---
+Hey Sudeep,
 
-Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Thanks for the review!
+
+On 2021-05-04 20:12, Sudeep Holla wrote:
+> On Fri, Apr 30, 2021 at 07:58:21PM +0530, Sibi Sankar wrote:
+>> Add OPP tables required to scale DDR/L3 per freq-domain on SC7280 
+>> SoCs.
+>> 
+>> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+>> ---
+>>  arch/arm64/boot/dts/qcom/sc7280.dtsi | 135 
+>> +++++++++++++++++++++++++++++++++++
+>>  1 file changed, 135 insertions(+)
+>> 
+>> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi 
+>> b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>> index 0bb835aeae33..90220cecb368 100644
+>> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> 
+> 
+> [...]
+> 
+>> @@ -248,6 +273,116 @@
+>>  		};
+>>  	};
+>> 
+>> +	cpu0_opp_table: cpu0_opp_table {
+>> +		compatible = "operating-points-v2";
+>> +		opp-shared;
+>> +
+>> +		cpu0_opp1: opp-300000000 {
+>> +			opp-hz = /bits/ 64 <300000000>;
+>> +			opp-peak-kBps = <800000 9600000>;
+>> +		};
+>> +
+>> +		cpu0_opp2: opp-691200000 {
+>> +			opp-hz = /bits/ 64 <691200000>;
+>> +			opp-peak-kBps = <800000 17817600>;
+>> +		};
+>> +
+>> +		cpu0_opp3: opp-806400000 {
+>> +			opp-hz = /bits/ 64 <806400000>;
+>> +			opp-peak-kBps = <800000 20889600>;
+>> +		};
+>> +
+>> +		cpu0_opp4: opp-940800000 {
+>> +			opp-hz = /bits/ 64 <940800000>;
+>> +			opp-peak-kBps = <1804000 24576000>;
+>> +		};
+>> +
+>> +		cpu0_opp5: opp-1152000000 {
+>> +			opp-hz = /bits/ 64 <1152000000>;
+>> +			opp-peak-kBps = <2188000 27033600>;
+>> +		};
+>> +
+>> +		cpu0_opp6: opp-1324800000 {
+>> +			opp-hz = /bits/ 64 <1324800000>;
+>> +			opp-peak-kBps = <2188000 33792000>;
+>> +		};
+>> +
+>> +		cpu0_opp7: opp-1516800000 {
+>> +			opp-hz = /bits/ 64 <1516800000>;
+>> +			opp-peak-kBps = <3072000 38092800>;
+>> +		};
+>> +
+>> +		cpu0_opp8: opp-1651200000 {
+>> +			opp-hz = /bits/ 64 <1651200000>;
+>> +			opp-peak-kBps = <3072000 41779200>;
+>> +		};
+>> +
+>> +		cpu0_opp9: opp-1804800000 {
+>> +			opp-hz = /bits/ 64 <1804800000>;
+>> +			opp-peak-kBps = <4068000 48537600>;
+>> +		};
+>> +
+>> +		cpu0_opp10: opp-1958400000 {
+>> +			opp-hz = /bits/ 64 <1958400000>;
+>> +			opp-peak-kBps = <4068000 48537600>;
+>> +		};
+>> +	};
+>> +
+> 
+> NACK, this breaks if there is a mismatch from what is read from the 
+> hardware
+> and what is presented in this table above. Either add it from the some
+> bootloader or other boot code to this table reading from the 
+> hardware/firmware
+> or find a way to link them without this.
+> 
+> Sorry I had warned long back about this when such links were discussed 
+> as
+> part of interconnect binding.
+
+Not sure why this warrants a NACK,
+as this was consensus for mapping
+cpu freq to DDR/L3 bandwidth votes.
+(We use the same solution on SDM845
+and SC7180). The opp tables are
+optional and when specified puts in
+votes for DDR/L3. In the future the
+table can be safely dropped when more
+useful devfreq governors are upstreamed.
+
+cpufreq: qcom: Don't add frequencies without an OPP
+
+I guess your main concern for breakage
+is ^^ commit? The original design is
+to list a super set of frequencies
+supported by all variants of the SoC
+along with the required DDR/L3 bandwidth
+values. When we run into non-documented
+frequency we just wouldn't put in bw
+votes for it which should be fine since
+the entire opp_table is optional. If
+this is the reason for the NACK I can
+try get it reverted with Matthias's ack.
+
+
+-- 
+Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project.
