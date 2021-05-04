@@ -2,71 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4D054372C3D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 May 2021 16:41:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9E23C372C4B
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 May 2021 16:42:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231642AbhEDOlq convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-arm-msm@lfdr.de>); Tue, 4 May 2021 10:41:46 -0400
-Received: from jabberwock.ucw.cz ([46.255.230.98]:44448 "EHLO
-        jabberwock.ucw.cz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231610AbhEDOlo (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 May 2021 10:41:44 -0400
-Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
-        id 27BE01C0B9B; Tue,  4 May 2021 16:40:47 +0200 (CEST)
-Date:   Tue, 4 May 2021 16:39:45 +0200
-From:   Pavel Machek <pavel@ucw.cz>
-To:     Subbaraman Narayanamurthy <subbaram@codeaurora.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Uwe Kleine-K??nig <u.kleine-koenig@pengutronix.de>,
-        Lee Jones <lee.jones@linaro.org>, linux-leds@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-pwm@vger.kernel.org,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Yassine Oudjana <y.oudjana@protonmail.com>,
-        Luca Weiss <luca@z3ntu.xyz>
-Subject: Re: [PATCH v7 1/6] dt-bindings: leds: Add Qualcomm Light Pulse
- Generator binding
-Message-ID: <YJFcsRnki3XT3isk@mobian>
-References: <20210429211517.312792-1-bjorn.andersson@linaro.org>
- <20210429211517.312792-2-bjorn.andersson@linaro.org>
- <635d3f2c-d3a8-c0d6-7659-c22e44103901@codeaurora.org>
+        id S231467AbhEDOnS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 May 2021 10:43:18 -0400
+Received: from foss.arm.com ([217.140.110.172]:59474 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230086AbhEDOnS (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 4 May 2021 10:43:18 -0400
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 67CFFED1;
+        Tue,  4 May 2021 07:42:23 -0700 (PDT)
+Received: from bogus (unknown [10.57.61.118])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 839EF3F718;
+        Tue,  4 May 2021 07:42:21 -0700 (PDT)
+Date:   Tue, 4 May 2021 15:42:15 +0100
+From:   Sudeep Holla <sudeep.holla@arm.com>
+To:     Sibi Sankar <sibis@codeaurora.org>
+Cc:     bjorn.andersson@linaro.org, viresh.kumar@linaro.org,
+        Sudeep Holla <sudeep.holla@arm.com>, swboyd@chromium.org,
+        agross@kernel.org, robh+dt@kernel.org, rjw@rjwysocki.net,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        dianders@chromium.org, mka@chromium.org
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: sc7280: Add cpu OPP tables
+Message-ID: <20210504144215.svmrmmsy4jtoixzv@bogus>
+References: <1619792901-32701-1-git-send-email-sibis@codeaurora.org>
+ <1619792901-32701-3-git-send-email-sibis@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8BIT
-In-Reply-To: <635d3f2c-d3a8-c0d6-7659-c22e44103901@codeaurora.org>
+In-Reply-To: <1619792901-32701-3-git-send-email-sibis@codeaurora.org>
+User-Agent: NeoMutt/20171215
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi!
-On Mon 2021-05-03 18:01:09, Subbaraman Narayanamurthy wrote:
-> On 4/29/21 2:15 PM, Bjorn Andersson wrote:
-> > This adds the binding document describing the three hardware blocks
-> > related to the Light Pulse Generator found in a wide range of Qualcomm
-> > PMICs.
-> >
-> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-...
-> > +      "^led@[0-9a-f]$":
-> > +        type: object
-> > +        $ref: common.yaml#
-> > +
+On Fri, Apr 30, 2021 at 07:58:21PM +0530, Sibi Sankar wrote:
+> Add OPP tables required to scale DDR/L3 per freq-domain on SC7280 SoCs.
 > 
+> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sc7280.dtsi | 135 +++++++++++++++++++++++++++++++++++
+>  1 file changed, 135 insertions(+)
 > 
-> Just a question more than a comment. From what I can see, when this device is specified as a multi-color device or an individual device (e.g. "red", "green" and "blue"), the user can only set "pattern" and "repeat" under the corresponding device after setting "pattern" to "trigger". Would you be planning to add a way (e.g. another set of DT properties) for the user to specify such patterns via the devicetree itself?
->
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> index 0bb835aeae33..90220cecb368 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
 
-Please trim your replies and format emails to 72 columns or so.
 
-If you need patterns in DTS that can be discussed, but it should be
-generic functionality not tied to one driver.
+[...]
 
-Best regards,
+> @@ -248,6 +273,116 @@
+>  		};
+>  	};
+>  
+> +	cpu0_opp_table: cpu0_opp_table {
+> +		compatible = "operating-points-v2";
+> +		opp-shared;
+> +
+> +		cpu0_opp1: opp-300000000 {
+> +			opp-hz = /bits/ 64 <300000000>;
+> +			opp-peak-kBps = <800000 9600000>;
+> +		};
+> +
+> +		cpu0_opp2: opp-691200000 {
+> +			opp-hz = /bits/ 64 <691200000>;
+> +			opp-peak-kBps = <800000 17817600>;
+> +		};
+> +
+> +		cpu0_opp3: opp-806400000 {
+> +			opp-hz = /bits/ 64 <806400000>;
+> +			opp-peak-kBps = <800000 20889600>;
+> +		};
+> +
+> +		cpu0_opp4: opp-940800000 {
+> +			opp-hz = /bits/ 64 <940800000>;
+> +			opp-peak-kBps = <1804000 24576000>;
+> +		};
+> +
+> +		cpu0_opp5: opp-1152000000 {
+> +			opp-hz = /bits/ 64 <1152000000>;
+> +			opp-peak-kBps = <2188000 27033600>;
+> +		};
+> +
+> +		cpu0_opp6: opp-1324800000 {
+> +			opp-hz = /bits/ 64 <1324800000>;
+> +			opp-peak-kBps = <2188000 33792000>;
+> +		};
+> +
+> +		cpu0_opp7: opp-1516800000 {
+> +			opp-hz = /bits/ 64 <1516800000>;
+> +			opp-peak-kBps = <3072000 38092800>;
+> +		};
+> +
+> +		cpu0_opp8: opp-1651200000 {
+> +			opp-hz = /bits/ 64 <1651200000>;
+> +			opp-peak-kBps = <3072000 41779200>;
+> +		};
+> +
+> +		cpu0_opp9: opp-1804800000 {
+> +			opp-hz = /bits/ 64 <1804800000>;
+> +			opp-peak-kBps = <4068000 48537600>;
+> +		};
+> +
+> +		cpu0_opp10: opp-1958400000 {
+> +			opp-hz = /bits/ 64 <1958400000>;
+> +			opp-peak-kBps = <4068000 48537600>;
+> +		};
+> +	};
+> +
 
-       	    	 	     	    	      	 	 Pavel
+NACK, this breaks if there is a mismatch from what is read from the hardware
+and what is presented in this table above. Either add it from the some
+bootloader or other boot code to this table reading from the hardware/firmware
+or find a way to link them without this.
+
+Sorry I had warned long back about this when such links were discussed as
+part of interconnect binding.
+
 -- 
+Regards,
+Sudeep
