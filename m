@@ -2,109 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9632F37252D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 May 2021 06:42:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AE47D372573
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 May 2021 07:28:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229746AbhEDEnV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 May 2021 00:43:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40164 "EHLO
+        id S229721AbhEDF3u (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 May 2021 01:29:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50226 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229715AbhEDEnU (ORCPT
+        with ESMTP id S229737AbhEDF3t (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 May 2021 00:43:20 -0400
-Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94D57C061574
-        for <linux-arm-msm@vger.kernel.org>; Mon,  3 May 2021 21:42:26 -0700 (PDT)
-Received: by mail-ot1-x32d.google.com with SMTP id b5-20020a9d5d050000b02902a5883b0f4bso7184127oti.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 May 2021 21:42:26 -0700 (PDT)
+        Tue, 4 May 2021 01:29:49 -0400
+Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 653F1C061574
+        for <linux-arm-msm@vger.kernel.org>; Mon,  3 May 2021 22:28:54 -0700 (PDT)
+Received: by mail-pf1-x431.google.com with SMTP id m11so6274407pfc.11
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 May 2021 22:28:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=11Nzt21PGgG7EY1Zm8LPZ6J+bFs0Dr0fBy2u4R0XE/M=;
-        b=eMDxI/J5JXLmmKxTyVqOM4RrALRwtyMIm7+ZVgBG5CshybG7FGuLkpX5f0siwUVD/Y
-         HoFLI68bUSlqWKu34+h4BOf+B3SG6I0D93xctqrZUs8i1JCfWEqKvdEQ8AyQH2KDklLw
-         8hkXj1MLvgoLX3BWvOfcXqJ54hj5dHndfr7ic=
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=d1/AzVVrNidYL1JjR1YC/Peao5Mw1ewmpCW6nzrTArc=;
+        b=c5b+/FRo57MbHTEAez+tIFj/mbxJ/4TPCMLMKwqCj1QxrLBFwTpK57F4kMxLtQGXMt
+         mc7iFXrws3C9/0+t9VmgFbSBgs2t4h9EU+fyLsJPks8kYl13VW0oUYsRTS++of+93ixc
+         kAemPYkMm9g85Wigz1LOS9AEvABZmYQsJ0vR13prGzBfzTB8Unocu+YjUS/pioB7vHLF
+         Yu4NSzzNdLswqoqn01CvWc3CuFr/BDC78spqKJgjz5Y0ebrRMg7Xnxpo9PkfhCBLgeVM
+         Qp+C2ryA2xWsDsMsiAqMYQqZQ5kEZE9RMMKwo8lbRkCT8S4kDOI7fuSesaba+1SdIhDS
+         956w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=11Nzt21PGgG7EY1Zm8LPZ6J+bFs0Dr0fBy2u4R0XE/M=;
-        b=p1A3Mp7nDlVtnw1trjYZ5AfLEe+5qbUrkpxdiOnMLiJfD36o/+kWv8EqnE81zDkwE5
-         IPZ6H8GVKD+81eMPMSR6iQMJkEdzi1T/54IOTKbpsRKodnUpTGOuaXRZXeKiXux1auvO
-         7xn9Ow33+6Lt+ju7Ku9wqFB7c1xgajtRin01Jr4Y4p9nhAbmr1J90TeIC7M5OnjnDV+s
-         ODRgQGUfooRclINe3K75wnjHu5y2AMLXvhSvcm8Uypgs02cLViMpw/EBfPgdz/RVJtYw
-         ohsZIfdpjw2uosOymXC4fqYfKfxPeFBDSiAGP+B0/T97b+r4zPd+MkGAM087joXj+CQN
-         2W7Q==
-X-Gm-Message-State: AOAM532jBHrIvr+x/xpAst/ZHmgCBv7lbVyyN1A+RaKhL7cmUOBttRCv
-        ioHTg+zguc39m6tbqDxURl4rOPKUCFdMwPF0pyFkL/G9VyE=
-X-Google-Smtp-Source: ABdhPJxCezCWHhNH1naSml5SlQdlnfQJrJxORDMFSaHhNEWOV1BLyNy+3WNmkZObBEETMxJdHv/XU00MVUB6ixxxRwc=
-X-Received: by 2002:a9d:5e19:: with SMTP id d25mr17278425oti.308.1620103346067;
- Mon, 03 May 2021 21:42:26 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 3 May 2021 21:42:25 -0700
-MIME-Version: 1.0
-In-Reply-To: <1619048258-8717-4-git-send-email-khsieh@codeaurora.org>
-References: <1619048258-8717-1-git-send-email-khsieh@codeaurora.org> <1619048258-8717-4-git-send-email-khsieh@codeaurora.org>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.9.1
-Date:   Mon, 3 May 2021 21:42:25 -0700
-Message-ID: <CAE-0n50EW8evqt1NtbjEbSS71CzSAzXR21-FvCrTmvsaj+GGHQ@mail.gmail.com>
-Subject: Re: [PATCH v4 3/4] drm/msm/dp: check main link status before start
- aux read
-To:     Kuogee Hsieh <khsieh@codeaurora.org>, robdclark@gmail.com,
-        sean@poorly.run
-Cc:     abhinavk@codeaurora.org, aravindh@codeaurora.org, airlied@linux.ie,
-        daniel@ffwll.ch, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=d1/AzVVrNidYL1JjR1YC/Peao5Mw1ewmpCW6nzrTArc=;
+        b=UfsC8jQM1dePd3+fMeqCyyN8NgaQcY+yfk9CCQYAhnS/60/QZCM4a/QwLdjm5pg4V/
+         CK0kMZIle+6jTH5UVvBvfVifMpTRR67dKfWOHedEFvLL5yov5qNs7UL7kBS4TPrcwTJ7
+         BtGkMwb2f1f38jX7Qui57fS9Dikfo/krv1JFa2AAksAhhGd7i+ti/cKIcaKnPtjn2IRG
+         WUQWRfXC1JOGLIzcZqLRRxGQpsW5EOuRUWD2sOhkkLaArWNAMymGxBWu/9PSBUWEMnSl
+         ZYTxi64YIGq5+dOs5ZkzzeDwZ/xz62yIuttz7QWaagCJZ1NIvT0InDNfc4sa8M4ZVxjH
+         Tz4A==
+X-Gm-Message-State: AOAM530r9LNMk7u4T6UTgQ51NwCV+5eAS4n4bxURpwU/b87tUBYXNb+u
+        atKKySImKZ3qFlUPFS2JlHTZ3w==
+X-Google-Smtp-Source: ABdhPJzdS4ViNq2A7okdWhYQ2+fzIzBEVaEgOXbmwhyYrZjKUPwp7RHhi6GILgShVLSSoTLLZuHlaA==
+X-Received: by 2002:a63:f258:: with SMTP id d24mr21482075pgk.174.1620106133811;
+        Mon, 03 May 2021 22:28:53 -0700 (PDT)
+Received: from localhost.localdomain (80.251.214.228.16clouds.com. [80.251.214.228])
+        by smtp.gmail.com with ESMTPSA id 145sm5933229pfv.196.2021.05.03.22.28.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 03 May 2021 22:28:53 -0700 (PDT)
+From:   Shawn Guo <shawn.guo@linaro.org>
+To:     Stephen Boyd <sboyd@kernel.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Sivaprakash Murugesan <sivaprak@codeaurora.org>,
+        Benjamin Li <benl@squareup.com>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        Shawn Guo <shawn.guo@linaro.org>
+Subject: [PATCH 0/5] Add MSM8939 APCS/A53PLL clock support
+Date:   Tue,  4 May 2021 13:28:39 +0800
+Message-Id: <20210504052844.21096-1-shawn.guo@linaro.org>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Kuogee Hsieh (2021-04-21 16:37:37)
-> Maybe when the cable is disconnected the DP phy should be shutdown and
-> some bit in the phy could effectively "cut off" the aux channel and then
-> NAKs would start coming through here in the DP controller I/O register
-> space. This patch have DP aux channel read/write to return NAK immediately
-> if DP controller connection status is in unplugged state.
->
-> Changes in V4:
-> -- split this patch as stand alone patch
->
-> Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
-> ---
->  drivers/gpu/drm/msm/dp/dp_aux.c | 5 +++++
->  1 file changed, 5 insertions(+)
->
-> diff --git a/drivers/gpu/drm/msm/dp/dp_aux.c b/drivers/gpu/drm/msm/dp/dp_aux.c
-> index 7c22bfe..fae3806 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_aux.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_aux.c
-> @@ -343,6 +343,11 @@ static ssize_t dp_aux_transfer(struct drm_dp_aux *dp_aux,
->
->         mutex_lock(&aux->mutex);
->
-> +       if (!dp_catalog_link_is_connected(aux->catalog)) {
-> +               ret = -ETIMEDOUT;
-> +               goto unlock_exit;
-> +       }
-> +
->         aux->native = msg->request & (DP_AUX_NATIVE_WRITE & DP_AUX_NATIVE_READ);
->
->         /* Ignore address only message */
+This series adds MSM8939 APCS/A53PLL clock support.  Most outstanding
+thing about MSM8939 is that it integrates 3 APCS instances, for Cluster0
+(little cores), Cluster1 (big cores) and CCI (Cache Coherent Interconnect)
+respectively.
 
-Can the code check for aux timeouts? So instead of blindly completing
-'aux->comp' we would do the transfer, and then dp_aux_cmd_fifo_tx()
-would check to see if the completion was completed from the irq
-handler because of a timeout or a nack, etc. I think the code is
-probably racy, given that dp_aux_isr() is called from irq context, and
-aux_error_num is set from the irq context and tested in non-irq context.
-This code needs a spinlock and then to check the isr bits to figure out
-if it should tell the upper layers that the address was wrong, or there
-was a nack or a timeout, etc.
+Note: the first one is a small improvement which is not specific to
+MSM8939 support.
 
-I don't think we need to check the link to see if it is connected, just
-look at the irq bits to see if the response was bad and letting higher
-layers know that should quickly cut off the transactions.
+
+Shawn Guo (5):
+  clk: qcom: apcs-msm8916: Flag a53mux instead of a53pll as critical
+  dt-bindings: clock: update qcom,a53pll bindings for MSM8939 support
+  clk: qcom: apcs-msm8916: Retrieve clock name from DT
+  clk: qcom: a53-pll: Pass freq_tbl via match data
+  clk: qcom: a53-pll: Add MSM8939 a53pll clocks
+
+ .../bindings/clock/qcom,a53pll.yaml           | 34 +++++++++++
+ drivers/clk/qcom/a53-pll.c                    | 59 +++++++++++++++++--
+ drivers/clk/qcom/apcs-msm8916.c               |  7 ++-
+ 3 files changed, 93 insertions(+), 7 deletions(-)
+
+-- 
+2.17.1
+
