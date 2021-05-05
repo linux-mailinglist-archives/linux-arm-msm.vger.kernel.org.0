@@ -2,213 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A873A3738FF
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 May 2021 13:06:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 565EB373990
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 May 2021 13:37:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232314AbhEELHl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 May 2021 07:07:41 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56]:2999 "EHLO
-        frasgout.his.huawei.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232256AbhEELHl (ORCPT
+        id S232917AbhEELiZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 May 2021 07:38:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55824 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233113AbhEELiY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 May 2021 07:07:41 -0400
-Received: from fraeml708-chm.china.huawei.com (unknown [172.18.147.207])
-        by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4FZtzn3MSwz72f1x;
-        Wed,  5 May 2021 19:00:53 +0800 (CST)
-Received: from lhreml710-chm.china.huawei.com (10.201.108.61) by
- fraeml708-chm.china.huawei.com (10.206.15.36) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2176.2; Wed, 5 May 2021 13:06:41 +0200
-Received: from localhost (10.52.120.138) by lhreml710-chm.china.huawei.com
- (10.201.108.61) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2176.2; Wed, 5 May 2021
- 12:06:41 +0100
-Date:   Wed, 5 May 2021 12:05:02 +0100
-From:   Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-To:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-CC:     <linuxarm@huawei.com>, <mauro.chehab@huawei.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "Hans Verkuil" <hans.verkuil@cisco.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-media@vger.kernel.org>
-Subject: Re: [PATCH 03/25] media: venus: Rework error fail recover logic
-Message-ID: <20210505120502.000047e0@Huawei.com>
-In-Reply-To: <419e346f01af5423485202d624fc144756bd2b11.1620207353.git.mchehab+huawei@kernel.org>
-References: <cover.1620207353.git.mchehab+huawei@kernel.org>
-        <419e346f01af5423485202d624fc144756bd2b11.1620207353.git.mchehab+huawei@kernel.org>
-Organization: Huawei Technologies Research and Development (UK) Ltd.
-X-Mailer: Claws Mail 3.17.8 (GTK+ 2.24.33; i686-w64-mingw32)
+        Wed, 5 May 2021 07:38:24 -0400
+Received: from mail-pg1-x52a.google.com (mail-pg1-x52a.google.com [IPv6:2607:f8b0:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A07CC061763
+        for <linux-arm-msm@vger.kernel.org>; Wed,  5 May 2021 04:37:27 -0700 (PDT)
+Received: by mail-pg1-x52a.google.com with SMTP id m12so1568900pgr.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 05 May 2021 04:37:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=jwzu12d+QscnqOFQLhy4vh097a70ZnMp+hWw5krWrIk=;
+        b=ZxbA1tfyfKPGdWBAOR+Y7RlXNKo0jtDwpuDRVr1usMxGZoBv82lY5nRNfltNjKO1hH
+         Q7y7FDb6LgIpvZMvCb7aqc+Xve+lVh9zkUaSTlQzCBPHlpwpwcZtrEnarO5Lc5WDNp0a
+         ug8JjqltbYlpsOLL2jMLtIfag5oYlt9qghVOy/7eC6FZhjz5YERIwOAuHHdzqHj7WESp
+         GHgXxzeLXt3pIm1ioOJenBBeRsDagR/fc+XiEzSImMUkgoAX1tbV5vPWKN21/w36v4bG
+         9WW1ksviqEZBHvq9FUbzJrqKeFQ0eOf9EDv5mYbjpmIryj4TESREdyKnD9I8QGacUcAQ
+         iTXQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=jwzu12d+QscnqOFQLhy4vh097a70ZnMp+hWw5krWrIk=;
+        b=Sf+6+gJVSU4Jx9TcEyyefSwGwIJIyRI5+DHe2kHLbeF1cTkkSkOGINZVphzjJKjYOB
+         xWo9kWOVlgZWGuilLZywPYHGAyhQpEgXvXiwpcmFZfoIOVpAH3yRLi/sytkX7KdnPyWr
+         tXQmHgCFk2JO4eDoaAraTCv8K45KOHLx8ZApy077+5ZySIEX1Be4yxBdF0i5Q1GR7nGb
+         TvywHVT+aXulV2si+uNVHcjBbc3NBzVEoCaWFBxfE77/UHnk68yTxVYv4ZGuOAJwI/iR
+         kC6Qd01davwF9ZAgPMceoQ/fO6UU/DbqHzn1qwr+ShbTrk5N2vgpBN4r9uPg619hmmAz
+         hfcg==
+X-Gm-Message-State: AOAM533SQ7nNZQzXqWfMNvc2PRiANQJmpD7nMvzl5py6YuQ0nU3BrWki
+        bquRuHGG8dQobT+b84BOm7ipKg==
+X-Google-Smtp-Source: ABdhPJwCPq/LSEqazkj7mS6+zQB5ApPaTWOLcZzzlV2ZlvhakMrgpY4gelMW0KBKN7Xw7oLx2vKNbw==
+X-Received: by 2002:a62:5209:0:b029:278:648f:99b6 with SMTP id g9-20020a6252090000b0290278648f99b6mr28004842pfb.9.1620214646574;
+        Wed, 05 May 2021 04:37:26 -0700 (PDT)
+Received: from localhost ([136.185.154.93])
+        by smtp.gmail.com with ESMTPSA id a18sm14989138pfo.64.2021.05.05.04.37.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 05 May 2021 04:37:26 -0700 (PDT)
+Date:   Wed, 5 May 2021 17:07:24 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Sudeep Holla <sudeep.holla@arm.com>
+Cc:     Sibi Sankar <sibis@codeaurora.org>, bjorn.andersson@linaro.org,
+        swboyd@chromium.org, agross@kernel.org, robh+dt@kernel.org,
+        rjw@rjwysocki.net, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, dianders@chromium.org, mka@chromium.org
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: sc7280: Add cpu OPP tables
+Message-ID: <20210505113724.fpzcizgytf55msfa@vireshk-i7>
+References: <1619792901-32701-1-git-send-email-sibis@codeaurora.org>
+ <1619792901-32701-3-git-send-email-sibis@codeaurora.org>
+ <20210504144215.svmrmmsy4jtoixzv@bogus>
+ <1fc9fb8d9a94909ff9b7b76d598bd266@codeaurora.org>
+ <20210505084908.3lynedmblmqagr72@bogus>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.52.120.138]
-X-ClientProxiedBy: lhreml725-chm.china.huawei.com (10.201.108.76) To
- lhreml710-chm.china.huawei.com (10.201.108.61)
-X-CFilter-Loop: Reflected
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210505084908.3lynedmblmqagr72@bogus>
+User-Agent: NeoMutt/20180716-391-311a52
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 5 May 2021 11:41:53 +0200
-Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+On 05-05-21, 09:49, Sudeep Holla wrote:
+> No my main concern is this platform uses "qcom-cpufreq-hw" driver and the
+> fact that the OPPs are retrieved from the hardware lookup table invalidates
+> whatever we have in DT.
 
-> The Venus code has a sort of watchdog that attempts to recover
-> from IP errors, implemented as a delayed work job, which
-> calls venus_sys_error_handler().
-> 
-> Right now, it has several issues:
-> 
-> 1. It assumes that PM runtime resume never fails
-> 
-> 2. It internally runs two while() loops that also assume that
->    PM runtime will never fail to go idle:
-> 
-> 	while (pm_runtime_active(core->dev_dec) || pm_runtime_active(core->dev_enc))
-> 		msleep(10);
-> 
-> ...
-> 
-> 	while (core->pmdomains[0] && pm_runtime_active(core->pmdomains[0]))
-> 		usleep_range(1000, 1500);
-> 
-> 3. It uses an OR to merge all return codes and then report to the user
-> 
-> 4. If the hardware never recovers, it keeps running on every 10ms,
->    flooding the syslog with 2 messages (so, up to 200 messages
->    per second).
-> 
-> Rework the code, in order to prevent that, by:
-> 
-> 1. check the return code from PM runtime resume;
-> 2. don't let the while() loops run forever;
-> 3. store the failed event;
-> 4. use warn ratelimited when it fails to recover.
-> 
-> Fixes: af2c3834c8ca ("[media] media: venus: adding core part and helper functions")
-> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Not exactly.
 
-Trivial comments inline, otherwise based on no knowledge at all of the
-actual hardware, the fix looks sane.
+It disables them all, and then call dev_pm_opp_adjust_voltage() and
+enable them again. This is how it started initially. Though the driver
+also works if the DT doesn't have the table, in that case it calls
+dev_pm_opp_add() for all the OPPs.
 
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-
-> ---
->  drivers/media/platform/qcom/venus/core.c | 59 +++++++++++++++++++-----
->  1 file changed, 47 insertions(+), 12 deletions(-)
+> In short it will be junk and becomes obsolete.
+> So what I suggested before is still valid. You simply can't have static
+> OPP tables in the DT for this platform. Do get some boot code to fetch the
+> same from the h/w LUT and patch to the DT or figure out any other way to
+> manage dynamically.
 > 
-> diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
-> index 54bac7ec14c5..4d0482743c0a 100644
-> --- a/drivers/media/platform/qcom/venus/core.c
-> +++ b/drivers/media/platform/qcom/venus/core.c
-> @@ -78,22 +78,32 @@ static const struct hfi_core_ops venus_core_ops = {
->  	.event_notify = venus_event_notify,
->  };
->  
-> +#define RPM_WAIT_FOR_IDLE_MAX_ATTEMPTS 10
-> +
->  static void venus_sys_error_handler(struct work_struct *work)
->  {
->  	struct venus_core *core =
->  			container_of(work, struct venus_core, work.work);
-> -	int ret = 0;
-> +	int ret, i, max_attempts = RPM_WAIT_FOR_IDLE_MAX_ATTEMPTS;
-> +	bool failed = false;
-> +	const char *err_msg = "";
->  
-> -	pm_runtime_get_sync(core->dev);
-> +	ret = pm_runtime_get_sync(core->dev);
-> +	if (ret < 0) {
-> +		err_msg = "resume runtime PM\n";
+> So NACK still stands for static addition of OPPs to the DT as in this patch.
 
-Will end up with two newlines I think as %s\n" later.
-
-> +		max_attempts = 0;
-> +		failed = true;
-> +	}
->  
->  	hfi_core_deinit(core, true);
->  
-> -	dev_warn(core->dev, "system error has occurred, starting recovery!\n");
-> -
->  	mutex_lock(&core->lock);
->  
-> -	while (pm_runtime_active(core->dev_dec) || pm_runtime_active(core->dev_enc))
-> +	for (i = 0; i < max_attempts; i++) {
-> +		if (!pm_runtime_active(core->dev_dec) && !pm_runtime_active(core->dev_enc))
-> +			break;
->  		msleep(10);
-> +	}
->  
->  	venus_shutdown(core);
->  
-> @@ -101,31 +111,56 @@ static void venus_sys_error_handler(struct work_struct *work)
->  
->  	pm_runtime_put_sync(core->dev);
->  
-> -	while (core->pmdomains[0] && pm_runtime_active(core->pmdomains[0]))
-> +	for (i = 0; i < max_attempts; i++) {
-> +		if (!core->pmdomains[0] || !pm_runtime_active(core->pmdomains[0]))
-> +			break;
->  		usleep_range(1000, 1500);
-> +	}
->  
->  	hfi_reinit(core);
->  
-> -	pm_runtime_get_sync(core->dev);
-> +	ret = pm_runtime_get_sync(core->dev);
-> +	if (ret < 0) {
-> +		err_msg = "resume runtime PM\n";
-> +		max_attempts = 0;
-
-This is after the last use of max_attempts, so no point in setting it to zero.
-
-> +		failed = true;
-> +	}
->  
-> -	ret |= venus_boot(core);
-> -	ret |= hfi_core_resume(core, true);
-> +	ret = venus_boot(core);
-> +	if (ret && !failed) {
-> +		err_msg = "boot Venus\n";
-> +		failed = true;
-> +	}
-> +
-> +	ret = hfi_core_resume(core, true);
-> +	if (ret && !failed) {
-> +		err_msg = "resume HFI\n";
-> +		failed = true;
-> +	}
->  
->  	enable_irq(core->irq);
->  
->  	mutex_unlock(&core->lock);
->  
-> -	ret |= hfi_core_init(core);
-> +	ret = hfi_core_init(core);
-> +	if (ret && !failed) {
-> +		err_msg = "init HFI\n";
-> +		failed = true;
-> +	}
->  
->  	pm_runtime_put_sync(core->dev);
->  
-> -	if (ret) {
-> +	if (failed) {
->  		disable_irq_nosync(core->irq);
-> -		dev_warn(core->dev, "recovery failed (%d)\n", ret);
-> +		dev_warn_ratelimited(core->dev,
-> +				     "System error has occurred, recovery failed to %s\n",
-> +				     err_msg);
->  		schedule_delayed_work(&core->work, msecs_to_jiffies(10));
->  		return;
->  	}
->  
-> +	dev_warn(core->dev, "system error has occurred (recovered)\n");
-> +
->  	mutex_lock(&core->lock);
->  	core->sys_error = false;
->  	mutex_unlock(&core->lock);
-
+-- 
+viresh
