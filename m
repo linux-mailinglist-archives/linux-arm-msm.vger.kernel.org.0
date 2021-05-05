@@ -2,128 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2CD7F3735CA
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 May 2021 09:44:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E550737361C
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 May 2021 10:17:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231752AbhEEHpR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 May 2021 03:45:17 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:20669 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231709AbhEEHpQ (ORCPT
+        id S229780AbhEEISQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 May 2021 04:18:16 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:29574 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229744AbhEEISQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 May 2021 03:45:16 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1620200660; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=+S5kmU6xVK0FKbVGrsxNwlTFR/UzcM5BAX9iz0qyWHI=; b=vibsq298/JnI91zfGPlFQQWMGzcEqX973e9CxOW0XPbhnS57xkm7OC6lH8RkcgKX+CIqWAq9
- 9BHrqzhomQaJl2TML9NGhy3w4vnxTSqsfCHFwiorPzc61hiz2hXaHuklNTuHjJIwx3x0SfCl
- tTwa2osBWP0ICi0blEt6eNAp75o=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
- 60924cd48166b7eff7bc5d30 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 05 May 2021 07:44:20
- GMT
-Sender: deesin=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 856C0C433F1; Wed,  5 May 2021 07:44:19 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
-Received: from [192.168.1.3] (unknown [122.163.131.242])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: deesin)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 9ADAAC433D3;
-        Wed,  5 May 2021 07:44:16 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 9ADAAC433D3
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=deesin@codeaurora.org
-Subject: Re: [PATCH V2 1/2] soc: qcom: aoss: Expose send for generic usecase
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Deepak Kumar Singh <deesin@qti.qualcomm.com>
-Cc:     clew@codeaurora.org, sibis@codeaurora.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org, Andy Gross <agross@kernel.org>
-References: <1617943188-23278-1-git-send-email-deesin@qti.qualcomm.com>
- <1617943188-23278-2-git-send-email-deesin@qti.qualcomm.com>
- <YHYJVjvjUyXtrNmC@builder.lan>
-From:   Deepak Kumar Singh <deesin@codeaurora.org>
-Message-ID: <926738e1-6786-aa6f-5a85-784d624575c7@codeaurora.org>
-Date:   Wed, 5 May 2021 13:14:07 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.10.0
-MIME-Version: 1.0
-In-Reply-To: <YHYJVjvjUyXtrNmC@builder.lan>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+        Wed, 5 May 2021 04:18:16 -0400
+Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
+  by alexa-out.qualcomm.com with ESMTP; 05 May 2021 01:17:20 -0700
+X-QCInternal: smtphost
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 05 May 2021 01:17:18 -0700
+X-QCInternal: smtphost
+Received: from sbillaka-linux.qualcomm.com ([10.204.66.13])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 05 May 2021 13:46:46 +0530
+Received: by sbillaka-linux.qualcomm.com (Postfix, from userid 2305739)
+        id 4449221D5B; Wed,  5 May 2021 13:46:45 +0530 (IST)
+From:   Sankeerth Billakanti <sbillaka@codeaurora.org>
+To:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Cc:     Sankeerth Billakanti <sbillaka@codeaurora.org>,
+        robdclark@gmail.com, seanpaul@chromium.org, swboyd@chromium.org,
+        kalyan_t@codeaurora.org, abhinavk@codeaurora.org,
+        dianders@chromium.org, khsieh@codeaurora.org,
+        mkrishn@codeaurora.org
+Subject: [PATCH v1 0/3] Add support for next gen eDP driver on SnapDragon
+Date:   Wed,  5 May 2021 13:46:16 +0530
+Message-Id: <1620202579-19066-1-git-send-email-sbillaka@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+These patches add support for the next generation eDP driver on SnapDragon
+with dpu support. The existing eDP driver cannot support the new eDP
+hardware. So, to maintain backward compatibility, the older eDP driver is
+moved to v200 folder and the new generation eDP driver is added in
+the v510 folder.
 
-On 4/14/2021 2:42 AM, Bjorn Andersson wrote:
-> On Thu 08 Apr 23:39 CDT 2021, Deepak Kumar Singh wrote:
-> [..]
->> +/**
->> + * qmp_get() - get a qmp handle from a device
->> + * @dev: client device pointer
->> + *
->> + * Return: handle to qmp device on success, ERR_PTR() on failure
->> + */
->> +struct qmp *qmp_get(struct device *dev)
->> +{
->> +	struct platform_device *pdev;
->> +	struct device_node *np;
->> +	struct qmp *qmp;
->> +
->> +	if (!dev || !dev->of_node)
->> +		return ERR_PTR(-EINVAL);
->> +
->> +	np = of_parse_phandle(dev->of_node, "qcom,qmp", 0);
->> +	if (!np)
->> +		return ERR_PTR(-ENODEV);
->> +
->> +	pdev = of_find_device_by_node(np);
->> +	if (!pdev)
->> +		return ERR_PTR(-EINVAL);
->> +
->> +	qmp = platform_get_drvdata(pdev);
->> +	return qmp ? qmp : ERR_PTR(-EPROBE_DEFER);
->> +}
->> +EXPORT_SYMBOL(qmp_get);
->> +
->> +void qmp_put(struct platform_device *pdev)
->> +{
->> +	platform_device_put(pdev);
-> I was expecting that the devres allocated struct qmp would stick around
-> until the struct device's release callback came. As described in my
-> answer to Mani yesterday I was wrong.
->
-> As such you need to make sure that struct qmp stays around until
-> qmp_remove() and all qmp_put() calls has been made.
->
-> I presume a reasonable way to achieve this is to not use devm to
-> allocate our struct qmp, add a kref to the object. So this would have to
-> be a kref_put() on that instead of the platform_device_put() I asked you
-> to implement here.
->
-> Sorry about that.
->
->
-> The rest of the patch looks good.
->
-> Regards,
-> Bjorn
+These are baseline changes with which we can enable display. The new eDP
+controller can also support additional features such as backlight control,
+PSR etc. which will be enabled in subsequent patch series.
 
-Hi Bjorn,
+Summary of changes:
+DPU driver interface to the new eDP v510 display driver.
+New generation eDP controller and phy driver implementation.
+A common interface to choose enable the required eDP driver.
 
-Even if we use kref_put(), would it not require platform_device_put()? 
-As per my understanding of_find_device_by_node(np) will increment 
-node/pdev kobj refcount which both needs to be decremented.
+Sankeerth Billakanti (3):
+  drm/msm/edp: support multiple generations of edp hardware
+  drm/msm/edp: add support for next gen edp
+  drm/msm/disp/dpu1: add support for edp encoder
+
+ drivers/gpu/drm/msm/Makefile                      |   19 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c       |    7 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c           |   33 +
+ drivers/gpu/drm/msm/edp/edp.c                     |  198 ---
+ drivers/gpu/drm/msm/edp/edp.h                     |   78 -
+ drivers/gpu/drm/msm/edp/edp.xml.h                 |  380 -----
+ drivers/gpu/drm/msm/edp/edp_aux.c                 |  264 ----
+ drivers/gpu/drm/msm/edp/edp_bridge.c              |  111 --
+ drivers/gpu/drm/msm/edp/edp_common.c              |   38 +
+ drivers/gpu/drm/msm/edp/edp_common.h              |   47 +
+ drivers/gpu/drm/msm/edp/edp_connector.c           |  132 --
+ drivers/gpu/drm/msm/edp/edp_ctrl.c                | 1375 ------------------
+ drivers/gpu/drm/msm/edp/edp_phy.c                 |   98 --
+ drivers/gpu/drm/msm/edp/v200/edp.xml.h            |  380 +++++
+ drivers/gpu/drm/msm/edp/v200/edp_v200.c           |  210 +++
+ drivers/gpu/drm/msm/edp/v200/edp_v200.h           |   70 +
+ drivers/gpu/drm/msm/edp/v200/edp_v200_aux.c       |  264 ++++
+ drivers/gpu/drm/msm/edp/v200/edp_v200_bridge.c    |  111 ++
+ drivers/gpu/drm/msm/edp/v200/edp_v200_connector.c |  132 ++
+ drivers/gpu/drm/msm/edp/v200/edp_v200_ctrl.c      | 1375 ++++++++++++++++++
+ drivers/gpu/drm/msm/edp/v200/edp_v200_phy.c       |   98 ++
+ drivers/gpu/drm/msm/edp/v510/edp_v510.c           |  220 +++
+ drivers/gpu/drm/msm/edp/v510/edp_v510.h           |  151 ++
+ drivers/gpu/drm/msm/edp/v510/edp_v510_aux.c       |  268 ++++
+ drivers/gpu/drm/msm/edp/v510/edp_v510_bridge.c    |  111 ++
+ drivers/gpu/drm/msm/edp/v510/edp_v510_connector.c |  117 ++
+ drivers/gpu/drm/msm/edp/v510/edp_v510_ctrl.c      | 1583 +++++++++++++++++++++
+ drivers/gpu/drm/msm/edp/v510/edp_v510_phy.c       |  641 +++++++++
+ drivers/gpu/drm/msm/edp/v510/edp_v510_reg.h       |  339 +++++
+ 29 files changed, 6207 insertions(+), 2643 deletions(-)
+ delete mode 100644 drivers/gpu/drm/msm/edp/edp.c
+ delete mode 100644 drivers/gpu/drm/msm/edp/edp.h
+ delete mode 100644 drivers/gpu/drm/msm/edp/edp.xml.h
+ delete mode 100644 drivers/gpu/drm/msm/edp/edp_aux.c
+ delete mode 100644 drivers/gpu/drm/msm/edp/edp_bridge.c
+ create mode 100644 drivers/gpu/drm/msm/edp/edp_common.c
+ create mode 100644 drivers/gpu/drm/msm/edp/edp_common.h
+ delete mode 100644 drivers/gpu/drm/msm/edp/edp_connector.c
+ delete mode 100644 drivers/gpu/drm/msm/edp/edp_ctrl.c
+ delete mode 100644 drivers/gpu/drm/msm/edp/edp_phy.c
+ create mode 100644 drivers/gpu/drm/msm/edp/v200/edp.xml.h
+ create mode 100644 drivers/gpu/drm/msm/edp/v200/edp_v200.c
+ create mode 100644 drivers/gpu/drm/msm/edp/v200/edp_v200.h
+ create mode 100644 drivers/gpu/drm/msm/edp/v200/edp_v200_aux.c
+ create mode 100644 drivers/gpu/drm/msm/edp/v200/edp_v200_bridge.c
+ create mode 100644 drivers/gpu/drm/msm/edp/v200/edp_v200_connector.c
+ create mode 100644 drivers/gpu/drm/msm/edp/v200/edp_v200_ctrl.c
+ create mode 100644 drivers/gpu/drm/msm/edp/v200/edp_v200_phy.c
+ create mode 100644 drivers/gpu/drm/msm/edp/v510/edp_v510.c
+ create mode 100644 drivers/gpu/drm/msm/edp/v510/edp_v510.h
+ create mode 100644 drivers/gpu/drm/msm/edp/v510/edp_v510_aux.c
+ create mode 100644 drivers/gpu/drm/msm/edp/v510/edp_v510_bridge.c
+ create mode 100644 drivers/gpu/drm/msm/edp/v510/edp_v510_connector.c
+ create mode 100644 drivers/gpu/drm/msm/edp/v510/edp_v510_ctrl.c
+ create mode 100644 drivers/gpu/drm/msm/edp/v510/edp_v510_phy.c
+ create mode 100644 drivers/gpu/drm/msm/edp/v510/edp_v510_reg.h
+
+-- 
+The Qualcomm Innovatin Center, Inc. is a member of the Code Aurora Forum, a Linux Foundation Collaborative Project
 
