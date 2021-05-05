@@ -2,143 +2,164 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A6ECB37379F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 May 2021 11:35:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2CC113737C2
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 May 2021 11:42:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231129AbhEEJgI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 May 2021 05:36:08 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:63516 "EHLO m43-7.mailgun.net"
+        id S232490AbhEEJnR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 May 2021 05:43:17 -0400
+Received: from mail.kernel.org ([198.145.29.99]:48572 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231959AbhEEJgI (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 May 2021 05:36:08 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1620207312; h=Content-Transfer-Encoding: MIME-Version:
- Message-Id: Date: Subject: Cc: To: From: Sender;
- bh=DjffynwOTIplvphcol0QO9d3xBlxRHbmF00ZLWu5TJ8=; b=jLb1n9ozScPOsQjCdL/qKDLNmfg492vV0lQr34TITJrzyo+JeqfvA8mkDaw+WFySSUwKceOy
- R6OLdZBmOOx7y2VxKn4D6f1VINE0hb34lFmW4uW5jLJj55KSeeBqajNrdB/VqS7JZAmbD5tW
- zuoiipyxssQp2ZR9xmpTV+KwDpk=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
- 609266b879b6f9e57beb5b08 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 05 May 2021 09:34:48
- GMT
-Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 6EB77C43144; Wed,  5 May 2021 09:34:48 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 14296C4338A;
-        Wed,  5 May 2021 09:34:43 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 14296C4338A
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=saiprakash.ranjan@codeaurora.org
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        Leo Yan <leo.yan@linaro.org>
-Cc:     coresight@lists.linaro.org, Stephen Boyd <swboyd@chromium.org>,
-        Denis Nikitin <denik@chromium.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        id S232242AbhEEJnQ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 5 May 2021 05:43:16 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 0602D61401;
+        Wed,  5 May 2021 09:42:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1620207739;
+        bh=yt06NNHz8DnYKToINWX+kvUyHzX2tR5CxsEbiivgk9Q=;
+        h=From:To:Cc:Subject:Date:From;
+        b=aqDRmaF3drwaIh64M6SmLAXcURg7md3/lxLq6hY7zb9NqADehFDhLwTfZdBs7O+Ua
+         PrWk1xzp0TuIUKCqW49WlvukyoTfR5zgDGz7Uu2PZqSgv1pEGUUxNbyoLUBf8HZnu5
+         qRdm6t31xE9TWLgGFmfaTYQA8hMkY0ziRes30XuBsRHwKIVlQv7wfSkyxIpDYtEO+h
+         OCd1Y0Rg6YCyxJf0fUjbsEoL8cTStyP6CBORWLMbL183NygQ2Jt0qsW8FwH+QN9AJO
+         UNaAIvqUS7AS4O6rIj0PTrvaAvgGwleAAphalHt9KMZmiBAzijNKMWxdBLmzF/O1Jj
+         VRSlJc4wK+6AA==
+Received: by mail.kernel.org with local (Exim 4.94)
+        (envelope-from <mchehab@kernel.org>)
+        id 1leE2q-00AHvp-Hf; Wed, 05 May 2021 11:42:16 +0200
+From:   Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Cc:     linuxarm@huawei.com, mauro.chehab@huawei.com,
+        Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+        "Lad, Prabhakar" <prabhakar.csengg@gmail.com>,
+        "Paul J. Murphy" <paul.j.murphy@intel.com>,
+        Andrzej Pietrasiewicz <andrzejtp2010@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Daniele Alessandrelli <daniele.alessandrelli@intel.com>,
+        Ezequiel Garcia <ezequiel@collabora.com>,
+        Fabio Estevam <festevam@gmail.com>,
+        Jacek Anaszewski <jacek.anaszewski@gmail.com>,
+        Jernej Skrabec <jernej.skrabec@siol.net>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Maxime Ripard <mripard@kernel.org>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Rui Miguel Silva <rmfrfs@gmail.com>,
+        Sakari Ailus <sakari.ailus@linux.intel.com>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Steve Longerbeam <slongerbeam@gmail.com>,
+        Sylwester Nawrocki <s.nawrocki@samsung.com>,
         linux-arm-kernel@lists.infradead.org,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        stable@vger.kernel.org
-Subject: [PATCH] coresight: tmc-etf: Fix global-out-of-bounds in tmc_update_etf_buffer()
-Date:   Wed,  5 May 2021 15:04:30 +0530
-Message-Id: <20210505093430.18445-1-saiprakash.ranjan@codeaurora.org>
-X-Mailer: git-send-email 2.29.0
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-media@vger.kernel.org, linux-mediatek@lists.infradead.org,
+        linux-renesas-soc@vger.kernel.org,
+        linux-rockchip@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-staging@lists.linux.dev,
+        linux-sunxi@lists.linux.dev
+Subject: [PATCH 00/25] Fix some PM runtime issues at the media subsystem
+Date:   Wed,  5 May 2021 11:41:50 +0200
+Message-Id: <cover.1620207353.git.mchehab+huawei@kernel.org>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+Sender: Mauro Carvalho Chehab <mchehab@kernel.org>
+To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-commit 6f755e85c332 ("coresight: Add helper for inserting synchronization
-packets") removed trailing '\0' from barrier_pkt array and updated the
-call sites like etb_update_buffer() to have proper checks for barrier_pkt
-size before read but missed updating tmc_update_etf_buffer() which still
-reads barrier_pkt past the array size resulting in KASAN out-of-bounds
-bug. Fix this by adding a check for barrier_pkt size before accessing
-like it is done in etb_update_buffer().
+As part of an effort to cleanup pm_runtime*get* calls, I detected a number
+of issues at the media subsystem.
 
- BUG: KASAN: global-out-of-bounds in tmc_update_etf_buffer+0x4b8/0x698
- Read of size 4 at addr ffffffd05b7d1030 by task perf/2629
+Most of the patches here were submitted previously at:
 
- Call trace:
-  dump_backtrace+0x0/0x27c
-  show_stack+0x20/0x2c
-  dump_stack+0x11c/0x188
-  print_address_description+0x3c/0x4a4
-  __kasan_report+0x140/0x164
-  kasan_report+0x10/0x18
-  __asan_report_load4_noabort+0x1c/0x24
-  tmc_update_etf_buffer+0x4b8/0x698
-  etm_event_stop+0x248/0x2d8
-  etm_event_del+0x20/0x2c
-  event_sched_out+0x214/0x6f0
-  group_sched_out+0xd0/0x270
-  ctx_sched_out+0x2ec/0x518
-  __perf_event_task_sched_out+0x4fc/0xe6c
-  __schedule+0x1094/0x16a0
-  preempt_schedule_irq+0x88/0x170
-  arm64_preempt_schedule_irq+0xf0/0x18c
-  el1_irq+0xe8/0x180
-  perf_event_exec+0x4d8/0x56c
-  setup_new_exec+0x204/0x400
-  load_elf_binary+0x72c/0x18c0
-  search_binary_handler+0x13c/0x420
-  load_script+0x500/0x6c4
-  search_binary_handler+0x13c/0x420
-  exec_binprm+0x118/0x654
-  __do_execve_file+0x77c/0xba4
-  __arm64_compat_sys_execve+0x98/0xac
-  el0_svc_common+0x1f8/0x5e0
-  el0_svc_compat_handler+0x84/0xb0
-  el0_svc_compat+0x10/0x50
+	https://lore.kernel.org/linux-media/cover.1619621413.git.mchehab+huawei@kernel.org/
 
- The buggy address belongs to the variable:
-  barrier_pkt+0x10/0x40
+This series contain just the bug fixes and other related issues that are
+present with the current code on media.
 
- Memory state around the buggy address:
-  ffffffd05b7d0f00: fa fa fa fa 04 fa fa fa fa fa fa fa 00 00 00 00
-  ffffffd05b7d0f80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
- >ffffffd05b7d1000: 00 00 00 00 00 00 fa fa fa fa fa fa 00 00 00 03
-                                      ^
-  ffffffd05b7d1080: fa fa fa fa 00 02 fa fa fa fa fa fa 03 fa fa fa
-  ffffffd05b7d1100: fa fa fa fa 00 00 00 00 05 fa fa fa fa fa fa fa
- ==================================================================
+It address the points from the existing reviews. I also did my own
+set of reviews, in order to avoid regressions.
 
-Fixes: 6f755e85c332 ("coresight: Add helper for inserting synchronization packets")
-Cc: stable@vger.kernel.org
-Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
----
- drivers/hwtracing/coresight/coresight-tmc-etf.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Changes from v4 of the previous changeset:
 
-diff --git a/drivers/hwtracing/coresight/coresight-tmc-etf.c b/drivers/hwtracing/coresight/coresight-tmc-etf.c
-index 45b85edfc690..cd0fb7bfba68 100644
---- a/drivers/hwtracing/coresight/coresight-tmc-etf.c
-+++ b/drivers/hwtracing/coresight/coresight-tmc-etf.c
-@@ -530,7 +530,7 @@ static unsigned long tmc_update_etf_buffer(struct coresight_device *csdev,
- 		buf_ptr = buf->data_pages[cur] + offset;
- 		*buf_ptr = readl_relaxed(drvdata->base + TMC_RRD);
- 
--		if (lost && *barrier) {
-+		if (lost && i < CORESIGHT_BARRIER_PKT_SIZE) {
- 			*buf_ptr = *barrier;
- 			barrier++;
- 		}
+- reworked i2c/css RPM get logic;
+- dropped two patches that could cause regressions;
+- am437x: keep using pm_runtime_get_sync on suspend/resume;
+- atmel: fix the returned code and add a print on failures at start streaming;
+- simplify some checks for return code > 0;
+- mdk-vcodec: properly handle RPM errors at device on logic;
+- venus: rework venus_sys_error_handler() logic;
+- sti/delta: fix an issue at the error checking logic.
+
+Mauro Carvalho Chehab (25):
+  staging: media: rkvdec: fix pm_runtime_get_sync() usage count
+  staging: media: imx7-mipi-csis: fix pm_runtime_get_sync() usage count
+  media: venus: Rework error fail recover logic
+  media: s5p_cec: decrement usage count if disabled
+  media: i2c: ccs-core: return the right error code at suspend
+  media: i2c: imx334: fix the pm runtime get logic
+  media: exynos-gsc: don't resume at remove time
+  media: atmel: properly get pm_runtime
+  media: hantro: do a PM resume earlier
+  media: marvel-ccic: fix some issues when getting pm_runtime
+  media: mdk-mdp: fix pm_runtime_get_sync() usage count
+  media: rcar_fdp1: simplify error check logic at fdp_open()
+  media: rcar_fdp1: fix pm_runtime_get_sync() usage count
+  media: renesas-ceu: Properly check for PM errors
+  media: s5p: fix pm_runtime_get_sync() usage count
+  media: am437x: fix pm_runtime_get_sync() usage count
+  media: sh_vou: fix pm_runtime_get_sync() usage count
+  media: mtk-vcodec: fix PM runtime get logic
+  media: s5p-jpeg: fix pm_runtime_get_sync() usage count
+  media: sti/delta: use pm_runtime_resume_and_get()
+  media: sunxi: fix pm_runtime_get_sync() usage count
+  media: sti/bdisp: fix pm_runtime_get_sync() usage count
+  media: exynos4-is: fix pm_runtime_get_sync() usage count
+  media: exynos-gsc: fix pm_runtime_get_sync() usage count
+  media: i2c: ccs-core: fix pm_runtime_get_sync() usage count
+
+ drivers/media/cec/platform/s5p/s5p_cec.c      |  7 ++-
+ drivers/media/i2c/ccs/ccs-core.c              | 41 ++++++++-----
+ drivers/media/i2c/imx334.c                    |  7 ++-
+ drivers/media/platform/am437x/am437x-vpfe.c   | 15 ++++-
+ drivers/media/platform/atmel/atmel-isc-base.c | 30 +++++++---
+ drivers/media/platform/atmel/atmel-isi.c      | 19 ++++--
+ drivers/media/platform/exynos-gsc/gsc-core.c  | 11 ++--
+ drivers/media/platform/exynos-gsc/gsc-m2m.c   |  4 +-
+ .../media/platform/exynos4-is/fimc-capture.c  |  6 +-
+ drivers/media/platform/exynos4-is/fimc-is.c   |  4 +-
+ .../platform/exynos4-is/fimc-isp-video.c      |  3 +-
+ drivers/media/platform/exynos4-is/fimc-isp.c  |  7 +--
+ drivers/media/platform/exynos4-is/fimc-lite.c |  5 +-
+ drivers/media/platform/exynos4-is/fimc-m2m.c  |  5 +-
+ drivers/media/platform/exynos4-is/media-dev.c |  9 +--
+ drivers/media/platform/exynos4-is/mipi-csis.c | 10 ++--
+ .../media/platform/marvell-ccic/mcam-core.c   |  9 ++-
+ drivers/media/platform/mtk-mdp/mtk_mdp_m2m.c  |  6 +-
+ .../platform/mtk-vcodec/mtk_vcodec_dec_drv.c  |  4 +-
+ .../platform/mtk-vcodec/mtk_vcodec_dec_pm.c   |  8 ++-
+ .../platform/mtk-vcodec/mtk_vcodec_dec_pm.h   |  2 +-
+ drivers/media/platform/qcom/venus/core.c      | 59 +++++++++++++++----
+ drivers/media/platform/rcar_fdp1.c            | 28 ++++++---
+ drivers/media/platform/renesas-ceu.c          |  4 +-
+ drivers/media/platform/s5p-jpeg/jpeg-core.c   |  5 +-
+ drivers/media/platform/sh_vou.c               |  6 +-
+ drivers/media/platform/sti/bdisp/bdisp-v4l2.c |  7 ++-
+ drivers/media/platform/sti/delta/delta-v4l2.c |  8 +--
+ .../sunxi/sun8i-rotate/sun8i_rotate.c         |  2 +-
+ drivers/staging/media/hantro/hantro_drv.c     |  7 ++-
+ drivers/staging/media/imx/imx7-mipi-csis.c    |  7 +--
+ drivers/staging/media/rkvdec/rkvdec.c         |  2 +-
+ 32 files changed, 220 insertions(+), 127 deletions(-)
+
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+2.30.2
+
 
