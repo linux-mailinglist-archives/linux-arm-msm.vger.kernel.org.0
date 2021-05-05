@@ -2,200 +2,173 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1436B373844
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 May 2021 12:02:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 74DB037385C
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 May 2021 12:09:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231494AbhEEKDY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 May 2021 06:03:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34810 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232613AbhEEKDT (ORCPT
+        id S231750AbhEEKKd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 May 2021 06:10:33 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:35200 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231851AbhEEKKd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 May 2021 06:03:19 -0400
-Received: from mail-qk1-x735.google.com (mail-qk1-x735.google.com [IPv6:2607:f8b0:4864:20::735])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 757C1C061763
-        for <linux-arm-msm@vger.kernel.org>; Wed,  5 May 2021 03:01:37 -0700 (PDT)
-Received: by mail-qk1-x735.google.com with SMTP id i67so921620qkc.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 05 May 2021 03:01:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=m5HtWmAnig6lw4RtHlzbQQmHRo3yOMqpgy7bbvUw2Fc=;
-        b=JniwsF2H3MzPZR21KHPne2QKpqm3PVEUXKzmCmnkH7RlYzmTZq/6/RHJBZNbOtMn/9
-         vMN47dV1ItkRww5AhS3qakC0YRKHj3jMfAeGsM3MmGU7lM/CPbHpR2qkV9OlGAS48eIq
-         z+B/zbykJn3on8cqFqO54/okzAmUQgW/4UlM1FCJThqgZ303ftdEUZZPLpfs2Yfc33ua
-         Kf/BVZz51zGRZU8MqvpIAc+KopwOpm8DzLi55iCBaEsCz1xAo5nv+KGkynbWMIXPmrww
-         tg14uieIucJf7Rj2PNw7qgJKtR7OIDYr8cAllmA5f5H2hyvIhvPWxXhQ/CDplX2oyPnh
-         SWiA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=m5HtWmAnig6lw4RtHlzbQQmHRo3yOMqpgy7bbvUw2Fc=;
-        b=P/Q4JGcx8SvIMMMYNX0LRmiZHoffTBX9LRlvD6FHsk4yXcjIz2PVdc8eb/P1vqBlTe
-         4IZliRrhBmQAAB+0ICUalc8ikaYOfNMAtkQmcPundDS8vzqnbQdEvNqpDl+XT62+CPUH
-         nOdkT9CvhO6zYH/pyd99Q64aY2PwsbNAJt2RiHDtVBKEjScCu0SlBnoL8VJnzyzsscd4
-         lPEAATPZ2yYEB6pOkDr+3GjnYgy8Cl+CpWh/q1aBB3paS1Xd49e35gtFeC7u5o/1rYQE
-         jtryHaGTUd+n+IaOdg1gZVGfQsOSQ3f+7zd1Si4nb8+0hLPynKzzOPow3x3fCI0XD07C
-         zmcw==
-X-Gm-Message-State: AOAM532agTxYtGlAqOj+XE/b/HW/PgoXvOqKf+qEbHV+C7aWV5rQYFVI
-        AXN1tX9399E/XKefc12meMEQ2dlUOVoo8cNJIA9/eA==
-X-Google-Smtp-Source: ABdhPJzvlSeiw16CrlySSngkvytIk52sMnf7quC/lBLqjW87Oju0lcBCJeZcUbsFMc/Zx3Q5B4XRt+ZghNjIBeYr9g4=
-X-Received: by 2002:a37:5945:: with SMTP id n66mr29120690qkb.138.1620208896828;
- Wed, 05 May 2021 03:01:36 -0700 (PDT)
+        Wed, 5 May 2021 06:10:33 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1620209376; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=/pFeOOQka32uiKGUO61/tAA85g3Y2JLsNoKpfoqaSaM=;
+ b=ev4kXKkxDEXxGwcb+6aWp7Rig6L5p/g7FR9BPmB0DFIL1Pz6rqHqqWzT3oo+U0/fYHRM7A1C
+ VS4WUwQb9lqIdAFVNUljIa0+vuWtdu/xzWfe8ilbo6QYcFhJHRglc0a4jFR3ko/3hqdlmjYh
+ 5tmsntAH16Jz+cEof4HcTOnkr50=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
+ 60926ece79b6f9e57b0223d1 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 05 May 2021 10:09:18
+ GMT
+Sender: sibis=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 3F97DC43460; Wed,  5 May 2021 10:09:18 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: sibis)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 66FFDC433F1;
+        Wed,  5 May 2021 10:09:17 +0000 (UTC)
 MIME-Version: 1.0
-References: <1620202579-19066-1-git-send-email-sbillaka@codeaurora.org>
-In-Reply-To: <1620202579-19066-1-git-send-email-sbillaka@codeaurora.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Wed, 5 May 2021 13:01:25 +0300
-Message-ID: <CAA8EJpqZXHNvBySL0Vm-CmsrAh8Z85SoQHn97TqWLYeFW-Q=UA@mail.gmail.com>
-Subject: Re: [PATCH v1 0/3] Add support for next gen eDP driver on SnapDragon
-To:     Sankeerth Billakanti <sbillaka@codeaurora.org>
-Cc:     "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <dri-devel@lists.freedesktop.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Sean Paul <seanpaul@chromium.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Kalyan Thota <kalyan_t@codeaurora.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        khsieh@codeaurora.org, Krishna Manikandan <mkrishn@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Wed, 05 May 2021 15:39:17 +0530
+From:   Sibi Sankar <sibis@codeaurora.org>
+To:     Sudeep Holla <sudeep.holla@arm.com>
+Cc:     bjorn.andersson@linaro.org, viresh.kumar@linaro.org,
+        swboyd@chromium.org, agross@kernel.org, robh+dt@kernel.org,
+        rjw@rjwysocki.net, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, dianders@chromium.org, mka@chromium.org
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: sc7280: Add cpu OPP tables
+In-Reply-To: <20210505084908.3lynedmblmqagr72@bogus>
+References: <1619792901-32701-1-git-send-email-sibis@codeaurora.org>
+ <1619792901-32701-3-git-send-email-sibis@codeaurora.org>
+ <20210504144215.svmrmmsy4jtoixzv@bogus>
+ <1fc9fb8d9a94909ff9b7b76d598bd266@codeaurora.org>
+ <20210505084908.3lynedmblmqagr72@bogus>
+Message-ID: <5cc53032c1f9f4e0170559c006133f47@codeaurora.org>
+X-Sender: sibis@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On 2021-05-05 14:19, Sudeep Holla wrote:
+> Hi Sibi,
+> 
+> On Tue, May 04, 2021 at 11:55:10PM +0530, Sibi Sankar wrote:
+>> Hey Sudeep,
+>> 
+>> Thanks for the review!
+>> 
+>> On 2021-05-04 20:12, Sudeep Holla wrote:
+> 
+> [...]
+> 
+>> >
+>> > NACK, this breaks if there is a mismatch from what is read from the
+>> > hardware and what is presented in this table above. Either add it from the
+>> > some bootloader or other boot code to this table reading from the
+>> > hardware/firmware or find a way to link them without this.
+>> >
+>> > Sorry I had warned long back about this when such links were discussed
+>> > as part of interconnect binding.
+>> 
+>> Not sure why this warrants a NACK, as this was consensus for mapping 
+>> cpu
+>> freq to DDR/L3 bandwidth votes. (We use the same solution on SDM845 
+>> and
+>> SC7180). The opp tables are optional and when specified puts in votes 
+>> for
+>> DDR/L3. In the future the table can be safely dropped when more useful
+>> devfreq governors are upstreamed.
+>> cpufreq: qcom: Don't add frequencies without an OPP
+> 
+> (You can always add commit sha to make it easy to search)
+> 
+> But I am not sure how this is related to the above commit anyways.
+> 
+>> 
+>> I guess your main concern for breakage is ^^ commit? The original 
+>> design is
+>> to list a super set of frequencies supported by all variants of the 
+>> SoC
+>> along with the required DDR/L3 bandwidth values. When we run into
+>> non-documented frequency we just wouldn't put in bw votes for it which
+>> should be fine since the entire opp_table is optional. If this is the 
+>> reason
+>> for the NACK I can try get it reverted with Matthias's ack.
+> 
+> No my main concern is this platform uses "qcom-cpufreq-hw" driver and 
+> the
+> fact that the OPPs are retrieved from the hardware lookup table 
+> invalidates
+> whatever we have in DT. In short it will be junk and becomes obsolete.
 
-On Wed, 5 May 2021 at 11:17, Sankeerth Billakanti
-<sbillaka@codeaurora.org> wrote:
->
-> These patches add support for the next generation eDP driver on SnapDragon
-> with dpu support. The existing eDP driver cannot support the new eDP
-> hardware. So, to maintain backward compatibility, the older eDP driver is
-> moved to v200 folder and the new generation eDP driver is added in
-> the v510 folder.
+The table provides mapping to bandwidths
+which aren't available in the firmware
+though. In short we do have to store the
+mapping somewhere i.e. a mapping that
+lists all possible frequencies to its
+bandwidth requirements needs to be present
+and using a opp table with the interconnect
+bw bindings was the consensus reached.
 
-What exactly does this version correspond to?
-I assume that v510 corresponds to sdmshrike/sc8180x. Is it right?
-Is it really so specific, or just v2/v5 would be enough? Not to
-mention that this is the MDP/ version, while other blocks tend to use
-block-specific versions/ids.
+Given that a duplicate mapping that lists
+all possible frequencies to bw is inevitable
+and Qualcomm has a way of listing all the
+supported frequencies for the SoC, I feel
+that dt breakage in the future should be
+a non-concern. Not sure why you call it
+junk since it solves the perf/power
+requirements on SDM845/SC7180 SoCs. When
+it becomes obsolete it would mean that
+they are better devfreq governors available
+upstream and that's a good reason for the
+opp tables to go away.
 
-Also, how much does it differ from the current DP core supported via
-drivers/gpu/drm/msm/dp ?
+> So what I suggested before is still valid. You simply can't have static
+> OPP tables in the DT for this platform. Do get some boot code to fetch 
+> the
+> same from the h/w LUT and patch to the DT or figure out any other way 
+> to
+> manage dynamically.
 
-First two patches did not make it to the linux-msm, so I can not
-comment on each of the lines.
-However just my few cents (other reviewers might disagree though):
+moving the logic to boot loader doesn't
+magically fix your concerns though (since
+it would also need a superset of available
+frequencies). It will suffer from the same
+problems with an additional dependency on
+firmware propagation in case of breakages
+which is something you can avoid for the
+simple cpu based scaling solution.
 
-- I see little benefit in renaming the folders just for the sake of
-renaming. You can put your code in drivers/gpu/drm/msm/edp-v510, if
-you really insist on that. Note that for all other (even incompatible)
-hardware types we still use single level of folders.
+> 
+> So NACK still stands for static addition of OPPs to the DT as in this 
+> patch.
 
-- Also I see that significant parts of code (e.g. AUX, bridge,
-connector, maybe more) are just c&p of old edp code pieces. Please
-share the code instead of duplicating it.
+I'll let Viresh take the call since this
+solution is already used on older SoCs.
 
-- Please consider updating register definitions in xml form and then
-providing both changed xml files (to mesa project (?)) and generated
-headers into the kernel.
-
-- Please consider using clk_bulk_* functions instead of using
-dss_module_power. I'm going to send a patchset reworking current users
-to use the generic clk_bulk_* function family.
-
-- In generic, this eDP clock handling seems to match closely DP clocks
-handling (with all the name comparison, etc). Consider moving this to
-a generic piece of code
-
-- PHY seems to be a version of QMP PHY. Please use it, like it was
-done for the DP itself. There is support for combined USB+DP PHYs
-(both v3 and v4), so it should be possible to extend that for eDP.
-
-
-> These are baseline changes with which we can enable display. The new eDP
-> controller can also support additional features such as backlight control,
-> PSR etc. which will be enabled in subsequent patch series.
->
-> Summary of changes:
-> DPU driver interface to the new eDP v510 display driver.
-> New generation eDP controller and phy driver implementation.
-> A common interface to choose enable the required eDP driver.
->
-> Sankeerth Billakanti (3):
->   drm/msm/edp: support multiple generations of edp hardware
->   drm/msm/edp: add support for next gen edp
->   drm/msm/disp/dpu1: add support for edp encoder
->
->  drivers/gpu/drm/msm/Makefile                      |   19 +-
->  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c       |    7 +-
->  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c           |   33 +
->  drivers/gpu/drm/msm/edp/edp.c                     |  198 ---
->  drivers/gpu/drm/msm/edp/edp.h                     |   78 -
->  drivers/gpu/drm/msm/edp/edp.xml.h                 |  380 -----
->  drivers/gpu/drm/msm/edp/edp_aux.c                 |  264 ----
->  drivers/gpu/drm/msm/edp/edp_bridge.c              |  111 --
->  drivers/gpu/drm/msm/edp/edp_common.c              |   38 +
->  drivers/gpu/drm/msm/edp/edp_common.h              |   47 +
->  drivers/gpu/drm/msm/edp/edp_connector.c           |  132 --
->  drivers/gpu/drm/msm/edp/edp_ctrl.c                | 1375 ------------------
->  drivers/gpu/drm/msm/edp/edp_phy.c                 |   98 --
->  drivers/gpu/drm/msm/edp/v200/edp.xml.h            |  380 +++++
->  drivers/gpu/drm/msm/edp/v200/edp_v200.c           |  210 +++
->  drivers/gpu/drm/msm/edp/v200/edp_v200.h           |   70 +
->  drivers/gpu/drm/msm/edp/v200/edp_v200_aux.c       |  264 ++++
->  drivers/gpu/drm/msm/edp/v200/edp_v200_bridge.c    |  111 ++
->  drivers/gpu/drm/msm/edp/v200/edp_v200_connector.c |  132 ++
->  drivers/gpu/drm/msm/edp/v200/edp_v200_ctrl.c      | 1375 ++++++++++++++++++
->  drivers/gpu/drm/msm/edp/v200/edp_v200_phy.c       |   98 ++
->  drivers/gpu/drm/msm/edp/v510/edp_v510.c           |  220 +++
->  drivers/gpu/drm/msm/edp/v510/edp_v510.h           |  151 ++
->  drivers/gpu/drm/msm/edp/v510/edp_v510_aux.c       |  268 ++++
->  drivers/gpu/drm/msm/edp/v510/edp_v510_bridge.c    |  111 ++
->  drivers/gpu/drm/msm/edp/v510/edp_v510_connector.c |  117 ++
->  drivers/gpu/drm/msm/edp/v510/edp_v510_ctrl.c      | 1583 +++++++++++++++++++++
->  drivers/gpu/drm/msm/edp/v510/edp_v510_phy.c       |  641 +++++++++
->  drivers/gpu/drm/msm/edp/v510/edp_v510_reg.h       |  339 +++++
->  29 files changed, 6207 insertions(+), 2643 deletions(-)
->  delete mode 100644 drivers/gpu/drm/msm/edp/edp.c
->  delete mode 100644 drivers/gpu/drm/msm/edp/edp.h
->  delete mode 100644 drivers/gpu/drm/msm/edp/edp.xml.h
->  delete mode 100644 drivers/gpu/drm/msm/edp/edp_aux.c
->  delete mode 100644 drivers/gpu/drm/msm/edp/edp_bridge.c
->  create mode 100644 drivers/gpu/drm/msm/edp/edp_common.c
->  create mode 100644 drivers/gpu/drm/msm/edp/edp_common.h
->  delete mode 100644 drivers/gpu/drm/msm/edp/edp_connector.c
->  delete mode 100644 drivers/gpu/drm/msm/edp/edp_ctrl.c
->  delete mode 100644 drivers/gpu/drm/msm/edp/edp_phy.c
->  create mode 100644 drivers/gpu/drm/msm/edp/v200/edp.xml.h
->  create mode 100644 drivers/gpu/drm/msm/edp/v200/edp_v200.c
->  create mode 100644 drivers/gpu/drm/msm/edp/v200/edp_v200.h
->  create mode 100644 drivers/gpu/drm/msm/edp/v200/edp_v200_aux.c
->  create mode 100644 drivers/gpu/drm/msm/edp/v200/edp_v200_bridge.c
->  create mode 100644 drivers/gpu/drm/msm/edp/v200/edp_v200_connector.c
->  create mode 100644 drivers/gpu/drm/msm/edp/v200/edp_v200_ctrl.c
->  create mode 100644 drivers/gpu/drm/msm/edp/v200/edp_v200_phy.c
->  create mode 100644 drivers/gpu/drm/msm/edp/v510/edp_v510.c
->  create mode 100644 drivers/gpu/drm/msm/edp/v510/edp_v510.h
->  create mode 100644 drivers/gpu/drm/msm/edp/v510/edp_v510_aux.c
->  create mode 100644 drivers/gpu/drm/msm/edp/v510/edp_v510_bridge.c
->  create mode 100644 drivers/gpu/drm/msm/edp/v510/edp_v510_connector.c
->  create mode 100644 drivers/gpu/drm/msm/edp/v510/edp_v510_ctrl.c
->  create mode 100644 drivers/gpu/drm/msm/edp/v510/edp_v510_phy.c
->  create mode 100644 drivers/gpu/drm/msm/edp/v510/edp_v510_reg.h
->
+> 
 > --
-> The Qualcomm Innovatin Center, Inc. is a member of the Code Aurora Forum, a Linux Foundation Collaborative Project
->
+> Regards,
+> Sudeep
 
-
---
-With best wishes
-Dmitry
+-- 
+Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project.
