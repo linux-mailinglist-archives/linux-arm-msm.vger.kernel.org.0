@@ -2,112 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7A4C5373E15
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 May 2021 17:04:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 172903746D8
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 May 2021 19:53:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232327AbhEEPFn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 May 2021 11:05:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46032 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232314AbhEEPFm (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 May 2021 11:05:42 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8FB4C061574
-        for <linux-arm-msm@vger.kernel.org>; Wed,  5 May 2021 08:04:45 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id d4so2209989wru.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 05 May 2021 08:04:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=2Gi74r6bWKra3O9s/pxea0QXB4uKnGjkF4C2eurOB6E=;
-        b=nLiMdnzMk+BC7w/NuLCs1qwRWMroUT6TmMNPUVWnC9KL/r2d5Qk/byRPuOaJ7jZJZs
-         VgBpYoWYBneNdYZ6PY+a4m6ELV0ZpDnLOqDoRVymyealRnAXEHeKiTFXsBrOFksMXe/P
-         MOb4AOB77V6rFX4XkbZs2J+bQ7wX4PBndAIGfuFjHfBnhdIQhnrmQi0MLJ8S63oOwPTW
-         vAAZVAA0HeqP59+dlluj903vCeKMBeR8wsseHrVSZcO+FxYQWVvzYHrYqJfvVth5enW1
-         LbgkQv9p8L1exSd7nprCV6VJ+UheC4PeTH195X7DUiwzIZNUcxeKFWcLc4hAWyyT3EJh
-         fggA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=2Gi74r6bWKra3O9s/pxea0QXB4uKnGjkF4C2eurOB6E=;
-        b=kqAe7wkb4y7I0BcgryXkD+I77xcn7o5i8KVrmtrl8qJvNO9XJKcIriWg2JlzpqPk0i
-         D6FzrWFTh5nXU0XirtBxJfLZwzYQ993wg7iq4P50Vc31xTieBUEh2lnuSEQiEl1dHRef
-         VpZAqZU1Fwazm1kKCPu5AbQT3D85GFJ2y5E/OMs8J8sAR7z29WPAhBc0DxdQ/0pum6KF
-         c1FPt+dUfmhpiGXVBrY/fF89XkIMGpw0jMZTx40z4eFPrNYZv3QvGgSNsjpY77sOGu61
-         BSwMoUQ1w+4/K6Ktw2QYYD1bbcq37B1kgSdKG0BH/0Dqs/Gj1kDe58oBoja9Owv9ezam
-         6k8A==
-X-Gm-Message-State: AOAM5328bbvbho5PHfmLMWsTI4nWlJnSv8PPxPoUGeABwQwEMeslCqiK
-        1K4+82goySenx5hYx53GNBCTm8+kEiwQ7OCNZug=
-X-Google-Smtp-Source: ABdhPJzxdy+BRtggiZ65xQfdf0Xjz5Pml6ymKZSSgYvYNYJ73wVY2GQ6RFW8wj0zD/FoJW6vHG/Ev8STeG7i4JNnO3U=
-X-Received: by 2002:adf:f74d:: with SMTP id z13mr39054140wrp.147.1620227084462;
- Wed, 05 May 2021 08:04:44 -0700 (PDT)
-MIME-Version: 1.0
-References: <CALAqxLXsLcA=r1x6hXxLx3aVA-8=RG5qd+yj+sKEFiaWPUzkSA@mail.gmail.com>
-In-Reply-To: <CALAqxLXsLcA=r1x6hXxLx3aVA-8=RG5qd+yj+sKEFiaWPUzkSA@mail.gmail.com>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Wed, 5 May 2021 08:08:17 -0700
-Message-ID: <CAF6AEGt5AZ4jPO5=qUy-JhDCj1D5oD9nboNDDiJFnFDmWWvOaA@mail.gmail.com>
-Subject: Re: Regression: arm64: dts: sdm845-db845c: make firmware filenames
- follow linux-firmware
-To:     John Stultz <john.stultz@linaro.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Vinod Koul <vinod.koul@linaro.org>,
-        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
-        Amit Pundir <amit.pundir@linaro.org>,
-        YongQin Liu <yongqin.liu@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        id S238003AbhEER25 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 May 2021 13:28:57 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:62228 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S238866AbhEERKC (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 5 May 2021 13:10:02 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1620234545; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=zJ3n4e38JIW/W6C47Rp2eE60Ip/I/8mMnIajfX9QwqY=; b=Cym6D+8Xs8+JmoUAlSIh8Cqjb7ypOUUa75aPUOLRffBYU+XN7C5nWndO3YWBVNLThlvuC/WM
+ m0QcHoU6KH8bMYl4pTgZNZShAhQV0iXedTYGcamXbZmx8vLvNkGgyJ/GRdn1lSe3itJIM1Si
+ 4b4uNFn/FWGjPWfr4vi1bX6yT0o=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
+ 6092d11ac39407c327c2f915 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 05 May 2021 17:08:42
+ GMT
+Sender: bbhatt=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 8A187C43144; Wed,  5 May 2021 17:08:41 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from malabar-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: bbhatt)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 840C2C433D3;
+        Wed,  5 May 2021 17:08:40 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 840C2C433D3
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=bbhatt@codeaurora.org
+From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
+To:     manivannan.sadhasivam@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
+        jhugo@codeaurora.org, linux-kernel@vger.kernel.org,
+        loic.poulain@linaro.org, linux-wireless@vger.kernel.org,
+        kvalo@codeaurora.org, ath11k@lists.infradead.org,
+        Bhaumik Bhatt <bbhatt@codeaurora.org>
+Subject: [PATCH v3 0/6] BHI/BHIe improvements for MHI power purposes
+Date:   Wed,  5 May 2021 10:08:15 -0700
+Message-Id: <1620234501-30461-1-git-send-email-bbhatt@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, May 4, 2021 at 11:37 PM John Stultz <john.stultz@linaro.org> wrote:
->
-> Hey Dmitry, Bjorn,
->   I wanted to raise a regression I caught in the merge window on db845c.
->
-> I was seeing troubles with audio and while there are a few other
-> pending fixes needed, they did not seem to work for me. So I spent
-> some time bisecting things down and found the problematic commit was
-> 7443ff06da45 ("arm64: dts: sdm845-db845c: make firmware filenames
-> follow linux-firmware").
->
-> It seems for systems using the old firmware filenames, this will break
-> dependent devices on adsp_pas and cdsp_pas nodes.
->
-> Now, obviously updating the firmware files in userland should resolve
-> this, but it adds the complexity that we can't just replace the
-> firmware files because older LTS kernels will look for the old names,
-> while newer kernels will look for the new names. We can add both files
-> to the system images, but then there is some confusion on which
-> version of the firmware files are being used where.
->
-> So yes, we should align with linux-firmware file names, but I think
-> more care is needed for this sort of thing as it has the potential to
-> break folks, and this isn't the first time around we've had similar
-> firmware name changes break us.
->
-> So I'm working on fixing this by including both filenames in userland,
-> so we probably don't need a revert here, but *please* maybe take more
-> care on this sort of change.
->
+This patch series improves the power up behavior by allowing MHI host driver to
+set BHI and/or BHIe offsets early on in the preparation phase and fail pre-power
+up if offsets are not found or not within a limited MMIO region. This also
+allows MHI host to clean up the offsets in the unprepare after power down phase.
 
-It is rather more difficult than you think, because if you try the
-wrong path you could end up waiting with a timeout.. we have
-shenanigans to work around that for gpu fw in drm/msm to avoid this
-sort of regression with people using downstream firmware trees.  I'd
-like to rip that out at some point, but I suppose doing so would be
-problematic for folks doing upstream kernel on android devices.
+Going forward, controllers will be required to specify a reg_len field which
+will be used to check whether the BHI/BHIe offsets are in range or not.
 
-Maybe there is some way to add support to simultaneously
-request_firmware for two different paths at the same time.. not sure
-how that would work from the PoV of the usermode helper path.
+This series has been tested on X86_64 architecture with the PCI generic driver
+as controller and an SDX55 device.
 
-It really is a lot of pain to deal with downstream firmware layout..
+v3:
+-Added reviewed-by tags
+-Updated order of reg_len in mhi_controller structure documentation
 
-BR,
--R
+v2:
+-Added reviewed-by tags
+-Moved reg_len entry in mhi_controller structure to allow for a packed struct
+
+Bhaumik Bhatt (6):
+  bus: mhi: core: Set BHI/BHIe offsets on power up preparation
+  bus: mhi: core: Set BHI and BHIe pointers to NULL in clean-up
+  bus: mhi: Add MMIO region length to controller structure
+  ath11k: set register access length for MHI driver
+  bus: mhi: pci_generic: Set register access length for MHI driver
+  bus: mhi: core: Add range checks for BHI and BHIe
+
+ drivers/bus/mhi/core/init.c           | 58 +++++++++++++++++++++++------------
+ drivers/bus/mhi/core/pm.c             | 28 +++--------------
+ drivers/bus/mhi/pci_generic.c         |  1 +
+ drivers/net/wireless/ath/ath11k/mhi.c |  1 +
+ include/linux/mhi.h                   |  2 ++
+ 5 files changed, 47 insertions(+), 43 deletions(-)
+
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
