@@ -2,118 +2,308 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B53783732D1
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 May 2021 01:38:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 716CD37339A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 May 2021 03:38:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231637AbhEDXjN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 May 2021 19:39:13 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:31310 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231535AbhEDXjG (ORCPT
+        id S232119AbhEEBjD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 May 2021 21:39:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37684 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232095AbhEEBjD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 May 2021 19:39:06 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1620171490; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=2NJ2FCJ5eygsO7NmVQKBkrCnohRdJRzGE0EKHDhDgYA=; b=ZxWclR2c+o4w/lAGBNehqK7keFDIuUC0OUgS+iJhpadUCg2sO6ytr6CbBvn7qOcxGrM5iVTl
- MY089dWCtN7Fox0YH1pWPO7Jl1ja4bsj070gb2gKifqNBS1MzDOQZo9LiHuIUn/+ooXXJJVI
- IKBmQrfa/i63jRxPQl7HZntiHJs=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
- 6091dae2f34440a9d4e2d120 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 04 May 2021 23:38:10
- GMT
-Sender: bbhatt=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 75AC6C4338A; Tue,  4 May 2021 23:38:10 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
-Received: from malabar-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: bbhatt)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 89D26C43217;
-        Tue,  4 May 2021 23:38:09 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 89D26C43217
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=bbhatt@codeaurora.org
-From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
-To:     manivannan.sadhasivam@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
-        jhugo@codeaurora.org, linux-kernel@vger.kernel.org,
-        loic.poulain@linaro.org, linux-wireless@vger.kernel.org,
-        kvalo@codeaurora.org, ath11k@lists.infradead.org,
-        Bhaumik Bhatt <bbhatt@codeaurora.org>
-Subject: [PATCH v2 6/6] bus: mhi: core: Add range checks for BHI and BHIe
-Date:   Tue,  4 May 2021 16:37:58 -0700
-Message-Id: <1620171478-35679-7-git-send-email-bbhatt@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1620171478-35679-1-git-send-email-bbhatt@codeaurora.org>
-References: <1620171478-35679-1-git-send-email-bbhatt@codeaurora.org>
+        Tue, 4 May 2021 21:39:03 -0400
+Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D5BFC061761
+        for <linux-arm-msm@vger.kernel.org>; Tue,  4 May 2021 18:38:07 -0700 (PDT)
+Received: by mail-ot1-x32d.google.com with SMTP id b5-20020a9d5d050000b02902a5883b0f4bso375968oti.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 May 2021 18:38:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=lX6vTVdP28sAUcsZAx6P7d8fEnuW4SnnYR6kFB2r4Dk=;
+        b=PziAM8UzWWk2O/fAzTSdFRXR7VcbJ09nbjUox6Gj//Qu/D9P8KlV8l6Au+ElQtRw6X
+         8T8bE2mwD02yOI1opc3c1rt4s5Ex9Iad+xA8TfnCoKIdoe/LnfsTFq+5m5hVVkxJGjxk
+         LTm7cuzIh7Xb0zG00C464iaHUBYkOtxO/4ces=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=lX6vTVdP28sAUcsZAx6P7d8fEnuW4SnnYR6kFB2r4Dk=;
+        b=Bvi3fB8CuAMhypK1A6k1Abhj/DJobql1es0yomOEmBviicaWbPhUUx7eF9VU6BMWJu
+         IkJZNuoItYIz4gc57aOJ273UoetvRf+aOBk1V66Q9sJXpFjDBpjPMBFEsQT8VLZlf5Qm
+         tO0ILVtmLYwPCeCLnAC4yPBZODhlFG+9PD3LkJM3UalwHkbwog5KrmwHZiq2Ae8UvM4+
+         EK+s4IZKmpTijnW2xK5k42tV5h8T64C06XAQ1FNTGlXkKPka4JFh4hg8dosNSM24igOi
+         yDeCAmzdDux34/qFKhG8+PgG07vcinJEq1c2fnDGR0KSG/JC/Lgh8vjncbWvE3yNPBR9
+         NO/g==
+X-Gm-Message-State: AOAM533xLPM/k8iwropV6RnhdbKad9iXT4QdYxHy7WoRqg1z8sv6JWfx
+        CCT4BlK+/f+9EeZav0mUP4tMwXvS+B1bdk0W4teH8w==
+X-Google-Smtp-Source: ABdhPJzro2JKCy5vcnXa+onhPlmyRkPLgrndLJM9Va0ydjoM12Zj8/ZTtsjIG2ChK4qCSQ+1i5lO2Rxulpu23l1dX20=
+X-Received: by 2002:a9d:1ea9:: with SMTP id n38mr22439486otn.233.1620178686562;
+ Tue, 04 May 2021 18:38:06 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 4 May 2021 21:38:05 -0400
+MIME-Version: 1.0
+In-Reply-To: <20210420111355.18462-1-rojay@codeaurora.org>
+References: <20210420111355.18462-1-rojay@codeaurora.org>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.9.1
+Date:   Tue, 4 May 2021 21:38:05 -0400
+Message-ID: <CAE-0n51iyNgVW4Vra2C_4FAqQECU-aqAHLWZ+kB2Xv3i-inxiQ@mail.gmail.com>
+Subject: Re: [PATCH V9] i2c: i2c-qcom-geni: Add shutdown callback for i2c
+To:     Roja Rani Yarubandi <rojay@codeaurora.org>, wsa@kernel.org
+Cc:     dianders@chromium.org, saiprakash.ranjan@codeaurora.org,
+        gregkh@linuxfoundation.org, mka@chromium.org,
+        skananth@codeaurora.org, msavaliy@qti.qualcomm.com,
+        skakit@codeaurora.org, rnayak@codeaurora.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org,
+        sumit.semwal@linaro.org, linux-media@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-When obtaining the BHI or BHIe offsets during the power up
-preparation phase, range checks are missing. These can help
-controller drivers avoid accessing any address outside of the
-MMIO region. Ensure that mhi_cntrl->reg_len is set before MHI
-registration as it is a required field and range checks will
-fail without it.
+Quoting Roja Rani Yarubandi (2021-04-20 04:13:55)
+> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
+> index 214b4c913a13..8ae17ccad99e 100644
+> --- a/drivers/i2c/busses/i2c-qcom-geni.c
+> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
+> @@ -71,6 +71,8 @@ enum geni_i2c_err_code {
+>  #define ABORT_TIMEOUT          HZ
+>  #define XFER_TIMEOUT           HZ
+>  #define RST_TIMEOUT            HZ
+> +#define ABORT_XFER             0
+> +#define STOP_AND_ABORT_XFER    1
 
-Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
-Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
----
- drivers/bus/mhi/core/init.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+These should be an enum.
 
-diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
-index 1cc2f22..86ad06e 100644
---- a/drivers/bus/mhi/core/init.c
-+++ b/drivers/bus/mhi/core/init.c
-@@ -885,7 +885,8 @@ int mhi_register_controller(struct mhi_controller *mhi_cntrl,
- 	if (!mhi_cntrl || !mhi_cntrl->cntrl_dev || !mhi_cntrl->regs ||
- 	    !mhi_cntrl->runtime_get || !mhi_cntrl->runtime_put ||
- 	    !mhi_cntrl->status_cb || !mhi_cntrl->read_reg ||
--	    !mhi_cntrl->write_reg || !mhi_cntrl->nr_irqs || !mhi_cntrl->irq)
-+	    !mhi_cntrl->write_reg || !mhi_cntrl->nr_irqs ||
-+	    !mhi_cntrl->irq || !mhi_cntrl->reg_len)
- 		return -EINVAL;
- 
- 	ret = parse_config(mhi_cntrl, config);
-@@ -1077,6 +1078,12 @@ int mhi_prepare_for_power_up(struct mhi_controller *mhi_cntrl)
- 		dev_err(dev, "Error getting BHI offset\n");
- 		goto error_reg_offset;
- 	}
-+
-+	if (bhi_off >= mhi_cntrl->reg_len) {
-+		dev_err(dev, "BHI offset is out of range\n");
-+		ret = -EINVAL;
-+		goto error_reg_offset;
-+	}
- 	mhi_cntrl->bhi = mhi_cntrl->regs + bhi_off;
- 
- 	if (mhi_cntrl->fbc_download || mhi_cntrl->rddm_size) {
-@@ -1086,6 +1093,12 @@ int mhi_prepare_for_power_up(struct mhi_controller *mhi_cntrl)
- 			dev_err(dev, "Error getting BHIE offset\n");
- 			goto error_reg_offset;
- 		}
-+
-+		if (bhie_off >= mhi_cntrl->reg_len) {
-+			dev_err(dev, "BHIe offset is out of range\n");
-+			ret = -EINVAL;
-+			goto error_reg_offset;
-+		}
- 		mhi_cntrl->bhie = mhi_cntrl->regs + bhie_off;
- 	}
- 
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+>
+>  struct geni_i2c_dev {
+>         struct geni_se se;
+> @@ -89,6 +91,7 @@ struct geni_i2c_dev {
+>         void *dma_buf;
+>         size_t xfer_len;
+>         dma_addr_t dma_addr;
+> +       bool stop_xfer;
+>  };
+>
+>  struct geni_i2c_err_log {
+> @@ -215,6 +218,11 @@ static irqreturn_t geni_i2c_irq(int irq, void *dev)
+>         struct i2c_msg *cur;
+>
+>         spin_lock(&gi2c->lock);
+> +       if (!gi2c->cur) {
+> +               dev_err(gi2c->se.dev, "Can't process irq, gi2c->cur is NULL\n");
 
+This error message is worthless. The user won't know what to do and then
+we return IRQ_HANDLED? If the device is misbehaving we should return
+IRQ_NONE and shut down the irq storm that will soon be upon us, not
+print an error message and hope for the best.
+
+> +               spin_unlock(&gi2c->lock);
+> +               return IRQ_HANDLED;
+> +       }
+>         m_stat = readl_relaxed(base + SE_GENI_M_IRQ_STATUS);
+>         rx_st = readl_relaxed(base + SE_GENI_RX_FIFO_STATUS);
+>         dm_tx_st = readl_relaxed(base + SE_DMA_TX_IRQ_STAT);
+> @@ -222,8 +230,7 @@ static irqreturn_t geni_i2c_irq(int irq, void *dev)
+>         dma = readl_relaxed(base + SE_GENI_DMA_MODE_EN);
+>         cur = gi2c->cur;
+>
+> -       if (!cur ||
+> -           m_stat & (M_CMD_FAILURE_EN | M_CMD_ABORT_EN) ||
+> +       if (m_stat & (M_CMD_FAILURE_EN | M_CMD_ABORT_EN) ||
+>             dm_rx_st & (DM_I2C_CB_ERR)) {
+>                 if (m_stat & M_GP_IRQ_1_EN)
+>                         geni_i2c_err(gi2c, NACK);
+> @@ -301,17 +308,19 @@ static irqreturn_t geni_i2c_irq(int irq, void *dev)
+>         return IRQ_HANDLED;
+>  }
+>
+> -static void geni_i2c_abort_xfer(struct geni_i2c_dev *gi2c)
+> +static void geni_i2c_abort_xfer(struct geni_i2c_dev *gi2c, bool is_stop_xfer)
+
+The bool should be an enum, but a better approach would be to have a
+locked and unlocked version of this function.
+
+>  {
+>         u32 val;
+>         unsigned long time_left = ABORT_TIMEOUT;
+>         unsigned long flags;
+>
+> -       spin_lock_irqsave(&gi2c->lock, flags);
+> +       if (!is_stop_xfer)
+> +               spin_lock_irqsave(&gi2c->lock, flags);
+>         geni_i2c_err(gi2c, GENI_TIMEOUT);
+>         gi2c->cur = NULL;
+>         geni_se_abort_m_cmd(&gi2c->se);
+> -       spin_unlock_irqrestore(&gi2c->lock, flags);
+> +       if (!is_stop_xfer)
+> +               spin_unlock_irqrestore(&gi2c->lock, flags);
+
+Please no conditional locking. It's too hard to reason about.
+
+>         do {
+>                 time_left = wait_for_completion_timeout(&gi2c->done, time_left);
+>                 val = readl_relaxed(gi2c->se.base + SE_GENI_M_IRQ_STATUS);
+> @@ -375,6 +384,38 @@ static void geni_i2c_tx_msg_cleanup(struct geni_i2c_dev *gi2c,
+>         }
+>  }
+>
+> +static void geni_i2c_stop_xfer(struct geni_i2c_dev *gi2c)
+> +{
+> +       int ret;
+> +       u32 geni_status;
+> +       struct i2c_msg *cur;
+> +       unsigned long flags;
+> +
+> +       /* Resume device, as runtime suspend can happen anytime during transfer */
+
+This comment doesn't make any sense. Hopefully a suspend can't happen
+during a transfer, but only before or after a transfer. Otherwise, the
+transfer code is broken and isn't properly keeping the device runtime
+resumed during the transfer.
+
+> +       ret = pm_runtime_get_sync(gi2c->se.dev);
+> +       if (ret < 0) {
+> +               dev_err(gi2c->se.dev, "Failed to resume device: %d\n", ret);
+> +               return;
+> +       }
+> +
+> +       spin_lock_irqsave(&gi2c->lock, flags);
+> +       gi2c->stop_xfer = 1;
+> +       geni_status = readl_relaxed(gi2c->se.base + SE_GENI_STATUS);
+> +       if (geni_status & M_GENI_CMD_ACTIVE) {
+> +               cur = gi2c->cur;
+> +               geni_i2c_abort_xfer(gi2c, STOP_AND_ABORT_XFER);
+> +               spin_unlock_irqrestore(&gi2c->lock, flags);
+> +               if (cur->flags & I2C_M_RD)
+> +                       geni_i2c_rx_msg_cleanup(gi2c, cur);
+> +               else
+> +                       geni_i2c_tx_msg_cleanup(gi2c, cur);
+> +       } else {
+> +               spin_unlock_irqrestore(&gi2c->lock, flags);
+> +       }
+
+Please unlock outside of an if condition. A local variable can be used
+outside of the unlock, but then the code is easier to follow
+
+	spin_lock_irqsave(&gi2c->lock, flags);
+	if (geni_status & M_GENI_CMD_ACTIVE) {
+		cur = gic2->cur;
+		geni_i2c_abort_xfer(....);
+	}
+	spin_unlock_irqrestore(gi2c->lock, flags);
+
+	if (cur) {
+		if (cur->flags & I2C_M_RD)
+			...
+		else
+			...
+	}
+
+And then I don't really know if grabbing 'cur' out of the struct and
+then messing with it outside the lock is correct.
+
+> +
+> +       pm_runtime_put_sync_suspend(gi2c->se.dev);
+> +}
+> +
+>  static int geni_i2c_rx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
+>                                 u32 m_param)
+>  {
+> @@ -407,7 +448,7 @@ static int geni_i2c_rx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
+>         cur = gi2c->cur;
+>         time_left = wait_for_completion_timeout(&gi2c->done, XFER_TIMEOUT);
+>         if (!time_left)
+> -               geni_i2c_abort_xfer(gi2c);
+> +               geni_i2c_abort_xfer(gi2c, ABORT_XFER);
+
+So this would say geni_i2c_abort_xfer() but the one above would say
+geni_i2c_abort_xfer_locked() because the lock is already held.
+
+>
+>         geni_i2c_rx_msg_cleanup(gi2c, cur);
+>
+> @@ -449,7 +490,7 @@ static int geni_i2c_tx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
+>         cur = gi2c->cur;
+>         time_left = wait_for_completion_timeout(&gi2c->done, XFER_TIMEOUT);
+>         if (!time_left)
+> -               geni_i2c_abort_xfer(gi2c);
+> +               geni_i2c_abort_xfer(gi2c, ABORT_XFER);
+>
+>         geni_i2c_tx_msg_cleanup(gi2c, cur);
+>
+> @@ -462,6 +503,7 @@ static int geni_i2c_xfer(struct i2c_adapter *adap,
+>  {
+>         struct geni_i2c_dev *gi2c = i2c_get_adapdata(adap);
+>         int i, ret;
+> +       unsigned long flags;
+>
+>         gi2c->err = 0;
+>         reinit_completion(&gi2c->done);
+> @@ -480,7 +522,13 @@ static int geni_i2c_xfer(struct i2c_adapter *adap,
+>
+>                 m_param |= ((msgs[i].addr << SLV_ADDR_SHFT) & SLV_ADDR_MSK);
+>
+> +               spin_lock_irqsave(&gi2c->lock, flags);
+> +               if (gi2c->stop_xfer) {
+> +                       spin_unlock_irqrestore(&gi2c->lock, flags);
+> +                       break;
+> +               }
+>                 gi2c->cur = &msgs[i];
+> +               spin_unlock_irqrestore(&gi2c->lock, flags);
+
+Is this to jump into the transfer real fast and break out if we're in
+the middle of a transfer?
+
+>                 if (msgs[i].flags & I2C_M_RD)
+>                         ret = geni_i2c_rx_one_msg(gi2c, &msgs[i], m_param);
+>                 else
+> @@ -624,6 +672,7 @@ static int geni_i2c_probe(struct platform_device *pdev)
+>         dev_dbg(dev, "i2c fifo/se-dma mode. fifo depth:%d\n", tx_depth);
+>
+>         gi2c->suspended = 1;
+> +       gi2c->stop_xfer = 0;
+>         pm_runtime_set_suspended(gi2c->se.dev);
+>         pm_runtime_set_autosuspend_delay(gi2c->se.dev, I2C_AUTO_SUSPEND_DELAY);
+>         pm_runtime_use_autosuspend(gi2c->se.dev);
+> @@ -650,6 +699,13 @@ static int geni_i2c_remove(struct platform_device *pdev)
+>         return 0;
+>  }
+>
+> +static void  geni_i2c_shutdown(struct platform_device *pdev)
+> +{
+> +       struct geni_i2c_dev *gi2c = platform_get_drvdata(pdev);
+> +
+> +       geni_i2c_stop_xfer(gi2c);
+
+It would read better as
+
+	geni_i2c_plug_xfer(gi2c);
+
+or
+
+	geni_i2c_flush_and_teardown(gi2c);
+
+or
+
+	geni_i2c_teardown_tx_rx(gi2c);
+
+Something that says we're waiting for any transfer to complete, and then
+plugging the queue and removing the i2c bus entirely.
+
+In fact, where is that code? I'd expect to see i2c_del_adapter() in here
+so we know the adapter can't accept transfers anymore. Maybe
+i2c_del_adapter() could be called, and then there's nothing to do after
+that? This whole patch is trying to rip the adapter out from under the
+i2c core framework, when we should take the opposite approach and remove
+it from the core framework so that it can't transfer anything anymore
+and thus the IOMMU can remove the mapping.
+
+> +}
+> +
+>  static int __maybe_unused geni_i2c_runtime_suspend(struct device *dev)
+>  {
+>         int ret;
