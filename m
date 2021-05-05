@@ -2,94 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4151E373699
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 May 2021 10:49:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 103CE3736EF
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 May 2021 11:18:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232153AbhEEIuP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 May 2021 04:50:15 -0400
-Received: from foss.arm.com ([217.140.110.172]:40612 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231430AbhEEIuO (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 May 2021 04:50:14 -0400
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 6B7F2D6E;
-        Wed,  5 May 2021 01:49:18 -0700 (PDT)
-Received: from bogus (unknown [10.57.61.118])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 74E243F70D;
-        Wed,  5 May 2021 01:49:16 -0700 (PDT)
-Date:   Wed, 5 May 2021 09:49:08 +0100
-From:   Sudeep Holla <sudeep.holla@arm.com>
-To:     Sibi Sankar <sibis@codeaurora.org>
-Cc:     bjorn.andersson@linaro.org, viresh.kumar@linaro.org,
-        Sudeep Holla <sudeep.holla@arm.com>, swboyd@chromium.org,
-        agross@kernel.org, robh+dt@kernel.org, rjw@rjwysocki.net,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-        dianders@chromium.org, mka@chromium.org
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: sc7280: Add cpu OPP tables
-Message-ID: <20210505084908.3lynedmblmqagr72@bogus>
-References: <1619792901-32701-1-git-send-email-sibis@codeaurora.org>
- <1619792901-32701-3-git-send-email-sibis@codeaurora.org>
- <20210504144215.svmrmmsy4jtoixzv@bogus>
- <1fc9fb8d9a94909ff9b7b76d598bd266@codeaurora.org>
+        id S232036AbhEEJTl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 May 2021 05:19:41 -0400
+Received: from guitar.tcltek.co.il ([192.115.133.116]:52449 "EHLO
+        mx.tkos.co.il" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232184AbhEEJTl (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 5 May 2021 05:19:41 -0400
+Received: from tarshish.tkos.co.il (unknown [10.0.8.4])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mx.tkos.co.il (Postfix) with ESMTPS id EC4B74407F0;
+        Wed,  5 May 2021 12:18:35 +0300 (IDT)
+From:   Baruch Siach <baruch@tkos.co.il>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Baruch Siach <baruch@tkos.co.il>,
+        Selvam Sathappan Periakaruppan <speriaka@codeaurora.org>,
+        Kathiravan T <kathirav@codeaurora.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Robert Marko <robert.marko@sartura.hr>,
+        devicetree@vger.kernel.org, linux-phy@lists.infradead.org,
+        linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-tegra@vger.kernel.org
+Subject: [PATCH v2 0/6] arm64: IPQ6018 PCIe support
+Date:   Wed,  5 May 2021 12:18:28 +0300
+Message-Id: <cover.1620203062.git.baruch@tkos.co.il>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1fc9fb8d9a94909ff9b7b76d598bd266@codeaurora.org>
-User-Agent: NeoMutt/20171215
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Sibi,
+This series adds support for the single PCIe lane on IPQ6018 SoCs. The code is 
+ported from downstream Codeaurora v5.4 kernel. The main difference from 
+downstream code is the split of PCIe registers configuration from .init to 
+.post_init, since it requires phy_power_on().
 
-On Tue, May 04, 2021 at 11:55:10PM +0530, Sibi Sankar wrote:
-> Hey Sudeep,
->
-> Thanks for the review!
->
-> On 2021-05-04 20:12, Sudeep Holla wrote:
+Tested on IPQ6010 based hardware.
 
-[...]
+Changes in v2:
 
-> >
-> > NACK, this breaks if there is a mismatch from what is read from the
-> > hardware and what is presented in this table above. Either add it from the
-> > some bootloader or other boot code to this table reading from the
-> > hardware/firmware or find a way to link them without this.
-> >
-> > Sorry I had warned long back about this when such links were discussed
-> > as part of interconnect binding.
->
-> Not sure why this warrants a NACK, as this was consensus for mapping cpu
-> freq to DDR/L3 bandwidth votes. (We use the same solution on SDM845 and
-> SC7180). The opp tables are optional and when specified puts in votes for
-> DDR/L3. In the future the table can be safely dropped when more useful
-> devfreq governors are upstreamed.
-> cpufreq: qcom: Don't add frequencies without an OPP
+  * Add patch moving GEN3_RELATED macros to a common header
 
-(You can always add commit sha to make it easy to search)
+  * Drop ATU configuration from pcie-qcom
 
-But I am not sure how this is related to the above commit anyways.
+  * Remove local definition of common registers
 
->
-> I guess your main concern for breakage is ^^ commit? The original design is
-> to list a super set of frequencies supported by all variants of the SoC
-> along with the required DDR/L3 bandwidth values. When we run into
-> non-documented frequency we just wouldn't put in bw votes for it which
-> should be fine since the entire opp_table is optional. If this is the reason
-> for the NACK I can try get it reverted with Matthias's ack.
+  * Use bulk clk and reset APIs
 
-No my main concern is this platform uses "qcom-cpufreq-hw" driver and the
-fact that the OPPs are retrieved from the hardware lookup table invalidates
-whatever we have in DT. In short it will be junk and becomes obsolete.
-So what I suggested before is still valid. You simply can't have static
-OPP tables in the DT for this platform. Do get some boot code to fetch the
-same from the h/w LUT and patch to the DT or figure out any other way to
-manage dynamically.
+  * Remove msi-parent from device-tree
 
-So NACK still stands for static addition of OPPs to the DT as in this patch.
+Baruch Siach (3):
+  PCI: dwc: tegra: move GEN3_RELATED DBI register to common header
+  dt-bindings: phy: qcom,qmp: Add IPQ60xx PCIe PHY bindings
+  dt-bindings: pci: qcom: Document PCIe bindings for IPQ6018 SoC
 
---
-Regards,
-Sudeep
+Selvam Sathappan Periakaruppan (3):
+  PCI: qcom: add support for IPQ60xx PCIe controller
+  phy: qcom-qmp: add QMP V2 PCIe PHY support for ipq60xx
+  arm64: dts: ipq6018: Add pcie support
+
+ .../devicetree/bindings/pci/qcom,pcie.txt     |  24 +++
+ .../devicetree/bindings/phy/qcom,qmp-phy.yaml |  25 +++
+ arch/arm64/boot/dts/qcom/ipq6018.dtsi         |  99 ++++++++++++
+ drivers/pci/controller/dwc/pcie-designware.h  |   7 +
+ drivers/pci/controller/dwc/pcie-qcom.c        | 150 ++++++++++++++++++
+ drivers/pci/controller/dwc/pcie-tegra194.c    |   6 -
+ drivers/phy/qualcomm/phy-qcom-qmp.c           | 147 +++++++++++++++++
+ drivers/phy/qualcomm/phy-qcom-qmp.h           | 132 +++++++++++++++
+ 8 files changed, 584 insertions(+), 6 deletions(-)
+
+-- 
+2.30.2
+
