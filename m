@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4A528374A7F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 May 2021 23:39:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C3043374A84
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 May 2021 23:39:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234484AbhEEVkB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 May 2021 17:40:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49826 "EHLO
+        id S234458AbhEEVkM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 May 2021 17:40:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49858 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234246AbhEEVjy (ORCPT
+        with ESMTP id S234469AbhEEVkB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 May 2021 17:39:54 -0400
-Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 027F7C06138C
-        for <linux-arm-msm@vger.kernel.org>; Wed,  5 May 2021 14:38:57 -0700 (PDT)
-Received: by mail-pj1-x102c.google.com with SMTP id md17so1670282pjb.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 05 May 2021 14:38:56 -0700 (PDT)
+        Wed, 5 May 2021 17:40:01 -0400
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B729FC06138B
+        for <linux-arm-msm@vger.kernel.org>; Wed,  5 May 2021 14:39:03 -0700 (PDT)
+Received: by mail-pj1-x1035.google.com with SMTP id x7-20020a17090a5307b02901589d39576eso820370pjh.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 05 May 2021 14:39:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=EiBQGXYFrfCnZUi3Qrj72wva/FJNobB/Gmt17VjquqY=;
-        b=MWoU747xjoIPLLFuMd9w7vEB7A2x9fDTPO4vH7gdS640PAUoRBjxYrI43DAZXvgfyi
-         NNftfA4WsfW4ch21kfISSrmHuZUsmU7Z9fWVVQWu8Wy0VqRLu11SD5Vgv3tJYLYndAQb
-         k3hvxfX1eZci72giEqdTfhGI2Nsk6EcpKzOAKgBvGi01pb0NlcNIGTyTl5QLrCfoZRuv
-         sYaaT72JeTVA3RBwqdqPYFgWe9wtwCUWNBdKEba5R2badAAId53SkIpdK2Yll4S5TPOr
-         owXBfD1Y/1Sv6QSHYsD7q0ZW4DfmZ7y/JZ/8GRbJpddSKxzFGvHri8EC9gaySeC7vVCA
-         OtzQ==
+        bh=QTs/SEbir+LcEB2TCs+hMhq7sImYAohAveDk3rTOiyw=;
+        b=dmGQrXTwqbRU0YhX8eT/Ex5erqUOL1+ceNi/hWVzGZ5pm6zXm6j41AkvT2l4wXcg2F
+         a4Q5kq4KdcUGN9y7nl20+l2xT57h+f+xE4ZEB3PFSLU4v2PV/fg9zYinl0kYHLweLfTJ
+         WdAw4b8nkdbvaO9WpBXCEQKdDQUfrWELQlKbOeyLRyAyLc6y/+7PMTTPhU7NldrvQ0V1
+         mG6/93fRQVrAKi8rtrRDnn4yK9PjFO9vEC75sCjPSMR8wM3UsO2FWlavpIbAdEFrI6HB
+         BrWNmV0H4O+cJ6J+Q8LYysunkKODrLQuU1EBMpzMhdowQbgAHzXyb6rUVzKjbdL5gBOa
+         7GZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=EiBQGXYFrfCnZUi3Qrj72wva/FJNobB/Gmt17VjquqY=;
-        b=rjOfn5EHIEaC6Cbj/egTp/y2XS4SNFkXyTPeXgXH7UAzVKzors8qYaTpyoJDtNcpNI
-         CHfy1dM6ZJEVwzxfy2YqtmbpqNC0uk4IOPshvwSPhi6XCR9TX9lDL8in9cDEvvFOObZk
-         ZFEk3A5vUn7NiffQSbDZTOJinl4wqON35vACDDTG70X35lU+D9FQ4ltu9J4WpTMjCyhw
-         PLgZA/kvdxQWRvP+TAOo/zlmePAaHYZdqwODvNVwCKVVOHKCKN24S480cLtxH8lXErBq
-         J/xtyErFHnYYwcO98FEd8a0npEB9IACvJu0HnbCoIK6v7bRyUyzqngH+hNOEi1v4HeMx
-         fKXQ==
-X-Gm-Message-State: AOAM5304QE2r04+u6E6dSdS3njKyHX+lmdip/LxHI701j1qI0LJIPe88
-        ReFx46/xy7y1RifAaSxzas/Ush12HYby5A==
-X-Google-Smtp-Source: ABdhPJxd7I2r5weGX9L8Q7n4b1OwKzK7MlzICqi26e47BNvQrhKnDo3cuWTD/D8JUjI9ugvHgAfnUg==
-X-Received: by 2002:a17:90a:3e0f:: with SMTP id j15mr736891pjc.70.1620250736310;
-        Wed, 05 May 2021 14:38:56 -0700 (PDT)
+        bh=QTs/SEbir+LcEB2TCs+hMhq7sImYAohAveDk3rTOiyw=;
+        b=RGruHv6uUai3KAnSIF4emy/MiG+DWUXxevhqrEXWdCT5zDDtWa0aqeaaLGTTykVU97
+         j9VL+FuzegodWTFM3oUY4hrDo9polb4twVUaqOb6X9ZaWlImAUi6VzBNGIj+7d2TBOzR
+         VEvOolqaadCUEXlk6EqN+Qtk0Nr1IkzCJ1WUlnx+5omLRFVZh2njeFxdfmwo6ZDMe7oQ
+         ZHs9P+AvkoLCJL2GjNiKQFg9TFuuerIHdyWb/PPgJVzbwmsuofdG6nk4/LJUvEB8sdU+
+         VmD6QV2Js2N6aIRp8qDS5oKNDKKWzKPSIJkAb1LAwrFxdNrp8wc08TLVYpFkKAjcGjgj
+         g3Qw==
+X-Gm-Message-State: AOAM530EaEopqY2A49m4YB6vaISKWkxgcylVLkYES62Gm505MQxaNBSU
+        LfDDueC2zKTVcHvXGbSV684PFtEVSpi22w==
+X-Google-Smtp-Source: ABdhPJxkzMArkMxXqIrhQRb74mSjr059HhOAUNBZubYzmJ6xexzehYn/V21P3TskEk5VEAZYSKsdkw==
+X-Received: by 2002:a17:90a:c687:: with SMTP id n7mr13795495pjt.104.1620250743115;
+        Wed, 05 May 2021 14:39:03 -0700 (PDT)
 Received: from localhost.localdomain.name ([223.235.141.68])
-        by smtp.gmail.com with ESMTPSA id z26sm167031pfq.86.2021.05.05.14.38.50
+        by smtp.gmail.com with ESMTPSA id z26sm167031pfq.86.2021.05.05.14.38.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 May 2021 14:38:55 -0700 (PDT)
+        Wed, 05 May 2021 14:39:02 -0700 (PDT)
 From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
 To:     linux-arm-msm@vger.kernel.org
 Cc:     bhupesh.sharma@linaro.org,
@@ -63,9 +63,9 @@ Cc:     bhupesh.sharma@linaro.org,
         linux-clk@vger.kernel.org, linux-crypto@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         bhupesh.linux@gmail.com
-Subject: [PATCH v2 09/17] crypto: qce: core: Add support to initialize interconnect path
-Date:   Thu,  6 May 2021 03:07:23 +0530
-Message-Id: <20210505213731.538612-10-bhupesh.sharma@linaro.org>
+Subject: [PATCH v2 10/17] crypto: qce: Add new compatibles for qce crypto driver
+Date:   Thu,  6 May 2021 03:07:24 +0530
+Message-Id: <20210505213731.538612-11-bhupesh.sharma@linaro.org>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20210505213731.538612-1-bhupesh.sharma@linaro.org>
 References: <20210505213731.538612-1-bhupesh.sharma@linaro.org>
@@ -75,13 +75,11 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Thara Gopinath <thara.gopinath@linaro.org>
+Since we decided to use soc specific compatibles for describing
+the qce crypto IP nodes in the device-trees, adapt the driver
+now to handle the same.
 
-Crypto engine on certain Snapdragon processors like sm8150, sm8250, sm8350
-etc. requires interconnect path between the engine and memory to be
-explicitly enabled and bandwidth set prior to any operations. Add support
-in the qce core to enable the interconnect path appropriately.
-
+Cc: Thara Gopinath <thara.gopinath@linaro.org>
 Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
 Cc: Rob Herring <robh+dt@kernel.org>
 Cc: Andy Gross <agross@kernel.org>
@@ -97,100 +95,25 @@ Cc: devicetree@vger.kernel.org
 Cc: linux-kernel@vger.kernel.org
 Cc: bhupesh.linux@gmail.com
 Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-[Make header file inclusion alphabetical]
-Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
 ---
- drivers/crypto/qce/core.c | 35 ++++++++++++++++++++++++++++-------
- drivers/crypto/qce/core.h |  1 +
- 2 files changed, 29 insertions(+), 7 deletions(-)
+ drivers/crypto/qce/core.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/crypto/qce/core.c b/drivers/crypto/qce/core.c
-index 80b75085c265..92a0ff1d357e 100644
+index 92a0ff1d357e..f6032c303c8c 100644
 --- a/drivers/crypto/qce/core.c
 +++ b/drivers/crypto/qce/core.c
-@@ -5,6 +5,7 @@
- 
- #include <linux/clk.h>
- #include <linux/dma-mapping.h>
-+#include <linux/interconnect.h>
- #include <linux/interrupt.h>
- #include <linux/module.h>
- #include <linux/mod_devicetable.h>
-@@ -21,6 +22,8 @@
- #define QCE_MAJOR_VERSION5	0x05
- #define QCE_QUEUE_LENGTH	1
- 
-+#define QCE_DEFAULT_MEM_BANDWIDTH	393600
-+
- static const struct qce_algo_ops *qce_ops[] = {
- #ifdef CONFIG_CRYPTO_DEV_QCE_SKCIPHER
- 	&skcipher_ops,
-@@ -202,21 +205,35 @@ static int qce_crypto_probe(struct platform_device *pdev)
- 	if (ret < 0)
- 		return ret;
- 
-+	qce->mem_path = of_icc_get(qce->dev, "memory");
-+	if (IS_ERR(qce->mem_path))
-+		return PTR_ERR(qce->mem_path);
-+
- 	qce->core = devm_clk_get(qce->dev, "core");
--	if (IS_ERR(qce->core))
--		return PTR_ERR(qce->core);
-+	if (IS_ERR(qce->core)) {
-+		ret = PTR_ERR(qce->core);
-+		goto err_mem_path_put;
-+	}
- 
- 	qce->iface = devm_clk_get(qce->dev, "iface");
--	if (IS_ERR(qce->iface))
--		return PTR_ERR(qce->iface);
-+	if (IS_ERR(qce->iface)) {
-+		ret = PTR_ERR(qce->iface);
-+		goto err_mem_path_put;
-+	}
- 
- 	qce->bus = devm_clk_get(qce->dev, "bus");
--	if (IS_ERR(qce->bus))
--		return PTR_ERR(qce->bus);
-+	if (IS_ERR(qce->bus)) {
-+		ret = PTR_ERR(qce->bus);
-+		goto err_mem_path_put;
-+	}
-+
-+	ret = icc_set_bw(qce->mem_path, QCE_DEFAULT_MEM_BANDWIDTH, QCE_DEFAULT_MEM_BANDWIDTH);
-+	if (ret)
-+		goto err_mem_path_put;
- 
- 	ret = clk_prepare_enable(qce->core);
- 	if (ret)
--		return ret;
-+		goto err_mem_path_disable;
- 
- 	ret = clk_prepare_enable(qce->iface);
- 	if (ret)
-@@ -256,6 +273,10 @@ static int qce_crypto_probe(struct platform_device *pdev)
- 	clk_disable_unprepare(qce->iface);
- err_clks_core:
- 	clk_disable_unprepare(qce->core);
-+err_mem_path_disable:
-+	icc_set_bw(qce->mem_path, 0, 0);
-+err_mem_path_put:
-+	icc_put(qce->mem_path);
- 	return ret;
+@@ -294,8 +294,8 @@ static int qce_crypto_remove(struct platform_device *pdev)
  }
  
-diff --git a/drivers/crypto/qce/core.h b/drivers/crypto/qce/core.h
-index 085774cdf641..228fcd69ec51 100644
---- a/drivers/crypto/qce/core.h
-+++ b/drivers/crypto/qce/core.h
-@@ -35,6 +35,7 @@ struct qce_device {
- 	void __iomem *base;
- 	struct device *dev;
- 	struct clk *core, *iface, *bus;
-+	struct icc_path *mem_path;
- 	struct qce_dma_data dma;
- 	int burst_size;
- 	unsigned int pipe_pair_id;
+ static const struct of_device_id qce_crypto_of_match[] = {
+-	{ .compatible = "qcom,crypto-v5.1", },
+-	{ .compatible = "qcom,crypto-v5.4", },
++	{ .compatible = "qcom,ipq6018-qce", },
++	{ .compatible = "qcom,sdm845-qce", },
+ 	{}
+ };
+ MODULE_DEVICE_TABLE(of, qce_crypto_of_match);
 -- 
 2.30.2
 
