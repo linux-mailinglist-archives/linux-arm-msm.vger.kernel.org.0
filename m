@@ -2,118 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 605C13746D9
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 May 2021 19:53:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6C45D374823
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 May 2021 20:43:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238037AbhEER27 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 May 2021 13:28:59 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:27967 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239021AbhEERKh (ORCPT
+        id S234140AbhEESoq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 May 2021 14:44:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38872 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229810AbhEESoo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 May 2021 13:10:37 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1620234581; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=2NJ2FCJ5eygsO7NmVQKBkrCnohRdJRzGE0EKHDhDgYA=; b=OPoThA0k+SvrmdAK1rPlx27NR468IPsD8+YtfOuEjFoIr+cTq3hZz7J4llZU5tt1P9pJtNZV
- bow/JayCcg7dMJ2t7iPp63fdNqnObps4di5lIOVqnx8zs7K7CWk9gc2O78/qM4i29WNC3/AX
- e7iq9UqkhQvZJkU9QQyf5+evIJ4=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
- 6092d1398807bcde1d132854 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 05 May 2021 17:09:13
- GMT
-Sender: bbhatt=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 567ABC00A28; Wed,  5 May 2021 17:09:13 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
-Received: from malabar-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: bbhatt)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id A7CD9C43143;
-        Wed,  5 May 2021 17:08:53 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A7CD9C43143
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=bbhatt@codeaurora.org
-From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
-To:     manivannan.sadhasivam@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
-        jhugo@codeaurora.org, linux-kernel@vger.kernel.org,
-        loic.poulain@linaro.org, linux-wireless@vger.kernel.org,
-        kvalo@codeaurora.org, ath11k@lists.infradead.org,
-        Bhaumik Bhatt <bbhatt@codeaurora.org>
-Subject: [PATCH v3 6/6] bus: mhi: core: Add range checks for BHI and BHIe
-Date:   Wed,  5 May 2021 10:08:21 -0700
-Message-Id: <1620234501-30461-7-git-send-email-bbhatt@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1620234501-30461-1-git-send-email-bbhatt@codeaurora.org>
-References: <1620234501-30461-1-git-send-email-bbhatt@codeaurora.org>
+        Wed, 5 May 2021 14:44:44 -0400
+Received: from mail-qv1-xf30.google.com (mail-qv1-xf30.google.com [IPv6:2607:f8b0:4864:20::f30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE2FBC061574
+        for <linux-arm-msm@vger.kernel.org>; Wed,  5 May 2021 11:43:46 -0700 (PDT)
+Received: by mail-qv1-xf30.google.com with SMTP id z1so1780237qvo.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 05 May 2021 11:43:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=xCaYprLSbNEdDL+9pgV9awJ0GDvBneLu+CkgeXpmcjo=;
+        b=FckFAAM0urXrxgm4fZ3T+9B51HbBjhE9phC8kF9WEf0AxlYqXQYF4gUqgg3gKGPXt1
+         C58jWi0p7CyV/Soar5QXSuXV3TPtTU0jTn232BvM9aejBgoWBg+FggCt6xSbmlvVq+Nc
+         BI9aquKT1voy8GA4j3AP3FUrYdmfqEpvFKbMWQ70HWWO27v1ivhhJQ1iObIzhHWS48FI
+         rBu3YT/nsa4qOuq65AC4jd+5j13aHS1++z6it3g2QAqGNoEpSZIUvkUNNiV1yPVKF5Ik
+         C8EGFv6fA1I0E7Lg0iRb1cGEvtBe2fWtIpNPmbY+0iJhES0jRYt9ndYmZCBMOl670zGN
+         hxEA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=xCaYprLSbNEdDL+9pgV9awJ0GDvBneLu+CkgeXpmcjo=;
+        b=DepMNtSWBt/h1tR56nJjBQK/FEjGcrZTsNkg+e2niftH2aF4vTyNaZBtD/TfQxMl90
+         DIx89/riUXZ+mUpxHYU3bMTlO6BlUOJ1DilHF2F+ewsUgT2Pf6Wyl2eCfefKSend2cpU
+         AzXJEZ9f0U+M+YF5sYixG3Tw9QNED7UBi3NDKyFLUyYkfXaiZ3KTemgh5I74CnK9LoiX
+         YlOhu7JpeemR1RwE/sX44Zr0jyUVPVNj8a9qOnFvZRqFvr7VQiU7Yfk0eyjqCJU4xbEC
+         IzG+d+m1sg4e8kpy15F+LowltQKWnje01bMun4KfkrMB0Qhf71KSOtr3GPcveZafADy+
+         h6WA==
+X-Gm-Message-State: AOAM531O10ywtfEz2XuAlFydfUw0Vzz+P6RNiniFIf5LqhLeo0QnQqW6
+        F+jZ2hMY4mN32AZGsErEOsyXjfoYqfhe4+mQy3fG9Q==
+X-Google-Smtp-Source: ABdhPJxjAtmlJGOviymK04xz3wUlKBRHnG7TAUVt1XCsQ9vh284EoCTjeYLM2e/U6Gp547e3Fx1btrfrtvH1aKOTIoI=
+X-Received: by 2002:a0c:e183:: with SMTP id p3mr423632qvl.4.1620240226108;
+ Wed, 05 May 2021 11:43:46 -0700 (PDT)
+MIME-Version: 1.0
+References: <CALAqxLXsLcA=r1x6hXxLx3aVA-8=RG5qd+yj+sKEFiaWPUzkSA@mail.gmail.com>
+In-Reply-To: <CALAqxLXsLcA=r1x6hXxLx3aVA-8=RG5qd+yj+sKEFiaWPUzkSA@mail.gmail.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Wed, 5 May 2021 21:43:34 +0300
+Message-ID: <CAA8EJppTgQSFvNcA4vEf1rSDeH0ec7nj3YHDA4DUgiJ5OPciOg@mail.gmail.com>
+Subject: Re: Regression: arm64: dts: sdm845-db845c: make firmware filenames
+ follow linux-firmware
+To:     John Stultz <john.stultz@linaro.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Vinod Koul <vinod.koul@linaro.org>,
+        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+        Amit Pundir <amit.pundir@linaro.org>,
+        YongQin Liu <yongqin.liu@linaro.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-When obtaining the BHI or BHIe offsets during the power up
-preparation phase, range checks are missing. These can help
-controller drivers avoid accessing any address outside of the
-MMIO region. Ensure that mhi_cntrl->reg_len is set before MHI
-registration as it is a required field and range checks will
-fail without it.
+Hi
 
-Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
-Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
----
- drivers/bus/mhi/core/init.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+On Wed, 5 May 2021 at 09:20, John Stultz <john.stultz@linaro.org> wrote:
+>
+> Hey Dmitry, Bjorn,
+>   I wanted to raise a regression I caught in the merge window on db845c.
+>
+> I was seeing troubles with audio and while there are a few other
+> pending fixes needed, they did not seem to work for me. So I spent
+> some time bisecting things down and found the problematic commit was
+> 7443ff06da45 ("arm64: dts: sdm845-db845c: make firmware filenames
+> follow linux-firmware").
+>
+> It seems for systems using the old firmware filenames, this will break
+> dependent devices on adsp_pas and cdsp_pas nodes.
+>
+> Now, obviously updating the firmware files in userland should resolve
+> this, but it adds the complexity that we can't just replace the
+> firmware files because older LTS kernels will look for the old names,
+> while newer kernels will look for the new names. We can add both files
+> to the system images, but then there is some confusion on which
+> version of the firmware files are being used where.
+>
+> So yes, we should align with linux-firmware file names, but I think
+> more care is needed for this sort of thing as it has the potential to
+> break folks, and this isn't the first time around we've had similar
+> firmware name changes break us.
+>
+> So I'm working on fixing this by including both filenames in userland,
+> so we probably don't need a revert here, but *please* maybe take more
+> care on this sort of change.
 
-diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
-index 1cc2f22..86ad06e 100644
---- a/drivers/bus/mhi/core/init.c
-+++ b/drivers/bus/mhi/core/init.c
-@@ -885,7 +885,8 @@ int mhi_register_controller(struct mhi_controller *mhi_cntrl,
- 	if (!mhi_cntrl || !mhi_cntrl->cntrl_dev || !mhi_cntrl->regs ||
- 	    !mhi_cntrl->runtime_get || !mhi_cntrl->runtime_put ||
- 	    !mhi_cntrl->status_cb || !mhi_cntrl->read_reg ||
--	    !mhi_cntrl->write_reg || !mhi_cntrl->nr_irqs || !mhi_cntrl->irq)
-+	    !mhi_cntrl->write_reg || !mhi_cntrl->nr_irqs ||
-+	    !mhi_cntrl->irq || !mhi_cntrl->reg_len)
- 		return -EINVAL;
- 
- 	ret = parse_config(mhi_cntrl, config);
-@@ -1077,6 +1078,12 @@ int mhi_prepare_for_power_up(struct mhi_controller *mhi_cntrl)
- 		dev_err(dev, "Error getting BHI offset\n");
- 		goto error_reg_offset;
- 	}
-+
-+	if (bhi_off >= mhi_cntrl->reg_len) {
-+		dev_err(dev, "BHI offset is out of range\n");
-+		ret = -EINVAL;
-+		goto error_reg_offset;
-+	}
- 	mhi_cntrl->bhi = mhi_cntrl->regs + bhi_off;
- 
- 	if (mhi_cntrl->fbc_download || mhi_cntrl->rddm_size) {
-@@ -1086,6 +1093,12 @@ int mhi_prepare_for_power_up(struct mhi_controller *mhi_cntrl)
- 			dev_err(dev, "Error getting BHIE offset\n");
- 			goto error_reg_offset;
- 		}
-+
-+		if (bhie_off >= mhi_cntrl->reg_len) {
-+			dev_err(dev, "BHIe offset is out of range\n");
-+			ret = -EINVAL;
-+			goto error_reg_offset;
-+		}
- 		mhi_cntrl->bhie = mhi_cntrl->regs + bhie_off;
- 	}
- 
+Point taken.
+
+
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
-
+With best wishes
+Dmitry
