@@ -2,76 +2,266 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A70A837506B
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 May 2021 09:55:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7CBF537539C
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 May 2021 14:15:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231596AbhEFH4U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 May 2021 03:56:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43648 "EHLO
+        id S233407AbhEFMQO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 May 2021 08:16:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45122 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233573AbhEFH4T (ORCPT
+        with ESMTP id S233701AbhEFMQF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 May 2021 03:56:19 -0400
-Received: from mail-pg1-x529.google.com (mail-pg1-x529.google.com [IPv6:2607:f8b0:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9338C061574
-        for <linux-arm-msm@vger.kernel.org>; Thu,  6 May 2021 00:55:20 -0700 (PDT)
-Received: by mail-pg1-x529.google.com with SMTP id i14so4164546pgk.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 May 2021 00:55:20 -0700 (PDT)
+        Thu, 6 May 2021 08:16:05 -0400
+Received: from mail-qt1-x82e.google.com (mail-qt1-x82e.google.com [IPv6:2607:f8b0:4864:20::82e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98933C06138E
+        for <linux-arm-msm@vger.kernel.org>; Thu,  6 May 2021 05:15:05 -0700 (PDT)
+Received: by mail-qt1-x82e.google.com with SMTP id h21so3425qtu.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 May 2021 05:15:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=ESVV/fMaAxNkE4WvbW0fxbJidb4bTYMGXoio537XTy8=;
-        b=CBl6iUCMWBc1+XteGpbJ9leQZsxPoMSOwx/iAOt5hsVC8kF9j8ypdYuGO1NLGxRqgf
-         3Ykk1ylqzolhm9eRIbT68h92NVteUANOM1QfT0FYefqAV18aaXzlczPZ45hztQHrFb+a
-         gBbpnbW6Y49Lpts8ib15JwNOaHgWZoc9wZTZ9cdz0IFMH5Nu5zrJTlQBNsZCjHmTVZyn
-         tl2Y4l3ES+7g3boCezH0i/M934Qc7jBnF/aHXKTo/18PFCu+BbVtiuo076Nt9W6eNOXA
-         sg9YqOHJ7wRmVywkTdw4YdnzYb/EOOmYxhTQKtUnx61935Ac57esFpzZeAspbfmKjgeR
-         HIgg==
+        bh=DUBNP/diVecNRarR8rXDAXXdwLBzzCz+wT6lGIZyhBQ=;
+        b=p1wmcAirf8twjh7j4y7n7/sNMOvDFv4zxvvOAWgwJShsPTDyyXeMARuPmDbEY9XNIM
+         H10rT0OYPeoV/WjCySiW7Etdr+fC7J4j+6FHE9OmB9e0xSj/bbk8rM8c/7DOs2oTEJha
+         EX4gyEFW9VqvvxxGJkalzJeo473Sd/b5cbmoaVqCPgQAD3aBNc2eK998BD78Ilyl/mpp
+         EMCprNWl3yaQOomGQ71I1HZvhb4vDGMtczu46gXwhI63qnE+IMB2zWg8z2lEf3/xOLK0
+         D4w6BgXXlYtkXG3HmPO8cfSpf6JprtlI0SRFna2WFHqVQCdDPG15VKiliGetWq6LAsxx
+         x1xg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=ESVV/fMaAxNkE4WvbW0fxbJidb4bTYMGXoio537XTy8=;
-        b=G+W/qa9ZEhfPGzBDeatX5Je9l0XOc13KSU934FtD+80T7ygC4C3oD71oXnL1r5AZ/1
-         R2GOdTqmAtnnDE7K0788PrE9g8qZHLkNC1Wxrrs/utsT11vN8SNygBPxMJjGimAaCs9G
-         toJ4DdC0kOTCB8Up7TNFFyB1Nk4ZLm+4vgvfVUOWNJ68esrTT/VuASPsqNL65BMI+43Q
-         t9q40C2Ds7nOJq1KuzUNVVwDd5GXCZOq+fVam3ORVLOiXAfDwPIBzYp4d7Fj7CwAYpsc
-         19XCqXj5JMIzx5Cik4LH2Z8Jjg5NBfJHvh3e/807UKi7qXfDVF/a7/jRSwNj6TGFiAUf
-         qfzA==
-X-Gm-Message-State: AOAM5329snl4TrCrikcb//T0/nAEt9iO49G6FrCqE2nXnNOKXL6pSNzy
-        a3UbMDaCdsRLrQU66+uUXIet7eVqhlgKsAWFTlG6zg==
-X-Google-Smtp-Source: ABdhPJz9+BbLcod0C8x9IKaB+7PNgAIm6oZ/AvRXYy2PJxruNemP5ifp+mZctZppylusL3o8E5DacbRjvD7abeeEMnE=
-X-Received: by 2002:a63:9d4e:: with SMTP id i75mr2924857pgd.443.1620287720183;
- Thu, 06 May 2021 00:55:20 -0700 (PDT)
+        bh=DUBNP/diVecNRarR8rXDAXXdwLBzzCz+wT6lGIZyhBQ=;
+        b=XOJzCuyTj1X3ZTj8QhZbXdbEZfWLS2K3TWrS6DtbMJsS9BGSpp0S1ApNDDDmZ38Cv0
+         ScVfyM9RW8zqPLdza28vJzC+Zn/e5+cZjFBb1Ff/El4Lo7S8Qvysev8xfoqEszSvjCyI
+         0JNLMFRpGuT2XIxdqjvGdxWoJdLD3pdCX9EBbhTAJvEBRbg37OZH9D380z/uVQVaKMrD
+         yBUWMqi3UE9k5wNh6uAb8DUhNvKvvbhL5KOlNLO4HeoJP+JJYYkxv60jknXpVDlG/VN/
+         Szeq4w/Qr9CSHWCQIUIlkEemwsNLrzWH5At1xuL9H+9H9Buz53AeSV5SV79C7biBoS9G
+         GRJQ==
+X-Gm-Message-State: AOAM5331VqbbB6fGIf3mRpnQrKon1L1xyY1ejo5Y/nNuoXzDNGAOwfXP
+        PiWI+LqGw8Ku8LRVvzjCIJ7A+u3Pwcw+ZjZDwt0T9A==
+X-Google-Smtp-Source: ABdhPJyCvZQdhDSj+wJuU6w9mImpPUuOhpP4irakqX87z+tfX/6pvqyAn0DJxf5+abGHLFWRCSX4Zsgc1lfgktd5Ki8=
+X-Received: by 2002:a05:622a:1716:: with SMTP id h22mr3764154qtk.273.1620303304595;
+ Thu, 06 May 2021 05:15:04 -0700 (PDT)
 MIME-Version: 1.0
-References: <1620234501-30461-1-git-send-email-bbhatt@codeaurora.org> <1620234501-30461-6-git-send-email-bbhatt@codeaurora.org>
-In-Reply-To: <1620234501-30461-6-git-send-email-bbhatt@codeaurora.org>
-From:   Loic Poulain <loic.poulain@linaro.org>
-Date:   Thu, 6 May 2021 10:03:53 +0200
-Message-ID: <CAMZdPi8_MKyF8imaOc+9MGz4ifOKX=UMA1CzHe3aPuXC2BEoOg@mail.gmail.com>
-Subject: Re: [PATCH v3 5/6] bus: mhi: pci_generic: Set register access length
- for MHI driver
-To:     Bhaumik Bhatt <bbhatt@codeaurora.org>
-Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Hemant Kumar <hemantk@codeaurora.org>,
-        Jeffrey Hugo <jhugo@codeaurora.org>,
+References: <1620202579-19066-1-git-send-email-sbillaka@codeaurora.org>
+ <CAA8EJpqZXHNvBySL0Vm-CmsrAh8Z85SoQHn97TqWLYeFW-Q=UA@mail.gmail.com> <3398f9a1f985ccd6bb6a44646f7bea24@codeaurora.org>
+In-Reply-To: <3398f9a1f985ccd6bb6a44646f7bea24@codeaurora.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Thu, 6 May 2021 15:14:13 +0300
+Message-ID: <CAA8EJpq7c34JD1q-iqe8eLujfXCdHeLXyUSMnGtaABHs5LSi8g@mail.gmail.com>
+Subject: Re: [PATCH v1 0/3] Add support for next gen eDP driver on SnapDragon
+To:     Sankeerth Billakanti <sbillaka@codeaurora.org>
+Cc:     "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <dri-devel@lists.freedesktop.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
         open list <linux-kernel@vger.kernel.org>,
-        linux-wireless@vger.kernel.org, Kalle Valo <kvalo@codeaurora.org>,
-        ath11k@lists.infradead.org
+        Rob Clark <robdclark@gmail.com>,
+        Sean Paul <seanpaul@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Kalyan Thota <kalyan_t@codeaurora.org>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        khsieh@codeaurora.org, Krishna Manikandan <mkrishn@codeaurora.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 5 May 2021 at 19:08, Bhaumik Bhatt <bbhatt@codeaurora.org> wrote:
+On Thu, 6 May 2021 at 09:47, <sbillaka@codeaurora.org> wrote:
 >
-> MHI driver requires register space length to add range checks and
-> prevent memory region accesses outside of that for MMIO space.
-> Set it from the PCI generic controller driver before registering
-> the MHI controller.
+> On 2021-05-05 15:31, Dmitry Baryshkov wrote:
+> > Hi,
+> >
+> > On Wed, 5 May 2021 at 11:17, Sankeerth Billakanti
+> > <sbillaka@codeaurora.org> wrote:
+> >>
+> >> These patches add support for the next generation eDP driver on
+> >> SnapDragon
+> >> with dpu support. The existing eDP driver cannot support the new eDP
+> >> hardware. So, to maintain backward compatibility, the older eDP driver
+> >> is
+> >> moved to v200 folder and the new generation eDP driver is added in
+> >> the v510 folder.
+> >
+> > What exactly does this version correspond to?
+> > I assume that v510 corresponds to sdmshrike/sc8180x. Is it right?
+> [Sankeerth] This is for sc7280.
 >
-> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+> > Is it really so specific, or just v2/v5 would be enough? Not to
+> > mention that this is the MDP/ version, while other blocks tend to use
+> > block-specific versions/ids.
+> [Sankeerth] I can rename it as edp-v1 and edp-v2. Edp v1 is very old
+> chip and there is considerable HW delta between v1 and v2. So, we want
+> to separate the driver. We followed similar model for DPU driver where,
+> MDP4, MDP5 and DPU have separate folders. EDP v1 belongs to MDP4
+> generation.
 
-Reviewed-by: Loic Poulain <loic.poulain@linaro.org>
+I'd say, just leave old eDP as is, add eDPv2 in a separate folder.
+
+> > Also, how much does it differ from the current DP core supported via
+> > drivers/gpu/drm/msm/dp ?
+> [Sankeerth] eDP is a native controller like DP but does not have audio,
+> content protection and interoperability requirement. Upstream already
+> supports eDP as a new interface driver found here:
+> drivers/gpu/drm/msm/edp.
+> I wanted to add the new controller driver as part of that folder.
+
+This does not answer if there is significant difference from the
+supported DP core.
+Does it differ significantly or not?
+
+> > First two patches did not make it to the linux-msm, so I can not
+> > comment on each of the lines.
+> [Sankeerth] I am also not sure why they did not make it to patchwork. I
+> will repost them.
+
+Because your patches are huge and thus they do not pass size limits
+for linux-arm-msm ML.
+Reposting didn't help of course. In future, if you plan to do mass
+renaming, please pass -M -C to git-format-patch (or git send-email if
+you use it directly).
+
+> > However just my few cents (other reviewers might disagree though):
+> >
+> > - I see little benefit in renaming the folders just for the sake of
+> > renaming. You can put your code in drivers/gpu/drm/msm/edp-v510, if
+> > you really insist on that. Note that for all other (even incompatible)
+> > hardware types we still use single level of folders.
+> >
+> > - Also I see that significant parts of code (e.g. AUX, bridge,
+> > connector, maybe more) are just c&p of old edp code pieces. Please
+> > share the code instead of duplicating it.
+> [Sankeerth] It is a baseline driver. As we add more features, it will
+> considerably deviate a lot. The effort seems to be very high to maintain
+> the common portion of code as I expect a lot of deviation.
+
+Can we find support for this eDP core in the display drivers pack somewhere?
+
+> >
+> > - Please consider updating register definitions in xml form and then
+> > providing both changed xml files (to mesa project (?)) and generated
+> > headers into the kernel.
+> [Sankeerth] I followed what was done in the DP driver at
+> /drivers/gpu/drm/msm/dp. I need to explore the xml approach to generate
+> the register definitions.
+
+We'd need to convert them to xml too.
+
+> >
+> > - Please consider using clk_bulk_* functions instead of using
+> > dss_module_power. I'm going to send a patchset reworking current users
+> > to use the generic clk_bulk_* function family.
+> [Sankeerth] I will explore and rebase after your patch is available.
+> >
+> > - In generic, this eDP clock handling seems to match closely DP clocks
+> > handling (with all the name comparison, etc). Consider moving this to
+> > a generic piece of code
+> >
+> > - PHY seems to be a version of QMP PHY. Please use it, like it was
+> > done for the DP itself. There is support for combined USB+DP PHYs
+> > (both v3 and v4), so it should be possible to extend that for eDP.
+> [Sankeerth] The DP phy is a combophy which supports both usb and dp phy
+> concurrently, unlike eDP phy which is specific to only the eDP
+> controller in sc7280. So, I implemented the edp phy sequences in the
+> same folder.
+
+Please use the tthe qmp driver for qmp phys. Judging from the register
+definitions, your hardware is definitely the QMP v4. Initial support
+for DP on this generation has been merged during this merge window.
+Feel free to correct/extend it.
+
+> >> These are baseline changes with which we can enable display. The new
+> >> eDP
+> >> controller can also support additional features such as backlight
+> >> control,
+> >> PSR etc. which will be enabled in subsequent patch series.
+> >>
+> >> Summary of changes:
+> >> DPU driver interface to the new eDP v510 display driver.
+> >> New generation eDP controller and phy driver implementation.
+> >> A common interface to choose enable the required eDP driver.
+> >>
+> >> Sankeerth Billakanti (3):
+> >>   drm/msm/edp: support multiple generations of edp hardware
+> >>   drm/msm/edp: add support for next gen edp
+> >>   drm/msm/disp/dpu1: add support for edp encoder
+> >>
+> >>  drivers/gpu/drm/msm/Makefile                      |   19 +-
+> >>  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c       |    7 +-
+> >>  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c           |   33 +
+> >>  drivers/gpu/drm/msm/edp/edp.c                     |  198 ---
+> >>  drivers/gpu/drm/msm/edp/edp.h                     |   78 -
+> >>  drivers/gpu/drm/msm/edp/edp.xml.h                 |  380 -----
+> >>  drivers/gpu/drm/msm/edp/edp_aux.c                 |  264 ----
+> >>  drivers/gpu/drm/msm/edp/edp_bridge.c              |  111 --
+> >>  drivers/gpu/drm/msm/edp/edp_common.c              |   38 +
+> >>  drivers/gpu/drm/msm/edp/edp_common.h              |   47 +
+> >>  drivers/gpu/drm/msm/edp/edp_connector.c           |  132 --
+> >>  drivers/gpu/drm/msm/edp/edp_ctrl.c                | 1375
+> >> ------------------
+> >>  drivers/gpu/drm/msm/edp/edp_phy.c                 |   98 --
+> >>  drivers/gpu/drm/msm/edp/v200/edp.xml.h            |  380 +++++
+> >>  drivers/gpu/drm/msm/edp/v200/edp_v200.c           |  210 +++
+> >>  drivers/gpu/drm/msm/edp/v200/edp_v200.h           |   70 +
+> >>  drivers/gpu/drm/msm/edp/v200/edp_v200_aux.c       |  264 ++++
+> >>  drivers/gpu/drm/msm/edp/v200/edp_v200_bridge.c    |  111 ++
+> >>  drivers/gpu/drm/msm/edp/v200/edp_v200_connector.c |  132 ++
+> >>  drivers/gpu/drm/msm/edp/v200/edp_v200_ctrl.c      | 1375
+> >> ++++++++++++++++++
+> >>  drivers/gpu/drm/msm/edp/v200/edp_v200_phy.c       |   98 ++
+> >>  drivers/gpu/drm/msm/edp/v510/edp_v510.c           |  220 +++
+> >>  drivers/gpu/drm/msm/edp/v510/edp_v510.h           |  151 ++
+> >>  drivers/gpu/drm/msm/edp/v510/edp_v510_aux.c       |  268 ++++
+> >>  drivers/gpu/drm/msm/edp/v510/edp_v510_bridge.c    |  111 ++
+> >>  drivers/gpu/drm/msm/edp/v510/edp_v510_connector.c |  117 ++
+> >>  drivers/gpu/drm/msm/edp/v510/edp_v510_ctrl.c      | 1583
+> >> +++++++++++++++++++++
+> >>  drivers/gpu/drm/msm/edp/v510/edp_v510_phy.c       |  641 +++++++++
+> >>  drivers/gpu/drm/msm/edp/v510/edp_v510_reg.h       |  339 +++++
+> >>  29 files changed, 6207 insertions(+), 2643 deletions(-)
+> >>  delete mode 100644 drivers/gpu/drm/msm/edp/edp.c
+> >>  delete mode 100644 drivers/gpu/drm/msm/edp/edp.h
+> >>  delete mode 100644 drivers/gpu/drm/msm/edp/edp.xml.h
+> >>  delete mode 100644 drivers/gpu/drm/msm/edp/edp_aux.c
+> >>  delete mode 100644 drivers/gpu/drm/msm/edp/edp_bridge.c
+> >>  create mode 100644 drivers/gpu/drm/msm/edp/edp_common.c
+> >>  create mode 100644 drivers/gpu/drm/msm/edp/edp_common.h
+> >>  delete mode 100644 drivers/gpu/drm/msm/edp/edp_connector.c
+> >>  delete mode 100644 drivers/gpu/drm/msm/edp/edp_ctrl.c
+> >>  delete mode 100644 drivers/gpu/drm/msm/edp/edp_phy.c
+> >>  create mode 100644 drivers/gpu/drm/msm/edp/v200/edp.xml.h
+> >>  create mode 100644 drivers/gpu/drm/msm/edp/v200/edp_v200.c
+> >>  create mode 100644 drivers/gpu/drm/msm/edp/v200/edp_v200.h
+> >>  create mode 100644 drivers/gpu/drm/msm/edp/v200/edp_v200_aux.c
+> >>  create mode 100644 drivers/gpu/drm/msm/edp/v200/edp_v200_bridge.c
+> >>  create mode 100644 drivers/gpu/drm/msm/edp/v200/edp_v200_connector.c
+> >>  create mode 100644 drivers/gpu/drm/msm/edp/v200/edp_v200_ctrl.c
+> >>  create mode 100644 drivers/gpu/drm/msm/edp/v200/edp_v200_phy.c
+> >>  create mode 100644 drivers/gpu/drm/msm/edp/v510/edp_v510.c
+> >>  create mode 100644 drivers/gpu/drm/msm/edp/v510/edp_v510.h
+> >>  create mode 100644 drivers/gpu/drm/msm/edp/v510/edp_v510_aux.c
+> >>  create mode 100644 drivers/gpu/drm/msm/edp/v510/edp_v510_bridge.c
+> >>  create mode 100644 drivers/gpu/drm/msm/edp/v510/edp_v510_connector.c
+> >>  create mode 100644 drivers/gpu/drm/msm/edp/v510/edp_v510_ctrl.c
+> >>  create mode 100644 drivers/gpu/drm/msm/edp/v510/edp_v510_phy.c
+> >>  create mode 100644 drivers/gpu/drm/msm/edp/v510/edp_v510_reg.h
+> >>
+> >> --
+> >> The Qualcomm Innovatin Center, Inc. is a member of the Code Aurora
+> >> Forum, a Linux Foundation Collaborative Project
+> >>
+> >
+> >
+> > --
+> > With best wishes
+> > Dmitry
+
+
+
+-- 
+With best wishes
+Dmitry
