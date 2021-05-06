@@ -2,266 +2,301 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2419437591A
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 May 2021 19:18:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A5E4937592B
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 May 2021 19:23:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236182AbhEFRTq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 May 2021 13:19:46 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:42017 "EHLO
+        id S236249AbhEFRYo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 May 2021 13:24:44 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:20587 "EHLO
         so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235881AbhEFRTq (ORCPT
+        with ESMTP id S236253AbhEFRYn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 May 2021 13:19:46 -0400
+        Thu, 6 May 2021 13:24:43 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1620321528; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=+nCwIMPWKByZx58DsVTPusnFKpRmeyq4KgLpfZ2JfkE=; b=fGNogDpUWI6SmsenUtDWeUhHhlUPVKhvcrQ8L20HEtalA4gvs+a5kg5Cdc91T66W27vzWl/g
- E0ePD6RPjhf0vzgn7XyC2LE9F1GVJ41tEfnOYeNdmDQqAbxaa5r9GAllcJHwHAlgHLbaypMx
- u3yTRAYowhWLgf3+aMUAXr2+DBA=
+ s=smtp; t=1620321825; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=PkvnuSL03SDpw2bV221k6yrIiH+aU95lV8M60p0fhZU=;
+ b=wb07Lr0f2NhIuG887Xyu0zxf2coF7Y9nwXWgP/Lxv940t0qhk7HsZhvArDzsoFv4baiFHhTS
+ Mj8clQH5AD/EG9d2hXAmBjHRhscS3+b2Hu66jRjQaxbW/W5ZsyY5uhfmQ4S5x0LZaorsUrWi
+ EfV2U+J7kUtklPSA6d7Yh2n/hGY=
 X-Mailgun-Sending-Ip: 198.61.254.9
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
- 609424f8f34440a9d494350d (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 06 May 2021 17:18:48
+ smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
+ 6094260e853c0a2c468082eb (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 06 May 2021 17:23:26
  GMT
-Sender: deesin=codeaurora.org@mg.codeaurora.org
+Sender: gubbaven=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id DCD6FC43143; Thu,  6 May 2021 17:18:47 +0000 (UTC)
+        id 8B216C43145; Thu,  6 May 2021 17:23:25 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [192.168.1.3] (unknown [122.163.131.242])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: deesin)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id C1B2AC4338A;
-        Thu,  6 May 2021 17:18:43 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org C1B2AC4338A
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=deesin@codeaurora.org
-Subject: Re: [PATCH V6 1/4] rpmsg: core: Add signal API support
-To:     bjorn.andersson@linaro.org, clew@codeaurora.org,
-        sibis@codeaurora.org, manivannan.sadhasivam@linaro.org,
-        mathieu.poirier@linaro.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org,
-        Arun Kumar Neelakantam <aneela@codeaurora.org>,
-        Ohad Ben-Cohen <ohad@wizery.com>
-References: <1620320818-2206-1-git-send-email-deesin@codeaurora.org>
- <1593182819-30747-2-git-send-email-deesin@codeaurora.org>
-From:   Deepak Kumar Singh <deesin@codeaurora.org>
-Message-ID: <2113e8c5-582e-e0d6-e700-d2cc2020746f@codeaurora.org>
-Date:   Thu, 6 May 2021 22:48:40 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.10.1
+        (Authenticated sender: gubbaven)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 32BF1C4338A;
+        Thu,  6 May 2021 17:23:22 +0000 (UTC)
 MIME-Version: 1.0
-In-Reply-To: <1593182819-30747-2-git-send-email-deesin@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
 Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Date:   Thu, 06 May 2021 22:53:22 +0530
+From:   gubbaven@codeaurora.org
+To:     Matthias Kaehlcke <mka@chromium.org>
+Cc:     marcel@holtmann.org, johan.hedberg@gmail.com,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-bluetooth@vger.kernel.org, hemantg@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
+        rjliao@codeaurora.org, hbandi@codeaurora.org,
+        abhishekpandit@chromium.org
+Subject: Re: [PATCH v2 2/3] dt-bindings: net: bluetooth: Convert to DT schema
+In-Reply-To: <YH924M62b7PDd/r6@google.com>
+References: <1618936010-16579-1-git-send-email-gubbaven@codeaurora.org>
+ <1618936010-16579-3-git-send-email-gubbaven@codeaurora.org>
+ <YH924M62b7PDd/r6@google.com>
+Message-ID: <6eb5084aa89b7d2c26e41642b4fe56e1@codeaurora.org>
+X-Sender: gubbaven@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Please ignore V6 patch set for rpmsg: core: Add signal API support.
+Hi Matthias,
+On 2021-04-21 06:20, Matthias Kaehlcke wrote:
+> On Tue, Apr 20, 2021 at 09:56:49PM +0530, Venkata Lakshmi Narayana 
+> Gubba wrote:
+> 
+>> Subject: dt-bindings: net: bluetooth: Convert to DT schema
+> 
+> This doesn't convert the generic binding or all bindings to DT schema
+> as the subject suggests, but the Qualcomm BT binding.
+> 
+[Venkata]:
+I will update in next patchset.
+>> 
+>> Converted Qualcomm Bluetooth binidings to DT schema.
+>> 
+>> Signed-off-by: Venkata Lakshmi Narayana Gubba 
+>> <gubbaven@codeaurora.org>
+>> ---
+>>  .../devicetree/bindings/net/qualcomm-bluetooth.txt | 69 
+>> -----------------
+>>  .../bindings/net/qualcomm-bluetooth.yaml           | 87 
+>> ++++++++++++++++++++++
+>>  2 files changed, 87 insertions(+), 69 deletions(-)
+>>  delete mode 100644 
+>> Documentation/devicetree/bindings/net/qualcomm-bluetooth.txt
+>>  create mode 100644 
+>> Documentation/devicetree/bindings/net/qualcomm-bluetooth.yaml
+>> 
+>> diff --git 
+>> a/Documentation/devicetree/bindings/net/qualcomm-bluetooth.txt 
+>> b/Documentation/devicetree/bindings/net/qualcomm-bluetooth.txt
+>> deleted file mode 100644
+>> index 709ca6d..0000000
+>> --- a/Documentation/devicetree/bindings/net/qualcomm-bluetooth.txt
+>> +++ /dev/null
+>> @@ -1,69 +0,0 @@
+>> -Qualcomm Bluetooth Chips
+>> ----------------------
+>> -
+>> -This documents the binding structure and common properties for serial
+>> -attached Qualcomm devices.
+>> -
+>> -Serial attached Qualcomm devices shall be a child node of the host 
+>> UART
+>> -device the slave device is attached to.
+>> -
+>> -Required properties:
+>> - - compatible: should contain one of the following:
+>> -   * "qcom,qca6174-bt"
+>> -   * "qcom,qca9377-bt"
+>> -   * "qcom,wcn3990-bt"
+>> -   * "qcom,wcn3991-bt"
+>> -   * "qcom,wcn3998-bt"
+>> -   * "qcom,qca6390-bt"
+>> -
+>> -Optional properties for compatible string qcom,qca6174-bt:
+>> -
+>> - - enable-gpios: gpio specifier used to enable chip
+>> - - clocks: clock provided to the controller (SUSCLK_32KHZ)
+>> - - firmware-name: specify the name of nvm firmware to load
+>> -
+>> -Optional properties for compatible string qcom,qca9377-bt:
+>> -
+>> - - max-speed: see 
+>> Documentation/devicetree/bindings/serial/serial.yaml
+>> -
+>> -Required properties for compatible string qcom,wcn399x-bt:
+>> -
+>> - - vddio-supply: VDD_IO supply regulator handle.
+>> - - vddxo-supply: VDD_XO supply regulator handle.
+>> - - vddrf-supply: VDD_RF supply regulator handle.
+>> - - vddch0-supply: VDD_CH0 supply regulator handle.
+>> -
+>> -Optional properties for compatible string qcom,wcn399x-bt:
+>> -
+>> - - max-speed: see 
+>> Documentation/devicetree/bindings/serial/serial.yaml
+>> - - firmware-name: specify the name of nvm firmware to load
+>> - - clocks: clock provided to the controller
+>> -
+>> -Examples:
+>> -
+>> -serial@7570000 {
+>> -	label = "BT-UART";
+>> -	status = "okay";
+>> -
+>> -	bluetooth {
+>> -		compatible = "qcom,qca6174-bt";
+>> -
+>> -		enable-gpios = <&pm8994_gpios 19 GPIO_ACTIVE_HIGH>;
+>> -		clocks = <&divclk4>;
+>> -		firmware-name = "nvm_00440302.bin";
+>> -	};
+>> -};
+>> -
+>> -serial@898000 {
+>> -	bluetooth {
+>> -		compatible = "qcom,wcn3990-bt";
+>> -
+>> -		vddio-supply = <&vreg_s4a_1p8>;
+>> -		vddxo-supply = <&vreg_l7a_1p8>;
+>> -		vddrf-supply = <&vreg_l17a_1p3>;
+>> -		vddch0-supply = <&vreg_l25a_3p3>;
+>> -		max-speed = <3200000>;
+>> -		firmware-name = "crnv21.bin";
+>> -		clocks = <&rpmhcc RPMH_RF_CLK2>;
+>> -	};
+>> -};
+>> diff --git 
+>> a/Documentation/devicetree/bindings/net/qualcomm-bluetooth.yaml 
+>> b/Documentation/devicetree/bindings/net/qualcomm-bluetooth.yaml
+>> new file mode 100644
+>> index 0000000..55cd995
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/net/qualcomm-bluetooth.yaml
+>> @@ -0,0 +1,87 @@
+>> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+>> +%YAML 1.2
+>> +---
+>> +$id: http://devicetree.org/schemas/net/qualcomm-bluetooth.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: Qualcomm Bluetooth Chips
+>> +
+>> +maintainers:
+>> +  - Rob Herring <robh@kernel.org>
+>> +  - Marcel Holtmann <marcel@holtmann.org>
+>> +
+>> +description:
+>> +  This binding describes Qualcomm UART-attached bluetooth chips.
+>> +
+>> +properties:
+>> +  compatible:
+>> +    enum:
+>> +      - qcom,qca6174-bt
+>> +      - qcom,qca9377-bt
+>> +      - qcom,wcn3990-bt
+>> +      - qcom,wcn3991-bt
+>> +      - qcom,wcn3998-bt
+>> +      - qcom,qca6390-bt
+> 
+> delete trailing blanks
+> 
+[Venkata]:
+I will update in next patchset.
+>> +
+>> +  enable-gpios:
+>> +    maxItems: 1
+>> +    description: gpio specifier used to enable chip
+>> +
+> 
+> delete blanks
+> 
+[Venkata]:
+I will update in next patchset.
+>> +  clocks:
+>> +    maxItems: 1
+>> +    description: clock provided to the controller (SUSCLK_32KHZ)
+>> +
+>> +  vddio-supply:
+>> +    description: VDD_IO supply regulator handle
+>> +
+>> +  vddxo-supply:
+>> +    description: VDD_XO supply regulator handle
+>> +
+>> +  vddrf-supply:
+>> +    description: VDD_RF supply regulator handle
+>> +
+>> +  vddch0-supply:
+>> +    description: VDD_CH0 supply regulator handle
+>> +
+>> +  max-speed:
+> 
+> delete trailing blank
+> 
+[Venkata]:
+I will update in next patchset.
+>> +    description: see 
+>> Documentation/devicetree/bindings/serial/serial.yaml
+>> +
+>> +  firmware-name:
+>> +    description: specify the name of nvm firmware to load
+>> +
+>> +  local-bd-address:
+>> +    description: see 
+>> Documentation/devicetree/bindings/net/bluetooth.txt
+>> +
+>> +
+>> +required:
+>> +  - compatible
+> 
+> it seems you could make the supplies conditionally required based on 
+> the
+> compatible string. See
+> Documentation/devicetree/bindings/connector/usb-connector.yaml
+> for an example
+> 
+[Venkata]:
+I will update in next patchset
+>> +
+>> +additionalProperties: false
+>> +
+>> +examples:
+>> +  - |
+>> +    #include <dt-bindings/gpio/gpio.h>
+>> +    uart {
+>> +        label = "BT-UART";
+>> +        status = "okay";
+>> +
+>> +        bluetooth {
+>> +            compatible = "qcom,qca6174-bt";
+>> +            enable-gpios = <&pm8994_gpios 19 GPIO_ACTIVE_HIGH>;
+>> +            clocks = <&divclk4>;
+>> +            firmware-name = "nvm_00440302.bin";
+>> +        };
+>> +    };
+>> +  - |
+>> +    uart {
+>> +
+>> +        bluetooth {
+>> +            compatible = "qcom,wcn3990-bt";
+>> +            vddio-supply = <&vreg_s4a_1p8>;
+>> +            vddxo-supply = <&vreg_l7a_1p8>;
+>> +            vddrf-supply = <&vreg_l17a_1p3>;
+>> +            vddch0-supply = <&vreg_l25a_3p3>;
+>> +            max-speed = <3200000>;
+>> +            firmware-name = "crnv21.bin";
+> 
+> delete trailing blanks
+[Venkata]:
+I will update in next patchset.
 
-Wrongly pushed.
-
-On 5/6/2021 10:36 PM, Deepak Kumar Singh wrote:
-> Some transports like Glink support the state notifications between
-> clients using signals similar to serial protocol signals.
-> Local glink client drivers can send and receive signals to glink
-> clients running on remote processors.
->
-> Add apis to support sending and receiving of signals by rpmsg clients.
->
-> Signed-off-by: Chris Lew <clew@codeaurora.org>
-> Signed-off-by: Deepak Kumar Singh <deesin@codeaurora.org>
-> Signed-off-by: Arun Kumar Neelakantam <aneela@codeaurora.org>
-> ---
->   drivers/rpmsg/rpmsg_core.c     | 40 ++++++++++++++++++++++++++++++++++++++++
->   drivers/rpmsg/rpmsg_internal.h |  5 +++++
->   include/linux/rpmsg.h          | 27 +++++++++++++++++++++++++++
->   3 files changed, 72 insertions(+)
->
-> diff --git a/drivers/rpmsg/rpmsg_core.c b/drivers/rpmsg/rpmsg_core.c
-> index 91de940..e6eb5a1 100644
-> --- a/drivers/rpmsg/rpmsg_core.c
-> +++ b/drivers/rpmsg/rpmsg_core.c
-> @@ -283,6 +283,42 @@ int rpmsg_trysend_offchannel(struct rpmsg_endpoint *ept, u32 src, u32 dst,
->   }
->   EXPORT_SYMBOL(rpmsg_trysend_offchannel);
->   
-> +/**
-> + * rpmsg_get_signals() - get the signals for this endpoint
-> + * @ept:	the rpmsg endpoint
-> + *
-> + * Returns signal bits on success and an appropriate error value on failure.
-> + */
-> +int rpmsg_get_signals(struct rpmsg_endpoint *ept)
-> +{
-> +	if (WARN_ON(!ept))
-> +		return -EINVAL;
-> +	if (!ept->ops->get_signals)
-> +		return -ENXIO;
-> +
-> +	return ept->ops->get_signals(ept);
-> +}
-> +EXPORT_SYMBOL(rpmsg_get_signals);
-> +
-> +/**
-> + * rpmsg_set_signals() - set the remote signals for this endpoint
-> + * @ept:	the rpmsg endpoint
-> + * @set:	set mask for signals
-> + * @clear:	clear mask for signals
-> + *
-> + * Returns 0 on success and an appropriate error value on failure.
-> + */
-> +int rpmsg_set_signals(struct rpmsg_endpoint *ept, u32 set, u32 clear)
-> +{
-> +	if (WARN_ON(!ept))
-> +		return -EINVAL;
-> +	if (!ept->ops->set_signals)
-> +		return -ENXIO;
-> +
-> +	return ept->ops->set_signals(ept, set, clear);
-> +}
-> +EXPORT_SYMBOL(rpmsg_set_signals);
-> +
->   /*
->    * match a rpmsg channel with a channel info struct.
->    * this is used to make sure we're not creating rpmsg devices for channels
-> @@ -468,6 +504,10 @@ static int rpmsg_dev_probe(struct device *dev)
->   
->   		rpdev->ept = ept;
->   		rpdev->src = ept->addr;
-> +
-> +		if (rpdrv->signals)
-> +			ept->sig_cb = rpdrv->signals;
-> +
->   	}
->   
->   	err = rpdrv->probe(rpdev);
-> diff --git a/drivers/rpmsg/rpmsg_internal.h b/drivers/rpmsg/rpmsg_internal.h
-> index 3fc83cd..8958d6c 100644
-> --- a/drivers/rpmsg/rpmsg_internal.h
-> +++ b/drivers/rpmsg/rpmsg_internal.h
-> @@ -2,6 +2,7 @@
->   /*
->    * remote processor messaging bus internals
->    *
-> + * Copyright (c) 2018, The Linux Foundation.
->    * Copyright (C) 2011 Texas Instruments, Inc.
->    * Copyright (C) 2011 Google, Inc.
->    *
-> @@ -47,6 +48,8 @@ struct rpmsg_device_ops {
->    * @trysendto:		see @rpmsg_trysendto(), optional
->    * @trysend_offchannel:	see @rpmsg_trysend_offchannel(), optional
->    * @poll:		see @rpmsg_poll(), optional
-> + * @get_signals:	see @rpmsg_get_signals(), optional
-> + * @set_signals:	see @rpmsg_set_signals(), optional
->    *
->    * Indirection table for the operations that a rpmsg backend should implement.
->    * In addition to @destroy_ept, the backend must at least implement @send and
-> @@ -66,6 +69,8 @@ struct rpmsg_endpoint_ops {
->   			     void *data, int len);
->   	__poll_t (*poll)(struct rpmsg_endpoint *ept, struct file *filp,
->   			     poll_table *wait);
-> +	int (*get_signals)(struct rpmsg_endpoint *ept);
-> +	int (*set_signals)(struct rpmsg_endpoint *ept, u32 set, u32 clear);
->   };
->   
->   int rpmsg_register_device(struct rpmsg_device *rpdev);
-> diff --git a/include/linux/rpmsg.h b/include/linux/rpmsg.h
-> index 9fe156d..c4dbb47 100644
-> --- a/include/linux/rpmsg.h
-> +++ b/include/linux/rpmsg.h
-> @@ -2,6 +2,7 @@
->   /*
->    * Remote processor messaging
->    *
-> + * Copyright (c) 2018 The Linux Foundation.
->    * Copyright (C) 2011 Texas Instruments, Inc.
->    * Copyright (C) 2011 Google, Inc.
->    * All rights reserved.
-> @@ -60,6 +61,7 @@ struct rpmsg_device {
->   };
->   
->   typedef int (*rpmsg_rx_cb_t)(struct rpmsg_device *, void *, int, void *, u32);
-> +typedef int (*rpmsg_rx_sig_t)(struct rpmsg_device *, void *, u32, u32);
->   
->   /**
->    * struct rpmsg_endpoint - binds a local rpmsg address to its user
-> @@ -67,6 +69,7 @@ typedef int (*rpmsg_rx_cb_t)(struct rpmsg_device *, void *, int, void *, u32);
->    * @refcount: when this drops to zero, the ept is deallocated
->    * @cb: rx callback handler
->    * @cb_lock: must be taken before accessing/changing @cb
-> + * @sig_cb: rx serial signal handler
->    * @addr: local rpmsg address
->    * @priv: private data for the driver's use
->    *
-> @@ -89,6 +92,7 @@ struct rpmsg_endpoint {
->   	struct kref refcount;
->   	rpmsg_rx_cb_t cb;
->   	struct mutex cb_lock;
-> +	rpmsg_rx_sig_t sig_cb;
->   	u32 addr;
->   	void *priv;
->   
-> @@ -102,6 +106,7 @@ struct rpmsg_endpoint {
->    * @probe: invoked when a matching rpmsg channel (i.e. device) is found
->    * @remove: invoked when the rpmsg channel is removed
->    * @callback: invoked when an inbound message is received on the channel
-> + * @signals: invoked when a serial signal change is received on the channel
->    */
->   struct rpmsg_driver {
->   	struct device_driver drv;
-> @@ -109,6 +114,8 @@ struct rpmsg_driver {
->   	int (*probe)(struct rpmsg_device *dev);
->   	void (*remove)(struct rpmsg_device *dev);
->   	int (*callback)(struct rpmsg_device *, void *, int, void *, u32);
-> +	int (*signals)(struct rpmsg_device *rpdev,
-> +		       void *priv, u32 old, u32 new);
->   };
->   
->   #if IS_ENABLED(CONFIG_RPMSG)
-> @@ -135,6 +142,9 @@ int rpmsg_trysend_offchannel(struct rpmsg_endpoint *ept, u32 src, u32 dst,
->   __poll_t rpmsg_poll(struct rpmsg_endpoint *ept, struct file *filp,
->   			poll_table *wait);
->   
-> +int rpmsg_get_signals(struct rpmsg_endpoint *ept);
-> +int rpmsg_set_signals(struct rpmsg_endpoint *ept, u32 set, u32 clear);
-> +
->   #else
->   
->   static inline int register_rpmsg_device(struct rpmsg_device *dev)
-> @@ -242,6 +252,23 @@ static inline __poll_t rpmsg_poll(struct rpmsg_endpoint *ept,
->   	return 0;
->   }
->   
-> +static inline int rpmsg_get_signals(struct rpmsg_endpoint *ept)
-> +{
-> +	/* This shouldn't be possible */
-> +	WARN_ON(1);
-> +
-> +	return -ENXIO;
-> +}
-> +
-> +static inline int rpmsg_set_signals(struct rpmsg_endpoint *ept,
-> +				    u32 set, u32 clear)
-> +{
-> +	/* This shouldn't be possible */
-> +	WARN_ON(1);
-> +
-> +	return -ENXIO;
-> +}
-> +
->   #endif /* IS_ENABLED(CONFIG_RPMSG) */
->   
->   /* use a macro to avoid include chaining to get THIS_MODULE */
->
+Regards,
+Venkata.
