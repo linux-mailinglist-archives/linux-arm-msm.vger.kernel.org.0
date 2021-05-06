@@ -2,121 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DFFF4375C08
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 May 2021 21:52:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BA86B375C2D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 May 2021 22:27:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234202AbhEFTx2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 May 2021 15:53:28 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:29052 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233917AbhEFTxT (ORCPT
+        id S234025AbhEFU2a (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 May 2021 16:28:30 -0400
+Received: from mail-ot1-f49.google.com ([209.85.210.49]:33711 "EHLO
+        mail-ot1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229954AbhEFU23 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 May 2021 15:53:19 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1620330741; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=1iSZ9gN2YEKR2pGwgdA9DmUP9kIp4ATUhfPWsp4bGhk=; b=OL3+C2IbvEjI/ITl3TvxFSZQPGx5soLY2oEu+kvH+EYCUrEjdlFE0f3mekkUo+xspfacZU2v
- s+m3KwhToiHZ89npHvevIV90bYQ3+lQC9PsZqMxjpt1Z9jUxfgJeb+0h3PbgKYt++x+1fHH7
- Z5ShqyJIuAopzkVkv8D2cbwJF0A=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
- 609448df853c0a2c463228f0 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 06 May 2021 19:51:59
- GMT
-Sender: bbhatt=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 57B53C43143; Thu,  6 May 2021 19:51:58 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from malabar-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: bbhatt)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 10B64C433D3;
-        Thu,  6 May 2021 19:51:57 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 10B64C433D3
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=bbhatt@codeaurora.org
-From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
-To:     manivannan.sadhasivam@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
-        jhugo@codeaurora.org, linux-kernel@vger.kernel.org,
-        loic.poulain@linaro.org, linux-wireless@vger.kernel.org,
-        kvalo@codeaurora.org, ath11k@lists.infradead.org,
-        Bhaumik Bhatt <bbhatt@codeaurora.org>
-Subject: [PATCH v4 6/6] bus: mhi: core: Add range checks for BHI and BHIe
-Date:   Thu,  6 May 2021 12:51:45 -0700
-Message-Id: <1620330705-40192-7-git-send-email-bbhatt@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1620330705-40192-1-git-send-email-bbhatt@codeaurora.org>
-References: <1620330705-40192-1-git-send-email-bbhatt@codeaurora.org>
+        Thu, 6 May 2021 16:28:29 -0400
+Received: by mail-ot1-f49.google.com with SMTP id i23-20020a9d68d70000b02902dc19ed4c15so2039182oto.0;
+        Thu, 06 May 2021 13:27:30 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=itqPIgMSRUm7mjLuAMIStPX3IirpKll5U1amEMt59hU=;
+        b=NId6L8dlVh0j874adHL5WWBbV2/xQX9ssnc4pmWkxC2MJ+PKdmXxFUdheVQIf6oqbi
+         0OvvvsVWhpvNZdUXvIwgPHKGmk+9TMpjuk/GA5lxgYsl/0CDpwEZwY/zQHIjMghC0FU+
+         nMPcKygNc6a01SQvFb4nETaf3OtKV+oeBVSCElR/H41R3NpWqX3aXX9ZiYsLQMp4HK45
+         50J34/zcvRRZLhwIftAziDn6RMfyvbkgy5xst73NVspAoi433BxZJDmQRdPwtysYjufK
+         EEtJVwn7AhLHtYt/3CM6EFDjScSrFQoHnjTpLSwygIUgpw7c+tTpwuv1A0qRqOxExHkG
+         30/w==
+X-Gm-Message-State: AOAM531yME04fH0oV6YdBuhfgYquD6nsZYxyJhascRgrzpCSiyp38o8/
+        KYn8Yc76RIFC9JpW+QCuwbMPJkZXVA==
+X-Google-Smtp-Source: ABdhPJylItoM595UGV/4yqDvwNAmHRcH3hYhsGZVyPxxAwPv63lCNxd5mL71+50GRRhJp8CY6zqWYA==
+X-Received: by 2002:a05:6830:33ea:: with SMTP id i10mr5157809otu.212.1620332849774;
+        Thu, 06 May 2021 13:27:29 -0700 (PDT)
+Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id l131sm592786oia.0.2021.05.06.13.27.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 06 May 2021 13:27:28 -0700 (PDT)
+Received: (nullmailer pid 748504 invoked by uid 1000);
+        Thu, 06 May 2021 20:27:26 -0000
+Date:   Thu, 6 May 2021 15:27:26 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Shawn Guo <shawn.guo@linaro.org>
+Cc:     Stephen Boyd <sboyd@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Sivaprakash Murugesan <sivaprak@codeaurora.org>,
+        Benjamin Li <benl@squareup.com>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
+Subject: Re: [PATCH 2/5] dt-bindings: clock: update qcom,a53pll bindings for
+ MSM8939 support
+Message-ID: <20210506202726.GA744866@robh.at.kernel.org>
+References: <20210504052844.21096-1-shawn.guo@linaro.org>
+ <20210504052844.21096-3-shawn.guo@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210504052844.21096-3-shawn.guo@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-When obtaining the BHI or BHIe offsets during the power up
-preparation phase, range checks are missing. These can help
-controller drivers avoid accessing any address outside of the
-MMIO region. Ensure that mhi_cntrl->reg_len is set before MHI
-registration as it is a required field and range checks will
-fail without it.
+On Tue, May 04, 2021 at 01:28:41PM +0800, Shawn Guo wrote:
+> Update qcom,a53pll bindings for MSM8939 support:
+> 
+>  - Add optional clock-output-names property.
+>  - Add MSM8939 specific compatibles.
+>  - Add MSM8939 examples.
+> 
+> Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+> ---
+>  .../bindings/clock/qcom,a53pll.yaml           | 34 +++++++++++++++++++
+>  1 file changed, 34 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,a53pll.yaml b/Documentation/devicetree/bindings/clock/qcom,a53pll.yaml
+> index db3d0ea6bc7a..7a410a76be2f 100644
+> --- a/Documentation/devicetree/bindings/clock/qcom,a53pll.yaml
+> +++ b/Documentation/devicetree/bindings/clock/qcom,a53pll.yaml
+> @@ -18,6 +18,9 @@ properties:
+>      enum:
+>        - qcom,ipq6018-a53pll
+>        - qcom,msm8916-a53pll
+> +      - qcom,msm8939-a53pll-c0
+> +      - qcom,msm8939-a53pll-c1
+> +      - qcom,msm8939-a53pll-cci
 
-Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
-Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
----
- drivers/bus/mhi/core/init.c | 18 +++++++++++++++++-
- 1 file changed, 17 insertions(+), 1 deletion(-)
+These 3 have differences?
 
-diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
-index 1cc2f22..aeb1e3c 100644
---- a/drivers/bus/mhi/core/init.c
-+++ b/drivers/bus/mhi/core/init.c
-@@ -885,7 +885,8 @@ int mhi_register_controller(struct mhi_controller *mhi_cntrl,
- 	if (!mhi_cntrl || !mhi_cntrl->cntrl_dev || !mhi_cntrl->regs ||
- 	    !mhi_cntrl->runtime_get || !mhi_cntrl->runtime_put ||
- 	    !mhi_cntrl->status_cb || !mhi_cntrl->read_reg ||
--	    !mhi_cntrl->write_reg || !mhi_cntrl->nr_irqs || !mhi_cntrl->irq)
-+	    !mhi_cntrl->write_reg || !mhi_cntrl->nr_irqs ||
-+	    !mhi_cntrl->irq || !mhi_cntrl->reg_len)
- 		return -EINVAL;
- 
- 	ret = parse_config(mhi_cntrl, config);
-@@ -1077,6 +1078,13 @@ int mhi_prepare_for_power_up(struct mhi_controller *mhi_cntrl)
- 		dev_err(dev, "Error getting BHI offset\n");
- 		goto error_reg_offset;
- 	}
-+
-+	if (bhi_off >= mhi_cntrl->reg_len) {
-+		dev_err(dev, "BHI offset: 0x%x is out of range: 0x%zx\n",
-+			bhi_off, mhi_cntrl->reg_len);
-+		ret = -EINVAL;
-+		goto error_reg_offset;
-+	}
- 	mhi_cntrl->bhi = mhi_cntrl->regs + bhi_off;
- 
- 	if (mhi_cntrl->fbc_download || mhi_cntrl->rddm_size) {
-@@ -1086,6 +1094,14 @@ int mhi_prepare_for_power_up(struct mhi_controller *mhi_cntrl)
- 			dev_err(dev, "Error getting BHIE offset\n");
- 			goto error_reg_offset;
- 		}
-+
-+		if (bhie_off >= mhi_cntrl->reg_len) {
-+			dev_err(dev,
-+				"BHIe offset: 0x%x is out of range: 0x%zx\n",
-+				bhie_off, mhi_cntrl->reg_len);
-+			ret = -EINVAL;
-+			goto error_reg_offset;
-+		}
- 		mhi_cntrl->bhie = mhi_cntrl->regs + bhie_off;
- 	}
- 
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+>  
+>    reg:
+>      maxItems: 1
+> @@ -33,6 +36,9 @@ properties:
+>      items:
+>        - const: xo
+>  
+> +  clock-output-names:
+> +    maxItems: 1
+> +
+>  required:
+>    - compatible
+>    - reg
+> @@ -57,3 +63,31 @@ examples:
+>          clocks = <&xo>;
+>          clock-names = "xo";
+>      };
+> +  #Example 3 - A53 PLLs found on MSM8939 devices
+> +  - |
+> +    a53pll_c1: clock-controller@b016000 {
+> +        compatible = "qcom,msm8939-a53pll-c1";
+> +        reg = <0xb016000 0x40>;
+> +        #clock-cells = <0>;
+> +        clocks = <&xo_board>;
+> +        clock-names = "xo";
+> +        clock-output-names = "a53pll_c1";
+> +    };
+> +
+> +    a53pll_c0: clock-controller@b116000 {
+> +        compatible = "qcom,msm8939-a53pll-c0";
+> +        reg = <0xb116000 0x40>;
+> +        #clock-cells = <0>;
+> +        clocks = <&xo_board>;
+> +        clock-names = "xo";
+> +        clock-output-names = "a53pll_c0";
+> +    };
+> +
+> +    a53pll_cci: clock-controller@b1d0000 {
+> +        compatible = "qcom,msm8939-a53pll-cci";
+> +        reg = <0xb1d0000 0x40>;
+> +        #clock-cells = <0>;
+> +        clocks = <&xo_board>;
+> +        clock-names = "xo";
+> +        clock-output-names = "a53pll_cci";
+> +    };
 
+Do these examples really add anything?
