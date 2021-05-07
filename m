@@ -2,152 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DFDB4376B82
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 May 2021 23:14:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5C7CC376B8B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 May 2021 23:16:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229488AbhEGVPj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 May 2021 17:15:39 -0400
-Received: from mail-ot1-f50.google.com ([209.85.210.50]:41561 "EHLO
-        mail-ot1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229470AbhEGVPi (ORCPT
+        id S229470AbhEGVRf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 May 2021 17:17:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33410 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229739AbhEGVRe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 May 2021 17:15:38 -0400
-Received: by mail-ot1-f50.google.com with SMTP id 36-20020a9d0ba70000b02902e0a0a8fe36so2774485oth.8;
-        Fri, 07 May 2021 14:14:37 -0700 (PDT)
+        Fri, 7 May 2021 17:17:34 -0400
+Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C48BC061574
+        for <linux-arm-msm@vger.kernel.org>; Fri,  7 May 2021 14:16:33 -0700 (PDT)
+Received: by mail-ot1-x332.google.com with SMTP id n32-20020a9d1ea30000b02902a53d6ad4bdso9087981otn.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 07 May 2021 14:16:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=APM8DPe+LccdNN0+kDhVMWE01PD1ASVom/GfyL9NQwQ=;
+        b=GZ6T53sDSxyJBlvDHo4adf5vjclL7ypHDgiGoE9d1hJDXgzjc7xvS4mBAvDmFetP6S
+         zVvvaaBvOvbk8k+J9llQCaOZqyWpGt8oBYMJwlr6x4opNvfBkrVv6l1SdiiJ767zIxnH
+         qANjmP+kWk142hAEQlZRKMmP/4iOeWNJPGjmkAAO6rb1WkbWXdHPc81gWwn5EF9Q+VzQ
+         P8hepX5Yh7YpGT2CX/d6CdG37NdOprVWJCV/YQA5OYTknrOaZV5YokWvUUgo/BWjfzTv
+         +eCa08HIF5ECCWpRVu/vHyVHgvXrCpHjAzUx15DSMqjx2OfIobkpZhSCFoG0m/auP6BM
+         TM+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=7veamalGpZ3JPYDEzgwvaohfG+qmQaU3ikes2gGH9cY=;
-        b=so6LJ1RBcGzpR+s3GBJ2bspHXUghZvAg8bmKPaIsOa7VtNbOzkDEcmO/jsRPzWHM7d
-         RXL4OfYKw7eEed+8cUyCxuXVGHgXHUgnyhXePc+MOyJSt83qZb/OxAZnXhWaDtwjDaf0
-         F1PEywpwxdDK0q1XZ1IA+VjzUtkI4cZbRygdEaU8ZqTgjFWkz77LumaLSa7rRawm5cmX
-         zDioXvOsesDO/U9jpUwGzU9I2oWKR/hFo33yKBR8WuirO4hWSFVzFB0OBz8IUWYImdJ/
-         iKMPjy3ytRqPCXq07ZG5fDU5HoqG+vcjFXwR8NfOrgZcsa+MyQi0mFzgfM05vWhKA2MY
-         PdxQ==
-X-Gm-Message-State: AOAM530VTkZ1a1F7jQGCLiz+ERkiHNEIXWA0ZLcPoww3f3+k6+1/UDaQ
-        0dnlmFOPpFji2yd976mieJJ73lBHEg==
-X-Google-Smtp-Source: ABdhPJws1frb5rRP1SOGObFpTLxgTjiWmAFCGMur/wBJeGgvCd26jhJ/gW4kSV1Zn+ctT9nDKHskEA==
-X-Received: by 2002:a9d:7593:: with SMTP id s19mr10190187otk.268.1620422076830;
-        Fri, 07 May 2021 14:14:36 -0700 (PDT)
-Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id c18sm128622otm.1.2021.05.07.14.14.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 May 2021 14:14:35 -0700 (PDT)
-Received: (nullmailer pid 2897610 invoked by uid 1000);
-        Fri, 07 May 2021 21:14:34 -0000
-Date:   Fri, 7 May 2021 16:14:34 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org,
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=APM8DPe+LccdNN0+kDhVMWE01PD1ASVom/GfyL9NQwQ=;
+        b=QQGIe07Vc0YwsuAX2wSwzkAy5vxfgVvzxGSwF7ismEJTP+UQL23p7SA1jU8mq3XVL9
+         QAlT+LunOcRY55Svl70eM9qQaRiO5gMW1PENRHrXmFCylCfCGlHwFjAYeGXgymBVCGaQ
+         xuMQHeABxtoCIgZMbjDpQvq8R6eisxLSqrY2/R1nVMI2yZ7ev87J/02n1la1HoQNul7V
+         kgT6dufMk09gjUAwz+vtW8n6bnYwmCY+ERp62C3PUTE4NkeHFpXz2oiBvBBF7bjRvdqo
+         pYvyzkIgNVNc7chGAYyI+yvDhimm3wl0E4PRj99MAHo00YyagrQCC3hPWhhPhn+wMmMb
+         /4Ew==
+X-Gm-Message-State: AOAM533kWS+vhpGpn7aGwTat8spk6glLw19ThbSoyemiRImfDhnpDWP6
+        RVthovuid9bV95wmRDvm2NGOYCIO8bO7Gtx/GzGdtQ==
+X-Google-Smtp-Source: ABdhPJzqdKU7pUjJzYnNW7PizvgLbISRnoQ261R0j899n4w4iNfHYMQ3jhpX6z4YfUOJK84+o89SjUC0IdMthaqNvM8=
+X-Received: by 2002:a9d:1d01:: with SMTP id m1mr10126143otm.155.1620422192855;
+ Fri, 07 May 2021 14:16:32 -0700 (PDT)
+MIME-Version: 1.0
+References: <20210505213731.538612-16-bhupesh.sharma@linaro.org> <202105061257.2mFnfdJE-lkp@intel.com>
+In-Reply-To: <202105061257.2mFnfdJE-lkp@intel.com>
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Date:   Sat, 8 May 2021 02:46:21 +0530
+Message-ID: <CAH=2NtzgdAnMxY0ih9TD9WEW2-7JN4-doywPG6x88rDzZjDCgw@mail.gmail.com>
+Subject: Re: [PATCH v2 15/17] crypto: qce: Defer probing if BAM dma is not yet initialized
+To:     kernel test robot <lkp@intel.com>
+Cc:     linux-arm-msm@vger.kernel.org, kbuild-all@lists.01.org,
         Thara Gopinath <thara.gopinath@linaro.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Andy Gross <agross@kernel.org>,
         Herbert Xu <herbert@gondor.apana.org.au>,
         "David S . Miller" <davem@davemloft.net>,
         Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Vinod Koul <vkoul@kernel.org>, dmaengine@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-crypto@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        bhupesh.linux@gmail.com
-Subject: Re: [PATCH v2 00/17]  Enable Qualcomm Crypto Engine on sm8250
-Message-ID: <20210507211434.GA2879094@robh.at.kernel.org>
-References: <20210505213731.538612-1-bhupesh.sharma@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210505213731.538612-1-bhupesh.sharma@linaro.org>
+        Michael Turquette <mturquette@baylibre.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, May 06, 2021 at 03:07:14AM +0530, Bhupesh Sharma wrote:
-> Changes since v1:
-> =================
-> - v1 can be seen here: https://lore.kernel.org/linux-arm-msm/20210310052503.3618486-1-bhupesh.sharma@linaro.org/ 
-> - v1 did not work well as reported earlier by Dmitry, so v2 contains the following
->   changes/fixes:
->   ~ Enable the interconnect path b/w BAM DMA and main memory first
->     before trying to access the BAM DMA registers.
->   ~ Enable the interconnect path b/w qce crytpo and main memory first
->     before trying to access the qce crypto registers.
->   ~ Make sure to document the required and optional properties for both
->     BAM DMA and qce crypto drivers.
->   ~ Add a few debug related print messages in case the qce crypto driver
->     passes or fails to probe.
->   ~ Convert the qce crypto driver probe to a defered one in case the BAM DMA
->     or the interconnect driver(s) (needed on specific Qualcomm parts) are not
->     yet probed.
-> 
-> Qualcomm crypto engine is also available on sm8250 SoC.
-> It supports hardware accelerated algorithms for encryption
-> and authentication. It also provides support for aes, des, 3des
-> encryption algorithms and sha1, sha256, hmac(sha1), hmac(sha256)
-> authentication algorithms.
-> 
-> Tested the enabled crypto algorithms with cryptsetup test utilities
-> on sm8250-mtp and RB5 board (see [1]).
-> 
-> While at it, also make a minor fix in 'sdm845.dtsi', to make
-> sure it confirms with the other .dtsi files which expose
-> crypto nodes on qcom SoCs.
-> 
-> Cc: Thara Gopinath <thara.gopinath@linaro.org>
-> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Cc: Rob Herring <robh+dt@kernel.org>
-> Cc: Andy Gross <agross@kernel.org>
-> Cc: Herbert Xu <herbert@gondor.apana.org.au>
-> Cc: David S. Miller <davem@davemloft.net>
-> Cc: Stephen Boyd <sboyd@kernel.org>
-> Cc: Michael Turquette <mturquette@baylibre.com>
-> Cc: Vinod Koul <vkoul@kernel.org>
-> Cc: dmaengine@vger.kernel.org
-> Cc: linux-clk@vger.kernel.org
-> Cc: linux-crypto@vger.kernel.org
-> Cc: devicetree@vger.kernel.org
-> Cc: linux-kernel@vger.kernel.org
-> Cc: bhupesh.linux@gmail.com
->  
-> Bhupesh Sharma (14):
->   dt-bindings: qcom-bam: Add 'interconnects' & 'interconnect-names' to
->     optional properties
->   dt-bindings: qcom-bam: Add 'iommus' to required properties
->   dt-bindings: qcom-qce: Add 'iommus' to required properties
->   dt-bindings: qcom-qce: Add 'interconnects' and move 'clocks' to
->     optional properties
->   arm64/dts: qcom: sdm845: Use RPMH_CE_CLK macro directly
->   dt-bindings: crypto : Add new compatible strings for qcom-qce
+Hi,
 
-Please convert these bindings to schemas.
+On Thu, 6 May 2021 at 10:23, kernel test robot <lkp@intel.com> wrote:
+>
+> Hi Bhupesh,
+>
+> Thank you for the patch! Yet something to improve:
+>
+> [auto build test ERROR on cryptodev/master]
+> [also build test ERROR on crypto/master vkoul-dmaengine/next robh/for-next v5.12 next-20210505]
+> [If your patch is applied to the wrong git tree, kindly drop us a note.
+> And when submitting patch, we suggest to use '--base' as documented in
+> https://git-scm.com/docs/git-format-patch]
+>
+> url:    https://github.com/0day-ci/linux/commits/Bhupesh-Sharma/Enable-Qualcomm-Crypto-Engine-on-sm8250/20210506-054114
+> base:   https://git.kernel.org/pub/scm/linux/kernel/git/herbert/cryptodev-2.6.git master
+> config: m68k-allmodconfig (attached as .config)
+> compiler: m68k-linux-gcc (GCC) 9.3.0
+> reproduce (this is a W=1 build):
+>         wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+>         chmod +x ~/bin/make.cross
+>         # https://github.com/0day-ci/linux/commit/4c00d66a1b254454e85dc82cb7358649e1dda72c
+>         git remote add linux-review https://github.com/0day-ci/linux
+>         git fetch --no-tags linux-review Bhupesh-Sharma/Enable-Qualcomm-Crypto-Engine-on-sm8250/20210506-054114
+>         git checkout 4c00d66a1b254454e85dc82cb7358649e1dda72c
+>         # save the attached .config to linux build tree
+>         COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-9.3.0 make.cross W=1 ARCH=m68k
+>
+> If you fix the issue, kindly add following tag as appropriate
+> Reported-by: kernel test robot <lkp@intel.com>
+>
+> All errors (new ones prefixed by >>, old ones prefixed by <<):
+>
+> >> ERROR: modpost: "bam_is_probed" [drivers/crypto/qce/qcrypto.ko] undefined!
 
+Thanks, I will fix this in v3.
 
->   arm64/dts: qcom: Use new compatibles for crypto nodes
->   crypto: qce: Add new compatibles for qce crypto driver
->   crypto: qce: Print a failure msg in case probe() fails
->   crypto: qce: Convert the device found dev_dbg() to dev_info()
->   dma: qcom: bam_dma: Create a new header file for BAM DMA driver
->   crypto: qce: Defer probing if BAM dma is not yet initialized
->   crypto: qce: Defer probe in case interconnect is not yet initialized
->   arm64/dts: qcom: sm8250: Add dt entries to support crypto engine.
-> 
-> Thara Gopinath (3):
->   dma: qcom: bam_dma: Add support to initialize interconnect path
->   crypto: qce: core: Add support to initialize interconnect path
->   crypto: qce: core: Make clocks optional
-> 
->  .../devicetree/bindings/crypto/qcom-qce.txt   |  22 +-
->  .../devicetree/bindings/dma/qcom_bam_dma.txt  |   5 +
->  arch/arm64/boot/dts/qcom/ipq6018.dtsi         |   2 +-
->  arch/arm64/boot/dts/qcom/sdm845.dtsi          |   6 +-
->  arch/arm64/boot/dts/qcom/sm8250.dtsi          |  28 ++
->  drivers/crypto/qce/core.c                     | 112 +++++--
->  drivers/crypto/qce/core.h                     |   3 +
->  drivers/dma/qcom/bam_dma.c                    | 306 ++----------------
->  include/soc/qcom/bam_dma.h                    | 290 +++++++++++++++++
->  9 files changed, 457 insertions(+), 317 deletions(-)
->  create mode 100644 include/soc/qcom/bam_dma.h
-> 
-> -- 
-> 2.30.2
-> 
+Regards,
+Bhupesh
