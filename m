@@ -2,70 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0FB51375E50
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 May 2021 03:19:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ACF44375ED6
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 May 2021 04:33:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233248AbhEGBUP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 May 2021 21:20:15 -0400
-Received: from mail-ot1-f45.google.com ([209.85.210.45]:44005 "EHLO
-        mail-ot1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233027AbhEGBUO (ORCPT
+        id S234044AbhEGCeW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 May 2021 22:34:22 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:31125 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233785AbhEGCeV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 May 2021 21:20:14 -0400
-Received: by mail-ot1-f45.google.com with SMTP id u19-20020a0568302493b02902d61b0d29adso5830700ots.10;
-        Thu, 06 May 2021 18:19:14 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=iTRiEv/+c31w1knsIgiLTIV+1F0Vw0ef9aNvXKYG0/M=;
-        b=pkouxRVbkiG9cirC0aqotu3NAIOlNAoqaUscfy2FXBEwDnq8HOzoCFl429IoTxDA4e
-         oNk+oETH9N3Un+7Kw27TNWuMK5XBVBHfiE7bJ8XcMiogaNfQ7a4j+Uk+i6VUXJHVWUDN
-         4qkwEN2TS1T6dEWbAcbVrNe7HFbSA+BT4r+L825t5Vow2B4aAkPHDRa7w5FpAI0LEMfR
-         M6w/PO/fFgbB00lwQZft5OsPh9V4uo4O/BzgwuUeunfYLKYmJhKnQg47nvzkyn+Mgm8F
-         S3RsVlfSw9DrPt4UIZ/NogV0EReyu3n3xgYqyvPIGi98/0Srs4sA9tZ3VltssiJo5sGz
-         ttcg==
-X-Gm-Message-State: AOAM532oBnOE5K5/vK1MSz5DmlNREn/rG/NYmAFlYRrxcsbCLXgWHl3N
-        nTnP+gQ0ufA2gzDX+Tag3g==
-X-Google-Smtp-Source: ABdhPJwPMNVgkYoUMeIdVLdofJLqZe2HJ2aWT28cmU2/jeNKZAqSuKtsNJ/sYxzF5visBCFJ01x8lg==
-X-Received: by 2002:a9d:543:: with SMTP id 61mr2637297otw.287.1620350354494;
-        Thu, 06 May 2021 18:19:14 -0700 (PDT)
-Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id o6sm731687oih.44.2021.05.06.18.19.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 May 2021 18:19:13 -0700 (PDT)
-Received: (nullmailer pid 1133400 invoked by uid 1000);
-        Fri, 07 May 2021 01:19:12 -0000
-Date:   Thu, 6 May 2021 20:19:12 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
-Cc:     rjliao@codeaurora.org, abhishekpandit@chromium.org,
-        hbandi@codeaurora.org, bgodavar@codeaurora.org,
-        devicetree@vger.kernel.org, johan.hedberg@gmail.com,
-        linux-bluetooth@vger.kernel.org, marcel@holtmann.org,
-        mka@chromium.org, hemantg@codeaurora.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v3 5/5] dt-bindings: net: bluetooth: Add device tree
- bindings for QTI chip wcn6750
-Message-ID: <20210507011912.GA1133328@robh.at.kernel.org>
-References: <1620322392-27148-1-git-send-email-gubbaven@codeaurora.org>
- <1620322392-27148-6-git-send-email-gubbaven@codeaurora.org>
+        Thu, 6 May 2021 22:34:21 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1620354803; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=8laHLxpGeb7o6Scw5WGknuXL88+X8velIbUvuC+eLbs=; b=NIuCncq92KrkmQWbYB+qpHwB8WYioIpBlFwbP3Nm6KMrdu40S+cyjluxqg6eiAPSYk+tJHq+
+ LkrV0aWUnAwC2JebNGO5ir3z4dbt3sHlZnVJx9ljqFJTHxkIiW9hNE5ICYTt/sw+jG+MKJOu
+ eUK8UwFN8HO1ntWB2Kung3jRi8w=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
+ 6094a6f1e0e9c9a6b601e82c (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 07 May 2021 02:33:21
+ GMT
+Sender: hemantk=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 3EA25C433D3; Fri,  7 May 2021 02:33:21 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [10.46.162.249] (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: hemantk)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0EEFEC433D3;
+        Fri,  7 May 2021 02:33:19 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 0EEFEC433D3
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=hemantk@codeaurora.org
+Subject: Re: [PATCH v4 6/6] bus: mhi: core: Add range checks for BHI and BHIe
+To:     Bhaumik Bhatt <bbhatt@codeaurora.org>,
+        manivannan.sadhasivam@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, jhugo@codeaurora.org,
+        linux-kernel@vger.kernel.org, loic.poulain@linaro.org,
+        linux-wireless@vger.kernel.org, kvalo@codeaurora.org,
+        ath11k@lists.infradead.org
+References: <1620330705-40192-1-git-send-email-bbhatt@codeaurora.org>
+ <1620330705-40192-7-git-send-email-bbhatt@codeaurora.org>
+From:   Hemant Kumar <hemantk@codeaurora.org>
+Message-ID: <860e3d9d-91dc-7fd6-68f6-e8f099cc4555@codeaurora.org>
+Date:   Thu, 6 May 2021 19:33:19 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1620322392-27148-6-git-send-email-gubbaven@codeaurora.org>
+In-Reply-To: <1620330705-40192-7-git-send-email-bbhatt@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 06 May 2021 23:03:12 +0530, Venkata Lakshmi Narayana Gubba wrote:
-> This patch enables regulators and gpios for the Qualcomm Bluetooth wcn6750
-> controller.
-> 
-> Signed-off-by: Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
-> ---
->  .../bindings/net/qualcomm-bluetooth.yaml           | 71 ++++++++++++++++++++++
->  1 file changed, 71 insertions(+)
-> 
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+
+On 5/6/21 12:51 PM, Bhaumik Bhatt wrote:
+> When obtaining the BHI or BHIe offsets during the power up
+> preparation phase, range checks are missing. These can help
+> controller drivers avoid accessing any address outside of the
+> MMIO region. Ensure that mhi_cntrl->reg_len is set before MHI
+> registration as it is a required field and range checks will
+> fail without it.
+> 
+> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+> Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+
+Reviewed-by: Hemant Kumar <hemantk@codeaurora.org>
+
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
