@@ -2,129 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0493E376927
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 May 2021 18:59:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DEBF2376947
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 May 2021 19:07:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238454AbhEGRAK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 May 2021 13:00:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33450 "EHLO
+        id S235840AbhEGRIe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 May 2021 13:08:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35350 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236002AbhEGRAK (ORCPT
+        with ESMTP id S238505AbhEGRId (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 May 2021 13:00:10 -0400
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33879C061574
-        for <linux-arm-msm@vger.kernel.org>; Fri,  7 May 2021 09:59:10 -0700 (PDT)
-Received: by mail-wm1-x329.google.com with SMTP id 4-20020a05600c26c4b0290146e1feccd8so5272952wmv.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 07 May 2021 09:59:10 -0700 (PDT)
+        Fri, 7 May 2021 13:08:33 -0400
+Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 587A3C061574
+        for <linux-arm-msm@vger.kernel.org>; Fri,  7 May 2021 10:07:31 -0700 (PDT)
+Received: by mail-pj1-x1032.google.com with SMTP id cl24-20020a17090af698b0290157efd14899so5681698pjb.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 07 May 2021 10:07:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=f4WDLsvKJMxDGO3+bzmGSecNUJim8tE2LEMA4fIetY8=;
-        b=CL8xvpvAHG70auywB/Spvy3ss+5QkCld2KRv1eqOt1maC6iB8xp0ExToQWHwYN56Nu
-         JaB4JwO8a6v2h3mA/7iNyQSy6NLIvmuiKB7pDd+tA46COmLc5s4t7H5AJGNPgcUBbsP+
-         ZneMWoLXa/bsisGUCnVPTbFpuYcndZED/Kpz8vxBk8zqNJkDZA1PAEWah0is5/MF05hv
-         +jmN9gGsj6H8YMJ5GYty8V0SWpc291OGZYVcxgF/+yHfkhwn+Qy+Bdtmo9uUkEtlnFNl
-         wQNBU5DB80M22GuLYUmfPuOavL+njr6kebiGsJ4RXuD7Oxu2dMVoqW1akJyu85rJ8eS9
-         B5Sw==
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=RiGyUlYAW1u/8xTEb2M57YXe98Wsy6SGD0Ef+9dzg2k=;
+        b=zXQbNUSKr6WntaFyoibLr+KI6HA/xr8Y8FL4frv3mk1pziMaor2RgvdJxyXYG+V2u+
+         0o37nxLDo6ReRvnYGpdFzA4iSIAYvvzPHXqqbs6ahWb1WVMgDPHfaFI304x2txId9w1m
+         1n+cimEpErDy+cXQ6MBj2W7m3VLC9nxKcHSBiBVPsmj3ZuLbjHASw7tiCO2IWzBJhCFc
+         fT5sEFMPT3buMA4fyMIv0YO3lgPXVR8Q1G86XU4oGhS3ElYr3rnjGuEcoBs7+Xsf6WGL
+         bBbH60nl7ziBQbnBdhIO7opxW1beGWPhOahXcKrgDRQUHpmFjteuHbEskM+vYsg5s+6F
+         XPKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=f4WDLsvKJMxDGO3+bzmGSecNUJim8tE2LEMA4fIetY8=;
-        b=TJfNoW3CYlsfQdkkx5c+eSWhFqekAsxTM9I5ZscDxHYxJmhi5F7IhKtewc0Vq5HQTq
-         54HkOlQvJHALxXZMjEHmeX6xZExcRWVUsY9X3w1ToLDMwJPoT77FgnvcvIjSg8FVVfNi
-         qaw8ZDLMh5cXSH8GLIWvYrtmfqFZ1g3oAZ7A02EDmwn0mQNDhpNM159R3vEDkIIWjhmO
-         mvna8h9PR+fTH54sFJkPgGdiQLWwbaajKwGQaFMrRD1YKa9GkH6Pp1XtHCH3OPKF7Tz/
-         Rv4cHADSv0t26hIzVYZyQ9zWn4KtB7OrJItrvBJLIsJi2tpDdFdHyIHw4t+iBrENTZrY
-         hqZw==
-X-Gm-Message-State: AOAM531/ezf6aTKetmBdaDfdA0B0Yqy6orMMaCbEUkx4ZAvXx1T2DKWU
-        TznL4smEyRQvV+gCLdXmzcb/ToxFkh8PRDwCjxG8KQ/Y
-X-Google-Smtp-Source: ABdhPJwHz0UOTtSriaYhPLieL9JH2FIXzvpsM22+FD0bA2bQxAo21M2u2vcZgRZf0DcF6KRujyOP7mZtKl87ZCNv7I4=
-X-Received: by 2002:a1c:4954:: with SMTP id w81mr22641820wma.49.1620406748836;
- Fri, 07 May 2021 09:59:08 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=RiGyUlYAW1u/8xTEb2M57YXe98Wsy6SGD0Ef+9dzg2k=;
+        b=fFwqy2DwOTzvasC3hTMZs7+QGflaAIY0+FgT1ZvASaY6Mz5jCNBt8Lz/1qiuMK26tP
+         1/bvCD0Zycvs+z/uh8P5R5da6A+n0b5C6gzsXocnHK6SbWOtDIXa5SUrXwz3iNgLTqqI
+         OQ9DraxCNqPSJmcOtQjYRJ4S8oTZ6ctxHwg0y0IK4UK1Mvp/hyzRODojHUE8y/FXhxIX
+         74HFCGn77RJNqwZmo+TFjMGxsigLK/f1iSCH1CBIiGsQKu1izlTzuR3tKGYrYttOXF93
+         vTNliYvzv6p/lRqf/FpyOEdZPbH+8mXEHx0408A0WTvgaeE/IjbIF9qRc1dxSgN2CEk3
+         T3QA==
+X-Gm-Message-State: AOAM5318jiYdfkocYVaZ36GCgxmu8FPjQwV9AdpUIeoy6V910LGd6r/a
+        nCt6cG4Cbu4vCO2lJl71xaK9
+X-Google-Smtp-Source: ABdhPJyuPKTcZCWMAOt39RYL09MRviRjAJXantrTkcrhT5nEDL3ejQXsOJOUnbZ/LZQFdAgX5bckWg==
+X-Received: by 2002:a17:90b:3615:: with SMTP id ml21mr24188974pjb.28.1620407250646;
+        Fri, 07 May 2021 10:07:30 -0700 (PDT)
+Received: from thinkpad ([2409:4072:e94:6cb6:4728:f123:8d88:45e9])
+        by smtp.gmail.com with ESMTPSA id n189sm3415486pfn.10.2021.05.07.10.07.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 07 May 2021 10:07:30 -0700 (PDT)
+Date:   Fri, 7 May 2021 22:37:22 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Konrad Dybcio <konrad.dybcio@somainline.org>
+Cc:     Yassine Oudjana <y.oudjana@protonmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Ohad Ben-Cohen <ohad@wizery.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht
+Subject: Re: [PATCH 1/3] remoteproc: qcom: pas: Use the same init resources
+ for MSM8996 and MSM8998
+Message-ID: <20210507170722.GB3919@thinkpad>
+References: <zbAB2sceYHmsYeraZUi4YUKL7lgFMu13w3vHQQYUQ4@cp3-web-020.plabs.ch>
+ <20210507164045.GA3622@thinkpad>
+ <22accfef-a629-b483-f93f-820030ff5189@somainline.org>
 MIME-Version: 1.0
-References: <20210507141651.2887-1-sean@poorly.run> <CAF6AEGutiv+0QMNo6QQ8jSDYwxhJ5+62_TZ5zsiT_WxgDm+JiA@mail.gmail.com>
-In-Reply-To: <CAF6AEGutiv+0QMNo6QQ8jSDYwxhJ5+62_TZ5zsiT_WxgDm+JiA@mail.gmail.com>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Fri, 7 May 2021 10:02:49 -0700
-Message-ID: <CAF6AEGud9xdEwDpADN3SpA+JMUCYtRL6UEaGLiq49vy5sqwa7A@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm: Fix uninitialized var usage in dsi_phy_28nm_8960.c
-To:     Sean Paul <sean@poorly.run>
-Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
-        Sean Paul <seanpaul@chromium.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Rob Clark <robdclark@chromium.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <22accfef-a629-b483-f93f-820030ff5189@somainline.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, May 7, 2021 at 9:43 AM Rob Clark <robdclark@gmail.com> wrote:
->
-> On Fri, May 7, 2021 at 7:16 AM Sean Paul <sean@poorly.run> wrote:
+On Fri, May 07, 2021 at 06:56:22PM +0200, Konrad Dybcio wrote:
+> Hi,
+> 
+> 
+> > NACK.
 > >
-> > From: Sean Paul <seanpaul@chromium.org>
-> >
-> > This patch fixes the following error:
-> >
-> > drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c:425:11: error: variable 'parent_name' is uninitialized when used here
-> > [-Werror,-Wuninitialized]
-> >         snprintf(parent_name, 32, "dsi%dvco_clk", pll_28nm->phy->id);
-> >                  ^~~~~~~~~~~
-> > drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c:385:30:
-> > note: initialize the variable 'parent_name' to silence this warning
-> >         char *clk_name, *parent_name, *vco_name;
-> >                                     ^
-> >                                      = NULL
-> > 1 error generated.
-> > make[5]: ***
-> > [scripts/Makefile.build:279: drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.o] Error 1
-> >
-> > It looks like the allocation was inadvertently deleted.
-> >
-> > Fixes: 5d13459650b3 ("drm/msm/dsi: push provided clocks handling into a generic code")
-> >
-> > Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > Cc: Stephen Boyd <swboyd@chromium.org>
-> > Cc: Abhinav Kumar <abhinavk@codeaurora.org>
-> > Cc: Rob Clark <robdclark@chromium.org>
-> > Signed-off-by: Sean Paul <seanpaul@chromium.org>
->
-> Thanks, I'll pick this up for next -fixes pr
+> > I see that the "slpi_resource_init" and "msm8998_{slpi/adsp}_resource" are
+> > completely different, even the firmware name. How can you get it to work?
+> 
+> one of us must be looking at some knock-off source code, as they are identical say for the presence or absence of proxy_pd_names, which are required for 8996 and weren't really an exposed thing on old SoCs like 8974.
+> 
 
-Oh, sorry, I lied, I already had the same fix from Dmitry
+Actually "msm8998_adsp_resource" is what different from "slpi_resource_init" and
+"msm8998_slpi_resource" looks good. So you can just add the proxy votes to
+"slpi_resource_init".
 
-BR,
--R
+Thanks,
+Mani
 
->
-> > ---
-> >  drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c | 4 ++++
-> >  1 file changed, 4 insertions(+)
-> >
-> > diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c
-> > index 582b1428f971..86e40a0d41a3 100644
-> > --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c
-> > +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c
-> > @@ -405,6 +405,10 @@ static int pll_28nm_register(struct dsi_pll_28nm *pll_28nm, struct clk_hw **prov
-> >         if (!vco_name)
-> >                 return -ENOMEM;
-> >
-> > +       parent_name = devm_kzalloc(dev, 32, GFP_KERNEL);
-> > +       if (!parent_name)
-> > +               return -ENOMEM;
-> > +
-> >         clk_name = devm_kzalloc(dev, 32, GFP_KERNEL);
-> >         if (!clk_name)
-> >                 return -ENOMEM;
-> > --
-> > Sean Paul, Software Engineer, Google / Chromium OS
-> >
+> 
+> Konrad
+> 
