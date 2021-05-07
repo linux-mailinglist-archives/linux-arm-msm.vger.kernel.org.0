@@ -2,338 +2,268 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1455B376BAA
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 May 2021 23:25:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 95472376BF8
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 May 2021 00:00:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229760AbhEGV0L (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 May 2021 17:26:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35300 "EHLO
+        id S229786AbhEGWBm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 May 2021 18:01:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43210 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229753AbhEGV0L (ORCPT
+        with ESMTP id S229742AbhEGWBm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 May 2021 17:26:11 -0400
-Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05AC4C061763
-        for <linux-arm-msm@vger.kernel.org>; Fri,  7 May 2021 14:25:11 -0700 (PDT)
-Received: by mail-pf1-x42b.google.com with SMTP id b15so8817435pfl.4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 07 May 2021 14:25:11 -0700 (PDT)
+        Fri, 7 May 2021 18:01:42 -0400
+Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDE65C061574
+        for <linux-arm-msm@vger.kernel.org>; Fri,  7 May 2021 15:00:40 -0700 (PDT)
+Received: by mail-ot1-x331.google.com with SMTP id b5-20020a9d5d050000b02902a5883b0f4bso9198160oti.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 07 May 2021 15:00:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=oPhUQbXG7R8X2jOQyavNRDbK8zQ1lt29JM0olvEd6PQ=;
-        b=YXdR3h0ajhLbtUPggFTKw7aRLvQEPxVypdSmdKuTcPNmu2BkdbFaNrh21YYwZkcU3S
-         8HI6uCRQYUt+r/0NcM04/b8g/qLDmYsKYkNOPqnxtTv2ISHnuyTtGtXNqUHZgyW4c4XD
-         ibH8rzVa1r4Ak8ubuD+e2u9Qd9cCCt4231sgY=
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=pHGpBPn7Vn0QhtA1pV17/jRpabR6QCqZfLFyPRSi3+8=;
+        b=MtRUWN3NdIe8WJV5L1m4UKE/6IVj0lSLJ9hd9+q9hT6VZvQ/OvZRj68oY8kQ9VEQdK
+         Bm0Wgonsj09qR6/gDPJ61+gO20a0XDTGgacgRCt2On6rs/PBFgorX+VpYnClx2hAaUKt
+         GtDUlqNIqG/8p0S3N9Gd4xOUWdvTs5y9FtyefnRxLd+zRps93/Uara/r+Xo3j80jR2um
+         EsQZl/BvDZ4qM3cfcX+xQLjdE+n9E9N5QbPP1bcjCpxWo3AXsEsX3DkOwH/VhOM6di7f
+         ApPg3zZC1rY8XJbaQId5JFVgrpJ0lVwOGTFuqEKJgxoBb39JtNEcrd8EHh90jo4h56gc
+         9c0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=oPhUQbXG7R8X2jOQyavNRDbK8zQ1lt29JM0olvEd6PQ=;
-        b=o2JaKku9EWhMUtR21o7QrwArM22aeiCAFnig5FctpUySf3OTU7Tn4aFPdVa0BPDu/a
-         WhyXHBtuHyMwTnEADbei8Kv/FF2GjOKypvrS4IwkQMGO59N6X0/PXvLkn+6cZzMM6jtW
-         VuIAjAe3UkpnMupcHlzjZ46oXN5ni/VxY1azpLkEFOJYpB03j3vzazBm4+PvNrjZrtKT
-         75hDNVsh9K6n4oUKVn4gYuJSDXZ6UfFQz8NgELcfTTtdBhGlhaznnNYa+5GCiQbLagEV
-         6cIt/JzH1+mtkhefPvjHuaH2ZsZNrrCvj/yr0hlxYUqxJT8RaHas4OzjphHmH0Pe0fqj
-         iIww==
-X-Gm-Message-State: AOAM530O5//dVa068BvfuNSjuvqqJxaANwERLKZg4CvPmowlmmwyoVhM
-        TWAWCCjKaQ5nFjbN0JNv+mrlDg==
-X-Google-Smtp-Source: ABdhPJyEMXQEvGTkBlCsP+Gb6Sbe/3bU5vBg3c5J0yYX7KTOUksQ/Habp7gr4cjV345Pp2XDZWPlBg==
-X-Received: by 2002:a65:4185:: with SMTP id a5mr11906182pgq.388.1620422710622;
-        Fri, 07 May 2021 14:25:10 -0700 (PDT)
-Received: from smtp.gmail.com ([2620:15c:202:201:ab8b:4a3d:46ab:361c])
-        by smtp.gmail.com with ESMTPSA id t1sm4996298pjo.33.2021.05.07.14.25.09
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=pHGpBPn7Vn0QhtA1pV17/jRpabR6QCqZfLFyPRSi3+8=;
+        b=aty37w3PTMYG37swWvUx7jIVBjg9n7Eo68lRq/Mujq6WNVsrZXafOXs/7yCOBQqREk
+         Jp/HfBxTcHQPaDh3fHH4d11o9Tpem5QdIr6bnrgBOyowVeC+z7csAtij5MvpEQcc1P8O
+         E2Z/LAHW0yNcRVtKeqsBxzdMJnqEitV/lu6JW7gBJ645cl7wuboS50u9BqlvP7MQvx1o
+         0VmKMxm7yAfkhwS6t4ZMl+nGacFdF41iEAz5UGZqoszXFbDCxhFW1rURFxD6xzsGBlif
+         Iv0JYSNJsfvzo32Cpk9S2Csf7kVl+KjzLmt634MLR692dwvqnZYNXIVhfqn1cGuUZR5g
+         1ktw==
+X-Gm-Message-State: AOAM5303fXVmP4xVLlFvACM34HZy/kbbAXUqPTnQBc9qaUs+eKFD1gqA
+        dtRLTUqyky6StU061Gif1ubJEw==
+X-Google-Smtp-Source: ABdhPJwml4NJxDp+z8QnYGmN/27SVl0D/MkeGXJRaGlqAQ75zZ3MDGKIZ8gR6NgZhWHnOQQaau97TA==
+X-Received: by 2002:a9d:728b:: with SMTP id t11mr5850135otj.230.1620424840128;
+        Fri, 07 May 2021 15:00:40 -0700 (PDT)
+Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id w66sm1327673ooa.37.2021.05.07.15.00.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 May 2021 14:25:10 -0700 (PDT)
-From:   Stephen Boyd <swboyd@chromium.org>
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Kuogee Hsieh <khsieh@codeaurora.org>, aravindh@codeaurora.org,
-        Sean Paul <sean@poorly.run>
-Subject: [PATCH 3/3] drm/msm/dp: Handle aux timeouts, nacks, defers
-Date:   Fri,  7 May 2021 14:25:05 -0700
-Message-Id: <20210507212505.1224111-4-swboyd@chromium.org>
-X-Mailer: git-send-email 2.31.1.607.g51e8a6a459-goog
-In-Reply-To: <20210507212505.1224111-1-swboyd@chromium.org>
-References: <20210507212505.1224111-1-swboyd@chromium.org>
+        Fri, 07 May 2021 15:00:39 -0700 (PDT)
+Date:   Fri, 7 May 2021 17:00:36 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Lyude Paul <lyude@redhat.com>
+Cc:     Douglas Anderson <dianders@chromium.org>,
+        Andrzej Hajda <a.hajda@samsung.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jernej Skrabec <jernej.skrabec@siol.net>,
+        Sam Ravnborg <sam@ravnborg.org>, Wolfram Sang <wsa@kernel.org>,
+        Ville Syrjala <ville.syrjala@intel.com>,
+        Steev Klimaszewski <steev@kali.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        linux-arm-msm@vger.kernel.org,
+        Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>,
+        Linus W <linus.walleij@linaro.org>, robdclark@chromium.org,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Thierry Reding <treding@nvidia.com>, linux-i2c@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v6 2/5] drm/dp: Allow an early call to register DDC i2c
+ bus
+Message-ID: <20210507220036.GI2484@yoga>
+References: <20210503215844.2996320-1-dianders@chromium.org>
+ <20210503145750.v6.2.Iff8f2957d86af40f2bfcfb5a7163928481fccea4@changeid>
+ <8eedeb02dc56ecaed5d2f3cb8d929a3675b2c3da.camel@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <8eedeb02dc56ecaed5d2f3cb8d929a3675b2c3da.camel@redhat.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Let's look at the irq status bits after a transfer and see if we got a
-nack or a defer or a timeout, instead of telling drm layers that
-everything was fine, while still printing an error message. I wasn't
-sure about NACK+DEFER so I lumped all those various errors along with a
-nack so that the drm core can figure out that things are just not going
-well. The important thing is that we're now returning -ETIMEDOUT when
-the message times out and nacks for bad addresses.
+On Fri 07 May 16:18 CDT 2021, Lyude Paul wrote:
 
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Abhinav Kumar <abhinavk@codeaurora.org>
-Cc: Kuogee Hsieh <khsieh@codeaurora.org>
-Cc: aravindh@codeaurora.org
-Cc: Sean Paul <sean@poorly.run>
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
----
- drivers/gpu/drm/msm/dp/dp_aux.c | 140 ++++++++++++++------------------
- drivers/gpu/drm/msm/dp/dp_aux.h |   8 --
- 2 files changed, 61 insertions(+), 87 deletions(-)
+> Adding ville from Intel to also get their take on this.
+> 
+> In general we've been trying to move DRM to a design where we don't expose any
+> devices until everything is ready. That's pretty much the main reason that we
+> register things during bridge attach time. Note though that even before the
+> DDC bus is registered it should still be usable, just things like get_device()
+> won't work.
+> 
+> This isn't the first time we've run into a problem like the one you're trying
+> to solve though, Tegra currently has a similar issue. Something we discussed
+> as a possible long-term solution for this was splitting i2c_add_adapter() into
+> a minimal initialization function and a registration function. Linux's device
+> core already allows for this (device_initialize() and device_add(), which are
+> called together when device_register() is called). Would this be a solution
+> that might work for you (and even better, would you possibly be willing to
+> write the patches? :)
+> 
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_aux.c b/drivers/gpu/drm/msm/dp/dp_aux.c
-index b49810396513..4a3293b590b0 100644
---- a/drivers/gpu/drm/msm/dp/dp_aux.c
-+++ b/drivers/gpu/drm/msm/dp/dp_aux.c
-@@ -9,7 +9,15 @@
- #include "dp_reg.h"
- #include "dp_aux.h"
- 
--#define DP_AUX_ENUM_STR(x)		#x
-+enum msm_dp_aux_err {
-+	DP_AUX_ERR_NONE,
-+	DP_AUX_ERR_ADDR,
-+	DP_AUX_ERR_TOUT,
-+	DP_AUX_ERR_NACK,
-+	DP_AUX_ERR_DEFER,
-+	DP_AUX_ERR_NACK_DEFER,
-+	DP_AUX_ERR_PHY,
-+};
- 
- struct dp_aux_private {
- 	struct device *dev;
-@@ -18,7 +26,7 @@ struct dp_aux_private {
- 	struct mutex mutex;
- 	struct completion comp;
- 
--	u32 aux_error_num;
-+	enum msm_dp_aux_err aux_error_num;
- 	u32 retry_cnt;
- 	bool cmd_busy;
- 	bool native;
-@@ -33,62 +41,45 @@ struct dp_aux_private {
- 
- #define MAX_AUX_RETRIES			5
- 
--static const char *dp_aux_get_error(u32 aux_error)
--{
--	switch (aux_error) {
--	case DP_AUX_ERR_NONE:
--		return DP_AUX_ENUM_STR(DP_AUX_ERR_NONE);
--	case DP_AUX_ERR_ADDR:
--		return DP_AUX_ENUM_STR(DP_AUX_ERR_ADDR);
--	case DP_AUX_ERR_TOUT:
--		return DP_AUX_ENUM_STR(DP_AUX_ERR_TOUT);
--	case DP_AUX_ERR_NACK:
--		return DP_AUX_ENUM_STR(DP_AUX_ERR_NACK);
--	case DP_AUX_ERR_DEFER:
--		return DP_AUX_ENUM_STR(DP_AUX_ERR_DEFER);
--	case DP_AUX_ERR_NACK_DEFER:
--		return DP_AUX_ENUM_STR(DP_AUX_ERR_NACK_DEFER);
--	default:
--		return "unknown";
--	}
--}
--
--static u32 dp_aux_write(struct dp_aux_private *aux,
-+static ssize_t dp_aux_write(struct dp_aux_private *aux,
- 			struct drm_dp_aux_msg *msg)
- {
--	u32 data[4], reg, len;
-+	u8 data[4];
-+	u32 reg;
-+	ssize_t len;
- 	u8 *msgdata = msg->buffer;
- 	int const AUX_CMD_FIFO_LEN = 128;
- 	int i = 0;
- 
- 	if (aux->read)
--		len = 4;
-+		len = 0;
- 	else
--		len = msg->size + 4;
-+		len = msg->size;
- 
- 	/*
- 	 * cmd fifo only has depth of 144 bytes
- 	 * limit buf length to 128 bytes here
- 	 */
--	if (len > AUX_CMD_FIFO_LEN) {
-+	if (len > AUX_CMD_FIFO_LEN - 4) {
- 		DRM_ERROR("buf size greater than allowed size of 128 bytes\n");
--		return 0;
-+		return -EINVAL;
- 	}
- 
- 	/* Pack cmd and write to HW */
--	data[0] = (msg->address >> 16) & 0xf; /* addr[19:16] */
-+	data[0] = (msg->address >> 16) & 0xf;	/* addr[19:16] */
- 	if (aux->read)
--		data[0] |=  BIT(4); /* R/W */
-+		data[0] |=  BIT(4);		/* R/W */
- 
--	data[1] = (msg->address >> 8) & 0xff;	/* addr[15:8] */
--	data[2] = msg->address & 0xff;		/* addr[7:0] */
--	data[3] = (msg->size - 1) & 0xff;	/* len[7:0] */
-+	data[1] = msg->address >> 8;		/* addr[15:8] */
-+	data[2] = msg->address;			/* addr[7:0] */
-+	data[3] = msg->size - 1;		/* len[7:0] */
- 
--	for (i = 0; i < len; i++) {
-+	for (i = 0; i < len + 4; i++) {
- 		reg = (i < 4) ? data[i] : msgdata[i - 4];
-+		reg <<= DP_AUX_DATA_OFFSET;
-+		reg &= DP_AUX_DATA_MASK;
-+		reg |= DP_AUX_DATA_WRITE;
- 		/* index = 0, write */
--		reg = (((reg) << DP_AUX_DATA_OFFSET)
--		       & DP_AUX_DATA_MASK) | DP_AUX_DATA_WRITE;
- 		if (i == 0)
- 			reg |= DP_AUX_DATA_INDEX_WRITE;
- 		aux->catalog->aux_data = reg;
-@@ -116,39 +107,27 @@ static u32 dp_aux_write(struct dp_aux_private *aux,
- 	return len;
- }
- 
--static int dp_aux_cmd_fifo_tx(struct dp_aux_private *aux,
-+static ssize_t dp_aux_cmd_fifo_tx(struct dp_aux_private *aux,
- 			      struct drm_dp_aux_msg *msg)
- {
--	u32 ret, len, timeout;
--	int aux_timeout_ms = HZ/4;
-+	ssize_t ret;
-+	unsigned long time_left;
- 
- 	reinit_completion(&aux->comp);
- 
--	len = dp_aux_write(aux, msg);
--	if (len == 0) {
--		DRM_ERROR("DP AUX write failed\n");
--		return -EINVAL;
--	}
-+	ret = dp_aux_write(aux, msg);
-+	if (ret < 0)
-+		return ret;
- 
--	timeout = wait_for_completion_timeout(&aux->comp, aux_timeout_ms);
--	if (!timeout) {
--		DRM_ERROR("aux %s timeout\n", (aux->read ? "read" : "write"));
-+	time_left = wait_for_completion_timeout(&aux->comp,
-+						msecs_to_jiffies(250));
-+	if (!time_left)
- 		return -ETIMEDOUT;
--	}
--
--	if (aux->aux_error_num == DP_AUX_ERR_NONE) {
--		ret = len;
--	} else {
--		DRM_ERROR_RATELIMITED("aux err: %s\n",
--			dp_aux_get_error(aux->aux_error_num));
--
--		ret = -EINVAL;
--	}
- 
- 	return ret;
- }
- 
--static void dp_aux_cmd_fifo_rx(struct dp_aux_private *aux,
-+static ssize_t dp_aux_cmd_fifo_rx(struct dp_aux_private *aux,
- 		struct drm_dp_aux_msg *msg)
- {
- 	u32 data;
-@@ -175,9 +154,10 @@ static void dp_aux_cmd_fifo_rx(struct dp_aux_private *aux,
- 
- 		actual_i = (data >> DP_AUX_DATA_INDEX_OFFSET) & 0xFF;
- 		if (i != actual_i)
--			DRM_ERROR("Index mismatch: expected %d, found %d\n",
--				i, actual_i);
-+			break;
- 	}
-+
-+	return i;
- }
- 
- static void dp_aux_native_handler(struct dp_aux_private *aux, u32 isr)
-@@ -367,36 +347,38 @@ static ssize_t dp_aux_transfer(struct drm_dp_aux *dp_aux,
- 	}
- 
- 	ret = dp_aux_cmd_fifo_tx(aux, msg);
--
- 	if (ret < 0) {
- 		if (aux->native) {
- 			aux->retry_cnt++;
- 			if (!(aux->retry_cnt % MAX_AUX_RETRIES))
- 				dp_catalog_aux_update_cfg(aux->catalog);
- 		}
--		usleep_range(400, 500); /* at least 400us to next try */
--		goto unlock_exit;
--	}
--
--	if (aux->aux_error_num == DP_AUX_ERR_NONE) {
--		if (aux->read)
--			dp_aux_cmd_fifo_rx(aux, msg);
--
--		msg->reply = aux->native ?
--			DP_AUX_NATIVE_REPLY_ACK : DP_AUX_I2C_REPLY_ACK;
- 	} else {
--		/* Reply defer to retry */
--		msg->reply = aux->native ?
--			DP_AUX_NATIVE_REPLY_DEFER : DP_AUX_I2C_REPLY_DEFER;
-+		aux->retry_cnt = 0;
-+		switch (aux->aux_error_num) {
-+		case DP_AUX_ERR_NONE:
-+			if (aux->read)
-+				ret = dp_aux_cmd_fifo_rx(aux, msg);
-+			msg->reply = aux->native ? DP_AUX_NATIVE_REPLY_ACK : DP_AUX_I2C_REPLY_ACK;
-+			break;
-+		case DP_AUX_ERR_DEFER:
-+			msg->reply = aux->native ? DP_AUX_NATIVE_REPLY_DEFER : DP_AUX_I2C_REPLY_DEFER;
-+			break;
-+		case DP_AUX_ERR_PHY:
-+		case DP_AUX_ERR_ADDR:
-+		case DP_AUX_ERR_NACK:
-+		case DP_AUX_ERR_NACK_DEFER:
-+			msg->reply = aux->native ? DP_AUX_NATIVE_REPLY_NACK : DP_AUX_I2C_REPLY_NACK;
-+			break;
-+		case DP_AUX_ERR_TOUT:
-+			ret = -ETIMEDOUT;
-+			break;
-+		}
- 	}
- 
--	/* Return requested size for success or retry */
--	ret = msg->size;
--	aux->retry_cnt = 0;
--
--unlock_exit:
- 	aux->cmd_busy = false;
- 	mutex_unlock(&aux->mutex);
-+
- 	return ret;
- }
- 
-diff --git a/drivers/gpu/drm/msm/dp/dp_aux.h b/drivers/gpu/drm/msm/dp/dp_aux.h
-index f8b8ba919465..0728cc09c9ec 100644
---- a/drivers/gpu/drm/msm/dp/dp_aux.h
-+++ b/drivers/gpu/drm/msm/dp/dp_aux.h
-@@ -9,14 +9,6 @@
- #include "dp_catalog.h"
- #include <drm/drm_dp_helper.h>
- 
--#define DP_AUX_ERR_NONE		0
--#define DP_AUX_ERR_ADDR		-1
--#define DP_AUX_ERR_TOUT		-2
--#define DP_AUX_ERR_NACK		-3
--#define DP_AUX_ERR_DEFER	-4
--#define DP_AUX_ERR_NACK_DEFER	-5
--#define DP_AUX_ERR_PHY		-6
--
- int dp_aux_register(struct drm_dp_aux *dp_aux);
- void dp_aux_unregister(struct drm_dp_aux *dp_aux);
- void dp_aux_isr(struct drm_dp_aux *dp_aux);
--- 
-https://chromeos.dev
+It's not enough that the adapter is half-baked, because the bridge's
+initialization depends on that the panel device is done probing, and the
+panel driver will only complete its probe if it can find it's resources.
 
+So we need a mechanism to fully create the resources exposed by the
+bridge chip (i2c bus, gpio chip and (soon) a pwm chip), then allow the
+panel to probe and after that initialize the bridge.
+
+We did discuss possible ways to register these resources and then
+"sleep for a while" before resolving the panel, but what we came up with
+was definitely suboptimal - and ugly.
+
+Regards,
+Bjorn
+
+> On Mon, 2021-05-03 at 14:58 -0700, Douglas Anderson wrote:
+> > It can be helpful to fully register the AUX channel as an i2c bus even
+> > before the bridge is created. Let's optionally allow bridges to do
+> > that.
+> > 
+> > Specifically the case we're running into:
+> > - The panel driver wants to get its DDC bus at probe time.
+> > - The ti-sn65dsi86 MIPI-to-eDP bridge code, which provides the DDC
+> >   bus, wants to get the panel at probe time.
+> > 
+> > The next patches ("drm/bridge: ti-sn65dsi86: Promote the AUX channel
+> > to its own sub-dev") solves the chicken-and-egg problem by breaking
+> > the ti-sn65dsi86 driver into sub-devices, but in order for it to
+> > actually work we need the i2c bus to get registered at probe time and
+> > not in bridge attach time.
+> > 
+> > Cc: Lyude Paul <lyude@redhat.com>
+> > Cc: Thierry Reding <treding@nvidia.com>
+> > Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> > ---
+> > 
+> > Changes in v6:
+> > - ("drm/dp: Allow an early call to register DDC i2c bus") new for v6.
+> > 
+> >  drivers/gpu/drm/drm_dp_helper.c | 67 +++++++++++++++++++++++++++------
+> >  include/drm/drm_dp_helper.h     |  2 +
+> >  2 files changed, 57 insertions(+), 12 deletions(-)
+> > 
+> > diff --git a/drivers/gpu/drm/drm_dp_helper.c
+> > b/drivers/gpu/drm/drm_dp_helper.c
+> > index cb56d74e9d38..830294f0b341 100644
+> > --- a/drivers/gpu/drm/drm_dp_helper.c
+> > +++ b/drivers/gpu/drm/drm_dp_helper.c
+> > @@ -1757,6 +1757,49 @@ void drm_dp_aux_init(struct drm_dp_aux *aux)
+> >  }
+> >  EXPORT_SYMBOL(drm_dp_aux_init);
+> >  
+> > +/**
+> > + * drm_dp_aux_register_ddc() - register the DDC parts of the aux channel
+> > + * @aux: DisplayPort AUX channel
+> > + *
+> > + * This can be called after drm_dp_aux_init() to fully register the ddc bus
+> > + * as an i2c adapter with the rest of Linux.
+> > + *
+> > + * If you don't explicitly call this function it will be done implicitly as
+> > + * part of drm_dp_aux_register().
+> > + *
+> > + * Returns 0 on success or a negative error code on failure.
+> > + */
+> > +int drm_dp_aux_register_ddc(struct drm_dp_aux *aux)
+> > +{
+> > +       WARN_ON_ONCE(!aux->dev);
+> > +
+> > +       aux->ddc.class = I2C_CLASS_DDC;
+> > +       aux->ddc.owner = THIS_MODULE;
+> > +       aux->ddc.dev.parent = aux->dev;
+> > +
+> > +       strlcpy(aux->ddc.name, aux->name ? aux->name : dev_name(aux->dev),
+> > +               sizeof(aux->ddc.name));
+> > +
+> > +       return i2c_add_adapter(&aux->ddc);
+> > +}
+> > +EXPORT_SYMBOL(drm_dp_aux_register_ddc);
+> > +
+> > +/**
+> > + * drm_dp_aux_unregister_ddc() - unregister the DDC parts of the aux
+> > channel
+> > + *
+> > + * This is useful if you called drm_dp_aux_register_ddc(). If you let
+> > + * drm_dp_aux_register() implicitly register the DDC for you then you don't
+> > + * need to worry about calling this yourself.
+> > + *
+> > + * @aux: DisplayPort AUX channel
+> > + */
+> > +void drm_dp_aux_unregister_ddc(struct drm_dp_aux *aux)
+> > +{
+> > +       i2c_del_adapter(&aux->ddc);
+> > +       aux->ddc.dev.parent = NULL;
+> > +}
+> > +EXPORT_SYMBOL(drm_dp_aux_unregister_ddc);
+> > +
+> >  /**
+> >   * drm_dp_aux_register() - initialise and register aux channel
+> >   * @aux: DisplayPort AUX channel
+> > @@ -1793,20 +1836,19 @@ int drm_dp_aux_register(struct drm_dp_aux *aux)
+> >         if (!aux->ddc.algo)
+> >                 drm_dp_aux_init(aux);
+> >  
+> > -       aux->ddc.class = I2C_CLASS_DDC;
+> > -       aux->ddc.owner = THIS_MODULE;
+> > -       aux->ddc.dev.parent = aux->dev;
+> > -
+> > -       strlcpy(aux->ddc.name, aux->name ? aux->name : dev_name(aux->dev),
+> > -               sizeof(aux->ddc.name));
+> > +       /*
+> > +        * Implicitly register if drm_dp_aux_register_ddc() wasn't already
+> > +        * called (as evidenced by a NULL parent pointer).
+> > +        */
+> > +       if (!aux->ddc.dev.parent) {
+> > +               ret = drm_dp_aux_register_ddc(aux);
+> > +               if (ret)
+> > +                       return ret;
+> > +       }
+> >  
+> >         ret = drm_dp_aux_register_devnode(aux);
+> > -       if (ret)
+> > -               return ret;
+> > -
+> > -       ret = i2c_add_adapter(&aux->ddc);
+> >         if (ret) {
+> > -               drm_dp_aux_unregister_devnode(aux);
+> > +               drm_dp_aux_unregister_ddc(aux);
+> >                 return ret;
+> >         }
+> >  
+> > @@ -1821,7 +1863,8 @@ EXPORT_SYMBOL(drm_dp_aux_register);
+> >  void drm_dp_aux_unregister(struct drm_dp_aux *aux)
+> >  {
+> >         drm_dp_aux_unregister_devnode(aux);
+> > -       i2c_del_adapter(&aux->ddc);
+> > +       if (aux->ddc.dev.parent)
+> > +               drm_dp_aux_unregister_ddc(aux);
+> >  }
+> >  EXPORT_SYMBOL(drm_dp_aux_unregister);
+> >  
+> > diff --git a/include/drm/drm_dp_helper.h b/include/drm/drm_dp_helper.h
+> > index e932b2c40095..d4d2d5e25bb7 100644
+> > --- a/include/drm/drm_dp_helper.h
+> > +++ b/include/drm/drm_dp_helper.h
+> > @@ -2021,6 +2021,8 @@ bool drm_dp_lttpr_pre_emphasis_level_3_supported(const
+> > u8 caps[DP_LTTPR_PHY_CAP_
+> >  
+> >  void drm_dp_remote_aux_init(struct drm_dp_aux *aux);
+> >  void drm_dp_aux_init(struct drm_dp_aux *aux);
+> > +int drm_dp_aux_register_ddc(struct drm_dp_aux *aux);
+> > +void drm_dp_aux_unregister_ddc(struct drm_dp_aux *aux);
+> >  int drm_dp_aux_register(struct drm_dp_aux *aux);
+> >  void drm_dp_aux_unregister(struct drm_dp_aux *aux);
+> >  
+> 
+> -- 
+> Cheers,
+>  Lyude Paul (she/her)
+>  Software Engineer at Red Hat
+> 
