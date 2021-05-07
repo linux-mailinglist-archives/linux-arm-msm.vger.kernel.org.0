@@ -2,75 +2,199 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 15373376180
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 May 2021 09:53:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9A97437629D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 May 2021 11:07:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235910AbhEGHyo convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-arm-msm@lfdr.de>); Fri, 7 May 2021 03:54:44 -0400
-Received: from coyote.holtmann.net ([212.227.132.17]:48433 "EHLO
-        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234951AbhEGHym (ORCPT
+        id S234346AbhEGJIG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 May 2021 05:08:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41576 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229849AbhEGJIF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 May 2021 03:54:42 -0400
-Received: from smtpclient.apple (p4fefc624.dip0.t-ipconnect.de [79.239.198.36])
-        by mail.holtmann.org (Postfix) with ESMTPSA id 8CB8BCECD9;
-        Fri,  7 May 2021 10:01:26 +0200 (CEST)
-Content-Type: text/plain;
-        charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.80.0.2.43\))
-Subject: Re: [PATCH v3 3/5] Bluetooth: btqca: Moved extracting rom version
- info to common place
-From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <1620322392-27148-4-git-send-email-gubbaven@codeaurora.org>
-Date:   Fri, 7 May 2021 09:53:35 +0200
-Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
-        devicetree@vger.kernel.org, Matthias Kaehlcke <mka@chromium.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        Bluetooth Kernel Mailing List 
-        <linux-bluetooth@vger.kernel.org>,
-        Hemantg <hemantg@codeaurora.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        Balakrishna Godavarthi <bgodavar@codeaurora.org>,
-        Rocky Liao <rjliao@codeaurora.org>, hbandi@codeaurora.org,
-        abhishekpandit@chromium.org
-Content-Transfer-Encoding: 8BIT
-Message-Id: <A9592AB3-EE71-4A1A-8CE4-AC209A98BDE5@holtmann.org>
-References: <1620322392-27148-1-git-send-email-gubbaven@codeaurora.org>
- <1620322392-27148-4-git-send-email-gubbaven@codeaurora.org>
-To:     Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
-X-Mailer: Apple Mail (2.3654.80.0.2.43)
+        Fri, 7 May 2021 05:08:05 -0400
+Received: from mail-ua1-x92e.google.com (mail-ua1-x92e.google.com [IPv6:2607:f8b0:4864:20::92e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 122B5C061574
+        for <linux-arm-msm@vger.kernel.org>; Fri,  7 May 2021 02:07:06 -0700 (PDT)
+Received: by mail-ua1-x92e.google.com with SMTP id h4so1159250uap.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 07 May 2021 02:07:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Emrx5l6IxiPmxcLoHUN2T5+3p5O1Oj22+2uUA3lMLvY=;
+        b=OPbUrm+aooEm549SGhEWylJ/ad6a26aO1KWzArdCrfIu/0hQJf2fMS6ditnPq3gvTf
+         lUHp+O86Lff2f+u7UZZlmB7uGamCGz9IrSr24+MhoNv6/4rUOWrpRCgL8xLe3xkC2tb7
+         77KNmklQgO7m53Gzub6bXS6JY0b9P7FNj3KgPXisJn1ZE6wwdrxhXD0uNiBBL+h5KVpu
+         Oyp3C0VMTpJ44h1R0KxvB4jlHM+XZwwdy2RAUVx39J76KKIHLX1hDKO3t1qC5wG4toEH
+         APx1xaUYALmo4w+5aTUD2E1SDAY/Qe8QJdlaHXNtxBCaOsd93bbgWpx4cJeytLQwdFg5
+         YkfQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Emrx5l6IxiPmxcLoHUN2T5+3p5O1Oj22+2uUA3lMLvY=;
+        b=bfJnvlAXPLqy9x/Ovdlbx8Jj1zxPAJWI43r/rmZZc98IOJGX7sTMRJHJqwTl8d/0a6
+         GL6iaD3vo8n+19wHF1vO8kSl5gAw8qLnt9yplWV25H7fMaGOq8/oCwSm78bOB/zyYIRN
+         VL8oMCO3cHirU4Lr8W016Z8O94qSA3HAi6G6KPAnTQhg5J+XJ5/Ks1prDY5E8G+jQmwp
+         Pmu6mou2XJ62rMStgzMEYsg7xj3BfDvycK2lxKa2VeTR7c19At3imX66zLxX9TbBn/Fz
+         OiOFNM7H6JWXCJfw17BrxtDwXa/zw+8Nl4nsru6SViuezjJCIVl0MWi0J6G5wPIpfkKi
+         fYFQ==
+X-Gm-Message-State: AOAM532TEue1OMTld9pSOGLFRvR2TTkRIivOOpuwUAniDGukIGtUqDaG
+        vTb4I8vaFaxldzrTUxKLV2xw3K99xLYC/P6O/T3Kbw==
+X-Google-Smtp-Source: ABdhPJwvsJbSjRPAb/QWotTeHpIV165mNFkzIh//FoY0SPxyr8LOUCZDUk9TcY+pD8Ey0W5a+a4VwAtDac+BHBctZC0=
+X-Received: by 2002:ab0:5fdb:: with SMTP id g27mr7516032uaj.15.1620378425193;
+ Fri, 07 May 2021 02:07:05 -0700 (PDT)
+MIME-Version: 1.0
+References: <20201224111210.1214-1-rojay@codeaurora.org> <20201224111210.1214-4-rojay@codeaurora.org>
+ <YAGqKfDfB7EEuZVn@builder.lan> <6bfec3e6-3d26-7ade-d836-032273856ce2@codeaurora.org>
+ <CAPDyKFqF0NE3QRAEfiqj5QOXXH2om4CpyyeudeqoovANfvjsaQ@mail.gmail.com>
+ <20210429075054.vrotcbldbaivfh2d@vireshk-i7> <3743d729-4287-a389-72e2-2201ee59601d@codeaurora.org>
+In-Reply-To: <3743d729-4287-a389-72e2-2201ee59601d@codeaurora.org>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Fri, 7 May 2021 11:06:28 +0200
+Message-ID: <CAPDyKFrVcvXvSHrRyJFZUjTXEeOLk2k7G-36pOSWUKhkWRTftA@mail.gmail.com>
+Subject: Re: [PATCH 3/3] i2c: i2c-qcom-geni: Add support for 'assigned-performance-states'
+To:     Rajendra Nayak <rnayak@codeaurora.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Roja Rani Yarubandi <rojay@codeaurora.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Wolfram Sang <wsa@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Matthias Kaehlcke <mka@chromium.org>, akashast@codeaurora.org,
+        msavaliy@qti.qualcomm.com, parashar@codeaurora.org,
+        Linux PM <linux-pm@vger.kernel.org>,
+        DTML <devicetree@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Andy Gross <agross@kernel.org>, linux-i2c@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Venkata,
+On Tue, 4 May 2021 at 09:18, Rajendra Nayak <rnayak@codeaurora.org> wrote:
+>
+>
+> []...
+> >>>>
+> >>>> Ulf, Viresh, I think we discussed this at the time of introducing the
+> >>>> performance states.
+> >>>>
+> >>>> The client's state does not affect if its performance_state should
+> >>>> be included in the calculation of the aggregated performance_state, so
+> >>>> each driver that needs to keep some minimum performance state needs to
+> >>>> have these two snippets.
+> >>>>
+> >>>> Would it not make sense to on enable/disable re-evaluate the
+> >>>> performance_state and potentially reconfigure the hardware
+> >>>> automatically?
+> >>>
+> >>> I agree, this will be repeated across multiple drivers which would
+> >>> need some minimal vote while they are active, handling this during
+> >>> genpd enable/disable in genpd core makes sense.
+> >>
+> >> Initially that's what we tried out, but we realized that it was
+> >> difficult to deal with this internally in genpd, but more importantly
+> >> it also removed some flexibility from consumers and providers. See
+> >> commit 68de2fe57a8f ("PM / Domains: Make genpd performance states
+> >> orthogonal to the idlestates").
+> >>
+> >> As a matter of fact this was quite recently discussed [1], which also
+> >> pointed out some issues when using the "required-opps" in combination,
+> >> but perhaps that got resolved? Viresh?
+> >
+> > So I looked again at that thread in detail today. The basic idea was
+> > to enable/disable the genpd from within the OPP core and there were
+> > doubts on how to do that efficiently as there are cases where domains
+> > may be enabled for an OPP, but not for others.. etc. etc.
+> >
+> > I am not sure if I consider that thread as part of the discussion we
+> > are having here, they may be related, but that thread doesn't block
+> > anything to be done in the genpd core.
+>
+> That's true, the 2 threads are different in the sense that one talks
+> about having OPP core managing power on/off along with setting perf state,
+> while the other talks about genpd core managing a default perf state
+> along with power on/off, but they are similar in the sense that both
+> are related to the discussion whether we should treat powering on and off
+> a domain related to setting its performance state or if it should be
+> considered completely orthogonal.
+>
+> I think the clock framework treats setting clock rates and turning
+> on/off a clock orthogonal because there is an inherent assumption that
+> once the clock is turned off, what rate it was set to should not matter,
+> and it can be running at the same rate when we turn the clock back on.
+>
+> I guess we can have the same assumption here that a perf state of a
+> power domain should not matter if the power domain is turned off
+> and hence the perf state need not be dropped explicitly during power off,
+> atleast that should be true for the qcom power domains supporting perf
+> state upstream.
+>
+> Should that be the approach taken here? I guess that would mean the patch
+> I had proposed earlier [1] to manage this in the genpd core would have to set the default
+> perf state at attach and remove it only during a detach of the device to
+> the pm_domain, and not manage it during the runtime_suspend/resume of the device.
 
-> Moved extracting rom version info to common place as this code is
-> common in all if else ladder in qca_uart_setup.
-> 
-> Signed-off-by: Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
-> ---
-> drivers/bluetooth/btqca.c | 15 ++++++---------
-> 1 file changed, 6 insertions(+), 9 deletions(-)
-> 
-> diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
-> index 320c555..658fd8e4 100644
-> --- a/drivers/bluetooth/btqca.c
-> +++ b/drivers/bluetooth/btqca.c
-> @@ -533,24 +533,21 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
-> 
-> 	config.user_baud_rate = baudrate;
-> 
-> +	/* Firmware files to download are based on ROM version.
-> +	 * ROM version is derived from last two bytes of soc_ver.
-> +	 */
-> +	rom_ver = ((soc_ver & 0x00000f00) >> 0x04) |
-> +		    (soc_ver & 0x0000000f);
-> +
+Right, I think this would be a step in the right direction, but it's
+not sufficient to solve the complete problem. As you also point out
+below.
 
-please try to align this properly.
+>
+> >> A consumer driver
+> >> can no longer make its vote for its device to stick around, when the
+> >> device becomes runtime suspended - and how do we know that we never
+> >> need to support such a case?
+>
+> The above approach should take care of this but the down side of it would be,
+> unlike in the case of clocks where the devices assigning a default clock rate
+> might be doing so on a device specific clock (rarely shared with other devices)
+> in case of power domain, and especially in the qcom implementation of these
+> power domains which support perf state, these can be large domains with lots of devices,
+> and any device being active (not necessarily wanting any default perf state) will keep
+> the domain at the default perf state, requested by a device which isn't really active.
 
-Regards
+Yep, this certainly sounds suboptimal. To me, this isn't good enough.
 
-Marcel
+>
+> > What about doing this just for the assigned-performance-state case as
+> > the clients don't want to play with it at all.
+>
+> well, thats possible too, but you obviously can't reuse the same bindings
+> in such cases
 
+Not sure I understand the issue with the DT binding? Let me elaborate
+on how I think we could move forward.
+
+It looks like we have two problems to solve:
+
+*) We need a new DT binding.
+If that becomes a generic property along the lines of the
+"assigned-performance-state" as suggested - or if we decide to add a
+SoC specific binding via using an additional cell in "power-domains"
+(suggested by Rob), doesn't really matter much to me. The arguments
+for the new DT property are very much similar to why we added
+"assigned-clock-rates" for clocks.
+
+**) We want to avoid boiler-plate code in drivers to manage
+"assigned-performance-state" for their devices.
+No matter what DT property we decide on (generic or SoC specific), we
+should be able to manage this from the PM domain (genpd) layer. No
+changes in the drivers should be needed.
+If a generic binding is used, we could consider to let genpd
+internally manage the whole thing (DT parsing and updating performance
+state votes for assigned-performance-state only).
+If we go for an SoC specific binding, the genpd provider needs to be
+updated. It can manage DT parsing from the ->attach|detach_dev()
+callbacks and update performance votes from the ->start|stop()
+callbacks.
+We could also consider a hybrid of these two solutions.
+
+>
+> [1] https://lore.kernel.org/patchwork/patch/1284042/
+
+Kind regards
+Uffe
