@@ -2,110 +2,156 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 94E4C375CC8
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 May 2021 23:19:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3A8DA375DD9
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 May 2021 02:18:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230366AbhEFVUF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 May 2021 17:20:05 -0400
-Received: from mail-41104.protonmail.ch ([185.70.41.104]:46488 "EHLO
-        mail-41104.protonmail.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230348AbhEFVUE (ORCPT
+        id S233565AbhEGATZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 May 2021 20:19:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37660 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233545AbhEGATZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 May 2021 17:20:04 -0400
-Received: from mail-02.mail-europe.com (mail-0201.mail-europe.com [51.77.79.158])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits))
-        (No client certificate requested)
-        by mail-41104.protonmail.ch (Postfix) with ESMTPS id 4Fbmfd1T2gz4x8RH
-        for <linux-arm-msm@vger.kernel.org>; Thu,  6 May 2021 21:19:05 +0000 (UTC)
-Authentication-Results: mail-41104.protonmail.ch;
-        dkim=pass (1024-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="vEUlZx9B"
-Date:   Thu, 06 May 2021 21:18:52 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-        s=protonmail; t=1620335940;
-        bh=hOrbqVj5R3JVLRiDgquRCxHlYsob+D3PH8ZLMkNz0DQ=;
-        h=Date:To:From:Cc:Reply-To:Subject:From;
-        b=vEUlZx9BpIVLYi+i8KmAnglGAhY0Lm+PIWgY+jzs7hfCLrg2nNt+6cGhKjfk+jh+t
-         MW/USfsin/HVSWU0gRSSR3DqrLvTlTXA8hNDtHUcNzmek7ypLAcoBu346h8ed+gu0G
-         +qOE5bKEtiOU5gdivGNSoTUgxnzYSx0iCMl+hGNA=
-To:     Andy Gross <agross@kernel.org>,
+        Thu, 6 May 2021 20:19:25 -0400
+Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC158C061761
+        for <linux-arm-msm@vger.kernel.org>; Thu,  6 May 2021 17:18:26 -0700 (PDT)
+Received: by mail-pl1-x62f.google.com with SMTP id v20so4255797plo.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 May 2021 17:18:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=fV18dwtn48LbYqtUNII+U1sK5U/gi1BuSDsNnAhHG24=;
+        b=MYpD7CjcrphZ4my3TYsWeM2OdrpZazyN+NnRL5x8v5VFpr+u7uZ9abthjHGxBRWmKC
+         9uKEh12en8aNciSJcxab7peUABhQdCKV4zfQVvrpBN5VRj9gMerazqZGtI3R8AnKRK5m
+         2xptVyQ+gx/g/IxxdJOvAR3r3V3Z9LezSOzuechLeVemFJ0m9RIstiy7+8DYsnJymGgY
+         idHeOV/VedR8+t3hIn8e7WchpLfETSsHmTsmMlbGyIb8beOQsOhhhfnwN05NycVRSX3p
+         8OgNxSGwSEEXUJ9VSPKYqYa7G5R5+v+n76r1yx+aVVfbHrTN5UoK7jXlshT2BBEqvgwW
+         53dQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=fV18dwtn48LbYqtUNII+U1sK5U/gi1BuSDsNnAhHG24=;
+        b=KZQGxAf0Y7JNIyj2LJjhZYvjHFPX29EjRXm0PT0SuCcMstLOqXr/h3S0aU0yiyxa1I
+         XPcGT1JithBxXxTQ2+y9XQsmTEvareYegqPjxc75BFB21Ss/Jsy0VN1yVhutFssm6dfE
+         cxR+rPkaX6qE9AYEh7XPCmVNwqiuLtGt+RFprTpAL8K0H2TST0qc4tLSGC7Xmhx+ZcFS
+         b1pDPH8MneWQc7La6PiPXgbQLhXSkWDlQvO9WwGi4s8famBWPc5yE4MzoJTU3xZeoBOH
+         QlnUzBMBg2gr9QxtCxKFaJSeOCEBXeB4BPlJ/teaanMuxlGDTWLUXX278y89yJDMu+Fp
+         xAiw==
+X-Gm-Message-State: AOAM5336lt5OSl5x/qrsQ9/+QuNsH0/BM1eEUYjUrB3K0/N2dtBaeNjU
+        B51g5vYOsBusdEAdLu2vkl4rxg==
+X-Google-Smtp-Source: ABdhPJxRx82i02LDLS2+djk0BHt1+xL+GR9hJCey0SBueodvY0Fw57884EVQI3JzzFz78Db5xXSNrw==
+X-Received: by 2002:a17:90a:510d:: with SMTP id t13mr20271514pjh.1.1620346706374;
+        Thu, 06 May 2021 17:18:26 -0700 (PDT)
+Received: from dragon (80.251.214.228.16clouds.com. [80.251.214.228])
+        by smtp.gmail.com with ESMTPSA id a129sm3208419pfa.36.2021.05.06.17.18.23
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 06 May 2021 17:18:25 -0700 (PDT)
+Date:   Fri, 7 May 2021 08:18:20 +0800
+From:   Shawn Guo <shawn.guo@linaro.org>
+To:     Rob Herring <robh@kernel.org>
+Cc:     Stephen Boyd <sboyd@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Ohad Ben-Cohen <ohad@wizery.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        devicetree@vger.kernel.org
-From:   Yassine Oudjana <y.oudjana@protonmail.com>
-Cc:     Yassine Oudjana <y.oudjana@protonmail.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        linux-kernel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
-Reply-To: Yassine Oudjana <y.oudjana@protonmail.com>
-Subject: [PATCH 3/3] arm64: dts: qcom: msm8996: Disable ADSP and add power domains
-Message-ID: <Epn1vFjJb0oQhqMYxspzL6X1N6MPcDT1f9oVVOjXc@cp3-web-020.plabs.ch>
+        Sivaprakash Murugesan <sivaprak@codeaurora.org>,
+        Benjamin Li <benl@squareup.com>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
+Subject: Re: [PATCH 2/5] dt-bindings: clock: update qcom,a53pll bindings for
+ MSM8939 support
+Message-ID: <20210507001818.GB8679@dragon>
+References: <20210504052844.21096-1-shawn.guo@linaro.org>
+ <20210504052844.21096-3-shawn.guo@linaro.org>
+ <20210506202726.GA744866@robh.at.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-1.2 required=10.0 tests=ALL_TRUSTED,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM shortcircuit=no
-        autolearn=disabled version=3.4.4
-X-Spam-Checker-Version: SpamAssassin 3.4.4 (2020-01-24) on
-        mailout.protonmail.ch
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210506202726.GA744866@robh.at.kernel.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Disable ADSP by default and enable it in devices that use it.
-Also add CX power domain.
+On Thu, May 06, 2021 at 03:27:26PM -0500, Rob Herring wrote:
+> On Tue, May 04, 2021 at 01:28:41PM +0800, Shawn Guo wrote:
+> > Update qcom,a53pll bindings for MSM8939 support:
+> > 
+> >  - Add optional clock-output-names property.
+> >  - Add MSM8939 specific compatibles.
+> >  - Add MSM8939 examples.
+> > 
+> > Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+> > ---
+> >  .../bindings/clock/qcom,a53pll.yaml           | 34 +++++++++++++++++++
+> >  1 file changed, 34 insertions(+)
+> > 
+> > diff --git a/Documentation/devicetree/bindings/clock/qcom,a53pll.yaml b/Documentation/devicetree/bindings/clock/qcom,a53pll.yaml
+> > index db3d0ea6bc7a..7a410a76be2f 100644
+> > --- a/Documentation/devicetree/bindings/clock/qcom,a53pll.yaml
+> > +++ b/Documentation/devicetree/bindings/clock/qcom,a53pll.yaml
+> > @@ -18,6 +18,9 @@ properties:
+> >      enum:
+> >        - qcom,ipq6018-a53pll
+> >        - qcom,msm8916-a53pll
+> > +      - qcom,msm8939-a53pll-c0
+> > +      - qcom,msm8939-a53pll-c1
+> > +      - qcom,msm8939-a53pll-cci
+> 
+> These 3 have differences?
 
-Signed-off-by: Yassine Oudjana <y.oudjana@protonmail.com>
----
- arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi | 4 ++++
- arch/arm64/boot/dts/qcom/msm8996.dtsi        | 6 ++++++
- 2 files changed, 10 insertions(+)
+Yes.  They need to hook up with different frequency table as shown in
+patch #5.
 
-diff --git a/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi b/arch/arm64/boot=
-/dts/qcom/apq8096-db820c.dtsi
-index defcbd15edf9..409a5dec2615 100644
---- a/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi
-+++ b/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi
-@@ -162,6 +162,10 @@ bluetooth {
- =09};
- };
-=20
-+&adsp_pil {
-+=09status =3D "okay";
-+};
-+
- &blsp2_i2c0 {
- =09/* On High speed expansion */
- =09label =3D "HS-I2C2";
-diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qc=
-om/msm8996.dtsi
-index ce430ba9c118..7e647843f7c7 100644
---- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-@@ -6,6 +6,7 @@
- #include <dt-bindings/clock/qcom,gcc-msm8996.h>
- #include <dt-bindings/clock/qcom,mmcc-msm8996.h>
- #include <dt-bindings/clock/qcom,rpmcc.h>
-+#include <dt-bindings/power/qcom-rpmpd.h>
- #include <dt-bindings/soc/qcom,apr.h>
-=20
- / {
-@@ -2067,6 +2068,11 @@ adsp_pil: remoteproc@9300000 {
- =09=09=09qcom,smem-states =3D <&smp2p_adsp_out 0>;
- =09=09=09qcom,smem-state-names =3D "stop";
-=20
-+=09=09=09power-domains =3D <&rpmpd MSM8996_VDDCX>;
-+=09=09=09power-domain-names =3D "cx";
-+
-+=09=09=09status =3D "disabled";
-+
- =09=09=09smd-edge {
- =09=09=09=09interrupts =3D <GIC_SPI 156 IRQ_TYPE_EDGE_RISING>;
-=20
---=20
-2.31.1
+> 
+> >  
+> >    reg:
+> >      maxItems: 1
+> > @@ -33,6 +36,9 @@ properties:
+> >      items:
+> >        - const: xo
+> >  
+> > +  clock-output-names:
+> > +    maxItems: 1
+> > +
+> >  required:
+> >    - compatible
+> >    - reg
+> > @@ -57,3 +63,31 @@ examples:
+> >          clocks = <&xo>;
+> >          clock-names = "xo";
+> >      };
+> > +  #Example 3 - A53 PLLs found on MSM8939 devices
+> > +  - |
+> > +    a53pll_c1: clock-controller@b016000 {
+> > +        compatible = "qcom,msm8939-a53pll-c1";
+> > +        reg = <0xb016000 0x40>;
+> > +        #clock-cells = <0>;
+> > +        clocks = <&xo_board>;
+> > +        clock-names = "xo";
+> > +        clock-output-names = "a53pll_c1";
+> > +    };
+> > +
+> > +    a53pll_c0: clock-controller@b116000 {
+> > +        compatible = "qcom,msm8939-a53pll-c0";
+> > +        reg = <0xb116000 0x40>;
+> > +        #clock-cells = <0>;
+> > +        clocks = <&xo_board>;
+> > +        clock-names = "xo";
+> > +        clock-output-names = "a53pll_c0";
+> > +    };
+> > +
+> > +    a53pll_cci: clock-controller@b1d0000 {
+> > +        compatible = "qcom,msm8939-a53pll-cci";
+> > +        reg = <0xb1d0000 0x40>;
+> > +        #clock-cells = <0>;
+> > +        clocks = <&xo_board>;
+> > +        clock-names = "xo";
+> > +        clock-output-names = "a53pll_cci";
+> > +    };
+> 
+> Do these examples really add anything?
 
+The example was added to demonstrate that multiple A53PLL clock
+controllers could be found on a single SoC.  But I'm happy to drop it
+if you think it's not so useful.
 
+Shawn
