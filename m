@@ -2,97 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6C4F437636F
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 May 2021 12:18:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 76C4F37647D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 May 2021 13:30:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236032AbhEGKTC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 May 2021 06:19:02 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:35736 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S235988AbhEGKS5 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 May 2021 06:18:57 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1620382677; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=5jWPR1PEFpz2yfMbIlWUNf3ozREmqIJcTy1sDzOJYnQ=; b=CIqhfERE6l2d+YCn049wwTbgeqtqMAg7TKXQMfgO8tH2moZdHN7s1uvHW1mq1qo2cWC28j0t
- adGkEZik1Eu1cFQyzTtZdwp77Fa8WUSKt4VWnBtYGFoLjcVoDEKpuV7L1Y/Oe2IbiL/KRi/5
- I/7mVfDFIqsLLvMrPSLV2DQrNt4=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
- 609513d48166b7eff75696d3 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 07 May 2021 10:17:56
- GMT
-Sender: pmaliset=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 32F28C43143; Fri,  7 May 2021 10:17:56 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from pmaliset-linux.qualcomm.com (unknown [202.46.22.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: pmaliset)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id E9443C43143;
-        Fri,  7 May 2021 10:17:51 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org E9443C43143
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=pmaliset@codeaurora.org
-From:   Prasad Malisetty <pmaliset@codeaurora.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        id S233143AbhEGLa7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 May 2021 07:30:59 -0400
+Received: from bhuna.collabora.co.uk ([46.235.227.227]:52890 "EHLO
+        bhuna.collabora.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229612AbhEGLa7 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 7 May 2021 07:30:59 -0400
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+        (Authenticated sender: sre)
+        with ESMTPSA id 11BD61F43F80
+Received: by earth.universe (Postfix, from userid 1000)
+        id 44EFD3C0C96; Fri,  7 May 2021 13:29:56 +0200 (CEST)
+Date:   Fri, 7 May 2021 13:29:56 +0200
+From:   Sebastian Reichel <sebastian.reichel@collabora.com>
+To:     skakit@codeaurora.org
+Cc:     Dmitry Torokhov <dmitry.torokhov@gmail.com>,
         Rob Herring <robh+dt@kernel.org>,
-        Bjorn Helgaas <bhelgaas@google.com>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
-        mgautam@codeaurora.org, swboyd@chromium.org, dianders@chromium.org,
-        mka@chromium.org, Prasad Malisetty <pmaliset@codeaurora.org>
-Subject: [PATCH 3/3] arm64: dts: qcom: sc7280: Add PCIe nodes for IDP board
-Date:   Fri,  7 May 2021 15:47:28 +0530
-Message-Id: <1620382648-17395-4-git-send-email-pmaliset@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1620382648-17395-1-git-send-email-pmaliset@codeaurora.org>
-References: <1620382648-17395-1-git-send-email-pmaliset@codeaurora.org>
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        David Collins <collinsd@codeaurora.org>, kgunda@codeaurora.org,
+        Vinod Koul <vkoul@kernel.org>,
+        Courtney Cavin <courtney.cavin@sonymobile.com>,
+        linux-input@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org
+Subject: Re: [PATCH V2 3/4] dt-bindings: power: reset: qcom-pon: Convert qcom
+ PON binding to yaml
+Message-ID: <20210507112956.3ibzuinvzd6d5rku@earth.universe>
+References: <1617881469-31965-1-git-send-email-skakit@codeaurora.org>
+ <1617881469-31965-4-git-send-email-skakit@codeaurora.org>
+ <20210408130001.k3qbq3vvwkiyykzv@earth.universe>
+ <0cb9b3503000ac7206f4a3ef5fd16c17@codeaurora.org>
+ <322cbdbb022fec3f43c1cbe13c532dd3@codeaurora.org>
+ <20210427083721.heavcdadeb4ajkk2@earth.universe>
+ <a190e414c53af3ea094548f5011c3a04@codeaurora.org>
+ <be3573974d76d7e464048b34854416ad@codeaurora.org>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="ix4wlrl34amaeftv"
+Content-Disposition: inline
+In-Reply-To: <be3573974d76d7e464048b34854416ad@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add PCIe nodes for sc7280 IDP board.
 
-Signed-off-by: Prasad Malisetty <pmaliset@codeaurora.org>
----
- arch/arm64/boot/dts/qcom/sc7280-idp.dts | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+--ix4wlrl34amaeftv
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dts b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
-index 54d2cb3..9105a74 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-idp.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
-@@ -234,6 +234,19 @@
- 	};
- };
- 
-+&pcie1 {
-+	status = "okay";
-+
-+	vdda-supply = <&vreg_l10c_0p8>;
-+};
-+
-+&pcie1_phy {
-+	status = "okay";
-+
-+	vdda-phy-supply = <&vreg_l10c_0p8>;
-+	vdda-pll-supply = <&vreg_l6b_1p2>;
-+};
-+
- &qupv3_id_0 {
- 	status = "okay";
- };
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+Hi,
 
+On Fri, May 07, 2021 at 03:15:55PM +0530, skakit@codeaurora.org wrote:
+> Seems like I have to make 'additionalProperties' as true in reboot-mode.yaml
+> I have checked other yaml binding docs where allOf is used, and they have
+> 'additionalProperties' as true in the file which is being referred. Please
+> let me know if this is not correct way to do it.
+
+Yes, reboot-mode.yaml should have additionalProperties = true. I
+think Rob missed, that the binding is a generic one when he added
+it in f84e2c5c528d.
+
+-- Sebastian
+
+--ix4wlrl34amaeftv
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEE72YNB0Y/i3JqeVQT2O7X88g7+poFAmCVJKoACgkQ2O7X88g7
++pqZqg//bAl15lpGbh5wgVjf5oRwoIJT0FsA2CjTDNeaNO9xiVJhMfQBPWzqmAhB
+hKN6XC4DSemLD7BKsPgIWYTsJvNyQi7wEZKLO6G3+R6Q+bEp4Ry30Cf/heTXw76y
+41udUW+UvPXY1p/v36Xyhidirt4gPfIHTTKEyQ9WEHlDI+J4TjPrH9CaU3a8FwAc
+a5/73gv5OZn4tSLEfbK/VLC7OOMkGrv4zzm+GZeDfeAhv51psVGXUTp1g2UtI70j
+1IlxeMNUus/dSNHqPVUmUndKWhFRAcm4xpjzz3ArGOGYcAXjG5uZzc7hdl5x3APf
+Fj56H//aEn/ERAt0zVJMY+tmenq/XA3hBFZZ7Y9qewz96ep7QUkOSeYe2m5xm8pr
+5ChL1RuwsXdVomwpLKx6q975+9RZi7d+HtM4GymzBQ0CJaWekE2nDPhZKnZL6aoF
+/BS0Il/mVhHLVzhHel9tUGOU0JiyqvcaoZI/nKTqs7mLAFk+J0v1ya3djKo5/yFT
+/VlW892Rie5Prj+c8PUpCgNDBLzrBhdlsrfQZDCob81OaC6sn5KJiNnsZGXuux3n
+ZzIVQXWvsoBSU8vCKwh3hIfmfnKQfR02WdAP6TDac0TB6dOKgzz05oQ56sQ8+CSM
+rCE6/07o9NePc9lvoYdS6IFWLnIwLoix125kXkmVLYfOgQX4c8E=
+=szSx
+-----END PGP SIGNATURE-----
+
+--ix4wlrl34amaeftv--
