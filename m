@@ -2,91 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 76C4F37647D
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 May 2021 13:30:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AD1123766F3
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 May 2021 16:16:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233143AbhEGLa7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 May 2021 07:30:59 -0400
-Received: from bhuna.collabora.co.uk ([46.235.227.227]:52890 "EHLO
-        bhuna.collabora.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229612AbhEGLa7 (ORCPT
+        id S237520AbhEGOR6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 May 2021 10:17:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54028 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233115AbhEGOR5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 May 2021 07:30:59 -0400
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-        (Authenticated sender: sre)
-        with ESMTPSA id 11BD61F43F80
-Received: by earth.universe (Postfix, from userid 1000)
-        id 44EFD3C0C96; Fri,  7 May 2021 13:29:56 +0200 (CEST)
-Date:   Fri, 7 May 2021 13:29:56 +0200
-From:   Sebastian Reichel <sebastian.reichel@collabora.com>
-To:     skakit@codeaurora.org
-Cc:     Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        David Collins <collinsd@codeaurora.org>, kgunda@codeaurora.org,
-        Vinod Koul <vkoul@kernel.org>,
-        Courtney Cavin <courtney.cavin@sonymobile.com>,
-        linux-input@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org
-Subject: Re: [PATCH V2 3/4] dt-bindings: power: reset: qcom-pon: Convert qcom
- PON binding to yaml
-Message-ID: <20210507112956.3ibzuinvzd6d5rku@earth.universe>
-References: <1617881469-31965-1-git-send-email-skakit@codeaurora.org>
- <1617881469-31965-4-git-send-email-skakit@codeaurora.org>
- <20210408130001.k3qbq3vvwkiyykzv@earth.universe>
- <0cb9b3503000ac7206f4a3ef5fd16c17@codeaurora.org>
- <322cbdbb022fec3f43c1cbe13c532dd3@codeaurora.org>
- <20210427083721.heavcdadeb4ajkk2@earth.universe>
- <a190e414c53af3ea094548f5011c3a04@codeaurora.org>
- <be3573974d76d7e464048b34854416ad@codeaurora.org>
+        Fri, 7 May 2021 10:17:57 -0400
+Received: from mail-qv1-xf29.google.com (mail-qv1-xf29.google.com [IPv6:2607:f8b0:4864:20::f29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D72B1C061574
+        for <linux-arm-msm@vger.kernel.org>; Fri,  7 May 2021 07:16:57 -0700 (PDT)
+Received: by mail-qv1-xf29.google.com with SMTP id z1so4856654qvo.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 07 May 2021 07:16:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=poorly.run; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=CrsCAQJk5ZnVE8tHLcfB4TXYodmjeHRejfnH2DA3Xwo=;
+        b=gNmi0I+4CIYhNbZW0mjW8xkLfbDle3nmeSHl3j6E8TPjhsuWwRmnSwbeE6MHpKhUI7
+         mc2Wo5bRyjZUO09n3MPdnG8XOfARJg842Eez33T8q57wX4PY/bDUrzlhrKP73P8CuJKJ
+         ugEs4LCsqjhO3wOEkdr7TYYl0RsHgIgNJSl8vvNQ15o5BCyHaGf0Q+aqq/NlIjL/nt2O
+         5zIx1jTVT7Mqd8GXWZ716NkdOOExYzd1lTr/SAUQmHG4WJ1f5cGH0oPcckrBxup9olDF
+         R9DgA9WquRKw/btJaBOmn9iMnIhzDQa1ZQN7xv38apNm5nPHQZ3zQ+V+AhBSIIlsBJS/
+         hhOg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=CrsCAQJk5ZnVE8tHLcfB4TXYodmjeHRejfnH2DA3Xwo=;
+        b=k70zwC4E2dGsLzqWFT6LBoxp7npZmZ+tIIVF086fwpG6vQ96NKKY1jqgAhQnM50DjV
+         rRFb62lIepdV9vWH+6QKujy8IvfWgoo7dqxxE+SYerYzrlmudovSt/ZtMjoFJmWbTfEd
+         gtLjfhl+NaYGQ0Ae5eO4Fla2Sw7okuxKZ6lXxueoB/sH5I8fvFbUoA9jpBEbeXRh6SlQ
+         N2eWlbsidplmB7pC1lwCWcNsPBYd8796d3CVITnzE1GAlxNYo0PicHCPEor9QUDECEX6
+         y7BcDT7LW37o4pSSajCLw1U2Q5dx3z6951QxPFHnUy9evr4T6x8o4V9uPEO0UTzoT7f8
+         08EQ==
+X-Gm-Message-State: AOAM532Z1WvNYZ/CtRWQOSYDA8RMaOfKwB4JZpF3YB6MimEAAGpeqkU+
+        xRuAsIXjZP2zmlB38gtvHhilug==
+X-Google-Smtp-Source: ABdhPJxp56tr64aqcM62OQw+TwL3qUEpuXjmL1PUPxM/z2GmPIuBhQjZC4jfARWKPzrg8mF7L12rlg==
+X-Received: by 2002:a0c:dd01:: with SMTP id u1mr10179642qvk.32.1620397017195;
+        Fri, 07 May 2021 07:16:57 -0700 (PDT)
+Received: from localhost ([172.58.157.149])
+        by smtp.gmail.com with ESMTPSA id r8sm4642098qtc.24.2021.05.07.07.16.56
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 07 May 2021 07:16:56 -0700 (PDT)
+From:   Sean Paul <sean@poorly.run>
+To:     dri-devel@lists.freedesktop.org
+Cc:     Sean Paul <seanpaul@chromium.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org
+Subject: [PATCH] drm/msm: Fix uninitialized var usage in dsi_phy_28nm_8960.c
+Date:   Fri,  7 May 2021 10:16:43 -0400
+Message-Id: <20210507141651.2887-1-sean@poorly.run>
+X-Mailer: git-send-email 2.31.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="ix4wlrl34amaeftv"
-Content-Disposition: inline
-In-Reply-To: <be3573974d76d7e464048b34854416ad@codeaurora.org>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+From: Sean Paul <seanpaul@chromium.org>
 
---ix4wlrl34amaeftv
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+This patch fixes the following error:
 
-Hi,
+drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c:425:11: error: variable 'parent_name' is uninitialized when used here
+[-Werror,-Wuninitialized]
+        snprintf(parent_name, 32, "dsi%dvco_clk", pll_28nm->phy->id);
+                 ^~~~~~~~~~~
+drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c:385:30:
+note: initialize the variable 'parent_name' to silence this warning
+        char *clk_name, *parent_name, *vco_name;
+                                    ^
+                                     = NULL
+1 error generated.
+make[5]: ***
+[scripts/Makefile.build:279: drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.o] Error 1
 
-On Fri, May 07, 2021 at 03:15:55PM +0530, skakit@codeaurora.org wrote:
-> Seems like I have to make 'additionalProperties' as true in reboot-mode.yaml
-> I have checked other yaml binding docs where allOf is used, and they have
-> 'additionalProperties' as true in the file which is being referred. Please
-> let me know if this is not correct way to do it.
+It looks like the allocation was inadvertently deleted.
 
-Yes, reboot-mode.yaml should have additionalProperties = true. I
-think Rob missed, that the binding is a generic one when he added
-it in f84e2c5c528d.
+Fixes: 5d13459650b3 ("drm/msm/dsi: push provided clocks handling into a generic code")
 
--- Sebastian
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Stephen Boyd <swboyd@chromium.org>
+Cc: Abhinav Kumar <abhinavk@codeaurora.org>
+Cc: Rob Clark <robdclark@chromium.org>
+Signed-off-by: Sean Paul <seanpaul@chromium.org>
+---
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
---ix4wlrl34amaeftv
-Content-Type: application/pgp-signature; name="signature.asc"
+diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c
+index 582b1428f971..86e40a0d41a3 100644
+--- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c
++++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c
+@@ -405,6 +405,10 @@ static int pll_28nm_register(struct dsi_pll_28nm *pll_28nm, struct clk_hw **prov
+ 	if (!vco_name)
+ 		return -ENOMEM;
+ 
++	parent_name = devm_kzalloc(dev, 32, GFP_KERNEL);
++	if (!parent_name)
++		return -ENOMEM;
++
+ 	clk_name = devm_kzalloc(dev, 32, GFP_KERNEL);
+ 	if (!clk_name)
+ 		return -ENOMEM;
+-- 
+Sean Paul, Software Engineer, Google / Chromium OS
 
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEE72YNB0Y/i3JqeVQT2O7X88g7+poFAmCVJKoACgkQ2O7X88g7
-+pqZqg//bAl15lpGbh5wgVjf5oRwoIJT0FsA2CjTDNeaNO9xiVJhMfQBPWzqmAhB
-hKN6XC4DSemLD7BKsPgIWYTsJvNyQi7wEZKLO6G3+R6Q+bEp4Ry30Cf/heTXw76y
-41udUW+UvPXY1p/v36Xyhidirt4gPfIHTTKEyQ9WEHlDI+J4TjPrH9CaU3a8FwAc
-a5/73gv5OZn4tSLEfbK/VLC7OOMkGrv4zzm+GZeDfeAhv51psVGXUTp1g2UtI70j
-1IlxeMNUus/dSNHqPVUmUndKWhFRAcm4xpjzz3ArGOGYcAXjG5uZzc7hdl5x3APf
-Fj56H//aEn/ERAt0zVJMY+tmenq/XA3hBFZZ7Y9qewz96ep7QUkOSeYe2m5xm8pr
-5ChL1RuwsXdVomwpLKx6q975+9RZi7d+HtM4GymzBQ0CJaWekE2nDPhZKnZL6aoF
-/BS0Il/mVhHLVzhHel9tUGOU0JiyqvcaoZI/nKTqs7mLAFk+J0v1ya3djKo5/yFT
-/VlW892Rie5Prj+c8PUpCgNDBLzrBhdlsrfQZDCob81OaC6sn5KJiNnsZGXuux3n
-ZzIVQXWvsoBSU8vCKwh3hIfmfnKQfR02WdAP6TDac0TB6dOKgzz05oQ56sQ8+CSM
-rCE6/07o9NePc9lvoYdS6IFWLnIwLoix125kXkmVLYfOgQX4c8E=
-=szSx
------END PGP SIGNATURE-----
-
---ix4wlrl34amaeftv--
