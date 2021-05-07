@@ -2,253 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 680B8376B92
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 May 2021 23:18:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 510F2376BA3
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 May 2021 23:25:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229658AbhEGVTn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 May 2021 17:19:43 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([216.205.24.124]:58735 "EHLO
-        us-smtp-delivery-124.mimecast.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229524AbhEGVTj (ORCPT
+        id S229512AbhEGV0I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 May 2021 17:26:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35282 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229482AbhEGV0H (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 May 2021 17:19:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1620422318;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=h69xFeijQcIIQwN+KpkbH+8q4ZpDpGmwjDACTpEty9k=;
-        b=FbTdCC9RRsTJypgYPj6TweFzj8TUAYcrlrSs2mS+3J+3TS02gPmyVdcP9PAA+HrFdcNp99
-        TxvgukTfxN041ZbBNTzwUFAqUnTLkyphpZmY/0WSIxIW0TR/x4IQQKsTtr7AMbywvrABT9
-        0Ydk3hG95wmvBsKYxtjg83SeRjrgOhg=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-311-yUPcLJbUPgi2VzFXMxr7qA-1; Fri, 07 May 2021 17:18:35 -0400
-X-MC-Unique: yUPcLJbUPgi2VzFXMxr7qA-1
-Received: by mail-qv1-f69.google.com with SMTP id h88-20020a0c82610000b02901b70a2884e8so7562867qva.20
-        for <linux-arm-msm@vger.kernel.org>; Fri, 07 May 2021 14:18:35 -0700 (PDT)
+        Fri, 7 May 2021 17:26:07 -0400
+Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com [IPv6:2607:f8b0:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9BF9CC061574
+        for <linux-arm-msm@vger.kernel.org>; Fri,  7 May 2021 14:25:07 -0700 (PDT)
+Received: by mail-pf1-x429.google.com with SMTP id x188so8796940pfd.7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 07 May 2021 14:25:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=TTG2OfOuQUejFlO2ocmSjc3xkounpxNXjXzbmWWcXQ4=;
+        b=ReDI50O4p6XG7KYhP06LRbAWuvZbFoPiydm8iaQ0lbFendfkj5D12q3t4o8Tjq3+XQ
+         45Sn3Xz3HB+4fOLjk25u0rJcdrmMMw3B5OOy77dyA72ufIy0vXm1BWyyIVy/kto58mO+
+         9byAgPEYPR1V4rWSn2F3s39QJYpw6TrbM5SZA=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:user-agent:mime-version
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=h69xFeijQcIIQwN+KpkbH+8q4ZpDpGmwjDACTpEty9k=;
-        b=Y9DuKLm3M5AsNRIp8oK6HH8R7uyK1rUq5WJtqNQbifoiGVAKQPYe0N/TOTQlFeXPEO
-         rALvs6/XpXMr378cfmDQkyXcWZUMTqaYtAKprWVy8aoZgUmsu6lyidJqJDiArrGxKY4X
-         cdFNYSwn3BnkSqIrw4jW1iSxEBwn+NAKB5UokqJDL0t49kLpjseiZyfiieZrm9fVj40e
-         gokQ7bjiIYPpuWZgjMVddhVV0bGwg7ocYET9wL7ehDHZCZYkl0u/9KRBCo6UqVeYwSVN
-         va/EvLgPTpcg8SBlxulngmXkl5WKKbSXeHIpLRjhYGRnl5x/ZbIuu00b4Az0uPYxJh+U
-         qAsw==
-X-Gm-Message-State: AOAM533ba/LoCraM9JzDOtjtcGtXJAUudMlhHHsCG0Gq6EXk+lxZHZSZ
-        hDLtSG2KnBVTcVVCR1u//L1pWhF+TJByc6KUReCJBBvZw5nZje5PoGykeAlPlirCnMCuRcDEfjm
-        7qNUF0GasVYelkKW9DF1ThzBYUw==
-X-Received: by 2002:a37:a8cb:: with SMTP id r194mr12177996qke.349.1620422315176;
-        Fri, 07 May 2021 14:18:35 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJzBWLZBXRB/xfQD+GxRV/Eh4eGw4fJ1tp1D9K7eJc5hSczf3mZHlXsF4pzBv0Ropy/az8Nxzg==
-X-Received: by 2002:a37:a8cb:: with SMTP id r194mr12177967qke.349.1620422314904;
-        Fri, 07 May 2021 14:18:34 -0700 (PDT)
-Received: from Ruby.lyude.net (pool-108-49-102-102.bstnma.fios.verizon.net. [108.49.102.102])
-        by smtp.gmail.com with ESMTPSA id r81sm5950514qka.82.2021.05.07.14.18.33
+        bh=TTG2OfOuQUejFlO2ocmSjc3xkounpxNXjXzbmWWcXQ4=;
+        b=TRpe+ENT5u77dAFsyAEnEW0RaD+XjiP358GY8uqU8CKufYPjPbIZA3MabdNhtFQUiZ
+         hOsUweTxOc4kG5SUsiVndlm/Emept+f894b+yCWOeHPgPlCmsG6DwAUmRCP3I5h3nWQs
+         X2y/yZCTGlcM5CZUGxpn9uG4LyOJZ/MSkmLTy/kjH/MUP/qLoCWd5KRECapxRnHU3pgS
+         epSrQ1dx3KxSXJ0dVguJaF6gpPmSaYyaykG69UAfSkZVm34ZCu4qZXKKURhEKQ9EB32K
+         mOMigO4DCXTKDZXG7fUyrhanZnZjAzmCTtwF5GeDPWvsN20ghfvS4MEzRDoWQDYUmJX5
+         hSbg==
+X-Gm-Message-State: AOAM533g3kECnSzeWqbIEE7rxGLQj4WAwiNc3eJhBrb0FVq2AfXRxkS1
+        B6kJ5gevCoH9Rzt+MF/QbrU6eg==
+X-Google-Smtp-Source: ABdhPJxXqi4S16zzZRUDmrs4PpXoCn4oLa/reeq8qjeKTY4CE/QCv/tBLRMZb5MLVWo20hYp/3coDQ==
+X-Received: by 2002:aa7:8e85:0:b029:28f:2620:957e with SMTP id a5-20020aa78e850000b029028f2620957emr12473932pfr.40.1620422707177;
+        Fri, 07 May 2021 14:25:07 -0700 (PDT)
+Received: from smtp.gmail.com ([2620:15c:202:201:ab8b:4a3d:46ab:361c])
+        by smtp.gmail.com with ESMTPSA id t1sm4996298pjo.33.2021.05.07.14.25.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 May 2021 14:18:34 -0700 (PDT)
-Message-ID: <8eedeb02dc56ecaed5d2f3cb8d929a3675b2c3da.camel@redhat.com>
-Subject: Re: [PATCH v6 2/5] drm/dp: Allow an early call to register DDC i2c
- bus
-From:   Lyude Paul <lyude@redhat.com>
-To:     Douglas Anderson <dianders@chromium.org>,
-        Andrzej Hajda <a.hajda@samsung.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@siol.net>,
-        Sam Ravnborg <sam@ravnborg.org>, Wolfram Sang <wsa@kernel.org>,
-        Ville Syrjala <ville.syrjala@intel.com>
-Cc:     Steev Klimaszewski <steev@kali.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org,
-        Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>,
-        Linus W <linus.walleij@linaro.org>, robdclark@chromium.org,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Thierry Reding <treding@nvidia.com>, linux-i2c@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        linux-kernel@vger.kernel.org
-Date:   Fri, 07 May 2021 17:18:32 -0400
-In-Reply-To: <20210503145750.v6.2.Iff8f2957d86af40f2bfcfb5a7163928481fccea4@changeid>
-References: <20210503215844.2996320-1-dianders@chromium.org>
-         <20210503145750.v6.2.Iff8f2957d86af40f2bfcfb5a7163928481fccea4@changeid>
-Organization: Red Hat
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.38.4 (3.38.4-1.fc33) 
+        Fri, 07 May 2021 14:25:06 -0700 (PDT)
+From:   Stephen Boyd <swboyd@chromium.org>
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Kuogee Hsieh <khsieh@codeaurora.org>, aravindh@codeaurora.org,
+        Sean Paul <sean@poorly.run>
+Subject: [PATCH 0/3] drm/msm/dp: Simplify aux code
+Date:   Fri,  7 May 2021 14:25:02 -0700
+Message-Id: <20210507212505.1224111-1-swboyd@chromium.org>
+X-Mailer: git-send-email 2.31.1.607.g51e8a6a459-goog
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Adding ville from Intel to also get their take on this.
+Here's a few patches that simplify the aux handling code and bubble up
+timeouts and nacks to the upper DRM layers. The goal is to get DRM to
+know that the other side isn't there or that there's been a timeout,
+instead of saying that everything is fine and putting some error message
+into the logs.
 
-In general we've been trying to move DRM to a design where we don't expose any
-devices until everything is ready. That's pretty much the main reason that we
-register things during bridge attach time. Note though that even before the
-DDC bus is registered it should still be usable, just things like get_device()
-won't work.
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Abhinav Kumar <abhinavk@codeaurora.org>
+Cc: Kuogee Hsieh <khsieh@codeaurora.org>
+Cc: aravindh@codeaurora.org
+Cc: Sean Paul <sean@poorly.run>
 
-This isn't the first time we've run into a problem like the one you're trying
-to solve though, Tegra currently has a similar issue. Something we discussed
-as a possible long-term solution for this was splitting i2c_add_adapter() into
-a minimal initialization function and a registration function. Linux's device
-core already allows for this (device_initialize() and device_add(), which are
-called together when device_register() is called). Would this be a solution
-that might work for you (and even better, would you possibly be willing to
-write the patches? :)
+Stephen Boyd (3):
+  drm/msm/dp: Simplify aux irq handling code
+  drm/msm/dp: Shrink locking area of dp_aux_transfer()
+  drm/msm/dp: Handle aux timeouts, nacks, defers
 
-On Mon, 2021-05-03 at 14:58 -0700, Douglas Anderson wrote:
-> It can be helpful to fully register the AUX channel as an i2c bus even
-> before the bridge is created. Let's optionally allow bridges to do
-> that.
-> 
-> Specifically the case we're running into:
-> - The panel driver wants to get its DDC bus at probe time.
-> - The ti-sn65dsi86 MIPI-to-eDP bridge code, which provides the DDC
->   bus, wants to get the panel at probe time.
-> 
-> The next patches ("drm/bridge: ti-sn65dsi86: Promote the AUX channel
-> to its own sub-dev") solves the chicken-and-egg problem by breaking
-> the ti-sn65dsi86 driver into sub-devices, but in order for it to
-> actually work we need the i2c bus to get registered at probe time and
-> not in bridge attach time.
-> 
-> Cc: Lyude Paul <lyude@redhat.com>
-> Cc: Thierry Reding <treding@nvidia.com>
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> ---
-> 
-> Changes in v6:
-> - ("drm/dp: Allow an early call to register DDC i2c bus") new for v6.
-> 
->  drivers/gpu/drm/drm_dp_helper.c | 67 +++++++++++++++++++++++++++------
->  include/drm/drm_dp_helper.h     |  2 +
->  2 files changed, 57 insertions(+), 12 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/drm_dp_helper.c
-> b/drivers/gpu/drm/drm_dp_helper.c
-> index cb56d74e9d38..830294f0b341 100644
-> --- a/drivers/gpu/drm/drm_dp_helper.c
-> +++ b/drivers/gpu/drm/drm_dp_helper.c
-> @@ -1757,6 +1757,49 @@ void drm_dp_aux_init(struct drm_dp_aux *aux)
->  }
->  EXPORT_SYMBOL(drm_dp_aux_init);
->  
-> +/**
-> + * drm_dp_aux_register_ddc() - register the DDC parts of the aux channel
-> + * @aux: DisplayPort AUX channel
-> + *
-> + * This can be called after drm_dp_aux_init() to fully register the ddc bus
-> + * as an i2c adapter with the rest of Linux.
-> + *
-> + * If you don't explicitly call this function it will be done implicitly as
-> + * part of drm_dp_aux_register().
-> + *
-> + * Returns 0 on success or a negative error code on failure.
-> + */
-> +int drm_dp_aux_register_ddc(struct drm_dp_aux *aux)
-> +{
-> +       WARN_ON_ONCE(!aux->dev);
-> +
-> +       aux->ddc.class = I2C_CLASS_DDC;
-> +       aux->ddc.owner = THIS_MODULE;
-> +       aux->ddc.dev.parent = aux->dev;
-> +
-> +       strlcpy(aux->ddc.name, aux->name ? aux->name : dev_name(aux->dev),
-> +               sizeof(aux->ddc.name));
-> +
-> +       return i2c_add_adapter(&aux->ddc);
-> +}
-> +EXPORT_SYMBOL(drm_dp_aux_register_ddc);
-> +
-> +/**
-> + * drm_dp_aux_unregister_ddc() - unregister the DDC parts of the aux
-> channel
-> + *
-> + * This is useful if you called drm_dp_aux_register_ddc(). If you let
-> + * drm_dp_aux_register() implicitly register the DDC for you then you don't
-> + * need to worry about calling this yourself.
-> + *
-> + * @aux: DisplayPort AUX channel
-> + */
-> +void drm_dp_aux_unregister_ddc(struct drm_dp_aux *aux)
-> +{
-> +       i2c_del_adapter(&aux->ddc);
-> +       aux->ddc.dev.parent = NULL;
-> +}
-> +EXPORT_SYMBOL(drm_dp_aux_unregister_ddc);
-> +
->  /**
->   * drm_dp_aux_register() - initialise and register aux channel
->   * @aux: DisplayPort AUX channel
-> @@ -1793,20 +1836,19 @@ int drm_dp_aux_register(struct drm_dp_aux *aux)
->         if (!aux->ddc.algo)
->                 drm_dp_aux_init(aux);
->  
-> -       aux->ddc.class = I2C_CLASS_DDC;
-> -       aux->ddc.owner = THIS_MODULE;
-> -       aux->ddc.dev.parent = aux->dev;
-> -
-> -       strlcpy(aux->ddc.name, aux->name ? aux->name : dev_name(aux->dev),
-> -               sizeof(aux->ddc.name));
-> +       /*
-> +        * Implicitly register if drm_dp_aux_register_ddc() wasn't already
-> +        * called (as evidenced by a NULL parent pointer).
-> +        */
-> +       if (!aux->ddc.dev.parent) {
-> +               ret = drm_dp_aux_register_ddc(aux);
-> +               if (ret)
-> +                       return ret;
-> +       }
->  
->         ret = drm_dp_aux_register_devnode(aux);
-> -       if (ret)
-> -               return ret;
-> -
-> -       ret = i2c_add_adapter(&aux->ddc);
->         if (ret) {
-> -               drm_dp_aux_unregister_devnode(aux);
-> +               drm_dp_aux_unregister_ddc(aux);
->                 return ret;
->         }
->  
-> @@ -1821,7 +1863,8 @@ EXPORT_SYMBOL(drm_dp_aux_register);
->  void drm_dp_aux_unregister(struct drm_dp_aux *aux)
->  {
->         drm_dp_aux_unregister_devnode(aux);
-> -       i2c_del_adapter(&aux->ddc);
-> +       if (aux->ddc.dev.parent)
-> +               drm_dp_aux_unregister_ddc(aux);
->  }
->  EXPORT_SYMBOL(drm_dp_aux_unregister);
->  
-> diff --git a/include/drm/drm_dp_helper.h b/include/drm/drm_dp_helper.h
-> index e932b2c40095..d4d2d5e25bb7 100644
-> --- a/include/drm/drm_dp_helper.h
-> +++ b/include/drm/drm_dp_helper.h
-> @@ -2021,6 +2021,8 @@ bool drm_dp_lttpr_pre_emphasis_level_3_supported(const
-> u8 caps[DP_LTTPR_PHY_CAP_
->  
->  void drm_dp_remote_aux_init(struct drm_dp_aux *aux);
->  void drm_dp_aux_init(struct drm_dp_aux *aux);
-> +int drm_dp_aux_register_ddc(struct drm_dp_aux *aux);
-> +void drm_dp_aux_unregister_ddc(struct drm_dp_aux *aux);
->  int drm_dp_aux_register(struct drm_dp_aux *aux);
->  void drm_dp_aux_unregister(struct drm_dp_aux *aux);
->  
+ drivers/gpu/drm/msm/dp/dp_aux.c     | 181 ++++++++++++----------------
+ drivers/gpu/drm/msm/dp/dp_aux.h     |   8 --
+ drivers/gpu/drm/msm/dp/dp_catalog.c |   2 +-
+ drivers/gpu/drm/msm/dp/dp_catalog.h |   2 +-
+ 4 files changed, 80 insertions(+), 113 deletions(-)
 
+
+base-commit: 51595e3b4943b0079638b2657f603cf5c8ea3a66
 -- 
-Cheers,
- Lyude Paul (she/her)
- Software Engineer at Red Hat
+https://chromeos.dev
 
