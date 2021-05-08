@@ -2,74 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E5356376C70
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 May 2021 00:19:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C7628376EA0
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 May 2021 04:28:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229864AbhEGWUV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 May 2021 18:20:21 -0400
-Received: from mail-oo1-f48.google.com ([209.85.161.48]:41896 "EHLO
-        mail-oo1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229470AbhEGWUV (ORCPT
+        id S230312AbhEHC34 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 May 2021 22:29:56 -0400
+Received: from szxga04-in.huawei.com ([45.249.212.190]:17595 "EHLO
+        szxga04-in.huawei.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229775AbhEHC3z (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 May 2021 18:20:21 -0400
-Received: by mail-oo1-f48.google.com with SMTP id u48-20020a4a97330000b02901fa060b8066so2276731ooi.8;
-        Fri, 07 May 2021 15:19:20 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=m+Fa80kPuv08thHywW5q/sPvIDsbmQsI+c8g68W0K4w=;
-        b=DrkWbXNsjB1Y4tEonBudKZEhZHmn0uAsxjP/gkWWKW561oinurFGiT4dLLm/hfXqnI
-         i6wZt7gMljcXYJgH8wf/DYTF4WsUdIRCLAgfH8leVf9O1JhermXQolurdbFwKEAgOCXX
-         5lQFoxgY0AjyAWGyHoCCCVqO3vC2uxKIHfo/OlUk0BbG0GdO7i8nxpXFqh/919nME738
-         YP8HsaXWdTIw+J/OLLV0S5mikocEKaOJ02LsVrxrHvuNitXr6Hw5/F+1GOwGlB2udX4k
-         lHnB5p6ak3Pfq6I1GVfkM4Y7IuIKaIne81M18Vadr/rY9e8AAbApN1q0jYISEZxOuYIb
-         Hzag==
-X-Gm-Message-State: AOAM530FrchQ4hoTfKoCsJIGqwoeLsYspFxd7KvEsnXB+CgCjQumsH0G
-        TGpT5Fjk0uSUdqgOYuEqzsRmfOxWxQ==
-X-Google-Smtp-Source: ABdhPJyAjjAvm3vQ7DRCv2WJcUPznBLSvIKljuefgTKHxfMlOw5LENbClezJhS9JkdtNgwXLZoippg==
-X-Received: by 2002:a4a:55c9:: with SMTP id e192mr1475395oob.37.1620425960580;
-        Fri, 07 May 2021 15:19:20 -0700 (PDT)
-Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id g16sm1317938oof.43.2021.05.07.15.19.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 May 2021 15:19:19 -0700 (PDT)
-Received: (nullmailer pid 2999929 invoked by uid 1000);
-        Fri, 07 May 2021 22:19:18 -0000
-Date:   Fri, 7 May 2021 17:19:18 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Yassine Oudjana <y.oudjana@protonmail.com>
-Cc:     devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Ohad Ben-Cohen <ohad@wizery.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        linux-remoteproc@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>
-Subject: Re: [PATCH 2/3] dt-bindings: remoteproc: qcom: pas: Add power
- domains for MSM8996
-Message-ID: <20210507221918.GA2999879@robh.at.kernel.org>
-References: <lRf8M7F6Qo9s7tlx6vuAWHThg26ls3u6SvQn1PLrAdI@cp4-web-038.plabs.ch>
+        Fri, 7 May 2021 22:29:55 -0400
+Received: from DGGEMS414-HUB.china.huawei.com (unknown [172.30.72.60])
+        by szxga04-in.huawei.com (SkyGuard) with ESMTP id 4FcWQd11MGz16LLD;
+        Sat,  8 May 2021 10:26:17 +0800 (CST)
+Received: from thunder-town.china.huawei.com (10.174.177.72) by
+ DGGEMS414-HUB.china.huawei.com (10.3.19.214) with Microsoft SMTP Server id
+ 14.3.498.0; Sat, 8 May 2021 10:28:43 +0800
+From:   Zhen Lei <thunder.leizhen@huawei.com>
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jeykumar Sankaran <jsanka@codeaurora.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        linux-kernel <linux-kernel@vger.kernel.org>
+CC:     Zhen Lei <thunder.leizhen@huawei.com>
+Subject: [PATCH 1/1] drm/msm: Fix error return code in msm_drm_init()
+Date:   Sat, 8 May 2021 10:28:36 +0800
+Message-ID: <20210508022836.1777-1-thunder.leizhen@huawei.com>
+X-Mailer: git-send-email 2.26.0.windows.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <lRf8M7F6Qo9s7tlx6vuAWHThg26ls3u6SvQn1PLrAdI@cp4-web-038.plabs.ch>
+Content-Transfer-Encoding: 7BIT
+Content-Type:   text/plain; charset=US-ASCII
+X-Originating-IP: [10.174.177.72]
+X-CFilter-Loop: Reflected
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 06 May 2021 21:18:31 +0000, Yassine Oudjana wrote:
-> Add MSM8996 compatible strings to CX and SSC-CX power domains.
-> 
-> This depends on: "dt-bindings: remoteproc: qcom: pas: Convert binding to YAML"
-> https://lore.kernel.org/linux-arm-msm/20210505082200.32635-1-manivannan.sadhasivam@linaro.org/T/#u
-> 
-> Signed-off-by: Yassine Oudjana <y.oudjana@protonmail.com>
-> ---
->  Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml | 2 ++
->  1 file changed, 2 insertions(+)
-> 
+Fix to return a negative error code from the error handling case instead
+of 0, as done elsewhere in this function.
 
-Acked-by: Rob Herring <robh@kernel.org>
+Fixes: 7f9743abaa79 ("drm/msm: validate display and event threads")
+Reported-by: Hulk Robot <hulkci@huawei.com>
+Signed-off-by: Zhen Lei <thunder.leizhen@huawei.com>
+---
+ drivers/gpu/drm/msm/msm_drv.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+index e1104d2454e2..ebd856dde1f1 100644
+--- a/drivers/gpu/drm/msm/msm_drv.c
++++ b/drivers/gpu/drm/msm/msm_drv.c
+@@ -523,6 +523,7 @@ static int msm_drm_init(struct device *dev, const struct drm_driver *drv)
+ 		priv->event_thread[i].worker = kthread_create_worker(0,
+ 			"crtc_event:%d", priv->event_thread[i].crtc_id);
+ 		if (IS_ERR(priv->event_thread[i].worker)) {
++			ret = PTR_ERR(priv->event_thread[i].worker);
+ 			DRM_DEV_ERROR(dev, "failed to create crtc_event kthread\n");
+ 			goto err_msm_uninit;
+ 		}
+-- 
+2.25.1
+
+
