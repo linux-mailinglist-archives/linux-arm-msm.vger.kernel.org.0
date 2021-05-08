@@ -2,131 +2,168 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4B15A37709E
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 May 2021 10:17:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B6AB33773B7
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 May 2021 20:56:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229797AbhEHISz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 8 May 2021 04:18:55 -0400
-Received: from szxga04-in.huawei.com ([45.249.212.190]:17600 "EHLO
-        szxga04-in.huawei.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229752AbhEHISz (ORCPT
+        id S229664AbhEHS5V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 8 May 2021 14:57:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32976 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229661AbhEHS5T (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 8 May 2021 04:18:55 -0400
-Received: from DGGEMS411-HUB.china.huawei.com (unknown [172.30.72.58])
-        by szxga04-in.huawei.com (SkyGuard) with ESMTP id 4Fcg9H4vlNz1BGnC;
-        Sat,  8 May 2021 16:15:15 +0800 (CST)
-Received: from [127.0.0.1] (10.174.177.72) by DGGEMS411-HUB.china.huawei.com
- (10.3.19.211) with Microsoft SMTP Server id 14.3.498.0; Sat, 8 May 2021
- 16:17:50 +0800
-Subject: Re: [PATCH 1/1] drm/msm/dpu: Fix error return code in dpu_mdss_init()
-To:     Stephen Boyd <swboyd@chromium.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        "David Airlie" <airlied@linux.ie>, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <sean@poorly.run>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-kernel <linux-kernel@vger.kernel.org>
-References: <20210508024254.1877-1-thunder.leizhen@huawei.com>
- <CAE-0n51owL8RGJyz_5BUCTjrUW5m0X-DTKUx=mqRL=-4i-tMDA@mail.gmail.com>
- <4f6ab4db-958d-c2c5-7879-aa9a0d3b87ae@huawei.com>
- <CAE-0n51bPtbw4gx4EOTd2wNq6gcH9yCuR_e8kqBo0-+7unUz5A@mail.gmail.com>
-From:   "Leizhen (ThunderTown)" <thunder.leizhen@huawei.com>
-Message-ID: <bba9f2f4-19cd-018a-2233-dc51ffb1d85b@huawei.com>
-Date:   Sat, 8 May 2021 16:17:48 +0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.0
+        Sat, 8 May 2021 14:57:19 -0400
+Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE7ACC06175F
+        for <linux-arm-msm@vger.kernel.org>; Sat,  8 May 2021 11:56:17 -0700 (PDT)
+Received: by mail-ot1-x32e.google.com with SMTP id q7-20020a9d57870000b02902a5c2bd8c17so10855383oth.5
+        for <linux-arm-msm@vger.kernel.org>; Sat, 08 May 2021 11:56:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=IF7Fac0YjVDycbq5PH+VvNCEX38AVPA4fKxY5+X2pvM=;
+        b=PUqcaScEb9tsf7vUvHj3CnZsCwzWf3odcLsWYZX9AtdI1hc4sT58bXGsUhazsSPyWI
+         6Q6kBqJcVBJZgaxWMz3M7RZJYw4eqyTkDsILIbnC1E1xxqSzc316q931UtbagBNF20ma
+         156h+ehNaRPmn35EfI/9L4A5U6GjV4KBICyzI1eHarm/92TJyfZ0rREoWPcNWGegyDVv
+         L1yO/eZLul0v1cZ41ndHwaMbCGiPESt4zyISiWKNkIHF5wwVjA84EkC9VkLvHvxF0RRb
+         UzbBBWKZy5vRQlr9iE1nZLtvcescqeEuUx9GHyqoND2oK+jyGr+AZVrK+LrPt6b5XP1H
+         j2CA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=IF7Fac0YjVDycbq5PH+VvNCEX38AVPA4fKxY5+X2pvM=;
+        b=ai9G+5Agkz32hBSo5eKEa9t0qK3lSoJrRxB5MybHn+EDnIkTAnGqdVQOOU6Z65ZEsP
+         nR8XwFO4Trt4hzYZnS4beyrZIWlIDAsomuEXvHdPAu7QpVucat3mQ+Jc4ibms5PUUM2p
+         F6jdbcO0WlF95AnbteuRYMRYrJv2eqvklPmdDR+BmK5G8BDCgjqaGcAuZFtcaq99mb/g
+         hYZ5wuACxgPp6aTknNrw1dgvTBVtHiV7gdjDvkjsaem3DI/ZfM2M31OE6cgsw61gVgAR
+         9YvD7fF94q7cdyG6K/WdHmW6k/F04oRjGN9Gn8j7JO9OtZL/AlixrL4eZJAAb0R+aPQ/
+         yvDg==
+X-Gm-Message-State: AOAM531Y+lUTgVqAmE5JuMWzJPkJ+qMUBg+dt7vnXy32iZQiRHxjCoih
+        Yh3tHyOoD17a8xQQZnhkSXbf4bHhNkkpLF/ZdvkukA==
+X-Google-Smtp-Source: ABdhPJwSVaVB5oB3yhUXmvXMdKhgh8GWruFZ82+rfw+bzS/cGv/WjBJnJLO0ry+vEzbyw1Po+3sMwFzSUAbOpuPcAsg=
+X-Received: by 2002:a9d:51c7:: with SMTP id d7mr5449017oth.51.1620500177155;
+ Sat, 08 May 2021 11:56:17 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAE-0n51bPtbw4gx4EOTd2wNq6gcH9yCuR_e8kqBo0-+7unUz5A@mail.gmail.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.174.177.72]
-X-CFilter-Loop: Reflected
+References: <20210505213731.538612-1-bhupesh.sharma@linaro.org> <20210507211434.GA2879094@robh.at.kernel.org>
+In-Reply-To: <20210507211434.GA2879094@robh.at.kernel.org>
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Date:   Sun, 9 May 2021 00:26:06 +0530
+Message-ID: <CAH=2Ntwwzu5Ftwj=r9RWnKv6xvRdKz0qjyqvJvxFwmoTP1zTqg@mail.gmail.com>
+Subject: Re: [PATCH v2 00/17] Enable Qualcomm Crypto Engine on sm8250
+To:     Rob Herring <robh@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Thara Gopinath <thara.gopinath@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Herbert Xu <herbert@gondor.apana.org.au>,
+        "David S . Miller" <davem@davemloft.net>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Vinod Koul <vkoul@kernel.org>, dmaengine@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-crypto@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        bhupesh.linux@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Rob,
 
+On Sat, 8 May 2021 at 02:44, Rob Herring <robh@kernel.org> wrote:
+>
+> On Thu, May 06, 2021 at 03:07:14AM +0530, Bhupesh Sharma wrote:
+> > Changes since v1:
+> > =================
+> > - v1 can be seen here: https://lore.kernel.org/linux-arm-msm/20210310052503.3618486-1-bhupesh.sharma@linaro.org/
+> > - v1 did not work well as reported earlier by Dmitry, so v2 contains the following
+> >   changes/fixes:
+> >   ~ Enable the interconnect path b/w BAM DMA and main memory first
+> >     before trying to access the BAM DMA registers.
+> >   ~ Enable the interconnect path b/w qce crytpo and main memory first
+> >     before trying to access the qce crypto registers.
+> >   ~ Make sure to document the required and optional properties for both
+> >     BAM DMA and qce crypto drivers.
+> >   ~ Add a few debug related print messages in case the qce crypto driver
+> >     passes or fails to probe.
+> >   ~ Convert the qce crypto driver probe to a defered one in case the BAM DMA
+> >     or the interconnect driver(s) (needed on specific Qualcomm parts) are not
+> >     yet probed.
+> >
+> > Qualcomm crypto engine is also available on sm8250 SoC.
+> > It supports hardware accelerated algorithms for encryption
+> > and authentication. It also provides support for aes, des, 3des
+> > encryption algorithms and sha1, sha256, hmac(sha1), hmac(sha256)
+> > authentication algorithms.
+> >
+> > Tested the enabled crypto algorithms with cryptsetup test utilities
+> > on sm8250-mtp and RB5 board (see [1]).
+> >
+> > While at it, also make a minor fix in 'sdm845.dtsi', to make
+> > sure it confirms with the other .dtsi files which expose
+> > crypto nodes on qcom SoCs.
+> >
+> > Cc: Thara Gopinath <thara.gopinath@linaro.org>
+> > Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > Cc: Rob Herring <robh+dt@kernel.org>
+> > Cc: Andy Gross <agross@kernel.org>
+> > Cc: Herbert Xu <herbert@gondor.apana.org.au>
+> > Cc: David S. Miller <davem@davemloft.net>
+> > Cc: Stephen Boyd <sboyd@kernel.org>
+> > Cc: Michael Turquette <mturquette@baylibre.com>
+> > Cc: Vinod Koul <vkoul@kernel.org>
+> > Cc: dmaengine@vger.kernel.org
+> > Cc: linux-clk@vger.kernel.org
+> > Cc: linux-crypto@vger.kernel.org
+> > Cc: devicetree@vger.kernel.org
+> > Cc: linux-kernel@vger.kernel.org
+> > Cc: bhupesh.linux@gmail.com
+> >
+> > Bhupesh Sharma (14):
+> >   dt-bindings: qcom-bam: Add 'interconnects' & 'interconnect-names' to
+> >     optional properties
+> >   dt-bindings: qcom-bam: Add 'iommus' to required properties
+> >   dt-bindings: qcom-qce: Add 'iommus' to required properties
+> >   dt-bindings: qcom-qce: Add 'interconnects' and move 'clocks' to
+> >     optional properties
+> >   arm64/dts: qcom: sdm845: Use RPMH_CE_CLK macro directly
+> >   dt-bindings: crypto : Add new compatible strings for qcom-qce
+>
+> Please convert these bindings to schemas.
 
-On 2021/5/8 15:58, Stephen Boyd wrote:
-> Quoting Leizhen (ThunderTown) (2021-05-08 00:55:04)
->>
->>
->> On 2021/5/8 14:09, Stephen Boyd wrote:
->>> Quoting Zhen Lei (2021-05-07 19:42:54)
->>>> Fix to return a negative error code from the error handling case instead
->>>> of 0, as done elsewhere in this function.
->>>>
->>>> Fixes: 070e64dc1bbc ("drm/msm/dpu: Convert to a chained irq chip")
->>>> Reported-by: Hulk Robot <hulkci@huawei.com>
->>>> Signed-off-by: Zhen Lei <thunder.leizhen@huawei.com>
->>>> ---
->>>>  drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c | 4 +++-
->>>>  1 file changed, 3 insertions(+), 1 deletion(-)
->>>>
->>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c
->>>> index 06b56fec04e0..1b6c9fb500a1 100644
->>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c
->>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c
->>>> @@ -253,8 +253,10 @@ int dpu_mdss_init(struct drm_device *dev)
->>>>                 goto irq_domain_error;
->>>>
->>>>         irq = platform_get_irq(pdev, 0);
->>>> -       if (irq < 0)
->>>> +       if (irq < 0) {
->>>> +               ret = irq;
->>>>                 goto irq_error;
->>>> +       }
->>>
->>> It would be even better if ret wasn't assigned to 0 at the start of this
->>> function.
->>
->> The returned error code is not unique.
->>
-> 
-> What does it mean? I was saying this
+Ok, will fix it in v3.
 
-Sorry, I misunderstood. I think your opinion is good.
+Thanks,
+Bhupesh
 
-> 
-> ----8<----
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c
-> b/drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c
-> index cd4078807db1..0fcf190f6322 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c
-> @@ -263,7 +263,7 @@ int dpu_mdss_init(struct drm_device *dev)
->  	struct msm_drm_private *priv = dev->dev_private;
->  	struct dpu_mdss *dpu_mdss;
->  	struct dss_module_power *mp;
-> -	int ret = 0;
-> +	int ret;
->  	int irq;
-> 
->  	dpu_mdss = devm_kzalloc(dev->dev, sizeof(*dpu_mdss), GFP_KERNEL);
-> @@ -297,8 +297,10 @@ int dpu_mdss_init(struct drm_device *dev)
->  		goto irq_domain_error;
-> 
->  	irq = platform_get_irq(pdev, 0);
-> -	if (irq < 0)
-> +	if (irq < 0) {
-> +		ret = irq;
->  		goto irq_error;
-> +	}
-> 
->  	irq_set_chained_handler_and_data(irq, dpu_mdss_irq,
->  					 dpu_mdss);
-> @@ -309,7 +311,7 @@ int dpu_mdss_init(struct drm_device *dev)
-> 
->  	dpu_mdss_icc_request_bw(priv->mdss);
-> 
-> -	return ret;
-> +	return 0;
-> 
->  irq_error:
->  	_dpu_mdss_irq_domain_fini(dpu_mdss);
-> 
-> .
-> 
-
+>
+> >   arm64/dts: qcom: Use new compatibles for crypto nodes
+> >   crypto: qce: Add new compatibles for qce crypto driver
+> >   crypto: qce: Print a failure msg in case probe() fails
+> >   crypto: qce: Convert the device found dev_dbg() to dev_info()
+> >   dma: qcom: bam_dma: Create a new header file for BAM DMA driver
+> >   crypto: qce: Defer probing if BAM dma is not yet initialized
+> >   crypto: qce: Defer probe in case interconnect is not yet initialized
+> >   arm64/dts: qcom: sm8250: Add dt entries to support crypto engine.
+> >
+> > Thara Gopinath (3):
+> >   dma: qcom: bam_dma: Add support to initialize interconnect path
+> >   crypto: qce: core: Add support to initialize interconnect path
+> >   crypto: qce: core: Make clocks optional
+> >
+> >  .../devicetree/bindings/crypto/qcom-qce.txt   |  22 +-
+> >  .../devicetree/bindings/dma/qcom_bam_dma.txt  |   5 +
+> >  arch/arm64/boot/dts/qcom/ipq6018.dtsi         |   2 +-
+> >  arch/arm64/boot/dts/qcom/sdm845.dtsi          |   6 +-
+> >  arch/arm64/boot/dts/qcom/sm8250.dtsi          |  28 ++
+> >  drivers/crypto/qce/core.c                     | 112 +++++--
+> >  drivers/crypto/qce/core.h                     |   3 +
+> >  drivers/dma/qcom/bam_dma.c                    | 306 ++----------------
+> >  include/soc/qcom/bam_dma.h                    | 290 +++++++++++++++++
+> >  9 files changed, 457 insertions(+), 317 deletions(-)
+> >  create mode 100644 include/soc/qcom/bam_dma.h
+> >
+> > --
+> > 2.30.2
+> >
