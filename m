@@ -2,121 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9B33E37780E
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 May 2021 21:20:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 15E12377931
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 May 2021 01:17:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229662AbhEITV7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 9 May 2021 15:21:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36610 "EHLO
+        id S229987AbhEIXSj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 9 May 2021 19:18:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59764 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229693AbhEITV7 (ORCPT
+        with ESMTP id S229840AbhEIXSj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 9 May 2021 15:21:59 -0400
-Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7DF9CC061763
-        for <linux-arm-msm@vger.kernel.org>; Sun,  9 May 2021 12:20:55 -0700 (PDT)
-Received: by mail-oi1-x22f.google.com with SMTP id i81so13903860oif.6
-        for <linux-arm-msm@vger.kernel.org>; Sun, 09 May 2021 12:20:55 -0700 (PDT)
+        Sun, 9 May 2021 19:18:39 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A411DC061573
+        for <linux-arm-msm@vger.kernel.org>; Sun,  9 May 2021 16:17:35 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id s5-20020a7bc0c50000b0290147d0c21c51so7821776wmh.4
+        for <linux-arm-msm@vger.kernel.org>; Sun, 09 May 2021 16:17:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=4GPX6YCdFT0eI9OqiRM8BpJFmnkJ48nTNs5bVOXcOto=;
-        b=W3oEm+Oqv8jLV7JX4eRdNWLtaUGnm18j3ZTtBh3ytvRUvWqMMuZkuTsalW6FwJM1O7
-         zUy9IpQYFCCLsR5UA1avToB85nZYis468um1kgBb/SwY5TG/CIlZ1bzK034KroZdFLqS
-         0s2UClL6u5efDdXqywqT3Zh4/b2E4cYf2DJXU/jtyB8Rf0ngt9FJ7sdYfzTz2aBVTgvb
-         vXOD4O0mCV5xLFLNWHc82ZV2MArtTu7PbWHYjBdlnr4rnjLUEkWRtkTVS87WNLE1vnJu
-         9GRBQp9f7nbi32VxANmKrUXkFGiEIxHnDooT79iM5V1J4eh6t4UYcI9Epnt7xanmWzMh
-         wX2Q==
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=ePciVVPEBMHi9XfKMWeqEPGTV/ZtJKjK01Vqdn8reZw=;
+        b=n95Ng3tuJ4jJ044BYgsu1Kuwh1GV9Sw9uo///kvGaxWKPLOEEgrkpgYOUs7738QRh0
+         sHL4/U/Ker7ltuW6goKvOL5sEXhFCudy803FrEHdw8dWiKrfmalwMeRTbjcq8tSML046
+         /38J8MJzXBhfs5TBgdn+yMLWonViDHia/Yls/gLrpGWowDrKjU7HqF89GvwY8t5ZVV+W
+         TipBUb9X7GCf2Sv58GSQ+lKekIXuu0OyPZAXrEzqN/g7fUW0PLd/pzQa3XAG+rhogBKs
+         D0HNiyBWfXI/fg++1KpCVtGuhWM63PayBgN38S6I0uU6bJ3OHC2Pj9VHAJodDAQktCUS
+         KNgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=4GPX6YCdFT0eI9OqiRM8BpJFmnkJ48nTNs5bVOXcOto=;
-        b=b2X7ZxR4IrLcVPfSkMK0+h8xvQF68Y66D5YS6CRbEyidH5SG3Af80Tq3kODRkiDWkP
-         fMjMZaDhvu62EoX+MTTRI8mnj0BSXDMm17nb93wyzFOWeA8lR838ioyrl09VmcAx97j5
-         UFrKb+rCH4sLRXz6lRVQMSJnQx+VDyt+aV7YorblfKsPl5IYZD8cP7lwhzTFoVC01gMh
-         DdZiq/M2Cga2wuDjyLuHgfLYaAqqibRxpWJoIu20JahncXWyhxnnE02LmN6yFniWPrsh
-         6sR9GaRSlSmSZVdbGBGwE9UBN9+VV3SR35d0coiGbWAr0yyF9i8tFaLoRWoR2awqWQ3P
-         74hQ==
-X-Gm-Message-State: AOAM531NzYD8NS463CNAjnACLQWEcj6m+hnZYdJvr4T5rB3dPJI3TYem
-        T+O0w0o1UjsT7cdJ4MWF1s17zoSwNz1THZyiyvEMbQ==
-X-Google-Smtp-Source: ABdhPJw6+UCBlq3IWslbkvJg6hDx8LHViB9kozY6+DNTnjWO3Xjnwmrth+lDZWe6PVj3aw2O9mJQcyzhFO5f962x7fo=
-X-Received: by 2002:aca:3dc3:: with SMTP id k186mr23871986oia.126.1620588054621;
- Sun, 09 May 2021 12:20:54 -0700 (PDT)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=ePciVVPEBMHi9XfKMWeqEPGTV/ZtJKjK01Vqdn8reZw=;
+        b=dcDO50D6KDor0ECQnCTBZg6QJNVtaoIql4z84JXA2TvqqcoE8xEUieRh7RIlGiHphP
+         q4G68IWTJzKr2xFGAa//BQjB7ku3FtmrFfBcxAo4lap8vvvdexv/ZL4NFAmPX0TPf407
+         LLkAab0Q3EjhYCovmTV7usdIrvnVsfnM4feySMWAkIFygugQI2wxpFhVcHsXqz15hhTt
+         t+n7oyvsG+bWab2mh6XUDgugqpw4zWwdYXQd/sWTij6V+FQcjQytWqjSOMdRyQJyXenz
+         1CtbeyShs57yUXHb7qFPZHsaWf3RJfrK82USOUN3ho4ypQpAirc0Jih4vmd6R0uNNeSv
+         x41w==
+X-Gm-Message-State: AOAM533huhMv2GK8PFzAxBxUnTWdA8TgNv7PAS0oxfN7yITfgazS0Epn
+        6lBsPn9PJ6vDReuOvmZvbt1nx1OdDdrqWEfJXvk=
+X-Google-Smtp-Source: ABdhPJyowrQIMEmEuTa2jIzG7Bl2yCWb6/cU2OuM5B+6OrRhpVCUjezV1fRPp33YH/fBciOo9zuIuZjqs5ZHWZ+iOso=
+X-Received: by 2002:a05:600c:249:: with SMTP id 9mr22929827wmj.175.1620602254362;
+ Sun, 09 May 2021 16:17:34 -0700 (PDT)
 MIME-Version: 1.0
-References: <20210505213731.538612-1-bhupesh.sharma@linaro.org>
- <20210505213731.538612-15-bhupesh.sharma@linaro.org> <YJfqk/0Whr2Qfxjb@vkoul-mobl.Dlink>
-In-Reply-To: <YJfqk/0Whr2Qfxjb@vkoul-mobl.Dlink>
-From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Date:   Mon, 10 May 2021 00:50:43 +0530
-Message-ID: <CAH=2Ntw6MfqLvxzx44TqgF21frwkeJnUmkeH2+zx0L+MfLdG=A@mail.gmail.com>
-Subject: Re: [PATCH v2 14/17] dma: qcom: bam_dma: Create a new header file for
- BAM DMA driver
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Thara Gopinath <thara.gopinath@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Herbert Xu <herbert@gondor.apana.org.au>,
-        "David S . Miller" <davem@davemloft.net>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        dmaengine@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-crypto@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, bhupesh.linux@gmail.com
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Sun, 9 May 2021 16:21:16 -0700
+Message-ID: <CAF6AEGtmr-X=Cs8V0bJZMAuONcvn8-rfJGuMNXCO9Q39JYEaFQ@mail.gmail.com>
+Subject: [pull] drm/msm: drm-msm-fixes-2021-05-09 for v5.13-rc2
+To:     Dave Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
+Cc:     freedreno <freedreno@lists.freedesktop.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Sean Paul <sean@poorly.run>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Vinod,
+Hi Dave & Daniel,
 
-Thanks for the review.
+First round of fixes for v5.13
 
-On Sun, 9 May 2021 at 19:28, Vinod Koul <vkoul@kernel.org> wrote:
->
-> On 06-05-21, 03:07, Bhupesh Sharma wrote:
-> > Create a new header file for BAM DMA driver to make sure
-> > that it can be included in the follow-up patch to defer probing
-> > drivers which require BAM DMA driver to be first probed successfully.
-> >
-> > Cc: Thara Gopinath <thara.gopinath@linaro.org>
-> > Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > Cc: Rob Herring <robh+dt@kernel.org>
-> > Cc: Andy Gross <agross@kernel.org>
-> > Cc: Herbert Xu <herbert@gondor.apana.org.au>
-> > Cc: David S. Miller <davem@davemloft.net>
-> > Cc: Stephen Boyd <sboyd@kernel.org>
-> > Cc: Michael Turquette <mturquette@baylibre.com>
-> > Cc: Vinod Koul <vkoul@kernel.org>
-> > Cc: dmaengine@vger.kernel.org
-> > Cc: linux-clk@vger.kernel.org
-> > Cc: linux-crypto@vger.kernel.org
-> > Cc: devicetree@vger.kernel.org
-> > Cc: linux-kernel@vger.kernel.org
-> > Cc: bhupesh.linux@gmail.com
-> > Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> > ---
-> >  drivers/dma/qcom/bam_dma.c | 283 +-----------------------------------
-> >  include/soc/qcom/bam_dma.h | 290 +++++++++++++++++++++++++++++++++++++
->
-> 1. Please use -M with move patches...
+The following changes since commit a29c8c0241654d5f3165d52e9307e4feff955621:
 
-Oops, will do.
+  drm/msm/disp/dpu1: fix display underruns during modeset. (2021-04-09
+12:02:35 -0700)
 
-> 2. susbsytem is dmaengine
->
-> 3. Why move..? These things are internal to the driver and I dont think
-> it is wise for clients to use everything here... If the client needs to
-> know defer probe, it should request a channel and check the status
-> returned for EPROBE_DEFER
+are available in the Git repository at:
 
-Yes, the main intent is to defer the probe of the calling client driver in
-case the BAM DMA is not probed() yet.
+  https://gitlab.freedesktop.org/drm/msm.git
 
-Sure, I will make the suggested change in v3,
+for you to fetch changes up to f2f46b878777e0d3f885c7ddad48f477b4dea247:
 
-Regards,
-Bhupesh
+  drm/msm/dp: initialize audio_comp when audio starts (2021-05-06
+16:26:57 -0700)
+
+----------------------------------------------------------------
+Dmitry Baryshkov (2):
+      drm/msm/dsi: dsi_phy_28nm_8960: fix uninitialized variable access
+      drm/msm/dsi: fix msm_dsi_phy_get_clk_provider return code
+
+Jonathan Marek (2):
+      drm/msm: fix LLC not being enabled for mmu500 targets
+      drm/msm: fix minor version to indicate MSM_PARAM_SUSPENDS support
+
+Kuogee Hsieh (2):
+      drm/msm/dp: check sink_count before update is_connected status
+      drm/msm/dp: initialize audio_comp when audio starts
+
+Rob Clark (1):
+      drm/msm: Do not unpin/evict exported dma-buf's
+
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c           |  9 +++++----
+ drivers/gpu/drm/msm/dp/dp_audio.c               |  1 +
+ drivers/gpu/drm/msm/dp/dp_display.c             | 26 ++++++++++++++++---------
+ drivers/gpu/drm/msm/dp/dp_display.h             |  1 +
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy.c           |  2 +-
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c |  4 ++++
+ drivers/gpu/drm/msm/msm_drv.c                   |  2 +-
+ drivers/gpu/drm/msm/msm_gem.c                   | 16 ++++++++++++++-
+ drivers/gpu/drm/msm/msm_gem.h                   |  4 ++--
+ 9 files changed, 47 insertions(+), 18 deletions(-)
