@@ -2,134 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 64E5C3774BC
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 May 2021 02:41:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3A00A3774E9
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 May 2021 04:14:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229647AbhEIAmq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 8 May 2021 20:42:46 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:19847 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229616AbhEIAmp (ORCPT
+        id S229616AbhEICPz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 8 May 2021 22:15:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42412 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229609AbhEICPy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 8 May 2021 20:42:45 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1620520903; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=SD9OLK+Xie/V3bYXwDC9AsFVonphv9bIA6gkq44pVpU=; b=CKikid0O4kBBPj0ntbb1ouUBPeyFkvkRQKBptGmUR4D3MZDlzmM+41MSq6ziWGKW9nFLaUsR
- nJRpSDoDbM0pyvifd4x0oCpZNSkipNQS3SxCbCsaHpFvxwrP9E8Qy1kEVNX34IwdoNyPZ8H9
- QwhBTWFdLgtIuRPCCoVfJwuoqO8=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
- 60972faefebcffa80f04bdc7 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Sun, 09 May 2021 00:41:18
- GMT
-Sender: pmaliset=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id A209EC433D3; Sun,  9 May 2021 00:41:18 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
-Received: from pmaliset-linux.qualcomm.com (unknown [202.46.22.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: pmaliset)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 71B17C4338A;
-        Sun,  9 May 2021 00:41:13 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 71B17C4338A
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=pmaliset@codeaurora.org
-From:   Prasad Malisetty <pmaliset@codeaurora.org>
-To:     Andy Gross <agross@kernel.org>,
+        Sat, 8 May 2021 22:15:54 -0400
+Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com [IPv6:2607:f8b0:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1AD8C061573
+        for <linux-arm-msm@vger.kernel.org>; Sat,  8 May 2021 19:14:51 -0700 (PDT)
+Received: by mail-pl1-x631.google.com with SMTP id b3so7462201plg.11
+        for <linux-arm-msm@vger.kernel.org>; Sat, 08 May 2021 19:14:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=Yo0KQvoiXvT8aOrdD5NF+kaz4eBGOnmZ/KNVCKPE7tc=;
+        b=mjxYMvW/+v9g3q+EnJujlRtxIAAnpJeF4PjKGr3m6DlcGUcwMQGyp5ei450aJx9Vn2
+         /TaosHSBCaZRQXeDmHfRT+veBFw3kjY5BIVtmoxF05rBCrW7GMw8JRc+WgSrpywhT8E9
+         U3dtSExDi9fvhapwA7AZd8DMYUiD3t6SMqfGXEGTJicqRRen/xfUV7ApgUtWmRKG3MS4
+         oxwJ9yLiS/9jdduY/OeUTJamGhhBAt+wsQBu31r+pdnWrX0ynx8OEA7byPUEF0ydenZE
+         SFBM1wtiVXu02COjEkzoGR0pT139+/FSWCFY2YcH2ashUuRY8KWVjX0oPe9yTeFpCOQK
+         VoSw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=Yo0KQvoiXvT8aOrdD5NF+kaz4eBGOnmZ/KNVCKPE7tc=;
+        b=fuM3AFAcoq5coJpvTlxS8VxVsEYGRaNRrgIsn9rwuxaUDddDvxds3WHC2youlBDNcs
+         y3bINbgZuMP+27ifu4BQmLWmbdaqek1IhFeBgVBJaqeMmSCAEXGJqN4DdtJZH7WZayYL
+         Eb+WXPEpIkj6Vbo2C2JOchLa9PwsUOPsUiOdsFtpcfPtZrXHgDsjV74QEvAPXTKQ6SyE
+         9OwzyUJUYW9HP0jxEGTFyT2tNRkYvxt4A9dD7rjZU54cjz+d0FWGx1nkPDj0PXiL+T/w
+         6ZwDCGAC3AhY/mjkWG8jYuQjUATvMGxjQ1uWKYHunWvU3XOk7o7qMj4hH0PSftqnRnkb
+         DfPA==
+X-Gm-Message-State: AOAM5312WVTvJw5/oywl//mOFEJLBFkS5G1L7qs7cPM3zh0Yomm9vQnm
+        IcBSfHx3iGuePasloU7JeNOCN3Z+6Bp0Xg==
+X-Google-Smtp-Source: ABdhPJy0ul308TSBzRKYuK9i3aBcixl6K5aFZ9TuP2H2bcxthK/ZEvIVgwwP7k0pJunw1xf0ampsZQ==
+X-Received: by 2002:a17:90b:3615:: with SMTP id ml21mr31833701pjb.28.1620526491111;
+        Sat, 08 May 2021 19:14:51 -0700 (PDT)
+Received: from dragon (80.251.214.228.16clouds.com. [80.251.214.228])
+        by smtp.gmail.com with ESMTPSA id y13sm7952004pgs.93.2021.05.08.19.14.48
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Sat, 08 May 2021 19:14:50 -0700 (PDT)
+Date:   Sun, 9 May 2021 10:14:44 +0800
+From:   Shawn Guo <shawn.guo@linaro.org>
+To:     Robin Murphy <robin.murphy@arm.com>
+Cc:     Will Deacon <will@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Bjorn Helgaas <bhelgaas@google.com>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
-        mgautam@codeaurora.org, swboyd@chromium.org, dianders@chromium.org,
-        mka@chromium.org, Prasad Malisetty <pmaliset@codeaurora.org>
-Subject: [PATCH] PCIe: qcom: Add support to control pipe clk mux
-Date:   Sun,  9 May 2021 06:11:00 +0530
-Message-Id: <1620520860-8589-1-git-send-email-pmaliset@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        Hanjun Guo <guohanjun@huawei.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2 1/3] ACPI/IORT: Consolidate use of SMMU device platdata
+Message-ID: <20210509021443.GC8679@dragon>
+References: <20210402035602.9484-1-shawn.guo@linaro.org>
+ <20210402035602.9484-2-shawn.guo@linaro.org>
+ <bf51c5b3-082c-98dd-ff8d-559ef5b56bad@arm.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <bf51c5b3-082c-98dd-ff8d-559ef5b56bad@arm.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-PCIe driver needs to toggle between bi_tcxo and phy pipe
-clock as part of its LPM sequence. This is done by setting
-pipe_clk/ref_clk_src as parent of pipe_clk_src after phy init
+On Tue, Apr 27, 2021 at 06:37:24PM +0100, Robin Murphy wrote:
+> On 2021-04-02 04:56, Shawn Guo wrote:
+> > Currently the platdata is being used in different way by SMMU and PMCG
+> > device.  The former uses it for acpi_iort_node pointer passing, while
+> > the later uses it for model identifier.  As it's been seen that the
+> > model identifier is useful for SMMU devices as well, let's consolidate
+> > the platdata use to get it accommodate both acpi_iort_node pointer and
+> > model identifier, so that all IORT devices (SMMU, SMMUv3 and PMCG) pass
+> > platdata in a consistent manner.
+> > 
+> > With this change, model identifier is not specific to PMCG, so
+> > IORT_SMMU_V3_PMCG_GENERIC gets renamed to IORT_SMMU_GENERIC.  While at
+> > it, the spaces used in model defines are converted to tabs.
+> 
+> SMMUs and PMCGs are deliberately kept distinct because they are not
+> necessarily equivalent - a PMCG may belong to something other than an SMMU,
+> (like a root complex or a device with its own TLB), and even a single SMMU
+> may implement heterogeneous PMCGs (e.g. Arm's MMU-600 has PMCGs in its
+> control unit and TLB units which count different sets of events). So NAK to
+> that aspect, sorry.
+> 
+> FWIW this was originally here because we envisaged needing to identify
+> individual PMCG implementations through a variety of poking at different
+> fields and tables, so hiding that behind an abstraction in ACPI code seemed
+> neatest. However, things haven't really panned out that way - now we seem to
+> have moved more towards describing events in userspace in conjunction with
+> other system-specific identifiers. If we've no need to identify PMCGs in the
+> kernel for the sake of exporting imp-def events, then most of the argument
+> for this PMCG identifier abstraction is gone, and it's looking increasingly
+> like the HIP08 case deserves to be punted back to the PMCG driver itself as
+> a one-off erratum workaround.
+> 
+> I think at this point we should accept that if a driver needs to match
+> *some* platform-specific data for its own internal purposes, the fact that
+> that data might be the IORT header still doesn't make it "IORT
+> functionality", and referencing ACPI_SIG_IORT from drivers is a lesser evil
+> than cluttering up the IORT code with increasing amounts of random stuff
+> that's outside the scope of the IORT specification itself.
 
-Dependent on below change:
+Thanks much for the comments, Robin!  Indeed, it makes more sense to
+sort the issue out in qcom driver than IORT code.  v3 is on the way.
 
-	https://lore.kernel.org/patchwork/patch/1422499/
-
-Signed-off-by: Prasad Malisetty <pmaliset@codeaurora.org>
----
- drivers/pci/controller/dwc/pcie-qcom.c | 23 ++++++++++++++++++++++-
- 1 file changed, 22 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-index 8a7a300..a9f69e8 100644
---- a/drivers/pci/controller/dwc/pcie-qcom.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom.c
-@@ -9,6 +9,7 @@
-  */
- 
- #include <linux/clk.h>
-+#include <linux/clk-provider.h>
- #include <linux/crc8.h>
- #include <linux/delay.h>
- #include <linux/gpio/consumer.h>
-@@ -166,6 +167,9 @@ struct qcom_pcie_resources_2_7_0 {
- 	struct regulator_bulk_data supplies[2];
- 	struct reset_control *pci_reset;
- 	struct clk *pipe_clk;
-+	struct clk *pipe_clk_src;
-+	struct clk *pipe_ext_src;
-+	struct clk *ref_clk_src;
- };
- 
- union qcom_pcie_resources {
-@@ -1168,7 +1172,19 @@ static int qcom_pcie_get_resources_2_7_0(struct qcom_pcie *pcie)
- 		return ret;
- 
- 	res->pipe_clk = devm_clk_get(dev, "pipe");
--	return PTR_ERR_OR_ZERO(res->pipe_clk);
-+	if (IS_ERR(res->pipe_clk))
-+		return PTR_ERR(res->pipe_clk);
-+
-+	res->pipe_clk_src = devm_clk_get(dev, "pipe_src");
-+	if (IS_ERR(res->pipe_clk_src))
-+		return PTR_ERR(res->pipe_clk_src);
-+
-+	res->pipe_ext_src = devm_clk_get(dev, "pipe_ext");
-+	if (IS_ERR(res->pipe_ext_src))
-+		return PTR_ERR(res->pipe_ext_src);
-+
-+	res->ref_clk_src = devm_clk_get(dev, "ref");
-+	return PTR_ERR_OR_ZERO(res->ref_clk_src);
- }
- 
- static int qcom_pcie_init_2_7_0(struct qcom_pcie *pcie)
-@@ -1255,6 +1271,11 @@ static void qcom_pcie_deinit_2_7_0(struct qcom_pcie *pcie)
- static int qcom_pcie_post_init_2_7_0(struct qcom_pcie *pcie)
- {
- 	struct qcom_pcie_resources_2_7_0 *res = &pcie->res.v2_7_0;
-+	struct dw_pcie *pci = pcie->pci;
-+	struct device *dev = pci->dev;
-+
-+	if (of_device_is_compatible(dev->of_node, "qcom,pcie-sc7280"))
-+		clk_set_parent(res->pipe_clk_src, res->pipe_ext_src);
- 
- 	return clk_prepare_enable(res->pipe_clk);
- }
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
-
+Shawn
