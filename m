@@ -2,118 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 896293773E3
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 May 2021 21:53:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 64E5C3774BC
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 May 2021 02:41:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229698AbhEHTyG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 8 May 2021 15:54:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45164 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229549AbhEHTyF (ORCPT
+        id S229647AbhEIAmq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 8 May 2021 20:42:46 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:19847 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229616AbhEIAmp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 8 May 2021 15:54:05 -0400
-Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 106A1C061574;
-        Sat,  8 May 2021 12:53:03 -0700 (PDT)
-Received: by mail-pj1-x102a.google.com with SMTP id j6-20020a17090adc86b02900cbfe6f2c96so7874929pjv.1;
-        Sat, 08 May 2021 12:53:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=P7qWaXSLZT/HSg5BGmuOtFL+9OavfUK43XNh+avyzkE=;
-        b=Cfz6kXOQ7lqNfnzW70b8KqN+tUSJD0CXYqIS6qaQ1jYmxz8btG4RZHeN1w5BrbyI8O
-         dGL2brbo+0eiVkFGuUoqNfqpIiBgcu+ZFkwMM3q9G8kA+j6gUtVEWo8peuSFxZ4QYVzR
-         oS/hswtOr5v0V1Se+RGAGRHT6MJgDNK7avqyXT3wBlu5djN7qFJmqh93sBjuyzIWb9Q9
-         Ji0Jcoa6GaOtW1fvE5rkTPFN4Mr/rlBjGJkQgs/9tdO3krNNTTsvhinGf3Dp4QN7Cs4P
-         xIeDlmvQD5dPJVR2o55d/LYGT3muYdKY5/RrT659fVp9tAf1wjBg/auTDLZKXCcfxgwT
-         KUcg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=P7qWaXSLZT/HSg5BGmuOtFL+9OavfUK43XNh+avyzkE=;
-        b=eucR1DFITse3NQqsBDoXEDSd3qWNHc/u9gU6mUsqJo1Fy0fDFn982kFAQ+AJB291/A
-         URqil0t5Zzm34/Nwt+/zedL6SXl9H3E8fQnof6S5acKnQFCCu5TiO88vejtCFJneFO69
-         5EoIFdzCfkOndtywgfUNtFkOVmcu0XPn8KkvPvbI/W3czhKom2M2+QNru0jbkpxetq64
-         c/Yhyr2PYdpYoArn5C4t3ZQWPnXkJCCy5x6VcXeq9/vK8UzMMLilao8Bm+Ub9FPUQHcq
-         JrcAEtYwB0savXKXGkwaVgo0WdvzECqMl02czI31d9BzNhv7wOnXdU5o0gYNyL+U6ajq
-         KFQA==
-X-Gm-Message-State: AOAM5330lBKLAYCdG4ESrqk2ymANs9IEQFLH00sNHt5yEgXOkS3Y/9bS
-        cXSiz/nR+mZJO7GsXJV+kH2VHZfkcuU1ow==
-X-Google-Smtp-Source: ABdhPJwLl3aQzZ4odu6hB+uFJI7LKqDT9XIEAljRfcQb0PSIx+QTdBUvLKu9+xxTse/3dzOqGWlCGg==
-X-Received: by 2002:a17:90a:c297:: with SMTP id f23mr17680567pjt.197.1620503582651;
-        Sat, 08 May 2021 12:53:02 -0700 (PDT)
-Received: from localhost (c-73-25-156-94.hsd1.or.comcast.net. [73.25.156.94])
-        by smtp.gmail.com with ESMTPSA id j26sm7484972pfn.47.2021.05.08.12.53.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 08 May 2021 12:53:01 -0700 (PDT)
-From:   Rob Clark <robdclark@gmail.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     Rob Clark <robdclark@chromium.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Maxime Ripard <maxime@cerno.tech>,
-        Kalyan Thota <kalyan_t@codeaurora.org>,
-        Qinglang Miao <miaoqinglang@huawei.com>,
-        Hongbo Yao <yaohongbo@huawei.com>,
-        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
-        freedreno@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
-        GPU), linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH 2/2] drm/msm/dpu: Wire up needs_dirtyfb
-Date:   Sat,  8 May 2021 12:56:39 -0700
-Message-Id: <20210508195641.397198-3-robdclark@gmail.com>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20210508195641.397198-1-robdclark@gmail.com>
-References: <20210508195641.397198-1-robdclark@gmail.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Sat, 8 May 2021 20:42:45 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1620520903; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=SD9OLK+Xie/V3bYXwDC9AsFVonphv9bIA6gkq44pVpU=; b=CKikid0O4kBBPj0ntbb1ouUBPeyFkvkRQKBptGmUR4D3MZDlzmM+41MSq6ziWGKW9nFLaUsR
+ nJRpSDoDbM0pyvifd4x0oCpZNSkipNQS3SxCbCsaHpFvxwrP9E8Qy1kEVNX34IwdoNyPZ8H9
+ QwhBTWFdLgtIuRPCCoVfJwuoqO8=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
+ 60972faefebcffa80f04bdc7 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Sun, 09 May 2021 00:41:18
+ GMT
+Sender: pmaliset=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id A209EC433D3; Sun,  9 May 2021 00:41:18 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from pmaliset-linux.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: pmaliset)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 71B17C4338A;
+        Sun,  9 May 2021 00:41:13 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 71B17C4338A
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=pmaliset@codeaurora.org
+From:   Prasad Malisetty <pmaliset@codeaurora.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Bjorn Helgaas <bhelgaas@google.com>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
+        mgautam@codeaurora.org, swboyd@chromium.org, dianders@chromium.org,
+        mka@chromium.org, Prasad Malisetty <pmaliset@codeaurora.org>
+Subject: [PATCH] PCIe: qcom: Add support to control pipe clk mux
+Date:   Sun,  9 May 2021 06:11:00 +0530
+Message-Id: <1620520860-8589-1-git-send-email-pmaliset@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+PCIe driver needs to toggle between bi_tcxo and phy pipe
+clock as part of its LPM sequence. This is done by setting
+pipe_clk/ref_clk_src as parent of pipe_clk_src after phy init
 
-Signed-off-by: Rob Clark <robdclark@chromium.org>
+Dependent on below change:
+
+	https://lore.kernel.org/patchwork/patch/1422499/
+
+Signed-off-by: Prasad Malisetty <pmaliset@codeaurora.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/pci/controller/dwc/pcie-qcom.c | 23 ++++++++++++++++++++++-
+ 1 file changed, 22 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-index 5a74f93e29da..868ee6136438 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-@@ -143,6 +143,19 @@ static bool dpu_crtc_get_scanout_position(struct drm_crtc *crtc,
- 	return true;
- }
+diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+index 8a7a300..a9f69e8 100644
+--- a/drivers/pci/controller/dwc/pcie-qcom.c
++++ b/drivers/pci/controller/dwc/pcie-qcom.c
+@@ -9,6 +9,7 @@
+  */
  
-+static bool dpu_crtc_needs_dirtyfb(struct drm_crtc *crtc)
-+{
-+	struct drm_encoder *encoder;
-+
-+	drm_for_each_encoder_mask (encoder, crtc->dev, crtc->state->encoder_mask) {
-+		if (dpu_encoder_get_intf_mode(encoder) == INTF_MODE_CMD) {
-+			return true;
-+		}
-+	}
-+
-+	return false;
-+}
-+
- static void _dpu_crtc_setup_blend_cfg(struct dpu_crtc_mixer *mixer,
- 		struct dpu_plane_state *pstate, struct dpu_format *format)
- {
-@@ -1343,6 +1356,7 @@ static const struct drm_crtc_helper_funcs dpu_crtc_helper_funcs = {
- 	.atomic_begin = dpu_crtc_atomic_begin,
- 	.atomic_flush = dpu_crtc_atomic_flush,
- 	.get_scanout_position = dpu_crtc_get_scanout_position,
-+	.needs_dirtyfb = dpu_crtc_needs_dirtyfb,
+ #include <linux/clk.h>
++#include <linux/clk-provider.h>
+ #include <linux/crc8.h>
+ #include <linux/delay.h>
+ #include <linux/gpio/consumer.h>
+@@ -166,6 +167,9 @@ struct qcom_pcie_resources_2_7_0 {
+ 	struct regulator_bulk_data supplies[2];
+ 	struct reset_control *pci_reset;
+ 	struct clk *pipe_clk;
++	struct clk *pipe_clk_src;
++	struct clk *pipe_ext_src;
++	struct clk *ref_clk_src;
  };
  
- /* initialize crtc */
+ union qcom_pcie_resources {
+@@ -1168,7 +1172,19 @@ static int qcom_pcie_get_resources_2_7_0(struct qcom_pcie *pcie)
+ 		return ret;
+ 
+ 	res->pipe_clk = devm_clk_get(dev, "pipe");
+-	return PTR_ERR_OR_ZERO(res->pipe_clk);
++	if (IS_ERR(res->pipe_clk))
++		return PTR_ERR(res->pipe_clk);
++
++	res->pipe_clk_src = devm_clk_get(dev, "pipe_src");
++	if (IS_ERR(res->pipe_clk_src))
++		return PTR_ERR(res->pipe_clk_src);
++
++	res->pipe_ext_src = devm_clk_get(dev, "pipe_ext");
++	if (IS_ERR(res->pipe_ext_src))
++		return PTR_ERR(res->pipe_ext_src);
++
++	res->ref_clk_src = devm_clk_get(dev, "ref");
++	return PTR_ERR_OR_ZERO(res->ref_clk_src);
+ }
+ 
+ static int qcom_pcie_init_2_7_0(struct qcom_pcie *pcie)
+@@ -1255,6 +1271,11 @@ static void qcom_pcie_deinit_2_7_0(struct qcom_pcie *pcie)
+ static int qcom_pcie_post_init_2_7_0(struct qcom_pcie *pcie)
+ {
+ 	struct qcom_pcie_resources_2_7_0 *res = &pcie->res.v2_7_0;
++	struct dw_pcie *pci = pcie->pci;
++	struct device *dev = pci->dev;
++
++	if (of_device_is_compatible(dev->of_node, "qcom,pcie-sc7280"))
++		clk_set_parent(res->pipe_clk_src, res->pipe_ext_src);
+ 
+ 	return clk_prepare_enable(res->pipe_clk);
+ }
 -- 
-2.30.2
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
