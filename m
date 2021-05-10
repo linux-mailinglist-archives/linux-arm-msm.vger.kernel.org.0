@@ -2,100 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 57814377C6F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 May 2021 08:38:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A1249377CD2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 May 2021 09:02:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230116AbhEJGjk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 10 May 2021 02:39:40 -0400
-Received: from szxga05-in.huawei.com ([45.249.212.191]:2546 "EHLO
-        szxga05-in.huawei.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230155AbhEJGjk (ORCPT
+        id S230224AbhEJHDO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 10 May 2021 03:03:14 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:61182 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230193AbhEJHDM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 10 May 2021 02:39:40 -0400
-Received: from DGGEMS407-HUB.china.huawei.com (unknown [172.30.72.59])
-        by szxga05-in.huawei.com (SkyGuard) with ESMTP id 4Fdrsl4mztzkYNj;
-        Mon, 10 May 2021 14:35:55 +0800 (CST)
-Received: from thunder-town.china.huawei.com (10.174.177.72) by
- DGGEMS407-HUB.china.huawei.com (10.3.19.207) with Microsoft SMTP Server id
- 14.3.498.0; Mon, 10 May 2021 14:38:23 +0800
-From:   Zhen Lei <thunder.leizhen@huawei.com>
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Stephen Boyd <swboyd@chromium.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        linux-kernel <linux-kernel@vger.kernel.org>
-CC:     Zhen Lei <thunder.leizhen@huawei.com>
-Subject: [PATCH v2 1/1] drm/msm/dpu: Fix error return code in dpu_mdss_init()
-Date:   Mon, 10 May 2021 14:38:05 +0800
-Message-ID: <20210510063805.3262-2-thunder.leizhen@huawei.com>
-X-Mailer: git-send-email 2.26.0.windows.1
-In-Reply-To: <20210510063805.3262-1-thunder.leizhen@huawei.com>
-References: <20210510063805.3262-1-thunder.leizhen@huawei.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7BIT
-Content-Type:   text/plain; charset=US-ASCII
-X-Originating-IP: [10.174.177.72]
-X-CFilter-Loop: Reflected
+        Mon, 10 May 2021 03:03:12 -0400
+Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
+  by alexa-out.qualcomm.com with ESMTP; 10 May 2021 00:02:07 -0700
+X-QCInternal: smtphost
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 10 May 2021 00:02:05 -0700
+X-QCInternal: smtphost
+Received: from c-skakit-linux.ap.qualcomm.com (HELO c-skakit-linux.qualcomm.com) ([10.242.51.242])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 10 May 2021 12:31:20 +0530
+Received: by c-skakit-linux.qualcomm.com (Postfix, from userid 2344709)
+        id 6EB814B37; Mon, 10 May 2021 12:31:19 +0530 (IST)
+From:   satya priya <skakit@codeaurora.org>
+To:     Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Sebastian Reichel <sre@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     David Collins <collinsd@codeaurora.org>, kgunda@codeaurora.org,
+        linux-input@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Courtney Cavin <courtney.cavin@sonymobile.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Andy Yan <andy.yan@rock-chips.com>,
+        satya priya <skakit@codeaurora.org>
+Subject: [PATCH V3 0/5] Add support for PMK8350 PON_HLOS PMIC peripheral
+Date:   Mon, 10 May 2021 12:30:59 +0530
+Message-Id: <1620630064-16354-1-git-send-email-skakit@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The error code returned by platform_get_irq() is stored in 'irq', it's
-forgotten to be copied to 'ret' before being returned. As a result, the
-value 0 of 'ret' is returned incorrectly.
+David Collins (2):
+  input: pm8941-pwrkey: add support for PMK8350 PON_HLOS PMIC peripheral
+  dt-bindings: input: pm8941-pwrkey: add pmk8350 compatible strings
 
-After the above fix is completed, initializing the local variable 'ret'
-to 0 is no longer needed, remove it.
+satya priya (3):
+  dt-bindings: power: reset: Change 'additionalProperties' to true
+  dt-bindings: input: pm8941-pwrkey: Convert pm8941 power key binding to
+    yaml
+  dt-bindings: power: reset: qcom-pon: Convert qcom PON binding to yaml
 
-In addition, when dpu_mdss_init() is successfully returned, the value of
-'ret' is always 0. Therefore, replace "return ret" with "return 0" to make
-the code clearer.
+ .../bindings/input/qcom,pm8941-pwrkey.txt          |  53 -----------
+ .../bindings/input/qcom,pm8941-pwrkey.yaml         |  87 +++++++++++++++++
+ .../devicetree/bindings/power/reset/qcom,pon.txt   |  49 ----------
+ .../devicetree/bindings/power/reset/qcom,pon.yaml  |  44 +++++++++
+ .../bindings/power/reset/reboot-mode.yaml          |   2 +-
+ drivers/input/misc/pm8941-pwrkey.c                 | 103 ++++++++++++++-------
+ 6 files changed, 204 insertions(+), 134 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/input/qcom,pm8941-pwrkey.txt
+ create mode 100644 Documentation/devicetree/bindings/input/qcom,pm8941-pwrkey.yaml
+ delete mode 100644 Documentation/devicetree/bindings/power/reset/qcom,pon.txt
+ create mode 100644 Documentation/devicetree/bindings/power/reset/qcom,pon.yaml
 
-Fixes: 070e64dc1bbc ("drm/msm/dpu: Convert to a chained irq chip")
-Reported-by: Hulk Robot <hulkci@huawei.com>
-Signed-off-by: Zhen Lei <thunder.leizhen@huawei.com>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c
-index 06b56fec04e047a..6b0a7bc87eb75b8 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c
-@@ -225,7 +225,7 @@ int dpu_mdss_init(struct drm_device *dev)
- 	struct msm_drm_private *priv = dev->dev_private;
- 	struct dpu_mdss *dpu_mdss;
- 	struct dss_module_power *mp;
--	int ret = 0;
-+	int ret;
- 	int irq;
- 
- 	dpu_mdss = devm_kzalloc(dev->dev, sizeof(*dpu_mdss), GFP_KERNEL);
-@@ -253,8 +253,10 @@ int dpu_mdss_init(struct drm_device *dev)
- 		goto irq_domain_error;
- 
- 	irq = platform_get_irq(pdev, 0);
--	if (irq < 0)
-+	if (irq < 0) {
-+		ret = irq;
- 		goto irq_error;
-+	}
- 
- 	irq_set_chained_handler_and_data(irq, dpu_mdss_irq,
- 					 dpu_mdss);
-@@ -263,7 +265,7 @@ int dpu_mdss_init(struct drm_device *dev)
- 
- 	pm_runtime_enable(dev->dev);
- 
--	return ret;
-+	return 0;
- 
- irq_error:
- 	_dpu_mdss_irq_domain_fini(dpu_mdss);
 -- 
-2.26.0.106.g9fadedd
-
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
+of Code Aurora Forum, hosted by The Linux Foundation
 
