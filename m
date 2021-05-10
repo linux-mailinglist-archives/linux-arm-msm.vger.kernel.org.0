@@ -2,78 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7498B378EB1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 May 2021 15:51:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EDCE6379078
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 May 2021 16:19:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234134AbhEJNbC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 10 May 2021 09:31:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49596 "EHLO
+        id S235134AbhEJOUN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 10 May 2021 10:20:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60172 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352522AbhEJN01 (ORCPT
+        with ESMTP id S233061AbhEJORt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 10 May 2021 09:26:27 -0400
-Received: from mail-qt1-x832.google.com (mail-qt1-x832.google.com [IPv6:2607:f8b0:4864:20::832])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C3CBC061353
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 May 2021 06:23:42 -0700 (PDT)
-Received: by mail-qt1-x832.google.com with SMTP id y12so11839094qtx.11
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 May 2021 06:23:42 -0700 (PDT)
+        Mon, 10 May 2021 10:17:49 -0400
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93300C061379
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 May 2021 06:54:48 -0700 (PDT)
+Received: by mail-ej1-x631.google.com with SMTP id b25so24619232eju.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 May 2021 06:54:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=krXqQz2y6UCds8IrOuLeIkvxgS9HOKdz+LADfeWMxlg=;
-        b=w+uU4qZpXraSKHIyJ7iQNdD3lzs+CFCAllsw+3pbBq3UdShVBzKWKejjh8jijt42HU
-         v4pdRD3+x7DZiGHS9vlL5axp5UQZ0CGGBC8pmTuuk6g0UBEqz2bwzp2NNYXHD4Qa9tUh
-         gYHzpc6WjANKCUHZ3FViJbQklPT1vlqsaamR8NYntMr3tsJdLvUMw0So1SnZwkrpYOXV
-         ZCYRKxIwSfq72PQsGNEBr1SbXWkjsKq1e25G1xXsPiipMGodFsvWUJSAZIrugKj0KkP9
-         oF+8lLzYcx5mKP7ZAvtM3/pEmt24DCPNop08WOntNENV2PfmxZg1RD7EfPkxQmLL/Mas
-         DN7w==
+        bh=N/tsR4FPpi1SMa4JphRzoqbRD642hzPRhRehPxfLE8I=;
+        b=FPrJVgd7V/a2zz2Q0otP08sQFNf/w1p+kVWgnWsOnyKsYCck2v8rIeWPnFO2FuYhuI
+         bE2RHp92aBVZ6n4NZ4rz7Kg1aiRJQf2/EXF+OlgXmVhxhlDFQeVASC/NuoaNhQqd4y6K
+         eEZ8IpC6c0yXpubstKGcroxL6vZ6Vvg8920GalWCq/BAbUgMSK848W/e0xXI2u/FF2Wc
+         vANQekUzQlLLjYdwyGc9ID0Y9UiqrbpgiS4rGltEP4GlJtAZjO6YoErvirmwVdb5eScx
+         M4rjJzY1C/75EVAd9XX9gBT+1w5poDKuWYut+ufz8O3zndjtkL57z4F9xiAxX410Kq4V
+         bYmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=krXqQz2y6UCds8IrOuLeIkvxgS9HOKdz+LADfeWMxlg=;
-        b=JyD68pQO/VU4RcbxJFeOLfAGEo5MgCe+D9roEqdKMoaejtPSVPcAKMHSL95bHCsOWb
-         e6PNPy2UUMYon0t+HyNlqsrxb9rVMEZ5q3eBUdqz00dhzCXAipjgPTeXfbaXynS2qXqa
-         wSvyNwA7M+wdvXEf/Q85+OmTswRnmzlKzjeg+iDtQpAIvRDTfuhTDhkWIhixC0Tb92hD
-         Yk6AcvLxOhJ1Dbqb9mUowcYtmlrBHbxiyKJgx8ji/s8FfI9i97zcrDL2OUJ8D9vgYZpF
-         XMh6+2Ocdc8WlowHzlC7GTI+b2+fODzwNT8HNntuev8NXqCQgXIDPlP/aKmCZGxA+BhP
-         TpNw==
-X-Gm-Message-State: AOAM531ZwAe/y2Ab7FLqPDMouLqfG7n+2oEBP0fpLw9tuT8UCnNVwnSE
-        hIkL5Omtv3c9w+K7TevNKJocLg==
-X-Google-Smtp-Source: ABdhPJwfRIs0onofwqErno7eqHaC3LIzOMd7FaTEt2t8U3wHaXxAIWgy3i9kaImw9xh3CUJ5BlYmKg==
-X-Received: by 2002:a05:622a:1044:: with SMTP id f4mr7041878qte.181.1620653021581;
-        Mon, 10 May 2021 06:23:41 -0700 (PDT)
-Received: from [192.168.1.93] (pool-71-163-245-5.washdc.fios.verizon.net. [71.163.245.5])
-        by smtp.gmail.com with ESMTPSA id u3sm496449qtg.16.2021.05.10.06.23.40
+        bh=N/tsR4FPpi1SMa4JphRzoqbRD642hzPRhRehPxfLE8I=;
+        b=IwtXKg3Fao8b35dTV7GmvOyCPQmRSCUYpUDcPwh23g+gyMGbTngcIrNyn59mk/Cits
+         x62IUGhfZ3Wh/vSk3+fkwi7pncyHU9I2zZJtiEElo08IPvisUZ8liRoJlnJEjaC+sY7k
+         kXVa8/e/Jpw8XAEXxk16ehkH0uDyLGMmEA5ih+z63kXMscixrzQXL5SGdyocPXwxixm5
+         t0ulQz3B0K/kL818JbftMOPdKjhL7hiI8ncx8XPkKNe7Gn7CFaxlI8Yu0TxfAzNX/ZXm
+         ar+rn5Wr0FsXS2Z1xmXbP3GLWClVukScc2TtOHGwVvR0anMBnuP3xfwmDcYAaScz3KfA
+         s4eA==
+X-Gm-Message-State: AOAM5303Xw3qY3W7oDIM8mLuKpdu4vKEyIJziy7lyJm2es5GTrBqIruM
+        X/miJ+QG8/XaYLxeK0CbuLxb9A==
+X-Google-Smtp-Source: ABdhPJx4OsN4bcqkQbOKWXhTyPn2+tTamYNiif8kVzvyu0hItzjNmFGr6lyBRCAfCvz2Y20of3O3mQ==
+X-Received: by 2002:a17:906:4809:: with SMTP id w9mr22916796ejq.401.1620654887266;
+        Mon, 10 May 2021 06:54:47 -0700 (PDT)
+Received: from [192.168.1.14] ([195.24.90.54])
+        by smtp.googlemail.com with ESMTPSA id v14sm11444780edx.5.2021.05.10.06.54.44
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 10 May 2021 06:23:41 -0700 (PDT)
-Subject: Re: [PATCH v2 16/17] crypto: qce: Defer probe in case interconnect is
- not yet initialized
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        linux-arm-msm@vger.kernel.org
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
+        Mon, 10 May 2021 06:54:46 -0700 (PDT)
+Subject: Re: [PATCH v5 13/25] media: venus: core: use
+ pm_runtime_resume_and_get()
+To:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Cc:     linuxarm@huawei.com, mauro.chehab@huawei.com,
         Andy Gross <agross@kernel.org>,
-        Herbert Xu <herbert@gondor.apana.org.au>,
-        "David S . Miller" <davem@davemloft.net>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Vinod Koul <vkoul@kernel.org>, dmaengine@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-crypto@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        bhupesh.linux@gmail.com
-References: <20210505213731.538612-1-bhupesh.sharma@linaro.org>
- <20210505213731.538612-17-bhupesh.sharma@linaro.org>
-From:   Thara Gopinath <thara.gopinath@linaro.org>
-Message-ID: <d809f290-ed94-7e35-bc4d-bd695965fa04@linaro.org>
-Date:   Mon, 10 May 2021 09:23:39 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-media@vger.kernel.org
+References: <cover.1620314616.git.mchehab+huawei@kernel.org>
+ <492e148ae1c7b0a8858c1670037925d3e4adb719.1620314616.git.mchehab+huawei@kernel.org>
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Message-ID: <adb102ab-c197-fdc8-4858-5683bd97baf4@linaro.org>
+Date:   Mon, 10 May 2021 16:54:43 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.8.1
 MIME-Version: 1.0
-In-Reply-To: <20210505213731.538612-17-bhupesh.sharma@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
+In-Reply-To: <492e148ae1c7b0a8858c1670037925d3e4adb719.1620314616.git.mchehab+huawei@kernel.org>
+Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
@@ -82,69 +77,39 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 5/5/21 5:37 PM, Bhupesh Sharma wrote:
-> On some Qualcomm parts the qce crypto driver needs the interconnect between
-> the crypto block and main memory to be initialized first before the crypto
-> registers can be accessed. So it makes sense to defer the qce crypto driver
-> probing in case the interconnect driver is not yet probed.
+On 5/6/21 6:25 PM, Mauro Carvalho Chehab wrote:
+> Commit dd8088d5a896 ("PM: runtime: Add pm_runtime_resume_and_get to deal with usage counter")
+> added pm_runtime_resume_and_get() in order to automatically handle
+> dev->power.usage_count decrement on errors.
 > 
-> This fixes the qce probe failure issues when both qce and
-> interconnect drivers are compiled as static part of the kernel.
+> Use the new API, in order to cleanup the error check logic.
 > 
-> Cc: Thara Gopinath <thara.gopinath@linaro.org>
-> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Cc: Rob Herring <robh+dt@kernel.org>
-> Cc: Andy Gross <agross@kernel.org>
-> Cc: Herbert Xu <herbert@gondor.apana.org.au>
-> Cc: David S. Miller <davem@davemloft.net>
-> Cc: Stephen Boyd <sboyd@kernel.org>
-> Cc: Michael Turquette <mturquette@baylibre.com>
-> Cc: Vinod Koul <vkoul@kernel.org>
-> Cc: dmaengine@vger.kernel.org
-> Cc: linux-clk@vger.kernel.org
-> Cc: linux-crypto@vger.kernel.org
-> Cc: devicetree@vger.kernel.org
-> Cc: linux-kernel@vger.kernel.org
-> Cc: bhupesh.linux@gmail.com
-> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 > ---
->   drivers/crypto/qce/core.c | 14 ++++++++++++++
->   1 file changed, 14 insertions(+)
+>  drivers/media/platform/qcom/venus/pm_helpers.c | 3 +--
+>  1 file changed, 1 insertion(+), 2 deletions(-)
+
+Tested-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Acked-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+
 > 
-> diff --git a/drivers/crypto/qce/core.c b/drivers/crypto/qce/core.c
-> index 3e742e9911fa..9915b184f780 100644
-> --- a/drivers/crypto/qce/core.c
-> +++ b/drivers/crypto/qce/core.c
-> @@ -222,6 +222,20 @@ static int qce_crypto_probe(struct platform_device *pdev)
->   		return ret;
->   
->   	qce->mem_path = of_icc_get(qce->dev, "memory");
-> +
-> +	/* Check for NULL return path, which indicates
-> +	 * interconnect API is disabled or the "interconnects"
-> +	 * DT property is missing.
-> +	 */
-> +	if (!qce->mem_path)
-> +		/* On some qcom parts, the qce crypto block needs interconnect
-> +		 * paths to be configured before the registers can be accessed.
-> +		 * Check here for the same.
-> +		 */
-> +		if (!strcmp(of_id->compatible, "qcom,ipq6018-qce") ||
-> +		    !strcmp(of_id->compatible, "qcom,sdm845-qce"))
-> +			return -EPROBE_DEFER;
-> +
-
-Hi Bhupesh,
-
-You don't need this here. of_icc_get returns -EPROBE_DEFER if the 
-interconnect provider is not initialized yet.
+> diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c b/drivers/media/platform/qcom/venus/pm_helpers.c
+> index c7e1ebec47ee..d0fddf5e9a69 100644
+> --- a/drivers/media/platform/qcom/venus/pm_helpers.c
+> +++ b/drivers/media/platform/qcom/venus/pm_helpers.c
+> @@ -990,9 +990,8 @@ static int core_power_v4(struct venus_core *core, int on)
+>  
+>  	if (on == POWER_ON) {
+>  		if (pmctrl) {
+> -			ret = pm_runtime_get_sync(pmctrl);
+> +			ret = pm_runtime_resume_and_get(pmctrl);
+>  			if (ret < 0) {
+> -				pm_runtime_put_noidle(pmctrl);
+>  				return ret;
+>  			}
+>  		}
+> 
 
 -- 
-Warm Regards
-Thara
-
->   	if (IS_ERR(qce->mem_path))
->   		return PTR_ERR(qce->mem_path);
->   
-> 
-
+regards,
+Stan
