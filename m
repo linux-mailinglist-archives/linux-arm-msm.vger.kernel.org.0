@@ -2,87 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6E85C3793B4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 May 2021 18:25:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4DBCB3794A9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 May 2021 18:55:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231388AbhEJQ0O (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 10 May 2021 12:26:14 -0400
-Received: from mail-ot1-f49.google.com ([209.85.210.49]:38845 "EHLO
-        mail-ot1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230145AbhEJQ0N (ORCPT
+        id S232184AbhEJQ4R (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 10 May 2021 12:56:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40322 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232160AbhEJQ4Q (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 10 May 2021 12:26:13 -0400
-Received: by mail-ot1-f49.google.com with SMTP id q7-20020a9d57870000b02902a5c2bd8c17so14952614oth.5;
-        Mon, 10 May 2021 09:25:08 -0700 (PDT)
+        Mon, 10 May 2021 12:56:16 -0400
+Received: from mail-oi1-x22e.google.com (mail-oi1-x22e.google.com [IPv6:2607:f8b0:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9738C06175F
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 May 2021 09:55:10 -0700 (PDT)
+Received: by mail-oi1-x22e.google.com with SMTP id c3so16326923oic.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 May 2021 09:55:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to;
+        bh=sVOf3rnQQoCxErFwACuycQahXXh0Mo2aHzmf0ZUSPko=;
+        b=HQy+UmcK03DuKLfDIAryB3qD1Mil6T0UDB98z17huWfwRWDjMSI+T3c85L9CGSPeay
+         DU+Evt3AJhioziDQCNcCJSrpcKj5BsrsNIscNv7h4V1kko81oWGTehQmGxZDnyW4CUe5
+         yw9wsqE9adjtg4qamSlq2FebUWGdDllpv8PeU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=2F9o9CXmQjIHf3vmeIvzaTvlAH8nG5XppEHKJCixyLg=;
-        b=NOpFePfHVsxwEyqSUOw6nch56+nImWARBEnJFhWx+JPcvyaAUpPaiefXo6BVrYTG+8
-         vzhGwRco3nvUZp0rc9j/bM2OUrCvYHqggaNWzbz1gtKXNL96ulFcw1WaBRr46auGL/f7
-         TEu+ZJ+tQg0FZvD2UDkNsGveycOhA6cEGAuv6hF3tbOIaqfPQKAmj0a8UJGGLU3W5Svd
-         Z+ZanzI23OTipUFmt+LWOR6iJNhq6CdhU+w0+VIAwP7iNgJolcSFTFxLKZmm8FjDGzua
-         66iMbphtBGX8XxJYJNI9ewwTA6dG9Sr+xaMqZ1a51023bOGf6sBVzJ+x4KG5meWKhVF5
-         QP8w==
-X-Gm-Message-State: AOAM531FgpwxX750TJ2xD7U2OxZhULfaSByI5b42PD3lFV/plj3FxlDO
-        ifrpohT7GnbDCKRN3VsnIQ==
-X-Google-Smtp-Source: ABdhPJw+aQ/EcFoJoRzYs5MDjvD6++YcmtpIF6H+/TjqKW7iUQD0lS6ROaMWhUoIF5dvFPIY/MGy1A==
-X-Received: by 2002:a9d:5f82:: with SMTP id g2mr21841675oti.4.1620663908320;
-        Mon, 10 May 2021 09:25:08 -0700 (PDT)
-Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id u207sm2682382oie.56.2021.05.10.09.25.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 May 2021 09:25:07 -0700 (PDT)
-Received: (nullmailer pid 234223 invoked by uid 1000);
-        Mon, 10 May 2021 16:25:06 -0000
-Date:   Mon, 10 May 2021 11:25:06 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     satya priya <skakit@codeaurora.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        David Collins <collinsd@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        kgunda@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-input@vger.kernel.org,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        linux-kernel@vger.kernel.org, Andy Yan <andy.yan@rock-chips.com>,
-        Courtney Cavin <courtney.cavin@sonymobile.com>,
-        Sebastian Reichel <sre@kernel.org>, devicetree@vger.kernel.org,
-        linux-pm@vger.kernel.org
-Subject: Re: [PATCH V3 5/5] dt-bindings: power: reset: qcom-pon: Convert qcom
- PON binding to yaml
-Message-ID: <20210510162506.GA234174@robh.at.kernel.org>
-References: <1620630064-16354-1-git-send-email-skakit@codeaurora.org>
- <1620630064-16354-6-git-send-email-skakit@codeaurora.org>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to;
+        bh=sVOf3rnQQoCxErFwACuycQahXXh0Mo2aHzmf0ZUSPko=;
+        b=GKld01z181V4/X4N8CKBrdla1x1eao/rdjE2hLYQnmKOxXH7DdxqJdSzldJIeXuCS6
+         vr2fzSBagJuacvExCHn5HCPxNxyh1BTuplW5dHJRrgXdbyqSb3SaGIQPAOq8cAJryaXP
+         vALBmdIt9vgD8Kpz1jqCxHxOrnpkT9Z5Qy1gXCgQkPlZJPEqMUKf45npt6fNpKvt4rzG
+         DzyR21XNXsIug6xI1GynN14Loh8l4hS3y1PrRJEIEH/YHCqF8yFkN/MS7GmG9cdGMmTY
+         hotdNCZipWPUEeWpJBSsF6qDtEWakujiMM1OevCpdgPLbJvY6fL0ncgsCeJ3wjytqe4u
+         85sg==
+X-Gm-Message-State: AOAM532S1UddElMDSAB4XoHz6wOo6dIx56yZe5uOmxhTpkS5rvqOzXT/
+        Zdkbl3O0mVoRr/1CEltYm8hJe/MFNzrnpGCND7zpHQ==
+X-Google-Smtp-Source: ABdhPJz5RLoBLot1CVzxTjJkBJp56d5KozQuBoFhRpWF7SSXLzx/nTWQb1uAogO6gMhleLVVnQnOjunOH/YyigS6+KU=
+X-Received: by 2002:aca:211a:: with SMTP id 26mr18395539oiz.19.1620665710136;
+ Mon, 10 May 2021 09:55:10 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 10 May 2021 09:55:09 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1620630064-16354-6-git-send-email-skakit@codeaurora.org>
+In-Reply-To: <20210510063805.3262-2-thunder.leizhen@huawei.com>
+References: <20210510063805.3262-1-thunder.leizhen@huawei.com> <20210510063805.3262-2-thunder.leizhen@huawei.com>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.9.1
+Date:   Mon, 10 May 2021 09:55:09 -0700
+Message-ID: <CAE-0n52a4hAsg0bq-1PeL=gK3uFQ0mkvWngdfA_NqdhgWg6tuQ@mail.gmail.com>
+Subject: Re: [PATCH v2 1/1] drm/msm/dpu: Fix error return code in dpu_mdss_init()
+To:     Daniel Vetter <daniel@ffwll.ch>, David Airlie <airlied@linux.ie>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Zhen Lei <thunder.leizhen@huawei.com>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-kernel <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 10 May 2021 12:31:04 +0530, satya priya wrote:
-> Convert qcom PON binding from .txt to .yaml format.
-> 
-> The example has been removed in favour of full example being
-> available in the qcom,pm8941-pwrkey binding.
-> 
-> Signed-off-by: satya priya <skakit@codeaurora.org>
+Quoting Zhen Lei (2021-05-09 23:38:05)
+> The error code returned by platform_get_irq() is stored in 'irq', it's
+> forgotten to be copied to 'ret' before being returned. As a result, the
+> value 0 of 'ret' is returned incorrectly.
+>
+> After the above fix is completed, initializing the local variable 'ret'
+> to 0 is no longer needed, remove it.
+>
+> In addition, when dpu_mdss_init() is successfully returned, the value of
+> 'ret' is always 0. Therefore, replace "return ret" with "return 0" to make
+> the code clearer.
+>
+> Fixes: 070e64dc1bbc ("drm/msm/dpu: Convert to a chained irq chip")
+> Reported-by: Hulk Robot <hulkci@huawei.com>
+> Signed-off-by: Zhen Lei <thunder.leizhen@huawei.com>
 > ---
-> Changes in V2:
->  - As per Rob's comments, converted the main PON binding and added in V2.
-> 
-> Changes in V3:
->  - As per Sebastian's comments, added allOf to refer reboot-mode.yaml and
->    used unevaluatedProperties = false. Added maxItems for reg.
-> 
->  .../devicetree/bindings/power/reset/qcom,pon.txt   | 49 ----------------------
->  .../devicetree/bindings/power/reset/qcom,pon.yaml  | 44 +++++++++++++++++++
->  2 files changed, 44 insertions(+), 49 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/power/reset/qcom,pon.txt
->  create mode 100644 Documentation/devicetree/bindings/power/reset/qcom,pon.yaml
-> 
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
