@@ -2,105 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3D93937902F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 May 2021 16:08:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D7D9C379119
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 May 2021 16:39:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233756AbhEJOI4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 10 May 2021 10:08:56 -0400
-Received: from mail-ot1-f53.google.com ([209.85.210.53]:43769 "EHLO
-        mail-ot1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238363AbhEJOCw (ORCPT
+        id S241742AbhEJOkq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 10 May 2021 10:40:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36842 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S245667AbhEJOid (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 10 May 2021 10:02:52 -0400
-Received: by mail-ot1-f53.google.com with SMTP id u19-20020a0568302493b02902d61b0d29adso13708549ots.10;
-        Mon, 10 May 2021 07:01:47 -0700 (PDT)
+        Mon, 10 May 2021 10:38:33 -0400
+Received: from mail-qt1-x833.google.com (mail-qt1-x833.google.com [IPv6:2607:f8b0:4864:20::833])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F774C061238;
+        Mon, 10 May 2021 07:00:51 -0700 (PDT)
+Received: by mail-qt1-x833.google.com with SMTP id t20so7666071qtx.8;
+        Mon, 10 May 2021 07:00:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=wjunn4+x2QEs4HRrQcozT7INn2DM0lGSHIZkmkDz3T0=;
+        b=L/ovaQGsIQJ16RcBfR6b/a0uw1v8AuIn7fQ9eh4YsdSSKvDW4CkAjvTB/dGpjznghX
+         L6lqqe+Kk27OTwdCf5fqsCSYKCCvyNzjzN9aiIHsKJHBeR7fNrjGs7yHW7aNgkvz0jj3
+         2Hz07jB83RuuTOK0PhpCj+/L95e8wZN0INkyMFHz3yI1uGZ2iuQZ155bQk8hz5CDmYMy
+         mAKvWtMz2MxKZfQB2ixw/N0ydujFB/OUGVn5AxrTTELxqskFotx9R2X0D47OMzDdM4rx
+         o83MVzN0/LS6fc5WGdsq+8nmxXaXakboOJmLEvl4lKLaJYqdsf1toqitIi0UCwEU1TvF
+         5mwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
-         :message-id;
-        bh=aMyd74V2xPR9HsHsdnpVhEpDDf6pkpJ1H3LsUAn7sbI=;
-        b=d/4ZY7ISqohEwb2d1Bdh83OedwbHW94d1A6Dfgq1IcCP1Q18XZQA0ulSJ19AKAbmHa
-         2Lzsdw9uRigyAzFlQ2T6GIAJfs3jcH2Y+PeGfJvwbjbwH49hup22tvWi9W7n2mhxrKF1
-         47+oLcTkImAA7sz/HrrDHZWPmng0YZ+dMDTmmjrg+Z+w4AcrP+ZmB5m0PI/QI6nestHG
-         J/dw+UisWRRwDOpFBCLtAylxoA/ONIw3VDHa5FQEIpWgUssJxwpF+vIKdNhwZ+mnxyma
-         oUKA3Sfcw3MVD8Fm0sA+m/sIqRj5ohBLcd8ay0YXTV+AU0Y5gBoOjW67eT7uArMzoPPA
-         jMPg==
-X-Gm-Message-State: AOAM533qusKFrwaEfH7YQdCxq+H6+1Ji/VMrtuWPUcTQUJv9ppWIVT4a
-        fjThkDNli3FrirnhzojlMpOYUnpsWw==
-X-Google-Smtp-Source: ABdhPJzSILUisRkF9ZkgKtKLtWcN1AIVtat4Sjmyowu6KWN3kbXqHOkZeDA9q9iEo8Fblx+U2ozBDw==
-X-Received: by 2002:a9d:70c1:: with SMTP id w1mr2290991otj.276.1620655306804;
-        Mon, 10 May 2021 07:01:46 -0700 (PDT)
-Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id s6sm1167461otk.71.2021.05.10.07.01.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 May 2021 07:01:45 -0700 (PDT)
-Received: (nullmailer pid 41439 invoked by uid 1000);
-        Mon, 10 May 2021 14:01:39 -0000
-From:   Rob Herring <robh@kernel.org>
-To:     satya priya <skakit@codeaurora.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        kgunda@codeaurora.org, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
-        Courtney Cavin <courtney.cavin@sonymobile.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Sebastian Reichel <sre@kernel.org>,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        David Collins <collinsd@codeaurora.org>,
-        Andy Yan <andy.yan@rock-chips.com>,
-        linux-kernel@vger.kernel.org, linux-input@vger.kernel.org,
-        devicetree@vger.kernel.org, Andy Gross <agross@kernel.org>
-In-Reply-To: <1620630064-16354-5-git-send-email-skakit@codeaurora.org>
-References: <1620630064-16354-1-git-send-email-skakit@codeaurora.org> <1620630064-16354-5-git-send-email-skakit@codeaurora.org>
-Subject: Re: [PATCH V3 4/5] dt-bindings: input: pm8941-pwrkey: Convert pm8941 power key binding to yaml
-Date:   Mon, 10 May 2021 09:01:39 -0500
-Message-Id: <1620655299.793818.41438.nullmailer@robh.at.kernel.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=wjunn4+x2QEs4HRrQcozT7INn2DM0lGSHIZkmkDz3T0=;
+        b=VIlCq8g19SysQ8JfhD4fTrtj8PMz8ZMM15Jy+3Bv6LrEGWBP5PYlT56bcci1gKiFTd
+         tvPmXGt1z7pa5TNuIQLybEuhNF4G7XIIjObisF90lrIVGpV1W49staeDSMhG52LNFIQ0
+         h7Waiip3fCU4IUiWD/Wx370nTzqaclFRWsQflAEOSVV25lAdoPlCsj6WCHPollcf6ofL
+         69aOpuc3Fwh/k+Io80yQrsK6PKDi1zYzzVpZmRgBR4yselDpyz7Kqm8IRIJC2qbopF/i
+         huLCnSVuw4FMNgWU55254qHUoJu4FmA8npp3vKTerloDwpfsd9ABDDbJzSc9nihh71V1
+         hHtw==
+X-Gm-Message-State: AOAM533uECgE81YC/TPMXyz/bw78hXT45DcHzwbpAT6PqWk4HsRbjo1L
+        HTUjxyFmL0N7SoI3op/PzLZUrh1yIE8eYmdG9IqWzbBQRn0=
+X-Google-Smtp-Source: ABdhPJwh5JX+bwkggx6HLDsx//+0oTOuuzpBvGpN6VQvRf6Z6sNFlcsbQacasqJW84jKbyHf62u2uu3iQdIRPdfCXYY=
+X-Received: by 2002:ac8:6a01:: with SMTP id t1mr19600561qtr.47.1620655250595;
+ Mon, 10 May 2021 07:00:50 -0700 (PDT)
+MIME-Version: 1.0
+References: <20210505213731.538612-1-bhupesh.sharma@linaro.org> <20210505213731.538612-17-bhupesh.sharma@linaro.org>
+In-Reply-To: <20210505213731.538612-17-bhupesh.sharma@linaro.org>
+From:   Rafael Reinoldes <rafareino@gmail.com>
+Date:   Mon, 10 May 2021 10:58:49 -0300
+Message-ID: <CAOZB5GH1r+T9xMuO9vi-R_h_T5q0jvOZ2As0MUeESPxM1MHcLw@mail.gmail.com>
+Subject: Re: [PATCH v2 16/17] crypto: qce: Defer probe in case interconnect is
+ not yet initialized
+To:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-crypto@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, dmaengine@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 10 May 2021 12:31:03 +0530, satya priya wrote:
-> Convert qcom pm8941 power key binding from .txt to .yaml format.
-> 
-> Signed-off-by: satya priya <skakit@codeaurora.org>
-> ---
-> Changes in V2:
->  - Fixed bot errors, took reference from input.yaml for "linux,code"
->  - Added one complete example for powerkey and resin, and referenced it
->    in main PON binding.
->  - Moved this patch to the end of the series.
-> 
-> Changes in V3:
->  - Moved this patch before PON binding patch.
->  - As per Rob's comments, added allOf at the beginning of binding.
->    Added maxItems for interrupts.
->  - Added 'unevaluatedProperties' instead of 'additionalProperties' as
->    we are using allOf.
-> 
->  .../bindings/input/qcom,pm8941-pwrkey.txt          | 55 --------------
->  .../bindings/input/qcom,pm8941-pwrkey.yaml         | 87 ++++++++++++++++++++++
->  2 files changed, 87 insertions(+), 55 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/input/qcom,pm8941-pwrkey.txt
->  create mode 100644 Documentation/devicetree/bindings/input/qcom,pm8941-pwrkey.yaml
-> 
-
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
-
-yamllint warnings/errors:
-
-dtschema/dtc warnings/errors:
-Documentation/devicetree/bindings/input/qcom,pm8941-pwrkey.example.dt.yaml:0:0: /example-0/spmi@c440000/pmic@0/pon_hlos@1300: failed to match any schema with compatible: ['qcom,pm8998-pon']
-
-See https://patchwork.ozlabs.org/patch/1476186
-
-This check can fail if there are any dependencies. The base for a patch
-series is generally the most recent rc1.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit.
-
+unsubscribe
