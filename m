@@ -2,82 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4DBCB3794A9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 May 2021 18:55:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AA528379516
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 May 2021 19:10:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232184AbhEJQ4R (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 10 May 2021 12:56:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40322 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232160AbhEJQ4Q (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 10 May 2021 12:56:16 -0400
-Received: from mail-oi1-x22e.google.com (mail-oi1-x22e.google.com [IPv6:2607:f8b0:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9738C06175F
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 May 2021 09:55:10 -0700 (PDT)
-Received: by mail-oi1-x22e.google.com with SMTP id c3so16326923oic.8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 May 2021 09:55:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to;
-        bh=sVOf3rnQQoCxErFwACuycQahXXh0Mo2aHzmf0ZUSPko=;
-        b=HQy+UmcK03DuKLfDIAryB3qD1Mil6T0UDB98z17huWfwRWDjMSI+T3c85L9CGSPeay
-         DU+Evt3AJhioziDQCNcCJSrpcKj5BsrsNIscNv7h4V1kko81oWGTehQmGxZDnyW4CUe5
-         yw9wsqE9adjtg4qamSlq2FebUWGdDllpv8PeU=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to;
-        bh=sVOf3rnQQoCxErFwACuycQahXXh0Mo2aHzmf0ZUSPko=;
-        b=GKld01z181V4/X4N8CKBrdla1x1eao/rdjE2hLYQnmKOxXH7DdxqJdSzldJIeXuCS6
-         vr2fzSBagJuacvExCHn5HCPxNxyh1BTuplW5dHJRrgXdbyqSb3SaGIQPAOq8cAJryaXP
-         vALBmdIt9vgD8Kpz1jqCxHxOrnpkT9Z5Qy1gXCgQkPlZJPEqMUKf45npt6fNpKvt4rzG
-         DzyR21XNXsIug6xI1GynN14Loh8l4hS3y1PrRJEIEH/YHCqF8yFkN/MS7GmG9cdGMmTY
-         hotdNCZipWPUEeWpJBSsF6qDtEWakujiMM1OevCpdgPLbJvY6fL0ncgsCeJ3wjytqe4u
-         85sg==
-X-Gm-Message-State: AOAM532S1UddElMDSAB4XoHz6wOo6dIx56yZe5uOmxhTpkS5rvqOzXT/
-        Zdkbl3O0mVoRr/1CEltYm8hJe/MFNzrnpGCND7zpHQ==
-X-Google-Smtp-Source: ABdhPJz5RLoBLot1CVzxTjJkBJp56d5KozQuBoFhRpWF7SSXLzx/nTWQb1uAogO6gMhleLVVnQnOjunOH/YyigS6+KU=
-X-Received: by 2002:aca:211a:: with SMTP id 26mr18395539oiz.19.1620665710136;
- Mon, 10 May 2021 09:55:10 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 10 May 2021 09:55:09 -0700
+        id S232316AbhEJRLm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 10 May 2021 13:11:42 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:16312 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232323AbhEJRLi (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 10 May 2021 13:11:38 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1620666633; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=yFWWK3TE0vWmOc5WunVL+VHFoaHbjzJfXbG1CeyzwUU=;
+ b=DQjVhjbVxbR+b17fVzHUBPfNbJGMNFqZlTxwbQonFWf5OuGQ6PbN/1OlY01vlcNVAuv74gid
+ YocYVliaKIZjUF9UyTclK7tNl3Zv5lAdaI+YnMQgIy95n5kumhEsMzYOVUDwY7YmKDuyYR5y
+ n9EQtB7IMfMPzTGmOAT2TjfyQHw=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
+ 609968dc87ce1fbb567ec47f (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 10 May 2021 17:09:48
+ GMT
+Sender: gubbaven=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id EDEB5C43143; Mon, 10 May 2021 17:09:47 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: gubbaven)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id C3594C433D3;
+        Mon, 10 May 2021 17:09:42 +0000 (UTC)
 MIME-Version: 1.0
-In-Reply-To: <20210510063805.3262-2-thunder.leizhen@huawei.com>
-References: <20210510063805.3262-1-thunder.leizhen@huawei.com> <20210510063805.3262-2-thunder.leizhen@huawei.com>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.9.1
-Date:   Mon, 10 May 2021 09:55:09 -0700
-Message-ID: <CAE-0n52a4hAsg0bq-1PeL=gK3uFQ0mkvWngdfA_NqdhgWg6tuQ@mail.gmail.com>
-Subject: Re: [PATCH v2 1/1] drm/msm/dpu: Fix error return code in dpu_mdss_init()
-To:     Daniel Vetter <daniel@ffwll.ch>, David Airlie <airlied@linux.ie>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Zhen Lei <thunder.leizhen@huawei.com>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-kernel <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Mon, 10 May 2021 22:39:42 +0530
+From:   gubbaven@codeaurora.org
+To:     Marcel Holtmann <marcel@holtmann.org>
+Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
+        devicetree@vger.kernel.org, Matthias Kaehlcke <mka@chromium.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        Bluetooth Kernel Mailing List 
+        <linux-bluetooth@vger.kernel.org>,
+        Hemantg <hemantg@codeaurora.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        Balakrishna Godavarthi <bgodavar@codeaurora.org>,
+        Rocky Liao <rjliao@codeaurora.org>, hbandi@codeaurora.org,
+        abhishekpandit@chromium.org
+Subject: Re: [PATCH v3 3/5] Bluetooth: btqca: Moved extracting rom version
+ info to common place
+In-Reply-To: <A9592AB3-EE71-4A1A-8CE4-AC209A98BDE5@holtmann.org>
+References: <1620322392-27148-1-git-send-email-gubbaven@codeaurora.org>
+ <1620322392-27148-4-git-send-email-gubbaven@codeaurora.org>
+ <A9592AB3-EE71-4A1A-8CE4-AC209A98BDE5@holtmann.org>
+Message-ID: <297a32b472d314e07b4f1a99784c5a9e@codeaurora.org>
+X-Sender: gubbaven@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Zhen Lei (2021-05-09 23:38:05)
-> The error code returned by platform_get_irq() is stored in 'irq', it's
-> forgotten to be copied to 'ret' before being returned. As a result, the
-> value 0 of 'ret' is returned incorrectly.
->
-> After the above fix is completed, initializing the local variable 'ret'
-> to 0 is no longer needed, remove it.
->
-> In addition, when dpu_mdss_init() is successfully returned, the value of
-> 'ret' is always 0. Therefore, replace "return ret" with "return 0" to make
-> the code clearer.
->
-> Fixes: 070e64dc1bbc ("drm/msm/dpu: Convert to a chained irq chip")
-> Reported-by: Hulk Robot <hulkci@huawei.com>
-> Signed-off-by: Zhen Lei <thunder.leizhen@huawei.com>
-> ---
+Hi Marcel,
+On 2021-05-07 13:23, Marcel Holtmann wrote:
+> Hi Venkata,
+> 
+>> Moved extracting rom version info to common place as this code is
+>> common in all if else ladder in qca_uart_setup.
+>> 
+>> Signed-off-by: Venkata Lakshmi Narayana Gubba 
+>> <gubbaven@codeaurora.org>
+>> ---
+>> drivers/bluetooth/btqca.c | 15 ++++++---------
+>> 1 file changed, 6 insertions(+), 9 deletions(-)
+>> 
+>> diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
+>> index 320c555..658fd8e4 100644
+>> --- a/drivers/bluetooth/btqca.c
+>> +++ b/drivers/bluetooth/btqca.c
+>> @@ -533,24 +533,21 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t 
+>> baudrate,
+>> 
+>> 	config.user_baud_rate = baudrate;
+>> 
+>> +	/* Firmware files to download are based on ROM version.
+>> +	 * ROM version is derived from last two bytes of soc_ver.
+>> +	 */
+>> +	rom_ver = ((soc_ver & 0x00000f00) >> 0x04) |
+>> +		    (soc_ver & 0x0000000f);
+>> +
+> 
+> please try to align this properly.
+> 
+[Venkata]:
+Sure, I will update in next patchset.
+> Regards
+> 
+> Marcel
 
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Regards,
+Lakshmi Narayana.
