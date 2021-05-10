@@ -2,78 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C38F93792BF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 May 2021 17:31:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 10FFF379302
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 May 2021 17:49:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236092AbhEJPcO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 10 May 2021 11:32:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48366 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232239AbhEJPb5 (ORCPT
+        id S231508AbhEJPuD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 10 May 2021 11:50:03 -0400
+Received: from mail-ot1-f50.google.com ([209.85.210.50]:36863 "EHLO
+        mail-ot1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230185AbhEJPuA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 10 May 2021 11:31:57 -0400
-Received: from mail-oi1-x231.google.com (mail-oi1-x231.google.com [IPv6:2607:f8b0:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1ECDC06129E;
-        Mon, 10 May 2021 08:26:19 -0700 (PDT)
-Received: by mail-oi1-x231.google.com with SMTP id c3so16063647oic.8;
-        Mon, 10 May 2021 08:26:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=PKb19RbJtddT9ixiaDJEd8lwiTEBJP0932RguN39+5w=;
-        b=DN5VlvIzv2g9pN3rZ3NKCDlekbYySLhe/345TmwLE6f4Ue27NTu9IBhPFBLr9IaIdp
-         z4Zv7LzGdz4jlFYWm6fMGoZ7E8Bp7Q3gbA4NwITHmOGmb7bVjIZUqOoW/h4sy9iC3WJ6
-         z4zxnILaTCBvcRn04n77bWpzO+pJ5J4xvbALUbLoo25WVLrHdyXePrAUj/P2A4bQ1Nzj
-         nfzvdu2lN5xCZZmVkEk2fCzh8oWxvjprHyhXUtYiso/TnUJ3t9USHJHvbzc3Q9goIYH1
-         lkfU6sVWEMBZWptG8R/usnz+NxOg3E5m9FubEpR09knIBMHcF7pUvZBANGlZPst+vOCo
-         /yRg==
+        Mon, 10 May 2021 11:50:00 -0400
+Received: by mail-ot1-f50.google.com with SMTP id n32-20020a9d1ea30000b02902a53d6ad4bdso14825391otn.3;
+        Mon, 10 May 2021 08:48:55 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=PKb19RbJtddT9ixiaDJEd8lwiTEBJP0932RguN39+5w=;
-        b=CgTrWoanLHlcoSaiYHdMii1FWodziO9GWkvIKrSThfYBOcehiy6nO6421QDQQfbrok
-         o9M6T1TvVM3H5zDhsJPz+JQKCQp32As8MDqtwDZBo7cmDB6fartfL1MhcAToxK0IpddV
-         D7IKrA8wMZoJLkKzWkPzTUU+dwL4fmBGaXMlfCh4dIHPZADmF4ZkJVuSfgnIXEcCfXze
-         a9eeUcOlH8zZAJctJxCfq+cOlffG8udS2UdnCV6u8Qzq5HLydLeJRCU4yKSzWoUrOg7p
-         wT311xFRgTWOitXW7gTyJnbgShCNhQdH5pnVaW85jVmviMNNCDWlZSqbkV01XgkMG09P
-         uxOQ==
-X-Gm-Message-State: AOAM5322P7Yqh5lLYMblMt/xkpa5W3nqAen1/A+A0pfDpKcSu5g+V68d
-        KyymAvjWWG2V92l7H95FebLb+nzK7Jqvpj+btTo=
-X-Google-Smtp-Source: ABdhPJzCSRFYLLVUuC5sQQX2WXHyV1S5ZaJ9vjN9QEEuHySuJRNPNM6lWwqjm5FEw2QcIvsAelWNDKhsqEnDR1wI5ls=
-X-Received: by 2002:aca:c08a:: with SMTP id q132mr24901330oif.5.1620660379373;
- Mon, 10 May 2021 08:26:19 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=0s9YigQUJ/LXiQfPGifCK11/lOC8QzwiEINdkGwd2X4=;
+        b=oAdPb6Y/DzphItXce6znA5q3d3Lf63o3uLhEW9UMY4GSvPy1RWH/prb3c2lU5TLORO
+         U44dNGka+xQQs/VrhRTBBF44jPMvorauUUd79pmC+1zhnpXOy52Juz7mbWZIfKleQiW0
+         rZqa8FQBAuVLtZy3ALWS8CCPsyOKpnOzv3IvB4QmlikvU1xU4UCXz9DEY1SsUB3ith0c
+         MlFbQ+b+QjhAm/+YUpwBMMCt4e2JfLEYOgc8Or80iJmqe/BcMaDoYiFCnjIvJq8pn5Rp
+         ogRa0wxdUTRj1D7l4aqBXMmQMPGD9zDyqGGNWfkP+HwxV9hOC5frdMrbBQcZ05lJgzuS
+         GUfA==
+X-Gm-Message-State: AOAM533UAfCO0VmjvQbe3nFbgVOy1ANmzhsxmZ6ySfsUHZOy+M7w+OQB
+        bQy6ZLidRAb4HqWzKCxUZQ==
+X-Google-Smtp-Source: ABdhPJxnAsMxt2AYbuf0Wn5S6hv3hi6bMg9NcLNa7hEDJKYFK+24dzi7MZHl2PtrRRsPpVxcSqUKJw==
+X-Received: by 2002:a9d:6b84:: with SMTP id b4mr13021392otq.152.1620661735051;
+        Mon, 10 May 2021 08:48:55 -0700 (PDT)
+Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id y191sm1765230oia.50.2021.05.10.08.48.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 10 May 2021 08:48:53 -0700 (PDT)
+Received: (nullmailer pid 185091 invoked by uid 1000);
+        Mon, 10 May 2021 15:48:52 -0000
+Date:   Mon, 10 May 2021 10:48:52 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Prasad Malisetty <pmaliset@codeaurora.org>
+Cc:     Rob Herring <robh+dt@kernel.org>, mka@chromium.org,
+        Bjorn Helgaas <bhelgaas@google.com>, swboyd@chromium.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        linux-pci@vger.kernel.org, mgautam@codeaurora.org,
+        dianders@chromium.org, Bjorn Andersson <bjorn.andersson@linaro.org>
+Subject: Re: [PATCH 1/3] dt-bindings: pci: qcom: Document PCIe bindings for
+ SC720
+Message-ID: <20210510154852.GA185045@robh.at.kernel.org>
+References: <1620382648-17395-1-git-send-email-pmaliset@codeaurora.org>
+ <1620382648-17395-2-git-send-email-pmaliset@codeaurora.org>
 MIME-Version: 1.0
-References: <20210508195641.397198-3-robdclark@gmail.com> <20210509153842.124974-1-Houdek.Ryan@fex-emu.org>
-In-Reply-To: <20210509153842.124974-1-Houdek.Ryan@fex-emu.org>
-From:   Alex Deucher <alexdeucher@gmail.com>
-Date:   Mon, 10 May 2021 11:26:08 -0400
-Message-ID: <CADnq5_OYRP5EE3GOdY6HyTcJuLxXw5V7X9fTTw+QMrKs6cjcvw@mail.gmail.com>
-Subject: Re: Tested
-To:     houdek.ryan@fex-emu.org
-Cc:     Rob Clark <robdclark@gmail.com>, robdclark@chromium.org,
-        Dave Airlie <airlied@linux.ie>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        yaohongbo@huawei.com, LKML <linux-kernel@vger.kernel.org>,
-        Maling list - DRI developers 
-        <dri-devel@lists.freedesktop.org>, swboyd@chromium.org,
-        Sean Paul <sean@poorly.run>,
-        Qinglang Miao <miaoqinglang@huawei.com>,
-        abhinavk@codeaurora.org, kalyan_t@codeaurora.org,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Maxime Ripard <maxime@cerno.tech>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1620382648-17395-2-git-send-email-pmaliset@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Sorry, what patch are you referring to?
+On Fri, 07 May 2021 15:47:26 +0530, Prasad Malisetty wrote:
+> Document the PCIe DT bindings for SC7280 SoC.The PCIe IP is similar
+> to the one used on SM8250. Add the compatible for SC7280.
+> 
+> Signed-off-by: Prasad Malisetty <pmaliset@codeaurora.org>
+> ---
+>  Documentation/devicetree/bindings/pci/qcom,pcie.txt | 17 +++++++++++++++++
+>  1 file changed, 17 insertions(+)
+> 
 
-Alex
-
-On Mon, May 10, 2021 at 4:04 AM <houdek.ryan@fex-emu.org> wrote:
->
-> I have tested this on my end and it resolves the 120hz problem.
->
-> Tested-By: Ryan Houdek <Houdek.Ryan@fex-emu.org>
+Acked-by: Rob Herring <robh@kernel.org>
