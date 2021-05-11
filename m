@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 771DF379E4F
+	by mail.lfdr.de (Postfix) with ESMTP id C04BE379E51
 	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 May 2021 06:21:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229809AbhEKEWC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 May 2021 00:22:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52754 "EHLO
+        id S230383AbhEKEWE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 May 2021 00:22:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52772 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229980AbhEKEWB (ORCPT
+        with ESMTP id S230351AbhEKEWD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 May 2021 00:22:01 -0400
-Received: from mail-oo1-xc29.google.com (mail-oo1-xc29.google.com [IPv6:2607:f8b0:4864:20::c29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2CA8BC06175F
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 May 2021 21:20:55 -0700 (PDT)
-Received: by mail-oo1-xc29.google.com with SMTP id h9-20020a4a94090000b02901f9d4f64172so3946590ooi.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 May 2021 21:20:55 -0700 (PDT)
+        Tue, 11 May 2021 00:22:03 -0400
+Received: from mail-oo1-xc35.google.com (mail-oo1-xc35.google.com [IPv6:2607:f8b0:4864:20::c35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3EA6FC061761
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 May 2021 21:20:57 -0700 (PDT)
+Received: by mail-oo1-xc35.google.com with SMTP id s20-20020a4ae9940000b02902072d5df239so1468161ood.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 May 2021 21:20:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=OcpXm0EDMnP4dra5e7iyBpiH9cJegx8S0SHhpEQspRs=;
-        b=uy35xOt8NlWv2bH/rJeOkeWy/DdvsU2ILjJHieExX+E824ktjTUD7GWuxkWugIEz0Z
-         SrasuBXe/RGJ+jckNzWj9U5MNJmIWcn4NvHz1ym51cvjVK6SpYTKkUD7o7yGfnrGxQ7f
-         RnWNPOZofts9QPo6ptIIQR7wZ363rAPgox9S8upKUJKJMLxwFu5/FPMh/1QUw8rNZt04
-         kEEwUeM+XWuD+NjZ/8Gdq29/fc5Mfhb9wtpAWZgex1pGtmpoNSTJpehdIejYTureT4iG
-         ipeO67SMP3v99f8j+K+PerjxbCPOJzAG4DymV4lo3KwY4RcUKuvWfNbaufRtk3xjxVrL
-         W76Q==
+        bh=kq1BhPeNrbUbILjy2DK6JPnYvHJ/R6XjYtFB4u6ooZo=;
+        b=kHL5D5deXsZOxircr2d9YXoUtkdt2CM+LoQokUnzGEgxtP9VctNeMk2I4xulnVIx9B
+         I3d6oJt3l6FdI2U+U5sM7JBrGnG7FHb3dF5J08p80nS/u7ppBVKEfJaT1c9crm65ntuR
+         G1aElnw2pE/tmcdiFJkW0L4FebcnuqBNLEFWiEDm7WisddSY73aKVrFwvyokexbhvZPY
+         zWrqVSzGK3jaK1AjmUsitmxhWBS5uufwi4Sy18+/SjeF//lZLZl6nNq/nX4+gvukOX8G
+         2PPm0QdFONuY/WrL6dbUgIK3u9SPqJZ9FJoT8uHGaD/ayf3009tDyng65l8ohNczcnoJ
+         6mDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=OcpXm0EDMnP4dra5e7iyBpiH9cJegx8S0SHhpEQspRs=;
-        b=Ry3IGLkfFPq69u/K9iMY8Tz+G5U0p0YYFr4CLdxd82hLoaEgONs3c/YyDKkwUseltY
-         1V95qodbPOkxsZZ46JfAFDz3x2LfNFroP/bPZ0PDAL2tImUkPpkY+0bw/kAmDNQwKHeV
-         iaK8jPBJDpcij1zLJKlrODgSc7OzXh/pEDipgKDqDi4cRUdGS07B7MbIJ55Kwzu0OFDp
-         XQkSdbF+3M7FRKW57CN4jNjwb3HJFQYcJke/eIPa7G1i/9rhsupf6vc2Vz1BvNejxv+E
-         Ea4TuC+89UWGDRcj5ZPpRDcDmJBHv9gZeb11eD7bO2dVC95lxHmgq6fcGkQTA31/ewQU
-         /0YA==
-X-Gm-Message-State: AOAM531l4J+ldSXPps9O8Ceufk1Bxt9i+Ds7Y66N9O8AkECQtfJAx4M6
-        iuxvzLi/ubAJNgvg5VfyGbsAHHtwnCEXFw==
-X-Google-Smtp-Source: ABdhPJxPDNuwbdGnwtO2yQGR4GWIYkcmFFbdGXCWFAxp71xpPhzuxeiakHDyAlIwTunkimpw7dpLTg==
-X-Received: by 2002:a4a:b102:: with SMTP id a2mr21819330ooo.30.1620706854521;
-        Mon, 10 May 2021 21:20:54 -0700 (PDT)
+        bh=kq1BhPeNrbUbILjy2DK6JPnYvHJ/R6XjYtFB4u6ooZo=;
+        b=q3pzTwLX16x+PPQ87pv88bhZG0JIB2v/fp7TcTpA4Ou+E+GueZPgVMtM7myLOfwlyV
+         yEQ3prD51IYoophyAPpXFLbIShJ5nDJEzhfvwSCUylxoyJszSFK1WBw00G0T5xwrat9m
+         0MS+NKx0RNA7sHs45MwU0CWfT7majqqeVdrHVpQdjDf8rYzEF3tDBHq7YzGpdXCrfN4P
+         dvQaMqTC488U/J5ZeZnRyGZIBop4T0YRJMYs8EUElv9afrOEJEAcJgqx93xfokCZZk+9
+         EAa0dSI1MWUr9BrXF5cVket3Jq96vojV2PVTCASsP6bfsDUD6IXYoeFffj6OBdkzofou
+         yXFg==
+X-Gm-Message-State: AOAM531xf8GpgC7jfG0NnkUQ9R8MgXSMBGmpBsHbp4fx3FQqRphN8yMH
+        WAlvxH6gJXjRTqZ7VtyKNn5TmA==
+X-Google-Smtp-Source: ABdhPJwKuNNy2kRhMwTgm81Gdl6iG6M7SkQfGa39BybDaqSWaphX9RBimZ6aYvIPx9p7BNyl/rpVzg==
+X-Received: by 2002:a4a:b186:: with SMTP id c6mr4829155ooo.28.1620706856599;
+        Mon, 10 May 2021 21:20:56 -0700 (PDT)
 Received: from localhost.localdomain ([2607:fb90:e623:42c1:10df:adff:fec2:f1d])
-        by smtp.gmail.com with ESMTPSA id r124sm3042294oig.38.2021.05.10.21.20.52
+        by smtp.gmail.com with ESMTPSA id r124sm3042294oig.38.2021.05.10.21.20.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 May 2021 21:20:54 -0700 (PDT)
+        Mon, 10 May 2021 21:20:56 -0700 (PDT)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         David Airlie <airlied@linux.ie>,
@@ -59,9 +59,9 @@ Cc:     Tanmay Shah <tanmay@codeaurora.org>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 1/4] drm/msm/dp: Simplify the mvid/nvid calculation
-Date:   Mon, 10 May 2021 23:20:40 -0500
-Message-Id: <20210511042043.592802-2-bjorn.andersson@linaro.org>
+Subject: [PATCH 2/4] drm/msm/dp: Store each subblock in the io region
+Date:   Mon, 10 May 2021 23:20:41 -0500
+Message-Id: <20210511042043.592802-3-bjorn.andersson@linaro.org>
 X-Mailer: git-send-email 2.31.1
 In-Reply-To: <20210511042043.592802-1-bjorn.andersson@linaro.org>
 References: <20210511042043.592802-1-bjorn.andersson@linaro.org>
@@ -71,110 +71,224 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In the search for causes to timing issues seen during implementation of
-eDP support for SC8180x a fair amount of time was spent concluding why
-the calculated mvid/nvid values where wrong.
-
-The overall conclusion is that the ratio of MVID/NVID describes, and
-should match, the ratio between the pixel and link clock.
-
-Downstream this calculation reads the M and N values off the pixel clock
-straight from DISP_CC and are then adjusted based on knowledge of how
-the link and vco_div (parent of the pixel clock) are derrived from the
-common VCO.
-
-While upstreaming, and then extracting the PHY driver, the resulting
-function performs the following steps:
-
-1) Adjust the passed link rate based on the VCO divider used in the PHY
-   driver, and multiply this by 10 based on the link rate divider.
-2) Pick reasonable choices of M and N, by calculating the ratio between
-   this new clock and the pixel clock.
-3) Subtract M from N and flip the bits, to match the encoding of the N
-   register in DISP_CC.
-4) Flip the bits of N and add M, to get the value of N back.
-5) Multiply M with 5, per the documentation.
-6) Scale the values such that N is close to 0x8000 (or larger)
-7) Multply M with 2 or 3 depending on the link rate of HBR2 or HBR3.
-
-Presumably step 3) was added to provide step 4) with expected input, so
-the two cancel each other out. The factor of 10 from step 1) goes into
-the denominator and is partially cancelled by the 5 in the numerator in
-step 5), resulting in step 7) simply cancelling out step 1).
-
-Left is the code that finds the ratio between the two arguments, scaled
-to keep the denominator close to or larger than 0x8000. And this is our
-mvid/nvid pair.
+Not all platforms has DP_P0 at offset 0x1000 from the beginning of the
+DP block. So move the offsets into dss_io_data, to make it possible in
+the next patch to specify alternative offsets and sizes of these
+segments.
 
 Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 ---
- drivers/gpu/drm/msm/dp/dp_catalog.c | 41 +++++------------------------
- 1 file changed, 6 insertions(+), 35 deletions(-)
+ drivers/gpu/drm/msm/dp/dp_catalog.c | 57 ++++++++---------------------
+ drivers/gpu/drm/msm/dp/dp_parser.c  | 10 +++++
+ drivers/gpu/drm/msm/dp/dp_parser.h  |  8 ++++
+ 3 files changed, 33 insertions(+), 42 deletions(-)
 
 diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.c b/drivers/gpu/drm/msm/dp/dp_catalog.c
-index b1a9b1b98f5f..2eb37ee48e42 100644
+index 2eb37ee48e42..a0449a2867e4 100644
 --- a/drivers/gpu/drm/msm/dp/dp_catalog.c
 +++ b/drivers/gpu/drm/msm/dp/dp_catalog.c
-@@ -415,39 +415,16 @@ void dp_catalog_ctrl_config_msa(struct dp_catalog *dp_catalog,
- 					u32 rate, u32 stream_rate_khz,
- 					bool fixed_nvid)
- {
--	u32 pixel_m, pixel_n;
--	u32 mvid, nvid, pixel_div = 0, dispcc_input_rate;
- 	u32 const nvid_fixed = DP_LINK_CONSTANT_N_VALUE;
--	u32 const link_rate_hbr2 = 540000;
--	u32 const link_rate_hbr3 = 810000;
--	unsigned long den, num;
+@@ -24,15 +24,6 @@
+ #define DP_INTERRUPT_STATUS_ACK_SHIFT	1
+ #define DP_INTERRUPT_STATUS_MASK_SHIFT	2
+ 
+-#define MSM_DP_CONTROLLER_AHB_OFFSET	0x0000
+-#define MSM_DP_CONTROLLER_AHB_SIZE	0x0200
+-#define MSM_DP_CONTROLLER_AUX_OFFSET	0x0200
+-#define MSM_DP_CONTROLLER_AUX_SIZE	0x0200
+-#define MSM_DP_CONTROLLER_LINK_OFFSET	0x0400
+-#define MSM_DP_CONTROLLER_LINK_SIZE	0x0C00
+-#define MSM_DP_CONTROLLER_P0_OFFSET	0x1000
+-#define MSM_DP_CONTROLLER_P0_SIZE	0x0400
 -
-+	unsigned long mvid, nvid;
+ #define DP_INTERRUPT_STATUS1 \
+ 	(DP_INTR_AUX_I2C_DONE| \
+ 	DP_INTR_WRONG_ADDR | DP_INTR_TIMEOUT | \
+@@ -64,75 +55,67 @@ struct dp_catalog_private {
+ 
+ static inline u32 dp_read_aux(struct dp_catalog_private *catalog, u32 offset)
+ {
+-	offset += MSM_DP_CONTROLLER_AUX_OFFSET;
+-	return readl_relaxed(catalog->io->dp_controller.base + offset);
++	return readl_relaxed(catalog->io->dp_controller.aux + offset);
+ }
+ 
+ static inline void dp_write_aux(struct dp_catalog_private *catalog,
+ 			       u32 offset, u32 data)
+ {
+-	offset += MSM_DP_CONTROLLER_AUX_OFFSET;
+ 	/*
+ 	 * To make sure aux reg writes happens before any other operation,
+ 	 * this function uses writel() instread of writel_relaxed()
+ 	 */
+-	writel(data, catalog->io->dp_controller.base + offset);
++	writel(data, catalog->io->dp_controller.aux + offset);
+ }
+ 
+ static inline u32 dp_read_ahb(struct dp_catalog_private *catalog, u32 offset)
+ {
+-	offset += MSM_DP_CONTROLLER_AHB_OFFSET;
+-	return readl_relaxed(catalog->io->dp_controller.base + offset);
++	return readl_relaxed(catalog->io->dp_controller.ahb + offset);
+ }
+ 
+ static inline void dp_write_ahb(struct dp_catalog_private *catalog,
+ 			       u32 offset, u32 data)
+ {
+-	offset += MSM_DP_CONTROLLER_AHB_OFFSET;
+ 	/*
+ 	 * To make sure phy reg writes happens before any other operation,
+ 	 * this function uses writel() instread of writel_relaxed()
+ 	 */
+-	writel(data, catalog->io->dp_controller.base + offset);
++	writel(data, catalog->io->dp_controller.ahb + offset);
+ }
+ 
+ static inline void dp_write_p0(struct dp_catalog_private *catalog,
+ 			       u32 offset, u32 data)
+ {
+-	offset += MSM_DP_CONTROLLER_P0_OFFSET;
+ 	/*
+ 	 * To make sure interface reg writes happens before any other operation,
+ 	 * this function uses writel() instread of writel_relaxed()
+ 	 */
+-	writel(data, catalog->io->dp_controller.base + offset);
++	writel(data, catalog->io->dp_controller.p0 + offset);
+ }
+ 
+ static inline u32 dp_read_p0(struct dp_catalog_private *catalog,
+ 			       u32 offset)
+ {
+-	offset += MSM_DP_CONTROLLER_P0_OFFSET;
+ 	/*
+ 	 * To make sure interface reg writes happens before any other operation,
+ 	 * this function uses writel() instread of writel_relaxed()
+ 	 */
+-	return readl_relaxed(catalog->io->dp_controller.base + offset);
++	return readl_relaxed(catalog->io->dp_controller.p0 + offset);
+ }
+ 
+ static inline u32 dp_read_link(struct dp_catalog_private *catalog, u32 offset)
+ {
+-	offset += MSM_DP_CONTROLLER_LINK_OFFSET;
+-	return readl_relaxed(catalog->io->dp_controller.base + offset);
++	return readl_relaxed(catalog->io->dp_controller.link + offset);
+ }
+ 
+ static inline void dp_write_link(struct dp_catalog_private *catalog,
+ 			       u32 offset, u32 data)
+ {
+-	offset += MSM_DP_CONTROLLER_LINK_OFFSET;
+ 	/*
+ 	 * To make sure link reg writes happens before any other operation,
+ 	 * this function uses writel() instread of writel_relaxed()
+ 	 */
+-	writel(data, catalog->io->dp_controller.base + offset);
++	writel(data, catalog->io->dp_controller.link + offset);
+ }
+ 
+ /* aux related catalog functions */
+@@ -267,29 +250,21 @@ static void dump_regs(void __iomem *base, int len)
+ 
+ void dp_catalog_dump_regs(struct dp_catalog *dp_catalog)
+ {
+-	u32 offset, len;
  	struct dp_catalog_private *catalog = container_of(dp_catalog,
+ 		struct dp_catalog_private, dp_catalog);
++	struct dss_io_data *io = &catalog->io->dp_controller;
+ 
+ 	pr_info("AHB regs\n");
+-	offset = MSM_DP_CONTROLLER_AHB_OFFSET;
+-	len = MSM_DP_CONTROLLER_AHB_SIZE;
+-	dump_regs(catalog->io->dp_controller.base + offset, len);
++	dump_regs(io->ahb, io->ahb_len);
+ 
+ 	pr_info("AUXCLK regs\n");
+-	offset = MSM_DP_CONTROLLER_AUX_OFFSET;
+-	len = MSM_DP_CONTROLLER_AUX_SIZE;
+-	dump_regs(catalog->io->dp_controller.base + offset, len);
++	dump_regs(io->aux, io->aux_len);
+ 
+ 	pr_info("LCLK regs\n");
+-	offset = MSM_DP_CONTROLLER_LINK_OFFSET;
+-	len = MSM_DP_CONTROLLER_LINK_SIZE;
+-	dump_regs(catalog->io->dp_controller.base + offset, len);
++	dump_regs(io->link, io->link_len);
+ 
+ 	pr_info("P0CLK regs\n");
+-	offset = MSM_DP_CONTROLLER_P0_OFFSET;
+-	len = MSM_DP_CONTROLLER_P0_SIZE;
+-	dump_regs(catalog->io->dp_controller.base + offset, len);
++	dump_regs(io->p0, io->p0_len);
+ }
+ 
+ int dp_catalog_aux_get_irq(struct dp_catalog *dp_catalog)
+@@ -454,8 +429,7 @@ int dp_catalog_ctrl_set_pattern(struct dp_catalog *dp_catalog,
+ 	bit = BIT(pattern - 1) << DP_MAINLINK_READY_LINK_TRAINING_SHIFT;
+ 
+ 	/* Poll for mainlink ready status */
+-	ret = readx_poll_timeout(readl, catalog->io->dp_controller.base +
+-					MSM_DP_CONTROLLER_LINK_OFFSET +
++	ret = readx_poll_timeout(readl, catalog->io->dp_controller.link +
+ 					REG_DP_MAINLINK_READY,
+ 					data, data & bit,
+ 					POLLING_SLEEP_US, POLLING_TIMEOUT_US);
+@@ -502,8 +476,7 @@ bool dp_catalog_ctrl_mainlink_ready(struct dp_catalog *dp_catalog)
  				struct dp_catalog_private, dp_catalog);
  
--	if (rate == link_rate_hbr3)
--		pixel_div = 6;
--	else if (rate == 1620000 || rate == 270000)
--		pixel_div = 2;
--	else if (rate == link_rate_hbr2)
--		pixel_div = 4;
--	else
--		DRM_ERROR("Invalid pixel mux divider\n");
--
--	dispcc_input_rate = (rate * 10) / pixel_div;
--
--	rational_best_approximation(dispcc_input_rate, stream_rate_khz,
--			(unsigned long)(1 << 16) - 1,
--			(unsigned long)(1 << 16) - 1, &den, &num);
--
--	den = ~(den - num);
--	den = den & 0xFFFF;
--	pixel_m = num;
--	pixel_n = den;
--
--	mvid = (pixel_m & 0xFFFF) * 5;
--	nvid = (0xFFFF & (~pixel_n)) + (pixel_m & 0xFFFF);
-+	rational_best_approximation(stream_rate_khz, rate,
-+				    (1 << 16) - 1, (1 << 16) - 1,
-+				    &mvid, &nvid);
+ 	/* Poll for mainlink ready status */
+-	ret = readl_poll_timeout(catalog->io->dp_controller.base +
+-				MSM_DP_CONTROLLER_LINK_OFFSET +
++	ret = readl_poll_timeout(catalog->io->dp_controller.link +
+ 				REG_DP_MAINLINK_READY,
+ 				data, data & DP_MAINLINK_READY_FOR_VIDEO,
+ 				POLLING_SLEEP_US, POLLING_TIMEOUT_US);
+diff --git a/drivers/gpu/drm/msm/dp/dp_parser.c b/drivers/gpu/drm/msm/dp/dp_parser.c
+index 0519dd3ac3c3..51ec85b4803b 100644
+--- a/drivers/gpu/drm/msm/dp/dp_parser.c
++++ b/drivers/gpu/drm/msm/dp/dp_parser.c
+@@ -250,6 +250,7 @@ static int dp_parser_clock(struct dp_parser *parser)
  
-+	/* Adjust values so that nvid is close to DP_LINK_CONSTANT_N_VALUE */
- 	if (nvid < nvid_fixed) {
- 		u32 temp;
+ static int dp_parser_parse(struct dp_parser *parser)
+ {
++	struct dss_io_data *io = &parser->io.dp_controller;
+ 	int rc = 0;
  
-@@ -456,13 +433,7 @@ void dp_catalog_ctrl_config_msa(struct dp_catalog *dp_catalog,
- 		nvid = temp;
- 	}
+ 	if (!parser) {
+@@ -275,6 +276,15 @@ static int dp_parser_parse(struct dp_parser *parser)
+ 	 */
+ 	parser->regulator_cfg = &sdm845_dp_reg_cfg;
  
--	if (link_rate_hbr2 == rate)
--		nvid *= 2;
--
--	if (link_rate_hbr3 == rate)
--		nvid *= 3;
--
--	DRM_DEBUG_DP("mvid=0x%x, nvid=0x%x\n", mvid, nvid);
-+	DRM_DEBUG_DP("mvid=0x%lx, nvid=0x%lx\n", mvid, nvid);
- 	dp_write_link(catalog, REG_DP_SOFTWARE_MVID, mvid);
- 	dp_write_link(catalog, REG_DP_SOFTWARE_NVID, nvid);
- 	dp_write_p0(catalog, MMSS_DP_DSC_DTO, 0x0);
++	io->ahb = io->base + 0x0;
++	io->ahb_len = 0x200;
++	io->aux = io->base + 0x200;
++	io->aux_len = 0x200;
++	io->link = io->base + 0x400;
++	io->link_len = 0x600;
++	io->p0 = io->base + 0x1000;
++	io->p0_len = 0x400;
++
+ 	return 0;
+ }
+ 
+diff --git a/drivers/gpu/drm/msm/dp/dp_parser.h b/drivers/gpu/drm/msm/dp/dp_parser.h
+index 34b49628bbaf..ff4774109c63 100644
+--- a/drivers/gpu/drm/msm/dp/dp_parser.h
++++ b/drivers/gpu/drm/msm/dp/dp_parser.h
+@@ -28,6 +28,14 @@ enum dp_pm_type {
+ struct dss_io_data {
+ 	u32 len;
+ 	void __iomem *base;
++	void __iomem *ahb;
++	size_t ahb_len;
++	void __iomem *aux;
++	size_t aux_len;
++	void __iomem *link;
++	size_t link_len;
++	void __iomem *p0;
++	size_t p0_len;
+ };
+ 
+ static inline const char *dp_parser_pm_name(enum dp_pm_type module)
 -- 
 2.29.2
 
