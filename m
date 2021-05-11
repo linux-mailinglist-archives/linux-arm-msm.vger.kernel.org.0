@@ -2,39 +2,39 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 18D3C37A1D3
+	by mail.lfdr.de (Postfix) with ESMTP id 55D6337A1D4
 	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 May 2021 10:27:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231182AbhEKI22 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 May 2021 04:28:28 -0400
-Received: from mail.kernel.org ([198.145.29.99]:36844 "EHLO mail.kernel.org"
+        id S230521AbhEKI2a (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 May 2021 04:28:30 -0400
+Received: from mail.kernel.org ([198.145.29.99]:36930 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230483AbhEKI2R (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 May 2021 04:28:17 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 427E1613C3;
-        Tue, 11 May 2021 08:27:11 +0000 (UTC)
+        id S231163AbhEKI2U (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 11 May 2021 04:28:20 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 2398461622;
+        Tue, 11 May 2021 08:27:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1620721631;
-        bh=mCBFyU4XUfWkB55SJhQL3mqIT6VRoEqjftOBUHEEXpg=;
+        s=k20201202; t=1620721634;
+        bh=yNahv4s2ZyD/O1JsVRA0U9WyNwFTOmybewgtOHHYFAc=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=XYMXG2128GsTJB7pqGsJvAKj6VAWrrfBkFbuuC09wOhG/UKti9b+gfIR6eD3dcNFz
-         8RjRK3A6+mtXC2Z2s/+xIl6JDh5u4yQr3cpO556AhY8RKPqT45eazZ98nRiiexWJVy
-         NTnuDRS3nHbl95H6JxHpBZ2CvHRzIw6ZfiU/n0LLzvIfzEM999/qBOqZCQm7wjPsrB
-         RGVGp38Krk+iv0+OKTn76gD27mv+GzK1+bWXpgLP5TU9Oo/ywkI4LJlmbgzsdja8gE
-         egjI8jQMDqh/wV49Ht42/S8Szc3bV7QOSnIgqsnFJukAaHeZi5bPoQpMAd4BzBc5S9
-         vupvzBG9yRHcQ==
+        b=OSROV3xr/KtLtILJOm3UYIOXSyfOh3pPLQLflibkOGDr5gxjp/9A7gJVRNIzCkdY8
+         IGbp89O/7JN2u7yXLZ1j4S7cKJnlLqab7UUHb3XcgvajMoMI9F0c7UEsF/mos/23A7
+         uhj8pkxMSKm232C7eiZizP7pmdGAVquqbcQ4LuhTffGJLyEfGM/yklRi3uVPhHb+gT
+         OWrMOHZj9p/zfeWJuGOvFWPTAAxYrgx8S65Ox8DseKfOyjEXrY0mqFr+z9bcCCwn9t
+         G+vHUe3TveZA2SitU7EsxFcb9GYdJxPdR+DWz60cVpc/727AVy4liRnvmEUbKs1ds3
+         tBgvSL+Ifo+sA==
 From:   Mark Brown <broonie@kernel.org>
-To:     agross@kernel.org, lgirdwood@gmail.com, bjorn.andersson@linaro.org,
+To:     lgirdwood@gmail.com, agross@kernel.org, bjorn.andersson@linaro.org,
         Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
         devicetree@vger.kernel.org, robh@kernel.org
 Cc:     Mark Brown <broonie@kernel.org>, wcheng@codeaurora.org,
         dmitry.baryshkov@linaro.org, linux-arm-msm@vger.kernel.org
-Subject: Re: (subset) [PATCH v2 0/2] Enable VBUS current boost on pm8150b platforms
-Date:   Tue, 11 May 2021 09:25:39 +0100
-Message-Id: <162072067394.33366.15146499353870845816.b4-ty@kernel.org>
+Subject: Re: (subset) [PATCH v3 0/2] Enable VBUS current boost on pm8150b platforms
+Date:   Tue, 11 May 2021 09:25:40 +0100
+Message-Id: <162072067394.33366.791621175467822202.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20210426221446.1852572-1-bryan.odonoghue@linaro.org>
-References: <20210426221446.1852572-1-bryan.odonoghue@linaro.org>
+In-Reply-To: <20210427130712.2005456-1-bryan.odonoghue@linaro.org>
+References: <20210427130712.2005456-1-bryan.odonoghue@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -42,14 +42,17 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 26 Apr 2021 23:14:44 +0100, Bryan O'Donoghue wrote:
+On Tue, 27 Apr 2021 14:07:10 +0100, Bryan O'Donoghue wrote:
+> V3:
+> - Drop the SoC regulator constraints for
+>   regulator-min-microamp
+>   regulator-max-microamp
+>   These will be applied on a per-board basis - Mark Brown
+> 
+> V2:
 > The first version of this patch set the current limit to 3 amps as was done
 > in downstream. Mark indicated a preference to set this on a per-system
 > basis instead of blitzing it, as in downstream.
-> 
-> Looking at what was upstream versus what was in my working tree I saw that
-> in fact the VBUS boost driver had been upstreamed minus accompanying DTS in
-> pm8150b.
 > 
 > [...]
 
