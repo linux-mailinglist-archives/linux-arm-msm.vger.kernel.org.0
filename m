@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 326C0379E29
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 May 2021 06:19:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A78F4379E31
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 May 2021 06:19:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230197AbhEKEUH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 May 2021 00:20:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52262 "EHLO
+        id S230300AbhEKEUJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 May 2021 00:20:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52254 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230228AbhEKEUF (ORCPT
+        with ESMTP id S230240AbhEKEUH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 May 2021 00:20:05 -0400
-Received: from mail-oo1-xc32.google.com (mail-oo1-xc32.google.com [IPv6:2607:f8b0:4864:20::c32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 298E1C06138B
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 May 2021 21:18:59 -0700 (PDT)
-Received: by mail-oo1-xc32.google.com with SMTP id j17-20020a4ad6d10000b02901fef5280522so3961010oot.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 May 2021 21:18:59 -0700 (PDT)
+        Tue, 11 May 2021 00:20:07 -0400
+Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com [IPv6:2607:f8b0:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5EB24C061761
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 May 2021 21:19:01 -0700 (PDT)
+Received: by mail-oi1-x22a.google.com with SMTP id l6so17912719oii.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 May 2021 21:19:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=UHDiz1eezJ432ML1+q0u/7YP2AqbZQOs7C+Mh2wfUZM=;
-        b=elkI4iI8zU5LP6C7fY67XaMyEKBfxs65uArPZDePbpFwolvnqmBPpTehyUjLmimqUB
-         KlpbDcYlJkSLYpDEXMeFSvWvRGzuim++ElCuaSmTzN8LnFQMpkVDK2txkOUNF8A9zcNu
-         DV0d0YZzCNSy7vhEpikEGYRyRkDAPjuTXJyNjvgbyNhCXsWBOh4qcJUD4XMZZu+nSuiW
-         USJ75cDR9zxpb5sXoAmDReAldjQ09u/5Adqmkslbsoasle3Jk3ZGfY9eTdFkrJJ7HyMd
-         KCcZuJCrPjH1qd8kRlJcRO4yijomLQ3MeKT3jcusbzPV7KjUy+FhelXURriC6o/E28gK
-         iHlg==
+        bh=yGqNeFLLhKemkKzPrEVE1RxgsnZKpAbhsczo+V7oBEA=;
+        b=yCZ8STQGotjYrZmz7EZofb96u4FIRWgeR34Q8QXrnCgxod9ZAt5vdBMLdRKdBzVwFN
+         3ALF/c64h3BowjQJuoIc+hb6MygG1pGKI2mWOxFsULuB/2saOURwEJKTo5px7uVogFrD
+         cFwjUMP4Fcjxxkpmq5BgFJ1ruUCIxxFRAupMCNohMRFOfok7p+ngfPSKYJ/sAjUpeLez
+         BdLolzNrj0Hpkk1I/bS9wur3XtPYsUjlGQOYT2n9ODEpHyPFUFPL6ubcIf+cK6aInVdQ
+         ggxviwlMcVCzKklSBDfecFCvfaCYbmtevtRb54uXenqzfrosK6i+uOejRrh+/dO26A40
+         /s6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=UHDiz1eezJ432ML1+q0u/7YP2AqbZQOs7C+Mh2wfUZM=;
-        b=A+RQS14d/n10/pL1aQ9eHJz0HFUE0jGvb0IdYjgwKTw/LCVPL7H5to2z7yxpe7bFCn
-         /MJyGAuO4vSmyJkMmrldgIFahb5WeAGQ/CGE18nqNogx+4uBoqHfVuBkTR5RMlm3p4nV
-         XNBfL6v/ClFVXjENspUdLY6VEuVrxSPJgRpFFtcRSj1DCOG9DQoxqv9FMfo+Wd0FV4xi
-         Lk6SDsnawMOAbKQ8TfwGcfZLg4V3TmO+VB+2aTmyDDTMVgYYCUs2zytJpIPO+Dh4jaWT
-         dcXYaTObg41sienVkJl6h3ijRFfoi6u4xO/b4+y4wb9maLyLOG33YHOkX4jO9yV371/R
-         vC/g==
-X-Gm-Message-State: AOAM532BPGFOV1xlCe3png+CWkr+j1zxTAgZgeFw9fgtoaCLwu2CLHp3
-        cCpo8kqGffXe6ZNfBNi1E9cFMVh7T+Rv9w==
-X-Google-Smtp-Source: ABdhPJz/6oZvGjOsOX2nLMv/1sonOntXRywl8G5ChsiimZhwdTrNEprOLhFcZFB7PhMjRt2LRko6CQ==
-X-Received: by 2002:a4a:4f06:: with SMTP id c6mr21827742oob.34.1620706738506;
-        Mon, 10 May 2021 21:18:58 -0700 (PDT)
+        bh=yGqNeFLLhKemkKzPrEVE1RxgsnZKpAbhsczo+V7oBEA=;
+        b=rW4cqYpCzzTVDorrQeL3WslMknHUlCDI7MC9v5WPNQfcTjFkDjj3flhKP9AOyBmLnm
+         AH1oefqLpJAQqP+xqqt71+OlWHfzyR+4KV1/JVvaQA2uTng4GmzviAlUiDi1J763EQy8
+         ktaPPotKYGURGeMmHuq1SzUqSBm32djqZxj79egsnso5xgbNVJWipywP2JVhAUkUulmm
+         OUHrrAbJT/GEV7yOpp3c22Wlir+ZzxhWlg8PO7a5JZxkVfUjyN2+creOuKva3xf6gBfW
+         7frjTNJyZ+rHSlZZlu7E/B5/gXjGQKEtfZAa6rD2xZfX00q2ShWjOfI9qDvkPV/T06zb
+         tlSA==
+X-Gm-Message-State: AOAM532GSrbREwz6z+SxtZeXTvaC3uzajnPgJvM8DtRexZjaEIxO0qsh
+        fYSUK3C0rShM1iquFN6RXfBXFQ==
+X-Google-Smtp-Source: ABdhPJyYrMl2sjpLxj/Vvvbr8y+S+d1wkkeMBBkqVoEy9bvVoosQmbQM0ZF+aUf2kyOADP2oN0Wa3A==
+X-Received: by 2002:a54:4011:: with SMTP id x17mr21197172oie.112.1620706740433;
+        Mon, 10 May 2021 21:19:00 -0700 (PDT)
 Received: from localhost.localdomain ([2607:fb90:e623:42c1:10df:adff:fec2:f1d])
-        by smtp.gmail.com with ESMTPSA id z15sm558647otp.20.2021.05.10.21.18.56
+        by smtp.gmail.com with ESMTPSA id z15sm558647otp.20.2021.05.10.21.18.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 May 2021 21:18:58 -0700 (PDT)
+        Mon, 10 May 2021 21:19:00 -0700 (PDT)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         David Airlie <airlied@linux.ie>,
@@ -57,9 +57,9 @@ To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
 Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH 2/4] drm/msm/dpu: Clear boot loader configured data paths
-Date:   Mon, 10 May 2021 23:18:50 -0500
-Message-Id: <20210511041852.592295-3-bjorn.andersson@linaro.org>
+Subject: [PATCH 3/4] drm/msm/dpu: Add SC8180x to hw catalog
+Date:   Mon, 10 May 2021 23:18:51 -0500
+Message-Id: <20210511041852.592295-4-bjorn.andersson@linaro.org>
 X-Mailer: git-send-email 2.31.1
 In-Reply-To: <20210511041852.592295-1-bjorn.andersson@linaro.org>
 References: <20210511041852.592295-1-bjorn.andersson@linaro.org>
@@ -69,129 +69,281 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-It's typical for the bootloader to configure CTL_0 for the boot splash
-or EFIFB, but for non-DSI use cases the DPU driver tend to pick another
-CTL and the system might end up with two configured data paths producing
-data on the same INTF - with resulting graphical artifacts.
+From: Rob Clark <robdclark@chromium.org>
 
-Naturally the end goal would be to inherit the bootloader's
-configuration and provide the user with a glitch free handover from the
-boot configuration to a running DPU.
-But such effort will affect clocks, regulators, power-domains etc, so in
-the meantime this patch simply disables all INTFs and clear all
-configured data paths, to avoid the graphical artifacts.
+Add SC8180x to the hardware catalog, for initial support for the
+platform. Due to limitations in the DP driver only one of the four DP
+interfaces is left enabled.
 
+The SC8180x platform supports the newly added DPU_INTF_WIDEBUS flag and
+the Windows-on-Snapdragon bootloader leaves the widebus bit set, so this
+is flagged appropriately to ensure widebus is disabled - for now.
+
+Signed-off-by: Rob Clark <robdclark@chromium.org>
 Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c |  4 +++
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c    |  2 ++
- drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c     | 36 ++++++++++++++++++++++
- drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h     |  8 +++++
- 4 files changed, 50 insertions(+)
+ .../devicetree/bindings/display/msm/dpu.txt   |   4 +-
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    | 121 ++++++++++++++++++
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |   3 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       |   1 +
+ drivers/gpu/drm/msm/msm_drv.c                 |   1 +
+ 5 files changed, 128 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-index 2d4645e01ebf..7aba27c1055a 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-@@ -349,9 +349,13 @@ static void dpu_hw_ctl_clear_all_blendstages(struct dpu_hw_ctl *ctx)
- 		DPU_REG_WRITE(c, CTL_LAYER_EXT(LM_0 + i), 0);
- 		DPU_REG_WRITE(c, CTL_LAYER_EXT2(LM_0 + i), 0);
- 		DPU_REG_WRITE(c, CTL_LAYER_EXT3(LM_0 + i), 0);
-+
-+		ctx->pending_flush_mask |= dpu_hw_ctl_get_bitmask_mixer(ctx, LM_0 + i);
- 	}
+diff --git a/Documentation/devicetree/bindings/display/msm/dpu.txt b/Documentation/devicetree/bindings/display/msm/dpu.txt
+index 586e6eac5b08..b98258374a60 100644
+--- a/Documentation/devicetree/bindings/display/msm/dpu.txt
++++ b/Documentation/devicetree/bindings/display/msm/dpu.txt
+@@ -8,7 +8,7 @@ The DPU display controller is found in SDM845 SoC.
  
- 	DPU_REG_WRITE(c, CTL_FETCH_PIPE_ACTIVE, 0);
+ MDSS:
+ Required properties:
+-- compatible:  "qcom,sdm845-mdss", "qcom,sc7180-mdss"
++- compatible:  "qcom,sdm845-mdss", "qcom,sc7180-mdss", "qcom,sc8180x-mdss"
+ - reg: physical base address and length of controller's registers.
+ - reg-names: register region names. The following region is required:
+   * "mdss"
+@@ -41,7 +41,7 @@ Optional properties:
+ 
+ MDP:
+ Required properties:
+-- compatible: "qcom,sdm845-dpu", "qcom,sc7180-dpu"
++- compatible: "qcom,sdm845-dpu", "qcom,sc7180-dpu", "qcom,sc8180x-dpu"
+ - reg: physical base address and length of controller's registers.
+ - reg-names : register region names. The following region is required:
+   * "mdp"
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+index b569030a0847..81c429ce94a9 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+@@ -56,6 +56,10 @@
+ 
+ #define INTF_SC7280_MASK INTF_SC7180_MASK | BIT(DPU_DATA_HCTL_EN)
+ 
++#define INTF_SC8180X_MASK BIT(DPU_INTF_INPUT_CTRL) | \
++			  BIT(DPU_INTF_TE) | \
++			  BIT(DPU_INTF_WIDEBUS)
 +
-+	ctx->pending_flush_mask |= CTL_FLUSH_MASK_CTL;
+ #define INTR_SC7180_MASK \
+ 	(BIT(DPU_IRQ_TYPE_PING_PONG_RD_PTR) |\
+ 	BIT(DPU_IRQ_TYPE_PING_PONG_WR_PTR) |\
+@@ -197,6 +201,22 @@ static const struct dpu_caps sm8150_dpu_caps = {
+ 	.max_vdeci_exp = MAX_VERT_DECIMATION,
+ };
+ 
++static const struct dpu_caps sc8180_dpu_caps = {
++	.max_mixer_width = DEFAULT_DPU_OUTPUT_LINE_WIDTH,
++	.max_mixer_blendstages = 0xb,
++	.qseed_type = DPU_SSPP_SCALER_QSEED3,
++	.smart_dma_rev = DPU_SSPP_SMART_DMA_V2, /* TODO: v2.5 */
++	.ubwc_version = DPU_HW_UBWC_VER_30,
++	.has_src_split = true,
++	.has_dim_layer = true,
++	.has_idle_pc = true,
++	.has_3d_merge = false,   /* I think? */
++	.max_linewidth = 4096,
++	.pixel_ram_size = DEFAULT_PIXEL_RAM_SIZE,
++	.max_hdeci_exp = MAX_HORZ_DECIMATION,
++	.max_vdeci_exp = MAX_VERT_DECIMATION,
++};
++
+ static const struct dpu_caps sm8250_dpu_caps = {
+ 	.max_mixer_width = DEFAULT_DPU_OUTPUT_LINE_WIDTH,
+ 	.max_mixer_blendstages = 0xb,
+@@ -265,6 +285,35 @@ static const struct dpu_mdp_cfg sc7180_mdp[] = {
+ 	},
+ };
+ 
++static const struct dpu_mdp_cfg sc8180_mdp[] = {
++	{
++	.name = "top_0", .id = MDP_TOP,
++	// TODO check len
++	.base = 0x0, .len = 0x45C,
++	.features = 0,
++	.highest_bank_bit = 0x3,
++	.clk_ctrls[DPU_CLK_CTRL_VIG0] = {
++			.reg_off = 0x2AC, .bit_off = 0},
++	.clk_ctrls[DPU_CLK_CTRL_VIG1] = {
++			.reg_off = 0x2B4, .bit_off = 0},
++	.clk_ctrls[DPU_CLK_CTRL_VIG2] = {
++			.reg_off = 0x2BC, .bit_off = 0},
++	.clk_ctrls[DPU_CLK_CTRL_VIG3] = {
++			.reg_off = 0x2C4, .bit_off = 0},
++	.clk_ctrls[DPU_CLK_CTRL_DMA0] = {
++			.reg_off = 0x2AC, .bit_off = 8},
++	.clk_ctrls[DPU_CLK_CTRL_DMA1] = {
++			.reg_off = 0x2B4, .bit_off = 8},
++	.clk_ctrls[DPU_CLK_CTRL_CURSOR0] = {
++			.reg_off = 0x2BC, .bit_off = 8},
++	.clk_ctrls[DPU_CLK_CTRL_CURSOR1] = {
++			.reg_off = 0x2C4, .bit_off = 8},
++// TODO ???
++//	.clk_ctrls[DPU_CLK_CTRL_REG_DMA] = {
++//			.reg_off = 0x2BC, .bit_off = 20},
++	},
++};
++
+ static const struct dpu_mdp_cfg sm8250_mdp[] = {
+ 	{
+ 	.name = "top_0", .id = MDP_TOP,
+@@ -789,6 +838,15 @@ static const struct dpu_intf_cfg sc7280_intf[] = {
+ 	INTF_BLK("intf_5", INTF_5, 0x39000, INTF_EDP, 0, 24, INTF_SC7280_MASK),
+ };
+ 
++static const struct dpu_intf_cfg sc8180x_intf[] = {
++//	INTF_BLK("intf_0", INTF_0, 0x6A000, INTF_DP, 0, 24, INTF_SC8180X_MASK),
++	INTF_BLK("intf_1", INTF_1, 0x6A800, INTF_DSI, 0, 24, INTF_SC8180X_MASK),
++	INTF_BLK("intf_2", INTF_2, 0x6B000, INTF_DSI, 1, 24, INTF_SC8180X_MASK),
++//	INTF_BLK("intf_3", INTF_3, 0x6B800, INTF_DP, 1, 24, INTF_SC8180X_MASK),
++//	INTF_BLK("intf_4", INTF_4, 0x6C000, INTF_DP, 2, 24, INTF_SC8180X_MASK),
++	INTF_BLK("intf_5", INTF_5, 0x6C800, INTF_DP, 0, 24, INTF_SC8180X_MASK),
++};
++
+ /*************************************************************
+  * VBIF sub blocks config
+  *************************************************************/
+@@ -859,6 +917,10 @@ static const struct dpu_qos_lut_entry sm8150_qos_linear[] = {
+ 	{.fl = 0, .lut = 0x0011222222223357 },
+ };
+ 
++static const struct dpu_qos_lut_entry sc8180_qos_linear[] = {
++	{.fl = 4, .lut = 0x0000000000000357 },
++};
++
+ static const struct dpu_qos_lut_entry sdm845_qos_macrotile[] = {
+ 	{.fl = 10, .lut = 0x344556677},
+ 	{.fl = 11, .lut = 0x3344556677},
+@@ -872,6 +934,10 @@ static const struct dpu_qos_lut_entry sc7180_qos_macrotile[] = {
+ 	{.fl = 0, .lut = 0x0011223344556677},
+ };
+ 
++static const struct dpu_qos_lut_entry sc8180_qos_macrotile[] = {
++	{.fl = 10, .lut = 0x0000000344556677},
++};
++
+ static const struct dpu_qos_lut_entry sdm845_qos_nrt[] = {
+ 	{.fl = 0, .lut = 0x0},
+ };
+@@ -976,6 +1042,31 @@ static const struct dpu_perf_cfg sm8150_perf_data = {
+ 	.bw_inefficiency_factor = 120,
+ };
+ 
++static const struct dpu_perf_cfg sc8180_perf_data = {
++	.max_bw_low = 9600000,
++	.max_bw_high = 9600000,
++	.min_core_ib = 2400000,
++	.min_llcc_ib = 800000,
++	.min_dram_ib = 800000,
++	.danger_lut_tbl = {0xf, 0xffff, 0x0, 0x0},
++	.qos_lut_tbl = {
++		{.nentry = ARRAY_SIZE(sc8180_qos_linear),
++		.entries = sc8180_qos_linear
++		},
++		{.nentry = ARRAY_SIZE(sc8180_qos_macrotile),
++		.entries = sc8180_qos_macrotile
++		},
++		{.nentry = ARRAY_SIZE(sc7180_qos_nrt),
++		.entries = sc7180_qos_nrt
++		},
++		/* TODO: macrotile-qseed is different from macrotile */
++	},
++	.cdp_cfg = {
++		{.rd_enable = 1, .wr_enable = 1},
++		{.rd_enable = 1, .wr_enable = 0}
++	},
++};
++
+ static const struct dpu_perf_cfg sm8250_perf_data = {
+ 	.max_bw_low = 13700000,
+ 	.max_bw_high = 16600000,
+@@ -1129,6 +1220,35 @@ static void sm8150_cfg_init(struct dpu_mdss_cfg *dpu_cfg)
+ 	};
  }
  
- static void dpu_hw_ctl_setup_blendstage(struct dpu_hw_ctl *ctx,
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-index 88e9cc38c13b..8b01cb660381 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-@@ -970,6 +970,8 @@ static int dpu_kms_hw_init(struct msm_kms *kms)
- 
- 	dpu_kms->rm_init = true;
- 
-+	dpu_rm_clear_boot_config(&dpu_kms->rm, dpu_kms->catalog);
-+
- 	dpu_kms->hw_mdp = dpu_hw_mdptop_init(MDP_TOP, dpu_kms->mmio,
- 					     dpu_kms->catalog);
- 	if (IS_ERR(dpu_kms->hw_mdp)) {
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-index fd2d104f0a91..2cf47084482f 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-@@ -4,6 +4,7 @@
-  */
- 
- #define pr_fmt(fmt)	"[drm:%s] " fmt, __func__
-+#include <linux/delay.h>
- #include "dpu_kms.h"
- #include "dpu_hw_lm.h"
- #include "dpu_hw_ctl.h"
-@@ -229,6 +230,41 @@ int dpu_rm_init(struct dpu_rm *rm,
- 	return rc ? rc : -EFAULT;
- }
- 
-+void dpu_rm_clear_boot_config(struct dpu_rm *rm, struct dpu_mdss_cfg *cat)
++/*
++ * sc8180_cfg_init(): populate sc8180 dpu sub-blocks reg offsets
++ * and instance counts.
++ */
++static void sc8180_cfg_init(struct dpu_mdss_cfg *dpu_cfg)
 +{
-+	struct dpu_hw_intf *intf;
-+	struct dpu_hw_ctl *ctl;
-+	int i;
-+
-+	for (i = INTF_0; i < INTF_MAX; i++) {
-+		if (!rm->intf_blks[i - INTF_0])
-+			continue;
-+
-+		DPU_DEBUG("disabling intf%d timing engine\n", i - INTF_0);
-+
-+		intf = to_dpu_hw_intf(rm->intf_blks[i - INTF_0]);
-+		intf->ops.enable_timing(intf, 0);
-+	}
-+
-+	/*
-+	 * Wait one frame for the INTF timing engine to stop, and then wait one
-+	 * more frame, per the documentation.
-+	 */
-+	msleep(32);
-+
-+	for (i = CTL_0; i < CTL_MAX; i++) {
-+		if (!rm->ctl_blks[i - CTL_0])
-+			continue;
-+
-+		DPU_DEBUG("clearing ctl%d layer configuration\n", i - CTL_0);
-+
-+		ctl = to_dpu_hw_ctl(rm->ctl_blks[i - CTL_0]);
-+		ctl->ops.clear_all_blendstages(ctl);
-+		ctl->ops.trigger_flush(ctl);
-+		ctl->ops.trigger_start(ctl);
-+	}
++	*dpu_cfg = (struct dpu_mdss_cfg){
++		.caps = &sc8180_dpu_caps,
++		.mdp_count = ARRAY_SIZE(sc8180_mdp),
++		.mdp = sc8180_mdp,
++		.ctl_count = ARRAY_SIZE(sm8150_ctl),
++		.ctl = sm8150_ctl,
++		.sspp_count = ARRAY_SIZE(sdm845_sspp),
++		.sspp = sdm845_sspp,
++		.mixer_count = ARRAY_SIZE(sm8150_lm),
++		.mixer = sm8150_lm,
++		.pingpong_count = ARRAY_SIZE(sm8150_pp),
++		.pingpong = sm8150_pp,
++		.intf_count = ARRAY_SIZE(sc8180x_intf),
++		.intf = sc8180x_intf,
++		.vbif_count = ARRAY_SIZE(sdm845_vbif),
++		.vbif = sdm845_vbif,
++		.reg_dma_count = 1,
++		.dma_cfg = sm8150_regdma,
++		.perf = sc8180_perf_data,
++		.mdss_irqs = 0x3ff,
++	};
 +}
 +
- static bool _dpu_rm_needs_split_display(const struct msm_display_topology *top)
- {
- 	return top->num_intf > 1;
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
-index 1f12c8d5b8aa..53cd649614a3 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
-@@ -88,5 +88,13 @@ void dpu_rm_release(struct dpu_global_state *global_state,
- int dpu_rm_get_assigned_resources(struct dpu_rm *rm,
- 	struct dpu_global_state *global_state, uint32_t enc_id,
- 	enum dpu_hw_blk_type type, struct dpu_hw_blk **blks, int blks_size);
-+
-+/**
-+ * dpu_rm_clear_boot_config() - Tear down any data paths configured by boot
-+ * @rm: DPU Resource Manger handle
-+ * @cat: Pointer to hardware catalog
-+ */
-+void dpu_rm_clear_boot_config(struct dpu_rm *rm, struct dpu_mdss_cfg *cat);
-+
- #endif /* __DPU_RM_H__ */
+ /*
+  * sm8250_cfg_init(): populate sm8250 dpu sub-blocks reg offsets
+  * and instance counts.
+@@ -1191,6 +1311,7 @@ static const struct dpu_mdss_hw_cfg_handler cfg_handler[] = {
+ 	{ .hw_rev = DPU_HW_VER_401, .cfg_init = sdm845_cfg_init},
+ 	{ .hw_rev = DPU_HW_VER_500, .cfg_init = sm8150_cfg_init},
+ 	{ .hw_rev = DPU_HW_VER_501, .cfg_init = sm8150_cfg_init},
++	{ .hw_rev = DPU_HW_VER_510, .cfg_init = sc8180_cfg_init},
+ 	{ .hw_rev = DPU_HW_VER_600, .cfg_init = sm8250_cfg_init},
+ 	{ .hw_rev = DPU_HW_VER_620, .cfg_init = sc7180_cfg_init},
+ 	{ .hw_rev = DPU_HW_VER_720, .cfg_init = sc7280_cfg_init},
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+index c2f34a4f82d9..644e315df0fb 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+@@ -39,6 +39,7 @@
+ #define DPU_HW_VER_410	DPU_HW_VER(4, 1, 0) /* sdm670 v1.0 */
+ #define DPU_HW_VER_500	DPU_HW_VER(5, 0, 0) /* sm8150 v1.0 */
+ #define DPU_HW_VER_501	DPU_HW_VER(5, 0, 1) /* sm8150 v2.0 */
++#define DPU_HW_VER_510	DPU_HW_VER(5, 1, 1) /* sc8180 */
+ #define DPU_HW_VER_600	DPU_HW_VER(6, 0, 0) /* sm8250 */
+ #define DPU_HW_VER_620	DPU_HW_VER(6, 2, 0) /* sc7180 v1.0 */
+ #define DPU_HW_VER_720	DPU_HW_VER(7, 2, 0) /* sc7280 */
+@@ -287,6 +288,8 @@ enum dpu_qos_lut_usage {
+ 	DPU_QOS_LUT_USAGE_LINEAR,
+ 	DPU_QOS_LUT_USAGE_MACROTILE,
+ 	DPU_QOS_LUT_USAGE_NRT,
++	DPU_QOS_LUT_USAGE_CWB,
++	DPU_QOS_LUT_USAGE_MACROTILE_QSEED,
+ 	DPU_QOS_LUT_USAGE_MAX,
+ };
  
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+index 8b01cb660381..7e8f0df2bd88 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+@@ -1228,6 +1228,7 @@ static const struct of_device_id dpu_dt_match[] = {
+ 	{ .compatible = "qcom,sdm845-dpu", },
+ 	{ .compatible = "qcom,sc7180-dpu", },
+ 	{ .compatible = "qcom,sc7280-dpu", },
++	{ .compatible = "qcom,sc8180x-dpu", },
+ 	{ .compatible = "qcom,sm8150-dpu", },
+ 	{ .compatible = "qcom,sm8250-dpu", },
+ 	{}
+diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+index e1104d2454e2..b5bcbf5c2306 100644
+--- a/drivers/gpu/drm/msm/msm_drv.c
++++ b/drivers/gpu/drm/msm/msm_drv.c
+@@ -1342,6 +1342,7 @@ static const struct of_device_id dt_match[] = {
+ 	{ .compatible = "qcom,sdm845-mdss", .data = (void *)KMS_DPU },
+ 	{ .compatible = "qcom,sc7180-mdss", .data = (void *)KMS_DPU },
+ 	{ .compatible = "qcom,sc7280-mdss", .data = (void *)KMS_DPU },
++	{ .compatible = "qcom,sc8180x-mdss", .data = (void *)KMS_DPU },
+ 	{ .compatible = "qcom,sm8150-mdss", .data = (void *)KMS_DPU },
+ 	{ .compatible = "qcom,sm8250-mdss", .data = (void *)KMS_DPU },
+ 	{}
 -- 
 2.29.2
 
