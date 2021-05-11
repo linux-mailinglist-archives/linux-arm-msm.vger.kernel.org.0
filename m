@@ -2,488 +2,315 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B804637AE0D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 May 2021 20:09:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 932B037AE23
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 May 2021 20:12:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232209AbhEKSJ7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 May 2021 14:09:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42468 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232053AbhEKSJm (ORCPT
+        id S232009AbhEKSNd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 May 2021 14:13:33 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:51515 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231944AbhEKSNa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 May 2021 14:09:42 -0400
-Received: from mail-qk1-x72b.google.com (mail-qk1-x72b.google.com [IPv6:2607:f8b0:4864:20::72b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02F40C061344
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 May 2021 11:08:35 -0700 (PDT)
-Received: by mail-qk1-x72b.google.com with SMTP id a22so19101097qkl.10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 May 2021 11:08:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=marek-ca.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=4yZOjGcJEt9EQKSpyiWEPYHdrFxhpAOtCLklY8CQFQA=;
-        b=aypzBKTptN/UjXT3TWHjy9sfkwnu0NIzW5t6RFq5G11jBg8/zGzl32jOBzRp30sCB2
-         Z2cVnKnHlvEFHgjMVWvkkYpSFqXct4kj//yBtesS2NUt70BcxTeOTdUr6HywcC5TSdeF
-         GkSjhWe3u/hi7liKZ3yhgwBEsGKpLG9dHQ7WuscWSBq9NzcLGdy9+NFcExj6oo8LkIzf
-         pDww3gA/dcdF5b+YUycAoyMiqLiFuxQoBMDgdlWLGTWlpOvZbJrohiiz/M7NU1s/rplH
-         7FF8V9qn6vnF8cbp3O2xUHJqxuBMmWKmuHZBhXyJ2KgAqX/uT/N0H5K2s/deM/V70ZRW
-         Do1Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=4yZOjGcJEt9EQKSpyiWEPYHdrFxhpAOtCLklY8CQFQA=;
-        b=ZmNlMRBB/V8DHu+hmwNc8j16u95BZLBwVI7AE87lqaT+CbDP1efDLWinaPYEthfHTb
-         eQYldOlKpOL/JWsPajEp6evNNBk9HaKAvm9Cwrvz9uzFod/eFgidSmYNzpfhkn1x9CBS
-         1QrLv/M5LoY5Rlvz3XKO2U+KS5Kz7rmhSapLnIgq+M+RmEhvRwJK76BqG2rz/bCb1Hrj
-         oEDj0MbDjcuIzA7096z4/jiZYp5CcaLsUFhShQ9ETHgnwHOiyVaqDxpX2dv7JprEriPr
-         vP6vGo59y+16ub8mVoiS45FQOpsF7TZrb70b7PI1IMmlkhZ82R/ZlczIWhtWpYKED6Ru
-         SG7Q==
-X-Gm-Message-State: AOAM531+oIBX62bByXJee/Q8iyXKNheznzI+KHHUkTR0pI2j0kPkyWW2
-        xJTIlQ8oBUf/gwbI7pUxyGqh1q1cJmbZtOgL
-X-Google-Smtp-Source: ABdhPJyh9bSqHlG6Jx8t+yhNktLGl4tM7ppi7p0Amly5rQxPJ5rre7shrVZPfl+3eK6XPLTtm3bmeg==
-X-Received: by 2002:ae9:edcd:: with SMTP id c196mr28395201qkg.441.1620756514850;
-        Tue, 11 May 2021 11:08:34 -0700 (PDT)
-Received: from localhost.localdomain (modemcable068.184-131-66.mc.videotron.ca. [66.131.184.68])
-        by smtp.gmail.com with ESMTPSA id g5sm17104476qtm.2.2021.05.11.11.08.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 May 2021 11:08:34 -0700 (PDT)
-From:   Jonathan Marek <jonathan@marek.ca>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     robert.foss@linaro.org, andrey.konovalov@linaro.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Todor Tomov <todor.too@gmail.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-media@vger.kernel.org (open list:QUALCOMM CAMERA SUBSYSTEM DRIVER),
-        devicetree@vger.kernel.org (open list:OPEN FIRMWARE AND FLATTENED
-        DEVICE TREE BINDINGS), linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH 17/17] media: dt-bindings: media: camss: Add qcom,sm8250-camss binding
-Date:   Tue, 11 May 2021 14:07:24 -0400
-Message-Id: <20210511180728.23781-18-jonathan@marek.ca>
-X-Mailer: git-send-email 2.26.1
-In-Reply-To: <20210511180728.23781-1-jonathan@marek.ca>
-References: <20210511180728.23781-1-jonathan@marek.ca>
+        Tue, 11 May 2021 14:13:30 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1620756743; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=DzEJfa/vKLf61btyzX4T5WVRRfcXyjWJ4T0YA1U8UFA=;
+ b=X1pEOHRB3RpIFbGuSywTY6U85jFjqkoDl6y2DtWnpciCFFxPsEz8YmXUtLfcnwLxlDL/dF7j
+ GhvtIR6gnoQiiIk20e0euCr/CZs7BgfPg7XwgpsCO6FGpbKnA7x05kPEiz3GjSrBSjqSufE9
+ yDbXQZGYEBsQIdzq4cwNchP2rMw=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
+ 609ac8efd951beb69eddcc17 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 11 May 2021 18:11:59
+ GMT
+Sender: rajeevny=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 32615C43149; Tue, 11 May 2021 18:11:59 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: rajeevny)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 43309C4338A;
+        Tue, 11 May 2021 18:11:57 +0000 (UTC)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Tue, 11 May 2021 23:41:57 +0530
+From:   rajeevny@codeaurora.org
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Rob Herring <robh@kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+        Rob Clark <robdclark@gmail.com>, mkrishn@codeaurora.org,
+        Kalyan Thota <kalyan_t@codeaurora.org>,
+        "Kristian H. Kristensen" <hoegsberg@chromium.org>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Sean Paul <seanpaul@chromium.org>,
+        Jani Nikula <jani.nikula@linux.intel.com>,
+        Lyude Paul <lyude@redhat.com>,
+        "Lankhorst, Maarten" <maarten.lankhorst@intel.com>,
+        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        Andrzej Hajda <a.hajda@samsung.com>
+Subject: Re: [v3 1/2] dt-bindings: backlight: add DisplayPort aux backlight
+In-Reply-To: <CAD=FV=XW90L6or8NKA-Rjjp3s3fRno1xSkD+X0PA1rTyeKgpMw@mail.gmail.com>
+References: <1619416756-3533-1-git-send-email-rajeevny@codeaurora.org>
+ <1619416756-3533-2-git-send-email-rajeevny@codeaurora.org>
+ <20210429180435.GA1385465@robh.at.kernel.org>
+ <CAD=FV=V-kdySH5Pp-Fb-PRYk60Ha_UOTXJHcvMp+uV3P1oo7Uw@mail.gmail.com>
+ <78c4bd291bd4a17ae2a1d02d0217de43@codeaurora.org>
+ <CAD=FV=XW90L6or8NKA-Rjjp3s3fRno1xSkD+X0PA1rTyeKgpMw@mail.gmail.com>
+Message-ID: <c867b2e59e90899e6c1648e06f5f9cd2@codeaurora.org>
+X-Sender: rajeevny@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add bindings for qcom,sm8250-camss in order to support the camera
-subsystem for SM8250.
+On 01-05-2021 03:08, Doug Anderson wrote:
+> Hi,
+> 
+> On Fri, Apr 30, 2021 at 8:10 AM <rajeevny@codeaurora.org> wrote:
+>> 
+>> On 30-04-2021 02:33, Doug Anderson wrote:
+>> > Hi,
+>> >
+>> > On Thu, Apr 29, 2021 at 11:04 AM Rob Herring <robh@kernel.org> wrote:
+>> >>
+>> >> On Mon, Apr 26, 2021 at 11:29:15AM +0530, Rajeev Nandan wrote:
+>> >> > Add bindings for DisplayPort aux backlight driver.
+>> >> >
+>> >> > Changes in v2:
+>> >> > - New
+>> >> >
+>> >> > Signed-off-by: Rajeev Nandan <rajeevny@codeaurora.org>
+>> >> > ---
+>> >> >  .../bindings/leds/backlight/dp-aux-backlight.yaml  | 49 ++++++++++++++++++++++
+>> >> >  1 file changed, 49 insertions(+)
+>> >> >  create mode 100644 Documentation/devicetree/bindings/leds/backlight/dp-aux-backlight.yaml
+>> >> >
+>> >> > diff --git a/Documentation/devicetree/bindings/leds/backlight/dp-aux-backlight.yaml b/Documentation/devicetree/bindings/leds/backlight/dp-aux-backlight.yaml
+>> >> > new file mode 100644
+>> >> > index 00000000..0fa8bf0
+>> >> > --- /dev/null
+>> >> > +++ b/Documentation/devicetree/bindings/leds/backlight/dp-aux-backlight.yaml
+>> >> > @@ -0,0 +1,49 @@
+>> >> > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+>> >> > +%YAML 1.2
+>> >> > +---
+>> >> > +$id: http://devicetree.org/schemas/leds/backlight/dp-aux-backlight.yaml#
+>> >> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> >> > +
+>> >> > +title: DisplayPort aux backlight driver bindings
+>> >> > +
+>> >> > +maintainers:
+>> >> > +  - Rajeev Nandan <rajeevny@codeaurora.org>
+>> >> > +
+>> >> > +description:
+>> >> > +  Backlight driver to control the brightness over DisplayPort aux channel.
+>> >> > +
+>> >> > +allOf:
+>> >> > +  - $ref: common.yaml#
+>> >> > +
+>> >> > +properties:
+>> >> > +  compatible:
+>> >> > +    const: dp-aux-backlight
+>> >> > +
+>> >> > +  ddc-i2c-bus:
+>> >> > +    $ref: /schemas/types.yaml#/definitions/phandle
+>> >> > +    description:
+>> >> > +      A phandle to the system I2C controller connected to the DDC bus used
+>> >> > +      for the DisplayPort AUX channel.
+>> >> > +
+>> >> > +  enable-gpios:
+>> >> > +    maxItems: 1
+>> >> > +    description: GPIO specifier for backlight enable pin.
+>> >> > +
+>> >> > +  max-brightness: true
+>> >> > +
+>> >> > +required:
+>> >> > +  - compatible
+>> >> > +  - ddc-i2c-bus
+>> >> > +
+>> >> > +additionalProperties: false
+>> >> > +
+>> >> > +examples:
+>> >> > +  - |
+>> >> > +    backlight {
+>> >> > +        compatible = "dp-aux-backlight";
+>> >> > +        ddc-i2c-bus = <&sn65dsi86_bridge>;
+>> >> > +        enable-gpios = <&tlmm 12 GPIO_ACTIVE_HIGH>;
+>> >>
+>> >> So the DDC bus is connected to a backlight and also a panel? This
+>> >> binding is not reflecting the h/w, but rather what you want for some
+>> >> driver.
+>> >>
+>> >> There's only one thing here and that's an eDP panel which supports
+>> >> backlight control via DP aux channel. You can figure all that out from
+>> >> the panel's compatible and/or reading the EDID.
+>> >>
+>> >> You might also be interested in this thread:
+>> >>
+>> >> https://lore.kernel.org/lkml/YIKsDtjcIHGNvW0u@orome.fritz.box/
+>> >
+>> > I think Rajeev needs to rework everything anyway as per:
+>> >
+>> > https://lore.kernel.org/r/87zgxl5qar.fsf@intel.com
+>> >
+>> > ...but you're right that it makes sense not to model the backlight as
+>> > a separate node in the device tree. The panel driver can handle
+>> > setting up the backlight.
+>> >
+>> > -Doug
+>> 
+>> It was not a good idea to create a separate backlight driver and use
+>> ddc-i2c-bus to get access to DP aux. I am working to move the code
+>> to the panel driver and to utilize the new DRM helper functions
+>> (drm_edp_backlight_*) Lyude has added [1].
+>> 
+>> To use these helper functions, the panel driver should have access to
+>> the
+>> "struct drm_dp_aux *". The simple-panel has a "ddc-i2c-bus" property
+>> to give the panel access to the DDC bus and is currently being used to
+>> get the EDID from the panel. Can I use the same ddc bus i2c_adapter to
+>> get
+>> the "struct drm_dp_aux *"?
+>> 
+>> As per the suggestion [2], I get the "struct drm_dp_aux *" from the
+>> i2c_adapter of ddc bus (maybe I didn't understand the suggestion
+>> correctly),
+>> and, it turned out, the way I have implemented is not the right way 
+>> [3].
+>> So, I am afraid to use the same method in the panel driver.
+>> 
+>> 
+>> [1] https://lore.kernel.org/dri-devel/871rb5bcf9.fsf@intel.com/
+>> [2] https://www.spinics.net/lists/dri-devel/msg295429.html
+>> [3]
+>> https://lore.kernel.org/dri-devel/20210426111116.4lc3ekxjugjr3oho@maple.lan/
+> 
+> So it's definitely up to maintainers, not me. ...but I guess I would
+> have expected something like a new property called "ddc-aux-bus". Then
+> you'd have to create a new API call called something like
+> "of_find_ddc_aux_adapter_by_node()" that would allow you to find it.
+> 
 
-Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+To implement the first suggestion, I can think of the following way
+to get the "struct drm_dp_aux" in the panel_simple_probe function:
+
+- Create a new panel-simple DT property "ddc-aux-bus", a phandle to the
+platform device that implements the AUX channel.
+
+- Create a global list of drm_dp_aux in drm_dp_helper.c. Initialize list 
+head
+in drm_dp_aux_init(), add the drm_dp_aux onto the list in 
+drm_dp_aux_register().
+Similarly, remove the drm_dp_aux from list in drm_dp_aux_unregister().
+
+- Create a new function of_drm_find_dp_aux_by_node() to get the expected
+drm_dp_aux from this global list.
+
+Please let me know your views on this implementation.
+
+Below is the summary of the changes in drm dp helper:
+
 ---
- .../bindings/media/qcom,sm8250-camss.yaml     | 398 ++++++++++++++++++
- 1 file changed, 398 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/media/qcom,sm8250-camss.yaml
 
-diff --git a/Documentation/devicetree/bindings/media/qcom,sm8250-camss.yaml b/Documentation/devicetree/bindings/media/qcom,sm8250-camss.yaml
-new file mode 100644
-index 000000000000..9a7896d3d9ff
---- /dev/null
-+++ b/Documentation/devicetree/bindings/media/qcom,sm8250-camss.yaml
-@@ -0,0 +1,398 @@
-+# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-+
-+%YAML 1.2
-+---
-+$id: "http://devicetree.org/schemas/media/qcom,sm8250-camss.yaml#"
-+$schema: "http://devicetree.org/meta-schemas/core.yaml#"
-+
-+title: Qualcomm CAMSS ISP
-+
-+maintainers:
-+  - Robert Foss <robert.foss@linaro.org>
-+
-+description: |
-+  The CAMSS IP is a CSI decoder and ISP present on Qualcomm platforms
-+
-+properties:
-+  compatible:
-+    const: qcom,sm8250-camss
-+
-+  clocks:
-+    minItems: 30
-+    maxItems: 30
-+
-+  clock-names:
-+    items:
-+      - const: cam_hf_axi
-+      - const: csiphy0
-+      - const: csiphy0_timer
-+      - const: csiphy1
-+      - const: csiphy1_timer
-+      - const: csiphy2
-+      - const: csiphy2_timer
-+      - const: csiphy3
-+      - const: csiphy3_timer
-+      - const: csiphy4
-+      - const: csiphy4_timer
-+      - const: csiphy5
-+      - const: csiphy5_timer
-+      - const: vfe0_ahb
-+      - const: vfe0_axi
-+      - const: vfe0
-+      - const: vfe0_cphy_rx
-+      - const: vfe0_csid
-+      - const: vfe0_areg
-+      - const: vfe1_ahb
-+      - const: vfe1_axi
-+      - const: vfe1
-+      - const: vfe1_cphy_rx
-+      - const: vfe1_csid
-+      - const: vfe1_areg
-+      - const: vfe_lite_ahb
-+      - const: vfe_lite_axi
-+      - const: vfe_lite
-+      - const: vfe_lite_cphy_rx
-+      - const: vfe_lite_csid
-+
-+  interrupts:
-+    minItems: 14
-+    maxItems: 14
-+
-+  interrupt-names:
-+    items:
-+      - const: csid0
-+      - const: csid1
-+      - const: csid2
-+      - const: csid3
-+      - const: csiphy0
-+      - const: csiphy1
-+      - const: csiphy2
-+      - const: csiphy3
-+      - const: csiphy4
-+      - const: csiphy5
-+      - const: vfe0
-+      - const: vfe1
-+      - const: vfe_lite0
-+      - const: vfe_lite1
-+
-+  iommus:
-+    maxItems: 1
-+
-+  power-domains:
-+    items:
-+      - description: IFE0 GDSC - Image Front End, Global Distributed Switch Controller.
-+      - description: IFE1 GDSC - Image Front End, Global Distributed Switch Controller.
-+      - description: Titan GDSC - Titan ISP Block, Global Distributed Switch Controller.
-+
-+  ports:
-+    $ref: /schemas/graph.yaml#/properties/ports
-+
-+    description:
-+      CSI input ports.
-+
-+    properties:
-+      port@0:
-+        $ref: /schemas/graph.yaml#/$defs/port-base
-+        unevaluatedProperties: false
-+        description:
-+          Input port for receiving CSI data.
-+
-+        properties:
-+          endpoint:
-+            $ref: video-interfaces.yaml#
-+            unevaluatedProperties: false
-+
-+            properties:
-+              clock-lanes:
-+                maxItems: 1
-+
-+              data-lanes:
-+                minItems: 1
-+                maxItems: 4
-+
-+            required:
-+              - clock-lanes
-+              - data-lanes
-+
-+      port@1:
-+        $ref: /schemas/graph.yaml#/$defs/port-base
-+        unevaluatedProperties: false
-+        description:
-+          Input port for receiving CSI data.
-+
-+        properties:
-+          endpoint:
-+            $ref: video-interfaces.yaml#
-+            unevaluatedProperties: false
-+
-+            properties:
-+              clock-lanes:
-+                maxItems: 1
-+
-+              data-lanes:
-+                minItems: 1
-+                maxItems: 4
-+
-+            required:
-+              - clock-lanes
-+              - data-lanes
-+
-+      port@2:
-+        $ref: /schemas/graph.yaml#/$defs/port-base
-+        unevaluatedProperties: false
-+        description:
-+          Input port for receiving CSI data.
-+
-+        properties:
-+          endpoint:
-+            $ref: video-interfaces.yaml#
-+            unevaluatedProperties: false
-+
-+            properties:
-+              clock-lanes:
-+                maxItems: 1
-+
-+              data-lanes:
-+                minItems: 1
-+                maxItems: 4
-+
-+            required:
-+              - clock-lanes
-+              - data-lanes
-+
-+      port@3:
-+        $ref: /schemas/graph.yaml#/$defs/port-base
-+        unevaluatedProperties: false
-+        description:
-+          Input port for receiving CSI data.
-+
-+        properties:
-+          endpoint:
-+            $ref: video-interfaces.yaml#
-+            unevaluatedProperties: false
-+
-+            properties:
-+              clock-lanes:
-+                maxItems: 1
-+
-+              data-lanes:
-+                minItems: 1
-+                maxItems: 4
-+
-+            required:
-+              - clock-lanes
-+              - data-lanes
-+
-+      port@4:
-+        $ref: /schemas/graph.yaml#/$defs/port-base
-+        unevaluatedProperties: false
-+        description:
-+          Input port for receiving CSI data.
-+
-+        properties:
-+          endpoint:
-+            $ref: video-interfaces.yaml#
-+            unevaluatedProperties: false
-+
-+            properties:
-+              clock-lanes:
-+                maxItems: 1
-+
-+              data-lanes:
-+                minItems: 1
-+                maxItems: 4
-+
-+            required:
-+              - clock-lanes
-+              - data-lanes
-+
-+      port@5:
-+        $ref: /schemas/graph.yaml#/$defs/port-base
-+        unevaluatedProperties: false
-+        description:
-+          Input port for receiving CSI data.
-+
-+        properties:
-+          endpoint:
-+            $ref: video-interfaces.yaml#
-+            unevaluatedProperties: false
-+
-+            properties:
-+              clock-lanes:
-+                maxItems: 1
-+
-+              data-lanes:
-+                minItems: 1
-+                maxItems: 4
-+
-+            required:
-+              - clock-lanes
-+              - data-lanes
-+
-+  reg:
-+    minItems: 10
-+    maxItems: 10
-+
-+  reg-names:
-+    items:
-+      - const: csiphy0
-+      - const: csiphy1
-+      - const: csiphy2
-+      - const: csiphy3
-+      - const: csiphy4
-+      - const: csiphy5
-+      - const: vfe0
-+      - const: vfe1
-+      - const: vfe_lite0
-+      - const: vfe_lite1
-+
-+required:
-+  - clock-names
-+  - clocks
-+  - compatible
-+  - interrupt-names
-+  - interrupts
-+  - iommus
-+  - power-domains
-+  - reg
-+  - reg-names
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/interrupt-controller/arm-gic.h>
-+    #include <dt-bindings/clock/qcom,camcc-sm8250.h>
-+    #include <dt-bindings/clock/qcom,gcc-sm8250.h>
-+
-+    soc {
-+      #address-cells = <2>;
-+      #size-cells = <2>;
-+
-+      camss: camss@ac6a000 {
-+        compatible = "qcom,sm8250-camss";
-+
-+        reg = <0 0xac6a000 0 0x2000>,
-+          <0 0xac6c000 0 0x2000>,
-+          <0 0xac6e000 0 0x1000>,
-+          <0 0xac70000 0 0x1000>,
-+          <0 0xac72000 0 0x1000>,
-+          <0 0xac74000 0 0x1000>,
-+          <0 0xacb4000 0 0xd000>,
-+          <0 0xacc3000 0 0xd000>,
-+          <0 0xacd9000 0 0x2200>,
-+          <0 0xacdb200 0 0x2200>;
-+        reg-names = "csiphy0",
-+          "csiphy1",
-+          "csiphy2",
-+          "csiphy3",
-+          "csiphy4",
-+          "csiphy5",
-+          "vfe0",
-+          "vfe1",
-+          "vfe_lite0",
-+          "vfe_lite1";
-+
-+        interrupts = <GIC_SPI 477 IRQ_TYPE_LEVEL_HIGH>,
-+          <GIC_SPI 478 IRQ_TYPE_LEVEL_HIGH>,
-+          <GIC_SPI 479 IRQ_TYPE_LEVEL_HIGH>,
-+          <GIC_SPI 448 IRQ_TYPE_LEVEL_HIGH>,
-+          <GIC_SPI 86 IRQ_TYPE_LEVEL_HIGH>,
-+          <GIC_SPI 89 IRQ_TYPE_LEVEL_HIGH>,
-+          <GIC_SPI 464 IRQ_TYPE_LEVEL_HIGH>,
-+          <GIC_SPI 466 IRQ_TYPE_LEVEL_HIGH>,
-+          <GIC_SPI 468 IRQ_TYPE_LEVEL_HIGH>,
-+          <GIC_SPI 359 IRQ_TYPE_LEVEL_HIGH>,
-+          <GIC_SPI 465 IRQ_TYPE_LEVEL_HIGH>,
-+          <GIC_SPI 467 IRQ_TYPE_LEVEL_HIGH>,
-+          <GIC_SPI 469 IRQ_TYPE_LEVEL_HIGH>,
-+          <GIC_SPI 360 IRQ_TYPE_LEVEL_HIGH>;
-+        interrupt-names = "csiphy0",
-+          "csiphy1",
-+          "csiphy2",
-+          "csiphy3",
-+          "csiphy4",
-+          "csiphy5",
-+          "csid0",
-+          "csid1",
-+          "csid2",
-+          "csid3",
-+          "vfe0",
-+          "vfe1",
-+          "vfe_lite0",
-+          "vfe_lite1";
-+
-+        power-domains = <&camcc IFE_0_GDSC>,
-+          <&camcc IFE_1_GDSC>,
-+          <&camcc TITAN_TOP_GDSC>;
-+
-+        clocks = <&gcc GCC_CAMERA_HF_AXI_CLK>,
-+          <&camcc CAM_CC_CSIPHY0_CLK>,
-+          <&camcc CAM_CC_CSI0PHYTIMER_CLK>,
-+          <&camcc CAM_CC_CSIPHY1_CLK>,
-+          <&camcc CAM_CC_CSI1PHYTIMER_CLK>,
-+          <&camcc CAM_CC_CSIPHY2_CLK>,
-+          <&camcc CAM_CC_CSI2PHYTIMER_CLK>,
-+          <&camcc CAM_CC_CSIPHY3_CLK>,
-+          <&camcc CAM_CC_CSI3PHYTIMER_CLK>,
-+          <&camcc CAM_CC_CSIPHY4_CLK>,
-+          <&camcc CAM_CC_CSI4PHYTIMER_CLK>,
-+          <&camcc CAM_CC_CSIPHY5_CLK>,
-+          <&camcc CAM_CC_CSI5PHYTIMER_CLK>,
-+          <&camcc CAM_CC_IFE_0_AHB_CLK>,
-+          <&camcc CAM_CC_IFE_0_AXI_CLK>,
-+          <&camcc CAM_CC_IFE_0_CLK>,
-+          <&camcc CAM_CC_IFE_0_CPHY_RX_CLK>,
-+          <&camcc CAM_CC_IFE_0_CSID_CLK>,
-+          <&camcc CAM_CC_IFE_0_AREG_CLK>,
-+          <&camcc CAM_CC_IFE_1_AHB_CLK>,
-+          <&camcc CAM_CC_IFE_1_AXI_CLK>,
-+          <&camcc CAM_CC_IFE_1_CLK>,
-+          <&camcc CAM_CC_IFE_1_CPHY_RX_CLK>,
-+          <&camcc CAM_CC_IFE_1_CSID_CLK>,
-+          <&camcc CAM_CC_IFE_1_AREG_CLK>,
-+          <&camcc CAM_CC_IFE_LITE_AHB_CLK>,
-+          <&camcc CAM_CC_IFE_LITE_AXI_CLK>,
-+          <&camcc CAM_CC_IFE_LITE_CLK>,
-+          <&camcc CAM_CC_IFE_LITE_CPHY_RX_CLK>,
-+          <&camcc CAM_CC_IFE_LITE_CSID_CLK>;
-+
-+        clock-names = "cam_hf_axi",
-+          "csiphy0",
-+          "csiphy0_timer",
-+          "csiphy1",
-+          "csiphy1_timer",
-+          "csiphy2",
-+          "csiphy2_timer",
-+          "csiphy3",
-+          "csiphy3_timer",
-+          "csiphy4",
-+          "csiphy4_timer",
-+          "csiphy5",
-+          "csiphy5_timer",
-+          "vfe0_ahb",
-+          "vfe0_axi",
-+          "vfe0",
-+          "vfe0_cphy_rx",
-+          "vfe0_csid",
-+          "vfe0_areg",
-+          "vfe1_ahb",
-+          "vfe1_axi",
-+          "vfe1",
-+          "vfe1_cphy_rx",
-+          "vfe1_csid",
-+          "vfe1_areg",
-+          "vfe_lite_ahb",
-+          "vfe_lite_axi",
-+          "vfe_lite",
-+          "vfe_lite_cphy_rx",
-+          "vfe_lite_csid";
-+
-+        iommus = <&apps_smmu 0x800 0x400>;
-+
-+        ports {
-+          #address-cells = <1>;
-+          #size-cells = <0>;
-+        };
-+      };
-+    };
--- 
-2.26.1
+// drm_dp_helper.h
 
+struct drm_dp_aux {
+	...
+	struct list_head list;
+	...
+}
+
+// drm_dp_helper.c
+
+static DEFINE_MUTEX(dp_aux_lock);
+static LIST_HEAD(dp_aux_list);
+
+static void drm_dp_aux_add(struct drm_dp_aux *aux)
+{
+     mutex_lock(&dp_aux_lock);
+     list_add_tail(&aux->list, &dp_aux_list);
+     mutex_unlock(&dp_aux_lock);
+}
+
+static void drm_dp_aux_remove(struct drm_dp_aux *aux)
+{
+     mutex_lock(&dp_aux_lock);
+     list_del_init(&aux->list);
+     mutex_unlock(&dp_aux_lock);
+}
+
+#ifdef CONFIG_OF
+struct drm_dp_aux *of_drm_find_dp_aux_by_node(struct device_node *np)
+{
+     struct drm_dp_aux *aux;
+     mutex_lock(&dp_aux_lock);
+
+     list_for_each_entry(aux, &dp_aux_list, list) {
+         if (aux->dev->of_node == np) {
+             mutex_unlock(&dp_aux_lock);
+             return aux;
+         }
+     }
+
+     mutex_unlock(&dp_aux_lock);
+     return NULL;
+}
+EXPORT_SYMBOL(of_drm_find_dp_aux_by_node);
+#endif
+
+
+int drm_dp_aux_init(struct drm_dp_aux *aux)
+{
+     INIT_LIST_HEAD(&aux->list);
+     ...
+}
+
+int drm_dp_aux_register(struct drm_dp_aux *aux)
+{
+     ...
+     drm_dp_aux_add(aux);
+
+     return 0;
+}
+
+void drm_dp_aux_unregister(struct drm_dp_aux *aux)
+{
+     drm_dp_aux_remove(aux);
+     ...
+}
+---
+
+Thanks,
+Rajeev
+
+> I guess an alternate way to solve this (I'm not totally sure whether
+> it's better or worse) would be to add a function that would walk up
+> the chain of parent bridges and ask them for a pointer to the aux bus.
+> I definitely haven't thought it all the way through, but I'd imagine
+> something like drm_bridge_chain_get_ddc_aux(). This is _probably_
+> better than adding the "ddc-aux-bus" property but it assumes that the
+> aux bus is provided by one of our parents. Hrm, looking at this
+> briefly, though, I'm not sure how to do it. It doesn't seem possible
+> to get the parent bridges from the panel structure. Even if you assume
+> that your parent is wrapping you with a panel_bridge it still doesn't
+> seem possible?
+> 
+> This probably needs more drm-expertise.
+> 
+> -Doug
