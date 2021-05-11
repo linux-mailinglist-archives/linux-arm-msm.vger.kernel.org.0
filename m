@@ -2,139 +2,154 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 78C9A379ED3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 May 2021 06:54:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 635AC379EDD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 May 2021 06:56:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230135AbhEKEzc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 May 2021 00:55:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60278 "EHLO
+        id S230291AbhEKE5Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 May 2021 00:57:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60684 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229885AbhEKEzc (ORCPT
+        with ESMTP id S230330AbhEKE5O (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 May 2021 00:55:32 -0400
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18F1FC061574;
-        Mon, 10 May 2021 21:54:25 -0700 (PDT)
-Received: by mail-lf1-x134.google.com with SMTP id x20so26733511lfu.6;
-        Mon, 10 May 2021 21:54:25 -0700 (PDT)
+        Tue, 11 May 2021 00:57:14 -0400
+Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com [IPv6:2607:f8b0:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5FAF4C061763
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 May 2021 21:55:54 -0700 (PDT)
+Received: by mail-ot1-x32b.google.com with SMTP id t4-20020a05683014c4b02902ed26dd7a60so6349596otq.7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 May 2021 21:55:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=gUde+0C3uKFPjg4eE3AOOGn4QQ9yT5Sdvd4hkNYDw4A=;
-        b=LMJvsyDVQRsdlaAdXNrDQEv/MOnoCVJzTk3qzuJniXNoy7oF3OEMZNz4aOC7iPkNGO
-         U3qyPxZOu0vu5QHnKI0jTgRmqthh9yC3zykpCcQHq81SE0OnUtaXZHCYydZkaBmITod+
-         NmM0l4IBvbqFWEMGZ6UlYnD+iM/rZBeAmOgRspMLvW7Qep/s7r/tXO8c7kKs0hVuv6FD
-         OfBXsBg4Cs/PaUIkJiGnxnsDG1CFewAqO7EyT2YxNfUBw0ns3Uhfr8dL2KeLtORdysgR
-         i6zuh+QHFIDqoU7Pk4m2TVDRvUHTcbIklLT2uzx8xuILAaspv+Ofeb8q/HXNI2UKRnWR
-         Tkqg==
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=LRkUu5LCFvquDlyLgAggMIQvj0PMUIKV3fzj8HPK4n8=;
+        b=Qv5FC1Qu1CtsXR1UyCXrkd3H3IdtGC0FvhcKvPZ2AVZy6EW/FOgLXMLu+gyFmPcicr
+         tbGyiy8k25+sfaBK0EQBbMtgKmjrgvFtrASptwxobVuTYK/ju6Ge/V0GrQ6tqRS+6Aj+
+         N73461M8vfuTpjuSyUqtPHVSa2JKd8j9MwOsgPmHkTF/PgG66p1gQy3fIrRMvzDgBesy
+         nq3i75AVJNhoPnPxj0DwICnLO9LRd6JM8HWSNkXgXQ/UWUfq3xada1j8Rk9k+EkexBKl
+         fim5b9j/oBKZveH8XAiSoCM9yyuyw4IIWc3RWnR/9OOBEer3SUh7sXV7QIIDTyqMKLau
+         pcew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:user-agent:mime-version:content-transfer-encoding;
-        bh=gUde+0C3uKFPjg4eE3AOOGn4QQ9yT5Sdvd4hkNYDw4A=;
-        b=e4ld7cTjKl5X5/hfvrRF4HwPjHNYHPI/x8GDVmRDYrqymWQaE+qUFMzFqs4vqqbQ4p
-         io+u12ZQgFqH+mogdIQkyIhQJsgqV/3ESBII9RW0nO8ls/Rq/O63d0iTL/pLCVsPsVIm
-         Av2zkcjq6zdIs8sMVhVhxQPkdWhkhsAKR05jA2u5ZPtw89VvEi+OHqHruTHE53m3xt3/
-         1BMsoaFMm/N/CK+lkKNrYVSYmCl/aE29u33XtWqtP16YPqgDJ4uwU8cSQqg8YSz4xEfr
-         2nvos3rUbb9ep+erlULNEsqP4fwvR5sLjjrRd8lbu60q02VyzquP+zt1QAHCYHP2+gAt
-         xTjQ==
-X-Gm-Message-State: AOAM530DlujQ73AROhV2lwpno3deKUv6p/Zt0Gh6J4p7eXaF8mlCWBTD
-        mYaG4penbNWwsnjrMMPklcc=
-X-Google-Smtp-Source: ABdhPJwgrRWl6DhBeWJJShgRfVrOjBrs83HkKSkcxrUmsZTJfcdtPutDR6rtLau1yNbUVAWdsAllow==
-X-Received: by 2002:ac2:464f:: with SMTP id s15mr19216179lfo.329.1620708863614;
-        Mon, 10 May 2021 21:54:23 -0700 (PDT)
-Received: from dc7vkhyyyyyyyyyyyyyby-3.rev.dnainternet.fi (dc7vkhyyyyyyyyyyyyyby-3.rev.dnainternet.fi. [2001:14ba:16e2:8300::2])
-        by smtp.gmail.com with ESMTPSA id v77sm2471474lfa.111.2021.05.10.21.54.22
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=LRkUu5LCFvquDlyLgAggMIQvj0PMUIKV3fzj8HPK4n8=;
+        b=o1YqScO6r3j3MRyqxh63QlxMSLp7Ow6s1It5YLUodnWIvuRMKgekSIjhWKc4Tt4//G
+         cadtzeHS3Qt6RFHJ9rSKiw7/gPTp0pB1vSmz5lO8Vt8MU2vKjekT4nsw2oeEA1xUkJwR
+         F06E9QG7qIfuNm0WjTs8NYIagjw9R03UpHAdXciz0pawj/l1oEJrdCdGV+Qk/IoDliqP
+         sUZcPinNjREm+A31Our8ZS0wtQohXIoz9LoMSIy5wz1XQetR6/ZVmBznZoaAVF+xbQQW
+         +5t8xvUr/2gq54htwgQHvJ/wDE1pD+HmMtlqVyMgOYO0kiZXmlQy0W9bsnh36VVj3Hb4
+         lb9A==
+X-Gm-Message-State: AOAM531rAyuTw533nq4goVDMnEOejwK10QO9dcmt4IOrJMlxzH/8uZTB
+        DDm34Wv5ekVAK0bDJuuoCI2cG5N8OcF6WA==
+X-Google-Smtp-Source: ABdhPJwn2ZRr/gjRSK8ClIz3ilxOMtFbJ2lD+fzPmX3FeDD9T3M0Pl0j3Uuro/ae7a/eiv8xtTSnZg==
+X-Received: by 2002:a9d:721b:: with SMTP id u27mr15693822otj.95.1620708954195;
+        Mon, 10 May 2021 21:55:54 -0700 (PDT)
+Received: from yoga ([2607:fb90:e623:42c1:10df:adff:fec2:f1d])
+        by smtp.gmail.com with ESMTPSA id x18sm3024293oix.28.2021.05.10.21.55.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 May 2021 21:54:23 -0700 (PDT)
-Message-ID: <4d980efbec6a63d3241c14c7afdbaf14459d3fb3.camel@gmail.com>
-Subject: Re: [PATCH v9 05/10] regulator: IRQ based event/error notification
- helpers
-From:   Matti Vaittinen <mazziesaccount@gmail.com>
-To:     Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>
-Cc:     Mark Brown <broonie@kernel.org>, Kees Cook <keescook@chromium.org>,
-        Andy Shevchenko <andy.shevchenko@gmail.com>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Guenter Roeck <linux@roeck-us.net>,
-        "agross@kernel.org" <agross@kernel.org>,
-        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
-        linux-power <linux-power@fi.rohmeurope.com>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "linux-renesas-soc@vger.kernel.org" 
-        <linux-renesas-soc@vger.kernel.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "bjorn.andersson@linaro.org" <bjorn.andersson@linaro.org>,
-        "lgirdwood@gmail.com" <lgirdwood@gmail.com>,
-        "robh+dt@kernel.org" <robh+dt@kernel.org>
-Date:   Tue, 11 May 2021 07:54:22 +0300
-In-Reply-To: <a22cf56239512f52ae5927f226e79d890d7a1240.1620645507.git.matti.vaittinen@fi.rohmeurope.com>
-References: <cover.1620645507.git.matti.vaittinen@fi.rohmeurope.com>
-         <a22cf56239512f52ae5927f226e79d890d7a1240.1620645507.git.matti.vaittinen@fi.rohmeurope.com>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.34.4 (3.34.4-1.fc31) 
+        Mon, 10 May 2021 21:55:53 -0700 (PDT)
+Date:   Mon, 10 May 2021 23:55:50 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     sbillaka@codeaurora.org
+Cc:     Rob Clark <robdclark@gmail.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <dri-devel@lists.freedesktop.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        Sean Paul <seanpaul@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Kalyan Thota <kalyan_t@codeaurora.org>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Kuogee Hsieh <khsieh@codeaurora.org>,
+        Krishna Manikandan <mkrishn@codeaurora.org>
+Subject: Re: [PATCH v1 0/3] Add support for next gen eDP driver on SnapDragon
+Message-ID: <20210511045550.GL2484@yoga>
+References: <1620202579-19066-1-git-send-email-sbillaka@codeaurora.org>
+ <CAA8EJpqZXHNvBySL0Vm-CmsrAh8Z85SoQHn97TqWLYeFW-Q=UA@mail.gmail.com>
+ <3398f9a1f985ccd6bb6a44646f7bea24@codeaurora.org>
+ <CAF6AEGuPpihBj9GQbuPKXuZvY=+Bid-pSB9XPP2ZXNQvHEm-Ag@mail.gmail.com>
+ <3d96a5be6c6f0140b738a302befc25b5@codeaurora.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <3d96a5be6c6f0140b738a302befc25b5@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Mon 10 May 07:16 CDT 2021, sbillaka@codeaurora.org wrote:
 
-On Mon, 2021-05-10 at 14:29 +0300, Matti Vaittinen wrote:
-> Provide helper function for IC's implementing regulator notifications
-> when an IRQ fires. The helper also works for IRQs which can not be
-> acked.
-> Helper can be set to disable the IRQ at handler and then re-enabling
-> it
-> on delayed work later. The helper also adds
-> regulator_get_error_flags()
-> errors in cache for the duration of IRQ disabling.
+> On 2021-05-06 20:32, Rob Clark wrote:
+> > On Wed, May 5, 2021 at 11:47 PM <sbillaka@codeaurora.org> wrote:
+> > > 
+> > > On 2021-05-05 15:31, Dmitry Baryshkov wrote:
+> > > > Hi,
+> > > >
+> > > > On Wed, 5 May 2021 at 11:17, Sankeerth Billakanti
+> > > > <sbillaka@codeaurora.org> wrote:
+> > > >>
+> > > >> These patches add support for the next generation eDP driver on
+> > > >> SnapDragon
+> > > >> with dpu support. The existing eDP driver cannot support the new eDP
+> > > >> hardware. So, to maintain backward compatibility, the older eDP driver
+> > > >> is
+> > > >> moved to v200 folder and the new generation eDP driver is added in
+> > > >> the v510 folder.
+> > > >
+> > > > What exactly does this version correspond to?
+> > > > I assume that v510 corresponds to sdmshrike/sc8180x. Is it right?
+> > > [Sankeerth] This is for sc7280.
+> > > 
+> > > > Is it really so specific, or just v2/v5 would be enough? Not to
+> > > > mention that this is the MDP/ version, while other blocks tend to use
+> > > > block-specific versions/ids.
+> > > [Sankeerth] I can rename it as edp-v1 and edp-v2. Edp v1 is very old
+> > > chip and there is considerable HW delta between v1 and v2. So, we want
+> > > to separate the driver. We followed similar model for DPU driver
+> > > where,
+> > > MDP4, MDP5 and DPU have separate folders. EDP v1 belongs to MDP4
+> > > generation.
+> > 
+> > Bjorn brought up the idea of just dropping the existing drm/msm/edp..
+> > since the efforts to upstream the platform it worked on (8084?)
+> > fizzled out, I don't think there is any device which uses it.
+> > 
+> > But it does sound like edp is a subset of the the newer dp driver, so
+> > seems sort of like the better approach would be to add edp support to
+> > dp.  I believe Bjorn has something based on this approach which is
+> > working for sc8280 (although not sure if it is in shape to post
+> > patches yet)
+> > 
+> > BR,
+> > -R
+> Hi Rob,
+> I will explore to integrate native eDP driver as part of DP driver. Will
+> follow up with new patchsets.
 > 
-> Signed-off-by: Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>
-> Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+> Hi Dmitry,
+> I will move the eDP phy to qmp drivers folder in the new patchsets so that
+> it can reuse the dp core driver.
 > 
-> 
-> +static irqreturn_t regulator_notifier_isr(int irq, void *data)
-> +{
 
-//snip
+Hi Sankeerth,
 
-> +	/*
-> +	 * IRQ seems to be for us. Let's fire correct notifiers / store
-> error
-> +	 * flags
-> +	 */
-> +	for_each_set_bit(i, &rdev_map, num_rdevs) {
-> +		unsigned long evt;
-> +		struct regulator_err_state *stat;
-> +		struct regulator_dev *rdev;
-> +
-> +		stat = &rid->states[i];
-> +		rdev = stat->rdev;
-> +
-> +		for_each_set_bit(j, &stat->notifs, BITS_PER_TYPE(stat-
-> >notifs)) {
-> +			evt =  BIT(j);
-> +			pr_dbg("Sending regulator notification EVT
-> 0x%lx\r\n",
-> +			       stat->notifs, evt);
-> +			regulator_notifier_call_chain(rdev, evt, NULL);
-> +		}
+I've been working on eDP support for sc8180x recently, which afaict is
+identical to sc7280 in this regard. I finally got the patches cleaned up
+and posted here:
+https://lore.kernel.org/linux-arm-msm/20210511042043.592802-1-bjorn.andersson@linaro.org/T/#t
+https://lore.kernel.org/linux-arm-msm/20210511041930.592483-1-bjorn.andersson@linaro.org/T/#t
 
-This construct sends own notification for each of the event flagged by
-the driver. My thinking was that sending each event separately ensures
-all of them are handled. OTOH, the comment in the even description
-states:
+My initial patches added widebus support, rather than disabling it. But
+those patches needs a little bit more polishing - and I finally figured
+was able to disable the feature. So I will get back to this.
 
-> * NOTE: These events can be OR'ed together when passed into handler.
+There's currently a few seconds delay on plug detection, so this needs
+to be investigated further and I haven't looked at backlight handling
+yet.
 
-So... Should I actually simplify this and just punt out all the
-stat->notifs in one event? That would get rid of this one extra loop.
-
-> +		rdev_flag_err(rdev, stat->errors);
-> +	}
-
-Best Regards
-	Matti Vaittinen
-
-
+Regards,
+Bjorn
