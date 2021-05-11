@@ -2,291 +2,160 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E42FB37B1A3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 May 2021 00:34:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8161437B1C5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 May 2021 00:52:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229714AbhEKWfK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 May 2021 18:35:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45972 "EHLO
+        id S230111AbhEKWxf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 May 2021 18:53:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50050 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229637AbhEKWfJ (ORCPT
+        with ESMTP id S230012AbhEKWxf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 May 2021 18:35:09 -0400
-Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [IPv6:2001:4b98:dc2:55:216:3eff:fef7:d647])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06AD2C061574;
-        Tue, 11 May 2021 15:34:02 -0700 (PDT)
-Received: from pendragon.ideasonboard.com (62-78-145-57.bb.dnainternet.fi [62.78.145.57])
-        by perceval.ideasonboard.com (Postfix) with ESMTPSA id 2BEEC5A5;
-        Wed, 12 May 2021 00:33:59 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-        s=mail; t=1620772439;
-        bh=KzHx1Q72g1Ph0hy3qlmj9H4gxvGEMdk3xBf/U2vswNg=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=mlIdKyd0YYwFWiJ5nRc1b+qPije5a5tmd1SvlsC15Xo2aJgRfdeFTyxS9M+Cj5dTh
-         ZF7l22wgGEtqSdN2h6MuAkWaBDUWjgEeoRdH265GsOMGoLKpL0oWqc4yMIbzfNdfxg
-         L1je65f0KGFsc8tmjGbLI02Bz3VqygMVfhSVM+TM=
-Date:   Wed, 12 May 2021 01:33:50 +0300
-From:   Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-To:     rajeevny@codeaurora.org
-Cc:     Doug Anderson <dianders@chromium.org>,
-        Rob Herring <robh@kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
-        Rob Clark <robdclark@gmail.com>, mkrishn@codeaurora.org,
-        Kalyan Thota <kalyan_t@codeaurora.org>,
-        "Kristian H. Kristensen" <hoegsberg@chromium.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Sean Paul <seanpaul@chromium.org>,
-        Jani Nikula <jani.nikula@linux.intel.com>,
-        Lyude Paul <lyude@redhat.com>,
-        "Lankhorst, Maarten" <maarten.lankhorst@intel.com>,
-        Andrzej Hajda <a.hajda@samsung.com>
-Subject: Re: [v3 1/2] dt-bindings: backlight: add DisplayPort aux backlight
-Message-ID: <YJsGToxCpE4I+8MC@pendragon.ideasonboard.com>
-References: <1619416756-3533-1-git-send-email-rajeevny@codeaurora.org>
- <1619416756-3533-2-git-send-email-rajeevny@codeaurora.org>
- <20210429180435.GA1385465@robh.at.kernel.org>
- <CAD=FV=V-kdySH5Pp-Fb-PRYk60Ha_UOTXJHcvMp+uV3P1oo7Uw@mail.gmail.com>
- <78c4bd291bd4a17ae2a1d02d0217de43@codeaurora.org>
- <CAD=FV=XW90L6or8NKA-Rjjp3s3fRno1xSkD+X0PA1rTyeKgpMw@mail.gmail.com>
- <c867b2e59e90899e6c1648e06f5f9cd2@codeaurora.org>
+        Tue, 11 May 2021 18:53:35 -0400
+Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3CA8C061760
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 May 2021 15:52:27 -0700 (PDT)
+Received: by mail-pj1-x1031.google.com with SMTP id v11-20020a17090a6b0bb029015cba7c6bdeso1983357pjj.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 May 2021 15:52:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=MoNMrqKHpNoIlrWmHHElwi2Zgk61Xn7OFK++3WUoOmc=;
+        b=IO3+l5+HYPtRVdCZtd678/nzTEnB8gsZcFj/BpOZJF3dDCfBW0m9s3KfpSOP0c4vsN
+         AKWL8yrs860HI/07jGm3jGQjxPOoF29ld0nhO0rA/LkBTpgJ5lGBGlquqeOpu32S2D1g
+         MF602Xh8wuECIHCyJIhcxkt++RNYUSCz4Kaf0=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=MoNMrqKHpNoIlrWmHHElwi2Zgk61Xn7OFK++3WUoOmc=;
+        b=YL+TiU+H7IRqEn6ue0+ilw3utS2EHk+lTWMcoajQyYZF2JsomegQyqa2ElGrbIex3F
+         V5NkP2UXgOkjQGNwBz/fjSqTFpnwQFvS3pfkkBBmn2l+1QtsWFYbetrAf/ME5/wS96l6
+         o1BsrwWjNLr+veYM2sCaekeg8uZYL6LhLO+C7iAUgkHkUU5Hud13HHsizn7zE1mmwda4
+         h/eq8/a/oc0TwNdIIwChh+JZA6Wslo8kd0tUIQsuiGPycswPGxLeuI5w2DW0ehgin61w
+         uORBToEoyyUt0+ZzJjVSHRsqkGOHnv5pcwBL3qhLnQv9VclBznlImdfkIqPhVTd4n1ai
+         rMXw==
+X-Gm-Message-State: AOAM530dftnHKkMU09cJo4f01apAsJGcJUmXq5B9nRa0ntGecKoOxFBS
+        zoxRR/Krf9wV3onaAZFFcvBfwA==
+X-Google-Smtp-Source: ABdhPJyJkpvYFQl8dIjuffCEsX6wfwXKpmoPjao12wYgsRO0/c9PPHShcVturNVIs01FZwIuhkQ4vg==
+X-Received: by 2002:a17:90b:3b4b:: with SMTP id ot11mr34824045pjb.189.1620773547184;
+        Tue, 11 May 2021 15:52:27 -0700 (PDT)
+Received: from localhost ([2620:15c:202:201:f1d7:673a:456e:c653])
+        by smtp.gmail.com with UTF8SMTPSA id v22sm14303739pff.105.2021.05.11.15.52.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 11 May 2021 15:52:26 -0700 (PDT)
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Alan Stern <stern@rowland.harvard.edu>,
+        Rob Herring <robh+dt@kernel.org>,
+        Frank Rowand <frowand.list@gmail.com>
+Cc:     Michal Simek <michal.simek@xilinx.com>, devicetree@vger.kernel.org,
+        Douglas Anderson <dianders@chromium.org>,
+        linux-usb@vger.kernel.org, Peter Chen <peter.chen@kernel.org>,
+        linux-kernel@vger.kernel.org, Stephen Boyd <swboyd@chromium.org>,
+        Ravi Chandra Sadineni <ravisadineni@chromium.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Bastien Nocera <hadess@hadess.net>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Al Cooper <alcooperx@gmail.com>,
+        "Alexander A. Klimov" <grandmaster@al2klimov.de>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Christian Lamparter <chunkeey@googlemail.com>,
+        Colin Ian King <colin.king@canonical.com>,
+        Dmitry Osipenko <digetx@gmail.com>,
+        Fabio Estevam <festevam@gmail.com>,
+        Masahiro Yamada <masahiroy@kernel.org>,
+        Mathias Nyman <mathias.nyman@intel.com>,
+        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org
+Subject: [PATCH v10 0/5] USB: misc: Add onboard_usb_hub driver
+Date:   Tue, 11 May 2021 15:52:18 -0700
+Message-Id: <20210511225223.550762-1-mka@chromium.org>
+X-Mailer: git-send-email 2.31.1.607.g51e8a6a459-goog
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <c867b2e59e90899e6c1648e06f5f9cd2@codeaurora.org>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rajeevny,
+This series adds:
+- the onboard_usb_hub_driver
+- glue in the xhci-plat driver to create the onboard_usb_hub
+  platform device if needed
+- a device tree binding for the Realtek RTS5411 USB hub controller
+- device tree changes that add RTS5411 entries for the QCA SC7180
+  based boards trogdor and lazor
+- a couple of stubs for platform device functions to avoid
+  unresolved symbols with certain kernel configs
 
-On Tue, May 11, 2021 at 11:41:57PM +0530, rajeevny@codeaurora.org wrote:
-> On 01-05-2021 03:08, Doug Anderson wrote:
-> > On Fri, Apr 30, 2021 at 8:10 AM <rajeevny@codeaurora.org> wrote:
-> >> On 30-04-2021 02:33, Doug Anderson wrote:
-> >> > On Thu, Apr 29, 2021 at 11:04 AM Rob Herring <robh@kernel.org> wrote:
-> >> >> On Mon, Apr 26, 2021 at 11:29:15AM +0530, Rajeev Nandan wrote:
-> >> >> > Add bindings for DisplayPort aux backlight driver.
-> >> >> >
-> >> >> > Changes in v2:
-> >> >> > - New
-> >> >> >
-> >> >> > Signed-off-by: Rajeev Nandan <rajeevny@codeaurora.org>
-> >> >> > ---
-> >> >> >  .../bindings/leds/backlight/dp-aux-backlight.yaml  | 49 ++++++++++++++++++++++
-> >> >> >  1 file changed, 49 insertions(+)
-> >> >> >  create mode 100644 Documentation/devicetree/bindings/leds/backlight/dp-aux-backlight.yaml
-> >> >> >
-> >> >> > diff --git a/Documentation/devicetree/bindings/leds/backlight/dp-aux-backlight.yaml b/Documentation/devicetree/bindings/leds/backlight/dp-aux-backlight.yaml
-> >> >> > new file mode 100644
-> >> >> > index 00000000..0fa8bf0
-> >> >> > --- /dev/null
-> >> >> > +++ b/Documentation/devicetree/bindings/leds/backlight/dp-aux-backlight.yaml
-> >> >> > @@ -0,0 +1,49 @@
-> >> >> > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> >> >> > +%YAML 1.2
-> >> >> > +---
-> >> >> > +$id: http://devicetree.org/schemas/leds/backlight/dp-aux-backlight.yaml#
-> >> >> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> >> >> > +
-> >> >> > +title: DisplayPort aux backlight driver bindings
-> >> >> > +
-> >> >> > +maintainers:
-> >> >> > +  - Rajeev Nandan <rajeevny@codeaurora.org>
-> >> >> > +
-> >> >> > +description:
-> >> >> > +  Backlight driver to control the brightness over DisplayPort aux channel.
-> >> >> > +
-> >> >> > +allOf:
-> >> >> > +  - $ref: common.yaml#
-> >> >> > +
-> >> >> > +properties:
-> >> >> > +  compatible:
-> >> >> > +    const: dp-aux-backlight
-> >> >> > +
-> >> >> > +  ddc-i2c-bus:
-> >> >> > +    $ref: /schemas/types.yaml#/definitions/phandle
-> >> >> > +    description:
-> >> >> > +      A phandle to the system I2C controller connected to the DDC bus used
-> >> >> > +      for the DisplayPort AUX channel.
-> >> >> > +
-> >> >> > +  enable-gpios:
-> >> >> > +    maxItems: 1
-> >> >> > +    description: GPIO specifier for backlight enable pin.
-> >> >> > +
-> >> >> > +  max-brightness: true
-> >> >> > +
-> >> >> > +required:
-> >> >> > +  - compatible
-> >> >> > +  - ddc-i2c-bus
-> >> >> > +
-> >> >> > +additionalProperties: false
-> >> >> > +
-> >> >> > +examples:
-> >> >> > +  - |
-> >> >> > +    backlight {
-> >> >> > +        compatible = "dp-aux-backlight";
-> >> >> > +        ddc-i2c-bus = <&sn65dsi86_bridge>;
-> >> >> > +        enable-gpios = <&tlmm 12 GPIO_ACTIVE_HIGH>;
-> >> >>
-> >> >> So the DDC bus is connected to a backlight and also a panel? This
-> >> >> binding is not reflecting the h/w, but rather what you want for some
-> >> >> driver.
-> >> >>
-> >> >> There's only one thing here and that's an eDP panel which supports
-> >> >> backlight control via DP aux channel. You can figure all that out from
-> >> >> the panel's compatible and/or reading the EDID.
-> >> >>
-> >> >> You might also be interested in this thread:
-> >> >>
-> >> >> https://lore.kernel.org/lkml/YIKsDtjcIHGNvW0u@orome.fritz.box/
-> >> >
-> >> > I think Rajeev needs to rework everything anyway as per:
-> >> >
-> >> > https://lore.kernel.org/r/87zgxl5qar.fsf@intel.com
-> >> >
-> >> > ...but you're right that it makes sense not to model the backlight as
-> >> > a separate node in the device tree. The panel driver can handle
-> >> > setting up the backlight.
-> >> 
-> >> It was not a good idea to create a separate backlight driver and use
-> >> ddc-i2c-bus to get access to DP aux. I am working to move the code
-> >> to the panel driver and to utilize the new DRM helper functions
-> >> (drm_edp_backlight_*) Lyude has added [1].
-> >> 
-> >> To use these helper functions, the panel driver should have access to the
-> >> "struct drm_dp_aux *". The simple-panel has a "ddc-i2c-bus" property
-> >> to give the panel access to the DDC bus and is currently being used to
-> >> get the EDID from the panel. Can I use the same ddc bus i2c_adapter to get
-> >> the "struct drm_dp_aux *"?
-> >> 
-> >> As per the suggestion [2], I get the "struct drm_dp_aux *" from the
-> >> i2c_adapter of ddc bus (maybe I didn't understand the suggestion correctly),
-> >> and, it turned out, the way I have implemented is not the right way [3].
-> >> So, I am afraid to use the same method in the panel driver.
-> >> 
-> >> 
-> >> [1] https://lore.kernel.org/dri-devel/871rb5bcf9.fsf@intel.com/
-> >> [2] https://www.spinics.net/lists/dri-devel/msg295429.html
-> >> [3]
-> >> https://lore.kernel.org/dri-devel/20210426111116.4lc3ekxjugjr3oho@maple.lan/
-> > 
-> > So it's definitely up to maintainers, not me. ...but I guess I would
-> > have expected something like a new property called "ddc-aux-bus". Then
-> > you'd have to create a new API call called something like
-> > "of_find_ddc_aux_adapter_by_node()" that would allow you to find it.
-> 
-> To implement the first suggestion, I can think of the following way
-> to get the "struct drm_dp_aux" in the panel_simple_probe function:
-> 
-> - Create a new panel-simple DT property "ddc-aux-bus", a phandle to the
-> platform device that implements the AUX channel.
-> 
-> - Create a global list of drm_dp_aux in drm_dp_helper.c. Initialize list 
-> head
-> in drm_dp_aux_init(), add the drm_dp_aux onto the list in 
-> drm_dp_aux_register().
-> Similarly, remove the drm_dp_aux from list in drm_dp_aux_unregister().
-> 
-> - Create a new function of_drm_find_dp_aux_by_node() to get the expected
-> drm_dp_aux from this global list.
-> 
-> Please let me know your views on this implementation.
-> 
-> Below is the summary of the changes in drm dp helper:
-> 
-> ---
-> 
-> // drm_dp_helper.h
-> 
-> struct drm_dp_aux {
-> 	...
-> 	struct list_head list;
-> 	...
-> }
-> 
-> // drm_dp_helper.c
-> 
-> static DEFINE_MUTEX(dp_aux_lock);
-> static LIST_HEAD(dp_aux_list);
-> 
-> static void drm_dp_aux_add(struct drm_dp_aux *aux)
-> {
->      mutex_lock(&dp_aux_lock);
->      list_add_tail(&aux->list, &dp_aux_list);
->      mutex_unlock(&dp_aux_lock);
-> }
-> 
-> static void drm_dp_aux_remove(struct drm_dp_aux *aux)
-> {
->      mutex_lock(&dp_aux_lock);
->      list_del_init(&aux->list);
->      mutex_unlock(&dp_aux_lock);
-> }
-> 
-> #ifdef CONFIG_OF
-> struct drm_dp_aux *of_drm_find_dp_aux_by_node(struct device_node *np)
-> {
->      struct drm_dp_aux *aux;
->      mutex_lock(&dp_aux_lock);
-> 
->      list_for_each_entry(aux, &dp_aux_list, list) {
->          if (aux->dev->of_node == np) {
->              mutex_unlock(&dp_aux_lock);
->              return aux;
->          }
->      }
-> 
->      mutex_unlock(&dp_aux_lock);
->      return NULL;
-> }
-> EXPORT_SYMBOL(of_drm_find_dp_aux_by_node);
-> #endif
-> 
-> 
-> int drm_dp_aux_init(struct drm_dp_aux *aux)
-> {
->      INIT_LIST_HEAD(&aux->list);
->      ...
-> }
-> 
-> int drm_dp_aux_register(struct drm_dp_aux *aux)
-> {
->      ...
->      drm_dp_aux_add(aux);
-> 
->      return 0;
-> }
-> 
-> void drm_dp_aux_unregister(struct drm_dp_aux *aux)
-> {
->      drm_dp_aux_remove(aux);
->      ...
-> }
+The main issue the driver addresses is that a USB hub needs to be
+powered before it can be discovered. For discrete onboard hubs (an
+example for such a hub is the Realtek RTS5411) this is often solved
+by supplying the hub with an 'always-on' regulator, which is kind
+of a hack. Some onboard hubs may require further initialization
+steps, like changing the state of a GPIO or enabling a clock, which
+requires even more hacks. This driver creates a platform device
+representing the hub which performs the necessary initialization.
+Currently it only supports switching on a single regulator, support
+for multiple regulators or other actions can be added as needed.
+Different initialization sequences can be supported based on the
+compatible string.
 
-Overall this seems like a good approach, but there's one unanswered
-question: what happens if drm_dp_aux_unregister() is called while a
-panel holds a reference to it ? The drm_dp_aux instances likely need to
-be reference-counted.
+Besides performing the initialization the driver can be configured
+to power the hub off during system suspend. This can help to extend
+battery life on battery powered devices which have no requirements
+to keep the hub powered during suspend. The driver can also be
+configured to leave the hub powered when a wakeup capable USB device
+is connected when suspending, and power it off otherwise.
 
-> > I guess an alternate way to solve this (I'm not totally sure whether
-> > it's better or worse) would be to add a function that would walk up
-> > the chain of parent bridges and ask them for a pointer to the aux bus.
-> > I definitely haven't thought it all the way through, but I'd imagine
-> > something like drm_bridge_chain_get_ddc_aux(). This is _probably_
-> > better than adding the "ddc-aux-bus" property but it assumes that the
-> > aux bus is provided by one of our parents. Hrm, looking at this
-> > briefly, though, I'm not sure how to do it. It doesn't seem possible
-> > to get the parent bridges from the panel structure. Even if you assume
-> > that your parent is wrapping you with a panel_bridge it still doesn't
-> > seem possible?
-> > 
-> > This probably needs more drm-expertise.
+Changes in v10:
+- always use of_is_onboard_usb_hub() stub unless ONBOARD_USB_HUB=y/m
+- keep 'regulator-boot-on' property for pp3300_hub
+
+Changes in v9:
+- added dependency on ONBOARD_USB_HUB (or !!ONBOARD_USB_HUB) to
+  USB_PLATFORM_XHCI
+
+Changes in v7:
+- updated DT binding
+- series rebased on qcom/arm64-for-5.13
+
+Changes in v6:
+- updated summary
+
+Changes in v5:
+- cover letter added
+
+Matthias Kaehlcke (5):
+  dt-bindings: usb: Add binding for Realtek RTS5411 hub controller
+  USB: misc: Add onboard_usb_hub driver
+  of/platform: Add stubs for of_platform_device_create/destroy()
+  usb: host: xhci-plat: Create platform device for onboard hubs in
+    probe()
+  arm64: dts: qcom: sc7180-trogdor: Add nodes for onboard USB hub
+
+ .../sysfs-bus-platform-onboard-usb-hub        |   8 +
+ .../bindings/usb/realtek,rts5411.yaml         |  62 +++
+ MAINTAINERS                                   |   7 +
+ .../boot/dts/qcom/sc7180-trogdor-lazor-r0.dts |  19 +-
+ .../boot/dts/qcom/sc7180-trogdor-lazor-r1.dts |  11 +-
+ .../arm64/boot/dts/qcom/sc7180-trogdor-r1.dts |  19 +-
+ arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi  |  19 +-
+ drivers/usb/host/Kconfig                      |   1 +
+ drivers/usb/host/xhci-plat.c                  |  16 +
+ drivers/usb/misc/Kconfig                      |  17 +
+ drivers/usb/misc/Makefile                     |   1 +
+ drivers/usb/misc/onboard_usb_hub.c            | 415 ++++++++++++++++++
+ include/linux/of_platform.h                   |  22 +-
+ include/linux/usb/hcd.h                       |   2 +
+ include/linux/usb/onboard_hub.h               |  15 +
+ 15 files changed, 600 insertions(+), 34 deletions(-)
+ create mode 100644 Documentation/ABI/testing/sysfs-bus-platform-onboard-usb-hub
+ create mode 100644 Documentation/devicetree/bindings/usb/realtek,rts5411.yaml
+ create mode 100644 drivers/usb/misc/onboard_usb_hub.c
+ create mode 100644 include/linux/usb/onboard_hub.h
 
 -- 
-Regards,
+2.31.1.607.g51e8a6a459-goog
 
-Laurent Pinchart
