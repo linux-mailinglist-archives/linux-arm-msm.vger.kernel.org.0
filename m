@@ -2,212 +2,189 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 583BA37B5B7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 May 2021 08:15:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D7DA937B6C2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 May 2021 09:20:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230181AbhELGQc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 May 2021 02:16:32 -0400
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:53424 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230109AbhELGQ2 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 May 2021 02:16:28 -0400
-Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
-  by alexa-out.qualcomm.com with ESMTP; 11 May 2021 23:15:21 -0700
-X-QCInternal: smtphost
-Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 11 May 2021 23:15:18 -0700
-X-QCInternal: smtphost
-Received: from c-skakit-linux.ap.qualcomm.com (HELO c-skakit-linux.qualcomm.com) ([10.242.51.242])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 12 May 2021 11:44:40 +0530
-Received: by c-skakit-linux.qualcomm.com (Postfix, from userid 2344709)
-        id E013F4F44; Wed, 12 May 2021 11:44:38 +0530 (IST)
-From:   satya priya <skakit@codeaurora.org>
-To:     Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        id S230176AbhELHV1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 May 2021 03:21:27 -0400
+Received: from mail.thorsis.com ([92.198.35.195]:60660 "EHLO mail.thorsis.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230166AbhELHV1 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 12 May 2021 03:21:27 -0400
+Received: from localhost (localhost [127.0.0.1])
+        by mail.thorsis.com (Postfix) with ESMTP id 15FABF6A;
+        Wed, 12 May 2021 09:20:17 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at mail.thorsis.com
+Received: from mail.thorsis.com ([127.0.0.1])
+        by localhost (mail.thorsis.com [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id AYe52KTAIS14; Wed, 12 May 2021 09:20:17 +0200 (CEST)
+Received: by mail.thorsis.com (Postfix, from userid 109)
+        id E8D32119D; Wed, 12 May 2021 09:20:16 +0200 (CEST)
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,NO_RECEIVED,
+        NO_RELAYS,URIBL_BLOCKED autolearn=unavailable autolearn_force=no
+        version=3.4.2
+X-Spam-Report: * -1.9 BAYES_00 BODY: Bayes spam probability is 0 to 1%
+        *      [score: 0.0000]
+        *  0.0 URIBL_BLOCKED ADMINISTRATOR NOTICE: The query to URIBL was
+        *      blocked.  See
+        *      http://wiki.apache.org/spamassassin/DnsBlocklists#dnsbl-block
+        *      for more information.
+        *      [URIs: microchip.com]
+        * -0.0 NO_RELAYS Informational: message was not relayed via SMTP
+        * -0.0 NO_RECEIVED Informational: message has no Received headers
+Date:   Wed, 12 May 2021 09:19:54 +0200
+From:   Alexander Dahl <ada@thorsis.com>
+To:     Matthias Kaehlcke <mka@chromium.org>
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Alan Stern <stern@rowland.harvard.edu>,
         Rob Herring <robh+dt@kernel.org>,
+        Frank Rowand <frowand.list@gmail.com>,
+        Michal Simek <michal.simek@xilinx.com>,
+        devicetree@vger.kernel.org,
+        Douglas Anderson <dianders@chromium.org>,
+        linux-usb@vger.kernel.org, Peter Chen <peter.chen@kernel.org>,
+        linux-kernel@vger.kernel.org, Stephen Boyd <swboyd@chromium.org>,
+        Ravi Chandra Sadineni <ravisadineni@chromium.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Bastien Nocera <hadess@hadess.net>,
+        Al Cooper <alcooperx@gmail.com>,
+        "Alexander A. Klimov" <grandmaster@al2klimov.de>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Sebastian Reichel <sre@kernel.org>
-Cc:     David Collins <collinsd@codeaurora.org>, kgunda@codeaurora.org,
-        linux-input@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
-        Andy Yan <andy.yan@rock-chips.com>,
-        satya priya <skakit@codeaurora.org>
-Subject: [PATCH V4 5/5] dt-bindings: power: reset: qcom-pon: Convert qcom PON binding to yaml
-Date:   Wed, 12 May 2021 11:44:13 +0530
-Message-Id: <1620800053-26405-6-git-send-email-skakit@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1620800053-26405-1-git-send-email-skakit@codeaurora.org>
-References: <1620800053-26405-1-git-send-email-skakit@codeaurora.org>
+        Christian Lamparter <chunkeey@googlemail.com>,
+        Colin Ian King <colin.king@canonical.com>,
+        Dmitry Osipenko <digetx@gmail.com>,
+        Fabio Estevam <festevam@gmail.com>,
+        Masahiro Yamada <masahiroy@kernel.org>,
+        Mathias Nyman <mathias.nyman@intel.com>,
+        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v10 0/5] USB: misc: Add onboard_usb_hub driver
+Message-ID: <YJuBmlPSaJlyVuzW@ada-deb-carambola.ifak-system.com>
+Mail-Followup-To: Matthias Kaehlcke <mka@chromium.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Alan Stern <stern@rowland.harvard.edu>,
+        Rob Herring <robh+dt@kernel.org>,
+        Frank Rowand <frowand.list@gmail.com>,
+        Michal Simek <michal.simek@xilinx.com>, devicetree@vger.kernel.org,
+        Douglas Anderson <dianders@chromium.org>, linux-usb@vger.kernel.org,
+        Peter Chen <peter.chen@kernel.org>, linux-kernel@vger.kernel.org,
+        Stephen Boyd <swboyd@chromium.org>,
+        Ravi Chandra Sadineni <ravisadineni@chromium.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Bastien Nocera <hadess@hadess.net>, Al Cooper <alcooperx@gmail.com>,
+        "Alexander A. Klimov" <grandmaster@al2klimov.de>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Christian Lamparter <chunkeey@googlemail.com>,
+        Colin Ian King <colin.king@canonical.com>,
+        Dmitry Osipenko <digetx@gmail.com>,
+        Fabio Estevam <festevam@gmail.com>,
+        Masahiro Yamada <masahiroy@kernel.org>,
+        Mathias Nyman <mathias.nyman@intel.com>,
+        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org
+References: <20210511225223.550762-1-mka@chromium.org>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210511225223.550762-1-mka@chromium.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Convert qcom PON binding from .txt to .yaml format.
+Hello Matthias,
 
-Signed-off-by: satya priya <skakit@codeaurora.org>
-Reviewed-by: Rob Herring <robh@kernel.org>
----
-Changes in V2:
- - As per Rob's comments, converted the main PON binding and added in V2.
-   Dropped example here to have one full example in qcom,pm8941-pwrkey.yaml
+just a curious informal question, see below.
 
-Changes in V3:
- - As per Sebastian's comments, added allOf to refer reboot-mode.yaml and
-   used unevaluatedProperties = false. Added maxItems for reg.
+Am Tue, May 11, 2021 at 03:52:18PM -0700 schrieb Matthias Kaehlcke:
+> This series adds:
+> - the onboard_usb_hub_driver
+> - glue in the xhci-plat driver to create the onboard_usb_hub
+>   platform device if needed
+> - a device tree binding for the Realtek RTS5411 USB hub controller
+> - device tree changes that add RTS5411 entries for the QCA SC7180
+>   based boards trogdor and lazor
+> - a couple of stubs for platform device functions to avoid
+>   unresolved symbols with certain kernel configs
+> 
+> The main issue the driver addresses is that a USB hub needs to be
+> powered before it can be discovered. For discrete onboard hubs (an
+> example for such a hub is the Realtek RTS5411) this is often solved
+> by supplying the hub with an 'always-on' regulator, which is kind
+> of a hack. Some onboard hubs may require further initialization
+> steps, like changing the state of a GPIO or enabling a clock, which
+> requires even more hacks. This driver creates a platform device
+> representing the hub which performs the necessary initialization.
+> Currently it only supports switching on a single regulator, support
+> for multiple regulators or other actions can be added as needed.
+> Different initialization sequences can be supported based on the
+> compatible string.
 
-Changes in V4:
- - Added the example back. Removed it in qcom,pm8941-pwrkey.yaml
+This sounds like it would be useful for other hub controllers as well?
+For example, would the Microchip USB3503 (former SMSC,
+drivers/usb/misc/usb3503.c, [1]) fall into this category? That chip is
+used on the "Cubietech Cubietruck Plus" for example.
 
- .../devicetree/bindings/power/reset/qcom,pon.txt   | 49 -------------
- .../devicetree/bindings/power/reset/qcom,pon.yaml  | 80 ++++++++++++++++++++++
- 2 files changed, 80 insertions(+), 49 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/power/reset/qcom,pon.txt
- create mode 100644 Documentation/devicetree/bindings/power/reset/qcom,pon.yaml
+> Besides performing the initialization the driver can be configured
+> to power the hub off during system suspend. This can help to extend
+> battery life on battery powered devices which have no requirements
+> to keep the hub powered during suspend. The driver can also be
+> configured to leave the hub powered when a wakeup capable USB device
+> is connected when suspending, and power it off otherwise.
 
-diff --git a/Documentation/devicetree/bindings/power/reset/qcom,pon.txt b/Documentation/devicetree/bindings/power/reset/qcom,pon.txt
-deleted file mode 100644
-index 0c0dc3a..0000000
---- a/Documentation/devicetree/bindings/power/reset/qcom,pon.txt
-+++ /dev/null
-@@ -1,49 +0,0 @@
--Qualcomm PON Device
--
--The Power On device for Qualcomm PM8xxx is MFD supporting pwrkey
--and resin along with the Android reboot-mode.
--
--This DT node has pwrkey and resin as sub nodes.
--
--Required Properties:
---compatible: Must be one of:
--	"qcom,pm8916-pon"
--	"qcom,pms405-pon"
--	"qcom,pm8998-pon"
--
---reg: Specifies the physical address of the pon register
--
--Optional subnode:
---pwrkey: Specifies the subnode pwrkey and should follow the
-- qcom,pm8941-pwrkey.txt description.
---resin: Specifies the subnode resin and should follow the
-- qcom,pm8xxx-pwrkey.txt description.
--
--The rest of the properties should follow the generic reboot-mode description
--found in reboot-mode.txt
--
--Example:
--
--	pon@800 {
--		compatible = "qcom,pm8916-pon";
--
--		reg = <0x800>;
--		mode-bootloader = <0x2>;
--		mode-recovery = <0x1>;
--
--		pwrkey {
--			compatible = "qcom,pm8941-pwrkey";
--			interrupts = <0x0 0x8 0 IRQ_TYPE_EDGE_BOTH>;
--			debounce = <15625>;
--			bias-pull-up;
--			linux,code = <KEY_POWER>;
--		};
--
--		resin {
--			compatible = "qcom,pm8941-resin";
--			interrupts = <0x0 0x8 1 IRQ_TYPE_EDGE_BOTH>;
--			debounce = <15625>;
--			bias-pull-up;
--			linux,code = <KEY_VOLUMEDOWN>;
--		};
--	};
-diff --git a/Documentation/devicetree/bindings/power/reset/qcom,pon.yaml b/Documentation/devicetree/bindings/power/reset/qcom,pon.yaml
-new file mode 100644
-index 0000000..353f155
---- /dev/null
-+++ b/Documentation/devicetree/bindings/power/reset/qcom,pon.yaml
-@@ -0,0 +1,80 @@
-+# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/power/reset/qcom,pon.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Qualcomm PON Device
-+
-+maintainers:
-+  - Vinod Koul <vkoul@kernel.org>
-+
-+description: |
-+  The Power On device for Qualcomm PM8xxx is MFD supporting pwrkey
-+  and resin along with the Android reboot-mode.
-+
-+  This DT node has pwrkey and resin as sub nodes.
-+
-+allOf:
-+  - $ref: reboot-mode.yaml#
-+
-+properties:
-+  compatible:
-+    enum:
-+      - qcom,pm8916-pon
-+      - qcom,pms405-pon
-+      - qcom,pm8998-pon
-+
-+  reg:
-+    maxItems: 1
-+
-+  pwrkey:
-+    type: object
-+    $ref: "../../input/qcom,pm8941-pwrkey.yaml#"
-+
-+  resin:
-+    type: object
-+    $ref: "../../input/qcom,pm8941-pwrkey.yaml#"
-+
-+required:
-+  - compatible
-+  - reg
-+
-+unevaluatedProperties: false
-+
-+examples:
-+  - |
-+   #include <dt-bindings/interrupt-controller/irq.h>
-+   #include <dt-bindings/input/linux-event-codes.h>
-+   #include <dt-bindings/spmi/spmi.h>
-+   spmi_bus: spmi@c440000 {
-+     reg = <0x0c440000 0x1100>;
-+     #address-cells = <2>;
-+     #size-cells = <0>;
-+     pmk8350: pmic@0 {
-+       reg = <0x0 SPMI_USID>;
-+       #address-cells = <1>;
-+       #size-cells = <0>;
-+       pmk8350_pon: pon_hlos@1300 {
-+         reg = <0x1300>;
-+         compatible = "qcom,pm8998-pon";
-+
-+         pwrkey {
-+            compatible = "qcom,pm8941-pwrkey";
-+            interrupts = < 0x0 0x8 0 IRQ_TYPE_EDGE_BOTH >;
-+            debounce = <15625>;
-+            bias-pull-up;
-+            linux,code = <KEY_POWER>;
-+         };
-+
-+         resin {
-+            compatible = "qcom,pm8941-resin";
-+            interrupts = <0x0 0x8 1 IRQ_TYPE_EDGE_BOTH>;
-+            debounce = <15625>;
-+            bias-pull-up;
-+            linux,code = <KEY_VOLUMEDOWN>;
-+         };
-+       };
-+     };
-+   };
-+...
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
-of Code Aurora Forum, hosted by The Linux Foundation
+Sounds interesting.
 
+Greets
+Alex
+
+[1] https://www.microchip.com/wwwproducts/en/USB3503
+
+> Changes in v10:
+> - always use of_is_onboard_usb_hub() stub unless ONBOARD_USB_HUB=y/m
+> - keep 'regulator-boot-on' property for pp3300_hub
+> 
+> Changes in v9:
+> - added dependency on ONBOARD_USB_HUB (or !!ONBOARD_USB_HUB) to
+>   USB_PLATFORM_XHCI
+> 
+> Changes in v7:
+> - updated DT binding
+> - series rebased on qcom/arm64-for-5.13
+> 
+> Changes in v6:
+> - updated summary
+> 
+> Changes in v5:
+> - cover letter added
+> 
+> Matthias Kaehlcke (5):
+>   dt-bindings: usb: Add binding for Realtek RTS5411 hub controller
+>   USB: misc: Add onboard_usb_hub driver
+>   of/platform: Add stubs for of_platform_device_create/destroy()
+>   usb: host: xhci-plat: Create platform device for onboard hubs in
+>     probe()
+>   arm64: dts: qcom: sc7180-trogdor: Add nodes for onboard USB hub
+> 
+>  .../sysfs-bus-platform-onboard-usb-hub        |   8 +
+>  .../bindings/usb/realtek,rts5411.yaml         |  62 +++
+>  MAINTAINERS                                   |   7 +
+>  .../boot/dts/qcom/sc7180-trogdor-lazor-r0.dts |  19 +-
+>  .../boot/dts/qcom/sc7180-trogdor-lazor-r1.dts |  11 +-
+>  .../arm64/boot/dts/qcom/sc7180-trogdor-r1.dts |  19 +-
+>  arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi  |  19 +-
+>  drivers/usb/host/Kconfig                      |   1 +
+>  drivers/usb/host/xhci-plat.c                  |  16 +
+>  drivers/usb/misc/Kconfig                      |  17 +
+>  drivers/usb/misc/Makefile                     |   1 +
+>  drivers/usb/misc/onboard_usb_hub.c            | 415 ++++++++++++++++++
+>  include/linux/of_platform.h                   |  22 +-
+>  include/linux/usb/hcd.h                       |   2 +
+>  include/linux/usb/onboard_hub.h               |  15 +
+>  15 files changed, 600 insertions(+), 34 deletions(-)
+>  create mode 100644 Documentation/ABI/testing/sysfs-bus-platform-onboard-usb-hub
+>  create mode 100644 Documentation/devicetree/bindings/usb/realtek,rts5411.yaml
+>  create mode 100644 drivers/usb/misc/onboard_usb_hub.c
+>  create mode 100644 include/linux/usb/onboard_hub.h
+> 
+> -- 
+> 2.31.1.607.g51e8a6a459-goog
+> 
