@@ -2,84 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AF3BD37B574
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 May 2021 07:27:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 24D0137B5BC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 May 2021 08:15:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229654AbhELF2h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 May 2021 01:28:37 -0400
-Received: from mail.kernel.org ([198.145.29.99]:55810 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229626AbhELF2h (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 May 2021 01:28:37 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 0ABD26187E;
-        Wed, 12 May 2021 05:27:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1620797249;
-        bh=RkvocLfL9s9Nf9etoyzdRt+PlG3yiOaKcr0S6ZVeI0g=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=LsalKg8RipUCRCVYOnvn/R/JjaQN6jllYXB9njqGr+G9gL4kMx2TKQbdUKzSblVw3
-         ZbFgcqr5476sWGbbsJRvfPQ/smgym1Ddxk/lNWjRzvi/8tBMfrMjKiSJroTOEeTdzq
-         01N9HTC2OI1ZLMmUBEqETA9NY5KXTlE7S/8NsAzbGobjZk75L16bB2aswSZ6piUrT2
-         h6hgpwoPCDJ11ZdFS6GiSQuaTUb40p5XuyznnCQDMAN1suX3gm/BVTERswReOj3lSi
-         FIOpZ2LQVJquTfFCXCv7FYd5nbdAUwYEZ4s5ljVNf8wVuiTjik98qdVo3cOr75wtK4
-         EcU3q8D2H/xDg==
-Date:   Wed, 12 May 2021 10:57:26 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Kuogee Hsieh <khsieh@codeaurora.org>, agross@kernel.org,
-        bjorn.andersson@linaro.org, robdclark@gmail.com, sean@poorly.run,
-        abhinavk@codeaurora.org, aravindh@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] drm/msm/dp: handle irq_hpd with sink_count = 0 correctly
-Message-ID: <YJtnPt63yK4zP3O1@vkoul-mobl.Dlink>
-References: <1620251521-29999-1-git-send-email-khsieh@codeaurora.org>
- <CAE-0n50HUo0tm22xX+j8H-u+EDH+wBrdEvM68p-X3EyR8S_u3Q@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAE-0n50HUo0tm22xX+j8H-u+EDH+wBrdEvM68p-X3EyR8S_u3Q@mail.gmail.com>
+        id S230213AbhELGQd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 May 2021 02:16:33 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:53424 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230149AbhELGQa (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 12 May 2021 02:16:30 -0400
+Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
+  by alexa-out.qualcomm.com with ESMTP; 11 May 2021 23:15:23 -0700
+X-QCInternal: smtphost
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 11 May 2021 23:15:21 -0700
+X-QCInternal: smtphost
+Received: from c-skakit-linux.ap.qualcomm.com (HELO c-skakit-linux.qualcomm.com) ([10.242.51.242])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 12 May 2021 11:44:39 +0530
+Received: by c-skakit-linux.qualcomm.com (Postfix, from userid 2344709)
+        id 676D3488F; Wed, 12 May 2021 11:44:38 +0530 (IST)
+From:   satya priya <skakit@codeaurora.org>
+To:     Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Sebastian Reichel <sre@kernel.org>
+Cc:     David Collins <collinsd@codeaurora.org>, kgunda@codeaurora.org,
+        linux-input@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
+        Andy Yan <andy.yan@rock-chips.com>,
+        satya priya <skakit@codeaurora.org>
+Subject: [PATCH V4 0/5] Add support for PMK8350 PON_HLOS PMIC peripheral
+Date:   Wed, 12 May 2021 11:44:08 +0530
+Message-Id: <1620800053-26405-1-git-send-email-skakit@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10-05-21, 11:15, Stephen Boyd wrote:
-> Quoting Kuogee Hsieh (2021-05-05 14:52:01)
-> > @@ -1414,6 +1416,10 @@ void dp_ctrl_host_deinit(struct dp_ctrl *dp_ctrl)
-> >         phy = dp_io->phy;
-> >
-> >         dp_catalog_ctrl_enable_irq(ctrl->catalog, false);
-> > +
-> > +       if (phy->power_count)
-> > +               phy_power_off(phy);
-> > +
-> >         phy_exit(phy);
-> >
-> >         DRM_DEBUG_DP("Host deinitialized successfully\n");
-> > @@ -1445,7 +1451,6 @@ static int dp_ctrl_reinitialize_mainlink(struct dp_ctrl_private *ctrl)
-> >
-> >         dp_catalog_ctrl_mainlink_ctrl(ctrl->catalog, false);
-> >         opts_dp->lanes = ctrl->link->link_params.num_lanes;
-> > -       phy_configure(phy, &dp_io->phy_opts);
-> >         /*
-> >          * Disable and re-enable the mainlink clock since the
-> >          * link clock might have been adjusted as part of the
-> > @@ -1456,9 +1461,13 @@ static int dp_ctrl_reinitialize_mainlink(struct dp_ctrl_private *ctrl)
-> >                 DRM_ERROR("Failed to disable clocks. ret=%d\n", ret);
-> >                 return ret;
-> >         }
-> > -       phy_power_off(phy);
-> > -       /* hw recommended delay before re-enabling clocks */
-> > -       msleep(20);
-> > +
-> > +       if (phy->power_count) {
-> 
-> I don't believe members of 'phy' are supposed to be looked at by various
-> phy consumer drivers. Vinod, is that right?
+David Collins (2):
+  input: pm8941-pwrkey: add support for PMK8350 PON_HLOS PMIC peripheral
+  dt-bindings: input: pm8941-pwrkey: add pmk8350 compatible strings
 
-That is correct, we should not be doing that. And IMO this code is
-redundant, the phy core will check power_count and invoke drivers
-.power_off accordingly, so should be removed...
+satya priya (3):
+  dt-bindings: power: reset: Change 'additionalProperties' to true
+  dt-bindings: input: pm8941-pwrkey: Convert pm8941 power key binding to
+    yaml
+  dt-bindings: power: reset: qcom-pon: Convert qcom PON binding to yaml
 
-Thanks
+ .../bindings/input/qcom,pm8941-pwrkey.txt          |  53 -----------
+ .../bindings/input/qcom,pm8941-pwrkey.yaml         |  51 ++++++++++
+ .../devicetree/bindings/power/reset/qcom,pon.txt   |  49 ----------
+ .../devicetree/bindings/power/reset/qcom,pon.yaml  |  80 ++++++++++++++++
+ .../bindings/power/reset/reboot-mode.yaml          |   2 +-
+ drivers/input/misc/pm8941-pwrkey.c                 | 103 ++++++++++++++-------
+ 6 files changed, 204 insertions(+), 134 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/input/qcom,pm8941-pwrkey.txt
+ create mode 100644 Documentation/devicetree/bindings/input/qcom,pm8941-pwrkey.yaml
+ delete mode 100644 Documentation/devicetree/bindings/power/reset/qcom,pon.txt
+ create mode 100644 Documentation/devicetree/bindings/power/reset/qcom,pon.yaml
+
 -- 
-~Vinod
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
+of Code Aurora Forum, hosted by The Linux Foundation
+
