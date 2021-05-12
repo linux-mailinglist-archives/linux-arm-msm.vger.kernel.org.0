@@ -2,610 +2,269 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EF70137BB87
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 May 2021 13:13:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BB28F37BBBA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 May 2021 13:27:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230197AbhELLOv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 May 2021 07:14:51 -0400
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:49396 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230160AbhELLOu (ORCPT
+        id S230139AbhELL2J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 May 2021 07:28:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49204 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230109AbhELL2J (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 May 2021 07:14:50 -0400
-Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
-  by alexa-out.qualcomm.com with ESMTP; 12 May 2021 04:13:43 -0700
-X-QCInternal: smtphost
-Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 12 May 2021 04:13:40 -0700
-X-QCInternal: smtphost
-Received: from c-skakit-linux.ap.qualcomm.com (HELO c-skakit-linux.qualcomm.com) ([10.242.51.242])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 12 May 2021 16:43:14 +0530
-Received: by c-skakit-linux.qualcomm.com (Postfix, from userid 2344709)
-        id B1D604F4F; Wed, 12 May 2021 16:43:13 +0530 (IST)
-From:   satya priya <skakit@codeaurora.org>
-To:     Linus Walleij <linus.walleij@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     kgunda@codeaurora.org, linux-gpio@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, satya priya <skakit@codeaurora.org>
-Subject: [PATCH V3 3/3] dt-bindings: pinctrl: qcom-pmic-gpio: Convert qcom pmic gpio bindings to YAML
-Date:   Wed, 12 May 2021 16:43:08 +0530
-Message-Id: <1620817988-18809-4-git-send-email-skakit@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1620817988-18809-1-git-send-email-skakit@codeaurora.org>
-References: <1620817988-18809-1-git-send-email-skakit@codeaurora.org>
+        Wed, 12 May 2021 07:28:09 -0400
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE249C06175F
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 May 2021 04:26:59 -0700 (PDT)
+Received: by mail-ed1-x532.google.com with SMTP id g14so26644935edy.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 May 2021 04:26:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=sW3jMCftDfiFtBgZttGt05xUZb6de8CfShosPvhcNg8=;
+        b=Ct/bixgpdm8CwXOzW7AiVcDbDzPjEfU8A77D9J6D6jlIx5sqJwfho3+XVoMriZhDLL
+         O6hzC/4bxdM9imU5OShWs00D1DM+NMZcDp1ys3mUsVXewPv390xPrkLPWGCgeuNFDfM4
+         HfyLLiCIi4twItp7eqqLlO7quZdXDxY7NBh9t+1POIxaXX/ohNSJG91ti9OA+xst7AqR
+         xO8ErxgVWmtDupIyr202+s1wTsZPgss0vfZpYHHMVaIXAfzZmIc1l6vEpafIchFirIcz
+         di6LD2V8fA8xYqJpIwt5S+4ncv9b1lAzD8HZ7iUOD6ccrD3IdyG8vp8YOBivakI+wE4q
+         N8hQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=sW3jMCftDfiFtBgZttGt05xUZb6de8CfShosPvhcNg8=;
+        b=evt6SVDv6Ed9eoji/xjjM5zAy2qdkANMnpx+Ei4p1jtpX+12o0upBtWzxzeD0NPwyB
+         5f5D2Xx0Z7BaC16vVzS+myyeQLxXrwBlna96k0bl2kfTCsoH5Qi93a0WILz3gK266OdR
+         46CaxrKt/b7yjq5kPgp3kSHGs2aJFVdsZIJ1nbywGrzobXzQwoI5k/XFwjM8RpbuwdEt
+         6q2ZhB4vIZYhNORg8l6Ilj/j5iXau27pPtZO63uYPwokRqVRSk11OybssoaHqbyMaHug
+         +fgzpaIpwPa9oVfFMRFQROaRjBToPuY/Q84IaopSf2f351cDHoKdjMaliVz4rCZ6yGqG
+         gwMA==
+X-Gm-Message-State: AOAM533R/4tNxEdHk/QAUhPQLglQ6P4nEjqasV4tWZCajNc4Q5zVi0lD
+        PEsJw+yk7OdgrOlLrHpA/T7f/1CQj+RrbA==
+X-Google-Smtp-Source: ABdhPJz55jMl6b3k9QurAc7BVgcHwv7YgqQ++RMJeBNkrqx9UgSpqH44KgrXr2cMoU4nLdFb7ybC8A==
+X-Received: by 2002:aa7:d41a:: with SMTP id z26mr44229923edq.54.1620818818509;
+        Wed, 12 May 2021 04:26:58 -0700 (PDT)
+Received: from [192.168.1.14] ([195.24.90.54])
+        by smtp.googlemail.com with ESMTPSA id e19sm16703339edv.10.2021.05.12.04.26.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 12 May 2021 04:26:58 -0700 (PDT)
+Subject: Re: [PATCH] dt-bindings: media: venus: Add sc7280 dt schema
+To:     Dikshita Agarwal <dikshita@codeaurora.org>, andy.gross@linaro.org,
+        david.brown@linaro.org, robh+dt@kernel.org, mark.rutland@arm.com,
+        devicetree@vger.kernel.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        vgarodia@codeaurora.org
+References: <1619432515-9060-1-git-send-email-dikshita@codeaurora.org>
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Message-ID: <f40aa304-2717-4a0b-00ee-e2ca222042e6@linaro.org>
+Date:   Wed, 12 May 2021 14:26:56 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.8.1
+MIME-Version: 1.0
+In-Reply-To: <1619432515-9060-1-git-send-email-dikshita@codeaurora.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Convert Qualcomm PMIC GPIO bindings from .txt to .yaml format.
 
-Signed-off-by: satya priya <skakit@codeaurora.org>
----
-Changes in V3:
- - As per Rob's comments fixed bot erros.
- - Moved this patch to end of the series so that other patches are not
-   blocked on this.
 
-Changes in V4:
- - As per Rob's comments, added maxItems for reg and interrupts.
-   Added reference of "pinmux-node.yaml" and "pincfg-node.yaml".
-   Made 'additionalProperties' as false.
+On 4/26/21 1:21 PM, Dikshita Agarwal wrote:
+> Add a schema description for the venus video encoder/decoder on the sc7280.
+> 
+> Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
+> ---
+>  .../bindings/media/qcom,sc7280-venus.yaml          | 158 +++++++++++++++++++++
+>  1 file changed, 158 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml b/Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml
+> new file mode 100644
+> index 0000000..a258d97
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml
+> @@ -0,0 +1,158 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> +
+> +%YAML 1.2
+> +---
+> +$id: "http://devicetree.org/schemas/media/qcom,sc7280-venus.yaml#"
+> +$schema: "http://devicetree.org/meta-schemas/core.yaml#"
+> +
+> +title: Qualcomm Venus video encode and decode accelerators
+> +
+> +maintainers:
+> +  - Stanimir Varbanov <stanimir.varbanov@linaro.org>
+> +
+> +description: |
+> +  The Venus IP is a video encode and decode accelerator present
 
- .../devicetree/bindings/pinctrl/qcom,pmic-gpio.txt | 288 ---------------------
- .../bindings/pinctrl/qcom,pmic-gpio.yaml           | 245 ++++++++++++++++++
- 2 files changed, 245 insertions(+), 288 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt
- create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.yaml
+Maybe we can mention that this is Venus Iris2 IP?
 
-diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt b/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt
-deleted file mode 100644
-index 161216d..0000000
---- a/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt
-+++ /dev/null
-@@ -1,288 +0,0 @@
--Qualcomm PMIC GPIO block
--
--This binding describes the GPIO block(s) found in the 8xxx series of
--PMIC's from Qualcomm.
--
--- compatible:
--	Usage: required
--	Value type: <string>
--	Definition: must be one of:
--		    "qcom,pm8005-gpio"
--		    "qcom,pm8018-gpio"
--		    "qcom,pm8038-gpio"
--		    "qcom,pm8058-gpio"
--		    "qcom,pm8916-gpio"
--		    "qcom,pm8917-gpio"
--		    "qcom,pm8921-gpio"
--		    "qcom,pm8941-gpio"
--		    "qcom,pm8950-gpio"
--		    "qcom,pm8994-gpio"
--		    "qcom,pm8998-gpio"
--		    "qcom,pma8084-gpio"
--		    "qcom,pmi8950-gpio"
--		    "qcom,pmi8994-gpio"
--		    "qcom,pmi8998-gpio"
--		    "qcom,pms405-gpio"
--		    "qcom,pm660-gpio"
--		    "qcom,pm660l-gpio"
--		    "qcom,pm8150-gpio"
--		    "qcom,pm8150b-gpio"
--		    "qcom,pm8350-gpio"
--		    "qcom,pm8350b-gpio"
--		    "qcom,pm8350c-gpio"
--		    "qcom,pmk8350-gpio"
--		    "qcom,pm7325-gpio"
--		    "qcom,pmr735a-gpio"
--		    "qcom,pmr735b-gpio"
--		    "qcom,pm6150-gpio"
--		    "qcom,pm6150l-gpio"
--		    "qcom,pm8008-gpio"
--		    "qcom,pmx55-gpio"
--
--		    And must contain either "qcom,spmi-gpio" or "qcom,ssbi-gpio"
--		    if the device is on an spmi bus or an ssbi bus respectively
--
--- reg:
--	Usage: required
--	Value type: <prop-encoded-array>
--	Definition: Register base of the GPIO block and length.
--
--- interrupts:
--	Usage: required
--	Value type: <prop-encoded-array>
--	Definition: Must contain an array of encoded interrupt specifiers for
--		    each available GPIO
--
--- gpio-controller:
--	Usage: required
--	Value type: <none>
--	Definition: Mark the device node as a GPIO controller
--
--- #gpio-cells:
--	Usage: required
--	Value type: <u32>
--	Definition: Must be 2;
--		    the first cell will be used to define gpio number and the
--		    second denotes the flags for this gpio
--
--Please refer to ../gpio/gpio.txt and ../interrupt-controller/interrupts.txt for
--a general description of GPIO and interrupt bindings.
--
--Please refer to pinctrl-bindings.txt in this directory for details of the
--common pinctrl bindings used by client devices, including the meaning of the
--phrase "pin configuration node".
--
--The pin configuration nodes act as a container for an arbitrary number of
--subnodes. Each of these subnodes represents some desired configuration for a
--pin or a list of pins. This configuration can include the
--mux function to select on those pin(s), and various pin configuration
--parameters, as listed below.
--
--
--SUBNODES:
--
--The name of each subnode is not important; all subnodes should be enumerated
--and processed purely based on their content.
--
--Each subnode only affects those parameters that are explicitly listed. In
--other words, a subnode that lists a mux function but no pin configuration
--parameters implies no information about any pin configuration parameters.
--Similarly, a pin subnode that describes a pullup parameter implies no
--information about e.g. the mux function.
--
--The following generic properties as defined in pinctrl-bindings.txt are valid
--to specify in a pin configuration subnode:
--
--- pins:
--	Usage: required
--	Value type: <string-array>
--	Definition: List of gpio pins affected by the properties specified in
--		    this subnode.  Valid pins are:
--		    gpio1-gpio4 for pm8005
--		    gpio1-gpio6 for pm8018
--		    gpio1-gpio12 for pm8038
--		    gpio1-gpio40 for pm8058
--		    gpio1-gpio4 for pm8916
--		    gpio1-gpio38 for pm8917
--		    gpio1-gpio44 for pm8921
--		    gpio1-gpio36 for pm8941
--		    gpio1-gpio8 for pm8950 (hole on gpio3)
--		    gpio1-gpio22 for pm8994
--		    gpio1-gpio26 for pm8998
--		    gpio1-gpio22 for pma8084
--		    gpio1-gpio2 for pmi8950
--		    gpio1-gpio10 for pmi8994
--		    gpio1-gpio12 for pms405 (holes on gpio1, gpio9 and gpio10)
--		    gpio1-gpio10 for pm8150 (holes on gpio2, gpio5, gpio7
--					     and gpio8)
--		    gpio1-gpio12 for pm8150b (holes on gpio3, gpio4, gpio7)
--		    gpio1-gpio12 for pm8150l (hole on gpio7)
--		    gpio1-gpio10 for pm8350
--		    gpio1-gpio8 for pm8350b
--		    gpio1-gpio9 for pm8350c
--		    gpio1-gpio4 for pmk8350
--		    gpio1-gpio10 for pm7325
--		    gpio1-gpio4 for pmr735a
--		    gpio1-gpio4 for pmr735b
--		    gpio1-gpio10 for pm6150
--		    gpio1-gpio12 for pm6150l
--		    gpio1-gpio2 for pm8008
--		    gpio1-gpio11 for pmx55 (holes on gpio3, gpio7, gpio10
--					    and gpio11)
--
--- function:
--	Usage: required
--	Value type: <string>
--	Definition: Specify the alternative function to be configured for the
--		    specified pins.  Valid values are:
--		    "normal",
--		    "paired",
--		    "func1",
--		    "func2",
--		    "dtest1",
--		    "dtest2",
--		    "dtest3",
--		    "dtest4",
--		    And following values are supported by LV/MV GPIO subtypes:
--		    "func3",
--		    "func4"
--
--- bias-disable:
--	Usage: optional
--	Value type: <none>
--	Definition: The specified pins should be configured as no pull.
--
--- bias-pull-down:
--	Usage: optional
--	Value type: <none>
--	Definition: The specified pins should be configured as pull down.
--
--- bias-pull-up:
--	Usage: optional
--	Value type: <empty>
--	Definition: The specified pins should be configured as pull up.
--
--- qcom,pull-up-strength:
--	Usage: optional
--	Value type: <u32>
--	Definition: Specifies the strength to use for pull up, if selected.
--		    Valid values are; as defined in
--		    <dt-bindings/pinctrl/qcom,pmic-gpio.h>:
--		    1: 30uA                     (PMIC_GPIO_PULL_UP_30)
--		    2: 1.5uA                    (PMIC_GPIO_PULL_UP_1P5)
--		    3: 31.5uA                   (PMIC_GPIO_PULL_UP_31P5)
--		    4: 1.5uA + 30uA boost       (PMIC_GPIO_PULL_UP_1P5_30)
--		    If this property is omitted 30uA strength will be used if
--		    pull up is selected
--
--- bias-high-impedance:
--	Usage: optional
--	Value type: <none>
--	Definition: The specified pins will put in high-Z mode and disabled.
--
--- input-enable:
--	Usage: optional
--	Value type: <none>
--	Definition: The specified pins are put in input mode.
--
--- output-high:
--	Usage: optional
--	Value type: <none>
--	Definition: The specified pins are configured in output mode, driven
--		    high.
--
--- output-low:
--	Usage: optional
--	Value type: <none>
--	Definition: The specified pins are configured in output mode, driven
--		    low.
--
--- power-source:
--	Usage: optional
--	Value type: <u32>
--	Definition: Selects the power source for the specified pins. Valid
--		    power sources are defined per chip in
--		    <dt-bindings/pinctrl/qcom,pmic-gpio.h>
--
--- qcom,drive-strength:
--	Usage: optional
--	Value type: <u32>
--	Definition: Selects the drive strength for the specified pins. Value
--		    drive strengths are:
--		    0: no (PMIC_GPIO_STRENGTH_NO)
--		    1: high (PMIC_GPIO_STRENGTH_HIGH) 0.9mA @ 1.8V - 1.9mA @ 2.6V
--		    2: medium (PMIC_GPIO_STRENGTH_MED) 0.6mA @ 1.8V - 1.25mA @ 2.6V
--		    3: low (PMIC_GPIO_STRENGTH_LOW) 0.15mA @ 1.8V - 0.3mA @ 2.6V
--		    as defined in <dt-bindings/pinctrl/qcom,pmic-gpio.h>
--
--- drive-push-pull:
--	Usage: optional
--	Value type: <none>
--	Definition: The specified pins are configured in push-pull mode.
--
--- drive-open-drain:
--	Usage: optional
--	Value type: <none>
--	Definition: The specified pins are configured in open-drain mode.
--
--- drive-open-source:
--	Usage: optional
--	Value type: <none>
--	Definition: The specified pins are configured in open-source mode.
--
--- qcom,analog-pass:
--	Usage: optional
--	Value type: <none>
--	Definition: The specified pins are configured in analog-pass-through mode.
--
--- qcom,atest:
--	Usage: optional
--	Value type: <u32>
--	Definition: Selects ATEST rail to route to GPIO when it's configured
--		    in analog-pass-through mode.
--		    Valid values are 1-4 corresponding to ATEST1 to ATEST4.
--
--- qcom,dtest-buffer:
--	Usage: optional
--	Value type: <u32>
--	Definition: Selects DTEST rail to route to GPIO when it's configured
--		    as digital input.
--		    Valid values are 1-4 corresponding to DTEST1 to DTEST4.
--
--Example:
--
--	pm8921_gpio: gpio@150 {
--		compatible = "qcom,pm8921-gpio", "qcom,ssbi-gpio";
--		reg = <0x150 0x160>;
--		interrupts = <192 1>, <193 1>, <194 1>,
--			     <195 1>, <196 1>, <197 1>,
--			     <198 1>, <199 1>, <200 1>,
--			     <201 1>, <202 1>, <203 1>,
--			     <204 1>, <205 1>, <206 1>,
--			     <207 1>, <208 1>, <209 1>,
--			     <210 1>, <211 1>, <212 1>,
--			     <213 1>, <214 1>, <215 1>,
--			     <216 1>, <217 1>, <218 1>,
--			     <219 1>, <220 1>, <221 1>,
--			     <222 1>, <223 1>, <224 1>,
--			     <225 1>, <226 1>, <227 1>,
--			     <228 1>, <229 1>, <230 1>,
--			     <231 1>, <232 1>, <233 1>,
--			     <234 1>, <235 1>;
--
--		gpio-controller;
--		#gpio-cells = <2>;
--
--		pm8921_gpio_keys: gpio-keys {
--			volume-keys {
--				pins = "gpio20", "gpio21";
--				function = "normal";
--
--				input-enable;
--				bias-pull-up;
--				drive-push-pull;
--				qcom,drive-strength = <PMIC_GPIO_STRENGTH_NO>;
--				power-source = <PM8921_GPIO_S4>;
--			};
--		};
--	};
-diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.yaml
-new file mode 100644
-index 0000000..85381a0
---- /dev/null
-+++ b/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.yaml
-@@ -0,0 +1,245 @@
-+# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/pinctrl/qcom,pmic-gpio.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Qualcomm PMIC GPIO block
-+
-+maintainers:
-+  - Bjorn Andersson <bjorn.andersson@sonymobile.com>
-+
-+description: |
-+  This binding describes the GPIO block(s) found in the 8xxx series of
-+  PMIC's from Qualcomm.
-+
-+properties:
-+  compatible:
-+    items:
-+      - enum:
-+          - qcom,pm8005-gpio
-+          - qcom,pm8018-gpio
-+          - qcom,pm8038-gpio
-+          - qcom,pm8058-gpio
-+          - qcom,pm8916-gpio
-+          - qcom,pm8917-gpio
-+          - qcom,pm8921-gpio
-+          - qcom,pm8941-gpio
-+          - qcom,pm8950-gpio
-+          - qcom,pm8994-gpio
-+          - qcom,pm8998-gpio
-+          - qcom,pma8084-gpio
-+          - qcom,pmi8950-gpio
-+          - qcom,pmi8994-gpio
-+          - qcom,pmi8998-gpio
-+          - qcom,pms405-gpio
-+          - qcom,pm660-gpio
-+          - qcom,pm660l-gpio
-+          - qcom,pm8150-gpio
-+          - qcom,pm8150b-gpio
-+          - qcom,pm6150-gpio
-+          - qcom,pm6150l-gpio
-+          - qcom,pmx55-gpio
-+          - qcom,pm7325-gpio
-+          - qcom,pm8350c-gpio
-+          - qcom,pmk8350-gpio
-+          - qcom,pmr735a-gpio
-+
-+      - enum:
-+          - qcom,spmi-gpio
-+          - qcom,ssbi-gpio
-+
-+  reg:
-+    maxItems: 1
-+
-+  interrupts:
-+    minItems: 1
-+    maxItems: 44
-+
-+  '#interrupt-cells':
-+    const: 2
-+
-+  interrupt-controller: true
-+
-+  gpio-controller: true
-+
-+  gpio-ranges:
-+    maxItems: 1
-+
-+  '#gpio-cells':
-+    const: 2
-+    description: |
-+        The first cell will be used to define gpio number and the
-+        second denotes the flags for this gpio
-+
-+  gpio-keys:
-+    type: object
-+    properties:
-+      volume-keys:
-+        type: object
-+        anyOf:
-+          - $ref: "pinmux-node.yaml"
-+          - $ref: "pincfg-node.yaml"
-+        properties:
-+          pins:
-+            description: |
-+                List of gpio pins affected by the properties specified in
-+                this subnode.  Valid pins are
-+                     - gpio1-gpio4 for pm8005
-+                     - gpio1-gpio6 for pm8018
-+                     - gpio1-gpio12 for pm8038
-+                     - gpio1-gpio40 for pm8058
-+                     - gpio1-gpio4 for pm8916
-+                     - gpio1-gpio38 for pm8917
-+                     - gpio1-gpio44 for pm8921
-+                     - gpio1-gpio36 for pm8941
-+                     - gpio1-gpio8 for pm8950 (hole on gpio3)
-+                     - gpio1-gpio22 for pm8994
-+                     - gpio1-gpio26 for pm8998
-+                     - gpio1-gpio22 for pma8084
-+                     - gpio1-gpio2 for pmi8950
-+                     - gpio1-gpio10 for pmi8994
-+                     - gpio1-gpio12 for pms405 (holes on gpio1, gpio9
-+                                                and gpio10)
-+                     - gpio1-gpio10 for pm8150 (holes on gpio2, gpio5,
-+                                                gpio7 and gpio8)
-+                     - gpio1-gpio12 for pm8150b (holes on gpio3, gpio4
-+                                                 and gpio7)
-+                     - gpio1-gpio12 for pm8150l (hole on gpio7)
-+                     - gpio1-gpio10 for pm6150
-+                     - gpio1-gpio12 for pm6150l
-+                     - gpio1-gpio10 for pm7325
-+                     - gpio1-gpio9 for pm8350c
-+                     - gpio1-gpio4 for pmk8350
-+                     - gpio1-gpio4 for pmr735a
-+
-+            items:
-+              pattern: "^gpio([0-9]+)$"
-+
-+          function:
-+            description: |
-+                Specify the alternative function to be configured for the
-+                specified pins.
-+            items:
-+              - enum:
-+                  - normal
-+                  - paired
-+                  - func1
-+                  - func2
-+                  - dtest1
-+                  - dtest2
-+                  - dtest3
-+                  - dtest4
-+                  - func3  # supported by LV/MV GPIO subtypes
-+                  - func4  # supported by LV/MV GPIO subtypes
-+
-+          bias-disable: true
-+
-+          bias-pull-down: true
-+
-+          bias-pull-up: true
-+
-+          qcom,pull-up-strength:
-+            $ref: /schemas/types.yaml#/definitions/uint32
-+            description: |
-+                Specifies the strength to use for pull up, if selected.
-+                Valid values are defined in
-+                <dt-bindings/pinctrl/qcom,pmic-gpio.h>
-+                If this property is omitted 30uA strength will be used
-+                if pull up is selected
-+
-+          bias-high-impedance: true
-+
-+          input-enable: true
-+
-+          output-high: true
-+
-+          output-low: true
-+
-+          power-source: true
-+
-+          qcom,drive-strength:
-+            $ref: /schemas/types.yaml#/definitions/uint32
-+            description: |
-+                Selects the drive strength for the specified pins
-+                Valid drive strength values are defined in
-+                <dt-bindings/pinctrl/qcom,pmic-gpio.h>
-+
-+          drive-push-pull: true
-+
-+          drive-open-drain: true
-+
-+          drive-open-source: true
-+
-+          qcom,analog-pass:
-+            $ref: /schemas/types.yaml#/definitions/flag
-+            description: |
-+                The specified pins are configured in
-+                analog-pass-through mode.
-+
-+          qcom,atest:
-+            $ref: /schemas/types.yaml#/definitions/uint32
-+            description: |
-+                Selects ATEST rail to route to GPIO when it's
-+                configured in analog-pass-through mode.
-+            enum: [1 2 3 4]
-+
-+          qcom,dtest-buffer:
-+            $ref: /schemas/types.yaml#/definitions/uint32
-+            description: |
-+                Selects DTEST rail to route to GPIO when it's
-+                configured as digital input.
-+            enum: [1 2 3 4]
-+
-+        required:
-+          - pins
-+          - function
-+
-+        additionalProperties: false
-+
-+additionalProperties: false
-+
-+required:
-+  - compatible
-+  - reg
-+
-+examples:
-+  - |
-+    #include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
-+
-+    pm8921_gpio: gpio@150 {
-+      compatible = "qcom,pm8921-gpio", "qcom,ssbi-gpio";
-+      reg = <0x150 0x160>;
-+      interrupts = <192 1>, <193 1>, <194 1>,
-+                   <195 1>, <196 1>, <197 1>,
-+                   <198 1>, <199 1>, <200 1>,
-+                   <201 1>, <202 1>, <203 1>,
-+                   <204 1>, <205 1>, <206 1>,
-+                   <207 1>, <208 1>, <209 1>,
-+                   <210 1>, <211 1>, <212 1>,
-+                   <213 1>, <214 1>, <215 1>,
-+                   <216 1>, <217 1>, <218 1>,
-+                   <219 1>, <220 1>, <221 1>,
-+                   <222 1>, <223 1>, <224 1>,
-+                   <225 1>, <226 1>, <227 1>,
-+                   <228 1>, <229 1>, <230 1>,
-+                   <231 1>, <232 1>, <233 1>,
-+                   <234 1>, <235 1>;
-+
-+      gpio-controller;
-+      #gpio-cells = <2>;
-+
-+      pm8921_gpio_keys: gpio-keys {
-+        volume-keys {
-+          pins = "gpio20", "gpio21";
-+          function = "normal";
-+
-+          input-enable;
-+          bias-pull-up;
-+          drive-push-pull;
-+          qcom,drive-strength = <PMIC_GPIO_STRENGTH_NO>;
-+          power-source = <PM8921_GPIO_S4>;
-+        };
-+      };
-+    };
-+...
+> +  on Qualcomm platforms
+> +
+> +properties:
+> +  compatible:
+> +    const: qcom,sc7280-venus
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  interrupts:
+> +    maxItems: 1
+> +
+> +  power-domains:
+> +    minItems: 2
+> +    maxItems: 3
+> +
+> +  power-domain-names:
+> +    minItems: 2
+> +    maxItems: 3
+> +    items:
+> +      - const: venus
+> +      - const: vcodec0
+
+The sm8250 (the same Iris2 IP) has one more MX power domain, I guess we
+should have it here too?
+
+> +
+> +  clocks:
+> +    maxItems: 5
+> +
+> +  clock-names:
+> +    items:
+> +      - const: core_clk
+> +      - const: video_cc_mvsc_ctl_axi
+> +      - const: iface_clk
+> +      - const: vcodec_clk
+> +      - const: video_cc_mvs0_ctl_axi
+
+I'd suggest following names:
+	core
+	bus
+	iface
+	vcodec_core
+	vcodec_bus
+
+> +
+> +  iommus:
+> +    maxItems: 2
+> +
+> +  memory-region:
+> +    maxItems: 1
+> +
+> +  interconnects:
+> +    maxItems: 2
+> +
+> +  interconnect-names:
+> +    items:
+> +      - const: cpu-cfg
+> +      - const: video-mem
+> +
+> +  video-decoder:
+> +    type: object
+> +
+> +    properties:
+> +      compatible:
+> +        const: venus-decoder
+> +
+> +    required:
+> +      - compatible
+> +
+> +    additionalProperties: false
+> +
+> +  video-encoder:
+> +    type: object
+> +
+> +    properties:
+> +      compatible:
+> +        const: venus-encoder
+> +
+> +    required:
+> +      - compatible
+> +
+> +    additionalProperties: false
+> +
+> +  video-firmware:
+> +    type: object
+> +
+> +    description: |
+> +      Firmware subnode is needed when the platform does not
+> +      have TrustZone.
+> +
+> +    properties:
+> +      iommus:
+> +        maxItems: 1
+> +
+> +    required:
+> +      - iommus
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - interrupts
+> +  - power-domains
+> +  - power-domain-names
+> +  - clocks
+> +  - clock-names
+> +  - iommus
+> +  - memory-region
+> +  - video-decoder
+> +  - video-encoder
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +        #include <dt-bindings/clock/qcom,videocc-sc7280.h>
+> +
+> +        venus: video-codec@aa00000 {
+> +                compatible = "qcom,sc7280-venus";
+> +                reg = <0x0aa00000 0xd0600>;
+> +                interrupts = <GIC_SPI 174 IRQ_TYPE_LEVEL_HIGH>;
+> +
+> +                clocks = <&videocc VIDEO_CC_MVSC_CORE_CLK>,
+> +                         <&videocc VIDEO_CC_MVSC_CTL_AXI_CLK>,
+> +                         <&videocc VIDEO_CC_VENUS_AHB_CLK>,
+> +                         <&videocc VIDEO_CC_MVS0_CORE_CLK>,
+> +                         <&videocc VIDEO_CC_MVS0_AXI_CLK>;
+> +                clock-names = "core_clk", "video_cc_mvsc_ctl_axi",
+> +                              "iface_clk", "vcodec_clk",
+> +                              "video_cc_mvs0_ctl_axi";
+> +
+> +                power-domains = <&videocc MVSC_GDSC>,
+> +                                <&videocc MVS0_GDSC>;
+> +                power-domain-names = "venus", "vcodec0";
+> +
+> +                interconnects = <&gem_noc MASTER_APPSS_PROC 0 &cnoc2 SLAVE_VENUS_CFG 0>
+> +                                <&mmss_noc MASTER_VIDEO_P0 0 &mc_virt SLAVE_EBI1 0>;
+> +                interconnect-names = "cpu-cfg", "video-mem";
+
+Do we have sc7280 interconnect binding somewhere?
+
+> +
+> +                iommus = <&apps_smmu 0x2180 0x20>,
+> +                         <&apps_smmu 0x2184 0x20>;
+> +
+> +                memory-region = <&video_mem>;
+> +
+> +                video-decoder {
+> +                        compatible = "venus-decoder";
+> +                };
+> +
+> +                video-encoder {
+> +                        compatible = "venus-encoder";
+> +                };
+> +
+> +                video-firmware {
+> +                        iommus = <&apps_smmu 0x21a2 0x0>;
+> +                };
+> +        };
+> 
+
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
-of Code Aurora Forum, hosted by The Linux Foundation
-
+regards,
+Stan
