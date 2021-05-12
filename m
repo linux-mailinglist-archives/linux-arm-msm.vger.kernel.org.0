@@ -2,187 +2,163 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5BD7437EE31
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 May 2021 00:55:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5689937EE35
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 May 2021 00:55:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239943AbhELVMk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 May 2021 17:12:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38382 "EHLO
+        id S1346339AbhELVND (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 May 2021 17:13:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41524 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1377303AbhELTDb (ORCPT
+        with ESMTP id S1378784AbhELTRv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 May 2021 15:03:31 -0400
-Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43D28C061243
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 May 2021 11:57:57 -0700 (PDT)
-Received: by mail-ot1-x32d.google.com with SMTP id q7-20020a9d57870000b02902a5c2bd8c17so21502580oth.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 May 2021 11:57:57 -0700 (PDT)
+        Wed, 12 May 2021 15:17:51 -0400
+Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71E9FC06124F
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 May 2021 12:12:30 -0700 (PDT)
+Received: by mail-pf1-x42f.google.com with SMTP id x188so19319957pfd.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 May 2021 12:12:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=PehLa9MGShjuTsXrSuonmCUzxBSw0r+oW/besiLAOSg=;
-        b=e7QWriUulUNRPB0jJnAJKw/zMmZn8kRRBSywopzp5wcDxq2VWWf3bpHvugikCOY9W7
-         a0kHkr5Jzk42OGM3+lOAtcuS0p0ieGRuKMhb2vlc8V0O/xW/q5D3pDzlFkt0uzQFmD9p
-         nSwAKymo6YI0llaqDyFJQY9dDhKN070USLUjM=
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=D4zra+2OcqLeXBKvPEfQ+zldqDvc4Lb04WXOVxk+t7s=;
+        b=JWHHEVS5nCGdCEZURurGEYLRNNXVXUG738rX1fWuCafwFTzCliVgm9lgg6Bnw/Qj10
+         GnY+2HlD5LoE6V6UhVfiz06hWvjjxirXJEFQx7tm4oxBU1dm3bm9N8TjnaTJn9tI4hsL
+         qQwKh+0QMUcBR2KzJ+M1BKuUT9BKjLeaEWL94=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=PehLa9MGShjuTsXrSuonmCUzxBSw0r+oW/besiLAOSg=;
-        b=Wi1kgtnBRXEiWUaZ5Y8EfPFHrr8nCphBFjjF8wm5zt3iwsWTArSit59ZT9X9HSnuqw
-         PKFOJiB1s3m2Vm7+2c7MfRtHvM8vJvZYNyhqc+r+U5MbibwtK7SMQEFgdGj4/nB/chAl
-         ESsSCm8CmjYfC98r28WR9YslkkFZTJO2hRWYuc5BgnMOe0v6TCm0IMadrvtn9wC8ilq5
-         9i/8XqkcaxlwYIxbBBCOZmRnLdDLvC2YeptWM3kHnqK3uWm6/bWhgyHkkGdRVWzdOcp7
-         xLeDCyv/bV3rzPVq1vfimhuTzft8LL7Y8xoK+QkgFoIUIuKPXWXZtDZ77sSMuWTjUVzV
-         uNvQ==
-X-Gm-Message-State: AOAM532RmN3u+3XyqYJBcH7ZePns+hSU+fX/0sr6ttJdpuJnSMOUEoUp
-        Gm6WunTNEnaYVz4LocparzB/meeoUZjOJGF4wi2y8g==
-X-Google-Smtp-Source: ABdhPJzBOj/82oAh5sBucFDlICY1aaY8WRL1s5yQq3y7rEs/5jiHV7d0KyTPx5JmEzraeDWWvfK+qDFF5VxaUmj9mUE=
-X-Received: by 2002:a9d:1ea9:: with SMTP id n38mr32942611otn.233.1620845876668;
- Wed, 12 May 2021 11:57:56 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 12 May 2021 11:57:56 -0700
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=D4zra+2OcqLeXBKvPEfQ+zldqDvc4Lb04WXOVxk+t7s=;
+        b=QNEP4OtNugdeocUMlj1F7aX2uFMnMKsGJDYjUty3i9eg0cCaFG/K5X9x+d7bqirVwl
+         uI8dVoIPeIoFzYcYgduz4msVLBhFdAFNLo8ddGd0X18LQLAx+iT1UdvDKhKYOg8C30bO
+         HnaH9rTuqlBkX+n81u+2o8cY+/5E4Vm+K72vT/Eu8JQ0afw/Nv5ldvyGUGWXWqSzMNJt
+         aCCS2t/05LgUp5PVni+jt5RRg9Y2AIJ7kuBXWpopKjgkSSO2UTx2OSHBLuCNLKBc976N
+         naPhci5ss+SDpLh9DFGPG1gCZGRbTfaIiNULXzXymXMC7pfxYJ/Kyqv3KzteeixmJMYG
+         6e2Q==
+X-Gm-Message-State: AOAM533WC3lK6K+jzuFGWuHssvo32ATaKkoAFYFdq9djL79KNEEv5rrP
+        0LVpolmw5LvPnf2zk9hBKDExdQ==
+X-Google-Smtp-Source: ABdhPJykVjZEJ1xEZyXdu11r8zsTbD/6AB5b0X6vdDk11oVIuICCbksL/S4dmlwsDNEVd2hmNTK08w==
+X-Received: by 2002:aa7:8503:0:b029:27d:497f:1da6 with SMTP id v3-20020aa785030000b029027d497f1da6mr37664610pfn.28.1620846750001;
+        Wed, 12 May 2021 12:12:30 -0700 (PDT)
+Received: from localhost ([2620:15c:202:201:a89e:5bb2:e8e0:4428])
+        by smtp.gmail.com with UTF8SMTPSA id t4sm473715pfq.165.2021.05.12.12.12.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 12 May 2021 12:12:29 -0700 (PDT)
+Date:   Wed, 12 May 2021 12:12:26 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Felipe Balbi <balbi@kernel.org>
+Cc:     Sandeep Maheswaram <sanm@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Manu Gautam <mgautam@codeaurora.org>
+Subject: Re: [PATCH v7 1/5] usb: dwc3: host: Set PHY mode during suspend
+Message-ID: <YJwommGqKVeMdXth@google.com>
+References: <1619586716-8687-1-git-send-email-sanm@codeaurora.org>
+ <1619586716-8687-2-git-send-email-sanm@codeaurora.org>
+ <87tunqka2e.fsf@kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <20210512082220.7137-1-rojay@codeaurora.org>
-References: <20210512082220.7137-1-rojay@codeaurora.org>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.9.1
-Date:   Wed, 12 May 2021 11:57:56 -0700
-Message-ID: <CAE-0n52D-K1T0QgxA-S7BXxE3Qk807F9edNyR+2RL4YxRyigMg@mail.gmail.com>
-Subject: Re: [PATCH V10] i2c: i2c-qcom-geni: Add shutdown callback for i2c
-To:     Roja Rani Yarubandi <rojay@codeaurora.org>, wsa@kernel.org
-Cc:     dianders@chromium.org, saiprakash.ranjan@codeaurora.org,
-        gregkh@linuxfoundation.org, mka@chromium.org,
-        skananth@codeaurora.org, msavaliy@qti.qualcomm.com,
-        skakit@codeaurora.org, rnayak@codeaurora.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org,
-        sumit.semwal@linaro.org, linux-media@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <87tunqka2e.fsf@kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Roja Rani Yarubandi (2021-05-12 01:22:20)
-> If the hardware is still accessing memory after SMMU translation
-> is disabled (as part of smmu shutdown callback), then the
-> IOVAs (I/O virtual address) which it was using will go on the bus
-> as the physical addresses which will result in unknown crashes
-> like NoC/interconnect errors.
->
-> So, implement shutdown callback for i2c driver to suspend the bus
-> during system "reboot" or "shutdown".
->
-> Fixes: 37692de5d523 ("i2c: i2c-qcom-geni: Add bus driver for the Qualcomm GENI I2C controller")
-> Signed-off-by: Roja Rani Yarubandi <rojay@codeaurora.org>
-> ---
-> Changes in V2:
->  - As per Stephen's comments added seperate function for stop transfer,
->    fixed minor nitpicks.
->  - As per Stephen's comments, changed commit text.
->
-> Changes in V3:
->  - As per Stephen's comments, squashed patch 1 into patch 2, added Fixes tag.
->  - As per Akash's comments, included FIFO case in stop_xfer, fixed minor nitpicks.
->
-> Changes in V4:
->  - As per Stephen's comments cleaned up geni_i2c_stop_xfer function,
->    added dma_buf in geni_i2c_dev struct to call i2c_put_dma_safe_msg_buf()
->    from other functions, removed "iova" check in geni_se_rx_dma_unprep()
->    and geni_se_tx_dma_unprep() functions.
->  - Added two helper functions geni_i2c_rx_one_msg_done() and
->    geni_i2c_tx_one_msg_done() to unwrap the things after rx/tx FIFO/DMA
->    transfers, so that the same can be used in geni_i2c_stop_xfer() function
->    during shutdown callback. Updated commit text accordingly.
->  - Checking whether it is tx/rx transfer using I2C_M_RD which is valid for both
->    FIFO and DMA cases, so dropped DMA_RX_ACTIVE and DMA_TX_ACTIVE bit checking
->
-> Changes in V5:
->  - As per Stephen's comments, added spin_lock_irqsave & spin_unlock_irqsave in
->    geni_i2c_stop_xfer() function.
->
-> Changes in V6:
->  - As per Stephen's comments, taken care of unsafe lock order in
->    geni_i2c_stop_xfer().
->  - Moved spin_lock/unlock to geni_i2c_rx_msg_cleanup() and
->    geni_i2c_tx_msg_cleanup() functions.
->
-> Changes in V7:
->  - No changes
->
-> Changes in V8:
->  - As per Wolfram Sang comment, removed goto and modified geni_i2c_stop_xfer()
->    accordingly.
->
-> Changes in V9:
->  - Fixed possbile race by protecting gi2c->cur and calling geni_i2c_abort_xfer()
->    with adding another parameter to differentiate from which sequence is the
->    geni_i2c_abort_xfer() called and handle the spin_lock/spin_unlock accordingly
->    inside geni_i2c_abort_xfer(). For this added two macros ABORT_XFER and
->    STOP_AND_ABORT_XFER.
->  - Added a bool variable "stop_xfer" in geni_i2c_dev struct, used to put stop
->    to upcoming geni_i2c_rx_one_msg() and geni_i2c_tx_one_msg() calls once we
->    recieve the shutdown call.
->  - Added gi2c->cur == NULL check in geni_i2c_irq() to not to process the irq
->    even if any transfer is queued and shutdown to HW received.
->
-> Changes in V10:
->  - As per Stephen's comments, removed ongoing transfers flush and only
->    suspending i2c bus in shutdown callback.
->  - Also removed all other changes which have been made for ongoing transfers
->    flush, handling race issues etc., during shutdown callback.
->  - Updated commit text accordingly.
->
->  drivers/i2c/busses/i2c-qcom-geni.c | 9 +++++++++
->  1 file changed, 9 insertions(+)
->
-> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
-> index 214b4c913a13..277ab7e7dd51 100644
-> --- a/drivers/i2c/busses/i2c-qcom-geni.c
-> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
-> @@ -650,6 +650,14 @@ static int geni_i2c_remove(struct platform_device *pdev)
->         return 0;
->  }
->
-> +static void geni_i2c_shutdown(struct platform_device *pdev)
-> +{
-> +       struct geni_i2c_dev *gi2c = platform_get_drvdata(pdev);
-> +
-> +       if (!pm_runtime_status_suspended(gi2c->se.dev))
-> +               pm_runtime_set_suspended(gi2c->se.dev);
+On Wed, Apr 28, 2021 at 12:55:21PM +0300, Felipe Balbi wrote:
+> 
+> Hi,
+> 
+> Sandeep Maheswaram <sanm@codeaurora.org> writes:
+> > During suspend read the status of all port and make sure the PHYs
+> > are in the correct mode based on current speed.
+> > Phy interrupt masks are set based on this mode. Keep track of the mode
+> > of the HS PHY to be able to configure wakeup properly.
+> >
+> > Also check during suspend if any wakeup capable devices are
+> > connected to the controller (directly or through hubs), if there
+> > are none set a flag to indicate that the PHY should be powered
+> > down during suspend.
+> >
+> > Signed-off-by: Sandeep Maheswaram <sanm@codeaurora.org>
+> > ---
+> >  drivers/usb/dwc3/core.h |  3 +++
+> >  drivers/usb/dwc3/host.c | 59 +++++++++++++++++++++++++++++++++++++++++++++++++
+> >  2 files changed, 62 insertions(+)
+> >
+> > diff --git a/drivers/usb/dwc3/core.h b/drivers/usb/dwc3/core.h
+> > index b1e875c..cecd278 100644
+> > --- a/drivers/usb/dwc3/core.h
+> > +++ b/drivers/usb/dwc3/core.h
+> > @@ -1123,6 +1123,9 @@ struct dwc3 {
+> >  
+> >  	bool			phys_ready;
+> >  
+> > +	unsigned int            hs_phy_mode;
+> > +	bool			phy_power_off;
+> > +
+> >  	struct ulpi		*ulpi;
+> >  	bool			ulpi_ready;
+> >  
+> > diff --git a/drivers/usb/dwc3/host.c b/drivers/usb/dwc3/host.c
+> > index f29a264..527f04c 100644
+> > --- a/drivers/usb/dwc3/host.c
+> > +++ b/drivers/usb/dwc3/host.c
+> > @@ -11,6 +11,14 @@
+> >  #include <linux/platform_device.h>
+> >  
+> >  #include "core.h"
+> > +#include "../host/xhci.h"
+> > +#include "../host/xhci-plat.h"
+> > +
+> > +static int xhci_dwc3_suspend_quirk(struct usb_hcd *hcd);
+> > +
+> > +static const struct xhci_plat_priv xhci_plat_dwc3_xhci = {
+> > +	.suspend_quirk = xhci_dwc3_suspend_quirk,
+> > +};
+> 
+> we're passing data using device_properties, why do you want this here?
+> 
+> > @@ -115,6 +123,13 @@ int dwc3_host_init(struct dwc3 *dwc)
+> >  		}
+> >  	}
+> >  
+> > +	ret = platform_device_add_data(xhci, &xhci_plat_dwc3_xhci,
+> > +			sizeof(struct xhci_plat_priv));
+> > +	if (ret) {
+> > +		dev_err(dwc->dev, "failed to add data to xHCI\n");
+> > +		goto err;
+> > +	}
+> > +
+> >  	ret = platform_device_add(xhci);
+> >  	if (ret) {
+> >  		dev_err(dwc->dev, "failed to register xHCI device\n");
+> > @@ -127,6 +142,50 @@ int dwc3_host_init(struct dwc3 *dwc)
+> >  	return ret;
+> >  }
+> >  
+> > +static void dwc3_set_phy_mode(struct usb_hcd *hcd)
+> > +{
+> > +
+> > +	int i, num_ports;
+> > +	u32 reg;
+> > +	unsigned int ss_phy_mode = 0;
+> > +	struct dwc3 *dwc = dev_get_drvdata(hcd->self.controller->parent);
+> > +	struct xhci_hcd	*xhci_hcd = hcd_to_xhci(hcd);
+> > +
+> > +	dwc->hs_phy_mode = 0;
+> > +
+> > +	reg = readl(&xhci_hcd->cap_regs->hcs_params1);
+> > +	num_ports = HCS_MAX_PORTS(reg);
+> 
+> there's a big assumption here that xhci is still alive. Why isn't this
+> quirk implemented in xhci-plat itself?
 
-What was wrong with my suggested approach of telling i2c core that the
-bus is suspended? This looks to do a bunch of work right before we're
-shutting down, when it would be simpler to just mark the bus as
-suspended and have it block future transactions and spit out a warning.
-
-I do see that we should be marking it suspended/resumed during runtime
-suspend/resume. I'm also confused if during system wide suspend/resume
-we actually do anything in this driver. Is runtime suspend called for
-system wide suspend?
-
-----8<----
-diff --git a/drivers/i2c/busses/i2c-qcom-geni.c
-b/drivers/i2c/busses/i2c-qcom-geni.c
-index 214b4c913a13..ca12d348336b 100644
---- a/drivers/i2c/busses/i2c-qcom-geni.c
-+++ b/drivers/i2c/busses/i2c-qcom-geni.c
-@@ -656,6 +656,7 @@ static int __maybe_unused
-geni_i2c_runtime_suspend(struct device *dev)
- 	struct geni_i2c_dev *gi2c = dev_get_drvdata(dev);
-
- 	disable_irq(gi2c->irq);
-+	i2c_mark_adapter_suspended(&gi2c->adap);
- 	ret = geni_se_resources_off(&gi2c->se);
- 	if (ret) {
- 		enable_irq(gi2c->irq);
-@@ -682,6 +683,7 @@ static int __maybe_unused
-geni_i2c_runtime_resume(struct device *dev)
- 		return ret;
-
- 	enable_irq(gi2c->irq);
-+	i2c_mark_adapter_resumed(&gi2c->adap);
- 	gi2c->suspended = 0;
- 	return 0;
- }
+That should work for determining which types of devices are connected to
+the PHYs, however IIUC the xhci-plat doesn't know about the PHY topology.
+Are you suggesting to move that info into the xhci-plat driver so that it
+can set the corresponding PHY modes?
