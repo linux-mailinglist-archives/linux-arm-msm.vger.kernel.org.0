@@ -2,130 +2,147 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D0AB437B7B9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 May 2021 10:20:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2DFCB37B7C8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 May 2021 10:23:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230126AbhELIV0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 May 2021 04:21:26 -0400
-Received: from mx2.suse.de ([195.135.220.15]:50322 "EHLO mx2.suse.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229968AbhELIV0 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 May 2021 04:21:26 -0400
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
-        t=1620807617; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=Vza9DD+KUbiRtLfI0mIL3ImF5EprHsvwKgA+ti787LI=;
-        b=SEUCFz0zu0Zp1BQ9xz1mNFPtDYhbTNwQhQo77/WPTDUSYSs9YYUUH3rHkmMfCEgx7RVIJp
-        dwIeahyOWnteniGqdd3VuYtW/CarKwLYLktS4+AtvvPlDD3WewhKIPFriqz5n56j3P2hbq
-        S4D13UGTFc3ksE8v03AOtcpvvI1r4nc=
-Received: from relay2.suse.de (unknown [195.135.221.27])
-        by mx2.suse.de (Postfix) with ESMTP id 28C1BAF2C;
-        Wed, 12 May 2021 08:20:17 +0000 (UTC)
-Date:   Wed, 12 May 2021 10:20:16 +0200
-From:   Petr Mladek <pmladek@suse.com>
-To:     Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>
-Cc:     Matti Vaittinen <mazziesaccount@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Kees Cook <keescook@chromium.org>,
-        Andy Shevchenko <andy.shevchenko@gmail.com>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Guenter Roeck <linux@roeck-us.net>,
-        "agross@kernel.org" <agross@kernel.org>,
-        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
-        linux-power <linux-power@fi.rohmeurope.com>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "linux-renesas-soc@vger.kernel.org" 
-        <linux-renesas-soc@vger.kernel.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "bjorn.andersson@linaro.org" <bjorn.andersson@linaro.org>,
-        "lgirdwood@gmail.com" <lgirdwood@gmail.com>,
-        "robh+dt@kernel.org" <robh+dt@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Matteo Croce <mcroce@microsoft.com>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-        Mike Rapoport <rppt@kernel.org>,
-        Josef Bacik <josef@toxicpanda.com>,
-        Kai-Heng Feng <kai.heng.feng@canonical.com>,
-        linux-pm@vger.kernel.org
-Subject: Re: [PATCH v9 02/10] reboot: Add hardware protection power-off
-Message-ID: <YJuPwAZroVZ/w633@alley>
-References: <cover.1620645507.git.matti.vaittinen@fi.rohmeurope.com>
- <97260f8e150abb898a262fade25860609b460912.1620645507.git.matti.vaittinen@fi.rohmeurope.com>
+        id S230166AbhELIYS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 May 2021 04:24:18 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:5544 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229968AbhELIYR (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 12 May 2021 04:24:17 -0400
+Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
+  by alexa-out.qualcomm.com with ESMTP; 12 May 2021 01:23:10 -0700
+X-QCInternal: smtphost
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/AES256-SHA; 12 May 2021 01:23:07 -0700
+X-QCInternal: smtphost
+Received: from c-rojay-linux.qualcomm.com ([10.206.21.80])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 12 May 2021 13:52:24 +0530
+Received: by c-rojay-linux.qualcomm.com (Postfix, from userid 88981)
+        id 1378D11F1; Wed, 12 May 2021 13:52:22 +0530 (IST)
+From:   Roja Rani Yarubandi <rojay@codeaurora.org>
+To:     wsa@kernel.org
+Cc:     swboyd@chromium.org, dianders@chromium.org,
+        saiprakash.ranjan@codeaurora.org, gregkh@linuxfoundation.org,
+        mka@chromium.org, skananth@codeaurora.org,
+        msavaliy@qti.qualcomm.com, skakit@codeaurora.org,
+        rnayak@codeaurora.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org,
+        sumit.semwal@linaro.org, linux-media@vger.kernel.org,
+        Roja Rani Yarubandi <rojay@codeaurora.org>
+Subject: [PATCH V10] i2c: i2c-qcom-geni: Add shutdown callback for i2c
+Date:   Wed, 12 May 2021 13:52:20 +0530
+Message-Id: <20210512082220.7137-1-rojay@codeaurora.org>
+X-Mailer: git-send-email 2.29.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <97260f8e150abb898a262fade25860609b460912.1620645507.git.matti.vaittinen@fi.rohmeurope.com>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 2021-05-10 14:28:30, Matti Vaittinen wrote:
-> There can be few cases when we need to shut-down the system in order to
-> protect the hardware. Currently this is done at east by the thermal core
-> when temperature raises over certain limit.
-> 
-> Some PMICs can also generate interrupts for example for over-current or
-> over-voltage, voltage drops, short-circuit, ... etc. On some systems
-> these are a sign of hardware failure and only thing to do is try to
-> protect the rest of the hardware by shutting down the system.
-> 
-> Add shut-down logic which can be used by all subsystems instead of
-> implementing the shutdown in each subsystem. The logic is stolen from
-> thermal_core with difference of using atomic_t instead of a mutex in
-> order to allow calls directly from IRQ context.
-> 
-> Signed-off-by: Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>
-> 
-> diff --git a/kernel/reboot.c b/kernel/reboot.c
-> index a6ad5eb2fa73..5da8c80a2647 100644
-> --- a/kernel/reboot.c
-> +++ b/kernel/reboot.c
-> @@ -518,6 +519,85 @@ void orderly_reboot(void)
->  }
->  EXPORT_SYMBOL_GPL(orderly_reboot);
->  
-> +/**
-> + * hw_failure_emergency_poweroff_func - emergency poweroff work after a known delay
-> + * @work: work_struct associated with the emergency poweroff function
-> + *
-> + * This function is called in very critical situations to force
-> + * a kernel poweroff after a configurable timeout value.
-> + */
-> +static void hw_failure_emergency_poweroff_func(struct work_struct *work)
-> +{
-> +	/*
-> +	 * We have reached here after the emergency shutdown waiting period has
-> +	 * expired. This means orderly_poweroff has not been able to shut off
-> +	 * the system for some reason.
-> +	 *
-> +	 * Try to shut down the system immediately using kernel_power_off
-> +	 * if populated
-> +	 */
-> +	WARN(1, "Hardware protection timed-out. Trying forced poweroff\n");
-> +	kernel_power_off();
+If the hardware is still accessing memory after SMMU translation
+is disabled (as part of smmu shutdown callback), then the
+IOVAs (I/O virtual address) which it was using will go on the bus
+as the physical addresses which will result in unknown crashes
+like NoC/interconnect errors.
 
-WARN() look like an overkill here. It prints many lines that are not
-much useful in this case. The function is called from well-known
-context (workqueue worker).
+So, implement shutdown callback for i2c driver to suspend the bus
+during system "reboot" or "shutdown".
 
-Also be aware that "panic_on_warn" commandline option will trigger
-panic() here.
+Fixes: 37692de5d523 ("i2c: i2c-qcom-geni: Add bus driver for the Qualcomm GENI I2C controller")
+Signed-off-by: Roja Rani Yarubandi <rojay@codeaurora.org>
+---
+Changes in V2:
+ - As per Stephen's comments added seperate function for stop transfer,
+   fixed minor nitpicks.
+ - As per Stephen's comments, changed commit text.
 
+Changes in V3:
+ - As per Stephen's comments, squashed patch 1 into patch 2, added Fixes tag.
+ - As per Akash's comments, included FIFO case in stop_xfer, fixed minor nitpicks.
 
-> +	/*
-> +	 * Worst of the worst case trigger emergency restart
-> +	 */
-> +	WARN(1,
-> +	     "Hardware protection shutdown failed. Trying emergency restart\n");
-> +	emergency_restart();
+Changes in V4:
+ - As per Stephen's comments cleaned up geni_i2c_stop_xfer function,
+   added dma_buf in geni_i2c_dev struct to call i2c_put_dma_safe_msg_buf()
+   from other functions, removed "iova" check in geni_se_rx_dma_unprep()
+   and geni_se_tx_dma_unprep() functions.
+ - Added two helper functions geni_i2c_rx_one_msg_done() and
+   geni_i2c_tx_one_msg_done() to unwrap the things after rx/tx FIFO/DMA
+   transfers, so that the same can be used in geni_i2c_stop_xfer() function
+   during shutdown callback. Updated commit text accordingly.
+ - Checking whether it is tx/rx transfer using I2C_M_RD which is valid for both
+   FIFO and DMA cases, so dropped DMA_RX_ACTIVE and DMA_TX_ACTIVE bit checking
 
-Two consecutive WARN() calls are even less useful. They are eye
-catching but it is hard to find the only useful line with
-the custom message.
+Changes in V5:
+ - As per Stephen's comments, added spin_lock_irqsave & spin_unlock_irqsave in
+   geni_i2c_stop_xfer() function.
 
-Best Regards,
-Petr
+Changes in V6:
+ - As per Stephen's comments, taken care of unsafe lock order in
+   geni_i2c_stop_xfer().
+ - Moved spin_lock/unlock to geni_i2c_rx_msg_cleanup() and
+   geni_i2c_tx_msg_cleanup() functions.
+
+Changes in V7:
+ - No changes
+
+Changes in V8:
+ - As per Wolfram Sang comment, removed goto and modified geni_i2c_stop_xfer()
+   accordingly.
+
+Changes in V9:
+ - Fixed possbile race by protecting gi2c->cur and calling geni_i2c_abort_xfer()
+   with adding another parameter to differentiate from which sequence is the
+   geni_i2c_abort_xfer() called and handle the spin_lock/spin_unlock accordingly
+   inside geni_i2c_abort_xfer(). For this added two macros ABORT_XFER and
+   STOP_AND_ABORT_XFER.
+ - Added a bool variable "stop_xfer" in geni_i2c_dev struct, used to put stop
+   to upcoming geni_i2c_rx_one_msg() and geni_i2c_tx_one_msg() calls once we
+   recieve the shutdown call.
+ - Added gi2c->cur == NULL check in geni_i2c_irq() to not to process the irq
+   even if any transfer is queued and shutdown to HW received.
+
+Changes in V10:
+ - As per Stephen's comments, removed ongoing transfers flush and only 
+   suspending i2c bus in shutdown callback.
+ - Also removed all other changes which have been made for ongoing transfers 
+   flush, handling race issues etc., during shutdown callback.
+ - Updated commit text accordingly.
+
+ drivers/i2c/busses/i2c-qcom-geni.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
+index 214b4c913a13..277ab7e7dd51 100644
+--- a/drivers/i2c/busses/i2c-qcom-geni.c
++++ b/drivers/i2c/busses/i2c-qcom-geni.c
+@@ -650,6 +650,14 @@ static int geni_i2c_remove(struct platform_device *pdev)
+ 	return 0;
+ }
+ 
++static void geni_i2c_shutdown(struct platform_device *pdev)
++{
++	struct geni_i2c_dev *gi2c = platform_get_drvdata(pdev);
++
++	if (!pm_runtime_status_suspended(gi2c->se.dev))
++		pm_runtime_set_suspended(gi2c->se.dev);
++}
++
+ static int __maybe_unused geni_i2c_runtime_suspend(struct device *dev)
+ {
+ 	int ret;
+@@ -714,6 +722,7 @@ MODULE_DEVICE_TABLE(of, geni_i2c_dt_match);
+ static struct platform_driver geni_i2c_driver = {
+ 	.probe  = geni_i2c_probe,
+ 	.remove = geni_i2c_remove,
++	.shutdown = geni_i2c_shutdown,
+ 	.driver = {
+ 		.name = "geni_i2c",
+ 		.pm = &geni_i2c_pm_ops,
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
+of Code Aurora Forum, hosted by The Linux Foundation
+
