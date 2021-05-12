@@ -2,50 +2,51 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5689937EE35
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 May 2021 00:55:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9D64F37EF44
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 May 2021 01:11:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346339AbhELVND (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 May 2021 17:13:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41524 "EHLO
+        id S240758AbhELXB0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 May 2021 19:01:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46974 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1378784AbhELTRv (ORCPT
+        with ESMTP id S1390091AbhELVtY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 May 2021 15:17:51 -0400
-Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71E9FC06124F
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 May 2021 12:12:30 -0700 (PDT)
-Received: by mail-pf1-x42f.google.com with SMTP id x188so19319957pfd.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 May 2021 12:12:30 -0700 (PDT)
+        Wed, 12 May 2021 17:49:24 -0400
+Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE886C06175F
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 May 2021 14:47:53 -0700 (PDT)
+Received: by mail-pf1-x430.google.com with SMTP id h16so6972111pfk.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 May 2021 14:47:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=D4zra+2OcqLeXBKvPEfQ+zldqDvc4Lb04WXOVxk+t7s=;
-        b=JWHHEVS5nCGdCEZURurGEYLRNNXVXUG738rX1fWuCafwFTzCliVgm9lgg6Bnw/Qj10
-         GnY+2HlD5LoE6V6UhVfiz06hWvjjxirXJEFQx7tm4oxBU1dm3bm9N8TjnaTJn9tI4hsL
-         qQwKh+0QMUcBR2KzJ+M1BKuUT9BKjLeaEWL94=
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=N1sUYuNRtWpe5/0gBwMIZwmUciYoDGABR1xIt9TC6eM=;
+        b=YBGOjbBK1Lv4SSzr9vR844bjr8N+oPqsqXVS9OppNQix8L7AGlck8c67Q0v7jQAPyH
+         DOR//BlEIdfW067JNJ+TpdoSm3UTAMOB8+NX4ZlPQOgUNxI73rhKhy5odLsOIYbfpmpe
+         gar7Q7vsFCcqYajv4wWlR+Mdk9RmkFd583Ty8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=D4zra+2OcqLeXBKvPEfQ+zldqDvc4Lb04WXOVxk+t7s=;
-        b=QNEP4OtNugdeocUMlj1F7aX2uFMnMKsGJDYjUty3i9eg0cCaFG/K5X9x+d7bqirVwl
-         uI8dVoIPeIoFzYcYgduz4msVLBhFdAFNLo8ddGd0X18LQLAx+iT1UdvDKhKYOg8C30bO
-         HnaH9rTuqlBkX+n81u+2o8cY+/5E4Vm+K72vT/Eu8JQ0afw/Nv5ldvyGUGWXWqSzMNJt
-         aCCS2t/05LgUp5PVni+jt5RRg9Y2AIJ7kuBXWpopKjgkSSO2UTx2OSHBLuCNLKBc976N
-         naPhci5ss+SDpLh9DFGPG1gCZGRbTfaIiNULXzXymXMC7pfxYJ/Kyqv3KzteeixmJMYG
-         6e2Q==
-X-Gm-Message-State: AOAM533WC3lK6K+jzuFGWuHssvo32ATaKkoAFYFdq9djL79KNEEv5rrP
-        0LVpolmw5LvPnf2zk9hBKDExdQ==
-X-Google-Smtp-Source: ABdhPJykVjZEJ1xEZyXdu11r8zsTbD/6AB5b0X6vdDk11oVIuICCbksL/S4dmlwsDNEVd2hmNTK08w==
-X-Received: by 2002:aa7:8503:0:b029:27d:497f:1da6 with SMTP id v3-20020aa785030000b029027d497f1da6mr37664610pfn.28.1620846750001;
-        Wed, 12 May 2021 12:12:30 -0700 (PDT)
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=N1sUYuNRtWpe5/0gBwMIZwmUciYoDGABR1xIt9TC6eM=;
+        b=ntMCNCnOYrj+DzJHrjLq1AU907SA9oSlpl5Nr5+zRwXJj/TIS/9dnnHwqJhaO15zIL
+         6eX9YHD9zYvvSAyi3jS8YOzv7pIwWvWEzi79Ge+uEQEzDy3QHmZwsR11Z8nlIGYLwxB7
+         KO1Wh7d6+JI64SKhuXjmXD5w1h33N4JQ1NCob02THWMzVftus+Kt+xXoQbMzYH2U/wfN
+         PC15+qwgyjMqhtuSXMs62Y/BtlDmjm5iFCnMfOwuy2Pp3e9hO58iIhZx0KI3YFTFt4hR
+         chwI5S2oITmY3jZsY6Nkux2LOSh600pub1sTqOxzOKgFS1Hn5F8p+450vnhBznbqqRrL
+         FlzA==
+X-Gm-Message-State: AOAM530UI4fXD9JPiFnCtMjIk0/k2Rk/coPBN7Yd3a6pbNVqYUdAfB4S
+        uTej74A4NURrb7tevnHCgsDDLg==
+X-Google-Smtp-Source: ABdhPJzyYEFFCFF3ZAAPgV0TudErY54r0ya7cQySaETLzoT/B5u7qP3W8ckLBKfcjrYik66Ir6w+9g==
+X-Received: by 2002:a05:6a00:14cb:b029:2be:1466:5a28 with SMTP id w11-20020a056a0014cbb02902be14665a28mr18204262pfu.55.1620856073353;
+        Wed, 12 May 2021 14:47:53 -0700 (PDT)
 Received: from localhost ([2620:15c:202:201:a89e:5bb2:e8e0:4428])
-        by smtp.gmail.com with UTF8SMTPSA id t4sm473715pfq.165.2021.05.12.12.12.27
+        by smtp.gmail.com with UTF8SMTPSA id t26sm611645pfg.12.2021.05.12.14.47.51
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 12 May 2021 12:12:29 -0700 (PDT)
-Date:   Wed, 12 May 2021 12:12:26 -0700
+        Wed, 12 May 2021 14:47:52 -0700 (PDT)
+Date:   Wed, 12 May 2021 14:47:50 -0700
 From:   Matthias Kaehlcke <mka@chromium.org>
 To:     Felipe Balbi <balbi@kernel.org>
 Cc:     Sandeep Maheswaram <sanm@codeaurora.org>,
@@ -56,109 +57,88 @@ Cc:     Sandeep Maheswaram <sanm@codeaurora.org>,
         Doug Anderson <dianders@chromium.org>,
         linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
         linux-kernel@vger.kernel.org, Manu Gautam <mgautam@codeaurora.org>
-Subject: Re: [PATCH v7 1/5] usb: dwc3: host: Set PHY mode during suspend
-Message-ID: <YJwommGqKVeMdXth@google.com>
+Subject: Re: [PATCH v7 2/5] usb: dwc3: core: Host wake up support from system
+ suspend
+Message-ID: <YJxNBm0WiMqjJ2Cg@google.com>
 References: <1619586716-8687-1-git-send-email-sanm@codeaurora.org>
- <1619586716-8687-2-git-send-email-sanm@codeaurora.org>
- <87tunqka2e.fsf@kernel.org>
+ <1619586716-8687-3-git-send-email-sanm@codeaurora.org>
+ <87r1iuk9vs.fsf@kernel.org>
+ <184ddea9-643f-91ea-6d1f-5bdd26373e53@codeaurora.org>
+ <87h7jkhxmw.fsf@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <87tunqka2e.fsf@kernel.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87h7jkhxmw.fsf@kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Apr 28, 2021 at 12:55:21PM +0300, Felipe Balbi wrote:
+On Mon, May 03, 2021 at 02:20:23PM +0300, Felipe Balbi wrote:
 > 
 > Hi,
 > 
 > Sandeep Maheswaram <sanm@codeaurora.org> writes:
-> > During suspend read the status of all port and make sure the PHYs
-> > are in the correct mode based on current speed.
-> > Phy interrupt masks are set based on this mode. Keep track of the mode
-> > of the HS PHY to be able to configure wakeup properly.
+> >> Sandeep Maheswaram <sanm@codeaurora.org> writes:
+> >>> Avoiding phy powerdown when wakeup capable devices are connected
+> >>> by checking phy_power_off flag.
+> >>> Phy should be on to wake up the device from suspend using wakeup capable
+> >>> devices such as keyboard and mouse.
+> >>>
+> >>> Signed-off-by: Sandeep Maheswaram <sanm@codeaurora.org>
+> >>> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+> >>> ---
+> >>>   drivers/usb/dwc3/core.c | 7 +++++--
+> >>>   1 file changed, 5 insertions(+), 2 deletions(-)
+> >>>
+> >>> diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
+> >>> index b6e53d8..bb414c3 100644
+> >>> --- a/drivers/usb/dwc3/core.c
+> >>> +++ b/drivers/usb/dwc3/core.c
+> >>> @@ -1738,7 +1738,7 @@ static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
+> >>>   		dwc3_core_exit(dwc);
+> >>>   		break;
+> >>>   	case DWC3_GCTL_PRTCAP_HOST:
+> >>> -		if (!PMSG_IS_AUTO(msg)) {
+> >>> +		if (!PMSG_IS_AUTO(msg) && dwc->phy_power_off) {
+> >> should be able to detect this generically, no? Shouldn't
+> >> device_may_wakeup() be valid here and give you the answer you want?
 > >
-> > Also check during suspend if any wakeup capable devices are
-> > connected to the controller (directly or through hubs), if there
-> > are none set a flag to indicate that the PHY should be powered
-> > down during suspend.
-> >
-> > Signed-off-by: Sandeep Maheswaram <sanm@codeaurora.org>
-> > ---
-> >  drivers/usb/dwc3/core.h |  3 +++
-> >  drivers/usb/dwc3/host.c | 59 +++++++++++++++++++++++++++++++++++++++++++++++++
-> >  2 files changed, 62 insertions(+)
-> >
-> > diff --git a/drivers/usb/dwc3/core.h b/drivers/usb/dwc3/core.h
-> > index b1e875c..cecd278 100644
-> > --- a/drivers/usb/dwc3/core.h
-> > +++ b/drivers/usb/dwc3/core.h
-> > @@ -1123,6 +1123,9 @@ struct dwc3 {
-> >  
-> >  	bool			phys_ready;
-> >  
-> > +	unsigned int            hs_phy_mode;
-> > +	bool			phy_power_off;
-> > +
-> >  	struct ulpi		*ulpi;
-> >  	bool			ulpi_ready;
-> >  
-> > diff --git a/drivers/usb/dwc3/host.c b/drivers/usb/dwc3/host.c
-> > index f29a264..527f04c 100644
-> > --- a/drivers/usb/dwc3/host.c
-> > +++ b/drivers/usb/dwc3/host.c
-> > @@ -11,6 +11,14 @@
-> >  #include <linux/platform_device.h>
-> >  
-> >  #include "core.h"
-> > +#include "../host/xhci.h"
-> > +#include "../host/xhci-plat.h"
-> > +
-> > +static int xhci_dwc3_suspend_quirk(struct usb_hcd *hcd);
-> > +
-> > +static const struct xhci_plat_priv xhci_plat_dwc3_xhci = {
-> > +	.suspend_quirk = xhci_dwc3_suspend_quirk,
-> > +};
+> > I think  device_may_wakeup() gives whether the controller is wake up 
+> > capable or not.
 > 
-> we're passing data using device_properties, why do you want this here?
+> Yes, but it's a bit more than that. Looking at devices.rst we read:
 > 
-> > @@ -115,6 +123,13 @@ int dwc3_host_init(struct dwc3 *dwc)
-> >  		}
-> >  	}
-> >  
-> > +	ret = platform_device_add_data(xhci, &xhci_plat_dwc3_xhci,
-> > +			sizeof(struct xhci_plat_priv));
-> > +	if (ret) {
-> > +		dev_err(dwc->dev, "failed to add data to xHCI\n");
-> > +		goto err;
-> > +	}
-> > +
-> >  	ret = platform_device_add(xhci);
-> >  	if (ret) {
-> >  		dev_err(dwc->dev, "failed to register xHCI device\n");
-> > @@ -127,6 +142,50 @@ int dwc3_host_init(struct dwc3 *dwc)
-> >  	return ret;
-> >  }
-> >  
-> > +static void dwc3_set_phy_mode(struct usb_hcd *hcd)
-> > +{
-> > +
-> > +	int i, num_ports;
-> > +	u32 reg;
-> > +	unsigned int ss_phy_mode = 0;
-> > +	struct dwc3 *dwc = dev_get_drvdata(hcd->self.controller->parent);
-> > +	struct xhci_hcd	*xhci_hcd = hcd_to_xhci(hcd);
-> > +
-> > +	dwc->hs_phy_mode = 0;
-> > +
-> > +	reg = readl(&xhci_hcd->cap_regs->hcs_params1);
-> > +	num_ports = HCS_MAX_PORTS(reg);
+> If :c:func:`device_may_wakeup(dev)` returns ``true``, the device should be
+> prepared for generating hardware wakeup signals to trigger a system wakeup event
+> when the system is in the sleep state.  For example, :c:func:`enable_irq_wake()`
+> might identify GPIO signals hooked up to a switch or other external hardware,
+> and :c:func:`pci_enable_wake()` does something similar for the PCI PME signal.
 > 
-> there's a big assumption here that xhci is still alive. Why isn't this
-> quirk implemented in xhci-plat itself?
+> So, if there is a condition where $this device has to, somehow, deal
+> with wakeup, it should be configured accordingly. This ->phy_power_off
+> flag is telling us the same thing.
+> 
+> > But we want to keep phy powered on only when some wakeup capable devices 
+> > (eg:keyboard ,mouse ) are connected to controller.
+> 
+> Understood, it could be that we're missing some method for propagating
+> that state (i.e. keyboard with PM support) up to the parent device, but
+> that's no excuse to bypass driver boundaries. Wouldn't you agree?
 
-That should work for determining which types of devices are connected to
-the PHYs, however IIUC the xhci-plat doesn't know about the PHY topology.
-Are you suggesting to move that info into the xhci-plat driver so that it
-can set the corresponding PHY modes?
+I'm not sure if device_may_wakeup() is really the right tool for the
+job. This is the current implementation:
+
+static inline bool device_may_wakeup(struct device *dev)
+{
+	return dev->power.can_wakeup && !!dev->power.wakeup;
+}
+
+IIUC power.can_wakeup specifies whether the device is wakeup
+capable, primarily in physical terms and indicating that the
+driver is ready to handle wakeups, and power.wakeup represents
+the policy which can be changed by userspace.
+
+Supposing the hub is generally wakeup capable that flag
+shouldn't be changed. Neither should be the policy based on
+what is connected to the bus.
