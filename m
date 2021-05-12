@@ -2,108 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EE05637D12B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 May 2021 19:54:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7785237EE37
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 May 2021 00:55:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240345AbhELRsp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 May 2021 13:48:45 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:64500 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348185AbhELRcA (ORCPT
+        id S231340AbhELVNI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 May 2021 17:13:08 -0400
+Received: from mail-ot1-f54.google.com ([209.85.210.54]:44555 "EHLO
+        mail-ot1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1385224AbhELUH2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 May 2021 13:32:00 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1620840652; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=7oUoGyjrFKYwW1zHjHfoOw/G0kalViUlyRPQ/f7iQmc=;
- b=NQeA2kyoJdn2rNr0oKimdmTqIRWWroAdlWXfaZA9kKV1a1rvB82JDpsSyXRMD4bmMbeHpidS
- oZTSBKvtYUIfXuMC6QuDZTfIlJEwu0AFGuNgbuJ1H/Ec8Ti1sh2avVQXyMWcEDt1SdXL+1WA
- csogZPiCVdcyia5CY+EaupRHGec=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
- 609c10c0938a1a6b8f6e38cb (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 12 May 2021 17:30:40
- GMT
-Sender: khsieh=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 5DDFFC433F1; Wed, 12 May 2021 17:30:40 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=ham autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: khsieh)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0C505C433D3;
-        Wed, 12 May 2021 17:30:39 +0000 (UTC)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Wed, 12 May 2021 10:30:39 -0700
-From:   khsieh@codeaurora.org
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>, agross@kernel.org,
-        bjorn.andersson@linaro.org, robdclark@gmail.com, sean@poorly.run,
-        abhinavk@codeaurora.org, aravindh@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] drm/msm/dp: handle irq_hpd with sink_count = 0 correctly
-In-Reply-To: <YJtnPt63yK4zP3O1@vkoul-mobl.Dlink>
-References: <1620251521-29999-1-git-send-email-khsieh@codeaurora.org>
- <CAE-0n50HUo0tm22xX+j8H-u+EDH+wBrdEvM68p-X3EyR8S_u3Q@mail.gmail.com>
- <YJtnPt63yK4zP3O1@vkoul-mobl.Dlink>
-Message-ID: <868dbca9a30e0d6a6d51f5e559b12ea3@codeaurora.org>
-X-Sender: khsieh@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+        Wed, 12 May 2021 16:07:28 -0400
+Received: by mail-ot1-f54.google.com with SMTP id r26-20020a056830121ab02902a5ff1c9b81so21670766otp.11;
+        Wed, 12 May 2021 13:06:19 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
+         :message-id;
+        bh=bDpn0xOsJEyqotdRpMYjw+ug9Gx1M8eSNlxTk3hCNS0=;
+        b=cmLz7KCd4yXLXRfhpG/QNuLXC2EJEQaeTVBvTIEL+IqHWOd9TOTpNQ7+B8EP2fban0
+         x85Nvz0Opy/N4OSMZ8Slb9QtjHbMY7PdH4KV5khFgr/s1OYBl6b4LT1l5Zi+P6EMXTNv
+         Zi1fjrdNzhLuLUQ4xcb8/XtuB2sKbomIGhLIkO7OJrRSQ+VCJj8aln1wQiTMXwk3V9P7
+         qIRCtp6c8Kx0EQsDbfsvhJxkPmz8PCBbjhJLBu0EG0j1k2hCYGr5QxwIO5Gg11fj5VUc
+         1hMKK5bn6TK2kd7D63nH3KXsBj8ZcepBvlSbM6ozwI+LCCFC13Nt8ylnd0H9aROwmESD
+         elug==
+X-Gm-Message-State: AOAM531PTrudS7wIykYarpFvbEVc+KxXUqfnPf1yn9nAF7OmLGCXcG09
+        Rt6vGkSV/9soQOXzJsoqrahTqAssEQ==
+X-Google-Smtp-Source: ABdhPJyELr+EXup1zcc4RnO7m+0mc55//JTIHHm1eW0apyiwBCZ/i+5RMJseKGRLph6YtmWi0wGeCg==
+X-Received: by 2002:a05:6830:30bc:: with SMTP id g28mr31982488ots.43.1620849979543;
+        Wed, 12 May 2021 13:06:19 -0700 (PDT)
+Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id k7sm215496ood.36.2021.05.12.13.06.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 12 May 2021 13:06:18 -0700 (PDT)
+Received: (nullmailer pid 204075 invoked by uid 1000);
+        Wed, 12 May 2021 18:35:16 -0000
+From:   Rob Herring <robh@kernel.org>
+To:     Jonathan Marek <jonathan@marek.ca>
+Cc:     devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, andrey.konovalov@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Todor Tomov <todor.too@gmail.com>, robert.foss@linaro.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+In-Reply-To: <20210511180728.23781-18-jonathan@marek.ca>
+References: <20210511180728.23781-1-jonathan@marek.ca> <20210511180728.23781-18-jonathan@marek.ca>
+Subject: Re: [PATCH 17/17] media: dt-bindings: media: camss: Add qcom,sm8250-camss binding
+Date:   Wed, 12 May 2021 13:35:16 -0500
+Message-Id: <1620844516.475963.204074.nullmailer@robh.at.kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-05-11 22:27, Vinod Koul wrote:
-> On 10-05-21, 11:15, Stephen Boyd wrote:
->> Quoting Kuogee Hsieh (2021-05-05 14:52:01)
->> > @@ -1414,6 +1416,10 @@ void dp_ctrl_host_deinit(struct dp_ctrl *dp_ctrl)
->> >         phy = dp_io->phy;
->> >
->> >         dp_catalog_ctrl_enable_irq(ctrl->catalog, false);
->> > +
->> > +       if (phy->power_count)
->> > +               phy_power_off(phy);
->> > +
->> >         phy_exit(phy);
->> >
->> >         DRM_DEBUG_DP("Host deinitialized successfully\n");
->> > @@ -1445,7 +1451,6 @@ static int dp_ctrl_reinitialize_mainlink(struct dp_ctrl_private *ctrl)
->> >
->> >         dp_catalog_ctrl_mainlink_ctrl(ctrl->catalog, false);
->> >         opts_dp->lanes = ctrl->link->link_params.num_lanes;
->> > -       phy_configure(phy, &dp_io->phy_opts);
->> >         /*
->> >          * Disable and re-enable the mainlink clock since the
->> >          * link clock might have been adjusted as part of the
->> > @@ -1456,9 +1461,13 @@ static int dp_ctrl_reinitialize_mainlink(struct dp_ctrl_private *ctrl)
->> >                 DRM_ERROR("Failed to disable clocks. ret=%d\n", ret);
->> >                 return ret;
->> >         }
->> > -       phy_power_off(phy);
->> > -       /* hw recommended delay before re-enabling clocks */
->> > -       msleep(20);
->> > +
->> > +       if (phy->power_count) {
->> 
->> I don't believe members of 'phy' are supposed to be looked at by 
->> various
->> phy consumer drivers. Vinod, is that right?
+On Tue, 11 May 2021 14:07:24 -0400, Jonathan Marek wrote:
+> Add bindings for qcom,sm8250-camss in order to support the camera
+> subsystem for SM8250.
 > 
-> That is correct, we should not be doing that. And IMO this code is
-> redundant, the phy core will check power_count and invoke drivers
-> .power_off accordingly, so should be removed...
+> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+> ---
+>  .../bindings/media/qcom,sm8250-camss.yaml     | 398 ++++++++++++++++++
+>  1 file changed, 398 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/media/qcom,sm8250-camss.yaml
 > 
-> Thanks
 
-ok, v2 patch uploaded to address this issue.
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
+
+yamllint warnings/errors:
+
+dtschema/dtc warnings/errors:
+Documentation/devicetree/bindings/media/qcom,sm8250-camss.example.dts:20:18: fatal error: dt-bindings/clock/qcom,camcc-sm8250.h: No such file or directory
+   20 |         #include <dt-bindings/clock/qcom,camcc-sm8250.h>
+      |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+compilation terminated.
+make[1]: *** [scripts/Makefile.lib:380: Documentation/devicetree/bindings/media/qcom,sm8250-camss.example.dt.yaml] Error 1
+make[1]: *** Waiting for unfinished jobs....
+make: *** [Makefile:1416: dt_binding_check] Error 2
+
+See https://patchwork.ozlabs.org/patch/1477274
+
+This check can fail if there are any dependencies. The base for a patch
+series is generally the most recent rc1.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit.
+
