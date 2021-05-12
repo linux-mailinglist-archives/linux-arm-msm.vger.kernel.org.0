@@ -2,172 +2,340 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9981D37D128
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 May 2021 19:54:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3991E37D129
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 May 2021 19:54:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239674AbhELRsc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 May 2021 13:48:32 -0400
-Received: from gateway34.websitewelcome.com ([192.185.148.142]:48515 "EHLO
-        gateway34.websitewelcome.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1344859AbhELRCy (ORCPT
+        id S238787AbhELRsm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 May 2021 13:48:42 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:64500 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S239159AbhELRap (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 May 2021 13:02:54 -0400
-X-Greylist: delayed 1442 seconds by postgrey-1.27 at vger.kernel.org; Wed, 12 May 2021 13:02:54 EDT
-Received: from cm17.websitewelcome.com (cm17.websitewelcome.com [100.42.49.20])
-        by gateway34.websitewelcome.com (Postfix) with ESMTP id E357A478D8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 May 2021 11:37:25 -0500 (CDT)
-Received: from gator4166.hostgator.com ([108.167.133.22])
-        by cmsmtp with SMTP
-        id grrRluK0cMGeEgrrRlzLo5; Wed, 12 May 2021 11:37:25 -0500
-X-Authority-Reason: nr=8
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=embeddedor.com; s=default; h=Content-Transfer-Encoding:Content-Type:
-        In-Reply-To:MIME-Version:Date:Message-ID:From:References:Cc:To:Subject:Sender
-        :Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
-        Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
-        List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=Kyq9KuIG2zdCKlIloTSlN2gRTDBH/PRFSECmIEkdnb8=; b=uIijnBcYYSjbO3LEu5TWaSRHNf
-        4FvxoJSrD2IeDRCmFaFhY717HPT7GnS3cIVs8BgycE23xI1ztnDwX+3KLZRyTiTcsNGUV+LFGb1/m
-        +RGJK8bF/7lvliMuV1xuwB0SASlEXYG/H7uwfqqeXFN3/yBUyfVV79lzP91ydnujlDjfjOedwiENe
-        UviQHapORxa6CFHOni3fDtXLZc2e+sWqDxZmkmIi/2FqOSwdT5596P0gTqW/2eSrbNtRorJo8bAe/
-        emsRSbsTRFr6ZUsfHqsvH0Bl6SIENTJ/NHzpOyXvvF60sDJ/UQC5oZ03AQtLJCiiyM+0sE/llYSAQ
-        PH8BuUWQ==;
-Received: from 187-162-31-110.static.axtel.net ([187.162.31.110]:52952 helo=[192.168.15.8])
-        by gator4166.hostgator.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-        (Exim 4.94.2)
-        (envelope-from <gustavo@embeddedor.com>)
-        id 1lgrrN-003Xfo-Rz; Wed, 12 May 2021 11:37:21 -0500
-Subject: Re: [PATCH][next] media: venus: hfi_msgs.h: Replace one-element
- arrays with flexible-array members
-To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        "Gustavo A. R. Silva" <gustavoars@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>
-Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org
-References: <20210211001044.GA69612@embeddedor>
- <bf31beab-dc36-23e9-757f-9729be59f7b2@embeddedor.com>
- <de8538ad-48d8-7a3c-af4f-ab31ee2da761@linaro.org>
-From:   "Gustavo A. R. Silva" <gustavo@embeddedor.com>
-Message-ID: <f63824ee-fc8b-25cf-f3c2-c7b3947b8076@embeddedor.com>
-Date:   Wed, 12 May 2021 11:37:49 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.8.1
-MIME-Version: 1.0
-In-Reply-To: <de8538ad-48d8-7a3c-af4f-ab31ee2da761@linaro.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - gator4166.hostgator.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - embeddedor.com
-X-BWhitelist: no
-X-Source-IP: 187.162.31.110
-X-Source-L: No
-X-Exim-ID: 1lgrrN-003Xfo-Rz
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: 187-162-31-110.static.axtel.net ([192.168.15.8]) [187.162.31.110]:52952
-X-Source-Auth: gustavo@embeddedor.com
-X-Email-Count: 7
-X-Source-Cap: Z3V6aWRpbmU7Z3V6aWRpbmU7Z2F0b3I0MTY2Lmhvc3RnYXRvci5jb20=
-X-Local-Domain: yes
+        Wed, 12 May 2021 13:30:45 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1620840575; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=UflwmnQChaQlCsa3Tb1vT/Wzj+LkoGJrbouQ38Qv1pw=; b=ZpzHbuknHLjEKlpEMO4aryRvHaeQRWpWGlwix1I6565mXs8Ka8EthB2Kb8bz0rV5Z7T7pBdy
+ IcUM4XOB11mMiO99cB/2FXbCzzTmzs5FeofM5bogNG11Fb6L7OP5ciWMJj2lWyddrl5uA8+W
+ mjsGSp487T32fr+RXTz0TJzdBkA=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
+ 609c107ce0211609c43b067c (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 12 May 2021 17:29:32
+ GMT
+Sender: khsieh=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 99C29C4323A; Wed, 12 May 2021 17:29:32 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from khsieh-linux1.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: khsieh)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 8A9BEC43460;
+        Wed, 12 May 2021 17:29:29 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 8A9BEC43460
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=khsieh@codeaurora.org
+From:   Kuogee Hsieh <khsieh@codeaurora.org>
+To:     robdclark@gmail.com, sean@poorly.run, swboyd@chromium.org,
+        vkoul@kernel.org, agross@kernel.org, bjorn.andersson@linaro.org
+Cc:     abhinavk@codeaurora.org, aravindh@codeaurora.org,
+        khsieh@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH v2] drm/msm/dp: handle irq_hpd with sink_count = 0 correctly
+Date:   Wed, 12 May 2021 10:29:18 -0700
+Message-Id: <1620840558-28684-1-git-send-email-khsieh@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+irq_hpd interrupt should be handled after dongle plugged in and
+before dongle unplugged. Hence irq_hpd interrupt is enabled at
+the end of the plugin handle and disabled at the beginning of
+unplugged handle. Current irq_hpd with sink_count = 0 is wrongly
+handled same as the dongle unplugged which tears down the mainlink
+and disables the phy. This patch fixes this problem by only tearing
+down the mainlink but keeping phy enabled at irq_hpd with
+sink_count = 0 handle so that next irq_hpe with sink_count =1 can be
+handled by setup mainlink only.
 
+Changes in v2:
+-- add ctrl->phy_Power_count
 
-On 5/12/21 06:39, Stanimir Varbanov wrote:
-> Hi,
-> 
-> On 5/11/21 6:46 PM, Gustavo A. R. Silva wrote:
->> Hi all,
->>
->> Friendly ping:
->>
->> We are about to be able to globally enable -Warray-bounds and, these are one of
->> the last out-of-bounds warnings in linux-next.
->>
->> Could someone take this, please?
-> 
-> This one introduces regressions, so I cannot take it. It needs some more
-> work.
+Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
+---
+ drivers/gpu/drm/msm/dp/dp_catalog.c |  5 +--
+ drivers/gpu/drm/msm/dp/dp_ctrl.c    | 83 ++++++++++++++++++++++++++++++++++---
+ drivers/gpu/drm/msm/dp/dp_ctrl.h    |  2 +
+ drivers/gpu/drm/msm/dp/dp_display.c | 46 +++++++++++++++-----
+ 4 files changed, 118 insertions(+), 18 deletions(-)
 
-Please, share with me the errors or warnings you see with this. So, I can
-have an idea of what is going on. Unfortunately, I don't have access to the
-test suite or hardware to test this.
+diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.c b/drivers/gpu/drm/msm/dp/dp_catalog.c
+index b1a9b1b..f4f53f2 100644
+--- a/drivers/gpu/drm/msm/dp/dp_catalog.c
++++ b/drivers/gpu/drm/msm/dp/dp_catalog.c
+@@ -582,10 +582,9 @@ void dp_catalog_ctrl_hpd_config(struct dp_catalog *dp_catalog)
+ 
+ 	u32 reftimer = dp_read_aux(catalog, REG_DP_DP_HPD_REFTIMER);
+ 
+-	/* enable HPD interrupts */
++	/* enable HPD plug and unplug interrupts */
+ 	dp_catalog_hpd_config_intr(dp_catalog,
+-		DP_DP_HPD_PLUG_INT_MASK | DP_DP_IRQ_HPD_INT_MASK
+-		| DP_DP_HPD_UNPLUG_INT_MASK | DP_DP_HPD_REPLUG_INT_MASK, true);
++		DP_DP_HPD_PLUG_INT_MASK | DP_DP_HPD_UNPLUG_INT_MASK, true);
+ 
+ 	/* Configure REFTIMER and enable it */
+ 	reftimer |= DP_DP_HPD_REFTIMER_ENABLE;
+diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+index 8d59eb9..b5bed5f 100644
+--- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
++++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+@@ -77,6 +77,8 @@ struct dp_ctrl_private {
+ 	struct dp_parser *parser;
+ 	struct dp_catalog *catalog;
+ 
++	int phy_power_count;
++
+ 	struct opp_table *opp_table;
+ 
+ 	struct completion idle_comp;
+@@ -1334,8 +1336,11 @@ static int dp_ctrl_enable_mainlink_clocks(struct dp_ctrl_private *ctrl)
+ 	dp_ctrl_set_clock_rate(ctrl, DP_CTRL_PM, "ctrl_link",
+ 					ctrl->link->link_params.rate * 1000);
+ 
+-	phy_configure(phy, &dp_io->phy_opts);
+-	phy_power_on(phy);
++	if (!ctrl->phy_power_count) {
++		phy_configure(phy, &dp_io->phy_opts);
++		phy_power_on(phy);
++		ctrl->phy_power_count++;
++	}
+ 
+ 	ret = dp_power_clk_enable(ctrl->power, DP_CTRL_PM, true);
+ 	if (ret)
+@@ -1414,6 +1419,12 @@ void dp_ctrl_host_deinit(struct dp_ctrl *dp_ctrl)
+ 	phy = dp_io->phy;
+ 
+ 	dp_catalog_ctrl_enable_irq(ctrl->catalog, false);
++
++	if (ctrl->phy_power_count) {
++		phy_power_off(phy);
++		ctrl->phy_power_count--;
++	}
++
+ 	phy_exit(phy);
+ 
+ 	DRM_DEBUG_DP("Host deinitialized successfully\n");
+@@ -1456,7 +1467,12 @@ static int dp_ctrl_reinitialize_mainlink(struct dp_ctrl_private *ctrl)
+ 		DRM_ERROR("Failed to disable clocks. ret=%d\n", ret);
+ 		return ret;
+ 	}
+-	phy_power_off(phy);
++
++	if (ctrl->phy_power_count) {
++		phy_power_off(phy);
++		ctrl->phy_power_count--;
++	}
++
+ 	/* hw recommended delay before re-enabling clocks */
+ 	msleep(20);
+ 
+@@ -1487,7 +1503,11 @@ static int dp_ctrl_deinitialize_mainlink(struct dp_ctrl_private *ctrl)
+ 		DRM_ERROR("Failed to disable link clocks. ret=%d\n", ret);
+ 	}
+ 
+-	phy_power_off(phy);
++	if (ctrl->phy_power_count) {
++		phy_power_off(phy);
++		ctrl->phy_power_count--;
++	}
++
+ 	phy_exit(phy);
+ 
+ 	return 0;
+@@ -1811,6 +1831,55 @@ int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl)
+ 	return ret;
+ }
+ 
++int dp_ctrl_off_link_stream(struct dp_ctrl *dp_ctrl)
++{
++	struct dp_ctrl_private *ctrl;
++	int ret = 0;
++
++	if (!dp_ctrl)
++		return -EINVAL;
++
++	ctrl = container_of(dp_ctrl, struct dp_ctrl_private, dp_ctrl);
++
++	dp_catalog_ctrl_mainlink_ctrl(ctrl->catalog, false);
++
++	ret = dp_power_clk_enable(ctrl->power, DP_STREAM_PM, false);
++	if (ret)
++		DRM_ERROR("Failed to disable pixel clocks. ret=%d\n", ret);
++
++	ret = dp_power_clk_enable(ctrl->power, DP_CTRL_PM, false);
++	if (ret)
++		DRM_ERROR("Failed to disable link clocks. ret=%d\n", ret);
++
++	DRM_DEBUG_DP("DP off link/stream done\n");
++	return ret;
++}
++
++void dp_ctrl_off_phy(struct dp_ctrl *dp_ctrl)
++{
++	struct dp_ctrl_private *ctrl;
++	struct dp_io *dp_io;
++	struct phy *phy;
++
++	if (!dp_ctrl)
++		return;
++
++	ctrl = container_of(dp_ctrl, struct dp_ctrl_private, dp_ctrl);
++	dp_io = &ctrl->parser->io;
++	phy = dp_io->phy;
++
++	dp_catalog_ctrl_reset(ctrl->catalog);
++
++	if (ctrl->phy_power_count) {
++		phy_power_off(phy);
++		ctrl->phy_power_count--;
++	}
++
++	phy_exit(phy);
++
++	DRM_DEBUG_DP("DP off phy done\n");
++}
++
+ int dp_ctrl_off(struct dp_ctrl *dp_ctrl)
+ {
+ 	struct dp_ctrl_private *ctrl;
+@@ -1838,7 +1907,11 @@ int dp_ctrl_off(struct dp_ctrl *dp_ctrl)
+ 		DRM_ERROR("Failed to disable link clocks. ret=%d\n", ret);
+ 	}
+ 
+-	phy_power_off(phy);
++	if (ctrl->phy_power_count) {
++		phy_power_off(phy);
++		ctrl->phy_power_count--;
++	}
++
+ 	phy_exit(phy);
+ 
+ 	DRM_DEBUG_DP("DP off done\n");
+diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.h b/drivers/gpu/drm/msm/dp/dp_ctrl.h
+index a836bd3..25e4f75 100644
+--- a/drivers/gpu/drm/msm/dp/dp_ctrl.h
++++ b/drivers/gpu/drm/msm/dp/dp_ctrl.h
+@@ -23,6 +23,8 @@ int dp_ctrl_host_init(struct dp_ctrl *dp_ctrl, bool flip, bool reset);
+ void dp_ctrl_host_deinit(struct dp_ctrl *dp_ctrl);
+ int dp_ctrl_on_link(struct dp_ctrl *dp_ctrl);
+ int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl);
++int dp_ctrl_off_link_stream(struct dp_ctrl *dp_ctrl);
++void dp_ctrl_off_phy(struct dp_ctrl *dp_ctrl);
+ int dp_ctrl_off(struct dp_ctrl *dp_ctrl);
+ void dp_ctrl_push_idle(struct dp_ctrl *dp_ctrl);
+ void dp_ctrl_isr(struct dp_ctrl *dp_ctrl);
+diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+index 0ba71c7..c2b2050 100644
+--- a/drivers/gpu/drm/msm/dp/dp_display.c
++++ b/drivers/gpu/drm/msm/dp/dp_display.c
+@@ -570,6 +570,10 @@ static int dp_hpd_plug_handle(struct dp_display_private *dp, u32 data)
+ 		dp_add_event(dp, EV_CONNECT_PENDING_TIMEOUT, 0, tout);
+ 	}
+ 
++	/* enable HDP irq_hpd/replug interrupt */
++	dp_catalog_hpd_config_intr(dp->catalog,
++		DP_DP_IRQ_HPD_INT_MASK | DP_DP_HPD_REPLUG_INT_MASK, true);
++
+ 	mutex_unlock(&dp->event_mutex);
+ 
+ 	/* uevent will complete connection part */
+@@ -619,7 +623,26 @@ static int dp_hpd_unplug_handle(struct dp_display_private *dp, u32 data)
+ 	mutex_lock(&dp->event_mutex);
+ 
+ 	state = dp->hpd_state;
+-	if (state == ST_DISCONNECT_PENDING || state == ST_DISCONNECTED) {
++
++	/* disable irq_hpd/replug interrupts */
++	dp_catalog_hpd_config_intr(dp->catalog,
++		DP_DP_IRQ_HPD_INT_MASK | DP_DP_HPD_REPLUG_INT_MASK, false);
++
++	/* unplugged, no more irq_hpd handle */
++	dp_del_event(dp, EV_IRQ_HPD_INT);
++
++	if (state == ST_DISCONNECTED) {
++		/* triggered by irq_hdp with sink_count = 0 */
++		if (dp->link->sink_count == 0) {
++			dp_ctrl_off_phy(dp->ctrl);
++			hpd->hpd_high = 0;
++			dp->core_initialized = false;
++		}
++		mutex_unlock(&dp->event_mutex);
++		return 0;
++	}
++
++	if (state == ST_DISCONNECT_PENDING) {
+ 		mutex_unlock(&dp->event_mutex);
+ 		return 0;
+ 	}
+@@ -633,9 +656,8 @@ static int dp_hpd_unplug_handle(struct dp_display_private *dp, u32 data)
+ 
+ 	dp->hpd_state = ST_DISCONNECT_PENDING;
+ 
+-	/* disable HPD plug interrupt until disconnect is done */
+-	dp_catalog_hpd_config_intr(dp->catalog, DP_DP_HPD_PLUG_INT_MASK
+-				| DP_DP_IRQ_HPD_INT_MASK, false);
++	/* disable HPD plug interrupts */
++	dp_catalog_hpd_config_intr(dp->catalog, DP_DP_HPD_PLUG_INT_MASK, false);
+ 
+ 	hpd->hpd_high = 0;
+ 
+@@ -652,8 +674,8 @@ static int dp_hpd_unplug_handle(struct dp_display_private *dp, u32 data)
+ 	reinit_completion(&dp->audio_comp);
+ 	dp_display_handle_plugged_change(g_dp_display, false);
+ 
+-	dp_catalog_hpd_config_intr(dp->catalog, DP_DP_HPD_PLUG_INT_MASK |
+-					DP_DP_IRQ_HPD_INT_MASK, true);
++	/* enable HDP plug interrupt to prepare for next plugin */
++	dp_catalog_hpd_config_intr(dp->catalog, DP_DP_HPD_PLUG_INT_MASK, true);
+ 
+ 	/* uevent will complete disconnection part */
+ 	mutex_unlock(&dp->event_mutex);
+@@ -684,7 +706,7 @@ static int dp_irq_hpd_handle(struct dp_display_private *dp, u32 data)
+ 
+ 	/* irq_hpd can happen at either connected or disconnected state */
+ 	state =  dp->hpd_state;
+-	if (state == ST_DISPLAY_OFF) {
++	if (state == ST_DISPLAY_OFF || state == ST_SUSPENDED) {
+ 		mutex_unlock(&dp->event_mutex);
+ 		return 0;
+ 	}
+@@ -903,9 +925,13 @@ static int dp_display_disable(struct dp_display_private *dp, u32 data)
+ 
+ 	dp_display->audio_enabled = false;
+ 
+-	dp_ctrl_off(dp->ctrl);
+-
+-	dp->core_initialized = false;
++	/* triggered by irq_hpd with sink_count = 0 */
++	if (dp->link->sink_count == 0) {
++		dp_ctrl_off_link_stream(dp->ctrl);
++	} else {
++		dp_ctrl_off(dp->ctrl);
++		dp->core_initialized = false;
++	}
+ 
+ 	dp_display->power_on = false;
+ 
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
-Thanks!
---
-Gustavo
-
-
-
->>
->> Thanks
->> --
->> Gustavo
->>
->> On 2/10/21 18:10, Gustavo A. R. Silva wrote:
->>> There is a regular need in the kernel to provide a way to declare having
->>> a dynamically sized set of trailing elements in a structure. Kernel code
->>> should always use “flexible array members”[1] for these cases. The older
->>> style of one-element or zero-length arrays should no longer be used[2].
->>>
->>> Use flexible-array members in struct hfi_msg_sys_property_info_pkt and
->>> hfi_msg_session_property_info_pkt instead of one-element arrays.
->>>
->>> Also, this helps with the ongoing efforts to enable -Warray-bounds by
->>> fixing the following warnings:
->>>
->>>   CC [M]  drivers/media/platform/qcom/venus/hfi_msgs.o
->>> drivers/media/platform/qcom/venus/hfi_msgs.c: In function ‘hfi_sys_property_info’:
->>> drivers/media/platform/qcom/venus/hfi_msgs.c:246:35: warning: array subscript 1 is above array bounds of ‘u32[1]’ {aka ‘unsigned int[1]’} [-Warray-bounds]
->>>   246 |  if (req_bytes < 128 || !pkt->data[1] || pkt->num_properties > 1)
->>>       |                          ~~~~~~~~~^~~
->>> drivers/media/platform/qcom/venus/hfi_msgs.c: In function ‘hfi_session_prop_info’:
->>> drivers/media/platform/qcom/venus/hfi_msgs.c:342:62: warning: array subscript 1 is above array bounds of ‘u32[1]’ {aka ‘unsigned int[1]’} [-Warray-bounds]
->>>   342 |  if (!req_bytes || req_bytes % sizeof(*buf_req) || !pkt->data[1])
->>>       |                                                     ~~~~~~~~~^~~
->>>
->>> [1] https://en.wikipedia.org/wiki/Flexible_array_member
->>> [2] https://www.kernel.org/doc/html/v5.9/process/deprecated.html#zero-length-and-one-element-arrays
->>>
->>> Link: https://github.com/KSPP/linux/issues/79
->>> Link: https://github.com/KSPP/linux/issues/109
->>> Build-tested-by: <lkp@intel.com>
->>> Link: https://lore.kernel.org/lkml/6023dd80.MmTeFf8SzwX0iK7%2F%25lkp@intel.com/
->>> Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
->>> ---
->>>  drivers/media/platform/qcom/venus/hfi_msgs.h | 4 ++--
->>>  1 file changed, 2 insertions(+), 2 deletions(-)
->>>
->>> diff --git a/drivers/media/platform/qcom/venus/hfi_msgs.h b/drivers/media/platform/qcom/venus/hfi_msgs.h
->>> index 526d9f5b487b..e2d2ccfbdd24 100644
->>> --- a/drivers/media/platform/qcom/venus/hfi_msgs.h
->>> +++ b/drivers/media/platform/qcom/venus/hfi_msgs.h
->>> @@ -113,7 +113,7 @@ struct hfi_msg_sys_ping_ack_pkt {
->>>  struct hfi_msg_sys_property_info_pkt {
->>>  	struct hfi_pkt_hdr hdr;
->>>  	u32 num_properties;
->>> -	u32 data[1];
->>> +	u32 data[];
->>>  };
->>>  
->>>  struct hfi_msg_session_load_resources_done_pkt {
->>> @@ -233,7 +233,7 @@ struct hfi_msg_session_parse_sequence_header_done_pkt {
->>>  struct hfi_msg_session_property_info_pkt {
->>>  	struct hfi_session_hdr_pkt shdr;
->>>  	u32 num_properties;
->>> -	u32 data[1];
->>> +	u32 data[];
->>>  };
->>>  
->>>  struct hfi_msg_session_release_resources_done_pkt {
->>>
-> 
