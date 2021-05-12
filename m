@@ -2,117 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1EC7037B51C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 May 2021 06:47:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0298137B547
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 May 2021 07:01:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230017AbhELEsx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 May 2021 00:48:53 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:20141 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230010AbhELEsx (ORCPT
+        id S230017AbhELFDE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 May 2021 01:03:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47746 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229952AbhELFDE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 May 2021 00:48:53 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1620794865; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=IWt2toohdxLCE2CFRRMmRw4/HdGmAbB02mam/jKAH7k=;
- b=SlP8+Bau+CtmHKYEkoW/WAg9CHvBm7615AKmA+2CCs0SEi81fKm/qBT0VOSiTHofgeZKqN3a
- DMny5ApNaunITXGRVvx5t2vpNB9ST3oc1DpLoTlcaq9+2QkjA8C9boBMWNhJVfsByuNJP/EY
- xyAYZ4VO4Vvht3DHKMoi0yFKj8A=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
- 609b5df04ab9954eb8c8f4df (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 12 May 2021 04:47:44
- GMT
-Sender: skakit=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 72312C4323A; Wed, 12 May 2021 04:47:44 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: skakit)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id AB931C433D3;
-        Wed, 12 May 2021 04:47:43 +0000 (UTC)
+        Wed, 12 May 2021 01:03:04 -0400
+Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com [IPv6:2607:f8b0:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04CEBC06174A
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 May 2021 22:01:57 -0700 (PDT)
+Received: by mail-pg1-x530.google.com with SMTP id i14so17343056pgk.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 May 2021 22:01:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=wk1ENZDBAFMU6w2gyvcYa/1jSkHOtxtQDBw+BmtwlGU=;
+        b=DQuzxqW4+0js9J2BcgQRPteRY2Mh2dT6DWXY2YZjeDHTZrTw8JFJ4QqK44cpSyxyox
+         8UstzCJw627afRRGyogd+75XLhHvqkm3UKSOB4b2Qd4Vi8CAgmA8Voqm4UJpfjhrZSI4
+         kAA6e7k+8g38KIE9UyI+wwNfGG4nR7WYoW90nWQbcFMq43/TIvEs/CPirCkwn4zcG0CA
+         tI4RTGcQAv1Flpk1L7CysFE2V6OZVZESprT3Od/ivTSt4/lYRYEnjCICL9gLlJnqm3fI
+         lOokthnI4lFsdewdjsE0LCy5A4MkPSSjingMZtLg3SDnZVniNVkkTL5oYegiPzUnOZkS
+         W93A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=wk1ENZDBAFMU6w2gyvcYa/1jSkHOtxtQDBw+BmtwlGU=;
+        b=m0Yd4S9We0rw7kY/rBqk/bu/5t8ozMZY75AFpq4R3D4iB6u4tKwxR1F+QnwpYZZfWW
+         q4XYTYN7d8PNxHPVt0VHp/ULDQq5jooRApc2TQnWIZSuEDw8AyrN4lMFh3UBLafQviaj
+         Q/bVuHhy+Eff4gz9rtwgN6L4q/uDla0uZEZSWq8ttwX/ZCF+QImC9wer8IFRbKkQKd0R
+         uV1zwvi0OqNnd3cpOgS5xQSgOyb9r+vcz/HjamY6h35rhdpmy+c9GD/GC/2NJulEPRUL
+         jfvVfwnAtmtq01+X310DtSN67v4bCVR8kVc4j/Gcapycmo8C46yRxWNL7dY75uG+9LWB
+         Vv+A==
+X-Gm-Message-State: AOAM531D3SqlfPQZrSpEmxgD90bfA3WrNtGk/2mdRsq2A80ATgl7wnbj
+        7m4G2vkQWaG13Zb0U0FmFGcj
+X-Google-Smtp-Source: ABdhPJzYH/kP+PChTqQsbIn+71z7fW24n3ILff66BzQCXLH+mY2Cxl5SAzqgNhoyX/ydn5+bR41GVw==
+X-Received: by 2002:a63:38d:: with SMTP id 135mr34716690pgd.285.1620795716340;
+        Tue, 11 May 2021 22:01:56 -0700 (PDT)
+Received: from localhost.localdomain ([103.77.37.142])
+        by smtp.gmail.com with ESMTPSA id g2sm8115559pfj.218.2021.05.11.22.01.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 11 May 2021 22:01:55 -0700 (PDT)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     bjorn.andersson@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH 1/2] ARM: dts: qcom: sdx55-t55: Represent secure-regions as 64-bit elements
+Date:   Wed, 12 May 2021 10:31:40 +0530
+Message-Id: <20210512050141.43338-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Wed, 12 May 2021 10:17:43 +0530
-From:   skakit@codeaurora.org
-To:     Rob Herring <robh@kernel.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        kgunda@codeaurora.org, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Courtney Cavin <courtney.cavin@sonymobile.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Sebastian Reichel <sre@kernel.org>,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        David Collins <collinsd@codeaurora.org>,
-        Andy Yan <andy.yan@rock-chips.com>,
-        linux-kernel@vger.kernel.org, linux-input@vger.kernel.org,
-        devicetree@vger.kernel.org, Andy Gross <agross@kernel.org>
-Subject: Re: [PATCH V3 4/5] dt-bindings: input: pm8941-pwrkey: Convert pm8941
- power key binding to yaml
-In-Reply-To: <20210510162445.GA230005@robh.at.kernel.org>
-References: <1620630064-16354-1-git-send-email-skakit@codeaurora.org>
- <1620630064-16354-5-git-send-email-skakit@codeaurora.org>
- <1620655299.793818.41438.nullmailer@robh.at.kernel.org>
- <20210510162445.GA230005@robh.at.kernel.org>
-Message-ID: <c4e286ae6bd621a9d84184d5d014d060@codeaurora.org>
-X-Sender: skakit@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-05-10 21:54, Rob Herring wrote:
-> On Mon, May 10, 2021 at 09:01:39AM -0500, Rob Herring wrote:
->> On Mon, 10 May 2021 12:31:03 +0530, satya priya wrote:
->> > Convert qcom pm8941 power key binding from .txt to .yaml format.
->> >
->> > Signed-off-by: satya priya <skakit@codeaurora.org>
->> > ---
->> > Changes in V2:
->> >  - Fixed bot errors, took reference from input.yaml for "linux,code"
->> >  - Added one complete example for powerkey and resin, and referenced it
->> >    in main PON binding.
->> >  - Moved this patch to the end of the series.
->> >
->> > Changes in V3:
->> >  - Moved this patch before PON binding patch.
->> >  - As per Rob's comments, added allOf at the beginning of binding.
->> >    Added maxItems for interrupts.
->> >  - Added 'unevaluatedProperties' instead of 'additionalProperties' as
->> >    we are using allOf.
->> >
->> >  .../bindings/input/qcom,pm8941-pwrkey.txt          | 55 --------------
->> >  .../bindings/input/qcom,pm8941-pwrkey.yaml         | 87 ++++++++++++++++++++++
->> >  2 files changed, 87 insertions(+), 55 deletions(-)
->> >  delete mode 100644 Documentation/devicetree/bindings/input/qcom,pm8941-pwrkey.txt
->> >  create mode 100644 Documentation/devicetree/bindings/input/qcom,pm8941-pwrkey.yaml
->> >
->> 
->> My bot found errors running 'make DT_CHECKER_FLAGS=-m 
->> dt_binding_check'
->> on your patch (DT_CHECKER_FLAGS is new in v5.13):
->> 
->> yamllint warnings/errors:
->> 
->> dtschema/dtc warnings/errors:
->> Documentation/devicetree/bindings/input/qcom,pm8941-pwrkey.example.dt.yaml:0:0: 
->> /example-0/spmi@c440000/pmic@0/pon_hlos@1300: failed to match any 
->> schema with compatible: ['qcom,pm8998-pon']
-> 
-> You have the same example in patch 5, so drop the example here. That
-> will fix this circular dependency.
+The corresponding MTD code expects the regions to be of 64-bit elements.
+Hence, prefix "/bits/ 64", otherwise the regions will not be parsed
+correctly.
 
-Earlier I have dropped example from qcom-pon.yaml. Now, I will add the 
-example there and drop here.
+Fixes: 3263d4be5788 ("ARM: dts: qcom: sdx55: Add basic devicetree support for Thundercomm T55")
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+---
+ arch/arm/boot/dts/qcom-sdx55-t55.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/arm/boot/dts/qcom-sdx55-t55.dts b/arch/arm/boot/dts/qcom-sdx55-t55.dts
+index ddcd53aa533d..2ffcd085904d 100644
+--- a/arch/arm/boot/dts/qcom-sdx55-t55.dts
++++ b/arch/arm/boot/dts/qcom-sdx55-t55.dts
+@@ -250,7 +250,7 @@ nand@0 {
+ 		nand-ecc-step-size = <512>;
+ 		nand-bus-width = <8>;
+ 		/* efs2 partition is secured */
+-		secure-regions = <0x500000 0xb00000>;
++		secure-regions = /bits/ 64 <0x500000 0xb00000>;
+ 	};
+ };
+ 
+-- 
+2.25.1
+
