@@ -2,189 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D7DA937B6C2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 May 2021 09:20:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D34EF37B791
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 May 2021 10:12:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230176AbhELHV1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 May 2021 03:21:27 -0400
-Received: from mail.thorsis.com ([92.198.35.195]:60660 "EHLO mail.thorsis.com"
+        id S230307AbhELINH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 May 2021 04:13:07 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:51118 "EHLO m43-7.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230166AbhELHV1 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 May 2021 03:21:27 -0400
-Received: from localhost (localhost [127.0.0.1])
-        by mail.thorsis.com (Postfix) with ESMTP id 15FABF6A;
-        Wed, 12 May 2021 09:20:17 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at mail.thorsis.com
-Received: from mail.thorsis.com ([127.0.0.1])
-        by localhost (mail.thorsis.com [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id AYe52KTAIS14; Wed, 12 May 2021 09:20:17 +0200 (CEST)
-Received: by mail.thorsis.com (Postfix, from userid 109)
-        id E8D32119D; Wed, 12 May 2021 09:20:16 +0200 (CEST)
+        id S230284AbhELING (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 12 May 2021 04:13:06 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1620807118; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=z0fHUZecSYuqWomka6fjDkY05S5ZCmTD18gCyAwIM1E=; b=SikBjwnyId4WbD6Yq5UFem+v0IdyiYRzEZ6W6H0BEKF41VNSs/as31Uz2SvBopCYybGJhzX/
+ AZMqvdfKwjOd+Gq5Z5MfHEzsYY3gP1zw+UWcW6M5tw1Et8fmM5fDf0NbzvRU8dv35JvdBbY0
+ Q7VG1lK9Jny8j8v2cKMjzzPEaTE=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
+ 609b8db9938a1a6b8f0b6eca (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 12 May 2021 08:11:37
+ GMT
+Sender: sibis=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id A7677C43143; Wed, 12 May 2021 08:11:37 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,NO_RECEIVED,
-        NO_RELAYS,URIBL_BLOCKED autolearn=unavailable autolearn_force=no
-        version=3.4.2
-X-Spam-Report: * -1.9 BAYES_00 BODY: Bayes spam probability is 0 to 1%
-        *      [score: 0.0000]
-        *  0.0 URIBL_BLOCKED ADMINISTRATOR NOTICE: The query to URIBL was
-        *      blocked.  See
-        *      http://wiki.apache.org/spamassassin/DnsBlocklists#dnsbl-block
-        *      for more information.
-        *      [URIs: microchip.com]
-        * -0.0 NO_RELAYS Informational: message was not relayed via SMTP
-        * -0.0 NO_RECEIVED Informational: message has no Received headers
-Date:   Wed, 12 May 2021 09:19:54 +0200
-From:   Alexander Dahl <ada@thorsis.com>
-To:     Matthias Kaehlcke <mka@chromium.org>
-Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Alan Stern <stern@rowland.harvard.edu>,
-        Rob Herring <robh+dt@kernel.org>,
-        Frank Rowand <frowand.list@gmail.com>,
-        Michal Simek <michal.simek@xilinx.com>,
-        devicetree@vger.kernel.org,
-        Douglas Anderson <dianders@chromium.org>,
-        linux-usb@vger.kernel.org, Peter Chen <peter.chen@kernel.org>,
-        linux-kernel@vger.kernel.org, Stephen Boyd <swboyd@chromium.org>,
-        Ravi Chandra Sadineni <ravisadineni@chromium.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Bastien Nocera <hadess@hadess.net>,
-        Al Cooper <alcooperx@gmail.com>,
-        "Alexander A. Klimov" <grandmaster@al2klimov.de>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Christian Lamparter <chunkeey@googlemail.com>,
-        Colin Ian King <colin.king@canonical.com>,
-        Dmitry Osipenko <digetx@gmail.com>,
-        Fabio Estevam <festevam@gmail.com>,
-        Masahiro Yamada <masahiroy@kernel.org>,
-        Mathias Nyman <mathias.nyman@intel.com>,
-        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v10 0/5] USB: misc: Add onboard_usb_hub driver
-Message-ID: <YJuBmlPSaJlyVuzW@ada-deb-carambola.ifak-system.com>
-Mail-Followup-To: Matthias Kaehlcke <mka@chromium.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Alan Stern <stern@rowland.harvard.edu>,
-        Rob Herring <robh+dt@kernel.org>,
-        Frank Rowand <frowand.list@gmail.com>,
-        Michal Simek <michal.simek@xilinx.com>, devicetree@vger.kernel.org,
-        Douglas Anderson <dianders@chromium.org>, linux-usb@vger.kernel.org,
-        Peter Chen <peter.chen@kernel.org>, linux-kernel@vger.kernel.org,
-        Stephen Boyd <swboyd@chromium.org>,
-        Ravi Chandra Sadineni <ravisadineni@chromium.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Bastien Nocera <hadess@hadess.net>, Al Cooper <alcooperx@gmail.com>,
-        "Alexander A. Klimov" <grandmaster@al2klimov.de>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Christian Lamparter <chunkeey@googlemail.com>,
-        Colin Ian King <colin.king@canonical.com>,
-        Dmitry Osipenko <digetx@gmail.com>,
-        Fabio Estevam <festevam@gmail.com>,
-        Masahiro Yamada <masahiroy@kernel.org>,
-        Mathias Nyman <mathias.nyman@intel.com>,
-        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org
-References: <20210511225223.550762-1-mka@chromium.org>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210511225223.550762-1-mka@chromium.org>
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from blr-ubuntu-87.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: sibis)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 76454C433F1;
+        Wed, 12 May 2021 08:11:33 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 76454C433F1
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=sibis@codeaurora.org
+From:   Sibi Sankar <sibis@codeaurora.org>
+To:     bjorn.andersson@linaro.org, dianders@chromium.org, mka@chromium.org
+Cc:     viresh.kumar@linaro.org, sboyd@kernel.org, agross@kernel.org,
+        robh+dt@kernel.org, rjw@rjwysocki.net,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        Sibi Sankar <sibis@codeaurora.org>
+Subject: [PATCH v3 0/2] DDR/L3 Scaling support on SC7280 SoCs
+Date:   Wed, 12 May 2021 13:41:21 +0530
+Message-Id: <1620807083-5451-1-git-send-email-sibis@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello Matthias,
+The patch series adds support for DDR/L3 Scaling on SC7280 SoCs.
 
-just a curious informal question, see below.
+V3:
+ * Rename opp table nodes [Matthias]
+ * Rename opp phandles [Doug]
 
-Am Tue, May 11, 2021 at 03:52:18PM -0700 schrieb Matthias Kaehlcke:
-> This series adds:
-> - the onboard_usb_hub_driver
-> - glue in the xhci-plat driver to create the onboard_usb_hub
->   platform device if needed
-> - a device tree binding for the Realtek RTS5411 USB hub controller
-> - device tree changes that add RTS5411 entries for the QCA SC7180
->   based boards trogdor and lazor
-> - a couple of stubs for platform device functions to avoid
->   unresolved symbols with certain kernel configs
-> 
-> The main issue the driver addresses is that a USB hub needs to be
-> powered before it can be discovered. For discrete onboard hubs (an
-> example for such a hub is the Realtek RTS5411) this is often solved
-> by supplying the hub with an 'always-on' regulator, which is kind
-> of a hack. Some onboard hubs may require further initialization
-> steps, like changing the state of a GPIO or enabling a clock, which
-> requires even more hacks. This driver creates a platform device
-> representing the hub which performs the necessary initialization.
-> Currently it only supports switching on a single regulator, support
-> for multiple regulators or other actions can be added as needed.
-> Different initialization sequences can be supported based on the
-> compatible string.
+V2:
+ * Add a new opp table for cpu 7 to account for the additional frequencies
+   supported by it.
 
-This sounds like it would be useful for other hub controllers as well?
-For example, would the Microchip USB3503 (former SMSC,
-drivers/usb/misc/usb3503.c, [1]) fall into this category? That chip is
-used on the "Cubietech Cubietruck Plus" for example.
+Depends on the following patch series:
+L3 Provider Support: https://lore.kernel.org/lkml/1618556290-28303-1-git-send-email-okukatla@codeaurora.org/
+CPUfreq Support: https://lore.kernel.org/lkml/1618020280-5470-2-git-send-email-tdas@codeaurora.org/
+RPMH Provider Support: https://lore.kernel.org/lkml/1619517059-12109-1-git-send-email-okukatla@codeaurora.org/
 
-> Besides performing the initialization the driver can be configured
-> to power the hub off during system suspend. This can help to extend
-> battery life on battery powered devices which have no requirements
-> to keep the hub powered during suspend. The driver can also be
-> configured to leave the hub powered when a wakeup capable USB device
-> is connected when suspending, and power it off otherwise.
+It also depends on L3 and cpufreq dt nodes from the ^^ series to not have
+overlapping memory regions.
 
-Sounds interesting.
+Sibi Sankar (2):
+  cpufreq: blacklist SC7280 in cpufreq-dt-platdev
+  arm64: dts: qcom: sc7280: Add cpu OPP tables
 
-Greets
-Alex
+ arch/arm64/boot/dts/qcom/sc7280.dtsi | 215 +++++++++++++++++++++++++++++++++++
+ drivers/cpufreq/cpufreq-dt-platdev.c |   1 +
+ 2 files changed, 216 insertions(+)
 
-[1] https://www.microchip.com/wwwproducts/en/USB3503
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
-> Changes in v10:
-> - always use of_is_onboard_usb_hub() stub unless ONBOARD_USB_HUB=y/m
-> - keep 'regulator-boot-on' property for pp3300_hub
-> 
-> Changes in v9:
-> - added dependency on ONBOARD_USB_HUB (or !!ONBOARD_USB_HUB) to
->   USB_PLATFORM_XHCI
-> 
-> Changes in v7:
-> - updated DT binding
-> - series rebased on qcom/arm64-for-5.13
-> 
-> Changes in v6:
-> - updated summary
-> 
-> Changes in v5:
-> - cover letter added
-> 
-> Matthias Kaehlcke (5):
->   dt-bindings: usb: Add binding for Realtek RTS5411 hub controller
->   USB: misc: Add onboard_usb_hub driver
->   of/platform: Add stubs for of_platform_device_create/destroy()
->   usb: host: xhci-plat: Create platform device for onboard hubs in
->     probe()
->   arm64: dts: qcom: sc7180-trogdor: Add nodes for onboard USB hub
-> 
->  .../sysfs-bus-platform-onboard-usb-hub        |   8 +
->  .../bindings/usb/realtek,rts5411.yaml         |  62 +++
->  MAINTAINERS                                   |   7 +
->  .../boot/dts/qcom/sc7180-trogdor-lazor-r0.dts |  19 +-
->  .../boot/dts/qcom/sc7180-trogdor-lazor-r1.dts |  11 +-
->  .../arm64/boot/dts/qcom/sc7180-trogdor-r1.dts |  19 +-
->  arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi  |  19 +-
->  drivers/usb/host/Kconfig                      |   1 +
->  drivers/usb/host/xhci-plat.c                  |  16 +
->  drivers/usb/misc/Kconfig                      |  17 +
->  drivers/usb/misc/Makefile                     |   1 +
->  drivers/usb/misc/onboard_usb_hub.c            | 415 ++++++++++++++++++
->  include/linux/of_platform.h                   |  22 +-
->  include/linux/usb/hcd.h                       |   2 +
->  include/linux/usb/onboard_hub.h               |  15 +
->  15 files changed, 600 insertions(+), 34 deletions(-)
->  create mode 100644 Documentation/ABI/testing/sysfs-bus-platform-onboard-usb-hub
->  create mode 100644 Documentation/devicetree/bindings/usb/realtek,rts5411.yaml
->  create mode 100644 drivers/usb/misc/onboard_usb_hub.c
->  create mode 100644 include/linux/usb/onboard_hub.h
-> 
-> -- 
-> 2.31.1.607.g51e8a6a459-goog
-> 
