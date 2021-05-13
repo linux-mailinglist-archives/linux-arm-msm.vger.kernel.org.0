@@ -2,135 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7105837FD1C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 May 2021 20:13:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 33BDC37FD34
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 May 2021 20:24:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231654AbhEMSPH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 May 2021 14:15:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37092 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231630AbhEMSPF (ORCPT
+        id S230441AbhEMSZr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 May 2021 14:25:47 -0400
+Received: from mo4-p01-ob.smtp.rzone.de ([85.215.255.54]:31570 "EHLO
+        mo4-p01-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229819AbhEMSZr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 May 2021 14:15:05 -0400
-Received: from mail-qt1-x82c.google.com (mail-qt1-x82c.google.com [IPv6:2607:f8b0:4864:20::82c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2A56C06175F
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 May 2021 11:13:55 -0700 (PDT)
-Received: by mail-qt1-x82c.google.com with SMTP id 1so20447447qtb.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 May 2021 11:13:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=marek-ca.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=HXltQBvkx1uGuMaYPj9g2id51wvtZyhCM+wy/g4T8Fs=;
-        b=IqyBLMHPnqOO1aMM6yaIY9uAFQDOUOb9efB8ywVoZQt0QjImKLmxQzp+QG49XLsESj
-         jbDe5QoSSAtex00OLxYlHdAIM2i/wKq6HeMr4ytmC/9iQJ26L+RSK2QkQEtT9XbXJtMz
-         lsXSc42Txy0pLw/IZK0V3EXPwP1aXfABAJn1YmEavYUNISYuzpdZHyQq92pl2YpCJP1C
-         Zwag5XxrjST/OhEAMwstFsn1mlQ2hED1fEA5jGvotTER2luavibFw3rzkxQselJCCiQk
-         oi5SsmXPBQ86j0pIXOT/jD0qU06NWC3NlUjJz1HyoGN3RcNi2FgwR8TGs1Zz5XL6EjLF
-         JEig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=HXltQBvkx1uGuMaYPj9g2id51wvtZyhCM+wy/g4T8Fs=;
-        b=tWD4eMZn1X/R14I2W0Y22FzKNzKA5pJgtCyO4hf/FTD9aQPkT9guADKUr4gW8ldFZD
-         naVSO/RY8XufPBIPgI9I7DsWVdyebXdxY1Y+pU04PK4ClBruf9/X0TlxfyJ9mH0Tiv5j
-         WtF0KYbLAtMGBBR1DWUxfr7HZi6ie92/2Ik3Vr+1HCuw1LDqGfl12UdZb/OW1kTHLVYJ
-         dmftuUNvUeh9NPbQeyNqXXMh1CsppCYyy+miPmyALq2Y6yHw6S4lbY5Aa01jH5leJ0JK
-         1UXCXSZSW9K+qUCikfseADGSnEzuZU16dkIG0vbn4qfpO1zrw0uULt11CJvzTL4tJCqw
-         ClwA==
-X-Gm-Message-State: AOAM532HxNEhNwQwuLOeaiKM8O8MRIUS08QKIYcB6GsA/aDH3jx3jCS5
-        lEn7vHg4fERe1i7t7T+TAnkACvQf91Ktdb0xTCw=
-X-Google-Smtp-Source: ABdhPJyEMR6sukN1MstuFcNht076AryZM0nX8XcmQwhDdctmhiQyIcYhqR3M6/fU8WTw2Cb1h6OzKQ==
-X-Received: by 2002:ac8:66da:: with SMTP id m26mr27531909qtp.102.1620929634885;
-        Thu, 13 May 2021 11:13:54 -0700 (PDT)
-Received: from localhost.localdomain (modemcable068.184-131-66.mc.videotron.ca. [66.131.184.68])
-        by smtp.gmail.com with ESMTPSA id y6sm3069492qkd.106.2021.05.13.11.13.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 May 2021 11:13:54 -0700 (PDT)
-From:   Jonathan Marek <jonathan@marek.ca>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     Andy Gross <agross@kernel.org>,
+        Thu, 13 May 2021 14:25:47 -0400
+ARC-Seal: i=1; a=rsa-sha256; t=1620930275; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=BaXSqLqMDPD3YmeTDdHz61FFopAPciI40QzVEV0Fqwg8H5pn+IJzv7pj/+mARoqrzl
+    nBJFfqMaTwC68nJ2Pyt0iUqMg2CPdaMSvYG1ZN7PfPUJXY4pJMuuMVTJ7E9zujy06SVt
+    GylIRQO5PK/QQAWtOhTmu+Yrm11iDYwWwCcQ808JjnWtAwTUSz8Ops9omx7jeHD4h1Hy
+    e7R1ek+PN8H3N6u07V+rPqxK5roFDKh6XB5jBTq5mUOqZV+n0DSlelRmJAGEoPH66XoB
+    PxKyar7sfsYmm0m2i0L0oDbuW5DBML3WwQ15KgZUQCam5TCoBH3dNUedK01gYNRe2/NJ
+    +2Xg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1620930275;
+    s=strato-dkim-0002; d=strato.com;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=La2k3otlW4DaTcwOkpooer6L76+dh9I6/tmKprhZSh4=;
+    b=d/9InNVUIWZT1VxK67TwIcYB/qawmlRR8rrtaCTqjhRmJGkrhmHyW51HbHSzOmELpm
+    moNL79FzqitaC2udJa49F/Ygdh7k1Hz4J9uLwUrEeeL/akSvLh7Sn5MwYZSnR4SCczF5
+    H7YJcHyR1lt+r5IzDoMzUWIwO8OeNDtrH94PX9OgDAVS0aSywCAYwW8mDPSMLw5sP5tV
+    2k6fmXdyBIN4vfT2mk6MecvI11b1ASH9wVEd1TAC+ndp60Ct4m8i9OGaMLR+uVej2jgI
+    N5DX7BBAMmRc9a84UuNmLyj+bXFw3FmIQB2udwqXGzgFpld6NV93Lwp2astsXe77MtaC
+    sGGg==
+ARC-Authentication-Results: i=1; strato.com;
+    dkim=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1620930275;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=La2k3otlW4DaTcwOkpooer6L76+dh9I6/tmKprhZSh4=;
+    b=WKcOGm1ZNWj5TzAudxvR5g0HRpzlXyWcR7t3UjWIUX8ub/Mc1hFqKSjGkjjxUAg63a
+    stwZ0QAlOUYhxevJBKNfFZ4hp1i5roOGpVTFYLxAc+rAc3iUgCPADQYlijlJKywjRimF
+    4V40lHfk2787klBLqzFSmFrdpSSGjzJ0XdinvDSNMzFB98AaeFbscMxURLFyG7Rbc7Ze
+    03bbhqmPTtIqCHwb+uwWRy5J/JhC0fxlT7K1k6S3OqRd+iXeMTelx0ywrW7PFwv4K4rt
+    ZW8VkffLGbtF1wH1UM277tRA1M9Puyx0lx+vLq8pNE/JAI7N0weng9u4b2VsUhCZXEDO
+    lgmw==
+Authentication-Results: strato.com;
+    dkim=none
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u26zEodhPgRDZ8j6IczCBg=="
+X-RZG-CLASS-ID: mo00
+Received: from gerhold.net
+    by smtp.strato.de (RZmta 47.25.7 DYNA|AUTH)
+    with ESMTPSA id j06c13x4DIOZD6V
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Thu, 13 May 2021 20:24:35 +0200 (CEST)
+Date:   Thu, 13 May 2021 20:24:30 +0200
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Bartosz Dudziak <bartosz.dudziak@snejp.pl>
+Cc:     Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        devicetree@vger.kernel.org (open list:OPEN FIRMWARE AND FLATTENED
-        DEVICE TREE BINDINGS), linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH 2/2] arm64: dts: qcom: sm8350: add qupv3_id_1/i2c13 nodes
-Date:   Thu, 13 May 2021 14:13:09 -0400
-Message-Id: <20210513181309.12491-2-jonathan@marek.ca>
-X-Mailer: git-send-email 2.26.1
-In-Reply-To: <20210513181309.12491-1-jonathan@marek.ca>
-References: <20210513181309.12491-1-jonathan@marek.ca>
+        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        David Sterba <dsterba@suse.com>, Jens Axboe <axboe@kernel.dk>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org
+Subject: Re: [PATCH 2/2] cpuidle: qcom: Add SPM register data for APQ8026 and
+ MSM8226
+Message-ID: <YJ1u3syIquKRyuv2@gerhold.net>
+References: <20210513150150.51464-1-bartosz.dudziak@snejp.pl>
+ <20210513150150.51464-2-bartosz.dudziak@snejp.pl>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210513150150.51464-2-bartosz.dudziak@snejp.pl>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the qupv3_id_1 node and the i2c13 child node used for i2c devices
-connected to gpio0/gpio1.
+Hi,
 
-Signed-off-by: Jonathan Marek <jonathan@marek.ca>
----
- arch/arm64/boot/dts/qcom/sm8350.dtsi | 38 ++++++++++++++++++++++++++++
- 1 file changed, 38 insertions(+)
+On Thu, May 13, 2021 at 05:01:50PM +0200, Bartosz Dudziak wrote:
+> Add APQ8026 and MSM8226 SoCs register data to SPM AVS Wrapper 2 (SAW2)
+> power controller driver.
+> 
+> Signed-off-by: Bartosz Dudziak <bartosz.dudziak@snejp.pl>
+> ---
+>  drivers/cpuidle/cpuidle-qcom-spm.c | 16 ++++++++++++++++
+>  1 file changed, 16 insertions(+)
+> 
+> diff --git a/drivers/cpuidle/cpuidle-qcom-spm.c b/drivers/cpuidle/cpuidle-qcom-spm.c
+> index adf91a6e4d..9711a98d68 100644
+> --- a/drivers/cpuidle/cpuidle-qcom-spm.c
+> +++ b/drivers/cpuidle/cpuidle-qcom-spm.c
+> @@ -87,6 +87,18 @@ static const struct spm_reg_data spm_reg_8974_8084_cpu  = {
+>  	.start_index[PM_SLEEP_MODE_SPC] = 3,
+>  };
+>  
+> +/* SPM register data for 8026, 8226 */
+> +static const struct spm_reg_data spm_reg_8x26_cpu  = {
+> +	.reg_offset = spm_reg_offset_v2_1,
+> +	.spm_cfg = 0x0,
+> +	.spm_dly = 0x3C102800,
+> +	.seq = { 0x60, 0x03, 0x60, 0x0B, 0x0F, 0x20, 0x10, 0x80, 0x30, 0x90,
+> +		0x5B, 0x60, 0x03, 0x60, 0x3B, 0x76, 0x76, 0x0B, 0x94, 0x5B,
+> +		0x80, 0x10, 0x26, 0x30, 0x0F },
+> +	.start_index[PM_SLEEP_MODE_STBY] = 0,
+> +	.start_index[PM_SLEEP_MODE_SPC] = 5,
+> +};
+> +
+>  static const u8 spm_reg_offset_v1_1[SPM_REG_NR] = {
+>  	[SPM_REG_CFG]		= 0x08,
+>  	[SPM_REG_SPM_CTL]	= 0x20,
+> @@ -259,6 +271,10 @@ static struct spm_driver_data *spm_get_drv(struct platform_device *pdev,
+>  }
+>  
+>  static const struct of_device_id spm_match_table[] = {
+> +	{ .compatible = "qcom,apq8026-saw2-v2.1-cpu",
+> +	  .data = &spm_reg_8x26_cpu },
+> +	{ .compatible = "qcom,msm8226-saw2-v2.1-cpu",
+> +	  .data = &spm_reg_8x26_cpu },
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-index 76a1df371b17..b7b997dd1475 100644
---- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-@@ -468,6 +468,31 @@ uart3: serial@98c000 {
- 			};
- 		};
- 
-+		qupv3_id_1: geniqup@ac0000 {
-+			compatible = "qcom,geni-se-qup";
-+			reg = <0x0 0x00ac0000 0x0 0x6000>;
-+			clock-names = "m-ahb", "s-ahb";
-+			clocks = <&gcc GCC_QUPV3_WRAP_1_M_AHB_CLK>,
-+				 <&gcc GCC_QUPV3_WRAP_1_S_AHB_CLK>;
-+			#address-cells = <2>;
-+			#size-cells = <2>;
-+			ranges;
-+			status = "disabled";
-+
-+			i2c13: i2c@a94000 {
-+				compatible = "qcom,geni-i2c";
-+				reg = <0 0x00a94000 0 0x4000>;
-+				clock-names = "se";
-+				clocks = <&gcc GCC_QUPV3_WRAP1_S5_CLK>;
-+				pinctrl-names = "default";
-+				pinctrl-0 = <&qup_i2c13_default_state>;
-+				interrupts = <GIC_SPI 358 IRQ_TYPE_LEVEL_HIGH>;
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				status = "disabled";
-+			};
-+		};
-+
- 		apps_smmu: iommu@15000000 {
- 			compatible = "qcom,sm8350-smmu-500", "arm,mmu-500";
- 			reg = <0 0x15000000 0 0x100000>;
-@@ -760,6 +785,19 @@ tx {
- 					function = "qup3";
- 				};
- 			};
-+
-+			qup_i2c13_default_state: qup-i2c13-default-state {
-+				mux {
-+					pins = "gpio0", "gpio1";
-+					function = "qup13";
-+				};
-+
-+				config {
-+					pins = "gpio0", "gpio1";
-+					drive-strength = <2>;
-+					bias-pull-up;
-+				};
-+			};
- 		};
- 
- 		rng: rng@10d3000 {
--- 
-2.26.1
+What is the reason for having a separate compatible for APQ8026?
 
+If the difference between MSM8226 and APQ8026 is similar to other qcom
+SoCs (just lack of modem), both will end up using the same device tree
+include anyway. Then it's easier to have both use qcom,msm8226-saw2-v2.1-cpu.
+
+Thanks,
+Stephan
