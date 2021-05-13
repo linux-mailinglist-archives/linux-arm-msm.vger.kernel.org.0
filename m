@@ -2,182 +2,210 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7A80337FC5E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 May 2021 19:18:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0671637FC31
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 May 2021 19:14:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231162AbhEMRTb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 May 2021 13:19:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52938 "EHLO
+        id S230168AbhEMRP3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 May 2021 13:15:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52032 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230525AbhEMRTV (ORCPT
+        with ESMTP id S230034AbhEMRP3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 May 2021 13:19:21 -0400
-Received: from mail-qk1-x72e.google.com (mail-qk1-x72e.google.com [IPv6:2607:f8b0:4864:20::72e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2741C061756
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 May 2021 10:18:09 -0700 (PDT)
-Received: by mail-qk1-x72e.google.com with SMTP id v8so8253484qkv.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 May 2021 10:18:09 -0700 (PDT)
+        Thu, 13 May 2021 13:15:29 -0400
+Received: from mail-pg1-x52a.google.com (mail-pg1-x52a.google.com [IPv6:2607:f8b0:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24237C061756
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 May 2021 10:14:19 -0700 (PDT)
+Received: by mail-pg1-x52a.google.com with SMTP id k15so9298226pgb.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 May 2021 10:14:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=marek-ca.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=NX+3K+nDZfJV2EuD7CkoMwpkTTqFDDwUKaIW0GhTpho=;
-        b=TTb0cint3NPx33vn/NZ46EWC11vTzo312u0r8YAz/OmrCdlQ9aX25LFxkEAIqy4zHM
-         Shv03wlQeA9OmJZJpMxSucex3UZbrEazadCwVDx8CVNic4Xw8cDMuPZdCLHjJiApDxK4
-         cpd1xxk8vp8iVUKU6B7tXv2Jc2dtwDz5YXejDhmIN3GwtLe1KE9W9TTEaaN2Uojzz4DF
-         QxP+AgY+8a3+htzXLZJfu6hIeffsVe+aVUMAi6cc/+kn0z1GbiH85eTP2/USGEm3OAt9
-         YwX3wdCUj9z7Kw9ip5iHSZY0md1tlbRAH4RY6jiPgSk4LDQaVuJ87BzSBLQNkSpgVM1P
-         4INQ==
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=kSs+1tBj3VUYIMuFlEEx58LmywfW1aed7E8E2k9YJrU=;
+        b=Qb4KCDH67UjllIopYlb1nqkuOcpV8gfLoK/X/8+ToEConK64B5kY9kueyUreIOSwn8
+         TZqzo+n/lUBLNtRO/LsEjSPUhLS9YVa+eZqf0EdSv4nhHBWsysq5QR+C4c+Eh0Fy5Ywi
+         QgD92NU5Rzg7PabDrwSovVVYENDtF3/w2zmj8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=NX+3K+nDZfJV2EuD7CkoMwpkTTqFDDwUKaIW0GhTpho=;
-        b=o+1CEUda5r5PplvyK1cjhvUP4/cJSZUeQjZeF7fYOmZ1JjHo/xVAiWy1uNJovT/TRb
-         hwtwWn1pTV18skuY6sglYbANMBS5Y1A881HcxAZz8QBtVfA3E1XEp/GdMaZCfJMt22wW
-         P5lO9u2DQPAurSpI/hrq3aY7HN8ruNJESyQ7OOlKc1efw5uYvAaDciRZDMnR+V0YsCPS
-         uWuKxRGLmWr1K/A/zMYgj2AjBsyrqCt+W/Xhtaf8DEGjHa1xMSP44YQcfsomUSgoTI65
-         IzPDJsG3QHOjVwaUtlpMlZqJ1JRdUVhcvgzV67fYR76eXBLKj954gzbmcy65xDNMDADn
-         P3jQ==
-X-Gm-Message-State: AOAM533dDBodJgGq15Y8Dnw8fT6AmSH1VPVvLrM8/YNANfc+xDAkSMXU
-        rLE555C0aCIgf6kQD2m7sVVHaQ==
-X-Google-Smtp-Source: ABdhPJyBINN0E76DwCsbr+OiT0OrklRNb0uZcvUCvLFqVk6GMlaQngCGx/9Xn57Otw0KWYPpnUOmAQ==
-X-Received: by 2002:a37:e12:: with SMTP id 18mr38903795qko.419.1620926288384;
-        Thu, 13 May 2021 10:18:08 -0700 (PDT)
-Received: from localhost.localdomain (modemcable068.184-131-66.mc.videotron.ca. [66.131.184.68])
-        by smtp.gmail.com with ESMTPSA id f132sm2971117qke.104.2021.05.13.10.18.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 May 2021 10:18:08 -0700 (PDT)
-From:   Jonathan Marek <jonathan@marek.ca>
-To:     freedreno@lists.freedesktop.org
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Akhil P Oommen <akhilpo@codeaurora.org>,
-        Eric Anholt <eric@anholt.net>,
-        Sharat Masetty <smasetty@codeaurora.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Iskren Chernev <iskren.chernev@gmail.com>,
-        Shawn Guo <shawn.guo@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
-        dri-devel@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
-        GPU), linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v2 8/8] drm/msm/a6xx: add a660 hwcg table
-Date:   Thu, 13 May 2021 13:14:03 -0400
-Message-Id: <20210513171431.18632-9-jonathan@marek.ca>
-X-Mailer: git-send-email 2.26.1
-In-Reply-To: <20210513171431.18632-1-jonathan@marek.ca>
-References: <20210513171431.18632-1-jonathan@marek.ca>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=kSs+1tBj3VUYIMuFlEEx58LmywfW1aed7E8E2k9YJrU=;
+        b=MbF4ZCRkRxcwNc+HkDylB9yxT0jg7kZIucDnz40uuJTjTpmtNjbkM1A4vjXROORi9e
+         AZLs37kyPXiQS+7KREpqeG0IGFKSW6whSJWoOfZnJYzZDU8iSju+lRQvpSLVL2+wWiNs
+         IZyrp8/exkwRzgJdWEeAj1AOHpYm+otf4IiM4k5qVE6ZjlXdJXOO1Z/FTpe8NJAjcGuD
+         w3qZFPgFlE0/25fyDEjJ8gpLAx2A9jVIPvGYLH0+9bFQs0TCfRPCj1qAapKvxqpi+HlL
+         tg0BXxoJ8Kj495sdMtWsqxR1E3xWNxHKeDnmnQkn9wG9rJG7EP+NtOP8IuMmK1Nb9VR4
+         cE5A==
+X-Gm-Message-State: AOAM532X6k6DqCA2GBUrXQbz0nf750w7EEHHl3QgrjA0w0sBvPiWTuf8
+        i8RO0JSp+QK+XbjjVe7YB1O19Q==
+X-Google-Smtp-Source: ABdhPJxlZ9XLksNeF3rW1kBEnzOLBwWdzU5gFedyz4E7+6DbgjIgL+4tmb8BSdVm/frRfGe97vMuKQ==
+X-Received: by 2002:a63:fb05:: with SMTP id o5mr41545190pgh.316.1620926058610;
+        Thu, 13 May 2021 10:14:18 -0700 (PDT)
+Received: from localhost ([2620:15c:202:201:4c2:8d34:961f:de80])
+        by smtp.gmail.com with UTF8SMTPSA id t192sm2355328pfc.56.2021.05.13.10.14.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 13 May 2021 10:14:17 -0700 (PDT)
+Date:   Thu, 13 May 2021 10:14:16 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Sibi Sankar <sibis@codeaurora.org>
+Cc:     bjorn.andersson@linaro.org, dianders@chromium.org,
+        viresh.kumar@linaro.org, sboyd@kernel.org, agross@kernel.org,
+        robh+dt@kernel.org, rjw@rjwysocki.net,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org
+Subject: Re: [PATCH v3 2/2] arm64: dts: qcom: sc7280: Add cpu OPP tables
+Message-ID: <YJ1eaECY6VDN94dr@google.com>
+References: <1620807083-5451-1-git-send-email-sibis@codeaurora.org>
+ <1620807083-5451-3-git-send-email-sibis@codeaurora.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1620807083-5451-3-git-send-email-sibis@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add a660 hwcg table, ported over from downstream.
+On Wed, May 12, 2021 at 01:41:23PM +0530, Sibi Sankar wrote:
+> Add OPP tables required to scale DDR/L3 per freq-domain on SC7280 SoCs.
+> 
+> Reviewed-by: Douglas Anderson <dianders@chromium.org>
+> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+> ---
+> 
+> V3:
+>  * Rename cpu opp table nodes [Matthias]
+>  * Rename opp phandles [Doug]
+> 
+> Depends on the following patch series:
+> L3 Provider Support: https://lore.kernel.org/lkml/1618556290-28303-1-git-send-email-okukatla@codeaurora.org/
+> CPUfreq Support: https://lore.kernel.org/lkml/1618020280-5470-2-git-send-email-tdas@codeaurora.org/
+> RPMH Provider Support: https://lore.kernel.org/lkml/1619517059-12109-1-git-send-email-okukatla@codeaurora.org/
+> 
+> It also depends on L3 and cpufreq dt nodes from the ^^ series to not have
+> overlapping memory regions.
+> 
+>  arch/arm64/boot/dts/qcom/sc7280.dtsi | 215 +++++++++++++++++++++++++++++++++++
+>  1 file changed, 215 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> index 0bb835aeae33..89ec11eb7fc0 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> @@ -7,6 +7,7 @@
+>  
+>  #include <dt-bindings/clock/qcom,gcc-sc7280.h>
+>  #include <dt-bindings/clock/qcom,rpmh.h>
+> +#include <dt-bindings/interconnect/qcom,osm-l3.h>
+>  #include <dt-bindings/interconnect/qcom,sc7280.h>
+>  #include <dt-bindings/interrupt-controller/arm-gic.h>
+>  #include <dt-bindings/mailbox/qcom-ipcc.h>
+> @@ -71,6 +72,9 @@
+>  					   &LITTLE_CPU_SLEEP_1
+>  					   &CLUSTER_SLEEP_0>;
+>  			next-level-cache = <&L2_0>;
+> +			operating-points-v2 = <&cpu0_opp_table>;
+> +			interconnects = <&gem_noc MASTER_APPSS_PROC 3 &mc_virt SLAVE_EBI1 3>,
+> +					<&epss_l3 MASTER_EPSS_L3_APPS &epss_l3 SLAVE_EPSS_L3_SHARED>;
+>  			qcom,freq-domain = <&cpufreq_hw 0>;
+>  			L2_0: l2-cache {
+>  				compatible = "cache";
+> @@ -90,6 +94,9 @@
+>  					   &LITTLE_CPU_SLEEP_1
+>  					   &CLUSTER_SLEEP_0>;
+>  			next-level-cache = <&L2_100>;
+> +			operating-points-v2 = <&cpu0_opp_table>;
+> +			interconnects = <&gem_noc MASTER_APPSS_PROC 3 &mc_virt SLAVE_EBI1 3>,
+> +					<&epss_l3 MASTER_EPSS_L3_APPS &epss_l3 SLAVE_EPSS_L3_SHARED>;
+>  			qcom,freq-domain = <&cpufreq_hw 0>;
+>  			L2_100: l2-cache {
+>  				compatible = "cache";
+> @@ -106,6 +113,9 @@
+>  					   &LITTLE_CPU_SLEEP_1
+>  					   &CLUSTER_SLEEP_0>;
+>  			next-level-cache = <&L2_200>;
+> +			operating-points-v2 = <&cpu0_opp_table>;
+> +			interconnects = <&gem_noc MASTER_APPSS_PROC 3 &mc_virt SLAVE_EBI1 3>,
+> +					<&epss_l3 MASTER_EPSS_L3_APPS &epss_l3 SLAVE_EPSS_L3_SHARED>;
+>  			qcom,freq-domain = <&cpufreq_hw 0>;
+>  			L2_200: l2-cache {
+>  				compatible = "cache";
+> @@ -122,6 +132,9 @@
+>  					   &LITTLE_CPU_SLEEP_1
+>  					   &CLUSTER_SLEEP_0>;
+>  			next-level-cache = <&L2_300>;
+> +			operating-points-v2 = <&cpu0_opp_table>;
+> +			interconnects = <&gem_noc MASTER_APPSS_PROC 3 &mc_virt SLAVE_EBI1 3>,
+> +					<&epss_l3 MASTER_EPSS_L3_APPS &epss_l3 SLAVE_EPSS_L3_SHARED>;
+>  			qcom,freq-domain = <&cpufreq_hw 0>;
+>  			L2_300: l2-cache {
+>  				compatible = "cache";
+> @@ -138,6 +151,9 @@
+>  					   &BIG_CPU_SLEEP_1
+>  					   &CLUSTER_SLEEP_0>;
+>  			next-level-cache = <&L2_400>;
+> +			operating-points-v2 = <&cpu4_opp_table>;
+> +			interconnects = <&gem_noc MASTER_APPSS_PROC 3 &mc_virt SLAVE_EBI1 3>,
+> +					<&epss_l3 MASTER_EPSS_L3_APPS &epss_l3 SLAVE_EPSS_L3_SHARED>;
+>  			qcom,freq-domain = <&cpufreq_hw 1>;
+>  			L2_400: l2-cache {
+>  				compatible = "cache";
+> @@ -154,6 +170,9 @@
+>  					   &BIG_CPU_SLEEP_1
+>  					   &CLUSTER_SLEEP_0>;
+>  			next-level-cache = <&L2_500>;
+> +			operating-points-v2 = <&cpu4_opp_table>;
+> +			interconnects = <&gem_noc MASTER_APPSS_PROC 3 &mc_virt SLAVE_EBI1 3>,
+> +					<&epss_l3 MASTER_EPSS_L3_APPS &epss_l3 SLAVE_EPSS_L3_SHARED>;
+>  			qcom,freq-domain = <&cpufreq_hw 1>;
+>  			L2_500: l2-cache {
+>  				compatible = "cache";
+> @@ -170,6 +189,9 @@
+>  					   &BIG_CPU_SLEEP_1
+>  					   &CLUSTER_SLEEP_0>;
+>  			next-level-cache = <&L2_600>;
+> +			operating-points-v2 = <&cpu4_opp_table>;
+> +			interconnects = <&gem_noc MASTER_APPSS_PROC 3 &mc_virt SLAVE_EBI1 3>,
+> +					<&epss_l3 MASTER_EPSS_L3_APPS &epss_l3 SLAVE_EPSS_L3_SHARED>;
+>  			qcom,freq-domain = <&cpufreq_hw 1>;
+>  			L2_600: l2-cache {
+>  				compatible = "cache";
+> @@ -186,6 +208,9 @@
+>  					   &BIG_CPU_SLEEP_1
+>  					   &CLUSTER_SLEEP_0>;
+>  			next-level-cache = <&L2_700>;
+> +			operating-points-v2 = <&cpu7_opp_table>;
+> +			interconnects = <&gem_noc MASTER_APPSS_PROC 3 &mc_virt SLAVE_EBI1 3>,
+> +					<&epss_l3 MASTER_EPSS_L3_APPS &epss_l3 SLAVE_EPSS_L3_SHARED>;
+>  			qcom,freq-domain = <&cpufreq_hw 2>;
+>  			L2_700: l2-cache {
+>  				compatible = "cache";
+> @@ -248,6 +273,196 @@
+>  		};
+>  	};
+>  
+> +	cpu0_opp_table: cpu0-opp-table {
+> +		compatible = "operating-points-v2";
+> +		opp-shared;
+> +
+> +		cpu0_opp_300mhz: opp-300000000 {
+> +			opp-hz = /bits/ 64 <300000000>;
+> +			opp-peak-kBps = <800000 9600000>;
+> +		};
+> +
+> +		cpu0_opp_691mhz: opp-691200000 {
+> +			opp-hz = /bits/ 64 <691200000>;
+> +			opp-peak-kBps = <800000 17817600>;
+> +		};
+> +
+> +		cpu0_opp_806mhz: opp-806400000 {
+> +			opp-hz = /bits/ 64 <806400000>;
+> +			opp-peak-kBps = <800000 20889600>;
+> +		};
+> +
+> +		cpu0_opp_940mhz: opp-940800000 {
 
-Signed-off-by: Jonathan Marek <jonathan@marek.ca>
----
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c      | 53 ++++++++++++++++++++++
- drivers/gpu/drm/msm/adreno/adreno_device.c |  1 +
- drivers/gpu/drm/msm/adreno/adreno_gpu.h    |  2 +-
- 3 files changed, 55 insertions(+), 1 deletion(-)
+nit: one could argue that rounded it's 941 MHz. Same for some other OPPs.
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-index ec66a24fc37e..2713f69e916d 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -427,6 +427,59 @@ const struct adreno_reglist a650_hwcg[] = {
- 	{},
- };
- 
-+const struct adreno_reglist a660_hwcg[] = {
-+	{REG_A6XX_RBBM_CLOCK_CNTL_SP0, 0x02222222},
-+	{REG_A6XX_RBBM_CLOCK_CNTL2_SP0, 0x02222220},
-+	{REG_A6XX_RBBM_CLOCK_DELAY_SP0, 0x00000080},
-+	{REG_A6XX_RBBM_CLOCK_HYST_SP0, 0x0000F3CF},
-+	{REG_A6XX_RBBM_CLOCK_CNTL_TP0, 0x22222222},
-+	{REG_A6XX_RBBM_CLOCK_CNTL2_TP0, 0x22222222},
-+	{REG_A6XX_RBBM_CLOCK_CNTL3_TP0, 0x22222222},
-+	{REG_A6XX_RBBM_CLOCK_CNTL4_TP0, 0x00022222},
-+	{REG_A6XX_RBBM_CLOCK_DELAY_TP0, 0x11111111},
-+	{REG_A6XX_RBBM_CLOCK_DELAY2_TP0, 0x11111111},
-+	{REG_A6XX_RBBM_CLOCK_DELAY3_TP0, 0x11111111},
-+	{REG_A6XX_RBBM_CLOCK_DELAY4_TP0, 0x00011111},
-+	{REG_A6XX_RBBM_CLOCK_HYST_TP0, 0x77777777},
-+	{REG_A6XX_RBBM_CLOCK_HYST2_TP0, 0x77777777},
-+	{REG_A6XX_RBBM_CLOCK_HYST3_TP0, 0x77777777},
-+	{REG_A6XX_RBBM_CLOCK_HYST4_TP0, 0x00077777},
-+	{REG_A6XX_RBBM_CLOCK_CNTL_RB0, 0x22222222},
-+	{REG_A6XX_RBBM_CLOCK_CNTL2_RB0, 0x01002222},
-+	{REG_A6XX_RBBM_CLOCK_CNTL_CCU0, 0x00002220},
-+	{REG_A6XX_RBBM_CLOCK_HYST_RB_CCU0, 0x00040F00},
-+	{REG_A6XX_RBBM_CLOCK_CNTL_RAC, 0x25222022},
-+	{REG_A6XX_RBBM_CLOCK_CNTL2_RAC, 0x00005555},
-+	{REG_A6XX_RBBM_CLOCK_DELAY_RAC, 0x00000011},
-+	{REG_A6XX_RBBM_CLOCK_HYST_RAC, 0x00445044},
-+	{REG_A6XX_RBBM_CLOCK_CNTL_TSE_RAS_RBBM, 0x04222222},
-+	{REG_A6XX_RBBM_CLOCK_MODE_VFD, 0x00002222},
-+	{REG_A6XX_RBBM_CLOCK_MODE_GPC, 0x00222222},
-+	{REG_A6XX_RBBM_CLOCK_DELAY_HLSQ_2, 0x00000002},
-+	{REG_A6XX_RBBM_CLOCK_MODE_HLSQ, 0x00002222},
-+	{REG_A6XX_RBBM_CLOCK_DELAY_TSE_RAS_RBBM, 0x00004000},
-+	{REG_A6XX_RBBM_CLOCK_DELAY_VFD, 0x00002222},
-+	{REG_A6XX_RBBM_CLOCK_DELAY_GPC, 0x00000200},
-+	{REG_A6XX_RBBM_CLOCK_DELAY_HLSQ, 0x00000000},
-+	{REG_A6XX_RBBM_CLOCK_HYST_TSE_RAS_RBBM, 0x00000000},
-+	{REG_A6XX_RBBM_CLOCK_HYST_VFD, 0x00000000},
-+	{REG_A6XX_RBBM_CLOCK_HYST_GPC, 0x04104004},
-+	{REG_A6XX_RBBM_CLOCK_HYST_HLSQ, 0x00000000},
-+	{REG_A6XX_RBBM_CLOCK_CNTL_TEX_FCHE, 0x00000222},
-+	{REG_A6XX_RBBM_CLOCK_DELAY_TEX_FCHE, 0x00000111},
-+	{REG_A6XX_RBBM_CLOCK_HYST_TEX_FCHE, 0x00000000},
-+	{REG_A6XX_RBBM_CLOCK_CNTL_UCHE, 0x22222222},
-+	{REG_A6XX_RBBM_CLOCK_HYST_UCHE, 0x00000004},
-+	{REG_A6XX_RBBM_CLOCK_DELAY_UCHE, 0x00000002},
-+	{REG_A6XX_RBBM_ISDB_CNT, 0x00000182},
-+	{REG_A6XX_RBBM_RAC_THRESHOLD_CNT, 0x00000000},
-+	{REG_A6XX_RBBM_SP_HYST_CNT, 0x00000000},
-+	{REG_A6XX_RBBM_CLOCK_CNTL_GMU_GX, 0x00000222},
-+	{REG_A6XX_RBBM_CLOCK_DELAY_GMU_GX, 0x00000111},
-+	{REG_A6XX_RBBM_CLOCK_HYST_GMU_GX, 0x00000555},
-+	{},
-+};
-+
- static void a6xx_set_hwcg(struct msm_gpu *gpu, bool state)
- {
- 	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
-index e4db0683d381..6dad8015c9a1 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_device.c
-+++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
-@@ -299,6 +299,7 @@ static const struct adreno_info gpulist[] = {
- 		.inactive_period = DRM_MSM_INACTIVE_PERIOD,
- 		.init = a6xx_gpu_init,
- 		.zapfw = "a660_zap.mdt",
-+		.hwcg = a660_hwcg,
- 	},
- };
- 
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-index 63c050919d85..e6b11e6ec82d 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-+++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-@@ -55,7 +55,7 @@ struct adreno_reglist {
- 	u32 value;
- };
- 
--extern const struct adreno_reglist a630_hwcg[], a640_hwcg[], a650_hwcg[];
-+extern const struct adreno_reglist a630_hwcg[], a640_hwcg[], a650_hwcg[], a660_hwcg[];
- 
- struct adreno_info {
- 	struct adreno_rev rev;
--- 
-2.26.1
+Not super-important though, so:
 
+Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
