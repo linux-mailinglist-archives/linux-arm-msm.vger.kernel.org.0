@@ -2,129 +2,209 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 33BDC37FD34
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 May 2021 20:24:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B548837FE6E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 May 2021 21:56:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230441AbhEMSZr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 May 2021 14:25:47 -0400
-Received: from mo4-p01-ob.smtp.rzone.de ([85.215.255.54]:31570 "EHLO
-        mo4-p01-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229819AbhEMSZr (ORCPT
+        id S232218AbhEMT57 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 May 2021 15:57:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59958 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232091AbhEMT57 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 May 2021 14:25:47 -0400
-ARC-Seal: i=1; a=rsa-sha256; t=1620930275; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=BaXSqLqMDPD3YmeTDdHz61FFopAPciI40QzVEV0Fqwg8H5pn+IJzv7pj/+mARoqrzl
-    nBJFfqMaTwC68nJ2Pyt0iUqMg2CPdaMSvYG1ZN7PfPUJXY4pJMuuMVTJ7E9zujy06SVt
-    GylIRQO5PK/QQAWtOhTmu+Yrm11iDYwWwCcQ808JjnWtAwTUSz8Ops9omx7jeHD4h1Hy
-    e7R1ek+PN8H3N6u07V+rPqxK5roFDKh6XB5jBTq5mUOqZV+n0DSlelRmJAGEoPH66XoB
-    PxKyar7sfsYmm0m2i0L0oDbuW5DBML3WwQ15KgZUQCam5TCoBH3dNUedK01gYNRe2/NJ
-    +2Xg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1620930275;
-    s=strato-dkim-0002; d=strato.com;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=La2k3otlW4DaTcwOkpooer6L76+dh9I6/tmKprhZSh4=;
-    b=d/9InNVUIWZT1VxK67TwIcYB/qawmlRR8rrtaCTqjhRmJGkrhmHyW51HbHSzOmELpm
-    moNL79FzqitaC2udJa49F/Ygdh7k1Hz4J9uLwUrEeeL/akSvLh7Sn5MwYZSnR4SCczF5
-    H7YJcHyR1lt+r5IzDoMzUWIwO8OeNDtrH94PX9OgDAVS0aSywCAYwW8mDPSMLw5sP5tV
-    2k6fmXdyBIN4vfT2mk6MecvI11b1ASH9wVEd1TAC+ndp60Ct4m8i9OGaMLR+uVej2jgI
-    N5DX7BBAMmRc9a84UuNmLyj+bXFw3FmIQB2udwqXGzgFpld6NV93Lwp2astsXe77MtaC
-    sGGg==
-ARC-Authentication-Results: i=1; strato.com;
-    dkim=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1620930275;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=La2k3otlW4DaTcwOkpooer6L76+dh9I6/tmKprhZSh4=;
-    b=WKcOGm1ZNWj5TzAudxvR5g0HRpzlXyWcR7t3UjWIUX8ub/Mc1hFqKSjGkjjxUAg63a
-    stwZ0QAlOUYhxevJBKNfFZ4hp1i5roOGpVTFYLxAc+rAc3iUgCPADQYlijlJKywjRimF
-    4V40lHfk2787klBLqzFSmFrdpSSGjzJ0XdinvDSNMzFB98AaeFbscMxURLFyG7Rbc7Ze
-    03bbhqmPTtIqCHwb+uwWRy5J/JhC0fxlT7K1k6S3OqRd+iXeMTelx0ywrW7PFwv4K4rt
-    ZW8VkffLGbtF1wH1UM277tRA1M9Puyx0lx+vLq8pNE/JAI7N0weng9u4b2VsUhCZXEDO
-    lgmw==
-Authentication-Results: strato.com;
-    dkim=none
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u26zEodhPgRDZ8j6IczCBg=="
-X-RZG-CLASS-ID: mo00
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 47.25.7 DYNA|AUTH)
-    with ESMTPSA id j06c13x4DIOZD6V
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Thu, 13 May 2021 20:24:35 +0200 (CEST)
-Date:   Thu, 13 May 2021 20:24:30 +0200
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Bartosz Dudziak <bartosz.dudziak@snejp.pl>
-Cc:     Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
+        Thu, 13 May 2021 15:57:59 -0400
+Received: from mail-qt1-x835.google.com (mail-qt1-x835.google.com [IPv6:2607:f8b0:4864:20::835])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 232D5C061756
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 May 2021 12:56:49 -0700 (PDT)
+Received: by mail-qt1-x835.google.com with SMTP id j19so20662806qtp.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 May 2021 12:56:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=marek-ca.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=5bEQcUz043gHSOI81cTAg7K/WzddoUEXUtqRGFxEF/s=;
+        b=pCDMF4WeEQcTGNVyQhSUARuPUJYzOHZudSVaLbJLoP5LXYu85R7jkvr1hg/YYPVWw9
+         s0JuAUnU276nLCks1Vr3OwKJrtEt1HOHjm2NhMYgEaTH9gfXNxHYcxNgf6aa1isXG44I
+         QtHu0y1uKdyrQoJ7Hhq0MrPkTCOlfmLgIHNqAl5rWPRNCqT+ECvSMZ/41mMTvypL5nzY
+         1wlTII6Sl2uh945DXPYLKsIKXFlVDdygPECbOnE9pe3OJniteK4UEH9PHi41bL8dDA88
+         sc1fjuGLL/l6+QAy3m5y5o2ZMz8iULeJvJxwOeUgtwKKmPsF7LLRESXEVct8Y9+cp5em
+         I2Fg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=5bEQcUz043gHSOI81cTAg7K/WzddoUEXUtqRGFxEF/s=;
+        b=GVIi3gzcAQ4ojM8FnPUwlxlRdcTF8Hnj7NT0vlAmoftMH6/ps4HBdf1Wike92Wem2D
+         ePSmSYVfVs4Ku1x7r05Tqb0g4bkPxyr9C760MpFVCV2YuHVQSWkxghZ+Gve0c9RHcx86
+         +tZZaJoAugF0CHnS8mwXqCe2q9RbD4dUMe6QLNB+UKxhU6gF3gJXmTy7gdPacFYonGbv
+         ETbzjdefvESorRvezN5MhTprBj7iZZ0bBgDV66ir/bDc/ciCgViKLnBHM628GIwKmVau
+         jO2+FhlNinS2JrBcRE7GJfaecwBWeuxv5lV/NJYa20Fa79RtNHKG/VoEviZipohmuuDc
+         jBNw==
+X-Gm-Message-State: AOAM530ESt/hhp6JeVkpjJxkW+JUEYZKv4YaH/7R3cIM85iwvROe+zY1
+        52I+qy0PvepFXvVGNZIsHTVY8m2qLCAUG94WGqI=
+X-Google-Smtp-Source: ABdhPJzfP1vVPSACv3rr93bWKLIazkFuLnzLzgLmMmukBJyBc4/PDb9tm2xeBihh/9BW81JOG8x1bw==
+X-Received: by 2002:a05:622a:183:: with SMTP id s3mr18828276qtw.115.1620935808023;
+        Thu, 13 May 2021 12:56:48 -0700 (PDT)
+Received: from localhost.localdomain (modemcable068.184-131-66.mc.videotron.ca. [66.131.184.68])
+        by smtp.gmail.com with ESMTPSA id h12sm3211228qkj.52.2021.05.13.12.56.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 13 May 2021 12:56:47 -0700 (PDT)
+From:   Jonathan Marek <jonathan@marek.ca>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        David Sterba <dsterba@suse.com>, Jens Axboe <axboe@kernel.dk>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org
-Subject: Re: [PATCH 2/2] cpuidle: qcom: Add SPM register data for APQ8026 and
- MSM8226
-Message-ID: <YJ1u3syIquKRyuv2@gerhold.net>
-References: <20210513150150.51464-1-bartosz.dudziak@snejp.pl>
- <20210513150150.51464-2-bartosz.dudziak@snejp.pl>
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        linux-clk@vger.kernel.org (open list:COMMON CLK FRAMEWORK),
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH 1/2] clk: qcom: add support for SM8350 DISPCC
+Date:   Thu, 13 May 2021 15:56:16 -0400
+Message-Id: <20210513195617.15068-1-jonathan@marek.ca>
+X-Mailer: git-send-email 2.26.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210513150150.51464-2-bartosz.dudziak@snejp.pl>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Add support to the SM8350 display clock controller by extending the SM8250
+display clock controller, which is almost identical but has some minor
+differences.
 
-On Thu, May 13, 2021 at 05:01:50PM +0200, Bartosz Dudziak wrote:
-> Add APQ8026 and MSM8226 SoCs register data to SPM AVS Wrapper 2 (SAW2)
-> power controller driver.
-> 
-> Signed-off-by: Bartosz Dudziak <bartosz.dudziak@snejp.pl>
-> ---
->  drivers/cpuidle/cpuidle-qcom-spm.c | 16 ++++++++++++++++
->  1 file changed, 16 insertions(+)
-> 
-> diff --git a/drivers/cpuidle/cpuidle-qcom-spm.c b/drivers/cpuidle/cpuidle-qcom-spm.c
-> index adf91a6e4d..9711a98d68 100644
-> --- a/drivers/cpuidle/cpuidle-qcom-spm.c
-> +++ b/drivers/cpuidle/cpuidle-qcom-spm.c
-> @@ -87,6 +87,18 @@ static const struct spm_reg_data spm_reg_8974_8084_cpu  = {
->  	.start_index[PM_SLEEP_MODE_SPC] = 3,
->  };
->  
-> +/* SPM register data for 8026, 8226 */
-> +static const struct spm_reg_data spm_reg_8x26_cpu  = {
-> +	.reg_offset = spm_reg_offset_v2_1,
-> +	.spm_cfg = 0x0,
-> +	.spm_dly = 0x3C102800,
-> +	.seq = { 0x60, 0x03, 0x60, 0x0B, 0x0F, 0x20, 0x10, 0x80, 0x30, 0x90,
-> +		0x5B, 0x60, 0x03, 0x60, 0x3B, 0x76, 0x76, 0x0B, 0x94, 0x5B,
-> +		0x80, 0x10, 0x26, 0x30, 0x0F },
-> +	.start_index[PM_SLEEP_MODE_STBY] = 0,
-> +	.start_index[PM_SLEEP_MODE_SPC] = 5,
-> +};
-> +
->  static const u8 spm_reg_offset_v1_1[SPM_REG_NR] = {
->  	[SPM_REG_CFG]		= 0x08,
->  	[SPM_REG_SPM_CTL]	= 0x20,
-> @@ -259,6 +271,10 @@ static struct spm_driver_data *spm_get_drv(struct platform_device *pdev,
->  }
->  
->  static const struct of_device_id spm_match_table[] = {
-> +	{ .compatible = "qcom,apq8026-saw2-v2.1-cpu",
-> +	  .data = &spm_reg_8x26_cpu },
-> +	{ .compatible = "qcom,msm8226-saw2-v2.1-cpu",
-> +	  .data = &spm_reg_8x26_cpu },
+Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+---
+ drivers/clk/qcom/Kconfig         |  4 +-
+ drivers/clk/qcom/dispcc-sm8250.c | 84 +++++++++++++++++++++++++++-----
+ 2 files changed, 75 insertions(+), 13 deletions(-)
 
-What is the reason for having a separate compatible for APQ8026?
+diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
+index 45646b867cdb..cc60e6ee1654 100644
+--- a/drivers/clk/qcom/Kconfig
++++ b/drivers/clk/qcom/Kconfig
+@@ -484,11 +484,11 @@ config SDX_GCC_55
+ 	  SPI, I2C, USB, SD/UFS, PCIe etc.
+ 
+ config SM_DISPCC_8250
+-	tristate "SM8150 and SM8250 Display Clock Controller"
++	tristate "SM8150/SM8250/SM8350 Display Clock Controller"
+ 	depends on SM_GCC_8150 || SM_GCC_8250
+ 	help
+ 	  Support for the display clock controller on Qualcomm Technologies, Inc
+-	  SM8150 and SM8250 devices.
++	  SM8150/SM8250/SM8350 devices.
+ 	  Say Y if you want to support display devices and functionality such as
+ 	  splash screen.
+ 
+diff --git a/drivers/clk/qcom/dispcc-sm8250.c b/drivers/clk/qcom/dispcc-sm8250.c
+index de09cd5c209f..1fcf8085a109 100644
+--- a/drivers/clk/qcom/dispcc-sm8250.c
++++ b/drivers/clk/qcom/dispcc-sm8250.c
+@@ -36,6 +36,10 @@ static struct pll_vco vco_table[] = {
+ 	{ 249600000, 2000000000, 0 },
+ };
+ 
++static struct pll_vco lucid_5lpe_vco[] = {
++	{ 249600000, 1750000000, 0 },
++};
++
+ static struct alpha_pll_config disp_cc_pll0_config = {
+ 	.l = 0x47,
+ 	.alpha = 0xE000,
+@@ -1039,6 +1043,7 @@ static const struct qcom_cc_desc disp_cc_sm8250_desc = {
+ static const struct of_device_id disp_cc_sm8250_match_table[] = {
+ 	{ .compatible = "qcom,sm8150-dispcc" },
+ 	{ .compatible = "qcom,sm8250-dispcc" },
++	{ .compatible = "qcom,sm8350-dispcc" },
+ 	{ }
+ };
+ MODULE_DEVICE_TABLE(of, disp_cc_sm8250_match_table);
+@@ -1051,19 +1056,76 @@ static int disp_cc_sm8250_probe(struct platform_device *pdev)
+ 	if (IS_ERR(regmap))
+ 		return PTR_ERR(regmap);
+ 
+-	/* note: trion == lucid, except for the prepare() op */
+-	BUILD_BUG_ON(CLK_ALPHA_PLL_TYPE_TRION != CLK_ALPHA_PLL_TYPE_LUCID);
+-	if (of_device_is_compatible(pdev->dev.of_node, "qcom,sm8150-dispcc")) {
+-		disp_cc_pll0_config.config_ctl_hi_val = 0x00002267;
+-		disp_cc_pll0_config.config_ctl_hi1_val = 0x00000024;
+-		disp_cc_pll0_config.user_ctl_hi1_val = 0x000000D0;
+-		disp_cc_pll0_init.ops = &clk_alpha_pll_trion_ops;
+-		disp_cc_pll1_config.config_ctl_hi_val = 0x00002267;
+-		disp_cc_pll1_config.config_ctl_hi1_val = 0x00000024;
+-		disp_cc_pll1_config.user_ctl_hi1_val = 0x000000D0;
+-		disp_cc_pll1_init.ops = &clk_alpha_pll_trion_ops;
++	/* SM8350 has _SRC clocks offset by 4, and some other differences */
++	if (of_device_is_compatible(pdev->dev.of_node, "qcom,sm8350-dispcc")) {
++		static struct clk_rcg2* const rcgs[] = {
++			&disp_cc_mdss_byte0_clk_src,
++			&disp_cc_mdss_byte1_clk_src,
++			&disp_cc_mdss_dp_aux1_clk_src,
++			&disp_cc_mdss_dp_aux_clk_src,
++			&disp_cc_mdss_dp_link1_clk_src,
++			&disp_cc_mdss_dp_link_clk_src,
++			&disp_cc_mdss_dp_pixel1_clk_src,
++			&disp_cc_mdss_dp_pixel2_clk_src,
++			&disp_cc_mdss_dp_pixel_clk_src,
++			&disp_cc_mdss_esc0_clk_src,
++			&disp_cc_mdss_mdp_clk_src,
++			&disp_cc_mdss_pclk0_clk_src,
++			&disp_cc_mdss_pclk1_clk_src,
++			&disp_cc_mdss_rot_clk_src,
++			&disp_cc_mdss_vsync_clk_src,
++		};
++		static struct clk_regmap_div* const divs[] = {
++			&disp_cc_mdss_byte0_div_clk_src,
++			&disp_cc_mdss_byte1_div_clk_src,
++			&disp_cc_mdss_dp_link1_div_clk_src,
++			&disp_cc_mdss_dp_link_div_clk_src,
++		};
++		unsigned i;
++		static bool offset_applied = false;
++
++		/* only apply the offsets once (in case of deferred probe) */
++		if (!offset_applied) {
++			for (i = 0; i < ARRAY_SIZE(rcgs); i++)
++				rcgs[i]->cmd_rcgr -= 4;
++
++			for (i = 0; i < ARRAY_SIZE(divs); i++) {
++				divs[i]->reg -= 4;
++				divs[i]->width = 4;
++			}
++
++			disp_cc_mdss_ahb_clk.halt_reg -= 4;
++			disp_cc_mdss_ahb_clk.clkr.enable_reg -= 4;
++
++			offset_applied = true;
++		}
++
++		disp_cc_mdss_ahb_clk_src.cmd_rcgr = 0x22a0;
++
++		disp_cc_pll0_config.config_ctl_hi1_val = 0x2A9A699C;
++		disp_cc_pll0_config.test_ctl_hi1_val = 0x01800000;
++		disp_cc_pll0_init.ops = &clk_alpha_pll_lucid_5lpe_ops;
++		disp_cc_pll0.vco_table = lucid_5lpe_vco;
++		disp_cc_pll1_config.config_ctl_hi1_val = 0x2A9A699C;
++		disp_cc_pll1_config.test_ctl_hi1_val = 0x01800000;
++		disp_cc_pll1_init.ops = &clk_alpha_pll_lucid_5lpe_ops;
++		disp_cc_pll1.vco_table = lucid_5lpe_vco;
++	} else {
++		/* note: trion == lucid, except for the prepare() op */
++		BUILD_BUG_ON(CLK_ALPHA_PLL_TYPE_TRION != CLK_ALPHA_PLL_TYPE_LUCID);
++		if (of_device_is_compatible(pdev->dev.of_node, "qcom,sm8150-dispcc")) {
++			disp_cc_pll0_config.config_ctl_hi_val = 0x00002267;
++			disp_cc_pll0_config.config_ctl_hi1_val = 0x00000024;
++			disp_cc_pll0_config.user_ctl_hi1_val = 0x000000D0;
++			disp_cc_pll0_init.ops = &clk_alpha_pll_trion_ops;
++			disp_cc_pll1_config.config_ctl_hi_val = 0x00002267;
++			disp_cc_pll1_config.config_ctl_hi1_val = 0x00000024;
++			disp_cc_pll1_config.user_ctl_hi1_val = 0x000000D0;
++			disp_cc_pll1_init.ops = &clk_alpha_pll_trion_ops;
++		}
+ 	}
+ 
++	/* note for SM8350: downstream lucid_5lpe configure differs slightly */
+ 	clk_lucid_pll_configure(&disp_cc_pll0, regmap, &disp_cc_pll0_config);
+ 	clk_lucid_pll_configure(&disp_cc_pll1, regmap, &disp_cc_pll1_config);
+ 
+-- 
+2.26.1
 
-If the difference between MSM8226 and APQ8026 is similar to other qcom
-SoCs (just lack of modem), both will end up using the same device tree
-include anyway. Then it's easier to have both use qcom,msm8226-saw2-v2.1-cpu.
-
-Thanks,
-Stephan
