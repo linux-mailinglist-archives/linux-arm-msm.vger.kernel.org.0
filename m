@@ -2,126 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7AD7037EFEA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 May 2021 01:36:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8A9EF37F06F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 May 2021 02:37:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230097AbhELXhT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 May 2021 19:37:19 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:54416 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244100AbhELXcL (ORCPT
+        id S233339AbhEMAiX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 May 2021 20:38:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56204 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1343680AbhEMAgE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 May 2021 19:32:11 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1620862263; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=vn1GUprrTOTgFLsy5aDltqbfGp3QhAfUgbGNgrzy+6k=;
- b=JtNym1sC4Pf9snjmUHKBPCxGO6kQa9af8lseeRG2Dg4oniydmICiTvg27WdLe/tto2AyU/yn
- x7iZqBIaMbXnjhf3vT5KzrkLvosd6iOOgucLhvfv0vMFGEdhjQUEGuYIE8Z1N8lJI1D5olI2
- I5HXPh9m3Xp8l2dh/25P5wnqhto=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
- 609c65327bf557a012050395 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 12 May 2021 23:30:58
- GMT
-Sender: khsieh=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 888B4C433D3; Wed, 12 May 2021 23:30:58 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: khsieh)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id C5925C433F1;
-        Wed, 12 May 2021 23:30:57 +0000 (UTC)
+        Wed, 12 May 2021 20:36:04 -0400
+Received: from mail-pg1-x532.google.com (mail-pg1-x532.google.com [IPv6:2607:f8b0:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A51FAC06138B
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 May 2021 17:23:11 -0700 (PDT)
+Received: by mail-pg1-x532.google.com with SMTP id m37so19649671pgb.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 May 2021 17:23:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=Luwh+TGoydzGL3JCJlpVZNGhUrtfqRBntVXhvPw5QHw=;
+        b=PfS3fnU78oKI5JB9cVtWpPNRgSQDF6jbdL6+Nmu5aJK1dg5mpNWrpAb1xnWeXRSTg2
+         t9CsTHKfuGnO8xJLDpEL/zaXCpNBi6kmhbCAnt8cCNNWH0bKpJd8/fYNSrfvNy1+FPrq
+         MAk26aE4uuUHS6aQPMzd2+LcrbuY95tiBExmM=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=Luwh+TGoydzGL3JCJlpVZNGhUrtfqRBntVXhvPw5QHw=;
+        b=XKFSeACsDDptb4rNBD0bkS/S9YXYVeui4uNz8U0VWhgcI4oz16+0MmUV5UhOH1qiaj
+         JeBlUpJLN0l4IpMQV1wFk/TlnVEfYGLwOeewf7e6qwpW9zjRrs9T7kP0F1eACLjw0tAC
+         02tscbFEVWCRQZliebVOh0mTyniSS5L+2TROw6lzGOw1nr47pc4EKbydIpo00qBxMD9v
+         75SO9pFLmCIvbe+xyw74b9Y6Eq3tbs2Ldbh1ihRMzqLDx5sJ7wI9D0VAc8jHFuWZpOkP
+         TKTK5mkAMyL4u1AU8n6oI9an/wXmDXepZHDvPtm5i4dZkMrV5/t4V/Bp0hx/sjT6CbEq
+         tZog==
+X-Gm-Message-State: AOAM531ofdFm90pTO9etZAsK7MDLaUvG64xO39Gc8A4OWY+ReAbDdKW/
+        +hde/sPs0UXs61EvIvdODzjFMw==
+X-Google-Smtp-Source: ABdhPJzvWhTvBADac93Bf79sSF/vT3WimwfcACeawZ8q5mYpd+q6meomOGgP9eN2ENBNBpktpzI5nw==
+X-Received: by 2002:a63:214b:: with SMTP id s11mr2566471pgm.423.1620865391277;
+        Wed, 12 May 2021 17:23:11 -0700 (PDT)
+Received: from localhost ([2620:15c:202:201:a89e:5bb2:e8e0:4428])
+        by smtp.gmail.com with UTF8SMTPSA id t133sm804825pgb.0.2021.05.12.17.23.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 12 May 2021 17:23:10 -0700 (PDT)
+Date:   Wed, 12 May 2021 17:23:09 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Felipe Balbi <balbi@kernel.org>
+Cc:     Sandeep Maheswaram <sanm@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Manu Gautam <mgautam@codeaurora.org>
+Subject: Re: [PATCH v7 5/5] usb: dwc3: qcom: Keep power domain on to support
+ wakeup
+Message-ID: <YJxxbe9L3+VBEqno@google.com>
+References: <1619586716-8687-1-git-send-email-sanm@codeaurora.org>
+ <1619586716-8687-6-git-send-email-sanm@codeaurora.org>
+ <87lf92k9ms.fsf@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Wed, 12 May 2021 16:30:57 -0700
-From:   khsieh@codeaurora.org
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robdclark@gmail.com,
-        sean@poorly.run, vkoul@kernel.org, abhinavk@codeaurora.org,
-        aravindh@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] drm/msm/dp: handle irq_hpd with sink_count = 0
- correctly
-In-Reply-To: <CAE-0n517Xkj=-m=gYv-FkpWGP+xC=ht8pRTtr5V8CKdrNtq9gQ@mail.gmail.com>
-References: <1620840558-28684-1-git-send-email-khsieh@codeaurora.org>
- <CAE-0n517Xkj=-m=gYv-FkpWGP+xC=ht8pRTtr5V8CKdrNtq9gQ@mail.gmail.com>
-Message-ID: <f259274c5b474b51d31b05845d06c55b@codeaurora.org>
-X-Sender: khsieh@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <87lf92k9ms.fsf@kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-05-12 11:50, Stephen Boyd wrote:
-> Quoting Kuogee Hsieh (2021-05-12 10:29:18)
->> irq_hpd interrupt should be handled after dongle plugged in and
->> before dongle unplugged. Hence irq_hpd interrupt is enabled at
->> the end of the plugin handle and disabled at the beginning of
->> unplugged handle. Current irq_hpd with sink_count = 0 is wrongly
->> handled same as the dongle unplugged which tears down the mainlink
->> and disables the phy. This patch fixes this problem by only tearing
->> down the mainlink but keeping phy enabled at irq_hpd with
->> sink_count = 0 handle so that next irq_hpe with sink_count =1 can be
->> handled by setup mainlink only.
->> 
->> Changes in v2:
->> -- add ctrl->phy_Power_count
->> 
->> Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
->> ---
->>  drivers/gpu/drm/msm/dp/dp_catalog.c |  5 +--
->>  drivers/gpu/drm/msm/dp/dp_ctrl.c    | 83 
->> ++++++++++++++++++++++++++++++++++---
->>  drivers/gpu/drm/msm/dp/dp_ctrl.h    |  2 +
->>  drivers/gpu/drm/msm/dp/dp_display.c | 46 +++++++++++++++-----
->>  4 files changed, 118 insertions(+), 18 deletions(-)
->> 
->> diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.c 
->> b/drivers/gpu/drm/msm/dp/dp_catalog.c
->> index b1a9b1b..f4f53f2 100644
->> --- a/drivers/gpu/drm/msm/dp/dp_catalog.c
->> +++ b/drivers/gpu/drm/msm/dp/dp_catalog.c
->> @@ -582,10 +582,9 @@ void dp_catalog_ctrl_hpd_config(struct dp_catalog 
->> *dp_catalog)
->> 
->>         u32 reftimer = dp_read_aux(catalog, REG_DP_DP_HPD_REFTIMER);
->> 
->> -       /* enable HPD interrupts */
->> +       /* enable HPD plug and unplug interrupts */
->>         dp_catalog_hpd_config_intr(dp_catalog,
->> -               DP_DP_HPD_PLUG_INT_MASK | DP_DP_IRQ_HPD_INT_MASK
->> -               | DP_DP_HPD_UNPLUG_INT_MASK | 
->> DP_DP_HPD_REPLUG_INT_MASK, true);
->> +               DP_DP_HPD_PLUG_INT_MASK | DP_DP_HPD_UNPLUG_INT_MASK, 
->> true);
->> 
->>         /* Configure REFTIMER and enable it */
->>         reftimer |= DP_DP_HPD_REFTIMER_ENABLE;
->> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c 
->> b/drivers/gpu/drm/msm/dp/dp_ctrl.c
->> index 8d59eb9..b5bed5f 100644
->> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
->> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
->> @@ -77,6 +77,8 @@ struct dp_ctrl_private {
->>         struct dp_parser *parser;
->>         struct dp_catalog *catalog;
->> 
->> +       int phy_power_count;
+On Wed, Apr 28, 2021 at 01:04:43PM +0300, Felipe Balbi wrote:
 > 
-> This is still redundant. Please restructure the code to call the power
-> on/off function in one place and the init/exit function in another so
-> that we don't have to reference count it.
+> Hi,
+> 
+> Sandeep Maheswaram <sanm@codeaurora.org> writes:
+> > If wakeup capable devices are connected to the controller (directly
+> > or through hubs) at suspend time keep the power domain on in order
+> > to support wakeup from these devices.
+> >
+> > Signed-off-by: Sandeep Maheswaram <sanm@codeaurora.org>
+> > ---
+> >  drivers/usb/dwc3/dwc3-qcom.c | 17 +++++++++++++++++
+> >  1 file changed, 17 insertions(+)
+> >
+> > diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
+> > index 82125bc..1e220af 100644
+> > --- a/drivers/usb/dwc3/dwc3-qcom.c
+> > +++ b/drivers/usb/dwc3/dwc3-qcom.c
+> > @@ -17,9 +17,11 @@
+> >  #include <linux/of_platform.h>
+> >  #include <linux/platform_device.h>
+> >  #include <linux/phy/phy.h>
+> > +#include <linux/pm_domain.h>
+> >  #include <linux/usb/of.h>
+> >  #include <linux/reset.h>
+> >  #include <linux/iopoll.h>
+> > +#include <linux/usb/hcd.h>
+> >  
+> >  #include "core.h"
+> >  
+> > @@ -354,10 +356,19 @@ static int dwc3_qcom_suspend(struct dwc3_qcom *qcom)
+> >  {
+> >  	u32 val;
+> >  	int i, ret;
+> > +	struct dwc3 *dwc = platform_get_drvdata(qcom->dwc3);
+> > +	struct usb_hcd  *hcd;
+> > +	struct generic_pm_domain *genpd = pd_to_genpd(qcom->dev->pm_domain);
+> >  
+> >  	if (qcom->is_suspended)
+> >  		return 0;
+> >  
+> > +	if (dwc->xhci) {
+> > +		hcd = platform_get_drvdata(dwc->xhci);
+> > +		if (usb_wakeup_enabled_descendants(hcd->self.root_hub))
+> > +			genpd->flags |= GENPD_FLAG_ACTIVE_WAKEUP;
+> > +	}
+> 
+> wow, you really need to find a way to do these things generically
+> instead of bypassing a bunch of layers and access stuff $this doesn't
+> directly own.
+>
+> I'm gonna say 'no' to this, sorry. It looks like xhci should, directly,
+> learn about much of this instead of hiding it 3-layers deep into the
+> dwc3 glue layer for your specific SoC.
 
-ok, v3 patch uploaded
+Maybe this could be addressed with a pair of wakeup quirks, one for suspend,
+another for resume. An optional genpd field could be added to struct
+xhci_plat_priv. The wakeup quirks would set/clear GENPD_FLAG_ACTIVE_WAKEUP
+of the genpd.
+
+Does the above sound more palatable?
