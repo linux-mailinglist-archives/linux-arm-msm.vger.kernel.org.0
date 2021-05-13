@@ -2,68 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 85BBD37F091
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 May 2021 02:42:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C77B537F094
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 May 2021 02:42:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232968AbhEMAnR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 May 2021 20:43:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57586 "EHLO
+        id S232100AbhEMAnw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 May 2021 20:43:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57344 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237628AbhEMAkw (ORCPT
+        with ESMTP id S233287AbhEMAlu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 May 2021 20:40:52 -0400
-Received: from mail-qk1-x732.google.com (mail-qk1-x732.google.com [IPv6:2607:f8b0:4864:20::732])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD0B3C061763
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 May 2021 17:39:03 -0700 (PDT)
-Received: by mail-qk1-x732.google.com with SMTP id k127so24122754qkc.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 May 2021 17:39:03 -0700 (PDT)
+        Wed, 12 May 2021 20:41:50 -0400
+Received: from mail-qt1-x832.google.com (mail-qt1-x832.google.com [IPv6:2607:f8b0:4864:20::832])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7C8FC06138A
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 May 2021 17:39:06 -0700 (PDT)
+Received: by mail-qt1-x832.google.com with SMTP id m13so3429506qtk.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 May 2021 17:39:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=marek-ca.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=OWZAMSO2hYSW16tUIYHpicH/GLn/3fYypp5Jz9VSm00=;
-        b=U4o7cwX2QQVVTuDryXGCKWLw0coEb16npVBu/jFofLo4GTjmsF8dA6MYmsiPfPhL6k
-         7aMlrAqXx/H6Pa4kuBluRMbfC247VwlqE0yooUKjYvApRKrTskwNrJBHYywJUAG2X7ZA
-         VQXOMtLtIOPk3tDvIg5SVdRe9RAwpOkkNNNFBVO9EHxnkLiovJXusp6fgipw2FGdIazc
-         cjmJd/iLu+KsJIxKRLXf4zI1sOEvxLypncNuNAUbrYar2eBfztYVQSj/RZ2iqy5QXSXb
-         2xhLZY6lyGwAnZZBDNeBnBzMFx55muQBXIO7309s7AB4U2TuElmMFmNEZQZL0Ogeze8S
-         WZTw==
+        bh=/Suj7rUF8MJYpSENOVcgNKkIQ7HdP/cqmF4RJs83xUg=;
+        b=Ok4b06fm240rt6q8SJwuDlWX3p0+7j3KUQCdoVM61MLZizJKrH3WzYjt2R8/VHvuHd
+         nlwYxjoVLi7VSPzGhiBjj9Ha4Hzv6Uo+Pn62IGsq/M+YOZ+gKmWIsPSO7Aitg0gN3/Dx
+         zOAcsoAv8bo8pcDo+Y6KUR43zefAjHUfQdHktVOHb+916Dxmo2JHKI8lUwEop6tI806V
+         KHffv1x5FOG5QrIEeBdhKrq30VOi7LpDmA7oFXZRBDDZD3IqKueXGVVFto0nqfeurDM/
+         kulCd2rG9bue1lCuX3n4+ow6bDIKfsBLLLnw0X0dScRtw074SOK18O4AlF3R6EOTrR61
+         EQXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=OWZAMSO2hYSW16tUIYHpicH/GLn/3fYypp5Jz9VSm00=;
-        b=Xv4U5sTwsTmlq8+xW6C8y4cFQWzINOPUXrWFnuIL8pxF0EXFNpYGQ1CRRgD9Jo/6DC
-         YDtR9yMtvUiV/Md5KZONs4JDWBwF2k9Cc3yQYcvDGffjHh0cYAPIbnR7BAyNeh8nsutl
-         WXSac2izFUc/TFVkz2ndjWcHcIjDEqVcJu0bAbgUQ+SMS29FVSIh7NS5hYiF7y4klELK
-         UhTFtTBPVXhxoPqC60NmBpcIA2fAotz5WRtEOhj56F9oIrV84MllnFABJoRR9wIkpBYT
-         Ww36hamyppQgzvBN/ylUnYQZeSCpGdZjkyS1ZvYs3vP7VOUtsjMGtRngeh2iBv13TjCE
-         LISQ==
-X-Gm-Message-State: AOAM5328Q6sBDcK5jxddqAXvfQM3TxWsVbliLfartjjjGRwS3kd1GASn
-        gTJuuxjpF5VF7b9W9Rq9GIvXIQ==
-X-Google-Smtp-Source: ABdhPJyDGD9edTt/pecm2J2HYiTGtCLsMV1PL5FrxPOMfc9PT5J5phKcxKXCTRi/AnZO7jbXTmddog==
-X-Received: by 2002:a37:4017:: with SMTP id n23mr34108146qka.338.1620866343100;
-        Wed, 12 May 2021 17:39:03 -0700 (PDT)
+        bh=/Suj7rUF8MJYpSENOVcgNKkIQ7HdP/cqmF4RJs83xUg=;
+        b=GRj2YiYjdU7+i6keYFCyZD/VMcc5Tm7E8aSoXvoJBw7O3NjhFUFaRCWisMNmgPhN7g
+         OOiEAKXakNflWldwzudvXWH0AfMe9iih90+rBiClsQyp6nVucAqj7yIhWSYnw5lPwEeZ
+         R2gxlE/nuwTNPI6jdj9hh+3IsBHAW2fajKRY8lqZANxUm5wi8egQOP9Jts8hXW05W18h
+         sJfzOy8PQnHAqPky5uVp3oezaVJCpB+dpJUC5x0i822Un0DSW66eRvJtiJyzdcEUeF67
+         tgt9KRigo13ljSaEAXh89XZwinq6qwpOgzMNG7xwl9myQebOF/+Tyw4U/TE1X79ov0rn
+         znqw==
+X-Gm-Message-State: AOAM530FWXIMicG9nrUa0P767quUnkEcyJraw+397BLV90+W8dSU7VUx
+        ZHr3pzNYaGr3PAUOLmbfY6/+vA==
+X-Google-Smtp-Source: ABdhPJxTw1P3oaoCV0WfoXRiB/+wKSwQTK+iAtqp6IJbfH0cUqEkpY2KsJRruijFgA1FamuFr24gBQ==
+X-Received: by 2002:a05:622a:154:: with SMTP id v20mr4064234qtw.91.1620866346172;
+        Wed, 12 May 2021 17:39:06 -0700 (PDT)
 Received: from localhost.localdomain (modemcable068.184-131-66.mc.videotron.ca. [66.131.184.68])
-        by smtp.gmail.com with ESMTPSA id w16sm1204201qts.70.2021.05.12.17.39.01
+        by smtp.gmail.com with ESMTPSA id w16sm1204201qts.70.2021.05.12.17.39.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 May 2021 17:39:02 -0700 (PDT)
+        Wed, 12 May 2021 17:39:05 -0700 (PDT)
 From:   Jonathan Marek <jonathan@marek.ca>
 To:     freedreno@lists.freedesktop.org
 Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         David Airlie <airlied@linux.ie>,
         Daniel Vetter <daniel@ffwll.ch>,
         Jordan Crouse <jordan@cosmicpenguin.net>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Sharat Masetty <smasetty@codeaurora.org>,
         Akhil P Oommen <akhilpo@codeaurora.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Eric Anholt <eric@anholt.net>,
+        Sharat Masetty <smasetty@codeaurora.org>,
+        Douglas Anderson <dianders@chromium.org>,
         linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
         dri-devel@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
         GPU), linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH 1/5] drm/msm: remove unused icc_path/ocmem_icc_path
-Date:   Wed, 12 May 2021 20:37:45 -0400
-Message-Id: <20210513003811.29578-2-jonathan@marek.ca>
+Subject: [PATCH 2/5] drm/msm/a6xx: avoid shadow NULL reference in failure path
+Date:   Wed, 12 May 2021 20:37:46 -0400
+Message-Id: <20210513003811.29578-3-jonathan@marek.ca>
 X-Mailer: git-send-email 2.26.1
 In-Reply-To: <20210513003811.29578-1-jonathan@marek.ca>
 References: <20210513003811.29578-1-jonathan@marek.ca>
@@ -73,46 +74,29 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-These aren't used by anything anymore.
+If a6xx_hw_init() fails before creating the shadow_bo, the a6xx_pm_suspend
+code referencing it will crash. Change the condition to one that avoids
+this problem (note: creation of shadow_bo is behind this same condition)
 
+Fixes: e8b0b994c3a5 ("drm/msm/a6xx: Clear shadow on suspend")
 Signed-off-by: Jonathan Marek <jonathan@marek.ca>
 ---
- drivers/gpu/drm/msm/adreno/adreno_gpu.c | 3 ---
- drivers/gpu/drm/msm/msm_gpu.h           | 9 ---------
- 2 files changed, 12 deletions(-)
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-index 8fd0777f2dc9..009f4c560f16 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-@@ -946,7 +946,4 @@ void adreno_gpu_cleanup(struct adreno_gpu *adreno_gpu)
- 	pm_runtime_disable(&priv->gpu_pdev->dev);
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+index 727d111a413f..01bd31b3c504 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+@@ -1211,7 +1211,7 @@ static int a6xx_pm_suspend(struct msm_gpu *gpu)
+ 	if (ret)
+ 		return ret;
  
- 	msm_gpu_cleanup(&adreno_gpu->base);
--
--	icc_put(gpu->icc_path);
--	icc_put(gpu->ocmem_icc_path);
- }
-diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.h
-index 18baf935e143..c302ab7ffb06 100644
---- a/drivers/gpu/drm/msm/msm_gpu.h
-+++ b/drivers/gpu/drm/msm/msm_gpu.h
-@@ -118,15 +118,6 @@ struct msm_gpu {
- 	struct clk *ebi1_clk, *core_clk, *rbbmtimer_clk;
- 	uint32_t fast_rate;
+-	if (adreno_gpu->base.hw_apriv || a6xx_gpu->has_whereami)
++	if (a6xx_gpu->shadow_bo)
+ 		for (i = 0; i < gpu->nr_rings; i++)
+ 			a6xx_gpu->shadow[i] = 0;
  
--	/* The gfx-mem interconnect path that's used by all GPU types. */
--	struct icc_path *icc_path;
--
--	/*
--	 * Second interconnect path for some A3xx and all A4xx GPUs to the
--	 * On Chip MEMory (OCMEM).
--	 */
--	struct icc_path *ocmem_icc_path;
--
- 	/* Hang and Inactivity Detection:
- 	 */
- #define DRM_MSM_INACTIVE_PERIOD   66 /* in ms (roughly four frames) */
 -- 
 2.26.1
 
