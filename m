@@ -2,157 +2,544 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B847637F433
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 May 2021 10:35:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3B87A37F5F2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 May 2021 12:52:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231998AbhEMIgQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 May 2021 04:36:16 -0400
-Received: from mx2.suse.de ([195.135.220.15]:39336 "EHLO mx2.suse.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232017AbhEMIgD (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 May 2021 04:36:03 -0400
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
-        t=1620894892; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=mMbyojh6a77y/n4n2x5m5FSvtbZLYhRvkKdMCE0XqIo=;
-        b=f6iDbhj56ru9OVo+GW8gX1a7hFo49kjc71l/SieGk8e/McEB2FQaWhtotl1rQHP0FsuzSZ
-        peEKBaqtnxuV5XgmYts9dYJQ6slqQkQYduFsx0O6YRi04bZShvTWaNbjyAxKSW4Y23n82D
-        35S4vaiboE50cwddR8FkRM/h57FbY/Q=
-Received: from relay2.suse.de (unknown [195.135.221.27])
-        by mx2.suse.de (Postfix) with ESMTP id ED2EEAD9F;
-        Thu, 13 May 2021 08:34:51 +0000 (UTC)
-Date:   Thu, 13 May 2021 10:34:51 +0200
-From:   Petr Mladek <pmladek@suse.com>
-To:     "Vaittinen, Matti" <Matti.Vaittinen@fi.rohmeurope.com>
-Cc:     "josef@toxicpanda.com" <josef@toxicpanda.com>,
-        "keescook@chromium.org" <keescook@chromium.org>,
-        "rppt@kernel.org" <rppt@kernel.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        linux-power <linux-power@fi.rohmeurope.com>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "bjorn.andersson@linaro.org" <bjorn.andersson@linaro.org>,
-        "rui.zhang@intel.com" <rui.zhang@intel.com>,
-        "linux-renesas-soc@vger.kernel.org" 
-        <linux-renesas-soc@vger.kernel.org>,
-        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
-        "akpm@linux-foundation.org" <akpm@linux-foundation.org>,
-        "linux@roeck-us.net" <linux@roeck-us.net>,
-        "daniel.lezcano@linaro.org" <daniel.lezcano@linaro.org>,
-        "lgirdwood@gmail.com" <lgirdwood@gmail.com>,
-        "robh+dt@kernel.org" <robh+dt@kernel.org>,
-        "kai.heng.feng@canonical.com" <kai.heng.feng@canonical.com>,
-        "mcroce@microsoft.com" <mcroce@microsoft.com>,
-        "amitk@kernel.org" <amitk@kernel.org>,
-        "linux-pm@vger.kernel.org" <linux-pm@vger.kernel.org>,
-        "andy.shevchenko@gmail.com" <andy.shevchenko@gmail.com>,
-        "agross@kernel.org" <agross@kernel.org>,
-        "broonie@kernel.org" <broonie@kernel.org>,
-        "rafael.j.wysocki@intel.com" <rafael.j.wysocki@intel.com>,
-        rostedt@goodmis.org, Geert Uytterhoeven <geert@linux-m68k.org>
-Subject: Re: [PATCH v9 02/10] reboot: Add hardware protection power-off
-Message-ID: <YJzkq+NPW4ZMB8AF@alley>
-References: <cover.1620645507.git.matti.vaittinen@fi.rohmeurope.com>
- <97260f8e150abb898a262fade25860609b460912.1620645507.git.matti.vaittinen@fi.rohmeurope.com>
- <YJuPwAZroVZ/w633@alley>
- <2149df3f542d25ce15d049e81d6188bb7198478c.camel@fi.rohmeurope.com>
+        id S230462AbhEMKxp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 May 2021 06:53:45 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:48126 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232195AbhEMKxn (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 13 May 2021 06:53:43 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1620903150; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=l43av0MNdasuSlRaWS4HbE7aHdm8Jr27+otQGPeLkDA=;
+ b=FBj5AA3HAl0+XyqStYrlOYszWfVnA0SewXsVK0iHAX6/XpraTDX1G53J4HcEf01Eje6QZ4rq
+ Or2Ppme0W/xlUy2pqpXmnUnKlgV+UyNoIMaZzUBds6FEipRC+6WakITBpAqAoCLDrn6woh9E
+ 2bQx4C/LFA2p/w9OtlqYBejel+w=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
+ 609d04ed7bf557a01215f548 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 13 May 2021 10:52:29
+ GMT
+Sender: mkrishn=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 48FF7C4338A; Thu, 13 May 2021 10:52:29 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: mkrishn)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 400C4C433D3;
+        Thu, 13 May 2021 10:52:26 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <2149df3f542d25ce15d049e81d6188bb7198478c.camel@fi.rohmeurope.com>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Thu, 13 May 2021 16:22:26 +0530
+From:   mkrishn@codeaurora.org
+To:     robh@kernel.org, robh+dt@kernel.org
+Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, kalyan_t@codeaurora.org,
+        tanmay@codeaurora.org, abhinavk@codeaurora.org,
+        robdclark@gmail.com, swboyd@chromium.org,
+        bjorn.andersson@linaro.org, vinod.koul@linaro.org,
+        dianders@chromium.org, khsieh@codeaurora.org, sean@poorly.run
+Subject: Fwd: Re: [PATCH v15 2/4] dt-bindings: msm: dsi: add yaml schemas for
+ DSI bindings
+In-Reply-To: <827048554933585f4cc42c94aa911e55@codeaurora.org>
+References: <1617620770-26202-1-git-send-email-mkrishn@codeaurora.org>
+ <1617620770-26202-2-git-send-email-mkrishn@codeaurora.org>
+ <20210408150300.GA1476562@robh.at.kernel.org>
+ <827048554933585f4cc42c94aa911e55@codeaurora.org>
+Message-ID: <4326018bcc2efc812b3267c830570f04@codeaurora.org>
+X-Sender: mkrishn@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 2021-05-12 12:00:46, Vaittinen, Matti wrote:
-> On Wed, 2021-05-12 at 10:20 +0200, Petr Mladek wrote:
-> > On Mon 2021-05-10 14:28:30, Matti Vaittinen wrote:
-> > > There can be few cases when we need to shut-down the system in
-> > > order to
-> > > protect the hardware. Currently this is done at east by the thermal
-> > > core
-> > > when temperature raises over certain limit.
-> > > 
-> > > Some PMICs can also generate interrupts for example for over-
-> > > current or
-> > > over-voltage, voltage drops, short-circuit, ... etc. On some
-> > > systems
-> > > these are a sign of hardware failure and only thing to do is try to
-> > > protect the rest of the hardware by shutting down the system.
-> > > 
-> > > Add shut-down logic which can be used by all subsystems instead of
-> > > implementing the shutdown in each subsystem. The logic is stolen
-> > > from
-> > > thermal_core with difference of using atomic_t instead of a mutex
-> > > in
-> > > order to allow calls directly from IRQ context.
-> > > 
-> > > Signed-off-by: Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>
-> > > 
-> > > diff --git a/kernel/reboot.c b/kernel/reboot.c
-> > > index a6ad5eb2fa73..5da8c80a2647 100644
-> > > --- a/kernel/reboot.c
-> > > +++ b/kernel/reboot.c
-> > > @@ -518,6 +519,85 @@ void orderly_reboot(void)
-> > >  }
-> > >  EXPORT_SYMBOL_GPL(orderly_reboot);
-> > >  
-> > > +/**
-> > > + * hw_failure_emergency_poweroff_func - emergency poweroff work
-> > > after a known delay
-> > > + * @work: work_struct associated with the emergency poweroff
-> > > function
-> > > + *
-> > > + * This function is called in very critical situations to force
-> > > + * a kernel poweroff after a configurable timeout value.
-> > > + */
-> > > +static void hw_failure_emergency_poweroff_func(struct work_struct
-> > > *work)
-> > > +{
-> > > +	/*
-> > > +	 * We have reached here after the emergency shutdown waiting
-> > > period has
-> > > +	 * expired. This means orderly_poweroff has not been able to
-> > > shut off
-> > > +	 * the system for some reason.
-> > > +	 *
-> > > +	 * Try to shut down the system immediately using
-> > > kernel_power_off
-> > > +	 * if populated
-> > > +	 */
-> > > +	WARN(1, "Hardware protection timed-out. Trying forced
-> > > poweroff\n");
-> > > +	kernel_power_off();
-> > 
-> > WARN() look like an overkill here. It prints many lines that are not
-> > much useful in this case. The function is called from well-known
-> > context (workqueue worker).
+On 2021-04-08 20:33, Rob Herring wrote:
+> On Mon, Apr 05, 2021 at 04:36:08PM +0530, Krishna Manikandan wrote:
+>> Add YAML schema for the device tree bindings for DSI
+>> 
+>> Signed-off-by: Krishna Manikandan <mkrishn@codeaurora.org>
+>> 
+>> Changes in v1:
+>>     - Separate dsi controller bindings to a separate patch (Stephen 
+>> Boyd)
+>>     - Merge dsi-common-controller.yaml and dsi-controller-main.yaml to
+>>       a single file (Stephen Boyd)
+>>     - Drop supply entries and definitions from properties (Stephen 
+>> Boyd)
+>>     - Modify phy-names property for dsi controller (Stephen Boyd)
+>>     - Remove boolean from description (Stephen Boyd)
+>>     - Drop pinctrl properties as they are standard entries (Stephen 
+>> Boyd)
+>>     - Modify the description for ports property and keep the reference
+>>       to the generic binding where this is defined (Stephen Boyd)
+>>     - Add description to clock names (Stephen Boyd)
+>>     - Correct the indendation (Stephen Boyd)
+>>     - Drop the label for display dt nodes and correct the node
+>>       name (Stephen Boyd)
+>> 
+>> Changes in v2:
+>>     - Drop maxItems for clock (Stephen Boyd)
+>>     - Drop qcom,mdss-mdp-transfer-time-us as it is not used in 
+>> upstream
+>>       dt file (Stephen Boyd)
+>>     - Keep child node directly under soc node (Stephen Boyd)
+>>     - Drop qcom,sync-dual-dsi as it is not used in upstream dt
+>> 
+>> Changes in v3:
+>>     - Add description for register property (Stephen Boyd)
+>> 
+>> Changes in v4:
+>>     - Add maxItems for phys property (Stephen Boyd)
+>>     - Add maxItems for reg property (Stephen Boyd)
+>>     - Add reference for data-lanes property (Stephen Boyd)
+>>     - Remove soc from example (Stephen Boyd)
+>> 
+>> Changes in v5:
+>>     - Modify title and description (Stephen Boyd)
+>>     - Add required properties for ports node (Stephen Boyd)
+>>     - Add data-lanes in the example (Stephen Boyd)
+>>     - Drop qcom,master-dsi property (Stephen Boyd)
+>> 
+>> Changes in v6:
+>>     - Add required properties for port@0, port@1 and corresponding
+>>       endpoints (Stephen Boyd)
+>>     - Add address-cells and size-cells for ports (Stephen Boyd)
+>>     - Use additionalProperties instead of unevaluatedProperties 
+>> (Stephen Boyd)
+>> ---
+>>  .../bindings/display/msm/dsi-controller-main.yaml  | 213 
+>> ++++++++++++++++++
+>>  .../devicetree/bindings/display/msm/dsi.txt        | 249 
+>> ---------------------
+>>  2 files changed, 213 insertions(+), 249 deletions(-)
+>>  create mode 100644 
+>> Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
+>>  delete mode 100644 
+>> Documentation/devicetree/bindings/display/msm/dsi.txt
+>> 
+>> diff --git 
+>> a/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml 
+>> b/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
+>> new file mode 100644
+>> index 0000000..7858524
+>> --- /dev/null
+>> +++ 
+>> b/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
+>> @@ -0,0 +1,213 @@
+>> +# SPDX-License-Identifier: GPL-2.0-only or BSD-2-Clause
+>> +%YAML 1.2
+>> +---
+>> +$id: 
+>> http://devicetree.org/schemas/display/msm/dsi-controller-main.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: Qualcomm Display DSI controller
+>> +
+>> +maintainers:
+>> +  - Krishna Manikandan <mkrishn@codeaurora.org>
+>> +
+>> +allOf:
+>> +  - $ref: "../dsi-controller.yaml#"
+>> +
+>> +properties:
+>> +  compatible:
+>> +    items:
+>> +      - const: qcom,mdss-dsi-ctrl
+>> +
+>> +  reg:
+>> +    maxItems: 1
+>> +
+>> +  reg-names:
+>> +    const: dsi_ctrl
+>> +
+>> +  interrupts:
+>> +    maxItems: 1
+>> +
+>> +  clocks:
+>> +    items:
+>> +      - description: Display byte clock
+>> +      - description: Display byte interface clock
+>> +      - description: Display pixel clock
+>> +      - description: Display escape clock
+>> +      - description: Display AHB clock
+>> +      - description: Display AXI clock
+>> +
+>> +  clock-names:
+>> +    items:
+>> +      - const: byte
+>> +      - const: byte_intf
+>> +      - const: pixel
+>> +      - const: core
+>> +      - const: iface
+>> +      - const: bus
+>> +
+>> +  phys:
+>> +    maxItems: 1
+>> +
+>> +  phy-names:
+>> +    const: dsi
+>> +
+>> +  "#address-cells": true
+>> +
+>> +  "#size-cells": true
+>> +
+>> +  syscon-sfpb:
+>> +    description: A phandle to mmss_sfpb syscon node (only for DSIv2).
+>> +    $ref: "/schemas/types.yaml#/definitions/phandle"
+>> +
+>> +  qcom,dual-dsi-mode:
+>> +    type: boolean
+>> +    description: |
+>> +      Indicates if the DSI controller is driving a panel which needs
+>> +      2 DSI links.
+>> +
+>> +  ports:
 > 
-> This was the existing code which I stole from the thermal_core. I kind
-> of think that eye-catching WARN is actually a good choice here. Doing
-> autonomous power-off without a WARNing does not sound good to me :)
+> Same issues in this one.
 > 
-> > Also be aware that "panic_on_warn" commandline option will trigger
-> > panic() here.
+>> +    $ref: "/schemas/graph.yaml#/properties/port"
+>> +    type: object
+>> +    description: |
+>> +      Contains DSI controller input and output ports as children, 
+>> each
+>> +      containing one endpoint subnode.
+>> +
+>> +    properties:
+>> +      port@0:
+>> +        type: object
+>> +        description: |
+>> +          Input endpoints of the controller.
+>> +
+>> +        properties:
+>> +          reg:
+>> +            const: 0
+>> +
+>> +          endpoint:
+>> +            type: object
+>> +            properties:
+>> +              remote-endpoint:
 > 
-> Hmm.. If panic() hangs the system that might indeed be a problem. Now
-> we are (again) on a territory which I don't know well. I'd appreciate
-> any input from thermal folks and Mark. I don't like the idea of making
-> extreme things like power-off w/o well visible log-trace. Thus I would
-> like to have WARN()-like eye-catcher, even if the call-trace was not
-> too varying. It will at least point to this worker. Any better
-> suggestions than WARN()?
+> Don't need to describe this, the common schema does.
+> 
+>> +                description: |
+>> +                  For port@1, set to phandle of the connected 
+>> panel/bridge's
+>> +                  input endpoint. For port@0, set to the MDP 
+>> interface output.
+>> +
+>> +              data-lanes:
+>> +                $ref: "/schemas/media/video-interfaces.yaml#"
+> 
+> Not how this reference works. Look at other examples.
+> 
+>> +                description: |
+>> +                  This describes how the physical DSI data lanes are 
+>> mapped
+>> +                  to the logical lanes on the given platform. The 
+>> value contained in
+>> +                  index n describes what physical lane is mapped to 
+>> the logical lane n
+>> +                  (DATAn, where n lies between 0 and 3). The clock 
+>> lane position is fixed
+>> +                  and can't be changed. Hence, they aren't a part of 
+>> the DT bindings.
+>> +
+>> +                items:
+>> +                  - const: 0
+>> +                  - const: 1
+>> +                  - const: 2
+>> +                  - const: 3
+> 
+> If this is the only possible value, why does it need to be in DT?
+Hi Rob,
+These are the possible values:
+-    <0 1 2 3>
+-    <1 2 3 0>
+-    <2 3 0 1>
+-    <3 0 1 2>
+-    <0 3 2 1>
+-    <1 0 3 2>
+-    <2 1 0 3>
+-    <3 2 1 0>
 
-Heh, it might make sense to create a system wide API for these. I am
-sure that WARN() is mis-used this way on many other locations.
+Shall I follow the below mentioned approach for defining these values ?
+oneOf:
+   - items:
+     - const: 0
+     - const: 1
+     - const: 2
+     - const: 3
+   - items:
+     - const: 1
+     - const: 2
+     - const: 3
+     - const: 0
+   - items:
+     - const: 2
+     - const: 3
+     - const: 0
+     - const: 1
+   - items:
+     - const: 3
+     - const: 0
+     - const: 1
+     - const: 2
+   - items:
+     - const: 0
+     - const: 3
+     - const: 2
+     - const: 1
+   - items:
+     - const: 1
+     - const: 0
+     - const: 3
+     - const: 2
+   - items:
+     - const: 2
+     - const: 1
+     - const: 0
+     - const: 3
+   - items:
+     - const: 3
+     - const: 2
+     - const: 1
+     - const: 0
 
-There already are two locations that use another eye-catching text.
-A common API might help to avoid duplication of the common parts,
-see
-https://lore.kernel.org/lkml/20210305194206.3165917-2-elver@google.com/
-
-Well, it might be out of scope for this patchset.
-
-Best Regards,
-Petr
+Thanks,
+Krishna
+> 
+>> +
+>> +            required:
+>> +              - remote-endpoint
+>> +
+>> +        required:
+>> +          - reg
+>> +          - endpoint
+>> +
+>> +      port@1:
+>> +        type: object
+>> +        description: |
+>> +          Output endpoints of the controller.
+>> +        properties:
+>> +          reg:
+>> +            const: 1
+>> +
+>> +          endpoint:
+>> +            type: object
+>> +            properties:
+>> +              remote-endpoint: true
+>> +              data-lanes:
+>> +                items:
+>> +                  - const: 0
+>> +                  - const: 1
+>> +                  - const: 2
+>> +                  - const: 3
+>> +
+>> +            required:
+>> +              - remote-endpoint
+>> +              - data-lanes
+>> +
+>> +        required:
+>> +          - reg
+>> +          - endpoint
+>> +
+>> +    required:
+>> +      - port@0
+>> +      - port@1
+>> +      - "#address-cells"
+>> +      - "#size-cells"
+>> +
+>> +required:
+>> +  - compatible
+>> +  - reg
+>> +  - reg-names
+>> +  - interrupts
+>> +  - clocks
+>> +  - clock-names
+>> +  - phys
+>> +  - phy-names
+>> +  - ports
+>> +
+>> +additionalProperties: false
+>> +
+>> +examples:
+>> +  - |
+>> +     #include <dt-bindings/interrupt-controller/arm-gic.h>
+>> +     #include <dt-bindings/clock/qcom,dispcc-sdm845.h>
+>> +     #include <dt-bindings/clock/qcom,gcc-sdm845.h>
+>> +
+>> +     dsi@ae94000 {
+>> +           compatible = "qcom,mdss-dsi-ctrl";
+>> +           reg = <0x0ae94000 0x400>;
+>> +           reg-names = "dsi_ctrl";
+>> +
+>> +           #address-cells = <1>;
+>> +           #size-cells = <0>;
+>> +
+>> +           interrupt-parent = <&mdss>;
+>> +           interrupts = <4>;
+>> +
+>> +           clocks = <&dispcc DISP_CC_MDSS_BYTE0_CLK>,
+>> +                    <&dispcc DISP_CC_MDSS_BYTE0_INTF_CLK>,
+>> +                    <&dispcc DISP_CC_MDSS_PCLK0_CLK>,
+>> +                    <&dispcc DISP_CC_MDSS_ESC0_CLK>,
+>> +                    <&dispcc DISP_CC_MDSS_AHB_CLK>,
+>> +                    <&dispcc DISP_CC_MDSS_AXI_CLK>;
+>> +           clock-names = "byte",
+>> +                         "byte_intf",
+>> +                         "pixel",
+>> +                         "core",
+>> +                         "iface",
+>> +                         "bus";
+>> +
+>> +           phys = <&dsi0_phy>;
+>> +           phy-names = "dsi";
+>> +
+>> +           ports {
+>> +                  #address-cells = <1>;
+>> +                  #size-cells = <0>;
+>> +
+>> +                  port@0 {
+>> +                          reg = <0>;
+>> +                          dsi0_in: endpoint {
+>> +                                   remote-endpoint = 
+>> <&dpu_intf1_out>;
+>> +                          };
+>> +                  };
+>> +
+>> +                  port@1 {
+>> +                          reg = <1>;
+>> +                          dsi0_out: endpoint {
+>> +                                   remote-endpoint = <&sn65dsi86_in>;
+>> +                                   data-lanes = <0 1 2 3>;
+>> +                          };
+>> +                  };
+>> +           };
+>> +     };
+>> +...
+>> diff --git a/Documentation/devicetree/bindings/display/msm/dsi.txt 
+>> b/Documentation/devicetree/bindings/display/msm/dsi.txt
+>> deleted file mode 100644
+>> index b9a64d3..0000000
+>> --- a/Documentation/devicetree/bindings/display/msm/dsi.txt
+>> +++ /dev/null
+>> @@ -1,249 +0,0 @@
+>> -Qualcomm Technologies Inc. adreno/snapdragon DSI output
+>> -
+>> -DSI Controller:
+>> -Required properties:
+>> -- compatible:
+>> -  * "qcom,mdss-dsi-ctrl"
+>> -- reg: Physical base address and length of the registers of 
+>> controller
+>> -- reg-names: The names of register regions. The following regions are 
+>> required:
+>> -  * "dsi_ctrl"
+>> -- interrupts: The interrupt signal from the DSI block.
+>> -- power-domains: Should be <&mmcc MDSS_GDSC>.
+>> -- clocks: Phandles to device clocks.
+>> -- clock-names: the following clocks are required:
+>> -  * "mdp_core"
+>> -  * "iface"
+>> -  * "bus"
+>> -  * "core_mmss"
+>> -  * "byte"
+>> -  * "pixel"
+>> -  * "core"
+>> -  For DSIv2, we need an additional clock:
+>> -   * "src"
+>> -  For DSI6G v2.0 onwards, we need also need the clock:
+>> -   * "byte_intf"
+>> -- assigned-clocks: Parents of "byte" and "pixel" for the given 
+>> platform.
+>> -- assigned-clock-parents: The Byte clock and Pixel clock PLL outputs 
+>> provided
+>> -  by a DSI PHY block. See [1] for details on clock bindings.
+>> -- vdd-supply: phandle to vdd regulator device node
+>> -- vddio-supply: phandle to vdd-io regulator device node
+>> -- vdda-supply: phandle to vdda regulator device node
+>> -- phys: phandle to DSI PHY device node
+>> -- phy-names: the name of the corresponding PHY device
+>> -- syscon-sfpb: A phandle to mmss_sfpb syscon node (only for DSIv2)
+>> -- ports: Contains 2 DSI controller ports as child nodes. Each port 
+>> contains
+>> -  an endpoint subnode as defined in [2] and [3].
+>> -
+>> -Optional properties:
+>> -- panel@0: Node of panel connected to this DSI controller.
+>> -  See files in [4] for each supported panel.
+>> -- qcom,dual-dsi-mode: Boolean value indicating if the DSI controller 
+>> is
+>> -  driving a panel which needs 2 DSI links.
+>> -- qcom,master-dsi: Boolean value indicating if the DSI controller is 
+>> driving
+>> -  the master link of the 2-DSI panel.
+>> -- qcom,sync-dual-dsi: Boolean value indicating if the DSI controller 
+>> is
+>> -  driving a 2-DSI panel whose 2 links need receive command 
+>> simultaneously.
+>> -- pinctrl-names: the pin control state names; should contain 
+>> "default"
+>> -- pinctrl-0: the default pinctrl state (active)
+>> -- pinctrl-n: the "sleep" pinctrl state
+>> -- ports: contains DSI controller input and output ports as children, 
+>> each
+>> -  containing one endpoint subnode.
+>> -
+>> -  DSI Endpoint properties:
+>> -  - remote-endpoint: For port@0, set to phandle of the connected 
+>> panel/bridge's
+>> -    input endpoint. For port@1, set to the MDP interface output. See 
+>> [2] for
+>> -    device graph info.
+>> -
+>> -  - data-lanes: this describes how the physical DSI data lanes are 
+>> mapped
+>> -    to the logical lanes on the given platform. The value contained 
+>> in
+>> -    index n describes what physical lane is mapped to the logical 
+>> lane n
+>> -    (DATAn, where n lies between 0 and 3). The clock lane position is 
+>> fixed
+>> -    and can't be changed. Hence, they aren't a part of the DT 
+>> bindings. See
+>> -    [3] for more info on the data-lanes property.
+>> -
+>> -    For example:
+>> -
+>> -    data-lanes = <3 0 1 2>;
+>> -
+>> -    The above mapping describes that the logical data lane DATA0 is 
+>> mapped to
+>> -    the physical data lane DATA3, logical DATA1 to physical DATA0, 
+>> logic DATA2
+>> -    to phys DATA1 and logic DATA3 to phys DATA2.
+>> -
+>> -    There are only a limited number of physical to logical mappings 
+>> possible:
+>> -    <0 1 2 3>
+>> -    <1 2 3 0>
+>> -    <2 3 0 1>
+>> -    <3 0 1 2>
+>> -    <0 3 2 1>
+>> -    <1 0 3 2>
+>> -    <2 1 0 3>
+>> -    <3 2 1 0>
+> 
+> You've dropped all these?
