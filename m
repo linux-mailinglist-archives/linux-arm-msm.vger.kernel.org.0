@@ -2,100 +2,195 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 972BE3803C6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 May 2021 08:50:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8A7813803F4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 May 2021 09:03:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231671AbhENGwI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 14 May 2021 02:52:08 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:29726 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229927AbhENGwH (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 14 May 2021 02:52:07 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1620975057; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=d51erDtkha1RR6bdcED15Fv71pub36quAgP8GlBGWEc=; b=voVH0i+XZykK7nVnlT7J+MCmaBqHun5QpOkVe09cqmQ5AyRX1A0AvHktYCV18mwo1vrEsZAl
- cwBeg8P3EjCg2UNuyLnvnAGBP+xYA9LKi/qip0l8BSFNt2mg+mM+8vjh3jSvt0pWmpGmOOoT
- TyJWeFFBMZbf1EQgCFd/EeTXEFk=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
- 609e1dd0c7220f8fd36165c6 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 14 May 2021 06:50:56
- GMT
-Sender: srivasam=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id CE409C43144; Fri, 14 May 2021 06:50:55 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
-Received: from [192.168.1.100] (unknown [157.48.128.130])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: srivasam)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 399BFC433F1;
-        Fri, 14 May 2021 06:50:48 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 399BFC433F1
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=srivasam@codeaurora.org
-Subject: Re: [PATCH] ASoC: qcom: lpass-cpu: Fix pop noise during audio capture
- begin
-To:     Mark Brown <broonie@kernel.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        robh+dt@kernel.org, plai@codeaurora.org, bgoswami@codeaurora.org,
-        perex@perex.cz, tiwai@suse.com, srinivas.kandagatla@linaro.org,
-        rohitkr@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, swboyd@chromium.org,
-        judyhsiao@chromium.org
-References: <20210513114539.4813-1-srivasam@codeaurora.org>
- <20210513133132.GC5813@sirena.org.uk>
-From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-Organization: Qualcomm India Private Limited.
-Message-ID: <a6649fad-c2ca-1808-4227-8bcb373f66bd@codeaurora.org>
-Date:   Fri, 14 May 2021 12:20:46 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.10.1
+        id S232575AbhENHEu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 14 May 2021 03:04:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36744 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232013AbhENHEu (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 14 May 2021 03:04:50 -0400
+Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44F4DC06174A
+        for <linux-arm-msm@vger.kernel.org>; Fri, 14 May 2021 00:03:39 -0700 (PDT)
+Received: by mail-ot1-x32d.google.com with SMTP id t10-20020a05683022eab0290304ed8bc759so4581025otc.12
+        for <linux-arm-msm@vger.kernel.org>; Fri, 14 May 2021 00:03:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=t/erlS0KSM8vCio7Ok8bLMUZqEf2SFqD0+lTW1WVjb0=;
+        b=XFVDbfbb/JY7synsDmjIJVMDAKGuCXMsAP2qZIxfGYDIxMUPeqpsA8es62Up5zMtjI
+         ezhtKdtBN2rc5+5X5OPBWqRrFczHyNnxwxXEfoo6N+joR4hXnerFPW2Zbw+SWqjwOu5Y
+         iYrkWwVfiCOajba0X+vbVp9q1JWGA1Q9yzRHc=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=t/erlS0KSM8vCio7Ok8bLMUZqEf2SFqD0+lTW1WVjb0=;
+        b=sJiazn8iNKtl/bE/FRl6/iFNhmm44TvXEyi8DM/8VTcJczBKZ124FMd8QRqc1KeQa5
+         f86qzaOb3sCIvPbXctL7Ht+6MPVIa3oq3TzZ+83j1dJXulIBE64563ECzN3vjxWWjYoe
+         k+rDO036D8oenzK+uNwLv77T3sUKH2+kTOxCJGDCvGjmN+MhE9xxBSgS2U7XUPlxX+ul
+         EjS5fnbtWJD9sORrW+/i8+jbdR+cdObMP11kFedViHqHtdibVyNrJgqZWPFvUexHRtd3
+         u59xbOU4BLwobN4xUtXJBk0Cjv5y5ruukY0WWLnYmU06AfKVlfKXW/vBEoPpPmWJybmD
+         ldvg==
+X-Gm-Message-State: AOAM533rdnOPz/fqI38NdpmZGX1iOWWmfY9A/US6iYUTGQZzZFCtUI1C
+        C7lkODDsbtOuR4PfQlArrG9/4FxXaqEeHcdK//lIOw==
+X-Google-Smtp-Source: ABdhPJxqNL/YMpX++PfY8q6b7kVFtbe6P871ZUDuytU5EYikWR22m6n/N/8HvyA4vP4kN6nrUl6tj1pWy2QsnazMBkY=
+X-Received: by 2002:a05:6830:1556:: with SMTP id l22mr38502367otp.34.1620975818621;
+ Fri, 14 May 2021 00:03:38 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 14 May 2021 02:03:37 -0500
 MIME-Version: 1.0
-In-Reply-To: <20210513133132.GC5813@sirena.org.uk>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+In-Reply-To: <1620862199-19514-1-git-send-email-khsieh@codeaurora.org>
+References: <1620862199-19514-1-git-send-email-khsieh@codeaurora.org>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.9.1
+Date:   Fri, 14 May 2021 02:03:37 -0500
+Message-ID: <CAE-0n53V661ir2hTpPYA2CAq3HLgXQYL+O-nnJy8vHYKPzynzw@mail.gmail.com>
+Subject: Re: [PATCH v3 1/2] drm/msm/dp: handle irq_hpd with sink_count = 0 correctly
+To:     Kuogee Hsieh <khsieh@codeaurora.org>, agross@kernel.org,
+        bjorn.andersson@linaro.org, robdclark@gmail.com, sean@poorly.run,
+        vkoul@kernel.org
+Cc:     abhinavk@codeaurora.org, aravindh@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Brown,
+Quoting Kuogee Hsieh (2021-05-12 16:29:59)
+> irq_hpd interrupt should be handled after dongle plugged in and
+> before dongle unplugged. Hence irq_hpd interrupt is enabled at
+> the end of the plugin handle and disabled at the beginning of
+> unplugged handle. Current irq_hpd with sink_count = 0 is wrongly
+> handled same as the dongle unplugged which tears down the mainlink
+> and disables the phy. This patch fixes this problem by only tearing
+> down the mainlink but keeping phy enabled at irq_hpd with
+> sink_count = 0 handle so that next irq_hpe with sink_count =1 can be
 
-Thanks for your review comments!!!
+s/irq_hpe/irq/hpd/
 
-On 5/13/2021 7:01 PM, Mark Brown wrote:
-> On Thu, May 13, 2021 at 05:15:39PM +0530, Srinivasa Rao Mandadapu wrote:
+> handled by setup mainlink only.
 >
->> +	if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK) {
->> +		ret = regmap_fields_write(i2sctl->spken, id,
->> +						 LPAIF_I2SCTL_SPKEN_ENABLE);
->> +	} else  {
->> +		ret = regmap_fields_write(i2sctl->micen, id,
->> +						 LPAIF_I2SCTL_MICEN_ENABLE);
->> +	}
-> This commit doesn't remove the matching update in triger() so we'd have
-> two redundant updates.  I guess it's unlikely to be harmful but it looks
-> wrong/confusing.
+> Changes in v2:
+> -- add ctrl->phy_Power_count
+>
+> Changes in v3:
+> -- del ctrl->phy_Power_count
+> -- add phy_power_off to dp_ctrl_off_link_stream()
+>
+> Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
+> ---
+>  drivers/gpu/drm/msm/dp/dp_catalog.c |  5 ++--
+>  drivers/gpu/drm/msm/dp/dp_ctrl.c    | 54 +++++++++++++++++++++++++++++++++++++
+>  drivers/gpu/drm/msm/dp/dp_ctrl.h    |  2 ++
+>  drivers/gpu/drm/msm/dp/dp_display.c | 46 ++++++++++++++++++++++++-------
+>  4 files changed, 94 insertions(+), 13 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.c b/drivers/gpu/drm/msm/dp/dp_catalog.c
+> index b1a9b1b..f4f53f2 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_catalog.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_catalog.c
+> @@ -582,10 +582,9 @@ void dp_catalog_ctrl_hpd_config(struct dp_catalog *dp_catalog)
+>
+>         u32 reftimer = dp_read_aux(catalog, REG_DP_DP_HPD_REFTIMER);
+>
+> -       /* enable HPD interrupts */
+> +       /* enable HPD plug and unplug interrupts */
+>         dp_catalog_hpd_config_intr(dp_catalog,
+> -               DP_DP_HPD_PLUG_INT_MASK | DP_DP_IRQ_HPD_INT_MASK
+> -               | DP_DP_HPD_UNPLUG_INT_MASK | DP_DP_HPD_REPLUG_INT_MASK, true);
+> +               DP_DP_HPD_PLUG_INT_MASK | DP_DP_HPD_UNPLUG_INT_MASK, true);
+>
+>         /* Configure REFTIMER and enable it */
+>         reftimer |= DP_DP_HPD_REFTIMER_ENABLE;
+> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> index 8d59eb9..41c122c 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> @@ -1811,6 +1811,60 @@ int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl)
+>         return ret;
+>  }
+>
+> +int dp_ctrl_off_link_stream(struct dp_ctrl *dp_ctrl)
+> +{
+> +       struct dp_ctrl_private *ctrl;
+> +       struct dp_io *dp_io;
+> +       struct phy *phy;
+> +       int ret = 0;
 
-Yes, It's not harmful, as clk_prepare_enable is enabling clock only once 
-but maintaining count.
+Please don't assign ret and then reassign it without testing it first.
 
-As Some times in Suspend/resume Sequence not hitting startup/shutdown, 
-but Trigger, so for maintaining
+> +
+> +       if (!dp_ctrl)
 
-consistency not removed in trigger.
+Does this ever happen?
 
--- 
-Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
-is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
+> +               return -EINVAL;
+> +
+> +       ctrl = container_of(dp_ctrl, struct dp_ctrl_private, dp_ctrl);
+> +       dp_io = &ctrl->parser->io;
+> +       phy = dp_io->phy;
+> +
+> +       dp_catalog_ctrl_mainlink_ctrl(ctrl->catalog, false);
+> +
+> +       ret = dp_power_clk_enable(ctrl->power, DP_STREAM_PM, false);
+> +       if (ret)
+> +               DRM_ERROR("Failed to disable pixel clocks. ret=%d\n", ret);
 
+Why do we continue instead of returning with a failure?
+
+> +
+> +       ret = dp_power_clk_enable(ctrl->power, DP_CTRL_PM, false);
+> +       if (ret)
+> +               DRM_ERROR("Failed to disable link clocks. ret=%d\n", ret);
+
+Same, why do we continue?
+
+> +
+> +       phy_power_off(phy);
+> +       phy_exit(phy);
+> +
+> +       /* aux channel down, reinit phy */
+
+So we need to call exit/init to reinitialize the phy? I wonder if there
+could be some phy_reinit() function that combines those.
+
+> +       phy_init(phy);
+> +
+> +       DRM_DEBUG_DP("DP off link/stream done\n");
+> +       return ret;
+
+Except here we return with a failure.
+
+> +}
+> +
+> +void dp_ctrl_off_phy(struct dp_ctrl *dp_ctrl)
+> +{
+> +       struct dp_ctrl_private *ctrl;
+> +       struct dp_io *dp_io;
+> +       struct phy *phy;
+> +
+> +       if (!dp_ctrl)
+
+Does this ever happen?
+
+> +               return;
+> +
+> +       ctrl = container_of(dp_ctrl, struct dp_ctrl_private, dp_ctrl);
+> +       dp_io = &ctrl->parser->io;
+> +       phy = dp_io->phy;
+> +
+> +       dp_catalog_ctrl_reset(ctrl->catalog);
+> +
+> +       phy_exit(phy);
+> +
+> +       DRM_DEBUG_DP("DP off phy done\n");
+> +}
+> +
+>  int dp_ctrl_off(struct dp_ctrl *dp_ctrl)
+>  {
+>         struct dp_ctrl_private *ctrl;
