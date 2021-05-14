@@ -2,125 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CD15837FE73
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 May 2021 21:56:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 972BE3803C6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 May 2021 08:50:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232282AbhEMT6H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 May 2021 15:58:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59980 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232274AbhEMT6D (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 May 2021 15:58:03 -0400
-Received: from mail-qk1-x735.google.com (mail-qk1-x735.google.com [IPv6:2607:f8b0:4864:20::735])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39AE1C06175F
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 May 2021 12:56:53 -0700 (PDT)
-Received: by mail-qk1-x735.google.com with SMTP id c20so15722403qkm.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 May 2021 12:56:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=marek-ca.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=ImB00rCkO3Du5fe7tW03c3z2e4cEx+x9KwGSBQTfV8Y=;
-        b=MYFZYZfeOsnayRhW4lf4ZMW7Qg1ZxX5/VeI5As9fUKYtgLYeIfesf4bvt4LNtZOd+n
-         mkh1Pl/j62eJYdcFcF8Y2m6ir8r1lBayar5pI5GS/9TfjCguiGAxUpRTjmDCYN3YH2Mm
-         Z0AnoB/pz5FOM4R1rfgdwYatRIcNVvXv6Dd1QJICdDN2iC66ipJ+K+zDXDw9M/IMJJ/4
-         0jQySlzbudom8C/dZwF2oQFXMydcug0llFJ2F8aLGsh62K9YKz2SVWcD6csBXeZZ+rYR
-         CUCXvys1qHCIdb/JwjDUvGntkYEyNUIEFy25Qpq7Qy4zk5fQUo6uUWx6Xx10j9hFMVTx
-         ejTQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=ImB00rCkO3Du5fe7tW03c3z2e4cEx+x9KwGSBQTfV8Y=;
-        b=o3ctposFXl1K4ZN2L1bSmQ10JAPW7oVt5PCFAV09GgC3MJNukFVH0TloEnI97yX1DX
-         2q4BP6g1RKKDBnhGdDQkrPDe7dETecj9m/iEqBdP6A4kws0zAOGGhcoirmylgdgy0YP7
-         zBQVl/a3KwAGOxierXw5klQKjLTwGxdpJ60k6+7GwXKWDrmqtTTGuszwZngyKiAATSaA
-         I1/2EmNs5QETYNWVbR+771QUVlOXnOh7R1AhEBuXH3P94opO0QzY0hWBuEpD0WVE/miN
-         OCowiJgYs1bynJJ4w5+IhiouAf3vVaKv4KR78TRxyLOus0uRA/+cxjbN2jZT0nnfmyny
-         0geA==
-X-Gm-Message-State: AOAM532q4fkBmUAXGFiZhA6+8S+aLe0BUQphwiEDDcvdeBpN9Rbpxgne
-        zeR7hMK6/VIvAcQMKbMOk11oTk23V4WaQcXkf5E=
-X-Google-Smtp-Source: ABdhPJx1RtfJ/l4n/RuqVFt93meQ5WMhpxPL9gL8UNj3gRu1WJT/XnnZlFikpcxf3KQh0hdKj1TlWA==
-X-Received: by 2002:ae9:ed86:: with SMTP id c128mr32927476qkg.224.1620935811744;
-        Thu, 13 May 2021 12:56:51 -0700 (PDT)
-Received: from localhost.localdomain (modemcable068.184-131-66.mc.videotron.ca. [66.131.184.68])
-        by smtp.gmail.com with ESMTPSA id h12sm3211228qkj.52.2021.05.13.12.56.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 May 2021 12:56:51 -0700 (PDT)
-From:   Jonathan Marek <jonathan@marek.ca>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-clk@vger.kernel.org (open list:COMMON CLK FRAMEWORK),
-        devicetree@vger.kernel.org (open list:OPEN FIRMWARE AND FLATTENED
-        DEVICE TREE BINDINGS), linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH 2/2] dt-bindings: clock: add QCOM SM8350 display clock bindings
-Date:   Thu, 13 May 2021 15:56:17 -0400
-Message-Id: <20210513195617.15068-2-jonathan@marek.ca>
-X-Mailer: git-send-email 2.26.1
-In-Reply-To: <20210513195617.15068-1-jonathan@marek.ca>
-References: <20210513195617.15068-1-jonathan@marek.ca>
+        id S231671AbhENGwI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 14 May 2021 02:52:08 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:29726 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229927AbhENGwH (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 14 May 2021 02:52:07 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1620975057; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=d51erDtkha1RR6bdcED15Fv71pub36quAgP8GlBGWEc=; b=voVH0i+XZykK7nVnlT7J+MCmaBqHun5QpOkVe09cqmQ5AyRX1A0AvHktYCV18mwo1vrEsZAl
+ cwBeg8P3EjCg2UNuyLnvnAGBP+xYA9LKi/qip0l8BSFNt2mg+mM+8vjh3jSvt0pWmpGmOOoT
+ TyJWeFFBMZbf1EQgCFd/EeTXEFk=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
+ 609e1dd0c7220f8fd36165c6 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 14 May 2021 06:50:56
+ GMT
+Sender: srivasam=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id CE409C43144; Fri, 14 May 2021 06:50:55 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
+Received: from [192.168.1.100] (unknown [157.48.128.130])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: srivasam)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 399BFC433F1;
+        Fri, 14 May 2021 06:50:48 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 399BFC433F1
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=srivasam@codeaurora.org
+Subject: Re: [PATCH] ASoC: qcom: lpass-cpu: Fix pop noise during audio capture
+ begin
+To:     Mark Brown <broonie@kernel.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        robh+dt@kernel.org, plai@codeaurora.org, bgoswami@codeaurora.org,
+        perex@perex.cz, tiwai@suse.com, srinivas.kandagatla@linaro.org,
+        rohitkr@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, swboyd@chromium.org,
+        judyhsiao@chromium.org
+References: <20210513114539.4813-1-srivasam@codeaurora.org>
+ <20210513133132.GC5813@sirena.org.uk>
+From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+Organization: Qualcomm India Private Limited.
+Message-ID: <a6649fad-c2ca-1808-4227-8bcb373f66bd@codeaurora.org>
+Date:   Fri, 14 May 2021 12:20:46 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20210513133132.GC5813@sirena.org.uk>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add sm8350 DISPCC bindings, which are simply a symlink to the sm8250
-bindings. Update the documentation with add the new compatible.
+Hi Brown,
 
-Signed-off-by: Jonathan Marek <jonathan@marek.ca>
----
- .../devicetree/bindings/clock/qcom,dispcc-sm8x50.yaml       | 6 ++++--
- include/dt-bindings/clock/qcom,dispcc-sm8350.h              | 1 +
- 2 files changed, 5 insertions(+), 2 deletions(-)
- create mode 120000 include/dt-bindings/clock/qcom,dispcc-sm8350.h
+Thanks for your review comments!!!
 
-diff --git a/Documentation/devicetree/bindings/clock/qcom,dispcc-sm8x50.yaml b/Documentation/devicetree/bindings/clock/qcom,dispcc-sm8x50.yaml
-index 0cdf53f41f84..8f414642445e 100644
---- a/Documentation/devicetree/bindings/clock/qcom,dispcc-sm8x50.yaml
-+++ b/Documentation/devicetree/bindings/clock/qcom,dispcc-sm8x50.yaml
-@@ -4,24 +4,26 @@
- $id: http://devicetree.org/schemas/clock/qcom,dispcc-sm8x50.yaml#
- $schema: http://devicetree.org/meta-schemas/core.yaml#
- 
--title: Qualcomm Display Clock & Reset Controller Binding for SM8150/SM8250
-+title: Qualcomm Display Clock & Reset Controller Binding for SM8150/SM8250/SM8350
- 
- maintainers:
-   - Jonathan Marek <jonathan@marek.ca>
- 
- description: |
-   Qualcomm display clock control module which supports the clocks, resets and
--  power domains on SM8150 and SM8250.
-+  power domains on SM8150/SM8250/SM8350.
- 
-   See also:
-     dt-bindings/clock/qcom,dispcc-sm8150.h
-     dt-bindings/clock/qcom,dispcc-sm8250.h
-+    dt-bindings/clock/qcom,dispcc-sm8350.h
- 
- properties:
-   compatible:
-     enum:
-       - qcom,sm8150-dispcc
-       - qcom,sm8250-dispcc
-+      - qcom,sm8350-dispcc
- 
-   clocks:
-     items:
-diff --git a/include/dt-bindings/clock/qcom,dispcc-sm8350.h b/include/dt-bindings/clock/qcom,dispcc-sm8350.h
-new file mode 120000
-index 000000000000..0312b4544acb
---- /dev/null
-+++ b/include/dt-bindings/clock/qcom,dispcc-sm8350.h
-@@ -0,0 +1 @@
-+qcom,dispcc-sm8250.h
-\ No newline at end of file
+On 5/13/2021 7:01 PM, Mark Brown wrote:
+> On Thu, May 13, 2021 at 05:15:39PM +0530, Srinivasa Rao Mandadapu wrote:
+>
+>> +	if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK) {
+>> +		ret = regmap_fields_write(i2sctl->spken, id,
+>> +						 LPAIF_I2SCTL_SPKEN_ENABLE);
+>> +	} else  {
+>> +		ret = regmap_fields_write(i2sctl->micen, id,
+>> +						 LPAIF_I2SCTL_MICEN_ENABLE);
+>> +	}
+> This commit doesn't remove the matching update in triger() so we'd have
+> two redundant updates.  I guess it's unlikely to be harmful but it looks
+> wrong/confusing.
+
+Yes, It's not harmful, as clk_prepare_enable is enabling clock only once 
+but maintaining count.
+
+As Some times in Suspend/resume Sequence not hitting startup/shutdown, 
+but Trigger, so for maintaining
+
+consistency not removed in trigger.
+
 -- 
-2.26.1
+Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
+is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
 
