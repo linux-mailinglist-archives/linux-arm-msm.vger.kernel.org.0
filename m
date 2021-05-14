@@ -2,105 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CB006381165
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 May 2021 22:09:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 838673812D5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 May 2021 23:31:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231133AbhENUKO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 14 May 2021 16:10:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43996 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230426AbhENUKO (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 14 May 2021 16:10:14 -0400
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6E43C061574
-        for <linux-arm-msm@vger.kernel.org>; Fri, 14 May 2021 13:09:01 -0700 (PDT)
-Received: by mail-wm1-x32e.google.com with SMTP id o127so314702wmo.4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 14 May 2021 13:09:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=9vee9zbKeJ08k4xe/XZutEWn1yTcRHSY9UUPRdL/HXQ=;
-        b=gVYhbAwKpL+ipOCZsofpwGVTpgzbCcblvU3WaxpvrC2CMYY6UdIWABp8eoZaO5iN67
-         l0DjlqBBn6qBKolaKOvBLfdlxqGqv5fw5Mm8LCjUZ0yQCcMCMcnIfWheVkcKqcM43rOU
-         qOIyS1MOttsktudza5OEYdEmqF7ACmhT7C0bpUVpDd+TnKLVyPyYuxoEz16MdaYlYmxL
-         tkP+9hYPxfrJynYZqwFbAke1nv5zoKgTvQY5cI3uNTmnvRAfOxmOzz003HaPMT5H1vUe
-         ID1mjtkj7gD74zzbyCbf8PsH/V2Lk56d+jYMZUztQMJnM8UryNFcBdz8umAF4i+fhr39
-         HNqg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=9vee9zbKeJ08k4xe/XZutEWn1yTcRHSY9UUPRdL/HXQ=;
-        b=GXZxLS/fZWNQJTCcSSo8dR3/ra0YqD0DuAoV+7ldwIr0e0NZDC7roil0K2a+6LnJ6G
-         yhtbjUfnHGVrlwXfIFJFTw+7xFmmgYkkUC4YW7CWV4oLmp9VfEyjBetLGByuEq6nhG0l
-         bLkbFni2HfdvvGVIcf81e56czs1kVFGM905uBa2QU0TqC5/ygOcuwiB3MfcwZ49JegJq
-         gzZIopwZywMYgkHHVOC7lSsRWLvbcHblQ3H/rvPdsYtAX16qv0NDICYRYaPxS4c1d5i0
-         FdV/8ChZJ0mEQZMP4SlYA5S6B7Ay3xJWUCbfeWAhjHUNJcqjRkJ+5gC+DYCHJU0CAY1r
-         Nb5g==
-X-Gm-Message-State: AOAM531T/hz+w09BGl1NIbGzjHWNYZosQ0GA0yo/8CkxSNDZX82pjm+V
-        2xX1JqbAEjQrDbuU/XuN7/zK7yB85JiTVssYNZA=
-X-Google-Smtp-Source: ABdhPJx1lkTJm9rKHYxi7GjduJl398gAg9pDy7QhR05IuHloVqkBr+xdhtf226DwAeMSoQsJqqj/3zgJ733l7f3xrLI=
-X-Received: by 2002:a7b:cd8e:: with SMTP id y14mr6087258wmj.164.1621022940229;
- Fri, 14 May 2021 13:09:00 -0700 (PDT)
-MIME-Version: 1.0
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Fri, 14 May 2021 13:12:42 -0700
-Message-ID: <CAF6AEGuqLZDAEJwUFKb6m+h3kyxgjDEKa3DPA1fHA69vxbXH=g@mail.gmail.com>
-Subject: [resend][pull] drm/msm: drm-msm-fixes-2021-05-09 for v5.13-rc2
-To:     Dave Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
-Cc:     freedreno <freedreno@lists.freedesktop.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Sean Paul <sean@poorly.run>,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
+        id S232369AbhENVcg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 14 May 2021 17:32:36 -0400
+Received: from mail.kernel.org ([198.145.29.99]:55178 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229504AbhENVcf (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 14 May 2021 17:32:35 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 4D9306140A;
+        Fri, 14 May 2021 21:31:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1621027884;
+        bh=r4ZITb5VahQ1bp4eOnHrhuqUyrRIdgRO+1xUikzpyiU=;
+        h=From:To:Cc:Subject:Date:From;
+        b=YxucMdfrO3LsjOLFgbwf4gd1fZXfgu1IvyP2icIRwYCV4bedtaWMzi1WGRNs0Eowl
+         tXuYLbhMVhEqACnTNhbLJBvJzz1S1cnhww1BzNrVek3qqJ9X7QsjegPzRvrgOmZqpY
+         oPBoQQcwqIinJ4IBNcFEgcMigj7WzH7dbEyc1kgzL/owH6UttN0NYnfLnYd9oiqrIX
+         Cgb5M/SOrlWGpzdDrC4AJaCUtAMk8BDOLRtOpnXef19SaUjzjnSoIVE8kHr0dIsD23
+         7yBmUtwPDb/CzoliYRLu9Jx7O64M1056cFB//tOzWcpL3bkMJjHuIRm0Lju5wZL0sr
+         0+Q1xtHzt8zhA==
+From:   Arnd Bergmann <arnd@kernel.org>
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>
+Cc:     Arnd Bergmann <arnd@arndb.de>,
+        Nathan Chancellor <nathan@kernel.org>,
+        Nick Desaulniers <ndesaulniers@google.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Abhinav Kumar <abhinavk@codeaurora.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+        Jonathan Marek <jonathan@marek.ca>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        clang-built-linux@googlegroups.com
+Subject: [PATCH] drm/msm/dsi: fix 32-bit clang warning
+Date:   Fri, 14 May 2021 23:30:17 +0200
+Message-Id: <20210514213032.575161-1-arnd@kernel.org>
+X-Mailer: git-send-email 2.29.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Dave & Daniel,
+From: Arnd Bergmann <arnd@arndb.de>
 
-First round of fixes for v5.13
+clang is a little overzealous with warning about a constant conversion
+in an untaken branch of a ternary expression:
 
-The following changes since commit a29c8c0241654d5f3165d52e9307e4feff955621:
+drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c:975:48: error: implicit conversion from 'unsigned long long' to 'unsigned long' changes value from 5000000000 to 705032704 [-Werror,-Wconstant-conversion]
+        .max_pll_rate = (5000000000ULL < ULONG_MAX) ? 5000000000UL : ULONG_MAX,
+                                                      ^~~~~~~~~~~~
 
-  drm/msm/disp/dpu1: fix display underruns during modeset. (2021-04-09
-12:02:35 -0700)
+Rewrite this to use a preprocessor conditional instead to avoid the
+warning.
 
-are available in the Git repository at:
+Fixes: 076437c9e360 ("drm/msm/dsi: move min/max PLL rate to phy config")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+---
+As found with another patch, using __builtin_choose_expr() would
+likely also work here, but doesn't seem any more readable.
+---
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-  https://gitlab.freedesktop.org/drm/msm.git drm-msm-fixes-2021-05-09
+diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+index e76ce40a12ab..accd6b4eb7c2 100644
+--- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
++++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+@@ -972,7 +972,11 @@ const struct msm_dsi_phy_cfg dsi_phy_7nm_cfgs = {
+ 		.restore_pll_state = dsi_7nm_pll_restore_state,
+ 	},
+ 	.min_pll_rate = 600000000UL,
+-	.max_pll_rate = (5000000000ULL < ULONG_MAX) ? 5000000000ULL : ULONG_MAX,
++#ifdef CONFIG_64BIT
++	.max_pll_rate = 5000000000UL,
++#else
++	.max_pll_rate = ULONG_MAX,
++#endif
+ 	.io_start = { 0xae94400, 0xae96400 },
+ 	.num_dsi_phy = 2,
+ 	.quirks = DSI_PHY_7NM_QUIRK_V4_1,
+-- 
+2.29.2
 
-for you to fetch changes up to f2f46b878777e0d3f885c7ddad48f477b4dea247:
-
-  drm/msm/dp: initialize audio_comp when audio starts (2021-05-06
-16:26:57 -0700)
-
-----------------------------------------------------------------
-Dmitry Baryshkov (2):
-      drm/msm/dsi: dsi_phy_28nm_8960: fix uninitialized variable access
-      drm/msm/dsi: fix msm_dsi_phy_get_clk_provider return code
-
-Jonathan Marek (2):
-      drm/msm: fix LLC not being enabled for mmu500 targets
-      drm/msm: fix minor version to indicate MSM_PARAM_SUSPENDS support
-
-Kuogee Hsieh (2):
-      drm/msm/dp: check sink_count before update is_connected status
-      drm/msm/dp: initialize audio_comp when audio starts
-
-Rob Clark (1):
-      drm/msm: Do not unpin/evict exported dma-buf's
-
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c           |  9 +++++----
- drivers/gpu/drm/msm/dp/dp_audio.c               |  1 +
- drivers/gpu/drm/msm/dp/dp_display.c             | 26 ++++++++++++++++---------
- drivers/gpu/drm/msm/dp/dp_display.h             |  1 +
- drivers/gpu/drm/msm/dsi/phy/dsi_phy.c           |  2 +-
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c |  4 ++++
- drivers/gpu/drm/msm/msm_drv.c                   |  2 +-
- drivers/gpu/drm/msm/msm_gem.c                   | 16 ++++++++++++++-
- drivers/gpu/drm/msm/msm_gem.h                   |  4 ++--
- 9 files changed, 47 insertions(+), 18 deletions(-)
