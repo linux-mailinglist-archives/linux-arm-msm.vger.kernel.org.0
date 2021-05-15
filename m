@@ -2,121 +2,151 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9959E38137D
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 May 2021 00:07:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D1B7538149A
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 May 2021 02:34:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232925AbhENWIr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 14 May 2021 18:08:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42176 "EHLO
+        id S234534AbhEOAfO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 14 May 2021 20:35:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46098 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229942AbhENWIp (ORCPT
+        with ESMTP id S230022AbhEOAfN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 14 May 2021 18:08:45 -0400
-Received: from mail-qt1-x832.google.com (mail-qt1-x832.google.com [IPv6:2607:f8b0:4864:20::832])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5E5AC06174A
-        for <linux-arm-msm@vger.kernel.org>; Fri, 14 May 2021 15:07:32 -0700 (PDT)
-Received: by mail-qt1-x832.google.com with SMTP id j19so708802qtp.7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 14 May 2021 15:07:32 -0700 (PDT)
+        Fri, 14 May 2021 20:35:13 -0400
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F4D1C06174A
+        for <linux-arm-msm@vger.kernel.org>; Fri, 14 May 2021 17:34:01 -0700 (PDT)
+Received: by mail-lj1-x231.google.com with SMTP id s25so451098ljo.11
+        for <linux-arm-msm@vger.kernel.org>; Fri, 14 May 2021 17:34:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=IbrQjxkb0K3z7ZkPDbwumBPr7QnDKgJDV9MYg72KtXI=;
-        b=dx1Df5/yzY+AeZz/rdkuLnqLf65GYwH3dHIFCdSBqpHR3fWG5VtvM11+v8Pz0I424K
-         /CTN93UfyjlVQMv7eSajh07I4QztMYX0OMg0CHIOA2eA2JA68b/3utBkLzotkWwEGMYo
-         pnph5wO/Gl8XUyBVgaIP6DIgLVnP/tHjlk/sY1uNq1c5iAz2ltn/TpK+gz9uARdDWfNz
-         KE0Nouw9d71fwOyDTx1rde2xAF4byNR1HtLY4UzwVp7KueySru6gKGgLUrpUX49QoMAW
-         qLKZzxO74ljfE8ocXZcXcgy7UgDj2/GzwxBgMcm3+7UlIM8aqyxYD+tC5H2LRLvBx7cp
-         eZKg==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=of+8ovXa4aMkgT++S+Rbq2lvQyR6d2cuz8n7kSYpUpI=;
+        b=Kq0QoHib0LhGTBGOmnLeO2uKT6lhZJ7JE6HW62W0k+OoJ0+syPzju2rPmKwXTUe5be
+         07gVHhnxyERfyqW/hmhBLDrtyDW23n37LtpPFZ6hWJgOhufcMpJ6QABQkeiDdIPPRPD0
+         SQrsmGds5m0bNY153xxt3Bn7AjlduyNDowXzNRmzZM8Hk1MfRNGm+7C8W3f2jO/qxhrv
+         sTBWCVfzvNs+k2Sh2uttE/KM/uhnrnzrhnBX3r555f54Rq5u3KSlMee9GfJQgaXRdoQr
+         GmoWBu0TOg/AC8mzIx2ZcaDVaAQLtUnyvO7NeT6zeXM9oqaaIjPC1hdLQaukPg0cK7+U
+         cFLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=IbrQjxkb0K3z7ZkPDbwumBPr7QnDKgJDV9MYg72KtXI=;
-        b=nZ5EpeSBkf1qY6QXXgbAgJgZK87ByzgtO5Aa0Y5GqxryYRT+n6nosk2fFbmebRPVCU
-         MpGeN89Q6lgiulgGpTleOQTvcAmKcCTGpCsp+u1Yht273RxMAcHPFd1WZqAm8hUdoS+8
-         PdezkB9Ye601Xk5V/QF3iFS4d6Q3mF4u9vEBotIzUCOIFuvJoBVY4wZwG9JaMcfhRLGT
-         fOAwTILXoGv7J8pJtFVFDj9wujJaGMOSWUHH3cH9Hl4BDhRSgrDF7gEmDMuXxZWucroa
-         kIeb/7YjsmrMG3ncuniHksjaeCOKJ+kH9XLs5YRdsnp/oeV8f2VpDX8vhyanv/au0ZPt
-         EgjA==
-X-Gm-Message-State: AOAM530IgbwxQemH6sttq8NI2mSs7jcYWJEnHXn/xkX6NRaNxB7pSRhT
-        SAAqdPNiaAtGzYi5Q/r42zYwUYVRYabNkIahq4dWcQ==
-X-Google-Smtp-Source: ABdhPJxaEbRftY4lIHCyF5Rw8nvdMm5/lCdHTk5LXSje8/I/5yu/Xzt4icnH9N8EPP/ne043QHlIxNTO/PeJv6d+lKQ=
-X-Received: by 2002:ac8:5810:: with SMTP id g16mr44371397qtg.135.1621030052188;
- Fri, 14 May 2021 15:07:32 -0700 (PDT)
-MIME-Version: 1.0
-References: <20210514213032.575161-1-arnd@kernel.org>
-In-Reply-To: <20210514213032.575161-1-arnd@kernel.org>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=of+8ovXa4aMkgT++S+Rbq2lvQyR6d2cuz8n7kSYpUpI=;
+        b=WBcjG//hF5E2XlBFPRUPPvCxTPr63yLKN6vEM8Y/GPlKaj/c+x/nYXJcIVHr842Coz
+         FOWsB3J3m3EFWRHB3zRkYVZsJ1pvVi8QtyeXaIEnK57IMHScmWpUCthyei3a9RL8/45V
+         KaBt51gwgjCJ/R2SSYMPqZjex2fUl7yTEarNnm0X1brhx2Q7QBizbnypZ+OP4NRoZT1K
+         Xrocpm4ZDuptWndhUH+J2Grs0NfwW6iJY3Sf+dwW8n7BIhiOIfRTXNImM/7S1rV2iYc0
+         vJxEy0act5b6DW84B38IZUp/Dq7iRJYI5/3EzQU10MiEQjeXZVJC54taOJrWwuNjwFCm
+         SKSg==
+X-Gm-Message-State: AOAM530UgVeu+o0B6vwjZQSB8T+lNamUsXAdlRVjos8ZR98UZ8KrZkGM
+        gbpNoa4m50Yj0+EMbx/S1/qa3w==
+X-Google-Smtp-Source: ABdhPJy1qxqA5sO0wnDdnlQJEd6fDfdb/W8RDe1VFuE+W2M+2se5SRTFDkcx/m4HcH2jMNg2oOHEXw==
+X-Received: by 2002:a05:651c:b28:: with SMTP id b40mr24154392ljr.9.1621038839814;
+        Fri, 14 May 2021 17:33:59 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id e17sm1581436ljp.71.2021.05.14.17.33.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 14 May 2021 17:33:59 -0700 (PDT)
+Subject: Re: [PATCH] drm/msm/dsi: save PLL registers across first PHY reset
+To:     benl@squareup.com, robdclark@gmail.com, sean@poorly.run
+Cc:     David Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
+        AngeloGioacchino Del Regno <kholk11@gmail.com>,
+        Harigovindan P <harigovi@codeaurora.org>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        zhengbin <zhengbin13@huawei.com>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+References: <010101750064e17e-3db0087e-fc37-494d-aac9-2c2b9b0a7c5b-000000@us-west-2.amazonses.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Sat, 15 May 2021 01:07:21 +0300
-Message-ID: <CAA8EJpoo=VS1Nk-3CpyraDFzF+0xe3SWxkVt7M=8aBNhbdh_hQ@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm/dsi: fix 32-bit clang warning
-To:     Arnd Bergmann <arnd@kernel.org>
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, Arnd Bergmann <arnd@arndb.de>,
-        Nathan Chancellor <nathan@kernel.org>,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        clang-built-linux@googlegroups.com
-Content-Type: text/plain; charset="UTF-8"
+Message-ID: <c425c92d-3149-592b-f72e-009c972b9b21@linaro.org>
+Date:   Sat, 15 May 2021 03:33:58 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.0
+MIME-Version: 1.0
+In-Reply-To: <010101750064e17e-3db0087e-fc37-494d-aac9-2c2b9b0a7c5b-000000@us-west-2.amazonses.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 15 May 2021 at 00:31, Arnd Bergmann <arnd@kernel.org> wrote:
->
-> From: Arnd Bergmann <arnd@arndb.de>
->
-> clang is a little overzealous with warning about a constant conversion
-> in an untaken branch of a ternary expression:
->
-> drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c:975:48: error: implicit conversion from 'unsigned long long' to 'unsigned long' changes value from 5000000000 to 705032704 [-Werror,-Wconstant-conversion]
->         .max_pll_rate = (5000000000ULL < ULONG_MAX) ? 5000000000UL : ULONG_MAX,
->                                                       ^~~~~~~~~~~~
->
-> Rewrite this to use a preprocessor conditional instead to avoid the
-> warning.
->
-> Fixes: 076437c9e360 ("drm/msm/dsi: move min/max PLL rate to phy config")
-> Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Rob,
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+On 07/10/2020 03:10, benl-kernelpatches@squareup.com wrote:
+> From: Benjamin Li <benl@squareup.com>
+> 
+> Take advantage of previously-added support for persisting PLL
+> registers across DSI PHY disable/enable cycles (see 328e1a6
+> 'drm/msm/dsi: Save/Restore PLL status across PHY reset') to
+> support persisting across the very first DSI PHY enable at
+> boot.
+> 
+> The bootloader may have left the PLL registers in a non-default
+> state. For example, for dsi_pll_28nm.c on 8x16/8x39, the byte
+> clock mux's power-on reset configuration is to bypass DIV1, but
+> depending on bandwidth requirements[1] the bootloader may have
+> set the DIV1 path.
+> 
+> When the byte clock mux is registered with the generic clock
+> framework at probe time, the framework reads & caches the value
+> of the mux bit field (the initial clock parent). After PHY enable,
+> when clk_set_rate is called on the byte clock, the framework
+> assumes there is no need to reparent, and doesn't re-write the
+> mux bit field. But PHY enable resets PLL registers, so the mux
+> bit field actually silently reverted to the DIV1 bypass path.
+> This causes the byte clock to be off by a factor of e.g. 2 for
+> our tested WXGA panel.
+> 
+> The above issue manifests as the display not working and a
+> constant stream of FIFO/LP0 contention errors.
+> 
+> [1] The specific requirement for triggering the DIV1 path (and
+> thus this issue) on 28nm is a panel with pixel clock <116.7MHz
+> (one-third the minimum VCO setting). FHD/1080p (~145MHz) is fine,
+> WXGA/1280x800 (~75MHz) is not.
 
+This patch seems to be still relevant. Applying it would allow us to 
+drop respective save_state calls from 10nm and 7nm drivers.
+
+I'd suggest applying it.
+
+> 
+> Signed-off-by: Benjamin Li <benl@squareup.com>
 > ---
-> As found with another patch, using __builtin_choose_expr() would
-> likely also work here, but doesn't seem any more readable.
-> ---
->  drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c | 6 +++++-
->  1 file changed, 5 insertions(+), 1 deletion(-)
->
-> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-> index e76ce40a12ab..accd6b4eb7c2 100644
-> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-> @@ -972,7 +972,11 @@ const struct msm_dsi_phy_cfg dsi_phy_7nm_cfgs = {
->                 .restore_pll_state = dsi_7nm_pll_restore_state,
->         },
->         .min_pll_rate = 600000000UL,
-> -       .max_pll_rate = (5000000000ULL < ULONG_MAX) ? 5000000000ULL : ULONG_MAX,
-> +#ifdef CONFIG_64BIT
-> +       .max_pll_rate = 5000000000UL,
-> +#else
-> +       .max_pll_rate = ULONG_MAX,
-> +#endif
->         .io_start = { 0xae94400, 0xae96400 },
->         .num_dsi_phy = 2,
->         .quirks = DSI_PHY_7NM_QUIRK_V4_1,
-> --
-> 2.29.2
->
+>   drivers/gpu/drm/msm/dsi/phy/dsi_phy.c | 16 ++++++++++++++++
+>   1 file changed, 16 insertions(+)
+> 
+> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
+> index 009f5b843dd1..139b4a5aaf86 100644
+> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
+> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
+> @@ -621,6 +621,22 @@ static int dsi_phy_driver_probe(struct platform_device *pdev)
+>   		phy->pll = NULL;
+>   	}
+>   
+> +	/*
+> +	 * As explained in msm_dsi_phy_enable, resetting the DSI PHY (as done
+> +	 * in dsi_mgr_phy_enable) silently changes its PLL registers to power-on
+> +	 * defaults, but the generic clock framework manages and caches several
+> +	 * of the PLL registers. It initializes these caches at registration
+> +	 * time via register read.
+> +	 *
+> +	 * As a result, we need to save DSI PLL registers once at probe in order
+> +	 * for the first call to msm_dsi_phy_enable to successfully bring PLL
+> +	 * registers back in line with what the generic clock framework expects.
+> +	 *
+> +	 * Subsequent PLL restores during msm_dsi_phy_enable will always be
+> +	 * paired with PLL saves in msm_dsi_phy_disable.
+> +	 */
+> +	msm_dsi_pll_save_state(phy->pll);
+> +
+>   	dsi_phy_disable_resource(phy);
+>   
+>   	platform_set_drvdata(pdev, phy);
+> 
 
 
 -- 
