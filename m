@@ -2,38 +2,37 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6E7C93819FB
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 May 2021 18:53:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 459653819FE
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 May 2021 18:53:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233860AbhEOQyk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 15 May 2021 12:54:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33206 "EHLO
+        id S233894AbhEOQyz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 15 May 2021 12:54:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33270 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233837AbhEOQyc (ORCPT
+        with ESMTP id S233878AbhEOQyt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 15 May 2021 12:54:32 -0400
-X-Greylist: delayed 63 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sat, 15 May 2021 09:53:18 PDT
+        Sat, 15 May 2021 12:54:49 -0400
 Received: from the.earth.li (the.earth.li [IPv6:2a00:1098:86:4d:c0ff:ee:15:900d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55149C06174A;
-        Sat, 15 May 2021 09:53:17 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E6B6C061573;
+        Sat, 15 May 2021 09:53:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=earth.li;
          s=the; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject
         :To:From:Date:Sender:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:
         Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
         :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
         List-Post:List-Owner:List-Archive;
-        bh=8SHldVPRB3IgRIGvdvG9IQiPYuel04QK7Wt6vmIztp4=; b=bcvBSu5hwtNHXT67Bx9UlR5Eyk
-        WPw8JXxiFyV+G8jxixsFDOSyZzb3QZZdCb2BQg0dZkpzBCu4X8cBXOoVyLIyr2R8JEAmHqdN1QUbO
-        49KGaSzYydpcXNG1uIU9CjpR9gKVpGoIhcEh/IEqbkwjyPTO9XGui85GK/vgf0C34eixgmnYzB0oB
-        gTB72Bjb5FDXjL+lWbugRZiSWQ8pd/JjuIOOLjL0RJbkFiRLJsoxcwo2Ukcims8DxNA+8YUbo+AmY
-        ang4uE4hmzPax+h2JPDN5XqrlS0h4KX4OKEdx+W7IhwTJNl5DGZstNwdxbfm88eco9/zgZWYK9x1o
-        HOK+5RNg==;
+        bh=ioi3waAr1lR9usSqi7Atv2O2Gz6ffig/mjFfjQ//hqg=; b=UiyYzDw3rE7ype69DoCg7+bY21
+        QOTRWnjJU9P3SMWJsE/vqtukRjHACiLwLUOl3k8Ufbgbw8kUDPDxk73N+vZPxouAlEV03SnaA6nRN
+        wS5Sd3g4bioYqHzZs51ipVOdGH/2cckRluyYxCr8Jy0AUUdtIBoiIDErfmSyhXwQUxVgWqxelqRWf
+        OKNlUrBHtE842ZLC+CxjXu05pXhU+Jnkt9dNnYwm7eoRYEHxXNa17DrhAYVLDDy8EGmvJWrWOv1d5
+        dnGQSGxlE5fqIdhCWh4RP1AVavY4AkBlo/9ykS2HfGzyNrylA/S4QKyYLGWD4uGVJ8cK4t+hDDOnm
+        ml3IhUAA==;
 Received: from [2001:4d48:ad59:1409:4::2] (helo=youmian.o362.us)
         by the.earth.li with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
         (Exim 4.92)
         (envelope-from <noodles@earth.li>)
-        id 1lhxXO-0004UW-Km; Sat, 15 May 2021 17:53:14 +0100
-Date:   Sat, 15 May 2021 17:53:10 +0100
+        id 1lhxXe-0004Vq-PD; Sat, 15 May 2021 17:53:30 +0100
+Date:   Sat, 15 May 2021 17:53:27 +0100
 From:   Jonathan McDowell <noodles@earth.li>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -41,8 +40,8 @@ To:     Andy Gross <agross@kernel.org>,
         Ansuel Smith <ansuelsmth@gmail.com>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH 4/5] ARM: dts: qcom: add L2CC and RPM for IPQ8064
-Message-ID: <bc31c86e21e56536cd537b2b31f03d0f6532e295.1621097174.git.noodles@earth.li>
+Subject: [PATCH 5/5] ARM: dts: qcom: Enable NAND + USB for RB3011
+Message-ID: <46d2561fbefa481bb475d89164a92e8c8538df7f.1621097174.git.noodles@earth.li>
 References: <cover.1621097174.git.noodles@earth.li>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -53,68 +52,95 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This adds the L2CC IPC resource and RPM devices to the IPQ8064 device
-tree.
-
-Tested on a Mikrotik RB3011.
+Enable the NAND + USB devices for the MikroTik RB3011 platform now
+they're in the main IPQ806x DT.
 
 Signed-off-by: Jonathan McDowell <noodles@earth.li>
 ---
- arch/arm/boot/dts/qcom-ipq8064.dtsi | 29 +++++++++++++++++++++++++++++
- 1 file changed, 29 insertions(+)
+ arch/arm/boot/dts/qcom-ipq8064-rb3011.dts | 58 +++++++++++++++++++++++
+ 1 file changed, 58 insertions(+)
 
-diff --git a/arch/arm/boot/dts/qcom-ipq8064.dtsi b/arch/arm/boot/dts/qcom-ipq8064.dtsi
-index afa11acfb378..e4e3dc59c650 100644
---- a/arch/arm/boot/dts/qcom-ipq8064.dtsi
-+++ b/arch/arm/boot/dts/qcom-ipq8064.dtsi
-@@ -2,6 +2,8 @@
- /dts-v1/;
+diff --git a/arch/arm/boot/dts/qcom-ipq8064-rb3011.dts b/arch/arm/boot/dts/qcom-ipq8064-rb3011.dts
+index 282b89ce3d45..f7ea2e5dd191 100644
+--- a/arch/arm/boot/dts/qcom-ipq8064-rb3011.dts
++++ b/arch/arm/boot/dts/qcom-ipq8064-rb3011.dts
+@@ -216,6 +216,10 @@
+ 	};
+ };
  
- #include <dt-bindings/interrupt-controller/arm-gic.h>
-+#include <dt-bindings/mfd/qcom-rpm.h>
-+#include <dt-bindings/clock/qcom,rpmcc.h>
- #include <dt-bindings/clock/qcom,gcc-ipq806x.h>
- #include <dt-bindings/clock/qcom,lcc-ipq806x.h>
- #include <dt-bindings/gpio/gpio.h>
-@@ -753,11 +755,38 @@
- 			};
- 		};
++&adm_dma {
++	status = "okay";
++};
++
+ &gmac0 {
+ 	status = "okay";
  
-+		rpm: rpm@108000 {
-+			compatible = "qcom,rpm-ipq8064";
-+			reg = <0x108000 0x1000>;
-+			qcom,ipc = <&l2cc 0x8 2>;
+@@ -251,6 +255,39 @@
+ 	status = "okay";
+ };
+ 
++&hs_phy_1 {
++	status = "okay";
++};
 +
-+			interrupts = <GIC_SPI 19 IRQ_TYPE_LEVEL_HIGH>,
-+					<GIC_SPI 21 IRQ_TYPE_LEVEL_HIGH>,
-+					<GIC_SPI 22 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "ack", "err", "wakeup";
++&nand {
++	status = "okay";
 +
-+			clocks = <&gcc RPM_MSG_RAM_H_CLK>;
-+			clock-names = "ram";
++	nandcs@0 {
++		compatible = "qcom,nandcs";
++		reg = <0>;
 +
-+			rpmcc: clock-controller {
-+				compatible = "qcom,rpmcc-ipq806x", "qcom,rpmcc";
-+				#clock-cells = <1>;
++		nand-ecc-strength = <4>;
++		nand-bus-width = <8>;
++		nand-ecc-step-size = <512>;
++
++		partitions {
++			compatible = "fixed-partitions";
++			#address-cells = <1>;
++			#size-cells = <1>;
++
++			boot@0 {
++				label = "RouterBoard NAND 1 Boot";
++				reg = <0x0000000 0x0800000>;
++			};
++
++			main@800000 {
++				label = "RouterBoard NAND 1 Main";
++				reg = <0x0800000 0x7800000>;
 +			};
 +		};
++	};
++};
 +
- 		tcsr: syscon@1a400000 {
- 			compatible = "qcom,tcsr-ipq8064", "syscon";
- 			reg = <0x1a400000 0x100>;
+ &qcom_pinmux {
+ 	buttons_pins: buttons_pins {
+ 		mux {
+@@ -305,4 +342,25 @@
+ 			input-disable;
  		};
- 
-+		l2cc: clock-controller@2011000 {
-+			compatible = "qcom,kpss-gcc", "syscon";
-+			reg = <0x2011000 0x1000>;
-+			clocks = <&gcc PLL8_VOTE>, <&gcc PXO_SRC>;
-+			clock-names = "pll8_vote", "pxo";
-+			clock-output-names = "acpu_l2_aux";
-+		};
+ 	};
 +
- 		lcc: clock-controller@28000000 {
- 			compatible = "qcom,lcc-ipq8064";
- 			reg = <0x28000000 0x1000>;
++	usb1_pwr_en_pins: usb1_pwr_en_pins {
++		mux {
++			pins = "gpio4";
++			function = "gpio";
++			drive-strength = <16>;
++			bias-disable;
++			output-high;
++		};
++	};
++};
++
++&ss_phy_1 {
++	status = "okay";
++};
++
++&usb3_1 {
++	pinctrl-0 = <&usb1_pwr_en_pins>;
++	pinctrl-names = "default";
++
++	status = "okay";
+ };
 -- 
 2.20.1
 
