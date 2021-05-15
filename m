@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A6042381AE1
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 May 2021 21:56:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0AF29381B97
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 May 2021 00:58:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231455AbhEOT53 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 15 May 2021 15:57:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44822 "EHLO
+        id S230330AbhEOW7S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 15 May 2021 18:59:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56026 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231334AbhEOT53 (ORCPT
+        with ESMTP id S230087AbhEOW7Q (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 15 May 2021 15:57:29 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA713C061573
-        for <linux-arm-msm@vger.kernel.org>; Sat, 15 May 2021 12:56:15 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id x19so3141381lfa.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 15 May 2021 12:56:15 -0700 (PDT)
+        Sat, 15 May 2021 18:59:16 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8635AC061573
+        for <linux-arm-msm@vger.kernel.org>; Sat, 15 May 2021 15:58:01 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id m11so3453813lfg.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 15 May 2021 15:58:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=xLPVHzXvZPZqCUFMlT+UaetcRgvb81SJ4rZHo1/l8nY=;
-        b=GU5IIubT7CmC5lmDf5QF/AAC62pL1eDpTwPVeJ9ffhvU8ho5taSSdqrLOltENkyCVA
-         7u86uLmP8rOerBCD+9+GGXmEISyhXmHRntgXCcpPJNYFwLeu8AzuKnVluhIUCP+pHvnl
-         QIYZsQHcJpN6hIRJqQ9R7qkxbcizn9+TssM0sGfDK1XmcgICPqyA7CtXVLfwcY1RMFp+
-         imQA/KZJ9FD1/tmDEaakvkOe8g6FE/E89mulrHL99EgT2fWB1fdwbucScmlZD72t313E
-         M8dHWetSC+zFnlO+yD5MGPZtTkzKsloySLSg5C0+lDVH62HuBMzFZOgl2wwt//Kthwsi
-         fcPg==
+        bh=eBTQmpM/Ml6k7hvWgriWTmEFhLechL8G1HA7n71TelE=;
+        b=tPV/dGjVkXN5nq1h7uNLOhDPoF7XIcwERQ76MsEgF+PmQ+QNYbhhxO/i3T0iTCSlpk
+         Id217cfqi0fgG/CyxbuCgmf6iN9tKMto3qPIUyecAs6aXtKd0C0vQM0oKdYgKzmzSdAc
+         n1RlD/yevvkHZ1I1zlgXPVMy1D216pn9TCpDuwWM+K8WRnhjRSEpsl3HaBWgJnOH1udo
+         Y4TabnrlRylsZzU4MUzuJTVWgMVbVMRkt/fjRLBUx6nc+0fFsIEpzN3jKHJcFw+LamsZ
+         w2giAV0YkEuL+/jrweoT1nntGdN1hTwSxTo5u37CljFcQQmyM6d1VjHr9VccR+AZsYYv
+         ODUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=xLPVHzXvZPZqCUFMlT+UaetcRgvb81SJ4rZHo1/l8nY=;
-        b=B6n7Kunf/AalXYC6DU4hnEbMhJBqvda//pILd9+mqeeJaTujwzNwP2RlxlUBDszNnn
-         MCo4oTGWdE1vDYgeKfFw6OFXPE5xKV5RQRCNNQCIua0Q0ZotNH3Mm1/f3Gw+jOBSPq4T
-         BrMhpsWG2Ia846Nl1RunyPtPk3Py+VkSSNH4AVAagmWbVCDx/RiNjmYF/ADCYctbuRor
-         dCVFzJIISZmzljo6OwFv43VdToDLQOehIMW84tdYI6Fw5SsXMt46s2GfSoSe/H/SqCS7
-         pJhMtbRDuwx9Eu/xjBqXUTpxASsypqaUt6XZMvsjGyfjLFQ1cXp4JeiaWD7Yqwqx9hsf
-         l0Mw==
-X-Gm-Message-State: AOAM532rqVJoZHyEYgJ8sgg4nlmEJXqPgINr7ofrBtc/AujfydsM96Bg
-        AO+gR7sj6qvCJkfsu2FbOBMq3g==
-X-Google-Smtp-Source: ABdhPJzYPdt7f1LAXcEMzToEyXXFUw9rLsuh54lVh38GVHwxFBRNG2mmHrN0ExeUucT15WYsHHWooA==
-X-Received: by 2002:a05:6512:33d0:: with SMTP id d16mr10314516lfg.184.1621108574018;
-        Sat, 15 May 2021 12:56:14 -0700 (PDT)
+        bh=eBTQmpM/Ml6k7hvWgriWTmEFhLechL8G1HA7n71TelE=;
+        b=Vr6+BjpiYBppPD2d4l1VTRGAKL5w2RhoMLaXcqm+eDnwu60AfGVtpzYB+cXOH8P9vB
+         zZ3mVKr/7BMtms2/30BrZLg09pb+2fghniZFY+yiSDqfJ2k58b+5eKUgM4VW+iI2Wl2H
+         F+DzwfSfeniIaAZETgBpr/af89q3tr4c5OfYn4bkMhROMqhipxhLQ8jgYRrSH2icc8l2
+         BoZq9ePNGLLvLs2DhSZkagSsNM2beDF3bwQvzlrum/dBFN/6WkuSc3BYG9d0aP2oLbl0
+         wx68+qlXaMWPdfsmOosUpeiCQ8mNr75gKcrr21M+V8aBQZYQJbwffOO+A0coK1Yx4Woe
+         GYzw==
+X-Gm-Message-State: AOAM533VtRtbeZ5O7kxWSIXEV6/lodbEEVMgYzLPJNIkFvKHQXkWgQ9F
+        agoU0Rr7ZAYl78yGxTh/tPsP6A==
+X-Google-Smtp-Source: ABdhPJyq+Rs0oTEyhmaCf7LKxlQ+Eibtf/uz0XmOMbZgMJIVeNGzdm5yvJ8vMU0kQV39Xg1tenk4hA==
+X-Received: by 2002:a05:6512:22c2:: with SMTP id g2mr39209032lfu.305.1621119479940;
+        Sat, 15 May 2021 15:57:59 -0700 (PDT)
 Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id u21sm1449989lff.66.2021.05.15.12.56.13
+        by smtp.gmail.com with ESMTPSA id j3sm1499729lfe.5.2021.05.15.15.57.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 15 May 2021 12:56:13 -0700 (PDT)
+        Sat, 15 May 2021 15:57:59 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
@@ -57,9 +57,9 @@ Cc:     Jonathan Marek <jonathan@marek.ca>,
         David Airlie <airlied@linux.ie>,
         Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
         dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: [PATCH] drm/msm/dp: remove most of usbpd-related remains
-Date:   Sat, 15 May 2021 22:56:12 +0300
-Message-Id: <20210515195612.1901147-1-dmitry.baryshkov@linaro.org>
+Subject: 
+Date:   Sun, 16 May 2021 01:57:51 +0300
+Message-Id: <20210515225757.1989955-1-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -67,436 +67,49 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Remove most of remains of downstream usbpd code. Mainline kernel uses
-different approach for managing Type-C / USB-PD, so this remains unused.
-Do not touch usbpd callbacks for now, since they look usefull enough as
-an example of how to handle connect/disconnect (to be rewritten into .
+From Dmitry Baryshkov <dmitry.baryshkov@linaro.org> # This line is ignored.
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reply-To: 
+Subject: [PATCH v2 0/6] drm/msm/dpu: simplify RM code
+In-Reply-To: 
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/msm/Makefile        |  1 -
- drivers/gpu/drm/msm/dp/dp_ctrl.c    |  4 +-
- drivers/gpu/drm/msm/dp/dp_ctrl.h    |  3 +-
- drivers/gpu/drm/msm/dp/dp_debug.c   |  6 +--
- drivers/gpu/drm/msm/dp/dp_debug.h   |  4 +-
- drivers/gpu/drm/msm/dp/dp_display.c | 36 ++-------------
- drivers/gpu/drm/msm/dp/dp_hpd.c     | 69 -----------------------------
- drivers/gpu/drm/msm/dp/dp_hpd.h     | 51 ---------------------
- drivers/gpu/drm/msm/dp/dp_power.c   |  2 +-
- drivers/gpu/drm/msm/dp/dp_power.h   |  3 +-
- 10 files changed, 11 insertions(+), 168 deletions(-)
- delete mode 100644 drivers/gpu/drm/msm/dp/dp_hpd.c
+There is no need to request most of hardware blocks through the resource
+manager (RM), since typically there is 1:1 or N:1 relationship between
+corresponding blocks. Each LM is tied to the single PP. Each MERGE_3D
+can be used by the specified pair of PPs.  Each DSPP is also tied to
+single LM. So instead of allocating them through the RM, get them via
+static configuration.
 
-diff --git a/drivers/gpu/drm/msm/Makefile b/drivers/gpu/drm/msm/Makefile
-index 610d630326bb..8a58c1615d38 100644
---- a/drivers/gpu/drm/msm/Makefile
-+++ b/drivers/gpu/drm/msm/Makefile
-@@ -107,7 +107,6 @@ msm-$(CONFIG_DRM_MSM_DP)+= dp/dp_aux.o \
- 	dp/dp_ctrl.o \
- 	dp/dp_display.o \
- 	dp/dp_drm.o \
--	dp/dp_hpd.o \
- 	dp/dp_link.o \
- 	dp/dp_panel.o \
- 	dp/dp_parser.o \
-diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-index 1390f3547fde..7bb0f6a9b731 100644
---- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
-+++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-@@ -1364,7 +1364,7 @@ static int dp_ctrl_enable_stream_clocks(struct dp_ctrl_private *ctrl)
- 	return ret;
- }
- 
--int dp_ctrl_host_init(struct dp_ctrl *dp_ctrl, bool flip, bool reset)
-+int dp_ctrl_host_init(struct dp_ctrl *dp_ctrl, bool reset)
- {
- 	struct dp_ctrl_private *ctrl;
- 	struct dp_io *dp_io;
-@@ -1379,8 +1379,6 @@ int dp_ctrl_host_init(struct dp_ctrl *dp_ctrl, bool flip, bool reset)
- 	dp_io = &ctrl->parser->io;
- 	phy = dp_io->phy;
- 
--	ctrl->dp_ctrl.orientation = flip;
--
- 	if (reset)
- 		dp_catalog_ctrl_reset(ctrl->catalog);
- 
-diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.h b/drivers/gpu/drm/msm/dp/dp_ctrl.h
-index a836bd358447..682c3c511e8e 100644
---- a/drivers/gpu/drm/msm/dp/dp_ctrl.h
-+++ b/drivers/gpu/drm/msm/dp/dp_ctrl.h
-@@ -14,12 +14,11 @@
- #include "dp_catalog.h"
- 
- struct dp_ctrl {
--	bool orientation;
- 	atomic_t aborted;
- 	u32 pixel_rate;
- };
- 
--int dp_ctrl_host_init(struct dp_ctrl *dp_ctrl, bool flip, bool reset);
-+int dp_ctrl_host_init(struct dp_ctrl *dp_ctrl, bool reset);
- void dp_ctrl_host_deinit(struct dp_ctrl *dp_ctrl);
- int dp_ctrl_on_link(struct dp_ctrl *dp_ctrl);
- int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl);
-diff --git a/drivers/gpu/drm/msm/dp/dp_debug.c b/drivers/gpu/drm/msm/dp/dp_debug.c
-index 2f6247e80e9d..eb6288dcabde 100644
---- a/drivers/gpu/drm/msm/dp/dp_debug.c
-+++ b/drivers/gpu/drm/msm/dp/dp_debug.c
-@@ -21,7 +21,6 @@
- struct dp_debug_private {
- 	struct dentry *root;
- 
--	struct dp_usbpd *usbpd;
- 	struct dp_link *link;
- 	struct dp_panel *panel;
- 	struct drm_connector **connector;
-@@ -390,14 +389,14 @@ static int dp_debug_init(struct dp_debug *dp_debug, struct drm_minor *minor)
- }
- 
- struct dp_debug *dp_debug_get(struct device *dev, struct dp_panel *panel,
--		struct dp_usbpd *usbpd, struct dp_link *link,
-+		struct dp_link *link,
- 		struct drm_connector **connector, struct drm_minor *minor)
- {
- 	int rc = 0;
- 	struct dp_debug_private *debug;
- 	struct dp_debug *dp_debug;
- 
--	if (!dev || !panel || !usbpd || !link) {
-+	if (!dev || !panel || !link) {
- 		DRM_ERROR("invalid input\n");
- 		rc = -EINVAL;
- 		goto error;
-@@ -410,7 +409,6 @@ struct dp_debug *dp_debug_get(struct device *dev, struct dp_panel *panel,
- 	}
- 
- 	debug->dp_debug.debug_en = false;
--	debug->usbpd = usbpd;
- 	debug->link = link;
- 	debug->panel = panel;
- 	debug->dev = dev;
-diff --git a/drivers/gpu/drm/msm/dp/dp_debug.h b/drivers/gpu/drm/msm/dp/dp_debug.h
-index 7eaedfbb149c..c5da109143da 100644
---- a/drivers/gpu/drm/msm/dp/dp_debug.h
-+++ b/drivers/gpu/drm/msm/dp/dp_debug.h
-@@ -42,7 +42,7 @@ struct dp_debug {
-  * for debugfs input to be communicated with existing modules
-  */
- struct dp_debug *dp_debug_get(struct device *dev, struct dp_panel *panel,
--		struct dp_usbpd *usbpd, struct dp_link *link,
-+		struct dp_link *link,
- 		struct drm_connector **connector,
- 		struct drm_minor *minor);
- 
-@@ -59,7 +59,7 @@ void dp_debug_put(struct dp_debug *dp_debug);
- 
- static inline
- struct dp_debug *dp_debug_get(struct device *dev, struct dp_panel *panel,
--		struct dp_usbpd *usbpd, struct dp_link *link,
-+		struct dp_link *link,
- 		struct drm_connector **connector, struct drm_minor *minor)
- {
- 	return ERR_PTR(-EINVAL);
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index 1784e119269b..ee227c69f9f2 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -88,7 +88,6 @@ struct dp_display_private {
- 	struct platform_device *pdev;
- 	struct dentry *root;
- 
--	struct dp_usbpd   *usbpd;
- 	struct dp_parser  *parser;
- 	struct dp_power   *power;
- 	struct dp_catalog *catalog;
-@@ -361,20 +360,15 @@ static int dp_display_process_hpd_high(struct dp_display_private *dp)
- 
- static void dp_display_host_init(struct dp_display_private *dp, int reset)
- {
--	bool flip = false;
--
- 	if (dp->core_initialized) {
- 		DRM_DEBUG_DP("DP core already initialized\n");
- 		return;
- 	}
- 
--	if (dp->usbpd->orientation == ORIENTATION_CC2)
--		flip = true;
--
- 	dp_display_set_encoder_mode(dp);
- 
--	dp_power_init(dp->power, flip);
--	dp_ctrl_host_init(dp->ctrl, flip, reset);
-+	dp_power_init(dp->power);
-+	dp_ctrl_host_init(dp->ctrl, reset);
- 	dp_aux_init(dp->aux);
- 	dp->core_initialized = true;
- }
-@@ -502,7 +496,6 @@ static int dp_display_usbpd_attention_cb(struct device *dev)
- 	int rc = 0;
- 	u32 sink_request;
- 	struct dp_display_private *dp;
--	struct dp_usbpd *hpd;
- 
- 	if (!dev) {
- 		DRM_ERROR("invalid dev\n");
-@@ -516,8 +509,6 @@ static int dp_display_usbpd_attention_cb(struct device *dev)
- 		return -ENODEV;
- 	}
- 
--	hpd = dp->usbpd;
--
- 	/* check for any test request issued by sink */
- 	rc = dp_link_process_request(dp->link);
- 	if (!rc) {
-@@ -533,14 +524,10 @@ static int dp_display_usbpd_attention_cb(struct device *dev)
- 
- static int dp_hpd_plug_handle(struct dp_display_private *dp, u32 data)
- {
--	struct dp_usbpd *hpd = dp->usbpd;
- 	u32 state;
- 	u32 tout = DP_TIMEOUT_5_SECOND;
- 	int ret;
- 
--	if (!hpd)
--		return 0;
--
- 	mutex_lock(&dp->event_mutex);
- 
- 	state =  dp->hpd_state;
-@@ -563,11 +550,8 @@ static int dp_hpd_plug_handle(struct dp_display_private *dp, u32 data)
- 
- 	dp->hpd_state = ST_CONNECT_PENDING;
- 
--	hpd->hpd_high = 1;
--
- 	ret = dp_display_usbpd_configure_cb(&dp->pdev->dev);
- 	if (ret) {	/* link train failed */
--		hpd->hpd_high = 0;
- 		dp->hpd_state = ST_DISCONNECTED;
- 
- 		if (ret == -ECONNRESET) { /* cable unplugged */
-@@ -619,12 +603,8 @@ static void dp_display_handle_plugged_change(struct msm_dp *dp_display,
- 
- static int dp_hpd_unplug_handle(struct dp_display_private *dp, u32 data)
- {
--	struct dp_usbpd *hpd = dp->usbpd;
- 	u32 state;
- 
--	if (!hpd)
--		return 0;
--
- 	mutex_lock(&dp->event_mutex);
- 
- 	state = dp->hpd_state;
-@@ -646,8 +626,6 @@ static int dp_hpd_unplug_handle(struct dp_display_private *dp, u32 data)
- 	dp_catalog_hpd_config_intr(dp->catalog, DP_DP_HPD_PLUG_INT_MASK
- 				| DP_DP_IRQ_HPD_INT_MASK, false);
- 
--	hpd->hpd_high = 0;
--
- 	/*
- 	 * We don't need separate work for disconnect as
- 	 * connect/attention interrupts are disabled
-@@ -744,14 +722,6 @@ static int dp_init_sub_modules(struct dp_display_private *dp)
- 	cb->disconnect = dp_display_usbpd_disconnect_cb;
- 	cb->attention  = dp_display_usbpd_attention_cb;
- 
--	dp->usbpd = dp_hpd_get(dev, cb);
--	if (IS_ERR(dp->usbpd)) {
--		rc = PTR_ERR(dp->usbpd);
--		DRM_ERROR("failed to initialize hpd, rc = %d\n", rc);
--		dp->usbpd = NULL;
--		goto error;
--	}
--
- 	dp->parser = dp_parser_get(dp->pdev);
- 	if (IS_ERR(dp->parser)) {
- 		rc = PTR_ERR(dp->parser);
-@@ -1380,7 +1350,7 @@ void msm_dp_debugfs_init(struct msm_dp *dp_display, struct drm_minor *minor)
- 	dp = container_of(dp_display, struct dp_display_private, dp_display);
- 	dev = &dp->pdev->dev;
- 
--	dp->debug = dp_debug_get(dev, dp->panel, dp->usbpd,
-+	dp->debug = dp_debug_get(dev, dp->panel,
- 					dp->link, &dp->dp_display.connector,
- 					minor);
- 	if (IS_ERR(dp->debug)) {
-diff --git a/drivers/gpu/drm/msm/dp/dp_hpd.c b/drivers/gpu/drm/msm/dp/dp_hpd.c
-deleted file mode 100644
-index e1c90fa47411..000000000000
---- a/drivers/gpu/drm/msm/dp/dp_hpd.c
-+++ /dev/null
-@@ -1,69 +0,0 @@
--// SPDX-License-Identifier: GPL-2.0-only
--/*
-- * Copyright (c) 2012-2020, The Linux Foundation. All rights reserved.
-- */
--
--#define pr_fmt(fmt)	"[drm-dp] %s: " fmt, __func__
--
--#include <linux/slab.h>
--#include <linux/device.h>
--
--#include "dp_hpd.h"
--
--/* DP specific VDM commands */
--#define DP_USBPD_VDM_STATUS	0x10
--#define DP_USBPD_VDM_CONFIGURE	0x11
--
--/* USBPD-TypeC specific Macros */
--#define VDM_VERSION		0x0
--#define USB_C_DP_SID		0xFF01
--
--struct dp_hpd_private {
--	struct device *dev;
--	struct dp_usbpd_cb *dp_cb;
--	struct dp_usbpd dp_usbpd;
--};
--
--int dp_hpd_connect(struct dp_usbpd *dp_usbpd, bool hpd)
--{
--	int rc = 0;
--	struct dp_hpd_private *hpd_priv;
--
--	hpd_priv = container_of(dp_usbpd, struct dp_hpd_private,
--					dp_usbpd);
--
--	dp_usbpd->hpd_high = hpd;
--
--	if (!hpd_priv->dp_cb || !hpd_priv->dp_cb->configure
--				|| !hpd_priv->dp_cb->disconnect) {
--		pr_err("hpd dp_cb not initialized\n");
--		return -EINVAL;
--	}
--	if (hpd)
--		hpd_priv->dp_cb->configure(hpd_priv->dev);
--	else
--		hpd_priv->dp_cb->disconnect(hpd_priv->dev);
--
--	return rc;
--}
--
--struct dp_usbpd *dp_hpd_get(struct device *dev, struct dp_usbpd_cb *cb)
--{
--	struct dp_hpd_private *dp_hpd;
--
--	if (!cb) {
--		pr_err("invalid cb data\n");
--		return ERR_PTR(-EINVAL);
--	}
--
--	dp_hpd = devm_kzalloc(dev, sizeof(*dp_hpd), GFP_KERNEL);
--	if (!dp_hpd)
--		return ERR_PTR(-ENOMEM);
--
--	dp_hpd->dev = dev;
--	dp_hpd->dp_cb = cb;
--
--	dp_hpd->dp_usbpd.connect = dp_hpd_connect;
--
--	return &dp_hpd->dp_usbpd;
--}
-diff --git a/drivers/gpu/drm/msm/dp/dp_hpd.h b/drivers/gpu/drm/msm/dp/dp_hpd.h
-index 5bc5bb64680f..1d16cc49b5b7 100644
---- a/drivers/gpu/drm/msm/dp/dp_hpd.h
-+++ b/drivers/gpu/drm/msm/dp/dp_hpd.h
-@@ -11,42 +11,6 @@
- #include <linux/types.h>
- #include <linux/device.h>
- 
--enum plug_orientation {
--	ORIENTATION_NONE,
--	ORIENTATION_CC1,
--	ORIENTATION_CC2,
--};
--
--/**
-- * struct dp_usbpd - DisplayPort status
-- *
-- * @orientation: plug orientation configuration
-- * @low_pow_st: low power state
-- * @adaptor_dp_en: adaptor functionality enabled
-- * @multi_func: multi-function preferred
-- * @usb_config_req: request to switch to usb
-- * @exit_dp_mode: request exit from displayport mode
-- * @hpd_high: Hot Plug Detect signal is high.
-- * @hpd_irq: Change in the status since last message
-- * @alt_mode_cfg_done: bool to specify alt mode status
-- * @debug_en: bool to specify debug mode
-- * @connect: simulate disconnect or connect for debug mode
-- */
--struct dp_usbpd {
--	enum plug_orientation orientation;
--	bool low_pow_st;
--	bool adaptor_dp_en;
--	bool multi_func;
--	bool usb_config_req;
--	bool exit_dp_mode;
--	bool hpd_high;
--	bool hpd_irq;
--	bool alt_mode_cfg_done;
--	bool debug_en;
--
--	int (*connect)(struct dp_usbpd *dp_usbpd, bool hpd);
--};
--
- /**
-  * struct dp_usbpd_cb - callback functions provided by the client
-  *
-@@ -62,19 +26,4 @@ struct dp_usbpd_cb {
- 	int (*attention)(struct device *dev);
- };
- 
--/**
-- * dp_hpd_get() - setup hpd module
-- *
-- * @dev: device instance of the caller
-- * @cb: struct containing callback function pointers.
-- *
-- * This function allows the client to initialize the usbpd
-- * module. The module will communicate with HPD module.
-- */
--struct dp_usbpd *dp_hpd_get(struct device *dev, struct dp_usbpd_cb *cb);
--
--int dp_hpd_register(struct dp_usbpd *dp_usbpd);
--void dp_hpd_unregister(struct dp_usbpd *dp_usbpd);
--int dp_hpd_connect(struct dp_usbpd *dp_usbpd, bool hpd);
--
- #endif /* _DP_HPD_H_ */
-diff --git a/drivers/gpu/drm/msm/dp/dp_power.c b/drivers/gpu/drm/msm/dp/dp_power.c
-index 3961ba4efc3c..6e3bcf582308 100644
---- a/drivers/gpu/drm/msm/dp/dp_power.c
-+++ b/drivers/gpu/drm/msm/dp/dp_power.c
-@@ -338,7 +338,7 @@ void dp_power_client_deinit(struct dp_power *dp_power)
- 
- }
- 
--int dp_power_init(struct dp_power *dp_power, bool flip)
-+int dp_power_init(struct dp_power *dp_power)
- {
- 	int rc = 0;
- 	struct dp_power_private *power = NULL;
-diff --git a/drivers/gpu/drm/msm/dp/dp_power.h b/drivers/gpu/drm/msm/dp/dp_power.h
-index 7d0327bbc0d5..7c445f51b0f8 100644
---- a/drivers/gpu/drm/msm/dp/dp_power.h
-+++ b/drivers/gpu/drm/msm/dp/dp_power.h
-@@ -26,13 +26,12 @@ struct dp_power {
-  * dp_power_init() - enable power supplies for display controller
-  *
-  * @power: instance of power module
-- * @flip: bool for flipping gpio direction
-  * return: 0 if success or error if failure.
-  *
-  * This API will turn on the regulators and configures gpio's
-  * aux/hpd.
-  */
--int dp_power_init(struct dp_power *power, bool flip);
-+int dp_power_init(struct dp_power *power);
- 
- /**
-  * dp_power_deinit() - turn off regulators and gpios.
--- 
-2.30.2
+Depends on: https://lore.kernel.org/linux-arm-msm/20210515190909.1809050-1-dmitry.baryshkov@linaro.org
+
+Changes since v1:
+ - Split into separate patch series to ease review.
+
+----------------------------------------------------------------
+Dmitry Baryshkov (6):
+      drm/msm/dpu: get DSPP blocks directly rather than through RM
+      drm/msm/dpu: get MERGE_3D blocks directly rather than through RM
+      drm/msm/dpu: get PINGPONG blocks directly rather than through RM
+      drm/msm/dpu: get INTF blocks directly rather than through RM
+      drm/msm/dpu: drop unused lm_max_width from RM
+      drm/msm/dpu: simplify peer LM handling
+
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c        |  54 +---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h        |   8 -
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h   |   5 -
+ .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c   |   8 -
+ .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c   |   8 -
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c     |   2 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h     |   4 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c          |  14 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.h          |   7 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c    |   7 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h    |   4 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            |  53 +++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h            |   5 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c             | 310 ++-------------------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h             |  18 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_trace.h          |   9 +-
+ 16 files changed, 115 insertions(+), 401 deletions(-)
+
 
