@@ -2,153 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D1B7538149A
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 May 2021 02:34:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6D2E43818F2
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 May 2021 15:12:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234534AbhEOAfO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 14 May 2021 20:35:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46098 "EHLO
+        id S229939AbhEONNi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 15 May 2021 09:13:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41476 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230022AbhEOAfN (ORCPT
+        with ESMTP id S229571AbhEONNf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 14 May 2021 20:35:13 -0400
-Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F4D1C06174A
-        for <linux-arm-msm@vger.kernel.org>; Fri, 14 May 2021 17:34:01 -0700 (PDT)
-Received: by mail-lj1-x231.google.com with SMTP id s25so451098ljo.11
-        for <linux-arm-msm@vger.kernel.org>; Fri, 14 May 2021 17:34:01 -0700 (PDT)
+        Sat, 15 May 2021 09:13:35 -0400
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2074DC061573
+        for <linux-arm-msm@vger.kernel.org>; Sat, 15 May 2021 06:12:21 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id h10so2248511lfm.7
+        for <linux-arm-msm@vger.kernel.org>; Sat, 15 May 2021 06:12:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=of+8ovXa4aMkgT++S+Rbq2lvQyR6d2cuz8n7kSYpUpI=;
-        b=Kq0QoHib0LhGTBGOmnLeO2uKT6lhZJ7JE6HW62W0k+OoJ0+syPzju2rPmKwXTUe5be
-         07gVHhnxyERfyqW/hmhBLDrtyDW23n37LtpPFZ6hWJgOhufcMpJ6QABQkeiDdIPPRPD0
-         SQrsmGds5m0bNY153xxt3Bn7AjlduyNDowXzNRmzZM8Hk1MfRNGm+7C8W3f2jO/qxhrv
-         sTBWCVfzvNs+k2Sh2uttE/KM/uhnrnzrhnBX3r555f54Rq5u3KSlMee9GfJQgaXRdoQr
-         GmoWBu0TOg/AC8mzIx2ZcaDVaAQLtUnyvO7NeT6zeXM9oqaaIjPC1hdLQaukPg0cK7+U
-         cFLw==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=LWOuVSzGe1Bg26jle07IUN3g0HLvecdChr8/TDnFdlY=;
+        b=H+z4a92eObirfZs9Rrw4YwnS68iESpzRiCtDReEgj1k7MxdyuNxCg2L2I0HOkmVJfJ
+         hAvQHYeffSZ+QeAMyUcCde46l1oT8Vge748UzkOMxCV7reajxzwm+8ecdcjlBSCqzId+
+         vIuoMZp8mBLx1Secl7w5ZjTFl/wRaZAeLi4LR0PvdwrVK7bGEJ3BGTgVRPwMPKt3XpLt
+         m7fWPhYd4gdkHpkZdqsU05bijiI+a634UQYzfanMNYwyukZcNTzgsyG/Q7OJ4zpYxouS
+         cb4E3xm1uzWZ+0OCLEyHD3hDtfQlF234YUsk039FBr3muK4nA7hthxz1558RK4QzzjZX
+         ltyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=of+8ovXa4aMkgT++S+Rbq2lvQyR6d2cuz8n7kSYpUpI=;
-        b=WBcjG//hF5E2XlBFPRUPPvCxTPr63yLKN6vEM8Y/GPlKaj/c+x/nYXJcIVHr842Coz
-         FOWsB3J3m3EFWRHB3zRkYVZsJ1pvVi8QtyeXaIEnK57IMHScmWpUCthyei3a9RL8/45V
-         KaBt51gwgjCJ/R2SSYMPqZjex2fUl7yTEarNnm0X1brhx2Q7QBizbnypZ+OP4NRoZT1K
-         Xrocpm4ZDuptWndhUH+J2Grs0NfwW6iJY3Sf+dwW8n7BIhiOIfRTXNImM/7S1rV2iYc0
-         vJxEy0act5b6DW84B38IZUp/Dq7iRJYI5/3EzQU10MiEQjeXZVJC54taOJrWwuNjwFCm
-         SKSg==
-X-Gm-Message-State: AOAM530UgVeu+o0B6vwjZQSB8T+lNamUsXAdlRVjos8ZR98UZ8KrZkGM
-        gbpNoa4m50Yj0+EMbx/S1/qa3w==
-X-Google-Smtp-Source: ABdhPJy1qxqA5sO0wnDdnlQJEd6fDfdb/W8RDe1VFuE+W2M+2se5SRTFDkcx/m4HcH2jMNg2oOHEXw==
-X-Received: by 2002:a05:651c:b28:: with SMTP id b40mr24154392ljr.9.1621038839814;
-        Fri, 14 May 2021 17:33:59 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id e17sm1581436ljp.71.2021.05.14.17.33.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 14 May 2021 17:33:59 -0700 (PDT)
-Subject: Re: [PATCH] drm/msm/dsi: save PLL registers across first PHY reset
-To:     benl@squareup.com, robdclark@gmail.com, sean@poorly.run
-Cc:     David Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
-        AngeloGioacchino Del Regno <kholk11@gmail.com>,
-        Harigovindan P <harigovi@codeaurora.org>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        zhengbin <zhengbin13@huawei.com>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
-References: <010101750064e17e-3db0087e-fc37-494d-aac9-2c2b9b0a7c5b-000000@us-west-2.amazonses.com>
+        bh=LWOuVSzGe1Bg26jle07IUN3g0HLvecdChr8/TDnFdlY=;
+        b=ECGF9Irn8D22QXbXWEOds7daWNFDdbz7ynUX3sDEtuB8UlaGw+wqbdmfYK7sSXpg1O
+         HPiyEXQTixAZoBIQ2pmBqUpE1CzZy1aLWx0vsMl21OXxbXHVNvGWr6yWilHdp4p7GVlv
+         aBoCOjK5DCd+L1TUkKKGH+yNWhWRA9jHE3Kjg1SrkrXuv/of5I3SQr9f/sibDBeIkQ5b
+         Y9GkwLNsAHVKAyKiG6UMV0y1bnbJp8HisXFSxJMKxblvWVGmr6Xx6kJi4BPEz24C5NrE
+         eiLpGR4DoKvLBS5litiinPpevQ1py6w0KTHAwqTCj/br0XpNgfJReH2CWVAA/RiE3+AT
+         i1lw==
+X-Gm-Message-State: AOAM532+4ytShYyGtyESwS6iLEJogejtG6etpuDNwYgJFneTXRZhPSha
+        yHh2H3UG1Nh0Had2bC7GEaT+RQ==
+X-Google-Smtp-Source: ABdhPJzpEBkC8T2rG2IN+cGuL5eFjjjPvMZaBnK9PyXO0mKEL9k2xFIFASUS1gWT6foDgeQa79Uzsg==
+X-Received: by 2002:a05:6512:3d8c:: with SMTP id k12mr24904422lfv.272.1621084339621;
+        Sat, 15 May 2021 06:12:19 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id m4sm2061865ljp.9.2021.05.15.06.12.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 15 May 2021 06:12:19 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Message-ID: <c425c92d-3149-592b-f72e-009c972b9b21@linaro.org>
-Date:   Sat, 15 May 2021 03:33:58 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.10.0
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <abhinavk@codeaurora.org>
+Cc:     Jonathan Marek <jonathan@marek.ca>,
+        Stephen Boyd <sboyd@kernel.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+Subject: [PATCH 0/8] dsi: rework clock parents and timing handling
+Date:   Sat, 15 May 2021 16:12:09 +0300
+Message-Id: <20210515131217.1540412-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
-In-Reply-To: <010101750064e17e-3db0087e-fc37-494d-aac9-2c2b9b0a7c5b-000000@us-west-2.amazonses.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Rob,
+This patch series brings back several patches targeting assigning dispcc
+clock parents, that were removed from the massive dsi rework patchset
+earlier.
 
-On 07/10/2020 03:10, benl-kernelpatches@squareup.com wrote:
-> From: Benjamin Li <benl@squareup.com>
-> 
-> Take advantage of previously-added support for persisting PLL
-> registers across DSI PHY disable/enable cycles (see 328e1a6
-> 'drm/msm/dsi: Save/Restore PLL status across PHY reset') to
-> support persisting across the very first DSI PHY enable at
-> boot.
-> 
-> The bootloader may have left the PLL registers in a non-default
-> state. For example, for dsi_pll_28nm.c on 8x16/8x39, the byte
-> clock mux's power-on reset configuration is to bypass DIV1, but
-> depending on bandwidth requirements[1] the bootloader may have
-> set the DIV1 path.
-> 
-> When the byte clock mux is registered with the generic clock
-> framework at probe time, the framework reads & caches the value
-> of the mux bit field (the initial clock parent). After PHY enable,
-> when clk_set_rate is called on the byte clock, the framework
-> assumes there is no need to reparent, and doesn't re-write the
-> mux bit field. But PHY enable resets PLL registers, so the mux
-> bit field actually silently reverted to the DIV1 bypass path.
-> This causes the byte clock to be off by a factor of e.g. 2 for
-> our tested WXGA panel.
-> 
-> The above issue manifests as the display not working and a
-> constant stream of FIFO/LP0 contention errors.
-> 
-> [1] The specific requirement for triggering the DIV1 path (and
-> thus this issue) on 28nm is a panel with pixel clock <116.7MHz
-> (one-third the minimum VCO setting). FHD/1080p (~145MHz) is fine,
-> WXGA/1280x800 (~75MHz) is not.
+Few notes:
+ - assign-clock-parents is a mandatory proprety according to the current
+   dsi.txt description.
+ - There is little point in duplicating this functionality with the ad-hoc
+   implementation in the dsi code.
 
-This patch seems to be still relevant. Applying it would allow us to 
-drop respective save_state calls from 10nm and 7nm drivers.
+On top of that come few minor cleanups for the DSI PHY drivers.
 
-I'd suggest applying it.
-
-> 
-> Signed-off-by: Benjamin Li <benl@squareup.com>
-> ---
->   drivers/gpu/drm/msm/dsi/phy/dsi_phy.c | 16 ++++++++++++++++
->   1 file changed, 16 insertions(+)
-> 
-> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-> index 009f5b843dd1..139b4a5aaf86 100644
-> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-> @@ -621,6 +621,22 @@ static int dsi_phy_driver_probe(struct platform_device *pdev)
->   		phy->pll = NULL;
->   	}
->   
-> +	/*
-> +	 * As explained in msm_dsi_phy_enable, resetting the DSI PHY (as done
-> +	 * in dsi_mgr_phy_enable) silently changes its PLL registers to power-on
-> +	 * defaults, but the generic clock framework manages and caches several
-> +	 * of the PLL registers. It initializes these caches at registration
-> +	 * time via register read.
-> +	 *
-> +	 * As a result, we need to save DSI PLL registers once at probe in order
-> +	 * for the first call to msm_dsi_phy_enable to successfully bring PLL
-> +	 * registers back in line with what the generic clock framework expects.
-> +	 *
-> +	 * Subsequent PLL restores during msm_dsi_phy_enable will always be
-> +	 * paired with PLL saves in msm_dsi_phy_disable.
-> +	 */
-> +	msm_dsi_pll_save_state(phy->pll);
-> +
->   	dsi_phy_disable_resource(phy);
->   
->   	platform_set_drvdata(pdev, phy);
-> 
+I'd kindly ask to bring all dts changes also through the drm tree, so
+that there won't be any breakage of the functionality.
 
 
--- 
-With best wishes
-Dmitry
+The following changes since commit f2f46b878777e0d3f885c7ddad48f477b4dea247:
+
+  drm/msm/dp: initialize audio_comp when audio starts (2021-05-06 16:26:57 -0700)
+
+are available in the Git repository at:
+
+  https://git.linaro.org/people/dmitry.baryshkov/kernel.git dsi-phy-update
+
+for you to fetch changes up to f1fd3b113cbb98febad682fc11ea1c6e717434c2:
+
+  drm/msm/dsi: remove msm_dsi_dphy_timing from msm_dsi_phy (2021-05-14 22:55:11 +0300)
+
+----------------------------------------------------------------
+Dmitry Baryshkov (8):
+      arm64: dts: qcom: sc7180: assign DSI clock source parents
+      arm64: dts: qcom: sdm845: assign DSI clock source parents
+      arm64: dts: qcom: sdm845-mtp: assign DSI clock source parents
+      arm64: dts: qcom: sm8250: assign DSI clock source parents
+      drm/msm/dsi: stop setting clock parents manually
+      drm/msm/dsi: phy: use of_device_get_match_data
+      drm/msm/dsi: drop msm_dsi_phy_get_shared_timings
+      drm/msm/dsi: remove msm_dsi_dphy_timing from msm_dsi_phy
+
+ arch/arm64/boot/dts/qcom/sc7180.dtsi            |  3 ++
+ arch/arm64/boot/dts/qcom/sdm845-mtp.dts         |  3 ++
+ arch/arm64/boot/dts/qcom/sdm845.dtsi            |  6 +++
+ arch/arm64/boot/dts/qcom/sm8250.dtsi            |  6 +++
+ drivers/gpu/drm/msm/dsi/dsi.h                   |  7 +---
+ drivers/gpu/drm/msm/dsi/dsi_host.c              | 51 -------------------------
+ drivers/gpu/drm/msm/dsi/dsi_manager.c           |  8 +---
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy.c           | 46 ++++++++++------------
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy.h           | 10 ++++-
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c      | 11 ++----
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c      | 11 ++----
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_20nm.c      | 10 +----
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c      | 12 ++----
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c | 10 +----
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c       | 13 ++-----
+ 15 files changed, 67 insertions(+), 140 deletions(-)
+
+
