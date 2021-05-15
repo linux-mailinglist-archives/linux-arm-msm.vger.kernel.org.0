@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B035C381B9E
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 May 2021 00:58:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9E633381BA3
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 May 2021 00:58:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229568AbhEOW7Z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 15 May 2021 18:59:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56050 "EHLO
+        id S230411AbhEOW71 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 15 May 2021 18:59:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56038 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230393AbhEOW7T (ORCPT
+        with ESMTP id S230440AbhEOW7U (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 15 May 2021 18:59:19 -0400
-Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8523AC06174A
-        for <linux-arm-msm@vger.kernel.org>; Sat, 15 May 2021 15:58:05 -0700 (PDT)
-Received: by mail-lj1-x22a.google.com with SMTP id y9so2763693ljn.6
-        for <linux-arm-msm@vger.kernel.org>; Sat, 15 May 2021 15:58:05 -0700 (PDT)
+        Sat, 15 May 2021 18:59:20 -0400
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46E0DC061756
+        for <linux-arm-msm@vger.kernel.org>; Sat, 15 May 2021 15:58:06 -0700 (PDT)
+Received: by mail-lj1-x231.google.com with SMTP id v5so2735611ljg.12
+        for <linux-arm-msm@vger.kernel.org>; Sat, 15 May 2021 15:58:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=ALt2xpqxR2M7ID0/lSTYxo899aEF0TaxPvxXAG/ycDA=;
-        b=gvXEsRJs033GcqK2sH1Iyi/TjQHWKRC+qN8Ak/KNQd+PQsq7r659fLB/3hCUzmK+T1
-         aXtxVuxw0vsnxFpV58u+qgoSKhHQvZRg9EaqykOAXGe/8wfFsmYzV2tk0PyFOF5ZQqVj
-         hMXiMQtcBnxFlmULIHYH2BmktuhSk7RxsQl4+OFYTuVdnx0QLjeATmpcIdnUQCfXyVTQ
-         4us/PzwIB1MauLsrLjGHG8nKWI3CbWccHFIG0hKABubseVKwgP/rOkDjwKMN3jXIiD/m
-         acc8wQJkqhj26mxeUeGHda0Lu3zdHnqo5jwO2RRPD8at0wu2M9Fl4fGA6njNFkKmttfN
-         3JAw==
+        bh=qJQofiqb3TH83HNq4q/uODxswUVtxbMvEOcsV4NaxVo=;
+        b=tn+X0wtelq9WOWDO6OHygErFpAsAZxcqZ1VkpDXDwyTUul9nTNpWtGcRsTrC5VHcX1
+         ZTbKqyuA2zGU7ni/pSrI+S6w4Ym5ikQVAXVp3DduC+7PPLWX1lBVWT4T5ThpTmcK6NWc
+         jCgKRXGdxsF4e2FLUTy3NsXtciO5KazUcLBeskI9wjJ5xb2gt1GSBJKA90syLEnrVYD9
+         VfWhaLkolOt7di3apXv3GXcvsosztCUl1YnJ2///FBRuj5jZsS5oyyOnUroh2Lx0rd9e
+         oPnl+E4xStBqOvXOH+mU7LK3Deb9PmwftG3KEKHMa1LMy5b9CEHL4hdW5k7EPZnseqvw
+         Q2+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=ALt2xpqxR2M7ID0/lSTYxo899aEF0TaxPvxXAG/ycDA=;
-        b=hGHJhwRVDtf5JIDB0dGS5ioiHjxF8A3wbmv6mXC4BtoiSSdrO6bIu0LygeHQ1cV7P8
-         p7G+8UcNWHhMqjP1lX5hk7ZytU5u4myyNtkeNmNRyaPTfSZesbXG/7XiJASQjDlIyu+y
-         yBLaC0w3lD3G/V5MeJ4NHDIKi1vD/mfmvT8PwFDKNHAutiw6dZ1ZHgUlhjnpEw6Q12QU
-         5B6rpgz19VfpYEr8l6BW3HL2Lzk3YrKNaGxHZoR/dLaGLYG0AOVtKwEgEh4zlfiqP0Oj
-         0UCpK2yMCqQogDnOm86hn9F/u2p3nlYPs24RxXalxABUG9w2g9UE8tAfvLm+An+JUat4
-         b0Rg==
-X-Gm-Message-State: AOAM533LaX8sB39tFl9vCXT213bN7KONidAzXnSJ9W22qFCft+noT4rb
-        3LdAK74Mhli9fXuIEf2k9vTZrw==
-X-Google-Smtp-Source: ABdhPJxVomA6+KwMCBCYalVwu8xNGF3Q1k/Cfb94TZzmYw24i1yt/uCu6UzbmXdojge9FbhmJX0aQQ==
-X-Received: by 2002:a2e:a370:: with SMTP id i16mr25862713ljn.90.1621119484091;
+        bh=qJQofiqb3TH83HNq4q/uODxswUVtxbMvEOcsV4NaxVo=;
+        b=RVeQL6v+MRF4xiCBqcdxPbBbHlaAzFu53XNl1dkcxHQeuoN+2sJ+QjU8GGb3y5bXwT
+         0XaSmCLys5ySYtfgS5OoN63Q3+Y7gemQdo1Zlt2bxRGcDwP5qUQkegWcT75yTJ+LtxuA
+         C4eL3N6m9SXuDh46Q0888uRndOUhM3jpoG1GUHyhGCg+xeAOhgQvLuRqbqx8FD3xw2ES
+         vts1kwPAvo1Il3++gwOgi84KWgX54pMjOXnLzGWuKN+EP/ThatO2IZ91W8xUzfE6vlud
+         o05gKlmd1lADjwBcPHePAZJgVeJmCaH7fLYCfoL3y+n5266ywTItcfHdmID5eIYRV73A
+         UTxA==
+X-Gm-Message-State: AOAM530l6UhQCIICxOVKXl438q/QMOcgQmSIHdrEKMqW19MZhg99lXrk
+        oIY6PEYxWxN2e/KKB/sMBTCuOg==
+X-Google-Smtp-Source: ABdhPJx2CotdSMKvf8ppYfGD1jllchQG5bbbKLKabf+dzNmDgbBTC2d2qWOue5FF76fmBIHUd2/1rg==
+X-Received: by 2002:a2e:780a:: with SMTP id t10mr40137463ljc.38.1621119484858;
         Sat, 15 May 2021 15:58:04 -0700 (PDT)
 Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id j3sm1499729lfe.5.2021.05.15.15.58.03
+        by smtp.gmail.com with ESMTPSA id j3sm1499729lfe.5.2021.05.15.15.58.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 15 May 2021 15:58:03 -0700 (PDT)
+        Sat, 15 May 2021 15:58:04 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
@@ -57,9 +57,9 @@ Cc:     Jonathan Marek <jonathan@marek.ca>,
         David Airlie <airlied@linux.ie>,
         Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
         dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: [PATCH v2 5/6] drm/msm/dpu: drop unused lm_max_width from RM
-Date:   Sun, 16 May 2021 01:57:56 +0300
-Message-Id: <20210515225757.1989955-6-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v2 6/6] drm/msm/dpu: simplify peer LM handling
+Date:   Sun, 16 May 2021 01:57:57 +0300
+Message-Id: <20210515225757.1989955-7-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20210515225757.1989955-1-dmitry.baryshkov@linaro.org>
 References: <20210515225757.1989955-1-dmitry.baryshkov@linaro.org>
@@ -69,56 +69,110 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-No code uses lm_max_width from resource manager, so drop it.
+For each LM there is at max 1 peer LM which can be driven by the same
+CTL, so there no need to have a mask instead of just an ID of the peer
+LM.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c | 12 ------------
- drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h |  4 ----
- 2 files changed, 16 deletions(-)
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    |  2 +-
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |  4 +--
+ drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c        | 30 +++++--------------
+ 3 files changed, 11 insertions(+), 25 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-index c36700a06ff2..ec4387ad1182 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-@@ -88,18 +88,6 @@ int dpu_rm_init(struct dpu_rm *rm,
- 			goto fail;
- 		}
- 		rm->mixer_blks[lm->id - LM_0] = &hw->base;
--
--		if (!rm->lm_max_width) {
--			rm->lm_max_width = lm->sblk->maxwidth;
--		} else if (rm->lm_max_width != lm->sblk->maxwidth) {
--			/*
--			 * Don't expect to have hw where lm max widths differ.
--			 * If found, take the min.
--			 */
--			DPU_ERROR("unsupported: lm maxwidth differs\n");
--			if (rm->lm_max_width > lm->sblk->maxwidth)
--				rm->lm_max_width = lm->sblk->maxwidth;
--		}
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+index b569030a0847..e7b132dce849 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+@@ -571,7 +571,7 @@ static const struct dpu_lm_sub_blks sdm845_lm_sblk = {
+ 	.features = _fmask, \
+ 	.sblk = _sblk, \
+ 	.pingpong = _pp, \
+-	.lm_pair_mask = (1 << _lmpair), \
++	.lm_pair = _lmpair, \
+ 	.dspp = _dspp \
  	}
  
- 	for (i = 0; i < cat->ctl_count; i++) {
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
-index ee90b1233430..0c9113581d71 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
-@@ -17,14 +17,10 @@ struct dpu_global_state;
-  * struct dpu_rm - DPU dynamic hardware resource manager
-  * @mixer_blks: array of layer mixer hardware resources
-  * @ctl_blks: array of ctl hardware resources
-- * @lm_max_width: cached layer mixer maximum width
-- * @rm_lock: resource manager mutex
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+index 4dfd8a20ad5c..3199bf8dc085 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+@@ -498,14 +498,14 @@ struct dpu_sspp_cfg {
+  * @features           bit mask identifying sub-blocks/features
+  * @sblk:              LM Sub-blocks information
+  * @pingpong:          ID of connected PingPong, PINGPONG_MAX if unsupported
+- * @lm_pair_mask:      Bitmask of LMs that can be controlled by same CTL
++ * @lm_pair:           ID of LM that can be controlled by same CTL
   */
- struct dpu_rm {
- 	struct dpu_hw_blk *mixer_blks[LM_MAX - LM_0];
- 	struct dpu_hw_blk *ctl_blks[CTL_MAX - CTL_0];
--
--	uint32_t lm_max_width;
+ struct dpu_lm_cfg {
+ 	DPU_HW_BLK_INFO;
+ 	const struct dpu_lm_sub_blks *sblk;
+ 	u32 pingpong;
+ 	u32 dspp;
+-	unsigned long lm_pair_mask;
++	unsigned long lm_pair;
  };
  
- struct dpu_kms;
+ /**
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+index ec4387ad1182..030bc30aba64 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+@@ -121,28 +121,19 @@ static bool _dpu_rm_needs_split_display(const struct msm_display_topology *top)
+ }
+ 
+ /**
+- * _dpu_rm_check_lm_peer - check if a mixer is a peer of the primary
++ * _dpu_rm_get_lm_peer - get the id of a mixer which is a peer of the primary
+  * @rm: dpu resource manager handle
+  * @primary_idx: index of primary mixer in rm->mixer_blks[]
+- * @peer_idx: index of other mixer in rm->mixer_blks[]
+- * Return: true if rm->mixer_blks[peer_idx] is a peer of
+- *          rm->mixer_blks[primary_idx]
+  */
+-static bool _dpu_rm_check_lm_peer(struct dpu_rm *rm, int primary_idx,
+-		int peer_idx)
++static int _dpu_rm_get_lm_peer(struct dpu_rm *rm, int primary_idx)
+ {
+ 	const struct dpu_lm_cfg *prim_lm_cfg;
+-	const struct dpu_lm_cfg *peer_cfg;
+ 
+ 	prim_lm_cfg = to_dpu_hw_mixer(rm->mixer_blks[primary_idx])->cap;
+-	peer_cfg = to_dpu_hw_mixer(rm->mixer_blks[peer_idx])->cap;
+ 
+-	if (!test_bit(peer_cfg->id, &prim_lm_cfg->lm_pair_mask)) {
+-		DPU_DEBUG("lm %d not peer of lm %d\n", peer_cfg->id,
+-				peer_cfg->id);
+-		return false;
+-	}
+-	return true;
++	if (prim_lm_cfg->lm_pair >= LM_0 && prim_lm_cfg->lm_pair < LM_MAX)
++		return prim_lm_cfg->lm_pair - LM_0;
++	return -EINVAL;
+ }
+ 
+ static int _dpu_rm_reserve_lms(struct dpu_rm *rm,
+@@ -176,17 +167,12 @@ static int _dpu_rm_reserve_lms(struct dpu_rm *rm,
+ 		++lm_count;
+ 
+ 		/* Valid primary mixer found, find matching peers */
+-		for (j = i + 1; j < ARRAY_SIZE(rm->mixer_blks) &&
+-				lm_count < reqs->topology.num_lm; j++) {
++		j = _dpu_rm_get_lm_peer(rm, i);
++		/* ignore the peer if there is an error or if the peer was already processed */
++		if (j < 0 || j < i) {
+ 			if (!rm->mixer_blks[j])
+ 				continue;
+ 
+-			if (!_dpu_rm_check_lm_peer(rm, i, j)) {
+-				DPU_DEBUG("lm %d not peer of lm %d\n", LM_0 + j,
+-						LM_0 + i);
+-				continue;
+-			}
+-
+ 			if (reserved_by_other(global_state->mixer_to_enc_id, j, enc_id)) {
+ 				DPU_DEBUG("lm %d already reserved\n", j + LM_0);
+ 				continue;
 -- 
 2.30.2
 
