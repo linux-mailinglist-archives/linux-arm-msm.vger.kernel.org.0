@@ -2,54 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2A1773820E4
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 May 2021 22:27:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 708213820EB
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 May 2021 22:29:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233404AbhEPU26 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 16 May 2021 16:28:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53774 "EHLO
+        id S233501AbhEPUal (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 16 May 2021 16:30:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54132 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233353AbhEPU26 (ORCPT
+        with ESMTP id S233441AbhEPUai (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 16 May 2021 16:28:58 -0400
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 033F9C061573
-        for <linux-arm-msm@vger.kernel.org>; Sun, 16 May 2021 13:27:41 -0700 (PDT)
-Received: by mail-lj1-x22e.google.com with SMTP id f12so4771538ljp.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 16 May 2021 13:27:41 -0700 (PDT)
+        Sun, 16 May 2021 16:30:38 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4AABEC061573
+        for <linux-arm-msm@vger.kernel.org>; Sun, 16 May 2021 13:29:22 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id v9so4401866lfa.4
+        for <linux-arm-msm@vger.kernel.org>; Sun, 16 May 2021 13:29:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=subject:from:to:cc:references:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=AbJBlzsKGOoI2CAg95RwFNI4w8cM41FRv1nk7z5fJHc=;
-        b=KjhDBnFoEOcTlmvMSHz1T4BRhw5VGpuJ76pDSk5fhdwFHFyjWGkvDyX6rDK9U5fBzc
-         7zK5gkzx0s3B1GncEvr9XcFlD4qqpwlDfWrBK/JAVhd8oZzRdBkB3R78azsBNGV1dtpe
-         H8uCQ127UdHxMHpdC6vq/xGwpXT4Hg98fxx2POAkF5mIlvr3hCbAjLCRHMSeeL8KgS8t
-         3BJh/wiJ1sgALTzt+VL55XWt7VeZn8pmSdFd3v3+FtqJbq90IySjYWzgq2emoiMn7Qil
-         aEpCqrOkQzNgIV2+kJOJhPEIFpfYpL/pkP+LZTaynonvvNRgDIbrHZ+1wodpbJCCWr/v
-         OUbQ==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Yx7lyjus5tkXrUkQqZ06xZS0977rH25/5Uu8MUALxzU=;
+        b=JjvEJePtFvg6AAjvz13dQA9K5P5LCJ7yAHnN1UxZkQdjwG2FLGCTAT7+H9uCwDrn0p
+         CTC2Bas1BfLXW+zlEpl/ottJ82eFLrvtkw+pmQmadvVu3JlWrxcKtcnnKHOe6PD8hWnH
+         XHhfnO3BMhUjmi2UIUGtWbbHnKjIdgRXSaVYWMV3lWMKUsMJqWN8fPMML+ZaocxswGXY
+         LV7obEkUfbi5fGhQB4FTJy0ylFOXJ6oh9BWn8TPm2jcX4F1B8wyu0zXnLe0RnpK8izZs
+         BQyFqSQb8zDVXIpQathzlqP69LBRJmk/+LPWIfUERGKncgegxGDhZRhGcHT5W2FEb+ye
+         IWlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=AbJBlzsKGOoI2CAg95RwFNI4w8cM41FRv1nk7z5fJHc=;
-        b=eLTqUbFxs/7rQGejV6V5qE1ZFn2TaozS93G0FFLLG4ZU4qSOGeW9nDse/Schnbg9Yc
-         KMn9GkIeWOYPMsvdACgFgXqvaIVFSv+7t7q+irkDQJAZTxtt+oRBkFTw1gsGNjQ2LJ03
-         QHACWLNdzaa3lm/8HyFmfcN7O+c35evLVBdlfSZJSuthlHCDiPFhzXjb2sjHuciaKW7u
-         bcsOOoWcYPFfE/EX2bM9ni7d3MXn59QSSxEqm90dwtmYTpGpeNhP6agQGqDMkKQlbGcu
-         ecgnkoEKObyZ11EusFwsUj4NSxU5r9+7bcmoR35I/h7pD+Hm2IHaU5bMHZNAWpj5O2h4
-         9OOQ==
-X-Gm-Message-State: AOAM5318c2gm8XxiD7jjGI2y3nDzIXwpJAmypGiVl6MYDmaXSXsSRS77
-        vsOcg91giH+e/3isCwR2+e7uwg==
-X-Google-Smtp-Source: ABdhPJz5IfrOEFXSEYBo1KstqRsesBwgiCVHo7r+QPWbbKUQKGXlcYTL1B+zfZUVuIcMw0GyxfyCKg==
-X-Received: by 2002:a2e:b5a2:: with SMTP id f2mr46521053ljn.101.1621196860252;
-        Sun, 16 May 2021 13:27:40 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id b35sm1739267lfv.82.2021.05.16.13.27.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 16 May 2021 13:27:39 -0700 (PDT)
-Subject: Re: [PATCH] drm/msm/dpu: simplify dpu_core_irq_en/disable helpers
+        bh=Yx7lyjus5tkXrUkQqZ06xZS0977rH25/5Uu8MUALxzU=;
+        b=RVlPY8r+RrLVQ9+LbMOPQMicMfH3nI639bTNZ4TyVHhXxpFM9zk4FrwDg767nyq66s
+         UgQf8OHB0/dNBMEdPpLLhem2qr81ypQHFvAoxoBgBsaekbpMo75A5HGp712hqWrVr9L+
+         VvdA1uMtBubmAq/4PgieRRv9kMntHUKPmVf05fbM8/3QtECquYInHc9KvNTJUPioXaDm
+         7sN8nR2vcFRsnfaIb+uUvPY/zwA1vLz59M4QyyMUpBR4IKnqvMeP3lfzQRKpPZjk9jU0
+         53pLKxbZAvr8Sx6lPFdVC7KxE9UMcWdJvp00hLu4TiphMQqJ29ji6ohOBUozBWYUNP7q
+         41IA==
+X-Gm-Message-State: AOAM533O7WSzZD2RNnNNmw0WvSi8trNS99Acgcu2lrCdODumSeazsN/a
+        2gT9ZuT/nLRwdnnWDhzdTQSfrA==
+X-Google-Smtp-Source: ABdhPJyZknMufSGJqVoQHvCXUeuulq2yKpWMWfgmFYNb3IXMFAKxE+aZKJYQfq4GA7eA9EbT5pr2dg==
+X-Received: by 2002:ac2:4f92:: with SMTP id z18mr38521595lfs.343.1621196960758;
+        Sun, 16 May 2021 13:29:20 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id l10sm2629795ljc.132.2021.05.16.13.29.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 16 May 2021 13:29:20 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
@@ -59,203 +57,72 @@ Cc:     Jonathan Marek <jonathan@marek.ca>,
         David Airlie <airlied@linux.ie>,
         Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
         dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-References: <20210511141554.629380-1-dmitry.baryshkov@linaro.org>
-Message-ID: <6b6cfb61-0858-ce7f-1bf5-966fc552ea53@linaro.org>
-Date:   Sun, 16 May 2021 23:27:38 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.10.0
+Subject: [PATCH v2 0/6] drm/msm/dpu: rework irq handling
+Date:   Sun, 16 May 2021 23:29:05 +0300
+Message-Id: <20210516202910.2141079-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
-In-Reply-To: <20210511141554.629380-1-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/05/2021 17:15, Dmitry Baryshkov wrote:
-> dpu_core_irq_en/disable helpers are always called with the irq_count
-> equal to 1. Merge them with _dpu_core_en/disable functions and make them
-> handle just one interrupt index at a time.
-Replacing this patch with the squashing enable/disable into 
-register/unregister (part of DPU IRQ rework patchset v2).
+Simplify IRQ handling. dpu_irq_map is a huge table consisting of all
+possible IRQ entries (including a plenty of 'reserved' = not existing
+IRQs). It is always used to lookup the interrupt index (in the table)
+and then to use this index to lookup related interrupt register and
+mask. For the long period of time these indices had 1:1 correspondence
+to register/mask pairs. SC7280 introduced 'additional' IRQs removing
+this correpondence.
 
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.c | 50 ++++----------------
->   drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.h | 20 ++++----
->   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c  |  4 +-
->   3 files changed, 18 insertions(+), 56 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.c
-> index c10761ea191c..0ee9ac21e24a 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.c
-> @@ -63,11 +63,11 @@ int dpu_core_irq_idx_lookup(struct dpu_kms *dpu_kms,
->   }
->   
->   /**
-> - * _dpu_core_irq_enable - enable core interrupt given by the index
-> + * dpu_core_irq_enable - enable core interrupt given by the index
->    * @dpu_kms:		Pointer to dpu kms context
->    * @irq_idx:		interrupt index
->    */
-> -static int _dpu_core_irq_enable(struct dpu_kms *dpu_kms, int irq_idx)
-> +int dpu_core_irq_enable(struct dpu_kms *dpu_kms, int irq_idx)
->   {
->   	unsigned long irq_flags;
->   	int ret = 0, enable_count;
-> @@ -85,6 +85,8 @@ static int _dpu_core_irq_enable(struct dpu_kms *dpu_kms, int irq_idx)
->   	}
->   
->   	enable_count = atomic_read(&dpu_kms->irq_obj.enable_counts[irq_idx]);
-> +	if (enable_count)
-> +		DRM_ERROR("irq_idx=%d enable_count=%d\n", irq_idx, enable_count);
->   	DRM_DEBUG_KMS("irq_idx=%d enable_count=%d\n", irq_idx, enable_count);
->   	trace_dpu_core_irq_enable_idx(irq_idx, enable_count);
->   
-> @@ -109,31 +111,12 @@ static int _dpu_core_irq_enable(struct dpu_kms *dpu_kms, int irq_idx)
->   	return ret;
->   }
->   
-> -int dpu_core_irq_enable(struct dpu_kms *dpu_kms, int *irq_idxs, u32 irq_count)
-> -{
-> -	int i, ret = 0, counts;
-> -
-> -	if (!irq_idxs || !irq_count) {
-> -		DPU_ERROR("invalid params\n");
-> -		return -EINVAL;
-> -	}
-> -
-> -	counts = atomic_read(&dpu_kms->irq_obj.enable_counts[irq_idxs[0]]);
-> -	if (counts)
-> -		DRM_ERROR("irq_idx=%d enable_count=%d\n", irq_idxs[0], counts);
-> -
-> -	for (i = 0; (i < irq_count) && !ret; i++)
-> -		ret = _dpu_core_irq_enable(dpu_kms, irq_idxs[i]);
-> -
-> -	return ret;
-> -}
-> -
->   /**
-> - * _dpu_core_irq_disable - disable core interrupt given by the index
-> + * dpu_core_irq_disable - disable core interrupt given by the index
->    * @dpu_kms:		Pointer to dpu kms context
->    * @irq_idx:		interrupt index
->    */
-> -static int _dpu_core_irq_disable(struct dpu_kms *dpu_kms, int irq_idx)
-> +int dpu_core_irq_disable(struct dpu_kms *dpu_kms, int irq_idx)
->   {
->   	int ret = 0, enable_count;
->   
-> @@ -148,6 +131,8 @@ static int _dpu_core_irq_disable(struct dpu_kms *dpu_kms, int irq_idx)
->   	}
->   
->   	enable_count = atomic_read(&dpu_kms->irq_obj.enable_counts[irq_idx]);
-> +	if (enable_count > 1)
-> +		DRM_ERROR("irq_idx=%d enable_count=%d\n", irq_idx, enable_count);
->   	DRM_DEBUG_KMS("irq_idx=%d enable_count=%d\n", irq_idx, enable_count);
->   	trace_dpu_core_irq_disable_idx(irq_idx, enable_count);
->   
-> @@ -164,25 +149,6 @@ static int _dpu_core_irq_disable(struct dpu_kms *dpu_kms, int irq_idx)
->   	return ret;
->   }
->   
-> -int dpu_core_irq_disable(struct dpu_kms *dpu_kms, int *irq_idxs, u32 irq_count)
-> -{
-> -	int i, ret = 0, counts;
-> -
-> -	if (!irq_idxs || !irq_count) {
-> -		DPU_ERROR("invalid params\n");
-> -		return -EINVAL;
-> -	}
-> -
-> -	counts = atomic_read(&dpu_kms->irq_obj.enable_counts[irq_idxs[0]]);
-> -	if (counts == 2)
-> -		DRM_ERROR("irq_idx=%d enable_count=%d\n", irq_idxs[0], counts);
-> -
-> -	for (i = 0; (i < irq_count) && !ret; i++)
-> -		ret = _dpu_core_irq_disable(dpu_kms, irq_idxs[i]);
-> -
-> -	return ret;
-> -}
-> -
->   u32 dpu_core_irq_read(struct dpu_kms *dpu_kms, int irq_idx, bool clear)
->   {
->   	if (!dpu_kms->hw_intr)
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.h
-> index e30775e6585b..2ac781738e83 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.h
-> @@ -43,34 +43,30 @@ int dpu_core_irq_idx_lookup(
->   		uint32_t instance_idx);
->   
->   /**
-> - * dpu_core_irq_enable - IRQ helper function for enabling one or more IRQs
-> + * dpu_core_irq_enable - IRQ helper function for enabling IRQ
->    * @dpu_kms:		DPU handle
-> - * @irq_idxs:		Array of irq index
-> - * @irq_count:		Number of irq_idx provided in the array
-> + * @irq_idx:		irq index
->    * @return:		0 for success enabling IRQ, otherwise failure
->    *
->    * This function increments count on each enable and decrements on each
-> - * disable.  Interrupts is enabled if count is 0 before increment.
-> + * disable.  Interrupt is enabled if count is 0 before increment.
->    */
->   int dpu_core_irq_enable(
->   		struct dpu_kms *dpu_kms,
-> -		int *irq_idxs,
-> -		uint32_t irq_count);
-> +		int irq_idxs);
->   
->   /**
-> - * dpu_core_irq_disable - IRQ helper function for disabling one of more IRQs
-> + * dpu_core_irq_disable - IRQ helper function for disabling IRQ
->    * @dpu_kms:		DPU handle
-> - * @irq_idxs:		Array of irq index
-> - * @irq_count:		Number of irq_idx provided in the array
-> + * @irq_idx:		irq index
->    * @return:		0 for success disabling IRQ, otherwise failure
->    *
->    * This function increments count on each enable and decrements on each
-> - * disable.  Interrupts is disabled if count is 0 after decrement.
-> + * disable.  Interrupt is disabled if count is 0 after decrement.
->    */
->   int dpu_core_irq_disable(
->   		struct dpu_kms *dpu_kms,
-> -		int *irq_idxs,
-> -		uint32_t irq_count);
-> +		int irq_idxs);
->   
->   /**
->    * dpu_core_irq_read - IRQ helper function for reading IRQ status
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> index 72eb245341bf..e365815e6e28 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> @@ -367,7 +367,7 @@ int dpu_encoder_helper_register_irq(struct dpu_encoder_phys *phys_enc,
->   		return ret;
->   	}
->   
-> -	ret = dpu_core_irq_enable(phys_enc->dpu_kms, &irq->irq_idx, 1);
-> +	ret = dpu_core_irq_enable(phys_enc->dpu_kms, irq->irq_idx);
->   	if (ret) {
->   		DRM_ERROR("enable failed id=%u, intr=%d, hw=%d, irq=%d",
->   			  DRMID(phys_enc->parent), intr_idx, irq->hw_idx,
-> @@ -400,7 +400,7 @@ int dpu_encoder_helper_unregister_irq(struct dpu_encoder_phys *phys_enc,
->   		return 0;
->   	}
->   
-> -	ret = dpu_core_irq_disable(phys_enc->dpu_kms, &irq->irq_idx, 1);
-> +	ret = dpu_core_irq_disable(phys_enc->dpu_kms, irq->irq_idx);
->   	if (ret) {
->   		DRM_ERROR("disable failed id=%u, intr=%d, hw=%d, irq=%d ret=%d",
->   			  DRMID(phys_enc->parent), intr_idx, irq->hw_idx,
-> 
+Replace all IRQ lookup with stable irq indices, which correponds
+directly to the register/bit pair. The irq indices are now fetched from
+the hw catalog rather than being looked up using the hw block id and irq
+type.
+
+Changes since v1:
+ - move IRQ indices to hw catalog rather than looking them up from the
+   big dpu_irq_map table (as suggested by Bjorn).
+ - add patch to squash irq enable/disable into
+   dpu_core_irq_register_callback()/dpu_core_irq_unregister_callback()
+
+Changes since RFC:
+ - rebase on top of msm/msm-next to include SC7280 changes.
 
 
--- 
-With best wishes
-Dmitry
+The following changes since commit f2f46b878777e0d3f885c7ddad48f477b4dea247:
+
+  drm/msm/dp: initialize audio_comp when audio starts (2021-05-06 16:26:57 -0700)
+
+are available in the Git repository at:
+
+  https://git.linaro.org/people/dmitry.baryshkov/kernel.git dpu-irq-simplify-2
+
+for you to fetch changes up to ec3d935f9a18aeb3ebf5482eba7133cec020e047:
+
+  drm/msm/dpu: simplify IRQ enabling/disabling (2021-05-16 23:19:56 +0300)
+
+----------------------------------------------------------------
+Dmitry Baryshkov (6):
+      drm/msm/dpu: merge dpu_hw_intr_get_interrupt_statuses into dpu_hw_intr_dispatch_irqs
+      drm/msm/dpu: hw_intr: always call dpu_hw_intr_clear_intr_status_nolock
+      drm/msm/dpu: define interrupt register names
+      drm/msm/dpu: replace IRQ lookup with the data in hw catalog
+      drm/msm/dpu: drop remains of old irq lookup subsystem
+      drm/msm/dpu: simplify IRQ enabling/disabling
+
+ drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.c       |  203 +--
+ drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.h       |   43 -
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c        |   74 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h   |    4 -
+ .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c   |   40 +-
+ .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c   |   33 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c     |  202 ++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h     |   14 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c  | 1450 ++------------------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h  |  112 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h            |    2 -
+ drivers/gpu/drm/msm/disp/dpu1/dpu_trace.h          |   36 +-
+ 12 files changed, 330 insertions(+), 1883 deletions(-)
+
+
