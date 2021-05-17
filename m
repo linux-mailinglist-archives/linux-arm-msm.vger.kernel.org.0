@@ -2,119 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1355B3839D5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 May 2021 18:29:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6460C3839F7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 May 2021 18:32:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240244AbhEQQad (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 May 2021 12:30:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38410 "EHLO
+        id S243008AbhEQQd6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 May 2021 12:33:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39230 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344308AbhEQQaQ (ORCPT
+        with ESMTP id S244464AbhEQQdr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 May 2021 12:30:16 -0400
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A0DFC08EB05
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 May 2021 08:13:07 -0700 (PDT)
-Received: by mail-ej1-x62c.google.com with SMTP id b25so9765139eju.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 May 2021 08:13:07 -0700 (PDT)
+        Mon, 17 May 2021 12:33:47 -0400
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1B9AC059C93
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 May 2021 08:22:40 -0700 (PDT)
+Received: by mail-ej1-x633.google.com with SMTP id lg14so9775571ejb.9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 May 2021 08:22:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=usbkl3eSbLJY48dNZ3F0WFUOcTmkoTvft5/B7CL2sSU=;
-        b=kEuT1N5/kO7rAdEgl1j8JLVDuUgyk4mkEmZFl/+L8PvOtZmcdeETEi8LQMF8goxorE
-         FHnZ92LpD8DQrwHOQnBY0OJtFifqJVScvJBJMt7TI/clMG9wx1CsJjBQx5H0QwNpwNqz
-         MGfJd0FotdiakdxcCi9xYYnEwCAN2u0wOhxTnXByh1if0GaLk0sx0poV3LInQt1k+l8T
-         YULNsLltGxmiW6JJkLVGH4BUgIznFMaEjApb9esqcBXB3UeNl8GhX9YL3Yf/61VvVBEQ
-         3/0oV9tncPFMDubvXrNbDEVU9mMc9AvFU3gIfELO3i7hr2vxS/xIirAA+Ma1oZ+/A3ZB
-         woog==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=P+7sG3/Jmv/wBWtoh3/MZVcO8CZp8esktTkHoMkDLYo=;
+        b=F2kCUFghNi6IMOwnEJibP3dYc7YqvFgTZRqgv0xN8X19MV446rQsXUcEQTHrUX+IH9
+         b3aEfLWz5VrQO2SZY2ERucBM5qXFxazXeiOSwUeAl9bu5pm5zYVFgJ3dB1GRWiR6sr1/
+         JT/MatQ0LcOORLBA1T5NPbfJw88/xAUnmY8uGuisHdBLiDhsZJ2o6mR+amJDTDgRpQMa
+         Fw5fW7O0cPzFlpqINJJuAgiKa2MngUnmHxHL8LDbZdgOTkN4Twui+G12qnwO3P29p186
+         p+XpStg/jKOKzpzS4Fs49ZvFkC688Ad4QvNn+WtP2grmMXurFleD3rk1Qo+Mi/vXmPCn
+         6IEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=usbkl3eSbLJY48dNZ3F0WFUOcTmkoTvft5/B7CL2sSU=;
-        b=HLKngPy5NtjwZ9Pu108kWlVkdI1VDjAczqrwPjSoav/2oIysE1HbAxClEQOL8PfogT
-         aNxKdzcQkH6G0o7u/Thh5fAWTlE8nPqOuSHp8kJ5Xrd7p1n5Xie+1P5kVCslvF+3v+nv
-         enuHyrhEM0hsK8Q/jQn5/aVnUXG15l0e0PNyMBGf0cV38QtnNksY3CiQ78yos4ndyJ2v
-         qVzBWTUHuuyEIXzI7ynBOU9BhaOLIAWoxOyTooFVwfUDJ7fbijZSuwjNQrx704bK2VpQ
-         gjg/ySV+sSRXHgy9WigpNQa22NznMgk0F3RW44pCl1Ow2DocFWKFeGN5zRPpezKSFaji
-         0aJg==
-X-Gm-Message-State: AOAM531CfgEV5pvai26tr811cr2GyRKOY0sJ+L8UvylW8I3wTZBhShD5
-        aSRrARwjbY/65Ly14VjiNTbsbQ==
-X-Google-Smtp-Source: ABdhPJyz6c2G3oG+zPca9fjjDDqPHFgaRlOjr19GzNPtmUAVMbqQGJd82kvv2LT1kvF53lvygb3s8Q==
-X-Received: by 2002:a17:906:2559:: with SMTP id j25mr423050ejb.42.1621264386090;
-        Mon, 17 May 2021 08:13:06 -0700 (PDT)
-Received: from [192.168.1.14] ([195.24.90.54])
-        by smtp.googlemail.com with ESMTPSA id z4sm11175002edc.1.2021.05.17.08.13.05
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 17 May 2021 08:13:05 -0700 (PDT)
-Subject: Re: [PATCH 1/3] v4l: Add Qualcomm custom compressed pixel formats
-To:     Nicolas Dufresne <nicolas@ndufresne.ca>,
-        linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-api@vger.kernel.org
-Cc:     Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>
-References: <20210429105815.2790770-1-stanimir.varbanov@linaro.org>
- <20210429105815.2790770-2-stanimir.varbanov@linaro.org>
- <d54b1bb7956e1e3bea47fde1216084c7f2eae87e.camel@ndufresne.ca>
+        bh=P+7sG3/Jmv/wBWtoh3/MZVcO8CZp8esktTkHoMkDLYo=;
+        b=NB80833PMmfIc/Ohglf/RH+0DsoBpo79e0Q/7jZ4jOEzJBFap1IpGjiwV6rFmf5Yiu
+         BMskWHrRA89K4zLQrW5zZMAGvhv2C0MPRNm//9A9oM1Pk8iGgAsVjhv7VPT0WlLlclDH
+         ko3RamuF9cYJXvVdhuxQ0I8rTLFf4WfkezaqiXQOFWkQkC2QP7shsoaEgDYIMNqggdCk
+         YU6/i5UCOjV5HTYq5CSHskEnqcwN5RoIHUD8Xh1UB5bwMqzSYEAK9+F+xZio9HZwTIIz
+         EKDrEs8J1PaV2+liDv0Fx+RVsiFqNC+12l1G7bG+yXJhEtK5+PL8/wE0wblfmSayMYyg
+         6EZA==
+X-Gm-Message-State: AOAM533mkTkdXrJ9y1Do8AnX48SSJCFuF95tls7xAvM7lPD3HjkdGBhc
+        PXCLC2vKiLlgjnbTTyuhtxqt9A==
+X-Google-Smtp-Source: ABdhPJxV3U48zfxePLyqfMNwTJz43JF4mRuLiwZeYnOUA0alPW+w8WU00vbcmni2jZSBFVQmZoYrCQ==
+X-Received: by 2002:a17:906:fcb4:: with SMTP id qw20mr474669ejb.216.1621264958826;
+        Mon, 17 May 2021 08:22:38 -0700 (PDT)
+Received: from localhost.localdomain ([195.24.90.54])
+        by smtp.gmail.com with ESMTPSA id jw9sm3028375ejb.77.2021.05.17.08.22.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 17 May 2021 08:22:38 -0700 (PDT)
 From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Message-ID: <892effb7-7a29-e016-c903-1a9bee6e9881@linaro.org>
-Date:   Mon, 17 May 2021 18:13:03 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.8.1
+To:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Subject: [PATCH] venus: hfi_cmds: Fix conceal color property
+Date:   Mon, 17 May 2021 18:22:25 +0300
+Message-Id: <20210517152225.482511-1-stanimir.varbanov@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-In-Reply-To: <d54b1bb7956e1e3bea47fde1216084c7f2eae87e.camel@ndufresne.ca>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+The conceal color property used for Venus v4 and v6 has the same
+payload structure. But currently v4 follow down to payload
+structure for v1. Correct this by moving set_property to v4.
 
+Fixes: 4ef6039fad8f ("media: venus: vdec: Add support for conceal control")
+Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+---
+ drivers/media/platform/qcom/venus/hfi_cmds.c | 22 ++++++++++----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
-On 4/29/21 10:10 PM, Nicolas Dufresne wrote:
-> Le jeudi 29 avril 2021 à 13:58 +0300, Stanimir Varbanov a écrit :
->> Here we add custom Qualcomm raw compressed pixel formats. They are
->> used in Qualcomm SoCs to optimaize the interconnect bandwidth.
-> 
-> Wasn't reviewing, just skimming the lists, but s/optimaize/optimize/
-> 
->>
->> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
->> ---
->>  .../userspace-api/media/v4l/pixfmt-reserved.rst      | 12 ++++++++++++
->>  drivers/media/v4l2-core/v4l2-ioctl.c                 |  2 ++
->>  include/uapi/linux/videodev2.h                       |  2 ++
->>  3 files changed, 16 insertions(+)
->>
->> diff --git a/Documentation/userspace-api/media/v4l/pixfmt-reserved.rst b/Documentation/userspace-api/media/v4l/pixfmt-reserved.rst
->> index 0b879c0da713..30b9cef4cbf0 100644
->> --- a/Documentation/userspace-api/media/v4l/pixfmt-reserved.rst
->> +++ b/Documentation/userspace-api/media/v4l/pixfmt-reserved.rst
->> @@ -260,6 +260,18 @@ please make a proposal on the linux-media mailing list.
->>  	of tiles, resulting in 32-aligned resolutions for the luminance plane
->>  	and 16-aligned resolutions for the chrominance plane (with 2x2
->>  	subsampling).
->> +    * .. _V4L2-PIX-FMT-QC8C:
->> +
->> +      - ``V4L2_PIX_FMT_QC8C``
->> +      - 'QC8C'
->> +      - Compressed Macro-tile 8Bit YUV420 format used by Qualcomm platforms.
->> +	The compression is lossless. It contains four planes.
-> 
-> Would be nice to document if the bytesperline is meaningful or not. Basically,
-> what information need to be carried to other drivers ?
-
-I don't think that bytesperline has some valuable information, the
-important thing is the size of the memory buffer and it should be used
-to negotiate between v4l2 and drm for example. The layout of the buffer
-can be seen at [1].
-
-[1]
-https://android.googlesource.com/kernel/msm/+/android-msm-bullhead-3.10-marshmallow-dr/include/media/msm_media_info.h
-
+diff --git a/drivers/media/platform/qcom/venus/hfi_cmds.c b/drivers/media/platform/qcom/venus/hfi_cmds.c
+index 11a8347e5f5c..4b9dea7f6940 100644
+--- a/drivers/media/platform/qcom/venus/hfi_cmds.c
++++ b/drivers/media/platform/qcom/venus/hfi_cmds.c
+@@ -1226,6 +1226,17 @@ pkt_session_set_property_4xx(struct hfi_session_set_property_pkt *pkt,
+ 		pkt->shdr.hdr.size += sizeof(u32) + sizeof(*hdr10);
+ 		break;
+ 	}
++	case HFI_PROPERTY_PARAM_VDEC_CONCEAL_COLOR: {
++		struct hfi_conceal_color_v4 *color = prop_data;
++		u32 *in = pdata;
++
++		color->conceal_color_8bit = *in & 0xff;
++		color->conceal_color_8bit |= ((*in >> 10) & 0xff) << 8;
++		color->conceal_color_8bit |= ((*in >> 20) & 0xff) << 16;
++		color->conceal_color_10bit = *in;
++		pkt->shdr.hdr.size += sizeof(u32) + sizeof(*color);
++		break;
++	}
+ 
+ 	case HFI_PROPERTY_CONFIG_VENC_MAX_BITRATE:
+ 	case HFI_PROPERTY_CONFIG_VDEC_POST_LOOP_DEBLOCKER:
+@@ -1279,17 +1290,6 @@ pkt_session_set_property_6xx(struct hfi_session_set_property_pkt *pkt,
+ 		pkt->shdr.hdr.size += sizeof(u32) + sizeof(*cq);
+ 		break;
+ 	}
+-	case HFI_PROPERTY_PARAM_VDEC_CONCEAL_COLOR: {
+-		struct hfi_conceal_color_v4 *color = prop_data;
+-		u32 *in = pdata;
+-
+-		color->conceal_color_8bit = *in & 0xff;
+-		color->conceal_color_8bit |= ((*in >> 10) & 0xff) << 8;
+-		color->conceal_color_8bit |= ((*in >> 20) & 0xff) << 16;
+-		color->conceal_color_10bit = *in;
+-		pkt->shdr.hdr.size += sizeof(u32) + sizeof(*color);
+-		break;
+-	}
+ 	default:
+ 		return pkt_session_set_property_4xx(pkt, cookie, ptype, pdata);
+ 	}
 -- 
-regards,
-Stan
+2.25.1
+
