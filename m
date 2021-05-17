@@ -2,105 +2,207 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F0A8838226C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 May 2021 02:59:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 83C04382398
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 May 2021 06:57:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231521AbhEQBAa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 16 May 2021 21:00:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56918 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231491AbhEQBA3 (ORCPT
+        id S233635AbhEQE6j (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 May 2021 00:58:39 -0400
+Received: from mail-lf1-f43.google.com ([209.85.167.43]:46894 "EHLO
+        mail-lf1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229625AbhEQE6j (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 16 May 2021 21:00:29 -0400
-Received: from mail-pg1-x52e.google.com (mail-pg1-x52e.google.com [IPv6:2607:f8b0:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3697C061573
-        for <linux-arm-msm@vger.kernel.org>; Sun, 16 May 2021 17:59:11 -0700 (PDT)
-Received: by mail-pg1-x52e.google.com with SMTP id t30so3514962pgl.8
-        for <linux-arm-msm@vger.kernel.org>; Sun, 16 May 2021 17:59:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=ANkYnem2igzEfr34lf0bWQfWO8rn1biLX4pTs2vIelE=;
-        b=Oy4YpkMC6kL/1rEOyL11BEFzYzBYcifbZ28dhgYgYByQXG7loqbvCV8B0qtSC1IybD
-         pqMlIbQ2itJQgJyWDtjuwn+pr9zJdZ5uvRPlxloumec2ZU9VKQtSFLo9+4nb71Tb/BLW
-         jocglSfNOZzNKSPB0upRaQYI/aquzCNo1N94FlgrBohZXCpYDxSZAla2zJvQF4tt9b/1
-         w+i3dgoOWmS+KVD9xA9kOvqFr5UM4RUdg+I979u7suzIZY1CPekBcSTdTWPVmgaMBOD/
-         NwsFKLp9c52GSb98Ss8L2klMDBM5F+SceBFpIC3vEJyNH5g7qnP+7tEeMh/eZK7bhIzm
-         GHiw==
+        Mon, 17 May 2021 00:58:39 -0400
+Received: by mail-lf1-f43.google.com with SMTP id i9so6759350lfe.13;
+        Sun, 16 May 2021 21:57:21 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=ANkYnem2igzEfr34lf0bWQfWO8rn1biLX4pTs2vIelE=;
-        b=Khoawla3V7hWM1300yvQIn7vhDvC7X4FF5T8lxIIeZGRQlE8pPy51eW5bsyBkhJ6Q6
-         JodFKwpJc/QUcHBnNl6itqDCXhNn/sKmOoUNtArgPQP7edtfuCogUERWj725nTOfN/hc
-         vJJ+wXwedS5wADKs+teXf0CbvYYrJo/tl3aaU220lMIBxd+wlJHUAMTaDNjAJvLnDT2I
-         d0IH+uaGJEyOSqUVN2AXHecFxqjl/ilrEvS4ZXIISGSDyCBsmDCC82RrXCZ6OdglVYT5
-         djLVeHMPSHYxzGYgDHOwYKi6k+KyNobO2BXHK/6yyhlICtB+fznixzTObNOZW6ULX2O3
-         huVQ==
-X-Gm-Message-State: AOAM531oYGBqLNhE/YF2Rhd8dEiNgwszNGMrS8sPPapkcBzZ3H1Jhc0O
-        UrRNyD0eQ1j07KUoCPPNknEpIA==
-X-Google-Smtp-Source: ABdhPJzLGwP1y+N/BkES4LzGeZ0jZ19k0n5ykMvcpwJIFcCTOuwnK4pW6TqMNImRjZMVIjPJ8FIB/Q==
-X-Received: by 2002:a05:6a00:1687:b029:253:f417:4dba with SMTP id k7-20020a056a001687b0290253f4174dbamr57212226pfc.5.1621213151386;
-        Sun, 16 May 2021 17:59:11 -0700 (PDT)
-Received: from dragon (80.251.214.228.16clouds.com. [80.251.214.228])
-        by smtp.gmail.com with ESMTPSA id h22sm8562878pfn.55.2021.05.16.17.59.08
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 16 May 2021 17:59:10 -0700 (PDT)
-Date:   Mon, 17 May 2021 08:59:04 +0800
-From:   Shawn Guo <shawn.guo@linaro.org>
-To:     Ard Biesheuvel <ardb@kernel.org>,
-        Maximilian Luz <luzmaximilian@gmail.com>
-Cc:     Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>,
-        Jeffrey Hugo <jhugo@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-efi <linux-efi@vger.kernel.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] arm64: efi: add check for broken efi poweroff
-Message-ID: <20210517005903.GA15021@dragon>
-References: <20210305065120.11355-1-shawn.guo@linaro.org>
- <CAMj1kXHOXOX6V735tLPxcVUAAM0AeZkLKyOUDKTPvazLjjrQ6Q@mail.gmail.com>
+        h=x-gm-message-state:message-id:subject:from:reply-to:to:cc
+         :in-reply-to:references:mime-version:date:user-agent
+         :content-transfer-encoding;
+        bh=ZlBxGhYLZ60uGDaPOSr/zz7izf5PGo7iYr82/TiNDOQ=;
+        b=E+zP2LSMSbK65WxXy9THvknp5RylijQ7mfAxj5iwLuA63uOVbTCjdSsNakY2CFRo3w
+         LOnsYBxw4rOJEBDxwkyHOhU8e3PhrV3jhAQEcg8v2PGCJA+bI6NQcBeUAvYHdZwsiiIo
+         ORJg3fGAzaAf0EQH0cJAE4MsmWLVI3XlqFH9/Vm3w88MPoz9bY6vH1hSOZ4T73d46E4G
+         3BBNsMlzByFJb+O4NTJFY4gVg/V6ycwj/H0goTNZrGlmbrLiGbRW1KEiuaHWyzl8boEj
+         6uOrAtWE6cnAAJ2JZCYo4G4VycAS94EsWbjjBuqDdZlSHZkHwllHup3jUZ0QME1yOKNH
+         FSSA==
+X-Gm-Message-State: AOAM531qw2B2rIgSesCMiMuLiYHI9jX9yZ3DTIqvI5Gc66Tq2hiYlbOa
+        /4/FE+fdz+l3t4Q5Ox08GS4=
+X-Google-Smtp-Source: ABdhPJz6XlOoLFS1OExcL4aOBvUwCPGZFB6U6VqCJpuJZQYA/MBhFsa1h3+611hseFVm2x5fKxip8Q==
+X-Received: by 2002:ac2:54ba:: with SMTP id w26mr41231726lfk.78.1621227440658;
+        Sun, 16 May 2021 21:57:20 -0700 (PDT)
+Received: from dc7vkhyyyyyyyyyyyyyby-3.rev.dnainternet.fi (dc7vkhyyyyyyyyyyyyyby-3.rev.dnainternet.fi. [2001:14ba:16e2:8300::2])
+        by smtp.gmail.com with ESMTPSA id g28sm2775163ljn.134.2021.05.16.21.57.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 16 May 2021 21:57:19 -0700 (PDT)
+Message-ID: <fefd2daff66123d5a812ad41466095e56e699bf2.camel@fi.rohmeurope.com>
+Subject: Re: [PATCH v9 02/10] reboot: Add hardware protection power-off
+From:   Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>
+Reply-To: matti.vaittinen@fi.rohmeurope.com
+To:     Petr Mladek <pmladek@suse.com>
+Cc:     "josef@toxicpanda.com" <josef@toxicpanda.com>,
+        "keescook@chromium.org" <keescook@chromium.org>,
+        "rppt@kernel.org" <rppt@kernel.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        linux-power <linux-power@fi.rohmeurope.com>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "bjorn.andersson@linaro.org" <bjorn.andersson@linaro.org>,
+        "rui.zhang@intel.com" <rui.zhang@intel.com>,
+        "linux-renesas-soc@vger.kernel.org" 
+        <linux-renesas-soc@vger.kernel.org>,
+        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+        "akpm@linux-foundation.org" <akpm@linux-foundation.org>,
+        "linux@roeck-us.net" <linux@roeck-us.net>,
+        "daniel.lezcano@linaro.org" <daniel.lezcano@linaro.org>,
+        "lgirdwood@gmail.com" <lgirdwood@gmail.com>,
+        "robh+dt@kernel.org" <robh+dt@kernel.org>,
+        "kai.heng.feng@canonical.com" <kai.heng.feng@canonical.com>,
+        "mcroce@microsoft.com" <mcroce@microsoft.com>,
+        "amitk@kernel.org" <amitk@kernel.org>,
+        "linux-pm@vger.kernel.org" <linux-pm@vger.kernel.org>,
+        "andy.shevchenko@gmail.com" <andy.shevchenko@gmail.com>,
+        "agross@kernel.org" <agross@kernel.org>,
+        "broonie@kernel.org" <broonie@kernel.org>,
+        "rafael.j.wysocki@intel.com" <rafael.j.wysocki@intel.com>,
+        rostedt@goodmis.org, Geert Uytterhoeven <geert@linux-m68k.org>
+In-Reply-To: <YJzkq+NPW4ZMB8AF@alley>
+References: <cover.1620645507.git.matti.vaittinen@fi.rohmeurope.com>
+         <97260f8e150abb898a262fade25860609b460912.1620645507.git.matti.vaittinen@fi.rohmeurope.com>
+         <YJuPwAZroVZ/w633@alley>
+         <2149df3f542d25ce15d049e81d6188bb7198478c.camel@fi.rohmeurope.com>
+         <YJzkq+NPW4ZMB8AF@alley>
+Content-Type: text/plain; charset="UTF-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAMj1kXHOXOX6V735tLPxcVUAAM0AeZkLKyOUDKTPvazLjjrQ6Q@mail.gmail.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Date:   Mon, 17 May 2021 07:57:11 +0300
+User-Agent: Evolution 3.34.4 (3.34.4-1.fc31) 
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-+ Maximilian
 
-On Fri, Mar 05, 2021 at 08:01:02AM +0100, Ard Biesheuvel wrote:
-> On Fri, 5 Mar 2021 at 07:51, Shawn Guo <shawn.guo@linaro.org> wrote:
-> >
-> > Poweroff via UEFI Runtime Services doesn't always work on every single
-> > arm64 machine.  For example, on Lenovo Flex 5G laptop, it results in
-> > a system reboot rather than shutdown.  Add a DMI check to keep such
-> > system stay with the original poweroff method (PSCI).
-> >
-> > Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+On Thu, 2021-05-13 at 10:34 +0200, Petr Mladek wrote:
+> On Wed 2021-05-12 12:00:46, Vaittinen, Matti wrote:
+> > On Wed, 2021-05-12 at 10:20 +0200, Petr Mladek wrote:
+> > > On Mon 2021-05-10 14:28:30, Matti Vaittinen wrote:
+> > > > There can be few cases when we need to shut-down the system in
+> > > > order to
+> > > > protect the hardware. Currently this is done at east by the
+> > > > thermal
+> > > > core
+> > > > when temperature raises over certain limit.
+> > > > 
+> > > > Some PMICs can also generate interrupts for example for over-
+> > > > current or
+> > > > over-voltage, voltage drops, short-circuit, ... etc. On some
+> > > > systems
+> > > > these are a sign of hardware failure and only thing to do is
+> > > > try to
+> > > > protect the rest of the hardware by shutting down the system.
+> > > > 
+> > > > Add shut-down logic which can be used by all subsystems instead
+> > > > of
+> > > > implementing the shutdown in each subsystem. The logic is
+> > > > stolen
+> > > > from
+> > > > thermal_core with difference of using atomic_t instead of a
+> > > > mutex
+> > > > in
+> > > > order to allow calls directly from IRQ context.
+> > > > 
+> > > > Signed-off-by: Matti Vaittinen <
+> > > > matti.vaittinen@fi.rohmeurope.com>
+> > > > 
+> > > > diff --git a/kernel/reboot.c b/kernel/reboot.c
+> > > > index a6ad5eb2fa73..5da8c80a2647 100644
+> > > > --- a/kernel/reboot.c
+> > > > +++ b/kernel/reboot.c
+> > > > @@ -518,6 +519,85 @@ void orderly_reboot(void)
+> > > >  }
+> > > >  EXPORT_SYMBOL_GPL(orderly_reboot);
+> > > >  
+> > > > +/**
+> > > > + * hw_failure_emergency_poweroff_func - emergency poweroff
+> > > > work
+> > > > after a known delay
+> > > > + * @work: work_struct associated with the emergency poweroff
+> > > > function
+> > > > + *
+> > > > + * This function is called in very critical situations to
+> > > > force
+> > > > + * a kernel poweroff after a configurable timeout value.
+> > > > + */
+> > > > +static void hw_failure_emergency_poweroff_func(struct
+> > > > work_struct
+> > > > *work)
+> > > > +{
+> > > > +	/*
+> > > > +	 * We have reached here after the emergency shutdown
+> > > > waiting
+> > > > period has
+> > > > +	 * expired. This means orderly_poweroff has not been
+> > > > able to
+> > > > shut off
+> > > > +	 * the system for some reason.
+> > > > +	 *
+> > > > +	 * Try to shut down the system immediately using
+> > > > kernel_power_off
+> > > > +	 * if populated
+> > > > +	 */
+> > > > +	WARN(1, "Hardware protection timed-out. Trying forced
+> > > > poweroff\n");
+> > > > +	kernel_power_off();
+> > > 
+> > > WARN() look like an overkill here. It prints many lines that are
+> > > not
+> > > much useful in this case. The function is called from well-known
+> > > context (workqueue worker).
+> > 
+> > This was the existing code which I stole from the thermal_core. I
+> > kind
+> > of think that eye-catching WARN is actually a good choice here.
+> > Doing
+> > autonomous power-off without a WARNing does not sound good to me :)
+> > 
+> > > Also be aware that "panic_on_warn" commandline option will
+> > > trigger
+> > > panic() here.
+> > 
+> > Hmm.. If panic() hangs the system that might indeed be a problem.
+> > Now
+> > we are (again) on a territory which I don't know well. I'd
+> > appreciate
+> > any input from thermal folks and Mark. I don't like the idea of
+> > making
+> > extreme things like power-off w/o well visible log-trace. Thus I
+> > would
+> > like to have WARN()-like eye-catcher, even if the call-trace was
+> > not
+> > too varying. It will at least point to this worker. Any better
+> > suggestions than WARN()?
 > 
-> What is the point of using EFI runtime services on this machine if
-> poweroff doesn't work either? Can't we just boot this thing with
-> efi=noruntime?
+> Heh, it might make sense to create a system wide API for these. I am
+> sure that WARN() is mis-used this way on many other locations.
+> 
+> There already are two locations that use another eye-catching text.
+> A common API might help to avoid duplication of the common parts,
+> see
+> https://lore.kernel.org/lkml/20210305194206.3165917-2-elver@google.com/
+> 
+> Well, it might be out of scope for this patchset.
 
-Ard,
+I just had a very brief "chat" with Geert (3 IRC messages, posted
+during 4 or 5 days :]) - and Geert pointed me to this:
 
-With Maximilian playing ACPI kernel on Microsoft Surface Pro X, this
-ResetSystem service issue triggers more discussion and testing [1].
-Maximilian tested it with uefi-test-runner and reported that ResetSystem
-actually works [2].
+https://lore.kernel.org/linux-iommu/20210331093104.383705-4-geert+renesas@glider.be/
 
-Looking at the kernel dump, I'm wondering if it's because that kernel
-calls into the services with assuming they are in virtual addressing
-mode, while actually they are in flat physical mode instead, due to
-that SetVirtualAddressMap() call is skipped (efi_novamap).
+So, maybe I'll just go with simple pr_emerg() and trust that the
+emerg() print should catch attention as such level print probably
+should. I'll respin the patch series (probably tomorrow) - let's see
+what thermal and regulator folks say :)
 
-Shawn
+Thanks for all the help this far!
 
-[1] https://github.com/Sonicadvance1/linux/issues/27#issuecomment-836103896
-[2] https://github.com/Sonicadvance1/linux/issues/27#issuecomment-837184892
+Best Regards
+	Matti Vaittinen
+
