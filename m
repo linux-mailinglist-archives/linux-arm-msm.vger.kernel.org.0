@@ -2,49 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B82FA3865F1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 May 2021 22:11:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7D91F3865F3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 May 2021 22:11:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237776AbhEQULO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 May 2021 16:11:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32974 "EHLO
+        id S238334AbhEQULQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 May 2021 16:11:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32990 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237957AbhEQULL (ORCPT
+        with ESMTP id S238164AbhEQULM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 May 2021 16:11:11 -0400
-Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A61FBC061760
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 May 2021 13:09:53 -0700 (PDT)
-Received: by mail-pj1-x1031.google.com with SMTP id b15-20020a17090a550fb029015dad75163dso299451pji.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 May 2021 13:09:53 -0700 (PDT)
+        Mon, 17 May 2021 16:11:12 -0400
+Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06CD1C06138C
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 May 2021 13:09:55 -0700 (PDT)
+Received: by mail-pf1-x42d.google.com with SMTP id d16so5718892pfn.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 May 2021 13:09:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=tOZl2a0Xn+Y+oYoBUp55w9Z29a1A4HjFAvDLzhVhkqE=;
-        b=eU6UxXe8TD0o/QUCV0Yy+MMbIQLPLTHNNbNuBTC7DkWQuRoGhqVm3tGDTzB4qDOYxD
-         yETi1jd/D3yEQbqMMpM1nEQ/RTTc80vMdtggULBTBM76/Ei21a5xS7ByOrfe3aPvJAcN
-         Dqaz34kIW4/3TYsbnViDkSpc2yP55yNrbq1s8=
+        bh=L1nKDGF6pGJe0IpKS5C/RodzguTsVg0ZIzYR3jS4u4k=;
+        b=fWtS/TP40LqAlfZ78nEJ1PtGoPOzEu9gxI8cBuKOzb3ckduQ8M34kJrg774jQAOf/y
+         JIQLcpDk8HU/9Fu1vgLxJk+O0CxqxE8UNHL0YKIpuErycVwSIn+InsXfScFEg6ztd0Ru
+         tAuBqLmQGLn3HJF6PdAncObwhOeO1jWcf5rMA=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=tOZl2a0Xn+Y+oYoBUp55w9Z29a1A4HjFAvDLzhVhkqE=;
-        b=cqq6pwNet0i6NatINZM4HhDhEHetTi88hnvvZz/Y+5BOxSNBtqrlBSri6//3MtYu3f
-         wrkiwU9KboEtXeDABhwvCRk42rj31T7h+xbq1GjtJs4K0a+k1QVUzwsP64t7Q2Uq2Ghb
-         Ju8CHZYLQeu062SKr81lp2AjFn7TWNgIYRPMxf4XLiYxxvLwZOfMVaf5eBikDB1GoWxV
-         wdBEr9zVR42YjE9JsjY5qIGFsUee9unSEEoP5kAfDBE10BX7ZBj6X03cQY1JyXB4zFvt
-         k4OuJSZxglxxzOYv08OzaJfDluGbOWtaEPpdy6wNuSq/MSmQfIBqYoGyIZXrr3Q9KM+5
-         Uu6w==
-X-Gm-Message-State: AOAM530Wy5k2KHJV9n4/BTXV7WMWax/3jxoODA1YQMiEdG9RoxAvilwx
-        j0Vg94T5evKC4sU2PwcKZTUT2g==
-X-Google-Smtp-Source: ABdhPJyTrQXjfhuuJoM4Ts7rTF2Cm+pFj01Va4cSrUA6KTyHc0dawC5/JzLBe/tqlu792cBM94O5kA==
-X-Received: by 2002:a17:90b:1949:: with SMTP id nk9mr838329pjb.220.1621282193248;
-        Mon, 17 May 2021 13:09:53 -0700 (PDT)
+        bh=L1nKDGF6pGJe0IpKS5C/RodzguTsVg0ZIzYR3jS4u4k=;
+        b=TRAam4w4it5wuu7Zzxka4ElF9/h3W1BAQYcIZ7z3WMrcYObuBVUqW7Ek3FrpaJ/+h2
+         E+b7tBip/vxM+3p1EmpgX3FnsE5rrH+f2c74+UV5ybpTBw8B1CzlU7696dIT3BqRcdmi
+         5vI9x/jijwWz4ey38uBZzx0SwH4j7wfE6Nj+NRc4XtoCXGQfwq/3Qk08JITKr3tTXYjn
+         BaM208sqJo19WedFML+TtOt3BxzMd/Zsm1iN8pbhVg9bgwMAT+9AMdgtVNNhkZVTE968
+         4MRet4tGMn74qtV/AyxYRyq3K9RLVBH1OYfVzjFpBasnwa0uXcfnrlUXCz2D4QwmfvwW
+         zyeg==
+X-Gm-Message-State: AOAM532DB2JFTo5aN/3GQbuJ1EW7Fgb6v8MMDx4aAJDbNs+CGMzYl8Yq
+        wGTlDO7ekqRPNvPaQSEu2592LQ==
+X-Google-Smtp-Source: ABdhPJwufsQmvr4lrG28XiJcm5hpjG/jAsvaoyX7ibGY6ATt/3lk8A+H8Ck46X0LCGgEvfbtITbFBg==
+X-Received: by 2002:a63:8f15:: with SMTP id n21mr1212991pgd.366.1621282194627;
+        Mon, 17 May 2021 13:09:54 -0700 (PDT)
 Received: from tictac2.mtv.corp.google.com ([2620:15c:202:201:bc91:c597:ded0:7930])
-        by smtp.gmail.com with ESMTPSA id x19sm9078941pgj.66.2021.05.17.13.09.52
+        by smtp.gmail.com with ESMTPSA id x19sm9078941pgj.66.2021.05.17.13.09.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 May 2021 13:09:52 -0700 (PDT)
+        Mon, 17 May 2021 13:09:53 -0700 (PDT)
 From:   Douglas Anderson <dianders@chromium.org>
 To:     Andrzej Hajda <a.hajda@samsung.com>,
         Neil Armstrong <narmstrong@baylibre.com>,
@@ -67,9 +67,9 @@ Cc:     Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>,
         David Airlie <airlied@linux.ie>,
         Thierry Reding <thierry.reding@gmail.com>,
         linux-kernel@vger.kernel.org
-Subject: [PATCH v7 05/10] drm/panel: panel-simple: Allow panel-simple be a DP AUX endpoint device
-Date:   Mon, 17 May 2021 13:09:02 -0700
-Message-Id: <20210517130450.v7.5.Iada41f76a7342354bae929d0bb3ceba40f27f0ea@changeid>
+Subject: [PATCH v7 06/10] drm/panel: panel-simple: Stash DP AUX bus; allow using it for DDC
+Date:   Mon, 17 May 2021 13:09:03 -0700
+Message-Id: <20210517130450.v7.6.I18e60221f6d048d14d6c50a770b15f356fa75092@changeid>
 X-Mailer: git-send-email 2.31.1.751.gd2f1c929bd-goog
 In-Reply-To: <20210517200907.1459182-1-dianders@chromium.org>
 References: <20210517200907.1459182-1-dianders@chromium.org>
@@ -79,128 +79,97 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The panel-simple driver can already have devices instantiated as
-platform devices or MIPI DSI devices. Let's add a 3rd way to
-instantiate it: as DP AUX endpoint devices.
+If panel-simple is instantiated as a DP AUX bus endpoint then we have
+access to the DP AUX bus. Let's stash it in the panel-simple
+structure, leaving it NULL for the cases where the panel is
+instantiated in other ways.
 
-At the moment there is no benefit to instantiating it in this way,
-but:
-- In the next patch we'll give it access to the DDC channel via the DP
-  AUX bus.
-- Possibly in the future we may use this channel to configure the
-  backlight.
+If we happen to have access to the DP AUX bus and we weren't provided
+the ddc-i2c-bus in some other manner, let's use the DP AUX bus for it.
 
 Signed-off-by: Douglas Anderson <dianders@chromium.org>
 ---
 
 Changes in v7:
-- Patch to allow panel-simple to be DP AUX EP new for v7.
+- Patch using the DP AUX for DDC new for v7.
 
- drivers/gpu/drm/panel/Kconfig        |  1 +
- drivers/gpu/drm/panel/panel-simple.c | 52 +++++++++++++++++++++++++---
- 2 files changed, 49 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/panel/panel-simple.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/panel/Kconfig b/drivers/gpu/drm/panel/Kconfig
-index ef87d92cdf49..b1ea86d9fdaf 100644
---- a/drivers/gpu/drm/panel/Kconfig
-+++ b/drivers/gpu/drm/panel/Kconfig
-@@ -82,6 +82,7 @@ config DRM_PANEL_SIMPLE
- 	depends on BACKLIGHT_CLASS_DEVICE
- 	depends on PM
- 	select VIDEOMODE_HELPERS
-+	select DRM_DP_AUX_BUS
- 	help
- 	  DRM panel driver for dumb panels that need at most a regulator and
- 	  a GPIO to be powered up. Optionally a backlight can be attached so
 diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
-index 21939d4352cf..d3b5ae22d939 100644
+index d3b5ae22d939..b09be6e5e147 100644
 --- a/drivers/gpu/drm/panel/panel-simple.c
 +++ b/drivers/gpu/drm/panel/panel-simple.c
-@@ -36,6 +36,7 @@
- 
+@@ -37,6 +37,7 @@
  #include <drm/drm_crtc.h>
  #include <drm/drm_device.h>
-+#include <drm/drm_dp_aux_bus.h>
+ #include <drm/drm_dp_aux_bus.h>
++#include <drm/drm_dp_helper.h>
  #include <drm/drm_mipi_dsi.h>
  #include <drm/drm_panel.h>
  
-@@ -4957,6 +4958,38 @@ static struct mipi_dsi_driver panel_simple_dsi_driver = {
- 	.shutdown = panel_simple_dsi_shutdown,
- };
+@@ -186,6 +187,7 @@ struct panel_simple {
  
-+static int panel_simple_dp_aux_ep_probe(struct dp_aux_ep_device *aux_ep)
-+{
-+	const struct of_device_id *id;
-+
-+	id = of_match_node(platform_of_match, aux_ep->dev.of_node);
-+	if (!id)
-+		return -ENODEV;
-+
-+	return panel_simple_probe(&aux_ep->dev, id->data);
-+}
-+
-+static void panel_simple_dp_aux_ep_remove(struct dp_aux_ep_device *aux_ep)
-+{
-+	panel_simple_remove(&aux_ep->dev);
-+}
-+
-+static void panel_simple_dp_aux_ep_shutdown(struct dp_aux_ep_device *aux_ep)
-+{
-+	panel_simple_shutdown(&aux_ep->dev);
-+}
-+
-+static struct dp_aux_ep_driver panel_simple_dp_aux_ep_driver = {
-+	.driver = {
-+		.name = "panel-simple-dp-aux",
-+		.of_match_table = platform_of_match,	/* Same as platform one! */
-+		.pm = &panel_simple_pm_ops,
-+	},
-+	.probe = panel_simple_dp_aux_ep_probe,
-+	.remove = panel_simple_dp_aux_ep_remove,
-+	.shutdown = panel_simple_dp_aux_ep_shutdown,
-+};
-+
- static int __init panel_simple_init(void)
+ 	struct regulator *supply;
+ 	struct i2c_adapter *ddc;
++	struct drm_dp_aux *aux;
+ 
+ 	struct gpio_desc *enable_gpio;
+ 	struct gpio_desc *hpd_gpio;
+@@ -658,7 +660,8 @@ static void panel_simple_parse_panel_timing_node(struct device *dev,
+ 		dev_err(dev, "Reject override mode: No display_timing found\n");
+ }
+ 
+-static int panel_simple_probe(struct device *dev, const struct panel_desc *desc)
++static int panel_simple_probe(struct device *dev, const struct panel_desc *desc,
++			      struct drm_dp_aux *aux)
  {
- 	int err;
-@@ -4965,15 +4998,25 @@ static int __init panel_simple_init(void)
+ 	struct panel_simple *panel;
+ 	struct display_timing dt;
+@@ -674,6 +677,7 @@ static int panel_simple_probe(struct device *dev, const struct panel_desc *desc)
+ 	panel->enabled = false;
+ 	panel->prepared_time = 0;
+ 	panel->desc = desc;
++	panel->aux = aux;
+ 
+ 	panel->no_hpd = of_property_read_bool(dev->of_node, "no-hpd");
+ 	if (!panel->no_hpd) {
+@@ -708,6 +712,8 @@ static int panel_simple_probe(struct device *dev, const struct panel_desc *desc)
+ 
+ 		if (!panel->ddc)
+ 			return -EPROBE_DEFER;
++	} else if (aux) {
++		panel->ddc = &aux->ddc;
+ 	}
+ 
+ 	if (desc == &panel_dpi) {
+@@ -4633,7 +4639,7 @@ static int panel_simple_platform_probe(struct platform_device *pdev)
+ 	if (!id)
+ 		return -ENODEV;
+ 
+-	return panel_simple_probe(&pdev->dev, id->data);
++	return panel_simple_probe(&pdev->dev, id->data, NULL);
+ }
+ 
+ static int panel_simple_platform_remove(struct platform_device *pdev)
+@@ -4913,7 +4919,7 @@ static int panel_simple_dsi_probe(struct mipi_dsi_device *dsi)
+ 
+ 	desc = id->data;
+ 
+-	err = panel_simple_probe(&dsi->dev, &desc->desc);
++	err = panel_simple_probe(&dsi->dev, &desc->desc, NULL);
  	if (err < 0)
  		return err;
  
-+	err = dp_aux_dp_driver_register(&panel_simple_dp_aux_ep_driver);
-+	if (err < 0)
-+		goto err_did_platform_register;
-+
- 	if (IS_ENABLED(CONFIG_DRM_MIPI_DSI)) {
- 		err = mipi_dsi_driver_register(&panel_simple_dsi_driver);
--		if (err < 0) {
--			platform_driver_unregister(&panel_simple_platform_driver);
--			return err;
--		}
-+		if (err < 0)
-+			goto err_did_aux_ep_register;
- 	}
+@@ -4966,7 +4972,7 @@ static int panel_simple_dp_aux_ep_probe(struct dp_aux_ep_device *aux_ep)
+ 	if (!id)
+ 		return -ENODEV;
  
- 	return 0;
-+
-+err_did_aux_ep_register:
-+	dp_aux_dp_driver_unregister(&panel_simple_dp_aux_ep_driver);
-+
-+err_did_platform_register:
-+	platform_driver_unregister(&panel_simple_platform_driver);
-+
-+	return err;
+-	return panel_simple_probe(&aux_ep->dev, id->data);
++	return panel_simple_probe(&aux_ep->dev, id->data, aux_ep->aux);
  }
- module_init(panel_simple_init);
  
-@@ -4982,6 +5025,7 @@ static void __exit panel_simple_exit(void)
- 	if (IS_ENABLED(CONFIG_DRM_MIPI_DSI))
- 		mipi_dsi_driver_unregister(&panel_simple_dsi_driver);
- 
-+	dp_aux_dp_driver_unregister(&panel_simple_dp_aux_ep_driver);
- 	platform_driver_unregister(&panel_simple_platform_driver);
- }
- module_exit(panel_simple_exit);
+ static void panel_simple_dp_aux_ep_remove(struct dp_aux_ep_device *aux_ep)
 -- 
 2.31.1.751.gd2f1c929bd-goog
 
