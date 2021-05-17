@@ -2,49 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EE3023865D5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 May 2021 22:09:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 42CEC3865D7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 May 2021 22:09:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237584AbhEQULH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S236705AbhEQULH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Mon, 17 May 2021 16:11:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32938 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32950 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236853AbhEQULG (ORCPT
+        with ESMTP id S236794AbhEQULH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 May 2021 16:11:06 -0400
-Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E083C061756
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 May 2021 13:09:48 -0700 (PDT)
-Received: by mail-pg1-x536.google.com with SMTP id i5so5446420pgm.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 May 2021 13:09:48 -0700 (PDT)
+        Mon, 17 May 2021 16:11:07 -0400
+Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84A95C061573
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 May 2021 13:09:49 -0700 (PDT)
+Received: by mail-pj1-x102e.google.com with SMTP id t11so4310663pjm.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 May 2021 13:09:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=+Od89iO9K7b3a0mIXVinRw4ty+isZRxmi2wE6XqdNOk=;
-        b=TtUzhEsImHEcyrdQGMv96nCuysYgEsi3cNO4UegmgRhdA1F8TACbuVBLqp/QdKqQaf
-         UAtp6s4WuAUNwtNHz8bz9UudmLTCHxM6xHX4DvbM/OUI/MRDYHTHfgOj3vROVbiMG17d
-         UARJMKUM6A4voepduG2ek9sL/YpvPRkECaI7o=
+        bh=+urYn/auWJUjc3W4sdmPucnZoewzDoUKh0jwgsir+nQ=;
+        b=RJIYA2O4giqjYO66q0SQpXcr1odgBXvF0aQ7MZWxCqHVao92mTCpdHiAQvvuOvnWb0
+         VZxZOmXubCqnouWsB4I/kkQdT1Im1eoL3aSwrMtqJyVTC9wk2bixTA8YpNXujs3ebJNq
+         UgdlMPwUrXlBTiOUWlGJKj96af58fxXxVUckM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=+Od89iO9K7b3a0mIXVinRw4ty+isZRxmi2wE6XqdNOk=;
-        b=Mm4wujVQEqlkURxEpmS672Ad8eZCHfwWqPkmH+3vkjYPY4tvCS+ImHh8uJjzYFQ4s9
-         3YbPW7Ef2R9Yb8LfnEQXyLZILc3/JhHIo03a7CwQcE2DkkspPozXUMhp6LgtXPr9Kojw
-         5t5HTBtNaq8nTQIspX1HkN6u7RdboC5r2CY/N9Qkt0JYvNlD6fg8rqqaxShEGBtU91ZP
-         o54ZVshpBxg4JDQHrwwNThBjw/6e44IhzqiW3jwOSwl1NzX6jHfkziZh3yOEPBkk4O9j
-         5Q0bvBK8R1K79+QCQ82Xsk+Y0wkgN1XFwQhjdKXpyUwHMph5MRB1wkQ1GAGn+4ER9/eY
-         jRxw==
-X-Gm-Message-State: AOAM531gBbNJ7e2FAmej1xo1VXOsdRo3nCQ1/m8D9a1l52akzmXTt5Jg
-        fqN3MXvp8Yq4KAYCGVeWVsntpw==
-X-Google-Smtp-Source: ABdhPJzM48ZbURkxPit3OBuzXEszo4hQUmrav6Fobpm8X3kMTwn8gRXetNU7W9BoueB/crKw8VmEDg==
-X-Received: by 2002:a63:36c1:: with SMTP id d184mr1219542pga.47.1621282188016;
-        Mon, 17 May 2021 13:09:48 -0700 (PDT)
+        bh=+urYn/auWJUjc3W4sdmPucnZoewzDoUKh0jwgsir+nQ=;
+        b=fjZn6ugd1nyc9DeHgboJe40UTRgagyHsDXzHQ1EFZ89k3jI/JIAM/3M8UV/Pks76kw
+         3iFLOXpK8yzF9QStkndcio78Ar17P5OuKenMwi958ibtCXQZFHQW9z/tEnYKA//iCzI7
+         +v5Hin1OuncAOYFV+8jRBb2vBt2khW42HQ/pm6zL/VdtQTMN0jxEXD927ZgnLE5NgVOR
+         PjtezPJCGi8Pu8QGdyoXuFfFOmoCS1luV9iJLGH0C6Fm88shQoPNGeGc32FsR4eDB73y
+         2kyOBMqDwFTa427TWDow1erMQpuk/rh2QkKf2BSZj/GfK5eQ42m2d8nsHFQ/Vpiow3ND
+         tOhA==
+X-Gm-Message-State: AOAM531anCMBZk99ZDIeSEfuYTtbR5pu8u7Czfn8c7FNCKH/iZ+L6cM9
+        uAOCfBIeACyVvqoDuRM57LbRow==
+X-Google-Smtp-Source: ABdhPJzqYY2WqAKQmfMbYwBASkiXd/jkLCuXy99v9JmQQ8Cmyq311d8LnPThMxqgk98rM3Md4cOG2w==
+X-Received: by 2002:a17:90b:188f:: with SMTP id mn15mr1153919pjb.219.1621282189154;
+        Mon, 17 May 2021 13:09:49 -0700 (PDT)
 Received: from tictac2.mtv.corp.google.com ([2620:15c:202:201:bc91:c597:ded0:7930])
-        by smtp.gmail.com with ESMTPSA id x19sm9078941pgj.66.2021.05.17.13.09.46
+        by smtp.gmail.com with ESMTPSA id x19sm9078941pgj.66.2021.05.17.13.09.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 May 2021 13:09:47 -0700 (PDT)
+        Mon, 17 May 2021 13:09:48 -0700 (PDT)
 From:   Douglas Anderson <dianders@chromium.org>
 To:     Andrzej Hajda <a.hajda@samsung.com>,
         Neil Armstrong <narmstrong@baylibre.com>,
@@ -65,12 +65,12 @@ Cc:     Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>,
         Douglas Anderson <dianders@chromium.org>,
         Daniel Vetter <daniel@ffwll.ch>,
         David Airlie <airlied@linux.ie>,
-        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        Rob Herring <robh+dt@kernel.org>,
         Thierry Reding <thierry.reding@gmail.com>,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH v7 01/10] drm/panel: panel-simple: Add missing pm_runtime_dont_use_autosuspend() calls
-Date:   Mon, 17 May 2021 13:08:58 -0700
-Message-Id: <20210517130450.v7.1.I9e947183e95c9bd067c9c1d51208ac6a96385139@changeid>
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v7 02/10] dt-bindings: display: simple: List hpd properties in panel-simple
+Date:   Mon, 17 May 2021 13:08:59 -0700
+Message-Id: <20210517130450.v7.2.Ieb731d23680db4700cc41fe51ccc73ba0b785fb7@changeid>
 X-Mailer: git-send-email 2.31.1.751.gd2f1c929bd-goog
 In-Reply-To: <20210517200907.1459182-1-dianders@chromium.org>
 References: <20210517200907.1459182-1-dianders@chromium.org>
@@ -80,47 +80,35 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The PM Runtime docs specifically call out the need to call
-pm_runtime_dont_use_autosuspend() in the remove() callback if
-pm_runtime_use_autosuspend() was called in probe():
+These are described in panel-common.yaml but if I don't list them in
+panel-simple then I get yells when running 'dt_binding_check' in a
+future patch. List them along with other properties that seem to be
+listed in panel-simple for similar reasons.
 
-> Drivers in ->remove() callback should undo the runtime PM changes done
-> in ->probe(). Usually this means calling pm_runtime_disable(),
-> pm_runtime_dont_use_autosuspend() etc.
-
-We should do this. This fixes a warning splat that I saw when I was
-testing out the panel-simple's remove().
-
-Fixes: 3235b0f20a0a ("drm/panel: panel-simple: Use runtime pm to avoid excessive unprepare / prepare")
 Signed-off-by: Douglas Anderson <dianders@chromium.org>
 ---
+I didn't spend tons of time digging to see if there was supposed to be
+a better way of doing this. If there is, feel free to yell.
 
 Changes in v7:
-- pm_runtime_dont_use_autosuspend() fix new for v7.
+- List hpd properties bindings patch new for v7.
 
- drivers/gpu/drm/panel/panel-simple.c | 2 ++
+ .../devicetree/bindings/display/panel/panel-simple.yaml         | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
-index 9be050ab372f..21939d4352cf 100644
---- a/drivers/gpu/drm/panel/panel-simple.c
-+++ b/drivers/gpu/drm/panel/panel-simple.c
-@@ -798,6 +798,7 @@ static int panel_simple_probe(struct device *dev, const struct panel_desc *desc)
- 	return 0;
+diff --git a/Documentation/devicetree/bindings/display/panel/panel-simple.yaml b/Documentation/devicetree/bindings/display/panel/panel-simple.yaml
+index b3797ba2698b..4a0a5e1ee252 100644
+--- a/Documentation/devicetree/bindings/display/panel/panel-simple.yaml
++++ b/Documentation/devicetree/bindings/display/panel/panel-simple.yaml
+@@ -298,6 +298,8 @@ properties:
+   enable-gpios: true
+   port: true
+   power-supply: true
++  no-hpd: true
++  hpd-gpios: true
  
- disable_pm_runtime:
-+	pm_runtime_dont_use_autosuspend(dev);
- 	pm_runtime_disable(dev);
- free_ddc:
- 	if (panel->ddc)
-@@ -814,6 +815,7 @@ static int panel_simple_remove(struct device *dev)
- 	drm_panel_disable(&panel->base);
- 	drm_panel_unprepare(&panel->base);
+ additionalProperties: false
  
-+	pm_runtime_dont_use_autosuspend(dev);
- 	pm_runtime_disable(dev);
- 	if (panel->ddc)
- 		put_device(&panel->ddc->dev);
 -- 
 2.31.1.751.gd2f1c929bd-goog
 
