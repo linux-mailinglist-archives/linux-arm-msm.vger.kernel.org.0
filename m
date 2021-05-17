@@ -2,113 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AE006386BA4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 May 2021 22:46:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 799AE386C67
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 May 2021 23:40:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244402AbhEQUsA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 May 2021 16:48:00 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:12056 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S243974AbhEQUr7 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 May 2021 16:47:59 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1621284402; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=OCZ7uak29LEl8jJmUhLI4AIqfTsr8cXO52ZSocwTCrQ=; b=hO5z3x0P+jN9Ju2mLwftv7bZy7fDocZc+3VJ/sjFnPPEop+MTanqeUUxaJMbnNsHSH0ElrSE
- 43hY1dlfeMldino3fCUXU4/IYnMmGKDpigU7wdNqr/l/kXBSsA1Cfb+dEWMHHCg0iiNjJLf5
- 8rIA3AdzZApwxiLKvYf+vLsv92I=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
- 60a2d61160c53c8c9dec21ec (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 17 May 2021 20:46:09
- GMT
-Sender: sidgup=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id DF8EBC433D3; Mon, 17 May 2021 20:46:08 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from sidgup-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: sidgup)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id AC5E3C433D3;
-        Mon, 17 May 2021 20:46:07 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org AC5E3C433D3
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=sidgup@codeaurora.org
-From:   Siddharth Gupta <sidgup@codeaurora.org>
-To:     bjorn.andersson@linaro.org, ohad@wizery.com,
-        linux-remoteproc@vger.kernel.org
-Cc:     Siddharth Gupta <sidgup@codeaurora.org>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, psodagud@codeaurora.org,
-        stable@vger.kernel.org
-Subject: [PATCH 3/3] remoteproc: core: Cleanup device in case of failure
-Date:   Mon, 17 May 2021 13:45:49 -0700
-Message-Id: <1621284349-22752-4-git-send-email-sidgup@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1621284349-22752-1-git-send-email-sidgup@codeaurora.org>
-References: <1621284349-22752-1-git-send-email-sidgup@codeaurora.org>
+        id S245293AbhEQVmE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 May 2021 17:42:04 -0400
+Received: from mail-oi1-f170.google.com ([209.85.167.170]:33699 "EHLO
+        mail-oi1-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237766AbhEQVmE (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 17 May 2021 17:42:04 -0400
+Received: by mail-oi1-f170.google.com with SMTP id b25so7896224oic.0;
+        Mon, 17 May 2021 14:40:47 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=yUN0fqrTxElDEO12Fng6p1MRYBZ1KCEP1NdaNKcV0iQ=;
+        b=EsOjHPXXCaz2XjnzvOGA4GaL8YdjfeZzUbQvmtGxg6o3+SG9xsxM5wz+rxxUcLj3k1
+         y1T44XHFBlwA4WjpBxHuOROvqxhFN86WHw0qO1Fb5x+sVwswMSvTV+l+8Li5UErZok6z
+         YrmOyQb/r0EAU99/GWBQQDcxiL54qf32TVyeq4LrLdkMdjw5Oc931N/dachyFjeWSKna
+         pxYmwMGchav3UcGJrsgTUXecoRhoCFyBwEgJeWU8xVq436d9EtEU7g/9dycErg8exW0e
+         oJ9MinQoDSXLSpMIEEfKwhSj+S50kFcHSN2Y/oh5RS1SMVhgD9AcS2ryr/3svVxZ9Uxj
+         G91A==
+X-Gm-Message-State: AOAM533WiGBP8pWn5C3V1Bak9r5pyancBqFzfwh8L131nzjvhxWBIZCs
+        Qjs96Wpi0L0AyblNtsiQyf8liMBiRw==
+X-Google-Smtp-Source: ABdhPJx2H7OQ7/3ST3OABk4Iu6mFxGH3X6TdWosJdDKDx9qGf6vbKJGhFvsPapny4okRNFIXuw2Mow==
+X-Received: by 2002:aca:5758:: with SMTP id l85mr916863oib.120.1621287646951;
+        Mon, 17 May 2021 14:40:46 -0700 (PDT)
+Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id c17sm3485875otn.45.2021.05.17.14.40.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 17 May 2021 14:40:43 -0700 (PDT)
+Received: (nullmailer pid 3249683 invoked by uid 1000);
+        Mon, 17 May 2021 21:40:34 -0000
+Date:   Mon, 17 May 2021 16:40:34 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-kernel@vger.kernel.org,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Jonathan Marek <jonathan@marek.ca>, linux-clk@vger.kernel.org,
+        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
+        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 1/2] clk: qcom: dispcc-sm8250: Add sc8180x support
+Message-ID: <20210517214034.GA3249633@robh.at.kernel.org>
+References: <20210511041719.591969-1-bjorn.andersson@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210511041719.591969-1-bjorn.andersson@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-When a failure occurs in rproc_add() it returns an error, but does
-not cleanup after itself. This change adds the failure path in such
-cases.
+On Mon, 10 May 2021 23:17:18 -0500, Bjorn Andersson wrote:
+> The display clock controller in SC8180x is reused from SM8150, so add
+> the necessary compatible and wire up the driver to enable this.
+> 
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
+>  .../devicetree/bindings/clock/qcom,dispcc-sm8x50.yaml         | 1 +
+>  drivers/clk/qcom/dispcc-sm8250.c                              | 4 +++-
+>  2 files changed, 4 insertions(+), 1 deletion(-)
+> 
 
-Signed-off-by: Siddharth Gupta <sidgup@codeaurora.org>
----
- drivers/remoteproc/remoteproc_core.c | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
-
-diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
-index 45d09bf..6f5fa81 100644
---- a/drivers/remoteproc/remoteproc_core.c
-+++ b/drivers/remoteproc/remoteproc_core.c
-@@ -2326,8 +2326,10 @@ int rproc_add(struct rproc *rproc)
- 		return ret;
- 
- 	ret = device_add(dev);
--	if (ret < 0)
--		return ret;
-+	if (ret < 0) {
-+		put_device(dev);
-+		goto rproc_remove_cdev;
-+	}
- 
- 	dev_info(dev, "%s is available\n", rproc->name);
- 
-@@ -2338,7 +2340,7 @@ int rproc_add(struct rproc *rproc)
- 	if (rproc->auto_boot) {
- 		ret = rproc_trigger_auto_boot(rproc);
- 		if (ret < 0)
--			return ret;
-+			goto rproc_remove_dev;
- 	}
- 
- 	/* expose to rproc_get_by_phandle users */
-@@ -2347,6 +2349,13 @@ int rproc_add(struct rproc *rproc)
- 	mutex_unlock(&rproc_list_mutex);
- 
- 	return 0;
-+
-+rproc_remove_dev:
-+	rproc_delete_debug_dir(rproc);
-+	device_del(dev);
-+rproc_remove_cdev:
-+	rproc_char_device_remove(rproc);
-+	return ret;
- }
- EXPORT_SYMBOL(rproc_add);
- 
--- 
-Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
-
+Acked-by: Rob Herring <robh@kernel.org>
