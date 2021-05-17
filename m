@@ -2,88 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id ADF5C3823B3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 May 2021 07:28:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 90EEE3823BE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 May 2021 07:37:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234325AbhEQFaI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 May 2021 01:30:08 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:27040 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234305AbhEQFaI (ORCPT
+        id S234141AbhEQFiq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 May 2021 01:38:46 -0400
+Received: from mailgw02.mediatek.com ([1.203.163.81]:4178 "EHLO
+        mailgw02.mediatek.com" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
+        with ESMTP id S234022AbhEQFip (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 May 2021 01:30:08 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1621229333; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=f2OQmIUadLX/vJUsCw/tZ97nNVk3pjk1o5K0ABgM7o0=;
- b=S1iEWl4xpYJ+C2nYQom5Iky8fDkNofw2RIRLUE5RJ4zBzzOWqIxlpoGjRK97um6NacWNXjYU
- mMhygAuW4iETkx9Pb6a3yZll81EoE3IOFllmeo8kRDKohS2TsI+/q37H/h0hncXG1J/5UXDE
- 1n34EDO105s/PTPMqNvZTdZPAbU=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
- 60a1ff067b5af81b5c21cea5 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 17 May 2021 05:28:38
- GMT
-Sender: skakit=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 1C9CEC4338A; Mon, 17 May 2021 05:28:38 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: skakit)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id B1CDEC433F1;
-        Mon, 17 May 2021 05:28:37 +0000 (UTC)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Mon, 17 May 2021 10:58:37 +0530
-From:   skakit@codeaurora.org
-To:     Matthias Kaehlcke <mka@chromium.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        Mon, 17 May 2021 01:38:45 -0400
+X-UUID: 8690de4fc6514704b14a0ddcd502e1ac-20210517
+X-UUID: 8690de4fc6514704b14a0ddcd502e1ac-20210517
+Received: from mtkcas32.mediatek.inc [(172.27.4.253)] by mailgw02.mediatek.com
+        (envelope-from <chunfeng.yun@mediatek.com>)
+        (mailgw01.mediatek.com ESMTP with TLSv1.2 ECDHE-RSA-AES256-SHA384 256/256)
+        with ESMTP id 574679692; Mon, 17 May 2021 13:37:27 +0800
+Received: from mtkcas11.mediatek.inc (172.21.101.40) by
+ MTKMBS31N1.mediatek.inc (172.27.4.69) with Microsoft SMTP Server (TLS) id
+ 15.0.1497.2; Mon, 17 May 2021 13:37:24 +0800
+Received: from localhost.localdomain (10.17.3.153) by mtkcas11.mediatek.inc
+ (172.21.101.73) with Microsoft SMTP Server id 15.0.1497.2 via Frontend
+ Transport; Mon, 17 May 2021 13:37:23 +0800
+From:   Chunfeng Yun <chunfeng.yun@mediatek.com>
+To:     Kishon Vijay Abraham I <kishon@ti.com>,
+        Vinod Koul <vkoul@kernel.org>
+CC:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, kgunda@codeaurora.org
-Subject: Re: [PATCH V4 7/8] arm64: dts: qcom: sc7280: Add channel nodes for
- sc7280-idp
-In-Reply-To: <YJKvtLMPCg56DO1E@google.com>
-References: <1620197726-23802-1-git-send-email-skakit@codeaurora.org>
- <1620197726-23802-8-git-send-email-skakit@codeaurora.org>
- <YJKvtLMPCg56DO1E@google.com>
-Message-ID: <a835d67abc8509f1e7de5f0afd330a1c@codeaurora.org>
-X-Sender: skakit@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-mediatek@lists.infradead.org>,
+        Chunfeng Yun <chunfeng.yun@mediatek.com>
+Subject: [PATCH v2] phy: qcom-qmp: remove redundant error of clock bulk
+Date:   Mon, 17 May 2021 13:37:21 +0800
+Message-ID: <1621229841-22984-1-git-send-email-chunfeng.yun@mediatek.com>
+X-Mailer: git-send-email 1.8.1.1.dirty
+MIME-Version: 1.0
+Content-Type: text/plain
+X-TM-SNTS-SMTP: 5CC1D6D304A0BEF7EF3422F5471F0CEC2843A0B05FCE63BE7801B45554CA7BFB2000:8
+X-MTK:  N
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-05-05 20:16, Matthias Kaehlcke wrote:
-> On Wed, May 05, 2021 at 12:25:25PM +0530, satya priya wrote:
-> 
->> Subject: arm64: dts: qcom: sc7280: Add channel nodes for sc7280-idp
-> 
-> nit: just 'channel nodes' is a bit vague. In case you respin maybe
-> change it to something like 'Add ADC channel nodes for PMIC
-> temperatures to sc7280-idp'
-> 
+There is error log in clk_bulk_prepare/enable()
 
-Okay will change it and resend v4.
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Signed-off-by: Chunfeng Yun <chunfeng.yun@mediatek.com>
+---
+v2: add reviewed-by Bjorn
+---
+ drivers/phy/qualcomm/phy-qcom-qmp.c | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
-> In any case it doesn't seem worth to respin just for this.
-> 
->> 
->> Add channel nodes for the on die temperatures of PMICS
->> pmk8350, pm8350, pmr735a and pmr735b.
->> 
->> Signed-off-by: satya priya <skakit@codeaurora.org>
-> 
-> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/phy-qcom-qmp.c
+index 7877f70cf86f..882b8ecae235 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
+@@ -3993,10 +3993,8 @@ static int qcom_qmp_phy_com_init(struct qmp_phy *qphy)
+ 	}
+ 
+ 	ret = clk_bulk_prepare_enable(cfg->num_clks, qmp->clks);
+-	if (ret) {
+-		dev_err(qmp->dev, "failed to enable clks, err=%d\n", ret);
++	if (ret)
+ 		goto err_rst;
+-	}
+ 
+ 	if (cfg->has_phy_dp_com_ctrl) {
+ 		qphy_setbits(dp_com, QPHY_V3_DP_COM_POWER_DOWN_CTRL,
+@@ -4430,10 +4428,8 @@ static int __maybe_unused qcom_qmp_phy_runtime_resume(struct device *dev)
+ 	}
+ 
+ 	ret = clk_bulk_prepare_enable(cfg->num_clks, qmp->clks);
+-	if (ret) {
+-		dev_err(qmp->dev, "failed to enable clks, err=%d\n", ret);
++	if (ret)
+ 		return ret;
+-	}
+ 
+ 	ret = clk_prepare_enable(qphy->pipe_clk);
+ 	if (ret) {
+-- 
+2.18.0
+
