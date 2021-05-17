@@ -2,207 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 83C04382398
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 May 2021 06:57:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 647813823AF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 May 2021 07:27:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233635AbhEQE6j (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 May 2021 00:58:39 -0400
-Received: from mail-lf1-f43.google.com ([209.85.167.43]:46894 "EHLO
-        mail-lf1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229625AbhEQE6j (ORCPT
+        id S234079AbhEQF2Z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 May 2021 01:28:25 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:26129 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229625AbhEQF2Z (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 May 2021 00:58:39 -0400
-Received: by mail-lf1-f43.google.com with SMTP id i9so6759350lfe.13;
-        Sun, 16 May 2021 21:57:21 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:reply-to:to:cc
-         :in-reply-to:references:mime-version:date:user-agent
-         :content-transfer-encoding;
-        bh=ZlBxGhYLZ60uGDaPOSr/zz7izf5PGo7iYr82/TiNDOQ=;
-        b=E+zP2LSMSbK65WxXy9THvknp5RylijQ7mfAxj5iwLuA63uOVbTCjdSsNakY2CFRo3w
-         LOnsYBxw4rOJEBDxwkyHOhU8e3PhrV3jhAQEcg8v2PGCJA+bI6NQcBeUAvYHdZwsiiIo
-         ORJg3fGAzaAf0EQH0cJAE4MsmWLVI3XlqFH9/Vm3w88MPoz9bY6vH1hSOZ4T73d46E4G
-         3BBNsMlzByFJb+O4NTJFY4gVg/V6ycwj/H0goTNZrGlmbrLiGbRW1KEiuaHWyzl8boEj
-         6uOrAtWE6cnAAJ2JZCYo4G4VycAS94EsWbjjBuqDdZlSHZkHwllHup3jUZ0QME1yOKNH
-         FSSA==
-X-Gm-Message-State: AOAM531qw2B2rIgSesCMiMuLiYHI9jX9yZ3DTIqvI5Gc66Tq2hiYlbOa
-        /4/FE+fdz+l3t4Q5Ox08GS4=
-X-Google-Smtp-Source: ABdhPJz6XlOoLFS1OExcL4aOBvUwCPGZFB6U6VqCJpuJZQYA/MBhFsa1h3+611hseFVm2x5fKxip8Q==
-X-Received: by 2002:ac2:54ba:: with SMTP id w26mr41231726lfk.78.1621227440658;
-        Sun, 16 May 2021 21:57:20 -0700 (PDT)
-Received: from dc7vkhyyyyyyyyyyyyyby-3.rev.dnainternet.fi (dc7vkhyyyyyyyyyyyyyby-3.rev.dnainternet.fi. [2001:14ba:16e2:8300::2])
-        by smtp.gmail.com with ESMTPSA id g28sm2775163ljn.134.2021.05.16.21.57.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 16 May 2021 21:57:19 -0700 (PDT)
-Message-ID: <fefd2daff66123d5a812ad41466095e56e699bf2.camel@fi.rohmeurope.com>
-Subject: Re: [PATCH v9 02/10] reboot: Add hardware protection power-off
-From:   Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>
-Reply-To: matti.vaittinen@fi.rohmeurope.com
-To:     Petr Mladek <pmladek@suse.com>
-Cc:     "josef@toxicpanda.com" <josef@toxicpanda.com>,
-        "keescook@chromium.org" <keescook@chromium.org>,
-        "rppt@kernel.org" <rppt@kernel.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        linux-power <linux-power@fi.rohmeurope.com>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "bjorn.andersson@linaro.org" <bjorn.andersson@linaro.org>,
-        "rui.zhang@intel.com" <rui.zhang@intel.com>,
-        "linux-renesas-soc@vger.kernel.org" 
-        <linux-renesas-soc@vger.kernel.org>,
-        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
-        "akpm@linux-foundation.org" <akpm@linux-foundation.org>,
-        "linux@roeck-us.net" <linux@roeck-us.net>,
-        "daniel.lezcano@linaro.org" <daniel.lezcano@linaro.org>,
-        "lgirdwood@gmail.com" <lgirdwood@gmail.com>,
-        "robh+dt@kernel.org" <robh+dt@kernel.org>,
-        "kai.heng.feng@canonical.com" <kai.heng.feng@canonical.com>,
-        "mcroce@microsoft.com" <mcroce@microsoft.com>,
-        "amitk@kernel.org" <amitk@kernel.org>,
-        "linux-pm@vger.kernel.org" <linux-pm@vger.kernel.org>,
-        "andy.shevchenko@gmail.com" <andy.shevchenko@gmail.com>,
-        "agross@kernel.org" <agross@kernel.org>,
-        "broonie@kernel.org" <broonie@kernel.org>,
-        "rafael.j.wysocki@intel.com" <rafael.j.wysocki@intel.com>,
-        rostedt@goodmis.org, Geert Uytterhoeven <geert@linux-m68k.org>
-In-Reply-To: <YJzkq+NPW4ZMB8AF@alley>
-References: <cover.1620645507.git.matti.vaittinen@fi.rohmeurope.com>
-         <97260f8e150abb898a262fade25860609b460912.1620645507.git.matti.vaittinen@fi.rohmeurope.com>
-         <YJuPwAZroVZ/w633@alley>
-         <2149df3f542d25ce15d049e81d6188bb7198478c.camel@fi.rohmeurope.com>
-         <YJzkq+NPW4ZMB8AF@alley>
-Content-Type: text/plain; charset="UTF-8"
+        Mon, 17 May 2021 01:28:25 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1621229229; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=MuCdQ3B8kZ30d41nu+ytgA3HhxH13/BnvH4pMsPHBHI=;
+ b=WnYPlopQZi5sPHe93LMChdEEicwxiaRJRrbDw84UoVRWu3YrytpdqRarQKEXO5t1V/JvsrWn
+ PYRrYLC4ncZAC4DyZW1U7qzrQwArrl15c4aGgWCj9siiVN3QRT18u/G6iCGafU+eqFQ10v78
+ dtICZsUFIMCNqY8hHWq7Q+Mde+w=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
+ 60a1fead2bff04e53b736e28 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 17 May 2021 05:27:09
+ GMT
+Sender: skakit=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 1C8E4C4338A; Mon, 17 May 2021 05:27:09 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: skakit)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4472FC433D3;
+        Mon, 17 May 2021 05:27:08 +0000 (UTC)
 MIME-Version: 1.0
-Date:   Mon, 17 May 2021 07:57:11 +0300
-User-Agent: Evolution 3.34.4 (3.34.4-1.fc31) 
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
 Content-Transfer-Encoding: 7bit
+Date:   Mon, 17 May 2021 10:57:08 +0530
+From:   skakit@codeaurora.org
+To:     Matthias Kaehlcke <mka@chromium.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, kgunda@codeaurora.org
+Subject: Re: [PATCH V4 8/8] arm64: dts: qcom: sc7280: Include PMIC DT files
+ for sc7280-idp
+In-Reply-To: <YJKyc09bL/Z6YcK1@google.com>
+References: <1620197726-23802-1-git-send-email-skakit@codeaurora.org>
+ <1620197726-23802-9-git-send-email-skakit@codeaurora.org>
+ <YJKyc09bL/Z6YcK1@google.com>
+Message-ID: <e2ce6842d253bdfa5e166d9e31b32615@codeaurora.org>
+X-Sender: skakit@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On Thu, 2021-05-13 at 10:34 +0200, Petr Mladek wrote:
-> On Wed 2021-05-12 12:00:46, Vaittinen, Matti wrote:
-> > On Wed, 2021-05-12 at 10:20 +0200, Petr Mladek wrote:
-> > > On Mon 2021-05-10 14:28:30, Matti Vaittinen wrote:
-> > > > There can be few cases when we need to shut-down the system in
-> > > > order to
-> > > > protect the hardware. Currently this is done at east by the
-> > > > thermal
-> > > > core
-> > > > when temperature raises over certain limit.
-> > > > 
-> > > > Some PMICs can also generate interrupts for example for over-
-> > > > current or
-> > > > over-voltage, voltage drops, short-circuit, ... etc. On some
-> > > > systems
-> > > > these are a sign of hardware failure and only thing to do is
-> > > > try to
-> > > > protect the rest of the hardware by shutting down the system.
-> > > > 
-> > > > Add shut-down logic which can be used by all subsystems instead
-> > > > of
-> > > > implementing the shutdown in each subsystem. The logic is
-> > > > stolen
-> > > > from
-> > > > thermal_core with difference of using atomic_t instead of a
-> > > > mutex
-> > > > in
-> > > > order to allow calls directly from IRQ context.
-> > > > 
-> > > > Signed-off-by: Matti Vaittinen <
-> > > > matti.vaittinen@fi.rohmeurope.com>
-> > > > 
-> > > > diff --git a/kernel/reboot.c b/kernel/reboot.c
-> > > > index a6ad5eb2fa73..5da8c80a2647 100644
-> > > > --- a/kernel/reboot.c
-> > > > +++ b/kernel/reboot.c
-> > > > @@ -518,6 +519,85 @@ void orderly_reboot(void)
-> > > >  }
-> > > >  EXPORT_SYMBOL_GPL(orderly_reboot);
-> > > >  
-> > > > +/**
-> > > > + * hw_failure_emergency_poweroff_func - emergency poweroff
-> > > > work
-> > > > after a known delay
-> > > > + * @work: work_struct associated with the emergency poweroff
-> > > > function
-> > > > + *
-> > > > + * This function is called in very critical situations to
-> > > > force
-> > > > + * a kernel poweroff after a configurable timeout value.
-> > > > + */
-> > > > +static void hw_failure_emergency_poweroff_func(struct
-> > > > work_struct
-> > > > *work)
-> > > > +{
-> > > > +	/*
-> > > > +	 * We have reached here after the emergency shutdown
-> > > > waiting
-> > > > period has
-> > > > +	 * expired. This means orderly_poweroff has not been
-> > > > able to
-> > > > shut off
-> > > > +	 * the system for some reason.
-> > > > +	 *
-> > > > +	 * Try to shut down the system immediately using
-> > > > kernel_power_off
-> > > > +	 * if populated
-> > > > +	 */
-> > > > +	WARN(1, "Hardware protection timed-out. Trying forced
-> > > > poweroff\n");
-> > > > +	kernel_power_off();
-> > > 
-> > > WARN() look like an overkill here. It prints many lines that are
-> > > not
-> > > much useful in this case. The function is called from well-known
-> > > context (workqueue worker).
-> > 
-> > This was the existing code which I stole from the thermal_core. I
-> > kind
-> > of think that eye-catching WARN is actually a good choice here.
-> > Doing
-> > autonomous power-off without a WARNing does not sound good to me :)
-> > 
-> > > Also be aware that "panic_on_warn" commandline option will
-> > > trigger
-> > > panic() here.
-> > 
-> > Hmm.. If panic() hangs the system that might indeed be a problem.
-> > Now
-> > we are (again) on a territory which I don't know well. I'd
-> > appreciate
-> > any input from thermal folks and Mark. I don't like the idea of
-> > making
-> > extreme things like power-off w/o well visible log-trace. Thus I
-> > would
-> > like to have WARN()-like eye-catcher, even if the call-trace was
-> > not
-> > too varying. It will at least point to this worker. Any better
-> > suggestions than WARN()?
+On 2021-05-05 20:27, Matthias Kaehlcke wrote:
+> On Wed, May 05, 2021 at 12:25:26PM +0530, satya priya wrote:
+>> The sc7280-idp has four PMICs, include their .dtsi files.
+>> 
+>> Signed-off-by: satya priya <skakit@codeaurora.org>
+>> ---
+>>  arch/arm64/boot/dts/qcom/sc7280-idp.dts | 4 ++++
+>>  1 file changed, 4 insertions(+)
+>> 
+>> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dts 
+>> b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
+>> index 02a14fc..704fb9a 100644
+>> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dts
+>> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
+>> @@ -12,6 +12,10 @@
+>>  #include <dt-bindings/iio/qcom,spmi-adc7-pm8350.h>
+>>  #include <dt-bindings/iio/qcom,spmi-adc7-pmk8350.h>
+>>  #include "sc7280.dtsi"
+>> +#include "pm7325.dtsi"
+>> +#include "pmr735a.dtsi"
+>> +#include "pm8350c.dtsi"
+>> +#include "pmk8350.dtsi"
 > 
-> Heh, it might make sense to create a system wide API for these. I am
-> sure that WARN() is mis-used this way on many other locations.
+> Patch '[7/8] arm64: dts: qcom: sc7280: Add channel nodes for 
+> sc7280-idp'
+> of this series makes use of the label 'pmk8350_vadc', which doesn't 
+> exist
+> at that point.
 > 
-> There already are two locations that use another eye-catching text.
-> A common API might help to avoid duplication of the common parts,
-> see
-> https://lore.kernel.org/lkml/20210305194206.3165917-2-elver@google.com/
-> 
-> Well, it might be out of scope for this patchset.
+> A series should be organized in a way that applying only a
+> subset of the series (in order, starting with patch 1) doesn't
+> cause any build or runtime issues. To achieve this patch [7/8]
+> and [8/8] of this series need to be swapped.
 
-I just had a very brief "chat" with Geert (3 IRC messages, posted
-during 4 or 5 days :]) - and Geert pointed me to this:
+Okay, I will re-arrange the series and resend v4.
 
-https://lore.kernel.org/linux-iommu/20210331093104.383705-4-geert+renesas@glider.be/
-
-So, maybe I'll just go with simple pr_emerg() and trust that the
-emerg() print should catch attention as such level print probably
-should. I'll respin the patch series (probably tomorrow) - let's see
-what thermal and regulator folks say :)
-
-Thanks for all the help this far!
-
-Best Regards
-	Matti Vaittinen
-
+Thanks,
+Satya Priya
