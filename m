@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AFA38387CB5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 May 2021 17:46:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D7BDE387CB6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 May 2021 17:46:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350343AbhERPr3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 May 2021 11:47:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44440 "EHLO
+        id S1350312AbhERPri (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 May 2021 11:47:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44444 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350312AbhERPqr (ORCPT
+        with ESMTP id S1350315AbhERPqs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 May 2021 11:46:47 -0400
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 128E1C061763
+        Tue, 18 May 2021 11:46:48 -0400
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1BCB3C06138A
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 May 2021 08:45:27 -0700 (PDT)
+Received: by mail-ej1-x634.google.com with SMTP id k10so15310477ejj.8
         for <linux-arm-msm@vger.kernel.org>; Tue, 18 May 2021 08:45:26 -0700 (PDT)
-Received: by mail-ej1-x62e.google.com with SMTP id n2so15309618ejy.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 May 2021 08:45:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=1/H81rU02gspRWJgBsv9W0dFt8/8Hr7Pms8U3EgDA+w=;
-        b=h4OWn/Ns0ZlE7bfHiYjnBQ/qhCvVVo1H5J/FwA+uo2OgCZFV/gsV5Qbct+RI3pnmWT
-         pxXLhFqMd3XnDevqVqwCriVafixt6W/5xVtnxghUorX7c4uxboXhRl37TyT5qESEmoEu
-         z5y1XeltxPk1LAQs6v/lmi0kB5ixuSLdEG9xKswYxvzxgJBxcnv68r/vLSIhX7ssWFJR
-         xrLVNeHvJd0JoFq+MM1yYtx6gcceAhueq2oSVTtupgXL4CvHoSmgLg3FJRu3CTeoK9Iv
-         C2Bxjm6sK6LB//nXIEApzHsVr0QWqW1oysk3gYdzEPenfpmse5oEqrcv1cuNmd3KDwTX
-         zkIQ==
+        bh=3eQT5w75rkSKr8V4Rzzvpp/1P0SvKsxN/0nHM1tgGJI=;
+        b=rRhgP9UZQiEtb6v8BAdYyzo30YdvcIFku8IRRd3mkNvNFcE+EWF6QZTLqsz9OdbMU7
+         GVvvDahRMVIt3nHGMgTIfO85NVc+TZIwj2mEvs4hJxiAv1cswxOu/w0dil0C5nAcDmJm
+         4QS3Jzp4KbQ/P2eQPLlwfADa15l/P9Sw4WZBfHhCd4fy1CoIkuAT/B+UlloP5rTVaGSR
+         WRv2YMGSOIQ20WwAiQ6yO2JKzb8ZCnBrjXq9XQ+f5yzKqZyaXadWauEQAL4FvBIzGUnL
+         YGjcdJZ4d28Pt+weEaWL2rLlQsjDUNPUycz3ThX+wPIud59ceeZ5wS6mQAR81WMakib/
+         E0GA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=1/H81rU02gspRWJgBsv9W0dFt8/8Hr7Pms8U3EgDA+w=;
-        b=A23pTzGRvwkEu7dYgavitTr/ql/CWC4C15BZ+yPwd6EYYOlMKPGIa36Hnsy5homGhM
-         V688QgvwsuXIqMwIKrbaO+Winqis0NYGfTO4raH9Hi5YCvtrNuKs45Z7XChkYZU6fGrI
-         zM9NRtLdvb6p/tgYsHGuvIrXJrBT/5S/qotLY98Qrzb+vxwPiDKVxWyqA6rnc6Y3tcno
-         1HTx0Ouh1O/FwDMpRFv2ZevtDnBUe16/ARB/ddGu4ZNuXuqCBrCxberhsrWlTE2UodvM
-         4mnrHVfcRgg+kSVJIc0lUhjJdHy+TMIw81GGc/XVO3eADevaB5EcEhT5aJBPlXZ0An5a
-         9XsA==
-X-Gm-Message-State: AOAM532WyLXprXWpZVytqPE6ImxC3NWTq/GSrjWbgfMo84CGzhQ8jix8
-        FN1O9RzsKiv++cUc+yaIlhG+eA==
-X-Google-Smtp-Source: ABdhPJw3gsXZ5sHEfzaV464cIRS6QXk/qHyuCJXsWVj3j4NcX9/vA+QWANhbySFGTFtFFxC38ZRUsA==
-X-Received: by 2002:a17:906:c448:: with SMTP id ck8mr6697836ejb.497.1621352724422;
-        Tue, 18 May 2021 08:45:24 -0700 (PDT)
+        bh=3eQT5w75rkSKr8V4Rzzvpp/1P0SvKsxN/0nHM1tgGJI=;
+        b=Z7f0UI7FMGIab9gPzCSw/HpGmUVXh1ahM8d9YkpTFePm35MRA57q6nl5m4OPqKFLPq
+         mDHbedTbKrfom+8U30/kYSFK8fJUkyK+YJBNHDyQCYtU9drtMijppRQmXivievtXLjv6
+         o2LDrWCWmXMExEdhdPNg8MzD40AtQIh4BBJcE6nWFQOSHRMRdZiejbUQ72eGTKDOy8i3
+         bjkzNQEs0w6L6XDK1XWsCsng/Ya9mPCAkRqxATpm0Qjrkyl0u5hddiPs0V7kQ1GSFzi6
+         wUHtTtMHlnytzRWRU4PGDAIX3ALQFtA7unEeY3WbVVVBoiTpHSL6iRi+qZ3KEQrG0LQ0
+         u0uw==
+X-Gm-Message-State: AOAM530pdcdvxiZcshildf+2IF2wnaBWdUDkNkcbTBcaUk2IWsug9pfO
+        BWmGAA2g/fBlkXLsD0090YFpPw==
+X-Google-Smtp-Source: ABdhPJw5mfRC4RqCLaY7aOa1qIS00rxJ82fYMuX6Y6HHeNpienr5acBlJGILnNqzE5dPmw4MZ9IZcg==
+X-Received: by 2002:a17:906:7c82:: with SMTP id w2mr6796433ejo.448.1621352725704;
+        Tue, 18 May 2021 08:45:25 -0700 (PDT)
 Received: from localhost.localdomain ([195.24.90.54])
-        by smtp.gmail.com with ESMTPSA id n17sm13016434eds.72.2021.05.18.08.45.23
+        by smtp.gmail.com with ESMTPSA id n17sm13016434eds.72.2021.05.18.08.45.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 May 2021 08:45:24 -0700 (PDT)
+        Tue, 18 May 2021 08:45:25 -0700 (PDT)
 From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
 To:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org
 Cc:     Vikash Garodia <vgarodia@codeaurora.org>,
         Mansur Alisha Shaik <mansur@codeaurora.org>,
         Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Subject: [PATCH 1/5] venus: venc: Use pmruntime autosuspend
-Date:   Tue, 18 May 2021 18:45:05 +0300
-Message-Id: <20210518154509.602137-2-stanimir.varbanov@linaro.org>
+Subject: [PATCH 2/5] venus: Make sys_error flag an atomic bitops
+Date:   Tue, 18 May 2021 18:45:06 +0300
+Message-Id: <20210518154509.602137-3-stanimir.varbanov@linaro.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20210518154509.602137-1-stanimir.varbanov@linaro.org>
 References: <20210518154509.602137-1-stanimir.varbanov@linaro.org>
@@ -66,233 +66,100 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Migrate encoder to use pm-runtime autosuspend APIs.
+Make the sys_error flag an atomic bitops in order to avoid
+locking in sys_error readers.
 
 Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
 ---
- drivers/media/platform/qcom/venus/venc.c | 104 +++++++++++++++++++++--
- 1 file changed, 96 insertions(+), 8 deletions(-)
+ drivers/media/platform/qcom/venus/core.c    | 4 ++--
+ drivers/media/platform/qcom/venus/core.h    | 3 ++-
+ drivers/media/platform/qcom/venus/helpers.c | 2 +-
+ drivers/media/platform/qcom/venus/hfi.c     | 2 +-
+ drivers/media/platform/qcom/venus/vdec.c    | 2 +-
+ 5 files changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
-index 4a7291f934b6..a7a858f03ba3 100644
---- a/drivers/media/platform/qcom/venus/venc.c
-+++ b/drivers/media/platform/qcom/venus/venc.c
-@@ -536,6 +536,64 @@ static const struct v4l2_ioctl_ops venc_ioctl_ops = {
- 	.vidioc_unsubscribe_event = v4l2_event_unsubscribe,
- };
- 
-+static int venc_pm_get(struct venus_inst *inst)
-+{
-+	struct venus_core *core = inst->core;
-+	struct device *dev = core->dev_enc;
-+	int ret;
-+
-+	mutex_lock(&core->pm_lock);
-+	ret = pm_runtime_get_sync(dev);
-+	mutex_unlock(&core->pm_lock);
-+
-+	return ret < 0 ? ret : 0;
-+}
-+
-+static int venc_pm_put(struct venus_inst *inst, bool autosuspend)
-+{
-+	struct venus_core *core = inst->core;
-+	struct device *dev = core->dev_enc;
-+	int ret;
-+
-+	mutex_lock(&core->pm_lock);
-+
-+	if (autosuspend)
-+		ret = pm_runtime_put_autosuspend(dev);
-+	else
-+		ret = pm_runtime_put_sync(dev);
-+
-+	mutex_unlock(&core->pm_lock);
-+
-+	return ret < 0 ? ret : 0;
-+}
-+
-+static int venc_pm_get_put(struct venus_inst *inst)
-+{
-+	struct venus_core *core = inst->core;
-+	struct device *dev = core->dev_enc;
-+	int ret = 0;
-+
-+	mutex_lock(&core->pm_lock);
-+
-+	if (pm_runtime_suspended(dev)) {
-+		ret = pm_runtime_get_sync(dev);
-+		if (ret < 0)
-+			goto error;
-+
-+		ret = pm_runtime_put_autosuspend(dev);
-+	}
-+
-+error:
-+	mutex_unlock(&core->pm_lock);
-+
-+	return ret < 0 ? ret : 0;
-+}
-+
-+static void venc_pm_touch(struct venus_inst *inst)
-+{
-+	pm_runtime_mark_last_busy(inst->core->dev_enc);
-+}
-+
- static int venc_set_properties(struct venus_inst *inst)
- {
- 	struct venc_controls *ctr = &inst->controls.enc;
-@@ -891,10 +949,18 @@ static int venc_queue_setup(struct vb2_queue *q,
- 		return 0;
+diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
+index 91b15842c555..cc6195f2409c 100644
+--- a/drivers/media/platform/qcom/venus/core.c
++++ b/drivers/media/platform/qcom/venus/core.c
+@@ -65,7 +65,7 @@ static void venus_event_notify(struct venus_core *core, u32 event)
  	}
  
-+	ret = venc_pm_get(inst);
-+	if (ret)
-+		return ret;
-+
- 	mutex_lock(&inst->lock);
- 	ret = venc_init_session(inst);
- 	mutex_unlock(&inst->lock);
+ 	mutex_lock(&core->lock);
+-	core->sys_error = true;
++	set_bit(0, &core->sys_error);
+ 	list_for_each_entry(inst, &core->instances, list)
+ 		inst->ops->event_notify(inst, EVT_SESSION_ERROR, NULL);
+ 	mutex_unlock(&core->lock);
+@@ -161,7 +161,7 @@ static void venus_sys_error_handler(struct work_struct *work)
+ 	dev_warn(core->dev, "system error has occurred (recovered)\n");
  
-+	if (ret)
-+		goto put_power;
-+
-+	ret = venc_pm_put(inst, false);
- 	if (ret)
- 		return ret;
- 
-@@ -930,6 +996,9 @@ static int venc_queue_setup(struct vb2_queue *q,
- 		break;
- 	}
- 
-+	return ret;
-+put_power:
-+	venc_pm_put(inst, false);
- 	return ret;
+ 	mutex_lock(&core->lock);
+-	core->sys_error = false;
++	clear_bit(0, &core->sys_error);
+ 	mutex_unlock(&core->lock);
  }
  
-@@ -946,6 +1015,8 @@ static void venc_release_session(struct venus_inst *inst)
- {
- 	int ret;
+diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
+index 745f226a523f..15713209cc48 100644
+--- a/drivers/media/platform/qcom/venus/core.h
++++ b/drivers/media/platform/qcom/venus/core.h
+@@ -7,6 +7,7 @@
+ #ifndef __VENUS_CORE_H_
+ #define __VENUS_CORE_H_
  
-+	venc_pm_get(inst);
-+
- 	mutex_lock(&inst->lock);
++#include <linux/bitops.h>
+ #include <linux/list.h>
+ #include <media/videobuf2-v4l2.h>
+ #include <media/v4l2-ctrls.h>
+@@ -182,7 +183,7 @@ struct venus_core {
+ 	unsigned int state;
+ 	struct completion done;
+ 	unsigned int error;
+-	bool sys_error;
++	unsigned long sys_error;
+ 	const struct hfi_core_ops *core_ops;
+ 	const struct venus_pm_ops *pm_ops;
+ 	struct mutex pm_lock;
+diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/platform/qcom/venus/helpers.c
+index b813d6dba481..de87f4c81a1c 100644
+--- a/drivers/media/platform/qcom/venus/helpers.c
++++ b/drivers/media/platform/qcom/venus/helpers.c
+@@ -1478,7 +1478,7 @@ void venus_helper_vb2_stop_streaming(struct vb2_queue *q)
+ 		ret |= venus_helper_intbufs_free(inst);
+ 		ret |= hfi_session_deinit(inst);
  
+-		if (inst->session_error || core->sys_error)
++		if (inst->session_error || test_bit(0, &core->sys_error))
+ 			ret = -EIO;
+ 
+ 		if (ret)
+diff --git a/drivers/media/platform/qcom/venus/hfi.c b/drivers/media/platform/qcom/venus/hfi.c
+index 0f2482367e06..179b1f8b2650 100644
+--- a/drivers/media/platform/qcom/venus/hfi.c
++++ b/drivers/media/platform/qcom/venus/hfi.c
+@@ -214,7 +214,7 @@ int hfi_session_init(struct venus_inst *inst, u32 pixfmt)
+ 	 * session_init() can't pass successfully
+ 	 */
+ 	mutex_lock(&core->lock);
+-	if (!core->ops || core->sys_error) {
++	if (!core->ops || test_bit(0, &inst->core->sys_error)) {
+ 		mutex_unlock(&core->lock);
+ 		return -EIO;
+ 	}
+diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
+index ddb7cd39424e..132a2921902a 100644
+--- a/drivers/media/platform/qcom/venus/vdec.c
++++ b/drivers/media/platform/qcom/venus/vdec.c
+@@ -1211,7 +1211,7 @@ static void vdec_session_release(struct venus_inst *inst)
  	ret = hfi_session_deinit(inst);
-@@ -957,6 +1028,8 @@ static void venc_release_session(struct venus_inst *inst)
- 	venus_pm_load_scale(inst);
- 	INIT_LIST_HEAD(&inst->registeredbufs);
- 	venus_pm_release_core(inst);
-+
-+	venc_pm_put(inst, false);
- }
+ 	abort = (ret && ret != -EINVAL) ? 1 : 0;
  
- static void venc_buf_cleanup(struct vb2_buffer *vb)
-@@ -1026,7 +1099,15 @@ static int venc_start_streaming(struct vb2_queue *q, unsigned int count)
- 	inst->sequence_cap = 0;
- 	inst->sequence_out = 0;
+-	if (inst->session_error || core->sys_error)
++	if (inst->session_error || test_bit(0, &core->sys_error))
+ 		abort = 1;
  
-+	ret = venc_pm_get(inst);
-+	if (ret)
-+		goto error;
-+
- 	ret = venus_pm_acquire_core(inst);
-+	if (ret)
-+		goto put_power;
-+
-+	ret = venc_pm_put(inst, true);
- 	if (ret)
- 		goto error;
- 
-@@ -1051,6 +1132,8 @@ static int venc_start_streaming(struct vb2_queue *q, unsigned int count)
- 
- 	return 0;
- 
-+put_power:
-+	venc_pm_put(inst, false);
- error:
- 	venus_helper_buffers_done(inst, q->type, VB2_BUF_STATE_QUEUED);
- 	if (q->type == V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE)
-@@ -1065,6 +1148,8 @@ static void venc_vb2_buf_queue(struct vb2_buffer *vb)
- {
- 	struct venus_inst *inst = vb2_get_drv_priv(vb->vb2_queue);
- 
-+	venc_pm_get_put(inst);
-+
- 	mutex_lock(&inst->lock);
- 	venus_helper_vb2_buf_queue(vb);
- 	mutex_unlock(&inst->lock);
-@@ -1088,6 +1173,8 @@ static void venc_buf_done(struct venus_inst *inst, unsigned int buf_type,
- 	struct vb2_buffer *vb;
- 	unsigned int type;
- 
-+	venc_pm_touch(inst);
-+
- 	if (buf_type == HFI_BUFFER_INPUT)
- 		type = V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE;
- 	else
-@@ -1117,6 +1204,8 @@ static void venc_event_notify(struct venus_inst *inst, u32 event,
- {
- 	struct device *dev = inst->core->dev_enc;
- 
-+	venc_pm_touch(inst);
-+
- 	if (event == EVT_SESSION_ERROR) {
- 		inst->session_error = true;
- 		dev_err(dev, "enc: event session error %x\n", inst->error);
-@@ -1205,13 +1294,9 @@ static int venc_open(struct file *file)
- 
- 	venus_helper_init_instance(inst);
- 
--	ret = pm_runtime_get_sync(core->dev_enc);
--	if (ret < 0)
--		goto err_put_sync;
--
- 	ret = venc_ctrl_init(inst);
- 	if (ret)
--		goto err_put_sync;
-+		goto err_free;
- 
- 	ret = hfi_session_create(inst, &venc_hfi_ops);
- 	if (ret)
-@@ -1250,8 +1335,7 @@ static int venc_open(struct file *file)
- 	hfi_session_destroy(inst);
- err_ctrl_deinit:
- 	venc_ctrl_deinit(inst);
--err_put_sync:
--	pm_runtime_put_sync(core->dev_enc);
-+err_free:
- 	kfree(inst);
- 	return ret;
- }
-@@ -1260,6 +1344,8 @@ static int venc_close(struct file *file)
- {
- 	struct venus_inst *inst = to_inst(file);
- 
-+	venc_pm_get(inst);
-+
- 	v4l2_m2m_ctx_release(inst->m2m_ctx);
- 	v4l2_m2m_release(inst->m2m_dev);
- 	venc_ctrl_deinit(inst);
-@@ -1268,7 +1354,7 @@ static int venc_close(struct file *file)
- 	v4l2_fh_del(&inst->fh);
- 	v4l2_fh_exit(&inst->fh);
- 
--	pm_runtime_put_sync(inst->core->dev_enc);
-+	venc_pm_put(inst, false);
- 
- 	kfree(inst);
- 	return 0;
-@@ -1325,6 +1411,8 @@ static int venc_probe(struct platform_device *pdev)
- 	core->dev_enc = dev;
- 
- 	video_set_drvdata(vdev, core);
-+	pm_runtime_set_autosuspend_delay(dev, 2000);
-+	pm_runtime_use_autosuspend(dev);
- 	pm_runtime_enable(dev);
- 
- 	return 0;
+ 	if (abort)
 -- 
 2.25.1
 
