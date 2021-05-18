@@ -2,96 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3FE82387E85
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 May 2021 19:35:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 364E3387F02
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 May 2021 19:52:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351278AbhERRgJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 May 2021 13:36:09 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:35825 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351227AbhERRfy (ORCPT
+        id S1351179AbhERRxT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 May 2021 13:53:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45082 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237923AbhERRxT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 May 2021 13:35:54 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1621359276; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=ZgFIvI40y7otmHzklIMUNhMtm0MlsP2bGGKHOKWsOXI=; b=IEyNrujA+DA9qaLOU9gLnGsOeOVxqsWGI/NnJmD5g9HNpybv8uhON2OExdiqprooHPM7ZSXv
- Dykcp5LAemye3UMqfZNr3NHPJpXxkN9Ce/2slDg6A+nYeE+AOxyyhg9hLLmCMLNUehjtZOWY
- qAk1hh2nvB+F87BbUXsfbXB+EHI=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
- 60a3faabb15734c8f9ca67fd (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 18 May 2021 17:34:35
- GMT
-Sender: okukatla=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id B6734C43217; Tue, 18 May 2021 17:34:34 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
-Received: from okukatla1-linux.qualcomm.com (unknown [202.46.22.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: okukatla)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id C307FC43217;
-        Tue, 18 May 2021 17:34:29 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org C307FC43217
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=okukatla@codeaurora.org
-From:   Odelu Kukatla <okukatla@codeaurora.org>
-To:     georgi.djakov@linaro.org, sibis@codeaurora.org,
-        bjorn.andersson@linaro.org, evgreen@google.com,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     sboyd@kernel.org, seansw@qti.qualcomm.com, elder@linaro.org,
-        linux-pm@vger.kernel.org, linux-arm-msm-owner@vger.kernel.org,
-        Odelu Kukatla <okukatla@codeaurora.org>
-Subject: [V2 3/3] arm64: dts: qcom: sc7280: Add EPSS L3 interconnect provider
-Date:   Tue, 18 May 2021 23:04:02 +0530
-Message-Id: <1621359242-18641-4-git-send-email-okukatla@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1621359242-18641-1-git-send-email-okukatla@codeaurora.org>
-References: <1621359242-18641-1-git-send-email-okukatla@codeaurora.org>
+        Tue, 18 May 2021 13:53:19 -0400
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B82BDC061573;
+        Tue, 18 May 2021 10:51:59 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id et19so8875517ejc.4;
+        Tue, 18 May 2021 10:51:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=lsP0X9SD53wNifUOWr66qcQ19cCdk8WhX9LQttz6sIY=;
+        b=FdWvFUcLxCoxgP1buQNZhEGSzhIHgFkHCRHBfPdFYJ1OIehb32ub9sZjPb1nr0s8uX
+         3l0bc+a5rMbDhXeDqIRf91Bpe5v7182nqMGTofj1RWsKVFjCjUVqogm+CyzFoDksUoBe
+         x0onZULmcG2mrCjtztIaSthMQtRVJHuyOYnpTe8dhfONXB3kNEJtpxAx3uMWF5deQJe1
+         hiZFJi9bXkkN4vj8/owdWxTH3PHXo4kDsEZBO1kadVrkeE8pTsbx5iPRgJPAgbnSTf3y
+         g2GVT5EfyUol13i4LDS7pr0s77k1ic3BwiUUaM48XVUgPV77sR0po7hd8yuZietlfD9f
+         1fmQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=lsP0X9SD53wNifUOWr66qcQ19cCdk8WhX9LQttz6sIY=;
+        b=keEa9E4mGZ2hxGbDuOXvFBcdWWeB8M0dXfAgA63maVJvwmUAdQ1U8dGICRZkAb7zzX
+         SXSHkYsVyT2aNn3uWStWzwJROnaZXPzrbHA6tLPza29JjGOv1kSD/zuVRdfhhy5Ouhbt
+         vX9kD4i52TYUcZIZSL1M7H1nk1HH4rDGBZhci/pjA3dIWUOy/Hwzvs5G/L2s2X0EnmCa
+         PxyGZxLgRS8tFYP0JX7xnM6DLYBq+zD5tEjn2sGGeMVGU8+UGbVNof5+UeB0SgzDwIUu
+         ksAnK9U9wnUSSdvrI2sR2WO+q3QFgGqnOpXL+eiUWWIkJ1Cch4W44Cuut0PIREOAoqat
+         GlYw==
+X-Gm-Message-State: AOAM533UxHwXxjN9SF/7uykFP9yu2/Z2/o1BB8r11t/jE0F0VA5moMf9
+        sfS+lWXxFefXyZWIK/I9OMY=
+X-Google-Smtp-Source: ABdhPJyAQTCsHL5sZsq0vnHwyze01i0vgx3SISlC7frKJMr+wLWxjjDHrqUF/e9gI5X/3/uvDL6eBA==
+X-Received: by 2002:a17:906:3419:: with SMTP id c25mr7139419ejb.96.1621360318465;
+        Tue, 18 May 2021 10:51:58 -0700 (PDT)
+Received: from localhost.localdomain (dh207-99-66.xnet.hr. [88.207.99.66])
+        by smtp.googlemail.com with ESMTPSA id w14sm13511513edj.6.2021.05.18.10.51.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 18 May 2021 10:51:57 -0700 (PDT)
+From:   Robert Marko <robimarko@gmail.com>
+To:     agross@kernel.org, bjorn.andersson@linaro.org,
+        mturquette@baylibre.com, sboyd@kernel.org, speriaka@codeaurora.org,
+        sivaprak@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     Robert Marko <robimarko@gmail.com>
+Subject: [PATCH] clk: qcom: ipq8074: fix PCI-E clock oops
+Date:   Tue, 18 May 2021 19:51:53 +0200
+Message-Id: <20210518175153.3176764-1-robimarko@gmail.com>
+X-Mailer: git-send-email 2.31.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add Epoch Subsystem (EPSS) L3 interconnect provider node on SC7280
-SoCs.
+Fix PCI-E clock related kernel oops that are causes by missing
+parent_names.
 
-Signed-off-by: Odelu Kukatla <okukatla@codeaurora.org>
+Without the use of parent_names kernel will panic on
+clk_core_get_parent_by_index() due to a NULL pointer.
+
+Without this earlycon is needed to even catch the OOPS as it will reset
+the board before serial is initialized.
+
+Fixes: f0cfcf1ade20 ("clk: qcom: ipq8074: Add missing clocks for pcie")
+Signed-off-by: Robert Marko <robimarko@gmail.com>
 ---
- arch/arm64/boot/dts/qcom/sc7280.dtsi | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/clk/qcom/gcc-ipq8074.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index 6b22021..5aec586 100644
---- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -1122,6 +1122,15 @@
- 			};
- 		};
- 
-+		epss_l3: interconnect@18590000 {
-+			compatible = "qcom,sc7280-epss-l3";
-+			reg = <0 0x18590000 0 1000>, <0 0x18591000 0 0x100>,
-+				<0 0x18592000 0 0x100>, <0 0x18593000 0 0x100>;
-+			clocks = <&rpmhcc RPMH_CXO_CLK>, <&gcc GCC_GPLL0>;
-+			clock-names = "xo", "alternate";
-+			#interconnect-cells = <1>;
-+		};
-+
- 		clk_virt: interconnect {
- 			compatible = "qcom,sc7280-clk-virt";
- 			#interconnect-cells = <2>;
+diff --git a/drivers/clk/qcom/gcc-ipq8074.c b/drivers/clk/qcom/gcc-ipq8074.c
+index 0c619ed35c82..8d8b1717a203 100644
+--- a/drivers/clk/qcom/gcc-ipq8074.c
++++ b/drivers/clk/qcom/gcc-ipq8074.c
+@@ -4357,8 +4357,7 @@ static struct clk_rcg2 pcie0_rchng_clk_src = {
+ 	.parent_map = gcc_xo_gpll0_map,
+ 	.clkr.hw.init = &(struct clk_init_data){
+ 		.name = "pcie0_rchng_clk_src",
+-		.parent_hws = (const struct clk_hw *[]) {
+-				&gpll0.clkr.hw },
++		.parent_names = gcc_xo_gpll0,
+ 		.num_parents = 2,
+ 		.ops = &clk_rcg2_ops,
+ 	},
+@@ -4372,8 +4371,8 @@ static struct clk_branch gcc_pcie0_rchng_clk = {
+ 		.enable_mask = BIT(1),
+ 		.hw.init = &(struct clk_init_data){
+ 			.name = "gcc_pcie0_rchng_clk",
+-			.parent_hws = (const struct clk_hw *[]){
+-				&pcie0_rchng_clk_src.clkr.hw,
++			.parent_names = (const char *[]){
++				"pcie0_rchng_clk_src",
+ 			},
+ 			.num_parents = 1,
+ 			.flags = CLK_SET_RATE_PARENT,
+@@ -4390,8 +4389,8 @@ static struct clk_branch gcc_pcie0_axi_s_bridge_clk = {
+ 		.enable_mask = BIT(0),
+ 		.hw.init = &(struct clk_init_data){
+ 			.name = "gcc_pcie0_axi_s_bridge_clk",
+-			.parent_hws = (const struct clk_hw *[]){
+-				&pcie0_axi_clk_src.clkr.hw,
++			.parent_names = (const char *[]){
++				"pcie0_axi_clk_src"
+ 			},
+ 			.num_parents = 1,
+ 			.flags = CLK_SET_RATE_PARENT,
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+2.31.1
 
