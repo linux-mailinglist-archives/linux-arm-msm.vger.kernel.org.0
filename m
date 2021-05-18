@@ -2,239 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7EE33387C9C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 May 2021 17:39:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 64D4A387CB4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 May 2021 17:46:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350265AbhERPkn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 May 2021 11:40:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43074 "EHLO
+        id S1350309AbhERPrY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 May 2021 11:47:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44426 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350250AbhERPkm (ORCPT
+        with ESMTP id S1350310AbhERPqq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 May 2021 11:40:42 -0400
-Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com [IPv6:2607:f8b0:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E6E7C06175F
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 May 2021 08:39:24 -0700 (PDT)
-Received: by mail-ot1-x32b.google.com with SMTP id v19-20020a0568301413b0290304f00e3d88so9017296otp.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 May 2021 08:39:24 -0700 (PDT)
+        Tue, 18 May 2021 11:46:46 -0400
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF0F5C061756
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 May 2021 08:45:24 -0700 (PDT)
+Received: by mail-ej1-x632.google.com with SMTP id p24so14082563ejb.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 May 2021 08:45:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=2hSwqPBR8xk5peOjp8r36zshPTihxbD5KyZ7/NEBH24=;
-        b=mvj1ormvns6c8e+ic/PsSJNg9DLr9kf/17VvtRI2XtMI//1llYzD/QpQuvPakUJYQQ
-         DS+Xo/uoPIJyjHoavYY7zuWK4qVVV83WVk5nAn7MDmEsl2vw0uz1xsLweQYC/9dTzzRV
-         ghr128tExjqZBppdRqp8xWwxJxE68i7ZTjFXGbfJPFUT9aWJyvLRdh3QWPkRkYnXtm3T
-         zrCwTYgf17p8ER1Pg5Xx1kYVK5BPy71uz1Lto2qzL+gIYXWfHrE0RCY/SPzUIGJYMqlV
-         +BRUesvZx2dingYSETXNoJPVsjGINfdPZ7JjYsY39BlCrS8AMVaG+GwJF7MJ4hKWkcDX
-         W6lQ==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Uzhu44uRZv1s3nfAlcOB8ei5a/9G/5m4eMNR5sBJlT4=;
+        b=Gv4f8B/Gxitv8+cOCEpXL5j7KUaKWbrZswuaSXIHed5VMYd8XhHu7K7zKuml6EFOpb
+         dZknsuFeZNYojlHQng9VgaM/QrqcH74VJrmdrfwPgeo5XDwWGNZTKVpp9EO7PqyJKMyJ
+         7JSkTosNgiQaEdWvV6OYiumeVB7+oEZA1yUmApJOgWWGzVe5fWGW/UlF3Pbx3wmExdF4
+         P3exJcgdKVUN9X6M0d8VZWT23DeQSGq4sFDbUMAXs38QsTYIQobDQ6Ed2dVLU+exv+35
+         NndqJuQLUQFI/XMBCdBGwvDRkfaxHVHME9h/X7O19sAqwn64FE9HG+Z8aG78GSXOc0gj
+         D+mA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=2hSwqPBR8xk5peOjp8r36zshPTihxbD5KyZ7/NEBH24=;
-        b=nhsZVx6i6HL7PuExp3PSrqyZAtdHrsZ9vboRgUJ166ezFvEIXUg2UmEXtThTxMDXck
-         hQ6EdSS8NfUl7wa+zmx2rxEbUyHrueUi7DxZ7EJOdfWnfo34g+jYpk/NYFqLmwv/OH5K
-         f45Y6B6tT1MQFxqVgzXtBIPAZYkfGjfe+DPAkF3ytXLZehsSOj8G2SGZ7lqEMzQvKMHc
-         cIkWRoDMc5AYHDzZ26B2apz5jsXqNGhQKBRWl/GbSXw6zSR251EZSfWJa3fSYmSIK6ek
-         a3IWhPZtqEdq1J9LS93CYzTpt5EgqXvrESNbrPoCDUyfjc0zNR8pYcmbtEPo7HWUl6ha
-         V+JQ==
-X-Gm-Message-State: AOAM533frG0sJGpaQwHOufzwBRH06UcftL569gHmFg12U1grul/7jXqp
-        uypSzk0AY8L80GJP1ArxRrF7JBwcbb4d7YfH2nTkaA==
-X-Google-Smtp-Source: ABdhPJxs5EkaQ8cVqMmDDyuAeI4LeAKT2u8OFSqwXjSjLKhqFVkkYjQ9FPfi1Tdv13wngOPWcvaW1DPF7TKLro0KyJ0=
-X-Received: by 2002:a9d:4f15:: with SMTP id d21mr4807826otl.155.1621352363686;
- Tue, 18 May 2021 08:39:23 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Uzhu44uRZv1s3nfAlcOB8ei5a/9G/5m4eMNR5sBJlT4=;
+        b=l47NoVsTegDpe66dGCVTjinTOFUYUmizLRXUCM95aK0wnPcPdw4aLpYU7QR1lHn3ra
+         RDSWF4CgvnqiY0UC0+xBwVfk5Zif5DMG4Z6482OfeXEEwzqmzNe/Qaai//uIWAkwfYrH
+         w5L8M7hDeabCBiRcekjcMo0ghQZgyjYaUcCws+psQYXBSPIAjvmfbvT3KqaHFul98k/O
+         FqgIJ0Yt1LnZRaIKw9bNyCyHRaOi2FGsignGu1iNgTKqVRLO5LNOKj3wsJ3BFWesth35
+         Eon/neLL0dV3ScmcHuuAc42acUIxiO5FSGM0t8IYKlzmiGCpbiD7E+BskpU+iu0syKDx
+         OepA==
+X-Gm-Message-State: AOAM5304poqaIMdlJWy2YMa6OnkK9RFi7XwXqhIB+C+i0WSbLpSRb6Mz
+        9uV0Ig1B9HWBhbugIoGH1OV7tQ==
+X-Google-Smtp-Source: ABdhPJyWv38guj9NKPQJrcpRLso+xBI2P2svq44TuYFknZlEJ1aJN2cs8hJT8lW6Jvur3bQEyDT4vg==
+X-Received: by 2002:a17:906:1e15:: with SMTP id g21mr6660662ejj.241.1621352723392;
+        Tue, 18 May 2021 08:45:23 -0700 (PDT)
+Received: from localhost.localdomain ([195.24.90.54])
+        by smtp.gmail.com with ESMTPSA id n17sm13016434eds.72.2021.05.18.08.45.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 18 May 2021 08:45:23 -0700 (PDT)
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+To:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Vikash Garodia <vgarodia@codeaurora.org>,
+        Mansur Alisha Shaik <mansur@codeaurora.org>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Subject: [PATCH 0/5] Venus fatal error handling
+Date:   Tue, 18 May 2021 18:45:04 +0300
+Message-Id: <20210518154509.602137-1-stanimir.varbanov@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-References: <20210505213731.538612-1-bhupesh.sharma@linaro.org>
- <20210505213731.538612-10-bhupesh.sharma@linaro.org> <20210518150702.GW2484@yoga>
-In-Reply-To: <20210518150702.GW2484@yoga>
-From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Date:   Tue, 18 May 2021 21:09:12 +0530
-Message-ID: <CAH=2NtxMR5zCBJ7_u3kT9Koewv3Ay4baH8YQ9frX2uhO2gDM=Q@mail.gmail.com>
-Subject: Re: [PATCH v2 09/17] crypto: qce: core: Add support to initialize
- interconnect path
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Thara Gopinath <thara.gopinath@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Herbert Xu <herbert@gondor.apana.org.au>,
-        "David S . Miller" <davem@davemloft.net>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Vinod Koul <vkoul@kernel.org>, dmaengine@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-crypto@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        bhupesh.linux@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bjorn,
+According to the stateful decoder spec fatal errors could be
+recovered either by close and open it again the file descriptor
+or by stop the streaming and starting it again. This patch series
+is attempting to solve the second fatal recovery case.
 
-Thanks for the review.
+regards,
+Stan
 
-On Tue, 18 May 2021 at 20:37, Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
->
-> On Wed 05 May 16:37 CDT 2021, Bhupesh Sharma wrote:
->
-> > From: Thara Gopinath <thara.gopinath@linaro.org>
-> >
-> > Crypto engine on certain Snapdragon processors like sm8150, sm8250, sm8350
-> > etc. requires interconnect path between the engine and memory to be
-> > explicitly enabled and bandwidth set prior to any operations. Add support
-> > in the qce core to enable the interconnect path appropriately.
-> >
-> > Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > Cc: Rob Herring <robh+dt@kernel.org>
-> > Cc: Andy Gross <agross@kernel.org>
-> > Cc: Herbert Xu <herbert@gondor.apana.org.au>
-> > Cc: David S. Miller <davem@davemloft.net>
-> > Cc: Stephen Boyd <sboyd@kernel.org>
-> > Cc: Michael Turquette <mturquette@baylibre.com>
-> > Cc: Vinod Koul <vkoul@kernel.org>
-> > Cc: dmaengine@vger.kernel.org
-> > Cc: linux-clk@vger.kernel.org
-> > Cc: linux-crypto@vger.kernel.org
-> > Cc: devicetree@vger.kernel.org
-> > Cc: linux-kernel@vger.kernel.org
-> > Cc: bhupesh.linux@gmail.com
-> > Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> > [Make header file inclusion alphabetical]
-> > Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
->
-> This says that you prepared the patch, then Thara picked up the patch
-> and sorted the includes. But somehow you then sent the patch.
->
-> I.e. you name should be the last - unless you jointly wrote the path, in
-> which case you should also add a "Co-developed-by: Thara".
+Stanimir Varbanov (5):
+  venus: venc: Use pmruntime autosuspend
+  venus: Make sys_error flag an atomic bitops
+  venus: hfi: Check for sys error on session hfi functions
+  venus: helpers: Add helper to mark fatal vb2 error
+  venus: Handle fatal errors during encoding and decoding
 
-No, it's the other way around. Thara prepared the patch (as the
-'From:' field suggests) and I just changed the inclusion order of the
-header files and made it in alphabetical order.
+ drivers/media/platform/qcom/venus/core.c    |  13 ++-
+ drivers/media/platform/qcom/venus/core.h    |   6 +-
+ drivers/media/platform/qcom/venus/helpers.c |  16 ++-
+ drivers/media/platform/qcom/venus/helpers.h |   1 +
+ drivers/media/platform/qcom/venus/hfi.c     |  48 +++++++-
+ drivers/media/platform/qcom/venus/vdec.c    |  18 ++-
+ drivers/media/platform/qcom/venus/venc.c    | 117 ++++++++++++++++++--
+ 7 files changed, 202 insertions(+), 17 deletions(-)
 
-I will move my S-o-b later in the order.
+-- 
+2.25.1
 
-> > ---
-> >  drivers/crypto/qce/core.c | 35 ++++++++++++++++++++++++++++-------
-> >  drivers/crypto/qce/core.h |  1 +
-> >  2 files changed, 29 insertions(+), 7 deletions(-)
-> >
-> > diff --git a/drivers/crypto/qce/core.c b/drivers/crypto/qce/core.c
-> > index 80b75085c265..92a0ff1d357e 100644
-> > --- a/drivers/crypto/qce/core.c
-> > +++ b/drivers/crypto/qce/core.c
-> > @@ -5,6 +5,7 @@
-> >
-> >  #include <linux/clk.h>
-> >  #include <linux/dma-mapping.h>
-> > +#include <linux/interconnect.h>
-> >  #include <linux/interrupt.h>
-> >  #include <linux/module.h>
-> >  #include <linux/mod_devicetable.h>
-> > @@ -21,6 +22,8 @@
-> >  #define QCE_MAJOR_VERSION5   0x05
-> >  #define QCE_QUEUE_LENGTH     1
-> >
-> > +#define QCE_DEFAULT_MEM_BANDWIDTH    393600
->
-> Do we know what this rate is?
-
-I think this corresponds to the arbitrated bandwidth / instantaneous
-bandwidth (in KBps)
-for the qce crypto part [I think 'average/peak bandwidth' would be a
-better terminology :) ].
-
-Maybe Thara can add more comments here.
-
-> > +
-> >  static const struct qce_algo_ops *qce_ops[] = {
-> >  #ifdef CONFIG_CRYPTO_DEV_QCE_SKCIPHER
-> >       &skcipher_ops,
-> > @@ -202,21 +205,35 @@ static int qce_crypto_probe(struct platform_device *pdev)
-> >       if (ret < 0)
-> >               return ret;
-> >
-> > +     qce->mem_path = of_icc_get(qce->dev, "memory");
->
-> Using devm_of_icc_get() would save you some changes to the error path.
-
-Ok, I can address this in v3.
-
-> > +     if (IS_ERR(qce->mem_path))
-> > +             return PTR_ERR(qce->mem_path);
-> > +
-> >       qce->core = devm_clk_get(qce->dev, "core");
-> > -     if (IS_ERR(qce->core))
-> > -             return PTR_ERR(qce->core);
-> > +     if (IS_ERR(qce->core)) {
-> > +             ret = PTR_ERR(qce->core);
-> > +             goto err_mem_path_put;
-> > +     }
-> >
-> >       qce->iface = devm_clk_get(qce->dev, "iface");
-> > -     if (IS_ERR(qce->iface))
-> > -             return PTR_ERR(qce->iface);
-> > +     if (IS_ERR(qce->iface)) {
-> > +             ret = PTR_ERR(qce->iface);
-> > +             goto err_mem_path_put;
-> > +     }
-> >
-> >       qce->bus = devm_clk_get(qce->dev, "bus");
-> > -     if (IS_ERR(qce->bus))
-> > -             return PTR_ERR(qce->bus);
-> > +     if (IS_ERR(qce->bus)) {
-> > +             ret = PTR_ERR(qce->bus);
-> > +             goto err_mem_path_put;
-> > +     }
-> > +
-> > +     ret = icc_set_bw(qce->mem_path, QCE_DEFAULT_MEM_BANDWIDTH, QCE_DEFAULT_MEM_BANDWIDTH);
-> > +     if (ret)
-> > +             goto err_mem_path_put;
-> >
-> >       ret = clk_prepare_enable(qce->core);
-> >       if (ret)
-> > -             return ret;
-> > +             goto err_mem_path_disable;
-> >
-> >       ret = clk_prepare_enable(qce->iface);
-> >       if (ret)
-> > @@ -256,6 +273,10 @@ static int qce_crypto_probe(struct platform_device *pdev)
-> >       clk_disable_unprepare(qce->iface);
-> >  err_clks_core:
-> >       clk_disable_unprepare(qce->core);
-> > +err_mem_path_disable:
-> > +     icc_set_bw(qce->mem_path, 0, 0);
->
-> When you icc_put() (or devm_of_icc_get() does it for you) the path's
-> votes are implicitly set to 0, so you don't need to do this.
->
-> And as such, you don't need to change the error path at all.
-
-Ok, got it. Will change v3 accordingly.
-
-Thanks,
-Bhupesh
-
-> > +err_mem_path_put:
-> > +     icc_put(qce->mem_path);
-> >       return ret;
-> >  }
-> >
-> > diff --git a/drivers/crypto/qce/core.h b/drivers/crypto/qce/core.h
-> > index 085774cdf641..228fcd69ec51 100644
-> > --- a/drivers/crypto/qce/core.h
-> > +++ b/drivers/crypto/qce/core.h
-> > @@ -35,6 +35,7 @@ struct qce_device {
-> >       void __iomem *base;
-> >       struct device *dev;
-> >       struct clk *core, *iface, *bus;
-> > +     struct icc_path *mem_path;
-> >       struct qce_dma_data dma;
-> >       int burst_size;
-> >       unsigned int pipe_pair_id;
-> > --
-> > 2.30.2
-> >
