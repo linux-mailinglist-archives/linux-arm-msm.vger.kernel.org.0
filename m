@@ -2,151 +2,148 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 675E4387A8A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 May 2021 15:58:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 36CFD387B66
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 May 2021 16:39:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343739AbhERN7z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 May 2021 09:59:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48048 "EHLO
+        id S234418AbhEROlM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 May 2021 10:41:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57656 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239860AbhERN7u (ORCPT
+        with ESMTP id S234987AbhEROlH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 May 2021 09:59:50 -0400
-Received: from mail-qk1-x72f.google.com (mail-qk1-x72f.google.com [IPv6:2607:f8b0:4864:20::72f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 520C6C061573
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 May 2021 06:58:31 -0700 (PDT)
-Received: by mail-qk1-x72f.google.com with SMTP id i5so2080840qkf.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 May 2021 06:58:31 -0700 (PDT)
+        Tue, 18 May 2021 10:41:07 -0400
+Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11EDFC06138D
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 May 2021 07:39:49 -0700 (PDT)
+Received: by mail-oi1-x22d.google.com with SMTP id z3so9955886oib.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 May 2021 07:39:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
+        d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=c0rcuf59hk8zzhGYb9mHFLDEmB+phP4Kth6slEOIZYA=;
-        b=lFI0AHcModwrEa18qX2uKnk2Wac55m5AiPLM2cv6lnVwkVH8JDjqEIw0gazCaElftB
-         cHNLRg0l98UfE8vp/8XiQGbD96CtVJc0fhLv9d7phtdY+1C1sgwhDT1cCrwNauVQRMVj
-         zr3eFfPWbISXhR8fSSHBrFosPT42cHLgNrX+4=
+        bh=zp3it5Zu0KA9JHtt+jDEOh0cwWAwW8S1nVYQo9cUI6g=;
+        b=M+LBCcMHMPB69ojN8igqTaiE33ZRMpEcF1APy9OlgsLWEwTLhd++g9E5r/PdgPXEYk
+         Sf+oWKImVvjttXeuquw1tqKq5sDT5hjJaJrr+UNwmVU4yyHWnKmjWyMw/MlpRuRujG3f
+         OPz9XnatcZBy1chC6V/PUTr8885yi7PK0DlXuwh780MM5fxWeByS/rU5afx+k05h1jpm
+         6Fcu7iuPNq3rkO4cA5dE3C1+aLyOA0g1mfkf0PgTpooOLOhwOnpmJucMbwAHPEXBoGUI
+         M0YmbK1i3TawT2Kq/MdoI37cIF1l4xEwiO9riemaM2il88FrHe0Ly8xeiVsF219JVpb/
+         6zcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=c0rcuf59hk8zzhGYb9mHFLDEmB+phP4Kth6slEOIZYA=;
-        b=hpILagbYl7ZlzAwAXzlJlTym7DsVdBZ1v+LqQCPynog53isFK27RSjJjiqUEyWJX1P
-         OkjwEAOakF2PR0LzCITaF8AIfICkjvMTLzh9m0Niye3Q5twHQa2SaVQfvqqdFDX6s5F8
-         ctku8bizjIzpoaUsm7wA7gKomgvpD9ZJgoLshJcRlkUG7eEzBenbMqgP3n6Ir8mNS8hw
-         QJALJIKv4tIjTUj3eVra44DAZsO1McSFQgrWEggQlPqMAjJ7KucrHKlOduhXb+50jyhR
-         z2fnFahhwIt7Bl90Js0uHQumM+Z6Hl0XKgIt/qY+9Yi5pt7yOWSAmOMtAtjJnV32HdJO
-         rBAg==
-X-Gm-Message-State: AOAM532NecYSsAr1fLtRHmvnfYvlN05TG3sV6yetKT0EFP+uWLvuG9JW
-        zEBf7+I2LrgxK/gkGee1tI9ob4vGajE5aQ==
-X-Google-Smtp-Source: ABdhPJyVcFdN5rbQLb9PpauEXYonguCFtRkLdr0ikS0gickxxEtSckkcAk3nKHRNoc4y9hF1BJPkXg==
-X-Received: by 2002:a05:620a:b09:: with SMTP id t9mr5684834qkg.17.1621346310175;
-        Tue, 18 May 2021 06:58:30 -0700 (PDT)
-Received: from mail-yb1-f171.google.com (mail-yb1-f171.google.com. [209.85.219.171])
-        by smtp.gmail.com with ESMTPSA id e5sm12959871qtg.96.2021.05.18.06.58.29
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 18 May 2021 06:58:29 -0700 (PDT)
-Received: by mail-yb1-f171.google.com with SMTP id h202so13348457ybg.11
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 May 2021 06:58:29 -0700 (PDT)
-X-Received: by 2002:a25:aad4:: with SMTP id t78mr7268437ybi.343.1621346308916;
- Tue, 18 May 2021 06:58:28 -0700 (PDT)
+        bh=zp3it5Zu0KA9JHtt+jDEOh0cwWAwW8S1nVYQo9cUI6g=;
+        b=ZuzWWOrVNUUNcI7Jxw69uOWV2HP8+3dmXs3NVgpS+IgelFmcBs/vY9IiLYPmmHVs8y
+         jmTQuN5dJGD3s57Ls7XFO8xihFzorkF4e4c2uSzkFVn47cMSDw+8p7SoNDDHeTdvWnfE
+         2gffCRYB/uVHTkf5sMAXlTxg2LMB7FmJ6PJcu3xyk7cKguJKf9rS5OXRhSC3WYwtRa2L
+         hjp/LvTGkaP9vrqJ+ZBW6K5tWr/yLc1tENIw8yPWIXASuzzoJSbb2cOanI1l+vnzEwt1
+         Ju/Jk7DZTHwpk6UHT77t9hhAbUNzCf3W8k5odbPP+h03/e68q+pD5BvRkkGcIbQTXzzI
+         mveg==
+X-Gm-Message-State: AOAM533EGd7SaGMTC42xPTcj/PszCrvsvEb3FBvgsmD3fxvbYFl9V7BR
+        qOthGv3DZxi1bvNtT1snhGDPynLmTKkuz1ZLeNnPHA==
+X-Google-Smtp-Source: ABdhPJztinWXNYTl+kiATtOdsiKD/CaM/e4dVlbDyWrHV5TSscaWHVYcyb9gQYVDavq46dJM3FBF4Qd71vU3cs+rKMU=
+X-Received: by 2002:a05:6808:f0b:: with SMTP id m11mr3641199oiw.12.1621348788489;
+ Tue, 18 May 2021 07:39:48 -0700 (PDT)
 MIME-Version: 1.0
-References: <20210517200907.1459182-1-dianders@chromium.org>
- <20210517130450.v7.2.Ieb731d23680db4700cc41fe51ccc73ba0b785fb7@changeid> <CAL_JsqLMs10Luj7fKkNVu-BUZhpqAGJMZyUxz76N3b9Xa7EByg@mail.gmail.com>
-In-Reply-To: <CAL_JsqLMs10Luj7fKkNVu-BUZhpqAGJMZyUxz76N3b9Xa7EByg@mail.gmail.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Tue, 18 May 2021 06:58:16 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=Xsc1noo7ZBK4_+Cty6KO5vc7Ex7G7BCg38rRu3s=fvUg@mail.gmail.com>
-Message-ID: <CAD=FV=Xsc1noo7ZBK4_+Cty6KO5vc7Ex7G7BCg38rRu3s=fvUg@mail.gmail.com>
-Subject: Re: [PATCH v7 02/10] dt-bindings: display: simple: List hpd
- properties in panel-simple
-To:     Rob Herring <robh+dt@kernel.org>
-Cc:     Andrzej Hajda <a.hajda@samsung.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>,
-        Lyude Paul <lyude@redhat.com>,
-        Thierry Reding <treding@nvidia.com>,
-        Stephen Boyd <swboyd@chromium.org>,
+References: <20210505213731.538612-1-bhupesh.sharma@linaro.org>
+ <20210505213731.538612-17-bhupesh.sharma@linaro.org> <d809f290-ed94-7e35-bc4d-bd695965fa04@linaro.org>
+In-Reply-To: <d809f290-ed94-7e35-bc4d-bd695965fa04@linaro.org>
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Date:   Tue, 18 May 2021 20:09:37 +0530
+Message-ID: <CAH=2NtwS+WBbwbp1tftyMjOCWo9ORZfiZFRr+UNxKQLc9aUNcA@mail.gmail.com>
+Subject: Re: [PATCH v2 16/17] crypto: qce: Defer probe in case interconnect is
+ not yet initialized
+To:     Thara Gopinath <thara.gopinath@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Linus W <linus.walleij@linaro.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Steev Klimaszewski <steev@kali.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Herbert Xu <herbert@gondor.apana.org.au>,
+        "David S . Miller" <davem@davemloft.net>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Vinod Koul <vkoul@kernel.org>, dmaengine@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-crypto@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        bhupesh.linux@gmail.com
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Hi Thara,
 
-On Tue, May 18, 2021 at 5:42 AM Rob Herring <robh+dt@kernel.org> wrote:
+On Mon, 10 May 2021 at 18:53, Thara Gopinath <thara.gopinath@linaro.org> wrote:
 >
-> On Mon, May 17, 2021 at 3:09 PM Douglas Anderson <dianders@chromium.org> wrote:
+>
+>
+> On 5/5/21 5:37 PM, Bhupesh Sharma wrote:
+> > On some Qualcomm parts the qce crypto driver needs the interconnect between
+> > the crypto block and main memory to be initialized first before the crypto
+> > registers can be accessed. So it makes sense to defer the qce crypto driver
+> > probing in case the interconnect driver is not yet probed.
 > >
-> > These are described in panel-common.yaml but if I don't list them in
-> > panel-simple then I get yells when running 'dt_binding_check' in a
-> > future patch. List them along with other properties that seem to be
-> > listed in panel-simple for similar reasons.
->
-> If you have HPD, is it still a simple panel? I don't see this as an
-> omission because the use of these properties for simple panels was
-> never documented IIRC.
-
-I would say so. It is currently supported by panel-simple in Linux. Of
-course, you could make the argument that panel-simple is no longer
-really "simple" because of things like this...
-
-I guess I'd say this: I believe that the HPD properties eventually
-belong in the generic "edp-panel" that I'm still planning to post (and
-which will be based on this series). I justified that previously [1]
-by talking about the fact that there's a single timing diagram that
-(as far as I've been able to tell) is fairly universal in panel specs.
-It's a complicated timing diagram showing some two dozen timings (and
-includes HPD!), but if you support all the timings then you've
-supported pretty much all panels. IMO the original intent of
-"simple-panel" was to specify a panel that's just like all the other
-panels w/ a few parameters.
-
-NOTE: I'd also say that for nearly all eDP panels HPD is important,
-but in many designs HPD is handled "magically" and not specified in
-the device tree. This is because it goes to a dedicated location on
-the eDP controller / bridge chip. I added the HPD GPIO support (and
-no-hpd) to simple-panel because my bridge chip has a fairly useless
-HPD line and we don't use it. Even though the fact that we need the
-HPD specified like this is a function of our bridge chip, back in the
-day I was told that the property belonged in the panel and so that's
-where it lives.
-
-
-> Not saying we can't add them, but justify it as an addition, not just
-> fixing a warning.
-
-Sure, I'll beef up the commit message.
-
-
-> > Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> > This fixes the qce probe failure issues when both qce and
+> > interconnect drivers are compiled as static part of the kernel.
+> >
+> > Cc: Thara Gopinath <thara.gopinath@linaro.org>
+> > Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > Cc: Rob Herring <robh+dt@kernel.org>
+> > Cc: Andy Gross <agross@kernel.org>
+> > Cc: Herbert Xu <herbert@gondor.apana.org.au>
+> > Cc: David S. Miller <davem@davemloft.net>
+> > Cc: Stephen Boyd <sboyd@kernel.org>
+> > Cc: Michael Turquette <mturquette@baylibre.com>
+> > Cc: Vinod Koul <vkoul@kernel.org>
+> > Cc: dmaengine@vger.kernel.org
+> > Cc: linux-clk@vger.kernel.org
+> > Cc: linux-crypto@vger.kernel.org
+> > Cc: devicetree@vger.kernel.org
+> > Cc: linux-kernel@vger.kernel.org
+> > Cc: bhupesh.linux@gmail.com
+> > Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
 > > ---
-> > I didn't spend tons of time digging to see if there was supposed to be
-> > a better way of doing this. If there is, feel free to yell.
+> >   drivers/crypto/qce/core.c | 14 ++++++++++++++
+> >   1 file changed, 14 insertions(+)
+> >
+> > diff --git a/drivers/crypto/qce/core.c b/drivers/crypto/qce/core.c
+> > index 3e742e9911fa..9915b184f780 100644
+> > --- a/drivers/crypto/qce/core.c
+> > +++ b/drivers/crypto/qce/core.c
+> > @@ -222,6 +222,20 @@ static int qce_crypto_probe(struct platform_device *pdev)
+> >               return ret;
+> >
+> >       qce->mem_path = of_icc_get(qce->dev, "memory");
+> > +
+> > +     /* Check for NULL return path, which indicates
+> > +      * interconnect API is disabled or the "interconnects"
+> > +      * DT property is missing.
+> > +      */
+> > +     if (!qce->mem_path)
+> > +             /* On some qcom parts, the qce crypto block needs interconnect
+> > +              * paths to be configured before the registers can be accessed.
+> > +              * Check here for the same.
+> > +              */
+> > +             if (!strcmp(of_id->compatible, "qcom,ipq6018-qce") ||
+> > +                 !strcmp(of_id->compatible, "qcom,sdm845-qce"))
+> > +                     return -EPROBE_DEFER;
+> > +
 >
-> That's the right way to do it unless you want to allow all common
-> properties, then we'd use unevaluatedProperties instead of
-> additionalProperties.
+> Hi Bhupesh,
+>
+> You don't need this here. of_icc_get returns -EPROBE_DEFER if the
+> interconnect provider is not initialized yet.
 
-Ah, perfect. Thanks!
+Thanks for the review.
 
-[1] https://lore.kernel.org/r/CAD=FV=VZYOMPwQZzWdhJGh5cjJWw_EcM-wQVEivZ-bdGXjPrEQ@mail.gmail.com/
+Yes, I finished testing all the possible combinations with qce, bam
+dma and interconnect drivers compiled as modules v/s as static parts
+of the kernel and we don't need this extra check for the interconnect
+here. We should be fine with checking just the qce_dma_request()
+return value and returning early in the qce probe() flow if no dma
+channels are yet available from the bam dma driver.
 
+I have made the changes in v3 and will post it for review shortly.
 
--Doug
+Regards,
+Bhupesh
