@@ -2,117 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DD0E93877EA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 May 2021 13:42:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1DE203877EE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 May 2021 13:43:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244747AbhERLnj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 May 2021 07:43:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44952 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245026AbhERLnc (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 May 2021 07:43:32 -0400
-Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D228C061573
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 May 2021 04:42:14 -0700 (PDT)
-Received: by mail-pj1-x102b.google.com with SMTP id gm21so5350016pjb.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 May 2021 04:42:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=7S6PUZObKkIfh3dODhQCy9E7mIQHbGFC9dWCAcju/jo=;
-        b=SwBpWj+/Sbd3xmdoFsEWL4TtWjdKN15Sfgx7w030cR7SVp6Ye1cVLF/GgJrB8PdJ3t
-         +bWWuSUBuB1S6wyeQTzPboeQVPgyIKTIfegE/8OIhCCSCynGDynUFDGzQz6mXE7+pvIW
-         dM353u8JWAaT6zEiBJ+LSggu4nM//+AIqjqXyRGO6UDLpxPZlkun7Hpvdt41hBAmP/gj
-         oVN/+/9BJWbZCzVcLMu7EFQ21iZ8eCc6cB2IWdLhb5dbMmgsFpTcJ9BJysNFQ/6IX3BC
-         0pQwP9p4EGhKsuCMF5q6BL4n6VkGpnyTbZPZ0sCvIo/HrvdSb4eM2LIgM1Cr5ViZj5rp
-         hvLg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=7S6PUZObKkIfh3dODhQCy9E7mIQHbGFC9dWCAcju/jo=;
-        b=MFZ+RFCIa2nz+CY8mwFCdFb+P/pdkPGi5xggNSKiaIH2MexX7ATdGGFSPii7eT82SK
-         Z6VP/E0BEd+179lYHkMk/DuY0e89sVRko30Qp8DIvAK222G8P4eKiUpCnlzTuFBdghI7
-         F8cFJ0ktfJmoBfBroxtlx1KXJ8950vH2uoyBDl1QehkMrZCnlz6Winn1+6DeY025fLWM
-         Cl1MKr2LTRnH6hjniwiVFxKqqPtRpZ/K1TptOnKAt6nazre9G1TNUSSOtWrAkiHhieyU
-         OdkMM2f/zoeikZY/TZjTI6TlsVrWvKeQMOLFNTG/TCVVjxTf0jpVZTgljn1N61IufaK9
-         jh5Q==
-X-Gm-Message-State: AOAM532TnXBoVbeAXMN29/UjBzZnyBIQY5z/IYruNb2msA7EtLRfE44v
-        gBOFaKo58c1T+eG6UyNFzlLzovdXtHy4eoMNbKAKbA==
-X-Google-Smtp-Source: ABdhPJxFfhcir7SromnhgqTH2KqWlndpO3tIOi4AVJmcHUKmPMiLDixKblE4Sk6MK9lPqY7c+ddadZP+ObGtVwvmRCk=
-X-Received: by 2002:a17:90a:e391:: with SMTP id b17mr282959pjz.75.1621338133894;
- Tue, 18 May 2021 04:42:13 -0700 (PDT)
-MIME-Version: 1.0
-References: <20210513175258.5842-1-jonathan@marek.ca> <20210513175258.5842-4-jonathan@marek.ca>
-In-Reply-To: <20210513175258.5842-4-jonathan@marek.ca>
-From:   Robert Foss <robert.foss@linaro.org>
-Date:   Tue, 18 May 2021 13:42:02 +0200
-Message-ID: <CAG3jFys=aCJOnP11EC_PK-KBJxMksT78McKb6pLTHuBxhU2qdg@mail.gmail.com>
-Subject: Re: [PATCH 3/3] clk: qcom: Add camera clock controller driver for SM8250
-To:     Jonathan Marek <jonathan@marek.ca>
-Cc:     MSM <linux-arm-msm@vger.kernel.org>,
-        Andrey Konovalov <andrey.konovalov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+        id S242822AbhERLoX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 May 2021 07:44:23 -0400
+Received: from mail.kernel.org ([198.145.29.99]:50378 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231655AbhERLoV (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 18 May 2021 07:44:21 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 2B16560BD3;
+        Tue, 18 May 2021 11:43:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1621338184;
+        bh=XIzw+7OS/V1zUzWXN8higtcu24gjwfGY3HOOQ6GgKwo=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=eHVpQ/pP/mDVLHU7rqDTrLRoI2M44s1EbX2EQFODh5nm3tn1iDQrei0lCPi48Vqci
+         OHO8QFnaph1z8AEl+sL6YO2s31U/6FS0m+vi2tpm/vB4YzRugk4zHwiX7VHqWNxRGA
+         ttVNVlVwPxV0C/AzqdJuzlbo+yS1UMDL9YcLDOY2ZlXgR/Gsd7ql5sePcKn2Rr7B59
+         fp7upzQTM9YYday43YIPUdY0raybJ/2N0YSWeRjoPkE3YyJGnGFMoIsSstMeBgKjBb
+         senkfXtMhEzpbC/JtnbN10qFeJ4NfA4CsOujWASP6jCJVqmxRp2IHLrEC7/BPxWEBn
+         qtE5dHGn4+qRQ==
+Date:   Tue, 18 May 2021 17:13:00 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     satya priya <skakit@codeaurora.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        "open list:COMMON CLK FRAMEWORK" <linux-clk@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Rob Herring <robh+dt@kernel.org>, mka@chromium.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, kgunda@codeaurora.org
+Subject: Re: [RESEND PATCH V4 1/8] arm64: dts: qcom: sm8350: Add label for
+ thermal-zones node
+Message-ID: <YKOoRPDiTnOQG+4l@vkoul-mobl.Dlink>
+References: <1621318822-29332-1-git-send-email-skakit@codeaurora.org>
+ <1621318822-29332-2-git-send-email-skakit@codeaurora.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1621318822-29332-2-git-send-email-skakit@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hey Jonathan,
+On 18-05-21, 11:50, satya priya wrote:
+> Add label "thermal_zones" for thermal-zones node.
+> 
+> Signed-off-by: satya priya <skakit@codeaurora.org>
+> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+> ---
+> Changes in RESEND V4:
+>  - No Changes.
+> 
+>  arch/arm64/boot/dts/qcom/sm8350.dtsi | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+> index ed0b51b..47c6c0b 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+> @@ -1317,7 +1317,7 @@
+>  		};
+>  	};
+>  
+> -	thermal-zones {
+> +	thermal_zones: thermal-zones {
 
+is this label used anywhere in this series? If not lets drop it
 
-> +static int cam_cc_sm8250_probe(struct platform_device *pdev)
-> +{
-> +       struct regmap *regmap;
-> +
-> +       regmap = qcom_cc_map(pdev, &cam_cc_sm8250_desc);
-> +       if (IS_ERR(regmap))
-> +               return PTR_ERR(regmap);
-> +
-> +       clk_lucid_pll_configure(&cam_cc_pll0, regmap, &cam_cc_pll0_config);
-> +       clk_lucid_pll_configure(&cam_cc_pll1, regmap, &cam_cc_pll1_config);
-> +       clk_lucid_pll_configure(&cam_cc_pll3, regmap, &cam_cc_pll3_config);
-> +       clk_lucid_pll_configure(&cam_cc_pll4, regmap, &cam_cc_pll4_config);
-> +
-> +       return qcom_cc_really_probe(pdev, &cam_cc_sm8250_desc, regmap);;
+>  		cpu0-thermal {
+>  			polling-delay-passive = <250>;
+>  			polling-delay = <1000>;
+> -- 
+> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
+> of Code Aurora Forum, hosted by The Linux Foundation
 
-Remove a semicolon.
-
-> +}
-> +
-> +static struct platform_driver cam_cc_sm8250_driver = {
-> +       .probe = cam_cc_sm8250_probe,
-> +       .driver = {
-> +               .name = "cam_cc-sm8250",
-
-Maybe conforming with the naming scheme of "sdm845-camcc" is the
-better way to go.
-
-> +               .of_match_table = cam_cc_sm8250_match_table,
-> +       },
-> +};
-> +
-> +static int __init cam_cc_sm8250_init(void)
-> +{
-> +       return platform_driver_register(&cam_cc_sm8250_driver);
-> +}
-> +subsys_initcall(cam_cc_sm8250_init);
-> +
-> +static void __exit cam_cc_sm8250_exit(void)
-> +{
-> +       platform_driver_unregister(&cam_cc_sm8250_driver);
-> +}
-> +module_exit(cam_cc_sm8250_exit);
-> +
-> +MODULE_DESCRIPTION("QTI CAMCC SM8250 Driver");
-> +MODULE_LICENSE("GPL v2");
-> --
-> 2.26.1
->
+-- 
+~Vinod
