@@ -2,96 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CE5DC387F6A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 May 2021 20:16:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CA35F3881C5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 May 2021 22:57:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245566AbhERSRs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 May 2021 14:17:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50590 "EHLO
+        id S1352300AbhERU7L (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 May 2021 16:59:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58762 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235043AbhERSRq (ORCPT
+        with ESMTP id S1352289AbhERU7K (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 May 2021 14:17:46 -0400
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9982EC061573;
-        Tue, 18 May 2021 11:16:27 -0700 (PDT)
-Received: by mail-ej1-x635.google.com with SMTP id c20so16088515ejm.3;
-        Tue, 18 May 2021 11:16:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=NGqV4Xu3Ra2v1f3J2XY6oCYA2hVcPqhjvch9qSMDdIc=;
-        b=C5sNyxP48U8ETKM6xIOl80A3W07rIY3Xk+ug64dFj+h+f96AG5nzacHyBY8wouDovQ
-         10swg9gNw1xC4b37NSg4p4eVJRanxDY7dXl7c2NnbI5Zwb5d4paO902wHAqYY0WojeSX
-         xEc9XBCzG8laFQ0U8lDeBMRb0OSlnRVRzfuBQDGWa+zejn0LzhvQNTooQsW39+7GMrUC
-         6tfnddaGVOdq2S2fiVt6yHg3P8XDW9hxC4a0zqdNdaM1kH56Vy1OMCBqwAa58hi1Qhtg
-         KqAVdQUKSUa0UPZrzPSsbPNovnrLPRdOhe5TlPAOnmQOLk6rRVAuO7l93am/yUkJtAXn
-         +fzA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=NGqV4Xu3Ra2v1f3J2XY6oCYA2hVcPqhjvch9qSMDdIc=;
-        b=CMKBvL4ERPkunUB+XKDEx9RUJumHC3KsilDMsyVgxywQn0g2n7x2ZtZGWyvj5cshjl
-         FG6joG9TXW8Og21JVt+k15WXqWmEnRIj+x7yCiRofti1+KboOhQzUeg/dEOnby16A4iY
-         nNdpvkr18rxHcj61RC45CU0af002buq5XrZGuK8ecDjAqVXYqSTddcsjL9UNPP/TVgkp
-         CC5d3Loz39vlga++kgAhGtZ9haPt14xkS0hJ9Q0AAbUYrT7WND0B7KIcJUo3EfyTMa9T
-         UdcuCk3rkAUDo/UkVE35fAUbWVfXjfRohx1aWvJP6tvI5w4pI6b9LP/OkUvjhw1Yqeqq
-         N7Lg==
-X-Gm-Message-State: AOAM532eGN64Q0xImldPnyAbCQSsLxFexVaFXBtZmERbY9P4xm7HsH3u
-        u9QApQRkLWYV5mRFROzQAL4=
-X-Google-Smtp-Source: ABdhPJx2BUHOnAU6/shPsIepkQPA3/FKXJ1Nc0RO7X1tmvIDYtNyCrribRZuqojOPt9a3mAhtanZcQ==
-X-Received: by 2002:a17:906:b104:: with SMTP id u4mr7210776ejy.211.1621361786322;
-        Tue, 18 May 2021 11:16:26 -0700 (PDT)
-Received: from localhost.localdomain (dh207-99-66.xnet.hr. [88.207.99.66])
-        by smtp.googlemail.com with ESMTPSA id e23sm12258594edr.80.2021.05.18.11.16.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 May 2021 11:16:25 -0700 (PDT)
-From:   Robert Marko <robimarko@gmail.com>
-To:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Robert Marko <robimarko@gmail.com>
-Subject: [PATCH 2/2] arm64: dts: ipq8074: add PRNG node
-Date:   Tue, 18 May 2021 20:16:18 +0200
-Message-Id: <20210518181618.3238386-2-robimarko@gmail.com>
-X-Mailer: git-send-email 2.31.1
-In-Reply-To: <20210518181618.3238386-1-robimarko@gmail.com>
-References: <20210518181618.3238386-1-robimarko@gmail.com>
+        Tue, 18 May 2021 16:59:10 -0400
+Received: from m-r1.th.seeweb.it (m-r1.th.seeweb.it [IPv6:2001:4b7a:2000:18::170])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7910C061573
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 May 2021 13:57:51 -0700 (PDT)
+Received: from [192.168.1.101] (83.6.168.104.neoplus.adsl.tpnet.pl [83.6.168.104])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 81A5B1F94B;
+        Tue, 18 May 2021 22:57:46 +0200 (CEST)
+Subject: Re: [PATCH] arm64: dts: qcom: add initial device-tree for Microsoft
+ Surface Duo
+To:     Felipe Balbi <balbi@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Rob Herring <robh+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org,
+        Felipe Balbi <felipe.balbi@microsoft.com>
+References: <20210510120547.1315536-1-balbi@kernel.org>
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+Message-ID: <397b7def-99fb-1084-f0bd-6da81066af17@somainline.org>
+Date:   Tue, 18 May 2021 22:57:45 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20210510120547.1315536-1-balbi@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-PRNG insinde of IPQ8074 is already supported,
-so simply add the node for it.
+Hi!
 
-Signed-off-by: Robert Marko <robimarko@gmail.com>
----
- arch/arm64/boot/dts/qcom/ipq8074.dtsi | 8 ++++++++
- 1 file changed, 8 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-index 194930374bc5..aec7ced72a89 100644
---- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-@@ -197,6 +197,14 @@ pcie_phy1: phy@8e000 {
- 			status = "disabled";
- 		};
- 
-+		prng: rng@e3000 {
-+			compatible = "qcom,prng-ee";
-+			reg = <0x000e3000 0x1000>;
-+			clocks = <&gcc GCC_PRNG_AHB_CLK>;
-+			clock-names = "core";
-+			status = "disabled";
-+		};
-+
- 		cryptobam: dma@704000 {
- 			compatible = "qcom,bam-v1.7.0";
- 			reg = <0x00704000 0x20000>;
--- 
-2.31.1
+> +/ {
+> +	model = "Microsoft Surface Duo";
+> +	compatible = "microsoft,surface-duo", "qcom,sm8150-mtp";
+> +
+Please remove the -mtp compatible, as the phone is not 1:1 compatible with the MTP design and replace it with the platform-generic "qcom,sm8150" (otherwise things like CPUFreq won't work!).
+
+
+> +
+> +	aliases {
+> +		serial0 = &uart2;
+> +	};
+> +
+> +	chosen {
+> +		stdout-path = "serial0:115200n8";
+> +	};
+> +
+
+Is the serial port exposed and enabled on production hardware?
+
+
+> +
+> +	bq27742@55 {
+> +		compatible = "ti,bq27742";
+> +		reg = <0x55>;
+> +	};
+> +
+> +	da7280@4a {
+> +		compatible = "dlg,da7280";
+> +		reg = <0x4a>;
+> +		interrupts-extended = <&tlmm 42 IRQ_TYPE_LEVEL_LOW>;
+> +		pinctrl-names = "da7280_default";
+> +		pinctrl-0 = <&da7280_intr_default>;
+> +
+> +		dlg,actuator-type = "LRA";
+> +		dlg,dlg,const-op-mode = <1>;
+> +		dlg,dlg,periodic-op-mode = <1>;
+> +		dlg,nom-microvolt = <2000000>;
+> +		dlg,abs-max-microvolt = <2000000>;
+> +		dlg,imax-microamp = <129000>;
+> +		dlg,resonant-freq-hz = <180>;
+> +		dlg,impd-micro-ohms = <14300000>;
+> +		dlg,freq-track-enable;
+> +		dlg,bemf-sens-enable;
+> +		dlg,mem-array = <
+> +		  0x06 0x08 0x10 0x11 0x12 0x13 0x14 0x15 0x1c 0x2a
+> +		  0x33 0x3c 0x42 0x4b 0x4c 0x4e 0x17 0x19 0x27 0x29
+> +		  0x17 0x19 0x03 0x84 0x5e 0x04 0x08 0x84 0x5d 0x01
+> +		  0x84 0x5e 0x02 0x00 0xa4 0x5d 0x03 0x84 0x5e 0x06
+> +		  0x08 0x84 0x5d 0x05 0x84 0x5d 0x06 0x84 0x5e 0x08
+> +		  0x84 0x5e 0x05 0x8c 0x5e 0x24 0x84 0x5f 0x10 0x84
+> +		  0x5e 0x05 0x84 0x5e 0x08 0x84 0x5f 0x01 0x8c 0x5e
+> +		  0x04 0x84 0x5e 0x08 0x84 0x5f 0x11 0x19 0x88 0x00
+> +		  0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00
+> +		  0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00
+> +		>;
+> +	};
+> +
+> +	/* SMB1381 @ 0x44 */
+> +	/* MAX34417 @ 0x1c */
+> +};
+
+Please add generic labels to these peripherals, such as "vibrator: " or so.
+
+
+> +&i2c17 {
+> +	status = "okay";
+> +	clock-frequency = <400000>;
+> +
+> +	bq27742@55 {
+> +		compatible = "ti,bq27742";
+> +		reg = <0x55>;
+> +	};
+> +};
+
+Are there actually two of these TI ICs, presumably for the dual-batteries? If that's the case, could you add a comment specifying which one is in charge (pun intended) of which cell?
+
+
+Aside from that, it generally looks good :)
+
+
+Konrad
 
