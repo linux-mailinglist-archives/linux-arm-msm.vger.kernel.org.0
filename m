@@ -2,396 +2,285 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BA6D938773F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 May 2021 13:15:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2E10E38776A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 May 2021 13:25:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348757AbhERLQn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 May 2021 07:16:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38516 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241529AbhERLQm (ORCPT
+        id S232494AbhERL0Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 May 2021 07:26:16 -0400
+Received: from mail-lj1-f172.google.com ([209.85.208.172]:45794 "EHLO
+        mail-lj1-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231696AbhERL0P (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 May 2021 07:16:42 -0400
-Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com [IPv6:2607:f8b0:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0794C061756
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 May 2021 04:15:24 -0700 (PDT)
-Received: by mail-pf1-x429.google.com with SMTP id k19so7145148pfu.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 May 2021 04:15:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=rMKnzxRmjpsxvf399XdssqdAcsyhVxeW8xMKc4bly4E=;
-        b=L20mdIJLWmBGOt6Zr0wKtKN2hmAsVsuRvrBq38YtV6trCJ0Mm2wBnoMKzHID+Zz0x/
-         tqEJO6XN+bNkN2guD2KoIrEYDvCYNWS/+vD1dIuyzgsJ6MIoQ2eXTJfSlr8sNGp48grj
-         yyjHF/2uMdZ1ZGGSyDroMPJqlVXWTrbWrJBWJKctc7s5Iii/AqzVWVeglUjRi83txDZJ
-         n/r0q2F3n1gH5nrjTpIh6ZMvpWx0Cpl8HnRfrwbLrtHFcWhDASB9/Fs6QB55212Pplfk
-         Bnp0jPhbhBBjXXOG5ikGRcBDL0qBA1eZWU7ivd+FVEYxTp9t+XgZSQqxfkYlmJGOGqm0
-         66dQ==
+        Tue, 18 May 2021 07:26:15 -0400
+Received: by mail-lj1-f172.google.com with SMTP id v5so11080384ljg.12;
+        Tue, 18 May 2021 04:24:56 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=rMKnzxRmjpsxvf399XdssqdAcsyhVxeW8xMKc4bly4E=;
-        b=QzT3cwL/xvlBpd9DNvT1yYr5IHyJGrMfieCdngVaX4tBmmB/dW9fxHmDHVwiyn34qs
-         Wc0NBEpVgANQAOdTuu7DL5ja4U/zwV8vb1uBW5f8EJcyDUE7oTLrYjFwpE8p37XlTKej
-         UmkSbILgy2DWmh+6WVEYOtBmOJQ4X6VyguwEfIwdxffQei8+SPA7t5IIYR4klFixstCr
-         ayLHRJ0UBgt4KhKNM7we9W7xjhV3Qgx4e2uy6qOItjKss7IWTejJKa76Cse+D0tjhxEn
-         3a9JaSmUvUl7x7709gaZzK5TKaLnEH98G8kHRHOd5O2ZNsMMfvqAjnFKqLP9rWjarm5+
-         q3og==
-X-Gm-Message-State: AOAM533Sz7RWJu02AcuKDmdwS+38taQoB8EV6Uqv0J+dhpFDNa6izEe8
-        IPEL3h7R9JpG5InoRuBtNrv/D2gKDlyc7ibauyKuQQ==
-X-Google-Smtp-Source: ABdhPJyGJky0kq4cz/sS0Qdl3z1SdGh0e3GJKG8woQktve1SQtUFgEFRcX0l0CiI0OLo0JeFDtreU149pO3ezEkRCoU=
-X-Received: by 2002:a62:a517:0:b029:2dc:9daf:5e91 with SMTP id
- v23-20020a62a5170000b02902dc9daf5e91mr4638350pfm.39.1621336524229; Tue, 18
- May 2021 04:15:24 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition;
+        bh=8BRXyRfE+/lPf97nYNK6cOdKGSM5fWZ0jFB495vj08U=;
+        b=hvxLyoytvnh1vZDahymnghmhqSE4LjQQ+BxEiyPnA2uc9zeStoSEADbngi7a4YOPs1
+         BIutMYdnowVAXCDuI3cvZQDZTKDtvZrfYo4/GvQxR21bepoBOktfyR5rcKOB2Uw4tMaT
+         xkJpZxNB6nUWPJv7pA3rJL8LusbWOPbhOROBTeffGdRjGFclvGox4pZtUhVGSu1KoBDG
+         xZ/oeHkWDs8TVJTJ0dBkXMIFhPjYCksBzgRfHFRU0jeEEvb62O4qzGD5tZib+67zU9wk
+         k7yqI9l9FLnWFp6CIPhv+TZOnBJrSOqUGavHaL/UMXc5g/tfISS5Sb4tNpgOKH9HMLiy
+         j/4w==
+X-Gm-Message-State: AOAM5339UPq/QR4updTWLeeRYLv+NnfDVEKYvjspgoqN6z35S1jaTl9Z
+        UZrlLyhRlnaoxPgRLtoHo74=
+X-Google-Smtp-Source: ABdhPJzTEJp5UdXTIPwaXgHAm6mHZqBw7Tyea8XoFb6j2CXSb5HSytSsrhqwBJmQrl5HM6tjWxc/ew==
+X-Received: by 2002:a2e:a167:: with SMTP id u7mr3629436ljl.495.1621337095294;
+        Tue, 18 May 2021 04:24:55 -0700 (PDT)
+Received: from localhost.localdomain (dc7vkhyyyyyyyyyyyyyyt-3.rev.dnainternet.fi. [2001:14ba:16e2:8300::1])
+        by smtp.gmail.com with ESMTPSA id i20sm2244813lfv.71.2021.05.18.04.24.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 18 May 2021 04:24:54 -0700 (PDT)
+Date:   Tue, 18 May 2021 14:24:47 +0300
+From:   Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>
+To:     Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>,
+        Matti Vaittinen <mazziesaccount@gmail.com>
+Cc:     Mark Brown <broonie@kernel.org>, Kees Cook <keescook@chromium.org>,
+        Andy Shevchenko <andy.shevchenko@gmail.com>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Guenter Roeck <linux@roeck-us.net>,
+        "agross@kernel.org" <agross@kernel.org>,
+        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+        linux-power <linux-power@fi.rohmeurope.com>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "linux-renesas-soc@vger.kernel.org" 
+        <linux-renesas-soc@vger.kernel.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "bjorn.andersson@linaro.org" <bjorn.andersson@linaro.org>,
+        "lgirdwood@gmail.com" <lgirdwood@gmail.com>,
+        "robh+dt@kernel.org" <robh+dt@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Amit Kucheria <amitk@kernel.org>,
+        Matteo Croce <mcroce@microsoft.com>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Petr Mladek <pmladek@suse.com>,
+        "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+        Mike Rapoport <rppt@kernel.org>,
+        Josef Bacik <josef@toxicpanda.com>,
+        Kai-Heng Feng <kai.heng.feng@canonical.com>,
+        linux-pm@vger.kernel.org
+Subject: [PATCH v10 00/11] Extend regulator notification support
+Message-ID: <cover.1621333893.git.matti.vaittinen@fi.rohmeurope.com>
 MIME-Version: 1.0
-References: <20210513175258.5842-1-jonathan@marek.ca> <20210513175258.5842-2-jonathan@marek.ca>
-In-Reply-To: <20210513175258.5842-2-jonathan@marek.ca>
-From:   Robert Foss <robert.foss@linaro.org>
-Date:   Tue, 18 May 2021 13:15:12 +0200
-Message-ID: <CAG3jFyuBnaY28D9FmA8JEQKtXX5r0LF78pco=skDSWrPfFou4A@mail.gmail.com>
-Subject: Re: [PATCH 1/3] clk: qcom: clk-alpha-pll: add support for zonda pll
-To:     Jonathan Marek <jonathan@marek.ca>
-Cc:     MSM <linux-arm-msm@vger.kernel.org>,
-        Andrey Konovalov <andrey.konovalov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        "open list:COMMON CLK FRAMEWORK" <linux-clk@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha256;
+        protocol="application/pgp-signature"; boundary="6TrnltStXW4iwmi0"
+Content-Disposition: inline
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hey Jonathan,
 
-On Thu, 13 May 2021 at 19:53, Jonathan Marek <jonathan@marek.ca> wrote:
->
-> Ported over from the downstream driver. Will be used by SM8250 CAMCC.
->
-> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
-> ---
->  drivers/clk/qcom/clk-alpha-pll.c | 245 +++++++++++++++++++++++++++++++
->  drivers/clk/qcom/clk-alpha-pll.h |   6 +
->  2 files changed, 251 insertions(+)
->
-> diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
-> index c6eb99169ddc..7b332a8935f4 100644
-> --- a/drivers/clk/qcom/clk-alpha-pll.c
-> +++ b/drivers/clk/qcom/clk-alpha-pll.c
-> @@ -126,6 +126,19 @@ const u8 clk_alpha_pll_regs[][PLL_OFF_MAX_REGS] = {
->                 [PLL_OFF_TEST_CTL_U] = 0x1c,
->                 [PLL_OFF_STATUS] = 0x2c,
->         },
-> +       [CLK_ALPHA_PLL_TYPE_ZONDA] =  {
-> +               [PLL_OFF_L_VAL] = 0x04,
-> +               [PLL_OFF_ALPHA_VAL] = 0x08,
-> +               [PLL_OFF_USER_CTL] = 0x0c,
-> +               [PLL_OFF_CONFIG_CTL] = 0x10,
-> +               [PLL_OFF_CONFIG_CTL_U] = 0x14,
-> +               [PLL_OFF_CONFIG_CTL_U1] = 0x18,
-> +               [PLL_OFF_TEST_CTL] = 0x1c,
-> +               [PLL_OFF_TEST_CTL_U] = 0x20,
-> +               [PLL_OFF_TEST_CTL_U1] = 0x24,
-> +               [PLL_OFF_OPMODE] = 0x28,
-> +               [PLL_OFF_STATUS] = 0x38,
-> +       },
->  };
->  EXPORT_SYMBOL_GPL(clk_alpha_pll_regs);
->
-> @@ -162,6 +175,11 @@ EXPORT_SYMBOL_GPL(clk_alpha_pll_regs);
->  #define LUCID_5LPE_PLL_LATCH_INPUT     BIT(14)
->  #define LUCID_5LPE_ENABLE_VOTE_RUN     BIT(21)
->
-> +/* ZONDA PLL specific */
-> +#define ZONDA_PLL_OUT_MASK     0xf
-> +#define ZONDA_STAY_IN_CFA      BIT(16)
-> +#define ZONDA_PLL_FREQ_LOCK_DET        BIT(29)
-> +
->  #define pll_alpha_width(p)                                     \
->                 ((PLL_ALPHA_VAL_U(p) - PLL_ALPHA_VAL(p) == 4) ? \
->                                  ALPHA_REG_BITWIDTH : ALPHA_REG_16BIT_WIDTH)
-> @@ -208,6 +226,9 @@ static int wait_for_pll(struct clk_alpha_pll *pll, u32 mask, bool inverse,
->  #define wait_for_pll_enable_lock(pll) \
->         wait_for_pll(pll, PLL_LOCK_DET, 0, "enable")
->
-> +#define wait_for_zonda_pll_freq_lock(pll) \
-> +       wait_for_pll(pll, ZONDA_PLL_FREQ_LOCK_DET, 0, "freq enable")
-> +
->  #define wait_for_pll_disable(pll) \
->         wait_for_pll(pll, PLL_ACTIVE_FLAG, 1, "disable")
->
-> @@ -1398,6 +1419,13 @@ const struct clk_ops clk_alpha_pll_postdiv_fabia_ops = {
->  };
->  EXPORT_SYMBOL_GPL(clk_alpha_pll_postdiv_fabia_ops);
->
-> +const struct clk_ops clk_alpha_pll_postdiv_zonda_ops = {
-> +       .recalc_rate = clk_alpha_pll_postdiv_fabia_recalc_rate,
-> +       .round_rate = clk_alpha_pll_postdiv_fabia_round_rate,
-> +       .set_rate = clk_alpha_pll_postdiv_fabia_set_rate,
-> +};
-> +EXPORT_SYMBOL(clk_alpha_pll_postdiv_zonda_ops);
-> +
->  /**
->   * clk_lucid_pll_configure - configure the lucid pll
->   *
-> @@ -1777,3 +1805,220 @@ const struct clk_ops clk_alpha_pll_postdiv_lucid_5lpe_ops = {
->         .set_rate = clk_lucid_5lpe_pll_postdiv_set_rate,
->  };
->  EXPORT_SYMBOL(clk_alpha_pll_postdiv_lucid_5lpe_ops);
-> +
-> +void clk_zonda_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
-> +                               const struct alpha_pll_config *config)
-> +{
-> +       if (config->l)
-> +               regmap_write(regmap, PLL_L_VAL(pll), config->l);
-> +
-> +       if (config->alpha)
-> +               regmap_write(regmap, PLL_ALPHA_VAL(pll), config->alpha);
-> +
-> +       if (config->config_ctl_val)
-> +               regmap_write(regmap, PLL_CONFIG_CTL(pll),
-> +                               config->config_ctl_val);
-> +
-> +       if (config->config_ctl_hi_val)
-> +               regmap_write(regmap, PLL_CONFIG_CTL_U(pll),
-> +                               config->config_ctl_hi_val);
-> +
-> +       if (config->config_ctl_hi1_val)
-> +               regmap_write(regmap, PLL_CONFIG_CTL_U1(pll),
-> +                               config->config_ctl_hi1_val);
-> +
-> +       if (config->user_ctl_val)
-> +               regmap_write(regmap, PLL_USER_CTL(pll),
-> +                               config->user_ctl_val);
-> +
-> +       if (config->user_ctl_hi_val)
-> +               regmap_write(regmap, PLL_USER_CTL_U(pll),
-> +                               config->user_ctl_hi_val);
-> +
-> +       if (config->user_ctl_hi1_val)
-> +               regmap_write(regmap, PLL_USER_CTL_U1(pll),
-> +                               config->user_ctl_hi1_val);
-> +
-> +       if (config->test_ctl_val)
-> +               regmap_write(regmap, PLL_TEST_CTL(pll),
-> +                               config->test_ctl_val);
-> +
-> +       if (config->test_ctl_hi_val)
-> +               regmap_write(regmap, PLL_TEST_CTL_U(pll),
-> +                               config->test_ctl_hi_val);
-> +
-> +       if (config->test_ctl_hi1_val)
-> +               regmap_write(regmap, PLL_TEST_CTL_U1(pll),
-> +                               config->test_ctl_hi1_val);
-> +
-> +       regmap_update_bits(regmap, PLL_MODE(pll),
-> +                        PLL_BYPASSNL, 0);
-> +
-> +       /* Disable PLL output */
-> +       regmap_update_bits(regmap, PLL_MODE(pll), PLL_OUTCTRL, 0);
-> +
-> +       /* Set operation mode to OFF */
-> +       regmap_write(regmap, PLL_OPMODE(pll), PLL_STANDBY);
-> +
-> +       /* PLL should be in OFF mode before continuing */
-> +       wmb();
-> +
-> +       /* Place the PLL in STANDBY mode */
-> +       regmap_update_bits(regmap, PLL_MODE(pll), PLL_RESET_N, PLL_RESET_N);
-> +}
-> +
-> +static int clk_zonda_pll_enable(struct clk_hw *hw)
-> +{
-> +       struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
-> +       struct regmap *regmap = pll->clkr.regmap;
-> +       u32 val;
-> +       int ret;
-> +
-> +       ret = regmap_read(regmap, PLL_MODE(pll), &val);
-> +       if (ret)
-> +               return ret;
-> +
-> +       /* If in FSM mode, just vote for it */
-> +       if (val & PLL_VOTE_FSM_ENA) {
-> +               ret = clk_enable_regmap(hw);
-> +               if (ret)
-> +                       return ret;
-> +               return wait_for_pll_enable_active(pll);
-> +       }
-> +
-> +       /* Get the PLL out of bypass mode */
-> +       regmap_update_bits(regmap, PLL_MODE(pll), PLL_BYPASSNL, PLL_BYPASSNL);
-> +
-> +       /*
-> +        * H/W requires a 1us delay between disabling the bypass and
-> +        * de-asserting the reset.
-> +        */
-> +       mb();
-> +       udelay(1);
-> +
-> +       regmap_update_bits(regmap, PLL_MODE(pll), PLL_RESET_N, PLL_RESET_N);
-> +
-> +       /* Set operation mode to RUN */
-> +       regmap_write(regmap, PLL_OPMODE(pll), PLL_RUN);
-> +
-> +       ret = regmap_read(regmap, PLL_TEST_CTL(pll), &val);
-> +       if (ret)
-> +               return ret;
-> +
-> +       /* If cfa mode then poll for freq lock */
-> +       if (val & ZONDA_STAY_IN_CFA)
-> +               ret = wait_for_zonda_pll_freq_lock(pll);
-> +       else
-> +               ret = wait_for_pll_enable_lock(pll);
-> +       if (ret)
-> +               return ret;
-> +
-> +       /* Enable the PLL outputs */
-> +       ret = regmap_update_bits(regmap, PLL_USER_CTL(pll),
-> +                                ZONDA_PLL_OUT_MASK, ZONDA_PLL_OUT_MASK);
-> +       if (ret)
-> +               return ret;
-> +
-> +       /* Enable the global PLL outputs */
-> +       ret = regmap_update_bits(regmap, PLL_MODE(pll),
-> +                                PLL_OUTCTRL, PLL_OUTCTRL);
-> +       if (ret)
-> +               return ret;
-> +
-> +       /* Ensure that the write above goes through before returning. */
-> +       mb();
-> +
-> +       return 0;
-> +}
-> +
-> +static void clk_zonda_pll_disable(struct clk_hw *hw)
-> +{
-> +       struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
-> +       struct regmap *regmap = pll->clkr.regmap;
-> +       u32 val;
-> +       int ret;
-> +
-> +       ret = regmap_read(regmap, PLL_MODE(pll), &val);
-> +       if (ret)
-> +               return;
-> +
-> +       /* If in FSM mode, just unvote it */
-> +       if (val & PLL_VOTE_FSM_ENA) {
-> +               clk_disable_regmap(hw);
-> +               return;
-> +       }
-> +
-> +       /* Disable the global PLL output */
-> +       ret = regmap_update_bits(regmap, PLL_MODE(pll), PLL_OUTCTRL, 0);
-> +
-> +       /* Disable the PLL outputs */
-> +       regmap_update_bits(regmap, PLL_USER_CTL(pll), ZONDA_PLL_OUT_MASK, 0);
-> +
-> +       /* Put the PLL in bypass and reset */
-> +       regmap_update_bits(regmap, PLL_MODE(pll), PLL_RESET_N | PLL_BYPASSNL, 0);
-> +
-> +       /* Place the PLL mode in OFF state */
-> +       regmap_write(regmap, PLL_OPMODE(pll), 0x0);
-> +}
-> +
-> +static int clk_zonda_pll_set_rate(struct clk_hw *hw, unsigned long rate,
-> +                                 unsigned long prate)
-> +{
-> +       struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
-> +       unsigned long rrate;
-> +       u32 test_ctl_val;
-> +       u32 l;
-> +       u64 a;
-> +       int ret;
-> +
-> +       rrate = alpha_pll_round_rate(rate, prate, &l, &a, ALPHA_BITWIDTH);
-> +
-> +       ret = alpha_pll_check_rate_margin(hw, rrate, rate);
-> +       if (ret < 0)
-> +               return ret;
-> +
-> +       regmap_write(pll->clkr.regmap, PLL_ALPHA_VAL(pll), a);
-> +       regmap_write(pll->clkr.regmap, PLL_L_VAL(pll), l);
-> +
-> +       /* Wait before polling for the frequency latch */
-> +       udelay(5);
-> +
-> +       /* Read stay in cfa mode */
-> +       ret = regmap_read(pll->clkr.regmap, PLL_TEST_CTL(pll), &test_ctl_val);
-> +       if (ret)
-> +               return ret;
-> +
-> +       /* If cfa mode then poll for freq lock */
-> +       if (test_ctl_val & ZONDA_STAY_IN_CFA)
-> +               ret = wait_for_zonda_pll_freq_lock(pll);
-> +       else
-> +               ret = wait_for_pll_enable_lock(pll);
-> +       if (ret)
-> +               return ret;
-> +
-> +       /* Wait for PLL output to stabilize */
-> +       udelay(100);
-> +       return 0;
-> +}
-> +
-> +static unsigned long
-> +clk_zonda_pll_recalc_rate(struct clk_hw *hw, unsigned long parent_rate)
-> +{
-> +       struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
-> +       u32 l, frac;
-> +
-> +       regmap_read(pll->clkr.regmap, PLL_L_VAL(pll), &l);
-> +       regmap_read(pll->clkr.regmap, PLL_ALPHA_VAL(pll), &frac);
-> +
-> +       return alpha_pll_calc_rate(parent_rate, l, frac, ALPHA_BITWIDTH);
-> +}
-> +
-> +const struct clk_ops clk_alpha_pll_zonda_ops = {
-> +       .enable = clk_zonda_pll_enable,
-> +       .disable = clk_zonda_pll_disable,
-> +       .is_enabled = clk_trion_pll_is_enabled,
-> +       .recalc_rate = clk_zonda_pll_recalc_rate,
-> +       .round_rate = clk_alpha_pll_round_rate,
-> +       .set_rate = clk_zonda_pll_set_rate,
-> +};
-> +EXPORT_SYMBOL(clk_alpha_pll_zonda_ops);
-> diff --git a/drivers/clk/qcom/clk-alpha-pll.h b/drivers/clk/qcom/clk-alpha-pll.h
-> index 6943e933be0f..4871af27cf76 100644
-> --- a/drivers/clk/qcom/clk-alpha-pll.h
-> +++ b/drivers/clk/qcom/clk-alpha-pll.h
-> @@ -16,6 +16,7 @@ enum {
->         CLK_ALPHA_PLL_TYPE_TRION,
->         CLK_ALPHA_PLL_TYPE_LUCID = CLK_ALPHA_PLL_TYPE_TRION,
->         CLK_ALPHA_PLL_TYPE_AGERA,
-> +       CLK_ALPHA_PLL_TYPE_ZONDA,
->         CLK_ALPHA_PLL_TYPE_MAX,
->  };
->
-> @@ -148,6 +149,9 @@ extern const struct clk_ops clk_alpha_pll_lucid_5lpe_ops;
->  extern const struct clk_ops clk_alpha_pll_fixed_lucid_5lpe_ops;
->  extern const struct clk_ops clk_alpha_pll_postdiv_lucid_5lpe_ops;
->
-> +extern const struct clk_ops clk_alpha_pll_zonda_ops;
-> +extern const struct clk_ops clk_alpha_pll_postdiv_zonda_ops;
-> +
->  void clk_alpha_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
->                              const struct alpha_pll_config *config);
->  void clk_fabia_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
-> @@ -159,6 +163,8 @@ void clk_agera_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
->  #define clk_lucid_pll_configure(pll, regmap, config) \
->         clk_trion_pll_configure(pll, regmap, config)
->
-> +void clk_zonda_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
-> +                            const struct alpha_pll_config *config);
->
->
->  #endif
+--6TrnltStXW4iwmi0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I'm seeing some checkpatch --strict warnings, with those fixed this
-patch looks good to me.
+Extend regulator notification support
 
-Reviewed-by: Robert Foss <robert.foss@linaro.org>
+This series extends the regulator notification and error flag support.
+Initial discussion on the topic can be found here:
+https://lore.kernel.org/lkml/6046836e22b8252983f08d5621c35ececb97820d.camel=
+@fi.rohmeurope.com/
+
+In a nutshell - the series adds:
+
+1. WARNING level events/error flags. (Patch 3)
+  Current regulator 'ERROR' event notifications for over/under
+  voltage, over current and over temperature are used to indicate
+  condition where monitored entity is so badly "off" that it actually
+  indicates a hardware error which can not be recovered. The most
+  typical hanling for that is believed to be a (graceful)
+  system-shutdown. Here we add set of 'WARNING' level flags to allow
+  sending notifications to consumers before things are 'that badly off'
+  so that consumer drivers can implement recovery-actions.
+2. Device-tree properties for specifying limit values. (Patches 1, 5)
+  Add limits for above mentioned 'ERROR' and 'WARNING' levels (which
+  send notifications to consumers) and also for a 'PROTECTION' level
+  (which will be used to immediately shut-down the regulator(s) W/O
+  informing consumer drivers. Typically implemented by hardware).
+  Property parsing is implemented in regulator core which then calls
+  callback operations for limit setting from the IC drivers. A
+  warning is emitted if protection is requested by device tree but the
+  underlying IC does not support configuring requested protection.
+3. Helpers which can be registered by IC. (Patch 4)
+  Target is to avoid implementing IRQ handling and IRQ storm protection
+  in each IC driver. (Many of the ICs implementin these IRQs do not allow
+  masking or acking the IRQ but keep the IRQ asserted for the whole
+  duration of problem keeping the processor in IRQ handling loop).
+4. Emergency poweroff function (refactored out of the thermal_core to
+  kernel/reboot.c) which is called if IC fires error IRQs but IC reading
+  fails and given retry-count is exceeded. (Patches 2, 4)
+  Please note that the mutex in the emergency shutdown was replaced by a
+  simple atomic in order to allow call from any context.
+
+The helper was attempted to be done so it could be used to implement
+roughly same logic as is used in qcom-labibb regulator. This means
+amongst other things a safety shut-down if IC registers are not readable.
+Using these shut-down retry counters are optional. The idea is that the
+helper could be also used by simpler ICs which do not provide status
+register(s) which can be used to check if error is still active.
+
+ICs which do not have such status register can simply omit the 'renable'
+callback (and retry-counts etc) - and helper assumes the situation is Ok
+and re-enables IRQ after given time period. If problem persists the
+handler is ran again and another notification is sent - but at least the
+delay allows processor to avoid IRQ loop.
+
+Patch 7 takes this notification support in use at BD9576MUF.
+Patch 8 is related to MFD change which is not really related to the RFC
+here. It was added to this series in order to avoid potential conflicts.
+Patch 9 adds a maintainers entry.
+
+Changelog v10:
+   - rebased on v5.13-rc2
+   - Move rdev_*() print macros to the internal.h and use rdev_dbg()
+     from irq_helpers.c
+   - Export rdev_get_name() and move it from coupler.h to driver.h for
+     others to use. (It was already in coupler.h but not exported -
+     usage was limited and coupler.h does not sound like optimal place
+     as rdev_name is not only used by coupled regulators)
+   - Send all regulator notifications from irq_helpers.c at one OR'd
+     event for the sake of simplicity. For BD9576 this does not matter
+     as it has own IRQ for each event case. Header defining events says
+     they may be OR'd.
+   - Change WARN() at protection shutdown to pr_emerg as suggested by
+     Petr.
+Changelog v9:
+   - rebases on v5.13-rc1
+   - Update thermal documentation
+   - Fix regulator notification event number
+Changelog v8:
+   - split shutdown API adding and thermal core taking it in use to
+     own patches.
+   - replace the spinlock with atomic when ensuring the emergency
+     shutdown is only called once.
+Changelog v7:
+  general:
+   - rebased on v5.12-rc7
+   - new patch for refactoring the hw-failure reboot logic out of
+     thermal_core.c for others to use.
+  notification helpers:
+   - fix regulator error_flags query
+   - grammar/typos
+   - do not BUG() but attempt to shut-down the system
+   - use BITS_PER_TYPE()
+
+Changelog v6:
+  Add MAINTAINERS entry
+  Changes to IRQ notifiers
+   - move devm functions to drivers/regulator/devres.c
+   - drop irq validity check
+   - use devm_add_action_or_reset()
+   - fix styling issues
+   - fix kerneldocs
+
+Changelog v5:
+   - Fix the badly formatted pr_emerg() call.
+
+Changelog v4:
+   - rebased on v5.12-rc6
+   - dropped RFC
+   - fix external FET DT-binding.
+   - improve prints for cases when expecting HW failure.
+   - styling and typos
+
+Changelog v3:
+  Regulator core:
+   - Fix dangling pointer access at regulator_irq_helper()
+  stpmic1_regulator:
+   - fix function prototype (compile error)
+  bd9576-regulator:
+   - Update over current limits to what was given in new data-sheet
+     (REV00K)
+   - Allow over-current monitoring without external FET. Set limits to
+     values given in data-sheet (REV00K).
+
+Changelog v2:
+  Generic:
+  - rebase on v5.12-rc2 + BD9576 series
+  - Split devm variant of delayed wq to own series
+  Regulator framework:
+  - Provide non devm variant of IRQ notification helpers
+  - shorten dt-property names as suggested by Rob
+  - unconditionally call map_event in IRQ handling and require it to be
+    populated
+  BD9576 regulators:
+  - change the FET resistance property to micro-ohms
+  - fix voltage computation in OC limit setting
+
+--
+
+Matti Vaittinen (11):
+  dt_bindings: Add protection limit properties
+  reboot: Add hardware protection power-off
+  thermal: Use generic HW-protection shutdown API
+  regulator: add warning flags
+  regulator: move rdev_print helpers to internal.h
+  regulator: IRQ based event/error notification helpers
+  regulator: add property parsing and callbacks to set protection limits
+  dt-bindings: regulator: bd9576 add FET ON-resistance for OCW
+  regulator: bd9576: Support error reporting
+  regulator: bd9576: Fix the driver name in id table
+  MAINTAINERS: Add reviewer for regulator irq_helpers
+
+ .../bindings/regulator/regulator.yaml         |   82 ++
+ .../regulator/rohm,bd9576-regulator.yaml      |    6 +
+ .../driver-api/thermal/sysfs-api.rst          |   24 +-
+ MAINTAINERS                                   |    4 +
+ drivers/regulator/Makefile                    |    2 +-
+ drivers/regulator/bd9576-regulator.c          | 1054 +++++++++++++++--
+ drivers/regulator/core.c                      |  163 ++-
+ drivers/regulator/devres.c                    |   52 +
+ drivers/regulator/internal.h                  |   11 +
+ drivers/regulator/irq_helpers.c               |  397 +++++++
+ drivers/regulator/of_regulator.c              |   58 +
+ drivers/regulator/qcom-labibb-regulator.c     |   10 +-
+ drivers/regulator/qcom_spmi-regulator.c       |    6 +-
+ drivers/regulator/stpmic1_regulator.c         |   20 +-
+ drivers/thermal/thermal_core.c                |   63 +-
+ include/linux/reboot.h                        |    1 +
+ include/linux/regulator/consumer.h            |   14 +
+ include/linux/regulator/coupler.h             |    5 -
+ include/linux/regulator/driver.h              |  186 ++-
+ include/linux/regulator/machine.h             |   26 +
+ kernel/reboot.c                               |   79 ++
+ 21 files changed, 2030 insertions(+), 233 deletions(-)
+ create mode 100644 drivers/regulator/irq_helpers.c
+
+
+base-commit: d07f6ca923ea0927a1024dfccafc5b53b61cfecc
+--=20
+2.25.4
+
+
+--=20
+Matti Vaittinen, Linux device drivers
+ROHM Semiconductors, Finland SWDC
+Kiviharjunlenkki 1E
+90220 OULU
+FINLAND
+
+~~~ "I don't think so," said Rene Descartes. Just then he vanished ~~~
+Simon says - in Latin please.
+~~~ "non cogito me" dixit Rene Descarte, deinde evanescavit ~~~
+Thanks to Simon Glass for the translation =3D]=20
+
+--6TrnltStXW4iwmi0
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCAAdFiEEIx+f8wZb28fLKEhTeFA3/03aocUFAmCjo/AACgkQeFA3/03a
+ocVZDAgAleBW9ZiN6uLa1j337BvbdTonJLEg9vdNBDzmNez6HRG2Smap0OJNhoiM
+vvIHMV0xSK6jSWtDOr60rDqT8dKMpJ5j/sqNhsDqS59w0Z5jV3Fhjmvo/mL5jsCw
+vgaoA9tQByFOlMWavEyNmadqejsIPX0EdWZPQHe5cVNKvUUMFILKzd3oaxq/S38I
+SYl5qMDPtW9aCAOHLtP5GKySHyuZF/bG8eYHkQNELAgUQ70AKyx9WDCEhrzv6/Wl
+GQ8gCLkUKg75Ufe/KetGliz9JFmIrN0B2Ciq56Xw8Bjr2IGQKzQ1/G5RAH4whoZj
+kA0Hpk9a9hgWq1iztGpoxvOkhejFZg==
+=dZB2
+-----END PGP SIGNATURE-----
+
+--6TrnltStXW4iwmi0--
