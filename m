@@ -2,129 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CA35F3881C5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 May 2021 22:57:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 28DE43881F3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 May 2021 23:16:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352300AbhERU7L (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 May 2021 16:59:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58762 "EHLO
+        id S240725AbhERVR0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 May 2021 17:17:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34682 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352289AbhERU7K (ORCPT
+        with ESMTP id S235250AbhERVR0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 May 2021 16:59:10 -0400
-Received: from m-r1.th.seeweb.it (m-r1.th.seeweb.it [IPv6:2001:4b7a:2000:18::170])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7910C061573
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 May 2021 13:57:51 -0700 (PDT)
-Received: from [192.168.1.101] (83.6.168.104.neoplus.adsl.tpnet.pl [83.6.168.104])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 81A5B1F94B;
-        Tue, 18 May 2021 22:57:46 +0200 (CEST)
-Subject: Re: [PATCH] arm64: dts: qcom: add initial device-tree for Microsoft
- Surface Duo
-To:     Felipe Balbi <balbi@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        Felipe Balbi <felipe.balbi@microsoft.com>
-References: <20210510120547.1315536-1-balbi@kernel.org>
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-Message-ID: <397b7def-99fb-1084-f0bd-6da81066af17@somainline.org>
-Date:   Tue, 18 May 2021 22:57:45 +0200
+        Tue, 18 May 2021 17:17:26 -0400
+Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A48A6C061573
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 May 2021 14:16:07 -0700 (PDT)
+Received: by mail-lj1-x229.google.com with SMTP id o8so13194042ljp.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 May 2021 14:16:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=cvtZ6ckUlmE+gpWNrBbw9zxXMPT5gh65PGrIYRqcK5Y=;
+        b=iLl0ogtDiHXNumD0oddnV4kaw9Ev2AwKFeUmc2FjyS+1M6VOsapRKaqm7p2BglvgxI
+         T6dmZ/sUaHraMvyjpXwbpGnJb+kLpKcmvfMepzi9aH2S8ld/vgsm91XDqtfJmh8xlAwM
+         dAdfTX4DzekHupKNC7n1eYCOMU98eToddA/jxOtwmGQ1IlM17Dsg01JnAzLmsMIpf791
+         Myf2aXgx3l84KQt4Jo9VHjzcvWiD7/VQ02tVsUP6zOzYpWhK65la6QKwCMuNZVS9mLy0
+         cPR2YFgDBwfLkGBDPwmHudjJXoaZHyF5/RWTljNuCUZWR8dkqteiMUoBh4j4hTjoQ6Uw
+         Rykg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=cvtZ6ckUlmE+gpWNrBbw9zxXMPT5gh65PGrIYRqcK5Y=;
+        b=s27kP2JWrrNW4ZXQvirZTnU5nhQJg0khnwzMlXwJq4bV/IRjQWEY7TM/2TFns0hIgz
+         47bza0FU+b45U2rRyAFT6CcBe28ai3d/FsNRi25jTGcOBJAhF6ajrbqc33qCSlcQpDNf
+         wBWu/dl77KONZzhk/chAifDzlSJ60g1kYuSgguXub78pFs9MvdLwpH6ZBVH9d+HMIBeo
+         SYgkoA/o30x4G7aSBosrd6rkEulhDp1DMidEtRAeOePZUdcTf+parIfOu10Q1I30yHxr
+         K0rpEkmBMR0XutshWQjmsEVPQTPQ9ereFN91XNAt8mfIcl7TuQy6aKH1C/AtMX3XSpk0
+         dhiQ==
+X-Gm-Message-State: AOAM532Ka4BCsCZ5HETugTPMUb6HbrpgiAdplFfmclpCJ2Ff9J67+ErE
+        rijeCUGB6m0+K1Q2UJ7r7ZGG+g==
+X-Google-Smtp-Source: ABdhPJwdgDivEG21hAH7jNDs5nhwwFl04oy+clqY5EDKhnLQf9OSj189KQKsWbxE+tXrlXFlPH8ilg==
+X-Received: by 2002:a2e:808f:: with SMTP id i15mr5579846ljg.376.1621372566177;
+        Tue, 18 May 2021 14:16:06 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id v66sm546415lfa.222.2021.05.18.14.16.05
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 18 May 2021 14:16:05 -0700 (PDT)
+Subject: Re: [RESEND PATCH V4 2/8] arm64: dts: qcom: sc7280: Add thermal-zones
+ node
+To:     Matthias Kaehlcke <mka@chromium.org>, Vinod Koul <vkoul@kernel.org>
+Cc:     satya priya <skakit@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, kgunda@codeaurora.org
+References: <1621318822-29332-1-git-send-email-skakit@codeaurora.org>
+ <1621318822-29332-3-git-send-email-skakit@codeaurora.org>
+ <YKOog43JZghth3Np@vkoul-mobl.Dlink> <YKPq84r7soE0yjMA@google.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Message-ID: <2b1e0927-5521-1a6d-eedb-27f420bf2cb2@linaro.org>
+Date:   Wed, 19 May 2021 00:16:05 +0300
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.10.1
+ Thunderbird/78.10.0
 MIME-Version: 1.0
-In-Reply-To: <20210510120547.1315536-1-balbi@kernel.org>
-Content-Type: text/plain; charset=utf-8
+In-Reply-To: <YKPq84r7soE0yjMA@google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
 Content-Transfer-Encoding: 7bit
-Content-Language: en-US
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi!
+On 18/05/2021 19:27, Matthias Kaehlcke wrote:
+> On Tue, May 18, 2021 at 05:14:03PM +0530, Vinod Koul wrote:
+>> On 18-05-21, 11:50, satya priya wrote:
+>>> Add thermal-zones node for SC7280 SoC.
+>>>
+>>> Signed-off-by: satya priya <skakit@codeaurora.org>
+>>> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+>>> ---
+>>> Changes in RESEND V4:
+>>>   - No Changes.
+>>>
+>>>   arch/arm64/boot/dts/qcom/sc7280.dtsi | 3 +++
+>>>   1 file changed, 3 insertions(+)
+>>>
+>>> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>>> index 2cc4785..2a7d488 100644
+>>> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>>> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>>> @@ -1125,4 +1125,7 @@
+>>>   			     <GIC_PPI 11 IRQ_TYPE_LEVEL_LOW>,
+>>>   			     <GIC_PPI 10 IRQ_TYPE_LEVEL_LOW>;
+>>>   	};
+>>> +
+>>> +	thermal_zones: thermal-zones {
+>>> +	};
+>>
+>> Empty node..? what am i missing here...
+> 
+> The 'thermal-zones' node with the SoC thermal zones is usually created
+> in the <soc>.dtsi, however it doesn't exist yet. The 'Add DT bindings
+> and device tree nodes for TSENS in SC7280' series
+> (https://patchwork.kernel.org/project/linux-arm-msm/list/?series=478225)
+> is creating it, but the series hasn't landed yet.
+> 
+> The node is needed by other patches in this series that add non-SoC
+> thermal zones. Hence either an empty node needs to be added (for now)
+> or this series should 'officially' depend on the TSENS series mentioned
+> above.
+
+You can reference the TZ node as /thermal-zones/ even from non-SoC 
+includes. See pm8150.dtsi for example.
 
 
-> +/ {
-> +	model = "Microsoft Surface Duo";
-> +	compatible = "microsoft,surface-duo", "qcom,sm8150-mtp";
-> +
-Please remove the -mtp compatible, as the phone is not 1:1 compatible with the MTP design and replace it with the platform-generic "qcom,sm8150" (otherwise things like CPUFreq won't work!).
-
-
-> +
-> +	aliases {
-> +		serial0 = &uart2;
-> +	};
-> +
-> +	chosen {
-> +		stdout-path = "serial0:115200n8";
-> +	};
-> +
-
-Is the serial port exposed and enabled on production hardware?
-
-
-> +
-> +	bq27742@55 {
-> +		compatible = "ti,bq27742";
-> +		reg = <0x55>;
-> +	};
-> +
-> +	da7280@4a {
-> +		compatible = "dlg,da7280";
-> +		reg = <0x4a>;
-> +		interrupts-extended = <&tlmm 42 IRQ_TYPE_LEVEL_LOW>;
-> +		pinctrl-names = "da7280_default";
-> +		pinctrl-0 = <&da7280_intr_default>;
-> +
-> +		dlg,actuator-type = "LRA";
-> +		dlg,dlg,const-op-mode = <1>;
-> +		dlg,dlg,periodic-op-mode = <1>;
-> +		dlg,nom-microvolt = <2000000>;
-> +		dlg,abs-max-microvolt = <2000000>;
-> +		dlg,imax-microamp = <129000>;
-> +		dlg,resonant-freq-hz = <180>;
-> +		dlg,impd-micro-ohms = <14300000>;
-> +		dlg,freq-track-enable;
-> +		dlg,bemf-sens-enable;
-> +		dlg,mem-array = <
-> +		  0x06 0x08 0x10 0x11 0x12 0x13 0x14 0x15 0x1c 0x2a
-> +		  0x33 0x3c 0x42 0x4b 0x4c 0x4e 0x17 0x19 0x27 0x29
-> +		  0x17 0x19 0x03 0x84 0x5e 0x04 0x08 0x84 0x5d 0x01
-> +		  0x84 0x5e 0x02 0x00 0xa4 0x5d 0x03 0x84 0x5e 0x06
-> +		  0x08 0x84 0x5d 0x05 0x84 0x5d 0x06 0x84 0x5e 0x08
-> +		  0x84 0x5e 0x05 0x8c 0x5e 0x24 0x84 0x5f 0x10 0x84
-> +		  0x5e 0x05 0x84 0x5e 0x08 0x84 0x5f 0x01 0x8c 0x5e
-> +		  0x04 0x84 0x5e 0x08 0x84 0x5f 0x11 0x19 0x88 0x00
-> +		  0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00
-> +		  0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00
-> +		>;
-> +	};
-> +
-> +	/* SMB1381 @ 0x44 */
-> +	/* MAX34417 @ 0x1c */
-> +};
-
-Please add generic labels to these peripherals, such as "vibrator: " or so.
-
-
-> +&i2c17 {
-> +	status = "okay";
-> +	clock-frequency = <400000>;
-> +
-> +	bq27742@55 {
-> +		compatible = "ti,bq27742";
-> +		reg = <0x55>;
-> +	};
-> +};
-
-Are there actually two of these TI ICs, presumably for the dual-batteries? If that's the case, could you add a comment specifying which one is in charge (pun intended) of which cell?
-
-
-Aside from that, it generally looks good :)
-
-
-Konrad
-
+-- 
+With best wishes
+Dmitry
