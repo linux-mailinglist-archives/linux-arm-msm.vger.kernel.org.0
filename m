@@ -2,214 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7E96A38820A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 May 2021 23:19:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3359138824B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 May 2021 23:42:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352475AbhERVUs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 May 2021 17:20:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35452 "EHLO
+        id S1352560AbhERVnk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 May 2021 17:43:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40548 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352466AbhERVUr (ORCPT
+        with ESMTP id S1352556AbhERVnj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 May 2021 17:20:47 -0400
-Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4FAEAC061573
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 May 2021 14:19:29 -0700 (PDT)
-Received: by mail-pl1-x635.google.com with SMTP id v13so5825922ple.9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 May 2021 14:19:29 -0700 (PDT)
+        Tue, 18 May 2021 17:43:39 -0400
+Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 387A2C061573
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 May 2021 14:42:20 -0700 (PDT)
+Received: by mail-oi1-x22c.google.com with SMTP id v22so11218810oic.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 May 2021 14:42:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=bLWRn4YrBPmazJ8WI5kmmonzugp1WS3cDhiksn1lYpA=;
-        b=RiAZucGr2tMDReAvGRghbavv+OqeexmPwk9L0Sa1G0N1lVW4bugRRy6QeOZ0uEmjfH
-         5PaxShh07y+EeD5JiNr/T9HbgsyTau/uKGP9aptCxiQILfafQr/8l9GWKns49cxBaEJs
-         tDub1Bn5LtCmIs9AVjtA7+iL+ny+34QzNTu2v+CMpuxoQGtbXFpBJM7I+Q17PlLFX1Tj
-         0uQQFPGe4uEEBw81peImZaTgd+CimyIb68zX6CN1Sfb1GsfeEYnIYmF+ObhCJ46I3RVA
-         Dj+DiBd7ShzKixZqcFIrenx8csAgHAkprcQIzr2pMrdgnmi3E9V2fdsXPqhLNVCGznQL
-         GSiA==
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=P2BFiut883Wk/O9dHYh5DtbSYu9aoR0O90BzeK6m1Ys=;
+        b=jy5qlX0rsrDaPRzUFlx4Y9rYQU3p5CxptO5FN7VNVOOi2zC35MEcCaOjsKJIE8sPew
+         NWvgQyxLt6SAKvgye1AqhtWqUucNYWri8HHDGg4EJiG8nwZ8LbSebDvIUQNMvZ1eiVlD
+         D7wETwfewuPyny4AqbUC2UC5JxM8YKKeMYdZ8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=bLWRn4YrBPmazJ8WI5kmmonzugp1WS3cDhiksn1lYpA=;
-        b=gvtTl1TBTQU4LLTRgDi+/TngiK8mp3IcQ6OgFgQle2anw6QpW81vlodBceNYblmOl5
-         5R0iq9SUX5sAuxi7c5iYytUo5X6ICw6JU2YXM0KkF+iCkQ6DTAFlQCRkt4Ezfb1xhwIh
-         jT8V5meX3g/4kQn5xIE5Raatj5SCv5i/rLHqKqPttRGPe45IjsbgrqLSYhI+AVDkuQY8
-         ZqJaY69HedGEczpd6uBQi3lJaE7mQRoIn0KRnt0WW3l61yG2FKs8uFQdpPvXbeD2fvvo
-         PMiieHDdiAzsRTyQi2xh6pgotAEJERYWyts1mlbOW+qmScgAgrVC3z/x1JcVSCDB+ScX
-         zF9Q==
-X-Gm-Message-State: AOAM530xf8OdMF5jw6WutOovBiy6DRXCsTu1Hn9KxiOmXdmcJ8Ctc53o
-        8HUKJUwXS4n3Jnra7bCnzsZvjg==
-X-Google-Smtp-Source: ABdhPJxHjKGb/4+/e9ItkwLk86iv5/VqrabAvfiV4n0yDMTb9BhGqOB4FZ7RycC3MZjGKKimegcReg==
-X-Received: by 2002:a17:902:7c0f:b029:ec:f5e2:4442 with SMTP id x15-20020a1709027c0fb02900ecf5e24442mr6753915pll.81.1621372768894;
-        Tue, 18 May 2021 14:19:28 -0700 (PDT)
-Received: from localhost.localdomain ([2601:1c2:680:1319:692:26ff:feda:3a81])
-        by smtp.gmail.com with ESMTPSA id g89sm2587199pjg.30.2021.05.18.14.19.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 May 2021 14:19:28 -0700 (PDT)
-From:   John Stultz <john.stultz@linaro.org>
-To:     lkml <linux-kernel@vger.kernel.org>
-Cc:     John Stultz <john.stultz@linaro.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Joerg Roedel <joro@8bytes.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Jason Cooper <jason@lakedaemon.net>,
-        Marc Zyngier <maz@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kalle Valo <kvalo@codeaurora.org>,
-        Maulik Shah <mkshah@codeaurora.org>,
-        Lina Iyer <ilina@codeaurora.org>,
-        Saravana Kannan <saravanak@google.com>,
-        Todd Kjos <tkjos@google.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-arm-msm@vger.kernel.org, iommu@lists.linux-foundation.org,
-        linux-gpio@vger.kernel.org
-Subject: [PATCH 2/2] firmware: QCOM_SCM: Allow qcom_scm driver to be loadable as a permenent module
-Date:   Tue, 18 May 2021 21:19:22 +0000
-Message-Id: <20210518211922.3474368-2-john.stultz@linaro.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20210518211922.3474368-1-john.stultz@linaro.org>
-References: <20210518211922.3474368-1-john.stultz@linaro.org>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=P2BFiut883Wk/O9dHYh5DtbSYu9aoR0O90BzeK6m1Ys=;
+        b=WQRCqINlkPFK9JsTyeppzNrX4jy4WeIiXGplDCph89RvZxCVoXAR/QFbZiKDU98J87
+         me7WcPMDhzMhqtQWwU0MGHGcPqQioFdDkUsma3tfbHXGJSVlcRSrRWU6SOcsdqKyPOYM
+         0XIliqw0mNC4JjSTPvIXuN0lrn3tF06OnfiF/yt1T8Dzb1GOtY/g2xu762pKfX6FIlFR
+         IdYEtoZSTB+u7y8b2VysLwYb3Xp8HxUpcBNwY5Pk7FIkEiT/ahTVm5Hhu5zbE9hlbYgX
+         ZDzV6aVh++9HR15cmPbTvlc9FqbhuZBUA3vxVTMKTK9wvTS07Z/lq0dn4UDlFY+5EYTD
+         3rPA==
+X-Gm-Message-State: AOAM532BBAugPyixSEdSaC/cZPHLvbJ497ndL1bYZXdHsJK4kzFovxcv
+        excExTJw/pyaAi30tiNLEaN5SlQ/NoRyso9Qhwr6nw==
+X-Google-Smtp-Source: ABdhPJxs+FM+fIEe7OcwYdDoX96musI15SfqRciK/EHUrjpF6HXRQZqWM6KEFCt81pz9PERMR8kvPnDCM0vwyFr7O4M=
+X-Received: by 2002:a54:4501:: with SMTP id l1mr5533426oil.19.1621374139680;
+ Tue, 18 May 2021 14:42:19 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 18 May 2021 17:42:18 -0400
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <1621013713-6860-1-git-send-email-khsieh@codeaurora.org>
+References: <1621013713-6860-1-git-send-email-khsieh@codeaurora.org>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.9.1
+Date:   Tue, 18 May 2021 17:42:18 -0400
+Message-ID: <CAE-0n53VUr=f=PKnO5HhXZ3BAG_mNBwmQrfQPxHvxLZPDReA+g@mail.gmail.com>
+Subject: Re: [PATCH v4 1/2] drm/msm/dp: handle irq_hpd with sink_count = 0 correctly
+To:     Kuogee Hsieh <khsieh@codeaurora.org>, agross@kernel.org,
+        bjorn.andersson@linaro.org, robdclark@gmail.com, sean@poorly.run,
+        vkoul@kernel.org
+Cc:     abhinavk@codeaurora.org, aravindh@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Allow the qcom_scm driver to be loadable as a permenent module.
+Quoting Kuogee Hsieh (2021-05-14 10:35:13)
+> irq_hpd interrupt should be handled after dongle plugged in and
+> before dongle unplugged. Hence irq_hpd interrupt is enabled at
+> the end of the plugin handle and disabled at the beginning of
+> unplugged handle. Current irq_hpd with sink_count = 0 is wrongly
+> handled same as the dongle unplugged which tears down the mainlink
+> and disables the phy. This patch fixes this problem by only tearing
+> down the mainlink but keeping phy enabled at irq_hpd with
+> sink_count = 0 handle so that next irq_hpd with sink_count =1 can be
+> handled by setup mainlink only.
+>
+> Changes in v2:
+> -- add ctrl->phy_Power_count
+>
+> Changes in v3:
+> -- del ctrl->phy_Power_count
+> -- add phy_power_off to dp_ctrl_off_link_stream()
+>
+> Changes in v4:
+> -- return immediately if clock disable failed at dp_ctrl_off_link_stream()
+>
+> Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
 
-This still uses the "depends on QCOM_SCM || !QCOM_SCM" bit to
-ensure that drivers that call into the qcom_scm driver are
-also built as modules. While not ideal in some cases its the
-only safe way I can find to avoid build errors without having
-those drivers select QCOM_SCM and have to force it on (as
-QCOM_SCM=n can be valid for those drivers).
+I think we want some Fixes tag. Not sure what it would be though.
 
-Reviving this now that Saravana's fw_devlink defaults to on,
-which should avoid loading troubles seen before.
+I also noticed that if I plug and unplug the HDMI cable from my apple
+dongle that I see this error message
 
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Will Deacon <will@kernel.org>
-Cc: Andy Gross <agross@kernel.org>
-Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc: Joerg Roedel <joro@8bytes.org>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Cc: Jason Cooper <jason@lakedaemon.net>
-Cc: Marc Zyngier <maz@kernel.org>
-Cc: Linus Walleij <linus.walleij@linaro.org>
-Cc: Vinod Koul <vkoul@kernel.org>
-Cc: Kalle Valo <kvalo@codeaurora.org>
-Cc: Maulik Shah <mkshah@codeaurora.org>
-Cc: Lina Iyer <ilina@codeaurora.org>
-Cc: Saravana Kannan <saravanak@google.com>
-Cc: Todd Kjos <tkjos@google.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: linux-arm-msm@vger.kernel.org
-Cc: iommu@lists.linux-foundation.org
-Cc: linux-gpio@vger.kernel.org
-Acked-by: Kalle Valo <kvalo@codeaurora.org>
-Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Signed-off-by: John Stultz <john.stultz@linaro.org>
----
-v3:
-* Fix __arm_smccc_smc build issue reported by
-  kernel test robot <lkp@intel.com>
-v4:
-* Add "depends on QCOM_SCM || !QCOM_SCM" bit to ath10k
-  config that requires it.
-v5:
-* Fix QCOM_QCM typo in Kconfig, it should be QCOM_SCM
----
- drivers/firmware/Kconfig                | 2 +-
- drivers/firmware/Makefile               | 3 ++-
- drivers/firmware/qcom_scm.c             | 4 ++++
- drivers/iommu/Kconfig                   | 2 ++
- drivers/net/wireless/ath/ath10k/Kconfig | 1 +
- 5 files changed, 10 insertions(+), 2 deletions(-)
+  [drm:dp_display_usbpd_attention_cb] *ERROR* Disconnected, no
+DP_LINK_STATUS_UPDATED
 
-diff --git a/drivers/firmware/Kconfig b/drivers/firmware/Kconfig
-index db0ea2d2d75a2..af53778edc7e2 100644
---- a/drivers/firmware/Kconfig
-+++ b/drivers/firmware/Kconfig
-@@ -235,7 +235,7 @@ config INTEL_STRATIX10_RSU
- 	  Say Y here if you want Intel RSU support.
- 
- config QCOM_SCM
--	bool
-+	tristate "Qcom SCM driver"
- 	depends on ARM || ARM64
- 	depends on HAVE_ARM_SMCCC
- 	select RESET_CONTROLLER
-diff --git a/drivers/firmware/Makefile b/drivers/firmware/Makefile
-index 5e013b6a3692e..523173cbff335 100644
---- a/drivers/firmware/Makefile
-+++ b/drivers/firmware/Makefile
-@@ -17,7 +17,8 @@ obj-$(CONFIG_ISCSI_IBFT)	+= iscsi_ibft.o
- obj-$(CONFIG_FIRMWARE_MEMMAP)	+= memmap.o
- obj-$(CONFIG_RASPBERRYPI_FIRMWARE) += raspberrypi.o
- obj-$(CONFIG_FW_CFG_SYSFS)	+= qemu_fw_cfg.o
--obj-$(CONFIG_QCOM_SCM)		+= qcom_scm.o qcom_scm-smc.o qcom_scm-legacy.o
-+obj-$(CONFIG_QCOM_SCM)		+= qcom-scm.o
-+qcom-scm-objs += qcom_scm.o qcom_scm-smc.o qcom_scm-legacy.o
- obj-$(CONFIG_TI_SCI_PROTOCOL)	+= ti_sci.o
- obj-$(CONFIG_TRUSTED_FOUNDATIONS) += trusted_foundations.o
- obj-$(CONFIG_TURRIS_MOX_RWTM)	+= turris-mox-rwtm.o
-diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
-index ee9cb545e73b9..bb9ce3f92931a 100644
---- a/drivers/firmware/qcom_scm.c
-+++ b/drivers/firmware/qcom_scm.c
-@@ -1296,6 +1296,7 @@ static const struct of_device_id qcom_scm_dt_match[] = {
- 	{ .compatible = "qcom,scm" },
- 	{}
- };
-+MODULE_DEVICE_TABLE(of, qcom_scm_dt_match);
- 
- static struct platform_driver qcom_scm_driver = {
- 	.driver = {
-@@ -1312,3 +1313,6 @@ static int __init qcom_scm_init(void)
- 	return platform_driver_register(&qcom_scm_driver);
+which looks like the irq_hpd comes in while I'm disconnecting the HDMI
+cable but the hpd_state is ST_DISCONNECTED. The state is set to
+ST_DISCONNECTED in msm_dp_display_disable() so it seems that userspace
+has turned off the external display, and then the kthread runs for the
+irq_hpd but it's too late.
+
+Something is missing from this patch then to properly disable the
+IRQ_HPD interrupt before telling userspace that the external display is
+disconnected. Shouldn't we be toggling the irq enable bits from the
+hardirq context when we figure out what it is? The logic would be
+
+ in_hardirq() {
+
+   if (hpd high)
+      enable_irq_hpd(); // Probably this can be delayed to the kthread
+after enabling the link
+
+   if (hpd_low)
+      disable_irq_hpd(); // But this certainly cannot be in the kthread
+
+   else if (irq_hpd) // Notice the else-if so that if hpd is low we
+don't even try to handle irq_hpd if it came in at the same time
+      handle_irq_hpd();
  }
- subsys_initcall(qcom_scm_init);
-+
-+MODULE_DESCRIPTION("Qualcomm Technologies, Inc. SCM driver");
-+MODULE_LICENSE("GPL v2");
-diff --git a/drivers/iommu/Kconfig b/drivers/iommu/Kconfig
-index 1f111b399bcab..38f7b7a8e2843 100644
---- a/drivers/iommu/Kconfig
-+++ b/drivers/iommu/Kconfig
-@@ -253,6 +253,7 @@ config SPAPR_TCE_IOMMU
- config ARM_SMMU
- 	tristate "ARM Ltd. System MMU (SMMU) Support"
- 	depends on ARM64 || ARM || (COMPILE_TEST && !GENERIC_ATOMIC64)
-+	depends on QCOM_SCM || !QCOM_SCM #if QCOM_SCM=m this can't be =y
- 	select IOMMU_API
- 	select IOMMU_IO_PGTABLE_LPAE
- 	select ARM_DMA_USE_IOMMU if ARM
-@@ -382,6 +383,7 @@ config QCOM_IOMMU
- 	# Note: iommu drivers cannot (yet?) be built as modules
- 	bool "Qualcomm IOMMU Support"
- 	depends on ARCH_QCOM || (COMPILE_TEST && !GENERIC_ATOMIC64)
-+	depends on QCOM_SCM=y
- 	select IOMMU_API
- 	select IOMMU_IO_PGTABLE_LPAE
- 	select ARM_DMA_USE_IOMMU
-diff --git a/drivers/net/wireless/ath/ath10k/Kconfig b/drivers/net/wireless/ath/ath10k/Kconfig
-index 40f91bc8514d8..741289e385d59 100644
---- a/drivers/net/wireless/ath/ath10k/Kconfig
-+++ b/drivers/net/wireless/ath/ath10k/Kconfig
-@@ -44,6 +44,7 @@ config ATH10K_SNOC
- 	tristate "Qualcomm ath10k SNOC support"
- 	depends on ATH10K
- 	depends on ARCH_QCOM || COMPILE_TEST
-+	depends on QCOM_SCM || !QCOM_SCM #if QCOM_SCM=m this can't be =y
- 	select QCOM_QMI_HELPERS
- 	help
- 	  This module adds support for integrated WCN3990 chip connected
--- 
-2.25.1
 
+Because we can't really mess with the irq controls in the kthread when
+hpd goes low, it will be too late. For all we know, the kthread could
+run seconds later, after an irq_hpd has come bouncing in at the same
+time and pushed an irq_hpd handling event onto the kthread.
