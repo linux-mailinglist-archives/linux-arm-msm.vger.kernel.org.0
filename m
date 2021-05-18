@@ -2,107 +2,163 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E53B8387C52
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 May 2021 17:20:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 59F25387C94
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 May 2021 17:38:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350117AbhERPVi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 May 2021 11:21:38 -0400
-Received: from mail.kernel.org ([198.145.29.99]:54296 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1350112AbhERPVi (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 May 2021 11:21:38 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 7214D61074;
-        Tue, 18 May 2021 15:20:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1621351219;
-        bh=pM/wP3SO41YR80bpdiSeEVPNAWyq2ivENVttrfaRQHs=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=Cr1JVzJpVxA9bSwQKfEm7NFNpHGuLvIkYLdaPZDX+C04HCezG/s5TBTjK9uPufG5L
-         GtFvCKBz5kMWgJHH+XhgR0JlDEF/iTBluzxOOc+4BO/fQpibetNmRFhufzRF1yV8VY
-         x9HOX6XVrYiyd0Y6jgdV6N4WPeIaL/LVMNloD6yt0gchD6fM96IqYzeEj/4nkCFHWz
-         hJwFzDA0zSO1mpfD+i5JynSGp5np3T8DSq3krsGVW3Gyc3r6/AnuebRjtw8pSeewCJ
-         /TmysaiRwgEK2rr0mdEnEcSxpeg0+wpAqCYrC56AfBTeOqxua0LKmKqpAVJd4PCXKL
-         FUajvLvD2jzOg==
-Date:   Tue, 18 May 2021 17:20:14 +0200
-From:   Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Cc:     linuxarm@huawei.com, mauro.chehab@huawei.com,
+        id S1350255AbhERPjb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 May 2021 11:39:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42786 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1350244AbhERPja (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 18 May 2021 11:39:30 -0400
+Received: from mail-qk1-x732.google.com (mail-qk1-x732.google.com [IPv6:2607:f8b0:4864:20::732])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C6ABC061756
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 May 2021 08:38:11 -0700 (PDT)
+Received: by mail-qk1-x732.google.com with SMTP id a2so9648730qkh.11
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 May 2021 08:38:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=fHk8jTLjGRhBkosG/Y9mmV4IXiwYJNJWhiEHtFbYDBE=;
+        b=KL8aoq2dBknGdwjLoxfcvrplt+zbdX4cbam2aZQNX1/s4a3hyLLKwCL570ng4FkciW
+         caehR6MGKn8Jz6XiEa5lcmt+/9BX+B8mJBcgl9LSiD4UWG9UsnzX40ErxOeUnaNbBQQz
+         9Y+Yn83CBn0i8D/AH4OsAwGCEsDLShH9uzUevV2+AaHC95xUJhgGsC2oKcfNpDuUSgaI
+         beZF5lY9Ga/E97/OoUd/G77UkrnKBseOWRBsnr0zWAAriMrqSanKC/a1+uT5Yg5yU0L2
+         A/eSTy4mgkHx9KiTf9AuQQ/HqD7RhNspwhPF0DL7BG2jCf+hfgvX3nAFk8xWUkd7POrf
+         PJxw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=fHk8jTLjGRhBkosG/Y9mmV4IXiwYJNJWhiEHtFbYDBE=;
+        b=dXJgbqPUvekIAT/OX95EP/K1vP2CgwqkH3W+e+s5KIZ9vA5sUZn4o5rNMAOeKdguHV
+         HEWxP/p/Qm7kif5DcPBUFZ+mUkcmm8lBwP3+SKzEcE9V0vWdoOTsn2mpSl43IG7MACAg
+         Zi/q5WpGxp2FaX/gBOhIf615J2ZuXQK/TZumKBrxaepRLVG4AnOh5PGweSMxm6KWyzu3
+         5gKO1G/00rvkW3diCrrNCMVlRxoRIpFxegI0xBOSclaLxQwBEAXfEQnOoDeSTuN70zqg
+         znVQLDoGafpooePxfXR66qLlvyWa2j8zpwL+hvGxdR08CIYP3HcQlWsu5ylnTXOQ0W5y
+         O3eg==
+X-Gm-Message-State: AOAM532HVawg7/5imKvUkU1gV7sGAuWPOhbQQ9WTjtmW65qH8Q07MeXB
+        l+4usNZU6xYlVxVqM7cP4ZjljA==
+X-Google-Smtp-Source: ABdhPJzDZ3tqdXRScQz088nvn5Uj75hTZPqJ2TQAAvPz7G51zpOw4SlYxu/1Iko+aKuPUXfhFo0aCQ==
+X-Received: by 2002:a05:620a:2291:: with SMTP id o17mr6071185qkh.150.1621352290394;
+        Tue, 18 May 2021 08:38:10 -0700 (PDT)
+Received: from [192.168.1.93] (pool-71-163-245-5.washdc.fios.verizon.net. [71.163.245.5])
+        by smtp.gmail.com with ESMTPSA id o4sm7155973qkb.29.2021.05.18.08.38.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 18 May 2021 08:38:09 -0700 (PDT)
+Subject: Re: [PATCH v2 09/17] crypto: qce: core: Add support to initialize
+ interconnect path
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-media@vger.kernel.org
-Subject: Re: [PATCH v5 13/25] media: venus: core: use
- pm_runtime_resume_and_get()
-Message-ID: <20210518172014.68f7a655@coco.lan>
-In-Reply-To: <3f41387e-a15f-1e45-6b63-bd6ef647a47f@linaro.org>
-References: <cover.1620314616.git.mchehab+huawei@kernel.org>
-        <492e148ae1c7b0a8858c1670037925d3e4adb719.1620314616.git.mchehab+huawei@kernel.org>
-        <adb102ab-c197-fdc8-4858-5683bd97baf4@linaro.org>
-        <3f41387e-a15f-1e45-6b63-bd6ef647a47f@linaro.org>
-X-Mailer: Claws Mail 3.17.8 (GTK+ 2.24.33; x86_64-redhat-linux-gnu)
+        Herbert Xu <herbert@gondor.apana.org.au>,
+        "David S . Miller" <davem@davemloft.net>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Vinod Koul <vkoul@kernel.org>, dmaengine@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-crypto@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        bhupesh.linux@gmail.com
+References: <20210505213731.538612-1-bhupesh.sharma@linaro.org>
+ <20210505213731.538612-10-bhupesh.sharma@linaro.org>
+ <20210518150702.GW2484@yoga>
+From:   Thara Gopinath <thara.gopinath@linaro.org>
+Message-ID: <180046b9-35fb-f7c1-fc92-a0fb5eecace5@linaro.org>
+Date:   Tue, 18 May 2021 11:38:08 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+In-Reply-To: <20210518150702.GW2484@yoga>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Em Mon, 17 May 2021 18:26:14 +0300
-Stanimir Varbanov <stanimir.varbanov@linaro.org> escreveu:
 
-> Hi Mauro,
+
+On 5/18/21 11:07 AM, Bjorn Andersson wrote:
+> On Wed 05 May 16:37 CDT 2021, Bhupesh Sharma wrote:
 > 
-> On 5/10/21 4:54 PM, Stanimir Varbanov wrote:
-> > 
-> > 
-> > On 5/6/21 6:25 PM, Mauro Carvalho Chehab wrote:  
-> >> Commit dd8088d5a896 ("PM: runtime: Add pm_runtime_resume_and_get to deal with usage counter")
-> >> added pm_runtime_resume_and_get() in order to automatically handle
-> >> dev->power.usage_count decrement on errors.
-> >>
-> >> Use the new API, in order to cleanup the error check logic.
-> >>
-> >> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-> >> ---
-> >>  drivers/media/platform/qcom/venus/pm_helpers.c | 3 +--
-> >>  1 file changed, 1 insertion(+), 2 deletions(-)  
-> > 
-> > Tested-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
-> > Acked-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
-> >   
+>> From: Thara Gopinath <thara.gopinath@linaro.org>
+>>
+>> Crypto engine on certain Snapdragon processors like sm8150, sm8250, sm8350
+>> etc. requires interconnect path between the engine and memory to be
+>> explicitly enabled and bandwidth set prior to any operations. Add support
+>> in the qce core to enable the interconnect path appropriately.
+>>
+>> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+>> Cc: Rob Herring <robh+dt@kernel.org>
+>> Cc: Andy Gross <agross@kernel.org>
+>> Cc: Herbert Xu <herbert@gondor.apana.org.au>
+>> Cc: David S. Miller <davem@davemloft.net>
+>> Cc: Stephen Boyd <sboyd@kernel.org>
+>> Cc: Michael Turquette <mturquette@baylibre.com>
+>> Cc: Vinod Koul <vkoul@kernel.org>
+>> Cc: dmaengine@vger.kernel.org
+>> Cc: linux-clk@vger.kernel.org
+>> Cc: linux-crypto@vger.kernel.org
+>> Cc: devicetree@vger.kernel.org
+>> Cc: linux-kernel@vger.kernel.org
+>> Cc: bhupesh.linux@gmail.com
+>> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+>> [Make header file inclusion alphabetical]
+>> Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
 > 
-> What is the plan for these venus patches. Do I need to take them through
-> my Venus pull request for v5.14 or you will take them directly?
-
-Whatever works best for you. In principle, I should apply them on my
-tree probably tomorrow, if ok for you.
-
-Regards,
-Mauro
-
+> This says that you prepared the patch, then Thara picked up the patch
+> and sorted the includes. But somehow you then sent the patch.
 > 
-> >>
-> >> diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c b/drivers/media/platform/qcom/venus/pm_helpers.c
-> >> index c7e1ebec47ee..d0fddf5e9a69 100644
-> >> --- a/drivers/media/platform/qcom/venus/pm_helpers.c
-> >> +++ b/drivers/media/platform/qcom/venus/pm_helpers.c
-> >> @@ -990,9 +990,8 @@ static int core_power_v4(struct venus_core *core, int on)
-> >>  
-> >>  	if (on == POWER_ON) {
-> >>  		if (pmctrl) {
-> >> -			ret = pm_runtime_get_sync(pmctrl);
-> >> +			ret = pm_runtime_resume_and_get(pmctrl);
-> >>  			if (ret < 0) {
-> >> -				pm_runtime_put_noidle(pmctrl);
-> >>  				return ret;
-> >>  			}
-> >>  		}
-> >>  
-> >   
+> I.e. you name should be the last - unless you jointly wrote the path, in
+> which case you should also add a "Co-developed-by: Thara".
 > 
+>> ---
+>>   drivers/crypto/qce/core.c | 35 ++++++++++++++++++++++++++++-------
+>>   drivers/crypto/qce/core.h |  1 +
+>>   2 files changed, 29 insertions(+), 7 deletions(-)
+>>
+>> diff --git a/drivers/crypto/qce/core.c b/drivers/crypto/qce/core.c
+>> index 80b75085c265..92a0ff1d357e 100644
+>> --- a/drivers/crypto/qce/core.c
+>> +++ b/drivers/crypto/qce/core.c
+>> @@ -5,6 +5,7 @@
+>>   
+>>   #include <linux/clk.h>
+>>   #include <linux/dma-mapping.h>
+>> +#include <linux/interconnect.h>
+>>   #include <linux/interrupt.h>
+>>   #include <linux/module.h>
+>>   #include <linux/mod_devicetable.h>
+>> @@ -21,6 +22,8 @@
+>>   #define QCE_MAJOR_VERSION5	0x05
+>>   #define QCE_QUEUE_LENGTH	1
+>>   
+>> +#define QCE_DEFAULT_MEM_BANDWIDTH	393600
+> 
+> Do we know what this rate is?
+> 
+>> +
+>>   static const struct qce_algo_ops *qce_ops[] = {
+>>   #ifdef CONFIG_CRYPTO_DEV_QCE_SKCIPHER
+>>   	&skcipher_ops,
+>> @@ -202,21 +205,35 @@ static int qce_crypto_probe(struct platform_device *pdev)
+>>   	if (ret < 0)
+>>   		return ret;
+>>   
+>> +	qce->mem_path = of_icc_get(qce->dev, "memory");
+> 
+> Using devm_of_icc_get() would save you some changes to the error path.
+
+Right. I keep forgetting to use the devm_ version! Bhupesh, will you do 
+these changes or do you want me to ?
+
+-- 
+Warm Regards
+Thara
 
 
 
-Thanks,
-Mauro
