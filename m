@@ -2,277 +2,344 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D6CDB3893BC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 May 2021 18:27:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 580B738941C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 May 2021 18:51:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345704AbhESQ2l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 May 2021 12:28:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40362 "EHLO
+        id S1355410AbhESQwx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 May 2021 12:52:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46104 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1355410AbhESQ23 (ORCPT
+        with ESMTP id S1355411AbhESQwx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 May 2021 12:28:29 -0400
-Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com [IPv6:2607:f8b0:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41D11C061763
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 May 2021 09:27:09 -0700 (PDT)
-Received: by mail-pg1-x52c.google.com with SMTP id l70so9844321pga.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 May 2021 09:27:09 -0700 (PDT)
+        Wed, 19 May 2021 12:52:53 -0400
+Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com [IPv6:2607:f8b0:4864:20::730])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF1ABC06175F
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 May 2021 09:51:32 -0700 (PDT)
+Received: by mail-qk1-x730.google.com with SMTP id a2so13351955qkh.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 May 2021 09:51:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
+        d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=SakSgiZ4ddbOim/P+Jnfe0RsK1mrrxRc8FFWjgiG+Hw=;
-        b=C4RQBdYrK8StFkUZxtXfsB0waWA1/ViKjhuPBk07N76D6u5UT1LGXcZMc5aDZVdXBw
-         iTBHHNXJYaZkygeKDrLpKb0qzmmIpKNQSbXtQeSUmfvIUIOt7pAzvT2Xjrf7YW2as+DO
-         LUyGCOFcJpHFWRNntaK90tv4pJZlDR32phNsmmnlPqQnAghYvFM6IbCsOb5lkrXjPt8s
-         LX3gmQrpa+KInfNtM4ffR5n6FV7Fxr1lSgom0Ojh8ivnnhnhOzgPhOjvwl+EGn5v/Gdx
-         8MUixZbxbUoBzFL7KUTeVZ5LoNQyjpTRVxP7PQQtoDyHOS0xCPY+F62VI4b7bPkHmppo
-         0XLg==
+        bh=LVSvKu+uF44UhP5igvEj8imLggEUIgId1rVB9sDvdoc=;
+        b=VVV4obMZk/I97g6wXYoHuI42S/L6dNximTaEXL7kvSJxnHL1s55v9BgtUGcDq78Qyg
+         hhXwLlw9i1HfzGYRrJ8iZQ3gI4b+uNq3Ku9gwylNuLQztXeG7Vwy0LHTBPGmonKI1Z2+
+         qLT/kEwSPxGCTtpL4ZZ0liITxb5ZC4dBTlVxs=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=SakSgiZ4ddbOim/P+Jnfe0RsK1mrrxRc8FFWjgiG+Hw=;
-        b=WB5GjTyVMFHt6XIHNiG/z1+xXqe58g6gsBkuIhlLEXNfjPGWohtWyvLKKHcnL9F9zi
-         COhqbdsHcN9ZV8YnYcFzXxIdy7B5rSZlhL+D1Wvau6hSwI66cysb8+I/5CR7tJkYyEDG
-         9sY2mrHEeo2H7d5DL7O37jC98mmTVFS4HxTF9bYe1sCNr9ilbIYm/zIUv+HH3nXbFGPa
-         P5KpWed9UemEdVzrzRql1P5wxDe0Sh8DbBhdVf5F0Jk89EuuG9hh3eg2cYIKoChip+Nu
-         p/aDLg04Y3wf7zr3rB3yzkpAHhViqzGTEC+2aRXiStc+Zc6I01/Q+7eVLYHRQEjUCeJT
-         1BmQ==
-X-Gm-Message-State: AOAM531L03FJTtuMYgSWtr8yJp95eWFteVLSzuokE3ewwsbge7KpUT9v
-        gTAvOiaDuQJwqA7Z2MOcSG0mD7Ev2mJeOUTNDNruAg==
-X-Google-Smtp-Source: ABdhPJwBsBhjiVRzoKpttjhEcHUgcSBV5/F0iI39ODAGN8VEsOq+opgx2eS+Vsrr/pYeZ7Vkt9I6CAAl7ipObN2gnIc=
-X-Received: by 2002:a05:6a00:bc2:b029:2df:93cc:371a with SMTP id
- x2-20020a056a000bc2b02902df93cc371amr4622908pfu.12.1621441628686; Wed, 19 May
- 2021 09:27:08 -0700 (PDT)
+        bh=LVSvKu+uF44UhP5igvEj8imLggEUIgId1rVB9sDvdoc=;
+        b=XSh3QP+yWKrFouJ16qOTyLrL/C274PHMlI9VWwMQU/r4G1ducY8MWUDWaQMTVqu/Kh
+         KsZkDtLDXEPmolH5FfxhTp/QwXjEA5pLs+2Dobx6JQoi1WOD5aBZIsXTgCM/do9LbhTX
+         LOcE2z6Zgt507CYGJIxf7EMvBL5qTVQsLBFfA7H29yGVmQ7xO6SsVeogN7r/Yy29eJ57
+         Rg9qTj/BjasrsIFrUIl5yh0slViJa5H31p6VnY2zWt68h/Plz2bjuP5trg1rBjGyLqYq
+         6f+YjMl27c7+Q4VjZBMjvegiYcGEI758Id1BeHD4jRZGR9axbXJULVf/HMDtn2e/FsfR
+         0FNw==
+X-Gm-Message-State: AOAM530LY58z+Qpej33Hjw4hnwpLQ1rT0WaA29JTlONVfrPdX2sURE6m
+        Cj9gebMhbl/NIEUfraFIlOd1/wJA/6BwHw==
+X-Google-Smtp-Source: ABdhPJzpdTOlWN0KI8jlcrtFtMbGZ/8LwmMUF4782lwAEdhfEOkScSKWVflrWtNMeZRK2Y8doV1N2A==
+X-Received: by 2002:a05:620a:22f3:: with SMTP id p19mr252562qki.281.1621443091701;
+        Wed, 19 May 2021 09:51:31 -0700 (PDT)
+Received: from mail-yb1-f173.google.com (mail-yb1-f173.google.com. [209.85.219.173])
+        by smtp.gmail.com with ESMTPSA id g18sm162701qke.37.2021.05.19.09.51.31
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 19 May 2021 09:51:31 -0700 (PDT)
+Received: by mail-yb1-f173.google.com with SMTP id r8so18945776ybb.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 May 2021 09:51:31 -0700 (PDT)
+X-Received: by 2002:a5b:54a:: with SMTP id r10mr636416ybp.476.1621443090636;
+ Wed, 19 May 2021 09:51:30 -0700 (PDT)
 MIME-Version: 1.0
-References: <20210511180728.23781-1-jonathan@marek.ca> <20210511180728.23781-4-jonathan@marek.ca>
-In-Reply-To: <20210511180728.23781-4-jonathan@marek.ca>
-From:   Robert Foss <robert.foss@linaro.org>
-Date:   Wed, 19 May 2021 18:26:57 +0200
-Message-ID: <CAG3jFytj8sgC-GW03e17RWFLhJGhMGTBpBpFBhYi3fixJuAdFg@mail.gmail.com>
-Subject: Re: [PATCH 03/17] media: camss: csiphy-3ph: add support for SM8250
- CSI DPHY
-To:     Jonathan Marek <jonathan@marek.ca>
-Cc:     MSM <linux-arm-msm@vger.kernel.org>,
-        Andrey Konovalov <andrey.konovalov@linaro.org>,
-        Todor Tomov <todor.too@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        "open list:QUALCOMM CAMERA SUBSYSTEM DRIVER" 
-        <linux-media@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
+References: <20210518154509.602137-1-stanimir.varbanov@linaro.org> <20210518154509.602137-2-stanimir.varbanov@linaro.org>
+In-Reply-To: <20210518154509.602137-2-stanimir.varbanov@linaro.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Wed, 19 May 2021 09:51:18 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=WJZ3=YMcqFLeoXnYh6=fPDzAe_4yAxehSafLGOC31ogQ@mail.gmail.com>
+Message-ID: <CAD=FV=WJZ3=YMcqFLeoXnYh6=fPDzAe_4yAxehSafLGOC31ogQ@mail.gmail.com>
+Subject: Re: [PATCH 1/5] venus: venc: Use pmruntime autosuspend
+To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Cc:     Linux Media Mailing List <linux-media@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Vikash Garodia <vgarodia@codeaurora.org>,
+        Mansur Alisha Shaik <mansur@codeaurora.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 11 May 2021 at 20:08, Jonathan Marek <jonathan@marek.ca> wrote:
+Hi,
+
+On Tue, May 18, 2021 at 8:46 AM Stanimir Varbanov
+<stanimir.varbanov@linaro.org> wrote:
 >
-> Add support for CSIPHY (2PH/DPHY mode) found on SM8250 hardware.
+> Migrate encoder to use pm-runtime autosuspend APIs.
 >
-> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
 > ---
->  .../qcom/camss/camss-csiphy-3ph-1-0.c         | 144 +++++++++++++++++-
->  1 file changed, 137 insertions(+), 7 deletions(-)
->
-> diff --git a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
-> index 783b65295d20..61947576ddfb 100644
-> --- a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
-> +++ b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
-> @@ -62,6 +62,7 @@ struct csiphy_reg_t {
->         u32 csiphy_param_type;
+>  drivers/media/platform/qcom/venus/venc.c | 104 +++++++++++++++++++++--
+>  1 file changed, 96 insertions(+), 8 deletions(-)
+
+Not a full review but I happened to skim by this patch and it caught
+my attention...
+
+
+> diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
+> index 4a7291f934b6..a7a858f03ba3 100644
+> --- a/drivers/media/platform/qcom/venus/venc.c
+> +++ b/drivers/media/platform/qcom/venus/venc.c
+> @@ -536,6 +536,64 @@ static const struct v4l2_ioctl_ops venc_ioctl_ops = {
+>         .vidioc_unsubscribe_event = v4l2_event_unsubscribe,
 >  };
 >
-> +/* GEN2 1.0 2PH */
->  static const struct
->  csiphy_reg_t lane_regs_sdm845[5][14] = {
->         {
-> @@ -146,6 +147,121 @@ csiphy_reg_t lane_regs_sdm845[5][14] = {
->         },
->  };
->
-> +/* GEN2 1.2.1 2PH */
-> +static const struct
-> +csiphy_reg_t lane_regs_sm8250[5][20] = {
-> +       {
-> +               {0x0030, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x0900, 0x05, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x0908, 0x10, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x0904, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x0904, 0x07, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x0004, 0x0C, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x002C, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x0034, 0x07, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x0010, 0x02, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x001C, 0x08, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x003C, 0xB8, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x0008, 0x10, 0x00, CSIPHY_SETTLE_CNT_LOWER_BYTE},
-> +               {0x0000, 0x8D, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x000c, 0x00, 0x00, CSIPHY_DNP_PARAMS},
-> +               {0x0038, 0xFE, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x0014, 0x60, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x0028, 0x00, 0x00, CSIPHY_DNP_PARAMS},
-> +               {0x0024, 0x00, 0x00, CSIPHY_DNP_PARAMS},
-> +               {0x0800, 0x02, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x0884, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +       },
-> +       {
-> +               {0x0730, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x0C80, 0x05, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x0C88, 0x10, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x0C84, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x0C84, 0x07, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x0704, 0x0C, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x072C, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x0734, 0x07, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x0710, 0x02, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x071C, 0x08, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x073C, 0xB8, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x0708, 0x10, 0x00, CSIPHY_SETTLE_CNT_LOWER_BYTE},
-> +               {0x0700, 0x80, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x070c, 0xA5, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x0738, 0x1F, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x0714, 0x60, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x0728, 0x04, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x0724, 0x00, 0x00, CSIPHY_DNP_PARAMS},
-> +               {0x0800, 0x02, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x0884, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +       },
-> +       {
-> +               {0x0230, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x0A00, 0x05, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x0A08, 0x10, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x0A04, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x0A04, 0x07, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x0204, 0x0C, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x022C, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x0234, 0x07, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x0210, 0x02, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x021C, 0x08, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x023C, 0xB8, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x0208, 0x10, 0x00, CSIPHY_SETTLE_CNT_LOWER_BYTE},
-> +               {0x0200, 0x8D, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x020c, 0x00, 0x00, CSIPHY_DNP_PARAMS},
-> +               {0x0238, 0xFE, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x0214, 0x60, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x0228, 0x00, 0x00, CSIPHY_DNP_PARAMS},
-> +               {0x0224, 0x00, 0x00, CSIPHY_DNP_PARAMS},
-> +               {0x0800, 0x02, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x0884, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +       },
-> +       {
-> +               {0x0430, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x0B00, 0x05, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x0B08, 0x10, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x0B04, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x0B04, 0x07, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x0404, 0x0C, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x042C, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x0434, 0x07, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x0410, 0x02, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x041C, 0x08, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x043C, 0xB8, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x0408, 0x10, 0x00, CSIPHY_SETTLE_CNT_LOWER_BYTE},
-> +               {0x0400, 0x8D, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x040c, 0x00, 0x00, CSIPHY_DNP_PARAMS},
-> +               {0x0438, 0xFE, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x0414, 0x60, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x0428, 0x00, 0x00, CSIPHY_DNP_PARAMS},
-> +               {0x0424, 0x00, 0x00, CSIPHY_DNP_PARAMS},
-> +               {0x0800, 0x02, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x0884, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +       },
-> +       {
-> +               {0x0630, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x0C00, 0x05, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x0C08, 0x10, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x0C04, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x0C04, 0x07, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x0604, 0x0C, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x062C, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x0634, 0x07, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x0610, 0x02, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x061C, 0x08, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x063C, 0xB8, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x0608, 0x10, 0x00, CSIPHY_SETTLE_CNT_LOWER_BYTE},
-> +               {0x0600, 0x8D, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x060c, 0x00, 0x00, CSIPHY_DNP_PARAMS},
-> +               {0x0638, 0xFE, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x0614, 0x60, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x0628, 0x00, 0x00, CSIPHY_DNP_PARAMS},
-> +               {0x0624, 0x00, 0x00, CSIPHY_DNP_PARAMS},
-> +               {0x0800, 0x02, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +               {0x0884, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
-> +       },
-> +};
+> +static int venc_pm_get(struct venus_inst *inst)
+> +{
+> +       struct venus_core *core = inst->core;
+> +       struct device *dev = core->dev_enc;
+> +       int ret;
 > +
->  static void csiphy_hw_version_read(struct csiphy_device *csiphy,
->                                    struct device *dev)
->  {
-> @@ -298,13 +414,23 @@ static void csiphy_gen1_config_lanes(struct csiphy_device *csiphy,
->  static void csiphy_gen2_config_lanes(struct csiphy_device *csiphy,
->                                      u8 settle_cnt)
->  {
-> -       int i, l;
-> -       u32 val;
-> +       const struct csiphy_reg_t *r;
-> +       int i, l, array_size;
-> +       u32 val, lane_enable;
+> +       mutex_lock(&core->pm_lock);
+> +       ret = pm_runtime_get_sync(dev);
+> +       mutex_unlock(&core->pm_lock);
+
+Why do you need a mutex around this?
+
 > +
-> +       switch (csiphy->camss->version) {
-> +       case CAMSS_845:
-> +               r = &lane_regs_sdm845[0][0];
-> +               array_size = ARRAY_SIZE(lane_regs_sdm845[0]);
-> +               break;
-> +       case CAMSS_8250:
+> +       return ret < 0 ? ret : 0;
 
-CAMSS_8250 is not defined until later in the series, in "media: camss:
-add support for SM8250 camss".
+Odd but true: if pm_runtime_get_sync() returns an error you still need
+to put. If your code below isn't going to do this then you should
+handle it here?
 
-> +               r = &lane_regs_sm8250[0][0];
-> +               array_size = ARRAY_SIZE(lane_regs_sm8250[0]);
-> +               break;
-> +       }
->
->         for (l = 0; l < 5; l++) {
-> -               for (i = 0; i < 14; i++) {
-> -                       const struct csiphy_reg_t *r = &lane_regs_sdm845[l][i];
-> -
-> +               for (i = 0; i < array_size; i++, r++) {
->                         switch (r->csiphy_param_type) {
->                         case CSIPHY_SETTLE_CNT_LOWER_BYTE:
->                                 val = settle_cnt & 0xff;
-> @@ -331,7 +457,10 @@ static void csiphy_lanes_enable(struct csiphy_device *csiphy,
->
->         settle_cnt = csiphy_settle_cnt_calc(link_freq, csiphy->timer_clk_rate);
->
-> -       val = BIT(c->clk.pos);
-> +       if (csiphy->camss->version == CAMSS_8250)
-> +               val = BIT(7);
+> +}
+> +
+> +static int venc_pm_put(struct venus_inst *inst, bool autosuspend)
+> +{
+> +       struct venus_core *core = inst->core;
+> +       struct device *dev = core->dev_enc;
+> +       int ret;
+> +
+> +       mutex_lock(&core->pm_lock);
+> +
+> +       if (autosuspend)
+> +               ret = pm_runtime_put_autosuspend(dev);
 > +       else
-> +               val = BIT(c->clk.pos);
+> +               ret = pm_runtime_put_sync(dev);
+> +
+> +       mutex_unlock(&core->pm_lock);
+> +
+> +       return ret < 0 ? ret : 0;
+> +}
+> +
+> +static int venc_pm_get_put(struct venus_inst *inst)
+> +{
+> +       struct venus_core *core = inst->core;
+> +       struct device *dev = core->dev_enc;
+> +       int ret = 0;
+> +
+> +       mutex_lock(&core->pm_lock);
+> +
+> +       if (pm_runtime_suspended(dev)) {
+> +               ret = pm_runtime_get_sync(dev);
+> +               if (ret < 0)
+> +                       goto error;
 
-sdm845 and sm8250 behave the same way, and I think this chunk should
-reflect that. With that being said the docs for camss-sdm845 mention
-that the only valid lane for the clock is #7. I don't know if it is
-preferred to enforce the restriction in the driver, yaml or both.
+If pm_runtime_get_sync() returns an error you still need to put.
 
->         for (i = 0; i < c->num_data; i++)
->                 val |= BIT(c->data[i].pos * 2);
+
+> +
+> +               ret = pm_runtime_put_autosuspend(dev);
+> +       }
+> +
+> +error:
+> +       mutex_unlock(&core->pm_lock);
+> +
+> +       return ret < 0 ? ret : 0;
+> +}
+
+What is the purpose of "get_put"? It feels like using it would be racy to me.
+
+
+> +
+> +static void venc_pm_touch(struct venus_inst *inst)
+> +{
+> +       pm_runtime_mark_last_busy(inst->core->dev_enc);
+> +}
+> +
+>  static int venc_set_properties(struct venus_inst *inst)
+>  {
+>         struct venc_controls *ctr = &inst->controls.enc;
+> @@ -891,10 +949,18 @@ static int venc_queue_setup(struct vb2_queue *q,
+>                 return 0;
+>         }
 >
-> @@ -349,7 +478,8 @@ static void csiphy_lanes_enable(struct csiphy_device *csiphy,
->         if (csiphy->camss->version == CAMSS_8x16 ||
->             csiphy->camss->version == CAMSS_8x96)
->                 csiphy_gen1_config_lanes(csiphy, cfg, settle_cnt);
-> -       else if (csiphy->camss->version == CAMSS_845)
-> +       else if (csiphy->camss->version == CAMSS_845 ||
-> +                csiphy->camss->version == CAMSS_8250)
->                 csiphy_gen2_config_lanes(csiphy, settle_cnt);
+> +       ret = venc_pm_get(inst);
+> +       if (ret)
+> +               return ret;
+> +
+>         mutex_lock(&inst->lock);
+>         ret = venc_init_session(inst);
+>         mutex_unlock(&inst->lock);
 >
->         /* IRQ_MASK registers - disable all interrupts */
+> +       if (ret)
+> +               goto put_power;
+> +
+> +       ret = venc_pm_put(inst, false);
+>         if (ret)
+>                 return ret;
+>
+> @@ -930,6 +996,9 @@ static int venc_queue_setup(struct vb2_queue *q,
+>                 break;
+>         }
+>
+> +       return ret;
+> +put_power:
+> +       venc_pm_put(inst, false);
+>         return ret;
+>  }
+>
+> @@ -946,6 +1015,8 @@ static void venc_release_session(struct venus_inst *inst)
+>  {
+>         int ret;
+>
+> +       venc_pm_get(inst);
+> +
+>         mutex_lock(&inst->lock);
+>
+>         ret = hfi_session_deinit(inst);
+> @@ -957,6 +1028,8 @@ static void venc_release_session(struct venus_inst *inst)
+>         venus_pm_load_scale(inst);
+>         INIT_LIST_HEAD(&inst->registeredbufs);
+>         venus_pm_release_core(inst);
+> +
+> +       venc_pm_put(inst, false);
+>  }
+>
+>  static void venc_buf_cleanup(struct vb2_buffer *vb)
+> @@ -1026,7 +1099,15 @@ static int venc_start_streaming(struct vb2_queue *q, unsigned int count)
+>         inst->sequence_cap = 0;
+>         inst->sequence_out = 0;
+>
+> +       ret = venc_pm_get(inst);
+> +       if (ret)
+> +               goto error;
+> +
+>         ret = venus_pm_acquire_core(inst);
+> +       if (ret)
+> +               goto put_power;
+> +
+> +       ret = venc_pm_put(inst, true);
+>         if (ret)
+>                 goto error;
+>
+> @@ -1051,6 +1132,8 @@ static int venc_start_streaming(struct vb2_queue *q, unsigned int count)
+>
+>         return 0;
+>
+> +put_power:
+> +       venc_pm_put(inst, false);
+>  error:
+>         venus_helper_buffers_done(inst, q->type, VB2_BUF_STATE_QUEUED);
+>         if (q->type == V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE)
+> @@ -1065,6 +1148,8 @@ static void venc_vb2_buf_queue(struct vb2_buffer *vb)
+>  {
+>         struct venus_inst *inst = vb2_get_drv_priv(vb->vb2_queue);
+>
+> +       venc_pm_get_put(inst);
+> +
 
-With the above issues fixed;
+I don't know this code at all, but I don't understand the point of the
+"get_put". Couldn't the task running this code get scheduled out for 2
+seconds right after your call to venc_pm_get_put() and then it would
+be just like you didn't call it?
 
-Reviewed-by: Robert Foss <robert.foss@linaro.org>
+...or maybe the device wasn't suspended but it was 10 us away from
+being suspended so your "get_put" decided it didn't need to do
+anything. Then you get scheduled out for 10 us and it powers off.
+
+Maybe there's a good reason for get_put() to exist and a good reason
+why it's race-free but it feels like the kind of thing that needs a
+comment.
+
+
+>         mutex_lock(&inst->lock);
+>         venus_helper_vb2_buf_queue(vb);
+>         mutex_unlock(&inst->lock);
+> @@ -1088,6 +1173,8 @@ static void venc_buf_done(struct venus_inst *inst, unsigned int buf_type,
+>         struct vb2_buffer *vb;
+>         unsigned int type;
+>
+> +       venc_pm_touch(inst);
+> +
+>         if (buf_type == HFI_BUFFER_INPUT)
+>                 type = V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE;
+>         else
+> @@ -1117,6 +1204,8 @@ static void venc_event_notify(struct venus_inst *inst, u32 event,
+>  {
+>         struct device *dev = inst->core->dev_enc;
+>
+> +       venc_pm_touch(inst);
+> +
+>         if (event == EVT_SESSION_ERROR) {
+>                 inst->session_error = true;
+>                 dev_err(dev, "enc: event session error %x\n", inst->error);
+> @@ -1205,13 +1294,9 @@ static int venc_open(struct file *file)
+>
+>         venus_helper_init_instance(inst);
+>
+> -       ret = pm_runtime_get_sync(core->dev_enc);
+> -       if (ret < 0)
+> -               goto err_put_sync;
+> -
+>         ret = venc_ctrl_init(inst);
+>         if (ret)
+> -               goto err_put_sync;
+> +               goto err_free;
+>
+>         ret = hfi_session_create(inst, &venc_hfi_ops);
+>         if (ret)
+> @@ -1250,8 +1335,7 @@ static int venc_open(struct file *file)
+>         hfi_session_destroy(inst);
+>  err_ctrl_deinit:
+>         venc_ctrl_deinit(inst);
+> -err_put_sync:
+> -       pm_runtime_put_sync(core->dev_enc);
+> +err_free:
+>         kfree(inst);
+>         return ret;
+>  }
+> @@ -1260,6 +1344,8 @@ static int venc_close(struct file *file)
+>  {
+>         struct venus_inst *inst = to_inst(file);
+>
+> +       venc_pm_get(inst);
+> +
+>         v4l2_m2m_ctx_release(inst->m2m_ctx);
+>         v4l2_m2m_release(inst->m2m_dev);
+>         venc_ctrl_deinit(inst);
+> @@ -1268,7 +1354,7 @@ static int venc_close(struct file *file)
+>         v4l2_fh_del(&inst->fh);
+>         v4l2_fh_exit(&inst->fh);
+>
+> -       pm_runtime_put_sync(inst->core->dev_enc);
+> +       venc_pm_put(inst, false);
+>
+>         kfree(inst);
+>         return 0;
+> @@ -1325,6 +1411,8 @@ static int venc_probe(struct platform_device *pdev)
+>         core->dev_enc = dev;
+>
+>         video_set_drvdata(vdev, core);
+> +       pm_runtime_set_autosuspend_delay(dev, 2000);
+> +       pm_runtime_use_autosuspend(dev);
+>         pm_runtime_enable(dev);
+
+You have the same bug that I just made in another module! :-P
+Specifically, the pm_runtime docs say:
+
+> Drivers in ->remove() callback should undo the runtime PM changes done
+> in ->probe(). Usually this means calling pm_runtime_disable(),
+> pm_runtime_dont_use_autosuspend() etc.
+
+-Doug
