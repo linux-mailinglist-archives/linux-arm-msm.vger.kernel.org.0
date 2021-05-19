@@ -2,89 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 879F43884EB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 May 2021 04:48:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 411F238859D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 May 2021 05:41:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238999AbhESCte (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 May 2021 22:49:34 -0400
-Received: from mail-ot1-f49.google.com ([209.85.210.49]:38650 "EHLO
-        mail-ot1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237274AbhESCtd (ORCPT
+        id S237776AbhESDnD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 May 2021 23:43:03 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:39007 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231931AbhESDnD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 May 2021 22:49:33 -0400
-Received: by mail-ot1-f49.google.com with SMTP id q7-20020a9d57870000b02902a5c2bd8c17so10502951oth.5;
-        Tue, 18 May 2021 19:48:13 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
-         :message-id;
-        bh=Q4LcyG7TR1wlU65C0tMqAS7GQ9Qzklf/Ua5vm6bP0dY=;
-        b=kBf1wdaFlurEs4ItIqW4b39n51OaGMkHtLJMebu0IxJq7Ut57VErSsUG2ImAr0/LkL
-         6oJ7HtYP0dU4rCub5rs/M5BZeycN3Tpzh/yciz5eOModxUNQy1Fl6d/QTFtI0frRoq6O
-         5NMPnUEutkw9rAQlr33955Qx4VKC4hPEuS5OGFA8kvobCVYuTgg8PMPGBZKSf7G5VBLe
-         E79XFtV26uMb2VS6R4Yn/Rfs8gfdZv9dTa66gmsxmqNcvew9aWAckwWYXLXgKfSjGHHp
-         Wxxhs2beVxG36oT6QQ9qCjPrbITriVuHuukEfB89wqAacMQwdCOIAo0tmfCTi9ZOtjOX
-         ODew==
-X-Gm-Message-State: AOAM532ozCSL+wHJ73O5OSfVQa6neqrUXXiWP47mpGA10axUxDnhUB69
-        gDzTddJKsmRmHoW3z88y1A==
-X-Google-Smtp-Source: ABdhPJx3BlvLuylgzd5eRpyEpXh47BO/eHtxDBU1//TMyqLZFNXTI3iRXR5JOdrQYhqAlyt6R2LmPw==
-X-Received: by 2002:a9d:62d0:: with SMTP id z16mr559268otk.180.1621392493120;
-        Tue, 18 May 2021 19:48:13 -0700 (PDT)
-Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id x14sm3853076oic.3.2021.05.18.19.48.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 May 2021 19:48:12 -0700 (PDT)
-Received: (nullmailer pid 1905258 invoked by uid 1000);
-        Wed, 19 May 2021 02:48:11 -0000
-From:   Rob Herring <robh@kernel.org>
-To:     Odelu Kukatla <okukatla@codeaurora.org>
-Cc:     elder@linaro.org, bjorn.andersson@linaro.org,
-        seansw@qti.qualcomm.com, linux-kernel@vger.kernel.org,
-        georgi.djakov@linaro.org, devicetree@vger.kernel.org,
-        Georgi Djakov <djakov@kernel.org>,
-        linux-arm-msm@vger.kernel.org, sboyd@kernel.org,
-        sibis@codeaurora.org, Andy Gross <agross@kernel.org>,
-        evgreen@google.com, Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm-owner@vger.kernel.org, linux-pm@vger.kernel.org
-In-Reply-To: <1621359242-18641-2-git-send-email-okukatla@codeaurora.org>
-References: <1621359242-18641-1-git-send-email-okukatla@codeaurora.org> <1621359242-18641-2-git-send-email-okukatla@codeaurora.org>
-Subject: Re: [V2 1/3] dt-bindings: interconnect: Add EPSS L3 DT binding on SC7280
-Date:   Tue, 18 May 2021 21:48:11 -0500
-Message-Id: <1621392491.220233.1905257.nullmailer@robh.at.kernel.org>
+        Tue, 18 May 2021 23:43:03 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1621395704; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=WqoS9E4WNEnuTzuu8mBefr5gA3kuqZaXEvJiKfOXllI=;
+ b=W/jlcN3KTQStc44Xatp1XOvyPSgoVAIO9NG6IMOI/8xZukPYljAWdaJwaMYQNR3UVokpv1vy
+ rESJxVtwHf1badhwKELNoMFk3wYN4mIOZTJYKKLbkbU80UCBja0sCISg/eErYDMtbAbkLIW0
+ oaBW7KhLVJCRuA+TF5VF2W9aALg=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
+ 60a488f65f788b52a5821880 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 19 May 2021 03:41:42
+ GMT
+Sender: abhinavk=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id B9D5AC4360C; Wed, 19 May 2021 03:41:42 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: abhinavk)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id EA3C2C433F1;
+        Wed, 19 May 2021 03:41:41 +0000 (UTC)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Tue, 18 May 2021 20:41:41 -0700
+From:   abhinavk@codeaurora.org
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Stephen Boyd <swboyd@chromium.org>, sbillaka@codeaurora.org,
+        Tanmay Shah <tanmay@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        dri-devel@lists.freedesktop.org,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        freedreno@lists.freedesktop.org,
+        Chandan Uddaraju <chandanu@codeaurora.org>
+Subject: Re: [Freedreno] [PATCH 0/4] drm/msm/dp: Add support for SC8180x eDP
+ controller
+In-Reply-To: <20210511042043.592802-1-bjorn.andersson@linaro.org>
+References: <20210511042043.592802-1-bjorn.andersson@linaro.org>
+Message-ID: <40f6aefd3fa341e2bec2060106389be7@codeaurora.org>
+X-Sender: abhinavk@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 18 May 2021 23:04:00 +0530, Odelu Kukatla wrote:
-> Add Epoch Subsystem (EPSS) L3 interconnect provider binding on SC7280
-> SoCs.
+Hi Bjorn
+
+I had a quick glance on the series and before getting to other things 
+wanted to know how you are initializing two different connectors for
+DP & EDP resp.
+
+The connector type for DP should be DRM_MODE_CONNECTOR_DisplayPort and 
+eDP should be DRM_MODE_CONNECTOR_eDP.
+We need both to be created so that both EDP and DP can be supported 
+concurrently.
+
+Will these changes work for concurrent eDP and DP case?
+
+Thanks
+
+Abhinav
+
+On 2021-05-10 21:20, Bjorn Andersson wrote:
+> The first patch in the series is somewhat unrelated to the support, but
+> simplifies reasoning and debugging of timing related issues.
 > 
-> Signed-off-by: Odelu Kukatla <okukatla@codeaurora.org>
-> ---
->  .../devicetree/bindings/interconnect/qcom,osm-l3.yaml          |  3 ++-
->  include/dt-bindings/interconnect/qcom,osm-l3.h                 | 10 +++++++++-
->  2 files changed, 11 insertions(+), 2 deletions(-)
+> The second patch introduces support for dealing with different register 
+> block
+> layouts, which is used in the forth patch to describe the hardware 
+> blocks found
+> in the SC8180x eDP block.
 > 
-
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
-
-yamllint warnings/errors:
-
-dtschema/dtc warnings/errors:
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/interconnect/qcom,osm-l3.example.dt.yaml: interconnect@17d41000: reg: [[399773696, 5120]] is too short
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml
-
-See https://patchwork.ozlabs.org/patch/1480367
-
-This check can fail if there are any dependencies. The base for a patch
-series is generally the most recent rc1.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit.
-
+> The third patch configures the INTF_CONFIG register, which carries the
+> configuration for widebus handling. As with the DPU the bootloader 
+> enables
+> widebus and we need to disable it, or implement support for adjusting 
+> the
+> timing.
+> 
+> Bjorn Andersson (4):
+>   drm/msm/dp: Simplify the mvid/nvid calculation
+>   drm/msm/dp: Store each subblock in the io region
+>   drm/msm/dp: Initialize the INTF_CONFIG register
+>   drm/msm/dp: Add support for SC8180x eDP
+> 
+>  drivers/gpu/drm/msm/dp/dp_catalog.c | 99 +++++++----------------------
+>  drivers/gpu/drm/msm/dp/dp_display.c |  1 +
+>  drivers/gpu/drm/msm/dp/dp_parser.c  | 22 +++++++
+>  drivers/gpu/drm/msm/dp/dp_parser.h  |  8 +++
+>  4 files changed, 53 insertions(+), 77 deletions(-)
