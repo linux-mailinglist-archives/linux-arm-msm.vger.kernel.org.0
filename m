@@ -2,174 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 608BC38957E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 May 2021 20:35:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D402B3895A4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 May 2021 20:41:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231569AbhESSgf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 May 2021 14:36:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41142 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231576AbhESSge (ORCPT
+        id S231635AbhESSm2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 May 2021 14:42:28 -0400
+Received: from mail-ot1-f41.google.com ([209.85.210.41]:43569 "EHLO
+        mail-ot1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230285AbhESSm1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 May 2021 14:36:34 -0400
-Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17255C06175F;
-        Wed, 19 May 2021 11:35:15 -0700 (PDT)
-Received: by mail-pl1-x630.google.com with SMTP id n8so2327544plf.7;
-        Wed, 19 May 2021 11:35:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=n5uWZIfYNT9NU92iv+57nnURivFj6aDlrNkoAZSXV/w=;
-        b=KOarvd9cHWYKgnPJf9nSyzfOesTFIXD7IGNVJ+du1Z0SHpY0Xm/EXFqN9HQCuRMAQv
-         2kguO8VQtBzz6vByBahivwR4XUM3q8ulOI8YpSsXjpoEOvnn5Q8Agif1PURmqHLXabsp
-         7ut0TDH/YxF+ybzk5eNjGyIgsd59xbXVTFbcLLxezlV9PYiC90gA5k4sHMSHYcE/eL71
-         WDNWal+4Iwi/BnBVwN/Ro2dY2R06U35roeH5Zz9oUvtHgiLl40sNw1Oan98B2QWU9aFW
-         27b1mG8mnUdeTGBpYRnPwm0j9hU/61yxlpITvDf8+bBkjQqHITe1Egm6dmEBdNCIeVEm
-         1sag==
+        Wed, 19 May 2021 14:42:27 -0400
+Received: by mail-ot1-f41.google.com with SMTP id i12-20020a05683033ecb02903346fa0f74dso1990968otu.10;
+        Wed, 19 May 2021 11:41:07 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=n5uWZIfYNT9NU92iv+57nnURivFj6aDlrNkoAZSXV/w=;
-        b=Q1VuU+BjWrGwr4FK5whZQMkjD61v+9J0jZvDqz5ElgV5FKq76OLePsKnVa1Dj/zDjv
-         V1+AH/VsUswyTGI2BSURaWYv+3dlD+mr5wsnzy2iOdlC/Z52ErCj0UZ/g/ty8KV4cSNz
-         V+F4kcOLfeDCJQ3OjbsAFkUxM7gkYwPnMT+YsdxS7cIjxVyEZmF07epNpLGGYaeOZtNo
-         lkFd6bixJDpipb0GhweXS3kSjTBoTyIYgn4erqk2I2UQZLsx8hJrxOfD+d2T7zd7mUDv
-         fEUo9drsXOZvDqAoeC30FjuivzXu60D+A4G0Vp8w7GU43mQ1dMmEhCq1hhKLDQCs7EGe
-         2f3Q==
-X-Gm-Message-State: AOAM533E/CSSo/VHcLy4Z2qMYvkCRLv/0IBS+jI6UL/hc2DZs8wSzCbr
-        0YKXmiAOBhnh+PJPZ694mnU=
-X-Google-Smtp-Source: ABdhPJx7j2+wCkNK1D1YUAjaIZNBYpRrQkfJ3sHGCatwOmy6egf6QrGebz1yZKbJJVE5Een+NF84FA==
-X-Received: by 2002:a17:902:8e88:b029:ee:b947:d7df with SMTP id bg8-20020a1709028e88b02900eeb947d7dfmr1029276plb.48.1621449314588;
-        Wed, 19 May 2021 11:35:14 -0700 (PDT)
-Received: from localhost (c-73-25-156-94.hsd1.or.comcast.net. [73.25.156.94])
-        by smtp.gmail.com with ESMTPSA id a24sm68148pgv.76.2021.05.19.11.35.13
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=Rtf8KMzzJr42v64G2RjuzNWf/9gnkzjTH/NKtoSThvI=;
+        b=l6bUevFSjAPWsLP83CQ46DeOFq8mPGVydCVF/G4gzhFjQmkxsI1sBXBDM1NSW33AJ8
+         XnUrkYZ9uUSDs+XWZeo09X2ehanV85x8hJTeRvKaSB5i6HlqPLSjFE2ZHPrtK/NkMQ05
+         b6TwPdGQamZYDIgeeaZVZH8Te/IYG2EylI8C/EHrX9Y4VSgnchwmuV2BQtNNQfkVOTD6
+         2c6oKQoV4H9rhMYfMLsPdKlmw0hdY3yBMVG3E0rOeEy8nYeyALqaTsuYTce3cCnCOOOP
+         72KQFFR+ApcqRIftw3JOpQpzkqiUG75UDnyK3XnGhOkjuJ60500imrG7vf5o+UecftF0
+         ADlA==
+X-Gm-Message-State: AOAM530cGdE1eaU7mt2f0BbneUdEiS95bEVQaWbpKJjUW5mKbF3Uj0n/
+        eRQnRe5vefSRzoGF7TbS7Q==
+X-Google-Smtp-Source: ABdhPJzKCNKgPqJxkK3ZoO9FffuSqLJK2JvlvJ6vh/99VzIiSeIzxlVQ0Sr+TkVmJPVPrkbVdiu1QQ==
+X-Received: by 2002:a9d:863:: with SMTP id 90mr653159oty.335.1621449667558;
+        Wed, 19 May 2021 11:41:07 -0700 (PDT)
+Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id z6sm90480oiz.39.2021.05.19.11.41.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 May 2021 11:35:13 -0700 (PDT)
-From:   Rob Clark <robdclark@gmail.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Rob Clark <robdclark@chromium.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-        linux-kernel@vger.kernel.org (open list),
-        linux-media@vger.kernel.org (open list:DMA BUFFER SHARING FRAMEWORK),
-        linaro-mm-sig@lists.linaro.org (moderated list:DMA BUFFER SHARING
-        FRAMEWORK)
-Subject: [RFC 3/3] drm/msm: Wire up gpu boost
-Date:   Wed, 19 May 2021 11:38:54 -0700
-Message-Id: <20210519183855.1523927-4-robdclark@gmail.com>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20210519183855.1523927-1-robdclark@gmail.com>
-References: <20210519183855.1523927-1-robdclark@gmail.com>
+        Wed, 19 May 2021 11:41:07 -0700 (PDT)
+Received: (nullmailer pid 3426747 invoked by uid 1000);
+        Wed, 19 May 2021 18:41:05 -0000
+Date:   Wed, 19 May 2021 13:41:05 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
+Cc:     mka@chromium.org, linux-bluetooth@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        hemantg@codeaurora.org, johan.hedberg@gmail.com,
+        rjliao@codeaurora.org, bgodavar@codeaurora.org,
+        abhishekpandit@chromium.org, devicetree@vger.kernel.org,
+        marcel@holtmann.org, hbandi@codeaurora.org
+Subject: Re: [PATCH v4 4/5] dt-bindings: net: bluetooth: Convert Qualcomm BT
+ binding to DT schema
+Message-ID: <20210519184105.GA3426539@robh.at.kernel.org>
+References: <1621355686-29550-1-git-send-email-gubbaven@codeaurora.org>
+ <1621355686-29550-5-git-send-email-gubbaven@codeaurora.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1621355686-29550-5-git-send-email-gubbaven@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+On Tue, 18 May 2021 22:04:45 +0530, Venkata Lakshmi Narayana Gubba wrote:
+> Converted Qualcomm Bluetooth binidings to DT schema.
+> 
+> Signed-off-by: Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
+> ---
+>  .../devicetree/bindings/net/qualcomm-bluetooth.txt |  69 -------------
+>  .../bindings/net/qualcomm-bluetooth.yaml           | 112 +++++++++++++++++++++
+>  2 files changed, 112 insertions(+), 69 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/net/qualcomm-bluetooth.txt
+>  create mode 100644 Documentation/devicetree/bindings/net/qualcomm-bluetooth.yaml
+> 
 
-Note, at this point I haven't given a lot of consideration into how much
-we should boost, and for how long.  And perhaps we should only boost at
-less than 50% utilization?  At this point, this is only an example of
-dma_fence_boost() implementation.
-
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- drivers/gpu/drm/msm/msm_fence.c | 10 ++++++++++
- drivers/gpu/drm/msm/msm_gpu.c   | 13 +++++++++++++
- drivers/gpu/drm/msm/msm_gpu.h   |  2 ++
- 3 files changed, 25 insertions(+)
-
-diff --git a/drivers/gpu/drm/msm/msm_fence.c b/drivers/gpu/drm/msm/msm_fence.c
-index cd59a5918038..e58895603726 100644
---- a/drivers/gpu/drm/msm/msm_fence.c
-+++ b/drivers/gpu/drm/msm/msm_fence.c
-@@ -8,6 +8,7 @@
- 
- #include "msm_drv.h"
- #include "msm_fence.h"
-+#include "msm_gpu.h"
- 
- 
- struct msm_fence_context *
-@@ -114,10 +115,19 @@ static bool msm_fence_signaled(struct dma_fence *fence)
- 	return fence_completed(f->fctx, f->base.seqno);
- }
- 
-+static void msm_fence_boost(struct dma_fence *fence)
-+{
-+	struct msm_fence *f = to_msm_fence(fence);
-+	struct msm_drm_private *priv = f->fctx->dev->dev_private;
-+
-+	msm_gpu_boost(priv->gpu);
-+}
-+
- static const struct dma_fence_ops msm_fence_ops = {
- 	.get_driver_name = msm_fence_get_driver_name,
- 	.get_timeline_name = msm_fence_get_timeline_name,
- 	.signaled = msm_fence_signaled,
-+	.boost = msm_fence_boost,
- };
- 
- struct dma_fence *
-diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
-index 9dd1c58430ab..c90b79116500 100644
---- a/drivers/gpu/drm/msm/msm_gpu.c
-+++ b/drivers/gpu/drm/msm/msm_gpu.c
-@@ -62,6 +62,10 @@ static int msm_devfreq_get_dev_status(struct device *dev,
- 	status->total_time = ktime_us_delta(time, gpu->devfreq.time);
- 	gpu->devfreq.time = time;
- 
-+	if (atomic_dec_if_positive(&gpu->devfreq.boost) >= 0) {
-+		status->busy_time = status->total_time;
-+	}
-+
- 	return 0;
- }
- 
-@@ -84,6 +88,15 @@ static struct devfreq_dev_profile msm_devfreq_profile = {
- 	.get_cur_freq = msm_devfreq_get_cur_freq,
- };
- 
-+void msm_gpu_boost(struct msm_gpu *gpu)
-+{
-+	if (!gpu->funcs->gpu_busy)
-+		return;
-+
-+	/* Add three devfreq polling intervals worth of boost: */
-+	atomic_add(3, &gpu->devfreq.boost);
-+}
-+
- static void msm_devfreq_init(struct msm_gpu *gpu)
- {
- 	/* We need target support to do devfreq */
-diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.h
-index 18baf935e143..7a082a12d98f 100644
---- a/drivers/gpu/drm/msm/msm_gpu.h
-+++ b/drivers/gpu/drm/msm/msm_gpu.h
-@@ -150,6 +150,7 @@ struct msm_gpu {
- 		struct devfreq *devfreq;
- 		u64 busy_cycles;
- 		ktime_t time;
-+		atomic_t boost;
- 	} devfreq;
- 
- 	uint32_t suspend_count;
-@@ -295,6 +296,7 @@ static inline void gpu_write64(struct msm_gpu *gpu, u32 lo, u32 hi, u64 val)
- int msm_gpu_pm_suspend(struct msm_gpu *gpu);
- int msm_gpu_pm_resume(struct msm_gpu *gpu);
- void msm_gpu_resume_devfreq(struct msm_gpu *gpu);
-+void msm_gpu_boost(struct msm_gpu *gpu);
- 
- int msm_gpu_hw_init(struct msm_gpu *gpu);
- 
--- 
-2.30.2
-
+Reviewed-by: Rob Herring <robh@kernel.org>
