@@ -2,216 +2,618 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DBEE03898BB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 May 2021 23:41:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8E4F13898C8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 May 2021 23:46:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229464AbhESVnL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 May 2021 17:43:11 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([216.205.24.124]:39137 "EHLO
-        us-smtp-delivery-124.mimecast.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229470AbhESVnL (ORCPT
+        id S229498AbhESVrt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 May 2021 17:47:49 -0400
+Received: from mail-ot1-f45.google.com ([209.85.210.45]:33390 "EHLO
+        mail-ot1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229464AbhESVrt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 May 2021 17:43:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1621460510;
-        h=from:from:reply-to:reply-to:subject:subject:date:date:
-         message-id:message-id:to:to:cc:cc:mime-version:mime-version:
-         content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=xi95e1B6yP6PyH5g1s3FTxyljRjhUsy7lPQQAr+y8fI=;
-        b=VEvYIjGyzwMHiQwK10Z9/N8ky75LZ4IMKC5ZrDQdGKqxqx1gAK7eFjPUPR+dzy3pLHUlSm
-        VSOKvGPqx3H1v9RAtEjFVYlXvr+TjZrR7QEaQTmeAiFnYYNljYEF7GoDEl+CfPcbUZlZG5
-        AnGm5dYk0Ii1DKt2KM0zXuDza/aC5PQ=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-349-yc-BGK_vMgCfaonMxPt4nQ-1; Wed, 19 May 2021 17:41:49 -0400
-X-MC-Unique: yc-BGK_vMgCfaonMxPt4nQ-1
-Received: by mail-qk1-f198.google.com with SMTP id s4-20020a3790040000b02902fa7aa987e8so10857264qkd.14
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 May 2021 14:41:49 -0700 (PDT)
+        Wed, 19 May 2021 17:47:49 -0400
+Received: by mail-ot1-f45.google.com with SMTP id i23-20020a9d68d70000b02902dc19ed4c15so13134490oto.0;
+        Wed, 19 May 2021 14:46:28 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:reply-to:to:cc:date
-         :in-reply-to:references:organization:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=xi95e1B6yP6PyH5g1s3FTxyljRjhUsy7lPQQAr+y8fI=;
-        b=ioc+fRegbWKVHK31GwJBDEiaA7fpnDT5X8dJMuw5uQeQiI6EC4CFYJCsUoV9s8eA4r
-         2oxzcZkpvahUaBGHXjT8yvq8PF9rbnpk52FVOM0TrbkGVnzfQqeWT2qnETmqdNVl6FE6
-         GN779h8E/oEFrfixlerBK7o9ef6+vsUOrZxkMGDnR2vj2+88C3flUocj4HX1xwtgRosR
-         PM2v7ZV/8XmFCDFgdysyds89cpRo8gbVSXxypC9oPe+8jXUEKDjCw2tZd6fQqtiUdcfb
-         nLgZGDQCxihdRyuGfv2lt08jZSrcB15hL7qAvJHpn5vPdueCfRLq8Vf4qPoSLNMhlEL2
-         huSg==
-X-Gm-Message-State: AOAM530hpJukVNmeKnpMNUDxzJw3ieZJQ3SKpvl3xdeo2CNTjpDTxMAN
-        QA9P4wsQwTzHMikb39UFgB53ldp34wcmjPPM/rB90agkz3FK1je8jr7S2WOiu8AOXr0qVY9oOiN
-        Zo1wVg2MukZ20g0PhlvAWnjbcFA==
-X-Received: by 2002:a05:620a:448e:: with SMTP id x14mr1685734qkp.10.1621460508698;
-        Wed, 19 May 2021 14:41:48 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJygixeZlf0WhKb4MiMKmyRvb2Nhk8mEdN0fmN0QG9FyGu0PUyVituBlrQG6ZwqT63XHgeIdDw==
-X-Received: by 2002:a05:620a:448e:: with SMTP id x14mr1685713qkp.10.1621460508441;
-        Wed, 19 May 2021 14:41:48 -0700 (PDT)
-Received: from Whitewolf.lyude.net (pool-108-49-102-102.bstnma.fios.verizon.net. [108.49.102.102])
-        by smtp.gmail.com with ESMTPSA id p19sm698489qki.119.2021.05.19.14.41.47
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=yOGPs0V6FkNejdUdVjlvBiW0dEeEZEXepILqZyt8co8=;
+        b=XU+QFmpE9a/+BjMwUnKm/Fs0387YNa7dXZ6ZxLA135pWx4qzx6ahrkuiM/rg3JPZXo
+         eyyhesnko79qVXvIKZLk//xnTTH9lawCLmoyES013pwF3Zo4F3qtp5oh6m97jthdvmJm
+         2WcnGRmTO2c8JLoZBCCT9vOktXG98sKIll5oUhCwxCF9hCvnMrg3l0o1IC8LHJIKBXNm
+         DTEuyCW8+hdmnQAGEzeqfPFwsGbC+EZYwWSuGFui+Lx+OajEuXRFDkZI+hjgi6VS3BMl
+         /xpMMCZwn9DAqwmrUq8lutRfI6/fhj9zuoq/EpJFmWX/s+3sX2xn3NNHFTo/RyH3Og8O
+         YfCQ==
+X-Gm-Message-State: AOAM530kF1E9r5hBjMy+YwrAb9cjPO4Erkn8JaOQJVeSNaXblHPqJ/mW
+        M561AVxw3mVjVBSaiAuMpA==
+X-Google-Smtp-Source: ABdhPJwRqQJK3vnCAqVW6aOusQi9dumKLf/hwwSSpufREOP2Y4ovY1yFsoxPQrHVlwY8/1R070Vciw==
+X-Received: by 2002:a9d:7a99:: with SMTP id l25mr1307179otn.97.1621460788421;
+        Wed, 19 May 2021 14:46:28 -0700 (PDT)
+Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id j16sm206481otn.55.2021.05.19.14.46.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 May 2021 14:41:48 -0700 (PDT)
-Message-ID: <eff349659d26a922c39ff24ee1fee8655e5f6efe.camel@redhat.com>
-Subject: Re: [PATCH v7 00/10] drm: Fix EDID reading on ti-sn65dsi86 by
- introducing the DP AUX bus
-From:   Lyude Paul <lyude@redhat.com>
-Reply-To: lyude@redhat.com
-To:     Douglas Anderson <dianders@chromium.org>,
-        Andrzej Hajda <a.hajda@samsung.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@siol.net>,
-        Sam Ravnborg <sam@ravnborg.org>
-Cc:     Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>,
-        Thierry Reding <treding@nvidia.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Linus W <linus.walleij@linaro.org>,
-        dri-devel@lists.freedesktop.org, robdclark@chromium.org,
-        Steev Klimaszewski <steev@kali.org>,
-        Andy Gross <agross@kernel.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Maxime Ripard <mripard@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Robert Foss <robert.foss@linaro.org>,
-        Sandeep Panda <spanda@codeaurora.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Date:   Wed, 19 May 2021 17:41:46 -0400
-In-Reply-To: <20210517200907.1459182-1-dianders@chromium.org>
-References: <20210517200907.1459182-1-dianders@chromium.org>
-Organization: Red Hat
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.38.4 (3.38.4-1.fc33) 
+        Wed, 19 May 2021 14:46:26 -0700 (PDT)
+Received: (nullmailer pid 3713590 invoked by uid 1000);
+        Wed, 19 May 2021 21:46:23 -0000
+Date:   Wed, 19 May 2021 16:46:23 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Krishna Manikandan <mkrishn@codeaurora.org>
+Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, kalyan_t@codeaurora.org,
+        tanmay@codeaurora.org, abhinavk@codeaurora.org,
+        robdclark@gmail.com, swboyd@chromium.org,
+        bjorn.andersson@linaro.org, vinod.koul@linaro.org,
+        dianders@chromium.org, khsieh@codeaurora.org, sean@poorly.run
+Subject: Re: [PATCH v16 2/4] dt-bindings: msm: dsi: add yaml schemas for DSI
+ bindings
+Message-ID: <20210519214623.GA3698211@robh.at.kernel.org>
+References: <1621332225-31918-1-git-send-email-mkrishn@codeaurora.org>
+ <1621332225-31918-2-git-send-email-mkrishn@codeaurora.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1621332225-31918-2-git-send-email-mkrishn@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-JFYI I haven't had a chance yet but I'm hoping to look at this this week
-
-On Mon, 2021-05-17 at 13:08 -0700, Douglas Anderson wrote:
-> The primary goal of this series is to try to properly fix EDID reading
-> for eDP panels using the ti-sn65dsi86 bridge.
+On Tue, May 18, 2021 at 03:33:43PM +0530, Krishna Manikandan wrote:
+> Add YAML schema for the device tree bindings for DSI
 > 
-> Previously we had a patch that added EDID reading but it turned out
-> not to work at bootup. This caused some extra churn at bootup as we
-> tried (and failed) to read the EDID several times and also ended up
-> forcing us to use the hardcoded mode at boot. With this patch series I
-> believe EDID reading is reliable at boot now and we never use the
-> hardcoded mode.
+> Signed-off-by: Krishna Manikandan <mkrishn@codeaurora.org>
 > 
-> High level note: in this series the EDID reading is driven by the
-> panel driver, not by the bridge chip driver. I believe this makes a
-> reasonable amount of sense since the panel driver already _could_
-> drive reading the EDID if provided with the DDC bus and in future
-> planned work we'll want to give the panel driver the DDC bus (to make
-> decisions based on EDID) and the AUX bus (to control the
-> backlight). There are also planned patches from Laurent to make
-> ti-sn65dsi86 able to drive full DP monitors. In that case the bridge
-> chip will still be in charge of reading the EDID, but it's not hard to
-> make this dynamic.
+> Changes in v1:
+>     - Separate dsi controller bindings to a separate patch (Stephen Boyd)
+>     - Merge dsi-common-controller.yaml and dsi-controller-main.yaml to
+>       a single file (Stephen Boyd)
+>     - Drop supply entries and definitions from properties (Stephen Boyd)
+>     - Modify phy-names property for dsi controller (Stephen Boyd)
+>     - Remove boolean from description (Stephen Boyd)
+>     - Drop pinctrl properties as they are standard entries (Stephen Boyd)
+>     - Modify the description for ports property and keep the reference
+>       to the generic binding where this is defined (Stephen Boyd)
+>     - Add description to clock names (Stephen Boyd)
+>     - Correct the indendation (Stephen Boyd)
+>     - Drop the label for display dt nodes and correct the node
+>       name (Stephen Boyd)
 > 
-> This series is the logical successor to the 3-part series containing
-> the patch ("drm/bridge: ti-sn65dsi86: Properly get the EDID, but only
-> if refclk") [1].
+> Changes in v2:
+>     - Drop maxItems for clock (Stephen Boyd)
+>     - Drop qcom,mdss-mdp-transfer-time-us as it is not used in upstream
+>       dt file (Stephen Boyd)
+>     - Keep child node directly under soc node (Stephen Boyd)
+>     - Drop qcom,sync-dual-dsi as it is not used in upstream dt
 > 
-> This patch was tested against drm-misc-next commit 60a6b73dd821
-> ("drm/ingenic: Fix pixclock rate for 24-bit serial panels") on a
-> sc7180-trogdor-lazor device.
+> Changes in v3:
+>     - Add description for register property (Stephen Boyd)
 > 
-> At v7 now, this patch series grew a bit from v6 because it introduces
-> the DP AUX bus.
+> Changes in v4:
+>     - Add maxItems for phys property (Stephen Boyd)
+>     - Add maxItems for reg property (Stephen Boyd)
+>     - Add reference for data-lanes property (Stephen Boyd)
+>     - Remove soc from example (Stephen Boyd)
 > 
-> Between v2 and v3, high-level view of changes:
-> - stop doing the EDID caching in the core.
-> 
-> Between v3 and v4, high-level view of changes:
-> - EDID reading is actually driven by the panel driver now. See above.
-> - Lots of chicken-and-egg problems solved w/ sub-devices.
-> 
-> Between v4 and v5, high-level view of changes.
-> - Some of the early patches landed, so dropped from series.
-> - New pm_runtime_disable() fix (fixed a patch that already landed).
-> - Added Bjorn's tags to most patches
-> - Fixed problems when building as a module.
-> - Reordered debugfs patch and fixed error handling there.
-> - Dropped last patch. I'm not convinced it's safe w/out more work.
-> 
-> Between v5 and v6, high-level view of changes:
-> - Added the patch ("drm/dp: Allow an early call to register DDC i2c
->   bus")
-> - Many patches had been landed, so only a few "controversial" ones
->   left.
-> 
-> Between v6 and v7, high-level view of changes:
-> - New AUX DP bus!
-> 
-> [1]
-> https://lore.kernel.org/r/20210304155144.3.I60a7fb23ce4589006bc95c64ab8d15c74b876e68@changeid/
-> 
-> Changes in v7:
-> - pm_runtime_dont_use_autosuspend() fix new for v7.
-> - List hpd properties bindings patch new for v7.
-> - ti-sn65dsi86: Add aux-bus child patch new for v7.
-> - Patch introducing the DP AUX bus is new for v7.
-> - Patch to allow panel-simple to be DP AUX EP new for v7.
-> - Patch using the DP AUX for DDC new for v7.
-> - Remove use of now-dropped drm_dp_aux_register_ddc() call.
-> - Beefed up commit message in context of the DP AUX bus.
-> - Set the proper sub-device "dev" pointer in the AUX structure.
-> - Patch to support for DP AUX bus on ti-sn65dsi86 new for v7.
-> - Adjusted commit message to talk about DP AUX bus.
-> - Panel now under bridge chip instead of getting a link to ddc-i2c
+> Changes in v5:
+>     - Modify title and description (Stephen Boyd)
+>     - Add required properties for ports node (Stephen Boyd)
+>     - Add data-lanes in the example (Stephen Boyd)
+>     - Drop qcom,master-dsi property (Stephen Boyd)
 > 
 > Changes in v6:
-> - Use new drm_dp_aux_register_ddc() calls.
+>     - Add required properties for port@0, port@1 and corresponding
+>       endpoints (Stephen Boyd)
+>     - Add address-cells and size-cells for ports (Stephen Boyd)
+>     - Use additionalProperties instead of unevaluatedProperties (Stephen Boyd)
 > 
-> Douglas Anderson (10):
->   drm/panel: panel-simple: Add missing pm_runtime_dont_use_autosuspend()
->     calls
->   dt-bindings: display: simple: List hpd properties in panel-simple
->   dt-bindings: drm/bridge: ti-sn65dsi86: Add aux-bus child
->   drm: Introduce the DP AUX bus
->   drm/panel: panel-simple: Allow panel-simple be a DP AUX endpoint
->     device
->   drm/panel: panel-simple: Stash DP AUX bus; allow using it for DDC
->   drm/bridge: ti-sn65dsi86: Promote the AUX channel to its own sub-dev
->   drm/bridge: ti-sn65dsi86: Add support for the DP AUX bus
->   drm/bridge: ti-sn65dsi86: Don't read EDID blob over DDC
->   arm64: dts: qcom: sc7180-trogdor: Move panel under the bridge chip
+> Changes in v7:
+>     - Add reference for ports and data-lanes (Rob Herring)
+>     - Add maxItems and minItems for data-lanes (Rob Herring)
+> ---
+>  .../bindings/display/msm/dsi-controller-main.yaml  | 209 +++++++++++++++++
+>  .../devicetree/bindings/display/msm/dsi.txt        | 249 ---------------------
+>  2 files changed, 209 insertions(+), 249 deletions(-)
+>  create mode 100644 Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
+>  delete mode 100644 Documentation/devicetree/bindings/display/msm/dsi.txt
 > 
->  .../bindings/display/bridge/ti,sn65dsi86.yaml |  22 +-
->  .../bindings/display/panel/panel-simple.yaml  |   2 +
->  arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi  |  30 +-
->  drivers/gpu/drm/Kconfig                       |   5 +
->  drivers/gpu/drm/Makefile                      |   2 +
->  drivers/gpu/drm/bridge/Kconfig                |   1 +
->  drivers/gpu/drm/bridge/ti-sn65dsi86.c         | 111 ++++--
->  drivers/gpu/drm/drm_dp_aux_bus.c              | 322 ++++++++++++++++++
->  drivers/gpu/drm/panel/Kconfig                 |   1 +
->  drivers/gpu/drm/panel/panel-simple.c          |  66 +++-
->  include/drm/drm_dp_aux_bus.h                  |  57 ++++
->  11 files changed, 563 insertions(+), 56 deletions(-)
->  create mode 100644 drivers/gpu/drm/drm_dp_aux_bus.c
->  create mode 100644 include/drm/drm_dp_aux_bus.h
-> 
+> diff --git a/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml b/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
+> new file mode 100644
+> index 0000000..80f5218
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
+> @@ -0,0 +1,209 @@
+> +# SPDX-License-Identifier: GPL-2.0-only or BSD-2-Clause
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/display/msm/dsi-controller-main.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Display DSI controller
+> +
+> +maintainers:
+> +  - Krishna Manikandan <mkrishn@codeaurora.org>
+> +
+> +allOf:
+> +  - $ref: "../dsi-controller.yaml#"
+> +
+> +properties:
+> +  compatible:
+> +    items:
+> +      - const: qcom,mdss-dsi-ctrl
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  reg-names:
+> +    const: dsi_ctrl
+> +
+> +  interrupts:
+> +    maxItems: 1
+> +
+> +  clocks:
+> +    items:
+> +      - description: Display byte clock
+> +      - description: Display byte interface clock
+> +      - description: Display pixel clock
+> +      - description: Display escape clock
+> +      - description: Display AHB clock
+> +      - description: Display AXI clock
+> +
+> +  clock-names:
+> +    items:
+> +      - const: byte
+> +      - const: byte_intf
+> +      - const: pixel
+> +      - const: core
+> +      - const: iface
+> +      - const: bus
+> +
+> +  phys:
+> +    maxItems: 1
+> +
+> +  phy-names:
+> +    const: dsi
+> +
+> +  "#address-cells": true
+> +
+> +  "#size-cells": true
+> +
+> +  syscon-sfpb:
+> +    description: A phandle to mmss_sfpb syscon node (only for DSIv2).
+> +    $ref: "/schemas/types.yaml#/definitions/phandle"
+> +
+> +  qcom,dual-dsi-mode:
+> +    type: boolean
+> +    description: |
+> +      Indicates if the DSI controller is driving a panel which needs
+> +      2 DSI links.
+> +
+> +  power-domains:
+> +    maxItems: 1
+> +
+> +  operating-points-v2: true
+> +
+> +  ports:
+> +    $ref: "/schemas/graph.yaml#/properties/ports"
+> +    description: |
+> +      Contains DSI controller input and output ports as children, each
+> +      containing one endpoint subnode.
+> +
+> +    properties:
+> +      port@0:
+> +        $ref: "/schemas/graph.yaml#/properties/port"
+> +        description: |
+> +          Input endpoints of the controller.
+> +
+> +        properties:
+> +          reg:
+> +            const: 0
 
--- 
-Sincerely,
-   Lyude Paul (she/her)
-   Software Engineer at Red Hat
-   
-Note: I deal with a lot of emails and have a lot of bugs on my plate. If you've
-asked me a question, are waiting for a review/merge on a patch, etc. and I
-haven't responded in a while, please feel free to send me another email to check
-on my status. I don't bite!
+You can drop 'reg'.
 
+> +
+> +          endpoint:
+> +            type: object
+> +            properties:
+> +              remote-endpoint: true
+
+Don't need this.
+
+> +              data-lanes:
+> +                $ref: "../../media/video-interfaces.yaml"
+
+This is not where the $ref goes. Please look at other users.
+
+> +                description: |
+> +                  This describes how the physical DSI data lanes are mapped
+> +                  to the logical lanes on the given platform. The value contained in
+> +                  index n describes what physical lane is mapped to the logical lane n
+> +                  (DATAn, where n lies between 0 and 3). The clock lane position is fixed
+> +                  and can't be changed. Hence, they aren't a part of the DT bindings.
+
+Don't redescribe common properties. If you have something special about 
+this device, then say it.
+
+> +                maxItems: 4
+> +                minItems: 4
+> +                items:
+> +                  enum: [ 0, 1, 2, 3 ]
+> +
+> +        required:
+> +          - reg
+> +          - endpoint
+
+Drop. Already covered by the common schema.
+
+> +
+> +      port@1:
+> +        $ref: "/schemas/graph.yaml#/properties/port"
+> +        description: |
+> +          Output endpoints of the controller.
+> +        properties:
+> +          reg:
+> +            const: 1
+> +
+> +          endpoint:
+> +            type: object
+
+Needs a $ref to video-interfaces.yaml.
+
+> +            properties:
+> +              remote-endpoint: true
+> +              data-lanes:
+> +                maxItems: 4
+> +                minItems: 4
+> +                items:
+> +                  enum: [ 0, 1, 2, 3 ]
+> +
+
+> +        required:
+> +          - reg
+> +          - endpoint
+
+Drop
+
+> +
+> +    required:
+> +      - port@0
+> +      - port@1
+
+> +      - "#address-cells"
+> +      - "#size-cells"
+
+Last 2 are covered by the common schema.
+
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - reg-names
+> +  - interrupts
+> +  - clocks
+> +  - clock-names
+> +  - phys
+> +  - phy-names
+> +  - power-domains
+> +  - operating-points-v2
+> +  - ports
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +     #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +     #include <dt-bindings/clock/qcom,dispcc-sdm845.h>
+> +     #include <dt-bindings/clock/qcom,gcc-sdm845.h>
+> +     #include <dt-bindings/power/qcom-rpmpd.h>
+> +
+> +     dsi@ae94000 {
+> +           compatible = "qcom,mdss-dsi-ctrl";
+> +           reg = <0x0ae94000 0x400>;
+> +           reg-names = "dsi_ctrl";
+> +
+> +           #address-cells = <1>;
+> +           #size-cells = <0>;
+> +
+> +           interrupt-parent = <&mdss>;
+> +           interrupts = <4>;
+> +
+> +           clocks = <&dispcc DISP_CC_MDSS_BYTE0_CLK>,
+> +                    <&dispcc DISP_CC_MDSS_BYTE0_INTF_CLK>,
+> +                    <&dispcc DISP_CC_MDSS_PCLK0_CLK>,
+> +                    <&dispcc DISP_CC_MDSS_ESC0_CLK>,
+> +                    <&dispcc DISP_CC_MDSS_AHB_CLK>,
+> +                    <&dispcc DISP_CC_MDSS_AXI_CLK>;
+> +           clock-names = "byte",
+> +                         "byte_intf",
+> +                         "pixel",
+> +                         "core",
+> +                         "iface",
+> +                         "bus";
+> +
+> +           phys = <&dsi0_phy>;
+> +           phy-names = "dsi";
+> +
+> +           power-domains = <&rpmhpd SC7180_CX>;
+> +           operating-points-v2 = <&dsi_opp_table>;
+> +
+> +           ports {
+> +                  #address-cells = <1>;
+> +                  #size-cells = <0>;
+> +
+> +                  port@0 {
+> +                          reg = <0>;
+> +                          dsi0_in: endpoint {
+> +                                   remote-endpoint = <&dpu_intf1_out>;
+> +                          };
+> +                  };
+> +
+> +                  port@1 {
+> +                          reg = <1>;
+> +                          dsi0_out: endpoint {
+> +                                   remote-endpoint = <&sn65dsi86_in>;
+> +                                   data-lanes = <0 1 2 3>;
+> +                          };
+> +                  };
+> +           };
+> +     };
+> +...
+> diff --git a/Documentation/devicetree/bindings/display/msm/dsi.txt b/Documentation/devicetree/bindings/display/msm/dsi.txt
+> deleted file mode 100644
+> index b9a64d3..0000000
+> --- a/Documentation/devicetree/bindings/display/msm/dsi.txt
+> +++ /dev/null
+> @@ -1,249 +0,0 @@
+> -Qualcomm Technologies Inc. adreno/snapdragon DSI output
+> -
+> -DSI Controller:
+> -Required properties:
+> -- compatible:
+> -  * "qcom,mdss-dsi-ctrl"
+> -- reg: Physical base address and length of the registers of controller
+> -- reg-names: The names of register regions. The following regions are required:
+> -  * "dsi_ctrl"
+> -- interrupts: The interrupt signal from the DSI block.
+> -- power-domains: Should be <&mmcc MDSS_GDSC>.
+> -- clocks: Phandles to device clocks.
+> -- clock-names: the following clocks are required:
+> -  * "mdp_core"
+> -  * "iface"
+> -  * "bus"
+> -  * "core_mmss"
+> -  * "byte"
+> -  * "pixel"
+> -  * "core"
+> -  For DSIv2, we need an additional clock:
+> -   * "src"
+> -  For DSI6G v2.0 onwards, we need also need the clock:
+> -   * "byte_intf"
+> -- assigned-clocks: Parents of "byte" and "pixel" for the given platform.
+> -- assigned-clock-parents: The Byte clock and Pixel clock PLL outputs provided
+> -  by a DSI PHY block. See [1] for details on clock bindings.
+> -- vdd-supply: phandle to vdd regulator device node
+> -- vddio-supply: phandle to vdd-io regulator device node
+> -- vdda-supply: phandle to vdda regulator device node
+> -- phys: phandle to DSI PHY device node
+> -- phy-names: the name of the corresponding PHY device
+> -- syscon-sfpb: A phandle to mmss_sfpb syscon node (only for DSIv2)
+> -- ports: Contains 2 DSI controller ports as child nodes. Each port contains
+> -  an endpoint subnode as defined in [2] and [3].
+> -
+> -Optional properties:
+> -- panel@0: Node of panel connected to this DSI controller.
+> -  See files in [4] for each supported panel.
+> -- qcom,dual-dsi-mode: Boolean value indicating if the DSI controller is
+> -  driving a panel which needs 2 DSI links.
+> -- qcom,master-dsi: Boolean value indicating if the DSI controller is driving
+> -  the master link of the 2-DSI panel.
+> -- qcom,sync-dual-dsi: Boolean value indicating if the DSI controller is
+> -  driving a 2-DSI panel whose 2 links need receive command simultaneously.
+> -- pinctrl-names: the pin control state names; should contain "default"
+> -- pinctrl-0: the default pinctrl state (active)
+> -- pinctrl-n: the "sleep" pinctrl state
+> -- ports: contains DSI controller input and output ports as children, each
+> -  containing one endpoint subnode.
+> -
+> -  DSI Endpoint properties:
+> -  - remote-endpoint: For port@0, set to phandle of the connected panel/bridge's
+> -    input endpoint. For port@1, set to the MDP interface output. See [2] for
+> -    device graph info.
+> -
+> -  - data-lanes: this describes how the physical DSI data lanes are mapped
+> -    to the logical lanes on the given platform. The value contained in
+> -    index n describes what physical lane is mapped to the logical lane n
+> -    (DATAn, where n lies between 0 and 3). The clock lane position is fixed
+> -    and can't be changed. Hence, they aren't a part of the DT bindings. See
+> -    [3] for more info on the data-lanes property.
+> -
+> -    For example:
+> -
+> -    data-lanes = <3 0 1 2>;
+> -
+> -    The above mapping describes that the logical data lane DATA0 is mapped to
+> -    the physical data lane DATA3, logical DATA1 to physical DATA0, logic DATA2
+> -    to phys DATA1 and logic DATA3 to phys DATA2.
+> -
+> -    There are only a limited number of physical to logical mappings possible:
+> -    <0 1 2 3>
+> -    <1 2 3 0>
+> -    <2 3 0 1>
+> -    <3 0 1 2>
+> -    <0 3 2 1>
+> -    <1 0 3 2>
+> -    <2 1 0 3>
+> -    <3 2 1 0>
+> -
+> -DSI PHY:
+> -Required properties:
+> -- compatible: Could be the following
+> -  * "qcom,dsi-phy-28nm-hpm"
+> -  * "qcom,dsi-phy-28nm-lp"
+> -  * "qcom,dsi-phy-20nm"
+> -  * "qcom,dsi-phy-28nm-8960"
+> -  * "qcom,dsi-phy-14nm"
+> -  * "qcom,dsi-phy-14nm-660"
+> -  * "qcom,dsi-phy-10nm"
+> -  * "qcom,dsi-phy-10nm-8998"
+> -  * "qcom,dsi-phy-7nm"
+> -  * "qcom,dsi-phy-7nm-8150"
+> -- reg: Physical base address and length of the registers of PLL, PHY. Some
+> -  revisions require the PHY regulator base address, whereas others require the
+> -  PHY lane base address. See below for each PHY revision.
+> -- reg-names: The names of register regions. The following regions are required:
+> -  For DSI 28nm HPM/LP/8960 PHYs and 20nm PHY:
+> -  * "dsi_pll"
+> -  * "dsi_phy"
+> -  * "dsi_phy_regulator"
+> -  For DSI 14nm, 10nm and 7nm PHYs:
+> -  * "dsi_pll"
+> -  * "dsi_phy"
+> -  * "dsi_phy_lane"
+> -- clock-cells: Must be 1. The DSI PHY block acts as a clock provider, creating
+> -  2 clocks: A byte clock (index 0), and a pixel clock (index 1).
+> -- power-domains: Should be <&mmcc MDSS_GDSC>.
+> -- clocks: Phandles to device clocks. See [1] for details on clock bindings.
+> -- clock-names: the following clocks are required:
+> -  * "iface"
+> -  * "ref" (only required for new DTS files/entries)
+> -  For 28nm HPM/LP, 28nm 8960 PHYs:
+> -- vddio-supply: phandle to vdd-io regulator device node
+> -  For 20nm PHY:
+> -- vddio-supply: phandle to vdd-io regulator device node
+> -- vcca-supply: phandle to vcca regulator device node
+> -  For 14nm PHY:
+> -- vcca-supply: phandle to vcca regulator device node
+> -  For 10nm and 7nm PHY:
+> -- vdds-supply: phandle to vdds regulator device node
+> -
+> -Optional properties:
+> -- qcom,dsi-phy-regulator-ldo-mode: Boolean value indicating if the LDO mode PHY
+> -  regulator is wanted.
+> -- qcom,mdss-mdp-transfer-time-us:	Specifies the dsi transfer time for command mode
+> -					panels in microseconds. Driver uses this number to adjust
+> -					the clock rate according to the expected transfer time.
+> -					Increasing this value would slow down the mdp processing
+> -					and can result in slower performance.
+> -					Decreasing this value can speed up the mdp processing,
+> -					but this can also impact power consumption.
+> -					As a rule this time should not be higher than the time
+> -					that would be expected with the processing at the
+> -					dsi link rate since anyways this would be the maximum
+> -					transfer time that could be achieved.
+> -					If ping pong split is enabled, this time should not be higher
+> -					than two times the dsi link rate time.
+> -					If the property is not specified, then the default value is 14000 us.
+> -
+> -[1] Documentation/devicetree/bindings/clock/clock-bindings.txt
+> -[2] Documentation/devicetree/bindings/graph.txt
+> -[3] Documentation/devicetree/bindings/media/video-interfaces.txt
+> -[4] Documentation/devicetree/bindings/display/panel/
+> -
+> -Example:
+> -	dsi0: dsi@fd922800 {
+> -		compatible = "qcom,mdss-dsi-ctrl";
+> -		qcom,dsi-host-index = <0>;
+> -		interrupt-parent = <&mdp>;
+> -		interrupts = <4 0>;
+> -		reg-names = "dsi_ctrl";
+> -		reg = <0xfd922800 0x200>;
+> -		power-domains = <&mmcc MDSS_GDSC>;
+> -		clock-names =
+> -			"bus",
+> -			"byte",
+> -			"core",
+> -			"core_mmss",
+> -			"iface",
+> -			"mdp_core",
+> -			"pixel";
+> -		clocks =
+> -			<&mmcc MDSS_AXI_CLK>,
+> -			<&mmcc MDSS_BYTE0_CLK>,
+> -			<&mmcc MDSS_ESC0_CLK>,
+> -			<&mmcc MMSS_MISC_AHB_CLK>,
+> -			<&mmcc MDSS_AHB_CLK>,
+> -			<&mmcc MDSS_MDP_CLK>,
+> -			<&mmcc MDSS_PCLK0_CLK>;
+> -
+> -		assigned-clocks =
+> -				 <&mmcc BYTE0_CLK_SRC>,
+> -				 <&mmcc PCLK0_CLK_SRC>;
+> -		assigned-clock-parents =
+> -				 <&dsi_phy0 0>,
+> -				 <&dsi_phy0 1>;
+> -
+> -		vdda-supply = <&pma8084_l2>;
+> -		vdd-supply = <&pma8084_l22>;
+> -		vddio-supply = <&pma8084_l12>;
+> -
+> -		phys = <&dsi_phy0>;
+> -		phy-names ="dsi-phy";
+> -
+> -		qcom,dual-dsi-mode;
+> -		qcom,master-dsi;
+> -		qcom,sync-dual-dsi;
+> -
+> -		qcom,mdss-mdp-transfer-time-us = <12000>;
+> -
+> -		pinctrl-names = "default", "sleep";
+> -		pinctrl-0 = <&dsi_active>;
+> -		pinctrl-1 = <&dsi_suspend>;
+> -
+> -		ports {
+> -			#address-cells = <1>;
+> -			#size-cells = <0>;
+> -
+> -			port@0 {
+> -				reg = <0>;
+> -				dsi0_in: endpoint {
+> -					remote-endpoint = <&mdp_intf1_out>;
+> -				};
+> -			};
+> -
+> -			port@1 {
+> -				reg = <1>;
+> -				dsi0_out: endpoint {
+> -					remote-endpoint = <&panel_in>;
+> -					data-lanes = <0 1 2 3>;
+> -				};
+> -			};
+> -		};
+> -
+> -		panel: panel@0 {
+> -			compatible = "sharp,lq101r1sx01";
+> -			reg = <0>;
+> -			link2 = <&secondary>;
+> -
+> -			power-supply = <...>;
+> -			backlight = <...>;
+> -
+> -			port {
+> -				panel_in: endpoint {
+> -					remote-endpoint = <&dsi0_out>;
+> -				};
+> -			};
+> -		};
+> -	};
+> -
+> -	dsi_phy0: dsi-phy@fd922a00 {
+> -		compatible = "qcom,dsi-phy-28nm-hpm";
+> -		qcom,dsi-phy-index = <0>;
+> -		reg-names =
+> -			"dsi_pll",
+> -			"dsi_phy",
+> -			"dsi_phy_regulator";
+> -		reg =   <0xfd922a00 0xd4>,
+> -			<0xfd922b00 0x2b0>,
+> -			<0xfd922d80 0x7b>;
+> -		clock-names = "iface";
+> -		clocks = <&mmcc MDSS_AHB_CLK>;
+> -		#clock-cells = <1>;
+> -		vddio-supply = <&pma8084_l12>;
+> -
+> -		qcom,dsi-phy-regulator-ldo-mode;
+> -	};
+> -- 
+> 2.7.4
+> 
