@@ -2,118 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 42D073898EB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 May 2021 23:54:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C24D63898F2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 May 2021 23:58:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229470AbhESVyx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 May 2021 17:54:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58074 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229508AbhESVyw (ORCPT
+        id S229465AbhESV4r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 May 2021 17:56:47 -0400
+Received: from mail-ot1-f41.google.com ([209.85.210.41]:40927 "EHLO
+        mail-ot1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229455AbhESV4r (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 May 2021 17:54:52 -0400
-Received: from mail-yb1-xb2e.google.com (mail-yb1-xb2e.google.com [IPv6:2607:f8b0:4864:20::b2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA7BCC0613CE
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 May 2021 14:53:29 -0700 (PDT)
-Received: by mail-yb1-xb2e.google.com with SMTP id f9so20083845ybo.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 May 2021 14:53:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=jd/bNwxn2oWSrAf9sSe4tPmoSQKVy+JtsHNGOQIE9iI=;
-        b=J6Y530AZYNAlrFVMi7i3q0xCyUTQychAs7BdsD0/YERwsccLWVscdP3NroaENp4m9Q
-         2mhhPBib3iTcw+sq088NZi7U2c/lVraSBD4+e/Sl237lWfwbVCy3T9R+gQBf68B6HcE0
-         ni7G4pWVCbp/qfHKp1XvaVzt8uenTUTfQnoSns1WNlyX8wfFE9PED425khkG87mNCdbB
-         Fiz5RDZcMV190aOAsuXCyuBD7xYnbz6WIKE/plzZnDF3LrA6wADXmx7InWdfIWlDBjy+
-         R87KZ340bZm62ZTmsynT1GOyEtkGjIsrgagbiAZdqL5OJ1XWIsqCv/meHzIqRHo3vkM4
-         AQDA==
+        Wed, 19 May 2021 17:56:47 -0400
+Received: by mail-ot1-f41.google.com with SMTP id 80-20020a9d08560000b0290333e9d2b247so2559067oty.7;
+        Wed, 19 May 2021 14:55:26 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=jd/bNwxn2oWSrAf9sSe4tPmoSQKVy+JtsHNGOQIE9iI=;
-        b=HxWmLOpezKjgwUT7exh/z4LSrzCJbdLtS0/NHO78wmpcLRc+DrDmGkHjMgQY+I6Swx
-         pDwQ3kbnMmEj9jL6CaI6NkokrYz8LPCsNQnTSiekLiRUR0IAiVkd3Xac010QqK+VpMEN
-         6PdoJcKngU0xnuX1jYDbWyn1PBmLqEijK2RCeCbKOVsY1V+dYzRZlzYkY73gm9KarXpf
-         dSZNfSS6Cd+yRuE33VjpSNKHjKKWQUStd8CRtfUbilsLe3vkzFCpAd2hlnTalG26Fb2D
-         d7jPlVSmg0o/1r6oeQrZC84JAw92q0dXay7Cxf+ZZT2dWsKx1iVxJrf364Xic0HkoxfR
-         TG4w==
-X-Gm-Message-State: AOAM532vL9i/JtMeLLDHNuOa+GWr4Q5yF6ih29SHGhL1srDCE2ftGedO
-        Aaq5WQYdoyKaGpgOE5HvdWiEw4gqUy7ZjifcUxzoYA==
-X-Google-Smtp-Source: ABdhPJx+chv+0MSlRmJV0+qUwkBTi/rX1EuTqdg6Z+GDAwGpIFq9O5l3giqr2oaLO30TYH42ACRTUcWpWyXxR5qs/1Y=
-X-Received: by 2002:a25:3f47:: with SMTP id m68mr2386868yba.228.1621461208826;
- Wed, 19 May 2021 14:53:28 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=WLdhbkfROLOODKehFnwQndYXUu6pb9BwesCQWlQZNdw=;
+        b=U+HHgxOF2UERRC0wF4iDu0cB+7WSoe7YhlnhiLybWZO8t5k5Ey3Mxjjbm8DGZGk/D+
+         lsE54aJTzx0jU6Kpa8f9+2g9GDkzUTriQwvnHuvoCPPOAscmV+C49g2lm5R2Wg22CGZ9
+         i7FR8/U2cv4l5amaGlQuvmKLzdGI4JSH+I2UT3uvLTB1yxV/yUSlLeKHxvh+lZ931pg5
+         onmbTWhuynOC2tWlMxQq3o3pDWAUVx53yYrHWSm4fwPPv0OVz/SNEu8Nueh0rlUQsbd9
+         Tcrso3N3btuYgxknq/pLFyjmSKspEhq7QJXdlrTRxL9uBYVzhYJXMXQ53f8uff/3MH9j
+         g2Jg==
+X-Gm-Message-State: AOAM533lFMn7ymaFvhOvaXBwZJsqjRN8Kw5zS7PZEgcLsMJGvxp6cF+p
+        U9rx5u3Aig+Fvc66TdQv2Q==
+X-Google-Smtp-Source: ABdhPJy49y22kLS9d/WyIC9ajGLpmAUxVb+mt4q2p/FqjQ7LQ4zq/L9X0mp5DRJqVySH6KSGKlsQBQ==
+X-Received: by 2002:a9d:2271:: with SMTP id o104mr1314514ota.201.1621461326401;
+        Wed, 19 May 2021 14:55:26 -0700 (PDT)
+Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id v22sm171283oic.37.2021.05.19.14.55.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 19 May 2021 14:55:24 -0700 (PDT)
+Received: (nullmailer pid 3727657 invoked by uid 1000);
+        Wed, 19 May 2021 21:55:23 -0000
+Date:   Wed, 19 May 2021 16:55:23 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Krishna Manikandan <mkrishn@codeaurora.org>
+Cc:     dri-devel@lists.freedesktop.org, swboyd@chromium.org,
+        devicetree@vger.kernel.org, khsieh@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, sean@poorly.run,
+        kalyan_t@codeaurora.org, tanmay@codeaurora.org,
+        vinod.koul@linaro.org, robh+dt@kernel.org,
+        bjorn.andersson@linaro.org, linux-kernel@vger.kernel.org,
+        freedreno@lists.freedesktop.org, abhinavk@codeaurora.org,
+        dianders@chromium.org
+Subject: Re: [PATCH v16 3/4] dt-bindings: msm: dsi: add yaml schemas for DSI
+ PHY bindings
+Message-ID: <20210519215523.GA3727626@robh.at.kernel.org>
+References: <1621332225-31918-1-git-send-email-mkrishn@codeaurora.org>
+ <1621332225-31918-3-git-send-email-mkrishn@codeaurora.org>
 MIME-Version: 1.0
-References: <aff4807e-e554-2e32-5789-dfaf65128a8e@connolly.tech> <CAF6AEGvnL9mOp3vKuSvz=KDijtFVMdKCF4BXSLxXeoR38O-SUg@mail.gmail.com>
-In-Reply-To: <CAF6AEGvnL9mOp3vKuSvz=KDijtFVMdKCF4BXSLxXeoR38O-SUg@mail.gmail.com>
-From:   Saravana Kannan <saravanak@google.com>
-Date:   Wed, 19 May 2021 14:52:53 -0700
-Message-ID: <CAGETcx-2TySe=w1qAbtj2AJu6fNo_gaYnyP6GN150ShT1TvDfA@mail.gmail.com>
-Subject: Re: fw_devlink breakage on SDM845 / a630 with DSI displays
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     Caleb Connolly <caleb@connolly.tech>,
-        John Stultz <john.stultz@linaro.org>,
-        Amit Pundir <amit.pundir@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1621332225-31918-3-git-send-email-mkrishn@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, May 19, 2021 at 8:36 AM Rob Clark <robdclark@gmail.com> wrote:
->
-> + some more folks and msm list..
->
-> I suppose I didn't hit this because CONFIG_FBDEV_EMULATION is not
-> normally enabled for CrOS.. but I'm not really to familiar with
-> fw_devlink
->
-> BR,
-> -R
->
-> On Wed, May 19, 2021 at 8:26 AM Caleb Connolly <caleb@connolly.tech> wrote:
-> >
-> >
-> > Hi,
-> >
-> > Since -rc1 I've been hit by some DRM breakage in freedreno which happens
-> > when fw_devlink=on. It seems to cause some clocks (rcg) to get stuck and
-> > break DSI displays, here's a full log from the OnePlus 6:
-> > https://paste.ubuntu.com/p/8kPx4nFGF5/ (that is with
-> > "deferred_probe_timeout") The PocoPhone F1 also seems to be affected by
-> > this.
-> >
-> > The display will still come up after pressing the power button a few
-> > times, although it will be incredibly slow.
-> >
-> > It's worth noting that the issue only happens with
-> > CONFIG_FBDEV_EMULATION is enabled, I've previously required this to see
-> > kernel logs during boot and general boot splash with postmarketOS.
-> > Without it the display will be stuck on the bootloader splash until I
-> > press the power button and cause it to update once UI (like Phosh) has
-> > started (though this has been the case for quite some time).
-> >
-> > I'd appreciate any help with debugging / resolving this issue, I'm
-> > afraid I haven't been able to determine much from some brief digging.
-> >
+On Tue, 18 May 2021 15:33:44 +0530, Krishna Manikandan wrote:
+> Add YAML schema for the device tree bindings for DSI PHY.
+> 
+> Signed-off-by: Krishna Manikandan <mkrishn@codeaurora.org>
+> 
+> Changes in v1:
+>    - Merge dsi-phy.yaml and dsi-phy-10nm.yaml (Stephen Boyd)
+>    - Remove qcom,dsi-phy-regulator-ldo-mode (Stephen Boyd)
+>    - Add clock cells properly (Stephen Boyd)
+>    - Remove unnecessary decription from clock names (Stephen Boyd)
+>    - Add pin names for the supply entries for 10nm phy which is
+>      used in sc7180 and sdm845 (Stephen Boyd)
+>    - Remove unused header files from examples (Stephen Boyd)
+>    - Drop labels for display nodes and correct node name (Stephen Boyd)
+> 
+> Changes in v2:
+>    - Drop maxItems for clock (Stephen Boyd)
+>    - Add vdds supply pin information for sdm845 (Stephen Boyd)
+>    - Add examples for 14nm, 20nm and 28nm phy yaml files (Stephen Boyd)
+>    - Keep child nodes directly under soc node (Stephen Boyd)
+> 
+> Changes in v3:
+>    - Use a separate yaml file to describe the common properties
+>      for all the dsi phy versions (Stephen Boyd)
+>    - Remove soc from examples (Stephen Boyd)
+>    - Add description for register property
+> 
+> Changes in v4:
+>    - Modify the title for all the phy versions (Stephen Boyd)
+>    - Drop description for all the phy versions (Stephen Boyd)
+>    - Modify the description for register property (Stephen Boyd)
+> 
+> Changes in v5:
+>    - Remove unused properties from common dsi phy file
+>    - Add clock-cells and phy-cells to required property
+>      list (Stephen Boyd)
+> 
+> Changes in v6:
+>    - Add proper compatible string in example
+> ---
+>  .../bindings/display/msm/dsi-phy-10nm.yaml         | 68 +++++++++++++++++++++
+>  .../bindings/display/msm/dsi-phy-14nm.yaml         | 66 ++++++++++++++++++++
+>  .../bindings/display/msm/dsi-phy-20nm.yaml         | 71 ++++++++++++++++++++++
+>  .../bindings/display/msm/dsi-phy-28nm.yaml         | 68 +++++++++++++++++++++
+>  .../bindings/display/msm/dsi-phy-common.yaml       | 40 ++++++++++++
+>  5 files changed, 313 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml
+>  create mode 100644 Documentation/devicetree/bindings/display/msm/dsi-phy-14nm.yaml
+>  create mode 100644 Documentation/devicetree/bindings/display/msm/dsi-phy-20nm.yaml
+>  create mode 100644 Documentation/devicetree/bindings/display/msm/dsi-phy-28nm.yaml
+>  create mode 100644 Documentation/devicetree/bindings/display/msm/dsi-phy-common.yaml
+> 
 
-Hi Caleb,
-
-Is this a device that's supported upstream? If so, can you please
-point me to the DTS file that corresponds to this board?
-
-Also, can you please change all the dev_dbg to dev_info in these
-functions and give me the full boot log?
-device_link_add()
-device_links_check_suppliers()
-
-Can you also tell what device are not probing with fw_devlink=on that
-might be probing with fw_devlink=permissive?
-You should be able to compare /<debugfs>/devices_deferred to figure that out.
-
-Thanks,
-Saravana
+Reviewed-by: Rob Herring <robh@kernel.org>
