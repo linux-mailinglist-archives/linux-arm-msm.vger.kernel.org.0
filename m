@@ -2,142 +2,152 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 35A86389192
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 May 2021 16:40:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9C4853891FC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 May 2021 16:51:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1354555AbhESOlw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 May 2021 10:41:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43690 "EHLO
+        id S1354798AbhESOxM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 May 2021 10:53:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46780 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241769AbhESOlP (ORCPT
+        with ESMTP id S244049AbhESOxM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 May 2021 10:41:15 -0400
-Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7DD96C06134C
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 May 2021 07:39:19 -0700 (PDT)
-Received: by mail-pf1-x433.google.com with SMTP id k19so10043993pfu.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 May 2021 07:39:19 -0700 (PDT)
+        Wed, 19 May 2021 10:53:12 -0400
+Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A811EC06175F
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 May 2021 07:51:52 -0700 (PDT)
+Received: by mail-ot1-x32a.google.com with SMTP id g7-20020a9d12870000b0290328b1342b73so4145190otg.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 May 2021 07:51:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Ha/LaDJaWqJqGFUOZ/CIIY7Ny0kkYMvLA61pIJyDFZ0=;
-        b=WLOYc+Zws2OfLaWguoyIkyA1m4y1KdTsBz7yZ364G202kFhg5Cz8wae1i/DUrnQHh1
-         HBeM5YDGHk7LZ98IXVwaHuqR6OYbgMNOt9yY43rqwglS9/2svFr72RgIxvfI7HyIe0vc
-         gBjIwofSIcAXXCjfK7daf+hKjL/Ov9zRgQVvNfI+sW2xNj+oUyJk2cHZDPRxC9d7PyLj
-         AjUBTsoIlgPuTpoNBp/SqFHUBY4G59V5KiNlfdFPX2sWdvG/ykFt3dJY4iHLokwCDR4T
-         VGAL6RoKhXBZn6TUmJxWyNrcHT2Nsxa/gVWl+XiW3yAWyOwzHT03zZTVDjnTVJUYKxxW
-         ez+A==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=FTJFgBVyDmUOEWvTRev7q14+qgObUW0H7ne5i0Gbe6Y=;
+        b=S9tVdEtrJGHa2o7lEkJCl4ciWBJIW+7y7XAxPg2JtJRWL8oEtOofCj7Kd+s7C/rIBr
+         X/N8xkmpWtnyWt1DKO7+61sttUWb96XaXea/B1XI7p/WQnRVkFodqInkdzVDOGszpRe4
+         bpJLlyQD9AEUc4m7DCFI/fKCMPXeM+YTcp1d73LC5Eq2i6Zs/OdFoDQ388kT3FuKiZDB
+         dsyJ9WRYzho23HSpVRA74CioM2IFz/p6ya/SE2EPNaHHGbHjx6SKcHx+OuMx087PBb3/
+         MqM61FpRqZKf8ve9BqJGm1gC0KM3eQ3qrqTWLKksOYf2pqrZGeeweNHmboD1YyD6ExZR
+         Wt4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Ha/LaDJaWqJqGFUOZ/CIIY7Ny0kkYMvLA61pIJyDFZ0=;
-        b=eGF+JKCysYtprGv/jSxa2MH9pFjt4DFFoOfVh8euQf4Ouh4dUyBl78MVza32xA5Egw
-         LIX0N/beqNy/336N2VokUrVKMdMXh/GM3xNmAs3kYwtdNws01dHusrh+IsFH+4J1RxKV
-         6Lm6j/ZtgIkFFv7wEdXrJqAHKrYpzdDcjI+e7ctvfGTdyDCsLBARBLLTkPflAcX4eQWX
-         4tBzDkePsXgnRFudW7HYTfpkdA15juM3YBd9Ffa77h1WcGAjmbg54u5DVXvC4BiAEZjH
-         HDAMojmn10yl0cqAT8fjQHyJLuav+TUXxYogw0v98zWARHdVrS0cc3WKC2C/5RVMjuel
-         qR1g==
-X-Gm-Message-State: AOAM532IwB8gd/8zFO1gzsHosBjPzksUTziyFZbd5J4/O89AItNvlBvf
-        OFVpHkgpXB8JFNx+CNO0W+9B+HsqwNackw==
-X-Google-Smtp-Source: ABdhPJy6oYXhdskz+Yn8nt3Y0Tv5dRWI5TVs9gHJNz0N7OYXa/C/ddOSJ9Mb0VgSbzLMrAfiYCZtuQ==
-X-Received: by 2002:aa7:8588:0:b029:28e:dfa1:e31a with SMTP id w8-20020aa785880000b029028edfa1e31amr10952488pfn.77.1621435158778;
-        Wed, 19 May 2021 07:39:18 -0700 (PDT)
-Received: from localhost.localdomain.name ([122.177.135.250])
-        by smtp.gmail.com with ESMTPSA id o24sm9239515pgl.55.2021.05.19.07.39.12
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=FTJFgBVyDmUOEWvTRev7q14+qgObUW0H7ne5i0Gbe6Y=;
+        b=JNbUQRL+XJFYQayXPoJ52zzcV0HWa+WBPX9UoWz816B+uNFVII/jGayBvTnFMQR8cG
+         hTvg34T4NptAtbi2UAdvNZHN+4ib+hTZ6p+9RYUf/uStQpwWMcQnrrnnF4CA1QyxsqxC
+         NmQAE4VbIy4ZjeHq0UuLEWgd6nkSTaSzN4nz5B/EID4VfZWbnJz+sKIMSFV6sHLqYm03
+         iEkCF1CL1o+Zt5P3ue0EO51UF7iJ9RhlW9Fb2XFVn44jiu+i6VCYzNjpnc4R2uBqILPf
+         65jwlsAkxIjH+Kp7+ijPzO9hYMo5NN2gKFD1gGzw8yoPrsCiCPF00FPwwK+bqDLu9Ii6
+         jS6g==
+X-Gm-Message-State: AOAM532/yoW1TQvoU7Dm7fAxvH/7mwFxZcE08vxbPb8NBh5lSGyEytJN
+        1NTMutUqxGBHqAvN7mcYtXJw3w==
+X-Google-Smtp-Source: ABdhPJzY4rU2tPVJy8SezcMhmTeANCYark26o2ccH2Eo3RpalK98eq0y6YRbfDXggAfXeWgxMe1aUg==
+X-Received: by 2002:a05:6830:1594:: with SMTP id i20mr9168662otr.279.1621435911905;
+        Wed, 19 May 2021 07:51:51 -0700 (PDT)
+Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id 67sm4571702otp.68.2021.05.19.07.51.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 May 2021 07:39:18 -0700 (PDT)
-From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     bhupesh.sharma@linaro.org,
-        Thara Gopinath <thara.gopinath@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Herbert Xu <herbert@gondor.apana.org.au>,
-        "David S . Miller" <davem@davemloft.net>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Vinod Koul <vkoul@kernel.org>, dmaengine@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-crypto@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        bhupesh.linux@gmail.com
-Subject: [PATCH v3 17/17] arm64/dts: qcom: sm8250: Add dt entries to support crypto engine.
-Date:   Wed, 19 May 2021 20:07:00 +0530
-Message-Id: <20210519143700.27392-18-bhupesh.sharma@linaro.org>
-X-Mailer: git-send-email 2.31.1
-In-Reply-To: <20210519143700.27392-1-bhupesh.sharma@linaro.org>
-References: <20210519143700.27392-1-bhupesh.sharma@linaro.org>
+        Wed, 19 May 2021 07:51:51 -0700 (PDT)
+Date:   Wed, 19 May 2021 09:51:49 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     abhinavk@codeaurora.org
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Stephen Boyd <swboyd@chromium.org>, sbillaka@codeaurora.org,
+        Tanmay Shah <tanmay@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        dri-devel@lists.freedesktop.org,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        freedreno@lists.freedesktop.org,
+        Chandan Uddaraju <chandanu@codeaurora.org>
+Subject: Re: [Freedreno] [PATCH 0/4] drm/msm/dp: Add support for SC8180x eDP
+ controller
+Message-ID: <20210519145149.GX2484@yoga>
+References: <20210511042043.592802-1-bjorn.andersson@linaro.org>
+ <40f6aefd3fa341e2bec2060106389be7@codeaurora.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <40f6aefd3fa341e2bec2060106389be7@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add crypto engine (CE) and CE BAM related nodes and definitions to
-"sm8250.dtsi".
+On Tue 18 May 22:41 CDT 2021, abhinavk@codeaurora.org wrote:
 
-Cc: Thara Gopinath <thara.gopinath@linaro.org>
-Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc: Rob Herring <robh+dt@kernel.org>
-Cc: Andy Gross <agross@kernel.org>
-Cc: Herbert Xu <herbert@gondor.apana.org.au>
-Cc: David S. Miller <davem@davemloft.net>
-Cc: Stephen Boyd <sboyd@kernel.org>
-Cc: Michael Turquette <mturquette@baylibre.com>
-Cc: Vinod Koul <vkoul@kernel.org>
-Cc: dmaengine@vger.kernel.org
-Cc: linux-clk@vger.kernel.org
-Cc: linux-crypto@vger.kernel.org
-Cc: devicetree@vger.kernel.org
-Cc: linux-kernel@vger.kernel.org
-Cc: bhupesh.linux@gmail.com
-Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8250.dtsi | 28 ++++++++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
+> Hi Bjorn
+> 
+> I had a quick glance on the series and before getting to other things wanted
+> to know how you are initializing two different connectors for
+> DP & EDP resp.
+> 
+> The connector type for DP should be DRM_MODE_CONNECTOR_DisplayPort and eDP
+> should be DRM_MODE_CONNECTOR_eDP.
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index 4c0de12aaba6..6700d609a7b8 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -3796,6 +3796,34 @@ cpufreq_hw: cpufreq@18591000 {
- 
- 			#freq-domain-cells = <1>;
- 		};
-+
-+		cryptobam: dma@1dc4000 {
-+			compatible = "qcom,bam-v1.7.0";
-+			reg = <0 0x01dc4000 0 0x24000>;
-+			interrupts = <GIC_SPI 272 IRQ_TYPE_LEVEL_HIGH>;
-+			#dma-cells = <1>;
-+			qcom,ee = <0>;
-+			qcom,controlled-remotely = <1>;
-+			iommus = <&apps_smmu 0x584 0x0011>,
-+				 <&apps_smmu 0x586 0x0011>,
-+				 <&apps_smmu 0x594 0x0011>,
-+				 <&apps_smmu 0x596 0x0011>;
-+			interconnects = <&aggre2_noc MASTER_CRYPTO_CORE_0 &mc_virt SLAVE_EBI_CH0>;
-+			interconnect-names = "memory";
-+		};
-+
-+		crypto: crypto@1dfa000 {
-+			compatible = "qcom,sm8250-qce";
-+			reg = <0 0x01dfa000 0 0x6000>;
-+			dmas = <&cryptobam 4>, <&cryptobam 5>;
-+			dma-names = "rx", "tx";
-+			iommus = <&apps_smmu 0x584 0x0011>,
-+				 <&apps_smmu 0x586 0x0011>,
-+				 <&apps_smmu 0x594 0x0011>,
-+				 <&apps_smmu 0x596 0x0011>;
-+			interconnects = <&aggre2_noc MASTER_CRYPTO_CORE_0 &mc_virt SLAVE_EBI_CH0>;
-+			interconnect-names = "memory";
-+		};
- 	};
- 
- 	timer {
--- 
-2.31.1
+As far as I've been able to conclude there is no eDP support in the
+upstream DPU driver; an encoder of type DRM_MODE_ENCODER_TMDS will only
+attach to INTF_DP.
 
+> We need both to be created so that both EDP and DP can be supported
+> concurrently.
+> 
+
+Further more the DP controller driver has a global variable to track
+state and the INTF-picker will always pick the interface of index 0 when
+setting up the DP controller.
+
+> Will these changes work for concurrent eDP and DP case?
+> 
+
+The proposed changes are all that I need to get eDP working on my
+sc8180x laptop. But the DPU code does not currently support more than a
+single DP interface - and that has to be on the first INTF_DP that the
+DPU driver knows about.
+
+But this is a limitation we should fix, rather than claiming that you
+can only have one of each. Further more, afaict the sc7280 DP controller
+can do both DP and eDP, so it would make sense not to distinguish the
+interfaces as eDP or DP - just because the product in mind will use eDP.
+
+
+PS. I've currently disabled the eDP interface on my laptop and am
+working on trying to get Type-C DP working. Once that's in place I'd
+need a better INTF/encoder picker - because the current model of just
+picking INTF_DP 0 (or in a sequential fashion) won't work.
+
+Regards,
+Bjorn
+
+> Thanks
+> 
+> Abhinav
+> 
+> On 2021-05-10 21:20, Bjorn Andersson wrote:
+> > The first patch in the series is somewhat unrelated to the support, but
+> > simplifies reasoning and debugging of timing related issues.
+> > 
+> > The second patch introduces support for dealing with different register
+> > block
+> > layouts, which is used in the forth patch to describe the hardware
+> > blocks found
+> > in the SC8180x eDP block.
+> > 
+> > The third patch configures the INTF_CONFIG register, which carries the
+> > configuration for widebus handling. As with the DPU the bootloader
+> > enables
+> > widebus and we need to disable it, or implement support for adjusting
+> > the
+> > timing.
+> > 
+> > Bjorn Andersson (4):
+> >   drm/msm/dp: Simplify the mvid/nvid calculation
+> >   drm/msm/dp: Store each subblock in the io region
+> >   drm/msm/dp: Initialize the INTF_CONFIG register
+> >   drm/msm/dp: Add support for SC8180x eDP
+> > 
+> >  drivers/gpu/drm/msm/dp/dp_catalog.c | 99 +++++++----------------------
+> >  drivers/gpu/drm/msm/dp/dp_display.c |  1 +
+> >  drivers/gpu/drm/msm/dp/dp_parser.c  | 22 +++++++
+> >  drivers/gpu/drm/msm/dp/dp_parser.h  |  8 +++
+> >  4 files changed, 53 insertions(+), 77 deletions(-)
