@@ -2,117 +2,178 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 431593890B7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 May 2021 16:20:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DE11E389127
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 May 2021 16:37:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347294AbhESOWI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 May 2021 10:22:08 -0400
-Received: from mail.kernel.org ([198.145.29.99]:46440 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S241696AbhESOWH (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 May 2021 10:22:07 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 3D31261184;
-        Wed, 19 May 2021 14:20:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1621434048;
-        bh=IlyTRVg9iaS4GdcP04fzS3iku0yy9r7l2Sc5IKQw2h8=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=u8iYiTHz6WKwkXK8DUk4bdAtDMhyHECQPmnvfLzihs6zlxU9ErUc42OZE8Rslt/jv
-         MpZyIg0qJQZIKVJ5mh1jM4Nl8TNaBs6n1yoZ646aoHbi/BfWVaE1FilOgNrqX6Up9Q
-         Ya1uwW6V4Wm7TREfhHcJAPRQZFOzxtfNEAwLGgiEblDoZ+qtXQqrDSOYowxipUNzl9
-         g2dQuxh7J/qSW3kF7fiGgUtSviAJrRrywg9mf72PHC2Vx87kb8nxWi/h+MO+7G0QeO
-         o0b9+AnPe4hSGCMF87KSiDx8vH237V63ilCfqV5n0Hc+Ygo9h/QfmrNau5wWHKYgnI
-         3iNpvxUsOIQTg==
-Received: by mail-ot1-f43.google.com with SMTP id n32-20020a9d1ea30000b02902a53d6ad4bdso11896730otn.3;
-        Wed, 19 May 2021 07:20:48 -0700 (PDT)
-X-Gm-Message-State: AOAM530/MOmwbwV3oqWBLC4fC+yd038AFVRFdJaAh5Pggto3tYUu0VSi
-        wxF7dd1E4/kD5yQoy4l53xZS1y5LbtdffzxYbQY=
-X-Google-Smtp-Source: ABdhPJyETvAxsYWYp5Kss584s/HTffElw/LUlVLMMgr4T3fAvWLIEbcuepRyTzFvawA1+nqXqGvyh2+ZMFPklNLeRlk=
-X-Received: by 2002:a05:6830:4da:: with SMTP id s26mr9082205otd.77.1621434047501;
- Wed, 19 May 2021 07:20:47 -0700 (PDT)
-MIME-Version: 1.0
-References: <20210305065120.11355-1-shawn.guo@linaro.org> <CAMj1kXHOXOX6V735tLPxcVUAAM0AeZkLKyOUDKTPvazLjjrQ6Q@mail.gmail.com>
- <20210517005903.GA15021@dragon> <CAMj1kXFY_0uqGVn7La7v=8Aocz+X5T+zN=ZOzfwHHmjRe-Jhzg@mail.gmail.com>
- <20210519140545.GA26772@dragon>
-In-Reply-To: <20210519140545.GA26772@dragon>
-From:   Ard Biesheuvel <ardb@kernel.org>
-Date:   Wed, 19 May 2021 16:20:35 +0200
-X-Gmail-Original-Message-ID: <CAMj1kXGPG8+z_XBA7grvfJXuQ_TF2Xv+kZxtQdfTvwR+VK47Tw@mail.gmail.com>
-Message-ID: <CAMj1kXGPG8+z_XBA7grvfJXuQ_TF2Xv+kZxtQdfTvwR+VK47Tw@mail.gmail.com>
-Subject: Re: [PATCH] arm64: efi: add check for broken efi poweroff
-To:     Shawn Guo <shawn.guo@linaro.org>
-Cc:     Maximilian Luz <luzmaximilian@gmail.com>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>,
-        Jeffrey Hugo <jhugo@codeaurora.org>,
+        id S1348095AbhESOip (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 May 2021 10:38:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43176 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1348175AbhESOio (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 19 May 2021 10:38:44 -0400
+Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AAF74C0613ED
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 May 2021 07:37:24 -0700 (PDT)
+Received: by mail-pl1-x632.google.com with SMTP id a11so7149737plh.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 May 2021 07:37:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=nZMq8xWSXZHjYFFX9U2EDQv78qoTWHbTqwBMbdQQv0s=;
+        b=lVsbFM6aeHV9QO0yMWIoUEsFvuZICTWzjhH06XiLX53vIJd5fOltlBQU1AsHgkhC7b
+         GU7k6gSGN0lQBG7GaWR3AXAnUcQMwsq433ErObGTb6pDseELCOfit4GmF45i6IK022NF
+         M+m7ctX0SDRhPS+HjsgbUljOhedYqSDTR0Pi7DN1iY821hWBTzJRccUOL7JfRceTEhVm
+         WiUIbNY+lmeBWXgJiDm5Bwzu0VW1qgp0cDMdjjim4TeuzJzCwjGTtf4WhgkqrvH6NwRG
+         gT/bcRL0+NO+q5WxqSE5QH4O5aVBTDe0mV1ytUVtiFZLkjVcha+EmZ/cETYMz3SYJzbG
+         gh5w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=nZMq8xWSXZHjYFFX9U2EDQv78qoTWHbTqwBMbdQQv0s=;
+        b=Pz4j0ClhlEwTr6PHc7NZQ2TAYKeXctTrK+HXJV5YgGWpfdC2rXx0ImuVSSwWU9FqaM
+         k8O7kx5AuqWjXOMmt09meWd0ZxERTk1LvzNUXesh53fuUeMTBA3svwXYM+Tp3dknkqnd
+         mBVeOsWPY2nHDkuQQQy5IE/UoeTe6wePG8EDjiPRh8DJ19q5KqQPy/n8Zegrdcf9+7DL
+         8fqxM5+SimSsHXB7Fsk3AGZf220BNfcTpGHRBzjjgjLcq4omJI7/dxrU4bzrJEf+vXwf
+         5CyjHWs4U35F4/XdfDNXLCCHEnR9X6Cs5fB1gSHEmkDeZobXlOjgajcbsUARVFkbD8jc
+         jQnw==
+X-Gm-Message-State: AOAM533t+3RH3yPKxhFA/qu+h87wiSy7FGpypNucV27rUq8b8oL7cZ6s
+        GVnQrEZsjIoHIrjsOuCC8snn7OcqxlWt9Q==
+X-Google-Smtp-Source: ABdhPJx1AAoohm3tZC2APaKhDLsi3QklihlNmlo84V+Pzp/Q+nnZSaKyM1DsUUTiJWfa4t751iNqNg==
+X-Received: by 2002:a17:90a:f87:: with SMTP id 7mr12090307pjz.38.1621435043946;
+        Wed, 19 May 2021 07:37:23 -0700 (PDT)
+Received: from localhost.localdomain.name ([122.177.135.250])
+        by smtp.gmail.com with ESMTPSA id o24sm9239515pgl.55.2021.05.19.07.37.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 19 May 2021 07:37:23 -0700 (PDT)
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     bhupesh.sharma@linaro.org,
+        Thara Gopinath <thara.gopinath@linaro.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-efi <linux-efi@vger.kernel.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Herbert Xu <herbert@gondor.apana.org.au>,
+        "David S . Miller" <davem@davemloft.net>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Vinod Koul <vkoul@kernel.org>, dmaengine@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-crypto@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        bhupesh.linux@gmail.com
+Subject: [PATCH v3 00/17] Enable Qualcomm Crypto Engine on sm8250
+Date:   Wed, 19 May 2021 20:06:43 +0530
+Message-Id: <20210519143700.27392-1-bhupesh.sharma@linaro.org>
+X-Mailer: git-send-email 2.31.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 19 May 2021 at 16:05, Shawn Guo <shawn.guo@linaro.org> wrote:
->
-> On Tue, May 18, 2021 at 09:44:12AM +0200, Ard Biesheuvel wrote:
-> > On Mon, 17 May 2021 at 02:59, Shawn Guo <shawn.guo@linaro.org> wrote:
-> > >
-> > > + Maximilian
-> > >
-> > > On Fri, Mar 05, 2021 at 08:01:02AM +0100, Ard Biesheuvel wrote:
-> > > > On Fri, 5 Mar 2021 at 07:51, Shawn Guo <shawn.guo@linaro.org> wrote:
-> > > > >
-> > > > > Poweroff via UEFI Runtime Services doesn't always work on every single
-> > > > > arm64 machine.  For example, on Lenovo Flex 5G laptop, it results in
-> > > > > a system reboot rather than shutdown.  Add a DMI check to keep such
-> > > > > system stay with the original poweroff method (PSCI).
-> > > > >
-> > > > > Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
-> > > >
-> > > > What is the point of using EFI runtime services on this machine if
-> > > > poweroff doesn't work either? Can't we just boot this thing with
-> > > > efi=noruntime?
-> > >
-> > > Ard,
-> > >
-> > > With Maximilian playing ACPI kernel on Microsoft Surface Pro X, this
-> > > ResetSystem service issue triggers more discussion and testing [1].
-> > > Maximilian tested it with uefi-test-runner and reported that ResetSystem
-> > > actually works [2].
-> > >
-> > > Looking at the kernel dump, I'm wondering if it's because that kernel
-> > > calls into the services with assuming they are in virtual addressing
-> > > mode, while actually they are in flat physical mode instead, due to
-> > > that SetVirtualAddressMap() call is skipped (efi_novamap).
-> > >
-> >
-> > That looks like a firmware bug. Boot with efi=debug to figure out
-> > whether the faulting address is a physical address that falls inside a
-> > EfiRuntimeServicesData region.
->
-> Last time when I was seeing reboot/poweroff broken on Flex 5G, I did not
-> capture any kernel dumps.  I will retry with efi=debug and see if I can
-> get more information.
->
-> In the meantime, could you help me understand if EFI must be running in
-> virtual address mode when kernel is calling into the services, or it
-> should work no matter EFI is running in virtual or physical address
-> mode?  Thanks!
->
+Changes since v2:
+=================
+- v2 can be seen here: https://lore.kernel.org/dmaengine/20210505213731.538612-1-bhupesh.sharma@linaro.org/
+- Drop a couple of patches from v1, which tried to address the defered
+  probing of qce driver in case bam dma driver is not yet probed.
+  Replace it instead with a single (simpler) patch [PATCH 16/17].
+- Convert bam dma and qce crypto dt-bindings to YAML.
+- Addressed review comments from Thara, Bjorn, Vinod and Rob.
 
-There are really three scenarios to consider here:
-- SetVirtualAddressMap() is never called
-- SetVirtualAddressMap() is called with a 1:1 mapping for all
-EFI_MEMORY_RUNTIME regions
-- SetVirtualAddressMap() is called with an virtual remapping for all
-EFI_MEMORY_RUNTIME regions.
+Changes since v1:
+=================
+- v1 can be seen here: https://lore.kernel.org/linux-arm-msm/20210310052503.3618486-1-bhupesh.sharma@linaro.org/ 
+- v1 did not work well as reported earlier by Dmitry, so v2 contains the following
+  changes/fixes:
+  ~ Enable the interconnect path b/w BAM DMA and main memory first
+    before trying to access the BAM DMA registers.
+  ~ Enable the interconnect path b/w qce crytpo and main memory first
+    before trying to access the qce crypto registers.
+  ~ Make sure to document the required and optional properties for both
+    BAM DMA and qce crypto drivers.
+  ~ Add a few debug related print messages in case the qce crypto driver
+    passes or fails to probe.
+  ~ Convert the qce crypto driver probe to a defered one in case the BAM DMA
+    or the interconnect driver(s) (needed on specific Qualcomm parts) are not
+    yet probed.
 
-Firmware that is working correctly should not care about which
-scenario it is running under. All runtime services should simply work
-as expected.
+Qualcomm crypto engine is also available on sm8250 SoC.
+It supports hardware accelerated algorithms for encryption
+and authentication. It also provides support for aes, des, 3des
+encryption algorithms and sha1, sha256, hmac(sha1), hmac(sha256)
+authentication algorithms.
 
-However, there are numerous examples of UEFI in the field (both x86
-and ARM), where only the third scenario works, or where the second one
-is needed to work around problems that occur when using the first one.
+Tested the enabled crypto algorithms with cryptsetup test utilities
+on sm8250-mtp and RB5 board (see [1]) and also with crypto self-tests,
+including the fuzz tests (CONFIG_CRYPTO_MANAGER_EXTRA_TESTS=y).
+
+While at it, also make a minor fix in 'sdm845.dtsi', to make
+sure it confirms with the other .dtsi files which expose
+crypto nodes on qcom SoCs.
+
+Note that this series is rebased on AEAD fixes from Thara (see [2]).
+This is required for all of the fuzz tests to work.
+
+[1]. https://linux.die.net/man/8/cryptsetup
+[2]. https://lore.kernel.org/linux-crypto/20210429150707.3168383-5-thara.gopinath@linaro.org/T/
+
+Cc: Thara Gopinath <thara.gopinath@linaro.org>
+Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc: Rob Herring <robh+dt@kernel.org>
+Cc: Andy Gross <agross@kernel.org>
+Cc: Herbert Xu <herbert@gondor.apana.org.au>
+Cc: David S. Miller <davem@davemloft.net>
+Cc: Stephen Boyd <sboyd@kernel.org>
+Cc: Michael Turquette <mturquette@baylibre.com>
+Cc: Vinod Koul <vkoul@kernel.org>
+Cc: dmaengine@vger.kernel.org
+Cc: linux-clk@vger.kernel.org
+Cc: linux-crypto@vger.kernel.org
+Cc: devicetree@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+Cc: bhupesh.linux@gmail.com
+ 
+Bhupesh Sharma (14):
+  dt-bindings: qcom-bam: Convert binding to YAML
+  dt-bindings: qcom-bam: Add 'interconnects' & 'interconnect-names' to
+    optional properties
+  dt-bindings: qcom-bam: Add 'iommus' to required properties
+  dt-bindings: qcom-qce: Convert bindings to yaml
+  dt-bindings: qcom-qce: Add 'interconnects' and move 'clocks' to
+    optional properties
+  dt-bindings: qcom-qce: Add 'iommus' to required properties
+  arm64/dts: qcom: sdm845: Use RPMH_CE_CLK macro directly
+  dt-bindings: crypto : Add new compatible strings for qcom-qce
+  arm64/dts: qcom: Use new compatibles for crypto nodes
+  crypto: qce: Add new compatibles for qce crypto driver
+  crypto: qce: Print a failure msg in case probe() fails
+  crypto: qce: Convert the device found dev_dbg() to dev_info()
+  crypto: qce: Defer probing if BAM dma channel is not yet initialized
+  arm64/dts: qcom: sm8250: Add dt entries to support crypto engine.
+
+Thara Gopinath (3):
+  dma: qcom: bam_dma: Add support to initialize interconnect path
+  crypto: qce: core: Add support to initialize interconnect path
+  crypto: qce: core: Make clocks optional
+
+ .../devicetree/bindings/crypto/qcom-qce.txt   |  25 ----
+ .../devicetree/bindings/crypto/qcom-qce.yaml  |  92 +++++++++++++++
+ .../devicetree/bindings/dma/qcom_bam_dma.txt  |  50 --------
+ .../devicetree/bindings/dma/qcom_bam_dma.yaml | 110 ++++++++++++++++++
+ arch/arm64/boot/dts/qcom/ipq6018.dtsi         |   2 +-
+ arch/arm64/boot/dts/qcom/sdm845.dtsi          |   6 +-
+ arch/arm64/boot/dts/qcom/sm8250.dtsi          |  28 +++++
+ drivers/crypto/qce/core.c                     | 110 ++++++++++++------
+ drivers/crypto/qce/core.h                     |   3 +
+ drivers/dma/qcom/bam_dma.c                    |  10 ++
+ 10 files changed, 322 insertions(+), 114 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/crypto/qcom-qce.txt
+ create mode 100644 Documentation/devicetree/bindings/crypto/qcom-qce.yaml
+ delete mode 100644 Documentation/devicetree/bindings/dma/qcom_bam_dma.txt
+ create mode 100644 Documentation/devicetree/bindings/dma/qcom_bam_dma.yaml
+
+-- 
+2.31.1
+
