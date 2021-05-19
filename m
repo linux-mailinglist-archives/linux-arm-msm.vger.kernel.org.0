@@ -2,311 +2,184 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A77E73897D5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 May 2021 22:22:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2326138985E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 May 2021 23:06:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229437AbhESUYG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 May 2021 16:24:06 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:62083 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229543AbhESUYG (ORCPT
+        id S229785AbhESVHj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 May 2021 17:07:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47414 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229681AbhESVHj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 May 2021 16:24:06 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1621455766; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=AYbOgwbChI5rvlsBei4mmaY0nKq1z4ofewnO/Kfy8Xc=; b=jW5/FB/BeYeLimVMMNSQxz29Kaf3+v76eEU5A4jHMDhut/nYi+fTHC6GoLAo2ZNzgivXvSrS
- IzAfZHaAP9ZYU8B0mZ+gj9mqUdY/fiL3kVnDGvmlfcae5wO5dg14FewtUJs4djpw818ZEkfd
- cNZ9RRp9PKLDBYwWEf/4m+zeQuM=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
- 60a573922bff04e53b41eb1b (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 19 May 2021 20:22:42
- GMT
-Sender: khsieh=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 71717C4323A; Wed, 19 May 2021 20:22:42 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from khsieh-linux1.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: khsieh)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 7C22AC433F1;
-        Wed, 19 May 2021 20:22:40 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 7C22AC433F1
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=khsieh@codeaurora.org
-From:   Kuogee Hsieh <khsieh@codeaurora.org>
-To:     robdclark@gmail.com, sean@poorly.run, swboyd@chromium.org,
-        vkoul@kernel.org, agross@kernel.org, bjorn.andersson@linaro.org
-Cc:     abhinavk@codeaurora.org, aravindh@codeaurora.org,
-        khsieh@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH v6 1/2] drm/msm/dp: handle irq_hpd with sink_count = 0 correctly
-Date:   Wed, 19 May 2021 13:22:33 -0700
-Message-Id: <1621455753-28966-1-git-send-email-khsieh@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        Wed, 19 May 2021 17:07:39 -0400
+Received: from mail-qt1-x829.google.com (mail-qt1-x829.google.com [IPv6:2607:f8b0:4864:20::829])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69F08C06175F
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 May 2021 14:06:19 -0700 (PDT)
+Received: by mail-qt1-x829.google.com with SMTP id f8so11247547qth.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 May 2021 14:06:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=rrV0j7YUVvQ9ro0u0QUGjNvrEZGZrHvU5ryrt5YfeRs=;
+        b=U1IFwZKjSALWLmQnkWT+FZ6THaCzRnuvs9LNdLOH1gdUwrJcSljJp2mdbv0j0f67Hp
+         GGdvJkHB5QAc8gaH+BnQ61h+VgY4bkBdafPs/9u0BfMU7hzI8Ot6rMCdrAdfNeTZVI21
+         wip7kua1Tq13mnLBds/XBerje9kPZExpHBe5o=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=rrV0j7YUVvQ9ro0u0QUGjNvrEZGZrHvU5ryrt5YfeRs=;
+        b=WV7FqLR8IL5jzPPdcRtWbe1l4YNai/nsgck8z8umGMrgDaPmvVkPX0E+wYwXsaIodt
+         qlME/Ol3kp1iMcyXoHGwO4MraY8DeFq36VOiy4qcetgiklkZR1HlVQSbOuD7Ns9JlRpH
+         uPPIXSSifD9R/nx8ZQnCF1+OEkAaK8LDwSM8gJoro4m7rjgkUhwgROQUWj3J1e8nHP4S
+         0TQ1S+ewVrGPIgaP01Vlya5Yr/rdooh9W+ucxKiMinUZEhhjIkBnKTSnMVBKSg5wReNB
+         58OoGRyDKNz5lIXBy3m8PkiG/oJUkRd04d01/M4gjA0Sezliv1afadYP6tcWLK/cIQeW
+         Oaww==
+X-Gm-Message-State: AOAM5310CXuWDvMqjehPizvdASdcczBcq6oQ1zBrlQRMKG5M8p1jJjv1
+        lRKQ8lz+6nPNUz0Ku6lcVo7+OwRYK1D/PA==
+X-Google-Smtp-Source: ABdhPJxZJMhF4DRUuHy/zV/xNH6+0KxKWHIEO1AbmxUrDEGNC56mlDX1xMbu7oOQhyDuEKkGHV6irg==
+X-Received: by 2002:ac8:58cc:: with SMTP id u12mr1628479qta.302.1621458378224;
+        Wed, 19 May 2021 14:06:18 -0700 (PDT)
+Received: from mail-yb1-f180.google.com (mail-yb1-f180.google.com. [209.85.219.180])
+        by smtp.gmail.com with ESMTPSA id h5sm726434qkg.122.2021.05.19.14.06.17
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 19 May 2021 14:06:17 -0700 (PDT)
+Received: by mail-yb1-f180.google.com with SMTP id y36so3340684ybi.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 May 2021 14:06:17 -0700 (PDT)
+X-Received: by 2002:a25:734e:: with SMTP id o75mr2168098ybc.405.1621458376733;
+ Wed, 19 May 2021 14:06:16 -0700 (PDT)
+MIME-Version: 1.0
+References: <20210517200907.1459182-1-dianders@chromium.org>
+ <20210517130450.v7.3.I98bf729846c37c4c143f6ab88b1e299280e2fe26@changeid> <20210519200156.GA3535665@robh.at.kernel.org>
+In-Reply-To: <20210519200156.GA3535665@robh.at.kernel.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Wed, 19 May 2021 14:06:04 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=XNaB8fVvwwHPgo8wPmG3EmJ68u_3o8qpPXn4YobNokAA@mail.gmail.com>
+Message-ID: <CAD=FV=XNaB8fVvwwHPgo8wPmG3EmJ68u_3o8qpPXn4YobNokAA@mail.gmail.com>
+Subject: Re: [PATCH v7 03/10] dt-bindings: drm/bridge: ti-sn65dsi86: Add
+ aux-bus child
+To:     Rob Herring <robh@kernel.org>
+Cc:     Andrzej Hajda <a.hajda@samsung.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>,
+        Lyude Paul <lyude@redhat.com>,
+        Thierry Reding <treding@nvidia.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Linus W <linus.walleij@linaro.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Steev Klimaszewski <steev@kali.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-irq_hpd interrupt should be handled after dongle plugged in and
-before dongle unplugged. Hence irq_hpd interrupt is enabled at
-the end of the plugin handle and disabled at the beginning of
-unplugged handle. Current irq_hpd with sink_count = 0 is wrongly
-handled same as the dongle unplugged which tears down the mainlink
-and disables the phy. This patch fixes this problem by only tearing
-down the mainlink but keeping phy enabled at irq_hpd with
-sink_count = 0 handle so that next irq_hpd with sink_count =1 can be
-handled by setup mainlink only. This patch also set dongle into D3
-(power off) state at end of handling irq_hpd with sink_count = 0.
+Hi,
 
-Changes in v2:
--- add ctrl->phy_Power_count
+On Wed, May 19, 2021 at 1:02 PM Rob Herring <robh@kernel.org> wrote:
+>
+> On Mon, May 17, 2021 at 01:09:00PM -0700, Douglas Anderson wrote:
+> > We want to be able to list an eDP panel as a child of a ti-sn65dsi86
+> > node to represent the fact that the panel is connected to the bridge's
+> > DP AUX bus. Though the panel and the bridge chip are connected in
+> > several ways, the DP AUX bus is the primary control interface between
+> > the two and thus makes the most sense to model in device tree
+> > hierarchy.
+> >
+> > Listing a panel in this way makes it possible for the panel driver to
+> > easily get access to the DP AUX bus that it resides on, which can be
+> > useful to help in auto-detecting the panel and for turning on various
+> > bits.
+> >
+> > NOTE: it's still possible to continue using the bridge chip and point
+> > to a panel that _isn't_ listed as a child of the bridge chip (since
+> > it's worked that way previously), but that should be deprecated since
+> > there is no downside to listing the panel under the bridge chip.
+> >
+> > The idea for this bus's design was hashed out over IRC [1].
+> >
+> > [1] https://people.freedesktop.org/~cbrill/dri-log/?channel=dri-devel&date=2021-05-11
+> >
+> > Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> > ---
+> > Possibly we might want something fancier that could be included by
+> > other eDP controller bindings. If we want to do this, I'd love to be
+> > pointed at a good example to follow.
+> >
+> > Changes in v7:
+> > - ti-sn65dsi86: Add aux-bus child patch new for v7.
+> >
+> >  .../bindings/display/bridge/ti,sn65dsi86.yaml | 22 ++++++++++++++++++-
+> >  1 file changed, 21 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/Documentation/devicetree/bindings/display/bridge/ti,sn65dsi86.yaml b/Documentation/devicetree/bindings/display/bridge/ti,sn65dsi86.yaml
+> > index 26932d2e86ab..51f5a29e216c 100644
+> > --- a/Documentation/devicetree/bindings/display/bridge/ti,sn65dsi86.yaml
+> > +++ b/Documentation/devicetree/bindings/display/bridge/ti,sn65dsi86.yaml
+> > @@ -70,6 +70,11 @@ properties:
+> >      const: 1
+> >      description: See ../../pwm/pwm.yaml for description of the cell formats.
+> >
+> > +  aux-bus:
+>
+> As this is a node:
+>
+> type: object
+>
+> > +    description:
+> > +      It is recommended that you place your panel under the aux-bus node
+> > +      here to represent the control hierarchy.
+> > +
+> >    ports:
+> >      $ref: /schemas/graph.yaml#/properties/ports
+> >
+> > @@ -201,11 +206,26 @@ examples:
+> >
+> >            port@1 {
+> >              reg = <1>;
+> > -            endpoint {
+> > +            sn65dsi86_out: endpoint {
+> >                remote-endpoint = <&panel_in_edp>;
+> >              };
+> >            };
+> >          };
+> > +
+> > +        aux-bus {
+> > +          panel {
+>
+> We should perhaps have a separate aux-bus schema.
 
-Changes in v3:
--- del ctrl->phy_Power_count
--- add phy_power_off to dp_ctrl_off_link_stream()
+Yeah. Before spending lots of time digging into how to do this I
+wanted to see if anyone was going to give me a big-old NAK on the
+whole approach. ;-)
 
-Changes in v4:
--- return immediately if clock disable failed at dp_ctrl_off_link_stream()
+I guess I'd make a file called "dp-aux-bus.yaml" (maybe right under
+bindings/display?) and then I'd include it like this:
 
-Changes in v5:
--- set dongle to D3 (power off) state at dp_ctrl_off_link_stream()
+aux-bus:
+  $ref: "../dp-aux-bus.yaml#"
 
-Changes in v6:
--- add Fixes tag
 
-Fixes: 94e58e2d06e3 ("drm/msm/dp: reset dp controller only at boot up and pm_resume")
+> Something should
+> define the child node is 'panel' and nothing else.
 
-Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
----
- drivers/gpu/drm/msm/dp/dp_catalog.c |  5 ++--
- drivers/gpu/drm/msm/dp/dp_ctrl.c    | 55 +++++++++++++++++++++++++++++++++++
- drivers/gpu/drm/msm/dp/dp_ctrl.h    |  2 ++
- drivers/gpu/drm/msm/dp/dp_display.c | 57 +++++++++++++++++++++++++++----------
- 4 files changed, 101 insertions(+), 18 deletions(-)
+At the moment the code also requires that the node name is 'aux-bus'.
+Any objections to that?
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.c b/drivers/gpu/drm/msm/dp/dp_catalog.c
-index b1a9b1b..f4f53f2 100644
---- a/drivers/gpu/drm/msm/dp/dp_catalog.c
-+++ b/drivers/gpu/drm/msm/dp/dp_catalog.c
-@@ -582,10 +582,9 @@ void dp_catalog_ctrl_hpd_config(struct dp_catalog *dp_catalog)
- 
- 	u32 reftimer = dp_read_aux(catalog, REG_DP_DP_HPD_REFTIMER);
- 
--	/* enable HPD interrupts */
-+	/* enable HPD plug and unplug interrupts */
- 	dp_catalog_hpd_config_intr(dp_catalog,
--		DP_DP_HPD_PLUG_INT_MASK | DP_DP_IRQ_HPD_INT_MASK
--		| DP_DP_HPD_UNPLUG_INT_MASK | DP_DP_HPD_REPLUG_INT_MASK, true);
-+		DP_DP_HPD_PLUG_INT_MASK | DP_DP_HPD_UNPLUG_INT_MASK, true);
- 
- 	/* Configure REFTIMER and enable it */
- 	reftimer |= DP_DP_HPD_REFTIMER_ENABLE;
-diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-index 8d59eb9..dbd8943 100644
---- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
-+++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-@@ -1811,6 +1811,61 @@ int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl)
- 	return ret;
- }
- 
-+int dp_ctrl_off_link_stream(struct dp_ctrl *dp_ctrl)
-+{
-+	struct dp_ctrl_private *ctrl;
-+	struct dp_io *dp_io;
-+	struct phy *phy;
-+	int ret;
-+
-+	ctrl = container_of(dp_ctrl, struct dp_ctrl_private, dp_ctrl);
-+	dp_io = &ctrl->parser->io;
-+	phy = dp_io->phy;
-+
-+	/* set dongle to D3 (power off) mode */
-+	dp_link_psm_config(ctrl->link, &ctrl->panel->link_info, true);
-+
-+	dp_catalog_ctrl_mainlink_ctrl(ctrl->catalog, false);
-+
-+	ret = dp_power_clk_enable(ctrl->power, DP_STREAM_PM, false);
-+	if (ret) {
-+		DRM_ERROR("Failed to disable pixel clocks. ret=%d\n", ret);
-+		return ret;
-+	}
-+
-+	ret = dp_power_clk_enable(ctrl->power, DP_CTRL_PM, false);
-+	if (ret) {
-+		DRM_ERROR("Failed to disable link clocks. ret=%d\n", ret);
-+		return ret;
-+	}
-+
-+	phy_power_off(phy);
-+
-+	/* aux channel down, reinit phy */
-+	phy_exit(phy);
-+	phy_init(phy);
-+
-+	DRM_DEBUG_DP("DP off link/stream done\n");
-+	return ret;
-+}
-+
-+void dp_ctrl_off_phy(struct dp_ctrl *dp_ctrl)
-+{
-+	struct dp_ctrl_private *ctrl;
-+	struct dp_io *dp_io;
-+	struct phy *phy;
-+
-+	ctrl = container_of(dp_ctrl, struct dp_ctrl_private, dp_ctrl);
-+	dp_io = &ctrl->parser->io;
-+	phy = dp_io->phy;
-+
-+	dp_catalog_ctrl_reset(ctrl->catalog);
-+
-+	phy_exit(phy);
-+
-+	DRM_DEBUG_DP("DP off phy done\n");
-+}
-+
- int dp_ctrl_off(struct dp_ctrl *dp_ctrl)
- {
- 	struct dp_ctrl_private *ctrl;
-diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.h b/drivers/gpu/drm/msm/dp/dp_ctrl.h
-index a836bd3..25e4f75 100644
---- a/drivers/gpu/drm/msm/dp/dp_ctrl.h
-+++ b/drivers/gpu/drm/msm/dp/dp_ctrl.h
-@@ -23,6 +23,8 @@ int dp_ctrl_host_init(struct dp_ctrl *dp_ctrl, bool flip, bool reset);
- void dp_ctrl_host_deinit(struct dp_ctrl *dp_ctrl);
- int dp_ctrl_on_link(struct dp_ctrl *dp_ctrl);
- int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl);
-+int dp_ctrl_off_link_stream(struct dp_ctrl *dp_ctrl);
-+void dp_ctrl_off_phy(struct dp_ctrl *dp_ctrl);
- int dp_ctrl_off(struct dp_ctrl *dp_ctrl);
- void dp_ctrl_push_idle(struct dp_ctrl *dp_ctrl);
- void dp_ctrl_isr(struct dp_ctrl *dp_ctrl);
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index 0ba71c7..b2a282a 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -337,6 +337,12 @@ static int dp_display_process_hpd_high(struct dp_display_private *dp)
- 	dp->dp_display.max_pclk_khz = DP_MAX_PIXEL_CLK_KHZ;
- 	dp->dp_display.max_dp_lanes = dp->parser->max_dp_lanes;
- 
-+	/*
-+	 * set sink to normal operation mode -- D0
-+	 * before dpcd read
-+	 */
-+	dp_link_psm_config(dp->link, &dp->panel->link_info, false);
-+
- 	dp_link_reset_phy_params_vx_px(dp->link);
- 	rc = dp_ctrl_on_link(dp->ctrl);
- 	if (rc) {
-@@ -405,11 +411,6 @@ static int dp_display_usbpd_configure_cb(struct device *dev)
- 
- 	dp_display_host_init(dp, false);
- 
--	/*
--	 * set sink to normal operation mode -- D0
--	 * before dpcd read
--	 */
--	dp_link_psm_config(dp->link, &dp->panel->link_info, false);
- 	rc = dp_display_process_hpd_high(dp);
- end:
- 	return rc;
-@@ -570,6 +571,10 @@ static int dp_hpd_plug_handle(struct dp_display_private *dp, u32 data)
- 		dp_add_event(dp, EV_CONNECT_PENDING_TIMEOUT, 0, tout);
- 	}
- 
-+	/* enable HDP irq_hpd/replug interrupt */
-+	dp_catalog_hpd_config_intr(dp->catalog,
-+		DP_DP_IRQ_HPD_INT_MASK | DP_DP_HPD_REPLUG_INT_MASK, true);
-+
- 	mutex_unlock(&dp->event_mutex);
- 
- 	/* uevent will complete connection part */
-@@ -619,7 +624,26 @@ static int dp_hpd_unplug_handle(struct dp_display_private *dp, u32 data)
- 	mutex_lock(&dp->event_mutex);
- 
- 	state = dp->hpd_state;
--	if (state == ST_DISCONNECT_PENDING || state == ST_DISCONNECTED) {
-+
-+	/* disable irq_hpd/replug interrupts */
-+	dp_catalog_hpd_config_intr(dp->catalog,
-+		DP_DP_IRQ_HPD_INT_MASK | DP_DP_HPD_REPLUG_INT_MASK, false);
-+
-+	/* unplugged, no more irq_hpd handle */
-+	dp_del_event(dp, EV_IRQ_HPD_INT);
-+
-+	if (state == ST_DISCONNECTED) {
-+		/* triggered by irq_hdp with sink_count = 0 */
-+		if (dp->link->sink_count == 0) {
-+			dp_ctrl_off_phy(dp->ctrl);
-+			hpd->hpd_high = 0;
-+			dp->core_initialized = false;
-+		}
-+		mutex_unlock(&dp->event_mutex);
-+		return 0;
-+	}
-+
-+	if (state == ST_DISCONNECT_PENDING) {
- 		mutex_unlock(&dp->event_mutex);
- 		return 0;
- 	}
-@@ -633,9 +657,8 @@ static int dp_hpd_unplug_handle(struct dp_display_private *dp, u32 data)
- 
- 	dp->hpd_state = ST_DISCONNECT_PENDING;
- 
--	/* disable HPD plug interrupt until disconnect is done */
--	dp_catalog_hpd_config_intr(dp->catalog, DP_DP_HPD_PLUG_INT_MASK
--				| DP_DP_IRQ_HPD_INT_MASK, false);
-+	/* disable HPD plug interrupts */
-+	dp_catalog_hpd_config_intr(dp->catalog, DP_DP_HPD_PLUG_INT_MASK, false);
- 
- 	hpd->hpd_high = 0;
- 
-@@ -652,8 +675,8 @@ static int dp_hpd_unplug_handle(struct dp_display_private *dp, u32 data)
- 	reinit_completion(&dp->audio_comp);
- 	dp_display_handle_plugged_change(g_dp_display, false);
- 
--	dp_catalog_hpd_config_intr(dp->catalog, DP_DP_HPD_PLUG_INT_MASK |
--					DP_DP_IRQ_HPD_INT_MASK, true);
-+	/* enable HDP plug interrupt to prepare for next plugin */
-+	dp_catalog_hpd_config_intr(dp->catalog, DP_DP_HPD_PLUG_INT_MASK, true);
- 
- 	/* uevent will complete disconnection part */
- 	mutex_unlock(&dp->event_mutex);
-@@ -684,7 +707,7 @@ static int dp_irq_hpd_handle(struct dp_display_private *dp, u32 data)
- 
- 	/* irq_hpd can happen at either connected or disconnected state */
- 	state =  dp->hpd_state;
--	if (state == ST_DISPLAY_OFF) {
-+	if (state == ST_DISPLAY_OFF || state == ST_SUSPENDED) {
- 		mutex_unlock(&dp->event_mutex);
- 		return 0;
- 	}
-@@ -903,9 +926,13 @@ static int dp_display_disable(struct dp_display_private *dp, u32 data)
- 
- 	dp_display->audio_enabled = false;
- 
--	dp_ctrl_off(dp->ctrl);
--
--	dp->core_initialized = false;
-+	/* triggered by irq_hpd with sink_count = 0 */
-+	if (dp->link->sink_count == 0) {
-+		dp_ctrl_off_link_stream(dp->ctrl);
-+	} else {
-+		dp_ctrl_off(dp->ctrl);
-+		dp->core_initialized = false;
-+	}
- 
- 	dp_display->power_on = false;
- 
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
 
+> Though perhaps
+> connectors are valid too?
+
+They might be. We could always add it later?
