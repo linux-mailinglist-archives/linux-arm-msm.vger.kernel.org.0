@@ -2,125 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2A116389306
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 May 2021 17:52:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D30193892F8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 May 2021 17:49:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1355009AbhESPyJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 May 2021 11:54:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60834 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346825AbhESPyD (ORCPT
+        id S1354552AbhESPvC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 May 2021 11:51:02 -0400
+Received: from szxga04-in.huawei.com ([45.249.212.190]:4753 "EHLO
+        szxga04-in.huawei.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233708AbhESPvA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 May 2021 11:54:03 -0400
-Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81DFFC06175F
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 May 2021 08:52:43 -0700 (PDT)
-Received: by mail-pl1-x630.google.com with SMTP id z4so5083484plg.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 May 2021 08:52:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=AjaxYg4bUUARP67WdGinpCbYpxiblugMhlcvL7HjH8s=;
-        b=exnK+d2N5ecA63XuVyOCKzjR4/cye2CMBz3pcMSTaRcM9gs5Ic38YZqMewJJFd16MT
-         p0x7DhlXbr/+0VixgDfqq+En4zwXPeji2FA+ulvWQVxzmUldfdo2e5AwOMJ/Cw2EV4oY
-         x3Y/nGHpsqOaI9GDwedwIJWbklq13gbzEENJgnvabAJquqBHI4IivPX3XPntBMDd1IUb
-         bYOXHrIBxfyouKSWEnaeCawybiTYK/murqLNxF+VzIyNbtFHbAJA7cVZBkDQzhKODo+K
-         977ADWL9KRjFVmDH4i0jL3MaQi+mjoNfaOItgTT2V8h88glq7/WacRl3u1mclRFsneSH
-         we5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=AjaxYg4bUUARP67WdGinpCbYpxiblugMhlcvL7HjH8s=;
-        b=WpLps0xKiwTo9UNf4b5etKrd2ZL43JlIEUp/8nlhf24OLRD831W/U7UJykFNSfXPc9
-         Gz2JBctst4bxPmWL4Yn89ByG9fwuwz7dABvBFqnunlu/t46WZ7sb3dBt5MblnLLLbMDM
-         N5c968iHvECX2J5wU+mHiW1h618ew1X+Uimjdv6uLHuWP2hqUj8U/7ncT5KmlpxdZDBS
-         h17RrQbfopa1Rv1OJ+QK2eBl7qqHGmIWQYPKGEyjARrN+tNFUeV5/tMa0hHuPQK0CuII
-         JFiIIsOakN+dmo1ImXXGuooxnWkLtcWWkEQ+CcCdg/vYhLVzGbRr/w/lbZXEY9EGaFTZ
-         dDrQ==
-X-Gm-Message-State: AOAM533b5fU9UDNHl4S2mEPEN/XwEEcMisO0KmYQEAKSFpVFItktKH3F
-        ZgIWkK5h88lYwApTHKoASyOoyRfvelEoKqDcUctdbQ==
-X-Google-Smtp-Source: ABdhPJznYOweZXIKYDgZ3nLOZlhjx+oq97Yjw8fXxaWJMMRlfhU/ljaNm1YJbtniMdzPJeCNQ4PYsRKhN4xoAo/Jfkk=
-X-Received: by 2002:a17:90a:b38d:: with SMTP id e13mr11507026pjr.222.1621439562957;
- Wed, 19 May 2021 08:52:42 -0700 (PDT)
+        Wed, 19 May 2021 11:51:00 -0400
+Received: from dggems705-chm.china.huawei.com (unknown [172.30.72.58])
+        by szxga04-in.huawei.com (SkyGuard) with ESMTP id 4FlcfR6sgMzpfcM;
+        Wed, 19 May 2021 23:46:07 +0800 (CST)
+Received: from dggeml759-chm.china.huawei.com (10.1.199.138) by
+ dggems705-chm.china.huawei.com (10.3.19.182) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256) id
+ 15.1.2176.2; Wed, 19 May 2021 23:49:37 +0800
+Received: from localhost.localdomain (10.175.102.38) by
+ dggeml759-chm.china.huawei.com (10.1.199.138) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id
+ 15.1.2176.2; Wed, 19 May 2021 23:49:37 +0800
+From:   Wei Yongjun <weiyongjun1@huawei.com>
+To:     <weiyongjun1@huawei.com>, Manivannan Sadhasivam <mani@kernel.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <netdev@vger.kernel.org>,
+        <kernel-janitors@vger.kernel.org>, Hulk Robot <hulkci@huawei.com>,
+        "Manivannan Sadhasivam" <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH net-next v2] net: qrtr: ns: Fix error return code in qrtr_ns_init()
+Date:   Wed, 19 May 2021 15:58:52 +0000
+Message-ID: <20210519155852.2878479-1-weiyongjun1@huawei.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-References: <20210511180728.23781-1-jonathan@marek.ca> <20210511180728.23781-3-jonathan@marek.ca>
-In-Reply-To: <20210511180728.23781-3-jonathan@marek.ca>
-From:   Robert Foss <robert.foss@linaro.org>
-Date:   Wed, 19 May 2021 17:52:31 +0200
-Message-ID: <CAG3jFyvx3szAdUFJWyQCe6DndQX6YEY3M=xWM585ujSv1ro6VQ@mail.gmail.com>
-Subject: Re: [PATCH 02/17] media: camss: csiphy-3ph: disable interrupts
-To:     Jonathan Marek <jonathan@marek.ca>
-Cc:     MSM <linux-arm-msm@vger.kernel.org>,
-        Andrey Konovalov <andrey.konovalov@linaro.org>,
-        Todor Tomov <todor.too@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        "open list:QUALCOMM CAMERA SUBSYSTEM DRIVER" 
-        <linux-media@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type:   text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-Originating-IP: [10.175.102.38]
+X-ClientProxiedBy: dggems702-chm.china.huawei.com (10.3.19.179) To
+ dggeml759-chm.china.huawei.com (10.1.199.138)
+X-CFilter-Loop: Reflected
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 11 May 2021 at 20:08, Jonathan Marek <jonathan@marek.ca> wrote:
->
-> The driver does nothing with the interrupts, so set the irq mask registers
-> to zero to avoid wasting CPU time for thing.
->
-> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
-> ---
->  .../qcom/camss/camss-csiphy-3ph-1-0.c         | 35 ++-----------------
->  1 file changed, 3 insertions(+), 32 deletions(-)
->
-> diff --git a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
-> index 5948abdcd220..783b65295d20 100644
-> --- a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
-> +++ b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
-> @@ -352,38 +352,9 @@ static void csiphy_lanes_enable(struct csiphy_device *csiphy,
->         else if (csiphy->camss->version == CAMSS_845)
->                 csiphy_gen2_config_lanes(csiphy, settle_cnt);
->
-> -       val = 0xff;
-> -       writel_relaxed(val, csiphy->base + CSIPHY_3PH_CMN_CSI_COMMON_CTRLn(11));
-> -
-> -       val = 0xff;
-> -       writel_relaxed(val, csiphy->base + CSIPHY_3PH_CMN_CSI_COMMON_CTRLn(12));
-> -
-> -       val = 0xfb;
-> -       writel_relaxed(val, csiphy->base + CSIPHY_3PH_CMN_CSI_COMMON_CTRLn(13));
-> -
-> -       val = 0xff;
-> -       writel_relaxed(val, csiphy->base + CSIPHY_3PH_CMN_CSI_COMMON_CTRLn(14));
-> -
-> -       val = 0x7f;
-> -       writel_relaxed(val, csiphy->base + CSIPHY_3PH_CMN_CSI_COMMON_CTRLn(15));
-> -
-> -       val = 0xff;
-> -       writel_relaxed(val, csiphy->base + CSIPHY_3PH_CMN_CSI_COMMON_CTRLn(16));
-> -
-> -       val = 0xff;
-> -       writel_relaxed(val, csiphy->base + CSIPHY_3PH_CMN_CSI_COMMON_CTRLn(17));
-> -
-> -       val = 0xef;
-> -       writel_relaxed(val, csiphy->base + CSIPHY_3PH_CMN_CSI_COMMON_CTRLn(18));
-> -
-> -       val = 0xff;
-> -       writel_relaxed(val, csiphy->base + CSIPHY_3PH_CMN_CSI_COMMON_CTRLn(19));
-> -
-> -       val = 0xff;
-> -       writel_relaxed(val, csiphy->base + CSIPHY_3PH_CMN_CSI_COMMON_CTRLn(20));
-> -
-> -       val = 0xff;
-> -       writel_relaxed(val, csiphy->base + CSIPHY_3PH_CMN_CSI_COMMON_CTRLn(21));
-> +       /* IRQ_MASK registers - disable all interrupts */
-> +       for (i = 11; i < 22; i++)
-> +               writel_relaxed(0, csiphy->base + CSIPHY_3PH_CMN_CSI_COMMON_CTRLn(i));
->  }
->
->  static void csiphy_lanes_disable(struct csiphy_device *csiphy,
+Fix to return a negative error code -ENOMEM from the error handling
+case instead of 0, as done elsewhere in this function.
 
-Reviewed-by: Robert Foss <robert.foss@linaro.org>
+Fixes: c6e08d6251f3 ("net: qrtr: Allocate workqueue before kernel_bind")
+Reported-by: Hulk Robot <hulkci@huawei.com>
+Signed-off-by: Wei Yongjun <weiyongjun1@huawei.com>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+---
+v1 -> v2: add fixes tag and reviewed-by
+---
+ net/qrtr/ns.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/net/qrtr/ns.c b/net/qrtr/ns.c
+index 8d00dfe8139e..1990d496fcfc 100644
+--- a/net/qrtr/ns.c
++++ b/net/qrtr/ns.c
+@@ -775,8 +775,10 @@ int qrtr_ns_init(void)
+ 	}
+ 
+ 	qrtr_ns.workqueue = alloc_workqueue("qrtr_ns_handler", WQ_UNBOUND, 1);
+-	if (!qrtr_ns.workqueue)
++	if (!qrtr_ns.workqueue) {
++		ret = -ENOMEM;
+ 		goto err_sock;
++	}
+ 
+ 	qrtr_ns.sock->sk->sk_data_ready = qrtr_ns_data_ready;
+ 
+
