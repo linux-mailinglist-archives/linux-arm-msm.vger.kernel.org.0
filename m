@@ -2,103 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 06F9D3892C0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 May 2021 17:36:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2A116389306
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 May 2021 17:52:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241453AbhESPhl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 May 2021 11:37:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57140 "EHLO
+        id S1355009AbhESPyJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 May 2021 11:54:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60834 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347685AbhESPhl (ORCPT
+        with ESMTP id S1346825AbhESPyD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 May 2021 11:37:41 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE0B6C061760
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 May 2021 08:36:20 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id z85-20020a1c7e580000b029017a76f3afbaso1048668wmc.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 May 2021 08:36:20 -0700 (PDT)
+        Wed, 19 May 2021 11:54:03 -0400
+Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81DFFC06175F
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 May 2021 08:52:43 -0700 (PDT)
+Received: by mail-pl1-x630.google.com with SMTP id z4so5083484plg.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 May 2021 08:52:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=2k1RQcHuqE3d5DTNLm7iPcGtCR5pGOkRkdI9x42tRhc=;
-        b=YDsCNb9nXIZW+RCd48mBEbQPVZ838svVhqV3ByPzilyBN7EM0FhjLOM5EfqdXGNnrY
-         HC0yiBLobWxEDqDlq9O8EhhIcThv7XpDaZAgD7YNDn+33K84zjzdBj7AOj3ueA3e2EU1
-         Tqb/DQDY9WGgN5HbI0eEKds/X8L7fY+3aBvGMotjv+kiSQT4OgTiSP+5ndTqm9WpWKEE
-         SEmUDP+5u5s49yUwKT9UtfZZ/5mHde/8W2Ru5EY6QGXgiXEsfvRx2q9XinbbGd1ycxIG
-         mA+qxA32aTEnQ7aEhIlC2Anjqw+S2vNeKZdyTcnOhwzh9AVIGC+Ft4E4Mx/onPmJS1Vs
-         tW2g==
+        bh=AjaxYg4bUUARP67WdGinpCbYpxiblugMhlcvL7HjH8s=;
+        b=exnK+d2N5ecA63XuVyOCKzjR4/cye2CMBz3pcMSTaRcM9gs5Ic38YZqMewJJFd16MT
+         p0x7DhlXbr/+0VixgDfqq+En4zwXPeji2FA+ulvWQVxzmUldfdo2e5AwOMJ/Cw2EV4oY
+         x3Y/nGHpsqOaI9GDwedwIJWbklq13gbzEENJgnvabAJquqBHI4IivPX3XPntBMDd1IUb
+         bYOXHrIBxfyouKSWEnaeCawybiTYK/murqLNxF+VzIyNbtFHbAJA7cVZBkDQzhKODo+K
+         977ADWL9KRjFVmDH4i0jL3MaQi+mjoNfaOItgTT2V8h88glq7/WacRl3u1mclRFsneSH
+         we5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=2k1RQcHuqE3d5DTNLm7iPcGtCR5pGOkRkdI9x42tRhc=;
-        b=f51LShB9eV8uVPxVo+yy3m2PkzMcCvZFMRrR7SOqv1h+lmcFCSK15WOBmBCFDvVCra
-         ThxrcdFj9MMx2xQUBCeU1hL96b001RtsNc+3nYojD/9Gmlhq3v4h2+4uAVuiev3+w+iD
-         UTzXos6voP7MxuPQ3dv6NKL7x2lFYOIE9sLDgI8TdO06R7grruAYctl11hMi7HsoWw0L
-         jqOQD3bwVl+YTbWWbxyQbLgmwWUTKBF8BIUccK24ZfRYFaN6Ebq1BbDSajb6Exxn0vgs
-         1rkOrLvlMjFq3m66J0RZDvx5YY/IrMfNjW4POOGgrvWUf6iwPnEtftrf/ZyJnbzWK4Eb
-         qMSA==
-X-Gm-Message-State: AOAM531p5F31ptpVdkkFJsqmWJJqjbU0+IyJbuLRIyiNX3Nea7nlRYUB
-        x0965sjZ6QxZsUVLW8C17IxYrwe4/X/da/UIiW0=
-X-Google-Smtp-Source: ABdhPJw7lVf5a1fGFQ2vWFsdurmPB6vtBSIqVFcGs3b6A4LYd3tn0YtkXaSVD/mhMaaNiLkJWQdOHn5x+Yo+vDjATUM=
-X-Received: by 2002:a7b:c012:: with SMTP id c18mr11855157wmb.94.1621438579254;
- Wed, 19 May 2021 08:36:19 -0700 (PDT)
+        bh=AjaxYg4bUUARP67WdGinpCbYpxiblugMhlcvL7HjH8s=;
+        b=WpLps0xKiwTo9UNf4b5etKrd2ZL43JlIEUp/8nlhf24OLRD831W/U7UJykFNSfXPc9
+         Gz2JBctst4bxPmWL4Yn89ByG9fwuwz7dABvBFqnunlu/t46WZ7sb3dBt5MblnLLLbMDM
+         N5c968iHvECX2J5wU+mHiW1h618ew1X+Uimjdv6uLHuWP2hqUj8U/7ncT5KmlpxdZDBS
+         h17RrQbfopa1Rv1OJ+QK2eBl7qqHGmIWQYPKGEyjARrN+tNFUeV5/tMa0hHuPQK0CuII
+         JFiIIsOakN+dmo1ImXXGuooxnWkLtcWWkEQ+CcCdg/vYhLVzGbRr/w/lbZXEY9EGaFTZ
+         dDrQ==
+X-Gm-Message-State: AOAM533b5fU9UDNHl4S2mEPEN/XwEEcMisO0KmYQEAKSFpVFItktKH3F
+        ZgIWkK5h88lYwApTHKoASyOoyRfvelEoKqDcUctdbQ==
+X-Google-Smtp-Source: ABdhPJznYOweZXIKYDgZ3nLOZlhjx+oq97Yjw8fXxaWJMMRlfhU/ljaNm1YJbtniMdzPJeCNQ4PYsRKhN4xoAo/Jfkk=
+X-Received: by 2002:a17:90a:b38d:: with SMTP id e13mr11507026pjr.222.1621439562957;
+ Wed, 19 May 2021 08:52:42 -0700 (PDT)
 MIME-Version: 1.0
-References: <aff4807e-e554-2e32-5789-dfaf65128a8e@connolly.tech>
-In-Reply-To: <aff4807e-e554-2e32-5789-dfaf65128a8e@connolly.tech>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Wed, 19 May 2021 08:40:02 -0700
-Message-ID: <CAF6AEGvnL9mOp3vKuSvz=KDijtFVMdKCF4BXSLxXeoR38O-SUg@mail.gmail.com>
-Subject: Re: fw_devlink breakage on SDM845 / a630 with DSI displays
-To:     Caleb Connolly <caleb@connolly.tech>
-Cc:     saravanak@google.com, John Stultz <john.stultz@linaro.org>,
-        Amit Pundir <amit.pundir@linaro.org>,
+References: <20210511180728.23781-1-jonathan@marek.ca> <20210511180728.23781-3-jonathan@marek.ca>
+In-Reply-To: <20210511180728.23781-3-jonathan@marek.ca>
+From:   Robert Foss <robert.foss@linaro.org>
+Date:   Wed, 19 May 2021 17:52:31 +0200
+Message-ID: <CAG3jFyvx3szAdUFJWyQCe6DndQX6YEY3M=xWM585ujSv1ro6VQ@mail.gmail.com>
+Subject: Re: [PATCH 02/17] media: camss: csiphy-3ph: disable interrupts
+To:     Jonathan Marek <jonathan@marek.ca>
+Cc:     MSM <linux-arm-msm@vger.kernel.org>,
+        Andrey Konovalov <andrey.konovalov@linaro.org>,
+        Todor Tomov <todor.too@gmail.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        "open list:QUALCOMM CAMERA SUBSYSTEM DRIVER" 
+        <linux-media@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-+ some more folks and msm list..
+On Tue, 11 May 2021 at 20:08, Jonathan Marek <jonathan@marek.ca> wrote:
+>
+> The driver does nothing with the interrupts, so set the irq mask registers
+> to zero to avoid wasting CPU time for thing.
+>
+> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+> ---
+>  .../qcom/camss/camss-csiphy-3ph-1-0.c         | 35 ++-----------------
+>  1 file changed, 3 insertions(+), 32 deletions(-)
+>
+> diff --git a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
+> index 5948abdcd220..783b65295d20 100644
+> --- a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
+> +++ b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
+> @@ -352,38 +352,9 @@ static void csiphy_lanes_enable(struct csiphy_device *csiphy,
+>         else if (csiphy->camss->version == CAMSS_845)
+>                 csiphy_gen2_config_lanes(csiphy, settle_cnt);
+>
+> -       val = 0xff;
+> -       writel_relaxed(val, csiphy->base + CSIPHY_3PH_CMN_CSI_COMMON_CTRLn(11));
+> -
+> -       val = 0xff;
+> -       writel_relaxed(val, csiphy->base + CSIPHY_3PH_CMN_CSI_COMMON_CTRLn(12));
+> -
+> -       val = 0xfb;
+> -       writel_relaxed(val, csiphy->base + CSIPHY_3PH_CMN_CSI_COMMON_CTRLn(13));
+> -
+> -       val = 0xff;
+> -       writel_relaxed(val, csiphy->base + CSIPHY_3PH_CMN_CSI_COMMON_CTRLn(14));
+> -
+> -       val = 0x7f;
+> -       writel_relaxed(val, csiphy->base + CSIPHY_3PH_CMN_CSI_COMMON_CTRLn(15));
+> -
+> -       val = 0xff;
+> -       writel_relaxed(val, csiphy->base + CSIPHY_3PH_CMN_CSI_COMMON_CTRLn(16));
+> -
+> -       val = 0xff;
+> -       writel_relaxed(val, csiphy->base + CSIPHY_3PH_CMN_CSI_COMMON_CTRLn(17));
+> -
+> -       val = 0xef;
+> -       writel_relaxed(val, csiphy->base + CSIPHY_3PH_CMN_CSI_COMMON_CTRLn(18));
+> -
+> -       val = 0xff;
+> -       writel_relaxed(val, csiphy->base + CSIPHY_3PH_CMN_CSI_COMMON_CTRLn(19));
+> -
+> -       val = 0xff;
+> -       writel_relaxed(val, csiphy->base + CSIPHY_3PH_CMN_CSI_COMMON_CTRLn(20));
+> -
+> -       val = 0xff;
+> -       writel_relaxed(val, csiphy->base + CSIPHY_3PH_CMN_CSI_COMMON_CTRLn(21));
+> +       /* IRQ_MASK registers - disable all interrupts */
+> +       for (i = 11; i < 22; i++)
+> +               writel_relaxed(0, csiphy->base + CSIPHY_3PH_CMN_CSI_COMMON_CTRLn(i));
+>  }
+>
+>  static void csiphy_lanes_disable(struct csiphy_device *csiphy,
 
-I suppose I didn't hit this because CONFIG_FBDEV_EMULATION is not
-normally enabled for CrOS.. but I'm not really to familiar with
-fw_devlink
-
-BR,
--R
-
-On Wed, May 19, 2021 at 8:26 AM Caleb Connolly <caleb@connolly.tech> wrote:
->
->
-> Hi,
->
-> Since -rc1 I've been hit by some DRM breakage in freedreno which happens
-> when fw_devlink=on. It seems to cause some clocks (rcg) to get stuck and
-> break DSI displays, here's a full log from the OnePlus 6:
-> https://paste.ubuntu.com/p/8kPx4nFGF5/ (that is with
-> "deferred_probe_timeout") The PocoPhone F1 also seems to be affected by
-> this.
->
-> The display will still come up after pressing the power button a few
-> times, although it will be incredibly slow.
->
-> It's worth noting that the issue only happens with
-> CONFIG_FBDEV_EMULATION is enabled, I've previously required this to see
-> kernel logs during boot and general boot splash with postmarketOS.
-> Without it the display will be stuck on the bootloader splash until I
-> press the power button and cause it to update once UI (like Phosh) has
-> started (though this has been the case for quite some time).
->
-> I'd appreciate any help with debugging / resolving this issue, I'm
-> afraid I haven't been able to determine much from some brief digging.
->
->
-> --
-> Kind Regards,
-> Caleb
->
+Reviewed-by: Robert Foss <robert.foss@linaro.org>
