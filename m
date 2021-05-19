@@ -2,92 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 88FA13886EC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 May 2021 07:46:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EB5FA3886FA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 May 2021 07:50:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244695AbhESFry (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 May 2021 01:47:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33418 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347581AbhESFpW (ORCPT
+        id S241572AbhESFvh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 May 2021 01:51:37 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:14618 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1344680AbhESFvS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 May 2021 01:45:22 -0400
-Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FEEDC06135C
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 May 2021 22:40:32 -0700 (PDT)
-Received: by mail-pj1-x1034.google.com with SMTP id g24so6744795pji.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 May 2021 22:40:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=tDPqv+AGN7wtbpPjjahbn+dmEBiJeJla+NXHuJgGztY=;
-        b=CFQ2rkcRD6NXzil9QEv8Tknv9r0y7aBoq2LLzhrcPDhbUokV0C0i1tEXOwxu0WZM9W
-         Gi3RlTpbKvocPxUvEJk87GTdzFUA9+4x2kYv8mtG50MaqqyAu+1CENotNi6tJLzBjrGy
-         r6BVr0BrchfI4OTTn256dH0pKhIBFwT41GrNE=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=tDPqv+AGN7wtbpPjjahbn+dmEBiJeJla+NXHuJgGztY=;
-        b=U6aD0WqCnzB2ZjTglqWgBqpYjAesuMAdWllS1z2qGuIKNM444g+Fk91Atd6qswB7UZ
-         /srkhCm8tuj5OQum3nNjFaFPy74GT6TGC78/vy0s6SBCzohPkmjKBo7u/XWjwHEmogVD
-         H3OxzpToGvp8p96W3cnVNAmiYnbp9PJe1ehKb1iUDanIaJo6vqJUeIYP/z5JUOUcOTHX
-         8RHL/AxYNkp1wKX5EBMbCtWhmuyZ/EyHVOTjc3T4i2JZVKVPeQdohy4p5rJbz+Ue7Z+B
-         xLvR8Fo8hULS918VOt9t1ttr/iPCtPDk3UIvKOhfQuCk9QK00D8pzhIZXJOkfUK6kPbD
-         d0Mw==
-X-Gm-Message-State: AOAM530oxYQw4ZLxm2+4NoPTy12qvSEBlh4B8+336CLK/OCUWdgCeQKG
-        GI1gMteb8juxez7hCRD2RmnJ9g==
-X-Google-Smtp-Source: ABdhPJy35T58OKPGSuAkd/FwUh7fXr6tPkdLI26vFEGAVr1Dixf9LwhbZ9/exYaJMJoHhOJr29bIkA==
-X-Received: by 2002:a17:90a:aa12:: with SMTP id k18mr9391167pjq.232.1621402832054;
-        Tue, 18 May 2021 22:40:32 -0700 (PDT)
-Received: from smtp.gmail.com ([2620:15c:202:201:e494:25a5:1a6a:5b32])
-        by smtp.gmail.com with ESMTPSA id q28sm4081171pfs.197.2021.05.18.22.40.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 May 2021 22:40:31 -0700 (PDT)
-From:   Stephen Boyd <swboyd@chromium.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
+        Wed, 19 May 2021 01:51:18 -0400
+Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
+  by alexa-out.qualcomm.com with ESMTP; 18 May 2021 22:47:09 -0700
+X-QCInternal: smtphost
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 18 May 2021 22:47:08 -0700
+X-QCInternal: smtphost
+Received: from dikshita-linux.qualcomm.com ([10.204.65.237])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 19 May 2021 11:16:47 +0530
+Received: by dikshita-linux.qualcomm.com (Postfix, from userid 347544)
+        id 7EFD8219B3; Wed, 19 May 2021 11:16:46 +0530 (IST)
+From:   Dikshita Agarwal <dikshita@codeaurora.org>
+To:     david.brown@linaro.org, robh+dt@kernel.org, mark.rutland@arm.com,
+        devicetree@vger.kernel.org
 Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Douglas Anderson <dianders@chromium.org>
-Subject: [PATCH] arm64: dts: qcom: sc7180-trogdor: Update flash freq to match reality
-Date:   Tue, 18 May 2021 22:40:30 -0700
-Message-Id: <20210519054030.3217704-1-swboyd@chromium.org>
-X-Mailer: git-send-email 2.31.1.751.gd2f1c929bd-goog
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        vgarodia@codeaurora.org, Dikshita Agarwal <dikshita@codeaurora.org>
+Subject: [PATCH] arm64: dts: qcom: sc7280: Add venus DT node
+Date:   Wed, 19 May 2021 11:16:44 +0530
+Message-Id: <1621403204-21398-1-git-send-email-dikshita@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This spi flash part is actually being clocked at 37.5MHz, not 25MHz,
-because of the way the clk driver is rounding up the rate that is
-requested to the nearest supported frequency. Let's update the frequency
-here, and remove the TODO because this is the fastest frequency we're
-going to be able to use here.
+Add DT entries for the sc7280 venus encoder/decoder.
 
-Cc: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+Co-developed-by: Mansur Alisha Shaik <mansur@codeaurora.org>
+Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
 ---
- arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/sc7280.dtsi | 43 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 43 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-index 24d293ef56d7..af3c0e1e2223 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-@@ -335,8 +335,7 @@ flash@0 {
- 		compatible = "jedec,spi-nor";
- 		reg = <0>;
- 
--		/* TODO: Increase frequency after testing */
--		spi-max-frequency = <25000000>;
-+		spi-max-frequency = <37500000>;
- 		spi-tx-bus-width = <2>;
- 		spi-rx-bus-width = <2>;
+diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+index 4c44a52..9b4cc9a 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+@@ -60,6 +60,11 @@
+ 			no-map;
+ 			reg = <0x0 0x80b00000 0x0 0x100000>;
+ 		};
++
++		video_mem: memory@8b200000 {
++			reg = <0x0 0x8b200000 0x0 0x500000>;
++			no-map;
++		};
  	};
-
-base-commit: 6efb943b8616ec53a5e444193dccf1af9ad627b5
+ 
+ 	cpus {
+@@ -850,6 +855,44 @@
+ 			interrupts = <GIC_SPI 582 IRQ_TYPE_LEVEL_HIGH>;
+ 		};
+ 
++		venus: video-codec@0aa00000 {
++			compatible = "qcom,sc7280-venus";
++			reg = <0 0x0aa00000 0 0xd0600>;
++			interrupts = <GIC_SPI 174 IRQ_TYPE_LEVEL_HIGH>;
++
++			clocks = <&videocc VIDEO_CC_MVSC_CORE_CLK>,
++				 <&videocc VIDEO_CC_MVSC_CTL_AXI_CLK>,
++				 <&videocc VIDEO_CC_VENUS_AHB_CLK>,
++				 <&videocc VIDEO_CC_MVS0_CORE_CLK>,
++				 <&videocc VIDEO_CC_MVS0_AXI_CLK>;
++			clock-names = "core", "bus", "iface",
++				      "vcodec_core", "vcodec_bus";
++
++			power-domains = <&videocc MVSC_GDSC>,
++					<&videocc MVS0_GDSC>;
++			power-domain-names = "venus", "vcodec0";
++
++			interconnects = <&gem_noc MASTER_APPSS_PROC 0 &cnoc2 SLAVE_VENUS_CFG 0>,
++					<&mmss_noc MASTER_VIDEO_P0 0 &mc_virt SLAVE_EBI1 0>;
++			interconnect-names = "cpu-cfg", "video-mem";
++
++			iommus = <&apps_smmu 0x2180 0x20>,
++				 <&apps_smmu 0x2184 0x20>;
++			memory-region = <&video_mem>;
++
++			video-decoder {
++				compatible = "venus-decoder";
++			};
++
++			video-encoder {
++				compatible = "venus-encoder";
++			};
++
++			video-firmware {
++				iommus = <&apps_smmu 0x21a2 0x0>;
++			};
++		};
++
+ 		videocc: clock-controller@aaf0000 {
+ 			compatible = "qcom,sc7280-videocc";
+ 			reg = <0 0xaaf0000 0 0x10000>;
 -- 
-https://chromeos.dev
+2.7.4
 
