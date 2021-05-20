@@ -2,116 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 66B24389AFC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 May 2021 03:41:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 200C2389B0A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 May 2021 03:48:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230148AbhETBmt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 May 2021 21:42:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52806 "EHLO
+        id S230148AbhETBta (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 May 2021 21:49:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54298 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230146AbhETBms (ORCPT
+        with ESMTP id S229498AbhETBt3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 May 2021 21:42:48 -0400
-Received: from mail-oi1-x22e.google.com (mail-oi1-x22e.google.com [IPv6:2607:f8b0:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 682D8C06175F
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 May 2021 18:41:28 -0700 (PDT)
-Received: by mail-oi1-x22e.google.com with SMTP id j75so14898795oih.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 May 2021 18:41:28 -0700 (PDT)
+        Wed, 19 May 2021 21:49:29 -0400
+Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 587C0C06175F
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 May 2021 18:48:09 -0700 (PDT)
+Received: by mail-pl1-x62c.google.com with SMTP id 69so8103277plc.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 May 2021 18:48:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=iYMoi9RfdIWAgrdRsxo09y149SU9Ox48bYShc9UJAkk=;
-        b=MN+ncWnQj5oJcKQh5vuPCIM41BJLa6s8lmFL8zoK2g+NHcZdFR9PgL21BglNUh2z4n
-         nCdAoiPJU62w6XQ+ItF7ciK0mX48MZ669tc+ocCLqP2rD8dMbE2JuELGbvmIayYXYNOG
-         WH9Tbh2D25aIZVMI9u7RYzMmmgOXo4VlM2ImA=
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ir1Dpg3bgUq0v/H9js0abZRsZHQ5PmTY8mx+eB1aHs0=;
+        b=PtufKgnmd6DXX0n+Vuz+quN0FhXP/QXYDqTuIbfCCrI+RpSi1wz08zBNGC8LZKvZfr
+         6Rarw7f4CMCfDB3Z2FRqJgd7rRYjBj34A/6TGR/0TmJOlrfC53kLnN2c1X4JGAAPqSTW
+         l5i/oyLhU1BOH2qUsvcGKVwx7q62nSJljlteI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=iYMoi9RfdIWAgrdRsxo09y149SU9Ox48bYShc9UJAkk=;
-        b=eSObutjqz1xic6BWdDq6pErn6UKgJ64mEER4VVnzamod8NZTXum/WnzZciSc0Latwx
-         te21uGF1Jydjwg0B0+RenR6VN1DSU5nw8ugde+bj2SCvbRP5DjJEw4Gj6EtAlUUDPODd
-         Z/zIAXDeCdmhiJPboOmlpWTcA9QeoUyX7P2Wi6ccOEGhRrhNNUdquh9k4SjI0iYMAzNY
-         RvIAfUUBdb4T9SZmUYXasxtwTCjGJm3BBhIpehsegZJo+wgKG14Tru7RoAJcDAqq48J1
-         hMS5MyD/UXPqgneD93mVQDMs0hmORja9S+imu8dhAm6tUsCZQOfA9s7fAFNLbjsrW9Zt
-         w5DA==
-X-Gm-Message-State: AOAM533iKKv3IV2kfdDV/qBJ5W63R39HSAOgadNPAuyjlaU0pPBKnKoE
-        2d2yKb7LgwwjK9qW82dyLKkCtY5P5R63HAjDWkwYlpVEDyk=
-X-Google-Smtp-Source: ABdhPJw+XAwShhYEdBQWbCN36WfVRcWEA+e8iITrKYVuyjhU4KfB0Q0SdwsVvIj+ukXQ2RGlbZqeN+uJh1kegL9mZus=
-X-Received: by 2002:aca:654d:: with SMTP id j13mr1688671oiw.125.1621474887843;
- Wed, 19 May 2021 18:41:27 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 19 May 2021 21:41:27 -0400
-MIME-Version: 1.0
-In-Reply-To: <CAGETcx-jK3pBNRYevPmRhw1TALHNjtM5dSxCdEuB+2sBH32rtQ@mail.gmail.com>
-References: <20210520002519.3538432-1-swboyd@chromium.org> <CAGETcx-jK3pBNRYevPmRhw1TALHNjtM5dSxCdEuB+2sBH32rtQ@mail.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ir1Dpg3bgUq0v/H9js0abZRsZHQ5PmTY8mx+eB1aHs0=;
+        b=gR7gecNwj3BJ0h1u2bke0KrhDgc2n/ajBiPqq4DweaMmbYuyv/1gLBmEt/5EDrEQUu
+         1Bkx87oQWhfBPi2Z6JOB2Vj8jqQVTcJeO6BwDnNpyHvtlInJJCAGzNoJNgatUa7oY7cW
+         QJ48Fticuy12UfZDzmDV1gfMHhDy8XEn/F/Rxl2WDRstujTCBOvECF6Qxhuld3Wg8l3l
+         oozWEx4C7YErjTP1vdDTwMm6BmG/2ldF+uoBspAE+9TOthhMypEpdMlNlDWt0RZfB5d7
+         MvMrWryzYjc0aL3cgmqEfhJ3xnmnCONaT571akjhCIBJPk8PxFrRu2w0fXtOaKiRPe2c
+         3CtA==
+X-Gm-Message-State: AOAM530IaBf59trLAbgHkVbJrGxmE2HbKITisrkIn7COyFPQd7fjteZP
+        bkKA623UCcMYFOam+KwPwTJ8+Q==
+X-Google-Smtp-Source: ABdhPJz7N0VmwvOgwy+qH0pZAbQ7t9pnPLjhIpOgCLFaidWogYGP3K6a/k6jHeTHfiDGcnQs+GOsQg==
+X-Received: by 2002:a17:902:f291:b029:f0:ba5b:5c47 with SMTP id k17-20020a170902f291b02900f0ba5b5c47mr2963239plc.41.1621475288909;
+        Wed, 19 May 2021 18:48:08 -0700 (PDT)
+Received: from smtp.gmail.com ([2620:15c:202:201:200b:db75:4e6c:8b96])
+        by smtp.gmail.com with ESMTPSA id v14sm490668pfi.25.2021.05.19.18.48.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 19 May 2021 18:48:08 -0700 (PDT)
 From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.9.1
-Date:   Wed, 19 May 2021 21:41:27 -0400
-Message-ID: <CAE-0n522QRUfQOSGmYS59AbFdx2kmtz-CNszdWfLnPCbMkCryA@mail.gmail.com>
-Subject: Re: [PATCH 0/7] component: Make into an aggregate bus
-To:     Saravana Kannan <saravanak@google.com>
-Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Daniel Vetter <daniel.vetter@ffwll.ch>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Russell King <rmk+kernel@arm.linux.org.uk>
-Content-Type: text/plain; charset="UTF-8"
+To:     Mark Brown <broonie@kernel.org>
+Cc:     linux-kernel@vger.kernel.org, alsa-devel@alsa-project.org,
+        linux-arm-msm@vger.kernel.org,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Banajit Goswami <bgoswami@codeaurora.org>
+Subject: [PATCH] ASoC: qcom: lpass-cpu: Use optional clk APIs
+Date:   Wed, 19 May 2021 18:48:07 -0700
+Message-Id: <20210520014807.3749797-1-swboyd@chromium.org>
+X-Mailer: git-send-email 2.31.1.751.gd2f1c929bd-goog
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Saravana Kannan (2021-05-19 18:27:50)
-> On Wed, May 19, 2021 at 5:25 PM Stephen Boyd <swboyd@chromium.org> wrote:
-> >
-> > This series is from discussion we had on reordering the device lists for
-> > drm shutdown paths[1]. I've introduced an 'aggregate' bus that we put
-> > the aggregate device onto and then we probe the device once all the
-> > components are probed and call component_add(). The probe/remove hooks
-> > are where the bind/unbind calls go, and then a shutdown hook is added
-> > that can be used to shutdown the drm display pipeline at the right time.
-> >
-> > This works for me on my sc7180 board, but I'm currently struggling with
-> > the last patch where we migrate the msm driver. It runs into a runtime
-> > PM problem where the parent device isn't runtime PM enabled yet. I'm
-> > still trying to figure out a clean solution there. Moving runtime PM
-> > around breaks boot and I think that's because the power domain is off.
-> >
-> > Cc: Daniel Vetter <daniel.vetter@ffwll.ch>
-> > Cc: "Rafael J. Wysocki" <rafael@kernel.org>
-> > Cc: Rob Clark <robdclark@gmail.com>
-> > Cc: Russell King <rmk+kernel@arm.linux.org.uk>
-> > Cc: Saravana Kannan <saravanak@google.com>
-> >
-> > [1] https://lore.kernel.org/r/20210508074118.1621729-1-swboyd@chromium.org
-> >
->
-> I skimmed through the series and in general the idea is good, but I'm
-> not sure why each component user needs to be converted/"modern" before
-> it can make use of the benefits of this series. Why not just have
-> wrapper functions around the component ops that the new aggregate bus
-> driver can just call? That'll give all the existing component users
-> the new ability to use the new ops without having to have two
-> versions.
+This driver spits out a warning for me at boot:
 
-The existing users can only have one or the other. Either use the ops
-structure or use the struct aggregate_driver. What benefits of this
-series are they not gaining?
+ sc7180-lpass-cpu 62f00000.lpass: asoc_qcom_lpass_cpu_platform_probe() error getting optional null: -2
 
-> That'll also allow us to do other improvements (I have some
-> in mind) that'll apply to all the component users instead of only the
-> converted ones.
+but it looks like it is all an optional clk. Use the optional clk APIs
+here so that we don't see this message and everything else is the same.
 
-What do you have in mind? I didn't want to convert drivers over to the
-new way of doing things without making them consciously change their
-code. Otherwise I worry it will break things in random, subtle ways. The
-last patch, as I mentioned above in the cover, causes warnings because
-the display driver is enabling runtime PM in an odd spot as part of the
-bind callback of the aggregate/master. That should move out of there and
-into the msm_pdev driver that registers the aggregate from what I can
-tell.
+Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc: Banajit Goswami <bgoswami@codeaurora.org>
+Fixes: 3e53ac8230c1 ("ASoC: qcom: make osr clock optional")
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+---
+ sound/soc/qcom/lpass-cpu.c | 12 +-----------
+ 1 file changed, 1 insertion(+), 11 deletions(-)
+
+diff --git a/sound/soc/qcom/lpass-cpu.c b/sound/soc/qcom/lpass-cpu.c
+index c62d2612e8f5..28c7497344e3 100644
+--- a/sound/soc/qcom/lpass-cpu.c
++++ b/sound/soc/qcom/lpass-cpu.c
+@@ -835,18 +835,8 @@ int asoc_qcom_lpass_cpu_platform_probe(struct platform_device *pdev)
+ 		if (dai_id == LPASS_DP_RX)
+ 			continue;
+ 
+-		drvdata->mi2s_osr_clk[dai_id] = devm_clk_get(dev,
++		drvdata->mi2s_osr_clk[dai_id] = devm_clk_get_optional(dev,
+ 					     variant->dai_osr_clk_names[i]);
+-		if (IS_ERR(drvdata->mi2s_osr_clk[dai_id])) {
+-			dev_warn(dev,
+-				"%s() error getting optional %s: %ld\n",
+-				__func__,
+-				variant->dai_osr_clk_names[i],
+-				PTR_ERR(drvdata->mi2s_osr_clk[dai_id]));
+-
+-			drvdata->mi2s_osr_clk[dai_id] = NULL;
+-		}
+-
+ 		drvdata->mi2s_bit_clk[dai_id] = devm_clk_get(dev,
+ 						variant->dai_bit_clk_names[i]);
+ 		if (IS_ERR(drvdata->mi2s_bit_clk[dai_id])) {
+
+base-commit: 6efb943b8616ec53a5e444193dccf1af9ad627b5
+-- 
+https://chromeos.dev
+
