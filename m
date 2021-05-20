@@ -2,69 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0B8C738B2A6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 May 2021 17:10:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2D96538B2F0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 May 2021 17:21:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233236AbhETPMG convert rfc822-to-8bit (ORCPT
+        id S232801AbhETPXC convert rfc822-to-8bit (ORCPT
         <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 May 2021 11:12:06 -0400
-Received: from coyote.holtmann.net ([212.227.132.17]:58146 "EHLO
+        Thu, 20 May 2021 11:23:02 -0400
+Received: from coyote.holtmann.net ([212.227.132.17]:55703 "EHLO
         mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232020AbhETPMF (ORCPT
+        with ESMTP id S242827AbhETPW5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 May 2021 11:12:05 -0400
+        Thu, 20 May 2021 11:22:57 -0400
 Received: from smtpclient.apple (p4fefc9d6.dip0.t-ipconnect.de [79.239.201.214])
-        by mail.holtmann.org (Postfix) with ESMTPSA id 05B39CECEA;
-        Thu, 20 May 2021 17:18:33 +0200 (CEST)
+        by mail.holtmann.org (Postfix) with ESMTPSA id 1921FCECEA;
+        Thu, 20 May 2021 17:29:25 +0200 (CEST)
 Content-Type: text/plain;
         charset=us-ascii
 Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.80.0.2.43\))
-Subject: Re: [PATCH v4 0/5] Enable Bluetooth functionality for WCN6750
+Subject: Re: [PATCH v1] Bluetooth: btusb: fix bt fiwmare downloading failure
+ issue for qca btsoc.
 From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <1621355686-29550-1-git-send-email-gubbaven@codeaurora.org>
-Date:   Thu, 20 May 2021 17:10:39 +0200
+In-Reply-To: <1621304202-5675-1-git-send-email-zijuhu@codeaurora.org>
+Date:   Thu, 20 May 2021 17:21:30 +0200
 Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
-        devicetree@vger.kernel.org, Matthias Kaehlcke <mka@chromium.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        "open list:BLUETOOTH SUBSYSTEM" <linux-bluetooth@vger.kernel.org>,
-        Hemantg <hemantg@codeaurora.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        Balakrishna Godavarthi <bgodavar@codeaurora.org>,
-        Rocky Liao <rjliao@codeaurora.org>, hbandi@codeaurora.org,
-        abhishekpandit@chromium.org
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
+        c-hbandi@codeaurora.org, hemantg@codeaurora.org, mka@chromium.org,
+        rjliao@codeaurora.org, tjiang@codeaurora.org
 Content-Transfer-Encoding: 8BIT
-Message-Id: <DF3C6156-F44A-4954-B1EF-CB3051BCC0B6@holtmann.org>
-References: <1621355686-29550-1-git-send-email-gubbaven@codeaurora.org>
-To:     Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
+Message-Id: <CE9E21DA-4FFE-455A-BFC3-EF4E11509CF7@holtmann.org>
+References: <1621304202-5675-1-git-send-email-zijuhu@codeaurora.org>
+To:     Zijun Hu <zijuhu@codeaurora.org>
 X-Mailer: Apple Mail (2.3654.80.0.2.43)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Venkata,
+Hi Zijun,
 
-> These patches enables Bluetooth functionalties for new Qualcomm
-> Bluetooth SoC wcn6750.
+> This is btsoc timing issue, host add 20ms delay as workaround.
 > 
-> Venkata Lakshmi Narayana Gubba (5):
->  Bluetooth: hci_qca: Add support for QTI Bluetooth chip wcn6750
->  Bluetooth: btqca: Add support for firmware image with mbn type for
->    WCN6750
->  Bluetooth: btqca: Moved extracting rom version info to common place
->  dt-bindings: net: bluetooth: Convert Qualcomm BT binding to DT schema
->  dt-bindings: net: bluetooth: Add device tree bindings for QTI chip
->    wcn6750
+> Signed-off-by: Tim Jiang <tjiang@codeaurora.org>
+> ---
+> drivers/bluetooth/btusb.c | 1 +
+> 1 file changed, 1 insertion(+)
 > 
-> .../devicetree/bindings/net/qualcomm-bluetooth.txt |  69 --------
-> .../bindings/net/qualcomm-bluetooth.yaml           | 183 +++++++++++++++++++++
-> drivers/bluetooth/btqca.c                          |  90 +++++++---
-> drivers/bluetooth/btqca.h                          |  14 +-
-> drivers/bluetooth/hci_qca.c                        | 114 ++++++++++---
-> 5 files changed, 354 insertions(+), 116 deletions(-)
-> delete mode 100644 Documentation/devicetree/bindings/net/qualcomm-bluetooth.txt
-> create mode 100644 Documentation/devicetree/bindings/net/qualcomm-bluetooth.yaml
+> diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+> index 5245714..b0743db 100644
+> --- a/drivers/bluetooth/btusb.c
+> +++ b/drivers/bluetooth/btusb.c
+> @@ -4064,6 +4064,7 @@ static int btusb_setup_qca_download_fw(struct hci_dev *hdev,
+> 
+> 	sent += size;
+> 	count -= size;
+> +	msleep(20);
 
-all 5 patches have been applied to bluetooth-next tree.
+please add a comment and more details on why this is needed.
 
 Regards
 
