@@ -2,109 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 40E1C38ADF7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 May 2021 14:19:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0C2E438AD7E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 May 2021 14:04:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231975AbhETMUl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 May 2021 08:20:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53518 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231998AbhETMUe (ORCPT
+        id S242236AbhETMFY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 May 2021 08:05:24 -0400
+Received: from m1380.mail.163.com ([220.181.13.80]:44311 "EHLO
+        m1380.mail.163.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S242067AbhETMFG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 May 2021 08:20:34 -0400
-Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23060C08142A
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 May 2021 04:10:57 -0700 (PDT)
-Received: by mail-pj1-x102c.google.com with SMTP id q6so8949565pjj.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 May 2021 04:10:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=+SQgtRFMTp/VNytQ8r2NMcxoq1dwxAECxDdDjfqIL4s=;
-        b=P3b/Duz8M4+Hge7/LfFHO6OMmXFcXb6YJWngVCFP30Cqt2TUl7tTfjonWXL6xcV0q6
-         YHjHgB9FKTVS8VZxA8in9hltL44LI1jo5rOL2qSDOAmK5kxlFm7PIJ7C5WtMB2M8VSXl
-         PYgXweW80DrRT+vmN3DfYebgYYfgJU0yKCoxUS82cNpRQKTsG+sM32LktXd4PxRhN33y
-         JFXXWSraFn+EGPocj1LYIAS7ZuZQqDksLJr7CA9r94zw+ijR+paOLSoTVe2j/eZyFYD6
-         QfytsDf6AcM9xzqVplhtpNaHeyxiWf00T78zZW61CThPH7kkrUxuosIW7vW7ITmObmOj
-         1+YQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=+SQgtRFMTp/VNytQ8r2NMcxoq1dwxAECxDdDjfqIL4s=;
-        b=by59H/UpNYDB0LVyY0DFs+MIePsbO6kOvyP7ih9/n8YC9c8/cnCfMPHoaMMWZ8Zzbg
-         ENk8sdjY0oFJF3A3dX+WUr1ITDHSF4FaNagKaGmfzZSGKIWBBWmFQyJFbGu3XySc4B20
-         htv5niAz1VltpvCl09z8KBxBO1+nPeH1tbnfK+rajZi+EWQz88tRzdYwdSxmkHDeBbJP
-         yk1ZvU7TxifmanFp1dkM//S+10MNq+CcYktB7sRvgX0urMHz4G0DVTQRsx9NxZ9dhCEV
-         lZofW98N8Ah19tmVIe/qWqib+p8q+eQc6ncX4UzhzE0ZrckLFZyzYmZcQz7Uynvj3Cye
-         Yd8w==
-X-Gm-Message-State: AOAM533BrdWlCjZH3eI5VUFPLbVR3x1VUG0whyxHaKHOeNmGl79pzKA1
-        W9yIWcZP12HJrnl7pNzn/+Ojx/cwMYksUazBcIGOXXchpxH8bg==
-X-Google-Smtp-Source: ABdhPJxDatCkyaJySsM7YbGJJF1h+SyvbWfKKUQgB5JZyAvMmGF4EU5+OXQG1W4UyBPcNUeSO9L3ZjFa6fX//+V5nOs=
-X-Received: by 2002:a17:902:8693:b029:f3:b47e:6a08 with SMTP id
- g19-20020a1709028693b02900f3b47e6a08mr5169048plo.69.1621509056670; Thu, 20
- May 2021 04:10:56 -0700 (PDT)
+        Thu, 20 May 2021 08:05:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+        s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=Lvxlv
+        /jbqFyHOx/iy1dvt7BdawmxAecjJiBDgIXlLmA=; b=bFATlEO229Lc5MhnJ2cWD
+        bDPdDP2CBejMrQCOq1N/9lUUDhBkiYcPFKxXLHEsxLxSSJZw2LkqefKhAQaHNBba
+        ZdrSnkhPHxMdW+iS5C0qspdwWoR1hkA8UqiyBNoviTzNG0aHSv3BeRnhl41yIeOY
+        pb89batFAlg564f1qwgcoA=
+Received: from wsj20369$163.com ( [120.197.196.176] ) by
+ ajax-webmail-wmsvr80 (Coremail) ; Thu, 20 May 2021 19:16:40 +0800 (CST)
+X-Originating-IP: [120.197.196.176]
+Date:   Thu, 20 May 2021 19:16:40 +0800 (CST)
+From:   "Shujun Wang" <wsj20369@163.com>
+To:     bbhatt@codeaurora.org
+Cc:     mani@kernel.org, hemantk@codeaurora.org, loic.poulain@linaro.org,
+        jarvis.w.jiang@gmail.com, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re:Re: [PATCH RESEND,v2] bus: mhi: pci_generic: T99W175: update
+ channel name from AT to DUN
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version XT5.0.13 build 20210104(ab8c30b6)
+ Copyright (c) 2002-2021 www.mailtech.cn 163com
+In-Reply-To: <88d7754c381ba9eb927b4dd91e30ca35@codeaurora.org>
+References: <20210517095415.3626-1-wsj20369@163.com>
+ <88d7754c381ba9eb927b4dd91e30ca35@codeaurora.org>
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=UTF-8
 MIME-Version: 1.0
-References: <20210511180728.23781-1-jonathan@marek.ca> <20210511180728.23781-9-jonathan@marek.ca>
-In-Reply-To: <20210511180728.23781-9-jonathan@marek.ca>
-From:   Robert Foss <robert.foss@linaro.org>
-Date:   Thu, 20 May 2021 13:10:45 +0200
-Message-ID: <CAG3jFytmf4fo_EZ4bcQOkszXe1u7uKYdUStP0WbOVAaZemgB8w@mail.gmail.com>
-Subject: Re: [PATCH 08/17] media: camss: csid-170: set the right HALF_CMD when disabled
-To:     Jonathan Marek <jonathan@marek.ca>
-Cc:     MSM <linux-arm-msm@vger.kernel.org>,
-        Andrey Konovalov <andrey.konovalov@linaro.org>,
-        Todor Tomov <todor.too@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-        "open list:QUALCOMM CAMERA SUBSYSTEM DRIVER" 
-        <linux-media@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Message-ID: <734feeda.5d5f.179897de742.Coremail.wsj20369@163.com>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID: UMGowACHAzEZRaZgLrHkAA--.24290W
+X-CM-SenderInfo: hzvmjiqtwzqiywtou0bp/xtbBQwaYF1++LpAUPAABs8
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hey Jonathan,
-
-On Tue, 11 May 2021 at 20:08, Jonathan Marek <jonathan@marek.ca> wrote:
->
-> Use the "HALT_CMD_RESUME_AT_FRAME_BOUNDARY" define instead of a "1" which
-> is otherwise confusing, and add a "HALT_CMD_HALT_AT_FRAME_BOUNDARY" which
-> is set when disabling.
->
-> Fixes: eebe6d00e9bf ("media: camss: Add support for CSID hardware version Titan 170")
-> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
-> ---
->  drivers/media/platform/qcom/camss/camss-csid-170.c | 8 ++++++--
->  1 file changed, 6 insertions(+), 2 deletions(-)
->
-> diff --git a/drivers/media/platform/qcom/camss/camss-csid-170.c b/drivers/media/platform/qcom/camss/camss-csid-170.c
-> index af134ded241d..9f6334fd68fc 100644
-> --- a/drivers/media/platform/qcom/camss/camss-csid-170.c
-> +++ b/drivers/media/platform/qcom/camss/camss-csid-170.c
-> @@ -105,7 +105,8 @@
->  #define CSID_RDI_CTRL(rdi)                     ((IS_LITE ? 0x208 : 0x308)\
->                                                 + 0x100 * (rdi))
->  #define                RDI_CTRL_HALT_CMD               0
-> -#define                        ALT_CMD_RESUME_AT_FRAME_BOUNDARY        1
-> +#define                        HALT_CMD_HALT_AT_FRAME_BOUNDARY         0
-> +#define                        HALT_CMD_RESUME_AT_FRAME_BOUNDARY       1
->  #define                RDI_CTRL_HALT_MODE              2
->
->  #define CSID_RDI_FRM_DROP_PATTERN(rdi)                 ((IS_LITE ? 0x20C : 0x30C)\
-> @@ -443,7 +444,10 @@ static void csid_configure_stream(struct csid_device *csid, u8 enable)
->         val |= 1 << CSI2_RX_CFG1_MISR_EN;
->         writel_relaxed(val, csid->base + CSID_CSI2_RX_CFG1);
->
-> -       val = 1 << RDI_CTRL_HALT_CMD;
-> +       if (enable)
-> +               val = HALT_CMD_RESUME_AT_FRAME_BOUNDARY << RDI_CTRL_HALT_CMD;
-> +       else
-> +               val = HALT_CMD_HALT_AT_FRAME_BOUNDARY << RDI_CTRL_HALT_CMD;
->         writel_relaxed(val, csid->base + CSID_RDI_CTRL(0));
-
-Reviewed-by: Robert Foss <robert.foss@linaro.org>
+CkF0IDIwMjEtMDUtMTggMDI6MDE6MTAsICJCaGF1bWlrIEJoYXR0IiA8YmJoYXR0QGNvZGVhdXJv
+cmEub3JnPiB3cm90ZToKPk9uIDIwMjEtMDUtMTcgMDI6NTQgQU0sIFNodWp1biBXYW5nIHdyb3Rl
+Ogo+PiBGcm9tOiBKYXJ2aXMgSmlhbmcgPGphcnZpcy53LmppYW5nQGdtYWlsLmNvbT4KPj4gCj4+
+IEFjY29yZGluZyB0byBNSEkgdjEuMSBzcGVjaWZpY2F0aW9uLCBjaGFuZ2UgdGhlIGNoYW5uZWwg
+bmFtZSBvZiBUOTlXMTc1Cj4+IGZyb20gIkFUIiB0byAiRFVOIiAoRGlhbC11cCBuZXR3b3JraW5n
+KSBmb3IgYm90aCBjaGFubmVsIDMyIGFuZCAzMywKPj4gc28gdGhhdCB0aGUgY2hhbm5lbHMgY2Fu
+IGJlIGJvdW5kIHRvIHRoZSBRY29tIFdXQU4gY29udHJvbCBkcml2ZXIsIGFuZAo+PiBkZXZpY2Ug
+bm9kZSBzdWNoIGFzIC9kZXYvd3dhbjBwM0FUIHdpbGwgYmUgZ2VuZXJhdGVkLCB3aGljaCBpcyB2
+ZXJ5IAo+PiB1c2VmdWwKPj4gZm9yIGRlYnVnZ2luZyBtb2RlbQo+PiAKPj4gRml4ZXM6IGFhYzQy
+NjU2MmY1NiAoImJ1czogbWhpOiBwY2lfZ2VuZXJpYzogSW50cm9kdWNlIEZveGNvbm4gVDk5VzE3
+NSAKPj4gc3VwcG9ydCIpCj4+IFNpZ25lZC1vZmYtYnk6IEphcnZpcyBKaWFuZyA8amFydmlzLncu
+amlhbmdAZ21haWwuY29tPgo+PiBTaWduZWQtb2ZmLWJ5OiBTaHVqdW4gV2FuZyA8d3NqMjAzNjlA
+MTYzLmNvbT4KPgo+UmV2aWV3ZWQtYnk6IEJoYXVtaWsgQmhhdHQgPGJiaGF0dEBjb2RlYXVyb3Jh
+Lm9yZz4KCkhpIEJoYXVtaWssCgpUaGFua3MgYSBsb3QuCgo+PiAtLS0KPj4gCj4+IHYyOiBBZGQ6
+IEZpeGVzOiBhYWM0MjY1NjJmNTYKPj4gCj4+ICBkcml2ZXJzL2J1cy9taGkvcGNpX2dlbmVyaWMu
+YyB8IDQgKystLQo+PiAgMSBmaWxlIGNoYW5nZWQsIDIgaW5zZXJ0aW9ucygrKSwgMiBkZWxldGlv
+bnMoLSkKPj4gCj4+IGRpZmYgLS1naXQgYS9kcml2ZXJzL2J1cy9taGkvcGNpX2dlbmVyaWMuYyAK
+Pj4gYi9kcml2ZXJzL2J1cy9taGkvcGNpX2dlbmVyaWMuYwo+PiBpbmRleCA3YzgxMGYwMmEyZWYu
+LjhjN2Y2NTc2ZTQyMSAxMDA2NDQKPj4gLS0tIGEvZHJpdmVycy9idXMvbWhpL3BjaV9nZW5lcmlj
+LmMKPj4gKysrIGIvZHJpdmVycy9idXMvbWhpL3BjaV9nZW5lcmljLmMKPj4gQEAgLTMxMSw4ICsz
+MTEsOCBAQCBzdGF0aWMgY29uc3Qgc3RydWN0IG1oaV9jaGFubmVsX2NvbmZpZwo+PiBtaGlfZm94
+Y29ubl9zZHg1NV9jaGFubmVsc1tdID0gewo+PiAgCU1ISV9DSEFOTkVMX0NPTkZJR19ETCg1LCAi
+RElBRyIsIDMyLCAxKSwKPj4gIAlNSElfQ0hBTk5FTF9DT05GSUdfVUwoMTIsICJNQklNIiwgMzIs
+IDApLAo+PiAgCU1ISV9DSEFOTkVMX0NPTkZJR19ETCgxMywgIk1CSU0iLCAzMiwgMCksCj4+IC0J
+TUhJX0NIQU5ORUxfQ09ORklHX1VMKDMyLCAiQVQiLCAzMiwgMCksCj4+IC0JTUhJX0NIQU5ORUxf
+Q09ORklHX0RMKDMzLCAiQVQiLCAzMiwgMCksCj4+ICsJTUhJX0NIQU5ORUxfQ09ORklHX1VMKDMy
+LCAiRFVOIiwgMzIsIDApLAo+PiArCU1ISV9DSEFOTkVMX0NPTkZJR19ETCgzMywgIkRVTiIsIDMy
+LCAwKSwKPj4gIAlNSElfQ0hBTk5FTF9DT05GSUdfSFdfVUwoMTAwLCAiSVBfSFcwX01CSU0iLCAx
+MjgsIDIpLAo+PiAgCU1ISV9DSEFOTkVMX0NPTkZJR19IV19ETCgxMDEsICJJUF9IVzBfTUJJTSIs
+IDEyOCwgMyksCj4+ICB9Owo+Cj5UaGFua3MsCj5CaGF1bWlrCj4tLS0KPlRoZSBRdWFsY29tbSBJ
+bm5vdmF0aW9uIENlbnRlciwgSW5jLiBpcyBhIG1lbWJlciBvZiB0aGUgQ29kZSBBdXJvcmEgCj5G
+b3J1bSwKPmEgTGludXggRm91bmRhdGlvbiBDb2xsYWJvcmF0aXZlIFByb2plY3QK
