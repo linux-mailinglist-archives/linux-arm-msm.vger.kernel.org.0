@@ -2,147 +2,196 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8620F38B804
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 May 2021 22:03:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 93CB938B811
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 May 2021 22:06:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240158AbhETUEl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 May 2021 16:04:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47354 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233856AbhETUEl (ORCPT
+        id S232256AbhETUHb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 May 2021 16:07:31 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:48750 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234708AbhETUHa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 May 2021 16:04:41 -0400
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 512DDC061574
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 May 2021 13:03:18 -0700 (PDT)
-Received: by mail-wr1-x42e.google.com with SMTP id n2so18944302wrm.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 May 2021 13:03:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ffwll.ch; s=google;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=FU0d7+kSraKdngkIyPIt5NSqznuzgSQmwjTFbIqh82I=;
-        b=d3Hei2jwKc/C87+dDBawCoVOIy25i8qyEpyU173i9Pjbt5Y20BvdCZ8F2ElivH/0zu
-         9AEo0+/d2oCPHGEXgs0wUj5fskkaNcF3sxm1lGfOnuv9EtgCvT7UuYR3GC3CDFtxqT1G
-         yp94Q2YMApSmYgq4UPNNxJ7so1vlyBp14sZfg=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-disposition
-         :in-reply-to;
-        bh=FU0d7+kSraKdngkIyPIt5NSqznuzgSQmwjTFbIqh82I=;
-        b=oJ6EWbJ4ALrA0qgrnXAN1ds8q/O016vgWFB25swsskJNsB1c1A95NoJPQbKLDmHucn
-         n4sT1JRcBdSCVWzRK/01EDYSpE+Z0bxCMBugWrISYSwHf+/XOhOtiCnbArPw9tF8ngRB
-         /9SyUfyGEVubymqj5gl8fB7PgiLoHVh/gkiSMlB9TRURc8g9bMpPnJ7bo52V9oC/0K2S
-         Fn7muaziwmy9CD0+eEjloGk9OoqrYijWog3xkt2SZv/n7Ft6dDRpkhW0SKTJqtvEU57Z
-         VbQOQme1Z40cGtijyXUYS4r68TWtfmMdMPbG8P03x8MY47Gme5rGxwE9qpubw3ufpJ5l
-         WMfw==
-X-Gm-Message-State: AOAM533pZIrdocIu0AEK4yKJT5Ub3nFbklcCLPsY+bic2QoOfbsomKDp
-        J7hgPyBQT7C8SToCzD8Eh2YYsg==
-X-Google-Smtp-Source: ABdhPJz9rVlxy/Vj9yTBij7i/ZlVLzwSpGkTG/jrgEO2Fbi8ijXxMCLylcVrmu8o6ORVeKgxAsWApg==
-X-Received: by 2002:adf:f751:: with SMTP id z17mr5877306wrp.150.1621540996980;
-        Thu, 20 May 2021 13:03:16 -0700 (PDT)
-Received: from phenom.ffwll.local ([2a02:168:57f4:0:efd0:b9e5:5ae6:c2fa])
-        by smtp.gmail.com with ESMTPSA id c15sm4269990wro.21.2021.05.20.13.03.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 May 2021 13:03:16 -0700 (PDT)
-Date:   Thu, 20 May 2021 22:03:14 +0200
-From:   Daniel Vetter <daniel@ffwll.ch>
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Saravana Kannan <saravanak@google.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Daniel Vetter <daniel.vetter@ffwll.ch>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Russell King <rmk+kernel@arm.linux.org.uk>
-Subject: Re: [PATCH 0/7] component: Make into an aggregate bus
-Message-ID: <YKbAgipp/rmSjOXn@phenom.ffwll.local>
-Mail-Followup-To: Stephen Boyd <swboyd@chromium.org>,
-        Saravana Kannan <saravanak@google.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Russell King <rmk+kernel@arm.linux.org.uk>
-References: <20210520002519.3538432-1-swboyd@chromium.org>
- <CAGETcx-jK3pBNRYevPmRhw1TALHNjtM5dSxCdEuB+2sBH32rtQ@mail.gmail.com>
- <CAE-0n522QRUfQOSGmYS59AbFdx2kmtz-CNszdWfLnPCbMkCryA@mail.gmail.com>
+        Thu, 20 May 2021 16:07:30 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1621541169; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=tIi11JvMaJUrccT5HPI071vmJi9rsmm0l6ZeJdFpBdA=;
+ b=F3alDn6nFIqAsqy2D8wmyaOW/TTDyHLsWjVsfx20wOkItfElqw6MiOJ+5Nf+g6gQcqRUVKwj
+ 1orf/DEI3KgcqIJRVskw1ggRdKLWqIVVApb0nRzch0r2u0IrnaZmTR1dE3MXnSvpBZW0Hvov
+ zR5PXAhh/0O5PmEOgL8qO248d/E=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
+ 60a6c11df752fca668f324eb (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 20 May 2021 20:05:49
+ GMT
+Sender: khsieh=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id B3E56C4338A; Thu, 20 May 2021 20:05:49 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: khsieh)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5D478C4338A;
+        Thu, 20 May 2021 20:05:48 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAE-0n522QRUfQOSGmYS59AbFdx2kmtz-CNszdWfLnPCbMkCryA@mail.gmail.com>
-X-Operating-System: Linux phenom 5.10.32scarlett+ 
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Thu, 20 May 2021 13:05:48 -0700
+From:   khsieh@codeaurora.org
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robdclark@gmail.com,
+        sean@poorly.run, vkoul@kernel.org, abhinavk@codeaurora.org,
+        aravindh@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v4 1/2] drm/msm/dp: handle irq_hpd with sink_count = 0
+ correctly
+In-Reply-To: <CAE-0n52rBrjy-=dpqK+dae2GNk1rAaQnKqCjzdqiAoS13gHpSQ@mail.gmail.com>
+References: <1621013713-6860-1-git-send-email-khsieh@codeaurora.org>
+ <CAE-0n53VUr=f=PKnO5HhXZ3BAG_mNBwmQrfQPxHvxLZPDReA+g@mail.gmail.com>
+ <c1a3ced9ac4682bae310712a11576322@codeaurora.org>
+ <CAE-0n50yRCA00ck_FtXwzKw_R8UcocMzTh8V7NOe4ob__3G3bg@mail.gmail.com>
+ <e071434531947e5c4275a1a14b77b2c3@codeaurora.org>
+ <CAE-0n52rBrjy-=dpqK+dae2GNk1rAaQnKqCjzdqiAoS13gHpSQ@mail.gmail.com>
+Message-ID: <f476d82d0798e0d7eb9e12949aa2c8f1@codeaurora.org>
+X-Sender: khsieh@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, May 19, 2021 at 09:41:27PM -0400, Stephen Boyd wrote:
-> Quoting Saravana Kannan (2021-05-19 18:27:50)
-> > On Wed, May 19, 2021 at 5:25 PM Stephen Boyd <swboyd@chromium.org> wrote:
-> > >
-> > > This series is from discussion we had on reordering the device lists for
-> > > drm shutdown paths[1]. I've introduced an 'aggregate' bus that we put
-> > > the aggregate device onto and then we probe the device once all the
-> > > components are probed and call component_add(). The probe/remove hooks
-> > > are where the bind/unbind calls go, and then a shutdown hook is added
-> > > that can be used to shutdown the drm display pipeline at the right time.
-> > >
-> > > This works for me on my sc7180 board, but I'm currently struggling with
-> > > the last patch where we migrate the msm driver. It runs into a runtime
-> > > PM problem where the parent device isn't runtime PM enabled yet. I'm
-> > > still trying to figure out a clean solution there. Moving runtime PM
-> > > around breaks boot and I think that's because the power domain is off.
-> > >
-> > > Cc: Daniel Vetter <daniel.vetter@ffwll.ch>
-> > > Cc: "Rafael J. Wysocki" <rafael@kernel.org>
-> > > Cc: Rob Clark <robdclark@gmail.com>
-> > > Cc: Russell King <rmk+kernel@arm.linux.org.uk>
-> > > Cc: Saravana Kannan <saravanak@google.com>
-> > >
-> > > [1] https://lore.kernel.org/r/20210508074118.1621729-1-swboyd@chromium.org
-> > >
-> >
-> > I skimmed through the series and in general the idea is good, but I'm
-> > not sure why each component user needs to be converted/"modern" before
-> > it can make use of the benefits of this series. Why not just have
-> > wrapper functions around the component ops that the new aggregate bus
-> > driver can just call? That'll give all the existing component users
-> > the new ability to use the new ops without having to have two
-> > versions.
+On 2021-05-20 12:28, Stephen Boyd wrote:
+> Quoting khsieh@codeaurora.org (2021-05-20 09:08:03)
+>> On 2021-05-19 14:06, Stephen Boyd wrote:
+>> > Quoting khsieh@codeaurora.org (2021-05-19 09:01:02)
+>> >> On 2021-05-18 14:42, Stephen Boyd wrote:
+>> >> > Quoting Kuogee Hsieh (2021-05-14 10:35:13)
+>> >> >> irq_hpd interrupt should be handled after dongle plugged in and
+>> >> >> before dongle unplugged. Hence irq_hpd interrupt is enabled at
+>> >> >> the end of the plugin handle and disabled at the beginning of
+>> >> >> unplugged handle. Current irq_hpd with sink_count = 0 is wrongly
+>> >> >> handled same as the dongle unplugged which tears down the mainlink
+>> >> >> and disables the phy. This patch fixes this problem by only tearing
+>> >> >> down the mainlink but keeping phy enabled at irq_hpd with
+>> >> >> sink_count = 0 handle so that next irq_hpd with sink_count =1 can be
+>> >> >> handled by setup mainlink only.
+>> >> >>
+>> >> >> Changes in v2:
+>> >> >> -- add ctrl->phy_Power_count
+>> >> >>
+>> >> >> Changes in v3:
+>> >> >> -- del ctrl->phy_Power_count
+>> >> >> -- add phy_power_off to dp_ctrl_off_link_stream()
+>> >> >>
+>> >> >> Changes in v4:
+>> >> >> -- return immediately if clock disable failed at
+>> >> >> dp_ctrl_off_link_stream()
+>> >> >>
+>> >> >> Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
+>> >> >
+>> >> > I think we want some Fixes tag. Not sure what it would be though.
+>> >> >
+>> >> > I also noticed that if I plug and unplug the HDMI cable from my apple
+>> >> > dongle that I see this error message
+>> >> >
+>> >> >   [drm:dp_display_usbpd_attention_cb] *ERROR* Disconnected, no
+>> >> > DP_LINK_STATUS_UPDATED
+>> >>
+>> >> > *ERROR* Disconnected, no DP_LINK_STATUS_UPDATED <== this is caused by
+>> >> > dongle generate the second
+>> >> irq_hpd with sink_count = 0 after first first irq_hpd with sink_count
+>> >> =
+>> >> 0. The fix is you have
+>> >> set dongle to D3 (power off) state after first irq_pd with sink_count
+>> >> =display_disable
+>> >> 0 handled.
+>> >> I have a patch fix this problem. I will merge and re submit for
+>> >> review.
+>> >
+>> > That's good. I still don't understand how the kthread can't race with
+>> > irq_hpd and hpd going low though. Userspace will have to disable
+>> > thectrl_off_link_stream()).
+>> > display and that could happen far later than the time that the hpd low
+>> > interrupt fires and is processed. Can't hpd go high during that time
+>> > and
+>> > then blip before userspace notices and disables the display?
+>> >
+>> > Put another way, putting the dongle into D3 state may make the race
+>> > window smaller, but it's not fixing the root cause of the problem which
+>> > is that the kthread is running later and userspace is involved in the
+>> > state of the dongle while irqs are firing. The three different contexts
+>> > have to coordinate work, so it feels like a better approach would be to
+>> > shut off the irq_hpd interrupt once hpd goes low for an unplug in
+>> > hardirq context so that we don't have to consider the cable state or
+>> > userspace changing the state after we notify it.
+>> 
+>> There is no race condition here.
+>> The interrupts are converted into event and stored at event q.
+>> event thread service event sequentially and make sure transaction had
+>> been completed before service next event.
+>> The first irq_hpd with sink_count = 0 is handled and this transaction
+>> will not completed until user space frame work turn off display
+>> (msm_dp_display_disable()).
+>> After that, the second irq_hpd with sink_count will be service which
+>> found that display is off so it spill out DP_LINK_STATUS_UPDATED 
+>> warning
+>> message and do nothing.
+>> 
+>> Put dongle to D3 state so that it will not issue the unnecessary 
+>> second
+>> irq_hpd with sink_count = 0. this will prevent the annoy but unharmful
+>> DP_LINK_STATUS_UPDATED warning message.
+>> Again, we can not disable hpd interrupt since dongle still attached 
+>> and
+>> hdmi cable can be plugged in at any instant.
+>> 
 > 
-> The existing users can only have one or the other. Either use the ops
-> structure or use the struct aggregate_driver. What benefits of this
-> series are they not gaining?
-> 
-> > That'll also allow us to do other improvements (I have some
-> > in mind) that'll apply to all the component users instead of only the
-> > converted ones.
-> 
-> What do you have in mind? I didn't want to convert drivers over to the
-> new way of doing things without making them consciously change their
-> code. Otherwise I worry it will break things in random, subtle ways. The
-> last patch, as I mentioned above in the cover, causes warnings because
-> the display driver is enabling runtime PM in an odd spot as part of the
-> bind callback of the aggregate/master. That should move out of there and
-> into the msm_pdev driver that registers the aggregate from what I can
-> tell.
+> Right I'm not suggesting to disable hpd interrupt, just the hpd_irq
+> interrupt once an unplug irq comes in, and do that in hardirq context.
+> Also, I'm suggesting that we consider unplug as a higher priority if 
+> the
+> hard irq handler is delayed for some reason and both an unplug irq and
+> an hpd irq are pending in the hardware when the hard irq handler is
+> running. Putting the dongle into D3 state won't fix these problems.
 
-Hm yeah that's annoying. Another thing to check is that there's no locking
-issues with lockdep enabled. But there's plenty of other places that
-register/bind drivers within other drivers, so it should all work.
 
-I think this is a good reason why more drivers should be converted (in
-separate patches) so that we get a lot more testing and can find bugs in
-the design.
--Daniel
--- 
-Daniel Vetter
-Software Engineer, Intel Corporation
-http://blog.ffwll.ch
+
+The unplug interrupt is not happen in this case since dongle still 
+attached.
+The unplug interrupt only happen when dongle unplugged.
+
+I think you mistakenly think DP_LINK_STATUS_UPDATED is caused by unplug 
+interrupt.
+DP_LINK_STATUS_UPDATED happen is due to dongle issue two consecutive 
+irq_hpd with sink_count = 0 when hdmi cable unplugged from dongle.
+The first irq_hpd with sink_count = 0 is handled as expected to turn off 
+display.
+After that the second irq_hpd with sink_count = 0 is handled.
+Since display had turned off, then there is nothing to do but spill 
+DP_LINK_STATUS_UPDATED warning message.
+There is no unplug (hpd become low) happen in this case since dongle 
+still attached.
+
+All interrupt (plug/irq_hpd and unplug) are required to be handled in 
+the order of happening.
+We can not ignore any one.
+For example, you plug/unplug two different resolution monitor 
+alternative to/from dongle and unplug dongle once for while.
+
+I think the race condition you describe here all had been taken care 
+with
+1) convert irq into event and store at event q in order.
+2) irq handled base on transaction. Next irq can be handled when 
+previous irq transaction is done.
+
+
+
+
