@@ -2,153 +2,146 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3E35A38B795
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 May 2021 21:28:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3246D38B79E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 May 2021 21:30:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235408AbhETTaJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 May 2021 15:30:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39628 "EHLO
+        id S239442AbhETTcK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 May 2021 15:32:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40080 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237673AbhETTaJ (ORCPT
+        with ESMTP id S238856AbhETTcK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 May 2021 15:30:09 -0400
-Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 597A7C061761
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 May 2021 12:28:47 -0700 (PDT)
-Received: by mail-oi1-x22d.google.com with SMTP id s19so17437133oic.7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 May 2021 12:28:47 -0700 (PDT)
+        Thu, 20 May 2021 15:32:10 -0400
+Received: from mail-yb1-xb2e.google.com (mail-yb1-xb2e.google.com [IPv6:2607:f8b0:4864:20::b2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A42DBC061574
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 May 2021 12:30:46 -0700 (PDT)
+Received: by mail-yb1-xb2e.google.com with SMTP id y36so7743383ybi.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 May 2021 12:30:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=UkMIkgxAg1yDU50Q27zsSjPf6ATFEQhYvSl3BA7FZWs=;
-        b=l/XwDaSM0eTBErOQdXx+pm5scDKjtceA9ooO6g22HuXH/gHozT+VeDSc8a2tyte9p0
-         b9f5CWu3gEBJvcercP9QoUkfrwDMZijoTSSUd38OmbgpPuhHFqOL5tDJZGwTjJp9qwck
-         GrcmZFYMhDtuEDKyFQOapi+syhAzc086w32bM=
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=ar6byVVqK1lRvgLic9qsfKVrGRqd/nf6HO0KI5j0j7Y=;
+        b=unZRQZQT4/xG3FpO3Qvabhk7GtClO/EQX8NrK+CX8mvFkiQa5TBKByzoSB9YvynKp3
+         wA78WE5VlE1cFOyQDnI/mFxF/4vPge3E5maZKQwrxGPJ77DLmQPTTfnFSDYgz9h/dGk7
+         9NGIJS0g0ARLDQIZw5T9Koi3k3mI8lRs9mg9FFhdCibrO5tH9jW6eMYopX9ZtNQjBNee
+         IbUNtzyGCGGCoEWI3pfbj2D6gjdROJ2rsWg2Pn01Ty6hESjZajhVy7i7UBQIWPm/rJFA
+         rVxU6dq0z0t+76SD7PsWv3X+0Q3J3SISwxcHy6bB9vMsPkhRDJ77JUbuTSD3BctDTtiG
+         xb3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=UkMIkgxAg1yDU50Q27zsSjPf6ATFEQhYvSl3BA7FZWs=;
-        b=pCuR1e/o5R2i9BIdk6mSPd5Y8Eixsh7Wr/LwGMsDBhLkQ0oM8Yl9cilTKQPOSC10bZ
-         8arQbMYTYrmd2tbZi2YteQYm5ykdAylsN/F0n9k7dKgtlzrA//McF+v3+3nIR1wi8NTe
-         Sh+pzwVKr7JwWVFeKqcQlaNds+8LVnK1enwJIIotFnEV41OPQoryRMUnGyG/zg4k5wy3
-         2PeD7fzoouFwN5sWXJ5WyFPtY/oPX/4DukR0HtOQiriW4WdRAHFYY6ZG0HjJxXYuIStk
-         K7HSjEz4yyphytRM7lgUc2UME/bg23BGXMwjXGXdn952WDGluV6p+g83aDfe65fqDHMc
-         caUA==
-X-Gm-Message-State: AOAM530yGInNb6iP2rzyJ7Lq6MOsfLtFV8uQ0HpB8xWU6EZXFRznfZPf
-        Ov2z/2eUq3ONOKfBMcLUJecCfz8fOPair8OQbw2vNA==
-X-Google-Smtp-Source: ABdhPJycnoVRNHyVCJ7p4WTbEK2ooDsoACtWKydECvIhMgsT9Py4KJxnv4eCrQkaI8ZWtJ2nPliIKOWT+oZyY1tnXc8=
-X-Received: by 2002:a54:4501:: with SMTP id l1mr4373766oil.19.1621538926660;
- Thu, 20 May 2021 12:28:46 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 20 May 2021 12:28:46 -0700
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ar6byVVqK1lRvgLic9qsfKVrGRqd/nf6HO0KI5j0j7Y=;
+        b=m0axLsGAvgFE6PrqRZhL65oPCbBNSLl+qvDyUfGY2b9jTJyGchGoip7F/DC4Jo0oC1
+         FC7qtPcfdKv09msDsU/ovMQjpv+e0ZwMy80brs3q6sAvF5m2ubJYVUZ+SsGgzP9tp4cN
+         MjbdPg8xT7tXtHHNTnc70k43Lir1r5bG5i1aYlBljJMIQGR4mtB98AcldS7XrVCs3iLo
+         H9mC+KymTO5dQ3CVPCsIRVPJU5igqjZpzdILGIBN7OYWyB2wzL2FzP4G7sDOFd/G+9NW
+         iXBrccRxsbljfEaG/ETsKujchfFU3bz+UdCMqu/aEJpHaDlHIMr1UyY3o59kSc370+Bc
+         KNJg==
+X-Gm-Message-State: AOAM531haUQdhHRqMCdcqS93aWbYQN2lJDZLIX0OZXfTJ+wYtDO3TbbV
+        mticGht1KG7gPx9fnphBYzvof9zmgLYtDlW80HsAhQ==
+X-Google-Smtp-Source: ABdhPJxpYOKGwUniY64mHhJrUUD46UWR7FL11JhqYySHKRMSD1AvlOq8F1sramRfgpdMzWznP9AXEMMiLxmDs65ILyA=
+X-Received: by 2002:a25:2fca:: with SMTP id v193mr9594447ybv.412.1621539045424;
+ Thu, 20 May 2021 12:30:45 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <e071434531947e5c4275a1a14b77b2c3@codeaurora.org>
-References: <1621013713-6860-1-git-send-email-khsieh@codeaurora.org>
- <CAE-0n53VUr=f=PKnO5HhXZ3BAG_mNBwmQrfQPxHvxLZPDReA+g@mail.gmail.com>
- <c1a3ced9ac4682bae310712a11576322@codeaurora.org> <CAE-0n50yRCA00ck_FtXwzKw_R8UcocMzTh8V7NOe4ob__3G3bg@mail.gmail.com>
- <e071434531947e5c4275a1a14b77b2c3@codeaurora.org>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.9.1
-Date:   Thu, 20 May 2021 12:28:46 -0700
-Message-ID: <CAE-0n52rBrjy-=dpqK+dae2GNk1rAaQnKqCjzdqiAoS13gHpSQ@mail.gmail.com>
-Subject: Re: [PATCH v4 1/2] drm/msm/dp: handle irq_hpd with sink_count = 0 correctly
-To:     khsieh@codeaurora.org
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robdclark@gmail.com,
-        sean@poorly.run, vkoul@kernel.org, abhinavk@codeaurora.org,
-        aravindh@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
+References: <20210520002519.3538432-1-swboyd@chromium.org> <CAGETcx-jK3pBNRYevPmRhw1TALHNjtM5dSxCdEuB+2sBH32rtQ@mail.gmail.com>
+ <CAE-0n522QRUfQOSGmYS59AbFdx2kmtz-CNszdWfLnPCbMkCryA@mail.gmail.com>
+In-Reply-To: <CAE-0n522QRUfQOSGmYS59AbFdx2kmtz-CNszdWfLnPCbMkCryA@mail.gmail.com>
+From:   Saravana Kannan <saravanak@google.com>
+Date:   Thu, 20 May 2021 12:30:09 -0700
+Message-ID: <CAGETcx-mRrqC_sGiBk+wx8RtwjJjXf0KJo+ejU6SweEBiATaLw@mail.gmail.com>
+Subject: Re: [PATCH 0/7] component: Make into an aggregate bus
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Daniel Vetter <daniel.vetter@ffwll.ch>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Russell King <rmk+kernel@arm.linux.org.uk>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting khsieh@codeaurora.org (2021-05-20 09:08:03)
-> On 2021-05-19 14:06, Stephen Boyd wrote:
-> > Quoting khsieh@codeaurora.org (2021-05-19 09:01:02)
-> >> On 2021-05-18 14:42, Stephen Boyd wrote:
-> >> > Quoting Kuogee Hsieh (2021-05-14 10:35:13)
-> >> >> irq_hpd interrupt should be handled after dongle plugged in and
-> >> >> before dongle unplugged. Hence irq_hpd interrupt is enabled at
-> >> >> the end of the plugin handle and disabled at the beginning of
-> >> >> unplugged handle. Current irq_hpd with sink_count = 0 is wrongly
-> >> >> handled same as the dongle unplugged which tears down the mainlink
-> >> >> and disables the phy. This patch fixes this problem by only tearing
-> >> >> down the mainlink but keeping phy enabled at irq_hpd with
-> >> >> sink_count = 0 handle so that next irq_hpd with sink_count =1 can be
-> >> >> handled by setup mainlink only.
-> >> >>
-> >> >> Changes in v2:
-> >> >> -- add ctrl->phy_Power_count
-> >> >>
-> >> >> Changes in v3:
-> >> >> -- del ctrl->phy_Power_count
-> >> >> -- add phy_power_off to dp_ctrl_off_link_stream()
-> >> >>
-> >> >> Changes in v4:
-> >> >> -- return immediately if clock disable failed at
-> >> >> dp_ctrl_off_link_stream()
-> >> >>
-> >> >> Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
-> >> >
-> >> > I think we want some Fixes tag. Not sure what it would be though.
-> >> >
-> >> > I also noticed that if I plug and unplug the HDMI cable from my apple
-> >> > dongle that I see this error message
-> >> >
-> >> >   [drm:dp_display_usbpd_attention_cb] *ERROR* Disconnected, no
-> >> > DP_LINK_STATUS_UPDATED
-> >>
-> >> > *ERROR* Disconnected, no DP_LINK_STATUS_UPDATED <== this is caused by
-> >> > dongle generate the second
-> >> irq_hpd with sink_count = 0 after first first irq_hpd with sink_count
-> >> =
-> >> 0. The fix is you have
-> >> set dongle to D3 (power off) state after first irq_pd with sink_count
-> >> =display_disable
-> >> 0 handled.
-> >> I have a patch fix this problem. I will merge and re submit for
-> >> review.
+On Wed, May 19, 2021 at 6:41 PM Stephen Boyd <swboyd@chromium.org> wrote:
+>
+> Quoting Saravana Kannan (2021-05-19 18:27:50)
+> > On Wed, May 19, 2021 at 5:25 PM Stephen Boyd <swboyd@chromium.org> wrote:
+> > >
+> > > This series is from discussion we had on reordering the device lists for
+> > > drm shutdown paths[1]. I've introduced an 'aggregate' bus that we put
+> > > the aggregate device onto and then we probe the device once all the
+> > > components are probed and call component_add(). The probe/remove hooks
+> > > are where the bind/unbind calls go, and then a shutdown hook is added
+> > > that can be used to shutdown the drm display pipeline at the right time.
+> > >
+> > > This works for me on my sc7180 board, but I'm currently struggling with
+> > > the last patch where we migrate the msm driver. It runs into a runtime
+> > > PM problem where the parent device isn't runtime PM enabled yet. I'm
+> > > still trying to figure out a clean solution there. Moving runtime PM
+> > > around breaks boot and I think that's because the power domain is off.
+> > >
+> > > Cc: Daniel Vetter <daniel.vetter@ffwll.ch>
+> > > Cc: "Rafael J. Wysocki" <rafael@kernel.org>
+> > > Cc: Rob Clark <robdclark@gmail.com>
+> > > Cc: Russell King <rmk+kernel@arm.linux.org.uk>
+> > > Cc: Saravana Kannan <saravanak@google.com>
+> > >
+> > > [1] https://lore.kernel.org/r/20210508074118.1621729-1-swboyd@chromium.org
+> > >
 > >
-> > That's good. I still don't understand how the kthread can't race with
-> > irq_hpd and hpd going low though. Userspace will have to disable
-> > thectrl_off_link_stream()).
-> > display and that could happen far later than the time that the hpd low
-> > interrupt fires and is processed. Can't hpd go high during that time
-> > and
-> > then blip before userspace notices and disables the display?
-> >
-> > Put another way, putting the dongle into D3 state may make the race
-> > window smaller, but it's not fixing the root cause of the problem which
-> > is that the kthread is running later and userspace is involved in the
-> > state of the dongle while irqs are firing. The three different contexts
-> > have to coordinate work, so it feels like a better approach would be to
-> > shut off the irq_hpd interrupt once hpd goes low for an unplug in
-> > hardirq context so that we don't have to consider the cable state or
-> > userspace changing the state after we notify it.
+> > I skimmed through the series and in general the idea is good, but I'm
+> > not sure why each component user needs to be converted/"modern" before
+> > it can make use of the benefits of this series. Why not just have
+> > wrapper functions around the component ops that the new aggregate bus
+> > driver can just call? That'll give all the existing component users
+> > the new ability to use the new ops without having to have two
+> > versions.
 >
-> There is no race condition here.
-> The interrupts are converted into event and stored at event q.
-> event thread service event sequentially and make sure transaction had
-> been completed before service next event.
-> The first irq_hpd with sink_count = 0 is handled and this transaction
-> will not completed until user space frame work turn off display
-> (msm_dp_display_disable()).
-> After that, the second irq_hpd with sink_count will be service which
-> found that display is off so it spill out DP_LINK_STATUS_UPDATED warning
-> message and do nothing.
->
-> Put dongle to D3 state so that it will not issue the unnecessary second
-> irq_hpd with sink_count = 0. this will prevent the annoy but unharmful
-> DP_LINK_STATUS_UPDATED warning message.
-> Again, we can not disable hpd interrupt since dongle still attached and
-> hdmi cable can be plugged in at any instant.
->
+> The existing users can only have one or the other. Either use the ops
+> structure or use the struct aggregate_driver. What benefits of this
+> series are they not gaining?
 
-Right I'm not suggesting to disable hpd interrupt, just the hpd_irq
-interrupt once an unplug irq comes in, and do that in hardirq context.
-Also, I'm suggesting that we consider unplug as a higher priority if the
-hard irq handler is delayed for some reason and both an unplug irq and
-an hpd irq are pending in the hardware when the hard irq handler is
-running. Putting the dongle into D3 state won't fix these problems.
+As I mentioned earlier, if we add device links between the aggregate
+device (consumer) and all the component devices (suppliers), it'll
+take care of a lot of the ordering issues (probe, suspend, runtime PM)
+and dependency issues (unbind the master device if a component driver
+unbinds). It'll allow us to delete a lot of the code in the component
+framework too. I can send the patch for the device links once your
+series settles. So having two implementations comes in the way of a
+clean up and code improvement because we'll have to keep a lot of the
+component code for the purpose of the "legacy" ops.
+
+> > That'll also allow us to do other improvements (I have some
+> > in mind) that'll apply to all the component users instead of only the
+> > converted ones.
+>
+> What do you have in mind? I didn't want to convert drivers over to the
+> new way of doing things without making them consciously change their
+> code.
+
+What ordering/behavior would you be changing with the new ops? If the
+new shutdown ops isn't used, it really shouldn't change anything. Put
+another way, if we ignore your msm driver changes, we should be able
+to switch to having a real device for the "master" without making any
+functional change. If you are causing any functional change with the
+new ops, maybe you can key it off a flag that needs to be set? That
+way, we'll have one API/ops but still be backward compatible if you
+are worried about breaking existing users?
+
+> Otherwise I worry it will break things in random, subtle ways. The
+> last patch, as I mentioned above in the cover, causes warnings because
+> the display driver is enabling runtime PM in an odd spot as part of the
+> bind callback of the aggregate/master. That should move out of there and
+> into the msm_pdev driver that registers the aggregate from what I can
+> tell.
+
+Can you give more context? I think if you create device links with
+RPM_ACTIVE and PM_RUNTIME flags, it should ensure runtime PM
+correctness.
+
+-Saravana
