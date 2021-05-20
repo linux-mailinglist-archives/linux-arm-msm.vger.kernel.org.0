@@ -2,173 +2,186 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 63FA3389F9C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 May 2021 10:15:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2EFA838A5B2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 May 2021 12:20:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230508AbhETIQg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 May 2021 04:16:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56206 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230448AbhETIQd (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 May 2021 04:16:33 -0400
-Received: from mail-oi1-x22e.google.com (mail-oi1-x22e.google.com [IPv6:2607:f8b0:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B88FFC061574
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 May 2021 01:15:11 -0700 (PDT)
-Received: by mail-oi1-x22e.google.com with SMTP id u11so15659729oiv.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 May 2021 01:15:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=nMDQIGNN2athUw77QzoxbIIxTVnjEUXN1gVmGUELkVE=;
-        b=SsQfc1zR+XeSGQo7ATvGLAygCqAoQdAKJ10BQbNRTAdGZbHXkP5E2SeBTa/fmozrtr
-         BW1ch1lrmrOquATIbjBBJQ3qB7nz2vMpT+teZq42SgeJ1AlWZPQW7JZSQePDVYDQhZNQ
-         /3xuFjIu65ZqHjnqpsHTH4b61QayocPTbNdrw=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=nMDQIGNN2athUw77QzoxbIIxTVnjEUXN1gVmGUELkVE=;
-        b=jvIphppnZx+Ro9coQQa+T0XeehKk/8xYVdKPlg8ZJOVJZ96n23/bRF65HXJr4Hk8vI
-         LvKLo9i8C1fcqqLA7Mx3S6eIPjh0/AaRVIXe0i0IYtDncoGAL5uSoIdDco3m8wTx48RD
-         TOS6FWOFIPU3dv7/9FWYMWWuLxMyBzYu8K3GW4terK5ljRmwKbGXIEH64LAarGWvRWIz
-         3dXx4F7fE2FfOJ2m4d8OV1HDiFzpGbO+VojcxlSX4DpL1XS88qJgJ1UDs+OCt6xdWF3F
-         mDkbhFGSWXFk4mrnCqh2NYa7Ct2pyk/5xDzgzb4VchtNhS29kqKCKSE9cSTvduQUK7t4
-         9OUA==
-X-Gm-Message-State: AOAM532HLjcJckn+fjUJZZKXgKX+T+ucIxF4+i80UzfFZcd3aW/ykC4i
-        48xF3cSzNOtjPVeOqC30ULp4o2eFYK10af/jAaAc5Q==
-X-Google-Smtp-Source: ABdhPJwxsXmfJTVN1Dt1DE1hOOnvh3huMgzuBaqFM49Psm1tLnZS6IREr/TfQ24FfmOw3l4L4vqvrWbtroEWNUiP9Ek=
-X-Received: by 2002:aca:654d:: with SMTP id j13mr2566246oiw.125.1621498511160;
- Thu, 20 May 2021 01:15:11 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 20 May 2021 04:15:10 -0400
+        id S235992AbhETKSx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 May 2021 06:18:53 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:21813 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S236552AbhETKQu (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 20 May 2021 06:16:50 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1621505723; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=RimnFyHnEwmSSWhM/3E14U80346pavoF8LlaOtDcD8Y=;
+ b=vhv+PBlG1RPb70r4A0xQ3h1IHdnFyYS3Ex/NgPeWmqV0AvCAwhRDIh4nmKVmw/Hui8RfCjM2
+ OvdFofxhOekc0fxcTi+YAyUy4li+0yfN0iRMk2RJRTjYtoMupCXZlaZYApSUXwagqQ0VWo9f
+ NVBblzVDnBDN4l37g87sn5g1vlI=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
+ 60a636b8c4456bc0f1d46042 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 20 May 2021 10:15:20
+ GMT
+Sender: pmaliset=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 550CFC00914; Thu, 20 May 2021 10:15:19 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: pmaliset)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 12116C4314A;
+        Thu, 20 May 2021 10:15:15 +0000 (UTC)
 MIME-Version: 1.0
-In-Reply-To: <70a90d229551bcec21ed74cfd1350b9b@codeaurora.org>
-References: <20210512082220.7137-1-rojay@codeaurora.org> <CAE-0n52D-K1T0QgxA-S7BXxE3Qk807F9edNyR+2RL4YxRyigMg@mail.gmail.com>
- <70a90d229551bcec21ed74cfd1350b9b@codeaurora.org>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.9.1
-Date:   Thu, 20 May 2021 04:15:10 -0400
-Message-ID: <CAE-0n50o1XRnV3HSAM7uhfS8M3kf_m0DrTkqCfYGdnSjpF6Xfg@mail.gmail.com>
-Subject: Re: [PATCH V10] i2c: i2c-qcom-geni: Add shutdown callback for i2c
-To:     rojay@codeaurora.org
-Cc:     wsa@kernel.org, dianders@chromium.org,
-        saiprakash.ranjan@codeaurora.org, gregkh@linuxfoundation.org,
-        mka@chromium.org, skananth@codeaurora.org,
-        msavaliy@qti.qualcomm.com, skakit@codeaurora.org,
-        rnayak@codeaurora.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org,
-        sumit.semwal@linaro.org, linux-media@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Thu, 20 May 2021 15:45:15 +0530
+From:   Prasad Malisetty <pmaliset@codeaurora.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
+        mgautam@codeaurora.org, swboyd@chromium.org, dianders@chromium.org,
+        mka@chromium.org
+Subject: Re: [PATCH] PCIe: qcom: Add support to control pipe clk mux
+In-Reply-To: <20210509023547.GJ2484@yoga>
+References: <1620520860-8589-1-git-send-email-pmaliset@codeaurora.org>
+ <20210509023547.GJ2484@yoga>
+Message-ID: <3447606ba9ade9d578c609838e63dbb3@codeaurora.org>
+X-Sender: pmaliset@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting rojay@codeaurora.org (2021-05-16 23:32:50)
-> Hi Stephen,
->
-> Now, I have made the changes, calling i2c_mark_adapter_suspended() in
-> shutdown() and i2c_mark_adapter_suspended()/_resumed() from runtime
-> suspend/resume also and validated the changes. I have also picked
-> your patch [1] for this validation.
->
-> During the device boot up I am seeing multiple traces shown below.
-> Are these expected now and needs to be fixed from rt5682/respective
-> client driver?
->
-> Trace1:
-> [   11.709477] i2c i2c-9: Transfer while suspended
-> [   11.905595] Call trace:
-> [   11.908124]  __i2c_transfer+0xb8/0x38c
-> [   11.911984]  i2c_transfer+0xa0/0xf4
-> [   11.915569]  i2c_transfer_buffer_flags+0x68/0x9c
-> [   11.920314]  regmap_i2c_write+0x34/0x64
-> [   11.924255]  _regmap_raw_write_impl+0x4e8/0x7bc
-> [   11.928911]  _regmap_bus_raw_write+0x70/0x8c
-> [   11.933301]  _regmap_write+0x100/0x150
-> [   11.937152]  regmap_write+0x54/0x78
-> [   11.940744]  soc_component_write_no_lock+0x34/0xa8
-> [   11.945666]  snd_soc_component_write+0x3c/0x5c
-> [   11.950242]  rt5682_set_component_pll+0x1e4/0x2b4 [snd_soc_rt5682]
-> [   11.956588]  snd_soc_component_set_pll+0x50/0xa8
-> [   11.961328]  snd_soc_dai_set_pll+0x74/0xc8
-> [   11.965542]  sc7180_snd_startup+0x9c/0x120 [snd_soc_sc7180]
-> [   11.971262]  snd_soc_link_startup+0x34/0x88
-> [   11.975557]  soc_pcm_open+0x100/0x538
-> [   11.979323]  snd_pcm_open_substream+0x530/0x704
-> [   11.983980]  snd_pcm_open+0xc8/0x210
-> [   11.987653]  snd_pcm_playback_open+0x50/0x80
-> [   11.992049]  snd_open+0x120/0x150
-> [   11.995462]  chrdev_open+0xb8/0x1a4
-> [   11.999056]  do_dentry_open+0x238/0x358
-> [   12.003001]  vfs_open+0x34/0x40
-> [   12.006235]  path_openat+0x9e8/0xd60
-> [   12.009913]  do_filp_open+0x90/0x10c
-> [   12.013587]  do_sys_open+0x148/0x314
-> [   12.017260]  __arm64_compat_sys_openat+0x28/0x34
-> [   12.022009]  el0_svc_common+0xa4/0x16c
-> [   12.025860]  el0_svc_compat_handler+0x2c/0x40
-> [   12.030337]  el0_svc_compat+0x8/0x10
-> [   12.034018] ---[ end trace 745ead557fcbb5dc ]---
+On 2021-05-09 08:05, Bjorn Andersson wrote:
+> On Sat 08 May 19:41 CDT 2021, Prasad Malisetty wrote:
+> 
+>> PCIe driver needs to toggle between bi_tcxo and phy pipe
+>> clock as part of its LPM sequence. This is done by setting
+>> pipe_clk/ref_clk_src as parent of pipe_clk_src after phy init
+>> 
+>> Dependent on below change:
+>> 
+>> 	https://lore.kernel.org/patchwork/patch/1422499/
+> 
+> In what way is this change to the driver dependent on the addition of
+> the node to DT?
+> 
+I will move this patch to DT series patches in next version.
+>> 
+>> Signed-off-by: Prasad Malisetty <pmaliset@codeaurora.org>
+>> ---
+>>  drivers/pci/controller/dwc/pcie-qcom.c | 23 ++++++++++++++++++++++-
+>>  1 file changed, 22 insertions(+), 1 deletion(-)
+>> 
+>> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c 
+>> b/drivers/pci/controller/dwc/pcie-qcom.c
+>> index 8a7a300..a9f69e8 100644
+>> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+>> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+>> @@ -9,6 +9,7 @@
+>>   */
+>> 
+>>  #include <linux/clk.h>
+>> +#include <linux/clk-provider.h>
+> 
+> Can you help me see why this is needed?
+> 
+Its needed for set_parent function prototype.
+>>  #include <linux/crc8.h>
+>>  #include <linux/delay.h>
+>>  #include <linux/gpio/consumer.h>
+>> @@ -166,6 +167,9 @@ struct qcom_pcie_resources_2_7_0 {
+>>  	struct regulator_bulk_data supplies[2];
+>>  	struct reset_control *pci_reset;
+>>  	struct clk *pipe_clk;
+>> +	struct clk *pipe_clk_src;
+>> +	struct clk *pipe_ext_src;
+>> +	struct clk *ref_clk_src;
+>>  };
+>> 
+>>  union qcom_pcie_resources {
+>> @@ -1168,7 +1172,19 @@ static int qcom_pcie_get_resources_2_7_0(struct 
+>> qcom_pcie *pcie)
+>>  		return ret;
+>> 
+>>  	res->pipe_clk = devm_clk_get(dev, "pipe");
+>> -	return PTR_ERR_OR_ZERO(res->pipe_clk);
+>> +	if (IS_ERR(res->pipe_clk))
+>> +		return PTR_ERR(res->pipe_clk);
+>> +
+>> +	res->pipe_clk_src = devm_clk_get(dev, "pipe_src");
+>> +	if (IS_ERR(res->pipe_clk_src))
+> 
+> How does this not fail on existing targets?
+I will add platform check in next version.
+> 
+>> +		return PTR_ERR(res->pipe_clk_src);
+>> +
+>> +	res->pipe_ext_src = devm_clk_get(dev, "pipe_ext");
+>> +	if (IS_ERR(res->pipe_ext_src))
+>> +		return PTR_ERR(res->pipe_ext_src);
+>> +
+>> +	res->ref_clk_src = devm_clk_get(dev, "ref");
+>> +	return PTR_ERR_OR_ZERO(res->ref_clk_src);
+>>  }
+>> 
+>>  static int qcom_pcie_init_2_7_0(struct qcom_pcie *pcie)
+>> @@ -1255,6 +1271,11 @@ static void qcom_pcie_deinit_2_7_0(struct 
+>> qcom_pcie *pcie)
+>>  static int qcom_pcie_post_init_2_7_0(struct qcom_pcie *pcie)
+>>  {
+>>  	struct qcom_pcie_resources_2_7_0 *res = &pcie->res.v2_7_0;
+>> +	struct dw_pcie *pci = pcie->pci;
+>> +	struct device *dev = pci->dev;
+>> +
+>> +	if (of_device_is_compatible(dev->of_node, "qcom,pcie-sc7280"))
+> 
+> Why is this specific to sc7280?
+> 
+Newer targets including sc7280 require changing pipe-clk mux to switch 
+between pipe_clk and XO for GDSC enable.
 
-Ah I see. Maybe it isn't correct to mark the device as suspended in
-runtime PM operations because the bus will be resumed during the
-transfer? So only mark it suspended during system wide suspend/resume
-transitions?
-
--Stephen
-
-> [   12.040151] rt5682 9-001a: ASoC: error at soc_component_write_no_lock
-> on rt5682.9-001a: -108
-> [   12.049055] rt5682 9-001a: ASoC: error at soc_component_write_no_lock
-> on rt5682.9-001a: -108
-> [   12.057742] rt5682 9-001a: ASoC: error at
-> snd_soc_component_update_bits on rt5682.9-001a: -108
->
-> Trace2:
-> [    3.515390] i2c i2c-2: Transfer while suspended
-> [    3.606749] Call trace:
-> [    3.606751]  __i2c_transfer+0xb8/0x38c
-> [    3.606752]  i2c_transfer+0xa0/0xf4
-> [    3.606754]  i2c_transfer_buffer_flags+0x68/0x9c
-> [    3.639599] hub 2-1.4:1.0: USB hub found
-> [    3.644375]  regmap_i2c_write+0x34/0x64
-> [    3.644376]  _regmap_raw_write_impl+0x4e8/0x7bc
-> [    3.644378]  _regmap_bus_raw_write+0x70/0x8c
-> [    3.644379]  _regmap_write+0x100/0x150
-> [    3.644381]  regmap_write+0x54/0x78
-> [    3.644383]  ti_sn_aux_transfer+0x90/0x244
-> [    3.650695] hub 2-1.4:1.0: 4 ports detected
-> [    3.655288]  drm_dp_dpcd_access+0x8c/0x11c
-> [    3.655289]  drm_dp_dpcd_read+0x64/0x10c
-> [    3.655290]  ti_sn_bridge_enable+0x5c/0x824
-> [    3.655292]  drm_atomic_bridge_chain_enable+0x78/0xa0
-> [    3.655294]  drm_atomic_helper_commit_modeset_enables+0x198/0x238
-> [    3.655295]  msm_atomic_commit_tail+0x324/0x714
-> [    3.655297]  commit_tail+0xa4/0x108
-> [    3.664985] usb 1-1.4: new high-speed USB device number 4 using
-> xhci-hcd
-> [    3.666204]  drm_atomic_helper_commit+0xf4/0xfc
-> [    3.666205]  drm_atomic_commit+0x50/0x5c
-> [    3.666206]  drm_atomic_helper_set_config+0x64/0x98
-> [    3.666208]  drm_mode_setcrtc+0x26c/0x590
-> [    3.666209]  drm_ioctl_kernel+0x9c/0x114
-> [    3.701074] hub 2-1.4:1.0: USB hub found
-> [    3.703347]  drm_ioctl+0x288/0x420
-> [    3.703349]  drm_compat_ioctl+0xd0/0xe0
-> [    3.703351]  __arm64_compat_sys_ioctl+0x100/0x2108
-> [    3.703354]  el0_svc_common+0xa4/0x16c
-> [    3.708499] hub 2-1.4:1.0: 4 ports detected
-> [    3.711588]  el0_svc_compat_handler+0x2c/0x40
-> [    3.711590]  el0_svc_compat+0x8/0x10
-> [    3.711591] ---[ end trace 745ead557fcbb5db ]---
-> [    3.772120] usb 1-1.4: New USB device found, idVendor=0bda,
-> idProduct=5411, bcdDevice= 1.04
-> [    3.794990] ti_sn65dsi86 2-002d: [drm:ti_sn_bridge_enable] *ERROR*
-> Can't read lane count (-108); assuming 4
->
-> [1]
-> https://lore.kernel.org/r/20210508075151.1626903-2-swboyd@chromium.org
->
+>> +		clk_set_parent(res->pipe_clk_src, res->pipe_ext_src);
+> 
+> The naming here is not obvious to me, but I think you're going to use
+> this to set parent of gcc_pcie_0_pipe_clk_src to pcie_0_pipe_clk?
+> 
+> But in the commit message you're talking about switching back and forth
+> between the pipe clock and tcxo, can you please help me understand 
+> where
+> this is happening?
+> 
+Shall I add the naming convention for above clocks "pipe_clk_mux and 
+pcie_0_pipe_clk_src" .
+Switching between pipe clk and tcxo are added in suspend/resume 
+callbacks. I will update the commit message
+in next version.
+> 
+> PS. The new clocks should be mentioned in the binding.
+> 
+> Regards,
+> Bjorn
+> 
+>> 
+>>  	return clk_prepare_enable(res->pipe_clk);
+>>  }
+>> --
+>> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
+>> Forum,
+>> a Linux Foundation Collaborative Project
+>> 
