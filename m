@@ -2,30 +2,30 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9E6A338B0B2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 May 2021 15:59:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 35E9138B0BB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 May 2021 16:00:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238751AbhETOBS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 May 2021 10:01:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48494 "EHLO
+        id S242367AbhETOBV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 May 2021 10:01:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48516 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243557AbhETOAO (ORCPT
+        with ESMTP id S243604AbhETOAW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 May 2021 10:00:14 -0400
+        Thu, 20 May 2021 10:00:22 -0400
 Received: from andre.telenet-ops.be (andre.telenet-ops.be [IPv6:2a02:1800:120:4::f00:15])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89516C061574
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 May 2021 06:58:50 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3AC2C061349
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 May 2021 06:58:52 -0700 (PDT)
 Received: from ramsan.of.borg ([IPv6:2a02:1810:ac12:ed20:9cc6:7165:bcc2:1e70])
         by andre.telenet-ops.be with bizsmtp
-        id 71yi2500T31btb9011yizs; Thu, 20 May 2021 15:58:46 +0200
+        id 71yi2500g31btb9011yizu; Thu, 20 May 2021 15:58:51 +0200
 Received: from rox.of.borg ([192.168.97.57])
         by ramsan.of.borg with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
         (Exim 4.93)
         (envelope-from <geert@linux-m68k.org>)
-        id 1ljjCD-007Wn3-UB; Thu, 20 May 2021 15:58:41 +0200
+        id 1ljjCE-007Wn5-9V; Thu, 20 May 2021 15:58:42 +0200
 Received: from geert by rox.of.borg with local (Exim 4.93)
         (envelope-from <geert@linux-m68k.org>)
-        id 1ljjCD-008zrZ-I0; Thu, 20 May 2021 15:58:41 +0200
+        id 1ljjCD-008zrn-JQ; Thu, 20 May 2021 15:58:41 +0200
 From:   Geert Uytterhoeven <geert+renesas@glider.be>
 To:     Rob Herring <robh+dt@kernel.org>, Shawn Guo <shawnguo@kernel.org>,
         Linus Walleij <linus.walleij@linaro.org>,
@@ -38,9 +38,9 @@ Cc:     devicetree@vger.kernel.org, netdev@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, linux-mips@vger.kernel.org,
         linux-kernel@vger.kernel.org,
         Geert Uytterhoeven <geert+renesas@glider.be>
-Subject: [PATCH 2/5] ARM: dts: imx53-ard: Correct Ethernet node name
-Date:   Thu, 20 May 2021 15:58:36 +0200
-Message-Id: <daf2394440a8e6aae015b561f560e443aaa246bf.1621518686.git.geert+renesas@glider.be>
+Subject: [PATCH 4/5] MIPS: SEAD3: Correct Ethernet node name
+Date:   Thu, 20 May 2021 15:58:38 +0200
+Message-Id: <b708fdb009912cf247ef257dce519c52889688d8.1621518686.git.geert+renesas@glider.be>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <cover.1621518686.git.geert+renesas@glider.be>
 References: <cover.1621518686.git.geert+renesas@glider.be>
@@ -52,26 +52,26 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 make dtbs_check:
 
-    lan9220@f4000000: $nodename:0: 'lan9220@f4000000' does not match '^ethernet(@.*)?$'
+    eth@1f010000: $nodename:0: 'eth@1f010000' does not match '^ethernet(@.*)?$'
 
 Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 ---
- arch/arm/boot/dts/imx53-ard.dts | 2 +-
+ arch/mips/boot/dts/mti/sead3.dts | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/imx53-ard.dts b/arch/arm/boot/dts/imx53-ard.dts
-index 9a2e1fde712879ea..6208fbb2e74104fb 100644
---- a/arch/arm/boot/dts/imx53-ard.dts
-+++ b/arch/arm/boot/dts/imx53-ard.dts
-@@ -24,7 +24,7 @@ eim-cs1@f4000000 {
- 		reg = <0xf4000000 0x3ff0000>;
- 		ranges;
+diff --git a/arch/mips/boot/dts/mti/sead3.dts b/arch/mips/boot/dts/mti/sead3.dts
+index 1cf6728af8fee1b6..046c97a297103fbf 100644
+--- a/arch/mips/boot/dts/mti/sead3.dts
++++ b/arch/mips/boot/dts/mti/sead3.dts
+@@ -244,7 +244,7 @@ uart1: uart@1f000800 {
+ 		no-loopback-test;
+ 	};
  
--		lan9220@f4000000 {
-+		ethernet@f4000000 {
- 			compatible = "smsc,lan9220", "smsc,lan9115";
- 			reg = <0xf4000000 0x2000000>;
- 			phy-mode = "mii";
+-	eth@1f010000 {
++	ethernet@1f010000 {
+ 		compatible = "smsc,lan9115";
+ 		reg = <0x1f010000 0x10000>;
+ 		reg-io-width = <4>;
 -- 
 2.25.1
 
