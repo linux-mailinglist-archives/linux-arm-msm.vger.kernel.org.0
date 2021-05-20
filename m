@@ -2,56 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 32C3238B298
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 May 2021 17:08:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0B8C738B2A6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 May 2021 17:10:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231751AbhETPJr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 May 2021 11:09:47 -0400
-Received: from elvis.franken.de ([193.175.24.41]:41345 "EHLO elvis.franken.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232452AbhETPJq (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 May 2021 11:09:46 -0400
-Received: from uucp (helo=alpha)
-        by elvis.franken.de with local-bsmtp (Exim 3.36 #1)
-        id 1ljkHS-0001VG-01; Thu, 20 May 2021 17:08:10 +0200
-Received: by alpha.franken.de (Postfix, from userid 1000)
-        id 47969C101E; Thu, 20 May 2021 17:07:42 +0200 (CEST)
-Date:   Thu, 20 May 2021 17:07:42 +0200
-From:   Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-To:     Geert Uytterhoeven <geert+renesas@glider.be>
-Cc:     Rob Herring <robh+dt@kernel.org>, Shawn Guo <shawnguo@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "David S . Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>, devicetree@vger.kernel.org,
-        netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-mips@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 4/5] MIPS: SEAD3: Correct Ethernet node name
-Message-ID: <20210520150742.GB22843@alpha.franken.de>
-References: <cover.1621518686.git.geert+renesas@glider.be>
- <b708fdb009912cf247ef257dce519c52889688d8.1621518686.git.geert+renesas@glider.be>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <b708fdb009912cf247ef257dce519c52889688d8.1621518686.git.geert+renesas@glider.be>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+        id S233236AbhETPMG convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 May 2021 11:12:06 -0400
+Received: from coyote.holtmann.net ([212.227.132.17]:58146 "EHLO
+        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232020AbhETPMF (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 20 May 2021 11:12:05 -0400
+Received: from smtpclient.apple (p4fefc9d6.dip0.t-ipconnect.de [79.239.201.214])
+        by mail.holtmann.org (Postfix) with ESMTPSA id 05B39CECEA;
+        Thu, 20 May 2021 17:18:33 +0200 (CEST)
+Content-Type: text/plain;
+        charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.80.0.2.43\))
+Subject: Re: [PATCH v4 0/5] Enable Bluetooth functionality for WCN6750
+From:   Marcel Holtmann <marcel@holtmann.org>
+In-Reply-To: <1621355686-29550-1-git-send-email-gubbaven@codeaurora.org>
+Date:   Thu, 20 May 2021 17:10:39 +0200
+Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
+        devicetree@vger.kernel.org, Matthias Kaehlcke <mka@chromium.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        "open list:BLUETOOTH SUBSYSTEM" <linux-bluetooth@vger.kernel.org>,
+        Hemantg <hemantg@codeaurora.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        Balakrishna Godavarthi <bgodavar@codeaurora.org>,
+        Rocky Liao <rjliao@codeaurora.org>, hbandi@codeaurora.org,
+        abhishekpandit@chromium.org
+Content-Transfer-Encoding: 8BIT
+Message-Id: <DF3C6156-F44A-4954-B1EF-CB3051BCC0B6@holtmann.org>
+References: <1621355686-29550-1-git-send-email-gubbaven@codeaurora.org>
+To:     Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
+X-Mailer: Apple Mail (2.3654.80.0.2.43)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, May 20, 2021 at 03:58:38PM +0200, Geert Uytterhoeven wrote:
-> make dtbs_check:
-> 
->     eth@1f010000: $nodename:0: 'eth@1f010000' does not match '^ethernet(@.*)?$'
-> 
-> Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-> ---
->  arch/mips/boot/dts/mti/sead3.dts | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+Hi Venkata,
 
-Acked-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+> These patches enables Bluetooth functionalties for new Qualcomm
+> Bluetooth SoC wcn6750.
+> 
+> Venkata Lakshmi Narayana Gubba (5):
+>  Bluetooth: hci_qca: Add support for QTI Bluetooth chip wcn6750
+>  Bluetooth: btqca: Add support for firmware image with mbn type for
+>    WCN6750
+>  Bluetooth: btqca: Moved extracting rom version info to common place
+>  dt-bindings: net: bluetooth: Convert Qualcomm BT binding to DT schema
+>  dt-bindings: net: bluetooth: Add device tree bindings for QTI chip
+>    wcn6750
+> 
+> .../devicetree/bindings/net/qualcomm-bluetooth.txt |  69 --------
+> .../bindings/net/qualcomm-bluetooth.yaml           | 183 +++++++++++++++++++++
+> drivers/bluetooth/btqca.c                          |  90 +++++++---
+> drivers/bluetooth/btqca.h                          |  14 +-
+> drivers/bluetooth/hci_qca.c                        | 114 ++++++++++---
+> 5 files changed, 354 insertions(+), 116 deletions(-)
+> delete mode 100644 Documentation/devicetree/bindings/net/qualcomm-bluetooth.txt
+> create mode 100644 Documentation/devicetree/bindings/net/qualcomm-bluetooth.yaml
 
--- 
-Crap can work. Given enough thrust pigs will fly, but it's not necessarily a
-good idea.                                                [ RFC1925, 2.3 ]
+all 5 patches have been applied to bluetooth-next tree.
+
+Regards
+
+Marcel
+
