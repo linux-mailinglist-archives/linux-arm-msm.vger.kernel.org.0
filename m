@@ -2,99 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7DCFC389C32
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 May 2021 05:56:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A08A5389DCF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 May 2021 08:24:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229586AbhETD5r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 May 2021 23:57:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54494 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229498AbhETD5q (ORCPT
+        id S230424AbhETG0H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 May 2021 02:26:07 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:28014 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230342AbhETG0G (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 May 2021 23:57:46 -0400
-Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38A05C061574
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 May 2021 20:56:26 -0700 (PDT)
-Received: by mail-pj1-x102a.google.com with SMTP id ot16so6484482pjb.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 May 2021 20:56:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=po4uQOPMb2vlHYmlr9YHEFFwM3Cu/99nzbQP8WwI5lA=;
-        b=QA2gT1MQUF6M1toXCLbBIu346gFBWM2+MW4S6+iOCrftmZ9J9H6x/wOB7FEGqXedgw
-         TsyB2746ddL7IozzQ4uUKW5spTp9bbxpp5GWvQGG/QByDCNc7dwsWrsmeLAhiZh2wjRB
-         xGu2cndaRm50Eze5PR/Ykkdgq7BNRdQHT7BNCsJceMQftYTLT8WhVtrjKpDOErlml/hV
-         xkmp948hPsMEX01dI+vp51mgYJbySMDiQwgT9oJUZiwNtyQfTbX062DXhuQpW9tESltX
-         xuygOdF4raqwfyzMzuJBPN9VtL37DxDzYOHl/URYwvp4J+IUdN1EHq9eKzYPj9Zozh5/
-         3dtQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=po4uQOPMb2vlHYmlr9YHEFFwM3Cu/99nzbQP8WwI5lA=;
-        b=aQhHMeqGx8plLEEcueryrlDd7tdgK72DsSskIDEmK2zG27Tox2U0+fYDF3X/IAG7dX
-         K2qmnBC2u74iQ9ClhfJKEWsq0jphpSVo5shLy7QVT946YdqWNL/WmbKCc/4Eao9cvMZK
-         By48N4qI1GfKOiNRPgV1/oyEZIoBku28ujNCuyuYu/l771sA09ndQo4NIFpXgBxuFX2m
-         DOa/vdGHs4MjA2QZCkaP73ySxNFE79ud6xW0nPHfMV7gAkAZ2XGjjbTurxVQUTlVTnHm
-         b1Hv6Jc32gTkbDeRdbH6TbNLRAP4/lGBGElHs81my4rucgHovDhUbeRNWegJmYZaPYWG
-         m+GA==
-X-Gm-Message-State: AOAM530QU8o0/C9VzVnXatoQkcxVYzOxS6FgKwJhoFQhxMUF677+42GE
-        k13XTXqgx9+SH1x1PYdRFoMqhg==
-X-Google-Smtp-Source: ABdhPJzLrj2GgWWPuAohBxvwb17XdNk9prc3xA0DJgRsykC+2R2crjPg0lGmRQCkouKu1bT0psKqVQ==
-X-Received: by 2002:a17:902:db09:b029:f4:8d37:8d12 with SMTP id m9-20020a170902db09b02900f48d378d12mr3529028plx.52.1621482985771;
-        Wed, 19 May 2021 20:56:25 -0700 (PDT)
-Received: from localhost ([136.185.154.93])
-        by smtp.gmail.com with ESMTPSA id a10sm5221770pjs.39.2021.05.19.20.56.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 May 2021 20:56:24 -0700 (PDT)
-Date:   Thu, 20 May 2021 09:26:22 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Sibi Sankar <sibis@codeaurora.org>
-Cc:     bjorn.andersson@linaro.org, dianders@chromium.org,
-        mka@chromium.org, sboyd@kernel.org, agross@kernel.org,
-        robh+dt@kernel.org, rjw@rjwysocki.net,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org
-Subject: Re: [PATCH v3 1/2] cpufreq: blacklist SC7280 in cpufreq-dt-platdev
-Message-ID: <20210520035622.e276tqpl4gg5fxhk@vireshk-i7>
-References: <1620807083-5451-1-git-send-email-sibis@codeaurora.org>
- <1620807083-5451-2-git-send-email-sibis@codeaurora.org>
+        Thu, 20 May 2021 02:26:06 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1621491886; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=lPEWZInXYCrR26bwC8R9J1S2kRCL+vZQmdRPKezCvRM=;
+ b=tvNMtqJG08qtF07ZIk5ef0pbsAUcqSWjkSRu2Uaw17cEpufaqqWPVbMWIuUQBn6l4uXBuK8z
+ kDvGy7MhLtN+I0BvOGyeT/HguxsPiaFnDkqfqMMOtxihqWzvPLZl/rHcYKCkz9V+weM++qdr
+ 4g+f9HB6ygQXei0NAZFuZAbWR+c=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
+ 60a600987b9a7a2b6c3fd275 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 20 May 2021 06:24:24
+ GMT
+Sender: skakit=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id D1379C433F1; Thu, 20 May 2021 06:24:23 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: skakit)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 2E9D5C433D3;
+        Thu, 20 May 2021 06:24:23 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1620807083-5451-2-git-send-email-sibis@codeaurora.org>
-User-Agent: NeoMutt/20180716-391-311a52
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Thu, 20 May 2021 11:54:23 +0530
+From:   skakit@codeaurora.org
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, mka@chromium.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, kgunda@codeaurora.org
+Subject: Re: [RESEND PATCH V4 1/8] arm64: dts: qcom: sm8350: Add label for
+ thermal-zones node
+In-Reply-To: <YKOoRPDiTnOQG+4l@vkoul-mobl.Dlink>
+References: <1621318822-29332-1-git-send-email-skakit@codeaurora.org>
+ <1621318822-29332-2-git-send-email-skakit@codeaurora.org>
+ <YKOoRPDiTnOQG+4l@vkoul-mobl.Dlink>
+Message-ID: <e5c0b6e169eecaf2d2350056be105f13@codeaurora.org>
+X-Sender: skakit@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12-05-21, 13:41, Sibi Sankar wrote:
-> Add SC7280 to cpufreq-dt-platdev blacklist since the actual scaling is
-> handled by the 'qcom-cpufreq-hw' driver.
+On 2021-05-18 17:13, Vinod Koul wrote:
+> On 18-05-21, 11:50, satya priya wrote:
+>> Add label "thermal_zones" for thermal-zones node.
+>> 
+>> Signed-off-by: satya priya <skakit@codeaurora.org>
+>> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+>> ---
+>> Changes in RESEND V4:
+>>  - No Changes.
+>> 
+>>  arch/arm64/boot/dts/qcom/sm8350.dtsi | 2 +-
+>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>> 
+>> diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi 
+>> b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+>> index ed0b51b..47c6c0b 100644
+>> --- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+>> @@ -1317,7 +1317,7 @@
+>>  		};
+>>  	};
+>> 
+>> -	thermal-zones {
+>> +	thermal_zones: thermal-zones {
 > 
-> Reviewed-by: Douglas Anderson <dianders@chromium.org>
-> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
-> ---
->  drivers/cpufreq/cpufreq-dt-platdev.c | 1 +
->  1 file changed, 1 insertion(+)
+> is this label used anywhere in this series? If not lets drop it
 > 
-> diff --git a/drivers/cpufreq/cpufreq-dt-platdev.c b/drivers/cpufreq/cpufreq-dt-platdev.c
-> index 5e07065ec22f..345418b8250e 100644
-> --- a/drivers/cpufreq/cpufreq-dt-platdev.c
-> +++ b/drivers/cpufreq/cpufreq-dt-platdev.c
-> @@ -137,6 +137,7 @@ static const struct of_device_id blacklist[] __initconst = {
->  	{ .compatible = "qcom,msm8996", },
->  	{ .compatible = "qcom,qcs404", },
->  	{ .compatible = "qcom,sc7180", },
-> +	{ .compatible = "qcom,sc7280", },
->  	{ .compatible = "qcom,sdm845", },
->  
->  	{ .compatible = "st,stih407", },
 
-Applied 1/2. Thanks.
+yes, it is used in pm8350c.dtsi, pmk8350.dtsi and pmr735a.dtsi files 
+which are included in sm8350 board dts.
 
-What do you want to do for 2/2 ? Go through my tree? need an update ?
-
--- 
-viresh
+>>  		cpu0-thermal {
+>>  			polling-delay-passive = <250>;
+>>  			polling-delay = <1000>;
+>> --
+>> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+>> member
+>> of Code Aurora Forum, hosted by The Linux Foundation
