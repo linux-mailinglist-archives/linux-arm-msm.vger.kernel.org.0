@@ -2,306 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9A2F538B4E7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 May 2021 19:08:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 765A038B52D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 May 2021 19:29:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235007AbhETRJr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 May 2021 13:09:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35566 "EHLO
+        id S233162AbhETRay (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 May 2021 13:30:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40312 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234990AbhETRJr (ORCPT
+        with ESMTP id S231680AbhETRax (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 May 2021 13:09:47 -0400
-Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C597C061760
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 May 2021 10:08:25 -0700 (PDT)
-Received: by mail-oi1-x230.google.com with SMTP id x15so17012438oic.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 May 2021 10:08:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ffwll.ch; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=19vRcmplLXN5rsKze776GJzl9Zc5ZlB+YGB7+ebjG1U=;
-        b=LdWbG1JohbVo0PpbgUBgm0nknB5Jrgz9zGJYezv2szJC/EWjMxqIOEYlDUZbtgaYXp
-         U1TX5owkIXMWUT41mKmhgieYXtfFjwnzrpKAiqDZKQLL5il2F3suoKpQ89wR6wUeHQMx
-         ed3wW4Z/PH9MvBKspeA5P70T/RwodhoujLsLw=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=19vRcmplLXN5rsKze776GJzl9Zc5ZlB+YGB7+ebjG1U=;
-        b=AhG/7ASwRHnkFI7LgnHsWBTtyjGNPtW1rafoZf/uj/8odJOy2PAjDUbxKhAzauuuZc
-         i/lF+h40/Y5tyPDU1ZUSHuiEY9BJrwFkqJcN3yO1ATYvxstmUfom56grLMTdMRWjq/QO
-         QFA0upokaysll1FIp/pHvPXi2TQmbtmplDKG6EcLGJ5Kk0QDUAPbbJDDU9cefzPV5xdd
-         kXzxrtp6+keOMSqo6p/uvm27C1gQ0rxVEee2MvJLJ6aupffVtgFW3Ds8UBDW9F8RpjQW
-         42t/1HcLYipAJeW75z9FgnAgbvOQkvrqW1JYwXFs/Ap2LTSYk57jn+cXKbYmLgm0y6H8
-         6qrw==
-X-Gm-Message-State: AOAM5337xroysvkMx9gOABkyv+pzFd2d46ZZG7tBFywfd5jEtgb7t2Ug
-        KJihMU7qbavh30atv6O78jgCG/d0BRTrC76h1UA0Mw==
-X-Google-Smtp-Source: ABdhPJxFOX5qzESyK/Qlnhl0yO++z8yh0BXFjwg0t/1L8tVO0VOZCnP7yjmCBKWgN8hCRULLZYh74RTBvvvz+tw6RP8=
-X-Received: by 2002:a54:4809:: with SMTP id j9mr3993051oij.14.1621530504649;
- Thu, 20 May 2021 10:08:24 -0700 (PDT)
+        Thu, 20 May 2021 13:30:53 -0400
+Received: from the.earth.li (the.earth.li [IPv6:2a00:1098:86:4d:c0ff:ee:15:900d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0D51C061574;
+        Thu, 20 May 2021 10:29:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=earth.li;
+         s=the; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject
+        :To:From:Date:Sender:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+        List-Post:List-Owner:List-Archive;
+        bh=mMEfjWXMu5RnzNk39JglHJcBoTbUJzKRcpQGIP+KGe8=; b=oEzLz7cTpV89g1ZcaKbpdYgdB8
+        +LVc19tWMtzS7UoQXmeqjZKoG1jfeQAT2sZOZT1qkeCRWl6rnb8sCU4Tdx/qrOgGyIwuregVNf6tu
+        Gb6LjUYs77TBd5Snu/OQEB4wfSBNVevPcr3iJOuZQ4tj3WXbCx8siMrWT1kB+deSPfpSCKGxTNnuU
+        sAKy6IDUf565Y/tBWPy9Q1Jk6aj6AAdxZkp8mBhEvcpJgb0cZESeEoo79tvDgLJoAgnK/DjIhKIgK
+        ydj2UWoW8YvT3vin16Q1EZ9U/PBwVypm8xrxi7Qz10g1pBrxndt9+argJvccfIF31qdpIvfoo2xAw
+        sNRJeyCQ==;
+Received: from noodles by the.earth.li with local (Exim 4.92)
+        (envelope-from <noodles@earth.li>)
+        id 1ljmUC-0003qw-Kg; Thu, 20 May 2021 18:29:28 +0100
+Date:   Thu, 20 May 2021 18:29:28 +0100
+From:   Jonathan McDowell <noodles@earth.li>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Ansuel Smith <ansuelsmth@gmail.com>,
+        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v2 0/5] ARM: dts: qcom: Enable various devices for IPQ806x /
+ RB3011
+Message-ID: <cover.1621531633.git.noodles@earth.li>
+References: <cover.1621097174.git.noodles@earth.li>
 MIME-Version: 1.0
-References: <20210519183855.1523927-1-robdclark@gmail.com> <20210519183855.1523927-2-robdclark@gmail.com>
- <8dcdc8d5-176c-f0ad-0d54-6466e9e68a0a@amd.com> <CAF6AEGtg_VnxYrj94AfbAfViK1v8U0ZJyfJjS4taVLMF=YVy+w@mail.gmail.com>
- <d65acf46-4c3b-4903-6222-0b81915d355d@amd.com> <CAF6AEGvm1tFwpfyJrX1bTGoHg_wzKKLQvSk2qLHf3XeqvEzDPA@mail.gmail.com>
- <e8f3d71c-7025-deab-4dd7-14f3fa6a8810@gmail.com> <YKaPf3VLfjoZJRw7@phenom.ffwll.local>
- <4244879a-e2b8-7994-e3fb-f63c0e115a2c@amd.com>
-In-Reply-To: <4244879a-e2b8-7994-e3fb-f63c0e115a2c@amd.com>
-From:   Daniel Vetter <daniel@ffwll.ch>
-Date:   Thu, 20 May 2021 19:08:13 +0200
-Message-ID: <CAKMK7uHROqWzTaG-JDzd343WJJiJCbzEOCZ++oCmKrQJAQgo7A@mail.gmail.com>
-Subject: Re: [Linaro-mm-sig] [RFC 1/3] dma-fence: Add boost fence op
-To:     =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>
-Cc:     =?UTF-8?Q?Christian_K=C3=B6nig?= <ckoenig.leichtzumerken@gmail.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Rob Clark <robdclark@chromium.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        "moderated list:DMA BUFFER SHARING FRAMEWORK" 
-        <linaro-mm-sig@lists.linaro.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        "open list:DMA BUFFER SHARING FRAMEWORK" 
-        <linux-media@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <cover.1621097174.git.noodles@earth.li>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, May 20, 2021 at 6:41 PM Christian K=C3=B6nig
-<christian.koenig@amd.com> wrote:
->
-> Am 20.05.21 um 18:34 schrieb Daniel Vetter:
-> > On Thu, May 20, 2021 at 06:01:39PM +0200, Christian K=C3=B6nig wrote:
-> >> Am 20.05.21 um 16:54 schrieb Rob Clark:
-> >>> On Thu, May 20, 2021 at 7:11 AM Christian K=C3=B6nig
-> >>> <christian.koenig@amd.com> wrote:
-> >>>>
-> >>>> Am 20.05.21 um 16:07 schrieb Rob Clark:
-> >>>>> On Wed, May 19, 2021 at 11:47 PM Christian K=C3=B6nig
-> >>>>> <christian.koenig@amd.com> wrote:
-> >>>>>> Uff, that looks very hardware specific to me.
-> >>>>> Howso?  I'm not sure I agree.. and even if it was not useful for so=
-me
-> >>>>> hw, it should be useful for enough drivers (and harm no drivers), s=
-o I
-> >>>>> still think it is a good idea
-> >>>>>
-> >>>>> The fallback plan is to go the i915 route and stop using atomic
-> >>>>> helpers and do the same thing inside the driver, but that doesn't h=
-elp
-> >>>>> any of the cases where you have a separate kms and gpu driver.
-> >>>> Yeah, that's certainly not something we want.
-> >>>>
-> >>>>>> As far as I can see you can also implement completely inside the b=
-ackend
-> >>>>>> by starting a timer on enable_signaling, don't you?
-> >>>>> Not really.. I mean, the fact that something waited on a fence coul=
-d
-> >>>>> be a useful input signal to gpu freq governor, but it is entirely
-> >>>>> insufficient..
-> >>>>>
-> >>>>> If the cpu is spending a lot of time waiting on a fence, cpufreq wi=
-ll
-> >>>>> clock down so you spend less time waiting.  And no problem has been
-> >>>>> solved.  You absolutely need the concept of a missed deadline, and =
-a
-> >>>>> timer doesn't give you that.
-> >>>> Ok then I probably don't understand the use case here.
-> >>>>
-> >>>> What exactly do you try to solve?
-> >>> Basically situations where you are ping-ponging between GPU and CPU..
-> >>> for example if you are double buffering instead of triple buffering,
-> >>> and doing vblank sync'd pageflips.  The GPU, without any extra signal=
-,
-> >>> could get stuck at 30fps and a low gpu freq, because it ends up idle
-> >>> while waiting for an extra vblank cycle for the next back-buffer to
-> >>> become available.  Whereas if it boosted up to a higher freq and
-> >>> stopped missing a vblank deadline, it would be less idle due to
-> >>> getting the next back-buffer sooner (due to not missing a vblank
-> >>> deadline).
-> >> Ok the is the why, but what about the how?
-> >>
-> >> How does it help to have this boost callback and not just start a time=
- on
-> >> enable signaling and stop it when the signal arrives?
-> > Because the render side (or drm/scheduler, if msm would use that) has n=
-o
-> > idea for which vblank a rendering actually is for.
->
-> AH! So we are basically telling the fence backend that we have just
-> missed an event we waited for.
->
-> So what we want to know is how long the frontend wanted to wait instead
-> of how long the backend took for rendering.
+This series adds various devices (NAND, USB, tsens, L2CC, RPM) which
+have either recently gained mainline drivers, or just failed to be
+previously added, to the DTS for the IPQ806x platform. It then enables
+them for the MikroTik RB3011 platform, where they have all been tested.
 
-tbh I'm not sure the timestamp matters at all. What we do in i915 is
-boost quite aggressively, and then let the usual clock tuning wittle
-it down if we overshot. Plus soom cool-down to prevent
-abuse/continuous boosting. I think we also differentiate between
-display boost and userspace waits.
+I've done the additions to the main IPQ806x DTS as separate commits for
+each logical set, and then a single wholesale set of changes for the
+RB3011 to turn everything on. Happy to squash to 1/2 commits or split
+out further if desired.
 
-On the display side we also wait until the vblank has passed we aimed
-for (atm always the next, we don't have target_frame support like
-amdgpu), to avoid boosting when there's no point.
+v2:
+  Fix ADM label to "dma-controller"
+  Drop spurious "syscon" on GCC for tsens changes
 
-> > So boosting right when you've missed your frame (not what Rob implement=
-s
-> > currently, but fixable) is the right semantics.
-> >
-> > The other issue is that for cpu waits, we want to differentiate from fe=
-nce
-> > waits that userspace does intentially (e.g. wait ioctl) and waits that
-> > random other things are doing within the kernel to keep track of progre=
-ss.
-> >
-> > For the former we know that userspace is stuck waiting for the gpu, and=
- we
-> > probably want to boost. For the latter we most definitely do _not_ want=
- to
-> > boost.
-> >
-> > Otoh I do agree with you that the current api is a bit awkward, so perh=
-aps
-> > we do need a dma_fence_userspace_wait wrapper which boosts automaticall=
-y
-> > after a bit. And similarly perhaps a drm_vblank_dma_fence_wait, where y=
-ou
-> > give it a vblank target, and if the fence isn't signalled by then, we k=
-ick
-> > it real hard.
->
-> Yeah, something like an use case driven API would be nice to have.
->
-> For this particular case I suggest that we somehow extend the enable
-> signaling callback.
->
-> > But otherwise yes this is absolutely a thing that matters a ton. If you
-> > look at Matt Brost's scheduler rfc, there's also a line item in there
-> > about adding this kind of boosting to drm/scheduler.
->
-> BTW: I still can't see this in my inbox.
+Jonathan McDowell (5):
+  ARM: dts: qcom: Add ADM DMA + NAND definitions to ipq806x
+  ARM: dts: qcom: Add tsens details to ipq806x
+  ARM: dts: qcom: Add USB port definitions to ipq806x
+  ARM: dts: qcom: add L2CC and RPM for IPQ8064
+  ARM: dts: qcom: Enable NAND + USB for RB3011
 
-You've replied already:
+ arch/arm/boot/dts/qcom-ipq8064-rb3011.dts |  58 +++
+ arch/arm/boot/dts/qcom-ipq8064.dtsi       | 425 ++++++++++++++++++++++
+ 2 files changed, 483 insertions(+)
 
-https://lore.kernel.org/dri-devel/20210518235830.133834-1-matthew.brost@int=
-el.com/
+-- 
+2.20.1
 
-It's just the big picture plan of what areas we're all trying to
-tackle with some why, so that everyone knows what's coming in the next
-half year at least. Probably longer until this is all sorted. I think
-Matt has some poc hacked-up pile, but nothing really to show.
--Daniel
-
-> Do you have a link?
->
-> Christian.
->
-> > -Daniel
-> >
-> >
-> >> Regards,
-> >> Christian.
-> >>
-> >>> BR,
-> >>> -R
-> >>>
-> >>>> Thanks,
-> >>>> Christian.
-> >>>>
-> >>>>> BR,
-> >>>>> -R
-> >>>>>
-> >>>>>> Christian.
-> >>>>>>
-> >>>>>> Am 19.05.21 um 20:38 schrieb Rob Clark:
-> >>>>>>> From: Rob Clark <robdclark@chromium.org>
-> >>>>>>>
-> >>>>>>> Add a way to hint to the fence signaler that a fence waiter has m=
-issed a
-> >>>>>>> deadline waiting on the fence.
-> >>>>>>>
-> >>>>>>> In some cases, missing a vblank can result in lower gpu utilizati=
-on,
-> >>>>>>> when really we want to go in the opposite direction and boost gpu=
- freq.
-> >>>>>>> The boost callback gives some feedback to the fence signaler that=
- we
-> >>>>>>> are missing deadlines, so it can take this into account in it's f=
-req/
-> >>>>>>> utilization calculations.
-> >>>>>>>
-> >>>>>>> Signed-off-by: Rob Clark <robdclark@chromium.org>
-> >>>>>>> ---
-> >>>>>>>      include/linux/dma-fence.h | 26 ++++++++++++++++++++++++++
-> >>>>>>>      1 file changed, 26 insertions(+)
-> >>>>>>>
-> >>>>>>> diff --git a/include/linux/dma-fence.h b/include/linux/dma-fence.=
-h
-> >>>>>>> index 9f12efaaa93a..172702521acc 100644
-> >>>>>>> --- a/include/linux/dma-fence.h
-> >>>>>>> +++ b/include/linux/dma-fence.h
-> >>>>>>> @@ -231,6 +231,17 @@ struct dma_fence_ops {
-> >>>>>>>          signed long (*wait)(struct dma_fence *fence,
-> >>>>>>>                              bool intr, signed long timeout);
-> >>>>>>>
-> >>>>>>> +     /**
-> >>>>>>> +      * @boost:
-> >>>>>>> +      *
-> >>>>>>> +      * Optional callback, to indicate that a fence waiter misse=
-d a deadline.
-> >>>>>>> +      * This can serve as a signal that (if possible) whatever s=
-ignals the
-> >>>>>>> +      * fence should boost it's clocks.
-> >>>>>>> +      *
-> >>>>>>> +      * This can be called in any context that can call dma_fenc=
-e_wait().
-> >>>>>>> +      */
-> >>>>>>> +     void (*boost)(struct dma_fence *fence);
-> >>>>>>> +
-> >>>>>>>          /**
-> >>>>>>>           * @release:
-> >>>>>>>           *
-> >>>>>>> @@ -586,6 +597,21 @@ static inline signed long dma_fence_wait(str=
-uct dma_fence *fence, bool intr)
-> >>>>>>>          return ret < 0 ? ret : 0;
-> >>>>>>>      }
-> >>>>>>>
-> >>>>>>> +/**
-> >>>>>>> + * dma_fence_boost - hint from waiter that it missed a deadline
-> >>>>>>> + *
-> >>>>>>> + * @fence: the fence that caused the missed deadline
-> >>>>>>> + *
-> >>>>>>> + * This function gives a hint from a fence waiter that a deadlin=
-e was
-> >>>>>>> + * missed, so that the fence signaler can factor this in to devi=
-ce
-> >>>>>>> + * power state decisions
-> >>>>>>> + */
-> >>>>>>> +static inline void dma_fence_boost(struct dma_fence *fence)
-> >>>>>>> +{
-> >>>>>>> +     if (fence->ops->boost)
-> >>>>>>> +             fence->ops->boost(fence);
-> >>>>>>> +}
-> >>>>>>> +
-> >>>>>>>      struct dma_fence *dma_fence_get_stub(void);
-> >>>>>>>      u64 dma_fence_context_alloc(unsigned num);
-> >>>>>>>
-> >>> _______________________________________________
-> >>> Linaro-mm-sig mailing list
-> >>> Linaro-mm-sig@lists.linaro.org
-> >>> https://nam11.safelinks.protection.outlook.com/?url=3Dhttps%3A%2F%2Fl=
-ists.linaro.org%2Fmailman%2Flistinfo%2Flinaro-mm-sig&amp;data=3D04%7C01%7Cc=
-hristian.koenig%40amd.com%7C69c1843a93ec4888abd308d91bad18bd%7C3dd8961fe488=
-4e608e11a82d994e183d%7C0%7C0%7C637571252548030247%7CUnknown%7CTWFpbGZsb3d8e=
-yJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C1000&am=
-p;sdata=3DEJBA9rVl5xTRmdEPzyCyGX7xyZMKAGVhTmoEnsPfOxw%3D&amp;reserved=3D0
->
-
-
---=20
-Daniel Vetter
-Software Engineer, Intel Corporation
-http://blog.ffwll.ch
