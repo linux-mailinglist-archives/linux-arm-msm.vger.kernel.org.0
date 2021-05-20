@@ -2,175 +2,197 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6FFD438B1A6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 May 2021 16:25:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8903138B237
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 May 2021 16:50:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234985AbhETO0a (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 May 2021 10:26:30 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:37117 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231791AbhETO03 (ORCPT
+        id S231345AbhETOvq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 May 2021 10:51:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60468 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230483AbhETOvq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 May 2021 10:26:29 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1621520707; h=Content-Transfer-Encoding: MIME-Version:
- Message-Id: Date: Subject: Cc: To: From: Sender;
- bh=zyVvMEbw6fGlwBlGsUwf0H2yuUNMPC9CYtNKkDWlN6k=; b=AuWOhTNV92eY1z781kLbNbsG5txJv5HGQUlXe3MLa2b0c4Zz7ya33pJHPe4wZqI0dQ7kOJQ7
- 5CU1LjXihAo1Q2RPrNXBDIgUV5ta3l28oarRTLEvDdmzt4ZgM8PzCBWywuNMpy3EAgdEShy+
- cyFojXuu/vAFFvCutwAiaz0f4hU=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
- 60a6713e60c53c8c9db27821 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 20 May 2021 14:25:02
- GMT
-Sender: srivasam=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 8F955C43144; Thu, 20 May 2021 14:25:01 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
-Received: from hyd-lnxbld210.qualcomm.com (unknown [202.46.22.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: srivasam)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 02868C43460;
-        Thu, 20 May 2021 14:24:54 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 02868C43460
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=srivasam@codeaurora.org
-From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-To:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
-        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
-        srinivas.kandagatla@linaro.org, rohitkr@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        swboyd@chromium.org, judyhsiao@chromium.org
-Cc:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-Subject: [PATCH v2] ASoC: qcom: lpass-cpu: Fix pop noise during audio capture begin
-Date:   Thu, 20 May 2021 19:54:32 +0530
-Message-Id: <20210520142432.29869-1-srivasam@codeaurora.org>
-X-Mailer: git-send-email 2.29.0
+        Thu, 20 May 2021 10:51:46 -0400
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BCEEEC061574;
+        Thu, 20 May 2021 07:50:23 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id v12so17970425wrq.6;
+        Thu, 20 May 2021 07:50:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=Pw/S3DhRfs9hqIwXkjoQ53ij2Leive6HtbA3MFyHCVA=;
+        b=hwiIauTkRs1gkN7GptgkaSNYGZrP3Ui4s0V1lP3VcpU9RdwFWgPVtzMNlwAMoyPI9s
+         I3PU2aWE4CfRaH9vhiYZHL4ZGUUoS8qUrgEV10VObwtOqCMXgORXcqrLFvBKxrSZjk7U
+         Qy1ReiQyV5LNQNzkjF6irBDS4DxFx32SHBvWepatsCspmxetBEaXfREFdmHe269HmmRt
+         v/p+fLWYleQBkV2+rMjMpiJGHWoFBON/jYuJop49t+TmRKFFYAZccBHEeboTIKls3dmz
+         Lu25yodi2wA30N77koIcqpHBweSntl6WcktpsTVQQkL4mmoicBJglBDbb9I8RA0NJFLq
+         oLrg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=Pw/S3DhRfs9hqIwXkjoQ53ij2Leive6HtbA3MFyHCVA=;
+        b=EXVfvn0yTle641f2Ubi9S0Ncxjd2Y94bfJuzuDwLQat/ae7L055EKzrHy1USi9734M
+         aMOqJWbs0uu/cyzN6sck/Y2jz/JsoJco2O8xafF0CADH+DdyCn4r0nt8MvqB6Iz37rpA
+         FZ2HkFsQjzIDptqP6PbkKxfAC9h1Yi2yH2AUT3WZMX5sni1n0sUxaKlF3CnKH8++rk2E
+         HP7cMlGeh+MMiiIkFjetx7NNN2YwYnXQzp6dqYY8KcLdWJ4tRdLnuA+Gb9uk+KdmBxed
+         DjdWwonE9A4asgetB/UcU4LdH2mrMJsl/YRTovRZ9JLko2wHd/G0YKsM+hmtxiCF01Hp
+         S2hw==
+X-Gm-Message-State: AOAM532nlH4dHdBj3xaMOzGj+jWW7rp/pBaPW8a9p7XVvLIBpSNnV1LI
+        CRo4WjCFgf/8nedzDF58KBfOG21ZDLmBYmui8VE=
+X-Google-Smtp-Source: ABdhPJyqpa5z8S7zPqUU/Sw+yjCc4qC8hKSJNQRRZDc71DjdMxDOwRF7Ke51/NMtAhuN4Tw9Wv81UvtjRWmRVbsahmU=
+X-Received: by 2002:adf:fa46:: with SMTP id y6mr4810707wrr.83.1621522222321;
+ Thu, 20 May 2021 07:50:22 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20210519183855.1523927-1-robdclark@gmail.com> <20210519183855.1523927-2-robdclark@gmail.com>
+ <8dcdc8d5-176c-f0ad-0d54-6466e9e68a0a@amd.com> <CAF6AEGtg_VnxYrj94AfbAfViK1v8U0ZJyfJjS4taVLMF=YVy+w@mail.gmail.com>
+ <d65acf46-4c3b-4903-6222-0b81915d355d@amd.com>
+In-Reply-To: <d65acf46-4c3b-4903-6222-0b81915d355d@amd.com>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Thu, 20 May 2021 07:54:05 -0700
+Message-ID: <CAF6AEGvm1tFwpfyJrX1bTGoHg_wzKKLQvSk2qLHf3XeqvEzDPA@mail.gmail.com>
+Subject: Re: [RFC 1/3] dma-fence: Add boost fence op
+To:     =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>
+Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        "open list:DMA BUFFER SHARING FRAMEWORK" 
+        <linux-media@vger.kernel.org>,
+        "moderated list:DMA BUFFER SHARING FRAMEWORK" 
+        <linaro-mm-sig@lists.linaro.org>,
+        open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This patch fixes PoP noise of around 15ms observed during audio capture begin.
-Enables BCLK and LRCLK in snd_soc_dai_ops prepare call for introducing some delay
-before capture start and clock enable.
+On Thu, May 20, 2021 at 7:11 AM Christian K=C3=B6nig
+<christian.koenig@amd.com> wrote:
+>
+>
+>
+> Am 20.05.21 um 16:07 schrieb Rob Clark:
+> > On Wed, May 19, 2021 at 11:47 PM Christian K=C3=B6nig
+> > <christian.koenig@amd.com> wrote:
+> >> Uff, that looks very hardware specific to me.
+> > Howso?  I'm not sure I agree.. and even if it was not useful for some
+> > hw, it should be useful for enough drivers (and harm no drivers), so I
+> > still think it is a good idea
+> >
+> > The fallback plan is to go the i915 route and stop using atomic
+> > helpers and do the same thing inside the driver, but that doesn't help
+> > any of the cases where you have a separate kms and gpu driver.
+>
+> Yeah, that's certainly not something we want.
+>
+> >> As far as I can see you can also implement completely inside the backe=
+nd
+> >> by starting a timer on enable_signaling, don't you?
+> > Not really.. I mean, the fact that something waited on a fence could
+> > be a useful input signal to gpu freq governor, but it is entirely
+> > insufficient..
+> >
+> > If the cpu is spending a lot of time waiting on a fence, cpufreq will
+> > clock down so you spend less time waiting.  And no problem has been
+> > solved.  You absolutely need the concept of a missed deadline, and a
+> > timer doesn't give you that.
+>
+> Ok then I probably don't understand the use case here.
+>
+> What exactly do you try to solve?
 
-Signed-off-by: Judy Hsiao <judyhsiao@chromium.org>
-Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
----
-Changes Since V1:
-	-- Enableed BCLK and LRCLK in dai ops prepare API instead of startup API
-	-- Added comments 
-	
- sound/soc/qcom/lpass-cpu.c | 48 ++++++++++++++++++++++++++++++++++++--
- 1 file changed, 46 insertions(+), 2 deletions(-)
+Basically situations where you are ping-ponging between GPU and CPU..
+for example if you are double buffering instead of triple buffering,
+and doing vblank sync'd pageflips.  The GPU, without any extra signal,
+could get stuck at 30fps and a low gpu freq, because it ends up idle
+while waiting for an extra vblank cycle for the next back-buffer to
+become available.  Whereas if it boosted up to a higher freq and
+stopped missing a vblank deadline, it would be less idle due to
+getting the next back-buffer sooner (due to not missing a vblank
+deadline).
 
-diff --git a/sound/soc/qcom/lpass-cpu.c b/sound/soc/qcom/lpass-cpu.c
-index c62d2612e8f5..c5bb3f16d25f 100644
---- a/sound/soc/qcom/lpass-cpu.c
-+++ b/sound/soc/qcom/lpass-cpu.c
-@@ -93,9 +93,18 @@ static void lpass_cpu_daiops_shutdown(struct snd_pcm_substream *substream,
- 		struct snd_soc_dai *dai)
- {
- 	struct lpass_data *drvdata = snd_soc_dai_get_drvdata(dai);
-+	struct lpaif_i2sctl *i2sctl = drvdata->i2sctl;
-+	unsigned int id = dai->driver->id;
- 
- 	clk_disable_unprepare(drvdata->mi2s_osr_clk[dai->driver->id]);
--	clk_unprepare(drvdata->mi2s_bit_clk[dai->driver->id]);
-+	/* To ensure BCLK/LRCLK disabled even in device node validation.
-+	  Will not impact if disabled in trigger suspend */
-+	if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK)
-+		regmap_fields_write(i2sctl->spken, id, LPAIF_I2SCTL_SPKEN_DISABLE);
-+	else
-+		regmap_fields_write(i2sctl->micen, id, LPAIF_I2SCTL_MICEN_DISABLE);
-+
-+	clk_disable_unprepare(drvdata->mi2s_bit_clk[dai->driver->id]);
- }
- 
- static int lpass_cpu_daiops_hw_params(struct snd_pcm_substream *substream,
-@@ -275,6 +284,8 @@ static int lpass_cpu_daiops_trigger(struct snd_pcm_substream *substream,
- 	case SNDRV_PCM_TRIGGER_START:
- 	case SNDRV_PCM_TRIGGER_RESUME:
- 	case SNDRV_PCM_TRIGGER_PAUSE_RELEASE:
-+		/* To ensure lpass BCLK/LRCLK is enabled during
-+	   		device resume. Will not impact if enabled in prepare */
- 		if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK) {
- 			ret = regmap_fields_write(i2sctl->spken, id,
- 						 LPAIF_I2SCTL_SPKEN_ENABLE);
-@@ -296,6 +307,8 @@ static int lpass_cpu_daiops_trigger(struct snd_pcm_substream *substream,
- 	case SNDRV_PCM_TRIGGER_STOP:
- 	case SNDRV_PCM_TRIGGER_SUSPEND:
- 	case SNDRV_PCM_TRIGGER_PAUSE_PUSH:
-+		/* To ensure lpass BCLK/LRCLK is disabled during
-+	   		device suspend */
- 		if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK) {
- 			ret = regmap_fields_write(i2sctl->spken, id,
- 						 LPAIF_I2SCTL_SPKEN_DISABLE);
-@@ -308,19 +321,50 @@ static int lpass_cpu_daiops_trigger(struct snd_pcm_substream *substream,
- 				ret);
- 
- 		clk_disable(drvdata->mi2s_bit_clk[dai->driver->id]);
--
-+		break;
-+	default:
- 		break;
- 	}
- 
- 	return ret;
- }
- 
-+static int lpass_cpu_daiops_prepare(struct snd_pcm_substream *substream,
-+		struct snd_soc_dai *dai)
-+{
-+	struct lpass_data *drvdata = snd_soc_dai_get_drvdata(dai);
-+	struct lpaif_i2sctl *i2sctl = drvdata->i2sctl;
-+	unsigned int id = dai->driver->id;
-+	int ret = -EINVAL;
-+	/* To ensure lpass BCLK/LRCLK is enabled bit before
-+	   playback/capture data flow starts */
-+	if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK)
-+		ret = regmap_fields_write(i2sctl->spken, id, LPAIF_I2SCTL_SPKEN_ENABLE);
-+	else
-+		ret = regmap_fields_write(i2sctl->micen, id, LPAIF_I2SCTL_MICEN_ENABLE);
-+
-+	if (ret)
-+		dev_err(dai->dev, "error writing to i2sctl reg: %d\n",
-+	       ret);
-+
-+	ret = clk_enable(drvdata->mi2s_bit_clk[id]);
-+
-+	if (ret) {
-+		dev_err(dai->dev, "error in enabling mi2s bit clk: %d\n", ret);
-+		clk_disable(drvdata->mi2s_osr_clk[id]);
-+		return ret;
-+	}
-+	return 0;
-+}
-+
-+
- const struct snd_soc_dai_ops asoc_qcom_lpass_cpu_dai_ops = {
- 	.set_sysclk	= lpass_cpu_daiops_set_sysclk,
- 	.startup	= lpass_cpu_daiops_startup,
- 	.shutdown	= lpass_cpu_daiops_shutdown,
- 	.hw_params	= lpass_cpu_daiops_hw_params,
- 	.trigger	= lpass_cpu_daiops_trigger,
-+	.prepare	= lpass_cpu_daiops_prepare,
- };
- EXPORT_SYMBOL_GPL(asoc_qcom_lpass_cpu_dai_ops);
- 
--- 
-Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
-is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
+BR,
+-R
 
+> Thanks,
+> Christian.
+>
+> >
+> > BR,
+> > -R
+> >
+> >> Christian.
+> >>
+> >> Am 19.05.21 um 20:38 schrieb Rob Clark:
+> >>> From: Rob Clark <robdclark@chromium.org>
+> >>>
+> >>> Add a way to hint to the fence signaler that a fence waiter has misse=
+d a
+> >>> deadline waiting on the fence.
+> >>>
+> >>> In some cases, missing a vblank can result in lower gpu utilization,
+> >>> when really we want to go in the opposite direction and boost gpu fre=
+q.
+> >>> The boost callback gives some feedback to the fence signaler that we
+> >>> are missing deadlines, so it can take this into account in it's freq/
+> >>> utilization calculations.
+> >>>
+> >>> Signed-off-by: Rob Clark <robdclark@chromium.org>
+> >>> ---
+> >>>    include/linux/dma-fence.h | 26 ++++++++++++++++++++++++++
+> >>>    1 file changed, 26 insertions(+)
+> >>>
+> >>> diff --git a/include/linux/dma-fence.h b/include/linux/dma-fence.h
+> >>> index 9f12efaaa93a..172702521acc 100644
+> >>> --- a/include/linux/dma-fence.h
+> >>> +++ b/include/linux/dma-fence.h
+> >>> @@ -231,6 +231,17 @@ struct dma_fence_ops {
+> >>>        signed long (*wait)(struct dma_fence *fence,
+> >>>                            bool intr, signed long timeout);
+> >>>
+> >>> +     /**
+> >>> +      * @boost:
+> >>> +      *
+> >>> +      * Optional callback, to indicate that a fence waiter missed a =
+deadline.
+> >>> +      * This can serve as a signal that (if possible) whatever signa=
+ls the
+> >>> +      * fence should boost it's clocks.
+> >>> +      *
+> >>> +      * This can be called in any context that can call dma_fence_wa=
+it().
+> >>> +      */
+> >>> +     void (*boost)(struct dma_fence *fence);
+> >>> +
+> >>>        /**
+> >>>         * @release:
+> >>>         *
+> >>> @@ -586,6 +597,21 @@ static inline signed long dma_fence_wait(struct =
+dma_fence *fence, bool intr)
+> >>>        return ret < 0 ? ret : 0;
+> >>>    }
+> >>>
+> >>> +/**
+> >>> + * dma_fence_boost - hint from waiter that it missed a deadline
+> >>> + *
+> >>> + * @fence: the fence that caused the missed deadline
+> >>> + *
+> >>> + * This function gives a hint from a fence waiter that a deadline wa=
+s
+> >>> + * missed, so that the fence signaler can factor this in to device
+> >>> + * power state decisions
+> >>> + */
+> >>> +static inline void dma_fence_boost(struct dma_fence *fence)
+> >>> +{
+> >>> +     if (fence->ops->boost)
+> >>> +             fence->ops->boost(fence);
+> >>> +}
+> >>> +
+> >>>    struct dma_fence *dma_fence_get_stub(void);
+> >>>    u64 dma_fence_context_alloc(unsigned num);
+> >>>
+>
