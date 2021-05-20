@@ -2,387 +2,178 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9B38938AFA0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 May 2021 15:06:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AFC4D38AFEF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 May 2021 15:25:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242010AbhETNHm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 May 2021 09:07:42 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:51406 "EHLO m43-7.mailgun.net"
+        id S231737AbhETN0m (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 May 2021 09:26:42 -0400
+Received: from mail.kernel.org ([198.145.29.99]:48036 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S238588AbhETNHV (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 May 2021 09:07:21 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1621515960; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=JPtC60RO41+P3OoBocVeVFv4X8kpV/bjSY64w/T+SJ4=;
- b=wFvkcSliO88TNISTqi5s9DJ+LmqGpDUWHmmemgd7lPxK85hHz7RuGxv3FAWtu2CeX/416JcS
- 6Ejjf7qiigTMikfiZn1ZoFSfCrwS/6ChHpEGgEcnZzQkCxUJhcgI5ggCi0kspwSKTlXNTNOk
- qAfZ005spjjgFNQapttjg7QpUOY=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
- 60a65e95d1aee7698dcb4b17 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 20 May 2021 13:05:25
- GMT
-Sender: skakit=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 0BAEBC43146; Thu, 20 May 2021 13:05:24 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=ham autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: skakit)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 44FD9C43143;
-        Thu, 20 May 2021 13:05:23 +0000 (UTC)
+        id S231733AbhETN0m (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 20 May 2021 09:26:42 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id D44566135A;
+        Thu, 20 May 2021 13:25:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1621517120;
+        bh=ZGR0d1utfxvQm3s0niYerfupf8fQvgD1F1Vf6QEpFTQ=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=IXW65ZzioDVPpl+gzUyMI7M0QoFYoDQ0n55Jigm9jcR1TrXz764f5RO555kqg1dgS
+         +59mcs5flYcU+0f1rFAoFe9rsMmFbdg6NdLm97gxNtobggpXUyFZrdolLMEiypJY5E
+         cKA3ALOxntTIfnBmr94MP95KzRU7w2Qj4WyArEzPGceHu6fcpBcJSUAzuhQEjeBIC0
+         HCw/kXVbZsToel77d5YBHK4zxdRsL9rbmbT6u1XtU4j4JiCqI9OMV5lsQbSElz+NJ/
+         sU4yw79M9FHu5fq9GK62cYcRgvw6/MUSq8M0chxk840k/b5ooVe+7hT0pbretYqesF
+         MjgN9G723EnIw==
+Received: by mail-ej1-f45.google.com with SMTP id i7so7449408ejc.5;
+        Thu, 20 May 2021 06:25:20 -0700 (PDT)
+X-Gm-Message-State: AOAM53030A9e5BQg0z0iBIVmjylPcFjc9VRSAWkjfT7X7/XH8knMDu3/
+        RFXWKnG0wf6rD3wgU4NpBylvngu/JHaHhi0T6g==
+X-Google-Smtp-Source: ABdhPJyYRw8Cvw8jFOxekcPR1d+Gtnv+Q16LLY5HiWSVWHW/5gWy/2iRMsHIUVSQpFkOEVzkI/Xk0CeumJ0LRI12PjY=
+X-Received: by 2002:a17:907:724b:: with SMTP id ds11mr4688567ejc.108.1621517119203;
+ Thu, 20 May 2021 06:25:19 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Thu, 20 May 2021 18:35:23 +0530
-From:   skakit@codeaurora.org
-To:     Rob Herring <robh@kernel.org>
-Cc:     Linus Walleij <linus.walleij@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+References: <20210517200907.1459182-1-dianders@chromium.org>
+ <20210517130450.v7.3.I98bf729846c37c4c143f6ab88b1e299280e2fe26@changeid>
+ <20210519200156.GA3535665@robh.at.kernel.org> <CAD=FV=XNaB8fVvwwHPgo8wPmG3EmJ68u_3o8qpPXn4YobNokAA@mail.gmail.com>
+In-Reply-To: <CAD=FV=XNaB8fVvwwHPgo8wPmG3EmJ68u_3o8qpPXn4YobNokAA@mail.gmail.com>
+From:   Rob Herring <robh@kernel.org>
+Date:   Thu, 20 May 2021 08:25:06 -0500
+X-Gmail-Original-Message-ID: <CAL_JsqL9p1nOQs5V5xN167E860Gm+3dTRaOwpv2X+AP=cM1Q_g@mail.gmail.com>
+Message-ID: <CAL_JsqL9p1nOQs5V5xN167E860Gm+3dTRaOwpv2X+AP=cM1Q_g@mail.gmail.com>
+Subject: Re: [PATCH v7 03/10] dt-bindings: drm/bridge: ti-sn65dsi86: Add
+ aux-bus child
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Andrzej Hajda <a.hajda@samsung.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>,
+        Lyude Paul <lyude@redhat.com>,
+        Thierry Reding <treding@nvidia.com>,
+        Stephen Boyd <swboyd@chromium.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        kgunda@codeaurora.org, linux-gpio@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH V3 3/3] dt-bindings: pinctrl: qcom-pmic-gpio: Convert qcom
- pmic gpio bindings to YAML
-In-Reply-To: <20210518005531.GA3539579@robh.at.kernel.org>
-References: <1620817988-18809-1-git-send-email-skakit@codeaurora.org>
- <1620817988-18809-4-git-send-email-skakit@codeaurora.org>
- <20210518005531.GA3539579@robh.at.kernel.org>
-Message-ID: <68ccd08a4aa89582aa499f510ea4b1a6@codeaurora.org>
-X-Sender: skakit@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Linus W <linus.walleij@linaro.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Steev Klimaszewski <steev@kali.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-05-18 06:25, Rob Herring wrote:
-> On Wed, May 12, 2021 at 04:43:08PM +0530, satya priya wrote:
->> Convert Qualcomm PMIC GPIO bindings from .txt to .yaml format.
->> 
->> Signed-off-by: satya priya <skakit@codeaurora.org>
->> ---
->> Changes in V3:
->>  - As per Rob's comments fixed bot erros.
->>  - Moved this patch to end of the series so that other patches are not
->>    blocked on this.
->> 
->> Changes in V4:
->>  - As per Rob's comments, added maxItems for reg and interrupts.
->>    Added reference of "pinmux-node.yaml" and "pincfg-node.yaml".
->>    Made 'additionalProperties' as false.
->> 
->>  .../devicetree/bindings/pinctrl/qcom,pmic-gpio.txt | 288 
->> ---------------------
->>  .../bindings/pinctrl/qcom,pmic-gpio.yaml           | 245 
->> ++++++++++++++++++
->>  2 files changed, 245 insertions(+), 288 deletions(-)
->>  delete mode 100644 
->> Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt
->>  create mode 100644 
->> Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.yaml
-> 
-> 
->> diff --git 
->> a/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.yaml 
->> b/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.yaml
->> new file mode 100644
->> index 0000000..85381a0
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.yaml
->> @@ -0,0 +1,245 @@
->> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
->> +%YAML 1.2
->> +---
->> +$id: http://devicetree.org/schemas/pinctrl/qcom,pmic-gpio.yaml#
->> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->> +
->> +title: Qualcomm PMIC GPIO block
->> +
->> +maintainers:
->> +  - Bjorn Andersson <bjorn.andersson@sonymobile.com>
->> +
->> +description: |
->> +  This binding describes the GPIO block(s) found in the 8xxx series 
->> of
->> +  PMIC's from Qualcomm.
->> +
->> +properties:
->> +  compatible:
->> +    items:
->> +      - enum:
->> +          - qcom,pm8005-gpio
->> +          - qcom,pm8018-gpio
->> +          - qcom,pm8038-gpio
->> +          - qcom,pm8058-gpio
->> +          - qcom,pm8916-gpio
->> +          - qcom,pm8917-gpio
->> +          - qcom,pm8921-gpio
->> +          - qcom,pm8941-gpio
->> +          - qcom,pm8950-gpio
->> +          - qcom,pm8994-gpio
->> +          - qcom,pm8998-gpio
->> +          - qcom,pma8084-gpio
->> +          - qcom,pmi8950-gpio
->> +          - qcom,pmi8994-gpio
->> +          - qcom,pmi8998-gpio
->> +          - qcom,pms405-gpio
->> +          - qcom,pm660-gpio
->> +          - qcom,pm660l-gpio
->> +          - qcom,pm8150-gpio
->> +          - qcom,pm8150b-gpio
->> +          - qcom,pm6150-gpio
->> +          - qcom,pm6150l-gpio
->> +          - qcom,pmx55-gpio
->> +          - qcom,pm7325-gpio
->> +          - qcom,pm8350c-gpio
->> +          - qcom,pmk8350-gpio
->> +          - qcom,pmr735a-gpio
->> +
->> +      - enum:
->> +          - qcom,spmi-gpio
->> +          - qcom,ssbi-gpio
->> +
->> +  reg:
->> +    maxItems: 1
->> +
->> +  interrupts:
->> +    minItems: 1
->> +    maxItems: 44
-> 
-> Please say something about what the 1-44 interrupts are if you can't
-> define each one.
-> 
+On Wed, May 19, 2021 at 4:06 PM Doug Anderson <dianders@chromium.org> wrote:
+>
+> Hi,
+>
+> On Wed, May 19, 2021 at 1:02 PM Rob Herring <robh@kernel.org> wrote:
+> >
+> > On Mon, May 17, 2021 at 01:09:00PM -0700, Douglas Anderson wrote:
+> > > We want to be able to list an eDP panel as a child of a ti-sn65dsi86
+> > > node to represent the fact that the panel is connected to the bridge's
+> > > DP AUX bus. Though the panel and the bridge chip are connected in
+> > > several ways, the DP AUX bus is the primary control interface between
+> > > the two and thus makes the most sense to model in device tree
+> > > hierarchy.
+> > >
+> > > Listing a panel in this way makes it possible for the panel driver to
+> > > easily get access to the DP AUX bus that it resides on, which can be
+> > > useful to help in auto-detecting the panel and for turning on various
+> > > bits.
+> > >
+> > > NOTE: it's still possible to continue using the bridge chip and point
+> > > to a panel that _isn't_ listed as a child of the bridge chip (since
+> > > it's worked that way previously), but that should be deprecated since
+> > > there is no downside to listing the panel under the bridge chip.
+> > >
+> > > The idea for this bus's design was hashed out over IRC [1].
+> > >
+> > > [1] https://people.freedesktop.org/~cbrill/dri-log/?channel=dri-devel&date=2021-05-11
+> > >
+> > > Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> > > ---
+> > > Possibly we might want something fancier that could be included by
+> > > other eDP controller bindings. If we want to do this, I'd love to be
+> > > pointed at a good example to follow.
+> > >
+> > > Changes in v7:
+> > > - ti-sn65dsi86: Add aux-bus child patch new for v7.
+> > >
+> > >  .../bindings/display/bridge/ti,sn65dsi86.yaml | 22 ++++++++++++++++++-
+> > >  1 file changed, 21 insertions(+), 1 deletion(-)
+> > >
+> > > diff --git a/Documentation/devicetree/bindings/display/bridge/ti,sn65dsi86.yaml b/Documentation/devicetree/bindings/display/bridge/ti,sn65dsi86.yaml
+> > > index 26932d2e86ab..51f5a29e216c 100644
+> > > --- a/Documentation/devicetree/bindings/display/bridge/ti,sn65dsi86.yaml
+> > > +++ b/Documentation/devicetree/bindings/display/bridge/ti,sn65dsi86.yaml
+> > > @@ -70,6 +70,11 @@ properties:
+> > >      const: 1
+> > >      description: See ../../pwm/pwm.yaml for description of the cell formats.
+> > >
+> > > +  aux-bus:
+> >
+> > As this is a node:
+> >
+> > type: object
+> >
+> > > +    description:
+> > > +      It is recommended that you place your panel under the aux-bus node
+> > > +      here to represent the control hierarchy.
+> > > +
+> > >    ports:
+> > >      $ref: /schemas/graph.yaml#/properties/ports
+> > >
+> > > @@ -201,11 +206,26 @@ examples:
+> > >
+> > >            port@1 {
+> > >              reg = <1>;
+> > > -            endpoint {
+> > > +            sn65dsi86_out: endpoint {
+> > >                remote-endpoint = <&panel_in_edp>;
+> > >              };
+> > >            };
+> > >          };
+> > > +
+> > > +        aux-bus {
+> > > +          panel {
+> >
+> > We should perhaps have a separate aux-bus schema.
+>
+> Yeah. Before spending lots of time digging into how to do this I
+> wanted to see if anyone was going to give me a big-old NAK on the
+> whole approach. ;-)
+>
+> I guess I'd make a file called "dp-aux-bus.yaml" (maybe right under
+> bindings/display?) and then I'd include it like this:
+>
+> aux-bus:
+>   $ref: "../dp-aux-bus.yaml#"
 
-Okay, will add the description back.
+Right.
 
->> +
->> +  '#interrupt-cells':
->> +    const: 2
->> +
->> +  interrupt-controller: true
->> +
->> +  gpio-controller: true
->> +
->> +  gpio-ranges:
->> +    maxItems: 1
->> +
->> +  '#gpio-cells':
->> +    const: 2
->> +    description: |
->> +        The first cell will be used to define gpio number and the
->> +        second denotes the flags for this gpio
->> +
->> +  gpio-keys:
->> +    type: object
->> +    properties:
->> +      volume-keys:
->> +        type: object
->> +        anyOf:
->> +          - $ref: "pinmux-node.yaml"
->> +          - $ref: "pincfg-node.yaml"
->> +        properties:
->> +          pins:
->> +            description: |
->> +                List of gpio pins affected by the properties 
->> specified in
->> +                this subnode.  Valid pins are
->> +                     - gpio1-gpio4 for pm8005
->> +                     - gpio1-gpio6 for pm8018
->> +                     - gpio1-gpio12 for pm8038
->> +                     - gpio1-gpio40 for pm8058
->> +                     - gpio1-gpio4 for pm8916
->> +                     - gpio1-gpio38 for pm8917
->> +                     - gpio1-gpio44 for pm8921
->> +                     - gpio1-gpio36 for pm8941
->> +                     - gpio1-gpio8 for pm8950 (hole on gpio3)
->> +                     - gpio1-gpio22 for pm8994
->> +                     - gpio1-gpio26 for pm8998
->> +                     - gpio1-gpio22 for pma8084
->> +                     - gpio1-gpio2 for pmi8950
->> +                     - gpio1-gpio10 for pmi8994
->> +                     - gpio1-gpio12 for pms405 (holes on gpio1, gpio9
->> +                                                and gpio10)
->> +                     - gpio1-gpio10 for pm8150 (holes on gpio2, 
->> gpio5,
->> +                                                gpio7 and gpio8)
->> +                     - gpio1-gpio12 for pm8150b (holes on gpio3, 
->> gpio4
->> +                                                 and gpio7)
->> +                     - gpio1-gpio12 for pm8150l (hole on gpio7)
->> +                     - gpio1-gpio10 for pm6150
->> +                     - gpio1-gpio12 for pm6150l
->> +                     - gpio1-gpio10 for pm7325
->> +                     - gpio1-gpio9 for pm8350c
->> +                     - gpio1-gpio4 for pmk8350
->> +                     - gpio1-gpio4 for pmr735a
->> +
->> +            items:
->> +              pattern: "^gpio([0-9]+)$"
->> +
->> +          function:
->> +            description: |
->> +                Specify the alternative function to be configured for 
->> the
->> +                specified pins.
-> 
-> No need to redescribe a common property.
-> 
+> > Something should
+> > define the child node is 'panel' and nothing else.
+>
+> At the moment the code also requires that the node name is 'aux-bus'.
+> Any objections to that?
 
-okay, will remove.
+No. There's 2 ways to do that. The above does and adding $nodename in
+dp-aux-bus.yaml will. The latter also means the schema will be applied
+automatically to any node named 'aux-bus'. That means the schema will
+be applied twice unless you have 'select: false'. The main advantage
+of the latter case is it gets applied even without all the users
+converted to schema.
 
->> +            items:
->> +              - enum:
->> +                  - normal
->> +                  - paired
->> +                  - func1
->> +                  - func2
->> +                  - dtest1
->> +                  - dtest2
->> +                  - dtest3
->> +                  - dtest4
->> +                  - func3  # supported by LV/MV GPIO subtypes
->> +                  - func4  # supported by LV/MV GPIO subtypes
->> +
->> +          bias-disable: true
->> +
->> +          bias-pull-down: true
->> +
->> +          bias-pull-up: true
->> +
->> +          qcom,pull-up-strength:
->> +            $ref: /schemas/types.yaml#/definitions/uint32
->> +            description: |
->> +                Specifies the strength to use for pull up, if 
->> selected.
->> +                Valid values are defined in
->> +                <dt-bindings/pinctrl/qcom,pmic-gpio.h>
->> +                If this property is omitted 30uA strength will be 
->> used
->> +                if pull up is selected
->> +
->> +          bias-high-impedance: true
->> +
->> +          input-enable: true
->> +
->> +          output-high: true
->> +
->> +          output-low: true
->> +
->> +          power-source: true
->> +
->> +          qcom,drive-strength:
->> +            $ref: /schemas/types.yaml#/definitions/uint32
->> +            description: |
->> +                Selects the drive strength for the specified pins
->> +                Valid drive strength values are defined in
->> +                <dt-bindings/pinctrl/qcom,pmic-gpio.h>
-> 
-> Please define the constraints here.
-> 
+> > Though perhaps
+> > connectors are valid too?
+>
+> They might be. We could always add it later?
 
-Okay.
+Sure.
 
->> +
->> +          drive-push-pull: true
->> +
->> +          drive-open-drain: true
->> +
->> +          drive-open-source: true
->> +
->> +          qcom,analog-pass:
->> +            $ref: /schemas/types.yaml#/definitions/flag
->> +            description: |
->> +                The specified pins are configured in
->> +                analog-pass-through mode.
->> +
->> +          qcom,atest:
->> +            $ref: /schemas/types.yaml#/definitions/uint32
->> +            description: |
->> +                Selects ATEST rail to route to GPIO when it's
->> +                configured in analog-pass-through mode.
->> +            enum: [1 2 3 4]
-> 
-> enum: [ 1, 2, 3, 4 ]
-> 
-
-Okay.
-
->> +
->> +          qcom,dtest-buffer:
->> +            $ref: /schemas/types.yaml#/definitions/uint32
->> +            description: |
->> +                Selects DTEST rail to route to GPIO when it's
->> +                configured as digital input.
->> +            enum: [1 2 3 4]
-> 
-> Ditto.
-> 
->> +
->> +        required:
->> +          - pins
->> +          - function
->> +
->> +        additionalProperties: false
->> +
->> +additionalProperties: false
->> +
->> +required:
->> +  - compatible
->> +  - reg
->> +
->> +examples:
->> +  - |
->> +    #include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
->> +
->> +    pm8921_gpio: gpio@150 {
->> +      compatible = "qcom,pm8921-gpio", "qcom,ssbi-gpio";
->> +      reg = <0x150 0x160>;
->> +      interrupts = <192 1>, <193 1>, <194 1>,
->> +                   <195 1>, <196 1>, <197 1>,
->> +                   <198 1>, <199 1>, <200 1>,
->> +                   <201 1>, <202 1>, <203 1>,
->> +                   <204 1>, <205 1>, <206 1>,
->> +                   <207 1>, <208 1>, <209 1>,
->> +                   <210 1>, <211 1>, <212 1>,
->> +                   <213 1>, <214 1>, <215 1>,
->> +                   <216 1>, <217 1>, <218 1>,
->> +                   <219 1>, <220 1>, <221 1>,
->> +                   <222 1>, <223 1>, <224 1>,
->> +                   <225 1>, <226 1>, <227 1>,
->> +                   <228 1>, <229 1>, <230 1>,
->> +                   <231 1>, <232 1>, <233 1>,
->> +                   <234 1>, <235 1>;
->> +
->> +      gpio-controller;
->> +      #gpio-cells = <2>;
->> +
->> +      pm8921_gpio_keys: gpio-keys {
->> +        volume-keys {
->> +          pins = "gpio20", "gpio21";
->> +          function = "normal";
->> +
->> +          input-enable;
->> +          bias-pull-up;
->> +          drive-push-pull;
->> +          qcom,drive-strength = <PMIC_GPIO_STRENGTH_NO>;
->> +          power-source = <PM8921_GPIO_S4>;
->> +        };
->> +      };
->> +    };
->> +...
->> --
->> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
->> member
->> of Code Aurora Forum, hosted by The Linux Foundation
->> 
+Rob
