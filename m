@@ -2,124 +2,146 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BAEA538AEB9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 May 2021 14:43:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BE9A738AF2C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 May 2021 14:51:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242225AbhETMoq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 May 2021 08:44:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59084 "EHLO
+        id S243234AbhETMw2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 May 2021 08:52:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60330 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242741AbhETMoQ (ORCPT
+        with ESMTP id S243100AbhETMvi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 May 2021 08:44:16 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F09ADC0564A7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 May 2021 05:03:21 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id l11-20020a05600c4f0bb029017a7cd488f5so2425007wmq.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 May 2021 05:03:21 -0700 (PDT)
+        Thu, 20 May 2021 08:51:38 -0400
+Received: from mail-pg1-x532.google.com (mail-pg1-x532.google.com [IPv6:2607:f8b0:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27607C069177
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 May 2021 05:14:18 -0700 (PDT)
+Received: by mail-pg1-x532.google.com with SMTP id j12so11718342pgh.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 May 2021 05:14:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=T8jZ4n5cOgv/UmZYK2xnz10jZVZgWxDdZjKqpW0gHh0=;
-        b=aMQQ1xEnSvQD3ee9SKBfMAucjU1i0GuZYxyAm5Vr609ce3SciJolcr8Wax9ZulKXcv
-         sD6nDCXLgKhHFZ3wGUAXLDEJiKCTAzW9c2uo6dYfwWtOXy1SElARM6AMnC1g8qnj0Kza
-         2OYno/nCbkZcTT7bwnUWwKjRmnz8/lkO7uVOG7spMZDcB/uIjfsZ5lvMUPouUpWIkbwG
-         Y3s9n+8FZMsy05uayaR3a2lTuhWknvSN1tarfhiYwfVnNLGjQqu8AIILv9wDj7HGZ9IR
-         siuqyEEn6LuXh2udRCEITucyFfyhS4/070fI4zr86ciM5gokEaJC2UPZ+PnezrY2wqPW
-         Mi6g==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=+11Asx9mB6ZyWHyZn4h1vSOfApP9ND3aSL86GPZLDE8=;
+        b=drRAtIfz7o3efRjYGNUrYYK4FSZooNjDRta0p9WGLPAgjwmUIB2Rt0HozeQ9k72rI6
+         n0DfB7ldV8NvKV7bGfRMoElKKbwdsamH+qba9+Spn3R/XlRn0kh8YSIKnnyK4o9yEZZp
+         Ipl8lTxvURBCzbqQZYBPaHtYwjPgLKVs6R2B/K0nWIbgIld2rgWK4OUx1z8vQeTbS3ah
+         1tIRbbkS1YeBvUpBdcuf7UNwkFH3Ivwl1HuSocPqCCKnbztfuT2Rh3dLAr2uWx1TqPi0
+         hEIKfv4vfStz3l/k4JT+cOoSo0A5Ybu0pwKh2TIWQo/r98HnZYxIQlUAYK0ePoU1eBFU
+         PxCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=T8jZ4n5cOgv/UmZYK2xnz10jZVZgWxDdZjKqpW0gHh0=;
-        b=OTYVcVGqHlfS1oUDM7pHHXTiUn6YKm0tFFOrfCp8ESRZErnaQn+Lfq/nN1FTnmzRuf
-         Kf3qBkQ1JZBFyAdyouxt5j2hJPrkZrgKfs7wnRMvgYuRIlqXiFCWew+xTw4dRgXKLjra
-         1WBFwPDQQYLfR2hZZpIQlC2c4u/1ERaXzcwNqsteCusD7QfNIY24bQj3ln6yUTrI7YJ/
-         bWBlAUwtxH0aT2pf+g/8cxjOoN/ryDGZ8mhWX4TrdmRqKYr5ck35uekvlhMz6wr0iktD
-         jzX3eBZbCNrkTDci+tzUZAy3Cn/ELVbUyfwBjNI8peXwfqhVMPWIO2mEsOonuvXmYgtb
-         UMaA==
-X-Gm-Message-State: AOAM532XR7OsGrQec2qrqFVDsTPwnqLliaYQOPTJv61+mTAhdCD8yWz+
-        hGZI1LX4/79ygPvboB0serkhkw==
-X-Google-Smtp-Source: ABdhPJwtd7ia5gEWJ4SgBvkOPQ07S3wwyvf3RqqiLAzZCZ9Xq+Y9fxcbvVZ2VmUqb5ZT5on4iZGK8g==
-X-Received: by 2002:a7b:c5d2:: with SMTP id n18mr3716125wmk.97.1621512200589;
-        Thu, 20 May 2021 05:03:20 -0700 (PDT)
-Received: from dell.default ([91.110.221.215])
-        by smtp.gmail.com with ESMTPSA id j10sm2886332wrt.32.2021.05.20.05.03.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 May 2021 05:03:20 -0700 (PDT)
-From:   Lee Jones <lee.jones@linaro.org>
-To:     lee.jones@linaro.org
-Cc:     linux-kernel@vger.kernel.org, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Chandan Uddaraju <chandanu@codeaurora.org>,
-        Kuogee Hsieh <khsieh@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: [PATCH 28/38] drm/msm/dp/dp_link: Fix some potential doc-rot
-Date:   Thu, 20 May 2021 13:02:38 +0100
-Message-Id: <20210520120248.3464013-29-lee.jones@linaro.org>
-X-Mailer: git-send-email 2.31.1
-In-Reply-To: <20210520120248.3464013-1-lee.jones@linaro.org>
-References: <20210520120248.3464013-1-lee.jones@linaro.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=+11Asx9mB6ZyWHyZn4h1vSOfApP9ND3aSL86GPZLDE8=;
+        b=ttZLvE9HtGdEPIryV2vxZgBqo0wZ4RwKZ68bxMRC5c+Pv3biBiTg/L+xMTtYCTXHOE
+         OLtRVSZGVvaGzOIYCe0rhoH7y/MfIH8t5OENxkGZBt0Xt+zc8dmGoIjTqNpLvkUv1oIJ
+         yjh0MKErS/E4wCFivmAaCqz2W8d4EZe3XdmlRbLeAbrC9V6aOSSL2Ho860cPlerqrzwd
+         a6uDm9YavG7sIOQyzECRR2YauIbfB8IUoQK2uc1BCSS7UR8saCNCgVagZPvq4BdzWn/P
+         DzgXeMm4aR0WdaXe7PHu2LY6SRVRVprCeb7Med1QFdhy9oKxwydOhjpm1/9BJyszyaNp
+         tDnw==
+X-Gm-Message-State: AOAM531GCn89Wpmfem1gTfhxy8SQjbSuY2dlJiryFQ4wO5tsweu96pBx
+        4YdDD5cNP0Rgyim4WFNH2NUzTRPQtoSerVEXg5Xpug==
+X-Google-Smtp-Source: ABdhPJwbodNgWFgeN2AQHQRqgbGi8pKONPqqgmZHyx3zuUWP8wat9k8I1mThIO5zDnJdgh+krIPYwYTr7uNlCIK1IH4=
+X-Received: by 2002:a63:1054:: with SMTP id 20mr4317007pgq.120.1621512857098;
+ Thu, 20 May 2021 05:14:17 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20210511180728.23781-1-jonathan@marek.ca> <20210511180728.23781-10-jonathan@marek.ca>
+In-Reply-To: <20210511180728.23781-10-jonathan@marek.ca>
+From:   Robert Foss <robert.foss@linaro.org>
+Date:   Thu, 20 May 2021 14:14:04 +0200
+Message-ID: <CAG3jFyv71xJxkH_aq9PMObSKRu1GUcekCHpwKRMTbnrch2vG_Q@mail.gmail.com>
+Subject: Re: [PATCH 09/17] media: camss: csid: allow csid to work without a regulator
+To:     Jonathan Marek <jonathan@marek.ca>
+Cc:     MSM <linux-arm-msm@vger.kernel.org>,
+        Andrey Konovalov <andrey.konovalov@linaro.org>,
+        Todor Tomov <todor.too@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        "open list:QUALCOMM CAMERA SUBSYSTEM DRIVER" 
+        <linux-media@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Fixes the following W=1 kernel build warning(s):
+On Tue, 11 May 2021 at 20:08, Jonathan Marek <jonathan@marek.ca> wrote:
+>
+> At least for titan HW, CSID don't have an associated regulator. This change
+> is necessary to be able to model this in the CSID resources.
+>
+> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+> ---
+>  drivers/media/platform/qcom/camss/camss-csid.c | 17 +++++++++++------
+>  1 file changed, 11 insertions(+), 6 deletions(-)
+>
+> diff --git a/drivers/media/platform/qcom/camss/camss-csid.c b/drivers/media/platform/qcom/camss/camss-csid.c
+> index cc11fbfdae13..528674dea06c 100644
+> --- a/drivers/media/platform/qcom/camss/camss-csid.c
+> +++ b/drivers/media/platform/qcom/camss/camss-csid.c
+> @@ -162,7 +162,7 @@ static int csid_set_power(struct v4l2_subdev *sd, int on)
+>                         return ret;
+>                 }
+>
+> -               ret = regulator_enable(csid->vdda);
+> +               ret = csid->vdda ? regulator_enable(csid->vdda) : 0;
+>                 if (ret < 0) {
+>                         pm_runtime_put_sync(dev);
+>                         return ret;
+> @@ -170,14 +170,16 @@ static int csid_set_power(struct v4l2_subdev *sd, int on)
+>
+>                 ret = csid_set_clock_rates(csid);
+>                 if (ret < 0) {
+> -                       regulator_disable(csid->vdda);
+> +                       if (csid->vdda)
+> +                               regulator_disable(csid->vdda);
+>                         pm_runtime_put_sync(dev);
+>                         return ret;
+>                 }
+>
+>                 ret = camss_enable_clocks(csid->nclocks, csid->clock, dev);
+>                 if (ret < 0) {
+> -                       regulator_disable(csid->vdda);
+> +                       if (csid->vdda)
+> +                               regulator_disable(csid->vdda);
+>                         pm_runtime_put_sync(dev);
+>                         return ret;
+>                 }
+> @@ -188,7 +190,8 @@ static int csid_set_power(struct v4l2_subdev *sd, int on)
+>                 if (ret < 0) {
+>                         disable_irq(csid->irq);
+>                         camss_disable_clocks(csid->nclocks, csid->clock);
+> -                       regulator_disable(csid->vdda);
+> +                       if (csid->vdda)
+> +                               regulator_disable(csid->vdda);
+>                         pm_runtime_put_sync(dev);
+>                         return ret;
 
- drivers/gpu/drm/msm/dp/dp_link.c:374: warning: expecting prototype for dp_parse_video_pattern_params(). Prototype was for dp_link_parse_video_pattern_params() instead
- drivers/gpu/drm/msm/dp/dp_link.c:573: warning: expecting prototype for dp_parse_phy_test_params(). Prototype was for dp_link_parse_phy_test_params() instead
- drivers/gpu/drm/msm/dp/dp_link.c:975: warning: expecting prototype for dp_link_process_downstream_port_status_change(). Prototype was for dp_link_process_ds_port_status_change() instead
+Since this & the previous chunks of failure cleanups are growing
+larger, maybe it is time to extract all of the failure cleanups into
+gotos. That should probably go into a seperate patch though.
 
-Cc: Rob Clark <robdclark@gmail.com>
-Cc: Sean Paul <sean@poorly.run>
-Cc: David Airlie <airlied@linux.ie>
-Cc: Daniel Vetter <daniel@ffwll.ch>
-Cc: Chandan Uddaraju <chandanu@codeaurora.org>
-Cc: Kuogee Hsieh <khsieh@codeaurora.org>
-Cc: linux-arm-msm@vger.kernel.org
-Cc: dri-devel@lists.freedesktop.org
-Cc: freedreno@lists.freedesktop.org
-Signed-off-by: Lee Jones <lee.jones@linaro.org>
----
- drivers/gpu/drm/msm/dp/dp_link.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+>                 }
+> @@ -197,7 +200,7 @@ static int csid_set_power(struct v4l2_subdev *sd, int on)
+>         } else {
+>                 disable_irq(csid->irq);
+>                 camss_disable_clocks(csid->nclocks, csid->clock);
+> -               ret = regulator_disable(csid->vdda);
+> +               ret = csid->vdda ? regulator_disable(csid->vdda) : 0;
+>                 pm_runtime_put_sync(dev);
+>         }
+>
+> @@ -634,7 +637,9 @@ int msm_csid_subdev_init(struct camss *camss, struct csid_device *csid,
+>
+>         /* Regulator */
+>
+> -       csid->vdda = devm_regulator_get(dev, res->regulator[0]);
+> +       csid->vdda = NULL;
+> +       if (res->regulator[0])
+> +               csid->vdda = devm_regulator_get(dev, res->regulator[0]);
+>         if (IS_ERR(csid->vdda)) {
+>                 dev_err(dev, "could not get regulator\n");
+>                 return PTR_ERR(csid->vdda);
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_link.c b/drivers/gpu/drm/msm/dp/dp_link.c
-index be986da78c4a5..1099604bd1c86 100644
---- a/drivers/gpu/drm/msm/dp/dp_link.c
-+++ b/drivers/gpu/drm/msm/dp/dp_link.c
-@@ -364,7 +364,7 @@ static int dp_link_parse_timing_params3(struct dp_link_private *link,
- }
- 
- /**
-- * dp_parse_video_pattern_params() - parses video pattern parameters from DPCD
-+ * dp_link_parse_video_pattern_params() - parses video pattern parameters from DPCD
-  * @link: Display Port Driver data
-  *
-  * Returns 0 if it successfully parses the video link pattern and the link
-@@ -563,7 +563,7 @@ static int dp_link_parse_link_training_params(struct dp_link_private *link)
- }
- 
- /**
-- * dp_parse_phy_test_params() - parses the phy link parameters
-+ * dp_link_parse_phy_test_params() - parses the phy link parameters
-  * @link: Display Port Driver data
-  *
-  * Parses the DPCD (Byte 0x248) for the DP PHY link pattern that is being
-@@ -961,7 +961,7 @@ static int dp_link_process_link_status_update(struct dp_link_private *link)
- }
- 
- /**
-- * dp_link_process_downstream_port_status_change() - process port status changes
-+ * dp_link_process_ds_port_status_change() - process port status changes
-  * @link: Display Port Driver data
-  *
-  * This function will handle downstream port updates that are initiated by
--- 
-2.31.1
-
+Reviewed-by: Robert Foss <robert.foss@linaro.org>
