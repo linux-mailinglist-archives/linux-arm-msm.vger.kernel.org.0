@@ -2,273 +2,282 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D351838B7DF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 May 2021 21:56:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 37A4738B7E8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 May 2021 21:58:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237170AbhETT5a (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 May 2021 15:57:30 -0400
-Received: from mail-oi1-f172.google.com ([209.85.167.172]:41730 "EHLO
-        mail-oi1-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231917AbhETT5a (ORCPT
+        id S235859AbhETUAS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 May 2021 16:00:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46330 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234800AbhETUAS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 May 2021 15:57:30 -0400
-Received: by mail-oi1-f172.google.com with SMTP id c3so17510513oic.8;
-        Thu, 20 May 2021 12:56:08 -0700 (PDT)
+        Thu, 20 May 2021 16:00:18 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6175C061761
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 May 2021 12:58:55 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id c14so17070168wrx.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 May 2021 12:58:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ffwll.ch; s=google;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=fvRDr1D5/5+LCAmUf65vl1i5y+y4alcViE7GRSVhNkM=;
+        b=IJTQEmled92Limq65lxrtZal8HOwFj/1/UhSrjJkbEbu08DIpkT2M+pXl4vT54YMb/
+         1SEvjeoR8uPrk6as9bd43zO4V1j8Aa75jbzkHbhMRT9KmUCawIf5NbEbJIVb+b0b++Mn
+         FgEo/rN7Yfst8gFYO0KjrBYTSoknMUpMulURY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=0VijoX5LDfg/1oOMw8LJ4ISDw0Fwkh41HHXpCYwtkuk=;
-        b=t4Hwas5F0SLFu3gyJdU4YBsSLWjW8zHAibcmvnmuc7rPThICuUfzO/go/R9aiQXOUi
-         8hM47Lm7cY5CiGBoW4SOW87bPu3Q1g4vWvlGe/Gkyat7MF4py3rIWHmvFHAZobcAndjj
-         lCS4FpiI/WB4xNXyIeTXHpJ7i4l9xBNz17L9RGG+RZo9iBTGvix2C1VqTXs5mgD1b2sU
-         aTaMfnnJQnDxIkYcMTew28eCJreeN2I5Y36U5asapie6KT+r6c8SPhqIdhGU+xoMZQJW
-         MqSUvtaVAsKFiIqfIshOpGZ9YANVk44VuwtIPQTEljUHUlIh8mG4D+QmYebzumHhgvXi
-         OY5w==
-X-Gm-Message-State: AOAM533T+xG6FSfgBittyRhLDuENlgF+BcD6dMP5rogg+uEQ1FHneIef
-        IujgOg/EB8X4F39js5wLGg==
-X-Google-Smtp-Source: ABdhPJxO098MtKv/xIJDFHZb/QaNSKzx1aj3RdQ/IxvXFpRSQej3EhxKYRK3bRpKefU+2PHk7np0Ew==
-X-Received: by 2002:a05:6808:488:: with SMTP id z8mr4563022oid.135.1621540567686;
-        Thu, 20 May 2021 12:56:07 -0700 (PDT)
-Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id s4sm846291otr.80.2021.05.20.12.56.05
+        h=x-gm-message-state:date:from:to:cc:subject:message-id
+         :mail-followup-to:references:mime-version:content-disposition
+         :in-reply-to;
+        bh=fvRDr1D5/5+LCAmUf65vl1i5y+y4alcViE7GRSVhNkM=;
+        b=i24ZcBGA+gr77NNnUOM2Gi2vnYHsBpDWS/Jd0zhEoUtP0sTeIkxEBsxc6SynCCUAdu
+         Eqk4PBLsdVbFES8yf/Fv9/acmediByWyltoyoDgnOoqKLz3/GKv31CIIIibFAxV5pbfy
+         9AeQICefMkWIifeeYAdk5RzCC8+VyEmRVyLXhfQfGAMhc/YEeznvGmM29N7N9eFoSbYt
+         Kla3/45J7FZRIsxgWbR542WeH0R7Grtx+upULBsgu9XBJh+1w3YlMr8R0Hye3Ya0bwDq
+         rbXRbvZWLENKPozDS/K+vupvo6X1420ja/+RokjRwD6DUMwuEvsUznwQ/Yp0e+ETDZQ8
+         O2Sw==
+X-Gm-Message-State: AOAM531TMAZ/QU4eZR8bkh3dP+evDp0vWyQWmSK3ysWA05Kr193Uuqyk
+        nkX9SZ2uXcU/EGbUiiEJ9ZlV1O8iRHQdCA==
+X-Google-Smtp-Source: ABdhPJxkVwauF/EHL3NdcMJKAi/zvLETHClTk9XUCWU1LnHRqZ+1dbG0hruL8BgFaGFXrcbqn/w6cg==
+X-Received: by 2002:a5d:4e91:: with SMTP id e17mr6126622wru.396.1621540734354;
+        Thu, 20 May 2021 12:58:54 -0700 (PDT)
+Received: from phenom.ffwll.local ([2a02:168:57f4:0:efd0:b9e5:5ae6:c2fa])
+        by smtp.gmail.com with ESMTPSA id v11sm5059609wrs.9.2021.05.20.12.58.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 May 2021 12:56:06 -0700 (PDT)
-Received: (nullmailer pid 1840621 invoked by uid 1000);
-        Thu, 20 May 2021 19:56:05 -0000
-Date:   Thu, 20 May 2021 14:56:05 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Geert Uytterhoeven <geert+renesas@glider.be>
-Cc:     Shawn Guo <shawnguo@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
-        "David S . Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>, devicetree@vger.kernel.org,
-        netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-mips@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 5/5] dt-bindings: net: sms911x: Convert to json-schema
-Message-ID: <20210520195605.GA1832858@robh.at.kernel.org>
-References: <cover.1621518686.git.geert+renesas@glider.be>
- <f3f33f75c8911697f2c1dbde626f01187199bdc2.1621518686.git.geert+renesas@glider.be>
+        Thu, 20 May 2021 12:58:53 -0700 (PDT)
+Date:   Thu, 20 May 2021 21:58:52 +0200
+From:   Daniel Vetter <daniel@ffwll.ch>
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        Daniel Vetter <daniel.vetter@ffwll.ch>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Russell King <rmk+kernel@arm.linux.org.uk>,
+        Saravana Kannan <saravanak@google.com>
+Subject: Re: [PATCH 7/7] drm/msm: Migrate to aggregate driver
+Message-ID: <YKa/fEuVqHhV9CPC@phenom.ffwll.local>
+Mail-Followup-To: Stephen Boyd <swboyd@chromium.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Russell King <rmk+kernel@arm.linux.org.uk>,
+        Saravana Kannan <saravanak@google.com>
+References: <20210520002519.3538432-1-swboyd@chromium.org>
+ <20210520002519.3538432-8-swboyd@chromium.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <f3f33f75c8911697f2c1dbde626f01187199bdc2.1621518686.git.geert+renesas@glider.be>
+In-Reply-To: <20210520002519.3538432-8-swboyd@chromium.org>
+X-Operating-System: Linux phenom 5.10.32scarlett+ 
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, May 20, 2021 at 03:58:39PM +0200, Geert Uytterhoeven wrote:
-> Convert the Smart Mixed-Signal Connectivity (SMSC) LAN911x/912x
-> Controller Device Tree binding documentation to json-schema.
+On Wed, May 19, 2021 at 05:25:19PM -0700, Stephen Boyd wrote:
+> The device lists are poorly ordered when the component device code is
+> used. This is because component_master_add_with_match() returns 0
+> regardless of component devices calling component_add() first. It can
+> really only fail if an allocation fails, in which case everything is
+> going bad and we're out of memory. The driver that registers the
+> aggregate driver, can succeed at probe and put the attached device on
+> the DPM lists before any of the component devices are probed and put on
+> the lists.
 > 
-> Document missing properties.
-> Make "phy-mode" not required, as many DTS files do not have it, and the
-> Linux drivers falls back to PHY_INTERFACE_MODE_NA.
-> Correct nodename in example.
+> Within the component device framework this usually isn't that bad
+> because the real driver work is done at bind time via
+> component{,master}_ops::bind(). It becomes a problem when the driver
+> core, or host driver, wants to operate on the component device outside
+> of the bind/unbind functions, e.g. via 'remove' or 'shutdown'. The
+> driver core doesn't understand the relationship between the host device
+> and the component devices and could possibly try to operate on component
+> devices when they're already removed from the system or shut down.
 > 
-> Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+> Normally, device links or probe defer would reorder the lists and put
+> devices that depend on other devices in the lists at the correct
+> location, but with component devices this doesn't happen because this
+> information isn't expressed anywhere. Drivers simply succeed at
+> registering their component or the aggregate driver with the component
+> framework and wait for their bind() callback to be called once the other
+> components are ready. In summary, the drivers that make up the aggregate
+> driver can probe in any order.
+> 
+> This ordering problem becomes fairly obvious when shutting down the
+> device with a DSI controller connected to a DSI bridge that is
+> controlled via i2c. In this case, the msm display driver wants to tear
+> down the display pipeline on shutdown via msm_pdev_shutdown() by calling
+> drm_atomic_helper_shutdown(), and it can't do that unless the whole
+> display chain is still probed and active in the system. When a display
+> bridge is on i2c, the i2c device for the bridge will be created whenever
+> the i2c controller probes, which could be before or after the msm
+> display driver probes. If the i2c controller probes after the display
+> driver, then the i2c controller will be shutdown before the display
+> controller during system wide shutdown and thus i2c transactions will
+> stop working before the display pipeline is shut down. This means we'll
+> have the display bridge trying to access an i2c bus that's shut down
+> because drm_atomic_helper_shutdown() is trying to disable the bridge
+> after the bridge is off.
+> 
+> The solution is to make the aggregate driver into a real struct driver
+> that is bound to a device when the other component devices have all
+> probed. Now that the component driver code is a proper bus, we can
+> simply register an aggregate driver with that bus via
+> component_aggregate_register() and then attach the shutdown hook to that
+> driver to be sure that the shutdown for the display pipeline is called
+> before any of the component device driver shutdown hooks are called.
+> 
+> Cc: Daniel Vetter <daniel.vetter@ffwll.ch>
+> Cc: "Rafael J. Wysocki" <rafael@kernel.org>
+> Cc: Rob Clark <robdclark@gmail.com>
+> Cc: Russell King <rmk+kernel@arm.linux.org.uk>
+> Cc: Saravana Kannan <saravanak@google.com>
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 > ---
-> I have listed Shawn as the maintainer, as he wrote the original
-> bindings.  Shawn: Please scream if this is inappropriate ;-)
 > 
-> I left "additionalProperties: true", as there are lots of bus-specific
-> properties ("qcom,*", "samsung,*", "fsl,*", "gpmc,*", ...) to be found,
-> that actually depend on the compatible value of the parent node.
-
-Can you put a comment above additionalProperties to that effect. I need 
-to come up with some solution for this, but don't want folks copying 
-that when normally not needed.
-
+> As stated in the cover letter, this isn't perfect but it still works. I
+> get a warning from runtime PM that the parent device (e00000.mdss) is
+> not runtime PM enabled but the child device (the aggregate device) is
+> being enabled by the bus logic. I need to move around the place that the
+> parent device is runtime PM enabled and probably keep it powered up
+> during the entire time that the driver is probed until the aggregate
+> driver probes.
 > 
-> ---
->  .../devicetree/bindings/net/gpmc-eth.txt      |   2 +-
->  .../devicetree/bindings/net/smsc,lan9115.yaml | 107 ++++++++++++++++++
->  .../devicetree/bindings/net/smsc911x.txt      |  43 -------
->  3 files changed, 108 insertions(+), 44 deletions(-)
->  create mode 100644 Documentation/devicetree/bindings/net/smsc,lan9115.yaml
->  delete mode 100644 Documentation/devicetree/bindings/net/smsc911x.txt
+>  drivers/gpu/drm/msm/msm_drv.c | 47 +++++++++++++++++++----------------
+>  1 file changed, 26 insertions(+), 21 deletions(-)
 > 
-> diff --git a/Documentation/devicetree/bindings/net/gpmc-eth.txt b/Documentation/devicetree/bindings/net/gpmc-eth.txt
-> index f7da3d73ca1b2e15..32821066a85b0078 100644
-> --- a/Documentation/devicetree/bindings/net/gpmc-eth.txt
-> +++ b/Documentation/devicetree/bindings/net/gpmc-eth.txt
-> @@ -13,7 +13,7 @@ Documentation/devicetree/bindings/memory-controllers/omap-gpmc.txt
+> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+> index e1104d2454e2..0c64e6a2ce25 100644
+> --- a/drivers/gpu/drm/msm/msm_drv.c
+> +++ b/drivers/gpu/drm/msm/msm_drv.c
+> @@ -1265,19 +1265,35 @@ static int add_gpu_components(struct device *dev,
+>  	return 0;
+>  }
 >  
->  For the properties relevant to the ethernet controller connected to the GPMC
->  refer to the binding documentation of the device. For example, the documentation
-> -for the SMSC 911x is Documentation/devicetree/bindings/net/smsc911x.txt
-> +for the SMSC 911x is Documentation/devicetree/bindings/net/smsc,lan9115.yaml
+> -static int msm_drm_bind(struct device *dev)
+> +static int msm_drm_bind(struct aggregate_device *adev)
+>  {
+> -	return msm_drm_init(dev, &msm_driver);
+> +	return msm_drm_init(adev->dev.parent, &msm_driver);
+>  }
 >  
->  Child nodes need to specify the GPMC bus address width using the "bank-width"
->  property but is possible that an ethernet controller also has a property to
-> diff --git a/Documentation/devicetree/bindings/net/smsc,lan9115.yaml b/Documentation/devicetree/bindings/net/smsc,lan9115.yaml
-> new file mode 100644
-> index 0000000000000000..294fa3edf966695a
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/net/smsc,lan9115.yaml
-> @@ -0,0 +1,107 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/net/smsc,lan9115.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> -static void msm_drm_unbind(struct device *dev)
+> +static void msm_drm_unbind(struct aggregate_device *adev)
+>  {
+> -	msm_drm_uninit(dev);
+> +	msm_drm_uninit(adev->dev.parent);
+> +}
 > +
-> +title: Smart Mixed-Signal Connectivity (SMSC) LAN911x/912x Controller
+> +static void msm_drm_shutdown(struct aggregate_device *adev)
+> +{
+> +	struct drm_device *drm = platform_get_drvdata(to_platform_device(adev->dev.parent));
+> +	struct msm_drm_private *priv = drm ? drm->dev_private : NULL;
 > +
-> +maintainers:
-> +  - Shawn Guo <shawnguo@kernel.org>
+> +	if (!priv || !priv->kms)
+> +		return;
 > +
-> +allOf:
-> +  - $ref: ethernet-controller.yaml#
-> +
-> +properties:
-> +  compatible:
-> +    oneOf:
-> +      - const: smsc,lan9115
-> +      - items:
-> +          - enum:
-> +              - "smsc,lan89218"
-> +              - "smsc,lan9117"
-> +              - "smsc,lan9118"
-> +              - "smsc,lan9220"
-> +              - "smsc,lan9221"
+> +	drm_atomic_helper_shutdown(drm);
+>  }
+>  
+> -static const struct component_master_ops msm_drm_ops = {
+> -	.bind = msm_drm_bind,
+> -	.unbind = msm_drm_unbind,
+> +static struct aggregate_driver msm_drm_aggregate_driver = {
+> +	.probe = msm_drm_bind,
+> +	.remove = msm_drm_unbind,
+> +	.shutdown = msm_drm_shutdown,
+> +	.driver = {
+> +		.name	= "msm_drm",
+> +		.owner	= THIS_MODULE,
+> +	},
+>  };
+>  
+>  /*
+> @@ -1306,7 +1322,8 @@ static int msm_pdev_probe(struct platform_device *pdev)
+>  	if (ret)
+>  		goto fail;
+>  
+> -	ret = component_master_add_with_match(&pdev->dev, &msm_drm_ops, match);
+> +	msm_drm_aggregate_driver.match = match;
 
-Don't need quotes.
+This is a bit awkward design, because it means the driver struct can't be
+made const, and it will blow up when you have multiple instance of the
+same driver. I think the match should stay as part of the register
+function call, and be stored in the aggregate_device struct somewhere.
 
-> +          - const: smsc,lan9115
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  reg-shift: true
-> +
-> +  reg-io-width:
-> +    enum: [ 2, 4 ]
-> +    default: 2
-> +
-> +  interrupts:
-> +    minItems: 1
-> +    items:
-> +      - description:
-> +          LAN interrupt line
-> +      - description:
-> +          Optional PME (power management event) interrupt that is able to wake
-> +          up the host system with a 50ms pulse on network activity
-> +
-> +  clocks:
-> +    maxItems: 1
-> +
-> +  phy-mode: true
-> +
-> +  smsc,irq-active-high:
-> +    type: boolean
-> +    description: Indicates the IRQ polarity is active-high
-> +
-> +  smsc,irq-push-pull:
-> +    type: boolean
-> +    description: Indicates the IRQ type is push-pull
-> +
-> +  smsc,force-internal-phy:
-> +    type: boolean
-> +    description: Forces SMSC LAN controller to use internal PHY
-> +
-> +  smsc,force-external-phy:
-> +    type: boolean
-> +    description: Forces SMSC LAN controller to use external PHY
-> +
-> +  smsc,save-mac-address:
-> +    type: boolean
-> +    description:
-> +      Indicates that MAC address needs to be saved before resetting the
-> +      controller
-> +
-> +  reset-gpios:
-> +    maxItems: 1
-> +    description:
-> +      A GPIO line connected to the RESET (active low) signal of the device.
-> +      On many systems this is wired high so the device goes out of reset at
-> +      power-on, but if it is under program control, this optional GPIO can
-> +      wake up in response to it.
-> +
-> +  vdd33a-supply:
-> +    description: 3.3V analog power supply
-> +
-> +  vddvario-supply:
-> +    description: IO logic power supply
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - interrupts
-> +
-> +additionalProperties: true
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/gpio/gpio.h>
-> +
-> +    ethernet@f4000000 {
-> +            compatible = "smsc,lan9220", "smsc,lan9115";
-> +            reg = <0xf4000000 0x2000000>;
-> +            phy-mode = "mii";
-> +            interrupt-parent = <&gpio1>;
-> +            interrupts = <31>, <32>;
-> +            reset-gpios = <&gpio1 30 GPIO_ACTIVE_LOW>;
-> +            reg-io-width = <4>;
-> +            smsc,irq-push-pull;
-> +    };
-> diff --git a/Documentation/devicetree/bindings/net/smsc911x.txt b/Documentation/devicetree/bindings/net/smsc911x.txt
-> deleted file mode 100644
-> index acfafc8e143c4c85..0000000000000000
-> --- a/Documentation/devicetree/bindings/net/smsc911x.txt
-> +++ /dev/null
-> @@ -1,43 +0,0 @@
-> -* Smart Mixed-Signal Connectivity (SMSC) LAN911x/912x Controller
+Otherwise I think this looks really solid and fixes your issue properly.
+Obviously needs careful review from Greg KH for the device model side of
+things, and from Rafael Wysocki for pm side.
+
+Bunch of thoughts from a very cursory reading:
+
+- I think it'd be good if we pass the aggregate_device to all components
+  when we bind them, plus the void * parameter just to make this less
+  disruptive. Even more device model goodies.
+
+- Maybe splatter a pile of sysfs links around so that this all becomes
+  visible? Could be interesting for debugging ordering issues. Just an
+  idea, feel free to entirely ignore.
+
+- Needs solid kerneldoc for everything exposed to drivers and good
+  overview DOC:
+
+- Needs deprecation warnings in the kerneldoc for all the
+  component_master_* and if feasible with a mechanical conversion,
+  converting existing users. I'd like to not be stuck with the old model
+  forever, plus this will give a pile more people to review this code
+  here.
+
+Anyway the name changes in probe and remove hooks below are already worth
+this on their own imo. That's why I'd like to see them in all drivers.
+
+Cheers, Daniel
+
+> +	ret = component_aggregate_register(&pdev->dev, &msm_drm_aggregate_driver);
+>  	if (ret)
+>  		goto fail;
+>  
+> @@ -1319,23 +1336,12 @@ static int msm_pdev_probe(struct platform_device *pdev)
+>  
+>  static int msm_pdev_remove(struct platform_device *pdev)
+>  {
+> -	component_master_del(&pdev->dev, &msm_drm_ops);
+> +	component_aggregate_unregister(&pdev->dev, &msm_drm_aggregate_driver);
+>  	of_platform_depopulate(&pdev->dev);
+>  
+>  	return 0;
+>  }
+>  
+> -static void msm_pdev_shutdown(struct platform_device *pdev)
+> -{
+> -	struct drm_device *drm = platform_get_drvdata(pdev);
+> -	struct msm_drm_private *priv = drm ? drm->dev_private : NULL;
 > -
-> -Required properties:
-> -- compatible : Should be "smsc,lan<model>", "smsc,lan9115"
-> -- reg : Address and length of the io space for SMSC LAN
-> -- interrupts : one or two interrupt specifiers
-> -  - The first interrupt is the SMSC LAN interrupt line
-> -  - The second interrupt (if present) is the PME (power
-> -    management event) interrupt that is able to wake up the host
-> -     system with a 50ms pulse on network activity
-> -- phy-mode : See ethernet.txt file in the same directory
+> -	if (!priv || !priv->kms)
+> -		return;
 > -
-> -Optional properties:
-> -- reg-shift : Specify the quantity to shift the register offsets by
-> -- reg-io-width : Specify the size (in bytes) of the IO accesses that
-> -  should be performed on the device.  Valid value for SMSC LAN is
-> -  2 or 4.  If it's omitted or invalid, the size would be 2.
-> -- smsc,irq-active-high : Indicates the IRQ polarity is active-high
-> -- smsc,irq-push-pull : Indicates the IRQ type is push-pull
-> -- smsc,force-internal-phy : Forces SMSC LAN controller to use
-> -  internal PHY
-> -- smsc,force-external-phy : Forces SMSC LAN controller to use
-> -  external PHY
-> -- smsc,save-mac-address : Indicates that mac address needs to be saved
-> -  before resetting the controller
-> -- reset-gpios : a GPIO line connected to the RESET (active low) signal
-> -  of the device. On many systems this is wired high so the device goes
-> -  out of reset at power-on, but if it is under program control, this
-> -  optional GPIO can wake up in response to it.
-> -- vdd33a-supply, vddvario-supply : 3.3V analog and IO logic power supplies
+> -	drm_atomic_helper_shutdown(drm);
+> -}
 > -
-> -Examples:
-> -
-> -lan9220@f4000000 {
-> -	compatible = "smsc,lan9220", "smsc,lan9115";
-> -	reg = <0xf4000000 0x2000000>;
-> -	phy-mode = "mii";
-> -	interrupt-parent = <&gpio1>;
-> -	interrupts = <31>, <32>;
-> -	reset-gpios = <&gpio1 30 GPIO_ACTIVE_LOW>;
-> -	reg-io-width = <4>;
-> -	smsc,irq-push-pull;
-> -};
+>  static const struct of_device_id dt_match[] = {
+>  	{ .compatible = "qcom,mdp4", .data = (void *)KMS_MDP4 },
+>  	{ .compatible = "qcom,mdss", .data = (void *)KMS_MDP5 },
+> @@ -1351,7 +1357,6 @@ MODULE_DEVICE_TABLE(of, dt_match);
+>  static struct platform_driver msm_platform_driver = {
+>  	.probe      = msm_pdev_probe,
+>  	.remove     = msm_pdev_remove,
+> -	.shutdown   = msm_pdev_shutdown,
+>  	.driver     = {
+>  		.name   = "msm",
+>  		.of_match_table = dt_match,
 > -- 
-> 2.25.1
+> https://chromeos.dev
 > 
+
+-- 
+Daniel Vetter
+Software Engineer, Intel Corporation
+http://blog.ffwll.ch
