@@ -2,187 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F19F538B98A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 May 2021 00:39:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AB23038BA7F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 May 2021 01:43:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231686AbhETWkm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 May 2021 18:40:42 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:46283 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231653AbhETWkl (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 May 2021 18:40:41 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1621550359; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=u5Fv69WG7AZKBChnOzRtJI8AUhfjpxnX1Q0kHh77Ii0=;
- b=jXQdWhRjhusmvyahDawM1WP7ln1cKYv8YwI6DU09XbivyJkbiarKLCf8weXBl4pWPMFgZGu0
- Ses40pxogBYfS8I0tnFtUibPRB4afRELJWPHD8udgkQ3KslPAIRwt/SF+GqL35GTT5FR+u0k
- kGQmop+8iNeF55kcS57DYcFgJTY=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
- 60a6e50f7b9a7a2b6cb64564 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 20 May 2021 22:39:11
- GMT
-Sender: khsieh=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 7377FC43460; Thu, 20 May 2021 22:39:11 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: khsieh)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id D27A4C433F1;
-        Thu, 20 May 2021 22:39:09 +0000 (UTC)
+        id S234438AbhETXos (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 May 2021 19:44:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40200 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234446AbhETXop (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 20 May 2021 19:44:45 -0400
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E7A6C061574
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 May 2021 16:43:22 -0700 (PDT)
+Received: by mail-lf1-x130.google.com with SMTP id x19so27039211lfa.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 May 2021 16:43:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=53C1hfvSqmgg+nungZ28Wt68bSH0DONGE5fhh6kZnQc=;
+        b=ENX17ixMrZ6LlFjW2Hbl22WtfgniaMbSi4okNpeMs4vVauku+eqDwyn6oEZESJXMxY
+         PQyf7UprsW4oHu38k5myavH9faHMeACdc956gz0xg+9c6hfrXYWwf/ttU5SyDqe6HIkC
+         XwI52FPB/ACpKyTG/3ghEmAoxWRpNz0TsnvXVvFGzHD6pRaKLL+KWov4ezpDXg2Z7hoZ
+         HRqXf7x6XKl73GWbkCgRLdaKQ55VON9F+LfovOgkqN2So3Es3oA/Ht70YfUXv1VoPM6/
+         dtmNHBcLemlfAUVve/bIApLnwG+SdheSFgmZHY3nlzA4EdEIi6+qXAxcjnFpGiAbebZ/
+         zcXQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=53C1hfvSqmgg+nungZ28Wt68bSH0DONGE5fhh6kZnQc=;
+        b=a8JjPjDHdtZo17cj6ThOcvKiBAtYMivYMzMMZ/clTldPBidy4efb0zsdLiOpbV1JYx
+         Hp9h5BFk9FetmjHS9EOSQ40vrfGE7BFDm5qYRqLXFf/H9++qtNe0htidf8jN1LGMZRbj
+         gyaN5/+ovaSn84OEfcCda35GvAQWn2azO9WMqtg1yeBk/V7is3Be4S71klkZGTl+d1Le
+         nkTkzNMzGUZ129plHE3Vr2nNJH+2sj+9rdo9OAB9Z12v1Z+yHGFvYnnub/f8HAwswWAa
+         NsbyKHwMRl8iwkXdtv+edhQd1VYflBEUwdiEEVMkcv1cJePlYBVC7lj41MCAEzBDwMo/
+         p2ew==
+X-Gm-Message-State: AOAM5310H5AT4NeeJrHZZHh8jqiVEf/9yobhRAC37VVd2Rrl4pCB3s73
+        36LvViSwvFhXeDo2iCqZSYY7aNWTpLK8yGhBs4+XZQ==
+X-Google-Smtp-Source: ABdhPJygNMj5WuHzIbvLGIODNPR3orcEL5Kz4yD//0OspA/+6bWSXTMD99hFbettxaKcI97pqpWgO+KAhFftCGBncM0=
+X-Received: by 2002:a05:6512:49b:: with SMTP id v27mr4401lfq.29.1621554200649;
+ Thu, 20 May 2021 16:43:20 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Thu, 20 May 2021 15:39:09 -0700
-From:   khsieh@codeaurora.org
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robdclark@gmail.com,
-        sean@poorly.run, vkoul@kernel.org, abhinavk@codeaurora.org,
-        aravindh@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 1/2] drm/msm/dp: handle irq_hpd with sink_count = 0
- correctly
-In-Reply-To: <CAE-0n51+mbCAqWWTOMDA4Rx_=96V4tK8g+UWVZ-nnp50dFzRPA@mail.gmail.com>
-References: <1621013713-6860-1-git-send-email-khsieh@codeaurora.org>
- <CAE-0n53VUr=f=PKnO5HhXZ3BAG_mNBwmQrfQPxHvxLZPDReA+g@mail.gmail.com>
- <c1a3ced9ac4682bae310712a11576322@codeaurora.org>
- <CAE-0n50yRCA00ck_FtXwzKw_R8UcocMzTh8V7NOe4ob__3G3bg@mail.gmail.com>
- <e071434531947e5c4275a1a14b77b2c3@codeaurora.org>
- <CAE-0n52rBrjy-=dpqK+dae2GNk1rAaQnKqCjzdqiAoS13gHpSQ@mail.gmail.com>
- <f476d82d0798e0d7eb9e12949aa2c8f1@codeaurora.org>
- <CAE-0n51+mbCAqWWTOMDA4Rx_=96V4tK8g+UWVZ-nnp50dFzRPA@mail.gmail.com>
-Message-ID: <5d341df202facb3240a72cfb35e18167@codeaurora.org>
-X-Sender: khsieh@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+References: <cover.1621518686.git.geert+renesas@glider.be> <8abfe44e2ad77b6309866531ec662c5daf1e4dbf.1621518686.git.geert+renesas@glider.be>
+In-Reply-To: <8abfe44e2ad77b6309866531ec662c5daf1e4dbf.1621518686.git.geert+renesas@glider.be>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Fri, 21 May 2021 01:43:09 +0200
+Message-ID: <CACRpkdY1XY55HMEtkdUa-GDdy9v-47rD2aHQ90yObSKo3cmzVg@mail.gmail.com>
+Subject: Re: [PATCH 3/5] ARM: dts: qcom-apq8060: Correct Ethernet node name
+ and drop bogus irq property
+To:     Geert Uytterhoeven <geert+renesas@glider.be>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Rob Herring <robh+dt@kernel.org>, Shawn Guo <shawnguo@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+        "David S . Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, netdev <netdev@vger.kernel.org>,
+        MSM <linux-arm-msm@vger.kernel.org>, linux-mips@vger.kernel.org,
+        linux-kernel <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-05-20 14:28, Stephen Boyd wrote:
-> Quoting khsieh@codeaurora.org (2021-05-20 13:05:48)
->> On 2021-05-20 12:28, Stephen Boyd wrote:
->> >> Put dongle to D3 state so that it will not issue the unnecessary
->> >> second
->> >> irq_hpd with sink_count = 0. this will prevent the annoy but unharmful
->> >> DP_LINK_STATUS_UPDATED warning message.
->> >> Again, we can not disable hpd interrupt since dongle still attached
->> >> and
->> >> hdmi cable can be plugged in at any instant.
->> >>
->> >
->> > Right I'm not suggesting to disable hpd interrupt, just the hpd_irq
->> > interrupt once an unplug irq comes in, and do that in hardirq context.
->> > Also, I'm suggesting that we consider unplug as a higher priority if
->> > the
->> > hard irq handler is delayed for some reason and both an unplug irq and
->> > an hpd irq are pending in the hardware when the hard irq handler is
->> > running. Putting the dongle into D3 state won't fix these problems.
->> 
->> 
->> 
->> The unplug interrupt is not happen in this case since dongle still
->> attached.
->> The unplug interrupt only happen when dongle unplugged.
-> 
-> Agreed.
-> 
->> 
->> I think you mistakenly think DP_LINK_STATUS_UPDATED is caused by 
->> unplug
->> interrupt.
-> 
-> Ok, got it.
-> 
->> DP_LINK_STATUS_UPDATED happen is due to dongle issue two consecutive
->> irq_hpd with sink_count = 0 when hdmi cable unplugged from dongle.
->> The first irq_hpd with sink_count = 0 is handled as expected to turn 
->> off
->> display.
->> After that the second irq_hpd with sink_count = 0 is handled.
->> Since display had turned off, then there is nothing to do but spill
->> DP_LINK_STATUS_UPDATED warning message.
->> There is no unplug (hpd become low) happen in this case since dongle
->> still attached.
-> 
-> Agreed.
-> 
->> 
->> All interrupt (plug/irq_hpd and unplug) are required to be handled in
->> the order of happening.
->> We can not ignore any one.
->> For example, you plug/unplug two different resolution monitor
->> alternative to/from dongle and unplug dongle once for while.
->> 
->> I think the race condition you describe here all had been taken care
->> with
->> 1) convert irq into event and store at event q in order.
->> 2) irq handled base on transaction. Next irq can be handled when
->> previous irq transaction is done.
->> 
-> 
-> I'm mostly trying to point out that the irq handling and masking needs
-> to be done in the hard irq context and not in the kthread. It may or 
-> may
-> not be related to this message that's printed.
-> 
-> What happens if the hardirq is blocked by some other irq that takes a
-> long time to process? Imagine this scenario:
-> 
-> CPU0                                CPU1
-> ----                                ----
->  really_long_other_hardirq() {
->                                     hpd_irq
-> 				    hpd_irq
-> 				    hpd low
->  }
-> 
->  dp_display_irq_handler() {
-> 
+On Thu, May 20, 2021 at 3:58 PM Geert Uytterhoeven
+<geert+renesas@glider.be> wrote:
 
+> make dtbs_check:
+>
+>     ethernet-ebi2@2,0: $nodename:0: 'ethernet-ebi2@2,0' does not match '^ethernet(@.*)?$'
+>     ethernet-ebi2@2,0: 'smsc,irq-active-low' does not match any of the regexes: 'pinctrl-[0-9]+'
+>
+> There is no "smsc,irq-active-low" property, as active low is the
+> default.
+>
+> Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 
->    <fork things to kthread>
->  }
-> 
-> Shouldn't we ignore any hpd_irq events in this scenario? And shouldn't
-> we be disabling the hpd_irq by masking it with DP_DP_IRQ_HPD_INT_MASK
-> when hpd goes low (i.e. DP_DP_HPD_UNPLUG_INT_MASK)?
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
 
+I think Bjorn Andersson has to apply this patch.
 
-
-1) irq_hpd interrupt always happen before unplug interrupt
-2)if hdp_isr_status = (DP_DP_IRQ_HPD_INT_MASK | 
-DP_DP_HPD_UNPLUG_INT_MASK) at the time when read at 
-dp_display_irq_handler(),
-then DP_DP_IRQ_HPD_INT_MASK will be add into evetn q first followed by 
-DP_DP_HPD_UNPLUG_INT_MASK be add into event q.
-So that DP_DP_IRQ_HPD_INT_MASK will be executed by the event thread 
-before DP_DP_HPD_UNPLUG_INT_MASK.
-On the other word, IRQ_HPD has higher priority over UNPLUG in the timing 
-matter.
-By doing that we can shut down display gracefully.
-
-If you insist, at hdp_isr_status = (DP_DP_IRQ_HPD_INT_MASK | 
-DP_DP_HPD_UNPLUG_INT_MASK) case,
-we can have only add DP_DP_HPD_UNPLUG_INT_MASK to event q only by 
-dropping DP_DP_IRQ_HPD_INT_MASK.
-Is this will work for you?
-
-
-
-
-
-
-
-
-
+Yours,
+Linus Walleij
