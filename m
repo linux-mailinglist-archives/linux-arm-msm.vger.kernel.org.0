@@ -2,88 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6B18038D07F
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 May 2021 00:04:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8F49B38D077
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 May 2021 00:02:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229512AbhEUWFd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 May 2021 18:05:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60216 "EHLO
+        id S229613AbhEUWEV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 May 2021 18:04:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59922 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229507AbhEUWFd (ORCPT
+        with ESMTP id S229472AbhEUWEU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 May 2021 18:05:33 -0400
-Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A93A6C0613ED
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 May 2021 15:04:09 -0700 (PDT)
-Received: by mail-pf1-x42d.google.com with SMTP id d78so15024153pfd.10
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 May 2021 15:04:09 -0700 (PDT)
+        Fri, 21 May 2021 18:04:20 -0400
+Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1A74C061574
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 May 2021 15:02:56 -0700 (PDT)
+Received: by mail-oi1-x22c.google.com with SMTP id c196so12836964oib.9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 May 2021 15:02:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=fZVsdD5w5dtbGbEEJ61BTCXnjeAcPQ5ciZkXFGTTwac=;
-        b=BmJq5PJ91Kt9ueWlXfgGzQb1lvyeJkdvPtPnF1aTg6ImNy0Pe5eSeuMnLnT8NW7mCx
-         OBMKULvpyEp6PFq/qxpPh8PHEB09lKSWIDfXHL3aOX2G1YFgQmLWjxqBARLtW+ozJnBS
-         4XVhdLVFiR5s3e6g7RxHIS2InHQ/uYTsKhjBM=
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=N4WDRHJzz65u4VfeYJW6joOLDC2TOf7BbCNb8jma3Ds=;
+        b=lfkQEcoJDzWkpaNQkq45vsQfYAFYQvjFjWDhsaxUacnqXj1TyseJXeorDzXc0RtOQz
+         Aiy46ofTKuXrN095DXIH4oEfrR9k5TP0SxQU4Xk07U+Gy/2ozQpC6gZI7ACKzlSrleuL
+         +tvdyizaE58T36IItLv0VfNZs9UI4xHjHn4WQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=fZVsdD5w5dtbGbEEJ61BTCXnjeAcPQ5ciZkXFGTTwac=;
-        b=czMsaUpsQC8z8S+MPCEVSV0lUUYOSefP8k3v+/1stjZAt+V2E7dJm4RkLL96izWXb6
-         FaFquym2vS6DRLQcZCVXJX5hPQsNlIW51z7wCVvqC+IusAVLJrwD+8+E9ccKezQf/SOw
-         FYzs5zIVoAFX4bL57TPMO4zkFfOR5jBiyBOfcZ2XAqxtfXwYy8I+tP6D0vgb/cOx9puY
-         Op01FOZlB1n6KEHFEjyCp1sAhPvNhRPiAsIOfH6YTYMdg89nH4kIQzTJshUdl5SXFmu+
-         LVTUP6Q7OiC5bEwsyQVlXyv8BtAJXNmKvFj2GP4clAC7sTA8InEa3seW+0oMEOPuYsT1
-         TCqg==
-X-Gm-Message-State: AOAM531y1N8tqGCpOzYCMe23CIe0k72Ete55w20o80URWkXg6aNJtQIJ
-        EbnTdMSuiSHgzYSbb0uiR5dBmg==
-X-Google-Smtp-Source: ABdhPJwfj5QFKNrnmLhHknhNHNDuteX9JKlhhDvdG0CFxVyZMRpIv+KuMyWk3myJuifFPv1Lw+3h7Q==
-X-Received: by 2002:a63:db01:: with SMTP id e1mr928254pgg.38.1621634649232;
-        Fri, 21 May 2021 15:04:09 -0700 (PDT)
-Received: from sujitka-glaptop.hsd1.ca.comcast.net ([2601:646:8e00:b2f0:22bd:8c3f:584d:d265])
-        by smtp.gmail.com with ESMTPSA id z19sm6478752pjq.11.2021.05.21.15.04.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 May 2021 15:04:08 -0700 (PDT)
-From:   Sujit Kautkar <sujitka@chromium.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     Rajendra Nayak <rnayak@codeaurora.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Sibi Sankar <sibis@codeaurora.org>,
-        Sujit Kautkar <sujitka@chromium.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH v2 0/2] Update sd card pinconf for sc7180 DT
-Date:   Fri, 21 May 2021 15:02:45 -0700
-Message-Id: <20210521220246.2017976-1-sujitka@chromium.org>
-X-Mailer: git-send-email 2.31.1.818.g46aad6cb9e-goog
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=N4WDRHJzz65u4VfeYJW6joOLDC2TOf7BbCNb8jma3Ds=;
+        b=l3pVQMAORrPsflM9jzv+FPHeUhLqQTYJTvAcdmS8tOYJEkeI5fnelNVCT8Jo+pGUo0
+         vaj0C++8pQrCOub7/oPZL+xcvkQZ+uMNiBbkWsfQqhaVFKndOa8kPzN2QBrItl1sGTMc
+         ktsTfidRO3NakDcpkxmZ4bXzP9X3yOqjLgN6Xr3t9Y3hR7okjtf+K7xfjs9LCZA386r/
+         +49RLSxIqEbEZPAeDSkH1fL21PzxWVUQ4vKNvrZnHgSTEXuZMUtj/V6LrDmQsC1FX1LO
+         ZupMdvGQIHGn631Gj0SlLrjSRCzo6jDWNnKGmNMueK7ibymPrcKxZRrzDKQTzDE7ENVK
+         xYRA==
+X-Gm-Message-State: AOAM533V3fFX977C5PD4+ePqGAD/QyVixBtT4llLL5xU8XhSwTx7JczB
+        IoDOqa9e72QhCvluuJWV4UOomPlFJQHBC7hI3nRtgT5gJ58=
+X-Google-Smtp-Source: ABdhPJw8zLpWLEyiCx8j4huFdDMF7DGsGTaKrD11EDdPJJUOzIBohDVQogjM8wrT9jJfSnGqSuMKQOWpX69bGjp2DEs=
+X-Received: by 2002:aca:654d:: with SMTP id j13mr3780480oiw.125.1621634576454;
+ Fri, 21 May 2021 15:02:56 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 21 May 2021 15:02:55 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20210521140031.1.Ibaca694aedfaff823feefa06b29ae746c641dd1a@changeid>
+References: <20210521140031.1.Ibaca694aedfaff823feefa06b29ae746c641dd1a@changeid>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.9.1
+Date:   Fri, 21 May 2021 15:02:55 -0700
+Message-ID: <CAE-0n52vsTV_GPRQ4Fyvm7WQ0HHZ3r2GK4F+qv8qm9659WqTmg@mail.gmail.com>
+Subject: Re: [PATCH 1/2] nvmem: core: constify nvmem_cell_read_variable_common()
+ return value
+To:     Douglas Anderson <dianders@chromium.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc:     Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, Joe Perches <joe@perches.com>,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This patch series contains change to move sdc pinconf from SoC specific
-DT file to board specific DT file. It also contain change to set sdc
-GPIO pin to bias-pull up
+Quoting Douglas Anderson (2021-05-21 14:00:57)
+> The caller doesn't modify the memory pointed to by the pointer so it
+> can be const.
+>
+> Suggested-by: Stephen Boyd <swboyd@chromium.org>
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> ---
 
-Tested sd card working on sc7180 based board
-
-Changes in v2:
-- added pull-up for IDP
-
-Sujit Kautkar (2):
-  arm64: dts: qcom: sc7180: Move sdc pinconf to board specific DT files
-  arm64: dts: qcom: sc7180: trogdor: SD-card GPIO pin set bias-pull up
-
- arch/arm64/boot/dts/qcom/sc7180-idp.dts      | 102 +++++++++++++++++++
- arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 102 +++++++++++++++++++
- arch/arm64/boot/dts/qcom/sc7180.dtsi         | 102 -------------------
- 3 files changed, 204 insertions(+), 102 deletions(-)
-
--- 
-2.31.1.818.g46aad6cb9e-goog
-
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
