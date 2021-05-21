@@ -2,96 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A0D9E38CE14
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 May 2021 21:20:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1BC1938CE55
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 May 2021 21:45:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234961AbhEUTWR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 May 2021 15:22:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51346 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235943AbhEUTWQ (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 May 2021 15:22:16 -0400
-Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com [IPv6:2607:f8b0:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C726C06138A
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 May 2021 12:20:53 -0700 (PDT)
-Received: by mail-oi1-x22a.google.com with SMTP id c3so20631509oic.8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 May 2021 12:20:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=FyO/JqUhnAJn7rTfn8HMrxZKns8UrOKW6CCN24xNmJw=;
-        b=kk8gvTxu2F6FrdI0CCGAN+iKSWE0a9uhN0j8qo4IKMjr/VC0lIWL6XiOgDlPtdF623
-         CgDQ0MAS2Pwe7I6Co6Q5OklTQ+cAJo60nXf1pusd86wdqCtcV96QXgcee72pWHjB8o5n
-         Af1Aiyu/o9TW7ARVZ+cMLA+XgrXvJbMpY7BXE=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=FyO/JqUhnAJn7rTfn8HMrxZKns8UrOKW6CCN24xNmJw=;
-        b=OyP/TfwrYRqmLe1SsG3y/1fGzPBeTO5hjkpMlOAtNHCxtFP4T4a7v76AnA0mP4+5+0
-         9URrBv84158QunJI9jYdTBAy61tJUhXR5W2OX1z2jDDRyqGHD45itnTUmKxjbfOj90tQ
-         76KuedtlG7Z828XxMWArOOKRwBWMFbD0PIQSZWR20Ajz9H6t8cLZAnAN1528Jr4gacxQ
-         ugZwmEJ73pavzxv6xMiXGKRl5H+yRAM1XnLLu3T8otnwNF7hMCW09az46gPGMLzsABFh
-         5MkeROMUtm9SjHJBNIJUIDDTkd6oqgsCmJgZBXhE4Ua2KS5exGeVp+VX0I9L5FfgFnpL
-         7t3w==
-X-Gm-Message-State: AOAM530l49IEbyxeVXZEXoTMgnsW3immvpVexFECwHlqF12FbJ84Cdjw
-        aEm/jxqgIr746WR7u/qYb1LyK5Qo6U6HiEP6V+eSAQ==
-X-Google-Smtp-Source: ABdhPJy0xJWiKIvi9XlPEdl1F62I8MviS/gKGFUSCatMzFM9St5OGzTTa5zc7lgCaUm5SAQeU9LfXzHShYT8+v3Ub2o=
-X-Received: by 2002:a54:4501:: with SMTP id l1mr3318840oil.19.1621624852348;
- Fri, 21 May 2021 12:20:52 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 21 May 2021 12:20:51 -0700
+        id S229535AbhEUTrN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 May 2021 15:47:13 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:33643 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229517AbhEUTrN (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 21 May 2021 15:47:13 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1621626349; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=zFQeR15yIV/MRBDjlnj5bg2b1g+GsEMnzWlVJyF+4vU=;
+ b=XWzP9idNKLzoJ8X12Kp6TdZgnXQljMzBqJZh0TjYyx3M7otOi/RLkH8ODbEfPrA/OUB05YfN
+ x+IUsnAGCSSShuqcUgJ0bWNDm/MDxDjY3B6KBYUWZkyJg3hA5reo7WzrRXy05qV+npxSIHbg
+ WKObkkOqfpjyBMVXPfAcujXhIVk=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
+ 60a80de0c229adfeff6ea01c (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 21 May 2021 19:45:36
+ GMT
+Sender: khsieh=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id CB70AC4323A; Fri, 21 May 2021 19:45:36 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: khsieh)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3AA00C4338A;
+        Fri, 21 May 2021 19:45:35 +0000 (UTC)
 MIME-Version: 1.0
-In-Reply-To: <79fdd08e974d6f6e35f0042c98a9415c@codeaurora.org>
-References: <20210512082220.7137-1-rojay@codeaurora.org> <CAE-0n52D-K1T0QgxA-S7BXxE3Qk807F9edNyR+2RL4YxRyigMg@mail.gmail.com>
- <70a90d229551bcec21ed74cfd1350b9b@codeaurora.org> <CAE-0n50o1XRnV3HSAM7uhfS8M3kf_m0DrTkqCfYGdnSjpF6Xfg@mail.gmail.com>
- <79fdd08e974d6f6e35f0042c98a9415c@codeaurora.org>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.9.1
-Date:   Fri, 21 May 2021 12:20:51 -0700
-Message-ID: <CAE-0n53f_=AZ2NPwuio6+k3_LpY1dkvKOMrqq+jf25hacVUpNw@mail.gmail.com>
-Subject: Re: [PATCH V10] i2c: i2c-qcom-geni: Add shutdown callback for i2c
-To:     rojay@codeaurora.org
-Cc:     wsa@kernel.org, dianders@chromium.org,
-        saiprakash.ranjan@codeaurora.org, gregkh@linuxfoundation.org,
-        mka@chromium.org, skananth@codeaurora.org,
-        msavaliy@qti.qualcomm.com, skakit@codeaurora.org,
-        rnayak@codeaurora.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org,
-        sumit.semwal@linaro.org, linux-media@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Fri, 21 May 2021 12:45:35 -0700
+From:   khsieh@codeaurora.org
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robdclark@gmail.com,
+        sean@poorly.run, vkoul@kernel.org, abhinavk@codeaurora.org,
+        aravindh@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v4 1/2] drm/msm/dp: handle irq_hpd with sink_count = 0
+ correctly
+In-Reply-To: <CAE-0n50BOV6UofBzqqb+KzcOR7W=h3VD2g4CzeqB6+a0v-aZUQ@mail.gmail.com>
+References: <1621013713-6860-1-git-send-email-khsieh@codeaurora.org>
+ <c1a3ced9ac4682bae310712a11576322@codeaurora.org>
+ <CAE-0n50yRCA00ck_FtXwzKw_R8UcocMzTh8V7NOe4ob__3G3bg@mail.gmail.com>
+ <e071434531947e5c4275a1a14b77b2c3@codeaurora.org>
+ <CAE-0n52rBrjy-=dpqK+dae2GNk1rAaQnKqCjzdqiAoS13gHpSQ@mail.gmail.com>
+ <f476d82d0798e0d7eb9e12949aa2c8f1@codeaurora.org>
+ <CAE-0n51+mbCAqWWTOMDA4Rx_=96V4tK8g+UWVZ-nnp50dFzRPA@mail.gmail.com>
+ <5d341df202facb3240a72cfb35e18167@codeaurora.org>
+ <CAE-0n50u-qGvqzJThc+ggghv6ZErPr8g8dhvgequBm5CWOR2Kw@mail.gmail.com>
+ <1e9970ee1a7109e336bc6ed51e727442@codeaurora.org>
+ <CAE-0n50BOV6UofBzqqb+KzcOR7W=h3VD2g4CzeqB6+a0v-aZUQ@mail.gmail.com>
+Message-ID: <fc6542f2e760fa92aef73fdb9a789b2d@codeaurora.org>
+X-Sender: khsieh@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting rojay@codeaurora.org (2021-05-21 09:12:02)
->
-> Yes, we cannot mark device as suspended/resumed during
-> runtime PM operations. Bus will be resumed during i2c
-> transfers and before transfer initiation, in __i2c_transfer()
-> from i2c-core-base.c there is a check to see whether the device
-> is marked as suspended with "__i2c_check_suspended(adap)" call,
-> which is "true" in this case and returning from there.
->
-> To mark it only suspended during system wide suspend/resume
-> transitions, currently our geni i2c driver has only
-> system_suspend implemented (geni_i2c_suspend_noirq()) and
-> does not have system_resume implemented, which again causes i2c
-> transfers to fail during system_resume after system_suspend.
+On 2021-05-21 12:18, Stephen Boyd wrote:
+> Quoting khsieh@codeaurora.org (2021-05-21 08:21:58)
+>> >
+>> > Ok. So you're saying that we want to put both events on the queue
+>> > regardless, and put IRQ_HPD there first because we want to check the
+>> > status bit? Doesn't reading the status bit require the dongle to be
+>> > connected though? So if an unplug came in along with an irq_hpd we may
+>> > queue both the irq_hpd and the unplug, but when it comes time to
+>> > process
+>> > the irq_hpd in the kthread the link will be gone and so trying the dpcd
+>> > read for the link status will fail?
+>> >
+>> yes,
+>> we had a previous bug with this scenarios already.
+>> https://partnerissuetracker.corp.google.com/issues/170598152
+>> At this case, dongle produce two interrupts, irq_hpd followed by 
+>> unplug
+>> immediately (not presented at isr status register at same time), at 
+>> the
+>> time dongle unplugged form DTU.
+>> But due to dp ctrl reset at handling irq_hpd which cause unplug mask 
+>> bit
+>> be cleared so that unplug interrupt got lost.
+>> 
+> 
+> Again, wouldn't that be too late if the hardirq handler is delayed to
+> the point that the two irqs are pending in the isr status register?
 
-Got it.
+yes,
+but that not much dp driver can do.
+As long as DP driver can recovery (shut down gracefully) and ready for 
+next plugin, then i think it should be fine.
 
->
-> Shall I go ahead with marking device suspended during
-> shutdown() only?
->
 
-Yes that sounds good. Can you send two patches, one to mark suspend in
-the system PM paths and one in the shutdown path? There are various bugs
-to fix in other drivers that are trying to use the i2c bus after it has
-been suspended and shutdown, but that doesn't block these patches from
-moving forward. I'll take a look and see what's going on with
-suspend/resume on my board.
