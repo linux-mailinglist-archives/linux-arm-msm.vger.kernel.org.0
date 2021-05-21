@@ -2,100 +2,197 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C09AD38CC61
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 May 2021 19:39:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AF25B38CD6A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 May 2021 20:29:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234976AbhEURkd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 May 2021 13:40:33 -0400
-Received: from mail.kernel.org ([198.145.29.99]:49892 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S234840AbhEURkd (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 May 2021 13:40:33 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 0F2F661168;
-        Fri, 21 May 2021 17:39:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1621618749;
-        bh=xIU5ACJ/zvjxXAeKUhYIJa45BvsuyHjYVFRV6Y7K0+I=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=A0UpcUdqp6ZueQ9En2V3wtWcwDRT+ejuZ80d97iMFsaOtEDRWzutc4NoLsbLlglRq
-         1gYNfSSytgSVqVCSdZX3igFQjYK0/+WkKJmRp1YhTVJNfcvC4rVEBYfugAO13ljrvW
-         rm59ifBWLtHZqC1ErM9y6h6WtUy050BfGykARSanPG2mJS3wcnK2ppQy7dgoET9q3o
-         4087I1LErfm+zCW0s9Hu/UjDxrcero6Ne3TnOm8kh2YEvS8I98YptGkaw9uqf9jnbm
-         mU8u+JVs9W4y1tOarHqifYzWSyTM5i+/7KV+JRuBkw5PH7en27yZ1t+Cq9Cg1s17jJ
-         U2wQ4SWh69B+Q==
-Date:   Fri, 21 May 2021 23:09:04 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Loic Poulain <loic.poulain@linaro.org>
-Cc:     hemantk@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        bbhatt@codeaurora.org
-Subject: Re: [PATCH v2] bus: mhi: core: Fix power down latency
-Message-ID: <20210521173904.GS70095@thinkpad>
-References: <1620029090-8975-1-git-send-email-loic.poulain@linaro.org>
+        id S231866AbhEUSae (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 May 2021 14:30:34 -0400
+Received: from mail-oi1-f181.google.com ([209.85.167.181]:33369 "EHLO
+        mail-oi1-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229762AbhEUSad (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 21 May 2021 14:30:33 -0400
+Received: by mail-oi1-f181.google.com with SMTP id b25so20567696oic.0;
+        Fri, 21 May 2021 11:29:10 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=8emx9ZI3CrAcxovqlGVNx1EFwTvU6MTMB4GL7Tv15Ik=;
+        b=RMDSpOenNDp8BeUvDibf/0rXAsrxqsWFtoT7UUQZYUUDbYzHd6W1XUZ+fhKKM28lSl
+         rc8tBOjbsL3rQ7V1eQYgHfM6wpAC2JcOUhSaUgx9MLbDbOnZmO6dy5UUYakTnfEf33AI
+         eHGGF1POfujQR/ZMNxA3MxRL4sJ03O841IgY/GwkLgc/pmdA/kBthmwiS6z4YvEZF7GT
+         KGRFGrdQ+VnplgxfzCC2yb9D/zeuSM6LZa1/o8lCIQKj493UvkiJvu/j2rWAasrqdHYo
+         XVeBbSMR6ldX9pTsHBjhx+e+MmimOc89wXhbJdIBFPCOsu2gUtIN1FjyEbeak1dwjdRW
+         zn0g==
+X-Gm-Message-State: AOAM532J0iyxpFTmA9EzWqoN8Kh8IFcWsuTVQJlaRxW8ejpiFceCIxyr
+        pSU2gprgchKy1EOW0+Ae8Q==
+X-Google-Smtp-Source: ABdhPJzImzD+1PZ0sMh1zRAT7Crgc0DGWCKYrQp2JRd0FGG8b+zGLHg3aLxiNlyHeWoG3rKDP/yUAg==
+X-Received: by 2002:aca:d18:: with SMTP id 24mr2997436oin.56.1621621750075;
+        Fri, 21 May 2021 11:29:10 -0700 (PDT)
+Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id e21sm1296649oie.32.2021.05.21.11.29.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 21 May 2021 11:29:09 -0700 (PDT)
+Received: (nullmailer pid 162381 invoked by uid 1000);
+        Fri, 21 May 2021 18:29:07 -0000
+Date:   Fri, 21 May 2021 13:29:07 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Krishna Manikandan <mkrishn@codeaurora.org>
+Cc:     dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
+        swboyd@chromium.org, khsieh@codeaurora.org,
+        linux-kernel@vger.kernel.org, freedreno@lists.freedesktop.org,
+        dianders@chromium.org, tanmay@codeaurora.org, robh+dt@kernel.org,
+        kalyan_t@codeaurora.org, sean@poorly.run,
+        linux-arm-msm@vger.kernel.org, abhinavk@codeaurora.org,
+        vinod.koul@linaro.org, bjorn.andersson@linaro.org
+Subject: Re: [PATCH v17 1/4] dt-bindings: msm: disp: add yaml schemas for DPU
+ bindings
+Message-ID: <20210521182907.GA161758@robh.at.kernel.org>
+References: <1621592844-6414-1-git-send-email-mkrishn@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1620029090-8975-1-git-send-email-loic.poulain@linaro.org>
+In-Reply-To: <1621592844-6414-1-git-send-email-mkrishn@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, May 03, 2021 at 10:04:50AM +0200, Loic Poulain wrote:
-> On graceful power-down/disable transition, when an MHI reset is
-> performed, the MHI device loses its context, including interrupt
-> configuration. However, the current implementation is waiting for
-> event(irq) driven state change to confirm reset has been completed,
-> which never happens, and causes reset timeout, leading to unexpected
-> high latency of the mhi_power_down procedure (up to 45 seconds).
+On Fri, 21 May 2021 15:57:21 +0530, Krishna Manikandan wrote:
+> MSM Mobile Display Subsystem (MDSS) encapsulates sub-blocks
+> like DPU display controller, DSI etc. Add YAML schema
+> for DPU device tree bindings.
 > 
-> Fix that by moving to the recently introduced poll_reg_field method,
-> waiting for the reset bit to be cleared, in the same way as the
-> power_on procedure.
+> Signed-off-by: Krishna Manikandan <mkrishn@codeaurora.org>
 > 
-> Fixes: a6e2e3522f29 ("bus: mhi: core: Add support for PM state transitions")
-> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
-
-Applied to mhi-fixes!
-
-Thanks,
-Mani
-
+> Changes in v2:
+>     - Changed dpu to DPU (Sam Ravnborg)
+>     - Fixed indentation issues (Sam Ravnborg)
+>     - Added empty line between different properties (Sam Ravnborg)
+>     - Replaced reference txt files with  their corresponding
+>       yaml files (Sam Ravnborg)
+>     - Modified the file to use "|" only when it is
+>       necessary (Sam Ravnborg)
+> 
+> Changes in v3:
+>     - Corrected the license used (Rob Herring)
+>     - Added maxItems for properties (Rob Herring)
+>     - Dropped generic descriptions (Rob Herring)
+>     - Added ranges property (Rob Herring)
+>     - Corrected the indendation (Rob Herring)
+>     - Added additionalProperties (Rob Herring)
+>     - Split dsi file into two, one for dsi controller
+>       and another one for dsi phy per target (Rob Herring)
+>     - Corrected description for pinctrl-names (Rob Herring)
+>     - Corrected the examples used in yaml file (Rob Herring)
+>     - Delete dsi.txt and dpu.txt (Rob Herring)
+> 
+> Changes in v4:
+>     - Move schema up by one level (Rob Herring)
+>     - Add patternProperties for mdp node (Rob Herring)
+>     - Corrected description of some properties (Rob Herring)
+> 
+> Changes in v5:
+>     - Correct the indentation (Rob Herring)
+>     - Remove unnecessary description from properties (Rob Herring)
+>     - Correct the number of interconnect entries (Rob Herring)
+>     - Add interconnect names for sc7180 (Rob Herring)
+>     - Add description for ports (Rob Herring)
+>     - Remove common properties (Rob Herring)
+>     - Add unevalutatedProperties (Rob Herring)
+>     - Reference existing dsi controller yaml in the common
+>       dsi controller file (Rob Herring)
+>     - Correct the description of clock names to include only the
+>       clocks that are required (Rob Herring)
+>     - Remove properties which are already covered under the common
+>       binding (Rob Herring)
+>     - Add dsi phy supply nodes which are required for sc7180 and
+>       sdm845 targets (Rob Herring)
+>     - Add type ref for syscon-sfpb (Rob Herring)
+> 
+> Changes in v6:
+>     - Fixed errors during dt_binding_check (Rob Herring)
+>     - Add maxItems for phys and phys-names (Rob Herring)
+>     - Use unevaluatedProperties wherever required (Rob Herring)
+>     - Removed interrupt controller from required properties for
+>       dsi controller (Rob Herring)
+>     - Add constraints for dsi-phy reg-names based on the compatible
+>       phy version (Rob Herring)
+>     - Add constraints for dsi-phy supply nodes based on the
+>       compatible phy version (Rob Herring)
+> 
+> Changes in v7:
+>     - Add default value for qcom,mdss-mdp-transfer-time-us (Rob Herring)
+>     - Modify the schema for data-lanes (Rob Herring)
+>     - Split the phy schema into separate schemas based on
+>       the phy version (Rob Herring)
+> 
+> Changes in v8:
+>     - Resolve merge conflicts with latest dsi.txt file
+>     - Include dp yaml change also in the same series
+> 
+> Changes in v9:
+>     - Combine target specific dsi controller yaml files
+>       to a single yaml file (Rob Herring)
+>     - Combine target specific dsi phy yaml files into a
+>       single yaml file (Rob Herring)
+>     - Use unevaluatedProperties and additionalProperties
+>       wherever required
+>     - Remove duplicate properties from common yaml files
+> 
+> Changes in v10:
+>     - Split the patch into separate patches for DPU, DSI and
+>       PHY (Stephen Boyd)
+>     - Drop unnecessary fullstop (Stephen Boyd)
+>     - Add newline whereever required (Stephen Boyd)
+>     - Add description for clock used (Stephen Boyd)
+>     - Modify the description for interconnect entries  (Stephen Boyd)
+>     - Drop assigned clock entries as it a generic property (Stephen Boyd)
+>     - Correct the definition for interrupts (Stephen Boyd)
+>     - Drop clock names from required properties (Stephen Boyd)
+>     - Drop labels for display nodes from example (Stephen Boyd)
+>     - Drop flags from interrupts entries (Stephen Boyd)
+> 
+> Changes in v11:
+>     - Drop maxItems for clocks (Stephen Boyd)
+> 
+> Changes in v12:
+>     - Add description for register property (Stephen Boyd)
+>     - Add maxItems for interrupts (Stephen Boyd)
+>     - Add description for iommus property (Stephen Boyd)
+>     - Add description for interconnects (Stephen Boyd)
+>     - Change display node name to display_controller (Stephen Boyd)
+> 
+> Changes in v13:
+>     - Add maxItems for reg property (Stephen Boyd)
+>     - Add ranges property in example (Stephen Boyd)
+>     - Modify description for iommus property (Stephen Boyd)
+>     - Add Dp bindings for ports in the same patch (Stephen Boyd)
+>     - Remove soc from examples and change address and size cells
+>       accordingly (Stephen Boyd)
+>     - Add reference for ports
+> 
+> Changes in v14:
+>     - Modify title for SC7180 and SDM845 yaml files (Stephen Boyd)
+>     - Add required list for display-controller node (Stephen Boyd)
+> 
+> Changes in v16:
+>     - Add reference for port (Rob Herring)
+>     - Make additionalProperties as false (Rob Herring)
 > ---
->  drivers/bus/mhi/core/pm.c | 18 +++++-------------
->  1 file changed, 5 insertions(+), 13 deletions(-)
+>  .../bindings/display/msm/dpu-sc7180.yaml           | 228 +++++++++++++++++++++
+>  .../bindings/display/msm/dpu-sdm845.yaml           | 212 +++++++++++++++++++
+>  .../devicetree/bindings/display/msm/dpu.txt        | 141 -------------
+>  3 files changed, 440 insertions(+), 141 deletions(-)
+>  create mode 100644 Documentation/devicetree/bindings/display/msm/dpu-sc7180.yaml
+>  create mode 100644 Documentation/devicetree/bindings/display/msm/dpu-sdm845.yaml
+>  delete mode 100644 Documentation/devicetree/bindings/display/msm/dpu.txt
 > 
-> diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
-> index e2e59a3..704a5e2 100644
-> --- a/drivers/bus/mhi/core/pm.c
-> +++ b/drivers/bus/mhi/core/pm.c
-> @@ -465,23 +465,15 @@ static void mhi_pm_disable_transition(struct mhi_controller *mhi_cntrl)
->  
->  	/* Trigger MHI RESET so that the device will not access host memory */
->  	if (!MHI_PM_IN_FATAL_STATE(mhi_cntrl->pm_state)) {
-> -		u32 in_reset = -1;
-> -		unsigned long timeout = msecs_to_jiffies(mhi_cntrl->timeout_ms);
-> -
->  		dev_dbg(dev, "Triggering MHI Reset in device\n");
->  		mhi_set_mhi_state(mhi_cntrl, MHI_STATE_RESET);
->  
->  		/* Wait for the reset bit to be cleared by the device */
-> -		ret = wait_event_timeout(mhi_cntrl->state_event,
-> -					 mhi_read_reg_field(mhi_cntrl,
-> -							    mhi_cntrl->regs,
-> -							    MHICTRL,
-> -							    MHICTRL_RESET_MASK,
-> -							    MHICTRL_RESET_SHIFT,
-> -							    &in_reset) ||
-> -					!in_reset, timeout);
-> -		if (!ret || in_reset)
-> -			dev_err(dev, "Device failed to exit MHI Reset state\n");
-> +		ret = mhi_poll_reg_field(mhi_cntrl, mhi_cntrl->regs, MHICTRL,
-> +				 MHICTRL_RESET_MASK, MHICTRL_RESET_SHIFT, 0,
-> +				 25000);
-> +		if (ret)
-> +			dev_err(dev, "Device failed to clear MHI Reset\n");
->  
->  		/*
->  		 * Device will clear BHI_INTVEC as a part of RESET processing,
-> -- 
-> 2.7.4
-> 
+
+
+Please add Acked-by/Reviewed-by tags when posting new versions. However,
+there's no need to repost patches *only* to add the tags. The upstream
+maintainer will do that for acks received on the version they apply.
+
+If a tag was not added on purpose, please state why and what changed.
+
