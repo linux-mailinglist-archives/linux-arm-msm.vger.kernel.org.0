@@ -2,27 +2,27 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7A5AE38C70A
+	by mail.lfdr.de (Postfix) with ESMTP id C067E38C70B
 	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 May 2021 14:51:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235094AbhEUMwb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 May 2021 08:52:31 -0400
-Received: from mail.kernel.org ([198.145.29.99]:34316 "EHLO mail.kernel.org"
+        id S234934AbhEUMwc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 May 2021 08:52:32 -0400
+Received: from mail.kernel.org ([198.145.29.99]:34372 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S234911AbhEUMwP (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 May 2021 08:52:15 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id A822D613E1;
-        Fri, 21 May 2021 12:50:48 +0000 (UTC)
+        id S234950AbhEUMwT (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 21 May 2021 08:52:19 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 17FE4613DD;
+        Fri, 21 May 2021 12:50:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1621601452;
+        s=k20201202; t=1621601456;
         bh=Y6oR0c4fZFzazX3E5d47MSfaK8VBELYA/cqVKr86K0Q=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=SyD6SrfwUWsrUjTwyqnxtuT3D4gOGroTKnqxSpmqMuTgvKgJbFkfyT/dCHaspgSvp
-         Gvc0+KJVKbvCAscrHU/G6A38DgOnXRYmmJKYHAXy2CyTAKtqtPEo69MPVO+cGpExM0
-         ZtLyWSTFM34U7t+BH0IZQ/IFul+wXktg5O6/WZ9aNqxHHsU9qqLhK0emt/zOE275dY
-         KLAVHARpFGzLPSLtZdxxO0JXSJ89R9OU3ZKT+b4sTIKDW76DG3oULAPmEJrxGdTn55
-         +f6QLzq6dV4iPyAz9uMmMVTvzOAkTyE5UHy0hvWm2a+cz97NtE8FOKhVUA1RrU5+TN
-         zDNxaAgGyvQew==
+        b=Ez8g6zKIWFa0iXr/TmnV7hC8yycw1QjLElWJHhL1qeADa6euFZ/OqxcqDBcwn6Q2z
+         yzdWzDqFy5C7gHcyEJKbIKL1Rq6nvwyyGwHypQfo4afjU/qEWTNPvCq6E0r0x+CLuw
+         KlwKC4v0yEiTHqg2Qzo9/kSs/fbg+/DnF3Lq11Zyezjoj4bn9zSy5WTqZRJwnGLxWK
+         OEMOlDYWa8sxOeAy2l5Bt1S/61hhLPGyXgFHMEa8pY2FrnqTM15IlBAwQEuEYBKp7Z
+         FHwDW2lGghykiaA+aBNAyadcurEvTzTDzSRQ9g7jd90YacpvZ+MLH+bhYojIc2kWs1
+         +NIiX1KV6QoEQ==
 From:   Vinod Koul <vkoul@kernel.org>
 To:     Rob Clark <robdclark@gmail.com>
 Cc:     linux-arm-msm@vger.kernel.org,
@@ -34,9 +34,9 @@ Cc:     linux-arm-msm@vger.kernel.org,
         Abhinav Kumar <abhinavk@codeaurora.org>,
         linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
-Subject: [RFC PATCH 09/13] drm/msm/disp/dpu1: Don't use DSC with mode_3d
-Date:   Fri, 21 May 2021 18:19:41 +0530
-Message-Id: <20210521124946.3617862-13-vkoul@kernel.org>
+Subject: [RFC PATCH 09/13] drm/msm/disp/dpu1: Dont use DSC with mode_3d
+Date:   Fri, 21 May 2021 18:19:42 +0530
+Message-Id: <20210521124946.3617862-14-vkoul@kernel.org>
 X-Mailer: git-send-email 2.26.3
 In-Reply-To: <20210521124946.3617862-1-vkoul@kernel.org>
 References: <20210521124946.3617862-1-vkoul@kernel.org>
