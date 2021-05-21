@@ -2,54 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DECA238CC5C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 May 2021 19:37:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7C20E38CC5F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 May 2021 19:38:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232624AbhEURjL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 May 2021 13:39:11 -0400
-Received: from mail.kernel.org ([198.145.29.99]:49724 "EHLO mail.kernel.org"
+        id S238235AbhEURjd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 May 2021 13:39:33 -0400
+Received: from mail.kernel.org ([198.145.29.99]:49810 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S238273AbhEURjL (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 May 2021 13:39:11 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 476B6611AB;
-        Fri, 21 May 2021 17:37:44 +0000 (UTC)
+        id S235715AbhEURjb (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 21 May 2021 13:39:31 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 27E87611AB;
+        Fri, 21 May 2021 17:38:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1621618668;
-        bh=Pnku/X/HVYx7SW+LNkrVaiceNcDkgQAQ/XVQX7uC1iI=;
+        s=k20201202; t=1621618687;
+        bh=6KqEfYkDcoTb6Jwh7h3ZcahKjT4Yfi70EmtRbuy7RLo=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=BVLlJz3Yi9KZUihNkcNOuTRLhRitydgzlV0/mhPtwAIGbdqSc/O+bsp9zu5fGmLta
-         7QbcfvBsg02PiMsEaIm0NsqwZB0cYH2lt1hOHESu1GRao/N1gYvmUHZ0O5Y6zPjlsA
-         Ko05vXFD4FzJ36k8qRzPSWpMRSj+uHohzwAqgz9qSvivOXJDiNVzBPvmjd5bSCNDHK
-         +bNYcN/SWhbZzxCumBiTTzdHCuMblenbnPh5l3/oOY2rXq/swysUGuUNtIhCHW8y2m
-         dkbG/ExFk6ykeTgFzv5jBUJuV/4zv8EwA/qTQKE9xpWU3k14EJC5Fg8RjNHjtcdaOH
-         Bz/C6Sfh7IB5A==
-Date:   Fri, 21 May 2021 23:07:38 +0530
+        b=EViyEUm/3szNNeeSikyCz5/891e36M5WtDqih5VPwrBtKo+VgPm/DOiZvkt9T59yX
+         NFC//5BjgxPWCizubfiH0ZsNMsKrrYeafmNKglzqVXx/NsLXCwRiHxeRA3VXxaVzun
+         mOEHeiYC0Pw784ga/uClmNAhA1RV3ZwjklsuVOGE2yGCQhX3s/6IjXgL6ck9uuNh49
+         d7H0Pmyq69Z8Tcvd5bSAU6a0npy7oib78V4h9d5MViZcy5RH20YXM+pNqb/mnibKTG
+         aKG0cdwTie/kS8qYR6BjLIiXmZ9rGis46yknZBQVw1KpUlDV05uc7DaVddB0UUDkhE
+         kfILHZJ8RBEzw==
+Date:   Fri, 21 May 2021 23:07:59 +0530
 From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Jarvis Jiang <jarvis.w.jiang@gmail.com>
-Cc:     hemantk@codeaurora.org, loic.poulain@linaro.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        cchen50@lenovo.com, mpearson@lenovo.com
-Subject: Re: [PATCH v2] bus: mhi: pci_generic: T99W175: update channel name
- from AT to DUN
-Message-ID: <20210521173738.GQ70095@thinkpad>
-References: <20210429014226.21017-1-jarvis.w.jiang@gmail.com>
+To:     Wei Yongjun <weiyongjun1@huawei.com>
+Cc:     Loic Poulain <loic.poulain@linaro.org>,
+        Hemant Kumar <hemantk@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, kernel-janitors@vger.kernel.org,
+        Hulk Robot <hulkci@huawei.com>
+Subject: Re: [PATCH -next] bus: mhi: pci_generic: Fix possible use-after-free
+ in mhi_pci_remove()
+Message-ID: <20210521173759.GR70095@thinkpad>
+References: <20210413160318.2003699-1-weiyongjun1@huawei.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20210429014226.21017-1-jarvis.w.jiang@gmail.com>
+In-Reply-To: <20210413160318.2003699-1-weiyongjun1@huawei.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Apr 28, 2021 at 06:42:26PM -0700, Jarvis Jiang wrote:
-> According to MHI v1.1 specification, change the channel name of T99W175
-> from "AT" to "DUN" (Dial-up networking) for both channel 32 and 33,
-> so that the channels can be bound to the Qcom WWAN control driver, and
-> device node such as /dev/wwan0p3AT will be generated, which is very useful
-> for debugging modem
+On Tue, Apr 13, 2021 at 04:03:18PM +0000, Wei Yongjun wrote:
+> This driver's remove path calls del_timer(). However, that function
+> does not wait until the timer handler finishes. This means that the
+> timer handler may still be running after the driver's remove function
+> has finished, which would result in a use-after-free.
 > 
-> Fixes: aac426562f56 ("bus: mhi: pci_generic: Introduce Foxconn T99W175 support")
-> Signed-off-by: Jarvis Jiang <jarvis.w.jiang@gmail.com>
+> Fix by calling del_timer_sync(), which makes sure the timer handler
+> has finished, and unable to re-schedule itself.
+> 
+> Fixes: 8562d4fe34a3 ("mhi: pci_generic: Add health-check")
+> Reported-by: Hulk Robot <hulkci@huawei.com>
+> Signed-off-by: Wei Yongjun <weiyongjun1@huawei.com>
 
 Applied to mhi-fixes!
 
@@ -57,27 +61,20 @@ Thanks,
 Mani
 
 > ---
-> 
-> v2: Add: Fixes: aac426562f56
-> 
->  drivers/bus/mhi/pci_generic.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+>  drivers/bus/mhi/pci_generic.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
 > diff --git a/drivers/bus/mhi/pci_generic.c b/drivers/bus/mhi/pci_generic.c
-> index 7c810f02a2ef..8c7f6576e421 100644
+> index 7c810f02a2ef..5b19e877d17a 100644
 > --- a/drivers/bus/mhi/pci_generic.c
 > +++ b/drivers/bus/mhi/pci_generic.c
-> @@ -311,8 +311,8 @@ static const struct mhi_channel_config mhi_foxconn_sdx55_channels[] = {
->  	MHI_CHANNEL_CONFIG_DL(5, "DIAG", 32, 1),
->  	MHI_CHANNEL_CONFIG_UL(12, "MBIM", 32, 0),
->  	MHI_CHANNEL_CONFIG_DL(13, "MBIM", 32, 0),
-> -	MHI_CHANNEL_CONFIG_UL(32, "AT", 32, 0),
-> -	MHI_CHANNEL_CONFIG_DL(33, "AT", 32, 0),
-> +	MHI_CHANNEL_CONFIG_UL(32, "DUN", 32, 0),
-> +	MHI_CHANNEL_CONFIG_DL(33, "DUN", 32, 0),
->  	MHI_CHANNEL_CONFIG_HW_UL(100, "IP_HW0_MBIM", 128, 2),
->  	MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0_MBIM", 128, 3),
->  };
-> -- 
-> 2.25.1
+> @@ -708,7 +708,7 @@ static void mhi_pci_remove(struct pci_dev *pdev)
+>  	struct mhi_pci_device *mhi_pdev = pci_get_drvdata(pdev);
+>  	struct mhi_controller *mhi_cntrl = &mhi_pdev->mhi_cntrl;
+>  
+> -	del_timer(&mhi_pdev->health_check_timer);
+> +	del_timer_sync(&mhi_pdev->health_check_timer);
+>  	cancel_work_sync(&mhi_pdev->recovery_work);
+>  
+>  	if (test_and_clear_bit(MHI_PCI_DEV_STARTED, &mhi_pdev->status)) {
 > 
