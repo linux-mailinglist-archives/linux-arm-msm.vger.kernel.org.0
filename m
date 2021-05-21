@@ -2,206 +2,159 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CA75C38CB22
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 May 2021 18:35:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ABEE838CB9D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 May 2021 19:11:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237157AbhEUQhD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 May 2021 12:37:03 -0400
-Received: from mail.kernel.org ([198.145.29.99]:38208 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S236370AbhEUQhC (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 May 2021 12:37:02 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id A35D3613E3;
-        Fri, 21 May 2021 16:35:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1621614939;
-        bh=fbS4tegkDEGEwjG+qSSclbPKmztmBb0iRMLQXbmx4/4=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=iDWMlKelM2KVVp9hgNrNjtTZpPuH/fL6EYO4kccVeu+v1g5bGC7QrXsqnBe5fiCFX
-         cSW0/3Ony/CFYht98GfuRxgIYyIxH0liquTJlLSCWXPDFvPhAw3CXIOAO7zkRfQzpx
-         JXbNEcN2UZUIyWzf4AnnP5S6ZL/Mbmxyc8C6537o/pojNlSVRBmC9uTbNT/ZVA3qa1
-         3lbnSpSKPM+MEN2oS8ZLPMMlRgBYB+aIm0ZwbhNwSufvYgDzLjbCM4xMAinwNDZPLz
-         O6nfDJng503NBlqZN7GU4CJuICJjVU9acmY3ABhqhaMLGSFRIslam/zmBo84JZPoul
-         taKhEuNR5YwPg==
-Date:   Fri, 21 May 2021 22:05:30 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Loic Poulain <loic.poulain@linaro.org>
-Cc:     hemantk@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        bbhatt@codeaurora.org, netdev@vger.kernel.org, davem@davemloft.net,
-        kuba@kernel.org
-Subject: Re: [PATCH v2] bus: mhi: Add inbound buffers allocation flag
-Message-ID: <20210521163530.GO70095@thinkpad>
-References: <1621603519-16773-1-git-send-email-loic.poulain@linaro.org>
+        id S238017AbhEURNC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 May 2021 13:13:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50126 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229575AbhEURNB (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 21 May 2021 13:13:01 -0400
+Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E9A8C061574
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 May 2021 10:11:38 -0700 (PDT)
+Received: by mail-ot1-x329.google.com with SMTP id i23-20020a9d68d70000b02902dc19ed4c15so18713946oto.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 May 2021 10:11:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=e9JeVn1G8IdnIeIesci3+Ayk5EovOq0M3s+2FeKNFK0=;
+        b=pvPG2IpXF0bJcf/z/J6X/Jv/vHW0axAut+lT9rP4IJIFi/HUxPlCmpuFAhpJqpu8Qm
+         UKWNsaKRLrau75GJcP1RCp9U6Bjer9Z9dXkVlW74husfn10xGO2KrszYfsxXxprr0EXz
+         Q2X7i3RQzM2yfE8HcE4/cfKQAUwL2f62pg9Q0FhUV3JfqIc6uD4J9EW7h4TLe5UwbpdY
+         Ra3rqKrtZRBn9HfWadnIHfQ7Dz/cBqOK+eNhoShTmjYFetUdRqVcXACMtXFJFVv6gm2H
+         /lpBq543BSbByfrbXjd1cCNvgLCnoxoVovGQfv96UBW+qBRctQ0R7dbuxielpsvbVPP/
+         Qqng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=e9JeVn1G8IdnIeIesci3+Ayk5EovOq0M3s+2FeKNFK0=;
+        b=d0KrhQmitpF+WAOi8MerTZWQGp7fhGBK/dQaKp9DihosQqJXQwseqjOgrfZ006lmu6
+         VR52Ns8Wyh89laH90iR40DY9aEG7DZVzYlmC+UeMPTp7WyzJaS4JzbY+dhT6m2sC7PB2
+         UzYAwZfwBFX2prt0RkqZ7k/5V2xLSgwAqLjdOGnZ4OOtlzva5iFnMGtC+3FkPPNaRkzx
+         /RCfP3S/WuG4pOmFsxNe/sKXfgFHEZpzlZlSsxUyQ3mgjHnoAZUj8Owz2OtLUAsHpdbj
+         OEy0f3J36lr2OjOepKEIzgordt70BSg/MccIGpg8qLuU3joi4ffKGIvf6yZ17u1GNjrW
+         rRwA==
+X-Gm-Message-State: AOAM530bwX3YdfMMyZQ19Po+zOlj4YbCK28adCfS+A+drf+xCvxDBk+A
+        Wb5K62ZBYocAEiMv0hctB3RjAA==
+X-Google-Smtp-Source: ABdhPJyr6YEiNQNOwzD5WfXzXxLiSfPTTV2nKIC0FlJZRbbESbv1j2UsCVQtzVFeDjV+o96hBm31nQ==
+X-Received: by 2002:a9d:453:: with SMTP id 77mr9684827otc.31.1621617097435;
+        Fri, 21 May 2021 10:11:37 -0700 (PDT)
+Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id e26sm1209578oig.9.2021.05.21.10.11.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 21 May 2021 10:11:36 -0700 (PDT)
+Date:   Fri, 21 May 2021 12:11:34 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Krishna Manikandan <mkrishn@codeaurora.org>
+Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, kalyan_t@codeaurora.org,
+        tanmay@codeaurora.org, abhinavk@codeaurora.org,
+        robdclark@gmail.com, swboyd@chromium.org, vinod.koul@linaro.org,
+        dianders@chromium.org, khsieh@codeaurora.org, robh+dt@kernel.org,
+        sean@poorly.run, robh@kernel.org
+Subject: Re: [PATCH v17 1/4] dt-bindings: msm: disp: add yaml schemas for DPU
+ bindings
+Message-ID: <20210521171134.GB2484@yoga>
+References: <1621592844-6414-1-git-send-email-mkrishn@codeaurora.org>
+ <20210521160029.GA2484@yoga>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1621603519-16773-1-git-send-email-loic.poulain@linaro.org>
+In-Reply-To: <20210521160029.GA2484@yoga>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-+ netdev, Dave, Jakub
+On Fri 21 May 11:00 CDT 2021, Bjorn Andersson wrote:
 
-On Fri, May 21, 2021 at 03:25:19PM +0200, Loic Poulain wrote:
-> Currently, the MHI controller driver defines which channels should
-> have their inbound buffers allocated and queued. But ideally, this is
-> something that should be decided by the MHI device driver instead,
-> which actually deals with that buffers.
+> On Fri 21 May 05:27 CDT 2021, Krishna Manikandan wrote:
+> > diff --git a/Documentation/devicetree/bindings/display/msm/dpu-sc7180.yaml b/Documentation/devicetree/bindings/display/msm/dpu-sc7180.yaml
+> [..]
+> > +      ports:
+> > +        $ref: /schemas/graph.yaml#/properties/ports
+> > +        description: |
+> > +          Contains the list of output ports from DPU device. These ports
+> > +          connect to interfaces that are external to the DPU hardware,
+> > +          such as DSI, DP etc. Each output port contains an endpoint that
+> > +          describes how it is connected to an external interface.
+> > +
+> > +        properties:
+> > +          port@0:
+> > +            $ref: /schemas/graph.yaml#/properties/port
+> > +            description: DPU_INTF1 (DSI1)
+> > +
+> > +          port@2:
+> > +            $ref: /schemas/graph.yaml#/properties/port
+> > +            description: DPU_INTF0 (DP)
 > 
-> Add a flag parameter to mhi_prepare_for_transfer allowing to specify
-> if buffers have to be allocated and queued by the MHI stack.
+> Why is port@0 INTF1 and why is port@2 INTF0? In the binding you're
+> translating the two ports that are described are 0 and 1, representing
+> INTF1 and INTF2, or DSI1 and DSI2, respectively.
 > 
-> Keep auto_queue flag for now, but should be removed at some point.
+> Further more, I have a need for somehow describing the pairing of 4 DP
+> INTFs (INTF 0, 3, 4 and 5) and how they are connected to the 3+1 DP+eDP
+> controllers.
 > 
-> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
-> Tested-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
-> Reviewed-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
-> Reviewed-by: Hemant Kumar <hemantk@codeaurora.org>
-> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> ---
->  v2: Update API in mhi_wwan_ctrl driver
+> Downstream this seems to be handled by adding cell-index to the DP
+> controllers and then matching that against the numbering in the driver's
+> INTF array. But rather than adding cell-index to map this, can't we
+> define that the port index is the INTF-number here?
 > 
->  drivers/bus/mhi/core/internal.h  |  2 +-
->  drivers/bus/mhi/core/main.c      | 11 ++++++++---
->  drivers/net/mhi/net.c            |  2 +-
->  drivers/net/wwan/mhi_wwan_ctrl.c |  2 +-
+> 
+> This would obviously break compatibility with existing DTBs, but we
+> could start by doing it selectively for the new compatibles, fix up the
+> existing dts files and then drop the selective application after 1 or 2
+> LTS releases.
+> 
 
-Since this patch touches the drivers under net/, I need an Ack from Dave or
-Jakub to take it via MHI tree.
+In a chat with Rob I realized that my feedback here is unrelated to the
+yaml conversion and any conclusions of this discussion should be a
+separate patch anyways.
 
-Thanks,
-Mani
+So with the two style issues below resolve you have my:
 
->  include/linux/mhi.h              | 12 +++++++++++-
->  net/qrtr/mhi.c                   |  2 +-
->  6 files changed, 23 insertions(+), 8 deletions(-)
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+
+[..]
+> > +examples:
+[..]
+> > +                   ports {
+> > +                           #address-cells = <1>;
+> > +                           #size-cells = <0>;
+> > +
+> > +                           port@0 {
+> > +                                   reg = <0>;
+> > +                                   dpu_intf1_out: endpoint {
+> > +                                                  remote-endpoint = <&dsi0_in>;
+> > +                                   };
+> > +                           };
+> > +
+> > +                            port@2 {
+> > +                                    reg = <2>;
+> > +                                    dpu_intf0_out: endpoint {
+> > +                                                   remote-endpoint = <&dp_in>;
+> > +                                    };
+> > +                            };
 > 
-> diff --git a/drivers/bus/mhi/core/internal.h b/drivers/bus/mhi/core/internal.h
-> index 5b9ea66..672052f 100644
-> --- a/drivers/bus/mhi/core/internal.h
-> +++ b/drivers/bus/mhi/core/internal.h
-> @@ -682,7 +682,7 @@ void mhi_rddm_prepare(struct mhi_controller *mhi_cntrl,
->  		      struct image_info *img_info);
->  void mhi_fw_load_handler(struct mhi_controller *mhi_cntrl);
->  int mhi_prepare_channel(struct mhi_controller *mhi_cntrl,
-> -			struct mhi_chan *mhi_chan);
-> +			struct mhi_chan *mhi_chan, enum mhi_chan_flags flags);
->  int mhi_init_chan_ctxt(struct mhi_controller *mhi_cntrl,
->  		       struct mhi_chan *mhi_chan);
->  void mhi_deinit_chan_ctxt(struct mhi_controller *mhi_cntrl,
-> diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
-> index 0f1febf..432b53b 100644
-> --- a/drivers/bus/mhi/core/main.c
-> +++ b/drivers/bus/mhi/core/main.c
-> @@ -1384,7 +1384,8 @@ static void mhi_unprepare_channel(struct mhi_controller *mhi_cntrl,
->  }
->  
->  int mhi_prepare_channel(struct mhi_controller *mhi_cntrl,
-> -			struct mhi_chan *mhi_chan)
-> +			struct mhi_chan *mhi_chan,
-> +			enum mhi_chan_flags flags)
->  {
->  	int ret = 0;
->  	struct device *dev = &mhi_chan->mhi_dev->dev;
-> @@ -1409,6 +1410,9 @@ int mhi_prepare_channel(struct mhi_controller *mhi_cntrl,
->  	if (ret)
->  		goto error_pm_state;
->  
-> +	if (mhi_chan->dir == DMA_FROM_DEVICE)
-> +		mhi_chan->pre_alloc = !!(flags & MHI_CH_INBOUND_ALLOC_BUFS);
-> +
->  	/* Pre-allocate buffer for xfer ring */
->  	if (mhi_chan->pre_alloc) {
->  		int nr_el = get_nr_avail_ring_elements(mhi_cntrl,
-> @@ -1555,7 +1559,8 @@ void mhi_reset_chan(struct mhi_controller *mhi_cntrl, struct mhi_chan *mhi_chan)
->  }
->  
->  /* Move channel to start state */
-> -int mhi_prepare_for_transfer(struct mhi_device *mhi_dev)
-> +int mhi_prepare_for_transfer(struct mhi_device *mhi_dev,
-> +			     enum mhi_chan_flags flags)
->  {
->  	int ret, dir;
->  	struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
-> @@ -1566,7 +1571,7 @@ int mhi_prepare_for_transfer(struct mhi_device *mhi_dev)
->  		if (!mhi_chan)
->  			continue;
->  
-> -		ret = mhi_prepare_channel(mhi_cntrl, mhi_chan);
-> +		ret = mhi_prepare_channel(mhi_cntrl, mhi_chan, flags);
->  		if (ret)
->  			goto error_open_chan;
->  	}
-> diff --git a/drivers/net/mhi/net.c b/drivers/net/mhi/net.c
-> index 6b5bf23..3ddfb72 100644
-> --- a/drivers/net/mhi/net.c
-> +++ b/drivers/net/mhi/net.c
-> @@ -323,7 +323,7 @@ static int mhi_net_probe(struct mhi_device *mhi_dev,
->  	u64_stats_init(&mhi_netdev->stats.tx_syncp);
->  
->  	/* Start MHI channels */
-> -	err = mhi_prepare_for_transfer(mhi_dev);
-> +	err = mhi_prepare_for_transfer(mhi_dev, 0);
->  	if (err)
->  		goto out_err;
->  
-> diff --git a/drivers/net/wwan/mhi_wwan_ctrl.c b/drivers/net/wwan/mhi_wwan_ctrl.c
-> index 3a44b22..84e75e4 100644
-> --- a/drivers/net/wwan/mhi_wwan_ctrl.c
-> +++ b/drivers/net/wwan/mhi_wwan_ctrl.c
-> @@ -110,7 +110,7 @@ static int mhi_wwan_ctrl_start(struct wwan_port *port)
->  	int ret;
->  
->  	/* Start mhi device's channel(s) */
-> -	ret = mhi_prepare_for_transfer(mhiwwan->mhi_dev);
-> +	ret = mhi_prepare_for_transfer(mhiwwan->mhi_dev, 0);
->  	if (ret)
->  		return ret;
->  
-> diff --git a/include/linux/mhi.h b/include/linux/mhi.h
-> index d095fba..9372acf 100644
-> --- a/include/linux/mhi.h
-> +++ b/include/linux/mhi.h
-> @@ -60,6 +60,14 @@ enum mhi_flags {
->  };
->  
->  /**
-> + * enum mhi_chan_flags - MHI channel flags
-> + * @MHI_CH_INBOUND_ALLOC_BUFS: Automatically allocate and queue inbound buffers
-> + */
-> +enum mhi_chan_flags {
-> +	MHI_CH_INBOUND_ALLOC_BUFS = BIT(0),
-> +};
-> +
-> +/**
->   * enum mhi_device_type - Device types
->   * @MHI_DEVICE_XFER: Handles data transfer
->   * @MHI_DEVICE_CONTROLLER: Control device
-> @@ -719,8 +727,10 @@ void mhi_device_put(struct mhi_device *mhi_dev);
->   *                            host and device execution environments match and
->   *                            channels are in a DISABLED state.
->   * @mhi_dev: Device associated with the channels
-> + * @flags: MHI channel flags
->   */
-> -int mhi_prepare_for_transfer(struct mhi_device *mhi_dev);
-> +int mhi_prepare_for_transfer(struct mhi_device *mhi_dev,
-> +			     enum mhi_chan_flags flags);
->  
->  /**
->   * mhi_unprepare_from_transfer - Reset UL and DL channels for data transfer.
-> diff --git a/net/qrtr/mhi.c b/net/qrtr/mhi.c
-> index 2bf2b19..47afded 100644
-> --- a/net/qrtr/mhi.c
-> +++ b/net/qrtr/mhi.c
-> @@ -77,7 +77,7 @@ static int qcom_mhi_qrtr_probe(struct mhi_device *mhi_dev,
->  	int rc;
->  
->  	/* start channels */
-> -	rc = mhi_prepare_for_transfer(mhi_dev);
-> +	rc = mhi_prepare_for_transfer(mhi_dev, MHI_CH_INBOUND_ALLOC_BUFS);
->  	if (rc)
->  		return rc;
->  
-> -- 
-> 2.7.4
+> The indentation is inconsistent among the ports.
 > 
+> > +                   };
+> > +         };
+> > +    };
+> > +...
+> > diff --git a/Documentation/devicetree/bindings/display/msm/dpu-sdm845.yaml b/Documentation/devicetree/bindings/display/msm/dpu-sdm845.yaml
+[..]
+> > +      operating-points-v2: true
+> 
+> You have a blank line between all other properties, but not here.
+> 
+> > +      ports:
+
+Regards,
+Bjorn
