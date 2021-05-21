@@ -2,191 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AF25B38CD6A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 May 2021 20:29:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7BC7938CD6E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 May 2021 20:29:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231866AbhEUSae (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 May 2021 14:30:34 -0400
-Received: from mail-oi1-f181.google.com ([209.85.167.181]:33369 "EHLO
-        mail-oi1-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229762AbhEUSad (ORCPT
+        id S233721AbhEUSbI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 May 2021 14:31:08 -0400
+Received: from mail-oo1-f51.google.com ([209.85.161.51]:42503 "EHLO
+        mail-oo1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229762AbhEUSbI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 May 2021 14:30:33 -0400
-Received: by mail-oi1-f181.google.com with SMTP id b25so20567696oic.0;
-        Fri, 21 May 2021 11:29:10 -0700 (PDT)
+        Fri, 21 May 2021 14:31:08 -0400
+Received: by mail-oo1-f51.google.com with SMTP id v13-20020a4ac00d0000b029020b43b918eeso4781192oop.9;
+        Fri, 21 May 2021 11:29:43 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=8emx9ZI3CrAcxovqlGVNx1EFwTvU6MTMB4GL7Tv15Ik=;
-        b=RMDSpOenNDp8BeUvDibf/0rXAsrxqsWFtoT7UUQZYUUDbYzHd6W1XUZ+fhKKM28lSl
-         rc8tBOjbsL3rQ7V1eQYgHfM6wpAC2JcOUhSaUgx9MLbDbOnZmO6dy5UUYakTnfEf33AI
-         eHGGF1POfujQR/ZMNxA3MxRL4sJ03O841IgY/GwkLgc/pmdA/kBthmwiS6z4YvEZF7GT
-         KGRFGrdQ+VnplgxfzCC2yb9D/zeuSM6LZa1/o8lCIQKj493UvkiJvu/j2rWAasrqdHYo
-         XVeBbSMR6ldX9pTsHBjhx+e+MmimOc89wXhbJdIBFPCOsu2gUtIN1FjyEbeak1dwjdRW
-         zn0g==
-X-Gm-Message-State: AOAM532J0iyxpFTmA9EzWqoN8Kh8IFcWsuTVQJlaRxW8ejpiFceCIxyr
-        pSU2gprgchKy1EOW0+Ae8Q==
-X-Google-Smtp-Source: ABdhPJzImzD+1PZ0sMh1zRAT7Crgc0DGWCKYrQp2JRd0FGG8b+zGLHg3aLxiNlyHeWoG3rKDP/yUAg==
-X-Received: by 2002:aca:d18:: with SMTP id 24mr2997436oin.56.1621621750075;
-        Fri, 21 May 2021 11:29:10 -0700 (PDT)
+        bh=tz6qVE77xjQTgH3EvwvCGLs3nMgxHBUD5V9Eqv4sIOg=;
+        b=JMoW7VsKSvf8kAxjE5U6dLCN2Wbx8h1+UD5MIpw9fh1tSC5JGHfPWoIYFKDGFTXp31
+         izKLX4ay0dJnlAjZir7ZvSg8ag/He5VxjGfSJ00mrFea4F29RfH/sVHOfgiIsD97uYpr
+         mRZxAStxAYumQel+wIP+l/cwfuc065UibtHEJyzfTe7680g0nu7HG2LsoCuY41ZTcoyD
+         vWdR7DERpsjdkwyywAqDBk2W4nFQxqEmTKuOq//elhl7ISLDb8XzqJdZyz9RwWwOcIzV
+         TXdWOSCzu5/sGrh+W6nbtaxunf0jkEOly+cvmbyPlryWSfvyvJP5qkdTxCqMEaT5+USj
+         CAKw==
+X-Gm-Message-State: AOAM530l5XZQULEoi4wxxvJDFf1WHlqN2xwYr4qYCa1U+XekdARjlNHN
+        ZDz07UHUdFZ6bW/qIgwLWw==
+X-Google-Smtp-Source: ABdhPJwUaOQ3rcWENSb9U/Qt8wdNmQKm47UAKpPeq/0cATJVzmjSXBXOkw6hCj5jPwgDDocmleAxSw==
+X-Received: by 2002:a4a:6142:: with SMTP id u2mr9229182ooe.9.1621621783445;
+        Fri, 21 May 2021 11:29:43 -0700 (PDT)
 Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id e21sm1296649oie.32.2021.05.21.11.29.08
+        by smtp.gmail.com with ESMTPSA id l186sm1262215oih.55.2021.05.21.11.29.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 May 2021 11:29:09 -0700 (PDT)
-Received: (nullmailer pid 162381 invoked by uid 1000);
-        Fri, 21 May 2021 18:29:07 -0000
-Date:   Fri, 21 May 2021 13:29:07 -0500
+        Fri, 21 May 2021 11:29:42 -0700 (PDT)
+Received: (nullmailer pid 163550 invoked by uid 1000);
+        Fri, 21 May 2021 18:29:41 -0000
+Date:   Fri, 21 May 2021 13:29:41 -0500
 From:   Rob Herring <robh@kernel.org>
 To:     Krishna Manikandan <mkrishn@codeaurora.org>
-Cc:     dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
-        swboyd@chromium.org, khsieh@codeaurora.org,
-        linux-kernel@vger.kernel.org, freedreno@lists.freedesktop.org,
-        dianders@chromium.org, tanmay@codeaurora.org, robh+dt@kernel.org,
-        kalyan_t@codeaurora.org, sean@poorly.run,
-        linux-arm-msm@vger.kernel.org, abhinavk@codeaurora.org,
-        vinod.koul@linaro.org, bjorn.andersson@linaro.org
-Subject: Re: [PATCH v17 1/4] dt-bindings: msm: disp: add yaml schemas for DPU
- bindings
-Message-ID: <20210521182907.GA161758@robh.at.kernel.org>
+Cc:     khsieh@codeaurora.org, swboyd@chromium.org, vinod.koul@linaro.org,
+        tanmay@codeaurora.org, abhinavk@codeaurora.org,
+        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, robh+dt@kernel.org, sean@poorly.run,
+        kalyan_t@codeaurora.org, bjorn.andersson@linaro.org,
+        dianders@chromium.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v17 3/4] dt-bindings: msm: dsi: add yaml schemas for DSI
+ PHY bindings
+Message-ID: <20210521182941.GA163205@robh.at.kernel.org>
 References: <1621592844-6414-1-git-send-email-mkrishn@codeaurora.org>
+ <1621592844-6414-3-git-send-email-mkrishn@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1621592844-6414-1-git-send-email-mkrishn@codeaurora.org>
+In-Reply-To: <1621592844-6414-3-git-send-email-mkrishn@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 21 May 2021 15:57:21 +0530, Krishna Manikandan wrote:
-> MSM Mobile Display Subsystem (MDSS) encapsulates sub-blocks
-> like DPU display controller, DSI etc. Add YAML schema
-> for DPU device tree bindings.
+On Fri, 21 May 2021 15:57:23 +0530, Krishna Manikandan wrote:
+> Add YAML schema for the device tree bindings for DSI PHY.
 > 
 > Signed-off-by: Krishna Manikandan <mkrishn@codeaurora.org>
 > 
+> Changes in v1:
+>    - Merge dsi-phy.yaml and dsi-phy-10nm.yaml (Stephen Boyd)
+>    - Remove qcom,dsi-phy-regulator-ldo-mode (Stephen Boyd)
+>    - Add clock cells properly (Stephen Boyd)
+>    - Remove unnecessary decription from clock names (Stephen Boyd)
+>    - Add pin names for the supply entries for 10nm phy which is
+>      used in sc7180 and sdm845 (Stephen Boyd)
+>    - Remove unused header files from examples (Stephen Boyd)
+>    - Drop labels for display nodes and correct node name (Stephen Boyd)
+> 
 > Changes in v2:
->     - Changed dpu to DPU (Sam Ravnborg)
->     - Fixed indentation issues (Sam Ravnborg)
->     - Added empty line between different properties (Sam Ravnborg)
->     - Replaced reference txt files with  their corresponding
->       yaml files (Sam Ravnborg)
->     - Modified the file to use "|" only when it is
->       necessary (Sam Ravnborg)
+>    - Drop maxItems for clock (Stephen Boyd)
+>    - Add vdds supply pin information for sdm845 (Stephen Boyd)
+>    - Add examples for 14nm, 20nm and 28nm phy yaml files (Stephen Boyd)
+>    - Keep child nodes directly under soc node (Stephen Boyd)
 > 
 > Changes in v3:
->     - Corrected the license used (Rob Herring)
->     - Added maxItems for properties (Rob Herring)
->     - Dropped generic descriptions (Rob Herring)
->     - Added ranges property (Rob Herring)
->     - Corrected the indendation (Rob Herring)
->     - Added additionalProperties (Rob Herring)
->     - Split dsi file into two, one for dsi controller
->       and another one for dsi phy per target (Rob Herring)
->     - Corrected description for pinctrl-names (Rob Herring)
->     - Corrected the examples used in yaml file (Rob Herring)
->     - Delete dsi.txt and dpu.txt (Rob Herring)
+>    - Use a separate yaml file to describe the common properties
+>      for all the dsi phy versions (Stephen Boyd)
+>    - Remove soc from examples (Stephen Boyd)
+>    - Add description for register property
 > 
 > Changes in v4:
->     - Move schema up by one level (Rob Herring)
->     - Add patternProperties for mdp node (Rob Herring)
->     - Corrected description of some properties (Rob Herring)
+>    - Modify the title for all the phy versions (Stephen Boyd)
+>    - Drop description for all the phy versions (Stephen Boyd)
+>    - Modify the description for register property (Stephen Boyd)
 > 
 > Changes in v5:
->     - Correct the indentation (Rob Herring)
->     - Remove unnecessary description from properties (Rob Herring)
->     - Correct the number of interconnect entries (Rob Herring)
->     - Add interconnect names for sc7180 (Rob Herring)
->     - Add description for ports (Rob Herring)
->     - Remove common properties (Rob Herring)
->     - Add unevalutatedProperties (Rob Herring)
->     - Reference existing dsi controller yaml in the common
->       dsi controller file (Rob Herring)
->     - Correct the description of clock names to include only the
->       clocks that are required (Rob Herring)
->     - Remove properties which are already covered under the common
->       binding (Rob Herring)
->     - Add dsi phy supply nodes which are required for sc7180 and
->       sdm845 targets (Rob Herring)
->     - Add type ref for syscon-sfpb (Rob Herring)
+>    - Remove unused properties from common dsi phy file
+>    - Add clock-cells and phy-cells to required property
+>      list (Stephen Boyd)
 > 
 > Changes in v6:
->     - Fixed errors during dt_binding_check (Rob Herring)
->     - Add maxItems for phys and phys-names (Rob Herring)
->     - Use unevaluatedProperties wherever required (Rob Herring)
->     - Removed interrupt controller from required properties for
->       dsi controller (Rob Herring)
->     - Add constraints for dsi-phy reg-names based on the compatible
->       phy version (Rob Herring)
->     - Add constraints for dsi-phy supply nodes based on the
->       compatible phy version (Rob Herring)
-> 
-> Changes in v7:
->     - Add default value for qcom,mdss-mdp-transfer-time-us (Rob Herring)
->     - Modify the schema for data-lanes (Rob Herring)
->     - Split the phy schema into separate schemas based on
->       the phy version (Rob Herring)
-> 
-> Changes in v8:
->     - Resolve merge conflicts with latest dsi.txt file
->     - Include dp yaml change also in the same series
-> 
-> Changes in v9:
->     - Combine target specific dsi controller yaml files
->       to a single yaml file (Rob Herring)
->     - Combine target specific dsi phy yaml files into a
->       single yaml file (Rob Herring)
->     - Use unevaluatedProperties and additionalProperties
->       wherever required
->     - Remove duplicate properties from common yaml files
-> 
-> Changes in v10:
->     - Split the patch into separate patches for DPU, DSI and
->       PHY (Stephen Boyd)
->     - Drop unnecessary fullstop (Stephen Boyd)
->     - Add newline whereever required (Stephen Boyd)
->     - Add description for clock used (Stephen Boyd)
->     - Modify the description for interconnect entries  (Stephen Boyd)
->     - Drop assigned clock entries as it a generic property (Stephen Boyd)
->     - Correct the definition for interrupts (Stephen Boyd)
->     - Drop clock names from required properties (Stephen Boyd)
->     - Drop labels for display nodes from example (Stephen Boyd)
->     - Drop flags from interrupts entries (Stephen Boyd)
-> 
-> Changes in v11:
->     - Drop maxItems for clocks (Stephen Boyd)
-> 
-> Changes in v12:
->     - Add description for register property (Stephen Boyd)
->     - Add maxItems for interrupts (Stephen Boyd)
->     - Add description for iommus property (Stephen Boyd)
->     - Add description for interconnects (Stephen Boyd)
->     - Change display node name to display_controller (Stephen Boyd)
-> 
-> Changes in v13:
->     - Add maxItems for reg property (Stephen Boyd)
->     - Add ranges property in example (Stephen Boyd)
->     - Modify description for iommus property (Stephen Boyd)
->     - Add Dp bindings for ports in the same patch (Stephen Boyd)
->     - Remove soc from examples and change address and size cells
->       accordingly (Stephen Boyd)
->     - Add reference for ports
-> 
-> Changes in v14:
->     - Modify title for SC7180 and SDM845 yaml files (Stephen Boyd)
->     - Add required list for display-controller node (Stephen Boyd)
-> 
-> Changes in v16:
->     - Add reference for port (Rob Herring)
->     - Make additionalProperties as false (Rob Herring)
+>    - Add proper compatible string in example
 > ---
->  .../bindings/display/msm/dpu-sc7180.yaml           | 228 +++++++++++++++++++++
->  .../bindings/display/msm/dpu-sdm845.yaml           | 212 +++++++++++++++++++
->  .../devicetree/bindings/display/msm/dpu.txt        | 141 -------------
->  3 files changed, 440 insertions(+), 141 deletions(-)
->  create mode 100644 Documentation/devicetree/bindings/display/msm/dpu-sc7180.yaml
->  create mode 100644 Documentation/devicetree/bindings/display/msm/dpu-sdm845.yaml
->  delete mode 100644 Documentation/devicetree/bindings/display/msm/dpu.txt
+>  .../bindings/display/msm/dsi-phy-10nm.yaml         | 68 +++++++++++++++++++++
+>  .../bindings/display/msm/dsi-phy-14nm.yaml         | 66 ++++++++++++++++++++
+>  .../bindings/display/msm/dsi-phy-20nm.yaml         | 71 ++++++++++++++++++++++
+>  .../bindings/display/msm/dsi-phy-28nm.yaml         | 68 +++++++++++++++++++++
+>  .../bindings/display/msm/dsi-phy-common.yaml       | 40 ++++++++++++
+>  5 files changed, 313 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml
+>  create mode 100644 Documentation/devicetree/bindings/display/msm/dsi-phy-14nm.yaml
+>  create mode 100644 Documentation/devicetree/bindings/display/msm/dsi-phy-20nm.yaml
+>  create mode 100644 Documentation/devicetree/bindings/display/msm/dsi-phy-28nm.yaml
+>  create mode 100644 Documentation/devicetree/bindings/display/msm/dsi-phy-common.yaml
 > 
 
 
