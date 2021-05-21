@@ -2,120 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1492338CFAD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 May 2021 23:15:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 39D4F38CFE7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 May 2021 23:29:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229512AbhEUVQ6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 May 2021 17:16:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49126 "EHLO
+        id S229797AbhEUVao (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 May 2021 17:30:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52268 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229718AbhEUVQ6 (ORCPT
+        with ESMTP id S229634AbhEUVao (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 May 2021 17:16:58 -0400
-Received: from mail-qt1-x834.google.com (mail-qt1-x834.google.com [IPv6:2607:f8b0:4864:20::834])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8754EC0613CE
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 May 2021 14:15:33 -0700 (PDT)
-Received: by mail-qt1-x834.google.com with SMTP id s12so7146731qta.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 May 2021 14:15:33 -0700 (PDT)
+        Fri, 21 May 2021 17:30:44 -0400
+Received: from mail-oo1-xc2c.google.com (mail-oo1-xc2c.google.com [IPv6:2607:f8b0:4864:20::c2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 719F8C0613CE
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 May 2021 14:29:20 -0700 (PDT)
+Received: by mail-oo1-xc2c.google.com with SMTP id s1-20020a4ac1010000b02901cfd9170ce2so4887010oop.12
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 May 2021 14:29:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=KU2Ua3SJWwvztXy/qLseNaC6FX7ltF8ZRFgrKedX7pE=;
-        b=ZdLakRjz6xM5+M2e25BYKIX+s0E7OpHE4z63Xytk0sRCZ77TzzEhnoNmkSLiWGv9tK
-         78O8Iky/dAmIrG24dLVrSSygb40xQveRW7qAHQaDaJU6Tv5RHAQ37qPI2IOJ4vkX7T0z
-         k6FFZ/ZlC2HSwFhnHTfhzxGfqLOnq41C92UdI=
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=zwLYpS9p+8pJmcHuXNBolppRUtNsTbIPmp+o6UQN8KY=;
+        b=QtSBZYDh6GXubEPHb5E6TM+CGkEttGlt5INDzQJsT5WtE/0MFFvJhO7gbj3+Q4VeqP
+         Gra4TjrLaTsgPaETf4ffiTizTTRX6QPUdE9WKtw9XQoyJ6h70L7k1R6T81ghVNTBziD7
+         R3uada59gAbc3/ENK6NowtwkdkjnmhqV9mfXemPzQJzZDnM7lBSpB/4csFqbGTLhO+Xx
+         LxCryxs3M7PUB1zri84mcdXv5MDouCR5BQ0ymA5H2+N7NhciVn0NdFe8GY0fT2Karlmq
+         ysO9amHItoswmTqNRVDqi2LLuIWx8bhO6LQHf6iz32OyhKvY5PzoYvlD/hZtNaNE07ij
+         BPwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=KU2Ua3SJWwvztXy/qLseNaC6FX7ltF8ZRFgrKedX7pE=;
-        b=d3v9HeFXMlAW//dL2nsWnR7IwcgDULmRXdAjoAIgttd9DMopyI64kMGMoGWCMCVjaJ
-         q2DDENP8C46xCIQgZiCW9It8jhS2MujAe8Os36bpmnaLldnvtQK3hUDyTQs3toGo912Q
-         hXab5+KA4j58+ct2RDcjzajjggM08Z6ilBrAThrgjIu+oNfEWCuudNv7ZMJ9aYqCW6Wj
-         Okhv4V9xPUcmCvIS9DCJFpu0kEYL7H/iKDT5Pz4Y4zQQB36by3oNNJKhwHsJlJjoZEFS
-         s7oQQ/pjEGoW9DV1I9go3UiwXkV9liO4he6k5uI3sgjX+MbtSBZ8vDYcKdobiUusRbDX
-         LnWQ==
-X-Gm-Message-State: AOAM533l5TcXJ65PLyi6n5TZAcPJkUrCPr7+WvENofJKUfh/AIisxhSt
-        T0jDPcNqLb4VoDNdHToq1BGhx/+26u96Gw==
-X-Google-Smtp-Source: ABdhPJxUK8cWQVZdcAp9qGmbblLTbAUiIQTA5HvIdOMkz4ODZkwwBqI0kjG+x1w04Q4fswPsh7w54w==
-X-Received: by 2002:ac8:58cc:: with SMTP id u12mr13680679qta.302.1621631732491;
-        Fri, 21 May 2021 14:15:32 -0700 (PDT)
-Received: from mail-yb1-f178.google.com (mail-yb1-f178.google.com. [209.85.219.178])
-        by smtp.gmail.com with ESMTPSA id y12sm3871851qtv.59.2021.05.21.14.15.31
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 21 May 2021 14:15:31 -0700 (PDT)
-Received: by mail-yb1-f178.google.com with SMTP id r8so29259494ybb.9
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 May 2021 14:15:31 -0700 (PDT)
-X-Received: by 2002:a25:e007:: with SMTP id x7mr17331874ybg.343.1621631730850;
- Fri, 21 May 2021 14:15:30 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=zwLYpS9p+8pJmcHuXNBolppRUtNsTbIPmp+o6UQN8KY=;
+        b=saGUUjDhlnqhr/FIObOf3KIttv3PCKYjQz7C3TBz4k5xH8eQ8NwJ8/EMwU0uwHfeyO
+         jj8gOVWWnBu3Wuk1mBIj/AQ47FyitWAwmJRWLPKxSHbR2Ym/F6X3SzMtZffp5ZqJONqO
+         vqD4cCdpNOTwmr7po1obNvFUTu7PjxAAgbPqAq+RShGBtXz/TXTb0+LyerKkGiJCSFgp
+         6mo/tlLByVouOgRu5F1hBqOHBzd9sUjll2jQDvB1VxVXT7gr8hJckorohwpWuhOZo1UT
+         EBguf56J+qbvl8Kq+K2uaJXIbV7uQEGY5hYlL4L5IdNE5k/vrTVtrG49qKsvPGD1Idl7
+         K0Bg==
+X-Gm-Message-State: AOAM532cBKMQb+hpfB0QYa90VR7PxXNWDMQT34uXhuTaMn7b2GiXaGcl
+        bNrELN3ovCuuYTCysNa8jYzPGQ==
+X-Google-Smtp-Source: ABdhPJz3VBmFLhgkEFqyEA6f6S120M4rxSxkrTuWLk6tRMZx5/wC8POdyrzrinnm98ZUs5b0qJv3/A==
+X-Received: by 2002:a4a:4581:: with SMTP id y123mr9685400ooa.33.1621632559601;
+        Fri, 21 May 2021 14:29:19 -0700 (PDT)
+Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id x31sm1531434ota.24.2021.05.21.14.29.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 21 May 2021 14:29:19 -0700 (PDT)
+Date:   Fri, 21 May 2021 16:29:16 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Krishna Manikandan <mkrishn@codeaurora.org>,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, kalyan_t@codeaurora.org,
+        tanmay@codeaurora.org, abhinavk@codeaurora.org,
+        robdclark@gmail.com, vinod.koul@linaro.org, dianders@chromium.org,
+        khsieh@codeaurora.org, robh+dt@kernel.org, sean@poorly.run,
+        robh@kernel.org
+Subject: Re: [PATCH v17 1/4] dt-bindings: msm: disp: add yaml schemas for DPU
+ bindings
+Message-ID: <20210521212916.GG2484@yoga>
+References: <1621592844-6414-1-git-send-email-mkrishn@codeaurora.org>
+ <20210521160029.GA2484@yoga>
+ <CAE-0n53y2_icuPf+j8hd1hGyWRbD2V0Fye+aGSe0M9zku_0DOA@mail.gmail.com>
 MIME-Version: 1.0
-References: <20210521200529.1991729-1-sujitka@chromium.org> <20210521130511.v1.2.I52f30ddfe62041b7e6c3c362f0ad8f695ac28224@changeid>
-In-Reply-To: <20210521130511.v1.2.I52f30ddfe62041b7e6c3c362f0ad8f695ac28224@changeid>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Fri, 21 May 2021 14:15:19 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=WvUs=WAE0LRN9zK9gXhrtCy9_1B6rVf7PjFLQ2s8vuhg@mail.gmail.com>
-Message-ID: <CAD=FV=WvUs=WAE0LRN9zK9gXhrtCy9_1B6rVf7PjFLQ2s8vuhg@mail.gmail.com>
-Subject: Re: [PATCH v1 2/2] arm64: dts: qcom: sc7180: trogdor: SD-card GPIO
- pin set bias-pull up
-To:     Sujit Kautkar <sujitka@chromium.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Sibi Sankar <sibis@codeaurora.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAE-0n53y2_icuPf+j8hd1hGyWRbD2V0Fye+aGSe0M9zku_0DOA@mail.gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Fri 21 May 15:51 CDT 2021, Stephen Boyd wrote:
 
-On Fri, May 21, 2021 at 1:06 PM Sujit Kautkar <sujitka@chromium.org> wrote:
->
-> Trogdor board does not have external pull-up for cd-gpio. Set this pin
-> to internal pull-up for sleep config to avoid frequent regulator toggle
-> events.
->
-> This change is aligned with Qualcomm's DT change posted at:
-> https://patchwork.kernel.org/patch/11675347/
->
-> Signed-off-by: Sujit Kautkar <sujitka@chromium.org>
-> ---
->
->  arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-> index d128a0ed6ad3a..330deb4967ca2 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-> @@ -1638,7 +1638,7 @@ pinconf-data {
->
->                 pinconf-sd-cd {
->                         pins = "gpio69";
-> -                       bias-disable;
-> +                       bias-pull-up;
+> Quoting Bjorn Andersson (2021-05-21 09:00:29)
+> > On Fri 21 May 05:27 CDT 2021, Krishna Manikandan wrote:
+> > > diff --git a/Documentation/devicetree/bindings/display/msm/dpu-sc7180.yaml b/Documentation/devicetree/bindings/display/msm/dpu-sc7180.yaml
+> > [..]
+> > > +      ports:
+> > > +        $ref: /schemas/graph.yaml#/properties/ports
+> > > +        description: |
+> > > +          Contains the list of output ports from DPU device. These ports
+> > > +          connect to interfaces that are external to the DPU hardware,
+> > > +          such as DSI, DP etc. Each output port contains an endpoint that
+> > > +          describes how it is connected to an external interface.
+> > > +
+> > > +        properties:
+> > > +          port@0:
+> > > +            $ref: /schemas/graph.yaml#/properties/port
+> > > +            description: DPU_INTF1 (DSI1)
+> > > +
+> > > +          port@2:
+> > > +            $ref: /schemas/graph.yaml#/properties/port
+> > > +            description: DPU_INTF0 (DP)
+> >
+> > Why is port@0 INTF1 and why is port@2 INTF0? In the binding you're
+> > translating the two ports that are described are 0 and 1, representing
+> > INTF1 and INTF2, or DSI1 and DSI2, respectively.
+> >
+> > Further more, I have a need for somehow describing the pairing of 4 DP
+> > INTFs (INTF 0, 3, 4 and 5) and how they are connected to the 3+1 DP+eDP
+> > controllers.
+> >
+> > Downstream this seems to be handled by adding cell-index to the DP
+> > controllers and then matching that against the numbering in the driver's
+> > INTF array. But rather than adding cell-index to map this, can't we
+> > define that the port index is the INTF-number here?
+> >
+> >
+> > This would obviously break compatibility with existing DTBs, but we
+> > could start by doing it selectively for the new compatibles, fix up the
+> > existing dts files and then drop the selective application after 1 or 2
+> > LTS releases.
+> 
+> I requested that the existing DT not change a while ago when the DP
+> interface was being added to this binding. Is it possible to figure out
+> what interface it is that the port is for from the binding? It feels
+> like the problem is that the driver wants to look through the graph and
+> make connectors for each one, but it doesn't know what type of connector
+> to make.
 
-This looks fine to me. Honestly, I would have done it for IDP too. It
-really doesn't make any sense that the pull-up would be enabled for
-the "on" state but disabled for the "off" state. Either you have an
-external pull (in which case you never need the internal one) or you
-don't have an external pull (in which case you always need the
-internal one).
+Today there's a single priv->dp pointer which is initialized as the one
+and only displayport controller component is bound.
+_dpu_kms_set_encoder_mode() has no knowledge about which interface this
+single controller is attached to, so dpu_encoder_setup_display() will
+always just pick INTF_DP index 0.
 
-In any case, this change is correct and improves things. I'll add:
+So in its current form if your single DP port isn't sitting on the
+platform's first DP INTF you need to hack dpu_hw_catalog and remove the
+previous ones.
 
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+But with my desire to reuse the DP controller code for eDP, and the fact
+that I have 3 DP controllers in my laptop we need something more.
 
-If you do respin the patch to fix IDP too then you can feel free to
-keep my Reviewed-by tag.
+But after considering my proposal further I realized that it is too
+static for my use case anyway. SC8180x has INTF 0 and 4 are wired to
+the DP controllers associated with the two primary USB ports and then
+INTF 3 is dynamically switched between them for MST purposes.
 
+So using port indices would prevent me from doing this dynamic dance.
 
--Doug
+Regards,
+Bjorn
