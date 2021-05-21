@@ -2,142 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9D36E38C17A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 May 2021 10:12:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 722C838C301
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 May 2021 11:26:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230137AbhEUINj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 May 2021 04:13:39 -0400
-Received: from mo4-p02-ob.smtp.rzone.de ([85.215.255.81]:19214 "EHLO
-        mo4-p02-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229629AbhEUINi (ORCPT
+        id S236261AbhEUJ1Z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 May 2021 05:27:25 -0400
+Received: from szxga05-in.huawei.com ([45.249.212.191]:4569 "EHLO
+        szxga05-in.huawei.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233657AbhEUJ1Y (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 May 2021 04:13:38 -0400
-ARC-Seal: i=1; a=rsa-sha256; t=1621584692; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=px0a8MPK74qUXfzV5oznTizuZ6wSYWw1PnTyWPCWdSDm/VNlPpcX9mJnG6EcNy9+al
-    IrLqSd+SHTUy+MUh4/hS/NujOZyXCwe5HSxvwd14I4cIgw7AXjiqrNMEjfoNtHxIys+M
-    a14YcQqlLi/YEf8/g4X4ZGU/AalgcmEhdVB1NzRcUZHOqu2GPZZa5cXxBMD4g12p5vTr
-    1ZuiaGzrocf8qKnkp/grY2j8Mk/T8asPYHcGr9U72ssFsDrf0PwyrMIcLvz2THFrDc1E
-    Q0RN+6nMx63661R9AByJ0js93R8df2y6lfNya9k+aTx+RhVCKBFHq6sggs8ml9fW/Mm+
-    GM3Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1621584692;
-    s=strato-dkim-0002; d=strato.com;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=P7QD5eRHBuT1lh8i7wzUly3dzKODxjJ0OhwZcPAUEZs=;
-    b=qOvPJEGTxcu4ftC0OhXI8oXRU/fO3ZYD1+OJWQuXaRw0/0pVx5jb5rJU6Tdvzny/1t
-    q9kdVB/kSfoQheuv6mQ2ldYRUjTTQWfloUKYv3uVD0uaGqjs/fn7oRNK+GbfNjfg7Xvc
-    oUwGQB8uW6oqv/0EjOr4ISA5eEP8c1nv/XkFEjtEDjcj6fHN0WqmL1pno8Ifjy2Nd4K3
-    NdgKAgA3gzct4XSyv4PdgbwS4wJseRljsozSAgx2sM2h8w9XhYASEBzMbh0TPkqJ1at7
-    r35/EciNY0gCLtIMeKlIFzHsRjCNrgxe50OG6ghPv/pdNOM+7tuATln42+LmxkY73GCk
-    MHaA==
-ARC-Authentication-Results: i=1; strato.com;
-    dkim=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1621584692;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=P7QD5eRHBuT1lh8i7wzUly3dzKODxjJ0OhwZcPAUEZs=;
-    b=DqIzGoyybqPjiuFKLTxGZ6dWr/44ExmlF0FdJwNkGyMj6i0q4h4RS5yv5ONtvUEhMS
-    UB0osp8RELueRhSHyAG5nZgDxXvuGtfICJE1uWislHsnMqjyaoixsw9e0L2IB7+Z3uIW
-    RQtga13/EQTxsVG5KS78sR+Kfez1hbP5UGPbr7omd2Z31kDFcdrTBCDtWtX2TPhwj/eh
-    0XHq1pF8QHpkCFwA9SryKT0kGu9MW/fI/sqNvv1N+EVOA2jnEP92M667faGDxbN8Y4Pz
-    PyaZDAzCgW4Hd4v8hXWa0dly72EjDd9Fi45Fze1iyvh4hrfANIvuems9VscDkHxCxDia
-    JaFQ==
-Authentication-Results: strato.com;
-    dkim=none
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u26zEodhPgRDZ8j8IcvEBg=="
-X-RZG-CLASS-ID: mo00
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 47.26.1 DYNA|AUTH)
-    with ESMTPSA id 2037acx4L8BW0Pp
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Fri, 21 May 2021 10:11:32 +0200 (CEST)
-Date:   Fri, 21 May 2021 10:11:30 +0200
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Thara Gopinath <thara.gopinath@linaro.org>,
+        Fri, 21 May 2021 05:27:24 -0400
+Received: from dggems703-chm.china.huawei.com (unknown [172.30.72.59])
+        by szxga05-in.huawei.com (SkyGuard) with ESMTP id 4Fmh2X4WBWzqVC2;
+        Fri, 21 May 2021 17:22:12 +0800 (CST)
+Received: from dggpemm500006.china.huawei.com (7.185.36.236) by
+ dggems703-chm.china.huawei.com (10.3.19.180) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2176.2; Fri, 21 May 2021 17:25:00 +0800
+Received: from thunder-town.china.huawei.com (10.174.177.72) by
+ dggpemm500006.china.huawei.com (7.185.36.236) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2176.2; Fri, 21 May 2021 17:24:59 +0800
+From:   Zhen Lei <thunder.leizhen@huawei.com>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Herbert Xu <herbert@gondor.apana.org.au>,
-        "David S . Miller" <davem@davemloft.net>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Vinod Koul <vkoul@kernel.org>, dmaengine@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-crypto@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        bhupesh.linux@gmail.com
-Subject: Re: [PATCH v3 03/17] dt-bindings: qcom-bam: Add 'iommus' to required
- properties
-Message-ID: <YKdrMoSFAh1bR3xT@gerhold.net>
-References: <20210519143700.27392-1-bhupesh.sharma@linaro.org>
- <20210519143700.27392-4-bhupesh.sharma@linaro.org>
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        devicetree <devicetree@vger.kernel.org>
+CC:     Zhen Lei <thunder.leizhen@huawei.com>
+Subject: [PATCH 1/1] arm64: dts: qcom: Separate each group of data in the property 'reg'
+Date:   Fri, 21 May 2021 17:24:19 +0800
+Message-ID: <20210521092420.8418-1-thunder.leizhen@huawei.com>
+X-Mailer: git-send-email 2.26.0.windows.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210519143700.27392-4-bhupesh.sharma@linaro.org>
+Content-Transfer-Encoding: 7BIT
+Content-Type:   text/plain; charset=US-ASCII
+X-Originating-IP: [10.174.177.72]
+X-ClientProxiedBy: dggems701-chm.china.huawei.com (10.3.19.178) To
+ dggpemm500006.china.huawei.com (7.185.36.236)
+X-CFilter-Loop: Reflected
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Do not write the 'reg' of multiple groups of data into a uint32 array,
+use <> to separate them. Otherwise, the errors similar to the following
+will be reported by reg.yaml.
 
-On Wed, May 19, 2021 at 08:06:46PM +0530, Bhupesh Sharma wrote:
-> Add the missing required property - 'iommus' to the
-> device-tree binding documentation for qcom-bam DMA IP.
-> 
-> This property describes the phandle(s) to apps_smmu node with sid mask.
-> 
-> Cc: Thara Gopinath <thara.gopinath@linaro.org>
-> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Cc: Rob Herring <robh+dt@kernel.org>
-> Cc: Andy Gross <agross@kernel.org>
-> Cc: Herbert Xu <herbert@gondor.apana.org.au>
-> Cc: David S. Miller <davem@davemloft.net>
-> Cc: Stephen Boyd <sboyd@kernel.org>
-> Cc: Michael Turquette <mturquette@baylibre.com>
-> Cc: Vinod Koul <vkoul@kernel.org>
-> Cc: dmaengine@vger.kernel.org
-> Cc: linux-clk@vger.kernel.org
-> Cc: linux-crypto@vger.kernel.org
-> Cc: devicetree@vger.kernel.org
-> Cc: linux-kernel@vger.kernel.org
-> Cc: bhupesh.linux@gmail.com
-> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> ---
->  .../devicetree/bindings/dma/qcom_bam_dma.yaml         | 11 +++++++++++
->  1 file changed, 11 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/dma/qcom_bam_dma.yaml b/Documentation/devicetree/bindings/dma/qcom_bam_dma.yaml
-> index d2900616006c..2479862a3654 100644
-> --- a/Documentation/devicetree/bindings/dma/qcom_bam_dma.yaml
-> +++ b/Documentation/devicetree/bindings/dma/qcom_bam_dma.yaml
-> @@ -55,6 +55,12 @@ properties:
->    interconnect-names:
->      const: memory
->  
-> +  iommus:
-> +    minItems: 1
-> +    maxItems: 8
-> +    description: |
-> +      phandle to apps_smmu node with sid mask.
-> +
->    qcom,ee:
->      $ref: /schemas/types.yaml#/definitions/uint8
->      description:
-> @@ -81,6 +87,7 @@ required:
->    - clocks
->    - clock-names
->    - "#dma-cells"
-> +  - iommus
+arch/arm64/boot/dts/qcom/ipq8074-hk01.dt.yaml:
+ soc: pci@10000000:reg:0: \
+ [268435456, 3869, 268439328, 168, 557056, 8192, 269484032, 4096] is too long
 
-I don't think we can make this required, older SoCs don't use "iommus"
-for bam_dma.
+Signed-off-by: Zhen Lei <thunder.leizhen@huawei.com>
+---
+ arch/arm64/boot/dts/qcom/ipq8074.dtsi | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-arch/arm64/boot/dts/qcom/apq8016-sbc.dt.yaml: dma-controller@7884000: 'iommus' is a required property
-        From schema: Documentation/devicetree/bindings/dma/qcom_bam_dma.yaml
+diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
+index a32e5e79ab0b754..e8db62470b23059 100644
+--- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
+@@ -567,10 +567,10 @@ frame@b128000 {
+ 
+ 		pcie1: pci@10000000 {
+ 			compatible = "qcom,pcie-ipq8074";
+-			reg =  <0x10000000 0xf1d
+-				0x10000f20 0xa8
+-				0x00088000 0x2000
+-				0x10100000 0x1000>;
++			reg =  <0x10000000 0xf1d>,
++			       <0x10000f20 0xa8>,
++			       <0x00088000 0x2000>,
++			       <0x10100000 0x1000>;
+ 			reg-names = "dbi", "elbi", "parf", "config";
+ 			device_type = "pci";
+ 			linux,pci-domain = <1>;
+@@ -629,10 +629,10 @@ IRQ_TYPE_LEVEL_HIGH>, /* int_c */
+ 
+ 		pcie0: pci@20000000 {
+ 			compatible = "qcom,pcie-ipq8074";
+-			reg =  <0x20000000 0xf1d
+-				0x20000f20 0xa8
+-				0x00080000 0x2000
+-				0x20100000 0x1000>;
++			reg = <0x20000000 0xf1d>,
++			      <0x20000f20 0xa8>,
++			      <0x00080000 0x2000>,
++			      <0x20100000 0x1000>;
+ 			reg-names = "dbi", "elbi", "parf", "config";
+ 			device_type = "pci";
+ 			linux,pci-domain = <0>;
+-- 
+2.26.0.106.g9fadedd
 
-Stephan
+
