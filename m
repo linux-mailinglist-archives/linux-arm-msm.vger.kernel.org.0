@@ -2,101 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 535E438C5AC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 May 2021 13:27:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6884238C60F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 May 2021 13:56:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234701AbhEUL21 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 May 2021 07:28:27 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:20866 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233946AbhEUL2X (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 May 2021 07:28:23 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1621596420; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=yORL87zvs/JIbf2DwMLuAJGpDpo+Yql7ebK1r5sG3kM=; b=pZBqoAYdlNBJGN43VabLZ2SFHW66GMBR3xvKkHiwoW9m/2S0mWtiKfk7AC3gWjpuTYvfIMnp
- SVB8f7idxNrSAyO/kBF+xy9X9G54piYwtjXf9Ruazv3SCoOuNSxf4CLxVYI0Rm7pWErS/d2s
- 2V4xIlVo9YgLPn6hZsvmD8vSfsI=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
- 60a799010d60c09896712435 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 21 May 2021 11:26:57
- GMT
-Sender: mkshah=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id C5360C4338A; Fri, 21 May 2021 11:26:56 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from mkshah-linux.qualcomm.com (unknown [202.46.22.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: mkshah)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id D57C1C43217;
-        Fri, 21 May 2021 11:26:52 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org D57C1C43217
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=mkshah@codeaurora.org
-From:   Maulik Shah <mkshah@codeaurora.org>
-To:     swboyd@chromium.org, mka@chromium.org, evgreen@chromium.org,
-        bjorn.andersson@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        agross@kernel.org, dianders@chromium.org, linux@roeck-us.net,
-        rnayak@codeaurora.org, lsrao@codeaurora.org,
-        Maulik Shah <mkshah@codeaurora.org>, devicetree@vger.kernel.org
-Subject: [PATCH v8 5/5] arm64: dts: qcom: sc7280: Enable SoC sleep stats
-Date:   Fri, 21 May 2021 16:56:11 +0530
-Message-Id: <1621596371-26482-6-git-send-email-mkshah@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1621596371-26482-1-git-send-email-mkshah@codeaurora.org>
-References: <1621596371-26482-1-git-send-email-mkshah@codeaurora.org>
+        id S230510AbhEUL5W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 May 2021 07:57:22 -0400
+Received: from mail.kernel.org ([198.145.29.99]:43450 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229519AbhEUL5V (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 21 May 2021 07:57:21 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 4E31E6100C;
+        Fri, 21 May 2021 11:55:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1621598159;
+        bh=jDXUzd+uAeWo7BvYRyqav70ZgmYfajJqRkfkwy5cpeA=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=nCneHFmzpWzHHPhdQCWU2otza53d0DVBL1eQsIJ6BOshmh3zeVCm8pIj9N5TsfHHN
+         HFv+Ko1XCgMix3iSYhngh+CG3k/WgNryqr1kXepdGMYqt6x/sZrxKobawkEjh4rdeR
+         XFTcFHEo675jXm0XHx82xfXywzACbn+bP0lpnfGs2UHw3FMm2AX661pd08jCa36fa/
+         Qm7lDjvbSSGTzbaqCBYEgR53ZxrSTlIhRo12spWO6fVsCSjOnjlsWSSAMXr+Xm2XEb
+         v2Rdk6gaMl5ttKDwHw+cAwm54jdIo3lZi8WDDyPtmJTcGA7CCas9dDjryRix3dtLWc
+         AUwJWoWAr1BlQ==
+Date:   Fri, 21 May 2021 17:25:51 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Jarvis Jiang <jarvis.w.jiang@gmail.com>
+Cc:     hemantk@codeaurora.org, loic.poulain@linaro.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        cchen50@lenovo.com, mpearson@lenovo.com
+Subject: Re: [PATCH v2] bus: mhi: pci_generic: T99W175: update channel name
+ from AT to DUN
+Message-ID: <20210521115551.GA70095@thinkpad>
+References: <20210429014226.21017-1-jarvis.w.jiang@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210429014226.21017-1-jarvis.w.jiang@gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add device node for SoC sleep stats driver which provides various
-low power mode stats.
+On Wed, Apr 28, 2021 at 06:42:26PM -0700, Jarvis Jiang wrote:
+> According to MHI v1.1 specification, change the channel name of T99W175
+> from "AT" to "DUN" (Dial-up networking) for both channel 32 and 33,
+> so that the channels can be bound to the Qcom WWAN control driver, and
+> device node such as /dev/wwan0p3AT will be generated, which is very useful
+> for debugging modem
+> 
+> Fixes: aac426562f56 ("bus: mhi: pci_generic: Introduce Foxconn T99W175 support")
+> Signed-off-by: Jarvis Jiang <jarvis.w.jiang@gmail.com>
 
-Also update the reg size of aoss_qmp device to 0x400.
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-Cc: devicetree@vger.kernel.org
-Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
----
- arch/arm64/boot/dts/qcom/sc7280.dtsi | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+Thanks,
+Mani
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index 2cc4785..47afca8 100644
---- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -827,7 +827,7 @@
- 
- 		aoss_qmp: power-controller@c300000 {
- 			compatible = "qcom,sc7280-aoss-qmp";
--			reg = <0 0x0c300000 0 0x100000>;
-+			reg = <0 0x0c300000 0 0x400>;
- 			interrupts-extended = <&ipcc IPCC_CLIENT_AOP
- 						     IPCC_MPROC_SIGNAL_GLINK_QMP
- 						     IRQ_TYPE_EDGE_RISING>;
-@@ -838,6 +838,11 @@
- 			#power-domain-cells = <1>;
- 		};
- 
-+		rpmh-sleep-stats@c3f0000 {
-+			compatible = "qcom,rpmh-sleep-stats";
-+			reg = <0 0x0c3f0000 0 0x400>;
-+		};
-+
- 		spmi_bus: spmi@c440000 {
- 			compatible = "qcom,spmi-pmic-arb";
- 			reg = <0 0x0c440000 0 0x1100>,
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
-
+> ---
+> 
+> v2: Add: Fixes: aac426562f56
+> 
+>  drivers/bus/mhi/pci_generic.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/bus/mhi/pci_generic.c b/drivers/bus/mhi/pci_generic.c
+> index 7c810f02a2ef..8c7f6576e421 100644
+> --- a/drivers/bus/mhi/pci_generic.c
+> +++ b/drivers/bus/mhi/pci_generic.c
+> @@ -311,8 +311,8 @@ static const struct mhi_channel_config mhi_foxconn_sdx55_channels[] = {
+>  	MHI_CHANNEL_CONFIG_DL(5, "DIAG", 32, 1),
+>  	MHI_CHANNEL_CONFIG_UL(12, "MBIM", 32, 0),
+>  	MHI_CHANNEL_CONFIG_DL(13, "MBIM", 32, 0),
+> -	MHI_CHANNEL_CONFIG_UL(32, "AT", 32, 0),
+> -	MHI_CHANNEL_CONFIG_DL(33, "AT", 32, 0),
+> +	MHI_CHANNEL_CONFIG_UL(32, "DUN", 32, 0),
+> +	MHI_CHANNEL_CONFIG_DL(33, "DUN", 32, 0),
+>  	MHI_CHANNEL_CONFIG_HW_UL(100, "IP_HW0_MBIM", 128, 2),
+>  	MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0_MBIM", 128, 3),
+>  };
+> -- 
+> 2.25.1
+> 
