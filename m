@@ -2,198 +2,206 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BFA1238CAAD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 May 2021 18:12:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CA75C38CB22
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 May 2021 18:35:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233877AbhEUQNy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 May 2021 12:13:54 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:10361 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237282AbhEUQNy (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 May 2021 12:13:54 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1621613550; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=JBNjKRUr1tE/SpZsz0PTWtWzyb4OvafTBwnzC/mARrY=;
- b=xIBQ/Oltr7DcoYhAySPju4mKucYK8c/kkkLc8v8kYBi85gGXE63OVOnE8gyfrBp5A49cUPq3
- zLsDEA9ssKnXt+LkzSWXtlOdFtxKh148TunvxhCVBFLVOI+RzmcpkIpyDgQYIeBzLxhYvAF4
- tdehEBnbIjP0HKx2nXGj67Kuu14=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
- 60a7dbd32bff04e53bb086ad (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 21 May 2021 16:12:03
- GMT
-Sender: rojay=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 79E72C4360C; Fri, 21 May 2021 16:12:03 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: rojay)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 2A055C433D3;
-        Fri, 21 May 2021 16:12:02 +0000 (UTC)
+        id S237157AbhEUQhD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 May 2021 12:37:03 -0400
+Received: from mail.kernel.org ([198.145.29.99]:38208 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S236370AbhEUQhC (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 21 May 2021 12:37:02 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id A35D3613E3;
+        Fri, 21 May 2021 16:35:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1621614939;
+        bh=fbS4tegkDEGEwjG+qSSclbPKmztmBb0iRMLQXbmx4/4=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=iDWMlKelM2KVVp9hgNrNjtTZpPuH/fL6EYO4kccVeu+v1g5bGC7QrXsqnBe5fiCFX
+         cSW0/3Ony/CFYht98GfuRxgIYyIxH0liquTJlLSCWXPDFvPhAw3CXIOAO7zkRfQzpx
+         JXbNEcN2UZUIyWzf4AnnP5S6ZL/Mbmxyc8C6537o/pojNlSVRBmC9uTbNT/ZVA3qa1
+         3lbnSpSKPM+MEN2oS8ZLPMMlRgBYB+aIm0ZwbhNwSufvYgDzLjbCM4xMAinwNDZPLz
+         O6nfDJng503NBlqZN7GU4CJuICJjVU9acmY3ABhqhaMLGSFRIslam/zmBo84JZPoul
+         taKhEuNR5YwPg==
+Date:   Fri, 21 May 2021 22:05:30 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Loic Poulain <loic.poulain@linaro.org>
+Cc:     hemantk@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        bbhatt@codeaurora.org, netdev@vger.kernel.org, davem@davemloft.net,
+        kuba@kernel.org
+Subject: Re: [PATCH v2] bus: mhi: Add inbound buffers allocation flag
+Message-ID: <20210521163530.GO70095@thinkpad>
+References: <1621603519-16773-1-git-send-email-loic.poulain@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Fri, 21 May 2021 21:42:02 +0530
-From:   rojay@codeaurora.org
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     wsa@kernel.org, dianders@chromium.org,
-        saiprakash.ranjan@codeaurora.org, gregkh@linuxfoundation.org,
-        mka@chromium.org, skananth@codeaurora.org,
-        msavaliy@qti.qualcomm.com, skakit@codeaurora.org,
-        rnayak@codeaurora.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org,
-        sumit.semwal@linaro.org, linux-media@vger.kernel.org
-Subject: Re: [PATCH V10] i2c: i2c-qcom-geni: Add shutdown callback for i2c
-In-Reply-To: <CAE-0n50o1XRnV3HSAM7uhfS8M3kf_m0DrTkqCfYGdnSjpF6Xfg@mail.gmail.com>
-References: <20210512082220.7137-1-rojay@codeaurora.org>
- <CAE-0n52D-K1T0QgxA-S7BXxE3Qk807F9edNyR+2RL4YxRyigMg@mail.gmail.com>
- <70a90d229551bcec21ed74cfd1350b9b@codeaurora.org>
- <CAE-0n50o1XRnV3HSAM7uhfS8M3kf_m0DrTkqCfYGdnSjpF6Xfg@mail.gmail.com>
-Message-ID: <79fdd08e974d6f6e35f0042c98a9415c@codeaurora.org>
-X-Sender: rojay@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1621603519-16773-1-git-send-email-loic.poulain@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-05-20 13:45, Stephen Boyd wrote:
-> Quoting rojay@codeaurora.org (2021-05-16 23:32:50)
->> Hi Stephen,
->> 
->> Now, I have made the changes, calling i2c_mark_adapter_suspended() in
->> shutdown() and i2c_mark_adapter_suspended()/_resumed() from runtime
->> suspend/resume also and validated the changes. I have also picked
->> your patch [1] for this validation.
->> 
->> During the device boot up I am seeing multiple traces shown below.
->> Are these expected now and needs to be fixed from rt5682/respective
->> client driver?
->> 
->> Trace1:
->> [   11.709477] i2c i2c-9: Transfer while suspended
->> [   11.905595] Call trace:
->> [   11.908124]  __i2c_transfer+0xb8/0x38c
->> [   11.911984]  i2c_transfer+0xa0/0xf4
->> [   11.915569]  i2c_transfer_buffer_flags+0x68/0x9c
->> [   11.920314]  regmap_i2c_write+0x34/0x64
->> [   11.924255]  _regmap_raw_write_impl+0x4e8/0x7bc
->> [   11.928911]  _regmap_bus_raw_write+0x70/0x8c
->> [   11.933301]  _regmap_write+0x100/0x150
->> [   11.937152]  regmap_write+0x54/0x78
->> [   11.940744]  soc_component_write_no_lock+0x34/0xa8
->> [   11.945666]  snd_soc_component_write+0x3c/0x5c
->> [   11.950242]  rt5682_set_component_pll+0x1e4/0x2b4 [snd_soc_rt5682]
->> [   11.956588]  snd_soc_component_set_pll+0x50/0xa8
->> [   11.961328]  snd_soc_dai_set_pll+0x74/0xc8
->> [   11.965542]  sc7180_snd_startup+0x9c/0x120 [snd_soc_sc7180]
->> [   11.971262]  snd_soc_link_startup+0x34/0x88
->> [   11.975557]  soc_pcm_open+0x100/0x538
->> [   11.979323]  snd_pcm_open_substream+0x530/0x704
->> [   11.983980]  snd_pcm_open+0xc8/0x210
->> [   11.987653]  snd_pcm_playback_open+0x50/0x80
->> [   11.992049]  snd_open+0x120/0x150
->> [   11.995462]  chrdev_open+0xb8/0x1a4
->> [   11.999056]  do_dentry_open+0x238/0x358
->> [   12.003001]  vfs_open+0x34/0x40
->> [   12.006235]  path_openat+0x9e8/0xd60
->> [   12.009913]  do_filp_open+0x90/0x10c
->> [   12.013587]  do_sys_open+0x148/0x314
->> [   12.017260]  __arm64_compat_sys_openat+0x28/0x34
->> [   12.022009]  el0_svc_common+0xa4/0x16c
->> [   12.025860]  el0_svc_compat_handler+0x2c/0x40
->> [   12.030337]  el0_svc_compat+0x8/0x10
->> [   12.034018] ---[ end trace 745ead557fcbb5dc ]---
++ netdev, Dave, Jakub
+
+On Fri, May 21, 2021 at 03:25:19PM +0200, Loic Poulain wrote:
+> Currently, the MHI controller driver defines which channels should
+> have their inbound buffers allocated and queued. But ideally, this is
+> something that should be decided by the MHI device driver instead,
+> which actually deals with that buffers.
 > 
-> Ah I see. Maybe it isn't correct to mark the device as suspended in
-> runtime PM operations because the bus will be resumed during the
-> transfer? So only mark it suspended during system wide suspend/resume
-> transitions?
+> Add a flag parameter to mhi_prepare_for_transfer allowing to specify
+> if buffers have to be allocated and queued by the MHI stack.
 > 
-> -Stephen
+> Keep auto_queue flag for now, but should be removed at some point.
 > 
+> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+> Tested-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+> Reviewed-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+> Reviewed-by: Hemant Kumar <hemantk@codeaurora.org>
+> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> ---
+>  v2: Update API in mhi_wwan_ctrl driver
+> 
+>  drivers/bus/mhi/core/internal.h  |  2 +-
+>  drivers/bus/mhi/core/main.c      | 11 ++++++++---
+>  drivers/net/mhi/net.c            |  2 +-
+>  drivers/net/wwan/mhi_wwan_ctrl.c |  2 +-
 
-Yes, we cannot mark device as suspended/resumed during
-runtime PM operations. Bus will be resumed during i2c
-transfers and before transfer initiation, in __i2c_transfer()
-from i2c-core-base.c there is a check to see whether the device
-is marked as suspended with "__i2c_check_suspended(adap)" call,
-which is "true" in this case and returning from there.
+Since this patch touches the drivers under net/, I need an Ack from Dave or
+Jakub to take it via MHI tree.
 
-To mark it only suspended during system wide suspend/resume
-transitions, currently our geni i2c driver has only
-system_suspend implemented (geni_i2c_suspend_noirq()) and
-does not have system_resume implemented, which again causes i2c
-transfers to fail during system_resume after system_suspend.
+Thanks,
+Mani
 
-Shall I go ahead with marking device suspended during
-shutdown() only?
-
--Roja
-
->> [   12.040151] rt5682 9-001a: ASoC: error at 
->> soc_component_write_no_lock
->> on rt5682.9-001a: -108
->> [   12.049055] rt5682 9-001a: ASoC: error at 
->> soc_component_write_no_lock
->> on rt5682.9-001a: -108
->> [   12.057742] rt5682 9-001a: ASoC: error at
->> snd_soc_component_update_bits on rt5682.9-001a: -108
->> 
->> Trace2:
->> [    3.515390] i2c i2c-2: Transfer while suspended
->> [    3.606749] Call trace:
->> [    3.606751]  __i2c_transfer+0xb8/0x38c
->> [    3.606752]  i2c_transfer+0xa0/0xf4
->> [    3.606754]  i2c_transfer_buffer_flags+0x68/0x9c
->> [    3.639599] hub 2-1.4:1.0: USB hub found
->> [    3.644375]  regmap_i2c_write+0x34/0x64
->> [    3.644376]  _regmap_raw_write_impl+0x4e8/0x7bc
->> [    3.644378]  _regmap_bus_raw_write+0x70/0x8c
->> [    3.644379]  _regmap_write+0x100/0x150
->> [    3.644381]  regmap_write+0x54/0x78
->> [    3.644383]  ti_sn_aux_transfer+0x90/0x244
->> [    3.650695] hub 2-1.4:1.0: 4 ports detected
->> [    3.655288]  drm_dp_dpcd_access+0x8c/0x11c
->> [    3.655289]  drm_dp_dpcd_read+0x64/0x10c
->> [    3.655290]  ti_sn_bridge_enable+0x5c/0x824
->> [    3.655292]  drm_atomic_bridge_chain_enable+0x78/0xa0
->> [    3.655294]  drm_atomic_helper_commit_modeset_enables+0x198/0x238
->> [    3.655295]  msm_atomic_commit_tail+0x324/0x714
->> [    3.655297]  commit_tail+0xa4/0x108
->> [    3.664985] usb 1-1.4: new high-speed USB device number 4 using
->> xhci-hcd
->> [    3.666204]  drm_atomic_helper_commit+0xf4/0xfc
->> [    3.666205]  drm_atomic_commit+0x50/0x5c
->> [    3.666206]  drm_atomic_helper_set_config+0x64/0x98
->> [    3.666208]  drm_mode_setcrtc+0x26c/0x590
->> [    3.666209]  drm_ioctl_kernel+0x9c/0x114
->> [    3.701074] hub 2-1.4:1.0: USB hub found
->> [    3.703347]  drm_ioctl+0x288/0x420
->> [    3.703349]  drm_compat_ioctl+0xd0/0xe0
->> [    3.703351]  __arm64_compat_sys_ioctl+0x100/0x2108
->> [    3.703354]  el0_svc_common+0xa4/0x16c
->> [    3.708499] hub 2-1.4:1.0: 4 ports detected
->> [    3.711588]  el0_svc_compat_handler+0x2c/0x40
->> [    3.711590]  el0_svc_compat+0x8/0x10
->> [    3.711591] ---[ end trace 745ead557fcbb5db ]---
->> [    3.772120] usb 1-1.4: New USB device found, idVendor=0bda,
->> idProduct=5411, bcdDevice= 1.04
->> [    3.794990] ti_sn65dsi86 2-002d: [drm:ti_sn_bridge_enable] *ERROR*
->> Can't read lane count (-108); assuming 4
->> 
->> [1]
->> https://lore.kernel.org/r/20210508075151.1626903-2-swboyd@chromium.org
->> 
+>  include/linux/mhi.h              | 12 +++++++++++-
+>  net/qrtr/mhi.c                   |  2 +-
+>  6 files changed, 23 insertions(+), 8 deletions(-)
+> 
+> diff --git a/drivers/bus/mhi/core/internal.h b/drivers/bus/mhi/core/internal.h
+> index 5b9ea66..672052f 100644
+> --- a/drivers/bus/mhi/core/internal.h
+> +++ b/drivers/bus/mhi/core/internal.h
+> @@ -682,7 +682,7 @@ void mhi_rddm_prepare(struct mhi_controller *mhi_cntrl,
+>  		      struct image_info *img_info);
+>  void mhi_fw_load_handler(struct mhi_controller *mhi_cntrl);
+>  int mhi_prepare_channel(struct mhi_controller *mhi_cntrl,
+> -			struct mhi_chan *mhi_chan);
+> +			struct mhi_chan *mhi_chan, enum mhi_chan_flags flags);
+>  int mhi_init_chan_ctxt(struct mhi_controller *mhi_cntrl,
+>  		       struct mhi_chan *mhi_chan);
+>  void mhi_deinit_chan_ctxt(struct mhi_controller *mhi_cntrl,
+> diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
+> index 0f1febf..432b53b 100644
+> --- a/drivers/bus/mhi/core/main.c
+> +++ b/drivers/bus/mhi/core/main.c
+> @@ -1384,7 +1384,8 @@ static void mhi_unprepare_channel(struct mhi_controller *mhi_cntrl,
+>  }
+>  
+>  int mhi_prepare_channel(struct mhi_controller *mhi_cntrl,
+> -			struct mhi_chan *mhi_chan)
+> +			struct mhi_chan *mhi_chan,
+> +			enum mhi_chan_flags flags)
+>  {
+>  	int ret = 0;
+>  	struct device *dev = &mhi_chan->mhi_dev->dev;
+> @@ -1409,6 +1410,9 @@ int mhi_prepare_channel(struct mhi_controller *mhi_cntrl,
+>  	if (ret)
+>  		goto error_pm_state;
+>  
+> +	if (mhi_chan->dir == DMA_FROM_DEVICE)
+> +		mhi_chan->pre_alloc = !!(flags & MHI_CH_INBOUND_ALLOC_BUFS);
+> +
+>  	/* Pre-allocate buffer for xfer ring */
+>  	if (mhi_chan->pre_alloc) {
+>  		int nr_el = get_nr_avail_ring_elements(mhi_cntrl,
+> @@ -1555,7 +1559,8 @@ void mhi_reset_chan(struct mhi_controller *mhi_cntrl, struct mhi_chan *mhi_chan)
+>  }
+>  
+>  /* Move channel to start state */
+> -int mhi_prepare_for_transfer(struct mhi_device *mhi_dev)
+> +int mhi_prepare_for_transfer(struct mhi_device *mhi_dev,
+> +			     enum mhi_chan_flags flags)
+>  {
+>  	int ret, dir;
+>  	struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
+> @@ -1566,7 +1571,7 @@ int mhi_prepare_for_transfer(struct mhi_device *mhi_dev)
+>  		if (!mhi_chan)
+>  			continue;
+>  
+> -		ret = mhi_prepare_channel(mhi_cntrl, mhi_chan);
+> +		ret = mhi_prepare_channel(mhi_cntrl, mhi_chan, flags);
+>  		if (ret)
+>  			goto error_open_chan;
+>  	}
+> diff --git a/drivers/net/mhi/net.c b/drivers/net/mhi/net.c
+> index 6b5bf23..3ddfb72 100644
+> --- a/drivers/net/mhi/net.c
+> +++ b/drivers/net/mhi/net.c
+> @@ -323,7 +323,7 @@ static int mhi_net_probe(struct mhi_device *mhi_dev,
+>  	u64_stats_init(&mhi_netdev->stats.tx_syncp);
+>  
+>  	/* Start MHI channels */
+> -	err = mhi_prepare_for_transfer(mhi_dev);
+> +	err = mhi_prepare_for_transfer(mhi_dev, 0);
+>  	if (err)
+>  		goto out_err;
+>  
+> diff --git a/drivers/net/wwan/mhi_wwan_ctrl.c b/drivers/net/wwan/mhi_wwan_ctrl.c
+> index 3a44b22..84e75e4 100644
+> --- a/drivers/net/wwan/mhi_wwan_ctrl.c
+> +++ b/drivers/net/wwan/mhi_wwan_ctrl.c
+> @@ -110,7 +110,7 @@ static int mhi_wwan_ctrl_start(struct wwan_port *port)
+>  	int ret;
+>  
+>  	/* Start mhi device's channel(s) */
+> -	ret = mhi_prepare_for_transfer(mhiwwan->mhi_dev);
+> +	ret = mhi_prepare_for_transfer(mhiwwan->mhi_dev, 0);
+>  	if (ret)
+>  		return ret;
+>  
+> diff --git a/include/linux/mhi.h b/include/linux/mhi.h
+> index d095fba..9372acf 100644
+> --- a/include/linux/mhi.h
+> +++ b/include/linux/mhi.h
+> @@ -60,6 +60,14 @@ enum mhi_flags {
+>  };
+>  
+>  /**
+> + * enum mhi_chan_flags - MHI channel flags
+> + * @MHI_CH_INBOUND_ALLOC_BUFS: Automatically allocate and queue inbound buffers
+> + */
+> +enum mhi_chan_flags {
+> +	MHI_CH_INBOUND_ALLOC_BUFS = BIT(0),
+> +};
+> +
+> +/**
+>   * enum mhi_device_type - Device types
+>   * @MHI_DEVICE_XFER: Handles data transfer
+>   * @MHI_DEVICE_CONTROLLER: Control device
+> @@ -719,8 +727,10 @@ void mhi_device_put(struct mhi_device *mhi_dev);
+>   *                            host and device execution environments match and
+>   *                            channels are in a DISABLED state.
+>   * @mhi_dev: Device associated with the channels
+> + * @flags: MHI channel flags
+>   */
+> -int mhi_prepare_for_transfer(struct mhi_device *mhi_dev);
+> +int mhi_prepare_for_transfer(struct mhi_device *mhi_dev,
+> +			     enum mhi_chan_flags flags);
+>  
+>  /**
+>   * mhi_unprepare_from_transfer - Reset UL and DL channels for data transfer.
+> diff --git a/net/qrtr/mhi.c b/net/qrtr/mhi.c
+> index 2bf2b19..47afded 100644
+> --- a/net/qrtr/mhi.c
+> +++ b/net/qrtr/mhi.c
+> @@ -77,7 +77,7 @@ static int qcom_mhi_qrtr_probe(struct mhi_device *mhi_dev,
+>  	int rc;
+>  
+>  	/* start channels */
+> -	rc = mhi_prepare_for_transfer(mhi_dev);
+> +	rc = mhi_prepare_for_transfer(mhi_dev, MHI_CH_INBOUND_ALLOC_BUFS);
+>  	if (rc)
+>  		return rc;
+>  
+> -- 
+> 2.7.4
+> 
