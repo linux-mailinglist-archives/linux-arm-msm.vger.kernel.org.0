@@ -2,169 +2,261 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B6DA038C8F5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 May 2021 16:10:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C90A238C919
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 May 2021 16:21:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235718AbhEUOLZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 May 2021 10:11:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37402 "EHLO
+        id S236657AbhEUOWg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 May 2021 10:22:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39904 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233556AbhEUOLY (ORCPT
+        with ESMTP id S233048AbhEUOWf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 May 2021 10:11:24 -0400
-Received: from mail-io1-xd29.google.com (mail-io1-xd29.google.com [IPv6:2607:f8b0:4864:20::d29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F2E5C061574;
-        Fri, 21 May 2021 07:10:00 -0700 (PDT)
-Received: by mail-io1-xd29.google.com with SMTP id k132so6651873iof.4;
-        Fri, 21 May 2021 07:10:00 -0700 (PDT)
+        Fri, 21 May 2021 10:22:35 -0400
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC8FBC0613CE
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 May 2021 07:21:11 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id v12so21255592wrq.6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 May 2021 07:21:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=rgp+As3KlbEBKSyVtxsdvRFYlyX0rJUqDcyGgOG4188=;
-        b=rCvHAT1e9N+Z+rjcivIbW+yWiuaTrYUO4h7otm2/sRCHaUk8pHxU4B3+PkmI3d0ZRJ
-         2tAzBYA0FogjgbAW9UHIPwWHSJqgoogcJk+KIxo9bKBoFrhp5PDLOIkEL9pExfV5qjoo
-         WgzhYo/qWms4xYCdozWOV/TKQivldqCSJmrbLDXIAazejM/OtE+9GQCH4nacmJzStpjG
-         BjJf4OjkQJ44BYLrYcH1vgch1bc9kA1cg2kKmfMtI/+126z7oFd71CzcEoYOufDuYUy2
-         yk0jOfGH+/6HiIgsfUp30JWLGgCVUWja0/QtiKJ8pn7eVEIIW2BgHxpDpAUalZn3IwKh
-         vAUw==
+        d=ffwll.ch; s=google;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=wG9Dta0CaSLcShWSym55/bpGe6Fxr6HiM0MjsqM0GpA=;
+        b=RDX2hdnIo6f3DUh4nJ1K97BcaNQN8gpv0wjGqd3ja+QqP0Y9yzrTT2zz1IMk/Biyxm
+         x3Fwn1AO/sbgoy1cP2EoklOMdwh1IPMjOc3SeVCUUvEbftCzeBbec7peNNbL0p78q5q9
+         K8eXGg7lsqV7FacR6TtJQzQiV1Vi1VOKJc9BA=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=rgp+As3KlbEBKSyVtxsdvRFYlyX0rJUqDcyGgOG4188=;
-        b=bMoRJJI/2q1nWU+pUZDfna3VUH34dGYpuw78JefGPYcls95IyuOBAJrLsCVHXo/W9K
-         2KBgB7Oiuvzs3SCV4aKfN28eV9UKg4M9FggpxC4aDU/V7ttEyhAod77f/6GhCB07Je3y
-         mnhOy0La2MToybsWV3/wLi9gNbU0H+LHolyUdgsCgV1TiNlR1oPZRClJMudfIocFK53g
-         39ePn9gSvOTbpx9itQE59H/Jc4BLXcUaJxs0JX+lMPXOkyISbjQkng0+88US5gaKJnTr
-         rKbSckP1NHlKRlvPObwjpcQddZr7UDmfKZQ7R6ueHXbeOPnTS1xRn0JzlOZJIUaOhPE3
-         e65w==
-X-Gm-Message-State: AOAM530CI9uNd9T//gYt4wEM1VtwRCDxkCZKzb4HlziO68wvdaRs29Bm
-        7Ec4X2GRwN7NCtTPqacrQgDRS9f3UQTIKsEjTbrpWHqL
-X-Google-Smtp-Source: ABdhPJx963ZKIoMW0yX6SSKHV7v9iBzcVj51DKJpySvD2v+xqvtzSsBZXXpCXXZJOjbXRyJqMGA75GXapMiUzwK9shY=
-X-Received: by 2002:a05:6602:14c8:: with SMTP id b8mr11637904iow.209.1621606199837;
- Fri, 21 May 2021 07:09:59 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id
+         :mail-followup-to:references:mime-version:content-disposition
+         :content-transfer-encoding:in-reply-to;
+        bh=wG9Dta0CaSLcShWSym55/bpGe6Fxr6HiM0MjsqM0GpA=;
+        b=muf/6uHlYvY44FU934Pd+0xzXRKCd5PtfwaoRJZiozi5A6/Mesl8Acvano1BwFzOTy
+         AIbAC5+sJoGzRjE28CGzViIdtBmr5cvuah8E5raLgR0UM6/ZHj3jwm2syjH5EYVIaaKQ
+         kO+uQowfefW/78suQ+4QeWxFZ0wzSbBipTJZFiv12JnlzwhCb6tIfvUfiVm6XpObHuoz
+         VDR9GWPNH+Ax9fJrQTWcLpkN2kgqArJLJQakOzI8B8ezEIjblIZicON+aHhXcbKKH/Ub
+         83YOg1skfFgKYNc3FXzJ6lTh/G9vDCey0LUl1ZjzGDLeD9liJfKRHNdxtY08whGptKPd
+         +Bdw==
+X-Gm-Message-State: AOAM532z0hVQ6V4rXKtkj96ZmnqJ8e529Tbd6Dam+fXR0smA8ZrV8I5M
+        teEsfVyRiLaN33Sjn3+6afr24+j3DPTLfA==
+X-Google-Smtp-Source: ABdhPJy4RupA0RXG/bNF7PD78NvJ0QKf6Vd2VyhKKxTlhoDXSliYWWTxh9uksBg5g2Gs/DhKchOnWw==
+X-Received: by 2002:a5d:5257:: with SMTP id k23mr9894401wrc.328.1621606870495;
+        Fri, 21 May 2021 07:21:10 -0700 (PDT)
+Received: from phenom.ffwll.local ([2a02:168:57f4:0:efd0:b9e5:5ae6:c2fa])
+        by smtp.gmail.com with ESMTPSA id q62sm6358399wma.42.2021.05.21.07.21.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 21 May 2021 07:21:09 -0700 (PDT)
+Date:   Fri, 21 May 2021 16:21:07 +0200
+From:   Daniel Vetter <daniel@ffwll.ch>
+To:     Christian =?iso-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>
+Cc:     Daniel Vetter <daniel@ffwll.ch>,
+        Christian =?iso-8859-1?Q?K=F6nig?= 
+        <ckoenig.leichtzumerken@gmail.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Rob Clark <robdclark@chromium.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        "moderated list:DMA BUFFER SHARING FRAMEWORK" 
+        <linaro-mm-sig@lists.linaro.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        "open list:DMA BUFFER SHARING FRAMEWORK" 
+        <linux-media@vger.kernel.org>
+Subject: Re: [Linaro-mm-sig] [RFC 1/3] dma-fence: Add boost fence op
+Message-ID: <YKfB06kpmrb56etU@phenom.ffwll.local>
+Mail-Followup-To: Christian =?iso-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>,
+        Christian =?iso-8859-1?Q?K=F6nig?= <ckoenig.leichtzumerken@gmail.com>,
+        Rob Clark <robdclark@gmail.com>, Rob Clark <robdclark@chromium.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        "moderated list:DMA BUFFER SHARING FRAMEWORK" <linaro-mm-sig@lists.linaro.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        "open list:DMA BUFFER SHARING FRAMEWORK" <linux-media@vger.kernel.org>
+References: <20210519183855.1523927-2-robdclark@gmail.com>
+ <8dcdc8d5-176c-f0ad-0d54-6466e9e68a0a@amd.com>
+ <CAF6AEGtg_VnxYrj94AfbAfViK1v8U0ZJyfJjS4taVLMF=YVy+w@mail.gmail.com>
+ <d65acf46-4c3b-4903-6222-0b81915d355d@amd.com>
+ <CAF6AEGvm1tFwpfyJrX1bTGoHg_wzKKLQvSk2qLHf3XeqvEzDPA@mail.gmail.com>
+ <e8f3d71c-7025-deab-4dd7-14f3fa6a8810@gmail.com>
+ <YKaPf3VLfjoZJRw7@phenom.ffwll.local>
+ <4244879a-e2b8-7994-e3fb-f63c0e115a2c@amd.com>
+ <CAKMK7uHROqWzTaG-JDzd343WJJiJCbzEOCZ++oCmKrQJAQgo7A@mail.gmail.com>
+ <17f7e755-fce2-b7cf-dd6f-0a0dec618bba@amd.com>
 MIME-Version: 1.0
-References: <20210521124946.3617862-1-vkoul@kernel.org>
-In-Reply-To: <20210521124946.3617862-1-vkoul@kernel.org>
-From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Date:   Fri, 21 May 2021 08:09:49 -0600
-Message-ID: <CAOCk7Nqep_Db+z3fr5asHZ1u0j8+6fKkPFs2Ai8CbA_zGqV6ZA@mail.gmail.com>
-Subject: Re: [Freedreno] [RFC PATCH 00/13] drm/msm: Add Display Stream
- Compression Support
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Rob Clark <robdclark@gmail.com>, DTML <devicetree@vger.kernel.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        David Airlie <airlied@linux.ie>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        lkml <linux-kernel@vger.kernel.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        freedreno <freedreno@lists.freedesktop.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <17f7e755-fce2-b7cf-dd6f-0a0dec618bba@amd.com>
+X-Operating-System: Linux phenom 5.10.32scarlett+ 
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, May 21, 2021 at 6:50 AM Vinod Koul <vkoul@kernel.org> wrote:
->
-> Display Stream Compression (DSC) compresses the display stream in host which
-> is later decoded by panel. This series enables this for Qualcomm msm driver.
-> This was tested on Google Pixel3 phone which use LGE SW43408 panel.
->
-> The changes include adding DT properties for DSC then hardware blocks support
-> required in DPU1 driver and support in encoder. We also add support in DSI
-> and introduce required topology changes.
->
-> In order for panel to set the DSC parameters we add dsc in drm_panel and set
-> it from the msm driver.
->
-> Complete changes which enable this for Pixel3 along with panel driver (not
-> part of this series) and DT changes can be found at:
-> git.linaro.org/people/vinod.koul/kernel.git pixel/dsc_rfc
->
-> Comments welcome!
+On Fri, May 21, 2021 at 09:43:59AM +0200, Christian König wrote:
+> Am 20.05.21 um 19:08 schrieb Daniel Vetter:
+> > [SNIP]
+> > > AH! So we are basically telling the fence backend that we have just
+> > > missed an event we waited for.
+> > > 
+> > > So what we want to know is how long the frontend wanted to wait instead
+> > > of how long the backend took for rendering.
+> > tbh I'm not sure the timestamp matters at all. What we do in i915 is
+> > boost quite aggressively, and then let the usual clock tuning wittle
+> > it down if we overshot. Plus soom cool-down to prevent
+> > abuse/continuous boosting. I think we also differentiate between
+> > display boost and userspace waits.
+> 
+> I was not thinking about time stamps here, but more like which information
+> we need at which place.
+> 
+> > On the display side we also wait until the vblank has passed we aimed
+> > for (atm always the next, we don't have target_frame support like
+> > amdgpu), to avoid boosting when there's no point.
+> > 
+> > > > So boosting right when you've missed your frame (not what Rob implements
+> > > > currently, but fixable) is the right semantics.
+> > > > 
+> > > > The other issue is that for cpu waits, we want to differentiate from fence
+> > > > waits that userspace does intentially (e.g. wait ioctl) and waits that
+> > > > random other things are doing within the kernel to keep track of progress.
+> > > > 
+> > > > For the former we know that userspace is stuck waiting for the gpu, and we
+> > > > probably want to boost. For the latter we most definitely do _not_ want to
+> > > > boost.
+> > > > 
+> > > > Otoh I do agree with you that the current api is a bit awkward, so perhaps
+> > > > we do need a dma_fence_userspace_wait wrapper which boosts automatically
+> > > > after a bit. And similarly perhaps a drm_vblank_dma_fence_wait, where you
+> > > > give it a vblank target, and if the fence isn't signalled by then, we kick
+> > > > it real hard.
+> > > Yeah, something like an use case driven API would be nice to have.
+> > > 
+> > > For this particular case I suggest that we somehow extend the enable
+> > > signaling callback.
+> > > 
+> > > > But otherwise yes this is absolutely a thing that matters a ton. If you
+> > > > look at Matt Brost's scheduler rfc, there's also a line item in there
+> > > > about adding this kind of boosting to drm/scheduler.
+> > > BTW: I still can't see this in my inbox.
+> > You've replied already:
+> > 
+> > https://nam11.safelinks.protection.outlook.com/?url=https%3A%2F%2Flore.kernel.org%2Fdri-devel%2F20210518235830.133834-1-matthew.brost%40intel.com%2F&amp;data=04%7C01%7Cchristian.koenig%40amd.com%7Ce4f3688b832842c4236e08d91bb1e148%7C3dd8961fe4884e608e11a82d994e183d%7C0%7C0%7C637571273080820910%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C3000&amp;sdata=uk3Gs%2FW42BDqMuMJtujcAH5GvN8mOlDnmywK8x1I%2F0k%3D&amp;reserved=0
+> 
+> Yeah, but doesn't that also require some changes to the DRM scheduler?
+> 
+> I was expecting that this is a bit more than just two patches.
 
-This feels backwards to me.  I've only skimmed this series, and the DT
-changes didn't come through for me, so perhaps I have an incomplete
-view.
+It's just the rfc document, per the new rfc process:
 
-DSC is not MSM specific.  There is a standard for it.  Yet it looks
-like everything is implemented in a MSM specific way, and then pushed
-to the panel.  So, every vendor needs to implement their vendor
-specific way to get the DSC info, and then push it to the panel?
-Seems wrong, given there is an actual standard for this feature.
+https://dri.freedesktop.org/docs/drm/gpu/rfc/
 
-Additionally, we define panel properties (resolution, BPP, etc) at the
-panel, and have the display drivers pull it from the panel.  However,
-for DSC, you do the reverse (define it in the display driver, and push
-it to the panel).  If the argument is that DSC properties can be
-dynamic, well, so can resolution.  Every panel for MSM MTPs supports
-multiple resolutions, yet we define that with the panel in Linux.
+It's rather obviously not any piece of code in there, but just meant to
+check rough direction before we go rewrite the entire i915 execbuf
+frontend.
+-Daniel
 
-Finally, I haven't seen the DT bits, but I'm concerned about using DT
-for this.  It inherently excludes ACPI systems.  You appear to have
-sdm845 support in this series, but what about ACPI boot on the Lenovo
-C630 for example?  Or any of the 8cx laptops?  We don't read the panel
-resolution, etc from DT, so why the DSC?
+> 
+> Christian.
+> 
+> > 
+> > It's just the big picture plan of what areas we're all trying to
+> > tackle with some why, so that everyone knows what's coming in the next
+> > half year at least. Probably longer until this is all sorted. I think
+> > Matt has some poc hacked-up pile, but nothing really to show.
+> > -Daniel
+> > 
+> > > Do you have a link?
+> > > 
+> > > Christian.
+> > > 
+> > > > -Daniel
+> > > > 
+> > > > 
+> > > > > Regards,
+> > > > > Christian.
+> > > > > 
+> > > > > > BR,
+> > > > > > -R
+> > > > > > 
+> > > > > > > Thanks,
+> > > > > > > Christian.
+> > > > > > > 
+> > > > > > > > BR,
+> > > > > > > > -R
+> > > > > > > > 
+> > > > > > > > > Christian.
+> > > > > > > > > 
+> > > > > > > > > Am 19.05.21 um 20:38 schrieb Rob Clark:
+> > > > > > > > > > From: Rob Clark <robdclark@chromium.org>
+> > > > > > > > > > 
+> > > > > > > > > > Add a way to hint to the fence signaler that a fence waiter has missed a
+> > > > > > > > > > deadline waiting on the fence.
+> > > > > > > > > > 
+> > > > > > > > > > In some cases, missing a vblank can result in lower gpu utilization,
+> > > > > > > > > > when really we want to go in the opposite direction and boost gpu freq.
+> > > > > > > > > > The boost callback gives some feedback to the fence signaler that we
+> > > > > > > > > > are missing deadlines, so it can take this into account in it's freq/
+> > > > > > > > > > utilization calculations.
+> > > > > > > > > > 
+> > > > > > > > > > Signed-off-by: Rob Clark <robdclark@chromium.org>
+> > > > > > > > > > ---
+> > > > > > > > > >       include/linux/dma-fence.h | 26 ++++++++++++++++++++++++++
+> > > > > > > > > >       1 file changed, 26 insertions(+)
+> > > > > > > > > > 
+> > > > > > > > > > diff --git a/include/linux/dma-fence.h b/include/linux/dma-fence.h
+> > > > > > > > > > index 9f12efaaa93a..172702521acc 100644
+> > > > > > > > > > --- a/include/linux/dma-fence.h
+> > > > > > > > > > +++ b/include/linux/dma-fence.h
+> > > > > > > > > > @@ -231,6 +231,17 @@ struct dma_fence_ops {
+> > > > > > > > > >           signed long (*wait)(struct dma_fence *fence,
+> > > > > > > > > >                               bool intr, signed long timeout);
+> > > > > > > > > > 
+> > > > > > > > > > +     /**
+> > > > > > > > > > +      * @boost:
+> > > > > > > > > > +      *
+> > > > > > > > > > +      * Optional callback, to indicate that a fence waiter missed a deadline.
+> > > > > > > > > > +      * This can serve as a signal that (if possible) whatever signals the
+> > > > > > > > > > +      * fence should boost it's clocks.
+> > > > > > > > > > +      *
+> > > > > > > > > > +      * This can be called in any context that can call dma_fence_wait().
+> > > > > > > > > > +      */
+> > > > > > > > > > +     void (*boost)(struct dma_fence *fence);
+> > > > > > > > > > +
+> > > > > > > > > >           /**
+> > > > > > > > > >            * @release:
+> > > > > > > > > >            *
+> > > > > > > > > > @@ -586,6 +597,21 @@ static inline signed long dma_fence_wait(struct dma_fence *fence, bool intr)
+> > > > > > > > > >           return ret < 0 ? ret : 0;
+> > > > > > > > > >       }
+> > > > > > > > > > 
+> > > > > > > > > > +/**
+> > > > > > > > > > + * dma_fence_boost - hint from waiter that it missed a deadline
+> > > > > > > > > > + *
+> > > > > > > > > > + * @fence: the fence that caused the missed deadline
+> > > > > > > > > > + *
+> > > > > > > > > > + * This function gives a hint from a fence waiter that a deadline was
+> > > > > > > > > > + * missed, so that the fence signaler can factor this in to device
+> > > > > > > > > > + * power state decisions
+> > > > > > > > > > + */
+> > > > > > > > > > +static inline void dma_fence_boost(struct dma_fence *fence)
+> > > > > > > > > > +{
+> > > > > > > > > > +     if (fence->ops->boost)
+> > > > > > > > > > +             fence->ops->boost(fence);
+> > > > > > > > > > +}
+> > > > > > > > > > +
+> > > > > > > > > >       struct dma_fence *dma_fence_get_stub(void);
+> > > > > > > > > >       u64 dma_fence_context_alloc(unsigned num);
+> > > > > > > > > > 
+> > > > > > _______________________________________________
+> > > > > > Linaro-mm-sig mailing list
+> > > > > > Linaro-mm-sig@lists.linaro.org
+> > > > > > https://nam11.safelinks.protection.outlook.com/?url=https%3A%2F%2Flists.linaro.org%2Fmailman%2Flistinfo%2Flinaro-mm-sig&amp;data=04%7C01%7Cchristian.koenig%40amd.com%7Ce4f3688b832842c4236e08d91bb1e148%7C3dd8961fe4884e608e11a82d994e183d%7C0%7C0%7C637571273080820910%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C3000&amp;sdata=lOOKD4J4h7byys2ifx0Ibn5vVr9gwZGGGsgrNmaymc4%3D&amp;reserved=0
+> > 
+> 
 
-I'm glad that work is being done to add DSC to Linux, it's something I
-struggled with when working on the 8998 mtp, and I realize this is a
-bit of a drive-by review.  However, it seems like there should be a
-better way.
-
->
-> Vinod Koul (13):
->   drm/dsc: Add dsc pps header init function
->   dt-bindings: msm/dsi: Document Display Stream Compression (DSC)
->     parameters
->   drm/msm/dsi: add support for dsc data
->   drm/msm/disp/dpu1: Add support for DSC
->   drm/msm/disp/dpu1: Add support for DSC in pingpong block
->   drm/msm/disp/dpu1: Add DSC support in RM
->   drm/msm/disp/dpu1: Add DSC for SDM845 to hw_catalog
->   drm/msm/disp/dpu1: Add DSC support in hw_ctl
->   drm/msm/disp/dpu1: Don't use DSC with mode_3d
->   drm/msm/disp/dpu1: Add support for DSC in encoder
->   drm/msm/disp/dpu1: Add support for DSC in topology
->   drm/msm/dsi: Add support for DSC configuration
->   drm/msm/dsi: Pass DSC params to drm_panel
->
->  .../devicetree/bindings/display/msm/dsi.txt   |  15 +
->  drivers/gpu/drm/drm_dsc.c                     |  11 +
->  drivers/gpu/drm/msm/Makefile                  |   1 +
->  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c   | 204 +++++++++++-
->  .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h  |  11 +
->  .../drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c  |   2 +
->  .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    |  22 ++
->  .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |  26 ++
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c    |  12 +-
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h    |   2 +
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c    | 221 +++++++++++++
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.h    |  79 +++++
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h   |  13 +
->  .../gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c   |  32 ++
->  .../gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h   |  14 +
->  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h       |   1 +
->  drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c        |  32 ++
->  drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h        |   1 +
->  drivers/gpu/drm/msm/dsi/dsi.xml.h             |  10 +
->  drivers/gpu/drm/msm/dsi/dsi_host.c            | 293 +++++++++++++++++-
->  drivers/gpu/drm/msm/msm_drv.h                 |  32 ++
->  include/drm/drm_dsc.h                         |  16 +
->  include/drm/drm_panel.h                       |   7 +
->  23 files changed, 1043 insertions(+), 14 deletions(-)
->  create mode 100644 drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c
->  create mode 100644 drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.h
->
-> --
-> 2.26.3
->
-> _______________________________________________
-> Freedreno mailing list
-> Freedreno@lists.freedesktop.org
-> https://lists.freedesktop.org/mailman/listinfo/freedreno
+-- 
+Daniel Vetter
+Software Engineer, Intel Corporation
+http://blog.ffwll.ch
