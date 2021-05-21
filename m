@@ -2,109 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1A74B38CF67
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 May 2021 22:54:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B8D2038CF8E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 May 2021 23:01:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229988AbhEUUzk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 May 2021 16:55:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44248 "EHLO
+        id S229512AbhEUVCj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 May 2021 17:02:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45876 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229503AbhEUUzk (ORCPT
+        with ESMTP id S229583AbhEUVCi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 May 2021 16:55:40 -0400
-Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00646C0613CE
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 May 2021 13:54:15 -0700 (PDT)
-Received: by mail-oi1-x229.google.com with SMTP id u11so20876003oiv.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 May 2021 13:54:15 -0700 (PDT)
+        Fri, 21 May 2021 17:02:38 -0400
+Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40E9EC0613CE
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 May 2021 14:01:15 -0700 (PDT)
+Received: by mail-pj1-x102d.google.com with SMTP id n6-20020a17090ac686b029015d2f7aeea8so7995637pjt.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 May 2021 14:01:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=B3jduID57ZvHsMi3x4uB8b1Uc3RzS8uHWNJ1a8k5L9c=;
-        b=Vq+UjoaepuatCdv+jF9L93kUcjSzg5FxbSLlu/3chM+ilyPCC/wlYyA14tE0wP39He
-         wrzMHJgK2waajEWhwE18K6Wxi2T9TMFikGCK6UFbgsaDLx9LK+GS7CkKuI201AgR0w2T
-         jlJ1jgX4kWw0hmavhTK6U2i2IoRHRxe1QzEiA=
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=aFKQWgvv/ZjeD7qEYhd0tK/1myw1mlPKy3VEp4LyRTQ=;
+        b=XkFVDI7cTA/rvl2loxxjVQXOylrtUEj01BxcdLhC+fMn8kQQY2z94kujwhG2jROs+I
+         qxStg5pXFxXPB292lbCpdnygE5sOff6igeyUgaFmBfSpHwgYh/vw11Wj0p9KBujwNgnA
+         oIDxTtVrQJNN4F3xZ++zih4yqDuvTXxEnT1Pk=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=B3jduID57ZvHsMi3x4uB8b1Uc3RzS8uHWNJ1a8k5L9c=;
-        b=adsOwNah7ImFri+xNYnWm82iGAxWF8/ypmjh6YfIJ+98jGlOZLpd7eZ7fS2h1YkrDY
-         XxC7mRJ9/EY/mqfkEd8eZfgZGA+1Ee9HlMF4zJMZHZiFe2kXQohGCvRH3os8J6805S/b
-         VA4f+u6fZtTmQqGGXSMjHhjQwsYcj9OvKzy1oh1xj8BAkFaXJs/U1KHEvKojgmHufRE0
-         xZ2w/m21hfVX+WBG7jBFQDbugxlzd6TGFeRJgLZ8mYyEW+s5BV26ByJCP5g7gf94/hxe
-         ErT/9txllg0dNxYnipqDXjzr/xcwXqf4zsKwji/7IYH6hZZP+/LXTYBMx4AkYdqFGNJl
-         KXOA==
-X-Gm-Message-State: AOAM531bzCmLsVRhGCWzFcVwg/CHiXQdMU/LKsDSoLf343ojapegfvAZ
-        BbjQfGWE2eDPm6TAqwOoG0J/XIgLU2Ri/jehgnbnJA==
-X-Google-Smtp-Source: ABdhPJy52MtahaDQNrKr4IiPNrNxjwiZJb9Jaygu06Wc4503z17eg95wq2vPWdlQ8RbNsiMqQNO6fs3lD6zVL/6WHLs=
-X-Received: by 2002:aca:654d:: with SMTP id j13mr3627644oiw.125.1621630455411;
- Fri, 21 May 2021 13:54:15 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 21 May 2021 13:54:14 -0700
-MIME-Version: 1.0
-In-Reply-To: <fc6542f2e760fa92aef73fdb9a789b2d@codeaurora.org>
-References: <1621013713-6860-1-git-send-email-khsieh@codeaurora.org>
- <e071434531947e5c4275a1a14b77b2c3@codeaurora.org> <CAE-0n52rBrjy-=dpqK+dae2GNk1rAaQnKqCjzdqiAoS13gHpSQ@mail.gmail.com>
- <f476d82d0798e0d7eb9e12949aa2c8f1@codeaurora.org> <CAE-0n51+mbCAqWWTOMDA4Rx_=96V4tK8g+UWVZ-nnp50dFzRPA@mail.gmail.com>
- <5d341df202facb3240a72cfb35e18167@codeaurora.org> <CAE-0n50u-qGvqzJThc+ggghv6ZErPr8g8dhvgequBm5CWOR2Kw@mail.gmail.com>
- <1e9970ee1a7109e336bc6ed51e727442@codeaurora.org> <CAE-0n50BOV6UofBzqqb+KzcOR7W=h3VD2g4CzeqB6+a0v-aZUQ@mail.gmail.com>
- <fc6542f2e760fa92aef73fdb9a789b2d@codeaurora.org>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.9.1
-Date:   Fri, 21 May 2021 13:54:14 -0700
-Message-ID: <CAE-0n50qKmGUZn6nP-J=BfVA3cUnJ5vPBj2_Z=nCAwRBe3cYEQ@mail.gmail.com>
-Subject: Re: [PATCH v4 1/2] drm/msm/dp: handle irq_hpd with sink_count = 0 correctly
-To:     khsieh@codeaurora.org
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robdclark@gmail.com,
-        sean@poorly.run, vkoul@kernel.org, abhinavk@codeaurora.org,
-        aravindh@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=aFKQWgvv/ZjeD7qEYhd0tK/1myw1mlPKy3VEp4LyRTQ=;
+        b=mPseIs6dAW5t9Ez5SsUgrDstQFdEamHraiTKzVFLHpnkCWAn/gbVqJXLdyy5YZ1dyv
+         C0W45Mq6wSgekCvDeKu1/mEjQGZHMLar+VhPzb9R+STIzEmCrrpoM7ItZZtjyChDMrwQ
+         LsV00lmaEKF6KmGMegN33XnQcDvgG49gsFL/0rl6dqj0iHrgKddqszDIsWcp3q0riJ03
+         jq3Ku3yNCpcl25tWwYTvDalxaeCsCfjvE0v5B4oVDV/LArkP84Rp54h6DqfG97muT8B6
+         Gcq5e4bLDEo8rI21mDXehY/UdCv8/mPEgec+75Om9NrVXbCXg1xbtQ+xYXPpFxmR/Bnx
+         NxEQ==
+X-Gm-Message-State: AOAM530GKizBlNmHdNOHozM3g2gfVshdU9mdTvUqba5gi0YPmhAhrOzS
+        UOgQA9w6ZzPiD2u3RDqmJ0n5hw==
+X-Google-Smtp-Source: ABdhPJx7MHEPo/jvOnAkibp5h9E7i2EaxlTt20C2REG1j2QmVWx9wPjsN+qM6uufy6UR2tGIjPPgRw==
+X-Received: by 2002:a17:90a:d14f:: with SMTP id t15mr13209534pjw.160.1621630874693;
+        Fri, 21 May 2021 14:01:14 -0700 (PDT)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:202:201:10e9:a6cd:727f:561e])
+        by smtp.gmail.com with ESMTPSA id o6sm5202532pfb.126.2021.05.21.14.01.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 21 May 2021 14:01:14 -0700 (PDT)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc:     Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, Stephen Boyd <swboyd@chromium.org>,
+        Joe Perches <joe@perches.com>,
+        Douglas Anderson <dianders@chromium.org>,
         linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Subject: [PATCH 1/2] nvmem: core: constify nvmem_cell_read_variable_common() return value
+Date:   Fri, 21 May 2021 14:00:57 -0700
+Message-Id: <20210521140031.1.Ibaca694aedfaff823feefa06b29ae746c641dd1a@changeid>
+X-Mailer: git-send-email 2.31.1.818.g46aad6cb9e-goog
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting khsieh@codeaurora.org (2021-05-21 12:45:35)
-> On 2021-05-21 12:18, Stephen Boyd wrote:
-> > Quoting khsieh@codeaurora.org (2021-05-21 08:21:58)
-> >> >
-> >> > Ok. So you're saying that we want to put both events on the queue
-> >> > regardless, and put IRQ_HPD there first because we want to check the
-> >> > status bit? Doesn't reading the status bit require the dongle to be
-> >> > connected though? So if an unplug came in along with an irq_hpd we may
-> >> > queue both the irq_hpd and the unplug, but when it comes time to
-> >> > process
-> >> > the irq_hpd in the kthread the link will be gone and so trying the dpcd
-> >> > read for the link status will fail?
-> >> >
-> >> yes,
-> >> we had a previous bug with this scenarios already.
-> >> https://partnerissuetracker.corp.google.com/issues/170598152
-> >> At this case, dongle produce two interrupts, irq_hpd followed by
-> >> unplug
-> >> immediately (not presented at isr status register at same time), at
-> >> the
-> >> time dongle unplugged form DTU.
-> >> But due to dp ctrl reset at handling irq_hpd which cause unplug mask
-> >> bit
-> >> be cleared so that unplug interrupt got lost.
-> >>
-> >
-> > Again, wouldn't that be too late if the hardirq handler is delayed to
-> > the point that the two irqs are pending in the isr status register?
->
-> yes,
-> but that not much dp driver can do.
-> As long as DP driver can recovery (shut down gracefully) and ready for
-> next plugin, then i think it should be fine.
->
+The caller doesn't modify the memory pointed to by the pointer so it
+can be const.
 
-Yes. I'm trying to make the point that the least the DP driver could do
-would be to mask the interrupts for HPD IRQ when unplug irq happens at
-hardirq context and also ignore HPD IRQ when unplug is also there. And
-going even further, it feels like we should only enable the unplug irq
-once a plug in irq happens, and vice versa, so that we don't get into
-the case where a super long delayed irq sees all three bits: plug,
-unplug, and hpd irq.
+Suggested-by: Stephen Boyd <swboyd@chromium.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+---
+
+ drivers/nvmem/core.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/drivers/nvmem/core.c b/drivers/nvmem/core.c
+index f9c9c9859919..4868aa876e1b 100644
+--- a/drivers/nvmem/core.c
++++ b/drivers/nvmem/core.c
+@@ -1609,9 +1609,9 @@ int nvmem_cell_read_u64(struct device *dev, const char *cell_id, u64 *val)
+ }
+ EXPORT_SYMBOL_GPL(nvmem_cell_read_u64);
+ 
+-static void *nvmem_cell_read_variable_common(struct device *dev,
+-					     const char *cell_id,
+-					     size_t max_len, size_t *len)
++static const void *nvmem_cell_read_variable_common(struct device *dev,
++						   const char *cell_id,
++						   size_t max_len, size_t *len)
+ {
+ 	struct nvmem_cell *cell;
+ 	int nbits;
+@@ -1655,7 +1655,7 @@ int nvmem_cell_read_variable_le_u32(struct device *dev, const char *cell_id,
+ 				    u32 *val)
+ {
+ 	size_t len;
+-	u8 *buf;
++	const u8 *buf;
+ 	int i;
+ 
+ 	buf = nvmem_cell_read_variable_common(dev, cell_id, sizeof(*val), &len);
+@@ -1686,7 +1686,7 @@ int nvmem_cell_read_variable_le_u64(struct device *dev, const char *cell_id,
+ 				    u64 *val)
+ {
+ 	size_t len;
+-	u8 *buf;
++	const u8 *buf;
+ 	int i;
+ 
+ 	buf = nvmem_cell_read_variable_common(dev, cell_id, sizeof(*val), &len);
+-- 
+2.31.1.818.g46aad6cb9e-goog
+
