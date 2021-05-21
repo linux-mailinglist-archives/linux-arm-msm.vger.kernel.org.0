@@ -2,95 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6CE0D38CF8F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 May 2021 23:01:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E1B7538CFAA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 May 2021 23:15:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229655AbhEUVCk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 May 2021 17:02:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45886 "EHLO
+        id S229639AbhEUVQv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 May 2021 17:16:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49080 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229583AbhEUVCj (ORCPT
+        with ESMTP id S229565AbhEUVQu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 May 2021 17:02:39 -0400
-Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C403C0613ED
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 May 2021 14:01:16 -0700 (PDT)
-Received: by mail-pj1-x102d.google.com with SMTP id b15-20020a17090a550fb029015dad75163dso7851765pji.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 May 2021 14:01:16 -0700 (PDT)
+        Fri, 21 May 2021 17:16:50 -0400
+Received: from mail-qt1-x82c.google.com (mail-qt1-x82c.google.com [IPv6:2607:f8b0:4864:20::82c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A658C061574
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 May 2021 14:15:25 -0700 (PDT)
+Received: by mail-qt1-x82c.google.com with SMTP id a10so9531245qtp.7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 May 2021 14:15:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=qcucsln58OsrXcIsnyUyuUI/EGMDXBHA3sqXqZbY5oQ=;
-        b=aV1t1CAkEUTf2hFhPL0C02ioDHWC3FjKXeMwGRamT26ZTjEZBzNqGTmZYDvrtA3HhS
-         B2WWNw8sfATpuLnGwIlevkc8TkGaLuYHs0MAhP4CUy6CPuW23GqjJcR8w5m00Z9QeBoB
-         bOVSeIcNZHPV0LfiH+KC/xKFS9oJiKDdeAbrs=
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=CDXffk8yuVYOn1p3JAQ7iuPJM3NbY++kDuUelyU/OiQ=;
+        b=IUe8dgsBYwdkeskH874YCPmph/UsPTlXVZoGqqKDDhoBMBgaFAVyPAsh42s2HQ1qrL
+         Oe01LVrNZhKPvoHDtSKhAaGKIMuxoRrXuKb6wZlD10kYHdcwfnc+FCI/bz87BebQf5hw
+         Flyruw2yZu5Oa2kYYTQ1hAmjWnRoMq4kjU/gY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=qcucsln58OsrXcIsnyUyuUI/EGMDXBHA3sqXqZbY5oQ=;
-        b=G/UKZFeOfBUh1RSptA1xgUiJ3DPWQ3cc+9hyhO0HvnY6c1WV1qyj3bxExQqHpMmeO5
-         x3ne1IkZEwrchg8SE9evfG1NZecKyT3qNcFrjJ1Onrf02LJySQtoqL2vY8SNQ0+wwHpw
-         iDHqdLBPa8x7EKz1jd1p35+AE1CweO/HwWMEpNkQeEzmKVZiHuNa2VUll9kfW01Qlf7i
-         Io7PjL2MhpUlRqTDBE6obserXalVS7agkg4Rod+HW21w37/0rezD6RZnfVjSlMdjLfPV
-         E7wXFg1/kdGXIkTDHNG+6BLv20Fi+VvT/d25iTWjBKvGjAiJaFGWRM1Y8gjMBev+/Leo
-         YW4g==
-X-Gm-Message-State: AOAM530ycQMbk8IAhZgIPb+ruA92KJ+RbntTZlNi8LjRg8wIqpfdGNNZ
-        mmlRwwRIrxR14ODZXS4h4Fe6RQ==
-X-Google-Smtp-Source: ABdhPJzjiR9OmDU991lLjA+2s0PA+vhVMkD1DNqpi/iUqDxkAh+P7lJrs9JUFen9Q5TsbtHn3chUQg==
-X-Received: by 2002:a17:902:b412:b029:ef:1737:ed with SMTP id x18-20020a170902b412b02900ef173700edmr14322796plr.43.1621630875766;
-        Fri, 21 May 2021 14:01:15 -0700 (PDT)
-Received: from tictac2.mtv.corp.google.com ([2620:15c:202:201:10e9:a6cd:727f:561e])
-        by smtp.gmail.com with ESMTPSA id o6sm5202532pfb.126.2021.05.21.14.01.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 May 2021 14:01:15 -0700 (PDT)
-From:   Douglas Anderson <dianders@chromium.org>
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc:     Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, Stephen Boyd <swboyd@chromium.org>,
-        Joe Perches <joe@perches.com>,
-        Douglas Anderson <dianders@chromium.org>,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH 2/2] nvmem: qfprom: Improve the comment about regulator setting
-Date:   Fri, 21 May 2021 14:00:58 -0700
-Message-Id: <20210521140031.2.Iaa641db08ce7c571860dcce13e4ce056008b711e@changeid>
-X-Mailer: git-send-email 2.31.1.818.g46aad6cb9e-goog
-In-Reply-To: <20210521140031.1.Ibaca694aedfaff823feefa06b29ae746c641dd1a@changeid>
-References: <20210521140031.1.Ibaca694aedfaff823feefa06b29ae746c641dd1a@changeid>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=CDXffk8yuVYOn1p3JAQ7iuPJM3NbY++kDuUelyU/OiQ=;
+        b=Gh9RkxR19UvXfXbjyRneL+bzc+ozQ3hkqgtd5WcLHut7p4Jwx4VaCOMtvWazfylocV
+         h4OIbQxgf7ldF7PWeUkkKz8E1AwTyoC8/hRdDxsKLVA44rhxdzZUEAxwCTSCGNMa4q7n
+         NfrkFrO0nENCmvw3WDFsPBoEhbHk0Cf9Q6LO7LOpI2eVoFw6XefWNQaJ8oyzNQ1lGCPI
+         nkN3d0M1/e/CwF9EHxg2HagRXcStagXNm6U+Sw4Pgd1vQyUy/pNEsSm/rL4h0srX7bzK
+         BUmjhf7QKX0/r5eVGcmClRcySEsb0Kus1xP4gAkiY8pEH0m5Js0D3f/7v50INnWh/8fs
+         urKg==
+X-Gm-Message-State: AOAM533P4K6FTz/71PWTqSXwGnb8a9ZXtihf1KN00HOpLOLVwnSMbSqk
+        CMrTIY8rpz9McK5V3pX4wjwKWCvzEkJZMA==
+X-Google-Smtp-Source: ABdhPJzsrGyjuUU3nBgRWmJWj4MFFWFFJGK+c8CTeu0m6B5SKRiJO6MzBDlwypixq9pLmQVrIbpaxA==
+X-Received: by 2002:aed:2128:: with SMTP id 37mr13231661qtc.163.1621631724157;
+        Fri, 21 May 2021 14:15:24 -0700 (PDT)
+Received: from mail-yb1-f170.google.com (mail-yb1-f170.google.com. [209.85.219.170])
+        by smtp.gmail.com with ESMTPSA id 11sm5824267qky.71.2021.05.21.14.15.23
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 21 May 2021 14:15:23 -0700 (PDT)
+Received: by mail-yb1-f170.google.com with SMTP id r7so7221236ybs.10
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 May 2021 14:15:23 -0700 (PDT)
+X-Received: by 2002:a25:734d:: with SMTP id o74mr19566830ybc.32.1621631723160;
+ Fri, 21 May 2021 14:15:23 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20210521200529.1991729-1-sujitka@chromium.org> <20210521130511.v1.1.Ia83c80aec3b9535f01441247b6c3fb6f80b0ec7f@changeid>
+In-Reply-To: <20210521130511.v1.1.Ia83c80aec3b9535f01441247b6c3fb6f80b0ec7f@changeid>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Fri, 21 May 2021 14:15:11 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=VO6aiAULtsDbqbJd+F-BXxyOOKvwRXxUCahQEetdfcbA@mail.gmail.com>
+Message-ID: <CAD=FV=VO6aiAULtsDbqbJd+F-BXxyOOKvwRXxUCahQEetdfcbA@mail.gmail.com>
+Subject: Re: [PATCH v1 1/2] arm64: dts: qcom: sc7180: Move sdc pinconf to
+ board specific DT files
+To:     Sujit Kautkar <sujitka@chromium.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Sibi Sankar <sibis@codeaurora.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In review feedback Joe Perches found the existing comment
-confusing. Let's use something based on the wording proposed by Joe.
+Hi,
 
-Suggested-by: Joe Perches <joe@perches.com>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
----
+On Fri, May 21, 2021 at 1:06 PM Sujit Kautkar <sujitka@chromium.org> wrote:
+>
+> Move sdc1/sdc2 pinconf from SoC specific DT file to board specific DT
+> files
+>
+> Signed-off-by: Sujit Kautkar <sujitka@chromium.org>
+> ---
+>
+>  arch/arm64/boot/dts/qcom/sc7180-idp.dts      | 102 +++++++++++++++++++
+>  arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 102 +++++++++++++++++++
+>  arch/arm64/boot/dts/qcom/sc7180.dtsi         | 102 -------------------
+>  3 files changed, 204 insertions(+), 102 deletions(-)
 
- drivers/nvmem/qfprom.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+Yup, this looks good to me. Basically a no-op change moving this to
+the two boards.
 
-diff --git a/drivers/nvmem/qfprom.c b/drivers/nvmem/qfprom.c
-index 1ba666bcb900..81fbad5e939d 100644
---- a/drivers/nvmem/qfprom.c
-+++ b/drivers/nvmem/qfprom.c
-@@ -196,9 +196,9 @@ static int qfprom_enable_fuse_blowing(const struct qfprom_priv *priv,
- 	}
- 
- 	/*
--	 * Hardware requires a min voltage for fuse blowing; this may be
--	 * a rail shared do don't specify a max--regulator constraints
--	 * will handle.
-+	 * Hardware requires a minimum voltage for fuse blowing.
-+	 * This may be a shared rail so don't specify a maximum.
-+	 * Regulator constraints will cap to the actual maximum.
- 	 */
- 	ret = regulator_set_voltage(priv->vcc, qfprom_blow_uV, INT_MAX);
- 	if (ret) {
--- 
-2.31.1.818.g46aad6cb9e-goog
-
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
