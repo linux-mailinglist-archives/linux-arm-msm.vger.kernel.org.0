@@ -2,354 +2,198 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 64D5338CA84
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 May 2021 18:00:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BFA1238CAAD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 May 2021 18:12:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230424AbhEUQB7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 May 2021 12:01:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33948 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231587AbhEUQB5 (ORCPT
+        id S233877AbhEUQNy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 May 2021 12:13:54 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:10361 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237282AbhEUQNy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 May 2021 12:01:57 -0400
-Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0DA3FC0613ED
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 May 2021 09:00:32 -0700 (PDT)
-Received: by mail-ot1-x330.google.com with SMTP id i23-20020a9d68d70000b02902dc19ed4c15so18509805oto.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 May 2021 09:00:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=H63HtpaE+6Xg3N3fCciau2vnWnPyL31t9ItUFtyRdok=;
-        b=QZuIb1L8Cww3FE7u/iFMOZm50aekfIs+zrZYX9X0xwy6iRDtY5kWNsIHTBbPIHCpuU
-         BWnGfW7MXZqPAq4JDbctBsR919m7XzMICQJBogrnv+NRhl03wE6A5sK+1rU6PdmGmqHm
-         Yqn0Euw+zfU373uQrd5n60RWRTWFZwViL2CQC6ovDdnXSGOnd3nlYN8UDMWrL1n6MYQR
-         muFXMesZUnCCXt0GtvwRGTZjxKr2GmUKYSRyHuhyHLCEyfGKcn8KupXoQNjKaBsqvEJC
-         FhFzIbsLlQ4o4z4HOlQqUV4JRuFU5r/+ge3eKVYLRCpqaeMERhMmzV12CS8p3tgku6aa
-         K8mA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=H63HtpaE+6Xg3N3fCciau2vnWnPyL31t9ItUFtyRdok=;
-        b=CeAzlhYhDgEqPa6+ZyU0M9bZufvNkNCJAF4QP4ZeEBTTrnTcZ9WfW6Yt91bplJ5IIg
-         eGIiDjYSs+J3E6qgLbn3WfeYiLxHvTwXNtW5L+Clc5MK+W4a5S+OfgHjXD71BQ8Krde/
-         sqqc4chUABPNX5a94NmOoe1IzkRU3lmmBm8LWxrJFlCWZtqlkNP0U6KV3TcHfvWFmQTF
-         mKMswjrj426SOqDmu42TsjJgCazSrKjBFTKQYyVGoJn6bBABRZn1oy9wUB3uUAE2B5OO
-         uYr3dgf+LkIelf+uYDAyLqS2OUHkuEa+PWVgKcoDttGDcrw0qUEu3akLTDdc+nTZP8DS
-         qnRw==
-X-Gm-Message-State: AOAM5315WJAdr1rFrA+8mxiRfHcsn4WVDL57t1QXgRo5ILhSWFKn37Pz
-        z43D2Jgsz3ss5TBoMmi/ldp2aA==
-X-Google-Smtp-Source: ABdhPJxVYsBy/bGxAKrQ+85jYaJthqjgGvNjNriEMYLFbGFw4brOKshTM3SBpMd4+avuCFoQSzGFzw==
-X-Received: by 2002:a05:6830:109a:: with SMTP id y26mr8900044oto.164.1621612832077;
-        Fri, 21 May 2021 09:00:32 -0700 (PDT)
-Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id i9sm1275832oog.17.2021.05.21.09.00.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 May 2021 09:00:31 -0700 (PDT)
-Date:   Fri, 21 May 2021 11:00:29 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Krishna Manikandan <mkrishn@codeaurora.org>
-Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, kalyan_t@codeaurora.org,
-        tanmay@codeaurora.org, abhinavk@codeaurora.org,
-        robdclark@gmail.com, swboyd@chromium.org, vinod.koul@linaro.org,
-        dianders@chromium.org, khsieh@codeaurora.org, robh+dt@kernel.org,
-        sean@poorly.run, robh@kernel.org
-Subject: Re: [PATCH v17 1/4] dt-bindings: msm: disp: add yaml schemas for DPU
- bindings
-Message-ID: <20210521160029.GA2484@yoga>
-References: <1621592844-6414-1-git-send-email-mkrishn@codeaurora.org>
+        Fri, 21 May 2021 12:13:54 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1621613550; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=JBNjKRUr1tE/SpZsz0PTWtWzyb4OvafTBwnzC/mARrY=;
+ b=xIBQ/Oltr7DcoYhAySPju4mKucYK8c/kkkLc8v8kYBi85gGXE63OVOnE8gyfrBp5A49cUPq3
+ zLsDEA9ssKnXt+LkzSWXtlOdFtxKh148TunvxhCVBFLVOI+RzmcpkIpyDgQYIeBzLxhYvAF4
+ tdehEBnbIjP0HKx2nXGj67Kuu14=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
+ 60a7dbd32bff04e53bb086ad (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 21 May 2021 16:12:03
+ GMT
+Sender: rojay=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 79E72C4360C; Fri, 21 May 2021 16:12:03 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: rojay)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 2A055C433D3;
+        Fri, 21 May 2021 16:12:02 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1621592844-6414-1-git-send-email-mkrishn@codeaurora.org>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Fri, 21 May 2021 21:42:02 +0530
+From:   rojay@codeaurora.org
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     wsa@kernel.org, dianders@chromium.org,
+        saiprakash.ranjan@codeaurora.org, gregkh@linuxfoundation.org,
+        mka@chromium.org, skananth@codeaurora.org,
+        msavaliy@qti.qualcomm.com, skakit@codeaurora.org,
+        rnayak@codeaurora.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org,
+        sumit.semwal@linaro.org, linux-media@vger.kernel.org
+Subject: Re: [PATCH V10] i2c: i2c-qcom-geni: Add shutdown callback for i2c
+In-Reply-To: <CAE-0n50o1XRnV3HSAM7uhfS8M3kf_m0DrTkqCfYGdnSjpF6Xfg@mail.gmail.com>
+References: <20210512082220.7137-1-rojay@codeaurora.org>
+ <CAE-0n52D-K1T0QgxA-S7BXxE3Qk807F9edNyR+2RL4YxRyigMg@mail.gmail.com>
+ <70a90d229551bcec21ed74cfd1350b9b@codeaurora.org>
+ <CAE-0n50o1XRnV3HSAM7uhfS8M3kf_m0DrTkqCfYGdnSjpF6Xfg@mail.gmail.com>
+Message-ID: <79fdd08e974d6f6e35f0042c98a9415c@codeaurora.org>
+X-Sender: rojay@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri 21 May 05:27 CDT 2021, Krishna Manikandan wrote:
-> diff --git a/Documentation/devicetree/bindings/display/msm/dpu-sc7180.yaml b/Documentation/devicetree/bindings/display/msm/dpu-sc7180.yaml
-[..]
-> +      ports:
-> +        $ref: /schemas/graph.yaml#/properties/ports
-> +        description: |
-> +          Contains the list of output ports from DPU device. These ports
-> +          connect to interfaces that are external to the DPU hardware,
-> +          such as DSI, DP etc. Each output port contains an endpoint that
-> +          describes how it is connected to an external interface.
-> +
-> +        properties:
-> +          port@0:
-> +            $ref: /schemas/graph.yaml#/properties/port
-> +            description: DPU_INTF1 (DSI1)
-> +
-> +          port@2:
-> +            $ref: /schemas/graph.yaml#/properties/port
-> +            description: DPU_INTF0 (DP)
+On 2021-05-20 13:45, Stephen Boyd wrote:
+> Quoting rojay@codeaurora.org (2021-05-16 23:32:50)
+>> Hi Stephen,
+>> 
+>> Now, I have made the changes, calling i2c_mark_adapter_suspended() in
+>> shutdown() and i2c_mark_adapter_suspended()/_resumed() from runtime
+>> suspend/resume also and validated the changes. I have also picked
+>> your patch [1] for this validation.
+>> 
+>> During the device boot up I am seeing multiple traces shown below.
+>> Are these expected now and needs to be fixed from rt5682/respective
+>> client driver?
+>> 
+>> Trace1:
+>> [   11.709477] i2c i2c-9: Transfer while suspended
+>> [   11.905595] Call trace:
+>> [   11.908124]  __i2c_transfer+0xb8/0x38c
+>> [   11.911984]  i2c_transfer+0xa0/0xf4
+>> [   11.915569]  i2c_transfer_buffer_flags+0x68/0x9c
+>> [   11.920314]  regmap_i2c_write+0x34/0x64
+>> [   11.924255]  _regmap_raw_write_impl+0x4e8/0x7bc
+>> [   11.928911]  _regmap_bus_raw_write+0x70/0x8c
+>> [   11.933301]  _regmap_write+0x100/0x150
+>> [   11.937152]  regmap_write+0x54/0x78
+>> [   11.940744]  soc_component_write_no_lock+0x34/0xa8
+>> [   11.945666]  snd_soc_component_write+0x3c/0x5c
+>> [   11.950242]  rt5682_set_component_pll+0x1e4/0x2b4 [snd_soc_rt5682]
+>> [   11.956588]  snd_soc_component_set_pll+0x50/0xa8
+>> [   11.961328]  snd_soc_dai_set_pll+0x74/0xc8
+>> [   11.965542]  sc7180_snd_startup+0x9c/0x120 [snd_soc_sc7180]
+>> [   11.971262]  snd_soc_link_startup+0x34/0x88
+>> [   11.975557]  soc_pcm_open+0x100/0x538
+>> [   11.979323]  snd_pcm_open_substream+0x530/0x704
+>> [   11.983980]  snd_pcm_open+0xc8/0x210
+>> [   11.987653]  snd_pcm_playback_open+0x50/0x80
+>> [   11.992049]  snd_open+0x120/0x150
+>> [   11.995462]  chrdev_open+0xb8/0x1a4
+>> [   11.999056]  do_dentry_open+0x238/0x358
+>> [   12.003001]  vfs_open+0x34/0x40
+>> [   12.006235]  path_openat+0x9e8/0xd60
+>> [   12.009913]  do_filp_open+0x90/0x10c
+>> [   12.013587]  do_sys_open+0x148/0x314
+>> [   12.017260]  __arm64_compat_sys_openat+0x28/0x34
+>> [   12.022009]  el0_svc_common+0xa4/0x16c
+>> [   12.025860]  el0_svc_compat_handler+0x2c/0x40
+>> [   12.030337]  el0_svc_compat+0x8/0x10
+>> [   12.034018] ---[ end trace 745ead557fcbb5dc ]---
+> 
+> Ah I see. Maybe it isn't correct to mark the device as suspended in
+> runtime PM operations because the bus will be resumed during the
+> transfer? So only mark it suspended during system wide suspend/resume
+> transitions?
+> 
+> -Stephen
+> 
 
-Why is port@0 INTF1 and why is port@2 INTF0? In the binding you're
-translating the two ports that are described are 0 and 1, representing
-INTF1 and INTF2, or DSI1 and DSI2, respectively.
+Yes, we cannot mark device as suspended/resumed during
+runtime PM operations. Bus will be resumed during i2c
+transfers and before transfer initiation, in __i2c_transfer()
+from i2c-core-base.c there is a check to see whether the device
+is marked as suspended with "__i2c_check_suspended(adap)" call,
+which is "true" in this case and returning from there.
 
-Further more, I have a need for somehow describing the pairing of 4 DP
-INTFs (INTF 0, 3, 4 and 5) and how they are connected to the 3+1 DP+eDP
-controllers.
+To mark it only suspended during system wide suspend/resume
+transitions, currently our geni i2c driver has only
+system_suspend implemented (geni_i2c_suspend_noirq()) and
+does not have system_resume implemented, which again causes i2c
+transfers to fail during system_resume after system_suspend.
 
-Downstream this seems to be handled by adding cell-index to the DP
-controllers and then matching that against the numbering in the driver's
-INTF array. But rather than adding cell-index to map this, can't we
-define that the port index is the INTF-number here?
+Shall I go ahead with marking device suspended during
+shutdown() only?
 
+-Roja
 
-This would obviously break compatibility with existing DTBs, but we
-could start by doing it selectively for the new compatibles, fix up the
-existing dts files and then drop the selective application after 1 or 2
-LTS releases.
-
-> +
-> +        required:
-> +          - port@0
-
-Does this imply that I am not allowed to build a product on sc7180 that
-only has DP output?
-
-> +
-> +    required:
-> +      - compatible
-> +      - reg
-> +      - reg-names
-> +      - clocks
-> +      - interrupts
-> +      - power-domains
-> +      - operating-points-v2
-> +      - ports
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - reg-names
-> +  - power-domains
-> +  - clocks
-> +  - interrupts
-> +  - interrupt-controller
-> +  - iommus
-> +  - ranges
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/clock/qcom,dispcc-sc7180.h>
-> +    #include <dt-bindings/clock/qcom,gcc-sc7180.h>
-> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
-> +    #include <dt-bindings/interconnect/qcom,sdm845.h>
-> +    #include <dt-bindings/power/qcom-rpmpd.h>
-> +
-> +    display-subsystem@ae00000 {
-> +         #address-cells = <1>;
-> +         #size-cells = <1>;
-> +         compatible = "qcom,sc7180-mdss";
-> +         reg = <0xae00000 0x1000>;
-> +         reg-names = "mdss";
-> +         power-domains = <&dispcc MDSS_GDSC>;
-> +         clocks = <&gcc GCC_DISP_AHB_CLK>,
-> +                  <&dispcc DISP_CC_MDSS_AHB_CLK>,
-> +                  <&dispcc DISP_CC_MDSS_MDP_CLK>;
-> +         clock-names = "iface", "ahb", "core";
-> +
-> +         interrupts = <GIC_SPI 83 IRQ_TYPE_LEVEL_HIGH>;
-> +         interrupt-controller;
-> +         #interrupt-cells = <1>;
-> +
-> +         interconnects = <&mmss_noc MASTER_MDP0 &mc_virt SLAVE_EBI1>;
-> +         interconnect-names = "mdp0-mem";
-> +
-> +         iommus = <&apps_smmu 0x800 0x2>;
-> +         ranges;
-> +
-> +         display-controller@ae01000 {
-> +                   compatible = "qcom,sc7180-dpu";
-> +                   reg = <0x0ae01000 0x8f000>,
-> +                         <0x0aeb0000 0x2008>;
-> +
-> +                   reg-names = "mdp", "vbif";
-> +
-> +                   clocks = <&gcc GCC_DISP_HF_AXI_CLK>,
-> +                            <&dispcc DISP_CC_MDSS_AHB_CLK>,
-> +                            <&dispcc DISP_CC_MDSS_ROT_CLK>,
-> +                            <&dispcc DISP_CC_MDSS_MDP_LUT_CLK>,
-> +                            <&dispcc DISP_CC_MDSS_MDP_CLK>,
-> +                            <&dispcc DISP_CC_MDSS_VSYNC_CLK>;
-> +                   clock-names = "bus", "iface", "rot", "lut", "core",
-> +                                 "vsync";
-> +
-> +                   interrupt-parent = <&mdss>;
-> +                   interrupts = <0>;
-> +                   power-domains = <&rpmhpd SC7180_CX>;
-> +                   operating-points-v2 = <&mdp_opp_table>;
-> +
-> +                   ports {
-> +                           #address-cells = <1>;
-> +                           #size-cells = <0>;
-> +
-> +                           port@0 {
-> +                                   reg = <0>;
-> +                                   dpu_intf1_out: endpoint {
-> +                                                  remote-endpoint = <&dsi0_in>;
-> +                                   };
-> +                           };
-> +
-> +                            port@2 {
-> +                                    reg = <2>;
-> +                                    dpu_intf0_out: endpoint {
-> +                                                   remote-endpoint = <&dp_in>;
-> +                                    };
-> +                            };
-
-The indentation is inconsistent among the ports.
-
-> +                   };
-> +         };
-> +    };
-> +...
-> diff --git a/Documentation/devicetree/bindings/display/msm/dpu-sdm845.yaml b/Documentation/devicetree/bindings/display/msm/dpu-sdm845.yaml
-> new file mode 100644
-> index 0000000..b4ea7c9
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/display/msm/dpu-sdm845.yaml
-> @@ -0,0 +1,212 @@
-> +# SPDX-License-Identifier: GPL-2.0-only or BSD-2-Clause
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/display/msm/dpu-sdm845.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm Display DPU dt properties for SDM845 target
-> +
-> +maintainers:
-> +  - Krishna Manikandan <mkrishn@codeaurora.org>
-> +
-> +description: |
-> +  Device tree bindings for MSM Mobile Display Subsystem(MDSS) that encapsulates
-> +  sub-blocks like DPU display controller, DSI and DP interfaces etc. Device tree
-> +  bindings of MDSS and DPU are mentioned for SDM845 target.
-> +
-> +properties:
-> +  compatible:
-> +    items:
-> +      - const: qcom,sdm845-mdss
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  reg-names:
-> +    const: mdss
-> +
-> +  power-domains:
-> +    maxItems: 1
-> +
-> +  clocks:
-> +    items:
-> +      - description: Display AHB clock from gcc
-> +      - description: Display AXI clock
-> +      - description: Display core clock
-> +
-> +  clock-names:
-> +    items:
-> +      - const: iface
-> +      - const: bus
-> +      - const: core
-> +
-> +  interrupts:
-> +    maxItems: 1
-> +
-> +  interrupt-controller: true
-> +
-> +  "#address-cells": true
-> +
-> +  "#size-cells": true
-> +
-> +  "#interrupt-cells":
-> +    const: 1
-> +
-> +  iommus:
-> +    items:
-> +      - description: Phandle to apps_smmu node with SID mask for Hard-Fail port0
-> +      - description: Phandle to apps_smmu node with SID mask for Hard-Fail port1
-> +
-> +  ranges: true
-> +
-> +patternProperties:
-> +  "^display-controller@[0-9a-f]+$":
-> +    type: object
-> +    description: Node containing the properties of DPU.
-> +
-> +    properties:
-> +      compatible:
-> +        items:
-> +          - const: qcom,sdm845-dpu
-> +
-> +      reg:
-> +        items:
-> +          - description: Address offset and size for mdp register set
-> +          - description: Address offset and size for vbif register set
-> +
-> +      reg-names:
-> +        items:
-> +          - const: mdp
-> +          - const: vbif
-> +
-> +      clocks:
-> +        items:
-> +          - description: Display ahb clock
-> +          - description: Display axi clock
-> +          - description: Display core clock
-> +          - description: Display vsync clock
-> +
-> +      clock-names:
-> +        items:
-> +          - const: iface
-> +          - const: bus
-> +          - const: core
-> +          - const: vsync
-> +
-> +      interrupts:
-> +        maxItems: 1
-> +
-> +      power-domains:
-> +        maxItems: 1
-> +
-> +      operating-points-v2: true
-
-You have a blank line between all other properties, but not here.
-
-> +      ports:
-> +        $ref: /schemas/graph.yaml#/properties/ports
-> +        description: |
-> +          Contains the list of output ports from DPU device. These ports
-> +          connect to interfaces that are external to the DPU hardware,
-> +          such as DSI, DP etc. Each output port contains an endpoint that
-> +          describes how it is connected to an external interface.
-> +
-> +        properties:
-> +          port@0:
-> +            $ref: /schemas/graph.yaml#/properties/port
-> +            description: DPU_INTF1 (DSI1)
-> +
-> +          port@1:
-> +            $ref: /schemas/graph.yaml#/properties/port
-> +            description: DPU_INTF2 (DSI2)
-> +
-> +        required:
-> +          - port@0
-> +          - port@1
-
-In what sense are both these required?
-
-> +
-
-Regards,
-Bjorn
+>> [   12.040151] rt5682 9-001a: ASoC: error at 
+>> soc_component_write_no_lock
+>> on rt5682.9-001a: -108
+>> [   12.049055] rt5682 9-001a: ASoC: error at 
+>> soc_component_write_no_lock
+>> on rt5682.9-001a: -108
+>> [   12.057742] rt5682 9-001a: ASoC: error at
+>> snd_soc_component_update_bits on rt5682.9-001a: -108
+>> 
+>> Trace2:
+>> [    3.515390] i2c i2c-2: Transfer while suspended
+>> [    3.606749] Call trace:
+>> [    3.606751]  __i2c_transfer+0xb8/0x38c
+>> [    3.606752]  i2c_transfer+0xa0/0xf4
+>> [    3.606754]  i2c_transfer_buffer_flags+0x68/0x9c
+>> [    3.639599] hub 2-1.4:1.0: USB hub found
+>> [    3.644375]  regmap_i2c_write+0x34/0x64
+>> [    3.644376]  _regmap_raw_write_impl+0x4e8/0x7bc
+>> [    3.644378]  _regmap_bus_raw_write+0x70/0x8c
+>> [    3.644379]  _regmap_write+0x100/0x150
+>> [    3.644381]  regmap_write+0x54/0x78
+>> [    3.644383]  ti_sn_aux_transfer+0x90/0x244
+>> [    3.650695] hub 2-1.4:1.0: 4 ports detected
+>> [    3.655288]  drm_dp_dpcd_access+0x8c/0x11c
+>> [    3.655289]  drm_dp_dpcd_read+0x64/0x10c
+>> [    3.655290]  ti_sn_bridge_enable+0x5c/0x824
+>> [    3.655292]  drm_atomic_bridge_chain_enable+0x78/0xa0
+>> [    3.655294]  drm_atomic_helper_commit_modeset_enables+0x198/0x238
+>> [    3.655295]  msm_atomic_commit_tail+0x324/0x714
+>> [    3.655297]  commit_tail+0xa4/0x108
+>> [    3.664985] usb 1-1.4: new high-speed USB device number 4 using
+>> xhci-hcd
+>> [    3.666204]  drm_atomic_helper_commit+0xf4/0xfc
+>> [    3.666205]  drm_atomic_commit+0x50/0x5c
+>> [    3.666206]  drm_atomic_helper_set_config+0x64/0x98
+>> [    3.666208]  drm_mode_setcrtc+0x26c/0x590
+>> [    3.666209]  drm_ioctl_kernel+0x9c/0x114
+>> [    3.701074] hub 2-1.4:1.0: USB hub found
+>> [    3.703347]  drm_ioctl+0x288/0x420
+>> [    3.703349]  drm_compat_ioctl+0xd0/0xe0
+>> [    3.703351]  __arm64_compat_sys_ioctl+0x100/0x2108
+>> [    3.703354]  el0_svc_common+0xa4/0x16c
+>> [    3.708499] hub 2-1.4:1.0: 4 ports detected
+>> [    3.711588]  el0_svc_compat_handler+0x2c/0x40
+>> [    3.711590]  el0_svc_compat+0x8/0x10
+>> [    3.711591] ---[ end trace 745ead557fcbb5db ]---
+>> [    3.772120] usb 1-1.4: New USB device found, idVendor=0bda,
+>> idProduct=5411, bcdDevice= 1.04
+>> [    3.794990] ti_sn65dsi86 2-002d: [drm:ti_sn_bridge_enable] *ERROR*
+>> Can't read lane count (-108); assuming 4
+>> 
+>> [1]
+>> https://lore.kernel.org/r/20210508075151.1626903-2-swboyd@chromium.org
+>> 
