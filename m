@@ -2,117 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6263038D06D
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 May 2021 00:00:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3BDD238D074
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 May 2021 00:02:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229668AbhEUWBu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 May 2021 18:01:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59338 "EHLO
+        id S229676AbhEUWDw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 May 2021 18:03:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59806 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229503AbhEUWBu (ORCPT
+        with ESMTP id S229472AbhEUWDv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 May 2021 18:01:50 -0400
-Received: from mail-pg1-x532.google.com (mail-pg1-x532.google.com [IPv6:2607:f8b0:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB556C0613ED
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 May 2021 15:00:26 -0700 (PDT)
-Received: by mail-pg1-x532.google.com with SMTP id 27so13979838pgy.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 May 2021 15:00:26 -0700 (PDT)
+        Fri, 21 May 2021 18:03:51 -0400
+Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28D85C0613CE
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 May 2021 15:02:27 -0700 (PDT)
+Received: by mail-oi1-x234.google.com with SMTP id z3so21020154oib.5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 May 2021 15:02:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=U2V7fmw/fmgZiVcO3AfU6PNyi6PWDJ3vPw52uwZKHWA=;
-        b=RI8V3dwaAwJhbjkfHkPgO2ZyS3w4TIW3vYIgNDAwxZydDtq0dIM5c8IOph2dJvSeDH
-         FhDuNkvWfIgu4S32nM52ZXTv/mgAdzugTo9aYEUbVTx9t7RLLqdUYQFKsAQg7fQXR6pO
-         I0f8YvXuCQdmCu1Kzp8rcdEmAWRNnHqU4M0ms=
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=BDWzJy96GRZhQjoib8vzzXu2wXMhgadWs9pgCSJ6fsU=;
+        b=ZL1P3RcabmCpSMTBuX3Ap/4eI2kv9YvrUkO90pGNBu364b+TOSAymdUKfVrGf2ExT0
+         OQamP4ycPJARM/qhO9HKpksIjM9e4rsAEgAseJOvcGiK6n0DzHYpXEsnAa9II2QZAYRQ
+         ofOyLBiRQhZLVQUj+hO7yuT6j5jJlnaEPr4XU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=U2V7fmw/fmgZiVcO3AfU6PNyi6PWDJ3vPw52uwZKHWA=;
-        b=kcsbNW9B1bLpUEK65VhqaI2zxCMZiTfe8o/0h8ZA4fXIBYGT62NKkmktmGU8yHr60c
-         wTNy4/6Y9sHkadQskPFj++P4yny6MHPTEg7VbHZLiCQ1YJdV1fFfe5TDHE0RwTEZ8H6/
-         rIC4FXx35OgchYq77QKSJyAG+70IxRh26C+qSg3RI08BMsPoZ3B9vN+gFVIa0BUTgXuo
-         B8K1MJZvhJWgQS48LFPF/XR5d1UB2jNnfK0ip9LnUMDBPe0KpFRpFjXfexbtGlJFbWEY
-         b2IbH+YiIF6TOIIV4GIKLto4m28PX7hk/f9FpXvbzChD17DBzzOaqup2Yo7JWVziu1DA
-         6yYw==
-X-Gm-Message-State: AOAM530sX0+ZgUthC7la2mFw3zxWHZY9mOi7alEJVLYPSia7EUF+3SDj
-        68eBnL94591Riz6R1Ze3C3hzjg==
-X-Google-Smtp-Source: ABdhPJwFzwge0QTObIl3lZKYxTMVYg/MyrzPrxuxYe/7+wxEWHelKB6+Rkxq5iqFRSCJz+LG7fOx6Q==
-X-Received: by 2002:aa7:8f37:0:b029:2db:551f:ed8e with SMTP id y23-20020aa78f370000b02902db551fed8emr12017972pfr.43.1621634426412;
-        Fri, 21 May 2021 15:00:26 -0700 (PDT)
-Received: from sujitka-glaptop.hsd1.ca.comcast.net ([2601:646:8e00:b2f0:22bd:8c3f:584d:d265])
-        by smtp.gmail.com with ESMTPSA id h8sm4590835pfv.60.2021.05.21.15.00.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 May 2021 15:00:25 -0700 (PDT)
-From:   Sujit Kautkar <sujitka@chromium.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     Doug Anderson <dianders@chromium.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Sibi Sankar <sibis@codeaurora.org>,
-        Sujit Kautkar <sujitka@chromium.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH v2 2/2] arm64: dts: qcom: sc7180: trogdor: SD-card GPIO pin set bias-pull up
-Date:   Fri, 21 May 2021 14:58:44 -0700
-Message-Id: <20210521145824.v2.2.I52f30ddfe62041b7e6c3c362f0ad8f695ac28224@changeid>
-X-Mailer: git-send-email 2.31.1.818.g46aad6cb9e-goog
-In-Reply-To: <20210521215841.2017349-1-sujitka@chromium.org>
-References: <20210521215841.2017349-1-sujitka@chromium.org>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=BDWzJy96GRZhQjoib8vzzXu2wXMhgadWs9pgCSJ6fsU=;
+        b=JFhtyJ7vaQeIZZlIOKEWHxqeBcxMZkqcbHyDAM1CZFtaslSb18D7xIDJQJJK678qUv
+         KexDD9IoCE+v8Cn92aA+sfwg/DWSfoen8lmY6HzhkRl+U/PsX3MXYFMoG1i1/rwGriNh
+         TaDOaJ5eJCmgBXcif7v9FJCbJHBrAL8GFFBHy3/C6RGdKnedX6j1o/w18GGlfm5MnmI5
+         GtDgwx47ryko4ibN7lQf0z7ia3pAuxxRsLd4404PAHz/2KM3YB1piclKs0XofTavawzf
+         MrlQhdTzCMYa9ZrugLzZhlbenuk25LkkGcIZE7KkGV8w2St7aR6TYyovx3/4wWy8Vcrs
+         wgjQ==
+X-Gm-Message-State: AOAM530dLdg6+wj9GIzYdskL4cOmuv1YHxU6jOGNpB6IpiMaWnCDjm+5
+        wXNmgLL+qodvku49ArR6PEQu772/3ki3uWBmg99MOQ==
+X-Google-Smtp-Source: ABdhPJxh0vu/e6eESsibJjJILbZzCRD/2LOT2bhTh71e3wvyG25ltZwaMoeOeDpKLlXreBvUibMN9KsYVsL5734xZFA=
+X-Received: by 2002:a54:4501:: with SMTP id l1mr3714709oil.19.1621634546583;
+ Fri, 21 May 2021 15:02:26 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 21 May 2021 15:02:26 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20210521134516.v2.1.Id496c6fea0cb92ff6ea8ef1faf5d468eb09465e3@changeid>
+References: <20210521134516.v2.1.Id496c6fea0cb92ff6ea8ef1faf5d468eb09465e3@changeid>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.9.1
+Date:   Fri, 21 May 2021 15:02:26 -0700
+Message-ID: <CAE-0n52xEDak4-vuJQ6SQz83F54-oTm+TjeVJ_0GoezG8O_M5Q@mail.gmail.com>
+Subject: Re: [PATCH v2] drm/msm: Use nvmem_cell_read_variable_le_u32() to read
+ speed bin
+To:     Douglas Anderson <dianders@chromium.org>,
+        Rob Clark <robdclark@gmail.com>
+Cc:     John Stultz <john.stultz@linaro.org>,
+        YongQin Liu <yongqin.liu@linaro.org>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        linux-arm-msm@vger.kernel.org,
+        Akhil P Oommen <akhilpo@codeaurora.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>, Eric Anholt <eric@anholt.net>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Sean Paul <sean@poorly.run>,
+        Sharat Masetty <smasetty@codeaurora.org>,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Trogdor board does not have external pull-up for cd-gpio. Set this pin
-to internal pull-up for sleep config to avoid frequent regulator toggle
-events.
+Quoting Douglas Anderson (2021-05-21 13:45:50)
+> Let's use the newly-added nvmem_cell_read_variable_le_u32() to future
+> proof ourselves a little bit.
+>
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> ---
+> The patch that this depends on is now in mainline so it can be merged
+> at will. I'm just sending this as a singleton patch to make it obvious
+> that there are no dependencies now.
+>
+> Changes in v2:
+> - Rebased
+>
+>  drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 5 ++---
+>  1 file changed, 2 insertions(+), 3 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> index b4d8e1b01ee4..a07214157ad3 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> @@ -1403,10 +1403,10 @@ static int a6xx_set_supported_hw(struct device *dev, struct a6xx_gpu *a6xx_gpu,
+>  {
+>         struct opp_table *opp_table;
+>         u32 supp_hw = UINT_MAX;
+> -       u16 speedbin;
+> +       u32 speedbin;
+>         int ret;
+>
+> -       ret = nvmem_cell_read_u16(dev, "speed_bin", &speedbin);
+> +       ret = nvmem_cell_read_variable_le_u32(dev, "speed_bin", &speedbin);
 
-This change is aligned with Qualcomm's DT change posted at:
-https://patchwork.kernel.org/patch/11675347/
+I missed the review of this API, sorry. I wonder why it doesn't return
+the value into an __le32 pointer. Then the caller could use
+le32_to_cpu() like other places in the kernel and we know that code is
+properly converting the little endian value to CPU native order. Right
+now the API doesn't express the endianess of the bits in the return
+value because it uses u32, so from a static checker perspective (sparse)
+those bits are CPU native order, not little endian.
 
-Signed-off-by: Sujit Kautkar <sujitka@chromium.org>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
----
-Changes in v2:
-- added pull-up for IDP
-
-(no changes since v1)
-
- arch/arm64/boot/dts/qcom/sc7180-idp.dts      | 2 +-
- arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-index 07133e0af581a..0c255edb7f3c3 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-@@ -696,7 +696,7 @@ pinconf-data {
- 
- 		pinconf-sd-cd {
- 			pins = "gpio69";
--			bias-disable;
-+			bias-pull-up;
- 			drive-strength = <2>;
- 		};
- 	};
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-index d128a0ed6ad3a..330deb4967ca2 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-@@ -1638,7 +1638,7 @@ pinconf-data {
- 
- 		pinconf-sd-cd {
- 			pins = "gpio69";
--			bias-disable;
-+			bias-pull-up;
- 			drive-strength = <2>;
- 		};
- 	};
--- 
-2.31.1.818.g46aad6cb9e-goog
-
+>         /*
+>          * -ENOENT means that the platform doesn't support speedbin which is
+>          * fine
