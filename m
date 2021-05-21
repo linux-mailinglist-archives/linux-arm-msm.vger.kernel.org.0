@@ -2,123 +2,207 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EBDE838C33D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 May 2021 11:34:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6231B38C435
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 May 2021 11:58:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236575AbhEUJgT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 May 2021 05:36:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59716 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235458AbhEUJgS (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 May 2021 05:36:18 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 204FAC061763
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 May 2021 02:34:55 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id z137-20020a1c7e8f0000b02901774f2a7dc4so6495239wmc.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 May 2021 02:34:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=QS9C9TZP/LIhXh/A86+cA4E2zCqL/pkxZ+dcKq3mb/8=;
-        b=fztd89Omuf4opCAx6o67aZ0oeo6vyXKFZdPl6G2tingNdDYrhoEFs3wlaqcHS8uxaO
-         pq2mVArFa4w0Q1oJ1RF/YYasVVX/BCOwi1PVIyxxJgClzxKvLc4WPCNxjrvbHHpNTZk1
-         kg77USyJYEbHd7Pel+V6NFSnjrZKNrqwcYunKzQl4+fkmfKaVROmmJ2LeZ3qel9BVhIN
-         WOQ70lxA1LanxVCRdfj//1bckFAAQelE1Ucj1V2phNeSxFMPGdp0zurtSpaXv/w+lu00
-         BEHhygMVoitmv3BXEvS0E7MbEj706n7zcLl7rnSOBAumCdWEjU/oCh0kGjbRyOlAaqCt
-         KloQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=QS9C9TZP/LIhXh/A86+cA4E2zCqL/pkxZ+dcKq3mb/8=;
-        b=OgEdn5w5FMQeYYYpV7U+kXahULk0m2XYOI2SObMSfTcrdCCa5aTXRT5cWMuPPAs/B8
-         zQPAWCYJuMCjnwxj6wb9v7rTAvd+3sDOcRsDQ8JDviPfOVyyWzUnRTFbexiBaTH49ElW
-         ekWx128Yp6C/INbm7cJr5a2G4m7qTVb8w3e9zn5KIAOIMIxkWl0thyAZOJa1aTsxTj3r
-         sQIvm4R4KFmGrtsg3yejD/X2QZOoWaR2pLYoCsqwp63VV5GrAOR05waGO222Hy4cR55d
-         WWksUoPEGBNhRSjieoEmd8LnnPWA1db3wCK4uGOXayx6tSrZYz9AhV9AaySYLK32hKsj
-         qsrg==
-X-Gm-Message-State: AOAM533zSSFwIcTCc0hVJj4FxhnuKBsCfiLkNPU4Nx7kn7xZunasZkkx
-        URTmeCx+ntjQoAaWT+gOBoLpaw==
-X-Google-Smtp-Source: ABdhPJxKLuDkDkJcUdWHYHwuORgC+mlRBwAFwJvqko9NwAyymbpZBtCpoLhIIaAHqoxMYzHgADSoXw==
-X-Received: by 2002:a1c:f012:: with SMTP id a18mr7771186wmb.53.1621589693793;
-        Fri, 21 May 2021 02:34:53 -0700 (PDT)
-Received: from [192.168.86.34] (cpc86377-aztw32-2-0-cust226.18-1.cable.virginm.net. [92.233.226.227])
-        by smtp.googlemail.com with ESMTPSA id z131sm4993484wmb.30.2021.05.21.02.34.52
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 21 May 2021 02:34:53 -0700 (PDT)
-Subject: Re: [PATCH] ASoC: qcom: lpass-cpu: Use optional clk APIs
-To:     Stephen Boyd <swboyd@chromium.org>, Mark Brown <broonie@kernel.org>
-Cc:     linux-kernel@vger.kernel.org, alsa-devel@alsa-project.org,
-        linux-arm-msm@vger.kernel.org,
-        Banajit Goswami <bgoswami@codeaurora.org>
-References: <20210520014807.3749797-1-swboyd@chromium.org>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Message-ID: <96301eb2-ef2d-be7f-2a24-8723c1e39905@linaro.org>
-Date:   Fri, 21 May 2021 10:34:52 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        id S233361AbhEUKAM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 May 2021 06:00:12 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:10032 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S234282AbhEUJ6m (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 21 May 2021 05:58:42 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1621591040; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=N/Af6V6q0Pni5GJnu4A7BBwQUu+JckGgzbmRx6pgO9Q=;
+ b=G+OeBWvd/Y44/hHfTit/XX3xv2E7qXT+UPQ+fhJ985f5wmmIxjE44LO+KPo0xD/jw5Dez/gG
+ efvBMiom+hsS35Sb4bt3K3+/HdCdS1ZKXK5++Tj9kSIDT7kBwu7KFnsCYpHitkVAqL6outlV
+ RtTQgaJRGhLW5g/M9lTkYdJRlBI=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
+ 60a783ee60c53c8c9d0e3117 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 21 May 2021 09:57:02
+ GMT
+Sender: pmaliset=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 931F1C43145; Fri, 21 May 2021 09:57:01 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: pmaliset)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 25B5CC4360C;
+        Fri, 21 May 2021 09:57:00 +0000 (UTC)
 MIME-Version: 1.0
-In-Reply-To: <20210520014807.3749797-1-swboyd@chromium.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
 Content-Transfer-Encoding: 7bit
+Date:   Fri, 21 May 2021 15:27:00 +0530
+From:   Prasad Malisetty <pmaliset@codeaurora.org>
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
+        mgautam@codeaurora.org, dianders@chromium.org, mka@chromium.org
+Subject: Re: [PATCH 2/3] arm64: dts: qcom: sc7280: Add PCIe and PHY related
+ nodes
+In-Reply-To: <CAE-0n530bSPupOHVDzwpd_JVVN0tOfrAOm9dAt1ZGj7zaXOZ6A@mail.gmail.com>
+References: <1620382648-17395-1-git-send-email-pmaliset@codeaurora.org>
+ <1620382648-17395-3-git-send-email-pmaliset@codeaurora.org>
+ <CAE-0n530bSPupOHVDzwpd_JVVN0tOfrAOm9dAt1ZGj7zaXOZ6A@mail.gmail.com>
+Message-ID: <3b3701bb1e23dec88f2231722872fc40@codeaurora.org>
+X-Sender: pmaliset@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Thanks Stephen for patch.
-
-On 20/05/2021 02:48, Stephen Boyd wrote:
-> This driver spits out a warning for me at boot:
+On 2021-05-08 01:36, Stephen Boyd wrote:
+> Quoting Prasad Malisetty (2021-05-07 03:17:27)
+>> Add PCIe controller and PHY nodes for sc7280 SOC.
+>> 
+>> Signed-off-by: Prasad Malisetty <pmaliset@codeaurora.org>
+>> ---
+>>  arch/arm64/boot/dts/qcom/sc7280.dtsi | 138 
+>> +++++++++++++++++++++++++++++++++++
+>>  1 file changed, 138 insertions(+)
+>> 
+>> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi 
+>> b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>> index 2cc4785..a9f25fc1 100644
+>> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>> @@ -12,6 +12,7 @@
+>>  #include <dt-bindings/power/qcom-aoss-qmp.h>
+>>  #include <dt-bindings/power/qcom-rpmpd.h>
+>>  #include <dt-bindings/soc/qcom,rpmh-rsc.h>
+>> +#include <dt-bindings/gpio/gpio.h>
+>> 
+>>  / {
+>>         interrupt-parent = <&intc>;
+>> @@ -316,6 +317,118 @@
+>>                         };
+>>                 };
+>> 
+> [...]
+>> +
+>> +               pcie1_phy: phy@1c0e000 {
+>> +                       compatible = 
+>> "qcom,sm8250-qmp-gen3x2-pcie-phy";
+>> +                       reg = <0 0x01c0e000 0 0x1c0>;
+>> +                       #address-cells = <2>;
+>> +                       #size-cells = <2>;
+>> +                       ranges;
+>> +                       clocks = <&gcc GCC_PCIE_1_AUX_CLK>,
+>> +                                <&gcc GCC_PCIE_1_CFG_AHB_CLK>,
+>> +                                <&gcc GCC_PCIE_CLKREF_EN>,
+>> +                                <&gcc GCC_PCIE1_PHY_RCHNG_CLK>;
+>> +                       clock-names = "aux", "cfg_ahb", "ref", 
+>> "refgen";
+>> +
+>> +                       resets = <&gcc GCC_PCIE_1_PHY_BCR>;
+>> +                       reset-names = "phy";
+>> +
+>> +                       assigned-clocks = <&gcc 
+>> GCC_PCIE1_PHY_RCHNG_CLK>;
+>> +                       assigned-clock-rates = <100000000>;
+>> +
+>> +                       status = "disabled";
 > 
->   sc7180-lpass-cpu 62f00000.lpass: asoc_qcom_lpass_cpu_platform_probe() error getting optional null: -2
-> 
-> but it looks like it is all an optional clk. Use the optional clk APIs
-> here so that we don't see this message and everything else is the same.
-> 
-> Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-> Cc: Banajit Goswami <bgoswami@codeaurora.org>
-> Fixes: 3e53ac8230c1 ("ASoC: qcom: make osr clock optional")
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> I think the style is to put status disabled close to the compatible?
 
-Lgtm,
-
-Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-
-
---srini
-
-> ---
->   sound/soc/qcom/lpass-cpu.c | 12 +-----------
->   1 file changed, 1 insertion(+), 11 deletions(-)
+Generally I have added status disabled in end as like many nodes. just 
+curious to ask is there any specific reason to put close to compatible.
 > 
-> diff --git a/sound/soc/qcom/lpass-cpu.c b/sound/soc/qcom/lpass-cpu.c
-> index c62d2612e8f5..28c7497344e3 100644
-> --- a/sound/soc/qcom/lpass-cpu.c
-> +++ b/sound/soc/qcom/lpass-cpu.c
-> @@ -835,18 +835,8 @@ int asoc_qcom_lpass_cpu_platform_probe(struct platform_device *pdev)
->   		if (dai_id == LPASS_DP_RX)
->   			continue;
->   
-> -		drvdata->mi2s_osr_clk[dai_id] = devm_clk_get(dev,
-> +		drvdata->mi2s_osr_clk[dai_id] = devm_clk_get_optional(dev,
->   					     variant->dai_osr_clk_names[i]);
-> -		if (IS_ERR(drvdata->mi2s_osr_clk[dai_id])) {
-> -			dev_warn(dev,
-> -				"%s() error getting optional %s: %ld\n",
-> -				__func__,
-> -				variant->dai_osr_clk_names[i],
-> -				PTR_ERR(drvdata->mi2s_osr_clk[dai_id]));
-> -
-> -			drvdata->mi2s_osr_clk[dai_id] = NULL;
-> -		}
-> -
->   		drvdata->mi2s_bit_clk[dai_id] = devm_clk_get(dev,
->   						variant->dai_bit_clk_names[i]);
->   		if (IS_ERR(drvdata->mi2s_bit_clk[dai_id])) {
+>> +
+>> +                       pcie1_lane: lanes@1c0e200 {
+>> +                               reg = <0 0x1c0e200 0 0x170>, /* tx0 */
 > 
-> base-commit: 6efb943b8616ec53a5e444193dccf1af9ad627b5
+> Please pad reg addresses to 8 characters.
+
+Done
 > 
+>> +                                     <0 0x1c0e400 0 0x200>, /* rx0 */
+>> +                                     <0 0x1c0ea00 0 0x1f0>, /* pcs */
+>> +                                     <0 0x1c0e600 0 0x170>, /* tx1 */
+>> +                                     <0 0x1c0e800 0 0x200>, /* rx1 */
+>> +                                     <0 0x1c0ee00 0 0xf4>; /* 
+>> "pcs_com" same as pcs_misc? */
+> 
+> Is this a TODO? I'd prefer all the comments on the reg properties to be
+> removed.
+> 
+Done
+>> +                               clocks = <&rpmhcc RPMH_CXO_CLK>;
+>> +                               clock-names = "pipe0";
+>> +
+>> +                               #phy-cells = <0>;
+>> +                               #clock-cells = <1>;
+>> +                               clock-output-names = 
+>> "pcie_1_pipe_clk";
+>> +                       };
+>> +               };
+>> +
+>>                 stm@6002000 {
+>>                         compatible = "arm,coresight-stm", 
+>> "arm,primecell";
+>>                         reg = <0 0x06002000 0 0x1000>,
+>> @@ -871,6 +984,31 @@
+>>                                 pins = "gpio46", "gpio47";
+>>                                 function = "qup13";
+>>                         };
+>> +
+>> +                       pcie1_default_state: pcie1-default {
+>> +                               clkreq {
+>> +                                       pins = "gpio79";
+>> +                                       function = "pcie1_clkreqn";
+>> +                                       bias-pull-up;
+> 
+> Move this bias-pull-up to the idp file?
+
+Done
+> 
+>> +                               };
+>> +
+>> +                               reset-n {
+>> +                                       pins = "gpio2";
+>> +                                       function = "gpio";
+>> +
+>> +                                       drive-strength = <16>;
+>> +                                       output-low;
+>> +                                       bias-disable;
+>> +                               };
+>> +
+>> +                               wake-n {
+>> +                                       pins = "gpio3";
+>> +                                       function = "gpio";
+>> +
+>> +                                       drive-strength = <2>;
+>> +                                       bias-pull-up;
+>> +                               };
+> 
+> These last two nodes with the pull-up and drive-strength settings 
+> should
+> be in the board files, like the idp one, instead of here in the SoC
+> file. That way board designers can take the SoC and connect the pcie to
+> an external device using these pins and set the configuration they want
+> on these pins, or choose not to connect them to the SoC at all and use
+> those pins for something else.
+> 
+> In addition, it looks like the reset could be a reset-gpios property
+> instead of an output-low config.
+> 
+we are using reset property as perst gpio in pcie node.
+>> +                       };
+>>                 };
+>> 
