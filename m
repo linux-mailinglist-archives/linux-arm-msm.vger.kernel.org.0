@@ -2,82 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 528E538C7A3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 May 2021 15:17:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 320C038C7AC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 May 2021 15:19:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232093AbhEUNSw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 May 2021 09:18:52 -0400
-Received: from mail.kernel.org ([198.145.29.99]:41544 "EHLO mail.kernel.org"
+        id S233060AbhEUNUW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 May 2021 09:20:22 -0400
+Received: from mail.kernel.org ([198.145.29.99]:42950 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231601AbhEUNSu (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 May 2021 09:18:50 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id F021861244;
-        Fri, 21 May 2021 13:17:23 +0000 (UTC)
-Date:   Fri, 21 May 2021 18:47:19 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Bhaumik Bhatt <bbhatt@codeaurora.org>
-Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
-        jhugo@codeaurora.org, linux-kernel@vger.kernel.org,
-        loic.poulain@linaro.org
-Subject: Re: [PATCH] bus: mhi: core: Validate channel ID when processing
- command completions
-Message-ID: <20210521131719.GH70095@thinkpad>
-References: <1619481538-4435-1-git-send-email-bbhatt@codeaurora.org>
+        id S230391AbhEUNUV (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 21 May 2021 09:20:21 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 2E1A8613EB;
+        Fri, 21 May 2021 13:18:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1621603138;
+        bh=kML0VNwTPmuZzhjwUe6WlLUM6s2hR7O8GQYI8nIVEx4=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=bxlk4rI+nT2n2MilrkZEOxmGPpUtz5EM4hIvKviME1p5OqepyQ5kkp+CvAwVT5cAj
+         Ku9puQxIF9brbZ5vJTXmOPmc3eAwU0Um6HuXrJQIMfWiSc0ENOiFOrE3eTi/hekg+7
+         byFXoB0KFQyw6TBddhpvCkFbpkZKU5CDjw4wQqVDDNMZI0IgQa1p7I/zwm4I1+QOYm
+         fq6i3qeZ4iMVGg+ZO1rpctE0+23FuTODinw/xTnV6LYtInrTs+HAGt5/zcrKdOQR/D
+         CqrWl9I1AKZ8JmjwzmXemkdMkVGfzT6ZWZUK1eqlmPNS7llAIuoX3WxG3KGaEhANj6
+         9UtXFKw7LR4Uw==
+Received: by mail-ed1-f52.google.com with SMTP id r11so23232182edt.13;
+        Fri, 21 May 2021 06:18:58 -0700 (PDT)
+X-Gm-Message-State: AOAM531rN32SHrDDQdtzFyrgC08KvuwOnUMNnuk35Enddj7Jf72bsrKa
+        4AFwNIzlsxX+8ivcddzkgfkLYJMkJiWd08P5eA==
+X-Google-Smtp-Source: ABdhPJwmzwbCzIeEFfbyH8umGA8C0KXX6vUz4OS2ROZ9YiW5j/tCvUb0NLoSYwTa9fxOPM6+xMux6sI6PbKiUDMEH5I=
+X-Received: by 2002:a50:c446:: with SMTP id w6mr11114280edf.62.1621603136815;
+ Fri, 21 May 2021 06:18:56 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1619481538-4435-1-git-send-email-bbhatt@codeaurora.org>
+References: <20210521124946.3617862-1-vkoul@kernel.org> <20210521124946.3617862-3-vkoul@kernel.org>
+In-Reply-To: <20210521124946.3617862-3-vkoul@kernel.org>
+From:   Rob Herring <robh+dt@kernel.org>
+Date:   Fri, 21 May 2021 08:18:44 -0500
+X-Gmail-Original-Message-ID: <CAL_JsqJqPwkzxVgAfS9VgEXcY=ZH5LOaaxzoPDBzuDxOZ_OLjw@mail.gmail.com>
+Message-ID: <CAL_JsqJqPwkzxVgAfS9VgEXcY=ZH5LOaaxzoPDBzuDxOZ_OLjw@mail.gmail.com>
+Subject: Re: [RFC PATCH 02/13] dt-bindings: msm/dsi: Document Display Stream
+ Compression (DSC) parameters
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Rob Clark <robdclark@gmail.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        devicetree@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Apr 26, 2021 at 04:58:58PM -0700, Bhaumik Bhatt wrote:
-> MHI reads the channel ID from the event ring element sent by the
-> device which can be any value between 0 and 255. In order to
-> prevent any out of bound accesses, add a check against the maximum
-> number of channels supported by the controller and those channels
-> not configured yet so as to skip processing of that event ring
-> element.
-> 
-> Fixes: 1d3173a3bae7 ("bus: mhi: core: Add support for processing events from client device")
-> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
-
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-
-Thanks,
-Mani
-
+On Fri, May 21, 2021 at 7:50 AM Vinod Koul <vkoul@kernel.org> wrote:
+>
+> DSC enables streams to be compressed before we send to panel. This
+> requires DSC enabled encoder and a panel to be present. So we add this
+> information in board DTS and find if DSC can be enabled and the
+> parameters required to configure DSC are added to binding document along
+> with example
+>
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
 > ---
->  drivers/bus/mhi/core/main.c | 15 ++++++++++-----
->  1 file changed, 10 insertions(+), 5 deletions(-)
-> 
-> diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
-> index 22acde1..ed07421 100644
-> --- a/drivers/bus/mhi/core/main.c
-> +++ b/drivers/bus/mhi/core/main.c
-> @@ -773,11 +773,16 @@ static void mhi_process_cmd_completion(struct mhi_controller *mhi_cntrl,
->  	cmd_pkt = mhi_to_virtual(mhi_ring, ptr);
->  
->  	chan = MHI_TRE_GET_CMD_CHID(cmd_pkt);
-> -	mhi_chan = &mhi_cntrl->mhi_chan[chan];
-> -	write_lock_bh(&mhi_chan->lock);
-> -	mhi_chan->ccs = MHI_TRE_GET_EV_CODE(tre);
-> -	complete(&mhi_chan->completion);
-> -	write_unlock_bh(&mhi_chan->lock);
-> +	WARN_ON(chan >= mhi_cntrl->max_chan);
-> +
-> +	if (chan < mhi_cntrl->max_chan &&
-> +	    mhi_cntrl->mhi_chan[chan].configured) {
-> +		mhi_chan = &mhi_cntrl->mhi_chan[chan];
-> +		write_lock_bh(&mhi_chan->lock);
-> +		mhi_chan->ccs = MHI_TRE_GET_EV_CODE(tre);
-> +		complete(&mhi_chan->completion);
-> +		write_unlock_bh(&mhi_chan->lock);
-> +	}
->  
->  	mhi_del_ring_element(mhi_cntrl, mhi_ring);
->  }
-> -- 
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
-> 
+>  .../devicetree/bindings/display/msm/dsi.txt       | 15 +++++++++++++++
+>  1 file changed, 15 insertions(+)
+
+This is getting converted to schema. Hopefully, v17 will be it. Sigh.
+
+Rob
