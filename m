@@ -2,115 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3888438C6BD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 May 2021 14:45:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B6D6638C6D7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 May 2021 14:50:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230280AbhEUMrA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 May 2021 08:47:00 -0400
-Received: from mail.kernel.org ([198.145.29.99]:60100 "EHLO mail.kernel.org"
+        id S233394AbhEUMvX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 May 2021 08:51:23 -0400
+Received: from mail.kernel.org ([198.145.29.99]:33464 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229915AbhEUMrA (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 May 2021 08:47:00 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id CB6EB613AC;
-        Fri, 21 May 2021 12:45:34 +0000 (UTC)
-Date:   Fri, 21 May 2021 18:15:30 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Baochen Qiang <bqiang@codeaurora.org>
-Cc:     hemantk@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, ath11k@lists.infradead.org
-Subject: Re: [PATCH] mhi: add MHI_STATE_M2 to resume success criteria
-Message-ID: <20210521124530.GF70095@thinkpad>
-References: <20210420035339.282963-1-bqiang@codeaurora.org>
+        id S230081AbhEUMvW (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 21 May 2021 08:51:22 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id AE40E6128A;
+        Fri, 21 May 2021 12:49:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1621601399;
+        bh=G6ouIauR05ZjrZdPDoLSgmtuQODfUpudDe0dhIJwxGg=;
+        h=From:To:Cc:Subject:Date:From;
+        b=RXyaAIs4G0Wi1Rot89jVxURym/6ZQSoS/jdA8GQctBWZDIgCvsVVQWExpQBN9oF+K
+         HMEy6DtuwtA6mmNjtELemlALcpBAOWrRfq0gKd47AjhhQKIsWMoN/FdlBHSBno+/xr
+         TP8FSI0GuhTUqrUYr0x6VMucqe0fv1oI9+6/NhuDPGdnxds2iSVdZuEU11Pubs3wou
+         B1fv4Y2XlkPjG9D5BQvEPUxQZH5x8p+vXQb6P8HR+IbcJQiD/tMogtphEyCoIeb9ED
+         LyqRj+2W2RVnyqc06wU879N3lQAw5wOoMnk8E/o+Ucla6GsnhUJQ0PVqfM4M3dwkpW
+         ZsgAu2R9CDXkQ==
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, Rob Herring <robh+dt@kernel.org>,
+        devicetree@vger.kernel.org
+Subject: [RFC PATCH 00/13] drm/msm: Add Display Stream Compression Support
+Date:   Fri, 21 May 2021 18:19:29 +0530
+Message-Id: <20210521124946.3617862-1-vkoul@kernel.org>
+X-Mailer: git-send-email 2.26.3
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210420035339.282963-1-bqiang@codeaurora.org>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Display Stream Compression (DSC) compresses the display stream in host which
+is later decoded by panel. This series enables this for Qualcomm msm driver.
+This was tested on Google Pixel3 phone which use LGE SW43408 panel.
 
-The patch subject should be,
+The changes include adding DT properties for DSC then hardware blocks support
+required in DPU1 driver and support in encoder. We also add support in DSI
+and introduce required topology changes.
 
-"bus: mhi: Wait for M2 state during system resume"
+In order for panel to set the DSC parameters we add dsc in drm_panel and set
+it from the msm driver.
 
-We follow "bus: mhi:" prefix for all MHI patches. Also, the subject should
-clearly portray what the patch is intend to do.
+Complete changes which enable this for Pixel3 along with panel driver (not
+part of this series) and DT changes can be found at:
+git.linaro.org/people/vinod.koul/kernel.git pixel/dsc_rfc
 
-On Tue, Apr 20, 2021 at 11:53:39AM +0800, Baochen Qiang wrote:
-> During system resume, mhi driver triggers M3->M0 transition and then waits
+Comments welcome!
 
-s/mhi driver/MHI host
+Vinod Koul (13):
+  drm/dsc: Add dsc pps header init function
+  dt-bindings: msm/dsi: Document Display Stream Compression (DSC)
+    parameters
+  drm/msm/dsi: add support for dsc data
+  drm/msm/disp/dpu1: Add support for DSC
+  drm/msm/disp/dpu1: Add support for DSC in pingpong block
+  drm/msm/disp/dpu1: Add DSC support in RM
+  drm/msm/disp/dpu1: Add DSC for SDM845 to hw_catalog
+  drm/msm/disp/dpu1: Add DSC support in hw_ctl
+  drm/msm/disp/dpu1: Don't use DSC with mode_3d
+  drm/msm/disp/dpu1: Add support for DSC in encoder
+  drm/msm/disp/dpu1: Add support for DSC in topology
+  drm/msm/dsi: Add support for DSC configuration
+  drm/msm/dsi: Pass DSC params to drm_panel
 
-> for target device to enter M0 state. Once done, the device queues a state
-> change event into ctrl event ring and notify mhi dirver by raising an
+ .../devicetree/bindings/display/msm/dsi.txt   |  15 +
+ drivers/gpu/drm/drm_dsc.c                     |  11 +
+ drivers/gpu/drm/msm/Makefile                  |   1 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c   | 204 +++++++++++-
+ .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h  |  11 +
+ .../drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c  |   2 +
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    |  22 ++
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |  26 ++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c    |  12 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h    |   2 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c    | 221 +++++++++++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.h    |  79 +++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h   |  13 +
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c   |  32 ++
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h   |  14 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h       |   1 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c        |  32 ++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h        |   1 +
+ drivers/gpu/drm/msm/dsi/dsi.xml.h             |  10 +
+ drivers/gpu/drm/msm/dsi/dsi_host.c            | 293 +++++++++++++++++-
+ drivers/gpu/drm/msm/msm_drv.h                 |  32 ++
+ include/drm/drm_dsc.h                         |  16 +
+ include/drm/drm_panel.h                       |   7 +
+ 23 files changed, 1043 insertions(+), 14 deletions(-)
+ create mode 100644 drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c
+ create mode 100644 drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.h
 
-s/notify/notifies and s/mhi dirver/MHI host. MHI driver is somewhat confusing
-since we have the MHI device driver (QRTR etc...) as well. So just use MHI host
-everywhere.
+-- 
+2.26.3
 
-> interrupt, where a tasklet is scheduled to process this event. In most cases,
-> the taklet is served timely and wait operation succeeds.
-> 
-
-s/taklet/tasklet
-
-> However, there are cases where CPU is busy and can not serve this tasklet
-
-a/can not/cannot
-
-> for some time. Once delay goes long enough, the device moves itself to M1
-> state and also interrupts mhi driver after inserting a new state change
-> event to ctrl ring. Later CPU finally has time to process the ring, however
-> there are two events in it now:
-> 	1. for M3->M0 event, which is processed first as queued first,
-> 	   tasklet handler updates device state to M0 and wakes up the task,
-> 	   i.e., the mhi driver.
-> 	2. for M0->M1 event, which is processed later, tasklet handler
-> 	   triggers M1->M2 transition and updates device state to M2 directly,
-> 	   then wakes up the mhi driver(if still sleeping on this wait queue).
-> Note that although mhi driver has been woken up while processing the first
-> event, it may still has no chance to run before the second event is processed.
-> In other words, mhi driver has to keep waiting till timeout cause the M0 state
-> has been missed.
-> 
-> kernel log here:
-> ...
-> Apr 15 01:45:14 test-NUC8i7HVK kernel: [ 4247.911251] mhi 0000:06:00.0: Entered with PM state: M3, MHI state: M3
-> Apr 15 01:45:14 test-NUC8i7HVK kernel: [ 4247.917762] mhi 0000:06:00.0: State change event to state: M0
-> Apr 15 01:45:14 test-NUC8i7HVK kernel: [ 4247.917767] mhi 0000:06:00.0: State change event to state: M1
-> Apr 15 01:45:14 test-NUC8i7HVK kernel: [ 4338.788231] mhi 0000:06:00.0: Did not enter M0 state, MHI state: M2, PM state: M2
-> ...
-> 
-> Fix this issue by simply adding M2 as a valid state for resume.
-> 
-> Tested-on: WCN6855 hw2.0 PCI WLAN.HSP.1.1-01720.1-QCAHSPSWPL_V1_V2_SILICONZ_LITE-1
-> 
-> Signed-off-by: Baochen Qiang <bqiang@codeaurora.org>
-
-Could you please add a fixes tag as well? And this patch should be backported to
-stable kernels also, so please CC stable@vger.kernel.org.
-
-Thanks,
-Mani
-
-> ---
->  drivers/bus/mhi/core/pm.c | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
-> index ce73cfa63cb3..ca5f2feed9d5 100644
-> --- a/drivers/bus/mhi/core/pm.c
-> +++ b/drivers/bus/mhi/core/pm.c
-> @@ -900,6 +900,7 @@ int mhi_pm_resume(struct mhi_controller *mhi_cntrl)
->  
->  	ret = wait_event_timeout(mhi_cntrl->state_event,
->  				 mhi_cntrl->dev_state == MHI_STATE_M0 ||
-> +				 mhi_cntrl->dev_state == MHI_STATE_M2 ||
->  				 MHI_PM_IN_ERROR_STATE(mhi_cntrl->pm_state),
->  				 msecs_to_jiffies(mhi_cntrl->timeout_ms));
->  
-> -- 
-> 2.25.1
-> 
