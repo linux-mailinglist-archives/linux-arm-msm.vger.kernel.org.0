@@ -2,19 +2,19 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0771638DD26
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 May 2021 23:16:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 279C738DD2F
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 May 2021 23:18:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231980AbhEWVRf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 23 May 2021 17:17:35 -0400
-Received: from m-r1.th.seeweb.it ([5.144.164.170]:37317 "EHLO
-        m-r1.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232001AbhEWVRf (ORCPT
+        id S231979AbhEWVTp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 23 May 2021 17:19:45 -0400
+Received: from relay07.th.seeweb.it ([5.144.164.168]:45593 "EHLO
+        relay07.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231962AbhEWVTo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 23 May 2021 17:17:35 -0400
+        Sun, 23 May 2021 17:19:44 -0400
 Received: from TimeMachine.localdomain (bband-dyn255.178-41-232.t-com.sk [178.41.232.255])
-        by m-r1.th.seeweb.it (Postfix) with ESMTPA id DABB520084;
-        Sun, 23 May 2021 23:16:06 +0200 (CEST)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPA id 514863E8D8;
+        Sun, 23 May 2021 23:18:16 +0200 (CEST)
 From:   Martin Botka <martin.botka@somainline.org>
 Cc:     ~postmarketos/upstreaming@lists.sr.ht,
         konrad.dybcio@somainline.org,
@@ -23,15 +23,14 @@ Cc:     ~postmarketos/upstreaming@lists.sr.ht,
         Martin Botka <martin.botka@somainline.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, linux-clk@vger.kernel.org
-Subject: [PATCH V2 5/5] rpmcc: Add support for SM6125
-Date:   Sun, 23 May 2021 23:15:56 +0200
-Message-Id: <20210523211556.731976-5-martin.botka@somainline.org>
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH V2 1/2] dt-bindings: pinctrl: qcom: sm6125: Document SM6125 pinctrl driver
+Date:   Sun, 23 May 2021 23:18:06 +0200
+Message-Id: <20210523211809.734107-1-martin.botka@somainline.org>
 X-Mailer: git-send-email 2.31.1
-In-Reply-To: <20210523211556.731976-1-martin.botka@somainline.org>
-References: <20210523211556.731976-1-martin.botka@somainline.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 To:     unlisted-recipients:; (no To-header on input)
@@ -39,94 +38,183 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This commit adds support for RPM clocks found in SM6125 SoC
+Document the newly added SM6125 pinctrl driver
 
 Signed-off-by: Martin Botka <martin.botka@somainline.org>
 ---
 Changes in V2:
-None
- drivers/clk/qcom/clk-smd-rpm.c   | 55 ++++++++++++++++++++++++++++++++
- include/linux/soc/qcom/smd-rpm.h |  1 +
- 2 files changed, 56 insertions(+)
+Add commit description
+ .../bindings/pinctrl/qcom,sm6125-pinctrl.yaml | 161 ++++++++++++++++++
+ 1 file changed, 161 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sm6125-pinctrl.yaml
 
-diff --git a/drivers/clk/qcom/clk-smd-rpm.c b/drivers/clk/qcom/clk-smd-rpm.c
-index 8200c26b968c..51458f740ba0 100644
---- a/drivers/clk/qcom/clk-smd-rpm.c
-+++ b/drivers/clk/qcom/clk-smd-rpm.c
-@@ -1059,6 +1059,61 @@ static const struct rpm_smd_clk_desc rpm_clk_sdm660 = {
- 	.num_clks = ARRAY_SIZE(sdm660_clks),
- };
- 
-+/* SM6125 */
-+DEFINE_CLK_SMD_RPM_BRANCH(sm6125, bi_tcxo, bi_tcxo_ao,
-+					QCOM_SMD_RPM_MISC_CLK, 0, 19200000);
-+DEFINE_CLK_SMD_RPM(sm6125, cnoc_clk, cnoc_a_clk, QCOM_SMD_RPM_BUS_CLK, 1);
-+DEFINE_CLK_SMD_RPM(sm6125, bimc_clk, bimc_a_clk, QCOM_SMD_RPM_MEM_CLK, 0);
-+DEFINE_CLK_SMD_RPM(sm6125, snoc_clk, snoc_a_clk, QCOM_SMD_RPM_BUS_CLK, 2);
-+DEFINE_CLK_SMD_RPM_BRANCH(sm6125, qdss_clk, qdss_a_clk,
-+					QCOM_SMD_RPM_MISC_CLK, 1, 19200000);
-+DEFINE_CLK_SMD_RPM(sm6125, ce1_clk, ce1_a_clk, QCOM_SMD_RPM_CE_CLK, 0);
-+DEFINE_CLK_SMD_RPM(sm6125, ipa_clk, ipa_a_clk, QCOM_SMD_RPM_IPA_CLK, 0);
-+DEFINE_CLK_SMD_RPM(sm6125, qup_clk, qup_a_clk, QCOM_SMD_RPM_QUP_CLK, 0);
-+DEFINE_CLK_SMD_RPM(sm6125, mmnrt_clk, mmnrt_a_clk, QCOM_SMD_RPM_MMAXI_CLK, 0);
-+DEFINE_CLK_SMD_RPM(sm6125, mmrt_clk, mmrt_a_clk, QCOM_SMD_RPM_MMAXI_CLK, 1);
-+DEFINE_CLK_SMD_RPM(sm6125, snoc_periph_clk, snoc_periph_a_clk,
-+						QCOM_SMD_RPM_BUS_CLK, 0);
-+DEFINE_CLK_SMD_RPM(sm6125, snoc_lpass_clk, snoc_lpass_a_clk,
-+						QCOM_SMD_RPM_BUS_CLK, 5);
+diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sm6125-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sm6125-pinctrl.yaml
+new file mode 100644
+index 000000000000..951348953c11
+--- /dev/null
++++ b/Documentation/devicetree/bindings/pinctrl/qcom,sm6125-pinctrl.yaml
+@@ -0,0 +1,161 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/pinctrl/qcom,sm6125-pinctrl.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++title: Qualcomm Technologies, Inc. SM6125 TLMM block
 +
-+/* SMD_XO_BUFFER */
-+DEFINE_CLK_SMD_RPM_XO_BUFFER(sm6125, ln_bb_clk1, ln_bb_clk1_a, 1);
-+DEFINE_CLK_SMD_RPM_XO_BUFFER(sm6125, ln_bb_clk2, ln_bb_clk2_a, 2);
-+DEFINE_CLK_SMD_RPM_XO_BUFFER(sm6125, ln_bb_clk3, ln_bb_clk3_a, 3);
-+DEFINE_CLK_SMD_RPM_XO_BUFFER(sm6125, rf_clk1, rf_clk1_a, 4);
-+DEFINE_CLK_SMD_RPM_XO_BUFFER(sm6125, rf_clk2, rf_clk2_a, 5);
++maintainers:
++  - Martin Botka <martin.botka@somainline.org>
 +
-+static struct clk_smd_rpm *sm6125_clks[] = {
-+	[RPM_SMD_XO_CLK_SRC] = &sm6125_bi_tcxo,
-+	[RPM_SMD_XO_A_CLK_SRC] = &sm6125_bi_tcxo_ao,
-+	[RPM_SMD_SNOC_CLK] = &sm6125_snoc_clk,
-+	[RPM_SMD_SNOC_A_CLK] = &sm6125_snoc_a_clk,
-+	[RPM_SMD_BIMC_CLK] = &sm6125_bimc_clk,
-+	[RPM_SMD_BIMC_A_CLK] = &sm6125_bimc_a_clk,
-+	[RPM_SMD_QDSS_CLK] = &sm6125_qdss_clk,
-+	[RPM_SMD_QDSS_A_CLK] = &sm6125_qdss_a_clk,
-+	[RPM_SMD_RF_CLK1] = &sm6125_rf_clk1,
-+	[RPM_SMD_RF_CLK1_A] = &sm6125_rf_clk1_a,
-+	[RPM_SMD_RF_CLK2] = &sm6125_rf_clk2,
-+	[RPM_SMD_RF_CLK2_A] = &sm6125_rf_clk2_a,
-+	[RPM_SMD_LN_BB_CLK1] = &sm6125_ln_bb_clk1,
-+	[RPM_SMD_LN_BB_CLK1_A] = &sm6125_ln_bb_clk1_a,
-+	[RPM_SMD_LN_BB_CLK2] = &sm6125_ln_bb_clk2,
-+	[RPM_SMD_LN_BB_CLK2_A] = &sm6125_ln_bb_clk2_a,
-+	[RPM_SMD_LN_BB_CLK3] = &sm6125_ln_bb_clk3,
-+	[RPM_SMD_LN_BB_CLK3_A] = &sm6125_ln_bb_clk3_a,
-+	[RPM_SMD_CNOC_CLK] = &sm6125_cnoc_clk,
-+	[RPM_SMD_CNOC_A_CLK] = &sm6125_cnoc_a_clk,
-+	[RPM_SMD_CE1_CLK] = &sm6125_ce1_clk,
-+	[RPM_SMD_CE1_A_CLK] = &sm6125_ce1_a_clk,
-+};
++description: |
++  This binding describes the Top Level Mode Multiplexer (TLMM) block found
++  in the SM6125 platform.
 +
-+static const struct rpm_smd_clk_desc rpm_clk_sm6125 = {
-+	.clks = sm6125_clks,
-+	.num_clks = ARRAY_SIZE(sm6125_clks),
-+};
++allOf:
++  - $ref: /schemas/pinctrl/qcom,tlmm-common.yaml#
 +
- static const struct of_device_id rpm_smd_clk_match_table[] = {
- 	{ .compatible = "qcom,rpmcc-msm8916", .data = &rpm_clk_msm8916 },
- 	{ .compatible = "qcom,rpmcc-msm8936", .data = &rpm_clk_msm8936 },
-diff --git a/include/linux/soc/qcom/smd-rpm.h b/include/linux/soc/qcom/smd-rpm.h
-index f2645ec52520..b737d7e456e4 100644
---- a/include/linux/soc/qcom/smd-rpm.h
-+++ b/include/linux/soc/qcom/smd-rpm.h
-@@ -28,6 +28,7 @@ struct qcom_smd_rpm;
- #define QCOM_SMD_RPM_NCPA	0x6170636E
- #define QCOM_SMD_RPM_NCPB	0x6270636E
- #define QCOM_SMD_RPM_OCMEM_PWR	0x706d636f
-+#define QCOM_SMD_RPM_QUP_CLK	0x00707571
- #define QCOM_SMD_RPM_QPIC_CLK	0x63697071
- #define QCOM_SMD_RPM_SMPA	0x61706d73
- #define QCOM_SMD_RPM_SMPB	0x62706d73
++properties:
++  compatible:
++    const: qcom,sm6125-tlmm
++
++  reg:
++    maxItems: 1
++
++  interrupts: true
++  interrupt-controller: true
++  '#interrupt-cells': true
++  gpio-controller: true
++  gpio-reserved-ranges: true
++  '#gpio-cells': true
++  gpio-ranges: true
++  wakeup-parent: true
++
++required:
++  - compatible
++  - reg
++
++additionalProperties: false
++
++patternProperties:
++  '-state$':
++    oneOf:
++      - $ref: "#/$defs/qcom-sm6125-tlmm-state"
++      - patternProperties:
++          ".*":
++            $ref: "#/$defs/qcom-sm6125-tlmm-state"
++
++$defs:
++  qcom-sm6125-tlmm-state:
++    type: object
++    description:
++      Pinctrl node's client devices use subnodes for desired pin configuration.
++      Client device subnodes use below standard properties.
++    $ref: "qcom,tlmm-common.yaml#/$defs/qcom-tlmm-state"
++
++    properties:
++      pins:
++        description:
++          List of gpio pins affected by the properties specified in this
++          subnode.
++        items:
++          oneOf:
++            - pattern: "^gpio([0-9]|[1-9][0-9]|1[0-9][0-9]|20[0-3])$"
++            - enum: [ sdc1_clk, sdc1_cmd, sdc1_data, sdc2_clk, sdc2_cmd, sdc2_data ]
++        minItems: 1
++        maxItems: 36
++
++      function:
++        description:
++          Specify the alternative function to be configured for the specified
++          pins.
++
++        enum: [ adsp_ext, agera_pll, atest_char, atest_char0, atest_char1,
++                atest_char2, atest_char3, atest_tsens, atest_tsens2, atest_usb1,
++                atest_usb10, atest_usb11, atest_usb12, atest_usb13, atest_usb2,
++                atest_usb20, atest_usb21, atest_usb22, atest_usb23, aud_sb,
++                audio_ref, cam_mclk, cci_async, cci_i2c, cci_timer0, cci_timer1,
++                cci_timer2, cci_timer3, cci_timer4, copy_gp, copy_phase, cri_trng,
++                cri_trng0, cri_trng1, dbg_out, ddr_bist, ddr_pxi0, ddr_pxi1,
++                ddr_pxi2, ddr_pxi3, debug_hot, dmic0_clk, dmic0_data, dmic1_clk,
++                dmic1_data, dp_hot, edp_hot, edp_lcd, gcc_gp1, gcc_gp2, gcc_gp3,
++                gp_pdm0, gp_pdm1, gp_pdm2, gpio, gps_tx, jitter_bist, ldo_en,
++                ldo_update, m_voc, mclk1, mclk2, mdp_vsync, mdp_vsync0, mdp_vsync1,
++                mdp_vsync2, mdp_vsync3, mdp_vsync4, mdp_vsync5, mpm_pwr, mss_lte,
++                nav_pps, pa_indicator, phase_flag0, phase_flag1, phase_flag10,
++                phase_flag11, phase_flag12, phase_flag13, phase_flag14, phase_flag15,
++                phase_flag16, phase_flag17, phase_flag18, phase_flag19, phase_flag2,
++                phase_flag20, phase_flag21, phase_flag22, phase_flag23, phase_flag24,
++                phase_flag25, phase_flag26, phase_flag27, phase_flag28, phase_flag29,
++                phase_flag3, phase_flag30, phase_flag31, phase_flag4, phase_flag5,
++                phase_flag6, phase_flag7, phase_flag8, phase_flag9, pll_bist,
++                pll_bypassnl, pll_reset, pri_mi2s, pri_mi2s_ws, prng_rosc, qca_sb,
++                qdss_cti, qdss_gpio, qdss_gpio0, qdss_gpio1, qdss_gpio10, qdss_gpio11,
++                qdss_gpio12, qdss_gpio13, qdss_gpio14, qdss_gpio15, qdss_gpio2,
++                qdss_gpio3, qdss_gpio4, qdss_gpio5, qdss_gpio6, qdss_gpio7, qdss_gpio8,
++                qdss_gpio9, qlink_enable, qlink_request, qua_mi2s, qui_mi2s, qup00,
++                qup01, qup02, qup03, qup04, qup10, qup11, qup12, qup13, qup14,
++                sd_write, sec_mi2s, sp_cmu, swr_rx, swr_tx, ter_mi2s, tgu_ch0,
++                tgu_ch1, tgu_ch2, tgu_ch3, tsense_pwm, uim1_clk, uim1_data,
++                uim1_present, uim1_reset, uim2_clk, uim2_data, uim2_present,
++                uim2_reset, unused1, unused2, usb_phy, vfr_1, vsense_trigger,
++                wlan1_adc0, wlan1_adc1, wlan2_adc0, wlan2_adc1, wsa_clk, wsa_data ]
++
++
++      bias-disable: true
++      bias-pull-down: true
++      bias-pull-up: true
++      drive-strength: true
++      input-enable: true
++      output-high: true
++      output-low: true
++
++    required:
++      - pins
++      - function
++
++    additionalProperties: false
++
++examples:
++  - |
++        #include <dt-bindings/interrupt-controller/arm-gic.h>
++	pinctrl@500000 {
++		compatible = "qcom,sm6125-pinctrl";
++		reg = <0x00500000 0x400000>,
++			<0x00900000 0x400000>,
++			<0x00d00000 0x400000>;
++		reg-names = "west", "south", "east";
++		interrupts = <GIC_SPI 227 IRQ_TYPE_LEVEL_HIGH>;
++		gpio-controller;
++		gpio-ranges = <&tlmm 0 0 134>;
++		#gpio-cells = <2>;
++		interrupt-controller;
++		#interrupt-cells = <2>;
++
++		sdc2_state_on: sdc2-on {
++			pinconf-clk {
++				pins = "sdc2_clk";
++				bias-disable;
++				drive-strength = <16>;
++			};
++
++			pinconf-cmd {
++				pins = "sdc2_cmd";
++				bias-pull-up;
++				drive-strength = <10>;
++			};
++
++			pinconf-data {
++				pins = "sdc2_data";
++				bias-pull-up;
++				drive-strength = <10>;
++			};
++
++			pinconf-sd-cd {
++				pins = "gpio98";
++				bias-pull-up;
++				drive-strength = <2>;
++			};
++		};
++	};
++...
 -- 
 2.31.1
 
