@@ -2,92 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4242F38DBAD
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 May 2021 17:54:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 06F9638DCE7
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 May 2021 22:39:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231818AbhEWPzk convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 23 May 2021 11:55:40 -0400
-Received: from guitar.tcltek.co.il ([192.115.133.116]:52801 "EHLO
-        mx.tkos.co.il" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231789AbhEWPzk (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 23 May 2021 11:55:40 -0400
-Received: from tarshish (unknown [10.0.8.2])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mx.tkos.co.il (Postfix) with ESMTPS id D1FC0440583;
-        Sun, 23 May 2021 18:54:26 +0300 (IDT)
-References: <70ced827689b7ab35d8f3b07db8d9ccd1489e3e2.1621410526.git.baruch@tkos.co.il>
- <20210522213524.lnb5bds5hvv2f2zi@pengutronix.de>
-User-agent: mu4e 1.4.15; emacs 27.1
-From:   Baruch Siach <baruch@tkos.co.il>
-To:     Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-Cc:     Thierry Reding <thierry.reding@gmail.com>,
-        Lee Jones <lee.jones@linaro.org>,
+        id S231958AbhEWUk1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 23 May 2021 16:40:27 -0400
+Received: from relay03.th.seeweb.it ([5.144.164.164]:36407 "EHLO
+        relay03.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231994AbhEWUk1 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 23 May 2021 16:40:27 -0400
+Received: from TimeMachine.localdomain (bband-dyn255.178-41-232.t-com.sk [178.41.232.255])
+        by m-r1.th.seeweb.it (Postfix) with ESMTPA id 2B9421F6AF;
+        Sun, 23 May 2021 22:32:09 +0200 (CEST)
+From:   Martin Botka <martin.botka@somainline.org>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        konrad.dybcio@somainline.org,
+        angelogioacchino.delregno@somainline.org,
+        marijn.suijten@somainline.org,
+        Martin Botka <martin.botka@somainline.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Balaji Prakash J <bjagadee@codeaurora.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Robert Marko <robert.marko@sartura.hr>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-pwm@vger.kernel.org
-Subject: Re: [PATCH 1/3] pwm: driver for qualcomm ipq6018 pwm block
-In-reply-to: <20210522213524.lnb5bds5hvv2f2zi@pengutronix.de>
-Date:   Sun, 23 May 2021 18:54:08 +0300
-Message-ID: <87zgwltpi7.fsf@tarshish>
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH 01/2] dt-bindings: clk: qcom: gcc-sm6125: Document SM6125 GCC driver
+Date:   Sun, 23 May 2021 22:31:59 +0200
+Message-Id: <20210523203202.691900-1-martin.botka@somainline.org>
+X-Mailer: git-send-email 2.31.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8BIT
+Content-Transfer-Encoding: 8bit
+To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Uwe,
+Signed-off-by: Martin Botka <martin.botka@somainline.org>
+---
+ .../bindings/clock/qcom,gcc-sm6125.yaml       | 72 +++++++++++++++++++
+ 1 file changed, 72 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-sm6125.yaml
 
-Thanks for your review comments.
-
-On Sun, May 23 2021, Uwe Kleine-König wrote:
-> On Wed, May 19, 2021 at 10:48:44AM +0300, Baruch Siach wrote:
->> Driver for the PWM block in Qualcomm IPQ6018 line of SoCs. Based on
->> driver from downstream Codeaurora kernel tree. Removed support for older
->> (V1) variants because I have no access to that hardware.
->> 
->> Tested on IPQ6010 based hardware.
->> 
->> Signed-off-by: Baruch Siach <baruch@tkos.co.il>
-
-[...]
-
->> +static void ipq_pwm_disable(struct pwm_chip *chip, struct pwm_device *pwm)
->> +{
->> +	struct ipq_pwm_chip *ipq_chip = to_ipq_pwm_chip(pwm->chip);
->> +	unsigned offset = ipq_pwm_reg_offset(pwm, PWM_CFG_REG1);
->> +	unsigned long val;
->> +
->> +	val = readl(ipq_chip->mem + offset);
->> +	val |= PWM_UPDATE;
->
-> What is the effect of this register bit?
->
-> Does the output become inactive or does it freeze at state that happens
-> to be emitted when the ENABLE bit is removed?
-
-I don't know. PWM does not work when this bit is not set here. The
-original downstream driver[1] does not set this bit on disable. But it
-also enables PWM unconditionally on .config. I added the 'enabled' check
-in .config, and then PWM stopped working even when enabled later. It was
-only by accident (excess copy/paste) that I found this workaround.
-
-A comment on the original code says that PWM_UPDATE is "auto cleared".
-This is evidently not true on my hardware (IPQ6010). This might be true
-for older variants of this PWM block. Unfortunately, I have no access to
-hardware documentation.
-
-[1] https://source.codeaurora.org/quic/qsdk/oss/kernel/linux-ipq-5.4/tree/drivers/pwm/pwm-ipq.c?h=NHSS.QSDK.11.4.1.r1&id=9e4627b7088b0c06ddd910c8770274d26613de9e
-
-baruch
-
+diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-sm6125.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-sm6125.yaml
+new file mode 100644
+index 000000000000..f7198370a1b9
+--- /dev/null
++++ b/Documentation/devicetree/bindings/clock/qcom,gcc-sm6125.yaml
+@@ -0,0 +1,72 @@
++# SPDX-License-Identifier: GPL-2.0-only
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/clock/qcom,gcc-sm6125.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm Global Clock & Reset Controller Binding for SM6125
++
++maintainers:
++  - Konrad Dybcio <konrad.dybcio@somainline.org>
++
++description: |
++  Qualcomm global clock control module which supports the clocks, resets and
++  power domains on SM6125.
++
++  See also:
++  - dt-bindings/clock/qcom,gcc-sm6125.h
++
++properties:
++  compatible:
++    const: qcom,gcc-sm6125
++
++  clocks:
++    items:
++      - description: Board XO source
++      - description: Sleep clock source
++
++  clock-names:
++    items:
++      - const: bi_tcxo
++      - const: sleep_clk
++
++  '#clock-cells':
++    const: 1
++
++  '#reset-cells':
++    const: 1
++
++  '#power-domain-cells':
++    const: 1
++
++  reg:
++    maxItems: 1
++
++  protected-clocks:
++    description:
++      Protected clock specifier list as per common clock binding.
++
++required:
++  - compatible
++  - clocks
++  - clock-names
++  - reg
++  - '#clock-cells'
++  - '#reset-cells'
++  - '#power-domain-cells'
++
++additionalProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/clock/qcom,rpmh.h>
++    clock-controller@1400000 {
++    compatible = "qcom,gcc-sm6125";
++      reg = <0x01400000 0x1f0000>;
++      #clock-cells = <1>;
++      #reset-cells = <1>;
++      #power-domain-cells = <1>;
++      clock-names = "bi_tcxo", "sleep_clk";
++      clocks = <&rpmcc RPM_SMD_XO_CLK_SRC>, <&sleep_clk>;
++    };
++...
 -- 
-                                                     ~. .~   Tk Open Systems
-=}------------------------------------------------ooO--U--Ooo------------{=
-   - baruch@tkos.co.il - tel: +972.52.368.4656, http://www.tkos.co.il -
+2.31.1
+
