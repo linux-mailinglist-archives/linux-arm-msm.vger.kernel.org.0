@@ -2,121 +2,139 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4C95A38D934
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 May 2021 08:00:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BA95038D93B
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 May 2021 08:05:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231600AbhEWGBp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 23 May 2021 02:01:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54938 "EHLO
+        id S231549AbhEWGGj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 23 May 2021 02:06:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56040 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231540AbhEWGBo (ORCPT
+        with ESMTP id S231540AbhEWGGj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 23 May 2021 02:01:44 -0400
-Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com [IPv6:2607:f8b0:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05870C06138B
-        for <linux-arm-msm@vger.kernel.org>; Sat, 22 May 2021 23:00:16 -0700 (PDT)
-Received: by mail-pf1-x429.google.com with SMTP id x188so18152031pfd.7
-        for <linux-arm-msm@vger.kernel.org>; Sat, 22 May 2021 23:00:16 -0700 (PDT)
+        Sun, 23 May 2021 02:06:39 -0400
+Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 562C2C061574
+        for <linux-arm-msm@vger.kernel.org>; Sat, 22 May 2021 23:05:12 -0700 (PDT)
+Received: by mail-pf1-x42b.google.com with SMTP id x18so13868965pfi.9
+        for <linux-arm-msm@vger.kernel.org>; Sat, 22 May 2021 23:05:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=mBfopW5d3IJHx9JAp5B2XG/55RVDXUQjqthuHE97u5E=;
-        b=oSUc4Et4QiFnyKSiNcVYAevijCAa18konknMw+/Lyxctxi3kgxrEgTSu1LTwF9pE3G
-         n5Jgq/loSBV/hHtGZrogeyBTsK1V81mxjKeBnwk/sIetldbBf/6C3vndCA7XKnZbD7XK
-         jEDEisMicrEHkQHgy0LNOIoNIuekH2Xl9q1lzrLHbsb407nv0Ji8Xa0WL2m0JueaBK2A
-         iSNrWBQ71UDRv1PvPh7Ggw4p2yZ0qWYirBwsnk8WU3PkSuh/O5jbOld8jbvcKLKVypYD
-         vGxwEIL8vEEJ0jhq85FHQfwHSo5CywoWZjK1VxuZtC5jc9gEEm4uyu5iSMGTYEfL/UWC
-         TrLw==
+        bh=csGLr+TPRSaesVp+pLDCPAxv5f52IL07+7qSuKKfT4U=;
+        b=hl/Cc7/o3SbtJXsvK2IDLrJvO7F4/vCDVugF/rngNU6CA/j5AwJc/se12THbzFaciV
+         4h5JX/YxcebPocf6BumqT8oM1TG9rwmSsrH5XcI19PjrIJgGRP3AzdjAW7qAv4uP9VlU
+         v1AHUXMm/IouPKjifulK30MlDKG0NklOo/TtU/08WqIGADkuJuEwrzWjnqSZY9xjIh+m
+         /uPvis8rJxf0rsngO7A5+lia4Tbb1vrmQCQkHfaqyOIGTF+GPA4jgtA3ENyi6lglmXXb
+         N7LkiKaGBdU6dZKwgIrtrIR6VpxiFq3vy7j8Iddw0k37xyQhQbYkxLj/f+nYGpP5zEeB
+         YWSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=mBfopW5d3IJHx9JAp5B2XG/55RVDXUQjqthuHE97u5E=;
-        b=ReEWjhPjThLW6N+2D+w40YcLTNBVc1kRwxxdIyGkJfy2jAVdS76oSDYBliWwMyGJBj
-         cAtntStunWBheWYaxKyypn6S3WymvEALlQlxNh57RmHiZuc/1TpKNmstg/1JYSg15dDg
-         R/67mbgFnG+hm9r8Vw0lLJve50uz6QeDgmNrJwTwHnXAOibHGL22V9KJPGgtj7e2JMWz
-         QYQ0S64S6Bz0mgTcR4PkQTa/+GNWs881A7Q21XgUdt3DskTYf72uDLVh5fXyL0sFT8LW
-         nK8QsnxnoRK+M34xmvNbqWUVCK8KttVXNGuWf0rroM/UJu4XkLlz/jeNBjl97YncK8Lp
-         75vw==
-X-Gm-Message-State: AOAM530klEDNrT/hoQBSYnTKKe+F7Z6Q5vq8nY81LYvKg6JX3tXH1SdK
-        +Vl/KAmAcPxAOa5EzUop8EER2w==
-X-Google-Smtp-Source: ABdhPJzfwtxQNO5KyXLzrphaldJNDNvilmz5Qk2gCNQ8wt6N4NdfsbWD59wj/nRMo4RZdWAFOj66gQ==
-X-Received: by 2002:a63:5c1:: with SMTP id 184mr7420865pgf.75.1621749616457;
-        Sat, 22 May 2021 23:00:16 -0700 (PDT)
+        bh=csGLr+TPRSaesVp+pLDCPAxv5f52IL07+7qSuKKfT4U=;
+        b=KLZFaTND2zOQRlF/LG6NEpsd3yZbinIhms2VlotUL7QeGva2LehXSA2aI+6DMZNV4T
+         7148YM4xdaPx6WEA3zLQtDye+cmGrfrqplT4gCxk5gcpknVk9wRp5B3se5SymBmlncGW
+         Uhqn+qfC0lIP0zO6eULQHhRDzpfJ+Ik60kU9xtv71GHPjs7COFjfpnsuvAJ7v2ksTQ1A
+         YpH6cIt4yd6PIhU53xtd1MD3ikcDaRKer/ajMHJyseU11YdsRDQExgEvM95kxHaS3QRG
+         tpXExUs4yV6I9YIn+TgLRHjYt3wsvXPEevHVG9Wlwkw8c42+ABXdQOh6JK2BsOK9ZxOn
+         0W/A==
+X-Gm-Message-State: AOAM531hvOFUJqlDst0XmVkF/rJoNQXnF2+3w+2lYvtb7jvDJ3zZTWIM
+        YLOZwQQRjLQoINUSLJB9XNRW3w==
+X-Google-Smtp-Source: ABdhPJwi3UqwjLuznY5enwHu8cfXccUM/d95Nyw4XH7+A0EGAQ94i92P7B5eDHF7uRi2IzA7GA45bg==
+X-Received: by 2002:a63:5a5d:: with SMTP id k29mr7270030pgm.215.1621749911778;
+        Sat, 22 May 2021 23:05:11 -0700 (PDT)
 Received: from dragon (80.251.214.228.16clouds.com. [80.251.214.228])
-        by smtp.gmail.com with ESMTPSA id y20sm7267931pfn.164.2021.05.22.23.00.13
+        by smtp.gmail.com with ESMTPSA id g72sm7828495pfb.33.2021.05.22.23.05.09
         (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 22 May 2021 23:00:15 -0700 (PDT)
-Date:   Sun, 23 May 2021 14:00:10 +0800
+        Sat, 22 May 2021 23:05:11 -0700 (PDT)
+Date:   Sun, 23 May 2021 14:05:06 +0800
 From:   Shawn Guo <shawn.guo@linaro.org>
-To:     Jassi Brar <jassisinghbrar@gmail.com>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Sivaprakash Murugesan <sivaprak@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Benjamin Li <benl@squareup.com>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 2/2] mailbox: qcom: Add MSM8939 APCS support
-Message-ID: <20210523060009.GA29015@dragon>
-References: <20210503081334.17143-1-shawn.guo@linaro.org>
- <20210503081334.17143-3-shawn.guo@linaro.org>
+To:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Hanjun Guo <guohanjun@huawei.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v3] iommu/arm-smmu-qcom: hook up qcom_smmu_impl for ACPI
+ boot
+Message-ID: <20210523060505.GB29015@dragon>
+References: <20210509022607.17534-1-shawn.guo@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20210503081334.17143-3-shawn.guo@linaro.org>
+In-Reply-To: <20210509022607.17534-1-shawn.guo@linaro.org>
 User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, May 03, 2021 at 04:13:34PM +0800, Shawn Guo wrote:
-> MSM8939 has 3 APCS instances for Cluster0 (little cores), Cluster1 (big
-> cores) and CCI (Cache Coherent Interconnect).  Although only APCS of
-> Cluster0 and Cluster1 have IPC bits, each of 3 APCS has A53PLL clock
-> control bits.  That said, we need to register 3 'qcom-apcs-msm8916-clk'
-> devices to instantiate all 3 clocks.  Let's use PLATFORM_DEVID_AUTO
-> rather than PLATFORM_DEVID_NONE for platform_device_register_data()
-> call.  Otherwise, the second A53PLL clock registration will fail due
-> to duplicate device name.
+On Sun, May 09, 2021 at 10:26:07AM +0800, Shawn Guo wrote:
+> The hookup with qcom_smmu_impl is required to do ACPI boot on SC8180X
+> based devices like Lenovo Flex 5G laptop and Microsoft Surface Pro X.
+> Define acpi_platform_list for these platforms and match them using
+> acpi_match_platform_list() call, and create qcom_smmu_impl accordingly.
 > 
-> [    0.519657] sysfs: cannot create duplicate filename '/bus/platform/devices/qcom-apcs-msm8916-clk'
-> ...
-> [    0.661158] qcom_apcs_ipc b111000.mailbox: failed to register APCS clk
+> (np == NULL) is used to check ACPI boot, because fwnode of SMMU device
+> is a static allocation and thus helpers like has_acpi_companion() don't
+> work here.
 > 
 > Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
-> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
+> Changes for v3:
+>  - Call acpi_match_platform_list() to match platform in qcom smmu
+>    driver rather than IORT code.
 
-Hi Jassi,
+Hi Robin,
 
-Any comment on this patch?
+How does this version look?
 
 Shawn
 
-> ---
->  drivers/mailbox/qcom-apcs-ipc-mailbox.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
 > 
-> diff --git a/drivers/mailbox/qcom-apcs-ipc-mailbox.c b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
-> index f25324d03842..1699ec38bc3b 100644
-> --- a/drivers/mailbox/qcom-apcs-ipc-mailbox.c
-> +++ b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
-> @@ -132,7 +132,7 @@ static int qcom_apcs_ipc_probe(struct platform_device *pdev)
->  	if (apcs_data->clk_name) {
->  		apcs->clk = platform_device_register_data(&pdev->dev,
->  							  apcs_data->clk_name,
-> -							  PLATFORM_DEVID_NONE,
-> +							  PLATFORM_DEVID_AUTO,
->  							  NULL, 0);
->  		if (IS_ERR(apcs->clk))
->  			dev_err(&pdev->dev, "failed to register APCS clk\n");
-> @@ -158,6 +158,7 @@ static const struct of_device_id qcom_apcs_ipc_of_match[] = {
->  	{ .compatible = "qcom,ipq6018-apcs-apps-global", .data = &ipq6018_apcs_data },
->  	{ .compatible = "qcom,ipq8074-apcs-apps-global", .data = &ipq8074_apcs_data },
->  	{ .compatible = "qcom,msm8916-apcs-kpss-global", .data = &msm8916_apcs_data },
-> +	{ .compatible = "qcom,msm8939-apcs-kpss-global", .data = &msm8916_apcs_data },
->  	{ .compatible = "qcom,msm8994-apcs-kpss-global", .data = &msm8994_apcs_data },
->  	{ .compatible = "qcom,msm8996-apcs-hmss-global", .data = &msm8996_apcs_data },
->  	{ .compatible = "qcom,msm8998-apcs-hmss-global", .data = &msm8998_apcs_data },
+> Changes for v2:
+>  - Rather than using asl_compiler_id in IORT table, follow suggestion
+>    from Robin Murphy to use acpi_match_platform_list() to match platform.
+> 
+>  drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 13 +++++++++++++
+>  1 file changed, 13 insertions(+)
+> 
+> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> index 98b3a1c2a181..f7e187f3fa66 100644
+> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> @@ -3,6 +3,7 @@
+>   * Copyright (c) 2019, The Linux Foundation. All rights reserved.
+>   */
+>  
+> +#include <linux/acpi.h>
+>  #include <linux/adreno-smmu-priv.h>
+>  #include <linux/of_device.h>
+>  #include <linux/qcom_scm.h>
+> @@ -339,10 +340,22 @@ static const struct of_device_id __maybe_unused qcom_smmu_impl_of_match[] = {
+>  	{ }
+>  };
+>  
+> +static struct acpi_platform_list qcom_acpi_platlist[] = {
+> +	{ "LENOVO", "CB-01   ", 0x8180, ACPI_SIG_IORT, equal, "QCOM SMMU" },
+> +	{ "QCOM  ", "QCOMEDK2", 0x8180, ACPI_SIG_IORT, equal, "QCOM SMMU" },
+> +	{ }
+> +};
+> +
+>  struct arm_smmu_device *qcom_smmu_impl_init(struct arm_smmu_device *smmu)
+>  {
+>  	const struct device_node *np = smmu->dev->of_node;
+>  
+> +	if (np == NULL) {
+> +		/* Match platform for ACPI boot */
+> +		if (acpi_match_platform_list(qcom_acpi_platlist) >= 0)
+> +			return qcom_smmu_create(smmu, &qcom_smmu_impl);
+> +	}
+> +
+>  	if (of_match_node(qcom_smmu_impl_of_match, np))
+>  		return qcom_smmu_create(smmu, &qcom_smmu_impl);
+>  
 > -- 
 > 2.17.1
 > 
