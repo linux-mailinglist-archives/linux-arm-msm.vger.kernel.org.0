@@ -2,85 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6234138E08B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 May 2021 06:58:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6CF0E38E08F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 May 2021 06:59:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231307AbhEXE76 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 May 2021 00:59:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45100 "EHLO
+        id S232276AbhEXFA3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 May 2021 01:00:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45226 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229584AbhEXE75 (ORCPT
+        with ESMTP id S232234AbhEXFA2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 May 2021 00:59:57 -0400
-Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com [IPv6:2607:f8b0:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BCB3BC061574
-        for <linux-arm-msm@vger.kernel.org>; Sun, 23 May 2021 21:58:29 -0700 (PDT)
-Received: by mail-pf1-x429.google.com with SMTP id g18so18182679pfr.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 23 May 2021 21:58:29 -0700 (PDT)
+        Mon, 24 May 2021 01:00:28 -0400
+Received: from mail-pf1-x42c.google.com (mail-pf1-x42c.google.com [IPv6:2607:f8b0:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6707C06138A
+        for <linux-arm-msm@vger.kernel.org>; Sun, 23 May 2021 21:59:00 -0700 (PDT)
+Received: by mail-pf1-x42c.google.com with SMTP id q25so1805059pfn.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 23 May 2021 21:59:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=1ZYaJzg8EfGTG1YeFB1KyajqSUT6MB2q2X9Re4Ft+nw=;
-        b=QpGnnJc2Tb1UEE7G3EnRIds1WFTSQS/3IYFhN5NB1mCThWYLnzHZRMsvpQS8FOV1iP
-         oQBCNXR/jLpzVqr6JKVKe+R8B9fa5zy4t2pQQId55UfuG04FlZAKIgjy4dDvJXkmyU2N
-         dirg1foJ3iYCVhR0yU2o7NIb+9wViqBNjdUPyU2VxRe1LFE/lfkmRZ3lU/bN9rDs/dwL
-         2FkJVaDfL2wMisoaA5zBIfTuNLreUtmP/UVBVU56l83eg9albvBN816TBp3sukmjPISM
-         K4V5tLlpVYfBa4hXez4xPDwTfABLoK2kdSQ4U9vOAhtr8Nur+q0PyEy3WGb5Uh/nbyRN
-         eKTw==
+        bh=IAKmLQlo5yIdWFUbaREDZ8KxE5immhhtLzqjh0rXTzU=;
+        b=H5h59/wSyUEhLnaxOLf44Zjv9gy+xDh48y2q4T/os8Y8uxva6P8+92uyMOv+sWLFbK
+         JuF/KQtRv5FjWZQwkwwrkOdW0PSXCmjd76fkNmdcab/1klMOdj4g6t30ECwXWYuD6DJP
+         Cqtd41QwDuk9WYBYUuKSQ4r9YOxAUtDQek7VWfJd6qASaKuOBU/FmrFre2awHaHZRW53
+         7DPlTgaybhl7HlnG20B1a0crNXPQdPNkNDS075IO9sGjXZghcwuqerKIENVgeuvUmVYU
+         irXoN3/Zz6AVWFqn6bhp3HUmt3/6FnN8lAOIh5I172hPN8WU+UCzAFBN7O2FOm5ZXUoW
+         ZDqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=1ZYaJzg8EfGTG1YeFB1KyajqSUT6MB2q2X9Re4Ft+nw=;
-        b=mR2SdP2gDK0fg2P0On31sFGWxHZjumzek3X6LGyeLqpp2fGErlYrgy+V9W3kATmKMm
-         0qU/3VuwPX+XzcKjZr35fyTV8RvP3JS8tJS67YuHV3bAExvxCJoMNesQg5IvNEE5UfdY
-         EK7uBz+OfBWIROJt6ysGJrYlkiYOyX56osSzpw6YlGkQQg0fLV9XAfAUtxyvnyxZcB3r
-         HjXrk2WDUnI5kb0I/k4LyAN/EKxx/vL7Igga6CM69sUDvgZE51t0+GB9g19wTuWuKHuK
-         eDo4rPBBX1v6fh7YShTG/X0toq5r3obwrrzJBKZxY90jZaAsXErLCxSXLgn7eHeOH7fG
-         DSIw==
-X-Gm-Message-State: AOAM533I3ZXPkAM0W9tGi1wxspjBoYErGPq0gkWCh2crNskOmYbBb8Us
-        iDU+ltUqVlgLyFd+UMn9JBrR
-X-Google-Smtp-Source: ABdhPJzbYXJg0d7860GaWT42y4HEWTc3wQrKrsk/TEnPoqjFti276Sc54G9ltl/uRfd3wgq5m8vZ5A==
-X-Received: by 2002:a62:384c:0:b029:2dd:423b:6e49 with SMTP id f73-20020a62384c0000b02902dd423b6e49mr23220503pfa.9.1621832309175;
-        Sun, 23 May 2021 21:58:29 -0700 (PDT)
+        bh=IAKmLQlo5yIdWFUbaREDZ8KxE5immhhtLzqjh0rXTzU=;
+        b=Bd4SLScZTvHyY9/H6Dpyfr1KQFjKKr2HxegtlB3sc+u0ZGx0LNPkMYSIWSwJ+B4GLP
+         onVi8t4qXtc5GHZNE9zyOTZDDF2Yhq3J87bfXPT8S9Dkr/E1hXbzMyapJi5H3B0wPCqE
+         wmq6Sv7OwAwRxBAKKqGIxFrrX6qOC6/pQxMcwva8tOoZoKp7JUMB0UeQdA6oKFxZSxN3
+         4gfosGklcDpW1veZ8LJAumTcO0KUYkcXY6UtsdZBDVfk9afGC3DX8CaWWxDVnNWoLIhA
+         AmwG+3b3yYmQZYDvWdkD/1Z2SWOto4TRz6d+/5H8Yx9qpoHjrtRHC20pFAbBsgCw2KB4
+         chGg==
+X-Gm-Message-State: AOAM532M0uby65lg4mzV2S+ilrSA4i2iZqgIka/bnkJvZ+KCnBzqZmwT
+        cNCU6GwyGuW1Ncehw3xUmH0K6HKe9TR4
+X-Google-Smtp-Source: ABdhPJwdpF2fWwKYkGCy+MvDtZC8h+uirh0J8BSq/MBac0zgzhRyoIqggx05touQCKqS4xEMPxiGQw==
+X-Received: by 2002:a65:4608:: with SMTP id v8mr11564805pgq.435.1621832339503;
+        Sun, 23 May 2021 21:58:59 -0700 (PDT)
 Received: from work ([120.138.12.48])
-        by smtp.gmail.com with ESMTPSA id w2sm9341621pjq.5.2021.05.23.21.58.26
+        by smtp.gmail.com with ESMTPSA id b2sm13529363pji.28.2021.05.23.21.58.57
         (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 23 May 2021 21:58:28 -0700 (PDT)
-Date:   Mon, 24 May 2021 10:28:25 +0530
+        Sun, 23 May 2021 21:58:58 -0700 (PDT)
+Date:   Mon, 24 May 2021 10:28:55 +0530
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Bhaumik Bhatt <bbhatt@codeaurora.org>
-Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
-        jhugo@codeaurora.org, linux-kernel@vger.kernel.org,
-        loic.poulain@linaro.org
-Subject: Re: [PATCH] bus: mhi: core: Validate channel ID when processing
- command completions
-Message-ID: <20210524045825.GE8823@work>
-References: <1619481538-4435-1-git-send-email-bbhatt@codeaurora.org>
- <20210524044228.GD8823@work>
+To:     Baochen Qiang <bqiang@codeaurora.org>
+Cc:     hemantk@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, ath11k@lists.infradead.org,
+        stable@vger.kernel.org
+Subject: Re: [PATCH v2] bus: mhi: Wait for M2 state during system resume
+Message-ID: <20210524045855.GF8823@work>
+References: <20210524040312.14409-1-bqiang@codeaurora.org>
+ <20210524043740.GC8823@work>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20210524044228.GD8823@work>
+In-Reply-To: <20210524043740.GC8823@work>
 User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, May 24, 2021 at 10:12:28AM +0530, Manivannan Sadhasivam wrote:
-> On Mon, Apr 26, 2021 at 04:58:58PM -0700, Bhaumik Bhatt wrote:
-> > MHI reads the channel ID from the event ring element sent by the
-> > device which can be any value between 0 and 255. In order to
-> > prevent any out of bound accesses, add a check against the maximum
-> > number of channels supported by the controller and those channels
-> > not configured yet so as to skip processing of that event ring
-> > element.
+On Mon, May 24, 2021 at 10:07:40AM +0530, Manivannan Sadhasivam wrote:
+> On Mon, May 24, 2021 at 12:03:12PM +0800, Baochen Qiang wrote:
+> > During system resume, MHI host triggers M3->M0 transition and then waits
+> > for target device to enter M0 state. Once done, the device queues a state
+> > change event into ctrl event ring and notifies MHI host by raising an
+> > interrupt, where a tasklet is scheduled to process this event. In most cases,
+> > the tasklet is served timely and wait operation succeeds.
 > > 
-> > Fixes: 1d3173a3bae7 ("bus: mhi: core: Add support for processing events from client device")
-> > Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+> > However, there are cases where CPU is busy and cannot serve this tasklet
+> > for some time. Once delay goes long enough, the device moves itself to M1
+> > state and also interrupts MHI host after inserting a new state change
+> > event to ctrl ring. Later CPU finally has time to process the ring, however
+> > there are two events in it now:
+> > 	1. for M3->M0 event, which is processed first as queued first,
+> > 	   tasklet handler updates device state to M0 and wakes up the task,
+> > 	   i.e., the MHI host.
+> > 	2. for M0->M1 event, which is processed later, tasklet handler
+> > 	   triggers M1->M2 transition and updates device state to M2 directly,
+> > 	   then wakes up the MHI host(if still sleeping on this wait queue).
+> > Note that although MHI host has been woken up while processing the first
+> > event, it may still has no chance to run before the second event is processed.
+> > In other words, MHI host has to keep waiting till timeout cause the M0 state
+> > has been missed.
+> > 
+> > kernel log here:
+> > ...
+> > Apr 15 01:45:14 test-NUC8i7HVK kernel: [ 4247.911251] mhi 0000:06:00.0: Entered with PM state: M3, MHI state: M3
+> > Apr 15 01:45:14 test-NUC8i7HVK kernel: [ 4247.917762] mhi 0000:06:00.0: State change event to state: M0
+> > Apr 15 01:45:14 test-NUC8i7HVK kernel: [ 4247.917767] mhi 0000:06:00.0: State change event to state: M1
+> > Apr 15 01:45:14 test-NUC8i7HVK kernel: [ 4338.788231] mhi 0000:06:00.0: Did not enter M0 state, MHI state: M2, PM state: M2
+> > ...
+> > 
+> > Fix this issue by simply adding M2 as a valid state for resume.
+> > 
+> > Tested-on: WCN6855 hw2.0 PCI WLAN.HSP.1.1-01720.1-QCAHSPSWPL_V1_V2_SILICONZ_LITE-1
+> > 
+> > Fixes: 0c6b20a1d720 ("bus: mhi: core: Add support for MHI suspend and resume")
+> > Signed-off-by: Baochen Qiang <bqiang@codeaurora.org>
+> > Reviewed-by: Hemant Kumar <hemantk@codeaurora.org>
 > 
-> Applied to mhi-next!
+> Applied to mhi-fixes!
 > 
 
 Sorry this has been applied to mhi-next!
@@ -92,36 +119,21 @@ Mani
 > Mani
 > 
 > > ---
-> >  drivers/bus/mhi/core/main.c | 15 ++++++++++-----
-> >  1 file changed, 10 insertions(+), 5 deletions(-)
+> >  drivers/bus/mhi/core/pm.c | 1 +
+> >  1 file changed, 1 insertion(+)
 > > 
-> > diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
-> > index 22acde1..ed07421 100644
-> > --- a/drivers/bus/mhi/core/main.c
-> > +++ b/drivers/bus/mhi/core/main.c
-> > @@ -773,11 +773,16 @@ static void mhi_process_cmd_completion(struct mhi_controller *mhi_cntrl,
-> >  	cmd_pkt = mhi_to_virtual(mhi_ring, ptr);
+> > diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
+> > index e2e59a341fef..59b009a3ee9b 100644
+> > --- a/drivers/bus/mhi/core/pm.c
+> > +++ b/drivers/bus/mhi/core/pm.c
+> > @@ -934,6 +934,7 @@ int mhi_pm_resume(struct mhi_controller *mhi_cntrl)
 > >  
-> >  	chan = MHI_TRE_GET_CMD_CHID(cmd_pkt);
-> > -	mhi_chan = &mhi_cntrl->mhi_chan[chan];
-> > -	write_lock_bh(&mhi_chan->lock);
-> > -	mhi_chan->ccs = MHI_TRE_GET_EV_CODE(tre);
-> > -	complete(&mhi_chan->completion);
-> > -	write_unlock_bh(&mhi_chan->lock);
-> > +	WARN_ON(chan >= mhi_cntrl->max_chan);
-> > +
-> > +	if (chan < mhi_cntrl->max_chan &&
-> > +	    mhi_cntrl->mhi_chan[chan].configured) {
-> > +		mhi_chan = &mhi_cntrl->mhi_chan[chan];
-> > +		write_lock_bh(&mhi_chan->lock);
-> > +		mhi_chan->ccs = MHI_TRE_GET_EV_CODE(tre);
-> > +		complete(&mhi_chan->completion);
-> > +		write_unlock_bh(&mhi_chan->lock);
-> > +	}
+> >  	ret = wait_event_timeout(mhi_cntrl->state_event,
+> >  				 mhi_cntrl->dev_state == MHI_STATE_M0 ||
+> > +				 mhi_cntrl->dev_state == MHI_STATE_M2 ||
+> >  				 MHI_PM_IN_ERROR_STATE(mhi_cntrl->pm_state),
+> >  				 msecs_to_jiffies(mhi_cntrl->timeout_ms));
 > >  
-> >  	mhi_del_ring_element(mhi_cntrl, mhi_ring);
-> >  }
 > > -- 
-> > The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> > a Linux Foundation Collaborative Project
+> > 2.25.1
 > > 
