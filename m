@@ -2,114 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1AC2638F332
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 May 2021 20:46:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5957138F37F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 May 2021 21:10:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232803AbhEXSrw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 May 2021 14:47:52 -0400
-Received: from mail-ot1-f47.google.com ([209.85.210.47]:35746 "EHLO
-        mail-ot1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232746AbhEXSrw (ORCPT
+        id S233459AbhEXTLi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 May 2021 15:11:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39926 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232983AbhEXTLi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 May 2021 14:47:52 -0400
-Received: by mail-ot1-f47.google.com with SMTP id 69-20020a9d0a4b0000b02902ed42f141e1so26164544otg.2;
-        Mon, 24 May 2021 11:46:23 -0700 (PDT)
+        Mon, 24 May 2021 15:11:38 -0400
+Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8469C061756
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 May 2021 12:10:09 -0700 (PDT)
+Received: by mail-ot1-x330.google.com with SMTP id 69-20020a9d0a4b0000b02902ed42f141e1so26232013otg.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 May 2021 12:10:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=um2PPLRd0NGsUxBqyX+FbZVlwJTb66L6CWE+yk59KOs=;
+        b=cBcMduX6TRRUpe+jEH8fQPaayH6V8RcqkLcmDQzkr9uBEKen5OnbjnnSiW9gTtjHwV
+         ftRP9JTMOF31WsuGFbWqOdquRsA3S2jEXQPI6T0QxM12lKAALEA2cXQ0vQs89QXrV2H1
+         DMSeiJnifKjcCHKbLzfrC8H+cYc0Jwz/QTMcY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
-         :message-id;
-        bh=zUHC5bIhrZ72gMSo4YDUSPpMzPen1n8QrM3EpHdTPCU=;
-        b=ZN9WSq4Ga2k7jF584kZKj3f1EySb3V/oP5BiP5nd01ZSTOTOQ6kkWuxTWniEEt5R2N
-         TpsCnKeESFlrCcshNYGi1BO4yXN1ziwKvU/M1ZA7N9h0zV1G/boDMiM2igfMKMMqIFP9
-         v3oYN3cAyG7F4wHwnCDB9CTl7yJ7LehoX7ZfUvTBEV0WJTehYAXhkpFeuUd98EChnf4K
-         OUjoIFyIdYrlvDhRZB5iF6DfQ63QlGo779SABpc7whQhZFJB6FNkZkBP0hy05V7t2c/x
-         9++OIgaRt/b4CsFzg2wAA6hM0uqRIz4Bnzm+37nl1rAXtVxS3VeT7acPuec1crjoT0Qa
-         +4eQ==
-X-Gm-Message-State: AOAM530sTyNhrgJFJQnF8zYRsLMi+o+jn9MYqrMS+8/wdAB0RtJ/meX9
-        4HdKbIzuSGkgj1etWr6F7Q==
-X-Google-Smtp-Source: ABdhPJxdAi4fhbZzkOm6+CuFnI7z6/7DvcD5YO0qHwvEi3e5MRZ55z5rLH5D3pwhDjCNUsZ/1ZsHdQ==
-X-Received: by 2002:a05:6830:1042:: with SMTP id b2mr19873646otp.120.1621881982575;
-        Mon, 24 May 2021 11:46:22 -0700 (PDT)
-Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id 77sm3178951otc.54.2021.05.24.11.46.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 May 2021 11:46:21 -0700 (PDT)
-Received: (nullmailer pid 437764 invoked by uid 1000);
-        Mon, 24 May 2021 18:46:20 -0000
-From:   Rob Herring <robh@kernel.org>
-To:     Martin Botka <martin.botka@somainline.org>
-Cc:     linux-kernel@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        konrad.dybcio@somainline.org,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Andy Gross <agross@kernel.org>, marijn.suijten@somainline.org,
-        angelogioacchino.delregno@somainline.org,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
-        linux-gpio@vger.kernel.org, devicetree@vger.kernel.org
-In-Reply-To: <20210523204415.703081-1-martin.botka@somainline.org>
-References: <20210523204415.703081-1-martin.botka@somainline.org>
-Subject: Re: [PATCH 1/2] dt-bindings: pinctrl: qcom: sm6125: Document SM6125 pinctrl driver
-Date:   Mon, 24 May 2021 13:46:20 -0500
-Message-Id: <1621881980.447955.437763.nullmailer@robh.at.kernel.org>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=um2PPLRd0NGsUxBqyX+FbZVlwJTb66L6CWE+yk59KOs=;
+        b=ZN3wAKU6lej1St6YmALJ+hfW28E1hoz/aDVWzobbHK7PQq2U+xlU1ir6CeJnk+J9ZB
+         LP9EPDnJJms+aioY+mn4pwTFTi4oQ1ZJQTQs60RCE7rK24Ie6ZO3wahPXCk8QdYe9NO1
+         pWZoFAUTOQLZV+OxRgzLo4DlfbgTYL4SE2A1UfOQw7eUmnqr5wpI/Sg36WamlHv1AxbD
+         ib1kjjkq64i0bCIr11NX+NtFA4n1txbjQG/gCqORbJ7iQ5IKvcnopylBfkFWJMkoJwxE
+         EqU0Tg1cZk0xKAP+ToRLa7URL5VMiVOuWyGN6vHdHaEo3mLn30BwWNP21UIZxCNj7y30
+         hg5g==
+X-Gm-Message-State: AOAM532DytC61Spn/MXKDBNAtrwXpzXvz7F1T7VfJ1BR8Fg+cdCd1CG8
+        QlN5b6OF54GcD8ToM8lVdH2ZcLJvzLw8BNoRzsQSPw==
+X-Google-Smtp-Source: ABdhPJxTbpmjuA2CnIS3DZHUaKp1uaoBatpXP+OC8g8oTA8tNGzR7meC6kVssKlmSugIRxojjEmZ+CAM0uejvhm7Rv0=
+X-Received: by 2002:a05:6830:3154:: with SMTP id c20mr2407750ots.233.1621883409262;
+ Mon, 24 May 2021 12:10:09 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 24 May 2021 19:10:08 +0000
+MIME-Version: 1.0
+In-Reply-To: <1621635930-30161-1-git-send-email-khsieh@codeaurora.org>
+References: <1621635930-30161-1-git-send-email-khsieh@codeaurora.org>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.9.1
+Date:   Mon, 24 May 2021 19:10:08 +0000
+Message-ID: <CAE-0n507ahZLDbtfo-s+goBd5kUqBQ9hTqeoCvk1mNb9=XB5wg@mail.gmail.com>
+Subject: Re: [PATCH v6] drm/msm/dp: handle irq_hpd with sink_count = 0 correctly
+To:     Kuogee Hsieh <khsieh@codeaurora.org>, agross@kernel.org,
+        bjorn.andersson@linaro.org, robdclark@gmail.com, sean@poorly.run,
+        vkoul@kernel.org
+Cc:     abhinavk@codeaurora.org, aravindh@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, 23 May 2021 22:44:13 +0200, Martin Botka wrote:
-> Signed-off-by: Martin Botka <martin.botka@somainline.org>
+Quoting Kuogee Hsieh (2021-05-21 15:25:30)
+> irq_hpd interrupt should be handled after dongle plugged in and
+> before dongle unplugged. Hence irq_hpd interrupt is enabled at
+> the end of the plugin handle and disabled at the beginning of
+> unplugged handle. Current irq_hpd with sink_count = 0 is wrongly
+> handled same as the dongle unplugged which tears down the mainlink
+> and disables the phy. This patch fixes this problem by only tearing
+> down the mainlink but keeping phy enabled at irq_hpd with
+> sink_count = 0 handle so that next irq_hpd with sink_count =1 can be
+> handled by setup mainlink only. This patch also set dongle into D3
+> (power off) state at end of handling irq_hpd with sink_count = 0.
+>
+> Changes in v2:
+> -- add ctrl->phy_Power_count
+>
+> Changes in v3:
+> -- del ctrl->phy_Power_count
+> -- add phy_power_off to dp_ctrl_off_link_stream()
+>
+> Changes in v4:
+> -- return immediately if clock disable failed at dp_ctrl_off_link_stream()
+>
+> Changes in v5:
+> -- set dongle to D3 (power off) state at dp_ctrl_off_link_stream()
+>
+> Changes in v6:
+> -- add Fixes tag
+>
+> Fixes: 94e58e2d06e3 ("drm/msm/dp: reset dp controller only at boot up and pm_resume")
+>
+> Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
 > ---
->  .../bindings/pinctrl/qcom,sm6125-pinctrl.yaml | 161 ++++++++++++++++++
->  1 file changed, 161 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sm6125-pinctrl.yaml
-> 
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
-
-yamllint warnings/errors:
-./Documentation/devicetree/bindings/pinctrl/qcom,sm6125-pinctrl.yaml:122:1: [error] syntax error: found character '\t' that cannot start any token (syntax)
-
-dtschema/dtc warnings/errors:
-make[1]: *** Deleting file 'Documentation/devicetree/bindings/pinctrl/qcom,sm6125-pinctrl.example.dts'
-Traceback (most recent call last):
-  File "/usr/local/bin/dt-extract-example", line 45, in <module>
-    binding = yaml.load(open(args.yamlfile, encoding='utf-8').read())
-  File "/usr/local/lib/python3.8/dist-packages/ruamel/yaml/main.py", line 421, in load
-    return constructor.get_single_data()
-  File "/usr/local/lib/python3.8/dist-packages/ruamel/yaml/constructor.py", line 109, in get_single_data
-    node = self.composer.get_single_node()
-  File "_ruamel_yaml.pyx", line 706, in _ruamel_yaml.CParser.get_single_node
-  File "_ruamel_yaml.pyx", line 724, in _ruamel_yaml.CParser._compose_document
-  File "_ruamel_yaml.pyx", line 775, in _ruamel_yaml.CParser._compose_node
-  File "_ruamel_yaml.pyx", line 889, in _ruamel_yaml.CParser._compose_mapping_node
-  File "_ruamel_yaml.pyx", line 773, in _ruamel_yaml.CParser._compose_node
-  File "_ruamel_yaml.pyx", line 848, in _ruamel_yaml.CParser._compose_sequence_node
-  File "_ruamel_yaml.pyx", line 904, in _ruamel_yaml.CParser._parse_next_event
-ruamel.yaml.scanner.ScannerError: while scanning a block scalar
-  in "<unicode string>", line 120, column 5
-found a tab character where an indentation space is expected
-  in "<unicode string>", line 122, column 1
-make[1]: *** [Documentation/devicetree/bindings/Makefile:20: Documentation/devicetree/bindings/pinctrl/qcom,sm6125-pinctrl.example.dts] Error 1
-make[1]: *** Waiting for unfinished jobs....
-./Documentation/devicetree/bindings/pinctrl/qcom,sm6125-pinctrl.yaml:  while scanning a block scalar
-  in "<unicode string>", line 120, column 5
-found a tab character where an indentation space is expected
-  in "<unicode string>", line 122, column 1
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/pinctrl/qcom,sm6125-pinctrl.yaml: ignoring, error parsing file
-warning: no schema found in file: ./Documentation/devicetree/bindings/pinctrl/qcom,sm6125-pinctrl.yaml
-make: *** [Makefile:1416: dt_binding_check] Error 2
-
-See https://patchwork.ozlabs.org/patch/1482519
-
-This check can fail if there are any dependencies. The base for a patch
-series is generally the most recent rc1.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit.
-
+Tested-by: Stephen Boyd <swboyd@chromium.org>
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
