@@ -2,179 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 30ADB38E89C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 May 2021 16:21:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4263138E95D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 May 2021 16:47:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233038AbhEXOXN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 May 2021 10:23:13 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:23616 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233042AbhEXOXM (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 May 2021 10:23:12 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1621866105; h=Content-Transfer-Encoding: MIME-Version:
- Message-Id: Date: Subject: Cc: To: From: Sender;
- bh=m7+jOoOsnFGo767weGdSHvLamkIeGssb1Lzq9/80Lvs=; b=RZWBX5bR5sGWTP8wGrnyDZXQIjnDvOyAbJhMbUpMHMU3rGsTL5k90cQqeHAkpuVZmknBy8nN
- dQyRd9QNI7+jsL/TDuMcwO+vRDAe93yzTWI0jGv0NPJreQY+vnukDc9Mn4hn8J99t/Vfyh20
- 2TfMQGHZDxPwdk7IwO8V0/WEHVU=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
- 60abb66c67d156359aebe5a3 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 24 May 2021 14:21:32
- GMT
-Sender: srivasam=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 6BBF6C433F1; Mon, 24 May 2021 14:21:32 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
-Received: from hyd-lnxbld210.qualcomm.com (unknown [202.46.22.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: srivasam)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 46CCBC433F1;
-        Mon, 24 May 2021 14:21:25 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 46CCBC433F1
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=srivasam@codeaurora.org
-From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-To:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
-        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
-        srinivas.kandagatla@linaro.org, rohitkr@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        swboyd@chromium.org, judyhsiao@chromium.org
-Cc:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-Subject: [PATCH v3] ASoC: qcom: lpass-cpu: Fix pop noise during audio capture begin
-Date:   Mon, 24 May 2021 19:51:14 +0530
-Message-Id: <20210524142114.18676-1-srivasam@codeaurora.org>
-X-Mailer: git-send-email 2.29.0
+        id S233495AbhEXOss (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 May 2021 10:48:48 -0400
+Received: from mail.kernel.org ([198.145.29.99]:54728 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S233272AbhEXOsV (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 24 May 2021 10:48:21 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 703B7613D6;
+        Mon, 24 May 2021 14:46:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1621867613;
+        bh=jI99WAe9RVtRbs+Gt1kQRnnslk5QCXfmsL4bZR6wSPQ=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=SVqqIMiJXNn21AZmnDorWO69n3ucX/aWuW/SB7KeUnJO+USDaqaMs5FuIMUQ+DRkm
+         LDIXlXSKWZQ67o4cuvyp/fwp5dod4dmm3SJp7lfKUPY8zFaN2l4u0KVDjG8haVBGUI
+         Se/rPhqsmoJbTVBuYfOBWDnt7bH3kIonaituHHBVDPKpcTIDio6ATuN3/pweoPB/IH
+         1j159utqOoLcdSCJmNktxsC8yK0zgWpTGrVSjVf3MUWZ4UkHJN9D7MNKYbQwamBI4o
+         Uo4/Hr2gOKO7HCYlNkVJy+H2Bpf05L1r+1f6XH+cPm6mJ5QumRNcl0/6oWxBlVG+zc
+         EABhPR9SrZ4Lg==
+From:   Sasha Levin <sashal@kernel.org>
+To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Aditya Pakki <pakki001@umn.edu>, Vinod Koul <vkoul@kernel.org>,
+        Sinan Kaya <okaya@kernel.org>, Sasha Levin <sashal@kernel.org>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.12 25/63] Revert "dmaengine: qcom_hidma: Check for driver register failure"
+Date:   Mon, 24 May 2021 10:45:42 -0400
+Message-Id: <20210524144620.2497249-25-sashal@kernel.org>
+X-Mailer: git-send-email 2.30.2
+In-Reply-To: <20210524144620.2497249-1-sashal@kernel.org>
+References: <20210524144620.2497249-1-sashal@kernel.org>
 MIME-Version: 1.0
+X-stable: review
+X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This patch fixes PoP noise of around 15ms observed during audio capture begin.
-Enables BCLK and LRCLK in snd_soc_dai_ops prepare call for introducing some delay
-before capture start and clock enable.
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-Co-developed-by: Judy Hsiao <judyhsiao@chromium.org>
-Signed-off-by: Judy Hsiao <judyhsiao@chromium.org>
-Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+[ Upstream commit 43ed0fcf613a87dd0221ec72d1ade4d6544f2ffc ]
+
+This reverts commit a474b3f0428d6b02a538aa10b3c3b722751cb382.
+
+Because of recent interactions with developers from @umn.edu, all
+commits from them have been recently re-reviewed to ensure if they were
+correct or not.
+
+Upon review, this commit was found to be incorrect for the reasons
+below, so it must be reverted.  It will be fixed up "correctly" in a
+later kernel change.
+
+The original change is NOT correct, as it does not correctly unwind from
+the resources that was allocated before the call to
+platform_driver_register().
+
+Cc: Aditya Pakki <pakki001@umn.edu>
+Acked-By: Vinod Koul <vkoul@kernel.org>
+Acked-By: Sinan Kaya <okaya@kernel.org>
+Link: https://lore.kernel.org/r/20210503115736.2104747-51-gregkh@linuxfoundation.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
-Changes Since V2:
-	-- Updated comments as per linux style
-	-- Removed unrelated changes. 
-Changes Since V1:
-	-- Enableed BCLK and LRCLK in dai ops prepare API instead of startup API
-	-- Added comments
+ drivers/dma/qcom/hidma_mgmt.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
- sound/soc/qcom/lpass-cpu.c | 54 +++++++++++++++++++++++++++++++++++++-
- 1 file changed, 53 insertions(+), 1 deletion(-)
-
-diff --git a/sound/soc/qcom/lpass-cpu.c b/sound/soc/qcom/lpass-cpu.c
-index 28c7497344e3..1855eae22aad 100644
---- a/sound/soc/qcom/lpass-cpu.c
-+++ b/sound/soc/qcom/lpass-cpu.c
-@@ -93,9 +93,21 @@ static void lpass_cpu_daiops_shutdown(struct snd_pcm_substream *substream,
- 		struct snd_soc_dai *dai)
- {
- 	struct lpass_data *drvdata = snd_soc_dai_get_drvdata(dai);
-+	struct lpaif_i2sctl *i2sctl = drvdata->i2sctl;
-+	unsigned int id = dai->driver->id;
+diff --git a/drivers/dma/qcom/hidma_mgmt.c b/drivers/dma/qcom/hidma_mgmt.c
+index 806ca02c52d7..fe87b01f7a4e 100644
+--- a/drivers/dma/qcom/hidma_mgmt.c
++++ b/drivers/dma/qcom/hidma_mgmt.c
+@@ -418,8 +418,9 @@ static int __init hidma_mgmt_init(void)
+ 		hidma_mgmt_of_populate_channels(child);
+ 	}
+ #endif
+-	return platform_driver_register(&hidma_mgmt_driver);
++	platform_driver_register(&hidma_mgmt_driver);
  
- 	clk_disable_unprepare(drvdata->mi2s_osr_clk[dai->driver->id]);
--	clk_unprepare(drvdata->mi2s_bit_clk[dai->driver->id]);
-+	/*
-+	 * To ensure BCLK/LRCLK disabled even in device node validation
-+	 * Will not impact if disabled in lpass_cpu_daiops_trigger()
-+	 * suspend.
-+	 */
-+	if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK)
-+		regmap_fields_write(i2sctl->spken, id, LPAIF_I2SCTL_SPKEN_DISABLE);
-+	else
-+		regmap_fields_write(i2sctl->micen, id, LPAIF_I2SCTL_MICEN_DISABLE);
-+
-+	clk_disable_unprepare(drvdata->mi2s_bit_clk[dai->driver->id]);
- }
- 
- static int lpass_cpu_daiops_hw_params(struct snd_pcm_substream *substream,
-@@ -275,6 +287,10 @@ static int lpass_cpu_daiops_trigger(struct snd_pcm_substream *substream,
- 	case SNDRV_PCM_TRIGGER_START:
- 	case SNDRV_PCM_TRIGGER_RESUME:
- 	case SNDRV_PCM_TRIGGER_PAUSE_RELEASE:
-+		/*
-+		 * To ensure lpass BCLK/LRCLK is enabled during
-+		 * device resume. Will not impact if enabled in lpass_cpu_daiops_prepare().
-+		 */
- 		if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK) {
- 			ret = regmap_fields_write(i2sctl->spken, id,
- 						 LPAIF_I2SCTL_SPKEN_ENABLE);
-@@ -296,6 +312,10 @@ static int lpass_cpu_daiops_trigger(struct snd_pcm_substream *substream,
- 	case SNDRV_PCM_TRIGGER_STOP:
- 	case SNDRV_PCM_TRIGGER_SUSPEND:
- 	case SNDRV_PCM_TRIGGER_PAUSE_PUSH:
-+		/*
-+		 * To ensure lpass BCLK/LRCLK is disabled during
-+		 * device suspend.
-+		 */
- 		if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK) {
- 			ret = regmap_fields_write(i2sctl->spken, id,
- 						 LPAIF_I2SCTL_SPKEN_DISABLE);
-@@ -315,12 +335,44 @@ static int lpass_cpu_daiops_trigger(struct snd_pcm_substream *substream,
- 	return ret;
- }
- 
-+static int lpass_cpu_daiops_prepare(struct snd_pcm_substream *substream,
-+		struct snd_soc_dai *dai)
-+{
-+	struct lpass_data *drvdata = snd_soc_dai_get_drvdata(dai);
-+	struct lpaif_i2sctl *i2sctl = drvdata->i2sctl;
-+	unsigned int id = dai->driver->id;
-+	int ret;
-+	/*
-+	 * To ensure lpass BCLK/LRCLK is enabled bit before
-+	 * playback/capture data flow starts.
-+	 */
-+	if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK)
-+		ret = regmap_fields_write(i2sctl->spken, id, LPAIF_I2SCTL_SPKEN_ENABLE);
-+	else
-+		ret = regmap_fields_write(i2sctl->micen, id, LPAIF_I2SCTL_MICEN_ENABLE);
-+
-+	if (ret) {
-+		dev_err(dai->dev, "error writing to i2sctl reg: %d\n", ret);
-+		return ret;
-+	}
-+
-+	ret = clk_enable(drvdata->mi2s_bit_clk[id]);
-+
-+	if (ret) {
-+		dev_err(dai->dev, "error in enabling mi2s bit clk: %d\n", ret);
-+		clk_disable(drvdata->mi2s_osr_clk[id]);
-+		return ret;
-+	}
 +	return 0;
-+}
-+
- const struct snd_soc_dai_ops asoc_qcom_lpass_cpu_dai_ops = {
- 	.set_sysclk	= lpass_cpu_daiops_set_sysclk,
- 	.startup	= lpass_cpu_daiops_startup,
- 	.shutdown	= lpass_cpu_daiops_shutdown,
- 	.hw_params	= lpass_cpu_daiops_hw_params,
- 	.trigger	= lpass_cpu_daiops_trigger,
-+	.prepare	= lpass_cpu_daiops_prepare,
- };
- EXPORT_SYMBOL_GPL(asoc_qcom_lpass_cpu_dai_ops);
- 
+ }
+ module_init(hidma_mgmt_init);
+ MODULE_LICENSE("GPL v2");
 -- 
-Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
-is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
+2.30.2
 
