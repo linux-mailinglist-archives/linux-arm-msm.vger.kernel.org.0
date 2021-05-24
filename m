@@ -2,126 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 546A938F4BA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 May 2021 23:09:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B938038F506
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 May 2021 23:39:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233294AbhEXVKk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 May 2021 17:10:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38492 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233267AbhEXVKk (ORCPT
+        id S233686AbhEXVlJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 May 2021 17:41:09 -0400
+Received: from mail-oi1-f179.google.com ([209.85.167.179]:36584 "EHLO
+        mail-oi1-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232746AbhEXVlI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 May 2021 17:10:40 -0400
-Received: from mail-qk1-x72e.google.com (mail-qk1-x72e.google.com [IPv6:2607:f8b0:4864:20::72e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D365DC061756
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 May 2021 14:09:09 -0700 (PDT)
-Received: by mail-qk1-x72e.google.com with SMTP id v8so28435143qkv.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 May 2021 14:09:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Cb0Uq1HaIEgENxGmHlcF9aKNMAXuk7VxGUnLZxEoKmU=;
-        b=ntnzKyxJBJ7zU41VapDr35r0+JiHT8LcMIOT1SR4I6dP7Nrl9EK73MZQzrTWVv2G/a
-         TvLKeWmsqGVaLQw7mwVv23fZ6u/EttxAw0FagUfXUq1zL12KWaqXnLByBCoKE5F7om18
-         zGL5EynggjpTSTpu9EBvXFi+MSf3PrIlYRTSY=
+        Mon, 24 May 2021 17:41:08 -0400
+Received: by mail-oi1-f179.google.com with SMTP id t24so12873260oiw.3;
+        Mon, 24 May 2021 14:39:39 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Cb0Uq1HaIEgENxGmHlcF9aKNMAXuk7VxGUnLZxEoKmU=;
-        b=Iyr0fMDEjkZCJNP4fdVz2tGSXesU/1TdZApiQTWSqEv9qAXKwF1FmoEa9UAnRdxJzq
-         BENW6PJK5+a0dvNOf9TvUFI7JQChrahBr/LoXcm52QRZ0zc5oN53tNbtnk1DsdshmsHP
-         bdUeWMqfkD6vjF1NGLoKfyiU7VknPVyum0DMkC6FfkYsikrtgSq7qKs/sTMvXNOLGS0Q
-         2FsAt3JUc1v8FtiYxT2jxCfj6ggzCQoYhjzxWQuCGAFHJQCcLIYYVb6LXr7QuhYy/iZ3
-         f0hna/N49MUdpVM0/2pTRZub9eFOSIvnpTUbQ2pJBiJ0GiXn4Y9vNJN/6APuq87ucMog
-         lh7w==
-X-Gm-Message-State: AOAM532rVXpxdODoQzRT0BTy3R1n2SGHOTTtv7031jtF/CTw9nuqmjut
-        d53to9YNat69h/dJDrioOvCRtQC3WnIbIw==
-X-Google-Smtp-Source: ABdhPJxhCG3stcmcbor+5lY7uViTAUSqKnC3rKEC4I+MYyhQnVUSHrI2IAdw23cY0XPeG8MCwZ4hkQ==
-X-Received: by 2002:a37:789:: with SMTP id 131mr31537941qkh.130.1621890548508;
-        Mon, 24 May 2021 14:09:08 -0700 (PDT)
-Received: from mail-yb1-f175.google.com (mail-yb1-f175.google.com. [209.85.219.175])
-        by smtp.gmail.com with ESMTPSA id s20sm11870289qke.2.2021.05.24.14.09.07
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 24 May 2021 14:09:07 -0700 (PDT)
-Received: by mail-yb1-f175.google.com with SMTP id o18so2307189ybc.8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 May 2021 14:09:07 -0700 (PDT)
-X-Received: by 2002:a25:b801:: with SMTP id v1mr2108952ybj.32.1621890546699;
- Mon, 24 May 2021 14:09:06 -0700 (PDT)
-MIME-Version: 1.0
-References: <20210517200907.1459182-1-dianders@chromium.org>
- <20210517130450.v7.1.I9e947183e95c9bd067c9c1d51208ac6a96385139@changeid> <YKwK+lkcHMwAosLn@pendragon.ideasonboard.com>
-In-Reply-To: <YKwK+lkcHMwAosLn@pendragon.ideasonboard.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Mon, 24 May 2021 14:08:53 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=VnJB_6PMo3FQt8djYDD7h0s=sc9TAbKLQMe-y+43Z3NQ@mail.gmail.com>
-Message-ID: <CAD=FV=VnJB_6PMo3FQt8djYDD7h0s=sc9TAbKLQMe-y+43Z3NQ@mail.gmail.com>
-Subject: Re: [PATCH v7 01/10] drm/panel: panel-simple: Add missing
- pm_runtime_dont_use_autosuspend() calls
-To:     Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Cc:     Andrzej Hajda <a.hajda@samsung.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@siol.net>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Rob Clark <robdclark@chromium.org>,
-        David Airlie <airlied@linux.ie>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
+        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
+         :message-id;
+        bh=8EGEl7TG/OkXyYvTFTnYpNtZYItc7Ibtk58MX5Yvvac=;
+        b=EsuUyQrWCFBLodvFUzvoPrOj0eR2zhrlYHq9TQ5Jj8+223iNt+kSiCBN4A96N8cxwM
+         /TwhVNKC6NmcubA2PI6gREnWkU8pFwNQ6NtcTdPvOT8ydjeBK3gWvPHJWolzI+JfXmuM
+         AIsqT/IFkL9p6aeNuxq+Mq3uPC5I49PjdUUCVGTLwDvi4RAP6QrWI+aY/NSWb6m0a6WW
+         PwO6n5JYVHJidxiedbiLDO9F8l6LM4pbN3XbGoWwGAcrbZZK3Q6JWkBYz9CNalw6xzTH
+         NuEeEGvYibMJJoe2b70SNng0kTit/2qfvhjzAo9C3RwLEodW2Ei8Qvx2QigDU7zlyKnR
+         ov+Q==
+X-Gm-Message-State: AOAM533vRXfySb66dT+ZfBTFFBC7cteOc+e67N7pXOaolSXDxu1zn917
+        0xZl3jweCYVNh3ctNTc+kQ==
+X-Google-Smtp-Source: ABdhPJwYW1PGk1nOYYfJL+LLY33B9ICBMmggB/IFaQAFndprOIMUrK3hAiyVrJgxuHcyXB+e5yOfsw==
+X-Received: by 2002:aca:4a8b:: with SMTP id x133mr12455802oia.124.1621892379373;
+        Mon, 24 May 2021 14:39:39 -0700 (PDT)
+Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id w6sm3359352otj.5.2021.05.24.14.39.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 24 May 2021 14:39:38 -0700 (PDT)
+Received: (nullmailer pid 1190597 invoked by uid 1000);
+        Mon, 24 May 2021 21:39:35 -0000
+From:   Rob Herring <robh@kernel.org>
+To:     Martin Botka <martin.botka@somainline.org>
+Cc:     marijn.suijten@somainline.org, konrad.dybcio@somainline.org,
+        Andy Gross <agross@kernel.org>, linux-gpio@vger.kernel.org,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Steev Klimaszewski <steev@kali.org>,
-        Thierry Reding <treding@nvidia.com>,
-        LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        ~postmarketos/upstreaming@lists.sr.ht, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        angelogioacchino.delregno@somainline.org,
+        linux-kernel@vger.kernel.org,
+        Linus Walleij <linus.walleij@linaro.org>
+In-Reply-To: <20210523211809.734107-1-martin.botka@somainline.org>
+References: <20210523211809.734107-1-martin.botka@somainline.org>
+Subject: Re: [PATCH V2 1/2] dt-bindings: pinctrl: qcom: sm6125: Document SM6125 pinctrl driver
+Date:   Mon, 24 May 2021 16:39:35 -0500
+Message-Id: <1621892375.422017.1190596.nullmailer@robh.at.kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Sun, 23 May 2021 23:18:06 +0200, Martin Botka wrote:
+> Document the newly added SM6125 pinctrl driver
+> 
+> Signed-off-by: Martin Botka <martin.botka@somainline.org>
+> ---
+> Changes in V2:
+> Add commit description
+>  .../bindings/pinctrl/qcom,sm6125-pinctrl.yaml | 161 ++++++++++++++++++
+>  1 file changed, 161 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sm6125-pinctrl.yaml
+> 
 
-On Mon, May 24, 2021 at 1:22 PM Laurent Pinchart
-<laurent.pinchart@ideasonboard.com> wrote:
->
-> Hi Doug,
->
-> Thank you for the patch.
->
-> On Mon, May 17, 2021 at 01:08:58PM -0700, Douglas Anderson wrote:
-> > The PM Runtime docs specifically call out the need to call
-> > pm_runtime_dont_use_autosuspend() in the remove() callback if
-> > pm_runtime_use_autosuspend() was called in probe():
-> >
-> > > Drivers in ->remove() callback should undo the runtime PM changes done
-> > > in ->probe(). Usually this means calling pm_runtime_disable(),
-> > > pm_runtime_dont_use_autosuspend() etc.
->
-> ~/src/kernel/linux $ git grep pm_runtime_use_autosuspend -- drivers | wc -l
-> 209
-> ~/src/kernel/linux $ git grep pm_runtime_dont_use_autosuspend -- drivers | wc -l
-> 80
->
-> Seems like a lost battle :-(
->
-> The fix is right, but I wonder if this shouldn't be handled
-> automatically by the runtime PM core. The runtime PM API is notoriously
-> difficult to use correctly.
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
-No kidding.
+yamllint warnings/errors:
+./Documentation/devicetree/bindings/pinctrl/qcom,sm6125-pinctrl.yaml:122:1: [error] syntax error: found character '\t' that cannot start any token (syntax)
 
+dtschema/dtc warnings/errors:
+make[1]: *** Deleting file 'Documentation/devicetree/bindings/pinctrl/qcom,sm6125-pinctrl.example.dts'
+Traceback (most recent call last):
+  File "/usr/local/bin/dt-extract-example", line 45, in <module>
+    binding = yaml.load(open(args.yamlfile, encoding='utf-8').read())
+  File "/usr/local/lib/python3.8/dist-packages/ruamel/yaml/main.py", line 421, in load
+    return constructor.get_single_data()
+  File "/usr/local/lib/python3.8/dist-packages/ruamel/yaml/constructor.py", line 109, in get_single_data
+    node = self.composer.get_single_node()
+  File "_ruamel_yaml.pyx", line 706, in _ruamel_yaml.CParser.get_single_node
+  File "_ruamel_yaml.pyx", line 724, in _ruamel_yaml.CParser._compose_document
+  File "_ruamel_yaml.pyx", line 775, in _ruamel_yaml.CParser._compose_node
+  File "_ruamel_yaml.pyx", line 889, in _ruamel_yaml.CParser._compose_mapping_node
+  File "_ruamel_yaml.pyx", line 773, in _ruamel_yaml.CParser._compose_node
+  File "_ruamel_yaml.pyx", line 848, in _ruamel_yaml.CParser._compose_sequence_node
+  File "_ruamel_yaml.pyx", line 904, in _ruamel_yaml.CParser._parse_next_event
+ruamel.yaml.scanner.ScannerError: while scanning a block scalar
+  in "<unicode string>", line 120, column 5
+found a tab character where an indentation space is expected
+  in "<unicode string>", line 122, column 1
+make[1]: *** [Documentation/devicetree/bindings/Makefile:20: Documentation/devicetree/bindings/pinctrl/qcom,sm6125-pinctrl.example.dts] Error 1
+make[1]: *** Waiting for unfinished jobs....
+./Documentation/devicetree/bindings/pinctrl/qcom,sm6125-pinctrl.yaml:  while scanning a block scalar
+  in "<unicode string>", line 120, column 5
+found a tab character where an indentation space is expected
+  in "<unicode string>", line 122, column 1
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/pinctrl/qcom,sm6125-pinctrl.yaml: ignoring, error parsing file
+warning: no schema found in file: ./Documentation/devicetree/bindings/pinctrl/qcom,sm6125-pinctrl.yaml
+make: *** [Makefile:1416: dt_binding_check] Error 2
 
-> > We should do this. This fixes a warning splat that I saw when I was
-> > testing out the panel-simple's remove().
-> >
-> > Fixes: 3235b0f20a0a ("drm/panel: panel-simple: Use runtime pm to avoid excessive unprepare / prepare")
-> > Signed-off-by: Douglas Anderson <dianders@chromium.org>
->
-> Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+See https://patchwork.ozlabs.org/patch/1482532
 
-Thanks! I have pushed just this patch for now.
+This check can fail if there are any dependencies. The base for a patch
+series is generally the most recent rc1.
 
--Doug
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit.
+
