@@ -2,138 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6CF0E38E08F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 May 2021 06:59:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 675BF38E0C2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 May 2021 08:01:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232276AbhEXFA3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 May 2021 01:00:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45226 "EHLO
+        id S229733AbhEXGCr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 May 2021 02:02:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58838 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232234AbhEXFA2 (ORCPT
+        with ESMTP id S229633AbhEXGCr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 May 2021 01:00:28 -0400
-Received: from mail-pf1-x42c.google.com (mail-pf1-x42c.google.com [IPv6:2607:f8b0:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6707C06138A
-        for <linux-arm-msm@vger.kernel.org>; Sun, 23 May 2021 21:59:00 -0700 (PDT)
-Received: by mail-pf1-x42c.google.com with SMTP id q25so1805059pfn.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 23 May 2021 21:59:00 -0700 (PDT)
+        Mon, 24 May 2021 02:02:47 -0400
+Received: from mail-ot1-x336.google.com (mail-ot1-x336.google.com [IPv6:2607:f8b0:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7B8FC061574
+        for <linux-arm-msm@vger.kernel.org>; Sun, 23 May 2021 23:01:18 -0700 (PDT)
+Received: by mail-ot1-x336.google.com with SMTP id 36-20020a9d0ba70000b02902e0a0a8fe36so24163765oth.8
+        for <linux-arm-msm@vger.kernel.org>; Sun, 23 May 2021 23:01:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=IAKmLQlo5yIdWFUbaREDZ8KxE5immhhtLzqjh0rXTzU=;
-        b=H5h59/wSyUEhLnaxOLf44Zjv9gy+xDh48y2q4T/os8Y8uxva6P8+92uyMOv+sWLFbK
-         JuF/KQtRv5FjWZQwkwwrkOdW0PSXCmjd76fkNmdcab/1klMOdj4g6t30ECwXWYuD6DJP
-         Cqtd41QwDuk9WYBYUuKSQ4r9YOxAUtDQek7VWfJd6qASaKuOBU/FmrFre2awHaHZRW53
-         7DPlTgaybhl7HlnG20B1a0crNXPQdPNkNDS075IO9sGjXZghcwuqerKIENVgeuvUmVYU
-         irXoN3/Zz6AVWFqn6bhp3HUmt3/6FnN8lAOIh5I172hPN8WU+UCzAFBN7O2FOm5ZXUoW
-         ZDqA==
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=sLMIpW2Ge4GhccaqX0f4ED9sUyQ6GUsKxhCWraflgrQ=;
+        b=kVwYjulbTpXvf8F/AH3Cn0+PqDxe6AsTYtT1ijwLpjc9Obx9CbTmoSemY8OjUw5tYq
+         rghjvabI9aDAfy2KPMPOW60+THjy42P4Hk8yAjtHoNQ/Gt4be51wkQTQyQj5PlXT9Z8Q
+         euKF6L1zMRk4m61B6LOZ8/zAZNWibeDQj15O0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=IAKmLQlo5yIdWFUbaREDZ8KxE5immhhtLzqjh0rXTzU=;
-        b=Bd4SLScZTvHyY9/H6Dpyfr1KQFjKKr2HxegtlB3sc+u0ZGx0LNPkMYSIWSwJ+B4GLP
-         onVi8t4qXtc5GHZNE9zyOTZDDF2Yhq3J87bfXPT8S9Dkr/E1hXbzMyapJi5H3B0wPCqE
-         wmq6Sv7OwAwRxBAKKqGIxFrrX6qOC6/pQxMcwva8tOoZoKp7JUMB0UeQdA6oKFxZSxN3
-         4gfosGklcDpW1veZ8LJAumTcO0KUYkcXY6UtsdZBDVfk9afGC3DX8CaWWxDVnNWoLIhA
-         AmwG+3b3yYmQZYDvWdkD/1Z2SWOto4TRz6d+/5H8Yx9qpoHjrtRHC20pFAbBsgCw2KB4
-         chGg==
-X-Gm-Message-State: AOAM532M0uby65lg4mzV2S+ilrSA4i2iZqgIka/bnkJvZ+KCnBzqZmwT
-        cNCU6GwyGuW1Ncehw3xUmH0K6HKe9TR4
-X-Google-Smtp-Source: ABdhPJwdpF2fWwKYkGCy+MvDtZC8h+uirh0J8BSq/MBac0zgzhRyoIqggx05touQCKqS4xEMPxiGQw==
-X-Received: by 2002:a65:4608:: with SMTP id v8mr11564805pgq.435.1621832339503;
-        Sun, 23 May 2021 21:58:59 -0700 (PDT)
-Received: from work ([120.138.12.48])
-        by smtp.gmail.com with ESMTPSA id b2sm13529363pji.28.2021.05.23.21.58.57
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 23 May 2021 21:58:58 -0700 (PDT)
-Date:   Mon, 24 May 2021 10:28:55 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Baochen Qiang <bqiang@codeaurora.org>
-Cc:     hemantk@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, ath11k@lists.infradead.org,
-        stable@vger.kernel.org
-Subject: Re: [PATCH v2] bus: mhi: Wait for M2 state during system resume
-Message-ID: <20210524045855.GF8823@work>
-References: <20210524040312.14409-1-bqiang@codeaurora.org>
- <20210524043740.GC8823@work>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=sLMIpW2Ge4GhccaqX0f4ED9sUyQ6GUsKxhCWraflgrQ=;
+        b=ADs/SHTjvp48/UwQF8UUw4n+X0QDXRa6MzGvjyOq8n4HOhKYiyKgtu2XoB1S/vv3OP
+         mgPZskQLpRpSWWLUEeq3MtvLxv3ZDngz9JrbYprkLgRUwCE971SgEI3WI7Tq2fZrH2RQ
+         qcKlOUdM2ZCSDvL6nz9P9fsRSm+u2ml7oqvxs/GHgsgzKweGjmKVM+6NNVXw/sKuYAgm
+         MblUUL+XpFILno2I6nPY/ciPNMXVvmA7Z2zeGN8TV/Fou93VvajGP48Y4Gu01m1x7JDI
+         jk9yfZvnDJBg3ARBMFsOq3LLBnazNB9nQgzVjGuxxKu97+2WZoeUhdDWCYmKOARnFSWv
+         SgpQ==
+X-Gm-Message-State: AOAM530dGoRfIxykDazxmFUuR10N951M33D3JPkTnl79+Rz+j88zg98B
+        HdrF/q/7Gc6+2Wpp00bZKz+kcgi9OlcMcHgD5UjLJQ==
+X-Google-Smtp-Source: ABdhPJxUXFeT7fRAQnyP76eyIBN6bZDnvKj0MzPI3ELpSWl7G60SJAr6Ae5/UXm1yxBeM2GrXn7ehxeepjeJze0/e+U=
+X-Received: by 2002:a05:6830:1556:: with SMTP id l22mr17357557otp.34.1621836078248;
+ Sun, 23 May 2021 23:01:18 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Sun, 23 May 2021 23:01:17 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210524043740.GC8823@work>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+In-Reply-To: <CAGETcx_LKwfv3Lx0mpxXaSdvoz284THwjqoHoOmZDwtcTf1zWg@mail.gmail.com>
+References: <20210520002519.3538432-1-swboyd@chromium.org> <20210520002519.3538432-4-swboyd@chromium.org>
+ <CAGETcx_LKwfv3Lx0mpxXaSdvoz284THwjqoHoOmZDwtcTf1zWg@mail.gmail.com>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.9.1
+Date:   Sun, 23 May 2021 23:01:17 -0700
+Message-ID: <CAE-0n518E_Yfy7-Au-pO40SQzZAn6NLr8u1pGyPMWWr0wRgpJA@mail.gmail.com>
+Subject: Re: [PATCH 3/7] component: Introduce struct aggregate_device
+To:     Saravana Kannan <saravanak@google.com>
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Daniel Vetter <daniel.vetter@ffwll.ch>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Russell King <rmk+kernel@arm.linux.org.uk>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, May 24, 2021 at 10:07:40AM +0530, Manivannan Sadhasivam wrote:
-> On Mon, May 24, 2021 at 12:03:12PM +0800, Baochen Qiang wrote:
-> > During system resume, MHI host triggers M3->M0 transition and then waits
-> > for target device to enter M0 state. Once done, the device queues a state
-> > change event into ctrl event ring and notifies MHI host by raising an
-> > interrupt, where a tasklet is scheduled to process this event. In most cases,
-> > the tasklet is served timely and wait operation succeeds.
-> > 
-> > However, there are cases where CPU is busy and cannot serve this tasklet
-> > for some time. Once delay goes long enough, the device moves itself to M1
-> > state and also interrupts MHI host after inserting a new state change
-> > event to ctrl ring. Later CPU finally has time to process the ring, however
-> > there are two events in it now:
-> > 	1. for M3->M0 event, which is processed first as queued first,
-> > 	   tasklet handler updates device state to M0 and wakes up the task,
-> > 	   i.e., the MHI host.
-> > 	2. for M0->M1 event, which is processed later, tasklet handler
-> > 	   triggers M1->M2 transition and updates device state to M2 directly,
-> > 	   then wakes up the MHI host(if still sleeping on this wait queue).
-> > Note that although MHI host has been woken up while processing the first
-> > event, it may still has no chance to run before the second event is processed.
-> > In other words, MHI host has to keep waiting till timeout cause the M0 state
-> > has been missed.
-> > 
-> > kernel log here:
-> > ...
-> > Apr 15 01:45:14 test-NUC8i7HVK kernel: [ 4247.911251] mhi 0000:06:00.0: Entered with PM state: M3, MHI state: M3
-> > Apr 15 01:45:14 test-NUC8i7HVK kernel: [ 4247.917762] mhi 0000:06:00.0: State change event to state: M0
-> > Apr 15 01:45:14 test-NUC8i7HVK kernel: [ 4247.917767] mhi 0000:06:00.0: State change event to state: M1
-> > Apr 15 01:45:14 test-NUC8i7HVK kernel: [ 4338.788231] mhi 0000:06:00.0: Did not enter M0 state, MHI state: M2, PM state: M2
-> > ...
-> > 
-> > Fix this issue by simply adding M2 as a valid state for resume.
-> > 
-> > Tested-on: WCN6855 hw2.0 PCI WLAN.HSP.1.1-01720.1-QCAHSPSWPL_V1_V2_SILICONZ_LITE-1
-> > 
-> > Fixes: 0c6b20a1d720 ("bus: mhi: core: Add support for MHI suspend and resume")
-> > Signed-off-by: Baochen Qiang <bqiang@codeaurora.org>
-> > Reviewed-by: Hemant Kumar <hemantk@codeaurora.org>
-> 
-> Applied to mhi-fixes!
-> 
+Quoting Saravana Kannan (2021-05-20 13:20:45)
+> On Wed, May 19, 2021 at 5:25 PM Stephen Boyd <swboyd@chromium.org> wrote:
+> >
+> > -       master->parent = parent;
+> > -       master->ops = ops;
+> > -       master->match = match;
+> > +       id = ida_alloc(&aggregate_ida, GFP_KERNEL);
+> > +       if (id < 0) {
+> > +               kfree(adev);
+> > +               return id;
+> > +       }
+> > +
+> > +       adev->id = id;
+> > +       adev->parent = parent;
+> > +       adev->dev.parent = parent;
+>
+> Don't set adev->dev.parent. You are creating a functional 1-1
+> dependency where none exists. The real dependencies are the 1-many
+> dependencies between the aggregate and the components. Use device
+> links to capture that and enforce proper suspend/resume and runtime PM
+> ordering.
+>
 
-Sorry this has been applied to mhi-next!
-
-Thanks,
-Mani
-
-> Thanks,
-> Mani
-> 
-> > ---
-> >  drivers/bus/mhi/core/pm.c | 1 +
-> >  1 file changed, 1 insertion(+)
-> > 
-> > diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
-> > index e2e59a341fef..59b009a3ee9b 100644
-> > --- a/drivers/bus/mhi/core/pm.c
-> > +++ b/drivers/bus/mhi/core/pm.c
-> > @@ -934,6 +934,7 @@ int mhi_pm_resume(struct mhi_controller *mhi_cntrl)
-> >  
-> >  	ret = wait_event_timeout(mhi_cntrl->state_event,
-> >  				 mhi_cntrl->dev_state == MHI_STATE_M0 ||
-> > +				 mhi_cntrl->dev_state == MHI_STATE_M2 ||
-> >  				 MHI_PM_IN_ERROR_STATE(mhi_cntrl->pm_state),
-> >  				 msecs_to_jiffies(mhi_cntrl->timeout_ms));
-> >  
-> > -- 
-> > 2.25.1
-> > 
+Ah ok. Yeah it seems like that was the thing causing me runtime PM
+problems. I've removed the parent patch from this series now and I'll
+look at working in the device links now.
