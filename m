@@ -2,360 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A1C2B38F1A0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 May 2021 18:33:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1AC2638F332
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 May 2021 20:46:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232636AbhEXQfX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 May 2021 12:35:23 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:53351 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232491AbhEXQfX (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 May 2021 12:35:23 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1621874035; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=aHjdHVr2dluICSuWIvFlF2QPvPLQPnabZ4PLOF5vX7k=;
- b=BjvX/ROXwCWWG0y/U7wBWBOE9WPvhVPeGoi7jLD9ddM+qa+VwAhnW5/jhmdXxkdD2/klRCsE
- 0DekYWb0Cep5YaHi1ohinFWH2sS16geAh1Ig248UvH4dyenerAI85kqF3HU/r+8JDyJ9RNpx
- w4Zmp5mDB+mjf+6Dqmc0WlrhXO8=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
- 60abd56fc229adfeff1bb475 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 24 May 2021 16:33:51
- GMT
-Sender: khsieh=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 1D924C43217; Mon, 24 May 2021 16:33:51 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: khsieh)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id B1EA3C433D3;
-        Mon, 24 May 2021 16:33:49 +0000 (UTC)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Mon, 24 May 2021 09:33:49 -0700
-From:   khsieh@codeaurora.org
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Rob Clark <robdclark@gmail.com>, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        aravindh@codeaurora.org, Sean Paul <sean@poorly.run>
-Subject: Re: [PATCH 3/3] drm/msm/dp: Handle aux timeouts, nacks, defers
-In-Reply-To: <20210507212505.1224111-4-swboyd@chromium.org>
-References: <20210507212505.1224111-1-swboyd@chromium.org>
- <20210507212505.1224111-4-swboyd@chromium.org>
-Message-ID: <1133b2c21eb8f385c16c610638a17d9c@codeaurora.org>
-X-Sender: khsieh@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+        id S232803AbhEXSrw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 May 2021 14:47:52 -0400
+Received: from mail-ot1-f47.google.com ([209.85.210.47]:35746 "EHLO
+        mail-ot1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232746AbhEXSrw (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 24 May 2021 14:47:52 -0400
+Received: by mail-ot1-f47.google.com with SMTP id 69-20020a9d0a4b0000b02902ed42f141e1so26164544otg.2;
+        Mon, 24 May 2021 11:46:23 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
+         :message-id;
+        bh=zUHC5bIhrZ72gMSo4YDUSPpMzPen1n8QrM3EpHdTPCU=;
+        b=ZN9WSq4Ga2k7jF584kZKj3f1EySb3V/oP5BiP5nd01ZSTOTOQ6kkWuxTWniEEt5R2N
+         TpsCnKeESFlrCcshNYGi1BO4yXN1ziwKvU/M1ZA7N9h0zV1G/boDMiM2igfMKMMqIFP9
+         v3oYN3cAyG7F4wHwnCDB9CTl7yJ7LehoX7ZfUvTBEV0WJTehYAXhkpFeuUd98EChnf4K
+         OUjoIFyIdYrlvDhRZB5iF6DfQ63QlGo779SABpc7whQhZFJB6FNkZkBP0hy05V7t2c/x
+         9++OIgaRt/b4CsFzg2wAA6hM0uqRIz4Bnzm+37nl1rAXtVxS3VeT7acPuec1crjoT0Qa
+         +4eQ==
+X-Gm-Message-State: AOAM530sTyNhrgJFJQnF8zYRsLMi+o+jn9MYqrMS+8/wdAB0RtJ/meX9
+        4HdKbIzuSGkgj1etWr6F7Q==
+X-Google-Smtp-Source: ABdhPJxdAi4fhbZzkOm6+CuFnI7z6/7DvcD5YO0qHwvEi3e5MRZ55z5rLH5D3pwhDjCNUsZ/1ZsHdQ==
+X-Received: by 2002:a05:6830:1042:: with SMTP id b2mr19873646otp.120.1621881982575;
+        Mon, 24 May 2021 11:46:22 -0700 (PDT)
+Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id 77sm3178951otc.54.2021.05.24.11.46.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 24 May 2021 11:46:21 -0700 (PDT)
+Received: (nullmailer pid 437764 invoked by uid 1000);
+        Mon, 24 May 2021 18:46:20 -0000
+From:   Rob Herring <robh@kernel.org>
+To:     Martin Botka <martin.botka@somainline.org>
+Cc:     linux-kernel@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        konrad.dybcio@somainline.org,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Andy Gross <agross@kernel.org>, marijn.suijten@somainline.org,
+        angelogioacchino.delregno@somainline.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        linux-gpio@vger.kernel.org, devicetree@vger.kernel.org
+In-Reply-To: <20210523204415.703081-1-martin.botka@somainline.org>
+References: <20210523204415.703081-1-martin.botka@somainline.org>
+Subject: Re: [PATCH 1/2] dt-bindings: pinctrl: qcom: sm6125: Document SM6125 pinctrl driver
+Date:   Mon, 24 May 2021 13:46:20 -0500
+Message-Id: <1621881980.447955.437763.nullmailer@robh.at.kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-05-07 14:25, Stephen Boyd wrote:
-> Let's look at the irq status bits after a transfer and see if we got a
-> nack or a defer or a timeout, instead of telling drm layers that
-> everything was fine, while still printing an error message. I wasn't
-> sure about NACK+DEFER so I lumped all those various errors along with a
-> nack so that the drm core can figure out that things are just not going
-> well. The important thing is that we're now returning -ETIMEDOUT when
-> the message times out and nacks for bad addresses.
-> 
-> Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Cc: Abhinav Kumar <abhinavk@codeaurora.org>
-> Cc: Kuogee Hsieh <khsieh@codeaurora.org>
-> Cc: aravindh@codeaurora.org
-> Cc: Sean Paul <sean@poorly.run>
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+On Sun, 23 May 2021 22:44:13 +0200, Martin Botka wrote:
+> Signed-off-by: Martin Botka <martin.botka@somainline.org>
 > ---
->  drivers/gpu/drm/msm/dp/dp_aux.c | 140 ++++++++++++++------------------
->  drivers/gpu/drm/msm/dp/dp_aux.h |   8 --
->  2 files changed, 61 insertions(+), 87 deletions(-)
+>  .../bindings/pinctrl/qcom,sm6125-pinctrl.yaml | 161 ++++++++++++++++++
+>  1 file changed, 161 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sm6125-pinctrl.yaml
 > 
-> diff --git a/drivers/gpu/drm/msm/dp/dp_aux.c 
-> b/drivers/gpu/drm/msm/dp/dp_aux.c
-> index b49810396513..4a3293b590b0 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_aux.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_aux.c
-> @@ -9,7 +9,15 @@
->  #include "dp_reg.h"
->  #include "dp_aux.h"
-> 
-> -#define DP_AUX_ENUM_STR(x)		#x
-> +enum msm_dp_aux_err {
-> +	DP_AUX_ERR_NONE,
-> +	DP_AUX_ERR_ADDR,
-> +	DP_AUX_ERR_TOUT,
-> +	DP_AUX_ERR_NACK,
-> +	DP_AUX_ERR_DEFER,
-> +	DP_AUX_ERR_NACK_DEFER,
-> +	DP_AUX_ERR_PHY,
-> +};
-> 
->  struct dp_aux_private {
->  	struct device *dev;
-> @@ -18,7 +26,7 @@ struct dp_aux_private {
->  	struct mutex mutex;
->  	struct completion comp;
-> 
-> -	u32 aux_error_num;
-> +	enum msm_dp_aux_err aux_error_num;
->  	u32 retry_cnt;
->  	bool cmd_busy;
->  	bool native;
-> @@ -33,62 +41,45 @@ struct dp_aux_private {
-> 
->  #define MAX_AUX_RETRIES			5
-> 
-> -static const char *dp_aux_get_error(u32 aux_error)
-> -{
-> -	switch (aux_error) {
-> -	case DP_AUX_ERR_NONE:
-> -		return DP_AUX_ENUM_STR(DP_AUX_ERR_NONE);
-> -	case DP_AUX_ERR_ADDR:
-> -		return DP_AUX_ENUM_STR(DP_AUX_ERR_ADDR);
-> -	case DP_AUX_ERR_TOUT:
-> -		return DP_AUX_ENUM_STR(DP_AUX_ERR_TOUT);
-> -	case DP_AUX_ERR_NACK:
-> -		return DP_AUX_ENUM_STR(DP_AUX_ERR_NACK);
-> -	case DP_AUX_ERR_DEFER:
-> -		return DP_AUX_ENUM_STR(DP_AUX_ERR_DEFER);
-> -	case DP_AUX_ERR_NACK_DEFER:
-> -		return DP_AUX_ENUM_STR(DP_AUX_ERR_NACK_DEFER);
-> -	default:
-> -		return "unknown";
-> -	}
-> -}
-> -
-> -static u32 dp_aux_write(struct dp_aux_private *aux,
-> +static ssize_t dp_aux_write(struct dp_aux_private *aux,
->  			struct drm_dp_aux_msg *msg)
->  {
-> -	u32 data[4], reg, len;
-> +	u8 data[4];
-> +	u32 reg;
-> +	ssize_t len;
->  	u8 *msgdata = msg->buffer;
->  	int const AUX_CMD_FIFO_LEN = 128;
->  	int i = 0;
-> 
->  	if (aux->read)
-> -		len = 4;
-> +		len = 0;
->  	else
-> -		len = msg->size + 4;
-> +		len = msg->size;
-> 
->  	/*
->  	 * cmd fifo only has depth of 144 bytes
->  	 * limit buf length to 128 bytes here
->  	 */
-> -	if (len > AUX_CMD_FIFO_LEN) {
-> +	if (len > AUX_CMD_FIFO_LEN - 4) {
->  		DRM_ERROR("buf size greater than allowed size of 128 bytes\n");
-> -		return 0;
-> +		return -EINVAL;
->  	}
-> 
->  	/* Pack cmd and write to HW */
-> -	data[0] = (msg->address >> 16) & 0xf; /* addr[19:16] */
-> +	data[0] = (msg->address >> 16) & 0xf;	/* addr[19:16] */
->  	if (aux->read)
-> -		data[0] |=  BIT(4); /* R/W */
-> +		data[0] |=  BIT(4);		/* R/W */
-> 
-> -	data[1] = (msg->address >> 8) & 0xff;	/* addr[15:8] */
-> -	data[2] = msg->address & 0xff;		/* addr[7:0] */
-> -	data[3] = (msg->size - 1) & 0xff;	/* len[7:0] */
-> +	data[1] = msg->address >> 8;		/* addr[15:8] */
-> +	data[2] = msg->address;			/* addr[7:0] */
-> +	data[3] = msg->size - 1;		/* len[7:0] */
-> 
-> -	for (i = 0; i < len; i++) {
-> +	for (i = 0; i < len + 4; i++) {
->  		reg = (i < 4) ? data[i] : msgdata[i - 4];
-> +		reg <<= DP_AUX_DATA_OFFSET;
-> +		reg &= DP_AUX_DATA_MASK;
-> +		reg |= DP_AUX_DATA_WRITE;
->  		/* index = 0, write */
-> -		reg = (((reg) << DP_AUX_DATA_OFFSET)
-> -		       & DP_AUX_DATA_MASK) | DP_AUX_DATA_WRITE;
->  		if (i == 0)
->  			reg |= DP_AUX_DATA_INDEX_WRITE;
->  		aux->catalog->aux_data = reg;
-> @@ -116,39 +107,27 @@ static u32 dp_aux_write(struct dp_aux_private 
-> *aux,
->  	return len;
->  }
-> 
-> -static int dp_aux_cmd_fifo_tx(struct dp_aux_private *aux,
-> +static ssize_t dp_aux_cmd_fifo_tx(struct dp_aux_private *aux,
->  			      struct drm_dp_aux_msg *msg)
->  {
-> -	u32 ret, len, timeout;
-> -	int aux_timeout_ms = HZ/4;
-> +	ssize_t ret;
-> +	unsigned long time_left;
-> 
->  	reinit_completion(&aux->comp);
-> 
-> -	len = dp_aux_write(aux, msg);
-> -	if (len == 0) {
-> -		DRM_ERROR("DP AUX write failed\n");
-> -		return -EINVAL;
-> -	}
-> +	ret = dp_aux_write(aux, msg);
-> +	if (ret < 0)
-> +		return ret;
-> 
-> -	timeout = wait_for_completion_timeout(&aux->comp, aux_timeout_ms);
-> -	if (!timeout) {
-> -		DRM_ERROR("aux %s timeout\n", (aux->read ? "read" : "write"));
-> +	time_left = wait_for_completion_timeout(&aux->comp,
-> +						msecs_to_jiffies(250));
-> +	if (!time_left)
->  		return -ETIMEDOUT;
-> -	}
-> -
-> -	if (aux->aux_error_num == DP_AUX_ERR_NONE) {
-> -		ret = len;
-> -	} else {
-> -		DRM_ERROR_RATELIMITED("aux err: %s\n",
-> -			dp_aux_get_error(aux->aux_error_num));
-> -
-> -		ret = -EINVAL;
-> -	}
-> 
->  	return ret;
->  }
-> 
-> -static void dp_aux_cmd_fifo_rx(struct dp_aux_private *aux,
-> +static ssize_t dp_aux_cmd_fifo_rx(struct dp_aux_private *aux,
->  		struct drm_dp_aux_msg *msg)
->  {
->  	u32 data;
-> @@ -175,9 +154,10 @@ static void dp_aux_cmd_fifo_rx(struct 
-> dp_aux_private *aux,
-> 
->  		actual_i = (data >> DP_AUX_DATA_INDEX_OFFSET) & 0xFF;
->  		if (i != actual_i)
-> -			DRM_ERROR("Index mismatch: expected %d, found %d\n",
-> -				i, actual_i);
-> +			break;
->  	}
-> +
-> +	return i;
->  }
-> 
->  static void dp_aux_native_handler(struct dp_aux_private *aux, u32 isr)
-> @@ -367,36 +347,38 @@ static ssize_t dp_aux_transfer(struct drm_dp_aux 
-> *dp_aux,
->  	}
-> 
->  	ret = dp_aux_cmd_fifo_tx(aux, msg);
-> -
->  	if (ret < 0) {
->  		if (aux->native) {
->  			aux->retry_cnt++;
->  			if (!(aux->retry_cnt % MAX_AUX_RETRIES))
->  				dp_catalog_aux_update_cfg(aux->catalog);
->  		}
-> -		usleep_range(400, 500); /* at least 400us to next try */
-> -		goto unlock_exit;
-> -	}
 
-1) dp_catalog_aux_update_cfg(aux->catalog) will not work without  
-dp_catalog_aux_reset(aux->catalog);
-dp_catalog_aux_reset(aux->catalog) will reset hpd control block and 
-potentially cause pending hpd interrupts got lost.
-Therefore I think we should not do 
-dp_catalog_aux_update_cfg(aux->catalog) for now.
-reset aux controller will reset hpd control block probolem will be fixed 
-at next chipset.
-after that we can add dp_catalog_aux_update_cfg(aux->catalog) followed 
-by dp_catalog_aux_reset(aux->catalog) back at next chipset.
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
-2) according to DP specification, aux read/write failed have to wait at 
-least 400us before next try can start.
-Otherwise, DP compliant test will failed
+yamllint warnings/errors:
+./Documentation/devicetree/bindings/pinctrl/qcom,sm6125-pinctrl.yaml:122:1: [error] syntax error: found character '\t' that cannot start any token (syntax)
 
+dtschema/dtc warnings/errors:
+make[1]: *** Deleting file 'Documentation/devicetree/bindings/pinctrl/qcom,sm6125-pinctrl.example.dts'
+Traceback (most recent call last):
+  File "/usr/local/bin/dt-extract-example", line 45, in <module>
+    binding = yaml.load(open(args.yamlfile, encoding='utf-8').read())
+  File "/usr/local/lib/python3.8/dist-packages/ruamel/yaml/main.py", line 421, in load
+    return constructor.get_single_data()
+  File "/usr/local/lib/python3.8/dist-packages/ruamel/yaml/constructor.py", line 109, in get_single_data
+    node = self.composer.get_single_node()
+  File "_ruamel_yaml.pyx", line 706, in _ruamel_yaml.CParser.get_single_node
+  File "_ruamel_yaml.pyx", line 724, in _ruamel_yaml.CParser._compose_document
+  File "_ruamel_yaml.pyx", line 775, in _ruamel_yaml.CParser._compose_node
+  File "_ruamel_yaml.pyx", line 889, in _ruamel_yaml.CParser._compose_mapping_node
+  File "_ruamel_yaml.pyx", line 773, in _ruamel_yaml.CParser._compose_node
+  File "_ruamel_yaml.pyx", line 848, in _ruamel_yaml.CParser._compose_sequence_node
+  File "_ruamel_yaml.pyx", line 904, in _ruamel_yaml.CParser._parse_next_event
+ruamel.yaml.scanner.ScannerError: while scanning a block scalar
+  in "<unicode string>", line 120, column 5
+found a tab character where an indentation space is expected
+  in "<unicode string>", line 122, column 1
+make[1]: *** [Documentation/devicetree/bindings/Makefile:20: Documentation/devicetree/bindings/pinctrl/qcom,sm6125-pinctrl.example.dts] Error 1
+make[1]: *** Waiting for unfinished jobs....
+./Documentation/devicetree/bindings/pinctrl/qcom,sm6125-pinctrl.yaml:  while scanning a block scalar
+  in "<unicode string>", line 120, column 5
+found a tab character where an indentation space is expected
+  in "<unicode string>", line 122, column 1
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/pinctrl/qcom,sm6125-pinctrl.yaml: ignoring, error parsing file
+warning: no schema found in file: ./Documentation/devicetree/bindings/pinctrl/qcom,sm6125-pinctrl.yaml
+make: *** [Makefile:1416: dt_binding_check] Error 2
 
-> -
-> -	if (aux->aux_error_num == DP_AUX_ERR_NONE) {
-> -		if (aux->read)
-> -			dp_aux_cmd_fifo_rx(aux, msg);
-> -
-> -		msg->reply = aux->native ?
-> -			DP_AUX_NATIVE_REPLY_ACK : DP_AUX_I2C_REPLY_ACK;
->  	} else {
-> -		/* Reply defer to retry */
-> -		msg->reply = aux->native ?
-> -			DP_AUX_NATIVE_REPLY_DEFER : DP_AUX_I2C_REPLY_DEFER;
-> +		aux->retry_cnt = 0;
-> +		switch (aux->aux_error_num) {
-> +		case DP_AUX_ERR_NONE:
-> +			if (aux->read)
-> +				ret = dp_aux_cmd_fifo_rx(aux, msg);
-> +			msg->reply = aux->native ? DP_AUX_NATIVE_REPLY_ACK : 
-> DP_AUX_I2C_REPLY_ACK;
-> +			break;
-> +		case DP_AUX_ERR_DEFER:
-> +			msg->reply = aux->native ? DP_AUX_NATIVE_REPLY_DEFER :
-> DP_AUX_I2C_REPLY_DEFER;
-> +			break;
-> +		case DP_AUX_ERR_PHY:
-> +		case DP_AUX_ERR_ADDR:
-> +		case DP_AUX_ERR_NACK:
-> +		case DP_AUX_ERR_NACK_DEFER:
-> +			msg->reply = aux->native ? DP_AUX_NATIVE_REPLY_NACK : 
-> DP_AUX_I2C_REPLY_NACK;
-> +			break;
-> +		case DP_AUX_ERR_TOUT:
-> +			ret = -ETIMEDOUT;
-> +			break;
-> +		}
->  	}
-> 
-> -	/* Return requested size for success or retry */
-> -	ret = msg->size;
-> -	aux->retry_cnt = 0;
-> -
-> -unlock_exit:
->  	aux->cmd_busy = false;
->  	mutex_unlock(&aux->mutex);
-> +
->  	return ret;
->  }
-> 
-> diff --git a/drivers/gpu/drm/msm/dp/dp_aux.h 
-> b/drivers/gpu/drm/msm/dp/dp_aux.h
-> index f8b8ba919465..0728cc09c9ec 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_aux.h
-> +++ b/drivers/gpu/drm/msm/dp/dp_aux.h
-> @@ -9,14 +9,6 @@
->  #include "dp_catalog.h"
->  #include <drm/drm_dp_helper.h>
-> 
-> -#define DP_AUX_ERR_NONE		0
-> -#define DP_AUX_ERR_ADDR		-1
-> -#define DP_AUX_ERR_TOUT		-2
-> -#define DP_AUX_ERR_NACK		-3
-> -#define DP_AUX_ERR_DEFER	-4
-> -#define DP_AUX_ERR_NACK_DEFER	-5
-> -#define DP_AUX_ERR_PHY		-6
-> -
->  int dp_aux_register(struct drm_dp_aux *dp_aux);
->  void dp_aux_unregister(struct drm_dp_aux *dp_aux);
->  void dp_aux_isr(struct drm_dp_aux *dp_aux);
+See https://patchwork.ozlabs.org/patch/1482519
+
+This check can fail if there are any dependencies. The base for a patch
+series is generally the most recent rc1.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit.
+
