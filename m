@@ -2,125 +2,359 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0195338E275
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 May 2021 10:43:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3C6C438E3E7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 May 2021 12:20:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232429AbhEXIow (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 May 2021 04:44:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38506 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232422AbhEXIov (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 May 2021 04:44:51 -0400
-Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59EE8C061756
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 May 2021 01:43:23 -0700 (PDT)
-Received: by mail-pj1-x102b.google.com with SMTP id ot16so12493880pjb.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 May 2021 01:43:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=MjMSw6JkJ3i+fscbkM2syJzOK3oeShi36fMtZEjyMNs=;
-        b=nohoYVKtZXuHTwTn3O8RxPNvaAdv5rJX7Zo8d90Wii3cPlFrjzdoDpSQoC7IHxEaCU
-         DcZhtSHAmxLE1GpFjM0WFDWJXinPAEOcEgD9VrVFWeuUmTK6dhRY3XYsVFrLg71xLx6n
-         tRCu3Xj5l9V8dMf8y+/hfkQh23Lq2TyslSG03i0fBXscXS9xmiJGr2NUsoVIkCs+Gm6N
-         8G7UwzQo89K0NHgiHr3CBOKGB5rhH3diq9oazfAyFAgGMogJXpHqCcDkyEhrRdIUqs42
-         6jA1T2OXYEyi5iBCqv8UK3+g4h0D6+ESHpNdBua38AjwgqZKtQE7j5xrX6AB9hsduB44
-         sK3g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=MjMSw6JkJ3i+fscbkM2syJzOK3oeShi36fMtZEjyMNs=;
-        b=siblU8TdFVRu0K1M507a2F9IdjcfVTFNZZAXytkc0x3AImez3l/yPvZspp5MXBrD6T
-         3U9xFt46kXMcccmkikgra+Ilrg1AO831O/qCQQJDARY9XQ/Bd6BNW56k3vzVTeFzCQo6
-         eQTpWh3TDV3dw7uGxHHjY86GP2yUl2r+fNK6FdhWixvVYuKmr1i0r3Utx1OCPi+djGo5
-         MVk6AQ61gSkOUHtfQB03m2BMD7b2EOCeQ4YEPKIV6mDODd6Uu0vudm+T5VTvZ/KDnpnw
-         5k5gDHTDYs7EGCKn7AbS6mTb2e7m0kZcq7AL00etaKgWLXDhk2WHLA366k1IAbUa6Ely
-         3A/g==
-X-Gm-Message-State: AOAM5301YTNYOUzFAkPcEB/BHwDvtqU80rXiaDk+bmJmiXQb3CS+SfQl
-        TxIoTa2WgDcToSrLiE62ezFW
-X-Google-Smtp-Source: ABdhPJxkPjTW5y7cL79NQ02rVczpjAotpBArCZGu1B5M/vZwN1ohB6tRfUPnfVcMZZ/YTL3HOcGZbA==
-X-Received: by 2002:a17:90a:520f:: with SMTP id v15mr23501633pjh.23.1621845802722;
-        Mon, 24 May 2021 01:43:22 -0700 (PDT)
-Received: from work ([120.138.12.242])
-        by smtp.gmail.com with ESMTPSA id q3sm10629201pff.142.2021.05.24.01.43.19
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 24 May 2021 01:43:22 -0700 (PDT)
-Date:   Mon, 24 May 2021 14:13:18 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Greg KH <gregkh@linuxfoundation.org>
-Cc:     Baochen Qiang <bqiang@codeaurora.org>, hemantk@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        ath11k@lists.infradead.org, stable@vger.kernel.org
-Subject: Re: [PATCH v2] bus: mhi: Wait for M2 state during system resume
-Message-ID: <20210524084318.GA27389@work>
-References: <20210524040312.14409-1-bqiang@codeaurora.org>
- <YKtPXWrTb6Qj+E9l@kroah.com>
+        id S232617AbhEXKWZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 May 2021 06:22:25 -0400
+Received: from guitar.tcltek.co.il ([192.115.133.116]:53084 "EHLO
+        mx.tkos.co.il" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232609AbhEXKWW (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 24 May 2021 06:22:22 -0400
+Received: from tarshish.tkos.co.il (unknown [10.0.8.2])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mx.tkos.co.il (Postfix) with ESMTPS id D89AC44094B;
+        Mon, 24 May 2021 13:21:05 +0300 (IDT)
+From:   Baruch Siach <baruch@tkos.co.il>
+To:     Thierry Reding <thierry.reding@gmail.com>,
+        =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
+        <u.kleine-koenig@pengutronix.de>, Lee Jones <lee.jones@linaro.org>
+Cc:     Baruch Siach <baruch@tkos.co.il>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Balaji Prakash J <bjagadee@codeaurora.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Robert Marko <robert.marko@sartura.hr>,
+        linux-pwm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Subject: [PATCH v2 1/3] pwm: driver for qualcomm ipq6018 pwm block
+Date:   Mon, 24 May 2021 13:20:42 +0300
+Message-Id: <ea071bbcab92d4a296c7aee5d72de0427676847a.1621851644.git.baruch@tkos.co.il>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <YKtPXWrTb6Qj+E9l@kroah.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, May 24, 2021 at 09:01:49AM +0200, Greg KH wrote:
-> On Mon, May 24, 2021 at 12:03:12PM +0800, Baochen Qiang wrote:
-> > During system resume, MHI host triggers M3->M0 transition and then waits
-> > for target device to enter M0 state. Once done, the device queues a state
-> > change event into ctrl event ring and notifies MHI host by raising an
-> > interrupt, where a tasklet is scheduled to process this event. In most cases,
-> > the tasklet is served timely and wait operation succeeds.
-> > 
-> > However, there are cases where CPU is busy and cannot serve this tasklet
-> > for some time. Once delay goes long enough, the device moves itself to M1
-> > state and also interrupts MHI host after inserting a new state change
-> > event to ctrl ring. Later CPU finally has time to process the ring, however
-> > there are two events in it now:
-> > 	1. for M3->M0 event, which is processed first as queued first,
-> > 	   tasklet handler updates device state to M0 and wakes up the task,
-> > 	   i.e., the MHI host.
-> > 	2. for M0->M1 event, which is processed later, tasklet handler
-> > 	   triggers M1->M2 transition and updates device state to M2 directly,
-> > 	   then wakes up the MHI host(if still sleeping on this wait queue).
-> > Note that although MHI host has been woken up while processing the first
-> > event, it may still has no chance to run before the second event is processed.
-> > In other words, MHI host has to keep waiting till timeout cause the M0 state
-> > has been missed.
-> > 
-> > kernel log here:
-> > ...
-> > Apr 15 01:45:14 test-NUC8i7HVK kernel: [ 4247.911251] mhi 0000:06:00.0: Entered with PM state: M3, MHI state: M3
-> > Apr 15 01:45:14 test-NUC8i7HVK kernel: [ 4247.917762] mhi 0000:06:00.0: State change event to state: M0
-> > Apr 15 01:45:14 test-NUC8i7HVK kernel: [ 4247.917767] mhi 0000:06:00.0: State change event to state: M1
-> > Apr 15 01:45:14 test-NUC8i7HVK kernel: [ 4338.788231] mhi 0000:06:00.0: Did not enter M0 state, MHI state: M2, PM state: M2
-> > ...
-> > 
-> > Fix this issue by simply adding M2 as a valid state for resume.
-> > 
-> > Tested-on: WCN6855 hw2.0 PCI WLAN.HSP.1.1-01720.1-QCAHSPSWPL_V1_V2_SILICONZ_LITE-1
-> > 
-> > Fixes: 0c6b20a1d720 ("bus: mhi: core: Add support for MHI suspend and resume")
-> > Signed-off-by: Baochen Qiang <bqiang@codeaurora.org>
-> > Reviewed-by: Hemant Kumar <hemantk@codeaurora.org>
-> > ---
-> >  drivers/bus/mhi/core/pm.c | 1 +
-> >  1 file changed, 1 insertion(+)
-> 
-> <formletter>
-> 
-> This is not the correct way to submit patches for inclusion in the
-> stable kernel tree.  Please read:
->     https://www.kernel.org/doc/html/latest/process/stable-kernel-rules.html
-> for how to do this properly.
-> 
+Driver for the PWM block in Qualcomm IPQ6018 line of SoCs. Based on
+driver from downstream Codeaurora kernel tree. Removed support for older
+(V1) variants because I have no access to that hardware.
 
-I've applied this patch to mhi tree with tag "Cc: stable@vger.kernel.org".
+Tested on IPQ6010 based hardware.
 
-Thanks,
-Mani
+Signed-off-by: Baruch Siach <baruch@tkos.co.il>
+---
+v2:
 
-> </formletter>
+Address Uwe Kleine-König review comments:
+
+  Fix period calculation when out of range
+
+  Don't set period larger than requested
+
+  Remove PWM disable on configuration change
+
+  Implement .apply instead of non-atomic .config/.enable/.disable
+
+  Don't modify PWM on .request/.free
+
+  Check pwm_div underflow
+
+  Fix various code and comment formatting issues
+
+Other changes:
+
+  Use u64 divisor safe division
+
+  Remove now empty .request/.free
+---
+ drivers/pwm/Kconfig   |  12 +++
+ drivers/pwm/Makefile  |   1 +
+ drivers/pwm/pwm-ipq.c | 238 ++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 251 insertions(+)
+ create mode 100644 drivers/pwm/pwm-ipq.c
+
+diff --git a/drivers/pwm/Kconfig b/drivers/pwm/Kconfig
+index 9a4f66ae8070..54ef62a27bdc 100644
+--- a/drivers/pwm/Kconfig
++++ b/drivers/pwm/Kconfig
+@@ -260,6 +260,18 @@ config PWM_INTEL_LGM
+ 	  To compile this driver as a module, choose M here: the module
+ 	  will be called pwm-intel-lgm.
+ 
++config PWM_IPQ
++	tristate "IPQ PWM support"
++	depends on ARCH_QCOM || COMPILE_TEST
++	depends on HAVE_CLK && HAS_IOMEM
++	help
++	  Generic PWM framework driver for IPQ PWM block which supports
++	  4 pwm channels. Each of the these channels can be configured
++	  independent of each other.
++
++	  To compile this driver as a module, choose M here: the module
++	  will be called pwm-ipq.
++
+ config PWM_IQS620A
+ 	tristate "Azoteq IQS620A PWM support"
+ 	depends on MFD_IQS62X || COMPILE_TEST
+diff --git a/drivers/pwm/Makefile b/drivers/pwm/Makefile
+index 6374d3b1d6f3..73eb955dea1d 100644
+--- a/drivers/pwm/Makefile
++++ b/drivers/pwm/Makefile
+@@ -22,6 +22,7 @@ obj-$(CONFIG_PWM_IMX1)		+= pwm-imx1.o
+ obj-$(CONFIG_PWM_IMX27)		+= pwm-imx27.o
+ obj-$(CONFIG_PWM_IMX_TPM)	+= pwm-imx-tpm.o
+ obj-$(CONFIG_PWM_INTEL_LGM)	+= pwm-intel-lgm.o
++obj-$(CONFIG_PWM_IPQ)		+= pwm-ipq.o
+ obj-$(CONFIG_PWM_IQS620A)	+= pwm-iqs620a.o
+ obj-$(CONFIG_PWM_JZ4740)	+= pwm-jz4740.o
+ obj-$(CONFIG_PWM_KEEMBAY)	+= pwm-keembay.o
+diff --git a/drivers/pwm/pwm-ipq.c b/drivers/pwm/pwm-ipq.c
+new file mode 100644
+index 000000000000..cedbd682a5c7
+--- /dev/null
++++ b/drivers/pwm/pwm-ipq.c
+@@ -0,0 +1,238 @@
++// SPDX-License-Identifier: BSD-3-Clause OR GPL-2.0
++/*
++ * Copyright (c) 2016-2017, 2020 The Linux Foundation. All rights reserved.
++ */
++
++#include <linux/module.h>
++#include <linux/platform_device.h>
++#include <linux/pwm.h>
++#include <linux/clk.h>
++#include <linux/io.h>
++#include <linux/math64.h>
++#include <linux/of_device.h>
++
++#define CLK_SRC_FREQ		(100*1000*1000)
++#define MAX_PWM_DEVICES		4
++
++/*
++ * Enable bit is set to enable output toggling in pwm device.
++ * Update bit is set to reflect the changed divider and high duration
++ * values in register.
++ */
++#define PWM_ENABLE		0x80000000
++#define PWM_UPDATE		0x40000000
++
++/* The frequency range supported is 1Hz to 100MHz */
++#define MIN_PERIOD_NS	10
++#define MAX_PERIOD_NS	1000000000
++
++/*
++ * The max value specified for each field is based on the number of bits
++ * in the pwm control register for that field
++ */
++#define MAX_PWM_CFG		0xFFFF
++
++#define PWM_CTRL_HI_SHIFT	16
++
++#define PWM_CFG_REG0 0 /*PWM_DIV PWM_HI*/
++#define PWM_CFG_REG1 1 /*ENABLE UPDATE PWM_PRE_DIV*/
++
++struct ipq_pwm_chip {
++	struct pwm_chip chip;
++	struct clk *clk;
++	void __iomem *mem;
++};
++
++static struct ipq_pwm_chip *to_ipq_pwm_chip(struct pwm_chip *chip)
++{
++	return container_of(chip, struct ipq_pwm_chip, chip);
++}
++
++static unsigned ipq_pwm_reg_offset(struct pwm_device *pwm, unsigned reg)
++{
++	return ((pwm->hwpwm * 2) + reg) * 4;
++}
++
++static void config_div_and_duty(struct pwm_device *pwm, int pre_div,
++			unsigned long long pwm_div, unsigned long period_ns,
++			unsigned long long duty_ns)
++{
++	unsigned long hi_dur;
++	unsigned long long quotient;
++	unsigned long val = 0;
++	struct ipq_pwm_chip *ipq_chip = to_ipq_pwm_chip(pwm->chip);
++
++	/*
++	 * high duration = pwm duty * (pwm div + 1)
++	 * pwm duty = duty_ns / period_ns
++	 */
++	quotient = (pwm_div + 1) * duty_ns;
++	hi_dur = div64_u64(quotient, period_ns);
++
++	val |= ((hi_dur & MAX_PWM_CFG) << PWM_CTRL_HI_SHIFT);
++	val |= (pwm_div & MAX_PWM_CFG);
++	writel(val, ipq_chip->mem + ipq_pwm_reg_offset(pwm, PWM_CFG_REG0));
++	val = pre_div & MAX_PWM_CFG;
++	writel(val, ipq_chip->mem + ipq_pwm_reg_offset(pwm, PWM_CFG_REG1));
++}
++
++static int ipq_pwm_enable(struct pwm_device *pwm)
++{
++	struct ipq_pwm_chip *ipq_chip = to_ipq_pwm_chip(pwm->chip);
++	unsigned offset = ipq_pwm_reg_offset(pwm, PWM_CFG_REG1);
++	unsigned long val;
++
++	val = readl(ipq_chip->mem + offset);
++	val |= PWM_ENABLE | PWM_UPDATE;
++	writel(val, ipq_chip->mem + offset);
++
++	return 0;
++}
++
++static void ipq_pwm_disable(struct pwm_device *pwm)
++{
++	struct ipq_pwm_chip *ipq_chip = to_ipq_pwm_chip(pwm->chip);
++	unsigned offset = ipq_pwm_reg_offset(pwm, PWM_CFG_REG1);
++	unsigned long val;
++
++	val = readl(ipq_chip->mem + offset);
++	val |= PWM_UPDATE;
++	val &= ~PWM_ENABLE;
++	writel(val, ipq_chip->mem + offset);
++}
++
++static int ipq_pwm_apply(struct pwm_chip *chip, struct pwm_device *pwm,
++			 const struct pwm_state *state)
++{
++	struct ipq_pwm_chip *ipq_chip = to_ipq_pwm_chip(chip);
++	unsigned long freq;
++	int pre_div, close_pre_div, close_pwm_div;
++	int pwm_div;
++	long long diff;
++	unsigned long rate = clk_get_rate(ipq_chip->clk);
++	unsigned long min_diff = rate;
++	uint64_t fin_ps;
++	u64 period_ns, duty_ns;
++
++	if (state->period < MIN_PERIOD_NS)
++		return -ERANGE;
++
++	period_ns = min_t(u64, state->period, MAX_PERIOD_NS);
++	duty_ns = min_t(u64, state->duty_cycle, period_ns);
++
++	/* freq in Hz for period in nano second*/
++	freq = NSEC_PER_SEC / period_ns;
++	fin_ps = div64_u64(NSEC_PER_SEC * 1000, rate);
++	close_pre_div = MAX_PWM_CFG;
++	close_pwm_div = MAX_PWM_CFG;
++
++	for (pre_div = 0; pre_div <= MAX_PWM_CFG; pre_div++) {
++		pwm_div = DIV64_U64_ROUND_CLOSEST(period_ns * 1000,
++						  fin_ps * (pre_div + 1));
++		pwm_div--;
++		if (pwm_div < 0 || pwm_div > MAX_PWM_CFG)
++			continue;
++
++		diff = ((uint64_t)freq * (pre_div + 1) * (pwm_div + 1))
++			- (uint64_t)rate;
++
++		if (diff < 0) /* period larger than requested */
++			continue;
++		if (diff == 0) { /* bingo */
++			close_pre_div = pre_div;
++			close_pwm_div = pwm_div;
++			break;
++		}
++		if (diff < min_diff) {
++			min_diff = diff;
++			close_pre_div = pre_div;
++			close_pwm_div = pwm_div;
++		}
++	}
++
++	/* config divider values for the closest possible frequency */
++	config_div_and_duty(pwm, close_pre_div, close_pwm_div,
++			    period_ns, duty_ns);
++	if (state->enabled)
++		ipq_pwm_enable(pwm);
++	else
++		ipq_pwm_disable(pwm);
++
++	return 0;
++}
++
++static struct pwm_ops ipq_pwm_ops = {
++	.apply = ipq_pwm_apply,
++	.owner = THIS_MODULE,
++};
++
++static int ipq_pwm_probe(struct platform_device *pdev)
++{
++	struct ipq_pwm_chip *pwm;
++	struct device *dev;
++	int ret;
++
++	dev = &pdev->dev;
++	pwm = devm_kzalloc(dev, sizeof(*pwm), GFP_KERNEL);
++	if (!pwm)
++		return -ENOMEM;
++
++	platform_set_drvdata(pdev, pwm);
++
++	pwm->mem = devm_platform_ioremap_resource(pdev, 0);
++	if (IS_ERR(pwm->mem))
++		return PTR_ERR(pwm->mem);
++
++	pwm->clk = devm_clk_get(dev, "core");
++	if (IS_ERR(pwm->clk))
++		return PTR_ERR(pwm->clk);
++
++	ret = clk_set_rate(pwm->clk, CLK_SRC_FREQ);
++	if (ret)
++		return ret;
++	ret = clk_prepare_enable(pwm->clk);
++	if (ret)
++		return ret;
++
++	pwm->chip.dev = dev;
++	pwm->chip.ops = &ipq_pwm_ops;
++	pwm->chip.npwm = MAX_PWM_DEVICES;
++
++	ret = pwmchip_add(&pwm->chip);
++	if (ret < 0) {
++		dev_err_probe(dev, ret, "pwmchip_add() failed\n");
++		clk_disable_unprepare(pwm->clk);
++		return ret;
++	}
++
++	return 0;
++}
++
++static int ipq_pwm_remove(struct platform_device *pdev)
++{
++	struct ipq_pwm_chip *pwm = platform_get_drvdata(pdev);
++
++	pwmchip_remove(&pwm->chip);
++
++	return 0;
++}
++
++static const struct of_device_id pwm_ipq_dt_match[] = {
++	{ .compatible = "qcom,pwm-ipq6018", },
++	{}
++};
++MODULE_DEVICE_TABLE(of, pwm_ipq_dt_match);
++
++static struct platform_driver ipq_pwm_driver = {
++	.driver = {
++		.name = "ipq-pwm",
++		.owner = THIS_MODULE,
++		.of_match_table = pwm_ipq_dt_match,
++	},
++	.probe = ipq_pwm_probe,
++	.remove = ipq_pwm_remove,
++};
++
++module_platform_driver(ipq_pwm_driver);
++
++MODULE_LICENSE("Dual BSD/GPL");
+-- 
+2.30.2
+
