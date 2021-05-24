@@ -2,165 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 319AE38EF5B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 May 2021 17:56:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A00FD38F0EB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 May 2021 18:08:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234865AbhEXP5J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 May 2021 11:57:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51678 "EHLO
+        id S236576AbhEXQGw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 May 2021 12:06:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53004 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234261AbhEXP4N (ORCPT
+        with ESMTP id S236856AbhEXQEj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 May 2021 11:56:13 -0400
-Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC9EBC061142
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 May 2021 08:08:18 -0700 (PDT)
-Received: by mail-oi1-x22f.google.com with SMTP id d21so27298452oic.11
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 May 2021 08:08:18 -0700 (PDT)
+        Mon, 24 May 2021 12:04:39 -0400
+Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B705C026BD9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 May 2021 08:15:23 -0700 (PDT)
+Received: by mail-pf1-x434.google.com with SMTP id x18so16772860pfi.9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 May 2021 08:15:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=Qd2GGNOqjcoVwR9/InTy3gHaTefuQ8PzIzZm4PfwF+Q=;
-        b=pHUsCN/IDaId/ipsKoG3ZrMYVpOUrGYrLef0xTZtQqyz5XEMvN+lSpLTWg7jqjs6Jg
-         8wJ0pQL7+XaAsnBMSaWQCy7vQ/ZJnhOkVL0wp8RSeBJ7P47eTtE07yeR4+A6SNbbViAa
-         iet9G/GM1FfaXkBxAschybOUCLj4dh8QNh+vYyRua3BmM2eulhIfr9X1rl0wIRCwsWd+
-         pISDWphupk3cSrSJvfwLRLkVetuRq3bdIaT1ju8SB684mx/GMUIuCsIkN5+XbviAupjL
-         9P0mdNOzaKLEQ+SZt9yQ2d8SL3naZn+5M6s/xOz5hGkwU900zBI4ruNo/Nh5jzk7aRTk
-         Bqjg==
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=2hiXKO119GSaKQpX+psN+usfMuDJQ/GOJx+xCi36V10=;
+        b=U/Ic0oyql6VSf1zMHtEy4mFLp+v9j8wB4h0j/Vp8yHCVYnaly6d7tpSDvlo8G1uHBG
+         onMLvowml45t3Phb7Bu7NbF6vxIoTKOpA8zY6VOsOpeZPNaRe3LNzlYisU6IV8eLRjaT
+         +IRU0yWNE2MZiNO9ukMoaEt1eOKN9HLESVPHk=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Qd2GGNOqjcoVwR9/InTy3gHaTefuQ8PzIzZm4PfwF+Q=;
-        b=X5D0+xK84Vd34LtoCTk3o6cCfma6DLBHfY4q8bR1tbgPVDfOnm1cdBr5IK+TXm4fxB
-         S5suaKPDOX69Fw8dD2Nqv9gKcjCeVfOEEJIoOmYZ3FHmxYyv1BrIh5TzlIfpTboFZ+Wx
-         dNUy4SGedbl68pDZqEqIoe4DFpTfsAAwBeYG5PDm3eP0t7XGGiv/O3JrEZP1GBJlMM2V
-         23GNNL8fSbd8Os/rNIlQLPUcZFbyFoF4TMC844mhq+hqg2aSIloNETq70MTXsqeMEJj/
-         6I7SrVynElfxrcm285gKX1DgtpsUvjUGrmxJi1eYSBDhh9OULX+/IIGg+7uZMsdoR5o2
-         IuOw==
-X-Gm-Message-State: AOAM5326tsma2WB6mNqv58vpb5x4ILhzzvL2/Hkkq5eqWzDulT5KLg93
-        5RxgwJyAVF0sJK7qYTF3WdYwkg==
-X-Google-Smtp-Source: ABdhPJzQwEXxT63vulS4Mr1iXuUiQVfsntslWby9WpFJQ1i6LL+g6rwKWyZorlvtptAuR0hvccJ5Xg==
-X-Received: by 2002:aca:230e:: with SMTP id e14mr11102837oie.58.1621868898078;
-        Mon, 24 May 2021 08:08:18 -0700 (PDT)
-Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id n11sm2564001oom.1.2021.05.24.08.08.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 May 2021 08:08:17 -0700 (PDT)
-Date:   Mon, 24 May 2021 10:08:15 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Rob Clark <robdclark@gmail.com>, linux-arm-msm@vger.kernel.org,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, Rob Herring <robh+dt@kernel.org>,
-        devicetree@vger.kernel.org
-Subject: Re: [RFC PATCH 02/13] dt-bindings: msm/dsi: Document Display Stream
- Compression (DSC) parameters
-Message-ID: <20210524150815.GH2484@yoga>
-References: <20210521124946.3617862-1-vkoul@kernel.org>
- <20210521124946.3617862-3-vkoul@kernel.org>
- <20210521144237.GZ2484@yoga>
- <YKtWM+BYeIA+P+55@vkoul-mobl.Dlink>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=2hiXKO119GSaKQpX+psN+usfMuDJQ/GOJx+xCi36V10=;
+        b=MygWTQFFztuWEUFlSjJoZ+NKryREwRfLorYSLYMGQetjBAEalLysCac/fowTI5ewUk
+         Ff7vH+ANGXTFG0nMHMLGrHQ95PDB/sVJ9TC3uPFUiEJpUrugcUO2taAMnk6iYeBs3//h
+         MjXfyWqYc8mmBFnd84qA2cpEyuCfTUoPzdkrio76/MZ1itl4e+jYKV/6J/OTKdFomA7v
+         wOKo6EdZYE4NPYQiQyue/xy0e6ceOI/5xQzY65wYV28z7NxJRoEM4za+zDtVWoPIJFzh
+         7SUp0Ig6WI2Wdj2ctRRxc7jE2Q2+MKnYfmjTXpWvmHXWqagYCHxiWwuP1ItAuWs/jpFQ
+         ouhw==
+X-Gm-Message-State: AOAM5329HEaAJ2Eik8dYvKEuAgHx2pU6o2PiHvf3ONcDn1xx1NBOd0et
+        PGSzV7J/HFfHZdsP59BpdrRAthhr1+pGfw==
+X-Google-Smtp-Source: ABdhPJx0PsTs3IUNYWr5w8+0jzDP6ak7VDnDBWPWIldDVCLpjFiUJIIHEtOXhBgC3Fy+L7yCeJhlmA==
+X-Received: by 2002:a62:2a14:0:b029:263:20c5:6d8c with SMTP id q20-20020a622a140000b029026320c56d8cmr25346085pfq.23.1621869322274;
+        Mon, 24 May 2021 08:15:22 -0700 (PDT)
+Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com. [209.85.216.43])
+        by smtp.gmail.com with ESMTPSA id j17sm11055276pff.77.2021.05.24.08.15.22
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 24 May 2021 08:15:22 -0700 (PDT)
+Received: by mail-pj1-f43.google.com with SMTP id cu11-20020a17090afa8bb029015d5d5d2175so11402531pjb.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 May 2021 08:15:22 -0700 (PDT)
+X-Received: by 2002:a05:6102:3239:: with SMTP id x25mr21095761vsf.47.1621869311242;
+ Mon, 24 May 2021 08:15:11 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <YKtWM+BYeIA+P+55@vkoul-mobl.Dlink>
+References: <20210517200907.1459182-1-dianders@chromium.org> <2536404ca2ab0e7b785a104ec6b4efb48943a438.camel@redhat.com>
+In-Reply-To: <2536404ca2ab0e7b785a104ec6b4efb48943a438.camel@redhat.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Mon, 24 May 2021 08:14:59 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=WqM6fTuk3g4Rt9D+Fn=P1aUQwM3Cjz-K2BXurMB2AQ5A@mail.gmail.com>
+Message-ID: <CAD=FV=WqM6fTuk3g4Rt9D+Fn=P1aUQwM3Cjz-K2BXurMB2AQ5A@mail.gmail.com>
+Subject: Re: [PATCH v7 00/10] drm: Fix EDID reading on ti-sn65dsi86 by
+ introducing the DP AUX bus
+To:     Lyude Paul <lyude@redhat.com>
+Cc:     Andrzej Hajda <a.hajda@samsung.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>,
+        Thierry Reding <treding@nvidia.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Linus W <linus.walleij@linaro.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Steev Klimaszewski <steev@kali.org>,
+        Andy Gross <agross@kernel.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Maxime Ripard <mripard@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Robert Foss <robert.foss@linaro.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 24 May 02:30 CDT 2021, Vinod Koul wrote:
+Hi,
 
-> On 21-05-21, 09:42, Bjorn Andersson wrote:
-> > On Fri 21 May 07:49 CDT 2021, Vinod Koul wrote:
-> > 
-> > > DSC enables streams to be compressed before we send to panel. This
-> > > requires DSC enabled encoder and a panel to be present. So we add this
-> > > information in board DTS and find if DSC can be enabled and the
-> > > parameters required to configure DSC are added to binding document along
-> > > with example
-> > > 
-> > > Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> > > ---
-> > >  .../devicetree/bindings/display/msm/dsi.txt       | 15 +++++++++++++++
-> > >  1 file changed, 15 insertions(+)
-> > > 
-> > > diff --git a/Documentation/devicetree/bindings/display/msm/dsi.txt b/Documentation/devicetree/bindings/display/msm/dsi.txt
-> > > index b9a64d3ff184..83d2fb92267e 100644
-> > > --- a/Documentation/devicetree/bindings/display/msm/dsi.txt
-> > > +++ b/Documentation/devicetree/bindings/display/msm/dsi.txt
-> > > @@ -48,6 +48,13 @@ Optional properties:
-> > >  - pinctrl-n: the "sleep" pinctrl state
-> > >  - ports: contains DSI controller input and output ports as children, each
-> > >    containing one endpoint subnode.
-> > > +- qcom,mdss-dsc-enabled: Display Stream Compression (DSC) is enabled
-> > > +- qcom,mdss-slice-height: DSC slice height in pixels
-> > > +- qcom,mdss-slice-width: DSC slice width in pixels
-> > > +- qcom,mdss-slice-per-pkt: DSC slices per packet
-> > > +- qcom,mdss-bit-per-component: DSC bits per component
-> > > +- qcom,mdss-bit-per-pixel: DSC bits per pixel
-> > > +- qcom,mdss-block-prediction-enable: Block prediction mode of DSC enabled
-> > >  
-> > >    DSI Endpoint properties:
-> > >    - remote-endpoint: For port@0, set to phandle of the connected panel/bridge's
-> > > @@ -188,6 +195,14 @@ Example:
-> > >  		qcom,master-dsi;
-> > >  		qcom,sync-dual-dsi;
-> > >  
-> > > +		qcom,mdss-dsc-enabled;
-> > 
-> > To me the activation of DSC seems to be a property of the panel.
-> 
-> I think there are three parts to the problem
-> 1. Panel needs to support it
+On Fri, May 21, 2021 at 4:07 PM Lyude Paul <lyude@redhat.com> wrote:
+>
+> For patches 5, and 6:
+>
+> Reviewed-by: Lyude Paul <lyude@redhat.com>
+>
+> This week got really busy so I wasn't able to look at the rest of them, but next
+> week is going to be a lot less busy so I should be able to look at them then
 
-In the case of DP there's bits to be read in the panel to figure this
-out, for DSI panels this seems like a property that the panel (driver)
-should know about.
+Thanks for your review on the two patches and for letting me know your
+plans. I know that I still need to spin the bindings patches with Rob
+Herring's feedback, but I won't do that until I know you're done
+reviewing just to avoid spamming everyone an extra time. Assuming no
+emergency comes around and slams me, I should be able to react/respond
+fairly quickly this week M-Th, though I'm taking Friday off.
 
-> 2. Host needs to support it
+BTW: if anyone reading this happens to have 10 minutes, I'd sorta like
+to get patch #1 in this series landed sooner rather than later and
+it's a dead-simple fix. If I see a review of that one, I'll apply it
+to drm-misc before sending out the next version of the series. ;-)
 
-Right, so this needs to be known by the driver. My suggestion is that we
-derive it from the compatible or from the HW version.
-
-> 3. Someone needs to decide to use when both the above conditions are
-> met.
-> 
-> There are cases where above 1, 2 will be satisfied, but we might be okay
-> without DSC too.. so how to decide when to do DSC :)
-> 
-
-Can we describe those cases? E.g. is it because enabling DSC would not
-cause a reduction in clock speed that's worth the effort? Or do we only
-use DSC for DSI when it allows us to squeeze everything into a single
-link?
-
-Regards,
-Bjorn
-
-> I feel it is more of a system property. And I also think that these
-> parameters here are host configuration and not really for panel...
-> 
-> > 
-> > > +		qcom,mdss-slice-height = <16>;
-> > > +		qcom,mdss-slice-width = <540>;
-> > > +		qcom,mdss-slice-per-pkt = <1>;
-> > > +		qcom,mdss-bit-per-component = <8>;
-> > > +		qcom,mdss-bit-per-pixel = <8>;
-> > > +		qcom,mdss-block-prediction-enable;
-> > 
-> > Which of these properties relates to the DSC encoder and what needs to
-> > be agreed with the sink? Can't we derive e.g. bpp from the information
-> > we have from the attached panel already?
-> 
-> Let me go back and check on this a bit more
-> 
-> Thanks
-> -- 
-> ~Vinod
+-Doug
