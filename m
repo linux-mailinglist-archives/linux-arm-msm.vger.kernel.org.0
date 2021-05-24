@@ -2,487 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 47D7338F57D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 May 2021 00:14:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A0A9338F5D0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 May 2021 00:48:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233852AbhEXWP1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 May 2021 18:15:27 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:46726 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232911AbhEXWP1 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 May 2021 18:15:27 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1621894439; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=HGvLdeIwE6bHS5K0mAG/sHUUie9k2W7g5BOgYPlS9Io=;
- b=PC4XG1drw5d993CMyH4qr5Ii66utjswNHwN/pcofu48C/5DDW1Ia+vlalOH2nbvJfBtbPjQE
- sYAG2lhj73+WDWcsqc0pEJBDbkKPF1pG08UR1/g3TVtrl0/P8cW4ck3AwdVwqx8OIoCxmRT7
- TuVfSI65iQb9Mr1wmJUSP/TjSWs=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
- 60ac251160c53c8c9d4d3abf (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 24 May 2021 22:13:37
- GMT
-Sender: abhinavk=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id E7EB6C43145; Mon, 24 May 2021 22:13:36 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: abhinavk)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 8151CC4338A;
-        Mon, 24 May 2021 22:13:34 +0000 (UTC)
+        id S229623AbhEXWty (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 May 2021 18:49:54 -0400
+Received: from mail-oi1-f176.google.com ([209.85.167.176]:35802 "EHLO
+        mail-oi1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229651AbhEXWty (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 24 May 2021 18:49:54 -0400
+Received: by mail-oi1-f176.google.com with SMTP id v22so28542240oic.2;
+        Mon, 24 May 2021 15:48:24 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=KpKDmmYFy0WymhW++fAl7+6dJhCoWfgKM1MbYWz2Ja0=;
+        b=n4wwH1uIkcj5iikHrDD60fGOWUII/6kSCSeU6vzhzoZuZeMZlw6jysBTeiQ8AxEt1V
+         Bpu1hQ6CPNSed0gwRgMNWJfNM4jCqVrFT2IvrblwoRHI4nkhSerfpqcxmk8em1m5R3SS
+         a0olMzyfUyXmWJLBXfpE9rNmLGX2F+NrVOoJbLqGmGwUlSelw7h/L1mhTqzTlXEBbkru
+         O1y4c++lLHmTEy9abgkLnEqRvP8St4wLoKKFYnNUR0gjQQ+gxWuQAlRgeMkQb7ilPCH9
+         x4bh6B+8TDjFHWnGU1LTkbifFb2DvaKIE2gx3hMAAGGc8S5bE/Pc6CR1pQScJruDdGgu
+         C8VA==
+X-Gm-Message-State: AOAM532/RKcykr77jj52UqTuuiikClTlnTlO4NXX/ZDk8gsuQMSqT3w9
+        32Kh3GVPN7MNGWyBavDIuA6I54dIXg==
+X-Google-Smtp-Source: ABdhPJz5h2oM8aTFPJKI31HulznG3xW2XN9lU0oXrZlOIYquqz8vF2erRkrzWxbLCYco4ih9DhrhXw==
+X-Received: by 2002:a05:6808:4cf:: with SMTP id a15mr886196oie.78.1621896494189;
+        Mon, 24 May 2021 15:48:14 -0700 (PDT)
+Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id c19sm2881987oiw.7.2021.05.24.15.48.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 24 May 2021 15:48:13 -0700 (PDT)
+Received: (nullmailer pid 1314077 invoked by uid 1000);
+        Mon, 24 May 2021 22:48:12 -0000
+Date:   Mon, 24 May 2021 17:48:12 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Krishna Manikandan <mkrishn@codeaurora.org>
+Cc:     robh+dt@kernel.org, dri-devel@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, khsieh@codeaurora.org,
+        linux-kernel@vger.kernel.org, dianders@chromium.org,
+        abhinavk@codeaurora.org, tanmay@codeaurora.org,
+        freedreno@lists.freedesktop.org, swboyd@chromium.org,
+        devicetree@vger.kernel.org, vinod.koul@linaro.org,
+        kalyan_t@codeaurora.org, bjorn.andersson@linaro.org,
+        sean@poorly.run
+Subject: Re: [PATCH v18 2/4] dt-bindings: msm: dsi: add yaml schemas for DSI
+ bindings
+Message-ID: <20210524224812.GA1314047@robh.at.kernel.org>
+References: <1621856653-10649-1-git-send-email-mkrishn@codeaurora.org>
+ <1621856653-10649-2-git-send-email-mkrishn@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Mon, 24 May 2021 15:13:34 -0700
-From:   abhinavk@codeaurora.org
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        freedreno@lists.freedesktop.org
-Subject: Re: [Freedreno] [PATCH v2 6/6] drm/msm/dpu: simplify IRQ
- enabling/disabling
-In-Reply-To: <20210516202910.2141079-7-dmitry.baryshkov@linaro.org>
-References: <20210516202910.2141079-1-dmitry.baryshkov@linaro.org>
- <20210516202910.2141079-7-dmitry.baryshkov@linaro.org>
-Message-ID: <cf4fc3523e0e0009cbc28c5904e1bfef@codeaurora.org>
-X-Sender: abhinavk@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1621856653-10649-2-git-send-email-mkrishn@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-05-16 13:29, Dmitry Baryshkov wrote:
-> Merge dpu_core_irq_enable() into dpu_core_irq_register_callback() and
-> dpu_core_irq_disable() into dpu_core_irq_unregister_callback(), because
-> they are called in pairs. There is no need to have separate
-> enable/disable pair, we can enable hardware IRQ when first callback is
-> registered and when the last callback is unregistered.
+On Mon, 24 May 2021 17:14:11 +0530, Krishna Manikandan wrote:
+> Add YAML schema for the device tree bindings for DSI
 > 
-Since this change also removes the enable_counts atomic counter, I was a 
-bit hesitant
-because its helpful to protect against vblank discrepancies from 
-usermode during enable/disable
-but i think we have more protection for blank using vblank_refcount
-
-413 	if (enable && atomic_inc_return(&phys_enc->vblank_refcount) == 1)
-414 		ret = dpu_encoder_helper_register_irq(phys_enc, INTR_IDX_VSYNC);
-415 	else if (!enable && atomic_dec_return(&phys_enc->vblank_refcount) 
-== 0)
-416 		ret = dpu_encoder_helper_unregister_irq(phys_enc,
-417 				INTR_IDX_VSYNC);
-418
-419 end:
-
-So this should still be okay. Hence
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Abhinav Kumar <abhinavk@codeaurora.org>
+> Signed-off-by: Krishna Manikandan <mkrishn@codeaurora.org>
+> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
 > ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.c | 168 +++----------------
->  drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.h |  30 ----
->  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c  |  18 --
->  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h      |   2 -
->  drivers/gpu/drm/msm/disp/dpu1/dpu_trace.h    |   8 -
->  5 files changed, 27 insertions(+), 199 deletions(-)
+> Changes in v1:
+>     - Separate dsi controller bindings to a separate patch (Stephen Boyd)
+>     - Merge dsi-common-controller.yaml and dsi-controller-main.yaml to
+>       a single file (Stephen Boyd)
+>     - Drop supply entries and definitions from properties (Stephen Boyd)
+>     - Modify phy-names property for dsi controller (Stephen Boyd)
+>     - Remove boolean from description (Stephen Boyd)
+>     - Drop pinctrl properties as they are standard entries (Stephen Boyd)
+>     - Modify the description for ports property and keep the reference
+>       to the generic binding where this is defined (Stephen Boyd)
+>     - Add description to clock names (Stephen Boyd)
+>     - Correct the indendation (Stephen Boyd)
+>     - Drop the label for display dt nodes and correct the node
+>       name (Stephen Boyd)
 > 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.c
-> b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.c
-> index 11c0abed21ee..4f110c428b60 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.c
-> @@ -26,10 +26,8 @@ static void dpu_core_irq_callback_handler(void
-> *arg, int irq_idx)
+> Changes in v2:
+>     - Drop maxItems for clock (Stephen Boyd)
+>     - Drop qcom,mdss-mdp-transfer-time-us as it is not used in upstream
+>       dt file (Stephen Boyd)
+>     - Keep child node directly under soc node (Stephen Boyd)
+>     - Drop qcom,sync-dual-dsi as it is not used in upstream dt
 > 
->  	pr_debug("irq_idx=%d\n", irq_idx);
+> Changes in v3:
+>     - Add description for register property (Stephen Boyd)
 > 
-> -	if (list_empty(&irq_obj->irq_cb_tbl[irq_idx])) {
-> -		DRM_ERROR("no registered cb, idx:%d enable_count:%d\n", irq_idx,
-> -			atomic_read(&dpu_kms->irq_obj.enable_counts[irq_idx]));
-> -	}
-> +	if (list_empty(&irq_obj->irq_cb_tbl[irq_idx]))
-> +		DRM_ERROR("no registered cb, idx:%d\n", irq_idx);
+> Changes in v4:
+>     - Add maxItems for phys property (Stephen Boyd)
+>     - Add maxItems for reg property (Stephen Boyd)
+>     - Add reference for data-lanes property (Stephen Boyd)
+>     - Remove soc from example (Stephen Boyd)
 > 
->  	atomic_inc(&irq_obj->irq_counts[irq_idx]);
+> Changes in v5:
+>     - Modify title and description (Stephen Boyd)
+>     - Add required properties for ports node (Stephen Boyd)
+>     - Add data-lanes in the example (Stephen Boyd)
+>     - Drop qcom,master-dsi property (Stephen Boyd)
 > 
-> @@ -43,127 +41,6 @@ static void dpu_core_irq_callback_handler(void
-> *arg, int irq_idx)
->  	spin_unlock_irqrestore(&dpu_kms->irq_obj.cb_lock, irq_flags);
->  }
+> Changes in v6:
+>     - Add required properties for port@0, port@1 and corresponding
+>       endpoints (Stephen Boyd)
+>     - Add address-cells and size-cells for ports (Stephen Boyd)
+>     - Use additionalProperties instead of unevaluatedProperties (Stephen Boyd)
 > 
-> -/**
-> - * _dpu_core_irq_enable - enable core interrupt given by the index
-> - * @dpu_kms:		Pointer to dpu kms context
-> - * @irq_idx:		interrupt index
-> - */
-> -static int _dpu_core_irq_enable(struct dpu_kms *dpu_kms, int irq_idx)
-> -{
-> -	unsigned long irq_flags;
-> -	int ret = 0, enable_count;
-> -
-> -	if (!dpu_kms->hw_intr ||
-> -			!dpu_kms->irq_obj.enable_counts ||
-> -			!dpu_kms->irq_obj.irq_counts) {
-> -		DPU_ERROR("invalid params\n");
-> -		return -EINVAL;
-> -	}
-> -
-> -	if (irq_idx < 0 || irq_idx >= dpu_kms->hw_intr->total_irqs) {
-> -		DPU_ERROR("invalid IRQ index: [%d]\n", irq_idx);
-> -		return -EINVAL;
-> -	}
-> -
-> -	enable_count = atomic_read(&dpu_kms->irq_obj.enable_counts[irq_idx]);
-> -	DRM_DEBUG_KMS("irq_idx=%d enable_count=%d\n", irq_idx, enable_count);
-> -	trace_dpu_core_irq_enable_idx(irq_idx, enable_count);
-> -
-> -	if (atomic_inc_return(&dpu_kms->irq_obj.enable_counts[irq_idx]) == 1) 
-> {
-> -		ret = dpu_kms->hw_intr->ops.enable_irq(
-> -				dpu_kms->hw_intr,
-> -				irq_idx);
-> -		if (ret)
-> -			DPU_ERROR("Fail to enable IRQ for irq_idx:%d\n",
-> -					irq_idx);
-> -
-> -		DPU_DEBUG("irq_idx=%d ret=%d\n", irq_idx, ret);
-> -
-> -		spin_lock_irqsave(&dpu_kms->irq_obj.cb_lock, irq_flags);
-> -		/* empty callback list but interrupt is enabled */
-> -		if (list_empty(&dpu_kms->irq_obj.irq_cb_tbl[irq_idx]))
-> -			DPU_ERROR("irq_idx=%d enabled with no callback\n",
-> -					irq_idx);
-> -		spin_unlock_irqrestore(&dpu_kms->irq_obj.cb_lock, irq_flags);
-> -	}
-> -
-> -	return ret;
-> -}
-> -
-> -int dpu_core_irq_enable(struct dpu_kms *dpu_kms, int *irq_idxs, u32 
-> irq_count)
-> -{
-> -	int i, ret = 0, counts;
-> -
-> -	if (!irq_idxs || !irq_count) {
-> -		DPU_ERROR("invalid params\n");
-> -		return -EINVAL;
-> -	}
-> -
-> -	counts = atomic_read(&dpu_kms->irq_obj.enable_counts[irq_idxs[0]]);
-> -	if (counts)
-> -		DRM_ERROR("irq_idx=%d enable_count=%d\n", irq_idxs[0], counts);
-> -
-> -	for (i = 0; (i < irq_count) && !ret; i++)
-> -		ret = _dpu_core_irq_enable(dpu_kms, irq_idxs[i]);
-> -
-> -	return ret;
-> -}
-> -
-> -/**
-> - * _dpu_core_irq_disable - disable core interrupt given by the index
-> - * @dpu_kms:		Pointer to dpu kms context
-> - * @irq_idx:		interrupt index
-> - */
-> -static int _dpu_core_irq_disable(struct dpu_kms *dpu_kms, int irq_idx)
-> -{
-> -	int ret = 0, enable_count;
-> -
-> -	if (!dpu_kms->hw_intr || !dpu_kms->irq_obj.enable_counts) {
-> -		DPU_ERROR("invalid params\n");
-> -		return -EINVAL;
-> -	}
-> -
-> -	if (irq_idx < 0 || irq_idx >= dpu_kms->hw_intr->total_irqs) {
-> -		DPU_ERROR("invalid IRQ index: [%d]\n", irq_idx);
-> -		return -EINVAL;
-> -	}
-> -
-> -	enable_count = atomic_read(&dpu_kms->irq_obj.enable_counts[irq_idx]);
-> -	DRM_DEBUG_KMS("irq_idx=%d enable_count=%d\n", irq_idx, enable_count);
-> -	trace_dpu_core_irq_disable_idx(irq_idx, enable_count);
-> -
-> -	if (atomic_dec_return(&dpu_kms->irq_obj.enable_counts[irq_idx]) == 0) 
-> {
-> -		ret = dpu_kms->hw_intr->ops.disable_irq(
-> -				dpu_kms->hw_intr,
-> -				irq_idx);
-> -		if (ret)
-> -			DPU_ERROR("Fail to disable IRQ for irq_idx:%d\n",
-> -					irq_idx);
-> -		DPU_DEBUG("irq_idx=%d ret=%d\n", irq_idx, ret);
-> -	}
-> -
-> -	return ret;
-> -}
-> -
-> -int dpu_core_irq_disable(struct dpu_kms *dpu_kms, int *irq_idxs, u32 
-> irq_count)
-> -{
-> -	int i, ret = 0, counts;
-> -
-> -	if (!irq_idxs || !irq_count) {
-> -		DPU_ERROR("invalid params\n");
-> -		return -EINVAL;
-> -	}
-> -
-> -	counts = atomic_read(&dpu_kms->irq_obj.enable_counts[irq_idxs[0]]);
-> -	if (counts == 2)
-> -		DRM_ERROR("irq_idx=%d enable_count=%d\n", irq_idxs[0], counts);
-> -
-> -	for (i = 0; (i < irq_count) && !ret; i++)
-> -		ret = _dpu_core_irq_disable(dpu_kms, irq_idxs[i]);
-> -
-> -	return ret;
-> -}
-> -
->  u32 dpu_core_irq_read(struct dpu_kms *dpu_kms, int irq_idx, bool 
-> clear)
->  {
->  	if (!dpu_kms->hw_intr ||
-> @@ -210,6 +87,16 @@ int dpu_core_irq_register_callback(struct dpu_kms
-> *dpu_kms, int irq_idx,
->  	list_del_init(&register_irq_cb->list);
->  	list_add_tail(&register_irq_cb->list,
->  			&dpu_kms->irq_obj.irq_cb_tbl[irq_idx]);
-> +	if (list_is_first(&register_irq_cb->list,
-> +			&dpu_kms->irq_obj.irq_cb_tbl[irq_idx])) {
-> +		int ret = dpu_kms->hw_intr->ops.enable_irq(
-> +				dpu_kms->hw_intr,
-> +				irq_idx);
-> +		if (ret)
-> +			DPU_ERROR("Fail to enable IRQ for irq_idx:%d\n",
-> +					irq_idx);
-> +	}
-> +
->  	spin_unlock_irqrestore(&dpu_kms->irq_obj.cb_lock, irq_flags);
+> Changes in v7:
+>     - Add reference for ports and data-lanes (Rob Herring)
+>     - Add maxItems and minItems for data-lanes (Rob Herring)
 > 
->  	return 0;
-> @@ -244,9 +131,15 @@ int dpu_core_irq_unregister_callback(struct
-> dpu_kms *dpu_kms, int irq_idx,
->  	trace_dpu_core_irq_unregister_callback(irq_idx, register_irq_cb);
->  	list_del_init(&register_irq_cb->list);
->  	/* empty callback list but interrupt is still enabled */
-> -	if (list_empty(&dpu_kms->irq_obj.irq_cb_tbl[irq_idx]) &&
-> -			atomic_read(&dpu_kms->irq_obj.enable_counts[irq_idx]))
-> -		DPU_ERROR("irq_idx=%d enabled with no callback\n", irq_idx);
-> +	if (list_empty(&dpu_kms->irq_obj.irq_cb_tbl[irq_idx])) {
-> +		int ret = dpu_kms->hw_intr->ops.disable_irq(
-> +				dpu_kms->hw_intr,
-> +				irq_idx);
-> +		if (ret)
-> +			DPU_ERROR("Fail to disable IRQ for irq_idx:%d\n",
-> +					irq_idx);
-> +		DPU_DEBUG("irq_idx=%d ret=%d\n", irq_idx, ret);
-> +	}
->  	spin_unlock_irqrestore(&dpu_kms->irq_obj.cb_lock, irq_flags);
+> Changes in v8:
+>     - Drop common properties and description from ports (Rob Herring)
+>     - Add reference for endpoint (Rob Herring)
+>     - Add correct reference for data-lanes (Rob Herring)
+>     - Drop common properties from required list for ports (Rob Herring)
 > 
->  	return 0;
-> @@ -274,23 +167,22 @@ static int dpu_debugfs_core_irq_show(struct
-> seq_file *s, void *v)
->  	struct dpu_irq *irq_obj = s->private;
->  	struct dpu_irq_callback *cb;
->  	unsigned long irq_flags;
-> -	int i, irq_count, enable_count, cb_count;
-> +	int i, irq_count, cb_count;
+> Changes in v9:
+>     - Drop reference for data-lanes (Rob Herring)
+>     - Add unevaluatedProperties for endpoint (Rob Herring)
 > 
-> -	if (WARN_ON(!irq_obj->enable_counts || !irq_obj->irq_cb_tbl))
-> +	if (WARN_ON(!irq_obj->irq_cb_tbl))
->  		return 0;
+>  .../bindings/display/msm/dsi-controller-main.yaml  | 185 +++++++++++++++
+>  .../devicetree/bindings/display/msm/dsi.txt        | 249 ---------------------
+>  2 files changed, 185 insertions(+), 249 deletions(-)
+>  create mode 100644 Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
+>  delete mode 100644 Documentation/devicetree/bindings/display/msm/dsi.txt
 > 
->  	for (i = 0; i < irq_obj->total_irqs; i++) {
->  		spin_lock_irqsave(&irq_obj->cb_lock, irq_flags);
->  		cb_count = 0;
->  		irq_count = atomic_read(&irq_obj->irq_counts[i]);
-> -		enable_count = atomic_read(&irq_obj->enable_counts[i]);
->  		list_for_each_entry(cb, &irq_obj->irq_cb_tbl[i], list)
->  			cb_count++;
->  		spin_unlock_irqrestore(&irq_obj->cb_lock, irq_flags);
-> 
-> -		if (irq_count || enable_count || cb_count)
-> -			seq_printf(s, "idx:%d irq:%d enable:%d cb:%d\n",
-> -					i, irq_count, enable_count, cb_count);
-> +		if (irq_count || cb_count)
-> +			seq_printf(s, "idx:%d irq:%d cb:%d\n",
-> +					i, irq_count, cb_count);
->  	}
-> 
->  	return 0;
-> @@ -321,13 +213,10 @@ void dpu_core_irq_preinstall(struct dpu_kms 
-> *dpu_kms)
->  	dpu_kms->irq_obj.total_irqs = dpu_kms->hw_intr->total_irqs;
->  	dpu_kms->irq_obj.irq_cb_tbl = kcalloc(dpu_kms->irq_obj.total_irqs,
->  			sizeof(struct list_head), GFP_KERNEL);
-> -	dpu_kms->irq_obj.enable_counts = kcalloc(dpu_kms->irq_obj.total_irqs,
-> -			sizeof(atomic_t), GFP_KERNEL);
->  	dpu_kms->irq_obj.irq_counts = kcalloc(dpu_kms->irq_obj.total_irqs,
->  			sizeof(atomic_t), GFP_KERNEL);
->  	for (i = 0; i < dpu_kms->irq_obj.total_irqs; i++) {
->  		INIT_LIST_HEAD(&dpu_kms->irq_obj.irq_cb_tbl[i]);
-> -		atomic_set(&dpu_kms->irq_obj.enable_counts[i], 0);
->  		atomic_set(&dpu_kms->irq_obj.irq_counts[i], 0);
->  	}
->  }
-> @@ -338,8 +227,7 @@ void dpu_core_irq_uninstall(struct dpu_kms 
-> *dpu_kms)
-> 
->  	pm_runtime_get_sync(&dpu_kms->pdev->dev);
->  	for (i = 0; i < dpu_kms->irq_obj.total_irqs; i++)
-> -		if (atomic_read(&dpu_kms->irq_obj.enable_counts[i]) ||
-> -				!list_empty(&dpu_kms->irq_obj.irq_cb_tbl[i]))
-> +		if (!list_empty(&dpu_kms->irq_obj.irq_cb_tbl[i]))
->  			DPU_ERROR("irq_idx=%d still enabled/registered\n", i);
-> 
->  	dpu_clear_all_irqs(dpu_kms);
-> @@ -347,10 +235,8 @@ void dpu_core_irq_uninstall(struct dpu_kms 
-> *dpu_kms)
->  	pm_runtime_put_sync(&dpu_kms->pdev->dev);
-> 
->  	kfree(dpu_kms->irq_obj.irq_cb_tbl);
-> -	kfree(dpu_kms->irq_obj.enable_counts);
->  	kfree(dpu_kms->irq_obj.irq_counts);
->  	dpu_kms->irq_obj.irq_cb_tbl = NULL;
-> -	dpu_kms->irq_obj.enable_counts = NULL;
->  	dpu_kms->irq_obj.irq_counts = NULL;
->  	dpu_kms->irq_obj.total_irqs = 0;
->  }
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.h
-> b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.h
-> index d147784d5531..90ae6c9ccc95 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.h
-> @@ -29,36 +29,6 @@ void dpu_core_irq_uninstall(struct dpu_kms 
-> *dpu_kms);
->   */
->  irqreturn_t dpu_core_irq(struct dpu_kms *dpu_kms);
-> 
-> -/**
-> - * dpu_core_irq_enable - IRQ helper function for enabling one or more 
-> IRQs
-> - * @dpu_kms:		DPU handle
-> - * @irq_idxs:		Array of irq index
-> - * @irq_count:		Number of irq_idx provided in the array
-> - * @return:		0 for success enabling IRQ, otherwise failure
-> - *
-> - * This function increments count on each enable and decrements on 
-> each
-> - * disable.  Interrupts is enabled if count is 0 before increment.
-> - */
-> -int dpu_core_irq_enable(
-> -		struct dpu_kms *dpu_kms,
-> -		int *irq_idxs,
-> -		uint32_t irq_count);
-> -
-> -/**
-> - * dpu_core_irq_disable - IRQ helper function for disabling one of 
-> more IRQs
-> - * @dpu_kms:		DPU handle
-> - * @irq_idxs:		Array of irq index
-> - * @irq_count:		Number of irq_idx provided in the array
-> - * @return:		0 for success disabling IRQ, otherwise failure
-> - *
-> - * This function increments count on each enable and decrements on 
-> each
-> - * disable.  Interrupts is disabled if count is 0 after decrement.
-> - */
-> -int dpu_core_irq_disable(
-> -		struct dpu_kms *dpu_kms,
-> -		int *irq_idxs,
-> -		uint32_t irq_count);
-> -
->  /**
->   * dpu_core_irq_read - IRQ helper function for reading IRQ status
->   * @dpu_kms:		DPU handle
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> index 8a9d01e3b664..18c410433bb4 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> @@ -360,17 +360,6 @@ int dpu_encoder_helper_register_irq(struct
-> dpu_encoder_phys *phys_enc,
->  		return ret;
->  	}
-> 
-> -	ret = dpu_core_irq_enable(phys_enc->dpu_kms, &irq->irq_idx, 1);
-> -	if (ret) {
-> -		DRM_ERROR("enable failed id=%u, intr=%d, irq=%d",
-> -			  DRMID(phys_enc->parent), intr_idx,
-> -			  irq->irq_idx);
-> -		dpu_core_irq_unregister_callback(phys_enc->dpu_kms,
-> -				irq->irq_idx, &irq->cb);
-> -		irq->irq_idx = -EINVAL;
-> -		return ret;
-> -	}
-> -
->  	trace_dpu_enc_irq_register_success(DRMID(phys_enc->parent), intr_idx,
->  				irq->irq_idx);
-> 
-> @@ -393,13 +382,6 @@ int dpu_encoder_helper_unregister_irq(struct
-> dpu_encoder_phys *phys_enc,
->  		return 0;
->  	}
-> 
-> -	ret = dpu_core_irq_disable(phys_enc->dpu_kms, &irq->irq_idx, 1);
-> -	if (ret) {
-> -		DRM_ERROR("disable failed id=%u, intr=%d, irq=%d ret=%d",
-> -			  DRMID(phys_enc->parent), intr_idx,
-> -			  irq->irq_idx, ret);
-> -	}
-> -
->  	ret = dpu_core_irq_unregister_callback(phys_enc->dpu_kms, 
-> irq->irq_idx,
->  			&irq->cb);
->  	if (ret) {
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
-> b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
-> index d6717d6672f7..f6840b1af6e4 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
-> @@ -82,14 +82,12 @@ struct dpu_irq_callback {
->   * struct dpu_irq: IRQ structure contains callback registration info
->   * @total_irq:    total number of irq_idx obtained from HW interrupts 
-> mapping
->   * @irq_cb_tbl:   array of IRQ callbacks setting
-> - * @enable_counts array of IRQ enable counts
->   * @cb_lock:      callback lock
->   * @debugfs_file: debugfs file for irq statistics
->   */
->  struct dpu_irq {
->  	u32 total_irqs;
->  	struct list_head *irq_cb_tbl;
-> -	atomic_t *enable_counts;
->  	atomic_t *irq_counts;
->  	spinlock_t cb_lock;
->  };
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_trace.h
-> b/drivers/gpu/drm/msm/disp/dpu1/dpu_trace.h
-> index e349ea78a49d..00b43959f631 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_trace.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_trace.h
-> @@ -891,14 +891,6 @@ DECLARE_EVENT_CLASS(dpu_core_irq_idx_cnt_template,
->  	TP_printk("irq_idx:%d enable_count:%u", __entry->irq_idx,
->  		  __entry->enable_count)
->  );
-> -DEFINE_EVENT(dpu_core_irq_idx_cnt_template, dpu_core_irq_enable_idx,
-> -	TP_PROTO(int irq_idx, int enable_count),
-> -	TP_ARGS(irq_idx, enable_count)
-> -);
-> -DEFINE_EVENT(dpu_core_irq_idx_cnt_template, dpu_core_irq_disable_idx,
-> -	TP_PROTO(int irq_idx, int enable_count),
-> -	TP_ARGS(irq_idx, enable_count)
-> -);
-> 
->  DECLARE_EVENT_CLASS(dpu_core_irq_callback_template,
->  	TP_PROTO(int irq_idx, struct dpu_irq_callback *callback),
+
+Reviewed-by: Rob Herring <robh@kernel.org>
