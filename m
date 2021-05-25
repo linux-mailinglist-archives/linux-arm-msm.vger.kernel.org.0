@@ -2,83 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 311AA38F919
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 May 2021 05:58:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8BE1738F927
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 May 2021 06:00:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229612AbhEYEAS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 May 2021 00:00:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45652 "EHLO
+        id S230010AbhEYECA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 May 2021 00:02:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45960 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229492AbhEYEAS (ORCPT
+        with ESMTP id S230162AbhEYEBx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 May 2021 00:00:18 -0400
-Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com [IPv6:2607:f8b0:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3A54C061574
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 May 2021 20:58:48 -0700 (PDT)
-Received: by mail-ot1-x333.google.com with SMTP id i14-20020a9d624e0000b029033683c71999so16173619otk.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 May 2021 20:58:48 -0700 (PDT)
+        Tue, 25 May 2021 00:01:53 -0400
+Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 102B6C06138A
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 May 2021 21:00:25 -0700 (PDT)
+Received: by mail-oi1-x229.google.com with SMTP id w127so25242802oig.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 May 2021 21:00:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=PYCLMkEW+70ZigxLY6fmQ8dsM2q44x8Y2+ykUv3XIXI=;
-        b=H/DNaR8iAlpSqa0esisrNprCRmPr13QukJqyvgKoswi/uVSRceh8FbYO0f0yn8wWr2
-         5CxdFWvAqaandf7G4vv2VMokMy8X5uWVh4cXcK4HAER3PBoCW0Y4HtzoeDWl66MO6dJG
-         Wauw5mQMhH1SEPq3IdTEFF0NJMZkCP7B0dHxRU0jZhmyZTl1QFYwILexn5De6rQ3wGw6
-         DY1TkP7fHk+5dhtVBzIdhBKmFXi8aQaD8jyGRx55FyI+l/g0EVHIZZZYx9IaGFFpgrRt
-         0EeC6i/xjruU4te9J3va4X8xT62jGLkA8yfvhNCQ/kLabt6QioFKbJENa2+UGEOImzdY
-         jXNg==
+        bh=oh710QQejYAa/mMoSLfvFL7EfG7/Je5p6f7tFmEhnw4=;
+        b=Lj/p6gTvFjWagEJ3E2jFBMnF33As6gsxt+ZZqvFVYAm906xXsobeCfECstnZNQWfBv
+         I92wK2Ih3cCKZQa5cLrZT1qA7oYlxOZrSBXPCoEimWSuan4v72vGo7f0hVFfC1Hn8eVh
+         pzfqJvybomagpib2pVXJzfNGpBwpnuIg2MO97Clg5PTFZSOpGpHjCo4vnx1o2MqqHpyc
+         vHFqtG8sfNL3SqprePO0YeQOJOokXUiSCF/8Xnlih0kcW9K3UIBgFOCZk+DEArHlpKhY
+         QI2xUPNdLlZfTL2cK80k6zrYKEnV6ZWy+w38TNWauON2WOKa8x+bh+W2QBgF8oKzB1X5
+         1wrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=PYCLMkEW+70ZigxLY6fmQ8dsM2q44x8Y2+ykUv3XIXI=;
-        b=VqB5SKGRB5xXSfBXxDMF7/sJHTtF8NzlXsp1dRqJdtVarYbHTwLYJMv6KlIXUgvOYl
-         VGibN3SBlR7z5n505gNtZzqkYaJMtsPHDRt72fTCq2pbLs34c6tdtqJHFucdTUQmHNeR
-         /3Duzv6e9E8rKUmTnH3mxuDyLfFxgdvlKWjAcZIFCzGZaSxO/66gy2WUxinh3ShEbKOl
-         uyN6yJwER6DZ+HbXrCCqMgycz+fX8PPgnwkTn7iZrEb6gBLIMzz8rDbJ6H2w/u1CkhYr
-         g8rgkAMEIb6b8aJovRo0OQhSzeqUl9LQKMcqx4biuygJ52EXzAI9yS9ilQXOjCMZBPTZ
-         50og==
-X-Gm-Message-State: AOAM533ZGrI0bW9BEyNo+tJomkiqqe3uRKzmBpsrrAqn/4khm5W8v5cc
-        qp+vKq6ELDhe9skBkx3jeBfQbg==
-X-Google-Smtp-Source: ABdhPJyZXjYefLWliDSQvzVJp/OI2fPtOpIRZ7Tdcbr5odCMqVIiAaZVb8gEVfZxmY1u5CrCa2S9kg==
-X-Received: by 2002:a05:6830:1687:: with SMTP id k7mr22164926otr.220.1621915128032;
-        Mon, 24 May 2021 20:58:48 -0700 (PDT)
+        bh=oh710QQejYAa/mMoSLfvFL7EfG7/Je5p6f7tFmEhnw4=;
+        b=XdSqVkR5dvqrenIcs5DYEYoo32mlIFquw8OxfOeIaww4dhYAkbMJ2lTwpepIaV+Pt5
+         j/+K5ms++hi0y7JhY2nz/U7LzqwOXiEuf785SWhujmQL8pgMjRmWDLuYWHRzFVzfDeN0
+         ME9rBK05bZivtcyE9TSrLzuL4P2iyz/znK6G5m+njfHKoIGt2P/naSU1xTB1yGapz4zb
+         TkCx9ZklUtSlq/9UU9penAw0HUDtouRmhxC3qgXVgl2CQDlus3PHO5A7JYphkmEe81OW
+         4lDbwJ3Feb9FK8EeQTnFcYKgMVSUO0P/4B/cD803GBhSWPMsXiveW0FKvUrcmW+UH+RA
+         0VgQ==
+X-Gm-Message-State: AOAM532v7KGJju5QAi1ByFRrb071I6chZ2sAniK7ArB+BwEKhGkpYTCu
+        X6LPbVKYbB4wGZNsShQzZULsHQ==
+X-Google-Smtp-Source: ABdhPJzI7cE9gO2RAm4cn+ip07Ogo8f5FMCJmRBeiwUM2vJFPJiH3r3h8BzxlP/VGkMzSJypkkVgWw==
+X-Received: by 2002:aca:f207:: with SMTP id q7mr1526806oih.24.1621915224285;
+        Mon, 24 May 2021 21:00:24 -0700 (PDT)
 Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id 35sm3587790oth.49.2021.05.24.20.58.47
+        by smtp.gmail.com with ESMTPSA id e83sm2967141oia.40.2021.05.24.21.00.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 May 2021 20:58:47 -0700 (PDT)
-Date:   Mon, 24 May 2021 22:58:45 -0500
+        Mon, 24 May 2021 21:00:23 -0700 (PDT)
+Date:   Mon, 24 May 2021 23:00:20 -0500
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Shawn Guo <shawn.guo@linaro.org>
-Cc:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Hanjun Guo <guohanjun@huawei.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Mark Rutland <mark.rutland@arm.com>,
-        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v3] iommu/arm-smmu-qcom: hook up qcom_smmu_impl for ACPI
- boot
-Message-ID: <YKx19fppKVGXhH45@yoga>
-References: <20210509022607.17534-1-shawn.guo@linaro.org>
+To:     Douglas Anderson <dianders@chromium.org>
+Cc:     "Rafael J . Wysocki" <rafael.j.wysocki@intel.com>,
+        Niklas Cassel <niklas.cassel@linaro.org>,
+        Akhil P Oommen <akhilpo@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Niklas Cassel <nks@flawful.org>, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org
+Subject: Re: [PATCH v2] PM: AVS: qcom-cpr: Use
+ nvmem_cell_read_variable_le_u32()
+Message-ID: <YKx2VGxuPg3EPSMA@yoga>
+References: <20210521134437.v2.1.Id1c70158722750aec0673d60c12e46a9c66bbfed@changeid>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20210509022607.17534-1-shawn.guo@linaro.org>
+In-Reply-To: <20210521134437.v2.1.Id1c70158722750aec0673d60c12e46a9c66bbfed@changeid>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat 08 May 21:26 CDT 2021, Shawn Guo wrote:
+On Fri 21 May 15:44 CDT 2021, Douglas Anderson wrote:
 
-> The hookup with qcom_smmu_impl is required to do ACPI boot on SC8180X
-> based devices like Lenovo Flex 5G laptop and Microsoft Surface Pro X.
-> Define acpi_platform_list for these platforms and match them using
-> acpi_match_platform_list() call, and create qcom_smmu_impl accordingly.
+> Let's delete the private function cpr_read_efuse() since it does the
+> basically the same thing as the new API call
+> nvmem_cell_read_variable_le_u32().
 > 
-> (np == NULL) is used to check ACPI boot, because fwnode of SMMU device
-> is a static allocation and thus helpers like has_acpi_companion() don't
-> work here.
+> Differences between the new API call and the old private function:
+> * less error printing (I assume this is OK).
+> * will give an error if the value doesn't fit in 32-bits (the old code
+>   would have truncated silently).
 > 
 
 Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
@@ -86,54 +88,107 @@ Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 Regards,
 Bjorn
 
-> Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
 > ---
-> Changes for v3:
->  - Call acpi_match_platform_list() to match platform in qcom smmu
->    driver rather than IORT code.
+> I haven't done any more than compile-test this. Mostly I'm just
+> writing this patch because it helped provide inspiration for the
+> general API function.
 > 
-> Changes for v2:
->  - Rather than using asl_compiler_id in IORT table, follow suggestion
->    from Robin Murphy to use acpi_match_platform_list() to match platform.
+> Changes in v2:
+> - Resending v1 as a singleton patch; dependency is merged in mainline.
 > 
->  drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 13 +++++++++++++
->  1 file changed, 13 insertions(+)
+>  drivers/soc/qcom/cpr.c | 43 +++++-------------------------------------
+>  1 file changed, 5 insertions(+), 38 deletions(-)
 > 
-> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> index 98b3a1c2a181..f7e187f3fa66 100644
-> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> @@ -3,6 +3,7 @@
->   * Copyright (c) 2019, The Linux Foundation. All rights reserved.
->   */
+> diff --git a/drivers/soc/qcom/cpr.c b/drivers/soc/qcom/cpr.c
+> index b24cc77d1889..4ce8e816154f 100644
+> --- a/drivers/soc/qcom/cpr.c
+> +++ b/drivers/soc/qcom/cpr.c
+> @@ -801,38 +801,6 @@ static int cpr_set_performance_state(struct generic_pm_domain *domain,
+>  	return ret;
+>  }
 >  
-> +#include <linux/acpi.h>
->  #include <linux/adreno-smmu-priv.h>
->  #include <linux/of_device.h>
->  #include <linux/qcom_scm.h>
-> @@ -339,10 +340,22 @@ static const struct of_device_id __maybe_unused qcom_smmu_impl_of_match[] = {
->  	{ }
->  };
->  
-> +static struct acpi_platform_list qcom_acpi_platlist[] = {
-> +	{ "LENOVO", "CB-01   ", 0x8180, ACPI_SIG_IORT, equal, "QCOM SMMU" },
-> +	{ "QCOM  ", "QCOMEDK2", 0x8180, ACPI_SIG_IORT, equal, "QCOM SMMU" },
-> +	{ }
-> +};
-> +
->  struct arm_smmu_device *qcom_smmu_impl_init(struct arm_smmu_device *smmu)
+> -static int cpr_read_efuse(struct device *dev, const char *cname, u32 *data)
+> -{
+> -	struct nvmem_cell *cell;
+> -	ssize_t len;
+> -	char *ret;
+> -	int i;
+> -
+> -	*data = 0;
+> -
+> -	cell = nvmem_cell_get(dev, cname);
+> -	if (IS_ERR(cell)) {
+> -		if (PTR_ERR(cell) != -EPROBE_DEFER)
+> -			dev_err(dev, "undefined cell %s\n", cname);
+> -		return PTR_ERR(cell);
+> -	}
+> -
+> -	ret = nvmem_cell_read(cell, &len);
+> -	nvmem_cell_put(cell);
+> -	if (IS_ERR(ret)) {
+> -		dev_err(dev, "can't read cell %s\n", cname);
+> -		return PTR_ERR(ret);
+> -	}
+> -
+> -	for (i = 0; i < len; i++)
+> -		*data |= ret[i] << (8 * i);
+> -
+> -	kfree(ret);
+> -	dev_dbg(dev, "efuse read(%s) = %x, bytes %zd\n", cname, *data, len);
+> -
+> -	return 0;
+> -}
+> -
+>  static int
+>  cpr_populate_ring_osc_idx(struct cpr_drv *drv)
 >  {
->  	const struct device_node *np = smmu->dev->of_node;
+> @@ -843,8 +811,7 @@ cpr_populate_ring_osc_idx(struct cpr_drv *drv)
+>  	int ret;
 >  
-> +	if (np == NULL) {
-> +		/* Match platform for ACPI boot */
-> +		if (acpi_match_platform_list(qcom_acpi_platlist) >= 0)
-> +			return qcom_smmu_create(smmu, &qcom_smmu_impl);
-> +	}
-> +
->  	if (of_match_node(qcom_smmu_impl_of_match, np))
->  		return qcom_smmu_create(smmu, &qcom_smmu_impl);
+>  	for (; fuse < end; fuse++, fuses++) {
+> -		ret = cpr_read_efuse(drv->dev, fuses->ring_osc,
+> -				     &data);
+> +		ret = nvmem_cell_read_variable_le_u32(drv->dev, fuses->ring_osc, &data);
+>  		if (ret)
+>  			return ret;
+>  		fuse->ring_osc_idx = data;
+> @@ -863,7 +830,7 @@ static int cpr_read_fuse_uV(const struct cpr_desc *desc,
+>  	u32 bits = 0;
+>  	int ret;
+>  
+> -	ret = cpr_read_efuse(drv->dev, init_v_efuse, &bits);
+> +	ret = nvmem_cell_read_variable_le_u32(drv->dev, init_v_efuse, &bits);
+>  	if (ret)
+>  		return ret;
+>  
+> @@ -932,7 +899,7 @@ static int cpr_fuse_corner_init(struct cpr_drv *drv)
+>  		}
+>  
+>  		/* Populate target quotient by scaling */
+> -		ret = cpr_read_efuse(drv->dev, fuses->quotient, &fuse->quot);
+> +		ret = nvmem_cell_read_variable_le_u32(drv->dev, fuses->quotient, &fuse->quot);
+>  		if (ret)
+>  			return ret;
+>  
+> @@ -1001,7 +968,7 @@ static int cpr_calculate_scaling(const char *quot_offset,
+>  	prev_fuse = fuse - 1;
+>  
+>  	if (quot_offset) {
+> -		ret = cpr_read_efuse(drv->dev, quot_offset, &quot_diff);
+> +		ret = nvmem_cell_read_variable_le_u32(drv->dev, quot_offset, &quot_diff);
+>  		if (ret)
+>  			return ret;
+>  
+> @@ -1701,7 +1668,7 @@ static int cpr_probe(struct platform_device *pdev)
+>  	 * initialized after attaching to the power domain,
+>  	 * since it depends on the CPU's OPP table.
+>  	 */
+> -	ret = cpr_read_efuse(dev, "cpr_fuse_revision", &cpr_rev);
+> +	ret = nvmem_cell_read_variable_le_u32(dev, "cpr_fuse_revision", &cpr_rev);
+>  	if (ret)
+>  		return ret;
 >  
 > -- 
-> 2.17.1
+> 2.31.1.818.g46aad6cb9e-goog
 > 
