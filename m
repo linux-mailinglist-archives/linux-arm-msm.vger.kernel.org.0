@@ -2,151 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4680A38F6C0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 May 2021 02:03:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1C4EE38F6E4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 May 2021 02:15:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230024AbhEYAFT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 May 2021 20:05:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49534 "EHLO
+        id S229540AbhEYAQe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 May 2021 20:16:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52330 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230129AbhEYAEi (ORCPT
+        with ESMTP id S229539AbhEYAQd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 May 2021 20:04:38 -0400
-Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41319C061347
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 May 2021 17:02:56 -0700 (PDT)
-Received: by mail-pf1-x435.google.com with SMTP id q67so5123363pfb.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 May 2021 17:02:56 -0700 (PDT)
+        Mon, 24 May 2021 20:16:33 -0400
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E827C061574;
+        Mon, 24 May 2021 17:15:03 -0700 (PDT)
+Received: by mail-ej1-x62f.google.com with SMTP id jt22so233150ejb.7;
+        Mon, 24 May 2021 17:15:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=3qFLOaUCi0WYGUyCmLqrEif6mRJ8u8fFU7Zgh2OGms8=;
-        b=mG7J209zaQCJJxhHTB1kgkaUN3lotKNwZl1qpb1B/7puBZWLYE/M/Qfnt2cDUWNCig
-         nQOFY4Tftu9/1Xin+yQPRW+462ofrPtvfh28OYEXR3PCHAZc0rU+82eOZNUDK/1bTBdB
-         MCazDzs5CjxFNsJfJlRr+KIhYqs55qaaH5NAY=
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=qsmlRIkgq2zV5frevaV4WTTbksGQGcj6H85aoJ0Ejt8=;
+        b=q7Ocqmkns5l1r5KzX/QKurVUeFmPQH9c1DhFDzd87dFqvC5j4v+cO6y6Y3ndzRX0u5
+         Cl97L0mD2Zp9T7moehtSRy65RmpLbjEM1IgYR0/EfQFTFGtMDOv3WWjDk4QcdMB/oTWe
+         dWl6cnN0quBvaYbBwQGoHSMVOfUg32Il2vtpbBX3kMJAuoM4PLwNFJsqCSIKmM9kutoO
+         UPzSxqi1//NfbTQFS9lsOI8GHdiH0L5FS3fmrYoaNLrpGpAN3VlcC3WV2cTljlKsRzWB
+         Tq2o0Qx/AMkRPMcsI+dALFfDnOfWHeHPYBpZWA+9wKNJcaEyPGXJSUOPVlQ4E7HUHIDI
+         NxRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=3qFLOaUCi0WYGUyCmLqrEif6mRJ8u8fFU7Zgh2OGms8=;
-        b=EpJjlmTyNFrRKjGRiQuRaaeXwylkcvcgdWA7SVWFXnFeyNmAr58oryu/DyQBEsIFQi
-         mWlDNqvS1ZELCZ10KAGQZ8i3insdhW2waDdxDoj6G+D8KzuOLN+ffiSL/LC+cbQuWKmV
-         tK8hfrmIKwt5GVjOrMu7Ef11U2DnOjxPxXmC1JM3oFwxc4YxJhT0y3Alzb3YkMDaghKi
-         CJu58ierAKdHV5oeh7W/67/+Ry9F+VaFn4pEuhFcK8G2ZvveAVdAQ5f7FmfJGDGNNNDN
-         2fzX6eAWtrArFKtx9z3hgTBI2Av06yZBkkE76DHKTS8XJzI1y75C1UILR289K4gcRulr
-         ad5Q==
-X-Gm-Message-State: AOAM531zX8MykByuMcUC4Vz/s1XO0gHVnaST0T1Pn4vA4EUyxgi9gMei
-        5tGPdaZHyHnENBiUwdOslR1LXg==
-X-Google-Smtp-Source: ABdhPJx5C+8zTuLTjxVJMS4EPDr7rRNr7Ky/FS6RudZXZZvp+t4FXELkMogHFv7NbjC/xJ97iP4p3w==
-X-Received: by 2002:a63:6f4e:: with SMTP id k75mr16304849pgc.434.1621900975692;
-        Mon, 24 May 2021 17:02:55 -0700 (PDT)
-Received: from tictac2.mtv.corp.google.com ([2620:15c:202:201:26d1:4df0:7cdf:ce13])
-        by smtp.gmail.com with ESMTPSA id f18sm10696741pjh.55.2021.05.24.17.02.54
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=qsmlRIkgq2zV5frevaV4WTTbksGQGcj6H85aoJ0Ejt8=;
+        b=GbrIp+0sw+I5UIm0/K9eTPZKpI/8Hku2ahjFoILLmKhlTxCdfm66TVxMXhpvCZxjn2
+         VZMU1KyUG4iP/utDEHay9mfPSRJ57ebOpXNW/JI7Bl45qhXQ78rT31OpSSHEW2vmGVd+
+         gijrAiVmL90t11tKDFd/dyxO000dOdWRsrFFwd4FHL/C/I7wgcEDoVLCyKTF8mvT/k9w
+         xVPeOAoyDyUrfvv62cj8j9mdl/F9hutnjKb9SL3QZ5NV8f/GJCzufLlYqooabaVRyFAO
+         HytK1OFnUn+2uZMjpRmQngN1Ax96RGX4ySsPaEcaLcll/7BJPx4marS8+PEvRxOZgo6H
+         Y2TA==
+X-Gm-Message-State: AOAM5310e+Q9CFmibV9kmTggldCM4UaupnOuKfX5kfhiCRPCBlsvFXsQ
+        zwkG0rFeOhETX4ejt3X38fku1SG7GaO0KQ==
+X-Google-Smtp-Source: ABdhPJxLpRdzFVmTZm9zlKW4qOFdgQStppgfa8WmFcOlQhXn2XulruJIuoMAi/X73ZXZ6n0OJlVMgA==
+X-Received: by 2002:a17:907:d1a:: with SMTP id gn26mr23234142ejc.42.1621901702156;
+        Mon, 24 May 2021 17:15:02 -0700 (PDT)
+Received: from Ansuel-xps.localdomain (93-35-189-2.ip56.fastwebnet.it. [93.35.189.2])
+        by smtp.googlemail.com with ESMTPSA id yr15sm8448017ejb.16.2021.05.24.17.15.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 May 2021 17:02:55 -0700 (PDT)
-From:   Douglas Anderson <dianders@chromium.org>
-To:     Andrzej Hajda <a.hajda@samsung.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Sam Ravnborg <sam@ravnborg.org>
-Cc:     linux-arm-msm@vger.kernel.org, Linus W <linus.walleij@linaro.org>,
-        Lyude Paul <lyude@redhat.com>,
+        Mon, 24 May 2021 17:15:01 -0700 (PDT)
+From:   Ansuel Smith <ansuelsmth@gmail.com>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Steev Klimaszewski <steev@kali.org>, robdclark@chromium.org,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Thierry Reding <treding@nvidia.com>,
-        dri-devel@lists.freedesktop.org,
-        Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        Miquel Raynal <miquel.raynal@bootlin.com>,
+        Richard Weinberger <richard@nod.at>,
+        Vignesh Raghavendra <vigneshr@ti.com>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-mtd@lists.infradead.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH v8 11/11] arm64: dts: qcom: sc7180-trogdor: Move panel under the bridge chip
-Date:   Mon, 24 May 2021 17:01:59 -0700
-Message-Id: <20210524165920.v8.11.Ibdb7735fb1844561b902252215a69526a14f9abd@changeid>
-X-Mailer: git-send-email 2.31.1.818.g46aad6cb9e-goog
-In-Reply-To: <20210525000159.3384921-1-dianders@chromium.org>
-References: <20210525000159.3384921-1-dianders@chromium.org>
+Cc:     Ansuel Smith <ansuelsmth@gmail.com>
+Subject: [PATCH] mtd: parsers: qcom: Fix leaking of partition name
+Date:   Tue, 25 May 2021 02:14:49 +0200
+Message-Id: <20210525001449.10386-1-ansuelsmth@gmail.com>
+X-Mailer: git-send-email 2.31.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Putting the panel under the bridge chip (under the aux-bus node)
-allows the panel driver to get access to the DP AUX bus, enabling all
-sorts of fabulous new features.
+Partition name are already allocated and defined by the ptable struct.
+Skip reallocation of name variable and directly lowercase the name in
+the ptable struct. The name variable was duplicated but never freed.
+The leak was found using kmemleak.
 
-While we're at this, get rid of a level of hierarchy for the panel
-node. It doesn't need "ports / port" and can just have a "port" child.
-
-For Linux, this patch has a hard requirement on the patches adding DP
-AUX bus support to the ti-sn65dsi86 bridge chip driver. See the patch
-("drm/bridge: ti-sn65dsi86: Add support for the DP AUX bus").
-
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Acked-by: Linus Walleij <linus.walleij@linaro.org>
+Fixes: 803eb124e1a6 ("mtd: parsers: Add Qcom SMEM parser")
+Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
 ---
+ drivers/mtd/parsers/qcomsmempart.c | 22 ++++------------------
+ 1 file changed, 4 insertions(+), 18 deletions(-)
 
-(no changes since v7)
-
-Changes in v7:
-- Panel now under bridge chip instead of getting a link to ddc-i2c
-
- arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 30 ++++++++++----------
- 1 file changed, 15 insertions(+), 15 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-index 24d293ef56d7..c76afd857b54 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-@@ -260,21 +260,6 @@ max98357a: audio-codec-0 {
- 		#sound-dai-cells = <0>;
- 	};
+diff --git a/drivers/mtd/parsers/qcomsmempart.c b/drivers/mtd/parsers/qcomsmempart.c
+index d9083308f6ba..3d083f0815f8 100644
+--- a/drivers/mtd/parsers/qcomsmempart.c
++++ b/drivers/mtd/parsers/qcomsmempart.c
+@@ -62,8 +62,8 @@ static int parse_qcomsmem_part(struct mtd_info *mtd,
+ 	struct smem_flash_ptable *ptable;
+ 	size_t len = SMEM_FLASH_PTABLE_HDR_LEN;
+ 	struct mtd_partition *parts;
+-	int ret, i, numparts;
+-	char *name, *c;
++	int i, numparts;
++	char *c;
  
--	panel: panel {
--		/* Compatible will be filled in per-board */
--		power-supply = <&pp3300_dx_edp>;
--		backlight = <&backlight>;
--		hpd-gpios = <&sn65dsi86_bridge 2 GPIO_ACTIVE_HIGH>;
--
--		ports {
--			port {
--				panel_in_edp: endpoint {
--					remote-endpoint = <&sn65dsi86_out>;
--				};
--			};
--		};
--	};
--
- 	pwmleds {
- 		compatible = "pwm-leds";
- 		keyboard_backlight: keyboard-backlight {
-@@ -674,6 +659,21 @@ sn65dsi86_out: endpoint {
- 				};
- 			};
- 		};
-+
-+		aux-bus {
-+			panel: panel {
-+				/* Compatible will be filled in per-board */
-+				power-supply = <&pp3300_dx_edp>;
-+				backlight = <&backlight>;
-+				hpd-gpios = <&sn65dsi86_bridge 2 GPIO_ACTIVE_HIGH>;
-+
-+				port {
-+					panel_in_edp: endpoint {
-+						remote-endpoint = <&sn65dsi86_out>;
-+					};
-+				};
-+			};
-+		};
- 	};
- };
+ 	if (IS_ENABLED(CONFIG_MTD_SPI_NOR_USE_4K_SECTORS)
+ 			&& mtd->type == MTD_NORFLASH) {
+@@ -125,17 +125,11 @@ static int parse_qcomsmem_part(struct mtd_info *mtd,
+ 		if (pentry->name[0] == '\0')
+ 			continue;
  
+-		name = kstrdup(pentry->name, GFP_KERNEL);
+-		if (!name) {
+-			ret = -ENOMEM;
+-			goto out_free_parts;
+-		}
+-
+ 		/* Convert name to lower case */
+-		for (c = name; *c != '\0'; c++)
++		for (c = pentry->name; *c != '\0'; c++)
+ 			*c = tolower(*c);
+ 
+-		parts[i].name = name;
++		parts[i].name = pentry->name;
+ 		parts[i].offset = le32_to_cpu(pentry->offset) * mtd->erasesize;
+ 		parts[i].mask_flags = pentry->attr;
+ 		parts[i].size = le32_to_cpu(pentry->length) * mtd->erasesize;
+@@ -149,14 +143,6 @@ static int parse_qcomsmem_part(struct mtd_info *mtd,
+ 	*pparts = parts;
+ 
+ 	return numparts;
+-
+-out_free_parts:
+-	while (--i >= 0)
+-		kfree(parts[i].name);
+-	kfree(parts);
+-	*pparts = NULL;
+-
+-	return ret;
+ }
+ 
+ static const struct of_device_id qcomsmem_of_match_table[] = {
 -- 
-2.31.1.818.g46aad6cb9e-goog
+2.31.1
 
