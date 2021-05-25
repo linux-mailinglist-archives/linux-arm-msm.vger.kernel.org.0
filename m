@@ -2,62 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 53B3C39075D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 May 2021 19:19:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5834A390760
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 May 2021 19:20:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233709AbhEYRUv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 May 2021 13:20:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57640 "EHLO
+        id S233726AbhEYRVd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 May 2021 13:21:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57754 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233612AbhEYRUq (ORCPT
+        with ESMTP id S233698AbhEYRVN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 May 2021 13:20:46 -0400
-Received: from mail-qt1-x836.google.com (mail-qt1-x836.google.com [IPv6:2607:f8b0:4864:20::836])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF927C06138B
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 May 2021 10:19:15 -0700 (PDT)
-Received: by mail-qt1-x836.google.com with SMTP id i12so4109099qtr.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 May 2021 10:19:15 -0700 (PDT)
+        Tue, 25 May 2021 13:21:13 -0400
+Received: from mail-qk1-x72c.google.com (mail-qk1-x72c.google.com [IPv6:2607:f8b0:4864:20::72c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9B42C06138D
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 May 2021 10:19:30 -0700 (PDT)
+Received: by mail-qk1-x72c.google.com with SMTP id q10so31181621qkc.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 May 2021 10:19:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=RR4xoh8acB29qJPitkb2wSC7JB6AOVStGTvrt20hM8M=;
-        b=X4X35sDWeBb8yjiu2wga4t0uG2LuMIKkR8vb8537T25TUdcZecYeNPM+6j92rt10Bj
-         kHoZFMq36Kj+yuWTRdctsxqVOXm5jSQV06MN7AA6b5TdV4lu9ux13Zt6d27g5NELi5p4
-         kOFjT2uI16WjvUGvOa6UOUGhDbfW/1ZaPBYlQ=
+        bh=0I/7mJjy8fAtyuQW3u9pKYduA4z2KSC8v2zpf0k2q4Q=;
+        b=LoEAi62rRu7tHFsRIAnERe0Uo6+lB7bp00VbsoFCad2BNA4J/p4XQRSUgdI2W2YwpI
+         BCwReshEWdDvXBR49YxtAe1g92O1OceM2w/LWlaEzlpySS/rDNROaMb5tLKesjeJPP0X
+         CNKYpCq57mgvBz5whA92hLzX7uNngLYIcuAIs=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=RR4xoh8acB29qJPitkb2wSC7JB6AOVStGTvrt20hM8M=;
-        b=V68xdVqjQPw+/korEzY772nD/a/tP1GNuf/ldqctREhzD/QGjrSpx+tEe4EC3+dJbM
-         uu+H7LY6oyhIhwpTwykr8Q5KL878iCkdYwCi/El6D/4rH5zZeatjIMLu2N8jfOt/By+0
-         jXaxfRhiX3hKjyl0sEZKqItVP3hrigD79/RAlcTNr6Ev2+4SoxUIArBhmVYM2qjUSlyO
-         /wAWt8hq/GKCROL4mZ9LS74KOON+AcGGx+LhpR+MP/mDtmzQAqmGrrXcoJxAHIiwzjhA
-         Ou6bkmyxMfuCladqQbWmnmNQRLrbxVb/zab6Uc5EJXbwEMWXyYN3O4bELr2rERDJ/lem
-         WvRA==
-X-Gm-Message-State: AOAM533Q7NBZK4SWOCPjZlVfLE3S1WYLc2ubuw/Iu+Rv3xenYwV4lkLs
-        8E80MsmctiYvoWEzv23WDbRo5GlEpBT58w==
-X-Google-Smtp-Source: ABdhPJyaJvFLP23/sbxgMLoQjsCVyU14bc2ZQhKGwcaNNeKPir+DoBQ+SWHd30V++xE3hNPBRiNJWQ==
-X-Received: by 2002:ac8:5f90:: with SMTP id j16mr34060814qta.329.1621963154974;
-        Tue, 25 May 2021 10:19:14 -0700 (PDT)
-Received: from mail-yb1-f173.google.com (mail-yb1-f173.google.com. [209.85.219.173])
-        by smtp.gmail.com with ESMTPSA id v6sm13553569qkv.54.2021.05.25.10.19.12
+        bh=0I/7mJjy8fAtyuQW3u9pKYduA4z2KSC8v2zpf0k2q4Q=;
+        b=pJVqmhYXzF0188TILh+qf1l5JlJJZs0D9EMlt37xc45ZacxXG0o1o9JnoYe/BrsTA7
+         2AxYfPFRPs9r75gFgfuK4qEKZFaVvrcrq5DnxPvvIq+vR+WNU1zY2VhBGDDVXmJ5Xxwi
+         UT+9I0ZmY3u9dFo8dUCzWqg4zI1bRzlZwEzwijvU/PkIXi0/8EDxVHPvY6v+aU6KyAHJ
+         LwHSocsvpZUdHph1e4gc5gzAO3rwo5BZ9UTuaym/Hw10b2fisCrdrPCXlpNfPf1yYwmF
+         /TUdNhDiRfDnai8ksTyhQHYzSA7FZiN3IDSjB0zIf3qXYEE67VwwVv6KEeZJpohFz1GW
+         52jA==
+X-Gm-Message-State: AOAM532PPIniL2jWvw4XuSpB5c+/Yicv/2uApl98qwyqTx1Y5fFdupzu
+        ONoWUOID5P9o4JmznUv3dsKWTVB/zunsFg==
+X-Google-Smtp-Source: ABdhPJx1fNUb+ecuxPwmRmKWEJOenQ5ekTJFSZwXprW0Jan30q1ij47PKYoYXKTlnsiMb1xrziT5xQ==
+X-Received: by 2002:ae9:eb12:: with SMTP id b18mr23738220qkg.459.1621963169894;
+        Tue, 25 May 2021 10:19:29 -0700 (PDT)
+Received: from mail-yb1-f171.google.com (mail-yb1-f171.google.com. [209.85.219.171])
+        by smtp.gmail.com with ESMTPSA id j16sm12689495qtr.27.2021.05.25.10.19.29
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 25 May 2021 10:19:13 -0700 (PDT)
-Received: by mail-yb1-f173.google.com with SMTP id g38so44051284ybi.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 May 2021 10:19:12 -0700 (PDT)
-X-Received: by 2002:a25:d846:: with SMTP id p67mr5418346ybg.276.1621963152429;
- Tue, 25 May 2021 10:19:12 -0700 (PDT)
+        Tue, 25 May 2021 10:19:29 -0700 (PDT)
+Received: by mail-yb1-f171.google.com with SMTP id y197so2387069ybe.11
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 May 2021 10:19:29 -0700 (PDT)
+X-Received: by 2002:a5b:54a:: with SMTP id r10mr44274582ybp.476.1621963168291;
+ Tue, 25 May 2021 10:19:28 -0700 (PDT)
 MIME-Version: 1.0
-References: <1621927831-29471-1-git-send-email-rajeevny@codeaurora.org> <1621927831-29471-4-git-send-email-rajeevny@codeaurora.org>
-In-Reply-To: <1621927831-29471-4-git-send-email-rajeevny@codeaurora.org>
+References: <1621927831-29471-1-git-send-email-rajeevny@codeaurora.org> <1621927831-29471-5-git-send-email-rajeevny@codeaurora.org>
+In-Reply-To: <1621927831-29471-5-git-send-email-rajeevny@codeaurora.org>
 From:   Doug Anderson <dianders@chromium.org>
-Date:   Tue, 25 May 2021 10:19:00 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=VF+oggiTffSk5S0Bo0FA0ZaWKURkkqJBPWDjkyQ+Vspw@mail.gmail.com>
-Message-ID: <CAD=FV=VF+oggiTffSk5S0Bo0FA0ZaWKURkkqJBPWDjkyQ+Vspw@mail.gmail.com>
-Subject: Re: [v4 3/4] dt-bindings: display: simple: Add Samsung ATNA33XC20
+Date:   Tue, 25 May 2021 10:19:15 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=X=VtC9EGyxUGptRN1=PcKwyWLEyRfA9J1frTVPCKY68w@mail.gmail.com>
+Message-ID: <CAD=FV=X=VtC9EGyxUGptRN1=PcKwyWLEyRfA9J1frTVPCKY68w@mail.gmail.com>
+Subject: Re: [v4 4/4] drm/panel-simple: Add Samsung ATNA33XC20
 To:     Rajeev Nandan <rajeevny@codeaurora.org>
 Cc:     y@qualcomm.com, dri-devel <dri-devel@lists.freedesktop.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
@@ -93,25 +93,48 @@ On Tue, May 25, 2021 at 12:31 AM Rajeev Nandan <rajeevny@codeaurora.org> wrote:
 > Changes in v4:
 > - New
 >
->  Documentation/devicetree/bindings/display/panel/panel-simple.yaml | 2 ++
->  1 file changed, 2 insertions(+)
+>  drivers/gpu/drm/panel/panel-simple.c | 34 ++++++++++++++++++++++++++++++++++
+>  1 file changed, 34 insertions(+)
 >
-> diff --git a/Documentation/devicetree/bindings/display/panel/panel-simple.yaml b/Documentation/devicetree/bindings/display/panel/panel-simple.yaml
-> index 4a0a5e1..f5acfd6 100644
-> --- a/Documentation/devicetree/bindings/display/panel/panel-simple.yaml
-> +++ b/Documentation/devicetree/bindings/display/panel/panel-simple.yaml
-> @@ -242,6 +242,8 @@ properties:
->        - rocktech,rk101ii01d-ct
->          # Rocktech Display Ltd. RK070ER9427 800(RGB)x480 TFT LCD panel
->        - rocktech,rk070er9427
-> +        # Samsung 13.3" FHD (1920x1080 pixels) eDP AMOLED panel
-> +      - samsung,atna33xc20
->          # Samsung 12.2" (2560x1600 pixels) TFT LCD panel
->        - samsung,lsn122dl01-c01
+> diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
+> index caed71b..21af794 100644
+> --- a/drivers/gpu/drm/panel/panel-simple.c
+> +++ b/drivers/gpu/drm/panel/panel-simple.c
+> @@ -3644,6 +3644,37 @@ static const struct panel_desc rocktech_rk101ii01d_ct = {
+>         .connector_type = DRM_MODE_CONNECTOR_LVDS,
+>  };
+>
+> +static const struct drm_display_mode samsung_atna33xc20_mode = {
+> +       .clock = 138770,
+> +       .hdisplay = 1920,
+> +       .hsync_start = 1920 + 48,
+> +       .hsync_end = 1920 + 48 + 32,
+> +       .htotal = 1920 + 48 + 32 + 80,
+> +       .vdisplay = 1080,
+> +       .vsync_start = 1080 + 8,
+> +       .vsync_end = 1080 + 8 + 8,
+> +       .vtotal = 1080 + 8 + 8 + 16,
+> +       .flags = DRM_MODE_FLAG_PHSYNC | DRM_MODE_FLAG_NVSYNC,
+> +};
+> +
+> +static const struct panel_desc samsung_atna33xc20 = {
+> +       .modes = &samsung_atna33xc20_mode,
+> +       .num_modes = 1,
+> +       .bpc = 10,
+> +       .size = {
+> +               .width = 294,
+> +               .height = 165,
+> +       },
+> +       .delay = {
+> +               .disable_to_power_off = 150,
+> +               .power_to_enable = 150,
+> +               .hpd_absent_delay = 200,
+> +               .unprepare = 500,
+> +       },
+> +       .connector_type = DRM_MODE_CONNECTOR_eDP,
+> +       .uses_dpcd_backlight = true,
 
-This panel is slightly different from other panels currently listed
-here because it requires the DP AUX channel to control the backlight.
-However, in my mind, it still qualifies as "simple" because this fact
-is probable and no extra dt properties are needed. Thus:
-
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+From my feedback on the previous patch in this series, I believe the
+"uses_dpcd_backlight" property should be removed and this should be
+auto-detected. Other than that this patch looks fine to me. Feel free
+to add my Reviewed-by tag next spin when that property is removed.
