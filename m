@@ -2,143 +2,172 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DB2E238F88B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 May 2021 05:12:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AA1EC38F8AE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 May 2021 05:20:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230130AbhEYDNl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 May 2021 23:13:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35318 "EHLO
+        id S229837AbhEYDWS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 May 2021 23:22:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37236 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230100AbhEYDNk (ORCPT
+        with ESMTP id S229575AbhEYDWS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 May 2021 23:13:40 -0400
-Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F308FC06138A
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 May 2021 20:12:10 -0700 (PDT)
-Received: by mail-oi1-x22f.google.com with SMTP id z3so28978963oib.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 May 2021 20:12:10 -0700 (PDT)
+        Mon, 24 May 2021 23:22:18 -0400
+Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 769A7C061574;
+        Mon, 24 May 2021 20:20:48 -0700 (PDT)
+Received: by mail-ot1-x329.google.com with SMTP id 69-20020a9d0a4b0000b02902ed42f141e1so27276411otg.2;
+        Mon, 24 May 2021 20:20:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=LzZi3Q25vKg3XhS1Ic0lRTfT6eSF+5WUdcs1/J6hy2Y=;
-        b=KiZ7geh13gcARZT8mSzJFcrIk05fkvTTjIk8CLSHiGYBxiybxhUD1F0ZuRHi56V9S0
-         UMUccQgfUbA4cGGs5yqNLckMrl5KIDcdm7bjjFr0HI7/YCX5wkf7vRb4nWhpo7ccywpH
-         tOWVylQII31yvzek/fzTMlJPc/mBectQvhwumZg/NXiEG30Qb1ks2ngB1BLw8KBPUofY
-         lDHlfDQd/aDqCzf+RI/gsRXwwrkKk+kS4kEE5RlmBvSoeazJ4Tt/adeEo8sLE0dkIjr7
-         P7posTi86TqIcQcUctDyQiJAZdvqW2CM/pt085lwuuwFlQS8FOC2YtNMajwX6JfvupYi
-         UUeQ==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Sed5JvRLMiaF+0cJiDPgQf1+4i4xNSCm3dc8S6Z16pQ=;
+        b=jkwFbwTn/CLxuDbawKx+Ai7I2fdbLrqNe0hagrkWg8vHDxYqqBb+dOy51ktDABiZZf
+         1gm+owY9hu4NO8qC7NRXEcmGhU3Op6ND2J5cyc1mcDfpi4DBLcF59KZ5KQt9X5bkXMHR
+         40dQLvIVTmBQyrobhyZsnR6O3yj7LUoayZIfH0pSueke9vAjJ555E2ET6+qcqJPmRJH6
+         Rguhm8Xqje3K9Hoj+xa2ggJ1pBUKqiykXe3xokDsR85owUyxLFPiSJ8RLnGemfeaLRn0
+         LdRE7A0ZbQ4nGnViDPuXSHofG2MPMzm/KKIGdR2fYD/Q2rDz+9fJvEH0TA3HxOwYuUtz
+         HivQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=LzZi3Q25vKg3XhS1Ic0lRTfT6eSF+5WUdcs1/J6hy2Y=;
-        b=OEAnaVQ6h0Znw/XZMRqB8m93KUD20aXUgPuvBpa3ZaYQsNpacZpJhpob6FXnAA0lJi
-         krrmC+twMkuv/NXQp5HSXq3G/RUIzjC+9atTtfeqV0XF79k3BG2LpfizR++ZdfvLU/8y
-         JvhDS81IzF5JgWMrGPH27EqwATXmq0K1gHJXMIurBIkZJ6WS1v08w6Vz3NfRalued0tC
-         qy0aVahwccW4Dgz/2Sk7myQSnobMlejWAwuOWjcc3JoFlCb8vVb4GqMq8Gm3tUr51uqO
-         /2D0FDYVchvp6HtBXWitMd3Aadim/HVYdO6S62By/NU3UNbMRYvP1R4YCjZy4qgrJDGN
-         svjA==
-X-Gm-Message-State: AOAM5318AKokygbZL2bKKJv8/T2hWg5JeqYBPA0OClLT9oILhi7vJHPL
-        VuX9sWYXVLlbfIqf5+tqYwoVyn63+1xcZQ==
-X-Google-Smtp-Source: ABdhPJwfVJOo2UBAigec/ToH+3zn+ksCtwT3t0kun5HoEK1TJkhAS70gURQ1MwmEquyuXN0SmW90vQ==
-X-Received: by 2002:a05:6808:997:: with SMTP id a23mr1397330oic.129.1621912330250;
-        Mon, 24 May 2021 20:12:10 -0700 (PDT)
-Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id a6sm1130940oon.20.2021.05.24.20.12.09
+        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
+         :mime-version:content-transfer-encoding;
+        bh=Sed5JvRLMiaF+0cJiDPgQf1+4i4xNSCm3dc8S6Z16pQ=;
+        b=O4raLSzXldGJpc5TgSmT69QezMl62HYZ2WA74LUlIpRpjeqSjNt3lrlyiSFcdMruqi
+         jWwt2RJbt8S3Wjt3Q0gx3OZPu2ci6djIJAPB63CNr8O+S87O+kZjY+7qrkxJPZYoyUbQ
+         KY9dx+qmhDCBy5AodjL0TVbGaWcx0zqZAwxjiJdCTGOySmyWto4kGJ2HtBPAetRoofKE
+         dfCG/NBYmpDlLJMxos28P5jz0m1d1V6UOP1q0pFX3dpLFjggb+QGjxcgxmHauPTG+/2v
+         u710xLzomAOYI4rY81g5psBhBsh+UHfhDsCgwDHLh8IuTafnPEPyqqdgXSrG87XxQCRD
+         Df8Q==
+X-Gm-Message-State: AOAM531NufEc4M7b7EtlP0qO1dL12cHCNSqnqGMaBppKjfz2a/WjixNa
+        yoOAaX957RTSElpJE/bIlvM=
+X-Google-Smtp-Source: ABdhPJxKOQeYkDInkuL2V3aQoUYr+kbPVlPeMP9q3jy3Uz4aFJzK9uqk6bnPvR4B9/MbmKkZf/JsPw==
+X-Received: by 2002:a9d:60ca:: with SMTP id b10mr20574176otk.242.1621912847670;
+        Mon, 24 May 2021 20:20:47 -0700 (PDT)
+Received: from localhost ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id 88sm3481873otb.7.2021.05.24.20.20.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 May 2021 20:12:09 -0700 (PDT)
-Date:   Mon, 24 May 2021 22:12:07 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Martin Botka <martin.botka@somainline.org>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht,
-        konrad.dybcio@somainline.org,
-        angelogioacchino.delregno@somainline.org,
-        marijn.suijten@somainline.org, Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH V2 2/2] clk: qcom: Add SM6125 (TRINKET) GCC driver
-Message-ID: <YKxrB3xIIqtxXPzf@yoga>
-References: <20210523211016.726736-1-martin.botka@somainline.org>
- <20210523211016.726736-2-martin.botka@somainline.org>
+        Mon, 24 May 2021 20:20:46 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+From:   Guenter Roeck <linux@roeck-us.net>
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH] drm/msm/dp: Drop unnecessary NULL checks after container_of
+Date:   Mon, 24 May 2021 20:20:33 -0700
+Message-Id: <20210525032033.453143-1-linux@roeck-us.net>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210523211016.726736-2-martin.botka@somainline.org>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun 23 May 16:10 CDT 2021, Martin Botka wrote:
+The result of container_of() operations is never NULL unless the embedded
+element is the first element of the structure. This is not the case here.
+The NULL check on the result of container_of() is therefore unnecessary
+and misleading. Remove it.
 
-> From: Konrad Dybcio <konrad.dybcio@somainline.org>
-> 
-> Add the clocks supported in global clock controller, which clock the
-> peripherals like BLSPs, SDCC, USB, MDSS etc. Register all the clocks
-> to the clock framework for the clients to be able to request for them.
-> 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-> Signed-off-by: Martin Botka <martin.botka@somainline.org>
+This change was made automatically with the following Coccinelle script.
 
-This looks quite good to me, just two small things below.
+@@
+type t;
+identifier v;
+statement s;
+@@
 
-> diff --git a/drivers/clk/qcom/gcc-sm6125.c b/drivers/clk/qcom/gcc-sm6125.c
-[..]
-> +static struct clk_alpha_pll gpll0_out_early = {
-> +	.offset = 0x0,
-> +	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_DEFAULT],
-> +	.clkr = {
-> +		.enable_reg = 0x79000,
-> +		.enable_mask = BIT(0),
-> +		.hw.init = &(struct clk_init_data){
-> +			.name = "gpll0_out_early",
-> +			.parent_data = &(const struct clk_parent_data){
-> +				.fw_name = "bi_tcxo",
-> +				.name = "bi_tcxo",
+<+...
+(
+  t v = container_of(...);
+|
+  v = container_of(...);
+)
+  ...
+  when != v
+- if (\( !v \| v == NULL \) ) s
+...+>
 
-For new drivers we don't need to rely on global name lookup, so just
-keep fw_name for the external clocks.
+While at it, remove unused but assigned variable hpd in
+dp_display_usbpd_attention_cb().
 
-> +			},
-> +			.num_parents = 1,
-> +			.ops = &clk_alpha_pll_ops,
-> +		},
-> +	},
-> +};
-> +
-> +static struct clk_fixed_factor gpll0_out_aux2 = {
-> +	.mult = 1,
-> +	.div = 2,
-> +	.hw.init = &(struct clk_init_data){
-> +		.name = "gpll0_out_aux2",
-> +		.parent_data = &(const struct clk_parent_data){
-> +			.hw = &gpll0_out_early.clkr.hw,
-> +		},
-> +		.num_parents = 1,
-> +		.ops = &clk_fixed_factor_ops,
-> +	},
-> +};
-> +
-> +static struct clk_fixed_factor gpll0_out_main = {
-> +	.mult = 1,
-> +	.div = 2,
-> +	.hw.init = &(struct clk_init_data){
-> +		.name = "gpll0_out_main",
-> +		.parent_data = &(const struct clk_parent_data){
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+---
+ drivers/gpu/drm/msm/dp/dp_display.c | 25 -------------------------
+ 1 file changed, 25 deletions(-)
 
-Please use parent_hws instead when referencing a single hw in the same
-driver.
+diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+index 1784e119269b..a74e7ef96fcf 100644
+--- a/drivers/gpu/drm/msm/dp/dp_display.c
++++ b/drivers/gpu/drm/msm/dp/dp_display.c
+@@ -208,10 +208,6 @@ static int dp_display_bind(struct device *dev, struct device *master,
+ 
+ 	dp = container_of(g_dp_display,
+ 			struct dp_display_private, dp_display);
+-	if (!dp) {
+-		DRM_ERROR("DP driver bind failed. Invalid driver data\n");
+-		return -EINVAL;
+-	}
+ 
+ 	dp->dp_display.drm_dev = drm;
+ 	priv = drm->dev_private;
+@@ -252,10 +248,6 @@ static void dp_display_unbind(struct device *dev, struct device *master,
+ 
+ 	dp = container_of(g_dp_display,
+ 			struct dp_display_private, dp_display);
+-	if (!dp) {
+-		DRM_ERROR("Invalid DP driver data\n");
+-		return;
+-	}
+ 
+ 	dp_power_client_deinit(dp->power);
+ 	dp_aux_unregister(dp->aux);
+@@ -406,11 +398,6 @@ static int dp_display_usbpd_configure_cb(struct device *dev)
+ 
+ 	dp = container_of(g_dp_display,
+ 			struct dp_display_private, dp_display);
+-	if (!dp) {
+-		DRM_ERROR("no driver data found\n");
+-		rc = -ENODEV;
+-		goto end;
+-	}
+ 
+ 	dp_display_host_init(dp, false);
+ 
+@@ -437,11 +424,6 @@ static int dp_display_usbpd_disconnect_cb(struct device *dev)
+ 
+ 	dp = container_of(g_dp_display,
+ 			struct dp_display_private, dp_display);
+-	if (!dp) {
+-		DRM_ERROR("no driver data found\n");
+-		rc = -ENODEV;
+-		return rc;
+-	}
+ 
+ 	dp_add_event(dp, EV_USER_NOTIFICATION, false, 0);
+ 
+@@ -502,7 +484,6 @@ static int dp_display_usbpd_attention_cb(struct device *dev)
+ 	int rc = 0;
+ 	u32 sink_request;
+ 	struct dp_display_private *dp;
+-	struct dp_usbpd *hpd;
+ 
+ 	if (!dev) {
+ 		DRM_ERROR("invalid dev\n");
+@@ -511,12 +492,6 @@ static int dp_display_usbpd_attention_cb(struct device *dev)
+ 
+ 	dp = container_of(g_dp_display,
+ 			struct dp_display_private, dp_display);
+-	if (!dp) {
+-		DRM_ERROR("no driver data found\n");
+-		return -ENODEV;
+-	}
+-
+-	hpd = dp->usbpd;
+ 
+ 	/* check for any test request issued by sink */
+ 	rc = dp_link_process_request(dp->link);
+-- 
+2.25.1
 
-> +			.hw = &gpll0_out_early.clkr.hw,
-> +		},
-> +		.num_parents = 1,
-> +		.ops = &clk_fixed_factor_ops,
-> +	},
-> +};
-> +
-
-Regards,
-Bjorn
