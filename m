@@ -2,114 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8CF0238FD3F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 May 2021 10:55:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4E2A838FDA1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 May 2021 11:20:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230140AbhEYI4c (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 May 2021 04:56:32 -0400
-Received: from foss.arm.com ([217.140.110.172]:53376 "EHLO foss.arm.com"
+        id S232336AbhEYJWF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 May 2021 05:22:05 -0400
+Received: from mga11.intel.com ([192.55.52.93]:31642 "EHLO mga11.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231278AbhEYI4a (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 May 2021 04:56:30 -0400
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 98DBA6D;
-        Tue, 25 May 2021 01:55:00 -0700 (PDT)
-Received: from [10.57.71.208] (unknown [10.57.71.208])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id CCAD33F73D;
-        Tue, 25 May 2021 01:54:58 -0700 (PDT)
-Subject: Re: [PATCH] coresight: tmc-etf: Fix global-out-of-bounds in
- tmc_update_etf_buffer()
-From:   Suzuki K Poulose <suzuki.poulose@arm.com>
-To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Mike Leach <mike.leach@linaro.org>,
-        Leo Yan <leo.yan@linaro.org>
-Cc:     coresight@lists.linaro.org, Stephen Boyd <swboyd@chromium.org>,
-        Denis Nikitin <denik@chromium.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, stable@vger.kernel.org
-References: <20210505093430.18445-1-saiprakash.ranjan@codeaurora.org>
- <8e0dbf24-af71-9bce-b615-ce7b1d12a720@arm.com>
-Message-ID: <dc18845a-73bf-9cbf-6749-6271dcaac9e8@arm.com>
-Date:   Tue, 25 May 2021 09:54:57 +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
- Gecko/20100101 Thunderbird/78.10.2
+        id S231971AbhEYJWD (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 25 May 2021 05:22:03 -0400
+IronPort-SDR: D3fPq79nSYoj4Y7x5KaEKq5WCeJJBz+He0TcQezOLBDtGqBI/0ly7WAIHaetJnFvWieetyp1FL
+ T5sjruJvDrMA==
+X-IronPort-AV: E=McAfee;i="6200,9189,9994"; a="199094309"
+X-IronPort-AV: E=Sophos;i="5.82,328,1613462400"; 
+   d="scan'208";a="199094309"
+Received: from orsmga001.jf.intel.com ([10.7.209.18])
+  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 May 2021 02:20:33 -0700
+IronPort-SDR: OrD3r1B531jdCPZliHRgzxPYZP+m/ydrMHpCTNghEo9LHv25v5FXhv+aZlCgp6qQMQ27tw8pKQ
+ ixxjIbewQRNQ==
+X-IronPort-AV: E=Sophos;i="5.82,328,1613462400"; 
+   d="scan'208";a="476329263"
+Received: from shao2-debian.sh.intel.com (HELO [10.239.13.11]) ([10.239.13.11])
+  by orsmga001-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 May 2021 02:20:28 -0700
+Subject: Re: [kbuild-all] Re: [PATCH V2] arm64: dts: sc7280: Add qspi, qupv3_0
+ and qupv3_1 nodes
+To:     rojay@codeaurora.org, kernel test robot <lkp@intel.com>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        kbuild-all@lists.01.org, clang-built-linux@googlegroups.com,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        saiprakash.ranjan@codeaurora.org, msavaliy@qti.qualcomm.com
+References: <20210422150556.450-1-rojay@codeaurora.org>
+ <202104230503.T7HqjQbJ-lkp@intel.com>
+ <6950c9c7b54892b2a8e81915743431ea@codeaurora.org>
+From:   Rong Chen <rong.a.chen@intel.com>
+Message-ID: <de30ea1c-5572-ca4e-e473-7b77724a90d8@intel.com>
+Date:   Tue, 25 May 2021 17:19:14 +0800
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-In-Reply-To: <8e0dbf24-af71-9bce-b615-ce7b1d12a720@arm.com>
+In-Reply-To: <6950c9c7b54892b2a8e81915743431ea@codeaurora.org>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
 Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Sai
 
-On 05/05/2021 10:47, Suzuki K Poulose wrote:
-> On 05/05/2021 10:34, Sai Prakash Ranjan wrote:
->> commit 6f755e85c332 ("coresight: Add helper for inserting synchronization
->> packets") removed trailing '\0' from barrier_pkt array and updated the
->> call sites like etb_update_buffer() to have proper checks for barrier_pkt
->> size before read but missed updating tmc_update_etf_buffer() which still
->> reads barrier_pkt past the array size resulting in KASAN out-of-bounds
->> bug. Fix this by adding a check for barrier_pkt size before accessing
->> like it is done in etb_update_buffer().
->>
->>   BUG: KASAN: global-out-of-bounds in tmc_update_etf_buffer+0x4b8/0x698
->>   Read of size 4 at addr ffffffd05b7d1030 by task perf/2629
->>
->>   Call trace:
->>    dump_backtrace+0x0/0x27c
->>    show_stack+0x20/0x2c
->>    dump_stack+0x11c/0x188
->>    print_address_description+0x3c/0x4a4
->>    __kasan_report+0x140/0x164
->>    kasan_report+0x10/0x18
->>    __asan_report_load4_noabort+0x1c/0x24
->>    tmc_update_etf_buffer+0x4b8/0x698
->>    etm_event_stop+0x248/0x2d8
->>    etm_event_del+0x20/0x2c
->>    event_sched_out+0x214/0x6f0
->>    group_sched_out+0xd0/0x270
->>    ctx_sched_out+0x2ec/0x518
->>    __perf_event_task_sched_out+0x4fc/0xe6c
->>    __schedule+0x1094/0x16a0
->>    preempt_schedule_irq+0x88/0x170
->>    arm64_preempt_schedule_irq+0xf0/0x18c
->>    el1_irq+0xe8/0x180
->>    perf_event_exec+0x4d8/0x56c
->>    setup_new_exec+0x204/0x400
->>    load_elf_binary+0x72c/0x18c0
->>    search_binary_handler+0x13c/0x420
->>    load_script+0x500/0x6c4
->>    search_binary_handler+0x13c/0x420
->>    exec_binprm+0x118/0x654
->>    __do_execve_file+0x77c/0xba4
->>    __arm64_compat_sys_execve+0x98/0xac
->>    el0_svc_common+0x1f8/0x5e0
->>    el0_svc_compat_handler+0x84/0xb0
->>    el0_svc_compat+0x10/0x50
->>
->>   The buggy address belongs to the variable:
->>    barrier_pkt+0x10/0x40
->>
->>   Memory state around the buggy address:
->>    ffffffd05b7d0f00: fa fa fa fa 04 fa fa fa fa fa fa fa 00 00 00 00
->>    ffffffd05b7d0f80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
->>   >ffffffd05b7d1000: 00 00 00 00 00 00 fa fa fa fa fa fa 00 00 00 03
->>                                        ^
->>    ffffffd05b7d1080: fa fa fa fa 00 02 fa fa fa fa fa fa 03 fa fa fa
->>    ffffffd05b7d1100: fa fa fa fa 00 00 00 00 05 fa fa fa fa fa fa fa
->>   ==================================================================
->>
->> Fixes: 6f755e85c332 ("coresight: Add helper for inserting 
->> synchronization packets")
 
-I have changed the commit to :
+On 4/23/21 5:46 PM, rojay@codeaurora.org wrote:
+> On 2021-04-23 02:52, kernel test robot wrote:
+>> Hi Roja,
+>>
+>> Thank you for the patch! Yet something to improve:
+>>
+>> [auto build test ERROR on next-20210422]
+>> [cannot apply to robh/for-next v5.12-rc8 v5.12-rc7 v5.12-rc6 v5.12-rc8]
+>> [If your patch is applied to the wrong git tree, kindly drop us a note.
+>> And when submitting patch, we suggest to use '--base' as documented in
+>> https://git-scm.com/docs/git-format-patch]
+>>
+>> url:
+>> https://github.com/0day-ci/linux/commits/Roja-Rani-Yarubandi/arm64-dts-sc7280-Add-qspi-qupv3_0-and-qupv3_1-nodes/20210422-230756 
+>>
+>> base:    c457d9676496f5a895509f9c510278beaaffc829
+>> config: arm64-randconfig-r012-20210421 (attached as .config)
+>> compiler: clang version 13.0.0 (https://github.com/llvm/llvm-project
+>> f5446b769a7929806f72256fccd4826d66502e59)
+>> reproduce (this is a W=1 build):
+>>         wget
+>> https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross
+>> -O ~/bin/make.cross
+>>         chmod +x ~/bin/make.cross
+>>         # install arm64 cross compiling tool for clang build
+>>         # apt-get install binutils-aarch64-linux-gnu
+>>         #
+>> https://github.com/0day-ci/linux/commit/78ed1b1d4c9f34dd06ae4494b78d70334fa8d7c1 
+>>
+>>         git remote add linux-review https://github.com/0day-ci/linux
+>>         git fetch --no-tags linux-review
+>> Roja-Rani-Yarubandi/arm64-dts-sc7280-Add-qspi-qupv3_0-and-qupv3_1-nodes/20210422-230756 
+>>
+>>         git checkout 78ed1b1d4c9f34dd06ae4494b78d70334fa8d7c1
+>>         # save the attached .config to linux build tree
+>>         COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1
+>> ARCH=arm64
+>>
+>> If you fix the issue, kindly add following tag as appropriate
+>> Reported-by: kernel test robot <lkp@intel.com>
+>>
+>> All errors (new ones prefixed by >>):
+>>
+>>>> Error: arch/arm64/boot/dts/qcom/sc7280.dtsi:325.31-32 syntax error
+>>    FATAL ERROR: Unable to parse input tree
+>>
+>
+> This error is due to "clk_virt" node parse issue which will be defined 
+> in ICC patches
+> https://lore.kernel.org/patchwork/project/lkml/list/?series=488429
+> I also mentioned the dependency in the patch.
 
-Fixes: 0c3fc4d5fa26 ("coresight: Add barrier packet for synchronisation")
+Hi Roja,
 
-Applied.
+Thanks for the clarification, we can parse the base commit from patch to 
+avoid false positive:
 
-Thanks
-Suzuki
+     $ man git format-patch
+
+          With git format-patch --base=P -3 C (or variants thereof, e.g. 
+with --cover-letter or using Z..C instead of -3 C to specify the range), 
+the base tree information block is shown at the end of the first message 
+the command outputs (either the first patch, or the cover
+        letter), like this:
+
+            base-commit: P
+            prerequisite-patch-id: X
+            prerequisite-patch-id: Y
+            prerequisite-patch-id: Z
+
+Best Regards,
+Rong Chen
