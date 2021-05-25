@@ -2,146 +2,276 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BD22838F8E9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 May 2021 05:38:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6B89E38F8FF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 May 2021 05:46:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230291AbhEYDkC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 May 2021 23:40:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41134 "EHLO
+        id S230387AbhEYDsP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 May 2021 23:48:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42970 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230095AbhEYDkB (ORCPT
+        with ESMTP id S230382AbhEYDsM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 May 2021 23:40:01 -0400
-Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70563C061756
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 May 2021 20:38:32 -0700 (PDT)
-Received: by mail-ot1-x335.google.com with SMTP id v19-20020a0568301413b0290304f00e3d88so27306120otp.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 May 2021 20:38:32 -0700 (PDT)
+        Mon, 24 May 2021 23:48:12 -0400
+Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C30AC061574
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 May 2021 20:46:42 -0700 (PDT)
+Received: by mail-oi1-x22f.google.com with SMTP id y76so19790319oia.6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 May 2021 20:46:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=l5R619Q1zWvoFWxXu9dLdrHOdI9Uxbo2XfaR/PsqP/w=;
-        b=IerDmGwEhA8080Vgc39jnga4/cCYN+pcVLDsHy0yqapQfvzIs14sDM7W2+uLZ6t/Me
-         H3D7i/ZoUgC0XoVw4sLROZ1ylqiZentIDBvs5EajzQT0XUnDH2tOvaYGcc3uMwAnuDgH
-         hP4YnEYc8IVq0UTIMH9cSIhmxawddEmXoojv2++HQkR/UaMM1HOf+HqgHmyxwkvGC0rb
-         c9mZXcv1hZDoH88sGbb461aDbg28xTgvqQsvo27ntxDW7KJLUq9VxA2qOdGGXW6P2GSU
-         OoqMsT3CPxyDMxKqw1Y3axUY8zx5wqvphGcnbC42z0Jqqi0ssMRarmZYXco7NGyGQJki
-         sVvQ==
+        bh=Rkip6OsUPI3I8CTwZcBPub2IUfOlyAw41NYyjDQ66L8=;
+        b=IMWaz8QksQiE1gtKozdRYfDawPo/ppdmImUiEgzFMYumGASmb9io+rduCLABAtR0aD
+         xNICoD8NEv9c5YZ4G9mnOeXAAfJke+opO1sO0sFNM01AKR/QJRW0nq238t2pAWoW/Tiu
+         jLh1Uj2777WfG+qDYd2DmGCLNr7hA4pmdDVxTebVJHH1Q0TuORPec84Sf5ysxmed1zMA
+         M3s4pgoY3j/R7r5JuIyT2sN12TkoOPQl3huKkoqSeuRZGid7N6j56ylM/EkgZMz3PIz9
+         tJ5Ziv7baKIKSgu0zM2MJzBGwlmz71je396Z0Bjj/KJ2a6FcU4gmHXEyPDlvg+p8dxM2
+         8zTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=l5R619Q1zWvoFWxXu9dLdrHOdI9Uxbo2XfaR/PsqP/w=;
-        b=UL3qK/6PFugBhSF/akNmcVJd02L+lZFg+1xLhKyTEhCTbB2xac0OFVs3s/RUBEsVIS
-         GGTjFJ4vS+mTTxhUyR3LRtXMwFtk1DSYUxTORF8GvQ7JKIarxLxG5Oq47IdFDhDCAZnt
-         m4kcbespO5d1aKaz1k5OonQXYnoXPL+8w59EKiGWaUT4XAfJC68v1uCVhong+TQ1dESC
-         XPcdSZ2Nf2R6UxLVw+3AArjMlitAVDK4WInEc+QY67erszZVfz3v8zJUN7QAjQvLakDM
-         JVAKFilyX8gNh5Z8ylUgif4LU20kOogEHsycYgMSBF5KOG5J5Uz/6f0w4v8AhWg51Z+G
-         YKoQ==
-X-Gm-Message-State: AOAM530jNJ01T31dKMRPh8HKrhOYVeRWiO3SsmTRF7xGFtSL9syt0swQ
-        b6vSAMvDTvpwPER9ZHgzv8xC5g==
-X-Google-Smtp-Source: ABdhPJy+tUAVjYl81RpF00SVIPiVQYnS4lBr2iISxLqCvTBDx3I+NrN/q07EivJanpGKT10snnedyA==
-X-Received: by 2002:a9d:6255:: with SMTP id i21mr21299550otk.284.1621913911778;
-        Mon, 24 May 2021 20:38:31 -0700 (PDT)
+        bh=Rkip6OsUPI3I8CTwZcBPub2IUfOlyAw41NYyjDQ66L8=;
+        b=HmgRUr3jTd2/GVurxFyafep/xUFTaXvQ0hFJryU17JZGsNUc+i8msjP+cCZoBoJmCt
+         Un772E9z80gZ3E+78zXcNYNyhXzbxxQj2p+kfLP6uYgSz1yFOaFJdKBrCC5Epe4jwkmr
+         5ZhGCtl/dbd9gE69fEL23NOG4kd7io9dU/rqTxLIlKuYS39+AAEqUxIj+0N7tGssuZOG
+         MwJVcucObO6b4zOeFj9154NWQJQb6uqfQeVqNfUuczYePaNaGrMBQvSRkRv+aiXyrMWZ
+         6CA9UBMh81o5Z3jmboA4cMGKun4u+hnZSYi9upug/rDe57YgfyfVOugddqA/HQaXYjux
+         zX3g==
+X-Gm-Message-State: AOAM530cIavGCa392TG96COe26PFTEJAD85UlTiPKo+m3uQZLyXvR783
+        RdN6V/s/RJ8Tgr93+dWI7Ryijg==
+X-Google-Smtp-Source: ABdhPJzJ9wJWN3VBtOUv9zId5HPybHW8DRseEbik6TuCFZbeWdGyctV9tYlORyrgvC0FP2jwwwRn3w==
+X-Received: by 2002:aca:6207:: with SMTP id w7mr1475803oib.177.1621914401724;
+        Mon, 24 May 2021 20:46:41 -0700 (PDT)
 Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id x24sm3499384otq.34.2021.05.24.20.38.30
+        by smtp.gmail.com with ESMTPSA id p3sm3218135oov.2.2021.05.24.20.46.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 May 2021 20:38:31 -0700 (PDT)
-Date:   Mon, 24 May 2021 22:38:29 -0500
+        Mon, 24 May 2021 20:46:41 -0700 (PDT)
+Date:   Mon, 24 May 2021 22:46:39 -0500
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Ansuel Smith <ansuelsmth@gmail.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Miquel Raynal <miquel.raynal@bootlin.com>,
-        Richard Weinberger <richard@nod.at>,
-        Vignesh Raghavendra <vigneshr@ti.com>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-mtd@lists.infradead.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] mtd: parsers: qcom: Fix leaking of partition name
-Message-ID: <YKxxNY8d/M1fXWr9@yoga>
-References: <20210525001449.10386-1-ansuelsmth@gmail.com>
+To:     Martin Botka <martin.botka@somainline.org>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        konrad.dybcio@somainline.org,
+        angelogioacchino.delregno@somainline.org,
+        marijn.suijten@somainline.org, Andy Gross <agross@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH V2 1/2] dt-bindings: pinctrl: qcom: sm6125: Document
+ SM6125 pinctrl driver
+Message-ID: <YKxzH1TS00/2tjlP@yoga>
+References: <20210523211809.734107-1-martin.botka@somainline.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20210525001449.10386-1-ansuelsmth@gmail.com>
+In-Reply-To: <20210523211809.734107-1-martin.botka@somainline.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 24 May 19:14 CDT 2021, Ansuel Smith wrote:
+On Sun 23 May 16:18 CDT 2021, Martin Botka wrote:
 
-> Partition name are already allocated and defined by the ptable struct.
-> Skip reallocation of name variable and directly lowercase the name in
-> the ptable struct. The name variable was duplicated but never freed.
-> The leak was found using kmemleak.
+> Document the newly added SM6125 pinctrl driver
 > 
+> Signed-off-by: Martin Botka <martin.botka@somainline.org>
+> ---
+> Changes in V2:
+> Add commit description
+>  .../bindings/pinctrl/qcom,sm6125-pinctrl.yaml | 161 ++++++++++++++++++
+>  1 file changed, 161 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sm6125-pinctrl.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sm6125-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sm6125-pinctrl.yaml
+> new file mode 100644
+> index 000000000000..951348953c11
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,sm6125-pinctrl.yaml
+> @@ -0,0 +1,161 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/pinctrl/qcom,sm6125-pinctrl.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +title: Qualcomm Technologies, Inc. SM6125 TLMM block
+> +
+> +maintainers:
+> +  - Martin Botka <martin.botka@somainline.org>
+> +
+> +description: |
+> +  This binding describes the Top Level Mode Multiplexer (TLMM) block found
+> +  in the SM6125 platform.
+> +
+> +allOf:
+> +  - $ref: /schemas/pinctrl/qcom,tlmm-common.yaml#
+> +
+> +properties:
+> +  compatible:
+> +    const: qcom,sm6125-tlmm
+> +
+> +  reg:
+> +    maxItems: 1
 
-We know that SMEM_AARM_PARTITION_TABLE is accessed by at least the modem
-firmware, so I don't think we should change it in place.
+Driver (and example) defines 3 tiles.
 
-I think the appropriate solution is to implement the "cleanup" operation
-in struct mtd_part_parser.
+> +
+> +  interrupts: true
+> +  interrupt-controller: true
+> +  '#interrupt-cells': true
+> +  gpio-controller: true
+> +  gpio-reserved-ranges: true
+> +  '#gpio-cells': true
+> +  gpio-ranges: true
+> +  wakeup-parent: true
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +
+> +additionalProperties: false
+> +
+> +patternProperties:
+> +  '-state$':
+> +    oneOf:
+> +      - $ref: "#/$defs/qcom-sm6125-tlmm-state"
+> +      - patternProperties:
+> +          ".*":
+> +            $ref: "#/$defs/qcom-sm6125-tlmm-state"
+> +
+> +$defs:
+> +  qcom-sm6125-tlmm-state:
+> +    type: object
+> +    description:
+> +      Pinctrl node's client devices use subnodes for desired pin configuration.
+> +      Client device subnodes use below standard properties.
+> +    $ref: "qcom,tlmm-common.yaml#/$defs/qcom-tlmm-state"
+> +
+> +    properties:
+> +      pins:
+> +        description:
+> +          List of gpio pins affected by the properties specified in this
+> +          subnode.
+> +        items:
+> +          oneOf:
+> +            - pattern: "^gpio([0-9]|[1-9][0-9]|1[0-9][0-9]|20[0-3])$"
+
+This pattern allows gpio0-9, gpio10-99, gpio100-199 and gpio200-203. I
+think you're looking for something in line with:
+
+"^gpio[0-9]|[1-9][0-9]|1[0-2][0-9]|13[0-2]$"
+
+> +            - enum: [ sdc1_clk, sdc1_cmd, sdc1_data, sdc2_clk, sdc2_cmd, sdc2_data ]
+> +        minItems: 1
+> +        maxItems: 36
+> +
+> +      function:
+> +        description:
+> +          Specify the alternative function to be configured for the specified
+> +          pins.
+> +
+> +        enum: [ adsp_ext, agera_pll, atest_char, atest_char0, atest_char1,
+> +                atest_char2, atest_char3, atest_tsens, atest_tsens2, atest_usb1,
+> +                atest_usb10, atest_usb11, atest_usb12, atest_usb13, atest_usb2,
+> +                atest_usb20, atest_usb21, atest_usb22, atest_usb23, aud_sb,
+> +                audio_ref, cam_mclk, cci_async, cci_i2c, cci_timer0, cci_timer1,
+> +                cci_timer2, cci_timer3, cci_timer4, copy_gp, copy_phase, cri_trng,
+> +                cri_trng0, cri_trng1, dbg_out, ddr_bist, ddr_pxi0, ddr_pxi1,
+> +                ddr_pxi2, ddr_pxi3, debug_hot, dmic0_clk, dmic0_data, dmic1_clk,
+> +                dmic1_data, dp_hot, edp_hot, edp_lcd, gcc_gp1, gcc_gp2, gcc_gp3,
+> +                gp_pdm0, gp_pdm1, gp_pdm2, gpio, gps_tx, jitter_bist, ldo_en,
+> +                ldo_update, m_voc, mclk1, mclk2, mdp_vsync, mdp_vsync0, mdp_vsync1,
+> +                mdp_vsync2, mdp_vsync3, mdp_vsync4, mdp_vsync5, mpm_pwr, mss_lte,
+> +                nav_pps, pa_indicator, phase_flag0, phase_flag1, phase_flag10,
+> +                phase_flag11, phase_flag12, phase_flag13, phase_flag14, phase_flag15,
+> +                phase_flag16, phase_flag17, phase_flag18, phase_flag19, phase_flag2,
+> +                phase_flag20, phase_flag21, phase_flag22, phase_flag23, phase_flag24,
+> +                phase_flag25, phase_flag26, phase_flag27, phase_flag28, phase_flag29,
+> +                phase_flag3, phase_flag30, phase_flag31, phase_flag4, phase_flag5,
+> +                phase_flag6, phase_flag7, phase_flag8, phase_flag9, pll_bist,
+> +                pll_bypassnl, pll_reset, pri_mi2s, pri_mi2s_ws, prng_rosc, qca_sb,
+> +                qdss_cti, qdss_gpio, qdss_gpio0, qdss_gpio1, qdss_gpio10, qdss_gpio11,
+> +                qdss_gpio12, qdss_gpio13, qdss_gpio14, qdss_gpio15, qdss_gpio2,
+> +                qdss_gpio3, qdss_gpio4, qdss_gpio5, qdss_gpio6, qdss_gpio7, qdss_gpio8,
+> +                qdss_gpio9, qlink_enable, qlink_request, qua_mi2s, qui_mi2s, qup00,
+> +                qup01, qup02, qup03, qup04, qup10, qup11, qup12, qup13, qup14,
+> +                sd_write, sec_mi2s, sp_cmu, swr_rx, swr_tx, ter_mi2s, tgu_ch0,
+> +                tgu_ch1, tgu_ch2, tgu_ch3, tsense_pwm, uim1_clk, uim1_data,
+> +                uim1_present, uim1_reset, uim2_clk, uim2_data, uim2_present,
+> +                uim2_reset, unused1, unused2, usb_phy, vfr_1, vsense_trigger,
+> +                wlan1_adc0, wlan1_adc1, wlan2_adc0, wlan2_adc1, wsa_clk, wsa_data ]
+> +
+> +
+> +      bias-disable: true
+> +      bias-pull-down: true
+> +      bias-pull-up: true
+> +      drive-strength: true
+> +      input-enable: true
+> +      output-high: true
+> +      output-low: true
+> +
+> +    required:
+> +      - pins
+> +      - function
+> +
+> +    additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +        #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +	pinctrl@500000 {
+> +		compatible = "qcom,sm6125-pinctrl";
+
+s/pinconf/tlmm/
+
+> +		reg = <0x00500000 0x400000>,
+> +			<0x00900000 0x400000>,
+> +			<0x00d00000 0x400000>;
+> +		reg-names = "west", "south", "east";
+> +		interrupts = <GIC_SPI 227 IRQ_TYPE_LEVEL_HIGH>;
+> +		gpio-controller;
+> +		gpio-ranges = <&tlmm 0 0 134>;
+> +		#gpio-cells = <2>;
+> +		interrupt-controller;
+> +		#interrupt-cells = <2>;
+> +
+> +		sdc2_state_on: sdc2-on {
+
+Per the binding the node name needs to end in "-state".
+
+> +			pinconf-clk {
+
+There's no risk of name collisions in the state, so you should drop the
+"pinconf-" prefix.
 
 Regards,
 Bjorn
 
-> Fixes: 803eb124e1a6 ("mtd: parsers: Add Qcom SMEM parser")
-> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
-> ---
->  drivers/mtd/parsers/qcomsmempart.c | 22 ++++------------------
->  1 file changed, 4 insertions(+), 18 deletions(-)
-> 
-> diff --git a/drivers/mtd/parsers/qcomsmempart.c b/drivers/mtd/parsers/qcomsmempart.c
-> index d9083308f6ba..3d083f0815f8 100644
-> --- a/drivers/mtd/parsers/qcomsmempart.c
-> +++ b/drivers/mtd/parsers/qcomsmempart.c
-> @@ -62,8 +62,8 @@ static int parse_qcomsmem_part(struct mtd_info *mtd,
->  	struct smem_flash_ptable *ptable;
->  	size_t len = SMEM_FLASH_PTABLE_HDR_LEN;
->  	struct mtd_partition *parts;
-> -	int ret, i, numparts;
-> -	char *name, *c;
-> +	int i, numparts;
-> +	char *c;
->  
->  	if (IS_ENABLED(CONFIG_MTD_SPI_NOR_USE_4K_SECTORS)
->  			&& mtd->type == MTD_NORFLASH) {
-> @@ -125,17 +125,11 @@ static int parse_qcomsmem_part(struct mtd_info *mtd,
->  		if (pentry->name[0] == '\0')
->  			continue;
->  
-> -		name = kstrdup(pentry->name, GFP_KERNEL);
-> -		if (!name) {
-> -			ret = -ENOMEM;
-> -			goto out_free_parts;
-> -		}
-> -
->  		/* Convert name to lower case */
-> -		for (c = name; *c != '\0'; c++)
-> +		for (c = pentry->name; *c != '\0'; c++)
->  			*c = tolower(*c);
->  
-> -		parts[i].name = name;
-> +		parts[i].name = pentry->name;
->  		parts[i].offset = le32_to_cpu(pentry->offset) * mtd->erasesize;
->  		parts[i].mask_flags = pentry->attr;
->  		parts[i].size = le32_to_cpu(pentry->length) * mtd->erasesize;
-> @@ -149,14 +143,6 @@ static int parse_qcomsmem_part(struct mtd_info *mtd,
->  	*pparts = parts;
->  
->  	return numparts;
-> -
-> -out_free_parts:
-> -	while (--i >= 0)
-> -		kfree(parts[i].name);
-> -	kfree(parts);
-> -	*pparts = NULL;
-> -
-> -	return ret;
->  }
->  
->  static const struct of_device_id qcomsmem_of_match_table[] = {
+> +				pins = "sdc2_clk";
+> +				bias-disable;
+> +				drive-strength = <16>;
+> +			};
+> +
+> +			pinconf-cmd {
+> +				pins = "sdc2_cmd";
+> +				bias-pull-up;
+> +				drive-strength = <10>;
+> +			};
+> +
+> +			pinconf-data {
+> +				pins = "sdc2_data";
+> +				bias-pull-up;
+> +				drive-strength = <10>;
+> +			};
+> +
+> +			pinconf-sd-cd {
+> +				pins = "gpio98";
+> +				bias-pull-up;
+> +				drive-strength = <2>;
+> +			};
+> +		};
+> +	};
+> +...
 > -- 
 > 2.31.1
 > 
