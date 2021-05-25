@@ -2,73 +2,179 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 591A63908E0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 May 2021 20:23:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 703B4390905
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 May 2021 20:34:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231539AbhEYSZB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 May 2021 14:25:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44290 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232244AbhEYSY6 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 May 2021 14:24:58 -0400
-Received: from mail-oo1-xc35.google.com (mail-oo1-xc35.google.com [IPv6:2607:f8b0:4864:20::c35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1EE59C06175F
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 May 2021 11:23:28 -0700 (PDT)
-Received: by mail-oo1-xc35.google.com with SMTP id v13-20020a4ac00d0000b029020b43b918eeso7397200oop.9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 May 2021 11:23:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=yLrEWP7K8W4M2KTxVp15RNvgy39Wo8hmbcRL1UT8wm4=;
-        b=V9VWUnK0dVgC8ThICcYWKUrpc5Ij5G7O5GkEJ4p5ENwYCzL0XraIlL7+V2VympArHu
-         fYoHb2HG1xYjs/HlXUnTUzDNQpLmw6k7RH93cL7rct8xz60XNId/S1K64RwtwiDtmbk8
-         LPGbMKWTzXm/fhJM3V+0HuZgmj18yzuR5qlB4=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=yLrEWP7K8W4M2KTxVp15RNvgy39Wo8hmbcRL1UT8wm4=;
-        b=SXqEHEjiqOyJuKg1gY7jgit34FGJNoZsA3HV+2Pbhm2MGN8y3Mn/1vMLGM2xe1ZlXs
-         FUI8l7igvEswYv9aEhJTP+tHFXSHbO+sLso9uvvLvNI4dfzY2pQa7KQQBumEUj5uJX/X
-         9PxaZKzaSsMY9OceUPeLgGfNiIZPrxcH7Qi0O2fVVMQVyKxZtIUvX+NSnoOuOa9rdSEh
-         n7hirbb+gd/Nk0a5wk3HyCGa+8fWUyfldx/dulg68C0df7qzFFUy5KZB0Vevki/kv2fR
-         yGcEPqHw09SOw4YhHGfgwEzZZmtrO57DwrzOwdpiNLH2IgghQE80wHnYOjog68PoaQVI
-         Ub8Q==
-X-Gm-Message-State: AOAM5309X/+M8f0GYgJ1QuFooS/0J3rcwP9DT5nPEuL1JDXSM74rvZmS
-        SDQuc6Bsh1RbRIQ+IId+YtoQUaVLtcpJ2J6g4ZKjGg==
-X-Google-Smtp-Source: ABdhPJzqb/cUXWaFHPYbdlIHfd8m3yBFhec5Kh8+qcA+mY/y8sl8WzknhKEePGCSuaCP9Qxhq6MTXD6I9in9Oh14XbU=
-X-Received: by 2002:a05:6820:169:: with SMTP id k9mr8907033ood.92.1621967007509;
- Tue, 25 May 2021 11:23:27 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 25 May 2021 14:23:27 -0400
+        id S232439AbhEYSfx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 May 2021 14:35:53 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:20913 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230388AbhEYSfw (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 25 May 2021 14:35:52 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1621967662; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=wAGWZGwhPHXFsgocMwNQwb25WGwLb6HfTZos1TGO8XI=;
+ b=Zd7uEZ3KlnhiVGWhjsrdUcTXlWSaexUzkJnhkUsYN4fyc1EiVVSe83dmzYBEDujGY5MWi9Zd
+ iE+RX+ebolXGzbr2UEf/22MjW9cm7qx3zjUBnzX4iI5a/2n1d/T1Jizx2v8rgQP3IiF5T4o1
+ EM88pC5mLMuIWpVq1Gdo0K3EJvU=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
+ 60ad432967d156359aab472f (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 25 May 2021 18:34:17
+ GMT
+Sender: abhinavk=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 389E4C43145; Tue, 25 May 2021 18:34:17 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: abhinavk)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3242AC4338A;
+        Tue, 25 May 2021 18:34:16 +0000 (UTC)
 MIME-Version: 1.0
-In-Reply-To: <20210525133242.188603-1-senozhatsky@chromium.org>
-References: <20210525133242.188603-1-senozhatsky@chromium.org>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.9.1
-Date:   Tue, 25 May 2021 14:23:27 -0400
-Message-ID: <CAE-0n53MvSNZ+EZDLMzTzvvnQ-GZq8g29qxcEXQ-h9s-eQJ4Wg@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: qcom: remove camera_mem region
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Sergey Senozhatsky <senozhatsky@chromium.org>,
-        Tomasz Figa <tfiga@chromium.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Tue, 25 May 2021 11:34:16 -0700
+From:   abhinavk@codeaurora.org
+To:     Guenter Roeck <linux@roeck-us.net>
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        Daniel Vetter <daniel@ffwll.ch>,
+        freedreno@lists.freedesktop.org
+Subject: Re: [Freedreno] [PATCH] drm/msm/dp: Drop unnecessary NULL checks
+ after container_of
+In-Reply-To: <20210525032033.453143-1-linux@roeck-us.net>
+References: <20210525032033.453143-1-linux@roeck-us.net>
+Message-ID: <9bc7ffae7e4b2361be337c96f5524cbe@codeaurora.org>
+X-Sender: abhinavk@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Sergey Senozhatsky (2021-05-25 06:32:42)
-> qcom camera driver allocates the ICP firmware memory
-> dynamically, so the carveout region is unnecessary.
->
-> Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+On 2021-05-24 20:20, Guenter Roeck wrote:
+> The result of container_of() operations is never NULL unless the 
+> embedded
+> element is the first element of the structure. This is not the case 
+> here.
+> The NULL check on the result of container_of() is therefore unnecessary
+> and misleading. Remove it.
+> 
+> This change was made automatically with the following Coccinelle 
+> script.
+> 
+> @@
+> type t;
+> identifier v;
+> statement s;
+> @@
+> 
+> <+...
+> (
+>   t v = container_of(...);
+> |
+>   v = container_of(...);
+> )
+>   ...
+>   when != v
+> - if (\( !v \| v == NULL \) ) s
+> ...+>
+> 
+> While at it, remove unused but assigned variable hpd in
+> dp_display_usbpd_attention_cb().
+> 
+> Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Reviewed-by: Abhinav Kumar <abhinavk@codeaurora.org>
 > ---
-
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+>  drivers/gpu/drm/msm/dp/dp_display.c | 25 -------------------------
+>  1 file changed, 25 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c
+> b/drivers/gpu/drm/msm/dp/dp_display.c
+> index 1784e119269b..a74e7ef96fcf 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> @@ -208,10 +208,6 @@ static int dp_display_bind(struct device *dev,
+> struct device *master,
+> 
+>  	dp = container_of(g_dp_display,
+>  			struct dp_display_private, dp_display);
+> -	if (!dp) {
+> -		DRM_ERROR("DP driver bind failed. Invalid driver data\n");
+> -		return -EINVAL;
+> -	}
+> 
+>  	dp->dp_display.drm_dev = drm;
+>  	priv = drm->dev_private;
+> @@ -252,10 +248,6 @@ static void dp_display_unbind(struct device *dev,
+> struct device *master,
+> 
+>  	dp = container_of(g_dp_display,
+>  			struct dp_display_private, dp_display);
+> -	if (!dp) {
+> -		DRM_ERROR("Invalid DP driver data\n");
+> -		return;
+> -	}
+> 
+>  	dp_power_client_deinit(dp->power);
+>  	dp_aux_unregister(dp->aux);
+> @@ -406,11 +398,6 @@ static int dp_display_usbpd_configure_cb(struct
+> device *dev)
+> 
+>  	dp = container_of(g_dp_display,
+>  			struct dp_display_private, dp_display);
+> -	if (!dp) {
+> -		DRM_ERROR("no driver data found\n");
+> -		rc = -ENODEV;
+> -		goto end;
+> -	}
+> 
+>  	dp_display_host_init(dp, false);
+> 
+> @@ -437,11 +424,6 @@ static int dp_display_usbpd_disconnect_cb(struct
+> device *dev)
+> 
+>  	dp = container_of(g_dp_display,
+>  			struct dp_display_private, dp_display);
+> -	if (!dp) {
+> -		DRM_ERROR("no driver data found\n");
+> -		rc = -ENODEV;
+> -		return rc;
+> -	}
+> 
+>  	dp_add_event(dp, EV_USER_NOTIFICATION, false, 0);
+> 
+> @@ -502,7 +484,6 @@ static int dp_display_usbpd_attention_cb(struct 
+> device *dev)
+>  	int rc = 0;
+>  	u32 sink_request;
+>  	struct dp_display_private *dp;
+> -	struct dp_usbpd *hpd;
+> 
+>  	if (!dev) {
+>  		DRM_ERROR("invalid dev\n");
+> @@ -511,12 +492,6 @@ static int dp_display_usbpd_attention_cb(struct
+> device *dev)
+> 
+>  	dp = container_of(g_dp_display,
+>  			struct dp_display_private, dp_display);
+> -	if (!dp) {
+> -		DRM_ERROR("no driver data found\n");
+> -		return -ENODEV;
+> -	}
+> -
+> -	hpd = dp->usbpd;
+> 
+>  	/* check for any test request issued by sink */
+>  	rc = dp_link_process_request(dp->link);
