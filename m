@@ -2,87 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5AFBD390908
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 May 2021 20:34:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8EB7F390918
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 May 2021 20:39:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230388AbhEYSgK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 May 2021 14:36:10 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:33190 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230115AbhEYSgK (ORCPT
+        id S230505AbhEYSlV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 May 2021 14:41:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47910 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229532AbhEYSlT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 May 2021 14:36:10 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1621967680; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=WIyhPKKaXWb+9OY66v6kTHVLbjk02qsEX8PuE7ar4/0=;
- b=qiGnOUSvh+pr4UlWLrgYEOPqUNNwfcbfx536HgJ96ojSdbloLYfs40uVzI4DwPr0Eqc3V3e0
- 1N/zTRR+j81GxXyJjgnAOcw9DeNH1BK9JVa5xijgCiSb2fMTKovCi3MG0Nt9C8cxHcUKpGTJ
- a8R7A1CzBOdGUAy2CyD/SjyLLLE=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
- 60ad433f67d156359aabc863 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 25 May 2021 18:34:39
- GMT
-Sender: abhinavk=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 96B12C43217; Tue, 25 May 2021 18:34:39 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: abhinavk)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 9216CC433D3;
-        Tue, 25 May 2021 18:34:38 +0000 (UTC)
+        Tue, 25 May 2021 14:41:19 -0400
+Received: from mail-qt1-x82e.google.com (mail-qt1-x82e.google.com [IPv6:2607:f8b0:4864:20::82e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC323C061574
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 May 2021 11:39:48 -0700 (PDT)
+Received: by mail-qt1-x82e.google.com with SMTP id c15so1983059qte.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 May 2021 11:39:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=marek-ca.20150623.gappssmtp.com; s=20150623;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=uA5NkUKXM0NWHdAHxp1SODLexJ5Ziie+gDyKfXP7raY=;
+        b=LYluVxIBkI8U+Xe05mqgEsvQ0Z4D5b/Wgzt7o556utVtLdH+xmKVabulxtB8DCOStR
+         P2aqV6AunQzLtd8v8Di65NcqNFbNvhsgkvMq2cb9Jgwhv0D/Djr5BMttMsLbAUB4L8ps
+         KM1zUM0LEWFBRLU+kQD3ZFS973QpfuEwXKkZrsqqrplqqCXoZSO9tz/6fgAMyLt1H393
+         obsQUvVvPwWjM/wD4RfvoFKqOiV7pflSMqsHFUG5LiWDND0G83IaK1UyvtHN3EVveu8Y
+         FtRXa6/g5sFVGpn+DzU2z2qYA+vVL8TM+ErVLVQx3NmoEZPuU+COqKHVyvtEsEPFefBh
+         RW5Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=uA5NkUKXM0NWHdAHxp1SODLexJ5Ziie+gDyKfXP7raY=;
+        b=O1Hoxr7ek5R8Y1JtWnjAjTeatXlIV96ZGvT0xQlfNVhgi3+zrofu1e3JtnNeBXt1dw
+         2scalrFzE7h0q5h8hPIR8N4XDkvtrQ7Kt+SiB8MLXPMcmxvQk+VXlWUUqN/gR2sTlsJG
+         dGda6CI1kmcH9rY9R3FuGJN5hsbzPyyp8RvjzbDQ4GGVBCJx8at4wbu+qp/z0vcfZWuM
+         wCZOZdFjD8OaABKd2ZZXAWd7V+w26FM8HuPKVGSOu5/fhG2ZyK5Ya4s52ymQxV3tMY35
+         qt/ZsOU4bxlxA9dMRMT4vdx8S0ZXk+VeRVyCmRH93nvqKnzSmACFbGrIe92V5jYTqJhY
+         8shw==
+X-Gm-Message-State: AOAM533ewaXOYAqZmjNBza/bdR+3I7lqGaCugaeyNEwU8CgxKKgJNOUn
+        ktkB1aIMjN0Uw6QaY9jrLb9+Gg==
+X-Google-Smtp-Source: ABdhPJy2cqucvHZVgUQx2H2EoZIrjTSOXPj3OEVGVSqsQbfGROm3HmkyF6w430olHXCXCKDoFwL95w==
+X-Received: by 2002:ac8:5981:: with SMTP id e1mr33246270qte.310.1621967987988;
+        Tue, 25 May 2021 11:39:47 -0700 (PDT)
+Received: from [192.168.0.189] (modemcable068.184-131-66.mc.videotron.ca. [66.131.184.68])
+        by smtp.gmail.com with ESMTPSA id j28sm13570276qkl.35.2021.05.25.11.39.46
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 25 May 2021 11:39:47 -0700 (PDT)
+Subject: Re: [PATCH 04/17] media: camss: csid-170: fix non-10bit formats
+To:     Andrey Konovalov <andrey.konovalov@linaro.org>,
+        linux-arm-msm@vger.kernel.org
+Cc:     robert.foss@linaro.org, Todor Tomov <todor.too@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+        "open list:QUALCOMM CAMERA SUBSYSTEM DRIVER" 
+        <linux-media@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
+References: <20210511180728.23781-1-jonathan@marek.ca>
+ <20210511180728.23781-5-jonathan@marek.ca>
+ <fd72befe-f39c-ecb0-1130-50aa8452a90e@linaro.org>
+From:   Jonathan Marek <jonathan@marek.ca>
+Message-ID: <99f482de-78f8-82da-e52b-7f76da67ff39@marek.ca>
+Date:   Tue, 25 May 2021 14:38:42 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.2.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Tue, 25 May 2021 11:34:38 -0700
-From:   abhinavk@codeaurora.org
-To:     Shaokun Zhang <zhangshaokun@hisilicon.com>
-Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>
-Subject: Re: [Freedreno] [PATCH] drm/msm/dp: remove the repeated declaration
-In-Reply-To: <1621945327-10871-1-git-send-email-zhangshaokun@hisilicon.com>
-References: <1621945327-10871-1-git-send-email-zhangshaokun@hisilicon.com>
-Message-ID: <1a928a9f4fb4973b265a160cd1d6369a@codeaurora.org>
-X-Sender: abhinavk@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+In-Reply-To: <fd72befe-f39c-ecb0-1130-50aa8452a90e@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-05-25 05:22, Shaokun Zhang wrote:
-> Function 'dp_catalog_audio_enable' is declared twice, remove the
-> repeated declaration.
+On 5/25/21 2:15 PM, Andrey Konovalov wrote:
+> Hi Jonathan,
 > 
-> Cc: Rob Clark <robdclark@gmail.com>
-> Cc: Abhinav Kumar <abhinavk@codeaurora.org>
-> Signed-off-by: Shaokun Zhang <zhangshaokun@hisilicon.com>
-Reviewed-by: Abhinav Kumar <abhinavk@codeaurora.org>
-> ---
->  drivers/gpu/drm/msm/dp/dp_catalog.h | 1 -
->  1 file changed, 1 deletion(-)
+> Thank you for your patch!
 > 
-> diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.h
-> b/drivers/gpu/drm/msm/dp/dp_catalog.h
-> index 176a9020a520..f12468dcbb56 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_catalog.h
-> +++ b/drivers/gpu/drm/msm/dp/dp_catalog.h
-> @@ -124,7 +124,6 @@ void dp_catalog_audio_get_header(struct dp_catalog
-> *catalog);
->  void dp_catalog_audio_set_header(struct dp_catalog *catalog);
->  void dp_catalog_audio_config_acr(struct dp_catalog *catalog);
->  void dp_catalog_audio_enable(struct dp_catalog *catalog);
-> -void dp_catalog_audio_enable(struct dp_catalog *catalog);
->  void dp_catalog_audio_config_sdp(struct dp_catalog *catalog);
->  void dp_catalog_audio_init(struct dp_catalog *catalog);
->  void dp_catalog_audio_sfe_level(struct dp_catalog *catalog);
+> On 11.05.2021 21:07, Jonathan Marek wrote:
+>> Use the decode_format/data_type from the "format" struct instead of a
+>> hardcoded 10-bit format.
+>>
+>> Fixes: eebe6d00e9bf ("media: camss: Add support for CSID hardware 
+>> version Titan 170")
+>> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+>> ---
+>>   drivers/media/platform/qcom/camss/camss-csid-170.c | 6 +++---
+>>   1 file changed, 3 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/drivers/media/platform/qcom/camss/camss-csid-170.c 
+>> b/drivers/media/platform/qcom/camss/camss-csid-170.c
+>> index ac22ff29d2a9..a81cc94c075f 100644
+>> --- a/drivers/media/platform/qcom/camss/camss-csid-170.c
+>> +++ b/drivers/media/platform/qcom/camss/camss-csid-170.c
+>> @@ -366,7 +366,7 @@ static void csid_configure_stream(struct 
+>> csid_device *csid, u8 enable)
+>>               val |= input_format->width & 0x1fff << 
+>> TPG_DT_n_CFG_0_FRAME_WIDTH;
+>>               writel_relaxed(val, csid->base + CSID_TPG_DT_n_CFG_0(0));
+>> -            val = DATA_TYPE_RAW_10BIT << TPG_DT_n_CFG_1_DATA_TYPE;
+>> +            val = format->data_type << TPG_DT_n_CFG_1_DATA_TYPE;
+>>               writel_relaxed(val, csid->base + CSID_TPG_DT_n_CFG_1(0));
+>>               val = tg->mode << TPG_DT_n_CFG_2_PAYLOAD_MODE;
+>> @@ -382,8 +382,8 @@ static void csid_configure_stream(struct 
+>> csid_device *csid, u8 enable)
+>>           val = 1 << RDI_CFG0_BYTE_CNTR_EN;
+>>           val |= 1 << RDI_CFG0_FORMAT_MEASURE_EN;
+>>           val |= 1 << RDI_CFG0_TIMESTAMP_EN;
+>> -        val |= DECODE_FORMAT_PAYLOAD_ONLY << RDI_CFG0_DECODE_FORMAT;
+>> -        val |= DATA_TYPE_RAW_10BIT << RDI_CFG0_DATA_TYPE;
+>> +        val |= format->decode_format << RDI_CFG0_DECODE_FORMAT;
+>> +        val |= format->data_type << RDI_CFG0_DATA_TYPE;
+> 
+> I've given it a try on RB3 board (aka db845c plus the navigation 
+> mezzanine), which uses ov8856 camera
+> sensor (its output format is SGRBG10_1X10).
+> 
+> The above change doesn't work for me because format->decode_format has 
+> the value of 0x02 (which is
+> DECODE_FORMAT_UNCOMPRESSED_10_BIT). format->data_type has the expected 
+> value of 0x2b (DATA_TYPE_RAW_10BIT).
+> 
+
+I will change it back to using DECODE_FORMAT_PAYLOAD_ONLY for the v2, 
+since it does seem like this is the correct value for the RDI path.
+
+(but IIRC, using DECODE_FORMAT_UNCOMPRESSED_10_BIT worked on RB3 with 
+the ov8856 camera last year when I brought it up. maybe the VFE or 
+another register is configured differently)
+
+> Thanks,
+> Andrey
+> 
+>>           val |= vc << RDI_CFG0_VIRTUAL_CHANNEL;
+>>           val |= dt_id << RDI_CFG0_DT_ID;
+>>           writel_relaxed(val, csid->base + CSID_RDI_CFG0(0));
+>>
