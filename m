@@ -2,125 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2C0F63908A8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 May 2021 20:15:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 591A63908E0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 May 2021 20:23:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231423AbhEYSQr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 May 2021 14:16:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42396 "EHLO
+        id S231539AbhEYSZB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 May 2021 14:25:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44290 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229819AbhEYSQq (ORCPT
+        with ESMTP id S232244AbhEYSY6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 May 2021 14:16:46 -0400
-Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 407A0C061574
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 May 2021 11:15:16 -0700 (PDT)
-Received: by mail-lj1-x22d.google.com with SMTP id p20so39400742ljj.8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 May 2021 11:15:16 -0700 (PDT)
+        Tue, 25 May 2021 14:24:58 -0400
+Received: from mail-oo1-xc35.google.com (mail-oo1-xc35.google.com [IPv6:2607:f8b0:4864:20::c35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1EE59C06175F
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 May 2021 11:23:28 -0700 (PDT)
+Received: by mail-oo1-xc35.google.com with SMTP id v13-20020a4ac00d0000b029020b43b918eeso7397200oop.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 May 2021 11:23:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=JDvTiCSdSa6DaxtIYC1tMowbiLo2hs8x4utC1OfqK2o=;
-        b=Y0cT5eNGrR2XbykQQJwT1wOeAUQMHH6SYgDmM+mMFkMkayQ6xD5PUGDOGr3F32/fBk
-         pkNc+6EdG/uSZSm6eLl6qiZD/OKRmROd7jYkTXTN6ouPouIRxsmPSHcvmpdQ4+peCzub
-         huZocnWTLrHULYRTEn0klXNgWfoIQ2ns1VhthONqcOnXNUJdrdbGwDMn9jsSSKBlxigu
-         MZLW27hw6rDXtSoH4SSl0gXNgIt0i3ecQ6w98XGRkEjhvPrZNI/Djihh3ZRjvR+kCpk6
-         pRQIAoD+OXiNKeGF2dVGnKpXsJB9q4Y3guE/VoNosiSTyKkdrxjtkDHkHT/Wm/DtMkxD
-         r3/w==
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=yLrEWP7K8W4M2KTxVp15RNvgy39Wo8hmbcRL1UT8wm4=;
+        b=V9VWUnK0dVgC8ThICcYWKUrpc5Ij5G7O5GkEJ4p5ENwYCzL0XraIlL7+V2VympArHu
+         fYoHb2HG1xYjs/HlXUnTUzDNQpLmw6k7RH93cL7rct8xz60XNId/S1K64RwtwiDtmbk8
+         LPGbMKWTzXm/fhJM3V+0HuZgmj18yzuR5qlB4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=JDvTiCSdSa6DaxtIYC1tMowbiLo2hs8x4utC1OfqK2o=;
-        b=I+joijT1hPISZxXRTFHHZT9B0WqKJq61mRkn5WlFzOBJ3Fh8medijXp9GlBEPs2t7H
-         Jq3ep3I5VcZFj1wqmou8L7IqbVeOgiJbu/b0ICkKFdh4ym6AuXzVo9pRfs8/HyehwP10
-         XqDvKAuLX14dShuG6CAjuFiBh6IQhWihtBIxX+xksgqG45PvlmBce4Uwoal9Q1Fw9bzJ
-         AOH4G/tPIIKiiBlxv8kJus8XvqLwxtiwV8VxDTXsw9aOlZzHqxp20/tOarBgL0AQjPmO
-         qVxpnMqEF3JEf9QNC6YV6zH0qo8tMCkP8JMBkaoMl3ABPLY89/QnsYfCkqM8QClmQhzo
-         6LpA==
-X-Gm-Message-State: AOAM531/x62k1P8d8UwGQzDpoR/ZTdS47m6sjBsioIp2bB2E/NB00+rb
-        8DOIVUcxjPVHVh2IOUvwE+WCag==
-X-Google-Smtp-Source: ABdhPJxK4MtgBJuOAVSzxlU1r+29hap5/+nJwVLbu8fMwzhn270NTK8HImjvnRIAlbRf3BG5N52VSA==
-X-Received: by 2002:a2e:7a02:: with SMTP id v2mr21900894ljc.271.1621966514644;
-        Tue, 25 May 2021 11:15:14 -0700 (PDT)
-Received: from [192.168.88.254] ([85.249.41.56])
-        by smtp.gmail.com with ESMTPSA id m9sm2175810ljh.6.2021.05.25.11.15.13
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 25 May 2021 11:15:13 -0700 (PDT)
-Subject: Re: [PATCH 04/17] media: camss: csid-170: fix non-10bit formats
-To:     Jonathan Marek <jonathan@marek.ca>, linux-arm-msm@vger.kernel.org
-Cc:     robert.foss@linaro.org, Todor Tomov <todor.too@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-        "open list:QUALCOMM CAMERA SUBSYSTEM DRIVER" 
-        <linux-media@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-References: <20210511180728.23781-1-jonathan@marek.ca>
- <20210511180728.23781-5-jonathan@marek.ca>
-From:   Andrey Konovalov <andrey.konovalov@linaro.org>
-Message-ID: <fd72befe-f39c-ecb0-1130-50aa8452a90e@linaro.org>
-Date:   Tue, 25 May 2021 21:15:10 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.8.1
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=yLrEWP7K8W4M2KTxVp15RNvgy39Wo8hmbcRL1UT8wm4=;
+        b=SXqEHEjiqOyJuKg1gY7jgit34FGJNoZsA3HV+2Pbhm2MGN8y3Mn/1vMLGM2xe1ZlXs
+         FUI8l7igvEswYv9aEhJTP+tHFXSHbO+sLso9uvvLvNI4dfzY2pQa7KQQBumEUj5uJX/X
+         9PxaZKzaSsMY9OceUPeLgGfNiIZPrxcH7Qi0O2fVVMQVyKxZtIUvX+NSnoOuOa9rdSEh
+         n7hirbb+gd/Nk0a5wk3HyCGa+8fWUyfldx/dulg68C0df7qzFFUy5KZB0Vevki/kv2fR
+         yGcEPqHw09SOw4YhHGfgwEzZZmtrO57DwrzOwdpiNLH2IgghQE80wHnYOjog68PoaQVI
+         Ub8Q==
+X-Gm-Message-State: AOAM5309X/+M8f0GYgJ1QuFooS/0J3rcwP9DT5nPEuL1JDXSM74rvZmS
+        SDQuc6Bsh1RbRIQ+IId+YtoQUaVLtcpJ2J6g4ZKjGg==
+X-Google-Smtp-Source: ABdhPJzqb/cUXWaFHPYbdlIHfd8m3yBFhec5Kh8+qcA+mY/y8sl8WzknhKEePGCSuaCP9Qxhq6MTXD6I9in9Oh14XbU=
+X-Received: by 2002:a05:6820:169:: with SMTP id k9mr8907033ood.92.1621967007509;
+ Tue, 25 May 2021 11:23:27 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 25 May 2021 14:23:27 -0400
 MIME-Version: 1.0
-In-Reply-To: <20210511180728.23781-5-jonathan@marek.ca>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <20210525133242.188603-1-senozhatsky@chromium.org>
+References: <20210525133242.188603-1-senozhatsky@chromium.org>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.9.1
+Date:   Tue, 25 May 2021 14:23:27 -0400
+Message-ID: <CAE-0n53MvSNZ+EZDLMzTzvvnQ-GZq8g29qxcEXQ-h9s-eQJ4Wg@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: remove camera_mem region
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Sergey Senozhatsky <senozhatsky@chromium.org>,
+        Tomasz Figa <tfiga@chromium.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Jonathan,
-
-Thank you for your patch!
-
-On 11.05.2021 21:07, Jonathan Marek wrote:
-> Use the decode_format/data_type from the "format" struct instead of a
-> hardcoded 10-bit format.
-> 
-> Fixes: eebe6d00e9bf ("media: camss: Add support for CSID hardware version Titan 170")
-> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+Quoting Sergey Senozhatsky (2021-05-25 06:32:42)
+> qcom camera driver allocates the ICP firmware memory
+> dynamically, so the carveout region is unnecessary.
+>
+> Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
 > ---
->   drivers/media/platform/qcom/camss/camss-csid-170.c | 6 +++---
->   1 file changed, 3 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/media/platform/qcom/camss/camss-csid-170.c b/drivers/media/platform/qcom/camss/camss-csid-170.c
-> index ac22ff29d2a9..a81cc94c075f 100644
-> --- a/drivers/media/platform/qcom/camss/camss-csid-170.c
-> +++ b/drivers/media/platform/qcom/camss/camss-csid-170.c
-> @@ -366,7 +366,7 @@ static void csid_configure_stream(struct csid_device *csid, u8 enable)
->   			val |= input_format->width & 0x1fff << TPG_DT_n_CFG_0_FRAME_WIDTH;
->   			writel_relaxed(val, csid->base + CSID_TPG_DT_n_CFG_0(0));
->   
-> -			val = DATA_TYPE_RAW_10BIT << TPG_DT_n_CFG_1_DATA_TYPE;
-> +			val = format->data_type << TPG_DT_n_CFG_1_DATA_TYPE;
->   			writel_relaxed(val, csid->base + CSID_TPG_DT_n_CFG_1(0));
->   
->   			val = tg->mode << TPG_DT_n_CFG_2_PAYLOAD_MODE;
-> @@ -382,8 +382,8 @@ static void csid_configure_stream(struct csid_device *csid, u8 enable)
->   		val = 1 << RDI_CFG0_BYTE_CNTR_EN;
->   		val |= 1 << RDI_CFG0_FORMAT_MEASURE_EN;
->   		val |= 1 << RDI_CFG0_TIMESTAMP_EN;
-> -		val |= DECODE_FORMAT_PAYLOAD_ONLY << RDI_CFG0_DECODE_FORMAT;
-> -		val |= DATA_TYPE_RAW_10BIT << RDI_CFG0_DATA_TYPE;
-> +		val |= format->decode_format << RDI_CFG0_DECODE_FORMAT;
-> +		val |= format->data_type << RDI_CFG0_DATA_TYPE;
 
-I've given it a try on RB3 board (aka db845c plus the navigation mezzanine), which uses ov8856 camera
-sensor (its output format is SGRBG10_1X10).
-
-The above change doesn't work for me because format->decode_format has the value of 0x02 (which is
-DECODE_FORMAT_UNCOMPRESSED_10_BIT). format->data_type has the expected value of 0x2b (DATA_TYPE_RAW_10BIT).
-
-Thanks,
-Andrey
-
->   		val |= vc << RDI_CFG0_VIRTUAL_CHANNEL;
->   		val |= dt_id << RDI_CFG0_DT_ID;
->   		writel_relaxed(val, csid->base + CSID_RDI_CFG0(0));
-> 
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
