@@ -2,172 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AA1EC38F8AE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 May 2021 05:20:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 05A1838F8C2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 May 2021 05:28:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229837AbhEYDWS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 May 2021 23:22:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37236 "EHLO
+        id S230138AbhEYD3n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 May 2021 23:29:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38862 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229575AbhEYDWS (ORCPT
+        with ESMTP id S229837AbhEYD3n (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 May 2021 23:22:18 -0400
-Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 769A7C061574;
-        Mon, 24 May 2021 20:20:48 -0700 (PDT)
-Received: by mail-ot1-x329.google.com with SMTP id 69-20020a9d0a4b0000b02902ed42f141e1so27276411otg.2;
-        Mon, 24 May 2021 20:20:48 -0700 (PDT)
+        Mon, 24 May 2021 23:29:43 -0400
+Received: from mail-oi1-x22b.google.com (mail-oi1-x22b.google.com [IPv6:2607:f8b0:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3BA30C061574
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 May 2021 20:28:13 -0700 (PDT)
+Received: by mail-oi1-x22b.google.com with SMTP id c3so29009964oic.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 May 2021 20:28:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Sed5JvRLMiaF+0cJiDPgQf1+4i4xNSCm3dc8S6Z16pQ=;
-        b=jkwFbwTn/CLxuDbawKx+Ai7I2fdbLrqNe0hagrkWg8vHDxYqqBb+dOy51ktDABiZZf
-         1gm+owY9hu4NO8qC7NRXEcmGhU3Op6ND2J5cyc1mcDfpi4DBLcF59KZ5KQt9X5bkXMHR
-         40dQLvIVTmBQyrobhyZsnR6O3yj7LUoayZIfH0pSueke9vAjJ555E2ET6+qcqJPmRJH6
-         Rguhm8Xqje3K9Hoj+xa2ggJ1pBUKqiykXe3xokDsR85owUyxLFPiSJ8RLnGemfeaLRn0
-         LdRE7A0ZbQ4nGnViDPuXSHofG2MPMzm/KKIGdR2fYD/Q2rDz+9fJvEH0TA3HxOwYuUtz
-         HivQ==
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=yd7WNrW5RgCRq69GG/t641RhzJb1+O9rCNuKEDYZ+UQ=;
+        b=Qihz9q4ulhPC5+jW95HZeqBMuDCzCUu5BXI2aHGC/4iIT85jOP8Merwq+BoCPrrNFl
+         MlvM+x81c5n+TIyIs8D1H+nQNU4q7QNzAI9dT25HByHl0DudUzzbP+m5k87rrr5Q9E2V
+         v5XqwFV+m63TDEQPDv/hWb6ymRQnjJEmWX8UxwOq4fEA9/YflwcPI6/SYvL1XfI9wKyu
+         MX7xrQyiZQxJU57vhRcGOGin7qf+2ErXPVy3Bvl/TmpmCk08rHdDvK3HHWdT5SKcFbKm
+         Ngd5FveLSInfBtCMCRZDjCg1lBKeJGBrXkut5dcay1LhdzWu9x3oZnPqKeQ4HaT3Jee2
+         3LvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
-         :mime-version:content-transfer-encoding;
-        bh=Sed5JvRLMiaF+0cJiDPgQf1+4i4xNSCm3dc8S6Z16pQ=;
-        b=O4raLSzXldGJpc5TgSmT69QezMl62HYZ2WA74LUlIpRpjeqSjNt3lrlyiSFcdMruqi
-         jWwt2RJbt8S3Wjt3Q0gx3OZPu2ci6djIJAPB63CNr8O+S87O+kZjY+7qrkxJPZYoyUbQ
-         KY9dx+qmhDCBy5AodjL0TVbGaWcx0zqZAwxjiJdCTGOySmyWto4kGJ2HtBPAetRoofKE
-         dfCG/NBYmpDlLJMxos28P5jz0m1d1V6UOP1q0pFX3dpLFjggb+QGjxcgxmHauPTG+/2v
-         u710xLzomAOYI4rY81g5psBhBsh+UHfhDsCgwDHLh8IuTafnPEPyqqdgXSrG87XxQCRD
-         Df8Q==
-X-Gm-Message-State: AOAM531NufEc4M7b7EtlP0qO1dL12cHCNSqnqGMaBppKjfz2a/WjixNa
-        yoOAaX957RTSElpJE/bIlvM=
-X-Google-Smtp-Source: ABdhPJxKOQeYkDInkuL2V3aQoUYr+kbPVlPeMP9q3jy3Uz4aFJzK9uqk6bnPvR4B9/MbmKkZf/JsPw==
-X-Received: by 2002:a9d:60ca:: with SMTP id b10mr20574176otk.242.1621912847670;
-        Mon, 24 May 2021 20:20:47 -0700 (PDT)
-Received: from localhost ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id 88sm3481873otb.7.2021.05.24.20.20.44
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=yd7WNrW5RgCRq69GG/t641RhzJb1+O9rCNuKEDYZ+UQ=;
+        b=DuJY60axxGo4asADP6TRDAlq4DNRLjikD8hIpxsgaIOTbdQs+aUBozj+qVEOae2NAf
+         BAGJgBJS19IPtSnZuPdHsSPxiq50e6mRtOp17UvTk7kPkSs1b1bVLyhNVHUufrfp7IDM
+         AFpDEFbgTGaiJ/0GH3UOLeHhHmG1Tu20/a+XnIkYk7cG8MRYcdIsCY7s93TC22qMkYKi
+         GcNICWrmwbHAxVLn/UhGPn0apukq6CP6/Gp+NOwrKE6UVeLTDnfbqQX7qZyqy18Gbxpn
+         gjM0nGAXWVZcCZVWLovZI71W/9ubaizw1oQtSZgFyhHtbWHIQB3XnImzdNcjOnWtlRNY
+         C9bQ==
+X-Gm-Message-State: AOAM531sCchtNlsMK+mhzizP4qubmyDYhJYf9FDl/yeteX+8bsqb6nDC
+        xuSTypjianjDi0TL3HOuGVNvwg==
+X-Google-Smtp-Source: ABdhPJwKviMyrxlplBS0akvECPGFTv+lWWT2whiGwA05wk4Af21kzQrXyzWmMbn4Mo/QH1n2F7KL+Q==
+X-Received: by 2002:aca:4e8c:: with SMTP id c134mr1436989oib.169.1621913292614;
+        Mon, 24 May 2021 20:28:12 -0700 (PDT)
+Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id c19sm2990438oiw.7.2021.05.24.20.28.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 May 2021 20:20:46 -0700 (PDT)
-Sender: Guenter Roeck <groeck7@gmail.com>
-From:   Guenter Roeck <linux@roeck-us.net>
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH] drm/msm/dp: Drop unnecessary NULL checks after container_of
-Date:   Mon, 24 May 2021 20:20:33 -0700
-Message-Id: <20210525032033.453143-1-linux@roeck-us.net>
-X-Mailer: git-send-email 2.25.1
+        Mon, 24 May 2021 20:28:12 -0700 (PDT)
+Date:   Mon, 24 May 2021 22:28:10 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Lee Jones <lee.jones@linaro.org>
+Cc:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
+        iommu@lists.linux-foundation.org,
+        open list <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Patrick Daly <pdaly@codeaurora.org>,
+        Pratik Patel <pratikp@codeaurora.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Thierry Reding <treding@nvidia.com>
+Subject: Re: [PATCH 0/3] iommu/arm-smmu: Qualcomm bootsplash/efifb
+Message-ID: <YKxuynamQBTrNksO@yoga>
+References: <20191226221709.3844244-1-bjorn.andersson@linaro.org>
+ <20200108091641.GA15147@willie-the-truck>
+ <CAF2Aj3iKk2LSA5XC76pNiLV8a76BkibUitof-dix8rqkc0qiow@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAF2Aj3iKk2LSA5XC76pNiLV8a76BkibUitof-dix8rqkc0qiow@mail.gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The result of container_of() operations is never NULL unless the embedded
-element is the first element of the structure. This is not the case here.
-The NULL check on the result of container_of() is therefore unnecessary
-and misleading. Remove it.
+On Mon 24 May 07:03 CDT 2021, Lee Jones wrote:
 
-This change was made automatically with the following Coccinelle script.
+> On Wed, 8 Jan 2020 at 09:16, Will Deacon <will@kernel.org> wrote:
+> 
+> > On Thu, Dec 26, 2019 at 02:17:06PM -0800, Bjorn Andersson wrote:
+> > > These patches implements the stream mapping inheritance that's necessary
+> > in
+> > > order to not hit a security violation as the display hardware looses its
+> > stream
+> > > mapping during initialization of arm-smmu in various Qualcomm platforms.
+> > >
+> > > This was previously posted as an RFC [1], changes since then involves the
+> > > rebase and migration of the read-back code to the Qualcomm specific
+> > > implementation, the mapping is maintained indefinitely - to handle probe
+> > > deferring clients - and rewritten commit messages.
+> >
+> > I don't think we should solve this in a Qualcomm-specific manner. Please
+> > can
+> > you take a look at the proposal from Thierry [1] and see whether or not it
+> > works for you?
+> >
+> 
+> Did this or Thierry's solution ever gain traction?
+> 
 
-@@
-type t;
-identifier v;
-statement s;
-@@
+There was a few pieces that landed in the common code which allowed us
+to deal with the quirks of the Qualcomm platform (turned out that just
+reading back the settings wasn't the only piece necessary).
 
-<+...
-(
-  t v = container_of(...);
-|
-  v = container_of(...);
-)
-  ...
-  when != v
-- if (\( !v \| v == NULL \) ) s
-...+>
+The "generic" solution is essentially the second half of
+qcom_smmu_cfg_probe(), which ensures that as the SMMU is reset it will
+do so with bypass mappings for all stream mappings the boot loader left
+us.
 
-While at it, remove unused but assigned variable hpd in
-dp_display_usbpd_attention_cb().
+> Or are all the parties still 'solving' this downstream?
+> 
 
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
----
- drivers/gpu/drm/msm/dp/dp_display.c | 25 -------------------------
- 1 file changed, 25 deletions(-)
+I believe that Qualcomm has adopted the upstream solution in their
+downstream kernel.
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index 1784e119269b..a74e7ef96fcf 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -208,10 +208,6 @@ static int dp_display_bind(struct device *dev, struct device *master,
- 
- 	dp = container_of(g_dp_display,
- 			struct dp_display_private, dp_display);
--	if (!dp) {
--		DRM_ERROR("DP driver bind failed. Invalid driver data\n");
--		return -EINVAL;
--	}
- 
- 	dp->dp_display.drm_dev = drm;
- 	priv = drm->dev_private;
-@@ -252,10 +248,6 @@ static void dp_display_unbind(struct device *dev, struct device *master,
- 
- 	dp = container_of(g_dp_display,
- 			struct dp_display_private, dp_display);
--	if (!dp) {
--		DRM_ERROR("Invalid DP driver data\n");
--		return;
--	}
- 
- 	dp_power_client_deinit(dp->power);
- 	dp_aux_unregister(dp->aux);
-@@ -406,11 +398,6 @@ static int dp_display_usbpd_configure_cb(struct device *dev)
- 
- 	dp = container_of(g_dp_display,
- 			struct dp_display_private, dp_display);
--	if (!dp) {
--		DRM_ERROR("no driver data found\n");
--		rc = -ENODEV;
--		goto end;
--	}
- 
- 	dp_display_host_init(dp, false);
- 
-@@ -437,11 +424,6 @@ static int dp_display_usbpd_disconnect_cb(struct device *dev)
- 
- 	dp = container_of(g_dp_display,
- 			struct dp_display_private, dp_display);
--	if (!dp) {
--		DRM_ERROR("no driver data found\n");
--		rc = -ENODEV;
--		return rc;
--	}
- 
- 	dp_add_event(dp, EV_USER_NOTIFICATION, false, 0);
- 
-@@ -502,7 +484,6 @@ static int dp_display_usbpd_attention_cb(struct device *dev)
- 	int rc = 0;
- 	u32 sink_request;
- 	struct dp_display_private *dp;
--	struct dp_usbpd *hpd;
- 
- 	if (!dev) {
- 		DRM_ERROR("invalid dev\n");
-@@ -511,12 +492,6 @@ static int dp_display_usbpd_attention_cb(struct device *dev)
- 
- 	dp = container_of(g_dp_display,
- 			struct dp_display_private, dp_display);
--	if (!dp) {
--		DRM_ERROR("no driver data found\n");
--		return -ENODEV;
--	}
--
--	hpd = dp->usbpd;
- 
- 	/* check for any test request issued by sink */
- 	rc = dp_link_process_request(dp->link);
--- 
-2.25.1
-
+Regards,
+Bjorn
