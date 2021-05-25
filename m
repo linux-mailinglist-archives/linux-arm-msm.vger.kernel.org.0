@@ -2,142 +2,215 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8EB7F390918
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 May 2021 20:39:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 03C7639091E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 May 2021 20:41:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230505AbhEYSlV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 May 2021 14:41:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47910 "EHLO
+        id S230288AbhEYSn1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 May 2021 14:43:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48400 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229532AbhEYSlT (ORCPT
+        with ESMTP id S230105AbhEYSn1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 May 2021 14:41:19 -0400
-Received: from mail-qt1-x82e.google.com (mail-qt1-x82e.google.com [IPv6:2607:f8b0:4864:20::82e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC323C061574
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 May 2021 11:39:48 -0700 (PDT)
-Received: by mail-qt1-x82e.google.com with SMTP id c15so1983059qte.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 May 2021 11:39:48 -0700 (PDT)
+        Tue, 25 May 2021 14:43:27 -0400
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 126DDC061756
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 May 2021 11:41:57 -0700 (PDT)
+Received: by mail-wm1-x330.google.com with SMTP id b7so16704832wmh.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 May 2021 11:41:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=marek-ca.20150623.gappssmtp.com; s=20150623;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=uA5NkUKXM0NWHdAHxp1SODLexJ5Ziie+gDyKfXP7raY=;
-        b=LYluVxIBkI8U+Xe05mqgEsvQ0Z4D5b/Wgzt7o556utVtLdH+xmKVabulxtB8DCOStR
-         P2aqV6AunQzLtd8v8Di65NcqNFbNvhsgkvMq2cb9Jgwhv0D/Djr5BMttMsLbAUB4L8ps
-         KM1zUM0LEWFBRLU+kQD3ZFS973QpfuEwXKkZrsqqrplqqCXoZSO9tz/6fgAMyLt1H393
-         obsQUvVvPwWjM/wD4RfvoFKqOiV7pflSMqsHFUG5LiWDND0G83IaK1UyvtHN3EVveu8Y
-         FtRXa6/g5sFVGpn+DzU2z2qYA+vVL8TM+ErVLVQx3NmoEZPuU+COqKHVyvtEsEPFefBh
-         RW5Q==
+        d=snejp.pl; s=gmail;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=uA8zy8FMFOfbUuugs0P0F3l39RYnpQwCDdJbsxFoBTI=;
+        b=AfETKzCfYnpqwmxs4oM7m4JogaxlXXgr5SdBL5nyCsmwp4GFOvrSnArzR8BCONT9sR
+         Ko2myp/YeGR+nB2ftHfgMMOCUgZgmc1CkY44r1W3IhkFvuJYhSltKEqExkDNlfUY6lRr
+         pujOw7vc5djCRRU0Mu6Jjb0ox3Z1iI7wdy+yZiFElI9tI4HNAeFbbyAwS7zJzfRnnUcV
+         p4NgepHT5NtHbdaq7cvckZu1iXFI/ZwYMZDR6hQohm7k0T48PdAEcI5gKMoJFx7vi1SN
+         2U1DC6i7bHqeSwR8KsDOk8We6YVGYbcKVOuN8UJwvFHS2JDZUNZL3pM5vusaHNxOIFM2
+         Pg2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=uA5NkUKXM0NWHdAHxp1SODLexJ5Ziie+gDyKfXP7raY=;
-        b=O1Hoxr7ek5R8Y1JtWnjAjTeatXlIV96ZGvT0xQlfNVhgi3+zrofu1e3JtnNeBXt1dw
-         2scalrFzE7h0q5h8hPIR8N4XDkvtrQ7Kt+SiB8MLXPMcmxvQk+VXlWUUqN/gR2sTlsJG
-         dGda6CI1kmcH9rY9R3FuGJN5hsbzPyyp8RvjzbDQ4GGVBCJx8at4wbu+qp/z0vcfZWuM
-         wCZOZdFjD8OaABKd2ZZXAWd7V+w26FM8HuPKVGSOu5/fhG2ZyK5Ya4s52ymQxV3tMY35
-         qt/ZsOU4bxlxA9dMRMT4vdx8S0ZXk+VeRVyCmRH93nvqKnzSmACFbGrIe92V5jYTqJhY
-         8shw==
-X-Gm-Message-State: AOAM533ewaXOYAqZmjNBza/bdR+3I7lqGaCugaeyNEwU8CgxKKgJNOUn
-        ktkB1aIMjN0Uw6QaY9jrLb9+Gg==
-X-Google-Smtp-Source: ABdhPJy2cqucvHZVgUQx2H2EoZIrjTSOXPj3OEVGVSqsQbfGROm3HmkyF6w430olHXCXCKDoFwL95w==
-X-Received: by 2002:ac8:5981:: with SMTP id e1mr33246270qte.310.1621967987988;
-        Tue, 25 May 2021 11:39:47 -0700 (PDT)
-Received: from [192.168.0.189] (modemcable068.184-131-66.mc.videotron.ca. [66.131.184.68])
-        by smtp.gmail.com with ESMTPSA id j28sm13570276qkl.35.2021.05.25.11.39.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 25 May 2021 11:39:47 -0700 (PDT)
-Subject: Re: [PATCH 04/17] media: camss: csid-170: fix non-10bit formats
-To:     Andrey Konovalov <andrey.konovalov@linaro.org>,
-        linux-arm-msm@vger.kernel.org
-Cc:     robert.foss@linaro.org, Todor Tomov <todor.too@gmail.com>,
-        Andy Gross <agross@kernel.org>,
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=uA8zy8FMFOfbUuugs0P0F3l39RYnpQwCDdJbsxFoBTI=;
+        b=lN5jt54IhOxRjPJNKxD80hgWkK4clJoR+BvD/ZgG52WGN+Fka2pf69z/Kj6Y5elGrn
+         qH1EW4fSicTh/eyWXdpsSikxEtZ9+/Os+Ekmdk0TzWmxEb0qGV5BgtEFF2gS8CgImhWf
+         ADWnN/a8AwtkDXEahr62dm8o/ivod2xIMB/RwvopJvRsYmqA1d1UAjJq1GVhqWrX4n/L
+         ubyXvG6EZfZ3sKnpTGqZRfayVFUZz+yj4dXt5ZNaqK/+ursQhQl4qVHpJiS4BSijJo2C
+         S5F441xMFNcd1IUI5eSLIpiMSwNKAuHUjG8zO6fEfGfwGWta7QY5yjQSSgQfzdOGWRqh
+         lGIw==
+X-Gm-Message-State: AOAM533r3JFI7oOzG8gBQ53hEVMA6rHQtWRT6EpwAt3TKIDSMg+Cq2pO
+        T9zN98H25RNjg8vxFmC/S0PsEQ==
+X-Google-Smtp-Source: ABdhPJz9UBTRCNLv5q13a+UC8+jySNwiA5n/OC1n2KousY/xWSpRFiV/wbtBLYxSGjEmJlOeD2A5dQ==
+X-Received: by 2002:a05:600c:3542:: with SMTP id i2mr23107352wmq.124.1621968115511;
+        Tue, 25 May 2021 11:41:55 -0700 (PDT)
+Received: from PackardBell (public-gprs171801.centertel.pl. [46.134.10.90])
+        by smtp.googlemail.com with ESMTPSA id g10sm17381448wrq.12.2021.05.25.11.41.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 25 May 2021 11:41:54 -0700 (PDT)
+Received: from localhost (PackardBell [local])
+        by PackardBell (OpenSMTPD) with ESMTPA id d3d72a31;
+        Tue, 25 May 2021 18:41:51 +0000 (UTC)
+Date:   Tue, 25 May 2021 20:41:51 +0200
+From:   Bartosz Dudziak <bartosz.dudziak@snejp.pl>
+To:     Stephan Gerhold <stephan@gerhold.net>
+Cc:     Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-        "open list:QUALCOMM CAMERA SUBSYSTEM DRIVER" 
-        <linux-media@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-References: <20210511180728.23781-1-jonathan@marek.ca>
- <20210511180728.23781-5-jonathan@marek.ca>
- <fd72befe-f39c-ecb0-1130-50aa8452a90e@linaro.org>
-From:   Jonathan Marek <jonathan@marek.ca>
-Message-ID: <99f482de-78f8-82da-e52b-7f76da67ff39@marek.ca>
-Date:   Tue, 25 May 2021 14:38:42 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.2.2
+        Russell King <linux@armlinux.org.uk>,
+        David Sterba <dsterba@suse.com>, Jens Axboe <axboe@kernel.dk>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Kumar Gala <galak@codeaurora.org>, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH 2/2] arm: qcom: Add SMP support for Cortex-A7
+Message-ID: <20210525184151.GA1543@PackardBell>
+References: <20210513153442.52941-1-bartosz.dudziak@snejp.pl>
+ <20210513153442.52941-3-bartosz.dudziak@snejp.pl>
+ <YKzrq8V4c2HScgP4@gerhold.net>
 MIME-Version: 1.0
-In-Reply-To: <fd72befe-f39c-ecb0-1130-50aa8452a90e@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <YKzrq8V4c2HScgP4@gerhold.net>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 5/25/21 2:15 PM, Andrey Konovalov wrote:
-> Hi Jonathan,
+Hi,
+
+On Tue, May 25, 2021 at 02:20:59PM +0200, Stephan Gerhold wrote:
+> Hi,
 > 
-> Thank you for your patch!
+> On Thu, May 13, 2021 at 05:34:42PM +0200, Bartosz Dudziak wrote:
+> > Implement support for Cortex-A7 CPU release sequence.
+> > 
+> > Signed-off-by: Bartosz Dudziak <bartosz.dudziak@snejp.pl>
+> > ---
+> >  arch/arm/mach-qcom/platsmp.c | 72 ++++++++++++++++++++++++++++++++++++
+> >  1 file changed, 72 insertions(+)
+> > 
+> > diff --git a/arch/arm/mach-qcom/platsmp.c b/arch/arm/mach-qcom/platsmp.c
+> > index 630a038f45..10780bf14a 100644
+> > --- a/arch/arm/mach-qcom/platsmp.c
+> > +++ b/arch/arm/mach-qcom/platsmp.c
+> > @@ -29,6 +29,7 @@
+> >  #define COREPOR_RST		BIT(5)
+> >  #define CORE_RST		BIT(4)
+> >  #define L2DT_SLP		BIT(3)
+> > +#define CORE_MEM_CLAMP		BIT(1)
+> >  #define CLAMP			BIT(0)
+> >  
+> >  #define APC_PWR_GATE_CTL	0x14
+> > @@ -75,6 +76,63 @@ static int scss_release_secondary(unsigned int cpu)
+> >  	return 0;
+> >  }
+> >  
+> > +static int cortex_a7_release_secondary(unsigned int cpu)
+> > +{
+> > +	int ret = 0;
+> > +	void __iomem *reg;
+> > +	struct device_node *cpu_node, *acc_node;
+> > +	u32 reg_val;
+> > +
+> > +	cpu_node = of_get_cpu_node(cpu, NULL);
+> > +	if (!cpu_node)
+> > +		return -ENODEV;
+> > +
+> > +	acc_node = of_parse_phandle(cpu_node, "qcom,acc", 0);
+> > +	if (!acc_node) {
+> > +		ret = -ENODEV;
+> > +		goto out_acc;
+> > +	}
+> > +
+> > +	reg = of_iomap(acc_node, 0);
+> > +	if (!reg) {
+> > +		ret = -ENOMEM;
+> > +		goto out_acc_map;
+> > +	}
+> > +
+> > +	/* Put the CPU into reset. */
+> > +	reg_val = CORE_RST | COREPOR_RST | CLAMP | CORE_MEM_CLAMP;
+> > +	writel(reg_val, reg + APCS_CPU_PWR_CTL);
+> > +
+> > +	/* Turn on the BHS, set the BHS_CNT to 16 XO clock cycles */
+> > +	writel(BHS_EN | (0x10 << BHS_CNT_SHIFT), reg + APC_PWR_GATE_CTL);
+> > +	/* Wait for the BHS to settle */
+> > +	udelay(2);
+> > +
+> > +	reg_val &= ~CORE_MEM_CLAMP;
+> > +	writel(reg_val, reg + APCS_CPU_PWR_CTL);
+> > +
+> > +	reg_val |= L2DT_SLP;
+> > +	writel(reg_val, reg + APCS_CPU_PWR_CTL);
+> > +	udelay(2);
+> > +
+> > +	reg_val = (reg_val | BIT(17)) & ~CLAMP;
+> > +	writel(reg_val, reg + APCS_CPU_PWR_CTL);
+> > +	udelay(2);
+> > +
+> > +	/* Release CPU out of reset and bring it to life. */
+> > +	reg_val &= ~(CORE_RST | COREPOR_RST);
+> > +	writel(reg_val, reg + APCS_CPU_PWR_CTL);
+> > +	reg_val |= CORE_PWRD_UP;
+> > +	writel(reg_val, reg + APCS_CPU_PWR_CTL);
+> > +
 > 
-> On 11.05.2021 21:07, Jonathan Marek wrote:
->> Use the decode_format/data_type from the "format" struct instead of a
->> hardcoded 10-bit format.
->>
->> Fixes: eebe6d00e9bf ("media: camss: Add support for CSID hardware 
->> version Titan 170")
->> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
->> ---
->>   drivers/media/platform/qcom/camss/camss-csid-170.c | 6 +++---
->>   1 file changed, 3 insertions(+), 3 deletions(-)
->>
->> diff --git a/drivers/media/platform/qcom/camss/camss-csid-170.c 
->> b/drivers/media/platform/qcom/camss/camss-csid-170.c
->> index ac22ff29d2a9..a81cc94c075f 100644
->> --- a/drivers/media/platform/qcom/camss/camss-csid-170.c
->> +++ b/drivers/media/platform/qcom/camss/camss-csid-170.c
->> @@ -366,7 +366,7 @@ static void csid_configure_stream(struct 
->> csid_device *csid, u8 enable)
->>               val |= input_format->width & 0x1fff << 
->> TPG_DT_n_CFG_0_FRAME_WIDTH;
->>               writel_relaxed(val, csid->base + CSID_TPG_DT_n_CFG_0(0));
->> -            val = DATA_TYPE_RAW_10BIT << TPG_DT_n_CFG_1_DATA_TYPE;
->> +            val = format->data_type << TPG_DT_n_CFG_1_DATA_TYPE;
->>               writel_relaxed(val, csid->base + CSID_TPG_DT_n_CFG_1(0));
->>               val = tg->mode << TPG_DT_n_CFG_2_PAYLOAD_MODE;
->> @@ -382,8 +382,8 @@ static void csid_configure_stream(struct 
->> csid_device *csid, u8 enable)
->>           val = 1 << RDI_CFG0_BYTE_CNTR_EN;
->>           val |= 1 << RDI_CFG0_FORMAT_MEASURE_EN;
->>           val |= 1 << RDI_CFG0_TIMESTAMP_EN;
->> -        val |= DECODE_FORMAT_PAYLOAD_ONLY << RDI_CFG0_DECODE_FORMAT;
->> -        val |= DATA_TYPE_RAW_10BIT << RDI_CFG0_DATA_TYPE;
->> +        val |= format->decode_format << RDI_CFG0_DECODE_FORMAT;
->> +        val |= format->data_type << RDI_CFG0_DATA_TYPE;
+> I think you forgot to add
 > 
-> I've given it a try on RB3 board (aka db845c plus the navigation 
-> mezzanine), which uses ov8856 camera
-> sensor (its output format is SGRBG10_1X10).
+> 	iounmap(reg);
 > 
-> The above change doesn't work for me because format->decode_format has 
-> the value of 0x02 (which is
-> DECODE_FORMAT_UNCOMPRESSED_10_BIT). format->data_type has the expected 
-> value of 0x2b (DATA_TYPE_RAW_10BIT).
+> here :)
 > 
 
-I will change it back to using DECODE_FORMAT_PAYLOAD_ONLY for the v2, 
-since it does seem like this is the correct value for the RDI path.
+Thank you, i have missed it.
 
-(but IIRC, using DECODE_FORMAT_UNCOMPRESSED_10_BIT worked on RB3 with 
-the ov8856 camera last year when I brought it up. maybe the VFE or 
-another register is configured differently)
-
+> > +out_acc_map:
+> > +	of_node_put(acc_node);
+> > +out_acc:
+> > +	of_node_put(cpu_node);
+> > +
+> > +	return ret;
+> > +}
+> > +
+> >  static int kpssv1_release_secondary(unsigned int cpu)
+> >  {
+> >  	int ret = 0;
+> > @@ -281,6 +339,11 @@ static int msm8660_boot_secondary(unsigned int cpu, struct task_struct *idle)
+> >  	return qcom_boot_secondary(cpu, scss_release_secondary);
+> >  }
+> >  
+> > +static int cortex_a7_boot_secondary(unsigned int cpu, struct task_struct *idle)
+> > +{
+> > +	return qcom_boot_secondary(cpu, cortex_a7_release_secondary);
+> > +}
+> > +
+> >  static int kpssv1_boot_secondary(unsigned int cpu, struct task_struct *idle)
+> >  {
+> >  	return qcom_boot_secondary(cpu, kpssv1_release_secondary);
+> > @@ -315,6 +378,15 @@ static const struct smp_operations smp_msm8660_ops __initconst = {
+> >  };
+> >  CPU_METHOD_OF_DECLARE(qcom_smp, "qcom,gcc-msm8660", &smp_msm8660_ops);
+> >  
+> > +static const struct smp_operations qcom_smp_cortex_a7_ops __initconst = {
+> > +	.smp_prepare_cpus	= qcom_smp_prepare_cpus,
+> > +	.smp_boot_secondary	= cortex_a7_boot_secondary,
+> > +#ifdef CONFIG_HOTPLUG_CPU
+> > +	.cpu_die		= qcom_cpu_die,
+> > +#endif
+> > +};
+> > +CPU_METHOD_OF_DECLARE(qcom_smp_cortex_a7, "qcom,cpss-acc", &qcom_smp_cortex_a7_ops);
+> > +
+> 
+> I'm a bit curious about the name "CPSS". Is that something you came up
+> with yourself similar to KPSS? There is a slight naming collision here
+> with the "Chip peripheral subsystem" (CPSS) on APQ8064E (Snapdragon 600),
+> see https://developer.qualcomm.com/download/sd600/snapdragon-600-device-spec.pdf
+> 
 > Thanks,
-> Andrey
-> 
->>           val |= vc << RDI_CFG0_VIRTUAL_CHANNEL;
->>           val |= dt_id << RDI_CFG0_DT_ID;
->>           writel_relaxed(val, csid->base + CSID_RDI_CFG0(0));
->>
+> Stephan
+
+Yes, the "CPSS" is something i came up with when i was looking at KPSS bindings.
+Sorry that i did not check for a naming collision. I will think about a better
+name and send a v2 patch on the weekend with iounmap() included.
+
+Thanks for the review,
+Bartosz
