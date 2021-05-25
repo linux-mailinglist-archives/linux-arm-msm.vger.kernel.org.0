@@ -2,290 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4E2243907DB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 May 2021 19:36:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 163993907FF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 May 2021 19:42:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232748AbhEYRhc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 May 2021 13:37:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33454 "EHLO
+        id S229976AbhEYRn7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 May 2021 13:43:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34976 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232508AbhEYRhb (ORCPT
+        with ESMTP id S230010AbhEYRn6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 May 2021 13:37:31 -0400
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8A67C061574
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 May 2021 10:36:00 -0700 (PDT)
-Received: by mail-lf1-x12a.google.com with SMTP id a2so47271887lfc.9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 May 2021 10:36:00 -0700 (PDT)
+        Tue, 25 May 2021 13:43:58 -0400
+Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4130C061574
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 May 2021 10:42:28 -0700 (PDT)
+Received: by mail-pl1-x62a.google.com with SMTP id u7so8164997plq.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 May 2021 10:42:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:from:to:cc:references:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=Mp7udtTenG44NH/QCDQTjrCW5TxEnGG1zm25F5s/Mkc=;
-        b=NUa6XVtpvp4ZD37FJIrtCt/4viHX5kXUAVaox/Noop5X1mKA3a0HHoGPmdpmxjTn6/
-         Xrq0KmtSCWkoPm9WQxaYx8U02WvEzKoRy7B0dRIv9qn7z0rjauojw8zcPXK55Iix21ia
-         Fc5FgUBbevhofL14IsQED284iWRdqG9sZcrW6mj9YCVL/mwcRqZ2JhcEcVHW08yP6CFd
-         hTzMLHI6QIxybi5Rt0/jIt5eX1jlg4vKjfwk6Sfj3aC3LqcbUPEwmxZqWwNLhfAjDGtt
-         KzII28vCyIxGchruBFaFVy+aTTLUYTJHRqZlqAABFG5SPoRqqYi50qXBrCdaZ7eF5pxd
-         AHJg==
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=1LMzOQ6+6ac4DFrNM4H4DzBnGvXNX1b50v8NC4P1lBs=;
+        b=BE/GG9Z/NXu7m9YM5e6u1l7oetX08lvY69gn3S4WObyiIprElhwMJFxRb/3w0rS0WP
+         ILi/Q17Zws9RuwTT7b3Z0Pye+MhCu+QGrJKLlET2u9W0dHp4Fl4UgJFZ/nfsDdJe7CGm
+         uL/MdbkeZpsHmyfXOAjFMK4Q5ci07WgjKGGXk=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=Mp7udtTenG44NH/QCDQTjrCW5TxEnGG1zm25F5s/Mkc=;
-        b=clmOatALa6GlXH11L9ze1leCXES6H79IpgQJayEWyqNHquu5Hs2Ce2swCw7lXqVna1
-         W/D8+ID4C3xSUmGlL1YdOC14l1ywUUCAyujz/s32EmBfjQw/ax7m7j4c/gc4xlBLUadB
-         XbsOStIW/xvcWddQpSZr3KtOnVa76qEfIibWhaFOVOsWdysUne34oeXBFwQpV6zcYjsR
-         bray7Zhfdd+4eqqnudi6WNpLoaGmkbIIeK6bqZzTeDdtWDFtXWXh09RPR6ts2CGn6qix
-         KsQclfdQLZQgmfL7FLxIbSg8hsF6/uz4UinjaY0TyOuwWHzBBkyVV5+hQjjKzXDd0d6/
-         SyYQ==
-X-Gm-Message-State: AOAM532QZAqpJSUoHtDtNY5eX0CvLcF5kps1R3NPoka9iasl8nxRAVRD
-        GZqIho5bMMrLer4fYcaccGFwSSpV1/NcLw==
-X-Google-Smtp-Source: ABdhPJxUZoxftFBuGOSezXPUY74cZMDR2Fz9AHFYsTJ9Ld+DD5mRvqjvVTsOjWljyr9Zto5lzE/5kA==
-X-Received: by 2002:a05:6512:31c6:: with SMTP id j6mr14801514lfe.129.1621964159064;
-        Tue, 25 May 2021 10:35:59 -0700 (PDT)
-Received: from [192.168.88.254] ([85.249.41.56])
-        by smtp.gmail.com with ESMTPSA id 6sm1794842lfz.189.2021.05.25.10.35.58
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=1LMzOQ6+6ac4DFrNM4H4DzBnGvXNX1b50v8NC4P1lBs=;
+        b=ajex4k6VTgDsHSCM0JC38W5o5eeK5BAvcDkamTPopvxtdLh1uNFUqcggOwMqgY89ra
+         w66dUQYn+63dQT6YYfpVx7hiR7reTDc4Fb3c6OTa75fxO9hlWtLi/XjRHTacaoTSZcsv
+         RN153aTbsV5Rdwv/fcf6F5KFfwbt1BB9p1J2GqrVDAWhPEAXbcn4mq8DD+AkO/ub4Nbh
+         j9EEaoE1iQgELEYNioafzvwc4gJJQtFdrbbur/zXbBm6UNquzs1bVuJ10amLSRMApgOe
+         z1s07MHybUQ9fSO8b7hyeNQ55+sPfGGZVBuP5m1HSWcP7NcC6w4jDbcgNF0H5rZQEdCw
+         iMIQ==
+X-Gm-Message-State: AOAM5305I3U1ZIfqc9Ps1VDAYYXLcHtTTxA/ZKyXSIJjw9zlCxdPXSrc
+        cxnttMkgsbbjCUvPxb3Eg4m2Qw==
+X-Google-Smtp-Source: ABdhPJyA1ui0ylTVhiYxdLOqLS28ZsWlyNXkebBUTtc2C+tO7Ah8y7HTYwy8rOi4Wsvea8p/lSZoGw==
+X-Received: by 2002:a17:903:22cd:b029:f4:d923:89a9 with SMTP id y13-20020a17090322cdb02900f4d92389a9mr31750260plg.52.1621964548172;
+        Tue, 25 May 2021 10:42:28 -0700 (PDT)
+Received: from localhost ([2620:15c:202:201:ab0:bbc9:a71:2916])
+        by smtp.gmail.com with UTF8SMTPSA id s6sm2488105pjr.29.2021.05.25.10.42.26
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 25 May 2021 10:35:58 -0700 (PDT)
-Subject: Re: [PATCH 03/17] media: camss: csiphy-3ph: add support for SM8250
- CSI DPHY
-From:   Andrey Konovalov <andrey.konovalov@linaro.org>
-To:     Jonathan Marek <jonathan@marek.ca>, linux-arm-msm@vger.kernel.org
-Cc:     robert.foss@linaro.org, Todor Tomov <todor.too@gmail.com>,
+        Tue, 25 May 2021 10:42:27 -0700 (PDT)
+Date:   Tue, 25 May 2021 10:42:25 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc:     Alan Stern <stern@rowland.harvard.edu>,
+        Rob Herring <robh+dt@kernel.org>,
+        Frank Rowand <frowand.list@gmail.com>,
+        Michal Simek <michal.simek@xilinx.com>,
+        devicetree@vger.kernel.org,
+        Douglas Anderson <dianders@chromium.org>,
+        linux-usb@vger.kernel.org, Peter Chen <peter.chen@kernel.org>,
+        linux-kernel@vger.kernel.org, Stephen Boyd <swboyd@chromium.org>,
+        Ravi Chandra Sadineni <ravisadineni@chromium.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Bastien Nocera <hadess@hadess.net>,
+        Al Cooper <alcooperx@gmail.com>,
+        "Alexander A. Klimov" <grandmaster@al2klimov.de>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        "open list:QUALCOMM CAMERA SUBSYSTEM DRIVER" 
-        <linux-media@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-References: <20210511180728.23781-1-jonathan@marek.ca>
- <20210511180728.23781-4-jonathan@marek.ca>
- <e1188621-aa8d-d825-7454-491ffdec27c1@linaro.org>
-Message-ID: <4b50f855-e791-b445-f7b8-bc7b783bdc00@linaro.org>
-Date:   Tue, 25 May 2021 20:35:57 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.8.1
+        Christian Lamparter <chunkeey@googlemail.com>,
+        Colin Ian King <colin.king@canonical.com>,
+        Dmitry Osipenko <digetx@gmail.com>,
+        Fabio Estevam <festevam@gmail.com>,
+        Masahiro Yamada <masahiroy@kernel.org>,
+        Mathias Nyman <mathias.nyman@intel.com>,
+        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v10 0/5] USB: misc: Add onboard_usb_hub driver
+Message-ID: <YK03AVRfbRJUGd0X@google.com>
+References: <20210511225223.550762-1-mka@chromium.org>
+ <YKen70owPqdjy5+a@kroah.com>
 MIME-Version: 1.0
-In-Reply-To: <e1188621-aa8d-d825-7454-491ffdec27c1@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <YKen70owPqdjy5+a@kroah.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Jonathan,
-
-Couple more minor issues.
-
-On 25.05.2021 20:19, Andrey Konovalov wrote:
-> Hi Jonathan,
+On Fri, May 21, 2021 at 02:30:39PM +0200, Greg Kroah-Hartman wrote:
+> On Tue, May 11, 2021 at 03:52:18PM -0700, Matthias Kaehlcke wrote:
+> > This series adds:
+> > - the onboard_usb_hub_driver
+> > - glue in the xhci-plat driver to create the onboard_usb_hub
+> >   platform device if needed
+> > - a device tree binding for the Realtek RTS5411 USB hub controller
+> > - device tree changes that add RTS5411 entries for the QCA SC7180
+> >   based boards trogdor and lazor
+> > - a couple of stubs for platform device functions to avoid
+> >   unresolved symbols with certain kernel configs
+> > 
+> > The main issue the driver addresses is that a USB hub needs to be
+> > powered before it can be discovered. For discrete onboard hubs (an
+> > example for such a hub is the Realtek RTS5411) this is often solved
+> > by supplying the hub with an 'always-on' regulator, which is kind
+> > of a hack. Some onboard hubs may require further initialization
+> > steps, like changing the state of a GPIO or enabling a clock, which
+> > requires even more hacks. This driver creates a platform device
+> > representing the hub which performs the necessary initialization.
+> > Currently it only supports switching on a single regulator, support
+> > for multiple regulators or other actions can be added as needed.
+> > Different initialization sequences can be supported based on the
+> > compatible string.
+> > 
+> > Besides performing the initialization the driver can be configured
+> > to power the hub off during system suspend. This can help to extend
+> > battery life on battery powered devices which have no requirements
+> > to keep the hub powered during suspend. The driver can also be
+> > configured to leave the hub powered when a wakeup capable USB device
+> > is connected when suspending, and power it off otherwise.
 > 
-> Thank you for the patchset!
+> I get a build error when I apply this series to my tree:
 > 
-> On 11.05.2021 21:07, Jonathan Marek wrote:
->> Add support for CSIPHY (2PH/DPHY mode) found on SM8250 hardware.
->>
->> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
->> ---
->>   .../qcom/camss/camss-csiphy-3ph-1-0.c         | 144 +++++++++++++++++-
->>   1 file changed, 137 insertions(+), 7 deletions(-)
->>
->> diff --git a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
->> index 783b65295d20..61947576ddfb 100644
->> --- a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
->> +++ b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
->> @@ -62,6 +62,7 @@ struct csiphy_reg_t {
->>       u32 csiphy_param_type;
->>   };
->> +/* GEN2 1.0 2PH */
->>   static const struct
->>   csiphy_reg_t lane_regs_sdm845[5][14] = {
->>       {
->> @@ -146,6 +147,121 @@ csiphy_reg_t lane_regs_sdm845[5][14] = {
->>       },
->>   };
->> +/* GEN2 1.2.1 2PH */
->> +static const struct
->> +csiphy_reg_t lane_regs_sm8250[5][20] = {
->> +    {
->> +        {0x0030, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x0900, 0x05, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x0908, 0x10, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x0904, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x0904, 0x07, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x0004, 0x0C, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x002C, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x0034, 0x07, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x0010, 0x02, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x001C, 0x08, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x003C, 0xB8, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x0008, 0x10, 0x00, CSIPHY_SETTLE_CNT_LOWER_BYTE},
->> +        {0x0000, 0x8D, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x000c, 0x00, 0x00, CSIPHY_DNP_PARAMS},
->> +        {0x0038, 0xFE, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x0014, 0x60, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x0028, 0x00, 0x00, CSIPHY_DNP_PARAMS},
->> +        {0x0024, 0x00, 0x00, CSIPHY_DNP_PARAMS},
->> +        {0x0800, 0x02, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x0884, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    },
->> +    {
->> +        {0x0730, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x0C80, 0x05, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x0C88, 0x10, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x0C84, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x0C84, 0x07, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x0704, 0x0C, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x072C, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x0734, 0x07, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x0710, 0x02, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x071C, 0x08, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x073C, 0xB8, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x0708, 0x10, 0x00, CSIPHY_SETTLE_CNT_LOWER_BYTE},
->> +        {0x0700, 0x80, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x070c, 0xA5, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x0738, 0x1F, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x0714, 0x60, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x0728, 0x04, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x0724, 0x00, 0x00, CSIPHY_DNP_PARAMS},
->> +        {0x0800, 0x02, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x0884, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    },
->> +    {
->> +        {0x0230, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x0A00, 0x05, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x0A08, 0x10, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x0A04, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x0A04, 0x07, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x0204, 0x0C, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x022C, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x0234, 0x07, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x0210, 0x02, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x021C, 0x08, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x023C, 0xB8, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x0208, 0x10, 0x00, CSIPHY_SETTLE_CNT_LOWER_BYTE},
->> +        {0x0200, 0x8D, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x020c, 0x00, 0x00, CSIPHY_DNP_PARAMS},
->> +        {0x0238, 0xFE, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x0214, 0x60, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x0228, 0x00, 0x00, CSIPHY_DNP_PARAMS},
->> +        {0x0224, 0x00, 0x00, CSIPHY_DNP_PARAMS},
->> +        {0x0800, 0x02, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x0884, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    },
->> +    {
->> +        {0x0430, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x0B00, 0x05, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x0B08, 0x10, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x0B04, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x0B04, 0x07, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x0404, 0x0C, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x042C, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x0434, 0x07, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x0410, 0x02, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x041C, 0x08, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x043C, 0xB8, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x0408, 0x10, 0x00, CSIPHY_SETTLE_CNT_LOWER_BYTE},
->> +        {0x0400, 0x8D, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x040c, 0x00, 0x00, CSIPHY_DNP_PARAMS},
->> +        {0x0438, 0xFE, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x0414, 0x60, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x0428, 0x00, 0x00, CSIPHY_DNP_PARAMS},
->> +        {0x0424, 0x00, 0x00, CSIPHY_DNP_PARAMS},
->> +        {0x0800, 0x02, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x0884, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    },
->> +    {
->> +        {0x0630, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x0C00, 0x05, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x0C08, 0x10, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x0C04, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x0C04, 0x07, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x0604, 0x0C, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x062C, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x0634, 0x07, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x0610, 0x02, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x061C, 0x08, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x063C, 0xB8, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x0608, 0x10, 0x00, CSIPHY_SETTLE_CNT_LOWER_BYTE},
->> +        {0x0600, 0x8D, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x060c, 0x00, 0x00, CSIPHY_DNP_PARAMS},
->> +        {0x0638, 0xFE, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x0614, 0x60, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x0628, 0x00, 0x00, CSIPHY_DNP_PARAMS},
->> +        {0x0624, 0x00, 0x00, CSIPHY_DNP_PARAMS},
->> +        {0x0800, 0x02, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +        {0x0884, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    },
->> +};
->> +
->>   static void csiphy_hw_version_read(struct csiphy_device *csiphy,
->>                      struct device *dev)
->>   {
->> @@ -298,13 +414,23 @@ static void csiphy_gen1_config_lanes(struct csiphy_device *csiphy,
->>   static void csiphy_gen2_config_lanes(struct csiphy_device *csiphy,
->>                        u8 settle_cnt)
->>   {
->> -    int i, l;
->> -    u32 val;
->> +    const struct csiphy_reg_t *r;
->> +    int i, l, array_size;
->> +    u32 val, lane_enable;
-
-lane_enable is not used in this patch ("warning: unused variable ‘lane_enable’").
-
->> +
->> +    switch (csiphy->camss->version) {
-
-This switch statement doesn't have the "default:" clause which leads to several
-warnings of "enumeration value ‘CAMSS_8x16’ not handled in switch" kind.
-
-Thanks,
-Andrey
-
->> +    case CAMSS_845:
->> +        r = &lane_regs_sdm845[0][0];
->> +        array_size = ARRAY_SIZE(lane_regs_sdm845[0]);
->> +        break;
->> +    case CAMSS_8250:
+> drivers/usb/misc/onboard_usb_hub.c:273:6: error: redefinition of ‘of_is_onboard_usb_hub’
+>   273 | bool of_is_onboard_usb_hub(const struct device_node *np)
+>       |      ^~~~~~~~~~~~~~~~~~~~~
+> In file included from drivers/usb/misc/onboard_usb_hub.c:21:
+> ./include/linux/usb/onboard_hub.h:9:20: note: previous definition of ‘of_is_onboard_usb_hub’ with type ‘bool(const struct device_node *)’ {aka ‘_Bool(const struct device_node *)’}
+>     9 | static inline bool of_is_onboard_usb_hub(const struct device_node *np)
+>       |                    ^~~~~~~~~~~~~~~~~~~~~
 > 
-> CAMSS_8250 is only introduced in "[PATCH 16_17] media: camss: add support for SM8250 camss",
-> and this breaks bisecting.
-> 
-> Thanks,
-> Andrey
-> 
->> +        r = &lane_regs_sm8250[0][0];
->> +        array_size = ARRAY_SIZE(lane_regs_sm8250[0]);
->> +        break;
->> +    }
->>       for (l = 0; l < 5; l++) {
->> -        for (i = 0; i < 14; i++) {
->> -            const struct csiphy_reg_t *r = &lane_regs_sdm845[l][i];
->> -
->> +        for (i = 0; i < array_size; i++, r++) {
->>               switch (r->csiphy_param_type) {
->>               case CSIPHY_SETTLE_CNT_LOWER_BYTE:
->>                   val = settle_cnt & 0xff;
->> @@ -331,7 +457,10 @@ static void csiphy_lanes_enable(struct csiphy_device *csiphy,
->>       settle_cnt = csiphy_settle_cnt_calc(link_freq, csiphy->timer_clk_rate);
->> -    val = BIT(c->clk.pos);
->> +    if (csiphy->camss->version == CAMSS_8250)
->> +        val = BIT(7);
->> +    else
->> +        val = BIT(c->clk.pos);
->>       for (i = 0; i < c->num_data; i++)
->>           val |= BIT(c->data[i].pos * 2);
->> @@ -349,7 +478,8 @@ static void csiphy_lanes_enable(struct csiphy_device *csiphy,
->>       if (csiphy->camss->version == CAMSS_8x16 ||
->>           csiphy->camss->version == CAMSS_8x96)
->>           csiphy_gen1_config_lanes(csiphy, cfg, settle_cnt);
->> -    else if (csiphy->camss->version == CAMSS_845)
->> +    else if (csiphy->camss->version == CAMSS_845 ||
->> +         csiphy->camss->version == CAMSS_8250)
->>           csiphy_gen2_config_lanes(csiphy, settle_cnt);
->>       /* IRQ_MASK registers - disable all interrupts */
->>
+> Any thoughts?
+
+That function keeps haunting me in different ways ...
+
+I suspect this was a build with CONFIG_COMPILE_TEST=y. The driver is
+compiled for such a config and has the actual implementation, however
+the header defines the static inline unless CONFIG_USB_ONBOARD_HUB=y/m.
+
+I realized earlier that the driver doesn't really need to include the
+header, and planned to remove it in the next version, which might be
+the most practical solution.
