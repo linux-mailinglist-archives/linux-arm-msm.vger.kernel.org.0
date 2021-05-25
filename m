@@ -2,26 +2,26 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 21B9138FE93
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 May 2021 12:12:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 417B138FE83
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 May 2021 12:12:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230265AbhEYKNk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 May 2021 06:13:40 -0400
+        id S230100AbhEYKNa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 May 2021 06:13:30 -0400
 Received: from alexa-out.qualcomm.com ([129.46.98.28]:50028 "EHLO
         alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230087AbhEYKNa (ORCPT
+        with ESMTP id S229983AbhEYKNZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 May 2021 06:13:30 -0400
-Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
-  by alexa-out.qualcomm.com with ESMTP; 25 May 2021 03:12:00 -0700
+        Tue, 25 May 2021 06:13:25 -0400
+Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
+  by alexa-out.qualcomm.com with ESMTP; 25 May 2021 03:11:56 -0700
 X-QCInternal: smtphost
 Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 25 May 2021 03:11:58 -0700
+  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 25 May 2021 03:11:55 -0700
 X-QCInternal: smtphost
 Received: from c-skakit-linux.ap.qualcomm.com (HELO c-skakit-linux.qualcomm.com) ([10.242.51.242])
   by ironmsg02-blr.qualcomm.com with ESMTP; 25 May 2021 15:41:26 +0530
 Received: by c-skakit-linux.qualcomm.com (Postfix, from userid 2344709)
-        id 6C5242270; Tue, 25 May 2021 15:41:25 +0530 (IST)
+        id 854F9150E; Tue, 25 May 2021 15:41:25 +0530 (IST)
 From:   satya priya <skakit@codeaurora.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -30,9 +30,9 @@ Cc:     mka@chromium.org, Lee Jones <lee.jones@linaro.org>,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         devicetree@vger.kernel.org, kgunda@codeaurora.org,
         satya priya <skakit@codeaurora.org>
-Subject: [PATCH V5 10/11] arm64: dts: qcom: sc7280: Add ADC channel nodes for PMIC temperatures to sc7280-idp
-Date:   Tue, 25 May 2021 15:41:05 +0530
-Message-Id: <1621937466-1502-11-git-send-email-skakit@codeaurora.org>
+Subject: [PATCH V5 11/11] mfd: qcom-spmi-pmic: Add support for four variants
+Date:   Tue, 25 May 2021 15:41:06 +0530
+Message-Id: <1621937466-1502-12-git-send-email-skakit@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1621937466-1502-1-git-send-email-skakit@codeaurora.org>
 References: <1621937466-1502-1-git-send-email-skakit@codeaurora.org>
@@ -40,69 +40,31 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add channel nodes for the on die temperatures of PMICS
-pmk8350, pm8350, pmr735a and pmr735b.
+Add support for pm8350c, pmk8350, pm7325 and pmr735a PMICS.
 
 Signed-off-by: satya priya <skakit@codeaurora.org>
-Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
 ---
-Changes in RESEND V4:
- - As per Matthias comments, changed the commit text.
-
 Changes in V5:
- - No Changes.
+ - Newly added in V5 to add documentation support for pmics of this series.
 
- arch/arm64/boot/dts/qcom/sc7280-idp.dts | 30 ++++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+ Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dts b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
-index f295580..704fb9a 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-idp.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
-@@ -7,6 +7,10 @@
- 
- /dts-v1/;
- 
-+#include <dt-bindings/iio/qcom,spmi-adc7-pmr735a.h>
-+#include <dt-bindings/iio/qcom,spmi-adc7-pmr735b.h>
-+#include <dt-bindings/iio/qcom,spmi-adc7-pm8350.h>
-+#include <dt-bindings/iio/qcom,spmi-adc7-pmk8350.h>
- #include "sc7280.dtsi"
- #include "pm7325.dtsi"
- #include "pmr735a.dtsi"
-@@ -238,6 +242,32 @@
- 	};
- };
- 
-+&pmk8350_vadc {
-+		pm8350_die_temp {
-+			reg = <PM8350_ADC7_DIE_TEMP>;
-+			label = "pm8350_die_temp";
-+			qcom,pre-scaling = <1 1>;
-+		};
-+
-+		pmk8350_die_temp {
-+			reg = <PMK8350_ADC7_DIE_TEMP>;
-+			label = "pmk8350_die_temp";
-+			qcom,pre-scaling = <1 1>;
-+		};
-+
-+		pmr735a_die_temp {
-+			reg = <PMR735A_ADC7_DIE_TEMP>;
-+			label = "pmr735a_die_temp";
-+			qcom,pre-scaling = <1 1>;
-+		};
-+
-+		pmr735b_die_temp {
-+			reg = <PMR735B_ADC7_DIE_TEMP>;
-+			label = "pmr735b_die_temp";
-+			qcom,pre-scaling = <1 1>;
-+		};
-+};
-+
- &qupv3_id_0 {
- 	status = "okay";
- };
+diff --git a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt
+index 79367a4..5ef79bf 100644
+--- a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt
++++ b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt
+@@ -34,6 +34,10 @@ Required properties:
+                    "qcom,pm8998",
+                    "qcom,pmi8998",
+                    "qcom,pm8005",
++                   "qcom,pm8350c",
++                   "qcom,pmk8350",
++                   "qcom,pm7325",
++                   "qcom,pmr735a",
+                    or generalized "qcom,spmi-pmic".
+ - reg:             Specifies the SPMI USID slave address for this device.
+                    For more information see:
 -- 
 QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
 of Code Aurora Forum, hosted by The Linux Foundation
