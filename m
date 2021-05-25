@@ -2,125 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4E2A838FDA1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 May 2021 11:20:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9F56C38FE8B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 May 2021 12:12:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232336AbhEYJWF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 May 2021 05:22:05 -0400
-Received: from mga11.intel.com ([192.55.52.93]:31642 "EHLO mga11.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231971AbhEYJWD (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 May 2021 05:22:03 -0400
-IronPort-SDR: D3fPq79nSYoj4Y7x5KaEKq5WCeJJBz+He0TcQezOLBDtGqBI/0ly7WAIHaetJnFvWieetyp1FL
- T5sjruJvDrMA==
-X-IronPort-AV: E=McAfee;i="6200,9189,9994"; a="199094309"
-X-IronPort-AV: E=Sophos;i="5.82,328,1613462400"; 
-   d="scan'208";a="199094309"
-Received: from orsmga001.jf.intel.com ([10.7.209.18])
-  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 May 2021 02:20:33 -0700
-IronPort-SDR: OrD3r1B531jdCPZliHRgzxPYZP+m/ydrMHpCTNghEo9LHv25v5FXhv+aZlCgp6qQMQ27tw8pKQ
- ixxjIbewQRNQ==
-X-IronPort-AV: E=Sophos;i="5.82,328,1613462400"; 
-   d="scan'208";a="476329263"
-Received: from shao2-debian.sh.intel.com (HELO [10.239.13.11]) ([10.239.13.11])
-  by orsmga001-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 May 2021 02:20:28 -0700
-Subject: Re: [kbuild-all] Re: [PATCH V2] arm64: dts: sc7280: Add qspi, qupv3_0
- and qupv3_1 nodes
-To:     rojay@codeaurora.org, kernel test robot <lkp@intel.com>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
-        kbuild-all@lists.01.org, clang-built-linux@googlegroups.com,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        saiprakash.ranjan@codeaurora.org, msavaliy@qti.qualcomm.com
-References: <20210422150556.450-1-rojay@codeaurora.org>
- <202104230503.T7HqjQbJ-lkp@intel.com>
- <6950c9c7b54892b2a8e81915743431ea@codeaurora.org>
-From:   Rong Chen <rong.a.chen@intel.com>
-Message-ID: <de30ea1c-5572-ca4e-e473-7b77724a90d8@intel.com>
-Date:   Tue, 25 May 2021 17:19:14 +0800
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
-MIME-Version: 1.0
-In-Reply-To: <6950c9c7b54892b2a8e81915743431ea@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+        id S230159AbhEYKNe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 May 2021 06:13:34 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:58726 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230052AbhEYKN1 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 25 May 2021 06:13:27 -0400
+Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
+  by alexa-out.qualcomm.com with ESMTP; 25 May 2021 03:11:58 -0700
+X-QCInternal: smtphost
+Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
+  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 25 May 2021 03:11:56 -0700
+X-QCInternal: smtphost
+Received: from c-skakit-linux.ap.qualcomm.com (HELO c-skakit-linux.qualcomm.com) ([10.242.51.242])
+  by ironmsg02-blr.qualcomm.com with ESMTP; 25 May 2021 15:41:25 +0530
+Received: by c-skakit-linux.qualcomm.com (Postfix, from userid 2344709)
+        id 5899E2270; Tue, 25 May 2021 15:41:24 +0530 (IST)
+From:   satya priya <skakit@codeaurora.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     mka@chromium.org, Lee Jones <lee.jones@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, kgunda@codeaurora.org,
+        satya priya <skakit@codeaurora.org>
+Subject: [PATCH V5 00/11] Add PMIC DT files for sc7280
+Date:   Tue, 25 May 2021 15:40:55 +0530
+Message-Id: <1621937466-1502-1-git-send-email-skakit@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+This series depends on https://patchwork.kernel.org/project/linux-arm-msm/list/?series=478225
+which adds therml-zones node.
 
+Changes in V2:
+ - As per Matthias comments:
+   - I've Split the patch into per-PMIC patches and one sc7280 patch
+   - Removed 2nd critical point, thermal-governer property
+   - s/pm8325_tz/pm7325_temp_alarm and s/pm7325_temp_alarm/pm7325_thermal
+   - Fixed few other minor errors.
 
-On 4/23/21 5:46 PM, rojay@codeaurora.org wrote:
-> On 2021-04-23 02:52, kernel test robot wrote:
->> Hi Roja,
->>
->> Thank you for the patch! Yet something to improve:
->>
->> [auto build test ERROR on next-20210422]
->> [cannot apply to robh/for-next v5.12-rc8 v5.12-rc7 v5.12-rc6 v5.12-rc8]
->> [If your patch is applied to the wrong git tree, kindly drop us a note.
->> And when submitting patch, we suggest to use '--base' as documented in
->> https://git-scm.com/docs/git-format-patch]
->>
->> url:
->> https://github.com/0day-ci/linux/commits/Roja-Rani-Yarubandi/arm64-dts-sc7280-Add-qspi-qupv3_0-and-qupv3_1-nodes/20210422-230756 
->>
->> base:    c457d9676496f5a895509f9c510278beaaffc829
->> config: arm64-randconfig-r012-20210421 (attached as .config)
->> compiler: clang version 13.0.0 (https://github.com/llvm/llvm-project
->> f5446b769a7929806f72256fccd4826d66502e59)
->> reproduce (this is a W=1 build):
->>         wget
->> https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross
->> -O ~/bin/make.cross
->>         chmod +x ~/bin/make.cross
->>         # install arm64 cross compiling tool for clang build
->>         # apt-get install binutils-aarch64-linux-gnu
->>         #
->> https://github.com/0day-ci/linux/commit/78ed1b1d4c9f34dd06ae4494b78d70334fa8d7c1 
->>
->>         git remote add linux-review https://github.com/0day-ci/linux
->>         git fetch --no-tags linux-review
->> Roja-Rani-Yarubandi/arm64-dts-sc7280-Add-qspi-qupv3_0-and-qupv3_1-nodes/20210422-230756 
->>
->>         git checkout 78ed1b1d4c9f34dd06ae4494b78d70334fa8d7c1
->>         # save the attached .config to linux build tree
->>         COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1
->> ARCH=arm64
->>
->> If you fix the issue, kindly add following tag as appropriate
->> Reported-by: kernel test robot <lkp@intel.com>
->>
->> All errors (new ones prefixed by >>):
->>
->>>> Error: arch/arm64/boot/dts/qcom/sc7280.dtsi:325.31-32 syntax error
->>    FATAL ERROR: Unable to parse input tree
->>
->
-> This error is due to "clk_virt" node parse issue which will be defined 
-> in ICC patches
-> https://lore.kernel.org/patchwork/project/lkml/list/?series=488429
-> I also mentioned the dependency in the patch.
+ - As per Bjorn's comments, replaced '_' with '-' in node names and moved
+   DT files inclusion to board dts.
 
-Hi Roja,
+Changes in V3:
+  - As per Matthias comments, changed commit text, modified critical interrupt
+    node name like <name>-crit for all pmics.
+  - Moved pmk8350_vadc channel nodes to idp dts, as it is not guaranteed that
+    a board with the pmk8350 will always have the other 3 PMICs
 
-Thanks for the clarification, we can parse the base commit from patch to 
-avoid false positive:
+Changes in V4:
+ - PMR735A and PM8350C PMICS are used in sm8350 SoC. Added thermal_zones label
+   for thermal-zones node to avoid compilation error while using the phandle
+   in pmic dt files.
+ - As per Matthias comments:
+  - Changed commit text for pmk8350 pmic patch
+  - Moved the header files inclusion for the on die tempertures of PMICs from
+    pmk8350 dt file to sc7280-idp dts
+  - Changed commit text and made a dedicated patch to include pmic dt files
+    for sc7280-idp
+  - Made separate patches for on die temp channel nodes and for adding thermal-
+    zones node in sc7280 SoC dtsi
 
-     $ man git format-patch
+satya priya (11):
+  arm64: dts: qcom: sm8350: Add label for thermal-zones node
+  arm64: dts: qcom: pm7325: Add pm7325 base dts file
+  arm64: dts: qcom: pm8350c: Add temp-alarm support
+  arm64: dts: qcom: pm8350c: Correct the GPIO node
+  arm64: dts: qcom: pmr735a: Add temp-alarm support
+  arm64: dts: qcom: pmr735a: Correct the GPIO node
+  arm64: dts: qcom: pmk8350: Add peripherals for pmk8350
+  arm64: dts: qcom: pmk8350: Correct the GPIO node
+  arm64: dts: qcom: sc7280: Include PMIC DT files for sc7280-idp
+  arm64: dts: qcom: sc7280: Add ADC channel nodes for PMIC temperatures
+    to sc7280-idp
+  mfd: qcom-spmi-pmic: Add support for four variants
 
-          With git format-patch --base=P -3 C (or variants thereof, e.g. 
-with --cover-letter or using Z..C instead of -3 C to specify the range), 
-the base tree information block is shown at the end of the first message 
-the command outputs (either the first patch, or the cover
-        letter), like this:
+ .../devicetree/bindings/mfd/qcom,spmi-pmic.txt     |  4 ++
+ arch/arm64/boot/dts/qcom/pm7325.dtsi               | 53 ++++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/pm8350c.dtsi              | 32 ++++++++++++-
+ arch/arm64/boot/dts/qcom/pmk8350.dtsi              | 51 ++++++++++++++++++++-
+ arch/arm64/boot/dts/qcom/pmr735a.dtsi              | 32 ++++++++++++-
+ arch/arm64/boot/dts/qcom/sc7280-idp.dts            | 34 ++++++++++++++
+ arch/arm64/boot/dts/qcom/sm8350.dtsi               |  2 +-
+ 7 files changed, 204 insertions(+), 4 deletions(-)
+ create mode 100644 arch/arm64/boot/dts/qcom/pm7325.dtsi
 
-            base-commit: P
-            prerequisite-patch-id: X
-            prerequisite-patch-id: Y
-            prerequisite-patch-id: Z
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
+of Code Aurora Forum, hosted by The Linux Foundation
 
-Best Regards,
-Rong Chen
