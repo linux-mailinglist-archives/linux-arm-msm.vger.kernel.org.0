@@ -2,112 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 66EBF38F92C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 May 2021 06:03:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 406BF38F934
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 May 2021 06:06:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230035AbhEYEEz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 May 2021 00:04:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46710 "EHLO
+        id S230270AbhEYEHr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 May 2021 00:07:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47346 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229967AbhEYEEz (ORCPT
+        with ESMTP id S229488AbhEYEHr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 May 2021 00:04:55 -0400
-Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78D1CC061756
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 May 2021 21:03:25 -0700 (PDT)
-Received: by mail-oi1-x22f.google.com with SMTP id y76so19818822oia.6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 May 2021 21:03:25 -0700 (PDT)
+        Tue, 25 May 2021 00:07:47 -0400
+Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1EB01C061574
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 May 2021 21:06:18 -0700 (PDT)
+Received: by mail-oi1-x232.google.com with SMTP id w127so25253610oig.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 May 2021 21:06:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=6tmkFwE9gEojemy41RKVeGqItGxaoarfu1zkeWiXbe4=;
-        b=hf0kiOizuF9L+wlT35AN8K5vbzNTM0goou8lM4qeIntSrU77A/Ea8njGkzZIlhDOWD
-         JUhK6rDcHXUyVeurIBsKcMsVwoHmCBRGWnRDLqB7tPMaDEf6caRX/Rnmjb+elcQiqZX9
-         w9SvrroR00FtL2rgqcACAZbj8XxvLUO7K9xtZvKMc/ceJFLJb0+7H6Xami1qx5huAmzp
-         6LjkYCl1Ruj9IBHmYl0N63J1JQ2KxjLewROEOUwDehf15OTob/+u1FHb3+ySeIxbLag9
-         kWcdT5pfvtjQRmP+ue2wLNPoEdX2hKCCyVhm1SyVfeagU/slCOUyiLybB7M2D9fTz8cW
-         piiQ==
+        bh=Ybb0Rjn6LAZQg4cEKA0v6b97wibERmiaV6NPZgANMOo=;
+        b=jH4ERxqgRFMPae2s4f9MvoRGcL0LghRSEONXhM/5OztqvlZbrc+TILucrO0H7Tw4Nd
+         QrgJ7xHirQoo6GbOHqREeszQPPafPh5E9KsxhOxk7M5t3V1oxuY+05BJupAP1s3AhpLK
+         zNQ+roY+ZuymjCDkjQr19jrfNVmLX7gqQaxnD1Sgnyw4Np9eVPGpSyXlWZKQWD5ArcXh
+         R/8JK1pQfiQLx3DMvcNu0yVRgfSTDmoHdNC+etPlhy6G0wgXUHnUb7Vv0onhzLdOMYv+
+         7WICFtlkAH04FQZ8TeGvJY+EEW4lPg5h89yJmC3IFh18T8PZPmd4qylTU63GJoP4LRs+
+         86Yg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=6tmkFwE9gEojemy41RKVeGqItGxaoarfu1zkeWiXbe4=;
-        b=EcwRUQhpqJlIu21+Bg7bntKjBFDCnOQJKQAegdB8J2/LA9Du4/UkgRgXUYWEtxmVx8
-         YwEcVmoJXFkctuDtkQzaPGPwLM3TPUiWKYvR9aQDBty575kdFPnRjFh1NUg7KamMF/pz
-         E0VT5qDCaU6cq4GavxJ792vfTSf7/qn5qo3IfFTd914QU4Z240Q7/RLDH5i+UxFXplpz
-         /tFH+V0yT1zNccmZjtMecvPbwmctnDVV2Byd4dqgd5pAwzt1tguG0DoADY9GC6BRv4eT
-         NRRK1pHc/HxEChZ3wonSyCetacICvwGlUNA8NhIEVbtcyFD8tL2Ys9QVi5FRaETmwKvS
-         2R+w==
-X-Gm-Message-State: AOAM531s9341vBMCbS99mBLtjWJ4qaNts/KrJfFDxCKmLqhzjti0mXpW
-        3XGPsFDfN7jj11TenTEfhwGoFg==
-X-Google-Smtp-Source: ABdhPJxPc5Dt8YG6neMXiB44kx2vOieWPtfSC1+ziJQvCr9LXCWJR5tIEr7OzJ1Mw6NeT8EhwXgVag==
-X-Received: by 2002:aca:d596:: with SMTP id m144mr1480959oig.172.1621915404846;
-        Mon, 24 May 2021 21:03:24 -0700 (PDT)
+        bh=Ybb0Rjn6LAZQg4cEKA0v6b97wibERmiaV6NPZgANMOo=;
+        b=HIkDRPGCG6Tynk7bqBtMfNX2fiyZZff22eVxO0HPIbyCrl25RIdXGz1F1LEQG/NbzX
+         Zuo9SaqaSJdqOROo6hJj5vu7iZzq7Um0Fll8UP9BU/JVdiV/UrGSJPIkdEdmQdFfmA5C
+         YjtjJNxcHChqk3k1zaGVwfIn3bTEvEvQTG1nibAh5yhT1JwuD5d8exFykjdNeY/WeEmB
+         mByPLN8A+PRan0NVu6xHfjNZsDypNHhdHQ4eg3V2QXhdivqMQ4bnPnhalPhIYiGBqGzO
+         ljnZzAD+byook0L4OS5zFSPfEUMOTD2L8xNE9UxMRhv2L84r8W5b9+CcNXXePvtxrUV/
+         Y1eQ==
+X-Gm-Message-State: AOAM531MJYNPpZD/CQD1A8cpmMfY2vUDOT+NPxXzUES+hgwMcj0TJo/r
+        Lq+8utyGfZ0nSKErS82Ffj+Kmg==
+X-Google-Smtp-Source: ABdhPJySknn88EkRCFhznHNTqELFEezy08ZdiZAHPKjDKaNPnCcaoRo+cEW0tZyNSYFRGJgHkIiblQ==
+X-Received: by 2002:aca:2b17:: with SMTP id i23mr1486357oik.160.1621915577512;
+        Mon, 24 May 2021 21:06:17 -0700 (PDT)
 Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id k21sm3454117otr.3.2021.05.24.21.03.23
+        by smtp.gmail.com with ESMTPSA id l11sm3145920ooq.44.2021.05.24.21.06.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 May 2021 21:03:24 -0700 (PDT)
-Date:   Mon, 24 May 2021 23:03:22 -0500
+        Mon, 24 May 2021 21:06:17 -0700 (PDT)
+Date:   Mon, 24 May 2021 23:06:15 -0500
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Cc:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        iommu@lists.linux-foundation.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
-        Rob Clark <robdclark@gmail.com>,
-        Akhil P Oommen <akhilpo@codeaurora.org>
-Subject: Re: [PATCHv3 1/2] iommu/arm-smmu-qcom: Add SC7280 SMMU compatible
-Message-ID: <YKx3CiSYshq6BM1f@yoga>
-References: <cover.1618898456.git.saiprakash.ranjan@codeaurora.org>
- <b1ab02b5bcb5e0aab71e2649468ce82bd6d5ca49.1618898456.git.saiprakash.ranjan@codeaurora.org>
+To:     Martin Botka <martin.botka@somainline.org>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        konrad.dybcio@somainline.org,
+        angelogioacchino.delregno@somainline.org,
+        marijn.suijten@somainline.org, Andy Gross <agross@kernel.org>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH V2 1/2] mailbox: qcom-apcs: Add SM6125 compatible
+Message-ID: <YKx3twDPcDmK9K8K@yoga>
+References: <20210523212038.736445-1-martin.botka@somainline.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <b1ab02b5bcb5e0aab71e2649468ce82bd6d5ca49.1618898456.git.saiprakash.ranjan@codeaurora.org>
+In-Reply-To: <20210523212038.736445-1-martin.botka@somainline.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 20 Apr 01:04 CDT 2021, Sai Prakash Ranjan wrote:
+On Sun 23 May 16:20 CDT 2021, Martin Botka wrote:
 
-> Add compatible for SC7280 SMMU to use the Qualcomm Technologies, Inc.
-> specific implementation.
+> This commit adds compatible for the SM6125 SoC
 > 
 
 Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
+Please also submit a dt-bindings patch.
+
 Regards,
 Bjorn
 
-> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+> Signed-off-by: Martin Botka <martin.botka@somainline.org>
 > ---
->  drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 2 ++
->  1 file changed, 2 insertions(+)
+> Changes in V2:
+> None
+>  drivers/mailbox/qcom-apcs-ipc-mailbox.c | 5 +++++
+>  1 file changed, 5 insertions(+)
 > 
-> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> index 98b3a1c2a181..bea3ee0dabc2 100644
-> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> @@ -166,6 +166,7 @@ static const struct of_device_id qcom_smmu_client_of_match[] __maybe_unused = {
->  	{ .compatible = "qcom,mdss" },
->  	{ .compatible = "qcom,sc7180-mdss" },
->  	{ .compatible = "qcom,sc7180-mss-pil" },
-> +	{ .compatible = "qcom,sc7280-mdss" },
->  	{ .compatible = "qcom,sc8180x-mdss" },
->  	{ .compatible = "qcom,sdm845-mdss" },
->  	{ .compatible = "qcom,sdm845-mss-pil" },
-> @@ -330,6 +331,7 @@ static struct arm_smmu_device *qcom_smmu_create(struct arm_smmu_device *smmu,
->  static const struct of_device_id __maybe_unused qcom_smmu_impl_of_match[] = {
->  	{ .compatible = "qcom,msm8998-smmu-v2" },
->  	{ .compatible = "qcom,sc7180-smmu-500" },
-> +	{ .compatible = "qcom,sc7280-smmu-500" },
->  	{ .compatible = "qcom,sc8180x-smmu-500" },
->  	{ .compatible = "qcom,sdm630-smmu-v2" },
->  	{ .compatible = "qcom,sdm845-smmu-500" },
+> diff --git a/drivers/mailbox/qcom-apcs-ipc-mailbox.c b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
+> index f25324d03842..57745a764d4c 100644
+> --- a/drivers/mailbox/qcom-apcs-ipc-mailbox.c
+> +++ b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
+> @@ -57,6 +57,10 @@ static const struct qcom_apcs_ipc_data sdm660_apcs_data = {
+>  	.offset = 8, .clk_name = NULL
+>  };
+>  
+> +static const struct qcom_apcs_ipc_data sm6125_hmss_data = {
+> +	.offset = 8, .clk_name = NULL
+> +};
+> +
+>  static const struct qcom_apcs_ipc_data apps_shared_apcs_data = {
+>  	.offset = 12, .clk_name = NULL
+>  };
+> @@ -166,6 +170,7 @@ static const struct of_device_id qcom_apcs_ipc_of_match[] = {
+>  	{ .compatible = "qcom,sc8180x-apss-shared", .data = &apps_shared_apcs_data },
+>  	{ .compatible = "qcom,sdm660-apcs-hmss-global", .data = &sdm660_apcs_data },
+>  	{ .compatible = "qcom,sdm845-apss-shared", .data = &apps_shared_apcs_data },
+> +	{ .compatible = "qcom,sm6125-hmss-global", .data = &sm6125_hmss_data },
+>  	{ .compatible = "qcom,sm8150-apss-shared", .data = &apps_shared_apcs_data },
+>  	{ .compatible = "qcom,sdx55-apcs-gcc", .data = &sdx55_apcs_data },
+>  	{}
 > -- 
-> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-> of Code Aurora Forum, hosted by The Linux Foundation
+> 2.31.1
 > 
