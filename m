@@ -2,155 +2,204 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DE81B39004B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 May 2021 13:48:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 783503900D0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 May 2021 14:22:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232022AbhEYLt3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 May 2021 07:49:29 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:54872 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231136AbhEYLt2 (ORCPT
+        id S232587AbhEYMXk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 May 2021 08:23:40 -0400
+Received: from mo4-p01-ob.smtp.rzone.de ([85.215.255.52]:21036 "EHLO
+        mo4-p01-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232591AbhEYMXa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 May 2021 07:49:28 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1621943279; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=cwlGGBa1zEHucF6VP8Uur73PV/ShkGQin2rJxDn38o0=;
- b=gYfwB2eRqzjjXxLjHuwlvffHAlLEZg8r1q9yTAdHddy/up8J0+88qb0ottNsvBFUTnsP5c5e
- FdGqad5cYAc7a5Y4UYL8HrlFaXdW6JblY4elF4xaIxsNs2yKchfZ7jLwsbZkjjwB++BfgsQd
- 7XtC6CystkP8kptvWtP2MhYsLSM=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
- 60ace3e8c229adfeff00de7e (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 25 May 2021 11:47:52
- GMT
-Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 46949C43460; Tue, 25 May 2021 11:47:52 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 451E6C433D3;
-        Tue, 25 May 2021 11:47:51 +0000 (UTC)
+        Tue, 25 May 2021 08:23:30 -0400
+ARC-Seal: i=1; a=rsa-sha256; t=1621945276; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=OKz07d+O49cqaMLeo/Rt7OD7MqYPrAKU03s+8gNlSVU96SLZmQ8S/wv0TIUBG9KhpB
+    ynd+LE+9tFAluCp/VbLhRqIq3uBWdpl+9pjXXYHNwhqf8U46aFVhbdSIMNSH8beaBsPg
+    PEdRlBEd4pIF57/sDmbGKPNsnZemPSC9mYSXPr8gmpTHkBa9QuzgHm6ilXkrNUROw4Sr
+    dsT4cxzSZ7nkqre0yHn+IZtrOJ89L4MWaEeELboHpJMhgBBvJGMw/46eTIoremm4dC9I
+    ZukxRUOcarkYb0WPZ+DZbNW0nsVu81GmdMSqmMQpZfeZVZ87jJy7YkibBYJsu/LG/uUK
+    0fYQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1621945276;
+    s=strato-dkim-0002; d=strato.com;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=KV/2nj4skug8FbuclXnVJfsWZvYOWwsCbnrR2X4xTMY=;
+    b=Fdgxu++gjLGjLMJaYda5lA2SWNo4+nrCv1h86dC8iH6vafkFEYtipZHdryp/KtPW1i
+    nzBquWhY8+Wcy6tl4JtDOhHwXwNGhcpRMKRabHWFbpROT7dm4RH5qEwalXpboHxxKGSY
+    UkL7lSPjl6JsgxW3rOa968wPE2rp35DI4mJcrAUFL2jEY3YkUUnK5/5pAcp5ZqPcBviN
+    Vw5rqRRuv59t0ZupaoUGhz7Pu2rvKzUN1zXypa7l08juk858nbSWHgihsm21AfsRDM0f
+    7JsHK5zswLMq1Bwcy5Fikxd7uMIOprg4qTmPd3xlTN+FrAGxhDVZfgSEqIpRx03pcVRK
+    Eg0Q==
+ARC-Authentication-Results: i=1; strato.com;
+    dkim=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1621945276;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=KV/2nj4skug8FbuclXnVJfsWZvYOWwsCbnrR2X4xTMY=;
+    b=qjZrdFBsYZjJqBRakBJdI0cX1ZSjquKrj6VTfArcU/QZgj6kplyeEzAq946s4Z5/c6
+    2og8jZ3HPA+n9zaj52l1PyllfX30Lg1cpDJjwqZRgPgQ8/eFPmIl+/tbCuSaSRbjpTcJ
+    9jqr8iWPLQPsWgYNftHKL3gTEkytVDmA3kjjmSFqgUIKKQfnDXlG4uigztm5uTOOqncL
+    +MZMsiwXOHDkDk02vzjMbly7GNbZQStlqSIRco0SAmrvgqotPfSsVSX1FoBjP5g0N1pB
+    QfJ4ldiQX/n4tq1LQ+SldTbpQavbjQcMjj2a5r7o9y4ov7WUvbf0dYxg6Y/PyX/DR4rJ
+    QH6g==
+Authentication-Results: strato.com;
+    dkim=none
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u26zEodhPgRDZ8j9Icyp"
+X-RZG-CLASS-ID: mo00
+Received: from gerhold.net
+    by smtp.strato.de (RZmta 47.26.2 DYNA|AUTH)
+    with ESMTPSA id 6078a4x4PCLF0Xv
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Tue, 25 May 2021 14:21:15 +0200 (CEST)
+Date:   Tue, 25 May 2021 14:20:59 +0200
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Bartosz Dudziak <bartosz.dudziak@snejp.pl>
+Cc:     Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Russell King <linux@armlinux.org.uk>,
+        David Sterba <dsterba@suse.com>, Jens Axboe <axboe@kernel.dk>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Kumar Gala <galak@codeaurora.org>, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH 2/2] arm: qcom: Add SMP support for Cortex-A7
+Message-ID: <YKzrq8V4c2HScgP4@gerhold.net>
+References: <20210513153442.52941-1-bartosz.dudziak@snejp.pl>
+ <20210513153442.52941-3-bartosz.dudziak@snejp.pl>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
-Date:   Tue, 25 May 2021 17:17:51 +0530
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Suzuki K Poulose <suzuki.poulose@arm.com>
-Cc:     Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Mike Leach <mike.leach@linaro.org>,
-        Leo Yan <leo.yan@linaro.org>, coresight@lists.linaro.org,
-        Stephen Boyd <swboyd@chromium.org>,
-        Denis Nikitin <denik@chromium.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, stable@vger.kernel.org
-Subject: Re: [PATCH] coresight: tmc-etf: Fix global-out-of-bounds in
- tmc_update_etf_buffer()
-In-Reply-To: <dc18845a-73bf-9cbf-6749-6271dcaac9e8@arm.com>
-References: <20210505093430.18445-1-saiprakash.ranjan@codeaurora.org>
- <8e0dbf24-af71-9bce-b615-ce7b1d12a720@arm.com>
- <dc18845a-73bf-9cbf-6749-6271dcaac9e8@arm.com>
-Message-ID: <ee7abbb2cfebf982addec0a4a18d9512@codeaurora.org>
-X-Sender: saiprakash.ranjan@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210513153442.52941-3-bartosz.dudziak@snejp.pl>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-05-25 14:24, Suzuki K Poulose wrote:
-> Hi Sai
-> 
-> On 05/05/2021 10:47, Suzuki K Poulose wrote:
->> On 05/05/2021 10:34, Sai Prakash Ranjan wrote:
->>> commit 6f755e85c332 ("coresight: Add helper for inserting 
->>> synchronization
->>> packets") removed trailing '\0' from barrier_pkt array and updated 
->>> the
->>> call sites like etb_update_buffer() to have proper checks for 
->>> barrier_pkt
->>> size before read but missed updating tmc_update_etf_buffer() which 
->>> still
->>> reads barrier_pkt past the array size resulting in KASAN 
->>> out-of-bounds
->>> bug. Fix this by adding a check for barrier_pkt size before accessing
->>> like it is done in etb_update_buffer().
->>> 
->>>   BUG: KASAN: global-out-of-bounds in 
->>> tmc_update_etf_buffer+0x4b8/0x698
->>>   Read of size 4 at addr ffffffd05b7d1030 by task perf/2629
->>> 
->>>   Call trace:
->>>    dump_backtrace+0x0/0x27c
->>>    show_stack+0x20/0x2c
->>>    dump_stack+0x11c/0x188
->>>    print_address_description+0x3c/0x4a4
->>>    __kasan_report+0x140/0x164
->>>    kasan_report+0x10/0x18
->>>    __asan_report_load4_noabort+0x1c/0x24
->>>    tmc_update_etf_buffer+0x4b8/0x698
->>>    etm_event_stop+0x248/0x2d8
->>>    etm_event_del+0x20/0x2c
->>>    event_sched_out+0x214/0x6f0
->>>    group_sched_out+0xd0/0x270
->>>    ctx_sched_out+0x2ec/0x518
->>>    __perf_event_task_sched_out+0x4fc/0xe6c
->>>    __schedule+0x1094/0x16a0
->>>    preempt_schedule_irq+0x88/0x170
->>>    arm64_preempt_schedule_irq+0xf0/0x18c
->>>    el1_irq+0xe8/0x180
->>>    perf_event_exec+0x4d8/0x56c
->>>    setup_new_exec+0x204/0x400
->>>    load_elf_binary+0x72c/0x18c0
->>>    search_binary_handler+0x13c/0x420
->>>    load_script+0x500/0x6c4
->>>    search_binary_handler+0x13c/0x420
->>>    exec_binprm+0x118/0x654
->>>    __do_execve_file+0x77c/0xba4
->>>    __arm64_compat_sys_execve+0x98/0xac
->>>    el0_svc_common+0x1f8/0x5e0
->>>    el0_svc_compat_handler+0x84/0xb0
->>>    el0_svc_compat+0x10/0x50
->>> 
->>>   The buggy address belongs to the variable:
->>>    barrier_pkt+0x10/0x40
->>> 
->>>   Memory state around the buggy address:
->>>    ffffffd05b7d0f00: fa fa fa fa 04 fa fa fa fa fa fa fa 00 00 00 00
->>>    ffffffd05b7d0f80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
->>>   >ffffffd05b7d1000: 00 00 00 00 00 00 fa fa fa fa fa fa 00 00 00 03
->>>                                        ^
->>>    ffffffd05b7d1080: fa fa fa fa 00 02 fa fa fa fa fa fa 03 fa fa fa
->>>    ffffffd05b7d1100: fa fa fa fa 00 00 00 00 05 fa fa fa fa fa fa fa
->>>   ==================================================================
->>> 
->>> Fixes: 6f755e85c332 ("coresight: Add helper for inserting 
->>> synchronization packets")
-> 
-> I have changed the commit to :
-> 
-> Fixes: 0c3fc4d5fa26 ("coresight: Add barrier packet for 
-> synchronisation")
-> 
-> Applied.
-> 
+Hi,
 
-Sure, thanks Suzuki.
+On Thu, May 13, 2021 at 05:34:42PM +0200, Bartosz Dudziak wrote:
+> Implement support for Cortex-A7 CPU release sequence.
+> 
+> Signed-off-by: Bartosz Dudziak <bartosz.dudziak@snejp.pl>
+> ---
+>  arch/arm/mach-qcom/platsmp.c | 72 ++++++++++++++++++++++++++++++++++++
+>  1 file changed, 72 insertions(+)
+> 
+> diff --git a/arch/arm/mach-qcom/platsmp.c b/arch/arm/mach-qcom/platsmp.c
+> index 630a038f45..10780bf14a 100644
+> --- a/arch/arm/mach-qcom/platsmp.c
+> +++ b/arch/arm/mach-qcom/platsmp.c
+> @@ -29,6 +29,7 @@
+>  #define COREPOR_RST		BIT(5)
+>  #define CORE_RST		BIT(4)
+>  #define L2DT_SLP		BIT(3)
+> +#define CORE_MEM_CLAMP		BIT(1)
+>  #define CLAMP			BIT(0)
+>  
+>  #define APC_PWR_GATE_CTL	0x14
+> @@ -75,6 +76,63 @@ static int scss_release_secondary(unsigned int cpu)
+>  	return 0;
+>  }
+>  
+> +static int cortex_a7_release_secondary(unsigned int cpu)
+> +{
+> +	int ret = 0;
+> +	void __iomem *reg;
+> +	struct device_node *cpu_node, *acc_node;
+> +	u32 reg_val;
+> +
+> +	cpu_node = of_get_cpu_node(cpu, NULL);
+> +	if (!cpu_node)
+> +		return -ENODEV;
+> +
+> +	acc_node = of_parse_phandle(cpu_node, "qcom,acc", 0);
+> +	if (!acc_node) {
+> +		ret = -ENODEV;
+> +		goto out_acc;
+> +	}
+> +
+> +	reg = of_iomap(acc_node, 0);
+> +	if (!reg) {
+> +		ret = -ENOMEM;
+> +		goto out_acc_map;
+> +	}
+> +
+> +	/* Put the CPU into reset. */
+> +	reg_val = CORE_RST | COREPOR_RST | CLAMP | CORE_MEM_CLAMP;
+> +	writel(reg_val, reg + APCS_CPU_PWR_CTL);
+> +
+> +	/* Turn on the BHS, set the BHS_CNT to 16 XO clock cycles */
+> +	writel(BHS_EN | (0x10 << BHS_CNT_SHIFT), reg + APC_PWR_GATE_CTL);
+> +	/* Wait for the BHS to settle */
+> +	udelay(2);
+> +
+> +	reg_val &= ~CORE_MEM_CLAMP;
+> +	writel(reg_val, reg + APCS_CPU_PWR_CTL);
+> +
+> +	reg_val |= L2DT_SLP;
+> +	writel(reg_val, reg + APCS_CPU_PWR_CTL);
+> +	udelay(2);
+> +
+> +	reg_val = (reg_val | BIT(17)) & ~CLAMP;
+> +	writel(reg_val, reg + APCS_CPU_PWR_CTL);
+> +	udelay(2);
+> +
+> +	/* Release CPU out of reset and bring it to life. */
+> +	reg_val &= ~(CORE_RST | COREPOR_RST);
+> +	writel(reg_val, reg + APCS_CPU_PWR_CTL);
+> +	reg_val |= CORE_PWRD_UP;
+> +	writel(reg_val, reg + APCS_CPU_PWR_CTL);
+> +
 
-Regards,
-Sai
+I think you forgot to add
 
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
-member
-of Code Aurora Forum, hosted by The Linux Foundation
+	iounmap(reg);
+
+here :)
+
+> +out_acc_map:
+> +	of_node_put(acc_node);
+> +out_acc:
+> +	of_node_put(cpu_node);
+> +
+> +	return ret;
+> +}
+> +
+>  static int kpssv1_release_secondary(unsigned int cpu)
+>  {
+>  	int ret = 0;
+> @@ -281,6 +339,11 @@ static int msm8660_boot_secondary(unsigned int cpu, struct task_struct *idle)
+>  	return qcom_boot_secondary(cpu, scss_release_secondary);
+>  }
+>  
+> +static int cortex_a7_boot_secondary(unsigned int cpu, struct task_struct *idle)
+> +{
+> +	return qcom_boot_secondary(cpu, cortex_a7_release_secondary);
+> +}
+> +
+>  static int kpssv1_boot_secondary(unsigned int cpu, struct task_struct *idle)
+>  {
+>  	return qcom_boot_secondary(cpu, kpssv1_release_secondary);
+> @@ -315,6 +378,15 @@ static const struct smp_operations smp_msm8660_ops __initconst = {
+>  };
+>  CPU_METHOD_OF_DECLARE(qcom_smp, "qcom,gcc-msm8660", &smp_msm8660_ops);
+>  
+> +static const struct smp_operations qcom_smp_cortex_a7_ops __initconst = {
+> +	.smp_prepare_cpus	= qcom_smp_prepare_cpus,
+> +	.smp_boot_secondary	= cortex_a7_boot_secondary,
+> +#ifdef CONFIG_HOTPLUG_CPU
+> +	.cpu_die		= qcom_cpu_die,
+> +#endif
+> +};
+> +CPU_METHOD_OF_DECLARE(qcom_smp_cortex_a7, "qcom,cpss-acc", &qcom_smp_cortex_a7_ops);
+> +
+
+I'm a bit curious about the name "CPSS". Is that something you came up
+with yourself similar to KPSS? There is a slight naming collision here
+with the "Chip peripheral subsystem" (CPSS) on APQ8064E (Snapdragon 600),
+see https://developer.qualcomm.com/download/sd600/snapdragon-600-device-spec.pdf
+
+Thanks,
+Stephan
