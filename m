@@ -2,117 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E9EC1391163
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 May 2021 09:27:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 613A0391204
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 May 2021 10:10:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232617AbhEZH2n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 May 2021 03:28:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49396 "EHLO
+        id S232086AbhEZIMU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 May 2021 04:12:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59286 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232978AbhEZH2n (ORCPT
+        with ESMTP id S231871AbhEZIMT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 May 2021 03:28:43 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9A88C06175F
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 May 2021 00:27:10 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id u4-20020a05600c00c4b02901774b80945cso14886520wmm.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 May 2021 00:27:10 -0700 (PDT)
+        Wed, 26 May 2021 04:12:19 -0400
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86C5BC061756
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 May 2021 01:10:47 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id u5-20020a7bc0450000b02901480e40338bso2852427wmc.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 May 2021 01:10:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=ObaRCurLGiq7gTkLKAKr3kEfw73h6AOzHDoeYUsp2Y0=;
-        b=T5wfKDh1UNK2O7MTL704OyW6hZQCfSO1tuylHh4JSPnT877YqB1ydDB6ytMqNOUxCY
-         6kxfi2+/1gDy4MLcllXACk1Z5v8VSnKiJtrFtUFXJCvfpPDG2PrC7u5noXl1jN/MLVg2
-         5GmNoB1mV3X7wzHXWOcfkHaYPEs0QxGRQOAAEu8qIdTDjIEL2ZVjjIdxvWWk1zeLmSkJ
-         thrb5d+FFDTx5ki6+DGMJbmxfE+332vAtMjvD+DYBVR2A/DV4cm60qTFetbftP9RUaRk
-         a+XmH9Tog9yKXB2TnkVkPmRl3eqYjKRSGkua4HxCwRoEsIS0SOfZMqvYqWxuXjOK1IFz
-         1G+g==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=UJg9CGE0giXGSf2E49zfwV6qxHAc7VZeILYMwHitWSk=;
+        b=U25/0Z8aTRKIdQSransQLuQbgg/MytPSyikoseoD42jD4WVfHWX6C8rfQ9SG0eK8JK
+         bQDFgGSo4QqCj2nhCj/RnmFhNo6jB5e0FSmhjUBqpsawPzXSURDTDvOsmV2mltzjKtZn
+         cVqM51PDILda5Yt/Hhgzv84/3VbnqSE6tEcMA47JSvqeNlVMVVrY8tD/70SNDR2PLdeK
+         Y7XHDlR4c/DsdrV4n5iEqbN2Pf9YpOtd6pUyMdH55HTO9EKSzIKEm1XTqzrNVYsFuBdA
+         P3tmqk5DRStn0BIHyyPNvKTfzNzN05aK2yBLuDEnirSAGl9D9+x7wuEFftqDYP2ebh9J
+         kpzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=ObaRCurLGiq7gTkLKAKr3kEfw73h6AOzHDoeYUsp2Y0=;
-        b=Jlt3Gffk0ky5MAeXDrwqVNPm1H281wusj8PY0h0L87160jx+zXvOTsA6mRsGIm/xil
-         w6+irZldp8o97tazP+7AehYIi6YdxAnIw8th65M9FLDlKjraL1DDcbei0i2Wr2jpvGra
-         BEndE67U1X3G1KLeJdAotAr7lee112Vg+FEcluuxByz8SUm98wADyImhayIYNXGcm8zz
-         3fPrbq8f5VvgtIWq1YIYc2V8tGNgu6q3t020TQx7GoE+4xrayYTSmiem2WGu66zUy2dy
-         +7jUmzz2qtTzmkea4LJSvQ/oE8K12G2RyUrupEFPJ6/8KuJzGcrBQABX8zr6O5lZWE81
-         oxqg==
-X-Gm-Message-State: AOAM530F0mNmvxubSLtRIbNKLWxpffLd08vOGvE3q9wFfDjSxZxuYUlw
-        flAvGYNbDj2VB1258X4NsSsPDg==
-X-Google-Smtp-Source: ABdhPJzYn7l7izgDqJRiSF+iXahrCJQATc3NRCU+ROAee3TuBSNsuvVdyH8MND/tb7mi+q2kQEMCWQ==
-X-Received: by 2002:a7b:c041:: with SMTP id u1mr26901132wmc.95.1622014029338;
-        Wed, 26 May 2021 00:27:09 -0700 (PDT)
-Received: from dell ([91.110.221.223])
-        by smtp.gmail.com with ESMTPSA id l188sm505402wmf.27.2021.05.26.00.27.08
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=UJg9CGE0giXGSf2E49zfwV6qxHAc7VZeILYMwHitWSk=;
+        b=dr4cvTibUIs7mGiMhJzhGY6J5DZ880hVeOoSTdes4ZL/tTxSJWzjS0rhltGGUz8Mvm
+         YaCUKZIjMMMyUHevr6JDIiEH2FK4pzUEiV3kYCg4NxFwk4nyXk4TtvMYpgeITpjbSerW
+         Raf9CuqVvMcmgDBXPE4YZCYbjNH08YXFoFFmODbd9GUs6SqL3y4ZUx0+Xdu5ifalAKpz
+         f4wmIFyTnwuy8mN87tJI7W7CXvlBA/KitScacDaTzqtcPgh+xPz9bd4Di1HrMAtihULs
+         JRMS4MqB43ZW4EMNWikevNlW9QhpUDmB/BTjqn96LdRaoPY9PEGIhsOxwChzuI9A76e0
+         dlAg==
+X-Gm-Message-State: AOAM530kmx8qwlVFERYhHT7EJOQzx6irPzPCYRO/YNNT98r1MJHn9XqK
+        i7ivRWF/jZREStTdjafNm9ddJg==
+X-Google-Smtp-Source: ABdhPJzHeiHwzrpPIesnuXoCNKDK0E+NEgbljO8flxEoNftTXuDjMo3L2OmRjzb7E2q6lTMU6cIg8g==
+X-Received: by 2002:a05:600c:198c:: with SMTP id t12mr8563871wmq.145.1622016646119;
+        Wed, 26 May 2021 01:10:46 -0700 (PDT)
+Received: from dell.default ([91.110.221.223])
+        by smtp.gmail.com with ESMTPSA id v11sm22628319wrs.9.2021.05.26.01.10.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 May 2021 00:27:08 -0700 (PDT)
-Date:   Wed, 26 May 2021 08:27:07 +0100
+        Wed, 26 May 2021 01:10:45 -0700 (PDT)
 From:   Lee Jones <lee.jones@linaro.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     satya priya <skakit@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, mka@chromium.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, kgunda@codeaurora.org
-Subject: Re: [PATCH V5 11/11] mfd: qcom-spmi-pmic: Add support for four
- variants
-Message-ID: <20210526072707.GF4005783@dell>
-References: <1621937466-1502-1-git-send-email-skakit@codeaurora.org>
- <1621937466-1502-12-git-send-email-skakit@codeaurora.org>
- <YK0udV1Wbm4Hvk72@builder.lan>
+To:     lee.jones@linaro.org
+Cc:     linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        German Rivera <German.Rivera@freescale.com>,
+        Laurentiu Tudor <laurentiu.tudor@nxp.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-omap@vger.kernel.org,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Stuart Yoder <stuyoder@gmail.com>,
+        Tony Lindgren <tony@atomide.com>
+Subject: [PATCH 00/10] Rid W=1 warnings from Bus
+Date:   Wed, 26 May 2021 09:10:28 +0100
+Message-Id: <20210526081038.544942-1-lee.jones@linaro.org>
+X-Mailer: git-send-email 2.31.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <YK0udV1Wbm4Hvk72@builder.lan>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 25 May 2021, Bjorn Andersson wrote:
+This set is part of a larger effort attempting to clean-up W=1
+kernel builds, which are currently overwhelmingly riddled with
+niggly little warnings.
 
-> On Tue 25 May 05:11 CDT 2021, satya priya wrote:
-> 
-> > Add support for pm8350c, pmk8350, pm7325 and pmr735a PMICS.
-> > 
-> 
-> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> 
-> @Lee, will you take this patch through the mfd tree?
+Lee Jones (10):
+  bus: fsl-mc: mc-io: Supply function names for 'fsl_create_mc_io()' and
+    'fsl_destroy_mc_io()'
+  bus: fsl-mc: mc-sys: Supply missing function names in kernel-doc
+    headers
+  bus: fsl-mc: fsl-mc-bus: Demote a bunch of non-conformant kernel-doc
+    headers and help others
+  bus: fsl-mc: dprc: Fix a couple of misspelling and formatting issues
+  bus: fsl-mc: dprc-driver: Fix some missing/incorrect function
+    parameter descriptions
+  bus: fsl-mc: fsl-mc-allocator: Fix misspelling of 'new_mc_adev' and
+    demote non-kernel-doc headers
+  bus: qcom-ebi2: Fix incorrect documentation for '{slow,fast}_cfg'
+  bus: fsl-mc-msi: Fix a little doc-rot pertaining to 'np' to 'fwnode'
+    conversion
+  bus: ti-sysc: Correct misdocumentation of 'sysc_ioremap()'
+  bus: fsl-mc: mc-io: Correct misdocumentation of 'dpmcp_dev' param
 
-I will.
+ drivers/bus/fsl-mc/dprc-driver.c      |  8 +++++---
+ drivers/bus/fsl-mc/dprc.c             |  4 ++--
+ drivers/bus/fsl-mc/fsl-mc-allocator.c | 10 +++++-----
+ drivers/bus/fsl-mc/fsl-mc-bus.c       | 19 ++++++++++---------
+ drivers/bus/fsl-mc/fsl-mc-msi.c       |  2 +-
+ drivers/bus/fsl-mc/mc-io.c            |  6 +++---
+ drivers/bus/fsl-mc/mc-sys.c           | 19 ++++++++++---------
+ drivers/bus/qcom-ebi2.c               |  4 ++--
+ drivers/bus/ti-sysc.c                 |  2 +-
+ 9 files changed, 39 insertions(+), 35 deletions(-)
 
-Not sure if Rob would like to review it too - it's pretty simple.
-
-> > Signed-off-by: satya priya <skakit@codeaurora.org>
-> > ---
-> > Changes in V5:
-> >  - Newly added in V5 to add documentation support for pmics of this series.
-> > 
-> >  Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt | 4 ++++
-> >  1 file changed, 4 insertions(+)
-> > 
-> > diff --git a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt
-> > index 79367a4..5ef79bf 100644
-> > --- a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt
-> > +++ b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt
-> > @@ -34,6 +34,10 @@ Required properties:
-> >                     "qcom,pm8998",
-> >                     "qcom,pmi8998",
-> >                     "qcom,pm8005",
-> > +                   "qcom,pm8350c",
-> > +                   "qcom,pmk8350",
-> > +                   "qcom,pm7325",
-> > +                   "qcom,pmr735a",
-> >                     or generalized "qcom,spmi-pmic".
-> >  - reg:             Specifies the SPMI USID slave address for this device.
-> >                     For more information see:
-
+Cc: Andy Gross <agross@kernel.org>
+Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc: German Rivera <German.Rivera@freescale.com>
+Cc: Laurentiu Tudor <laurentiu.tudor@nxp.com>
+Cc: Linus Walleij <linus.walleij@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: linux-omap@vger.kernel.org
+Cc: Philipp Zabel <p.zabel@pengutronix.de>
+Cc: Stuart Yoder <stuyoder@gmail.com>
+Cc: Tony Lindgren <tony@atomide.com>
 -- 
-Lee Jones [李琼斯]
-Senior Technical Lead - Developer Services
-Linaro.org │ Open source software for Arm SoCs
-Follow Linaro: Facebook | Twitter | Blog
+2.31.1
+
