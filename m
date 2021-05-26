@@ -2,40 +2,40 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4D4AD39202E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 May 2021 21:04:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C853F392039
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 May 2021 21:04:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235307AbhEZTFb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 May 2021 15:05:31 -0400
-Received: from mail.kernel.org ([198.145.29.99]:41156 "EHLO mail.kernel.org"
+        id S235773AbhEZTFd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 May 2021 15:05:33 -0400
+Received: from mail.kernel.org ([198.145.29.99]:40990 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S235797AbhEZTFK (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 May 2021 15:05:10 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPS id 4A27461457;
+        id S235386AbhEZTFL (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 26 May 2021 15:05:11 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPS id 9ABCB61459;
         Wed, 26 May 2021 19:03:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1622055806;
-        bh=DccsNGBHt2fDvJud21ziB5h5AxD+7wkbv9NKp396/6Y=;
+        bh=X4nxVt3AVAXPrSRVPKoCEYUAR4X9YcteH3PTAHXsRBA=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=vCr9qY1XPH9mRJngY03clI6qGxR92i1STsGCi7CbPeD0guAQd/rTDxEtiQzMp3bNY
-         WKZ1nmJALHtYHQzcYmg/qw284VXud/P7Y5Z2OdLAMlYJrAEoDTq+AhCaOD1bFdhn+A
-         TqGRWHRbltY8U4Fyuo/pAozgDBOfiz1rXeuznuoXET7ZVEy+CMn74yHv/h5/5CJ+7x
-         FUJpZvqLuYHPxXW3BFe2pojygE5wZUbIA5eDiQWtMZnuqqyfcBJ45I2wLtHOIwvIQ3
-         cYHThjL7GyegIPWKukWciEjx265mHZMuZm4959HR6kelzi+509hlTyt97BcLG7mYX8
-         xqE1RbtO3BtXw==
+        b=MXuwQSGv7O/5fw5n+9T4InULKO3MCzCWFS2iKO1V8JMZ2dbaYU+4TG4GqYmzP3vR7
+         viwA/DIiuOIeYlY0dSOdbPjj+hO4EH0+yUddhizrIqXZlvNnICcLefCoWyWXl4EIaW
+         d51ONzuQ/sRg382RjlAXO7EXM8LRjUaJzawcsMlg9CrNVWllsTcBgbC57oFki94R3c
+         ZN5vy53fj7DuAvCGohyyOEQBlCn99SqLnM4LQ6zwce8ZAFW6SthilxU6BGKhH2bGPz
+         mNhLeiaAPfVOjms+aRUYhFKb6mE65dbn33075vWYK1SkSjEXxKdE3Y5momIz6Df61r
+         ryqqaahcs298w==
 Received: from pdx-korg-docbuild-2.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id 452A6609B2;
+        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id 96ACE60CE1;
         Wed, 26 May 2021 19:03:26 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH] bus: mhi: pci_generic: Implement PCI shutdown callback
+Subject: Re: [PATCH] arm64: dts: qcom: remove camera_mem region
 From:   patchwork-bot+linux-arm-msm@kernel.org
-Message-Id: <162205580627.26840.12165138159797938160.git-patchwork-notify@kernel.org>
+Message-Id: <162205580661.26840.6415343031235341229.git-patchwork-notify@kernel.org>
 Date:   Wed, 26 May 2021 19:03:26 +0000
-References: <1616169037-7969-1-git-send-email-loic.poulain@linaro.org>
-In-Reply-To: <1616169037-7969-1-git-send-email-loic.poulain@linaro.org>
-To:     Loic Poulain <loic.poulain@linaro.org>
+References: <20210525133242.188603-1-senozhatsky@chromium.org>
+In-Reply-To: <20210525133242.188603-1-senozhatsky@chromium.org>
+To:     Sergey Senozhatsky <senozhatsky@chromium.org>
 Cc:     linux-arm-msm@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -45,19 +45,18 @@ Hello:
 
 This patch was applied to qcom/linux.git (refs/heads/for-next):
 
-On Fri, 19 Mar 2021 16:50:37 +0100 you wrote:
-> Deinit the device on shutdown to halt MHI/PCI operation on device
-> side. This change fixes floating device state with some hosts that
-> do not fully shutdown PCIe device when rebooting.
+On Tue, 25 May 2021 22:32:42 +0900 you wrote:
+> qcom camera driver allocates the ICP firmware memory
+> dynamically, so the carveout region is unnecessary.
 > 
-> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+> Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
 > ---
->  drivers/bus/mhi/pci_generic.c | 7 +++++++
->  1 file changed, 7 insertions(+)
+>  arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 5 -----
+>  1 file changed, 5 deletions(-)
 
 Here is the summary with links:
-  - bus: mhi: pci_generic: Implement PCI shutdown callback
-    https://git.kernel.org/qcom/c/757072abe1c0
+  - arm64: dts: qcom: remove camera_mem region
+    https://git.kernel.org/qcom/c/59312ab13981
 
 You are awesome, thank you!
 --
