@@ -2,81 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B481D3922C3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 May 2021 00:33:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9D64D39233A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 May 2021 01:30:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234494AbhEZWfA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 May 2021 18:35:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58500 "EHLO
+        id S234874AbhEZXbq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 May 2021 19:31:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42884 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234492AbhEZWfA (ORCPT
+        with ESMTP id S234857AbhEZXbp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 May 2021 18:35:00 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1013C06175F
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 May 2021 15:33:27 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id x38so2910811lfa.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 May 2021 15:33:27 -0700 (PDT)
+        Wed, 26 May 2021 19:31:45 -0400
+Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0346DC061760
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 May 2021 16:30:11 -0700 (PDT)
+Received: by mail-ot1-x32a.google.com with SMTP id i23-20020a9d68d70000b02902dc19ed4c15so2717146oto.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 May 2021 16:30:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=+q6KaFxTPrGNNLwCmGAKEAgGlUkRO/QzSCDrfx0DrSg=;
-        b=wIL4RkZTimsFgGynXx75Vevi3OQSEWAGaZI61p/Zf5rRDcq0EC/ANeaHxDeVlYuon9
-         SArWJYsVvQwA93vz0r5icREmsbQFG/9BvKQpw/7clyuRu8kNEA8ZbcKW+6vhEnRpXHR2
-         4sNaTWjPv8oBoT3Gg6XtHnKGGZY5ALNo5n33JZIsLFqWT6XBg17FZrfnU/dYX2pNpRS2
-         SKhM/BArPmQFvHRNHZ2kBmijBMGAL1Pf7hTeV+AT779ThunhLrPEEQL/TeXOGg507TtV
-         h7Pk020KNFLt7jpA6agibScFz6G0tuR6BeONO4nBnqDV0qzvCfLy0qeO9LKRgUIG+Mw3
-         FiAA==
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=5JNvthxICYCbwqncAfRO/N/6rcuLYC3MNXQ1kdeQYSc=;
+        b=mzwzU4M9p1+BeCUQLUhRnPCqawrMRmPGXOcRz1F+Y1XnNTOtP9LXrGomQMffbfkHz6
+         CzwxHElr0IfiHHtxbleHnJOdeXW5GBygnlj1mEHMJ2XjjvoeTB6/VLzISghtSPLUWiFo
+         tUYVxzsqWJxDz1FeXwASAU8p5xqtM20ktfCzQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=+q6KaFxTPrGNNLwCmGAKEAgGlUkRO/QzSCDrfx0DrSg=;
-        b=h2oSW8LrVtPWmt9jrPPDp7AHfyOP41uTvsLOMwNMxZb2r1gw0+Z9CSvHuT1RV9IGFv
-         rUNoEHPPsxmHP/Qm3cJsRbMvuIBpSQk20ClsMcHSFRGDw+KUw0ggfp+rIlIJ22gQEU3C
-         coWzBFcjlCzZ/5uYiDGxrOonFVODX55QXc5KVpHPL60e45sQsFN4fiCHLLPZJxunDlbf
-         LwLX/MRg6SExYq2et67TCHkaP1Pf+lopzGOJ/8rdbVUx+VCI8nt3dfu50si1MwzxRb8J
-         lxVUtILgJFXoFYJGzLTDFQFnYJeOfkEVwP8bD6JZ7MxwAVxofCr76Ni6+NhIZuQvtX8b
-         5HDA==
-X-Gm-Message-State: AOAM5312w2ZR7xJroHXkxjY90Vw+61NpMkvB7bHLCliPnx+n8nzL0oiu
-        KtChL4xjggiy5BL8jGHlLlTWtIc8DvRupJxbPo8wjA==
-X-Google-Smtp-Source: ABdhPJwknJu0coBSwEXImOs1iWFs12E7H1AAxxtj3DzRAXFPL4IC5NQtTaeeFX3l9ZoJK3fa7b5MydykV+kcHntTlJA=
-X-Received: by 2002:ac2:544f:: with SMTP id d15mr212533lfn.465.1622068406233;
- Wed, 26 May 2021 15:33:26 -0700 (PDT)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=5JNvthxICYCbwqncAfRO/N/6rcuLYC3MNXQ1kdeQYSc=;
+        b=Zune89+EtNNgReQbWtFAl+xB49jVISoh3d9vc7ZL78zDWPN7L5NC8FXgDoyCdmzcTp
+         8Hfw4AHC92Zvsx4HNs9a9hU9EkTLreIE4xjKl67S2bDUaGgx+a19rNsOsJfM4/Wcg9vx
+         OE7DJxuaUiJUb8Q71WbMckLcJpIsQchxgD/cwIGjLQRLQQxKkefXT0fZzWdbHfE50/bC
+         H2Ejzy487vjvKApVGKIHXdpj0QVIlPmpiTarN5B4TWtxVNAlfbxhUXK89huKcppTXYVa
+         TLP5AN4g5CfeWqJT+dKjWLRf6nb//SJ0RyrcVSL030oiDEqno9+eXK3MH20vaVWcU/5z
+         vHiw==
+X-Gm-Message-State: AOAM53281mM8OsqqEFfW2yiThJU4m8jCAttqCSl7O1vdN+5gkg+u2xs4
+        AorTWLhvvgoGZwtCVRemtoVH8Qj67e7a92pzq2Yd5A==
+X-Google-Smtp-Source: ABdhPJy76CNAamDmxStCLV4d2vUuhc9BocdM3TpxDKQZCJPcKLABY1/C8quYbgWUUAexQB1BQGdzeVo1a3KQt1K18Sk=
+X-Received: by 2002:a05:6830:3154:: with SMTP id c20mr550760ots.233.1622071810960;
+ Wed, 26 May 2021 16:30:10 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 26 May 2021 19:30:10 -0400
 MIME-Version: 1.0
-References: <20210526081038.544942-1-lee.jones@linaro.org> <20210526081038.544942-8-lee.jones@linaro.org>
-In-Reply-To: <20210526081038.544942-8-lee.jones@linaro.org>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Thu, 27 May 2021 00:33:15 +0200
-Message-ID: <CACRpkdYjx3DyKoKpcQetXyB5uU8dqNb-qjzUbzNOj9Zqy=CmsQ@mail.gmail.com>
-Subject: Re: [PATCH 07/10] bus: qcom-ebi2: Fix incorrect documentation for '{slow,fast}_cfg'
-To:     Lee Jones <lee.jones@linaro.org>
-Cc:     linux-kernel <linux-kernel@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        MSM <linux-arm-msm@vger.kernel.org>
+In-Reply-To: <1621596371-26482-4-git-send-email-mkshah@codeaurora.org>
+References: <1621596371-26482-1-git-send-email-mkshah@codeaurora.org> <1621596371-26482-4-git-send-email-mkshah@codeaurora.org>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.9.1
+Date:   Wed, 26 May 2021 19:30:10 -0400
+Message-ID: <CAE-0n53ySKwDwzRYFYjnQnqVAujVrkik2U-PeCuS61xQU-hbWA@mail.gmail.com>
+Subject: Re: [PATCH v8 3/5] arm64: dts: qcom: sc7180: Enable SoC sleep stats
+To:     Maulik Shah <mkshah@codeaurora.org>, bjorn.andersson@linaro.org,
+        evgreen@chromium.org, mka@chromium.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        agross@kernel.org, dianders@chromium.org, linux@roeck-us.net,
+        rnayak@codeaurora.org, lsrao@codeaurora.org,
+        devicetree@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, May 26, 2021 at 10:10 AM Lee Jones <lee.jones@linaro.org> wrote:
-
-> Fixes the following W=1 kernel build warning(s):
+Quoting Maulik Shah (2021-05-21 04:26:09)
+> Add device node for SoC sleep stats driver which provides various
+> low power mode stats.
 >
->  drivers/bus/qcom-ebi2.c:112: warning: Function parameter or member 'slow_cfg' not described in 'cs_data'
->  drivers/bus/qcom-ebi2.c:112: warning: Function parameter or member 'fast_cfg' not described in 'cs_data'
+> Also update the reg size of aoss_qmp device to 0x400.
 >
-> Cc: Andy Gross <agross@kernel.org>
-> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Cc: Linus Walleij <linus.walleij@linaro.org>
-> Cc: linux-arm-msm@vger.kernel.org
-> Signed-off-by: Lee Jones <lee.jones@linaro.org>
+> Cc: devicetree@vger.kernel.org
+> Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
+> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sc7180.dtsi | 7 ++++++-
+>  1 file changed, 6 insertions(+), 1 deletion(-)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> index 6228ba2..889d04d 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> @@ -3215,7 +3215,7 @@
+>
+>                 aoss_qmp: power-controller@c300000 {
+>                         compatible = "qcom,sc7180-aoss-qmp";
+> -                       reg = <0 0x0c300000 0 0x100000>;
+> +                       reg = <0 0x0c300000 0 0x400>;
+>                         interrupts = <GIC_SPI 389 IRQ_TYPE_EDGE_RISING>;
+>                         mboxes = <&apss_shared 0>;
+>
+> @@ -3223,6 +3223,11 @@
+>                         #power-domain-cells = <1>;
+>                 };
+>
+> +               rpmh-sleep-stats@c3f0000 {
+> +                       compatible = "qcom,rpmh-sleep-stats";
+> +                       reg = <0 0x0c3f0000 0 0x400>;
+> +               };
+> +
 
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org
+Does this need to be in DT? Can the sc7180-aoss-qmp driver use the
+aux-bus and stick the sleep stats device on there?
 
-Thanks Lee!
-
-Yours,
-Linus Walleij
+>                 spmi_bus: spmi@c440000 {
+>                         compatible = "qcom,spmi-pmic-arb";
+>                         reg = <0 0x0c440000 0 0x1100>,
