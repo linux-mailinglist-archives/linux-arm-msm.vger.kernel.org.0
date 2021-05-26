@@ -2,40 +2,41 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 76D4F391FFC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 May 2021 21:03:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A5D4A391FFF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 May 2021 21:03:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235811AbhEZTFM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 May 2021 15:05:12 -0400
-Received: from mail.kernel.org ([198.145.29.99]:40990 "EHLO mail.kernel.org"
+        id S235820AbhEZTFO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 May 2021 15:05:14 -0400
+Received: from mail.kernel.org ([198.145.29.99]:41026 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S235591AbhEZTE4 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        id S235664AbhEZTE4 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
         Wed, 26 May 2021 15:04:56 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPS id 6159B6143C;
+Received: by mail.kernel.org (Postfix) with ESMTPS id 806FE610A5;
         Wed, 26 May 2021 19:03:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1622055804;
-        bh=q97q1McKm6OOdzPocHozo4mIrZxAxfZA9/2Sx+fZcxc=;
+        bh=DpA+w90IQKsqxPQILPNw/f+hVoWSsaOPfzXEJL0ogvY=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=d0RuIUxCDuw7EoRGmGddm397MWtVNn0BcYLxX5AnS6lOd8dr0JJ8amLqgLBTxTSLK
-         5/vP25DpH5768HEIljMZdcQEU0qcVy60jiX9hfBgWz3QA7AFOU6NxsfUN6B+N3urSt
-         xtg2Q1BCre9DBFy3XGW81BHD228fDXbR2dHLGinyUXVh+fRXPtu/UjQW4i4LaPvlp/
-         8UVCnKj+Sg2xO8fPYSwAgl5hy4rEuenP1ZNnx8tsb3JfeLbGcOiekd0HFVXr1om94n
-         fHrbdhkE8rD8Ko7Cd/Wp7e/61mcGGBeOHvUpYnR5COI/BSxib/p6Y8RhPEz/TEOWi/
-         zyEC/scayZ8Pg==
+        b=X/ABPSuM/Ya9u0IzPMlZAWQyP5PjhGbtlu30gIG4G74diVVqMy24tN6fklU6Sd1G+
+         ywxP2c9o6UyWx/4sv+kf8O5pY9L0lnYEAJocDg+JUgGDlTV7p7nMOdgho4AfF/9W7f
+         T8ARcN3f6hIBqlaiD1mZiHcWTc3ZGxu0MXHXJTO3UCbFRq7MLCMJmDBdG8dc9xTu51
+         gPDfI4XYKWML2VoJqZNHHTlNIH3jrR8S0pC0x+z/t+1XzLGIbD6sQpwfaKxnwOhkx+
+         0c6seJbhNyGV80e8Gd5LfD8o30AJjZbfWXhWw6Strlvrlcg7BLjUl3s93QpntxPkva
+         dkctAMjA1oOVw==
 Received: from pdx-korg-docbuild-2.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id 5D28460CE1;
+        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id 7C21B60CE1;
         Wed, 26 May 2021 19:03:24 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v2] drivers: pinctrl: qcom: fix Kconfig dependency on GPIOLIB
+Subject: Re: [PATCH 0/6] rpmsg: enable the use of the rpmsg_char device for the
+ Virtio backend
 From:   patchwork-bot+linux-arm-msm@kernel.org
-Message-Id: <162205580437.26840.11398023618152370305.git-patchwork-notify@kernel.org>
+Message-Id: <162205580450.26840.3762629489850728170.git-patchwork-notify@kernel.org>
 Date:   Wed, 26 May 2021 19:03:24 +0000
-References: <20210414025138.480085-1-julianbraha@gmail.com>
-In-Reply-To: <20210414025138.480085-1-julianbraha@gmail.com>
-To:     Julian Braha <julianbraha@gmail.com>
+References: <20210311140413.31725-1-arnaud.pouliquen@foss.st.com>
+In-Reply-To: <20210311140413.31725-1-arnaud.pouliquen@foss.st.com>
+To:     Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>
 Cc:     linux-arm-msm@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -43,22 +44,33 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hello:
 
-This patch was applied to qcom/linux.git (refs/heads/for-next):
+This series was applied to qcom/linux.git (refs/heads/for-next):
 
-On Tue, 13 Apr 2021 22:51:38 -0400 you wrote:
-> When PINCTRL_MSM is enabled, and GPIOLIB is disabled,
-> Kbuild gives the following warning:
+On Thu, 11 Mar 2021 15:04:07 +0100 you wrote:
+> This series is the first step in the division of the series:
+> "Introduce a generic IOCTL interface for RPMsg channels management"[1]
 > 
-> WARNING: unmet direct dependencies detected for GPIOLIB_IRQCHIP
->   Depends on [n]: GPIOLIB [=n]
->   Selected by [y]:
->   - PINCTRL_MSM [=y] && PINCTRL [=y] && (ARCH_QCOM || COMPILE_TEST [=y])
+> The main goal here is to enable the RPMsg char interface for
+> the virtio RPMsg backend.
+> 
+> In addition some patches have been includes in order to document the
+> interface and rename the rpmsg_char_init function.
 > 
 > [...]
 
 Here is the summary with links:
-  - [v2] drivers: pinctrl: qcom: fix Kconfig dependency on GPIOLIB
-    https://git.kernel.org/qcom/c/376f9e34c10f
+  - [1/6] rpmsg: char: Rename rpmsg_char_init to rpmsg_chrdev_init
+    https://git.kernel.org/qcom/c/60d7b22d2593
+  - [2/6] rpmsg: Move RPMSG_ADDR_ANY in user API
+    https://git.kernel.org/qcom/c/3093c3c7c136
+  - [3/6] rpmsg: Add short description of the IOCTL defined in UAPI.
+    https://git.kernel.org/qcom/c/809328b40cfb
+  - [4/6] rpmsg: char: Use rpmsg_sendto to specify the message destination address
+    https://git.kernel.org/qcom/c/b4ce7e2ebcc5
+  - [5/6] rpmsg: virtio: Register the rpmsg_char device
+    https://git.kernel.org/qcom/c/c486682ae1e2
+  - [6/6] rpmsg: char: Return an error if device already open
+    https://git.kernel.org/qcom/c/964e8bedd5a1
 
 You are awesome, thank you!
 --
