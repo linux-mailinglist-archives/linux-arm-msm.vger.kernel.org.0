@@ -2,121 +2,150 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 55D94390CDC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 May 2021 01:16:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 790CA390D21
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 May 2021 02:00:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230404AbhEYXSA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 May 2021 19:18:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53682 "EHLO
+        id S232155AbhEZACL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 May 2021 20:02:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35170 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229898AbhEYXR7 (ORCPT
+        with ESMTP id S232030AbhEZACL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 May 2021 19:17:59 -0400
-Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com [IPv6:2607:f8b0:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE2F7C061756
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 May 2021 16:16:27 -0700 (PDT)
-Received: by mail-ot1-x32c.google.com with SMTP id 69-20020a9d0a4b0000b02902ed42f141e1so30238584otg.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 May 2021 16:16:27 -0700 (PDT)
+        Tue, 25 May 2021 20:02:11 -0400
+Received: from mail-yb1-xb34.google.com (mail-yb1-xb34.google.com [IPv6:2607:f8b0:4864:20::b34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D5B2C06175F
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 May 2021 17:00:40 -0700 (PDT)
+Received: by mail-yb1-xb34.google.com with SMTP id v77so2008091ybi.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 May 2021 17:00:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=kRJQsbr4UUik0+tRstjeKX41a8OCpXExPGyFvaZBojo=;
-        b=S6AlfPL+fzQsW5ZhJXqX6HilwyQpM0VVd4UGRsd4EWTTxINvJTxex+kdlEBu5CBzG0
-         +RBWxaHB9Py9EK54p3ps7VTypiJ6pHMwQYh7BmaylgxU8ZABz9+D65de+m3xN1nscyrK
-         HJ/+vT70ggO8bet/hswCbgsbyKw6B1NftmW5ZSdGbonrGR5Wie8cpKaXwZ+fwGDd/fGA
-         OMECgWdd4S94g23go+HyKqjV/hL5lzgMNfZPTvvj2sAaanAm8skW31heVNujm4w8Vuh1
-         1nmJQ5mPfD0EKlBHJeydrnKSBci/2AwD0Z1+EFR43V3pLT48sGCSOJI1uxfg4RUmkaBz
-         gOww==
+        d=google.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=OgPBD9RTWV/+yocErwSjNvY03ozhb/ZIhTE4mqMzglY=;
+        b=QogSuupoLXyFIrvXgPMsgbgsuthJBIo84vbP7rB/tLuurhhp0LcJhmarHPFsNoryFQ
+         42mnkolSR6ahg8rnHPK7IkBB/PZ7XVexz7cXHhe6MPzIcr0K0ghejT3KaYxX6JjEwiD8
+         rcV9yhnjcexreaKFtyVgCQiR5QRtvjVp7DmRlOL6bciS4PXa/OMLFNUsHkuirNNwrmVv
+         Bn2MMmK+vA+GzatXKF77ROeAap3hyKk7k8KanrJJkO/ewFZ7pioPXV4ogBQzIvpDScgV
+         YoV0qKzlmyrV88MphFr/qxsbCgtE+XRKgxZ9gOnlgIqCCt/sXQxD9VeiElItLALzOSAW
+         Y4SQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=kRJQsbr4UUik0+tRstjeKX41a8OCpXExPGyFvaZBojo=;
-        b=o8Ogty13KvQXvNLQtM2BOV18RUxPkGpXVwaB3AmEdrEbOIUCxOl1SVX/WVFAK6igTe
-         FUf8lwPnGDGm5ybPwMiro6E+qzgMewBRkI/Xhkr0ZQHyvFuSp3ouY/plTLv1juMcNfVz
-         p5ZPVadP+8L8Zz8Du3P0SEMwjnNK/V/2XagVgK8xfjIrDb4iNY9s3Nvrt7dkKNJEq6u5
-         biEE4FxFAs1hIlEd7TWsibYhQkKkHKIZOfiJWjcCPYbQukZPKRAi/zTyIhbzCKLFcXKA
-         5ovVi2OGFBJJVTwezDet5T+KOekxoeFgZCy+u5Zk5tzhfnXdU/0kzkQ2LpV53J5M3CUD
-         dayg==
-X-Gm-Message-State: AOAM530chgjHqd9VmqXqRBHKXhdcofsV3kM9SfnMAgO0xfJP+uv7nl3V
-        J/jRzbI1tk8uUNAXUxLvydvpZg==
-X-Google-Smtp-Source: ABdhPJw9o+Oklb8frPMTtU40dTfwPoeGJOz2hCTCxQw/e0eWfUHbRnHaeS2PfEOGSn57ftpNNrXmBg==
-X-Received: by 2002:a9d:728b:: with SMTP id t11mr73613otj.230.1621984587274;
-        Tue, 25 May 2021 16:16:27 -0700 (PDT)
-Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id i17sm1237661oou.37.2021.05.25.16.16.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 May 2021 16:16:26 -0700 (PDT)
-Date:   Tue, 25 May 2021 18:16:24 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Ansuel Smith <ansuelsmth@gmail.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Miquel Raynal <miquel.raynal@bootlin.com>,
-        Richard Weinberger <richard@nod.at>,
-        Vignesh Raghavendra <vigneshr@ti.com>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-mtd@lists.infradead.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] mtd: parsers: qcom: Fix leaking of partition name
-Message-ID: <YK2FSM5UDZhGQN0n@yoga>
-References: <20210525230931.30013-1-ansuelsmth@gmail.com>
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=OgPBD9RTWV/+yocErwSjNvY03ozhb/ZIhTE4mqMzglY=;
+        b=O3/JDY+cB2zmrm97bTqIR4ZYO0B19UtKZY+2UiJ8jy4N/zJkunZknF46bg76tcO2Rm
+         smyipid5C49GhgEe5n8inosen26W8wl6rGTtS25Lckcb5BEVD+jCCBGnKWPrN73iS3hS
+         UrUvXm0aEt5Rr9HpovyxxLNfeH2wNtuFJdmc+G5MoLtFkd5M0Ty8v/C8Texn7ETFRpAh
+         e3PFDC2Z4TwsgofyMtr3xOOiUzEUOqD4lT6Um2lKZ8DmuF3TDJrLKy48jOYgpBu4mw2+
+         2/l/tiVbzXOCRly+M89aACHN/gapeubgR2/OPpKYDmsD3di2OfGRHkqE4IoD6ru/8ylo
+         QDZA==
+X-Gm-Message-State: AOAM5321Ltmuu5u0fJXQFdrIsGQwV7bB1gXzNiM2UQYEjHmBygPtMULt
+        H6LVfdXhP01D/6++VUuzXLOzr2FTdnKrc4kvqMNtYw==
+X-Google-Smtp-Source: ABdhPJzW+b+0ootIVJRT77W2OC01Wf6i3sBEfv820bajSe2qGZxWR2AQvY0EkjkdZvGr1uiz45DraOa6tGKNTWwbSjU=
+X-Received: by 2002:a25:734b:: with SMTP id o72mr24441243ybc.412.1621987239181;
+ Tue, 25 May 2021 17:00:39 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210525230931.30013-1-ansuelsmth@gmail.com>
+From:   Saravana Kannan <saravanak@google.com>
+Date:   Tue, 25 May 2021 17:00:03 -0700
+Message-ID: <CAGETcx_N-+7e0hgnmtuqavce0qgk7Ertf=9P-0kNZ01SOnFq_w@mail.gmail.com>
+Subject: Re: [PATCH] remoteproc: core: Invoke subdev callbacks in list order
+To:     sidgup@codeaurora.org
+Cc:     bjorn.andersson@linaro.org, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org, ohad@wizery.com,
+        psodagud@codeaurora.org, Saravana Kannan <saravanak@google.com>,
+        Android Kernel Team <kernel-team@android.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 25 May 18:09 CDT 2021, Ansuel Smith wrote:
+Sending again due to accidental HTML.
 
-> Add cleanup function as the name variable for the partition name was
-> allocaed but never freed after the use as the add mtd function
-> duplicate the name and free the pparts struct as the partition name is
-> assumed to be static.
-> The leak was found using kmemleak.
-> 
+On XXXXX, Siddharth Gupta wrote:
+> On 5/24/2021 8:03 PM, Bjorn Andersson wrote:
+> > On Mon 17 May 18:08 CDT 2021, Siddharth Gupta wrote:
+> >
+> >> Subdevices at the beginning of the subdev list should have
+> >> higher priority than those at the end of the list. Reverse
+> >> traversal of the list causes priority inversion, which can
+> >> impact the performance of the device.
+> >>
+> > The subdev lists layers of the communication onion, we bring them up
+> > inside out and we take them down outside in.
+> >
+> > This stems from the primary idea that we want to be able to shut things
+> > down cleanly (in the case of a stop) and we pass the "crashed" flag to
+> > indicate to each recipient during "stop" that it may not rely on the
+> > response of a lower layer.
+> >
+> > As such, I don't think it's right to say that we have a priority
+> > inversion.
+> My understanding of the topic was that each subdevice should be
+> independent of the other. In our case unfortunately the sysmon
+> subdevice depends on the glink endpoint.
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+In that case, the glink has to be prepared/started before sysmon, right?
 
-Regards,
-Bjorn
+>
+> However the priority inversion doesn't happen in these
+> subdevices, it happens due to the SSR notifications that we send
+> to kernel clients. In this case kernel clients also can have QMI
+> sockets that in turn depend on the glink endpoint, which means
+> when they go to release the QMI socket a broadcast will be sent
+> out to all connected clients about the closure of the connection
+> which in this case happens to be the remoteproc which died. So
+> if we peel the onion, we will be unnecessarily be waiting for a
+> dead remoteproc.
 
-> Fixes: 803eb124e1a6 ("mtd: parsers: Add Qcom SMEM parser")
-> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
-> ---
->  drivers/mtd/parsers/qcomsmempart.c | 10 ++++++++++
->  1 file changed, 10 insertions(+)
-> 
-> diff --git a/drivers/mtd/parsers/qcomsmempart.c b/drivers/mtd/parsers/qcomsmempart.c
-> index d9083308f6ba..06a818cd2433 100644
-> --- a/drivers/mtd/parsers/qcomsmempart.c
-> +++ b/drivers/mtd/parsers/qcomsmempart.c
-> @@ -159,6 +159,15 @@ static int parse_qcomsmem_part(struct mtd_info *mtd,
->  	return ret;
->  }
->  
-> +static void parse_qcomsmem_cleanup(const struct mtd_partition *pparts,
-> +				   int nr_parts)
-> +{
-> +	int i;
-> +
-> +	for (i = 0; i < nr_parts; i++)
-> +		kfree(pparts[i].name);
-> +}
-> +
->  static const struct of_device_id qcomsmem_of_match_table[] = {
->  	{ .compatible = "qcom,smem-part" },
->  	{},
-> @@ -167,6 +176,7 @@ MODULE_DEVICE_TABLE(of, qcomsmem_of_match_table);
->  
->  static struct mtd_part_parser mtd_parser_qcomsmem = {
->  	.parse_fn = parse_qcomsmem_part,
-> +	.cleanup = parse_qcomsmem_cleanup,
->  	.name = "qcomsmem",
->  	.of_match_table = qcomsmem_of_match_table,
->  };
-> -- 
-> 2.31.1
-> 
+So why can't the QMI layer be smart about this and check that the
+remoteproc hasn't crashed before you try to communicate with it? Or if
+the glink is torn down before QMI gets to broadcast, then it's a
+pretty clear indication of failure and just notify all the kernel side
+QMI clients?
+
+> >
+> >> For example a device adds the glink, sysmon and ssr subdevs
+> >> to its list. During a crash the ssr notification would go
+> >> before the glink and sysmon notifications. This can cause a
+> >> degraded response when a client driver waits for a response
+> >> from the crashed rproc.
+> >>
+> > In general the design is such that components are not expected to
+> > communicate with the crashed remote when "crashed" is set, this avoids
+> > the single-remote crash.
+> Here the glink device on the rpmsg bus won't know about the
+> crashed remoteproc till we send glink notification first, right?
+
+Why not just query the current state of the remote proc before trying
+to talk to it? It should be a quick check.
+
+> Since we send out sysmon and SSR notifications first, the glink
+> device will still be "alive" on the rpmsg bus.
+> >
+> > The case where this isn't holding up is when two remote processors
+> > crashes simultaneously, in which case e.g. sysmon has been seen hitting
+> > its timeout waiting for an ack from a dead remoteproc - but I was under
+> > the impression that this window shrunk dramatically as a side effect of
+> > us fixing the notification ordering.
+> You are right, the window would become smaller in the case of two
+> remoteprocs, but this issue can come up with even a single
+> remoteproc unless prioritize certain subdevices.
+
+I think the main problem you have here is rproc sub devices that
+depend on other rproc sub devices. But there's no dependency tracking
+here. Your change just happens to work for your specific case because
+the order of the sub devices in the list happens to work for your
+inter-subdevice dependencies. But this is definitely not going to work
+for all users of subdevices.
+
+If keeping track of dependency is too much complexity (I haven't read
+enough rproc code to comment on that), at the least, it looks like you
+need another ops instead of changing the order of stop() callbacks. Or
+at a minimum pick the ordering based on the "crashed" flag. A blanket,
+I'll just switch the ordering of stop() for everyone for all cases is
+wrong.
+
+In fact, in the normal/clean shutdown case, I'd think you'll want to
+stop the subdevices in reverse initialization order so that you can
+cleanly stop QMI/sysmon first before shutting down glink.
+
+-Saravana
