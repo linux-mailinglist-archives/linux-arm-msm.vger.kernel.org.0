@@ -2,164 +2,165 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D1FF6390EC9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 May 2021 05:18:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C0F4C390EEA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 May 2021 05:36:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231380AbhEZDUU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 May 2021 23:20:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50528 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230288AbhEZDUT (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 May 2021 23:20:19 -0400
-Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D6BBC061756
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 May 2021 20:18:48 -0700 (PDT)
-Received: by mail-ot1-x32f.google.com with SMTP id i12-20020a05683033ecb02903346fa0f74dso20043628otu.10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 May 2021 20:18:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=YGXwzJCQFErYClb2EnipBLYblfsmIfhbELhVEOmEmTI=;
-        b=K6Sk3jYxgjVXJwc6kE3n0cKeI+630QIrX7Qsi3cDGmmSDofGjKq7nIVYTBRW84i2aF
-         KuBeM+UmCKKcuRHFm2EM1AW7/EUeOPXA1Ou5XMZ685QRXUm9w9DRNqfpdZ37LutxiqIm
-         12XH0zEuHLsTfU5de9im+LqlehsXi3GJeaWz69kJCNWK+wrT1L/Tw2pKCMbkOHM3Ayrp
-         Pqlsckjgb0m861r4ERzXGgbEr/wcPi1z8yi7IdA9PG1No+zMr81VBRWbJQuy2dx2Y1TJ
-         EQ+zwT42emFO7YBl870ORbYFL7Ab9yjji2vYcDJnFmOOf+t6vhL+Sql7AxL4B+yIfATh
-         jpIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=YGXwzJCQFErYClb2EnipBLYblfsmIfhbELhVEOmEmTI=;
-        b=H2DqoxIDlnoH7ctBHdZi80fdD2NACcSf/uBY4vR0y3fUTqPqor2IsCYMvTlQVbHW46
-         wuXJOGVQ71lBRsw1mMvsFd4p0Iw8eimY6mBe4cTLVIp/HHlAm6Get7gKcO8x68WM2eMF
-         3pT98E84yPft+w9yEGfj85lm7pAo3jf6sHEsoJ4LUN0ghjJBG0GY8ChKvWZxrKKfiGDv
-         f/NokewN9PznobFcQy7ddZY3eN0BghoexaDgOEsDXY7HdSwExD8m8IX+t0ADpKShH1H6
-         NpIsgmtpiAlbxWWxv6AuZrZHhZAzADoeHUQcKc031ngFZcBX+InXKcTzNkr5djYY6+8j
-         hdwg==
-X-Gm-Message-State: AOAM533trudwjyA2AkQl5UexP0mN+gVK3MHf4IoQrDO5XbaoCDE/XS0Y
-        KxmlKNDZGALxhfyCFOXkMw6IIQ==
-X-Google-Smtp-Source: ABdhPJy08CENDuldrPgkLN1jUuH8g3uNtmHsp/QGWcMNofLQi2pyeFR8Qc1HHOHvxDhfY7QB+3n9xA==
-X-Received: by 2002:a9d:405:: with SMTP id 5mr671179otc.9.1621999127563;
-        Tue, 25 May 2021 20:18:47 -0700 (PDT)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id n11sm3768703otf.26.2021.05.25.20.18.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 May 2021 20:18:47 -0700 (PDT)
-Date:   Tue, 25 May 2021 22:18:45 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, martin.botka@somainline.org,
-        angelogioacchino.delregno@somainline.org,
-        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/7] arm64: dts: qcom: Add MSM8996v3.0 DTSI file
-Message-ID: <YK2+FfLrt+8ODVHb@builder.lan>
-References: <20210525200246.118323-1-konrad.dybcio@somainline.org>
- <20210525200246.118323-2-konrad.dybcio@somainline.org>
+        id S232063AbhEZDhg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 May 2021 23:37:36 -0400
+Received: from mail.kernel.org ([198.145.29.99]:50922 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231519AbhEZDhg (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 25 May 2021 23:37:36 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id D7723613BF;
+        Wed, 26 May 2021 03:36:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1622000166;
+        bh=M1Id63aaB1aallh3019UiD0//S980+aU2GCI7HZMGsk=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=twXQwn2ovA5RExg8oiNnUvhD68HF6CcrEwLyVavCd1MHms+I5p6IUY/eyrSCGqOqO
+         5juzuyno1xNfZNiGj3XordRCg3KlW8Q0yKA+Imj3JfWqqD/f2UGXUMzbGCCW5rVEVF
+         pGbEVT3FpqyoS9bst4GHWkrIKMTdWnTvlymRLqKrdUutQyseLv6KZmuwYHDJxJAmIr
+         BhqppZCIvKrYfRdUtki2MeUmVcGWDJn9GOrJSKS5egXo0sE6FI3H6Cb6dkimItEPcr
+         JIZSHPHT2aXOJCOM9DH0PRdOt6NKjWEaUl5OdkMO/BmHBmZN/v8Cbrgutt6RL9jQSB
+         DVQ5EjSp1j/Ew==
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210525200246.118323-2-konrad.dybcio@somainline.org>
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <1619334502-9880-2-git-send-email-tdas@codeaurora.org>
+References: <1619334502-9880-1-git-send-email-tdas@codeaurora.org> <1619334502-9880-2-git-send-email-tdas@codeaurora.org>
+Subject: Re: [PATCH v3] clk: qcom: clk-rcg2: Add support for duty-cycle for RCG
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Taniya Das <tdas@codeaurora.org>
+To:     Michael Turquette <mturquette@baylibre.com>,
+        Taniya Das <tdas@codeaurora.org>
+Date:   Tue, 25 May 2021 20:36:04 -0700
+Message-ID: <162200016458.4130789.5041222615667409232@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 25 May 15:02 CDT 2021, Konrad Dybcio wrote:
-
-> Add an overlay for MSM8996v3.0, which is a pre-final revision
-> of the said SoC. It has some stark differences with regards to
-> GPU, or more specifically its power delivery path. Oh, and of
-> course a different msm-id.
-> 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+Quoting Taniya Das (2021-04-25 00:08:22)
+> The root clock generators with MND divider has the capability to support
+> change in duty-cycle by updating the 'D'. Add the clock ops which would
+> check all the boundary conditions and enable setting the desired duty-cyc=
+le
+> as per the consumer.
+>=20
+> Signed-off-by: Taniya Das <tdas@codeaurora.org>
 > ---
->  arch/arm64/boot/dts/qcom/msm8996-v3.0.dtsi | 59 ++++++++++++++++++++++
->  1 file changed, 59 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/msm8996-v3.0.dtsi
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/msm8996-v3.0.dtsi b/arch/arm64/boot/dts/qcom/msm8996-v3.0.dtsi
-> new file mode 100644
-> index 000000000000..b46f10b7413a
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/msm8996-v3.0.dtsi
-> @@ -0,0 +1,59 @@
-> +// SPDX-License-Identifier: GPL-2.0
 
-BSD license?
+Applied to clk-next with '_val' removed everywhere as it made it super
+hard to read. I also don't like the (d / 2) stuff but I can live with
+it.
 
-> +/*
-> + * Copyright (c) 2021, Konrad Dybcio <konrad.dybcio@somainline.org>
-> + */
-> +
-> +#include "msm8996.dtsi"
-> +
-> + / {
-> +	qcom,msm-id = <246 0x30000>;
-> + };
-> +
-> + /*
-> +  * This revision seems to have differ GPU CPR
-> +  * parameters, GPU frequencies and some differences
-> +  * when it comes to voltage delivery to.. once again
-> +  * the GPU. Funnily enough, it's simpler to make it an
-> +  * overlay on top of 3.1 (the final one) than vice versa.
-> +  * The differences will show here as more and more
-> +  * features get enabled upstream.
-> +  */
-> +
-> +gpu_opp_table_3_0: gpu-opp-table-30 {
+---8<---
 
-Unused for now?
-
-Can you link it up this with the &gpu even if you don't enable it
-for now?
-
-Regards,
-Bjorn
-
-> +	compatible = "operating-points-v2";
-> +
-> +	opp-624000000 {
-> +		opp-hz = /bits/ 64 <624000000>;
-> +		opp-level = <7>;
-> +	};
-> +
-> +	opp-560000000 {
-> +		opp-hz = /bits/ 64 <560000000>;
-> +		opp-level = <6>;
-> +	};
-> +
-> +	opp-510000000 {
-> +		opp-hz = /bits/ 64 <510000000>;
-> +		opp-level = <5>;
-> +	};
-> +
-> +	opp-401800000 {
-> +		opp-hz = /bits/ 64 <401800000>;
-> +		opp-level = <4>;
-> +	};
-> +
-> +	opp-315000000 {
-> +		opp-hz = /bits/ 64 <315000000>;
-> +		opp-level = <3>;
-> +	};
-> +
-> +	opp-214000000 {
-> +		opp-hz = /bits/ 64 <214000000>;
-> +		opp-level = <3>;
-> +	};
-> +
-> +	opp-133000000 {
-> +		opp-hz = /bits/ 64 <133000000>;
-> +		opp-level = <3>;
-> +	};
-> +};
-> -- 
-> 2.31.1
-> 
+diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
+index aa03e315d891..e1b1b426fae4 100644
+--- a/drivers/clk/qcom/clk-rcg2.c
++++ b/drivers/clk/qcom/clk-rcg2.c
+@@ -360,7 +360,7 @@ static int clk_rcg2_set_floor_rate_and_parent(struct cl=
+k_hw *hw,
+ static int clk_rcg2_get_duty_cycle(struct clk_hw *hw, struct clk_duty *dut=
+y)
+ {
+ 	struct clk_rcg2 *rcg =3D to_clk_rcg2(hw);
+-	u32 notn_m_val, n_val, m_val, d_val, not2d_val, mask;
++	u32 notn_m, n, m, d, not2d, mask;
+=20
+ 	if (!rcg->mnd_width) {
+ 		/* 50 % duty-cycle for Non-MND RCGs */
+@@ -369,11 +369,11 @@ static int clk_rcg2_get_duty_cycle(struct clk_hw *hw,=
+ struct clk_duty *duty)
+ 		return 0;
+ 	}
+=20
+-	regmap_read(rcg->clkr.regmap, RCG_D_OFFSET(rcg), &not2d_val);
+-	regmap_read(rcg->clkr.regmap, RCG_M_OFFSET(rcg), &m_val);
+-	regmap_read(rcg->clkr.regmap, RCG_N_OFFSET(rcg), &notn_m_val);
++	regmap_read(rcg->clkr.regmap, RCG_D_OFFSET(rcg), &not2d);
++	regmap_read(rcg->clkr.regmap, RCG_M_OFFSET(rcg), &m);
++	regmap_read(rcg->clkr.regmap, RCG_N_OFFSET(rcg), &notn_m);
+=20
+-	if (!not2d_val && !m_val && !notn_m_val) {
++	if (!not2d && !m && !notn_m) {
+ 		/* 50 % duty-cycle always */
+ 		duty->num =3D 1;
+ 		duty->den =3D 2;
+@@ -382,13 +382,13 @@ static int clk_rcg2_get_duty_cycle(struct clk_hw *hw,=
+ struct clk_duty *duty)
+=20
+ 	mask =3D BIT(rcg->mnd_width) - 1;
+=20
+-	d_val =3D ~(not2d_val) & mask;
+-	d_val =3D DIV_ROUND_CLOSEST(d_val, 2);
++	d =3D ~(not2d) & mask;
++	d =3D DIV_ROUND_CLOSEST(d, 2);
+=20
+-	n_val =3D (~(notn_m_val) + m_val) & mask;
++	n =3D (~(notn_m) + m) & mask;
+=20
+-	duty->num =3D d_val;
+-	duty->den =3D n_val;
++	duty->num =3D d;
++	duty->den =3D n;
+=20
+ 	return 0;
+ }
+@@ -396,7 +396,7 @@ static int clk_rcg2_get_duty_cycle(struct clk_hw *hw, s=
+truct clk_duty *duty)
+ static int clk_rcg2_set_duty_cycle(struct clk_hw *hw, struct clk_duty *dut=
+y)
+ {
+ 	struct clk_rcg2 *rcg =3D to_clk_rcg2(hw);
+-	u32 notn_m_val, n_val, m_val, d_val, not2d_val, mask, duty_per;
++	u32 notn_m, n, m, d, not2d, mask, duty_per;
+ 	int ret;
+=20
+ 	/* Duty-cycle cannot be modified for non-MND RCGs */
+@@ -405,29 +405,29 @@ static int clk_rcg2_set_duty_cycle(struct clk_hw *hw,=
+ struct clk_duty *duty)
+=20
+ 	mask =3D BIT(rcg->mnd_width) - 1;
+=20
+-	regmap_read(rcg->clkr.regmap, RCG_N_OFFSET(rcg), &notn_m_val);
+-	regmap_read(rcg->clkr.regmap, RCG_M_OFFSET(rcg), &m_val);
++	regmap_read(rcg->clkr.regmap, RCG_N_OFFSET(rcg), &notn_m);
++	regmap_read(rcg->clkr.regmap, RCG_M_OFFSET(rcg), &m);
+=20
+-	n_val =3D (~(notn_m_val) + m_val) & mask;
++	n =3D (~(notn_m) + m) & mask;
+=20
+ 	duty_per =3D (duty->num * 100) / duty->den;
+=20
+ 	/* Calculate 2d value */
+-	d_val =3D DIV_ROUND_CLOSEST(n_val * duty_per * 2, 100);
++	d =3D DIV_ROUND_CLOSEST(n * duty_per * 2, 100);
+=20
+ 	 /* Check bit widths of 2d. If D is too big reduce duty cycle. */
+-	if (d_val > mask)
+-		d_val =3D mask;
++	if (d > mask)
++		d =3D mask;
+=20
+-	if ((d_val / 2) > (n_val - m_val))
+-		d_val =3D (n_val - m_val) * 2;
+-	else if ((d_val / 2) < (m_val / 2))
+-		d_val =3D m_val;
++	if ((d / 2) > (n - m))
++		d =3D (n - m) * 2;
++	else if ((d / 2) < (m / 2))
++		d =3D m;
+=20
+-	not2d_val =3D ~d_val & mask;
++	not2d =3D ~d & mask;
+=20
+ 	ret =3D regmap_update_bits(rcg->clkr.regmap, RCG_D_OFFSET(rcg), mask,
+-				 not2d_val);
++				 not2d);
+ 	if (ret)
+ 		return ret;
