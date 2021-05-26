@@ -2,40 +2,41 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3B398392000
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 May 2021 21:03:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4233239200A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 May 2021 21:03:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235805AbhEZTFO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 May 2021 15:05:14 -0400
-Received: from mail.kernel.org ([198.145.29.99]:41022 "EHLO mail.kernel.org"
+        id S235846AbhEZTFT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 May 2021 15:05:19 -0400
+Received: from mail.kernel.org ([198.145.29.99]:41168 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S235276AbhEZTE4 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 May 2021 15:04:56 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPS id 92928613EC;
+        id S235718AbhEZTE5 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 26 May 2021 15:04:57 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPS id E6E1761446;
         Wed, 26 May 2021 19:03:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1622055804;
-        bh=/3D5maVe5ES+bA/Jk/FeVDA6FOgw28p8tsfBolxsrqA=;
+        bh=8hAGMNm0vksALPYunxILkpkH3TfRm27ln3GSbhGtHbA=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=hhraZs0pxVeP0znNKEIo3EwGYDsDqK9iLvX6DMzhDjOANdTK+J/iMCXmGJ+qTrQxX
-         TaWrCRSRiIbIJnZGvToT9obmYbctVnDVWqGPul/KheO9ENJagTpK1VEWFLzg+/rnQL
-         7vGonZ0lYDgqtG2xbNRfa2UG4I4xVuwiqoEgCFjddMIr3SjkZ3xWBjbcG9JHLpQ5M8
-         pFz2ncSZC918Vp97MxIWYMUXcZ+0boshkWwMU/8AEfgTePgV2WdRrljbF1NV68yzEp
-         FLZ9hHGXXVIkuaklD6kYeGVnoJcrh/WV2pcDVPzExdiOVACwkv4F2+VXeSH+Ma/8FI
-         nrZjgftAynhxw==
+        b=GAYuNZC9Dfh15MY0VimxXJi2ZoKhhS3LojfGGPdso6sudFf+YpsyJuC7BUP1fVPLJ
+         orjbH+bcwST2Y9tKWznTMVbVLbw9vcwp2AsUhs+tGc39tzwXICvGOdwh0HX5ki3lf0
+         5v5P4vF7al0B/sltlMatdm7A9HHQeHbLSZDq22d5ZCsTNp9DXuWAGih/yR3FEjTVGc
+         IKy/helh1V9Ivg/k9dRTb3Uc0wny+umvC+QVJs/qGE48sIbDLIAbdyTS1Yq7cRznMt
+         kVWMXWnukLsrXVJv7Q9OYcv20t9Vg+5AjuOIkfHRYDnt7ky2shTOkl2qAm/DWqZS1E
+         iZ5+tCeoZ9t0w==
 Received: from pdx-korg-docbuild-2.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id 8E12C60C29;
+        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id E2C58609ED;
         Wed, 26 May 2021 19:03:24 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH 01/20] iommu: remove the unused domain_window_disable method
+Subject: Re: [PATCH] mhi: pci_generic: Remove WQ_MEM_RECLAIM flag from state
+ workqueue
 From:   patchwork-bot+linux-arm-msm@kernel.org
-Message-Id: <162205580457.26840.5669745281348188311.git-patchwork-notify@kernel.org>
+Message-Id: <162205580492.26840.4142575963031920525.git-patchwork-notify@kernel.org>
 Date:   Wed, 26 May 2021 19:03:24 +0000
-References: <20210401155256.298656-2-hch@lst.de>
-In-Reply-To: <20210401155256.298656-2-hch@lst.de>
-To:     Christoph Hellwig <hch@lst.de>
+References: <1614161930-8513-1-git-send-email-loic.poulain@linaro.org>
+In-Reply-To: <1614161930-8513-1-git-send-email-loic.poulain@linaro.org>
+To:     Loic Poulain <loic.poulain@linaro.org>
 Cc:     linux-arm-msm@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -43,60 +44,21 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hello:
 
-This series was applied to qcom/linux.git (refs/heads/for-next):
+This patch was applied to qcom/linux.git (refs/heads/for-next):
 
-On Thu,  1 Apr 2021 17:52:37 +0200 you wrote:
-> domain_window_disable is wired up by fsl_pamu, but never actually called.
+On Wed, 24 Feb 2021 11:18:50 +0100 you wrote:
+> A recent change created a dedicated workqueue for the state-change work
+> with WQ_HIGHPRI (no strong reason for that) and WQ_MEM_RECLAIM flags,
+> but the state-change work (mhi_pm_st_worker) does not guarantee forward
+> progress under memory pressure, and will even wait on various memory
+> allocations when e.g. creating devices, loading firmware, etc... The
+> work is then not part of a memory reclaim path...
 > 
-> Signed-off-by: Christoph Hellwig <hch@lst.de>
-> Acked-by: Will Deacon <will@kernel.org>
-> Acked-by: Li Yang <leoyang.li@nxp.com>
-> ---
->  drivers/iommu/fsl_pamu_domain.c | 48 ---------------------------------
->  include/linux/iommu.h           |  2 --
->  2 files changed, 50 deletions(-)
+> [...]
 
 Here is the summary with links:
-  - [01/20] iommu: remove the unused domain_window_disable method
-    https://git.kernel.org/qcom/c/47685cb202d1
-  - [02/20] iommu/fsl_pamu: remove fsl_pamu_get_domain_attr
-    https://git.kernel.org/qcom/c/392825e0c76c
-  - [03/20] iommu/fsl_pamu: remove support for setting DOMAIN_ATTR_GEOMETRY
-    https://git.kernel.org/qcom/c/f7641bb71d26
-  - [04/20] iommu/fsl_pamu: merge iommu_alloc_dma_domain into fsl_pamu_domain_alloc
-    https://git.kernel.org/qcom/c/c8224508074e
-  - [05/20] iommu/fsl_pamu: remove support for multiple windows
-    https://git.kernel.org/qcom/c/ba58d1216e2b
-  - [06/20] iommu/fsl_pamu: remove ->domain_window_enable
-    https://git.kernel.org/qcom/c/376dfd2a2ff4
-  - [07/20] iommu/fsl_pamu: replace DOMAIN_ATTR_FSL_PAMU_STASH with a direct call
-    https://git.kernel.org/qcom/c/4eeb96f6efac
-  - [08/20] iommu/fsl_pamu: merge pamu_set_liodn and map_liodn
-    https://git.kernel.org/qcom/c/dae7747ae41c
-  - [09/20] iommu/fsl_pamu: merge handle_attach_device into fsl_pamu_attach_device
-    https://git.kernel.org/qcom/c/85e362ca4625
-  - [10/20] iommu/fsl_pamu: enable the liodn when attaching a device
-    https://git.kernel.org/qcom/c/7d61cb6ff012
-  - [11/20] iommu/fsl_pamu: remove the snoop_id field
-    https://git.kernel.org/qcom/c/fd78696ece54
-  - [12/20] iommu/fsl_pamu: remove the rpn and snoop_id arguments to pamu_config_ppaac
-    https://git.kernel.org/qcom/c/151f9414b88b
-  - [13/20] iommu/fsl_pamu: hardcode the window address and size in pamu_config_ppaace
-    https://git.kernel.org/qcom/c/57fa44be7fdb
-  - [14/20] iommu: remove DOMAIN_ATTR_PAGING
-    https://git.kernel.org/qcom/c/9fb5fad562fa
-  - [15/20] iommu: remove DOMAIN_ATTR_GEOMETRY
-    https://git.kernel.org/qcom/c/bc9a05eef113
-  - [16/20] iommu: remove DOMAIN_ATTR_NESTING
-    https://git.kernel.org/qcom/c/7e147547783a
-  - [17/20] iommu: remove iommu_set_cmd_line_dma_api and iommu_cmd_line_dma_api
-    https://git.kernel.org/qcom/c/3189713a1b84
-  - [18/20] iommu: remove DOMAIN_ATTR_DMA_USE_FLUSH_QUEUE
-    https://git.kernel.org/qcom/c/a250c23f15c2
-  - [19/20] iommu: remove DOMAIN_ATTR_IO_PGTABLE_CFG
-    https://git.kernel.org/qcom/c/4fc52b81e87b
-  - [20/20] iommu: remove iommu_domain_{get,set}_attr
-    https://git.kernel.org/qcom/c/7876a83ffe8c
+  - mhi: pci_generic: Remove WQ_MEM_RECLAIM flag from state workqueue
+    https://git.kernel.org/qcom/c/0fccbf0a3b69
 
 You are awesome, thank you!
 --
