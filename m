@@ -2,106 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8C8A4390F05
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 May 2021 05:59:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 56E63390F0A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 May 2021 06:00:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229567AbhEZEBB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 May 2021 00:01:01 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:43600 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229559AbhEZEA7 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 May 2021 00:00:59 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1622001567; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=P0n4WbezbdAK81w1/rPYSPml9/Ly7Y5wITSskDucO7U=;
- b=JSxFNPfHrLz73OpZZrkAi+tBuFdF2XuyWDViMj5BjCJt8bdT6G1BsgFT95vywFwOmm98pJvn
- ZbA/us2ITlorMuVhBxQpW0a7EKZBZSNuejCgtzhPbRP4Kfb0+iZ7qcAW9oWRlezBhyYf5Uwg
- PqreQXl1gonaLNTpahIpG0T6ufQ=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
- 60adc79e2bff04e53bb8554b (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 26 May 2021 03:59:26
- GMT
-Sender: skakit=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 571AEC4338A; Wed, 26 May 2021 03:59:26 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: skakit)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 2A472C433F1;
-        Wed, 26 May 2021 03:59:25 +0000 (UTC)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Wed, 26 May 2021 09:29:25 +0530
-From:   skakit@codeaurora.org
-To:     Matthias Kaehlcke <mka@chromium.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Lee Jones <lee.jones@linaro.org>,
+        id S229553AbhEZECV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 May 2021 00:02:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59802 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229522AbhEZECV (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 26 May 2021 00:02:21 -0400
+Received: from mail-ot1-x336.google.com (mail-ot1-x336.google.com [IPv6:2607:f8b0:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F58EC061756
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 May 2021 21:00:50 -0700 (PDT)
+Received: by mail-ot1-x336.google.com with SMTP id 69-20020a9d0a4b0000b02902ed42f141e1so30755481otg.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 May 2021 21:00:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=1/0s4irIAHrEsalg1vYZ8qoD26aC19QWgqCayWmosVw=;
+        b=nfyuAbLzS6wleb8opN1gCeIdANOfcVxizXhDbL12q+twpO+KfBaDDqzQbkybbQkHuW
+         fy752HROUtfXiVARGwEt/9jYpplrjGUgXL04OszzgQhKbtktBx1arPwSVhE7F9hRBLyj
+         rtpaq7XKvwrhwEUdm+LcF/tVsnaM8Lea640urg+RmWA9GaSMjqX86CBR/D7AQcdEahRG
+         BmFjbncstNSXWASJbEmlSgBo7JaXA1/bnM+b9UNVYuDeFl3vIxU79Y7dzNbjEnOiV5z9
+         TTud1wsGlR+h2YLDsORMthKkb9eCG6tIC4KR+1H8Y5Z5ZeRwIHy+5TNmnCqKy40QU7xn
+         22Ww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=1/0s4irIAHrEsalg1vYZ8qoD26aC19QWgqCayWmosVw=;
+        b=BryeETFjWHlkkiwyABhTEfTzGcK6EReWapL6GnZLzQOphgHMV2TrRrLbf31sZB88NZ
+         pZaWpjBqyKRT9n0nbg/igsUV1nNLRPz8btCy2Pbr0u3TqcOkr7Wg77J4ooo0832ccART
+         5LsZ1vsk2eO0/t/brtcheI+ylsDMSFKadLD9cY4Wsv3Iaro/9GAwmm7grXbS5vZ4Rtsa
+         03g2bqH6jsdHUEK0zo1CoX7SAi0o9mqC5v+Fe8DOOkNLUU1Caqqy2TfPQR15w1Kplzs/
+         MkOgRfI8i5ZognubP0bHPmTQPxVMh3EtVVNfB5F26AKGqg41OCGLqpnW3yfMV6UvSCg7
+         es4A==
+X-Gm-Message-State: AOAM533cgnwMEn6/WWVttL43Enl97GDUTOid9R+Y7UciCVnaIQ+4HcIh
+        90z4Jnq/BItOrCFnsQUexYUuVw==
+X-Google-Smtp-Source: ABdhPJzk1HhgeuWiLDaU1PfKNdSJXCB+4kVlv9S0wuamiLM7l8i7S9GOa6B0UO5B2unyeDujQDsvhA==
+X-Received: by 2002:a9d:30d2:: with SMTP id r18mr750948otg.170.1622001649055;
+        Tue, 25 May 2021 21:00:49 -0700 (PDT)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id z9sm4248004oti.37.2021.05.25.21.00.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 25 May 2021 21:00:48 -0700 (PDT)
+Date:   Tue, 25 May 2021 23:00:46 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Maulik Shah <mkshah@codeaurora.org>
+Cc:     swboyd@chromium.org, mka@chromium.org, evgreen@chromium.org,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, kgunda@codeaurora.org
-Subject: Re: [PATCH V5 06/11] arm64: dts: qcom: pmr735a: Correct the GPIO node
-In-Reply-To: <YK1kcVj9iyekNnrj@google.com>
-References: <1621937466-1502-1-git-send-email-skakit@codeaurora.org>
- <1621937466-1502-7-git-send-email-skakit@codeaurora.org>
- <YK1kcVj9iyekNnrj@google.com>
-Message-ID: <f9f929f3bcf41f0188d27a57a79174a3@codeaurora.org>
-X-Sender: skakit@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+        agross@kernel.org, dianders@chromium.org, linux@roeck-us.net,
+        rnayak@codeaurora.org, lsrao@codeaurora.org,
+        Mahesh Sivasubramanian <msivasub@codeaurora.org>,
+        Lina Iyer <ilina@codeaurora.org>
+Subject: Re: [PATCH v7 2/5] soc: qcom: Add SoC sleep stats driver
+Message-ID: <YK3H7m7bpL2DJt9R@builder.lan>
+References: <1617704857-19620-1-git-send-email-mkshah@codeaurora.org>
+ <1617704857-19620-3-git-send-email-mkshah@codeaurora.org>
+ <20210412234317.GE1538589@yoga>
+ <cd54214e-8c60-8f92-3c0b-f7367f1bd42e@codeaurora.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <cd54214e-8c60-8f92-3c0b-f7367f1bd42e@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-05-26 02:26, Matthias Kaehlcke wrote:
-> On Tue, May 25, 2021 at 03:41:01PM +0530, satya priya wrote:
->> Add gpio ranges and correct the compatible to add
->> "qcom,spmi-gpio" as this pmic is on spmi bus.
->> 
->> Signed-off-by: satya priya <skakit@codeaurora.org>
->> ---
->> Changes in V5:
->>  - This is split from patch [5/11] and added newly in V5.
+On Fri 21 May 06:10 CDT 2021, Maulik Shah wrote:
+> On 4/13/2021 5:13 AM, Bjorn Andersson wrote:
+> > On Tue 06 Apr 05:27 CDT 2021, Maulik Shah wrote:
+[..]
+> > > diff --git a/drivers/soc/qcom/soc_sleep_stats.c b/drivers/soc/qcom/soc_sleep_stats.c
+[..]
+> > > +MODULE_SOFTDEP("pre: smem");
+> > I believe this should be "qcom_smem",
+> the module has smem.ko file so "smem" looks proper.
+> >   but given that you call
+> > qcom_smem_get() in your code you have a hard dependency in place
+> > already. So, can you help me understand what use this softdep provide?
 > 
-> actually it's a split from patch [5/8], right?
+> If both smem and soc_sleep_stats are compiled as DLKMs, this is to make sure
+> smem module was loaded first by keeping pre soft dependency.
 > 
 
-Right, my bad. I should have mentioned this way to be more clear.
-Thank you for reviewing the patches!
+But we're making a direct function call into the qcom_smem driver, so we
+already have a hard dependency on qcom_smem.ko being loaded.
 
-> https://patchwork.kernel.org/project/linux-arm-msm/patch/1621318822-29332-6-git-send-email-skakit@codeaurora.org/
-> 
->>  arch/arm64/boot/dts/qcom/pmr735a.dtsi | 3 ++-
->>  1 file changed, 2 insertions(+), 1 deletion(-)
->> 
->> diff --git a/arch/arm64/boot/dts/qcom/pmr735a.dtsi 
->> b/arch/arm64/boot/dts/qcom/pmr735a.dtsi
->> index b0a7cd6c0..b4b6ba24 100644
->> --- a/arch/arm64/boot/dts/qcom/pmr735a.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/pmr735a.dtsi
->> @@ -21,9 +21,10 @@
->>  		};
->> 
->>  		pmr735a_gpios: gpio@8800 {
->> -			compatible = "qcom,pmr735a-gpio";
->> +			compatible = "qcom,pmr735a-gpio", "qcom,spmi-gpio";
->>  			reg = <0x8800>;
->>  			gpio-controller;
->> +			gpio-ranges = <&pmr735a_gpios 0 0 4>;
->>  			#gpio-cells = <2>;
->>  			interrupt-controller;
->>  			#interrupt-cells = <2>;
-> 
-> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+Regards,
+Bjorn
