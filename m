@@ -2,40 +2,41 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DFA0C392041
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 May 2021 21:04:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 73801392045
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 May 2021 21:04:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235164AbhEZTFh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 May 2021 15:05:37 -0400
-Received: from mail.kernel.org ([198.145.29.99]:40984 "EHLO mail.kernel.org"
+        id S235491AbhEZTFi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 May 2021 15:05:38 -0400
+Received: from mail.kernel.org ([198.145.29.99]:41156 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S235813AbhEZTFM (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        id S235788AbhEZTFM (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
         Wed, 26 May 2021 15:05:12 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPS id DF88C61474;
+Received: by mail.kernel.org (Postfix) with ESMTPS id F2D0F61477;
         Wed, 26 May 2021 19:03:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1622055806;
-        bh=tDTYSv7vMn+YeB03++VqrSy3bihqB2he6UbxZ2FHvXY=;
+        s=k20201202; t=1622055807;
+        bh=SkMy02Xi8stzKASF7kKejSx/7Co9mL5QtIFDYdnfBnA=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=s7+Epfl8QANc3temaXvb6ro7krdjUl5Q5akWDbEFJo0w6tzHO0oMQVD7UKxPgvUl6
-         FKnKzELYGXtMKmyUpfGScWc3BOzK75aXON0FBGUtzUR40urVYFiwl9mZ02ONUyEn4x
-         0TGBjhQ4AC2Rzy899PIFQ7351b8cT4Obn67dhQBDYJyw0IPUFpqMwLC1egRkqrEKSs
-         d8elDxw+LtCG7HM6uRloS+sjK27tjErAKL2ztijtxBio3OYXUgf1UcTFg+0RkvcWMs
-         ZKcRk/f+dGDCka/3bppJLUyqJ1pTa1sM1evlmuJ+b82toOG9Fiy2Ph4zcAQwfbD2rO
-         byPFGcmFlVozg==
+        b=UfjtBuly7eHQgoXkAG43jJOP338KzgZB2LhS0pnfn7VM9R1fY6khwkwVznX/48Q/6
+         g4/c8fr0IsDH+i9CMXPTbzLaxpfup+s42imL6ZhEVx5fCRjnhuJkdH3O5dxBy95kFl
+         Kwc0M8Ibj9uAXYSZK8VtQq9MOxEZCGPKLrs/L+M/15rRfCQqgslOFqcoPjDopEbOIo
+         C46FfO3tnfzmuxVb59HeSpfywkLc4ZUM3sXJPCCLPx6D0GhnebBu+/L7qbjTfSRW4B
+         BQD7/4NgZblgLE5WHLVCekunqPfp5BUyPoTVh8qhtvEXMtnNaKnGzQL+nlU8kybNGX
+         LujA6XA4Ltqng==
 Received: from pdx-korg-docbuild-2.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id DB7DB60C29;
+        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id EEC4760CE1;
         Wed, 26 May 2021 19:03:26 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH] drm/msm/dsi: fix check-before-set in the 7nm dsi_pll code
+Subject: Re: [PATCH -next] usb: dwc3: qcom: Remove redundant dev_err call in
+ dwc3_qcom_probe()
 From:   patchwork-bot+linux-arm-msm@kernel.org
-Message-Id: <162205580689.26840.2027841481980957367.git-patchwork-notify@kernel.org>
+Message-Id: <162205580697.26840.8818822534849136832.git-patchwork-notify@kernel.org>
 Date:   Wed, 26 May 2021 19:03:26 +0000
-References: <20210224224751.1215018-1-dmitry.baryshkov@linaro.org>
-In-Reply-To: <20210224224751.1215018-1-dmitry.baryshkov@linaro.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+References: <20210410024818.65659-1-cuibixuan@huawei.com>
+In-Reply-To: <20210410024818.65659-1-cuibixuan@huawei.com>
+To:     Bixuan Cui <cuibixuan@huawei.com>
 Cc:     linux-arm-msm@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -45,20 +46,19 @@ Hello:
 
 This patch was applied to qcom/linux.git (refs/heads/for-next):
 
-On Thu, 25 Feb 2021 01:47:51 +0300 you wrote:
-> Fix setting min/max DSI PLL rate for the V4.1 7nm DSI PLL (used on
-> sm8250). Current code checks for pll->type before it is set (as it is
-> set in the msm_dsi_pll_init() after calling device-specific functions.
+On Sat, 10 Apr 2021 10:48:18 +0800 you wrote:
+> There is a error message within devm_ioremap_resource
+> already, so remove the dev_err call to avoid redundant
+> error message.
 > 
-> Cc: Jonathan Marek <jonathan@marek.ca>
-> Fixes: 1ef7c99d145c ("drm/msm/dsi: add support for 7nm DSI PHY/PLL")
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Reported-by: Hulk Robot <hulkci@huawei.com>
+> Signed-off-by: Bixuan Cui <cuibixuan@huawei.com>
 > 
 > [...]
 
 Here is the summary with links:
-  - drm/msm/dsi: fix check-before-set in the 7nm dsi_pll code
-    https://git.kernel.org/qcom/c/3b24cdfc721a
+  - [-next] usb: dwc3: qcom: Remove redundant dev_err call in dwc3_qcom_probe()
+    https://git.kernel.org/qcom/c/dc1e7e9a27e0
 
 You are awesome, thank you!
 --
