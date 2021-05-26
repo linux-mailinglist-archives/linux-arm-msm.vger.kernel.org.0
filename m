@@ -2,39 +2,39 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D5DCA392021
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 May 2021 21:03:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4AE2E39200E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 May 2021 21:03:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235769AbhEZTFZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 May 2021 15:05:25 -0400
+        id S235855AbhEZTFU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 May 2021 15:05:20 -0400
 Received: from mail.kernel.org ([198.145.29.99]:41062 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S235781AbhEZTFC (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 May 2021 15:05:02 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPS id C5C7561432;
+        id S235735AbhEZTE5 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 26 May 2021 15:04:57 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPS id 1062961442;
         Wed, 26 May 2021 19:03:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1622055805;
-        bh=K8VzYOfzs2VYtG4fQJU6ZakrVNlvzcXCJDwUL74qDIc=;
+        bh=DX1RnMBOV7hTBXm9AZ6SGeYDb7HUK++PtW/bN5PntOA=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=dKZTY/Xkm7u6T5ljz1+ZwyM70AmPG8uSlhCIOD3Dlf70qZ2kwpR9mTq5+Oaa5xw4U
-         uJVrMzK5QvMeOMLm/0P0/xsVIK+is+UZDUT6PFJzoXlJY1ckK5AzNkIaJwLfp6G0bj
-         W66JgdgA6ph4Sd+5LTTUSemXDfGyRX2AtIhXAFZMqMX1Poloo73ifxQQKE9wrINeAg
-         ACsS8oNiaAT9okxUFhaNLfl4K9Hnzx3Cskt84W3EErmMZVTJx4VOmUaEjrZcR30dEa
-         oM8tsBYfCwXP7z4qobb9rzASgA51hFq3AfXwsc8sOBCWvnO3r7LVyOLQkiUzqxOtvl
-         AcIRFtnYLnZ8g==
+        b=or5lDiR18ooF2l22NR7YsjkMUvrob49MchBjexmQriHM5Xn9FySHY4I9WU3QvKjpe
+         nUQR+9lMgfu/yo52HEs493fXYms1utStGnE23ZMAVZzMOFYVSUPNhXAprKMDoVFQJO
+         L9rz0DvFc7+ixsd6IqizLsOKP/bYmSqOxqMbcm0zi4dhwsx7NaTFx9f4gWvxFqDi02
+         b2vSkRWwQjcJTr4RUI51AcG/QCNljZvel/vcg4ZV12pDmX10c79zr8te0C39yqc4yl
+         stSL3biUYqwHlugAPZQMYaIXeM1pz1rigI9++A4BOJ3fzSfkWpIBunlYcQtl0sr/z8
+         uwyJ09aXGLXMg==
 Received: from pdx-korg-docbuild-2.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id BD8AB60C29;
+        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id 0C348609ED;
         Wed, 26 May 2021 19:03:25 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH net-next v11 1/2] net: Add a WWAN subsystem
+Subject: Re: [PATCH v2] mhi: pci_generic: No-Op for device_wake operations
 From:   patchwork-bot+linux-arm-msm@kernel.org
-Message-Id: <162205580577.26840.16265273733676213150.git-patchwork-notify@kernel.org>
+Message-Id: <162205580504.26840.1855740708336346180.git-patchwork-notify@kernel.org>
 Date:   Wed, 26 May 2021 19:03:25 +0000
-References: <1618562194-31913-1-git-send-email-loic.poulain@linaro.org>
-In-Reply-To: <1618562194-31913-1-git-send-email-loic.poulain@linaro.org>
+References: <1614096781-30646-1-git-send-email-loic.poulain@linaro.org>
+In-Reply-To: <1614096781-30646-1-git-send-email-loic.poulain@linaro.org>
 To:     Loic Poulain <loic.poulain@linaro.org>
 Cc:     linux-arm-msm@vger.kernel.org
 Precedence: bulk
@@ -43,27 +43,24 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hello:
 
-This series was applied to qcom/linux.git (refs/heads/for-next):
+This patch was applied to qcom/linux.git (refs/heads/for-next):
 
-On Fri, 16 Apr 2021 10:36:33 +0200 you wrote:
-> This change introduces initial support for a WWAN framework. Given the
-> complexity and heterogeneity of existing WWAN hardwares and interfaces,
-> there is no strict definition of what a WWAN device is and how it should
-> be represented. It's often a collection of multiple devices that perform
-> the global WWAN feature (netdev, tty, chardev, etc).
+On Tue, 23 Feb 2021 17:13:01 +0100 you wrote:
+> The wake_db register presence is highly speculative and can fuze MHI
+> devices. Indeed, currently the wake_db register address is defined at
+> entry 127 of the 'Channel doorbell array', thus writing to this address
+> is equivalent to ringing the doorbell for channel 127, causing trouble
+> with some device that get an unexpected channel 127 doorbell interrupt.
 > 
-> One usual way to expose modem controls and configuration is via high
-> level protocols such as the well known AT command protocol, MBIM or
-> QMI. The USB modems started to expose them as character devices, and
-> user daemons such as ModemManager learnt to use them.
+> This change fixes that issue by setting wake get/put as no-op for
+> pci_generic devices. The wake device sideband mechanism seems really
+> specific to each device, and is AFAIK no defined by the MHI spec.
 > 
 > [...]
 
 Here is the summary with links:
-  - [net-next,v11,1/2] net: Add a WWAN subsystem
-    https://git.kernel.org/qcom/c/9a44c1cc6388
-  - [net-next,v11,2/2] net: Add Qcom WWAN control driver
-    https://git.kernel.org/qcom/c/fa588eba632d
+  - [v2] mhi: pci_generic: No-Op for device_wake operations
+    https://git.kernel.org/qcom/c/e3e5e6508fc1
 
 You are awesome, thank you!
 --
