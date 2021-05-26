@@ -2,125 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EA89F39101C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 May 2021 07:46:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5589D39102E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 May 2021 07:51:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229500AbhEZFsV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 May 2021 01:48:21 -0400
-Received: from mail.kernel.org ([198.145.29.99]:46990 "EHLO mail.kernel.org"
+        id S232324AbhEZFwr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 May 2021 01:52:47 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:20234 "EHLO m43-7.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229450AbhEZFsU (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 May 2021 01:48:20 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 58489606A5;
-        Wed, 26 May 2021 05:46:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1622008009;
-        bh=ilgmusErlwIFJYQRA3ardBcRg28msFxATNE31YLfrxc=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=It70ferE7CzZH35zUGnfY4vR7J2/q46na1wowciyqZDlCYeFhcGLU9Sgb0CDo/Soz
-         2nT1Lt2PnTH50AKmMkS4MfZ1TvhcmNgNDNuGZ/UZ5/6RCBG+puDp3yiTMp0I2ADz5J
-         A5m67QniO9tSXr8PNiYJ4yAJFZXpK+s/VJhtqYDF4PuEJyoeNDRx8zqQ6aLjM7yD4T
-         3qPw6wRgU3eGFrn91k2CNcC3EYrkfNKj7WxKb2zHGznt8+L5ZNoF3G3xfwL4QhKDw5
-         igyepZ7OO4SodAXOVA7ZCFziFLjSrIz6uawXkFc4nKQtjO9EtymWg479xlUVTEyZ3L
-         rTUh2Mgcom8Dw==
-Date:   Wed, 26 May 2021 11:16:46 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Cc:     Rob Clark <robdclark@gmail.com>, DTML <devicetree@vger.kernel.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        David Airlie <airlied@linux.ie>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        lkml <linux-kernel@vger.kernel.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        freedreno <freedreno@lists.freedesktop.org>
-Subject: Re: [Freedreno] [RFC PATCH 00/13] drm/msm: Add Display Stream
- Compression Support
-Message-ID: <YK3gxqXBRupN/N+Q@vkoul-mobl.Dlink>
-References: <20210521124946.3617862-1-vkoul@kernel.org>
- <CAOCk7Nqep_Db+z3fr5asHZ1u0j8+6fKkPFs2Ai8CbA_zGqV6ZA@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAOCk7Nqep_Db+z3fr5asHZ1u0j8+6fKkPFs2Ai8CbA_zGqV6ZA@mail.gmail.com>
+        id S232270AbhEZFwq (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 26 May 2021 01:52:46 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1622008275; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=RAa9AIOyjdjzOOxbgydc+DP4eZHRUvGvKjJTEe0cJW4=; b=nlJc7Y5jXtQAq0iscm23k44EY1ip1vEZocZPT/2r88gFKnRUj8dFAK9ez0Am9/6xhJHuqSSd
+ S6jN61yY4XslCQboiiWGs8FAMQsXAe1BeLQQQMWxQziH6LtVc71GwnDvXrUGzEB0FsOCem/5
+ O/d21tp3qEYj3WgkZpfSmIhVwBU=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
+ 60ade1d0c229adfeff6d2eb2 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 26 May 2021 05:51:12
+ GMT
+Sender: zijuhu=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id C0394C43217; Wed, 26 May 2021 05:51:12 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from zijuhu-gv.qualcomm.com (unknown [180.166.53.21])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: zijuhu)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6879FC433D3;
+        Wed, 26 May 2021 05:51:09 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 6879FC433D3
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=zijuhu@codeaurora.org
+From:   Zijun Hu <zijuhu@codeaurora.org>
+To:     marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com
+Cc:     linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
+        c-hbandi@codeaurora.org, hemantg@codeaurora.org, mka@chromium.org,
+        rjliao@codeaurora.org, zijuhu@codeaurora.org, tjiang@codeaurora.org
+Subject: [PATCH v2] Bluetooth: btusb: fix bt fiwmare downloading failure issue for qca btsoc.
+Date:   Wed, 26 May 2021 13:51:05 +0800
+Message-Id: <1622008265-18727-1-git-send-email-zijuhu@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello Jeff,
+From: Tim Jiang <tjiang@codeaurora.org>
 
-On 21-05-21, 08:09, Jeffrey Hugo wrote:
-> On Fri, May 21, 2021 at 6:50 AM Vinod Koul <vkoul@kernel.org> wrote:
-> >
-> > Display Stream Compression (DSC) compresses the display stream in host which
-> > is later decoded by panel. This series enables this for Qualcomm msm driver.
-> > This was tested on Google Pixel3 phone which use LGE SW43408 panel.
-> >
-> > The changes include adding DT properties for DSC then hardware blocks support
-> > required in DPU1 driver and support in encoder. We also add support in DSI
-> > and introduce required topology changes.
-> >
-> > In order for panel to set the DSC parameters we add dsc in drm_panel and set
-> > it from the msm driver.
-> >
-> > Complete changes which enable this for Pixel3 along with panel driver (not
-> > part of this series) and DT changes can be found at:
-> > git.linaro.org/people/vinod.koul/kernel.git pixel/dsc_rfc
-> >
-> > Comments welcome!
-> 
-> This feels backwards to me.  I've only skimmed this series, and the DT
-> changes didn't come through for me, so perhaps I have an incomplete
-> view.
+This is btsoc timing issue, after host start to downloading bt firmware,
+ep2 need time to switch from function acl to function dfu, so host add
+20ms delay as workaround.
 
-Not sure why, I see it on lore:
-https://lore.kernel.org/dri-devel/20210521124946.3617862-3-vkoul@kernel.org/
+Signed-off-by: Tim Jiang <tjiang@codeaurora.org>
+---
+ drivers/bluetooth/btusb.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-> DSC is not MSM specific.  There is a standard for it.  Yet it looks
-> like everything is implemented in a MSM specific way, and then pushed
-> to the panel.  So, every vendor needs to implement their vendor
-> specific way to get the DSC info, and then push it to the panel?
-> Seems wrong, given there is an actual standard for this feature.
-
-I have added slice and bpp info in the DT here under the host and then
-pass the generic struct drm_dsc_config to panel which allows panel to
-write the pps cmd
-
-Nothing above is MSM specific.. It can very well work with non MSM
-controllers too.
-
-I didn't envision DSC to be a specific thing, most of
-the patches here are hardware enabling ones for DSC bits for MSM
-hardware.
-
-> Additionally, we define panel properties (resolution, BPP, etc) at the
-> panel, and have the display drivers pull it from the panel.  However,
-> for DSC, you do the reverse (define it in the display driver, and push
-> it to the panel).  If the argument is that DSC properties can be
-> dynamic, well, so can resolution.  Every panel for MSM MTPs supports
-> multiple resolutions, yet we define that with the panel in Linux.
-
-I dont have an answer for that right now, to start with yes the
-properties are in host but I am okay to discuss this and put wherever we
-feel is most correct thing.  I somehow dont like that we should pull
-from panel DT and program host with that. Here using struct
-drm_dsc_config allows me to configure panel based on resolution passed
-
-> Finally, I haven't seen the DT bits, but I'm concerned about using DT
-> for this.  It inherently excludes ACPI systems.  You appear to have
-> sdm845 support in this series, but what about ACPI boot on the Lenovo
-> C630 for example?  Or any of the 8cx laptops?  We don't read the panel
-> resolution, etc from DT, so why the DSC?
-
-But you must read from somewhere like ACPI tables. I think ACPI systems
-would have some ACPI table info out there which would help on this.
-Yes that is another task which we need to start with once we enable OF
-systems.
-
-Thanks
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index 5245714..b0743db 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -4064,6 +4064,7 @@ static int btusb_setup_qca_download_fw(struct hci_dev *hdev,
+ 
+ 	sent += size;
+ 	count -= size;
++	msleep(20);
+ 
+ 	while (count) {
+ 		size = min_t(size_t, count, QCA_DFU_PACKET_LEN);
 -- 
-~Vinod
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, a Linux Foundation Collaborative Project
+
