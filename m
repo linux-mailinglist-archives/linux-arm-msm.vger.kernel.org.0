@@ -2,41 +2,40 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F36BA392052
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 May 2021 21:04:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C136239204E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 May 2021 21:04:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235276AbhEZTFo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 May 2021 15:05:44 -0400
-Received: from mail.kernel.org ([198.145.29.99]:40982 "EHLO mail.kernel.org"
+        id S235336AbhEZTFn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 May 2021 15:05:43 -0400
+Received: from mail.kernel.org ([198.145.29.99]:41100 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S235824AbhEZTFP (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 May 2021 15:05:15 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPS id 929EE614A7;
+        id S235823AbhEZTFO (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 26 May 2021 15:05:14 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPS id 6E51161581;
         Wed, 26 May 2021 19:03:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1622055807;
-        bh=ZZowgClhyKvtMeNYLyJlJf28L9as81HQef58BGBFCp8=;
+        bh=VXxB3OSCRLUNRS0/QNmJZQlZ0L/4jS1/krffGRxg23w=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=gCWCsEDBpClLNWIqk3BiCYaMfSvxmhUIRSsC8WAlUhXx0aIxk4c/WdtOHMadgkRdg
-         MNbs8vu/uhxEBtKp/0XTSgmvkoF+3yacI+rddz4iphUv7hM+pr9E0lYDNj/GaPrPrh
-         5KhnNhRXK5UjLceZuZiCkmpgc5o0PYpIoGsKvqSZdSicD5nf4sJ1LFx3ZC2ng8fg55
-         u1TDPTsIxVqkxSLB57aqELS+tsLgN/EKckj/aRGNZiw67HZjBkdAwwAnNh6fY4nsjx
-         hJ+xLuw8xmAo+Xl3ZUc1DOh9Z9hDYkEPaQJvGPdHjJH7uiDgJUYncbyPpUlvUzuQAQ
-         SD8c/Qof2UhZQ==
+        b=lFHez2lAeDQNmLW5HWfWqonC5QqNcWami9aahKM48qn703dbF+Pqx1UojfNPFMa5j
+         ilH6spgLkvPUXFw4z6LAC1WnVI00kgwykhjfpf/clSqLsBmdGY2ZAgW+lcJqocZ9fD
+         Y7tKJKY7ETM0jWVQu+TJCynXlQjzywbFajvwh8nFueOZbz5JJu4+PByxOArlVJ1ezB
+         q4ntBlHecNeia2VdK82MLUMlCmE8uQeYWL00xIveTVisWWCtD221pgw2XNNsoFdOfL
+         dluhQNZDpv8gZgVM0gxf2Re10CT/UCkm98pHEWqeb80v7lO9jrQDyL+20CF7qrV7kE
+         Zzm+x3O1Zztew==
 Received: from pdx-korg-docbuild-2.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id 8B5A960CE1;
+        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id 69F8E60CE1;
         Wed, 26 May 2021 19:03:27 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH][next] bus: mhi: core: remove redundant initialization of
- variables state and ee
+Subject: Re: [PATCH] dt-bindings: mailbox: Add compatible for SM8350 IPCC
 From:   patchwork-bot+linux-arm-msm@kernel.org
-Message-Id: <162205580756.26840.17792518213593094922.git-patchwork-notify@kernel.org>
+Message-Id: <162205580742.26840.9027926355696969397.git-patchwork-notify@kernel.org>
 Date:   Wed, 26 May 2021 19:03:27 +0000
-References: <20210311111727.8433-1-colin.king@canonical.com>
-In-Reply-To: <20210311111727.8433-1-colin.king@canonical.com>
-To:     Colin King <colin.king@canonical.com>
+References: <20210312051203.3555751-1-vkoul@kernel.org>
+In-Reply-To: <20210312051203.3555751-1-vkoul@kernel.org>
+To:     Vinod Koul <vkoul@kernel.org>
 Cc:     linux-arm-msm@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -46,21 +45,17 @@ Hello:
 
 This patch was applied to qcom/linux.git (refs/heads/for-next):
 
-On Thu, 11 Mar 2021 11:17:27 +0000 you wrote:
-> From: Colin Ian King <colin.king@canonical.com>
+On Fri, 12 Mar 2021 10:42:03 +0530 you wrote:
+> Add the compatible string for SM8350 IPCC block on this SoC
 > 
-> The variables state and ee are being initialized with values that
-> are never read and are being updated later with a new values. The
-> initializations are redundant and can be removed.
-> 
-> Addresses-Coverity: ("Unused value")
-> Signed-off-by: Colin Ian King <colin.king@canonical.com>
-> 
-> [...]
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> ---
+>  Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml | 1 +
+>  1 file changed, 1 insertion(+)
 
 Here is the summary with links:
-  - [next] bus: mhi: core: remove redundant initialization of variables state and ee
-    https://git.kernel.org/qcom/c/70f7025c854c
+  - dt-bindings: mailbox: Add compatible for SM8350 IPCC
+    https://git.kernel.org/qcom/c/2a7db0d6eb5e
 
 You are awesome, thank you!
 --
