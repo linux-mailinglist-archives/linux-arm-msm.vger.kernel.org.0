@@ -2,185 +2,205 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A30A3391965
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 May 2021 16:00:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4F1E6391B01
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 May 2021 17:01:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233484AbhEZOBb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 May 2021 10:01:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54476 "EHLO
+        id S235206AbhEZPC3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 May 2021 11:02:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40396 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233429AbhEZOBb (ORCPT
+        with ESMTP id S234923AbhEZPC3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 May 2021 10:01:31 -0400
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71D65C06175F
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 May 2021 06:59:58 -0700 (PDT)
-Received: by mail-lf1-x12a.google.com with SMTP id w33so2682685lfu.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 May 2021 06:59:58 -0700 (PDT)
+        Wed, 26 May 2021 11:02:29 -0400
+Received: from mail-qk1-x72d.google.com (mail-qk1-x72d.google.com [IPv6:2607:f8b0:4864:20::72d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2BB20C061574;
+        Wed, 26 May 2021 08:00:57 -0700 (PDT)
+Received: by mail-qk1-x72d.google.com with SMTP id c20so1265617qkm.3;
+        Wed, 26 May 2021 08:00:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=EFzbhVu6bM6oWlXhaR3zxfrfJHwO7BkLYCWZCGzNBX8=;
-        b=ck6ScM5tpxHXLIOvFo4SoQVlW3wceQ3Z8bP1mIl51sIKlqZq9a3Dv1rrszOEHKcwuw
-         cfFN+AZxMowNTXbRhJCHb1xGWwN1m81jGuDCv5vpL1SxGtJvvfquIMUR5Qi1KzybK8F5
-         d/9+cRydPO+OeySDLYNp9VFYH+7iKI2u9niwkpwv7EEV6gjgBN6KRP1TsgQ9322sT1ts
-         gi56gNtGIJ1kdmp7Y/irO3MklJ/XqyX8+/+PDQED+IiKGEtWngSenEl//6feyN2r/P0H
-         xRDYTAqhLL2II6glmPIk4oVYM1FIE8vRFyY23EPYjDxisn2OEAsKHpmruhK6FIpjOv2O
-         /Rvw==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=IkLU3uWePaDxD/NdiontwagHrNF48wFOtRXP+VjWATI=;
+        b=qlHrqcG1+0gAL6VnluGLOdCxuzyVJzETlRQEugVCmh31XWVJ9/XTgZ9qNSV3hpKhBH
+         guwhqXfiiWZ07Z3nOeYbeQ+Tq8f//liZCyt4ldlF3AgkIiQral/X9NljXNIvOOzpbNei
+         OafqjCgf7jKAdlt2PWyitI0IUv8FYi9yJqlydqSOSQDWh/hmciGZvmsDFlQb0XmmrUqc
+         qZML+012px+9Xy6EFrx9vWbi0AERolwwS90tOnuSFb/LNjiK1iWQQTflNThdkTDY8S3k
+         W+O8Tuug+Mt3EagLhm+8gnFzHztvo8w8B8aAOcmHgGhv4n5ULtrrsAcgNO6QniQfDoYM
+         wc7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=EFzbhVu6bM6oWlXhaR3zxfrfJHwO7BkLYCWZCGzNBX8=;
-        b=TxPcjgw5mtKA1d3VkX9QNShahSmkqVlDbAZKYAUDuftY4R2TnbSJqMiINyp9bFWdRi
-         Mx0rBYo7gjlcuLbhUDf8Wlhnza9tG0ElPQyco6LwAITAwgWdUPC3Shy3ACGEY3xki28H
-         JldjqVvjCRfly9BdBujerK3/q3LtVDPi4s/c6t+35HmbP/QAH/MAJmA6Tj81SWq8tdh4
-         i0Hw+JLOp5/aJKbCxS1SDomS1/2xXSeILWA4vGruN7yPVg/JtoLgvk2woQpa24sfuzIA
-         Wh0lE6Q2XGXAbJf8geWFvJs4lqV2FDjEGyXk62cRoWjcAkYBEcg+3NwlBUS01fIL2hCq
-         wU4g==
-X-Gm-Message-State: AOAM532isiQrvy0npr0n/R7zdaIjdBidOSlFsM0nG2RLQMksUf9NiQd9
-        7Ni6KTkQlUFKk1vDjk/jt4yrW+V+tbiUuQ==
-X-Google-Smtp-Source: ABdhPJxzFIrtQR/OWj+vCXJXdAgBU3v8J52f5YvPe7f1DD3L3qhEomov7ffod+aE4z79rHDRW4JcTg==
-X-Received: by 2002:ac2:5a47:: with SMTP id r7mr2366705lfn.138.1622037596750;
-        Wed, 26 May 2021 06:59:56 -0700 (PDT)
-Received: from [192.168.88.254] ([85.249.41.56])
-        by smtp.gmail.com with ESMTPSA id p1sm2044585lfr.78.2021.05.26.06.59.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 26 May 2021 06:59:56 -0700 (PDT)
-Subject: Re: [PATCH 04/17] media: camss: csid-170: fix non-10bit formats
-To:     Jonathan Marek <jonathan@marek.ca>, linux-arm-msm@vger.kernel.org
-Cc:     robert.foss@linaro.org, Todor Tomov <todor.too@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-        "open list:QUALCOMM CAMERA SUBSYSTEM DRIVER" 
-        <linux-media@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-References: <20210511180728.23781-1-jonathan@marek.ca>
- <20210511180728.23781-5-jonathan@marek.ca>
- <fd72befe-f39c-ecb0-1130-50aa8452a90e@linaro.org>
- <99f482de-78f8-82da-e52b-7f76da67ff39@marek.ca>
-From:   Andrey Konovalov <andrey.konovalov@linaro.org>
-Message-ID: <8e8b4ae8-d4af-2b8d-9ed0-6a4b82d575e6@linaro.org>
-Date:   Wed, 26 May 2021 16:59:55 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.8.1
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=IkLU3uWePaDxD/NdiontwagHrNF48wFOtRXP+VjWATI=;
+        b=AA7jEiZf0d5cHhtcJmsA3agxQ3ZAVI5xfal1nnkW6eO+SHgx14eGI1t6sTCD2w/eVv
+         cCZeunSpgHGPUq+chdF0I+4aGq88+/Myjs+XuHlN02pbCYpts0O0kV4i3i+VVpvLVGUk
+         14DL+yGydSnhO2y1VFYbqhFVO5mJU//30gfw4r7rFvAhGjPgtoiVeQkKsCUVmArrRVue
+         C/CTE4NQCVrmSplt5f3l4scpOqGBhA/cNE7nZIT8uJ0zTISCacrYnDspgbXSWSYLdyXu
+         oKhbgWYn7FrzQiXYJ6ZZE7S4xi43JPQXMfsAdGtL3zN5ZLcSm+Cb+cQLSFQ9EBlcy5fV
+         5+4Q==
+X-Gm-Message-State: AOAM533ENltGUyYh3KFmKRz6Mg2NZleUkJ0GdBDJfMwNSYb3WBfSegUb
+        Ik/7aEsrMB+xOsj97VsaZEwoXuSZWwhJ/YLYTrI=
+X-Google-Smtp-Source: ABdhPJyocjvgfukJJ/VBXy2nM30jzHuQf3cR9GiU0ZGt71xcVgV6jLZiF0So7OewzUV+9YvS5OOb5+Osry58Tkemg8Q=
+X-Received: by 2002:a05:620a:12a6:: with SMTP id x6mr40061592qki.364.1622041256304;
+ Wed, 26 May 2021 08:00:56 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <99f482de-78f8-82da-e52b-7f76da67ff39@marek.ca>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+References: <20210521124946.3617862-1-vkoul@kernel.org> <CAOCk7Nqep_Db+z3fr5asHZ1u0j8+6fKkPFs2Ai8CbA_zGqV6ZA@mail.gmail.com>
+ <YK3gxqXBRupN/N+Q@vkoul-mobl.Dlink>
+In-Reply-To: <YK3gxqXBRupN/N+Q@vkoul-mobl.Dlink>
+From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Date:   Wed, 26 May 2021 09:00:45 -0600
+Message-ID: <CAOCk7NqvhGvYw8xCBctqj7H+o-Qwp2UuUJK1gatW9EWfXv56xA@mail.gmail.com>
+Subject: Re: [Freedreno] [RFC PATCH 00/13] drm/msm: Add Display Stream
+ Compression Support
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Rob Clark <robdclark@gmail.com>, DTML <devicetree@vger.kernel.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        David Airlie <airlied@linux.ie>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        freedreno <freedreno@lists.freedesktop.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Jonathan,
+On Tue, May 25, 2021 at 11:46 PM Vinod Koul <vkoul@kernel.org> wrote:
+>
+> Hello Jeff,
+>
+> On 21-05-21, 08:09, Jeffrey Hugo wrote:
+> > On Fri, May 21, 2021 at 6:50 AM Vinod Koul <vkoul@kernel.org> wrote:
+> > >
+> > > Display Stream Compression (DSC) compresses the display stream in host which
+> > > is later decoded by panel. This series enables this for Qualcomm msm driver.
+> > > This was tested on Google Pixel3 phone which use LGE SW43408 panel.
+> > >
+> > > The changes include adding DT properties for DSC then hardware blocks support
+> > > required in DPU1 driver and support in encoder. We also add support in DSI
+> > > and introduce required topology changes.
+> > >
+> > > In order for panel to set the DSC parameters we add dsc in drm_panel and set
+> > > it from the msm driver.
+> > >
+> > > Complete changes which enable this for Pixel3 along with panel driver (not
+> > > part of this series) and DT changes can be found at:
+> > > git.linaro.org/people/vinod.koul/kernel.git pixel/dsc_rfc
+> > >
+> > > Comments welcome!
+> >
+> > This feels backwards to me.  I've only skimmed this series, and the DT
+> > changes didn't come through for me, so perhaps I have an incomplete
+> > view.
+>
+> Not sure why, I see it on lore:
+> https://lore.kernel.org/dri-devel/20210521124946.3617862-3-vkoul@kernel.org/
+>
+> > DSC is not MSM specific.  There is a standard for it.  Yet it looks
+> > like everything is implemented in a MSM specific way, and then pushed
+> > to the panel.  So, every vendor needs to implement their vendor
+> > specific way to get the DSC info, and then push it to the panel?
+> > Seems wrong, given there is an actual standard for this feature.
+>
+> I have added slice and bpp info in the DT here under the host and then
+> pass the generic struct drm_dsc_config to panel which allows panel to
+> write the pps cmd
+>
+> Nothing above is MSM specific.. It can very well work with non MSM
+> controllers too.
 
-On 25.05.2021 21:38, Jonathan Marek wrote:
-> On 5/25/21 2:15 PM, Andrey Konovalov wrote:
->> Hi Jonathan,
->>
->> Thank you for your patch!
->>
->> On 11.05.2021 21:07, Jonathan Marek wrote:
->>> Use the decode_format/data_type from the "format" struct instead of a
->>> hardcoded 10-bit format.
->>>
->>> Fixes: eebe6d00e9bf ("media: camss: Add support for CSID hardware version Titan 170")
->>> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
->>> ---
->>>   drivers/media/platform/qcom/camss/camss-csid-170.c | 6 +++---
->>>   1 file changed, 3 insertions(+), 3 deletions(-)
->>>
->>> diff --git a/drivers/media/platform/qcom/camss/camss-csid-170.c b/drivers/media/platform/qcom/camss/camss-csid-170.c
->>> index ac22ff29d2a9..a81cc94c075f 100644
->>> --- a/drivers/media/platform/qcom/camss/camss-csid-170.c
->>> +++ b/drivers/media/platform/qcom/camss/camss-csid-170.c
->>> @@ -366,7 +366,7 @@ static void csid_configure_stream(struct csid_device *csid, u8 enable)
->>>               val |= input_format->width & 0x1fff << TPG_DT_n_CFG_0_FRAME_WIDTH;
->>>               writel_relaxed(val, csid->base + CSID_TPG_DT_n_CFG_0(0));
->>> -            val = DATA_TYPE_RAW_10BIT << TPG_DT_n_CFG_1_DATA_TYPE;
->>> +            val = format->data_type << TPG_DT_n_CFG_1_DATA_TYPE;
->>>               writel_relaxed(val, csid->base + CSID_TPG_DT_n_CFG_1(0));
->>>               val = tg->mode << TPG_DT_n_CFG_2_PAYLOAD_MODE;
->>> @@ -382,8 +382,8 @@ static void csid_configure_stream(struct csid_device *csid, u8 enable)
->>>           val = 1 << RDI_CFG0_BYTE_CNTR_EN;
->>>           val |= 1 << RDI_CFG0_FORMAT_MEASURE_EN;
->>>           val |= 1 << RDI_CFG0_TIMESTAMP_EN;
->>> -        val |= DECODE_FORMAT_PAYLOAD_ONLY << RDI_CFG0_DECODE_FORMAT;
->>> -        val |= DATA_TYPE_RAW_10BIT << RDI_CFG0_DATA_TYPE;
->>> +        val |= format->decode_format << RDI_CFG0_DECODE_FORMAT;
->>> +        val |= format->data_type << RDI_CFG0_DATA_TYPE;
->>
->> I've given it a try on RB3 board (aka db845c plus the navigation mezzanine), which uses ov8856 camera
->> sensor (its output format is SGRBG10_1X10).
->>
->> The above change doesn't work for me because format->decode_format has the value of 0x02 (which is
->> DECODE_FORMAT_UNCOMPRESSED_10_BIT). format->data_type has the expected value of 0x2b (DATA_TYPE_RAW_10BIT).
->>
-> 
-> I will change it back to using DECODE_FORMAT_PAYLOAD_ONLY for the v2, since it does seem like this is the correct value for the 
-> RDI path.
+I disagree.
 
-Sounds good. Just in case, I've tried
+The DT bindings you defined (thanks for the direct link) are MSM
+specific.  I'm not talking (yet) about the properties you defined, but
+purely from the stand point that you defined the binding within the
+scope of the MSM dsi binding.  No other vendor can use those bindings.
+Of course, if we look at the properties themselves, they are prefixed
+with "qcom", which is vendor specific.
 
---- a/drivers/media/platform/qcom/camss/camss-csid-170.c
-+++ b/drivers/media/platform/qcom/camss/camss-csid-170.c
-@@ -390,7 +390,7 @@ static void csid_configure_stream(struct csid_device *csid, u8 enable)
-                 val = 1 << RDI_CFG0_BYTE_CNTR_EN;
-                 val |= 1 << RDI_CFG0_FORMAT_MEASURE_EN;
-                 val |= 1 << RDI_CFG0_TIMESTAMP_EN;
--               val |= format->decode_format << RDI_CFG0_DECODE_FORMAT;
-+               val |= DECODE_FORMAT_PAYLOAD_ONLY << RDI_CFG0_DECODE_FORMAT;
-                 val |= format->data_type << RDI_CFG0_DATA_TYPE;
-                 val |= vc << RDI_CFG0_VIRTUAL_CHANNEL;
-                 val |= dt_id << RDI_CFG0_DT_ID;
+So, purely on the face of it, this is MSM specific.
 
-on top of v1 patchset, and it worked OK on RB3 with the ov8856 camera.
+Assuming we want a DT solution for DSC, I think it should be something
+like Documentation/devicetree/bindings/clock/clock-bindings.txt (the
+first example that comes to mind), which is a non-vendor specific
+generic set of properties that each vendor/device specific binding can
+inherit.  Panel has similar things.
 
-I planned to check the other RB3's camera too - the "tracking" ov7251 one, but it turned out that I don't
-have the information on which particular SOC's MIPI lanes are connected to this camera. I've tried a few
-clock-lanes/data-lanes combinations, but none worked (ov7251 is controlled OK via the i2c bus, but no
-data are captured).
+Specific to the properties, I don't much like that you duplicate BPP,
+which is already associated with the panel (although perhaps not in
+the scope of DT).  What if the panel and your DSC bindings disagree?
+Also, I guess I need to ask, have you read the DSC spec?  Last I
+looked, there were something like 3 dozen properties that could be
+configured.  You have five in your proposed binding.  To me, this is
+not a generic DSC solution, this is MSM specific (and frankly I don't
+think this supports all the configuration the MSM hardware can do,
+either).
 
-> (but IIRC, using DECODE_FORMAT_UNCOMPRESSED_10_BIT worked on RB3 with the ov8856 camera last year when I brought it up. maybe 
-> the VFE or another register is configured differently)
+I'm surprised Rob Herring didn't have more to say on this.
 
-OK. I only used the current upstream camss driver, so have nothing to compare it against.
+> I didn't envision DSC to be a specific thing, most of
+> the patches here are hardware enabling ones for DSC bits for MSM
+> hardware.
+>
+> > Additionally, we define panel properties (resolution, BPP, etc) at the
+> > panel, and have the display drivers pull it from the panel.  However,
+> > for DSC, you do the reverse (define it in the display driver, and push
+> > it to the panel).  If the argument is that DSC properties can be
+> > dynamic, well, so can resolution.  Every panel for MSM MTPs supports
+> > multiple resolutions, yet we define that with the panel in Linux.
+>
+> I dont have an answer for that right now, to start with yes the
+> properties are in host but I am okay to discuss this and put wherever we
+> feel is most correct thing.  I somehow dont like that we should pull
+> from panel DT and program host with that. Here using struct
+> drm_dsc_config allows me to configure panel based on resolution passed
 
-I also noticed that with ov8856 camera, only 3264x2448 and 1632x1224 modes work correctly on RB3
-(used the current media_tree). But with the below change all the other modes (3280x2464 and 1640x1232)
-start working OK too:
+I somewhat agree that pulling from the panel and programing the host
+based on that is an odd solution, but we have it currently.  Have a
+look at Documentation/devicetree/bindings/display/panel in particular
+panel-timing.  All of that ends up informing the mdss programing
+anyways (particularly the dsi and its phy).  So my problem is that we
+currently have a solution that seems to just need to be extended, and
+instead you have proposed a completely different solution which is
+arguably contradictory.
 
---- a/drivers/media/platform/qcom/camss/camss-vfe.c
-+++ b/drivers/media/platform/qcom/camss/camss-vfe.c
-@@ -1575,7 +1575,7 @@ int msm_vfe_register_entities(struct vfe_device *vfe,
-                 }
+However, I'd like to see thoughts from Rob Clark, David, and any
+others that typically handle this stuff (maybe Sam Ravenborg from the
+panel side?).  I consider them to be the experts, and if they think
+your solution is the way to go, I'll shut up.  I consider myself to be
+a novice that has dabbled in this area, and while this currently
+doesn't make sense to me, maybe I need some education here to see the
+light.
 
-                 video_out->ops = &vfe->video_ops;
--               video_out->bpl_alignment = 8;
-+               video_out->bpl_alignment = 16;
-                 video_out->line_based = 0;
-                 if (i == VFE_LINE_PIX) {
-                         video_out->bpl_alignment = 16;
+> > Finally, I haven't seen the DT bits, but I'm concerned about using DT
+> > for this.  It inherently excludes ACPI systems.  You appear to have
+> > sdm845 support in this series, but what about ACPI boot on the Lenovo
+> > C630 for example?  Or any of the 8cx laptops?  We don't read the panel
+> > resolution, etc from DT, so why the DSC?
+>
+> But you must read from somewhere like ACPI tables. I think ACPI systems
+> would have some ACPI table info out there which would help on this.
+> Yes that is another task which we need to start with once we enable OF
+> systems.
 
-And (with the increased size of the capture buffer) I did see that the data captured from camss were padded
-to the next 16-byte boundary with the data from the previous 16-byte chunk. E.g. in the 3280x2464 case 12
-padding bytes were added.
-Personally I don't have access to the datasheet, but I've been told that as per the docs, 16-byte alignment
-should not be needed in this case (RAW10P camera connected through rdi).
-Does it ring any bell for you?
+Frankly, I don't like the MSM ACPI solution that I've seen on the laptops.
+The ACPI assumes the entire MDSS (including DSI parts) and GPU is one
+device, and ultimately handled by one driver.  That driver needs to
+get a value from UEFI (set by the bootloader) that is the "panel id".
+Then the driver calls into ACPI (I think its _ROM, but I might be
+mistaken, doing this from memory) with that id.  It gets back a binary
+blob which is mostly an xml file (format is publicly documented) that
+contains the panel timings and such.
 
-Thanks,
-Andrey
+Generally we've defined simple-panel entities for these, with the
+timings in code (you can see what Bjorn and I have upstreamed), and
+just match on the compatible.
 
->> Thanks,
->> Andrey
->>
->>>           val |= vc << RDI_CFG0_VIRTUAL_CHANNEL;
->>>           val |= dt_id << RDI_CFG0_DT_ID;
->>>           writel_relaxed(val, csid->base + CSID_RDI_CFG0(0));
->>>
+In summary, I don't mean to be difficult, I just think this solution
+needs more "baking".
