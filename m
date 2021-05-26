@@ -2,102 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8D2CA390F00
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 May 2021 05:58:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8C8A4390F05
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 May 2021 05:59:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232225AbhEZD7y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 May 2021 23:59:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59234 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231356AbhEZD7x (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 May 2021 23:59:53 -0400
-Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58890C061756
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 May 2021 20:58:21 -0700 (PDT)
-Received: by mail-oi1-x22d.google.com with SMTP id v22so267278oic.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 May 2021 20:58:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=1HPVClxABt2jCFgOAzTtzBbjmWzpeUBRvvM0l/gpF7s=;
-        b=rZVNRfkLatkGnk9P/1ou/EbfSVzKxJLBoHjKQvkVwZXEaFxkQjpMKclV+didnwA/7R
-         1mnAF70MpSYJLnNxaqGW13J+QaxS3h7LOvmXrAOxIXsRvf3E9zN19Yzd+7me/id+lw0+
-         RQJACtU+/KeHrmAa0CP3cklGFfC35XhUXO40fJyG5uNPxvvlqyxr7CHUEhV4nDtJeoBU
-         14ZT86EwCZLyqN5WA9gITfMgIZvCoiwwQZLlT/VX1Q42i6/z3Hsx9f3Fo8nrqTFsZTZ0
-         zFrf2Tv5Q03MmHxG4snVrZvS8MYmVUvs0CJz6BLkPnJoaVJMuTybMvKZBiRJAp9xaDl7
-         E7DQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=1HPVClxABt2jCFgOAzTtzBbjmWzpeUBRvvM0l/gpF7s=;
-        b=uPtgydtKHJ+qGGVYSaoG3HsjBDCVvpW43TrHvR0103dQ8be2V5AxSnzr+ZgR4m2hNf
-         qbxlYdwYCKBGgkecnFVyWHpR1SvX464DpV5AEWUzw+rSAb3vvmZrhyAf/oJFNWMOz7H8
-         Lcrrvv4ZaJG6B6zWfJ/QlzNTWCDY+74LUNw/XJRvunYZRz4TxOI39qDYoh67FuObNlLP
-         +BKAAoMfHo25jR3mD0dCVWb1mvg4NvGzM7OuNNQEoj6RiT3PUxxJ6NJ+i/bK4gZeRiU0
-         Al8itCk6f4cMiKMQaIJrUEKqgYjc7M0v8n0Lq/Qx47Bna365bSK4jPgHLkOKVR6gHOoU
-         G7lQ==
-X-Gm-Message-State: AOAM533K86cCHEdcpW8p91hYH801P/WRZsvtny8vqwwfDyU27Cwks/JN
-        xkPtIbZ3ziel2vQF9MCCbX15CfXcgs0yqw==
-X-Google-Smtp-Source: ABdhPJytvroZhJKWznFEO/Ui7UguScUUzjXW7OnW0380g2TVaOrpz8Vd7Od5hHPU5JeyLUaIh03AIQ==
-X-Received: by 2002:a05:6808:1404:: with SMTP id w4mr588350oiv.53.1622001500071;
-        Tue, 25 May 2021 20:58:20 -0700 (PDT)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id q22sm4091615otl.11.2021.05.25.20.58.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 May 2021 20:58:19 -0700 (PDT)
-Date:   Tue, 25 May 2021 22:58:17 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     Luca Weiss <luca@z3ntu.xyz>, linux-arm-msm@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        Andy Gross <agross@kernel.org>, linux-kernel@vger.kernel.org
-Subject: Re: [RFC PATCH] soc: qcom: socinfo: import PMIC IDs from pmic-spmi
-Message-ID: <YK3HWaAaM3PRWZ4l@builder.lan>
-References: <20210504203752.95555-1-luca@z3ntu.xyz>
- <08fde8a5-1d9f-4676-41c2-133b7a9a1c75@somainline.org>
+        id S229567AbhEZEBB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 May 2021 00:01:01 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:43600 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229559AbhEZEA7 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 26 May 2021 00:00:59 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1622001567; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=P0n4WbezbdAK81w1/rPYSPml9/Ly7Y5wITSskDucO7U=;
+ b=JSxFNPfHrLz73OpZZrkAi+tBuFdF2XuyWDViMj5BjCJt8bdT6G1BsgFT95vywFwOmm98pJvn
+ ZbA/us2ITlorMuVhBxQpW0a7EKZBZSNuejCgtzhPbRP4Kfb0+iZ7qcAW9oWRlezBhyYf5Uwg
+ PqreQXl1gonaLNTpahIpG0T6ufQ=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
+ 60adc79e2bff04e53bb8554b (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 26 May 2021 03:59:26
+ GMT
+Sender: skakit=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 571AEC4338A; Wed, 26 May 2021 03:59:26 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: skakit)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 2A472C433F1;
+        Wed, 26 May 2021 03:59:25 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <08fde8a5-1d9f-4676-41c2-133b7a9a1c75@somainline.org>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Wed, 26 May 2021 09:29:25 +0530
+From:   skakit@codeaurora.org
+To:     Matthias Kaehlcke <mka@chromium.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Lee Jones <lee.jones@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, kgunda@codeaurora.org
+Subject: Re: [PATCH V5 06/11] arm64: dts: qcom: pmr735a: Correct the GPIO node
+In-Reply-To: <YK1kcVj9iyekNnrj@google.com>
+References: <1621937466-1502-1-git-send-email-skakit@codeaurora.org>
+ <1621937466-1502-7-git-send-email-skakit@codeaurora.org>
+ <YK1kcVj9iyekNnrj@google.com>
+Message-ID: <f9f929f3bcf41f0188d27a57a79174a3@codeaurora.org>
+X-Sender: skakit@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 05 May 14:14 CDT 2021, Konrad Dybcio wrote:
-
-> Hi,
+On 2021-05-26 02:26, Matthias Kaehlcke wrote:
+> On Tue, May 25, 2021 at 03:41:01PM +0530, satya priya wrote:
+>> Add gpio ranges and correct the compatible to add
+>> "qcom,spmi-gpio" as this pmic is on spmi bus.
+>> 
+>> Signed-off-by: satya priya <skakit@codeaurora.org>
+>> ---
+>> Changes in V5:
+>>  - This is split from patch [5/11] and added newly in V5.
 > 
-> 
-> > The driver in drivers/mfd/qcom-spmi-pmic.c has a more complete and more
-> > up-to-date list of PMICs with the respective IDs. Use those names for
-> > socinfo.
-> >
-> > Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
-> > ---
-> > I'm sending this as RFC because I'm not sure what names are correct for
-> > the IDs that I've replaced (13, 16, 17, 20, 21, 24).
-> > For PM8941, PM8841, PM8226 and PMA8084 I'm quite sure that the IDs are
-> > correct, but I don't have devices with the other PMICs. Please advise
-> > what to do.
-> >
-> As far as I'm aware, qcom did the lazy and ugly thing (as they usually do) and
-> 
-> decided to reuse previously-occupied IDs on newer kernel releases, where the legacy
-> 
-> PMICs weren't supported anymore. That's why some IDs have multiple candidates and unless
-> 
-> a better suggestion than "let's check if this 2013 PMIC+ 2019 SoC combo is sane" pops up, we
-> 
-> will probably just have to deal with ambiguity (for example `[20] PM8015/PM8998`).
+> actually it's a split from patch [5/8], right?
 > 
 
-I like this suggestion, even though I think it's only PM8058 we at all
-care about upstream (as of now).
+Right, my bad. I should have mentioned this way to be more clear.
+Thank you for reviewing the patches!
 
-Luca, can you please respin the patch accordingly?
-
-Thanks,
-Bjorn
+> https://patchwork.kernel.org/project/linux-arm-msm/patch/1621318822-29332-6-git-send-email-skakit@codeaurora.org/
+> 
+>>  arch/arm64/boot/dts/qcom/pmr735a.dtsi | 3 ++-
+>>  1 file changed, 2 insertions(+), 1 deletion(-)
+>> 
+>> diff --git a/arch/arm64/boot/dts/qcom/pmr735a.dtsi 
+>> b/arch/arm64/boot/dts/qcom/pmr735a.dtsi
+>> index b0a7cd6c0..b4b6ba24 100644
+>> --- a/arch/arm64/boot/dts/qcom/pmr735a.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/pmr735a.dtsi
+>> @@ -21,9 +21,10 @@
+>>  		};
+>> 
+>>  		pmr735a_gpios: gpio@8800 {
+>> -			compatible = "qcom,pmr735a-gpio";
+>> +			compatible = "qcom,pmr735a-gpio", "qcom,spmi-gpio";
+>>  			reg = <0x8800>;
+>>  			gpio-controller;
+>> +			gpio-ranges = <&pmr735a_gpios 0 0 4>;
+>>  			#gpio-cells = <2>;
+>>  			interrupt-controller;
+>>  			#interrupt-cells = <2>;
+> 
+> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
