@@ -2,81 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5F9AE3934D8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 May 2021 19:30:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B35A4393643
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 May 2021 21:30:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235083AbhE0Rb6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 May 2021 13:31:58 -0400
-Received: from m-r1.th.seeweb.it ([5.144.164.170]:50571 "EHLO
-        m-r1.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233689AbhE0Rb6 (ORCPT
+        id S235153AbhE0Tbt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 May 2021 15:31:49 -0400
+Received: from relay06.th.seeweb.it ([5.144.164.167]:43911 "EHLO
+        relay06.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229764AbhE0Tbj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 May 2021 13:31:58 -0400
-Received: from [192.168.1.49] (bband-dyn9.178-41-130.t-com.sk [178.41.130.9])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id C9C0E1F969;
-        Thu, 27 May 2021 19:30:22 +0200 (CEST)
-Date:   Thu, 27 May 2021 19:30:16 +0200
-From:   Martin Botka <martin.botka@somainline.org>
-Subject: Re: [PATCH V3 1/2] dt-bindings: pinctrl: qcom: sm6125: Document
- SM6125 pinctrl driver
-To:     Linus Walleij <linus.walleij@linaro.org>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
+        Thu, 27 May 2021 15:31:39 -0400
+Received: from localhost.localdomain (83.6.168.57.neoplus.adsl.tpnet.pl [83.6.168.57])
+        by m-r2.th.seeweb.it (Postfix) with ESMTPA id 630EC3F585;
+        Thu, 27 May 2021 21:30:03 +0200 (CEST)
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+To:     ~postmarketos/upstreaming@lists.sr.ht
+Cc:     martin.botka@somainline.org,
+        angelogioacchino.delregno@somainline.org,
         marijn.suijten@somainline.org, jamipkettunen@somainline.org,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        GPIO SUBSYSTEM <linux-gpio@vger.kernel.org>
-Message-Id: <GM0STQ.7UKZA16NEMPI1@somainline.org>
-In-Reply-To: <CACRpkdbPvxN2-VTm+n-j6JiWZnraCviZ2JDFe=A7Z=z93-seVQ@mail.gmail.com>
-References: <20210524193012.592210-1-martin.botka@somainline.org>
-        <CACRpkdbPvxN2-VTm+n-j6JiWZnraCviZ2JDFe=A7Z=z93-seVQ@mail.gmail.com>
-X-Mailer: geary/40.0
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] arm64: dts: qcom: msm8996: Make CPUCC actually probe (and work)
+Date:   Thu, 27 May 2021 21:29:58 +0200
+Message-Id: <20210527192958.775434-1-konrad.dybcio@somainline.org>
+X-Mailer: git-send-email 2.31.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello,
+Fix the compatible to make the driver probe and tell the
+driver where to look for the "xo" clock to make sure everything
+works.
 
-I did run the checks but i have forgoten to do a make clean before 
-hand. Thats probably why i didnt get that before.
-Will send V4 as soon as i can :)
+Then we get a happy (eh, happier) 8996:
 
-Best regards,
-Martin Botka
+somainline-sdcard:/home/konrad# cat /sys/kernel/debug/clk/pwrcl_pll/clk_rate
+1152000000
 
-On Thu, May 27 2021 at 05:05:32 PM +0200, Linus Walleij 
-<linus.walleij@linaro.org> wrote:
-> Hi Martin,
-> 
-> overall this looks good but the bot warned because of this:
-> 
-> On Mon, May 24, 2021 at 9:30 PM Martin Botka
-> <martin.botka@somainline.org> wrote:
->> 
->>  Document the newly added SM6125 pinctrl driver
->> 
->>  Signed-off-by: Martin Botka <martin.botka@somainline.org>
-> (...)
->>  +properties:
->>  +  compatible:
->>  +    const: qcom,sm6125-tlmm
-> (...)
->>  +        #include <dt-bindings/interrupt-controller/arm-gic.h>
->>  +        pinctrl@500000 {
->>  +                compatible = "qcom,sm6125-pinctrl";
-> 
-> So it seems like you didn't run the checks?
-> 
-> Yours,
-> Linus Walleij
+Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+---
+ arch/arm64/boot/dts/qcom/msm8996.dtsi | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
+diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+index 2f04a2bc052c..3fc912f587ba 100644
+--- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+@@ -2296,9 +2296,14 @@ apss_merge_funnel_out: endpoint {
+ 				};
+ 			};
+ 		};
++
+ 		kryocc: clock-controller@6400000 {
+-			compatible = "qcom,apcc-msm8996";
++			compatible = "qcom,msm8996-apcc";
+ 			reg = <0x06400000 0x90000>;
++
++			clock-names = "xo";
++			clocks = <&xo_board>;
++
+ 			#clock-cells = <1>;
+ 		};
+ 
+-- 
+2.31.1
 
