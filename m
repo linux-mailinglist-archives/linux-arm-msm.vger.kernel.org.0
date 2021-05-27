@@ -2,182 +2,167 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1FA9F393863
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 May 2021 23:46:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6D90E393883
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 May 2021 00:03:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234527AbhE0VsP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 May 2021 17:48:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34752 "EHLO
+        id S229672AbhE0WFL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 May 2021 18:05:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38496 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231419AbhE0VsP (ORCPT
+        with ESMTP id S234435AbhE0WFK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 May 2021 17:48:15 -0400
-Received: from mail-ot1-x336.google.com (mail-ot1-x336.google.com [IPv6:2607:f8b0:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6AB26C061574
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 May 2021 14:46:41 -0700 (PDT)
-Received: by mail-ot1-x336.google.com with SMTP id 36-20020a9d0ba70000b02902e0a0a8fe36so1620901oth.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 May 2021 14:46:41 -0700 (PDT)
+        Thu, 27 May 2021 18:05:10 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34093C061574
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 May 2021 15:03:33 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id j6so2257814lfr.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 May 2021 15:03:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=1zVv1GjmK07EWaIPDoxGxKRBfboRr4vWM9HdAWgd8h8=;
-        b=gFbhrH/lrOqgsguvnI/seGtIdQLXd0j1mB0K0q/fZNVu9/dKg42cRWlvGWBMdLcmsm
-         GR0LhjRyfauN/Us2dCVxfMDz0prbbMtTpZJJjo+6Ee/old3HeprB1ckBgqS2/neIatq6
-         DXeRV+iVk5XYHVkdu0Vcf+TzEWtQYMSmh4Myk=
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=P2FMXmqOYVBO9+wFKj80xIXzCv9cq/mWbBoWznbYoVQ=;
+        b=Se4zlNj9CjTtjHRXf23jz/kQmtFW2Sg9rXQ95SfIU/eLELFLvLu0FjEDsy8CZAUizo
+         qeRxrWhVMCCjFRKGIc1oV6SoldDNhDnskD4QAOJTmQOreOSuBeu2Ml3jhrQuvAtbn5fW
+         d5J8ln2kd+z7TmoGOcezG2KUidfV/z8JbC19Ngod6FQTZAb4pok+tEAtebggLOdb2P9e
+         ekRv6FVuOt/enZirsxFgGi844F9ruuOTUzRhDqovxTVUVEYLh8Kb02Q5aOKILdR+rfqS
+         G53qLzT2GQUtSim8o+t5hF9Klju2WvUX8DQJLsV+mQj1YrlXV45+qj4k8QYzwpIaTsBy
+         DzoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=1zVv1GjmK07EWaIPDoxGxKRBfboRr4vWM9HdAWgd8h8=;
-        b=mp1ihmdMN7SeFf8fuprDswtvvy5M5k0bDMH7qgxe8cOrTLTyUH8pQrwcz4QdCURBmJ
-         r9+JfEplJv8RhrNw02ruvSG989r1jAYjOcdSh1C5K+dxMuwF6UyO9JD22rNE/nUUF6sh
-         FcusQG+RSHLF38JXZueHpq+2ltw0d/xmRXgYvElH3GTWhn0lUp9VVlsI5BJkGcqAeZyx
-         ibVPrdFQW8EfRDldczkteCaYJXhabjc89B/nZXXgkJt/lIw7qqGUcJ7hgbyy5pKdt2vk
-         N1s/HrvHDRLZXebNyxTr0PgA5X3+XLw/cP9MvZjVUaVa940vYlUq13ynTIHekNHxJWo7
-         a45g==
-X-Gm-Message-State: AOAM531Peejk7cyOLx/OG8743Shtmda2CV5YhgTt/8BdMM+c1k5HT5yp
-        Za1R7QbJTqTEdeiGacUcz1yQ3tj/6WXMiA==
-X-Google-Smtp-Source: ABdhPJzRnlFDGibTgkAyOnA0SIh5ZjDTDCW73oDQsCXMiKKHnIgvhN20nLNRZ9lp1E0X8ZmPF3uXiA==
-X-Received: by 2002:a9d:4b0c:: with SMTP id q12mr4615884otf.49.1622152000625;
-        Thu, 27 May 2021 14:46:40 -0700 (PDT)
-Received: from mail-oo1-f45.google.com (mail-oo1-f45.google.com. [209.85.161.45])
-        by smtp.gmail.com with ESMTPSA id m1sm751371otk.33.2021.05.27.14.46.40
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 27 May 2021 14:46:40 -0700 (PDT)
-Received: by mail-oo1-f45.google.com with SMTP id s20-20020a4ae9940000b02902072d5df239so463691ood.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 May 2021 14:46:40 -0700 (PDT)
-X-Received: by 2002:a25:8191:: with SMTP id p17mr7998436ybk.405.1622151679762;
- Thu, 27 May 2021 14:41:19 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=P2FMXmqOYVBO9+wFKj80xIXzCv9cq/mWbBoWznbYoVQ=;
+        b=e2KX3m/uCgck5SPVvgqJXE3ZP6ptl6BkwyBy/BRmmU+VoC4j89slXsNHNONV7gFHg4
+         JWSZKHUh+kvIls1XumA5I2M9UQOXdXr1W27sK54nP6uuWMq1UwhdhnXudKg9EzAx8w2x
+         B3TcJ3Y59JOqov3EPGUkH7W2S0UzcbM7reACyucgoYp+DsxhmWk0rdAMZP00C4Rzsad7
+         vk8FxuFxqaWaA+LpYlR8JnRR/OyJ2URZuDBersgRTILBeimUwAwSH91rEi12ddQb7Cqm
+         PIyFb6AkxNDWtT9jEpLzloVrQDmfFYkAcsbER+TCkup5jyuhtp+YqqGXTXYpH1TRljrJ
+         G3HA==
+X-Gm-Message-State: AOAM530X88jAbYYZI7GjyQBwacXhSxUs9TLop8UZGBJ5iz1+LUVBaKI1
+        hWO1G/HvzDhom6+94y5q4ytzYg==
+X-Google-Smtp-Source: ABdhPJxh5y9hRAa3nCC+HCO2Xo//EOj94ljU4Kx9n4BlCJyA1o93MMclgoLN9dTd0QgdeHkawmwDMw==
+X-Received: by 2002:a05:6512:3c96:: with SMTP id h22mr3799949lfv.426.1622153011543;
+        Thu, 27 May 2021 15:03:31 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id i25sm98403lfl.212.2021.05.27.15.03.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 27 May 2021 15:03:31 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <abhinavk@codeaurora.org>
+Cc:     Jonathan Marek <jonathan@marek.ca>,
+        Stephen Boyd <sboyd@kernel.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        kernel test robot <lkp@intel.com>
+Subject: [PATCH] drm/msm: fix display snapshotting if DP or DSI is disabled
+Date:   Fri, 28 May 2021 01:03:30 +0300
+Message-Id: <20210527220330.3364716-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
-References: <1621927831-29471-1-git-send-email-rajeevny@codeaurora.org>
- <1621927831-29471-2-git-send-email-rajeevny@codeaurora.org>
- <CAD=FV=WzQ0Oc=e3kmNeBZUA+P1soKhBk8zt7bG1gqJ-Do-Tq_w@mail.gmail.com> <42db3a26684a5329287d57e1e78d0475@codeaurora.org>
-In-Reply-To: <42db3a26684a5329287d57e1e78d0475@codeaurora.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Thu, 27 May 2021 14:41:08 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=UuWuKibpT15McweuZ24qxsSAsSvJ3Q2MbZqgw5oggBVQ@mail.gmail.com>
-Message-ID: <CAD=FV=UuWuKibpT15McweuZ24qxsSAsSvJ3Q2MbZqgw5oggBVQ@mail.gmail.com>
-Subject: Re: [v4 1/4] drm/panel-simple: Add basic DPCD backlight support
-To:     Rajeev Nandan <rajeevny@codeaurora.org>
-Cc:     "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        Daniel Thompson <daniel.thompson@linaro.org>,
-        mkrishn@codeaurora.org, Sam Ravnborg <sam@ravnborg.org>,
-        Jani Nikula <jani.nikula@intel.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        Andrzej Hajda <a.hajda@samsung.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Sean Paul <seanpaul@chromium.org>,
-        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-        Kalyan Thota <kalyan_t@codeaurora.org>,
-        "Kristian H. Kristensen" <hoegsberg@chromium.org>,
-        freedreno <freedreno@lists.freedesktop.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Fix following warnings generated when either DP or DSI support is
+disabled:
 
-On Thu, May 27, 2021 at 5:21 AM <rajeevny@codeaurora.org> wrote:
->
-> >> @@ -171,6 +172,19 @@ struct panel_desc {
-> >>
-> >>         /** @connector_type: LVDS, eDP, DSI, DPI, etc. */
-> >>         int connector_type;
-> >> +
-> >> +       /**
-> >> +        * @uses_dpcd_backlight: Panel supports eDP dpcd backlight
-> >> control.
-> >> +        *
-> >> +        * Set true, if the panel supports backlight control over eDP
-> >> AUX channel
-> >> +        * using DPCD registers as per VESA's standard.
-> >> +        */
-> >> +       bool uses_dpcd_backlight;
-> >> +};
-> >> +
-> >> +struct edp_backlight {
-> >> +       struct backlight_device *dev;
-> >
-> > Can you pick a name other than "dev". In my mind "dev" means you've
-> > got a "struct device" or a "struct device *".
->
-> In the backlight.h "bd" is used for "struct backlight_device". I can use
-> "bd"?
+drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c:141:3: error: implicit declaration of function 'msm_dp_snapshot'; did you mean 'msm_dsi_snapshot'? [-Werror=implicit-function-declaration]
 
-That would be OK w/ me since it's not "dev". In theory you could also
-call it "base" like panel-simple does with the base class drm_panel,
-but I'll leave that up to you. It's mostly that in my brain "dev" is
-reserved for "struct device" but otherwise I'm pretty flexible.
+drivers/gpu/drm/msm/msm_kms.h:127:26: warning: 'struct msm_disp_state' declared inside parameter list will not be visible outside of this definition or declaration
+drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c:867:21: error: initialization of 'void (*)(struct msm_disp_state *, struct msm_kms *)' from incompatible pointer type 'void (*)(struct msm_disp_state *, struct msm_kms *)' [-Werror=incompatible-pointer-types]
+drivers/gpu/drm/msm/dsi/dsi.h:94:30: warning: 'struct msm_disp_state' declared inside parameter list will not be visible outside of this definition or declaration
 
+Reported-by: kernel test robot <lkp@intel.com>
+Cc: Abhinav Kumar <abhinavk@codeaurora.org>
+Fixes: 1c3b7ac1a71d ("drm/msm: pass dump state as a function argument")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ drivers/gpu/drm/msm/disp/msm_disp_snapshot.h |  1 -
+ drivers/gpu/drm/msm/dsi/dsi.h                |  2 --
+ drivers/gpu/drm/msm/msm_drv.h                | 12 +++++++++++-
+ 3 files changed, 11 insertions(+), 4 deletions(-)
 
-> >> +       struct drm_edp_backlight_info info;
-> >>  };
-> >>
-> >>  struct panel_simple {
-> >> @@ -194,6 +208,8 @@ struct panel_simple {
-> >>
-> >>         struct edid *edid;
-> >>
-> >> +       struct edp_backlight *edp_bl;
-> >> +
-> >
-> > I don't think you need to add this pointer. See below for details, but
-> > basically the backlight device should be in base.backlight. Any code
-> > that needs the containing structure can use the standard
-> > "container_of" syntax.
-> >
->
-> The documentation of the "struct drm_panel -> backlight" mentions
-> "backlight is set by drm_panel_of_backlight() and drivers shall not
-> assign it."
-> That's why I was not sure if I should touch that part. Because of this,
-> I added
-> backlight enable/disable calls inside panel_simple_disable/enable().
+diff --git a/drivers/gpu/drm/msm/disp/msm_disp_snapshot.h b/drivers/gpu/drm/msm/disp/msm_disp_snapshot.h
+index c6174a366095..c92a9508c8d3 100644
+--- a/drivers/gpu/drm/msm/disp/msm_disp_snapshot.h
++++ b/drivers/gpu/drm/msm/disp/msm_disp_snapshot.h
+@@ -27,7 +27,6 @@
+ #include <linux/devcoredump.h>
+ #include <stdarg.h>
+ #include "msm_kms.h"
+-#include "dsi.h"
+ 
+ #define MSM_DISP_SNAPSHOT_MAX_BLKS		10
+ 
+diff --git a/drivers/gpu/drm/msm/dsi/dsi.h b/drivers/gpu/drm/msm/dsi/dsi.h
+index cea73f9c4be9..9b8e9b07eced 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi.h
++++ b/drivers/gpu/drm/msm/dsi/dsi.h
+@@ -91,8 +91,6 @@ static inline bool msm_dsi_device_connected(struct msm_dsi *msm_dsi)
+ 	return msm_dsi->panel || msm_dsi->external_bridge;
+ }
+ 
+-void msm_dsi_snapshot(struct msm_disp_state *disp_state, struct msm_dsi *msm_dsi);
+-
+ struct drm_encoder *msm_dsi_get_encoder(struct msm_dsi *msm_dsi);
+ 
+ /* dsi host */
+diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
+index c33fc1293789..ba60bf6f124c 100644
+--- a/drivers/gpu/drm/msm/msm_drv.h
++++ b/drivers/gpu/drm/msm/msm_drv.h
+@@ -43,6 +43,7 @@ struct msm_gem_submit;
+ struct msm_fence_context;
+ struct msm_gem_address_space;
+ struct msm_gem_vma;
++struct msm_disp_state;
+ 
+ #define MAX_CRTCS      8
+ #define MAX_PLANES     20
+@@ -340,6 +341,8 @@ void __init msm_dsi_register(void);
+ void __exit msm_dsi_unregister(void);
+ int msm_dsi_modeset_init(struct msm_dsi *msm_dsi, struct drm_device *dev,
+ 			 struct drm_encoder *encoder);
++void msm_dsi_snapshot(struct msm_disp_state *disp_state, struct msm_dsi *msm_dsi);
++
+ #else
+ static inline void __init msm_dsi_register(void)
+ {
+@@ -353,6 +356,10 @@ static inline int msm_dsi_modeset_init(struct msm_dsi *msm_dsi,
+ {
+ 	return -EINVAL;
+ }
++static inline void msm_dsi_snapshot(struct msm_disp_state *disp_state, struct msm_dsi *msm_dsi)
++{
++}
++
+ #endif
+ 
+ #ifdef CONFIG_DRM_MSM_DP
+@@ -367,7 +374,6 @@ void msm_dp_display_mode_set(struct msm_dp *dp, struct drm_encoder *encoder,
+ 				struct drm_display_mode *mode,
+ 				struct drm_display_mode *adjusted_mode);
+ void msm_dp_irq_postinstall(struct msm_dp *dp_display);
+-struct msm_disp_state;
+ void msm_dp_snapshot(struct msm_disp_state *disp_state, struct msm_dp *dp_display);
+ 
+ void msm_dp_debugfs_init(struct msm_dp *dp_display, struct drm_minor *minor);
+@@ -412,6 +418,10 @@ static inline void msm_dp_irq_postinstall(struct msm_dp *dp_display)
+ {
+ }
+ 
++static inline void msm_dp_snapshot(struct msm_disp_state *disp_state, struct msm_dp *dp_display)
++{
++}
++
+ static inline void msm_dp_debugfs_init(struct msm_dp *dp_display,
+ 		struct drm_minor *minor)
+ {
+-- 
+2.30.2
 
-Fair enough. In my opinion (subject to being overridden by the adults
-in the room), if you move your backlight code into drm_panel.c and
-call it drm_panel_dp_aux_backlight() then it's fair game to use. This
-basically means that it's no longer a "driver" assigning it since it's
-being done in drm_panel.c. ;-) Obviously you'd want to update the
-comment, too...
-
-
-> >> +               err = drm_panel_of_backlight(&panel->base);
-> >> +               if (err)
-> >> +                       goto disable_pm_runtime;
-> >> +       }
-> >
-> > See above where I'm suggesting some different logic. Specifically:
-> > always try the drm_panel_of_backlight() call and then fallback to the
-> > AUX backlight if "panel->base.backlight" is NULL and "panel->aux" is
-> > not NULL.
->
-> What I understood:
-> 1. Create a new API drm_panel_dp_aux_backlight() in drm_panel.c
-> 1.1. Register DP AUX backlight if "struct drm_dp_aux" is given and
->      drm_edp_backlight_supported()
-> 2. Create a call back function for backlight ".update_status()" inside
-> drm_panel.c ?
->    This function should also handle the backlight enable/disable
-> operations.
-> 3. Use the suggested rules to call drm_panel_dp_aux_backlight() as a
-> fallback, if
->     no backlight is specified in the DT.
-> 4. Remove the @uses_dpcd_backlight flag from panel_desc as this should
-> be auto-detected.
-
-This sounds about right to me.
-
-As per all of my reviews in the DRM subsystem, this is all just my
-opinion and if someone more senior in DRM contradicts me then, of
-course, you might have to change directions. Hopefully that doesn't
-happen but it's always good to give warning...
-
--Doug
