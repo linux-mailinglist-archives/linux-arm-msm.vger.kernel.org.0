@@ -2,110 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D766E392525
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 May 2021 05:00:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D143E392662
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 May 2021 06:29:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234250AbhE0DB4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 May 2021 23:01:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33042 "EHLO
+        id S229775AbhE0EbE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 May 2021 00:31:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52944 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234169AbhE0DB4 (ORCPT
+        with ESMTP id S229768AbhE0EbE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 May 2021 23:01:56 -0400
-Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B0E3C061574;
-        Wed, 26 May 2021 20:00:23 -0700 (PDT)
-Received: by mail-pl1-x634.google.com with SMTP id v12so1614525plo.10;
-        Wed, 26 May 2021 20:00:23 -0700 (PDT)
+        Thu, 27 May 2021 00:31:04 -0400
+Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com [IPv6:2607:f8b0:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A220C061760
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 May 2021 21:29:32 -0700 (PDT)
+Received: by mail-ot1-x32c.google.com with SMTP id h24-20020a9d64180000b029036edcf8f9a6so3223231otl.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 May 2021 21:29:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=an1polfQn6vieJpzgSqPdiPhq14M4oUVqX/Ylf5ziPs=;
-        b=iLjcXPx4lqRNQzS3ska24bUU8Af/ko9/sGGaMUI2RpAPp4UphYKVzdDipO9Y6M1GkE
-         dIeKh+Wbu7M0IJYH4YV7hRR2J2e+cpmie5MkvOZ6QXhbCNK8ozlr+ebLG9RAR3TZbFNY
-         cqNFjJ22qsdDqQiBjJ4TrxeCjDN1GBfAqbGW2h8AsSMI7dp224h6CLRbild7A5zbTnwH
-         ylEixnDV4NgDPWuBJDtBszWouxoysKzlIsbdbAXvfvDfFwPq3e3C6eFF0Q8gxmraFcp9
-         XNWPwPB5nD4EkajG5bZMVM0b7TJgRdNN7ecydStYCcYAIoQVKl5hIrMS05Wg7CDmgVg/
-         gu5w==
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=b6/faYhfGu8qBtbR9bUitKj7oId3L35j1rSLlZcppAc=;
+        b=hqtLG7QpB0PQlZwg8WYtUpXzm2d/c3skqj2CuiBHVhNRi5kJrIGjiCGThIW9cWk625
+         F+gG060MyizR0reJ0HKBczMaxAQiJCu56bAJbJ4Z3gyBrrh+XtlXRJwR4KnqTw/XKBfs
+         XzwIZPTaXXUDQFHD08XZiVdQAoLGZXeLhvLZk=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=an1polfQn6vieJpzgSqPdiPhq14M4oUVqX/Ylf5ziPs=;
-        b=g2SR7ECloq5f2xAprQUdn2zDqqiPXOYYjpTShEHITYM540UTaQdf/bPaYUMR7wREx1
-         74Zz4hREdhueicRcoWZ26i8j5xspHruM+O7yIZO9x8aYz8DxaWGq8yc5OLt65oXeibAG
-         gtsCXzmKwQ/Le82eaqH95LvLwapbr5+LEbxwOtiMo/+WqNaN50f3m6wWEqR0A3tUlAio
-         gxpcdpHm3g3MrvgLaJQzLkjLU+hXD/U+s0detdTZxJm7Bp/Ewc+wc7hgybJrM/O3u6Jg
-         qtRJgpK/fX1v/6VdpDX8jzox6IFaskF1DKs+TH0KanIx54bTMPwveDsFL9am399Ggj5w
-         /Asg==
-X-Gm-Message-State: AOAM530SHngXpFRYZnLnp4OKeVf8qGxbr8fn0n+v6gikCI/GLwkbINed
-        n17BjJTN6wHAtzZhYV7xIctLdNcLJI55aeKov/ZlcWMjdu4=
-X-Google-Smtp-Source: ABdhPJwxnVnyzztt10Q86m+xS+QHTuioQsfAf05wWmuIlWJgsJUPA5s9c7IYyF029xW9KvhOQBt41hDKcpXIzZ1E8KM=
-X-Received: by 2002:a17:90a:bd08:: with SMTP id y8mr7132190pjr.8.1622084423104;
- Wed, 26 May 2021 20:00:23 -0700 (PDT)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=b6/faYhfGu8qBtbR9bUitKj7oId3L35j1rSLlZcppAc=;
+        b=cW9qWyPjQSPLH7wBUZ9aIDERSdjjuanQ7K4j0QoKKc4d2fI3oEFOKBiJyIqNow6B5d
+         FPWqa2J2md1O7LldgIHL6CirBtBB6hWq9zLsJaISFvnWKeZAPp9DNNX8//xqWqtkjXrP
+         CTCBAHWnVDrbdz3PJJkx3jYrAUrIGjEd9YBXh2kTS/VKH6fxMULdUjUwNC6VXtkfStKn
+         vnuDffI/lbtu/gdE+xtP9RUyH43FDycqtE1HULqXuwLeD4DMcqvD5Ma5rppAVZwjcdnP
+         1QxE6PXLMjBHI2RlNniDIRsCvokg9D4QWhM2CuFxE861RjIHAS0p2NHC9cDopoNEfw72
+         NXHQ==
+X-Gm-Message-State: AOAM533qfxvrl7dtp+HSU+Y77+5HcFzwVSQ+cIfup1QlqA5N/lFt/N31
+        jIV6cC9c3a8o3L9qe100vyNWWp4ASTV353EY5RnrGA==
+X-Google-Smtp-Source: ABdhPJws6Lj2vooodJL5wMKOsFkykOzSDFlWUi5rcClITq/ysQEsXTKKyLiW6XmKahA5l1NgfJeVvV5+sShDboAl3j0=
+X-Received: by 2002:a05:6830:1f51:: with SMTP id u17mr1338955oth.25.1622089771409;
+ Wed, 26 May 2021 21:29:31 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 27 May 2021 00:29:30 -0400
 MIME-Version: 1.0
-References: <20210521041633.GA1747@raspberrypi>
-In-Reply-To: <20210521041633.GA1747@raspberrypi>
-From:   Austin Kim <austindh.kim@gmail.com>
-Date:   Thu, 27 May 2021 12:00:12 +0900
-Message-ID: <CADLLry7xtt60wNqD4ZkcLByqEuyBpdO4VYjGjbrTMLsG1ACdcw@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm/dpu: remove unused variable cmd_enc
-To:     robdclark@gmail.com, sean@poorly.run, airlied@linux.ie,
-        Daniel Vetter <daniel@ffwll.ch>,
-        angelogioacchino.delregno@somainline.org,
-        dmitry.baryshkov@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        =?UTF-8?B?6rmA64+Z7ZiE?= <austindh.kim@gmail.com>
+In-Reply-To: <1622072989-793-1-git-send-email-khsieh@codeaurora.org>
+References: <1622072989-793-1-git-send-email-khsieh@codeaurora.org>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.9.1
+Date:   Thu, 27 May 2021 00:29:30 -0400
+Message-ID: <CAE-0n51tgnPnwTvtNe-w5MjEAOmgtko0aw6Hu744EwOE00tzPg@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm/dp: keep aux channel up when power of dp phy
+To:     Kuogee Hsieh <khsieh@codeaurora.org>, agross@kernel.org,
+        bjorn.andersson@linaro.org, robdclark@gmail.com, sean@poorly.run,
+        vkoul@kernel.org
+Cc:     abhinavk@codeaurora.org, aravindh@codeaurora.org,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-2021=EB=85=84 5=EC=9B=94 21=EC=9D=BC (=EA=B8=88) =EC=98=A4=ED=9B=84 1:16, A=
-ustin Kim <austindh.kim@gmail.com>=EB=8B=98=EC=9D=B4 =EC=9E=91=EC=84=B1:
+General note, please Cc dri-devel on freedreno driver patches.
+
+Quoting Kuogee Hsieh (2021-05-26 16:49:49)
+> Aux channel is used to perform management function and should be
+> running in parallel with main link. Therefore should only power
+> down main link and keep aux channel running when power down phy.
 >
-> After the call to to_dpu_encoder_phys_cmd() is made,
-> 'cmd_enc' is not used. Where to_dpu_encoder_phys_cmd() is simply replaced=
- with
-> container_of(x, struct dpu_encoder_phys_cmd, base) by compiler.
->
-> So it had better remove W=3D1 kernel build warning(s):
->
->   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c: In function
->  =E2=80=98dpu_encoder_phys_cmd_wait_for_commit_done=E2=80=99:
->   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c:688:31: warning:
->   variable =E2=80=98cmd_enc=E2=80=99 set but not used
->
-> Signed-off-by: Austin Kim <austindh.kim@gmail.com>
+> Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
 > ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c | 4 ----
->  1 file changed, 4 deletions(-)
+
+Does this supersede the previous patch[1] or is it in addition to?
+
+[1] https://lore.kernel.org/r/1622052503-21158-1-git-send-email-khsieh@codeaurora.org
+
+>  drivers/gpu/drm/msm/dp/dp_ctrl.c    |  4 ----
+>  drivers/phy/qualcomm/phy-qcom-qmp.c | 11 +++++++++--
+>  2 files changed, 9 insertions(+), 6 deletions(-)
+
+Given that it touches two subsystems the merge path is questionable.
+
 >
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c b/drive=
-rs/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-> index b2be39b9144e..088900841bf8 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-> @@ -685,10 +685,6 @@ static int dpu_encoder_phys_cmd_wait_for_tx_complete=
-(
->  static int dpu_encoder_phys_cmd_wait_for_commit_done(
->                 struct dpu_encoder_phys *phys_enc)
+> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> index 5115c05..5f93c64 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> @@ -1844,10 +1844,6 @@ int dp_ctrl_off_link_stream(struct dp_ctrl *dp_ctrl)
+>
+>         phy_power_off(phy);
+>
+> -       /* aux channel down, reinit phy */
+> -       phy_exit(phy);
+> -       phy_init(phy);
+> -
+>         DRM_DEBUG_DP("DP off link/stream done\n");
+>         return ret;
+>  }
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/phy-qcom-qmp.c
+> index b122e63..567e32e 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-qmp.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
+> @@ -3214,12 +3214,19 @@ static int qcom_qmp_phy_power_off(struct phy *phy)
 >  {
-> -       struct dpu_encoder_phys_cmd *cmd_enc;
-> -
-> -       cmd_enc =3D to_dpu_encoder_phys_cmd(phys_enc);
-> -
->         /* only required for master controller */
->         if (!dpu_encoder_phys_cmd_is_master(phys_enc))
->                 return 0;
-> --
-> 2.20.1
+>         struct qmp_phy *qphy = phy_get_drvdata(phy);
+>         const struct qmp_phy_cfg *cfg = qphy->cfg;
+> +       u32 val;
 >
+>         clk_disable_unprepare(qphy->pipe_clk);
+>
+>         if (cfg->type == PHY_TYPE_DP) {
+> -               /* Assert DP PHY power down */
+> -               writel(DP_PHY_PD_CTL_PSR_PWRDN, qphy->pcs + QSERDES_V3_DP_PHY_PD_CTL);
+> +               /*
+> +                * Assert DP PHY LANE_0_1, LANE_2_3, PSR power down
+> +                * keep aux channel up
 
-If you are available, would you please review this patch.
+Maybe say "keep aux channel up until phy_exit() is called" so we know
+how long it is supposed to stay on. And just to confirm, it is on in
+phy_init(), right?
 
-BR,
-Austin Kim
+> +                */
+> +               val = DP_PHY_PD_CTL_PWRDN | DP_PHY_PD_CTL_AUX_PWRDN |
+> +                       DP_PHY_PD_CTL_PLL_PWRDN | DP_PHY_PD_CTL_DP_CLAMP_EN |
+> +                       DP_PHY_PD_CTL_PSR_PWRDN;
+> +               writel(val, qphy->pcs + QSERDES_V3_DP_PHY_PD_CTL);
+>         } else {
+>                 /* PHY reset */
+>                 if (!cfg->no_pcs_sw_reset)
