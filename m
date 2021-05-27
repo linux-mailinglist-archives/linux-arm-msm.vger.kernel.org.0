@@ -2,68 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F0329392AA0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 May 2021 11:22:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D4611392AFF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 May 2021 11:44:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235608AbhE0JXy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 May 2021 05:23:54 -0400
-Received: from szxga08-in.huawei.com ([45.249.212.255]:2312 "EHLO
-        szxga08-in.huawei.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235559AbhE0JXx (ORCPT
+        id S235813AbhE0JqM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 May 2021 05:46:12 -0400
+Received: from mail-ua1-f45.google.com ([209.85.222.45]:41570 "EHLO
+        mail-ua1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235675AbhE0JqL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 May 2021 05:23:53 -0400
-Received: from dggeml756-chm.china.huawei.com (unknown [172.30.72.53])
-        by szxga08-in.huawei.com (SkyGuard) with ESMTP id 4FrMfc2c1hz19VVw;
-        Thu, 27 May 2021 17:17:44 +0800 (CST)
-Received: from dggpeml500017.china.huawei.com (7.185.36.243) by
- dggeml756-chm.china.huawei.com (10.1.199.158) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id
- 15.1.2176.2; Thu, 27 May 2021 17:22:19 +0800
-Received: from huawei.com (10.175.103.91) by dggpeml500017.china.huawei.com
- (7.185.36.243) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2176.2; Thu, 27 May
- 2021 17:22:18 +0800
-From:   Yang Yingliang <yangyingliang@huawei.com>
-To:     <linux-kernel@vger.kernel.org>, <linux-pm@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>
-CC:     <daniel.lezcano@linaro.org>, <colin.king@canonical.com>
-Subject: [PATCH -next resend] thermal: qcom: return error code on error path in adc_tm5_get_dt_channel_data()
-Date:   Thu, 27 May 2021 17:26:40 +0800
-Message-ID: <20210527092640.2070555-1-yangyingliang@huawei.com>
-X-Mailer: git-send-email 2.25.1
+        Thu, 27 May 2021 05:46:11 -0400
+Received: by mail-ua1-f45.google.com with SMTP id g34so832210uah.8;
+        Thu, 27 May 2021 02:44:38 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=xyO91WwRYqo2wMXqgZeeHTqV+3eSTnV/ZWWMMo01lKE=;
+        b=ZrNnBYATMgUyUZPJ/kijSLyvp8j4jJE4H2GpG1+0QHySWSAg+Qiy6orVjRExt+DRtF
+         2xLxsd0oyT8bf8fFHHORm0kMnisJawQRKfZSjCpWO0s2uA0tpWWxZDuIh/Z0SqX3bP1b
+         XvmE/woTMa+uQSgSd0cIRFqNrKfCiUiuQZ1tLZrFccLP6dv6BEpQvGXLdLo3PjaTuSQu
+         XlHWVAWmBsJNNLktE1oTjOgggxnanzHyUnS7+VTXfcngImgxfaljYP/yOGM5QXIhsM2Q
+         +nbodyM6uiDce+ZomhVDNm/X1dltCzqRl/KriRGQ3prtlhxKxyaWApdekP9gdzuw2ESF
+         lLTA==
+X-Gm-Message-State: AOAM530j42ej/cFHHZj2iJ5HAd50Pz5qdCJSLfZZMwC+jsKB7JK71oUs
+        QTi5AGQ6nAjOSSFoP6diodcVeWZGuVSqVq9FnmGqQ+0M
+X-Google-Smtp-Source: ABdhPJxm04ulbfNwcj1J1dC242uqkUkgB3I1fmf2xJPxaK+VsPn+SlpCJ5YiUalQQXQPXVe94B31n4eYZnyyCgmzn+Q=
+X-Received: by 2002:a1f:a388:: with SMTP id m130mr1257979vke.1.1622108678468;
+ Thu, 27 May 2021 02:44:38 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7BIT
-Content-Type:   text/plain; charset=US-ASCII
-X-Originating-IP: [10.175.103.91]
-X-ClientProxiedBy: dggems703-chm.china.huawei.com (10.3.19.180) To
- dggpeml500017.china.huawei.com (7.185.36.243)
-X-CFilter-Loop: Reflected
+References: <cover.1621518686.git.geert+renesas@glider.be> <b708fdb009912cf247ef257dce519c52889688d8.1621518686.git.geert+renesas@glider.be>
+ <20210520150742.GB22843@alpha.franken.de>
+In-Reply-To: <20210520150742.GB22843@alpha.franken.de>
+From:   Geert Uytterhoeven <geert@linux-m68k.org>
+Date:   Thu, 27 May 2021 11:44:27 +0200
+Message-ID: <CAMuHMdXtn9e9mvRP63GYXuGG7Gfwxoc8bmGrBwfV2UOPizD6Qw@mail.gmail.com>
+Subject: Re: [PATCH 4/5] MIPS: SEAD3: Correct Ethernet node name
+To:     Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Cc:     Rob Herring <robh+dt@kernel.org>, Shawn Guo <shawnguo@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        "David S . Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, netdev <netdev@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:BROADCOM NVRAM DRIVER" <linux-mips@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Return -EINVAL when args is invalid.
+Hi Thomas,
 
-Fixes: ca66dca5eda6 ("thermal: qcom: add support for adc-tm5 PMIC thermal monitor")
-Reported-by: Hulk Robot <hulkci@huawei.com>
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
----
- drivers/thermal/qcom/qcom-spmi-adc-tm5.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+On Thu, May 20, 2021 at 5:08 PM Thomas Bogendoerfer
+<tsbogend@alpha.franken.de> wrote:
+> On Thu, May 20, 2021 at 03:58:38PM +0200, Geert Uytterhoeven wrote:
+> > make dtbs_check:
+> >
+> >     eth@1f010000: $nodename:0: 'eth@1f010000' does not match '^ethernet(@.*)?$'
+> >
+> > Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+> > ---
+> >  arch/mips/boot/dts/mti/sead3.dts | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> Acked-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 
-diff --git a/drivers/thermal/qcom/qcom-spmi-adc-tm5.c b/drivers/thermal/qcom/qcom-spmi-adc-tm5.c
-index b460b56e981c..8ccd5d22c13b 100644
---- a/drivers/thermal/qcom/qcom-spmi-adc-tm5.c
-+++ b/drivers/thermal/qcom/qcom-spmi-adc-tm5.c
-@@ -441,7 +441,7 @@ static int adc_tm5_get_dt_channel_data(struct adc_tm5_chip *adc_tm,
- 
- 	if (args.args_count != 1 || args.args[0] >= ADC5_MAX_CHANNEL) {
- 		dev_err(dev, "%s: invalid ADC channel number %d\n", name, chan);
--		return ret;
-+		return -EINVAL;
- 	}
- 	channel->adc_channel = args.args[0];
- 
+Can you please take this through the MIPS tree?
+Thanks!
+
+Gr{oetje,eeting}s,
+
+                        Geert
+
 -- 
-2.25.1
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
 
+In personal conversations with technical people, I call myself a hacker. But
+when I'm talking to journalists I just say "programmer" or something like that.
+                                -- Linus Torvalds
