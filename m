@@ -2,151 +2,306 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F098A3946C5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 May 2021 20:09:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3CA9539477E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 May 2021 21:25:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229520AbhE1SKr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 May 2021 14:10:47 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:52492 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229450AbhE1SKq (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 May 2021 14:10:46 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1622225351; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=r1zhZYhMoSYg6a1HMnFXMjdjXy3nkmF+hSZFTbu8j3k=; b=wJ0pvHsT6hcSA5cRdW5w3gfq8w1jJFX+APKtXz5hOWGNtLUiTm2qlmdznqzGgBpjaYL/evpR
- nYnJRRX/ChgmJmYKgenBC567MKN0/4i5AJeFO/FdX6M/5veO3wJdN5zBNoCjWuY90DPQFbNq
- FOKsXIuitucBwtwmY61C6LhxqwY=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
- 60b131c0ef99224c246824b1 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 28 May 2021 18:09:04
- GMT
-Sender: khsieh=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 261EEC4338A; Fri, 28 May 2021 18:09:03 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
-Received: from khsieh-linux1.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: khsieh)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 60A5FC433F1;
-        Fri, 28 May 2021 18:09:01 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 60A5FC433F1
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=khsieh@codeaurora.org
-From:   Kuogee Hsieh <khsieh@codeaurora.org>
-To:     robdclark@gmail.com, sean@poorly.run, swboyd@chromium.org,
-        vkoul@kernel.org, agross@kernel.org, bjorn.andersson@linaro.org
-Cc:     abhinavk@codeaurora.org, aravindh@codeaurora.org,
-        khsieh@codeaurora.org, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v2] drm/msm/dp: power off DP phy bases on phy state at suspend
-Date:   Fri, 28 May 2021 11:08:55 -0700
-Message-Id: <1622225335-9875-1-git-send-email-khsieh@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        id S229547AbhE1T11 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 May 2021 15:27:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43108 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229494AbhE1T10 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 28 May 2021 15:27:26 -0400
+Received: from relay03.th.seeweb.it (relay03.th.seeweb.it [IPv6:2001:4b7a:2000:18::164])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DC9FC06174A
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 May 2021 12:25:51 -0700 (PDT)
+Received: from localhost.localdomain (83.6.168.57.neoplus.adsl.tpnet.pl [83.6.168.57])
+        by m-r1.th.seeweb.it (Postfix) with ESMTPA id 3EDB720344;
+        Fri, 28 May 2021 21:25:45 +0200 (CEST)
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+To:     ~postmarketos/upstreaming@lists.sr.ht
+Cc:     martin.botka@somainline.org,
+        angelogioacchino.delregno@somainline.org,
+        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH 1/2] clk: qcom: msm8996-cpu: Add CBF support
+Date:   Fri, 28 May 2021 21:25:40 +0200
+Message-Id: <20210528192541.1120703-1-konrad.dybcio@somainline.org>
+X-Mailer: git-send-email 2.31.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Normal DP suspend operation contains two steps, display off followed
-by dp suspend, to complete system wide suspending cycle if display is
-up at that time. In this case, DP phy will be powered off at display
-off. However there is an exception case that depending on the timing
-of dongle plug in during system wide suspending, sometimes display off
-procedure may be skipped and dp suspend was called directly. In this
-case, dp phy is stay at powered on (phy->power_count = 1) so that at
-next resume dp driver crash at main link clock enable due to phy is
-not physically powered on.  This patch add phy_power_off() at
-dp_ctrl_host_deinit() which is called by dp_pm_suspend() to power off
-phy according to the state of is_phy_on flag.
+Add the required code to support the CBF clock, which is responsible for
+core cluster interconnect frequency on msm8996.
 
-Changes in V2:
--- stashed changes into dp_ctrl.c
--- add is_phy_on to monitor phy state
+Somewhat based on AngeloGioacchino del Regno's work at:
+https://github.com/sonyxperiadev/kernel/blob/aosp/LE.UM.2.3.2.r1.4/drivers/clk/qcom/clk-cpu-8996.c
 
-Fixes: 0114f31a2903 ("drm/msm/dp: handle irq_hpd with sink_count = 0 correctly)
+This fixes the issue with booting with all 4 cores enabled.
 
-Sgned-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
+Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 ---
- drivers/gpu/drm/msm/dp/dp_ctrl.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/clk/qcom/clk-cpu-8996.c | 162 +++++++++++++++++++++++++++++++-
+ 1 file changed, 159 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-index dbd8943..3924ac6 100644
---- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
-+++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-@@ -77,6 +77,8 @@ struct dp_ctrl_private {
- 	struct dp_parser *parser;
- 	struct dp_catalog *catalog;
+diff --git a/drivers/clk/qcom/clk-cpu-8996.c b/drivers/clk/qcom/clk-cpu-8996.c
+index 4a4fde8dd12d..8afc271f92d0 100644
+--- a/drivers/clk/qcom/clk-cpu-8996.c
++++ b/drivers/clk/qcom/clk-cpu-8996.c
+@@ -68,10 +68,19 @@ enum _pmux_input {
+ 	NUM_OF_PMUX_INPUTS
+ };
  
-+	bool is_phy_on;
++enum {
++	CBF_PLL_INDEX = 1,
++	CBF_DIV_2_INDEX,
++	CBF_SAFE_INDEX
++};
 +
- 	struct opp_table *opp_table;
+ #define DIV_2_THRESHOLD		600000000
+ #define PWRCL_REG_OFFSET 0x0
+ #define PERFCL_REG_OFFSET 0x80000
+ #define MUX_OFFSET	0x40
++#define CBF_REG_OFFSET	0x0
++#define CBF_PLL_OFFSET	0xf000
++#define CBF_MUX_OFFSET 0x18
+ #define ALT_PLL_OFFSET	0x100
+ #define SSSCTL_OFFSET 0x160
  
- 	struct completion idle_comp;
-@@ -1336,6 +1338,7 @@ static int dp_ctrl_enable_mainlink_clocks(struct dp_ctrl_private *ctrl)
+@@ -98,6 +107,17 @@ static const u8 alt_pll_regs[PLL_OFF_MAX_REGS] = {
+ 	[PLL_OFF_STATUS] = 0x28,
+ };
  
- 	phy_configure(phy, &dp_io->phy_opts);
- 	phy_power_on(phy);
-+	ctrl->is_phy_on = true;
++static const u8 cbf_pll_regs[PLL_OFF_MAX_REGS] = {
++	[PLL_OFF_L_VAL] = 0x08,
++	[PLL_OFF_ALPHA_VAL] = 0x10,
++	[PLL_OFF_USER_CTL] = 0x18,
++	[PLL_OFF_CONFIG_CTL] = 0x20,
++	[PLL_OFF_CONFIG_CTL_U] = 0x24,
++	[PLL_OFF_TEST_CTL] = 0x30,
++	[PLL_OFF_TEST_CTL_U] = 0x34,
++	[PLL_OFF_STATUS] = 0x28,
++};
++
+ /* PLLs */
  
- 	ret = dp_power_clk_enable(ctrl->power, DP_CTRL_PM, true);
- 	if (ret)
-@@ -1414,6 +1417,11 @@ void dp_ctrl_host_deinit(struct dp_ctrl *dp_ctrl)
- 	phy = dp_io->phy;
+ static const struct alpha_pll_config hfpll_config = {
+@@ -111,6 +131,17 @@ static const struct alpha_pll_config hfpll_config = {
+ 	.early_output_mask = BIT(3),
+ };
  
- 	dp_catalog_ctrl_enable_irq(ctrl->catalog, false);
-+	if (ctrl->is_phy_on) {
-+		phy_power_off(phy);
-+		ctrl->is_phy_on = false;
++static const struct alpha_pll_config cbfpll_config = {
++	.l = 72,
++	.config_ctl_val = 0x200d4aa8,
++	.config_ctl_hi_val = 0x006,
++	.pre_div_mask = BIT(12),
++	.post_div_mask = 0x3 << 8,
++	.post_div_val = 0x1 << 8,
++	.main_output_mask = BIT(0),
++	.early_output_mask = BIT(3),
++};
++
+ static struct clk_alpha_pll perfcl_pll = {
+ 	.offset = PERFCL_REG_OFFSET,
+ 	.regs = prim_pll_regs,
+@@ -135,6 +166,18 @@ static struct clk_alpha_pll pwrcl_pll = {
+ 	},
+ };
+ 
++static struct clk_alpha_pll cbf_pll = {
++	.offset = CBF_PLL_OFFSET,
++	.regs = cbf_pll_regs,
++	.flags = SUPPORTS_DYNAMIC_UPDATE | SUPPORTS_FSM_MODE,
++	.clkr.hw.init = &(struct clk_init_data){
++		.name = "cbf_pll",
++		.parent_names = (const char *[]){ "xo" },
++		.num_parents = 1,
++		.ops = &clk_alpha_pll_huayra_ops,
++	},
++};
++
+ static const struct pll_vco alt_pll_vco_modes[] = {
+ 	VCO(3,  250000000,  500000000),
+ 	VCO(2,  500000000,  750000000),
+@@ -194,6 +237,9 @@ struct clk_cpu_8996_mux {
+ static int cpu_clk_notifier_cb(struct notifier_block *nb, unsigned long event,
+ 			       void *data);
+ 
++static int cbf_clk_notifier_cb(struct notifier_block *nb, unsigned long event,
++			       void *data);
++
+ #define to_clk_cpu_8996_mux_nb(_nb) \
+ 	container_of(_nb, struct clk_cpu_8996_mux, nb)
+ 
+@@ -329,6 +375,35 @@ static struct clk_cpu_8996_mux perfcl_pmux = {
+ 	},
+ };
+ 
++static struct clk_cpu_8996_mux cbf_mux = {
++	.reg = CBF_REG_OFFSET + CBF_MUX_OFFSET,
++	.shift = 0,
++	.width = 2,
++	.pll = &cbf_pll.clkr.hw,
++	.nb.notifier_call = cbf_clk_notifier_cb,
++	.clkr.hw.init = &(struct clk_init_data) {
++		.name = "cbf_mux",
++		.parent_names = (const char *[]){
++			"xo",
++			"cbf_pll",
++			"cbf_pll_main",
++		},
++		.num_parents = 3,
++		.ops = &clk_cpu_8996_mux_ops,
++		/* CPU clock is critical and should never be gated */
++		.flags = CLK_SET_RATE_PARENT | CLK_IS_CRITICAL,
++	},
++};
++
++static const struct regmap_config cbf_msm8996_regmap_config = {
++	.reg_bits		= 32,
++	.reg_stride		= 4,
++	.val_bits		= 32,
++	.max_register		= 0x10000,
++	.fast_io		= true,
++	.val_format_endian	= REGMAP_ENDIAN_LITTLE,
++};
++
+ static const struct regmap_config cpu_msm8996_regmap_config = {
+ 	.reg_bits		= 32,
+ 	.reg_stride		= 4,
+@@ -397,6 +472,35 @@ static int qcom_cpu_clk_msm8996_register_clks(struct device *dev,
+ 	return ret;
+ }
+ 
++static struct clk_regmap *cbf_msm8996_clks[] = {
++	&cbf_pll.clkr,
++	&cbf_mux.clkr,
++};
++
++static int qcom_cbf_clk_msm8996_register_clks(struct device *dev,
++					      struct regmap *regmap)
++{
++	int ret;
++
++	cbf_mux.pll_div_2 = clk_hw_register_fixed_factor(dev, "cbf_pll_main",
++						      "cbf_pll", CLK_SET_RATE_PARENT,
++						      1, 2);
++	if (IS_ERR(cbf_mux.pll_div_2)) {
++		dev_err(dev, "Failed to initialize cbf_pll_main\n");
++		return PTR_ERR(cbf_mux.pll_div_2);
 +	}
 +
- 	phy_exit(phy);
- 
- 	DRM_DEBUG_DP("Host deinitialized successfully\n");
-@@ -1457,6 +1465,8 @@ static int dp_ctrl_reinitialize_mainlink(struct dp_ctrl_private *ctrl)
++	ret = devm_clk_register_regmap(dev, cbf_msm8996_clks[0]);
++	ret = devm_clk_register_regmap(dev, cbf_msm8996_clks[1]);
++
++	clk_alpha_pll_configure(&cbf_pll, regmap, &cbfpll_config);
++	clk_set_rate(cbf_pll.clkr.hw.clk, 614400000);
++	clk_prepare_enable(cbf_pll.clkr.hw.clk);
++	clk_notifier_register(cbf_mux.clkr.hw.clk, &cbf_mux.nb);
++
++	return ret;
++}
++
+ static int qcom_cpu_clk_msm8996_unregister_clks(void)
+ {
+ 	int ret = 0;
+@@ -409,8 +513,13 @@ static int qcom_cpu_clk_msm8996_unregister_clks(void)
+ 	if (ret)
  		return ret;
- 	}
- 	phy_power_off(phy);
-+	ctrl->is_phy_on = false;
-+
- 	/* hw recommended delay before re-enabling clocks */
- 	msleep(20);
  
-@@ -1488,6 +1498,8 @@ static int dp_ctrl_deinitialize_mainlink(struct dp_ctrl_private *ctrl)
- 	}
- 
- 	phy_power_off(phy);
-+	ctrl->is_phy_on = false;
++	ret = clk_notifier_unregister(cbf_mux.clkr.hw.clk, &cbf_mux.nb);
++	if (ret)
++		return ret;
 +
- 	phy_exit(phy);
+ 	clk_hw_unregister(perfcl_smux.pll);
+ 	clk_hw_unregister(pwrcl_smux.pll);
++	clk_hw_unregister(cbf_mux.pll);
  
  	return 0;
-@@ -1840,6 +1852,7 @@ int dp_ctrl_off_link_stream(struct dp_ctrl *dp_ctrl)
- 	}
+ }
+@@ -481,14 +590,48 @@ static int cpu_clk_notifier_cb(struct notifier_block *nb, unsigned long event,
+ 	return notifier_from_errno(ret);
+ };
  
- 	phy_power_off(phy);
-+	ctrl->is_phy_on = false;
- 
- 	/* aux channel down, reinit phy */
- 	phy_exit(phy);
-@@ -1894,6 +1907,8 @@ int dp_ctrl_off(struct dp_ctrl *dp_ctrl)
- 	}
- 
- 	phy_power_off(phy);
-+	ctrl->is_phy_on = false;
++static int cbf_clk_notifier_cb(struct notifier_block *nb, unsigned long event,
++			       void *data)
++{
++	struct clk_cpu_8996_mux *cbfclk = to_clk_cpu_8996_mux_nb(nb);
++	struct clk_notifier_data *cnd = data;
++	struct clk_hw *parent;
++	int ret;
 +
- 	phy_exit(phy);
++	switch (event) {
++	case PRE_RATE_CHANGE:
++		parent = clk_hw_get_parent_by_index(&cbfclk->clkr.hw, CBF_DIV_2_INDEX);
++		ret = clk_cpu_8996_mux_set_parent(&cbfclk->clkr.hw, CBF_DIV_2_INDEX);
++
++		if (cnd->old_rate > DIV_2_THRESHOLD && cnd->new_rate < DIV_2_THRESHOLD)
++			ret = clk_set_rate(parent->clk, cnd->old_rate / 2);
++		break;
++	case POST_RATE_CHANGE:
++		if (cnd->new_rate < DIV_2_THRESHOLD)
++			ret = clk_cpu_8996_mux_set_parent(&cbfclk->clkr.hw, CBF_DIV_2_INDEX);
++		else {
++			parent = clk_hw_get_parent_by_index(&cbfclk->clkr.hw, CBF_PLL_INDEX);
++			ret = clk_set_rate(parent->clk, cnd->new_rate);
++			ret = clk_cpu_8996_mux_set_parent(&cbfclk->clkr.hw, CBF_PLL_INDEX);
++		}
++		break;
++	default:
++		ret = 0;
++		break;
++	}
++
++	return notifier_from_errno(ret);
++};
++
+ static int qcom_cpu_clk_msm8996_driver_probe(struct platform_device *pdev)
+ {
+-	struct regmap *regmap;
++	struct regmap *regmap, *regmap_cbf;
+ 	struct clk_hw_onecell_data *data;
+ 	struct device *dev = &pdev->dev;
++	static void __iomem *cbf_base;
+ 	int ret;
  
- 	DRM_DEBUG_DP("DP off done\n");
+-	data = devm_kzalloc(dev, struct_size(data, hws, 2), GFP_KERNEL);
++	data = devm_kzalloc(dev, struct_size(data, hws, 3), GFP_KERNEL);
+ 	if (!data)
+ 		return -ENOMEM;
+ 
+@@ -506,9 +649,22 @@ static int qcom_cpu_clk_msm8996_driver_probe(struct platform_device *pdev)
+ 
+ 	qcom_cpu_clk_msm8996_acd_init(base);
+ 
++	cbf_base = devm_platform_ioremap_resource(pdev, 1);
++	if (IS_ERR(cbf_base))
++		return PTR_ERR(cbf_base);
++
++	regmap_cbf = devm_regmap_init_mmio(dev, cbf_base, &cbf_msm8996_regmap_config);
++	if (IS_ERR(regmap_cbf))
++		return PTR_ERR(regmap_cbf);
++
++	ret = qcom_cbf_clk_msm8996_register_clks(dev, regmap_cbf);
++	if (ret)
++		return ret;
++
+ 	data->hws[0] = &pwrcl_pmux.clkr.hw;
+ 	data->hws[1] = &perfcl_pmux.clkr.hw;
+-	data->num = 2;
++	data->hws[2] = &cbf_mux.clkr.hw;
++	data->num = 3;
+ 
+ 	return devm_of_clk_add_hw_provider(dev, of_clk_hw_onecell_get, data);
+ }
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+2.31.1
 
