@@ -2,105 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D11BE394246
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 May 2021 14:03:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9CEED394317
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 May 2021 14:59:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236276AbhE1ME7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 May 2021 08:04:59 -0400
-Received: from mail.kernel.org ([198.145.29.99]:33242 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S236258AbhE1MEz (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 May 2021 08:04:55 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 8080A61186;
-        Fri, 28 May 2021 12:03:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1622203400;
-        bh=5OzrrDDSpnkdil7DVdkqBRXpyEYgnEAiPkXEiSeWUVk=;
-        h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
-        b=W/JPWL0O5HhSGWnonUD7bQZzXdvARN1CwDJ1uHCAcS8A5VXsjQJr9yg8DP8tzve4Y
-         9pneemZTPiNUmX6vu+N81YYC30eSlEkLoY5OWTYX0C7GMD01X85VAlX44D+2ngnVij
-         NZpXwdrt0ILF/Vm+CT2poCrb5IPVY7dOO8hDwyFn1Nc85OYlY7/9l9U/gzdvtHdPnQ
-         AXkYjVuFHxp5mFM8xEHU50UtgXybtiUFZ4aYgyOZ3fqZouMnwQUgm24vlHnzmO5z6e
-         6oXeJF3pJZ8GElmwV481i8EB6MwZXUUnkdfyFCXz33SPmrKdWHfUJivPcbibDip0Qv
-         S6yL/sj4p2kJg==
-From:   Felipe Balbi <balbi@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Felipe Balbi <felipe.balbi@microsoft.com>
-Subject: Re: [PATCH] arm64: dts: qcom: add initial device-tree for Microsoft
- Surface Duo
-In-Reply-To: <874kenb2p7.fsf@kernel.org>
-References: <20210510120547.1315536-1-balbi@kernel.org>
- <20210511044312.GK2484@yoga> <87wns5g0c6.fsf@kernel.org>
- <YK00sn1fvCrtVQaJ@builder.lan> <874kenb2p7.fsf@kernel.org>
-Date:   Fri, 28 May 2021 15:03:11 +0300
-Message-ID: <87v9739ibk.fsf@kernel.org>
+        id S235340AbhE1NBQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 May 2021 09:01:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41292 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234224AbhE1NBI (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 28 May 2021 09:01:08 -0400
+Received: from mail-qk1-x72c.google.com (mail-qk1-x72c.google.com [IPv6:2607:f8b0:4864:20::72c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4262C061760
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 May 2021 05:59:32 -0700 (PDT)
+Received: by mail-qk1-x72c.google.com with SMTP id 124so3927493qkh.10
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 May 2021 05:59:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=marek-ca.20150623.gappssmtp.com; s=20150623;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=QkS67PNWJLrMlG0Eh1DFrl12I+MHfh0CuXPqyN2o9Jk=;
+        b=RoE5+ne+IEtUIwJTmkaKAmIW8xmlFFiZyFu+RXc8Xtk3xP3WS2cnNmBkmt0rGcwaq/
+         qb2PuixGE3rnUfQLjmTJ60OtadS6WqwIMVT+H21njXbcac9gUxl4ua+OaRnV6dmBPQGk
+         cCjgQ0xixLesraJ7oA4Tw1q7d1IW86tp8+qcQKQmnLrhSW2W5PPT0vIu/dA7120u6STL
+         lP8WtyfVW1q00VzSS8n+0giUcaceB12ncIClUcgKgzU6JWAGYtnVT6Fs+IJQA/a+kbEy
+         bbqVyqPOW610wOc+b5AIAlA2tuOsdLLB6pV2bXvQM/3xs04eGLgpqeh/VYCtDPtFmGeu
+         NfYQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=QkS67PNWJLrMlG0Eh1DFrl12I+MHfh0CuXPqyN2o9Jk=;
+        b=kH4FPpyUbkbS34QHgsqHQP40f3zjeo9k2/rLT+aOL9nrTNdh/pSaVgVh2qc5o4Q+qR
+         ap09adE505ltf6JwKsT9mXlRaYksbjY+R0GEffr/hXtiXL2Nedfp5prgpbuVjhbOTfJm
+         nczOlm8nFUZhxT7KH1JHQjLqi+sEHnjIWcSjSbsAZb2GUrpMxf/NguTZvrpeTiCyDqM1
+         /oGsLXhRO21Cy5Gcf0E/dyDXjQiCK7WSbNsUWM1abE9Y+eENTs3qJvzIyN5eFftjl2au
+         z31yx7FucNh0wOMRc8pEzuPAVveAri7OfAydvBssmWRw4z5SuTBKhwUANfenO4iu9DMa
+         1EKw==
+X-Gm-Message-State: AOAM533XvSGqgFE+q6oqd9Zy5ji+E5VJWnPItWQ3U3dzkh83nCWuYY4u
+        D0nnU2dNjA5dd27j7GaiYD0vAg==
+X-Google-Smtp-Source: ABdhPJzrZ6/fmuomvi1UY7oEviJSluEuJL6Gjb+/l1q88tzyHFRCD8yK7EweolQnqF3+MS3DPRFyUQ==
+X-Received: by 2002:a05:620a:745:: with SMTP id i5mr3821434qki.324.1622206771962;
+        Fri, 28 May 2021 05:59:31 -0700 (PDT)
+Received: from [192.168.0.189] (modemcable068.184-131-66.mc.videotron.ca. [66.131.184.68])
+        by smtp.gmail.com with ESMTPSA id d6sm3525975qkf.109.2021.05.28.05.59.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 28 May 2021 05:59:31 -0700 (PDT)
+Subject: Re: [Freedreno] [PATCH v2 2/2] dt-bindings: display: msm/dsi: add
+ qcom, dsi-phy-cphy-mode option
+To:     Rob Herring <robh@kernel.org>
+Cc:     "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, David Airlie <airlied@linux.ie>,
+        freedreno@lists.freedesktop.org,
+        open list <linux-kernel@vger.kernel.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <dri-devel@lists.freedesktop.org>, Rob Clark <robdclark@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>, Sean Paul <sean@poorly.run>
+References: <20210423172450.4885-1-jonathan@marek.ca>
+ <20210423172450.4885-3-jonathan@marek.ca>
+ <20210503171139.GA2011901@robh.at.kernel.org>
+From:   Jonathan Marek <jonathan@marek.ca>
+Message-ID: <0e083e31-d349-6d5c-048f-258414492b2c@marek.ca>
+Date:   Fri, 28 May 2021 08:57:59 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.2.2
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
-        micalg=pgp-sha256; protocol="application/pgp-signature"
+In-Reply-To: <20210503171139.GA2011901@robh.at.kernel.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
---=-=-=
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
+On 5/3/21 1:11 PM, Rob Herring wrote:
+> On Fri, Apr 23, 2021 at 01:24:40PM -0400, Jonathan Marek wrote:
+>> Document qcom,dsi-phy-cphy-mode option, which can be used to control
+>> whether DSI will operate in D-PHY (default) or C-PHY mode.
+> 
+> Given this is a standard MIPI thing, I think this needs to be a common
+> property. We already have phy bindings that use the phy cells to set the
+> phy type which I think you should use here. See
+> include/dt-bindings/phy/phy.h.
+> 
 
-Felipe Balbi <balbi@kernel.org> writes:
+Is it OK to simply change the option to something like "phy-mode = 
+<PHY_TYPE_DSI_CPHY>;"?
 
-> Bjorn Andersson <bjorn.andersson@linaro.org> writes:
->
->> On Tue 11 May 03:07 CDT 2021, Felipe Balbi wrote:
->>> Bjorn Andersson <bjorn.andersson@linaro.org> writes:
->>> >> diff --git a/arch/arm64/boot/dts/qcom/sm8150-microsoft-surface-duo.d=
-ts b/arch/arm64/boot/dts/qcom/sm8150-microsoft-surface-duo.dts
->> [..]
->>> >> +&remoteproc_adsp {
->>> >> +	status =3D "okay";
->>> >> +	firmware-name =3D "qcom/sm8150/adsp.mdt";
->>> >
->>> > For platforms where we have a Dragonboard or similar we push the
->>> > test-signed firmware to qcom/<platform>/. I presume that the Duo
->>> > wouldn't run on the test-signed firmware.
->>> >
->>> > So I think it's better to make this qcom/sm8150/ms-duo/adsp.mdt...from
->>> > the start.
->>>=20
->>> ms-duo would look odd. How about qcom/sm8150/microsoft/adsp.mdt?
->>>=20
->>
->> Sounds good to me.
->>
->> I do prefer using the non-split firmware package though (i.e. .mbn), if
->> you don't have it you can repack the .mdt + .bNN files using
->>
->> https://github.com/andersson/pil-squasher
->
-> Cool, I'll check if we have the non-split version and rename the FW
-> files.
-
-doesn't seem like pil-squasher works with our slpi image. Gives me a
-0-byte image :-)
-
-I would rather not touch the binaries if I can avoid it, though. Is this
-a strong requirement to use mbn rather than mdt?
-
-=2D-=20
-balbi
-
---=-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQFFBAEBCAAvFiEE9DumQ60WEZ09LIErzlfNM9wDzUgFAmCw2/8RHGJhbGJpQGtl
-cm5lbC5vcmcACgkQzlfNM9wDzUjrfAgApuDkuo7ilM35jjM+zYZqYsV63T0fUFGs
-DOqVIq6GmIoJdFBSrmuaqS4Xx5MjTA2ZwytylWzlpDVnir6seGgAG+ohGCAZ4kXT
-D8r6/l+ca47kn3q97enaTynb4adtfQfik0wVurmR2lB/jccLAK1nbVp4bhELl/35
-/joCYr+wYRf0sS3zwY7INzQiok9qXbWwfE5uRgthbO/fIzfewSyW3bZVHcNkYWpz
-aWw0J/ZCn+EwssfW1zqkG6H05lmMDvCVymG/i+sDtyHwppFGREArBdJwwu3qprXt
-l8C/HoCdnAAOYdEMsabgcyeMiPOvtVm7rXqGHBA+IyiFkcMvhgmsiw==
-=Q6Jz
------END PGP SIGNATURE-----
---=-=-=--
+(using phy-cells would be annoying to implement, with no benefit IMO)
