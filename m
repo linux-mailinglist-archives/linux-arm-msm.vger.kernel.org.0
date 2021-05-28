@@ -2,104 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 73FB1393E72
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 May 2021 10:11:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 58671393EB8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 May 2021 10:26:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234226AbhE1INC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 May 2021 04:13:02 -0400
-Received: from mail.kernel.org ([198.145.29.99]:43314 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230187AbhE1INB (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 May 2021 04:13:01 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id AE723613D4;
-        Fri, 28 May 2021 08:11:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1622189487;
-        bh=nTpZYj8T50obfP/gOWNJZOk7cTQMZWYDkJeXsHFzFt4=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=hAuswPccSd5PNajb21LhrXERffLP1B2ZQPKooIljM6YgSYm+/U9IVAhYOhPZ8rh/R
-         7WaGTPIX17NIS5GT06DuRHz+osEnYdWgdcxllLr3fKZ4HQvsj6ept6lbQH3nt0zf6n
-         qKKikdcVHcP/XBjvjpugzqf5wOXEYFGfNcq6h4N2V6ldAVNktj/uEd1YJ+uM1apKx8
-         DeW9erXiKubD6XycrnX/J2JW2El1OBguew5Ndl7MJoKPyGwdKqE9I6GVkk+rUX203p
-         Vgl82LbpUpN/U+R/am3yP+I3ydncLSmDNibwQfyb8G/7kycyIzBai3vuvHrYsSwyeB
-         Oe9T85pZO+ffw==
-Date:   Fri, 28 May 2021 10:11:23 +0200
-From:   Wolfram Sang <wsa@kernel.org>
-To:     Roja Rani Yarubandi <rojay@codeaurora.org>
-Cc:     swboyd@chromium.org, dianders@chromium.org,
-        saiprakash.ranjan@codeaurora.org, gregkh@linuxfoundation.org,
-        mka@chromium.org, skananth@codeaurora.org,
-        msavaliy@qti.qualcomm.com, skakit@codeaurora.org,
-        rnayak@codeaurora.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org,
-        sumit.semwal@linaro.org, linux-media@vger.kernel.org
-Subject: Re: [PATCH V11 1/2] i2c: i2c-qcom-geni: Add shutdown callback for i2c
-Message-ID: <YLClq6hZKUA1Y4ZW@kunai>
-Mail-Followup-To: Wolfram Sang <wsa@kernel.org>,
-        Roja Rani Yarubandi <rojay@codeaurora.org>, swboyd@chromium.org,
-        dianders@chromium.org, saiprakash.ranjan@codeaurora.org,
-        gregkh@linuxfoundation.org, mka@chromium.org,
-        skananth@codeaurora.org, msavaliy@qti.qualcomm.com,
-        skakit@codeaurora.org, rnayak@codeaurora.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org,
-        sumit.semwal@linaro.org, linux-media@vger.kernel.org
-References: <20210525131051.31250-1-rojay@codeaurora.org>
- <20210525131051.31250-2-rojay@codeaurora.org>
+        id S236179AbhE1I1e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 May 2021 04:27:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36024 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236365AbhE1I1d (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 28 May 2021 04:27:33 -0400
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E357C061574
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 May 2021 01:25:50 -0700 (PDT)
+Received: by mail-wm1-x333.google.com with SMTP id l11-20020a05600c4f0bb029017a7cd488f5so1930357wmq.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 May 2021 01:25:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=gmLVVcZ2N+hglXJfzP+ki9yu4ta4AFOaHMScj05dW+U=;
+        b=YAoqpL3LdNFFopz1uasqeeJnfrbce4oZDKGeD6db3hOHwdYp53iI0duwXQPztv/GmE
+         I4Hh2K/TgdG3sQ0vRDGJ9+Bs9YHQugHmPnachfpNqJMkKPxksAlUQ2NNN+lmSrk3cUZV
+         7VAgHwYTKt3ZhhNKuEON3ehfNGPv5svHxhundcdkdkoFl5DwSlf2MSV/R0bo9Zq3rIUo
+         t1OamaJklC1WVQi2NNH3C8fDmCi+kiFqcv4Z38re8XgG5k9pgM4D2Trv0qksR/rSE0Wi
+         fz8yLrSR0SeqAk2ruBTFnzRswveADYPx7UdhJIGBDeCkgqJkfnXGPIAENj4C3tO3uhLg
+         ubcg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=gmLVVcZ2N+hglXJfzP+ki9yu4ta4AFOaHMScj05dW+U=;
+        b=VQMShko4NkrVNTEHnydR8N1MWMRVH4rZW7AiuU+vSfneXVTzcLPcCBw+mj2/O+DKaY
+         xAmM/u7I3LW11WzMbh1oLS7fmz6+y920XQgs0BAi8cCfXvPh8z7usj7JNUfW5zNXBfCz
+         tbXnkycTJPeNpW40wWj2zAWBcJeUtwt7lvdmyltMvFl3aYPm7nc9Ea9DzUMUIwG8lMP7
+         Lqlg3DMyjpoNcJyA2yvICC5PS5N/JFI/q+4xjsZ4T2YNyl9/hs24nr3fzj+XK7+cEHxS
+         Gj77NhjqiQnXwOGZ162CGmeCMh6/OKe++k4XciuArEvAgf40eMuVvZTsOWEixmIszp6b
+         Ss5g==
+X-Gm-Message-State: AOAM533hSZXc2BbiYzlt6cF+GNiZhx5wxh80gpQ0Cc56jrXhGvLZmil1
+        BMyzZRtgPzbDYjPZ/U0x495Wjg==
+X-Google-Smtp-Source: ABdhPJx8E7fPHSUVSThV6qHpCVgZr326Eid66C+rC24e58hcLs6jPFnhaUX9sTcHUVNoyX9aVvHSDA==
+X-Received: by 2002:a05:600c:358f:: with SMTP id p15mr12336004wmq.14.1622190348852;
+        Fri, 28 May 2021 01:25:48 -0700 (PDT)
+Received: from [192.168.86.34] (cpc86377-aztw32-2-0-cust226.18-1.cable.virginm.net. [92.233.226.227])
+        by smtp.googlemail.com with ESMTPSA id 60sm6300907wrq.14.2021.05.28.01.25.47
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 28 May 2021 01:25:48 -0700 (PDT)
+Subject: Re: [PATCH 1/2] nvmem: core: constify
+ nvmem_cell_read_variable_common() return value
+To:     Douglas Anderson <dianders@chromium.org>
+Cc:     Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, Stephen Boyd <swboyd@chromium.org>,
+        Joe Perches <joe@perches.com>, linux-kernel@vger.kernel.org
+References: <20210521140031.1.Ibaca694aedfaff823feefa06b29ae746c641dd1a@changeid>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Message-ID: <269ec480-e4b8-30c8-db3d-f45095fa1d46@linaro.org>
+Date:   Fri, 28 May 2021 09:25:47 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="ek337UlQrmDDG+TY"
-Content-Disposition: inline
-In-Reply-To: <20210525131051.31250-2-rojay@codeaurora.org>
+In-Reply-To: <20210521140031.1.Ibaca694aedfaff823feefa06b29ae746c641dd1a@changeid>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
---ek337UlQrmDDG+TY
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Tue, May 25, 2021 at 06:40:50PM +0530, Roja Rani Yarubandi wrote:
-> If the hardware is still accessing memory after SMMU translation
-> is disabled (as part of smmu shutdown callback), then the
-> IOVAs (I/O virtual address) which it was using will go on the bus
-> as the physical addresses which will result in unknown crashes
-> like NoC/interconnect errors.
->=20
-> So, implement shutdown callback for i2c driver to suspend the bus
-> during system "reboot" or "shutdown".
->=20
-> Fixes: 37692de5d523 ("i2c: i2c-qcom-geni: Add bus driver for the Qualcomm=
- GENI I2C controller")
-> Signed-off-by: Roja Rani Yarubandi <rojay@codeaurora.org>
+On 21/05/2021 22:00, Douglas Anderson wrote:
+> The caller doesn't modify the memory pointed to by the pointer so it
+> can be const.
+> 
+> Suggested-by: Stephen Boyd <swboyd@chromium.org>
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> ---
+> 
 
-Do we need patch 1 after patch 2 was applied? I always thought all
-devices are suspended before shutdown/reboot?
+Applied both thanks,
 
-Nice to see that 'mark_adapter_suspended' becomes useful again!
-
-
---ek337UlQrmDDG+TY
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmCwpasACgkQFA3kzBSg
-KbYxaQ//ZoP6wYYkxIedf6wA51iLmKm16cI2fTF5PkMosb8js+bEB0ffK5NryrVX
-zPdkmFNLHC9TsKp003YeBSdfJIAv8QQwdB9gHq4rscCcZyuFRgmjGxPPOlZzL7ce
-qddFnVVond15qVi1DcdW/gap6OqK0QvjX4ZMEDhi38QpXtLC+cZEiZgjQkqNxwXG
-eeVYE/nEO5I368PBfIfTRtjWSlVoJnWKYzfEoysm+cgkaANQwxp2ElI3c2P3qXTU
-VwCPZFAS2cDk1LQSdmMq4ugqEyekBkBFxubTFDeCPQR7XBlNE1VqecTF1h5GGU+X
-ZgCHltEjukcPyPbr1ocY7gtUnH8xpwDjyWa1yKjariIO9IwtMAgSgYI+Nt0ieQZv
-3snvjuVVcvmFYteRfXf4u4CK+/52bSLKsie/bcI3Nhrk58hC0zdTO2OXyvr9LeBg
-GzcIQoRbc+PIS0auopwnSXehNDesDLhVO3E0KQ1qu+et2z1vCchypCJVauzT97Al
-n4JuK0KTBvVejTy2Z/VaMQBHBbjkFcP+X64jyezJMvyV4NMjkBOWZ44ckHWjfxbs
-/7C6YPhC+BLxcQN82lpZrK/+cPAjaqga7i1OJyKit1iWWowHpU8lRsYMySUAf97w
-L7N/etgPoDeIjotZNWZ0GUeXilAH3/CaczUuh7lLe+kL9Vsb1O0=
-=3DXB
------END PGP SIGNATURE-----
-
---ek337UlQrmDDG+TY--
+--srini
+>   drivers/nvmem/core.c | 10 +++++-----
+>   1 file changed, 5 insertions(+), 5 deletions(-)
+> 
+> diff --git a/drivers/nvmem/core.c b/drivers/nvmem/core.c
+> index f9c9c9859919..4868aa876e1b 100644
+> --- a/drivers/nvmem/core.c
+> +++ b/drivers/nvmem/core.c
+> @@ -1609,9 +1609,9 @@ int nvmem_cell_read_u64(struct device *dev, const char *cell_id, u64 *val)
+>   }
+>   EXPORT_SYMBOL_GPL(nvmem_cell_read_u64);
+>   
+> -static void *nvmem_cell_read_variable_common(struct device *dev,
+> -					     const char *cell_id,
+> -					     size_t max_len, size_t *len)
+> +static const void *nvmem_cell_read_variable_common(struct device *dev,
+> +						   const char *cell_id,
+> +						   size_t max_len, size_t *len)
+>   {
+>   	struct nvmem_cell *cell;
+>   	int nbits;
+> @@ -1655,7 +1655,7 @@ int nvmem_cell_read_variable_le_u32(struct device *dev, const char *cell_id,
+>   				    u32 *val)
+>   {
+>   	size_t len;
+> -	u8 *buf;
+> +	const u8 *buf;
+>   	int i;
+>   
+>   	buf = nvmem_cell_read_variable_common(dev, cell_id, sizeof(*val), &len);
+> @@ -1686,7 +1686,7 @@ int nvmem_cell_read_variable_le_u64(struct device *dev, const char *cell_id,
+>   				    u64 *val)
+>   {
+>   	size_t len;
+> -	u8 *buf;
+> +	const u8 *buf;
+>   	int i;
+>   
+>   	buf = nvmem_cell_read_variable_common(dev, cell_id, sizeof(*val), &len);
+> 
