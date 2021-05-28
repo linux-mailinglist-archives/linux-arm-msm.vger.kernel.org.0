@@ -2,131 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BA3D2394523
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 May 2021 17:33:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3C663394654
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 May 2021 19:21:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233309AbhE1Pf1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 May 2021 11:35:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47702 "EHLO
+        id S230215AbhE1RXK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 May 2021 13:23:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43804 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233841AbhE1Pf1 (ORCPT
+        with ESMTP id S230193AbhE1RXJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 May 2021 11:35:27 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8E82C061574
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 May 2021 08:33:50 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id i9so5852252lfe.13
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 May 2021 08:33:50 -0700 (PDT)
+        Fri, 28 May 2021 13:23:09 -0400
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D35F5C061760
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 May 2021 10:21:34 -0700 (PDT)
+Received: by mail-wm1-x329.google.com with SMTP id l18-20020a1c79120000b0290181c444b2d0so2788882wme.5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 May 2021 10:21:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:from:to:cc:references:message-id:date:user-agent
+        d=nexus-software-ie.20150623.gappssmtp.com; s=20150623;
+        h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=WQAIy/cqL6HY4QoJk9rlb0qr88kUAFg5eiEbdRAxrlQ=;
-        b=QkHKGPK2Ney5fZb76pO4em6bYAF5+riaGgUaRkUFbq5A/iWgYV6W/HDuMeKQAo23hc
-         qPUCuwiaKnIbdN12ctahycJ7hOEpySONkQYuDhetagXKj87WOnX4BKQuOGE749xD6Ds3
-         tyvsnrmq1Ki7YyxzVPY1rsFu3YVSEGD069xcHdG58e7/o1aMLexDeHddfunA+akSgodT
-         o3KJdKIOvtU0WofEi0wF+0N55Sk+gruQ7zCuj8CkuHWx2ZVtiMn7mQBZ3bPvDtfCHKpd
-         tcfT6zsM3D7Nv5tPodqbsn3IV2l7v0SeZ/4ZsK+Jo0iQqjouqrv35EDSgjtmhKp9rH1h
-         /OYg==
+        bh=scHG+8hUPjtbaxqAIRrNTESjQXzSH5JKl2wenbFc2w8=;
+        b=eFsE+o2qmtozyY3vcZ5kChHif66Zz7w0LGa+0qR/yny+Eq63joHpR0T9uLI7KYeDwe
+         E/97imlGcQldR/Xs1VjBGkSKYHemWveFoMY1O4VqByLTtJKKSK6tZ31V4nclGy66T01h
+         3kt+osmVafd4clK7SkYS0fM4BhQniaKp5vg+5iOM44Zxdx2VW3oTmd9r2KLRpcQg28QU
+         IMX5ajbh8K8O+uf/aqgjf7IsS5wqUrsoSjtQUbApxNSNZHHm7FTKQ0Hs6uMWGZ7PpiEs
+         LsTQURHghAxQmEg8EaZu/1n+ZzI0d/7fCxWVszp59txlXGMQlipYpQgRHUruRizU2epx
+         9nQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=WQAIy/cqL6HY4QoJk9rlb0qr88kUAFg5eiEbdRAxrlQ=;
-        b=IwvWxkpwppixldNz+ZzfECQgEPzCMLdlPNDgwRtym8qE1YqlfQVvIiEs/RJ61LVhpx
-         /11uaF7+aNXgZQNHHZTmiwaPL4986MVj/aXDNNxmTqHuXohfJdZIWjz2n8mjHdHk7lop
-         +i4xxnVqzBR9B5LsC9bUSg4VnFgxMKp2Do0pABbDzB9p67CTrRfvZqcIOQZpczEtVs5e
-         kmeONxg79jYqT72lVbjpEuWhuIKhgqGx3XFuXo8RpPiOyAVs3Exqn/DSdFYWMhdgqnsA
-         t1CgrQUoepkuoSyriUn0SbWcPRve6D2SdUTh8rdFTbhektW9/UoDDF66al0gSJDuDElE
-         Doqw==
-X-Gm-Message-State: AOAM531uKkyFw0FSasxYkZn7/byxg3wwTMYLr6W5nO2HIcNA6l3pcOGn
-        Cas8xmUu5Cc5xlwUj8C7nc8IZA==
-X-Google-Smtp-Source: ABdhPJz7FYPsBx3F49MboSKfy0LCjkLr9TrmGCWDRjOYeVHrq4QgzrKnxy+VEzPDs0Oj5pw0ALKxsw==
-X-Received: by 2002:a05:6512:49d:: with SMTP id v29mr6291509lfq.185.1622216029314;
-        Fri, 28 May 2021 08:33:49 -0700 (PDT)
-Received: from [192.168.43.7] ([94.25.229.79])
-        by smtp.gmail.com with ESMTPSA id o2sm562620ljp.60.2021.05.28.08.33.48
+        bh=scHG+8hUPjtbaxqAIRrNTESjQXzSH5JKl2wenbFc2w8=;
+        b=RmRVPDZGgOUQjBxK1m37SHvcYhW4Or2K7nKWDQR5PrpJnZ1GPwWhxPs6GFEIQ/amgV
+         WIoq/9soIaPKQSZ2OzOf16xzSiA8CAl7LABH44l6MyZ2gL+aOdytCUKS0LtexB2tj7yy
+         aKNOrMX9R8luH+tlu9UpAT7/fDq9YBacTMyXEtX0iEAJdmz+A/lnIAkgvtjicC1gC1p1
+         UO/uBKAT/m0xhhqw9de6VLX4nKrS98qZQ5FPweW45IZabfEJ63vQLSNUL8e4uagMehyR
+         rbSFEdy2oWdDPZjC+f2HZhnnl6p9CiBSbX5klZjWxFP6fPZvpkI45vrbtgEJlB57TMHr
+         EmGw==
+X-Gm-Message-State: AOAM530Z+ML6bByFeFnqiMI+9Ws9TC/EXX1hI8dZ9+/pStxMWpdCYSga
+        NkeYAY2K0oc+IE2ALucrdrIQ3A==
+X-Google-Smtp-Source: ABdhPJwDSWZ04EbaFWGZL6KGWkl1fL/jAW11ceb1vkO71Tn+4xdhReJ0jxgiwkSAbkpbB5CyCxToAw==
+X-Received: by 2002:a05:600c:21c3:: with SMTP id x3mr9311858wmj.131.1622222493417;
+        Fri, 28 May 2021 10:21:33 -0700 (PDT)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id z17sm8767546wrt.81.2021.05.28.10.21.32
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 28 May 2021 08:33:48 -0700 (PDT)
-Subject: Re: [PATCH v2 3/4] arm64: dts: sdm845: move bus clock to mdp node for
- sdm845 target
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     Jonathan Marek <jonathan@marek.ca>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        devicetree@vger.kernel.org
-References: <20210407150157.801210-1-dmitry.baryshkov@linaro.org>
- <20210407150157.801210-4-dmitry.baryshkov@linaro.org>
-Message-ID: <2dc79aad-33cd-7b17-368f-d52d60d46811@linaro.org>
-Date:   Fri, 28 May 2021 18:33:47 +0300
+        Fri, 28 May 2021 10:21:32 -0700 (PDT)
+Subject: Re: [PATCH] venus: helper: do not set constrained format for UBWC
+To:     Mansur Alisha Shaik <mansur@codeaurora.org>,
+        linux-media@vger.kernel.org, stanimir.varbanov@linaro.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        vgarodia@codeaurora.org, dikshita@codeaurora.org
+References: <1622195288-18541-1-git-send-email-mansur@codeaurora.org>
+From:   Bryan O'Donoghue <pure.logic@nexus-software.ie>
+Message-ID: <a66e00f2-af3a-9550-0779-625152cc2719@nexus-software.ie>
+Date:   Fri, 28 May 2021 18:23:16 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.10.0
+ Thunderbird/78.7.1
 MIME-Version: 1.0
-In-Reply-To: <20210407150157.801210-4-dmitry.baryshkov@linaro.org>
+In-Reply-To: <1622195288-18541-1-git-send-email-mansur@codeaurora.org>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 07/04/2021 18:01, Dmitry Baryshkov wrote:
-> Move the bus clock to mdp device node,in order to facilitate bus band
-> width scaling on sdm845 target.
+On 28/05/2021 10:48, Mansur Alisha Shaik wrote:
+> Do not set constrained format explicitly for UBWC
 > 
-> The parent device MDSS will not vote for bus bw, instead the vote will
-> be triggered by mdp device node. Since a minimum vote is required to
-> turn on bus clock, move the clock node to mdp device from where the
-> votes are requested.
+> Signed-off-by: Mansur Alisha Shaik <mansur@codeaurora.org>
 
-drm/msm patches were merged through the msm tree (targeting 5.13). 
-Shouldn't we also merge these two patches (targeting 5.13 as fixes or 5.14)?
+Could you give a little bit more detail on why, what the side effects are ?
 
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Should this be a Fixes: ?
+
 > ---
->   arch/arm64/boot/dts/qcom/sdm845.dtsi | 8 ++++----
->   1 file changed, 4 insertions(+), 4 deletions(-)
+>   drivers/media/platform/qcom/venus/helpers.c | 4 ++++
+>   1 file changed, 4 insertions(+)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> index 7395ef20b90e..55704804c2ca 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> @@ -4136,9 +4136,8 @@ mdss: mdss@ae00000 {
->   			power-domains = <&dispcc MDSS_GDSC>;
+> diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/platform/qcom/venus/helpers.c
+> index b813d6dba..e4b8a2a 100644
+> --- a/drivers/media/platform/qcom/venus/helpers.c
+> +++ b/drivers/media/platform/qcom/venus/helpers.c
+> @@ -1138,8 +1138,12 @@ int venus_helper_set_format_constraints(struct venus_inst *inst)
+>   	if (!IS_V6(inst->core))
+>   		return 0;
 >   
->   			clocks = <&gcc GCC_DISP_AHB_CLK>,
-> -				 <&gcc GCC_DISP_AXI_CLK>,
->   				 <&dispcc DISP_CC_MDSS_MDP_CLK>;
-> -			clock-names = "iface", "bus", "core";
-> +			clock-names = "iface", "core";
->   
->   			assigned-clocks = <&dispcc DISP_CC_MDSS_MDP_CLK>;
->   			assigned-clock-rates = <300000000>;
-> @@ -4166,11 +4165,12 @@ mdss_mdp: mdp@ae01000 {
->   				      <0 0x0aeb0000 0 0x2008>;
->   				reg-names = "mdp", "vbif";
->   
-> -				clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
-> +				clocks = <&gcc GCC_DISP_AXI_CLK>,
-> +					 <&dispcc DISP_CC_MDSS_AHB_CLK>,
->   					 <&dispcc DISP_CC_MDSS_AXI_CLK>,
->   					 <&dispcc DISP_CC_MDSS_MDP_CLK>,
->   					 <&dispcc DISP_CC_MDSS_VSYNC_CLK>;
-> -				clock-names = "iface", "bus", "core", "vsync";
-> +				clock-names = "gcc-bus", "iface", "bus", "core", "vsync";
->   
->   				assigned-clocks = <&dispcc DISP_CC_MDSS_MDP_CLK>,
->   						  <&dispcc DISP_CC_MDSS_VSYNC_CLK>;
+> +	if (inst->opb_fmt == HFI_COLOR_FORMAT_NV12_UBWC)
+> +		return 0;
+> +
+>   	pconstraint.buffer_type = HFI_BUFFER_OUTPUT2;
+>   	pconstraint.num_planes = 2;
+> +
+
+Additional newline should be removed.
+
+>   	pconstraint.plane_format[0].stride_multiples = 128;
+>   	pconstraint.plane_format[0].max_stride = 8192;
+>   	pconstraint.plane_format[0].min_plane_buffer_height_multiple = 32;
 > 
 
-
--- 
-With best wishes
-Dmitry
+---
+bod
