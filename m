@@ -2,106 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 40A7F394D1C
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 May 2021 18:25:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E1C65394D38
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 May 2021 18:50:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229778AbhE2Q0t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 29 May 2021 12:26:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32832 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229774AbhE2Q0t (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 29 May 2021 12:26:49 -0400
-Received: from mail-oi1-x22e.google.com (mail-oi1-x22e.google.com [IPv6:2607:f8b0:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 861F8C061760
-        for <linux-arm-msm@vger.kernel.org>; Sat, 29 May 2021 09:25:12 -0700 (PDT)
-Received: by mail-oi1-x22e.google.com with SMTP id d21so7540613oic.11
-        for <linux-arm-msm@vger.kernel.org>; Sat, 29 May 2021 09:25:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=jFAfU25Qj+cRqC0XFUI+YM1/RbEp8mIA/HiLs0SBEww=;
-        b=g9Yqyl1WpDSv/0jO/8xVebd6wKxwc1+dm5MG4cr1gcfh4MVIFuW2eIp16PL+ioaq6b
-         5L5ImayrkmN0Piha2bK33MCQU3H32blsZiLieEi1ooIigoVz+L6cfTU1HGSLnvcxtrHv
-         v08QobuUW7y4BwxG3lspItWjIKotSoSKQQyQAOqiJ/4/y0PAXxzBosA0FMd3d6T6Dg1U
-         Q0JeBHx1LmMoXg//RBbtD375VoYoI5ABs73doALxcRvCAFKoXvWLD/gsfON7XmFt52F1
-         R1wxRFB5cLaFR8fnh9e+VBZYKGjaFuzlgwE6AX8eMdU1BLkzT+Hn0O574yFETWeYl7VQ
-         x1eA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=jFAfU25Qj+cRqC0XFUI+YM1/RbEp8mIA/HiLs0SBEww=;
-        b=ey02VyBf2NWkCUFNphFcPElrcFgTz10fxJr+9zESmZX7jft/2hWQ3HD3iXRAwDSuxe
-         nxzKqZ8SYBDMQMRAYzUoUtH5/06kV/v/aJt2a6EHloeFE8OW4a1NBj5wRryzXRvuGp5x
-         1EKOEIiSo04ejXwF+Od3YVslzTTvwmpJQOS+L8q//mXD3uVgykrHBPRQ21YYDp9ulDVz
-         EAKofgCAY6sLOPTaCZx8faeD8fVquyD7GecLXP1uHhi3nSoXZzDizKutk4c7f2kLVY8y
-         J4xn3g8h0x2zTg6eb/o7rhdwXCJ3OMPRbpj0rZDKWgAytCYxIHXuBvawpZZkSoQgK0ES
-         LCDQ==
-X-Gm-Message-State: AOAM533eg9lo0MRSvJiUN5qQvm7yOBrD3GJQ5wveR0usrTSOu4RqFZ5U
-        RQn72zhyF57OJzNNTjiafR0oqQ==
-X-Google-Smtp-Source: ABdhPJzBeIa8BbBikxQvxrQptxn7sm9GORyImFhfYm4PvpYKjjqs0wQnZEDwWHVXmVQL8iJtsNq8vw==
-X-Received: by 2002:aca:488f:: with SMTP id v137mr9350654oia.173.1622305511911;
-        Sat, 29 May 2021 09:25:11 -0700 (PDT)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id e21sm1750706oii.23.2021.05.29.09.25.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 29 May 2021 09:25:11 -0700 (PDT)
-Date:   Sat, 29 May 2021 11:25:09 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     vkoul@kernel.org, kishon@ti.com, robh+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH 1/3] dt-bindings: phy: qcom,qmp: Add binding for SDX55
- PCIe PHY
-Message-ID: <YLJq5R4uMYRDppmv@builder.lan>
-References: <20210427065400.18958-1-manivannan.sadhasivam@linaro.org>
- <20210427065400.18958-2-manivannan.sadhasivam@linaro.org>
+        id S229989AbhE2Qvk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 29 May 2021 12:51:40 -0400
+Received: from mail.kernel.org ([198.145.29.99]:45234 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229901AbhE2Qvj (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 29 May 2021 12:51:39 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPS id 4D466610FA;
+        Sat, 29 May 2021 16:50:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1622307003;
+        bh=y08og2W2xJjaqSvKiskAwITF/FKJ4xzzGFRrrPmOVbU=;
+        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+        b=bus5FzIpHRukGXcJ+7pJvAbrjrDzYIMGbj8veJK7eB1om5LNboiqM65dmm/6NoHxr
+         yTGkbQ/jCchFRNcHbbsQH4F+zn+tqOkugOWOnBF5Hi0Ci7AWFP2KnmX8Ml0JObJXDb
+         0iZSeUWtF8nR5oqlQg10ay7UmLVyFtBs59MkXPSb2IxnClIMSYQ435FtnjU3uwmRxq
+         XY3hxuBnipfimxvWV72Xg/t5xS3MNASS6o0GzS8gXhD9u3bMmi6AAxBCYOPFvumDSX
+         Z3S/n1VnmgZrhRAGjvUxQsgusa6NjbifRyr9/UpZe7hpIcu9OKttVs338oXnKFL0fW
+         s2cAgs+WvKuFw==
+Received: from pdx-korg-docbuild-2.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id 4834260987;
+        Sat, 29 May 2021 16:50:03 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210427065400.18958-2-manivannan.sadhasivam@linaro.org>
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH 1/2] ARM: dts: qcom: sdx55-t55: Represent secure-regions as
+ 64-bit elements
+From:   patchwork-bot+linux-arm-msm@kernel.org
+Message-Id: <162230700329.5097.11274193755063589702.git-patchwork-notify@kernel.org>
+Date:   Sat, 29 May 2021 16:50:03 +0000
+References: <20210512050141.43338-1-manivannan.sadhasivam@linaro.org>
+In-Reply-To: <20210512050141.43338-1-manivannan.sadhasivam@linaro.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 27 Apr 01:53 CDT 2021, Manivannan Sadhasivam wrote:
+Hello:
 
-> Add devicetree binding for PCIe PHY found in Qcom SDX55 platform.
+This series was applied to qcom/linux.git (refs/heads/for-next):
+
+On Wed, 12 May 2021 10:31:40 +0530 you wrote:
+> The corresponding MTD code expects the regions to be of 64-bit elements.
+> Hence, prefix "/bits/ 64", otherwise the regions will not be parsed
+> correctly.
 > 
-
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-
-Regards,
-Bjorn
-
+> Fixes: 3263d4be5788 ("ARM: dts: qcom: sdx55: Add basic devicetree support for Thundercomm T55")
 > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> ---
->  Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml | 2 ++
->  1 file changed, 2 insertions(+)
 > 
-> diff --git a/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml
-> index 626447fee092..d5162d58a479 100644
-> --- a/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml
-> +++ b/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml
-> @@ -43,6 +43,7 @@ properties:
->        - qcom,sm8350-qmp-ufs-phy
->        - qcom,sm8350-qmp-usb3-phy
->        - qcom,sm8350-qmp-usb3-uni-phy
-> +      - qcom,sdx55-qmp-pcie-phy
->        - qcom,sdx55-qmp-usb3-uni-phy
->  
->    reg:
-> @@ -301,6 +302,7 @@ allOf:
->              enum:
->                - qcom,sdm845-qhp-pcie-phy
->                - qcom,sdm845-qmp-pcie-phy
-> +              - qcom,sdx55-qmp-pcie-phy
->                - qcom,sm8250-qmp-gen3x1-pcie-phy
->                - qcom,sm8250-qmp-gen3x2-pcie-phy
->                - qcom,sm8250-qmp-modem-pcie-phy
-> -- 
-> 2.25.1
-> 
+> [...]
+
+Here is the summary with links:
+  - [1/2] ARM: dts: qcom: sdx55-t55: Represent secure-regions as 64-bit elements
+    https://git.kernel.org/qcom/c/619d3c4bf8f3
+  - [2/2] ARM: dts: qcom: sdx55-telit: Represent secure-regions as 64-bit elements
+    https://git.kernel.org/qcom/c/0fa1baeedf06
+
+You are awesome, thank you!
+--
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
+
