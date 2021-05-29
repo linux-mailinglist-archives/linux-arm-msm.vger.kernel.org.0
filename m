@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 88BB739497E
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 May 2021 02:25:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0B24539497F
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 May 2021 02:25:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229549AbhE2A0y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 May 2021 20:26:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52176 "EHLO
+        id S229594AbhE2A0z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 May 2021 20:26:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52186 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229528AbhE2A0y (ORCPT
+        with ESMTP id S229528AbhE2A0z (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 May 2021 20:26:54 -0400
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9CABCC061574
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 May 2021 17:25:17 -0700 (PDT)
-Received: by mail-lj1-x22b.google.com with SMTP id e2so7365891ljk.4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 May 2021 17:25:17 -0700 (PDT)
+        Fri, 28 May 2021 20:26:55 -0400
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45B39C061760
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 May 2021 17:25:19 -0700 (PDT)
+Received: by mail-lf1-x136.google.com with SMTP id q1so7763343lfo.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 May 2021 17:25:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=BODLqdEHCra9qUlSEftQ4xsxlh1+FODYRdHQRB86f28=;
-        b=uGbtAPxEvoyvx74MWS2o9kIhLaCxR9NZQ6OmOv9oc9hu1TLxHNNAPYn3gzlIIJmx3h
-         XQgbiB6FlZeDbiJJbKaKLSedqzztcCnXFEcc95yl3p1abMg+6eJOXmw/L6h4R+IV9o6C
-         XQesOeUmZMXHiEWXCfniwHipBZ8c/7VZhLxfplhdeg+Gi+VCzAEeSV70U2Whz/KT/gff
-         aP+9LDkHVzzE7Ssm6TA3El5AQEnaKCe0sgboENoAm609RhU7dziYGl8A8KtOC88joMS1
-         7iUtAC0eLTUnqx0D7SRsf+FnZbjq25dNJ4X4UWLyV/5j5iaNw7aaITt6uCukQEazBtei
-         OTKg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=xjGr8zrVoodPGoZ+CmB2tC5N2dK4RzlqkPi3DgmLbfg=;
+        b=VuDOOtoBvA0CaQnrlfhc8IsfATwRDUEvlzzBZ+oA7N9cflulstBufYmDbG/evOUwLb
+         x/g7Dpc9j0x7S1V8GC2Uu6INlHOjwtoPQeVhxQU72H8cWed6G1pVYkD2IvdIfzdJGGam
+         sFU2jDtsrFd7Me2icggO5qUR5lyIcjnqJr49M0Q7E+rcymTOok69wHghbv34/dFfSqe0
+         VOvMfgVKftK0HWRR4apYZ8IxhiISXZrx/uzTw1cn+4jzKVB9dn6O0b8/YPFMkEPunsXc
+         1qH1oWiFnqyGFBXFmN0rThBWHjF54fISqox8BviWBr62tkyxuhZaRpx6Hn2ZfmGIfLx1
+         1NTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=BODLqdEHCra9qUlSEftQ4xsxlh1+FODYRdHQRB86f28=;
-        b=oN2VLN1vnjsHXlNYQ1FeyVo8wrCcKdUlNnl+3TnxorSfJF2SULZNdD50ZU00pIq7pS
-         dOlBcQVtE5TqgURLBHo1z5SDStbyG8/e/uNfZNCqBG3x+2JB46pyGIF6DW0AsBHz/0ER
-         EdPdXVBAeGCJ3eWWWuFh3ZhSrJWeJqKzX5J/hiM4YzonY8Rf2a9V8s17At8cyTuy0Ax9
-         aan1XkAZUzRPOvaoz8/51DkarknwZngmYx/bRh2Z3ZY++F4+49jrXoh7kwxfvkKFbsxY
-         5mp8fuB6YAzkcWRzZdE5xdZcmvYiO5DDPG2grlJd0TcR5UdPK9IUiWPLXcIpGgOrpk0F
-         JmmA==
-X-Gm-Message-State: AOAM5309DHxszXmvT7PWoVghjK05TLw6bucN/6c+B2/s+IG3WGQ8jT2m
-        481aH9JU7eP4Alvb7ry2Lym2ZQ==
-X-Google-Smtp-Source: ABdhPJwjvewfZRMsnIYRlASELtzoZFUlolzG/MKKgogWsG4jMl6ZWBKnxfp4ESok53GK3bD6sdVxMA==
-X-Received: by 2002:a2e:7a17:: with SMTP id v23mr8274083ljc.99.1622247915928;
-        Fri, 28 May 2021 17:25:15 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=xjGr8zrVoodPGoZ+CmB2tC5N2dK4RzlqkPi3DgmLbfg=;
+        b=YxPDtY1DRK4eJORFUpkQtjhTn1aIxS+P7HwSjXTOup6zx5W9Cal3EbNX2wO77ODW7y
+         aQJjlQNjcV00MIi5xDn1r8BAwwYOoJQ6z6q0Z+l8pm/6a6rO4MJEfhXnBkgrLZ8NYCIb
+         8ruIZTSv1kPq22F1h95qUuSgw/sdg+NLy7IQHDOl+dMSgHXxCVwz4t71RAImJ0s0V/1v
+         NhRc70UvAoR7DqSm9PHn/v5OyqhvGwTgKDkkGYWscZzAF8Xq4LhRXXN+m8N2ft8peUIB
+         oboPtsK9WvLZPRWXEfL0NPV6hM6478xmXx5Hc+wqpfVe0cfVexKVHw7XHqj8x858yly4
+         On1w==
+X-Gm-Message-State: AOAM530Ld+XU9cY+6mIVovsUI9nz3A9MYcPCHQbHVxmyh6ROgUPWMJDT
+        XqGahtYF0XH13+eQ3UWZ/1l1UQ==
+X-Google-Smtp-Source: ABdhPJw22wrdYu0yhkTcrdRn6v+jdyyDFi0zoH9wEQAMDNpmWZz54XvGUxbZPywma0aMj80RT+o5xw==
+X-Received: by 2002:a19:ee15:: with SMTP id g21mr7601957lfb.338.1622247916549;
+        Fri, 28 May 2021 17:25:16 -0700 (PDT)
 Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id c8sm701078ljd.82.2021.05.28.17.25.15
+        by smtp.gmail.com with ESMTPSA id c8sm701078ljd.82.2021.05.28.17.25.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 May 2021 17:25:15 -0700 (PDT)
+        Fri, 28 May 2021 17:25:16 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <abhinavk@codeaurora.org>,
@@ -57,24 +57,87 @@ Cc:     Jonathan Marek <jonathan@marek.ca>,
         David Airlie <airlied@linux.ie>,
         Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
         dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: [RFC 0/8] drm/msm: split DSI PHY to generic PHY subsystem
-Date:   Sat, 29 May 2021 03:25:00 +0300
-Message-Id: <20210529002508.3839467-1-dmitry.baryshkov@linaro.org>
+Subject: [RFC 1/8] drm/msm/dsi: make msm_dsi_phy_pll_restore_state static function
+Date:   Sat, 29 May 2021 03:25:01 +0300
+Message-Id: <20210529002508.3839467-2-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.30.2
+In-Reply-To: <20210529002508.3839467-1-dmitry.baryshkov@linaro.org>
+References: <20210529002508.3839467-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This patchseries is an RFC for splitting Qualcomm DSI PHY from drm/msm
-driver to generic PHY subsystem.
+msm_dsi_phy_pll_restore_state() is only called from msm_dsi_phy_enable(),
+so there is no need to export it. Mark it static.
 
-Dependencies:
- - msm_disp_snapshot fix at https://lore.kernel.org/linux-arm-msm/20210527220330.3364716-1-dmitry.baryshkov@linaro.org/
- - Patches 1-7 from https://lore.kernel.org/linux-arm-msm/20210515131217.1540412-1-dmitry.baryshkov@linaro.org/
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ drivers/gpu/drm/msm/dsi/dsi.h         |  1 -
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy.c | 30 +++++++++++++--------------
+ 2 files changed, 15 insertions(+), 16 deletions(-)
 
-PATCH 8 from this series is quite big, it might be split further if
-required.
-
+diff --git a/drivers/gpu/drm/msm/dsi/dsi.h b/drivers/gpu/drm/msm/dsi/dsi.h
+index 876053ba615b..c467ad609453 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi.h
++++ b/drivers/gpu/drm/msm/dsi/dsi.h
+@@ -170,7 +170,6 @@ void msm_dsi_phy_disable(struct msm_dsi_phy *phy);
+ void msm_dsi_phy_set_usecase(struct msm_dsi_phy *phy,
+ 			     enum msm_dsi_phy_usecase uc);
+ void msm_dsi_phy_pll_save_state(struct msm_dsi_phy *phy);
+-int msm_dsi_phy_pll_restore_state(struct msm_dsi_phy *phy);
+ void msm_dsi_phy_snapshot(struct msm_disp_state *disp_state, struct msm_dsi_phy *phy);
+ 
+ #endif /* __DSI_CONNECTOR_H__ */
+diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
+index f479e37d6428..36878504bbb8 100644
+--- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
++++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
+@@ -559,6 +559,21 @@ static void dsi_phy_disable_resource(struct msm_dsi_phy *phy)
+ 	pm_runtime_put_autosuspend(&phy->pdev->dev);
+ }
+ 
++static int msm_dsi_phy_pll_restore_state(struct msm_dsi_phy *phy)
++{
++	int ret;
++
++	if (phy->cfg->ops.restore_pll_state && phy->state_saved) {
++		ret = phy->cfg->ops.restore_pll_state(phy);
++		if (ret)
++			return ret;
++
++		phy->state_saved = false;
++	}
++
++	return 0;
++}
++
+ static const struct of_device_id dsi_phy_dt_match[] = {
+ #ifdef CONFIG_DRM_MSM_DSI_28NM_PHY
+ 	{ .compatible = "qcom,dsi-phy-28nm-hpm",
+@@ -838,21 +853,6 @@ void msm_dsi_phy_pll_save_state(struct msm_dsi_phy *phy)
+ 	}
+ }
+ 
+-int msm_dsi_phy_pll_restore_state(struct msm_dsi_phy *phy)
+-{
+-	int ret;
+-
+-	if (phy->cfg->ops.restore_pll_state && phy->state_saved) {
+-		ret = phy->cfg->ops.restore_pll_state(phy);
+-		if (ret)
+-			return ret;
+-
+-		phy->state_saved = false;
+-	}
+-
+-	return 0;
+-}
+-
+ void msm_dsi_phy_snapshot(struct msm_disp_state *disp_state, struct msm_dsi_phy *phy)
+ {
+ 	msm_disp_snapshot_add_block(disp_state,
+-- 
+2.30.2
 
