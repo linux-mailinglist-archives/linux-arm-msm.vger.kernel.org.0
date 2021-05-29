@@ -2,108 +2,184 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7392B394D57
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 May 2021 19:07:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2D75B394D5C
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 May 2021 19:09:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229734AbhE2RJL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 29 May 2021 13:09:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42126 "EHLO
+        id S229709AbhE2RLd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 29 May 2021 13:11:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42654 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229704AbhE2RJK (ORCPT
+        with ESMTP id S229704AbhE2RLd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 29 May 2021 13:09:10 -0400
-Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80963C06174A
-        for <linux-arm-msm@vger.kernel.org>; Sat, 29 May 2021 10:07:34 -0700 (PDT)
-Received: by mail-ot1-x32d.google.com with SMTP id i14-20020a9d624e0000b029033683c71999so6687793otk.5
-        for <linux-arm-msm@vger.kernel.org>; Sat, 29 May 2021 10:07:34 -0700 (PDT)
+        Sat, 29 May 2021 13:11:33 -0400
+Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com [IPv6:2607:f8b0:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F6F5C06174A
+        for <linux-arm-msm@vger.kernel.org>; Sat, 29 May 2021 10:09:57 -0700 (PDT)
+Received: by mail-ot1-x32b.google.com with SMTP id 66-20020a9d02c80000b02903615edf7c1aso6629406otl.13
+        for <linux-arm-msm@vger.kernel.org>; Sat, 29 May 2021 10:09:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=YA91sBPn0zwwbxlssSM8hTajsH+fA9/jt+cb29CA/KE=;
-        b=KftmWWC+YlHD6Lhc3x7HrpPfD2MzZqfDFwgxXZJcQH2kUHXATovRhUeSCArLVUHJKE
-         1SpcswWKX9fE/KE9pPcN/Q0Y9V1od9D5GoxmAQQyvMaXPfC39Jzx6uwLMKYvrws1/gxK
-         LeyxO2DJpcTAQipj0pYzfYbRfKcx0Ubd3E0O+fKtAaEa08jNChtaz61oOkziNDREeD/2
-         eGNQLbpA3d6yLhdpY5FgEjiNQjGyxUdzPCkKkUEEptD4Irjc6TNdkgzty1ebV5vTaVmp
-         Yhz1lnyZTmBQF013RaOOZVsN32Fhx2x69JtO+IXtnF8j2beZOyNq8dQIxC6SkFQpmdR7
-         4Rjg==
+        bh=7bkqiEyd8a086aPYUR6burYJWQhu6f4gu/LbVHZNwfc=;
+        b=C9VvtCnGiiOfz68z7IKruRS5sWRRuWsoEtCw0Lj/ixm059lRUVLiuKzLsSXzkAAMRe
+         uJ4eaXZ5ZqCIUZMubTp1qf/rZb5tpIkjxmsnS7tLfO59Fn8o/94r1fyb0WJtEqQsjCxT
+         1x5mVlcx0c/wo4Er+O3GECknABerGiMOSPaC2Ss2cz6QWQsFW9ctGtN73p/7e7rW8CIM
+         a6Wp7sbZvVM//6YYSZ2E27qGU/Sb6X4c6SdHLxk8OrzAmJ6/8C6PAaQv44KqEDwMuGCc
+         7waL7JHrqvRhB4EoVETXwMB52MOROf/ivAGpO1LZwgGGbTVsgmIhKrjzYueuwgTAh/6G
+         kCPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=YA91sBPn0zwwbxlssSM8hTajsH+fA9/jt+cb29CA/KE=;
-        b=JN8Ow1wTn155iwo+yCq88SLJoDvdS7kZKT9jqT5ei/w2yK3dSpZTzpNobNfQVagWVz
-         7jp65zDzWTNbFXi7iXyUlidomGkZm7tMIgoklV7g2cIP0eLgkzdTsa5BUNVrqezbMkvY
-         GtLNdqotPsBQHx1IsM15F1ZAO/Kg6lx8hmne/hidsSpIYCfXjXM0azjHfos/LKSiDIAY
-         tQG/qwrAxXh/4O2kQazPH1A+knsgY/0B5JRVgyqR2ZvGcs7DZObDj+M7CiSJuwCGcN6U
-         y+TSVwKuqVizif2+B8lS8PQyT9soarG6R9Mm+RJvV6zny2PfpHqbnv2G+c811hYp6IsI
-         mIrA==
-X-Gm-Message-State: AOAM531dZpNEUxAl46BZYRNoPt8uGlAgIJacAdapVytmeOXepNBbBuaD
-        LLBNQa6K/7eyzb+pp+PR+y5geg==
-X-Google-Smtp-Source: ABdhPJzgUBYSwpCjkaEAyLAysdd0MI9ukwHNAwy5t9SKrqcg6zp6seZaqyUp6lAB4xB7JLMcOrKGxg==
-X-Received: by 2002:a9d:8c2:: with SMTP id 60mr11775276otf.217.1622308053620;
-        Sat, 29 May 2021 10:07:33 -0700 (PDT)
+        bh=7bkqiEyd8a086aPYUR6burYJWQhu6f4gu/LbVHZNwfc=;
+        b=ZX1lqnQlsdKG/IYTuELjj2AqpjnYArl0/YEKfhQ8bU5oJblAFs/u3uG0IpLj1qJbD/
+         nkxbrURXd3CNj9Ffd78gQGxgEw+Z7a+p/aUxyycXdoPwOFqS+fHHJwHMpYvnLWMuU8Vc
+         Yll4jwQGbuZOfLZCwe2avlYBKLAMA68GPkQMlWcEEfffRZTW6jeBg7xFDCUmupmHCZpO
+         6sYWLSnnq09cAqk9/kn7L2rPvtMuiZ7Nz4KBbzVUfGjDwmObVeueG5VfCUkfxMB7gsXu
+         SOuZ89o5JtZOWfqkNT4Q31TBohclUJYGYhxUafAuAVrp6c43DGIiflap/oRuyYzFruwI
+         YySg==
+X-Gm-Message-State: AOAM5313YnH+mWiKVBhoIiANq7IyfVNNUHkQdFB90cVEMv+f/KiMB9wQ
+        HsJ3NJy0EZFYI3dK1hYG26fwcw==
+X-Google-Smtp-Source: ABdhPJyhejKZ8P84aJ+O1OEB2O4xbRPp6DSwQ4nUr0TDzKzViEyqc3s1wCsWqp4HT4SiJmSGzahxbQ==
+X-Received: by 2002:a9d:6645:: with SMTP id q5mr11181131otm.80.1622308196402;
+        Sat, 29 May 2021 10:09:56 -0700 (PDT)
 Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id w6sm1887879otj.5.2021.05.29.10.07.32
+        by smtp.gmail.com with ESMTPSA id d19sm1827454oop.26.2021.05.29.10.09.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 29 May 2021 10:07:33 -0700 (PDT)
-Date:   Sat, 29 May 2021 12:07:31 -0500
+        Sat, 29 May 2021 10:09:55 -0700 (PDT)
+Date:   Sat, 29 May 2021 12:09:53 -0500
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Wesley Cheng <wcheng@codeaurora.org>
-Cc:     balbi@kernel.org, gregkh@linuxfoundation.org, agross@kernel.org,
-        robh+dt@kernel.org, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, jackp@codeaurora.org,
-        Thinh.Nguyen@synopsys.com
-Subject: Re: [PATCH v8 5/5] arm64: boot: dts: qcom: sm8150: Enable dynamic TX
- FIFO resize logic
-Message-ID: <YLJ000lIVhZM5WEV@builder.lan>
-References: <1621410238-31395-1-git-send-email-wcheng@codeaurora.org>
- <1621410238-31395-6-git-send-email-wcheng@codeaurora.org>
+To:     abhinavk@codeaurora.org
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Stephen Boyd <swboyd@chromium.org>, sbillaka@codeaurora.org,
+        Tanmay Shah <tanmay@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        dri-devel@lists.freedesktop.org,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        freedreno@lists.freedesktop.org,
+        Chandan Uddaraju <chandanu@codeaurora.org>
+Subject: Re: [Freedreno] [PATCH 4/4] drm/msm/dp: Add support for SC8180x eDP
+Message-ID: <YLJ1Yfg8jlrxILTE@builder.lan>
+References: <20210511042043.592802-1-bjorn.andersson@linaro.org>
+ <20210511042043.592802-5-bjorn.andersson@linaro.org>
+ <a1a8221a44edc3a509bdc1bb89bb5a97@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1621410238-31395-6-git-send-email-wcheng@codeaurora.org>
+In-Reply-To: <a1a8221a44edc3a509bdc1bb89bb5a97@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 19 May 02:43 CDT 2021, Wesley Cheng wrote:
+On Fri 28 May 18:40 CDT 2021, abhinavk@codeaurora.org wrote:
 
-> Enable the flexible TX FIFO resize logic on SM8150.  Using a larger TX FIFO
-> SZ can help account for situations when system latency is greater than the
-> USB bus transmission latency.
+> On 2021-05-10 21:20, Bjorn Andersson wrote:
+> > The eDP controller found in SC8180x is at large compatible with the
+> > current implementation, but has its register blocks at slightly
+> > different offsets.
+> > 
+> > Add the compatible and the new register layout.
+> > 
+> I am not able to completely recall the history of why in the DP bindings
+> we added DP register base as a big hunk and let catalog handle the submodule
+> offsets.
 > 
-> Reviewed-by: Rob Herring <robh@kernel.org>
-> Signed-off-by: Wesley Cheng <wcheng@codeaurora.org>
+> I guess earlier that made sense because DP sub-block offsets were fixed.
+> But if we plan to re-use the DP driver for eDP as well like this series,
+> then maybe it might be
+> better if this comes from device tree like the earlier version was planning
+> to
+> 
+> https://patchwork.kernel.org/project/dri-devel/patch/0101016ec6ddf446-e87ab1ce-5cbf-40a0-a0bb-cd0151cd577a-000000@us-west-2.amazonses.com/
+> 
+> 
+> +- reg:                  Base address and length of DP hardware's memory
+> mapped regions.
+> +- cell-index:           Specifies the controller instance.
+> +- reg-names:            A list of strings that name the list of regs.
+> +			"dp_ahb" - DP controller memory region.
+> +			"dp_aux" - DP AUX memory region.
+> +			"dp_link" - DP link layer memory region.
+> +			"dp_p0" - DP pixel clock domain memory region.
+> +			"dp_phy" - DP PHY memory region.
+> +			"dp_ln_tx0" - USB3 DP PHY combo TX-0 lane memory region.
+> +			"dp_ln_tx1" - USB3 DP PHY combo TX-1 lane memory region.
+> 
+> Now there is more reason to separate the sub-module offsets like
+> ahb/aux/link/p0
 
-Based on my previous request of always adding this for the Qualcomm
-platforms that supports it, which is implemented in patch 4, I don't see
-a need for this patch.
-
-Am I missing something?
+I like it, will rewrite the patch accordingly.
 
 Regards,
 Bjorn
 
-> ---
->  arch/arm64/boot/dts/qcom/sm8150.dtsi | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-> index 51235a9..8f532cb 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-> @@ -2275,6 +2275,7 @@
->  				iommus = <&apps_smmu 0x140 0>;
->  				snps,dis_u2_susphy_quirk;
->  				snps,dis_enblslpm_quirk;
-> +				tx-fifo-resize;
->  				phys = <&usb_1_hsphy>, <&usb_1_ssphy>;
->  				phy-names = "usb2-phy", "usb3-phy";
->  			};
-> -- 
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
-> 
+> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > ---
+> >  drivers/gpu/drm/msm/dp/dp_display.c |  1 +
+> >  drivers/gpu/drm/msm/dp/dp_parser.c  | 28 ++++++++++++++++++++--------
+> >  2 files changed, 21 insertions(+), 8 deletions(-)
+> > 
+> > diff --git a/drivers/gpu/drm/msm/dp/dp_display.c
+> > b/drivers/gpu/drm/msm/dp/dp_display.c
+> > index d1319b58e901..0be03bdc882c 100644
+> > --- a/drivers/gpu/drm/msm/dp/dp_display.c
+> > +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> > @@ -121,6 +121,7 @@ struct dp_display_private {
+> > 
+> >  static const struct of_device_id dp_dt_match[] = {
+> >  	{.compatible = "qcom,sc7180-dp"},
+> > +	{ .compatible = "qcom,sc8180x-edp" },
+> >  	{}
+> >  };
+> > 
+> > diff --git a/drivers/gpu/drm/msm/dp/dp_parser.c
+> > b/drivers/gpu/drm/msm/dp/dp_parser.c
+> > index 51ec85b4803b..47cf18bba4b2 100644
+> > --- a/drivers/gpu/drm/msm/dp/dp_parser.c
+> > +++ b/drivers/gpu/drm/msm/dp/dp_parser.c
+> > @@ -251,6 +251,7 @@ static int dp_parser_clock(struct dp_parser *parser)
+> >  static int dp_parser_parse(struct dp_parser *parser)
+> >  {
+> >  	struct dss_io_data *io = &parser->io.dp_controller;
+> > +	struct device *dev = &parser->pdev->dev;
+> >  	int rc = 0;
+> > 
+> >  	if (!parser) {
+> > @@ -276,14 +277,25 @@ static int dp_parser_parse(struct dp_parser
+> > *parser)
+> >  	 */
+> >  	parser->regulator_cfg = &sdm845_dp_reg_cfg;
+> > 
+> > -	io->ahb = io->base + 0x0;
+> > -	io->ahb_len = 0x200;
+> > -	io->aux = io->base + 0x200;
+> > -	io->aux_len = 0x200;
+> > -	io->link = io->base + 0x400;
+> > -	io->link_len = 0x600;
+> > -	io->p0 = io->base + 0x1000;
+> > -	io->p0_len = 0x400;
+> > +	if (of_device_is_compatible(dev->of_node, "qcom,sc8180x-edp")) {
+> > +		io->ahb = io->base + 0x0;
+> > +		io->ahb_len = 0x200;
+> > +		io->aux = io->base + 0x200;
+> > +		io->aux_len = 0x200;
+> > +		io->link = io->base + 0x400;
+> > +		io->link_len = 0x600;
+> > +		io->p0 = io->base + 0xa00;
+> > +		io->p0_len = 0x400;
+> > +	} else {
+> > +		io->ahb = io->base + 0x0;
+> > +		io->ahb_len = 0x200;
+> > +		io->aux = io->base + 0x200;
+> > +		io->aux_len = 0x200;
+> > +		io->link = io->base + 0x400;
+> > +		io->link_len = 0x600;
+> > +		io->p0 = io->base + 0x1000;
+> > +		io->p0_len = 0x400;
+> > +	}
+> > 
+> >  	return 0;
+> >  }
