@@ -2,172 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BD3CE39492F
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 May 2021 01:40:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 88BB739497E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 May 2021 02:25:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229586AbhE1Xm2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 May 2021 19:42:28 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:14851 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229500AbhE1Xm2 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 May 2021 19:42:28 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1622245253; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=ObCt7FLVUSqowY1LQ9oBhYcHVdMypKRBt0IQ8qdhFjM=;
- b=U/iPCF774cIHBCJOsf5JzLmgbOut7vmVA+FnhpcbNbAoYwlta+Y8ETWKg2in96W7QmCaOncb
- mK5Cxt9w9Vd88kXTfi38VfKiqq9UCRaZoRsDArN0b23Grz4W8MbW2z1+P6hO1Soy77fsDhAH
- JFYxryGgWJKw70LsFJILxRiURYU=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
- 60b17f718491191eb319c726 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 28 May 2021 23:40:33
- GMT
-Sender: abhinavk=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 354B7C4360C; Fri, 28 May 2021 23:40:33 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: abhinavk)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 45190C4338A;
-        Fri, 28 May 2021 23:40:32 +0000 (UTC)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Fri, 28 May 2021 16:40:32 -0700
-From:   abhinavk@codeaurora.org
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        id S229549AbhE2A0y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 May 2021 20:26:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52176 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229528AbhE2A0y (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 28 May 2021 20:26:54 -0400
+Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9CABCC061574
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 May 2021 17:25:17 -0700 (PDT)
+Received: by mail-lj1-x22b.google.com with SMTP id e2so7365891ljk.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 May 2021 17:25:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=BODLqdEHCra9qUlSEftQ4xsxlh1+FODYRdHQRB86f28=;
+        b=uGbtAPxEvoyvx74MWS2o9kIhLaCxR9NZQ6OmOv9oc9hu1TLxHNNAPYn3gzlIIJmx3h
+         XQgbiB6FlZeDbiJJbKaKLSedqzztcCnXFEcc95yl3p1abMg+6eJOXmw/L6h4R+IV9o6C
+         XQesOeUmZMXHiEWXCfniwHipBZ8c/7VZhLxfplhdeg+Gi+VCzAEeSV70U2Whz/KT/gff
+         aP+9LDkHVzzE7Ssm6TA3El5AQEnaKCe0sgboENoAm609RhU7dziYGl8A8KtOC88joMS1
+         7iUtAC0eLTUnqx0D7SRsf+FnZbjq25dNJ4X4UWLyV/5j5iaNw7aaITt6uCukQEazBtei
+         OTKg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=BODLqdEHCra9qUlSEftQ4xsxlh1+FODYRdHQRB86f28=;
+        b=oN2VLN1vnjsHXlNYQ1FeyVo8wrCcKdUlNnl+3TnxorSfJF2SULZNdD50ZU00pIq7pS
+         dOlBcQVtE5TqgURLBHo1z5SDStbyG8/e/uNfZNCqBG3x+2JB46pyGIF6DW0AsBHz/0ER
+         EdPdXVBAeGCJ3eWWWuFh3ZhSrJWeJqKzX5J/hiM4YzonY8Rf2a9V8s17At8cyTuy0Ax9
+         aan1XkAZUzRPOvaoz8/51DkarknwZngmYx/bRh2Z3ZY++F4+49jrXoh7kwxfvkKFbsxY
+         5mp8fuB6YAzkcWRzZdE5xdZcmvYiO5DDPG2grlJd0TcR5UdPK9IUiWPLXcIpGgOrpk0F
+         JmmA==
+X-Gm-Message-State: AOAM5309DHxszXmvT7PWoVghjK05TLw6bucN/6c+B2/s+IG3WGQ8jT2m
+        481aH9JU7eP4Alvb7ry2Lym2ZQ==
+X-Google-Smtp-Source: ABdhPJwjvewfZRMsnIYRlASELtzoZFUlolzG/MKKgogWsG4jMl6ZWBKnxfp4ESok53GK3bD6sdVxMA==
+X-Received: by 2002:a2e:7a17:: with SMTP id v23mr8274083ljc.99.1622247915928;
+        Fri, 28 May 2021 17:25:15 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id c8sm701078ljd.82.2021.05.28.17.25.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 28 May 2021 17:25:15 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Michael Turquette <mturquette@baylibre.com>
+Cc:     Jonathan Marek <jonathan@marek.ca>,
+        Stephen Boyd <sboyd@kernel.org>,
         David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Stephen Boyd <swboyd@chromium.org>, sbillaka@codeaurora.org,
-        Tanmay Shah <tanmay@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        dri-devel@lists.freedesktop.org,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        freedreno@lists.freedesktop.org,
-        Chandan Uddaraju <chandanu@codeaurora.org>
-Subject: Re: [Freedreno] [PATCH 4/4] drm/msm/dp: Add support for SC8180x eDP
-In-Reply-To: <20210511042043.592802-5-bjorn.andersson@linaro.org>
-References: <20210511042043.592802-1-bjorn.andersson@linaro.org>
- <20210511042043.592802-5-bjorn.andersson@linaro.org>
-Message-ID: <a1a8221a44edc3a509bdc1bb89bb5a97@codeaurora.org>
-X-Sender: abhinavk@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+Subject: [RFC 0/8] drm/msm: split DSI PHY to generic PHY subsystem
+Date:   Sat, 29 May 2021 03:25:00 +0300
+Message-Id: <20210529002508.3839467-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.30.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-05-10 21:20, Bjorn Andersson wrote:
-> The eDP controller found in SC8180x is at large compatible with the
-> current implementation, but has its register blocks at slightly
-> different offsets.
-> 
-> Add the compatible and the new register layout.
-> 
-I am not able to completely recall the history of why in the DP bindings
-we added DP register base as a big hunk and let catalog handle the 
-submodule
-offsets.
+This patchseries is an RFC for splitting Qualcomm DSI PHY from drm/msm
+driver to generic PHY subsystem.
 
-I guess earlier that made sense because DP sub-block offsets were fixed.
-But if we plan to re-use the DP driver for eDP as well like this series, 
-then maybe it might be
-better if this comes from device tree like the earlier version was 
-planning to
+Dependencies:
+ - msm_disp_snapshot fix at https://lore.kernel.org/linux-arm-msm/20210527220330.3364716-1-dmitry.baryshkov@linaro.org/
+ - Patches 1-7 from https://lore.kernel.org/linux-arm-msm/20210515131217.1540412-1-dmitry.baryshkov@linaro.org/
 
-https://patchwork.kernel.org/project/dri-devel/patch/0101016ec6ddf446-e87ab1ce-5cbf-40a0-a0bb-cd0151cd577a-000000@us-west-2.amazonses.com/
+PATCH 8 from this series is quite big, it might be split further if
+required.
 
 
-+- reg:                  Base address and length of DP hardware's memory 
-mapped regions.
-+- cell-index:           Specifies the controller instance.
-+- reg-names:            A list of strings that name the list of regs.
-+			"dp_ahb" - DP controller memory region.
-+			"dp_aux" - DP AUX memory region.
-+			"dp_link" - DP link layer memory region.
-+			"dp_p0" - DP pixel clock domain memory region.
-+			"dp_phy" - DP PHY memory region.
-+			"dp_ln_tx0" - USB3 DP PHY combo TX-0 lane memory region.
-+			"dp_ln_tx1" - USB3 DP PHY combo TX-1 lane memory region.
-
-Now there is more reason to separate the sub-module offsets like 
-ahb/aux/link/p0
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
->  drivers/gpu/drm/msm/dp/dp_display.c |  1 +
->  drivers/gpu/drm/msm/dp/dp_parser.c  | 28 ++++++++++++++++++++--------
->  2 files changed, 21 insertions(+), 8 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c
-> b/drivers/gpu/drm/msm/dp/dp_display.c
-> index d1319b58e901..0be03bdc882c 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_display.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-> @@ -121,6 +121,7 @@ struct dp_display_private {
-> 
->  static const struct of_device_id dp_dt_match[] = {
->  	{.compatible = "qcom,sc7180-dp"},
-> +	{ .compatible = "qcom,sc8180x-edp" },
->  	{}
->  };
-> 
-> diff --git a/drivers/gpu/drm/msm/dp/dp_parser.c
-> b/drivers/gpu/drm/msm/dp/dp_parser.c
-> index 51ec85b4803b..47cf18bba4b2 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_parser.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_parser.c
-> @@ -251,6 +251,7 @@ static int dp_parser_clock(struct dp_parser 
-> *parser)
->  static int dp_parser_parse(struct dp_parser *parser)
->  {
->  	struct dss_io_data *io = &parser->io.dp_controller;
-> +	struct device *dev = &parser->pdev->dev;
->  	int rc = 0;
-> 
->  	if (!parser) {
-> @@ -276,14 +277,25 @@ static int dp_parser_parse(struct dp_parser 
-> *parser)
->  	 */
->  	parser->regulator_cfg = &sdm845_dp_reg_cfg;
-> 
-> -	io->ahb = io->base + 0x0;
-> -	io->ahb_len = 0x200;
-> -	io->aux = io->base + 0x200;
-> -	io->aux_len = 0x200;
-> -	io->link = io->base + 0x400;
-> -	io->link_len = 0x600;
-> -	io->p0 = io->base + 0x1000;
-> -	io->p0_len = 0x400;
-> +	if (of_device_is_compatible(dev->of_node, "qcom,sc8180x-edp")) {
-> +		io->ahb = io->base + 0x0;
-> +		io->ahb_len = 0x200;
-> +		io->aux = io->base + 0x200;
-> +		io->aux_len = 0x200;
-> +		io->link = io->base + 0x400;
-> +		io->link_len = 0x600;
-> +		io->p0 = io->base + 0xa00;
-> +		io->p0_len = 0x400;
-> +	} else {
-> +		io->ahb = io->base + 0x0;
-> +		io->ahb_len = 0x200;
-> +		io->aux = io->base + 0x200;
-> +		io->aux_len = 0x200;
-> +		io->link = io->base + 0x400;
-> +		io->link_len = 0x600;
-> +		io->p0 = io->base + 0x1000;
-> +		io->p0_len = 0x400;
-> +	}
-> 
->  	return 0;
->  }
