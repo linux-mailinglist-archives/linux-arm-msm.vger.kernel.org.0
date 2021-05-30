@@ -2,117 +2,155 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 37B4E3950D2
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 30 May 2021 14:18:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B1F2439514B
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 30 May 2021 16:30:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229783AbhE3MUI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 30 May 2021 08:20:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37494 "EHLO
+        id S229682AbhE3Obp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 30 May 2021 10:31:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37608 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229756AbhE3MUH (ORCPT
+        with ESMTP id S229580AbhE3Obp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 30 May 2021 08:20:07 -0400
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79AF5C061574
-        for <linux-arm-msm@vger.kernel.org>; Sun, 30 May 2021 05:18:29 -0700 (PDT)
-Received: by mail-ed1-x534.google.com with SMTP id u24so681045edy.11
-        for <linux-arm-msm@vger.kernel.org>; Sun, 30 May 2021 05:18:29 -0700 (PDT)
+        Sun, 30 May 2021 10:31:45 -0400
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AE22C061574;
+        Sun, 30 May 2021 07:30:07 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id n4so8161789wrw.3;
+        Sun, 30 May 2021 07:30:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=snejp.pl; s=gmail;
-        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=8rN9+/NbxDFN7EMKi+Z7DRElm+PgvMbUeIui3UQMR6I=;
-        b=qJVdOhQHtMcg+2nPv/vNFy9Ol2s/2fBDvHkxS7qc23ky5Z6sptF7e04BeGQYo/NTT+
-         qkiIyDllxMUYjCO9SL1WEKvB12Y/2p7P+vpMY4QiPvZqZP08OPIEXpG2P2TVlKBdrx3L
-         EFhWuG17/6RH1lPyGAWdczyjCBW9xoJQqFRw6lhj0obtJODReqvIBhdsBXEw9GYhkO5R
-         UB5lGWsxYuIV6H64CmiwF2W5CbadHXDxfDstquirPIeHk9JbNjS0xDVsEYtA4VUv5Vl6
-         9VAIGL+pzv0qe3xmLjBQ3VPPd6Ev91AmbomwGHQ+i5KiNrePupsYQW8DjVug3zFlB3sQ
-         A14Q==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=6t3J8+C30P/KwAn8557WaaRrcOqXcNIb28Eid5rS1Ss=;
+        b=uDiPnuGhAkjMt19s6NVzVAetw8pr0xYSnhO63poVhU4hCJOekF0HGoE4aMDYoqR33N
+         HRnpfTNujtuSGbWd9ANiJ/MF2XYmKGk+xiSv859C/IgmNHliyXuCdL1CwK4PIlbM0DVS
+         SQo21M/DhdMadVTLrl8mKwQvsI6fv/Y4LkRS7cg4LEyQh7xjHJlaJSFvqnJUQ8cx9C5L
+         BQWIo4ueeTzmuvrnd6Mk4KB+Oqg9OjemlXdXCJkG7PU3ChMLYMqy/5PcbsYsWiV5xtVA
+         wxsYZ+Ju/LbkKSTGgfya9Dho3Kq8auLYeaBWuoyu9EdTPGKwLg5wIcg7SCpaDiikQ9WH
+         ptfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=8rN9+/NbxDFN7EMKi+Z7DRElm+PgvMbUeIui3UQMR6I=;
-        b=DJBKf8EO3YhRHMc7gurkj40nvBqT6lNx7MaQpcBxcn4fo0s4hxQRVj3f+N5CUVRxBN
-         6QK56X+uB+IZBp+UuuJwuEo4daS4+c50DpiEsyga+l0CqxcB2l/BiZ0d26rM3oR0sS/5
-         nrVdokcEnZueb3Zm+V75i32tKynCqERrow/AHZ8YJ/I/rv7vqEDiCQ/LMdbj80moLif9
-         FF+/DrIosa3KmGzC2J59p9bnGUr+P1SwhNuff6tCt5/mCW2CSCmEiQWIQQ0B6beladKQ
-         FQdEiCsz9N2YTOsrtTSyBC2UAN+T2W3VfxN/VA61Ji/bMsiQr3/1OuSHMajPz7UskuJR
-         ew4A==
-X-Gm-Message-State: AOAM532nfAdk41TZ6L7lLKb7osnEIL2U19nMKjFQOOQV0Ii4grqdkuBY
-        92lJSTh1d6eFSV5S6I06typYog==
-X-Google-Smtp-Source: ABdhPJwrJfzJgeBzJf2MVs93d/Iy62JjyA7TMenbRkTwpJ1DnrPw+H/3Q3hUuR/WmKdoiWA8bPmovw==
-X-Received: by 2002:aa7:cb84:: with SMTP id r4mr20012910edt.187.1622377108156;
-        Sun, 30 May 2021 05:18:28 -0700 (PDT)
-Received: from PackardBell (192038129069.mbb.telenor.dk. [192.38.129.69])
-        by smtp.googlemail.com with ESMTPSA id jx16sm1311662ejc.49.2021.05.30.05.18.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 30 May 2021 05:18:27 -0700 (PDT)
-Received: from localhost (PackardBell [local])
-        by PackardBell (OpenSMTPD) with ESMTPA id bda84510;
-        Sun, 30 May 2021 12:18:22 +0000 (UTC)
-From:   Bartosz Dudziak <bartosz.dudziak@snejp.pl>
-To:     Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Russell King <linux@armlinux.org.uk>,
-        David Sterba <dsterba@suse.com>, Jens Axboe <axboe@kernel.dk>,
-        Bartosz Dudziak <bartosz.dudziak@snejp.pl>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Kumar Gala <galak@codeaurora.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH v2 2/2] cpuidle: qcom: Add SPM register data for MSM8226
-Date:   Sun, 30 May 2021 14:18:03 +0200
-Message-Id: <20210530121803.13102-3-bartosz.dudziak@snejp.pl>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20210530121803.13102-1-bartosz.dudziak@snejp.pl>
-References: <20210530121803.13102-1-bartosz.dudziak@snejp.pl>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=6t3J8+C30P/KwAn8557WaaRrcOqXcNIb28Eid5rS1Ss=;
+        b=VZ9SCVMM61F8/PhWWf4Iaoy95zmqGIzIohMKXMhy6yyYlZ3Sr7JWaDoiW1XxTlGV8s
+         JZP339SYRqlWLKhlOgSJsMU3xrbNuDaRcIde2/ILknibCfRm/TzxfsfOTj8cNjtXG//l
+         fXe4P/VY4RQqaAhRh+g2am6Ni2/aSZFBVpDTYsWeAVeHrWWaCDtEuqyB05LaGN35TmXC
+         QcRjPYKaQD38SshRjQLvSb8cTHZmK63EaIK5ueW+WQFrPAZzfJ4QymOo6iolRA7iCsog
+         kRU6cyNd2AplJLfXIVIrx684d7OUUcO7nsnCBTUOsYsuAeuLs0kabd5uyzifTvp2WBxe
+         7E9g==
+X-Gm-Message-State: AOAM533WaQpD+bB6RIbNhCs9mXRBh1FbIiFzOKM2WjZl/5kjCATO8Aqn
+        i7qgdjxdZH3nRQjuImvqwDhZgzCosT0OT/YAwSc=
+X-Google-Smtp-Source: ABdhPJyDbitDVrmcDxOcHq0QHKT9fgqlgjU/u0BkC/alWsIcIKmfMJVN5yDHNrVFHPZFfjLaelLOvJ4wRSV8TgEQBok=
+X-Received: by 2002:adf:ec10:: with SMTP id x16mr9704649wrn.83.1622385005776;
+ Sun, 30 May 2021 07:30:05 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20210519183855.1523927-1-robdclark@gmail.com> <20210519183855.1523927-3-robdclark@gmail.com>
+ <YKaOY3AWgHh5kplS@phenom.ffwll.local>
+In-Reply-To: <YKaOY3AWgHh5kplS@phenom.ffwll.local>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Sun, 30 May 2021 07:33:57 -0700
+Message-ID: <CAF6AEGv470U7fujLrJOE8fJh1o-BW3=mOpKJ45FFz=Xb8Q0D6A@mail.gmail.com>
+Subject: Re: [RFC 2/3] drm/atomic: Call dma_fence_boost() when we've missed a vblank
+To:     Rob Clark <robdclark@gmail.com>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@linux.ie>,
+        open list <linux-kernel@vger.kernel.org>,
+        Matthew Brost <matthew.brost@intel.com>
+Cc:     Daniel Vetter <daniel@ffwll.ch>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add MSM8226 register data to SPM AVS Wrapper 2 (SAW2) power controller
-driver.
+On Thu, May 20, 2021 at 9:29 AM Daniel Vetter <daniel@ffwll.ch> wrote:
+>
+> On Wed, May 19, 2021 at 11:38:53AM -0700, Rob Clark wrote:
+> > From: Rob Clark <robdclark@chromium.org>
+> >
+> > Signed-off-by: Rob Clark <robdclark@chromium.org>
+> > ---
+> >  drivers/gpu/drm/drm_atomic_helper.c | 11 +++++++++++
+> >  1 file changed, 11 insertions(+)
+> >
+> > diff --git a/drivers/gpu/drm/drm_atomic_helper.c b/drivers/gpu/drm/drm_atomic_helper.c
+> > index 560aaecba31b..fe10fc2e7f86 100644
+> > --- a/drivers/gpu/drm/drm_atomic_helper.c
+> > +++ b/drivers/gpu/drm/drm_atomic_helper.c
+> > @@ -1435,11 +1435,15 @@ int drm_atomic_helper_wait_for_fences(struct drm_device *dev,
+> >       int i, ret;
+> >
+> >       for_each_new_plane_in_state(state, plane, new_plane_state, i) {
+> > +             u64 vblank_count;
+> > +
+> >               if (!new_plane_state->fence)
+> >                       continue;
+> >
+> >               WARN_ON(!new_plane_state->fb);
+> >
+> > +             vblank_count = drm_crtc_vblank_count(new_plane_state->crtc);
+> > +
+> >               /*
+> >                * If waiting for fences pre-swap (ie: nonblock), userspace can
+> >                * still interrupt the operation. Instead of blocking until the
+> > @@ -1449,6 +1453,13 @@ int drm_atomic_helper_wait_for_fences(struct drm_device *dev,
+> >               if (ret)
+> >                       return ret;
+> >
+> > +             /*
+> > +              * Check if we've missed a vblank while waiting, and if we have
+> > +              * signal the fence that it's signaler should be boosted
+> > +              */
+> > +             if (vblank_count != drm_crtc_vblank_count(new_plane_state->crtc))
+> > +                     dma_fence_boost(new_plane_state->fence);
+>
+> I think we should do a lot better here:
+> - maybe only bother doing this for single-crtc updates, and only if
+>   modeset isn't set. No one else cares about latency.
+>
+> - We should boost _right_ when we've missed the frame, so I think we
+>   should have a _timeout wait here that guesstimates when the vblank is
+>   over (might need to throw in a vblank wait if we missed) and then boost
+>   immediately. Not wait a bunch of frames (worst case) until we finally
+>   decide to boost.
 
-Signed-off-by: Bartosz Dudziak <bartosz.dudziak@snejp.pl>
----
- drivers/cpuidle/cpuidle-qcom-spm.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+I was thinking about this a bit more.. How about rather than calling
+some fence->op->boost() type thing when we are about to miss a vblank
+(IMO that is also already too late), we do something more like
+fence->ops->set_deadline() before we even wait?
 
-diff --git a/drivers/cpuidle/cpuidle-qcom-spm.c b/drivers/cpuidle/cpuidle-qcom-spm.c
-index adf91a6e4d..c0e7971da2 100644
---- a/drivers/cpuidle/cpuidle-qcom-spm.c
-+++ b/drivers/cpuidle/cpuidle-qcom-spm.c
-@@ -87,6 +87,18 @@ static const struct spm_reg_data spm_reg_8974_8084_cpu  = {
- 	.start_index[PM_SLEEP_MODE_SPC] = 3,
- };
- 
-+/* SPM register data for 8226 */
-+static const struct spm_reg_data spm_reg_8226_cpu  = {
-+	.reg_offset = spm_reg_offset_v2_1,
-+	.spm_cfg = 0x0,
-+	.spm_dly = 0x3C102800,
-+	.seq = { 0x60, 0x03, 0x60, 0x0B, 0x0F, 0x20, 0x10, 0x80, 0x30, 0x90,
-+		0x5B, 0x60, 0x03, 0x60, 0x3B, 0x76, 0x76, 0x0B, 0x94, 0x5B,
-+		0x80, 0x10, 0x26, 0x30, 0x0F },
-+	.start_index[PM_SLEEP_MODE_STBY] = 0,
-+	.start_index[PM_SLEEP_MODE_SPC] = 5,
-+};
-+
- static const u8 spm_reg_offset_v1_1[SPM_REG_NR] = {
- 	[SPM_REG_CFG]		= 0x08,
- 	[SPM_REG_SPM_CTL]	= 0x20,
-@@ -259,6 +271,8 @@ static struct spm_driver_data *spm_get_drv(struct platform_device *pdev,
- }
- 
- static const struct of_device_id spm_match_table[] = {
-+	{ .compatible = "qcom,msm8226-saw2-v2.1-cpu",
-+	  .data = &spm_reg_8226_cpu },
- 	{ .compatible = "qcom,msm8974-saw2-v2.1-cpu",
- 	  .data = &spm_reg_8974_8084_cpu },
- 	{ .compatible = "qcom,apq8084-saw2-v2.1-cpu",
--- 
-2.25.1
+It's probably a bit impossible for a gpu driver to really predict how
+long some rendering will take, but other cases like video decoder are
+somewhat more predictable.. the fence provider could predict given the
+remaining time until the deadline what clk rates are required to get
+you there.
 
+BR,
+-R
+
+
+>
+> Otherwise I really like this, I think it's about the only real reason i915
+> isn't using atomic helpers.
+>
+> Also adding Matt B for this topic.
+> -Daniel
+>
+> > +
+> >               dma_fence_put(new_plane_state->fence);
+> >               new_plane_state->fence = NULL;
+> >       }
+> > --
+> > 2.30.2
+> >
+>
+> --
+> Daniel Vetter
+> Software Engineer, Intel Corporation
+> http://blog.ffwll.ch
