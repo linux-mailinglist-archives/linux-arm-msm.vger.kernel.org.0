@@ -2,117 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2BB5C3967C3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 May 2021 20:21:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0F2DA3967F9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 May 2021 20:32:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230288AbhEaSWx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 May 2021 14:22:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38664 "EHLO
+        id S232106AbhEaSeL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 May 2021 14:34:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41142 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232198AbhEaSWu (ORCPT
+        with ESMTP id S230288AbhEaSeG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 May 2021 14:22:50 -0400
-Received: from mail-oo1-xc36.google.com (mail-oo1-xc36.google.com [IPv6:2607:f8b0:4864:20::c36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5EB9C061761
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 May 2021 11:21:10 -0700 (PDT)
-Received: by mail-oo1-xc36.google.com with SMTP id v13-20020a4aa40d0000b02902052145a469so2951940ool.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 May 2021 11:21:10 -0700 (PDT)
+        Mon, 31 May 2021 14:34:06 -0400
+Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1476BC061574
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 May 2021 11:32:26 -0700 (PDT)
+Received: by mail-ot1-x335.google.com with SMTP id t10-20020a05683022eab0290304ed8bc759so11817788otc.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 May 2021 11:32:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=x9RUBmMQU4rnqXddK5v0U/IX48u+qvHAWGVqJ1XFKLs=;
-        b=MHfxWL+Lu2oOODkz5EoTuDHIQEi5s7ukPWtuhHlW/8XG5+UTcO6MYZpbiddXDafU5F
-         6BUCX2CZFAoWuQQ8ecfq/dbqdNMyWIY+c9A33FW26Z01ymXG2GA/VMbR+EvD0lRi0cSu
-         4Y8CfTTpcuLwu1yXNT4k0VmU8UZuRmBLN2V+rexKayEeusAHebQej9WLqyPL77O61dFp
-         OmNyKQXf0By6aVugNT+JWITnnowVKt86hejogdhZZzGKiJTp9cmOmuQh2JrFcykSwfHN
-         e2W8cJe6cmpiViWHsWatFqGd8Iuh6FLxKXaOs9tNVBj4TIvSqn5CMTkSkaGLKxQ7SZjW
-         yMEw==
+        bh=BLVV9QZIDXqsvRH7Xti8i3IEgU5Yp6iFY14v7IM7JtI=;
+        b=MZPdaaqoKg5pgZ4tp20ZwnC/hrb4QzW8pbCBBwy9OcoE+kkw5Ec4IkjFjCxFA2Fba5
+         PnnhAKfZz2ginjK+mnQY1QvG29aCxN6JniWAC35aNnas1yzBQumAL26pOWr9qx7cXx1c
+         tDDl5JJ+SJDcfwBRrZZv08ouUk0Y9cWa1zt4Zl/KgsY5shL7m4Ojil9u2k5Aq226JGNc
+         B/7zP3Vmyl94ltaPNgN6bOPYY0fpctqUELcZtj+WSCKbUoQ+pBtPVeGsIAmpOHbanXMG
+         cVd8yXCzA9Bcxgf4H+w1KiU8WyX+r+2hQQMpo2wEKjzVB7gNmRHVprn3Kh97PJtgx2IE
+         BkFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=x9RUBmMQU4rnqXddK5v0U/IX48u+qvHAWGVqJ1XFKLs=;
-        b=F0n1UM86hBL5mjeehL7hPRofScQpnoVhxPP7kzT2W4HE/cbz5hre/f7t5Aplx1Rm0M
-         o2uq/GLgWCqIffbY1KoRPBlg5mHhQ5FfD9REZdSBaAfUQ5+9MP+pmdU53N7sTZqKukpI
-         uroKJq+MXbyZ5a6QehQeupo/wIQPTVd4rIPCr8cOUzTfgA1XTElS3tcmpAEbSfA/VThb
-         x68E6B6SPWWIC9giWYE2JNO3OC8RxdsrO7EjjkyLVZO4xWatcs0YeOUBIXkxpDCYhpwl
-         plPhN8gSEuFuAtV1/LHqKibbzxYwr7PWpAC+K8B9Eg4G2UAHim3t0I4p3Cf4ffXl9zCj
-         uEeA==
-X-Gm-Message-State: AOAM530NIAuMUvoQ4/nI7a3lQejXUuXPwWwypnLMZglkRb3Es8DsteL5
-        tHQiYkyPRkIWVcxNPXQU3CFmMw==
-X-Google-Smtp-Source: ABdhPJzu0yCihYWPm6Dv4bKzvA3alXKP7M0S6fx8sRM+Ca3aZphKMf4OAgtcwr7wrZvzZ0NcWt084w==
-X-Received: by 2002:a4a:ab83:: with SMTP id m3mr17112699oon.2.1622485270083;
-        Mon, 31 May 2021 11:21:10 -0700 (PDT)
+        bh=BLVV9QZIDXqsvRH7Xti8i3IEgU5Yp6iFY14v7IM7JtI=;
+        b=igH4AlqENS4UwVxYP+c7nFWwusrkj8W2Au5GfHP71dfhQjmwNCaIG1GzYItw+vbq4j
+         uBKYh/fNT2b0PhZzhHYY4ULMwC6TlgMdfJop2VfOeZHKXEL9Veld1HIKaalf+7balvDW
+         35Zd0hyDMCluEJaxe+LVXr9JCrGdF8DvvF86r2w9YtJ5C4plDHOEPDcOw0KUsRpM2ScN
+         g/EtbhDkFmr2oieDmExtCUVta3gR7CsfYdJ6w7nswtqbNwQs7GZMrMwZYlxiFEbhjf1Q
+         WTSf8RO68gUWlVJinPWxW3g7QQZ4TePcc5ZjttA5gVL9+hH+e5V2jTtJX8hUrNLcZdlV
+         9+eA==
+X-Gm-Message-State: AOAM532kvxOl0sTL8bH7fTn6fIidmlLvWY08r+iyzynV++3orFFcBPaX
+        giQQxZV/NgT/UeRgGIcGQSWjlA==
+X-Google-Smtp-Source: ABdhPJy3RxUiZyO4Jq6TccXwQv3j1QISvvAoai3BTT05OZNvSnYVKmbFz13tjj6gBZLJ0uE7KqpD9w==
+X-Received: by 2002:a05:6830:4009:: with SMTP id h9mr18320460ots.313.1622485945260;
+        Mon, 31 May 2021 11:32:25 -0700 (PDT)
 Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id t26sm3248506oth.14.2021.05.31.11.21.09
+        by smtp.gmail.com with ESMTPSA id d1sm3274856otu.9.2021.05.31.11.32.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 May 2021 11:21:09 -0700 (PDT)
-Date:   Mon, 31 May 2021 13:21:07 -0500
+        Mon, 31 May 2021 11:32:24 -0700 (PDT)
+Date:   Mon, 31 May 2021 13:32:23 -0500
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Sibi Sankar <sibis@codeaurora.org>
-Cc:     Viresh Kumar <viresh.kumar@linaro.org>, dianders@chromium.org,
-        mka@chromium.org, sboyd@kernel.org, agross@kernel.org,
-        robh+dt@kernel.org, rjw@rjwysocki.net,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org
-Subject: Re: [PATCH v3 1/2] cpufreq: blacklist SC7280 in cpufreq-dt-platdev
-Message-ID: <YLUpE6NK3WC+Nu2S@builder.lan>
-References: <1620807083-5451-1-git-send-email-sibis@codeaurora.org>
- <1620807083-5451-2-git-send-email-sibis@codeaurora.org>
- <20210520035622.e276tqpl4gg5fxhk@vireshk-i7>
- <6f5b1d0992243ff5d71362f463a5f1cf@codeaurora.org>
+To:     Sujit Kautkar <sujitka@chromium.org>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Sibi Sankar <sibis@codeaurora.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 2/2] arm64: dts: qcom: sc7180: trogdor: SD-card GPIO
+ pin set bias-pull up
+Message-ID: <YLUrtzDWn8HnSZ9L@builder.lan>
+References: <20210521215841.2017349-1-sujitka@chromium.org>
+ <20210521145824.v2.2.I52f30ddfe62041b7e6c3c362f0ad8f695ac28224@changeid>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <6f5b1d0992243ff5d71362f463a5f1cf@codeaurora.org>
+In-Reply-To: <20210521145824.v2.2.I52f30ddfe62041b7e6c3c362f0ad8f695ac28224@changeid>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 20 May 02:20 CDT 2021, Sibi Sankar wrote:
+On Fri 21 May 16:58 CDT 2021, Sujit Kautkar wrote:
 
-> On 2021-05-20 09:26, Viresh Kumar wrote:
-> > On 12-05-21, 13:41, Sibi Sankar wrote:
-> > > Add SC7280 to cpufreq-dt-platdev blacklist since the actual scaling is
-> > > handled by the 'qcom-cpufreq-hw' driver.
-> > > 
-> > > Reviewed-by: Douglas Anderson <dianders@chromium.org>
-> > > Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
-> > > ---
-> > >  drivers/cpufreq/cpufreq-dt-platdev.c | 1 +
-> > >  1 file changed, 1 insertion(+)
-> > > 
-> > > diff --git a/drivers/cpufreq/cpufreq-dt-platdev.c
-> > > b/drivers/cpufreq/cpufreq-dt-platdev.c
-> > > index 5e07065ec22f..345418b8250e 100644
-> > > --- a/drivers/cpufreq/cpufreq-dt-platdev.c
-> > > +++ b/drivers/cpufreq/cpufreq-dt-platdev.c
-> > > @@ -137,6 +137,7 @@ static const struct of_device_id blacklist[]
-> > > __initconst = {
-> > >  	{ .compatible = "qcom,msm8996", },
-> > >  	{ .compatible = "qcom,qcs404", },
-> > >  	{ .compatible = "qcom,sc7180", },
-> > > +	{ .compatible = "qcom,sc7280", },
-> > >  	{ .compatible = "qcom,sdm845", },
-> > > 
-> > >  	{ .compatible = "st,stih407", },
-> > 
-> > Applied 1/2. Thanks.
-> > 
-> > What do you want to do for 2/2 ? Go through my tree? need an update ?
+> Trogdor board does not have external pull-up for cd-gpio. Set this pin
+
+This says "Trogdor" specifically, but the diffstats says "all 7180
+devices".
+
+> to internal pull-up for sleep config to avoid frequent regulator toggle
+> events.
 > 
-> Lets skip pulling in 2/2 for now.
+> This change is aligned with Qualcomm's DT change posted at:
+> https://patchwork.kernel.org/patch/11675347/
+> 
 
-In particular it's ripe for merge conflicts, so I'd prefer to take it
-through my tree.
-
-> It depends on a few other changes to land first and the cpufreq node
-> for sc7280 needs a re-spin.
-
-What other dependencies do we have?
-
-I dropped the reg-names from the cpufreq node and merged that change.
+I'm sorry, but afacit this says that your v2 is Qualcomm's v2 but with
+the change I asked for. If this is the case, then your patch is either
+v3 or you could just mention this below the '---', as I don't see any
+benefit of carrying this in the git history.
 
 Regards,
 Bjorn
+
+> Signed-off-by: Sujit Kautkar <sujitka@chromium.org>
+> Reviewed-by: Douglas Anderson <dianders@chromium.org>
+> ---
+> Changes in v2:
+> - added pull-up for IDP
+> 
+> (no changes since v1)
+> 
+>  arch/arm64/boot/dts/qcom/sc7180-idp.dts      | 2 +-
+>  arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 2 +-
+>  2 files changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> index 07133e0af581a..0c255edb7f3c3 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> @@ -696,7 +696,7 @@ pinconf-data {
+>  
+>  		pinconf-sd-cd {
+>  			pins = "gpio69";
+> -			bias-disable;
+> +			bias-pull-up;
+>  			drive-strength = <2>;
+>  		};
+>  	};
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+> index d128a0ed6ad3a..330deb4967ca2 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+> @@ -1638,7 +1638,7 @@ pinconf-data {
+>  
+>  		pinconf-sd-cd {
+>  			pins = "gpio69";
+> -			bias-disable;
+> +			bias-pull-up;
+>  			drive-strength = <2>;
+>  		};
+>  	};
+> -- 
+> 2.31.1.818.g46aad6cb9e-goog
+> 
