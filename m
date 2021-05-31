@@ -2,157 +2,402 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B84EA396723
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 May 2021 19:32:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A7239396739
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 May 2021 19:36:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232874AbhEaRe1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 May 2021 13:34:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55592 "EHLO
+        id S232775AbhEaRiP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 May 2021 13:38:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56398 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232431AbhEaRd7 (ORCPT
+        with ESMTP id S232591AbhEaRh5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 May 2021 13:33:59 -0400
-Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63EEDC06123A
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 May 2021 09:33:10 -0700 (PDT)
-Received: by mail-oi1-x22d.google.com with SMTP id j75so12765196oih.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 May 2021 09:33:10 -0700 (PDT)
+        Mon, 31 May 2021 13:37:57 -0400
+Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC330C0612F1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 May 2021 09:48:05 -0700 (PDT)
+Received: by mail-oi1-x229.google.com with SMTP id h9so12841334oih.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 May 2021 09:48:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=QP5LNb4El4/rZNDG00JTVtCCr+8eN4gHZWK+691nZ+w=;
-        b=h2+JvBupdynnHCn8y5qmotQX4/b3+Ql9ZQ/Oakn5SozAt1G1xSOI/c1r0Pj0fak2o6
-         iLx1hzzCQYFKn8QU8Ae3Si/bl9PzCYdJLIY5DFkBRX/WCmglFH/YtEKCw3TSF9FFxweN
-         fA3uK2VyOhJZVCDBbwTSI4RspR6aWmMtNdoubyMfjC5YSU0p7iHb9ZKq3M2DGaQmZ4a6
-         6xvIIxZ0AjG3ByMZWGGVKpFeCuhIkrCsGgw+Nfl//BrDHlkw3BMIQR9dopVnZhJNA9fw
-         GFne4gHoOLtj+26H19MzCmqkbhMCLSnjnoSDYFZkVo39KmVowEcbd1dZKxXIRlX3CGDF
-         LDqw==
+        bh=ZYiTa5Hy1N01sEhR7uKgAAVY+m5MK8aa+pxnbA/gNGg=;
+        b=WnKds9S5JdAAiwGLC19GZe1X+adSL65bO5hHzCMFBzOcD8fQcbVQ31xqsZjKiNCiAt
+         FqzBPeYRr7AK9Jd6NyADO31k7ELbFTGNZKOED5YU00PTcChHChgx7rXGOiHzZ4Zs3IyM
+         c5Mvz7EgedeDLersb+bwj/9WzltsheO9N7bKUQVVCZvlw01/MdkYnELMrUJkS+XlNNGJ
+         oCF78IfeYvlOsnOZLvPByDNxaZeoM2UgI5H2Yieh7hSdaw1gscde5SCJdJj8htgpBbKf
+         fsD+9GbFF/FUYdYnuhyjBVLD1orOB7FsKSputD6XC0BGPkPvzZnZBvUUmv7d+mco8ok1
+         4ohg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=QP5LNb4El4/rZNDG00JTVtCCr+8eN4gHZWK+691nZ+w=;
-        b=NwIHFGVaOySI2PJNZC60hIyKqY1QuH0Zk9Sl7GNP/JcKNJLBEXMFsV28XKE3XhK1kd
-         uf7dj/2SpfD0rkxA5+k7trOYkSsTmfXiGEbZwxeYxkMblX+pyZwxewHGzENuIHS5ZbEu
-         Q13WiMKKP5kq94zqyDnju9/1KP/GVA2llAEqJgR42zFjX6YmlK7l97tbvWkQh18pFAF1
-         e71+Q8VYLFUQu0LsbZmVjIX1NmaOm3oto14xVUZSnA7YWvN6DxOEYasm+vE9YIVW8rGi
-         IFIP+vipL9eJK/YXy8h6WWXUbSTUA2XQkTeXRfN+cneuTqXc0A7RVwufuyZZRb/hdXAf
-         BGvg==
-X-Gm-Message-State: AOAM532nVA9Rh7go0D7gQSIoN4NMvAGUV7PV9ST+pACLDjXHAM8fgUPG
-        32A2SSRbM9vWxxoH30Ipanf05Q==
-X-Google-Smtp-Source: ABdhPJyvRGt8EqMiQvwDJo86HHk+JR6+rac0yGqlbu7+RuWwwoBNe3sU4G/6NUlarR0g5Ph9a5lFtA==
-X-Received: by 2002:aca:dc84:: with SMTP id t126mr14476306oig.32.1622478789149;
-        Mon, 31 May 2021 09:33:09 -0700 (PDT)
+        bh=ZYiTa5Hy1N01sEhR7uKgAAVY+m5MK8aa+pxnbA/gNGg=;
+        b=dtLIhQ/Y3ywpZBE1o0E8XIrjIiSNljbaTGNlk6nkQWMIpsHOCedsO9J/+de8UFDQW9
+         aV81MY+KgKhLCZp3ZkCjRJdp2BU+mA7zi49LGDLxzfHu16OrbM/dsyS4KTQnP/LWmn6i
+         g60mRhzc5LhyM7qmQFac8XrE14NIhRAZYLWplBUAkbBRig6eDdKQcudrawZYh3j7Zvl/
+         aFrzt8QoibECsaVModiRwT6aWRZQssMthEpMqpVR+3ObhQj2iJJvpP0bsh9LgSAF7zCZ
+         MhZFbyvu1RPjkVkFa74ESVgRwW++BUVqtkhF4Q2mFhV+abRWC6z1jGbWUR3MrBqRHBRF
+         +zuw==
+X-Gm-Message-State: AOAM5339FqZdxsfxjfn6heo0LF0YwGEfCm4TPYS0ItbOXC/W+RRXfG4M
+        u+TG6FwvsnCMO1I1vz2VSjCyD4LPECmxiw==
+X-Google-Smtp-Source: ABdhPJz3s2PN3g6N7lwVvO12no/QZUwHWeHdxfxxUq9gIRcquOscsgqTlwWQx61Gv4spicsva/zgrw==
+X-Received: by 2002:aca:edc3:: with SMTP id l186mr7355648oih.43.1622479685027;
+        Mon, 31 May 2021 09:48:05 -0700 (PDT)
 Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id z25sm2861589oic.30.2021.05.31.09.33.07
+        by smtp.gmail.com with ESMTPSA id e21sm2894671oie.32.2021.05.31.09.48.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 May 2021 09:33:08 -0700 (PDT)
-Date:   Mon, 31 May 2021 11:33:06 -0500
+        Mon, 31 May 2021 09:48:04 -0700 (PDT)
+Date:   Mon, 31 May 2021 11:48:02 -0500
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Stephan Gerhold <stephan@gerhold.net>
-Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Kalle Valo <kvalo@codeaurora.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
+To:     Konrad Dybcio <konrad.dybcio@somainline.org>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, martin.botka@somainline.org,
+        angelogioacchino.delregno@somainline.org,
+        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
+        Loic Poulain <loic.poulain@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, wcn36xx@lists.infradead.org,
-        linux-wireless@vger.kernel.org, netdev@vger.kernel.org
-Subject: Re: [PATCH 5/5] arm64: dts: qcom: msm8916: Enable modem and WiFi
-Message-ID: <YLUPwuD9+z8G1FXN@builder.lan>
-References: <20210312003318.3273536-1-bjorn.andersson@linaro.org>
- <20210312003318.3273536-6-bjorn.andersson@linaro.org>
- <YFTA8gEPp1x6o/9f@gerhold.net>
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/2] arch: arm64: dts: msm8996: Add CPU opps
+Message-ID: <YLUTQtxnk69OSsEK@builder.lan>
+References: <20210527194455.782108-1-konrad.dybcio@somainline.org>
+ <20210527194455.782108-2-konrad.dybcio@somainline.org>
+ <YLBamtRq1xgcsDRE@builder.lan>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <YFTA8gEPp1x6o/9f@gerhold.net>
+In-Reply-To: <YLBamtRq1xgcsDRE@builder.lan>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri 19 Mar 10:19 CDT 2021, Stephan Gerhold wrote:
+On Thu 27 May 21:51 CDT 2021, Bjorn Andersson wrote:
 
-> Hi Bjorn,
+> On Thu 27 May 14:44 CDT 2021, Konrad Dybcio wrote:
 > 
-
-Hi Stephan,
-
-I thought I wrote you a reply, but I don't see it on lore or in my
-mailbox...
-
-> On Thu, Mar 11, 2021 at 04:33:18PM -0800, Bjorn Andersson wrote:
-> > Enable the modem and WiFi subsystems and specify msm8916 specific
-> > firmware path for these and the WCNSS control service.
+> > From: Loic Poulain <loic.poulain@linaro.org>
 > > 
-> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> 
-> The changes itself look good to me, but the commit message is really
-> misleading. It does not mention anywhere that the change actually just
-> enables "modem" on apq8016-sbc instead of "msm8916". :)
-> 
-> Also, WCNSS was actually enabled before already (with the default
-> firmware path). In my opinion, it would be clearer to change the
-> firmware-name for it in an extra patch.
-> 
-
-You're right, I will rewrite the commit message.
-
-> > ---
-> >  arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi | 12 ++++++++++++
-> >  arch/arm64/boot/dts/qcom/msm8916.dtsi     |  2 +-
-> >  2 files changed, 13 insertions(+), 1 deletion(-)
+> > Add the operating points capabilities of the kryo CPUs, that can be
+> > used for frequency scaling. There are two differents operating point
+> > tables, one for the big cluster and one for the LITTLE cluster.
 > > 
-> > diff --git a/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi b/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
-> > index 6aef0c2e4f0a..448e3561ef63 100644
-> > --- a/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
-> > @@ -305,6 +305,12 @@ &mdss {
-> >  	status = "okay";
-> >  };
-> >  
-> > +&mpss {
-> > +	status = "okay";
-> > +
-> > +	firmware-name = "qcom/msm8916/mba.mbn", "qcom/msm8916/modem.mbn";
-> > +};
-> > +
-> >  &pm8916_resin {
-> >  	status = "okay";
-> >  	linux,code = <KEY_VOLUMEDOWN>;
-> > @@ -312,6 +318,8 @@ &pm8916_resin {
-> >  
-> >  &pronto {
-> >  	status = "okay";
-> > +
-> > +	firmware-name = "qcom/msm8916/wcnss.mbn";
-> >  };
-> >  
+> > This frequency scaling support can then be used as a passive cooling
+> > device (cpufreq cooling device).
+> > 
+> > Only add nominal fmax for now, since there is no dynamic control of
+> > VDD APC (s11..) which is statically set at its nominal value.
+> > 
+> > Original patch link: https://patchwork.kernel.org/project/linux-arm-msm/patch/1595253740-29466-6-git-send-email-loic.poulain@linaro.org/
+> > 
+> > Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+> > [konrad: drop the thermals part, rebase and remove spaces within <>]
+> > Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 > 
-> How do I get a .mbn from the wcnss.{mdt,.b??} files provided in the
-> DB410c firmware package? I guess I should just run them through
-> https://github.com/andersson/pil-squasher?
+> As reported to Konrad on IRC, booting this causes a lockup before the
+> kernel reaches init, on one of my db820c boards. Booting with powersave
+> governor makes this board boot fine and I'm able to switch to
+> performance after that and at least according to cpufreq we're at full
+> speed on all 4 cores. But I haven't done any proper stress of the
+> system to narrow it down further...
+> 
+> PS. This was tested with next-20210527, your 3 patches, defconfig and
+> CONFIG_QCOM_CLK_APCC_MSM8996=y
 > 
 
-Yes, .mdt + .bNN files can be put back together as a .mbn by running
-them through the pil-squasher.
-
-It's worth mentioning that the suffix doesn't matter for the loader, so
-symlinking the .mdt to .mbn (in either way) will keep the kernel
-happy - if that simplifies transitions in either way.
-
-> Also, is the single file format (mbn) preferred now? Not sure if there
-> is any significant difference except having less files laying around.
-> 
-
-We've had numerous cases where people has managed to mix the parts from
-different versions of the firmware, sometimes with the nice result of
-the loader complaining that some particular .bNN file is missing
-other times just with the signature check (mysteriously) failing.
-
-Lumping the parts into a single .mbn resolves all these issues and
-hence I prefer this. It is however not a requirement.
+Again as noted on IRC, I reflashed the boot and tz firmware on my db820c
+and am now able to boot my board with these patches.
 
 Regards,
 Bjorn
+
+> Regards,
+> Bjorn
+> 
+> > ---
+> >  arch/arm64/boot/dts/qcom/msm8996.dtsi | 234 ++++++++++++++++++++++++++
+> >  1 file changed, 234 insertions(+)
+> > 
+> > diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+> > index 509d5bfec8ad..10e6fecc9e13 100644
+> > --- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+> > @@ -8,6 +8,7 @@
+> >  #include <dt-bindings/clock/qcom,rpmcc.h>
+> >  #include <dt-bindings/power/qcom-rpmpd.h>
+> >  #include <dt-bindings/soc/qcom,apr.h>
+> > +#include <dt-bindings/thermal/thermal.h>
+> >  
+> >  / {
+> >  	interrupt-parent = <&intc>;
+> > @@ -44,6 +45,9 @@ CPU0: cpu@0 {
+> >  			enable-method = "psci";
+> >  			cpu-idle-states = <&CPU_SLEEP_0>;
+> >  			capacity-dmips-mhz = <1024>;
+> > +			clocks = <&kryocc 0>;
+> > +			operating-points-v2 = <&cluster0_opp>;
+> > +			#cooling-cells = <2>;
+> >  			next-level-cache = <&L2_0>;
+> >  			L2_0: l2-cache {
+> >  			      compatible = "cache";
+> > @@ -58,6 +62,9 @@ CPU1: cpu@1 {
+> >  			enable-method = "psci";
+> >  			cpu-idle-states = <&CPU_SLEEP_0>;
+> >  			capacity-dmips-mhz = <1024>;
+> > +			clocks = <&kryocc 0>;
+> > +			operating-points-v2 = <&cluster0_opp>;
+> > +			#cooling-cells = <2>;
+> >  			next-level-cache = <&L2_0>;
+> >  		};
+> >  
+> > @@ -68,6 +75,9 @@ CPU2: cpu@100 {
+> >  			enable-method = "psci";
+> >  			cpu-idle-states = <&CPU_SLEEP_0>;
+> >  			capacity-dmips-mhz = <1024>;
+> > +			clocks = <&kryocc 1>;
+> > +			operating-points-v2 = <&cluster1_opp>;
+> > +			#cooling-cells = <2>;
+> >  			next-level-cache = <&L2_1>;
+> >  			L2_1: l2-cache {
+> >  			      compatible = "cache";
+> > @@ -82,6 +92,9 @@ CPU3: cpu@101 {
+> >  			enable-method = "psci";
+> >  			cpu-idle-states = <&CPU_SLEEP_0>;
+> >  			capacity-dmips-mhz = <1024>;
+> > +			clocks = <&kryocc 1>;
+> > +			operating-points-v2 = <&cluster1_opp>;
+> > +			#cooling-cells = <2>;
+> >  			next-level-cache = <&L2_1>;
+> >  		};
+> >  
+> > @@ -121,6 +134,227 @@ CPU_SLEEP_0: cpu-sleep-0 {
+> >  		};
+> >  	};
+> >  
+> > +	cluster0_opp: opp_table0 {
+> > +		compatible = "operating-points-v2-kryo-cpu";
+> > +		nvmem-cells = <&speedbin_efuse>;
+> > +		opp-shared;
+> > +
+> > +		/* Nominal fmax for now */
+> > +		opp-307200000 {
+> > +			opp-hz = /bits/ 64 <307200000>;
+> > +			opp-supported-hw = <0x77>;
+> > +			clock-latency-ns = <200000>;
+> > +		};
+> > +		opp-422400000 {
+> > +			opp-hz = /bits/ 64 <422400000>;
+> > +			opp-supported-hw = <0x77>;
+> > +			clock-latency-ns = <200000>;
+> > +		};
+> > +		opp-480000000 {
+> > +			opp-hz = /bits/ 64 <480000000>;
+> > +			opp-supported-hw = <0x77>;
+> > +			clock-latency-ns = <200000>;
+> > +		};
+> > +		opp-556800000 {
+> > +			opp-hz = /bits/ 64 <556800000>;
+> > +			opp-supported-hw = <0x77>;
+> > +			clock-latency-ns = <200000>;
+> > +		};
+> > +		opp-652800000 {
+> > +			opp-hz = /bits/ 64 <652800000>;
+> > +			opp-supported-hw = <0x77>;
+> > +			clock-latency-ns = <200000>;
+> > +		};
+> > +		opp-729600000 {
+> > +			opp-hz = /bits/ 64 <729600000>;
+> > +			opp-supported-hw = <0x77>;
+> > +			clock-latency-ns = <200000>;
+> > +		};
+> > +		opp-844800000 {
+> > +			opp-hz = /bits/ 64 <844800000>;
+> > +			opp-supported-hw = <0x77>;
+> > +			clock-latency-ns = <200000>;
+> > +		};
+> > +		opp-960000000 {
+> > +			opp-hz = /bits/ 64 <960000000>;
+> > +			opp-supported-hw = <0x77>;
+> > +			clock-latency-ns = <200000>;
+> > +		};
+> > +		opp-1036800000 {
+> > +			opp-hz = /bits/ 64 <1036800000>;
+> > +			opp-supported-hw = <0x77>;
+> > +			clock-latency-ns = <200000>;
+> > +		};
+> > +		opp-1113600000 {
+> > +			opp-hz = /bits/ 64 <1113600000>;
+> > +			opp-supported-hw = <0x77>;
+> > +			clock-latency-ns = <200000>;
+> > +		};
+> > +		opp-1190400000 {
+> > +			opp-hz = /bits/ 64 <1190400000>;
+> > +			opp-supported-hw = <0x77>;
+> > +			clock-latency-ns = <200000>;
+> > +		};
+> > +		opp-1228800000 {
+> > +			opp-hz = /bits/ 64 <1228800000>;
+> > +			opp-supported-hw = <0x77>;
+> > +			clock-latency-ns = <200000>;
+> > +		};
+> > +		opp-1324800000 {
+> > +			opp-hz = /bits/ 64 <1324800000>;
+> > +			opp-supported-hw = <0x77>;
+> > +			clock-latency-ns = <200000>;
+> > +		};
+> > +		opp-1401600000 {
+> > +			opp-hz = /bits/ 64 <1401600000>;
+> > +			opp-supported-hw = <0x77>;
+> > +			clock-latency-ns = <200000>;
+> > +		};
+> > +		opp-1478400000 {
+> > +			opp-hz = /bits/ 64 <1478400000>;
+> > +			opp-supported-hw = <0x77>;
+> > +			clock-latency-ns = <200000>;
+> > +		};
+> > +		opp-1593600000 {
+> > +			opp-hz = /bits/ 64 <1593600000>;
+> > +			opp-supported-hw = <0x77>;
+> > +			clock-latency-ns = <200000>;
+> > +		};
+> > +	};
+> > +
+> > +	cluster1_opp: opp_table1 {
+> > +		compatible = "operating-points-v2-kryo-cpu";
+> > +		nvmem-cells = <&speedbin_efuse>;
+> > +		opp-shared;
+> > +
+> > +		/* Nominal fmax for now */
+> > +		opp-307200000 {
+> > +			opp-hz = /bits/ 64 <307200000>;
+> > +			opp-supported-hw = <0x77>;
+> > +			clock-latency-ns = <200000>;
+> > +		};
+> > +		opp-403200000 {
+> > +			opp-hz = /bits/ 64 <403200000>;
+> > +			opp-supported-hw = <0x77>;
+> > +			clock-latency-ns = <200000>;
+> > +		};
+> > +		opp-480000000 {
+> > +			opp-hz = /bits/ 64 <480000000>;
+> > +			opp-supported-hw = <0x77>;
+> > +			clock-latency-ns = <200000>;
+> > +		};
+> > +		opp-556800000 {
+> > +			opp-hz = /bits/ 64 <556800000>;
+> > +			opp-supported-hw = <0x77>;
+> > +			clock-latency-ns = <200000>;
+> > +		};
+> > +		opp-652800000 {
+> > +			opp-hz = /bits/ 64 <652800000>;
+> > +			opp-supported-hw = <0x77>;
+> > +			clock-latency-ns = <200000>;
+> > +		};
+> > +		opp-729600000 {
+> > +			opp-hz = /bits/ 64 <729600000>;
+> > +			opp-supported-hw = <0x77>;
+> > +			clock-latency-ns = <200000>;
+> > +		};
+> > +		opp-806400000 {
+> > +			opp-hz = /bits/ 64 <806400000>;
+> > +			opp-supported-hw = <0x77>;
+> > +			clock-latency-ns = <200000>;
+> > +		};
+> > +		opp-883200000 {
+> > +			opp-hz = /bits/ 64 <883200000>;
+> > +			opp-supported-hw = <0x77>;
+> > +			clock-latency-ns = <200000>;
+> > +		};
+> > +		opp-940800000 {
+> > +			opp-hz = /bits/ 64 <940800000>;
+> > +			opp-supported-hw = <0x77>;
+> > +			clock-latency-ns = <200000>;
+> > +		};
+> > +		opp-1036800000 {
+> > +			opp-hz = /bits/ 64 <1036800000>;
+> > +			opp-supported-hw = <0x77>;
+> > +			clock-latency-ns = <200000>;
+> > +		};
+> > +		opp-1113600000 {
+> > +			opp-hz = /bits/ 64 <1113600000>;
+> > +			opp-supported-hw = <0x77>;
+> > +			clock-latency-ns = <200000>;
+> > +		};
+> > +		opp-1190400000 {
+> > +			opp-hz = /bits/ 64 <1190400000>;
+> > +			opp-supported-hw = <0x77>;
+> > +			clock-latency-ns = <200000>;
+> > +		};
+> > +		opp-1248000000 {
+> > +			opp-hz = /bits/ 64 <1248000000>;
+> > +			opp-supported-hw = <0x77>;
+> > +			clock-latency-ns = <200000>;
+> > +		};
+> > +		opp-1324800000 {
+> > +			opp-hz = /bits/ 64 <1324800000>;
+> > +			opp-supported-hw = <0x77>;
+> > +			clock-latency-ns = <200000>;
+> > +		};
+> > +		opp-1401600000 {
+> > +			opp-hz = /bits/ 64 <1401600000>;
+> > +			opp-supported-hw = <0x77>;
+> > +			clock-latency-ns = <200000>;
+> > +		};
+> > +		opp-1478400000 {
+> > +			opp-hz = /bits/ 64 <1478400000>;
+> > +			opp-supported-hw = <0x77>;
+> > +			clock-latency-ns = <200000>;
+> > +		};
+> > +		opp-1555200000 {
+> > +			opp-hz = /bits/ 64 <1555200000>;
+> > +			opp-supported-hw = <0x77>;
+> > +			clock-latency-ns = <200000>;
+> > +		};
+> > +		opp-1632000000 {
+> > +			opp-hz = /bits/ 64 <1632000000>;
+> > +			opp-supported-hw = <0x77>;
+> > +			clock-latency-ns = <200000>;
+> > +		};
+> > +		opp-1708800000 {
+> > +			opp-hz = /bits/ 64 <1708800000>;
+> > +			opp-supported-hw = <0x77>;
+> > +			clock-latency-ns = <200000>;
+> > +		};
+> > +		opp-1785600000 {
+> > +			opp-hz = /bits/ 64 <1785600000>;
+> > +			opp-supported-hw = <0x77>;
+> > +			clock-latency-ns = <200000>;
+> > +		};
+> > +		opp-1824000000 {
+> > +			opp-hz = /bits/ 64 <1824000000>;
+> > +			opp-supported-hw = <0x77>;
+> > +			clock-latency-ns = <200000>;
+> > +		};
+> > +		opp-1920000000 {
+> > +			opp-hz = /bits/ 64 <1920000000>;
+> > +			opp-supported-hw = <0x77>;
+> > +			clock-latency-ns = <200000>;
+> > +		};
+> > +		opp-1996800000 {
+> > +			opp-hz = /bits/ 64 <1996800000>;
+> > +			opp-supported-hw = <0x77>;
+> > +			clock-latency-ns = <200000>;
+> > +		};
+> > +		opp-2073600000 {
+> > +			opp-hz = /bits/ 64 <2073600000>;
+> > +			opp-supported-hw = <0x77>;
+> > +			clock-latency-ns = <200000>;
+> > +		};
+> > +		opp-2150400000 {
+> > +			opp-hz = /bits/ 64 <2150400000>;
+> > +			opp-supported-hw = <0x77>;
+> > +			clock-latency-ns = <200000>;
+> > +		};
+> > +	};
+> > +
+> >  	firmware {
+> >  		scm {
+> >  			compatible = "qcom,scm-msm8996";
+> > -- 
+> > 2.31.1
+> > 
