@@ -2,109 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 42DDD39679C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 May 2021 20:10:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2BB5C3967C3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 May 2021 20:21:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231997AbhEaSME (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 May 2021 14:12:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36238 "EHLO
+        id S230288AbhEaSWx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 May 2021 14:22:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38664 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230351AbhEaSMD (ORCPT
+        with ESMTP id S232198AbhEaSWu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 May 2021 14:12:03 -0400
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59549C06174A
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 May 2021 11:10:22 -0700 (PDT)
-Received: by mail-lj1-x22e.google.com with SMTP id s25so15966129ljo.11
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 May 2021 11:10:22 -0700 (PDT)
+        Mon, 31 May 2021 14:22:50 -0400
+Received: from mail-oo1-xc36.google.com (mail-oo1-xc36.google.com [IPv6:2607:f8b0:4864:20::c36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5EB9C061761
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 May 2021 11:21:10 -0700 (PDT)
+Received: by mail-oo1-xc36.google.com with SMTP id v13-20020a4aa40d0000b02902052145a469so2951940ool.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 May 2021 11:21:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=RqDyoSo09lPZO7GbOVPgOTHVdV/YSSWYh+JNDnVcsAM=;
-        b=vy0uLjUP4b9/AdZSWCBIJkGYi4KqsFzlAguK9G1kq10RuG2QJ9SaCin/z40CAuN9N1
-         Ny/vrCiMNiRFhNLvJpQsZYZINHFf3EaQct9tsqIhk5tAUsuxyy09Jt+MFTo1pb2DxMnI
-         1mhuGM8ZMFNvXLG2phlK9NzBPLb3Sc3JtSvvZKZm+MyP/a9uTs2m53y9gSdGz1FPy9Zp
-         irfZkJPLzEw5eyrLgj7PQlgSEwbb6I7tSu/8WspO4dXuoX2ho+xANIhvHef5g176dFCi
-         3lou3RZZLIaFfJeZfbA0ikQgl/ZH1MLhSjVh8yTZE2in8m24BXFIdgP66V1SntHfTsA6
-         U1mA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=x9RUBmMQU4rnqXddK5v0U/IX48u+qvHAWGVqJ1XFKLs=;
+        b=MHfxWL+Lu2oOODkz5EoTuDHIQEi5s7ukPWtuhHlW/8XG5+UTcO6MYZpbiddXDafU5F
+         6BUCX2CZFAoWuQQ8ecfq/dbqdNMyWIY+c9A33FW26Z01ymXG2GA/VMbR+EvD0lRi0cSu
+         4Y8CfTTpcuLwu1yXNT4k0VmU8UZuRmBLN2V+rexKayEeusAHebQej9WLqyPL77O61dFp
+         OmNyKQXf0By6aVugNT+JWITnnowVKt86hejogdhZZzGKiJTp9cmOmuQh2JrFcykSwfHN
+         e2W8cJe6cmpiViWHsWatFqGd8Iuh6FLxKXaOs9tNVBj4TIvSqn5CMTkSkaGLKxQ7SZjW
+         yMEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=RqDyoSo09lPZO7GbOVPgOTHVdV/YSSWYh+JNDnVcsAM=;
-        b=q+H87UnmLnMlfht5UlmHinMloAuOtJ3bm/jnMca1jLufNjLky2ut0DL4dCpKfVjCmD
-         oCqFLllDy2Oe6+yOzwk6SogJn4YUGySM24Qu8s7Z8vBKLP0qRgPe32TlxNscXpDi3iZm
-         x1AeT46O7UoalCpyx+JWR5w1bvAAirfTyGEglnTMc413TevnwMyIuoiZmqu50rGzjCKc
-         eKSVxsf5t7BFIFVEYZaMKW/jqb/y9otiewdY8BVfa0doRAyPD99ZoyVFd9ta0Hb/9xba
-         Ogkaf6Jcpv87zR/sBGBmefZ1AmJAjx8V2UjtIejwru5M61cmEW+3rVlHEled2TpnWGic
-         1gDw==
-X-Gm-Message-State: AOAM533xjG1YpsTJMyVz3QgEw3JBbwfk6wEFLw7ZvVEHXed9Xd15gEYA
-        rO1BtJ3qnITKcZytQugCkaTKwg==
-X-Google-Smtp-Source: ABdhPJx3O6rn5NqZMzkPeijKZJM/6wPEQfnrs07M3tXIRXQouQa/sGsKJEEBs84ooxP684SBQE0Vag==
-X-Received: by 2002:a2e:bf20:: with SMTP id c32mr17459713ljr.311.1622484620655;
-        Mon, 31 May 2021 11:10:20 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id y1sm1331962lfl.68.2021.05.31.11.10.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 31 May 2021 11:10:20 -0700 (PDT)
-Subject: Re: [Freedreno] [PATCH v2 2/2] dt-bindings: display: msm/dsi: add
- qcom, dsi-phy-cphy-mode option
-To:     Jonathan Marek <jonathan@marek.ca>, Rob Herring <robh@kernel.org>
-Cc:     "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, David Airlie <airlied@linux.ie>,
-        freedreno@lists.freedesktop.org,
-        open list <linux-kernel@vger.kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <dri-devel@lists.freedesktop.org>, Rob Clark <robdclark@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>, Sean Paul <sean@poorly.run>
-References: <20210423172450.4885-1-jonathan@marek.ca>
- <20210423172450.4885-3-jonathan@marek.ca>
- <20210503171139.GA2011901@robh.at.kernel.org>
- <0e083e31-d349-6d5c-048f-258414492b2c@marek.ca>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Message-ID: <4e623554-bbe4-4d4a-7b14-0ca4f684c7fb@linaro.org>
-Date:   Mon, 31 May 2021 21:10:19 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.10.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=x9RUBmMQU4rnqXddK5v0U/IX48u+qvHAWGVqJ1XFKLs=;
+        b=F0n1UM86hBL5mjeehL7hPRofScQpnoVhxPP7kzT2W4HE/cbz5hre/f7t5Aplx1Rm0M
+         o2uq/GLgWCqIffbY1KoRPBlg5mHhQ5FfD9REZdSBaAfUQ5+9MP+pmdU53N7sTZqKukpI
+         uroKJq+MXbyZ5a6QehQeupo/wIQPTVd4rIPCr8cOUzTfgA1XTElS3tcmpAEbSfA/VThb
+         x68E6B6SPWWIC9giWYE2JNO3OC8RxdsrO7EjjkyLVZO4xWatcs0YeOUBIXkxpDCYhpwl
+         plPhN8gSEuFuAtV1/LHqKibbzxYwr7PWpAC+K8B9Eg4G2UAHim3t0I4p3Cf4ffXl9zCj
+         uEeA==
+X-Gm-Message-State: AOAM530NIAuMUvoQ4/nI7a3lQejXUuXPwWwypnLMZglkRb3Es8DsteL5
+        tHQiYkyPRkIWVcxNPXQU3CFmMw==
+X-Google-Smtp-Source: ABdhPJzu0yCihYWPm6Dv4bKzvA3alXKP7M0S6fx8sRM+Ca3aZphKMf4OAgtcwr7wrZvzZ0NcWt084w==
+X-Received: by 2002:a4a:ab83:: with SMTP id m3mr17112699oon.2.1622485270083;
+        Mon, 31 May 2021 11:21:10 -0700 (PDT)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id t26sm3248506oth.14.2021.05.31.11.21.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 31 May 2021 11:21:09 -0700 (PDT)
+Date:   Mon, 31 May 2021 13:21:07 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Sibi Sankar <sibis@codeaurora.org>
+Cc:     Viresh Kumar <viresh.kumar@linaro.org>, dianders@chromium.org,
+        mka@chromium.org, sboyd@kernel.org, agross@kernel.org,
+        robh+dt@kernel.org, rjw@rjwysocki.net,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org
+Subject: Re: [PATCH v3 1/2] cpufreq: blacklist SC7280 in cpufreq-dt-platdev
+Message-ID: <YLUpE6NK3WC+Nu2S@builder.lan>
+References: <1620807083-5451-1-git-send-email-sibis@codeaurora.org>
+ <1620807083-5451-2-git-send-email-sibis@codeaurora.org>
+ <20210520035622.e276tqpl4gg5fxhk@vireshk-i7>
+ <6f5b1d0992243ff5d71362f463a5f1cf@codeaurora.org>
 MIME-Version: 1.0
-In-Reply-To: <0e083e31-d349-6d5c-048f-258414492b2c@marek.ca>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <6f5b1d0992243ff5d71362f463a5f1cf@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 28/05/2021 15:57, Jonathan Marek wrote:
-> On 5/3/21 1:11 PM, Rob Herring wrote:
->> On Fri, Apr 23, 2021 at 01:24:40PM -0400, Jonathan Marek wrote:
->>> Document qcom,dsi-phy-cphy-mode option, which can be used to control
->>> whether DSI will operate in D-PHY (default) or C-PHY mode.
->>
->> Given this is a standard MIPI thing, I think this needs to be a common
->> property. We already have phy bindings that use the phy cells to set the
->> phy type which I think you should use here. See
->> include/dt-bindings/phy/phy.h.
->>
+On Thu 20 May 02:20 CDT 2021, Sibi Sankar wrote:
+
+> On 2021-05-20 09:26, Viresh Kumar wrote:
+> > On 12-05-21, 13:41, Sibi Sankar wrote:
+> > > Add SC7280 to cpufreq-dt-platdev blacklist since the actual scaling is
+> > > handled by the 'qcom-cpufreq-hw' driver.
+> > > 
+> > > Reviewed-by: Douglas Anderson <dianders@chromium.org>
+> > > Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+> > > ---
+> > >  drivers/cpufreq/cpufreq-dt-platdev.c | 1 +
+> > >  1 file changed, 1 insertion(+)
+> > > 
+> > > diff --git a/drivers/cpufreq/cpufreq-dt-platdev.c
+> > > b/drivers/cpufreq/cpufreq-dt-platdev.c
+> > > index 5e07065ec22f..345418b8250e 100644
+> > > --- a/drivers/cpufreq/cpufreq-dt-platdev.c
+> > > +++ b/drivers/cpufreq/cpufreq-dt-platdev.c
+> > > @@ -137,6 +137,7 @@ static const struct of_device_id blacklist[]
+> > > __initconst = {
+> > >  	{ .compatible = "qcom,msm8996", },
+> > >  	{ .compatible = "qcom,qcs404", },
+> > >  	{ .compatible = "qcom,sc7180", },
+> > > +	{ .compatible = "qcom,sc7280", },
+> > >  	{ .compatible = "qcom,sdm845", },
+> > > 
+> > >  	{ .compatible = "st,stih407", },
+> > 
+> > Applied 1/2. Thanks.
+> > 
+> > What do you want to do for 2/2 ? Go through my tree? need an update ?
 > 
-> Is it OK to simply change the option to something like "phy-mode = 
-> <PHY_TYPE_DSI_CPHY>;"?
-> 
-> (using phy-cells would be annoying to implement, with no benefit IMO)
+> Lets skip pulling in 2/2 for now.
 
+In particular it's ripe for merge conflicts, so I'd prefer to take it
+through my tree.
 
-To add another feather to the balance scales:
+> It depends on a few other changes to land first and the cpufreq node
+> for sc7280 needs a re-spin.
 
-- `phys = <&dsi0_phy PHY_TYPE_DSI_CPHY>;` would bring knowledge about 
-PHY mode to the DSI host (which does not really care about PHY mode)
+What other dependencies do we have?
 
-- `phy-mode = <PHY_TYPE_DSI_CPHY>;` would stay in the PHY node, where 
-this information belongs.
+I dropped the reg-names from the cpufreq node and merged that change.
 
--- 
-With best wishes
-Dmitry
+Regards,
+Bjorn
