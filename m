@@ -2,132 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D124E3964B7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 May 2021 18:07:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2DB943961D2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 May 2021 16:46:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233499AbhEaQIq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 May 2021 12:08:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35638 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233152AbhEaQGG (ORCPT
+        id S232924AbhEaOrK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 May 2021 10:47:10 -0400
+Received: from mo4-p01-ob.smtp.rzone.de ([85.215.255.51]:21408 "EHLO
+        mo4-p01-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234192AbhEaOpH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 May 2021 12:06:06 -0400
-Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com [IPv6:2607:f8b0:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8030EC08EAF6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 May 2021 07:42:25 -0700 (PDT)
-Received: by mail-ot1-x334.google.com with SMTP id 69-20020a9d0a4b0000b02902ed42f141e1so11297203otg.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 May 2021 07:42:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=qZo5Xl3B/iGBgaTUfAAHoJzK4eNGP09VMkA2WVAMmEA=;
-        b=G+irpJZSuBkS7cMmsk66PyJ6PMjD7BPfmYzfGXwe2yjjAyO9YBKNHPmHBrfhZnEkKt
-         teLlEfC3Hz6DZJ0P8+Ef+MdWamCQXdjA3qb+c1C9ca/mLXow0MJUrvoI/N9Z5Ed1XbQ5
-         rfRFhTAmBXkGCYmKiBCXauu+zXzuYGoNgHKDDQsJWR4gZG4gRf9igb/Q2UDyr45Xly6I
-         ZZ24zc+qc0AT6bIbshC6aHbkkncU4TDawmzDdnzGlrk00w3nG33LDl4pECinCR8xUPB7
-         OIQsBUi2hzUC1KR6tcm6rxQCA6qdcBiiclUWPRstmH6XwyKVUPKgRfWLLPVhdKRwkoc5
-         Z4Pw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=qZo5Xl3B/iGBgaTUfAAHoJzK4eNGP09VMkA2WVAMmEA=;
-        b=jneDXil1LxLCB/aZtNT9QQwq19FaJ+Medrm3qdOHAHwX9hFt6zVVJwUg7iMKqugqFC
-         Do+c2KjeDsma2B5AYv5FaWTC2FgG6B846HoArlcVACAH4tPO6WAzeukR+qSUT+UBkacm
-         2MqA97o4zmZZQ4WdfcWlXp+XP41H4YpafiJK815e16kvRUrlxIkmubPrVbnlIGiII/Nv
-         jEVikVBNrrhvc0HP/WhSHzkPG3tUOASxooEEIcIiIx9EhThmhmKOYs5e5rxGfy4D+V1n
-         NRY+HhvJECgnz8ZT/oyFs+e712ZYAW3Swzkin0uQjCqnw54qIBFdVlw7dgwBQot6CxKE
-         VFaQ==
-X-Gm-Message-State: AOAM532b6tQxrYH9sfqjY4vDr+EchYeZv07sKcTI9htgaJ8G7zV0+h7O
-        Mf+NAgMuRx5cmAlQWTwqCqBBTZu+cgl5Fw==
-X-Google-Smtp-Source: ABdhPJxKFWPIg9XMMPTnU9gnko2xdCi4qQvCCOI6yMaVDo812VQEIZywgAq5RhWPZ9HWgUtz/tIDaQ==
-X-Received: by 2002:a9d:4d99:: with SMTP id u25mr4751897otk.248.1622472144886;
-        Mon, 31 May 2021 07:42:24 -0700 (PDT)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id e83sm2803421oia.40.2021.05.31.07.42.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 May 2021 07:42:24 -0700 (PDT)
-Date:   Mon, 31 May 2021 09:42:22 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <sean@poorly.run>, Rob Herring <robh+dt@kernel.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH v2 3/4] arm64: dts: sdm845: move bus clock to mdp node
- for sdm845 target
-Message-ID: <YLT1ziKiesQHEw1B@builder.lan>
-References: <20210407150157.801210-1-dmitry.baryshkov@linaro.org>
- <20210407150157.801210-4-dmitry.baryshkov@linaro.org>
- <2dc79aad-33cd-7b17-368f-d52d60d46811@linaro.org>
+        Mon, 31 May 2021 10:45:07 -0400
+ARC-Seal: i=1; a=rsa-sha256; t=1622472196; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=pdx5kWR3ZwW4ErUT94+FZPObYCFadP5ETYHs+u0NEhhGMBQyHpUBBOtnAcTcmkl/Nw
+    AfErtxSzExzYIkNrBxFQnKhhBabU+n+Ig/o3UdC7Ei764VZAFgZQKznVB+KNytoCefvS
+    5VwB/8CkUPlrw4vC+BoXhr6y3DSX931nxfYD3dVHb5cNjlDTkMvRtBnqR0VvnSpAt4m7
+    TVduW96XIjxEKBUoL4g+P9zAxBBmiYZh8W2FHpveBi6nngDTE2Sw6cXdyEuM62N/AuNI
+    JNxX0vdgT33VSvbNdF7BrZ6a1UGGMJWcHjhE1DYUFVPLm90LHSA5QRT9750d3xnVZ6Hh
+    p0Jw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1622472196;
+    s=strato-dkim-0002; d=strato.com;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=Jg2H/1U2Rc29N+b/uXCyre5UMUQOhLUihSa0cmLxZHY=;
+    b=sstw1Fb35nWuKZaxRk5Ygu8fdf5lfd3zuRryVyU3i8mIHsw6Rky0UbB9/p1d6C0Yb2
+    OxMCrKATnwqiZtbtRNZLoInVerTq5dXKqlUX9SYsvV1xrn+i1qyf95KWuU6clLhCurTy
+    f7zYq2GM5HW3REp2R7DB/sSErtu6oxsG24/47U0KRAtdGdESzFi0mkZbAXXgSwj+3HKY
+    uY48iW7W/UJNq48+ZyNF00rqWSSON06u5V+cBrLPmkorIL1dSdC09HKTUHVazQ3NxEdP
+    gNEPbw4akdzTt6xJpkYz+1/s6herNNWOhfHExfV0EFIk0SVkU4U8hm4icYfqfBiRp0/5
+    fy9w==
+ARC-Authentication-Results: i=1; strato.com;
+    dkim=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1622472196;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=Jg2H/1U2Rc29N+b/uXCyre5UMUQOhLUihSa0cmLxZHY=;
+    b=JKjt6WmatMwO7xveKf716GY6Qwz0GSjcNuHvoGJXWnLv/M6bTColeiX5biq77hOwCQ
+    9APlAsm9hRjLwddt2aCc/LqwSJIK8CQyt9/SVtnuRz3GsjdD3TeCkympSLKnhmuV5zD1
+    AfopwoRSFF8geC5fpL/MSyOOFKFxeS0XUzl5bP/Uo4w339PK8M9ZOTIY0yAWxuMJGy0u
+    xXfAQXpW2A+Pkg9Gw+39KTSDlfjWytVgOaDhn44xccnSpF5dv2muHOK/naZ36ZHG5T0F
+    g7CFrtkRO4lDJEJWmpICBDommKAbphhOuhwslQoxYj68U5054I9gLFPaJWkxdWVwu4XW
+    UxGQ==
+Authentication-Results: strato.com;
+    dkim=none
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u26zEodhPgRDZ8j9IcjHBg=="
+X-RZG-CLASS-ID: mo00
+Received: from gerhold.net
+    by smtp.strato.de (RZmta 47.26.3 DYNA|AUTH)
+    with ESMTPSA id U0b2c9x4VEhFLpE
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Mon, 31 May 2021 16:43:15 +0200 (CEST)
+Date:   Mon, 31 May 2021 16:43:11 +0200
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Bartosz Dudziak <bartosz.dudziak@snejp.pl>
+Cc:     Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Russell King <linux@armlinux.org.uk>,
+        David Sterba <dsterba@suse.com>, Jens Axboe <axboe@kernel.dk>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Kumar Gala <galak@codeaurora.org>, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2 2/2] cpuidle: qcom: Add SPM register data for MSM8226
+Message-ID: <YLT18iBg20DZYyA4@gerhold.net>
+References: <20210530121803.13102-1-bartosz.dudziak@snejp.pl>
+ <20210530121803.13102-3-bartosz.dudziak@snejp.pl>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <2dc79aad-33cd-7b17-368f-d52d60d46811@linaro.org>
+In-Reply-To: <20210530121803.13102-3-bartosz.dudziak@snejp.pl>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri 28 May 10:33 CDT 2021, Dmitry Baryshkov wrote:
-
-> On 07/04/2021 18:01, Dmitry Baryshkov wrote:
-> > Move the bus clock to mdp device node,in order to facilitate bus band
-> > width scaling on sdm845 target.
-> > 
-> > The parent device MDSS will not vote for bus bw, instead the vote will
-> > be triggered by mdp device node. Since a minimum vote is required to
-> > turn on bus clock, move the clock node to mdp device from where the
-> > votes are requested.
+On Sun, May 30, 2021 at 02:18:03PM +0200, Bartosz Dudziak wrote:
+> Add MSM8226 register data to SPM AVS Wrapper 2 (SAW2) power controller
+> driver.
 > 
-> drm/msm patches were merged through the msm tree (targeting 5.13). Shouldn't
-> we also merge these two patches (targeting 5.13 as fixes or 5.14)?
-> 
+> Signed-off-by: Bartosz Dudziak <bartosz.dudziak@snejp.pl>
 
-Does the vote for the bus clock result in an improvement or is the
-device simply not working without it?
+I checked that the values added here match the ones I see in
+msm8226-pm-v2.dtsi in the downstream kernel, so FWIW:
 
-Regards,
-Bjorn
+Reviewed-by: Stephan Gerhold <stephan@gerhold.net>
 
-> > 
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> >   arch/arm64/boot/dts/qcom/sdm845.dtsi | 8 ++++----
-> >   1 file changed, 4 insertions(+), 4 deletions(-)
-> > 
-> > diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> > index 7395ef20b90e..55704804c2ca 100644
-> > --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> > @@ -4136,9 +4136,8 @@ mdss: mdss@ae00000 {
-> >   			power-domains = <&dispcc MDSS_GDSC>;
-> >   			clocks = <&gcc GCC_DISP_AHB_CLK>,
-> > -				 <&gcc GCC_DISP_AXI_CLK>,
-> >   				 <&dispcc DISP_CC_MDSS_MDP_CLK>;
-> > -			clock-names = "iface", "bus", "core";
-> > +			clock-names = "iface", "core";
-> >   			assigned-clocks = <&dispcc DISP_CC_MDSS_MDP_CLK>;
-> >   			assigned-clock-rates = <300000000>;
-> > @@ -4166,11 +4165,12 @@ mdss_mdp: mdp@ae01000 {
-> >   				      <0 0x0aeb0000 0 0x2008>;
-> >   				reg-names = "mdp", "vbif";
-> > -				clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
-> > +				clocks = <&gcc GCC_DISP_AXI_CLK>,
-> > +					 <&dispcc DISP_CC_MDSS_AHB_CLK>,
-> >   					 <&dispcc DISP_CC_MDSS_AXI_CLK>,
-> >   					 <&dispcc DISP_CC_MDSS_MDP_CLK>,
-> >   					 <&dispcc DISP_CC_MDSS_VSYNC_CLK>;
-> > -				clock-names = "iface", "bus", "core", "vsync";
-> > +				clock-names = "gcc-bus", "iface", "bus", "core", "vsync";
-> >   				assigned-clocks = <&dispcc DISP_CC_MDSS_MDP_CLK>,
-> >   						  <&dispcc DISP_CC_MDSS_VSYNC_CLK>;
-> > 
+Thanks,
+Stephan
+
+> ---
+>  drivers/cpuidle/cpuidle-qcom-spm.c | 14 ++++++++++++++
+>  1 file changed, 14 insertions(+)
 > 
-> 
+> diff --git a/drivers/cpuidle/cpuidle-qcom-spm.c b/drivers/cpuidle/cpuidle-qcom-spm.c
+> index adf91a6e4d..c0e7971da2 100644
+> --- a/drivers/cpuidle/cpuidle-qcom-spm.c
+> +++ b/drivers/cpuidle/cpuidle-qcom-spm.c
+> @@ -87,6 +87,18 @@ static const struct spm_reg_data spm_reg_8974_8084_cpu  = {
+>  	.start_index[PM_SLEEP_MODE_SPC] = 3,
+>  };
+>  
+> +/* SPM register data for 8226 */
+> +static const struct spm_reg_data spm_reg_8226_cpu  = {
+> +	.reg_offset = spm_reg_offset_v2_1,
+> +	.spm_cfg = 0x0,
+> +	.spm_dly = 0x3C102800,
+> +	.seq = { 0x60, 0x03, 0x60, 0x0B, 0x0F, 0x20, 0x10, 0x80, 0x30, 0x90,
+> +		0x5B, 0x60, 0x03, 0x60, 0x3B, 0x76, 0x76, 0x0B, 0x94, 0x5B,
+> +		0x80, 0x10, 0x26, 0x30, 0x0F },
+> +	.start_index[PM_SLEEP_MODE_STBY] = 0,
+> +	.start_index[PM_SLEEP_MODE_SPC] = 5,
+> +};
+> +
+>  static const u8 spm_reg_offset_v1_1[SPM_REG_NR] = {
+>  	[SPM_REG_CFG]		= 0x08,
+>  	[SPM_REG_SPM_CTL]	= 0x20,
+> @@ -259,6 +271,8 @@ static struct spm_driver_data *spm_get_drv(struct platform_device *pdev,
+>  }
+>  
+>  static const struct of_device_id spm_match_table[] = {
+> +	{ .compatible = "qcom,msm8226-saw2-v2.1-cpu",
+> +	  .data = &spm_reg_8226_cpu },
+>  	{ .compatible = "qcom,msm8974-saw2-v2.1-cpu",
+>  	  .data = &spm_reg_8974_8084_cpu },
+>  	{ .compatible = "qcom,apq8084-saw2-v2.1-cpu",
 > -- 
-> With best wishes
-> Dmitry
+> 2.25.1
+> 
