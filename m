@@ -2,71 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 12BBE396971
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 May 2021 23:50:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 20A04396986
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Jun 2021 00:04:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231695AbhEaVvv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 May 2021 17:51:51 -0400
-Received: from mail.kernel.org ([198.145.29.99]:39238 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231714AbhEaVvq (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 May 2021 17:51:46 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPS id 5B5BE61375;
-        Mon, 31 May 2021 21:50:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1622497806;
-        bh=a8b/C0heqBfVAFtFNeNjP2HHFrxDfpDwb+njMh/rbYQ=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=Pq5mqy94zL6S1Jb1YEOtIHXDZcZYA8spBP6LqgXwARY1l2Zh/F1TXysZVUFsZFFbJ
-         R/hmI+MxBcr8VcB8emEO7E53SM1E2VqjvhZ1/vMhBaYvqeS85ILVE+rVnwJoLOvx1c
-         dn5nSjxbriaVT6WASRkJgBMF7hg0ouoLTtBYux+TvAe5Opwz08wEEvHWJyybHN1bUT
-         rGxf30innYJVkD1DQaMC/S58Fey7lhejl8qzik7FtwMTzlekWmgLcY/a30kYhyzZQp
-         sXnLWjzJpQM9gY/9rCKzhE+gK2LrfNdI4Bnr1y9hSnmoWu+q+kU9NPAgPMk+MKxp2Q
-         IJM80MXHE6R/w==
-Received: from pdx-korg-docbuild-2.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id 54A9B60CAA;
-        Mon, 31 May 2021 21:50:06 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+        id S231240AbhEaWGi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 May 2021 18:06:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59390 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231708AbhEaWGh (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 31 May 2021 18:06:37 -0400
+Received: from mail-ot1-x336.google.com (mail-ot1-x336.google.com [IPv6:2607:f8b0:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 111B0C061756
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 May 2021 15:04:56 -0700 (PDT)
+Received: by mail-ot1-x336.google.com with SMTP id i23-20020a9d68d70000b02902dc19ed4c15so12347987oto.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 May 2021 15:04:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=ue5n0UpI5EqeaS+j7+t9xnc2N6UugI+y/wlKjXvZ9B0=;
+        b=tQae9Nr2rxLB0lFr7vREg1l/5tofxK6SHjrIwZUN/4EAM3zC3cbO2xQJg6KtQ24jz+
+         fWfNXqs4Z5P5sqyBew2Owpq1QL/8P5fyONiJQ6ehvJCx2DyqEoFkvhpywx98FDB+jp7E
+         gbBNnYT9EtrB6SJY7y6Sh0omYq/WNUxFEfEDtvxHaJHf6uW0MGQlvwnS3fCqbY7gZk/i
+         dEz5f0BhlXez/vzQpG8TcYn12w83Ri8zq1LQK+8eI2qtBBC2CYQeast4ai3R2rEfciA4
+         s2TPKzK+hpdi2YhOXRGMFwnAgMZNz27elJAQ3HjHokhBB3jg/uJklrjNbIH0uoKU6VrN
+         +2fQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=ue5n0UpI5EqeaS+j7+t9xnc2N6UugI+y/wlKjXvZ9B0=;
+        b=m633T+XfRNNJi12bSvq5JHCj1KvThQbsVq2u8K+Eq0NSvZ2TMJ2dnsOMGcZL6jmr1r
+         siBlvGzOB5rbZEKmsqQh7VpuA/1nNTgCU9DoB0MnPGVFQ6eo7ZkSXz+mGMsxLopeSXOO
+         /KeATGdHpi0+WuzmxX+QrKQaxmoDXIVLEYXxs0lLaOgg7moavahWsL9+Yvk6re1tDERF
+         ExNCKCer92XK1iIWGUGJ0xRrMLxFwMoci4a1Ii3U2wqkbw1ifXAa80tDQGAUfsixgI8A
+         dFTQRcqTDJtF50ebxUcdiWLxuU4H4PSB2/p5miHBa2ANORp6eIIQSH2NuthbT6CN+lAE
+         M7fg==
+X-Gm-Message-State: AOAM531xh3pgE+j0MAtU5AC0WuGrdGoPS9EmzEbwYWDShBhsGTBLEd+8
+        vD2oqCC13Yq88Rjfc2IzrHfWSQ==
+X-Google-Smtp-Source: ABdhPJxcwoUVpexwvq3Wsn8EnHbKmjTIh8RHtDZQJb8ubOn5aemktzs2jcu5a9r02dk1rNsVjFPZrw==
+X-Received: by 2002:a05:6830:2703:: with SMTP id j3mr7260923otu.140.1622498695281;
+        Mon, 31 May 2021 15:04:55 -0700 (PDT)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id f80sm1999395otf.32.2021.05.31.15.04.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 31 May 2021 15:04:54 -0700 (PDT)
+Date:   Mon, 31 May 2021 17:04:53 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Philipp Zabel <p.zabel@pengutronix.de>
+Cc:     Sibi Sankar <sibis@codeaurora.org>, robh+dt@kernel.org,
+        sboyd@kernel.org, agross@kernel.org, mani@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 4/5] reset: qcom: Add PDC Global reset signals for WPSS
+Message-ID: <YLVdhU3Zz/TWtwCX@builder.lan>
+References: <1619508824-14413-1-git-send-email-sibis@codeaurora.org>
+ <1619508824-14413-5-git-send-email-sibis@codeaurora.org>
+ <0c5f747fe0a3f757a4160e4fd28cc2b56a57a39d.camel@pengutronix.de>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v2] arm64: dts: qcom: c630: Add no-hpd to DSI bridge node
-From:   patchwork-bot+linux-arm-msm@kernel.org
-Message-Id: <162249780634.3521.10041642739676810501.git-patchwork-notify@kernel.org>
-Date:   Mon, 31 May 2021 21:50:06 +0000
-References: <20210324231424.2890039-1-swboyd@chromium.org>
-In-Reply-To: <20210324231424.2890039-1-swboyd@chromium.org>
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <0c5f747fe0a3f757a4160e4fd28cc2b56a57a39d.camel@pengutronix.de>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello:
+On Tue 27 Apr 02:58 CDT 2021, Philipp Zabel wrote:
 
-This patch was applied to qcom/linux.git (refs/heads/for-next):
-
-On Wed, 24 Mar 2021 16:14:24 -0700 you wrote:
-> We should indicate that we're not using the HPD pin on this device, per
-> the binding document. Otherwise if code in the future wants to enable
-> HPD in the bridge when this property is absent we'll be enabling HPD
-> when it isn't supposed to be used. Presumably this board isn't using hpd
-> on the bridge.
+> Hi Sibi,
 > 
-> Cc: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-> Cc: Douglas Anderson <dianders@chromium.org>
-> Cc: Steev Klimaszewski <steev@kali.org>
-> Fixes: 956e9c85f47b ("arm64: dts: qcom: c630: Define eDP bridge and panel")
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> On Tue, 2021-04-27 at 13:03 +0530, Sibi Sankar wrote:
+[..]
+> Acked-by: Philipp Zabel <p.zabel@pengutronix.de>
 > 
-> [...]
+> for the whole series to go through the qcom tree, or let me know if you
+> want me to pick up patches 2-4 next round.
+> 
 
-Here is the summary with links:
-  - [v2] arm64: dts: qcom: c630: Add no-hpd to DSI bridge node
-    https://git.kernel.org/qcom/c/c0dcfe6a784f
+Philipp, please do take patch 2-4 through your tree, that way we avoid
+any potential conflicts in the driver - and things will come together
+nicely for validation in linux-next anyways.
 
-You are awesome, thank you!
---
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
-
+Regards,
+Bjorn
