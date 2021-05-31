@@ -2,105 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4CA5E39580E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 May 2021 11:25:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0A4DC395961
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 May 2021 13:02:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230479AbhEaJ1Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 May 2021 05:27:24 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:14959 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230512AbhEaJ1X (ORCPT
+        id S231349AbhEaLDz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 May 2021 07:03:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54046 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231337AbhEaLDy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 May 2021 05:27:23 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1622453144; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=rfrUNiJtJb8dbghF/3gQm7fw8uC4HOEDbtXTJPnqFZ4=; b=iGblpqN00a3HUPnA/K9GHVlLF1CbmW9LUz2LeXGkfB3MIUzU5URyCjiDF5ZSqM2IYpwU/Akb
- 1njwkslkczQCVwZdnEll5ncGOQg4eXcO8ITuUxoER6Sm6SXfqciUygw9foEQruDCq9CpejTK
- RaM71A0J6qYY2Cz5IMakuatARmM=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
- 60b4ab945e7926f57b6a9b57 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 31 May 2021 09:25:40
- GMT
-Sender: akhilpo=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id A3086C43217; Mon, 31 May 2021 09:25:39 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-3.5 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [192.168.1.105] (unknown [117.210.184.158])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: akhilpo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 55813C433D3;
-        Mon, 31 May 2021 09:25:34 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 55813C433D3
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=akhilpo@codeaurora.org
-Subject: Re: [PATCH v2 5/8] drm/msm/a6xx: avoid shadow NULL reference in
- failure path
-To:     Jonathan Marek <jonathan@marek.ca>, freedreno@lists.freedesktop.org
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Eric Anholt <eric@anholt.net>,
-        Sharat Masetty <smasetty@codeaurora.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <dri-devel@lists.freedesktop.org>,
-        open list <linux-kernel@vger.kernel.org>
-References: <20210513171431.18632-1-jonathan@marek.ca>
- <20210513171431.18632-6-jonathan@marek.ca>
-From:   Akhil P Oommen <akhilpo@codeaurora.org>
-Message-ID: <3695f4d0-aa6f-4c85-bf4e-c3b59506ec34@codeaurora.org>
-Date:   Mon, 31 May 2021 14:55:31 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.10.2
+        Mon, 31 May 2021 07:03:54 -0400
+Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 192CFC061574
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 May 2021 04:02:14 -0700 (PDT)
+Received: by mail-pj1-x102a.google.com with SMTP id k5so6412833pjj.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 May 2021 04:02:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=QsELI27GjNc4NgcPcTg5v1GNDYXdqqvGuLPnw7Bko8A=;
+        b=tUtBmNg2kSJt9L9AgAc5YafyHRJUCsdA7sWm1cN27mwyiXxIy+/zdfOvZeFEsPGFaA
+         7x5tcvIBtBHn3JABLuLySnMmVwIU+eSmJMnZEA0I03NdAGLxmmi86Tb1dRKXEXom7NZs
+         k8Qq5WmzETj4Yl+OFm7/+NngJLmkGS/iy2nNJ9TxkrA4m88bb56pUUyllpcrIcw5157d
+         3gLJNz3g1ToUAyctQkDH3pGdnah3E2J6DosXYsITP/EIve7absVPa2WuFQDD8Tn5qTE5
+         6l4kJVoQfN7mm+IQEvrddiu9U0f7xuzGsTY90gbI3yylxXntsBKLrPNXRJbFSTeO3aqS
+         6P7Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=QsELI27GjNc4NgcPcTg5v1GNDYXdqqvGuLPnw7Bko8A=;
+        b=p/36yitVsbVqsgG1XnTruk+WdTcpcNXASrr98PzEc64qMIHHz0sS8GHJsvtSiX+7v1
+         QODCqiS7ZaasiyppgJVVcgz+IiQAuQet6b1Jqq8V5YeGAovFjWkXFppGjYht8CVSuc61
+         cEtfFe2A/hnvQeLhBc/Wx0OLPkQDSX3/upWVIUH1TAjvXuEM1Qu2xnuRQi6+RZ6g3BmJ
+         XVxgFPZnJwWOVi37TrMXlWwA3YoUZSYzE4J3nWZl+fM9tzxSFoCICyrQeEKZap0pmao+
+         LGY33yTQdwyeWPBkzugJgJPdFKgdDEwfbD17HYVhuIoqmdN9NZIJH/nPKU0VefQPxZhj
+         bFDg==
+X-Gm-Message-State: AOAM532BiIdrv9A2WhAeckzu6RTZh2Q5xjOc5JSHT9Onk+LXeB1hL5ux
+        mxtIA1HYqx9wsF41tBhVF6ZiV25/xN4Ifcv1RIM7IQ==
+X-Google-Smtp-Source: ABdhPJxdoulYKZIj6Zk1rtX5m5VjRTJF0CKo8ZLK6tIQvW1A82V/meISoXXpGRipbegu/yGpUke2FP0x6fjQnw85GAs=
+X-Received: by 2002:a17:90a:43a6:: with SMTP id r35mr10476573pjg.222.1622458933671;
+ Mon, 31 May 2021 04:02:13 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20210513171431.18632-6-jonathan@marek.ca>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <20210511180728.23781-1-jonathan@marek.ca> <20210511180728.23781-11-jonathan@marek.ca>
+In-Reply-To: <20210511180728.23781-11-jonathan@marek.ca>
+From:   Robert Foss <robert.foss@linaro.org>
+Date:   Mon, 31 May 2021 13:02:02 +0200
+Message-ID: <CAG3jFysr7O7PrPOk0FjkL+1RsgZn0-xLmEoXyuoetLyiqFJD6A@mail.gmail.com>
+Subject: Re: [PATCH 10/17] media: camss: remove vdda-csiN from sdm845 resources
+To:     Jonathan Marek <jonathan@marek.ca>
+Cc:     MSM <linux-arm-msm@vger.kernel.org>,
+        Andrey Konovalov <andrey.konovalov@linaro.org>,
+        Todor Tomov <todor.too@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        "open list:QUALCOMM CAMERA SUBSYSTEM DRIVER" 
+        <linux-media@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 5/13/2021 10:44 PM, Jonathan Marek wrote:
-> If a6xx_hw_init() fails before creating the shadow_bo, the a6xx_pm_suspend
-> code referencing it will crash. Change the condition to one that avoids
-> this problem (note: creation of shadow_bo is behind this same condition)
-> 
-> Fixes: e8b0b994c3a5 ("drm/msm/a6xx: Clear shadow on suspend")
+On Tue, 11 May 2021 at 20:08, Jonathan Marek <jonathan@marek.ca> wrote:
+>
+> This isn't used and only works because devm_regulator_get() returns a dummy
+> regulator.
+>
 > Signed-off-by: Jonathan Marek <jonathan@marek.ca>
 > ---
->   drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> index 909e3ff08f89..ff3c328604f8 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> @@ -1284,7 +1284,7 @@ static int a6xx_pm_suspend(struct msm_gpu *gpu)
->   	if (ret)
->   		return ret;
->   
-> -	if (adreno_gpu->base.hw_apriv || a6xx_gpu->has_whereami)
-> +	if (a6xx_gpu->shadow_bo)
->   		for (i = 0; i < gpu->nr_rings; i++)
->   			a6xx_gpu->shadow[i] = 0;
->   
-> 
-Reviewed-by: Akhil P Oommen <akhilpo@codeaurora.org>
+>  drivers/media/platform/qcom/camss/camss.c | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
+>
+> diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
+> index ef100d5f7763..c08d6d6f6f90 100644
+> --- a/drivers/media/platform/qcom/camss/camss.c
+> +++ b/drivers/media/platform/qcom/camss/camss.c
+> @@ -542,7 +542,7 @@ static const struct resources csiphy_res_845[] = {
+>  static const struct resources csid_res_845[] = {
+>         /* CSID0 */
+>         {
+> -               .regulator = { "vdda-csi0" },
+> +               .regulator = { NULL },
+>                 .clock = { "cpas_ahb", "cphy_rx_src", "slow_ahb_src",
+>                                 "soc_ahb", "vfe0", "vfe0_src",
+>                                 "vfe0_cphy_rx", "csi0",
+> @@ -562,7 +562,7 @@ static const struct resources csid_res_845[] = {
+>
+>         /* CSID1 */
+>         {
+> -               .regulator = { "vdda-csi1" },
+> +               .regulator = { NULL },
+>                 .clock = { "cpas_ahb", "cphy_rx_src", "slow_ahb_src",
+>                                 "soc_ahb", "vfe1", "vfe1_src",
+>                                 "vfe1_cphy_rx", "csi1",
+> @@ -582,7 +582,7 @@ static const struct resources csid_res_845[] = {
+>
+>         /* CSID2 */
+>         {
+> -               .regulator = { "vdda-csi2" },
+> +               .regulator = { NULL },
+>                 .clock = { "cpas_ahb", "cphy_rx_src", "slow_ahb_src",
+>                                 "soc_ahb", "vfe_lite", "vfe_lite_src",
+>                                 "vfe_lite_cphy_rx", "csi2",
 
--Akhil
+Reviewed-by: Robert Foss <robert.foss@linaro.org>
