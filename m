@@ -2,101 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 596A6395D00
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 May 2021 15:39:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 163DA396463
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 May 2021 17:55:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232479AbhEaNkk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 May 2021 09:40:40 -0400
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:56381 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232323AbhEaNib (ORCPT
+        id S233499AbhEaP5X (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 May 2021 11:57:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33750 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234569AbhEaPzU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 May 2021 09:38:31 -0400
-Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
-  by alexa-out.qualcomm.com with ESMTP; 31 May 2021 06:34:42 -0700
-X-QCInternal: smtphost
-Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/AES256-SHA; 31 May 2021 06:34:40 -0700
-X-QCInternal: smtphost
-Received: from rajeevny-linux.qualcomm.com ([10.204.66.121])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 31 May 2021 19:04:15 +0530
-Received: by rajeevny-linux.qualcomm.com (Postfix, from userid 2363605)
-        id 7D62421485; Mon, 31 May 2021 19:04:14 +0530 (IST)
-From:   Rajeev Nandan <rajeevny@codeaurora.org>
-To:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
-Cc:     Rajeev Nandan <rajeevny@codeaurora.org>,
-        linux-kernel@vger.kernel.org, sean@poorly.run, robdclark@gmail.com,
-        robh+dt@kernel.org, abhinavk@codeaurora.org,
-        kalyan_t@codeaurora.org, mkrishn@codeaurora.org, jonathan@marek.ca
-Subject: [v1 3/3] drm/msm/dsi: Add DSI support for SC7280
-Date:   Mon, 31 May 2021 19:03:55 +0530
-Message-Id: <1622468035-8453-4-git-send-email-rajeevny@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1622468035-8453-1-git-send-email-rajeevny@codeaurora.org>
-References: <1622468035-8453-1-git-send-email-rajeevny@codeaurora.org>
+        Mon, 31 May 2021 11:55:20 -0400
+Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CF7EC0494C1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 May 2021 07:36:09 -0700 (PDT)
+Received: by mail-pj1-x102d.google.com with SMTP id h16so2917911pjv.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 May 2021 07:36:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=TvjojEYkUcciFGjoK9PExTv10PVSKxQplxp1sRiaIpI=;
+        b=GDoDjavg9WSUFrStI/x6zQaKFfLe1Uvdwa5cASUXP4s7OJeyQZr2HQ6GFpvCGHSoFm
+         2sy14JP+rK8li50dKlW78CtrFVFRhsKjOJjbkP/kfSFnFe0P+Kjukg1PyFriTmiECNaw
+         90wQ6HotjoUquPiLEr5bHy+mJQx0juqP0kbD0=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=TvjojEYkUcciFGjoK9PExTv10PVSKxQplxp1sRiaIpI=;
+        b=XpuDTjSYnEEDoxVcU8tMIOrbi/ZfUm0Rq/AkWhLtHsGDVHYagQtIR6Bq0tUMxxQdQe
+         AzhJf//ZnyTytLIOZyLiQxzQDOmKQOKaZzSl08rx/Mrp4QtS0VUIZxTiGRk0bu3MhUHB
+         t8sFSs9qryN9QdgYie5sfkkIRN4IdnSVlyVYwd8QrT9fZ6GRjw8u3NV1+IvwmopXRycS
+         Kw5R1sI2sKA2dlEYhFOQB5Tuwt/9ALSxNt4A+20Ej/ZFKO2J49/7Oy35IPJ1UFa3GcT0
+         Kh++HS2ocEUaLl/tBWQB0O3Ed2hLP3irtKPxe3a6c6B80FithF9GHtgo9sUYmXFgmLMq
+         lwkg==
+X-Gm-Message-State: AOAM533jGNuVDKLkYaysCO6Nu4ykhLW5kT16/4HtD/KgVcjKb4TGYApg
+        apu40sgxz1PgExBKELuL6kChQw==
+X-Google-Smtp-Source: ABdhPJynM/jfg1vpJVL0xht4RCkyvJQ0dUIDAdwAvZEuU2SZChGp5iLKAsrha1qhoK4RQMdFt2WprA==
+X-Received: by 2002:a17:90a:8e82:: with SMTP id f2mr20123792pjo.157.1622471768974;
+        Mon, 31 May 2021 07:36:08 -0700 (PDT)
+Received: from judyhsiao-p920.tpe.corp.google.com ([2401:fa00:1:10:ee09:a901:df78:da19])
+        by smtp.gmail.com with ESMTPSA id w123sm11072498pfb.109.2021.05.31.07.36.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 31 May 2021 07:36:08 -0700 (PDT)
+From:   Judy Hsiao <judyhsiao@chromium.org>
+To:     broonie@kernel.org
+Cc:     Taniya Das <tdas@codeaurora.org>,
+        Rohit kumar <rohitkr@codeaurora.org>,
+        Banajit Goswami <bgoswami@codeaurora.org>,
+        Patrick Lai <plai@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Takashi Iwai <tiwai@suse.com>,
+        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+        Stephan Gerhold <stephan@gerhold.net>, dianders@chromium.org,
+        dgreid@chromium.org, cychiang@google.com, judyhsiao@google.com,
+        tzungbi@chromium.org, swboyd@chromium.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        alsa-devel@alsa-project.org, Judy Hsiao <judyhsiao@chromium.org>
+Subject: [PATCH] arm64: dts: qcom: sc7180: add lable for secondary mi2s
+Date:   Mon, 31 May 2021 22:35:57 +0800
+Message-Id: <20210531143557.3975917-1-judyhsiao@chromium.org>
+X-Mailer: git-send-email 2.32.0.rc0.204.g9fa02ecfa5-goog
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for v2.5.0 DSI block in the SC7280 SoC.
+Adds lable for secondary mi2s to allow overriding.
 
-Signed-off-by: Rajeev Nandan <rajeevny@codeaurora.org>
+Signed-off-by: Judy Hsiao <judyhsiao@chromium.org>
 ---
- drivers/gpu/drm/msm/dsi/dsi_cfg.c | 20 ++++++++++++++++++++
- drivers/gpu/drm/msm/dsi/dsi_cfg.h |  1 +
- 2 files changed, 21 insertions(+)
+ arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_cfg.c b/drivers/gpu/drm/msm/dsi/dsi_cfg.c
-index f3f1c03..d76a680 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_cfg.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_cfg.c
-@@ -200,6 +200,24 @@ static const struct msm_dsi_config sc7180_dsi_cfg = {
- 	.num_dsi = 1,
- };
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+index 24d293ef56d7..2027914a0bed 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+@@ -772,7 +772,7 @@ mi2s@0 {
+ 		qcom,capture-sd-lines = <0>;
+ 	};
  
-+static const char * const dsi_sc7280_bus_clk_names[] = {
-+	"iface", "bus",
-+};
-+
-+static const struct msm_dsi_config sc7280_dsi_cfg = {
-+	.io_offset = DSI_6G_REG_SHIFT,
-+	.reg_cfg = {
-+		.num = 1,
-+		.regs = {
-+			{"vdda", 8350, 0 },	/* 1.2 V */
-+		},
-+	},
-+	.bus_clk_names = dsi_sc7280_bus_clk_names,
-+	.num_bus_clks = ARRAY_SIZE(dsi_sc7280_bus_clk_names),
-+	.io_start = { 0xae94000 },
-+	.num_dsi = 1,
-+};
-+
- static const struct msm_dsi_host_cfg_ops msm_dsi_v2_host_ops = {
- 	.link_clk_set_rate = dsi_link_clk_set_rate_v2,
- 	.link_clk_enable = dsi_link_clk_enable_v2,
-@@ -267,6 +285,8 @@ static const struct msm_dsi_cfg_handler dsi_cfg_handlers[] = {
- 		&sdm845_dsi_cfg, &msm_dsi_6g_v2_host_ops},
- 	{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V2_4_1,
- 		&sc7180_dsi_cfg, &msm_dsi_6g_v2_host_ops},
-+	{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V2_5_0,
-+		&sc7280_dsi_cfg, &msm_dsi_6g_v2_host_ops},
- };
- 
- const struct msm_dsi_cfg_handler *msm_dsi_cfg_get(u32 major, u32 minor)
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_cfg.h b/drivers/gpu/drm/msm/dsi/dsi_cfg.h
-index ade9b60..b2c4d5e 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_cfg.h
-+++ b/drivers/gpu/drm/msm/dsi/dsi_cfg.h
-@@ -24,6 +24,7 @@
- #define MSM_DSI_6G_VER_MINOR_V2_3_0	0x20030000
- #define MSM_DSI_6G_VER_MINOR_V2_4_0	0x20040000
- #define MSM_DSI_6G_VER_MINOR_V2_4_1	0x20040001
-+#define MSM_DSI_6G_VER_MINOR_V2_5_0	0x20050000
- 
- #define MSM_DSI_V2_VER_MINOR_8064	0x0
- 
+-	mi2s@1 {
++	secondary_mi2s: mi2s@1 {
+ 		reg = <MI2S_SECONDARY>;
+ 		qcom,playback-sd-lines = <0>;
+ 	};
 -- 
-2.7.4
+2.32.0.rc0.204.g9fa02ecfa5-goog
 
