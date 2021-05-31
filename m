@@ -2,94 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F0F0D395509
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 May 2021 07:24:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6AED739553D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 May 2021 08:08:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230173AbhEaF0K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 May 2021 01:26:10 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:54933 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230070AbhEaF0K (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 May 2021 01:26:10 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1622438670; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=FkvZYbRbC/cAozRjP4BPGysEfk7mZXUuzUP30C8/JvY=;
- b=wi/LXyYkTYGnZ8vgzoqspxCuTt2vwfhnXLyQoApoiLvt9060phgVwMOY8z3ikEh84ScQE9+t
- WEIYLjMng+uwXGnZre8nrAcBSNFzPy/FlRE8AG74NCIpw4MZdot1kr/FVwoiXbubHQcTrUHd
- Vk4cr8GYsE93mV8AarXvx5BzTbA=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
- 60b47301e27c0cc77f0df7b3 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 31 May 2021 05:24:17
- GMT
-Sender: rojay=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 3AA25C4323A; Mon, 31 May 2021 05:24:17 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: rojay)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 866C0C4338A;
-        Mon, 31 May 2021 05:24:16 +0000 (UTC)
+        id S230172AbhEaGKJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 May 2021 02:10:09 -0400
+Received: from mail.kernel.org ([198.145.29.99]:51318 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230163AbhEaGKG (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 31 May 2021 02:10:06 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 01727610A6;
+        Mon, 31 May 2021 06:08:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1622441304;
+        bh=bJXekiCxbd47kWEfxPBA00RuulD8cPNLlN7HutDEhMo=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=aW4OsesDb9MyzcqB5y5T35wXfnhl7BCmrPVfKIguBswNnOK2BYzl1/L1q5QFiBSU7
+         MjQKMQ2yo7hP/cdMuaEAsZgPJ1WStYa9Kr911oFOsZTgjzqGgfE6xw5/SLe1uHL2ej
+         eEli8/sQe4WZZSo8fl+Onr4K17JMx+fjRT51cexnxhZjIwJLbsJtE4YCyBfV96UQzi
+         Q8RxkOtNQsVVmGNJ1gS5C9cA6PMaA6yml1huxKGccxbgBdDkRhiZu0Zf+uLsdOpv+M
+         kIciViy7lDD9AtGIMkbpiMHBB7qzwIy5v+P9AhezuPJyZysowWcOwKx/JskZJbnaWz
+         jKNR8G1LTj6Yg==
+Date:   Mon, 31 May 2021 11:38:21 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     kishon@ti.com, robh+dt@kernel.org, bjorn.andersson@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH 0/3] Add support for PCIe PHY in SDX55
+Message-ID: <YLR9Vd80yA8+/K9O@vkoul-mobl.Dlink>
+References: <20210427065400.18958-1-manivannan.sadhasivam@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Mon, 31 May 2021 10:54:16 +0530
-From:   rojay@codeaurora.org
-To:     Roja Rani Yarubandi <rojay@codeaurora.org>
-Cc:     swboyd@chromium.org, dianders@chromium.org,
-        saiprakash.ranjan@codeaurora.org, gregkh@linuxfoundation.org,
-        mka@chromium.org, skananth@codeaurora.org,
-        msavaliy@qti.qualcomm.com, skakit@codeaurora.org,
-        rnayak@codeaurora.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org,
-        sumit.semwal@linaro.org, linux-media@vger.kernel.org
-Subject: Re: [PATCH V11 1/2] i2c: i2c-qcom-geni: Add shutdown callback for i2c
-In-Reply-To: <YLClq6hZKUA1Y4ZW@kunai>
-References: <20210525131051.31250-1-rojay@codeaurora.org>
- <20210525131051.31250-2-rojay@codeaurora.org> <YLClq6hZKUA1Y4ZW@kunai>
-Message-ID: <f6cb21107dd7e7104bb40aabb8d2bf90@codeaurora.org>
-X-Sender: rojay@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210427065400.18958-1-manivannan.sadhasivam@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-05-28 13:41, Wolfram Sang wrote:
-> On Tue, May 25, 2021 at 06:40:50PM +0530, Roja Rani Yarubandi wrote:
->> If the hardware is still accessing memory after SMMU translation
->> is disabled (as part of smmu shutdown callback), then the
->> IOVAs (I/O virtual address) which it was using will go on the bus
->> as the physical addresses which will result in unknown crashes
->> like NoC/interconnect errors.
->> 
->> So, implement shutdown callback for i2c driver to suspend the bus
->> during system "reboot" or "shutdown".
->> 
->> Fixes: 37692de5d523 ("i2c: i2c-qcom-geni: Add bus driver for the 
->> Qualcomm GENI I2C controller")
->> Signed-off-by: Roja Rani Yarubandi <rojay@codeaurora.org>
+On 27-04-21, 12:23, Manivannan Sadhasivam wrote:
+> Hi,
 > 
-> Do we need patch 1 after patch 2 was applied? I always thought all
-> devices are suspended before shutdown/reboot?
+> This series adds support for PCIe PHY found in Qualcomm SDX55 platform.
+> The PHY version is v4.20 which has different register offsets compared with
+> previous v4.0x versions. So separate defines are introducted to handle the
+> differences.
 > 
+> This series has been tested on Telit FN980 EVB with an out of tree PCIe Endpoint
+> driver.
 
-Yes, both patch 1 and patch 2 are required.
-Devices are not suspended during shutdown/reboot.
+Applied, thanks
 
-> Nice to see that 'mark_adapter_suspended' becomes useful again!
+I got a conflict on last patch as Dimitry has already added some defines
+in the header.. Pls check everything was applied cleanly
 
-Thanks,
-Roja
+Thanks
+-- 
+~Vinod
