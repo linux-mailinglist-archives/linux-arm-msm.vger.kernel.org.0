@@ -2,66 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BD524396A3D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Jun 2021 02:10:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 15559396AA6
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Jun 2021 03:40:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232173AbhFAALo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 May 2021 20:11:44 -0400
-Received: from mail.kernel.org ([198.145.29.99]:48628 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232081AbhFAALo (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 May 2021 20:11:44 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPS id 8722C61026;
-        Tue,  1 Jun 2021 00:10:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1622506203;
-        bh=mxOHdOAXvAMQSkPEl5lHGCDoTX9mXs0pGAg4Zhc+u7E=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=D7WBeU+w+z5HPVwCOVxcQQafqQy2qXIGxO59djkftgpqDGECAL3ad2iCifFkCcrkI
-         mijNvYqCblOxFRgZwamGdGEu+HWOgeT48YvDXDdTuWzum1DpNH18BawWLcq0okkZw+
-         M32H6fvU6jdh84dGT+ULISvNMEQmTactL7JiPvtTVaLrbOHFPjI5z0PxKS6OrhTmTT
-         oXmdeBDXsMdRBkmFlBtIsV9hDsJkvR52hVSqFySTt4r6HR6kZAVYP/0d93pdmF3IW+
-         qkBsgZyKFeWoC2W0BZjVA3n2DzFYQX8cwFsdDQjTGhv43kywRyQG8mfkwPW0qnJngZ
-         zJ2uo0KB69Rrg==
-Received: from pdx-korg-docbuild-2.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id 79397609F8;
-        Tue,  1 Jun 2021 00:10:03 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+        id S232504AbhFABmG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 May 2021 21:42:06 -0400
+Received: from szxga08-in.huawei.com ([45.249.212.255]:3309 "EHLO
+        szxga08-in.huawei.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232207AbhFABmG (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 31 May 2021 21:42:06 -0400
+Received: from dggemv704-chm.china.huawei.com (unknown [172.30.72.53])
+        by szxga08-in.huawei.com (SkyGuard) with ESMTP id 4FvF986B4rz1BFXw;
+        Tue,  1 Jun 2021 09:35:40 +0800 (CST)
+Received: from dggpemm500006.china.huawei.com (7.185.36.236) by
+ dggemv704-chm.china.huawei.com (10.3.19.47) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2176.2; Tue, 1 Jun 2021 09:40:21 +0800
+Received: from [127.0.0.1] (10.174.177.72) by dggpemm500006.china.huawei.com
+ (7.185.36.236) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2176.2; Tue, 1 Jun 2021
+ 09:40:20 +0800
+Subject: Re: [PATCH v2 3/3] edac: Use 'ret' instead of 'res' to store the
+ return value
+To:     Borislav Petkov <bp@alien8.de>
+CC:     Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Tony Luck <tony.luck@intel.com>,
+        James Morse <james.morse@arm.com>,
+        Robert Richter <rric@kernel.org>,
+        Johannes Thumshirn <morbidrsa@gmail.com>,
+        Ralf Baechle <ralf@linux-mips.org>,
+        Dinh Nguyen <dinguyen@kernel.org>,
+        Jan Luebbe <jlu@pengutronix.de>,
+        Andre Przywara <andre.przywara@arm.com>,
+        "Channagoud Kadabi" <ckadabi@codeaurora.org>,
+        Venkata Narendra Kumar Gutta <vnkgutta@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Khuong Dinh <khuong@os.amperecomputing.com>,
+        York Sun <york.sun@nxp.com>,
+        linux-edac <linux-edac@vger.kernel.org>,
+        linux-mips <linux-mips@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-kernel <linux-kernel@vger.kernel.org>
+References: <20210531145302.9655-1-thunder.leizhen@huawei.com>
+ <20210531145302.9655-4-thunder.leizhen@huawei.com> <YLT5Y+FRhUWWszOq@zn.tnic>
+From:   "Leizhen (ThunderTown)" <thunder.leizhen@huawei.com>
+Message-ID: <4f96d85f-a7a6-531b-a032-a04e51a218cc@huawei.com>
+Date:   Tue, 1 Jun 2021 09:40:19 +0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH 1/2] dt-bindings: arm: qcom: Document google,senor board
-From:   patchwork-bot+linux-arm-msm@kernel.org
-Message-Id: <162250620349.26991.12569651685550187199.git-patchwork-notify@kernel.org>
-Date:   Tue, 01 Jun 2021 00:10:03 +0000
-References: <1619674827-26650-1-git-send-email-rnayak@codeaurora.org>
-In-Reply-To: <1619674827-26650-1-git-send-email-rnayak@codeaurora.org>
-To:     Rajendra Nayak <rnayak@codeaurora.org>
-Cc:     linux-arm-msm@vger.kernel.org
+In-Reply-To: <YLT5Y+FRhUWWszOq@zn.tnic>
+Content-Type: text/plain; charset="utf-8"
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.174.177.72]
+X-ClientProxiedBy: dggems706-chm.china.huawei.com (10.3.19.183) To
+ dggpemm500006.china.huawei.com (7.185.36.236)
+X-CFilter-Loop: Reflected
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello:
 
-This series was applied to qcom/linux.git (refs/heads/for-next):
 
-On Thu, 29 Apr 2021 11:10:26 +0530 you wrote:
-> Document the google,senor board based on sc7280 SoC
+On 2021/5/31 22:57, Borislav Petkov wrote:
+> On Mon, May 31, 2021 at 10:53:02PM +0800, Zhen Lei wrote:
+>> Usually 'ret' or 'rc' is used as the abbreviation for 'return code', and
+>> 'res' is used as the abbreviation for 'resource'.
 > 
-> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
-> ---
->  Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
->  1 file changed, 1 insertion(+)
+> Or "result."
 
-Here is the summary with links:
-  - [1/2] dt-bindings: arm: qcom: Document google,senor board
-    https://git.kernel.org/qcom/c/17bf8dfa2ac7
-  - [2/2] arm64: dts: qcom: sc7280: Add "google,senor" to the compatible
-    https://git.kernel.org/qcom/c/9d6e639cbaa1
+https://www.allacronyms.com/result/abbreviated
 
-You are awesome, thank you!
---
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+It seems 'res' is the right abbreviation for 'result'. But since people see 'res',
+it's easier to associate 'resource', it's probably better to use it sparingly.
+And it seems that 'ret' and 'rc' are used more frequently.
 
+However, the greens and radishes have their own love. So I'm fine with ignoring
+this patch.
+
+> 
+> Please refrain from doing pointless patches like that - it is a totally
+> unnecessary churn.
+
+OK
+
+> 
 
