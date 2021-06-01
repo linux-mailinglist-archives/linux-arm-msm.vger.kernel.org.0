@@ -2,108 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D9DEE397888
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Jun 2021 18:58:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 931F33979BE
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Jun 2021 20:07:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231918AbhFAQ7t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Jun 2021 12:59:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60598 "EHLO
+        id S232490AbhFASJW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Jun 2021 14:09:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48204 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232490AbhFAQ7t (ORCPT
+        with ESMTP id S231726AbhFASJW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Jun 2021 12:59:49 -0400
-Received: from mail-qt1-x82d.google.com (mail-qt1-x82d.google.com [IPv6:2607:f8b0:4864:20::82d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF080C061756
-        for <linux-arm-msm@vger.kernel.org>; Tue,  1 Jun 2021 09:58:07 -0700 (PDT)
-Received: by mail-qt1-x82d.google.com with SMTP id m13so10606390qtk.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Jun 2021 09:58:07 -0700 (PDT)
+        Tue, 1 Jun 2021 14:09:22 -0400
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3CE6DC061574
+        for <linux-arm-msm@vger.kernel.org>; Tue,  1 Jun 2021 11:07:39 -0700 (PDT)
+Received: by mail-wm1-x332.google.com with SMTP id f20-20020a05600c4e94b0290181f6edda88so2154391wmq.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Jun 2021 11:07:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ldU/TPmtPmVs6oGr7yGz/gAY04wIfA/VvvfcSuok9Fk=;
-        b=ItrTAwFyEd3vy4gcIMd1nyNP0+p9wLUpoepc2e8uV8llGt5bIcguuOkSItn+6rpc9z
-         Fc0Te4vtTh3Nw60Q7F+W0cNouuLl8j8GBlj6SUNYWeWdgIVL1iepdsaHtMug2yW2Ec4h
-         NSDfw/DRmV5Dai8I+dDkG+HF4HSBW2P+o0LBw=
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=cI3xd88aJlUdbK02qTBXKO1kFo3WfoLb7axOSIt/zjs=;
+        b=v9aaNQnhpdaeQ9vevyAosZ3MwikxESDl/o99lQaMTEbnK3wTaTSP7oUc4lzipb/mKi
+         +n33ccdCkCTf+hvIEXA51GRazbr37A0lQZ6nri8dhS137gxZUBzmuzKXPnARhueU+o0s
+         clVsfvsAjR9Ts5DT8dETjbbNB+LX6EafOz9NMmH0rgRfF2QEd7Cq9l7B45cr2/htH4Bp
+         QWakOQAvWUOS1eGFKPcHSttpS/Hx9XcbP/wilbsKYKv7Bi4NQPkoQZozNO8G3KLaxe+N
+         Xw26lEL3aoQ8EHVbIgAxuMwcijUQ+RYSzSezz+ut6X4HA3zC+9pdYKGNiIDFHu9igP71
+         5tqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ldU/TPmtPmVs6oGr7yGz/gAY04wIfA/VvvfcSuok9Fk=;
-        b=g8iwYbBlxgl6E/5pcyDMEL1nUPy9Sq1tr4yUzXHXvIi08Hba0sMLfTVpctpmMlBdWB
-         9W9IpvEe4jtwUmzvACsZ3AI6RTsUmUHoKjRu+VwKWAJsXRRe15ofvj8eVjEFSfwci6k9
-         S0WDo/dr8TLr//68tBTUbG6eb0/A8uET7p9omYCFynoU3EbpXRdcW7aBvCh+svO5yrDU
-         eVFzgr+KDFNJb6/G4Lm07bSTttPr58tEVdTkW7o9borhVPC/h5WylV4nHEuVPwhqAxwK
-         4/IV/TMJ6W2Yk5xnc8PE6Mgrs2VoiHBW/D1Md2dxwYfb93/QLQOYZ9nfRY7n7mWIBQ8f
-         HlSg==
-X-Gm-Message-State: AOAM530RlDSG4yoBak0oyC266ArFCuBoNFblD73RzghRPS4n6tGpcROU
-        VuiQnA5emytRxlXX9jCrAXZ8EEAUK3jsUw==
-X-Google-Smtp-Source: ABdhPJwe1fTA5JGk9GRREcynjU0430fZjExbdnnwUIg7N+fE2p89apJB1QuCJ96BfXV8E+HMbry4+A==
-X-Received: by 2002:ac8:5a8f:: with SMTP id c15mr19927172qtc.162.1622566686425;
-        Tue, 01 Jun 2021 09:58:06 -0700 (PDT)
-Received: from mail-yb1-f174.google.com (mail-yb1-f174.google.com. [209.85.219.174])
-        by smtp.gmail.com with ESMTPSA id d18sm11773858qkc.28.2021.06.01.09.58.05
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 01 Jun 2021 09:58:06 -0700 (PDT)
-Received: by mail-yb1-f174.google.com with SMTP id y2so22112599ybq.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Jun 2021 09:58:05 -0700 (PDT)
-X-Received: by 2002:a25:8191:: with SMTP id p17mr40654965ybk.405.1622566685333;
- Tue, 01 Jun 2021 09:58:05 -0700 (PDT)
-MIME-Version: 1.0
-References: <20210510075253.1.Ib4c296d6ff9819f26bcaf91e8a08729cc203fed0@changeid>
-In-Reply-To: <20210510075253.1.Ib4c296d6ff9819f26bcaf91e8a08729cc203fed0@changeid>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Tue, 1 Jun 2021 09:57:54 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=WMfCi9fVHxUqRiy+abgQU2K28BfOHfUrUpwcwUVrrOOA@mail.gmail.com>
-Message-ID: <CAD=FV=WMfCi9fVHxUqRiy+abgQU2K28BfOHfUrUpwcwUVrrOOA@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: qcom: sc7180: Modify SPI_CLK voltage level
- for trogdor
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Wenchao Han <hanwenchao@huaqin.corp-partner.google.com>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=cI3xd88aJlUdbK02qTBXKO1kFo3WfoLb7axOSIt/zjs=;
+        b=BsNhMUmvP65i1n92QGjb+R1frnLuuZcFQIXhKS0lv/JTEH5cayU8CHvb1fI1vPXTuf
+         n7l+E6O6u5pmMaXZnpF1hkEv/dC4pGdknai+DN3JVJ+zyDKYW0AE6Bdg09ZrIt95WnUt
+         zzoi3KCG4iSMvCHGordMNdWSquXBLJNcP+v4igB2fmJo1YrZQF7W7iLEP+5JUa6koRDR
+         F3kSQRyObLXo1gzPFFidQTcQw1uWk9hpa1YJ4gghlnRqh+cEX7l4bzGqDRzqwUn5x81h
+         4fezNud12NMmb/wcy8t4zpNnerWcp2Z2hVXXP6NMJSj7b9UT6kplB6CewET2g6KgYQZ4
+         mPlQ==
+X-Gm-Message-State: AOAM533JvP3YV9QlXa5MEOh0vaUjuBCuzaXlT4yaFM4om+Op4fuXafoU
+        t4X3cSEvxCyvYevR+l2k9cPanQ==
+X-Google-Smtp-Source: ABdhPJx3ClVxtviFlTIUhRnKzD7QwxlZCEetNshtIagecApJBa/nkkbo+drh2xx1vGYs1lQOWQmZ6g==
+X-Received: by 2002:a1c:6a14:: with SMTP id f20mr2008376wmc.150.1622570857748;
+        Tue, 01 Jun 2021 11:07:37 -0700 (PDT)
+Received: from localhost.localdomain ([2a01:e0a:82c:5f0:85ed:406e:1bc4:a268])
+        by smtp.gmail.com with ESMTPSA id x3sm238328wmj.30.2021.06.01.11.07.36
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 01 Jun 2021 11:07:37 -0700 (PDT)
+From:   Loic Poulain <loic.poulain@linaro.org>
+To:     mani@kernel.org, hemantk@codeaurora.org
+Cc:     linux-arm-msm@vger.kernel.org,
+        Loic Poulain <loic.poulain@linaro.org>
+Subject: [PATCH] bus: mhi: pci-generic: Fix hibernation
+Date:   Tue,  1 Jun 2021 20:17:25 +0200
+Message-Id: <1622571445-4505-1-git-send-email-loic.poulain@linaro.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Bjorn,
+This patch fixes crash after resuming from hibernation. The issue
+occurs when mhi stack is builtin and so part of the 'restore-kernel',
+causing the device to be resumed from 'restored kernel' with a no
+more valid context (memory mappings etc...) and leading to spurious
+crashes.
 
-On Mon, May 10, 2021 at 7:53 AM Douglas Anderson <dianders@chromium.org> wrote:
->
-> From: Wenchao Han <hanwenchao@huaqin.corp-partner.google.com>
->
-> On coachz it could be observed that SPI_CLK voltage level was only
-> 1.4V during active transfers because the drive strength was too
-> weak. The line hadn't finished slewing up by the time we started
-> driving it down again. Using a drive strength of 8 lets us achieve the
-> correct voltage level of 1.8V.
->
-> Though the worst problems were observed on coachz hardware, let's do
-> this across the board for trogdor devices. Scoping other boards shows
-> that this makes the clk line look nicer on them too and doesn't
-> introduce any problems.
->
-> Only the clk line is adjusted, not any data lines. Because SPI isn't a
-> DDR protocol we only sample the data lines on either rising or falling
-> edges, not both. That means the clk line needs to toggle twice as fast
-> as data lines so having the higher drive strength is more important
-> there.
->
-> Signed-off-by: Wenchao Han <hanwenchao@huaqin.corp-partner.google.com>
-> [dianders: Adjust author real name; adjust commit message]
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> ---
->
->  arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 1 +
->  1 file changed, 1 insertion(+)
+This patch fixes the issue by implementing proper freeze/restore
+callbacks.
 
-I think this patch is ready to land and it's what we're now using in
-the Chrome OS tree. See <https://crrev.com/c/2821728>.
+Reported-by: Shujun Wang <wsj20369@163.com>
+Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+---
+ drivers/bus/mhi/pci_generic.c | 36 +++++++++++++++++++++++++++++++++++-
+ 1 file changed, 35 insertions(+), 1 deletion(-)
 
--Doug
+diff --git a/drivers/bus/mhi/pci_generic.c b/drivers/bus/mhi/pci_generic.c
+index aa8f8d5..afa8763 100644
+--- a/drivers/bus/mhi/pci_generic.c
++++ b/drivers/bus/mhi/pci_generic.c
+@@ -888,9 +888,43 @@ static int __maybe_unused mhi_pci_resume(struct device *dev)
+ 	return ret;
+ }
+ 
++static int __maybe_unused mhi_pci_freeze(struct device *dev)
++{
++	struct mhi_pci_device *mhi_pdev = dev_get_drvdata(dev);
++	struct mhi_controller *mhi_cntrl = &mhi_pdev->mhi_cntrl;
++
++	/* We want to stop all operations, hibernation does not guarantee that
++	 * device will be in the same state as before freezing, especially if
++	 * the intermediate restore kernel reinitializes MHI device with new
++	 * context.
++	 */
++	if (test_and_clear_bit(MHI_PCI_DEV_STARTED, &mhi_pdev->status)) {
++		mhi_power_down(mhi_cntrl, false);
++		mhi_unprepare_after_power_down(mhi_cntrl);
++	}
++
++	return 0;
++}
++
++static int __maybe_unused mhi_pci_restore(struct device *dev)
++{
++	struct mhi_pci_device *mhi_pdev = dev_get_drvdata(dev);
++
++	/* Reinitialize the device */
++	queue_work(system_long_wq, &mhi_pdev->recovery_work);
++
++	return 0;
++}
++
+ static const struct dev_pm_ops mhi_pci_pm_ops = {
+ 	SET_RUNTIME_PM_OPS(mhi_pci_runtime_suspend, mhi_pci_runtime_resume, NULL)
+-	SET_SYSTEM_SLEEP_PM_OPS(mhi_pci_suspend, mhi_pci_resume)
++#ifdef CONFIG_PM_SLEEP
++	.suspend = mhi_pci_suspend,
++	.resume = mhi_pci_resume,
++	.freeze = mhi_pci_freeze,
++	.thaw = mhi_pci_restore,
++	.restore = mhi_pci_restore,
++#endif
+ };
+ 
+ static struct pci_driver mhi_pci_driver = {
+-- 
+2.7.4
+
