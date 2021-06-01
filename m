@@ -2,52 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 14E63396AFA
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Jun 2021 04:21:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 97A44396D3B
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Jun 2021 08:20:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232516AbhFACXJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 May 2021 22:23:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59226 "EHLO
+        id S231139AbhFAGWP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Jun 2021 02:22:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55828 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232268AbhFACXJ (ORCPT
+        with ESMTP id S229477AbhFAGWK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 May 2021 22:23:09 -0400
-Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com [IPv6:2607:f8b0:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD44DC061574
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 May 2021 19:21:27 -0700 (PDT)
-Received: by mail-pg1-x530.google.com with SMTP id n12so6335715pgs.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 May 2021 19:21:27 -0700 (PDT)
+        Tue, 1 Jun 2021 02:22:10 -0400
+Received: from mail-io1-xd34.google.com (mail-io1-xd34.google.com [IPv6:2607:f8b0:4864:20::d34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2263EC061574
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 May 2021 23:20:29 -0700 (PDT)
+Received: by mail-io1-xd34.google.com with SMTP id b25so14086709iot.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 May 2021 23:20:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=G7LsGLmMOn0RCf1NWPI0jTR/YPJV/uz3PsfA5w2kCWY=;
-        b=bMl5mgjYlnR3D9xJOq0kwO1H6utjThPiRUDlo5uvzPZFjXhXXLqE838OmSKJLfNmIm
-         H6f3yImB6nt/Hwd2V14xjPOomtM4mnElEV4CPs/KWAUnaimTw4O5D8OB0L9LMSuv4so0
-         tpR2ZeuWcHTkGNNWNY4pEoRpepxBoJGEVS1a0=
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=VjF5fmPWmJV34AdLHtXksUvrbFB635DQDVeSSdm6xpw=;
+        b=gWoOaav6t1rcuEJBzjAASU8hMh7ElCyKu3WcOsSLEc3Xe7lVLiay+RXoHxsk5buD9D
+         CJxpSkbkECsVfZz3xspVANq7Em5/UA/KnkZK2eyepxsTrI9nmXCBsG/Ba+Fld77RFgyI
+         KY0MKjd7G9GdbwK/dn3nFtFKUPHaEO3NiNr9KyReDbaYycz5FX3FtxuKgoUxpMWK06E9
+         rTUvb+BIfbN2poEUQU5Hr3BWCif1Gt8KkTBkAKd3ONOXRH1BMGIHpg/bytVrYCBUyiG5
+         aOj9qMNfW0/l0idxvtkTiQ1kkAythJVkrd//a8aEGOpbEifgVF7PwRE2MoHgJTRjzPKG
+         fs8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=G7LsGLmMOn0RCf1NWPI0jTR/YPJV/uz3PsfA5w2kCWY=;
-        b=mpR1IkwrCmcSW37r8HrO0vlfhLRbrKhORC7Lok0cSgF3ZHcHP6W3/Zls2KHNgyFEVq
-         pNlUABGAZCruCxymsdTSWRpowyBcKU4cSN4t24Byssm4J6k0qbTmzzg/NPpxRwpfEP6D
-         /0RIdE3KrTu8Kp43nNnptm/YmTjuMQCobg2+lK/p1pW2Bq8BWsXOBfWZw5Zg031dOl/n
-         +kuS1lMuxswLF4o+s9Q7Kls4ycJM626HRCZPieDMnBoT4hZ8xxatNabH06RIfhsLj9ui
-         x6Qpxb9ktrkB86TCNkvzbkb5rdc+XJO16z4QWHLqBgHTuVydrODfyU0WQ0R/q11S2XfQ
-         /EPQ==
-X-Gm-Message-State: AOAM533d1TF0kYZEHiinK63gPotrrYQYUYOEGj6hYysudd2g0187CpWI
-        LGNUZVtNd3wL1p1mTNwSHSafYA==
-X-Google-Smtp-Source: ABdhPJxN7Qm65U09tF7lVMDcXuKIvj4QgVk52a65hbjIuF1Bt95TBlmlV2sQ3UN4lpyqHz7qrp9kVg==
-X-Received: by 2002:a62:87cd:0:b029:2e9:a7c8:ad45 with SMTP id i196-20020a6287cd0000b02902e9a7c8ad45mr14001596pfe.8.1622514087296;
-        Mon, 31 May 2021 19:21:27 -0700 (PDT)
-Received: from judyhsiao-p920.tpe.corp.google.com ([2401:fa00:1:10:f7e8:2d6:ddb7:af4e])
-        by smtp.gmail.com with ESMTPSA id y205sm473797pfb.53.2021.05.31.19.21.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 May 2021 19:21:26 -0700 (PDT)
-From:   Judy Hsiao <judyhsiao@chromium.org>
-To:     broonie@kernel.org
-Cc:     Taniya Das <tdas@codeaurora.org>,
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=VjF5fmPWmJV34AdLHtXksUvrbFB635DQDVeSSdm6xpw=;
+        b=TQad8KnTZWCwR7Lv2vsxBLAxqmzG9193+e31IHzjEWI2JaT7l7Y+PBQZuBOUQ4pEAw
+         BxB9AGQmoYVWAQEYvW0Virxf4YW3CCWMLSGAoYeqtdyWXCB5jvXVvYa6p5G0SAIUXaTn
+         q63EWjLQtyk/Zojw2gnmeQl5ZuyPw/bj2zxH3z1GWIWYQrHbDYQ1zmS4tMoUvES0Gukg
+         QcSl5SzHOYV1nnZCrOj2yEgqY0czg/shnnXZMu61pnmvhDQjK0VEgv2N2g+Jmbi7gjvK
+         IJEw/TvoQkQJsjM8fXxUcBDM+MWJdFbY99DD3Nz0R+NH2BlhWjNNqzyWZw08/phPbKmL
+         3LVw==
+X-Gm-Message-State: AOAM531NrWMJgpJkg8s5rkiKfXvBk6Ekrq7W0bnapSEiVvL6SlNaA6zg
+        DJspo2DGiFWwZeNo12BRAYRw60SEOW8sEQ+Ugsv9FQ==
+X-Google-Smtp-Source: ABdhPJwwuuEEw4PW352dxmKdk5M40VGM4ah+oUqxQCijlCOa4x8O+ussAGmRTo654Y1vrVDRwi6DFNUbJ0yZ/HPFQkM=
+X-Received: by 2002:a5d:9694:: with SMTP id m20mr15203280ion.185.1622528428085;
+ Mon, 31 May 2021 23:20:28 -0700 (PDT)
+MIME-Version: 1.0
+References: <20210526154704.114957-1-judyhsiao@chromium.org>
+In-Reply-To: <20210526154704.114957-1-judyhsiao@chromium.org>
+From:   Tzung-Bi Shih <tzungbi@google.com>
+Date:   Tue, 1 Jun 2021 14:20:16 +0800
+Message-ID: <CA+Px+wXGjZCOhhAVh9eRw6L-g8g7Qi7Rf_3YHpHSCB2o=XQ+4g@mail.gmail.com>
+Subject: Re: [PATCH] ASoC: max98357a: set channels_max to 4
+To:     Judy Hsiao <judyhsiao@chromium.org>
+Cc:     Mark Brown <broonie@kernel.org>, Taniya Das <tdas@codeaurora.org>,
         Rohit kumar <rohitkr@codeaurora.org>,
         Banajit Goswami <bgoswami@codeaurora.org>,
         Patrick Lai <plai@codeaurora.org>,
@@ -58,43 +63,30 @@ Cc:     Taniya Das <tdas@codeaurora.org>,
         Jaroslav Kysela <perex@perex.cz>,
         Takashi Iwai <tiwai@suse.com>,
         Srini Kandagatla <srinivas.kandagatla@linaro.org>,
-        Stephan Gerhold <stephan@gerhold.net>, dianders@chromium.org,
-        dgreid@chromium.org, cychiang@google.com, judyhsiao@google.com,
-        tzungbi@chromium.org, swboyd@chromium.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        alsa-devel@alsa-project.org, Judy Hsiao <judyhsiao@chromium.org>
-Subject: [PATCH] arm64: dts: qcom: sc7180: add label for secondary mi2s
-Date:   Tue,  1 Jun 2021 10:21:17 +0800
-Message-Id: <20210601022117.4071117-1-judyhsiao@chromium.org>
-X-Mailer: git-send-email 2.32.0.rc0.204.g9fa02ecfa5-goog
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Stephan Gerhold <stephan@gerhold.net>,
+        Douglas Anderson <dianders@chromium.org>,
+        Dylan Reid <dgreid@chromium.org>,
+        Jimmy Cheng-Yi Chiang <cychiang@google.com>,
+        Tzung-Bi Shih <tzungbi@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        "moderated list:ARM/Mediatek SoC support" 
+        <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        ALSA development <alsa-devel@alsa-project.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Adds label for MI2S secondary block to allow follower projects to override
-for the four speaker support which uses I2S SD1 line on gpio52 pin.
+On Wed, May 26, 2021 at 11:47 PM Judy Hsiao <judyhsiao@chromium.org> wrote:
+> Sets channels_max to 4 to support QUAD channel.
 
-Signed-off-by: Judy Hsiao <judyhsiao@chromium.org>
----
- arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Could you point out probably the up-to-date MAX98357A datasheet for
+4-channel support?
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-index 24d293ef56d7..2027914a0bed 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-@@ -772,7 +772,7 @@ mi2s@0 {
- 		qcom,capture-sd-lines = <0>;
- 	};
- 
--	mi2s@1 {
-+	secondary_mi2s: mi2s@1 {
- 		reg = <MI2S_SECONDARY>;
- 		qcom,playback-sd-lines = <0>;
- 	};
--- 
-2.32.0.rc0.204.g9fa02ecfa5-goog
+On a related note, from the public datasheet I could find[1], "Table
+5" only shows 2 channel's configuration.
 
+[1]: https://pdf1.alldatasheet.com/datasheet-pdf/view/623796/MAXIM/MAX98357A.html
