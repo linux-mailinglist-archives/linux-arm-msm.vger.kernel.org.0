@@ -2,91 +2,239 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 97A44396D3B
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Jun 2021 08:20:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4195E396FA2
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Jun 2021 10:55:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231139AbhFAGWP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Jun 2021 02:22:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55828 "EHLO
+        id S233301AbhFAI5f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Jun 2021 04:57:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34662 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229477AbhFAGWK (ORCPT
+        with ESMTP id S233193AbhFAI5f (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Jun 2021 02:22:10 -0400
-Received: from mail-io1-xd34.google.com (mail-io1-xd34.google.com [IPv6:2607:f8b0:4864:20::d34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2263EC061574
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 May 2021 23:20:29 -0700 (PDT)
-Received: by mail-io1-xd34.google.com with SMTP id b25so14086709iot.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 May 2021 23:20:29 -0700 (PDT)
+        Tue, 1 Jun 2021 04:57:35 -0400
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2877C061756
+        for <linux-arm-msm@vger.kernel.org>; Tue,  1 Jun 2021 01:55:53 -0700 (PDT)
+Received: by mail-ed1-x532.google.com with SMTP id df21so16339807edb.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Jun 2021 01:55:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=VjF5fmPWmJV34AdLHtXksUvrbFB635DQDVeSSdm6xpw=;
-        b=gWoOaav6t1rcuEJBzjAASU8hMh7ElCyKu3WcOsSLEc3Xe7lVLiay+RXoHxsk5buD9D
-         CJxpSkbkECsVfZz3xspVANq7Em5/UA/KnkZK2eyepxsTrI9nmXCBsG/Ba+Fld77RFgyI
-         KY0MKjd7G9GdbwK/dn3nFtFKUPHaEO3NiNr9KyReDbaYycz5FX3FtxuKgoUxpMWK06E9
-         rTUvb+BIfbN2poEUQU5Hr3BWCif1Gt8KkTBkAKd3ONOXRH1BMGIHpg/bytVrYCBUyiG5
-         aOj9qMNfW0/l0idxvtkTiQ1kkAythJVkrd//a8aEGOpbEifgVF7PwRE2MoHgJTRjzPKG
-         fs8w==
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=ki1m+phqqeEKMm1Y4FBuUTps1qqhBduvhtHEsbv1LNk=;
+        b=gVHP+iVkVE0dsRQgwkY8e1vEleVxDXKMH2ooJn0cjVk37p2rPcdS75EF/5UQNotqw2
+         wBlAF9I6LXaYe6wvYob55OyeKzSa9JrGQ3PEfLh9El6YU8lqX1J9TZhVezrIc0r5wo4M
+         VPWf/XRvi94ZTVyLWE6rtJbEMDao1rIqQa62Ld0ikX/LX8OttXYStEYPbXrT+OTuOZF6
+         lHB8BLwWTGBE6s2Vp7TI7HJzvt5PKO98hQf6zn96OYaZaoTbtyFRUxgiJTEjVEOACzoP
+         9zAmn9nnHL5SXM6yQ7TeJz8iyTgj4+oCKgDziQUzFyV2FStcD5UTDXl910NK07+XX1Gi
+         GEDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=VjF5fmPWmJV34AdLHtXksUvrbFB635DQDVeSSdm6xpw=;
-        b=TQad8KnTZWCwR7Lv2vsxBLAxqmzG9193+e31IHzjEWI2JaT7l7Y+PBQZuBOUQ4pEAw
-         BxB9AGQmoYVWAQEYvW0Virxf4YW3CCWMLSGAoYeqtdyWXCB5jvXVvYa6p5G0SAIUXaTn
-         q63EWjLQtyk/Zojw2gnmeQl5ZuyPw/bj2zxH3z1GWIWYQrHbDYQ1zmS4tMoUvES0Gukg
-         QcSl5SzHOYV1nnZCrOj2yEgqY0czg/shnnXZMu61pnmvhDQjK0VEgv2N2g+Jmbi7gjvK
-         IJEw/TvoQkQJsjM8fXxUcBDM+MWJdFbY99DD3Nz0R+NH2BlhWjNNqzyWZw08/phPbKmL
-         3LVw==
-X-Gm-Message-State: AOAM531NrWMJgpJkg8s5rkiKfXvBk6Ekrq7W0bnapSEiVvL6SlNaA6zg
-        DJspo2DGiFWwZeNo12BRAYRw60SEOW8sEQ+Ugsv9FQ==
-X-Google-Smtp-Source: ABdhPJwwuuEEw4PW352dxmKdk5M40VGM4ah+oUqxQCijlCOa4x8O+ussAGmRTo654Y1vrVDRwi6DFNUbJ0yZ/HPFQkM=
-X-Received: by 2002:a5d:9694:: with SMTP id m20mr15203280ion.185.1622528428085;
- Mon, 31 May 2021 23:20:28 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=ki1m+phqqeEKMm1Y4FBuUTps1qqhBduvhtHEsbv1LNk=;
+        b=mWgnb9aJhEKUomgK/Zoi7qRJKdoXRgd+O3REoisnoXawRlotsALOX78dcMLsgMHvn/
+         HXWg5XG1N2Qxsz66pg/C9aHoD3U0HStbg6Wfck+a8r5pitaVoHq1uBGxFwTTY4CzStw5
+         tuCegmAK2Ea/VURRBGwpkV5n41lTWbvoCfbqv8KE5s2LsMeich6qWtpKIyAtXumNiozR
+         aIKaoSVp2ZcXcGlk1cYM96sYwEPZrk7TxaK9d4NeRp+fgYK7uhirHEpq9yBPt/0mwd1x
+         a/RM2hHdC0wqKHpWrMCXToWvMqGEXr8bPJG0vUa5qlLcuvzkBSXr4YSMLNlUX6BAwCpW
+         EmJQ==
+X-Gm-Message-State: AOAM531O1e4TTOQ0Oy1HL7YuCRFGnCbIv2kwQUHgbnVK9e5eA9sYrilU
+        +S/0kABBh35r/hd7nD0Iat/f3g==
+X-Google-Smtp-Source: ABdhPJy0RXo/zlgAv9qpM1Lr6nZNz/RzUBY/p2OdPdpz8RLu++tUZdIuaNMmVap7sWf7w9OzZ+If9g==
+X-Received: by 2002:aa7:c545:: with SMTP id s5mr17668220edr.113.1622537752505;
+        Tue, 01 Jun 2021 01:55:52 -0700 (PDT)
+Received: from [192.168.1.12] (hst-221-74.medicom.bg. [84.238.221.74])
+        by smtp.googlemail.com with ESMTPSA id f3sm3735863eds.59.2021.06.01.01.55.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 01 Jun 2021 01:55:52 -0700 (PDT)
+Subject: Re: [PATCH] venus: venc: add support for
+ V4L2_CID_MPEG_VIDEO_H264_8X8_TRANSFORM control
+To:     Mansur Alisha Shaik <mansur@codeaurora.org>,
+        linux-media@vger.kernel.org, stanimir.varbanov@linaro.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        vgarodia@codeaurora.org, dikshita@codeaurora.org
+References: <1622438514-16657-1-git-send-email-mansur@codeaurora.org>
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Message-ID: <f49ab90e-2e5a-8a61-ba6f-30bdb71818cf@linaro.org>
+Date:   Tue, 1 Jun 2021 11:55:51 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.8.1
 MIME-Version: 1.0
-References: <20210526154704.114957-1-judyhsiao@chromium.org>
-In-Reply-To: <20210526154704.114957-1-judyhsiao@chromium.org>
-From:   Tzung-Bi Shih <tzungbi@google.com>
-Date:   Tue, 1 Jun 2021 14:20:16 +0800
-Message-ID: <CA+Px+wXGjZCOhhAVh9eRw6L-g8g7Qi7Rf_3YHpHSCB2o=XQ+4g@mail.gmail.com>
-Subject: Re: [PATCH] ASoC: max98357a: set channels_max to 4
-To:     Judy Hsiao <judyhsiao@chromium.org>
-Cc:     Mark Brown <broonie@kernel.org>, Taniya Das <tdas@codeaurora.org>,
-        Rohit kumar <rohitkr@codeaurora.org>,
-        Banajit Goswami <bgoswami@codeaurora.org>,
-        Patrick Lai <plai@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Jaroslav Kysela <perex@perex.cz>,
-        Takashi Iwai <tiwai@suse.com>,
-        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Douglas Anderson <dianders@chromium.org>,
-        Dylan Reid <dgreid@chromium.org>,
-        Jimmy Cheng-Yi Chiang <cychiang@google.com>,
-        Tzung-Bi Shih <tzungbi@chromium.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        "moderated list:ARM/Mediatek SoC support" 
-        <linux-arm-kernel@lists.infradead.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        ALSA development <alsa-devel@alsa-project.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <1622438514-16657-1-git-send-email-mansur@codeaurora.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, May 26, 2021 at 11:47 PM Judy Hsiao <judyhsiao@chromium.org> wrote:
-> Sets channels_max to 4 to support QUAD channel.
 
-Could you point out probably the up-to-date MAX98357A datasheet for
-4-channel support?
 
-On a related note, from the public datasheet I could find[1], "Table
-5" only shows 2 channel's configuration.
+On 5/31/21 8:21 AM, Mansur Alisha Shaik wrote:
+> Add support for V4L2_CID_MPEG_VIDEO_H264_8X8_TRANSFORM control for
+> H264 high profile and constrained high profile.
+> 
+> Signed-off-by: Mansur Alisha Shaik <mansur@codeaurora.org>
+> ---
+>  drivers/media/platform/qcom/venus/core.h       |  1 +
+>  drivers/media/platform/qcom/venus/hfi_cmds.c   | 10 ++++++++++
+>  drivers/media/platform/qcom/venus/hfi_helper.h |  5 +++++
+>  drivers/media/platform/qcom/venus/venc.c       | 11 +++++++++++
+>  drivers/media/platform/qcom/venus/venc_ctrls.c | 12 +++++++++++-
+>  5 files changed, 38 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
+> index 745f226..103fbd8 100644
+> --- a/drivers/media/platform/qcom/venus/core.h
+> +++ b/drivers/media/platform/qcom/venus/core.h
+> @@ -235,6 +235,7 @@ struct venc_controls {
+>  	u32 h264_loop_filter_mode;
+>  	s32 h264_loop_filter_alpha;
+>  	s32 h264_loop_filter_beta;
+> +	u32 h264_8x8_transform;
+>  
+>  	u32 hevc_i_qp;
+>  	u32 hevc_p_qp;
+> diff --git a/drivers/media/platform/qcom/venus/hfi_cmds.c b/drivers/media/platform/qcom/venus/hfi_cmds.c
+> index 11a8347..61d04a5 100644
+> --- a/drivers/media/platform/qcom/venus/hfi_cmds.c
+> +++ b/drivers/media/platform/qcom/venus/hfi_cmds.c
+> @@ -1178,6 +1178,7 @@ pkt_session_set_property_4xx(struct hfi_session_set_property_pkt *pkt,
+>  {
+>  	void *prop_data;
+>  
+> +
 
-[1]: https://pdf1.alldatasheet.com/datasheet-pdf/view/623796/MAXIM/MAX98357A.html
+Uneeded new blank line.
+
+>  	if (!pkt || !cookie || !pdata)
+>  		return -EINVAL;
+>  
+> @@ -1227,6 +1228,15 @@ pkt_session_set_property_4xx(struct hfi_session_set_property_pkt *pkt,
+>  		break;
+>  	}
+>  
+> +	case HFI_PROPERTY_PARAM_VENC_H264_TRANSFORM_8X8: {
+> +		struct hfi_h264_8x8x_transform *in = pdata, *tm = prop_data;
+
+s/hfi_h264_8x8x_transform/hfi_h264_8x8_transform
+
+> +
+> +		tm->enable_type = in->enable_type;
+> +		pkt->shdr.hdr.size += sizeof(u32) + sizeof(*tm);
+> +		break;
+> +
+> +	}
+> +
+>  	case HFI_PROPERTY_CONFIG_VENC_MAX_BITRATE:
+>  	case HFI_PROPERTY_CONFIG_VDEC_POST_LOOP_DEBLOCKER:
+>  	case HFI_PROPERTY_PARAM_BUFFER_ALLOC_MODE:
+> diff --git a/drivers/media/platform/qcom/venus/hfi_helper.h b/drivers/media/platform/qcom/venus/hfi_helper.h
+> index 63cd347..81d0536 100644
+> --- a/drivers/media/platform/qcom/venus/hfi_helper.h
+> +++ b/drivers/media/platform/qcom/venus/hfi_helper.h
+> @@ -510,6 +510,7 @@
+>  #define HFI_PROPERTY_PARAM_VENC_MAX_NUM_B_FRAMES		0x2005020
+>  #define HFI_PROPERTY_PARAM_VENC_H264_VUI_BITSTREAM_RESTRC	0x2005021
+>  #define HFI_PROPERTY_PARAM_VENC_PRESERVE_TEXT_QUALITY		0x2005023
+> +#define HFI_PROPERTY_PARAM_VENC_H264_TRANSFORM_8X8			0x2005025
+>  #define HFI_PROPERTY_PARAM_VENC_HIER_P_MAX_NUM_ENH_LAYER	0x2005026
+>  #define HFI_PROPERTY_PARAM_VENC_DISABLE_RC_TIMESTAMP		0x2005027
+>  #define HFI_PROPERTY_PARAM_VENC_INITIAL_QP			0x2005028
+> @@ -565,6 +566,10 @@ struct hfi_bitrate {
+>  	u32 layer_id;
+>  };
+>  
+> +struct hfi_h264_8x8x_transform {
+
+s/hfi_h264_8x8x_transform/hfi_h264_8x8_transform
+
+> +	u32 enable_type;
+> +};
+> +
+>  #define HFI_CAPABILITY_FRAME_WIDTH			0x01
+>  #define HFI_CAPABILITY_FRAME_HEIGHT			0x02
+>  #define HFI_CAPABILITY_MBS_PER_FRAME			0x03
+> diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
+> index 8dd49d4..4ecf331 100644
+> --- a/drivers/media/platform/qcom/venus/venc.c
+> +++ b/drivers/media/platform/qcom/venus/venc.c
+> @@ -567,6 +567,7 @@ static int venc_set_properties(struct venus_inst *inst)
+>  		struct hfi_h264_vui_timing_info info;
+>  		struct hfi_h264_entropy_control entropy;
+>  		struct hfi_h264_db_control deblock;
+> +		struct hfi_h264_8x8x_transform h264_transform;
+
+ditto
+
+>  
+>  		ptype = HFI_PROPERTY_PARAM_VENC_H264_VUI_TIMING_INFO;
+>  		info.enable = 1;
+> @@ -597,6 +598,16 @@ static int venc_set_properties(struct venus_inst *inst)
+>  		ret = hfi_session_set_property(inst, ptype, &deblock);
+>  		if (ret)
+>  			return ret;
+> +
+> +		ptype = HFI_PROPERTY_PARAM_VENC_H264_TRANSFORM_8X8;
+> +		if (ctr->profile.h264 == HFI_H264_PROFILE_HIGH ||
+> +			ctr->profile.h264 == HFI_H264_PROFILE_CONSTRAINED_HIGH)
+
+checkpatch.pl --strict should complain about this ctr->profile.h264
+alignment.
+
+> +			h264_transform.enable_type = ctr->h264_8x8_transform;
+> +
+> +		ret = hfi_session_set_property(inst, ptype, &h264_transform);
+> +		if (ret)
+> +			return ret;
+> +
+>  	}
+>  
+>  	if (inst->fmt_cap->pixfmt == V4L2_PIX_FMT_H264 ||
+> diff --git a/drivers/media/platform/qcom/venus/venc_ctrls.c b/drivers/media/platform/qcom/venus/venc_ctrls.c
+> index 637c92f..e3ef611 100644
+> --- a/drivers/media/platform/qcom/venus/venc_ctrls.c
+> +++ b/drivers/media/platform/qcom/venus/venc_ctrls.c
+> @@ -319,6 +319,13 @@ static int venc_op_s_ctrl(struct v4l2_ctrl *ctrl)
+>  	case V4L2_CID_COLORIMETRY_HDR10_MASTERING_DISPLAY:
+>  		ctr->mastering = *ctrl->p_new.p_hdr10_mastering;
+>  		break;
+> +	case V4L2_CID_MPEG_VIDEO_H264_8X8_TRANSFORM:
+> +		if (ctr->profile.h264 != HFI_H264_PROFILE_HIGH ||
+> +			ctr->profile.h264 != HFI_H264_PROFILE_CONSTRAINED_HIGH)
+
+ditto
+
+> +			return -EINVAL;
+> +
+> +		ctr->h264_8x8_transform = ctrl->val;
+> +		break;
+>  	default:
+>  		return -EINVAL;
+>  	}
+> @@ -334,7 +341,7 @@ int venc_ctrl_init(struct venus_inst *inst)
+>  {
+>  	int ret;
+>  
+> -	ret = v4l2_ctrl_handler_init(&inst->ctrl_handler, 57);
+> +	ret = v4l2_ctrl_handler_init(&inst->ctrl_handler, 58);
+>  	if (ret)
+>  		return ret;
+>  
+> @@ -438,6 +445,9 @@ int venc_ctrl_init(struct venus_inst *inst)
+>  			  V4L2_CID_MPEG_VIDEO_H264_I_FRAME_MIN_QP, 1, 51, 1, 1);
+>  
+>  	v4l2_ctrl_new_std(&inst->ctrl_handler, &venc_ctrl_ops,
+> +		V4L2_CID_MPEG_VIDEO_H264_8X8_TRANSFORM, 0, 1, 1, 0);
+> +
+> +	v4l2_ctrl_new_std(&inst->ctrl_handler, &venc_ctrl_ops,
+>  			  V4L2_CID_MPEG_VIDEO_H264_P_FRAME_MIN_QP, 1, 51, 1, 1);
+>  
+>  	v4l2_ctrl_new_std(&inst->ctrl_handler, &venc_ctrl_ops,
+> 
+
+-- 
+regards,
+Stan
