@@ -2,150 +2,281 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B77C4397B78
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Jun 2021 22:58:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E76A0397C5D
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jun 2021 00:20:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234707AbhFAVAd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Jun 2021 17:00:33 -0400
-Received: from mail-ot1-f52.google.com ([209.85.210.52]:33654 "EHLO
-        mail-ot1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234638AbhFAVAd (ORCPT
+        id S235006AbhFAWWP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Jun 2021 18:22:15 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([216.205.24.124]:47824 "EHLO
+        us-smtp-delivery-124.mimecast.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S234766AbhFAWWP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Jun 2021 17:00:33 -0400
-Received: by mail-ot1-f52.google.com with SMTP id l19-20020a0568301553b02903beaa8d961aso634802otp.0;
-        Tue, 01 Jun 2021 13:58:50 -0700 (PDT)
+        Tue, 1 Jun 2021 18:22:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1622586032;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=zNZ1OHz+pgy9lSJZpnW7dTMVx/2d5p7wzElxmNic5mo=;
+        b=Qj+o3RsIYjMTdQc6zqRwgtrtY/G0Qtqrx2pEcH2zFqnSRFsHQEKH+8SCQFmUq4i+LmlLyP
+        x+urX1ffhrB2hrKkzZsu5AQGr834qj2QRwr1ODKSPXEBDNXFaKQ3NiEWJ1YqNoVmBNcuNx
+        PkalbNUgl1+kvJEhSpZ6ZKMnvhN5aqA=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-557-gP3QMzi3MZKNAp2X1-Uy7Q-1; Tue, 01 Jun 2021 18:20:31 -0400
+X-MC-Unique: gP3QMzi3MZKNAp2X1-Uy7Q-1
+Received: by mail-qv1-f70.google.com with SMTP id v19-20020a0ce1d30000b02902187ed4452eso334595qvl.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Jun 2021 15:20:31 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=mFVgXK4P9/P196d6q38oyDpnHkvZz1jGfjrbZohVPy8=;
-        b=oZebr1t4L3KpYIwM87E8veHoFItWVz59cRvZhh+/ZTdOjhQjbY9ZT63wYl9aisNzUr
-         PIdSoH2ojK5fYp5sCvjJdXeKVdiFteBvpVw/362vhQv0HmB2iaHXkOuYImcBsyMa/BgE
-         Zti81N5/dFTSPw0NFFRiIASGzoCaej/veNVvacc31h4Eer/lJskn2juir46uVUCRvKGe
-         UfhsbSslAiD3qw9R2KYbhUnPPoX/1a6VlNixrgiDF6g4n8Y2ldiwGNTupQPFhT3QlD5h
-         vdEeGCv5OlA8EmstKkdcX96u41b6BlG53oKRYJZLQYPFa2yafnkJwiv/EyaVdM/AvecK
-         7L2g==
-X-Gm-Message-State: AOAM532VFjDzkWYPveRA45nqra5FVD5ci4XAmNLjtHvzsyPZ9SIac0gA
-        gHaP9KX6zDpWHCKn8LKhRw==
-X-Google-Smtp-Source: ABdhPJwSDOHE2U3w/uzQOBXamMUbXVw3E+ghXWqjym71F23AjO+4al6m1BHPI6Gog/151NLhLbohIg==
-X-Received: by 2002:a05:6830:611:: with SMTP id w17mr22894682oti.225.1622581130059;
-        Tue, 01 Jun 2021 13:58:50 -0700 (PDT)
-Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id a14sm3956610otl.52.2021.06.01.13.58.48
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:organization:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=zNZ1OHz+pgy9lSJZpnW7dTMVx/2d5p7wzElxmNic5mo=;
+        b=Nmtw2AhcDcUwZkplS/07T62yayBlYWriL9cCSQ0PBDxuuLt0fcLgI+gpMnE4iTn+IN
+         SVKolrTWBwvV0Q+dI702LaC1L3TC5s5zGrUaIlvLo7WcwrISFkUqEz06eF8SwZXZ4Xk5
+         uX6CKro38kwIXjLBOvi10CEV8hFmdscvSzxlTCCnKy4WtlEZCkCwLVyMMrIZhRQI4sIq
+         hDQ2btjk2U/eIEn6unf/g5l/C40ILpD4+6o46enVnMIIZJWGamyWNIx+pfFAuR/Q2sbS
+         mWCO1tBCpCAbm5B7OAou1kjty96MIl8C0qtHqw0Aoiv018yXkhHCbVeYEi7wp0ajWR/P
+         smig==
+X-Gm-Message-State: AOAM53061FjVNE4XWE1a1+/kg59MWLRY42uJF16htzNsQ3e0mJABPcpS
+        BWYFB1YvbtGahmaPR1VoHS7l5prkFF8IDc+0uJq4Z5bqhy0NMdfAHmxY5QLevmtLsY6cKz/TPGf
+        FQRXKTN8jeUZhx5h4fif5CUmabQ==
+X-Received: by 2002:a05:620a:4007:: with SMTP id h7mr23810767qko.257.1622586031306;
+        Tue, 01 Jun 2021 15:20:31 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJwYa1qLyQ3m0UnCgsn0rF7qsVaI/mfTUhKZHlBTOPeAih4/7wa4I1RxpaoBnF8u9RQgUPIEog==
+X-Received: by 2002:a05:620a:4007:: with SMTP id h7mr23810728qko.257.1622586031051;
+        Tue, 01 Jun 2021 15:20:31 -0700 (PDT)
+Received: from Ruby.lyude.net (pool-108-49-102-102.bstnma.fios.verizon.net. [108.49.102.102])
+        by smtp.gmail.com with ESMTPSA id f130sm161456qke.37.2021.06.01.15.20.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Jun 2021 13:58:49 -0700 (PDT)
-Received: (nullmailer pid 1030577 invoked by uid 1000);
-        Tue, 01 Jun 2021 20:58:48 -0000
-Date:   Tue, 1 Jun 2021 15:58:48 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Rajeev Nandan <rajeevny@codeaurora.org>
-Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, sean@poorly.run, robdclark@gmail.com,
-        abhinavk@codeaurora.org, kalyan_t@codeaurora.org,
-        mkrishn@codeaurora.org, jonathan@marek.ca
-Subject: Re: [v1 1/3] dt-bindings: msm/dsi: Add yaml schema for 7nm DSI PHY
-Message-ID: <20210601205848.GA1025498@robh.at.kernel.org>
-References: <1622468035-8453-1-git-send-email-rajeevny@codeaurora.org>
- <1622468035-8453-2-git-send-email-rajeevny@codeaurora.org>
+        Tue, 01 Jun 2021 15:20:30 -0700 (PDT)
+Message-ID: <4df7dcddd5aca799361642ea91c37fa94e8a4fef.camel@redhat.com>
+Subject: Re: [v4 1/4] drm/panel-simple: Add basic DPCD backlight support
+From:   Lyude Paul <lyude@redhat.com>
+To:     Rajeev Nandan <rajeevny@codeaurora.org>, y@qualcomm.com,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
+Cc:     linux-kernel@vger.kernel.org, thierry.reding@gmail.com,
+        sam@ravnborg.org, robdclark@gmail.com, dianders@chromium.org,
+        jani.nikula@intel.com, robh@kernel.org,
+        laurent.pinchart@ideasonboard.com, a.hajda@samsung.com,
+        daniel.thompson@linaro.org, hoegsberg@chromium.org,
+        abhinavk@codeaurora.org, seanpaul@chromium.org,
+        kalyan_t@codeaurora.org, mkrishn@codeaurora.org
+Date:   Tue, 01 Jun 2021 18:20:29 -0400
+In-Reply-To: <1621927831-29471-2-git-send-email-rajeevny@codeaurora.org>
+References: <1621927831-29471-1-git-send-email-rajeevny@codeaurora.org>
+         <1621927831-29471-2-git-send-email-rajeevny@codeaurora.org>
+Organization: Red Hat
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.38.4 (3.38.4-1.fc33) 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1622468035-8453-2-git-send-email-rajeevny@codeaurora.org>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, May 31, 2021 at 07:03:53PM +0530, Rajeev Nandan wrote:
-> Add YAML schema for the device tree bindings for MSM 7nm DSI PHY driver.
+oh-looks like my patches just got reviewed, so hopefully I should get a chance
+to get a look at this in the next day or two :)
+
+On Tue, 2021-05-25 at 13:00 +0530, Rajeev Nandan wrote:
+> Add basic support of panel backlight control over eDP aux channel
+> using VESA's standard backlight control interface.
 > 
-> Cc: Jonathan Marek <jonathan@marek.ca>
 > Signed-off-by: Rajeev Nandan <rajeevny@codeaurora.org>
 > ---
->  .../bindings/display/msm/dsi-phy-7nm.yaml          | 68 ++++++++++++++++++++++
->  1 file changed, 68 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/display/msm/dsi-phy-7nm.yaml
 > 
-> diff --git a/Documentation/devicetree/bindings/display/msm/dsi-phy-7nm.yaml b/Documentation/devicetree/bindings/display/msm/dsi-phy-7nm.yaml
-> new file mode 100644
-> index 00000000..f17cfde
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/display/msm/dsi-phy-7nm.yaml
-> @@ -0,0 +1,68 @@
-> +# SPDX-License-Identifier: GPL-2.0-only or BSD-2-Clause
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/display/msm/dsi-phy-7nm.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> This patch depends on [1] (drm/panel: panel-simple: Stash DP AUX bus; 
+> allow using it for DDC) 
+> 
+> Changes in v4:
+> - New
+> 
+> [1]
+> https://lore.kernel.org/dri-devel/20210524165920.v8.7.I18e60221f6d048d14d6c50a770b15f356fa75092@changeid/
+> 
+>  drivers/gpu/drm/panel/panel-simple.c | 99
+> ++++++++++++++++++++++++++++++++++--
+>  1 file changed, 96 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/panel/panel-simple.c
+> b/drivers/gpu/drm/panel/panel-simple.c
+> index b09be6e..f9e4e60 100644
+> --- a/drivers/gpu/drm/panel/panel-simple.c
+> +++ b/drivers/gpu/drm/panel/panel-simple.c
+> @@ -21,6 +21,7 @@
+>   * DEALINGS IN THE SOFTWARE.
+>   */
+>  
+> +#include <linux/backlight.h>
+>  #include <linux/delay.h>
+>  #include <linux/gpio/consumer.h>
+>  #include <linux/iopoll.h>
+> @@ -171,6 +172,19 @@ struct panel_desc {
+>  
+>         /** @connector_type: LVDS, eDP, DSI, DPI, etc. */
+>         int connector_type;
 > +
-> +title: Qualcomm Display DSI 7nm PHY
+> +       /**
+> +        * @uses_dpcd_backlight: Panel supports eDP dpcd backlight control.
+> +        *
+> +        * Set true, if the panel supports backlight control over eDP AUX
+> channel
+> +        * using DPCD registers as per VESA's standard.
+> +        */
+> +       bool uses_dpcd_backlight;
+> +};
 > +
-> +maintainers:
-> +  - Rajeev Nandan <rajeevny@codeaurora.org>
+> +struct edp_backlight {
+> +       struct backlight_device *dev;
+> +       struct drm_edp_backlight_info info;
+>  };
+>  
+>  struct panel_simple {
+> @@ -194,6 +208,8 @@ struct panel_simple {
+>  
+>         struct edid *edid;
+>  
+> +       struct edp_backlight *edp_bl;
 > +
-> +allOf:
-> +  - $ref: dsi-phy-common.yaml#
+>         struct drm_display_mode override_mode;
+>  
+>         enum drm_panel_orientation orientation;
+> @@ -330,10 +346,14 @@ static void panel_simple_wait(ktime_t start_ktime,
+> unsigned int min_ms)
+>  static int panel_simple_disable(struct drm_panel *panel)
+>  {
+>         struct panel_simple *p = to_panel_simple(panel);
+> +       struct edp_backlight *bl = p->edp_bl;
+>  
+>         if (!p->enabled)
+>                 return 0;
+>  
+> +       if (p->desc->uses_dpcd_backlight && bl)
+> +               drm_edp_backlight_disable(p->aux, &bl->info);
 > +
-> +properties:
-> +  compatible:
-> +    oneOf:
-> +      - const: qcom,dsi-phy-7nm
+>         if (p->desc->delay.disable)
+>                 msleep(p->desc->delay.disable);
+>  
+> @@ -496,6 +516,7 @@ static int panel_simple_prepare(struct drm_panel *panel)
+>  static int panel_simple_enable(struct drm_panel *panel)
+>  {
+>         struct panel_simple *p = to_panel_simple(panel);
+> +       struct edp_backlight *bl = p->edp_bl;
+>  
+>         if (p->enabled)
+>                 return 0;
+> @@ -505,6 +526,10 @@ static int panel_simple_enable(struct drm_panel *panel)
+>  
+>         panel_simple_wait(p->prepared_time, p->desc-
+> >delay.prepare_to_enable);
+>  
+> +       if (p->desc->uses_dpcd_backlight && bl)
+> +               drm_edp_backlight_enable(p->aux, &bl->info,
+> +                                        bl->dev->props.brightness);
+> +
+>         p->enabled = true;
+>  
+>         return 0;
+> @@ -565,6 +590,59 @@ static const struct drm_panel_funcs panel_simple_funcs
+> = {
+>         .get_timings = panel_simple_get_timings,
+>  };
+>  
+> +static int edp_backlight_update_status(struct backlight_device *bd)
+> +{
+> +       struct panel_simple *p = bl_get_data(bd);
+> +       struct edp_backlight *bl = p->edp_bl;
+> +
+> +       if (!p->enabled)
+> +               return 0;
+> +
+> +       return drm_edp_backlight_set_level(p->aux, &bl->info, bd-
+> >props.brightness);
+> +}
+> +
+> +static const struct backlight_ops edp_backlight_ops = {
+> +       .update_status = edp_backlight_update_status,
+> +};
+> +
+> +static int edp_backlight_register(struct device *dev, struct panel_simple
+> *panel)
+> +{
+> +       struct edp_backlight *bl;
+> +       struct backlight_properties props = { 0 };
+> +       u16 current_level;
+> +       u8 current_mode;
+> +       u8 edp_dpcd[EDP_DISPLAY_CTL_CAP_SIZE];
+> +       int ret;
+> +
+> +       bl = devm_kzalloc(dev, sizeof(*bl), GFP_KERNEL);
+> +       if (!bl)
+> +               return -ENOMEM;
+> +
+> +       ret = drm_dp_dpcd_read(panel->aux, DP_EDP_DPCD_REV, edp_dpcd,
+> +                              EDP_DISPLAY_CTL_CAP_SIZE);
+> +       if (ret < 0)
+> +               return ret;
+> +
+> +       ret = drm_edp_backlight_init(panel->aux, &bl->info, 0, edp_dpcd,
+> +                                    &current_level, &current_mode);
+> +       if (ret < 0)
+> +               return ret;
+> +
+> +       props.type = BACKLIGHT_RAW;
+> +       props.brightness = current_level;
+> +       props.max_brightness = bl->info.max;
+> +
+> +       bl->dev = devm_backlight_device_register(dev, "edp_backlight",
+> +                                               dev, panel,
+> +                                               &edp_backlight_ops, &props);
+> +       if (IS_ERR(bl->dev))
+> +               return PTR_ERR(bl->dev);
+> +
+> +       panel->edp_bl = bl;
+> +
+> +       return 0;
+> +}
+> +
+>  static struct panel_desc panel_dpi;
+>  
+>  static int panel_dpi_probe(struct device *dev,
+> @@ -796,9 +874,24 @@ static int panel_simple_probe(struct device *dev, const
+> struct panel_desc *desc,
+>  
+>         drm_panel_init(&panel->base, dev, &panel_simple_funcs,
+> connector_type);
+>  
+> -       err = drm_panel_of_backlight(&panel->base);
+> -       if (err)
+> -               goto disable_pm_runtime;
+> +       if (panel->desc->uses_dpcd_backlight) {
+> +               if (!panel->aux) {
+> +                       dev_err(dev, "edp backlight needs DP aux\n");
+> +                       err = -EINVAL;
+> +                       goto disable_pm_runtime;
+> +               }
+> +
+> +               err = edp_backlight_register(dev, panel);
+> +               if (err) {
+> +                       dev_err(dev, "failed to register edp backlight
+> %d\n", err);
+> +                       goto disable_pm_runtime;
+> +               }
+> +
+> +       } else {
+> +               err = drm_panel_of_backlight(&panel->base);
+> +               if (err)
+> +                       goto disable_pm_runtime;
+> +       }
+>  
+>         drm_panel_add(&panel->base);
+>  
 
-When would one use this?
+-- 
+Cheers,
+ Lyude Paul (she/her)
+ Software Engineer at Red Hat
 
-> +      - const: qcom,dsi-phy-7nm-7280
-> +      - const: qcom,dsi-phy-7nm-8150
-
-These don't look like full SoC names (sm8150?) and it's 
-<vendor>,<soc>-<block>.
-
-> +
-> +  reg:
-> +    items:
-> +      - description: dsi phy register set
-> +      - description: dsi phy lane register set
-> +      - description: dsi pll register set
-> +
-> +  reg-names:
-> +    items:
-> +      - const: dsi_phy
-> +      - const: dsi_phy_lane
-> +      - const: dsi_pll
-> +
-> +  vdds-supply:
-> +    description: Phandle to 0.9V power supply regulator device node.
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - reg-names
-> +  - vdds-supply
-> +
-> +unevaluatedProperties: false
-> +
-> +examples:
-> +  - |
-> +     #include <dt-bindings/clock/qcom,dispcc-sc7280.h>
-> +     #include <dt-bindings/clock/qcom,rpmh.h>
-> +
-> +     dsi-phy@ae94400 {
-> +         compatible = "qcom,dsi-phy-7nm-7280";
-> +         reg = <0x0ae94400 0x200>,
-> +               <0x0ae94600 0x280>,
-> +               <0x0ae94900 0x280>;
-> +         reg-names = "dsi_phy",
-> +                     "dsi_phy_lane",
-> +                     "dsi_pll";
-> +
-> +         #clock-cells = <1>;
-> +         #phy-cells = <0>;
-> +
-> +         clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
-> +                  <&rpmhcc RPMH_CXO_CLK>;
-> +         clock-names = "iface", "ref";
-> +
-> +         vdds-supply = <&vreg_l10c_0p8>;
-> +     };
-> +...
-> -- 
-> 2.7.4
