@@ -2,92 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 15559396AA6
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Jun 2021 03:40:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 14E63396AFA
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Jun 2021 04:21:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232504AbhFABmG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 May 2021 21:42:06 -0400
-Received: from szxga08-in.huawei.com ([45.249.212.255]:3309 "EHLO
-        szxga08-in.huawei.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232207AbhFABmG (ORCPT
+        id S232516AbhFACXJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 May 2021 22:23:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59226 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232268AbhFACXJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 May 2021 21:42:06 -0400
-Received: from dggemv704-chm.china.huawei.com (unknown [172.30.72.53])
-        by szxga08-in.huawei.com (SkyGuard) with ESMTP id 4FvF986B4rz1BFXw;
-        Tue,  1 Jun 2021 09:35:40 +0800 (CST)
-Received: from dggpemm500006.china.huawei.com (7.185.36.236) by
- dggemv704-chm.china.huawei.com (10.3.19.47) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2176.2; Tue, 1 Jun 2021 09:40:21 +0800
-Received: from [127.0.0.1] (10.174.177.72) by dggpemm500006.china.huawei.com
- (7.185.36.236) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2176.2; Tue, 1 Jun 2021
- 09:40:20 +0800
-Subject: Re: [PATCH v2 3/3] edac: Use 'ret' instead of 'res' to store the
- return value
-To:     Borislav Petkov <bp@alien8.de>
-CC:     Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Tony Luck <tony.luck@intel.com>,
-        James Morse <james.morse@arm.com>,
-        Robert Richter <rric@kernel.org>,
-        Johannes Thumshirn <morbidrsa@gmail.com>,
-        Ralf Baechle <ralf@linux-mips.org>,
-        Dinh Nguyen <dinguyen@kernel.org>,
-        Jan Luebbe <jlu@pengutronix.de>,
-        Andre Przywara <andre.przywara@arm.com>,
-        "Channagoud Kadabi" <ckadabi@codeaurora.org>,
-        Venkata Narendra Kumar Gutta <vnkgutta@codeaurora.org>,
+        Mon, 31 May 2021 22:23:09 -0400
+Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com [IPv6:2607:f8b0:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD44DC061574
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 May 2021 19:21:27 -0700 (PDT)
+Received: by mail-pg1-x530.google.com with SMTP id n12so6335715pgs.13
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 May 2021 19:21:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=G7LsGLmMOn0RCf1NWPI0jTR/YPJV/uz3PsfA5w2kCWY=;
+        b=bMl5mgjYlnR3D9xJOq0kwO1H6utjThPiRUDlo5uvzPZFjXhXXLqE838OmSKJLfNmIm
+         H6f3yImB6nt/Hwd2V14xjPOomtM4mnElEV4CPs/KWAUnaimTw4O5D8OB0L9LMSuv4so0
+         tpR2ZeuWcHTkGNNWNY4pEoRpepxBoJGEVS1a0=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=G7LsGLmMOn0RCf1NWPI0jTR/YPJV/uz3PsfA5w2kCWY=;
+        b=mpR1IkwrCmcSW37r8HrO0vlfhLRbrKhORC7Lok0cSgF3ZHcHP6W3/Zls2KHNgyFEVq
+         pNlUABGAZCruCxymsdTSWRpowyBcKU4cSN4t24Byssm4J6k0qbTmzzg/NPpxRwpfEP6D
+         /0RIdE3KrTu8Kp43nNnptm/YmTjuMQCobg2+lK/p1pW2Bq8BWsXOBfWZw5Zg031dOl/n
+         +kuS1lMuxswLF4o+s9Q7Kls4ycJM626HRCZPieDMnBoT4hZ8xxatNabH06RIfhsLj9ui
+         x6Qpxb9ktrkB86TCNkvzbkb5rdc+XJO16z4QWHLqBgHTuVydrODfyU0WQ0R/q11S2XfQ
+         /EPQ==
+X-Gm-Message-State: AOAM533d1TF0kYZEHiinK63gPotrrYQYUYOEGj6hYysudd2g0187CpWI
+        LGNUZVtNd3wL1p1mTNwSHSafYA==
+X-Google-Smtp-Source: ABdhPJxN7Qm65U09tF7lVMDcXuKIvj4QgVk52a65hbjIuF1Bt95TBlmlV2sQ3UN4lpyqHz7qrp9kVg==
+X-Received: by 2002:a62:87cd:0:b029:2e9:a7c8:ad45 with SMTP id i196-20020a6287cd0000b02902e9a7c8ad45mr14001596pfe.8.1622514087296;
+        Mon, 31 May 2021 19:21:27 -0700 (PDT)
+Received: from judyhsiao-p920.tpe.corp.google.com ([2401:fa00:1:10:f7e8:2d6:ddb7:af4e])
+        by smtp.gmail.com with ESMTPSA id y205sm473797pfb.53.2021.05.31.19.21.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 31 May 2021 19:21:26 -0700 (PDT)
+From:   Judy Hsiao <judyhsiao@chromium.org>
+To:     broonie@kernel.org
+Cc:     Taniya Das <tdas@codeaurora.org>,
+        Rohit kumar <rohitkr@codeaurora.org>,
+        Banajit Goswami <bgoswami@codeaurora.org>,
+        Patrick Lai <plai@codeaurora.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Khuong Dinh <khuong@os.amperecomputing.com>,
-        York Sun <york.sun@nxp.com>,
-        linux-edac <linux-edac@vger.kernel.org>,
-        linux-mips <linux-mips@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-kernel <linux-kernel@vger.kernel.org>
-References: <20210531145302.9655-1-thunder.leizhen@huawei.com>
- <20210531145302.9655-4-thunder.leizhen@huawei.com> <YLT5Y+FRhUWWszOq@zn.tnic>
-From:   "Leizhen (ThunderTown)" <thunder.leizhen@huawei.com>
-Message-ID: <4f96d85f-a7a6-531b-a032-a04e51a218cc@huawei.com>
-Date:   Tue, 1 Jun 2021 09:40:19 +0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.0
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Takashi Iwai <tiwai@suse.com>,
+        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+        Stephan Gerhold <stephan@gerhold.net>, dianders@chromium.org,
+        dgreid@chromium.org, cychiang@google.com, judyhsiao@google.com,
+        tzungbi@chromium.org, swboyd@chromium.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        alsa-devel@alsa-project.org, Judy Hsiao <judyhsiao@chromium.org>
+Subject: [PATCH] arm64: dts: qcom: sc7180: add label for secondary mi2s
+Date:   Tue,  1 Jun 2021 10:21:17 +0800
+Message-Id: <20210601022117.4071117-1-judyhsiao@chromium.org>
+X-Mailer: git-send-email 2.32.0.rc0.204.g9fa02ecfa5-goog
 MIME-Version: 1.0
-In-Reply-To: <YLT5Y+FRhUWWszOq@zn.tnic>
-Content-Type: text/plain; charset="utf-8"
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.174.177.72]
-X-ClientProxiedBy: dggems706-chm.china.huawei.com (10.3.19.183) To
- dggpemm500006.china.huawei.com (7.185.36.236)
-X-CFilter-Loop: Reflected
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Adds label for MI2S secondary block to allow follower projects to override
+for the four speaker support which uses I2S SD1 line on gpio52 pin.
 
+Signed-off-by: Judy Hsiao <judyhsiao@chromium.org>
+---
+ arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-On 2021/5/31 22:57, Borislav Petkov wrote:
-> On Mon, May 31, 2021 at 10:53:02PM +0800, Zhen Lei wrote:
->> Usually 'ret' or 'rc' is used as the abbreviation for 'return code', and
->> 'res' is used as the abbreviation for 'resource'.
-> 
-> Or "result."
-
-https://www.allacronyms.com/result/abbreviated
-
-It seems 'res' is the right abbreviation for 'result'. But since people see 'res',
-it's easier to associate 'resource', it's probably better to use it sparingly.
-And it seems that 'ret' and 'rc' are used more frequently.
-
-However, the greens and radishes have their own love. So I'm fine with ignoring
-this patch.
-
-> 
-> Please refrain from doing pointless patches like that - it is a totally
-> unnecessary churn.
-
-OK
-
-> 
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+index 24d293ef56d7..2027914a0bed 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+@@ -772,7 +772,7 @@ mi2s@0 {
+ 		qcom,capture-sd-lines = <0>;
+ 	};
+ 
+-	mi2s@1 {
++	secondary_mi2s: mi2s@1 {
+ 		reg = <MI2S_SECONDARY>;
+ 		qcom,playback-sd-lines = <0>;
+ 	};
+-- 
+2.32.0.rc0.204.g9fa02ecfa5-goog
 
