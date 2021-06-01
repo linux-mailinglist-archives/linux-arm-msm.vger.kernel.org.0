@@ -2,239 +2,156 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4195E396FA2
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Jun 2021 10:55:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 78B26396FE3
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Jun 2021 11:05:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233301AbhFAI5f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Jun 2021 04:57:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34662 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233193AbhFAI5f (ORCPT
+        id S233351AbhFAJHV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Jun 2021 05:07:21 -0400
+Received: from mo4-p01-ob.smtp.rzone.de ([81.169.146.164]:12736 "EHLO
+        mo4-p01-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233671AbhFAJHH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Jun 2021 04:57:35 -0400
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2877C061756
-        for <linux-arm-msm@vger.kernel.org>; Tue,  1 Jun 2021 01:55:53 -0700 (PDT)
-Received: by mail-ed1-x532.google.com with SMTP id df21so16339807edb.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Jun 2021 01:55:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=ki1m+phqqeEKMm1Y4FBuUTps1qqhBduvhtHEsbv1LNk=;
-        b=gVHP+iVkVE0dsRQgwkY8e1vEleVxDXKMH2ooJn0cjVk37p2rPcdS75EF/5UQNotqw2
-         wBlAF9I6LXaYe6wvYob55OyeKzSa9JrGQ3PEfLh9El6YU8lqX1J9TZhVezrIc0r5wo4M
-         VPWf/XRvi94ZTVyLWE6rtJbEMDao1rIqQa62Ld0ikX/LX8OttXYStEYPbXrT+OTuOZF6
-         lHB8BLwWTGBE6s2Vp7TI7HJzvt5PKO98hQf6zn96OYaZaoTbtyFRUxgiJTEjVEOACzoP
-         9zAmn9nnHL5SXM6yQ7TeJz8iyTgj4+oCKgDziQUzFyV2FStcD5UTDXl910NK07+XX1Gi
-         GEDg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=ki1m+phqqeEKMm1Y4FBuUTps1qqhBduvhtHEsbv1LNk=;
-        b=mWgnb9aJhEKUomgK/Zoi7qRJKdoXRgd+O3REoisnoXawRlotsALOX78dcMLsgMHvn/
-         HXWg5XG1N2Qxsz66pg/C9aHoD3U0HStbg6Wfck+a8r5pitaVoHq1uBGxFwTTY4CzStw5
-         tuCegmAK2Ea/VURRBGwpkV5n41lTWbvoCfbqv8KE5s2LsMeich6qWtpKIyAtXumNiozR
-         aIKaoSVp2ZcXcGlk1cYM96sYwEPZrk7TxaK9d4NeRp+fgYK7uhirHEpq9yBPt/0mwd1x
-         a/RM2hHdC0wqKHpWrMCXToWvMqGEXr8bPJG0vUa5qlLcuvzkBSXr4YSMLNlUX6BAwCpW
-         EmJQ==
-X-Gm-Message-State: AOAM531O1e4TTOQ0Oy1HL7YuCRFGnCbIv2kwQUHgbnVK9e5eA9sYrilU
-        +S/0kABBh35r/hd7nD0Iat/f3g==
-X-Google-Smtp-Source: ABdhPJy0RXo/zlgAv9qpM1Lr6nZNz/RzUBY/p2OdPdpz8RLu++tUZdIuaNMmVap7sWf7w9OzZ+If9g==
-X-Received: by 2002:aa7:c545:: with SMTP id s5mr17668220edr.113.1622537752505;
-        Tue, 01 Jun 2021 01:55:52 -0700 (PDT)
-Received: from [192.168.1.12] (hst-221-74.medicom.bg. [84.238.221.74])
-        by smtp.googlemail.com with ESMTPSA id f3sm3735863eds.59.2021.06.01.01.55.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 01 Jun 2021 01:55:52 -0700 (PDT)
-Subject: Re: [PATCH] venus: venc: add support for
- V4L2_CID_MPEG_VIDEO_H264_8X8_TRANSFORM control
-To:     Mansur Alisha Shaik <mansur@codeaurora.org>,
-        linux-media@vger.kernel.org, stanimir.varbanov@linaro.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        vgarodia@codeaurora.org, dikshita@codeaurora.org
-References: <1622438514-16657-1-git-send-email-mansur@codeaurora.org>
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Message-ID: <f49ab90e-2e5a-8a61-ba6f-30bdb71818cf@linaro.org>
-Date:   Tue, 1 Jun 2021 11:55:51 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.8.1
+        Tue, 1 Jun 2021 05:07:07 -0400
+ARC-Seal: i=1; a=rsa-sha256; t=1622538324; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=Dm6jieNM34nq2NFzwsY8+gH7Px5iq2iF9fjYK/iu9UWp1gE3lRl6XSXkm5LnhlYRdq
+    EQjNHjIefqIZlNPxb6A0KZCQtxIQKt+7whaV/fcQYiczAD0/orjmZHXBz/Wg01xTGWm2
+    /JQ4240nH7wTLH03UyyiRX14PRywTh8Qvcgq0qGpqrcRiwe88fcuwFl4HrI/gXRiKqgC
+    bI0rgCAee0GLAEyg6MQBx49AzI+2uJK77aqVVu715NyzlIfUpigFqieHx4VJ9Ch4ML+K
+    wNVMmSRmDrqcHwTdLWBdIi02kprIPqfizP2B95cEyOfOBMeUHfLY7I0AC81C8n85yvRY
+    y5Fg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1622538324;
+    s=strato-dkim-0002; d=strato.com;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=oYoUHhMgoV+c2cRCVemxTwtrhdXd/jbjcuXHuxrMvc0=;
+    b=HpyvRDssuYbffpKN033XPVEmE+KIFGfcueYUyD7a2gdjROrNUUer+dN+JmSjatiQdr
+    3V4t1FfTH6Hx6fSMRtLBGA85oqzbhv+ySB0Myli4QNJK2X2VQKxiNQIhRMTCawqbkY/w
+    dIMHSrQ9/5vlEPJ0DhJnE7gU5P+Kh8VDSSuyrEQ5EVCPAAsSdpTOpsPyNnIg1pqb9aSF
+    ekYutWDHrY0uUCq/h+dfAY00j2/X5c3ev10hRAPXkox45eHaHyefsZyYr4bKn8Wa0OLD
+    sM83JiCcHQTLF/NO5/hCRFRY5fZy2QP2B+W617ybISBnJ6SFCXIcPd8k6RoWVldTlij6
+    vPQg==
+ARC-Authentication-Results: i=1; strato.com;
+    dkim=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1622538324;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=oYoUHhMgoV+c2cRCVemxTwtrhdXd/jbjcuXHuxrMvc0=;
+    b=l/aOrUc18cL4o2Em4ISO+VSnjK16WY05hxC+zzGOR6jxBElRwkbcAGhy1msUhZ31bn
+    s7lneKXDb3AM02fpuQ4ioPwBH06ykcZCkM0bvK4gGG/LTaCjEyapsNhvK9EQ06Pkqnjt
+    U6ruonJ8C0CixkBduVXdMvpzoYQpVzDKkj6JEAa2sUnYLxsrWx0zXLxp7yAGcktCm+RR
+    gEpvCQRpba8rbDtxbMYyhxGgXPXnoU+QvS9kShpFxU1D887nqUBjIPHZZBTTLP+jQkdJ
+    f55rxS4zLGM/svisxjwYMKEF6MvL+uHT8mlD2gLd/Iz6jfQWB1VP8NE3/cRofXQDcLXR
+    KPOw==
+Authentication-Results: strato.com;
+    dkim=none
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u26zEodhPgRDZ8j7Ic/MaIo="
+X-RZG-CLASS-ID: mo00
+Received: from gerhold.net
+    by smtp.strato.de (RZmta 47.26.3 DYNA|AUTH)
+    with ESMTPSA id U0b2c9x5195ORGT
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Tue, 1 Jun 2021 11:05:24 +0200 (CEST)
+Date:   Tue, 1 Jun 2021 11:05:17 +0200
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Anibal Limon <anibal.limon@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] arm64: dts: qcom: apq8016-sbc: Update modem and WiFi
+ firmware path
+Message-ID: <YLX4TfuxEnjQ3fhi@gerhold.net>
+References: <20210531224453.783218-1-bjorn.andersson@linaro.org>
 MIME-Version: 1.0
-In-Reply-To: <1622438514-16657-1-git-send-email-mansur@codeaurora.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210531224453.783218-1-bjorn.andersson@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 5/31/21 8:21 AM, Mansur Alisha Shaik wrote:
-> Add support for V4L2_CID_MPEG_VIDEO_H264_8X8_TRANSFORM control for
-> H264 high profile and constrained high profile.
+On Mon, May 31, 2021 at 03:44:53PM -0700, Bjorn Andersson wrote:
+> The firmware for the modem and WiFi subsystems platform specific and is
+> signed with a OEM specific key (or a test key). In order to support more
+> than a single device it is therefor not possible to rely on the default
+> path and stash these files directly in the firmware directory.
 > 
-> Signed-off-by: Mansur Alisha Shaik <mansur@codeaurora.org>
+> This has already been addressed for other platforms, but the APQ8016 SBC
+> (aka db410c) was never finished upstream.
+> 
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+
+As far as I can tell,
+"[PATCH 2/5] wcn36xx: Allow firmware name to be overridden by DT"
+was never applied so with this patch DB410c fails to request the
+"qcom/msm8916/WCNSS_qcom_wlan_nv.bin" firmware. Perhaps you need to
+resend that one or poke whoever is responsible to apply that.
+
+Once the wcn36xx patch was applied somewhere:
+Reviewed-by: Stephan Gerhold <stephan@gerhold.net>
+Tested-by: Stephan Gerhold <stephan@gerhold.net>
+
+Thanks,
+Stephan
+
 > ---
->  drivers/media/platform/qcom/venus/core.h       |  1 +
->  drivers/media/platform/qcom/venus/hfi_cmds.c   | 10 ++++++++++
->  drivers/media/platform/qcom/venus/hfi_helper.h |  5 +++++
->  drivers/media/platform/qcom/venus/venc.c       | 11 +++++++++++
->  drivers/media/platform/qcom/venus/venc_ctrls.c | 12 +++++++++++-
->  5 files changed, 38 insertions(+), 1 deletion(-)
+>  arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi | 12 ++++++++++++
+>  arch/arm64/boot/dts/qcom/msm8916.dtsi     |  2 +-
+>  2 files changed, 13 insertions(+), 1 deletion(-)
 > 
-> diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
-> index 745f226..103fbd8 100644
-> --- a/drivers/media/platform/qcom/venus/core.h
-> +++ b/drivers/media/platform/qcom/venus/core.h
-> @@ -235,6 +235,7 @@ struct venc_controls {
->  	u32 h264_loop_filter_mode;
->  	s32 h264_loop_filter_alpha;
->  	s32 h264_loop_filter_beta;
-> +	u32 h264_8x8_transform;
->  
->  	u32 hevc_i_qp;
->  	u32 hevc_p_qp;
-> diff --git a/drivers/media/platform/qcom/venus/hfi_cmds.c b/drivers/media/platform/qcom/venus/hfi_cmds.c
-> index 11a8347..61d04a5 100644
-> --- a/drivers/media/platform/qcom/venus/hfi_cmds.c
-> +++ b/drivers/media/platform/qcom/venus/hfi_cmds.c
-> @@ -1178,6 +1178,7 @@ pkt_session_set_property_4xx(struct hfi_session_set_property_pkt *pkt,
->  {
->  	void *prop_data;
->  
-> +
-
-Uneeded new blank line.
-
->  	if (!pkt || !cookie || !pdata)
->  		return -EINVAL;
->  
-> @@ -1227,6 +1228,15 @@ pkt_session_set_property_4xx(struct hfi_session_set_property_pkt *pkt,
->  		break;
->  	}
->  
-> +	case HFI_PROPERTY_PARAM_VENC_H264_TRANSFORM_8X8: {
-> +		struct hfi_h264_8x8x_transform *in = pdata, *tm = prop_data;
-
-s/hfi_h264_8x8x_transform/hfi_h264_8x8_transform
-
-> +
-> +		tm->enable_type = in->enable_type;
-> +		pkt->shdr.hdr.size += sizeof(u32) + sizeof(*tm);
-> +		break;
-> +
-> +	}
-> +
->  	case HFI_PROPERTY_CONFIG_VENC_MAX_BITRATE:
->  	case HFI_PROPERTY_CONFIG_VDEC_POST_LOOP_DEBLOCKER:
->  	case HFI_PROPERTY_PARAM_BUFFER_ALLOC_MODE:
-> diff --git a/drivers/media/platform/qcom/venus/hfi_helper.h b/drivers/media/platform/qcom/venus/hfi_helper.h
-> index 63cd347..81d0536 100644
-> --- a/drivers/media/platform/qcom/venus/hfi_helper.h
-> +++ b/drivers/media/platform/qcom/venus/hfi_helper.h
-> @@ -510,6 +510,7 @@
->  #define HFI_PROPERTY_PARAM_VENC_MAX_NUM_B_FRAMES		0x2005020
->  #define HFI_PROPERTY_PARAM_VENC_H264_VUI_BITSTREAM_RESTRC	0x2005021
->  #define HFI_PROPERTY_PARAM_VENC_PRESERVE_TEXT_QUALITY		0x2005023
-> +#define HFI_PROPERTY_PARAM_VENC_H264_TRANSFORM_8X8			0x2005025
->  #define HFI_PROPERTY_PARAM_VENC_HIER_P_MAX_NUM_ENH_LAYER	0x2005026
->  #define HFI_PROPERTY_PARAM_VENC_DISABLE_RC_TIMESTAMP		0x2005027
->  #define HFI_PROPERTY_PARAM_VENC_INITIAL_QP			0x2005028
-> @@ -565,6 +566,10 @@ struct hfi_bitrate {
->  	u32 layer_id;
+> diff --git a/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi b/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
+> index 6aef0c2e4f0a..448e3561ef63 100644
+> --- a/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
+> @@ -305,6 +305,12 @@ &mdss {
+>  	status = "okay";
 >  };
 >  
-> +struct hfi_h264_8x8x_transform {
-
-s/hfi_h264_8x8x_transform/hfi_h264_8x8_transform
-
-> +	u32 enable_type;
+> +&mpss {
+> +	status = "okay";
+> +
+> +	firmware-name = "qcom/msm8916/mba.mbn", "qcom/msm8916/modem.mbn";
 > +};
 > +
->  #define HFI_CAPABILITY_FRAME_WIDTH			0x01
->  #define HFI_CAPABILITY_FRAME_HEIGHT			0x02
->  #define HFI_CAPABILITY_MBS_PER_FRAME			0x03
-> diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
-> index 8dd49d4..4ecf331 100644
-> --- a/drivers/media/platform/qcom/venus/venc.c
-> +++ b/drivers/media/platform/qcom/venus/venc.c
-> @@ -567,6 +567,7 @@ static int venc_set_properties(struct venus_inst *inst)
->  		struct hfi_h264_vui_timing_info info;
->  		struct hfi_h264_entropy_control entropy;
->  		struct hfi_h264_db_control deblock;
-> +		struct hfi_h264_8x8x_transform h264_transform;
-
-ditto
-
+>  &pm8916_resin {
+>  	status = "okay";
+>  	linux,code = <KEY_VOLUMEDOWN>;
+> @@ -312,6 +318,8 @@ &pm8916_resin {
 >  
->  		ptype = HFI_PROPERTY_PARAM_VENC_H264_VUI_TIMING_INFO;
->  		info.enable = 1;
-> @@ -597,6 +598,16 @@ static int venc_set_properties(struct venus_inst *inst)
->  		ret = hfi_session_set_property(inst, ptype, &deblock);
->  		if (ret)
->  			return ret;
+>  &pronto {
+>  	status = "okay";
 > +
-> +		ptype = HFI_PROPERTY_PARAM_VENC_H264_TRANSFORM_8X8;
-> +		if (ctr->profile.h264 == HFI_H264_PROFILE_HIGH ||
-> +			ctr->profile.h264 == HFI_H264_PROFILE_CONSTRAINED_HIGH)
-
-checkpatch.pl --strict should complain about this ctr->profile.h264
-alignment.
-
-> +			h264_transform.enable_type = ctr->h264_8x8_transform;
+> +	firmware-name = "qcom/msm8916/wcnss.mbn";
+>  };
+>  
+>  &sdhc_1 {
+> @@ -394,6 +402,10 @@ &wcd_codec {
+>  	qcom,mbhc-vthreshold-high = <75 150 237 450 500>;
+>  };
+>  
+> +&wcnss_ctrl {
+> +	firmware-name = "qcom/msm8916/WCNSS_qcom_wlan_nv.bin";
+> +};
 > +
-> +		ret = hfi_session_set_property(inst, ptype, &h264_transform);
-> +		if (ret)
-> +			return ret;
-> +
->  	}
+>  /* Enable CoreSight */
+>  &cti0 { status = "okay"; };
+>  &cti1 { status = "okay"; };
+> diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
+> index 4f06c0a9c425..6abe0f8edb55 100644
+> --- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
+> @@ -1738,7 +1738,7 @@ smd-edge {
 >  
->  	if (inst->fmt_cap->pixfmt == V4L2_PIX_FMT_H264 ||
-> diff --git a/drivers/media/platform/qcom/venus/venc_ctrls.c b/drivers/media/platform/qcom/venus/venc_ctrls.c
-> index 637c92f..e3ef611 100644
-> --- a/drivers/media/platform/qcom/venus/venc_ctrls.c
-> +++ b/drivers/media/platform/qcom/venus/venc_ctrls.c
-> @@ -319,6 +319,13 @@ static int venc_op_s_ctrl(struct v4l2_ctrl *ctrl)
->  	case V4L2_CID_COLORIMETRY_HDR10_MASTERING_DISPLAY:
->  		ctr->mastering = *ctrl->p_new.p_hdr10_mastering;
->  		break;
-> +	case V4L2_CID_MPEG_VIDEO_H264_8X8_TRANSFORM:
-> +		if (ctr->profile.h264 != HFI_H264_PROFILE_HIGH ||
-> +			ctr->profile.h264 != HFI_H264_PROFILE_CONSTRAINED_HIGH)
-
-ditto
-
-> +			return -EINVAL;
-> +
-> +		ctr->h264_8x8_transform = ctrl->val;
-> +		break;
->  	default:
->  		return -EINVAL;
->  	}
-> @@ -334,7 +341,7 @@ int venc_ctrl_init(struct venus_inst *inst)
->  {
->  	int ret;
+>  				label = "pronto";
 >  
-> -	ret = v4l2_ctrl_handler_init(&inst->ctrl_handler, 57);
-> +	ret = v4l2_ctrl_handler_init(&inst->ctrl_handler, 58);
->  	if (ret)
->  		return ret;
+> -				wcnss {
+> +				wcnss_ctrl: wcnss {
+>  					compatible = "qcom,wcnss";
+>  					qcom,smd-channels = "WCNSS_CTRL";
 >  
-> @@ -438,6 +445,9 @@ int venc_ctrl_init(struct venus_inst *inst)
->  			  V4L2_CID_MPEG_VIDEO_H264_I_FRAME_MIN_QP, 1, 51, 1, 1);
->  
->  	v4l2_ctrl_new_std(&inst->ctrl_handler, &venc_ctrl_ops,
-> +		V4L2_CID_MPEG_VIDEO_H264_8X8_TRANSFORM, 0, 1, 1, 0);
-> +
-> +	v4l2_ctrl_new_std(&inst->ctrl_handler, &venc_ctrl_ops,
->  			  V4L2_CID_MPEG_VIDEO_H264_P_FRAME_MIN_QP, 1, 51, 1, 1);
->  
->  	v4l2_ctrl_new_std(&inst->ctrl_handler, &venc_ctrl_ops,
+> -- 
+> 2.29.2
 > 
-
--- 
-regards,
-Stan
