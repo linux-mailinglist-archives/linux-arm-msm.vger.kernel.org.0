@@ -2,246 +2,242 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 597C4398CA0
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jun 2021 16:22:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F0439398CCF
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jun 2021 16:33:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230143AbhFBOY0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Jun 2021 10:24:26 -0400
-Received: from mail.kernel.org ([198.145.29.99]:55554 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230083AbhFBOY0 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Jun 2021 10:24:26 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 2C767610CB;
-        Wed,  2 Jun 2021 14:22:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1622643763;
-        bh=j2Vucv7j48HxGa0rmULQUiDA8vOA5lkReOpPS+DWX0k=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=kWSNltbOxaUHNz7Oy82/Q+RVGRp7zGnvRgNvBvVbQ3lCd8/QJHQAQyy2X7kzPcOxF
-         xuDQRYjGNg9iJRLwwlpyKt7Dkmd5baI11N4QCi26WZ1pn6dbVjRBXUGEKSvp7+QatG
-         s6ojB0Y30ORJsCC+mkzh23WWj4qU7u/amyoxlrYdyLQXSz2prhPijFvZzjOSi0vCI1
-         eWdC4SxaX9/3zVvlps7NRwvbbf9IX3u+x20IB0Grcjh2/YrN8X8wb8t1vfqFxpyIYE
-         m/mQIOH4kjPsW9DDaw24yHS+Dn+wq1bKrs0TX7DLVz00buOm86O51+iO/+PDlVvMDW
-         wQz37ZgMtb3cg==
-Received: by mail-ed1-f49.google.com with SMTP id ba2so1429329edb.2;
-        Wed, 02 Jun 2021 07:22:43 -0700 (PDT)
-X-Gm-Message-State: AOAM53117+tNtIk+kJyEJtCAuM987wPtZzKYDzzdRiR9riZVaSEM54WP
-        6iUy0cFH5v6n2x8/smYAQCBFICrVcufs453cDg==
-X-Google-Smtp-Source: ABdhPJyIR6oYQn8q1KYvTQQteC/8OV+grbQU5QShD2x+i4fSDS+34Gh1WDg1MaRCWzgXaIfO5gte9k4P4zSCNbbkelI=
-X-Received: by 2002:a05:6402:1d85:: with SMTP id dk5mr21036040edb.289.1622643761769;
- Wed, 02 Jun 2021 07:22:41 -0700 (PDT)
+        id S230479AbhFBOe6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Jun 2021 10:34:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39796 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230446AbhFBOe5 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 2 Jun 2021 10:34:57 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D32CBC061574
+        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Jun 2021 07:33:13 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id f17so1450749wmf.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Jun 2021 07:33:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Hexu7cKSeKzuwDGfSYjJ5Naq4syeodeMqWoX460WR6c=;
+        b=YnUg9R7FAfDth6b0+i7LnprXoGOHmxfpsGVrwM1uR4qc3ylGDcN2fMm7g5Cw2B/cIW
+         j30w+lYL/AREtK2OKb6Mpkh+UhMcDOqEW8PseOYarGU/zP/skxG0FKrFJ0rR1Zs6txh8
+         5+8n+muAZdpofmyn1MIYZF5LmLJvIhct3uXEcUaKJfZq0a6R+yt4uSJuh8vvcT+wLdbZ
+         GmfEoZH5U46rZrJkBqJWpH87XABFe/4GcwKakQj6Sjpv/7rIFKu+YxANUoRR6Jxmo3RT
+         kUj/s0mLMiLiZ+uLUu1nFREt38x9aoB2pic1i2duhXYWl2LDDriXoDDCyZGQ/7coEEoi
+         NO2Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Hexu7cKSeKzuwDGfSYjJ5Naq4syeodeMqWoX460WR6c=;
+        b=opTX8cUYcyJ+u/EGLHWSVHSQrOysGaE5rXHhL7qJ1m/pPnz/rYVyWdB6yzHIBkFJCG
+         xcowF0P1KXcG10dFI0P7l9oDCXMKJn+z0FzfDTvK7boLvgE0zUeH/z/LHtKZb4/ONE2A
+         hN2PcNKxmVumhnzvRuyw/aNAftsDF69mxXd/DRv09r/V8x8gZ5XYy+NTdVL6LJ8GVl9b
+         sVAAJIJbXAdia6PxU/26/rymugFCBJQ6uhgC1aeEPQh/0B3qsicbqZRKY3qwbRusSiH1
+         ZOYZmSW8Mz/y1FxNQr0BWiXPwB683EPCaIpmwXQ2dFLdex5GfyVht2kZsmFXuMaBhLO2
+         lsKQ==
+X-Gm-Message-State: AOAM532MZhh4Bb/qk+ebUkNk5hZQLKI0PfX7YWD/GGya7IEq50UZBmo+
+        6a5ZGqakgQf53CC2MzRCAtIH7A==
+X-Google-Smtp-Source: ABdhPJwH8/eJTRs27ADnedTTW55aDfi99/T9FH9EumVjgB06SEnGQcD9JLwfnOw2xFcXpsN5fAwH9w==
+X-Received: by 2002:a05:600c:2cd2:: with SMTP id l18mr31968202wmc.142.1622644389928;
+        Wed, 02 Jun 2021 07:33:09 -0700 (PDT)
+Received: from dell.default ([91.110.221.214])
+        by smtp.gmail.com with ESMTPSA id o11sm132315wrq.93.2021.06.02.07.33.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 02 Jun 2021 07:33:09 -0700 (PDT)
+From:   Lee Jones <lee.jones@linaro.org>
+To:     lee.jones@linaro.org
+Cc:     linux-kernel@vger.kernel.org, Adam Jackson <ajax@redhat.com>,
+        Ajay Kumar <ajaykumar.rs@samsung.com>,
+        Akshu Agarwal <akshua@gmail.com>,
+        Alex Deucher <alexander.deucher@amd.com>,
+        Alistair Popple <apopple@nvidia.com>,
+        amd-gfx@lists.freedesktop.org,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Benjamin Gaignard <benjamin.gaignard@linaro.org>,
+        Ben Skeggs <bskeggs@redhat.com>,
+        Ben Widawsky <ben@bwidawsk.net>,
+        Chandan Uddaraju <chandanu@codeaurora.org>,
+        Christian Koenig <christian.koenig@amd.com>,
+        Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        dri-devel@lists.freedesktop.org, Eric Anholt <eric@anholt.net>,
+        Fabien Dessenne <fabien.dessenne@st.com>,
+        freedreno@lists.freedesktop.org,
+        Hans de Goede <hdegoede@redhat.com>,
+        Harry Wentland <harry.wentland@amd.com>,
+        Huang Rui <ray.huang@amd.com>,
+        Hyun Kwon <hyun.kwon@xilinx.com>,
+        Inki Dae <inki.dae@samsung.com>,
+        Jagan Teki <jagan@amarulasolutions.com>,
+        Joonyoung Shim <jy0922.shim@samsung.com>,
+        Krishna Manikandan <mkrishn@codeaurora.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+        Kuogee Hsieh <khsieh@codeaurora.org>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        Leo Li <sunpeng.li@amd.com>, linaro-mm-sig@lists.linaro.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
+        linux-media@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Mauro Rossi <issor.oruam@gmail.com>,
+        Michal Simek <michal.simek@xilinx.com>,
+        nouveau@lists.freedesktop.org,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Rob Clark <robdclark@gmail.com>,
+        Sam Ravnborg <sam@ravnborg.org>, Sean Paul <sean@poorly.run>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Vincent Abriou <vincent.abriou@st.com>
+Subject: [RESEND 00/26] Rid W=1 warnings from GPU
+Date:   Wed,  2 Jun 2021 15:32:34 +0100
+Message-Id: <20210602143300.2330146-1-lee.jones@linaro.org>
+X-Mailer: git-send-email 2.31.1
 MIME-Version: 1.0
-References: <20210602120752.46154-1-manivannan.sadhasivam@linaro.org> <20210602120752.46154-2-manivannan.sadhasivam@linaro.org>
-In-Reply-To: <20210602120752.46154-2-manivannan.sadhasivam@linaro.org>
-From:   Rob Herring <robh@kernel.org>
-Date:   Wed, 2 Jun 2021 09:22:29 -0500
-X-Gmail-Original-Message-ID: <CAL_JsqLdXsEfV6aj88e+ZjbL2EZxX2r8m+_MRMnUHuzKLV9_Yg@mail.gmail.com>
-Message-ID: <CAL_JsqLdXsEfV6aj88e+ZjbL2EZxX2r8m+_MRMnUHuzKLV9_Yg@mail.gmail.com>
-Subject: Re: [PATCH 1/3] dt-bindings: pci: Add devicetree binding for Qualcomm
- PCIe EP controller
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        PCI <linux-pci@vger.kernel.org>, devicetree@vger.kernel.org,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jun 2, 2021 at 7:08 AM Manivannan Sadhasivam
-<manivannan.sadhasivam@linaro.org> wrote:
->
-> Add devicetree binding for Qualcomm PCIe EP controller used in platforms
-> like SDX55. The EP controller is based on the Designware core with
-> Qualcomm specific wrappers.
+Some off these patches have been knocking around for a while.
 
-Is the block EP only or configurable EP or host?
+Who will hoover them up please?
 
->
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> ---
->  .../devicetree/bindings/pci/qcom,pcie-ep.yaml | 139 ++++++++++++++++++
->  1 file changed, 139 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
->
-> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
-> new file mode 100644
-> index 000000000000..0f9140e93bcb
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
-> @@ -0,0 +1,139 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/pci/qcom,pcie-ep.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm PCIe Endpoint Controller binding
-> +
-> +maintainers:
-> +  - Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> +
-> +allOf:
-> +  - $ref: "pci-ep.yaml#"
-> +
-> +properties:
-> +  compatible:
-> +    const: qcom,pcie-ep
+This set is part of a larger effort attempting to clean-up W=1
+kernel builds, which are currently overwhelmingly riddled with
+niggly little warnings.
 
-SoC specific please.
+Lee Jones (26):
+  drm/mediatek/mtk_disp_color: Strip incorrect doc and demote header
+  drm/mediatek/mtk_disp_gamma: Strip and demote non-conformant
+    kernel-doc header
+  drm/mediatek/mtk_disp_ovl: Strip and demote non-conformant header
+  drm/mediatek/mtk_disp_rdma: Strip and demote non-conformant kernel-doc
+    header
+  drm/sti/sti_hdmi_tx3g4c28phy: Provide function names for kernel-doc
+    headers
+  drm/sti/sti_hda: Provide missing function names
+  drm/sti/sti_tvout: Provide a bunch of missing function names
+  drm/sti/sti_hqvdp: Fix incorrectly named function 'sti_hqvdp_vtg_cb()'
+  drm/msm/disp/dpu1/dpu_encoder_phys_cmd: Remove unused variable
+    'cmd_enc'
+  drm/msm/disp/dpu1/dpu_hw_interrupts: Demote a bunch of kernel-doc
+    abuses
+  drm/msm/disp/dpu1/dpu_plane: Fix a couple of naming issues
+  drm/msm/msm_gem: Demote kernel-doc abuses
+  drm/msm/dp/dp_catalog: Correctly document param 'dp_catalog'
+  drm/msm/dp/dp_link: Fix some potential doc-rot
+  drm/nouveau/nvkm/subdev/mc/tu102: Make functions called by reference
+    static
+  drm/amd/display/dc/dce/dce_transform: Remove superfluous
+    re-initialisation of DCFE_MEM_LIGHT_SLEEP_CNTL,
+  drm/xlnx/zynqmp_disp: Fix incorrectly named enum
+    'zynqmp_disp_layer_id'
+  drm/xlnx/zynqmp_dp: Fix incorrectly name function 'zynqmp_dp_train()'
+  drm/ttm/ttm_tt: Demote non-conformant kernel-doc header
+  drm/panel/panel-raspberrypi-touchscreen: Demote kernel-doc abuse
+  drm/panel/panel-sitronix-st7701: Demote kernel-doc abuse
+  drm/vgem/vgem_drv: Standard comment blocks should not use kernel-doc
+    format
+  drm/exynos/exynos7_drm_decon: Fix incorrect naming of
+    'decon_shadow_protect_win()'
+  drm/exynos/exynos_drm_ipp: Fix documentation for
+    'exynos_drm_ipp_get_{caps,res}_ioctl()'
+  drm/vboxvideo/hgsmi_base: Place function names into headers
+  drm/vboxvideo/modesetting: Provide function names for prototype
+    headers
 
-> +
-> +  reg:
-> +    items:
-> +      - description: Designware PCIe registers
-> +      - description: External local bus interface registers
-> +      - description: Address Translation Unit (ATU) registers
-> +      - description: Memory region used to map remote RC address space
-> +      - description: Qualcomm specific PARF configuration registers
-> +      - description: Qualcomm specific TCSR registers
-> +
-> +  reg-names:
-> +    items:
-> +      - const: dbi
-> +      - const: elbi
-> +      - const: atu
-> +      - const: addr_space
-> +      - const: parf
-> +      - const: tcsr
+ .../drm/amd/display/dc/dce/dce_transform.h    |  3 +-
+ drivers/gpu/drm/exynos/exynos7_drm_decon.c    |  2 +-
+ drivers/gpu/drm/exynos/exynos_drm_ipp.c       |  4 +--
+ drivers/gpu/drm/mediatek/mtk_disp_color.c     |  3 +-
+ drivers/gpu/drm/mediatek/mtk_disp_gamma.c     |  4 +--
+ drivers/gpu/drm/mediatek/mtk_disp_ovl.c       |  3 +-
+ drivers/gpu/drm/mediatek/mtk_disp_rdma.c      |  4 +--
+ .../drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c  |  4 ---
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c | 32 +++++++++----------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c     |  4 +--
+ drivers/gpu/drm/msm/dp/dp_catalog.c           |  2 +-
+ drivers/gpu/drm/msm/dp/dp_link.c              |  6 ++--
+ drivers/gpu/drm/msm/msm_gem.c                 |  4 +--
+ .../gpu/drm/nouveau/nvkm/subdev/mc/tu102.c    |  6 ++--
+ .../drm/panel/panel-raspberrypi-touchscreen.c |  2 +-
+ drivers/gpu/drm/panel/panel-sitronix-st7701.c |  2 +-
+ drivers/gpu/drm/sti/sti_hda.c                 |  6 ++--
+ drivers/gpu/drm/sti/sti_hdmi_tx3g4c28phy.c    |  4 +--
+ drivers/gpu/drm/sti/sti_hqvdp.c               |  2 +-
+ drivers/gpu/drm/sti/sti_tvout.c               | 18 +++++------
+ drivers/gpu/drm/ttm/ttm_tt.c                  |  2 +-
+ drivers/gpu/drm/vboxvideo/hgsmi_base.c        | 19 +++++++----
+ drivers/gpu/drm/vboxvideo/modesetting.c       | 20 +++++++-----
+ drivers/gpu/drm/vgem/vgem_drv.c               |  2 +-
+ drivers/gpu/drm/xlnx/zynqmp_disp.c            |  2 +-
+ drivers/gpu/drm/xlnx/zynqmp_dp.c              |  2 +-
+ 26 files changed, 80 insertions(+), 82 deletions(-)
 
-This should be in the same order as the host side. Unfortunately,
-that's not consistent, but to pick one:
+Cc: Adam Jackson <ajax@redhat.com>
+Cc: Ajay Kumar <ajaykumar.rs@samsung.com>
+Cc: Akshu Agarwal <akshua@gmail.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Cc: Alistair Popple <apopple@nvidia.com>
+Cc: amd-gfx@lists.freedesktop.org
+Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+Cc: Benjamin Gaignard <benjamin.gaignard@linaro.org>
+Cc: Ben Skeggs <bskeggs@redhat.com>
+Cc: Ben Widawsky <ben@bwidawsk.net>
+Cc: Chandan Uddaraju <chandanu@codeaurora.org>
+Cc: Christian Koenig <christian.koenig@amd.com>
+Cc: "Christian König" <christian.koenig@amd.com>
+Cc: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Cc: Daniel Vetter <daniel@ffwll.ch>
+Cc: David Airlie <airlied@linux.ie>
+Cc: dri-devel@lists.freedesktop.org
+Cc: Eric Anholt <eric@anholt.net>
+Cc: Fabien Dessenne <fabien.dessenne@st.com>
+Cc: freedreno@lists.freedesktop.org
+Cc: Hans de Goede <hdegoede@redhat.com>
+Cc: Harry Wentland <harry.wentland@amd.com>
+Cc: Huang Rui <ray.huang@amd.com>
+Cc: Hyun Kwon <hyun.kwon@xilinx.com>
+Cc: Inki Dae <inki.dae@samsung.com>
+Cc: Jagan Teki <jagan@amarulasolutions.com>
+Cc: Joonyoung Shim <jy0922.shim@samsung.com>
+Cc: Krishna Manikandan <mkrishn@codeaurora.org>
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+Cc: Kuogee Hsieh <khsieh@codeaurora.org>
+Cc: Kyungmin Park <kyungmin.park@samsung.com>
+Cc: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Cc: Leo Li <sunpeng.li@amd.com>
+Cc: linaro-mm-sig@lists.linaro.org
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: linux-arm-msm@vger.kernel.org
+Cc: linux-mediatek@lists.infradead.org
+Cc: linux-media@vger.kernel.org
+Cc: linux-samsung-soc@vger.kernel.org
+Cc: Marek Szyprowski <m.szyprowski@samsung.com>
+Cc: Matthias Brugger <matthias.bgg@gmail.com>
+Cc: Mauro Rossi <issor.oruam@gmail.com>
+Cc: Michal Simek <michal.simek@xilinx.com>
+Cc: nouveau@lists.freedesktop.org
+Cc: Philipp Zabel <p.zabel@pengutronix.de>
+Cc: Rob Clark <robdclark@gmail.com>
+Cc: Sam Ravnborg <sam@ravnborg.org>
+Cc: Sean Paul <sean@poorly.run>
+Cc: Seung-Woo Kim <sw0312.kim@samsung.com>
+Cc: Stephen Boyd <swboyd@chromium.org>
+Cc: Sumit Semwal <sumit.semwal@linaro.org>
+Cc: Thierry Reding <thierry.reding@gmail.com>
+Cc: Vincent Abriou <vincent.abriou@st.com>
+-- 
+2.31.1
 
-reg-names = "parf", "dbi", "elbi", "atu", "config";
-
-
-> +
-> +  clocks:
-> +    items:
-> +      - description: PCIe CFG AHB clock
-> +      - description: PCIe Auxiliary clock
-> +      - description: PCIe Master AXI clock
-> +      - description: PCIe Slave AXI clock
-> +      - description: PCIe Reference clock
-> +      - description: PCIe Sleep clock
-> +      - description: PCIe Slave Q2A AXI clock
-> +
-> +  clock-names:
-> +    items:
-> +      - const: cfg
-> +      - const: aux
-> +      - const: bus_master
-> +      - const: bus_slave
-> +      - const: ref
-> +      - const: sleep
-> +      - const: slave_q2a
-
-Again, try to keep the same ordering.
-
-I have to wonder where 'pipe' clock is that most of the QCom
-implementations have?
-
-> +
-> +  interrupts:
-> +    maxItems: 1
-> +    description: PCIe Global interrupt
-> +
-> +  interrupt-names:
-> +    const: int_global
-
-'int_' is redundant, drop.
-
-> +
-> +  perst-gpios:
-> +    description: PCIe endpoint reset GPIO
-
-An input, right?
-
-> +    maxItems: 1
-> +
-> +  wake-gpios:
-> +    description: PCIe endpoint wake GPIO
-> +    maxItems: 1
-> +
-> +  resets:
-> +    maxItems: 1
-> +
-> +  reset-names:
-> +    const: core_reset
-
-Not yet another name. We already have 'pci' and 'core' in the cases of
-a single reset.
-
-> +
-> +  power-domains:
-> +    maxItems: 1
-> +
-> +  phys:
-> +    maxItems: 1
-> +
-> +  phy-names:
-> +    const: pciephy
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - reg-names
-> +  - clocks
-> +  - clock-names
-> +  - interrupts
-> +  - interrupt-names
-> +  - perst-gpios
-> +  - resets
-> +  - reset-names
-> +  - power-domains
-> +
-> +unevaluatedProperties: false
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/clock/qcom,gcc-sdx55.h>
-> +    #include <dt-bindings/gpio/gpio.h>
-> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
-> +    pcie_ep: pcie-ep@40000000 {
-> +        compatible = "qcom,pcie-ep";
-> +
-> +        reg = <0x40000000 0xf1d>,
-> +              <0x40000f20 0xc8>,
-> +              <0x40001000 0x1000>,
-> +              <0x42000000 0x1000>,
-> +              <0x01c00000 0x3000>,
-> +              <0x01fcb000 0x1000>;
-> +        reg-names = "dbi", "elbi", "atu", "addr_space", "parf", "tcsr";
-> +
-> +        clocks = <&gcc GCC_PCIE_CFG_AHB_CLK>,
-> +             <&gcc GCC_PCIE_AUX_CLK>,
-> +             <&gcc GCC_PCIE_MSTR_AXI_CLK>,
-> +             <&gcc GCC_PCIE_SLV_AXI_CLK>,
-> +             <&gcc GCC_PCIE_0_CLKREF_CLK>,
-> +             <&gcc GCC_PCIE_SLEEP_CLK>,
-> +             <&gcc GCC_PCIE_SLV_Q2A_AXI_CLK>;
-> +        clock-names = "cfg", "aux", "bus_master", "bus_slave",
-> +                      "ref", "sleep", "slave_q2a";
-> +
-> +        interrupts = <GIC_SPI 140 IRQ_TYPE_LEVEL_HIGH>;
-> +        interrupt-names = "int_global";
-> +        perst-gpios = <&tlmm 57 GPIO_ACTIVE_HIGH>;
-> +        wake-gpios = <&tlmm 53 GPIO_ACTIVE_LOW>;
-> +        resets = <&gcc GCC_PCIE_BCR>;
-> +        reset-names = "core_reset";
-> +        power-domains = <&gcc PCIE_GDSC>;
-> +        phys = <&pcie0_lane>;
-> +        phy-names = "pciephy";
-> +        max-link-speed = <3>;
-> +        num-lanes = <2>;
-
-Should be documented. I'd assume the max is less than 16 which is
-presumably what pcie-ep.yaml allows.
-
-> +    };
-> --
-> 2.25.1
->
