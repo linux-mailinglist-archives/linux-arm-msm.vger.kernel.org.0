@@ -2,175 +2,173 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 38944399575
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jun 2021 23:34:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 12B8F39958D
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jun 2021 23:43:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229558AbhFBVgO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Jun 2021 17:36:14 -0400
-Received: from mail.kernel.org ([198.145.29.99]:34184 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229467AbhFBVgN (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Jun 2021 17:36:13 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 53C84613E9;
-        Wed,  2 Jun 2021 21:34:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1622669670;
-        bh=dwfKNXe06HiEsvdu4JBANgbquCcKQPDuMnik64+E+BQ=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=PKHpM542/cRaNkqCFJwF0jFMTs3KaIo2qKGm8MyVsqB40ePGbyMRPKwzXE9px8z4C
-         PoplUtpCevNIpCrdEMeofpx2FO+ssa692qCDZhT+l3+yWPTALmR/srb9V0WWoS6tWn
-         b2I6AfSFaHaLzdaFz/hYtxfzFoIuke/RQggkb3+aCUYZLxyfhgu37rcrIE72+Dqi/4
-         S8pMistnQTxs6fTrGp5o8We4W3uHrvp4mjBw1yYedxb3Rmm7iZHkS8nthRep4Wc6qE
-         1sDp5p8lEWKXmd/rfUII5eXXBX0L6pJjel7fyzADnuqMzxNAuqp2EGwhUtxl2fzwdS
-         eh3RPYILWgYRA==
-Content-Type: text/plain; charset="utf-8"
+        id S229724AbhFBVpk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Jun 2021 17:45:40 -0400
+Received: from mail-ot1-f45.google.com ([209.85.210.45]:33731 "EHLO
+        mail-ot1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229467AbhFBVpj (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 2 Jun 2021 17:45:39 -0400
+Received: by mail-ot1-f45.google.com with SMTP id q9-20020a9d66490000b02903c741e5b703so2702457otm.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Jun 2021 14:43:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=Y9EqrbVUvdRXQm6S1vGkiBBzxsokfCTZDqeffR9IjWU=;
+        b=ez7XacjFJ5Tf16GMFkB8cnre+KJX4IIZyOcbMP9amxCwW7BGHdS4CdFpKfrV98HluV
+         rHRRqztGo1W5XeJovPvLEtHU3txxZNGswW5UianDRAciHrtQUt8wUv8oe3OSJB7UiKkR
+         1Q0WlyFL8DK0KXG3J4EP5irTdjSolimxwcbAo=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=Y9EqrbVUvdRXQm6S1vGkiBBzxsokfCTZDqeffR9IjWU=;
+        b=c7dqgTE/1mrJ3/D+/pn8mWbcX66HvB4odpXV+WY5PQFLrrIYjvDdejJevkIahZyObr
+         y4e1IuGpJkVKrLzkukGm1RCuzkk6xVUhGsOZ8nxSvldZ/uSP+ol6UXn+bttdtNdMH1hY
+         2wOOvwFKprPYjQa4+vzmbb8aUJx5+3Hv8fJGFfM7W6b6tuOEunW4lCTVH9o5WX4LLl1L
+         5sjTArUzkeCqw+6/4rQZ2Nc+Qe6M0T9VDpRRCP1FbQnlqCU+agLCZyzEK2Vfe2swW9Az
+         l0X85MPHeqq4RaAhLRL5arFf5LdL7F2uppkwGpHF+RBgXSMvH9IcXvKnzzibJcV1TPAV
+         C4OQ==
+X-Gm-Message-State: AOAM532acJTA7iPYw7XUN7AkSs00sKWNbpep3oIb67DF2SmYPOGIS15x
+        IJzjBbat9LTQhBgfgHYHb/P6M26S74kxJvLv1HHgRA==
+X-Google-Smtp-Source: ABdhPJwcQMiZ5bocnmxz6pkL58nlbAYlzkz5dN6hF3rzJ7ZRu+8AJhKGsZHlUBM5T4MznnMb51qeRSjoiSeN4OdKAbk=
+X-Received: by 2002:a05:6830:3154:: with SMTP id c20mr28424918ots.233.1622670164299;
+ Wed, 02 Jun 2021 14:42:44 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 2 Jun 2021 14:42:43 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20210519001802.1863-1-jonathan@marek.ca>
-References: <20210519001802.1863-1-jonathan@marek.ca>
-Subject: Re: [PATCH v2 1/2] clk: qcom: add support for SM8350 DISPCC
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-To:     Jonathan Marek <jonathan@marek.ca>, linux-arm-msm@vger.kernel.org
-Date:   Wed, 02 Jun 2021 14:34:29 -0700
-Message-ID: <162266966911.4130789.18195427738586432385@swboyd.mtv.corp.google.com>
+In-Reply-To: <1622668118-2237-1-git-send-email-khsieh@codeaurora.org>
+References: <1622668118-2237-1-git-send-email-khsieh@codeaurora.org>
+From:   Stephen Boyd <swboyd@chromium.org>
 User-Agent: alot/0.9.1
+Date:   Wed, 2 Jun 2021 14:42:43 -0700
+Message-ID: <CAE-0n52_GFYdvuugm0xZ4EsXTVe9V+-8N=RxWNuV=YJkjWAzQg@mail.gmail.com>
+Subject: Re: [PATCH] arm64/dts/qcom/sc7180: Add Display Port dt node
+To:     Kuogee Hsieh <khsieh@codeaurora.org>, agross@kernel.org,
+        bjorn.andersson@linaro.org, devicetree@vger.kernel.org,
+        robdclark@gmail.com, robh+dt@kernel.org, sean@poorly.run,
+        vkoul@kernel.org
+Cc:     abhinavk@codeaurora.org, aravindh@codeaurora.org,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Jonathan Marek (2021-05-18 17:18:01)
-> diff --git a/drivers/clk/qcom/dispcc-sm8250.c b/drivers/clk/qcom/dispcc-s=
-m8250.c
-> index de09cd5c209f..5f22a715e2f0 100644
-> --- a/drivers/clk/qcom/dispcc-sm8250.c
-> +++ b/drivers/clk/qcom/dispcc-sm8250.c
-> @@ -36,6 +36,10 @@ static struct pll_vco vco_table[] =3D {
->         { 249600000, 2000000000, 0 },
+Subject should be
+
+	"arm64: dts: qcom: sc7180: Add DisplayPort node"
+
+Quoting Kuogee Hsieh (2021-06-02 14:08:38)
+> Add DP device node on sc7180.
+>
+> Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi |  9 ++++
+>  arch/arm64/boot/dts/qcom/sc7180.dtsi         | 77 ++++++++++++++++++++++++++++
+>  2 files changed, 86 insertions(+)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+> index 24d293e..53ef3961 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+> @@ -786,6 +786,15 @@ hp_i2c: &i2c9 {
+>         status = "okay";
 >  };
-> =20
-> +static struct pll_vco lucid_5lpe_vco[] =3D {
+>
+> +&msm_dp {
 
-const
+Maybe the lable should just be 'dp' as msm_ prefix is redundant.
 
-> +       { 249600000, 1750000000, 0 },
+> +        status = "okay";
+> +        pinctrl-names = "default";
+> +        pinctrl-0 = <&dp_hot_plug_det>;
+> +        data-lanes = <0 1>;
+> +        vdda-1p2-supply = <&vdda_usb_ss_dp_1p2>;
+> +        vdda-0p9-supply = <&vdda_usb_ss_dp_core>;
 > +};
 > +
->  static struct alpha_pll_config disp_cc_pll0_config =3D {
->         .l =3D 0x47,
->         .alpha =3D 0xE000,
-> @@ -1039,6 +1043,7 @@ static const struct qcom_cc_desc disp_cc_sm8250_des=
-c =3D {
->  static const struct of_device_id disp_cc_sm8250_match_table[] =3D {
->         { .compatible =3D "qcom,sm8150-dispcc" },
->         { .compatible =3D "qcom,sm8250-dispcc" },
-> +       { .compatible =3D "qcom,sm8350-dispcc" },
->         { }
->  };
->  MODULE_DEVICE_TABLE(of, disp_cc_sm8250_match_table);
-> @@ -1051,7 +1056,7 @@ static int disp_cc_sm8250_probe(struct platform_dev=
-ice *pdev)
->         if (IS_ERR(regmap))
->                 return PTR_ERR(regmap);
-> =20
-> -       /* note: trion =3D=3D lucid, except for the prepare() op */
-> +       /* Apply differences for SM8150 and SM8350 */
->         BUILD_BUG_ON(CLK_ALPHA_PLL_TYPE_TRION !=3D CLK_ALPHA_PLL_TYPE_LUC=
-ID);
->         if (of_device_is_compatible(pdev->dev.of_node, "qcom,sm8150-dispc=
-c")) {
->                 disp_cc_pll0_config.config_ctl_hi_val =3D 0x00002267;
-> @@ -1062,8 +1067,62 @@ static int disp_cc_sm8250_probe(struct platform_de=
-vice *pdev)
->                 disp_cc_pll1_config.config_ctl_hi1_val =3D 0x00000024;
->                 disp_cc_pll1_config.user_ctl_hi1_val =3D 0x000000D0;
->                 disp_cc_pll1_init.ops =3D &clk_alpha_pll_trion_ops;
-> +       } else if (of_device_is_compatible(pdev->dev.of_node, "qcom,sm835=
-0-dispcc")) {
-> +               static struct clk_rcg2* const rcgs[] =3D {
-
-Please move this to global scope and give it a name.
-
-> +                       &disp_cc_mdss_byte0_clk_src,
-> +                       &disp_cc_mdss_byte1_clk_src,
-> +                       &disp_cc_mdss_dp_aux1_clk_src,
-> +                       &disp_cc_mdss_dp_aux_clk_src,
-> +                       &disp_cc_mdss_dp_link1_clk_src,
-> +                       &disp_cc_mdss_dp_link_clk_src,
-> +                       &disp_cc_mdss_dp_pixel1_clk_src,
-> +                       &disp_cc_mdss_dp_pixel2_clk_src,
-> +                       &disp_cc_mdss_dp_pixel_clk_src,
-> +                       &disp_cc_mdss_esc0_clk_src,
-> +                       &disp_cc_mdss_mdp_clk_src,
-> +                       &disp_cc_mdss_pclk0_clk_src,
-> +                       &disp_cc_mdss_pclk1_clk_src,
-> +                       &disp_cc_mdss_rot_clk_src,
-> +                       &disp_cc_mdss_vsync_clk_src,
-> +               };
-> +               static struct clk_regmap_div* const divs[] =3D {
-
-Move global.
-
-> +                       &disp_cc_mdss_byte0_div_clk_src,
-> +                       &disp_cc_mdss_byte1_div_clk_src,
-> +                       &disp_cc_mdss_dp_link1_div_clk_src,
-> +                       &disp_cc_mdss_dp_link_div_clk_src,
-> +               };
-> +               unsigned i;
-
-int i? I doubt being unsigned helps.
-
-> +               static bool offset_applied =3D false;
-> +
-> +               /* only apply the offsets once (in case of deferred probe=
-) */
-> +               if (!offset_applied) {
-
-Maybe instead of doing this in probe it can be done when the driver is
-added in module init? It would mean searching the DT for the compatible
-string and then if it is present running the subtraction code, but at
-least we would only do it once and the code would be thrown away after
-init.
-
-> +                       for (i =3D 0; i < ARRAY_SIZE(rcgs); i++)
-> +                               rcgs[i]->cmd_rcgr -=3D 4;
-> +
-> +                       for (i =3D 0; i < ARRAY_SIZE(divs); i++) {
-> +                               divs[i]->reg -=3D 4;
-> +                               divs[i]->width =3D 4;
-> +                       }
-> +
-> +                       disp_cc_mdss_ahb_clk.halt_reg -=3D 4;
-> +                       disp_cc_mdss_ahb_clk.clkr.enable_reg -=3D 4;
-> +
-> +                       offset_applied =3D true;
-> +               }
-> +
-> +               disp_cc_mdss_ahb_clk_src.cmd_rcgr =3D 0x22a0;
-> +
-> +               disp_cc_pll0_config.config_ctl_hi1_val =3D 0x2A9A699C;
-> +               disp_cc_pll0_config.test_ctl_hi1_val =3D 0x01800000;
-> +               disp_cc_pll0_init.ops =3D &clk_alpha_pll_lucid_5lpe_ops;
-> +               disp_cc_pll0.vco_table =3D lucid_5lpe_vco;
-> +               disp_cc_pll1_config.config_ctl_hi1_val =3D 0x2A9A699C;
-
-Lowercase hex please.
-
-> +               disp_cc_pll1_config.test_ctl_hi1_val =3D 0x01800000;
-> +               disp_cc_pll1_init.ops =3D &clk_alpha_pll_lucid_5lpe_ops;
-> +               disp_cc_pll1.vco_table =3D lucid_5lpe_vco;
->         }
-> =20
-> +       /* note for SM8350: downstream lucid_5lpe configure differs sligh=
-tly */
-
-Is this a TODO?
-
->         clk_lucid_pll_configure(&disp_cc_pll0, regmap, &disp_cc_pll0_conf=
-ig);
->         clk_lucid_pll_configure(&disp_cc_pll1, regmap, &disp_cc_pll1_conf=
-ig);
+>  &pm6150_adc {
+>         charger-thermistor@4f {
+>                 reg = <ADC5_AMUX_THM3_100K_PU>;
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> index 6228ba2..2e45098 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> @@ -3148,6 +3155,76 @@
 >
+>                                 status = "disabled";
+>                         };
+> +
+> +                       msm_dp: displayport-controller@ae90000 {
+> +                               status = "disabled";
+
+Can this come after compatible?
+
+> +                               compatible = "qcom,sc7180-dp";
+> +
+> +                               reg = <0 0x0ae90000 0 0x1400>;
+> +
+> +                               interrupt-parent = <&mdss>;
+> +                               interrupts = <12 IRQ_TYPE_NONE>;
+
+Should be
+
+	interrupts = <12>;
+
+> +
+> +                               clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
+> +                                        <&dispcc DISP_CC_MDSS_DP_AUX_CLK>,
+> +                                        <&dispcc DISP_CC_MDSS_DP_LINK_CLK>,
+> +                                        <&dispcc DISP_CC_MDSS_DP_LINK_INTF_CLK>,
+> +                                        <&dispcc DISP_CC_MDSS_DP_PIXEL_CLK>;
+> +                               clock-names = "core_iface", "core_aux", "ctrl_link",
+> +                                             "ctrl_link_iface", "stream_pixel";
+> +                               #clock-cells = <1>;
+> +                               assigned-clocks = <&dispcc DISP_CC_MDSS_DP_LINK_CLK_SRC>,
+> +                                                 <&dispcc DISP_CC_MDSS_DP_PIXEL_CLK_SRC>;
+> +                               assigned-clock-parents = <&dp_phy 0>, <&dp_phy 1>;
+> +                               phys = <&dp_phy>;
+> +                               phy-names = "dp";
+> +
+> +                               operating-points-v2 = <&dp_opp_table>;
+> +                               power-domains = <&rpmhpd SC7180_CX>;
+> +
+> +                               #sound-dai-cells = <0>;
+
+Move this next to phy? Or at least a newline here to split from ports.
+
+> +                               ports {
+> +                                       #address-cells = <1>;
+> +                                       #size-cells = <0>;
+> +                                       port@0 {
+> +                                               reg = <0>;
+> +                                               dp_in: endpoint {
+> +                                                       remote-endpoint = <&dpu_intf0_out>;
+> +                                               };
+> +                                       };
+> +
+> +                                       port@1 {
+> +                                               reg = <1>;
+> +                                               dp_out: endpoint { };
+> +                                       };
+> +                               };
+> +
+> +                               dp_opp_table: dp-opp-table {
+
+Maybe node name should be opp-table?
+
+				dp_opp_table: opp-table {
+
+				};
+
+> +                                       compatible = "operating-points-v2";
+> +
+> +                                       opp-160000000 {
+> +                                               opp-hz = /bits/ 64 <160000000>;
+> +                                               required-opps = <&rpmhpd_opp_low_svs>;
