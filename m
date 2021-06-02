@@ -2,74 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8803C3993C8
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jun 2021 21:46:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7D4AC3993D2
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jun 2021 21:47:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229629AbhFBTsE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Jun 2021 15:48:04 -0400
-Received: from mail-oi1-f181.google.com ([209.85.167.181]:38685 "EHLO
+        id S229662AbhFBTth (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Jun 2021 15:49:37 -0400
+Received: from mail-oi1-f181.google.com ([209.85.167.181]:43842 "EHLO
         mail-oi1-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229541AbhFBTsB (ORCPT
+        with ESMTP id S229558AbhFBTth (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Jun 2021 15:48:01 -0400
-Received: by mail-oi1-f181.google.com with SMTP id z3so3823386oib.5;
-        Wed, 02 Jun 2021 12:46:18 -0700 (PDT)
+        Wed, 2 Jun 2021 15:49:37 -0400
+Received: by mail-oi1-f181.google.com with SMTP id x196so3422450oif.10;
+        Wed, 02 Jun 2021 12:47:53 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=2kBzbHf+t2QwClNMpCYUx+9WwCp8xziT/Ti8nd8I4XU=;
-        b=Du6VGJNM9BJr6taS00B9Ozjf29zmmSjfpz0rUvmgGzrD+ace96IO3LGSUoC3ERxkfH
-         yVSirPoqyOLwtekBReLE/dKQByGkgxAuunYVApMrXbSlyrxkWLBC3AtYh7ZvMmm6MK/k
-         ag6QSuhYEokF26Fkgcxn/MR7ElROu/cp+s1iHRokvzxElH7knO5FfZIliFZM0bHCUJqL
-         eiuj/8a4hO72zkazkt5TvkD3ChdH8bafjyGvQqqcFN39E4nKD+pp5+d183PCehzgFfxX
-         qGue5x4WLGTQf1hAMMW2EUc6JaB2eOBFnbaapmFeotuxBCHxZ5NQGpXxxZGyWvexYa8L
-         NR1w==
-X-Gm-Message-State: AOAM530j8o7ZzLi1+4zebgIkYxtaeBl75CdAdB7oLWDTET4S7RYjIIqx
-        aO6nWFOIMj5mXkSzANM+m6FCu4jArQ==
-X-Google-Smtp-Source: ABdhPJy+S0VAadtTwv3K5X6cKfI4p9bsh4HO8pKRa2oJ5/0+EPOIdtF2PP4Mx+/YixuSBx61JN17Hg==
-X-Received: by 2002:a54:4d01:: with SMTP id v1mr3723606oix.82.1622663178009;
-        Wed, 02 Jun 2021 12:46:18 -0700 (PDT)
+        bh=zMBQsdEjo60dP+eGv84MsRwL9RIc/Ulop0Bl/gUWIjo=;
+        b=KE/wLa4ISv5LU10MnSfsjh7GYcd3GoqypWCXIhfhNiMH/rk87DTZTqiJedc0qEclz0
+         5V7hlC47Tl3L4WxSnPZ035ybk4yS5iOtN9sLO1jamA8Rs66353B2BfHS7otzAo6v7FKH
+         Ejol8Oy/U6RmhEC0rIfpSYjU1ilWIHu+Gqm4n1C1NMZypAnTtzhN0TC6rLeWlEJY55K1
+         OpDukfBBV3oDBQ670TgSd/HiUMbFE6dRhB+gBo0/tOaLcyRgqhE8pwOgaxiW9bJ320mv
+         IImBtQVNIk5gzp/b8JKj3TbFEx38p6TJGuWZnAKInFfofpI14ulmdeF4OXKN6/8e+Iw8
+         vR6Q==
+X-Gm-Message-State: AOAM5320Ret9Yl6ZBAvOQXcHk4N4kqU95uPTyhmtJg0P6vp+8uB1QNcJ
+        KXOsfzk78ziMDlOY4Et78A==
+X-Google-Smtp-Source: ABdhPJyuIasiPFE4iw4kymp1gUAaIH++QsSOgS3+1fEjCuHp55zfCKeWJzwUfp/ismBdPyZx38p3kA==
+X-Received: by 2002:aca:380a:: with SMTP id f10mr5020475oia.157.1622663273110;
+        Wed, 02 Jun 2021 12:47:53 -0700 (PDT)
 Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id q5sm190055oia.31.2021.06.02.12.46.16
+        by smtp.gmail.com with ESMTPSA id p25sm191461ood.4.2021.06.02.12.47.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Jun 2021 12:46:17 -0700 (PDT)
-Received: (nullmailer pid 3864945 invoked by uid 1000);
-        Wed, 02 Jun 2021 19:46:16 -0000
-Date:   Wed, 2 Jun 2021 14:46:16 -0500
+        Wed, 02 Jun 2021 12:47:52 -0700 (PDT)
+Received: (nullmailer pid 3867811 invoked by uid 1000);
+        Wed, 02 Jun 2021 19:47:51 -0000
+Date:   Wed, 2 Jun 2021 14:47:51 -0500
 From:   Rob Herring <robh@kernel.org>
-To:     Martin Botka <martin.botka@somainline.org>
-Cc:     linux-kernel@vger.kernel.org, marijn.suijten@somainline.org,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        linux-arm-msm@vger.kernel.org,
+To:     Baruch Siach <baruch@tkos.co.il>
+Cc:     Thierry Reding <thierry.reding@gmail.com>,
+        Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+        <u.kleine-koenig@pengutronix.de>, Lee Jones <lee.jones@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>, linux-clk@vger.kernel.org,
-        konrad.dybcio@somainline.org, Stephen Boyd <sboyd@kernel.org>,
-        devicetree@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        angelogioacchino.delregno@somainline.org
-Subject: Re: [PATCH V2 4/5] dt-bindings: clk: qcom: smd-rpm: Document SM6125
- compatible
-Message-ID: <20210602194616.GA3864860@robh.at.kernel.org>
-References: <20210523211556.731976-1-martin.botka@somainline.org>
- <20210523211556.731976-4-martin.botka@somainline.org>
+        Balaji Prakash J <bjagadee@codeaurora.org>,
+        Robert Marko <robert.marko@sartura.hr>,
+        linux-pwm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH v2 2/3] dt-bindings: pwm: add IPQ6018 binding
+Message-ID: <20210602194751.GA3865096@robh.at.kernel.org>
+References: <ea071bbcab92d4a296c7aee5d72de0427676847a.1621851644.git.baruch@tkos.co.il>
+ <249bddc521b15e992d0846edf1813aeb577458b9.1621851644.git.baruch@tkos.co.il>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20210523211556.731976-4-martin.botka@somainline.org>
+In-Reply-To: <249bddc521b15e992d0846edf1813aeb577458b9.1621851644.git.baruch@tkos.co.il>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, 23 May 2021 23:15:55 +0200, Martin Botka wrote:
-> Document the newly added compatible for sm6125 rpmcc.
+On Mon, May 24, 2021 at 01:20:43PM +0300, Baruch Siach wrote:
+> DT binding for the PWM block in Qualcomm IPQ6018 SoC.
 > 
-> Signed-off-by: Martin Botka <martin.botka@somainline.org>
+> Signed-off-by: Baruch Siach <baruch@tkos.co.il>
 > ---
-> Changes in V2:
-> None
->  Documentation/devicetree/bindings/clock/qcom,rpmcc.txt | 1 +
->  1 file changed, 1 insertion(+)
+> v2: Make #pwm-cells const (Rob Herring)
+> ---
+>  .../devicetree/bindings/pwm/ipq-pwm.yaml      | 52 +++++++++++++++++++
+>  1 file changed, 52 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/pwm/ipq-pwm.yaml
 > 
+> diff --git a/Documentation/devicetree/bindings/pwm/ipq-pwm.yaml b/Documentation/devicetree/bindings/pwm/ipq-pwm.yaml
+> new file mode 100644
+> index 000000000000..f85ce808a14e
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/pwm/ipq-pwm.yaml
+> @@ -0,0 +1,52 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/pwm/ipq-pwm.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm IPQ6018 PWM controller
+> +
+> +maintainers:
+> +  - Baruch Siach <baruch@tkos.co.il>
+> +
+> +properties:
+> +  "#pwm-cells":
+> +    const: 2
+> +
+> +  compatible:
+> +    const: qcom,pwm-ipq6018
 
-Acked-by: Rob Herring <robh@kernel.org>
+qcom,ipq6018-pwm is the normal ordering.
+
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  clocks:
+> +    maxItems: 1
+> +
+> +  clock-names:
+> +    const: core
+> +
+> +required:
+> +  - "#pwm-cells"
+> +  - compatible
+> +  - reg
+> +  - clocks
+> +  - clock-names
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/clock/qcom,gcc-ipq6018.h>
+> +
+> +    soc {
+> +        #address-cells = <2>;
+> +        #size-cells = <2>;
+> +
+> +        pwm@1941010 {
+> +            #pwm-cells = <2>;
+> +            compatible = "qcom,pwm-ipq6018";
+> +            reg = <0x0 0x1941010 0x0 0x20>;
+> +            clocks = <&gcc GCC_ADSS_PWM_CLK>;
+> +            clock-names = "core";
+> +        };
+> +    };
+> -- 
+> 2.30.2
