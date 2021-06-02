@@ -2,132 +2,143 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 21E863990F8
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jun 2021 18:54:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C1DA4399042
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jun 2021 18:44:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229772AbhFBQ4Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Jun 2021 12:56:24 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:41786 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230029AbhFBQ4Y (ORCPT
+        id S230052AbhFBQqk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Jun 2021 12:46:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41432 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230029AbhFBQqk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Jun 2021 12:56:24 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1622652881; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=u2Qrli205LtiGdqQxFTGNhNUHxXxKTQKpo6UMFiBbQ8=; b=ccKWZeuFVX1GKHcFrAaKKOUIEpGAExgrm3wgZWSRcwddyXYFN7WerH3/fEke95Mk/jqvCVU3
- 6ZYy9I1/QxPFUIaXpRnOqDXw6QQqIA0U23GcLD2km5Zp3JBfY5lWD8AtfNafcv7KecmTlh2D
- DzaRNdjb37x+FAe8ZnIiNazk27I=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
- 60b7b5226ddc3305c43006fa (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 02 Jun 2021 16:43:14
- GMT
-Sender: khsieh=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id CA6BFC43217; Wed,  2 Jun 2021 16:43:13 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from khsieh-linux1.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: khsieh)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id A1E57C433D3;
-        Wed,  2 Jun 2021 16:43:12 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A1E57C433D3
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=khsieh@codeaurora.org
-From:   Kuogee Hsieh <khsieh@codeaurora.org>
-To:     robdclark@gmail.com, sean@poorly.run, swboyd@chromium.org,
-        vkoul@kernel.org, agross@kernel.org, bjorn.andersson@linaro.org
-Cc:     abhinavk@codeaurora.org, aravindh@codeaurora.org,
-        khsieh@codeaurora.org, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v4] drm/msm/dp: power off DP phy at suspend
-Date:   Wed,  2 Jun 2021 09:43:05 -0700
-Message-Id: <1622652185-7157-1-git-send-email-khsieh@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        Wed, 2 Jun 2021 12:46:40 -0400
+Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B5EAC061756
+        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Jun 2021 09:44:41 -0700 (PDT)
+Received: by mail-pg1-x535.google.com with SMTP id 29so2697816pgu.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Jun 2021 09:44:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=v1f6CY6XzYIBDy4/kZuiiMp2Rh7Gg1cKpg7RU77/HAg=;
+        b=Plf/wGF5S49Noco4Lig+ZtpLaf/nj2FWSq4m/6+/1iRatd/EzSpCq3HI3yM/phuTDg
+         yLlOMxzhO3nO4qurZzgww8yeslx0ID5Oft7SF536Et0+q9iaUveoiSGuGprHU2r5aU9N
+         tDK89CSSG06nSXiuhleCfCjYeyYcrSXSCVubM=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=v1f6CY6XzYIBDy4/kZuiiMp2Rh7Gg1cKpg7RU77/HAg=;
+        b=kqQkdBbP2PFQJVPOdLpHdnEjwmwTrMxpSQ2Som0q/MLh5QPQHb6+MY1xHgLTO1tgOt
+         wEdlNcja3IY6Pd92btxNdENDxk85uKTNSo7q6PVt1B7MJGaZmriePJ9gRegUbXKswsPD
+         ey67vHHmlm6ZIlylGmKpB6dbKBdgQbTR445DcLsiE4OgDypUUJrqliGOQ/a2bDhzu7oe
+         96ELhXr+hBBOdZZV2NIUBmwAHoCUIRozaccD1xEaJOWu6/5w//UIOLcg9qKoO6s1JLsB
+         oBVfXI5a1+tpvrpelesevbzXyMyn2JVn4DLDbKdbOVT1bTQKlQHIY2uPrbjBvbsOEHZW
+         VU6Q==
+X-Gm-Message-State: AOAM532WGlrahv5KlL04VMbPRW3QBnci5fkM3beQkxC/KU/0jrx3JD4v
+        la/gb+9GzpeS9RZyQbEb+qCr5A==
+X-Google-Smtp-Source: ABdhPJyXVRE3MD31LcQEETFgTuL3GaZyuB8KTIU0GRkdXTHFP3v/4uWJaCnCXuP/7U112M4am8+zlA==
+X-Received: by 2002:aa7:8b44:0:b029:2dd:4cfc:7666 with SMTP id i4-20020aa78b440000b02902dd4cfc7666mr28339371pfd.73.1622652281039;
+        Wed, 02 Jun 2021 09:44:41 -0700 (PDT)
+Received: from localhost ([2620:15c:202:201:d737:2805:1403:7c09])
+        by smtp.gmail.com with UTF8SMTPSA id z7sm275711pgr.28.2021.06.02.09.44.39
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 02 Jun 2021 09:44:40 -0700 (PDT)
+Date:   Wed, 2 Jun 2021 09:44:38 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, Stephen Boyd <swboyd@chromium.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Subject: Re: [PATCH] arm64: dts: qcom: pm6150: Add thermal zone for PMIC
+ on-die temperature
+Message-ID: <YLe1dmEWq9+MjfTR@google.com>
+References: <20210602090525.1.Id4510e9e4baaa3f6c9fdd5cdf4d8606e63c262e3@changeid>
+ <CAD=FV=XcoLLCn+H6h9cX+qPjoueVFgK8BssvUXQ6WjVAapRyMg@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAD=FV=XcoLLCn+H6h9cX+qPjoueVFgK8BssvUXQ6WjVAapRyMg@mail.gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Normal DP suspend operation contains two steps, display off followed
-by dp suspend, to complete system wide suspending cycle if display is
-up at that time. In this case, DP phy will be powered off at display
-off. However there is an exception case that depending on the timing
-of dongle plug in during system wide suspending, sometimes display off
-procedure may be skipped and dp suspend was called directly. In this
-case, dp phy is stay at powered on (phy->power_count = 1) so that at
-next resume dp driver crash at main link clock enable due to phy is
-not physically powered on. This patch will call dp_ctrl_off_link_stream()
-to tear down main link and power off phy at dp_pm_suspend() if main link
-had been brought up.
+Hi Doug,
 
-Changes in V2:
--- stashed changes into dp_ctrl.c
--- add is_phy_on to monitor phy state
+On Wed, Jun 02, 2021 at 09:36:07AM -0700, Doug Anderson wrote:
+> Hi,
+> 
+> On Wed, Jun 2, 2021 at 9:06 AM Matthias Kaehlcke <mka@chromium.org> wrote:
+> >
+> > Add a thermal zone for the pm6150 on-die temperature. The system should
+> > try to shut down orderly when the temperature reaches 95degC, otherwise
+> > the PMIC will power off at 115degC.
+> >
+> > Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
+> > ---
+> >
+> >  arch/arm64/boot/dts/qcom/pm6150.dtsi | 24 ++++++++++++++++++++++++
+> >  1 file changed, 24 insertions(+)
+> >
+> > diff --git a/arch/arm64/boot/dts/qcom/pm6150.dtsi b/arch/arm64/boot/dts/qcom/pm6150.dtsi
+> > index 8ab4f1f78bbf..de7fb129f739 100644
+> > --- a/arch/arm64/boot/dts/qcom/pm6150.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/pm6150.dtsi
+> > @@ -7,6 +7,30 @@
+> >  #include <dt-bindings/spmi/spmi.h>
+> >  #include <dt-bindings/thermal/thermal.h>
+> >
+> > +/ {
+> > +       thermal-zones {
+> > +               pm6150_thermal: pm6150-thermal {
+> > +                       polling-delay-passive = <100>;
+> > +                       polling-delay = <0>;
+> > +                       thermal-sensors = <&pm6150_temp>;
+> > +
+> > +                       trips {
+> > +                               pm6150_trip0: trip0 {
+> > +                                       temperature = <95000>;
+> > +                                       hysteresis = <0>;
+> > +                                       type = "passive";
+> > +                               };
+> > +
+> > +                               pm6150_crit: pm6150-crit {
+> 
+> Nit that the node names are not symmetric. One is "trip0" and the
+> other is "pm6510-crit". Seems like you can remove the "pm6150-" prefix
+> from this one (but keep it in the label?)
 
-Changes in V3:
--- delete is_phy_on
--- call dp_ctrl_off_link_stream() from dp_pm_suspend()
+Sounds good.
 
-Changes in V4:
--- delete changes made at dp_power.c
--- move main link status checking to dp_pm_suspend
+> > +                                       temperature = <115000>;
+> > +                                       hysteresis = <0>;
+> > +                                       type = "critical";
+> > +                               };
+> > +                       };
+> > +               };
+> 
+> Correct me if I'm misunderstanding, but I don't think that the
+> description of this patch matches the contents. You're saying that the
+> PMIC will power itself off at 115C and that we want to do an orderly
+> shutdown _before_ the PMIC powers off. Doesn't that mean that the
+> "critical" trip needs to be at some temperature _lower_ than 115C? As
+> I remember it the system performs an orderly shutdown starting when it
+> sees the critical temperature.
 
-Fixes: 0114f31a2903 ("drm/msm/dp: handle irq_hpd with sink_count = 0 correctly)
-Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
----
- drivers/gpu/drm/msm/dp/dp_ctrl.c    | 10 ++++++----
- drivers/gpu/drm/msm/dp/dp_display.c |  7 ++++++-
- 2 files changed, 12 insertions(+), 5 deletions(-)
+Yeah, you are right. Polling starts at 95degC, the system should try to
+shutdown at 115degC and based on that configuration the emergency
+shutdown would happen at 145degC:
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-index dbd8943..caf71fa 100644
---- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
-+++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-@@ -1827,10 +1827,12 @@ int dp_ctrl_off_link_stream(struct dp_ctrl *dp_ctrl)
- 
- 	dp_catalog_ctrl_mainlink_ctrl(ctrl->catalog, false);
- 
--	ret = dp_power_clk_enable(ctrl->power, DP_STREAM_PM, false);
--	if (ret) {
--		DRM_ERROR("Failed to disable pixel clocks. ret=%d\n", ret);
--		return ret;
-+	if (dp_power_clk_status(ctrl->power, DP_STREAM_PM)) {
-+		ret = dp_power_clk_enable(ctrl->power, DP_STREAM_PM, false);
-+		if (ret) {
-+			DRM_ERROR("Failed to disable pclk. ret=%d\n", ret);
-+			return ret;
-+		}
- 	}
- 
- 	ret = dp_power_clk_enable(ctrl->power, DP_CTRL_PM, false);
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index cdec0a3..9c59def 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -1327,8 +1327,13 @@ static int dp_pm_suspend(struct device *dev)
- 
- 	mutex_lock(&dp->event_mutex);
- 
--	if (dp->core_initialized == true)
-+	if (dp->core_initialized == true) {
-+		/* mainlink enabled */
-+		if (dp_power_clk_status(dp->power, DP_CTRL_PM))
-+			dp_ctrl_off_link_stream(dp->ctrl);
-+
- 		dp_display_host_deinit(dp);
-+	}
- 
- 	dp->hpd_state = ST_SUSPENDED;
- 
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+  static const long temp_map_gen2_v1[THRESH_COUNT][STAGE_COUNT] = {
+        {  90000, 110000, 140000 },
+  	{  95000, 115000, 145000 },
+  	{ 100000, 120000, 150000 },
+  	{ 105000, 125000, 155000 },
+  };
 
+I'll fix the commit message in the v2.
