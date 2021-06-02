@@ -2,133 +2,231 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A5E0F3991C6
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jun 2021 19:34:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AB1AB3991D8
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jun 2021 19:41:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230267AbhFBRgA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Jun 2021 13:36:00 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:45845 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230389AbhFBRf5 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Jun 2021 13:35:57 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1622655254; h=Message-ID: Subject: Cc: To: From: Date:
- Content-Transfer-Encoding: Content-Type: MIME-Version: Sender;
- bh=QE3wn3ZMtzTvI5TXNGRhJwPX/5BjO8Hpo3zddXF8OVs=; b=qiboUnn74YApsF6HC1Lp95DAR3o1RCwRKkfhara2XXBDSbZgXtvAS7UKGmx61pYrNgE2mBO0
- nl7XVyG3VSYRrS5BAJdfOnj2W//tXBEx5aCq1xJcWrDvm9MEe5XpLGOgek4NdNdClaMTZFXh
- tESKkSLNVpPfjCKel8uP8JmNaMs=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
- 60b7c107e27c0cc77f6f0cdb (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 02 Jun 2021 17:33:59
- GMT
-Sender: abhinavk=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 5F97BC433F1; Wed,  2 Jun 2021 17:33:58 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: abhinavk)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id C088CC433D3;
-        Wed,  2 Jun 2021 17:33:56 +0000 (UTC)
+        id S229468AbhFBRnj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Jun 2021 13:43:39 -0400
+Received: from mail-qv1-f43.google.com ([209.85.219.43]:35496 "EHLO
+        mail-qv1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229554AbhFBRni (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 2 Jun 2021 13:43:38 -0400
+Received: by mail-qv1-f43.google.com with SMTP id q6so1754611qvb.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Jun 2021 10:41:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=xIhlm0z92BPitmZROEU2uJFBNk6dpYZfF4F1FaBapYY=;
+        b=iO9qLXISBAbTfSsVm9LIh6Uibc23JdxGag8P6gnfMxtnuEWCSdlywf3+wsmbyhgL7S
+         lG3V+i1Ma56WktVeOP43G1WfXkeHVlo0AW2mRU2lwfZJ6+QPxhtLNkAigOcqi1lVBHdg
+         gZVZ7sRKLQFdphFpHnI3NSdpG78o5ZvrvpJt4=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=xIhlm0z92BPitmZROEU2uJFBNk6dpYZfF4F1FaBapYY=;
+        b=RanAACuDzAMKafaDWQyd5G5ApqRM1CRY621qCEtzEH8i239Pb500JhNOsDeeCUe6OZ
+         8Lx+rLF7Yd/2p+YuRaeL91AOazNpK5Vw9MYtwUVTMBok4RMUrYOaPCWUsIB5vxjJ0sDe
+         CSLWlZ0WEPa4NgZ85JpRrPCupvhszbKyl9yoZ96Tuua2YuPNsdbYnRJwOew8PRH/00Z0
+         oN3XrH7iXcIdJth2JCWFQW6xp7CtwI+9CZ/+vhgLfny8xAcwUBN8f76Yjdt0nSsFySgm
+         OE12rfDjU3ux+CX4a9iawh+gZ/gFHGw+dSo5PBn0S0ygY4hhmd1g/NsxDzKAN3CnV6dB
+         kiYw==
+X-Gm-Message-State: AOAM5330AkoUfp+jiOIcyX/R1aC2mkEJ3J83h5yQd9FfFvO/fVpbWlPK
+        QK/VZO2UfYAZxVbYq/+FXffhybFE/wVGUQ==
+X-Google-Smtp-Source: ABdhPJxINyv5ITNciE61scnCdtp5gme/FQSh849Bn9BsWtd/8NEsjnWKvsbiQMlQ04rER8DWMlgXtg==
+X-Received: by 2002:ad4:4147:: with SMTP id z7mr29971751qvp.61.1622655654563;
+        Wed, 02 Jun 2021 10:40:54 -0700 (PDT)
+Received: from mail-yb1-f180.google.com (mail-yb1-f180.google.com. [209.85.219.180])
+        by smtp.gmail.com with ESMTPSA id e19sm235065qtr.45.2021.06.02.10.40.53
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 02 Jun 2021 10:40:54 -0700 (PDT)
+Received: by mail-yb1-f180.google.com with SMTP id b13so4968911ybk.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Jun 2021 10:40:53 -0700 (PDT)
+X-Received: by 2002:a25:b74d:: with SMTP id e13mr47171878ybm.372.1622655653411;
+ Wed, 02 Jun 2021 10:40:53 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Wed, 02 Jun 2021 10:33:56 -0700
-From:   abhinavk@codeaurora.org
-To:     Lee Jones <lee.jones@linaro.org>
-Cc:     freedreno@lists.freedesktop.org, David Airlie <airlied@linux.ie>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        dri-devel@lists.freedesktop.org,
-        Kuogee Hsieh <khsieh@codeaurora.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>, Sean Paul <sean@poorly.run>,
-        Chandan Uddaraju <chandanu@codeaurora.org>
-Subject: Re: [Freedreno] [RESEND 14/26] drm/msm/dp/dp_link: Fix some potential
- doc-rot
-Message-ID: <b668e09546c0ce86d90346f99f40853a@codeaurora.org>
-X-Sender: abhinavk@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+References: <1622438514-16657-1-git-send-email-mansur@codeaurora.org>
+In-Reply-To: <1622438514-16657-1-git-send-email-mansur@codeaurora.org>
+From:   Fritz Koenig <frkoenig@chromium.org>
+Date:   Wed, 2 Jun 2021 10:40:41 -0700
+X-Gmail-Original-Message-ID: <CAMfZQbyHN14OXVH4x8SsXD0My1QzdHocMLoi++pfCTk-XbABxg@mail.gmail.com>
+Message-ID: <CAMfZQbyHN14OXVH4x8SsXD0My1QzdHocMLoi++pfCTk-XbABxg@mail.gmail.com>
+Subject: Re: [PATCH] venus: venc: add support for V4L2_CID_MPEG_VIDEO_H264_8X8_TRANSFORM
+ control
+To:     Mansur Alisha Shaik <mansur@codeaurora.org>
+Cc:     Linux Media Mailing List <linux-media@vger.kernel.org>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org,
+        Vikash Garodia <vgarodia@codeaurora.org>,
+        Dikshita Agarwal <dikshita@codeaurora.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-06-02 07:32, Lee Jones wrote:
-> Fixes the following W=1 kernel build warning(s):
-> 
->  drivers/gpu/drm/msm/dp/dp_link.c:374: warning: expecting prototype
-> for dp_parse_video_pattern_params(). Prototype was for
-> dp_link_parse_video_pattern_params() instead
->  drivers/gpu/drm/msm/dp/dp_link.c:573: warning: expecting prototype
-> for dp_parse_phy_test_params(). Prototype was for
-> dp_link_parse_phy_test_params() instead
->  drivers/gpu/drm/msm/dp/dp_link.c:975: warning: expecting prototype
-> for dp_link_process_downstream_port_status_change(). Prototype was for
-> dp_link_process_ds_port_status_change() instead
-> 
-> Cc: Rob Clark <robdclark@gmail.com>
-> Cc: Sean Paul <sean@poorly.run>
-> Cc: David Airlie <airlied@linux.ie>
-> Cc: Daniel Vetter <daniel@ffwll.ch>
-> Cc: Chandan Uddaraju <chandanu@codeaurora.org>
-> Cc: Kuogee Hsieh <khsieh@codeaurora.org>
-> Cc: linux-arm-msm@vger.kernel.org
-> Cc: dri-devel@lists.freedesktop.org
-> Cc: freedreno@lists.freedesktop.org
-> Signed-off-by: Lee Jones <lee.jones@linaro.org>
-Reviewed-by: Abhinav Kumar <abhinavk@codeaurora.org>
+On Sun, May 30, 2021 at 10:22 PM Mansur Alisha Shaik
+<mansur@codeaurora.org> wrote:
+>
+> Add support for V4L2_CID_MPEG_VIDEO_H264_8X8_TRANSFORM control for
+> H264 high profile and constrained high profile.
+>
+> Signed-off-by: Mansur Alisha Shaik <mansur@codeaurora.org>
 > ---
->  drivers/gpu/drm/msm/dp/dp_link.c | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/dp/dp_link.c 
-> b/drivers/gpu/drm/msm/dp/dp_link.c
-> index be986da78c4a5..1099604bd1c86 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_link.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_link.c
-> @@ -364,7 +364,7 @@ static int dp_link_parse_timing_params3(struct
-> dp_link_private *link,
->  }
-> 
->  /**
-> - * dp_parse_video_pattern_params() - parses video pattern parameters 
-> from DPCD
-> + * dp_link_parse_video_pattern_params() - parses video pattern
-> parameters from DPCD
->   * @link: Display Port Driver data
->   *
->   * Returns 0 if it successfully parses the video link pattern and the 
-> link
-> @@ -563,7 +563,7 @@ static int
-> dp_link_parse_link_training_params(struct dp_link_private *link)
->  }
-> 
->  /**
-> - * dp_parse_phy_test_params() - parses the phy link parameters
-> + * dp_link_parse_phy_test_params() - parses the phy link parameters
->   * @link: Display Port Driver data
->   *
->   * Parses the DPCD (Byte 0x248) for the DP PHY link pattern that is 
-> being
-> @@ -961,7 +961,7 @@ static int
-> dp_link_process_link_status_update(struct dp_link_private *link)
->  }
-> 
->  /**
-> - * dp_link_process_downstream_port_status_change() - process port
-> status changes
-> + * dp_link_process_ds_port_status_change() - process port status 
-> changes
->   * @link: Display Port Driver data
->   *
->   * This function will handle downstream port updates that are 
-> initiated by
+>  drivers/media/platform/qcom/venus/core.h       |  1 +
+>  drivers/media/platform/qcom/venus/hfi_cmds.c   | 10 ++++++++++
+>  drivers/media/platform/qcom/venus/hfi_helper.h |  5 +++++
+>  drivers/media/platform/qcom/venus/venc.c       | 11 +++++++++++
+>  drivers/media/platform/qcom/venus/venc_ctrls.c | 12 +++++++++++-
+>  5 files changed, 38 insertions(+), 1 deletion(-)
+>
+> diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
+> index 745f226..103fbd8 100644
+> --- a/drivers/media/platform/qcom/venus/core.h
+> +++ b/drivers/media/platform/qcom/venus/core.h
+> @@ -235,6 +235,7 @@ struct venc_controls {
+>         u32 h264_loop_filter_mode;
+>         s32 h264_loop_filter_alpha;
+>         s32 h264_loop_filter_beta;
+> +       u32 h264_8x8_transform;
+>
+>         u32 hevc_i_qp;
+>         u32 hevc_p_qp;
+> diff --git a/drivers/media/platform/qcom/venus/hfi_cmds.c b/drivers/media/platform/qcom/venus/hfi_cmds.c
+> index 11a8347..61d04a5 100644
+> --- a/drivers/media/platform/qcom/venus/hfi_cmds.c
+> +++ b/drivers/media/platform/qcom/venus/hfi_cmds.c
+> @@ -1178,6 +1178,7 @@ pkt_session_set_property_4xx(struct hfi_session_set_property_pkt *pkt,
+>  {
+>         void *prop_data;
+>
+> +
+>         if (!pkt || !cookie || !pdata)
+>                 return -EINVAL;
+>
+> @@ -1227,6 +1228,15 @@ pkt_session_set_property_4xx(struct hfi_session_set_property_pkt *pkt,
+>                 break;
+>         }
+>
+> +       case HFI_PROPERTY_PARAM_VENC_H264_TRANSFORM_8X8: {
+> +               struct hfi_h264_8x8x_transform *in = pdata, *tm = prop_data;
+> +
+> +               tm->enable_type = in->enable_type;
+> +               pkt->shdr.hdr.size += sizeof(u32) + sizeof(*tm);
+> +               break;
+> +
+> +       }
+> +
+>         case HFI_PROPERTY_CONFIG_VENC_MAX_BITRATE:
+>         case HFI_PROPERTY_CONFIG_VDEC_POST_LOOP_DEBLOCKER:
+>         case HFI_PROPERTY_PARAM_BUFFER_ALLOC_MODE:
+> diff --git a/drivers/media/platform/qcom/venus/hfi_helper.h b/drivers/media/platform/qcom/venus/hfi_helper.h
+> index 63cd347..81d0536 100644
+> --- a/drivers/media/platform/qcom/venus/hfi_helper.h
+> +++ b/drivers/media/platform/qcom/venus/hfi_helper.h
+> @@ -510,6 +510,7 @@
+>  #define HFI_PROPERTY_PARAM_VENC_MAX_NUM_B_FRAMES               0x2005020
+>  #define HFI_PROPERTY_PARAM_VENC_H264_VUI_BITSTREAM_RESTRC      0x2005021
+>  #define HFI_PROPERTY_PARAM_VENC_PRESERVE_TEXT_QUALITY          0x2005023
+> +#define HFI_PROPERTY_PARAM_VENC_H264_TRANSFORM_8X8                     0x2005025
+>  #define HFI_PROPERTY_PARAM_VENC_HIER_P_MAX_NUM_ENH_LAYER       0x2005026
+>  #define HFI_PROPERTY_PARAM_VENC_DISABLE_RC_TIMESTAMP           0x2005027
+>  #define HFI_PROPERTY_PARAM_VENC_INITIAL_QP                     0x2005028
+> @@ -565,6 +566,10 @@ struct hfi_bitrate {
+>         u32 layer_id;
+>  };
+>
+> +struct hfi_h264_8x8x_transform {
+> +       u32 enable_type;
+> +};
+> +
+>  #define HFI_CAPABILITY_FRAME_WIDTH                     0x01
+>  #define HFI_CAPABILITY_FRAME_HEIGHT                    0x02
+>  #define HFI_CAPABILITY_MBS_PER_FRAME                   0x03
+> diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
+> index 8dd49d4..4ecf331 100644
+> --- a/drivers/media/platform/qcom/venus/venc.c
+> +++ b/drivers/media/platform/qcom/venus/venc.c
+> @@ -567,6 +567,7 @@ static int venc_set_properties(struct venus_inst *inst)
+>                 struct hfi_h264_vui_timing_info info;
+>                 struct hfi_h264_entropy_control entropy;
+>                 struct hfi_h264_db_control deblock;
+> +               struct hfi_h264_8x8x_transform h264_transform;
+>
+>                 ptype = HFI_PROPERTY_PARAM_VENC_H264_VUI_TIMING_INFO;
+>                 info.enable = 1;
+> @@ -597,6 +598,16 @@ static int venc_set_properties(struct venus_inst *inst)
+>                 ret = hfi_session_set_property(inst, ptype, &deblock);
+>                 if (ret)
+>                         return ret;
+> +
+> +               ptype = HFI_PROPERTY_PARAM_VENC_H264_TRANSFORM_8X8;
+> +               if (ctr->profile.h264 == HFI_H264_PROFILE_HIGH ||
+> +                       ctr->profile.h264 == HFI_H264_PROFILE_CONSTRAINED_HIGH)
+> +                       h264_transform.enable_type = ctr->h264_8x8_transform;
+> +
+> +               ret = hfi_session_set_property(inst, ptype, &h264_transform);
+> +               if (ret)
+> +                       return ret;
+> +
+>         }
+>
+>         if (inst->fmt_cap->pixfmt == V4L2_PIX_FMT_H264 ||
+> diff --git a/drivers/media/platform/qcom/venus/venc_ctrls.c b/drivers/media/platform/qcom/venus/venc_ctrls.c
+> index 637c92f..e3ef611 100644
+> --- a/drivers/media/platform/qcom/venus/venc_ctrls.c
+> +++ b/drivers/media/platform/qcom/venus/venc_ctrls.c
+> @@ -319,6 +319,13 @@ static int venc_op_s_ctrl(struct v4l2_ctrl *ctrl)
+>         case V4L2_CID_COLORIMETRY_HDR10_MASTERING_DISPLAY:
+>                 ctr->mastering = *ctrl->p_new.p_hdr10_mastering;
+>                 break;
+> +       case V4L2_CID_MPEG_VIDEO_H264_8X8_TRANSFORM:
+> +               if (ctr->profile.h264 != HFI_H264_PROFILE_HIGH ||
+> +                       ctr->profile.h264 != HFI_H264_PROFILE_CONSTRAINED_HIGH)
+
+This appears to be incorrect as the comparison will always be true.  I
+think it should be written as:
+               if (ctr->profile.h264 == HFI_H264_PROFILE_HIGH ||
+                       ctr->profile.h264 == HFI_H264_PROFILE_CONSTRAINED_HIGH)
+                       ctr->h264_8x8_transform = ctrl->val;
+
+> +                       return -EINVAL;
+
+I'm not sure -EINVAL is appropriate here.  venc_op_s_ctrl will be
+called to initialize the default control values from
+v4l2_ctrl_handler_setup.  If the default profile isn't high or
+constrained high, the driver will fail to initialize.
+
+> +
+> +               ctr->h264_8x8_transform = ctrl->val;
+> +               break;
+>
+>         default:
+>                 return -EINVAL;
+>         }
+> @@ -334,7 +341,7 @@ int venc_ctrl_init(struct venus_inst *inst)
+>  {
+>         int ret;
+>
+> -       ret = v4l2_ctrl_handler_init(&inst->ctrl_handler, 57);
+> +       ret = v4l2_ctrl_handler_init(&inst->ctrl_handler, 58);
+>         if (ret)
+>                 return ret;
+>
+> @@ -438,6 +445,9 @@ int venc_ctrl_init(struct venus_inst *inst)
+>                           V4L2_CID_MPEG_VIDEO_H264_I_FRAME_MIN_QP, 1, 51, 1, 1);
+>
+>         v4l2_ctrl_new_std(&inst->ctrl_handler, &venc_ctrl_ops,
+> +               V4L2_CID_MPEG_VIDEO_H264_8X8_TRANSFORM, 0, 1, 1, 0);
+> +
+> +       v4l2_ctrl_new_std(&inst->ctrl_handler, &venc_ctrl_ops,
+>                           V4L2_CID_MPEG_VIDEO_H264_P_FRAME_MIN_QP, 1, 51, 1, 1);
+>
+>         v4l2_ctrl_new_std(&inst->ctrl_handler, &venc_ctrl_ops,
+> --
+> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+> of Code Aurora Forum, hosted by The Linux Foundation
+>
