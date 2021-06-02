@@ -2,95 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6C061398765
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jun 2021 12:56:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1384B398774
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jun 2021 12:58:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232446AbhFBK6E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Jun 2021 06:58:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46510 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231180AbhFBK4v (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Jun 2021 06:56:51 -0400
-Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com [IPv6:2607:f8b0:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8DBEC061345
-        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Jun 2021 03:55:02 -0700 (PDT)
-Received: by mail-pg1-x52c.google.com with SMTP id i5so1957860pgm.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Jun 2021 03:55:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=NZdovLMjeOEfJmAhmYGaJ31BCe71BNnC9oUwaJkqSrw=;
-        b=O/1vU5AxxVDZZF1+hU/NgXTkHZ3FuCQYKTNDUSIdM+u9x8C76gjYFO9uifh/W01Qvg
-         UP98RuizPULtCPTUlBwSfHnrxFEiByqVQTrdMNkBmI55odOzJnv6Ol9QUCKmtHmyCJUT
-         6jqzEzOkniJcnI+KB7FjWgKJTf7Sv82q7ahlaXU57xZ0aj6M/I67a2xv29sl4/mxz3/4
-         s2CF+cVaEfCS/g+KF/inXCV2Dm49w7NTLyiFctj73UIHqn74C7CZ75LxXvSlbDuKmnl3
-         Dpbydm26eMsPrgqWTOAQik5nCAO9Wook0MMZzY3Cofwc0CEbbiguq9/5H/mhcUWK+7h3
-         yRNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=NZdovLMjeOEfJmAhmYGaJ31BCe71BNnC9oUwaJkqSrw=;
-        b=oy69heNLGMplnPgogRfmao5eaZKw4l1StPfmrq1oh5pTMGq4zLprzBCspxhtbJtMyp
-         umFT9LEe0hLjcYZml57Ujbj01TvRTekvJhQfLh+2yWKBP2vmth3xI/vfU5WKO3QDuWQd
-         sGZem1p2aA0vTBBdOZud8EMYGTdoIcRdC2E7ndsL+anAxYAhUnrWwubzDRUeyQmRiUpB
-         jkd+79y59cgQLChSwMhsmSCcnGYAQzCWB7rMYE3KSChgfhOK6iGPnLz4M+mHaRyp9PHr
-         6m1PqJ1+m1HjsErVz7IY88Emc58zkdojFBBWsM6oMPe9w6QZfNxPKMjfxHNpTkRlzIks
-         Mglg==
-X-Gm-Message-State: AOAM533TRrWL06/G5j6h7MO4JBYZllFbS4NG1LLO1SMZ8YDbMGSr4h2b
-        e2RkRSH3rraIlE1LlT48xuz6FQ==
-X-Google-Smtp-Source: ABdhPJzyaUtOl98TdbUkufZPcXhESdOOzueuiitqLnGjCTo4/ryVSeu+8QHy/+vUiSMwbrnzaFEgYg==
-X-Received: by 2002:a63:7e56:: with SMTP id o22mr3361120pgn.278.1622631302311;
-        Wed, 02 Jun 2021 03:55:02 -0700 (PDT)
-Received: from localhost ([136.185.154.93])
-        by smtp.gmail.com with ESMTPSA id p15sm16177139pjb.8.2021.06.02.03.55.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Jun 2021 03:55:01 -0700 (PDT)
-Date:   Wed, 2 Jun 2021 16:24:59 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Ulf Hansson <ulf.hansson@linaro.org>
-Cc:     Rajendra Nayak <rnayak@codeaurora.org>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Rob Herring <robh+dt@kernel.org>,
+        id S232369AbhFBK7z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Jun 2021 06:59:55 -0400
+Received: from mail.kernel.org ([198.145.29.99]:39944 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230382AbhFBK6o (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 2 Jun 2021 06:58:44 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 5FF1460FF2;
+        Wed,  2 Jun 2021 10:57:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1622631422;
+        bh=4Kqd06H4tk196Fea2oUyUzPCeW3WtfbykgTc6Olq6aI=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=NQ54KWhccDSvwlRvVWIWPFBMdCHFM40ckBKp6C0O5pVbaEfpXntyDYDIZR1FIkfVd
+         b03Za3uUGuo/Zj39zpCr1+1lWnv/u0cP4LFi/yd7RtFku3JFlWJf2ZxwT5f7jAgsBP
+         bcQ92lU7Z9HmuqOmHCs32ugqc6ToKMXLQ97btza9X9vl98ZMo0BBTIX/hXmN+tlrjz
+         s3ZeJunw3tPwq38VH4nTDl4fOD0zztQYA6ctd/OsneYD22ko3V9NN+aP7lTyWMDVOC
+         +ZIfuUA6BIgJOAP78YqTd1+yvM9FzcKekN/MsRDOCMeAnVXT1CsRs9IVj5IU+JMc3u
+         k3H3NIyX1NJ8A==
+Date:   Wed, 2 Jun 2021 16:26:58 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Cc:     Rob Clark <robdclark@gmail.com>, DTML <devicetree@vger.kernel.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        David Airlie <airlied@linux.ie>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        DTML <devicetree@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Roja Rani Yarubandi <rojay@codeaurora.org>
-Subject: Re: [PATCH v2 1/3] dt-bindings: power: Introduce
- 'assigned-performance-states' property
-Message-ID: <20210602105459.t3ptci42lgvrzqlx@vireshk-i7>
-References: <1622095949-2014-1-git-send-email-rnayak@codeaurora.org>
- <1622095949-2014-2-git-send-email-rnayak@codeaurora.org>
- <YLYV3ov/iBffZMg4@gerhold.net>
- <20210601114426.3vhh2twocqx254b6@vireshk-i7>
- <CAPDyKFqmBoMwQkWHT-w8A2=PeXeDgxE8n=D4prdEyuxM+ZOAaA@mail.gmail.com>
+        Rob Herring <robh+dt@kernel.org>,
+        "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        freedreno <freedreno@lists.freedesktop.org>
+Subject: Re: [Freedreno] [RFC PATCH 00/13] drm/msm: Add Display Stream
+ Compression Support
+Message-ID: <YLdj+nu3rUiIQL0k@vkoul-mobl>
+References: <20210521124946.3617862-1-vkoul@kernel.org>
+ <CAOCk7Nqep_Db+z3fr5asHZ1u0j8+6fKkPFs2Ai8CbA_zGqV6ZA@mail.gmail.com>
+ <YK3gxqXBRupN/N+Q@vkoul-mobl.Dlink>
+ <CAOCk7NqvhGvYw8xCBctqj7H+o-Qwp2UuUJK1gatW9EWfXv56xA@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAPDyKFqmBoMwQkWHT-w8A2=PeXeDgxE8n=D4prdEyuxM+ZOAaA@mail.gmail.com>
-User-Agent: NeoMutt/20180716-391-311a52
+In-Reply-To: <CAOCk7NqvhGvYw8xCBctqj7H+o-Qwp2UuUJK1gatW9EWfXv56xA@mail.gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 02-06-21, 12:45, Ulf Hansson wrote:
-> Alright, so it looks like we already have the DT binding that we need for this.
+On 26-05-21, 09:00, Jeffrey Hugo wrote:
+> On Tue, May 25, 2021 at 11:46 PM Vinod Koul <vkoul@kernel.org> wrote:
+> > On 21-05-21, 08:09, Jeffrey Hugo wrote:
+> > > On Fri, May 21, 2021 at 6:50 AM Vinod Koul <vkoul@kernel.org> wrote:
+> > > >
+> > > > Display Stream Compression (DSC) compresses the display stream in host which
+> > > > is later decoded by panel. This series enables this for Qualcomm msm driver.
+> > > > This was tested on Google Pixel3 phone which use LGE SW43408 panel.
+> > > >
+> > > > The changes include adding DT properties for DSC then hardware blocks support
+> > > > required in DPU1 driver and support in encoder. We also add support in DSI
+> > > > and introduce required topology changes.
+> > > >
+> > > > In order for panel to set the DSC parameters we add dsc in drm_panel and set
+> > > > it from the msm driver.
+> > > >
+> > > > Complete changes which enable this for Pixel3 along with panel driver (not
+> > > > part of this series) and DT changes can be found at:
+> > > > git.linaro.org/people/vinod.koul/kernel.git pixel/dsc_rfc
+> > > >
+> > > > Comments welcome!
+> > >
+> > > This feels backwards to me.  I've only skimmed this series, and the DT
+> > > changes didn't come through for me, so perhaps I have an incomplete
+> > > view.
+> >
+> > Not sure why, I see it on lore:
+> > https://lore.kernel.org/dri-devel/20210521124946.3617862-3-vkoul@kernel.org/
+> >
+> > > DSC is not MSM specific.  There is a standard for it.  Yet it looks
+> > > like everything is implemented in a MSM specific way, and then pushed
+> > > to the panel.  So, every vendor needs to implement their vendor
+> > > specific way to get the DSC info, and then push it to the panel?
+> > > Seems wrong, given there is an actual standard for this feature.
+> >
+> > I have added slice and bpp info in the DT here under the host and then
+> > pass the generic struct drm_dsc_config to panel which allows panel to
+> > write the pps cmd
+> >
+> > Nothing above is MSM specific.. It can very well work with non MSM
+> > controllers too.
 > 
-> That leaves us with the question, at what place should we parse it
-> (call of_get_required_opp_performance_state()) and set the performance
-> state for the device?
+> I disagree.
 > 
-> Does it still make sense to do it while attaching the device to the
-> genpd, you think?
+> The DT bindings you defined (thanks for the direct link) are MSM
+> specific.  I'm not talking (yet) about the properties you defined, but
+> purely from the stand point that you defined the binding within the
+> scope of the MSM dsi binding.  No other vendor can use those bindings.
+> Of course, if we look at the properties themselves, they are prefixed
+> with "qcom", which is vendor specific.
+> 
+> So, purely on the face of it, this is MSM specific.
+> 
+> Assuming we want a DT solution for DSC, I think it should be something
+> like Documentation/devicetree/bindings/clock/clock-bindings.txt (the
+> first example that comes to mind), which is a non-vendor specific
+> generic set of properties that each vendor/device specific binding can
+> inherit.  Panel has similar things.
+> 
+> Specific to the properties, I don't much like that you duplicate BPP,
+> which is already associated with the panel (although perhaps not in
+> the scope of DT).  What if the panel and your DSC bindings disagree?
+> Also, I guess I need to ask, have you read the DSC spec?  Last I
+> looked, there were something like 3 dozen properties that could be
+> configured.  You have five in your proposed binding.  To me, this is
+> not a generic DSC solution, this is MSM specific (and frankly I don't
+> think this supports all the configuration the MSM hardware can do,
+> either).
 
-For parsing, yes this is the right place. For getting that into
-effect, whenever the device is supposed to work, i.e. with runtime PM
-somehow.
+I would concede the point that DT is msm specific. I dont disagree on
+making them a common dsc biding which anyone can use. I think your idea
+does have merits...
+
+I am still not sure who should include these properties, would it be the
+panel or host. Either would work and rest of the system can use these
+properties...
 
 -- 
-viresh
+~Vinod
