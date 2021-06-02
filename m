@@ -2,131 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EE890398069
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jun 2021 06:37:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 682C639808E
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jun 2021 07:07:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229571AbhFBEjS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Jun 2021 00:39:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45876 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229516AbhFBEjR (ORCPT
+        id S229880AbhFBFJM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Jun 2021 01:09:12 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:22006 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229753AbhFBFJK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Jun 2021 00:39:17 -0400
-Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E24CC061574;
-        Tue,  1 Jun 2021 21:37:34 -0700 (PDT)
-Received: by mail-pg1-x536.google.com with SMTP id 133so1238017pgf.2;
-        Tue, 01 Jun 2021 21:37:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=s61OiZYKOsW6cE8ZfHpspLBA2T60D0x91MluTCnVBZQ=;
-        b=T15fJd1v4MPRbbyLv1Haelr/MaxNAhdly0rDRvzUldQYrCpUL3D3S5COwbsUPvyZT0
-         bQ18k51URaWmzSYry9/7qjGfHs+wkDNbpyVKeEuKRzOlH5nhgEgCt6XkCIHAVW9yGlOk
-         8xsiYLoKtI8Mr/U3ExDiBwogXBlsRw7hqR42/Os7bTk1+FLBjdfDopQcWmgzIX0pbWLo
-         vuzdEY0kLZ65t8isloVGiiQ17Q7Zw/bjP5fCt5BJKh3ZB9nJ7Qidb9D8h4IxdwWiWEY0
-         uu5U9ZhV+N6HyEHEAH+xy9XlQs2LP1unxFMsHhOS8/c+CBwJeduir2OGhppOmQOUgbps
-         bJJw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=s61OiZYKOsW6cE8ZfHpspLBA2T60D0x91MluTCnVBZQ=;
-        b=uSBCKYR4vhf5kgpRXFI5+xPnQZSjvboCcz6WPbzR9cAKkFKwyJOWOMS0sHSeoxIke5
-         iv9hGTCND/vORnDYTbjOW096qW+Lgtvts2Dq2zk29wO+P4vabVggNvNNUqFj/xtWC9UK
-         xkUPr9i4smqdr1CFr7pa67Y/EhfxpYewKHShApsRsOUCj890sFcimRb60MxfVDNoN/AF
-         U8BD1xwF/1VpfzAzfi9J5L4+wAvt0OEkFCgvCSScgRQXgct+2O9Q/E0jo9MDXOHZb+my
-         zlqgH/bPHcmKTUx10iZJe+UVBiwg2JrfDv/W2uDBeFCJ7cD8m8rSRmnW1ao8HdOmsiwZ
-         e4Mw==
-X-Gm-Message-State: AOAM531h89nD5z0CCXs8Ddyekub+DpueRpH0dC2BvKlAZFfuM9rl09M3
-        MTjIl5luZbUMJcgejWYt6x4=
-X-Google-Smtp-Source: ABdhPJziwfj1W0ruMVUYRYigH/z/tGV6kelJMEGVgv5M4xsXm04WArSn1+WMMI6YpGXghv4Pu8B1cw==
-X-Received: by 2002:a65:4042:: with SMTP id h2mr31570795pgp.380.1622608653977;
-        Tue, 01 Jun 2021 21:37:33 -0700 (PDT)
-Received: from google.com ([2620:15c:202:201:a596:b3cb:1a6:1ee4])
-        by smtp.gmail.com with ESMTPSA id d15sm3365543pjr.47.2021.06.01.21.37.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Jun 2021 21:37:32 -0700 (PDT)
-Date:   Tue, 1 Jun 2021 21:37:30 -0700
-From:   Dmitry Torokhov <dmitry.torokhov@gmail.com>
-To:     skakit@codeaurora.org
-Cc:     Rob Herring <robh@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        kgunda@codeaurora.org, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Courtney Cavin <courtney.cavin@sonymobile.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Sebastian Reichel <sre@kernel.org>,
-        David Collins <collinsd@codeaurora.org>,
-        Andy Yan <andy.yan@rock-chips.com>,
-        linux-kernel@vger.kernel.org, linux-input@vger.kernel.org,
-        devicetree@vger.kernel.org, Andy Gross <agross@kernel.org>
-Subject: Re: [PATCH V3 4/5] dt-bindings: input: pm8941-pwrkey: Convert pm8941
- power key binding to yaml
-Message-ID: <YLcLCmxNOYqj0SN3@google.com>
-References: <1620630064-16354-1-git-send-email-skakit@codeaurora.org>
- <1620630064-16354-5-git-send-email-skakit@codeaurora.org>
- <1620655299.793818.41438.nullmailer@robh.at.kernel.org>
- <20210510162445.GA230005@robh.at.kernel.org>
- <c4e286ae6bd621a9d84184d5d014d060@codeaurora.org>
+        Wed, 2 Jun 2021 01:09:10 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1622610448; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=FkvZYbRbC/cAozRjP4BPGysEfk7mZXUuzUP30C8/JvY=;
+ b=h1uVrM6GMHr2pUzreugYpqY/5tmacvBf1X6zxeA8IXDAWeZTZZ4kFeQq9t++AgD8U3K2IW6K
+ Bc82bLJ7SBv13KXrE4VYTasPtuy+ac+6vycDTHYAJ51LeJ/aPTBUF/U2TiOas9rYJOkdUXhc
+ yYe9qCUbgC09UhFj03knQ7KpQJw=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
+ 60b7120f6ddc3305c4ccc9d2 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 02 Jun 2021 05:07:27
+ GMT
+Sender: rojay=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 95E2AC4323A; Wed,  2 Jun 2021 05:07:26 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: rojay)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id DC05FC433F1;
+        Wed,  2 Jun 2021 05:07:25 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <c4e286ae6bd621a9d84184d5d014d060@codeaurora.org>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Wed, 02 Jun 2021 10:37:25 +0530
+From:   rojay@codeaurora.org
+To:     wsa@kernel.org
+Cc:     swboyd@chromium.org, dianders@chromium.org,
+        saiprakash.ranjan@codeaurora.org, gregkh@linuxfoundation.org,
+        mka@chromium.org, skananth@codeaurora.org,
+        msavaliy@qti.qualcomm.com, skakit@codeaurora.org,
+        rnayak@codeaurora.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org,
+        sumit.semwal@linaro.org, linux-media@vger.kernel.org
+Subject: Re: [PATCH V11 1/2] i2c: i2c-qcom-geni: Add shutdown callback for i2c
+Mail-Followup-To: wsa@kernel.org, swboyd@chromium.org,
+ dianders@chromium.org, saiprakash.ranjan@codeaurora.org,
+ gregkh@linuxfoundation.org, mka@chromium.org, skananth@codeaurora.org,
+ msavaliy@qti.qualcomm.com, skakit@codeaurora.org, rnayak@codeaurora.org,
+ agross@kernel.org, bjorn.andersson@linaro.org,
+ linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
+ linux-kernel@vger.kernel.org, sumit.semwal@linaro.org,
+ linux-media@vger.kernel.org
+In-Reply-To: <YLClq6hZKUA1Y4ZW@kunai>
+References: <20210525131051.31250-1-rojay@codeaurora.org>
+ <20210525131051.31250-2-rojay@codeaurora.org> <YLClq6hZKUA1Y4ZW@kunai>
+Message-ID: <f0b92d196a92201696b7f8984ab34523@codeaurora.org>
+X-Sender: rojay@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, May 12, 2021 at 10:17:43AM +0530, skakit@codeaurora.org wrote:
-> On 2021-05-10 21:54, Rob Herring wrote:
-> > On Mon, May 10, 2021 at 09:01:39AM -0500, Rob Herring wrote:
-> > > On Mon, 10 May 2021 12:31:03 +0530, satya priya wrote:
-> > > > Convert qcom pm8941 power key binding from .txt to .yaml format.
-> > > >
-> > > > Signed-off-by: satya priya <skakit@codeaurora.org>
-> > > > ---
-> > > > Changes in V2:
-> > > >  - Fixed bot errors, took reference from input.yaml for "linux,code"
-> > > >  - Added one complete example for powerkey and resin, and referenced it
-> > > >    in main PON binding.
-> > > >  - Moved this patch to the end of the series.
-> > > >
-> > > > Changes in V3:
-> > > >  - Moved this patch before PON binding patch.
-> > > >  - As per Rob's comments, added allOf at the beginning of binding.
-> > > >    Added maxItems for interrupts.
-> > > >  - Added 'unevaluatedProperties' instead of 'additionalProperties' as
-> > > >    we are using allOf.
-> > > >
-> > > >  .../bindings/input/qcom,pm8941-pwrkey.txt          | 55 --------------
-> > > >  .../bindings/input/qcom,pm8941-pwrkey.yaml         | 87 ++++++++++++++++++++++
-> > > >  2 files changed, 87 insertions(+), 55 deletions(-)
-> > > >  delete mode 100644 Documentation/devicetree/bindings/input/qcom,pm8941-pwrkey.txt
-> > > >  create mode 100644 Documentation/devicetree/bindings/input/qcom,pm8941-pwrkey.yaml
-> > > >
-> > > 
-> > > My bot found errors running 'make DT_CHECKER_FLAGS=-m
-> > > dt_binding_check'
-> > > on your patch (DT_CHECKER_FLAGS is new in v5.13):
-> > > 
-> > > yamllint warnings/errors:
-> > > 
-> > > dtschema/dtc warnings/errors:
-> > > Documentation/devicetree/bindings/input/qcom,pm8941-pwrkey.example.dt.yaml:0:0:
-> > > /example-0/spmi@c440000/pmic@0/pon_hlos@1300: failed to match any
-> > > schema with compatible: ['qcom,pm8998-pon']
-> > 
-> > You have the same example in patch 5, so drop the example here. That
-> > will fix this circular dependency.
+On 2021-05-28 13:41, Wolfram Sang wrote:
+> On Tue, May 25, 2021 at 06:40:50PM +0530, Roja Rani Yarubandi wrote:
+>> If the hardware is still accessing memory after SMMU translation
+>> is disabled (as part of smmu shutdown callback), then the
+>> IOVAs (I/O virtual address) which it was using will go on the bus
+>> as the physical addresses which will result in unknown crashes
+>> like NoC/interconnect errors.
+>> 
+>> So, implement shutdown callback for i2c driver to suspend the bus
+>> during system "reboot" or "shutdown".
+>> 
+>> Fixes: 37692de5d523 ("i2c: i2c-qcom-geni: Add bus driver for the 
+>> Qualcomm GENI I2C controller")
+>> Signed-off-by: Roja Rani Yarubandi <rojay@codeaurora.org>
 > 
-> Earlier I have dropped example from qcom-pon.yaml. Now, I will add the
-> example there and drop here.
+> Do we need patch 1 after patch 2 was applied? I always thought all
+> devices are suspended before shutdown/reboot?
+> 
 
-It sounds to me you want to combine patches 4 and 5 since they depend on
-each other.
+Yes, both patch 1 and patch 2 are required.
+Devices are not suspended during shutdown/reboot.
 
-Thanks.
+> Nice to see that 'mark_adapter_suspended' becomes useful again!
 
--- 
-Dmitry
+Thanks,
+Roja
