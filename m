@@ -2,93 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 23D4D398A0D
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jun 2021 14:51:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 181C4398A71
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jun 2021 15:29:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229822AbhFBMw7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Jun 2021 08:52:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45192 "EHLO
+        id S229710AbhFBNa4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Jun 2021 09:30:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53454 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229751AbhFBMw6 (ORCPT
+        with ESMTP id S229583AbhFBNay (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Jun 2021 08:52:58 -0400
-Received: from mail-vs1-xe35.google.com (mail-vs1-xe35.google.com [IPv6:2607:f8b0:4864:20::e35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFFBAC06174A
-        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Jun 2021 05:51:15 -0700 (PDT)
-Received: by mail-vs1-xe35.google.com with SMTP id e2so1004400vsr.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Jun 2021 05:51:15 -0700 (PDT)
+        Wed, 2 Jun 2021 09:30:54 -0400
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A662DC061574
+        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Jun 2021 06:29:11 -0700 (PDT)
+Received: by mail-ed1-x52b.google.com with SMTP id b17so3000020ede.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Jun 2021 06:29:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=zDam4v5Fg9p7lK+CPPtdMq2wb+GIbZcnsBCVIiUd08s=;
-        b=pPx7UQ5vCXmUVaWp/RGRW8H3dUeJPovQZDDbaJVgs5/Wp6iRe5oN3pKw2b4JwQXMiT
-         lMEGL2nBG0T/ztRgyHjWu/z0HHHB/0H9SIzc/4mfpBERd9AKFFV+SGY2FnjATr39V+yy
-         IrZXEkbTq2//k3FAo/Un/eAHd4UMhDZaZV4PZHC22BXOslQbAj3t8okWLVTmr+45tT7d
-         iAtxORC4HMNJcqe5TQ/uvvMb1EwqvfBjkK3SvbefiKKbpFWUFZls3ukK/eVJH1iPFRfQ
-         U2htTY/gOql+jetOZw7vHEGRgW94m+6W3URlxLlhXxyYPcnVDuC4cDiE8PuFj60d5b8v
-         fAzQ==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=ZONPVevPrQ8kgbLjTG/JbKJkdCcwfXG19PWEk0gLLz8=;
+        b=Pu00urgWpWIirMQ/SnHIyILnSmFYl5efJUfM/avAHQoV3zciv3sBvGrz7KcB1nBokf
+         zwNvbSkdBvO49VNx5q2Zj81dNtjrqU0Mz+qPuJkdsJo78RVM8/dV2qHIfxaYpVJlYDbg
+         dgz5Hs352CDX5gEp4NB0OXazoWWv8JXoqsGS76P4ZbjazJVoqRKLaEoIB6Vy5jZdh+vc
+         WnHc25WuYaTkqfkm6ar44Z9TEw3TMPZL2w7RLyfBAeO4Am+XtJrB/06/Sllg5A+DYzXl
+         XBFNCZkaz3FVB3cqym2YDeY+sVuAx2b0E2SWqoSZrZc+BohhpYlCDIKa9JMAGyjCiFNy
+         74NQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=zDam4v5Fg9p7lK+CPPtdMq2wb+GIbZcnsBCVIiUd08s=;
-        b=SIcj1iba2g16NxM/r9e1yxS0czi/0zkjhbwikZlqNFCgkJkr7SWxXZXk3Lmp6NHXWA
-         WStVAO/j7w2+zSrEXWspT1wDEJ7P/3ZWgUgd/0fiNfoNEuUwr1FSeaPVp0RHZAl0HYNm
-         MIjnFS/BeHMEatbJe/L3tzDXpgp7+khsYW+g5KxkAx86vYC6hHQEQVEmEpM/a5Ua41lO
-         FCcwJxxDCviJYSMIli+FbDE20YCcrMs+hjIcwAZJdEcpzWCPVgbQuIuVC7GrrXxAjkQ6
-         xhL3dlitJeRbZ5hp8gSWRTIXUiPjND3YuSe5jkOGj0SDM8pyvPX39sam0+XlaVPtfiyd
-         sYWg==
-X-Gm-Message-State: AOAM533bb85qf0S7QeuMXDKyVci8Ujkf9y/0+CWnYwu+GkHNMFInGTF7
-        Bl5e5D4Wy0kTwEkpt/T515WaMUlU8TtZXjYdYLbq9g==
-X-Google-Smtp-Source: ABdhPJzUginGmlokX+ysh4R5RQMBlTK4PfZt1V/KV/Te6Zr4zZ5crlWHz5ddYGKBWzw8HczkDLY1ZEHZw3YTwIkaRuw=
-X-Received: by 2002:a05:6102:5da:: with SMTP id v26mr2293516vsf.19.1622638274853;
- Wed, 02 Jun 2021 05:51:14 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=ZONPVevPrQ8kgbLjTG/JbKJkdCcwfXG19PWEk0gLLz8=;
+        b=cwE90J3I6ejy8e6Uyue+GorwFrtce9rwiijnrtlkILq8TUfcaNalkWxWKQdd3GcBAS
+         KfVbCPo2p+YKqNCQYoSB1vK6MpojpUquaMu9J8753DQupYPR3MULGatl6mMKzTo8pUbK
+         zSiQc7imkKqxg3ZVgWv7Jy/zB1ueNZA5cfc+fdEtgP7e3YD8n0PzihgqCX5oUa+ZLxT8
+         zRGm8NbuOnGWJBQVZfHBRutpN+q0gKAQot+v9XoUgssAiR0x3sw+HviKZmxt0KoYdRYY
+         VAiTW76vJqeI00ty6FhrC1+K4gp/M4UGcNiaw8De/yqPBvAnB58Fkx0joXZWQunSiG30
+         zsDA==
+X-Gm-Message-State: AOAM530+h1XEPfKXZZhKsvu+HVMqZnpppLo3lQU9njeVSCEs9QYx9wZh
+        QvAKO2NPUifGLv7F2DzqsnNWOQ==
+X-Google-Smtp-Source: ABdhPJywkRCY1c6rYh5cyHIY/U67rtIChrhtM3oBEa7Sqq51T+PU5O6ZFcrUf1JWHwutz6QUObW9Mg==
+X-Received: by 2002:aa7:cc97:: with SMTP id p23mr38160427edt.372.1622640550284;
+        Wed, 02 Jun 2021 06:29:10 -0700 (PDT)
+Received: from [192.168.1.28] (hst-221-100.medicom.bg. [84.238.221.100])
+        by smtp.googlemail.com with ESMTPSA id b22sm1337371eds.71.2021.06.02.06.29.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 02 Jun 2021 06:29:09 -0700 (PDT)
+Subject: Re: [PATCH 1/3] v4l: Add Qualcomm custom compressed pixel formats
+To:     Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+        linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-api@vger.kernel.org
+Cc:     Mauro Carvalho Chehab <mchehab@kernel.org>
+References: <20210429105815.2790770-1-stanimir.varbanov@linaro.org>
+ <20210429105815.2790770-2-stanimir.varbanov@linaro.org>
+ <b58061ff-aeb1-c48b-ea53-2366997bd825@xs4all.nl>
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Message-ID: <7a8a3b86-0c0a-f190-b6e7-d83d7d6b6433@linaro.org>
+Date:   Wed, 2 Jun 2021 16:29:08 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.8.1
 MIME-Version: 1.0
-References: <1622095949-2014-1-git-send-email-rnayak@codeaurora.org>
- <1622095949-2014-2-git-send-email-rnayak@codeaurora.org> <YLYV3ov/iBffZMg4@gerhold.net>
- <20210601114426.3vhh2twocqx254b6@vireshk-i7> <CAPDyKFqmBoMwQkWHT-w8A2=PeXeDgxE8n=D4prdEyuxM+ZOAaA@mail.gmail.com>
- <20210602105459.t3ptci42lgvrzqlx@vireshk-i7>
-In-Reply-To: <20210602105459.t3ptci42lgvrzqlx@vireshk-i7>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Wed, 2 Jun 2021 14:50:38 +0200
-Message-ID: <CAPDyKFrO-xTCy+ZRNX8y6yUdUoZqv0KZWcPp6dD_R1kxNB-L-g@mail.gmail.com>
-Subject: Re: [PATCH v2 1/3] dt-bindings: power: Introduce 'assigned-performance-states'
- property
-To:     Viresh Kumar <viresh.kumar@linaro.org>
-Cc:     Rajendra Nayak <rnayak@codeaurora.org>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Rob Herring <robh+dt@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        DTML <devicetree@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Roja Rani Yarubandi <rojay@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <b58061ff-aeb1-c48b-ea53-2366997bd825@xs4all.nl>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 2 Jun 2021 at 12:55, Viresh Kumar <viresh.kumar@linaro.org> wrote:
->
-> On 02-06-21, 12:45, Ulf Hansson wrote:
-> > Alright, so it looks like we already have the DT binding that we need for this.
-> >
-> > That leaves us with the question, at what place should we parse it
-> > (call of_get_required_opp_performance_state()) and set the performance
-> > state for the device?
-> >
-> > Does it still make sense to do it while attaching the device to the
-> > genpd, you think?
->
-> For parsing, yes this is the right place. For getting that into
-> effect, whenever the device is supposed to work, i.e. with runtime PM
-> somehow.
 
-Okay, thanks for confirming. That would be along the lines of what
-Rajendra did in patch2.
 
-Kind regards
-Uffe
+On 6/2/21 12:56 PM, Hans Verkuil wrote:
+> On 29/04/2021 12:58, Stanimir Varbanov wrote:
+>> Here we add custom Qualcomm raw compressed pixel formats. They are
+>> used in Qualcomm SoCs to optimaize the interconnect bandwidth.
+> 
+> optimize
+> 
+>>
+>> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+>> ---
+>>  .../userspace-api/media/v4l/pixfmt-reserved.rst      | 12 ++++++++++++
+>>  drivers/media/v4l2-core/v4l2-ioctl.c                 |  2 ++
+>>  include/uapi/linux/videodev2.h                       |  2 ++
+>>  3 files changed, 16 insertions(+)
+>>
+>> diff --git a/Documentation/userspace-api/media/v4l/pixfmt-reserved.rst b/Documentation/userspace-api/media/v4l/pixfmt-reserved.rst
+>> index 0b879c0da713..30b9cef4cbf0 100644
+>> --- a/Documentation/userspace-api/media/v4l/pixfmt-reserved.rst
+>> +++ b/Documentation/userspace-api/media/v4l/pixfmt-reserved.rst
+>> @@ -260,6 +260,18 @@ please make a proposal on the linux-media mailing list.
+>>  	of tiles, resulting in 32-aligned resolutions for the luminance plane
+>>  	and 16-aligned resolutions for the chrominance plane (with 2x2
+>>  	subsampling).
+>> +    * .. _V4L2-PIX-FMT-QC8C:
+>> +
+>> +      - ``V4L2_PIX_FMT_QC8C``
+>> +      - 'QC8C'
+>> +      - Compressed Macro-tile 8Bit YUV420 format used by Qualcomm platforms.
+> 
+> 8Bit -> 8-bit
+> 
+>> +	The compression is lossless. It contains four planes.
+>> +    * .. _V4L2-PIX-FMT-QC10C:
+>> +
+>> +      - ``V4L2_PIX_FMT_QC10C``
+>> +      - 'QC10C'
+>> +      - Compressed Macro-tile 10Bit YUV420 format used by Qualcomm platforms.
+> 
+> 10Bit -> 10-bit
+> 
+>> +	The compression is lossless. It contains four planes.
+> 
+> What is not clear from this description is if these formats are opaque, i.e. the
+> only way to decompress is through hardware, or if they can be decompressed in
+> software. If so, a reference to Qualcomm documentation would be useful. See e.g.
+> the V4L2_PIX_FMT_MT21C description (that's an opaque format).
+
+Yes, the formats are opaque and can be decompressed by hardware blocks
+only. I'll clear that in v2. Thanks for the review.
+
+-- 
+regards,
+Stan
