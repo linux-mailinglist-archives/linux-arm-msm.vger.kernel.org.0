@@ -2,128 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8A3D2399015
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jun 2021 18:37:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 17CF9399022
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jun 2021 18:38:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230049AbhFBQjK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Jun 2021 12:39:10 -0400
-Received: from mail-ua1-f48.google.com ([209.85.222.48]:42857 "EHLO
-        mail-ua1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230041AbhFBQjE (ORCPT
+        id S230250AbhFBQjl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Jun 2021 12:39:41 -0400
+Received: from mail-oi1-f173.google.com ([209.85.167.173]:38843 "EHLO
+        mail-oi1-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230230AbhFBQjk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Jun 2021 12:39:04 -0400
-Received: by mail-ua1-f48.google.com with SMTP id w5so1625031uaq.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Jun 2021 09:37:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=AvcpwHNjB8ShVBsQrITXz+J70Fl4tyXMM88UbOl1/HI=;
-        b=XU2T5eauZCuFUWc/+36xInqi+boOT7Be2v8/TeWqWW+ceG90g/W7o+Oyt1sAlBRU4o
-         DE/pLgcnvjDWfi4fTe1HAGvmNm5TxSdtHgYsnTDKYhO+g4tZlFnBFHeTUNGFRiyH/1T9
-         NaV2yb/N4MNj/qRiJEjkHQ1Uy+qqltCsF8q/g=
+        Wed, 2 Jun 2021 12:39:40 -0400
+Received: by mail-oi1-f173.google.com with SMTP id z3so3246652oib.5;
+        Wed, 02 Jun 2021 09:37:43 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=AvcpwHNjB8ShVBsQrITXz+J70Fl4tyXMM88UbOl1/HI=;
-        b=QvayOiuqS5AbMlNaaeR+OjsLqz64JqBOtIwPdoF5XB+W1Wr67MzkIjsX9W2djxxB0A
-         xJcARrxyLShq3rO6NKmtoP4szoIgzU6wU1QjYuJQWccnZqFEMFRbj4E6MVzahUQom48g
-         gQ4fQyLrhF1qUbWNKpNrvmoIWynSGfBz6fBhhKijfuvlIhsjDYPE8Ulpk5CLyF26KLMc
-         eGCcJTER0pKXlkHZ3++/ZdGzoWfXakhBpIOKm3IF7zG6wXZMpERY4ERsDFsv9GCMHQRN
-         jZeqVzWjmUKOQnwAyj5p4ihhnr2DxOZCZlsxJwoeWbGDenIEtvNoI7jFZhD1zxPbSGb3
-         g4Eg==
-X-Gm-Message-State: AOAM533ZnVcTIYJq767tCdRRBpAGo8ukFjLBNM285xmM1NqXTFK7GHl0
-        SEA819Sk3Tkoc/qYEujmdzQHeL3mlAxrnQ==
-X-Google-Smtp-Source: ABdhPJyiWRut5LHKtAxDlQZm6EGknZFm+UeXEuVxDV/dhrZw7dgldKTzGYZ5wclJG6154OUTrbLRVw==
-X-Received: by 2002:ab0:14ce:: with SMTP id f14mr22043546uae.50.1622651780623;
-        Wed, 02 Jun 2021 09:36:20 -0700 (PDT)
-Received: from mail-vs1-f41.google.com (mail-vs1-f41.google.com. [209.85.217.41])
-        by smtp.gmail.com with ESMTPSA id 10sm76201vky.26.2021.06.02.09.36.19
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 02 Jun 2021 09:36:19 -0700 (PDT)
-Received: by mail-vs1-f41.google.com with SMTP id x2so1421767vss.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Jun 2021 09:36:19 -0700 (PDT)
-X-Received: by 2002:a05:6102:227c:: with SMTP id v28mr25195946vsd.52.1622651779216;
- Wed, 02 Jun 2021 09:36:19 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=gXM+8pMIgFiy/+LLPCeVybsT1QR+jHzA8tbf9AdsUc0=;
+        b=t8t/nRciYgRqsHm1798xNyYefgv7ozmEeTuYDMo5w3tHkgfQjTU0t4m93OLIDWPJjD
+         jcPdql6WNk6pncr+rVKSqqrj0WC2kwSc9ZV6nibPy9re1wg76rETQo+S5Wqytru/sfjo
+         yg1GIUk0gdzCWpcrwnjUjt5B7gR1Hnvztta0mkn003FTSI8CC8jxavzEWFfpbL6OLcgc
+         QashGftIMIFPVpNBCdvwkKP34IuhQ4OZIo+ZTW9YCf+6DhiZrKaUTvxGPYK9WIiXD51h
+         jaTkqecsKKX3XJj1nr9P129AjVVidGRPffT4mJbyP9wETGxisPXXq7gA8dwJ9/K0f6B5
+         j1OQ==
+X-Gm-Message-State: AOAM533tnClYZ/abFuVtsyfWwPhQJI+OVzIkbNpZ1mXBSrxqERzkGw4h
+        RCyTk3RgPQ7R4K4nhXTdBQ==
+X-Google-Smtp-Source: ABdhPJwXv6Jn2RFRBK1OtgSwBJ+SYYLPTGtTgl9F7neb2wsxWgBLoylCpJ6v/9oELfAgF8YlwHquWw==
+X-Received: by 2002:aca:e156:: with SMTP id y83mr22247604oig.155.1622651863434;
+        Wed, 02 Jun 2021 09:37:43 -0700 (PDT)
+Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id f2sm68701ooj.22.2021.06.02.09.37.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 02 Jun 2021 09:37:42 -0700 (PDT)
+Received: (nullmailer pid 3525412 invoked by uid 1000);
+        Wed, 02 Jun 2021 16:37:40 -0000
+Date:   Wed, 2 Jun 2021 11:37:40 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Dikshita Agarwal <dikshita@codeaurora.org>
+Cc:     mark.rutland@arm.com, andy.gross@linaro.org,
+        stanimir.varbanov@linaro.org, robh+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        vgarodia@codeaurora.org, devicetree@vger.kernel.org,
+        david.brown@linaro.org
+Subject: Re: [PATCH v3] dt-bindings: media: venus: Add sc7280 dt schema
+Message-ID: <20210602163740.GA3521753@robh.at.kernel.org>
+References: <1622646392-27141-1-git-send-email-dikshita@codeaurora.org>
 MIME-Version: 1.0
-References: <20210602090525.1.Id4510e9e4baaa3f6c9fdd5cdf4d8606e63c262e3@changeid>
-In-Reply-To: <20210602090525.1.Id4510e9e4baaa3f6c9fdd5cdf4d8606e63c262e3@changeid>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Wed, 2 Jun 2021 09:36:07 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=XcoLLCn+H6h9cX+qPjoueVFgK8BssvUXQ6WjVAapRyMg@mail.gmail.com>
-Message-ID: <CAD=FV=XcoLLCn+H6h9cX+qPjoueVFgK8BssvUXQ6WjVAapRyMg@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: qcom: pm6150: Add thermal zone for PMIC
- on-die temperature
-To:     Matthias Kaehlcke <mka@chromium.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, Stephen Boyd <swboyd@chromium.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1622646392-27141-1-git-send-email-dikshita@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
-
-On Wed, Jun 2, 2021 at 9:06 AM Matthias Kaehlcke <mka@chromium.org> wrote:
->
-> Add a thermal zone for the pm6150 on-die temperature. The system should
-> try to shut down orderly when the temperature reaches 95degC, otherwise
-> the PMIC will power off at 115degC.
->
-> Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
+On Wed, 02 Jun 2021 20:36:32 +0530, Dikshita Agarwal wrote:
+> Add a schema description for the venus video encoder/decoder on the sc7280.
+> 
+> Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
 > ---
->
->  arch/arm64/boot/dts/qcom/pm6150.dtsi | 24 ++++++++++++++++++++++++
->  1 file changed, 24 insertions(+)
->
-> diff --git a/arch/arm64/boot/dts/qcom/pm6150.dtsi b/arch/arm64/boot/dts/qcom/pm6150.dtsi
-> index 8ab4f1f78bbf..de7fb129f739 100644
-> --- a/arch/arm64/boot/dts/qcom/pm6150.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/pm6150.dtsi
-> @@ -7,6 +7,30 @@
->  #include <dt-bindings/spmi/spmi.h>
->  #include <dt-bindings/thermal/thermal.h>
->
-> +/ {
-> +       thermal-zones {
-> +               pm6150_thermal: pm6150-thermal {
-> +                       polling-delay-passive = <100>;
-> +                       polling-delay = <0>;
-> +                       thermal-sensors = <&pm6150_temp>;
-> +
-> +                       trips {
-> +                               pm6150_trip0: trip0 {
-> +                                       temperature = <95000>;
-> +                                       hysteresis = <0>;
-> +                                       type = "passive";
-> +                               };
-> +
-> +                               pm6150_crit: pm6150-crit {
+>  .../bindings/media/qcom,sc7280-venus.yaml          | 159 +++++++++++++++++++++
+>  1 file changed, 159 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml
+> 
 
-Nit that the node names are not symmetric. One is "trip0" and the
-other is "pm6510-crit". Seems like you can remove the "pm6150-" prefix
-from this one (but keep it in the label?)
+Assuming the dependent header is merged first,
 
-> +                                       temperature = <115000>;
-> +                                       hysteresis = <0>;
-> +                                       type = "critical";
-> +                               };
-> +                       };
-> +               };
-
-Correct me if I'm misunderstanding, but I don't think that the
-description of this patch matches the contents. You're saying that the
-PMIC will power itself off at 115C and that we want to do an orderly
-shutdown _before_ the PMIC powers off. Doesn't that mean that the
-"critical" trip needs to be at some temperature _lower_ than 115C? As
-I remember it the system performs an orderly shutdown starting when it
-sees the critical temperature.
-
--Doug
+Reviewed-by: Rob Herring <robh@kernel.org>
