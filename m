@@ -2,77 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9EF59398854
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jun 2021 13:26:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 10B063988F7
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jun 2021 14:08:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232170AbhFBL21 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Jun 2021 07:28:27 -0400
-Received: from szxga03-in.huawei.com ([45.249.212.189]:3393 "EHLO
-        szxga03-in.huawei.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232776AbhFBL1t (ORCPT
+        id S229594AbhFBMJu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Jun 2021 08:09:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35198 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229590AbhFBMJt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Jun 2021 07:27:49 -0400
-Received: from dggeml759-chm.china.huawei.com (unknown [172.30.72.54])
-        by szxga03-in.huawei.com (SkyGuard) with ESMTP id 4Fw67c0gRFz665K;
-        Wed,  2 Jun 2021 19:22:20 +0800 (CST)
-Received: from localhost.localdomain (10.175.102.38) by
- dggeml759-chm.china.huawei.com (10.1.199.138) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id
- 15.1.2176.2; Wed, 2 Jun 2021 19:26:03 +0800
-From:   Wei Yongjun <weiyongjun1@huawei.com>
-To:     <weiyongjun1@huawei.com>,
-        Thara Gopinath <thara.gopinath@linaro.org>,
-        Herbert Xu <herbert@gondor.apana.org.au>,
-        "David S. Miller" <davem@davemloft.net>
-CC:     <linux-crypto@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <kernel-janitors@vger.kernel.org>, Hulk Robot <hulkci@huawei.com>
-Subject: [PATCH -next] crypto: qce: skcipher: fix error return code in qce_skcipher_async_req_handle()
-Date:   Wed, 2 Jun 2021 11:36:45 +0000
-Message-ID: <20210602113645.3038800-1-weiyongjun1@huawei.com>
+        Wed, 2 Jun 2021 08:09:49 -0400
+Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D637AC06174A
+        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Jun 2021 05:08:04 -0700 (PDT)
+Received: by mail-pf1-x435.google.com with SMTP id q25so2011577pfh.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Jun 2021 05:08:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Wv/GqpQtVNJ6eNnlYZDDtTKJU5/2n/Y/EinQRXFDYco=;
+        b=eN5huYwTTRQ6lO7k84mC91zHWmWx1hGyAM9oB3wOgB0t+ZcgT5dd7zm8sKR0qwNcfX
+         1AGy4y9eo2pioscpIY/xsYANPlB9QivENGooFgvJxNwv8izUnlzzx2BT8lDUa5e5y0hk
+         m7autFSC0cDZFCaBR3v2NCyhU4yus2Fv6niICUYaQZvRvJSBGgeVUJZkgW0V5an6B46p
+         fBAPzlS1Uj03keu3H5Bf/0K/BRmNNIr/F3rGWVTVLoI/4pHnjqX5O1CAqco8nBxV5Eya
+         bCamUHCdSpOqr+b6qAPwlD1sk2R7elpvRIXaIoNP5g4+2TAqmriUxkxNthn3msG3MGXi
+         G22Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Wv/GqpQtVNJ6eNnlYZDDtTKJU5/2n/Y/EinQRXFDYco=;
+        b=LDmcqwO0TsFGVT4eH3kEThosQucyQEKaUh3TT03XkUfvj2XJrZ4EHs+t5AR+IhU7+l
+         lSBQjhP+k87WXmESvIuyWuoat96SoJr8YHiJKMypnQZ/n6uanwX9rMpiMBSKJhL0lEBH
+         JW0EwhkcdMtseOmFjcQUiH0+CvESTnev75Ik17KggVvmPY7oGXhvtXXvmMZvSwY35JSL
+         GGP7Hi/TjAqpLTLRTmL2DPD0U4H9SUsqoxSwU2ojRMywYiFB3+p5gEPDsmRRT7VdL9i3
+         s45GKfj+7ztLHcvFVBKFF5JAF18qzaSokyJgoLE1NKMvoPmaMDldHAW3Os/yKAr/fbnI
+         Klug==
+X-Gm-Message-State: AOAM530Mk1g9xneULipTo4AIGlQsZwkQXUIKiZD9Nbr0+cALg0fDku8T
+        7sm0R46H8qkQA24xto1pe1+B
+X-Google-Smtp-Source: ABdhPJwZAd0XPU9npLeIfYpA8KAgDMiYPcVfnAmsvna5Q2CZJs8F9kFS7HeOrOvb2wp3nfGZKVC5/Q==
+X-Received: by 2002:a62:ee0b:0:b029:2e9:a790:f273 with SMTP id e11-20020a62ee0b0000b02902e9a790f273mr21176365pfi.24.1622635684052;
+        Wed, 02 Jun 2021 05:08:04 -0700 (PDT)
+Received: from localhost.localdomain ([120.138.12.54])
+        by smtp.gmail.com with ESMTPSA id h18sm12502907pgl.87.2021.06.02.05.08.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 02 Jun 2021 05:08:03 -0700 (PDT)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     lorenzo.pieralisi@arm.com, robh@kernel.org, bhelgaas@google.com
+Cc:     bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH 0/3] Add Qualcomm PCIe Endpoint driver support
+Date:   Wed,  2 Jun 2021 17:37:49 +0530
+Message-Id: <20210602120752.46154-1-manivannan.sadhasivam@linaro.org>
 X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type:   text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-Originating-IP: [10.175.102.38]
-X-ClientProxiedBy: dggems705-chm.china.huawei.com (10.3.19.182) To
- dggeml759-chm.china.huawei.com (10.1.199.138)
-X-CFilter-Loop: Reflected
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Fix to return a negative error code from the error handling
-case instead of 0, as done elsewhere in this function.
+Hello,
 
-Fixes: 1339a7c3ba05 ("crypto: qce: skcipher: Fix incorrect sg count for dma transfers")
-Reported-by: Hulk Robot <hulkci@huawei.com>
-Signed-off-by: Wei Yongjun <weiyongjun1@huawei.com>
----
- drivers/crypto/qce/skcipher.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+This series adds support for Qualcomm PCIe Endpoint controller found
+in platforms like SDX55. The Endpoint controller is based on the designware
+core with additional Qualcomm wrappers around the core.
 
-diff --git a/drivers/crypto/qce/skcipher.c b/drivers/crypto/qce/skcipher.c
-index 259418479227..8ff10928f581 100644
---- a/drivers/crypto/qce/skcipher.c
-+++ b/drivers/crypto/qce/skcipher.c
-@@ -124,13 +124,17 @@ qce_skcipher_async_req_handle(struct crypto_async_request *async_req)
- 	rctx->dst_sg = rctx->dst_tbl.sgl;
- 
- 	dst_nents = dma_map_sg(qce->dev, rctx->dst_sg, rctx->dst_nents, dir_dst);
--	if (dst_nents < 0)
-+	if (dst_nents < 0) {
-+		ret = dst_nents;
- 		goto error_free;
-+	}
- 
- 	if (diff_dst) {
- 		src_nents = dma_map_sg(qce->dev, req->src, rctx->src_nents, dir_src);
--		if (src_nents < 0)
-+		if (src_nents < 0) {
-+			ret = src_nents;
- 			goto error_unmap_dst;
-+		}
- 		rctx->src_sg = req->src;
- 	} else {
- 		rctx->src_sg = rctx->dst_sg;
+The driver is added separately unlike other Designware based drivers that
+combine RC and EP in a single driver. This is done to avoid complexity and
+to maintain this driver autonomously.
+
+The driver has been validated with an out of tree MHI function driver on
+SDX55 based Telit FN980 EVB connected to x86 host machine over PCIe.
+
+Thanks,
+Mani
+
+Manivannan Sadhasivam (3):
+  dt-bindings: pci: Add devicetree binding for Qualcomm PCIe EP
+    controller
+  PCI: dwc: Add Qualcomm PCIe Endpoint controller driver
+  MAINTAINERS: Add entry for Qualcomm PCIe Endpoint driver and binding
+
+ .../devicetree/bindings/pci/qcom,pcie-ep.yaml | 139 +++
+ MAINTAINERS                                   |  10 +-
+ drivers/pci/controller/dwc/Kconfig            |  10 +
+ drivers/pci/controller/dwc/Makefile           |   1 +
+ drivers/pci/controller/dwc/pcie-qcom-ep.c     | 788 ++++++++++++++++++
+ 5 files changed, 947 insertions(+), 1 deletion(-)
+ create mode 100644 Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
+ create mode 100644 drivers/pci/controller/dwc/pcie-qcom-ep.c
+
+-- 
+2.25.1
 
