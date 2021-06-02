@@ -2,169 +2,152 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 67FC5399506
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jun 2021 22:56:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 213303994C0
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jun 2021 22:43:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229541AbhFBU6h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Jun 2021 16:58:37 -0400
-Received: from gateway32.websitewelcome.com ([192.185.145.187]:30738 "EHLO
-        gateway32.websitewelcome.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229467AbhFBU6f (ORCPT
+        id S229558AbhFBUpN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Jun 2021 16:45:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38088 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229552AbhFBUpN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Jun 2021 16:58:35 -0400
-X-Greylist: delayed 1422 seconds by postgrey-1.27 at vger.kernel.org; Wed, 02 Jun 2021 16:58:35 EDT
-Received: from cm12.websitewelcome.com (cm12.websitewelcome.com [100.42.49.8])
-        by gateway32.websitewelcome.com (Postfix) with ESMTP id 1FB0A81E8E
-        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Jun 2021 15:33:06 -0500 (CDT)
-Received: from gator4166.hostgator.com ([108.167.133.22])
-        by cmsmtp with SMTP
-        id oXY1lMZLgR1jIoXY1lz2p2; Wed, 02 Jun 2021 15:33:06 -0500
-X-Authority-Reason: nr=8
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=embeddedor.com; s=default; h=Content-Transfer-Encoding:Content-Type:
-        In-Reply-To:MIME-Version:Date:Message-ID:From:References:Cc:To:Subject:Sender
-        :Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
-        Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
-        List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=+MhsQd5tiNlUqXw8oT14rjbKzGf8+RSzY0HUwHrz/28=; b=lWaAGL4hOhZnX/8WEY+pBwlfZu
-        silUDulrgxJkD4EN9ozzXyLMBN7oiBGTdWlanUSfeJUX0fJsSWPQF3r90THiDhWSn+Mq5KIUJvXcc
-        3Sdx1CLFU+/UIseyDTPiZ5G2HMMzC6EIrN2YDV9KqNhc2/cB+J7oWAemXQlrU6bX4T95D5esrC77+
-        rN0Hg/OwBRB42vUhQ34Os5Z7fzv2tbvDOnxBE9AyBPiV1P2Fea7Gp8KomRbuBbkDd0ghF9uun6SQ1
-        6wpG816qVUrZ2wsWUqd15rxSRQSdJEAGw8WOlYo9NEqkkoAeF+wl+gevBv9bAILf9LkJ1mpW13XEI
-        nqpoapmQ==;
-Received: from 187-162-31-110.static.axtel.net ([187.162.31.110]:52430 helo=[192.168.15.8])
-        by gator4166.hostgator.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-        (Exim 4.94.2)
-        (envelope-from <gustavo@embeddedor.com>)
-        id 1loXXw-002fpS-Uf; Wed, 02 Jun 2021 15:33:00 -0500
-Subject: Re: [PATCH][venus-for-next-v5.14] media: venus: hfi_cmds: Fix packet
- size calculation
-To:     Kees Cook <keescook@chromium.org>,
-        "Gustavo A. R. Silva" <gustavoars@kernel.org>
-Cc:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org
-References: <20210601184616.GA23488@embeddedor>
- <202106021254.39A1561075@keescook>
-From:   "Gustavo A. R. Silva" <gustavo@embeddedor.com>
-Message-ID: <e40f4067-82e2-31ff-0694-375a59f949de@embeddedor.com>
-Date:   Wed, 2 Jun 2021 15:34:06 -0500
+        Wed, 2 Jun 2021 16:45:13 -0400
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6EE75C06174A
+        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Jun 2021 13:43:13 -0700 (PDT)
+Received: by mail-ej1-x632.google.com with SMTP id h24so5851170ejy.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Jun 2021 13:43:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=m11y4i1SvujGuRzAdjBSm08F3vbFRf7B2NZgAGBozGg=;
+        b=RX5rlD+C4/B8bJewy4253z4LESQmaLz1GAHGt55FYSpDA/jDWJciy4Yd62p+3UiDpe
+         QA4WhZbDPolAp/wjlJvVy18gZ8IW0FpjsEwEj/IpPOjcRaj8hi0xz22+i+xWLifDUXvn
+         LZAsc5BxufYNKSnLa0v+w4y2Z87pCrnYK0dLh4SDFruhk5ginR4Sk7btgTNbQ5c+gPfN
+         ukoC0PnhDBl23h+LMZitJJN2q56IoPLCCDmxWZeO6+Ns4teAAPvYW1tgG+ro7INrZF9H
+         EZd5aS+pjSqcaFXbtmNWD8Qrjjxk390HSsYVhMqjWUiWfzOzPT3eDQo+kFienlpMQNNZ
+         9+Bw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=m11y4i1SvujGuRzAdjBSm08F3vbFRf7B2NZgAGBozGg=;
+        b=pTyowYSPtaG7hfYEVQZyyuVe3cO/MBaTLIrHZs8DMM2pnae7e7i+GlJnEqwNz1jkuK
+         HH2R2yPcWjGIR3SK90ApCmPEjjNJb/rvotEf69OpQoKm20tqOOFATyNSpu1gKiollrwd
+         CHSGezjRl/r4P1UD7v+Hxkm/RhoDOGPucoSk242BSEsamKjbFvrw6h/yYX/L2/xhqJDK
+         wRMXVyjcIPGkeC+nr7O7ttMQUYjHwdL0EUptz/AZAvkW3N2IJg1JqJNbKyA1PWSgifFC
+         W2misRxEcsNOPpJWBjVTkWUJ3i+c0rHYwc8Is04LsID6MngTKmEaJDrnoFtIDTOZdzrY
+         Pkzg==
+X-Gm-Message-State: AOAM532Z4BVkNh11CY0+8ogyOqYsMhPLtI6AhzDfXxdMXVMtgV1c+Ioz
+        XD8FFofylfNH8UAICoojcSgx4Q==
+X-Google-Smtp-Source: ABdhPJyZX7/9wQ9yx28ATg5R+fCoxCBPvTMELfrFneki7veMc5yQlCqhc7STaVWvl3GJcUIfVSYIDg==
+X-Received: by 2002:a17:906:b4b:: with SMTP id v11mr13129300ejg.359.1622666592047;
+        Wed, 02 Jun 2021 13:43:12 -0700 (PDT)
+Received: from [192.168.1.28] (hst-221-39.medicom.bg. [84.238.221.39])
+        by smtp.googlemail.com with ESMTPSA id y1sm510485ejl.7.2021.06.02.13.43.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 02 Jun 2021 13:43:11 -0700 (PDT)
+Subject: Re: [PATCH v2] arm64: dts: qcom: sc7280: Add venus DT node
+To:     Dikshita Agarwal <dikshita@codeaurora.org>, andy.gross@linaro.org,
+        david.brown@linaro.org, robh+dt@kernel.org, mark.rutland@arm.com,
+        devicetree@vger.kernel.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        vgarodia@codeaurora.org
+References: <1622647200-1487-1-git-send-email-dikshita@codeaurora.org>
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Message-ID: <134691c7-e939-879f-c897-befc4b71268b@linaro.org>
+Date:   Wed, 2 Jun 2021 23:43:10 +0300
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.8.1
 MIME-Version: 1.0
-In-Reply-To: <202106021254.39A1561075@keescook>
+In-Reply-To: <1622647200-1487-1-git-send-email-dikshita@codeaurora.org>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - gator4166.hostgator.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - embeddedor.com
-X-BWhitelist: no
-X-Source-IP: 187.162.31.110
-X-Source-L: No
-X-Exim-ID: 1loXXw-002fpS-Uf
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: 187-162-31-110.static.axtel.net ([192.168.15.8]) [187.162.31.110]:52430
-X-Source-Auth: gustavo@embeddedor.com
-X-Email-Count: 8
-X-Source-Cap: Z3V6aWRpbmU7Z3V6aWRpbmU7Z2F0b3I0MTY2Lmhvc3RnYXRvci5jb20=
-X-Local-Domain: yes
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 6/2/21 14:55, Kees Cook wrote:
-> On Tue, Jun 01, 2021 at 01:46:16PM -0500, Gustavo A. R. Silva wrote:
->> Now that a one-element array was replaced with a flexible-array member
->> in struct hfi_sys_set_property_pkt, use the struct_size() helper to
->> correctly calculate the packet size.
->>
->> Fixes: 701e10b3fd9f ("media: venus: hfi_cmds.h: Replace one-element array with flexible-array member")
->> Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
->> ---
->> BTW... it seems that a similar problem is present in
->> https://lore.kernel.org/linux-hardening/20210211001044.GA69612@embeddedor/ 
->> and that is what is causing the regression. I will send v2 of that
->> patch, shortly. Thanks.
->>
->>  drivers/media/platform/qcom/venus/hfi_cmds.c | 8 ++++----
->>  1 file changed, 4 insertions(+), 4 deletions(-)
->>
->> diff --git a/drivers/media/platform/qcom/venus/hfi_cmds.c b/drivers/media/platform/qcom/venus/hfi_cmds.c
->> index 11a8347e5f5c..c86279e5d6e8 100644
->> --- a/drivers/media/platform/qcom/venus/hfi_cmds.c
->> +++ b/drivers/media/platform/qcom/venus/hfi_cmds.c
->> @@ -27,7 +27,7 @@ void pkt_sys_idle_indicator(struct hfi_sys_set_property_pkt *pkt, u32 enable)
->>  {
->>  	struct hfi_enable *hfi = (struct hfi_enable *)&pkt->data[1];
->>  
->> -	pkt->hdr.size = sizeof(*pkt) + sizeof(*hfi) + sizeof(u32);
->> +	pkt->hdr.size = struct_size(pkt, data, 2) + sizeof(*hfi);
+On 6/2/21 6:20 PM, Dikshita Agarwal wrote:
+> Add DT entries for the sc7280 venus encoder/decoder.
 > 
-> I think this should be "1" not "2".
+> Co-developed-by: Mansur Alisha Shaik <mansur@codeaurora.org>
+> Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
 > 
-> (i.e. there is a single "data" item, followed by an entire *hfi (which
-> starts immediate after data[0]).
+> change since v1:
+>  - added rpmh power domain and opp table.
+> ---
+>  arch/arm64/boot/dts/qcom/sc7280.dtsi | 75 ++++++++++++++++++++++++++++++++++++
+>  1 file changed, 75 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> index 4c44a52..4982f96 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> @@ -60,6 +60,11 @@
+>  			no-map;
+>  			reg = <0x0 0x80b00000 0x0 0x100000>;
+>  		};
+> +
+> +		video_mem: memory@8b200000 {
+> +			reg = <0x0 0x8b200000 0x0 0x500000>;
+> +			no-map;
+> +		};
+>  	};
+>  
+>  	cpus {
+> @@ -850,6 +855,76 @@
+>  			interrupts = <GIC_SPI 582 IRQ_TYPE_LEVEL_HIGH>;
+>  		};
+>  
+> +		venus: video-codec@0aa00000 {
+> +			compatible = "qcom,sc7280-venus";
+> +			reg = <0 0x0aa00000 0 0xd0600>;
+> +			interrupts = <GIC_SPI 174 IRQ_TYPE_LEVEL_HIGH>;
+> +
+> +			clocks = <&videocc VIDEO_CC_MVSC_CORE_CLK>,
+> +				 <&videocc VIDEO_CC_MVSC_CTL_AXI_CLK>,
+> +				 <&videocc VIDEO_CC_VENUS_AHB_CLK>,
+> +				 <&videocc VIDEO_CC_MVS0_CORE_CLK>,
+> +				 <&videocc VIDEO_CC_MVS0_AXI_CLK>;
+> +			clock-names = "core", "bus", "iface",
+> +				      "vcodec_core", "vcodec_bus";
+> +
+> +			power-domains = <&videocc MVSC_GDSC>,
+> +					<&videocc MVS0_GDSC>;
+> +					<&rpmhpd SC7280_CX>;
+> +			power-domain-names = "venus", "vcodec0", "cx";
+> +			operating-points-v2 = <&venus_opp_table>;
+> +
+> +			interconnects = <&gem_noc MASTER_APPSS_PROC 0 &cnoc2 SLAVE_VENUS_CFG 0>,
+> +					<&mmss_noc MASTER_VIDEO_P0 0 &mc_virt SLAVE_EBI1 0>;
+> +			interconnect-names = "cpu-cfg", "video-mem";
+> +
+> +			iommus = <&apps_smmu 0x2180 0x20>,
+> +				 <&apps_smmu 0x2184 0x20>;
+> +			memory-region = <&video_mem>;
+> +
+> +			video-decoder {
+> +				compatible = "venus-decoder";
+> +			};
+> +
+> +			video-encoder {
+> +				compatible = "venus-encoder";
+> +			};
+> +
+> +			video-firmware {
+> +				iommus = <&apps_smmu 0x21a2 0x0>;
+> +			};
 
-Yeah; I see your point. Here I just wanted to preserve the exact same size
-as the original code, which turns out has a "benign" off-by-one issue.
+The assumption for all Qualcomm SoCs was that the firmware will be
+loaded by TZ, i.e. the platform has TZ firmware. I'd like to continue on
+that assumption, and propose to move video-firmware subnode into
+appropriate board dts file, in this case sc7280-idp.dts.
 
-I'll fix it up and respin.
-
-Thanks!
---
-Gustavo
-
-> 
->>  	pkt->hdr.pkt_type = HFI_CMD_SYS_SET_PROPERTY;
->>  	pkt->num_properties = 1;
->>  	pkt->data[0] = HFI_PROPERTY_SYS_IDLE_INDICATOR;
->> @@ -39,7 +39,7 @@ void pkt_sys_debug_config(struct hfi_sys_set_property_pkt *pkt, u32 mode,
->>  {
->>  	struct hfi_debug_config *hfi;
->>  
->> -	pkt->hdr.size = sizeof(*pkt) + sizeof(*hfi) + sizeof(u32);
->> +	pkt->hdr.size = struct_size(pkt, data, 2) + sizeof(*hfi);
-> 
-> Same here.
-> 
->>  	pkt->hdr.pkt_type = HFI_CMD_SYS_SET_PROPERTY;
->>  	pkt->num_properties = 1;
->>  	pkt->data[0] = HFI_PROPERTY_SYS_DEBUG_CONFIG;
->> @@ -50,7 +50,7 @@ void pkt_sys_debug_config(struct hfi_sys_set_property_pkt *pkt, u32 mode,
->>  
->>  void pkt_sys_coverage_config(struct hfi_sys_set_property_pkt *pkt, u32 mode)
->>  {
->> -	pkt->hdr.size = sizeof(*pkt) + sizeof(u32);
->> +	pkt->hdr.size = struct_size(pkt, data, 2);
-> 
-> This looks correct.
-> 
->>  	pkt->hdr.pkt_type = HFI_CMD_SYS_SET_PROPERTY;
->>  	pkt->num_properties = 1;
->>  	pkt->data[0] = HFI_PROPERTY_SYS_CONFIG_COVERAGE;
->> @@ -116,7 +116,7 @@ void pkt_sys_power_control(struct hfi_sys_set_property_pkt *pkt, u32 enable)
->>  {
->>  	struct hfi_enable *hfi = (struct hfi_enable *)&pkt->data[1];
->>  
->> -	pkt->hdr.size = sizeof(*pkt) + sizeof(*hfi) + sizeof(u32);
->> +	pkt->hdr.size = struct_size(pkt, data, 2) + sizeof(*hfi);
-> 
-> Also 1.
-> 
->>  	pkt->hdr.pkt_type = HFI_CMD_SYS_SET_PROPERTY;
->>  	pkt->num_properties = 1;
->>  	pkt->data[0] = HFI_PROPERTY_SYS_CODEC_POWER_PLANE_CTRL;
->> -- 
->> 2.27.0
->>
-> 
+-- 
+regards,
+Stan
