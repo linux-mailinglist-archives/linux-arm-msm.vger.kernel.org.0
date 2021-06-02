@@ -2,172 +2,162 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1124C399612
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Jun 2021 00:47:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 98E23399625
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Jun 2021 01:05:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229736AbhFBWtT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Jun 2021 18:49:19 -0400
-Received: from gateway36.websitewelcome.com ([192.185.199.121]:24734 "EHLO
-        gateway36.websitewelcome.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229626AbhFBWtS (ORCPT
+        id S229626AbhFBXHk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Jun 2021 19:07:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40702 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229736AbhFBXHj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Jun 2021 18:49:18 -0400
-X-Greylist: delayed 1497 seconds by postgrey-1.27 at vger.kernel.org; Wed, 02 Jun 2021 18:49:18 EDT
-Received: from cm10.websitewelcome.com (cm10.websitewelcome.com [100.42.49.4])
-        by gateway36.websitewelcome.com (Postfix) with ESMTP id 43D8441892749
-        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Jun 2021 17:01:24 -0500 (CDT)
-Received: from gator4166.hostgator.com ([108.167.133.22])
-        by cmsmtp with SMTP
-        id oYvUlj56Rx8DpoYvUlSke9; Wed, 02 Jun 2021 17:01:24 -0500
-X-Authority-Reason: nr=8
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=embeddedor.com; s=default; h=Content-Transfer-Encoding:Content-Type:
-        In-Reply-To:MIME-Version:Date:Message-ID:References:Cc:To:From:Subject:Sender
-        :Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
-        Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
-        List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=QGxXXmCFwyQE+vVNSEra/v2uZBYm6bBxxjB0/bpHJj0=; b=K5w/is1y6OWG4J4JsHJi+SeTNn
-        KC5+nKnTyg0qCm7TTgmHdYyHcGZSDwvSN3rxxEkZpbQb4uMQQmA89McPTAA2ge9a6wpzh6KGYi+Jt
-        H6CMyO0Rz5ZDD4aDVpqOrZ6vVdNYfOByVCuZEkZO55B9XEqvLMnphnrJJsF8aK6tR8QenuKt9AOoQ
-        xtpQZL44B8QYYAvqUZlosIbkrRFFjeYp6WWykaOWBuwwtlCtn0cvc9j7ie99NBGG2myMMC47LASOv
-        SFcWek5q4WzBsT5OLQahxjUBdwW6RSnIxN0531p+usneuWK2IZ61ii6knQ4RE4zTq6AltdFXuIXXq
-        S3S9cuKw==;
-Received: from 187-162-31-110.static.axtel.net ([187.162.31.110]:52554 helo=[192.168.15.8])
-        by gator4166.hostgator.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-        (Exim 4.94.2)
-        (envelope-from <gustavo@embeddedor.com>)
-        id 1loYvQ-00061U-Lg; Wed, 02 Jun 2021 17:01:20 -0500
-Subject: Re: [PATCH][venus-for-next-v5.14] media: venus: hfi_cmds: Fix packet
- size calculation
-From:   "Gustavo A. R. Silva" <gustavo@embeddedor.com>
-To:     Kees Cook <keescook@chromium.org>,
-        "Gustavo A. R. Silva" <gustavoars@kernel.org>
-Cc:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Wed, 2 Jun 2021 19:07:39 -0400
+Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15E02C061756
+        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Jun 2021 16:05:56 -0700 (PDT)
+Received: by mail-ot1-x335.google.com with SMTP id 5-20020a9d01050000b02903c700c45721so2939585otu.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Jun 2021 16:05:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=01Hagr0rlb03xkE9a3oTGw76oR0aQexaO5aG/02aCB4=;
+        b=Wab2V42HgyG6YvnYjDfObRMTpUq54/FpFMvvpT+0wP6ICyDk4x+cQIfhRBklOga6wc
+         ZL0R67ZCLhERbhyuwTzYg3c5pTIjZYhS8c+SVvNUVQr9sgmTphZnOrWci2bmdI29YgUL
+         QxLkjuCn9Dqr2RC8ie0c9Ou9nmmxGLKZtfLfAYHJdOsHNIEMzPyw3Hold94dCxvU1I4f
+         hkTn9Lv1rQl645l9hSEpP0ocnhED/xBz/LeQc1qlY+ARoZjZyHgcSuEaaH+5L//Bsr5Y
+         o71B/XPIjwbh8dCXUlSyzJTH6yHXVNiR9k2wA8C/SKAOy1wQnZCLi7r2vPjLc7iWAA2c
+         4xcg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=01Hagr0rlb03xkE9a3oTGw76oR0aQexaO5aG/02aCB4=;
+        b=KOXon6oF+ZUjyA9fyKn4gq8XtH5mJes/5MVWBgGaXY9/kN0HX7zbwpGF/4G3D/Ive9
+         tY1kcaL2c9l/APljYQCR7fz2z8oAJwWlIozxONV9oQWJK8AhS7r4Dh6/TnR7IzzcxPdK
+         A1eM4p+USSJD1Jwce/gBMwam5JhNjGuZsdypscoc55ilSm++1n37H9TUe/TDL7JgegCx
+         Q8RQxUsG7fqJnj+y0k6DUoq7qP1EUnrMY7PekgCxggA+y7ZsAIVJIzan4bu7z468LjAC
+         wGdMgkraqfI/9ndtJevSEUdP/udF8l4jxytmvjdvA/bPhmDdkgo9H9ZzbocjRPpV/G9I
+         e+tg==
+X-Gm-Message-State: AOAM533ySl4pfsDWYQcpZX4/PZ1R4e5knUvbD/wZMEo1Op+tS7YD3qmU
+        9sY4NNAmVSu3dg/4HyurVABRTw==
+X-Google-Smtp-Source: ABdhPJwkXDuDdU2nXIPKkgGdIzDgav85nX1ZhJns9Ee4N2N7+7xTNnkPC3zCqg/aC3h88B1WaWtj8Q==
+X-Received: by 2002:a05:6830:1d0:: with SMTP id r16mr3470023ota.116.1622675155259;
+        Wed, 02 Jun 2021 16:05:55 -0700 (PDT)
+Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id n11sm286681ooo.12.2021.06.02.16.05.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 02 Jun 2021 16:05:54 -0700 (PDT)
+Date:   Wed, 2 Jun 2021 18:05:52 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Baruch Siach <baruch@tkos.co.il>, Rob Herring <robh+dt@kernel.org>
+Cc:     Thierry Reding <thierry.reding@gmail.com>,
+        Uwe Kleine-K?nig <u.kleine-koenig@pengutronix.de>,
+        Lee Jones <lee.jones@linaro.org>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org
-References: <20210601184616.GA23488@embeddedor>
- <202106021254.39A1561075@keescook>
- <e40f4067-82e2-31ff-0694-375a59f949de@embeddedor.com>
-Message-ID: <113fd896-464c-6aef-215a-a53ac6103a62@embeddedor.com>
-Date:   Wed, 2 Jun 2021 17:02:25 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.8.1
+        Balaji Prakash J <bjagadee@codeaurora.org>,
+        Robert Marko <robert.marko@sartura.hr>,
+        linux-pwm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH v2 2/3] dt-bindings: pwm: add IPQ6018 binding
+Message-ID: <YLgO0Aj1d4w9EcPv@yoga>
+References: <ea071bbcab92d4a296c7aee5d72de0427676847a.1621851644.git.baruch@tkos.co.il>
+ <249bddc521b15e992d0846edf1813aeb577458b9.1621851644.git.baruch@tkos.co.il>
 MIME-Version: 1.0
-In-Reply-To: <e40f4067-82e2-31ff-0694-375a59f949de@embeddedor.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - gator4166.hostgator.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - embeddedor.com
-X-BWhitelist: no
-X-Source-IP: 187.162.31.110
-X-Source-L: No
-X-Exim-ID: 1loYvQ-00061U-Lg
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: 187-162-31-110.static.axtel.net ([192.168.15.8]) [187.162.31.110]:52554
-X-Source-Auth: gustavo@embeddedor.com
-X-Email-Count: 8
-X-Source-Cap: Z3V6aWRpbmU7Z3V6aWRpbmU7Z2F0b3I0MTY2Lmhvc3RnYXRvci5jb20=
-X-Local-Domain: yes
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <249bddc521b15e992d0846edf1813aeb577458b9.1621851644.git.baruch@tkos.co.il>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Mon 24 May 05:20 CDT 2021, Baruch Siach wrote:
 
-
-On 6/2/21 15:34, Gustavo A. R. Silva wrote:
+> DT binding for the PWM block in Qualcomm IPQ6018 SoC.
 > 
+> Signed-off-by: Baruch Siach <baruch@tkos.co.il>
+> ---
+> v2: Make #pwm-cells const (Rob Herring)
+> ---
+>  .../devicetree/bindings/pwm/ipq-pwm.yaml      | 52 +++++++++++++++++++
+>  1 file changed, 52 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/pwm/ipq-pwm.yaml
 > 
-> On 6/2/21 14:55, Kees Cook wrote:
->> On Tue, Jun 01, 2021 at 01:46:16PM -0500, Gustavo A. R. Silva wrote:
->>> Now that a one-element array was replaced with a flexible-array member
->>> in struct hfi_sys_set_property_pkt, use the struct_size() helper to
->>> correctly calculate the packet size.
->>>
->>> Fixes: 701e10b3fd9f ("media: venus: hfi_cmds.h: Replace one-element array with flexible-array member")
->>> Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
->>> ---
->>> BTW... it seems that a similar problem is present in
->>> https://lore.kernel.org/linux-hardening/20210211001044.GA69612@embeddedor/ 
->>> and that is what is causing the regression. I will send v2 of that
->>> patch, shortly. Thanks.
->>>
->>>  drivers/media/platform/qcom/venus/hfi_cmds.c | 8 ++++----
->>>  1 file changed, 4 insertions(+), 4 deletions(-)
->>>
->>> diff --git a/drivers/media/platform/qcom/venus/hfi_cmds.c b/drivers/media/platform/qcom/venus/hfi_cmds.c
->>> index 11a8347e5f5c..c86279e5d6e8 100644
->>> --- a/drivers/media/platform/qcom/venus/hfi_cmds.c
->>> +++ b/drivers/media/platform/qcom/venus/hfi_cmds.c
->>> @@ -27,7 +27,7 @@ void pkt_sys_idle_indicator(struct hfi_sys_set_property_pkt *pkt, u32 enable)
->>>  {
->>>  	struct hfi_enable *hfi = (struct hfi_enable *)&pkt->data[1];
->>>  
->>> -	pkt->hdr.size = sizeof(*pkt) + sizeof(*hfi) + sizeof(u32);
->>> +	pkt->hdr.size = struct_size(pkt, data, 2) + sizeof(*hfi);
->>
->> I think this should be "1" not "2".
->>
->> (i.e. there is a single "data" item, followed by an entire *hfi (which
->> starts immediate after data[0]).
+> diff --git a/Documentation/devicetree/bindings/pwm/ipq-pwm.yaml b/Documentation/devicetree/bindings/pwm/ipq-pwm.yaml
+> new file mode 100644
+> index 000000000000..f85ce808a14e
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/pwm/ipq-pwm.yaml
+> @@ -0,0 +1,52 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/pwm/ipq-pwm.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm IPQ6018 PWM controller
+> +
+> +maintainers:
+> +  - Baruch Siach <baruch@tkos.co.il>
+> +
+> +properties:
+> +  "#pwm-cells":
+> +    const: 2
+> +
+> +  compatible:
+> +    const: qcom,pwm-ipq6018
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  clocks:
+> +    maxItems: 1
+> +
+> +  clock-names:
+> +    const: core
+> +
+> +required:
+> +  - "#pwm-cells"
+> +  - compatible
+> +  - reg
+> +  - clocks
+> +  - clock-names
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/clock/qcom,gcc-ipq6018.h>
+> +
+> +    soc {
+> +        #address-cells = <2>;
+> +        #size-cells = <2>;
+> +
+> +        pwm@1941010 {
+> +            #pwm-cells = <2>;
+> +            compatible = "qcom,pwm-ipq6018";
+> +            reg = <0x0 0x1941010 0x0 0x20>;
+
+These 32 bytes are in the middle of the TCSR block, which is already
+partially described by the &tcsr_q6 node, which is described as only
+compatible = "syscon" - something no longer accepted by the DT
+maintainers.
+
+As such, I think we should adjust the &tcsr_q6 definition to cover the
+entire TCSR: 0x01937000 of size 0x21000.
+
+
+@Rob, should we represent the entire tcsr as a simple-mfd and then have
+the pwm and q6 region as children of that? Or can we make the whole
+thing as a simple-mfd and a syscon and only describe the pwm as a child?
+
+Regards,
+Bjorn
+
+> +            clocks = <&gcc GCC_ADSS_PWM_CLK>;
+> +            clock-names = "core";
+> +        };
+> +    };
+> -- 
+> 2.30.2
 > 
-> Yeah; I see your point. Here I just wanted to preserve the exact same size
-> as the original code, which turns out has a "benign" off-by-one issue.
-
-And the reason why I say it's a "benign" off-by-one (which is actually off-by-four-bytes)
-issue is because of this piece of code:
-
-drivers/media/platform/qcom/venus/hfi_venus.c:
- 864 static int venus_sys_set_idle_message(struct venus_hfi_device *hdev,
- 865                                       bool enable)
- 866 {
- 867         struct hfi_sys_set_property_pkt *pkt;
- 868         u8 packet[IFACEQ_VAR_SMALL_PKT_SIZE];
- 869         int ret;
- 870
- 871         if (!enable)
- 872                 return 0;
- 873
- 874         pkt = (struct hfi_sys_set_property_pkt *)packet;
- 875
- 876         pkt_sys_idle_indicator(pkt, enable);
- 877
- 878         ret = venus_iface_cmdq_write(hdev, pkt, false);
- 879         if (ret)
- 880                 return ret;
- 881
- 882         return 0;
- 883 }
-
-IFACEQ_VAR_SMALL_PKT_SIZE at line 868 is of size 100, which is greater than
-
-sizeof(*pkt) + sizeof(*hfi) + sizeof(u32); in the original code:
-
-drivers/media/platform/qcom/venus/hfi_cmds.c:
-  26 void pkt_sys_idle_indicator(struct hfi_sys_set_property_pkt *pkt, u32 enable)
-  27 {
-  28         struct hfi_enable *hfi = (struct hfi_enable *)&pkt->data[1];
-  29
-  30         pkt->hdr.size = sizeof(*pkt) + sizeof(*hfi) + sizeof(u32);
-  31         pkt->hdr.pkt_type = HFI_CMD_SYS_SET_PROPERTY;
-  32         pkt->num_properties = 1;
-  33         pkt->data[0] = HFI_PROPERTY_SYS_IDLE_INDICATOR;
-  34         hfi->enable = enable;
-  35 }
-
---
-Gustavo
-
-> I'll fix it up and respin.
-> 
-> Thanks!
-> --
-> Gustavo
