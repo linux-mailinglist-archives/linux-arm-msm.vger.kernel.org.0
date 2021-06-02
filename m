@@ -2,184 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1BCA2399535
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jun 2021 23:08:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B7E27399567
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jun 2021 23:27:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229604AbhFBVKk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Jun 2021 17:10:40 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:26499 "EHLO m43-7.mailgun.net"
+        id S229583AbhFBV3V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Jun 2021 17:29:21 -0400
+Received: from mail.kernel.org ([198.145.29.99]:33394 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229600AbhFBVKk (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Jun 2021 17:10:40 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1622668136; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=aaNWIIBpS4OGAZ4WCl/qqxyDVBnFqu0O/JomNH5q/Hc=; b=noFTz5dn2z83LfjApITkbIorMRVdA++xZnLZIEeaBbyjAAQ4nmZkKvz1p72Mr1CgIqFYDQef
- 25IdA18caRu/xCSezYPhqvH0uSowHep8JriX6igmHX0bRJGSVAMT61IXxMuYDizlOYlnELvT
- xqqbkZNtSyOXGZHnstezYhZ2TjU=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
- 60b7f35ff726fa41887094e2 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 02 Jun 2021 21:08:47
- GMT
-Sender: khsieh=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 7E10EC4338A; Wed,  2 Jun 2021 21:08:46 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from khsieh-linux1.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: khsieh)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id A2AF6C433D3;
-        Wed,  2 Jun 2021 21:08:44 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A2AF6C433D3
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=khsieh@codeaurora.org
-From:   Kuogee Hsieh <khsieh@codeaurora.org>
-To:     robdclark@gmail.com, sean@poorly.run, swboyd@chromium.org,
-        vkoul@kernel.org, agross@kernel.org, bjorn.andersson@linaro.org,
-        robh+dt@kernel.org, devicetree@vger.kernel.org
-Cc:     abhinavk@codeaurora.org, aravindh@codeaurora.org,
-        khsieh@codeaurora.org, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH] arm64/dts/qcom/sc7180: Add Display Port dt node
-Date:   Wed,  2 Jun 2021 14:08:38 -0700
-Message-Id: <1622668118-2237-1-git-send-email-khsieh@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        id S229467AbhFBV3U (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 2 Jun 2021 17:29:20 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 16A2E613D2;
+        Wed,  2 Jun 2021 21:27:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1622669257;
+        bh=lE85p69QGI6y7QaTePnues/2c+5McsZT084K1YrweNw=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=B8DV6wOh3MIm5mi1YrXGOznlrfUuCZOeXpQiKZ6Y4RGio/y0ayYK32131jJflfu2o
+         7L6x9BIPlQ1HSWw84GBx2YkogJbaBC81Awr1gVz/gr+zmbrAPf7as0TWosv1VxAHq2
+         2K4CBf/t8TIjcl8XMfpbfIfe/bX2VT8/rIArQu/jJvj90vt/sZApPTQZJj6KQa7g4a
+         bygk9u92h8RhN+PfppdIqOtKIU8qjuGbYMWwnrACnzm/QNw5RJTcynYC9nA+Uo/jeB
+         I+i9L28XGEauUq4h7HxmU3Pb96IyJinOVmYSdJUTUwnoXO4eV4fewHyxx1jvDEizAa
+         Qnq/CagdimW8Q==
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20210519001802.1863-2-jonathan@marek.ca>
+References: <20210519001802.1863-1-jonathan@marek.ca> <20210519001802.1863-2-jonathan@marek.ca>
+Subject: Re: [PATCH v2 2/2] dt-bindings: clock: add QCOM SM8350 display clock bindings
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     Rob Herring <robh@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+To:     Jonathan Marek <jonathan@marek.ca>, linux-arm-msm@vger.kernel.org
+Date:   Wed, 02 Jun 2021 14:27:35 -0700
+Message-ID: <162266925581.4130789.10178141366818328902@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add DP device node on sc7180.
+Quoting Jonathan Marek (2021-05-18 17:18:02)
+> Add sm8350 DISPCC bindings, which are simply a symlink to the sm8250
+> bindings. Update the documentation with the new compatible.
+>=20
+> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+> Reviewed-by: Rob Herring <robh@kernel.org>
+> ---
+>  .../devicetree/bindings/clock/qcom,dispcc-sm8x50.yaml       | 6 ++++--
+>  include/dt-bindings/clock/qcom,dispcc-sm8350.h              | 1 +
 
-Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
----
- arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi |  9 ++++
- arch/arm64/boot/dts/qcom/sc7180.dtsi         | 77 ++++++++++++++++++++++++++++
- 2 files changed, 86 insertions(+)
+>  2 files changed, 5 insertions(+), 2 deletions(-)
+>  create mode 120000 include/dt-bindings/clock/qcom,dispcc-sm8350.h
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-index 24d293e..53ef3961 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-@@ -786,6 +786,15 @@ hp_i2c: &i2c9 {
- 	status = "okay";
- };
- 
-+&msm_dp {
-+        status = "okay";
-+        pinctrl-names = "default";
-+        pinctrl-0 = <&dp_hot_plug_det>;
-+        data-lanes = <0 1>;
-+        vdda-1p2-supply = <&vdda_usb_ss_dp_1p2>;
-+        vdda-0p9-supply = <&vdda_usb_ss_dp_core>;
-+};
-+
- &pm6150_adc {
- 	charger-thermistor@4f {
- 		reg = <ADC5_AMUX_THM3_100K_PU>;
-diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-index 6228ba2..2e45098 100644
---- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -3032,6 +3032,13 @@
- 							remote-endpoint = <&dsi0_in>;
- 						};
- 					};
-+
-+					port@2 {
-+						reg = <2>;
-+						dpu_intf0_out: endpoint {
-+							remote-endpoint = <&dp_in>;
-+						};
-+					};
- 				};
- 
- 				mdp_opp_table: mdp-opp-table {
-@@ -3148,6 +3155,76 @@
- 
- 				status = "disabled";
- 			};
-+
-+			msm_dp: displayport-controller@ae90000 {
-+				status = "disabled";
-+				compatible = "qcom,sc7180-dp";
-+
-+				reg = <0 0x0ae90000 0 0x1400>;
-+
-+				interrupt-parent = <&mdss>;
-+				interrupts = <12 IRQ_TYPE_NONE>;
-+
-+				clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
-+					 <&dispcc DISP_CC_MDSS_DP_AUX_CLK>,
-+					 <&dispcc DISP_CC_MDSS_DP_LINK_CLK>,
-+					 <&dispcc DISP_CC_MDSS_DP_LINK_INTF_CLK>,
-+					 <&dispcc DISP_CC_MDSS_DP_PIXEL_CLK>;
-+				clock-names = "core_iface", "core_aux", "ctrl_link",
-+					      "ctrl_link_iface", "stream_pixel";
-+				#clock-cells = <1>;
-+				assigned-clocks = <&dispcc DISP_CC_MDSS_DP_LINK_CLK_SRC>,
-+						  <&dispcc DISP_CC_MDSS_DP_PIXEL_CLK_SRC>;
-+				assigned-clock-parents = <&dp_phy 0>, <&dp_phy 1>;
-+				phys = <&dp_phy>;
-+				phy-names = "dp";
-+
-+				operating-points-v2 = <&dp_opp_table>;
-+				power-domains = <&rpmhpd SC7180_CX>;
-+
-+				#sound-dai-cells = <0>;
-+				ports {
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+					port@0 {
-+						reg = <0>;
-+						dp_in: endpoint {
-+							remote-endpoint = <&dpu_intf0_out>;
-+						};
-+					};
-+
-+					port@1 {
-+						reg = <1>;
-+						dp_out: endpoint { };
-+					};
-+				};
-+
-+				dp_opp_table: dp-opp-table {
-+					compatible = "operating-points-v2";
-+
-+					opp-160000000 {
-+						opp-hz = /bits/ 64 <160000000>;
-+						required-opps = <&rpmhpd_opp_low_svs>;
-+					};
-+
-+					opp-270000000 {
-+						opp-hz = /bits/ 64 <270000000>;
-+						required-opps = <&rpmhpd_opp_svs>;
-+					};
-+
-+					opp-540000000 {
-+						opp-hz = /bits/ 64 <540000000>;
-+						required-opps = <&rpmhpd_opp_svs_l1>;
-+					};
-+
-+					opp-810000000 {
-+						opp-hz = /bits/ 64 <810000000>;
-+						required-opps = <&rpmhpd_opp_nom>;
-+					};
-+				};
-+			};
-+
-+
- 		};
- 
- 		dispcc: clock-controller@af00000 {
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+Why the symlink? Can we have the dt authors use the existing header file
+instead?
 
+>=20
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,dispcc-sm8x50.y=
+aml b/Documentation/devicetree/bindings/clock/qcom,dispcc-sm8x50.yaml
+> index 0cdf53f41f84..8f414642445e 100644
+> --- a/Documentation/devicetree/bindings/clock/qcom,dispcc-sm8x50.yaml
+> +++ b/Documentation/devicetree/bindings/clock/qcom,dispcc-sm8x50.yaml
+> @@ -4,24 +4,26 @@
+>  $id: http://devicetree.org/schemas/clock/qcom,dispcc-sm8x50.yaml#
+>  $schema: http://devicetree.org/meta-schemas/core.yaml#
+> =20
+> -title: Qualcomm Display Clock & Reset Controller Binding for SM8150/SM82=
+50
+> +title: Qualcomm Display Clock & Reset Controller Binding for SM8150/SM82=
+50/SM8350
+
+Maybe just "Binding for SM8x50 SoCs"
+
+> =20
+>  maintainers:
+>    - Jonathan Marek <jonathan@marek.ca>
+> =20
+>  description: |
+>    Qualcomm display clock control module which supports the clocks, reset=
+s and
+> -  power domains on SM8150 and SM8250.
+> +  power domains on SM8150/SM8250/SM8350.
+
+same 8x50 comment.
+
+> =20
+>    See also:
+>      dt-bindings/clock/qcom,dispcc-sm8150.h
+>      dt-bindings/clock/qcom,dispcc-sm8250.h
+> +    dt-bindings/clock/qcom,dispcc-sm8350.h
+> =20
+>  properties:
+>    compatible:
+>      enum:
+>        - qcom,sm8150-dispcc
+>        - qcom,sm8250-dispcc
+> +      - qcom,sm8350-dispcc
+> =20
+>    clocks:
+>      items:
+> diff --git a/include/dt-bindings/clock/qcom,dispcc-sm8350.h b/include/dt-=
+bindings/clock/qcom,dispcc-sm8350.h
+> new file mode 120000
+> index 000000000000..0312b4544acb
+> --- /dev/null
+> +++ b/include/dt-bindings/clock/qcom,dispcc-sm8350.h
+> @@ -0,0 +1 @@
+> +qcom,dispcc-sm8250.h
+> \ No newline at end of file
