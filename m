@@ -2,165 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 51CB139ABCA
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Jun 2021 22:29:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4F61939ABDE
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Jun 2021 22:34:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229617AbhFCUbD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Jun 2021 16:31:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38070 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229576AbhFCUbC (ORCPT
+        id S229801AbhFCUgW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Jun 2021 16:36:22 -0400
+Received: from mail-qt1-f181.google.com ([209.85.160.181]:36841 "EHLO
+        mail-qt1-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229617AbhFCUgW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Jun 2021 16:31:02 -0400
-Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com [IPv6:2607:f8b0:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 910E4C061756
-        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Jun 2021 13:29:17 -0700 (PDT)
-Received: by mail-ot1-x333.google.com with SMTP id h24-20020a9d64180000b029036edcf8f9a6so7029041otl.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Jun 2021 13:29:17 -0700 (PDT)
+        Thu, 3 Jun 2021 16:36:22 -0400
+Received: by mail-qt1-f181.google.com with SMTP id s12so5405809qta.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Jun 2021 13:34:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=xX3VYyjxzdpIjPz97c6PlVOdKP115o6p3Ui5EeqQcH8=;
-        b=ih5nYpGzowbPdJfl92eNjSiXeyjEU8mqtDMi6euxHBeilZo65ZqleTe1Pm4RddVC4c
-         B6r57+8YHVolT9AF5qMAGOdIsftI5Q9ik+rlE9alUQvw0PzTC6OwyETotdcYfF0LmBAX
-         Mt53RFDUjlIO50L5YY2Ogw6GD8v/kIWSbrUGc=
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=CWdL8xo0vHpWIgIBdECu+RNiDuRV629s7OGWjc46l1Q=;
+        b=n6a/oJMr+5W2Mhz4wGcI8n6C0FC8XTzSB7bxg187Zmsnm//6MWq6vCPwEl+T/+TZHT
+         EyA1fF4K1YQ73atxpYKYtS8RIeL0WKUB7CLjXPNYYz0AqHQAyCAysYSfzoXWit/v9R04
+         td8OfK6skei2EiDN76u0iJqFG+XzJGVsUNvvY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=xX3VYyjxzdpIjPz97c6PlVOdKP115o6p3Ui5EeqQcH8=;
-        b=UBaoVGrvF0s0cvb3fFN1Hq++Awah7o8hlLKa0tuHGi86lABpp8KwuP7mHNij/U5hDJ
-         Sz5hOC4l25Ya7MInPCK4FQ0DYgXL71jnlijr2kPAMWovEf+2yyFMx2xti/0cAYDsNXMy
-         ePgVWetVKYv0/x37eZ0f2WLQKEf6YkQzDIRneadsJzJDX6rlVzeXKvvceQ81ksvqkXOS
-         DLiGdD1NrT3nhFBWXDXGnJhE/VYCa7NvKl3umQRgCvf+5oa9u+dchGkzu0jVou4vTD2B
-         g7vmzr/8BbuCmL6DwAOg2gZn7R5F6j0ZvIvPM1d7Wtw8b8+kSRMTWppnQy6EQSQnaj7w
-         WQ/w==
-X-Gm-Message-State: AOAM533cvZBOak85SecSD38sbMNwEi/PHNXc/4KNfiKDMe2KWN3UDO9j
-        HwxSUKULwFPaqX1Bn3VaLyuSYqGy7yT6iLW9STr2xHkCSiA=
-X-Google-Smtp-Source: ABdhPJzEi43bs9A+1vKefCz1MnfpsKOuD1JXyyzfdyZKIKc9+GkL0Ty/1xFukAjWe+ur6BBOKH+NbAOBWyYfWF7fh9I=
-X-Received: by 2002:a9d:18e:: with SMTP id e14mr933504ote.34.1622752156132;
- Thu, 03 Jun 2021 13:29:16 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 3 Jun 2021 20:29:15 +0000
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=CWdL8xo0vHpWIgIBdECu+RNiDuRV629s7OGWjc46l1Q=;
+        b=YUo8jjZUMZWMWTdn/aNaMb4Cm7jYAZyFv04cN49y8IXtePqbAFiGhTiYlVOimJHmHr
+         rV7QWwWRIhTL/somugf4BpUxbu6JV+iEhRPLpZanqejsMe46aTdtO0hbJz7a1f8r+NFw
+         ajb56r/+C8Avgeh54lW48/lv+MAGRjyumkhqBFcjL8Eb6wJ9a5uVx7mD8FIS3FbE+9ld
+         TsFxiTT09wt8+fyj3/pMhbN5sciybD2N5Gux/sjIjAEpc+ukG7Nqk5BRGSJIh77DJj6q
+         IOxrH8HJsEQpLbiBIPd4nGv2zSuRP9GUVzOvYZZxHKxBCFT7FIBQdG8y88upJEon0NsV
+         /ChQ==
+X-Gm-Message-State: AOAM532JBa2IdobaCQnQ2zKW3xn+5pqa68NA2NQks0mpqYX2l9s66RkZ
+        mhUR/yC8Xv+rMzZU9j4bfwqq/Lq5LZmuuQ==
+X-Google-Smtp-Source: ABdhPJz5Q636IrmDCHjD3JQgSyckFg5RktWGR+9NAwjXAzyM2WNo4fSMLi+Q9CA3taO4GcZ62Elo8w==
+X-Received: by 2002:ac8:4a95:: with SMTP id l21mr1290561qtq.317.1622752401503;
+        Thu, 03 Jun 2021 13:33:21 -0700 (PDT)
+Received: from mail-yb1-f173.google.com (mail-yb1-f173.google.com. [209.85.219.173])
+        by smtp.gmail.com with ESMTPSA id p10sm2542569qkg.74.2021.06.03.13.33.20
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 03 Jun 2021 13:33:20 -0700 (PDT)
+Received: by mail-yb1-f173.google.com with SMTP id 207so10637196ybd.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Jun 2021 13:33:20 -0700 (PDT)
+X-Received: by 2002:a25:80d4:: with SMTP id c20mr424281ybm.345.1622752399765;
+ Thu, 03 Jun 2021 13:33:19 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <1622738250-1469-1-git-send-email-khsieh@codeaurora.org>
-References: <1622738250-1469-1-git-send-email-khsieh@codeaurora.org>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.9.1
-Date:   Thu, 3 Jun 2021 20:29:15 +0000
-Message-ID: <CAE-0n53t0fjZYTrsV3fwbPajswLXpgcm6crTAD6sYzTn7xNe8g@mail.gmail.com>
-Subject: Re: [PATCH v3] arm64: dts: qcom: sc7180: Add DisplayPort node
-To:     Kuogee Hsieh <khsieh@codeaurora.org>, agross@kernel.org,
-        bjorn.andersson@linaro.org, devicetree@vger.kernel.org,
-        robdclark@gmail.com, robh+dt@kernel.org, sean@poorly.run,
-        vkoul@kernel.org
-Cc:     abhinavk@codeaurora.org, aravindh@codeaurora.org,
-        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
+References: <20210602191338.1995827-1-sujitka@chromium.org> <20210602121313.v3.2.I52f30ddfe62041b7e6c3c362f0ad8f695ac28224@changeid>
+In-Reply-To: <20210602121313.v3.2.I52f30ddfe62041b7e6c3c362f0ad8f695ac28224@changeid>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Thu, 3 Jun 2021 13:33:07 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=WzgvkT-F-LoDHJXsRamHH2g0GVUzoU4Qe8wAc4Y_L2Dg@mail.gmail.com>
+Message-ID: <CAD=FV=WzgvkT-F-LoDHJXsRamHH2g0GVUzoU4Qe8wAc4Y_L2Dg@mail.gmail.com>
+Subject: Re: [PATCH v3 2/2] arm64: dts: qcom: sc7180: SD-card GPIO pin set
+ bias-pull up
+To:     Sujit Kautkar <sujitka@chromium.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Sibi Sankar <sibis@codeaurora.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Kuogee Hsieh (2021-06-03 09:37:30)
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-> index 24d293e..40367a2 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-> @@ -786,6 +786,15 @@ hp_i2c: &i2c9 {
->         status = "okay";
->  };
+Hi,
+
+On Wed, Jun 2, 2021 at 12:14 PM Sujit Kautkar <sujitka@chromium.org> wrote:
 >
-> +&dp {
+> Some SC7180 based board do not have external pull-up for cd-gpio.
 
-This is in the wrong place now. Bjorn's suggestion for mdss_dp sounds
-good to me, and then putting the node in alphabetical order.
+nit: s/board/boards
 
-> +        status = "okay";
-> +        pinctrl-names = "default";
-> +        pinctrl-0 = <&dp_hot_plug_det>;
-> +        data-lanes = <0 1>;
-> +        vdda-1p2-supply = <&vdda_usb_ss_dp_1p2>;
-> +        vdda-0p9-supply = <&vdda_usb_ss_dp_core>;
-> +};
-> +
->  &pm6150_adc {
->         charger-thermistor@4f {
->                 reg = <ADC5_AMUX_THM3_100K_PU>;
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> index 6228ba2..05a4133 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> @@ -3148,6 +3155,77 @@
+Presumably Bjorn could fix this when he applies the patch. I wouldn't
+re-post just for this fix unless Bjorn asks you to.
+
+
+> Set this pin to internal pull-up for sleep config to avoid frequent
+> regulator toggle events.
 >
->                                 status = "disabled";
->                         };
-> +
-> +                       dp: displayport-controller@ae90000 {
-> +                               compatible = "qcom,sc7180-dp";
-> +                               status = "disabled";
-> +
-> +                               reg = <0 0x0ae90000 0 0x1400>;
-> +
-> +                               interrupt-parent = <&mdss>;
-> +                               interrupts = <12>;
-> +
-> +                               clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
-> +                                        <&dispcc DISP_CC_MDSS_DP_AUX_CLK>,
-> +                                        <&dispcc DISP_CC_MDSS_DP_LINK_CLK>,
-> +                                        <&dispcc DISP_CC_MDSS_DP_LINK_INTF_CLK>,
-> +                                        <&dispcc DISP_CC_MDSS_DP_PIXEL_CLK>;
-> +                               clock-names = "core_iface", "core_aux", "ctrl_link",
-> +                                             "ctrl_link_iface", "stream_pixel";
-> +                               #clock-cells = <1>;
-> +                               assigned-clocks = <&dispcc DISP_CC_MDSS_DP_LINK_CLK_SRC>,
-> +                                                 <&dispcc DISP_CC_MDSS_DP_PIXEL_CLK_SRC>;
-> +                               assigned-clock-parents = <&dp_phy 0>, <&dp_phy 1>;
-> +                               phys = <&dp_phy>;
-> +                               phy-names = "dp";
-> +
-> +                               operating-points-v2 = <&opp_table>;
-> +                               power-domains = <&rpmhpd SC7180_CX>;
+> Signed-off-by: Sujit Kautkar <sujitka@chromium.org>
+> ---
+>
+> Changes in v3:
+> - remove 'trogdor' from commit message
+> - move reference patch from commit message
+>
+> Changes in v2:
+> - added pull-up for IDP
+>
+> This change is with reference to Qualcomm's DT change posted at:
+> https://patchwork.kernel.org/patch/11675347/
+>
+>  arch/arm64/boot/dts/qcom/sc7180-idp.dts      | 2 +-
+>  arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 2 +-
+>  2 files changed, 2 insertions(+), 2 deletions(-)
 
-I'm also curious about the power domain for DP. My guess is that both
-DSI and DP nodes should be a child of mdss if they're in the display
-subsystem and powered down/inaccessible when the mdss_gdsc is disabled.
+FYI: I had my Reviewed-by tag on v2. While you did make changes
+between v2 and v3, in this case I don't think the changes were
+significant enough to warrant removing my Reviewed-by tag and I would
+have been happy if you'd kept it.
 
-> +
-> +                               #sound-dai-cells = <0>;
-> +
-> +                               ports {
-> +                                       #address-cells = <1>;
-> +                                       #size-cells = <0>;
-> +                                       port@0 {
-> +                                               reg = <0>;
-> +                                               dp_in: endpoint {
-> +                                                       remote-endpoint = <&dpu_intf0_out>;
-> +                                               };
-> +                                       };
-> +
-> +                                       port@1 {
-> +                                               reg = <1>;
-> +                                               dp_out: endpoint { };
-> +                                       };
-> +                               };
-> +
-> +                               opp_table: dp-opp-table {
+In general, if you ever have questions about whether you should keep
+someone's reviewed tag, it never hurts to mention your logic "after
+the cut" (I think you use patman so this would be "Commit-notes:").
+For instance, you could say this if you removed Reviewed-by tags:
 
-I meant
+I totally recombobulated the frobnication logic in v3 and removed
+previous Reviewed-by tags. Hopefully reviewers can re-add if they
+still think the patch is good.
 
-	dp_opp_table: opp-table {
-		...
-	};
+...or, you could say this if you kept them but you weren't totally
+sure it was OK:
 
-> +                                       compatible = "operating-points-v2";
-> +
-> +                                       opp-160000000 {
-> +                                               opp-hz = /bits/ 64 <160000000>;
-> +                                               required-opps = <&rpmhpd_opp_low_svs>;
-> +                                       };
-> +
-> +                                       opp-270000000 {
-> +                                               opp-hz = /bits/ 64 <270000000>;
-> +                                               required-opps = <&rpmhpd_opp_svs>;
+Even though every single line in the v3 patch changed from v2, it's
+only because I fixed a stoopid spelling Mistake. Thus, I kept previous
+Reviewed-by tags. Please yell if you object. Who knew that the only
+acceptable spelling of the English word "stupid" in kerneldoc comments
+was written as "stoopid". Live and learn.
+
+:-)
+
+In any case, here's my Reviewed-by tag again. I also agree that
+Bjorn's comments made sense and were good to fix...
+
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
