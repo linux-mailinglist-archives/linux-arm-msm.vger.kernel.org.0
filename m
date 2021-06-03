@@ -2,198 +2,156 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6810239ADF2
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Jun 2021 00:22:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CA6F339AE54
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Jun 2021 00:42:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230424AbhFCWYS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Jun 2021 18:24:18 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:19175 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230370AbhFCWYR (ORCPT
+        id S230018AbhFCWoG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Jun 2021 18:44:06 -0400
+Received: from mail-qk1-f169.google.com ([209.85.222.169]:45896 "EHLO
+        mail-qk1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229629AbhFCWoF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Jun 2021 18:24:17 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1622758952; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=eFkcYHf9pYKCklf55nyjfhADoc5O8L4mgcg+wpkktEE=; b=h8w3+muew3BBQfSalMDFbxvUsoZ1ooMkV8MN+R/pI0rks+oqAnQgLq0IT205OLaRLlM7ywbz
- NND1tT2c5LtiMqIpSV5px+vDXn/FQyg61TJFtyafiQqCt0YJ9fPqqscwgmUVG3548e+863/g
- fkbg+oS7r/QiUMLnAmS/3j49PEQ=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
- 60b956248491191eb372c0c4 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 03 Jun 2021 22:22:28
- GMT
-Sender: khsieh=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id B9798C4323A; Thu,  3 Jun 2021 22:22:27 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
-Received: from khsieh-linux1.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: khsieh)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id CF1E8C433F1;
-        Thu,  3 Jun 2021 22:22:25 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org CF1E8C433F1
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=khsieh@codeaurora.org
-From:   Kuogee Hsieh <khsieh@codeaurora.org>
-To:     robdclark@gmail.com, sean@poorly.run, swboyd@chromium.org,
-        vkoul@kernel.org, agross@kernel.org, bjorn.andersson@linaro.org,
-        robh+dt@kernel.org, devicetree@vger.kernel.org
-Cc:     abhinavk@codeaurora.org, aravindh@codeaurora.org,
-        khsieh@codeaurora.org, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v4] arm64: dts: qcom: sc7180: Add DisplayPort node
-Date:   Thu,  3 Jun 2021 15:22:19 -0700
-Message-Id: <1622758940-13485-1-git-send-email-khsieh@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        Thu, 3 Jun 2021 18:44:05 -0400
+Received: by mail-qk1-f169.google.com with SMTP id d196so2468450qkg.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Jun 2021 15:42:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=MakzHmrhP8vAXjgFSVERlwbbPQz/I4RXtNHBxH/9Tqs=;
+        b=VHKdAmXjQ4mWJlaUmDx/2T6K5khw/jG/8HRArFGaS5PZAhyt5H9ths7x65e9eiWwVy
+         wVe7U4TCdZ4W9x+r1xnAzGyfLoKSkCOg8CL1xoqwU6s8AcHLMifmR/f714catM/cJHxP
+         6Q9oafZgsflYNWsgqYoAyys8ALdxUI/Wg7hF4=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=MakzHmrhP8vAXjgFSVERlwbbPQz/I4RXtNHBxH/9Tqs=;
+        b=swP6F2jFu5znEdCxAdx0GsPEZhRwe+W0+MPfg53raMs6ro628wdZ7/Ue1DOqc2HC5k
+         PVAbcm7Mqgqwh0WprzxADt4is3QD7WkqW+xOlaKuIy82ict3aA9CsDrhfXhH0nRAdoON
+         AVi6lUX3Cl/fkFrgaC9u4IaEQT/p6zCsxItjGUhxDOZJCD8pdKHEQJ8wXtTfjwtsVPCY
+         ifNKDQA9pF8GoTR9dyu/OGe+DlcO0MAwiK2Cd6yMwPVgXMZiJ5tSKUW0lnrSXa++7lRt
+         wSLkaUWAo7/2/BxiKc8fih+ZmN3EZcJUSRkX/tEiaBRFlDRMMruAPipcaJWJrn1GE066
+         zNAQ==
+X-Gm-Message-State: AOAM532q5YO910KzVOBqbtLDhPkBcN+NPvjLJgy6qWGGcrItKU9BvSQB
+        n442bbqIjS/KyhCHGdZRdtVj8b7PFr8biA==
+X-Google-Smtp-Source: ABdhPJz3JB/3fYmIqZernSozfxKe3UHJOxcgVLICWfEoR3M14hHx08vghiP77Xs/vAXarVZZCj2S3A==
+X-Received: by 2002:a37:6244:: with SMTP id w65mr1613438qkb.304.1622760069931;
+        Thu, 03 Jun 2021 15:41:09 -0700 (PDT)
+Received: from mail-yb1-f170.google.com (mail-yb1-f170.google.com. [209.85.219.170])
+        by smtp.gmail.com with ESMTPSA id b5sm2806528qkn.129.2021.06.03.15.41.09
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 03 Jun 2021 15:41:09 -0700 (PDT)
+Received: by mail-yb1-f170.google.com with SMTP id b13so11019747ybk.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Jun 2021 15:41:09 -0700 (PDT)
+X-Received: by 2002:a25:ab4b:: with SMTP id u69mr1137987ybi.276.1622760058683;
+ Thu, 03 Jun 2021 15:40:58 -0700 (PDT)
+MIME-Version: 1.0
+References: <20210603150830.229423-1-judyhsiao@chromium.org>
+In-Reply-To: <20210603150830.229423-1-judyhsiao@chromium.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Thu, 3 Jun 2021 15:40:46 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=VzBgbhhVQvG+UGD2yaLJkwiq0qQHdFNQ2Ey8RKmV+qTg@mail.gmail.com>
+Message-ID: <CAD=FV=VzBgbhhVQvG+UGD2yaLJkwiq0qQHdFNQ2Ey8RKmV+qTg@mail.gmail.com>
+Subject: Re: [v5] ASoC: qcom: lpass-cpu: Fix pop noise during audio capture begin
+To:     Judy Hsiao <judyhsiao@chromium.org>
+Cc:     Mark Brown <broonie@kernel.org>, Taniya Das <tdas@codeaurora.org>,
+        Rohit kumar <rohitkr@codeaurora.org>,
+        Banajit Goswami <bgoswami@codeaurora.org>,
+        Patrick Lai <plai@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Takashi Iwai <tiwai@suse.com>,
+        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Dylan Reid <dgreid@chromium.org>,
+        Jimmy Cheng-Yi Chiang <cychiang@google.com>,
+        Judy Hsiao <judyhsiao@google.com>,
+        Tzung-Bi Shih <tzungbi@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        ALSA Development Mailing List <alsa-devel@alsa-project.org>,
+        Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add DP device node on sc7180.
+Judy,
 
-Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
----
-Changes in v2:
--- replace msm_dp with dp
--- replace dp_opp_table with opp_table
+On Thu, Jun 3, 2021 at 8:08 AM Judy Hsiao <judyhsiao@chromium.org> wrote:
+>
+> @@ -315,12 +353,54 @@ static int lpass_cpu_daiops_trigger(struct snd_pcm_substream *substream,
+>         return ret;
+>  }
+>
+> +static int lpass_cpu_daiops_prepare(struct snd_pcm_substream *substream,
+> +               struct snd_soc_dai *dai)
+> +{
+> +       struct lpass_data *drvdata = snd_soc_dai_get_drvdata(dai);
+> +       struct lpaif_i2sctl *i2sctl = drvdata->i2sctl;
+> +       unsigned int id = dai->driver->id;
+> +       int ret;
+> +       /*
+> +        * Ensure lpass BCLK/LRCLK is enabled bit before playback/capture
+> +        * data flow starts. This allows other codec to have some delay before
+> +        * the data flow.
+> +        * (ex: to drop start up pop noise before capture starts).
+> +        */
 
-Changes in v3:
--- correct text of commit title
-
-Changes in v4:
--- replace dp with mdss_dp
--- replace opp_table with dp_opp_table
+nit: there's usually a blank line between the variable declarations
+and the first line of code, even if the first line of code is a
+comment.
 
 
- arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi |  9 ++++
- arch/arm64/boot/dts/qcom/sc7180.dtsi         | 78 ++++++++++++++++++++++++++++
- 2 files changed, 87 insertions(+)
+> +       if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK)
+> +               ret = regmap_fields_write(i2sctl->spken, id, LPAIF_I2SCTL_SPKEN_ENABLE);
+> +       else
+> +               ret = regmap_fields_write(i2sctl->micen, id, LPAIF_I2SCTL_MICEN_ENABLE);
+> +
+> +       if (ret) {
+> +               dev_err(dai->dev, "error writing to i2sctl reg: %d\n", ret);
+> +               return ret;
+> +       }
+> +
+> +       /*
+> +        * Check mi2s_was_prepared before enabling BCLK as lpass_cpu_daiops_prepare can
+> +        * be called multiple times. It's paired with the clk_disable in
+> +        * lpass_cpu_daiops_shutdown.
+> +        */
+> +       if (!drvdata->mi2s_was_prepared[dai->driver->id]) {
+> +               drvdata->mi2s_was_prepared[dai->driver->id] = true;
+> +               ret = clk_enable(drvdata->mi2s_bit_clk[id]);
+> +               if (ret) {
+> +                       dev_err(dai->dev, "error in enabling mi2s bit clk: %d\n", ret);
+> +                       clk_disable(drvdata->mi2s_osr_clk[id]);
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-index 24d293e..051fb40 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-@@ -786,6 +786,15 @@ hp_i2c: &i2c9 {
- 	status = "okay";
- };
- 
-+&mdss_dp {
-+        status = "okay";
-+        pinctrl-names = "default";
-+        pinctrl-0 = <&dp_hot_plug_det>;
-+        data-lanes = <0 1>;
-+        vdda-1p2-supply = <&vdda_usb_ss_dp_1p2>;
-+        vdda-0p9-supply = <&vdda_usb_ss_dp_core>;
-+};
-+
- &pm6150_adc {
- 	charger-thermistor@4f {
- 		reg = <ADC5_AMUX_THM3_100K_PU>;
-diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-index 6228ba2..c779ad3 100644
---- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -3032,6 +3032,13 @@
- 							remote-endpoint = <&dsi0_in>;
- 						};
- 					};
-+
-+					port@2 {
-+						reg = <2>;
-+						dpu_intf0_out: endpoint {
-+							remote-endpoint = <&dp_in>;
-+						};
-+					};
- 				};
- 
- 				mdp_opp_table: mdp-opp-table {
-@@ -3148,6 +3155,77 @@
- 
- 				status = "disabled";
- 			};
-+
-+			mdss_dp: displayport-controller@ae90000 {
-+				compatible = "qcom,sc7180-dp";
-+				status = "disabled";
-+
-+				reg = <0 0x0ae90000 0 0x1400>;
-+
-+				interrupt-parent = <&mdss>;
-+				interrupts = <12>;
-+
-+				clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
-+					 <&dispcc DISP_CC_MDSS_DP_AUX_CLK>,
-+					 <&dispcc DISP_CC_MDSS_DP_LINK_CLK>,
-+					 <&dispcc DISP_CC_MDSS_DP_LINK_INTF_CLK>,
-+					 <&dispcc DISP_CC_MDSS_DP_PIXEL_CLK>;
-+				clock-names = "core_iface", "core_aux", "ctrl_link",
-+					      "ctrl_link_iface", "stream_pixel";
-+				#clock-cells = <1>;
-+				assigned-clocks = <&dispcc DISP_CC_MDSS_DP_LINK_CLK_SRC>,
-+						  <&dispcc DISP_CC_MDSS_DP_PIXEL_CLK_SRC>;
-+				assigned-clock-parents = <&dp_phy 0>, <&dp_phy 1>;
-+				phys = <&dp_phy>;
-+				phy-names = "dp";
-+
-+				operating-points-v2 = <&dp_opp_table>;
-+				power-domains = <&rpmhpd SC7180_CX>;
-+
-+				#sound-dai-cells = <0>;
-+
-+				ports {
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+					port@0 {
-+						reg = <0>;
-+						dp_in: endpoint {
-+							remote-endpoint = <&dpu_intf0_out>;
-+						};
-+					};
-+
-+					port@1 {
-+						reg = <1>;
-+						dp_out: endpoint { };
-+					};
-+				};
-+
-+				dp_opp_table: dp-opp-table {
-+					compatible = "operating-points-v2";
-+
-+					opp-160000000 {
-+						opp-hz = /bits/ 64 <160000000>;
-+						required-opps = <&rpmhpd_opp_low_svs>;
-+					};
-+
-+					opp-270000000 {
-+						opp-hz = /bits/ 64 <270000000>;
-+						required-opps = <&rpmhpd_opp_svs>;
-+					};
-+
-+					opp-540000000 {
-+						opp-hz = /bits/ 64 <540000000>;
-+						required-opps = <&rpmhpd_opp_svs_l1>;
-+					};
-+
-+					opp-810000000 {
-+						opp-hz = /bits/ 64 <810000000>;
-+						required-opps = <&rpmhpd_opp_nom>;
-+					};
-+				};
-+			};
-+
-+
- 		};
- 
- 		dispcc: clock-controller@af00000 {
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+Can you explain why this clk_disable() is here? Your function didn't
+turn this clock on, so why should it be turning it off in the error
+case?
 
+
+> +                       drvdata->mi2s_was_prepared[dai->driver->id] = false;
+> +                       return ret;
+> +               }
+
+Why not put the `drvdata->mi2s_was_prepared[dai->driver->id] = true;`
+_after_ you check for errors. Then you don't need to undo it in the
+error case. I presume that your prepare() function isn't reentrant and
+can't be called at the same time as your shutdown (right?).
+
+Other than that, I don't have any objections to this patch anymore. I
+probably won't add a formal "Reviewed-by", though, since I _really_
+don't know anything about the issue at hand or the code. I just
+stumbled upon this because I was getting the clock splat at bootup. If
+someone feels like this needs me to spin up enough to understand /
+really review this patch then please yell.
+
+-Doug
