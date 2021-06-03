@@ -2,104 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9270B39A941
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Jun 2021 19:32:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B52FD39A9B0
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Jun 2021 20:03:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230265AbhFCReZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Jun 2021 13:34:25 -0400
-Received: from mail-qt1-f174.google.com ([209.85.160.174]:44581 "EHLO
-        mail-qt1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229947AbhFCReZ (ORCPT
+        id S230025AbhFCSFY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Jun 2021 14:05:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34426 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229850AbhFCSFX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Jun 2021 13:34:25 -0400
-Received: by mail-qt1-f174.google.com with SMTP id t17so4925828qta.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Jun 2021 10:32:40 -0700 (PDT)
+        Thu, 3 Jun 2021 14:05:23 -0400
+Received: from mail-il1-x132.google.com (mail-il1-x132.google.com [IPv6:2607:f8b0:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F652C061756
+        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Jun 2021 11:03:38 -0700 (PDT)
+Received: by mail-il1-x132.google.com with SMTP id z1so6497422ils.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Jun 2021 11:03:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=EmyX0XyWEIneeDYfbBG4ObIuDu7DXUhUCt5AQSkJlag=;
-        b=n6E+ChRbvpZMpLyiN6668dyKckxes03IVA8NNi42tJcaWWUDIlporID7j9wH8rN6P5
-         lDaXi4omE+fI8G5EYtzEAt70d6smtPw5lbRx9Q6URvNl+5Ic+PnFS8FEPwvDTKgb5Del
-         oQe/DMHD+DMUMjcpdVPk94WrJYfPc7jgMgjKUsSt2sBgtoJAmH0/7nEp1JUAFGXsNPeJ
-         /YSqrQFzDveb2iab77/pjlp2JLF3G/VJJxq8DKzVei+bsVIEuHLyrCirzq8gPNgmbANr
-         MLYNNig9nivfh8yqmVlzYav/hnP1LKy1WLQ2Q8qai5leMm5mZDQLqj5DO0xWvoif13ls
-         0lOQ==
+        h=subject:from:to:cc:references:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=6Ob9fN3eHmxejSCkba7i1gC+Yl9GGWt/OzvnuxIALQw=;
+        b=paVepX0VnqMe8YBRXCY7eHE/0n6xXvBQNbLJvBmfN3wOMegjaKdslfblqpqiucU+Cp
+         fiUpmrDG6u7+ok89LGdVRGozVPyCF9jWnQlFgpJFYMm0/8m3kcwTZ3SFjzknda8UBWvi
+         58H8RmovxQR6GpI0A47fN/L2WVkCpxB554lXY+I4r5blY7B8zxX3vomkrE2wHf+Vf4gz
+         fyhmUEkfK9GlwcWjteoNileGVMkR/k3qDR8tvoL3TB0DFKwwWUYwYk2Br+6eOv5GkCbq
+         6mOv0IuRSwF9+sPdpC608OFuupKa5CV2P2JqKhEDyLmAsUn960ROdvuYUVsqfZaGOeFl
+         SuzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=EmyX0XyWEIneeDYfbBG4ObIuDu7DXUhUCt5AQSkJlag=;
-        b=scq4dNYdX33XhviwTAse5CxgR0STwo9hquZbWyMAMnUvE9vyEQK6iPTMLqNXB9jazs
-         O8jdyxhAc3oLVOvQdyhNrnoUL7xwWHmX9PkhErI4tWyG7xlkygRC+2H/wkGjQUN7jnSD
-         2SzdYnr62QXztMyhyDG1YK3DKa/sZ2MVFwqq7YObwTnK+oQ8ADJ5owW0+cQp02s4z8m2
-         NInA3IdYYa2JqgCYTaa8OXG5jO4ooKFoT9wgjDVMnn5p22VlcEz3wt8hAgcEWoxzmqBU
-         7QV3CyFChZ3PEZYuiBohCprE4/S8w30QFR6ayROgEN3CqEQLP3yY0kr8BOItBLWf2tI/
-         IAVg==
-X-Gm-Message-State: AOAM532mAhoOj92INJBP0IL+KZH51e2BN8ZuAGmf6l53vOedpecEvBGG
-        4Gq8e5FNrNI/YTV/bYXNVatevq0mFUS15mQK5PAQ7g==
-X-Google-Smtp-Source: ABdhPJwhyFKw222zE8Liy33p0ZBdfNsTgR33XIaWU83t4vfa9un3ZfpXlpcOzIVgPrw84BBsZEJOG27VJfUQk84EqWc=
-X-Received: by 2002:ac8:470b:: with SMTP id f11mr535777qtp.273.1622741499724;
- Thu, 03 Jun 2021 10:31:39 -0700 (PDT)
+        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=6Ob9fN3eHmxejSCkba7i1gC+Yl9GGWt/OzvnuxIALQw=;
+        b=Y2yHTAMNbxHVT3p6Fg8h5tXC6JmZiMYmByGRB+N5t5MOvxu84fJrKoHEMhmpSrnQS5
+         NJUjtAXpFz57c1gF3E4m0d/QAHRK748teKZXW94xZP4Ti25SxrAHh4IOaMEL0A9TUQP7
+         z8D2mHUdBXhqv74Ox6N35726lEk8FbXEv1zqfjp+HGTm3xC43qd37m8QOQYNHgplYT1k
+         zZsxSgF4ZYQADH928T6Lhl48kkE4jB/mFYfNYEILhdTDoumTpI7uANf1V8mJLUKUN4OJ
+         gNZjZ4kt6bzHxzAAH6Fy9KbdjsWweLmvfr7In5/lS/wRQ3j9TCrTwOhj9Zdv9/xur+JH
+         aI1Q==
+X-Gm-Message-State: AOAM532hKKXH5nmb7atcC6hsrKZaOp0Dm4Buha6+ugDLOgfbjdD9WVq7
+        N0Opc/A4DuyIIZQPm5ffr8VgGA==
+X-Google-Smtp-Source: ABdhPJzGAIJoYGGO+qgsBYG8XqqUFYBQYiAq0Zbx+HUR+ZZ8zj9HkilaFJyuTtxWZMynAWzYbbGIgQ==
+X-Received: by 2002:a92:608:: with SMTP id x8mr461607ilg.217.1622743417937;
+        Thu, 03 Jun 2021 11:03:37 -0700 (PDT)
+Received: from [172.22.22.4] (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
+        by smtp.googlemail.com with ESMTPSA id r11sm2210347ilt.81.2021.06.03.11.03.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 03 Jun 2021 11:03:37 -0700 (PDT)
+Subject: Re: [PATCH v2] arm64: dts: qcom: sdm845-mtp: enable IPA
+From:   Alex Elder <elder@linaro.org>
+To:     bjorn.andersson@linaro.org, agross@kernel.org
+Cc:     evgreen@chromium.org, subashab@codeaurora.org,
+        cpratapa@codeaurora.org, robh+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20200519123258.29228-1-elder@linaro.org>
+Message-ID: <a9904eae-3de3-8b40-f0be-790c787133bc@linaro.org>
+Date:   Thu, 3 Jun 2021 13:03:35 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.8.1
 MIME-Version: 1.0
-References: <20210603141357.572347-1-yangyingliang@huawei.com> <20210603171253.GA25742@codeaurora.org>
-In-Reply-To: <20210603171253.GA25742@codeaurora.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Thu, 3 Jun 2021 20:31:28 +0300
-Message-ID: <CAA8EJprf+ipk45c-niM1PAHCwn5huBEyvBpQA=dgQMohN43E5g@mail.gmail.com>
-Subject: Re: [PATCH -next] mfd: pm8008: Fix return value check in pm8008_probe()
-To:     Guru Das Srinagesh <gurus@codeaurora.org>
-Cc:     Yang Yingliang <yangyingliang@huawei.com>,
-        open list <linux-kernel@vger.kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>, Lee Jones <lee.jones@linaro.org>,
-        Andy Gross <agross@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20200519123258.29228-1-elder@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 3 Jun 2021 at 20:18, Guru Das Srinagesh <gurus@codeaurora.org> wrote:
->
-> On Thu, Jun 03, 2021 at 10:13:57PM +0800, Yang Yingliang wrote:
-> > In case of error, the function devm_regmap_init_i2c() returns ERR_PTR()
-> > and never returns NULL. The NULL test in the return value check
-> > should be replaced with IS_ERR().
-> >
-> > Fixes: 6b149f3310a4 ("mfd: pm8008: Add driver for QCOM PM8008 PMIC")
-> > Reported-by: Hulk Robot <hulkci@huawei.com>
-> > Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
->
-> Acked-by: Guru Das Srinagesh <gurus@codeaurora.org>
+On 5/19/20 7:32 AM, Alex Elder wrote:
+> Enable IPA on the SDM845 MTP.
+> 
+> Signed-off-by: Alex Elder <elder@linaro.org>
+> ---
+> 
+> v2: This device uses the AP--not the modem--for early initialization.
 
-Interestingly, the change does not correspond to the changelog
-message. And the code is correct as devm_kzalloc returns NULL if I
-remember correctly.
+Ping.  This patch didn't get accepted (over a year ago!),
+but it still applies cleanly on top-of-tree.  If you
+would like me to re-send it, let me know.  Thanks.
 
->
-> > ---
-> >  drivers/mfd/qcom-pm8008.c | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
-> >
-> > diff --git a/drivers/mfd/qcom-pm8008.c b/drivers/mfd/qcom-pm8008.c
-> > index c472d7f8103c..dfefa60d693b 100644
-> > --- a/drivers/mfd/qcom-pm8008.c
-> > +++ b/drivers/mfd/qcom-pm8008.c
-> > @@ -223,7 +223,7 @@ static int pm8008_probe(struct i2c_client *client)
-> >       struct pm8008_data *chip;
-> >
-> >       chip = devm_kzalloc(&client->dev, sizeof(*chip), GFP_KERNEL);
-> > -     if (!chip)
-> > +     if (IS_ERR(chip))
-> >               return -ENOMEM;
-> >
-> >       chip->dev = &client->dev;
-> > --
-> > 2.25.1
-> >
+https://lore.kernel.org/lkml/20200519123258.29228-1-elder@linaro.org/
 
+					-Alex
 
+> 
+>   arch/arm64/boot/dts/qcom/sdm845-mtp.dts | 5 +++++
+>   1 file changed, 5 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845-mtp.dts b/arch/arm64/boot/dts/qcom/sdm845-mtp.dts
+> index 1372fe8601f5..91ede9296aff 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845-mtp.dts
+> +++ b/arch/arm64/boot/dts/qcom/sdm845-mtp.dts
+> @@ -448,6 +448,11 @@
+>   	clock-frequency = <400000>;
+>   };
+>   
+> +&ipa {
+> +	status = "okay";
+> +	memory-region = <&ipa_fw_mem>;
+> +};
+> +
+>   &mdss {
+>   	status = "okay";
+>   };
+> 
 
--- 
-With best wishes
-Dmitry
