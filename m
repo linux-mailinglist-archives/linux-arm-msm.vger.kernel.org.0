@@ -2,86 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BC12439AD5D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Jun 2021 23:59:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BEF7039AD82
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Jun 2021 00:16:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229963AbhFCWBk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Jun 2021 18:01:40 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:43078 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230316AbhFCWBk (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Jun 2021 18:01:40 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1622757595; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=JopR8lsZRXcBqVt7w6KYKzZfR6Rv2Sc1+2IbY1eLLm0=;
- b=O2CJomK7j1FyahTmbqy2Ps/5DLCFWLhYYwXLJn1gAPNIe5LZSYSr2+hZKpY8XTTUpI24OByJ
- 5lAK958/TP+TKNNyIxTaQ0zUHH+PcX1xRZkz9AZy1Yzk7jVqGxyITHPFp4zDXsoTafAxAJ82
- HYcBSWzkx17MmC6P25TK9LdE/aM=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
- 60b950d7f726fa41884e201b (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 03 Jun 2021 21:59:51
- GMT
-Sender: khsieh=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id A1E47C433F1; Thu,  3 Jun 2021 21:59:50 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: khsieh)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 25277C4338A;
-        Thu,  3 Jun 2021 21:59:49 +0000 (UTC)
+        id S229927AbhFCWSJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Jun 2021 18:18:09 -0400
+Received: from mail-pg1-f176.google.com ([209.85.215.176]:43624 "EHLO
+        mail-pg1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229656AbhFCWSJ (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 3 Jun 2021 18:18:09 -0400
+Received: by mail-pg1-f176.google.com with SMTP id e22so6216240pgv.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Jun 2021 15:16:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=Xlh/oNiO3TZl/popVg/iq16H/seu6puB9V0a6+PnUTA=;
+        b=ii2flrQzSCfBbiKjmatRgjNHRcy4XbdREu4axA/t8CDmXw7J+p7pAHClIv19jO0kjq
+         +scvaH0csxFb6xSmioqJuWkhfeE+B9h5NzZqFeQYUhDFPT9bVbXHUMr31H/9MaDFXX+8
+         oDM9ZLmBLYKXZDlu7Se7l2D+oAWPTtQP2h3kI=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=Xlh/oNiO3TZl/popVg/iq16H/seu6puB9V0a6+PnUTA=;
+        b=KWxv+g0bnKdKVT9zOT2ANs+pKJO5oHb8qNgsekZjXL5LH8jJcgr6/sLaCryAyXWNW5
+         G+JQSgMRfY/QAQGBhtxlPHts6Me67mINRSf5eDowkZqkjBYDVcFElZ0GklDSKx3GuFMe
+         /rcbEy+x8T6yRqs6xAdoFh0+SCxG90bw6pkxtnxlLuQ6D8KXJ767ZU9TVBO9J6NP0Y/t
+         HyYqSP9/7rJF9uUM1TW/KS3SVAJ6xzwRNfVOMps9HQ6hqD0dVG23l+yntrq35TbW4caR
+         GGNt9K+UOTbCTZmMiF8SfnKPaegTDuwkxWeP/wUvjz19zu8mLrKQbIfRV2v2OCvkbi7T
+         agFA==
+X-Gm-Message-State: AOAM533wHTtVGacf+z4beI3h9y4uK3Z4+o4hg+QkQ+6/UrpQmCejuiyt
+        y3LGdD8DRSspf8vMwXxd4gg6+Q==
+X-Google-Smtp-Source: ABdhPJz3UbVmJ50yQ1P/8llEFze5hkwDfxdoPLS+Dr46FFuRdBotkg/2pP/9HTXF3ybsg51Jw2fW3A==
+X-Received: by 2002:a63:d754:: with SMTP id w20mr1648264pgi.5.1622758511958;
+        Thu, 03 Jun 2021 15:15:11 -0700 (PDT)
+Received: from www.outflux.net (smtp.outflux.net. [198.145.64.163])
+        by smtp.gmail.com with ESMTPSA id j3sm66799pfe.98.2021.06.03.15.15.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 03 Jun 2021 15:15:11 -0700 (PDT)
+Date:   Thu, 3 Jun 2021 15:15:09 -0700
+From:   Kees Cook <keescook@chromium.org>
+To:     "Gustavo A. R. Silva" <gustavoars@kernel.org>
+Cc:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org
+Subject: Re: [PATCH v3][venus-for-next-v5.14] media: venus: hfi_cmds: Fix
+ packet size calculation
+Message-ID: <202106031514.BA827D5@keescook>
+References: <20210603001708.GA55239@embeddedor>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Thu, 03 Jun 2021 14:59:49 -0700
-From:   khsieh@codeaurora.org
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robdclark@gmail.com,
-        sean@poorly.run, vkoul@kernel.org, abhinavk@codeaurora.org,
-        aravindh@codeaurora.org, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v5] drm/msm/dp: power off DP phy at suspend
-In-Reply-To: <CAE-0n51-CsHPwYmceUq1kTaG=L+ifG3kX2pxJxTG_=r4Xm67_g@mail.gmail.com>
-References: <1622734846-14179-1-git-send-email-khsieh@codeaurora.org>
- <CAE-0n51-CsHPwYmceUq1kTaG=L+ifG3kX2pxJxTG_=r4Xm67_g@mail.gmail.com>
-Message-ID: <3f62fc2142f6089c43ec3a4b7b10cadc@codeaurora.org>
-X-Sender: khsieh@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210603001708.GA55239@embeddedor>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-06-03 13:22, Stephen Boyd wrote:
-> Can you Cc dri-devel?
+On Wed, Jun 02, 2021 at 07:17:08PM -0500, Gustavo A. R. Silva wrote:
+> Now that a one-element array was replaced with a flexible-array member
+> in struct hfi_sys_set_property_pkt, use the struct_size() helper to
+> correctly calculate the packet size.
 > 
-Sorry for dropping this cc.
-Should I re submit this v5 with cc=dri-devel?
+> Fixes: 701e10b3fd9f ("media: venus: hfi_cmds.h: Replace one-element array with flexible-array member")
+> Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
 
+Thanks for the update!
 
+Reviewed-by: Kees Cook <keescook@chromium.org>
 
-> Quoting Kuogee Hsieh (2021-06-03 08:40:46)
->> Normal DP suspend operation contains two steps, display off followed
->> by dp suspend, to complete system wide suspending cycle if display is
->> up at that time. In this case, DP phy will be powered off at display
->> off. However there is an exception case that depending on the timing
->> of dongle plug in during system wide suspending, sometimes display off
->> procedure may be skipped and dp suspend was called directly. In this
->> case, dp phy is stay at powered on (phy->power_count = 1) so that at
->> next resume dp driver crash at main link clock enable due to phy is
->> not physically powered on. This patch will call 
->> dp_ctrl_off_link_stream()
->> to tear down main link and power off phy at dp_pm_suspend() if main 
->> link
->> had been brought up.
->> 
+-- 
+Kees Cook
