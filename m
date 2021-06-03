@@ -2,190 +2,161 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3838939A579
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Jun 2021 18:11:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D0D1139A5D2
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Jun 2021 18:34:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229837AbhFCQNY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Jun 2021 12:13:24 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:43844 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229656AbhFCQNY (ORCPT
+        id S229786AbhFCQgd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Jun 2021 12:36:33 -0400
+Received: from mail-qt1-f178.google.com ([209.85.160.178]:33426 "EHLO
+        mail-qt1-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229695AbhFCQgd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Jun 2021 12:13:24 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1622736699; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=YPt57uRHkIKCAc3k7uJNjdS1IBPwSdXWYI60IXWNva4=; b=ZLbhcvQyOxUVnF4/Bdqn1bO6+ebbDt0IDZvh1iQVen450OVwhF9GDw9jEPRLIA2hJNB/BT95
- KXJ5BOAjjaymW4cOoq9rKzJqysUuHj7YYnCIlgBOF7E3nbZ1HeOH6+JjEiTO7aRPpo2n95e/
- 23Y2NZq9inYw5G1GqPwXP7Mp5Ek=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
- 60b8feb7ed59bf69cca96c1f (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 03 Jun 2021 16:09:27
- GMT
-Sender: khsieh=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 31783C43148; Thu,  3 Jun 2021 16:09:26 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
-Received: from khsieh-linux1.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: khsieh)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id F054AC4360C;
-        Thu,  3 Jun 2021 16:09:21 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org F054AC4360C
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=khsieh@codeaurora.org
-From:   Kuogee Hsieh <khsieh@codeaurora.org>
-To:     robdclark@gmail.com, sean@poorly.run, swboyd@chromium.org,
-        vkoul@kernel.org, agross@kernel.org, bjorn.andersson@linaro.org,
-        robh+dt@kernel.org, devicetree@vger.kernel.org
-Cc:     abhinavk@codeaurora.org, aravindh@codeaurora.org,
-        khsieh@codeaurora.org, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v2] arm64/dts/qcom/sc7180: Add Display Port dt node
-Date:   Thu,  3 Jun 2021 09:09:15 -0700
-Message-Id: <1622736555-15775-1-git-send-email-khsieh@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        Thu, 3 Jun 2021 12:36:33 -0400
+Received: by mail-qt1-f178.google.com with SMTP id a15so4858608qta.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Jun 2021 09:34:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=7DZmud8/NtbG9baAZHHVlQy45tmMkpb0U+jSSBeyr0o=;
+        b=OJtnsUj+NU3k9eUbaBLoZa3VTWFwShEc8qClgbcAydu3jpRLmFZvXo0S0GFkNEQI5m
+         70zGDVy/c/F2SXrvYFzqUe9QI0Q0gdpfzp+YNtkvGdfH2q+gQoAYI1E8UDgPJ2lCKjsO
+         kfdvL4JeF8H4G+Mov9iBsP3ybfNhm3/gfInNTTwBWY9AJRuCGrg6Eh/BBTy5T/m+n4V5
+         dNe5UALRYPNlKYm63n6ONLLrp4eWKqEymkPfl5A4UF0ilQ9HcROTNbMPeHdb39D9NcZq
+         ynWs1/W9Hwkrtco0K4VU3Or/HcFjgj4YwiGGBpMIIMvf5GXxGf0y3bgpj5rOZ7gTNgSo
+         t9nw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=7DZmud8/NtbG9baAZHHVlQy45tmMkpb0U+jSSBeyr0o=;
+        b=HHrzOvOUln7NqLMc7ja7ATnacbtRBopkRVRw3lb9BGd1q45ced80w+puH3KrSKxaiD
+         T2pbr1gZwqr3+AGQpHA746vRwaELOQss4jWmgREYjvG7vxQ8joG6LM5j0sMuLCmn3dvz
+         pwl09Jl8UHVMZOqFILBdA8bkjz0qzeCbyPD6yeGjGkUBTQHAR3c2lf/40fPBAZWqR6RT
+         VPuI5bjGaOyYKRwmcgsDALcU2M4AwSvw17ZW/nkcS5dVXZSTi4/PsUpGDT9KEGkmptrB
+         dtfyLMo2lf6exuHNlvSkYKYbz9hvnKuv2XjjH6MbcxrE5pIfGTB47INxV1shS5uJsSAS
+         8Jvg==
+X-Gm-Message-State: AOAM531Lh/a124QSGIJFPR+h3WhDzSR0mwYmBsTadN7uptj2MKWjwHow
+        ZRNAHS1zqAZOQrmP4/JP639AjYlexu9xve8Xn30BYA==
+X-Google-Smtp-Source: ABdhPJzeujnPaoppD4L3W7TKyoCjppbsv+WDwxb4a7/akyjuJiDJQcS4p674wBCDV3Vht6awFUTQcfFmk6ji0AGwTas=
+X-Received: by 2002:ac8:6b08:: with SMTP id w8mr335813qts.364.1622738028536;
+ Thu, 03 Jun 2021 09:33:48 -0700 (PDT)
+MIME-Version: 1.0
+References: <20210529002508.3839467-1-dmitry.baryshkov@linaro.org>
+ <20210529002508.3839467-6-dmitry.baryshkov@linaro.org> <CAF6AEGsoUET_=P1YkAKb7GMRyrZV5_jmGeMHZhB1u4uE9m7B9A@mail.gmail.com>
+In-Reply-To: <CAF6AEGsoUET_=P1YkAKb7GMRyrZV5_jmGeMHZhB1u4uE9m7B9A@mail.gmail.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Thu, 3 Jun 2021 19:33:37 +0300
+Message-ID: <CAA8EJpqkrkYF=DW46PWB=0huB9U6e2QqXjJv532f0PyDCC-eXA@mail.gmail.com>
+Subject: Re: [RFC 5/8] lib: add small API for handling register snapshots
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Stephen Boyd <sboyd@kernel.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add DP device node on sc7180.
+On Thu, 3 Jun 2021 at 17:41, Rob Clark <robdclark@gmail.com> wrote:
+>
+> On Fri, May 28, 2021 at 5:25 PM Dmitry Baryshkov
+> <dmitry.baryshkov@linaro.org> wrote:
+> >
+> > Add small API covering lists of register dumps. Currently this is a part
+> > of MSM DRM driver, but is extracted as it might be usefull to other
+> > drivers too.
+> >
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> >  include/linux/dump_state.h | 78 ++++++++++++++++++++++++++++++++++++++
+> >  lib/Kconfig                |  3 ++
+> >  lib/Makefile               |  1 +
+> >  lib/dump_state.c           | 51 +++++++++++++++++++++++++
+> >  4 files changed, 133 insertions(+)
+> >  create mode 100644 include/linux/dump_state.h
+> >  create mode 100644 lib/dump_state.c
+> >
+> [snip]
+> > diff --git a/lib/dump_state.c b/lib/dump_state.c
+> > new file mode 100644
+> > index 000000000000..58d88be65c0a
+> > --- /dev/null
+> > +++ b/lib/dump_state.c
+> > @@ -0,0 +1,51 @@
+> > +/* SPDX-License-Identifier: GPL-2.0-only */
+> > +/*
+> > + * Copyright (c) 2020-2021, The Linux Foundation. All rights reserved.
+> > + * Copyright (c) 2021, Linaro Ltd
+> > + */
+> > +
+> > +#include <linux/dump_state.h>
+> > +#include <linux/slab.h>
+> > +
+> > +void dump_state_free_blocks(struct dump_state *state)
+> > +{
+> > +       struct dump_state_block *block, *tmp;
+> > +
+> > +       list_for_each_entry_safe(block, tmp, &state->blocks, node) {
+> > +               list_del(&block->node);
+> > +               kfree(block);
+> > +       }
+> > +}
+> > +EXPORT_SYMBOL(dump_state_free_blocks);
+>
+> nit, perhaps EXPORT_SYMBOL_GPL()?
 
-Changes in v2:
--- replace msm_dp with dp
--- replace dp_opp_table with opp_table
+I don't really care. What is the current recommendation?
 
-Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
----
- arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi |  9 ++++
- arch/arm64/boot/dts/qcom/sc7180.dtsi         | 78 ++++++++++++++++++++++++++++
- 2 files changed, 87 insertions(+)
+>
+> BR,
+> -R
+>
+> > +
+> > +struct dump_state_block *dump_state_allocate_block_va(void __iomem *base_addr, size_t len, gfp_t gfp, const char *fmt, va_list args)
+> > +{
+> > +       struct dump_state_block *block = kzalloc(sizeof(*block) + len, gfp);
+> > +
+> > +       if (!block)
+> > +               return ERR_PTR(-ENOMEM);
+> > +
+> > +       vsnprintf(block->name, sizeof(block->name), fmt, args);
+> > +
+> > +       INIT_LIST_HEAD(&block->node);
+> > +       block->size = len;
+> > +       block->base_addr = base_addr;
+> > +
+> > +       return block;
+> > +}
+> > +EXPORT_SYMBOL(dump_state_allocate_block);
+> > +
+> > +struct dump_state_block *dump_state_allocate_block(void __iomem *base_addr, size_t len, gfp_t gfp, const char *fmt, ...)
+> > +{
+> > +       struct dump_state_block *block;
+> > +       va_list va;
+> > +
+> > +       va_start(va, fmt);
+> > +
+> > +       block = dump_state_allocate_block_va(base_addr, len, gfp, fmt, va);
+> > +
+> > +       va_end(va);
+> > +
+> > +       return block;
+> > +}
+> > +EXPORT_SYMBOL(dump_state_allocate_block_va);
+> > --
+> > 2.30.2
+> >
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-index 24d293e..40367a2 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-@@ -786,6 +786,15 @@ hp_i2c: &i2c9 {
- 	status = "okay";
- };
- 
-+&dp {
-+        status = "okay";
-+        pinctrl-names = "default";
-+        pinctrl-0 = <&dp_hot_plug_det>;
-+        data-lanes = <0 1>;
-+        vdda-1p2-supply = <&vdda_usb_ss_dp_1p2>;
-+        vdda-0p9-supply = <&vdda_usb_ss_dp_core>;
-+};
-+
- &pm6150_adc {
- 	charger-thermistor@4f {
- 		reg = <ADC5_AMUX_THM3_100K_PU>;
-diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-index 6228ba2..05a4133 100644
---- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -3032,6 +3032,13 @@
- 							remote-endpoint = <&dsi0_in>;
- 						};
- 					};
-+
-+					port@2 {
-+						reg = <2>;
-+						dpu_intf0_out: endpoint {
-+							remote-endpoint = <&dp_in>;
-+						};
-+					};
- 				};
- 
- 				mdp_opp_table: mdp-opp-table {
-@@ -3148,6 +3155,77 @@
- 
- 				status = "disabled";
- 			};
-+
-+			dp: displayport-controller@ae90000 {
-+				compatible = "qcom,sc7180-dp";
-+				status = "disabled";
-+
-+				reg = <0 0x0ae90000 0 0x1400>;
-+
-+				interrupt-parent = <&mdss>;
-+				interrupts = <12>;
-+
-+				clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
-+					 <&dispcc DISP_CC_MDSS_DP_AUX_CLK>,
-+					 <&dispcc DISP_CC_MDSS_DP_LINK_CLK>,
-+					 <&dispcc DISP_CC_MDSS_DP_LINK_INTF_CLK>,
-+					 <&dispcc DISP_CC_MDSS_DP_PIXEL_CLK>;
-+				clock-names = "core_iface", "core_aux", "ctrl_link",
-+					      "ctrl_link_iface", "stream_pixel";
-+				#clock-cells = <1>;
-+				assigned-clocks = <&dispcc DISP_CC_MDSS_DP_LINK_CLK_SRC>,
-+						  <&dispcc DISP_CC_MDSS_DP_PIXEL_CLK_SRC>;
-+				assigned-clock-parents = <&dp_phy 0>, <&dp_phy 1>;
-+				phys = <&dp_phy>;
-+				phy-names = "dp";
-+
-+				operating-points-v2 = <&opp_table>;
-+				power-domains = <&rpmhpd SC7180_CX>;
-+
-+				#sound-dai-cells = <0>;
-+
-+				ports {
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+					port@0 {
-+						reg = <0>;
-+						dp_in: endpoint {
-+							remote-endpoint = <&dpu_intf0_out>;
-+						};
-+					};
-+
-+					port@1 {
-+						reg = <1>;
-+						dp_out: endpoint { };
-+					};
-+				};
-+
-+				opp_table: dp-opp-table {
-+					compatible = "operating-points-v2";
-+
-+					opp-160000000 {
-+						opp-hz = /bits/ 64 <160000000>;
-+						required-opps = <&rpmhpd_opp_low_svs>;
-+					};
-+
-+					opp-270000000 {
-+						opp-hz = /bits/ 64 <270000000>;
-+						required-opps = <&rpmhpd_opp_svs>;
-+					};
-+
-+					opp-540000000 {
-+						opp-hz = /bits/ 64 <540000000>;
-+						required-opps = <&rpmhpd_opp_svs_l1>;
-+					};
-+
-+					opp-810000000 {
-+						opp-hz = /bits/ 64 <810000000>;
-+						required-opps = <&rpmhpd_opp_nom>;
-+					};
-+				};
-+			};
-+
-+
- 		};
- 
- 		dispcc: clock-controller@af00000 {
+
+
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
-
+With best wishes
+Dmitry
