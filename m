@@ -2,95 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 25B8439AB1A
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Jun 2021 21:54:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7144B39ABBB
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Jun 2021 22:24:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229702AbhFCT4C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Jun 2021 15:56:02 -0400
-Received: from mail.kernel.org ([198.145.29.99]:36044 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229576AbhFCT4B (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Jun 2021 15:56:01 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id E280F6140B;
-        Thu,  3 Jun 2021 19:54:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1622750056;
-        bh=A8bTRZWGyUBja/MSUQ29VA/mAZj6QtYjbvJCbANIqsE=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=lfvGW1xaIASaWdfnsj8Xa660kIIT0mmbK6felqgEx4EDG7tPnuUtWGLq9bZeqboYv
-         jFvKEAaYpYW6PQOCOemYaLD6rVqaUJmOPXUycexgYypJfAlqP1xhsXpPhj2AD6fGgE
-         iOAZbfFS2LGvC0fw2keWywTtHxmEkVsSa5/RR0djNImU9X2aZtCSVY5pViIUIC+7MU
-         AYBLRvSSIkgyKad41421ycs7ejiZ1pdWOJMQJYtt6D8qItdbbJI89CpbkYfsaKPBLb
-         mGpj8e8CkhwtWk0dhrRb/AiSG6CcvKzb6zYq4JfvZ2Zvbzw+RRp0UHjrjQ6u3Mkr6i
-         XrlU86O1/zRgg==
-Received: by mail-ej1-f51.google.com with SMTP id ho18so31006ejc.8;
-        Thu, 03 Jun 2021 12:54:16 -0700 (PDT)
-X-Gm-Message-State: AOAM530rYgqkTinWhdF8evwklIuiAH8n/hHsIFY8sI/8En2vNX1hh5vf
-        +Jf4QmA1EAHrvK6STo0IO6AR143rEtEmJ1V3fQ==
-X-Google-Smtp-Source: ABdhPJwDQD3xcAB0EXKWI0UDWW+ahHSVny9rQ0wOAWpa2cEgFyxpNPLRRrZrFwuDL+b/HEK8on4d0VTBOUxATJD7qJU=
-X-Received: by 2002:a17:906:fa13:: with SMTP id lo19mr895806ejb.468.1622750055293;
- Thu, 03 Jun 2021 12:54:15 -0700 (PDT)
+        id S229707AbhFCUZt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Jun 2021 16:25:49 -0400
+Received: from mail-oo1-f51.google.com ([209.85.161.51]:44875 "EHLO
+        mail-oo1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229576AbhFCUZs (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 3 Jun 2021 16:25:48 -0400
+Received: by mail-oo1-f51.google.com with SMTP id o5-20020a4a2c050000b0290245d6c7b555so1695985ooo.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Jun 2021 13:23:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=cMLM4cflpxEbsfu/ce/EkzAINJ+710gVrefVr0HI+qY=;
+        b=L0SkuWBv+83YGqTd6ik3MB9wor9LeocWUua6DOQob5uCIeKncJusY/+64rblVTnKgZ
+         tTRCUuoUgWaAQg7TsuVlaO5NxTdPq6WOncJXARM0/uRiV35POzwPmEbSKaXyAuzCtWDc
+         ONq7D/gq3ivz6aXRSTHk3Dn7oHzaEooVJ3WyM=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=cMLM4cflpxEbsfu/ce/EkzAINJ+710gVrefVr0HI+qY=;
+        b=BHUF+Gv3iMQPiPb40WA631xE2Kn8xow96jDEn5Q/V0R4/BPPJvc00wBauXkGNIPdW+
+         Dy/8AW84raYMCUdowzL2so2KerdJNsZcL1iPLhsrQTVK9g/0+UiLVuNrYULslgtgYKvR
+         L0Y5K0DKo8SyKllE2Kf/wOLjEU0tLrIAkBzIW3JpXFM+c2knBIzFADXOT+5QDSWJ+wIX
+         lXzUk3WnktbyNtyEZQ4xUmuhrznueGvAjBB8iGnGkHvQfWf3OV6O5BMq8xwtg+oQXNTY
+         2IkyjRFdcfIpQscFZ/80dC0xxcZz7b7ec4nb14XwFPEnqdh9RL0OLzquWto7sdfrvTx+
+         KGRg==
+X-Gm-Message-State: AOAM531MWRu2l+hLB88DoyVvpGLly1Rjl4wSS8p9v0v9YgFvLwTAIrt9
+        ZT+EynmYW/SS8ebH5Ni6/6UoY4VAMJL8MUHapniXT4R+WmM=
+X-Google-Smtp-Source: ABdhPJwJRX5XWGLQvcvpQ5gyjX7E4oP0MOspFx028qV6yYflYoKemYC4DYS5FSHp16wnBONkFO2dTwSCsw/L7BS4wVU=
+X-Received: by 2002:a4a:85ca:: with SMTP id u10mr857805ooh.80.1622751767413;
+ Thu, 03 Jun 2021 13:22:47 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 3 Jun 2021 20:22:47 +0000
 MIME-Version: 1.0
-References: <20210602215252.695994-1-keescook@chromium.org>
- <20210602215252.695994-4-keescook@chromium.org> <CAL_JsqLO_YbT3VU0+uHH2t6ONs_dWfBhqds9okYD0254ZiBf=A@mail.gmail.com>
-In-Reply-To: <CAL_JsqLO_YbT3VU0+uHH2t6ONs_dWfBhqds9okYD0254ZiBf=A@mail.gmail.com>
-From:   Rob Herring <robh@kernel.org>
-Date:   Thu, 3 Jun 2021 14:54:03 -0500
-X-Gmail-Original-Message-ID: <CAL_JsqLF6WhsoSWtxVUqUPDRMM8qwGwZqWa_xtNqsVyq8OCz6w@mail.gmail.com>
-Message-ID: <CAL_JsqLF6WhsoSWtxVUqUPDRMM8qwGwZqWa_xtNqsVyq8OCz6w@mail.gmail.com>
-Subject: Re: [PATCH 3/3] drm/pl111: depend on CONFIG_VEXPRESS_CONFIG
-To:     Kees Cook <keescook@chromium.org>
-Cc:     Dave Airlie <airlied@redhat.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Arnd Bergmann <arnd@kernel.org>,
-        kernel test robot <lkp@intel.com>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Emma Anholt <emma@anholt.net>, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <sean@poorly.run>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Sam Ravnborg <sam@ravnborg.org>, linux-kernel@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org
+In-Reply-To: <1622734846-14179-1-git-send-email-khsieh@codeaurora.org>
+References: <1622734846-14179-1-git-send-email-khsieh@codeaurora.org>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.9.1
+Date:   Thu, 3 Jun 2021 20:22:47 +0000
+Message-ID: <CAE-0n51-CsHPwYmceUq1kTaG=L+ifG3kX2pxJxTG_=r4Xm67_g@mail.gmail.com>
+Subject: Re: [PATCH v5] drm/msm/dp: power off DP phy at suspend
+To:     Kuogee Hsieh <khsieh@codeaurora.org>, agross@kernel.org,
+        bjorn.andersson@linaro.org, robdclark@gmail.com, sean@poorly.run,
+        vkoul@kernel.org
+Cc:     abhinavk@codeaurora.org, aravindh@codeaurora.org,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jun 3, 2021 at 1:42 PM Rob Herring <robh@kernel.org> wrote:
->
-> On Wed, Jun 2, 2021 at 4:53 PM Kees Cook <keescook@chromium.org> wrote:
-> >
-> > Avoid randconfig build failures by requiring VEXPRESS_CONFIG:
-> >
-> > aarch64-linux-gnu-ld: drivers/gpu/drm/pl111/pl111_versatile.o: in function `pl111_vexpress_clcd_init':
-> > pl111_versatile.c:(.text+0x220): undefined reference to `devm_regmap_init_vexpress_config'
->
-> pl111_vexpress_clcd_init() starts with:
->
-> if (!IS_ENABLED(CONFIG_VEXPRESS_CONFIG))
->                 return -ENODEV;
->
-> Isn't that supposed to be enough to avoid an undefined reference?
->
-> Making the whole file depend on VEXPRESS_CONFIG is not right either.
-> Not all platforms need it.
+Can you Cc dri-devel?
 
-Specifically, these defconfigs will break as they all use PL111 but
-don't need nor enable VEXPRESS_CONFIG:
-
-arch/arm/configs/integrator_defconfig:CONFIG_DRM_PL111=y
-arch/arm/configs/lpc18xx_defconfig:CONFIG_DRM_PL111=y
-arch/arm/configs/lpc32xx_defconfig:CONFIG_DRM_PL111=y
-arch/arm/configs/nhk8815_defconfig:CONFIG_DRM_PL111=y
-arch/arm/configs/realview_defconfig:CONFIG_DRM_PL111=y
-arch/arm/configs/spear3xx_defconfig:CONFIG_DRM_PL111=y
-arch/arm/configs/versatile_defconfig:CONFIG_DRM_PL111=y
-
-These defconfigs should all be failing with the same error, but don't
-from what I've tried nor have I seen any kernelci failures.
-
-Rob
+Quoting Kuogee Hsieh (2021-06-03 08:40:46)
+> Normal DP suspend operation contains two steps, display off followed
+> by dp suspend, to complete system wide suspending cycle if display is
+> up at that time. In this case, DP phy will be powered off at display
+> off. However there is an exception case that depending on the timing
+> of dongle plug in during system wide suspending, sometimes display off
+> procedure may be skipped and dp suspend was called directly. In this
+> case, dp phy is stay at powered on (phy->power_count = 1) so that at
+> next resume dp driver crash at main link clock enable due to phy is
+> not physically powered on. This patch will call dp_ctrl_off_link_stream()
+> to tear down main link and power off phy at dp_pm_suspend() if main link
+> had been brought up.
+>
