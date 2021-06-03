@@ -2,94 +2,165 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 743BC39ABC0
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Jun 2021 22:25:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 51CB139ABCA
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Jun 2021 22:29:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229803AbhFCU1J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Jun 2021 16:27:09 -0400
-Received: from mail-qt1-f176.google.com ([209.85.160.176]:36443 "EHLO
-        mail-qt1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229640AbhFCU1G (ORCPT
+        id S229617AbhFCUbD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Jun 2021 16:31:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38070 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229576AbhFCUbC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Jun 2021 16:27:06 -0400
-Received: by mail-qt1-f176.google.com with SMTP id s12so5385181qta.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Jun 2021 13:25:06 -0700 (PDT)
+        Thu, 3 Jun 2021 16:31:02 -0400
+Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com [IPv6:2607:f8b0:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 910E4C061756
+        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Jun 2021 13:29:17 -0700 (PDT)
+Received: by mail-ot1-x333.google.com with SMTP id h24-20020a9d64180000b029036edcf8f9a6so7029041otl.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Jun 2021 13:29:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=K0U2vfO0s/gXz3YV0/zSFcReO1Jx7LkT5Q9OOSBMSss=;
-        b=j1A98YTafAPvHjzQY+ZV3QAOa/LBVzmJgVhIbhQLSvdy7bXiODny1yOlaQlb7LWls1
-         opVdTQxQBf3Q8hayY4a9lm9mPaZjJGGYSQ2H30V1xIUhm1pwHvYQ50/PtHnXUA6ijneI
-         dnlEKejOa4+paYKemXhcp2qBAN9dE/b3ctD14=
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=xX3VYyjxzdpIjPz97c6PlVOdKP115o6p3Ui5EeqQcH8=;
+        b=ih5nYpGzowbPdJfl92eNjSiXeyjEU8mqtDMi6euxHBeilZo65ZqleTe1Pm4RddVC4c
+         B6r57+8YHVolT9AF5qMAGOdIsftI5Q9ik+rlE9alUQvw0PzTC6OwyETotdcYfF0LmBAX
+         Mt53RFDUjlIO50L5YY2Ogw6GD8v/kIWSbrUGc=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=K0U2vfO0s/gXz3YV0/zSFcReO1Jx7LkT5Q9OOSBMSss=;
-        b=oP5Dye58AMzb9uKWvC4B6v8e356mKJHUNRYwPZXzqBkk5iCyGskWuiBZUG3n2dHfyd
-         qJjg1fRz52EgOKFPdWeBE8cvDMvw2i4JYd+BQeXfUK+LMJBnHFTfhQXYPXKNduIFzYAb
-         64EwZI3dvN+izjcEROVT0YT+PpBnqIuuse7/kH0qOL8ozL8VwGxU9ztrbN12liWqsVHQ
-         xrTu+5yPClWQ/HpymVkf4mpcAHn8m5zPoTYguSH64VSXO83We6LlxaeugZuu3Vq3JIjg
-         osprygEc0cn8kWg1oMb3L6bxkSteJ8TmcvVW85b0dcRT+BLZjWb1Ahw7r1RKMNtrQh++
-         9sGA==
-X-Gm-Message-State: AOAM531D3WwaAMFQrXSUjUUzTjM4ii89ds+bMzfDr89cVu2qyTaokaKj
-        3xUnVRs8VwexxoM44n5j2UXoOScysiyDtg==
-X-Google-Smtp-Source: ABdhPJwT527RMI9p3X6mJCgsQsPjQW/CmPo1GF/y2qOvUDC6ZJTHGdqtWk6fXyDHSNGqZ6tBAmCgOA==
-X-Received: by 2002:a05:622a:315:: with SMTP id q21mr1269574qtw.203.1622751845456;
-        Thu, 03 Jun 2021 13:24:05 -0700 (PDT)
-Received: from mail-yb1-f174.google.com (mail-yb1-f174.google.com. [209.85.219.174])
-        by smtp.gmail.com with ESMTPSA id p17sm2574291qkg.67.2021.06.03.13.24.03
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 03 Jun 2021 13:24:04 -0700 (PDT)
-Received: by mail-yb1-f174.google.com with SMTP id x6so10561504ybl.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Jun 2021 13:24:03 -0700 (PDT)
-X-Received: by 2002:a25:8191:: with SMTP id p17mr361035ybk.405.1622751843264;
- Thu, 03 Jun 2021 13:24:03 -0700 (PDT)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=xX3VYyjxzdpIjPz97c6PlVOdKP115o6p3Ui5EeqQcH8=;
+        b=UBaoVGrvF0s0cvb3fFN1Hq++Awah7o8hlLKa0tuHGi86lABpp8KwuP7mHNij/U5hDJ
+         Sz5hOC4l25Ya7MInPCK4FQ0DYgXL71jnlijr2kPAMWovEf+2yyFMx2xti/0cAYDsNXMy
+         ePgVWetVKYv0/x37eZ0f2WLQKEf6YkQzDIRneadsJzJDX6rlVzeXKvvceQ81ksvqkXOS
+         DLiGdD1NrT3nhFBWXDXGnJhE/VYCa7NvKl3umQRgCvf+5oa9u+dchGkzu0jVou4vTD2B
+         g7vmzr/8BbuCmL6DwAOg2gZn7R5F6j0ZvIvPM1d7Wtw8b8+kSRMTWppnQy6EQSQnaj7w
+         WQ/w==
+X-Gm-Message-State: AOAM533cvZBOak85SecSD38sbMNwEi/PHNXc/4KNfiKDMe2KWN3UDO9j
+        HwxSUKULwFPaqX1Bn3VaLyuSYqGy7yT6iLW9STr2xHkCSiA=
+X-Google-Smtp-Source: ABdhPJzEi43bs9A+1vKefCz1MnfpsKOuD1JXyyzfdyZKIKc9+GkL0Ty/1xFukAjWe+ur6BBOKH+NbAOBWyYfWF7fh9I=
+X-Received: by 2002:a9d:18e:: with SMTP id e14mr933504ote.34.1622752156132;
+ Thu, 03 Jun 2021 13:29:16 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 3 Jun 2021 20:29:15 +0000
 MIME-Version: 1.0
-References: <20210602191338.1995827-1-sujitka@chromium.org> <20210602121313.v3.1.Ia83c80aec3b9535f01441247b6c3fb6f80b0ec7f@changeid>
-In-Reply-To: <20210602121313.v3.1.Ia83c80aec3b9535f01441247b6c3fb6f80b0ec7f@changeid>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Thu, 3 Jun 2021 13:23:51 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=Vfi6SZsgJN3Jm+DrmW8KrySbn14BMOWQjW9ib-fqZd8Q@mail.gmail.com>
-Message-ID: <CAD=FV=Vfi6SZsgJN3Jm+DrmW8KrySbn14BMOWQjW9ib-fqZd8Q@mail.gmail.com>
-Subject: Re: [PATCH v3 1/2] arm64: dts: qcom: sc7180: Move sdc pinconf to
- board specific DT files
-To:     Sujit Kautkar <sujitka@chromium.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Sibi Sankar <sibis@codeaurora.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>
+In-Reply-To: <1622738250-1469-1-git-send-email-khsieh@codeaurora.org>
+References: <1622738250-1469-1-git-send-email-khsieh@codeaurora.org>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.9.1
+Date:   Thu, 3 Jun 2021 20:29:15 +0000
+Message-ID: <CAE-0n53t0fjZYTrsV3fwbPajswLXpgcm6crTAD6sYzTn7xNe8g@mail.gmail.com>
+Subject: Re: [PATCH v3] arm64: dts: qcom: sc7180: Add DisplayPort node
+To:     Kuogee Hsieh <khsieh@codeaurora.org>, agross@kernel.org,
+        bjorn.andersson@linaro.org, devicetree@vger.kernel.org,
+        robdclark@gmail.com, robh+dt@kernel.org, sean@poorly.run,
+        vkoul@kernel.org
+Cc:     abhinavk@codeaurora.org, aravindh@codeaurora.org,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Quoting Kuogee Hsieh (2021-06-03 09:37:30)
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+> index 24d293e..40367a2 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+> @@ -786,6 +786,15 @@ hp_i2c: &i2c9 {
+>         status = "okay";
+>  };
+>
+> +&dp {
 
-On Wed, Jun 2, 2021 at 12:14 PM Sujit Kautkar <sujitka@chromium.org> wrote:
->
-> Move sdc1/sdc2 pinconf from SoC specific DT file to board specific DT
-> files
->
-> Signed-off-by: Sujit Kautkar <sujitka@chromium.org>
-> ---
->
-> (no changes since v1)
->
->  arch/arm64/boot/dts/qcom/sc7180-idp.dts      | 102 +++++++++++++++++++
->  arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 102 +++++++++++++++++++
->  arch/arm64/boot/dts/qcom/sc7180.dtsi         | 102 -------------------
->  3 files changed, 204 insertions(+), 102 deletions(-)
+This is in the wrong place now. Bjorn's suggestion for mdss_dp sounds
+good to me, and then putting the node in alphabetical order.
 
-FYI: Since there were no changes from v2 so you should have kept my
-reviewed-by tag from v2. Here it is again, though:
+> +        status = "okay";
+> +        pinctrl-names = "default";
+> +        pinctrl-0 = <&dp_hot_plug_det>;
+> +        data-lanes = <0 1>;
+> +        vdda-1p2-supply = <&vdda_usb_ss_dp_1p2>;
+> +        vdda-0p9-supply = <&vdda_usb_ss_dp_core>;
+> +};
+> +
+>  &pm6150_adc {
+>         charger-thermistor@4f {
+>                 reg = <ADC5_AMUX_THM3_100K_PU>;
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> index 6228ba2..05a4133 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> @@ -3148,6 +3155,77 @@
+>
+>                                 status = "disabled";
+>                         };
+> +
+> +                       dp: displayport-controller@ae90000 {
+> +                               compatible = "qcom,sc7180-dp";
+> +                               status = "disabled";
+> +
+> +                               reg = <0 0x0ae90000 0 0x1400>;
+> +
+> +                               interrupt-parent = <&mdss>;
+> +                               interrupts = <12>;
+> +
+> +                               clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
+> +                                        <&dispcc DISP_CC_MDSS_DP_AUX_CLK>,
+> +                                        <&dispcc DISP_CC_MDSS_DP_LINK_CLK>,
+> +                                        <&dispcc DISP_CC_MDSS_DP_LINK_INTF_CLK>,
+> +                                        <&dispcc DISP_CC_MDSS_DP_PIXEL_CLK>;
+> +                               clock-names = "core_iface", "core_aux", "ctrl_link",
+> +                                             "ctrl_link_iface", "stream_pixel";
+> +                               #clock-cells = <1>;
+> +                               assigned-clocks = <&dispcc DISP_CC_MDSS_DP_LINK_CLK_SRC>,
+> +                                                 <&dispcc DISP_CC_MDSS_DP_PIXEL_CLK_SRC>;
+> +                               assigned-clock-parents = <&dp_phy 0>, <&dp_phy 1>;
+> +                               phys = <&dp_phy>;
+> +                               phy-names = "dp";
+> +
+> +                               operating-points-v2 = <&opp_table>;
+> +                               power-domains = <&rpmhpd SC7180_CX>;
 
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+I'm also curious about the power domain for DP. My guess is that both
+DSI and DP nodes should be a child of mdss if they're in the display
+subsystem and powered down/inaccessible when the mdss_gdsc is disabled.
+
+> +
+> +                               #sound-dai-cells = <0>;
+> +
+> +                               ports {
+> +                                       #address-cells = <1>;
+> +                                       #size-cells = <0>;
+> +                                       port@0 {
+> +                                               reg = <0>;
+> +                                               dp_in: endpoint {
+> +                                                       remote-endpoint = <&dpu_intf0_out>;
+> +                                               };
+> +                                       };
+> +
+> +                                       port@1 {
+> +                                               reg = <1>;
+> +                                               dp_out: endpoint { };
+> +                                       };
+> +                               };
+> +
+> +                               opp_table: dp-opp-table {
+
+I meant
+
+	dp_opp_table: opp-table {
+		...
+	};
+
+> +                                       compatible = "operating-points-v2";
+> +
+> +                                       opp-160000000 {
+> +                                               opp-hz = /bits/ 64 <160000000>;
+> +                                               required-opps = <&rpmhpd_opp_low_svs>;
+> +                                       };
+> +
+> +                                       opp-270000000 {
+> +                                               opp-hz = /bits/ 64 <270000000>;
+> +                                               required-opps = <&rpmhpd_opp_svs>;
