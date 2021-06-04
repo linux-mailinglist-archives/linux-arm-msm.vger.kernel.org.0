@@ -2,137 +2,283 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0FCA739C220
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Jun 2021 23:13:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4C74C39C227
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Jun 2021 23:15:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229964AbhFDVPW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Jun 2021 17:15:22 -0400
-Received: from mail-pg1-f178.google.com ([209.85.215.178]:36649 "EHLO
-        mail-pg1-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229665AbhFDVPW (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Jun 2021 17:15:22 -0400
-Received: by mail-pg1-f178.google.com with SMTP id 27so8852573pgy.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Jun 2021 14:13:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=QvSj42IC9X/VM/7EZXZImoBUhNSJheUuiCLl0IF75NU=;
-        b=irc52CX95MAUzx3FMzgKRXeLnDxX6Muc8b9w+xbVcfiMOf2H6X8pnfDd+DffnZ5vWE
-         obYIvUsRO6ioqnIW9wH46dLgIi7/JwULyVlJfkrblDTozqN43O3LBQChm/wJnB6QYZbP
-         oZZ1OV8dOq2cPon4KUlBCLvCBiBBbLKKYlZeXVk2DsLtdnSG1ib9arvcvbUjaGbxxvIh
-         1kVyhFMWmhMWWjT1qxryRhBH90VZKUPMwHe8yF3GSow1U7fc2Q/vZZCJBQp9PcllbYy6
-         Is9on6kheUi1Wrv19nGEOLt2fbbZrKvTDQZ7fe6BfCGBO51hU2aWip+GQArOv2vWOIkL
-         yXxQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=QvSj42IC9X/VM/7EZXZImoBUhNSJheUuiCLl0IF75NU=;
-        b=D/0K50b1Qot8PxOhIadDO7ex9pgOk52lLjLTM/Qw5KsqeTUYhJ779Z2c2IPjwvDo7a
-         EqeVnJeW3dBhTGWGDRz/JEKZbkbaFZdWsGcfLoyZoHlwVZov+DbfglSAhwV8kKS4Up8y
-         DUw4QYRR5g17Fq0q3Wk2gtzKqflp/2NOOkdmmVCN+WEG9ghao3H4t5YwcKGuzw5EWdc4
-         lx96XKEObwc6EsQOus+biAAJtU6hR4xIgxewCK3vVDU/ybXw+RdJgcNLikOS9+oEa7yh
-         hf6tluF3iCSdvlujdmVlOHYIkkV8r421cmgGitQIPlQZ5hM0uzgrKxNej/PVs/MiTCYg
-         EF3A==
-X-Gm-Message-State: AOAM530jF+gLJFYpM7ymgI1hJpMLe1rcRcC+vLye6RJfgDU7iY6S2v/A
-        4zNBlgK6C+hBnFesmbdxN9ja5VZaXyAUN44xsoxjRA==
-X-Google-Smtp-Source: ABdhPJxZZNEEkPnqpVn7w/PtQ4RDsCPYfS+XUYeyuJ7k9JwElrcA87HSuGrHQ+ApctjxsIQnSSKDTyEpP+Dr4832G8s=
-X-Received: by 2002:a63:e309:: with SMTP id f9mr6771394pgh.443.1622841141722;
- Fri, 04 Jun 2021 14:12:21 -0700 (PDT)
+        id S229774AbhFDVRm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Jun 2021 17:17:42 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:28019 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229668AbhFDVRm (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 4 Jun 2021 17:17:42 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1622841355; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=GNHwhdvjGh/GIZR5RCVz2SGnmm+sxRKqNvS/Jvgdklc=;
+ b=Rrqr8wEVABcKEaiMudaPcWp7FAKcuqmh3FCZY8Ke4t2E99Wr/RzzzHpaff6XnlziHchPMajR
+ hj+NVm3hq/DfVofAk4VGGPVeguz8t4AI+VX31MFlO+/xoQD2xpyu0LZcoww/wtH89vPBOIyH
+ D8Od+TXfbFvPLS4dRODPt282Aew=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
+ 60ba9806e570c0561912ae88 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 04 Jun 2021 21:15:50
+ GMT
+Sender: abhinavk=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id A9774C4338A; Fri,  4 Jun 2021 21:15:50 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: abhinavk)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4A8C9C433F1;
+        Fri,  4 Jun 2021 21:15:47 +0000 (UTC)
 MIME-Version: 1.0
-References: <YLfL9Q+4860uqS8f@gerhold.net>
-In-Reply-To: <YLfL9Q+4860uqS8f@gerhold.net>
-From:   Loic Poulain <loic.poulain@linaro.org>
-Date:   Fri, 4 Jun 2021 23:11:45 +0200
-Message-ID: <CAMZdPi9tcye-4P4i0uXZcECJ-Big5T11JdvdXW6k2mEEi9XwyA@mail.gmail.com>
-Subject: Re: [RFC] Integrate RPMSG/SMD into WWAN subsystem
-To:     Stephan Gerhold <stephan@gerhold.net>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Fri, 04 Jun 2021 14:15:47 -0700
+From:   abhinavk@codeaurora.org
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Aleksander Morgado <aleksander@aleksander.es>,
-        Network Development <netdev@vger.kernel.org>,
-        linux-remoteproc@vger.kernel.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Ohad Ben-Cohen <ohad@wizery.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        freedreno@lists.freedesktop.org
+Subject: Re: [Freedreno] [PATCH v3 4/4] drm/msm/dpu: hw_blk: make dpu_hw_blk
+ empty opaque structure
+In-Reply-To: <20210515190909.1809050-5-dmitry.baryshkov@linaro.org>
+References: <20210515190909.1809050-1-dmitry.baryshkov@linaro.org>
+ <20210515190909.1809050-5-dmitry.baryshkov@linaro.org>
+Message-ID: <794981561256537e3535e6650a8137b6@codeaurora.org>
+X-Sender: abhinavk@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Stephan,
-
-On Wed, 2 Jun 2021 at 20:20, Stephan Gerhold <stephan@gerhold.net> wrote:
->
-> Hi Loic, Hi Bjorn,
->
-> I've been thinking about creating some sort of "RPMSG" driver for the
-> new WWAN subsystem; this would be used as a QMI/AT channel to the
-> integrated modem on some older Qualcomm SoCs such as MSM8916 and MSM8974.
->
-> It's easy to confuse all the different approaches that Qualcomm has to
-> talk to their modems, so I will first try to briefly give an overview
-> about those that I'm familiar with:
->
+On 2021-05-15 12:09, Dmitry Baryshkov wrote:
+> The code does not really use dpu_hw_blk fields, so drop them, making
+> dpu_hw_blk empty structure.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Abhinav Kumar <abhinavk@codeaurora.org>
 > ---
-> There is USB and MHI that are mainly used to talk to "external" modems.
->
-> For the integrated modems in many Qualcomm SoCs there is typically
-> a separate control and data path. They are not really related to each
-> other (e.g. currently no common parent device in sysfs).
->
-> For the data path (network interface) there is "IPA" (drivers/net/ipa)
-> on newer SoCs or "BAM-DMUX" on some older SoCs (e.g. MSM8916/MSM8974).
-> I have a driver for BAM-DMUX that I hope to finish up and submit soon.
->
-> The connection is set up via QMI. The messages are either sent via
-> a shared RPMSG channel (net/qrtr sockets in Linux) or via standalone
-> SMD/RPMSG channels (e.g. "DATA5_CNTL" for QMI and "DATA1" for AT).
->
-> This gives a lot of possible combinations like BAM-DMUX+RPMSG
-> (MSM8916, MSM8974), or IPA+QRTR (SDM845) but also other funny
-> combinations like IPA+RPMSG (MSM8994) or BAM-DMUX+QRTR (MSM8937).
->
-> Simply put, supporting all these in userspace like ModemManager
-> is a mess (Aleksander can probably confirm).
-> It would be nice if this could be simplified through the WWAN subsystem.
->
-> It's not clear to me if or how well QRTR sockets can be mapped to a char
-> device for the WWAN subsystem, so for now I'm trying to focus on the
-> standalone RPMSG approach (for MSM8916, MSM8974, ...).
-> ---
->
-> Currently ModemManager uses the RPMSG channels via the rpmsg-chardev
-> (drivers/rpmsg/rpmsg_char.c). It wasn't my idea to use it like this,
-> I just took that over from someone else. Realistically speaking, the
-> current approach isn't too different from the UCI "backdoor interface"
-> approach that was rejected for MHI...
->
-> I kind of expected that I can just trivially copy some code from
-> rpmsg_char.c into a WWAN driver since they both end up as a simple char
-> device. But it looks like the abstractions in wwan_core are kind of
-> getting in the way here... As far as I can tell, they don't really fit
-> together with the RPMSG interface.
->
-> For example there is rpmsg_send(...) (blocking) and rpmsg_trysend(...)
-> (non-blocking) and even a rpmsg_poll(...) [1] but I don't see a way to
-> get notified when the TX queue is full or no longer full so I can call
-> wwan_port_txon/off().
->
-> Any suggestions or other thoughts?
-
-It would be indeed nice to get this in the WWAN framework.
-I don't know much about rpmsg but I think it is straightforward for
-the RX path, the ept_cb can simply forward the buffers to
-wwan_port_rx. For tx, simply call rpmsg_trysend() in the wwan tx
-callback and don't use the txon/off helpers. In short, keep it simple
-and check if you observe any issues.
-
-And for sure you can propose changes in the WWAN framework if you
-think something is missing to support your specific case.
-
-Regards,
-Loic
+>  drivers/gpu/drm/msm/Makefile                  |  1 -
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_blk.c    | 24 -------------------
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_blk.h    |  4 +---
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c    |  2 --
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c   |  2 --
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c   |  2 --
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c     |  2 --
+>  .../gpu/drm/msm/disp/dpu1/dpu_hw_merge3d.c    |  2 --
+>  .../gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c   |  2 --
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c   |  2 --
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c    |  2 --
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c        |  2 +-
+>  12 files changed, 2 insertions(+), 45 deletions(-)
+>  delete mode 100644 drivers/gpu/drm/msm/disp/dpu1/dpu_hw_blk.c
+> 
+> diff --git a/drivers/gpu/drm/msm/Makefile 
+> b/drivers/gpu/drm/msm/Makefile
+> index 610d630326bb..55dbde30c2a2 100644
+> --- a/drivers/gpu/drm/msm/Makefile
+> +++ b/drivers/gpu/drm/msm/Makefile
+> @@ -58,7 +58,6 @@ msm-y := \
+>  	disp/dpu1/dpu_encoder_phys_cmd.o \
+>  	disp/dpu1/dpu_encoder_phys_vid.o \
+>  	disp/dpu1/dpu_formats.o \
+> -	disp/dpu1/dpu_hw_blk.o \
+>  	disp/dpu1/dpu_hw_catalog.o \
+>  	disp/dpu1/dpu_hw_ctl.o \
+>  	disp/dpu1/dpu_hw_interrupts.o \
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_blk.c
+> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_blk.c
+> deleted file mode 100644
+> index 1f2b74b9eb65..000000000000
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_blk.c
+> +++ /dev/null
+> @@ -1,24 +0,0 @@
+> -// SPDX-License-Identifier: GPL-2.0-only
+> -/* Copyright (c) 2017-2018, The Linux Foundation. All rights reserved.
+> - */
+> -
+> -#define pr_fmt(fmt)	"[drm:%s:%d] " fmt, __func__, __LINE__
+> -
+> -#include <linux/mutex.h>
+> -#include <linux/errno.h>
+> -#include <linux/slab.h>
+> -
+> -#include "dpu_hw_mdss.h"
+> -#include "dpu_hw_blk.h"
+> -
+> -/**
+> - * dpu_hw_blk_init - initialize hw block object
+> - * @hw_blk: pointer to hw block object
+> - * @type: hw block type - enum dpu_hw_blk_type
+> - * @id: instance id of the hw block
+> - */
+> -void dpu_hw_blk_init(struct dpu_hw_blk *hw_blk, u32 type, int id)
+> -{
+> -	hw_blk->type = type;
+> -	hw_blk->id = id;
+> -}
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_blk.h
+> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_blk.h
+> index 7768694b558a..52e92f37eda4 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_blk.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_blk.h
+> @@ -19,9 +19,7 @@ struct dpu_hw_blk;
+>   * @refcount: reference/usage count
+>   */
+>  struct dpu_hw_blk {
+> -	u32 type;
+> -	int id;
+> +	/* opaque */
+>  };
+> 
+> -void dpu_hw_blk_init(struct dpu_hw_blk *hw_blk, u32 type, int id);
+>  #endif /*_DPU_HW_BLK_H */
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+> index 441f66a4fb37..f8a74f6cdc4c 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+> @@ -613,8 +613,6 @@ struct dpu_hw_ctl *dpu_hw_ctl_init(enum dpu_ctl 
+> idx,
+>  	c->mixer_count = m->mixer_count;
+>  	c->mixer_hw_caps = m->mixer;
+> 
+> -	dpu_hw_blk_init(&c->base, DPU_HW_BLK_CTL, idx);
+> -
+>  	return c;
+>  }
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c
+> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c
+> index 977b25968f34..a98e964c3b6f 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c
+> @@ -110,8 +110,6 @@ struct dpu_hw_dspp *dpu_hw_dspp_init(enum dpu_dspp 
+> idx,
+>  	c->cap = cfg;
+>  	_setup_dspp_ops(c, c->cap->features);
+> 
+> -	dpu_hw_blk_init(&c->base, DPU_HW_BLK_DSPP, idx);
+> -
+>  	return c;
+>  }
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
+> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
+> index 17224556d5a8..116e2b5b1a90 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
+> @@ -325,8 +325,6 @@ struct dpu_hw_intf *dpu_hw_intf_init(enum dpu_intf 
+> idx,
+>  	c->mdss = m;
+>  	_setup_intf_ops(&c->ops, c->cap->features);
+> 
+> -	dpu_hw_blk_init(&c->base, DPU_HW_BLK_INTF, idx);
+> -
+>  	return c;
+>  }
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
+> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
+> index 76f8b8f75b82..cb6bb7a22c15 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
+> @@ -182,8 +182,6 @@ struct dpu_hw_mixer *dpu_hw_lm_init(enum dpu_lm 
+> idx,
+>  	c->cap = cfg;
+>  	_setup_mixer_ops(m, &c->ops, c->cap->features);
+> 
+> -	dpu_hw_blk_init(&c->base, DPU_HW_BLK_LM, idx);
+> -
+>  	return c;
+>  }
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_merge3d.c
+> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_merge3d.c
+> index 406ba950a066..c06d595d5df0 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_merge3d.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_merge3d.c
+> @@ -79,8 +79,6 @@ struct dpu_hw_merge_3d *dpu_hw_merge_3d_init(enum
+> dpu_merge_3d idx,
+>  	c->caps = cfg;
+>  	_setup_merge_3d_ops(c, c->caps->features);
+> 
+> -	dpu_hw_blk_init(&c->base, DPU_HW_BLK_MERGE_3D, idx);
+> -
+>  	return c;
+>  }
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c
+> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c
+> index 92cd724263ce..55766c97c4c8 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c
+> @@ -282,8 +282,6 @@ struct dpu_hw_pingpong *dpu_hw_pingpong_init(enum
+> dpu_pingpong idx,
+>  	c->caps = cfg;
+>  	_setup_pingpong_ops(c, c->caps->features);
+> 
+> -	dpu_hw_blk_init(&c->base, DPU_HW_BLK_PINGPONG, idx);
+> -
+>  	return c;
+>  }
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
+> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
+> index 8734a47040aa..69eed7932486 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
+> @@ -733,8 +733,6 @@ struct dpu_hw_pipe *dpu_hw_sspp_init(enum dpu_sspp 
+> idx,
+>  	hw_pipe->cap = cfg;
+>  	_setup_layer_ops(hw_pipe, hw_pipe->cap->features);
+> 
+> -	dpu_hw_blk_init(&hw_pipe->base, DPU_HW_BLK_SSPP, idx);
+> -
+>  	return hw_pipe;
+>  }
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c
+> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c
+> index dae77d9c2c74..282e3c6c6d48 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c
+> @@ -322,8 +322,6 @@ struct dpu_hw_mdp *dpu_hw_mdptop_init(enum dpu_mdp 
+> idx,
+>  	mdp->caps = cfg;
+>  	_setup_mdp_ops(&mdp->ops, mdp->caps->features);
+> 
+> -	dpu_hw_blk_init(&mdp->base, DPU_HW_BLK_TOP, idx);
+> -
+>  	return mdp;
+>  }
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+> b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+> index c0eec12498e7..f9c83d6e427a 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+> @@ -428,7 +428,7 @@ static int _dpu_rm_reserve_ctls(
+>  		features = ctl->caps->features;
+>  		has_split_display = BIT(DPU_CTL_SPLIT_DISPLAY) & features;
+> 
+> -		DPU_DEBUG("ctl %d caps 0x%lX\n", rm->ctl_blks[j]->id, features);
+> +		DPU_DEBUG("ctl %d caps 0x%lX\n", j + CTL_0, features);
+> 
+>  		if (needs_split_display != has_split_display)
+>  			continue;
