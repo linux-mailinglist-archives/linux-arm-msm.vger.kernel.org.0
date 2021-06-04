@@ -2,60 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6385639B0E0
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Jun 2021 05:27:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DC59539B108
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Jun 2021 05:41:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229761AbhFDD3j (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Jun 2021 23:29:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44472 "EHLO
+        id S229900AbhFDDm2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Jun 2021 23:42:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47310 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229752AbhFDD3j (ORCPT
+        with ESMTP id S229818AbhFDDm2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Jun 2021 23:29:39 -0400
-Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8E65C06174A
-        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Jun 2021 20:27:38 -0700 (PDT)
-Received: by mail-oi1-x234.google.com with SMTP id m137so4580877oig.6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Jun 2021 20:27:38 -0700 (PDT)
+        Thu, 3 Jun 2021 23:42:28 -0400
+Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F7EDC061760
+        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Jun 2021 20:40:42 -0700 (PDT)
+Received: by mail-oi1-x232.google.com with SMTP id a21so8505272oiw.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Jun 2021 20:40:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=ofLA5Yth7cNuIGM6YFGLuq5e5gElaG+msVA631CxO2I=;
-        b=uM528HoRNzisbbP1Ciydmknx8eMheK6X+d6E3rFSymcflD7mvtYlMX8p+3OZLkxMS+
-         aQg4bL5+kY4XKLbALNfehxg67eEFzpu/twKRRtQxlMbHHr1d8iLxJgtbZqXzIZn9wsKA
-         jf3J5tPcWgNnTKTOOiB+0QnWDhxeJ+u73zsFnu7dsxibWXvKcdUtnaNKt9atMtxfXEWK
-         8fmtPLQ4rr1iYa/JLWs7dWaxw52R/dOpfDtBvlwnc7ut65sMphdq7gntNT6VYsfxuket
-         ZeVgNhVGOIjPZ63VSskpHKw3zIabYe8fddOPme9cXw8nlIBLDuZEhlF9WC7PfQ18Q0xI
-         fPig==
+        bh=mXrwn8O7Z9ra0HSXrktp1Pf6RqZk04u/zgrpbaACAm8=;
+        b=nu4CkeZLjtParnluQs2D85/oiP8BC4dC3lLEdgDCmuPqmOoDjtnbi5bZ2kX+cTNrdP
+         5vJhubTFFMdk3K3XsKuYpd5XKB9OQ4UOqliuEXAqHBZyenB3qS1qpC19sZUDpCtDyemt
+         k2Fzh60Ct3oOhXi1kPsoomYf1tzWiVESNrgSWAAWggyNKEhGOXvUFp8l8U4OvALmiXR9
+         l3OpdE5s7u9lg9XVAx/D29OLWmfhnOd7zF8mRJ5BXubvtk+Ryd3xuy5hkvyoXVO5qt/9
+         9W/lNpgI5zyjsmhiNS3uor2pqoAQrqYq3qsR0T8lZLk5/FqabuEMTxnl0G+DE5lUflPD
+         xfhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=ofLA5Yth7cNuIGM6YFGLuq5e5gElaG+msVA631CxO2I=;
-        b=NpYbZNfUK67MGFUP5pI7FCpm9W2HNDxtKCRforutH7xBtwxCVwajsdMkdgIgh63n5O
-         Mr4oPMOQVOvxjxZp7/WKtIGYTxL+toeg/PhLAKLuHbtjgnfT4otYIDArRkzYZt4hBvac
-         AKKcO4TltnHJL7M1ub0tOPJiyX2nwqusy9yoC0k2Q4hmJkYsW7V7AcE0r3k9I5d/DkmX
-         jc5JJlN8r+d6HkZqY/Aq3AyojlsTBqFDWSDDxhap5YN0CvSuVCJI6UIzn6DW7xSrHUMb
-         kcHTpo9TkpYwglwfsznUIhJZSEKuCcP7zUf1k6QsqTxYtqfh+j5uiee0mq9aM515B5dx
-         VssA==
-X-Gm-Message-State: AOAM530imHF9wYC8tymhK0tbSPMKCm05OWVO1cB+ehiaJPrSbf9ce7eU
-        +cgqiEEIe9hKkL4MqTyV+Zodq9Fa6Cz2PtAgTmCnQA==
-X-Google-Smtp-Source: ABdhPJxD8+rFjLez4xtP2gnQcSqIZih5Kb5zZR7kQs9ajpSPJ77foKTuFLdY4J+edKcnDerJJr4PzhoV8pQ+xB7PRrg=
-X-Received: by 2002:a05:6808:b15:: with SMTP id s21mr592285oij.40.1622777258224;
- Thu, 03 Jun 2021 20:27:38 -0700 (PDT)
+        bh=mXrwn8O7Z9ra0HSXrktp1Pf6RqZk04u/zgrpbaACAm8=;
+        b=NypQYW68gf5mh91BlzmH1sd9hx98wRPJx+2QD8TBkDHfZNlx0SDpir0O8Xds3I0ipU
+         qTfymrq3/v/ORpPs2ru0dgcNdB05yCIrv8lMkLIWy6yQzULMFmtWLeckkfuiaPscrNsv
+         XyjR1XMwHGEd9Mn5F0Ox0LBst5pgyBiPxSxfKqcUCHMpRj6o0kA8FT8Z7waVJT9cLVNT
+         TosOaSReT3FeTY10gYjnUlyuefWR/IovkjyczrZPRXNjYuA3ol3n50heAzJeiS26AhpW
+         47Zl7YcnGceV1zkQ4gNG/hmWBLOfaKpKTJB3GCSk+HKKvtrQaUn/mXU8DY9EczUOY08q
+         yzXQ==
+X-Gm-Message-State: AOAM532M6Xa2iC0XGNzDucWnwumj9KF0f99jpuIpxSc84JHlkXS/9Z9S
+        gZW7P6PEUnakI82RsBskjyjJR1bkKlWfDwiDbTIHdg==
+X-Google-Smtp-Source: ABdhPJwCHeBEjD6JOd6thCiBXSp5CBpsWnXuTWBq89AVfaa1FU5pUZuP18t0YuywoLXf90lWSCMJTdIGpysTNi5zd+Y=
+X-Received: by 2002:a05:6808:f0b:: with SMTP id m11mr9216942oiw.12.1622778038637;
+ Thu, 03 Jun 2021 20:40:38 -0700 (PDT)
 MIME-Version: 1.0
 References: <20210519143700.27392-1-bhupesh.sharma@linaro.org>
- <20210519143700.27392-2-bhupesh.sharma@linaro.org> <20210521014316.GA2462277@robh.at.kernel.org>
-In-Reply-To: <20210521014316.GA2462277@robh.at.kernel.org>
+ <20210519143700.27392-2-bhupesh.sharma@linaro.org> <YKdqd6nreHwCV3te@gerhold.net>
+In-Reply-To: <YKdqd6nreHwCV3te@gerhold.net>
 From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Date:   Fri, 4 Jun 2021 08:57:27 +0530
-Message-ID: <CAH=2NtwzFMre_+6LRM_JL+itbG09UuKLtH+Awbv_zK++qns49w@mail.gmail.com>
+Date:   Fri, 4 Jun 2021 09:10:27 +0530
+Message-ID: <CAH=2NtxxWx4BWhQ5YEkxKaCnD6qBgfbJm2TBdXH0AAzr+_O2EA@mail.gmail.com>
 Subject: Re: [PATCH v3 01/17] dt-bindings: qcom-bam: Convert binding to YAML
-To:     Rob Herring <robh@kernel.org>
+To:     Stephan Gerhold <stephan@gerhold.net>
 Cc:     linux-arm-msm@vger.kernel.org,
         Thara Gopinath <thara.gopinath@linaro.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Andy Gross <agross@kernel.org>,
         Herbert Xu <herbert@gondor.apana.org.au>,
         "David S . Miller" <davem@davemloft.net>,
@@ -70,11 +71,13 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello Rob,
+Hi Stephan,
 
-Thanks for the review and sorry for the late reply.
+Thanks for the review.
 
-On Fri, 21 May 2021 at 07:13, Rob Herring <robh@kernel.org> wrote:
+On Fri, 21 May 2021 at 13:41, Stephan Gerhold <stephan@gerhold.net> wrote:
+>
+> Hi,
 >
 > On Wed, May 19, 2021 at 08:06:44PM +0530, Bhupesh Sharma wrote:
 > > Convert Qualcomm BAM DMA devicetree binding to YAML.
@@ -188,24 +191,10 @@ On Fri, 21 May 2021 at 07:13, Rob Herring <robh@kernel.org> wrote:
 > > +      - qcom,bam-v1.4.0
 > > +      - qcom,bam-v1.3.0
 > > +      - qcom,bam-v1.7.0
->
-> Can we keep the SoC association please.
-
-The original bam dma bindings are as per the underlying bam IP
-version, so I would prefer that we keep it this way for this series.
-
-Later on I can send a patchset to convert the bam DMA dt-bindings, dts
-and driver to work with 'SoC association' instead.
-
 > > +
 > > +  reg:
 > > +    maxItems: 1
 > > +    description: Address range of the DMA registers.
->
-> Drop description.
-
-Sure.
-
 > > +
 > > +  clocks:
 > > +    minItems: 1
@@ -213,23 +202,28 @@ Sure.
 > > +
 > > +  clock-names:
 > > +    const: bam_clk
->
-> This is going to fail if you try more than 1 clock.
-
-Right, currently we have one clock, but I can recheck and make fixes in v4.
-
 > > +
 > > +  interrupts:
 > > +    maxItems: 1
 > > +    description: Single interrupt line shared by all channels.
->
-> Drop description
-
-Ok.
-
 > > +
 > > +  num-channels:
 > > +    maxItems: 31
+>
+> maxItems doesn't seem right here, since num-channels isn't an array.
+> Perhaps you meant maximum: 31?
+>
+> Can you check your bindings on the existing device trees with
+> "make dtbs_check" and make sure that only reasonable errors remain?
+>
+> This fails on pretty much every device tree:
+>
+> arch/arm64/boot/dts/qcom/apq8096-db820c.dt.yaml: dma-controller@9184000: num-channels: [[31]] is too short
+>         From schema: Documentation/devicetree/bindings/dma/qcom_bam_dma.yaml
+
+I did run "make dtbs_check" and I don't remember seeing the issues you reported.
+Hmm.. maybe I missed something. Let me recheck and fix issues in v4.
+
 > > +    description: |
 > > +      Indicates supported number of DMA channels in a remotely controlled bam.
 > > +
@@ -244,6 +238,16 @@ Ok.
 > > +      used in the secure world.
 > > +    enum: [0, 1, 2, 3, 4, 5, 6, 7]
 > > +
+>
+> bam_dma.c reads this as uint32 and all existing device tree specify it
+> as uint32. I don't think adding the /bits/ 8 to all existing device
+> trees is really worth it.
+>
+> arch/arm64/boot/dts/qcom/apq8096-db820c.dt.yaml: dma-controller@9184000: qcom,ee: missing size tag in [[1]]
+>         From schema: Documentation/devicetree/bindings/dma/qcom_bam_dma.yaml
+
+Ok.
+
 > > +  qcom,controlled-remotely:
 > > +    $ref: /schemas/types.yaml#/definitions/flag
 > > +    description:
@@ -255,11 +259,6 @@ Ok.
 > > +    description:
 > > +      Indicates supported number of Execution Environments in a
 > > +      remotely controlled bam.
->
-> 0-2^32 is valid?
-
-Oh, got it. Will fix it in v4.
-
 > > +
 > > +required:
 > > +  - compatible
@@ -267,25 +266,29 @@ Oh, got it. Will fix it in v4.
 > > +  - interrupts
 > > +  - clocks
 > > +  - clock-names
-> > +  - "#dma-cells"
-> > +  - qcom,ee
-> > +
-> > +additionalProperties: false
-> > +
-> > +examples:
-> > +  - |
-> > +    #include <dt-bindings/clock/qcom,gcc-msm8974.h>
-> > +    dma-controller@f9984000 {
-> > +        compatible = "qcom,bam-v1.4.0";
-> > +        reg = <0xf9984000 0x15000>;
-> > +        interrupts = <0 94 0>;
-> > +        clocks = <&gcc GCC_BAM_DMA_AHB_CLK>;
-> > +        clock-names = "bam_clk";
-> > +        #dma-cells = <1>;
-> > +        qcom,ee = /bits/ 8 <0>;
-> > +    };
-> > --
-> > 2.31.1
+>
+> clocks is often missing if qcom,controlled-remotely is set, e.g.
+>
+>                 slimbam: dma-controller@9184000 {
+>                         compatible = "qcom,bam-v1.7.0";
+>                         qcom,controlled-remotely;
+>                         reg = <0x09184000 0x32000>;
+>                         num-channels  = <31>;
+>                         interrupts = <0 164 IRQ_TYPE_LEVEL_HIGH>;
+>                         #dma-cells = <1>;
+>                         qcom,ee = <1>;
+>                         qcom,num-ees = <2>;
+>                 };
+>
+> arch/arm64/boot/dts/qcom/apq8096-db820c.dt.yaml: dma-controller@9184000: 'clocks' is a required property
+>         From schema: Documentation/devicetree/bindings/dma/qcom_bam_dma.yaml
+> arch/arm64/boot/dts/qcom/apq8096-db820c.dt.yaml: dma-controller@9184000: 'clock-names' is a required property
+>         From schema: Documentation/devicetree/bindings/dma/qcom_bam_dma.yaml
+>
+> You might be able to encode this with an if: statement (clocks required
+> if qcom,controlled-remotely not specified), not sure.
+
+Ok.
 
 Thanks,
 Bhupesh
