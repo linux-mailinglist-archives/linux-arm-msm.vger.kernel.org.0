@@ -2,107 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 040F639B783
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Jun 2021 13:04:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5C14939B796
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Jun 2021 13:08:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230245AbhFDLGJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Jun 2021 07:06:09 -0400
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:25829 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230214AbhFDLGH (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Jun 2021 07:06:07 -0400
-Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
-  by alexa-out.qualcomm.com with ESMTP; 04 Jun 2021 04:04:21 -0700
-X-QCInternal: smtphost
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 04 Jun 2021 04:04:19 -0700
-X-QCInternal: smtphost
-Received: from c-sanm-linux.qualcomm.com ([10.206.25.31])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 04 Jun 2021 16:33:44 +0530
-Received: by c-sanm-linux.qualcomm.com (Postfix, from userid 2343233)
-        id 4F77A393F; Fri,  4 Jun 2021 16:33:43 +0530 (IST)
-From:   Sandeep Maheswaram <sanm@codeaurora.org>
-To:     Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
+        id S230004AbhFDLKm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Jun 2021 07:10:42 -0400
+Received: from mail.kernel.org ([198.145.29.99]:52038 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229740AbhFDLKm (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 4 Jun 2021 07:10:42 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id F2FFD61412;
+        Fri,  4 Jun 2021 11:08:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1622804936;
+        bh=iwBwbt7wIWhIr085qcXizQ5aues5uWdHTOBFESM33kE=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=fIqXQlp74u1ZPfFJtxNGqcLSKBsMV3w03xctfdujEY3FRhyErjEkraAi80re7BmyF
+         5vCx0CaDi2hTo43P9nx1aY+1h8dkhVsMVKWE7pQsd+8CbFzDe7ApHgc1rkvX7RPivV
+         ZgZSCYUxcUz7Th+MRRtAgvRbfegGlNTnqe0nDQEiuznYklRqzJ1I0C6lzHMXy5yFLd
+         J72mZkiWr8WLXxwDNGsy8OjYnNCny5+qdMhhAAKMWQ3zONxveacWHU/0untCOLREba
+         egxlkoSMz7HgL94OOOKFcJZSbP28n2r3gMnxo1t906NS8AFwvIh1jZjc0/6eLMIFel
+         dhVEPCm0+bWAA==
+Received: by earth.universe (Postfix, from userid 1000)
+        id 2DA053C0C95; Fri,  4 Jun 2021 13:08:54 +0200 (CEST)
+Date:   Fri, 4 Jun 2021 13:08:54 +0200
+From:   Sebastian Reichel <sre@kernel.org>
+To:     Rob Herring <robh@kernel.org>
+Cc:     satya priya <skakit@codeaurora.org>, linux-input@vger.kernel.org,
+        Courtney Cavin <courtney.cavin@sonymobile.com>,
+        kgunda@codeaurora.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        David Collins <collinsd@codeaurora.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>
-Cc:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Manu Gautam <mgautam@codeaurora.org>,
-        Sandeep Maheswaram <sanm@codeaurora.org>
-Subject: [PATCH v4 2/2] arm64: dts: qcom: sc7280: Add USB nodes for IDP board
-Date:   Fri,  4 Jun 2021 16:33:38 +0530
-Message-Id: <1622804618-18480-3-git-send-email-sanm@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1622804618-18480-1-git-send-email-sanm@codeaurora.org>
-References: <1622804618-18480-1-git-send-email-sanm@codeaurora.org>
+        Andy Yan <andy.yan@rock-chips.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        Andy Gross <agross@kernel.org>
+Subject: Re: [PATCH V3 3/5] dt-bindings: power: reset: Change
+ 'additionalProperties' to true
+Message-ID: <20210604110854.6zgxe2rbqnigdtid@earth.universe>
+References: <1620630064-16354-1-git-send-email-skakit@codeaurora.org>
+ <1620630064-16354-4-git-send-email-skakit@codeaurora.org>
+ <20210510162047.GA228385@robh.at.kernel.org>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="zeta74hijobubqw2"
+Content-Disposition: inline
+In-Reply-To: <20210510162047.GA228385@robh.at.kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add USB nodes for sc7280 IDP board.
 
-Signed-off-by: Sandeep Maheswaram <sanm@codeaurora.org>
-Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
----
- arch/arm64/boot/dts/qcom/sc7280-idp.dts | 39 +++++++++++++++++++++++++++++++++
- 1 file changed, 39 insertions(+)
+--zeta74hijobubqw2
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dts b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
-index 3900cfc..44326d8 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-idp.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
-@@ -276,6 +276,45 @@
- 	status = "okay";
- };
- 
-+&usb_1 {
-+	status = "okay";
-+};
-+
-+&usb_1_dwc3 {
-+	dr_mode = "host";
-+};
-+
-+&usb_1_hsphy {
-+	status = "okay";
-+
-+	vdda-pll-supply = <&vreg_l10c_0p8>;
-+	vdda33-supply = <&vreg_l2b_3p0>;
-+	vdda18-supply = <&vreg_l1c_1p8>;
-+};
-+
-+&usb_1_qmpphy {
-+	status = "okay";
-+
-+	vdda-phy-supply = <&vreg_l6b_1p2>;
-+	vdda-pll-supply = <&vreg_l1b_0p8>;
-+};
-+
-+&usb_2 {
-+	status = "okay";
-+};
-+
-+&usb_2_dwc3 {
-+	dr_mode = "peripheral";
-+};
-+
-+&usb_2_hsphy {
-+	status = "okay";
-+
-+	vdda-pll-supply = <&vreg_l10c_0p8>;
-+	vdda33-supply = <&vreg_l2b_3p0>;
-+	vdda18-supply = <&vreg_l1c_1p8>;
-+};
-+
- /* PINCTRL - additions to nodes defined in sc7280.dtsi */
- 
- &qup_uart5_default {
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+Hi,
 
+On Mon, May 10, 2021 at 11:20:47AM -0500, Rob Herring wrote:
+> On Mon, 10 May 2021 12:31:02 +0530, satya priya wrote:
+> > Change 'additionalProperties' to true as this is a generic binding.
+> >=20
+> > Signed-off-by: satya priya <skakit@codeaurora.org>
+> > ---
+> > Changes in V3:
+> >  - This is newly added in V3.
+> >=20
+> >  Documentation/devicetree/bindings/power/reset/reboot-mode.yaml | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> >=20
+>=20
+> Acked-by: Rob Herring <robh@kernel.org>
+
+Acked-by: Sebastian Reichel <sre@kernel.org>
+
+-- Sebastian
+
+--zeta74hijobubqw2
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEE72YNB0Y/i3JqeVQT2O7X88g7+poFAmC6CcUACgkQ2O7X88g7
++pql0RAAjGMGXrdsvasJs6QxGP5afvhDfYSgt9UrzZwC7SRvhDORoWc4o6YoucZY
+xjr/brpzKRwZYxFlioigY5KP220UZIbP4S05N8kB2GjTe2rqxz7nT9x81ahr8d36
+QSNUFkhCBLvQWFQeaRfBwoKWydW10GKax2PdPqwaIwlhIZdRijnQVpsWkmAZfjYW
+Yf0HIbP3meRQ38LlzGV0nHeZPCQarfImi2ZQ7CORoWaa4lTRlrujKkWqTNT1bZZ3
+Ma8HJRBJyK053m+awuvg36GQRjuHt3wDF3RFM9yL2oavkOh/rnZ14CV4IRM3v4Lw
+TJ+ygl/x/oTMpbKPzeBuL+Q+2yBY5AhMCO96KwlERk+MAZ/VWuFWlGVGlLTIbqrx
+82yjdS4b7XN10K51eKaTeogEYr0YIYz8Esy98JH3DHwZanVOmvGOVIfligN6/iWZ
+9zqZ/L8TBQ1OweadQSCMYwpiI7sxNC3v2bi0hPcNQKyTLPiqEZJRg9nIDP91luxY
+7BP7rriPdSXcSZe2+P5Rto495FMQKsuOqmIgD7Gsxn2YrCymylQ7mBaK4l/DKygw
+MFW1S7bSXqmoGqfqxVkE3PswUVFOykPn5/qlRF/GwcHLY+snx//W2sVI3HFQlwNA
+1w1hDaHzZHa213qdXdgnAJ4rreEZhKoch+zziWMvGnaIATaCyRk=
+=V2SN
+-----END PGP SIGNATURE-----
+
+--zeta74hijobubqw2--
