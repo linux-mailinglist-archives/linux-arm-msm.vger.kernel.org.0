@@ -2,255 +2,262 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BC3D239B39C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Jun 2021 09:11:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B820D39B4E4
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Jun 2021 10:32:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229799AbhFDHNN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Jun 2021 03:13:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36402 "EHLO
+        id S229956AbhFDIeU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Jun 2021 04:34:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54164 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229555AbhFDHNM (ORCPT
+        with ESMTP id S229930AbhFDIeT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Jun 2021 03:13:12 -0400
-Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4381BC06174A
-        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Jun 2021 00:11:27 -0700 (PDT)
-Received: by mail-pj1-x1036.google.com with SMTP id h12-20020a17090aa88cb029016400fd8ad8so5342282pjq.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Jun 2021 00:11:27 -0700 (PDT)
+        Fri, 4 Jun 2021 04:34:19 -0400
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4ABEC061761
+        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Jun 2021 01:32:33 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id v22so11525755lfa.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Jun 2021 01:32:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=04miD2l332N5JEOBvQKSIIZVsCHeGohPyIgj2Bs7M2g=;
-        b=UYq57R8/DgylVe7bQQT1K0kVoUZAKg78p7JLt3nj5Xvwwbo26bubgQ5Rw0p56VKVKI
-         amHFHnpXmNB3vNWQrTxGHHUWu72QjRLuyauxAguYYAP2L1gb+GKB426oPeZvXsFu720D
-         B+4BkzEKNPf/O01NI2pRsfoqR1YjT6nOmi3EI=
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=zP2dna87z6RKrxkkJWo2LQdu7tVCeYap9nb/k2QVk5I=;
+        b=BI1l2w090NvUuzjJirHDmxRkq5GWasjScNptw7r1C+4lSVHeu39FVyxAFCG19UwVsb
+         QxNh+Il5+n5v+KRUCdKpM4b0uCO0sut+buOkmxGTq1IGt4oTCexVpen6XunnkT3+A6sb
+         sJ5F3VD+VPhD66FtwJMqy7xgI4zXHyFKw9qbY+eymmVAtJEukFRIHGN4iZZ/+N9Ln3/T
+         L2QlfItJLRowUqeTs7AE9ktEuVgQ7Yw/hNIz9CdbORDFFHYL8svVvvPJAK4kS5justFA
+         io1E8bvEjd+eMlzxU2MoTjoqrZe3vFU9sleiCEEc1tVzGj9y6QmUkWq/w3WkeAl2+wcu
+         HhdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=04miD2l332N5JEOBvQKSIIZVsCHeGohPyIgj2Bs7M2g=;
-        b=GrIW26/tKYuvPCwlFlHvIUgtCEIjgAbmV1lAfhpl0Rm+ESBiF+/ppy6oDc5zKeThSy
-         YK0N1tXJwJUOKhyAAyD64KG1p76GmxhblzHjk6WoecEbO2F5gAZN4cz3MF4ExvI1lsbI
-         khiATLGAcwn4DEd0v3HrlVZjcvTfOTdJizPya+muykUgydn3De1eJtuc3jYoIMyKVHBz
-         zMzgjBoWBMcRoP+GkeMlqGPSl8NiWpQhK+rKh7Z2wMRhb8ZzqCrUCZ0RkO10PqCal13H
-         Hu3gyO1AihmvO68xh5NR5+Mty27uCrCPI4e1cf3xRCspVa8OaJJRvIBsQTz6kU6WJXT5
-         Ab+g==
-X-Gm-Message-State: AOAM532WbziCPlZg9QPBSN86ND92zG0/HqZzhFWnNyKUoyYGs44CViuc
-        uaafSJ+tY+UnPKHkossvBGqPmg==
-X-Google-Smtp-Source: ABdhPJzzf3MffrJf8cu1pAFiWopX0p1aSBAccKzEw4KlJf+njbnIDbY3jrRzxGG+7xsb8wZZsYufGg==
-X-Received: by 2002:a17:902:a3c3:b029:f0:b297:7778 with SMTP id q3-20020a170902a3c3b02900f0b2977778mr2996346plb.16.1622790686744;
-        Fri, 04 Jun 2021 00:11:26 -0700 (PDT)
-Received: from judyhsiao-p920.tpe.corp.google.com ([2401:fa00:1:10:a8e1:b46e:86b1:84fb])
-        by smtp.gmail.com with ESMTPSA id g8sm971625pfo.85.2021.06.04.00.11.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 04 Jun 2021 00:11:26 -0700 (PDT)
-From:   Judy Hsiao <judyhsiao@chromium.org>
-To:     broonie@kernel.org
-Cc:     Taniya Das <tdas@codeaurora.org>,
-        Rohit kumar <rohitkr@codeaurora.org>,
-        Banajit Goswami <bgoswami@codeaurora.org>,
-        Patrick Lai <plai@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Jaroslav Kysela <perex@perex.cz>,
-        Takashi Iwai <tiwai@suse.com>,
-        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
-        Stephan Gerhold <stephan@gerhold.net>, dianders@chromium.org,
-        dgreid@chromium.org, cychiang@google.com, judyhsiao@google.com,
-        tzungbi@chromium.org, swboyd@chromium.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        alsa-devel@alsa-project.org,
-        Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
-        Judy Hsiao <judyhsiao@chromium.org>
-Subject: [v6] ASoC: qcom: lpass-cpu: Fix pop noise during audio capture begin
-Date:   Fri,  4 Jun 2021 15:11:12 +0800
-Message-Id: <20210604071112.1055911-1-judyhsiao@chromium.org>
-X-Mailer: git-send-email 2.32.0.rc1.229.g3e70b5a671-goog
+        bh=zP2dna87z6RKrxkkJWo2LQdu7tVCeYap9nb/k2QVk5I=;
+        b=L2SNSO2MktnJc9NudVsb2GAgoPP0Vo6ZLCtAnifMtU+FtaeaEzsmOH+aNXJ1bYI7KH
+         m+/1VafeBqkf5y6/wVhEdEz0dm3nVlyg8laetk9Ks9YiNWyh/+zxYgEtbPKmEmEiIl5l
+         jW0jzp6vE4sB2jw7WfdFxQbAzYWy+DVj7XwtxQ5TnBFVZOcuMKes5IksU0E8R6kLLYcZ
+         EFnDes16wCqS9wjqr2dvomZ9gfL3RIDU64YCWb46FqGOObJG6mVZRDPBFCt23h/K3jBR
+         S7AwlK4bQolOL8J8iL0lnk/+L8OBISspuIC8AnG7P0F/gJm3RoRZSooUuL8YuER2KqZZ
+         m4jA==
+X-Gm-Message-State: AOAM531Chn6ZaIp14uRcFZqqEQTkKiO++p662KDFHBaUHtwlUM4aqt5i
+        NVYiF3gvjk3Xx+wYjlByOdUf2g==
+X-Google-Smtp-Source: ABdhPJykew9bOeZhphWWjOUQEebLS58YJSEt6mkLnOTlh99S+hukQhlFyBqTV9fKQ9UndvHQGxvMFA==
+X-Received: by 2002:a05:6512:33cb:: with SMTP id d11mr2097111lfg.180.1622795551966;
+        Fri, 04 Jun 2021 01:32:31 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id i127sm544870lfd.216.2021.06.04.01.32.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 04 Jun 2021 01:32:31 -0700 (PDT)
+Subject: Re: [RESEND 10/26] drm/msm/disp/dpu1/dpu_hw_interrupts: Demote a
+ bunch of kernel-doc abuses
+To:     Lee Jones <lee.jones@linaro.org>
+Cc:     linux-kernel@vger.kernel.org, Rob Clark <robdclark@gmail.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Krishna Manikandan <mkrishn@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+References: <20210602143300.2330146-1-lee.jones@linaro.org>
+ <20210602143300.2330146-11-lee.jones@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Message-ID: <85bd6c24-0e4e-6f18-ccf0-6acf62d0f0ff@linaro.org>
+Date:   Fri, 4 Jun 2021 11:32:30 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20210602143300.2330146-11-lee.jones@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+On 02/06/2021 17:32, Lee Jones wrote:
+> Fixes the following W=1 kernel build warning(s):
+> 
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c:17: warning: expecting prototype for Register offsets in MDSS register file for the interrupt registers(). Prototype was for MDP_SSPP_TOP0_OFF() instead
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c:35: warning: expecting prototype for WB interrupt status bit definitions(). Prototype was for DPU_INTR_WB_0_DONE() instead
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c:42: warning: expecting prototype for WDOG timer interrupt status bit definitions(). Prototype was for DPU_INTR_WD_TIMER_0_DONE() instead
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c:51: warning: expecting prototype for Pingpong interrupt status bit definitions(). Prototype was for DPU_INTR_PING_PONG_0_DONE() instead
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c:71: warning: expecting prototype for Interface interrupt status bit definitions(). Prototype was for DPU_INTR_INTF_0_UNDERRUN() instead
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c:85: warning: expecting prototype for Pingpong Secondary interrupt status bit definitions(). Prototype was for DPU_INTR_PING_PONG_S0_AUTOREFRESH_DONE() instead
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c:94: warning: expecting prototype for Pingpong TEAR detection interrupt status bit definitions(). Prototype was for DPU_INTR_PING_PONG_0_TEAR_DETECTED() instead
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c:102: warning: expecting prototype for Pingpong TE detection interrupt status bit definitions(). Prototype was for DPU_INTR_PING_PONG_0_TE_DETECTED() instead
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c:110: warning: expecting prototype for Ctl start interrupt status bit definitions(). Prototype was for DPU_INTR_CTL_0_START() instead
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c:119: warning: expecting prototype for Concurrent WB overflow interrupt status bit definitions(). Prototype was for DPU_INTR_CWB_2_OVERFLOW() instead
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c:125: warning: expecting prototype for Histogram VIG done interrupt status bit definitions(). Prototype was for DPU_INTR_HIST_VIG_0_DONE() instead
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c:133: warning: expecting prototype for Histogram VIG reset Sequence done interrupt status bit definitions(). Prototype was for DPU_INTR_HIST_VIG_0_RSTSEQ_DONE() instead
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c:141: warning: expecting prototype for Histogram DSPP done interrupt status bit definitions(). Prototype was for DPU_INTR_HIST_DSPP_0_DONE() instead
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c:149: warning: expecting prototype for Histogram DSPP reset Sequence done interrupt status bit definitions(). Prototype was for DPU_INTR_HIST_DSPP_0_RSTSEQ_DONE() instead
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c:157: warning: expecting prototype for INTF interrupt status bit definitions(). Prototype was for DPU_INTR_VIDEO_INTO_STATIC() instead
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c:170: warning: expecting prototype for AD4 interrupt status bit definitions(). Prototype was for DPU_INTR_BACKLIGHT_UPDATED() instead
 
-This patch fixes PoP noise of around 15ms observed during audio
-capture begin.
-Enables BCLK and LRCLK in snd_soc_dai_ops prepare call for
-introducing some delay before capture start.
+Most of these defines are gone in msm/msm-next. Could you please rebase 
+and repost just this patch? Other patches apply clearly.
 
-Co-developed-by: Judy Hsiao <judyhsiao@chromium.org>
-Signed-off-by: Judy Hsiao <judyhsiao@chromium.org>
-Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-(am from https://patchwork.kernel.org/patch/12276369/)
-(also found at https://lore.kernel.org/r/20210524142114.18676-1-srivasam@codeaurora.org)
+> Cc: Rob Clark <robdclark@gmail.com>
+> Cc: Sean Paul <sean@poorly.run>
+> Cc: David Airlie <airlied@linux.ie>
+> Cc: Daniel Vetter <daniel@ffwll.ch>
+> Cc: Krishna Manikandan <mkrishn@codeaurora.org>
+> Cc: linux-arm-msm@vger.kernel.org
+> Cc: dri-devel@lists.freedesktop.org
+> Cc: freedreno@lists.freedesktop.org
+> Signed-off-by: Lee Jones <lee.jones@linaro.org>
+> ---
+>   .../gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c | 32 +++++++++----------
+>   1 file changed, 16 insertions(+), 16 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
+> index 48c96b8121268..aaf251741dc27 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
+> @@ -10,7 +10,7 @@
+>   #include "dpu_hw_util.h"
+>   #include "dpu_hw_mdss.h"
+>   
+> -/**
+> +/*
+>    * Register offsets in MDSS register file for the interrupt registers
+>    * w.r.t. to the MDP base
+>    */
+> @@ -29,14 +29,14 @@
+>   #define MDP_INTF_1_OFF_REV_7xxx             0x35000
+>   #define MDP_INTF_5_OFF_REV_7xxx             0x39000
+>   
+> -/**
+> +/*
+>    * WB interrupt status bit definitions
+>    */
+>   #define DPU_INTR_WB_0_DONE BIT(0)
+>   #define DPU_INTR_WB_1_DONE BIT(1)
+>   #define DPU_INTR_WB_2_DONE BIT(4)
+>   
+> -/**
+> +/*
+>    * WDOG timer interrupt status bit definitions
+>    */
+>   #define DPU_INTR_WD_TIMER_0_DONE BIT(2)
+> @@ -45,7 +45,7 @@
+>   #define DPU_INTR_WD_TIMER_3_DONE BIT(6)
+>   #define DPU_INTR_WD_TIMER_4_DONE BIT(7)
+>   
+> -/**
+> +/*
+>    * Pingpong interrupt status bit definitions
+>    */
+>   #define DPU_INTR_PING_PONG_0_DONE BIT(8)
+> @@ -65,7 +65,7 @@
+>   #define DPU_INTR_PING_PONG_2_AUTOREFRESH_DONE BIT(22)
+>   #define DPU_INTR_PING_PONG_3_AUTOREFRESH_DONE BIT(23)
+>   
+> -/**
+> +/*
+>    * Interface interrupt status bit definitions
+>    */
+>   #define DPU_INTR_INTF_0_UNDERRUN BIT(24)
+> @@ -79,7 +79,7 @@
+>   #define DPU_INTR_INTF_3_VSYNC BIT(31)
+>   #define DPU_INTR_INTF_5_VSYNC BIT(23)
+>   
+> -/**
+> +/*
+>    * Pingpong Secondary interrupt status bit definitions
+>    */
+>   #define DPU_INTR_PING_PONG_S0_AUTOREFRESH_DONE BIT(0)
+> @@ -88,7 +88,7 @@
+>   #define DPU_INTR_PING_PONG_S0_TEAR_DETECTED BIT(22)
+>   #define DPU_INTR_PING_PONG_S0_TE_DETECTED BIT(28)
+>   
+> -/**
+> +/*
+>    * Pingpong TEAR detection interrupt status bit definitions
+>    */
+>   #define DPU_INTR_PING_PONG_0_TEAR_DETECTED BIT(16)
+> @@ -96,7 +96,7 @@
+>   #define DPU_INTR_PING_PONG_2_TEAR_DETECTED BIT(18)
+>   #define DPU_INTR_PING_PONG_3_TEAR_DETECTED BIT(19)
+>   
+> -/**
+> +/*
+>    * Pingpong TE detection interrupt status bit definitions
+>    */
+>   #define DPU_INTR_PING_PONG_0_TE_DETECTED BIT(24)
+> @@ -104,7 +104,7 @@
+>   #define DPU_INTR_PING_PONG_2_TE_DETECTED BIT(26)
+>   #define DPU_INTR_PING_PONG_3_TE_DETECTED BIT(27)
+>   
+> -/**
+> +/*
+>    * Ctl start interrupt status bit definitions
+>    */
+>   #define DPU_INTR_CTL_0_START BIT(9)
+> @@ -113,13 +113,13 @@
+>   #define DPU_INTR_CTL_3_START BIT(12)
+>   #define DPU_INTR_CTL_4_START BIT(13)
+>   
+> -/**
+> +/*
+>    * Concurrent WB overflow interrupt status bit definitions
+>    */
+>   #define DPU_INTR_CWB_2_OVERFLOW BIT(14)
+>   #define DPU_INTR_CWB_3_OVERFLOW BIT(15)
+>   
+> -/**
+> +/*
+>    * Histogram VIG done interrupt status bit definitions
+>    */
+>   #define DPU_INTR_HIST_VIG_0_DONE BIT(0)
+> @@ -127,7 +127,7 @@
+>   #define DPU_INTR_HIST_VIG_2_DONE BIT(8)
+>   #define DPU_INTR_HIST_VIG_3_DONE BIT(10)
+>   
+> -/**
+> +/*
+>    * Histogram VIG reset Sequence done interrupt status bit definitions
+>    */
+>   #define DPU_INTR_HIST_VIG_0_RSTSEQ_DONE BIT(1)
+> @@ -135,7 +135,7 @@
+>   #define DPU_INTR_HIST_VIG_2_RSTSEQ_DONE BIT(9)
+>   #define DPU_INTR_HIST_VIG_3_RSTSEQ_DONE BIT(11)
+>   
+> -/**
+> +/*
+>    * Histogram DSPP done interrupt status bit definitions
+>    */
+>   #define DPU_INTR_HIST_DSPP_0_DONE BIT(12)
+> @@ -143,7 +143,7 @@
+>   #define DPU_INTR_HIST_DSPP_2_DONE BIT(20)
+>   #define DPU_INTR_HIST_DSPP_3_DONE BIT(22)
+>   
+> -/**
+> +/*
+>    * Histogram DSPP reset Sequence done interrupt status bit definitions
+>    */
+>   #define DPU_INTR_HIST_DSPP_0_RSTSEQ_DONE BIT(13)
+> @@ -151,7 +151,7 @@
+>   #define DPU_INTR_HIST_DSPP_2_RSTSEQ_DONE BIT(21)
+>   #define DPU_INTR_HIST_DSPP_3_RSTSEQ_DONE BIT(23)
+>   
+> -/**
+> +/*
+>    * INTF interrupt status bit definitions
+>    */
+>   #define DPU_INTR_VIDEO_INTO_STATIC BIT(0)
+> @@ -164,7 +164,7 @@
+>   #define DPU_INTR_DSICMD_2_OUTOF_STATIC BIT(7)
+>   #define DPU_INTR_PROG_LINE BIT(8)
+>   
+> -/**
+> +/*
+>    * AD4 interrupt status bit definitions
+>    */
+>   #define DPU_INTR_BACKLIGHT_UPDATED BIT(0)
+> 
 
----
-Changes Since V5:
-	-- Fixed nit.
-        -- Updated `mi2s_was_prepared[dai->driver->id] = true;` after checking for errors.
-Changes Since V4:
-        -- Replaced the __clk_is_enabled(BCLK) check by the self maintained.
-           mi2s_was_prepared bool state.
-        -- Removed unrelated changes.
-        -- Refined comments.
-Changes Since V3:
-        -- Checked BCLK is off before enabling it in lpass_cpu_daiops_prepare as
-           lpass_cpu_daiops_prepare can be called multiple times
-        -- Checked BCLK is on before disabling it in lpass_cpu_daiops_shutdown to
-           fix the WARN. It is because BCLK may not be enabled if
-           lpass_cpu_daiops_prepare is not called before lpass_cpu_daiops_shutdown
-        -- Added more comments
-Changes Since V2:
-        -- Updated comments as per linux style
-        -- Removed unrelated changes
-Changes Since V1:
-        -- Enabled BCLK and LRCLK in dai ops prepare API instead of startup API
-        -- Added comments
 
- sound/soc/qcom/lpass-cpu.c | 80 ++++++++++++++++++++++++++++++++++++++
- sound/soc/qcom/lpass.h     |  4 ++
- 2 files changed, 84 insertions(+)
-
-diff --git a/sound/soc/qcom/lpass-cpu.c b/sound/soc/qcom/lpass-cpu.c
-index af8cb64924a0..0430cc797391 100644
---- a/sound/soc/qcom/lpass-cpu.c
-+++ b/sound/soc/qcom/lpass-cpu.c
-@@ -93,8 +93,30 @@ static void lpass_cpu_daiops_shutdown(struct snd_pcm_substream *substream,
- 		struct snd_soc_dai *dai)
- {
- 	struct lpass_data *drvdata = snd_soc_dai_get_drvdata(dai);
-+	struct lpaif_i2sctl *i2sctl = drvdata->i2sctl;
-+	unsigned int id = dai->driver->id;
- 
- 	clk_disable_unprepare(drvdata->mi2s_osr_clk[dai->driver->id]);
-+	/*
-+	 * Ensure LRCLK is disabled even in device node validation.
-+	 * Will not impact if disabled in lpass_cpu_daiops_trigger()
-+	 * suspend.
-+	 */
-+	if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK)
-+		regmap_fields_write(i2sctl->spken, id, LPAIF_I2SCTL_SPKEN_DISABLE);
-+	else
-+		regmap_fields_write(i2sctl->micen, id, LPAIF_I2SCTL_MICEN_DISABLE);
-+
-+	/*
-+	 * BCLK may not be enabled if lpass_cpu_daiops_prepare is called before
-+	 * lpass_cpu_daiops_shutdown. It's paired with the clk_enable in
-+	 * lpass_cpu_daiops_prepare.
-+	 */
-+	if (drvdata->mi2s_was_prepared[dai->driver->id]) {
-+		drvdata->mi2s_was_prepared[dai->driver->id] = false;
-+		clk_disable(drvdata->mi2s_bit_clk[dai->driver->id]);
-+	}
-+
- 	clk_unprepare(drvdata->mi2s_bit_clk[dai->driver->id]);
- }
- 
-@@ -275,6 +297,18 @@ static int lpass_cpu_daiops_trigger(struct snd_pcm_substream *substream,
- 	case SNDRV_PCM_TRIGGER_START:
- 	case SNDRV_PCM_TRIGGER_RESUME:
- 	case SNDRV_PCM_TRIGGER_PAUSE_RELEASE:
-+		/*
-+		 * Ensure lpass BCLK/LRCLK is enabled during
-+		 * device resume as lpass_cpu_daiops_prepare() is not called
-+		 * after the device resumes. We don't check mi2s_was_prepared before
-+		 * enable/disable BCLK in trigger events because:
-+		 *  1. These trigger events are paired, so the BCLK
-+		 *     enable_count is balanced.
-+		 *  2. the BCLK can be shared (ex: headset and headset mic),
-+		 *     we need to increase the enable_count so that we don't
-+		 *     turn off the shared BCLK while other devices are using
-+		 *     it.
-+		 */
- 		if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK) {
- 			ret = regmap_fields_write(i2sctl->spken, id,
- 						 LPAIF_I2SCTL_SPKEN_ENABLE);
-@@ -296,6 +330,10 @@ static int lpass_cpu_daiops_trigger(struct snd_pcm_substream *substream,
- 	case SNDRV_PCM_TRIGGER_STOP:
- 	case SNDRV_PCM_TRIGGER_SUSPEND:
- 	case SNDRV_PCM_TRIGGER_PAUSE_PUSH:
-+		/*
-+		 * To ensure lpass BCLK/LRCLK is disabled during
-+		 * device suspend.
-+		 */
- 		if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK) {
- 			ret = regmap_fields_write(i2sctl->spken, id,
- 						 LPAIF_I2SCTL_SPKEN_DISABLE);
-@@ -315,12 +353,54 @@ static int lpass_cpu_daiops_trigger(struct snd_pcm_substream *substream,
- 	return ret;
- }
- 
-+static int lpass_cpu_daiops_prepare(struct snd_pcm_substream *substream,
-+		struct snd_soc_dai *dai)
-+{
-+	struct lpass_data *drvdata = snd_soc_dai_get_drvdata(dai);
-+	struct lpaif_i2sctl *i2sctl = drvdata->i2sctl;
-+	unsigned int id = dai->driver->id;
-+	int ret;
-+
-+	/*
-+	 * Ensure lpass BCLK/LRCLK is enabled bit before playback/capture
-+	 * data flow starts. This allows other codec to have some delay before
-+	 * the data flow.
-+	 * (ex: to drop start up pop noise before capture starts).
-+	 */
-+	if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK)
-+		ret = regmap_fields_write(i2sctl->spken, id, LPAIF_I2SCTL_SPKEN_ENABLE);
-+	else
-+		ret = regmap_fields_write(i2sctl->micen, id, LPAIF_I2SCTL_MICEN_ENABLE);
-+
-+	if (ret) {
-+		dev_err(dai->dev, "error writing to i2sctl reg: %d\n", ret);
-+		return ret;
-+	}
-+
-+	/*
-+	 * Check mi2s_was_prepared before enabling BCLK as lpass_cpu_daiops_prepare can
-+	 * be called multiple times. It's paired with the clk_disable in
-+	 * lpass_cpu_daiops_shutdown.
-+	 */
-+	if (!drvdata->mi2s_was_prepared[dai->driver->id]) {
-+		ret = clk_enable(drvdata->mi2s_bit_clk[id]);
-+		if (ret) {
-+			dev_err(dai->dev, "error in enabling mi2s bit clk: %d\n", ret);
-+			clk_disable(drvdata->mi2s_osr_clk[id]);
-+			return ret;
-+		}
-+		drvdata->mi2s_was_prepared[dai->driver->id] = true;
-+	}
-+	return 0;
-+}
-+
- const struct snd_soc_dai_ops asoc_qcom_lpass_cpu_dai_ops = {
- 	.set_sysclk	= lpass_cpu_daiops_set_sysclk,
- 	.startup	= lpass_cpu_daiops_startup,
- 	.shutdown	= lpass_cpu_daiops_shutdown,
- 	.hw_params	= lpass_cpu_daiops_hw_params,
- 	.trigger	= lpass_cpu_daiops_trigger,
-+	.prepare	= lpass_cpu_daiops_prepare,
- };
- EXPORT_SYMBOL_GPL(asoc_qcom_lpass_cpu_dai_ops);
- 
-diff --git a/sound/soc/qcom/lpass.h b/sound/soc/qcom/lpass.h
-index 83b2e08ade06..7f72214404ba 100644
---- a/sound/soc/qcom/lpass.h
-+++ b/sound/soc/qcom/lpass.h
-@@ -67,6 +67,10 @@ struct lpass_data {
- 	/* MI2S SD lines to use for playback/capture */
- 	unsigned int mi2s_playback_sd_mode[LPASS_MAX_MI2S_PORTS];
- 	unsigned int mi2s_capture_sd_mode[LPASS_MAX_MI2S_PORTS];
-+
-+	/* The state of MI2S prepare dai_ops was called */
-+	bool mi2s_was_prepared[LPASS_MAX_MI2S_PORTS];
-+
- 	int hdmi_port_enable;
- 
- 	/* low-power audio interface (LPAIF) registers */
 -- 
-2.32.0.rc1.229.g3e70b5a671-goog
-
+With best wishes
+Dmitry
