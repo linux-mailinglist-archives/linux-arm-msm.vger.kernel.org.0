@@ -2,115 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 97F7D39B83A
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Jun 2021 13:45:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8869739B880
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Jun 2021 13:54:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230187AbhFDLrm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Jun 2021 07:47:42 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:23741 "EHLO m43-7.mailgun.net"
+        id S230222AbhFDL4i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Jun 2021 07:56:38 -0400
+Received: from mail.kernel.org ([198.145.29.99]:45998 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229740AbhFDLrl (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Jun 2021 07:47:41 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1622807155; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=/fL5ftPhjRgVOQgMkNWuk43t7ra9Y4TLDX3/oQqRB+M=;
- b=hV329ndZ5ymFkKanNN2MnSHJrJcmbtoXrmF128iqRUSNWqVa6aWwUF3lmDkogDnH+RevVM81
- 6Z1DV6ZTTcpqoH0MaBeIew348wSNRJh6Ut2v6PHs/u1V8oLRuGIqxk0rmlxtMeR7D+0LcWgB
- m5hs/dabQ9ZevND2E7cmSfdAyD4=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
- 60ba124ee27c0cc77f155f41 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 04 Jun 2021 11:45:18
- GMT
-Sender: skakit=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 15AEAC43460; Fri,  4 Jun 2021 11:45:18 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: skakit)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 52880C433F1;
-        Fri,  4 Jun 2021 11:45:17 +0000 (UTC)
+        id S229682AbhFDL4g (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 4 Jun 2021 07:56:36 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 3751561418;
+        Fri,  4 Jun 2021 11:54:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+        s=korg; t=1622807690;
+        bh=wZZG/mGZCjQQr4cb050WrblT+FLO7Xb59hw5tKouVLo=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=G4CIy+pqEcWSE8N1ou8T1exRmZ2BhmHAs5z1o5iTrbZso2KcXVcJnKtaxrVZeb9Ai
+         AJYgJuj7XI7Zp0rUtT4oxLV3QBHNqimHQYnNeUUHmMRcLkJyo8mJEYodpTFODqI2Wj
+         kiyUQV19SLATSESTWjh+tZIdmFuKfs5DejDBMNnE=
+Date:   Fri, 4 Jun 2021 13:54:48 +0200
+From:   Greg KH <gregkh@linuxfoundation.org>
+To:     Wesley Cheng <wcheng@codeaurora.org>
+Cc:     balbi@kernel.org, agross@kernel.org, bjorn.andersson@linaro.org,
+        robh+dt@kernel.org, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, jackp@codeaurora.org,
+        Thinh.Nguyen@synopsys.com
+Subject: Re: [PATCH v9 0/5] Re-introduce TX FIFO resize for larger EP bursting
+Message-ID: <YLoUiO8tpRpmvcyU@kroah.com>
+References: <1621410561-32762-1-git-send-email-wcheng@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Fri, 04 Jun 2021 17:15:17 +0530
-From:   skakit@codeaurora.org
-To:     Sebastian Reichel <sre@kernel.org>
-Cc:     Rob Herring <robh@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        David Collins <collinsd@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        kgunda@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-input@vger.kernel.org,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        linux-kernel@vger.kernel.org, Andy Yan <andy.yan@rock-chips.com>,
-        Courtney Cavin <courtney.cavin@sonymobile.com>,
-        devicetree@vger.kernel.org, linux-pm@vger.kernel.org
-Subject: Re: [PATCH V3 5/5] dt-bindings: power: reset: qcom-pon: Convert qcom
- PON binding to yaml
-In-Reply-To: <0e1471d4522d1356e354c4653e8e0b42@codeaurora.org>
-References: <1620630064-16354-1-git-send-email-skakit@codeaurora.org>
- <1620630064-16354-6-git-send-email-skakit@codeaurora.org>
- <20210510162506.GA234174@robh.at.kernel.org>
- <20210604110917.zbrjzpl23ujqclyf@earth.universe>
- <0e1471d4522d1356e354c4653e8e0b42@codeaurora.org>
-Message-ID: <f3ea0212f4122099e0e35d1aaf5e9e07@codeaurora.org>
-X-Sender: skakit@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <1621410561-32762-1-git-send-email-wcheng@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-06-04 17:12, skakit@codeaurora.org wrote:
-> Hi,
-> 
-> On 2021-06-04 16:39, Sebastian Reichel wrote:
->> Hi,
->> 
->> On Mon, May 10, 2021 at 11:25:06AM -0500, Rob Herring wrote:
->>> On Mon, 10 May 2021 12:31:04 +0530, satya priya wrote:
->>> > Convert qcom PON binding from .txt to .yaml format.
->>> >
->>> > The example has been removed in favour of full example being
->>> > available in the qcom,pm8941-pwrkey binding.
->>> >
->>> > Signed-off-by: satya priya <skakit@codeaurora.org>
->>> > ---
->>> > Changes in V2:
->>> >  - As per Rob's comments, converted the main PON binding and added in V2.
->>> >
->>> > Changes in V3:
->>> >  - As per Sebastian's comments, added allOf to refer reboot-mode.yaml and
->>> >    used unevaluatedProperties = false. Added maxItems for reg.
->>> >
->>> >  .../devicetree/bindings/power/reset/qcom,pon.txt   | 49 ----------------------
->>> >  .../devicetree/bindings/power/reset/qcom,pon.yaml  | 44 +++++++++++++++++++
->>> >  2 files changed, 44 insertions(+), 49 deletions(-)
->>> >  delete mode 100644 Documentation/devicetree/bindings/power/reset/qcom,pon.txt
->>> >  create mode 100644 Documentation/devicetree/bindings/power/reset/qcom,pon.yaml
->>> >
->>> 
->>> Reviewed-by: Rob Herring <robh@kernel.org>
->> 
->> Acked-by: Sebastian Reichel <sre@kernel.org>
->> 
-> 
-> There is a V4 for this.
-> https://lore.kernel.org/patchwork/patch/1425638/
-> 
-Seems like you already reviewed the V4.
+On Wed, May 19, 2021 at 12:49:16AM -0700, Wesley Cheng wrote:
+> Changes in V9:
+>  - Fixed incorrect patch in series.  Removed changes in DTSI, as dwc3-qcom will
+>    add the property by default from the kernel.
 
-Thanks,
-Satya Priya
->> -- Sebastian
+This patch series has one build failure and one warning added:
+
+drivers/usb/dwc3/gadget.c: In function ‘dwc3_gadget_calc_tx_fifo_size’:
+drivers/usb/dwc3/gadget.c:653:45: warning: passing argument 1 of ‘dwc3_mdwidth’ makes pointer from integer without a cast [-Wint-conversion]
+  653 |         mdwidth = dwc3_mdwidth(dwc->hwparams.hwparams0);
+      |                                ~~~~~~~~~~~~~^~~~~~~~~~
+      |                                             |
+      |                                             u32 {aka unsigned int}
+In file included from drivers/usb/dwc3/debug.h:14,
+                 from drivers/usb/dwc3/gadget.c:25:
+drivers/usb/dwc3/core.h:1493:45: note: expected ‘struct dwc3 *’ but argument is of type ‘u32’ {aka ‘unsigned int’}
+ 1493 | static inline u32 dwc3_mdwidth(struct dwc3 *dwc)
+      |                                ~~~~~~~~~~~~~^~~
+
+
+drivers/usb/dwc3/dwc3-qcom.c: In function ‘dwc3_qcom_of_register_core’:
+drivers/usb/dwc3/dwc3-qcom.c:660:23: error: implicit declaration of function ‘of_add_property’; did you mean ‘of_get_property’? [-Werror=implicit-function-declaration]
+  660 |                 ret = of_add_property(dwc3_np, prop);
+      |                       ^~~~~~~~~~~~~~~
+      |                       of_get_property
+
+
+How did you test these?
+
+thanks,
+
+greg k-h
