@@ -2,149 +2,156 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 026CC39BEB1
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Jun 2021 19:27:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6C2A639BED4
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Jun 2021 19:31:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230185AbhFDR3L (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Jun 2021 13:29:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58802 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229791AbhFDR3L (ORCPT
+        id S230319AbhFDRdf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Jun 2021 13:33:35 -0400
+Received: from mo4-p01-ob.smtp.rzone.de ([81.169.146.165]:23158 "EHLO
+        mo4-p01-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230261AbhFDRdf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Jun 2021 13:29:11 -0400
-Received: from mail-qt1-x82e.google.com (mail-qt1-x82e.google.com [IPv6:2607:f8b0:4864:20::82e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7360C061766
-        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Jun 2021 10:27:24 -0700 (PDT)
-Received: by mail-qt1-x82e.google.com with SMTP id t17so7537939qta.11
-        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Jun 2021 10:27:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=marek-ca.20150623.gappssmtp.com; s=20150623;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=W7q2U9QT7qAxj7hf+II4Z/nhms5EfM2onq31L99Ku2U=;
-        b=knyEhL7QEI32EeLzI2KT4Dljnurd8LSBl3eY1jsnandqQeKWQkPZUAoZo33Ipg4z6i
-         ebwNIk8PHzjI6iPgnKWu11xSJ7F8p2e1g4Ij1mMqWez1t91NnabPspncr395HhfNwHtT
-         XC3F3nkkrdCmEg76mV5KLl7EfwTEHmszTUNvOB7m+zA8CdMGorb7cs0OF0da1HKyrZAc
-         1/DVPkDnzn8KURWaYRlGNmlR8yNW1vy9Z+bnYexUzg5EymMymjArwtCVSzi+ETjbmrLA
-         NTXzipMQwxfXaZ8LqfiQ4TiM1rat14suhnFWwRgBiFbHi7rnenPJD/Q1GOUWkVp8kaei
-         tIBg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=W7q2U9QT7qAxj7hf+II4Z/nhms5EfM2onq31L99Ku2U=;
-        b=Xuvaw2tkQahw2/A6lMuNbpzPjtCiNsXKMRH1Zx0ILZS/XZf00UsAIQzswjjyPomXrX
-         enA+eAFEikNQ05wf2QJMaTw+0DXSLD0zaXu27HWIyC6qXgAJ/7dRu5Zt26sg+j9UwEwK
-         Qds/SII+lhuyQBtToEp+0ptTHT5D9eZMNlKsF5JZ2uRDpCFGIWGznLKJJlaw34Lt8bTx
-         i/BVoNJM2Qmqm44U1traorlYcqSb+acgo84IjfI4MG96S9vhCZaysCqrVBWU2IdFunJq
-         MHK2MgXQQTyHylCGc66f1Clw82UL1QE1WgsCf4b2ulVlS1rtPwMQU83f6GDFnuXUWMQ2
-         K8Tw==
-X-Gm-Message-State: AOAM533KpVN7RQO7C5OTkPdi/fZLCcmuN/W61bIphwwEPvpNXOCEvWAL
-        QJqJVLgB3MY+VOWDCv8hkA4bDw==
-X-Google-Smtp-Source: ABdhPJxry73nGzw9vaNeSCAnH5NcGdzaokOeVX5S03eBqde14Jqq6PqvuHlpJHmbrHME98hK3aceEw==
-X-Received: by 2002:ac8:570b:: with SMTP id 11mr5643304qtw.287.1622827643909;
-        Fri, 04 Jun 2021 10:27:23 -0700 (PDT)
-Received: from [192.168.0.189] (modemcable068.184-131-66.mc.videotron.ca. [66.131.184.68])
-        by smtp.gmail.com with ESMTPSA id l5sm3411632qkf.55.2021.06.04.10.27.22
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 04 Jun 2021 10:27:23 -0700 (PDT)
-Subject: Re: [PATCH v2 2/2] dt-bindings: clock: add QCOM SM8350 display clock
- bindings
-To:     Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org
-Cc:     Rob Herring <robh@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20210519001802.1863-1-jonathan@marek.ca>
- <20210519001802.1863-2-jonathan@marek.ca>
- <162266925581.4130789.10178141366818328902@swboyd.mtv.corp.google.com>
-From:   Jonathan Marek <jonathan@marek.ca>
-Message-ID: <56f3b0bd-5dd7-80d4-041a-0fd2daf4b1f2@marek.ca>
-Date:   Fri, 4 Jun 2021 13:25:41 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.2.2
+        Fri, 4 Jun 2021 13:33:35 -0400
+ARC-Seal: i=1; a=rsa-sha256; t=1622827904; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=m9pFcaPadHwKAQEiNm3NeyzwZTNTG1NGHkHfbbcR5LtqzezLmsoq0rcB7beJQCyHom
+    zMLP0isUqNs5vFKqjMm7UPVzIQzUGJtoSEkzUVzAMmMVWE8AcDEyysx86Zc6CbFfqGUg
+    l98Uv1Eebu1/6WHDuP4s4dDaBVZ2Bf9/kWPzHAJpahEtvnQOQ3SPM6hLRwsi/MGqCfsP
+    cd52arDhQiQBDAjp0KDtGu686Ci6mm5ED+yyhYs4l/w4rXhRO5vGdFge1umS2tF6UvB2
+    OYYb87uZUs5aGjsFYg6wgow4JIQEndFlx3eBTw8ARcnjVTXjhPV14eMR6KEsNYqKKj75
+    Nx1Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1622827904;
+    s=strato-dkim-0002; d=strato.com;
+    h=Message-Id:Date:Subject:Cc:To:From:Cc:Date:From:Subject:Sender;
+    bh=LVLr555nUQEvEYgAf4PXdZYCbzgO3vN/QlLUV+4x5jY=;
+    b=IR7/Ylqstp3O94+PLActKSdeiHBhVZVZXlLxoVoBiiZl/m1FlaT82uoJkWeNiJOcr5
+    Qxj+sicRyWxJMoA4q9MS4RWImtM0XgdTAtVZqQ/uq+vRJlp0AJfy4qzJ2Fgc0kG6nPgG
+    eaew965VdgiKkCKjIxhGYZUUAS1xRFAaPhdMnwSeAmcOpe1eliFZclZquD2vYR0NgSPE
+    SqkaI2HHrXbpbLGgfHmHaNpayDY1o+2PkN+3kZ4fY2g+/POMUK5qO+qZaGzbAycigw/G
+    EeGz9RiYSqcbuFftZp41PD/xU6bgPvcYuo2mkVW9oD4bwBtlU/g/asyPKr03RXcL6k0l
+    f1Pw==
+ARC-Authentication-Results: i=1; strato.com;
+    dkim=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1622827904;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=Message-Id:Date:Subject:Cc:To:From:Cc:Date:From:Subject:Sender;
+    bh=LVLr555nUQEvEYgAf4PXdZYCbzgO3vN/QlLUV+4x5jY=;
+    b=NH0D9LhDFWDAeo9K2dT2Ai7mcPQzc2FOBs7dQ73CpmVlguKCCI6wlcghIuWDKpyBrE
+    xzL67P0XWmNJLpeqkkHWgMna6vhxWSa/39BToUFnomgO7+/edMTb56bTapfuOzWRkSWy
+    7y3QTLIFeSRQn+NZMuD8Y2HIlC/6KWZ9xJb7u1EoWjtxB2g17Ue6E2eML0ydQ5GuzAt5
+    nnt23bAhdl3t6ZQBXvG3dMBZZIgD1IPmPO7eUvL1s+FPZJkZmevsXbXeIL0H78Q0bLSt
+    xke8G7XaxAzisNxjtJuaiNz7PrbGDg8nFXmPtFl5aVRfZOhRrBKMrI6Nt1t/kBUQb8mI
+    d1iA==
+Authentication-Results: strato.com;
+    dkim=none
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVORvLd4SsytBXS7IYBkLahKxB5m6Pvxo="
+X-RZG-CLASS-ID: mo00
+Received: from droid..
+    by smtp.strato.de (RZmta 47.27.2 DYNA|AUTH)
+    with ESMTPSA id y01375x54HVhH5X
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Fri, 4 Jun 2021 19:31:43 +0200 (CEST)
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, phone-devel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Michael Srba <Michael.Srba@seznam.cz>,
+        Stephan Gerhold <stephan@gerhold.net>
+Subject: [PATCH 1/5] arm64: dts: qcom: msm8916-samsung-a2015: Add touch key
+Date:   Fri,  4 Jun 2021 19:27:38 +0200
+Message-Id: <20210604172742.10593-1-stephan@gerhold.net>
+X-Mailer: git-send-email 2.31.1
 MIME-Version: 1.0
-In-Reply-To: <162266925581.4130789.10178141366818328902@swboyd.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 6/2/21 5:27 PM, Stephen Boyd wrote:
-> Quoting Jonathan Marek (2021-05-18 17:18:02)
->> Add sm8350 DISPCC bindings, which are simply a symlink to the sm8250
->> bindings. Update the documentation with the new compatible.
->>
->> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
->> Reviewed-by: Rob Herring <robh@kernel.org>
->> ---
->>   .../devicetree/bindings/clock/qcom,dispcc-sm8x50.yaml       | 6 ++++--
->>   include/dt-bindings/clock/qcom,dispcc-sm8350.h              | 1 +
-> 
->>   2 files changed, 5 insertions(+), 2 deletions(-)
->>   create mode 120000 include/dt-bindings/clock/qcom,dispcc-sm8350.h
-> 
-> Why the symlink? Can we have the dt authors use the existing header file
-> instead?
-> 
+The Samsung Galaxy A3/A5 both have two capacitive touch keys,
+connected to an ABOV MCU. It implements the same interface as
+implemented by the tm2-touchkey driver and works just fine with
+the coreriver,tc360-touchkey compatible. It's probably actually some
+Samsung-specific interface that they implement with different MCUs.
 
-It would be strange to include bindings with the name of a different 
-SoC. I guess it is a matter a preference, is there any good reason to 
-*not* do it like this?
+Note that for some reason Samsung decided to connect this to GPIOs
+where no hardware I2C bus is available, so we need to fall back
+to software bit-banging using i2c-gpio.
 
->>
->> diff --git a/Documentation/devicetree/bindings/clock/qcom,dispcc-sm8x50.yaml b/Documentation/devicetree/bindings/clock/qcom,dispcc-sm8x50.yaml
->> index 0cdf53f41f84..8f414642445e 100644
->> --- a/Documentation/devicetree/bindings/clock/qcom,dispcc-sm8x50.yaml
->> +++ b/Documentation/devicetree/bindings/clock/qcom,dispcc-sm8x50.yaml
->> @@ -4,24 +4,26 @@
->>   $id: http://devicetree.org/schemas/clock/qcom,dispcc-sm8x50.yaml#
->>   $schema: http://devicetree.org/meta-schemas/core.yaml#
->>   
->> -title: Qualcomm Display Clock & Reset Controller Binding for SM8150/SM8250
->> +title: Qualcomm Display Clock & Reset Controller Binding for SM8150/SM8250/SM8350
-> 
-> Maybe just "Binding for SM8x50 SoCs"
-> 
+The vdd/vcc-supply is board-specific and will be added separately
+for a3u/a5u.
 
-Its likely these bindings won't be compatible with future "SM8x50" SoCs, 
-listing supported SoCs explicitly will avoid confusion in the future.
+Co-developed-by: Michael Srba <Michael.Srba@seznam.cz>
+Signed-off-by: Michael Srba <Michael.Srba@seznam.cz>
+Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+---
+ .../qcom/msm8916-samsung-a2015-common.dtsi    | 45 +++++++++++++++++++
+ 1 file changed, 45 insertions(+)
 
->>   
->>   maintainers:
->>     - Jonathan Marek <jonathan@marek.ca>
->>   
->>   description: |
->>     Qualcomm display clock control module which supports the clocks, resets and
->> -  power domains on SM8150 and SM8250.
->> +  power domains on SM8150/SM8250/SM8350.
-> 
-> same 8x50 comment.
-> 
->>   
->>     See also:
->>       dt-bindings/clock/qcom,dispcc-sm8150.h
->>       dt-bindings/clock/qcom,dispcc-sm8250.h
->> +    dt-bindings/clock/qcom,dispcc-sm8350.h
->>   
->>   properties:
->>     compatible:
->>       enum:
->>         - qcom,sm8150-dispcc
->>         - qcom,sm8250-dispcc
->> +      - qcom,sm8350-dispcc
->>   
->>     clocks:
->>       items:
->> diff --git a/include/dt-bindings/clock/qcom,dispcc-sm8350.h b/include/dt-bindings/clock/qcom,dispcc-sm8350.h
->> new file mode 120000
->> index 000000000000..0312b4544acb
->> --- /dev/null
->> +++ b/include/dt-bindings/clock/qcom,dispcc-sm8350.h
->> @@ -0,0 +1 @@
->> +qcom,dispcc-sm8250.h
->> \ No newline at end of file
+diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-a2015-common.dtsi b/arch/arm64/boot/dts/qcom/msm8916-samsung-a2015-common.dtsi
+index 230ba3ce3277..3c77e7ef9eda 100644
+--- a/arch/arm64/boot/dts/qcom/msm8916-samsung-a2015-common.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-a2015-common.dtsi
+@@ -95,6 +95,35 @@ muic: extcon@25 {
+ 			pinctrl-0 = <&muic_int_default>;
+ 		};
+ 	};
++
++	i2c-tkey {
++		compatible = "i2c-gpio";
++		sda-gpios = <&msmgpio 16 (GPIO_ACTIVE_HIGH|GPIO_OPEN_DRAIN)>;
++		scl-gpios = <&msmgpio 17 (GPIO_ACTIVE_HIGH|GPIO_OPEN_DRAIN)>;
++
++		pinctrl-names = "default";
++		pinctrl-0 = <&tkey_i2c_default>;
++
++		#address-cells = <1>;
++		#size-cells = <0>;
++
++		touchkey: touchkey@20 {
++			/* Note: Actually an ABOV MCU that implements same interface */
++			compatible = "coreriver,tc360-touchkey";
++			reg = <0x20>;
++
++			interrupt-parent = <&msmgpio>;
++			interrupts = <98 IRQ_TYPE_EDGE_FALLING>;
++
++			/* vcc/vdd-supply are board-specific */
++			vddio-supply = <&pm8916_l6>;
++
++			linux,keycodes = <KEY_APPSELECT KEY_BACK>;
++
++			pinctrl-names = "default";
++			pinctrl-0 = <&tkey_default>;
++		};
++	};
+ };
+ 
+ &blsp_i2c2 {
+@@ -333,6 +362,22 @@ muic_int_default: muic-int-default {
+ 		bias-disable;
+ 	};
+ 
++	tkey_default: tkey-default {
++		pins = "gpio98";
++		function = "gpio";
++
++		drive-strength = <2>;
++		bias-disable;
++	};
++
++	tkey_i2c_default: tkey-i2c-default {
++		pins = "gpio16", "gpio17";
++		function = "gpio";
++
++		drive-strength = <2>;
++		bias-disable;
++	};
++
+ 	tsp_en_default: tsp-en-default {
+ 		pins = "gpio73";
+ 		function = "gpio";
+-- 
+2.31.1
+
