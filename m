@@ -2,76 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D691639BF17
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Jun 2021 19:50:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 15FD339C15F
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Jun 2021 22:34:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229791AbhFDRwo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Jun 2021 13:52:44 -0400
-Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:24316 "EHLO
-        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229690AbhFDRwo (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Jun 2021 13:52:44 -0400
-Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 04 Jun 2021 10:50:57 -0700
-X-QCInternal: smtphost
-Received: from gurus-linux.qualcomm.com ([10.134.64.25])
-  by ironmsg05-sd.qualcomm.com with ESMTP; 04 Jun 2021 10:50:57 -0700
-Received: by gurus-linux.qualcomm.com (Postfix, from userid 383780)
-        id 4C04F210ED; Fri,  4 Jun 2021 10:50:57 -0700 (PDT)
-Date:   Fri, 4 Jun 2021 10:50:57 -0700
-From:   Guru Das Srinagesh <gurus@codeaurora.org>
-To:     Yang Yingliang <yangyingliang@huawei.com>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        lee.jones@linaro.org, agross@kernel.org,
-        dmitry.baryshkov@linaro.org
-Subject: Re: [PATCH -next v2] mfd: pm8008: Fix return value check in
- pm8008_probe()
-Message-ID: <20210604175057.GA13362@codeaurora.org>
-References: <20210604013824.1040775-1-yangyingliang@huawei.com>
+        id S230281AbhFDUfs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Jun 2021 16:35:48 -0400
+Received: from mail.kernel.org ([198.145.29.99]:36846 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229854AbhFDUfs (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 4 Jun 2021 16:35:48 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id B9F6A60FF2;
+        Fri,  4 Jun 2021 20:34:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1622838841;
+        bh=prn70jPH40FaWqLyD9hxXxxeHKLoSW33nPc01wxEYoA=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=SQebSbLxcu/9QPbtm6HRvyQVpZUnDnBQAVJ/dz6dlyGN217CpaUq4Qnr4o5PB7CpZ
+         /Qdz805XJqtiM00YcgMV4ow/T8FaxelqFm8VGy2Mgx6sWO1Km/iyeYwAucdGMgOxBQ
+         wHFeO7wccfldVzQsG4BiZdkYk7ld0eCCmx3xyj4kwU/CB21kLXGVi71SXn7FKdpYcM
+         9ff/fljJCw0MODryiCj7BLnZYYEBFS9qNYmiCV0bHOSASmHMXMUxDCDgipy6hZiSwf
+         nOtvdDJcGIREJf4Js1gy7nL8dFAML5rtwHEJhiOyIyWCUvab7PGhOA/8JQ/ZxnKIeD
+         dCL+8n2VF1csQ==
+Date:   Fri, 4 Jun 2021 22:33:58 +0200
+From:   Wolfram Sang <wsa@kernel.org>
+To:     Roja Rani Yarubandi <rojay@codeaurora.org>
+Cc:     swboyd@chromium.org, dianders@chromium.org,
+        saiprakash.ranjan@codeaurora.org, gregkh@linuxfoundation.org,
+        mka@chromium.org, skananth@codeaurora.org,
+        msavaliy@qti.qualcomm.com, skakit@codeaurora.org,
+        rnayak@codeaurora.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org,
+        sumit.semwal@linaro.org, linux-media@vger.kernel.org
+Subject: Re: [PATCH V11 1/2] i2c: i2c-qcom-geni: Add shutdown callback for i2c
+Message-ID: <YLqONrlcPkOuZM18@kunai>
+Mail-Followup-To: Wolfram Sang <wsa@kernel.org>,
+        Roja Rani Yarubandi <rojay@codeaurora.org>, swboyd@chromium.org,
+        dianders@chromium.org, saiprakash.ranjan@codeaurora.org,
+        gregkh@linuxfoundation.org, mka@chromium.org,
+        skananth@codeaurora.org, msavaliy@qti.qualcomm.com,
+        skakit@codeaurora.org, rnayak@codeaurora.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org,
+        sumit.semwal@linaro.org, linux-media@vger.kernel.org
+References: <20210525131051.31250-1-rojay@codeaurora.org>
+ <20210525131051.31250-2-rojay@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="BValqsbsrpDr7D4r"
 Content-Disposition: inline
-In-Reply-To: <20210604013824.1040775-1-yangyingliang@huawei.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <20210525131051.31250-2-rojay@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jun 04, 2021 at 09:38:24AM +0800, Yang Yingliang wrote:
-> In case of error, the function devm_regmap_init_i2c() returns ERR_PTR()
-> and never returns NULL. The NULL test in the return value check
-> should be replaced with IS_ERR().
-> 
-> Fixes: 6b149f3310a4 ("mfd: pm8008: Add driver for QCOM PM8008 PMIC")
-> Reported-by: Hulk Robot <hulkci@huawei.com>
-> Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-> ---
-> v2:
->   make the change correspond to the changelog
-> ---
->  drivers/mfd/qcom-pm8008.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/mfd/qcom-pm8008.c b/drivers/mfd/qcom-pm8008.c
-> index c472d7f8103c..476171455d32 100644
-> --- a/drivers/mfd/qcom-pm8008.c
-> +++ b/drivers/mfd/qcom-pm8008.c
-> @@ -228,7 +228,7 @@ static int pm8008_probe(struct i2c_client *client)
->  
->  	chip->dev = &client->dev;
->  	chip->regmap = devm_regmap_init_i2c(client, &qcom_mfd_regmap_cfg);
-> -	if (!chip->regmap)
-> +	if (IS_ERR(chip->regmap))
->  		return -ENODEV;
 
-The error received from devm_regmap_init_i2c should be returned as-is and not
--ENODEV. Could you please do:
+--BValqsbsrpDr7D4r
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-	if (IS_ERR(chip->regmap))
-		return PTR_ERR(chip->regmap);
+On Tue, May 25, 2021 at 06:40:50PM +0530, Roja Rani Yarubandi wrote:
+> If the hardware is still accessing memory after SMMU translation
+> is disabled (as part of smmu shutdown callback), then the
+> IOVAs (I/O virtual address) which it was using will go on the bus
+> as the physical addresses which will result in unknown crashes
+> like NoC/interconnect errors.
+>=20
+> So, implement shutdown callback for i2c driver to suspend the bus
+> during system "reboot" or "shutdown".
+>=20
+> Fixes: 37692de5d523 ("i2c: i2c-qcom-geni: Add bus driver for the Qualcomm=
+ GENI I2C controller")
+> Signed-off-by: Roja Rani Yarubandi <rojay@codeaurora.org>
 
-Thank you for this patch.
+Applied to for-current, thanks!
 
->  
->  	i2c_set_clientdata(client, chip);
+
+--BValqsbsrpDr7D4r
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmC6jjYACgkQFA3kzBSg
+KbYZog/+O5j3/Xx4ClIqhhlhEbGhBpe9KGk/evPZr1X0Saw+cCAcQ0pVA9P7ssgm
+b+nY8IJ6Iztv+FZ7sQpFaeKIRlsUDDoxAjCwRJMjDv8AnK6IfrfCyBHd0e5EJcya
+qxpT9RHPdLj1fMP10G6pP5EfQEuqpEhhmF+08LYeX5HWv7bRuIs11L/UI8Ccjp97
+peEsIw6U/2L7vuQH4abPBs2XgBbYoiFP5s0HARg/k1dDY6TWiFnRFE13QGJQouD+
+mebqjSILR//iYxDMTJqNQTXWOMSld4QxWrRuJ1iG0GVmpwvb/Blzq6yIDqamHu7x
+AVaC1FXDEJuO+PxQPL63ttSfH28fIvhE4tDXpznXh5TXJyPMNmIQtUkuIKAdm2pj
+JRQWfDDOTljOCY/v5nl3nAnUWucGnZbaKAcpIIrGfOUKcLP1LQ9fTOlI0XvvcT3B
+a7fQFT/H6yyzOtnNzzaNZQ+V1Mr+Jx2pwnYa0rKNZy9cDBBQiZtdL+9cmsHleRO/
+mAnA+TqYTDZS8uEABL1M5wS17IhiGHWss9LMKgCEoc9B4khjDAPrH2tjzIraaSqT
+SAIoqik7TSSVlKuCeksja5dQ4JP0IcMfhjUvG/u4BbCm6n17lqe3M7+1EQoSLSPZ
+eeYCyc0pvHszrEGRha9sVXgQEZ1dTB/M03iUapMoZN1UfVdTXyc=
+=oyxh
+-----END PGP SIGNATURE-----
+
+--BValqsbsrpDr7D4r--
