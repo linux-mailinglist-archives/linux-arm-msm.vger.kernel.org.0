@@ -2,213 +2,255 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 544AA39B185
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Jun 2021 06:30:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BC3D239B39C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Jun 2021 09:11:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229787AbhFDEbq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Jun 2021 00:31:46 -0400
-Received: from mailout1.samsung.com ([203.254.224.24]:34674 "EHLO
-        mailout1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229527AbhFDEbq (ORCPT
+        id S229799AbhFDHNN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Jun 2021 03:13:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36402 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229555AbhFDHNM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Jun 2021 00:31:46 -0400
-Received: from epcas5p4.samsung.com (unknown [182.195.41.42])
-        by mailout1.samsung.com (KnoxPortal) with ESMTP id 20210604042958epoutp0184ad584d4ee9c10823913b79366ee14e~FRrhpVWyq0483904839epoutp019
-        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Jun 2021 04:29:58 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.samsung.com 20210604042958epoutp0184ad584d4ee9c10823913b79366ee14e~FRrhpVWyq0483904839epoutp019
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1622780998;
-        bh=5t04RlzQl0RyBI4gJM0ad0zEyozsoAuFKyhCdf1pY3k=;
-        h=From:To:In-Reply-To:Subject:Date:References:From;
-        b=k4PlVXAL+rSeoMOvbkgM0jiVDea+WpdlRfHGc0zn8AX+Ao/w73GPNkbQX20wl25DV
-         fP7uIUtOVHkhpeLwAtWpiVj+8OVinITQ3GFoLZlnkmxPuA1ToGyTLGYoOuanGMSgzK
-         J13TVPuXg1BO8/vfjInTrbHvk2FT/70CRxFszvMA=
-Received: from epsmges5p2new.samsung.com (unknown [182.195.42.74]) by
-        epcas5p2.samsung.com (KnoxPortal) with ESMTP id
-        20210604042957epcas5p2914e089ea9e9d9cbb403fa5b501bae18~FRrgr85Nf0828608286epcas5p2w;
-        Fri,  4 Jun 2021 04:29:57 +0000 (GMT)
-Received: from epcas5p1.samsung.com ( [182.195.41.39]) by
-        epsmges5p2new.samsung.com (Symantec Messaging Gateway) with SMTP id
-        25.F5.09697.54CA9B06; Fri,  4 Jun 2021 13:29:57 +0900 (KST)
-Received: from epsmtrp1.samsung.com (unknown [182.195.40.13]) by
-        epcas5p1.samsung.com (KnoxPortal) with ESMTPA id
-        20210603145716epcas5p151b1e268e09301c4c4c646d5f087b038~FGl8bk_qL1034210342epcas5p1g;
-        Thu,  3 Jun 2021 14:57:16 +0000 (GMT)
-Received: from epsmgms1p2.samsung.com (unknown [182.195.42.42]) by
-        epsmtrp1.samsung.com (KnoxPortal) with ESMTP id
-        20210603145716epsmtrp11174ce14d14f3c4e6bdfdfe8fe889bf2~FGl8ad9D32297722977epsmtrp1G;
-        Thu,  3 Jun 2021 14:57:16 +0000 (GMT)
-X-AuditID: b6c32a4a-64fff700000025e1-81-60b9ac459be3
-Received: from epsmtip1.samsung.com ( [182.195.34.30]) by
-        epsmgms1p2.samsung.com (Symantec Messaging Gateway) with SMTP id
-        C6.3B.08163.CCDE8B06; Thu,  3 Jun 2021 23:57:16 +0900 (KST)
-Received: from alimakhtar02 (unknown [107.122.12.5]) by epsmtip1.samsung.com
-        (KnoxPortal) with ESMTPA id
-        20210603145715epsmtip1ee74c17d7887cc26200750a672b2233d~FGl7KUm1B1456414564epsmtip1C;
-        Thu,  3 Jun 2021 14:57:15 +0000 (GMT)
-From:   "Alim Akhtar" <alim.akhtar@samsung.com>
-To:     "'Felipe Balbi'" <balbi@kernel.org>,
-        "'Avri Altman'" <avri.altman@wdc.com>,
-        "'James E.J. Bottomley'" <jejb@linux.ibm.com>,
-        "'Martin K. Petersen'" <martin.petersen@oracle.com>,
-        <linux-scsi@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <asutoshd@codeaurora.org>, <cang@codeaurora.org>
-In-Reply-To: <87lf7rc9es.fsf@kernel.org>
-Subject: RE: UFS failures with v5.13-rc4
-Date:   Thu, 3 Jun 2021 20:27:13 +0530
-Message-ID: <0acb01d75888$be51fe00$3af5fa00$@samsung.com>
+        Fri, 4 Jun 2021 03:13:12 -0400
+Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4381BC06174A
+        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Jun 2021 00:11:27 -0700 (PDT)
+Received: by mail-pj1-x1036.google.com with SMTP id h12-20020a17090aa88cb029016400fd8ad8so5342282pjq.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Jun 2021 00:11:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=04miD2l332N5JEOBvQKSIIZVsCHeGohPyIgj2Bs7M2g=;
+        b=UYq57R8/DgylVe7bQQT1K0kVoUZAKg78p7JLt3nj5Xvwwbo26bubgQ5Rw0p56VKVKI
+         amHFHnpXmNB3vNWQrTxGHHUWu72QjRLuyauxAguYYAP2L1gb+GKB426oPeZvXsFu720D
+         B+4BkzEKNPf/O01NI2pRsfoqR1YjT6nOmi3EI=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=04miD2l332N5JEOBvQKSIIZVsCHeGohPyIgj2Bs7M2g=;
+        b=GrIW26/tKYuvPCwlFlHvIUgtCEIjgAbmV1lAfhpl0Rm+ESBiF+/ppy6oDc5zKeThSy
+         YK0N1tXJwJUOKhyAAyD64KG1p76GmxhblzHjk6WoecEbO2F5gAZN4cz3MF4ExvI1lsbI
+         khiATLGAcwn4DEd0v3HrlVZjcvTfOTdJizPya+muykUgydn3De1eJtuc3jYoIMyKVHBz
+         zMzgjBoWBMcRoP+GkeMlqGPSl8NiWpQhK+rKh7Z2wMRhb8ZzqCrUCZ0RkO10PqCal13H
+         Hu3gyO1AihmvO68xh5NR5+Mty27uCrCPI4e1cf3xRCspVa8OaJJRvIBsQTz6kU6WJXT5
+         Ab+g==
+X-Gm-Message-State: AOAM532WbziCPlZg9QPBSN86ND92zG0/HqZzhFWnNyKUoyYGs44CViuc
+        uaafSJ+tY+UnPKHkossvBGqPmg==
+X-Google-Smtp-Source: ABdhPJzzf3MffrJf8cu1pAFiWopX0p1aSBAccKzEw4KlJf+njbnIDbY3jrRzxGG+7xsb8wZZsYufGg==
+X-Received: by 2002:a17:902:a3c3:b029:f0:b297:7778 with SMTP id q3-20020a170902a3c3b02900f0b2977778mr2996346plb.16.1622790686744;
+        Fri, 04 Jun 2021 00:11:26 -0700 (PDT)
+Received: from judyhsiao-p920.tpe.corp.google.com ([2401:fa00:1:10:a8e1:b46e:86b1:84fb])
+        by smtp.gmail.com with ESMTPSA id g8sm971625pfo.85.2021.06.04.00.11.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 04 Jun 2021 00:11:26 -0700 (PDT)
+From:   Judy Hsiao <judyhsiao@chromium.org>
+To:     broonie@kernel.org
+Cc:     Taniya Das <tdas@codeaurora.org>,
+        Rohit kumar <rohitkr@codeaurora.org>,
+        Banajit Goswami <bgoswami@codeaurora.org>,
+        Patrick Lai <plai@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Takashi Iwai <tiwai@suse.com>,
+        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+        Stephan Gerhold <stephan@gerhold.net>, dianders@chromium.org,
+        dgreid@chromium.org, cychiang@google.com, judyhsiao@google.com,
+        tzungbi@chromium.org, swboyd@chromium.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        alsa-devel@alsa-project.org,
+        Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
+        Judy Hsiao <judyhsiao@chromium.org>
+Subject: [v6] ASoC: qcom: lpass-cpu: Fix pop noise during audio capture begin
+Date:   Fri,  4 Jun 2021 15:11:12 +0800
+Message-Id: <20210604071112.1055911-1-judyhsiao@chromium.org>
+X-Mailer: git-send-email 2.32.0.rc1.229.g3e70b5a671-goog
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQFo4vPJKnQDl+7tnsLsmUF4WWdqJwIJTNTJq88AIjA=
-Content-Language: en-in
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrNKsWRmVeSWpSXmKPExsWy7bCmuq7rmp0JBosb5Sz2tp1gt3j58yqb
-        xbG2J+wWn9YvY7VYdGMbk8XE/WfZLbqv72CzWH78H5MDh8flvl4mj02rOtk8Jiw6wOjx8ekt
-        Fo/Pm+Q82g90MwWwRXHZpKTmZJalFunbJXBl/Fq6lLHgpnrFhN0vmRsYu+S7GDk5JARMJA71
-        TGbpYuTiEBLYzSjRdP8oE4TziVFiSfMBRgjnM6PEhrb7zDAtGy9uhErsYpRouLaaHcJ5ySjx
-        fMkqVpAqNgFdiR2L29hAEiICq5kkVn07xASS4BTQkDjcu5EFxBYGso9suwoWZxFQkWiY0Q3W
-        zCtgKXHi/lQoW1Di5MwnYPXMAvIS29/OgTpDQeLn02VgNSICVhK9P9azQdSISxz92cMMslhC
-        YCaHxMsPh6EaXCTan66CsoUlXh3fwg5hS0m87G8DsjmA7GyJnl3GEOEaiaXzjrFA2PYSB67M
-        YQEpYRbQlFi/Sx8iLCsx9dQ6Joi1fBK9v58wQcR5JXbMg7FVJZrfXYUaIy0xsRviRQkBD4kf
-        vw+yTmBUnIXky1lIvpyF5JtZCJsXMLKsYpRMLSjOTU8tNi0wykst1ytOzC0uzUvXS87P3cQI
-        Tk9aXjsYHz74oHeIkYmD8RCjBAezkgjvHrUdCUK8KYmVValF+fFFpTmpxYcYpTlYlMR5Vzyc
-        nCAkkJ5YkpqdmlqQWgSTZeLglGpgavi5/He26xmLkk0L8xZKz9Ysf7j28arASc3Bfh2B69Y8
-        7b7t0KUaYMB0bN3yLzmhwrvL5TSUP3pdYb1ytfUP0135/anlZvPsE3gz7k/5r6UR8TQ/N3pe
-        gIr8X+0jFrMKGHWllwvtlfaK/pS8kO3g9Js3Hqd8PPx2ackCn6wvnNvb3havn+xRMPWL5cuv
-        vu+n+nj1JzHH/nU9uc+i+q7uzx2vX2ztC5N0bN3rZ3TQfN6WFSVa6x9euvVeIWqKhYjYG4+O
-        tucJEdf5rU19/CtyRIrjqraFcrxvlsgXZWmQc/3ZbHLyoHhq3tOFCte/WBTd/RIQOekR662a
-        V1vaVFkXReYXif1klBI/6ba5bou1EktxRqKhFnNRcSIAUwNyNb4DAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrHLMWRmVeSWpSXmKPExsWy7bCSnO6ZtzsSDDZfkbDY23aC3eLlz6ts
-        FsfanrBbfFq/jNVi0Y1tTBYT959lt+i+voPNYvnxf0wOHB6X+3qZPDat6mTzmLDoAKPHx6e3
-        WDw+b5LzaD/QzRTAFsVlk5Kak1mWWqRvl8CV8WvpUsaCm+oVE3a/ZG5g7JLvYuTkkBAwkdh4
-        cSMjiC0ksINRYtPLIoi4tMT1jRPYIWxhiZX/ngPZXEA1zxkl9h9oAmtgE9CV2LG4jQ0kISKw
-        kUni+KRjTF2MHEBVlRKTn6uD1HAKaEgc7t3IAmILA9lHtl1lArFZBFQkGmZ0s4LYvAKWEifu
-        T4WyBSVOznzCAjKGWUBPog3iNmYBeYntb+cwQ9yjIPHz6TKwchEBK4neH+vZIGrEJY7+7GGe
-        wCg0C8mkWQiTZiGZNAtJxwJGllWMkqkFxbnpucWGBUZ5qeV6xYm5xaV56XrJ+bmbGMFRpKW1
-        g3HPqg96hxiZOBgPMUpwMCuJ8O5R25EgxJuSWFmVWpQfX1Sak1p8iFGag0VJnPdC18l4IYH0
-        xJLU7NTUgtQimCwTB6dUA9OR+Q6//vZovPx4LVXrhYDpmxffjkZ7iU78sa70mO3JiYsYX7oZ
-        vFoY13fV81XXtYeG8+wW5OhuVzOXWKRgtsypNGTlxrPvtq8/lPaitrloF9Pxsus/5fq+u0Q4
-        vb0kqKgonPd+2/LvF79Yhaq8/9ZcP2Uh77Fc7ps5pX39Ejw3fv/b9e8Iz5XSk0WPbn0Sk6r9
-        GjW/WfD+1Q17fn1I7Q+u28nVXZnGl9vhUrbL1Sqx9r2HjnvAlvgK18cFgjOv5J9L5+lbrX1J
-        Wnx/v/8qv8Xqcyt0ZllNyZnqacz9PvrgbsGPJ85tDmqyP9lt/lSxqTG3TbfMNGVz9OQyh939
-        QcI/a/JvLApcnpTQIPI1iEGJpTgj0VCLuag4EQA9r7VMEQMAAA==
-X-CMS-MailID: 20210603145716epcas5p151b1e268e09301c4c4c646d5f087b038
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-Sendblock-Type: REQ_APPROVE
-CMS-TYPE: 105P
-X-CMS-RootMailID: 20210603142546epcas5p2bea63eb4359ddec8ccd257ee3aa9af61
-References: <CGME20210603142546epcas5p2bea63eb4359ddec8ccd257ee3aa9af61@epcas5p2.samsung.com>
-        <87lf7rc9es.fsf@kernel.org>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-+ codeaurora guys ( Can and Asutosh)
+From: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
 
+This patch fixes PoP noise of around 15ms observed during audio
+capture begin.
+Enables BCLK and LRCLK in snd_soc_dai_ops prepare call for
+introducing some delay before capture start.
 
+Co-developed-by: Judy Hsiao <judyhsiao@chromium.org>
+Signed-off-by: Judy Hsiao <judyhsiao@chromium.org>
+Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+(am from https://patchwork.kernel.org/patch/12276369/)
+(also found at https://lore.kernel.org/r/20210524142114.18676-1-srivasam@codeaurora.org)
 
-> -----Original Message-----
-> From: Felipe Balbi <balbi@kernel.org>
-> Sent: 03 June 2021 19:56
-> To: Alim Akhtar <alim.akhtar@samsung.com>; Avri Altman
-> <avri.altman@wdc.com>; James E.J. Bottomley <jejb@linux.ibm.com>;
-> Martin K. Petersen <martin.petersen@oracle.com>; linux-
-> scsi@vger.kernel.org; linux-arm-msm@vger.kernel.org
-> Subject: UFS failures with v5.13-rc4
-> 
-> 
-> Hi guys,
-> 
-> Today I managed to trigger some pretty bad faults with with v5.13-rc4
-> running on SM8150 (Snapdragon) and iozone.
-> 
-> It seems the problem only happens when using bfq iosched, as I couldn't
-> trigger it with mq-deadline.
-> 
-> Here's the relevant snippet of console logs, full dmesg.txt attached.
-> 
-> # echo bfq > /sys/block/sdg/queue/scheduler # iozone -i 0 -R -t 8 -s 1G -r
-> 16M -b /tmp/iozone-bfq.xls -F /mnt/file0 /mnt/file1 /mnt/file2 /mnt/file3
-> /mnt/file4 /mnt/file5 /mnt/file6 /mnt/file7
->         Iozone: Performance Test of File I/O
->                 Version $Revision: 3.489 $
->                 Compiled for 64 bit mode.
->                 Build: linux
-> 
->         Contributors:William Norcott, Don Capps, Isom Crawford, Kirby
-Collins
->                      Al Slater, Scott Rhine, Mike Wisner, Ken Goss
->                      Steve Landherr, Brad Smith, Mark Kelly, Dr. Alain
-CYR,
->                      Randy Dunlap, Mark Montague, Dan Million, Gavin
-Brebner,
->                      Jean-Marc Zucconi, Jeff Blomberg, Benny Halevy, Dave
-Boone,
->                      Erik Habbinga, Kris Strecker, Walter Wong, Joshua
-Root,
->                      Fabrice Bacchella, Zhenghua Xue, Qin Li, Darren
-Sawyer,
->                      Vangel Bojaxhi, Ben England, Vikentsi Lapa,
->                      Alexey Skidanov, Sudhir Kumar.
-> 
->         Run began: Thu Jan  1 02:29:50 1970
-> 
->         Excel chart generation enabled
->         File size set to 1048576 kB
->         Record Size 16384 kB
->         Command line used: iozone -i 0 -R -t 8 -s 1G -r 16M -b
-/tmp/iozone-
-> bfq.xls -F /mnt/file0 /mnt/file1 /mnt/file2 /mnt/file3 /mnt/file4
-/mnt/file5
-> /mnt/file6 /mnt/fil
-> e7
->         Output is in kBytes/sec
->         Time Resolution = 0.000001 seconds.
->         Processor cache size set to 1024 kBytes.
->         Processor cache line size set to 32 bytes.
->         File stride size set to 17 * record size.
->         Throughput test with 8 processes
->         Each process writes a 1048576 kByte file in 16384 kByte records [
-> 2475.173128] ufshcd-qcom 1d84000.ufshc: __ufshcd_issue_tm_cmd: task
-> management cmd 0x80 timed-out [ 2475.182205] ufshcd-qcom
-> 1d84000.ufshc: ufshcd_try_to_abort_task: no response from device. tag = 0,
-> err -110 [ 2475.252049] ufshcd-qcom 1d84000.ufshc: Controller enable
-failed [
-> 2475.317224] ufshcd-qcom 1d84000.ufshc: Controller enable failed [
-> 2475.382038] ufshcd-qcom 1d84000.ufshc: Controller enable failed [
-> 2475.447318] ufshcd-qcom 1d84000.ufshc: Controller enable failed [
-> 2475.453450] ufshcd-qcom 1d84000.ufshc: ufshcd_host_reset_and_restore:
-> Host init failed -5 [ 2475.522779] ufshcd-qcom 1d84000.ufshc: Controller
-> enable failed [ 2475.587983] ufshcd-qcom 1d84000.ufshc: Controller enable
-> failed [ 2475.653027] ufshcd-qcom 1d84000.ufshc: Controller enable failed
-[
-> 2475.719555] ufshcd-qcom 1d84000.ufshc: Controller enable failed [
-> 2475.725690] ufshcd-qcom 1d84000.ufshc: ufshcd_host_reset_and_restore:
-> Host init failed -5 [ 2475.795173] ufshcd-qcom 1d84000.ufshc: Controller
-> enable failed [ 2475.861232] ufshcd-qcom 1d84000.ufshc: Controller enable
-> failed [ 2475.926035] ufshcd-qcom 1d84000.ufshc: Controller enable failed
-[
-> 2475.991184] ufshcd-qcom 1d84000.ufshc: Controller enable failed [
-> 2475.997382] ufshcd-qcom 1d84000.ufshc: ufshcd_host_reset_and_restore:
-> Host init failed -5 [ 2476.064948] ufshcd-qcom 1d84000.ufshc: Controller
-> enable failed [ 2476.129955] ufshcd-qcom 1d84000.ufshc: Controller enable
-> failed [ 2476.194502] ufshcd-qcom 1d84000.ufshc: Controller enable failed
-[
-> 2476.259851] ufshcd-qcom 1d84000.ufshc: Controller enable failed [
-> 2476.265962] ufshcd-qcom 1d84000.ufshc: ufshcd_host_reset_and_restore:
-> Host init failed -5 [ 2476.334428] ufshcd-qcom 1d84000.ufshc: Controller
-> enable failed [ 2476.399788] ufshcd-qcom 1d84000.ufshc: Controller enable
-> failed [ 2476.465468] ufshcd-qcom 1d84000.ufshc: Controller enable failed
-[
-> 2476.529965] ufshcd-qcom 1d84000.ufshc: Controller enable failed [
-> 2476.536086] ufshcd-qcom 1d84000.ufshc: ufshcd_host_reset_and_restore:
-> Host init failed -5 [ 2476.544523] ufshcd-qcom 1d84000.ufshc:
-> ufshcd_err_handler: reset and restore failed with err -5 [ 2476.606521] sd
-> 0:0:0:6: [sdg] tag#0 UNKNOWN(0x2003) Result: hostbyte=0x07
-> driverbyte=0x00 cmd_age=0s [ 2476.615917] sd 0:0:0:6: [sdg] tag#0 CDB:
-> opcode=0x2a 2a 00 00 35 b5 7c 00 00 10 00 [ 2476.623715]
-> blk_update_request: I/O error, dev sdg, sector 28158944 op 0x1:(WRITE)
-> flags 0x4000 phys_seg 16 prio class 0
+---
+Changes Since V5:
+	-- Fixed nit.
+        -- Updated `mi2s_was_prepared[dai->driver->id] = true;` after checking for errors.
+Changes Since V4:
+        -- Replaced the __clk_is_enabled(BCLK) check by the self maintained.
+           mi2s_was_prepared bool state.
+        -- Removed unrelated changes.
+        -- Refined comments.
+Changes Since V3:
+        -- Checked BCLK is off before enabling it in lpass_cpu_daiops_prepare as
+           lpass_cpu_daiops_prepare can be called multiple times
+        -- Checked BCLK is on before disabling it in lpass_cpu_daiops_shutdown to
+           fix the WARN. It is because BCLK may not be enabled if
+           lpass_cpu_daiops_prepare is not called before lpass_cpu_daiops_shutdown
+        -- Added more comments
+Changes Since V2:
+        -- Updated comments as per linux style
+        -- Removed unrelated changes
+Changes Since V1:
+        -- Enabled BCLK and LRCLK in dai ops prepare API instead of startup API
+        -- Added comments
 
+ sound/soc/qcom/lpass-cpu.c | 80 ++++++++++++++++++++++++++++++++++++++
+ sound/soc/qcom/lpass.h     |  4 ++
+ 2 files changed, 84 insertions(+)
+
+diff --git a/sound/soc/qcom/lpass-cpu.c b/sound/soc/qcom/lpass-cpu.c
+index af8cb64924a0..0430cc797391 100644
+--- a/sound/soc/qcom/lpass-cpu.c
++++ b/sound/soc/qcom/lpass-cpu.c
+@@ -93,8 +93,30 @@ static void lpass_cpu_daiops_shutdown(struct snd_pcm_substream *substream,
+ 		struct snd_soc_dai *dai)
+ {
+ 	struct lpass_data *drvdata = snd_soc_dai_get_drvdata(dai);
++	struct lpaif_i2sctl *i2sctl = drvdata->i2sctl;
++	unsigned int id = dai->driver->id;
+ 
+ 	clk_disable_unprepare(drvdata->mi2s_osr_clk[dai->driver->id]);
++	/*
++	 * Ensure LRCLK is disabled even in device node validation.
++	 * Will not impact if disabled in lpass_cpu_daiops_trigger()
++	 * suspend.
++	 */
++	if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK)
++		regmap_fields_write(i2sctl->spken, id, LPAIF_I2SCTL_SPKEN_DISABLE);
++	else
++		regmap_fields_write(i2sctl->micen, id, LPAIF_I2SCTL_MICEN_DISABLE);
++
++	/*
++	 * BCLK may not be enabled if lpass_cpu_daiops_prepare is called before
++	 * lpass_cpu_daiops_shutdown. It's paired with the clk_enable in
++	 * lpass_cpu_daiops_prepare.
++	 */
++	if (drvdata->mi2s_was_prepared[dai->driver->id]) {
++		drvdata->mi2s_was_prepared[dai->driver->id] = false;
++		clk_disable(drvdata->mi2s_bit_clk[dai->driver->id]);
++	}
++
+ 	clk_unprepare(drvdata->mi2s_bit_clk[dai->driver->id]);
+ }
+ 
+@@ -275,6 +297,18 @@ static int lpass_cpu_daiops_trigger(struct snd_pcm_substream *substream,
+ 	case SNDRV_PCM_TRIGGER_START:
+ 	case SNDRV_PCM_TRIGGER_RESUME:
+ 	case SNDRV_PCM_TRIGGER_PAUSE_RELEASE:
++		/*
++		 * Ensure lpass BCLK/LRCLK is enabled during
++		 * device resume as lpass_cpu_daiops_prepare() is not called
++		 * after the device resumes. We don't check mi2s_was_prepared before
++		 * enable/disable BCLK in trigger events because:
++		 *  1. These trigger events are paired, so the BCLK
++		 *     enable_count is balanced.
++		 *  2. the BCLK can be shared (ex: headset and headset mic),
++		 *     we need to increase the enable_count so that we don't
++		 *     turn off the shared BCLK while other devices are using
++		 *     it.
++		 */
+ 		if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK) {
+ 			ret = regmap_fields_write(i2sctl->spken, id,
+ 						 LPAIF_I2SCTL_SPKEN_ENABLE);
+@@ -296,6 +330,10 @@ static int lpass_cpu_daiops_trigger(struct snd_pcm_substream *substream,
+ 	case SNDRV_PCM_TRIGGER_STOP:
+ 	case SNDRV_PCM_TRIGGER_SUSPEND:
+ 	case SNDRV_PCM_TRIGGER_PAUSE_PUSH:
++		/*
++		 * To ensure lpass BCLK/LRCLK is disabled during
++		 * device suspend.
++		 */
+ 		if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK) {
+ 			ret = regmap_fields_write(i2sctl->spken, id,
+ 						 LPAIF_I2SCTL_SPKEN_DISABLE);
+@@ -315,12 +353,54 @@ static int lpass_cpu_daiops_trigger(struct snd_pcm_substream *substream,
+ 	return ret;
+ }
+ 
++static int lpass_cpu_daiops_prepare(struct snd_pcm_substream *substream,
++		struct snd_soc_dai *dai)
++{
++	struct lpass_data *drvdata = snd_soc_dai_get_drvdata(dai);
++	struct lpaif_i2sctl *i2sctl = drvdata->i2sctl;
++	unsigned int id = dai->driver->id;
++	int ret;
++
++	/*
++	 * Ensure lpass BCLK/LRCLK is enabled bit before playback/capture
++	 * data flow starts. This allows other codec to have some delay before
++	 * the data flow.
++	 * (ex: to drop start up pop noise before capture starts).
++	 */
++	if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK)
++		ret = regmap_fields_write(i2sctl->spken, id, LPAIF_I2SCTL_SPKEN_ENABLE);
++	else
++		ret = regmap_fields_write(i2sctl->micen, id, LPAIF_I2SCTL_MICEN_ENABLE);
++
++	if (ret) {
++		dev_err(dai->dev, "error writing to i2sctl reg: %d\n", ret);
++		return ret;
++	}
++
++	/*
++	 * Check mi2s_was_prepared before enabling BCLK as lpass_cpu_daiops_prepare can
++	 * be called multiple times. It's paired with the clk_disable in
++	 * lpass_cpu_daiops_shutdown.
++	 */
++	if (!drvdata->mi2s_was_prepared[dai->driver->id]) {
++		ret = clk_enable(drvdata->mi2s_bit_clk[id]);
++		if (ret) {
++			dev_err(dai->dev, "error in enabling mi2s bit clk: %d\n", ret);
++			clk_disable(drvdata->mi2s_osr_clk[id]);
++			return ret;
++		}
++		drvdata->mi2s_was_prepared[dai->driver->id] = true;
++	}
++	return 0;
++}
++
+ const struct snd_soc_dai_ops asoc_qcom_lpass_cpu_dai_ops = {
+ 	.set_sysclk	= lpass_cpu_daiops_set_sysclk,
+ 	.startup	= lpass_cpu_daiops_startup,
+ 	.shutdown	= lpass_cpu_daiops_shutdown,
+ 	.hw_params	= lpass_cpu_daiops_hw_params,
+ 	.trigger	= lpass_cpu_daiops_trigger,
++	.prepare	= lpass_cpu_daiops_prepare,
+ };
+ EXPORT_SYMBOL_GPL(asoc_qcom_lpass_cpu_dai_ops);
+ 
+diff --git a/sound/soc/qcom/lpass.h b/sound/soc/qcom/lpass.h
+index 83b2e08ade06..7f72214404ba 100644
+--- a/sound/soc/qcom/lpass.h
++++ b/sound/soc/qcom/lpass.h
+@@ -67,6 +67,10 @@ struct lpass_data {
+ 	/* MI2S SD lines to use for playback/capture */
+ 	unsigned int mi2s_playback_sd_mode[LPASS_MAX_MI2S_PORTS];
+ 	unsigned int mi2s_capture_sd_mode[LPASS_MAX_MI2S_PORTS];
++
++	/* The state of MI2S prepare dai_ops was called */
++	bool mi2s_was_prepared[LPASS_MAX_MI2S_PORTS];
++
+ 	int hdmi_port_enable;
+ 
+ 	/* low-power audio interface (LPAIF) registers */
+-- 
+2.32.0.rc1.229.g3e70b5a671-goog
 
