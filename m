@@ -2,93 +2,190 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 108F339C670
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Jun 2021 09:02:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8C71239C6C7
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Jun 2021 10:28:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229929AbhFEHDo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 5 Jun 2021 03:03:44 -0400
-Received: from mail.kernel.org ([198.145.29.99]:41774 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229755AbhFEHDo (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 5 Jun 2021 03:03:44 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 78742611C2;
-        Sat,  5 Jun 2021 07:01:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1622876516;
-        bh=dEiBulyfS+hMHcmHZ8xaKJ4n7scp65NNdvgcbC5kTlc=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=H+xS41ydzSMKlnd1KB2h+FGrtR2lzufDp611S21ieZB6DYdfn7JeG63DwNdRTmJYi
-         U0MGBzeYjxRCahICKTC5C1X2ZWev1X2+h1+vuZr4ZTK/kjbSJVZwhc3ZGWsgiRtdbS
-         dXndobf8GEAqyYRJ9AHvDN9UV3voagztELi68mrI=
-Date:   Sat, 5 Jun 2021 09:01:52 +0200
-From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To:     Matthias Kaehlcke <mka@chromium.org>
-Cc:     Alan Stern <stern@rowland.harvard.edu>,
-        Rob Herring <robh+dt@kernel.org>,
-        Frank Rowand <frowand.list@gmail.com>,
-        Mathias Nyman <mathias.nyman@intel.com>,
-        Michal Simek <michal.simek@xilinx.com>,
-        Ravi Chandra Sadineni <ravisadineni@chromium.org>,
-        linux-usb@vger.kernel.org, Bastien Nocera <hadess@hadess.net>,
-        linux-kernel@vger.kernel.org,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        devicetree@vger.kernel.org, Peter Chen <peter.chen@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Al Cooper <alcooperx@gmail.com>,
-        "Alexander A. Klimov" <grandmaster@al2klimov.de>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Colin Ian King <colin.king@canonical.com>,
-        Dmitry Osipenko <digetx@gmail.com>,
-        Fabio Estevam <festevam@gmail.com>,
-        Masahiro Yamada <masahiroy@kernel.org>,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v11 0/5] USB: misc: Add onboard_usb_hub driver
-Message-ID: <YLshYLa8dh6Fme4P@kroah.com>
-References: <20210604214101.3363525-1-mka@chromium.org>
+        id S230073AbhFEI3r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 5 Jun 2021 04:29:47 -0400
+Received: from mail-ot1-f47.google.com ([209.85.210.47]:40897 "EHLO
+        mail-ot1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230029AbhFEI3r (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 5 Jun 2021 04:29:47 -0400
+Received: by mail-ot1-f47.google.com with SMTP id c31-20020a056830349fb02903a5bfa6138bso11451479otu.7
+        for <linux-arm-msm@vger.kernel.org>; Sat, 05 Jun 2021 01:27:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=HKyUqf7NI2Yuw0Cm11CrEyV9uYKyJhwCEAKigEKJNJ8=;
+        b=ZS6EUPMoBJoX6MkxGQ9BXtnrqLzaWaesaMMxH99UlWaxLN0dTg8LcmeGrxD5kWX0OT
+         RL+cn0uTJqQmllPGzucLq8e/7lvwU4XSeiaX4MMIZSFLeODXFvXfENBjbp70qDH7lTiF
+         65bdM67WQJwnlcr//9cu38chzebttAT4TXJA3BA0A8+IJjo2v2xqG6KBwB769tFB8UK7
+         sp7L7k3FWnKHFS4Gguj+Vb57YMMQr4R6ptKeW0MKZqDgQz1F+w13d37fdO7wQQMsg89k
+         e0hXbn5vaHyz1AHDz0vVS+SdXyir9I/k+ueh88t33DXZub8SPyqQWaMuBRc4zmEbkH2n
+         4uMg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=HKyUqf7NI2Yuw0Cm11CrEyV9uYKyJhwCEAKigEKJNJ8=;
+        b=uSnM6o0NjE/zu4zC9G4bOdVpEj1G2NML4ZEmjkJFWEVjkHjeb/xS/6DfVgr39TUb7S
+         ah9lV69Lpdx2+sdpdpDW6zcKmEOw0FiOZW9JLPXRVoIaDkBGF3/Fr7m/BG9Fs/jP8GK7
+         GoWZR1S2nE5WyMPKwpTWqhvWkynDyy2GUNcckOzi3IKGLbc92On+TAr9w0cvqXLDmnGi
+         Xn74u9eWN/JnW0zmWh5qGZzUJiM62wD1MLkQ/LT0CXzaSCfv+E6KmdQe1IvEkz9uQ/9E
+         R/siADown96GGWwKjYV1qfhJW3Wd+qNr4iJGMIpaCXrokDZh/fWQKCcGRF+Vj9vOJQFi
+         ZjXQ==
+X-Gm-Message-State: AOAM531mjXlDyXQDOLkzuKSiytMwT4iYQU62/nCayXe5FACgSmIXW9l3
+        6A2ILAA3v4eGwvPf7EL2eVuRQDhrcIP27g3OKHol3RxlvTrtyg==
+X-Google-Smtp-Source: ABdhPJxnmzc/8hxfB8fveUdflIof7ixtQvUsNexucCkGmlOQVpwJQn70pCPp044bin6dr/pH+6DjV0HdWVtuhUOPgQg=
+X-Received: by 2002:a9d:7982:: with SMTP id h2mr742263otm.51.1622881619504;
+ Sat, 05 Jun 2021 01:26:59 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20210604214101.3363525-1-mka@chromium.org>
+References: <20210519143700.27392-1-bhupesh.sharma@linaro.org>
+ <20210519143700.27392-17-bhupesh.sharma@linaro.org> <ca0e576d-0231-d1a8-06c5-e85f0706c993@linaro.org>
+In-Reply-To: <ca0e576d-0231-d1a8-06c5-e85f0706c993@linaro.org>
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Date:   Sat, 5 Jun 2021 13:56:48 +0530
+Message-ID: <CAH=2NtwuPP+qAidYKJ6i_iQg1VMtPS6xeGvnSKcNE0pf0HqcNQ@mail.gmail.com>
+Subject: Re: [PATCH v3 16/17] crypto: qce: Defer probing if BAM dma channel is
+ not yet initialized
+To:     Thara Gopinath <thara.gopinath@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Herbert Xu <herbert@gondor.apana.org.au>,
+        "David S . Miller" <davem@davemloft.net>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Vinod Koul <vkoul@kernel.org>, dmaengine@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-crypto@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        bhupesh.linux@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jun 04, 2021 at 02:40:56PM -0700, Matthias Kaehlcke wrote:
-> This series adds:
-> - the onboard_usb_hub_driver
-> - glue in the xhci-plat driver to create and destroy the
->   onboard_usb_hub platform devices if needed
-> - a device tree binding for the Realtek RTS5411 USB hub controller
-> - device tree changes that add RTS5411 entries for the QCA SC7180
->   based boards trogdor and lazor
-> - a couple of stubs for platform device functions to avoid
->   unresolved symbols with certain kernel configs
-> 
-> The main issue the driver addresses is that a USB hub needs to be
-> powered before it can be discovered. For discrete onboard hubs (an
-> example for such a hub is the Realtek RTS5411) this is often solved
-> by supplying the hub with an 'always-on' regulator, which is kind
-> of a hack. Some onboard hubs may require further initialization
-> steps, like changing the state of a GPIO or enabling a clock, which
-> requires even more hacks. This driver creates a platform device
-> representing the hub which performs the necessary initialization.
-> Currently it only supports switching on a single regulator, support
-> for multiple regulators or other actions can be added as needed.
-> Different initialization sequences can be supported based on the
-> compatible string.
-> 
-> Besides performing the initialization the driver can be configured
-> to power the hub off during system suspend. This can help to extend
-> battery life on battery powered devices which have no requirements
-> to keep the hub powered during suspend. The driver can also be
-> configured to leave the hub powered when a wakeup capable USB device
-> is connected when suspending, and power it off otherwise.
-> 
-> Changes in v11:
-> - support multiple onboard hubs connected to the same parent
-> - don't include ‘onboard_hub.h’ from the onboard hub driver
+Hi Thara,
 
-There's still build warnings found by 0-day :(
+Thanks for the review and sorry for the late reply.
+
+On Fri, 21 May 2021 at 07:27, Thara Gopinath <thara.gopinath@linaro.org> wrote:
+>
+>
+>
+> On 5/19/21 10:36 AM, Bhupesh Sharma wrote:
+> > Since the Qualcomm qce crypto driver needs the BAM dma driver to be
+> > setup first (to allow crypto operations), it makes sense to defer
+> > the qce crypto driver probing in case the BAM dma driver is not yet
+> > probed.
+> >
+> > Move the code leg requesting dma channels earlier in the
+> > probe() flow. This fixes the qce probe failure issues when both qce
+> > and BMA dma are compiled as static part of the kernel.
+>
+> So, I do not understand what issue you faced with the current code
+> ordering. When bam dma is not initialized, qce_dma_request will fail and
+> rest the error path kicks in.
+> To me the correct ordering for enabling a driver is to turn on clocks
+> and interconnect before requesting for dma. Unless, there is a specific
+> issue, I will ask for that order to be maintained.
+
+Sure. The problem I faced was the following. Let's consider the
+scenario where while the qce crypto driver and the interconnect are
+compiled as static parts of the kernel, the bam DMA driver is compiled
+as a module, then the -EPROBE_DEFER return leg from the qce crypto
+driver is very late in the probe() flow, as we first turn on the
+clocks and then the interconnect.
+
+Now the suggested linux deferred probe implementation is to return as
+early from the caling driver in case the called driver (subdev) is not
+yet ready. SInce the qce crypto driver requires the bam DMA to be set
+up first, it makes sense to move 'qce_dma_request' early in the boot
+flow. If it's not yet probed(), it probably doesn't make sense to set
+up the clks and interconnects yet in the qce driver. We can do it
+later when the bam DMA is setup.
+
+I have tested the following combinations with the change I made in
+this patchset:
+
+1. qce - static, bam - module, interconnect - module ->
+qce_dma_request returned -EPROBE_DEFER
+2. qce - static, bam - module, interconnect - static ->
+qce_dma_request returned -EPROBE_DEFER
+3. qce - static, bam - static, interconnect - module ->
+qce_dma_request returned -EPROBE_DEFER
+4. qce - static, bam - static, interconnect - static -> no -EPROBE_DEFER
+
+Thanks,
+Bhupesh
+
+> > Cc: Thara Gopinath <thara.gopinath@linaro.org>
+> > Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > Cc: Rob Herring <robh+dt@kernel.org>
+> > Cc: Andy Gross <agross@kernel.org>
+> > Cc: Herbert Xu <herbert@gondor.apana.org.au>
+> > Cc: David S. Miller <davem@davemloft.net>
+> > Cc: Stephen Boyd <sboyd@kernel.org>
+> > Cc: Michael Turquette <mturquette@baylibre.com>
+> > Cc: Vinod Koul <vkoul@kernel.org>
+> > Cc: dmaengine@vger.kernel.org
+> > Cc: linux-clk@vger.kernel.org
+> > Cc: linux-crypto@vger.kernel.org
+> > Cc: devicetree@vger.kernel.org
+> > Cc: linux-kernel@vger.kernel.org
+> > Cc: bhupesh.linux@gmail.com
+> > Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+> > ---
+> >   drivers/crypto/qce/core.c | 16 +++++++++-------
+> >   1 file changed, 9 insertions(+), 7 deletions(-)
+> >
+> > diff --git a/drivers/crypto/qce/core.c b/drivers/crypto/qce/core.c
+> > index 8b3e2b4580c2..207221d5b996 100644
+> > --- a/drivers/crypto/qce/core.c
+> > +++ b/drivers/crypto/qce/core.c
+> > @@ -218,6 +218,14 @@ static int qce_crypto_probe(struct platform_device *pdev)
+> >       if (ret < 0)
+> >               goto err_out;
+> >
+> > +     /* qce driver requires BAM dma driver to be setup first.
+> > +      * In case the dma channel are not set yet, this check
+> > +      * helps use to return -EPROBE_DEFER earlier.
+> > +      */
+> > +     ret = qce_dma_request(qce->dev, &qce->dma);
+> > +     if (ret)
+> > +             return ret;
+> > +
+> >       qce->mem_path = devm_of_icc_get(qce->dev, "memory");
+> >       if (IS_ERR(qce->mem_path))
+> >               return dev_err_probe(dev, PTR_ERR(qce->mem_path),
+> > @@ -269,10 +277,6 @@ static int qce_crypto_probe(struct platform_device *pdev)
+> >                       goto err_clks_iface;
+> >       }
+> >
+> > -     ret = qce_dma_request(qce->dev, &qce->dma);
+> > -     if (ret)
+> > -             goto err_clks;
+> > -
+> >       ret = qce_check_version(qce);
+> >       if (ret)
+> >               goto err_clks;
+> > @@ -287,12 +291,10 @@ static int qce_crypto_probe(struct platform_device *pdev)
+> >
+> >       ret = qce_register_algs(qce);
+> >       if (ret)
+> > -             goto err_dma;
+> > +             goto err_clks;
+> >
+> >       return 0;
+> >
+> > -err_dma:
+> > -     qce_dma_release(&qce->dma);
+> >   err_clks:
+> >       clk_disable_unprepare(qce->bus);
+> >   err_clks_iface:
+> >
+>
+>
