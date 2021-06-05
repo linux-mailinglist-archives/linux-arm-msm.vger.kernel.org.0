@@ -2,110 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3106C39C928
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Jun 2021 16:42:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D40BD39CA42
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Jun 2021 19:41:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230162AbhFEOnu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 5 Jun 2021 10:43:50 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:31814 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230126AbhFEOns (ORCPT
+        id S229981AbhFERnn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 5 Jun 2021 13:43:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35804 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229964AbhFERnn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 5 Jun 2021 10:43:48 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1622904120; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=43Bl21EK+zttk3IXj2QlVLERCIK5YvKQPap9POdFPag=; b=Vq5R094bxA8U7gCANGitxBb69ZTS2m+Rk8ZziAY04nEySR4vlcqleSD19hofDOrhORcyhCNm
- OwoX/HYO4z8xr5gqUtUEPxzzpyztt85bUst1LJOxYVnwYczPhx9nl+BxlRpZ1EDXyGuEqO0A
- GJ3+6hnT/D60jNDShlGK1kA9IhU=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
- 60bb8d242eaeb98b5e0dc15b (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Sat, 05 Jun 2021 14:41:40
- GMT
-Sender: pmaliset=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 9B641C43145; Sat,  5 Jun 2021 14:41:40 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
-Received: from pmaliset-linux.qualcomm.com (unknown [202.46.22.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: pmaliset)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 02E13C43143;
-        Sat,  5 Jun 2021 14:41:29 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 02E13C43143
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=pmaliset@codeaurora.org
-From:   Prasad Malisetty <pmaliset@codeaurora.org>
-To:     agross@kernel.org, bjorn.andersson@linaro.org, bhelgaas@google.com,
-        robh+dt@kernel.org, swboyd@chromium.org, lorenzo.pieralisi@arm.com,
-        svarbanov@mm-sol.com
-Cc:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        mgautam@codeaurora.org, dianders@chromium.org, mka@chromium.org,
-        sanm@codeaurora.org, Prasad Malisetty <pmaliset@codeaurora.org>
-Subject: [PATCH v2 4/4] dt-bindings: pci: qcom: Document PCIe bindings for SC720
-Date:   Sat,  5 Jun 2021 20:10:59 +0530
-Message-Id: <1622904059-21244-5-git-send-email-pmaliset@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1622904059-21244-1-git-send-email-pmaliset@codeaurora.org>
-References: <1622904059-21244-1-git-send-email-pmaliset@codeaurora.org>
+        Sat, 5 Jun 2021 13:43:43 -0400
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4BDEBC061766;
+        Sat,  5 Jun 2021 10:41:42 -0700 (PDT)
+Received: by mail-wm1-x332.google.com with SMTP id t16-20020a05600c1990b02901a0d45ff03aso6244604wmq.2;
+        Sat, 05 Jun 2021 10:41:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=58S1Og3Gq6yFDBmvvvA786Kv3ZHM/KHp6+Nqv3S6XUY=;
+        b=b5eJWGhJcXo5IFD5VMPLXDFJk6XICjvJsKi6fJPjDU0yt3+d23qtGnZtUb3UMREcHq
+         zeLRKuHA2/4mX/1VJO+TIEfVadGQ2fEsXaEilGumOx/UGUyosGYn9evcumxaBDoJo4Su
+         kcJCrW65I1EePaKe5uNGbDnKLCF9qyG2c3JJVUkfdGDwpZYwl1zUI0zI2YyhZFEJS8Py
+         mP6GbeLyApeKPNr4W4DkjTshBVfP4fPMCWV4dzbMh1ib5NDd8Ol4yE8vmVgpO+aIs6m+
+         mBOaaSP2QV0vsolS0IBJb3TSyEu6EPYgf18kMUU7y8XK622+Y/r9gwF300uyuz4ihbAv
+         pYiQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=58S1Og3Gq6yFDBmvvvA786Kv3ZHM/KHp6+Nqv3S6XUY=;
+        b=qr4T2fClW0ln/oD+zLhrcRnA1pnPakenSoR9alUN8/U7eSf2QAg8w+hymGnO8b57bK
+         Ln4jkF+zCzqNUPVIP6hjuGjwk1ZIBB1lEFVxbiMnyfn9hF3FWzjWDR8H75RGNbL2UZNS
+         U0dK+xdC2oEupueY1PQQxLn5BaUUeqZWo2HoRlS3heVUBo5DwsJADzNPH9hmRvusMFFJ
+         6HoHFFjFCOtqgpR8TslAYUz8r0+gZYyRfpOIEmMlOlVyWFFwj+rIA1sNT4Vu6bIves+r
+         5NTWpTGU976kPSkHdgOU2/MIlp9gKeGqIxnUJhKLUKJBJC1wUjHSAf49xRL0kLXeB1ma
+         twng==
+X-Gm-Message-State: AOAM533js6FZV6fR39VvTKZQoRKlOXNvkmKRLfQ+e3CRfKc87JqEy8MH
+        rghlxri1bbKR3avzBMX64kM=
+X-Google-Smtp-Source: ABdhPJyiFCxRpIhc+P1d+WdBeVTCiCFPFUkUwjDbqSiPHq+lzi4KTMpPe8xwEp7BhyJd6VmUYckIpQ==
+X-Received: by 2002:a05:600c:4ba1:: with SMTP id e33mr3183717wmp.39.1622914900861;
+        Sat, 05 Jun 2021 10:41:40 -0700 (PDT)
+Received: from cluster5 ([80.76.206.81])
+        by smtp.gmail.com with ESMTPSA id c206sm12182512wmf.12.2021.06.05.10.41.40
+        (version=TLS1 cipher=ECDHE-ECDSA-AES128-SHA bits=128/128);
+        Sat, 05 Jun 2021 10:41:40 -0700 (PDT)
+From:   Matthew Hagan <mnhagan88@gmail.com>
+Cc:     Matthew Hagan <mnhagan88@gmail.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Giuseppe Cavallaro <peppe.cavallaro@st.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Jose Abreu <joabreu@synopsys.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Voon Weifeng <weifeng.voon@intel.com>,
+        Ong Boon Leong <boon.leong.ong@intel.com>,
+        Wong Vee Khee <vee.khee.wong@linux.intel.com>,
+        Tan Tee Min <tee.min.tan@intel.com>,
+        "Wong, Vee Khee" <vee.khee.wong@intel.com>,
+        Fugang Duan <fugang.duan@nxp.com>, netdev@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-arm-kernel@lists.infradead.org
+Subject: [PATCH 1/3] net: stmmac: explicitly deassert GMAC_AHB_RESET
+Date:   Sat,  5 Jun 2021 18:35:37 +0100
+Message-Id: <20210605173546.4102455-1-mnhagan88@gmail.com>
+X-Mailer: git-send-email 2.26.3
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Document the PCIe DT bindings for SC7280 SoC.The PCIe IP is similar
-to the one used on SM8250. Add the compatible for SC7280.
+We are currently assuming that GMAC_AHB_RESET will already be deasserted
+by the bootloader. However if this has not been done, probing of the GMAC
+will fail. To remedy this we must ensure GMAC_AHB_RESET has been deasserted
+prior to probing.
 
-Signed-off-by: Prasad Malisetty <pmaliset@codeaurora.org>
-Acked-by: Rob Herring <robh@kernel.org>
+Signed-off-by: Matthew Hagan <mnhagan88@gmail.com>
 ---
- Documentation/devicetree/bindings/pci/qcom,pcie.txt | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c     | 7 +++++++
+ drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c | 7 +++++++
+ include/linux/stmmac.h                                | 1 +
+ 3 files changed, 15 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.txt b/Documentation/devicetree/bindings/pci/qcom,pcie.txt
-index 25f4def..9c0908f 100644
---- a/Documentation/devicetree/bindings/pci/qcom,pcie.txt
-+++ b/Documentation/devicetree/bindings/pci/qcom,pcie.txt
-@@ -12,6 +12,7 @@
- 			- "qcom,pcie-ipq4019" for ipq4019
- 			- "qcom,pcie-ipq8074" for ipq8074
- 			- "qcom,pcie-qcs404" for qcs404
-+			- "qcom,pcie-sc7280" for sc7280
- 			- "qcom,pcie-sdm845" for sdm845
- 			- "qcom,pcie-sm8250" for sm8250
- 			- "qcom,pcie-ipq6018" for ipq6018
-@@ -144,6 +145,22 @@
- 			- "slave_bus"	AXI Slave clock
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index 6d41dd6f9f7a..1e28058b65a8 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -6840,6 +6840,13 @@ int stmmac_dvr_probe(struct device *device,
+ 			reset_control_reset(priv->plat->stmmac_rst);
+ 	}
  
- - clock-names:
-+	Usage: required for sc7280
-+	Value type: <stringlist>
-+	Definition: Should contain the following entries
-+			- "aux"         Auxiliary clock
-+			- "cfg"         Configuration clock
-+			- "bus_master"  Master AXI clock
-+			- "bus_slave"   Slave AXI clock
-+			- "slave_q2a"   Slave Q2A clock
-+			- "tbu"         PCIe TBU clock
-+			- "ddrss_sf_tbu" PCIe SF TBU clock
-+			- "pipe"        PIPE clock
-+			- "pipe_src"    PIPE MUX
-+			- "pipe_ext"    PIPE output clock
-+			- "ref"         REFERENCE clock
++	if (priv->plat->stmmac_ahb_rst) {
++		ret = reset_control_deassert(priv->plat->stmmac_ahb_rst);
++		if (ret == -ENOTSUPP)
++			dev_err(priv->device,
++				"unable to bring out of ahb reset\n");
++	}
 +
-+- clock-names:
- 	Usage: required for sdm845
- 	Value type: <stringlist>
- 	Definition: Should contain the following entries
+ 	/* Init MAC and get the capabilities */
+ 	ret = stmmac_hw_init(priv);
+ 	if (ret)
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
+index 97a1fedcc9ac..d8ae58bdbbe3 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
+@@ -600,6 +600,13 @@ stmmac_probe_config_dt(struct platform_device *pdev, u8 *mac)
+ 		goto error_hw_init;
+ 	}
+ 
++	plat->stmmac_ahb_rst = devm_reset_control_get_optional_shared(
++							&pdev->dev, "ahb");
++	if (IS_ERR(plat->stmmac_ahb_rst)) {
++		ret = plat->stmmac_ahb_rst;
++		goto error_hw_init;
++	}
++
+ 	return plat;
+ 
+ error_hw_init:
+diff --git a/include/linux/stmmac.h b/include/linux/stmmac.h
+index e55a4807e3ea..9b6a64f3e3dc 100644
+--- a/include/linux/stmmac.h
++++ b/include/linux/stmmac.h
+@@ -239,6 +239,7 @@ struct plat_stmmacenet_data {
+ 	unsigned int mult_fact_100ns;
+ 	s32 ptp_max_adj;
+ 	struct reset_control *stmmac_rst;
++	struct reset_control *stmmac_ahb_rst;
+ 	struct stmmac_axi *axi;
+ 	int has_gmac4;
+ 	bool has_sun8i;
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+2.26.3
 
