@@ -2,167 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DEAE939C70F
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Jun 2021 11:25:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E09C639C772
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Jun 2021 12:31:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229902AbhFEJ13 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 5 Jun 2021 05:27:29 -0400
-Received: from mo4-p01-ob.smtp.rzone.de ([85.215.255.50]:30018 "EHLO
-        mo4-p01-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229881AbhFEJ12 (ORCPT
+        id S230131AbhFEKdc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 5 Jun 2021 06:33:32 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:61202 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229931AbhFEKdb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 5 Jun 2021 05:27:28 -0400
-ARC-Seal: i=1; a=rsa-sha256; t=1622885133; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=moOMLLHmGAgJXsDkIEal4LJp8gZwsPk1cVKUc6MusVXojHm1HGfQisy/tkTQIrQXWI
-    +PdNQ2wMwyF+w9GyO19LYPO95W3cehou/upL3Fz43xZoDrdkA80rrfiGRMIhYQyg1bM/
-    UWSnXwkeh5uCVpI700Xh+i1CN79DiMD1eD7/qAmGU880p5Cw1EOqHXUtzEk5kAyCcrrr
-    AYgop131mAZmnmtCDgAsFuDzRxXRF3H6F2uNdZgtyrq+aUEDqFhSSp76T2qKtqi3ZLrK
-    8y7Ta+sePUVQC4ctKRoZfqPMVKl3wtSA8PNWAKWDwfuFyfhLKr+c2NQEeLnZcdzS40hs
-    bOEw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1622885133;
-    s=strato-dkim-0002; d=strato.com;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=GabYozNASBnE7dtIOF+VMV7TS49Lpb4nqqO+LYrYhU0=;
-    b=rQ2s6Gwk6uTpFnsnkpASP3YKURr+RMelTiUHyox0YeApl6QSk3zsizPOF2tiApFGpv
-    +nkgD6D+4R0f3N8M/0P8QrKprvRuFRknRvvujgOxCUpHXONrtOHDEvHa3L4CtDRGLdvm
-    ffSuzZHWtwlV0A2u6JYQZGG64uxCj1Zn25V5Fxj2KoKvndcR0wDiEkD/Ja83Y/CRdG6H
-    0n2opVZIWu4rIq6XYpgMStQcJTSCmTxWUl2dTf8YUOVcTtqBaB8HWD243XrNmVOhe9ew
-    +Ogmn+UhHrtCBfqOaRyswSNaZP4TPSlL+dAHJn2R7qFTptMC8AlGVuhJ2hwthZRNlmSJ
-    5TdA==
-ARC-Authentication-Results: i=1; strato.com;
-    dkim=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1622885133;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=GabYozNASBnE7dtIOF+VMV7TS49Lpb4nqqO+LYrYhU0=;
-    b=V25tR7AkIWt+W+o55qf3zVB7pQ54LUt27B8w7OMfGeZxE/22BCp44QJDV1CIxwb+tE
-    4ga/7VQL6r3bzDL+kQKmatQRzIlWhsOdy6/C6e1ANXrl/2d12SUAEW24/d7ys5e+FyDf
-    WNpUJybSQOF4fIPocAwC/VnSPvmwOpfgAp2aZR5A11aBhwXewkriCowyuakHIXW2WWiG
-    kxr9/UYUhp+NBtASkpCB9THc/fpRy1cMcs4lL9bt5zJmfWEbw1JUmgTQRLvII3A+DM41
-    weCOjgdqgt0xrZ8uWtJ5Fw9sCZ+GPM54W9NC8WC5BydB+cDDuFI0SO9IjLzZhOSB/eT7
-    FtcA==
-Authentication-Results: strato.com;
-    dkim=none
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u26zEodhPgRDZ8j6IcjHBg=="
-X-RZG-CLASS-ID: mo00
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 47.27.2 DYNA|AUTH)
-    with ESMTPSA id y01375x559PWIwr
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Sat, 5 Jun 2021 11:25:32 +0200 (CEST)
-Date:   Sat, 5 Jun 2021 11:25:27 +0200
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Loic Poulain <loic.poulain@linaro.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Aleksander Morgado <aleksander@aleksander.es>,
-        Network Development <netdev@vger.kernel.org>,
-        linux-remoteproc@vger.kernel.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Ohad Ben-Cohen <ohad@wizery.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>
-Subject: Re: [RFC] Integrate RPMSG/SMD into WWAN subsystem
-Message-ID: <YLtDB2Cz5ttewsFu@gerhold.net>
-References: <YLfL9Q+4860uqS8f@gerhold.net>
- <CAMZdPi9tcye-4P4i0uXZcECJ-Big5T11JdvdXW6k2mEEi9XwyA@mail.gmail.com>
+        Sat, 5 Jun 2021 06:33:31 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1622889104; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: To:
+ Subject: Sender; bh=ibQev18T9V9fkVqRTgCod7cdmgA96I6rIWCsroTRfWI=; b=q2fcjChzC2jP33eUdh+Hxgt+zasYlUYoCCV5aZMwOtmX+csZ/3VPHOzYKS46VXLKssIUKeb4
+ XDg8YMklrYMNO0MH3ydVfXHrwpSDd+l7SLWY+aquiIG11Mj2E6fmC/vFU8EYE5A/fPNqLDCC
+ 7RoCEatfqRREFV9H10W+RVnyuyM=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
+ 60bb527bf726fa41889cfaa2 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Sat, 05 Jun 2021 10:31:23
+ GMT
+Sender: srivasam=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id B2347C43145; Sat,  5 Jun 2021 10:31:22 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-3.5 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
+Received: from [192.168.212.90] (unknown [157.48.166.146])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: srivasam)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id AE40FC433F1;
+        Sat,  5 Jun 2021 10:31:13 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org AE40FC433F1
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=srivasam@codeaurora.org
+Subject: Re: [PATCH] ASoC: qcom: Fix for DMA interrupt clear reg overwriting
+To:     Stephen Boyd <swboyd@chromium.org>, agross@kernel.org,
+        alsa-devel@alsa-project.org, bgoswami@codeaurora.org,
+        bjorn.andersson@linaro.org, broonie@kernel.org,
+        devicetree@vger.kernel.org, judyhsiao@chromium.org,
+        lgirdwood@gmail.com, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, perex@perex.cz, plai@codeaurora.org,
+        robh+dt@kernel.org, rohitkr@codeaurora.org,
+        srinivas.kandagatla@linaro.org, tiwai@suse.com
+References: <20210603050530.15898-1-srivasam@codeaurora.org>
+ <CAE-0n52CyZkRDForR7LumXL7Tcr=48UV7T-wxirMsxk7AJJsmg@mail.gmail.com>
+From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+Organization: Qualcomm India Private Limited.
+Message-ID: <bea7d3f4-057a-7070-f493-3e625273212c@codeaurora.org>
+Date:   Sat, 5 Jun 2021 16:01:10 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAMZdPi9tcye-4P4i0uXZcECJ-Big5T11JdvdXW6k2mEEi9XwyA@mail.gmail.com>
+In-Reply-To: <CAE-0n52CyZkRDForR7LumXL7Tcr=48UV7T-wxirMsxk7AJJsmg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Loic,
+Hi Stephen,
 
-On Fri, Jun 04, 2021 at 11:11:45PM +0200, Loic Poulain wrote:
-> On Wed, 2 Jun 2021 at 20:20, Stephan Gerhold <stephan@gerhold.net> wrote:
-> > I've been thinking about creating some sort of "RPMSG" driver for the
-> > new WWAN subsystem; this would be used as a QMI/AT channel to the
-> > integrated modem on some older Qualcomm SoCs such as MSM8916 and MSM8974.
-> >
-> > It's easy to confuse all the different approaches that Qualcomm has to
-> > talk to their modems, so I will first try to briefly give an overview
-> > about those that I'm familiar with:
-> >
-> > ---
-> > There is USB and MHI that are mainly used to talk to "external" modems.
-> >
-> > For the integrated modems in many Qualcomm SoCs there is typically
-> > a separate control and data path. They are not really related to each
-> > other (e.g. currently no common parent device in sysfs).
-> >
-> > For the data path (network interface) there is "IPA" (drivers/net/ipa)
-> > on newer SoCs or "BAM-DMUX" on some older SoCs (e.g. MSM8916/MSM8974).
-> > I have a driver for BAM-DMUX that I hope to finish up and submit soon.
-> >
-> > The connection is set up via QMI. The messages are either sent via
-> > a shared RPMSG channel (net/qrtr sockets in Linux) or via standalone
-> > SMD/RPMSG channels (e.g. "DATA5_CNTL" for QMI and "DATA1" for AT).
-> >
-> > This gives a lot of possible combinations like BAM-DMUX+RPMSG
-> > (MSM8916, MSM8974), or IPA+QRTR (SDM845) but also other funny
-> > combinations like IPA+RPMSG (MSM8994) or BAM-DMUX+QRTR (MSM8937).
-> >
-> > Simply put, supporting all these in userspace like ModemManager
-> > is a mess (Aleksander can probably confirm).
-> > It would be nice if this could be simplified through the WWAN subsystem.
-> >
-> > It's not clear to me if or how well QRTR sockets can be mapped to a char
-> > device for the WWAN subsystem, so for now I'm trying to focus on the
-> > standalone RPMSG approach (for MSM8916, MSM8974, ...).
-> > ---
-> >
-> > Currently ModemManager uses the RPMSG channels via the rpmsg-chardev
-> > (drivers/rpmsg/rpmsg_char.c). It wasn't my idea to use it like this,
-> > I just took that over from someone else. Realistically speaking, the
-> > current approach isn't too different from the UCI "backdoor interface"
-> > approach that was rejected for MHI...
-> >
-> > I kind of expected that I can just trivially copy some code from
-> > rpmsg_char.c into a WWAN driver since they both end up as a simple char
-> > device. But it looks like the abstractions in wwan_core are kind of
-> > getting in the way here... As far as I can tell, they don't really fit
-> > together with the RPMSG interface.
-> >
-> > For example there is rpmsg_send(...) (blocking) and rpmsg_trysend(...)
-> > (non-blocking) and even a rpmsg_poll(...) [1] but I don't see a way to
-> > get notified when the TX queue is full or no longer full so I can call
-> > wwan_port_txon/off().
-> >
-> > Any suggestions or other thoughts?
-> 
-> It would be indeed nice to get this in the WWAN framework.
-> I don't know much about rpmsg but I think it is straightforward for
-> the RX path, the ept_cb can simply forward the buffers to
-> wwan_port_rx.
+Thanks for Your Time for review comments!!!
 
-Right, that part should be straightforward.
+On 6/3/2021 11:47 AM, Stephen Boyd wrote:
+> Quoting Srinivasa Rao Mandadapu (2021-06-02 22:05:30)
+>> This patch fixes the DMA interrupt registers overwriting
+>   $ git grep "This patch" -- Documentation/process
+Okay will change description.
+>
+>> issue in lpass platform interrupt handler.
+> Can you describe the issue more?
+Sure. will elaborate more.
+>
+>> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+>> ---
+> Any Fixes tag?
+>
+>>   sound/soc/qcom/lpass-platform.c | 17 +++++++++++------
+>>   1 file changed, 11 insertions(+), 6 deletions(-)
+>>
+>> diff --git a/sound/soc/qcom/lpass-platform.c b/sound/soc/qcom/lpass-platform.c
+>> index 0df9481ea4c6..e02caa121fa4 100644
+>> --- a/sound/soc/qcom/lpass-platform.c
+>> +++ b/sound/soc/qcom/lpass-platform.c
+>> @@ -650,7 +650,7 @@ static irqreturn_t lpass_dma_interrupt_handler(
+>>          struct lpass_variant *v = drvdata->variant;
+>>          irqreturn_t ret = IRQ_NONE;
+>>          int rv;
+>> -       unsigned int reg = 0, val = 0;
+>> +       unsigned int reg = 0, val = 0, val_clr = 0, val_mask = 0;
+> Why assign to 0 and then overwrite it?
+Okay. Will remove initialization.
+>
+>>          struct regmap *map;
+>>          unsigned int dai_id = cpu_dai->driver->id;
+>>
+>> @@ -676,8 +676,9 @@ static irqreturn_t lpass_dma_interrupt_handler(
+>>          return -EINVAL;
+>>          }
+>>          if (interrupts & LPAIF_IRQ_PER(chan)) {
+>> -
+>> -               rv = regmap_write(map, reg, LPAIF_IRQ_PER(chan) | val);
+>> +               val_clr = (LPAIF_IRQ_PER(chan) | val);
+> Is the extra parenthesis useful?
+Not exactly. Will remove it.
+>
+>> +               val_mask = LPAIF_IRQ_ALL(chan);
+>> +               rv = regmap_update_bits(map, reg, val_mask, val_clr);
+>>                  if (rv) {
+>>                          dev_err(soc_runtime->dev,
+>>                                  "error writing to irqclear reg: %d\n", rv);
 
-> For tx, simply call rpmsg_trysend() in the wwan tx
-> callback and don't use the txon/off helpers. In short, keep it simple
-> and check if you observe any issues.
-> 
+-- 
+Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
+is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
 
-I'm not sure that's a good idea. This sounds like exactly the kind of
-thing that might explode later just because I don't manage to get the
-TX queue full in my tests. In that case, writing to the WWAN char dev
-would not block, even if O_NONBLOCK is not set.
-
-But I think you're right that it's probably easiest if I start with
-that, see if I can get anything working at all ...
-
-> And for sure you can propose changes in the WWAN framework if you
-> think something is missing to support your specific case.
-> 
-
-... and then we can discuss that further on a RFC PATCH or something
-like that. Does that sound good to you?
-
-Thanks!
-Stephan
