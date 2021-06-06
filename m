@@ -2,158 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E743B39CF43
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Jun 2021 15:07:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 02F4A39CF98
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Jun 2021 16:40:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230108AbhFFNJX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 6 Jun 2021 09:09:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60858 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230084AbhFFNJW (ORCPT
+        id S230158AbhFFOls (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 6 Jun 2021 10:41:48 -0400
+Received: from mail-wm1-f46.google.com ([209.85.128.46]:53951 "EHLO
+        mail-wm1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230156AbhFFOlr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 6 Jun 2021 09:09:22 -0400
-Received: from galois.linutronix.de (Galois.linutronix.de [IPv6:2a0a:51c0:0:12e:550::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58AAFC061767;
-        Sun,  6 Jun 2021 06:07:32 -0700 (PDT)
-Date:   Sun, 06 Jun 2021 13:07:30 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-        s=2020; t=1622984850;
-        h=from:from:sender:sender:reply-to:reply-to:subject:subject:date:date:
-         message-id:message-id:to:to:cc:cc:mime-version:mime-version:
-         content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=iIRFb1jKnTo5dWo4vdft2FiOkoJM8ahbNvFiqMbznyk=;
-        b=ltstbgsahkZUdbqLiyLQq5sQTlO5N41+hC9GhiDBQkPCCs/IFALZjg0pGMH6Uwo7JYURUB
-        KMsAtQS2lFbW0geZ1P+v3p7wL6Ai4mi/8YpytJX/1xu84aZGw/6yTdhDgNxjZdEQVPZN7f
-        LPx5HidkeQ+/CbxiWtppSvIC2+vrxJfsIBldLFxwTB+rHox4yP8fcdhCfCogDjKswNAT8U
-        pYzU/d/mE+hZO4uHvOc78sulXGJi0Hs/S58RRja0a6ol/wFA9tsukebZIT78QfEreqWNxR
-        2WMGZcjU5ORwt+axgoTcX8LagP0aJTCdHGs9aPqyNM27yorJ3Y/BBLuJg2Ca9g==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-        s=2020e; t=1622984850;
-        h=from:from:sender:sender:reply-to:reply-to:subject:subject:date:date:
-         message-id:message-id:to:to:cc:cc:mime-version:mime-version:
-         content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=iIRFb1jKnTo5dWo4vdft2FiOkoJM8ahbNvFiqMbznyk=;
-        b=4lzV7xjaPAgFsIcDl+zLI85Jv5+nn9pDqmPtDep36NRE1BISmpNMGlMVs65Rl/jw4PEYRJ
-        jUy1tGr6Aq/CETAw==
-From:   "irqchip-bot for Saravana Kannan" <tip-bot2@linutronix.de>
-Sender: tip-bot2@linutronix.de
-Reply-to: linux-kernel@vger.kernel.org
-To:     linux-kernel@vger.kernel.org
-Subject: [irqchip: irq/irqchip-next] irqchip/qcom-pdc: Switch to
- IRQCHIP_PLATFORM_DRIVER and allow as a module
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Joerg Roedel <joro@8bytes.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Jason Cooper <jason@lakedaemon.net>,
-        Marc Zyngier <maz@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Maulik Shah <mkshah@codeaurora.org>,
-        Lina Iyer <ilina@codeaurora.org>,
-        Saravana Kannan <saravanak@google.com>,
-        Todd Kjos <tkjos@google.com>,
-        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
-        linux-arm-msm@vger.kernel.org, iommu@lists.linux-foundation.org,
-        linux-gpio@vger.kernel.org, John Stultz <john.stultz@linaro.org>
-In-Reply-To: <20210518211922.3474368-1-john.stultz@linaro.org>
-References: <20210518211922.3474368-1-john.stultz@linaro.org>
+        Sun, 6 Jun 2021 10:41:47 -0400
+Received: by mail-wm1-f46.google.com with SMTP id h3so8294370wmq.3;
+        Sun, 06 Jun 2021 07:39:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=SEVMnnp5jdJsfAi2k7Qasv3hIqmGSZ59KOCLXsglWOA=;
+        b=BhlhgQ9N06MFmRnop6dpWkPHolaAHbqtg/S1iH7IkTPMYWqV3cuHpOza8s5TPhWn/m
+         kacj+V//eT5wfef/cBFWLqJKBeEmIcOKxJC7tRUg53dQSceeYhb9pGDgIYKHPTRjkc3J
+         Ri+D49LbinizfAQo5VR8NNyrMD+pNN/kw8x0y3Hik1suuKNLojvUz7e5C3pW/ZVx3wID
+         Eg/E02DR5l2fkKqlZpnz/FY30IB5tc3AHSpND3KypkLuGZ4TtJDGDSG4OPeU672Gq/Fe
+         ELvi71Cz2ogQqnD591h8eD+Vcgkr/FhAo3GAfjr4LYW8kq+3cu5odsJILUQGSkWJ3mF0
+         a9kA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=SEVMnnp5jdJsfAi2k7Qasv3hIqmGSZ59KOCLXsglWOA=;
+        b=kQqyhoqgElJ2b+2zp4r0S2YR0KErrHXsLkc1IkQuIIn7JIFm779YniG4YspP51d+FL
+         cQ0uxQR/1dXh0jy+iGAFhvF6V+S6vImEW22PPBGUudUaulyL3kVkdw9fagFxxK5cTsJV
+         zsZbK9Gp/hh59B5D/f+EXi6WRxtwoEIaBCbvaWmZ/0peng8PCsnjLmTCPCJGLeP2+fV7
+         h6y7B6Aq8iUS7EUq9ZYYZEqUrIdvKGpeiJK5jF0pZqosSJClaT1cKyxo9wO47ti+a1qf
+         qGMLdi6Gd+omFL5bDaquJfaOpV28qVonyWx7wQfm8NTpdMMuspHay7wo9Y3vxDn3vKQl
+         K/ug==
+X-Gm-Message-State: AOAM530q1PT1EFq6/mvG1vaqW45XoiODsxugLOt9QEKM4dsStLQwIogJ
+        ZTAMzM/jRddnuZOXPDoXKvM=
+X-Google-Smtp-Source: ABdhPJwO7FetrZnpByd+buizj9rapzo5bXP50YMSXUYMlLCtYO90cuwv/6b2PSRFmQvSgM7IdmwcrQ==
+X-Received: by 2002:a05:600c:198c:: with SMTP id t12mr4191738wmq.16.1622990319748;
+        Sun, 06 Jun 2021 07:38:39 -0700 (PDT)
+Received: from localhost.localdomain (haganm.plus.com. [212.159.108.31])
+        by smtp.gmail.com with ESMTPSA id a123sm15383703wmd.2.2021.06.06.07.38.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 06 Jun 2021 07:38:39 -0700 (PDT)
+Subject: Re: [PATCH 1/3] net: stmmac: explicitly deassert GMAC_AHB_RESET
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Giuseppe Cavallaro <peppe.cavallaro@st.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Jose Abreu <joabreu@synopsys.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Voon Weifeng <weifeng.voon@intel.com>,
+        Ong Boon Leong <boon.leong.ong@intel.com>,
+        Wong Vee Khee <vee.khee.wong@linux.intel.com>,
+        Tan Tee Min <tee.min.tan@intel.com>,
+        "Wong, Vee Khee" <vee.khee.wong@intel.com>,
+        Fugang Duan <fugang.duan@nxp.com>, netdev@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-arm-kernel@lists.infradead.org
+References: <20210605173546.4102455-1-mnhagan88@gmail.com>
+ <YLw//XARgqNlRoTB@builder.lan>
+From:   Matthew Hagan <mnhagan88@gmail.com>
+Message-ID: <a322fc12-b041-5530-0b2a-5bb6a5ca050c@gmail.com>
+Date:   Sun, 6 Jun 2021 15:38:37 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.1
 MIME-Version: 1.0
-Message-ID: <162298485012.29796.14375276303480597518.tip-bot2@tip-bot2>
-Robot-ID: <tip-bot2@linutronix.de>
-Robot-Unsubscribe: Contact <mailto:tglx@linutronix.de> to get blacklisted from these emails
-Content-Type: text/plain; charset="utf-8"
+In-Reply-To: <YLw//XARgqNlRoTB@builder.lan>
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The following commit has been merged into the irq/irqchip-next branch of irqchip:
+On 06/06/2021 04:24, Bjorn Andersson wrote:
 
-Commit-ID:     4acd8a4be614a6c191273f2247aff7374a92f318
-Gitweb:        https://git.kernel.org/pub/scm/linux/kernel/git/maz/arm-platforms/4acd8a4be614a6c191273f2247aff7374a92f318
-Author:        Saravana Kannan <saravanak@google.com>
-AuthorDate:    Tue, 18 May 2021 21:19:21 
-Committer:     Marc Zyngier <maz@kernel.org>
-CommitterDate: Sun, 06 Jun 2021 13:57:41 +01:00
+>> diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
+>> index 97a1fedcc9ac..d8ae58bdbbe3 100644
+>> --- a/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
+>> +++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
+>> @@ -600,6 +600,13 @@ stmmac_probe_config_dt(struct platform_device *pdev, u8 *mac)
+>>  		goto error_hw_init;
+>>  	}
+>>  
+>> +	plat->stmmac_ahb_rst = devm_reset_control_get_optional_shared(
+>> +							&pdev->dev, "ahb");
+>> +	if (IS_ERR(plat->stmmac_ahb_rst)) {
+>> +		ret = plat->stmmac_ahb_rst;
+> You need a PTR_ERR() around the plat->stmmac_ahb_rst.
 
-irqchip/qcom-pdc: Switch to IRQCHIP_PLATFORM_DRIVER and allow as a module
+This is giving a warning. Shouldn't v1 be kept as it is here? Please refer
+to "net: stmmac: platform: use optional clk/reset get APIs" [1] which
+modified error handling for plat->stmmac_rst. PTR_ERR() would then be
+called by the parent function on the returned value of ret.
 
-This patch revives changes from Saravana Kannan to switch the
-qcom-pdc driver to use IRQCHIP_PLATFORM_DRIVER helper macros,
-and allows qcom-pdc driver to be loaded as a permanent module.
+[1]: https://lore.kernel.org/netdev/20201112092606.5173aa6f@xhacker.debian/
 
-Earlier attempts at this ran into trouble with loading
-dependencies, but with Saravana's fw_devlink=on set by default
-now we should avoid those.
+Thanks,
+Matthew
 
-[jstultz: Folded in with my changes to allow the driver to be
- loadable as a permenent module]
-
-Cc: Andy Gross <agross@kernel.org>
-Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc: Joerg Roedel <joro@8bytes.org>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Cc: Jason Cooper <jason@lakedaemon.net>
-Cc: Marc Zyngier <maz@kernel.org>
-Cc: Linus Walleij <linus.walleij@linaro.org>
-Cc: Maulik Shah <mkshah@codeaurora.org>
-Cc: Lina Iyer <ilina@codeaurora.org>
-Cc: Saravana Kannan <saravanak@google.com>
-Cc: Todd Kjos <tkjos@google.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: linux-arm-msm@vger.kernel.org
-Cc: iommu@lists.linux-foundation.org
-Cc: linux-gpio@vger.kernel.org
-Signed-off-by: Saravana Kannan <saravanak@google.com>
-Signed-off-by: John Stultz <john.stultz@linaro.org>
-Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20210518211922.3474368-1-john.stultz@linaro.org
----
- drivers/irqchip/Kconfig    | 2 +-
- drivers/irqchip/qcom-pdc.c | 8 +++++++-
- 2 files changed, 8 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/irqchip/Kconfig b/drivers/irqchip/Kconfig
-index 62543a4..4d5924e 100644
---- a/drivers/irqchip/Kconfig
-+++ b/drivers/irqchip/Kconfig
-@@ -415,7 +415,7 @@ config GOLDFISH_PIC
-          for Goldfish based virtual platforms.
- 
- config QCOM_PDC
--	bool "QCOM PDC"
-+	tristate "QCOM PDC"
- 	depends on ARCH_QCOM
- 	select IRQ_DOMAIN_HIERARCHY
- 	help
-diff --git a/drivers/irqchip/qcom-pdc.c b/drivers/irqchip/qcom-pdc.c
-index 5dc63c2..32d5920 100644
---- a/drivers/irqchip/qcom-pdc.c
-+++ b/drivers/irqchip/qcom-pdc.c
-@@ -11,9 +11,11 @@
- #include <linux/irqdomain.h>
- #include <linux/io.h>
- #include <linux/kernel.h>
-+#include <linux/module.h>
- #include <linux/of.h>
- #include <linux/of_address.h>
- #include <linux/of_device.h>
-+#include <linux/of_irq.h>
- #include <linux/soc/qcom/irq.h>
- #include <linux/spinlock.h>
- #include <linux/slab.h>
-@@ -459,4 +461,8 @@ fail:
- 	return ret;
- }
- 
--IRQCHIP_DECLARE(qcom_pdc, "qcom,pdc", qcom_pdc_init);
-+IRQCHIP_PLATFORM_DRIVER_BEGIN(qcom_pdc)
-+IRQCHIP_MATCH("qcom,pdc", qcom_pdc_init)
-+IRQCHIP_PLATFORM_DRIVER_END(qcom_pdc)
-+MODULE_DESCRIPTION("Qualcomm Technologies, Inc. Power Domain Controller");
-+MODULE_LICENSE("GPL v2");
