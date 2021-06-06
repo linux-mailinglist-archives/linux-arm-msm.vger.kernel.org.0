@@ -2,53 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D6DF639CC9B
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Jun 2021 05:53:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A9B4339CC9E
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Jun 2021 05:57:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230099AbhFFDzh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 5 Jun 2021 23:55:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54432 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230025AbhFFDzg (ORCPT
+        id S230060AbhFFD6s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 5 Jun 2021 23:58:48 -0400
+Received: from mail-oo1-f44.google.com ([209.85.161.44]:44715 "EHLO
+        mail-oo1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230025AbhFFD6r (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 5 Jun 2021 23:55:36 -0400
-Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE655C061767
-        for <linux-arm-msm@vger.kernel.org>; Sat,  5 Jun 2021 20:53:32 -0700 (PDT)
-Received: by mail-oi1-x229.google.com with SMTP id x196so13961300oif.10
-        for <linux-arm-msm@vger.kernel.org>; Sat, 05 Jun 2021 20:53:32 -0700 (PDT)
+        Sat, 5 Jun 2021 23:58:47 -0400
+Received: by mail-oo1-f44.google.com with SMTP id o5-20020a4a2c050000b0290245d6c7b555so3287357ooo.11
+        for <linux-arm-msm@vger.kernel.org>; Sat, 05 Jun 2021 20:56:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=TsYbNZ4laI9teXiRJwQVtXw/WDE1ka50Y7QE5jEbcP4=;
-        b=bbcnenBvpJuDnmICaT9RTDNMiZKHi64pJelIP6411edJGm6lP2ahR9DHujng+OvGKR
-         iEDVN1SHnmIcfdqhuXH5F4sEfooK91eon7fCFMznQFyyAmLe69I5MxNHWnW3UCbv8l+S
-         w8OGJ4WYeQ8f9HkHoc9shmU6g2QHklgbgl59uzNQVA+k0SOIBPWnVsxJFShpFjMpgAdT
-         3ZU0Ts65dhmcyQAfSGJBqZFI8woFUfa99Yq97FEXtCrsl/nFjuzvcyxma9AZz5xLoV3a
-         8D567spjUgk/tXA3hNq6jEgs7+mAaM2wCRyEKiwAx+n3OeAeKqh67FUpGA+wp8a3qI4+
-         JcJg==
+        bh=ZBtJoxAXWSTkFltAdWrC9azDVoj0nja+FIn0Yd4cs9g=;
+        b=k2q8oB4IHfDZQdohJj9qmF2/cTlamcKtmsJBzoGj3r8r5zrPe3RTS5geKmKL9A1DCU
+         IJRkwFXb6uF2bQpfJu5bG8HDz2Nmq4fasu7X3MKTJOnI6DCC2ptO14RI8epbCuRF1XtP
+         zI1LoA4RD2zg9Zg3TUafnI6m+FYWScb/TH7eLaorgbtyb/gf3B17bTH7iGSVdwCQOJuZ
+         MSJDVyEI74Cnzf4n7P7hfnIyaU+ylyD50+vf060G0V4Pz1DmE7WQ2G8qZgEKHNdW8Y4q
+         YdGbM/yruwSIY9FA/pobFRrt0E3a5VBSoiLX8gestbvMG/11CH9wUET1uNhiu3kuvcYt
+         1NIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=TsYbNZ4laI9teXiRJwQVtXw/WDE1ka50Y7QE5jEbcP4=;
-        b=DeMCgckJAefL6QEidQbWtnuZCJOv74fYWQbPKRy4kvemf18avJNWFp2w3BP57zrV7R
-         NeGJumK6Z0KEKCWv5IRZLJQ+MpLxrCNKTdnDyJnGGTpZXtd4whXTvDHkXyCRoA9wd4Zw
-         W7/cVs/g7qKBlv68MlaUONQ7me99V9OhouqyqOhVXnB8RPxb0hZtZXMGzGSlVeeAtIsl
-         w2Srbf/TrqAaQ3puruSS3GaV1jhf8yWazcgj5u3N1tnzA3j5iGS20wBePlaT0Co8p7xS
-         0BRU437n5WIPFPuG7BNeltDwGziiEhphOKK/IIZzhN0KjW0Y4fSzJur3lurhFjWVqhUK
-         j+jQ==
-X-Gm-Message-State: AOAM532RcHaxB/SS1Y0FNKwMAdH9C3O+n5Gx2tbluzLWnynyqtixIgDW
-        XwurERO3j+3H9bGISId57+xIhg==
-X-Google-Smtp-Source: ABdhPJzyruRqU3EEplQVcCRdayKYdxRwFXNLcXRW6dB7mQ4HsbBseHLG6XV9Edghjv66KDiiXHu6lw==
-X-Received: by 2002:a05:6808:249:: with SMTP id m9mr7656763oie.120.1622951612225;
-        Sat, 05 Jun 2021 20:53:32 -0700 (PDT)
+        bh=ZBtJoxAXWSTkFltAdWrC9azDVoj0nja+FIn0Yd4cs9g=;
+        b=tnZNWc3RezsnqdGlmEz4c+m2cpAtg+eK1i1cp7+F7lx2x//6zkPu5WgnHICUlMyaTC
+         4+gsJZh29CXbimwdqrV5ZOLWRDvyauBfCaW4s3LQtM98hlgBkNfuzScfT3ICCo//1jbX
+         Mupyi4+rR8+WBO4NksnfoZJYf0b3EePpIuSqH6LjnyGI5uUTAOQLmKYyqXqKHaj2OErw
+         WAD9mF8UOWj5bMSXntpK/VH7S0Biv7S5p53uqY1bO30n2ReXzBBzI0cMqaO0Wkl9YFlz
+         g1UOcfVRf9s0+mFiNf25tAKPHOmyeMztlHCl56ixbWwe+fBP5vojuL80AttrWvvBhO/W
+         YVsA==
+X-Gm-Message-State: AOAM530j2npgCEGu32SkxsYT0/VBUHsUhEKDLZxaOA9ogVlQLuXbVi1R
+        A+mbnr4zW7bECIpAKgKVS36gPw==
+X-Google-Smtp-Source: ABdhPJyK3TXmS9Z6jDq4ERjyglCsKG/bJlgNjiYVTbqcVBS1F1xDkYKUHn6UukcTiyOHgzpJGNk+Aw==
+X-Received: by 2002:a4a:d781:: with SMTP id c1mr9181424oou.23.1622951758431;
+        Sat, 05 Jun 2021 20:55:58 -0700 (PDT)
 Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id l24sm569847oii.45.2021.06.05.20.53.31
+        by smtp.gmail.com with ESMTPSA id x9sm1415903ooo.27.2021.06.05.20.55.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 05 Jun 2021 20:53:31 -0700 (PDT)
-Date:   Sat, 5 Jun 2021 22:53:30 -0500
+        Sat, 05 Jun 2021 20:55:58 -0700 (PDT)
+Date:   Sat, 5 Jun 2021 22:55:56 -0500
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Roja Rani Yarubandi <rojay@codeaurora.org>
 Cc:     agross@kernel.org, robh+dt@kernel.org,
@@ -56,21 +53,21 @@ Cc:     agross@kernel.org, robh+dt@kernel.org,
         linux-kernel@vger.kernel.org,
         Rajendra Nayak <rnayak@codeaurora.org>,
         saiprakash.ranjan@codeaurora.org, msavaliy@qti.qualcomm.com
-Subject: Re: [PATCH V3 3/3] arm64: dts: sc7280: Add QUPv3 wrapper_1 nodes
-Message-ID: <YLxGuumLA5ii9awe@builder.lan>
+Subject: Re: [PATCH V3 1/3] arm64: dts: sc7280: Add QSPI node
+Message-ID: <YLxHTDxVcSvVxsd5@builder.lan>
 References: <20210604135439.19119-1-rojay@codeaurora.org>
- <20210604135439.19119-4-rojay@codeaurora.org>
+ <20210604135439.19119-2-rojay@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20210604135439.19119-4-rojay@codeaurora.org>
+In-Reply-To: <20210604135439.19119-2-rojay@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Fri 04 Jun 08:54 CDT 2021, Roja Rani Yarubandi wrote:
 
-> Add QUPv3 wrapper_1 DT nodes for SC7280 SoC.
+> Add QSPI DT node for SC7280 SoC.
 > 
 > Signed-off-by: Roja Rani Yarubandi <rojay@codeaurora.org>
 > ---
@@ -85,51 +82,104 @@ On Fri 04 Jun 08:54 CDT 2021, Roja Rani Yarubandi wrote:
 >  - As per Doug's comments split of SPI, UART nodes has been done.
 >  - Moved QSPI node before aps_smmu as per the order.
 > 
->  arch/arm64/boot/dts/qcom/sc7280-idp.dts |   4 +
->  arch/arm64/boot/dts/qcom/sc7280.dtsi    | 751 ++++++++++++++++++++++++
->  2 files changed, 755 insertions(+)
+>  arch/arm64/boot/dts/qcom/sc7280-idp.dts | 29 ++++++++++++
+>  arch/arm64/boot/dts/qcom/sc7280.dtsi    | 61 +++++++++++++++++++++++++
+>  2 files changed, 90 insertions(+)
 > 
 > diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dts b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
-> index f57458dbe763..bdea9bf4eeca 100644
+> index 3900cfc09562..d0edffc15736 100644
 > --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dts
 > +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
-> @@ -288,6 +288,10 @@ &qupv3_id_0 {
->  	status = "okay";
+> @@ -268,6 +268,22 @@ pmr735b_die_temp {
+>  		};
 >  };
 >  
-> +&qupv3_id_1 {
+> +&qspi {
 > +	status = "okay";
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&qspi_clk>, <&qspi_cs0>, <&qspi_data01>;
+> +
+> +	flash@0 {
+> +		compatible = "jedec,spi-nor";
+> +		reg = <0>;
+> +
+> +		/* TODO: Increase frequency after testing */
+> +		spi-max-frequency = <25000000>;
+> +		spi-tx-bus-width = <2>;
+> +		spi-rx-bus-width = <2>;
+> +	};
 > +};
 > +
->  &uart5 {
+>  &qupv3_id_0 {
 >  	status = "okay";
 >  };
+> @@ -278,6 +294,19 @@ &uart5 {
+>  
+>  /* PINCTRL - additions to nodes defined in sc7280.dtsi */
+>  
+> +&qspi_cs0 {
+> +	bias-disable;
+> +};
+> +
+> +&qspi_clk {
+> +	bias-disable;
+> +};
+> +
+> +&qspi_data01 {
+> +	/* High-Z when no transfers; nice to park the lines */
+> +	bias-pull-up;
+> +};
+> +
+>  &qup_uart5_default {
+>  	tx {
+>  		pins = "gpio46";
 > diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> index b783f5622a66..348a34f3448e 100644
+> index 6c9d5eb93f93..3047ab802cd2 100644
 > --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
 > +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> @@ -881,6 +881,437 @@ uart7: serial@99c000 {
+> @@ -1061,6 +1061,42 @@ apss_merge_funnel_in: endpoint {
 >  			};
 >  		};
 >  
-> +		qupv3_id_1: geniqup@ac0000 {
-> +			compatible = "qcom,geni-se-qup";
-> +			reg = <0 0x00ac0000 0 0x2000>;
-> +			clock-names = "m-ahb", "s-ahb";
-> +			clocks = <&gcc GCC_QUPV3_WRAP_1_M_AHB_CLK>,
-> +				 <&gcc GCC_QUPV3_WRAP_1_S_AHB_CLK>;
-> +			#address-cells = <2>;
-> +			#size-cells = <2>;
-> +			ranges;
-> +			iommus = <&apps_smmu 0x43 0x0>;
-> +			interconnects = <&clk_virt MASTER_QUP_CORE_1 0 &clk_virt SLAVE_QUP_CORE_1 0>;
-> +			interconnect-names = "qup-core";
+> +		qspi_opp_table: qspi-opp-table {
 
-We used to have interconnect votes for the wrapper, but I recently
-merged patches that dropped these for sc7180, so please conclude which
-way this should be.
-
-The rest looks good.
+This node doesn't represents anything on the mmio bus, so it shouldn't
+live in in /soc. Can't you move it into &qspi?
 
 Regards,
 Bjorn
+
+> +			compatible = "operating-points-v2";
+> +
+> +			opp-75000000 {
+> +				opp-hz = /bits/ 64 <75000000>;
+> +				required-opps = <&rpmhpd_opp_low_svs>;
+> +			};
+> +
+> +			opp-150000000 {
+> +				opp-hz = /bits/ 64 <150000000>;
+> +				required-opps = <&rpmhpd_opp_svs>;
+> +			};
+> +
+> +			opp-300000000 {
+> +				opp-hz = /bits/ 64 <300000000>;
+> +				required-opps = <&rpmhpd_opp_nom>;
+> +			};
+> +		};
+> +
+> +		qspi: spi@88dc000 {
+> +			compatible = "qcom,qspi-v1";
+> +			reg = <0 0x088dc000 0 0x1000>;
+> +			#address-cells = <1>;
+> +			#size-cells = <0>;
+> +			interrupts = <GIC_SPI 82 IRQ_TYPE_LEVEL_HIGH>;
+> +			clocks = <&gcc GCC_QSPI_CNOC_PERIPH_AHB_CLK>,
+> +				 <&gcc GCC_QSPI_CORE_CLK>;
+> +			clock-names = "iface", "core";
+> +			interconnects = <&gem_noc MASTER_APPSS_PROC 0
+> +					&cnoc2 SLAVE_QSPI_0 0>;
+> +			interconnect-names = "qspi-config";
+> +			power-domains = <&rpmhpd SC7280_CX>;
+> +			operating-points-v2 = <&qspi_opp_table>;
+> +			status = "disabled";
+> +		};
