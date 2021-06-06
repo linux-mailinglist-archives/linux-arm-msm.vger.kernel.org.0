@@ -2,116 +2,168 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DF74339CD64
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Jun 2021 07:10:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A0D1639CE6C
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Jun 2021 11:37:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229504AbhFFFMr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 6 Jun 2021 01:12:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42962 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229465AbhFFFMr (ORCPT
+        id S230129AbhFFJj0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 6 Jun 2021 05:39:26 -0400
+Received: from mail-wm1-f44.google.com ([209.85.128.44]:37677 "EHLO
+        mail-wm1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229962AbhFFJj0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 6 Jun 2021 01:12:47 -0400
-Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F8A0C061766
-        for <linux-arm-msm@vger.kernel.org>; Sat,  5 Jun 2021 22:10:48 -0700 (PDT)
-Received: by mail-ot1-x32d.google.com with SMTP id c31-20020a056830349fb02903a5bfa6138bso13398257otu.7
-        for <linux-arm-msm@vger.kernel.org>; Sat, 05 Jun 2021 22:10:48 -0700 (PDT)
+        Sun, 6 Jun 2021 05:39:26 -0400
+Received: by mail-wm1-f44.google.com with SMTP id f16-20020a05600c1550b02901b00c1be4abso211306wmg.2;
+        Sun, 06 Jun 2021 02:37:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=Dhdp3uNglhwNTsHHri1BRiXlcER9kLclnHgN/OT8h7c=;
-        b=sn+EDz/EJCkCChBWKb/9tL+zQp5Jb+1gfVogm07usOLh1sXrIOMRHJY/sEQKcZkoK/
-         kSApQEM2z2ua9vuxm3D0LmCZ9rnw8ueVrvv4RmjVdqOc/fOv3mg5A1ADlNqZNmF6zIaM
-         KLT/fjR3KTwevH7sFuKzxVqxtH+zqpWVPQOe1Tt+bOS7HCIlKCeox0e7I/LkiGmDSpwB
-         7N/eG4rAI+1SqVN3ns8AO6u8/h6NaEi8sAI5ic+r7FCW0fnZPzuVqG/7ofY1GP51oxyW
-         NlgabchqGLK7dFcmn5pJsfvgxA8D+zxdh5nzvnt0M/q8wiPwFSZgseL9sl9+MlrHdDeL
-         0meg==
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=MJuP8CxV6bjU2gIDe6Qlmusnyce3p54TGbmJ67b3i24=;
+        b=moV/rgoyuYvOuX2oJAMxsMD5dWl7bn8Kth+LDjn06gSDP96MKJJtdHeiblB9HNbTXN
+         CJVga/pAzwi2UGAy2Xah3nC1sDDXnzhSLsV7IgNbTATu+KxD9Du9Aqkuhht+qGqVUFth
+         zREl1PjycLCiF3R4miwRpR6dG7UKyAcmIx/J6bFgXosCHIjQ04826C4o8bG9bUzO0yok
+         6qdDtV7kY87J+m6ArfVNYqcgD4tA5dYPB1ETPXBpB4W5ixR7yG5sBqVh/aD1KXSD7n/j
+         1Cx92lwyi51TCpnB2g33560bSASlyfzUBMRz+99cgHZK8JAYY1YZmsVX+FV/D2/ioPro
+         upwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Dhdp3uNglhwNTsHHri1BRiXlcER9kLclnHgN/OT8h7c=;
-        b=IY6Mspgd5l8ZI5tz3DWPZdIHhw3dKNgl155HfsAAZbEd8Z8cSPThHbPqkAqJDLlCsJ
-         0JduzS9jmiiADHsW56A9qAuaeVogb9JY4kOcBNTwFXyR7teyWEHEkL50CskdqdskZQWW
-         /c1ovkD7yGju94nNt27uBFsYGivd2rK/hwL36/fXGVbN4DwTtDMMZOm6d7QJ0y2kf0V9
-         6PvbI/exsB1kB3e0v0lqpaJEpOkfSDlvqCgAR8qyS9HUOUXzy33mSligGvciB2W44kuV
-         Dlj9mBqzDIz4mfEmQhKg0JHlRAsafclTLZagmAnQDoEcuYYCMmcDVuJTnK6iIBkk9IkV
-         8IEw==
-X-Gm-Message-State: AOAM533pgri5ycwrPTCrf5Brcu/bfybrYk8/1fKubviEe5kTIZOPnQ3z
-        wGYcu6rIeGqyBc2hWjrtCQaHug==
-X-Google-Smtp-Source: ABdhPJylLokjeZeh9DBiyvKHPflkIDq3GZv+lCwnvGJbU9ZKWoEZIYkXaSd11GiWy/GYFoTetvCl5A==
-X-Received: by 2002:a9d:29:: with SMTP id 38mr9720065ota.30.1622956247882;
-        Sat, 05 Jun 2021 22:10:47 -0700 (PDT)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id o20sm1532599otl.2.2021.06.05.22.10.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 05 Jun 2021 22:10:47 -0700 (PDT)
-Date:   Sun, 6 Jun 2021 00:10:45 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Alex Elder <elder@linaro.org>
-Cc:     agross@kernel.org, evgreen@chromium.org, subashab@codeaurora.org,
-        cpratapa@codeaurora.org, robh+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] arm64: dts: qcom: sdm845-mtp: enable IPA
-Message-ID: <YLxY1Zmznfz6UkJM@builder.lan>
-References: <20200519123258.29228-1-elder@linaro.org>
- <a9904eae-3de3-8b40-f0be-790c787133bc@linaro.org>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=MJuP8CxV6bjU2gIDe6Qlmusnyce3p54TGbmJ67b3i24=;
+        b=uKlR2Qcjvo5AUezNsfdG7W0wWNFFWdMpIofZH6wRW8MlPKtrJ/j1mfgBQI3OZ46riD
+         zEDMyfTEW92EgLLtEuLKYKYymSnM8SLJU/3vONDIjca82TLzIHBc3yl2mBa4/Koxzgqf
+         fm3GHtrzHJXiRfF+GSBk3IzDv9aSpjO/pNF/LmfxCyl/efkQlchM1nAnMwvPyYewvNXc
+         5eaiaQCXL1K6d8fTjgacuNA2ra6E5v9zajIjB18ZodYF0k0P+V7i8vBHvJaEDpdu5q9F
+         9jLq3jtq690DRNd2tLvwQ9VrKb5vBOsjJdtoLNRtoNQvmHR973uKDFr6eUzygZ6EIcKJ
+         gSKQ==
+X-Gm-Message-State: AOAM531b20CAiTfnoUduLkDYVpscNJcxRBx4eE86f3SHOlnTJJAu/xEu
+        /CC2BWQSCDHurrdbx793O8s=
+X-Google-Smtp-Source: ABdhPJyNIZqQPUm8ZPsH8rrCJBxDeoLQi0RWvWLyw30Db65AgsZUfT6IQD3f5Q7tthNSJ6IOqVhmcQ==
+X-Received: by 2002:a7b:c2a2:: with SMTP id c2mr9663889wmk.89.1622972195496;
+        Sun, 06 Jun 2021 02:36:35 -0700 (PDT)
+Received: from localhost.localdomain (haganm.plus.com. [212.159.108.31])
+        by smtp.gmail.com with ESMTPSA id y6sm13818467wmy.23.2021.06.06.02.36.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 06 Jun 2021 02:36:34 -0700 (PDT)
+Subject: Re: [PATCH 1/3] net: stmmac: explicitly deassert GMAC_AHB_RESET
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Giuseppe Cavallaro <peppe.cavallaro@st.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Jose Abreu <joabreu@synopsys.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Voon Weifeng <weifeng.voon@intel.com>,
+        Ong Boon Leong <boon.leong.ong@intel.com>,
+        Wong Vee Khee <vee.khee.wong@linux.intel.com>,
+        Tan Tee Min <tee.min.tan@intel.com>,
+        "Wong, Vee Khee" <vee.khee.wong@intel.com>,
+        Fugang Duan <fugang.duan@nxp.com>, netdev@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-arm-kernel@lists.infradead.org
+References: <20210605173546.4102455-1-mnhagan88@gmail.com>
+ <YLw//XARgqNlRoTB@builder.lan>
+From:   Matthew Hagan <mnhagan88@gmail.com>
+Message-ID: <3436f8f0-77dc-d4ff-4489-e9294c434a08@gmail.com>
+Date:   Sun, 6 Jun 2021 10:36:33 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <a9904eae-3de3-8b40-f0be-790c787133bc@linaro.org>
+In-Reply-To: <YLw//XARgqNlRoTB@builder.lan>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 03 Jun 13:03 CDT 2021, Alex Elder wrote:
+On 06/06/2021 04:24, Bjorn Andersson wrote:
 
-> On 5/19/20 7:32 AM, Alex Elder wrote:
-> > Enable IPA on the SDM845 MTP.
-> > 
-> > Signed-off-by: Alex Elder <elder@linaro.org>
-> > ---
-> > 
-> > v2: This device uses the AP--not the modem--for early initialization.
-> 
-> Ping.  This patch didn't get accepted (over a year ago!),
-> but it still applies cleanly on top-of-tree.  If you
-> would like me to re-send it, let me know.  Thanks.
-> 
+> On Sat 05 Jun 12:35 CDT 2021, Matthew Hagan wrote:
+>
+>> We are currently assuming that GMAC_AHB_RESET will already be deasserted
+>> by the bootloader. However if this has not been done, probing of the GMAC
+>> will fail. To remedy this we must ensure GMAC_AHB_RESET has been deasserted
+>> prior to probing.
+>>
+> Sounds good, just some small style comments below.
+>
+>> Signed-off-by: Matthew Hagan <mnhagan88@gmail.com>
+>> ---
+>>  drivers/net/ethernet/stmicro/stmmac/stmmac_main.c     | 7 +++++++
+>>  drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c | 7 +++++++
+>>  include/linux/stmmac.h                                | 1 +
+>>  3 files changed, 15 insertions(+)
+>>
+>> diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+>> index 6d41dd6f9f7a..1e28058b65a8 100644
+>> --- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+>> +++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+>> @@ -6840,6 +6840,13 @@ int stmmac_dvr_probe(struct device *device,
+>>  			reset_control_reset(priv->plat->stmmac_rst);
+>>  	}
+>>  
+>> +	if (priv->plat->stmmac_ahb_rst) {
+> You don't need this conditional, stmmac_ahb_rst will be NULL if not
+> specified and you can reset_control_deassert(NULL) without any problems.
+>
+>> +		ret = reset_control_deassert(priv->plat->stmmac_ahb_rst);
+>> +		if (ret == -ENOTSUPP)
+>> +			dev_err(priv->device,
+>> +				"unable to bring out of ahb reset\n");
+> No need to wrap this line.
+>
+>> +	}
+>> +
+>>  	/* Init MAC and get the capabilities */
+>>  	ret = stmmac_hw_init(priv);
+>>  	if (ret)
+>> diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
+>> index 97a1fedcc9ac..d8ae58bdbbe3 100644
+>> --- a/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
+>> +++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
+>> @@ -600,6 +600,13 @@ stmmac_probe_config_dt(struct platform_device *pdev, u8 *mac)
+>>  		goto error_hw_init;
+>>  	}
+>>  
+>> +	plat->stmmac_ahb_rst = devm_reset_control_get_optional_shared(
+>> +							&pdev->dev, "ahb");
+>> +	if (IS_ERR(plat->stmmac_ahb_rst)) {
+>> +		ret = plat->stmmac_ahb_rst;
+> You need a PTR_ERR() around the plat->stmmac_ahb_rst.
+>
+> Regards,
+> Bjorn
+>
+>> +		goto error_hw_init;
+>> +	}
+>> +
+>>  	return plat;
+>>  
+>>  error_hw_init:
+>> diff --git a/include/linux/stmmac.h b/include/linux/stmmac.h
+>> index e55a4807e3ea..9b6a64f3e3dc 100644
+>> --- a/include/linux/stmmac.h
+>> +++ b/include/linux/stmmac.h
+>> @@ -239,6 +239,7 @@ struct plat_stmmacenet_data {
+>>  	unsigned int mult_fact_100ns;
+>>  	s32 ptp_max_adj;
+>>  	struct reset_control *stmmac_rst;
+>> +	struct reset_control *stmmac_ahb_rst;
+>>  	struct stmmac_axi *axi;
+>>  	int has_gmac4;
+>>  	bool has_sun8i;
+>> -- 
+>> 2.26.3
+>>
+>>
+Thanks for the review. Will submit a v2 shortly.
 
-I'm not able to find any reason why I didn't merge it, perhaps it was
-because we had issues validating the whole thing?
+Matthew
 
-Anyway, I've picked it up now.
-
-Thanks,
-Bjorn
-
-> https://lore.kernel.org/lkml/20200519123258.29228-1-elder@linaro.org/
-> 
-> 					-Alex
-> 
-> > 
-> >   arch/arm64/boot/dts/qcom/sdm845-mtp.dts | 5 +++++
-> >   1 file changed, 5 insertions(+)
-> > 
-> > diff --git a/arch/arm64/boot/dts/qcom/sdm845-mtp.dts b/arch/arm64/boot/dts/qcom/sdm845-mtp.dts
-> > index 1372fe8601f5..91ede9296aff 100644
-> > --- a/arch/arm64/boot/dts/qcom/sdm845-mtp.dts
-> > +++ b/arch/arm64/boot/dts/qcom/sdm845-mtp.dts
-> > @@ -448,6 +448,11 @@
-> >   	clock-frequency = <400000>;
-> >   };
-> > +&ipa {
-> > +	status = "okay";
-> > +	memory-region = <&ipa_fw_mem>;
-> > +};
-> > +
-> >   &mdss {
-> >   	status = "okay";
-> >   };
-> > 
-> 
