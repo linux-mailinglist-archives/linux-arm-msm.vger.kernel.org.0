@@ -2,110 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 02F4A39CF98
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Jun 2021 16:40:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 400D039CFBE
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Jun 2021 17:23:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230158AbhFFOls (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 6 Jun 2021 10:41:48 -0400
-Received: from mail-wm1-f46.google.com ([209.85.128.46]:53951 "EHLO
-        mail-wm1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230156AbhFFOlr (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 6 Jun 2021 10:41:47 -0400
-Received: by mail-wm1-f46.google.com with SMTP id h3so8294370wmq.3;
-        Sun, 06 Jun 2021 07:39:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=SEVMnnp5jdJsfAi2k7Qasv3hIqmGSZ59KOCLXsglWOA=;
-        b=BhlhgQ9N06MFmRnop6dpWkPHolaAHbqtg/S1iH7IkTPMYWqV3cuHpOza8s5TPhWn/m
-         kacj+V//eT5wfef/cBFWLqJKBeEmIcOKxJC7tRUg53dQSceeYhb9pGDgIYKHPTRjkc3J
-         Ri+D49LbinizfAQo5VR8NNyrMD+pNN/kw8x0y3Hik1suuKNLojvUz7e5C3pW/ZVx3wID
-         Eg/E02DR5l2fkKqlZpnz/FY30IB5tc3AHSpND3KypkLuGZ4TtJDGDSG4OPeU672Gq/Fe
-         ELvi71Cz2ogQqnD591h8eD+Vcgkr/FhAo3GAfjr4LYW8kq+3cu5odsJILUQGSkWJ3mF0
-         a9kA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=SEVMnnp5jdJsfAi2k7Qasv3hIqmGSZ59KOCLXsglWOA=;
-        b=kQqyhoqgElJ2b+2zp4r0S2YR0KErrHXsLkc1IkQuIIn7JIFm779YniG4YspP51d+FL
-         cQ0uxQR/1dXh0jy+iGAFhvF6V+S6vImEW22PPBGUudUaulyL3kVkdw9fagFxxK5cTsJV
-         zsZbK9Gp/hh59B5D/f+EXi6WRxtwoEIaBCbvaWmZ/0peng8PCsnjLmTCPCJGLeP2+fV7
-         h6y7B6Aq8iUS7EUq9ZYYZEqUrIdvKGpeiJK5jF0pZqosSJClaT1cKyxo9wO47ti+a1qf
-         qGMLdi6Gd+omFL5bDaquJfaOpV28qVonyWx7wQfm8NTpdMMuspHay7wo9Y3vxDn3vKQl
-         K/ug==
-X-Gm-Message-State: AOAM530q1PT1EFq6/mvG1vaqW45XoiODsxugLOt9QEKM4dsStLQwIogJ
-        ZTAMzM/jRddnuZOXPDoXKvM=
-X-Google-Smtp-Source: ABdhPJwO7FetrZnpByd+buizj9rapzo5bXP50YMSXUYMlLCtYO90cuwv/6b2PSRFmQvSgM7IdmwcrQ==
-X-Received: by 2002:a05:600c:198c:: with SMTP id t12mr4191738wmq.16.1622990319748;
-        Sun, 06 Jun 2021 07:38:39 -0700 (PDT)
-Received: from localhost.localdomain (haganm.plus.com. [212.159.108.31])
-        by smtp.gmail.com with ESMTPSA id a123sm15383703wmd.2.2021.06.06.07.38.38
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 06 Jun 2021 07:38:39 -0700 (PDT)
-Subject: Re: [PATCH 1/3] net: stmmac: explicitly deassert GMAC_AHB_RESET
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Giuseppe Cavallaro <peppe.cavallaro@st.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Jose Abreu <joabreu@synopsys.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Voon Weifeng <weifeng.voon@intel.com>,
-        Ong Boon Leong <boon.leong.ong@intel.com>,
-        Wong Vee Khee <vee.khee.wong@linux.intel.com>,
-        Tan Tee Min <tee.min.tan@intel.com>,
-        "Wong, Vee Khee" <vee.khee.wong@intel.com>,
-        Fugang Duan <fugang.duan@nxp.com>, netdev@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-arm-kernel@lists.infradead.org
-References: <20210605173546.4102455-1-mnhagan88@gmail.com>
- <YLw//XARgqNlRoTB@builder.lan>
-From:   Matthew Hagan <mnhagan88@gmail.com>
-Message-ID: <a322fc12-b041-5530-0b2a-5bb6a5ca050c@gmail.com>
-Date:   Sun, 6 Jun 2021 15:38:37 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.10.1
+        id S230126AbhFFPZh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 6 Jun 2021 11:25:37 -0400
+Received: from mail.kernel.org ([198.145.29.99]:46594 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230091AbhFFPZg (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 6 Jun 2021 11:25:36 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id B5DE761408;
+        Sun,  6 Jun 2021 15:23:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1622993026;
+        bh=AHBSzPgv3ftjYoMAiRpp34DBtbu9q8Ul+4+BN7BRSs4=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=i+8oGayq4eXDOofVVa3Yh7YEUZwxGV1WzklrPuPXqfPolnl6oGL2s2kKo0LeC/HL4
+         twptr/EUdkP4X67OHlLpPIyFjMFzsnT+lnPggXUJMfZVLlHu54h5knaI+RrO98kU3p
+         h+oCTY/vLfoOnY1iL0SzS1vCZUEUF1FpHgoJhJiBsT3tPPqZA1qOg1w65eltJ/N33v
+         i72d7PDP1oXY7kIzLhaCQj46O1EBLBRhVi/Tkivh+4FEkKVzq0Ruof4kpn2fOR6w9E
+         yh8ZD/0zkmb3aS/YO66zvtWgTxEL8NT/ka/lGxoXaIvenC3KSj1bu+phCMRWnoJUBb
+         Xryubbky0bgLw==
+Date:   Sun, 6 Jun 2021 20:53:40 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Loic Poulain <loic.poulain@linaro.org>
+Cc:     hemantk@codeaurora.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] bus: mhi: pci-generic: Fix hibernation
+Message-ID: <20210606152340.GA15232@thinkpad>
+References: <1622571445-4505-1-git-send-email-loic.poulain@linaro.org>
 MIME-Version: 1.0
-In-Reply-To: <YLw//XARgqNlRoTB@builder.lan>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1622571445-4505-1-git-send-email-loic.poulain@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 06/06/2021 04:24, Bjorn Andersson wrote:
+On Tue, Jun 01, 2021 at 08:17:25PM +0200, Loic Poulain wrote:
+> This patch fixes crash after resuming from hibernation. The issue
+> occurs when mhi stack is builtin and so part of the 'restore-kernel',
+> causing the device to be resumed from 'restored kernel' with a no
+> more valid context (memory mappings etc...) and leading to spurious
+> crashes.
+> 
+> This patch fixes the issue by implementing proper freeze/restore
+> callbacks.
+> 
+> Reported-by: Shujun Wang <wsj20369@163.com>
+> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
 
->> diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
->> index 97a1fedcc9ac..d8ae58bdbbe3 100644
->> --- a/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
->> +++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
->> @@ -600,6 +600,13 @@ stmmac_probe_config_dt(struct platform_device *pdev, u8 *mac)
->>  		goto error_hw_init;
->>  	}
->>  
->> +	plat->stmmac_ahb_rst = devm_reset_control_get_optional_shared(
->> +							&pdev->dev, "ahb");
->> +	if (IS_ERR(plat->stmmac_ahb_rst)) {
->> +		ret = plat->stmmac_ahb_rst;
-> You need a PTR_ERR() around the plat->stmmac_ahb_rst.
-
-This is giving a warning. Shouldn't v1 be kept as it is here? Please refer
-to "net: stmmac: platform: use optional clk/reset get APIs" [1] which
-modified error handling for plat->stmmac_rst. PTR_ERR() would then be
-called by the parent function on the returned value of ret.
-
-[1]: https://lore.kernel.org/netdev/20201112092606.5173aa6f@xhacker.debian/
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
 Thanks,
-Matthew
+Mani
 
+> ---
+>  drivers/bus/mhi/pci_generic.c | 36 +++++++++++++++++++++++++++++++++++-
+>  1 file changed, 35 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/bus/mhi/pci_generic.c b/drivers/bus/mhi/pci_generic.c
+> index aa8f8d5..afa8763 100644
+> --- a/drivers/bus/mhi/pci_generic.c
+> +++ b/drivers/bus/mhi/pci_generic.c
+> @@ -888,9 +888,43 @@ static int __maybe_unused mhi_pci_resume(struct device *dev)
+>  	return ret;
+>  }
+>  
+> +static int __maybe_unused mhi_pci_freeze(struct device *dev)
+> +{
+> +	struct mhi_pci_device *mhi_pdev = dev_get_drvdata(dev);
+> +	struct mhi_controller *mhi_cntrl = &mhi_pdev->mhi_cntrl;
+> +
+> +	/* We want to stop all operations, hibernation does not guarantee that
+> +	 * device will be in the same state as before freezing, especially if
+> +	 * the intermediate restore kernel reinitializes MHI device with new
+> +	 * context.
+> +	 */
+> +	if (test_and_clear_bit(MHI_PCI_DEV_STARTED, &mhi_pdev->status)) {
+> +		mhi_power_down(mhi_cntrl, false);
+> +		mhi_unprepare_after_power_down(mhi_cntrl);
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+> +static int __maybe_unused mhi_pci_restore(struct device *dev)
+> +{
+> +	struct mhi_pci_device *mhi_pdev = dev_get_drvdata(dev);
+> +
+> +	/* Reinitialize the device */
+> +	queue_work(system_long_wq, &mhi_pdev->recovery_work);
+> +
+> +	return 0;
+> +}
+> +
+>  static const struct dev_pm_ops mhi_pci_pm_ops = {
+>  	SET_RUNTIME_PM_OPS(mhi_pci_runtime_suspend, mhi_pci_runtime_resume, NULL)
+> -	SET_SYSTEM_SLEEP_PM_OPS(mhi_pci_suspend, mhi_pci_resume)
+> +#ifdef CONFIG_PM_SLEEP
+> +	.suspend = mhi_pci_suspend,
+> +	.resume = mhi_pci_resume,
+> +	.freeze = mhi_pci_freeze,
+> +	.thaw = mhi_pci_restore,
+> +	.restore = mhi_pci_restore,
+> +#endif
+>  };
+>  
+>  static struct pci_driver mhi_pci_driver = {
+> -- 
+> 2.7.4
+> 
