@@ -2,33 +2,33 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 400D039CFBE
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Jun 2021 17:23:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E0D3739CFC2
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Jun 2021 17:26:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230126AbhFFPZh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 6 Jun 2021 11:25:37 -0400
-Received: from mail.kernel.org ([198.145.29.99]:46594 "EHLO mail.kernel.org"
+        id S230196AbhFFP2Z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 6 Jun 2021 11:28:25 -0400
+Received: from mail.kernel.org ([198.145.29.99]:46994 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230091AbhFFPZg (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 6 Jun 2021 11:25:36 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id B5DE761408;
-        Sun,  6 Jun 2021 15:23:44 +0000 (UTC)
+        id S230091AbhFFP2Z (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 6 Jun 2021 11:28:25 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 2F4AF61246;
+        Sun,  6 Jun 2021 15:26:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1622993026;
-        bh=AHBSzPgv3ftjYoMAiRpp34DBtbu9q8Ul+4+BN7BRSs4=;
+        s=k20201202; t=1622993195;
+        bh=g1xwNeUcRSN/h2p4QDiCxoMCRgDBICmh0r3vsguggqA=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=i+8oGayq4eXDOofVVa3Yh7YEUZwxGV1WzklrPuPXqfPolnl6oGL2s2kKo0LeC/HL4
-         twptr/EUdkP4X67OHlLpPIyFjMFzsnT+lnPggXUJMfZVLlHu54h5knaI+RrO98kU3p
-         h+oCTY/vLfoOnY1iL0SzS1vCZUEUF1FpHgoJhJiBsT3tPPqZA1qOg1w65eltJ/N33v
-         i72d7PDP1oXY7kIzLhaCQj46O1EBLBRhVi/Tkivh+4FEkKVzq0Ruof4kpn2fOR6w9E
-         yh8ZD/0zkmb3aS/YO66zvtWgTxEL8NT/ka/lGxoXaIvenC3KSj1bu+phCMRWnoJUBb
-         Xryubbky0bgLw==
-Date:   Sun, 6 Jun 2021 20:53:40 +0530
+        b=L+HoOXDHI7jyCBVuw8l6NRXWO8+0RFfDOPqJ7gg56QYN4rt4SpLuxwMCf2VtdwXrd
+         DbIB+TAxc1XJ2G2luq6jPWSqM9Y2PqnCFoCaK6gi6kVfrazrsPSxYApqu/SjcY7+XP
+         skEI3gkj8iOq/Q7X0TknLLHgVgWphmnVVqrzyHApjaxLNywmBmBbud8VOnyt3MRFJm
+         OMKb5ttCbtLa7lCO8M0KeB5M02hY6Y+Cgv2JHV8rmtMAA/ukO8ciSoAqEQdlN8dr8C
+         tLkvcIHPt3/HDAajzJs4dk9bj/b42WdnUC26MHrg8AVUTami2GFmVv160wn71bkLRm
+         WN119cfntFPow==
+Date:   Sun, 6 Jun 2021 20:56:29 +0530
 From:   Manivannan Sadhasivam <mani@kernel.org>
 To:     Loic Poulain <loic.poulain@linaro.org>
 Cc:     hemantk@codeaurora.org, linux-arm-msm@vger.kernel.org
 Subject: Re: [PATCH] bus: mhi: pci-generic: Fix hibernation
-Message-ID: <20210606152340.GA15232@thinkpad>
+Message-ID: <20210606152629.GB15232@thinkpad>
 References: <1622571445-4505-1-git-send-email-loic.poulain@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -51,7 +51,7 @@ On Tue, Jun 01, 2021 at 08:17:25PM +0200, Loic Poulain wrote:
 > Reported-by: Shujun Wang <wsj20369@163.com>
 > Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
 
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Applied to mhi-fixes!
 
 Thanks,
 Mani
