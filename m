@@ -2,49 +2,46 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A465839E4DC
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Jun 2021 19:07:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C419B39E4F2
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Jun 2021 19:07:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231504AbhFGRIj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Jun 2021 13:08:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60116 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231534AbhFGRIj (ORCPT
+        id S231830AbhFGRJc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Jun 2021 13:09:32 -0400
+Received: from mail-pg1-f172.google.com ([209.85.215.172]:40947 "EHLO
+        mail-pg1-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231721AbhFGRJb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Jun 2021 13:08:39 -0400
-Received: from mail-pg1-x529.google.com (mail-pg1-x529.google.com [IPv6:2607:f8b0:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DD02C06121D
-        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Jun 2021 10:06:29 -0700 (PDT)
-Received: by mail-pg1-x529.google.com with SMTP id y11so6164251pgp.11
-        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Jun 2021 10:06:29 -0700 (PDT)
+        Mon, 7 Jun 2021 13:09:31 -0400
+Received: by mail-pg1-f172.google.com with SMTP id j12so14300102pgh.7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Jun 2021 10:07:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=CmqJKJaio2UDvF9xWIYCt9beN4jtSVXClXFJ93Ass0A=;
-        b=MJdW8d4EwaL+R83An/5pzeXye/1/jXAwqOAFbdqpc35JCNHPRpC52nlqeRia99DSPi
-         mmTVuQicx/skRC356CF6cLgaKYvKhfeR3yxrai8kYSBhBkbtQqzwg5RCwaiuduMr1z2y
-         3UKADJKUlio1j791HLEQwcaE2ianIo07Ciliw=
+        bh=wKbk17m+yRiqrp8oW9bJSr2UykFdXfcHhiqIPzfS2qI=;
+        b=d7uRiZFiVdHNBDp2qM1GV2qvC8tUScUp4gQqpHiZHXNee8gRa/eAc4xiuA9dx93pFr
+         QOiJLnTOHlCOM5wbiTgfPH6ytHol9+kEJug/yedPbuegsMS8kLc4Vx0/w/FDNaGsGRST
+         1ylMolobN5or1ag0U0WYOWfgeGpYnzKuQdi3E=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=CmqJKJaio2UDvF9xWIYCt9beN4jtSVXClXFJ93Ass0A=;
-        b=XxS0VJq+U2EI09AlP72yn1ytdLyrQB5ea1U6iFU2xDjfAgEbp9u/CERsmOarSESANn
-         jou8HA7go1Bwjr+d2DaZUpdox0gFxZE6rVQwccmr6K3U27xfzFNOOjD6PbOpVo3/3Ms8
-         2QOc7Z3iu7FVkYJH9W1r3u7kUtvh9jRUfJv2xJhMKHcc0gt15ibtoY648vx1+joBQX22
-         4RdMEq/cz+aCzTMJOYnlcg4q7fDYjJnkD4aNWKwuVP3Ga55R2wmD4OhGuFaCo/ORJ24s
-         zPCG3KWgJjJNFwON7IErzTSqVSEyTIcvf1hbfAnvuN4bsydFi7KVyoglDEHQdGHjU8HC
-         fATw==
-X-Gm-Message-State: AOAM530e6DDGyWsrLz21MaaY/Nm6fH8FlRWDYcs6sIAutrzC3Kw4PR/W
-        +7F5EYcdMBrhOCX0rsEUrS9rXg==
-X-Google-Smtp-Source: ABdhPJxWm5zAogtb/40ohfpKI3yOwMuv5/+I42ZxgoktT3GJWrGbX9nIiWib55xdRXhF5wGOpNebrg==
-X-Received: by 2002:aa7:9537:0:b029:2ea:2312:d2cb with SMTP id c23-20020aa795370000b02902ea2312d2cbmr17629610pfp.27.1623085589204;
-        Mon, 07 Jun 2021 10:06:29 -0700 (PDT)
+        bh=wKbk17m+yRiqrp8oW9bJSr2UykFdXfcHhiqIPzfS2qI=;
+        b=OIqzN6D3rvZnjAGLRq/RU0A9j3IsQq5xso3/NFTzCvcpGOjKKJ6BV7Xs7LJBV4L6EL
+         5ziMH4YPjK/ekG2WRXJp2MMqPT4EEKG+gbUaX5vC8iGutqoXJVkCR4lPyN0P8tvNfVdE
+         3JazYUzHq2v0Gx97rx1yEOhQOJ5mqydj9amyjO7M2ETKxAduxY8HQK90GnE2RO6gJeTv
+         TzeRNBOONtwC9N0YMYRFxSKcWhgB4uCKhRkIL6mkO6FQ2GOmP/k+HgV53A3RNEJEbUtR
+         8nx/rlZGZtbEy0bHJxRngTTcdH90WqJbSJLvhMFjylIqBUu7lTmzMsbCO5NOKheik7AS
+         tUHA==
+X-Gm-Message-State: AOAM531QmEPBSd9rzB0QwONGTCLMfQPaEo4rZY6CnBAcgEPI3xRNqLvX
+        F87X8MXV0coyz1+ZA1uFxSJKSQ==
+X-Google-Smtp-Source: ABdhPJxEW50WvoFT9KK67OmVwM2Mr1eVymTaJSsTsWnsiAx1vJIlqoWz/EV/BWZ999GsFg+jutEjjg==
+X-Received: by 2002:a63:5504:: with SMTP id j4mr18814384pgb.238.1623085590332;
+        Mon, 07 Jun 2021 10:06:30 -0700 (PDT)
 Received: from tictac2.mtv.corp.google.com ([2620:15c:202:201:f656:ffce:6348:a42a])
-        by smtp.gmail.com with ESMTPSA id fs24sm12897639pjb.6.2021.06.07.10.06.27
+        by smtp.gmail.com with ESMTPSA id fs24sm12897639pjb.6.2021.06.07.10.06.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Jun 2021 10:06:28 -0700 (PDT)
+        Mon, 07 Jun 2021 10:06:29 -0700 (PDT)
 From:   Douglas Anderson <dianders@chromium.org>
 To:     Andrzej Hajda <a.hajda@samsung.com>,
         Neil Armstrong <narmstrong@baylibre.com>,
@@ -61,14 +58,12 @@ Cc:     Linus W <linus.walleij@linaro.org>, robdclark@chromium.org,
         Lyude Paul <lyude@redhat.com>, dri-devel@lists.freedesktop.org,
         Stephen Boyd <swboyd@chromium.org>,
         Douglas Anderson <dianders@chromium.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Robert Foss <robert.foss@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH v9 10/11] drm/bridge: ti-sn65dsi86: Improve probe errors with dev_err_probe()
-Date:   Mon,  7 Jun 2021 10:05:54 -0700
-Message-Id: <20210607100234.v9.10.I24bba069e63b1eea84443eef0c8535fd032a6311@changeid>
+Subject: [PATCH v9 11/11] arm64: dts: qcom: sc7180-trogdor: Move panel under the bridge chip
+Date:   Mon,  7 Jun 2021 10:05:55 -0700
+Message-Id: <20210607100234.v9.11.Ibdb7735fb1844561b902252215a69526a14f9abd@changeid>
 X-Mailer: git-send-email 2.32.0.rc1.229.g3e70b5a671-goog
 In-Reply-To: <20210607170555.4006050-1-dianders@chromium.org>
 References: <20210607170555.4006050-1-dianders@chromium.org>
@@ -78,80 +73,77 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-As I was testing to make sure that the DEFER path worked well with my
-patch series, I got tired of seeing this scary message in my logs just
-because the panel needed to defer:
-  [drm:ti_sn_bridge_probe] *ERROR* could not find any panel node
+Putting the panel under the bridge chip (under the aux-bus node)
+allows the panel driver to get access to the DP AUX bus, enabling all
+sorts of fabulous new features.
 
-Let's use dev_err_probe() which nicely quiets this error and also
-simplifies the code a tiny bit. We'll also update other places in the
-file which can use dev_err_probe().
+While we're at this, get rid of a level of hierarchy for the panel
+node. It doesn't need "ports / port" and can just have a "port" child.
+
+For Linux, this patch has a hard requirement on the patches adding DP
+AUX bus support to the ti-sn65dsi86 bridge chip driver. See the patch
+("drm/bridge: ti-sn65dsi86: Add support for the DP AUX bus").
 
 Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Acked-by: Linus Walleij <linus.walleij@linaro.org>
 ---
 
-Changes in v9:
-- ("Improve probe errors") patch new for v9.
+(no changes since v7)
 
- drivers/gpu/drm/bridge/ti-sn65dsi86.c | 31 +++++++++++----------------
- 1 file changed, 13 insertions(+), 18 deletions(-)
+Changes in v7:
+- Panel now under bridge chip instead of getting a link to ddc-i2c
 
-diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-index b544cbce7fdd..5d712c8c3c3b 100644
---- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-+++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-@@ -1305,10 +1305,9 @@ static int ti_sn_bridge_probe(struct auxiliary_device *adev,
- 	int ret;
+ arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 30 ++++++++++----------
+ 1 file changed, 15 insertions(+), 15 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+index 24d293ef56d7..c76afd857b54 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+@@ -260,21 +260,6 @@ max98357a: audio-codec-0 {
+ 		#sound-dai-cells = <0>;
+ 	};
  
- 	ret = drm_of_find_panel_or_bridge(np, 1, 0, &pdata->panel, NULL);
--	if (ret) {
--		DRM_ERROR("could not find any panel node\n");
--		return ret;
--	}
-+	if (ret)
-+		return dev_err_probe(&adev->dev, ret,
-+				     "could not find any panel node\n");
+-	panel: panel {
+-		/* Compatible will be filled in per-board */
+-		power-supply = <&pp3300_dx_edp>;
+-		backlight = <&backlight>;
+-		hpd-gpios = <&sn65dsi86_bridge 2 GPIO_ACTIVE_HIGH>;
+-
+-		ports {
+-			port {
+-				panel_in_edp: endpoint {
+-					remote-endpoint = <&sn65dsi86_out>;
+-				};
+-			};
+-		};
+-	};
+-
+ 	pwmleds {
+ 		compatible = "pwm-leds";
+ 		keyboard_backlight: keyboard-backlight {
+@@ -674,6 +659,21 @@ sn65dsi86_out: endpoint {
+ 				};
+ 			};
+ 		};
++
++		aux-bus {
++			panel: panel {
++				/* Compatible will be filled in per-board */
++				power-supply = <&pp3300_dx_edp>;
++				backlight = <&backlight>;
++				hpd-gpios = <&sn65dsi86_bridge 2 GPIO_ACTIVE_HIGH>;
++
++				port {
++					panel_in_edp: endpoint {
++						remote-endpoint = <&sn65dsi86_out>;
++					};
++				};
++			};
++		};
+ 	};
+ };
  
- 	ti_sn_bridge_parse_lanes(pdata, np);
- 
-@@ -1456,27 +1455,23 @@ static int ti_sn65dsi86_probe(struct i2c_client *client,
- 
- 	pdata->regmap = devm_regmap_init_i2c(client,
- 					     &ti_sn65dsi86_regmap_config);
--	if (IS_ERR(pdata->regmap)) {
--		DRM_ERROR("regmap i2c init failed\n");
--		return PTR_ERR(pdata->regmap);
--	}
-+	if (IS_ERR(pdata->regmap))
-+		return dev_err_probe(dev, PTR_ERR(pdata->regmap),
-+				     "regmap i2c init failed\n");
- 
- 	pdata->enable_gpio = devm_gpiod_get(dev, "enable", GPIOD_OUT_LOW);
--	if (IS_ERR(pdata->enable_gpio)) {
--		DRM_ERROR("failed to get enable gpio from DT\n");
--		ret = PTR_ERR(pdata->enable_gpio);
--		return ret;
--	}
-+	if (IS_ERR(pdata->enable_gpio))
-+		return dev_err_probe(dev, PTR_ERR(pdata->enable_gpio),
-+				     "failed to get enable gpio from DT\n");
- 
- 	ret = ti_sn65dsi86_parse_regulators(pdata);
--	if (ret) {
--		DRM_ERROR("failed to parse regulators\n");
--		return ret;
--	}
-+	if (ret)
-+		return dev_err_probe(dev, ret, "failed to parse regulators\n");
- 
- 	pdata->refclk = devm_clk_get_optional(dev, "refclk");
- 	if (IS_ERR(pdata->refclk))
--		return PTR_ERR(pdata->refclk);
-+		return dev_err_probe(dev, PTR_ERR(pdata->refclk),
-+				     "failed to get reference clock\n");
- 
- 	pm_runtime_enable(dev);
- 	ret = devm_add_action_or_reset(dev, ti_sn65dsi86_runtime_disable, dev);
 -- 
 2.32.0.rc1.229.g3e70b5a671-goog
 
