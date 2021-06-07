@@ -2,211 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5DCA639DBED
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Jun 2021 14:08:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 48FFD39DC7A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Jun 2021 14:33:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230294AbhFGMKH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Jun 2021 08:10:07 -0400
-Received: from mail-pf1-f180.google.com ([209.85.210.180]:33568 "EHLO
-        mail-pf1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230286AbhFGMKH (ORCPT
+        id S230233AbhFGMeX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Jun 2021 08:34:23 -0400
+Received: from mail-oi1-f179.google.com ([209.85.167.179]:36454 "EHLO
+        mail-oi1-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230314AbhFGMeG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Jun 2021 08:10:07 -0400
-Received: by mail-pf1-f180.google.com with SMTP id p13so3342735pfw.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Jun 2021 05:08:00 -0700 (PDT)
+        Mon, 7 Jun 2021 08:34:06 -0400
+Received: by mail-oi1-f179.google.com with SMTP id a21so17869510oiw.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Jun 2021 05:32:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=oySWjuX00iG0JfJzUXzKlyJetxcPmKf366838bUm5Rg=;
-        b=UpBmWQRLe6JFE2S8G4OGu0YN1kLq1W3qSXuczk4PCC5QaLBGtwtX8xybNoRSnv0gOU
-         NXch2EegBW4YWUzB/iEH2qn8yo9MmTTZWWZ5wimEo179T449eBh+IXHKWTv8SxgH3ja1
-         Oj+IQctXfy5c2NGA+knFST0adlUjBORKRImhMJ7r2+fWlPrfwso765e2EcW07Vv2Xfw9
-         OPn6Ixmc2sXnbWI2ucraPrA9t36UIFFMaZUp2Uv/yuZaeSIPguYNkzoJAPAKHYO6jVed
-         lrcz9rOcqt6YCyoyj4bwFKcdxedh0HT1bqX0HK0O5nAA634qTQVnnORhDvwGnaEikSmV
-         Io3w==
+         :cc;
+        bh=Tvr2LpJO+zoZVn/wehOpfwJd2m7kH19dGowal30QNMo=;
+        b=aH7lHOFR5B7dsCa2m5tbQCoN750DuUFWr0HiN5vZAs6LAs+CGFdJpeEVFHtXY0kvoU
+         jrIBJ8bF0F4lN3VniDDO/EdA3I7SbMGk0BzQnunqQSI9dNlewZtGbkgt9ClHH5oR4h5E
+         Gjz2gUjjV+hDNF+tW0h7hRI+XSXv8XVKpZvgQO7VFo9uk4nvKKAL9bDRDG3G0lc++FyG
+         SG5s88en7owxCA5IjiLYZy5zQZroX82O9IVLHv1pHQPnS3TGR8X7mxEIKCVFWESbkgWl
+         52CoisHehVZ2VJcHrwk0XQse6tNIXeW7iKgCoQuLyfKTb9Ew86ZbFhzSdESJnT60zhuw
+         e45w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=oySWjuX00iG0JfJzUXzKlyJetxcPmKf366838bUm5Rg=;
-        b=DiubkwYuKJ22i0mQ6UdMQR3bO2uxqSfDHTPuHFRXYUFBXG5Yr+tQAoNPozAeWkfN7I
-         AhP5+0S6c8wnykclHlyeAV8Ao6lNM+AkaLfi1wJ6iUD28OsRsmN1fRQXxSU02YvIkC1Y
-         aB5UwM7TCGjoB2dufoQhnAighWVLis9lz8/xFHqeDbqUdP5DzRCHKG6Jflm/GtKnhn8O
-         lWDFX20oUk5LT6GDw4kjA6jvomrWAII+/rd8qdw+kXYZhlcdQKgdL/3Et4DWaOkCMyXl
-         PWsIkzN9tMvrEEIWa3cOcd2ymN2jjDsGB0jQ/DgGXZoV1kDWFuzoKTYqWIFDEfrZidnK
-         a8Jw==
-X-Gm-Message-State: AOAM530HvNukguvSDw9m1ywsq4IS/r+bdwXS7h09pecBK9nIQ27+1CJ1
-        fkr1hpX9VZf4+DkivEugvmYlcmfYMzqgS7iFaJ/gMg==
-X-Google-Smtp-Source: ABdhPJzkAJCfO9yVvT65VlXPaAEGniGvpLXC5En1kXF7+bjrFlu8Evpgv0TtfKBexeO5HftT67TA02y4L9dc3cBlSPE=
-X-Received: by 2002:a63:1906:: with SMTP id z6mr17238719pgl.173.1623067619706;
- Mon, 07 Jun 2021 05:06:59 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=Tvr2LpJO+zoZVn/wehOpfwJd2m7kH19dGowal30QNMo=;
+        b=aAiyTl8zXZJvRElbNtvO0MW6xMMTTOnvAD6+lPI0CkkWhRZCggECZo3fMzCvE5qi+g
+         yOaDD3Kei6vpvp5rkjwUa9nVi5/Mwj9VoI2y98D2SHh56YE4vcEbmxaHP1V7rh6Uuub5
+         /2mvuuKrJDJMoSIUiCk4xFtXIifLHjsqTL0sj6Y2F9C44hLTavv12TBdVaRrH5xn6iRg
+         bglesY5DB0HpKFVNSi0bDL0NWLCfnac/kjo4OJfEhrgIitKaKrUG8zss76G29j7qiC5+
+         xiaQMNUSAbMuOI9+DHn0tp7nkpxqGrhYZGtnS9Pj4XfVc7BV7O1yK8SiCdKKkzLNseRG
+         Dl4w==
+X-Gm-Message-State: AOAM532R+Zuj252ENj/dZIUi1LnYGamTvlgDjGV/G3mDa6dkC+zfnkWU
+        ZrIOFUseSp10PSnmn0n9ys60J+Pv25NjA5LEeFbAmA==
+X-Google-Smtp-Source: ABdhPJxujfBEdFxkSmhJaaZBeJGlg2pawxqj0/1hGlU+4+i8J0LQb3IRXrgR10on+BxmXf/59rZHa0pvqkZakHHmsmo=
+X-Received: by 2002:a54:438e:: with SMTP id u14mr17939700oiv.126.1623069060601;
+ Mon, 07 Jun 2021 05:31:00 -0700 (PDT)
 MIME-Version: 1.0
-References: <YLfL9Q+4860uqS8f@gerhold.net> <CAMZdPi9tcye-4P4i0uXZcECJ-Big5T11JdvdXW6k2mEEi9XwyA@mail.gmail.com>
- <YLtDB2Cz5ttewsFu@gerhold.net> <CAMZdPi_-Qa=JnThHs_h-144dAfSAjF5s+QdBawdXZ3kk8Mx8ng@mail.gmail.com>
- <YL364+xK3mE2FU8a@gerhold.net> <87sg1tvryx.fsf@toke.dk> <YL4GiEEcOQC2XrjP@gerhold.net>
-In-Reply-To: <YL4GiEEcOQC2XrjP@gerhold.net>
-From:   Loic Poulain <loic.poulain@linaro.org>
-Date:   Mon, 7 Jun 2021 14:16:10 +0200
-Message-ID: <CAMZdPi-91y+t1bHb+6NY5Dh-xV_yvJTzG65efaSKzyTNsEGBvA@mail.gmail.com>
-Subject: Re: [RFC] Integrate RPMSG/SMD into WWAN subsystem
-To:     Stephan Gerhold <stephan@gerhold.net>
-Cc:     =?UTF-8?B?VG9rZSBIw7hpbGFuZC1Kw7hyZ2Vuc2Vu?= <toke@redhat.com>,
+References: <20210607113840.15435-1-bhupesh.sharma@linaro.org>
+ <20210607113840.15435-5-bhupesh.sharma@linaro.org> <CAHp75Vd7z6ivOxHikqP5j+yPtV7C8GBogwVUAziLznSatH+8EA@mail.gmail.com>
+In-Reply-To: <CAHp75Vd7z6ivOxHikqP5j+yPtV7C8GBogwVUAziLznSatH+8EA@mail.gmail.com>
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Date:   Mon, 7 Jun 2021 18:00:48 +0530
+Message-ID: <CAH=2NtxtzRhOzekHxn+V4DSYmwncX1wSRbKOe=PNkcTsQ3jqiQ@mail.gmail.com>
+Subject: Re: [PATCH 4/8] regulator: qcom-rpmh: Add new regulator types found
+ on SA8155p adp board
+To:     Andy Shevchenko <andy.shevchenko@gmail.com>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Aleksander Morgado <aleksander@aleksander.es>,
-        Network Development <netdev@vger.kernel.org>,
-        linux-remoteproc@vger.kernel.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Ohad Ben-Cohen <ohad@wizery.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>
+        Vinod Koul <vkoul@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        devicetree <devicetree@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        bhupesh.linux@gmail.com
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Setphan,
-
-On Mon, 7 Jun 2021 at 13:44, Stephan Gerhold <stephan@gerhold.net> wrote:
+On Mon, 7 Jun 2021 at 17:39, Andy Shevchenko <andy.shevchenko@gmail.com> wrote:
 >
-> On Mon, Jun 07, 2021 at 01:23:18PM +0200, Toke H=C3=B8iland-J=C3=B8rgense=
-n wrote:
-> > Stephan Gerhold <stephan@gerhold.net> writes:
-> > > On Mon, Jun 07, 2021 at 11:27:07AM +0200, Loic Poulain wrote:
-> > >> On Sat, 5 Jun 2021 at 11:25, Stephan Gerhold <stephan@gerhold.net> w=
-rote:
-> > >> > On Fri, Jun 04, 2021 at 11:11:45PM +0200, Loic Poulain wrote:
-> > >> > > On Wed, 2 Jun 2021 at 20:20, Stephan Gerhold <stephan@gerhold.ne=
-t> wrote:
-> > >> > > > I've been thinking about creating some sort of "RPMSG" driver =
-for the
-> > >> > > > new WWAN subsystem; this would be used as a QMI/AT channel to =
-the
-> > >> > > > integrated modem on some older Qualcomm SoCs such as MSM8916 a=
-nd MSM8974.
-> > >> > > >
-> > >> > > > It's easy to confuse all the different approaches that Qualcom=
-m has to
-> > >> > > > talk to their modems, so I will first try to briefly give an o=
-verview
-> > >> > > > about those that I'm familiar with:
-> > >> > > >
-> > >> > > > ---
-> > >> > > > There is USB and MHI that are mainly used to talk to "external=
-" modems.
-> > >> > > >
-> > >> > > > For the integrated modems in many Qualcomm SoCs there is typic=
-ally
-> > >> > > > a separate control and data path. They are not really related =
-to each
-> > >> > > > other (e.g. currently no common parent device in sysfs).
-> > >> > > >
-> > >> > > > For the data path (network interface) there is "IPA" (drivers/=
-net/ipa)
-> > >> > > > on newer SoCs or "BAM-DMUX" on some older SoCs (e.g. MSM8916/M=
-SM8974).
-> > >> > > > I have a driver for BAM-DMUX that I hope to finish up and subm=
-it soon.
-> > >> > > >
-> > >> > > > The connection is set up via QMI. The messages are either sent=
- via
-> > >> > > > a shared RPMSG channel (net/qrtr sockets in Linux) or via stan=
-dalone
-> > >> > > > SMD/RPMSG channels (e.g. "DATA5_CNTL" for QMI and "DATA1" for =
-AT).
-> > >> > > >
-> > >> > > > This gives a lot of possible combinations like BAM-DMUX+RPMSG
-> > >> > > > (MSM8916, MSM8974), or IPA+QRTR (SDM845) but also other funny
-> > >> > > > combinations like IPA+RPMSG (MSM8994) or BAM-DMUX+QRTR (MSM893=
-7).
-> > >> > > >
-> > >> > > > Simply put, supporting all these in userspace like ModemManage=
-r
-> > >> > > > is a mess (Aleksander can probably confirm).
-> > >> > > > It would be nice if this could be simplified through the WWAN =
-subsystem.
-> > >> > > >
-> > >> > > > It's not clear to me if or how well QRTR sockets can be mapped=
- to a char
-> > >> > > > device for the WWAN subsystem, so for now I'm trying to focus =
-on the
-> > >> > > > standalone RPMSG approach (for MSM8916, MSM8974, ...).
-> > >> > > > ---
-> > >> > > >
-> > >> > > > Currently ModemManager uses the RPMSG channels via the rpmsg-c=
-hardev
-> > >> > > > (drivers/rpmsg/rpmsg_char.c). It wasn't my idea to use it like=
- this,
-> > >> > > > I just took that over from someone else. Realistically speakin=
-g, the
-> > >> > > > current approach isn't too different from the UCI "backdoor in=
-terface"
-> > >> > > > approach that was rejected for MHI...
-> > >> > > >
-> > >> > > > I kind of expected that I can just trivially copy some code fr=
-om
-> > >> > > > rpmsg_char.c into a WWAN driver since they both end up as a si=
-mple char
-> > >> > > > device. But it looks like the abstractions in wwan_core are ki=
-nd of
-> > >> > > > getting in the way here... As far as I can tell, they don't re=
-ally fit
-> > >> > > > together with the RPMSG interface.
-> > >> > > >
-> > >> > > > For example there is rpmsg_send(...) (blocking) and rpmsg_trys=
-end(...)
-> > >> > > > (non-blocking) and even a rpmsg_poll(...) [1] but I don't see =
-a way to
-> > >> > > > get notified when the TX queue is full or no longer full so I =
-can call
-> > >> > > > wwan_port_txon/off().
-> > >> > > >
-> > >> > > > Any suggestions or other thoughts?
-> > >> > >
-> > >> > > It would be indeed nice to get this in the WWAN framework.
-> > >> > > I don't know much about rpmsg but I think it is straightforward =
-for
-> > >> > > the RX path, the ept_cb can simply forward the buffers to
-> > >> > > wwan_port_rx.
-> > >> >
-> > >> > Right, that part should be straightforward.
-> > >> >
-> > >> > > For tx, simply call rpmsg_trysend() in the wwan tx
-> > >> > > callback and don't use the txon/off helpers. In short, keep it s=
-imple
-> > >> > > and check if you observe any issues.
-> > >> > >
-> > >> >
-> > >> > I'm not sure that's a good idea. This sounds like exactly the kind=
- of
-> > >> > thing that might explode later just because I don't manage to get =
-the
-> > >> > TX queue full in my tests. In that case, writing to the WWAN char =
-dev
-> > >> > would not block, even if O_NONBLOCK is not set.
-> > >>
-> > >> Right, if you think it could be a problem, you can always implement =
-a
-> > >> more complex solution like calling rpmsg_send from a
-> > >> workqueue/kthread, and only re-enable tx once rpmsg_send returns.
-> > >>
-> > >
-> > > I did run into trouble when I tried to stream lots of data into the W=
-WAN
-> > > char device (e.g. using dd). However, in practice (with ModemManager)
-> > > I did not manage to cause such issues yet. Personally, I think it's
-> > > something we should get right, just to avoid trouble later
-> > > (like "modem suddenly stops working").
-> > >
-> > > Right now I extended the WWAN port ops a bit so I tells me if the wri=
-te
-> > > should be non-blocking or blocking and so I can call rpmsg_poll(...).
+> On Mon, Jun 7, 2021 at 2:41 PM Bhupesh Sharma <bhupesh.sharma@linaro.org> wrote:
+> >
+> > SA8155p-adp board has two new regulator types - pmm8155au_1 and
+> > pmm8155au_2.
+> >
+> > The output power management circuits in these regulators include:
+> > - FTS510 smps,
+> > - HFS510 smps, and
+> > - LDO510 linear regulators
+>
+> ...
+>
+> > Cc: Linus Walleij <linus.walleij@linaro.org>
+> > Cc: Liam Girdwood <lgirdwood@gmail.com>
+> > Cc: Mark Brown <broonie@kernel.org>
+> > Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > Cc: Vinod Koul <vkoul@kernel.org>
+> > Cc: Rob Herring <robh+dt@kernel.org>
+> > Cc: Andy Gross <agross@kernel.org>
+> > Cc: devicetree@vger.kernel.org
+> > Cc: linux-kernel@vger.kernel.org
+> > Cc: linux-gpio@vger.kernel.org
+> > Cc: bhupesh.linux@gmail.com
+>
+> Use --cc or similar option when run `git send-email`, no need to
+> pollute the commit message with these.
 
-OK, but note that poll seems to be an optional rpmsg ops, rpmsg_poll
-can be a no-op and so would not guarantee that EPOLL_OUT will ever be
-set.
+It's just a matter of preference IMO. I prefer to use a Cc list
+here.
 
+> > +static const struct rpmh_vreg_init_data pmm8155au_1_vreg_data[] = {
+>
+>
+> > +       {},
+>
+> Comma is not needed in the terminator line.
 
-Loic
+Hmm.. it's similar to the syntax already used at several places in this file.
+See ' struct rpmh_vreg_init_data pm8150l_vreg_data[] ' for example.
+
+Unless there is an obvious issue with it, let's use the same to keep
+things similar from a syntax p-o-v.
+
+Thanks,
+Bhupesh
+
+>
+> > +};
+>
+> --
+> With Best Regards,
+> Andy Shevchenko
