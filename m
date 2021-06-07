@@ -2,78 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 12BB239DED8
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Jun 2021 16:33:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DF8E939DF39
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Jun 2021 16:50:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230207AbhFGOfb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Jun 2021 10:35:31 -0400
-Received: from mail-wm1-f47.google.com ([209.85.128.47]:55892 "EHLO
-        mail-wm1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230197AbhFGOfa (ORCPT
+        id S230258AbhFGOwH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Jun 2021 10:52:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57940 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230239AbhFGOwH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Jun 2021 10:35:30 -0400
-Received: by mail-wm1-f47.google.com with SMTP id g204so10174478wmf.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Jun 2021 07:33:25 -0700 (PDT)
+        Mon, 7 Jun 2021 10:52:07 -0400
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03C45C061766
+        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Jun 2021 07:50:16 -0700 (PDT)
+Received: by mail-wr1-x436.google.com with SMTP id i94so12908502wri.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Jun 2021 07:50:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=nS6m0FoskpK8ycN8QLA4hdqiDT6/K9kbC4GMmw4lEgg=;
-        b=wuBUUMPo7j+sLLFtnqKUaB82pFJHv99qGo7ClXfEqsZSvuaJUB5BF/A35SoVioEQ//
-         XHgydv395SYMXvt+cNyaJQHl+CJ/2O5Dpwb975geOr0WhIe/z0AdvzIg/GVzlngBPhLh
-         iOal7WLi6KppWqsBkqrcMdh56ZhC/7MNI7F8VIdv/czQqpkmRqQwt6pamieTWHJpDCW0
-         NhiSsOnT0BVvweBvIEbrXcCPArp9x/rAEpRsOfSvHOuuZcmBSted+rUGMieDzYzmQwgO
-         Cx53J1e06Edwmn+SniXjCexCf+0r+Pr5IWfHPmPNTuM76ErJiuDtD4Z5Uo2Mi5XjPXQX
-         MhBA==
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=ByuWA/FeshPmLL8w1r+fuCOMh+rIc6tFaDLNfGOXkJ4=;
+        b=Q+AUXH6Ozlo1bGcem9xyhXLx6p5zw2kfb5vmaOQlSrxbGpyKvoWKTpZpEJ5ldB0oIC
+         wraYRcylqwrytpiW4zj62E+ZoZdSFWh9YWyk94dnSUGPFzkhJje3pzPp8uKaETDiapR0
+         Mb/TEAdkpUcE2FLckZ4CeYBof1xyG3XTltANywQNINpLvY9IAycbT/nK0Q/cJO8JCWwp
+         dgOYOMSDb46x69pcxr7dOkpt3YBLZBCvOo6vw7lelyJ5ZOAQHT+gHPnC3OZEH5M50zR0
+         HKo5967qxi6xvh5n48XjRAnpZ7PSIFOKuqjMc9xcAWkXt5Fi6cNAwaJC+hr6n6KVpgtp
+         RnNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+        h=x-gm-message-state:subject:to:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=nS6m0FoskpK8ycN8QLA4hdqiDT6/K9kbC4GMmw4lEgg=;
-        b=aCwHcgHKhlLr1G6LB3fCN7mIpg7Qam/omGbejnQfiQLrT7MoPDmHCMhBDt85BWVdNz
-         s9Y07etlB7qzj/CmZEEIRjCNgRI+v4LlKGZGupNJE1kyUDRTBhDYX5qAn7SAkWeakFEG
-         5DjUo6BfutM5YsKd/wcpknNuRApBGYGnveWRwp7LSYHTENwDM9opAKEbGDpeTgdoeJR8
-         4LhXlNVJ2D6NQsxEMH6dk+6//ap6KZvMd9CSE86m4ByXYTT8c4Oq5zJtDQNVgDoPcqPW
-         YO8sHCkv/4Nmdv9D1qtamUP6JyPK2CNbq65eUxg+TR5F4Wm2s1mLaD/koxJwyTCvUi7t
-         YZgQ==
-X-Gm-Message-State: AOAM531NKdlTElXmnfN7+E5ymqJdeQHGfyhv2trM27DUXMkxMEvvYWx+
-        j1y1Ulc3N4j7UrD5MFCDEOCiew==
-X-Google-Smtp-Source: ABdhPJxb4K8fj18KdVF7Jxi2taqHp0HFH+pigd0oQiE21oW8Svcam6ppkiB16UL1xyG+N6jay4+0Zg==
-X-Received: by 2002:a05:600c:19d1:: with SMTP id u17mr2594914wmq.31.1623076344662;
-        Mon, 07 Jun 2021 07:32:24 -0700 (PDT)
+        bh=ByuWA/FeshPmLL8w1r+fuCOMh+rIc6tFaDLNfGOXkJ4=;
+        b=gIBZ+hWYzOP8EClAOB9c42Vhs3m5cfeRm0fFTgbXPhiplNGPHmKucg0hbdBrsZ+l3z
+         5wRZtxADEcpf/nJIOjDw5h4NhG5wPZxc/+5H+csMeZ+d/H1u/nEqsIkqPiwp68ZXSMxM
+         t7UIGkn5tWDOEtkQ41Mj2Yl2nRBWjBVy3TrJbGyfY1IFPg1S9X0EwSZtcRqCC6BP4iar
+         kT0lUcC0LDtnZt98Z6Ojpci5pmAPiTK9pDz5nOMbpIM7UDoz6jhYa3oWhLzV26RhdbS6
+         QCZ3M3gn3yhzBPzdHdSvpt56SNDVk7Mc4J6/u8vWTDd4Ml4Sz/fdsPW+CdzpfrblOgYB
+         TmHw==
+X-Gm-Message-State: AOAM533Et5QR0U6l4+CKSqkrP8aFACdu7xFLDI1J8iR1AAE5MuXq8ZrO
+        jl5tHYSz/vj0D/7gByi3FdqrXw==
+X-Google-Smtp-Source: ABdhPJw59vawdwGj786iQvPc2EqyB2ILv3MVi/4BNcV3iN6RvaKPmAY4ReeZNQGuKy0QuV3behuSxg==
+X-Received: by 2002:a05:6000:1803:: with SMTP id m3mr17161493wrh.257.1623077414589;
+        Mon, 07 Jun 2021 07:50:14 -0700 (PDT)
 Received: from [192.168.86.34] (cpc86377-aztw32-2-0-cust226.18-1.cable.virginm.net. [92.233.226.227])
-        by smtp.googlemail.com with ESMTPSA id 125sm18884963wmb.34.2021.06.07.07.32.23
+        by smtp.googlemail.com with ESMTPSA id x10sm5665619wrt.26.2021.06.07.07.50.12
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 07 Jun 2021 07:32:24 -0700 (PDT)
-Subject: Re: [v7] ASoC: qcom: lpass-cpu: Fix pop noise during audio capture
- begin
-To:     Judy Hsiao <judyhsiao@chromium.org>, broonie@kernel.org
-Cc:     Taniya Das <tdas@codeaurora.org>,
-        Rohit kumar <rohitkr@codeaurora.org>,
-        Banajit Goswami <bgoswami@codeaurora.org>,
-        Patrick Lai <plai@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Jaroslav Kysela <perex@perex.cz>,
-        Takashi Iwai <tiwai@suse.com>,
-        Stephan Gerhold <stephan@gerhold.net>, dianders@chromium.org,
-        dgreid@chromium.org, cychiang@google.com, judyhsiao@google.com,
-        tzungbi@chromium.org, swboyd@chromium.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        alsa-devel@alsa-project.org,
-        Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-References: <20210604154545.1198337-1-judyhsiao@chromium.org>
+        Mon, 07 Jun 2021 07:50:13 -0700 (PDT)
+Subject: Re: [PATCH v2] ASoC: qcom: Fix for DMA interrupt clear reg
+ overwriting
+To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
+        agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
+        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
+        rohitkr@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, swboyd@chromium.org,
+        judyhsiao@chromium.org
+References: <20210605113809.26584-1-srivasam@codeaurora.org>
 From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Message-ID: <0085836e-20d5-d74f-5a1e-1a6ea8252d02@linaro.org>
-Date:   Mon, 7 Jun 2021 15:32:22 +0100
+Message-ID: <ac3e70da-7d82-2021-3a25-08179aeb6b54@linaro.org>
+Date:   Mon, 7 Jun 2021 15:50:12 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
  Thunderbird/60.8.0
 MIME-Version: 1.0
-In-Reply-To: <20210604154545.1198337-1-judyhsiao@chromium.org>
+In-Reply-To: <20210605113809.26584-1-srivasam@codeaurora.org>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -83,186 +76,86 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 04/06/2021 16:45, Judy Hsiao wrote:
-> From: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+On 05/06/2021 12:38, Srinivasa Rao Mandadapu wrote:
+> The DMA interrupt clear register overwritten during
+> simultaneous playback and capture in lpass platform
+> interrupt handler. It's causing playback or capture stuck
+> in similtaneous plaback on speaker and capture on dmic test.
+> Update appropriate reg fields of corresponding channel instead
+> of entire register write.
 > 
-> This patch fixes PoP noise of around 15ms observed during audio
-> capture begin.
-> Enables BCLK and LRCLK in snd_soc_dai_ops prepare call for
-> introducing some delay before capture start.
+> Fixes: commit c5c8635a04711 ("ASoC: qcom: Add LPASS platform driver")
 > 
-> Co-developed-by: Judy Hsiao <judyhsiao@chromium.org>
-> Signed-off-by: Judy Hsiao <judyhsiao@chromium.org>
 > Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-> (am from https://patchwork.kernel.org/patch/12276369/)
-> (also found at https://lore.kernel.org/r/20210524142114.18676-1-srivasam@codeaurora.org)
-> 
-
-Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-
-
 > ---
-> Changes Since V6:
-> 	-- Removed clk_disable OSR clock in lpass_cpu_daiops_prepare error case as failure
->             of prepare will result in calling shutdown which should take care of this.
-> Changes Since V5:
->          -- Fixed nit.
->          -- Updated `mi2s_was_prepared[dai->driver->id] = true;` after checking for errors.
-> Changes Since V4:
->          -- Replaced the __clk_is_enabled(BCLK) check by the self maintained.
->             mi2s_was_prepared bool state.
->          -- Removed unrelated changes.
->          -- Refined comments.
-> Changes Since V3:
->          -- Checked BCLK is off before enabling it in lpass_cpu_daiops_prepare as
->             lpass_cpu_daiops_prepare can be called multiple times
->          -- Checked BCLK is on before disabling it in lpass_cpu_daiops_shutdown to
->             fix the WARN. It is because BCLK may not be enabled if
->             lpass_cpu_daiops_prepare is not called before lpass_cpu_daiops_shutdown
->          -- Added more comments
-> Changes Since V2:
->          -- Updated comments as per linux style
->          -- Removed unrelated changes
-> Changes Since V1:
->          -- Enabled BCLK and LRCLK in dai ops prepare API instead of startup API
->          -- Added comments
+>   sound/soc/qcom/lpass-platform.c | 17 +++++++++++------
+>   1 file changed, 11 insertions(+), 6 deletions(-)
 > 
->   sound/soc/qcom/lpass-cpu.c | 79 ++++++++++++++++++++++++++++++++++++++
->   sound/soc/qcom/lpass.h     |  4 ++
->   2 files changed, 83 insertions(+)
-> 
-> diff --git a/sound/soc/qcom/lpass-cpu.c b/sound/soc/qcom/lpass-cpu.c
-> index af8cb64924a0..647423a6cb57 100644
-> --- a/sound/soc/qcom/lpass-cpu.c
-> +++ b/sound/soc/qcom/lpass-cpu.c
-> @@ -93,8 +93,30 @@ static void lpass_cpu_daiops_shutdown(struct snd_pcm_substream *substream,
->   		struct snd_soc_dai *dai)
->   {
->   	struct lpass_data *drvdata = snd_soc_dai_get_drvdata(dai);
-> +	struct lpaif_i2sctl *i2sctl = drvdata->i2sctl;
-> +	unsigned int id = dai->driver->id;
+> diff --git a/sound/soc/qcom/lpass-platform.c b/sound/soc/qcom/lpass-platform.c
+> index 0df9481ea4c6..f220a2739ac3 100644
+> --- a/sound/soc/qcom/lpass-platform.c
+> +++ b/sound/soc/qcom/lpass-platform.c
+> @@ -526,7 +526,7 @@ static int lpass_platform_pcmops_trigger(struct snd_soc_component *component,
+>   			return -EINVAL;
+>   		}
 >   
->   	clk_disable_unprepare(drvdata->mi2s_osr_clk[dai->driver->id]);
-> +	/*
-> +	 * Ensure LRCLK is disabled even in device node validation.
-> +	 * Will not impact if disabled in lpass_cpu_daiops_trigger()
-> +	 * suspend.
-> +	 */
-> +	if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK)
-> +		regmap_fields_write(i2sctl->spken, id, LPAIF_I2SCTL_SPKEN_DISABLE);
-> +	else
-> +		regmap_fields_write(i2sctl->micen, id, LPAIF_I2SCTL_MICEN_DISABLE);
-> +
-> +	/*
-> +	 * BCLK may not be enabled if lpass_cpu_daiops_prepare is called before
-> +	 * lpass_cpu_daiops_shutdown. It's paired with the clk_enable in
-> +	 * lpass_cpu_daiops_prepare.
-> +	 */
-> +	if (drvdata->mi2s_was_prepared[dai->driver->id]) {
-> +		drvdata->mi2s_was_prepared[dai->driver->id] = false;
-> +		clk_disable(drvdata->mi2s_bit_clk[dai->driver->id]);
-> +	}
-> +
->   	clk_unprepare(drvdata->mi2s_bit_clk[dai->driver->id]);
->   }
+> -		ret = regmap_write(map, reg_irqclr, val_irqclr);
+> +		ret = regmap_update_bits(map, reg_irqclr, val_irqclr, val_irqclr);
+>   		if (ret) {
+>   			dev_err(soc_runtime->dev, "error writing to irqclear reg: %d\n", ret);
+>   			return ret;
+> @@ -650,7 +650,7 @@ static irqreturn_t lpass_dma_interrupt_handler(
+>   	struct lpass_variant *v = drvdata->variant;
+>   	irqreturn_t ret = IRQ_NONE;
+>   	int rv;
+> -	unsigned int reg = 0, val = 0;
+> +	unsigned int reg, val, val_clr, val_mask;
+
+minor nit here, variable name val_clr is pretty confusing to readers, It 
+might be okay for irq clr register but we are using the same name of 
+writing to other registers. So can I suggest you to reuse val variable.
+
+other thing is val_mask, please rename this to mask and just set it in 
+the start of function so you can avoid 3 extra lines below.
+
+Other than that patch looks good to me!
+
+--srini
+>   	struct regmap *map;
+>   	unsigned int dai_id = cpu_dai->driver->id;
 >   
-> @@ -275,6 +297,18 @@ static int lpass_cpu_daiops_trigger(struct snd_pcm_substream *substream,
->   	case SNDRV_PCM_TRIGGER_START:
->   	case SNDRV_PCM_TRIGGER_RESUME:
->   	case SNDRV_PCM_TRIGGER_PAUSE_RELEASE:
-> +		/*
-> +		 * Ensure lpass BCLK/LRCLK is enabled during
-> +		 * device resume as lpass_cpu_daiops_prepare() is not called
-> +		 * after the device resumes. We don't check mi2s_was_prepared before
-> +		 * enable/disable BCLK in trigger events because:
-> +		 *  1. These trigger events are paired, so the BCLK
-> +		 *     enable_count is balanced.
-> +		 *  2. the BCLK can be shared (ex: headset and headset mic),
-> +		 *     we need to increase the enable_count so that we don't
-> +		 *     turn off the shared BCLK while other devices are using
-> +		 *     it.
-> +		 */
->   		if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK) {
->   			ret = regmap_fields_write(i2sctl->spken, id,
->   						 LPAIF_I2SCTL_SPKEN_ENABLE);
-> @@ -296,6 +330,10 @@ static int lpass_cpu_daiops_trigger(struct snd_pcm_substream *substream,
->   	case SNDRV_PCM_TRIGGER_STOP:
->   	case SNDRV_PCM_TRIGGER_SUSPEND:
->   	case SNDRV_PCM_TRIGGER_PAUSE_PUSH:
-> +		/*
-> +		 * To ensure lpass BCLK/LRCLK is disabled during
-> +		 * device suspend.
-> +		 */
->   		if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK) {
->   			ret = regmap_fields_write(i2sctl->spken, id,
->   						 LPAIF_I2SCTL_SPKEN_DISABLE);
-> @@ -315,12 +353,53 @@ static int lpass_cpu_daiops_trigger(struct snd_pcm_substream *substream,
->   	return ret;
->   }
+> @@ -676,8 +676,9 @@ static irqreturn_t lpass_dma_interrupt_handler(
+>   	return -EINVAL;
+>   	}
+>   	if (interrupts & LPAIF_IRQ_PER(chan)) {
+> -
+> -		rv = regmap_write(map, reg, LPAIF_IRQ_PER(chan) | val);
+> +		val_clr = LPAIF_IRQ_PER(chan) | val;
+> +		val_mask = LPAIF_IRQ_ALL(chan);
+> +		rv = regmap_update_bits(map, reg, val_mask, val_clr);
+>   		if (rv) {
+>   			dev_err(soc_runtime->dev,
+>   				"error writing to irqclear reg: %d\n", rv);
+> @@ -688,7 +689,9 @@ static irqreturn_t lpass_dma_interrupt_handler(
+>   	}
 >   
-> +static int lpass_cpu_daiops_prepare(struct snd_pcm_substream *substream,
-> +		struct snd_soc_dai *dai)
-> +{
-> +	struct lpass_data *drvdata = snd_soc_dai_get_drvdata(dai);
-> +	struct lpaif_i2sctl *i2sctl = drvdata->i2sctl;
-> +	unsigned int id = dai->driver->id;
-> +	int ret;
-> +
-> +	/*
-> +	 * Ensure lpass BCLK/LRCLK is enabled bit before playback/capture
-> +	 * data flow starts. This allows other codec to have some delay before
-> +	 * the data flow.
-> +	 * (ex: to drop start up pop noise before capture starts).
-> +	 */
-> +	if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK)
-> +		ret = regmap_fields_write(i2sctl->spken, id, LPAIF_I2SCTL_SPKEN_ENABLE);
-> +	else
-> +		ret = regmap_fields_write(i2sctl->micen, id, LPAIF_I2SCTL_MICEN_ENABLE);
-> +
-> +	if (ret) {
-> +		dev_err(dai->dev, "error writing to i2sctl reg: %d\n", ret);
-> +		return ret;
-> +	}
-> +
-> +	/*
-> +	 * Check mi2s_was_prepared before enabling BCLK as lpass_cpu_daiops_prepare can
-> +	 * be called multiple times. It's paired with the clk_disable in
-> +	 * lpass_cpu_daiops_shutdown.
-> +	 */
-> +	if (!drvdata->mi2s_was_prepared[dai->driver->id]) {
-> +		ret = clk_enable(drvdata->mi2s_bit_clk[id]);
-> +		if (ret) {
-> +			dev_err(dai->dev, "error in enabling mi2s bit clk: %d\n", ret);
-> +			return ret;
-> +		}
-> +		drvdata->mi2s_was_prepared[dai->driver->id] = true;
-> +	}
-> +	return 0;
-> +}
-> +
->   const struct snd_soc_dai_ops asoc_qcom_lpass_cpu_dai_ops = {
->   	.set_sysclk	= lpass_cpu_daiops_set_sysclk,
->   	.startup	= lpass_cpu_daiops_startup,
->   	.shutdown	= lpass_cpu_daiops_shutdown,
->   	.hw_params	= lpass_cpu_daiops_hw_params,
->   	.trigger	= lpass_cpu_daiops_trigger,
-> +	.prepare	= lpass_cpu_daiops_prepare,
->   };
->   EXPORT_SYMBOL_GPL(asoc_qcom_lpass_cpu_dai_ops);
+>   	if (interrupts & LPAIF_IRQ_XRUN(chan)) {
+> -		rv = regmap_write(map, reg, LPAIF_IRQ_XRUN(chan) | val);
+> +		val_clr = (LPAIF_IRQ_XRUN(chan) | val);
+> +		val_mask = LPAIF_IRQ_ALL(chan);
+> +		rv = regmap_update_bits(map, reg, val_mask, val_clr);
+>   		if (rv) {
+>   			dev_err(soc_runtime->dev,
+>   				"error writing to irqclear reg: %d\n", rv);
+> @@ -700,7 +703,9 @@ static irqreturn_t lpass_dma_interrupt_handler(
+>   	}
 >   
-> diff --git a/sound/soc/qcom/lpass.h b/sound/soc/qcom/lpass.h
-> index 83b2e08ade06..7f72214404ba 100644
-> --- a/sound/soc/qcom/lpass.h
-> +++ b/sound/soc/qcom/lpass.h
-> @@ -67,6 +67,10 @@ struct lpass_data {
->   	/* MI2S SD lines to use for playback/capture */
->   	unsigned int mi2s_playback_sd_mode[LPASS_MAX_MI2S_PORTS];
->   	unsigned int mi2s_capture_sd_mode[LPASS_MAX_MI2S_PORTS];
-> +
-> +	/* The state of MI2S prepare dai_ops was called */
-> +	bool mi2s_was_prepared[LPASS_MAX_MI2S_PORTS];
-> +
->   	int hdmi_port_enable;
->   
->   	/* low-power audio interface (LPAIF) registers */
+>   	if (interrupts & LPAIF_IRQ_ERR(chan)) {
+> -		rv = regmap_write(map, reg, LPAIF_IRQ_ERR(chan) | val);
+> +		val_clr = (LPAIF_IRQ_ERR(chan) | val);
+> +		val_mask = LPAIF_IRQ_ALL(chan);
+> +		rv = regmap_update_bits(map, reg, val_mask, val_clr);
+>   		if (rv) {
+>   			dev_err(soc_runtime->dev,
+>   				"error writing to irqclear reg: %d\n", rv);
 > 
