@@ -2,480 +2,299 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B78A639DB8C
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Jun 2021 13:39:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8AABE39DBAA
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Jun 2021 13:43:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231492AbhFGLll (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Jun 2021 07:41:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43678 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231286AbhFGLlk (ORCPT
+        id S231202AbhFGLoz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Jun 2021 07:44:55 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:36212 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230463AbhFGLoz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Jun 2021 07:41:40 -0400
-Received: from mail-pg1-x534.google.com (mail-pg1-x534.google.com [IPv6:2607:f8b0:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CC4CC061795
-        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Jun 2021 04:39:49 -0700 (PDT)
-Received: by mail-pg1-x534.google.com with SMTP id n12so13555515pgs.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Jun 2021 04:39:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Pxk9jMy8Cjya3/7I3jpQbZX9wqd4VZaOXPNFzD47/JM=;
-        b=FF16jz4FI0rZqKWnRUvm2o0+/OmsmpwT+6kqMjthc/XZ4V+EElUaK2TiW6IPXb0t6C
-         i7zkj1MV9ysof0hl1ZmSQixVGSiEXSk5USyHlzeNHJBBuXKuyzrZmi2+1x43pZaArB8M
-         aGRMX3MxcksyyGDDVD9lWBIYHZzv+PGvWkFnxIDFMfPFjnWsT2yKmuCupvL2YOBP6L0V
-         wK6iugn3A9dJYCbp2xYuTxFh3BshePrdrfaDspC9H4VPAxVlb31l0yQAEu8abckVOaDU
-         T3BBGw1cy91fnwfwusP5+dyt5b1xKM4WvsIlLVL+p4PSQwwQPWpa7AmgC+Br6PktPP1X
-         nGAQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Pxk9jMy8Cjya3/7I3jpQbZX9wqd4VZaOXPNFzD47/JM=;
-        b=FkwgiJbclafBc1jUA4FxLsochPX9mBEH68J3/XGg6H+F2xDSB5CxOR04J4n97C/ZjW
-         rRrs+s8ObMGzZZFuPf0qKWX7KRDgxn2sMP8ngXVBiF0JcsTDorfF8u9RNi5LO8VbULkK
-         nkxkGG2/i2a6eJVMfwRRBlQ6nIqLEBblUIKhxeC9R9pXbZ5xkjHq3OXUqtH+Ntj6E+ep
-         utTQTuejXiRBdwa+ZBmj9JuGbb8zwkc2EhUDRPiqcZdb74Ph3PGiiEBbCWqqxSTW7siI
-         0JhxPL7DgHDwQ7ObwAP9+I9JguPLXXTGtFVjjUAn8NhFOINitW6fHYZAozOdUp4NabGz
-         wdyQ==
-X-Gm-Message-State: AOAM530S2IY5S0qr3PnOA+eNGDhHRc75KSXCAivdmRsb/uZ6uGIbu7Cu
-        1Lj6qT2MvR/JryOVeQcnmQP7GhQqqMBK9Q==
-X-Google-Smtp-Source: ABdhPJwzMzOEx8SwHal3OfYVwIxhxRZyKdEQNqAYVNTnH+6PzRiTH9uUq+wNTGRQMFyWWWasIlxzIQ==
-X-Received: by 2002:a05:6a00:1a41:b029:2ef:9721:879e with SMTP id h1-20020a056a001a41b02902ef9721879emr5775585pfv.74.1623065988689;
-        Mon, 07 Jun 2021 04:39:48 -0700 (PDT)
-Received: from localhost.localdomain.name ([122.177.177.211])
-        by smtp.gmail.com with ESMTPSA id j7sm7223939pjf.0.2021.06.07.04.39.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Jun 2021 04:39:48 -0700 (PDT)
-From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     bhupesh.sharma@linaro.org,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
-        bhupesh.linux@gmail.com
-Subject: [PATCH 8/8] arm64: dts: qcom: sa8155p-adp: Add base dts file
-Date:   Mon,  7 Jun 2021 17:08:40 +0530
-Message-Id: <20210607113840.15435-9-bhupesh.sharma@linaro.org>
-X-Mailer: git-send-email 2.31.1
-In-Reply-To: <20210607113840.15435-1-bhupesh.sharma@linaro.org>
-References: <20210607113840.15435-1-bhupesh.sharma@linaro.org>
+        Mon, 7 Jun 2021 07:44:55 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1623066184; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=97EjolioTr/dzk8Rhja2FM2bBWL8D1t49C3Tr8J/VBM=;
+ b=Z2SLjx6c0HaSOL34hzWkz//xSRG6SNSNlxgO8ke5qTL9f1H7OrEc2D7pJw3Szt5O1VbMqsg5
+ c3bsS0bljblKhT4vg4JJ4VcqapTCzEOO3wH65gA+t4vsJr8GMiEvUEoyANitJ++cL1I1DFtr
+ CnXc6VW8qeN/FEyoxexWjS+o2z0=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
+ 60be0622f726fa41886b7a41 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 07 Jun 2021 11:42:26
+ GMT
+Sender: sibis=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 38B9BC43460; Mon,  7 Jun 2021 11:42:25 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: sibis)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 2C05BC433F1;
+        Mon,  7 Jun 2021 11:42:24 +0000 (UTC)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Mon, 07 Jun 2021 17:12:24 +0530
+From:   Sibi Sankar <sibis@codeaurora.org>
+To:     Deepak Kumar Singh <deesin@codeaurora.org>
+Cc:     bjorn.andersson@linaro.org, clew@codeaurora.org,
+        manivannan.sadhasivam@linaro.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        deesin=codeaurora.org@codeaurora.org
+Subject: Re: [PATCH V3 1/2] soc: qcom: aoss: Expose send for generic usecase
+In-Reply-To: <1620320818-2206-2-git-send-email-deesin@codeaurora.org>
+References: <1620320818-2206-1-git-send-email-deesin@codeaurora.org>
+ <1620320818-2206-2-git-send-email-deesin@codeaurora.org>
+Message-ID: <80c85e9a6f2ac5c3b8c77a1c9a18b9cc@codeaurora.org>
+X-Sender: sibis@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add base DTS file for sa8155p-adp and enable boot to console,
-tlmm reserved range and also include pmic file(s).
+Hey Deepak,
 
-SA8155p-adp board is based on sm8150 Qualcomm Snapdragon SoC.
+Thanks for the patch!
 
-Cc: Linus Walleij <linus.walleij@linaro.org>
-Cc: Liam Girdwood <lgirdwood@gmail.com>
-Cc: Mark Brown <broonie@kernel.org>
-Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc: Vinod Koul <vkoul@kernel.org>
-Cc: Rob Herring <robh+dt@kernel.org>
-Cc: Andy Gross <agross@kernel.org>
-Cc: devicetree@vger.kernel.org
-Cc: linux-kernel@vger.kernel.org
-Cc: linux-gpio@vger.kernel.org
-Cc: bhupesh.linux@gmail.com
-Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
----
- arch/arm64/boot/dts/qcom/Makefile        |   1 +
- arch/arm64/boot/dts/qcom/sa8155p-adp.dts | 363 +++++++++++++++++++++++
- 2 files changed, 364 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/sa8155p-adp.dts
+On 2021-05-06 22:36, Deepak Kumar Singh wrote:
+> Not all upcoming usecases will have an interface to allow the aoss
+> driver to hook onto. Expose the send api and create a get function to
+> enable drivers to send their own messages to aoss.
+> 
+> Signed-off-by: Chris Lew <clew@codeaurora.org>
+> Signed-off-by: Deepak Kumar Singh <deesin@codeaurora.org>
+> ---
+>  drivers/soc/qcom/qcom_aoss.c       | 70 
+> ++++++++++++++++++++++++++++++++++++--
+>  include/linux/soc/qcom/qcom_aoss.h | 33 ++++++++++++++++++
+>  2 files changed, 101 insertions(+), 2 deletions(-)
+>  create mode 100644 include/linux/soc/qcom/qcom_aoss.h
+> 
+> diff --git a/drivers/soc/qcom/qcom_aoss.c 
+> b/drivers/soc/qcom/qcom_aoss.c
+> index 53acb94..cd75d4d 100644
+> --- a/drivers/soc/qcom/qcom_aoss.c
+> +++ b/drivers/soc/qcom/qcom_aoss.c
+> @@ -8,10 +8,12 @@
+>  #include <linux/io.h>
+>  #include <linux/mailbox_client.h>
+>  #include <linux/module.h>
+> +#include <linux/of_platform.h>
+>  #include <linux/platform_device.h>
+>  #include <linux/pm_domain.h>
+>  #include <linux/thermal.h>
+>  #include <linux/slab.h>
+> +#include <linux/soc/qcom/qcom_aoss.h>
+> 
+>  #define QMP_DESC_MAGIC			0x0
+>  #define QMP_DESC_VERSION		0x4
+> @@ -61,6 +63,7 @@ struct qmp_cooling_device {
+>   * @mbox_chan: mailbox channel used to ring the doorbell on transmit
+>   * @offset: offset within @msgram where messages should be written
+>   * @size: maximum size of the messages to be transmitted
+> + * @orphan: tarcks whether qmp handle is valid
+>   * @event: wait_queue for synchronization with the IRQ
+>   * @tx_lock: provides synchronization between multiple callers of 
+> qmp_send()
+>   * @qdss_clk: QDSS clock hw struct
+> @@ -76,6 +79,8 @@ struct qmp {
+> 
+>  	size_t offset;
+>  	size_t size;
+> +	atomic_t  orphan;
+> +	struct kref refcount;
+> 
+>  	wait_queue_head_t event;
+> 
+> @@ -223,11 +228,17 @@ static bool qmp_message_empty(struct qmp *qmp)
+>   *
+>   * Return: 0 on success, negative errno on failure
+>   */
+> -static int qmp_send(struct qmp *qmp, const void *data, size_t len)
+> +int qmp_send(struct qmp *qmp, const void *data, size_t len)
+>  {
+>  	long time_left;
+>  	int ret;
+> 
+> +	if (WARN_ON(IS_ERR_OR_NULL(qmp) || !data))
+> +		return -EINVAL;
+> +
+> +	if (atomic_read(&qmp->orphan))
+> +		return -EINVAL;
+> +
+>  	if (WARN_ON(len + sizeof(u32) > qmp->size))
+>  		return -EINVAL;
+> 
+> @@ -261,6 +272,7 @@ static int qmp_send(struct qmp *qmp, const void
+> *data, size_t len)
+> 
+>  	return ret;
+>  }
+> +EXPORT_SYMBOL(qmp_send);
+> 
+>  static int qmp_qdss_clk_prepare(struct clk_hw *hw)
+>  {
+> @@ -515,6 +527,54 @@ static void qmp_cooling_devices_remove(struct qmp 
+> *qmp)
+>  		thermal_cooling_device_unregister(qmp->cooling_devs[i].cdev);
+>  }
+> 
+> +/**
+> + * qmp_get() - get a qmp handle from a device
+> + * @dev: client device pointer
+> + *
+> + * Return: handle to qmp device on success, ERR_PTR() on failure
+> + */
+> +struct qmp *qmp_get(struct device *dev)
+> +{
+> +	struct platform_device *pdev;
+> +	struct device_node *np;
+> +	struct qmp *qmp;
+> +
+> +	if (!dev || !dev->of_node)
+> +		return ERR_PTR(-EINVAL);
+> +
+> +	np = of_parse_phandle(dev->of_node, "qcom,qmp", 0);
+> +	if (!np)
+> +		return ERR_PTR(-ENODEV);
+> +
+> +	pdev = of_find_device_by_node(np);
+> +	of_node_put(np);
+> +	if (!pdev)
+> +		return ERR_PTR(-EINVAL);
+> +
+> +	qmp = platform_get_drvdata(pdev);
+> +	platform_device_put(pdev);
+> +
+> +	if (qmp)
+> +		kref_get(&qmp->refcount);
+> +
+> +	return qmp ? qmp : ERR_PTR(-EPROBE_DEFER);
+> +}
+> +EXPORT_SYMBOL(qmp_get);
+> +
+> +static void qmp_handle_release(struct kref *ref)
+> +{
+> +	struct qmp *qmp = container_of(ref, struct qmp, refcount);
+> +
+> +	kfree(qmp);
+> +}
+> +
+> +void qmp_put(struct qmp *qmp)
+> +{
+> +	if (!IS_ERR_OR_NULL(qmp))
+> +		kref_put(&qmp->refcount, qmp_handle_release);
+> +}
+> +EXPORT_SYMBOL(qmp_put);
+> +
+>  static int qmp_probe(struct platform_device *pdev)
+>  {
+>  	struct resource *res;
+> @@ -522,13 +582,14 @@ static int qmp_probe(struct platform_device 
+> *pdev)
+>  	int irq;
+>  	int ret;
+> 
+> -	qmp = devm_kzalloc(&pdev->dev, sizeof(*qmp), GFP_KERNEL);
+> +	qmp = kzalloc(sizeof(*qmp), GFP_KERNEL);
+>  	if (!qmp)
+>  		return -ENOMEM;
+> 
+>  	qmp->dev = &pdev->dev;
+>  	init_waitqueue_head(&qmp->event);
+>  	mutex_init(&qmp->tx_lock);
+> +	kref_init(&qmp->refcount);
+> 
+>  	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+>  	qmp->msgram = devm_ioremap_resource(&pdev->dev, res);
+> @@ -569,6 +630,8 @@ static int qmp_probe(struct platform_device *pdev)
+> 
+>  	platform_set_drvdata(pdev, qmp);
+> 
+> +	atomic_set(&qmp->orphan, 0);
+> +
+>  	return 0;
+> 
+>  err_remove_qdss_clk:
+> @@ -577,6 +640,7 @@ static int qmp_probe(struct platform_device *pdev)
+>  	qmp_close(qmp);
+>  err_free_mbox:
+>  	mbox_free_channel(qmp->mbox_chan);
+> +	kfree(qmp);
+> 
+>  	return ret;
+>  }
+> @@ -590,7 +654,9 @@ static int qmp_remove(struct platform_device *pdev)
+>  	qmp_cooling_devices_remove(qmp);
+> 
+>  	qmp_close(qmp);
+> +	atomic_set(&qmp->orphan, 1);
+>  	mbox_free_channel(qmp->mbox_chan);
+> +	kref_put(&qmp->refcount, qmp_handle_release);
+> 
+>  	return 0;
+>  }
+> diff --git a/include/linux/soc/qcom/qcom_aoss.h
+> b/include/linux/soc/qcom/qcom_aoss.h
+> new file mode 100644
+> index 0000000..27d00f7
+> --- /dev/null
+> +++ b/include/linux/soc/qcom/qcom_aoss.h
+> @@ -0,0 +1,33 @@
+> +/* SPDX-License-Identifier: GPL-2.0-only */
+> +/*
+> + * Copyright (c) 2020, The Linux Foundation. All rights reserved.
+> + */
+> +
+> +#ifndef __QCOM_AOSS_H__
+> +#define __QCOM_AOSS_H__
+> +
+> +#include <linux/err.h>
+> +#include <linux/device.h>
+> +
+> +struct qmp;
+> +
+> +#if IS_ENABLED(CONFIG_QCOM_AOSS_QMP)
+> +
+> +int qmp_send(struct qmp *qmp, const void *data, size_t len);
+> +struct qmp *qmp_get(struct device *dev);
 
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 456502aeee49..38d3a4728871 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -71,6 +71,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-xiaomi-beryllium.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm850-lenovo-yoga-c630.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8150-hdk.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8150-mtp.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sa8155p-adp.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8250-hdk.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8250-mtp.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8350-hdk.dtb
-diff --git a/arch/arm64/boot/dts/qcom/sa8155p-adp.dts b/arch/arm64/boot/dts/qcom/sa8155p-adp.dts
-new file mode 100644
-index 000000000000..470d740e060a
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sa8155p-adp.dts
-@@ -0,0 +1,363 @@
-+// SPDX-License-Identifier: BSD-3-Clause
-+/*
-+ * Copyright (c) 2021, Linaro Limited
-+ */
-+
-+/dts-v1/;
-+
-+#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
-+#include <dt-bindings/gpio/gpio.h>
-+#include "sm8150.dtsi"
-+#include "pmm8155au_1.dtsi"
-+#include "pmm8155au_2.dtsi"
-+
-+/ {
-+	model = "Qualcomm Technologies, Inc. SA8155P ADP";
-+	compatible = "qcom,sa8155p-adp";
-+
-+	aliases {
-+		serial0 = &uart2;
-+	};
-+
-+	chosen {
-+		stdout-path = "serial0:115200n8";
-+	};
-+
-+	vreg_3p3: vreg_3p3_regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vreg_3p3";
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
-+	};
-+
-+	/*
-+	 * Apparently RPMh does not provide support for PM8150 S4 because it
-+	 * is always-on; model it as a fixed regulator.
-+	 */
-+	vreg_s4a_1p8: smps4 {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vreg_s4a_1p8";
-+
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <1800000>;
-+
-+		regulator-always-on;
-+		regulator-boot-on;
-+
-+		vin-supply = <&vreg_3p3>;
-+	};
-+};
-+
-+&apps_rsc {
-+	pmm8155au-1-rpmh-regulators {
-+		compatible = "qcom,pmm8155au-1-rpmh-regulators";
-+		qcom,pmic-id = "a";
-+
-+		vdd-s1-supply = <&vreg_3p3>;
-+		vdd-s2-supply = <&vreg_3p3>;
-+		vdd-s3-supply = <&vreg_3p3>;
-+		vdd-s4-supply = <&vreg_3p3>;
-+		vdd-s5-supply = <&vreg_3p3>;
-+		vdd-s6-supply = <&vreg_3p3>;
-+		vdd-s7-supply = <&vreg_3p3>;
-+		vdd-s8-supply = <&vreg_3p3>;
-+		vdd-s9-supply = <&vreg_3p3>;
-+		vdd-s10-supply = <&vreg_3p3>;
-+
-+		vdd-l1-l8-l11-supply = <&vreg_s6a_0p92>;
-+		vdd-l2-l10-supply = <&vreg_3p3>;
-+		vdd-l3-l4-l5-l18-supply = <&vreg_s6a_0p92>;
-+		vdd-l6-l9-supply = <&vreg_s6a_0p92>;
-+		vdd-l7-l12-l14-l15-supply = <&vreg_s5a_2p04>;
-+		vdd-l13-l16-l17-supply = <&vreg_3p3>;
-+
-+		vreg_s5a_2p04: smps5 {
-+			regulator-min-microvolt = <1904000>;
-+			regulator-max-microvolt = <2000000>;
-+		};
-+
-+		vreg_s6a_0p92: smps6 {
-+			regulator-min-microvolt = <920000>;
-+			regulator-max-microvolt = <1128000>;
-+		};
-+
-+		vdda_wcss_pll:
-+		vreg_l1a_0p752: ldo1 {
-+			regulator-min-microvolt = <752000>;
-+			regulator-max-microvolt = <752000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vdda_usb_hs_3p1:
-+		vreg_l2a_3p072: ldo2 {
-+			regulator-min-microvolt = <3072000>;
-+			regulator-max-microvolt = <3072000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l3a_0p8: ldo3 {
-+			regulator-min-microvolt = <800000>;
-+			regulator-max-microvolt = <800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vdd_usb_hs_core:
-+		vdda_pll_hv_cc_ebi01:
-+		vdda_pll_hv_cc_ebi23:
-+		vdda_ufs_2ln_core:
-+		vdda_ufs_2ln_core:
-+		vdda_usb_ss_core:
-+		vdda_usb_ss_dp_core_1:
-+		vdda_usb_ss_dp_core_2:
-+		vdda_sp_sensor:
-+		vdda_qlink_lv:
-+		vdda_qlink_lv_ck:
-+		vdda_qrefs_0p875_5:
-+		vreg_l5a_0p88: ldo5 {
-+			regulator-min-microvolt = <880000>;
-+			regulator-max-microvolt = <880000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l7a_1p8: ldo7 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l10a_2p96: ldo10 {
-+			regulator-min-microvolt = <2504000>;
-+			regulator-max-microvolt = <2960000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l11a_0p8: ldo11 {
-+			regulator-min-microvolt = <800000>;
-+			regulator-max-microvolt = <800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vdd_qfprom:
-+		vdd_qfprom_sp:
-+		vdda_usb_hs_1p8:
-+		vdda_apc_cs_1p8:
-+		vdda_gfx_cs_1p8:
-+		vddpx_11:
-+		vreg_l12a_1p8: ldo12 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l13a_2p7: ldo13 {
-+			regulator-min-microvolt = <2704000>;
-+			regulator-max-microvolt = <2704000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l15a_1p7: ldo15 {
-+			regulator-min-microvolt = <1704000>;
-+			regulator-max-microvolt = <1704000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l16a_2p7: ldo16 {
-+			regulator-min-microvolt = <2704000>;
-+			regulator-max-microvolt = <2960000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l17a_2p96: ldo17 {
-+			regulator-min-microvolt = <2504000>;
-+			regulator-max-microvolt = <2960000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+	};
-+
-+	pmm8155au-2-rpmh-regulators {
-+		compatible = "qcom,pmm8155au-2-rpmh-regulators";
-+		qcom,pmic-id = "c";
-+
-+		vdd-s1-supply = <&vreg_3p3>;
-+		vdd-s2-supply = <&vreg_3p3>;
-+		vdd-s3-supply = <&vreg_3p3>;
-+		vdd-s4-supply = <&vreg_3p3>;
-+		vdd-s5-supply = <&vreg_3p3>;
-+		vdd-s6-supply = <&vreg_3p3>;
-+		vdd-s7-supply = <&vreg_3p3>;
-+		vdd-s8-supply = <&vreg_3p3>;
-+		vdd-s9-supply = <&vreg_3p3>;
-+		vdd-s10-supply = <&vreg_3p3>;
-+
-+		vdd-l1-l8-l11-supply = <&vreg_s4c_1p352>;
-+		vdd-l2-l10-supply = <&vreg_3p3>;
-+		vdd-l3-l4-l5-l18-supply = <&vreg_s4c_1p352>;
-+		vdd-l6-l9-supply = <&vreg_s6c_1p128>;
-+		vdd-l7-l12-l14-l15-supply = <&vreg_s5c_2p04>;
-+		vdd-l13-l16-l17-supply = <&vreg_3p3>;
-+
-+		vreg_s4c_1p352: smps4 {
-+			regulator-min-microvolt = <1352000>;
-+			regulator-max-microvolt = <1352000>;
-+		};
-+
-+		vreg_s5c_2p04: smps5 {
-+			regulator-min-microvolt = <1904000>;
-+			regulator-max-microvolt = <2000000>;
-+		};
-+
-+		vreg_s6c_1p128: smps6 {
-+			regulator-min-microvolt = <1128000>;
-+			regulator-max-microvolt = <1128000>;
-+		};
-+
-+		vdda_wcss_adcdac_1:
-+		vdda_wcss_adcdac_2:
-+		vreg_l1c_1p304: ldo1 {
-+			regulator-min-microvolt = <1304000>;
-+			regulator-max-microvolt = <1304000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vddpx_5:
-+		vreg_l2c_1p808: ldo2 {
-+			regulator-min-microvolt = <1704000>;
-+			regulator-max-microvolt = <2928000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vddpx_10:
-+		vreg_l5c_1p2: ldo5 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l7c_1p8: ldo7 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vdda_qlink_hv_ck:
-+		vdda_pcie_1ln_pll_1p2:
-+		vdda_pcie_2ln_pll_1p2:
-+		vdda_hv_refgen0:
-+		vdda_ufs_2ln_1p2:
-+		vdda_usb_ss_1p2:
-+		vdda_usb_ss_dp_1p2:
-+		vdda_csi_1p2:
-+		vdda_dsi_1p2:
-+		vreg_l8c_1p2: ldo8 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l10c_3p3: ldo10 {
-+			regulator-min-microvolt = <3000000>;
-+			regulator-max-microvolt = <3312000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l11c_0p8: ldo11 {
-+			regulator-min-microvolt = <800000>;
-+			regulator-max-microvolt = <800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vddpx_6:
-+		vreg_l12c_1p808: ldo12 {
-+			regulator-min-microvolt = <1704000>;
-+			regulator-max-microvolt = <2928000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vddpx_2:
-+		vreg_l13c_2p96: ldo13 {
-+			regulator-min-microvolt = <2504000>;
-+			regulator-max-microvolt = <2960000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l15c_1p9: ldo15 {
-+			regulator-min-microvolt = <1704000>;
-+			regulator-max-microvolt = <2928000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l16c_3p008: ldo16 {
-+			regulator-min-microvolt = <3008000>;
-+			regulator-max-microvolt = <3008000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vdda_pcie_1ln_core:
-+		vdda_pcie_2ln_core:
-+		vdda_csi_0_0p9:
-+		vdda_csi_1_0p9:
-+		vdda_csi_2_0p9:
-+		vdda_csi_3_0p9:
-+		vreg_l18c_0p88: ldo18 {
-+			regulator-min-microvolt = <880000>;
-+			regulator-max-microvolt = <880000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+	};
-+};
-+
-+&tlmm {
-+	gpio-reserved-ranges = <0 4>;
-+};
-+
-+&uart2 {
-+	status = "okay";
-+};
-+
-+&ufs_mem_hc {
-+	status = "okay";
-+
-+	reset-gpios = <&tlmm 175 GPIO_ACTIVE_LOW>;
-+
-+	vcc-supply = <&vreg_l10a_2p96>;
-+	vcc-max-microamp = <750000>;
-+	vccq-supply = <&vreg_l5c_1p2>;
-+	vccq-max-microamp = <700000>;
-+	vccq2-supply = <&vreg_s4a_1p8>;
-+	vccq2-max-microamp = <750000>;
-+};
-+
-+&ufs_mem_phy {
-+	status = "okay";
-+
-+	vdda-phy-supply = <&vreg_l8c_1p2>;
-+	vdda-max-microamp = <87100>;
-+	vdda-pll-supply = <&vreg_l5a_0p88>;
-+	vdda-pll-max-microamp = <18300>;
-+};
-+
-+
-+&usb_1_hsphy {
-+	status = "okay";
-+	vdda-pll-supply = <&vdd_usb_hs_core>;
-+	vdda33-supply = <&vdda_usb_hs_3p1>;
-+	vdda18-supply = <&vdda_usb_hs_1p8>;
-+};
-+
-+&usb_1_qmpphy {
-+	status = "okay";
-+	vdda-phy-supply = <&vreg_l8c_1p2>;
-+	vdda-pll-supply = <&vdda_usb_ss_dp_core_1>;
-+};
-+
-+&usb_1 {
-+	status = "okay";
-+};
-+
-+&usb_1_dwc3 {
-+	dr_mode = "peripheral";
-+};
-+
-+&qupv3_id_1 {
-+	status = "okay";
-+};
+missed adding qmp_put.
+
+> +
+> +#else
+> +
+> +static inline int qmp_send(struct qmp *qmp, const void *data, size_t 
+> len)
+> +{
+> +	return -ENODEV;
+> +}
+> +
+> +static inline struct qmp *qmp_get(struct device *dev)
+> +{
+> +	return ERR_PTR(-ENODEV);
+> +}
+
+
+missed adding qmp_put.
+
+> +
+> +#endif
+> +
+> +#endif
+
 -- 
-2.31.1
-
+Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project.
