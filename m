@@ -2,299 +2,204 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8AABE39DBAA
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Jun 2021 13:43:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ADAE139DBAD
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Jun 2021 13:44:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231202AbhFGLoz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Jun 2021 07:44:55 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:36212 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230463AbhFGLoz (ORCPT
+        id S231342AbhFGLqU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Jun 2021 07:46:20 -0400
+Received: from mo4-p02-ob.smtp.rzone.de ([81.169.146.169]:25901 "EHLO
+        mo4-p02-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230237AbhFGLqT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Jun 2021 07:44:55 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1623066184; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=97EjolioTr/dzk8Rhja2FM2bBWL8D1t49C3Tr8J/VBM=;
- b=Z2SLjx6c0HaSOL34hzWkz//xSRG6SNSNlxgO8ke5qTL9f1H7OrEc2D7pJw3Szt5O1VbMqsg5
- c3bsS0bljblKhT4vg4JJ4VcqapTCzEOO3wH65gA+t4vsJr8GMiEvUEoyANitJ++cL1I1DFtr
- CnXc6VW8qeN/FEyoxexWjS+o2z0=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
- 60be0622f726fa41886b7a41 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 07 Jun 2021 11:42:26
- GMT
-Sender: sibis=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 38B9BC43460; Mon,  7 Jun 2021 11:42:25 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: sibis)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 2C05BC433F1;
-        Mon,  7 Jun 2021 11:42:24 +0000 (UTC)
+        Mon, 7 Jun 2021 07:46:19 -0400
+ARC-Seal: i=1; a=rsa-sha256; t=1623066258; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=o25I3NXYEF6msRfv+uU2SQlrVkm9JpJCOBnwVJe931m2RZPOS06A+g1jWNTlQIP5Br
+    J2OftZZenzHid4pTNDBc5WPcwkFeWRT4H0FZO004GtBkuLGnTt8BDNL1EP800g5YHPM1
+    9feJWAhNgptm9vayuCc+rL9hDKliCBRxHuxLQNOxTqIwT3X8UAbvMcJMRbB6nON5Yjak
+    Sa0IRqfoqdRFgfFEHaP2/6efWwZ3w3Dei9wAlHU3LZrTZ7crbXkEoP3Yx8DKj/E06tqa
+    ZnPxYsQpgaft3NWNJW5ys/oVfYPA3lnw9HjA+ODuirb7PwYA2OiwitYKI12xCFUn3Aq6
+    aFMg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1623066258;
+    s=strato-dkim-0002; d=strato.com;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=Vdy9tEfiBAFvvsoNtMx1ub8MckqnBpdQT6Woicrtes8=;
+    b=Px2QJZ3A/g45ep6XfZx3rGaqslunXAUWL74cE1FVeZWJQSiahLxsC8zlfp6rRqs3u8
+    eklYaTKvIuHze1hOjNSpHdcsp5Qy0apG+P5pyIQ4bRy8Rap2IhjZBTHWuA8zL+xJS71r
+    vd664ImeVS4qjXo0w+aNCFpA4Ojkqzy2/vMCY7U/aOjLs5UE9p53LG1oUcHWXaWmIYJR
+    g3jIDau5bJ6yir+xFB6rqfLrEuhy9BnosqK6r8YQTI+GWkqwEg3kKJhWacIk5Io+Br7C
+    /f4IMQTeZwBKrk40gleCDlQZ3Do8IbkfzbmIUwLitstwJCucZWdCieGxTZEEVPkDHbYj
+    mPlA==
+ARC-Authentication-Results: i=1; strato.com;
+    dkim=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1623066258;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=Vdy9tEfiBAFvvsoNtMx1ub8MckqnBpdQT6Woicrtes8=;
+    b=KxR+fQdIYS1BYJ21qEH1QYmHXREyNsbNPxB8TLFXr+ll70Bv//k+/hjMSJIyJZpYUC
+    vqUmxGyGutsR3xOnQzWvW+6XXIhffbMyWz7HGBVC++RU3PHXSMlwD6F+5G1jD+2I3wMK
+    rRBhzwz0hJE9hD4w2n7gGlsvU33hxhsqlN5K1VKmR6XUX5Gj+SRDDirY+Q7riPd69+xe
+    ZwgzrpjF9WHODckqsZEmby48kSMx0vj5bW66cuUBnDBaV8oTNVDB+6QigIIpLOMHmfpd
+    sW++lXwQGXJQmYFwA3GIkmi2fi/+loNS1lla4ynPpFK87DFnpxTUedVpAseVZ3trUVQY
+    HZEQ==
+Authentication-Results: strato.com;
+    dkim=none
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u26zEodhPgRDZ8j7Ic/BBg=="
+X-RZG-CLASS-ID: mo00
+Received: from gerhold.net
+    by smtp.strato.de (RZmta 47.27.2 DYNA|AUTH)
+    with ESMTPSA id y01375x57BiHUEO
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Mon, 7 Jun 2021 13:44:17 +0200 (CEST)
+Date:   Mon, 7 Jun 2021 13:44:08 +0200
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Toke =?iso-8859-1?Q?H=F8iland-J=F8rgensen?= <toke@redhat.com>
+Cc:     Loic Poulain <loic.poulain@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Aleksander Morgado <aleksander@aleksander.es>,
+        Network Development <netdev@vger.kernel.org>,
+        linux-remoteproc@vger.kernel.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Ohad Ben-Cohen <ohad@wizery.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>
+Subject: Re: [RFC] Integrate RPMSG/SMD into WWAN subsystem
+Message-ID: <YL4GiEEcOQC2XrjP@gerhold.net>
+References: <YLfL9Q+4860uqS8f@gerhold.net>
+ <CAMZdPi9tcye-4P4i0uXZcECJ-Big5T11JdvdXW6k2mEEi9XwyA@mail.gmail.com>
+ <YLtDB2Cz5ttewsFu@gerhold.net>
+ <CAMZdPi_-Qa=JnThHs_h-144dAfSAjF5s+QdBawdXZ3kk8Mx8ng@mail.gmail.com>
+ <YL364+xK3mE2FU8a@gerhold.net>
+ <87sg1tvryx.fsf@toke.dk>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Mon, 07 Jun 2021 17:12:24 +0530
-From:   Sibi Sankar <sibis@codeaurora.org>
-To:     Deepak Kumar Singh <deesin@codeaurora.org>
-Cc:     bjorn.andersson@linaro.org, clew@codeaurora.org,
-        manivannan.sadhasivam@linaro.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        deesin=codeaurora.org@codeaurora.org
-Subject: Re: [PATCH V3 1/2] soc: qcom: aoss: Expose send for generic usecase
-In-Reply-To: <1620320818-2206-2-git-send-email-deesin@codeaurora.org>
-References: <1620320818-2206-1-git-send-email-deesin@codeaurora.org>
- <1620320818-2206-2-git-send-email-deesin@codeaurora.org>
-Message-ID: <80c85e9a6f2ac5c3b8c77a1c9a18b9cc@codeaurora.org>
-X-Sender: sibis@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87sg1tvryx.fsf@toke.dk>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hey Deepak,
+On Mon, Jun 07, 2021 at 01:23:18PM +0200, Toke Høiland-Jørgensen wrote:
+> Stephan Gerhold <stephan@gerhold.net> writes:
+> > On Mon, Jun 07, 2021 at 11:27:07AM +0200, Loic Poulain wrote:
+> >> On Sat, 5 Jun 2021 at 11:25, Stephan Gerhold <stephan@gerhold.net> wrote:
+> >> > On Fri, Jun 04, 2021 at 11:11:45PM +0200, Loic Poulain wrote:
+> >> > > On Wed, 2 Jun 2021 at 20:20, Stephan Gerhold <stephan@gerhold.net> wrote:
+> >> > > > I've been thinking about creating some sort of "RPMSG" driver for the
+> >> > > > new WWAN subsystem; this would be used as a QMI/AT channel to the
+> >> > > > integrated modem on some older Qualcomm SoCs such as MSM8916 and MSM8974.
+> >> > > >
+> >> > > > It's easy to confuse all the different approaches that Qualcomm has to
+> >> > > > talk to their modems, so I will first try to briefly give an overview
+> >> > > > about those that I'm familiar with:
+> >> > > >
+> >> > > > ---
+> >> > > > There is USB and MHI that are mainly used to talk to "external" modems.
+> >> > > >
+> >> > > > For the integrated modems in many Qualcomm SoCs there is typically
+> >> > > > a separate control and data path. They are not really related to each
+> >> > > > other (e.g. currently no common parent device in sysfs).
+> >> > > >
+> >> > > > For the data path (network interface) there is "IPA" (drivers/net/ipa)
+> >> > > > on newer SoCs or "BAM-DMUX" on some older SoCs (e.g. MSM8916/MSM8974).
+> >> > > > I have a driver for BAM-DMUX that I hope to finish up and submit soon.
+> >> > > >
+> >> > > > The connection is set up via QMI. The messages are either sent via
+> >> > > > a shared RPMSG channel (net/qrtr sockets in Linux) or via standalone
+> >> > > > SMD/RPMSG channels (e.g. "DATA5_CNTL" for QMI and "DATA1" for AT).
+> >> > > >
+> >> > > > This gives a lot of possible combinations like BAM-DMUX+RPMSG
+> >> > > > (MSM8916, MSM8974), or IPA+QRTR (SDM845) but also other funny
+> >> > > > combinations like IPA+RPMSG (MSM8994) or BAM-DMUX+QRTR (MSM8937).
+> >> > > >
+> >> > > > Simply put, supporting all these in userspace like ModemManager
+> >> > > > is a mess (Aleksander can probably confirm).
+> >> > > > It would be nice if this could be simplified through the WWAN subsystem.
+> >> > > >
+> >> > > > It's not clear to me if or how well QRTR sockets can be mapped to a char
+> >> > > > device for the WWAN subsystem, so for now I'm trying to focus on the
+> >> > > > standalone RPMSG approach (for MSM8916, MSM8974, ...).
+> >> > > > ---
+> >> > > >
+> >> > > > Currently ModemManager uses the RPMSG channels via the rpmsg-chardev
+> >> > > > (drivers/rpmsg/rpmsg_char.c). It wasn't my idea to use it like this,
+> >> > > > I just took that over from someone else. Realistically speaking, the
+> >> > > > current approach isn't too different from the UCI "backdoor interface"
+> >> > > > approach that was rejected for MHI...
+> >> > > >
+> >> > > > I kind of expected that I can just trivially copy some code from
+> >> > > > rpmsg_char.c into a WWAN driver since they both end up as a simple char
+> >> > > > device. But it looks like the abstractions in wwan_core are kind of
+> >> > > > getting in the way here... As far as I can tell, they don't really fit
+> >> > > > together with the RPMSG interface.
+> >> > > >
+> >> > > > For example there is rpmsg_send(...) (blocking) and rpmsg_trysend(...)
+> >> > > > (non-blocking) and even a rpmsg_poll(...) [1] but I don't see a way to
+> >> > > > get notified when the TX queue is full or no longer full so I can call
+> >> > > > wwan_port_txon/off().
+> >> > > >
+> >> > > > Any suggestions or other thoughts?
+> >> > >
+> >> > > It would be indeed nice to get this in the WWAN framework.
+> >> > > I don't know much about rpmsg but I think it is straightforward for
+> >> > > the RX path, the ept_cb can simply forward the buffers to
+> >> > > wwan_port_rx.
+> >> >
+> >> > Right, that part should be straightforward.
+> >> >
+> >> > > For tx, simply call rpmsg_trysend() in the wwan tx
+> >> > > callback and don't use the txon/off helpers. In short, keep it simple
+> >> > > and check if you observe any issues.
+> >> > >
+> >> >
+> >> > I'm not sure that's a good idea. This sounds like exactly the kind of
+> >> > thing that might explode later just because I don't manage to get the
+> >> > TX queue full in my tests. In that case, writing to the WWAN char dev
+> >> > would not block, even if O_NONBLOCK is not set.
+> >> 
+> >> Right, if you think it could be a problem, you can always implement a
+> >> more complex solution like calling rpmsg_send from a
+> >> workqueue/kthread, and only re-enable tx once rpmsg_send returns.
+> >> 
+> >
+> > I did run into trouble when I tried to stream lots of data into the WWAN
+> > char device (e.g. using dd). However, in practice (with ModemManager) 
+> > I did not manage to cause such issues yet. Personally, I think it's
+> > something we should get right, just to avoid trouble later
+> > (like "modem suddenly stops working").
+> >
+> > Right now I extended the WWAN port ops a bit so I tells me if the write
+> > should be non-blocking or blocking and so I can call rpmsg_poll(...).
+> >
+> > But having some sort of workqueue also sounds like it could work quite
+> > well, thanks for the suggestion! Will think about it some more, or
+> > I might post what I have right now so you can take a look.
+> 
+> How big are those hardware TXQs? Just pushing packets to the hardware
+> until it overflows sounds like a recipe for absolutely terrible
+> bufferbloat... That would be bad!
+> 
 
-Thanks for the patch!
+For reference, we're not really talking about "hardware" TXQs here.
+As far as I understand, the RPMSG channels on Qualcomm devices are
+mostly just a firmware convention for communicating between different
+CPUs/DSPs via shared memory.
 
-On 2021-05-06 22:36, Deepak Kumar Singh wrote:
-> Not all upcoming usecases will have an interface to allow the aoss
-> driver to hook onto. Expose the send api and create a get function to
-> enable drivers to send their own messages to aoss.
-> 
-> Signed-off-by: Chris Lew <clew@codeaurora.org>
-> Signed-off-by: Deepak Kumar Singh <deesin@codeaurora.org>
-> ---
->  drivers/soc/qcom/qcom_aoss.c       | 70 
-> ++++++++++++++++++++++++++++++++++++--
->  include/linux/soc/qcom/qcom_aoss.h | 33 ++++++++++++++++++
->  2 files changed, 101 insertions(+), 2 deletions(-)
->  create mode 100644 include/linux/soc/qcom/qcom_aoss.h
-> 
-> diff --git a/drivers/soc/qcom/qcom_aoss.c 
-> b/drivers/soc/qcom/qcom_aoss.c
-> index 53acb94..cd75d4d 100644
-> --- a/drivers/soc/qcom/qcom_aoss.c
-> +++ b/drivers/soc/qcom/qcom_aoss.c
-> @@ -8,10 +8,12 @@
->  #include <linux/io.h>
->  #include <linux/mailbox_client.h>
->  #include <linux/module.h>
-> +#include <linux/of_platform.h>
->  #include <linux/platform_device.h>
->  #include <linux/pm_domain.h>
->  #include <linux/thermal.h>
->  #include <linux/slab.h>
-> +#include <linux/soc/qcom/qcom_aoss.h>
-> 
->  #define QMP_DESC_MAGIC			0x0
->  #define QMP_DESC_VERSION		0x4
-> @@ -61,6 +63,7 @@ struct qmp_cooling_device {
->   * @mbox_chan: mailbox channel used to ring the doorbell on transmit
->   * @offset: offset within @msgram where messages should be written
->   * @size: maximum size of the messages to be transmitted
-> + * @orphan: tarcks whether qmp handle is valid
->   * @event: wait_queue for synchronization with the IRQ
->   * @tx_lock: provides synchronization between multiple callers of 
-> qmp_send()
->   * @qdss_clk: QDSS clock hw struct
-> @@ -76,6 +79,8 @@ struct qmp {
-> 
->  	size_t offset;
->  	size_t size;
-> +	atomic_t  orphan;
-> +	struct kref refcount;
-> 
->  	wait_queue_head_t event;
-> 
-> @@ -223,11 +228,17 @@ static bool qmp_message_empty(struct qmp *qmp)
->   *
->   * Return: 0 on success, negative errno on failure
->   */
-> -static int qmp_send(struct qmp *qmp, const void *data, size_t len)
-> +int qmp_send(struct qmp *qmp, const void *data, size_t len)
->  {
->  	long time_left;
->  	int ret;
-> 
-> +	if (WARN_ON(IS_ERR_OR_NULL(qmp) || !data))
-> +		return -EINVAL;
-> +
-> +	if (atomic_read(&qmp->orphan))
-> +		return -EINVAL;
-> +
->  	if (WARN_ON(len + sizeof(u32) > qmp->size))
->  		return -EINVAL;
-> 
-> @@ -261,6 +272,7 @@ static int qmp_send(struct qmp *qmp, const void
-> *data, size_t len)
-> 
->  	return ret;
->  }
-> +EXPORT_SYMBOL(qmp_send);
-> 
->  static int qmp_qdss_clk_prepare(struct clk_hw *hw)
->  {
-> @@ -515,6 +527,54 @@ static void qmp_cooling_devices_remove(struct qmp 
-> *qmp)
->  		thermal_cooling_device_unregister(qmp->cooling_devs[i].cdev);
->  }
-> 
-> +/**
-> + * qmp_get() - get a qmp handle from a device
-> + * @dev: client device pointer
-> + *
-> + * Return: handle to qmp device on success, ERR_PTR() on failure
-> + */
-> +struct qmp *qmp_get(struct device *dev)
-> +{
-> +	struct platform_device *pdev;
-> +	struct device_node *np;
-> +	struct qmp *qmp;
-> +
-> +	if (!dev || !dev->of_node)
-> +		return ERR_PTR(-EINVAL);
-> +
-> +	np = of_parse_phandle(dev->of_node, "qcom,qmp", 0);
-> +	if (!np)
-> +		return ERR_PTR(-ENODEV);
-> +
-> +	pdev = of_find_device_by_node(np);
-> +	of_node_put(np);
-> +	if (!pdev)
-> +		return ERR_PTR(-EINVAL);
-> +
-> +	qmp = platform_get_drvdata(pdev);
-> +	platform_device_put(pdev);
-> +
-> +	if (qmp)
-> +		kref_get(&qmp->refcount);
-> +
-> +	return qmp ? qmp : ERR_PTR(-EPROBE_DEFER);
-> +}
-> +EXPORT_SYMBOL(qmp_get);
-> +
-> +static void qmp_handle_release(struct kref *ref)
-> +{
-> +	struct qmp *qmp = container_of(ref, struct qmp, refcount);
-> +
-> +	kfree(qmp);
-> +}
-> +
-> +void qmp_put(struct qmp *qmp)
-> +{
-> +	if (!IS_ERR_OR_NULL(qmp))
-> +		kref_put(&qmp->refcount, qmp_handle_release);
-> +}
-> +EXPORT_SYMBOL(qmp_put);
-> +
->  static int qmp_probe(struct platform_device *pdev)
->  {
->  	struct resource *res;
-> @@ -522,13 +582,14 @@ static int qmp_probe(struct platform_device 
-> *pdev)
->  	int irq;
->  	int ret;
-> 
-> -	qmp = devm_kzalloc(&pdev->dev, sizeof(*qmp), GFP_KERNEL);
-> +	qmp = kzalloc(sizeof(*qmp), GFP_KERNEL);
->  	if (!qmp)
->  		return -ENOMEM;
-> 
->  	qmp->dev = &pdev->dev;
->  	init_waitqueue_head(&qmp->event);
->  	mutex_init(&qmp->tx_lock);
-> +	kref_init(&qmp->refcount);
-> 
->  	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
->  	qmp->msgram = devm_ioremap_resource(&pdev->dev, res);
-> @@ -569,6 +630,8 @@ static int qmp_probe(struct platform_device *pdev)
-> 
->  	platform_set_drvdata(pdev, qmp);
-> 
-> +	atomic_set(&qmp->orphan, 0);
-> +
->  	return 0;
-> 
->  err_remove_qdss_clk:
-> @@ -577,6 +640,7 @@ static int qmp_probe(struct platform_device *pdev)
->  	qmp_close(qmp);
->  err_free_mbox:
->  	mbox_free_channel(qmp->mbox_chan);
-> +	kfree(qmp);
-> 
->  	return ret;
->  }
-> @@ -590,7 +654,9 @@ static int qmp_remove(struct platform_device *pdev)
->  	qmp_cooling_devices_remove(qmp);
-> 
->  	qmp_close(qmp);
-> +	atomic_set(&qmp->orphan, 1);
->  	mbox_free_channel(qmp->mbox_chan);
-> +	kref_put(&qmp->refcount, qmp_handle_release);
-> 
->  	return 0;
->  }
-> diff --git a/include/linux/soc/qcom/qcom_aoss.h
-> b/include/linux/soc/qcom/qcom_aoss.h
-> new file mode 100644
-> index 0000000..27d00f7
-> --- /dev/null
-> +++ b/include/linux/soc/qcom/qcom_aoss.h
-> @@ -0,0 +1,33 @@
-> +/* SPDX-License-Identifier: GPL-2.0-only */
-> +/*
-> + * Copyright (c) 2020, The Linux Foundation. All rights reserved.
-> + */
-> +
-> +#ifndef __QCOM_AOSS_H__
-> +#define __QCOM_AOSS_H__
-> +
-> +#include <linux/err.h>
-> +#include <linux/device.h>
-> +
-> +struct qmp;
-> +
-> +#if IS_ENABLED(CONFIG_QCOM_AOSS_QMP)
-> +
-> +int qmp_send(struct qmp *qmp, const void *data, size_t len);
-> +struct qmp *qmp_get(struct device *dev);
+The packets are copied into some kind of shared FIFO/ring buffer
+per channel, with varying sizes. On my test device, the firmware
+allcates 1024 bytes for the QMI channel and 8192 bytes
+for the AT channel.
 
-missed adding qmp_put.
+I'm not sure how this would cause any kind of overflow/bufferbloat.
+The remote side (e.g. modem DSP) is notified separately for every packet
+that is sent. If we're really writing more quickly than the remote side
+will read, rpmsg_send() will block and therefore the client will
+block as well (since tx was disabled before calling rpmsg_send()).
 
-> +
-> +#else
-> +
-> +static inline int qmp_send(struct qmp *qmp, const void *data, size_t 
-> len)
-> +{
-> +	return -ENODEV;
-> +}
-> +
-> +static inline struct qmp *qmp_get(struct device *dev)
-> +{
-> +	return ERR_PTR(-ENODEV);
-> +}
-
-
-missed adding qmp_put.
-
-> +
-> +#endif
-> +
-> +#endif
-
--- 
-Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project.
+Thanks,
+Stephan
