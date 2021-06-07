@@ -2,112 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 90DB139E56B
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Jun 2021 19:30:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A5BFD39E5DD
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Jun 2021 19:48:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230272AbhFGRce (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Jun 2021 13:32:34 -0400
-Received: from mga02.intel.com ([134.134.136.20]:61742 "EHLO mga02.intel.com"
+        id S230520AbhFGRuD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Jun 2021 13:50:03 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:13353 "EHLO m43-7.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230266AbhFGRce (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Jun 2021 13:32:34 -0400
-IronPort-SDR: ZAZM8Xqh3GcRawNmstUShO7qRyg6kY7yiQJd2/ZwCxt8CjnQg8UoBUPAuG63dcjZcBPP0F3fYD
- qE/cIheAjyiA==
-X-IronPort-AV: E=McAfee;i="6200,9189,10008"; a="191778267"
-X-IronPort-AV: E=Sophos;i="5.83,255,1616482800"; 
-   d="scan'208";a="191778267"
-Received: from orsmga008.jf.intel.com ([10.7.209.65])
-  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Jun 2021 10:30:41 -0700
-IronPort-SDR: deirWvcCsgtdXm90yHp0Uzo2d9GpC2TweX2Cmw0E55DhCmB2kxSVjbhDMQXjthAHCKFtCmE0hY
- MB6b1F0LqgUA==
-X-IronPort-AV: E=Sophos;i="5.83,255,1616482800"; 
-   d="scan'208";a="447563923"
-Received: from rjwysock-mobl1.ger.corp.intel.com (HELO [10.249.139.144]) ([10.249.139.144])
-  by orsmga008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Jun 2021 10:30:38 -0700
-Subject: Re: [PATCH] cpuidle: ARM_QCOM_SPM_CPUIDLE should depend on
- HAVE_ARM_SMCCC
-To:     Stephan Gerhold <stephan@gerhold.net>,
-        Randy Dunlap <rdunlap@infradead.org>
-Cc:     linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, He Ying <heying24@huawei.com>,
-        Arnd Bergmann <arnd@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Linux PM <linux-pm@vger.kernel.org>
-References: <20210606190048.689-1-rdunlap@infradead.org>
- <YL4Is1LNzBuViF3/@gerhold.net>
-From:   "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Organization: Intel Technology Poland Sp. z o. o., KRS 101882, ul. Slowackiego
- 173, 80-298 Gdansk
-Message-ID: <7a207351-43e1-d439-9d86-bb28b6935fa2@intel.com>
-Date:   Mon, 7 Jun 2021 19:30:36 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.10.2
+        id S229997AbhFGRuD (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 7 Jun 2021 13:50:03 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1623088091; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=MFuDFvHXYlR2gGa8jeKkSiXVOoZvWtSWsoYMxROMkaU=;
+ b=Bgf6zsjgCTqIOyck6BMLRusUCOxe+UDs9S73Uu+IU2quVtUXHWJJLrpbIPCAu81dBwsjP3JP
+ SH8pdfsuAQMocjz5bLwNSQIOBJMPLBLR1TfR5dLPGyCmyZG3sTjHmi1pme2jLfkvDEL8ZQ3j
+ j0Wcfht5T0AvfqsOoJeJ1vWzmsw=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
+ 60be5bd4f726fa41885a6c49 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 07 Jun 2021 17:48:04
+ GMT
+Sender: khsieh=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id D122EC43460; Mon,  7 Jun 2021 17:48:03 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: khsieh)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5EB0FC4338A;
+        Mon,  7 Jun 2021 17:48:02 +0000 (UTC)
 MIME-Version: 1.0
-In-Reply-To: <YL4Is1LNzBuViF3/@gerhold.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
 Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Date:   Mon, 07 Jun 2021 10:48:02 -0700
+From:   khsieh@codeaurora.org
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     robdclark@gmail.com, sean@poorly.run, swboyd@chromium.org,
+        vkoul@kernel.org, agross@kernel.org, robh+dt@kernel.org,
+        devicetree@vger.kernel.org, abhinavk@codeaurora.org,
+        aravindh@codeaurora.org, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] arm64/dts/qcom/sc7180: Add Display Port dt node
+In-Reply-To: <YLxX/YtegtbLmkri@builder.lan>
+References: <1622736555-15775-1-git-send-email-khsieh@codeaurora.org>
+ <YLkI/6ItCz+SbbuJ@yoga> <ac326ec8689c0babb08b2311e19d52cc@codeaurora.org>
+ <YLxX/YtegtbLmkri@builder.lan>
+Message-ID: <ef1879fa7ecfefaf0c70c7a4782240a9@codeaurora.org>
+X-Sender: khsieh@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 6/7/2021 1:53 PM, Stephan Gerhold wrote:
-> Hi!
->
-> On Sun, Jun 06, 2021 at 12:00:48PM -0700, Randy Dunlap wrote:
->> QCOM_SCM depends on HAVE_ARM_SMCCC, so ARM_QCOM_SPM_CPUIDLE should
->> also depend on HAVE_ARM_SMCCC since 'select' does not follow any
->> dependency chains.
->>
->> This fixes a kconfig warning and subsequent build errors:
->>
->> WARNING: unmet direct dependencies detected for QCOM_SCM
->>    Depends on [n]: (ARM [=y] || ARM64) && HAVE_ARM_SMCCC [=n]
->>    Selected by [y]:
->>    - ARM_QCOM_SPM_CPUIDLE [=y] && CPU_IDLE [=y] && (ARM [=y] || ARM64) && (ARCH_QCOM [=n] || COMPILE_TEST [=y]) && !ARM64 && MMU [=y]
->>
->> arm-linux-gnueabi-ld: drivers/firmware/qcom_scm-smc.o: in function `__scm_smc_do_quirk':
->> qcom_scm-smc.c:(.text+0x5c): undefined reference to `__arm_smccc_smc'
->> arm-linux-gnueabi-ld: drivers/firmware/qcom_scm-legacy.o: in function `scm_legacy_call':
->> qcom_scm-legacy.c:(.text+0x140): undefined reference to `__arm_smccc_smc'
->> arm-linux-gnueabi-ld: drivers/firmware/qcom_scm-legacy.o: in function `scm_legacy_call_atomic':
->> qcom_scm-legacy.c:(.text+0x364): undefined reference to `__arm_smccc_smc'
->>
->> Fixes: a871be6b8eee ("cpuidle: Convert Qualcomm SPM driver to a generic CPUidle driver")
->> Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
->> Cc: Stephan Gerhold <stephan@gerhold.net>
->> Cc: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
->> Cc: Andy Gross <agross@kernel.org>
->> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
->> Cc: linux-arm-msm@vger.kernel.org
->> Cc: He Ying <heying24@huawei.com>
-> There was a similar patch from Arnd a while ago (which fixes another
-> warning for ARM_CPU_SUSPEND?):
->
-> https://lore.kernel.org/linux-pm/20210421135723.3601743-1-arnd@kernel.org/
->
-> I'm not sure who is supposed to pick it up. :)
+On 2021-06-05 22:07, Bjorn Andersson wrote:
+> On Thu 03 Jun 16:56 CDT 2021, khsieh@codeaurora.org wrote:
+> 
+>> On 2021-06-03 09:53, Bjorn Andersson wrote:
+>> > On Thu 03 Jun 11:09 CDT 2021, Kuogee Hsieh wrote:
+> [..]
+>> > > diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+> [..]
+>> > > +				power-domains = <&rpmhpd SC7180_CX>;
+>> >
+>> > Just curious, but isn't the DP block in the MDSS_GDCS? Or do we need to
+>> > mention CX here in order for the opp framework to apply required-opps
+>> > of CX?
+>> 
+>> yes,
+> 
+> If you want me, or other maintainers, to spend any time reviewing or
+> applying your patches going forward then you need to actually bother
+> replying properly to the questions asked.
+> 
+> Thanks,
+> Bjorn
 
-ARM cpuidle drivers are maintained by Daniel Lezcano.
-
-Also, please CC power management material to linux-pm@vger.kernel.org.
-
-
->
->> ---
->>   drivers/cpuidle/Kconfig.arm |    1 +
->>   1 file changed, 1 insertion(+)
->>
->> --- linux-next-20210604.orig/drivers/cpuidle/Kconfig.arm
->> +++ linux-next-20210604/drivers/cpuidle/Kconfig.arm
->> @@ -108,6 +108,7 @@ config ARM_TEGRA_CPUIDLE
->>   config ARM_QCOM_SPM_CPUIDLE
->>   	bool "CPU Idle Driver for Qualcomm Subsystem Power Manager (SPM)"
->>   	depends on (ARCH_QCOM || COMPILE_TEST) && !ARM64 && MMU
->> +	depends on HAVE_ARM_SMCCC
->>   	select ARM_CPU_SUSPEND
->>   	select CPU_IDLE_MULTIPLE_DRIVERS
->>   	select DT_IDLE_STATES
-
-
+Sorry about the confusion. What I meant is that even though DP 
+controller is in the MDSS_GDSC
+power domain, DP PHY/PLL sources out of CX. The DP link clocks have a 
+direct impact
+on the CX voltage corners. Therefore, we need to mention the CX power 
+domain here. And, since
+we can associate only one OPP table with one device, we picked the DP 
+link clock over other
+clocks.
