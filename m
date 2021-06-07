@@ -2,107 +2,141 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4E33B39D32C
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Jun 2021 04:55:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8EC0339D4B0
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Jun 2021 08:12:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230187AbhFGC5Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 6 Jun 2021 22:57:24 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:11671 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230127AbhFGC5Y (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 6 Jun 2021 22:57:24 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1623034533; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=KJV8f/5MUtIQ+OIjIwk4fwm9EsA/WiuotihBkKF1cpI=;
- b=mpS+eQmlXa7hXFjzcZN5ap90TGN21KbtCwp/HsowdTw9+uCtQnEBukzO/mXVeOMn0urMADxS
- yFX742Ky6snvzTtZTxuFhB78Qnvek/llZmuFUIb/T1UV+MMz5BkVJRbskE3gZd3W2tXPGdaj
- aA1Uh5u5ikwZZjyi0Wfadtyesf0=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
- 60bd8aa58491191eb3c3f02d (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 07 Jun 2021 02:55:33
- GMT
-Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id E1EE8C43460; Mon,  7 Jun 2021 02:55:32 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 19236C433D3;
-        Mon,  7 Jun 2021 02:55:31 +0000 (UTC)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Mon, 07 Jun 2021 08:25:30 +0530
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>
-Cc:     iommu@lists.linux-foundation.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
-        Rob Clark <robdclark@gmail.com>,
-        Akhil P Oommen <akhilpo@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        saiprakash.ranjan=codeaurora.org@codeaurora.org
-Subject: Re: [PATCHv3 0/2] iommu/arm-smmu-qcom: Add SC7280 support
-In-Reply-To: <664abf04654d78b08b118d11c7c03d99@codeaurora.org>
-References: <cover.1618898456.git.saiprakash.ranjan@codeaurora.org>
- <664abf04654d78b08b118d11c7c03d99@codeaurora.org>
-Message-ID: <8eee199f10daa93407914f58bfefd6c1@codeaurora.org>
-X-Sender: saiprakash.ranjan@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+        id S230197AbhFGGOY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Jun 2021 02:14:24 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:37614 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230175AbhFGGOY (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 7 Jun 2021 02:14:24 -0400
+Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
+  by alexa-out.qualcomm.com with ESMTP; 06 Jun 2021 23:12:33 -0700
+X-QCInternal: smtphost
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/AES256-SHA; 06 Jun 2021 23:12:32 -0700
+X-QCInternal: smtphost
+Received: from dikshita-linux.qualcomm.com ([10.204.65.237])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 07 Jun 2021 11:42:11 +0530
+Received: by dikshita-linux.qualcomm.com (Postfix, from userid 347544)
+        id AF6EC21A58; Mon,  7 Jun 2021 11:42:09 +0530 (IST)
+From:   Dikshita Agarwal <dikshita@codeaurora.org>
+To:     david.brown@linaro.org, robh+dt@kernel.org, mark.rutland@arm.com,
+        devicetree@vger.kernel.org, stanimir.varbanov@linaro.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        vgarodia@codeaurora.org, Dikshita Agarwal <dikshita@codeaurora.org>
+Subject: [PATCH v3] arm64: dts: qcom: sc7280: Add venus DT node
+Date:   Mon,  7 Jun 2021 11:42:07 +0530
+Message-Id: <1623046327-1970-1-git-send-email-dikshita@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Will,
+Add DT entries for the sc7280 venus encoder/decoder.
 
-On 2021-05-24 08:13, Sai Prakash Ranjan wrote:
-> Hi Will,
-> 
-> On 2021-04-20 11:34, Sai Prakash Ranjan wrote:
->> Patch 1 adds the sc7280 smmu compatible.
->> Patch 2 moves the adreno smmu check before apss smmu to enable
->> adreno smmu specific implementation.
->> 
->> Note that dt-binding for sc7280 is already merged.
->> 
->> Changes in v3:
->>  * Collect acks and reviews
->>  * Rebase on top of for-joerg/arm-smmu/updates
->> 
->> Changes in v2:
->>  * Add a comment to make sure this order is not changed in future 
->> (Jordan)
->> 
->> Sai Prakash Ranjan (2):
->>   iommu/arm-smmu-qcom: Add SC7280 SMMU compatible
->>   iommu/arm-smmu-qcom: Move the adreno smmu specific impl earlier
->> 
->>  drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 14 +++++++++++---
->>  1 file changed, 11 insertions(+), 3 deletions(-)
-> 
-> Gentle Ping!
-> 
+Co-developed-by: Mansur Alisha Shaik <mansur@codeaurora.org>
+Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
 
-Is this going to be taken for 5.14 or needs one more release cycle?
+change since v2:
+ - removed firmware node.
+change since v1:
+ - added rpmh power domain and opp table.
+---
+ arch/arm64/boot/dts/qcom/sc7280.dtsi | 71 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 71 insertions(+)
 
-Thanks,
-Sai
-
+diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+index 4c44a52..7b45623 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+@@ -60,6 +60,11 @@
+ 			no-map;
+ 			reg = <0x0 0x80b00000 0x0 0x100000>;
+ 		};
++
++		video_mem: memory@8b200000 {
++			reg = <0x0 0x8b200000 0x0 0x500000>;
++			no-map;
++		};
+ 	};
+ 
+ 	cpus {
+@@ -850,6 +855,72 @@
+ 			interrupts = <GIC_SPI 582 IRQ_TYPE_LEVEL_HIGH>;
+ 		};
+ 
++		venus: video-codec@0aa00000 {
++			compatible = "qcom,sc7280-venus";
++			reg = <0 0x0aa00000 0 0xd0600>;
++			interrupts = <GIC_SPI 174 IRQ_TYPE_LEVEL_HIGH>;
++
++			clocks = <&videocc VIDEO_CC_MVSC_CORE_CLK>,
++				 <&videocc VIDEO_CC_MVSC_CTL_AXI_CLK>,
++				 <&videocc VIDEO_CC_VENUS_AHB_CLK>,
++				 <&videocc VIDEO_CC_MVS0_CORE_CLK>,
++				 <&videocc VIDEO_CC_MVS0_AXI_CLK>;
++			clock-names = "core", "bus", "iface",
++				      "vcodec_core", "vcodec_bus";
++
++			power-domains = <&videocc MVSC_GDSC>,
++					<&videocc MVS0_GDSC>;
++					<&rpmhpd SC7280_CX>;
++			power-domain-names = "venus", "vcodec0", "cx";
++			operating-points-v2 = <&venus_opp_table>;
++
++			interconnects = <&gem_noc MASTER_APPSS_PROC 0 &cnoc2 SLAVE_VENUS_CFG 0>,
++					<&mmss_noc MASTER_VIDEO_P0 0 &mc_virt SLAVE_EBI1 0>;
++			interconnect-names = "cpu-cfg", "video-mem";
++
++			iommus = <&apps_smmu 0x2180 0x20>,
++				 <&apps_smmu 0x2184 0x20>;
++			memory-region = <&video_mem>;
++
++			video-decoder {
++				compatible = "venus-decoder";
++			};
++
++			video-encoder {
++				compatible = "venus-encoder";
++			};
++
++			venus_opp_table: venus-opp-table {
++				compatible = "operating-points-v2";
++
++				opp-133330000 {
++					opp-hz = /bits/ 64 <133330000>;
++					required-opps = <&rpmhpd_opp_low_svs>;
++				};
++
++				opp-240000000 {
++					opp-hz = /bits/ 64 <240000000>;
++					required-opps = <&rpmhpd_opp_svs>;
++				};
++
++				opp-335000000 {
++					opp-hz = /bits/ 64 <335000000>;
++					required-opps = <&rpmhpd_opp_svs_l1>;
++				};
++
++				opp-424000000 {
++					opp-hz = /bits/ 64 <424000000>;
++					required-opps = <&rpmhpd_opp_nom>;
++				};
++
++				opp-460000000 {
++					opp-hz = /bits/ 64 <460000000>;
++					required-opps = <&rpmhpd_opp_turbo>;
++				};
++			};
++
++		};
++
+ 		videocc: clock-controller@aaf0000 {
+ 			compatible = "qcom,sc7280-videocc";
+ 			reg = <0 0xaaf0000 0 0x10000>;
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
-member
-of Code Aurora Forum, hosted by The Linux Foundation
+2.7.4
+
