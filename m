@@ -2,186 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8991339D144
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Jun 2021 22:17:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4E33B39D32C
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Jun 2021 04:55:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230104AbhFFUTG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 6 Jun 2021 16:19:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40220 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230158AbhFFUSv (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 6 Jun 2021 16:18:51 -0400
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73914C061795
-        for <linux-arm-msm@vger.kernel.org>; Sun,  6 Jun 2021 13:17:00 -0700 (PDT)
-Received: by mail-ed1-x52e.google.com with SMTP id r11so17585143edt.13
-        for <linux-arm-msm@vger.kernel.org>; Sun, 06 Jun 2021 13:17:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=snejp.pl; s=gmail;
-        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=qqv/zIOjF7NIyGSn6gjOvY+easTFG+SbModa0mydre0=;
-        b=ngi3GO87bf82JBszh9x1WrlJpUMr6tKYc5Xpyf18N0WQ1Qp8qC8vgwBtn/bCmUA6Gw
-         cti4hDldWE9EH+zn1CNBeo1amj+evmleTIlWX7UUW1wEA3i9xpl+Oo0qGMhWgBXyvBuH
-         DveCYykijKUCf/7xbNgK9QThElkjeyoxyhIY9FVcs+0diw0jpi5Wi+7qP464idM0QGx7
-         j/ROBJGdaP7ejmz8ie25IGLSRBdWsVzsgJFf4EaGGJ11pAp/maPO9lKp7pmZwWXSrZmX
-         CP7bOkTgYn8trQ5FnN6+OTBbt9R4qXhINwU9bQeAq5QZQFv81RlNASLsY55WZMWRLzev
-         bNJA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=qqv/zIOjF7NIyGSn6gjOvY+easTFG+SbModa0mydre0=;
-        b=eyFn4MgLJsU1qeyeYaokUMurOiznb/RSfUOBGFy+3iEACLNXMCo6lJ4M0IdSB7ldHg
-         yQ6WYLWPNS72Jnp0doS+TETz2OXiXcy/NbqgDaaB2l92dqnxz23mf2le5pev/YZYNEVy
-         CzRRJ/0lbL3/YqqlIKKIRLcn9qT+5IhaS8kpcnQmB22/Wr8Ym5OT7LAKKyCnEgmp0N7V
-         InQcdZL/9bR3PlqtMMGeMjP6pAfKUNsoq2m4jsaguciB/4lTo/wNIx1s2I8a8q+fw3kj
-         71Y3YEhBVK+r9vSY8/NVh+1TVa8b7CB07G/9pBBBumP6rHp3uWkXdIHU6Wc1XQKfe7cg
-         Eqzw==
-X-Gm-Message-State: AOAM533iwf6LW+zD6DqOvul7IQRmoYyvJt5lp6zdSd4heH2hCjgkdigY
-        0Y9qi4qK7Jjb1wa1OjxV7etZDdfl69mHGZZSt28=
-X-Google-Smtp-Source: ABdhPJyC8Za9uHMXOdmHWNxp1ZB/q/0EUA8vonNdpV64QvjM9o48iCAQzT/b02iu7HThSlhwOoNWzw==
-X-Received: by 2002:aa7:d590:: with SMTP id r16mr16850650edq.355.1623010619108;
-        Sun, 06 Jun 2021 13:16:59 -0700 (PDT)
-Received: from PackardBell (192038129059.mbb.telenor.dk. [192.38.129.59])
-        by smtp.googlemail.com with ESMTPSA id v8sm2211623edc.59.2021.06.06.13.16.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 06 Jun 2021 13:16:58 -0700 (PDT)
-Received: from localhost (PackardBell [local])
-        by PackardBell (OpenSMTPD) with ESMTPA id 49482cf5;
-        Sun, 6 Jun 2021 20:16:53 +0000 (UTC)
-From:   Bartosz Dudziak <bartosz.dudziak@snejp.pl>
-To:     Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Russell King <linux@armlinux.org.uk>,
-        David Sterba <dsterba@suse.com>, Jens Axboe <axboe@kernel.dk>,
-        Bartosz Dudziak <bartosz.dudziak@snejp.pl>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-Subject: [PATCH v2 2/2] arm: qcom: Add SMP support for MSM8226
-Date:   Sun,  6 Jun 2021 22:16:12 +0200
-Message-Id: <20210606201612.100752-3-bartosz.dudziak@snejp.pl>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20210606201612.100752-1-bartosz.dudziak@snejp.pl>
-References: <20210606201612.100752-1-bartosz.dudziak@snejp.pl>
+        id S230187AbhFGC5Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 6 Jun 2021 22:57:24 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:11671 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230127AbhFGC5Y (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 6 Jun 2021 22:57:24 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1623034533; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=KJV8f/5MUtIQ+OIjIwk4fwm9EsA/WiuotihBkKF1cpI=;
+ b=mpS+eQmlXa7hXFjzcZN5ap90TGN21KbtCwp/HsowdTw9+uCtQnEBukzO/mXVeOMn0urMADxS
+ yFX742Ky6snvzTtZTxuFhB78Qnvek/llZmuFUIb/T1UV+MMz5BkVJRbskE3gZd3W2tXPGdaj
+ aA1Uh5u5ikwZZjyi0Wfadtyesf0=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
+ 60bd8aa58491191eb3c3f02d (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 07 Jun 2021 02:55:33
+ GMT
+Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id E1EE8C43460; Mon,  7 Jun 2021 02:55:32 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 19236C433D3;
+        Mon,  7 Jun 2021 02:55:31 +0000 (UTC)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Mon, 07 Jun 2021 08:25:30 +0530
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>
+Cc:     iommu@lists.linux-foundation.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Rob Clark <robdclark@gmail.com>,
+        Akhil P Oommen <akhilpo@codeaurora.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        saiprakash.ranjan=codeaurora.org@codeaurora.org
+Subject: Re: [PATCHv3 0/2] iommu/arm-smmu-qcom: Add SC7280 support
+In-Reply-To: <664abf04654d78b08b118d11c7c03d99@codeaurora.org>
+References: <cover.1618898456.git.saiprakash.ranjan@codeaurora.org>
+ <664abf04654d78b08b118d11c7c03d99@codeaurora.org>
+Message-ID: <8eee199f10daa93407914f58bfefd6c1@codeaurora.org>
+X-Sender: saiprakash.ranjan@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Implement support for Cortex-A7 CPU release sequence in MSM8226 SoC.
+Hi Will,
 
-Signed-off-by: Bartosz Dudziak <bartosz.dudziak@snejp.pl>
----
- arch/arm/mach-qcom/platsmp.c | 71 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 71 insertions(+)
+On 2021-05-24 08:13, Sai Prakash Ranjan wrote:
+> Hi Will,
+> 
+> On 2021-04-20 11:34, Sai Prakash Ranjan wrote:
+>> Patch 1 adds the sc7280 smmu compatible.
+>> Patch 2 moves the adreno smmu check before apss smmu to enable
+>> adreno smmu specific implementation.
+>> 
+>> Note that dt-binding for sc7280 is already merged.
+>> 
+>> Changes in v3:
+>>  * Collect acks and reviews
+>>  * Rebase on top of for-joerg/arm-smmu/updates
+>> 
+>> Changes in v2:
+>>  * Add a comment to make sure this order is not changed in future 
+>> (Jordan)
+>> 
+>> Sai Prakash Ranjan (2):
+>>   iommu/arm-smmu-qcom: Add SC7280 SMMU compatible
+>>   iommu/arm-smmu-qcom: Move the adreno smmu specific impl earlier
+>> 
+>>  drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 14 +++++++++++---
+>>  1 file changed, 11 insertions(+), 3 deletions(-)
+> 
+> Gentle Ping!
+> 
 
-diff --git a/arch/arm/mach-qcom/platsmp.c b/arch/arm/mach-qcom/platsmp.c
-index 630a038f45..60496554c6 100644
---- a/arch/arm/mach-qcom/platsmp.c
-+++ b/arch/arm/mach-qcom/platsmp.c
-@@ -29,6 +29,7 @@
- #define COREPOR_RST		BIT(5)
- #define CORE_RST		BIT(4)
- #define L2DT_SLP		BIT(3)
-+#define CORE_MEM_CLAMP		BIT(1)
- #define CLAMP			BIT(0)
- 
- #define APC_PWR_GATE_CTL	0x14
-@@ -75,6 +76,62 @@ static int scss_release_secondary(unsigned int cpu)
- 	return 0;
- }
- 
-+static int cortex_a7_release_secondary(unsigned int cpu)
-+{
-+	int ret = 0;
-+	void __iomem *reg;
-+	struct device_node *cpu_node, *acc_node;
-+	u32 reg_val;
-+
-+	cpu_node = of_get_cpu_node(cpu, NULL);
-+	if (!cpu_node)
-+		return -ENODEV;
-+
-+	acc_node = of_parse_phandle(cpu_node, "qcom,acc", 0);
-+	if (!acc_node) {
-+		ret = -ENODEV;
-+		goto out_acc;
-+	}
-+
-+	reg = of_iomap(acc_node, 0);
-+	if (!reg) {
-+		ret = -ENOMEM;
-+		goto out_acc_map;
-+	}
-+
-+	/* Put the CPU into reset. */
-+	reg_val = CORE_RST | COREPOR_RST | CLAMP | CORE_MEM_CLAMP;
-+	writel(reg_val, reg + APCS_CPU_PWR_CTL);
-+
-+	/* Turn on the BHS and set the BHS_CNT to 16 XO clock cycles */
-+	writel(BHS_EN | (0x10 << BHS_CNT_SHIFT), reg + APC_PWR_GATE_CTL);
-+	/* Wait for the BHS to settle */
-+	udelay(2);
-+
-+	reg_val &= ~CORE_MEM_CLAMP;
-+	writel(reg_val, reg + APCS_CPU_PWR_CTL);
-+	reg_val |= L2DT_SLP;
-+	writel(reg_val, reg + APCS_CPU_PWR_CTL);
-+	udelay(2);
-+
-+	reg_val = (reg_val | BIT(17)) & ~CLAMP;
-+	writel(reg_val, reg + APCS_CPU_PWR_CTL);
-+	udelay(2);
-+
-+	/* Release CPU out of reset and bring it to life. */
-+	reg_val &= ~(CORE_RST | COREPOR_RST);
-+	writel(reg_val, reg + APCS_CPU_PWR_CTL);
-+	reg_val |= CORE_PWRD_UP;
-+	writel(reg_val, reg + APCS_CPU_PWR_CTL);
-+
-+	iounmap(reg);
-+out_acc_map:
-+	of_node_put(acc_node);
-+out_acc:
-+	of_node_put(cpu_node);
-+	return ret;
-+}
-+
- static int kpssv1_release_secondary(unsigned int cpu)
- {
- 	int ret = 0;
-@@ -281,6 +338,11 @@ static int msm8660_boot_secondary(unsigned int cpu, struct task_struct *idle)
- 	return qcom_boot_secondary(cpu, scss_release_secondary);
- }
- 
-+static int cortex_a7_boot_secondary(unsigned int cpu, struct task_struct *idle)
-+{
-+	return qcom_boot_secondary(cpu, cortex_a7_release_secondary);
-+}
-+
- static int kpssv1_boot_secondary(unsigned int cpu, struct task_struct *idle)
- {
- 	return qcom_boot_secondary(cpu, kpssv1_release_secondary);
-@@ -315,6 +377,15 @@ static const struct smp_operations smp_msm8660_ops __initconst = {
- };
- CPU_METHOD_OF_DECLARE(qcom_smp, "qcom,gcc-msm8660", &smp_msm8660_ops);
- 
-+static const struct smp_operations qcom_smp_cortex_a7_ops __initconst = {
-+	.smp_prepare_cpus	= qcom_smp_prepare_cpus,
-+	.smp_boot_secondary	= cortex_a7_boot_secondary,
-+#ifdef CONFIG_HOTPLUG_CPU
-+	.cpu_die		= qcom_cpu_die,
-+#endif
-+};
-+CPU_METHOD_OF_DECLARE(qcom_smp_msm8226, "qcom,msm8226-smp", &qcom_smp_cortex_a7_ops);
-+
- static const struct smp_operations qcom_smp_kpssv1_ops __initconst = {
- 	.smp_prepare_cpus	= qcom_smp_prepare_cpus,
- 	.smp_boot_secondary	= kpssv1_boot_secondary,
+Is this going to be taken for 5.14 or needs one more release cycle?
+
+Thanks,
+Sai
+
 -- 
-2.25.1
-
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member
+of Code Aurora Forum, hosted by The Linux Foundation
