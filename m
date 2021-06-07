@@ -2,97 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A5BFD39E5DD
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Jun 2021 19:48:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E68A139E704
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Jun 2021 21:01:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230520AbhFGRuD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Jun 2021 13:50:03 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:13353 "EHLO m43-7.mailgun.net"
+        id S231490AbhFGTDL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Jun 2021 15:03:11 -0400
+Received: from mail.kernel.org ([198.145.29.99]:37612 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229997AbhFGRuD (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Jun 2021 13:50:03 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1623088091; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=MFuDFvHXYlR2gGa8jeKkSiXVOoZvWtSWsoYMxROMkaU=;
- b=Bgf6zsjgCTqIOyck6BMLRusUCOxe+UDs9S73Uu+IU2quVtUXHWJJLrpbIPCAu81dBwsjP3JP
- SH8pdfsuAQMocjz5bLwNSQIOBJMPLBLR1TfR5dLPGyCmyZG3sTjHmi1pme2jLfkvDEL8ZQ3j
- j0Wcfht5T0AvfqsOoJeJ1vWzmsw=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
- 60be5bd4f726fa41885a6c49 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 07 Jun 2021 17:48:04
- GMT
-Sender: khsieh=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id D122EC43460; Mon,  7 Jun 2021 17:48:03 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: khsieh)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5EB0FC4338A;
-        Mon,  7 Jun 2021 17:48:02 +0000 (UTC)
+        id S231442AbhFGTDJ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 7 Jun 2021 15:03:09 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 0B98561164;
+        Mon,  7 Jun 2021 19:01:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1623092477;
+        bh=BUGAoI+KqIWeSqshgoFKvoknfcZfg6rrVZ5THdPAqLc=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=BXFoK3hHKx/nBaxEkLMVoPl5nv2z2l1Hmk3O9qgDReAwaJL4v6VMOrrentpY7sz1l
+         3GF6XyEHO03ZhOmRT2Iz4agrQowtYGHXUWYogvCU2BEpgJx9VxDHgm6Ia3Xoi37N+5
+         8aTQywFvW4ls6zLSxxmzpKOaA5mpIIx3dJKoFFPrxw55rfCixkbSA0y239VbxNE27A
+         LMuDoi7lgS4/1Q8fqa1L57bZfM6pqhQbiRZuCAa+a1dNSaMR0dpjsjMQEf76wqEb5z
+         OTCg3NxsVHWb4QdGuUx+dKxqPlf8bcnHZtJyCWCGQdUYbVTmXX1e4YXBD2Hx4nk5sT
+         yTTPnQ3zH+axg==
+From:   Mark Brown <broonie@kernel.org>
+To:     Judy Hsiao <judyhsiao@chromium.org>
+Cc:     Mark Brown <broonie@kernel.org>, tzungbi@chromium.org,
+        swboyd@chromium.org, judyhsiao@google.com,
+        linux-arm-kernel@lists.infradead.org,
+        Rob Herring <robh+dt@kernel.org>,
+        Patrick Lai <plai@codeaurora.org>,
+        Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
+        alsa-devel@alsa-project.org, cychiang@google.com,
+        Taniya Das <tdas@codeaurora.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Rohit kumar <rohitkr@codeaurora.org>,
+        Andy Gross <agross@kernel.org>, Takashi Iwai <tiwai@suse.com>,
+        Banajit Goswami <bgoswami@codeaurora.org>,
+        dianders@chromium.org, Liam Girdwood <lgirdwood@gmail.com>,
+        dgreid@chromium.org, Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Srini Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: Re: [v7] ASoC: qcom: lpass-cpu: Fix pop noise during audio capture begin
+Date:   Mon,  7 Jun 2021 20:00:46 +0100
+Message-Id: <162309220525.30523.13322673130433156811.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20210604154545.1198337-1-judyhsiao@chromium.org>
+References: <20210604154545.1198337-1-judyhsiao@chromium.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Mon, 07 Jun 2021 10:48:02 -0700
-From:   khsieh@codeaurora.org
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     robdclark@gmail.com, sean@poorly.run, swboyd@chromium.org,
-        vkoul@kernel.org, agross@kernel.org, robh+dt@kernel.org,
-        devicetree@vger.kernel.org, abhinavk@codeaurora.org,
-        aravindh@codeaurora.org, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] arm64/dts/qcom/sc7180: Add Display Port dt node
-In-Reply-To: <YLxX/YtegtbLmkri@builder.lan>
-References: <1622736555-15775-1-git-send-email-khsieh@codeaurora.org>
- <YLkI/6ItCz+SbbuJ@yoga> <ac326ec8689c0babb08b2311e19d52cc@codeaurora.org>
- <YLxX/YtegtbLmkri@builder.lan>
-Message-ID: <ef1879fa7ecfefaf0c70c7a4782240a9@codeaurora.org>
-X-Sender: khsieh@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-06-05 22:07, Bjorn Andersson wrote:
-> On Thu 03 Jun 16:56 CDT 2021, khsieh@codeaurora.org wrote:
+On Fri, 4 Jun 2021 23:45:45 +0800, Judy Hsiao wrote:
+> This patch fixes PoP noise of around 15ms observed during audio
+> capture begin.
+> Enables BCLK and LRCLK in snd_soc_dai_ops prepare call for
+> introducing some delay before capture start.
 > 
->> On 2021-06-03 09:53, Bjorn Andersson wrote:
->> > On Thu 03 Jun 11:09 CDT 2021, Kuogee Hsieh wrote:
-> [..]
->> > > diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-> [..]
->> > > +				power-domains = <&rpmhpd SC7180_CX>;
->> >
->> > Just curious, but isn't the DP block in the MDSS_GDCS? Or do we need to
->> > mention CX here in order for the opp framework to apply required-opps
->> > of CX?
->> 
->> yes,
-> 
-> If you want me, or other maintainers, to spend any time reviewing or
-> applying your patches going forward then you need to actually bother
-> replying properly to the questions asked.
-> 
-> Thanks,
-> Bjorn
+> (am from https://patchwork.kernel.org/patch/12276369/)
+> (also found at https://lore.kernel.org/r/20210524142114.18676-1-srivasam@codeaurora.org)
 
-Sorry about the confusion. What I meant is that even though DP 
-controller is in the MDSS_GDSC
-power domain, DP PHY/PLL sources out of CX. The DP link clocks have a 
-direct impact
-on the CX voltage corners. Therefore, we need to mention the CX power 
-domain here. And, since
-we can associate only one OPP table with one device, we picked the DP 
-link clock over other
-clocks.
+Applied to
+
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
+
+Thanks!
+
+[1/1] ASoC: qcom: lpass-cpu: Fix pop noise during audio capture begin
+      commit: c8a4556d98510ca05bad8d02265a4918b03a8c0b
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
