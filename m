@@ -2,130 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9927839DBC1
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Jun 2021 13:53:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 431D439DBFB
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Jun 2021 14:09:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230198AbhFGLzb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Jun 2021 07:55:31 -0400
-Received: from mo4-p02-ob.smtp.rzone.de ([85.215.255.83]:21260 "EHLO
-        mo4-p02-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230209AbhFGLzb (ORCPT
+        id S230198AbhFGMLI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Jun 2021 08:11:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50146 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230127AbhFGMLH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Jun 2021 07:55:31 -0400
-ARC-Seal: i=1; a=rsa-sha256; t=1623066805; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=WDvHeVyb1fam9A3ae3q/u569ggyW5HiqX3vtxT7wXDVH/euXB0sggAHxARI1WTnk2K
-    9nUzJVMDF8HRXWe4cnLBdAaf21A9HJaHxvoPvwt51JrPM8WtHaQQ9rNk7hk2Bm/2EaYb
-    tr9jTi1GXhk/Rz08gaJnqSClff/QN3I5AJWhD7wH3VT1DUmC96NVe21h36alC4Aki3hP
-    zaPrAe/wk/JcVg8QOpqx75Y4vW6W/42XkXLwAYHE/UYxIiAeNya+2UPpKy/F+6QlUZnD
-    sAGS4Mdq2r+AQntk0TVa/IN8Jq+wytrvA1BFvEuAqz5o3OT43TKSyTSyNc4PB6DYqD01
-    VxbQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1623066805;
-    s=strato-dkim-0002; d=strato.com;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=m4+ki6pyAeRftYCv5yy/aXH3P2NWvcn1Xj3msV73uKI=;
-    b=hYbWEVrWSwTJLx4WgcLTSNf7Q/UnEBLyjxZYeZ3nFcr3O0B7xhH1h1oO6Tv3e2o3rL
-    tFrX2k66X+K7NMDZeA6OJyMFuh1yLrcCX27A8xlfc6U7KcX6QKLOT3j2cz/7+fC92ajf
-    R1uRPBOGgg07WTGTAzCibdthM0R73qhB6jJX8tbqe+aN4xyvuz/Ogjs8k9oe2Et87QYV
-    Be9cOMplPONEYpo3Xxl6/DwO2JhoHaPg+HZkSTY71f5Jrs/LuFhXqNJRnonHGJfqxRlX
-    oP1Jhvl/deWNjS32GlukMJuwpqGr6oQOhy7YGQ9vhdODSvAb0Iqaar8FUUK3TtL15l2K
-    Sdmw==
-ARC-Authentication-Results: i=1; strato.com;
-    dkim=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1623066805;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=m4+ki6pyAeRftYCv5yy/aXH3P2NWvcn1Xj3msV73uKI=;
-    b=Qbwc4gjI0Wsa5klcF6JKzgwpkayOFPvNxGIBWzglD1Mxm783HpVO5F7szx8L3LCQkI
-    eGcISosEQjUxYvfnFquPFjj4vNrrFUja2RO4OxGjVjxOtpVFKydo/uv1I0Vr9iver1zz
-    /P0wdJv7OyOgquIayhl7mjGTaodn5lWzGyXKeb0mZkCE73xOZwsFsYlaNKxWSRq/se6o
-    97iUodoh6XX00BPN3R+zpAXdjct5LovoJhqhABAgSkjWsMqnDY40rZK9g0BWnJWk5Ccm
-    fpoOUh2tn3WGnCNvQhljBXDxyE376y9R53phuOrOR+llp/LNH6pkwKLftnSslFMl6ZQO
-    7oNA==
-Authentication-Results: strato.com;
-    dkim=none
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u26zEodhPgRDZ8j7Ic/BBg=="
-X-RZG-CLASS-ID: mo00
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 47.27.2 DYNA|AUTH)
-    with ESMTPSA id y01375x57BrPUIE
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Mon, 7 Jun 2021 13:53:25 +0200 (CEST)
-Date:   Mon, 7 Jun 2021 13:53:23 +0200
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Randy Dunlap <rdunlap@infradead.org>
-Cc:     linux-kernel@vger.kernel.org,
-        "Rafael J . Wysocki" <rafael.j.wysocki@intel.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, He Ying <heying24@huawei.com>,
-        Arnd Bergmann <arnd@kernel.org>
-Subject: Re: [PATCH] cpuidle: ARM_QCOM_SPM_CPUIDLE should depend on
- HAVE_ARM_SMCCC
-Message-ID: <YL4Is1LNzBuViF3/@gerhold.net>
-References: <20210606190048.689-1-rdunlap@infradead.org>
+        Mon, 7 Jun 2021 08:11:07 -0400
+Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A081AC061766;
+        Mon,  7 Jun 2021 05:09:16 -0700 (PDT)
+Received: by mail-pf1-x42b.google.com with SMTP id g6so12924997pfq.1;
+        Mon, 07 Jun 2021 05:09:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=VfaKSpOPN68fbunxi9Wd1CjX2Xd/IeFmWOOjECL1YQI=;
+        b=vH3dDKe027sR8HHni53Akruq6MuPmUvEgsFtR1Agr2oSjVXdccvY3DWahH6hnV9lS1
+         8r2N8scuNHRwhKyI3dFyhbZJF3FwqonfrpJtHm8OJiiBQscuNEvl5kMyc70det5hfoma
+         fzOwK1DyMDO8YrR3O8uGFftWId2DnPpb8ZCvJs4Cup4ocm0dvMZBheFiRG9+fZrgAmU+
+         BNzQ53h8eIyNNMWaIgnOeIvtIQoSWq3T/yIlnCXR5ZVzCGaB5fP13lXkd01S7iMK4cyW
+         KwJI1EdcrVXDFEwqBR7ETlWW+eoJ3rrqI0nShm4AlG8TFpt0+qebKQXO2Xhk/qVVJRWI
+         ugBQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=VfaKSpOPN68fbunxi9Wd1CjX2Xd/IeFmWOOjECL1YQI=;
+        b=baIhjzmWJKm8zwbfuf3OE2kxvoxs4hn8nb9St0HIEXWyhT458OS8nSu7YDuxgYAgez
+         jlJlyB5KEZjWK5wt199hwD7zG38ax5aatYk3mHVTPR7Dt9XJRNixlVmYsxqQ3GnsyiTf
+         7wyYMsqDyJ/XF0njOCOcPr35z/5zT92C8krYaDeZhYDgWTzFwihZ8jWEhsnv+d43Fuv2
+         CNoLGLVIsD75AtqIzPCrtf7vuJ/ZXt3lb33yNkQrjRPB/NSACBtbby2OLxPtWLiGnNDr
+         v5PBE8CnfkZDKjIRM4Kss69CSEEjGwqleBHqoiSj1iTqkqPZo69IC/vc9Qqe46yMoSl5
+         nTEg==
+X-Gm-Message-State: AOAM531/z5AaUuDa4Okh+bT9A+OTfpW6dqrXKzrhxbY1+mEgt2MRvuP+
+        T2P82D5w3o3HZ9Qmd7QTpRF/0oWQaEgUK+Qyjf4=
+X-Google-Smtp-Source: ABdhPJy0MxSyT8V/S1IJrEDeletyhYpO1Vhhq/88aagD+5il4xJ0URp8rE7mlJZ7lKCT/s+XSCwAtSSXIeun13lRm2Y=
+X-Received: by 2002:a62:e404:0:b029:2ee:f086:726f with SMTP id
+ r4-20020a62e4040000b02902eef086726fmr6738641pfh.7.1623067756139; Mon, 07 Jun
+ 2021 05:09:16 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210606190048.689-1-rdunlap@infradead.org>
+References: <20210607113840.15435-1-bhupesh.sharma@linaro.org> <20210607113840.15435-5-bhupesh.sharma@linaro.org>
+In-Reply-To: <20210607113840.15435-5-bhupesh.sharma@linaro.org>
+From:   Andy Shevchenko <andy.shevchenko@gmail.com>
+Date:   Mon, 7 Jun 2021 15:09:00 +0300
+Message-ID: <CAHp75Vd7z6ivOxHikqP5j+yPtV7C8GBogwVUAziLznSatH+8EA@mail.gmail.com>
+Subject: Re: [PATCH 4/8] regulator: qcom-rpmh: Add new regulator types found
+ on SA8155p adp board
+To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        devicetree <devicetree@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        bhupesh.linux@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi!
+On Mon, Jun 7, 2021 at 2:41 PM Bhupesh Sharma <bhupesh.sharma@linaro.org> wrote:
+>
+> SA8155p-adp board has two new regulator types - pmm8155au_1 and
+> pmm8155au_2.
+>
+> The output power management circuits in these regulators include:
+> - FTS510 smps,
+> - HFS510 smps, and
+> - LDO510 linear regulators
 
-On Sun, Jun 06, 2021 at 12:00:48PM -0700, Randy Dunlap wrote:
-> QCOM_SCM depends on HAVE_ARM_SMCCC, so ARM_QCOM_SPM_CPUIDLE should
-> also depend on HAVE_ARM_SMCCC since 'select' does not follow any
-> dependency chains.
-> 
-> This fixes a kconfig warning and subsequent build errors:
-> 
-> WARNING: unmet direct dependencies detected for QCOM_SCM
->   Depends on [n]: (ARM [=y] || ARM64) && HAVE_ARM_SMCCC [=n]
->   Selected by [y]:
->   - ARM_QCOM_SPM_CPUIDLE [=y] && CPU_IDLE [=y] && (ARM [=y] || ARM64) && (ARCH_QCOM [=n] || COMPILE_TEST [=y]) && !ARM64 && MMU [=y]
-> 
-> arm-linux-gnueabi-ld: drivers/firmware/qcom_scm-smc.o: in function `__scm_smc_do_quirk':
-> qcom_scm-smc.c:(.text+0x5c): undefined reference to `__arm_smccc_smc'
-> arm-linux-gnueabi-ld: drivers/firmware/qcom_scm-legacy.o: in function `scm_legacy_call':
-> qcom_scm-legacy.c:(.text+0x140): undefined reference to `__arm_smccc_smc'
-> arm-linux-gnueabi-ld: drivers/firmware/qcom_scm-legacy.o: in function `scm_legacy_call_atomic':
-> qcom_scm-legacy.c:(.text+0x364): undefined reference to `__arm_smccc_smc'
-> 
-> Fixes: a871be6b8eee ("cpuidle: Convert Qualcomm SPM driver to a generic CPUidle driver")
-> Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-> Cc: Stephan Gerhold <stephan@gerhold.net>
-> Cc: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-> Cc: Andy Gross <agross@kernel.org>
+...
+
+> Cc: Linus Walleij <linus.walleij@linaro.org>
+> Cc: Liam Girdwood <lgirdwood@gmail.com>
+> Cc: Mark Brown <broonie@kernel.org>
 > Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Cc: linux-arm-msm@vger.kernel.org
-> Cc: He Ying <heying24@huawei.com>
+> Cc: Vinod Koul <vkoul@kernel.org>
+> Cc: Rob Herring <robh+dt@kernel.org>
+> Cc: Andy Gross <agross@kernel.org>
+> Cc: devicetree@vger.kernel.org
+> Cc: linux-kernel@vger.kernel.org
+> Cc: linux-gpio@vger.kernel.org
+> Cc: bhupesh.linux@gmail.com
 
-There was a similar patch from Arnd a while ago (which fixes another
-warning for ARM_CPU_SUSPEND?):
+Use --cc or similar option when run `git send-email`, no need to
+pollute the commit message with these.
 
-https://lore.kernel.org/linux-pm/20210421135723.3601743-1-arnd@kernel.org/
+...
 
-I'm not sure who is supposed to pick it up. :)
+> +static const struct rpmh_vreg_init_data pmm8155au_1_vreg_data[] = {
 
-Thanks!
-Stephan
 
-> ---
->  drivers/cpuidle/Kconfig.arm |    1 +
->  1 file changed, 1 insertion(+)
-> 
-> --- linux-next-20210604.orig/drivers/cpuidle/Kconfig.arm
-> +++ linux-next-20210604/drivers/cpuidle/Kconfig.arm
-> @@ -108,6 +108,7 @@ config ARM_TEGRA_CPUIDLE
->  config ARM_QCOM_SPM_CPUIDLE
->  	bool "CPU Idle Driver for Qualcomm Subsystem Power Manager (SPM)"
->  	depends on (ARCH_QCOM || COMPILE_TEST) && !ARM64 && MMU
-> +	depends on HAVE_ARM_SMCCC
->  	select ARM_CPU_SUSPEND
->  	select CPU_IDLE_MULTIPLE_DRIVERS
->  	select DT_IDLE_STATES
+> +       {},
+
+Comma is not needed in the terminator line.
+
+> +};
+
+-- 
+With Best Regards,
+Andy Shevchenko
