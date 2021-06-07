@@ -2,109 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 855B839E4F8
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Jun 2021 19:08:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 90DB139E56B
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Jun 2021 19:30:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230267AbhFGRKe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Jun 2021 13:10:34 -0400
-Received: from mail-qk1-f179.google.com ([209.85.222.179]:37647 "EHLO
-        mail-qk1-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230378AbhFGRKe (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Jun 2021 13:10:34 -0400
-Received: by mail-qk1-f179.google.com with SMTP id i67so17367144qkc.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Jun 2021 10:08:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Vmc21GFO17uaFIYIEI6ngL7qf7K+9zFe/VHNqdjyLTk=;
-        b=Sw3lO1CuIlIW8p7F9X3EIJWbHqckmdlxzrp7zumdiztpcK0kS+1dg7doroe67j7AiX
-         6ISqph79TFZjX9hMy/r/UF0kMeh+9gTRwhS6SEVotj3vIXHu9xL9KDu9UuiK20DXefxL
-         8T3IDs+fg77gOa1QGIfGtyYVVNonxe2aZ5rrk=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Vmc21GFO17uaFIYIEI6ngL7qf7K+9zFe/VHNqdjyLTk=;
-        b=WvgHluLs1RbPFk+fAQAD0Z9kGBdkTjqjYBKgXqY9/qFQrnjcUSaa41hU+YptN3m5ha
-         zooIWBOdSHiKVZe/QzW4HqQAJDjRduB1KyRXe04BlbMGK+TnWj6bs45h/DXXEQ5QDMeK
-         FC8a1xxbyvTvOjWLsxKildQ9QCv1AamgN5xSZxNEa5g8Ninbfdphb1JI3O8CW0bVzVh0
-         /yGqdeaHSPqaefyMS/iEKw9XBrsQo8970APkDe6HY/EA2AOZQtSbI2kILHNrcGeD47aY
-         9RZkuoNReAfk0CCMtvX7ZsmmfKMgg6x2gBhSz2VNJpofB8OWhqt6N0JIXEqmvCyCYsNw
-         r/Vg==
-X-Gm-Message-State: AOAM530EvY2RsJqoqY1GDq02J47XfZoja2i36mahbJBEafe0WiAHCYKN
-        VT3S1mXrI0x9C+aniyOlM2zY5WuUqzWHBg==
-X-Google-Smtp-Source: ABdhPJwmwCoj1qzQRiQ+BMvJPvWeUkDN26b4SNP2LdnQGik9QLOIJ8t4UyGS2iIbNdag26Lo0XJjlQ==
-X-Received: by 2002:a05:620a:9d7:: with SMTP id y23mr5338551qky.227.1623085645894;
-        Mon, 07 Jun 2021 10:07:25 -0700 (PDT)
-Received: from mail-yb1-f178.google.com (mail-yb1-f178.google.com. [209.85.219.178])
-        by smtp.gmail.com with ESMTPSA id b123sm10562870qke.87.2021.06.07.10.07.24
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 07 Jun 2021 10:07:25 -0700 (PDT)
-Received: by mail-yb1-f178.google.com with SMTP id q21so25985983ybg.8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Jun 2021 10:07:24 -0700 (PDT)
-X-Received: by 2002:a25:ab4b:: with SMTP id u69mr25982035ybi.276.1623085644485;
- Mon, 07 Jun 2021 10:07:24 -0700 (PDT)
+        id S230272AbhFGRce (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Jun 2021 13:32:34 -0400
+Received: from mga02.intel.com ([134.134.136.20]:61742 "EHLO mga02.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230266AbhFGRce (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 7 Jun 2021 13:32:34 -0400
+IronPort-SDR: ZAZM8Xqh3GcRawNmstUShO7qRyg6kY7yiQJd2/ZwCxt8CjnQg8UoBUPAuG63dcjZcBPP0F3fYD
+ qE/cIheAjyiA==
+X-IronPort-AV: E=McAfee;i="6200,9189,10008"; a="191778267"
+X-IronPort-AV: E=Sophos;i="5.83,255,1616482800"; 
+   d="scan'208";a="191778267"
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Jun 2021 10:30:41 -0700
+IronPort-SDR: deirWvcCsgtdXm90yHp0Uzo2d9GpC2TweX2Cmw0E55DhCmB2kxSVjbhDMQXjthAHCKFtCmE0hY
+ MB6b1F0LqgUA==
+X-IronPort-AV: E=Sophos;i="5.83,255,1616482800"; 
+   d="scan'208";a="447563923"
+Received: from rjwysock-mobl1.ger.corp.intel.com (HELO [10.249.139.144]) ([10.249.139.144])
+  by orsmga008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Jun 2021 10:30:38 -0700
+Subject: Re: [PATCH] cpuidle: ARM_QCOM_SPM_CPUIDLE should depend on
+ HAVE_ARM_SMCCC
+To:     Stephan Gerhold <stephan@gerhold.net>,
+        Randy Dunlap <rdunlap@infradead.org>
+Cc:     linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org, He Ying <heying24@huawei.com>,
+        Arnd Bergmann <arnd@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Linux PM <linux-pm@vger.kernel.org>
+References: <20210606190048.689-1-rdunlap@infradead.org>
+ <YL4Is1LNzBuViF3/@gerhold.net>
+From:   "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Organization: Intel Technology Poland Sp. z o. o., KRS 101882, ul. Slowackiego
+ 173, 80-298 Gdansk
+Message-ID: <7a207351-43e1-d439-9d86-bb28b6935fa2@intel.com>
+Date:   Mon, 7 Jun 2021 19:30:36 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.2
 MIME-Version: 1.0
-References: <20210525000159.3384921-1-dianders@chromium.org>
- <20210524165920.v8.8.If89144992cb9d900f8c91a8d1817dbe00f543720@changeid> <YLxRyC9eNlg+Uex3@builder.lan>
-In-Reply-To: <YLxRyC9eNlg+Uex3@builder.lan>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Mon, 7 Jun 2021 10:07:13 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=UZkzKG6EJFAU9jCjb-twChzCH+JtcL5a9VyO5dxSdOwA@mail.gmail.com>
-Message-ID: <CAD=FV=UZkzKG6EJFAU9jCjb-twChzCH+JtcL5a9VyO5dxSdOwA@mail.gmail.com>
-Subject: Re: [PATCH v8 08/11] drm/bridge: ti-sn65dsi86: Promote the AUX
- channel to its own sub-dev
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andrzej Hajda <a.hajda@samsung.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linus W <linus.walleij@linaro.org>,
-        Lyude Paul <lyude@redhat.com>,
-        Steev Klimaszewski <steev@kali.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Thierry Reding <treding@nvidia.com>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Robert Foss <robert.foss@linaro.org>,
-        LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <YL4Is1LNzBuViF3/@gerhold.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
-
-On Sat, Jun 5, 2021 at 9:40 PM Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
+On 6/7/2021 1:53 PM, Stephan Gerhold wrote:
+> Hi!
 >
-> > +     /*
-> > +      * We couldn't do this pre-probe because it would confuse pinctrl.
-> > +      * It would have tried to grab the same pins that the main device had.
-> > +      * Set it now so that we can put the proper (sub) device in the aux
-> > +      * structure and it will have the right node.
-> > +      */
-> > +     adev->dev.of_node = pdata->dev->of_node;
+> On Sun, Jun 06, 2021 at 12:00:48PM -0700, Randy Dunlap wrote:
+>> QCOM_SCM depends on HAVE_ARM_SMCCC, so ARM_QCOM_SPM_CPUIDLE should
+>> also depend on HAVE_ARM_SMCCC since 'select' does not follow any
+>> dependency chains.
+>>
+>> This fixes a kconfig warning and subsequent build errors:
+>>
+>> WARNING: unmet direct dependencies detected for QCOM_SCM
+>>    Depends on [n]: (ARM [=y] || ARM64) && HAVE_ARM_SMCCC [=n]
+>>    Selected by [y]:
+>>    - ARM_QCOM_SPM_CPUIDLE [=y] && CPU_IDLE [=y] && (ARM [=y] || ARM64) && (ARCH_QCOM [=n] || COMPILE_TEST [=y]) && !ARM64 && MMU [=y]
+>>
+>> arm-linux-gnueabi-ld: drivers/firmware/qcom_scm-smc.o: in function `__scm_smc_do_quirk':
+>> qcom_scm-smc.c:(.text+0x5c): undefined reference to `__arm_smccc_smc'
+>> arm-linux-gnueabi-ld: drivers/firmware/qcom_scm-legacy.o: in function `scm_legacy_call':
+>> qcom_scm-legacy.c:(.text+0x140): undefined reference to `__arm_smccc_smc'
+>> arm-linux-gnueabi-ld: drivers/firmware/qcom_scm-legacy.o: in function `scm_legacy_call_atomic':
+>> qcom_scm-legacy.c:(.text+0x364): undefined reference to `__arm_smccc_smc'
+>>
+>> Fixes: a871be6b8eee ("cpuidle: Convert Qualcomm SPM driver to a generic CPUidle driver")
+>> Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+>> Cc: Stephan Gerhold <stephan@gerhold.net>
+>> Cc: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+>> Cc: Andy Gross <agross@kernel.org>
+>> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+>> Cc: linux-arm-msm@vger.kernel.org
+>> Cc: He Ying <heying24@huawei.com>
+> There was a similar patch from Arnd a while ago (which fixes another
+> warning for ARM_CPU_SUSPEND?):
 >
-> I suspect the refcount of the of_node will be wrong here and upon
-> removing the aux device things will be off...
+> https://lore.kernel.org/linux-pm/20210421135723.3601743-1-arnd@kernel.org/
 >
-> Instead, I think you're looking for device_set_of_node_from_dev(), which
-> also sets of_node_reused, which in turn causes pinctrl_bind_pins() to be
-> skipped - i.e. it seems to deal with the problem your comment describes.
+> I'm not sure who is supposed to pick it up. :)
 
-You rock! This is exactly what I wanted. I wish I had thought to look
-for it--I somehow just assumed that this wasn't already a solved
-problem.
+ARM cpuidle drivers are maintained by Daniel Lezcano.
 
--Doug
+Also, please CC power management material to linux-pm@vger.kernel.org.
+
+
+>
+>> ---
+>>   drivers/cpuidle/Kconfig.arm |    1 +
+>>   1 file changed, 1 insertion(+)
+>>
+>> --- linux-next-20210604.orig/drivers/cpuidle/Kconfig.arm
+>> +++ linux-next-20210604/drivers/cpuidle/Kconfig.arm
+>> @@ -108,6 +108,7 @@ config ARM_TEGRA_CPUIDLE
+>>   config ARM_QCOM_SPM_CPUIDLE
+>>   	bool "CPU Idle Driver for Qualcomm Subsystem Power Manager (SPM)"
+>>   	depends on (ARCH_QCOM || COMPILE_TEST) && !ARM64 && MMU
+>> +	depends on HAVE_ARM_SMCCC
+>>   	select ARM_CPU_SUSPEND
+>>   	select CPU_IDLE_MULTIPLE_DRIVERS
+>>   	select DT_IDLE_STATES
+
+
