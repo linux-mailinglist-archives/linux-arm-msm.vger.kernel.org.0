@@ -2,133 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A40F539E91A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Jun 2021 23:23:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 26E3539E92D
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Jun 2021 23:40:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230444AbhFGVZc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Jun 2021 17:25:32 -0400
-Received: from mail-oi1-f174.google.com ([209.85.167.174]:39562 "EHLO
-        mail-oi1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230394AbhFGVZb (ORCPT
+        id S231173AbhFGVmV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Jun 2021 17:42:21 -0400
+Received: from mail-lj1-f175.google.com ([209.85.208.175]:40514 "EHLO
+        mail-lj1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230359AbhFGVmT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Jun 2021 17:25:31 -0400
-Received: by mail-oi1-f174.google.com with SMTP id m137so15613518oig.6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Jun 2021 14:23:40 -0700 (PDT)
+        Mon, 7 Jun 2021 17:42:19 -0400
+Received: by mail-lj1-f175.google.com with SMTP id x14so9838145ljp.7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Jun 2021 14:40:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=w6cymmwnuygy/COmkDxXiw8w0MLPT3SB23LZKuJIhqk=;
-        b=Imw57YSTwplWKEaH2jMh6y9gjQOKM8C1ctxHYEQ4dx59CFGUQ1ETLCB1TpAKziLjwt
-         a0i4CTX50+J9bvQdiQKTP7+RxQ4AbFp5UGPNgoOyW1WPlhMuuTP+ythNexcFfqigCdUp
-         A8VqriRQAwEurYZ+P/KtbMwxGC4UUy3jZUGdydWEBQNfk/1qSx2vxv886TtRRN3tuCbY
-         ERaBsHn+VcrwzET8xcvKm6k1a5vlk85NgZhckQ8VWlzBq5j6gfKukSm8+wVsOG8Advq0
-         HwD1RnVxQ+XmmD572VlV/Kr3MZtY2KCI37jpWNU95JdLcW332f/+KXdwb7GBOpQ+k+fS
-         cQ8A==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=u8CKvwSQLjjj+5EJDA8ATWx2yaOhMI1EEsNUtEuV8bk=;
+        b=EE8BrWdnOfaSRktSGtAbHGRjUb/zfSuaXZNayvdpAMV6+DhBqv7HwiJZ0qtfYNTipo
+         lUc1kkM4MrYxw1Unia3/QlQHLVsp7W2Ei8iqe4/yzsfmKBtaWgEabb57y5gDrGw2jm92
+         hDCA6mfDG9VTnyL/IBIHWRuJRfu/0eL2bQUuypQ2OsMoh67O4c+Z1AdM9IDmn48oXrfS
+         3ZH5HeNa1Qz1koFEd+YVMvYjQJEw5tToGmVQIOPYbDhABy0MtXqGMKcyfCeoxlI+uXBz
+         f1ea1+X7+bWPSZla4TFXywzmTYkDMi1Sk/G4JkL44zsIi5c4+9Gtv/MVafOuGuA3DiU/
+         5y4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=w6cymmwnuygy/COmkDxXiw8w0MLPT3SB23LZKuJIhqk=;
-        b=OaipIZsK+X+JxguCdn0FkIUDSdLnWP7E6gdlwwGun4JSObZSFBq6BAj/THmXNC3riv
-         OQ6eF9/oxRCOtJk9oQvhJsnGPs2kNudFZvj3ZomA7BBUGv4VziG2M71idePZnxR4/sdg
-         F64gI0hkGRKJSTulzh0nzGq5gX6nAhAoCTi97rnSysT09rKcb7nTqDzojozZvg3LwCdx
-         Hck+kOpa4iOPYnFL5XappaBw5RatVS8QJCfvSEX3yXHlPPC0R2cvWzDAWWroC7jKNJrk
-         OWDJOkWwGvU4HfsG6DskwtgvQYBvCrt+X2h1uC1XhOLVs0tImHXBqFuAXngPuhnmKid9
-         pbpA==
-X-Gm-Message-State: AOAM5324JKQoSpl89DCH8UvhC2DV/yfZ5m9ynItB5Js8h24Um7QWyypT
-        O8Z1j54RVvP8/7sqzzM74P/OeCn1m1VUwQO3kZ5+8g==
-X-Google-Smtp-Source: ABdhPJzVFi4ifcs3tEOiN3F0lwd561XWqjtWfo2MVoHwh8/TETf0Auy+GPFCcuTowEovcpU5FdnKuZ9hUIPCM2+C734=
-X-Received: by 2002:a05:6808:f0b:: with SMTP id m11mr675937oiw.12.1623100959866;
- Mon, 07 Jun 2021 14:22:39 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=u8CKvwSQLjjj+5EJDA8ATWx2yaOhMI1EEsNUtEuV8bk=;
+        b=eWaj1lUs5+RCs56tjv0h4SomkPB9qrKY387zYMyTwfOYsvbtHTwwOmLj4TO7pMemd5
+         lG7Sw+v9XCQdEubKmxvCebZU3bx73TS4nvRJjjsyH/HurHEJVdhL2gsgN6Q2yBIx6DNS
+         3KXQwc5EvmkQ3vyvPrPDUFiD2pYd6d+6UInmTSroEZoWwq+9fF7GYMRxu6dOrm6lXgpr
+         wizemUfhY2flkGPmTyYJ7z8ntVwliyA4CMkZBrDMtPm20yHW+0jPE0+AQeUrzvCn6vSy
+         rIh2bNRUHBq+mndK7GptzaXFEhkggICmi+BIkshbyoXz1HX6zwSmFL/HIG2AIsTuo53w
+         ktpQ==
+X-Gm-Message-State: AOAM532ef9iXteS3ID+kLkSlWL4RlnEz3ZXAsKAhzSNaosDcNDSt5y2v
+        tAjRUVfxv9+f+2KG+SmT7tK0JQ==
+X-Google-Smtp-Source: ABdhPJxopuAC3ib67JMkqaKVp9CX94BbYI9bARVwAKqMkZLRE+Amgp4fyqCYVPbLrcOGlFPzfAvW3Q==
+X-Received: by 2002:a05:651c:38b:: with SMTP id e11mr15788576ljp.198.1623101950184;
+        Mon, 07 Jun 2021 14:39:10 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id h22sm688111ljk.133.2021.06.07.14.39.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 07 Jun 2021 14:39:09 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <abhinavk@codeaurora.org>
+Cc:     Jonathan Marek <jonathan@marek.ca>,
+        Stephen Boyd <sboyd@kernel.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+Subject: [PATCH] drm/msm/dsi: do not enable PHYs when called for the slave DSI interface
+Date:   Tue,  8 Jun 2021 00:39:09 +0300
+Message-Id: <20210607213909.2186556-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
-References: <20210607113840.15435-1-bhupesh.sharma@linaro.org>
- <20210607113840.15435-9-bhupesh.sharma@linaro.org> <YL45uRr6+Q3jvPrO@vkoul-mobl>
-In-Reply-To: <YL45uRr6+Q3jvPrO@vkoul-mobl>
-From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Date:   Tue, 8 Jun 2021 02:52:28 +0530
-Message-ID: <CAH=2NtwhYpyHUB0ON6-MZP6PUA6CHwEsvwFhcUewdXo-Nqgo+A@mail.gmail.com>
-Subject: Re: [PATCH 8/8] arm64: dts: qcom: sa8155p-adp: Add base dts file
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        devicetree <devicetree@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        bhupesh.linux@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Vinod,
+Move the call to dsi_mgr_phy_enable after checking whether the DSI
+interface is slave, so that PHY enablement happens together with the
+host enablement.
 
-Thanks for your review.
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ drivers/gpu/drm/msm/dsi/dsi_manager.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-On Mon, 7 Jun 2021 at 20:52, Vinod Koul <vkoul@kernel.org> wrote:
->
-> On 07-06-21, 17:08, Bhupesh Sharma wrote:
-> > Add base DTS file for sa8155p-adp and enable boot to console,
-> > tlmm reserved range and also include pmic file(s).
->
-> I see ufs added too, pls mention that as well
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_manager.c b/drivers/gpu/drm/msm/dsi/dsi_manager.c
+index cc18ea2b244c..d77693904a15 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_manager.c
++++ b/drivers/gpu/drm/msm/dsi/dsi_manager.c
+@@ -374,14 +374,14 @@ static void dsi_mgr_bridge_pre_enable(struct drm_bridge *bridge)
+ 	if (!msm_dsi_device_connected(msm_dsi))
+ 		return;
+ 
+-	ret = dsi_mgr_phy_enable(id, phy_shared_timings);
+-	if (ret)
+-		goto phy_en_fail;
+-
+ 	/* Do nothing with the host if it is slave-DSI in case of dual DSI */
+ 	if (is_dual_dsi && !IS_MASTER_DSI_LINK(id))
+ 		return;
+ 
++	ret = dsi_mgr_phy_enable(id, phy_shared_timings);
++	if (ret)
++		goto phy_en_fail;
++
+ 	ret = msm_dsi_host_power_on(host, &phy_shared_timings[id], is_dual_dsi, msm_dsi->phy);
+ 	if (ret) {
+ 		pr_err("%s: power on host %d failed, %d\n", __func__, id, ret);
+-- 
+2.30.2
 
-Oops, missed that. Will fix it in v2.
-
->  --- a/arch/arm64/boot/dts/qcom/Makefile
-> > +++ b/arch/arm64/boot/dts/qcom/Makefile
-> > @@ -71,6 +71,7 @@ dtb-$(CONFIG_ARCH_QCOM)     += sdm845-xiaomi-beryllium.dtb
-> >  dtb-$(CONFIG_ARCH_QCOM)      += sdm850-lenovo-yoga-c630.dtb
-> >  dtb-$(CONFIG_ARCH_QCOM)      += sm8150-hdk.dtb
-> >  dtb-$(CONFIG_ARCH_QCOM)      += sm8150-mtp.dtb
-> > +dtb-$(CONFIG_ARCH_QCOM)      += sa8155p-adp.dtb
->
-> I think this should go before sdm..
-
-Oh, ok, I thought of keeping all boards based on sm8150 SoC together.
-But alphabetically, it makes more sense to put it earlier.
-
-> > +             vdd_usb_hs_core:
-> > +             vdda_pll_hv_cc_ebi01:
-> > +             vdda_pll_hv_cc_ebi23:
-> > +             vdda_ufs_2ln_core:
-> > +             vdda_ufs_2ln_core:
-> > +             vdda_usb_ss_core:
-> > +             vdda_usb_ss_dp_core_1:
-> > +             vdda_usb_ss_dp_core_2:
-> > +             vdda_sp_sensor:
-> > +             vdda_qlink_lv:
-> > +             vdda_qlink_lv_ck:
-> > +             vdda_qrefs_0p875_5:
->
-> I didnt find these labels very useful, so maybe remove?
-> It helped me to understand that a regulator is vreg_l5a_0p88 as it
-> implies I am using l5a with 0p88V :)
-
-While a few labels like 'vdd_usb_hs_core' are used in this patch (for
-example) to denote 'vdda-pll-supply ' of 'usb_1_hsphy', the others
-would be required as we enable further on-boards peripherals in the
-dts.
-
-I will recheck and limit these further in v2.
-
-> > +             vreg_l5a_0p88: ldo5 {
-> > +                     regulator-min-microvolt = <880000>;
-> > +                     regulator-max-microvolt = <880000>;
-> > +                     regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
->
-> Pls do add regulator-name property, it helps in understanding which ldo
-> in logs/debugfs, otherwise ldo5 will comes for both pmics
-
-That's a good point. Will fix this in v2.
-
-Regards,
-Bhupesh
-
-> --
-> ~Vinod
