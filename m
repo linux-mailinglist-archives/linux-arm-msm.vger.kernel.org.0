@@ -2,153 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E1AE93A06A1
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jun 2021 00:12:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8F7A83A06AC
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jun 2021 00:16:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229845AbhFHWOk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Jun 2021 18:14:40 -0400
-Received: from mail-oi1-f171.google.com ([209.85.167.171]:38602 "EHLO
-        mail-oi1-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229753AbhFHWOk (ORCPT
+        id S229526AbhFHWSj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Jun 2021 18:18:39 -0400
+Received: from mail-ot1-f47.google.com ([209.85.210.47]:46687 "EHLO
+        mail-ot1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234005AbhFHWSj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Jun 2021 18:14:40 -0400
-Received: by mail-oi1-f171.google.com with SMTP id z3so23122330oib.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Jun 2021 15:12:30 -0700 (PDT)
+        Tue, 8 Jun 2021 18:18:39 -0400
+Received: by mail-ot1-f47.google.com with SMTP id 66-20020a9d02c80000b02903615edf7c1aso21861023otl.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Jun 2021 15:16:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:in-reply-to:references:from:user-agent:date:message-id
          :subject:to:cc;
-        bh=bZu+LetIK/Ou2FsjTvcsb/kLMI/BFrEdJ0cjHy2JCV8=;
-        b=WugNAEnuACzJlxhsYmqoGNmcz374feWJhegI70dUbZN0lHbXLs3N7XS7hVJZWo2b21
-         7AIUBwfNNK/9OrVa9v7Nu0BxFw/zfFd/8tkUL4mvbMK/sO6I6MDgYr7/KOCImFnzE5C/
-         8xpYIMwngZwfRxquLyxkSwQLJKBL+WdwZ/qCI=
+        bh=1t7u9q3nwz2autO/xtf8MJUk6lpDM4DYMrf1MH8aW4Q=;
+        b=nnJv9OsQARR+ciGzlrE04XLGFV0Ux9hu6Ve/m90ADK/OJWfgUtFa5VXf9rre6PLWaN
+         LNJBnrT6y2ZueCu3zQ8Z3XEDG3zpgr+hsSnNo9wVaGY1PLXVOLR2eSRrW9umN/6gV4Me
+         NOnl93Y3lguNQy2J2fb3oDj4vwuOs3DRJawuY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from
          :user-agent:date:message-id:subject:to:cc;
-        bh=bZu+LetIK/Ou2FsjTvcsb/kLMI/BFrEdJ0cjHy2JCV8=;
-        b=FqYmL615zWB7qjuS7TMxWIOlAMkHy9xTuLGbg+Oemw4ezuAoDOJC/l+XiEqQIxrG0s
-         jm748jXJnuC6pAwitPuSaT40GKLptF7uEpWkH0WPHvW0fFJnXDCISgpKubdNtyZT1xcU
-         Rrgcd6IjVV0d2tBuM8N4MewIvda7tN9pTfD6w4KGOLuUlN3/SidPzyWEaK7kBac9S/wF
-         Jf+xgry/ES0/EEY0bthHklL9wj1HYGzAudiYJ8swfWh5cb9vlG/8WZue5cCrRQHcsOL5
-         S1aeQtAEE67dvzjyAH/WfTWatt3sG9Ae7rUdm/qzcAh45CmNv4QrKyNpxaBnH2+Nkdnm
-         IoeA==
-X-Gm-Message-State: AOAM531SHV8OPs7pjgt+Dw1LIoreXy34wmBsTha6Kf8p8hGvqLGjjR6h
-        d7gt1qCwIPY6si2i8UhyMUWBKdjURgjaAMFXDaix1src1Ew=
-X-Google-Smtp-Source: ABdhPJyLYJDdbR65ulUT98CM3xPB2U9bboRcC6MSbcDFmAX4Le8b+UG/ndJJnToeztAoKQHEZXx0LG2EHK3taiGGXFA=
-X-Received: by 2002:a05:6808:144e:: with SMTP id x14mr4502727oiv.166.1623190290310;
- Tue, 08 Jun 2021 15:11:30 -0700 (PDT)
+        bh=1t7u9q3nwz2autO/xtf8MJUk6lpDM4DYMrf1MH8aW4Q=;
+        b=iOOISrYGy3k2rXOEdU5wRCwYzTZE08ioODACnRfhNCM1FBr/KZ3F9aQcz1ox+WmMfw
+         f9k9pz8VVmKw6e7Fs1/IxcxkseQk8aMfFyvZmmM2GFu8mMpPdeISucne9Q0IBHRCp4F3
+         pz2NtMaaUaalKrqzXH7oBgmg5GjANkpCq0CLnKYK4pP6cn9DZrY2inNk3Wl/euMvm9SX
+         h5afzzjCvw5RvQphklao9NDjRD6fGt3U5PQzUXX3da28nTgkfJ8QjvNy4Gc3FNOCSyPZ
+         InkAryIjkUflfApg9SBffsjS5kruD0d5Vpd9EET/VxA8L8nzA9fxCNOf7wv2wc2qaY86
+         lkVg==
+X-Gm-Message-State: AOAM533bJc1Enn3gPu4am4oX6pDS3Xi+TopOLFa6NnBmJ4TVvQbevvSc
+        2PAhuOZHIOKdJksTGgydD67fMx+wKOWA4eNCPWjAsg==
+X-Google-Smtp-Source: ABdhPJyhL13bl002GGKwoydit/q9hRO2Cy7ITNXY5T1OOJafiJ0zxdlM0bxacz6SkRb5QZJX9/NiCtc2lHaGS2mp8d8=
+X-Received: by 2002:a05:6830:190:: with SMTP id q16mr7251410ota.34.1623190529833;
+ Tue, 08 Jun 2021 15:15:29 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 8 Jun 2021 15:11:29 -0700
+ HTTPREST; Tue, 8 Jun 2021 15:15:29 -0700
 MIME-Version: 1.0
-In-Reply-To: <a6356956-9d4a-6fe7-2acc-bbe968d3a936@linaro.org>
-References: <20210608195519.125561-1-swboyd@chromium.org> <a6356956-9d4a-6fe7-2acc-bbe968d3a936@linaro.org>
+In-Reply-To: <YL6sY/1E5wLzMiP/@yoga>
+References: <1622736555-15775-1-git-send-email-khsieh@codeaurora.org>
+ <YLkI/6ItCz+SbbuJ@yoga> <ac326ec8689c0babb08b2311e19d52cc@codeaurora.org>
+ <YLxX/YtegtbLmkri@builder.lan> <ef1879fa7ecfefaf0c70c7a4782240a9@codeaurora.org>
+ <YL6sY/1E5wLzMiP/@yoga>
 From:   Stephen Boyd <swboyd@chromium.org>
 User-Agent: alot/0.9.1
-Date:   Tue, 8 Jun 2021 15:11:29 -0700
-Message-ID: <CAE-0n521fW2F9V6E_7ei2KMsEUMLKSOCtAbRrVX+xXyrS0K9XQ@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm/dsi: Stash away calculated vco frequency on recalc
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        Abhinav Kumar <abhinavk@codeaurora.org>
+Date:   Tue, 8 Jun 2021 15:15:29 -0700
+Message-ID: <CAE-0n50-X03sMyJdsw7s=Ue0dWXBo=iHOc0HxDQm5yh2J-uS3A@mail.gmail.com>
+Subject: Re: [PATCH v2] arm64/dts/qcom/sc7180: Add Display Port dt node
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>, khsieh@codeaurora.org
+Cc:     robdclark@gmail.com, sean@poorly.run, vkoul@kernel.org,
+        agross@kernel.org, robh+dt@kernel.org, devicetree@vger.kernel.org,
+        abhinavk@codeaurora.org, aravindh@codeaurora.org,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Dmitry Baryshkov (2021-06-08 14:41:21)
-> Hi Stephen,
+Quoting Bjorn Andersson (2021-06-07 16:31:47)
+> On Mon 07 Jun 12:48 CDT 2021, khsieh@codeaurora.org wrote:
 >
-> On 08/06/2021 22:55, Stephen Boyd wrote:
-> > A problem was reported on CoachZ devices where the display wouldn't come
-> > up, or it would be distorted. It turns out that the PLL code here wasn't
-> > getting called once dsi_pll_10nm_vco_recalc_rate() started returning the
-> > same exact frequency, down to the Hz, that the bootloader was setting
-> > instead of 0 when the clk was registered with the clk framework.
+> > On 2021-06-05 22:07, Bjorn Andersson wrote:
+> > > On Thu 03 Jun 16:56 CDT 2021, khsieh@codeaurora.org wrote:
+> > >
+> > > > On 2021-06-03 09:53, Bjorn Andersson wrote:
+> > > > > On Thu 03 Jun 11:09 CDT 2021, Kuogee Hsieh wrote:
+> > > [..]
+> > > > > > diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+> > > [..]
+> > > > > > +                             power-domains = <&rpmhpd SC7180_CX>;
+> > > > >
+> > > > > Just curious, but isn't the DP block in the MDSS_GDCS? Or do we need to
+> > > > > mention CX here in order for the opp framework to apply required-opps
+> > > > > of CX?
+> > > >
+> > > > yes,
+> > >
+> > > If you want me, or other maintainers, to spend any time reviewing or
+> > > applying your patches going forward then you need to actually bother
+> > > replying properly to the questions asked.
+> > >
+> > > Thanks,
+> > > Bjorn
 > >
-> > After commit 001d8dc33875 ("drm/msm/dsi: remove temp data from global
-> > pll structure") we use a hardcoded value for the parent clk frequency,
-> > i.e.  VCO_REF_CLK_RATE, and we also hardcode the value for FRAC_BITS,
-> > instead of getting it from the config structure. This combination of
-> > changes to the recalc function allows us to properly calculate the
-> > frequency of the PLL regardless of whether or not the PLL has been
-> > clk_prepare()d or clk_set_rate()d. That's a good improvement.
-> >
-> > Unfortunately, this means that now we won't call down into the PLL clk
-> > driver when we call clk_set_rate() because the frequency calculated in
-> > the framework matches the frequency that is set in hardware. If the rate
-> > is the same as what we want it should be OK to not call the set_rate PLL
-> > op. The real problem is that the prepare op in this driver uses a
-> > private struct member to stash away the vco frequency so that it can
-> > call the set_rate op directly during prepare. Once the set_rate op is
-> > never called because recalc_rate told us the rate is the same, we don't
-> > set this private struct member before the prepare op runs, so we try to
-> > call the set_rate function directly with a frequency of 0. This
-> > effectively kills the PLL and configures it for a rate that won't work.
-> > Calling set_rate from prepare is really quite bad and will confuse any
-> > downstream clks about what the rate actually is of their parent. Fixing
-> > that will be a rather large change though so we leave that to later.
-> >
-> > For now, let's stash away the rate we calculate during recalc so that
-> > the prepare op knows what frequency to set, instead of 0. This way
-> > things keep working and the display can enable the PLL properly. In the
-> > future, we should remove that code from the prepare op so that it
-> > doesn't even try to call the set rate function.
-> >
-> > Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > Cc: Abhinav Kumar <abhinavk@codeaurora.org>
-> > Fixes: 001d8dc33875 ("drm/msm/dsi: remove temp data from global pll structure")
-> > Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> > Sorry about the confusion. What I meant is that even though DP controller is
+> > in the MDSS_GDSC
+> > power domain, DP PHY/PLL sources out of CX. The DP link clocks have a direct
+> > impact
+> > on the CX voltage corners. Therefore, we need to mention the CX power domain
+> > here. And, since
+> > we can associate only one OPP table with one device, we picked the DP link
+> > clock over other
+> > clocks.
 >
-> Thank you for the lengthy explanation. May I suggest another solution:
->   - Apply
-> https://lore.kernel.org/linux-arm-msm/010101750064e17e-3db0087e-fc37-494d-aac9-2c2b9b0a7c5b-000000@us-west-2.amazonses.com/
+> Thank you, that's a much more useful answer.
 >
->   - And make save_state for 7nm and 10nm cache vco freq (like 14nm does).
+> Naturally I would think it would make more sense for the PHY/PLL driver
+> to ensure that CX is appropriately voted for then, but I think that
+> would result in it being the clock driver performing such vote and I'm
+> unsure how the opp table for that would look.
 >
-> What do you think?
+> @Stephen, what do you say?
 >
 
-Maybe that can be done for the next merge window? I'd like to get the
-smallest possible patch in as a fix for this cycle given that the Fixes
-tag is a recent regression introduced during the most recent merge
-window.
+Wouldn't the PHY be the one that sets some vote? So it wouldn't be the
+clk driver, and probably not from the clk ops, but instead come from the
+phy ops via phy_enable() and phy_configure().
 
-I honestly have no idea what's going on with the clk driver in these
-files but from the clk framework perspective there are bigger problems
-than caching the vco freq properly. As I stated in the commit text
-above, calling set_rate from prepare is plain bad. That should stop.
-
-From my quick glance, the patch you mention looks like another
-workaround instead of a proper fix. Why would we need to save the
-registers at boot and then snap them back into place on enable? Maybe we
-shouldn't reset the phy after registering the clks? Instead register the
-clks after the phy is reset so recalc_rate can accurately calculate the
-frequency. I suppose that would break continuous splash screen though
-where you want the PLL to stay running the entire boot? But then
-issuing a reset would break that, wouldn't it? As you can see I'm pretty
-confused about how this is all supposed to work.
-
-Note: my problem isn't about recovering what boot sets, it's mostly
-exposing incorrect usage of the clk framework in this driver because it
-relies on this chain of events:
-
- 1) recalc rate calculates something different than what is
-    set via clk_set_rate()
-
- 2) clk_set_rate() is called with the different rate
-
- 3) clk_prepare() is called to actually enable the PLL and wait for it
-    to start
-
-If clk_prepare() was called before clk_set_rate(), which is totally
-valid, then it should similarly fail and think the rate is 0 and the PLL
-won't lock. Does implementing save_state fix that? If so, it seems like
-we have two pieces of code working around each other, maybe for
-suspend/resume purposes.
-
-I admit this patch I'm proposing is another workaround, but at least it
-makes things work again without going off and adding a bunch of register
-save/restore logic.
+By the way, there's nothing wrong with a clk device doing power domain
+"stuff", except for that we haven't plumbed it into the clk framework
+properly and I'm fairly certain our usage of runtime PM in the clk
+framework today underneath the prepare_lock is getting us into trouble
+or will get us there soon.
