@@ -2,87 +2,293 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 60E6F39F562
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jun 2021 13:43:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 951FC39F55D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jun 2021 13:43:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232199AbhFHLpf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Jun 2021 07:45:35 -0400
-Received: from mail-ed1-f50.google.com ([209.85.208.50]:42579 "EHLO
-        mail-ed1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232198AbhFHLpe (ORCPT
+        id S232129AbhFHLpW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Jun 2021 07:45:22 -0400
+Received: from mail-ed1-f45.google.com ([209.85.208.45]:46806 "EHLO
+        mail-ed1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231919AbhFHLpW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Jun 2021 07:45:34 -0400
-Received: by mail-ed1-f50.google.com with SMTP id i13so24151286edb.9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Jun 2021 04:43:28 -0700 (PDT)
+        Tue, 8 Jun 2021 07:45:22 -0400
+Received: by mail-ed1-f45.google.com with SMTP id r11so24079993edt.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Jun 2021 04:43:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=65A8swxG6F/ylZkbgWYzbxA0ZkKEGw9/dd1+oL9pTwE=;
-        b=kcgHRx7Fut0ZIyND9s9iBNEwwWtFn1Ujj0GtMhNPnfIFh8cO6bu+xyZs+dUeG35X0E
-         wAuK6peHjb/7oXjVSRtajwSpkNEWHcuT5E8XHfaW67jAwKQfbKLbqM38gUocQLotVLQ+
-         IrtM4g8eWVmSxfQintTUpcTFGLa2AyyVZGY6s5s7gb/J0Rv8UI5VkcPoXR+HDlaODv4X
-         qyI5HGyX+PNcH/vDex5ImOWEewbLkX5kh7MjudnX2pNu7FuFDcMqI+SdEIzIgoBzEsPH
-         Sahl6REdq9wzYfjWWvKQ7KD0MiIudWhRlhyvHAv0dckZ+Msq9Q3wNZY3zhOJc2V3ttIV
-         VovQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=k2wKJvLK7tR0cSFBus6iUpbSIY6nGRz9/ET7AjDR48U=;
+        b=R32UCUXBtI7/c9g37x4Z3cV6QgcGQQxUuH1H/ZQQUISK7W6Q8cGXc+uLp3VFs0tBfL
+         rJAf8FWLzhIZ5Q+QEOaUioIp/t+XZcW4dKmhL7+H9F3NajRLv3Bwp9SekN02StkgoLxL
+         DCftmQZIf20Ui9052JnyCJFn7czcTyaFUSB/5Qd6fPAXm8diHwSJOadB6VRonUKIjrp9
+         z4i5x3hx6YdaXVlA8QZKwr8r/0UAGg48qP42uKB/rbNvZgLZHZ5unJa9GqSk31+jeeoH
+         KRn5Llm9DNq5n3kBVu9Xx7Qa0ZEfkwPt81SP9is139aQnZKXNIkMs0guB/jS7AKgoTjE
+         ERiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=65A8swxG6F/ylZkbgWYzbxA0ZkKEGw9/dd1+oL9pTwE=;
-        b=snozJGoZxwzJ9lfeRaYWF0DvRnQi8FclmFZ5MRuq5z3lb1rMPp/WtWMqXwbQETAxcd
-         MCCAEbJOqNYazvUJvs2n499Rwb3YN7N5DUqzT01YBx3+Q1owP/hjP5l4KTgXYEBzRaAn
-         eEf2Nr7+SdQMJrshH3WONkABqsQnuYNKJvEAiwuujauCZC4rkZ//dxx6Hlw4fIVy4jpU
-         5VMuc7Z3yDDS2nBJImhEGRGM4vaHj6Ej0cEhHyiIGIfRPT+rAEHArvnHTmhwz9HWEj3h
-         H8h48qb47CFc9uag7FmVSFrR1TqqNcf/m/j4sFNMymnx3nVXTIW+IAk4AHcgiOeYDbCE
-         vdaQ==
-X-Gm-Message-State: AOAM530O9Dtiv22HCPVJtAyYXtfZByxiqXhCdxhL+2dRYCuUktJwt/Hl
-        bMmXbX2DcxA0gezlaiwKoLwP9w==
-X-Google-Smtp-Source: ABdhPJwGWZ8jOAdwtABw7tBzCTlHxQlQSIzH1R8MjGRJMsaIzJi7acSzOtAPhe6jqNDcBIf/ENMwYQ==
-X-Received: by 2002:aa7:db93:: with SMTP id u19mr24987185edt.227.1623152548257;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=k2wKJvLK7tR0cSFBus6iUpbSIY6nGRz9/ET7AjDR48U=;
+        b=CP9dLXKnSpPTTiWGu0DlsudC3LpwaJNXczZFFLScm+6P9c6xR5sbfluCHweA1Udhjx
+         iNsiu6NqpFHw1Y3ks9P+O2X7Fnerp8PYHSn1lwR0rO47H3wn5q1/o2gq9588usEVSGaI
+         dRsoxiyYuZL//xLiuO4PzoMXEuFxA9ZQU+vgF5IB84g1vpAqhT0VYIYJgxCxTmZJ5NjQ
+         M9dcGDLr50cKS+oGrl/Wngxpukrs3fBBZ/U1l9mtyVnSRSUDOomYlfJ8mkb7ny2+HHqC
+         jYV8gQx2o5W9Z2FrYmpUaOWsTycvmmn1CxpGd22tXeWGS06MT2em34sFiWoPTfrc1QJz
+         Vssw==
+X-Gm-Message-State: AOAM5307Ng+5S6MGPz3Yys3HLIgK2EBknyJYgKfex3x97Ao1Y6tQEMYe
+        mDjoZo7gD83s1fQD9P2EhzFxTQ==
+X-Google-Smtp-Source: ABdhPJx1fY3mD3MXSBOSPBkM412FkGkhPQHglrkVDdMI2xU70RD2T3wXp8TW0mwyMrPbOrUrGGbZrA==
+X-Received: by 2002:aa7:d798:: with SMTP id s24mr20722933edq.243.1623152548946;
         Tue, 08 Jun 2021 04:42:28 -0700 (PDT)
 Received: from localhost.localdomain (hst-221-104.medicom.bg. [84.238.221.104])
-        by smtp.gmail.com with ESMTPSA id x4sm8754740edq.23.2021.06.08.04.42.27
+        by smtp.gmail.com with ESMTPSA id x4sm8754740edq.23.2021.06.08.04.42.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Jun 2021 04:42:27 -0700 (PDT)
+        Tue, 08 Jun 2021 04:42:28 -0700 (PDT)
 From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
 To:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org
 Cc:     Vikash Garodia <vgarodia@codeaurora.org>,
         Mansur Alisha Shaik <mansur@codeaurora.org>,
         Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Subject: [PATCH v2 0/5] Venus fatal error handling
-Date:   Tue,  8 Jun 2021 14:41:51 +0300
-Message-Id: <20210608114156.87018-1-stanimir.varbanov@linaro.org>
+Subject: [PATCH v2 1/5] venus: venc: Use pmruntime autosuspend
+Date:   Tue,  8 Jun 2021 14:41:52 +0300
+Message-Id: <20210608114156.87018-2-stanimir.varbanov@linaro.org>
 X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20210608114156.87018-1-stanimir.varbanov@linaro.org>
+References: <20210608114156.87018-1-stanimir.varbanov@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Changes since v1:
-  * replace pm_runtime_get_sync with pm_runtime_resume_and_get in 1/5.
+Migrate encoder to pm-runtime autosuspend.
 
-regards,
-Stan
+Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+---
+ drivers/media/platform/qcom/venus/venc.c | 103 +++++++++++++++++++++--
+ 1 file changed, 95 insertions(+), 8 deletions(-)
 
-Stanimir Varbanov (5):
-  venus: venc: Use pmruntime autosuspend
-  venus: Make sys_error flag an atomic bitops
-  venus: hfi: Check for sys error on session hfi functions
-  venus: helpers: Add helper to mark fatal vb2 error
-  venus: Handle fatal errors during encoding and decoding
-
- drivers/media/platform/qcom/venus/core.c    |  13 ++-
- drivers/media/platform/qcom/venus/core.h    |   6 +-
- drivers/media/platform/qcom/venus/helpers.c |  16 ++-
- drivers/media/platform/qcom/venus/helpers.h |   1 +
- drivers/media/platform/qcom/venus/hfi.c     |  48 +++++++-
- drivers/media/platform/qcom/venus/vdec.c    |  18 ++-
- drivers/media/platform/qcom/venus/venc.c    | 116 ++++++++++++++++++--
- 7 files changed, 201 insertions(+), 17 deletions(-)
-
+diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
+index 8dd49d4f124c..47badd43145d 100644
+--- a/drivers/media/platform/qcom/venus/venc.c
++++ b/drivers/media/platform/qcom/venus/venc.c
+@@ -536,6 +536,64 @@ static const struct v4l2_ioctl_ops venc_ioctl_ops = {
+ 	.vidioc_unsubscribe_event = v4l2_event_unsubscribe,
+ };
+ 
++static int venc_pm_get(struct venus_inst *inst)
++{
++	struct venus_core *core = inst->core;
++	struct device *dev = core->dev_enc;
++	int ret;
++
++	mutex_lock(&core->pm_lock);
++	ret = pm_runtime_resume_and_get(dev);
++	mutex_unlock(&core->pm_lock);
++
++	return ret < 0 ? ret : 0;
++}
++
++static int venc_pm_put(struct venus_inst *inst, bool autosuspend)
++{
++	struct venus_core *core = inst->core;
++	struct device *dev = core->dev_enc;
++	int ret;
++
++	mutex_lock(&core->pm_lock);
++
++	if (autosuspend)
++		ret = pm_runtime_put_autosuspend(dev);
++	else
++		ret = pm_runtime_put_sync(dev);
++
++	mutex_unlock(&core->pm_lock);
++
++	return ret < 0 ? ret : 0;
++}
++
++static int venc_pm_get_put(struct venus_inst *inst)
++{
++	struct venus_core *core = inst->core;
++	struct device *dev = core->dev_enc;
++	int ret = 0;
++
++	mutex_lock(&core->pm_lock);
++
++	if (pm_runtime_suspended(dev)) {
++		ret = pm_runtime_resume_and_get(dev);
++		if (ret < 0)
++			goto error;
++
++		ret = pm_runtime_put_autosuspend(dev);
++	}
++
++error:
++	mutex_unlock(&core->pm_lock);
++
++	return ret < 0 ? ret : 0;
++}
++
++static void venc_pm_touch(struct venus_inst *inst)
++{
++	pm_runtime_mark_last_busy(inst->core->dev_enc);
++}
++
+ static int venc_set_properties(struct venus_inst *inst)
+ {
+ 	struct venc_controls *ctr = &inst->controls.enc;
+@@ -891,10 +949,18 @@ static int venc_queue_setup(struct vb2_queue *q,
+ 		return 0;
+ 	}
+ 
++	ret = venc_pm_get(inst);
++	if (ret)
++		return ret;
++
+ 	mutex_lock(&inst->lock);
+ 	ret = venc_init_session(inst);
+ 	mutex_unlock(&inst->lock);
+ 
++	if (ret)
++		goto put_power;
++
++	ret = venc_pm_put(inst, false);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -930,6 +996,9 @@ static int venc_queue_setup(struct vb2_queue *q,
+ 		break;
+ 	}
+ 
++	return ret;
++put_power:
++	venc_pm_put(inst, false);
+ 	return ret;
+ }
+ 
+@@ -946,6 +1015,8 @@ static void venc_release_session(struct venus_inst *inst)
+ {
+ 	int ret;
+ 
++	venc_pm_get(inst);
++
+ 	mutex_lock(&inst->lock);
+ 
+ 	ret = hfi_session_deinit(inst);
+@@ -957,6 +1028,8 @@ static void venc_release_session(struct venus_inst *inst)
+ 	venus_pm_load_scale(inst);
+ 	INIT_LIST_HEAD(&inst->registeredbufs);
+ 	venus_pm_release_core(inst);
++
++	venc_pm_put(inst, false);
+ }
+ 
+ static void venc_buf_cleanup(struct vb2_buffer *vb)
+@@ -1026,7 +1099,15 @@ static int venc_start_streaming(struct vb2_queue *q, unsigned int count)
+ 	inst->sequence_cap = 0;
+ 	inst->sequence_out = 0;
+ 
++	ret = venc_pm_get(inst);
++	if (ret)
++		goto error;
++
+ 	ret = venus_pm_acquire_core(inst);
++	if (ret)
++		goto put_power;
++
++	ret = venc_pm_put(inst, true);
+ 	if (ret)
+ 		goto error;
+ 
+@@ -1051,6 +1132,8 @@ static int venc_start_streaming(struct vb2_queue *q, unsigned int count)
+ 
+ 	return 0;
+ 
++put_power:
++	venc_pm_put(inst, false);
+ error:
+ 	venus_helper_buffers_done(inst, q->type, VB2_BUF_STATE_QUEUED);
+ 	if (q->type == V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE)
+@@ -1065,6 +1148,8 @@ static void venc_vb2_buf_queue(struct vb2_buffer *vb)
+ {
+ 	struct venus_inst *inst = vb2_get_drv_priv(vb->vb2_queue);
+ 
++	venc_pm_get_put(inst);
++
+ 	mutex_lock(&inst->lock);
+ 	venus_helper_vb2_buf_queue(vb);
+ 	mutex_unlock(&inst->lock);
+@@ -1088,6 +1173,8 @@ static void venc_buf_done(struct venus_inst *inst, unsigned int buf_type,
+ 	struct vb2_buffer *vb;
+ 	unsigned int type;
+ 
++	venc_pm_touch(inst);
++
+ 	if (buf_type == HFI_BUFFER_INPUT)
+ 		type = V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE;
+ 	else
+@@ -1117,6 +1204,8 @@ static void venc_event_notify(struct venus_inst *inst, u32 event,
+ {
+ 	struct device *dev = inst->core->dev_enc;
+ 
++	venc_pm_touch(inst);
++
+ 	if (event == EVT_SESSION_ERROR) {
+ 		inst->session_error = true;
+ 		dev_err(dev, "enc: event session error %x\n", inst->error);
+@@ -1205,13 +1294,9 @@ static int venc_open(struct file *file)
+ 
+ 	venus_helper_init_instance(inst);
+ 
+-	ret = pm_runtime_resume_and_get(core->dev_enc);
+-	if (ret < 0)
+-		goto err_free;
+-
+ 	ret = venc_ctrl_init(inst);
+ 	if (ret)
+-		goto err_put_sync;
++		goto err_free;
+ 
+ 	ret = hfi_session_create(inst, &venc_hfi_ops);
+ 	if (ret)
+@@ -1250,8 +1335,6 @@ static int venc_open(struct file *file)
+ 	hfi_session_destroy(inst);
+ err_ctrl_deinit:
+ 	venc_ctrl_deinit(inst);
+-err_put_sync:
+-	pm_runtime_put_sync(core->dev_enc);
+ err_free:
+ 	kfree(inst);
+ 	return ret;
+@@ -1261,6 +1344,8 @@ static int venc_close(struct file *file)
+ {
+ 	struct venus_inst *inst = to_inst(file);
+ 
++	venc_pm_get(inst);
++
+ 	v4l2_m2m_ctx_release(inst->m2m_ctx);
+ 	v4l2_m2m_release(inst->m2m_dev);
+ 	venc_ctrl_deinit(inst);
+@@ -1269,7 +1354,7 @@ static int venc_close(struct file *file)
+ 	v4l2_fh_del(&inst->fh);
+ 	v4l2_fh_exit(&inst->fh);
+ 
+-	pm_runtime_put_sync(inst->core->dev_enc);
++	venc_pm_put(inst, false);
+ 
+ 	kfree(inst);
+ 	return 0;
+@@ -1326,6 +1411,8 @@ static int venc_probe(struct platform_device *pdev)
+ 	core->dev_enc = dev;
+ 
+ 	video_set_drvdata(vdev, core);
++	pm_runtime_set_autosuspend_delay(dev, 2000);
++	pm_runtime_use_autosuspend(dev);
+ 	pm_runtime_enable(dev);
+ 
+ 	return 0;
 -- 
 2.25.1
 
