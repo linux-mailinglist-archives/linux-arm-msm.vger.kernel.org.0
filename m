@@ -2,50 +2,45 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 40FF639FD5B
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jun 2021 19:16:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8180F39FD5E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jun 2021 19:17:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232229AbhFHRSt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Jun 2021 13:18:49 -0400
-Received: from mail.kernel.org ([198.145.29.99]:52994 "EHLO mail.kernel.org"
+        id S232728AbhFHRSv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Jun 2021 13:18:51 -0400
+Received: from mail.kernel.org ([198.145.29.99]:53092 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232007AbhFHRSs (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Jun 2021 13:18:48 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id D3F7E61351;
-        Tue,  8 Jun 2021 17:16:52 +0000 (UTC)
+        id S232007AbhFHRSv (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 8 Jun 2021 13:18:51 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 2AC2061352;
+        Tue,  8 Jun 2021 17:16:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1623172615;
-        bh=DaPFTt06ZX9vrnUdxgsyoxWQxOB00PNGVCYx24PpEGY=;
+        s=k20201202; t=1623172618;
+        bh=yl2qHr4XV3/1fqJTupw4COciZIVz1WyvmJNh/E3HQqw=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=VK2XP8JOZiplEBMfE6qiNiXA3oNdqTFu374He9eycmhA/IWpRAegRF9Pj9zjPXqq+
-         mMKtfN0gTk1J9XHTC/VoFQS3Scd1juZ/gjTpRoG46Eq8tfFH+JPX3FOczigR01GUqE
-         Gtb06n3zf9naCHxEerD2PUvcisjN8QL+tGki3MYbc9ESvcAfbYUbwLNOHDgh7RpiQv
-         2QwPF/pr/V7mqYbGEMUUjBxnByIBpi9NMF+mPoKGthxDC7ZZ+3WZLhzgcswWwsPpNW
-         9c2O8dvR2ondNB1wwt4CPrxUwyULAKAZpDptWcAXVmQ5P+V7WfuOzGONDlwEMM+slZ
-         2losHzMFS0IJQ==
+        b=R/I/mVzq1fstGbnDEXSdA6AWxEKtxqXgdbMT/wIk7YSXVPsghiYPbnSI9yI4ZTvOP
+         l4PozDCrHNIqn9stZ2jpEhz6KzeVpjDSQ7IM8tefg3kBSnFlNGQ1V9W/dLhW8kvniM
+         jd2RgC55iq0cqvBOPbEvskNAck4hbKl9WncGKJB3zztKUYLv9SUZk6rPLR7ZXWEwF+
+         NdpCWyf0yRKiZ+5uOW/q1CU74TOnjRJRWMcWaqkxyHACT/eenYOXtR4ENPpX0hffNn
+         P+qXs7cRAKHG2aCAkfRVX8mOunUiRbIOFjCqIzn8iUq/2glJaoNUNyHK0K+BTl+xsU
+         SqogcFIkL1JPw==
 From:   Will Deacon <will@kernel.org>
-To:     Rob Clark <robdclark@gmail.com>,
-        Amey Narkhede <ameynarkhede03@gmail.com>
+To:     Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
 Cc:     catalin.marinas@arm.com, kernel-team@android.com,
-        Will Deacon <will@kernel.org>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        linux-kernel@vger.kernel.org, Joerg Roedel <joro@8bytes.org>,
-        Zenghui Yu <yuzenghui@huawei.com>,
-        Barry Song <song.bao.hua@hisilicon.com>,
-        Jean-Philippe Brucker <jean-philippe@linaro.org>,
+        Will Deacon <will@kernel.org>, linux-kernel@vger.kernel.org,
         linux-arm-msm@vger.kernel.org,
-        Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-        Krishna Reddy <vdumpa@nvidia.com>,
-        iommu@lists.linux-foundation.org,
-        Robin Murphy <robin.murphy@arm.com>,
-        Jon Hunter <jonathanh@nvidia.com>,
-        linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH] iommu/arm: Cleanup resources in case of probe error path
-Date:   Tue,  8 Jun 2021 18:16:47 +0100
-Message-Id: <162317119382.2860700.13290595260136409197.b4-ty@kernel.org>
+        linux-arm-kernel@lists.infradead.org,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Akhil P Oommen <akhilpo@codeaurora.org>,
+        iommu@lists.linux-foundation.org
+Subject: Re: [PATCHv4 0/2] iommu/arm-smmu-qcom: Add SC7280 support
+Date:   Tue,  8 Jun 2021 18:16:48 +0100
+Message-Id: <162317109419.2860401.3121131384006826065.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20210608164559.204023-1-ameynarkhede03@gmail.com>
-References: <20210608164559.204023-1-ameynarkhede03@gmail.com>
+In-Reply-To: <cover.1623155117.git.saiprakash.ranjan@codeaurora.org>
+References: <cover.1623155117.git.saiprakash.ranjan@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -53,15 +48,24 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 8 Jun 2021 22:15:59 +0530, Amey Narkhede wrote:
-> If device registration fails, remove sysfs attribute
-> and if setting bus callbacks fails, unregister the device
-> and cleanup the sysfs attribute.
+On Tue, 8 Jun 2021 18:00:05 +0530, Sai Prakash Ranjan wrote:
+> Patch 1 adds the sc7280 smmu compatible.
+> Patch 2 moves the adreno smmu check before apss smmu to enable
+> adreno smmu specific implementation.
+> 
+> Note that dt-binding for sc7280 is already merged.
+> 
+> Changes in v4:
+>  * Rebased on top of arm-smmu/updates with acpi changes.
+> 
+> [...]
 
 Applied to will (for-joerg/arm-smmu/updates), thanks!
 
-[1/1] iommu/arm: Cleanup resources in case of probe error path
-      https://git.kernel.org/will/c/249c9dc6aa0d
+[1/2] iommu/arm-smmu-qcom: Add SC7280 SMMU compatible
+      https://git.kernel.org/will/c/0b779f562b14
+[2/2] iommu/arm-smmu-qcom: Move the adreno smmu specific impl
+      https://git.kernel.org/will/c/ab9a77a141cc
 
 Cheers,
 -- 
