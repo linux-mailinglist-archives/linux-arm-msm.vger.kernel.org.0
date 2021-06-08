@@ -2,95 +2,249 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5BE6F39F4A7
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jun 2021 13:10:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 25C7139F4FB
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jun 2021 13:30:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231438AbhFHLME (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Jun 2021 07:12:04 -0400
-Received: from mail.kernel.org ([198.145.29.99]:46238 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231266AbhFHLME (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Jun 2021 07:12:04 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 28A876134F;
-        Tue,  8 Jun 2021 11:10:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1623150611;
-        bh=E/PY1UUD0KVjzvXwESFNHuR3PIRHP6Q6G/raiw7orh8=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=eMMSLasg1PmEGczdlpPNC/tnoIY1jN2TaOZq1u7kDB9K8fUTo1Op3BE4uLZMP1ctr
-         NUdcL7feiHhZexDss1zM937C/zcB92+4tA1wiLaIgOP192NFCrBWDmPlDJaLq8Jwi7
-         6mhw7sE1+rfG7LygR3YeFtiZ5mkSPbyX6cfHDpotOyLRqfbBJGLYHI1uEw+GKfGW0C
-         oGpK+eRsBsLO86Vk44p3QYp3meRwzP6NzhiXNIWaSAwoC2Q5OiIR/x4MrJ9Ya9m/sv
-         Q0Y+XI0KrtyPi7TE89vBnH96X/X3BkNlEfb347+3ELimyho0r44vZpjqbdA3vyiKQf
-         Y2eUoQhmUCXYQ==
-Date:   Tue, 8 Jun 2021 12:10:05 +0100
-From:   Will Deacon <will@kernel.org>
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
-        Krishna Reddy <vdumpa@nvidia.com>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        "moderated list:ARM SMMU DRIVERS" 
-        <linux-arm-kernel@lists.infradead.org>,
-        "open list:IOMMU DRIVERS" <iommu@lists.linux-foundation.org>,
-        open list <linux-kernel@vger.kernel.org>
-Subject: Re: [RESEND PATCH v4 1/6] iommu/arm-smmu: Add support for driver
- IOMMU fault handlers
-Message-ID: <20210608111005.GB9051@willie-the-truck>
-References: <20210602165313.553291-1-robdclark@gmail.com>
- <20210602165313.553291-2-robdclark@gmail.com>
+        id S231959AbhFHLca (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Jun 2021 07:32:30 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124]:29176 "EHLO
+        us-smtp-delivery-124.mimecast.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S231849AbhFHLc3 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 8 Jun 2021 07:32:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1623151836;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=2RI5ey86j83Uuwo2tjOtbNfV+FjFbv6oI/7mKd3IkLQ=;
+        b=Qu9Up//g3HUH2+bYL3cjoK5VvOZdHi7bT7lqXz5XgWc/SyBSg315abGz6l+wvtWU9Dbn+d
+        manbmFpWufFXaIPQVQ7ZjAH4Vs85JFaWAFJ62V3uITtxKAsYe0mGyQvX3wPWrJWvzX/Y3w
+        1Hj5H0bLc1GS9dj25ffrDZhX2n9F7fg=
+Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
+ [209.85.208.69]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-242-OtBog6kJPQ2o8NYafFu1HA-1; Tue, 08 Jun 2021 07:30:34 -0400
+X-MC-Unique: OtBog6kJPQ2o8NYafFu1HA-1
+Received: by mail-ed1-f69.google.com with SMTP id j13-20020aa7de8d0000b029038fc8e57037so10700081edv.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Jun 2021 04:30:34 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:in-reply-to:references:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=2RI5ey86j83Uuwo2tjOtbNfV+FjFbv6oI/7mKd3IkLQ=;
+        b=SgAVatXaEo8OzaMpPjuZi7nvOolJU4xOnUkhMpVmIRqcGUk6gHzmgiMTNpOB60CzJR
+         +mkJp8AXXjluBiw7PLK4nIBZuptWzUp5cTjlUycW42mcny722CtK5kYdOhvr2KkEcbfl
+         tEPBRyg34VgLmxU2VQm9t9f8f+MH2qPAWgbZTTHqK4WjOT4T9zgzdY9G+1rauzt+6x/D
+         WFDswySlybKSe5osN78yDKKIEEtEzT4L5EByiskeIOyh3fPNFeeRShOuCvOhuIfFLQqb
+         iKjtrLEqm03li+Fw+EmxYTLobico6vMeI4dzcq87PLAAMYCZ0QRw+ZPi2DzsmNmB9HXO
+         49uQ==
+X-Gm-Message-State: AOAM531DRFpuZrYhqywJDoNzMyLaD5lyg+cD4QgZBS3idVrAD6yvZkxP
+        3wEOGKu95zAe+ecHjTp6BrNEEQQ7kyg8BfKVFmTTvJigwMjzje5a8s0PoVxwGCwJ3WiOPt53rA/
+        Qf70qtap/CTydATX4cvhy+VxAtw==
+X-Received: by 2002:a17:906:1796:: with SMTP id t22mr22681443eje.304.1623151833295;
+        Tue, 08 Jun 2021 04:30:33 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJz8CZ6U8M4vg9eEJCjByzoIhJqloa45BAeveakQTDyR08YhlreAeA+vD8fAbQM0l0CtWDfZrg==
+X-Received: by 2002:a17:906:1796:: with SMTP id t22mr22681420eje.304.1623151833049;
+        Tue, 08 Jun 2021 04:30:33 -0700 (PDT)
+Received: from alrua-x1.borgediget.toke.dk ([45.145.92.2])
+        by smtp.gmail.com with ESMTPSA id w1sm7766790eds.37.2021.06.08.04.30.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 08 Jun 2021 04:30:32 -0700 (PDT)
+Received: by alrua-x1.borgediget.toke.dk (Postfix, from userid 1000)
+        id 88998180723; Tue,  8 Jun 2021 13:30:30 +0200 (CEST)
+From:   Toke =?utf-8?Q?H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>
+To:     Stephan Gerhold <stephan@gerhold.net>
+Cc:     Loic Poulain <loic.poulain@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Aleksander Morgado <aleksander@aleksander.es>,
+        Network Development <netdev@vger.kernel.org>,
+        linux-remoteproc@vger.kernel.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Ohad Ben-Cohen <ohad@wizery.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>
+Subject: Re: [RFC] Integrate RPMSG/SMD into WWAN subsystem
+In-Reply-To: <YL4GiEEcOQC2XrjP@gerhold.net>
+References: <YLfL9Q+4860uqS8f@gerhold.net>
+ <CAMZdPi9tcye-4P4i0uXZcECJ-Big5T11JdvdXW6k2mEEi9XwyA@mail.gmail.com>
+ <YLtDB2Cz5ttewsFu@gerhold.net>
+ <CAMZdPi_-Qa=JnThHs_h-144dAfSAjF5s+QdBawdXZ3kk8Mx8ng@mail.gmail.com>
+ <YL364+xK3mE2FU8a@gerhold.net> <87sg1tvryx.fsf@toke.dk>
+ <YL4GiEEcOQC2XrjP@gerhold.net>
+X-Clacks-Overhead: GNU Terry Pratchett
+Date:   Tue, 08 Jun 2021 13:30:30 +0200
+Message-ID: <87czswtwyx.fsf@toke.dk>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210602165313.553291-2-robdclark@gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jun 02, 2021 at 09:52:44AM -0700, Rob Clark wrote:
-> From: Jordan Crouse <jcrouse@codeaurora.org>
-> 
-> Call report_iommu_fault() to allow upper-level drivers to register their
-> own fault handlers.
-> 
-> Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
-> ---
->  drivers/iommu/arm/arm-smmu/arm-smmu.c | 9 +++++++--
->  1 file changed, 7 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c b/drivers/iommu/arm/arm-smmu/arm-smmu.c
-> index 6f72c4d208ca..b4b32d31fc06 100644
-> --- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
-> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
-> @@ -408,6 +408,7 @@ static irqreturn_t arm_smmu_context_fault(int irq, void *dev)
->  	struct arm_smmu_domain *smmu_domain = to_smmu_domain(domain);
->  	struct arm_smmu_device *smmu = smmu_domain->smmu;
->  	int idx = smmu_domain->cfg.cbndx;
-> +	int ret;
->  
->  	fsr = arm_smmu_cb_read(smmu, idx, ARM_SMMU_CB_FSR);
->  	if (!(fsr & ARM_SMMU_FSR_FAULT))
-> @@ -417,8 +418,12 @@ static irqreturn_t arm_smmu_context_fault(int irq, void *dev)
->  	iova = arm_smmu_cb_readq(smmu, idx, ARM_SMMU_CB_FAR);
->  	cbfrsynra = arm_smmu_gr1_read(smmu, ARM_SMMU_GR1_CBFRSYNRA(idx));
->  
-> -	dev_err_ratelimited(smmu->dev,
-> -	"Unhandled context fault: fsr=0x%x, iova=0x%08lx, fsynr=0x%x, cbfrsynra=0x%x, cb=%d\n",
-> +	ret = report_iommu_fault(domain, NULL, iova,
-> +		fsynr & ARM_SMMU_FSYNR0_WNR ? IOMMU_FAULT_WRITE : IOMMU_FAULT_READ);
-> +
-> +	if (ret == -ENOSYS)
-> +		dev_err_ratelimited(smmu->dev,
-> +		"Unhandled context fault: fsr=0x%x, iova=0x%08lx, fsynr=0x%x, cbfrsynra=0x%x, cb=%d\n",
->  			    fsr, iova, fsynr, cbfrsynra, idx);
+Stephan Gerhold <stephan@gerhold.net> writes:
 
-Acked-by: Will Deacon <will@kernel.org>
+> On Mon, Jun 07, 2021 at 01:23:18PM +0200, Toke H=C3=B8iland-J=C3=B8rgense=
+n wrote:
+>> Stephan Gerhold <stephan@gerhold.net> writes:
+>> > On Mon, Jun 07, 2021 at 11:27:07AM +0200, Loic Poulain wrote:
+>> >> On Sat, 5 Jun 2021 at 11:25, Stephan Gerhold <stephan@gerhold.net> wr=
+ote:
+>> >> > On Fri, Jun 04, 2021 at 11:11:45PM +0200, Loic Poulain wrote:
+>> >> > > On Wed, 2 Jun 2021 at 20:20, Stephan Gerhold <stephan@gerhold.net=
+> wrote:
+>> >> > > > I've been thinking about creating some sort of "RPMSG" driver f=
+or the
+>> >> > > > new WWAN subsystem; this would be used as a QMI/AT channel to t=
+he
+>> >> > > > integrated modem on some older Qualcomm SoCs such as MSM8916 an=
+d MSM8974.
+>> >> > > >
+>> >> > > > It's easy to confuse all the different approaches that Qualcomm=
+ has to
+>> >> > > > talk to their modems, so I will first try to briefly give an ov=
+erview
+>> >> > > > about those that I'm familiar with:
+>> >> > > >
+>> >> > > > ---
+>> >> > > > There is USB and MHI that are mainly used to talk to "external"=
+ modems.
+>> >> > > >
+>> >> > > > For the integrated modems in many Qualcomm SoCs there is typica=
+lly
+>> >> > > > a separate control and data path. They are not really related t=
+o each
+>> >> > > > other (e.g. currently no common parent device in sysfs).
+>> >> > > >
+>> >> > > > For the data path (network interface) there is "IPA" (drivers/n=
+et/ipa)
+>> >> > > > on newer SoCs or "BAM-DMUX" on some older SoCs (e.g. MSM8916/MS=
+M8974).
+>> >> > > > I have a driver for BAM-DMUX that I hope to finish up and submi=
+t soon.
+>> >> > > >
+>> >> > > > The connection is set up via QMI. The messages are either sent =
+via
+>> >> > > > a shared RPMSG channel (net/qrtr sockets in Linux) or via stand=
+alone
+>> >> > > > SMD/RPMSG channels (e.g. "DATA5_CNTL" for QMI and "DATA1" for A=
+T).
+>> >> > > >
+>> >> > > > This gives a lot of possible combinations like BAM-DMUX+RPMSG
+>> >> > > > (MSM8916, MSM8974), or IPA+QRTR (SDM845) but also other funny
+>> >> > > > combinations like IPA+RPMSG (MSM8994) or BAM-DMUX+QRTR (MSM8937=
+).
+>> >> > > >
+>> >> > > > Simply put, supporting all these in userspace like ModemManager
+>> >> > > > is a mess (Aleksander can probably confirm).
+>> >> > > > It would be nice if this could be simplified through the WWAN s=
+ubsystem.
+>> >> > > >
+>> >> > > > It's not clear to me if or how well QRTR sockets can be mapped =
+to a char
+>> >> > > > device for the WWAN subsystem, so for now I'm trying to focus o=
+n the
+>> >> > > > standalone RPMSG approach (for MSM8916, MSM8974, ...).
+>> >> > > > ---
+>> >> > > >
+>> >> > > > Currently ModemManager uses the RPMSG channels via the rpmsg-ch=
+ardev
+>> >> > > > (drivers/rpmsg/rpmsg_char.c). It wasn't my idea to use it like =
+this,
+>> >> > > > I just took that over from someone else. Realistically speaking=
+, the
+>> >> > > > current approach isn't too different from the UCI "backdoor int=
+erface"
+>> >> > > > approach that was rejected for MHI...
+>> >> > > >
+>> >> > > > I kind of expected that I can just trivially copy some code from
+>> >> > > > rpmsg_char.c into a WWAN driver since they both end up as a sim=
+ple char
+>> >> > > > device. But it looks like the abstractions in wwan_core are kin=
+d of
+>> >> > > > getting in the way here... As far as I can tell, they don't rea=
+lly fit
+>> >> > > > together with the RPMSG interface.
+>> >> > > >
+>> >> > > > For example there is rpmsg_send(...) (blocking) and rpmsg_tryse=
+nd(...)
+>> >> > > > (non-blocking) and even a rpmsg_poll(...) [1] but I don't see a=
+ way to
+>> >> > > > get notified when the TX queue is full or no longer full so I c=
+an call
+>> >> > > > wwan_port_txon/off().
+>> >> > > >
+>> >> > > > Any suggestions or other thoughts?
+>> >> > >
+>> >> > > It would be indeed nice to get this in the WWAN framework.
+>> >> > > I don't know much about rpmsg but I think it is straightforward f=
+or
+>> >> > > the RX path, the ept_cb can simply forward the buffers to
+>> >> > > wwan_port_rx.
+>> >> >
+>> >> > Right, that part should be straightforward.
+>> >> >
+>> >> > > For tx, simply call rpmsg_trysend() in the wwan tx
+>> >> > > callback and don't use the txon/off helpers. In short, keep it si=
+mple
+>> >> > > and check if you observe any issues.
+>> >> > >
+>> >> >
+>> >> > I'm not sure that's a good idea. This sounds like exactly the kind =
+of
+>> >> > thing that might explode later just because I don't manage to get t=
+he
+>> >> > TX queue full in my tests. In that case, writing to the WWAN char d=
+ev
+>> >> > would not block, even if O_NONBLOCK is not set.
+>> >>=20
+>> >> Right, if you think it could be a problem, you can always implement a
+>> >> more complex solution like calling rpmsg_send from a
+>> >> workqueue/kthread, and only re-enable tx once rpmsg_send returns.
+>> >>=20
+>> >
+>> > I did run into trouble when I tried to stream lots of data into the WW=
+AN
+>> > char device (e.g. using dd). However, in practice (with ModemManager)=
+=20
+>> > I did not manage to cause such issues yet. Personally, I think it's
+>> > something we should get right, just to avoid trouble later
+>> > (like "modem suddenly stops working").
+>> >
+>> > Right now I extended the WWAN port ops a bit so I tells me if the write
+>> > should be non-blocking or blocking and so I can call rpmsg_poll(...).
+>> >
+>> > But having some sort of workqueue also sounds like it could work quite
+>> > well, thanks for the suggestion! Will think about it some more, or
+>> > I might post what I have right now so you can take a look.
+>>=20
+>> How big are those hardware TXQs? Just pushing packets to the hardware
+>> until it overflows sounds like a recipe for absolutely terrible
+>> bufferbloat... That would be bad!
+>>=20
+>
+> For reference, we're not really talking about "hardware" TXQs here.
+> As far as I understand, the RPMSG channels on Qualcomm devices are
+> mostly just a firmware convention for communicating between different
+> CPUs/DSPs via shared memory.
+>
+> The packets are copied into some kind of shared FIFO/ring buffer
+> per channel, with varying sizes. On my test device, the firmware
+> allcates 1024 bytes for the QMI channel and 8192 bytes
+> for the AT channel.
+>
+> I'm not sure how this would cause any kind of overflow/bufferbloat.
+> The remote side (e.g. modem DSP) is notified separately for every packet
+> that is sent. If we're really writing more quickly than the remote side
+> will read, rpmsg_send() will block and therefore the client will
+> block as well (since tx was disabled before calling rpmsg_send()).
 
-Will
+Hmm, okay, if this is just control channel traffic and the buffers are
+no bigger than that maybe this is not such a huge issue. As long as the
+client (which I guess is whichever application is trying to control the
+modem?) can block and back off, so it won't just keep queuing up
+commands faster than the modem can process them...
+
+-Toke
+
