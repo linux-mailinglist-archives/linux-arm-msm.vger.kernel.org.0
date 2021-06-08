@@ -2,126 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8EE3439F921
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jun 2021 16:29:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B1E0039F9B4
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jun 2021 16:56:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233218AbhFHObE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Jun 2021 10:31:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59446 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233364AbhFHObB (ORCPT
+        id S233354AbhFHO6K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Jun 2021 10:58:10 -0400
+Received: from mail-pg1-f177.google.com ([209.85.215.177]:44810 "EHLO
+        mail-pg1-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232833AbhFHO6K (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Jun 2021 10:31:01 -0400
-Received: from mail-qt1-x82b.google.com (mail-qt1-x82b.google.com [IPv6:2607:f8b0:4864:20::82b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B7EFC061795
-        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Jun 2021 07:29:08 -0700 (PDT)
-Received: by mail-qt1-x82b.google.com with SMTP id u20so7141353qtx.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Jun 2021 07:29:08 -0700 (PDT)
+        Tue, 8 Jun 2021 10:58:10 -0400
+Received: by mail-pg1-f177.google.com with SMTP id y11so8565886pgp.11;
+        Tue, 08 Jun 2021 07:56:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=marek-ca.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=ya4sSOjySMHGjVVWLWrWfBjZGU/UNkNaSi2rQLK5WkI=;
-        b=1X5vWiICSrpwWJEznutissR6pu/5bj0Ju4L12Omxfb3SP/Za4+dbBmiY5ac1YZbKIK
-         ZG13VmDs1K+v5GcUYx9Wwwv2H6/36pMlI7sLQ13lWvQNb9cG4O+rGaWEmLbbXhb6UUxh
-         5esOht+eSbhW/L4rTNDyaCRQzfpBW8sDQ6SN4xJOjmkYLM4j3/QgHBS4m24oAVKNAiAC
-         czFQVsq/j33+Q72tzzg3NZaPvn3E0ncGwKDHzqNRVU1K+swCemhYaJeSINjAwyAyLxp+
-         Cw7O0VRMEYe77xyeurCssl/ojJtN0mIqs6ld3PD6xrEGp44zgFGp7vK4Ic4gsyJN91Nh
-         3yvA==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=BXIJhrJtCnUwRr3BS6zPrJx1Jt47CrNizQ5dotc5JuM=;
+        b=r9YQx1mjItYpJg8dKYY7v+z8vtEZRnEaBoGEki83EOyzIKmBac8w1hvvpwk4MhwWh1
+         mBrEmQV6jbXnHYAW85BnGXYKSq1KMOYZsBdRzlr9fGLdwg5BCy2jqB56q5IvJaOvHJMy
+         4tH04qu4LNbldjD4k6i0AL1GQ19OIBYG3QOkyY4eAL7AEQNqogQebUxqI66dDmLLIpq2
+         VIMJxLhWIfwwP+zfFpXtjMGYFJnCKoa9PL+iBiW/nw4uzdWS2KSCzpFK4kWiuo657rFn
+         tYxnyHQfK8pnT4Bp9BMJu3UXy6KIQtkVx4DZN+ueAwql2VR9ULeoYehQtkHTF34MsDFN
+         MBQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=ya4sSOjySMHGjVVWLWrWfBjZGU/UNkNaSi2rQLK5WkI=;
-        b=DS8BD/J5r4pFZpMhtlBg7Pgkvq+/69QoWkgOFppuq+HH9RZxTTr4TEFPHpcGauPUUt
-         cp/wnox2EdBP3Jxmof4OLMW4lwBLNWLUrwwVdYCPbuP6iLgHNC38ebBIzi7UqeYRUphM
-         gWZ4c8C4QcrRJn0fLFh66dzyo4At9FkUTPpUVyiCyjsrnok+72DFKX+M6VEJIcbCgmSE
-         k2GPAf7hjxthPGBtOQx0N9npEzmpU7ibvlAGgdfEXWldNgzj08h5Nr4fuGUccyBeUDmD
-         iPo/087HjHAAthD9vis/L6zIpMq92jl8uKWs3f01kjtoo2rifC7qUZqqi97Lww9ivbTv
-         VZKQ==
-X-Gm-Message-State: AOAM530lWwZNi3zXI87TF8bAUSP86UzFxzty1CbS2RcBtdxXHgSkICMI
-        SuLhTCbnsj131Gb1ZGgQC3Lp04lwmpFpczVJvaI=
-X-Google-Smtp-Source: ABdhPJwXYMw9s+35IctDKhPg2MZvfzZqU2XLhwmUCtvJaU+eoTE/zoB5Ljo1Tzq6Z54HDxylEPn7EQ==
-X-Received: by 2002:a05:622a:154:: with SMTP id v20mr21676270qtw.91.1623162547243;
-        Tue, 08 Jun 2021 07:29:07 -0700 (PDT)
-Received: from localhost.localdomain (modemcable068.184-131-66.mc.videotron.ca. [66.131.184.68])
-        by smtp.gmail.com with ESMTPSA id v6sm11838748qkv.54.2021.06.08.07.29.06
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=BXIJhrJtCnUwRr3BS6zPrJx1Jt47CrNizQ5dotc5JuM=;
+        b=NYGRkFP64DihVH7nONo0LV+DRZDXQrxgjyrkbaFgf03ldGz9EDVSl97dWO22IA6JyO
+         oXKgRMZWDW+XA5HuiUsbNq5uHF8u8BcFv4Q+r9TsuXTFUQh5h0HodqsmTXr6jWBH32SK
+         E6UhIB9x4mkQmVMq6OTcAh9q7pVuBFFwTfQyOqSob6kohUA1cA16KD2H1CqzzzYGP3cB
+         RgWqE/4lBaR958Br9wor1TkhdDrvVBzTzSDFBy8wXEP7u/jiERT0O+2Z+mQJfvxeQBrx
+         e2l7sAq8PbNC02gOX3jz1tlHemKuUs/qlVNpJhcTwo7BwysqJgKGPCg7eoufeM8GhUbf
+         AhiQ==
+X-Gm-Message-State: AOAM531HT5o3wYFR0WDTPR2edVqY7QtQd0fensqSj+wIvabOISpstGgO
+        BMjfrB7BDfurZEzvD4bjlps=
+X-Google-Smtp-Source: ABdhPJyKxi1AwxQYdbPLhPt/9PtnIXI+zxCtPTWSSFFYrmDMjiZTlo6M3Xy70SGobC4sSTE6fy/pYQ==
+X-Received: by 2002:aa7:8194:0:b029:2aa:db3a:4c1d with SMTP id g20-20020aa781940000b02902aadb3a4c1dmr308216pfi.58.1623164103922;
+        Tue, 08 Jun 2021 07:55:03 -0700 (PDT)
+Received: from localhost ([103.200.106.115])
+        by smtp.gmail.com with ESMTPSA id gg22sm2569437pjb.17.2021.06.08.07.55.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Jun 2021 07:29:06 -0700 (PDT)
-From:   Jonathan Marek <jonathan@marek.ca>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     Rob Herring <robh@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-clk@vger.kernel.org (open list:COMMON CLK FRAMEWORK),
-        devicetree@vger.kernel.org (open list:OPEN FIRMWARE AND FLATTENED
-        DEVICE TREE BINDINGS), linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v3 2/2] dt-bindings: clock: add QCOM SM8350 display clock bindings
-Date:   Tue,  8 Jun 2021 10:27:07 -0400
-Message-Id: <20210608142707.19637-2-jonathan@marek.ca>
-X-Mailer: git-send-email 2.26.1
-In-Reply-To: <20210608142707.19637-1-jonathan@marek.ca>
-References: <20210608142707.19637-1-jonathan@marek.ca>
+        Tue, 08 Jun 2021 07:55:03 -0700 (PDT)
+Date:   Tue, 8 Jun 2021 20:25:00 +0530
+From:   Amey Narkhede <ameynarkhede03@gmail.com>
+To:     Will Deacon <will@kernel.org>
+Cc:     Rob Clark <robdclark@gmail.com>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        iommu@lists.linux-foundation.org, linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] iommu/qcom: Cleanup resources in case of probe error path
+Message-ID: <20210608145500.wxtes4wpp4rpw7si@archlinux>
+References: <20210421221030.70647-1-ameynarkhede03@gmail.com>
+ <20210608092958.GA8935@willie-the-truck>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210608092958.GA8935@willie-the-truck>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add sm8350 DISPCC bindings, which are simply a symlink to the sm8250
-bindings. Update the documentation with the new compatible.
+On 21/06/08 10:29AM, Will Deacon wrote:
+> On Thu, Apr 22, 2021 at 03:40:30AM +0530, Amey Narkhede wrote:
+> > If device registration fails, remove sysfs attribute
+> > and if setting bus callbacks fails, unregister the device
+> > and cleanup the sysfs attribute.
+> >
+> > Signed-off-by: Amey Narkhede <ameynarkhede03@gmail.com>
+> > ---
+> >  drivers/iommu/arm/arm-smmu/qcom_iommu.c | 14 ++++++++++++--
+> >  1 file changed, 12 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/drivers/iommu/arm/arm-smmu/qcom_iommu.c b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+> > index 4294abe389b2..5fa128a1f7f0 100644
+> > --- a/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+> > +++ b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+> > @@ -850,10 +850,12 @@ static int qcom_iommu_device_probe(struct platform_device *pdev)
+> >  	ret = iommu_device_register(&qcom_iommu->iommu, &qcom_iommu_ops, dev);
+> >  	if (ret) {
+> >  		dev_err(dev, "Failed to register iommu\n");
+> > -		return ret;
+> > +		goto err_sysfs_remove;
+> >  	}
+> >
+> > -	bus_set_iommu(&platform_bus_type, &qcom_iommu_ops);
+> > +	ret = bus_set_iommu(&platform_bus_type, &qcom_iommu_ops);
+> > +	if (ret)
+> > +		goto err_unregister_device;
+> >
+> >  	if (qcom_iommu->local_base) {
+> >  		pm_runtime_get_sync(dev);
+> > @@ -862,6 +864,14 @@ static int qcom_iommu_device_probe(struct platform_device *pdev)
+> >  	}
+> >
+> >  	return 0;
+> > +
+> > +err_unregister_device:
+> > +	iommu_device_unregister(&qcom_iommu->iommu);
+> > +
+> > +err_sysfs_remove:
+> > +	iommu_device_sysfs_remove(&qcom_iommu->iommu);
+> > +
+> > +	return ret;
+>
+> It looks like we're also missing this logic in arm-smmu/arm-smmu.c and
+> arm-smmu-v3/arm-smmu-v3.c. Would you be able to fix those up too, please?
+>
+> Will
 
-Signed-off-by: Jonathan Marek <jonathan@marek.ca>
-Reviewed-by: Rob Herring <robh@kernel.org>
----
- .../devicetree/bindings/clock/qcom,dispcc-sm8x50.yaml       | 6 ++++--
- include/dt-bindings/clock/qcom,dispcc-sm8350.h              | 1 +
- 2 files changed, 5 insertions(+), 2 deletions(-)
- create mode 120000 include/dt-bindings/clock/qcom,dispcc-sm8350.h
+Sure, I will send a v2 with this and new patches.
 
-diff --git a/Documentation/devicetree/bindings/clock/qcom,dispcc-sm8x50.yaml b/Documentation/devicetree/bindings/clock/qcom,dispcc-sm8x50.yaml
-index 0cdf53f41f84..8f414642445e 100644
---- a/Documentation/devicetree/bindings/clock/qcom,dispcc-sm8x50.yaml
-+++ b/Documentation/devicetree/bindings/clock/qcom,dispcc-sm8x50.yaml
-@@ -4,24 +4,26 @@
- $id: http://devicetree.org/schemas/clock/qcom,dispcc-sm8x50.yaml#
- $schema: http://devicetree.org/meta-schemas/core.yaml#
- 
--title: Qualcomm Display Clock & Reset Controller Binding for SM8150/SM8250
-+title: Qualcomm Display Clock & Reset Controller Binding for SM8150/SM8250/SM8350
- 
- maintainers:
-   - Jonathan Marek <jonathan@marek.ca>
- 
- description: |
-   Qualcomm display clock control module which supports the clocks, resets and
--  power domains on SM8150 and SM8250.
-+  power domains on SM8150/SM8250/SM8350.
- 
-   See also:
-     dt-bindings/clock/qcom,dispcc-sm8150.h
-     dt-bindings/clock/qcom,dispcc-sm8250.h
-+    dt-bindings/clock/qcom,dispcc-sm8350.h
- 
- properties:
-   compatible:
-     enum:
-       - qcom,sm8150-dispcc
-       - qcom,sm8250-dispcc
-+      - qcom,sm8350-dispcc
- 
-   clocks:
-     items:
-diff --git a/include/dt-bindings/clock/qcom,dispcc-sm8350.h b/include/dt-bindings/clock/qcom,dispcc-sm8350.h
-new file mode 120000
-index 000000000000..0312b4544acb
---- /dev/null
-+++ b/include/dt-bindings/clock/qcom,dispcc-sm8350.h
-@@ -0,0 +1 @@
-+qcom,dispcc-sm8250.h
-\ No newline at end of file
--- 
-2.26.1
-
+Thanks,
+Amey
