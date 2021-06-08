@@ -2,209 +2,178 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0A9B439FCAD
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jun 2021 18:40:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 81D5739FCC7
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jun 2021 18:47:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232312AbhFHQls (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Jun 2021 12:41:48 -0400
-Received: from mo4-p01-ob.smtp.rzone.de ([81.169.146.167]:26591 "EHLO
-        mo4-p01-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231175AbhFHQlr (ORCPT
+        id S233544AbhFHQtC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Jun 2021 12:49:02 -0400
+Received: from mail-pj1-f54.google.com ([209.85.216.54]:33623 "EHLO
+        mail-pj1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233549AbhFHQtB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Jun 2021 12:41:47 -0400
-ARC-Seal: i=1; a=rsa-sha256; t=1623170383; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=LL6+qgW3rmuRKM9S+PCBqJt/OfcrnMD/aBcCL3HKNniaYUOO9Fmh/wW50KJ+lFYtUJ
-    rkugGASHwEc1CHcCkgywmm+LbtOeGSspZWLaCMad1eCPTyyV0m8Dcinp9TlJtcjXJcie
-    XcTvRSpxYSbtgLeyZSaIqLuBMGWldAzFYLRFOrT9SoKuxcEfoBsjpeVivhMyfQ3+8oQf
-    9z2FdZpxAH7HKfA8DY6I8u7vXotmA3mankWLKy+EdH2VeCnIl62s6RVsIfu3FKULi5fe
-    tKkwx7Sw/vWH6DhBeDAaqkYWe2pX3qTGtwaAvyv0DZkyxMtMrTYkb1cpe1bHUMuoyFsj
-    cyGg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1623170383;
-    s=strato-dkim-0002; d=strato.com;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=TsO8zQvAeuILETbsyy0wjP+jllz1JH7CujPdRGXvvo4=;
-    b=Nio76JFLhrGOfQX0ghSa0O5VlpjPJlGgRjBvP9mgoXXsnRbd6qkn6PK9iu+KvU+iTe
-    dxcSGbd6qoc5pg24LNDcP3kCMxjX2cuGb5V8FaG7gmlr2sz73BEoBa3QP0Pp74n6BTdj
-    NfdnjB04/t1BFXkpbYtvEaAKKA4k/Ky20IYPjEE9Uo/aniVdeyeQ7jX6rUMhA9O4rUbU
-    S4izJqHH9disCvsZPWA9HNaaqj0v9/4rQYMNe7QC9JPJnTD4GGdfAhivLaERVjRQMzfA
-    wLBEE2sLAfOI+mHnM4eFB+MoVnulkyq3Xi6mnXfsk7FLlJpYs6oOcrL96sInPqdtpn1Q
-    1LWA==
-ARC-Authentication-Results: i=1; strato.com;
-    dkim=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1623170383;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=TsO8zQvAeuILETbsyy0wjP+jllz1JH7CujPdRGXvvo4=;
-    b=tkkz+lEedL3UbGv8FPiMM2FfiAeJSpHMVmgM5zSMpd5XOKja3hAz1P0QqRrfUeFFo7
-    BxJlAKN1sNViM7MkTopSHnXTI0I0qFg41F1MRnUm0g8fbKa9WT3QdPtkCluSy8R0bQnp
-    eEfjqUnrFLXr9B3ZZFTBWS5o+FiMti0Pa0phWqmY1vp9YvkzGEG7Vdoszj4l2cvc21oT
-    pSmiDL9RObq0NBYorBIzTP9iN3GMLT6svtNvSdj7Dhy7kxyUuyFXsp0mJetjVnDtUu++
-    t/9eySlRmpzqSiE2WNgb+wz0N4ZxFBrpu+UtuLfUbYTX6sZM9TmV6K0dhZD36mGo5tSr
-    oG0w==
-Authentication-Results: strato.com;
-    dkim=none
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u26zEodhPgRDZ8j7IcbDBg=="
-X-RZG-CLASS-ID: mo00
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 47.27.2 DYNA|AUTH)
-    with ESMTPSA id y01375x58GdggUM
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Tue, 8 Jun 2021 18:39:42 +0200 (CEST)
-Date:   Tue, 8 Jun 2021 18:39:36 +0200
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, martin.botka@somainline.org,
-        angelogioacchino.delregno@somainline.org,
-        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Kees Cook <keescook@chromium.org>,
-        Anton Vorontsov <anton@enomsg.org>,
-        Colin Cross <ccross@android.com>,
-        Tony Luck <tony.luck@intel.com>
-Subject: Re: [PATCH v3 3/3] arm64: dts: qcom: Add support for SONY Xperia X
- Performance / XZ / XZs (msm8996, Tone platform)
-Message-ID: <YL+dSBRwS3bf1ztb@gerhold.net>
-References: <20210608152737.154218-1-konrad.dybcio@somainline.org>
- <20210608152737.154218-3-konrad.dybcio@somainline.org>
+        Tue, 8 Jun 2021 12:49:01 -0400
+Received: by mail-pj1-f54.google.com with SMTP id k22-20020a17090aef16b0290163512accedso2099114pjz.0;
+        Tue, 08 Jun 2021 09:47:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=2t+iT1aOdYCZU2AlXESXqTpbLz1wOUqv173mhLsP5Jc=;
+        b=TY6Sk2eZt08YqlpdA2cn4pVa+JehYb0k4OUYb4sO8TTUbHYJeVSegoOB78bUraCAT/
+         fv7Ic76M+WjKuz5VcW3wInudkLbyQLWyRjQQe2xT9eZ43uLOdX6MZU9CylSpv6oY01vN
+         jLSx70QPKb7cIG8M+Vlb04dKoWfQNVS9rhla0EbeIKEOwAIgjMPC4AM5fI4mz1krklc8
+         IpR+dokjcJ5myPc6sUULCwy1cOJoGF6+/2y+Gi41QP7SEmSzyV9xaSMmK3ahaLZAMBIh
+         lif10rY7YaVrrZ/JD4GpT3udb6QZ3FvsVvbjQ0MQrVdBcyXVuTbPtI8iJOnwRS87Y78N
+         BBDA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=2t+iT1aOdYCZU2AlXESXqTpbLz1wOUqv173mhLsP5Jc=;
+        b=rQgB6OSX3hCj55JLSS0KqsHSgt74Kl8IUSztuPrxkewtes38iwKpc8rAsT2MZqQ9mM
+         vuuaymJ5qusVBPVJUbsOYLwQWsNwvw/84fIrZ/dXRlwq4/FooZ0W7I25vKDsWqShmdsQ
+         I99ZOSuYgvOqxY6yGTXD0l1GboyQFm+/5rsTZ3kQIf0wQ1KHXipdaylAFMzGqEXZ9Cd7
+         NHt4dLkjHfRh+B7zX2JWCSor0GrO7hSNcvIDLpj7DhKM8tveWmk8g0/pYbWXOrGFK1em
+         O+t0VSUlXpKbDEdFz5Z/Dilt9Uqh3ublVfAGLd3jow7bB50jOn9HVJngSpNXVdQlMRBL
+         5qPA==
+X-Gm-Message-State: AOAM533mng7o4y6X1oTLUiC7eNjCWWq17AqeWHbmNgLKnrqzeO6On2WT
+        G+YMbddvrD5rAA7fTRN3cLs=
+X-Google-Smtp-Source: ABdhPJxo8z0gKm9nyddE2hgbA+4T56fMWkoWk4WJ05zb+Et72S0ZZzGhKucyCJluOysvsJpLM1gyLg==
+X-Received: by 2002:a17:90a:5998:: with SMTP id l24mr7427786pji.169.1623170768185;
+        Tue, 08 Jun 2021 09:46:08 -0700 (PDT)
+Received: from localhost.localdomain ([103.200.106.115])
+        by smtp.googlemail.com with ESMTPSA id t6sm2864863pjo.4.2021.06.08.09.46.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 08 Jun 2021 09:46:07 -0700 (PDT)
+From:   Amey Narkhede <ameynarkhede03@gmail.com>
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        iommu@lists.linux-foundation.org, linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        Jon Hunter <jonathanh@nvidia.com>,
+        Krishna Reddy <vdumpa@nvidia.com>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Jean-Philippe Brucker <jean-philippe@linaro.org>,
+        Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+        Barry Song <song.bao.hua@hisilicon.com>,
+        Zenghui Yu <yuzenghui@huawei.com>,
+        Amey Narkhede <ameynarkhede03@gmail.com>
+Subject: [PATCH] iommu/arm: Cleanup resources in case of probe error path
+Date:   Tue,  8 Jun 2021 22:15:59 +0530
+Message-Id: <20210608164559.204023-1-ameynarkhede03@gmail.com>
+X-Mailer: git-send-email 2.31.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210608152737.154218-3-konrad.dybcio@somainline.org>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jun 08, 2021 at 05:27:36PM +0200, Konrad Dybcio wrote:
-> From: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
-> 
-> Add support for following boards:
-> 
-> - Xperia X Performance (dora)
-> - Xperia XZ (kagura)
-> - Xperia XZs (keyaki)
-> 
-> They are all based on the SONY Tone platform and feature largely similar hardware
-> with the most obvious differences being lack of USB-C and ToF sensor on Dora and
-> different camera sensor on Keyaki.
-> 
-> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-> ---
-> Changes since v2:
-> - Remove unneeded labels from the pinned(pun intended)-by-default pins
-> 
->  arch/arm64/boot/dts/qcom/Makefile             |   6 +
->  .../msm8996-pmi8996-sony-xperia-tone-dora.dts |  11 +
->  ...sm8996-pmi8996-sony-xperia-tone-kagura.dts |  11 +
->  ...sm8996-pmi8996-sony-xperia-tone-keyaki.dts |  11 +
->  .../qcom/msm8996-sony-xperia-tone-dora.dts    |  27 +
->  .../qcom/msm8996-sony-xperia-tone-kagura.dts  |  15 +
->  .../qcom/msm8996-sony-xperia-tone-keyaki.dts  |  26 +
->  .../dts/qcom/msm8996-sony-xperia-tone.dtsi    | 959 ++++++++++++++++++
->  arch/arm64/boot/dts/qcom/msm8996.dtsi         |  12 +-
->  9 files changed, 1072 insertions(+), 6 deletions(-)
->  create mode 100644 arch/arm64/boot/dts/qcom/msm8996-pmi8996-sony-xperia-tone-dora.dts
->  create mode 100644 arch/arm64/boot/dts/qcom/msm8996-pmi8996-sony-xperia-tone-kagura.dts
->  create mode 100644 arch/arm64/boot/dts/qcom/msm8996-pmi8996-sony-xperia-tone-keyaki.dts
->  create mode 100644 arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-dora.dts
->  create mode 100644 arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-kagura.dts
->  create mode 100644 arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-keyaki.dts
->  create mode 100644 arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone.dtsi
-> 
-[...]
-> diff --git a/arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone.dtsi b/arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone.dtsi
-> new file mode 100644
-> index 000000000000..1f71b3b2dc57
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone.dtsi
-> @@ -0,0 +1,959 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +/*
-> + * Copyright (c) 2021, AngeloGioacchino Del Regno
-> + *                     <angelogioacchino.delregno@somainline.org>
-> + * Copyright (c) 2021, Konrad Dybcio <konrad.dybcio@somainline.org>
-> + */
-> +
-> +#include "msm8996.dtsi"
-> +#include "pm8994.dtsi"
-> +#include "pmi8994.dtsi"
-> +#include <dt-bindings/input/input.h>
-> +#include <dt-bindings/gpio/gpio.h>
-> +#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
-> +#include <dt-bindings/pinctrl/qcom,pmic-mpp.h>
-> +
-> +/delete-node/ &hdmi;
-> +/delete-node/ &hdmi_phy;
-> +/delete-node/ &mdp5_intf3_out;
+If device registration fails, remove sysfs attribute
+and if setting bus callbacks fails, unregister the device
+and cleanup the sysfs attribute.
 
-Is it not enough to set those to status = "disabled"? Kind of strange
-that you have to delete those entirely. I guess ideally "hdmi" should
-even be disabled by default in the SoC device tree.
+Signed-off-by: Amey Narkhede <ameynarkhede03@gmail.com>
+---
+ drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 14 ++++++++++++--
+ drivers/iommu/arm/arm-smmu/arm-smmu.c       | 15 ++++++++++++---
+ drivers/iommu/arm/arm-smmu/qcom_iommu.c     | 13 +++++++++++--
+ 3 files changed, 35 insertions(+), 7 deletions(-)
 
-> +/delete-node/ &slpi_region;
-> +/delete-node/ &venus_region;
-> +/delete-node/ &zap_shader_region;
-> +
-> +/ {
-> +	qcom,msm-id = <246 0x30001>; /* MSM8996 V3.1 (Final) */
-> +	qcom,pmic-id = <0x20009 0x2000a 0 0>; /* PM8994 + PMI8994 */
-> +	qcom,board-id = <8 0>;
-> +
-> +	chosen {
-> +		/*
-> +		 * Due to an unknown-for-a-few-years regression,
-> +		 * SDHCI only works on MSM8996 in PIO (lame) mode.
-> +		 */
-> +		bootargs = "sdhci.debug_quirks=0x40 sdhci.debug_quirks2=0x4 maxcpus=2";
-> +	};
-> +
-> +	reserved-memory {
-> +		ramoops@a7f00000 {
-> +			compatible = "ramoops";
-> +			reg = <0 0xa7f00000 0 0x100000>;
-> +			record-size = <0x20000>;
-> +			console-size = <0x40000>;
-> +			ftrace-size = <0x20000>;
-> +			pmsg-size = <0x20000>;
-> +			ecc-size = <16>;
-> +		};
-> +
-> +		cont_splash_mem: memory@83401000 {
-> +			reg = <0 0x83401000 0 0x23ff000>;
-> +			no-map;
-> +		};
-> +
-> +		zap_shader_region: gpu@90400000 {
-> +			compatible = "shared-dma-pool";
-> +			reg = <0x0 0x90400000 0x0 0x2000>;
-> +			no-map;
-> +		};
-> +
-> +		slpi_region: memory@90500000 {
-> +			reg = <0 0x90500000 0 0xa00000>;
-> +			no-map;
-> +		};
-> +
-> +		venus_region: memory@90f00000 {
-> +			reg = <0 0x90f00000 0 0x500000>;
-> +			no-map;
-> +		};
-> +	};
-> +
-> +	panel_tvdd: tvdd-regulator {
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "panel_tvdd";
-> +		gpio = <&tlmm 50 GPIO_ACTIVE_HIGH>;
+diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+index 54b2f27b81d4..de2499754025 100644
+--- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
++++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+@@ -3669,10 +3669,20 @@ static int arm_smmu_device_probe(struct platform_device *pdev)
+ 	ret = iommu_device_register(&smmu->iommu, &arm_smmu_ops, dev);
+ 	if (ret) {
+ 		dev_err(dev, "Failed to register iommu\n");
+-		return ret;
++		goto err_sysfs_remove;
+ 	}
 
-regulator-fixed is active-low without "enable-active-high;"
-If that's what you want it's probably more clear to write
-GPIO_ACTIVE_LOW. Otherwise, perhaps you forgot that property? :)
+-	return arm_smmu_set_bus_ops(&arm_smmu_ops);
++	ret = arm_smmu_set_bus_ops(&arm_smmu_ops);
++	if (ret)
++		goto err_unregister_device;
++
++	return 0;
++
++err_unregister_device:
++	iommu_device_unregister(&smmu->iommu);
++err_sysfs_remove:
++	iommu_device_sysfs_remove(&smmu->iommu);
++	return ret;
+ }
 
-Stephan
+ static int arm_smmu_device_remove(struct platform_device *pdev)
+diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+index 6f72c4d208ca..88a3023676ce 100644
+--- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
++++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+@@ -2164,7 +2164,7 @@ static int arm_smmu_device_probe(struct platform_device *pdev)
+ 	err = iommu_device_register(&smmu->iommu, &arm_smmu_ops, dev);
+ 	if (err) {
+ 		dev_err(dev, "Failed to register iommu\n");
+-		return err;
++		goto err_sysfs_remove;
+ 	}
+
+ 	platform_set_drvdata(pdev, smmu);
+@@ -2187,10 +2187,19 @@ static int arm_smmu_device_probe(struct platform_device *pdev)
+ 	 * any device which might need it, so we want the bus ops in place
+ 	 * ready to handle default domain setup as soon as any SMMU exists.
+ 	 */
+-	if (!using_legacy_binding)
+-		return arm_smmu_bus_init(&arm_smmu_ops);
++	if (!using_legacy_binding) {
++		err = arm_smmu_bus_init(&arm_smmu_ops);
++		if (err)
++			goto err_unregister_device;
++	}
+
+ 	return 0;
++
++err_unregister_device:
++	iommu_device_unregister(&smmu->iommu);
++err_sysfs_remove:
++	iommu_device_sysfs_remove(&smmu->iommu);
++	return err;
+ }
+
+ static int arm_smmu_device_remove(struct platform_device *pdev)
+diff --git a/drivers/iommu/arm/arm-smmu/qcom_iommu.c b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+index 4294abe389b2..b785d9fb7602 100644
+--- a/drivers/iommu/arm/arm-smmu/qcom_iommu.c
++++ b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+@@ -850,10 +850,12 @@ static int qcom_iommu_device_probe(struct platform_device *pdev)
+ 	ret = iommu_device_register(&qcom_iommu->iommu, &qcom_iommu_ops, dev);
+ 	if (ret) {
+ 		dev_err(dev, "Failed to register iommu\n");
+-		return ret;
++		goto err_sysfs_remove;
+ 	}
+
+-	bus_set_iommu(&platform_bus_type, &qcom_iommu_ops);
++	ret = bus_set_iommu(&platform_bus_type, &qcom_iommu_ops);
++	if (ret)
++		goto err_unregister_device;
+
+ 	if (qcom_iommu->local_base) {
+ 		pm_runtime_get_sync(dev);
+@@ -862,6 +864,13 @@ static int qcom_iommu_device_probe(struct platform_device *pdev)
+ 	}
+
+ 	return 0;
++
++err_unregister_device:
++	iommu_device_unregister(&qcom_iommu->iommu);
++
++err_sysfs_remove:
++	iommu_device_sysfs_remove(&qcom_iommu->iommu);
++	return ret;
+ }
+
+ static int qcom_iommu_device_remove(struct platform_device *pdev)
+--
+2.31.1
