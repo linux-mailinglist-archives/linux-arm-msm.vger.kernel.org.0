@@ -2,106 +2,243 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7B69F39F82E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jun 2021 15:54:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BCF3039F92C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jun 2021 16:30:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232895AbhFHN40 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Jun 2021 09:56:26 -0400
-Received: from mo4-p02-ob.smtp.rzone.de ([85.215.255.83]:34962 "EHLO
-        mo4-p02-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232842AbhFHN4X (ORCPT
+        id S233343AbhFHOcg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Jun 2021 10:32:36 -0400
+Received: from mail-qt1-f171.google.com ([209.85.160.171]:33506 "EHLO
+        mail-qt1-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233386AbhFHOcN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Jun 2021 09:56:23 -0400
-ARC-Seal: i=1; a=rsa-sha256; t=1623160464; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=ZAaGTvvy+FQIbEaP4NPYq26hcjORwSIUmUq9CEcfixW0CVBLwZ4DegggGOnRAbn6xp
-    A44zhbfJPtsvI4VeMdCdHhpx3wxv6E3BgCV0ZbASxxzi/Nki/BK9WAqr5TJg2uNHXMvW
-    0X9VrioYkXXyLe+ERx/1FdGQjibYU0VQjihKM0lzGE+CGfJ0GYMMbLFpNFjPzW75si6k
-    G/GhwBkm7MfKC/DHgFHXalgyTRWz3O+M6J/SbQtG7LfTUgYcknR9w9vQZH2ajRNDrMxG
-    I6oS/JGAZdQhsFkJo6MRS7ABlV0HC6ruzPxJvk4P7UNmF9vb0Je6XMf9D6+XS5siTMrc
-    W+Cg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1623160464;
-    s=strato-dkim-0002; d=strato.com;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=rl6OGeTVbuWMtg723dmqTLwwTjsRAkOWOnXJx3St/jM=;
-    b=h5A6HD2O1ed16AFmemsCp7wywFDQtEs1NgR7iePTV0iDi8clYUsm9p+0Pl7pBAwzBQ
-    /ESFtMMWx5PAdNNT5Rm3g2VnQDvhoHHOzVMOgPNTjMiRyR6iG7oTOxdEvpcSi6cy8X5U
-    9g1CBxGd+W6lWzUmzRo6DuHVLxeP1FpalcajOsZRT+jotMsSnsEfQiqWEbru5UgblUsZ
-    /nKrNH0gXHdFY2dlRceFl5P7XdSHyqVz+xgg4okG5oMSSlszgGeJxT4Pt+qkHnJRAnm5
-    MVJywAniOdmY2gZbys+Sxu4/M8IpDpTY2ckpQhALanyNP+mnAAQz5ukewS7HM6Rv/YBa
-    reUA==
-ARC-Authentication-Results: i=1; strato.com;
-    dkim=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1623160464;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=rl6OGeTVbuWMtg723dmqTLwwTjsRAkOWOnXJx3St/jM=;
-    b=mpP9NyOwzoLN1KyHO6PqPbXg9DKqsbnjECMZmRbVwlwN36M6Enw6HkU8Xbqst9ejIZ
-    zkce6hsjJQ3lzGbnVpAGnmhPxlHVQshMPfOBI653dwjhQ+JBEusbmUTuZz1HeROMzD40
-    56cBgzCV4cqjctrWgAc6396C7LnBd3LBelPKt9LIRHIEPL8SW6OsOhNQ5plVDvTr2Ron
-    TEOsxhZbFAa9qDu+f/urXvbTuB+4Ff2BNVbtpOIi7eKDDekxUhpku1ygXGHTNfHBl5mP
-    iO1/BhZ4KGEXa2+yObz4DnOvdJ/seinfBr/nJUX8w2gheardsKAv98eVBG2Z+XDK9Z/N
-    fybg==
-Authentication-Results: strato.com;
-    dkim=none
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u26zEodhPgRDZ8j7IcbDBg=="
-X-RZG-CLASS-ID: mo00
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 47.27.2 DYNA|AUTH)
-    with ESMTPSA id y01375x58DsOdxz
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Tue, 8 Jun 2021 15:54:24 +0200 (CEST)
-Date:   Tue, 8 Jun 2021 15:54:22 +0200
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Bartosz Dudziak <bartosz.dudziak@snejp.pl>
-Cc:     Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
+        Tue, 8 Jun 2021 10:32:13 -0400
+Received: by mail-qt1-f171.google.com with SMTP id e3so3783381qte.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Jun 2021 07:30:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=marek-ca.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=VeOWztuA+5uPjBv9EIEuhwDk4mv2PCrGI4GDUDewKOo=;
+        b=NaOmGIfFCIlb5WxE5scnJXWRp2zx3YDAbBkCr9ZbZHABdpF6f4/YuNxqvTmk4shOIM
+         MIYZ+7zqbtwM8x+m7zrRcPutGVH88keyVg+q4DZLhz7YH7DVGEygnJzGgXSju0HZ3AaQ
+         Jrs5dBYmfH1EEEZr+vxmfNA8hisbFq/wowITeTBzQh2QqlvkCgRDlPjBiLujR3IdlPT6
+         3dAeKWtvfo178YFUzklYGa9Rp+fQzgLGp61FSb9r2kPudprzQFM4JNI1vBk5BaSlSNex
+         eu1qTn8aXAW+Dg9DC5q2a35jEhEQ5WksxahzIKw6cAHSMQLanOU38awpMhiCp4TFiZLI
+         omAQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=VeOWztuA+5uPjBv9EIEuhwDk4mv2PCrGI4GDUDewKOo=;
+        b=tTw1vldGlOrWIGZoSURH4myHFS5FQmzjnXW6wiA4FzmFOLk0vb/sFoWCx04YuAhb5/
+         Z75iVOPsJTelgTXA3RtRhC3NEkOzevk6VjNpmUIRDaAf5PWVLbuWTb6ZXIMrrybOpLQk
+         Lg8gMA2JdOoBM9FhKUzTE2hvhlrGr7Gwm7DWk1bjC2Ubi/AN6snhrWwn0PdW/+HUX/FX
+         YRaaFVzz5rgns1P8F0BIDxFUSBVJp5aUB5YSMOE8vyn2XbmHVSBxUKv13xMdK9o4tMHB
+         M9GVXrvXJ5De0d9dEOhQjt7pbzok2twqOjOitvxsHaloJj6bw6Jlqk1zuFuMqtoHa5iS
+         12fw==
+X-Gm-Message-State: AOAM532pwyp+9EzNYvNaZs8l4DWzePnTm/+xYk6TmS8pvJK3hf4VExF5
+        qaaMNBlfjvZ/MZ1kjz1mxLn1oYewHITn2xky7b0=
+X-Google-Smtp-Source: ABdhPJwMwmq5sy+4mxEpbaOyJ0rNAp8o+/xUAeMnwbSVMnQPjjsoeYUcp70PsHRNrzb+pFRojO3vgg==
+X-Received: by 2002:a05:622a:4a:: with SMTP id y10mr4442251qtw.294.1623162544363;
+        Tue, 08 Jun 2021 07:29:04 -0700 (PDT)
+Received: from localhost.localdomain (modemcable068.184-131-66.mc.videotron.ca. [66.131.184.68])
+        by smtp.gmail.com with ESMTPSA id v6sm11838748qkv.54.2021.06.08.07.29.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 08 Jun 2021 07:29:03 -0700 (PDT)
+From:   Jonathan Marek <jonathan@marek.ca>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Russell King <linux@armlinux.org.uk>,
-        David Sterba <dsterba@suse.com>, Jens Axboe <axboe@kernel.dk>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Kumar Gala <galak@codeaurora.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2 0/2] cpuidle: qcom: Add SPM register data for MSM8226
-Message-ID: <YL92jqf/146P9vSl@gerhold.net>
-References: <20210530121803.13102-1-bartosz.dudziak@snejp.pl>
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        linux-clk@vger.kernel.org (open list:COMMON CLK FRAMEWORK),
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH v3 1/2] clk: qcom: add support for SM8350 DISPCC
+Date:   Tue,  8 Jun 2021 10:27:06 -0400
+Message-Id: <20210608142707.19637-1-jonathan@marek.ca>
+X-Mailer: git-send-email 2.26.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210530121803.13102-1-bartosz.dudziak@snejp.pl>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Add support to the SM8350 display clock controller by extending the SM8250
+display clock controller, which is almost identical but has some minor
+differences.
 
-On Sun, May 30, 2021 at 02:18:01PM +0200, Bartosz Dudziak wrote:
-> Add SPM register data sequence for MSM8226 SoC and enable SAW2 power
-> controller for it.
-> 
-> Changes in v2:
->  - Removed APQ8026 SoC support
-> 
-> Bartosz Dudziak (2):
->   dt-bindings: arm: msm: Add SAW2 for MSM8226
->   cpuidle: qcom: Add SPM register data for MSM8226
-> 
->  .../devicetree/bindings/arm/msm/qcom,saw2.txt      |  1 +
->  drivers/cpuidle/cpuidle-qcom-spm.c                 | 14 ++++++++++++++
->  2 files changed, 15 insertions(+)
-> 
-> 
+Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+---
+v3:
+ - added const to vco tables
+ - moved clk rcgs/div list to global scope
+ - patching clks on module init instead of probe
+ - lowercase hex
+ - update configure comment
+ - rebased on added edp clocks
 
-It looks like you got the To:/Cc: list wrong in v2 (was okay in v1).
-Can you re-send these patches and include Daniel Lezcano (ARM cpuidle
-maintainer) and the linux-pm mailing list? Otherwise they might never
-be applied by anyone. :)
+ drivers/clk/qcom/Kconfig         |   4 +-
+ drivers/clk/qcom/dispcc-sm8250.c | 103 ++++++++++++++++++++++++++-----
+ 2 files changed, 90 insertions(+), 17 deletions(-)
 
-Please also make sure to add the Acked-by:/Reviewed-by: from myself/Rob
-to the respective patches when re-sending.
+diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
+index 45646b867cdb..cc60e6ee1654 100644
+--- a/drivers/clk/qcom/Kconfig
++++ b/drivers/clk/qcom/Kconfig
+@@ -484,11 +484,11 @@ config SDX_GCC_55
+ 	  SPI, I2C, USB, SD/UFS, PCIe etc.
+ 
+ config SM_DISPCC_8250
+-	tristate "SM8150 and SM8250 Display Clock Controller"
++	tristate "SM8150/SM8250/SM8350 Display Clock Controller"
+ 	depends on SM_GCC_8150 || SM_GCC_8250
+ 	help
+ 	  Support for the display clock controller on Qualcomm Technologies, Inc
+-	  SM8150 and SM8250 devices.
++	  SM8150/SM8250/SM8350 devices.
+ 	  Say Y if you want to support display devices and functionality such as
+ 	  splash screen.
+ 
+diff --git a/drivers/clk/qcom/dispcc-sm8250.c b/drivers/clk/qcom/dispcc-sm8250.c
+index 601c7c0ba483..86c474a51cd2 100644
+--- a/drivers/clk/qcom/dispcc-sm8250.c
++++ b/drivers/clk/qcom/dispcc-sm8250.c
+@@ -34,10 +34,14 @@ enum {
+ 	P_DSI1_PHY_PLL_OUT_DSICLK,
+ };
+ 
+-static struct pll_vco vco_table[] = {
++static const struct pll_vco vco_table[] = {
+ 	{ 249600000, 2000000000, 0 },
+ };
+ 
++static const struct pll_vco lucid_5lpe_vco[] = {
++	{ 249600000, 1750000000, 0 },
++};
++
+ static struct alpha_pll_config disp_cc_pll0_config = {
+ 	.l = 0x47,
+ 	.alpha = 0xE000,
+@@ -1222,6 +1226,7 @@ static const struct of_device_id disp_cc_sm8250_match_table[] = {
+ 	{ .compatible = "qcom,sc8180x-dispcc" },
+ 	{ .compatible = "qcom,sm8150-dispcc" },
+ 	{ .compatible = "qcom,sm8250-dispcc" },
++	{ .compatible = "qcom,sm8350-dispcc" },
+ 	{ }
+ };
+ MODULE_DEVICE_TABLE(of, disp_cc_sm8250_match_table);
+@@ -1234,20 +1239,10 @@ static int disp_cc_sm8250_probe(struct platform_device *pdev)
+ 	if (IS_ERR(regmap))
+ 		return PTR_ERR(regmap);
+ 
+-	/* note: trion == lucid, except for the prepare() op */
+-	BUILD_BUG_ON(CLK_ALPHA_PLL_TYPE_TRION != CLK_ALPHA_PLL_TYPE_LUCID);
+-	if (of_device_is_compatible(pdev->dev.of_node, "qcom,sc8180x-dispcc") ||
+-	    of_device_is_compatible(pdev->dev.of_node, "qcom,sm8150-dispcc")) {
+-		disp_cc_pll0_config.config_ctl_hi_val = 0x00002267;
+-		disp_cc_pll0_config.config_ctl_hi1_val = 0x00000024;
+-		disp_cc_pll0_config.user_ctl_hi1_val = 0x000000D0;
+-		disp_cc_pll0_init.ops = &clk_alpha_pll_trion_ops;
+-		disp_cc_pll1_config.config_ctl_hi_val = 0x00002267;
+-		disp_cc_pll1_config.config_ctl_hi1_val = 0x00000024;
+-		disp_cc_pll1_config.user_ctl_hi1_val = 0x000000D0;
+-		disp_cc_pll1_init.ops = &clk_alpha_pll_trion_ops;
+-	}
+-
++	/* sm8350 note: downstream has a clk_lucid_5lpe_pll_configure, which
++	 * does not write the PLL_UPDATE_BYPASS bit in PLL_MODE.
++	 * It should not hurt sm8350 to have this extra write.
++	 */
+ 	clk_lucid_pll_configure(&disp_cc_pll0, regmap, &disp_cc_pll0_config);
+ 	clk_lucid_pll_configure(&disp_cc_pll1, regmap, &disp_cc_pll1_config);
+ 
+@@ -1268,8 +1263,86 @@ static struct platform_driver disp_cc_sm8250_driver = {
+ 	},
+ };
+ 
++static struct clk_rcg2 * const __initconst disp_cc_sm8250_rcgs[] = {
++	&disp_cc_mdss_byte0_clk_src,
++	&disp_cc_mdss_byte1_clk_src,
++	&disp_cc_mdss_dp_aux1_clk_src,
++	&disp_cc_mdss_dp_aux_clk_src,
++	&disp_cc_mdss_dp_link1_clk_src,
++	&disp_cc_mdss_dp_link_clk_src,
++	&disp_cc_mdss_dp_pixel1_clk_src,
++	&disp_cc_mdss_dp_pixel2_clk_src,
++	&disp_cc_mdss_dp_pixel_clk_src,
++	&disp_cc_mdss_edp_aux_clk_src,
++	&disp_cc_mdss_edp_gtc_clk_src,
++	&disp_cc_mdss_edp_link_clk_src,
++	&disp_cc_mdss_edp_pixel_clk_src,
++	&disp_cc_mdss_esc0_clk_src,
++	&disp_cc_mdss_mdp_clk_src,
++	&disp_cc_mdss_pclk0_clk_src,
++	&disp_cc_mdss_pclk1_clk_src,
++	&disp_cc_mdss_rot_clk_src,
++	&disp_cc_mdss_vsync_clk_src,
++	&disp_cc_mdss_ahb_clk_src,
++};
++
++static struct clk_regmap_div * const __initconst disp_cc_sm8250_divs[] = {
++	&disp_cc_mdss_byte0_div_clk_src,
++	&disp_cc_mdss_byte1_div_clk_src,
++	&disp_cc_mdss_dp_link1_div_clk_src,
++	&disp_cc_mdss_dp_link_div_clk_src,
++};
++
++static bool __init disp_cc_is_compatible(const char *compatible)
++{
++	struct device_node *node = of_find_compatible_node(NULL, NULL, compatible);
++
++	of_node_put(node);
++	return node != NULL;
++}
++
+ static int __init disp_cc_sm8250_init(void)
+ {
++	if (disp_cc_is_compatible("qcom,sm8150-dispcc") ||
++	    disp_cc_is_compatible("qcom,sc8180x-dispcc")) {
++		BUILD_BUG_ON(CLK_ALPHA_PLL_TYPE_TRION != CLK_ALPHA_PLL_TYPE_LUCID);
++		disp_cc_pll0_config.config_ctl_hi_val = 0x00002267;
++		disp_cc_pll0_config.config_ctl_hi1_val = 0x00000024;
++		disp_cc_pll0_config.user_ctl_hi1_val = 0x000000d0;
++		disp_cc_pll0_init.ops = &clk_alpha_pll_trion_ops;
++		disp_cc_pll1_config.config_ctl_hi_val = 0x00002267;
++		disp_cc_pll1_config.config_ctl_hi1_val = 0x00000024;
++		disp_cc_pll1_config.user_ctl_hi1_val = 0x000000d0;
++		disp_cc_pll1_init.ops = &clk_alpha_pll_trion_ops;
++	} else if (disp_cc_is_compatible("qcom,sm8350-dispcc")) {
++		unsigned int i;
++
++		for (i = 0; i < ARRAY_SIZE(disp_cc_sm8250_rcgs); i++)
++			disp_cc_sm8250_rcgs[i]->cmd_rcgr -= 4;
++
++		for (i = 0; i < ARRAY_SIZE(disp_cc_sm8250_divs); i++) {
++			disp_cc_sm8250_divs[i]->reg -= 4;
++			disp_cc_sm8250_divs[i]->width = 4;
++		}
++
++		disp_cc_mdss_ahb_clk.halt_reg -= 4;
++		disp_cc_mdss_ahb_clk.clkr.enable_reg -= 4;
++
++		disp_cc_mdss_ahb_clk_src.cmd_rcgr = 0x22a0;
++
++		disp_cc_pll0_config.config_ctl_hi1_val = 0x2a9a699c;
++		disp_cc_pll0_config.test_ctl_hi1_val = 0x01800000;
++		disp_cc_pll0_init.ops = &clk_alpha_pll_lucid_5lpe_ops;
++		disp_cc_pll0.vco_table = lucid_5lpe_vco;
++		disp_cc_pll1_config.config_ctl_hi1_val = 0x2a9a699c;
++		disp_cc_pll1_config.test_ctl_hi1_val = 0x01800000;
++		disp_cc_pll1_init.ops = &clk_alpha_pll_lucid_5lpe_ops;
++		disp_cc_pll1.vco_table = lucid_5lpe_vco;
++
++		disp_cc_sm8250_clocks[DISP_CC_MDSS_EDP_GTC_CLK] = NULL;
++		disp_cc_sm8250_clocks[DISP_CC_MDSS_EDP_GTC_CLK_SRC] = NULL;
++	}
++
+ 	return platform_driver_register(&disp_cc_sm8250_driver);
+ }
+ subsys_initcall(disp_cc_sm8250_init);
+-- 
+2.26.1
 
-Thanks!
-Stephan
