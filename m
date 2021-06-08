@@ -2,49 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7710A3A0731
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jun 2021 00:39:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DB4783A0727
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jun 2021 00:39:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235335AbhFHWlS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Jun 2021 18:41:18 -0400
-Received: from mail-qk1-f172.google.com ([209.85.222.172]:46683 "EHLO
-        mail-qk1-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234272AbhFHWlF (ORCPT
+        id S235385AbhFHWlB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Jun 2021 18:41:01 -0400
+Received: from mail-qt1-f171.google.com ([209.85.160.171]:35505 "EHLO
+        mail-qt1-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235343AbhFHWkx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Jun 2021 18:41:05 -0400
-Received: by mail-qk1-f172.google.com with SMTP id f70so6706344qke.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Jun 2021 15:38:58 -0700 (PDT)
+        Tue, 8 Jun 2021 18:40:53 -0400
+Received: by mail-qt1-f171.google.com with SMTP id g12so4206076qtb.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Jun 2021 15:38:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=marek-ca.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=ZIQt2jCiu8UQ3tm03+YZTLApMSATbTz4nD1zztWDgOQ=;
-        b=qFD9+dYXxnHJRQggT3QcQ/+nrZgr/vhVcXpz1xKDiACbl+FQ3UtSQPQNWA99ebE4cG
-         jvIG3k8cg1xNDk8Be7Gi010k7KRLfaj1RvY0D0R1UUI6K8t4nS6mzJp8oD6UlvGkGibi
-         KB3PdjvRlVaZlRBm1X+tUMRUH55JdW1h/0prncQOe6/oLUyZaQz2YOxAQFJ9RUcb7+KQ
-         AX68gwlxDBal0X9i1gu9NzMlRTYhJT+pbe5lgeAlVhUL/ZPd/MIJYiPnPBriFIMomMJU
-         sPCBR/reUkUUFP8p+znm1LQbJzsRaOVvMPYmaRL8C3VWEplfCdBLlbF8taUXUrtus1OQ
-         RXdA==
+        bh=D3ZK6tm1P5krabHbpmSBHMbnkFWqAx9kN5/b3XPjOKg=;
+        b=NqPm7TqbijVDkgRuQXoc5fYOUssLlZwiS0KacjYPXYq2g+AJEfnpm1VBbQxO7ChWnD
+         0nrz56qzj7VB746EF8ihDdrk6sDkNrMABmRsymcvOsJpx6CV4xVAe7YCauw2U82ULC7K
+         0AfDnjsqVWKp5jPlOjkjUH6IoXrTWzM0n5gRS8r4xk5PuTyYZg+XXT65LdK+A9aAwQSV
+         sNGLOG//qjUdGzMTRmHFkj9GUb6YwiwocX96hVo6+sNmEa7NR1gXBSPg3SVkMwRpGNwV
+         yOQ3/1e074rgjSKAvdbKZcDEDVpTVrNeofygDQkcZ1aWMay35e8aA4Mu5c+fHHwFttgW
+         Hhwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=ZIQt2jCiu8UQ3tm03+YZTLApMSATbTz4nD1zztWDgOQ=;
-        b=pqTWJzRODoI9d9VdH0GYHFRsM2PlFUI8+vcp6RxrfVbewD4z3SGzed0Zljzx63FQnc
-         YCnFv+jJMnlbu3sDyOxUaKzSQb5RQw6SR1siYIg8d372vDQEjazTjCVmCbvQts7+sqx8
-         wQNzOOcpeOxBNhqNN3B254n/+5q0OhdMTvmPVhb13aNZ7+OSt0/ujgwDZksKYFKlBAMg
-         WcVAZ9vH2CTWdKu+vzbWPhvN6uIoA5cpLapSUguufPYyFcYJEuCqNnHkODovK9WRW6vS
-         LYs71vrQ6cAs46JdlmJdlMrKrJfWijZGTKRyZp6sudgBgu4IIZP0QgNcI4W/bccRG+5B
-         pvgw==
-X-Gm-Message-State: AOAM5304v6zD8hAKaoDWMk3ycmfKSDEll6SlSYQUtZhFqlyAeL+XN2KF
-        0pGlbjqFH6DDtSAtadBi0JZyKRToBKJJHY29D+eizg==
-X-Google-Smtp-Source: ABdhPJzxpS1UIUw7jyGvjpk0uHBt5n9wjOEIm712XMpbWA+7rKbWITYsJFp9O5jKv2MzZpu+3XH2GA==
-X-Received: by 2002:a37:8b47:: with SMTP id n68mr23337235qkd.209.1623191877747;
-        Tue, 08 Jun 2021 15:37:57 -0700 (PDT)
+        bh=D3ZK6tm1P5krabHbpmSBHMbnkFWqAx9kN5/b3XPjOKg=;
+        b=BI0Wo1n420C16dsN06ONyP/9dzGhAMRZqqeh5/4N6p2ZWvDiBZO2p4DRewLWoS3OCk
+         weaIYB7H1AawXNG9p2YDhUqM45rbDBWIwEHBY0sl2ZWTAznhtJf5ZedVM3YG0uPq0bF8
+         JX20hHk9NgjzPbSkp8NkHl3Fzsy0ysw0Ldr41BuPBcJwY5ci36HOBKn4+1G7JBwTJWqN
+         MSieuVDzOl7GydVruQi3bqlzta0F0LoAdOAO7bBmMSmHnyWBSH/bA1og52dBgjVnOP2d
+         Q7rIRa21iXZTQxxFwdoYBuX65e1GFTW7Wm69RktV609HqE8R4gOBqJA8EhuEcHR4p0sg
+         TFLQ==
+X-Gm-Message-State: AOAM532UcE796L1UBjXm/FKYPM+oQmsuGvpFKuXWvSKAOGJ2EC8EfH+F
+        +0dxSFIpACt9J7J3T1LBPSlJgz7cFUW83nFCn9hVLA==
+X-Google-Smtp-Source: ABdhPJwa2jZlve0GnDig3FLTCu8hwvY4Jr42GtEtOB+PC0Id/IXOIO+U6nEi4Cv/6rq9mHW6b64eBg==
+X-Received: by 2002:ac8:7092:: with SMTP id y18mr23984864qto.2.1623191878941;
+        Tue, 08 Jun 2021 15:37:58 -0700 (PDT)
 Received: from localhost.localdomain (modemcable068.184-131-66.mc.videotron.ca. [66.131.184.68])
-        by smtp.gmail.com with ESMTPSA id m3sm2324266qkh.135.2021.06.08.15.37.56
+        by smtp.gmail.com with ESMTPSA id m3sm2324266qkh.135.2021.06.08.15.37.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Jun 2021 15:37:57 -0700 (PDT)
+        Tue, 08 Jun 2021 15:37:58 -0700 (PDT)
 From:   Jonathan Marek <jonathan@marek.ca>
 To:     linux-arm-msm@vger.kernel.org
 Cc:     robert.foss@linaro.org, andrey.konovalov@linaro.org,
@@ -54,9 +54,9 @@ Cc:     robert.foss@linaro.org, andrey.konovalov@linaro.org,
         Mauro Carvalho Chehab <mchehab@kernel.org>,
         linux-media@vger.kernel.org (open list:QUALCOMM CAMERA SUBSYSTEM DRIVER),
         linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH 10/17] media: camss: remove vdda-csiN from sdm845 resources
-Date:   Tue,  8 Jun 2021 18:34:59 -0400
-Message-Id: <20210608223513.23193-11-jonathan@marek.ca>
+Subject: [PATCH 11/17] media: camss: fix VFE irq name
+Date:   Tue,  8 Jun 2021 18:35:00 -0400
+Message-Id: <20210608223513.23193-12-jonathan@marek.ca>
 X-Mailer: git-send-email 2.26.1
 In-Reply-To: <20210608223513.23193-1-jonathan@marek.ca>
 References: <20210608223513.23193-1-jonathan@marek.ca>
@@ -66,46 +66,35 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This isn't used and only works because devm_regulator_get() returns a dummy
-regulator.
+vfe->id isn't set yet, so use "id" instead here.
 
 Signed-off-by: Jonathan Marek <jonathan@marek.ca>
 Reviewed-by: Robert Foss <robert.foss@linaro.org>
 ---
- drivers/media/platform/qcom/camss/camss.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/media/platform/qcom/camss/camss-vfe.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
-index ef100d5f77636..c08d6d6f6f90d 100644
---- a/drivers/media/platform/qcom/camss/camss.c
-+++ b/drivers/media/platform/qcom/camss/camss.c
-@@ -542,7 +542,7 @@ static const struct resources csiphy_res_845[] = {
- static const struct resources csid_res_845[] = {
- 	/* CSID0 */
- 	{
--		.regulator = { "vdda-csi0" },
-+		.regulator = { NULL },
- 		.clock = { "cpas_ahb", "cphy_rx_src", "slow_ahb_src",
- 				"soc_ahb", "vfe0", "vfe0_src",
- 				"vfe0_cphy_rx", "csi0",
-@@ -562,7 +562,7 @@ static const struct resources csid_res_845[] = {
+diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/media/platform/qcom/camss/camss-vfe.c
+index 15695fd466c4d..dec89079c6ae4 100644
+--- a/drivers/media/platform/qcom/camss/camss-vfe.c
++++ b/drivers/media/platform/qcom/camss/camss-vfe.c
+@@ -1290,7 +1290,6 @@ int msm_vfe_subdev_init(struct camss *camss, struct vfe_device *vfe,
+ 	case CAMSS_660:
+ 		vfe->ops = &vfe_ops_4_8;
+ 		break;
+-
+ 	case CAMSS_845:
+ 		vfe->ops = &vfe_ops_170;
+ 		break;
+@@ -1319,7 +1318,7 @@ int msm_vfe_subdev_init(struct camss *camss, struct vfe_device *vfe,
  
- 	/* CSID1 */
- 	{
--		.regulator = { "vdda-csi1" },
-+		.regulator = { NULL },
- 		.clock = { "cpas_ahb", "cphy_rx_src", "slow_ahb_src",
- 				"soc_ahb", "vfe1", "vfe1_src",
- 				"vfe1_cphy_rx", "csi1",
-@@ -582,7 +582,7 @@ static const struct resources csid_res_845[] = {
- 
- 	/* CSID2 */
- 	{
--		.regulator = { "vdda-csi2" },
-+		.regulator = { NULL },
- 		.clock = { "cpas_ahb", "cphy_rx_src", "slow_ahb_src",
- 				"soc_ahb", "vfe_lite", "vfe_lite_src",
- 				"vfe_lite_cphy_rx", "csi2",
+ 	vfe->irq = r->start;
+ 	snprintf(vfe->irq_name, sizeof(vfe->irq_name), "%s_%s%d",
+-		 dev_name(dev), MSM_VFE_NAME, vfe->id);
++		 dev_name(dev), MSM_VFE_NAME, id);
+ 	ret = devm_request_irq(dev, vfe->irq, vfe->ops->isr,
+ 			       IRQF_TRIGGER_RISING, vfe->irq_name, vfe);
+ 	if (ret < 0) {
 -- 
 2.26.1
 
