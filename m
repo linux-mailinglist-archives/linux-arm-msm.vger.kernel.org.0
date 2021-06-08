@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 547703A06CC
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jun 2021 00:29:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8F1753A06D1
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jun 2021 00:30:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234307AbhFHWbk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Jun 2021 18:31:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53054 "EHLO
+        id S234567AbhFHWbw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Jun 2021 18:31:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53044 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234302AbhFHWbi (ORCPT
+        with ESMTP id S234495AbhFHWbv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Jun 2021 18:31:38 -0400
-Received: from mail-qt1-x82d.google.com (mail-qt1-x82d.google.com [IPv6:2607:f8b0:4864:20::82d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C91DC0617A8
-        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Jun 2021 15:29:31 -0700 (PDT)
-Received: by mail-qt1-x82d.google.com with SMTP id 93so9195187qtc.10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Jun 2021 15:29:31 -0700 (PDT)
+        Tue, 8 Jun 2021 18:31:51 -0400
+Received: from mail-qk1-x735.google.com (mail-qk1-x735.google.com [IPv6:2607:f8b0:4864:20::735])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F486C0613A2
+        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Jun 2021 15:29:32 -0700 (PDT)
+Received: by mail-qk1-x735.google.com with SMTP id c138so9020796qkg.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Jun 2021 15:29:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Kv52q5OkhetJHuJO/uBANPhEtNpMztw2QDevSUVhoyk=;
-        b=qQAk0AZFhr3Eil+3IPei4tIjW2vaAakrRLTalW7XSgtVcWkqFdHiOpxd3U2sNdSZSz
-         +YKz/4xWcdxqBy6ud1BDevM/KqwTutK62o7az4YWhCVqnvSOR75eNRr1YTyykbe5K45r
-         drWiD2zPTROk/V0SMJyk3PdBii3sudFtn7FKtlOkoDSbpbPFonaKHs+RGOnzNDSz3Z4e
-         WCQ95YIIPhQH+rrQL9FFYHe339kZgL4At1iH8ORjT7aRf4gj/3TdW7ADVo6/w9dvYZM1
-         CgETorKHr/oSFOgBPY7fZJfpmbwpytcallpKLleECHU56EWh5BZ+UWM+UjPztPxEzSvQ
-         sF/g==
+        bh=cH/M8hML98gLh8w+CTkpmO+RznC7BLW0JshH/2U89MM=;
+        b=gaeaJcXtCHi2LjfYTKJF92D0iJmI0eBUZX9Wx31ODbJw9wCkG5tuYU8pN+ru++udBq
+         nEjWgm5txPHHjIEyBE3SGNPg+UqL6xIId7dWSYNSAKGTVb64gcmAt5YdnsuUh+22AthW
+         4PolUglQk5HDQFTjr4tV4D2j97Bob8977MrxqyEugM57j4nhrkzKtuM+nQYmrFYqOy4n
+         fN67xSra70Qzs9ygcL+4pD6+P931wRedwo8j/htyqSSfw+J5Xq3MEHsnPM7pNWerFj8p
+         wPmWH/nRzhuXy5y9yusgL9VU7eZPZnlZl24HnJDh9t1dsbnIH/4gLhve23ailyT6sYKe
+         aezg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Kv52q5OkhetJHuJO/uBANPhEtNpMztw2QDevSUVhoyk=;
-        b=hXgJExA8i+CIOGFyyfEudsFul8O6fKGtpWYZjjqHk6uoqsJ81clg2NciSN4t8UWBKM
-         mJ1lP4FFlvd10QkChqJA1QcyE4WrtpbVUQoxds1ee2aSumdSw8oekuWOVEpeSEJMD1WB
-         sZP41fTi0/On5BFe9rfZhImklXRkgv/xGdTFOHxkEPFALxTUctUi+KHWoEhuCacWR/fW
-         duGQdk+N73DhrUlLAa7GLotqNF48QKqerMSiqyadhYk1In7O6RzWVAoamRKvwEkSQHsi
-         ZP3APPLmO5CSwe8QdVdvqx6NIDxp1c+mdn4X8IQrVYbuyUB3km7OuuAyWwY7D3HYPDmi
-         Mqdg==
-X-Gm-Message-State: AOAM532JYhcb8u1yNpYeVOu3CABO51QyKrjuAxQAKYS1HokVUhjKNNne
-        V+MPmWOXBo4Rglv6joaqJgXl7w==
-X-Google-Smtp-Source: ABdhPJwNri2a83qDkFBegeIl3dnDQu4e9pX9nigPbXBNce7tFPVx2kk8O9XSNvj8CSWBeMmogF62FA==
-X-Received: by 2002:ac8:5248:: with SMTP id y8mr19581076qtn.346.1623191370663;
-        Tue, 08 Jun 2021 15:29:30 -0700 (PDT)
+        bh=cH/M8hML98gLh8w+CTkpmO+RznC7BLW0JshH/2U89MM=;
+        b=FgHudKgOR5e7pq7eBjPpueeys4f7hSD9fRwnT813iIW7wBq4BodEF0DF0rSSKVxv9r
+         UQT6f7C7U2izh5hUPzG/I6b+cEv8sNpWu9AFcIm9VELG4LGw7GgDTL7yGKEzPpinSm/U
+         jUj6HZSlU+GHNe07aLnPatrWWxokGgwfm77R6uzSoWMOQNBQxo2zt4L5suCH4hi9CoUM
+         +4grRo0mJbMmxKuKoK6AHoydDePXKA6YEPrfgjligZMN5Ecy/M1jCqu+JHPHB8G61Fny
+         Wn84JkxCfO2mThvfsLNTiGXvqftjf/O50e6YxWwk9f0yD6raHAtBi14F/OE/kYzEtmgO
+         xJPg==
+X-Gm-Message-State: AOAM530tGbIQjLh+xDsMfTY5+UFk2tyHUKBX9AiEyfCXlZJC7dPUjjfw
+        l/d7phJaYQpct29swyj16PmrtA==
+X-Google-Smtp-Source: ABdhPJzzPv33n8TyS0JmOTg0ugsTAWEwo3D9m79ayv2QjS8XIcBIWdg90fzWkWpUKMDvYhe0lgAxjQ==
+X-Received: by 2002:a05:620a:1454:: with SMTP id i20mr22818025qkl.91.1623191371612;
+        Tue, 08 Jun 2021 15:29:31 -0700 (PDT)
 Received: from pop-os.fios-router.home (pool-71-163-245-5.washdc.fios.verizon.net. [71.163.245.5])
-        by smtp.googlemail.com with ESMTPSA id h19sm10450736qtq.5.2021.06.08.15.29.29
+        by smtp.googlemail.com with ESMTPSA id h19sm10450736qtq.5.2021.06.08.15.29.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Jun 2021 15:29:30 -0700 (PDT)
+        Tue, 08 Jun 2021 15:29:31 -0700 (PDT)
 From:   Thara Gopinath <thara.gopinath@linaro.org>
 To:     agross@kernel.org, bjorn.andersson@linaro.org, rui.zhang@intel.com,
         daniel.lezcano@linaro.org, viresh.kumar@linaro.org,
         rjw@rjwysocki.net, robh+dt@kernel.org
 Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
         linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-Subject: [PATCH 3/5] cpufreq: qcom-cpufreq-hw: Add dcvs interrupt support
-Date:   Tue,  8 Jun 2021 18:29:24 -0400
-Message-Id: <20210608222926.2707768-4-thara.gopinath@linaro.org>
+Subject: [PATCH 4/5] arm64: boot: dts: sdm45: Add support for LMh node
+Date:   Tue,  8 Jun 2021 18:29:25 -0400
+Message-Id: <20210608222926.2707768-5-thara.gopinath@linaro.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20210608222926.2707768-1-thara.gopinath@linaro.org>
 References: <20210608222926.2707768-1-thara.gopinath@linaro.org>
@@ -66,191 +66,58 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add interrupt support to notify the kernel of h/w initiated frequency
-throttling by LMh. Convey this to scheduler via thermal presssure
-interface.
+Add LMh nodes for cpu cluster0 and cpu cluster1. Also add interrupt
+support in cpufreq node to capture the LMh interrupt and let the scheduler
+know of the max frequency throttling.
 
 Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
 ---
- drivers/cpufreq/qcom-cpufreq-hw.c | 100 ++++++++++++++++++++++++++++++
- 1 file changed, 100 insertions(+)
+ arch/arm64/boot/dts/qcom/sdm845.dtsi | 21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
 
-diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
-index f86859bf76f1..95e17330aa9d 100644
---- a/drivers/cpufreq/qcom-cpufreq-hw.c
-+++ b/drivers/cpufreq/qcom-cpufreq-hw.c
-@@ -13,6 +13,7 @@
- #include <linux/of_platform.h>
- #include <linux/pm_opp.h>
- #include <linux/slab.h>
-+#include <linux/interrupt.h>
+diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+index 0a86fe71a66d..fdd8d816f728 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+@@ -3646,6 +3646,24 @@ swm: swm@c85 {
+ 			};
+ 		};
  
- #define LUT_MAX_ENTRIES			40U
- #define LUT_SRC				GENMASK(31, 30)
-@@ -22,10 +23,13 @@
- #define CLK_HW_DIV			2
- #define LUT_TURBO_IND			1
++		lmh_cluster1: lmh@17d70800 {
++			compatible = "qcom,msm-hw-limits";
++			reg = <0 0x17d70800 0 0x401>;
++			interrupts = <GIC_SPI 33 IRQ_TYPE_LEVEL_HIGH>;
++			qcom,lmh-cpu-id = <0x4>;
++			interrupt-controller;
++			#interrupt-cells = <1>;
++		};
++
++		lmh_cluster0: lmh@17d78800 {
++			compatible = "qcom,msm-hw-limits";
++			reg = <0 0x17d78800 0 0x401>;
++			interrupts = <GIC_SPI 32 IRQ_TYPE_LEVEL_HIGH>;
++			qcom,lmh-cpu-id = <0x0>;
++			interrupt-controller;
++			#interrupt-cells = <1>;
++		};
++
+ 		sound: sound {
+ 		};
  
-+#define HZ_PER_KHZ			1000
-+
- struct qcom_cpufreq_soc_data {
- 	u32 reg_enable;
- 	u32 reg_freq_lut;
- 	u32 reg_volt_lut;
-+	u32 reg_current_vote;
- 	u32 reg_perf_state;
- 	u8 lut_row_size;
- };
-@@ -33,7 +37,11 @@ struct qcom_cpufreq_soc_data {
- struct qcom_cpufreq_data {
- 	void __iomem *base;
- 	struct resource *res;
-+	struct delayed_work lmh_dcvs_poll_work;
- 	const struct qcom_cpufreq_soc_data *soc_data;
-+	cpumask_var_t cpus;
-+	unsigned long throttled_freq;
-+	int lmh_dcvs_irq;
- };
+@@ -4911,10 +4929,13 @@ cpufreq_hw: cpufreq@17d43000 {
+ 			reg = <0 0x17d43000 0 0x1400>, <0 0x17d45800 0 0x1400>;
+ 			reg-names = "freq-domain0", "freq-domain1";
  
- static unsigned long cpu_hw_rate, xo_rate;
-@@ -251,10 +259,79 @@ static void qcom_get_related_cpus(int index, struct cpumask *m)
- 	}
- }
++			interrupts-extended = <&lmh_cluster0 0>, <&lmh_cluster1 0>;
++
+ 			clocks = <&rpmhcc RPMH_CXO_CLK>, <&gcc GPLL0>;
+ 			clock-names = "xo", "alternate";
  
-+static inline unsigned long qcom_lmh_vote_to_freq(u32 val)
-+{
-+	return (val & 0x3FF) * 19200;
-+}
-+
-+static void qcom_lmh_dcvs_notify(struct qcom_cpufreq_data *data)
-+{
-+	struct cpufreq_policy policy;
-+	struct dev_pm_opp *opp;
-+	struct device *dev;
-+	unsigned long max_capacity, capacity, freq_hz;
-+	unsigned int val, freq;
-+
-+	val = readl_relaxed(data->base + data->soc_data->reg_current_vote);
-+	freq = qcom_lmh_vote_to_freq(val);
-+	freq_hz = freq * HZ_PER_KHZ;
-+
-+	/* Do I need to calculate ceil and floor ? */
-+	dev = get_cpu_device(cpumask_first(data->cpus));
-+	opp = dev_pm_opp_find_freq_floor(dev, &freq_hz);
-+	if (IS_ERR(opp) && PTR_ERR(opp) == -ERANGE)
-+		opp = dev_pm_opp_find_freq_ceil(dev, &freq_hz);
-+
-+	data->throttled_freq = freq_hz / HZ_PER_KHZ;
-+
-+	cpufreq_get_policy(&policy, cpumask_first(data->cpus));
-+
-+	/* Update thermal pressure */
-+	max_capacity = arch_scale_cpu_capacity(cpumask_first(data->cpus));
-+	capacity = data->throttled_freq * max_capacity;
-+	capacity /= policy.cpuinfo.max_freq;
-+	/* Don't pass boost capacity to scheduler */
-+	if (capacity > max_capacity)
-+		capacity = max_capacity;
-+	arch_set_thermal_pressure(data->cpus, max_capacity - capacity);
-+}
-+
-+static void qcom_lmh_dcvs_poll(struct work_struct *work)
-+{
-+	struct qcom_cpufreq_data *data;
-+
-+	data = container_of(work, struct qcom_cpufreq_data, lmh_dcvs_poll_work.work);
-+
-+	qcom_lmh_dcvs_notify(data);
-+	/**
-+	 * If h/w throttled frequency is higher than what cpufreq has requested for, stop
-+	 * polling and switch back to interrupt mechanism
-+	 */
-+	if (data->throttled_freq >= qcom_cpufreq_hw_get(cpumask_first(data->cpus)))
-+		/* Clear the existing interrupts and enable it back */
-+		enable_irq(data->lmh_dcvs_irq);
-+	else
-+		mod_delayed_work(system_highpri_wq, &data->lmh_dcvs_poll_work,
-+				 msecs_to_jiffies(10));
-+}
-+
-+static irqreturn_t qcom_lmh_dcvs_handle_irq(int irq, void *data)
-+{
-+	struct qcom_cpufreq_data *c_data = data;
-+
-+	/* Disable interrupt and enable polling */
-+	disable_irq_nosync(c_data->lmh_dcvs_irq);
-+	qcom_lmh_dcvs_notify(c_data);
-+	mod_delayed_work(system_highpri_wq, &c_data->lmh_dcvs_poll_work, msecs_to_jiffies(10));
-+
-+	return 0;
-+}
-+
- static const struct qcom_cpufreq_soc_data qcom_soc_data = {
- 	.reg_enable = 0x0,
- 	.reg_freq_lut = 0x110,
- 	.reg_volt_lut = 0x114,
-+	.reg_current_vote = 0x704,
- 	.reg_perf_state = 0x920,
- 	.lut_row_size = 32,
- };
-@@ -285,6 +362,7 @@ static int qcom_cpufreq_hw_cpu_init(struct cpufreq_policy *policy)
- 	void __iomem *base;
- 	struct qcom_cpufreq_data *data;
- 	int ret, index;
-+	bool lmh_mitigation_enabled = false;
+ 			#freq-domain-cells = <1>;
++			qcom,support-lmh = <1>;
+ 		};
  
- 	cpu_dev = get_cpu_device(policy->cpu);
- 	if (!cpu_dev) {
-@@ -305,6 +383,8 @@ static int qcom_cpufreq_hw_cpu_init(struct cpufreq_policy *policy)
- 
- 	index = args.args[0];
- 
-+	lmh_mitigation_enabled = of_property_read_bool(pdev->dev.of_node, "qcom,support-lmh");
-+
- 	res = platform_get_resource(pdev, IORESOURCE_MEM, index);
- 	if (!res) {
- 		dev_err(dev, "failed to get mem resource %d\n", index);
-@@ -329,6 +409,11 @@ static int qcom_cpufreq_hw_cpu_init(struct cpufreq_policy *policy)
- 		goto unmap_base;
- 	}
- 
-+	if (!alloc_cpumask_var(&data->cpus, GFP_KERNEL)) {
-+		ret = -ENOMEM;
-+		goto unmap_base;
-+	}
-+
- 	data->soc_data = of_device_get_match_data(&pdev->dev);
- 	data->base = base;
- 	data->res = res;
-@@ -347,6 +432,7 @@ static int qcom_cpufreq_hw_cpu_init(struct cpufreq_policy *policy)
- 		goto error;
- 	}
- 
-+	cpumask_copy(data->cpus, policy->cpus);
- 	policy->driver_data = data;
- 
- 	ret = qcom_cpufreq_hw_read_lut(cpu_dev, policy);
-@@ -370,6 +456,20 @@ static int qcom_cpufreq_hw_cpu_init(struct cpufreq_policy *policy)
- 			dev_warn(cpu_dev, "failed to enable boost: %d\n", ret);
- 	}
- 
-+	if (lmh_mitigation_enabled) {
-+		data->lmh_dcvs_irq = platform_get_irq(pdev, index);
-+		if (data->lmh_dcvs_irq < 0) {
-+			ret = data->lmh_dcvs_irq;
-+			goto error;
-+		}
-+		ret = devm_request_irq(dev, data->lmh_dcvs_irq, qcom_lmh_dcvs_handle_irq,
-+				       0, "dcvsh-irq", data);
-+		if (ret) {
-+			dev_err(dev, "Error %d registering irq %x\n", ret, data->lmh_dcvs_irq);
-+			goto error;
-+		}
-+		INIT_DEFERRABLE_WORK(&data->lmh_dcvs_poll_work, qcom_lmh_dcvs_poll);
-+	}
- 	return 0;
- error:
- 	kfree(data);
+ 		wifi: wifi@18800000 {
 -- 
 2.25.1
 
