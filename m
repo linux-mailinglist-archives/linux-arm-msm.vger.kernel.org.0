@@ -2,153 +2,209 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B609C39FB5E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jun 2021 17:58:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0A9B439FCAD
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jun 2021 18:40:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232948AbhFHP7b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Jun 2021 11:59:31 -0400
-Received: from mail-qt1-f170.google.com ([209.85.160.170]:39467 "EHLO
-        mail-qt1-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233189AbhFHP7a (ORCPT
+        id S232312AbhFHQls (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Jun 2021 12:41:48 -0400
+Received: from mo4-p01-ob.smtp.rzone.de ([81.169.146.167]:26591 "EHLO
+        mo4-p01-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231175AbhFHQlr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Jun 2021 11:59:30 -0400
-Received: by mail-qt1-f170.google.com with SMTP id p21so3904067qtw.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Jun 2021 08:57:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=marek-ca.20150623.gappssmtp.com; s=20150623;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=SvrvGcdTqd/A2IzqKVxAjzaPvjwWLLId9Ilxa/8ESFQ=;
-        b=TGN6mpHcaPFQwHVw/GHM7ip0el1hd+0GbdCjU7WFXQjIeCWukpCfBh8rMkDIHRdosp
-         Q/LfJzQq7YCqM7ulA9Kg9TU02S0vhVEVeohZ8FHyWFLQ8d7dKe9CMMYkVTfvKgQBUc1q
-         gpQWsG9Cx4HioXDP4E7cBUteCE5WUgXDnzHrmpn/qVQTEuEMNT41YRN+fUY/jUt+u1eM
-         AXtwi4Zd9ZuwfRHh0bOxl1UYTGZDg6GM6nB//CR9MshABAVf8HuWx3+MXKq4+i51En1C
-         Yj7hqYtCJc/4fgsc5rh1FlzLxQ7EEvICLUzEsSaDKeajNFR1fip2MmgC+oHi2l9VqD5l
-         wonA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=SvrvGcdTqd/A2IzqKVxAjzaPvjwWLLId9Ilxa/8ESFQ=;
-        b=RsDyD2sh8DNGaRBzeKGyN7QehTwZXzti4flu1G+fMSq7r0jDdJyKrDcrmrRFZqRr8m
-         GySK750IUggCHDc3hX7ZyNOzQr+ww3tFOn5DoGtZ56UxM6Q+a4pSuHgI5YBCa49qsNwk
-         +QvoflVdCzMZZnm+m4nfWkw6IfbwipREur2VlEah4CHm3Q0/DZLJOnnWHA9+jUKcYyoV
-         91Rsmtru4XlwRW/2MnXYpM5dbgxZr8Y0HHp2Zp+/pUx8sVD/YPckuzC1AajhwUrinM2U
-         1oJGSMkrU0+Ld/zPW/pk3tXF2tPvXCz+GS6CC10RWjGlUX5gV3JIFiX65JDN+nsgZv6q
-         YzdQ==
-X-Gm-Message-State: AOAM530GkBN9fvEEkjwu9lwId+emxaj3HiUAHC63FbJyM96azYc6vNFG
-        ngWCO0JKm4RarONSW8VAWX0R7w==
-X-Google-Smtp-Source: ABdhPJy/UH8rRqmpAvUYWlHIcj680L6hW8fGJr7C6UkJboop+ydDiBFqBIFuB1C1L+iH8lasHCi7vw==
-X-Received: by 2002:a05:622a:587:: with SMTP id c7mr21989371qtb.315.1623167787791;
-        Tue, 08 Jun 2021 08:56:27 -0700 (PDT)
-Received: from [192.168.0.189] (modemcable068.184-131-66.mc.videotron.ca. [66.131.184.68])
-        by smtp.gmail.com with ESMTPSA id c68sm12078843qkd.112.2021.06.08.08.56.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 08 Jun 2021 08:56:27 -0700 (PDT)
-Subject: Re: [PATCH v2 2/8] drm/msm/a6xx: use AOP-initialized PDC for a650
-To:     Akhil P Oommen <akhilpo@codeaurora.org>,
-        freedreno@lists.freedesktop.org
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
-        Eric Anholt <eric@anholt.net>,
-        Sharat Masetty <smasetty@codeaurora.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <dri-devel@lists.freedesktop.org>,
-        open list <linux-kernel@vger.kernel.org>
-References: <20210513171431.18632-1-jonathan@marek.ca>
- <20210513171431.18632-3-jonathan@marek.ca>
- <bd5dc0e5-2c49-31fe-a290-0d8e75b45c94@codeaurora.org>
-From:   Jonathan Marek <jonathan@marek.ca>
-Message-ID: <b16de5ab-1485-a814-0885-c266a8706f0c@marek.ca>
-Date:   Tue, 8 Jun 2021 11:54:44 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.2.2
+        Tue, 8 Jun 2021 12:41:47 -0400
+ARC-Seal: i=1; a=rsa-sha256; t=1623170383; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=LL6+qgW3rmuRKM9S+PCBqJt/OfcrnMD/aBcCL3HKNniaYUOO9Fmh/wW50KJ+lFYtUJ
+    rkugGASHwEc1CHcCkgywmm+LbtOeGSspZWLaCMad1eCPTyyV0m8Dcinp9TlJtcjXJcie
+    XcTvRSpxYSbtgLeyZSaIqLuBMGWldAzFYLRFOrT9SoKuxcEfoBsjpeVivhMyfQ3+8oQf
+    9z2FdZpxAH7HKfA8DY6I8u7vXotmA3mankWLKy+EdH2VeCnIl62s6RVsIfu3FKULi5fe
+    tKkwx7Sw/vWH6DhBeDAaqkYWe2pX3qTGtwaAvyv0DZkyxMtMrTYkb1cpe1bHUMuoyFsj
+    cyGg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1623170383;
+    s=strato-dkim-0002; d=strato.com;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=TsO8zQvAeuILETbsyy0wjP+jllz1JH7CujPdRGXvvo4=;
+    b=Nio76JFLhrGOfQX0ghSa0O5VlpjPJlGgRjBvP9mgoXXsnRbd6qkn6PK9iu+KvU+iTe
+    dxcSGbd6qoc5pg24LNDcP3kCMxjX2cuGb5V8FaG7gmlr2sz73BEoBa3QP0Pp74n6BTdj
+    NfdnjB04/t1BFXkpbYtvEaAKKA4k/Ky20IYPjEE9Uo/aniVdeyeQ7jX6rUMhA9O4rUbU
+    S4izJqHH9disCvsZPWA9HNaaqj0v9/4rQYMNe7QC9JPJnTD4GGdfAhivLaERVjRQMzfA
+    wLBEE2sLAfOI+mHnM4eFB+MoVnulkyq3Xi6mnXfsk7FLlJpYs6oOcrL96sInPqdtpn1Q
+    1LWA==
+ARC-Authentication-Results: i=1; strato.com;
+    dkim=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1623170383;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=TsO8zQvAeuILETbsyy0wjP+jllz1JH7CujPdRGXvvo4=;
+    b=tkkz+lEedL3UbGv8FPiMM2FfiAeJSpHMVmgM5zSMpd5XOKja3hAz1P0QqRrfUeFFo7
+    BxJlAKN1sNViM7MkTopSHnXTI0I0qFg41F1MRnUm0g8fbKa9WT3QdPtkCluSy8R0bQnp
+    eEfjqUnrFLXr9B3ZZFTBWS5o+FiMti0Pa0phWqmY1vp9YvkzGEG7Vdoszj4l2cvc21oT
+    pSmiDL9RObq0NBYorBIzTP9iN3GMLT6svtNvSdj7Dhy7kxyUuyFXsp0mJetjVnDtUu++
+    t/9eySlRmpzqSiE2WNgb+wz0N4ZxFBrpu+UtuLfUbYTX6sZM9TmV6K0dhZD36mGo5tSr
+    oG0w==
+Authentication-Results: strato.com;
+    dkim=none
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u26zEodhPgRDZ8j7IcbDBg=="
+X-RZG-CLASS-ID: mo00
+Received: from gerhold.net
+    by smtp.strato.de (RZmta 47.27.2 DYNA|AUTH)
+    with ESMTPSA id y01375x58GdggUM
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Tue, 8 Jun 2021 18:39:42 +0200 (CEST)
+Date:   Tue, 8 Jun 2021 18:39:36 +0200
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Konrad Dybcio <konrad.dybcio@somainline.org>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, martin.botka@somainline.org,
+        angelogioacchino.delregno@somainline.org,
+        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Kees Cook <keescook@chromium.org>,
+        Anton Vorontsov <anton@enomsg.org>,
+        Colin Cross <ccross@android.com>,
+        Tony Luck <tony.luck@intel.com>
+Subject: Re: [PATCH v3 3/3] arm64: dts: qcom: Add support for SONY Xperia X
+ Performance / XZ / XZs (msm8996, Tone platform)
+Message-ID: <YL+dSBRwS3bf1ztb@gerhold.net>
+References: <20210608152737.154218-1-konrad.dybcio@somainline.org>
+ <20210608152737.154218-3-konrad.dybcio@somainline.org>
 MIME-Version: 1.0
-In-Reply-To: <bd5dc0e5-2c49-31fe-a290-0d8e75b45c94@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210608152737.154218-3-konrad.dybcio@somainline.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 5/31/21 3:24 AM, Akhil P Oommen wrote:
-> On 5/13/2021 10:43 PM, Jonathan Marek wrote:
->> SM8250 AOP firmware already sets up PDC registers for us, and it only 
->> needs
->> to be enabled. This path will be used for other newer GPUs.
->>
->> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
->> ---
->>   drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 21 ++++++++++++++++-----
->>   1 file changed, 16 insertions(+), 5 deletions(-)
->>
->> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c 
->> b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
->> index 3d55e153fa9c..c1ee02d6371d 100644
->> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
->> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
->> @@ -512,19 +512,26 @@ static void a6xx_gmu_rpmh_init(struct a6xx_gmu 
->> *gmu)
->>       struct adreno_gpu *adreno_gpu = &a6xx_gpu->base;
->>       struct platform_device *pdev = to_platform_device(gmu->dev);
->>       void __iomem *pdcptr = a6xx_gmu_get_mmio(pdev, "gmu_pdc");
->> -    void __iomem *seqptr = a6xx_gmu_get_mmio(pdev, "gmu_pdc_seq");
->> +    void __iomem *seqptr;
->>       uint32_t pdc_address_offset;
->> +    bool pdc_in_aop = false;
->> -    if (!pdcptr || !seqptr)
->> +    if (!pdcptr)
->>           goto err;
->> -    if (adreno_is_a618(adreno_gpu) || adreno_is_a640(adreno_gpu))
->> +    if (adreno_is_a650(adreno_gpu))
->> +        pdc_in_aop = true;
->> +    else if (adreno_is_a618(adreno_gpu) || adreno_is_a640(adreno_gpu))
->>           pdc_address_offset = 0x30090;
->> -    else if (adreno_is_a650(adreno_gpu))
->> -        pdc_address_offset = 0x300a0;
->>       else
->>           pdc_address_offset = 0x30080;
->> +    if (!pdc_in_aop) {
->> +        seqptr = a6xx_gmu_get_mmio(pdev, "gmu_pdc_seq");
->> +        if (!seqptr)
->> +            goto err;
->> +    }
->> +
->>       /* Disable SDE clock gating */
->>       gmu_write_rscc(gmu, REG_A6XX_GPU_RSCC_RSC_STATUS0_DRV0, BIT(24));
->> @@ -556,6 +563,9 @@ static void a6xx_gmu_rpmh_init(struct a6xx_gmu *gmu)
->>           gmu_write_rscc(gmu, REG_A6XX_RSCC_SEQ_MEM_0_DRV0 + 4, 
->> 0x0020e8a8);
->>       }
->> +    if (pdc_in_aop)
->> +        goto setup_pdc;
->> +
->>       /* Load PDC sequencer uCode for power up and power down sequence */
->>       pdc_write(seqptr, REG_A6XX_PDC_GPU_SEQ_MEM_0, 0xfebea1e1);
->>       pdc_write(seqptr, REG_A6XX_PDC_GPU_SEQ_MEM_0 + 1, 0xa5a4a3a2);
->> @@ -596,6 +606,7 @@ static void a6xx_gmu_rpmh_init(struct a6xx_gmu *gmu)
->>       pdc_write(pdcptr, REG_A6XX_PDC_GPU_TCS3_CMD0_DATA + 8, 0x3);
->>       /* Setup GPU PDC */
->> +setup_pdc:
->>       pdc_write(pdcptr, REG_A6XX_PDC_GPU_SEQ_START_ADDR, 0);
->>       pdc_write(pdcptr, REG_A6XX_PDC_GPU_ENABLE_PDC, 0x80000001);
->>
+On Tue, Jun 08, 2021 at 05:27:36PM +0200, Konrad Dybcio wrote:
+> From: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
 > 
-> We can simply swap the order of PDC and rsc programming here and skip 
-> pdc sequence to jump to the rscc programming for a650. This is the order 
-> followed in the downstream driver anyway.
+> Add support for following boards:
 > 
-> -Akhil.
+> - Xperia X Performance (dora)
+> - Xperia XZ (kagura)
+> - Xperia XZs (keyaki)
+> 
+> They are all based on the SONY Tone platform and feature largely similar hardware
+> with the most obvious differences being lack of USB-C and ToF sensor on Dora and
+> different camera sensor on Keyaki.
+> 
+> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+> ---
+> Changes since v2:
+> - Remove unneeded labels from the pinned(pun intended)-by-default pins
+> 
+>  arch/arm64/boot/dts/qcom/Makefile             |   6 +
+>  .../msm8996-pmi8996-sony-xperia-tone-dora.dts |  11 +
+>  ...sm8996-pmi8996-sony-xperia-tone-kagura.dts |  11 +
+>  ...sm8996-pmi8996-sony-xperia-tone-keyaki.dts |  11 +
+>  .../qcom/msm8996-sony-xperia-tone-dora.dts    |  27 +
+>  .../qcom/msm8996-sony-xperia-tone-kagura.dts  |  15 +
+>  .../qcom/msm8996-sony-xperia-tone-keyaki.dts  |  26 +
+>  .../dts/qcom/msm8996-sony-xperia-tone.dtsi    | 959 ++++++++++++++++++
+>  arch/arm64/boot/dts/qcom/msm8996.dtsi         |  12 +-
+>  9 files changed, 1072 insertions(+), 6 deletions(-)
+>  create mode 100644 arch/arm64/boot/dts/qcom/msm8996-pmi8996-sony-xperia-tone-dora.dts
+>  create mode 100644 arch/arm64/boot/dts/qcom/msm8996-pmi8996-sony-xperia-tone-kagura.dts
+>  create mode 100644 arch/arm64/boot/dts/qcom/msm8996-pmi8996-sony-xperia-tone-keyaki.dts
+>  create mode 100644 arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-dora.dts
+>  create mode 100644 arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-kagura.dts
+>  create mode 100644 arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-keyaki.dts
+>  create mode 100644 arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone.dtsi
+> 
+[...]
+> diff --git a/arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone.dtsi b/arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone.dtsi
+> new file mode 100644
+> index 000000000000..1f71b3b2dc57
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone.dtsi
+> @@ -0,0 +1,959 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * Copyright (c) 2021, AngeloGioacchino Del Regno
+> + *                     <angelogioacchino.delregno@somainline.org>
+> + * Copyright (c) 2021, Konrad Dybcio <konrad.dybcio@somainline.org>
+> + */
+> +
+> +#include "msm8996.dtsi"
+> +#include "pm8994.dtsi"
+> +#include "pmi8994.dtsi"
+> +#include <dt-bindings/input/input.h>
+> +#include <dt-bindings/gpio/gpio.h>
+> +#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
+> +#include <dt-bindings/pinctrl/qcom,pmic-mpp.h>
+> +
+> +/delete-node/ &hdmi;
+> +/delete-node/ &hdmi_phy;
+> +/delete-node/ &mdp5_intf3_out;
 
-The order is the same as the msm-4.19 kernel (msm-4.19 is what a650 
-hardware are using).
+Is it not enough to set those to status = "disabled"? Kind of strange
+that you have to delete those entirely. I guess ideally "hdmi" should
+even be disabled by default in the SoC device tree.
 
-Looks like the order was swapped for the msm-5.4 kernel, but if the 
-order isn't important, I think it is preferable to keep the current 
-order (to avoid a large diff mainly).
+> +/delete-node/ &slpi_region;
+> +/delete-node/ &venus_region;
+> +/delete-node/ &zap_shader_region;
+> +
+> +/ {
+> +	qcom,msm-id = <246 0x30001>; /* MSM8996 V3.1 (Final) */
+> +	qcom,pmic-id = <0x20009 0x2000a 0 0>; /* PM8994 + PMI8994 */
+> +	qcom,board-id = <8 0>;
+> +
+> +	chosen {
+> +		/*
+> +		 * Due to an unknown-for-a-few-years regression,
+> +		 * SDHCI only works on MSM8996 in PIO (lame) mode.
+> +		 */
+> +		bootargs = "sdhci.debug_quirks=0x40 sdhci.debug_quirks2=0x4 maxcpus=2";
+> +	};
+> +
+> +	reserved-memory {
+> +		ramoops@a7f00000 {
+> +			compatible = "ramoops";
+> +			reg = <0 0xa7f00000 0 0x100000>;
+> +			record-size = <0x20000>;
+> +			console-size = <0x40000>;
+> +			ftrace-size = <0x20000>;
+> +			pmsg-size = <0x20000>;
+> +			ecc-size = <16>;
+> +		};
+> +
+> +		cont_splash_mem: memory@83401000 {
+> +			reg = <0 0x83401000 0 0x23ff000>;
+> +			no-map;
+> +		};
+> +
+> +		zap_shader_region: gpu@90400000 {
+> +			compatible = "shared-dma-pool";
+> +			reg = <0x0 0x90400000 0x0 0x2000>;
+> +			no-map;
+> +		};
+> +
+> +		slpi_region: memory@90500000 {
+> +			reg = <0 0x90500000 0 0xa00000>;
+> +			no-map;
+> +		};
+> +
+> +		venus_region: memory@90f00000 {
+> +			reg = <0 0x90f00000 0 0x500000>;
+> +			no-map;
+> +		};
+> +	};
+> +
+> +	panel_tvdd: tvdd-regulator {
+> +		compatible = "regulator-fixed";
+> +		regulator-name = "panel_tvdd";
+> +		gpio = <&tlmm 50 GPIO_ACTIVE_HIGH>;
+
+regulator-fixed is active-low without "enable-active-high;"
+If that's what you want it's probably more clear to write
+GPIO_ACTIVE_LOW. Otherwise, perhaps you forgot that property? :)
+
+Stephan
