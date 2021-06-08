@@ -2,200 +2,170 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5839339FCEE
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jun 2021 18:56:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0FC6739FCFF
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jun 2021 19:02:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231652AbhFHQ6i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Jun 2021 12:58:38 -0400
-Received: from mail-qk1-f176.google.com ([209.85.222.176]:44622 "EHLO
-        mail-qk1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231278AbhFHQ6h (ORCPT
+        id S233533AbhFHRD7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Jun 2021 13:03:59 -0400
+Received: from mail-wr1-f54.google.com ([209.85.221.54]:46839 "EHLO
+        mail-wr1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231261AbhFHRD7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Jun 2021 12:58:37 -0400
-Received: by mail-qk1-f176.google.com with SMTP id c18so5755522qkc.11
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Jun 2021 09:56:29 -0700 (PDT)
+        Tue, 8 Jun 2021 13:03:59 -0400
+Received: by mail-wr1-f54.google.com with SMTP id a11so20493803wrt.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Jun 2021 10:01:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=marek-ca.20150623.gappssmtp.com; s=20150623;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=u0jkiDRYCG9tDKJ5bWYS1XDj3QKmjRotfMyh8Z3wS/8=;
-        b=A5JfgkNIXbw7zRFkCQvIO7v0/mtkxi+fmo+QnohaqF2ZVD9FOYLVvx37F/fINlIt7U
-         IUhslFH3Q9p0bAyz2sjljW5BZE9qoSUtMFiG+tNzeFL6P1doG3yJDeVJJZl5w/m46n4j
-         K1Blp0UxBcATeQHcNooWc5Jc8QetEa169iQrHKhPhqMUiD/Yx+LOc9gmn/kYmYThJcK5
-         QHkkwGuIz4reZ0citIlB+tRh4QEymvX/R5qaLVS0LL7upgmuSgF7cdObCyguqYbSnbyn
-         FUgHFL8qabZUglarZxie3yMRqr5x2KX1vGoCdyPp35YzDoK3tX7sCr4SLC+k1ERg2G6t
-         GqnQ==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Im5P/QCWaWuF664a1UIlJ1Y+ySq7OGimr9hjjiznKJU=;
+        b=m02ub/+oJjSbIpgy34CK+ZPFcS2gXnED5LUKcWyfaHGn9mkTpliOC30WbHpz7D/o3M
+         exr/W6vU7+XeWJjJWv567ZnEZh/8Gc3IBcjU9GkqomhgMtWqLRVLGO07XoQfan8IhAhr
+         rT4ooLG94sb/tgMh7ldTHuiZyAPGdfwxeewpyER+XLsV0WHB6rjWTV7i12aBk51QKOVs
+         0whsxylIvCefkSGtZYAYxtegWH5XRtkzEaAVvZGQpd9SiHab8Ghpc7BIhYhsXtWpBEi1
+         PCiJ43neWSeLHQS7g8sFGUsBaKRNeKmU225VvvWJz1TmKiE64DmjmVtbPoIrsRUwyYRW
+         fQNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=u0jkiDRYCG9tDKJ5bWYS1XDj3QKmjRotfMyh8Z3wS/8=;
-        b=blcNAdHh0pOSVZ4UUMxxJzPNwlLMO5E8XglbBfGbITL6JXI5Sh6TsCpXbqaZfq+a0c
-         ns3mGHczIZwYM7hKkeT7p/XR5P4wtA2JZWDVhUToKxR1IW5JTfh7vfXNcQqpiAxZwnjY
-         myms2om9uBzAVecn2amVGW5T3+BAs5TGVozkdzeWZD0DL97R8e+zPOy7I9s3wn8Ws6vF
-         rZGyKd5kSVSnYT32Il92Mv5sXoD8Sr6FGEjB4j/SLkXh0k4994Vy9Z9gSIbmgAS4Sqsd
-         vDEutW0SQNt++kWF6ImhX0aKH9Gq/WnaNYsLORZ1/qJaQAac6UVRXc2fxnAlp50mCIAQ
-         KNkg==
-X-Gm-Message-State: AOAM530+5euVtDXXqv0jltowTBh5llCj2OXNttMbOXPERXHqTQ3pc561
-        K6zqIDLF9gpwSCvvx1oGpi8Y1g==
-X-Google-Smtp-Source: ABdhPJzsgmTE+FYjCjQ89/qlYNd7CK3mU8AEGjcZnqOY3tWmhR+skZOgk9rTfy7cVDsI+1rBwYiq9g==
-X-Received: by 2002:a37:6884:: with SMTP id d126mr22160972qkc.497.1623171328720;
-        Tue, 08 Jun 2021 09:55:28 -0700 (PDT)
-Received: from [192.168.0.189] (modemcable068.184-131-66.mc.videotron.ca. [66.131.184.68])
-        by smtp.gmail.com with ESMTPSA id h19sm9936019qtq.5.2021.06.08.09.55.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 08 Jun 2021 09:55:28 -0700 (PDT)
-Subject: Re: [PATCH v2 6/8] drm/msm/a6xx: add support for Adreno 660 GPU
-To:     Akhil P Oommen <akhilpo@codeaurora.org>,
-        freedreno@lists.freedesktop.org
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Im5P/QCWaWuF664a1UIlJ1Y+ySq7OGimr9hjjiznKJU=;
+        b=NaqewmjqJFEgn+J9afATcRFmAJYoPOQ4bpBr7mQE882xyR2zrmi6AYcQWjI+WNqjiZ
+         dpq/iinfC4xvMqc7PyLRtEi+8Uik6s4ZDofZN7imxEsenxhxF0Zpu7KcxP0sZGvLO3LL
+         +wTIqVEm0W3ubHoBZDmQiiwaq3IyG0iV/ofKhNbwQ2xIqYKN6/KWc96e+nfz1xOeRwrS
+         2tfETAOZLVvwDLuhxrAG1jZnXC3RmVDGDTUyFfKwVMlAwjLIoBUZ+pDT2BeUF2JvOLIS
+         r9HEen2HFpLbkqF4vBnw3pb5Udlm+XGdVO9a1c6cPfTW+nr2e9Idnp2BoQQP8hQ0TuYN
+         LTwA==
+X-Gm-Message-State: AOAM5318csBwrWBZVRSjkzFOvV/WLySL7tkw4ZZrEVwjRqBTN+ZY3B+r
+        0dyXVmcASjyNXDvnRJB42o/yRY3n1nN6xfYziHw=
+X-Google-Smtp-Source: ABdhPJy9d1NDFKEHkyMxClSAHm844rimo5epL8i+sQpQnUYEKdksEOvpAHmFCpp6tGuXueQ7mHv36SBNH5iIZLrmYoI=
+X-Received: by 2002:adf:eed2:: with SMTP id a18mr23464179wrp.147.1623171652813;
+ Tue, 08 Jun 2021 10:00:52 -0700 (PDT)
+MIME-Version: 1.0
+References: <20210529002508.3839467-1-dmitry.baryshkov@linaro.org>
+ <20210529002508.3839467-6-dmitry.baryshkov@linaro.org> <CAF6AEGsoUET_=P1YkAKb7GMRyrZV5_jmGeMHZhB1u4uE9m7B9A@mail.gmail.com>
+ <CAA8EJpqkrkYF=DW46PWB=0huB9U6e2QqXjJv532f0PyDCC-eXA@mail.gmail.com>
+In-Reply-To: <CAA8EJpqkrkYF=DW46PWB=0huB9U6e2QqXjJv532f0PyDCC-eXA@mail.gmail.com>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Tue, 8 Jun 2021 10:04:46 -0700
+Message-ID: <CAF6AEGubTbNs4S5=Bzyrve-nM98FydtDpXmWK7eZFeAZaCKYFQ@mail.gmail.com>
+Subject: Re: [RFC 5/8] lib: add small API for handling register snapshots
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Stephen Boyd <sboyd@kernel.org>,
         David Airlie <airlied@linux.ie>,
         Daniel Vetter <daniel@ffwll.ch>,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
-        Eric Anholt <eric@anholt.net>,
-        Sharat Masetty <smasetty@codeaurora.org>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        kbuild test robot <lkp@intel.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Shawn Guo <shawn.guo@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <dri-devel@lists.freedesktop.org>,
-        open list <linux-kernel@vger.kernel.org>
-References: <20210513171431.18632-1-jonathan@marek.ca>
- <20210513171431.18632-7-jonathan@marek.ca>
- <055b924e-43fe-1b2b-7292-43a88f9798c2@codeaurora.org>
-From:   Jonathan Marek <jonathan@marek.ca>
-Message-ID: <8dd37a7b-b58f-3cf6-346e-ca5add2a163c@marek.ca>
-Date:   Tue, 8 Jun 2021 12:53:44 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.2.2
-MIME-Version: 1.0
-In-Reply-To: <055b924e-43fe-1b2b-7292-43a88f9798c2@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 5/31/21 11:05 AM, Akhil P Oommen wrote:
-> On 5/13/2021 10:44 PM, Jonathan Marek wrote:
+On Thu, Jun 3, 2021 at 9:33 AM Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
+>
+> On Thu, 3 Jun 2021 at 17:41, Rob Clark <robdclark@gmail.com> wrote:
+> >
+> > On Fri, May 28, 2021 at 5:25 PM Dmitry Baryshkov
+> > <dmitry.baryshkov@linaro.org> wrote:
+> > >
+> > > Add small API covering lists of register dumps. Currently this is a part
+> > > of MSM DRM driver, but is extracted as it might be usefull to other
+> > > drivers too.
+> > >
+> > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > > ---
+> > >  include/linux/dump_state.h | 78 ++++++++++++++++++++++++++++++++++++++
+> > >  lib/Kconfig                |  3 ++
+> > >  lib/Makefile               |  1 +
+> > >  lib/dump_state.c           | 51 +++++++++++++++++++++++++
+> > >  4 files changed, 133 insertions(+)
+> > >  create mode 100644 include/linux/dump_state.h
+> > >  create mode 100644 lib/dump_state.c
+> > >
+> > [snip]
+> > > diff --git a/lib/dump_state.c b/lib/dump_state.c
+> > > new file mode 100644
+> > > index 000000000000..58d88be65c0a
+> > > --- /dev/null
+> > > +++ b/lib/dump_state.c
+> > > @@ -0,0 +1,51 @@
+> > > +/* SPDX-License-Identifier: GPL-2.0-only */
+> > > +/*
+> > > + * Copyright (c) 2020-2021, The Linux Foundation. All rights reserved.
+> > > + * Copyright (c) 2021, Linaro Ltd
+> > > + */
+> > > +
+> > > +#include <linux/dump_state.h>
+> > > +#include <linux/slab.h>
+> > > +
+> > > +void dump_state_free_blocks(struct dump_state *state)
+> > > +{
+> > > +       struct dump_state_block *block, *tmp;
+> > > +
+> > > +       list_for_each_entry_safe(block, tmp, &state->blocks, node) {
+> > > +               list_del(&block->node);
+> > > +               kfree(block);
+> > > +       }
+> > > +}
+> > > +EXPORT_SYMBOL(dump_state_free_blocks);
+> >
+> > nit, perhaps EXPORT_SYMBOL_GPL()?
+>
+> I don't really care. What is the current recommendation?
 
-...
+AFAIU it is to default to EXPORT_SYMBOL_GPL() unless there is a good reason..
 
->> @@ -519,7 +519,7 @@ static void a6xx_gmu_rpmh_init(struct a6xx_gmu *gmu)
->>       if (!pdcptr)
->>           goto err;
->> -    if (adreno_is_a650(adreno_gpu))
->> +    if (adreno_is_a650(adreno_gpu) || adreno_is_a660(adreno_gpu))
-> 
-> why not adreno_is_a650_family() here?
-> 
+BR,
+-R
 
-Based on downstream, a620 is part of a650_family but does not have 
-pdc_in_aop flag.
-
->> @@ -751,7 +751,7 @@ static int a6xx_gmu_fw_start(struct a6xx_gmu *gmu, 
->> unsigned int state)
->>       int ret;
->>       u32 chipid;
-> We need to program this register here:
-> gmu_write(gmu, REG_A6XX_GPU_GMU_CX_GMU_CX_FALNEXT_INTF, 1);
-> 
-
-msm-4.19 does not have this write for a650, but msm-5.4 then adds it. 
-Will make it a separate change since it affects a650 and not just a660.
-
->> -    if (adreno_is_a650(adreno_gpu))
->> +    if (adreno_is_a650(adreno_gpu) || adreno_is_a660(adreno_gpu))
->>           gmu_write(gmu, REG_A6XX_GPU_GMU_CX_GMU_CX_FAL_INTF, 1);
->>       if (state == GMU_WARM_BOOT) {
->> @@ -1494,12 +1494,28 @@ int a6xx_gmu_init(struct a6xx_gpu *a6xx_gpu, 
->> struct device_node *node)
->>       if (ret)
->>           goto err_put_device;
->> +
->> +    /* A660 now requires handling "prealloc requests" in GMU firmware
->> +     * For now just hardcode allocations based on the known firmware.
->> +     * note: there is no indication that these correspond to "dummy" or
->> +     * "debug" regions, but this "guess" allows reusing these BOs which
->> +     * are otherwise unused by a660.
->> +     */
->> +    gmu->dummy.size = SZ_4K;
->> +    if (adreno_is_a660(adreno_gpu)) {
->> +        ret = a6xx_gmu_memory_alloc(gmu, &gmu->debug, SZ_4K * 7, 
->> 0x60400000);
->> +        if (ret)
->> +            goto err_memory;
-> 
-> I think we can simply ignore this allocation for a660 because it was 
-> required for an unused feature. Do you see any issue if you ignore this 
-> allocation?
-> 
-
-Yes, without it there will be an error:
-
-arm-smmu 3da0000.iommu: Unhandled context fault: fsr=0x402, 
-iova=0x60400000, fsynr=0x32, cbfrsynra=0x5, cb=2
-
->> +
->> +        gmu->dummy.size = SZ_8K;
->> +    }
->> +
->>       /* Allocate memory for the GMU dummy page */
->> -    ret = a6xx_gmu_memory_alloc(gmu, &gmu->dummy, SZ_4K, 0x60000000);
->> +    ret = a6xx_gmu_memory_alloc(gmu, &gmu->dummy, gmu->dummy.size, 
->> 0x60000000);
->>       if (ret)
->>           goto err_memory;
->> -    if (adreno_is_a650(adreno_gpu)) {
->> +    if (adreno_is_a650_family(adreno_gpu)) {
->>           ret = a6xx_gmu_memory_alloc(gmu, &gmu->icache,
->>               SZ_16M - SZ_16K, 0x04000);
->>           if (ret)
->> @@ -885,6 +937,13 @@ static int a6xx_hw_init(struct msm_gpu *gpu)
->>       /* Protect registers from the CP */
->>       a6xx_set_cp_protect(gpu);
->> +    if (adreno_is_a660(adreno_gpu)) {
->> +        gpu_write(gpu, REG_A6XX_CP_CHICKEN_DBG, 0x1);
->> +        gpu_write(gpu, REG_A6XX_RBBM_GBIF_CLIENT_QOS_CNTL, 0x0);
->> +        /* Set dualQ + disable afull for A660 GPU but not for A635 */
->> +        gpu_write(gpu, REG_A6XX_UCHE_CMDQ_CONFIG, 0x66906);
->> +    }
->> +
-> gpu_rmw(gpu, REG_A6XX_PC_DBG_ECO_CNTL, 0, (1 << 9));
-> We need this for a640, a650 and a660.
-> 
-
-Will make this a separate patch too, since it affects non-a660 GPUs too.
-
->>       /* Enable expanded apriv for targets that support it */
->>       if (gpu->hw_apriv) {
->>           gpu_write(gpu, REG_A6XX_CP_APRIV_CNTL,
->> +/* check for a650, a660, or any derivatives */
->> +static inline int adreno_is_a650_family(struct adreno_gpu *gpu)
->> +{
->> +       return gpu->revn == 650 || gpu->revn == 620 ||
->> +              gpu->revn == 660 || gpu->revn == 635;
-> We can remove 635 references throughout since that is not a valid adreno 
-> chipid anymore.
-> 
-> -Akhil
-
-I will remove it for my patch (it can discussed when adding 635 support, 
-but I think you will need to have a 6xx ID for the GPU)
-
->> +}
->> +
->>   int adreno_get_param(struct msm_gpu *gpu, uint32_t param, uint64_t 
->> *value);
->>   const struct firmware *adreno_request_fw(struct adreno_gpu *adreno_gpu,
->>           const char *fwname);
->>
+> >
+> > BR,
+> > -R
+> >
+> > > +
+> > > +struct dump_state_block *dump_state_allocate_block_va(void __iomem *base_addr, size_t len, gfp_t gfp, const char *fmt, va_list args)
+> > > +{
+> > > +       struct dump_state_block *block = kzalloc(sizeof(*block) + len, gfp);
+> > > +
+> > > +       if (!block)
+> > > +               return ERR_PTR(-ENOMEM);
+> > > +
+> > > +       vsnprintf(block->name, sizeof(block->name), fmt, args);
+> > > +
+> > > +       INIT_LIST_HEAD(&block->node);
+> > > +       block->size = len;
+> > > +       block->base_addr = base_addr;
+> > > +
+> > > +       return block;
+> > > +}
+> > > +EXPORT_SYMBOL(dump_state_allocate_block);
+> > > +
+> > > +struct dump_state_block *dump_state_allocate_block(void __iomem *base_addr, size_t len, gfp_t gfp, const char *fmt, ...)
+> > > +{
+> > > +       struct dump_state_block *block;
+> > > +       va_list va;
+> > > +
+> > > +       va_start(va, fmt);
+> > > +
+> > > +       block = dump_state_allocate_block_va(base_addr, len, gfp, fmt, va);
+> > > +
+> > > +       va_end(va);
+> > > +
+> > > +       return block;
+> > > +}
+> > > +EXPORT_SYMBOL(dump_state_allocate_block_va);
+> > > --
+> > > 2.30.2
+> > >
+>
+>
+>
+> --
+> With best wishes
+> Dmitry
