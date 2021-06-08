@@ -2,87 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 643B939FEB5
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jun 2021 20:10:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0DEA039FF07
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Jun 2021 20:26:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234036AbhFHSK5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Jun 2021 14:10:57 -0400
-Received: from mail-oi1-f178.google.com ([209.85.167.178]:46769 "EHLO
-        mail-oi1-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234052AbhFHSK4 (ORCPT
+        id S231162AbhFHS2f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Jun 2021 14:28:35 -0400
+Received: from mail-wm1-f42.google.com ([209.85.128.42]:42504 "EHLO
+        mail-wm1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230330AbhFHS2f (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Jun 2021 14:10:56 -0400
-Received: by mail-oi1-f178.google.com with SMTP id c13so16858973oib.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Jun 2021 11:08:50 -0700 (PDT)
+        Tue, 8 Jun 2021 14:28:35 -0400
+Received: by mail-wm1-f42.google.com with SMTP id l7-20020a05600c1d07b02901b0e2ebd6deso2536837wms.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Jun 2021 11:26:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=qtBn6+wQNM3SVHNHCv1FqEQ+GoHDdhutRmc/9Udy3Bc=;
-        b=U+yLUTtLshRKyWAMvVGc5M6Gul0Hk2AKwfzjffWrBkjaMEjmds8VnwPq7KDH+OMF7C
-         6ziYYlld6/i5tWzaZpYVAFvWd6sRa/ZU8qYN690iEQgKmAhI4LngAkcAVeI3iXxzLNz2
-         YXAiUroSvLUBzyO85XcwKs6fItRJ+wqzWPXZAOjNs/8jUgjCYHrJHQhP5kuCeNE3g8GR
-         xM/+z1CroRHQV7GOWahB1vFt6uQIyHg0+tSMK50DbHuc4WvqDQ0KBMpJZv5TQfS997Z1
-         5eZnkxSt62AMYEFYoOuwpirg9p+PErulK+HFn4vFCEw3qVVLlRMJzYjNMPbM2dcjA5RH
-         uDDA==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Dpc7jDBgR4bRpyMxKiXPomFG+A3xIaiwS0cF873d9mc=;
+        b=KWkZvnHH4nxrApOkUehAeCyA/rXa/6rXfhy3TXCuxO1ELjYLR5JOVuwHID6fMdUdR3
+         So2WEZVTMUm7TerayCLetB7N4TU3eSAIApIImU/UB4CF1z250RdTgeJtQjfyVUMSLekd
+         KJUQCeb3AHWCAF8IBtH+H+L360Y53dugYCoN0QKIjQYnWj+Cc5kYwBUThnKeHNQCR7In
+         neh8DtKATy4ZxUB3FsTUR2liOFldzj0hmjOl1W0y9XuBAklsRhIarK+8ytPMZmh6JGY3
+         ik4VvTClouqJoxnl8Mds2dDLyVwducLo+GV1QJFmFRGcifmCsL6p2TTuuxifajUhON1A
+         0c2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=qtBn6+wQNM3SVHNHCv1FqEQ+GoHDdhutRmc/9Udy3Bc=;
-        b=sc9a3UiwjK+rkr2xV6v4/VUWoTuebmURUJqyq2LM+66fIT1q3wcOSnERyDyTSXw9ub
-         4C4R3sRB4Dau8UF3z9WbHwDixoNAzqTZUVAnAUGFT+ZQx5pbjGwCbkcbKYYN9id1CG0Z
-         j/ab58ISY6xWpIzsyO4gUHvGeLAtGZsdHFa7pmgAnibpQLW1e86xtM1TgTTuJO0SA9Cv
-         K4cPfB02TwfAUXFiz3uJ7RDZVlK76Z5j2Vm023KOYaFaZ+ZkWJijvJ1xZFaNwexGXKBm
-         brxOEggXRpSrts9XJ8dUP1BDIN6k0Qh+CRVkoMe5cmT0EyicdacCvXxIeW04+hyl/u1l
-         yQ7Q==
-X-Gm-Message-State: AOAM533cyypOOCooRLMQtRA95xx934avP+JM83MnANeVRwzpodxd+UBQ
-        l2xjEi5IdiqDxDy7NSCbSLf2s6DhtJk27A==
-X-Google-Smtp-Source: ABdhPJwOoQ45O7PUk0iB4SrhSpnhTUzlcMavHr2RbdmemgcmbNRHLS8zUzxGVcgTrTLYXBaIUzxEgA==
-X-Received: by 2002:aca:4843:: with SMTP id v64mr3576333oia.68.1623175669992;
-        Tue, 08 Jun 2021 11:07:49 -0700 (PDT)
-Received: from localhost.localdomain (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id p1sm2838772oou.14.2021.06.08.11.07.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Jun 2021 11:07:49 -0700 (PDT)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] pinctrl: qcom: Make it possible to select SC8180x TLMM
-Date:   Tue,  8 Jun 2021 11:07:02 -0700
-Message-Id: <20210608180702.2064253-1-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.29.2
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Dpc7jDBgR4bRpyMxKiXPomFG+A3xIaiwS0cF873d9mc=;
+        b=lJVsJbTMkT9d07fILo5ahMrUOdZ9Rij2mme+KHoGtmLK/B8P1aI/6HcGG62GjupSkB
+         /KB0GWJ4KMt5ir2KUSMzwcvDswtlUvzsZQ77MY3xoz6NwX/kkiV3yledONJ2QZoqx8Sa
+         BzWIRP9EVQBwXVrp1/z+jAe/jMeIzjfcfNUmoJJNY619Cdpg0H2HGJA+mpiK4diPPwwT
+         SEEf0UDIql26iDIPrKCXnyVgdL7GxORp4dtpEOh76MyV5PyHwgN9axcYp/Zo8UM0xIaA
+         /Gmzfv3VpucyFP4FYRBoNygfHybZqyGa+t/O2aADEVexMbXJkvJGEIOblDNRGHPt+bKj
+         uI2Q==
+X-Gm-Message-State: AOAM5309dKbqDVntpeq3qZO2vbCHd7fDwry/+PcXEL5tAvmz6VBKDUmy
+        c3vXEBaTiD1GzW5zJ5xE2ojtcuSZV4f/vKibcUE=
+X-Google-Smtp-Source: ABdhPJx9NnFyX8wNc/FCRYHa2nklvr22qyrJ85Vop8BJ6EWvcd9fUqRCCIPSZwGzWxtXWq5SbvlnnUFj17ZgcRkBZnE=
+X-Received: by 2002:a05:600c:1c84:: with SMTP id k4mr5813076wms.164.1623176727348;
+ Tue, 08 Jun 2021 11:25:27 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <CAF6AEGs+zjKrj2_oU0ByF=UqBgh3oEOuNkNem3eg5HcFhffmBQ@mail.gmail.com>
+In-Reply-To: <CAF6AEGs+zjKrj2_oU0ByF=UqBgh3oEOuNkNem3eg5HcFhffmBQ@mail.gmail.com>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Tue, 8 Jun 2021 11:29:21 -0700
+Message-ID: <CAF6AEGsKyvkreMM67HY2Oi8LN=-w7sB7NWVoPdyfaJ8390Lz=Q@mail.gmail.com>
+Subject: Re: [pull] drm/msm: drm-msm-fixes-2021-06-08 for v5.13-rc6
+To:     Dave Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
+Cc:     freedreno <freedreno@lists.freedesktop.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-It's currently not possible to select the SC8180x TLMM driver, due to it
-selecting PINCTRL_MSM, rather than depending on the same. Fix this.
+sorry, spotted a small typo, I'll resend this shortly
 
-Fixes: 97423113ec4b ("pinctrl: qcom: Add sc8180x TLMM driver")
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
- drivers/pinctrl/qcom/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/pinctrl/qcom/Kconfig b/drivers/pinctrl/qcom/Kconfig
-index 25d2f7f7f3b6..11e967dbb44b 100644
---- a/drivers/pinctrl/qcom/Kconfig
-+++ b/drivers/pinctrl/qcom/Kconfig
-@@ -223,7 +223,7 @@ config PINCTRL_SC7280
- config PINCTRL_SC8180X
- 	tristate "Qualcomm Technologies Inc SC8180x pin controller driver"
- 	depends on GPIOLIB && (OF || ACPI)
--	select PINCTRL_MSM
-+	depends on PINCTRL_MSM
- 	help
- 	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
- 	  Qualcomm Technologies Inc TLMM block found on the Qualcomm
--- 
-2.29.2
-
+On Tue, Jun 8, 2021 at 10:32 AM Rob Clark <robdclark@gmail.com> wrote:
+>
+> Hi Dave & Daniel,
+>
+> A few late fixes for v5.13
+>
+> The following changes since commit f2f46b878777e0d3f885c7ddad48f477b4dea247:
+>
+>   drm/msm/dp: initialize audio_comp when audio starts (2021-05-06
+> 16:26:57 -0700)
+>
+> are available in the Git repository at:
+>
+>   https://gitlab.freedesktop.org/drm/msm.git drm-msm-fixes-2021-06-08
+>
+> for you to fetch changes up to 924f4cba9e68bf2b4717e7941697db96c6f203be:
+>
+>   drm/msm/a6xx: avoid shadow NULL reference in failure path
+> (2021-06-08 10:08:05 -0700)
+>
+> ----------------------------------------------------------------
+> Alexey Minnekhanov (1):
+>       drm/msm: Init mm_list before accessing it for use_vram path
+>
+> Jonathan Marek (3):
+>       drm/msm/a6xx: update/fix CP_PROTECT initialization
+>       drm/msm/a6xx: fix incorrectly set uavflagprd_inv field for A650
+>       drm/msm/a6xx: avoid shadow NULL reference in failure path
+>
+>  drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 155 +++++++++++++++++++++++++---------
+>  drivers/gpu/drm/msm/adreno/a6xx_gpu.h |   2 +-
+>  drivers/gpu/drm/msm/msm_gem.c         |   7 ++
+>  3 files changed, 122 insertions(+), 42 deletions(-)
