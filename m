@@ -2,103 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F3CC33A182F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jun 2021 16:56:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D88F13A1886
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jun 2021 17:06:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238573AbhFIO5t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Jun 2021 10:57:49 -0400
-Received: from relay08.th.seeweb.it ([5.144.164.169]:51631 "EHLO
-        relay08.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238492AbhFIO5r (ORCPT
+        id S234073AbhFIPIB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Jun 2021 11:08:01 -0400
+Received: from flippie-beckerswealthsa.xyz ([62.173.138.170]:51096 "EHLO
+        host.flippie-beckerswealthsa.xyz" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S234868AbhFIPHO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Jun 2021 10:57:47 -0400
-Received: from localhost.localdomain (83.6.168.161.neoplus.adsl.tpnet.pl [83.6.168.161])
-        by m-r2.th.seeweb.it (Postfix) with ESMTPA id 191803F629;
-        Wed,  9 Jun 2021 16:55:49 +0200 (CEST)
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-To:     ~postmarketos/upstreaming@lists.sr.ht
-Cc:     martin.botka@somainline.org,
-        angelogioacchino.delregno@somainline.org,
-        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Taniya Das <tdas@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v2 9/9] clk: qcom: gcc-msm8994: Add a quirk for a different SDCC configuration
-Date:   Wed,  9 Jun 2021 16:55:21 +0200
-Message-Id: <20210609145523.467090-9-konrad.dybcio@somainline.org>
-X-Mailer: git-send-email 2.31.1
-In-Reply-To: <20210609145523.467090-1-konrad.dybcio@somainline.org>
-References: <20210609145523.467090-1-konrad.dybcio@somainline.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Wed, 9 Jun 2021 11:07:14 -0400
+X-Greylist: delayed 9740 seconds by postgrey-1.27 at vger.kernel.org; Wed, 09 Jun 2021 11:07:14 EDT
+Received: from flippie-beckerswealthsa.xyz (ec2-18-118-29-154.us-east-2.compute.amazonaws.com [18.118.29.154])
+        by host.flippie-beckerswealthsa.xyz (Postfix) with ESMTPA id D54E03115AC4
+        for <linux-arm-msm@vger.kernel.org>; Wed,  9 Jun 2021 15:09:31 +0300 (MSK)
+DKIM-Filter: OpenDKIM Filter v2.11.0 host.flippie-beckerswealthsa.xyz D54E03115AC4
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=flippie-beckerswealthsa.xyz; s=default; t=1623240572;
+        bh=h0ivQLrZuUWuyEKz/TWb+FP9AASpHhVqOsJtRcwKQV4=;
+        h=Reply-To:From:To:Subject:Date:From;
+        b=CpVpGT92Cl/6WVnzp8h+AljUNViNqYl8BYv0+vdXV15B2lRU0tMJX+ZeffQxNM5h0
+         3RzMLcuXERfaLkXJGdT+QXA7oZsmk326JeAas57SiQHq4XaGedayC3RrJeAhVYBdcU
+         GCo53fQcPQeUcfS3sTl8iGJ2kiRjBn9WvAU7pmis=
+DKIM-Filter: OpenDKIM Filter v2.11.0 host.flippie-beckerswealthsa.xyz D54E03115AC4
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=flippie-beckerswealthsa.xyz; s=default; t=1623240572;
+        bh=h0ivQLrZuUWuyEKz/TWb+FP9AASpHhVqOsJtRcwKQV4=;
+        h=Reply-To:From:To:Subject:Date:From;
+        b=CpVpGT92Cl/6WVnzp8h+AljUNViNqYl8BYv0+vdXV15B2lRU0tMJX+ZeffQxNM5h0
+         3RzMLcuXERfaLkXJGdT+QXA7oZsmk326JeAas57SiQHq4XaGedayC3RrJeAhVYBdcU
+         GCo53fQcPQeUcfS3sTl8iGJ2kiRjBn9WvAU7pmis=
+Reply-To: jmasuku40@flippiebeckerwealthservices.com
+From:   Jotham Masuku <jmasuku40@flippie-beckerswealthsa.xyz>
+To:     linux-arm-msm@vger.kernel.org
+Subject: Projects
+Date:   09 Jun 2021 12:09:31 +0000
+Message-ID: <20210609120931.238A8842554A6E58@flippie-beckerswealthsa.xyz>
+Mime-Version: 1.0
+Content-Type: text/plain;
+        charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Some devices come with a different SDCC clock configuration,
-account for that.
+Hello there,
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
----
- .../bindings/clock/qcom,gcc-msm8994.yaml         |  4 ++++
- drivers/clk/qcom/gcc-msm8994.c                   | 16 ++++++++++++++++
- 2 files changed, 20 insertions(+)
+I hope this message finds you in good spirits especially during=20
+this challenging time of coronavirus pandemic. I hope you and=20
+your family are well and keeping safe. Anyway, I am Jotham=20
+Masuku, a broker working with Flippiebecker Wealth. I got your=20
+contact (along with few other contacts) through an online=20
+business directory and I thought I should contact you to see if=20
+you are interested in this opportunity. I am contacting you=20
+because one of my high profile clients is interested in investing=20
+abroad and has asked me to look for individuals and companies=20
+with interesting business ideas and projects that he can invest=20
+in. He wants to invest a substantial amount of asset abroad.
 
-diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-msm8994.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-msm8994.yaml
-index b44a844d894c..4ba2f72d3cad 100644
---- a/Documentation/devicetree/bindings/clock/qcom,gcc-msm8994.yaml
-+++ b/Documentation/devicetree/bindings/clock/qcom,gcc-msm8994.yaml
-@@ -49,6 +49,10 @@ properties:
-     description:
-       Protected clock specifier list as per common clock binding.
- 
-+  qcom,sdcc2-clk-src-40mhz:
-+    description: SDCC2_APPS clock source runs at 40MHz.
-+    type: boolean
-+
- required:
-   - compatible
-   - reg
-diff --git a/drivers/clk/qcom/gcc-msm8994.c b/drivers/clk/qcom/gcc-msm8994.c
-index bc8ad4973dd9..4903b07964dc 100644
---- a/drivers/clk/qcom/gcc-msm8994.c
-+++ b/drivers/clk/qcom/gcc-msm8994.c
-@@ -1012,6 +1012,19 @@ static struct clk_rcg2 sdcc1_apps_clk_src = {
- 	},
- };
- 
-+static struct freq_tbl ftbl_sdcc2_40mhz_apps_clk_src[] = {
-+	F(144000, P_XO, 16, 3, 25),
-+	F(400000, P_XO, 12, 1, 4),
-+	F(20000000, P_GPLL0, 15, 1, 2),
-+	F(25000000, P_GPLL0, 12, 1, 2),
-+	F(40000000, P_GPLL0, 15, 0, 0),
-+	F(50000000, P_GPLL0, 12, 0, 0),
-+	F(80000000, P_GPLL0, 7.5, 0, 0),
-+	F(100000000, P_GPLL0, 6, 0, 0),
-+	F(200000000, P_GPLL0, 3, 0, 0),
-+	{ }
-+};
-+
- static struct freq_tbl ftbl_sdcc2_4_apps_clk_src[] = {
- 	F(144000, P_XO, 16, 3, 25),
- 	F(400000, P_XO, 12, 1, 4),
-@@ -2788,6 +2801,9 @@ static int gcc_msm8994_probe(struct platform_device *pdev)
- 		gcc_msm8994_desc.clks[GCC_SYS_NOC_UFS_AXI_CLK] = NULL;
- 	}
- 
-+	if (of_find_property(dev->of_node, "qcom,sdcc2-clk-src-40mhz", NULL))
-+		sdcc2_apps_clk_src.freq_tbl = ftbl_sdcc2_40mhz_apps_clk_src;
-+
- 	return qcom_cc_probe(pdev, &gcc_msm8994_desc);
- }
- 
--- 
-2.31.1
+Please kindly respond back to this email if you are interested in=20
+this opportunity. Once I receive your response, I will give you=20
+more details and we can plan a strategy that will be beneficial=20
+to all parties.
 
+Best regards
+
+J Masuku
+Flippiebecker Wealth
