@@ -2,101 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 337DA3A1C24
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jun 2021 19:45:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 03BE93A1CFC
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jun 2021 20:44:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231633AbhFIRq7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Jun 2021 13:46:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54210 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231219AbhFIRq7 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Jun 2021 13:46:59 -0400
-Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59A75C061574
-        for <linux-arm-msm@vger.kernel.org>; Wed,  9 Jun 2021 10:45:04 -0700 (PDT)
-Received: by mail-pg1-x536.google.com with SMTP id y12so8302533pgk.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Jun 2021 10:45:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=QzDssiVcaAs2iXBKln3HFvpPx/SdWnQa94m+zZpAne0=;
-        b=YFOYwN9GYgjIuxKgHt+Y8crdfNkOHKAkE9WCtVDon+e2O+LTLGknuhCRA/sAXdz+0y
-         LNc0f9hLnug/ElvX7efE6XaHk0Tbm2dlfrsb88vWfTls7q/ue6Kzcqr2tGs5KjFiHhA+
-         MNiOIqFH7PO1bLnralyQhXZEtiPyAa7S6+szQm0NXL5UeUZScqIxKXHxgy4XLSIdSPbL
-         /6Llu/OuHltkVzfn1ifnglBN/k4uAcWnpot311GuX092/vytUv5/OoJXvZ+NC8DYYDMt
-         hV09eMbEz5Vdj8yNEAcK0AAl91N2/W8ZS6Av1WypD+ywbUAUQ4VU3n/pcpuS2ULitJ5n
-         3J9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=QzDssiVcaAs2iXBKln3HFvpPx/SdWnQa94m+zZpAne0=;
-        b=kf+eopXMLRs/Sdh+revHspMwNFt6IJ4QFNeFVxIyO0LhXnadHZKn1JFvc3NNydSmXB
-         jRcmc/9/I7GrPbAIaKRY5hsduMu3D8YoNPG+y8OnSgHficXM3k3UD7ftJ5pv0jqVMQ9w
-         aNp3MR85Lhmy9cjnYJGZoA2Y9gc59Jy8rrLaA1A3p0MX4LAMkYWhIP7wrJ9jcDsgnPVy
-         uWqei4nLQ7H08xiYav6zzS7SHsV640TOS7+za2PrEsDTAMrIKP+0Az9yJ7XPhoqRrLT2
-         CQZ/kc/9oz9RhaI0rjSLRu7575SaQ7c23EeOhTF0vhOaErwxotfmNqtzZEjbP/lY90oh
-         MDhg==
-X-Gm-Message-State: AOAM531HARUIjyeFC1/1bhkuWKhHqm89+DitsJ2fIr3/L6a7b0LT87qB
-        1RBiyVWt8JfWaa3gxaC59/aV
-X-Google-Smtp-Source: ABdhPJzhL0J6ruC8+rmiNMifbymiIEQoncR02iYqwVte5qnBfi1MqWgFHuxp2FhvJ+Ljr3p/bYKLQg==
-X-Received: by 2002:a62:8fc8:0:b029:2ec:9b7a:f59e with SMTP id n191-20020a628fc80000b02902ec9b7af59emr825555pfd.39.1623260703751;
-        Wed, 09 Jun 2021 10:45:03 -0700 (PDT)
-Received: from thinkpad ([2409:4072:641d:2c11:58bd:bfee:2422:5dea])
-        by smtp.gmail.com with ESMTPSA id 76sm215015pfy.82.2021.06.09.10.44.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Jun 2021 10:45:03 -0700 (PDT)
-Date:   Wed, 9 Jun 2021 23:14:56 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Greg KH <gregkh@linuxfoundation.org>
-Cc:     hemantk@codeaurora.org, bbhatt@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        jarvis.w.jiang@gmail.com, loic.poulain@linaro.org,
-        Shujun Wang <wsj20369@163.com>
-Subject: Re: [PATCH 3/3] bus: mhi: pci-generic: Fix hibernation
-Message-ID: <20210609174456.GA59730@thinkpad>
-References: <20210606153741.20725-1-manivannan.sadhasivam@linaro.org>
- <20210606153741.20725-4-manivannan.sadhasivam@linaro.org>
- <YMD0o26UzZ72mdDp@kroah.com>
+        id S230023AbhFISq0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Jun 2021 14:46:26 -0400
+Received: from foss.arm.com ([217.140.110.172]:40034 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229941AbhFISq0 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 9 Jun 2021 14:46:26 -0400
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id EF378D6E;
+        Wed,  9 Jun 2021 11:44:30 -0700 (PDT)
+Received: from [10.57.6.115] (unknown [10.57.6.115])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id D466C3F719;
+        Wed,  9 Jun 2021 11:44:29 -0700 (PDT)
+Subject: Re: [PATCH] iommu/io-pgtable-arm: Optimize partial walk flush for
+ large scatter-gather list
+To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Will Deacon <will@kernel.org>, Joerg Roedel <joro@8bytes.org>
+Cc:     iommu@lists.linux-foundation.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+References: <20210609145315.25750-1-saiprakash.ranjan@codeaurora.org>
+From:   Robin Murphy <robin.murphy@arm.com>
+Message-ID: <dbcd394a-4d85-316c-5dd0-033546a66132@arm.com>
+Date:   Wed, 9 Jun 2021 19:44:24 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <YMD0o26UzZ72mdDp@kroah.com>
+In-Reply-To: <20210609145315.25750-1-saiprakash.ranjan@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jun 09, 2021 at 07:04:35PM +0200, Greg KH wrote:
-> On Sun, Jun 06, 2021 at 09:07:41PM +0530, Manivannan Sadhasivam wrote:
-> > From: Loic Poulain <loic.poulain@linaro.org>
-> > 
-> > This patch fixes crash after resuming from hibernation. The issue
-> > occurs when mhi stack is builtin and so part of the 'restore-kernel',
-> > causing the device to be resumed from 'restored kernel' with a no
-> > more valid context (memory mappings etc...) and leading to spurious
-> > crashes.
-> > 
-> > This patch fixes the issue by implementing proper freeze/restore
-> > callbacks.
-> > 
-> > Reported-by: Shujun Wang <wsj20369@163.com>
-> > Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
-> > Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > Link: https://lore.kernel.org/r/1622571445-4505-1-git-send-email-loic.poulain@linaro.org
-> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > ---
-> >  drivers/bus/mhi/pci_generic.c | 36 ++++++++++++++++++++++++++++++++++-
-> >  1 file changed, 35 insertions(+), 1 deletion(-)
+On 2021-06-09 15:53, Sai Prakash Ranjan wrote:
+> Currently for iommu_unmap() of large scatter-gather list with page size
+> elements, the majority of time is spent in flushing of partial walks in
+> __arm_lpae_unmap() which is a VA based TLB invalidation (TLBIVA for
+> arm-smmu).
 > 
-> Also needs a stable link, right?  I'll go add it by hand.  Please be
-> more careful next time...
+> For example: to unmap a 32MB scatter-gather list with page size elements
+> (8192 entries), there are 16->2MB buffer unmaps based on the pgsize (2MB
+> for 4K granule) and each of 2MB will further result in 512 TLBIVAs (2MB/4K)
+> resulting in a total of 8192 TLBIVAs (512*16) for 16->2MB causing a huge
+> overhead.
 > 
+> So instead use io_pgtable_tlb_flush_all() to invalidate the entire context
+> if size (pgsize) is greater than the granule size (4K, 16K, 64K). For this
+> example of 32MB scatter-gather list unmap, this results in just 16 ASID
+> based TLB invalidations or tlb_flush_all() callback (TLBIASID in case of
+> arm-smmu) as opposed to 8192 TLBIVAs thereby increasing the performance of
+> unmaps drastically.
+> 
+> Condition (size > granule size) is chosen for io_pgtable_tlb_flush_all()
+> because for any granule with supported pgsizes, we will have at least 512
+> TLB invalidations for which tlb_flush_all() is already recommended. For
+> example, take 4K granule with 2MB pgsize, this will result in 512 TLBIVA
+> in partial walk flush.
+> 
+> Test on QTI SM8150 SoC for 10 iterations of iommu_{map_sg}/unmap:
+> (average over 10 iterations)
+> 
+> Before this optimization:
+> 
+>      size        iommu_map_sg      iommu_unmap
+>        4K            2.067 us         1.854 us
+>       64K            9.598 us         8.802 us
+>        1M          148.890 us       130.718 us
+>        2M          305.864 us        67.291 us
+>       12M         1793.604 us       390.838 us
+>       16M         2386.848 us       518.187 us
+>       24M         3563.296 us       775.989 us
+>       32M         4747.171 us      1033.364 us
+> 
+> After this optimization:
+> 
+>      size        iommu_map_sg      iommu_unmap
+>        4K            1.723 us         1.765 us
+>       64K            9.880 us         8.869 us
+>        1M          155.364 us       135.223 us
+>        2M          303.906 us         5.385 us
+>       12M         1786.557 us        21.250 us
+>       16M         2391.890 us        27.437 us
+>       24M         3570.895 us        39.937 us
+>       32M         4755.234 us        51.797 us
+> 
+> This is further reduced once the map/unmap_pages() support gets in which
+> will result in just 1 tlb_flush_all() as opposed to 16 tlb_flush_all().
+> 
+> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+> ---
+>   drivers/iommu/io-pgtable-arm.c | 7 +++++--
+>   1 file changed, 5 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/iommu/io-pgtable-arm.c b/drivers/iommu/io-pgtable-arm.c
+> index 87def58e79b5..c3cb9add3179 100644
+> --- a/drivers/iommu/io-pgtable-arm.c
+> +++ b/drivers/iommu/io-pgtable-arm.c
+> @@ -589,8 +589,11 @@ static size_t __arm_lpae_unmap(struct arm_lpae_io_pgtable *data,
+>   
+>   		if (!iopte_leaf(pte, lvl, iop->fmt)) {
+>   			/* Also flush any partial walks */
+> -			io_pgtable_tlb_flush_walk(iop, iova, size,
+> -						  ARM_LPAE_GRANULE(data));
+> +			if (size > ARM_LPAE_GRANULE(data))
+> +				io_pgtable_tlb_flush_all(iop);
+> +			else
 
-Oops... yes, sorry.
+Erm, when will the above condition ever not be true? ;)
 
-Thanks,
-Mani
+Taking a step back, though, what about the impact to drivers other than 
+SMMUv2? In particular I'm thinking of SMMUv3.2 where the whole range can 
+be invalidated by VA in a single command anyway, so the additional 
+penalties of TLBIALL are undesirable.
 
-> greg k-h
+Robin.
+
+> +				io_pgtable_tlb_flush_walk(iop, iova, size,
+> +							  ARM_LPAE_GRANULE(data));
+>   			ptep = iopte_deref(pte, data);
+>   			__arm_lpae_free_pgtable(data, lvl + 1, ptep);
+>   		} else if (iop->cfg.quirks & IO_PGTABLE_QUIRK_NON_STRICT) {
+> 
