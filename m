@@ -2,184 +2,141 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6BA753A15AF
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jun 2021 15:32:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 15ABF3A1801
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jun 2021 16:53:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234089AbhFINek (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Jun 2021 09:34:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54130 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235173AbhFINej (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Jun 2021 09:34:39 -0400
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B1CCC061574
-        for <linux-arm-msm@vger.kernel.org>; Wed,  9 Jun 2021 06:32:31 -0700 (PDT)
-Received: by mail-wr1-x434.google.com with SMTP id i94so20475474wri.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Jun 2021 06:32:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-language:content-transfer-encoding;
-        bh=lUdke6htwmhA5dwmH5nqrl72FFCl9nDLwry0d6NYq10=;
-        b=R8mGoDMwBBV4hbsRgCugAOZRINIEA08feaDk66tA1/lvBXWu/S4mRWoZjlLTMQUcZb
-         B8+GK7X12x72JgBelnNELBMtYhTs4wrfoQDGA/Pzy+e5QoYH4e5G0JJpPwKEp1gn7QPA
-         JR8mJ9uO0uI17pQoEOzhV6Hp0ubeniwuLMc/BdnbdXiZgLA6EO9I4ziIrnSWDn3h1nK2
-         eljT/7K45PN6HgdIetUOoiIbNLJ0tthL1GCmIrOpOQS/umywKSxrGq1FbEpazIafkUkx
-         gFaDXtSIEFArgmBZRXSkSaJvnZE6tb2BsLMBxTNXEmgAR2RbKsl6FC08bkKGqZQOkmfo
-         D+/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=lUdke6htwmhA5dwmH5nqrl72FFCl9nDLwry0d6NYq10=;
-        b=ecEpId+QVlZ/I6h8reUxSbD9H550s8UQjvsHG2SkElcrg9Mt18e8KBsZUw5eLt/py4
-         +Xe0hzlWvKBRj6mDqduX3U/7NEUb8AjdlIhzFzw3wDZGMVCi78Prepm3X0dHaT1zBlXb
-         iwSmYryNvsfmS7mkLAHHri37DR9j/0zIqeB/bw7VFt1pJDAlUgbtWcm+PWpbpF7q9yad
-         m4xLGP7y5mwTZjZ1mHe6eevelFsjZg4/N8LK5mvRRINBzQCnXl0HIZc8DR1VK5Lu/2mM
-         e/Ycx1Bq+OWL5wQzhnMJxq8+P6vMYs13q8/gdagL4Y9LvS6v3xInWJtgc11Ae2QXW159
-         vaPQ==
-X-Gm-Message-State: AOAM531a5m0v50UYbHomJarM4igUwf6BTsGh2Vb9NS2rq6T5wM60lucx
-        LrrqsEfnJWRgh9r9i1Fk0cKKdg==
-X-Google-Smtp-Source: ABdhPJxsmddMb8dvO3dYf14XNfU0myBP9qEVALchMojRiPg7w1K9x7FqpVtDhdvheKH6YNVjevxE0w==
-X-Received: by 2002:a5d:59af:: with SMTP id p15mr18312086wrr.292.1623245550059;
-        Wed, 09 Jun 2021 06:32:30 -0700 (PDT)
-Received: from [192.168.86.34] (cpc86377-aztw32-2-0-cust226.18-1.cable.virginm.net. [92.233.226.227])
-        by smtp.googlemail.com with ESMTPSA id v18sm26112965wrb.10.2021.06.09.06.32.28
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 09 Jun 2021 06:32:29 -0700 (PDT)
-Subject: Re: [PATCH v3] ASoC: qcom: Add four speaker support on MI2S secondary
-To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
-        agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
-        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
-        rohitkr@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, swboyd@chromium.org,
-        judyhsiao@chromium.org
-References: <20210609133039.4648-1-srivasam@codeaurora.org>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Message-ID: <c2ab81bc-98e8-e833-a8cc-7176ff03809c@linaro.org>
-Date:   Wed, 9 Jun 2021 14:32:28 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        id S238371AbhFIOzg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Jun 2021 10:55:36 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:29898 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230239AbhFIOzg (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 9 Jun 2021 10:55:36 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1623250421; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=VGxI7DNKJ4SftViaONqW/6OR8ZWMMCYv9JR2M0yYWr4=; b=GeKSXwtbKgTbv0bOYmi+qjB/82aEQzvcmyerUHtOYSiGdvnD+tcRzzo6ZCJNyy4ha4CNYW6o
+ fDWa8A6dN3cR8dY3SjyNyWA2iqKZnVuZdBkWdoNI8XNyFmx+7/ibKai40y8oKYrfmWIDJCPb
+ NHXqAkTtTAig1JJRau+c/uBvXCg=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
+ 60c0d5e5b6ccaab7531d7237 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 09 Jun 2021 14:53:25
+ GMT
+Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 3FCC5C43145; Wed,  9 Jun 2021 14:53:25 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id D312DC433F1;
+        Wed,  9 Jun 2021 14:53:21 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org D312DC433F1
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=saiprakash.ranjan@codeaurora.org
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>
+Cc:     iommu@lists.linux-foundation.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Subject: [PATCH] iommu/io-pgtable-arm: Optimize partial walk flush for large scatter-gather list
+Date:   Wed,  9 Jun 2021 20:23:14 +0530
+Message-Id: <20210609145315.25750-1-saiprakash.ranjan@codeaurora.org>
+X-Mailer: git-send-email 2.29.0
 MIME-Version: 1.0
-In-Reply-To: <20210609133039.4648-1-srivasam@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Currently for iommu_unmap() of large scatter-gather list with page size
+elements, the majority of time is spent in flushing of partial walks in
+__arm_lpae_unmap() which is a VA based TLB invalidation (TLBIVA for
+arm-smmu).
 
+For example: to unmap a 32MB scatter-gather list with page size elements
+(8192 entries), there are 16->2MB buffer unmaps based on the pgsize (2MB
+for 4K granule) and each of 2MB will further result in 512 TLBIVAs (2MB/4K)
+resulting in a total of 8192 TLBIVAs (512*16) for 16->2MB causing a huge
+overhead.
 
-On 09/06/2021 14:30, Srinivasa Rao Mandadapu wrote:
-> Add four speaker support on MI2S secondary block
-> by using I2S SD1 line on gpio52 pin, and add channel map
-> control support in the lpass-cpu audio driver.
-> 
-> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-> ---
+So instead use io_pgtable_tlb_flush_all() to invalidate the entire context
+if size (pgsize) is greater than the granule size (4K, 16K, 64K). For this
+example of 32MB scatter-gather list unmap, this results in just 16 ASID
+based TLB invalidations or tlb_flush_all() callback (TLBIASID in case of
+arm-smmu) as opposed to 8192 TLBIVAs thereby increasing the performance of
+unmaps drastically.
 
-LGTM,
+Condition (size > granule size) is chosen for io_pgtable_tlb_flush_all()
+because for any granule with supported pgsizes, we will have at least 512
+TLB invalidations for which tlb_flush_all() is already recommended. For
+example, take 4K granule with 2MB pgsize, this will result in 512 TLBIVA
+in partial walk flush.
 
-Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Test on QTI SM8150 SoC for 10 iterations of iommu_{map_sg}/unmap:
+(average over 10 iterations)
 
+Before this optimization:
 
+    size        iommu_map_sg      iommu_unmap
+      4K            2.067 us         1.854 us
+     64K            9.598 us         8.802 us
+      1M          148.890 us       130.718 us
+      2M          305.864 us        67.291 us
+     12M         1793.604 us       390.838 us
+     16M         2386.848 us       518.187 us
+     24M         3563.296 us       775.989 us
+     32M         4747.171 us      1033.364 us
 
---srini
-> Changes Since V2:
-> 	-- Added empty entry at the end of channel maps array.
-> Changes Since V1:
-> 	-- removed set_channel_map/get_channel_map implementation as default kcontrols
-> 		added in pcm_new API.
->   sound/soc/qcom/lpass-cpu.c    | 33 +++++++++++++++++++++++++++++++++
->   sound/soc/qcom/lpass-sc7180.c |  1 +
->   sound/soc/qcom/lpass.h        |  2 ++
->   3 files changed, 36 insertions(+)
-> 
-> diff --git a/sound/soc/qcom/lpass-cpu.c b/sound/soc/qcom/lpass-cpu.c
-> index c62d2612e8f5..aff39c9f6326 100644
-> --- a/sound/soc/qcom/lpass-cpu.c
-> +++ b/sound/soc/qcom/lpass-cpu.c
-> @@ -29,6 +29,15 @@
->   #define LPASS_CPU_I2S_SD0_1_2_MASK	GENMASK(2, 0)
->   #define LPASS_CPU_I2S_SD0_1_2_3_MASK	GENMASK(3, 0)
->   
-> +/*
-> + * Channel maps for Quad channel playbacks on MI2S Secondary
-> + */
-> +static struct snd_pcm_chmap_elem lpass_quad_chmaps[] = {
-> +		{ .channels = 4,
-> +		  .map = { SNDRV_CHMAP_FL, SNDRV_CHMAP_RL,
-> +				SNDRV_CHMAP_FR, SNDRV_CHMAP_RR } },
-> +		{ }
-> +};
->   static int lpass_cpu_init_i2sctl_bitfields(struct device *dev,
->   			struct lpaif_i2sctl *i2sctl, struct regmap *map)
->   {
-> @@ -324,6 +333,25 @@ const struct snd_soc_dai_ops asoc_qcom_lpass_cpu_dai_ops = {
->   };
->   EXPORT_SYMBOL_GPL(asoc_qcom_lpass_cpu_dai_ops);
->   
-> +int lpass_cpu_pcm_new(struct snd_soc_pcm_runtime *rtd,
-> +				struct snd_soc_dai *dai)
-> +{
-> +	int ret;
-> +	struct snd_soc_dai_driver *drv = dai->driver;
-> +	struct lpass_data *drvdata = snd_soc_dai_get_drvdata(dai);
-> +
-> +	if (drvdata->mi2s_playback_sd_mode[dai->id] == LPAIF_I2SCTL_MODE_QUAD01) {
-> +		ret =  snd_pcm_add_chmap_ctls(rtd->pcm, SNDRV_PCM_STREAM_PLAYBACK,
-> +				lpass_quad_chmaps, drv->playback.channels_max, 0,
-> +				NULL);
-> +		if (ret < 0)
-> +			return ret;
-> +	}
-> +
-> +	return 0;
-> +}
-> +EXPORT_SYMBOL_GPL(lpass_cpu_pcm_new);
-> +
->   int asoc_qcom_lpass_cpu_dai_probe(struct snd_soc_dai *dai)
->   {
->   	struct lpass_data *drvdata = snd_soc_dai_get_drvdata(dai);
-> @@ -856,6 +884,11 @@ int asoc_qcom_lpass_cpu_platform_probe(struct platform_device *pdev)
->   				PTR_ERR(drvdata->mi2s_bit_clk[dai_id]));
->   			return PTR_ERR(drvdata->mi2s_bit_clk[dai_id]);
->   		}
-> +		if (drvdata->mi2s_playback_sd_mode[dai_id] ==
-> +			LPAIF_I2SCTL_MODE_QUAD01) {
-> +			variant->dai_driver[dai_id].playback.channels_min = 4;
-> +			variant->dai_driver[dai_id].playback.channels_max = 4;
-> +		}
->   	}
->   
->   	/* Allocation for i2sctl regmap fields */
-> diff --git a/sound/soc/qcom/lpass-sc7180.c b/sound/soc/qcom/lpass-sc7180.c
-> index 8c168d3c589e..77a556b27cf0 100644
-> --- a/sound/soc/qcom/lpass-sc7180.c
-> +++ b/sound/soc/qcom/lpass-sc7180.c
-> @@ -58,6 +58,7 @@ static struct snd_soc_dai_driver sc7180_lpass_cpu_dai_driver[] = {
->   		},
->   		.probe	= &asoc_qcom_lpass_cpu_dai_probe,
->   		.ops    = &asoc_qcom_lpass_cpu_dai_ops,
-> +		.pcm_new = lpass_cpu_pcm_new,
->   	}, {
->   		.id = LPASS_DP_RX,
->   		.name = "Hdmi",
-> diff --git a/sound/soc/qcom/lpass.h b/sound/soc/qcom/lpass.h
-> index 83b2e08ade06..623ddccdafff 100644
-> --- a/sound/soc/qcom/lpass.h
-> +++ b/sound/soc/qcom/lpass.h
-> @@ -259,5 +259,7 @@ void asoc_qcom_lpass_cpu_platform_shutdown(struct platform_device *pdev);
->   int asoc_qcom_lpass_cpu_platform_probe(struct platform_device *pdev);
->   int asoc_qcom_lpass_cpu_dai_probe(struct snd_soc_dai *dai);
->   extern const struct snd_soc_dai_ops asoc_qcom_lpass_cpu_dai_ops;
-> +int lpass_cpu_pcm_new(struct snd_soc_pcm_runtime *rtd,
-> +				struct snd_soc_dai *dai);
->   
->   #endif /* __LPASS_H__ */
-> 
+After this optimization:
+
+    size        iommu_map_sg      iommu_unmap
+      4K            1.723 us         1.765 us
+     64K            9.880 us         8.869 us
+      1M          155.364 us       135.223 us
+      2M          303.906 us         5.385 us
+     12M         1786.557 us        21.250 us
+     16M         2391.890 us        27.437 us
+     24M         3570.895 us        39.937 us
+     32M         4755.234 us        51.797 us
+
+This is further reduced once the map/unmap_pages() support gets in which
+will result in just 1 tlb_flush_all() as opposed to 16 tlb_flush_all().
+
+Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+---
+ drivers/iommu/io-pgtable-arm.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/iommu/io-pgtable-arm.c b/drivers/iommu/io-pgtable-arm.c
+index 87def58e79b5..c3cb9add3179 100644
+--- a/drivers/iommu/io-pgtable-arm.c
++++ b/drivers/iommu/io-pgtable-arm.c
+@@ -589,8 +589,11 @@ static size_t __arm_lpae_unmap(struct arm_lpae_io_pgtable *data,
+ 
+ 		if (!iopte_leaf(pte, lvl, iop->fmt)) {
+ 			/* Also flush any partial walks */
+-			io_pgtable_tlb_flush_walk(iop, iova, size,
+-						  ARM_LPAE_GRANULE(data));
++			if (size > ARM_LPAE_GRANULE(data))
++				io_pgtable_tlb_flush_all(iop);
++			else
++				io_pgtable_tlb_flush_walk(iop, iova, size,
++							  ARM_LPAE_GRANULE(data));
+ 			ptep = iopte_deref(pte, data);
+ 			__arm_lpae_free_pgtable(data, lvl + 1, ptep);
+ 		} else if (iop->cfg.quirks & IO_PGTABLE_QUIRK_NON_STRICT) {
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
+
