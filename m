@@ -2,247 +2,486 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E96003A1FBD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jun 2021 00:04:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 272373A1FD6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jun 2021 00:11:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230201AbhFIWGN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Jun 2021 18:06:13 -0400
-Received: from mail-pl1-f179.google.com ([209.85.214.179]:42684 "EHLO
-        mail-pl1-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230314AbhFIWGK (ORCPT
+        id S229823AbhFIWNI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Jun 2021 18:13:08 -0400
+Received: from mail-oo1-f51.google.com ([209.85.161.51]:41980 "EHLO
+        mail-oo1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229535AbhFIWNI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Jun 2021 18:06:10 -0400
-Received: by mail-pl1-f179.google.com with SMTP id v13so13468426ple.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Jun 2021 15:04:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=lme9KpCil2St/RX+Aa4LOvZfU5uqoZ7j82GK9a82fTM=;
-        b=JNGUmfSWaMSyXLRrtPmPrACyYmuJpQP1NXeFy7poGGHRbhEh6sc+/GR0bbbyE2IjiN
-         1XcCXZ2Rke35D4qY13u0XCNN1FaR0wLtO3uwX+dZ9nTOeOKVwulcTXhZUssbv/jay+lq
-         TpnRjXegyvOJ5eLlZjzpMNBtQIgZZgx6dIVrA=
+        Wed, 9 Jun 2021 18:13:08 -0400
+Received: by mail-oo1-f51.google.com with SMTP id k21-20020a4a2a150000b029024955603642so4137337oof.8;
+        Wed, 09 Jun 2021 15:10:57 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=lme9KpCil2St/RX+Aa4LOvZfU5uqoZ7j82GK9a82fTM=;
-        b=KRZTN/ayK84LOixfL0SkrTrA2EdC7nZV1WftU9W2fcDOdY0sTTBQOzGwk0Bog8A7Yl
-         7UiTWFAvjdf8bfzFWtcXIC2/hxV1JMePbsBiMvjvs/VZ4LQ9Ezeo7oPLVP9DWr/Cx+Gn
-         gwWdrZl3hfsuuHFyjnwACJS5/tuPLTNbnjlPf6OdDakbpoDWCqBwnntQ5JR5XAa7LXy2
-         3UJyt48O8JTeaf1bfsiJWv87CywCvxyYP/mOKMc45Ae0JaZw26CFYvIsHvJqLYEJ0FYw
-         6wrKVhLnoFOLMCt5o2KuYj3mNSoPBdzt6SKntST5shuvQwygr+Xhvk6I7jXltoM5u5c9
-         CDfg==
-X-Gm-Message-State: AOAM5300KJPxOpKkpor6QC+ie8xT4Oyfz8Anb+Aiin/7Ie9assAfAwU1
-        ht0Ai3ozuzn9NNkkr/+MC4QfIA==
-X-Google-Smtp-Source: ABdhPJz8+5kfV2K+QPiA2UztUGJikKqSraayZvYo3SCSDmUrDF4JGBL6lAMtaVPgYPFDWLq0UeweCA==
-X-Received: by 2002:a17:903:184:b029:111:b4d9:8e8c with SMTP id z4-20020a1709030184b0290111b4d98e8cmr1396900plg.49.1623276180542;
-        Wed, 09 Jun 2021 15:03:00 -0700 (PDT)
-Received: from localhost ([2620:15c:202:201:cedb:c2b5:f22c:760])
-        by smtp.gmail.com with UTF8SMTPSA id a4sm510392pjw.46.2021.06.09.15.02.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 09 Jun 2021 15:02:59 -0700 (PDT)
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Alan Stern <stern@rowland.harvard.edu>,
-        Rob Herring <robh+dt@kernel.org>,
-        Frank Rowand <frowand.list@gmail.com>,
-        Mathias Nyman <mathias.nyman@intel.com>
-Cc:     Peter Chen <peter.chen@kernel.org>,
-        Bastien Nocera <hadess@hadess.net>, linux-usb@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        Ravi Chandra Sadineni <ravisadineni@chromium.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        linux-kernel@vger.kernel.org,
-        Michal Simek <michal.simek@xilinx.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Andy Gross <agross@kernel.org>,
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=pJ1pmJqdgFB+XRJ0dbrJYsD5EhkJC78pMhr5fClqAAo=;
+        b=soOg3AsGONAbPPNgh7UAn7hZ3EeFMAbRsLDWHZ3HjqKLIEknT+5DKCTD9TH8WlAP18
+         AE4kUnLcGunmcznhwTGqezum0KXl01labhIO+qyFFu1mEJIbHjYbRzHRZx1PCVL0O2d0
+         qwdnJTGVnWQd9VaS4PxW6gcEJM1hD911G8VOK1I8zrMSB80cLGbHJ86DUWofCxrNXxTU
+         9w1cD2Kofd2jAHjTubX+GxpFiZJl7gLDzFZlHJI4RGT9nMVLRaR3xDSDyf25NLYV8lRX
+         1SH9PMxoIdMCRt8Z7VtygN/EiCkSREnRYEFZ71G0MntuQbUHQkvG5AEEzpENZaOTOfFB
+         uZ9g==
+X-Gm-Message-State: AOAM530LVQzGe+Tcnjvvbu71wUF7u6bbzqb6G9wM9bJUkuS9ciWFcfwo
+        NOljkzmYWNeYoK7kRKmfVA==
+X-Google-Smtp-Source: ABdhPJznE1cbyrGtOU7nhUahUXh9xv3TD1WHGlcoZjMUjRrdDBZ2iNu9PhEDCZPLmwwKgAnIcr3Cew==
+X-Received: by 2002:a4a:b1c2:: with SMTP id j2mr1742402ooo.78.1623276656555;
+        Wed, 09 Jun 2021 15:10:56 -0700 (PDT)
+Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id 19sm198828oiy.11.2021.06.09.15.10.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 09 Jun 2021 15:10:56 -0700 (PDT)
+Received: (nullmailer pid 191717 invoked by uid 1000);
+        Wed, 09 Jun 2021 22:10:55 -0000
+Date:   Wed, 9 Jun 2021 17:10:55 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Jonathan Marek <jonathan@marek.ca>
+Cc:     linux-arm-msm@vger.kernel.org, robert.foss@linaro.org,
+        andrey.konovalov@linaro.org, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH v12 5/5] arm64: dts: qcom: sc7180-trogdor: Add nodes for onboard USB hub
-Date:   Wed,  9 Jun 2021 15:02:49 -0700
-Message-Id: <20210609150159.v12.5.Ie0d2c1214b767bb5551dd4cad38398bd40e4466f@changeid>
-X-Mailer: git-send-email 2.32.0.rc1.229.g3e70b5a671-goog
-In-Reply-To: <20210609220249.86061-1-mka@chromium.org>
-References: <20210609220249.86061-1-mka@chromium.org>
+        Todor Tomov <todor.too@gmail.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        "open list:QUALCOMM CAMERA SUBSYSTEM DRIVER" 
+        <linux-media@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 17/17] media: dt-bindings: media: camss: Add
+ qcom,sm8250-camss binding
+Message-ID: <20210609221055.GA171974@robh.at.kernel.org>
+References: <20210608223513.23193-1-jonathan@marek.ca>
+ <20210608223513.23193-18-jonathan@marek.ca>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210608223513.23193-18-jonathan@marek.ca>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add nodes for the onboard USB hub on trogdor devices. Remove the
-'always-on' property from the hub regulator, since the regulator
-is now managed by the onboard_usb_hub driver.
+On Tue, Jun 08, 2021 at 06:35:06PM -0400, Jonathan Marek wrote:
+> Add bindings for qcom,sm8250-camss in order to support the camera
+> subsystem for SM8250.
+> 
+> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+> ---
+>  .../bindings/media/qcom,sm8250-camss.yaml     | 399 ++++++++++++++++++
+>  1 file changed, 399 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/media/qcom,sm8250-camss.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/media/qcom,sm8250-camss.yaml b/Documentation/devicetree/bindings/media/qcom,sm8250-camss.yaml
+> new file mode 100644
+> index 0000000000000..7180e52ee59a8
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/media/qcom,sm8250-camss.yaml
+> @@ -0,0 +1,399 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> +
+> +%YAML 1.2
+> +---
+> +$id: "http://devicetree.org/schemas/media/qcom,sm8250-camss.yaml#"
+> +$schema: "http://devicetree.org/meta-schemas/core.yaml#"
+> +
+> +title: Qualcomm CAMSS ISP
+> +
+> +maintainers:
+> +  - Robert Foss <robert.foss@linaro.org>
+> +
+> +description: |
+> +  The CAMSS IP is a CSI decoder and ISP present on Qualcomm platforms
+> +
+> +properties:
+> +  compatible:
+> +    const: qcom,sm8250-camss
+> +
+> +  clocks:
+> +    minItems: 31
+> +    maxItems: 31
+> +
+> +  clock-names:
+> +    items:
+> +      - const: cam_hf_axi
+> +      - const: camnoc_axi
+> +      - const: csiphy0
+> +      - const: csiphy0_timer
+> +      - const: csiphy1
+> +      - const: csiphy1_timer
+> +      - const: csiphy2
+> +      - const: csiphy2_timer
+> +      - const: csiphy3
+> +      - const: csiphy3_timer
+> +      - const: csiphy4
+> +      - const: csiphy4_timer
+> +      - const: csiphy5
+> +      - const: csiphy5_timer
+> +      - const: vfe0_ahb
+> +      - const: vfe0_axi
+> +      - const: vfe0
+> +      - const: vfe0_cphy_rx
+> +      - const: vfe0_csid
+> +      - const: vfe0_areg
+> +      - const: vfe1_ahb
+> +      - const: vfe1_axi
+> +      - const: vfe1
+> +      - const: vfe1_cphy_rx
+> +      - const: vfe1_csid
+> +      - const: vfe1_areg
+> +      - const: vfe_lite_ahb
+> +      - const: vfe_lite_axi
+> +      - const: vfe_lite
+> +      - const: vfe_lite_cphy_rx
+> +      - const: vfe_lite_csid
+> +
+> +  interrupts:
+> +    minItems: 14
+> +    maxItems: 14
+> +
+> +  interrupt-names:
+> +    items:
+> +      - const: csid0
+> +      - const: csid1
+> +      - const: csid2
+> +      - const: csid3
+> +      - const: csiphy0
+> +      - const: csiphy1
+> +      - const: csiphy2
+> +      - const: csiphy3
+> +      - const: csiphy4
+> +      - const: csiphy5
+> +      - const: vfe0
+> +      - const: vfe1
+> +      - const: vfe_lite0
+> +      - const: vfe_lite1
+> +
+> +  iommus:
+> +    maxItems: 1
+> +
+> +  power-domains:
+> +    items:
+> +      - description: IFE0 GDSC - Image Front End, Global Distributed Switch Controller.
+> +      - description: IFE1 GDSC - Image Front End, Global Distributed Switch Controller.
+> +      - description: Titan GDSC - Titan ISP Block, Global Distributed Switch Controller.
+> +
+> +  ports:
+> +    $ref: /schemas/graph.yaml#/properties/ports
+> +
+> +    description:
+> +      CSI input ports.
+> +
+> +    properties:
+> +      port@0:
+> +        $ref: /schemas/graph.yaml#/$defs/port-base
+> +        unevaluatedProperties: false
+> +        description:
+> +          Input port for receiving CSI data.
+> +
+> +        properties:
+> +          endpoint:
+> +            $ref: video-interfaces.yaml#
+> +            unevaluatedProperties: false
+> +
+> +            properties:
+> +              clock-lanes:
+> +                maxItems: 1
+> +
+> +              data-lanes:
+> +                minItems: 1
+> +                maxItems: 4
+> +
+> +            required:
+> +              - clock-lanes
+> +              - data-lanes
+> +
+> +      port@1:
+> +        $ref: /schemas/graph.yaml#/$defs/port-base
+> +        unevaluatedProperties: false
+> +        description:
+> +          Input port for receiving CSI data.
+> +
+> +        properties:
+> +          endpoint:
+> +            $ref: video-interfaces.yaml#
+> +            unevaluatedProperties: false
+> +
+> +            properties:
+> +              clock-lanes:
+> +                maxItems: 1
+> +
+> +              data-lanes:
+> +                minItems: 1
+> +                maxItems: 4
+> +
+> +            required:
+> +              - clock-lanes
+> +              - data-lanes
+> +
+> +      port@2:
+> +        $ref: /schemas/graph.yaml#/$defs/port-base
+> +        unevaluatedProperties: false
+> +        description:
+> +          Input port for receiving CSI data.
+> +
+> +        properties:
+> +          endpoint:
+> +            $ref: video-interfaces.yaml#
+> +            unevaluatedProperties: false
+> +
+> +            properties:
+> +              clock-lanes:
+> +                maxItems: 1
+> +
+> +              data-lanes:
+> +                minItems: 1
+> +                maxItems: 4
+> +
+> +            required:
+> +              - clock-lanes
+> +              - data-lanes
+> +
+> +      port@3:
+> +        $ref: /schemas/graph.yaml#/$defs/port-base
+> +        unevaluatedProperties: false
+> +        description:
+> +          Input port for receiving CSI data.
+> +
+> +        properties:
+> +          endpoint:
+> +            $ref: video-interfaces.yaml#
+> +            unevaluatedProperties: false
+> +
+> +            properties:
+> +              clock-lanes:
+> +                maxItems: 1
+> +
+> +              data-lanes:
+> +                minItems: 1
+> +                maxItems: 4
+> +
+> +            required:
+> +              - clock-lanes
+> +              - data-lanes
+> +
+> +      port@4:
+> +        $ref: /schemas/graph.yaml#/$defs/port-base
+> +        unevaluatedProperties: false
+> +        description:
+> +          Input port for receiving CSI data.
+> +
+> +        properties:
+> +          endpoint:
+> +            $ref: video-interfaces.yaml#
+> +            unevaluatedProperties: false
+> +
+> +            properties:
+> +              clock-lanes:
+> +                maxItems: 1
+> +
+> +              data-lanes:
+> +                minItems: 1
+> +                maxItems: 4
+> +
+> +            required:
+> +              - clock-lanes
+> +              - data-lanes
+> +
+> +      port@5:
+> +        $ref: /schemas/graph.yaml#/$defs/port-base
+> +        unevaluatedProperties: false
+> +        description:
+> +          Input port for receiving CSI data.
+> +
+> +        properties:
+> +          endpoint:
+> +            $ref: video-interfaces.yaml#
+> +            unevaluatedProperties: false
+> +
+> +            properties:
+> +              clock-lanes:
+> +                maxItems: 1
+> +
+> +              data-lanes:
+> +                minItems: 1
+> +                maxItems: 4
+> +
+> +            required:
+> +              - clock-lanes
+> +              - data-lanes
+> +
+> +  reg:
+> +    minItems: 10
+> +    maxItems: 10
+> +
+> +  reg-names:
 
-Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
----
+Move these before ports. (DT) properties first then nodes.
 
-Changes in v12:
-- none
+> +    items:
+> +      - const: csiphy0
+> +      - const: csiphy1
+> +      - const: csiphy2
+> +      - const: csiphy3
+> +      - const: csiphy4
+> +      - const: csiphy5
 
-Changes in v11:
-- rebased on qcom/arm64-for-5.14 (with the rest of the series)
+Should be separate phy nodes? Same/similar DPHY or CPHY as QCom DSI PHY?
 
-Changes in v10:
-- keep 'regulator-boot-on' property
-- updated commit message
-
-Changes in v9:
-- none
-
-Changes in v8:
-- none
-
-Changes in v7:
-- rebased on qcom/arm64-for-5.13 (with the rest of the series)
-
-Changes in v6:
-- added 'companion-hub' entry to both USB devices
-- added 'vdd-supply' also to hub@2
-
-Changes in v5:
-- patch added to the series
-
- .../boot/dts/qcom/sc7180-trogdor-lazor-r0.dts | 19 ++++++++-----------
- .../boot/dts/qcom/sc7180-trogdor-lazor-r1.dts | 12 +++++-------
- .../arm64/boot/dts/qcom/sc7180-trogdor-r1.dts | 19 ++++++++-----------
- arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi  | 19 ++++++++++++++++++-
- 4 files changed, 39 insertions(+), 30 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts
-index 30e3e769d2b4..5fb8e12af1a0 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts
-@@ -14,17 +14,6 @@ / {
- 	compatible = "google,lazor-rev0", "qcom,sc7180";
- };
- 
--&pp3300_hub {
--	/* pp3300_l7c is used to power the USB hub */
--	/delete-property/regulator-always-on;
--	/delete-property/regulator-boot-on;
--};
--
--&pp3300_l7c {
--	regulator-always-on;
--	regulator-boot-on;
--};
--
- &sn65dsi86_out {
- 	/*
- 	 * Lane 0 was incorrectly mapped on the cable, but we've now decided
-@@ -33,3 +22,11 @@ &sn65dsi86_out {
- 	 */
- 	lane-polarities = <1 0>;
- };
-+
-+&usb_hub_2_0 {
-+	 vdd-supply = <&pp3300_l7c>;
-+};
-+
-+&usb_hub_3_0 {
-+	 vdd-supply = <&pp3300_l7c>;
-+};
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts
-index c2ef06367baf..1dae714250f5 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts
-@@ -14,13 +14,11 @@ / {
- 	compatible = "google,lazor-rev1", "google,lazor-rev2", "qcom,sc7180";
- };
- 
--&pp3300_hub {
--	/* pp3300_l7c is used to power the USB hub */
--	/delete-property/regulator-always-on;
--	/delete-property/regulator-boot-on;
-+
-+&usb_hub_2_0 {
-+	 vdd-supply = <&pp3300_l7c>;
- };
- 
--&pp3300_l7c {
--	regulator-always-on;
--	regulator-boot-on;
-+&usb_hub_3_0 {
-+	 vdd-supply = <&pp3300_l7c>;
- };
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts
-index 2b522f9e0d8f..2f5263e3d1b9 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts
-@@ -42,17 +42,6 @@ &panel {
- 	compatible = "auo,b116xa01";
- };
- 
--&pp3300_hub {
--	/* pp3300_l7c is used to power the USB hub */
--	/delete-property/regulator-always-on;
--	/delete-property/regulator-boot-on;
--};
--
--&pp3300_l7c {
--	regulator-always-on;
--	regulator-boot-on;
--};
--
- &sdhc_2 {
- 	status = "okay";
- };
-@@ -61,6 +50,14 @@ &trackpad {
- 	interrupts = <58 IRQ_TYPE_EDGE_FALLING>;
- };
- 
-+&usb_hub_2_0 {
-+	 vdd-supply = <&pp3300_l7c>;
-+};
-+
-+&usb_hub_3_0 {
-+	 vdd-supply = <&pp3300_l7c>;
-+};
-+
- /* PINCTRL - modifications to sc7180-trogdor.dtsi */
- 
- &trackpad_int_1v8_odl {
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-index a4cbdc36c306..3345ca650a4c 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-@@ -202,7 +202,6 @@ pp3300_hub: pp3300-hub {
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&en_pp3300_hub>;
- 
--		regulator-always-on;
- 		regulator-boot-on;
- 
- 		vin-supply = <&pp3300_a>;
-@@ -903,6 +902,24 @@ &usb_1 {
- 
- &usb_1_dwc3 {
- 	dr_mode = "host";
-+	#address-cells = <1>;
-+	#size-cells = <0>;
-+
-+	/* 2.0 hub on port 1 */
-+	usb_hub_2_0: hub@1 {
-+		compatible = "usbbda,5411";
-+		reg = <1>;
-+		vdd-supply = <&pp3300_hub>;
-+		companion-hub = <&usb_hub_3_0>;
-+	};
-+
-+	/* 3.0 hub on port 2 */
-+	usb_hub_3_0: hub@2 {
-+		compatible = "usbbda,411";
-+		reg = <2>;
-+		vdd-supply = <&pp3300_hub>;
-+		companion-hub = <&usb_hub_2_0>;
-+	};
- };
- 
- &usb_1_hsphy {
--- 
-2.32.0.rc1.229.g3e70b5a671-goog
-
+> +      - const: vfe0
+> +      - const: vfe1
+> +      - const: vfe_lite0
+> +      - const: vfe_lite1
+> +
+> +required:
+> +  - clock-names
+> +  - clocks
+> +  - compatible
+> +  - interrupt-names
+> +  - interrupts
+> +  - iommus
+> +  - power-domains
+> +  - reg
+> +  - reg-names
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +    #include <dt-bindings/clock/qcom,camcc-sm8250.h>
+> +    #include <dt-bindings/clock/qcom,gcc-sm8250.h>
+> +
+> +    soc {
+> +      #address-cells = <2>;
+> +      #size-cells = <2>;
+> +
+> +      camss: camss@ac6a000 {
+> +        compatible = "qcom,sm8250-camss";
+> +
+> +        reg = <0 0xac6a000 0 0x2000>,
+> +          <0 0xac6c000 0 0x2000>,
+> +          <0 0xac6e000 0 0x1000>,
+> +          <0 0xac70000 0 0x1000>,
+> +          <0 0xac72000 0 0x1000>,
+> +          <0 0xac74000 0 0x1000>,
+> +          <0 0xacb4000 0 0xd000>,
+> +          <0 0xacc3000 0 0xd000>,
+> +          <0 0xacd9000 0 0x2200>,
+> +          <0 0xacdb200 0 0x2200>;
+> +        reg-names = "csiphy0",
+> +          "csiphy1",
+> +          "csiphy2",
+> +          "csiphy3",
+> +          "csiphy4",
+> +          "csiphy5",
+> +          "vfe0",
+> +          "vfe1",
+> +          "vfe_lite0",
+> +          "vfe_lite1";
+> +
+> +        interrupts = <GIC_SPI 477 IRQ_TYPE_LEVEL_HIGH>,
+> +          <GIC_SPI 478 IRQ_TYPE_LEVEL_HIGH>,
+> +          <GIC_SPI 479 IRQ_TYPE_LEVEL_HIGH>,
+> +          <GIC_SPI 448 IRQ_TYPE_LEVEL_HIGH>,
+> +          <GIC_SPI 86 IRQ_TYPE_LEVEL_HIGH>,
+> +          <GIC_SPI 89 IRQ_TYPE_LEVEL_HIGH>,
+> +          <GIC_SPI 464 IRQ_TYPE_LEVEL_HIGH>,
+> +          <GIC_SPI 466 IRQ_TYPE_LEVEL_HIGH>,
+> +          <GIC_SPI 468 IRQ_TYPE_LEVEL_HIGH>,
+> +          <GIC_SPI 359 IRQ_TYPE_LEVEL_HIGH>,
+> +          <GIC_SPI 465 IRQ_TYPE_LEVEL_HIGH>,
+> +          <GIC_SPI 467 IRQ_TYPE_LEVEL_HIGH>,
+> +          <GIC_SPI 469 IRQ_TYPE_LEVEL_HIGH>,
+> +          <GIC_SPI 360 IRQ_TYPE_LEVEL_HIGH>;
+> +        interrupt-names = "csiphy0",
+> +          "csiphy1",
+> +          "csiphy2",
+> +          "csiphy3",
+> +          "csiphy4",
+> +          "csiphy5",
+> +          "csid0",
+> +          "csid1",
+> +          "csid2",
+> +          "csid3",
+> +          "vfe0",
+> +          "vfe1",
+> +          "vfe_lite0",
+> +          "vfe_lite1";
+> +
+> +        power-domains = <&camcc IFE_0_GDSC>,
+> +          <&camcc IFE_1_GDSC>,
+> +          <&camcc TITAN_TOP_GDSC>;
+> +
+> +        clocks = <&gcc GCC_CAMERA_HF_AXI_CLK>,
+> +          <&camcc CAM_CC_CSIPHY0_CLK>,
+> +          <&camcc CAM_CC_CSI0PHYTIMER_CLK>,
+> +          <&camcc CAM_CC_CSIPHY1_CLK>,
+> +          <&camcc CAM_CC_CSI1PHYTIMER_CLK>,
+> +          <&camcc CAM_CC_CSIPHY2_CLK>,
+> +          <&camcc CAM_CC_CSI2PHYTIMER_CLK>,
+> +          <&camcc CAM_CC_CSIPHY3_CLK>,
+> +          <&camcc CAM_CC_CSI3PHYTIMER_CLK>,
+> +          <&camcc CAM_CC_CSIPHY4_CLK>,
+> +          <&camcc CAM_CC_CSI4PHYTIMER_CLK>,
+> +          <&camcc CAM_CC_CSIPHY5_CLK>,
+> +          <&camcc CAM_CC_CSI5PHYTIMER_CLK>,
+> +          <&camcc CAM_CC_IFE_0_AHB_CLK>,
+> +          <&camcc CAM_CC_IFE_0_AXI_CLK>,
+> +          <&camcc CAM_CC_IFE_0_CLK>,
+> +          <&camcc CAM_CC_IFE_0_CPHY_RX_CLK>,
+> +          <&camcc CAM_CC_IFE_0_CSID_CLK>,
+> +          <&camcc CAM_CC_IFE_0_AREG_CLK>,
+> +          <&camcc CAM_CC_IFE_1_AHB_CLK>,
+> +          <&camcc CAM_CC_IFE_1_AXI_CLK>,
+> +          <&camcc CAM_CC_IFE_1_CLK>,
+> +          <&camcc CAM_CC_IFE_1_CPHY_RX_CLK>,
+> +          <&camcc CAM_CC_IFE_1_CSID_CLK>,
+> +          <&camcc CAM_CC_IFE_1_AREG_CLK>,
+> +          <&camcc CAM_CC_IFE_LITE_AHB_CLK>,
+> +          <&camcc CAM_CC_IFE_LITE_AXI_CLK>,
+> +          <&camcc CAM_CC_IFE_LITE_CLK>,
+> +          <&camcc CAM_CC_IFE_LITE_CPHY_RX_CLK>,
+> +          <&camcc CAM_CC_IFE_LITE_CSID_CLK>;
+> +
+> +        clock-names = "cam_hf_axi",
+> +          "csiphy0",
+> +          "csiphy0_timer",
+> +          "csiphy1",
+> +          "csiphy1_timer",
+> +          "csiphy2",
+> +          "csiphy2_timer",
+> +          "csiphy3",
+> +          "csiphy3_timer",
+> +          "csiphy4",
+> +          "csiphy4_timer",
+> +          "csiphy5",
+> +          "csiphy5_timer",
+> +          "vfe0_ahb",
+> +          "vfe0_axi",
+> +          "vfe0",
+> +          "vfe0_cphy_rx",
+> +          "vfe0_csid",
+> +          "vfe0_areg",
+> +          "vfe1_ahb",
+> +          "vfe1_axi",
+> +          "vfe1",
+> +          "vfe1_cphy_rx",
+> +          "vfe1_csid",
+> +          "vfe1_areg",
+> +          "vfe_lite_ahb",
+> +          "vfe_lite_axi",
+> +          "vfe_lite",
+> +          "vfe_lite_cphy_rx",
+> +          "vfe_lite_csid";
+> +
+> +        iommus = <&apps_smmu 0x800 0x400>;
+> +
+> +        ports {
+> +          #address-cells = <1>;
+> +          #size-cells = <0>;
+> +        };
+> +      };
+> +    };
+> -- 
+> 2.26.1
