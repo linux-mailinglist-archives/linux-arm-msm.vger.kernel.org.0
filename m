@@ -2,66 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B56DE3A1ADD
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jun 2021 18:26:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D1EB53A1B61
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jun 2021 18:59:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233406AbhFIQ2c (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Jun 2021 12:28:32 -0400
-Received: from mail.kernel.org ([198.145.29.99]:58466 "EHLO mail.kernel.org"
+        id S229734AbhFIRBO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Jun 2021 13:01:14 -0400
+Received: from mail.kernel.org ([198.145.29.99]:47616 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233160AbhFIQ2b (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Jun 2021 12:28:31 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 2D6C461246;
-        Wed,  9 Jun 2021 16:26:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1623255997;
-        bh=O6HW8I+joRCcMZI1bSIrpaEOalI+6d5uh3dG6p6sTUQ=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=NQIpMaWEwYsz/aYkCkBw5ANl5HkArWNkfJjLP4PNCFmWkGdlqStntcPDc4oJ4pZQU
-         1ZLoHpiH87YbJ76lTw1BubJ+kSrzbb4UmxLesTX7MnFUdaC+iEtF2pnTY6IM2/iRmz
-         Hrzpvf8eS5WhYVSRAtxG3xwH4cB8GjCp2kcAExEZUbjYd/to0mSaqLEVUTb1JSu1UC
-         6I/Zjkbdg3UguSsr+rYNgJKBUvjwr3oTBmAT2y3knHG1DDHsPvJ0ndYmXOKF/MG3Ww
-         uz/PH/nWhBeTDbXbViKUVZvLLS6OcQ2XONzIJmPxio7HmGAVUMGvraWypNgW3XapRY
-         eKVZ171cLMCjg==
-From:   Will Deacon <will@kernel.org>
-To:     Shawn Guo <shawn.guo@linaro.org>
-Cc:     catalin.marinas@arm.com, kernel-team@android.com,
-        Will Deacon <will@kernel.org>,
-        Hanjun Guo <guohanjun@huawei.com>,
-        linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mark Rutland <mark.rutland@arm.com>
-Subject: Re: [PATCH] iommu/arm-smmu-qcom: Protect acpi_match_platform_list() call with CONFIG_ACPI
-Date:   Wed,  9 Jun 2021 17:26:31 +0100
-Message-Id: <162323595056.1544220.15839418112955891074.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20210609015511.3955-1-shawn.guo@linaro.org>
-References: <20210609015511.3955-1-shawn.guo@linaro.org>
+        id S231132AbhFIRBO (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 9 Jun 2021 13:01:14 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id DCA5A6139A;
+        Wed,  9 Jun 2021 16:59:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+        s=korg; t=1623257959;
+        bh=j+9ZvgFzt2Oi5vNAUO87QSrR/HuRPT3TeK8NyQbv1y0=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=OL9oD4VJfBeYxSMSMijst/dZ0Sf6NRTAA60it+ghUGTkdbxMvtB0gMq2Mk2G0bXku
+         Mb6XihEHsYy1m9LnzmwHNHHgrfM6jpkv6MJZgCYKNIpThjEuxtOHU768KxAPHxDcee
+         ZKD1zhZMZMFynxUSrLphahiaetluzR1+K+91lDSw=
+Date:   Wed, 9 Jun 2021 18:59:16 +0200
+From:   Greg KH <gregkh@linuxfoundation.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     hemantk@codeaurora.org, bbhatt@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        jarvis.w.jiang@gmail.com, loic.poulain@linaro.org,
+        Wei Yongjun <weiyongjun1@huawei.com>,
+        Hulk Robot <hulkci@huawei.com>
+Subject: Re: [PATCH 2/3] bus: mhi: pci_generic: Fix possible use-after-free
+ in mhi_pci_remove()
+Message-ID: <YMDzZDVDOgR22ey1@kroah.com>
+References: <20210606153741.20725-1-manivannan.sadhasivam@linaro.org>
+ <20210606153741.20725-3-manivannan.sadhasivam@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210606153741.20725-3-manivannan.sadhasivam@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 9 Jun 2021 09:55:11 +0800, Shawn Guo wrote:
-> The struct acpi_platform_list and function acpi_match_platform_list()
-> defined in include/linux/acpi.h are available only when CONFIG_ACPI is
-> enabled.  Add protection to fix the build issues with !CONFIG_ACPI.
+On Sun, Jun 06, 2021 at 09:07:40PM +0530, Manivannan Sadhasivam wrote:
+> From: Wei Yongjun <weiyongjun1@huawei.com>
+> 
+> This driver's remove path calls del_timer(). However, that function
+> does not wait until the timer handler finishes. This means that the
+> timer handler may still be running after the driver's remove function
+> has finished, which would result in a use-after-free.
+> 
+> Fix by calling del_timer_sync(), which makes sure the timer handler
+> has finished, and unable to re-schedule itself.
+> 
+> Fixes: 8562d4fe34a3 ("mhi: pci_generic: Add health-check")
+> Reported-by: Hulk Robot <hulkci@huawei.com>
+> Signed-off-by: Wei Yongjun <weiyongjun1@huawei.com>
+> Reviewed-by: Hemant kumar <hemantk@codeaurora.org>
+> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> Reviewed-by: Loic Poulain <loic.poulain@linaro.org>
+> Link: https://lore.kernel.org/r/20210413160318.2003699-1-weiyongjun1@huawei.com
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> ---
+>  drivers/bus/mhi/pci_generic.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 
-Applied to will (for-joerg/arm-smmu/updates), thanks!
-
-[1/1] iommu/arm-smmu-qcom: Protect acpi_match_platform_list() call with CONFIG_ACPI
-      https://git.kernel.org/will/c/22c2d7189155
-
-Cheers,
--- 
-Will
-
-https://fixes.arm64.dev
-https://next.arm64.dev
-https://will.arm64.dev
+No Cc: stable on this?  I'll go add it...
