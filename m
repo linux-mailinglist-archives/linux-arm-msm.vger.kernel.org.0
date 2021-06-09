@@ -2,226 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B85823A20AF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jun 2021 01:27:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0D77E3A208E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jun 2021 01:11:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229715AbhFIX3Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Jun 2021 19:29:16 -0400
-Received: from gateway22.websitewelcome.com ([192.185.47.129]:31812 "EHLO
-        gateway22.websitewelcome.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229692AbhFIX3P (ORCPT
+        id S229659AbhFIXNY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Jun 2021 19:13:24 -0400
+Received: from mail-wm1-f49.google.com ([209.85.128.49]:56165 "EHLO
+        mail-wm1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229507AbhFIXNW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Jun 2021 19:29:15 -0400
-X-Greylist: delayed 4109 seconds by postgrey-1.27 at vger.kernel.org; Wed, 09 Jun 2021 19:29:15 EDT
-Received: from cm11.websitewelcome.com (cm11.websitewelcome.com [100.42.49.5])
-        by gateway22.websitewelcome.com (Postfix) with ESMTP id D8DAA17669
-        for <linux-arm-msm@vger.kernel.org>; Wed,  9 Jun 2021 16:03:58 -0500 (CDT)
-Received: from gator4166.hostgator.com ([108.167.133.22])
-        by cmsmtp with SMTP
-        id r5Mklo0TjMRV2r5MklyHAH; Wed, 09 Jun 2021 16:03:58 -0500
-X-Authority-Reason: nr=8
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=embeddedor.com; s=default; h=Content-Transfer-Encoding:Content-Type:
-        In-Reply-To:MIME-Version:Date:Message-ID:From:References:Cc:To:Subject:Sender
-        :Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
-        Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
-        List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=F8/K6f7wiZ3lLg2x0WZnCPtmLrMXlLHqyiyVWEZMk1s=; b=olR1XlL9t+wKpGpLY3g+1tcPzg
-        1n7AZQJy2G2dHbQ3K4wDQsLvChWYkG5R2GUCgVU2WlnJqkJNeJjpgDffGqoBW0LPGuV141bfHPFfy
-        1LpG/Wzl8J4V1DxtoiGysZkbBUJLjkBBX7GC2sHv0i/IK2hkTdeQFBKiig5D3DBTAqdSCaXDCg6up
-        PXXZvfhFrSUt8nFEOOyahokv7vQK+MHtKFxZ1LSN5UGT5Iwsypg5CETXaTo2tlYIYnyokch87qCe2
-        fCCAnG2CDq3tUSfXthruHL/DSJI0STHi5gRYxdco1r9JZkp5omWfhB8oNgLt3YebZHSIPRw4c2Mgl
-        cJmkagrw==;
-Received: from 187-162-31-110.static.axtel.net ([187.162.31.110]:49548 helo=[192.168.15.8])
-        by gator4166.hostgator.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-        (Exim 4.94.2)
-        (envelope-from <gustavo@embeddedor.com>)
-        id 1lr5Mh-000T6i-BR; Wed, 09 Jun 2021 16:03:55 -0500
-Subject: Re: [PATCH v2][next] media: venus: hfi_msgs.h: Replace one-element
- arrays with flexible-array members
-To:     "Gustavo A. R. Silva" <gustavoars@kernel.org>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Wed, 9 Jun 2021 19:13:22 -0400
+Received: by mail-wm1-f49.google.com with SMTP id g204so5007224wmf.5;
+        Wed, 09 Jun 2021 16:11:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=yHRC/scq4F0dFWocWwb0fJBrfvbRpe4lCbCOMRFoGqs=;
+        b=tX4VrW01dqBYDc4Ypi9GhnVybHYLT5kE3h6QwdYMIpgtPRi/pWTxo8i04R3kedKusK
+         Gt8zm5YEphQcR1VUapMtWTXn07bql74l6f/9N2LWDRkqeliv2Qh6klB9dHhKvG61Eokw
+         JsLss4rL0rGW0AAPwYCUW3Le+kQXIP9fpAa/QlVxvlDrw9UxFDQOKlDicXQaK0LU9zQX
+         1lOiXVdtHccHuFJYb4+mrI2e4VJ57a9/hiBU5NJLc4b47snKILJk5xNC990xzIiTES5n
+         l5kdUahARBIOkq/zhh4chtf1/LY2aRfHqLuy1W+n7mocwFOPktjJSeVpQlZ1vRK7Xg9u
+         r66Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=yHRC/scq4F0dFWocWwb0fJBrfvbRpe4lCbCOMRFoGqs=;
+        b=WrlutK/LcbchTI36fq9h3fiI0r56wyJs4PnoCYlcX2PZqyAUgAECTO1dAopKDaK8ou
+         KstYYk9A2h+MDj178elyszlmch7JA3GbeSN+Ebw9m5I+ZFOr7ybaljtnSkDdqwPgk5jq
+         1cSne4QH+4SKuEyILj/LgpD8SYOh4iSmx4FUvVAbXoAuWLAPSnvEuV3dqA00uaxZGJBU
+         QEa2vgu1VwgZDfzImLS139xEbLNjcFrZy5CEf3av+cTvuaxGPD7Yq0Cql5rTTFw4OAMe
+         h3ZAspiSBO+W+ZKidhDuwf4IJ0BVsXyJ9U17sKqShgvEZZntRoxJ5ZJmE2DjZhveAQkq
+         mwMw==
+X-Gm-Message-State: AOAM531qydToFg5dMC1prd7MwIvC4K+nFuEFuQGYJoJ0xtQFFaHCqPbi
+        laf9FKrmMa2+SLNolC0TUQ9WcZ81QVc=
+X-Google-Smtp-Source: ABdhPJw9WN8fCvpMPoE1AKzRm9GBs4EOGspo0NE/ssQH9Em8eorfi7AEOyiN82ccMpQ0pt7l0hdg8w==
+X-Received: by 2002:a7b:c417:: with SMTP id k23mr11755112wmi.71.1623280213734;
+        Wed, 09 Jun 2021 16:10:13 -0700 (PDT)
+Received: from cluster5 ([80.76.206.81])
+        by smtp.gmail.com with ESMTPSA id c7sm1477621wrc.42.2021.06.09.16.10.12
+        (version=TLS1 cipher=ECDHE-ECDSA-AES128-SHA bits=128/128);
+        Wed, 09 Jun 2021 16:10:13 -0700 (PDT)
+From:   Matthew Hagan <mnhagan88@gmail.com>
+Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
+        Matthew Hagan <mnhagan88@gmail.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>
-Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org,
-        Kees Cook <keescook@chromium.org>
-References: <20210604004338.GA140710@embeddedor>
-From:   "Gustavo A. R. Silva" <gustavo@embeddedor.com>
-Message-ID: <45b64531-a251-bd71-8930-b41b7edb40de@embeddedor.com>
-Date:   Wed, 9 Jun 2021 16:05:03 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.8.1
+        netdev@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: [PATCH RESEND 0/2] Add GMAC_AHB_RESET to ipq8064 ethernet resets
+Date:   Thu, 10 Jun 2021 00:09:43 +0100
+Message-Id: <20210609230946.1294326-1-mnhagan88@gmail.com>
+X-Mailer: git-send-email 2.26.3
 MIME-Version: 1.0
-In-Reply-To: <20210604004338.GA140710@embeddedor>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - gator4166.hostgator.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - embeddedor.com
-X-BWhitelist: no
-X-Source-IP: 187.162.31.110
-X-Source-L: No
-X-Exim-ID: 1lr5Mh-000T6i-BR
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: 187-162-31-110.static.axtel.net ([192.168.15.8]) [187.162.31.110]:49548
-X-Source-Auth: gustavo@embeddedor.com
-X-Email-Count: 7
-X-Source-Cap: Z3V6aWRpbmU7Z3V6aWRpbmU7Z2F0b3I0MTY2Lmhvc3RnYXRvci5jb20=
-X-Local-Domain: yes
+To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi all,
+These two additional patches were dropped at v2, v3 by error and
+should have been included with "net: stmmac: explicitly deassert
+GMAC_AHB_RESET". These add GMAC_AHB_RESET to the ipq8064 ethernet
+reset definitions and documentation.
 
-Friendly ping: who can take this, please?
+Apologies for the oversight.
 
-Thanks
---
-Gustavo
+Matthew Hagan (2):
+  ARM: dts: qcom: add ahb reset to ipq806x-gmac
+  dt-bindings: net: stmmac: add ahb reset to example
 
-On 6/3/21 19:43, Gustavo A. R. Silva wrote:
-> There is a regular need in the kernel to provide a way to declare having
-> a dynamically sized set of trailing elements in a structure. Kernel code
-> should always use “flexible array members”[1] for these cases. The older
-> style of one-element or zero-length arrays should no longer be used[2].
-> 
-> Use flexible-array members in struct hfi_msg_sys_property_info_pkt and
-> hfi_msg_session_property_info_pkt instead of one-element arrays, and
-> refactor the code accordingly.
-> 
-> Also, this helps with the ongoing efforts to enable -Warray-bounds by
-> fixing the following warnings:
-> 
->   CC [M]  drivers/media/platform/qcom/venus/hfi_msgs.o
-> drivers/media/platform/qcom/venus/hfi_msgs.c: In function ‘hfi_sys_property_info’:
-> drivers/media/platform/qcom/venus/hfi_msgs.c:246:35: warning: array subscript 1 is above array bounds of ‘u32[1]’ {aka ‘unsigned int[1]’} [-Warray-bounds]
->   246 |  if (req_bytes < 128 || !pkt->data[1] || pkt->num_properties > 1)
->       |                          ~~~~~~~~~^~~
-> drivers/media/platform/qcom/venus/hfi_msgs.c: In function ‘hfi_session_prop_info’:
-> drivers/media/platform/qcom/venus/hfi_msgs.c:342:62: warning: array subscript 1 is above array bounds of ‘u32[1]’ {aka ‘unsigned int[1]’} [-Warray-bounds]
->   342 |  if (!req_bytes || req_bytes % sizeof(*buf_req) || !pkt->data[1])
->       |                                                     ~~~~~~~~~^~~
-> 
-> [1] https://en.wikipedia.org/wiki/Flexible_array_member
-> [2] https://www.kernel.org/doc/html/v5.9/process/deprecated.html#zero-length-and-one-element-arrays
-> 
-> Link: https://github.com/KSPP/linux/issues/79
-> Link: https://github.com/KSPP/linux/issues/109
-> Co-developed-by: Kees Cook <keescook@chromium.org>
-> Signed-off-by: Kees Cook <keescook@chromium.org>
-> Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-> ---
-> Changes in v2:
->  - Fix packet size calculation by adding member _property_ to
->    both structutures hfi_msg_sys_property_info_pkt and
->    hfi_msg_session_property_info_pkt, and refactor the code
->    accordingly.
-> 
-> JFYI: We are about to be able to globally enable -Warray-bounds and,
-> these are pretty much the last out-of-bounds warnings in linux-next. :)
-> 
->  drivers/media/platform/qcom/venus/hfi_msgs.c | 16 ++++++++--------
->  drivers/media/platform/qcom/venus/hfi_msgs.h |  6 ++++--
->  2 files changed, 12 insertions(+), 10 deletions(-)
-> 
-> diff --git a/drivers/media/platform/qcom/venus/hfi_msgs.c b/drivers/media/platform/qcom/venus/hfi_msgs.c
-> index a2d436d407b2..d9fde66f6fa8 100644
-> --- a/drivers/media/platform/qcom/venus/hfi_msgs.c
-> +++ b/drivers/media/platform/qcom/venus/hfi_msgs.c
-> @@ -251,11 +251,11 @@ sys_get_prop_image_version(struct device *dev,
->  
->  	req_bytes = pkt->hdr.size - sizeof(*pkt);
->  
-> -	if (req_bytes < VER_STR_SZ || !pkt->data[1] || pkt->num_properties > 1)
-> +	if (req_bytes < VER_STR_SZ || !pkt->data[0] || pkt->num_properties > 1)
->  		/* bad packet */
->  		return;
->  
-> -	img_ver = (u8 *)&pkt->data[1];
-> +	img_ver = pkt->data;
->  
->  	dev_dbg(dev, VDBGL "F/W version: %s\n", img_ver);
->  
-> @@ -277,7 +277,7 @@ static void hfi_sys_property_info(struct venus_core *core,
->  		return;
->  	}
->  
-> -	switch (pkt->data[0]) {
-> +	switch (pkt->property) {
->  	case HFI_PROPERTY_SYS_IMAGE_VERSION:
->  		sys_get_prop_image_version(dev, pkt);
->  		break;
-> @@ -338,7 +338,7 @@ session_get_prop_profile_level(struct hfi_msg_session_property_info_pkt *pkt,
->  		/* bad packet */
->  		return HFI_ERR_SESSION_INVALID_PARAMETER;
->  
-> -	hfi = (struct hfi_profile_level *)&pkt->data[1];
-> +	hfi = (struct hfi_profile_level *)&pkt->data[0];
->  	profile_level->profile = hfi->profile;
->  	profile_level->level = hfi->level;
->  
-> @@ -355,11 +355,11 @@ session_get_prop_buf_req(struct hfi_msg_session_property_info_pkt *pkt,
->  
->  	req_bytes = pkt->shdr.hdr.size - sizeof(*pkt);
->  
-> -	if (!req_bytes || req_bytes % sizeof(*buf_req) || !pkt->data[1])
-> +	if (!req_bytes || req_bytes % sizeof(*buf_req) || !pkt->data[0])
->  		/* bad packet */
->  		return HFI_ERR_SESSION_INVALID_PARAMETER;
->  
-> -	buf_req = (struct hfi_buffer_requirements *)&pkt->data[1];
-> +	buf_req = (struct hfi_buffer_requirements *)&pkt->data[0];
->  	if (!buf_req)
->  		return HFI_ERR_SESSION_INVALID_PARAMETER;
->  
-> @@ -391,7 +391,7 @@ static void hfi_session_prop_info(struct venus_core *core,
->  		goto done;
->  	}
->  
-> -	switch (pkt->data[0]) {
-> +	switch (pkt->property) {
->  	case HFI_PROPERTY_CONFIG_BUFFER_REQUIREMENTS:
->  		memset(hprop->bufreq, 0, sizeof(hprop->bufreq));
->  		error = session_get_prop_buf_req(pkt, hprop->bufreq);
-> @@ -404,7 +404,7 @@ static void hfi_session_prop_info(struct venus_core *core,
->  	case HFI_PROPERTY_CONFIG_VDEC_ENTROPY:
->  		break;
->  	default:
-> -		dev_dbg(dev, VDBGM "unknown property id:%x\n", pkt->data[0]);
-> +		dev_dbg(dev, VDBGM "unknown property id:%x\n", pkt->property);
->  		return;
->  	}
->  
-> diff --git a/drivers/media/platform/qcom/venus/hfi_msgs.h b/drivers/media/platform/qcom/venus/hfi_msgs.h
-> index 526d9f5b487b..510513697335 100644
-> --- a/drivers/media/platform/qcom/venus/hfi_msgs.h
-> +++ b/drivers/media/platform/qcom/venus/hfi_msgs.h
-> @@ -113,7 +113,8 @@ struct hfi_msg_sys_ping_ack_pkt {
->  struct hfi_msg_sys_property_info_pkt {
->  	struct hfi_pkt_hdr hdr;
->  	u32 num_properties;
-> -	u32 data[1];
-> +	u32 property;
-> +	u8 data[];
->  };
->  
->  struct hfi_msg_session_load_resources_done_pkt {
-> @@ -233,7 +234,8 @@ struct hfi_msg_session_parse_sequence_header_done_pkt {
->  struct hfi_msg_session_property_info_pkt {
->  	struct hfi_session_hdr_pkt shdr;
->  	u32 num_properties;
-> -	u32 data[1];
-> +	u32 property;
-> +	u8 data[];
->  };
->  
->  struct hfi_msg_session_release_resources_done_pkt {
-> 
+ .../devicetree/bindings/net/ipq806x-dwmac.txt |  5 +++--
+ arch/arm/boot/dts/qcom-ipq8064.dtsi           | 20 +++++++++++--------
+ 2 files changed, 15 insertions(+), 10 deletions(-)
+
+-- 
+2.26.3
+
