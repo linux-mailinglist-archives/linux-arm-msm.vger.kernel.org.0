@@ -2,53 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D08033A120C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jun 2021 13:07:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6A6023A120D
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Jun 2021 13:07:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233074AbhFILJO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Jun 2021 07:09:14 -0400
-Received: from mail-lj1-f170.google.com ([209.85.208.170]:37880 "EHLO
-        mail-lj1-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237862AbhFILJN (ORCPT
+        id S233725AbhFILJg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Jun 2021 07:09:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49970 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233598AbhFILJg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Jun 2021 07:09:13 -0400
-Received: by mail-lj1-f170.google.com with SMTP id e2so31143407ljk.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Jun 2021 04:07:06 -0700 (PDT)
+        Wed, 9 Jun 2021 07:09:36 -0400
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8AADBC061574
+        for <linux-arm-msm@vger.kernel.org>; Wed,  9 Jun 2021 04:07:41 -0700 (PDT)
+Received: by mail-lj1-x236.google.com with SMTP id r14so11955617ljd.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Jun 2021 04:07:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=edtgaudOZI4aiobavQOBXkJeOQl3hnYi6MVEV9AQq84=;
-        b=ayZr7B/HMgVlC0okdohGCei7GaktNCuF+JQVg9SStH5spMXSHL3MnoVsgcy0gRKsa4
-         pmC0Ygl7wVqf8VNXIa61EBQp1XUesgEtUX6+OLbue18UVTP2J47q+hd2k9/FHzfOHm5z
-         v4s5fWNXcE4/VZXgXHruumXCmX5k8xgRxNY7/zlcN6NTfr5/GC2s1LXU9dTDHZshBKAk
-         fI5MiFrk14taaL/0EL1VY7ryUodwSdjXb05t+Qz7hHFcs3/UjKjSPPUYSd7DSJxsvaO/
-         ziRY4ZuBQwp9SwRC/wZ2DbWTwttmeVHxRTQE75htG42JEINP5VSFO96y+WHJUC6jJULz
-         mX/A==
+        bh=hO3vEEVdO0DPz+vO9KJvLBSJTaoPQXnru30sw8j8V+k=;
+        b=tJ+IxUQX6y8nk471bg47+iouc2pnb5EzeCVGDMgfLNBUUydydIFqq6lhq/QTCdnxoi
+         ETRyEs14qkwYFBNvb/vRgeiQw8SxbBcHxjYav9X1GrSQ3qaKSPkupNdkqkY/jwC+RDY7
+         7A3o3Z4V/nSi5iyqhEr9hxnBtloNMkYSXpM+UjFwtN7Kz2HvnQ7P3YjmM5M0Q8/qTVHG
+         3yVusC9NM0uIaOxkCxGe3ccLUlb59nfqak4qCXCkPmnMrkt4HxL+ZVO/zYUPfdsmP94r
+         9cHO2x7EITXWT1XtHoIwzIklwSrrsHteBwexobdOewu31/N/V/hyIE6+7nbIgvvxrEUB
+         CfkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=edtgaudOZI4aiobavQOBXkJeOQl3hnYi6MVEV9AQq84=;
-        b=qVcSHGAf489i8SPXq6T/C6qn6eJGjTYCfx9EWF9en83SQSnb/Q6d6/p/r81z2uP0tW
-         34fqWQAIcZLQm6COGxoqAyN4A2vBjCT0i6Ajd4dfCqj28haRF1evFpIf7f+30QJBUzOv
-         3McZePNTiWukpC6l1nCJ370HKab2YHe8xwiCZ+1RDjnyBLLaaGFZq/KYuapn02lxykZ5
-         UZ72NcMYzNDri4+1p9er08UnkgNUjmSkI9+NUGZfbjyT7SmN7BS+fUqd2YBvQwxuH15E
-         oVW3jqFlBrFsVRVZ7Rn2VpJgfYK7M5pjPtfr3bPSRnyAxHjm75w5f1itU324iYW5CmPw
-         3iAQ==
-X-Gm-Message-State: AOAM532ZkPHe1NNscXkgJhCIW9TFlRs+wJUamTGwzq+GbrAIlIloHBU2
-        re//5ACBCMNdbkeRocGnFLM4dpSWTKo2XMrbS75Ong==
-X-Google-Smtp-Source: ABdhPJzV9fO/orVbfpt+Pzff+qMI9NVxWDVHQAbz6au45P7iPdxzk0Z/yoL6wNzUHNhPVrsLwIbINGn7G3wSbYXVuXg=
-X-Received: by 2002:a05:651c:1411:: with SMTP id u17mr11266433lje.438.1623236765968;
- Wed, 09 Jun 2021 04:06:05 -0700 (PDT)
+        bh=hO3vEEVdO0DPz+vO9KJvLBSJTaoPQXnru30sw8j8V+k=;
+        b=osKjnvHI+dlrZ4KEc5QNiaBlKcoKqV70lP3EK2WL9dnkiPGCkBb/FvNkqrfEu+46yI
+         tOVgytvISojEQx61EY9jwYxh1AhqDguO8L4WvK+wndUNECNQWygF/HQEcE2Oqa463gGE
+         2c5FQ5NW1mhDrQDamMmpzNL11UXrdSvuIKO/S8dN6xQZl6TWX2RwBNkL46qnHF00wcNo
+         QA0kcD04ADTPt+T1n4MbedGBPojjIqJ+wTJYVNkK0MyGFiLvdTMhHCvE+gxZRjq5rusk
+         ucOcc9nwLx+Ay2gr+qzN7BcUn344SpOtnD+b3z8swnHVOiruScBAbT+ZabR/NqIbLUtD
+         AZmg==
+X-Gm-Message-State: AOAM532OpuMHpwbe6b0PnQcFRhRJ46kN4BE9sl752UogMzrZHSbhanYk
+        yGxCeYeKmC4up4ADRlLgFKENAgDVhl+O1fgngVrciw==
+X-Google-Smtp-Source: ABdhPJxL1/o/55M4zUInEECGJ8JlN2FQ3cBr/0HO5voXevIvLQKWpjpiW9USKNXD1KKnOZdv1T7oDDPbAU6x4fmJssI=
+X-Received: by 2002:a2e:22c3:: with SMTP id i186mr22139779lji.273.1623236859907;
+ Wed, 09 Jun 2021 04:07:39 -0700 (PDT)
 MIME-Version: 1.0
-References: <20210607170555.4006050-1-dianders@chromium.org> <20210607100234.v9.3.I98bf729846c37c4c143f6ab88b1e299280e2fe26@changeid>
-In-Reply-To: <20210607100234.v9.3.I98bf729846c37c4c143f6ab88b1e299280e2fe26@changeid>
+References: <20210607170555.4006050-1-dianders@chromium.org> <20210607100234.v9.6.I18e60221f6d048d14d6c50a770b15f356fa75092@changeid>
+In-Reply-To: <20210607100234.v9.6.I18e60221f6d048d14d6c50a770b15f356fa75092@changeid>
 From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Wed, 9 Jun 2021 13:05:55 +0200
-Message-ID: <CACRpkdZF_WgoJHExbw8R8ejVkWh7h32VfXQw8mfux_i2+sy-QA@mail.gmail.com>
-Subject: Re: [PATCH v9 03/11] dt-bindings: drm/bridge: ti-sn65dsi86: Add
- aux-bus child
+Date:   Wed, 9 Jun 2021 13:07:29 +0200
+Message-ID: <CACRpkdaa=1LsyESZenDWv91mTX4H_AhwzGnSO2b9v8zXRMAvzw@mail.gmail.com>
+Subject: Re: [PATCH v9 06/11] drm/panel: panel-simple: Stash DP AUX bus; allow
+ using it for DDC
 To:     Douglas Anderson <dianders@chromium.org>
 Cc:     Andrzej Hajda <a.hajda@samsung.com>,
         Neil Armstrong <narmstrong@baylibre.com>,
@@ -65,12 +68,9 @@ Cc:     Andrzej Hajda <a.hajda@samsung.com>,
         Lyude Paul <lyude@redhat.com>,
         "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
         Stephen Boyd <swboyd@chromium.org>,
-        Rob Herring <robh@kernel.org>, Daniel Vetter <daniel@ffwll.ch>,
+        Daniel Vetter <daniel@ffwll.ch>,
         David Airlie <airlied@linux.ie>,
-        Rob Herring <robh+dt@kernel.org>,
-        Sandeep Panda <spanda@codeaurora.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
         linux-kernel <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
@@ -79,12 +79,16 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Mon, Jun 7, 2021 at 7:06 PM Douglas Anderson <dianders@chromium.org> wrote:
 
->  The patch ("dt-bindings: drm: Introduce the DP AUX bus") talks about
-> how using the DP AUX bus is better than learning how to slice
-> bread. Let's add it to the ti-sn65dsi86 bindings.
+> If panel-simple is instantiated as a DP AUX bus endpoint then we have
+> access to the DP AUX bus. Let's stash it in the panel-simple
+> structure, leaving it NULL for the cases where the panel is
+> instantiated in other ways.
+>
+> If we happen to have access to the DP AUX bus and we weren't provided
+> the ddc-i2c-bus in some other manner, let's use the DP AUX bus for it.
 >
 > Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> Reviewed-by: Rob Herring <robh@kernel.org>
+> Reviewed-by: Lyude Paul <lyude@redhat.com>
 
 Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
 
