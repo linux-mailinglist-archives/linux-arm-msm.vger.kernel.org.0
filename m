@@ -2,117 +2,184 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 77B8A3A2CF9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jun 2021 15:28:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B73193A2D00
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jun 2021 15:29:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230434AbhFJNaK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Jun 2021 09:30:10 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:59082 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230250AbhFJNaJ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Jun 2021 09:30:09 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1623331693; h=Message-ID: Subject: Cc: To: From: Date:
- Content-Transfer-Encoding: Content-Type: MIME-Version: Sender;
- bh=zdh8Ve3I0bYMzcTgGWZH5OZKHgsbwm12U3W/MB8rCAU=; b=hQ2DNeNuam25rCYC38PGoZIt2LgA+sAbzwuSZO9o8OKqTvvWLC7QH/Kgc9FqXcwY6Yhb0XWV
- fDjUM+PI+zO6TkSRo617jg5tGlEPZYSovMaKdc3QXJR0Mm0mG8GOE2HlkL/5mB0oSHo94HA3
- DKybYpxfSYqv05vhbg1oZ3QR8kA=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
- 60c21367e27c0cc77f28bd90 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 10 Jun 2021 13:28:07
- GMT
-Sender: vhiren=codeaurora.com@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id B0531C433D3; Thu, 10 Jun 2021 13:28:06 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: vhiren)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id D7CA7C433F1;
-        Thu, 10 Jun 2021 13:28:04 +0000 (UTC)
+        id S230410AbhFJNa6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Jun 2021 09:30:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60388 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231169AbhFJNa6 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 10 Jun 2021 09:30:58 -0400
+Received: from mail-io1-xd2c.google.com (mail-io1-xd2c.google.com [IPv6:2607:f8b0:4864:20::d2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22081C061760
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Jun 2021 06:28:49 -0700 (PDT)
+Received: by mail-io1-xd2c.google.com with SMTP id b14so11907315iow.13
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Jun 2021 06:28:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=v4hLoN0siMfHmp2NeUt0J1eeOoHTnNdIx4P036PPjEI=;
+        b=Wk2mffK1+ySY6phuAC9E6Oscs2QoIMJbvTczGwXAWqrgPaSNdboavkfXm+SHEyHUeN
+         a7Cw5c2uW9jwxssW5/CHcxTLxz/zoQkIybbfmRMePDAjimANLEjvKq4MeAf8rppdazHw
+         UDKe3a2tjdjRTtfXlGuSN/UwMx6wavCnuFK9k=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=v4hLoN0siMfHmp2NeUt0J1eeOoHTnNdIx4P036PPjEI=;
+        b=cx/oyXA+XMRdGV6gAaFSXSElvZ7okE9PmKALY54tqSvYa+laTO5IMuyfbzjm/zW0Bz
+         NyQ3olsWLTk6cID0vzH0z4ArG4hJlI9333Q2fTmFuGi6wsF8Qu7kKc417cSdP/aHJSJ8
+         8er6Ikap54Xe8jp03bxrHWhog9aXEQkHP3S/JgOqboD3k2xvztXb3NjU1xWSYTkq0RyR
+         5dHeONS0mJM0pvxEL1w2wcAdOv56rHAIjCyyNYf/WLpukaczSmOxeNkzz+xIiseCoLeh
+         QzcfTY5LAWaSPVA+ecoNl/t4mh7GdkCXFS/VU1feLUUE9Iodo3/3mYaCzSrrTLCabODQ
+         kWIw==
+X-Gm-Message-State: AOAM530m90h43yyrDr/MCdGCNTnB3zpx7+3vMoCDrDxkjOSFyULWg028
+        fPwLlPEpQIvTHucD3s9xs55eE/m6fnGjpA2+COtH+A==
+X-Google-Smtp-Source: ABdhPJwDWhkRU1fVAP0bMfTTGja5FWHh/AN0sLKJdb5q2n5Skn/iVPxz7MLUvyRN1QZI0LSB0X1ZlcBFwRk8mJUuCsc=
+X-Received: by 2002:a02:354d:: with SMTP id y13mr4772274jae.83.1623331728198;
+ Thu, 10 Jun 2021 06:28:48 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
-Date:   Thu, 10 Jun 2021 18:58:04 +0530
-From:   vhiren@codeaurora.com
-To:     bjorn.andersson@linaro.org, adrian.hunter@intel.com,
-        robh+dt@kernel.org, ulf.hansson@linaro.org,
-        asutoshd@codeaurora.org, stummala@codeaurora.org,
-        sayalil@codeaurora.org, rampraka@codeaurora.org,
-        vbadigan@codeaurora.org, sboyd@kernel.org,
-        georgi.djakov@linaro.org, mka@chromium.org
-Cc:     linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        agross@kernel.org, linux-mmc-owner@vger.kernel.org,
-        nitirawa@codeaurora.org
-Subject: Re : Query on UFS Lun detection
-Message-ID: <d60373362ed41b49f763cdb46c9973e2@codeaurora.com>
-X-Sender: vhiren@codeaurora.com
-User-Agent: Roundcube Webmail/1.3.9
+References: <87tupqu10c.fsf@linux.intel.com> <20210309063828.26392-1-saiprakash.ranjan@codeaurora.org>
+ <20210309144423.GD203350@tassilo.jf.intel.com> <24e0d604750babd3461768897bb2ae82@codeaurora.org>
+In-Reply-To: <24e0d604750babd3461768897bb2ae82@codeaurora.org>
+From:   Mattias Nissler <mnissler@chromium.org>
+Date:   Thu, 10 Jun 2021 15:28:35 +0200
+Message-ID: <CAKUbbx+C=O4J7dz8ANGvpb-n=u=bC8XQYR6BPw-yYqZC1WuGyA@mail.gmail.com>
+Subject: Re: [PATCHv2 0/4] perf/core: Add support to exclude kernel mode PMU tracing
+To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Cc:     Andi Kleen <ak@linux.intel.com>, acme@kernel.org,
+        Al Grant <al.grant@arm.com>,
+        alexander.shishkin@linux.intel.com, coresight@lists.linaro.org,
+        Denis Nikitin <denik@chromium.org>,
+        Douglas Anderson <dianders@chromium.org>, jolsa@redhat.com,
+        Leo Yan <leo.yan@linaro.org>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        mark.rutland@arm.com, Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Mike Leach <mike.leach@linaro.org>, mingo@redhat.com,
+        namhyung@kernel.org, Peter Zijlstra <peterz@infradead.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Stephen Boyd <swboyd@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Community,
+I know this reply is hopelessly late, but I still want to clarify a
+few things (see inline for that) and provide some background on the
+thinking that led to this proposal and where we ultimately landed for
+the benefit of folks that come across this thread in the future.
 
-We are using UFS as a boot device, and we encountered an error, 
-mentioned below while booting through UFS.
+The team working on tracing had asked me to provide input on the
+security angle. We generally follow principle of least privilege /
+attack surface minimization principles, and so the conclusion "kernel
+tracing not needed" -> let's turn it off so we have one less thing to
+potentially worry about was an easy one. What I hadn't been aware of
+is that (a) no such config option exists in the kernel and (b) the
+approach that the kernel is taking is to limit access to tracing data
+to privileged users (via perf_event_paranoid sysctl, CAP_PERFMON).
+Same for leaking kernel code pointers (note that kernel tracing
+trivially defeats KASLR), privileged userspace can already read
+/proc/kallsysms. While I would still like the kernel to give us a
+build time option to disable kernel tracing, we can work with the
+current state of affairs.
 
+On Wed, Mar 10, 2021 at 4:17 PM Sai Prakash Ranjan
+<saiprakash.ranjan@codeaurora.org> wrote:
+>
+> Hi Andi,
+>
+> On 2021-03-09 20:14, Andi Kleen wrote:
+> >> The disk encryption is just one example
 
-APPS Crash - Kernel panic - not syncing: VFS: Unable to mount root fs on 
-unknown-block(8,7)
+The intention behind that example was to illustrate the point that
+there are some data items that the kernel should hide to all of
+userspace, including privileged processes. I know this has been
+controversial in the past, but I hope we all agree that the kernel (if
+configured appropriately) is aiming to do so.
 
-Here in Kernel command line we are passing "root=sda7", this is our 
-Filesystem partition to be mounted.
+>
+> and there might be others
+> >> which
+> >> we might not be aware of yet and we are not suspecting there is
+> >> something
+> >> wrong with the crypto code that needs to be fixed.
+> >
+> > Then you don't have any leaks relating to branch tracing.
+>
+> >
+> >> restrict an external(in the sense that its not related to crypto or
+> >> any
+> >> other security related component) entity such as hardware assisted
+> >> tracing
+> >> like ARM coresight and so on. I don't see why or how the crypto code
+> >> needs
+> >> to be fixed for something that is not related to it although it is
+> >> affected.
+> >
+> > It's just a general property that if some code that is handling secrets
+> > is data dependent it already leaks.
 
-While debugging the same we observed the partition which is suppose to 
-be mounted as Filesystem is not enumerated  itself.
-The reason behind not enumerating of partition is, the other Lun got 
-detected first instead of one which is having FS partition.
+Timing side channels have been a constant source of grief in crypto
+implementations for decades now. Things have become better in the most
+popular implementations, but bugs continue to be found. I happened to
+chat about this topic with David Benjamin (boringssl maintainer)
+recently, and his take was that timing side channels are a well
+understood problem meanwhile, but in practice few implementations get
+the details right. And the thing with high-resolution timestamps in
+traces is that it gives you a tool to observe timing differences
+closer to the source (so less noise) than if you just measure syscall
+latency from userspace. So, in theory you are right - data-dependent
+branches should not exist in crypto code, and if they do we should
+just fix them, since they're potentially exploitable already. In
+practice, timestamp information in tracing data can act as a
+magnifying glass that may well make a difference between whether a
+timing side channel is problematic in practice or not.
 
-We are using async probe, hence we know the detection will happen in 
-async way,
-
-
-In working case :  it looks like below
-
-sd 0:0:0:0: sda1 sda2 sda3 sda4 …..sda8
-
-sd 0:0:0:1: sdb1 sdb2
-Here, sd 0:0:0:0 Lun got detected first and enumerated as "sdaN", we 
-have FS partition as "sda7" and so we don’t see above mentioned error.
-
-
-In non working case : it looks like below
-
-sd 0:0:0:0: sdb1 sdb2 sdb3 sdb4 …..sdb8
-
-sd 0:0:0:1: sda1 sda2
-Here, sd 0:0:0:1 Lun got detected first and enumerated as "sdaN" but we 
-don’t have FS partition in this Lun. Instead FS partition now became 
-"sdb7".
-
-
-Observation here is, which ever Lun gets detected first it will have 
-"sda" enumeration and so on.
-However, sdx’s driver scsi/sd.c uses async probe to improve performance, 
-meaning sdx disks are created in parallel. Whoever calls 
-device_add_disk() first becomes sda, the next become sdb….
-
-
-Is there any way, where we can fix this in the Lun detection part of 
-code?
-
-Thank You,
-Regards,
-Hiren Gohel
+> >
+> >
+> >> The analogy would be like of the victims and a perpetrator. Lets take
+> >> coresight
+> >> as an example for perpetrator and crypto as the victim here. Now we
+> >> can try
+> >
+> > There's no victim with branch tracing, unless it is already leaky.
+> >
+> >> If we just know one victim (lets say crypto code here), what happens
+> >> to the
+> >> others which we haven't identified yet? Do we just wait for someone to
+> >> write
+> >> an exploit based on this and then scramble to fix it?
+> >
+> > For a useful security mitigation you need a threat model first I would
+> > say.
+> >
+> > So you need to have at least some idea how an attack with branch
+> > tracing would work.
+> >
+> >
+> >> Initial change was to restrict this only to HW assisted instruction
+> >> tracing [1]
+> >
+> > I don't think it's needed for instruction tracing.
+> >
+>
+>  From what I know, newer ARM A-profile cores doesn't allow data tracing.
+> And you
+> are saying that just the instruction tracing cannot be used to infer any
+> important data.
+>
+> There are few security folks in CC who probably can give us more details
+> on how
+> branch tracing can be used for an exploit. @mnissler?
+>
+> Thanks,
+> Sai
+>
+> --
+> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a
+> member
+> of Code Aurora Forum, hosted by The Linux Foundation
