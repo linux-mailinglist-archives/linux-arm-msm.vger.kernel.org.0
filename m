@@ -2,184 +2,139 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B73193A2D00
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jun 2021 15:29:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 264C43A2D70
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jun 2021 15:49:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230410AbhFJNa6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Jun 2021 09:30:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60388 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231169AbhFJNa6 (ORCPT
+        id S231153AbhFJNvK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Jun 2021 09:51:10 -0400
+Received: from mail-lj1-f182.google.com ([209.85.208.182]:44976 "EHLO
+        mail-lj1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230289AbhFJNvK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Jun 2021 09:30:58 -0400
-Received: from mail-io1-xd2c.google.com (mail-io1-xd2c.google.com [IPv6:2607:f8b0:4864:20::d2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22081C061760
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Jun 2021 06:28:49 -0700 (PDT)
-Received: by mail-io1-xd2c.google.com with SMTP id b14so11907315iow.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Jun 2021 06:28:49 -0700 (PDT)
+        Thu, 10 Jun 2021 09:51:10 -0400
+Received: by mail-lj1-f182.google.com with SMTP id d2so4956703ljj.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Jun 2021 06:49:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=v4hLoN0siMfHmp2NeUt0J1eeOoHTnNdIx4P036PPjEI=;
-        b=Wk2mffK1+ySY6phuAC9E6Oscs2QoIMJbvTczGwXAWqrgPaSNdboavkfXm+SHEyHUeN
-         a7Cw5c2uW9jwxssW5/CHcxTLxz/zoQkIybbfmRMePDAjimANLEjvKq4MeAf8rppdazHw
-         UDKe3a2tjdjRTtfXlGuSN/UwMx6wavCnuFK9k=
+        d=linaro.org; s=google;
+        h=subject:from:to:cc:references:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=11Ch0zTg4bYtpXueHaxR43aR9wj+nY2f+mnI1visPCM=;
+        b=p6sA4x678ac8IQLT9xziTdZq+TRG/++h6dI2/3JwzP08t15EgvXPi8f2AEOitzli8q
+         5eyaZK9gP4Ada5VPEUL9gbNzSvSsdZ5bK9TDa5mjNaGnlbEmOFMOvdlNj9/QiVsZDhDZ
+         6ktHQAJ+SS/anBSoh3v2SPrKebwGPKnWbx8R8CdQFkUlUWzxbyVZtdk0MWPA/+AIhjvV
+         xGum1knZriI6JwQVk1ioFLoxwya2uVc4xlkPOnBe/D6imfB3Us1SWQS1ah0LZAY+J6Qs
+         7iSmF4FJFG6zkmDukULyDe5b5V3jG3bsOanWMg4b1nLIf0ig1XZ+k0gGWh9mcHD5rnTs
+         Y+jw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=v4hLoN0siMfHmp2NeUt0J1eeOoHTnNdIx4P036PPjEI=;
-        b=cx/oyXA+XMRdGV6gAaFSXSElvZ7okE9PmKALY54tqSvYa+laTO5IMuyfbzjm/zW0Bz
-         NyQ3olsWLTk6cID0vzH0z4ArG4hJlI9333Q2fTmFuGi6wsF8Qu7kKc417cSdP/aHJSJ8
-         8er6Ikap54Xe8jp03bxrHWhog9aXEQkHP3S/JgOqboD3k2xvztXb3NjU1xWSYTkq0RyR
-         5dHeONS0mJM0pvxEL1w2wcAdOv56rHAIjCyyNYf/WLpukaczSmOxeNkzz+xIiseCoLeh
-         QzcfTY5LAWaSPVA+ecoNl/t4mh7GdkCXFS/VU1feLUUE9Iodo3/3mYaCzSrrTLCabODQ
-         kWIw==
-X-Gm-Message-State: AOAM530m90h43yyrDr/MCdGCNTnB3zpx7+3vMoCDrDxkjOSFyULWg028
-        fPwLlPEpQIvTHucD3s9xs55eE/m6fnGjpA2+COtH+A==
-X-Google-Smtp-Source: ABdhPJwDWhkRU1fVAP0bMfTTGja5FWHh/AN0sLKJdb5q2n5Skn/iVPxz7MLUvyRN1QZI0LSB0X1ZlcBFwRk8mJUuCsc=
-X-Received: by 2002:a02:354d:: with SMTP id y13mr4772274jae.83.1623331728198;
- Thu, 10 Jun 2021 06:28:48 -0700 (PDT)
+        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=11Ch0zTg4bYtpXueHaxR43aR9wj+nY2f+mnI1visPCM=;
+        b=Qe+fAAxWvzcCnHcXvGIsPjV7I8NAdAghOb8oVqWDf0a8Psk8zQQMElUIyMvylpJLYo
+         xvhdOv4396pH2UtKvzw1Iyj98aKJ6q++fmlQAq0s6aTacRTUqxaE84jQ8rfMsUjPWqIx
+         Ll3py4LAKGyrucjlJGTjA9Y4ZKUbOED7fvhk4rvUKeF2tRTG4b4CQ7Y50So/hp7SZeDC
+         PESGu6nM6ns1zLc3zmxctBheoGon5/IdjSBooKzjIAqckWfQ3wn7T01F+lrY58+CGSGq
+         dMpqbuE7nzDf6pQVjC9tfGHNUYJdnHizvfupzkmdCKqH19IsCEAGCuD4oDB6La5ENZU/
+         X1Hw==
+X-Gm-Message-State: AOAM530FP8WpiGU8sraub7cBPtvRnnyeQm8pqQX1Tq+riCM3kupMd1WC
+        imjV1eOtowaXCB3bE5DZExcT6A==
+X-Google-Smtp-Source: ABdhPJwZJzIOkSGhqqb3zGVBIHgRHoDBffm+2prh3DOdKwTImss/wxSYFdKGwgKHyvtT9OscgyAjyw==
+X-Received: by 2002:a2e:9b96:: with SMTP id z22mr2330119lji.164.1623332893362;
+        Thu, 10 Jun 2021 06:48:13 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id a14sm305055lfs.108.2021.06.10.06.48.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 10 Jun 2021 06:48:12 -0700 (PDT)
+Subject: Re: [PATCH 0/8] dsi: rework clock parents and timing handling
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <abhinavk@codeaurora.org>
+Cc:     Jonathan Marek <jonathan@marek.ca>,
+        Stephen Boyd <sboyd@kernel.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+References: <20210515131217.1540412-1-dmitry.baryshkov@linaro.org>
+Message-ID: <71839b49-554c-fcc4-d110-0c8a49905413@linaro.org>
+Date:   Thu, 10 Jun 2021 16:48:12 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.0
 MIME-Version: 1.0
-References: <87tupqu10c.fsf@linux.intel.com> <20210309063828.26392-1-saiprakash.ranjan@codeaurora.org>
- <20210309144423.GD203350@tassilo.jf.intel.com> <24e0d604750babd3461768897bb2ae82@codeaurora.org>
-In-Reply-To: <24e0d604750babd3461768897bb2ae82@codeaurora.org>
-From:   Mattias Nissler <mnissler@chromium.org>
-Date:   Thu, 10 Jun 2021 15:28:35 +0200
-Message-ID: <CAKUbbx+C=O4J7dz8ANGvpb-n=u=bC8XQYR6BPw-yYqZC1WuGyA@mail.gmail.com>
-Subject: Re: [PATCHv2 0/4] perf/core: Add support to exclude kernel mode PMU tracing
-To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Cc:     Andi Kleen <ak@linux.intel.com>, acme@kernel.org,
-        Al Grant <al.grant@arm.com>,
-        alexander.shishkin@linux.intel.com, coresight@lists.linaro.org,
-        Denis Nikitin <denik@chromium.org>,
-        Douglas Anderson <dianders@chromium.org>, jolsa@redhat.com,
-        Leo Yan <leo.yan@linaro.org>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        mark.rutland@arm.com, Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Mike Leach <mike.leach@linaro.org>, mingo@redhat.com,
-        namhyung@kernel.org, Peter Zijlstra <peterz@infradead.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Stephen Boyd <swboyd@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20210515131217.1540412-1-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-I know this reply is hopelessly late, but I still want to clarify a
-few things (see inline for that) and provide some background on the
-thinking that led to this proposal and where we ultimately landed for
-the benefit of folks that come across this thread in the future.
+On 15/05/2021 16:12, Dmitry Baryshkov wrote:
+> This patch series brings back several patches targeting assigning dispcc
+> clock parents, that were removed from the massive dsi rework patchset
+> earlier.
 
-The team working on tracing had asked me to provide input on the
-security angle. We generally follow principle of least privilege /
-attack surface minimization principles, and so the conclusion "kernel
-tracing not needed" -> let's turn it off so we have one less thing to
-potentially worry about was an easy one. What I hadn't been aware of
-is that (a) no such config option exists in the kernel and (b) the
-approach that the kernel is taking is to limit access to tracing data
-to privileged users (via perf_event_paranoid sysctl, CAP_PERFMON).
-Same for leaking kernel code pointers (note that kernel tracing
-trivially defeats KASLR), privileged userspace can already read
-/proc/kallsysms. While I would still like the kernel to give us a
-build time option to disable kernel tracing, we can work with the
-current state of affairs.
+Gracious ping for this series. I'd ask to skip patch 8 for now (as we 
+might bring that back for moving PHY to drivers/phy), but patches 1-7 
+are still valid and pending review/acceptance.
 
-On Wed, Mar 10, 2021 at 4:17 PM Sai Prakash Ranjan
-<saiprakash.ranjan@codeaurora.org> wrote:
->
-> Hi Andi,
->
-> On 2021-03-09 20:14, Andi Kleen wrote:
-> >> The disk encryption is just one example
+> 
+> Few notes:
+>   - assign-clock-parents is a mandatory proprety according to the current
+>     dsi.txt description.
+>   - There is little point in duplicating this functionality with the ad-hoc
+>     implementation in the dsi code.
+> 
+> On top of that come few minor cleanups for the DSI PHY drivers.
+> 
+> I'd kindly ask to bring all dts changes also through the drm tree, so
+> that there won't be any breakage of the functionality.
+> 
+> 
+> The following changes since commit f2f46b878777e0d3f885c7ddad48f477b4dea247:
+> 
+>    drm/msm/dp: initialize audio_comp when audio starts (2021-05-06 16:26:57 -0700)
+> 
+> are available in the Git repository at:
+> 
+>    https://git.linaro.org/people/dmitry.baryshkov/kernel.git dsi-phy-update
+> 
+> for you to fetch changes up to f1fd3b113cbb98febad682fc11ea1c6e717434c2:
+> 
+>    drm/msm/dsi: remove msm_dsi_dphy_timing from msm_dsi_phy (2021-05-14 22:55:11 +0300)
+> 
+> ----------------------------------------------------------------
+> Dmitry Baryshkov (8):
+>        arm64: dts: qcom: sc7180: assign DSI clock source parents
+>        arm64: dts: qcom: sdm845: assign DSI clock source parents
+>        arm64: dts: qcom: sdm845-mtp: assign DSI clock source parents
+>        arm64: dts: qcom: sm8250: assign DSI clock source parents
+>        drm/msm/dsi: stop setting clock parents manually
+>        drm/msm/dsi: phy: use of_device_get_match_data
+>        drm/msm/dsi: drop msm_dsi_phy_get_shared_timings
+>        drm/msm/dsi: remove msm_dsi_dphy_timing from msm_dsi_phy
+> 
+>   arch/arm64/boot/dts/qcom/sc7180.dtsi            |  3 ++
+>   arch/arm64/boot/dts/qcom/sdm845-mtp.dts         |  3 ++
+>   arch/arm64/boot/dts/qcom/sdm845.dtsi            |  6 +++
+>   arch/arm64/boot/dts/qcom/sm8250.dtsi            |  6 +++
+>   drivers/gpu/drm/msm/dsi/dsi.h                   |  7 +---
+>   drivers/gpu/drm/msm/dsi/dsi_host.c              | 51 -------------------------
+>   drivers/gpu/drm/msm/dsi/dsi_manager.c           |  8 +---
+>   drivers/gpu/drm/msm/dsi/phy/dsi_phy.c           | 46 ++++++++++------------
+>   drivers/gpu/drm/msm/dsi/phy/dsi_phy.h           | 10 ++++-
+>   drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c      | 11 ++----
+>   drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c      | 11 ++----
+>   drivers/gpu/drm/msm/dsi/phy/dsi_phy_20nm.c      | 10 +----
+>   drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c      | 12 ++----
+>   drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c | 10 +----
+>   drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c       | 13 ++-----
+>   15 files changed, 67 insertions(+), 140 deletions(-)
+> 
+> 
 
-The intention behind that example was to illustrate the point that
-there are some data items that the kernel should hide to all of
-userspace, including privileged processes. I know this has been
-controversial in the past, but I hope we all agree that the kernel (if
-configured appropriately) is aiming to do so.
 
->
-> and there might be others
-> >> which
-> >> we might not be aware of yet and we are not suspecting there is
-> >> something
-> >> wrong with the crypto code that needs to be fixed.
-> >
-> > Then you don't have any leaks relating to branch tracing.
->
-> >
-> >> restrict an external(in the sense that its not related to crypto or
-> >> any
-> >> other security related component) entity such as hardware assisted
-> >> tracing
-> >> like ARM coresight and so on. I don't see why or how the crypto code
-> >> needs
-> >> to be fixed for something that is not related to it although it is
-> >> affected.
-> >
-> > It's just a general property that if some code that is handling secrets
-> > is data dependent it already leaks.
-
-Timing side channels have been a constant source of grief in crypto
-implementations for decades now. Things have become better in the most
-popular implementations, but bugs continue to be found. I happened to
-chat about this topic with David Benjamin (boringssl maintainer)
-recently, and his take was that timing side channels are a well
-understood problem meanwhile, but in practice few implementations get
-the details right. And the thing with high-resolution timestamps in
-traces is that it gives you a tool to observe timing differences
-closer to the source (so less noise) than if you just measure syscall
-latency from userspace. So, in theory you are right - data-dependent
-branches should not exist in crypto code, and if they do we should
-just fix them, since they're potentially exploitable already. In
-practice, timestamp information in tracing data can act as a
-magnifying glass that may well make a difference between whether a
-timing side channel is problematic in practice or not.
-
-> >
-> >
-> >> The analogy would be like of the victims and a perpetrator. Lets take
-> >> coresight
-> >> as an example for perpetrator and crypto as the victim here. Now we
-> >> can try
-> >
-> > There's no victim with branch tracing, unless it is already leaky.
-> >
-> >> If we just know one victim (lets say crypto code here), what happens
-> >> to the
-> >> others which we haven't identified yet? Do we just wait for someone to
-> >> write
-> >> an exploit based on this and then scramble to fix it?
-> >
-> > For a useful security mitigation you need a threat model first I would
-> > say.
-> >
-> > So you need to have at least some idea how an attack with branch
-> > tracing would work.
-> >
-> >
-> >> Initial change was to restrict this only to HW assisted instruction
-> >> tracing [1]
-> >
-> > I don't think it's needed for instruction tracing.
-> >
->
->  From what I know, newer ARM A-profile cores doesn't allow data tracing.
-> And you
-> are saying that just the instruction tracing cannot be used to infer any
-> important data.
->
-> There are few security folks in CC who probably can give us more details
-> on how
-> branch tracing can be used for an exploit. @mnissler?
->
-> Thanks,
-> Sai
->
-> --
-> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a
-> member
-> of Code Aurora Forum, hosted by The Linux Foundation
+-- 
+With best wishes
+Dmitry
