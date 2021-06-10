@@ -2,199 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 602DB3A23FD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jun 2021 07:25:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 199B73A2570
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jun 2021 09:26:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230312AbhFJF1L (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Jun 2021 01:27:11 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:55634 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230027AbhFJF1K (ORCPT
+        id S229778AbhFJH2x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Jun 2021 03:28:53 -0400
+Received: from mail.chalver.com.ec ([186.3.12.10]:31612 "EHLO
+        mail.chalver.com.ec" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229725AbhFJH2x (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Jun 2021 01:27:10 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1623302715; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=Bgf1x/nFWFQGqJpMO9ldu/lRRQ3GhGowilaUgKGPmUA=;
- b=EeWzjBDhR/7rX3NJoN94o3cnTFpWcfcJJpE0HFDfW6L1OT2tC4tpQo8g7x7lMR9x2XTU1d8y
- ireyGMvUU1xDrP5siM3HfdbXlt2g0VPjbaZGWwM9LA1druavlt6smFvPVqWzbJ4+aeCcbapk
- XaRePHGjhE0R+HSrWBVnTFWOJ3U=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
- 60c1a22ce27c0cc77f461e9a (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 10 Jun 2021 05:25:00
- GMT
-Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id DDBA7C43144; Thu, 10 Jun 2021 05:24:59 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 23D8BC4338A;
-        Thu, 10 Jun 2021 05:24:58 +0000 (UTC)
+        Thu, 10 Jun 2021 03:28:53 -0400
+X-Greylist: delayed 4234 seconds by postgrey-1.27 at vger.kernel.org; Thu, 10 Jun 2021 03:28:52 EDT
+Received: from mail.chalver.com.ec (localhost.localdomain [127.0.0.1])
+        by mail.chalver.com.ec (Postfix) with ESMTPS id 5115E1F22DE4;
+        Thu, 10 Jun 2021 00:40:30 -0500 (ECT)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+        by mail.chalver.com.ec (Postfix) with ESMTP id 963041F22F2E;
+        Thu, 10 Jun 2021 00:28:41 -0500 (ECT)
+DKIM-Filter: OpenDKIM Filter v2.10.3 mail.chalver.com.ec 963041F22F2E
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=chalver.com.ec;
+        s=E2A417BC-DDA7-11E6-85F6-38495636B764; t=1623302921;
+        bh=PxMh0SAMbBGlctefOH2OhvTlJNlHw25bONEEE7Ldp0I=;
+        h=MIME-Version:To:From:Date:Message-Id;
+        b=OCjnMQHDCGbPo6sEFXWkxAlRTaZM8M572xIa7x4l6pwRbo94aaNBCjHBcAeLDiOU6
+         C0oyUSuU/EIn46RJhfHx17VJUGmUDwiUUmAZ6Nn2rEOI4UAz/fWLj9X21txsOrse9H
+         GNmdrEkcrpQfPhA837Hd1mclIafD/EuC2HR8CYECJ7832SyoOooMxsajrnvnv1+v3T
+         YgrVcpYHgOPyXy/bdyr56sqjsz9dPrmrE1G8EbbCboLa7I0tFNePiWSO/HvgwzL8P5
+         wdBkWu1EtiRApV0zG+vGhQPEAnRZn7U2VAuPg760Du+N3Fs9vadWx8ccgJ2MWClF8R
+         IjpwHyQX8i4Gw==
+X-Virus-Scanned: amavisd-new at chalver.com.ec
+Received: from mail.chalver.com.ec ([127.0.0.1])
+        by localhost (mail.chalver.com.ec [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id Mvhuc-WFVVRo; Thu, 10 Jun 2021 00:28:41 -0500 (ECT)
+Received: from cris-PC.wifi (unknown [105.9.120.116])
+        by mail.chalver.com.ec (Postfix) with ESMTPSA id 2B3EF1F22F0F;
+        Thu, 10 Jun 2021 00:28:32 -0500 (ECT)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Thu, 10 Jun 2021 10:54:58 +0530
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Robin Murphy <robin.murphy@arm.com>
-Cc:     Will Deacon <will@kernel.org>, Joerg Roedel <joro@8bytes.org>,
-        iommu@lists.linux-foundation.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] iommu/io-pgtable-arm: Optimize partial walk flush for
- large scatter-gather list
-In-Reply-To: <dbcd394a-4d85-316c-5dd0-033546a66132@arm.com>
-References: <20210609145315.25750-1-saiprakash.ranjan@codeaurora.org>
- <dbcd394a-4d85-316c-5dd0-033546a66132@arm.com>
-Message-ID: <c600e9b2534d54082a5272b508a7985f@codeaurora.org>
-X-Sender: saiprakash.ranjan@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Transfer-Encoding: quoted-printable
+Content-Description: Mail message body
+Subject: =?utf-8?q?Covid_19_Wohlt=C3=A4tigkeitsfonds?=
+To:     Recipients <mpaucar@chalver.com.ec>
+From:   ''Tayeb souami'' <mpaucar@chalver.com.ec>
+Date:   Thu, 10 Jun 2021 07:35:45 +0200
+Reply-To: Tayebsouam.spende@gmail.com
+Message-Id: <20210610052833.2B3EF1F22F0F@mail.chalver.com.ec>
+X-Laboratorios-Chalver-MailScanner-Information: Please contact the ISP for more information
+X-Laboratorios-Chalver-MailScanner-ID: 2B3EF1F22F0F.A228F
+X-Laboratorios-Chalver-MailScanner: Not scanned: please contact your Internet E-Mail Service Provider for details
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Robin,
 
-On 2021-06-10 00:14, Robin Murphy wrote:
-> On 2021-06-09 15:53, Sai Prakash Ranjan wrote:
->> Currently for iommu_unmap() of large scatter-gather list with page 
->> size
->> elements, the majority of time is spent in flushing of partial walks 
->> in
->> __arm_lpae_unmap() which is a VA based TLB invalidation (TLBIVA for
->> arm-smmu).
->> 
->> For example: to unmap a 32MB scatter-gather list with page size 
->> elements
->> (8192 entries), there are 16->2MB buffer unmaps based on the pgsize 
->> (2MB
->> for 4K granule) and each of 2MB will further result in 512 TLBIVAs 
->> (2MB/4K)
->> resulting in a total of 8192 TLBIVAs (512*16) for 16->2MB causing a 
->> huge
->> overhead.
->> 
->> So instead use io_pgtable_tlb_flush_all() to invalidate the entire 
->> context
->> if size (pgsize) is greater than the granule size (4K, 16K, 64K). For 
->> this
->> example of 32MB scatter-gather list unmap, this results in just 16 
->> ASID
->> based TLB invalidations or tlb_flush_all() callback (TLBIASID in case 
->> of
->> arm-smmu) as opposed to 8192 TLBIVAs thereby increasing the 
->> performance of
->> unmaps drastically.
->> 
->> Condition (size > granule size) is chosen for 
->> io_pgtable_tlb_flush_all()
->> because for any granule with supported pgsizes, we will have at least 
->> 512
->> TLB invalidations for which tlb_flush_all() is already recommended. 
->> For
->> example, take 4K granule with 2MB pgsize, this will result in 512 
->> TLBIVA
->> in partial walk flush.
->> 
->> Test on QTI SM8150 SoC for 10 iterations of iommu_{map_sg}/unmap:
->> (average over 10 iterations)
->> 
->> Before this optimization:
->> 
->>      size        iommu_map_sg      iommu_unmap
->>        4K            2.067 us         1.854 us
->>       64K            9.598 us         8.802 us
->>        1M          148.890 us       130.718 us
->>        2M          305.864 us        67.291 us
->>       12M         1793.604 us       390.838 us
->>       16M         2386.848 us       518.187 us
->>       24M         3563.296 us       775.989 us
->>       32M         4747.171 us      1033.364 us
->> 
->> After this optimization:
->> 
->>      size        iommu_map_sg      iommu_unmap
->>        4K            1.723 us         1.765 us
->>       64K            9.880 us         8.869 us
->>        1M          155.364 us       135.223 us
->>        2M          303.906 us         5.385 us
->>       12M         1786.557 us        21.250 us
->>       16M         2391.890 us        27.437 us
->>       24M         3570.895 us        39.937 us
->>       32M         4755.234 us        51.797 us
->> 
->> This is further reduced once the map/unmap_pages() support gets in 
->> which
->> will result in just 1 tlb_flush_all() as opposed to 16 
->> tlb_flush_all().
->> 
->> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
->> ---
->>   drivers/iommu/io-pgtable-arm.c | 7 +++++--
->>   1 file changed, 5 insertions(+), 2 deletions(-)
->> 
->> diff --git a/drivers/iommu/io-pgtable-arm.c 
->> b/drivers/iommu/io-pgtable-arm.c
->> index 87def58e79b5..c3cb9add3179 100644
->> --- a/drivers/iommu/io-pgtable-arm.c
->> +++ b/drivers/iommu/io-pgtable-arm.c
->> @@ -589,8 +589,11 @@ static size_t __arm_lpae_unmap(struct 
->> arm_lpae_io_pgtable *data,
->>     		if (!iopte_leaf(pte, lvl, iop->fmt)) {
->>   			/* Also flush any partial walks */
->> -			io_pgtable_tlb_flush_walk(iop, iova, size,
->> -						  ARM_LPAE_GRANULE(data));
->> +			if (size > ARM_LPAE_GRANULE(data))
->> +				io_pgtable_tlb_flush_all(iop);
->> +			else
-> 
-> Erm, when will the above condition ever not be true? ;)
-> 
+Lieber Freund,
 
-Ah right, silly me :)
+Ich bin Herr Tayeb Souami, New Jersey, Vereinigte Staaten von Amerika, der =
+Mega-Gewinner von $ 315million In Mega Millions Jackpot, spende ich an 5 zu=
+f=C3=A4llige Personen, wenn Sie diese E-Mail erhalten, dann wurde Ihre E-Ma=
+il nach einem Spinball ausgew=C3=A4hlt.Ich habe den gr=C3=B6=C3=9Ften Teil =
+meines Verm=C3=B6gens auf eine Reihe von Wohlt=C3=A4tigkeitsorganisationen =
+und Organisationen verteilt.Ich habe mich freiwillig dazu entschieden, die =
+Summe von =E2=82=AC 2.000.000,00 an Sie als eine der ausgew=C3=A4hlten 5 zu=
+ spenden, um meine Gewinne zu =C3=BCberpr=C3=BCfen, sehen Sie bitte meine Y=
+ou Tube Seite unten.
 
-> Taking a step back, though, what about the impact to drivers other
-> than SMMUv2?
+UHR MICH HIER: https://www.youtube.com/watch?v=3DZ6ui8ZDQ6Ks
 
-Other drivers would be msm_iommu.c, qcom_iommu.c which does the same
-thing as arm-smmu-v2 (page based invalidations), then there is 
-ipmmu-vmsa.c
-which does tlb_flush_all() for flush walk.
 
-> In particular I'm thinking of SMMUv3.2 where the whole
-> range can be invalidated by VA in a single command anyway, so the
-> additional penalties of TLBIALL are undesirable.
-> 
 
-Right, so I am thinking we can have a new generic quirk 
-IO_PGTABLE_QUIRK_RANGE_INV
-to choose between range based invalidations(tlb_flush_walk) and 
-tlb_flush_all().
-In this case of arm-smmu-v3.2, we can tie up ARM_SMMU_FEAT_RANGE_INV 
-with this quirk
-and have something like below, thoughts?
+Das ist dein Spendencode: [TS530342018]
 
-if (iop->cfg.quirks & IO_PGTABLE_QUIRK_RANGE_INV)
-         io_pgtable_tlb_flush_walk(iop, iova, size,
-                                   ARM_LPAE_GRANULE(data));
-else
-         io_pgtable_tlb_flush_all(iop);
 
-Thanks,
-Sai
 
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
-member
-of Code Aurora Forum, hosted by The Linux Foundation
+Antworten Sie mit dem SPENDE-CODE an diese
+
+E-Mail:Tayebsouam.spende@gmail.com
+
+
+Ich hoffe, Sie und Ihre Familie gl=C3=BCcklich zu machen.
+
+Gr=C3=BC=C3=9Fe
+Herr Tayeb Souami
