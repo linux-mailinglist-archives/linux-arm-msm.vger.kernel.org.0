@@ -2,41 +2,41 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 87AE33A2E9C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jun 2021 16:50:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 830213A2E98
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jun 2021 16:50:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231320AbhFJOwE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Jun 2021 10:52:04 -0400
-Received: from mail.kernel.org ([198.145.29.99]:36120 "EHLO mail.kernel.org"
+        id S231153AbhFJOwD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Jun 2021 10:52:03 -0400
+Received: from mail.kernel.org ([198.145.29.99]:36114 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231337AbhFJOwC (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        id S231320AbhFJOwC (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
         Thu, 10 Jun 2021 10:52:02 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPS id A2C7561403;
+Received: by mail.kernel.org (Postfix) with ESMTPS id 92489613FF;
         Thu, 10 Jun 2021 14:50:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1623336605;
-        bh=aeUzSv3RWvduDi38y+s95zkDTvxZXaVk9dtTFdmLtg0=;
+        bh=UvUbr1v62l4OE73CXvu0mGJrJUm7mIDZPd8GFGq0QLU=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=S+3cekheZCWedLb0wfYlUoqzh7vfjc16x/sG3lpuL0UGA3i40MI+PZTqabcRd7EJn
-         oPbp2pD/Ex6cDArYJhUogKHIVXjsV5yL0+TabiF98YgVA1rXiqoqV3W4dsT9Q7yZM2
-         Bf23ajs1ZVAYeB6v+WTkf6VFctJYmP4/09Paj5Uw/oDdpNA+4D6EYlEsMyasZivzoT
-         7ecJ2utryJgZ3W70eRCJfyh4r1XSmmfs5DMLCZHHGy6ZVV3gD4Z0Tj6eyUY4wtYeFZ
-         rlzOK6AQh8Ls4Evf4OH9tPQywp03y7hDV6IbMg8SQqugZwRuFfHc+sMup4wKVYqlAH
-         jfZCq6PP/M2Ow==
+        b=FeJcOEreyn5+vKvym6rxDGkDlmA6y3J6/GP9+XCTza0giz4RZkq76rYASVKwk3L7x
+         F7GJFNhW88huB+oHZebvkFEoqkh4/OcC3dbGyb8x+LDIm8T0EroY78gl0bRCRjI88C
+         CBVC7zLj/GEwgjnH6LWHIZX/1RXPawhD2TvNSuP4mS5ScNQmgrbqd0TbgSP2JPQqyo
+         GgokLj4ozmu3I1drZeTXxJhomePZfPPilQqyH4iFE8rvRs6k4OA56ibH5phCWOMg16
+         GL0Xwh4n4fWQWseJeZWvKOl8Jn6a9vL7f52NvotAGWone3NOKx/7fLB7X6eS/6Th+R
+         hWm5a1kWIA4LQ==
 Received: from pdx-korg-docbuild-2.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id 9A69B60CE2;
+        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id 898CF60952;
         Thu, 10 Jun 2021 14:50:05 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH] arm64: dts: qcom: sc7180: Modify SPI_CLK voltage level for
- trogdor
+Subject: Re: [PATCH v2] arm64: dts: qcom: pm6150: Add thermal zone for PMIC on-die
+ temperature
 From:   patchwork-bot+linux-arm-msm@kernel.org
-Message-Id: <162333660562.29297.2069366897696649782.git-patchwork-notify@kernel.org>
+Message-Id: <162333660555.29297.11042072370104295402.git-patchwork-notify@kernel.org>
 Date:   Thu, 10 Jun 2021 14:50:05 +0000
-References: <20210510075253.1.Ib4c296d6ff9819f26bcaf91e8a08729cc203fed0@changeid>
-In-Reply-To: <20210510075253.1.Ib4c296d6ff9819f26bcaf91e8a08729cc203fed0@changeid>
-To:     Doug Anderson <dianders@chromium.org>
+References: <20210603081215.v2.1.Id4510e9e4baaa3f6c9fdd5cdf4d8606e63c262e3@changeid>
+In-Reply-To: <20210603081215.v2.1.Id4510e9e4baaa3f6c9fdd5cdf4d8606e63c262e3@changeid>
+To:     Matthias Kaehlcke <mka@chromium.org>
 Cc:     linux-arm-msm@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -46,20 +46,19 @@ Hello:
 
 This patch was applied to qcom/linux.git (refs/heads/for-next):
 
-On Mon, 10 May 2021 07:53:12 -0700 you wrote:
-> From: Wenchao Han <hanwenchao@huaqin.corp-partner.google.com>
+On Thu,  3 Jun 2021 08:12:34 -0700 you wrote:
+> Add a thermal zone for the pm6150 on-die temperature. The system should
+> try to shut down orderly when the temperature reaches the critical trip
+> point at 115°C, otherwise the PMIC will perform a HW power off at 145°C.
 > 
-> On coachz it could be observed that SPI_CLK voltage level was only
-> 1.4V during active transfers because the drive strength was too
-> weak. The line hadn't finished slewing up by the time we started
-> driving it down again. Using a drive strength of 8 lets us achieve the
-> correct voltage level of 1.8V.
+> Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
+> ---
 > 
 > [...]
 
 Here is the summary with links:
-  - arm64: dts: qcom: sc7180: Modify SPI_CLK voltage level for trogdor
-    https://git.kernel.org/qcom/c/abbe13a2ffd9
+  - [v2] arm64: dts: qcom: pm6150: Add thermal zone for PMIC on-die temperature
+    https://git.kernel.org/qcom/c/eb59cd3e3983
 
 You are awesome, thank you!
 --
