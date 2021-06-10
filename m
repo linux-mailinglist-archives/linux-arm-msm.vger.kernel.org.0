@@ -2,41 +2,40 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 830213A2E98
+	by mail.lfdr.de (Postfix) with ESMTP id 392383A2E97
 	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jun 2021 16:50:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231153AbhFJOwD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S231180AbhFJOwD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Thu, 10 Jun 2021 10:52:03 -0400
-Received: from mail.kernel.org ([198.145.29.99]:36114 "EHLO mail.kernel.org"
+Received: from mail.kernel.org ([198.145.29.99]:36094 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231320AbhFJOwC (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Jun 2021 10:52:02 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPS id 92489613FF;
+        id S231153AbhFJOwB (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 10 Jun 2021 10:52:01 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPS id 731F76128A;
         Thu, 10 Jun 2021 14:50:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1623336605;
-        bh=UvUbr1v62l4OE73CXvu0mGJrJUm7mIDZPd8GFGq0QLU=;
+        bh=dfL0ss4MorwF0xCo+aM7L2ayK93I7kLMFEtFA7kbigU=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=FeJcOEreyn5+vKvym6rxDGkDlmA6y3J6/GP9+XCTza0giz4RZkq76rYASVKwk3L7x
-         F7GJFNhW88huB+oHZebvkFEoqkh4/OcC3dbGyb8x+LDIm8T0EroY78gl0bRCRjI88C
-         CBVC7zLj/GEwgjnH6LWHIZX/1RXPawhD2TvNSuP4mS5ScNQmgrbqd0TbgSP2JPQqyo
-         GgokLj4ozmu3I1drZeTXxJhomePZfPPilQqyH4iFE8rvRs6k4OA56ibH5phCWOMg16
-         GL0Xwh4n4fWQWseJeZWvKOl8Jn6a9vL7f52NvotAGWone3NOKx/7fLB7X6eS/6Th+R
-         hWm5a1kWIA4LQ==
+        b=X858zOrFnjyn8TLCoN7whk9VR252S+dcV4ByGcAQsxa0WafaVcolkXSFw2pu+ln+n
+         Sku1vfVlBd4MU52FG7pBkGo5s27wLBheyVVl2sHyEX/5hjBUfRphy8ceZZaLfviOVx
+         W4cKS92lYW9yxZabuCmtgaM9zUr0jPNVfrXb7pFoxN+0zv0HVN8sK+ropZinj79X4c
+         NuH/za76NV01roRaAwGqEczUBHTxBMOup43UgZOiq253tYFUSv0nE83RoBhPSViESt
+         VY4Axk7LBAMAgtEVz5/zoVOvB4wCFPT0gMNW19IH+l2v02LT7K35VFfy5PbfNYgUnQ
+         n+LVjkgNXJSiQ==
 Received: from pdx-korg-docbuild-2.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id 898CF60952;
+        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id 693D360D02;
         Thu, 10 Jun 2021 14:50:05 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v2] arm64: dts: qcom: pm6150: Add thermal zone for PMIC on-die
- temperature
+Subject: Re: [PATCH] arm64: dts: qcom: Disable PON on Trogdor
 From:   patchwork-bot+linux-arm-msm@kernel.org
-Message-Id: <162333660555.29297.11042072370104295402.git-patchwork-notify@kernel.org>
+Message-Id: <162333660542.29297.13756230208146511861.git-patchwork-notify@kernel.org>
 Date:   Thu, 10 Jun 2021 14:50:05 +0000
-References: <20210603081215.v2.1.Id4510e9e4baaa3f6c9fdd5cdf4d8606e63c262e3@changeid>
-In-Reply-To: <20210603081215.v2.1.Id4510e9e4baaa3f6c9fdd5cdf4d8606e63c262e3@changeid>
-To:     Matthias Kaehlcke <mka@chromium.org>
+References: <20210601184417.3020834-1-swboyd@chromium.org>
+In-Reply-To: <20210601184417.3020834-1-swboyd@chromium.org>
+To:     Stephen Boyd <swboyd@chromium.org>
 Cc:     linux-arm-msm@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -46,19 +45,21 @@ Hello:
 
 This patch was applied to qcom/linux.git (refs/heads/for-next):
 
-On Thu,  3 Jun 2021 08:12:34 -0700 you wrote:
-> Add a thermal zone for the pm6150 on-die temperature. The system should
-> try to shut down orderly when the temperature reaches the critical trip
-> point at 115°C, otherwise the PMIC will perform a HW power off at 145°C.
+On Tue,  1 Jun 2021 11:44:17 -0700 you wrote:
+> We don't use the PON module on Trogdor devices. Instead the reboot
+> reason is sort of stored in the 'eventlog' and the bootloader figures
+> out if the boot is abnormal and records that there. Disable the PON node
+> and then drop the power key disabling because that's a child node that
+> will no longer be enabled if the PON node is disabled.
 > 
-> Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
-> ---
+> Cc: Douglas Anderson <dianders@chromium.org>
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 > 
 > [...]
 
 Here is the summary with links:
-  - [v2] arm64: dts: qcom: pm6150: Add thermal zone for PMIC on-die temperature
-    https://git.kernel.org/qcom/c/eb59cd3e3983
+  - arm64: dts: qcom: Disable PON on Trogdor
+    https://git.kernel.org/qcom/c/d141e0524e8e
 
 You are awesome, thank you!
 --
