@@ -2,157 +2,148 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D757A3A3090
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jun 2021 18:25:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3D4093A30C0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jun 2021 18:35:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230167AbhFJQ13 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Jun 2021 12:27:29 -0400
-Received: from mail-ot1-f48.google.com ([209.85.210.48]:42804 "EHLO
-        mail-ot1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229963AbhFJQ13 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Jun 2021 12:27:29 -0400
-Received: by mail-ot1-f48.google.com with SMTP id w23-20020a9d5a970000b02903d0ef989477so231601oth.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Jun 2021 09:25:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=9/DjL0W8Kwc85dQlaMu4c0C34K4lltZtD4h1qCOOSvA=;
-        b=GaLND5jkIwSD9jqV/WpZxE4UH/wDlAtJgzmNhw2y3/Yik2Y7wRnhsf/Hpa3prXNU7l
-         gOgNYfJiFmKSO9ODUjt3FSMB/O6WZ1Gm3Nboha3ZyMK95v+F+QnXMtZkfnroSEUrMN9l
-         bEEi6880t7FZkekAemX8VzWlnIFCmyPHSwEtuyWP7ocptfO3Hu1nYtjimy2k07sbT91y
-         YpxFzEg5lGlY3EIesAAHzKt14IeQ03eqDNzAk6TwT37z+djMaP1rpZh0eq7AKkLY0is2
-         HKOmZCvdkUp6rxWv8g993B086e1HnTBKRe185Vjai1/1c/ioY+HXhbhMJWV4z67FNUkC
-         GAog==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=9/DjL0W8Kwc85dQlaMu4c0C34K4lltZtD4h1qCOOSvA=;
-        b=h168M7qwSmGfWKU6XvGPyRDNgyqUMa6k/gGwnypD68+mFY49HEr2Y4ksE8Cng62oI1
-         kt+LaqOwfVO4VHT0WfWvGZvteM4ABS4qewZns24rW5e/5S0v2QFJqrBf2/y9ynhyBsyX
-         tAi9QZ5er5xHD3uex1l2WIEbW3xcNfXmjjneEs8LucW7tMdxJIwCoZDexRRpZOdjkj/x
-         RJzFQtVRclnO/3FyhAEDzAYehYOt3prF/dCaJpcGV1vLJAaBfD3f4tLkDAQT8KPsjXsv
-         uUhSxw911SOsq+9PgFwgjwcsmbiGrWjkO4R15LnqksAfo437akD3GqCO0iEoTQ85S5c9
-         WIgA==
-X-Gm-Message-State: AOAM532lLJEfN/ylWXL9DFi37Lc35Q/ZzenTmi0isgKdNr3yVXqSeRnJ
-        kLJAP5996qtaZ9vHkghB6ix0tw==
-X-Google-Smtp-Source: ABdhPJwfnxifl7NsnrkIcbZ5Me40GCrphfoKbb7052rshFeC50yHN9obmyMANzozB5bwc0TkY/3uqw==
-X-Received: by 2002:a05:6830:18c2:: with SMTP id v2mr3042879ote.153.1623342272660;
-        Thu, 10 Jun 2021 09:24:32 -0700 (PDT)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id y16sm694225oto.60.2021.06.10.09.24.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Jun 2021 09:24:32 -0700 (PDT)
-Date:   Thu, 10 Jun 2021 11:24:30 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        martin.botka@somainline.org,
-        angelogioacchino.delregno@somainline.org,
-        marijn.suijten@somainline.org, Andy Gross <agross@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] regulator: qcom_smd: Fix up PM8950 regulator
- configuration
-Message-ID: <YMI8vopmXGb3Hl+G@builder.lan>
-References: <20210225213745.117498-1-konrad.dybcio@somainline.org>
+        id S230117AbhFJQhC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Jun 2021 12:37:02 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:53138 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229823AbhFJQhB (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 10 Jun 2021 12:37:01 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1623342905; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=c6pthFlaDomDCwRq3vO77ujf4RqY/JN1SN6iLy8Se2s=;
+ b=XClIqK0b512mh25gSIflxDSI3X1vCICFngZJTQwoLBeQx9arIrJQGlCWUBPiyOpMP25VvdqO
+ v1mxAYZ0U4Gkd5BXHM393sAOZ2xBOm81CovV56RxF0DP6GzR0g2IgVmQZm3jfzX/XzouArgE
+ WVzGaXzfcIyexBsll34vOHSbaiY=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
+ 60c23f1be27c0cc77f9dd193 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 10 Jun 2021 16:34:35
+ GMT
+Sender: abhinavk=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id E95F8C43143; Thu, 10 Jun 2021 16:34:34 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: abhinavk)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id EAF7CC433D3;
+        Thu, 10 Jun 2021 16:34:33 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210225213745.117498-1-konrad.dybcio@somainline.org>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Thu, 10 Jun 2021 09:34:33 -0700
+From:   abhinavk@codeaurora.org
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        freedreno@lists.freedesktop.org
+Subject: Re: [Freedreno] [PATCH 0/8] dsi: rework clock parents and timing
+ handling
+In-Reply-To: <71839b49-554c-fcc4-d110-0c8a49905413@linaro.org>
+References: <20210515131217.1540412-1-dmitry.baryshkov@linaro.org>
+ <71839b49-554c-fcc4-d110-0c8a49905413@linaro.org>
+Message-ID: <acc08fd48c98af3007ad3d8d810ff335@codeaurora.org>
+X-Sender: abhinavk@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 25 Feb 15:37 CST 2021, Konrad Dybcio wrote:
+Hi Dmitry
 
-> Following changes have been made:
+I will take a look at this next week for sure.
+
+Thanks
+
+Abhinav
+On 2021-06-10 06:48, Dmitry Baryshkov wrote:
+> On 15/05/2021 16:12, Dmitry Baryshkov wrote:
+>> This patch series brings back several patches targeting assigning 
+>> dispcc
+>> clock parents, that were removed from the massive dsi rework patchset
+>> earlier.
 > 
-> - S5, L4, L18, L20 and L21 were removed (S5 is managed by
-> SPMI, whereas the rest seems not to exist [or at least it's blocked
-> by Sony Loire /MSM8956/ RPM firmware])
+> Gracious ping for this series. I'd ask to skip patch 8 for now (as we
+> might bring that back for moving PHY to drivers/phy), but patches 1-7
+> are still valid and pending review/acceptance.
 > 
-> - Supply maps have were adjusted to reflect regulator changes.
-
-Please describe why, not what in your commit message.
-
-> 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-> ---
->  drivers/regulator/qcom_smd-regulator.c | 35 +++++++++++++-------------
->  1 file changed, 17 insertions(+), 18 deletions(-)
-> 
-> diff --git a/drivers/regulator/qcom_smd-regulator.c b/drivers/regulator/qcom_smd-regulator.c
-> index bb944ee5fe3b..5188f58b4718 100644
-> --- a/drivers/regulator/qcom_smd-regulator.c
-> +++ b/drivers/regulator/qcom_smd-regulator.c
-> @@ -843,32 +843,31 @@ static const struct rpm_regulator_data rpm_pm8950_regulators[] = {
->  	{ "s2", QCOM_SMD_RPM_SMPA, 2, &pm8950_hfsmps, "vdd_s2" },
->  	{ "s3", QCOM_SMD_RPM_SMPA, 3, &pm8950_hfsmps, "vdd_s3" },
->  	{ "s4", QCOM_SMD_RPM_SMPA, 4, &pm8950_hfsmps, "vdd_s4" },
-> -	{ "s5", QCOM_SMD_RPM_SMPA, 5, &pm8950_ftsmps2p5, "vdd_s5" },
-> +	/* S5 is managed via SPMI. */
-
-Why isn't it sufficient to just omit s5 from DT then?
-
->  	{ "s6", QCOM_SMD_RPM_SMPA, 6, &pm8950_hfsmps, "vdd_s6" },
->  
->  	{ "l1", QCOM_SMD_RPM_LDOA, 1, &pm8950_ult_nldo, "vdd_l1_l19" },
->  	{ "l2", QCOM_SMD_RPM_LDOA, 2, &pm8950_ult_nldo, "vdd_l2_l23" },
->  	{ "l3", QCOM_SMD_RPM_LDOA, 3, &pm8950_ult_nldo, "vdd_l3" },
-> -	{ "l4", QCOM_SMD_RPM_LDOA, 4, &pm8950_ult_pldo, "vdd_l4_l5_l6_l7_l16" },
-> -	{ "l5", QCOM_SMD_RPM_LDOA, 5, &pm8950_pldo_lv, "vdd_l4_l5_l6_l7_l16" },
-> -	{ "l6", QCOM_SMD_RPM_LDOA, 6, &pm8950_pldo_lv, "vdd_l4_l5_l6_l7_l16" },
-> -	{ "l7", QCOM_SMD_RPM_LDOA, 7, &pm8950_pldo_lv, "vdd_l4_l5_l6_l7_l16" },
-> +	/* L4 seems not to exist. */
-
-No LDO4 at all? Or it's one of those regulators where the RPM interface
-just says no (in your firmware)?
-
-> +	{ "l5", QCOM_SMD_RPM_LDOA, 5, &pm8950_pldo_lv, "vdd_l5_l6_l7_l16" },
-
-The fact that it's not possible to modify l4 doesn't mean that the input
-pin isn't named  "vdd_l4_l5...".
-
-Regards,
-Bjorn
-
-> +	{ "l6", QCOM_SMD_RPM_LDOA, 6, &pm8950_pldo_lv, "vdd_l5_l6_l7_l16" },
-> +	{ "l7", QCOM_SMD_RPM_LDOA, 7, &pm8950_pldo_lv, "vdd_l5_l6_l7_l16" },
->  	{ "l8", QCOM_SMD_RPM_LDOA, 8, &pm8950_ult_pldo, "vdd_l8_l11_l12_l17_l22" },
->  	{ "l9", QCOM_SMD_RPM_LDOA, 9, &pm8950_ult_pldo, "vdd_l9_l10_l13_l14_l15_l18" },
->  	{ "l10", QCOM_SMD_RPM_LDOA, 10, &pm8950_ult_nldo, "vdd_l9_l10_l13_l14_l15_l18"},
-> -	{ "l11", QCOM_SMD_RPM_LDOA, 11, &pm8950_ult_pldo, "vdd_l8_l11_l12_l17_l22"},
-> -	{ "l12", QCOM_SMD_RPM_LDOA, 12, &pm8950_ult_pldo, "vdd_l8_l11_l12_l17_l22"},
-> -	{ "l13", QCOM_SMD_RPM_LDOA, 13, &pm8950_ult_pldo, "vdd_l9_l10_l13_l14_l15_l18"},
-> -	{ "l14", QCOM_SMD_RPM_LDOA, 14, &pm8950_ult_pldo, "vdd_l9_l10_l13_l14_l15_l18"},
-> -	{ "l15", QCOM_SMD_RPM_LDOA, 15, &pm8950_ult_pldo, "vdd_l9_l10_l13_l14_l15_l18"},
-> -	{ "l16", QCOM_SMD_RPM_LDOA, 16, &pm8950_ult_pldo, "vdd_l4_l5_l6_l7_l16"},
-> -	{ "l17", QCOM_SMD_RPM_LDOA, 17, &pm8950_ult_pldo, "vdd_l8_l11_l12_l17_l22"},
-> -	{ "l18", QCOM_SMD_RPM_LDOA, 18, &pm8950_ult_pldo, "vdd_l9_l10_l13_l14_l15_l18"},
-> -	{ "l19", QCOM_SMD_RPM_LDOA, 18, &pm8950_pldo, "vdd_l1_l19"},
-> -	{ "l20", QCOM_SMD_RPM_LDOA, 18, &pm8950_pldo, "vdd_l20"},
-> -	{ "l21", QCOM_SMD_RPM_LDOA, 18, &pm8950_pldo, "vdd_l21"},
-> -	{ "l22", QCOM_SMD_RPM_LDOA, 18, &pm8950_pldo, "vdd_l8_l11_l12_l17_l22"},
-> -	{ "l23", QCOM_SMD_RPM_LDOA, 18, &pm8950_pldo, "vdd_l2_l23"},
-> +	{ "l11", QCOM_SMD_RPM_LDOA, 11, &pm8950_ult_pldo, "vdd_l8_l11_l12_l17_l22" },
-> +	{ "l12", QCOM_SMD_RPM_LDOA, 12, &pm8950_ult_pldo, "vdd_l8_l11_l12_l17_l22" },
-> +	{ "l13", QCOM_SMD_RPM_LDOA, 13, &pm8950_ult_pldo, "vdd_l9_l10_l13_l14_l15_l18" },
-> +	{ "l14", QCOM_SMD_RPM_LDOA, 14, &pm8950_ult_pldo, "vdd_l9_l10_l13_l14_l15_l18" },
-> +	{ "l15", QCOM_SMD_RPM_LDOA, 15, &pm8950_ult_pldo, "vdd_l9_l10_l13_l14_l15_l18" },
-> +	{ "l16", QCOM_SMD_RPM_LDOA, 16, &pm8950_ult_pldo, "vdd_l5_l6_l7_l16" },
-> +	{ "l17", QCOM_SMD_RPM_LDOA, 17, &pm8950_ult_pldo, "vdd_l8_l11_l12_l17_l22" },
-> +	/* L18 seems not to exist. */
-> +	{ "l19", QCOM_SMD_RPM_LDOA, 19, &pm8950_pldo, "vdd_l1_l19" },
-> +	/* L20 & L21 seem not to exist. */
-> +	{ "l22", QCOM_SMD_RPM_LDOA, 22, &pm8950_pldo, "vdd_l8_l11_l12_l17_l22" },
-> +	{ "l23", QCOM_SMD_RPM_LDOA, 23, &pm8950_pldo, "vdd_l2_l23" },
->  	{}
->  };
->  
-> -- 
-> 2.30.1
-> 
+>> 
+>> Few notes:
+>>   - assign-clock-parents is a mandatory proprety according to the 
+>> current
+>>     dsi.txt description.
+>>   - There is little point in duplicating this functionality with the 
+>> ad-hoc
+>>     implementation in the dsi code.
+>> 
+>> On top of that come few minor cleanups for the DSI PHY drivers.
+>> 
+>> I'd kindly ask to bring all dts changes also through the drm tree, so
+>> that there won't be any breakage of the functionality.
+>> 
+>> 
+>> The following changes since commit 
+>> f2f46b878777e0d3f885c7ddad48f477b4dea247:
+>> 
+>>    drm/msm/dp: initialize audio_comp when audio starts (2021-05-06 
+>> 16:26:57 -0700)
+>> 
+>> are available in the Git repository at:
+>> 
+>>    https://git.linaro.org/people/dmitry.baryshkov/kernel.git 
+>> dsi-phy-update
+>> 
+>> for you to fetch changes up to 
+>> f1fd3b113cbb98febad682fc11ea1c6e717434c2:
+>> 
+>>    drm/msm/dsi: remove msm_dsi_dphy_timing from msm_dsi_phy 
+>> (2021-05-14 22:55:11 +0300)
+>> 
+>> ----------------------------------------------------------------
+>> Dmitry Baryshkov (8):
+>>        arm64: dts: qcom: sc7180: assign DSI clock source parents
+>>        arm64: dts: qcom: sdm845: assign DSI clock source parents
+>>        arm64: dts: qcom: sdm845-mtp: assign DSI clock source parents
+>>        arm64: dts: qcom: sm8250: assign DSI clock source parents
+>>        drm/msm/dsi: stop setting clock parents manually
+>>        drm/msm/dsi: phy: use of_device_get_match_data
+>>        drm/msm/dsi: drop msm_dsi_phy_get_shared_timings
+>>        drm/msm/dsi: remove msm_dsi_dphy_timing from msm_dsi_phy
+>> 
+>>   arch/arm64/boot/dts/qcom/sc7180.dtsi            |  3 ++
+>>   arch/arm64/boot/dts/qcom/sdm845-mtp.dts         |  3 ++
+>>   arch/arm64/boot/dts/qcom/sdm845.dtsi            |  6 +++
+>>   arch/arm64/boot/dts/qcom/sm8250.dtsi            |  6 +++
+>>   drivers/gpu/drm/msm/dsi/dsi.h                   |  7 +---
+>>   drivers/gpu/drm/msm/dsi/dsi_host.c              | 51 
+>> -------------------------
+>>   drivers/gpu/drm/msm/dsi/dsi_manager.c           |  8 +---
+>>   drivers/gpu/drm/msm/dsi/phy/dsi_phy.c           | 46 
+>> ++++++++++------------
+>>   drivers/gpu/drm/msm/dsi/phy/dsi_phy.h           | 10 ++++-
+>>   drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c      | 11 ++----
+>>   drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c      | 11 ++----
+>>   drivers/gpu/drm/msm/dsi/phy/dsi_phy_20nm.c      | 10 +----
+>>   drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c      | 12 ++----
+>>   drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c | 10 +----
+>>   drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c       | 13 ++-----
+>>   15 files changed, 67 insertions(+), 140 deletions(-)
+>> 
+>> 
