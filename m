@@ -2,333 +2,267 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 691FB3A2EBB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jun 2021 16:56:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 15DF93A2F50
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jun 2021 17:29:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230298AbhFJO6b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Jun 2021 10:58:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51868 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231339AbhFJO6a (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Jun 2021 10:58:30 -0400
-Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [IPv6:2001:4b98:dc2:55:216:3eff:fef7:d647])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 377F0C061574;
-        Thu, 10 Jun 2021 07:56:34 -0700 (PDT)
-Received: from deskari.lan (91-158-153-130.elisa-laajakaista.fi [91.158.153.130])
-        by perceval.ideasonboard.com (Postfix) with ESMTPSA id 1173E8D4;
-        Thu, 10 Jun 2021 16:56:27 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-        s=mail; t=1623336990;
-        bh=SxEgL8cnLpb/jRlWgIpmg8TG8eHiIpa6PqahE1+yfYo=;
-        h=From:To:Cc:Subject:Date:From;
-        b=i/ZTfIZCBdUt08Ou/la3+E1RRfVNCCGWKugSMFIm6n1Pf4FfRR+QYvuIDoVHu/4HR
-         nojyo9LdzeqRj/ubUvTKI6/klykqWoGnBgYFZfW6ElzMxulG5zr/4tSmoGZwIAFhMt
-         cSU0kP4EectyzL7nrMPmBjVW+MwR/RLeJfsyGu0I=
-From:   Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-To:     linux-media@vger.kernel.org,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Hans Verkuil <hverkuil@xs4all.nl>,
-        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-        Sakari Ailus <sakari.ailus@linux.intel.com>
-Cc:     Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-        Andrzej Hajda <a.hajda@samsung.com>,
-        Sylwester Nawrocki <sylvester.nawrocki@gmail.com>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Kieran Bingham <kieran.bingham@ideasonboard.com>,
-        Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-        Pavel Machek <pavel@ucw.cz>, Shawn Tu <shawnx.tu@intel.com>,
-        Ricardo Ribalda <ribalda@kernel.org>,
-        Dave Stevenson <dave.stevenson@raspberrypi.com>,
-        Leon Luo <leonl@leopardimaging.com>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Bingbu Cao <bingbu.cao@intel.com>,
-        "Paul J. Murphy" <paul.j.murphy@intel.com>,
-        Daniele Alessandrelli <daniele.alessandrelli@intel.com>,
-        Tianshu Qiu <tian.shu.qiu@intel.com>,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        Heungjun Kim <riverful.kim@samsung.com>,
-        Jacopo Mondi <jacopo+renesas@jmondi.org>,
-        Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-        =?UTF-8?q?Niklas=20S=C3=B6derlund?= 
-        <niklas.soderlund+renesas@ragnatech.se>,
-        Dongchun Zhu <dongchun.zhu@mediatek.com>,
-        "Lad, Prabhakar" <prabhakar.csengg@gmail.com>,
-        Rui Miguel Silva <rmfrfs@gmail.com>,
-        Shunqian Zheng <zhengsq@rock-chips.com>,
-        Steve Longerbeam <slongerbeam@gmail.com>,
-        Chiranjeevi Rapolu <chiranjeevi.rapolu@intel.com>,
-        Hyungwoo Yang <hyungwoo.yang@intel.com>,
-        Wenyou Yang <wenyou.yang@microchip.com>,
-        Petr Cvek <petrcvekcz@gmail.com>,
-        Akinobu Mita <akinobu.mita@gmail.com>,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        Mickael Guene <mickael.guene@st.com>,
-        Mats Randgaard <matrandg@cisco.com>,
-        Tim Harvey <tharvey@gateworks.com>,
-        Andy Walls <awalls@md.metrocast.net>,
-        Yong Zhi <yong.zhi@intel.com>,
-        Dan Scally <djrscally@gmail.com>,
-        Eugen Hristev <eugen.hristev@microchip.com>,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Ludovic Desroches <ludovic.desroches@microchip.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
-        Robert Foss <robert.foss@linaro.org>,
-        Todor Tomov <todor.too@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        =?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund@ragnatech.se>,
-        Jacopo Mondi <jacopo@jmondi.org>,
-        Helen Koike <helen.koike@collabora.com>,
-        Dafna Hirschfeld <dafna.hirschfeld@collabora.com>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Hugues Fruchet <hugues.fruchet@foss.st.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Benoit Parrot <bparrot@ti.com>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
-        Hyun Kwon <hyun.kwon@xilinx.com>,
-        Michal Simek <michal.simek@xilinx.com>,
+        id S231423AbhFJPbq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Jun 2021 11:31:46 -0400
+Received: from foss.arm.com ([217.140.110.172]:34602 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231365AbhFJPbq (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 10 Jun 2021 11:31:46 -0400
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id A1EE4106F;
+        Thu, 10 Jun 2021 08:29:49 -0700 (PDT)
+Received: from [10.57.6.115] (unknown [10.57.6.115])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 4E1B13F719;
+        Thu, 10 Jun 2021 08:29:48 -0700 (PDT)
+Subject: Re: [PATCH] iommu/io-pgtable-arm: Optimize partial walk flush for
+ large scatter-gather list
+To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        iommu@lists.linux-foundation.org, Will Deacon <will@kernel.org>,
         linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-renesas-soc@vger.kernel.org,
-        linux-rockchip@lists.infradead.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-sunxi@lists.linux.dev,
-        Shuah Khan <skhan@linuxfoundation.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Sowjanya Komatineni <skomatineni@nvidia.com>
-Subject: [PATCH v5 0/9] media: v4l2-subdev: add subdev-wide state struct
-Date:   Thu, 10 Jun 2021 17:55:57 +0300
-Message-Id: <20210610145606.3468235-1-tomi.valkeinen@ideasonboard.com>
-X-Mailer: git-send-email 2.25.1
+        Thierry Reding <treding@nvidia.com>,
+        Krishna Reddy <vdumpa@nvidia.com>
+References: <20210609145315.25750-1-saiprakash.ranjan@codeaurora.org>
+ <dbcd394a-4d85-316c-5dd0-033546a66132@arm.com>
+ <c600e9b2534d54082a5272b508a7985f@codeaurora.org>
+ <35bfd245-45e2-8083-b620-330d6dbd7bd7@arm.com>
+ <12067ffb8243b220cf03e83aaac3e823@codeaurora.org>
+ <266f190e-99ae-9175-cf13-7a77730af389@arm.com>
+ <dfdabcdec99a4c6e3bf2b3c5eebe067f@codeaurora.org>
+From:   Robin Murphy <robin.murphy@arm.com>
+Message-ID: <61c69d23-324a-85d7-2458-dfff8df9280b@arm.com>
+Date:   Thu, 10 Jun 2021 16:29:43 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.1
 MIME-Version: 1.0
+In-Reply-To: <dfdabcdec99a4c6e3bf2b3c5eebe067f@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On 2021-06-10 12:54, Sai Prakash Ranjan wrote:
+> Hi Robin,
+> 
+> On 2021-06-10 17:03, Robin Murphy wrote:
+>> On 2021-06-10 10:36, Sai Prakash Ranjan wrote:
+>>> Hi Robin,
+>>>
+>>> On 2021-06-10 14:38, Robin Murphy wrote:
+>>>> On 2021-06-10 06:24, Sai Prakash Ranjan wrote:
+>>>>> Hi Robin,
+>>>>>
+>>>>> On 2021-06-10 00:14, Robin Murphy wrote:
+>>>>>> On 2021-06-09 15:53, Sai Prakash Ranjan wrote:
+>>>>>>> Currently for iommu_unmap() of large scatter-gather list with 
+>>>>>>> page size
+>>>>>>> elements, the majority of time is spent in flushing of partial 
+>>>>>>> walks in
+>>>>>>> __arm_lpae_unmap() which is a VA based TLB invalidation (TLBIVA for
+>>>>>>> arm-smmu).
+>>>>>>>
+>>>>>>> For example: to unmap a 32MB scatter-gather list with page size 
+>>>>>>> elements
+>>>>>>> (8192 entries), there are 16->2MB buffer unmaps based on the 
+>>>>>>> pgsize (2MB
+>>>>>>> for 4K granule) and each of 2MB will further result in 512 
+>>>>>>> TLBIVAs (2MB/4K)
+>>>>>>> resulting in a total of 8192 TLBIVAs (512*16) for 16->2MB causing 
+>>>>>>> a huge
+>>>>>>> overhead.
+>>>>>>>
+>>>>>>> So instead use io_pgtable_tlb_flush_all() to invalidate the 
+>>>>>>> entire context
+>>>>>>> if size (pgsize) is greater than the granule size (4K, 16K, 64K). 
+>>>>>>> For this
+>>>>>>> example of 32MB scatter-gather list unmap, this results in just 
+>>>>>>> 16 ASID
+>>>>>>> based TLB invalidations or tlb_flush_all() callback (TLBIASID in 
+>>>>>>> case of
+>>>>>>> arm-smmu) as opposed to 8192 TLBIVAs thereby increasing the 
+>>>>>>> performance of
+>>>>>>> unmaps drastically.
+>>>>>>>
+>>>>>>> Condition (size > granule size) is chosen for 
+>>>>>>> io_pgtable_tlb_flush_all()
+>>>>>>> because for any granule with supported pgsizes, we will have at 
+>>>>>>> least 512
+>>>>>>> TLB invalidations for which tlb_flush_all() is already 
+>>>>>>> recommended. For
+>>>>>>> example, take 4K granule with 2MB pgsize, this will result in 512 
+>>>>>>> TLBIVA
+>>>>>>> in partial walk flush.
+>>>>>>>
+>>>>>>> Test on QTI SM8150 SoC for 10 iterations of iommu_{map_sg}/unmap:
+>>>>>>> (average over 10 iterations)
+>>>>>>>
+>>>>>>> Before this optimization:
+>>>>>>>
+>>>>>>>      size        iommu_map_sg      iommu_unmap
+>>>>>>>        4K            2.067 us         1.854 us
+>>>>>>>       64K            9.598 us         8.802 us
+>>>>>>>        1M          148.890 us       130.718 us
+>>>>>>>        2M          305.864 us        67.291 us
+>>>>>>>       12M         1793.604 us       390.838 us
+>>>>>>>       16M         2386.848 us       518.187 us
+>>>>>>>       24M         3563.296 us       775.989 us
+>>>>>>>       32M         4747.171 us      1033.364 us
+>>>>>>>
+>>>>>>> After this optimization:
+>>>>>>>
+>>>>>>>      size        iommu_map_sg      iommu_unmap
+>>>>>>>        4K            1.723 us         1.765 us
+>>>>>>>       64K            9.880 us         8.869 us
+>>>>>>>        1M          155.364 us       135.223 us
+>>>>>>>        2M          303.906 us         5.385 us
+>>>>>>>       12M         1786.557 us        21.250 us
+>>>>>>>       16M         2391.890 us        27.437 us
+>>>>>>>       24M         3570.895 us        39.937 us
+>>>>>>>       32M         4755.234 us        51.797 us
+>>>>>>>
+>>>>>>> This is further reduced once the map/unmap_pages() support gets 
+>>>>>>> in which
+>>>>>>> will result in just 1 tlb_flush_all() as opposed to 16 
+>>>>>>> tlb_flush_all().
+>>>>>>>
+>>>>>>> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+>>>>>>> ---
+>>>>>>>   drivers/iommu/io-pgtable-arm.c | 7 +++++--
+>>>>>>>   1 file changed, 5 insertions(+), 2 deletions(-)
+>>>>>>>
+>>>>>>> diff --git a/drivers/iommu/io-pgtable-arm.c 
+>>>>>>> b/drivers/iommu/io-pgtable-arm.c
+>>>>>>> index 87def58e79b5..c3cb9add3179 100644
+>>>>>>> --- a/drivers/iommu/io-pgtable-arm.c
+>>>>>>> +++ b/drivers/iommu/io-pgtable-arm.c
+>>>>>>> @@ -589,8 +589,11 @@ static size_t __arm_lpae_unmap(struct 
+>>>>>>> arm_lpae_io_pgtable *data,
+>>>>>>>             if (!iopte_leaf(pte, lvl, iop->fmt)) {
+>>>>>>>               /* Also flush any partial walks */
+>>>>>>> -            io_pgtable_tlb_flush_walk(iop, iova, size,
+>>>>>>> -                          ARM_LPAE_GRANULE(data));
+>>>>>>> +            if (size > ARM_LPAE_GRANULE(data))
+>>>>>>> +                io_pgtable_tlb_flush_all(iop);
+>>>>>>> +            else
+>>>>>>
+>>>>>> Erm, when will the above condition ever not be true? ;)
+>>>>>>
+>>>>>
+>>>>> Ah right, silly me :)
+>>>>>
+>>>>>> Taking a step back, though, what about the impact to drivers other
+>>>>>> than SMMUv2?
+>>>>>
+>>>>> Other drivers would be msm_iommu.c, qcom_iommu.c which does the same
+>>>>> thing as arm-smmu-v2 (page based invalidations), then there is 
+>>>>> ipmmu-vmsa.c
+>>>>> which does tlb_flush_all() for flush walk.
+>>>>>
+>>>>>> In particular I'm thinking of SMMUv3.2 where the whole
+>>>>>> range can be invalidated by VA in a single command anyway, so the
+>>>>>> additional penalties of TLBIALL are undesirable.
+>>>>>>
+>>>>>
+>>>>> Right, so I am thinking we can have a new generic quirk 
+>>>>> IO_PGTABLE_QUIRK_RANGE_INV
+>>>>> to choose between range based invalidations(tlb_flush_walk) and 
+>>>>> tlb_flush_all().
+>>>>> In this case of arm-smmu-v3.2, we can tie up 
+>>>>> ARM_SMMU_FEAT_RANGE_INV with this quirk
+>>>>> and have something like below, thoughts?
+>>>>>
+>>>>> if (iop->cfg.quirks & IO_PGTABLE_QUIRK_RANGE_INV)
+>>>>>          io_pgtable_tlb_flush_walk(iop, iova, size,
+>>>>>                                    ARM_LPAE_GRANULE(data));
+>>>>> else
+>>>>>          io_pgtable_tlb_flush_all(iop);
+>>>>
+>>>> The design here has always been that io-pgtable says *what* needs
+>>>> invalidating, and we left it up to the drivers to decide exactly
+>>>> *how*. Even though things have evolved a bit I don't think that has
+>>>> fundamentally changed - tlb_flush_walk is now only used in this one
+>>>> place (technically I suppose it could be renamed tlb_flush_table but
+>>>> it's not worth the churn), so drivers can implement their own
+>>>> preferred table-invalidating behaviour even more easily than choosing
+>>>> whether to bounce a quirk through the common code or not. Consider
+>>>> what you've already seen for the Renesas IPMMU, or SMMUv1 stage 2...
+>>>>
+>>>
+>>> Thanks for the explanation, makes sense. If I am not mistaken, I see 
+>>> that
+>>> you are suggesting to move this logic based on size and granule-size to
+>>> arm-smmu-v2 driver and one more thing below..
+>>
+>> Simpler than that - following on from my original comment above,
+>> tlb_flush_walk already knows it's invalidating at least one full level
+>> of table so there's nothing it even needs to check. Adding a
+>> size-based heuristic to arm_smmu_inv_range_* for leaf invalidations
+>> would be a separate concern (note that changing the non-leaf behaviour
+>> might allow cleaning up the "reg" indirection there too).
+> 
+> Right, sorry I didn't mean to mention the size check as it was obvious
+> from your first reply, but rather just calling impl->tlb_inv() in
+> arm_smmu_tlb_inv_walk_s1().
+> 
+>>
+>>>> I'm instinctively a little twitchy about making this a blanket
+>>>> optimisation for SMMUv2 since I still remember the palaver with our
+>>>> display and MMU-500 integrations, where it had to implement the dodgy
+>>>> "prefetch" register to trigger translations before scanning out a
+>>>> frame since it couldn't ever afford a TLB miss, thus TLBIALL when
+>>>> freeing an old buffer would be a dangerous hammer to swing. However
+>>>> IIRC it also had to ensure everything was mapped as 2MB blocks to
+>>>> guarantee fitting everything in the TLBs in the first place, so I
+>>>> guess it would still work out OK due to never realistically unmapping
+>>>> a whole table at once anyway.
+>>>>
+>>>
+>>> You are also hinting to not do this for all SMMUv2 implementations 
+>>> and make
+>>> it QCOM specific?
+>>
+>> No, I'm really just wary that the performance implication is more
+>> complex than a simple unmap latency benefit, possibly even for QCOM.
+>> Consider the access latency, power and memory bandwidth hit from all
+>> the additional pagetable walks incurred by other ongoing traffic
+>> fighting against those 16 successive TLBIASIDs. Whether it's an
+>> overall win really depends on the specific workload and system
+>> conditions as much as the SMMU implementation.
+> 
+> No, the unmap latency is not just in some test case written, the issue
+> is very real and we have workloads where camera is reporting frame drops
+> because of this unmap latency in the order of 100s of milliseconds.
+> And hardware team recommends using ASID based invalidations for anything
+> larger than 128 TLB entries. So yes, we have taken note of impacts here
+> before going this way and hence feel more inclined to make this qcom
+> specific if required.
 
-v5 of the series. No content changes compared to v4, but the series is
-split into smaller parts to enable reviews.
+OK, that's good to know. I never suggested that CPU unmap latency wasn't 
+a valid concern in itself - obviously spending millions of cycles in, 
+say, an interrupt handler doing pointless busy work has some serious 
+downsides - just that it might not always be the most important concern 
+for everyone, so I wanted to make sure this discussion was had in the open.
 
-The split is artificial, and all the patches need to be squashed into
-one before merging.
+TBH I *am* inclined to make this a core SMMU driver change provided 
+nobody pops up with a strong counter-argument.
 
-The point of the series is explained in "media: v4l2-subdev: add
-subdev-wide state struct", but for easier reviews I add it partially
-here:
+>> Thinking some more, I
+>> wonder if the Tegra folks might have an opinion to add here, given
+>> that their multiple-SMMU solution was seemingly about trying to get
+>> enough TLB and pagetable walk bandwidth in the first place?
+>>
+> 
+> Sure but I do not see how that will help with the unmap latency?
 
-We have 'struct v4l2_subdev_pad_config' which contains configuration for
-a single pad used for the TRY functionality, and an array of those
-structs is passed to various v4l2_subdev_pad_ops.
+It won't. However it implies a use-case which is already sensitive to 
+translation bandwidth, and thus is somewhat more likely to be sensitive 
+to over-invalidation. But even then they also have more to gain from 
+reducing the number of MMIO writes that have to be duplicated :)
 
-I was working on subdev internal routing between pads, and realized that
-there's no way to add TRY functionality for routes, which is not pad
-specific configuration. Adding a separate struct for try-route config
-wouldn't work either, as e.g. set-fmt needs to know the try-route
-configuration to propagate the settings.
-
-This patch adds a new struct, 'struct v4l2_subdev_state' (which at the
-moment only contains the v4l2_subdev_pad_config array) and the new
-struct is used in most of the places where v4l2_subdev_pad_config was
-used. All v4l2_subdev_pad_ops functions taking v4l2_subdev_pad_config
-are changed to instead take v4l2_subdev_state.
-
- Tomi
-
-Tomi Valkeinen (9):
-  media: v4l2-subdev: add subdev-wide state struct
-  media: s5k5baf: changes for subdev-wide state struct
-  media: s3c-camif: changes for subdev-wide state struct
-  media: i2c: changes for subdev-wide state struct
-  media: pci: changes for subdev-wide state struct
-  media: platform: changes for subdev-wide state struct
-  media: test-drivers: changes for subdev-wide state struct
-  media: usb: changes for subdev-wide state struct
-  media: staging: changes for subdev-wide state struct
-
- drivers/media/i2c/adv7170.c                   |   6 +-
- drivers/media/i2c/adv7175.c                   |   6 +-
- drivers/media/i2c/adv7180.c                   |  18 +--
- drivers/media/i2c/adv7183.c                   |   8 +-
- drivers/media/i2c/adv748x/adv748x-afe.c       |  13 +-
- drivers/media/i2c/adv748x/adv748x-csi2.c      |  14 +-
- drivers/media/i2c/adv748x/adv748x-hdmi.c      |  13 +-
- drivers/media/i2c/adv7511-v4l2.c              |  10 +-
- drivers/media/i2c/adv7604.c                   |  12 +-
- drivers/media/i2c/adv7842.c                   |  12 +-
- drivers/media/i2c/ak881x.c                    |   6 +-
- drivers/media/i2c/ccs/ccs-core.c              |  84 ++++++-----
- drivers/media/i2c/cx25840/cx25840-core.c      |   2 +-
- drivers/media/i2c/et8ek8/et8ek8_driver.c      |  23 +--
- drivers/media/i2c/hi556.c                     |  15 +-
- drivers/media/i2c/imx208.c                    |  19 +--
- drivers/media/i2c/imx214.c                    |  37 ++---
- drivers/media/i2c/imx219.c                    |  30 ++--
- drivers/media/i2c/imx258.c                    |  19 +--
- drivers/media/i2c/imx274.c                    |  38 ++---
- drivers/media/i2c/imx290.c                    |  20 +--
- drivers/media/i2c/imx319.c                    |  18 +--
- drivers/media/i2c/imx334.c                    |  28 ++--
- drivers/media/i2c/imx355.c                    |  18 +--
- drivers/media/i2c/m5mols/m5mols_core.c        |  21 ++-
- drivers/media/i2c/max9286.c                   |  17 ++-
- drivers/media/i2c/ml86v7667.c                 |   4 +-
- drivers/media/i2c/mt9m001.c                   |  18 +--
- drivers/media/i2c/mt9m032.c                   |  38 ++---
- drivers/media/i2c/mt9m111.c                   |  18 +--
- drivers/media/i2c/mt9p031.c                   |  45 +++---
- drivers/media/i2c/mt9t001.c                   |  44 +++---
- drivers/media/i2c/mt9t112.c                   |  14 +-
- drivers/media/i2c/mt9v011.c                   |   6 +-
- drivers/media/i2c/mt9v032.c                   |  44 +++---
- drivers/media/i2c/mt9v111.c                   |  23 +--
- drivers/media/i2c/noon010pc30.c               |  19 ++-
- drivers/media/i2c/ov02a10.c                   |  17 ++-
- drivers/media/i2c/ov13858.c                   |  18 +--
- drivers/media/i2c/ov2640.c                    |  16 +-
- drivers/media/i2c/ov2659.c                    |  14 +-
- drivers/media/i2c/ov2680.c                    |  23 +--
- drivers/media/i2c/ov2685.c                    |  10 +-
- drivers/media/i2c/ov2740.c                    |  15 +-
- drivers/media/i2c/ov5640.c                    |  14 +-
- drivers/media/i2c/ov5645.c                    |  38 ++---
- drivers/media/i2c/ov5647.c                    |  26 ++--
- drivers/media/i2c/ov5648.c                    |  14 +-
- drivers/media/i2c/ov5670.c                    |  19 +--
- drivers/media/i2c/ov5675.c                    |  15 +-
- drivers/media/i2c/ov5695.c                    |  15 +-
- drivers/media/i2c/ov6650.c                    |  28 ++--
- drivers/media/i2c/ov7251.c                    |  39 ++---
- drivers/media/i2c/ov7670.c                    |  17 ++-
- drivers/media/i2c/ov772x.c                    |  12 +-
- drivers/media/i2c/ov7740.c                    |  17 ++-
- drivers/media/i2c/ov8856.c                    |  15 +-
- drivers/media/i2c/ov8865.c                    |  14 +-
- drivers/media/i2c/ov9640.c                    |   8 +-
- drivers/media/i2c/ov9650.c                    |  17 ++-
- drivers/media/i2c/ov9734.c                    |  15 +-
- drivers/media/i2c/rdacm20.c                   |   4 +-
- drivers/media/i2c/rdacm21.c                   |   4 +-
- drivers/media/i2c/rj54n1cb0c.c                |  12 +-
- drivers/media/i2c/s5c73m3/s5c73m3-core.c      |  55 +++----
- drivers/media/i2c/s5k4ecgx.c                  |  22 +--
- drivers/media/i2c/s5k5baf.c                   |  49 +++---
- drivers/media/i2c/s5k6a3.c                    |  19 ++-
- drivers/media/i2c/s5k6aa.c                    |  39 ++---
- drivers/media/i2c/saa6752hs.c                 |   6 +-
- drivers/media/i2c/saa7115.c                   |   2 +-
- drivers/media/i2c/saa717x.c                   |   2 +-
- drivers/media/i2c/sr030pc30.c                 |   8 +-
- drivers/media/i2c/st-mipid02.c                |  21 +--
- drivers/media/i2c/tc358743.c                  |   8 +-
- drivers/media/i2c/tda1997x.c                  |  14 +-
- drivers/media/i2c/tvp514x.c                   |  12 +-
- drivers/media/i2c/tvp5150.c                   |  20 +--
- drivers/media/i2c/tvp7002.c                   |  11 +-
- drivers/media/i2c/tw9910.c                    |  10 +-
- drivers/media/i2c/vs6624.c                    |   8 +-
- drivers/media/pci/cx18/cx18-av-core.c         |   2 +-
- drivers/media/pci/intel/ipu3/ipu3-cio2-main.c |  17 ++-
- drivers/media/pci/saa7134/saa7134-empress.c   |   5 +-
- drivers/media/platform/atmel/atmel-isc-base.c |  19 ++-
- drivers/media/platform/atmel/atmel-isi.c      |  19 ++-
- drivers/media/platform/cadence/cdns-csi2tx.c  |  14 +-
- .../media/platform/exynos4-is/fimc-capture.c  |  22 +--
- drivers/media/platform/exynos4-is/fimc-isp.c  |  37 +++--
- drivers/media/platform/exynos4-is/fimc-lite.c |  39 ++---
- drivers/media/platform/exynos4-is/mipi-csis.c |  17 ++-
- .../media/platform/marvell-ccic/mcam-core.c   |   5 +-
- drivers/media/platform/omap3isp/ispccdc.c     |  85 ++++++-----
- drivers/media/platform/omap3isp/ispccp2.c     |  49 +++---
- drivers/media/platform/omap3isp/ispcsi2.c     |  41 ++---
- drivers/media/platform/omap3isp/isppreview.c  |  69 +++++----
- drivers/media/platform/omap3isp/ispresizer.c  |  70 +++++----
- drivers/media/platform/pxa_camera.c           |   5 +-
- .../media/platform/qcom/camss/camss-csid.c    |  35 ++---
- .../media/platform/qcom/camss/camss-csiphy.c  |  40 ++---
- .../media/platform/qcom/camss/camss-ispif.c   |  36 ++---
- drivers/media/platform/qcom/camss/camss-vfe.c |  84 ++++++-----
- drivers/media/platform/rcar-vin/rcar-csi2.c   |   8 +-
- drivers/media/platform/rcar-vin/rcar-v4l2.c   |  10 +-
- drivers/media/platform/renesas-ceu.c          |   7 +-
- .../platform/rockchip/rkisp1/rkisp1-isp.c     | 112 ++++++++------
- .../platform/rockchip/rkisp1/rkisp1-resizer.c |  95 +++++++-----
- .../media/platform/s3c-camif/camif-capture.c  |  18 +--
- drivers/media/platform/stm32/stm32-dcmi.c     |  14 +-
- .../platform/sunxi/sun4i-csi/sun4i_v4l2.c     |  16 +-
- drivers/media/platform/ti-vpe/cal-camerarx.c  |  35 +++--
- drivers/media/platform/via-camera.c           |   5 +-
- drivers/media/platform/video-mux.c            |  22 +--
- drivers/media/platform/vsp1/vsp1_brx.c        |  34 +++--
- drivers/media/platform/vsp1/vsp1_clu.c        |  13 +-
- drivers/media/platform/vsp1/vsp1_entity.c     |  59 ++++----
- drivers/media/platform/vsp1/vsp1_entity.h     |  20 +--
- drivers/media/platform/vsp1/vsp1_histo.c      |  51 ++++---
- drivers/media/platform/vsp1/vsp1_hsit.c       |  14 +-
- drivers/media/platform/vsp1/vsp1_lif.c        |  13 +-
- drivers/media/platform/vsp1/vsp1_lut.c        |  13 +-
- drivers/media/platform/vsp1/vsp1_rwpf.c       |  32 ++--
- drivers/media/platform/vsp1/vsp1_rwpf.h       |   2 +-
- drivers/media/platform/vsp1/vsp1_sru.c        |  22 +--
- drivers/media/platform/vsp1/vsp1_uds.c        |  22 +--
- drivers/media/platform/vsp1/vsp1_uif.c        |  27 ++--
- .../media/platform/xilinx/xilinx-csi2rxss.c   |  26 ++--
- drivers/media/platform/xilinx/xilinx-tpg.c    |  25 +--
- drivers/media/platform/xilinx/xilinx-vip.c    |  12 +-
- drivers/media/platform/xilinx/xilinx-vip.h    |   4 +-
- .../media/test-drivers/vimc/vimc-debayer.c    |  20 +--
- drivers/media/test-drivers/vimc/vimc-scaler.c |  36 ++---
- drivers/media/test-drivers/vimc/vimc-sensor.c |  16 +-
- drivers/media/usb/go7007/s2250-board.c        |   2 +-
- drivers/media/v4l2-core/v4l2-subdev.c         | 142 ++++++++++--------
- .../media/atomisp/i2c/atomisp-gc0310.c        |  10 +-
- .../media/atomisp/i2c/atomisp-gc2235.c        |  10 +-
- .../media/atomisp/i2c/atomisp-mt9m114.c       |  12 +-
- .../media/atomisp/i2c/atomisp-ov2680.c        |  10 +-
- .../media/atomisp/i2c/atomisp-ov2722.c        |  10 +-
- .../media/atomisp/i2c/ov5693/atomisp-ov5693.c |  10 +-
- .../staging/media/atomisp/pci/atomisp_cmd.c   |  33 ++--
- .../staging/media/atomisp/pci/atomisp_csi2.c  |  28 ++--
- .../staging/media/atomisp/pci/atomisp_csi2.h  |   2 +-
- .../staging/media/atomisp/pci/atomisp_file.c  |  14 +-
- .../staging/media/atomisp/pci/atomisp_fops.c  |   6 +-
- .../media/atomisp/pci/atomisp_subdev.c        |  64 ++++----
- .../media/atomisp/pci/atomisp_subdev.h        |   9 +-
- .../staging/media/atomisp/pci/atomisp_tpg.c   |  12 +-
- drivers/staging/media/imx/imx-ic-prp.c        |  19 +--
- drivers/staging/media/imx/imx-ic-prpencvf.c   |  31 ++--
- drivers/staging/media/imx/imx-media-csi.c     |  82 +++++-----
- drivers/staging/media/imx/imx-media-utils.c   |   4 +-
- drivers/staging/media/imx/imx-media-vdic.c    |  24 +--
- drivers/staging/media/imx/imx-media.h         |   2 +-
- drivers/staging/media/imx/imx6-mipi-csi2.c    |  12 +-
- drivers/staging/media/imx/imx7-media-csi.c    |  33 ++--
- drivers/staging/media/imx/imx7-mipi-csis.c    |  34 +++--
- drivers/staging/media/ipu3/ipu3-v4l2.c        |  26 ++--
- drivers/staging/media/omap4iss/iss_csi2.c     |  37 ++---
- drivers/staging/media/omap4iss/iss_ipipe.c    |  37 ++---
- drivers/staging/media/omap4iss/iss_ipipeif.c  |  47 +++---
- drivers/staging/media/omap4iss/iss_resizer.c  |  39 ++---
- drivers/staging/media/tegra-video/csi.c       |  10 +-
- drivers/staging/media/tegra-video/vi.c        |  24 +--
- include/media/v4l2-subdev.h                   |  74 +++++----
- 166 files changed, 2162 insertions(+), 1802 deletions(-)
-
--- 
-2.25.1
-
+Thanks,
+Robin.
