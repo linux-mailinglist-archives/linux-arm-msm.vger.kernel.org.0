@@ -2,162 +2,153 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8721D3A2F66
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jun 2021 17:34:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B3AFF3A2FBD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jun 2021 17:46:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231650AbhFJPgD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Jun 2021 11:36:03 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:40530 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230406AbhFJPgC (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Jun 2021 11:36:02 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1623339246; h=In-Reply-To: Content-Type: MIME-Version:
- References: Message-ID: Subject: Cc: To: From: Date: Sender;
- bh=sF6NMZApoo9aWXMckXro/xfGEShqVev3nfjgAcTi8Yw=; b=X0V4quCTbsqZJe5AQj/4VU1DV6o3YK3p3z/00hmZguC1s1czzoTafsJOd+5JpbEEReatazVj
- dwzYyvyhIIFBfQkME9Yq/WII23r86BGfvXarfjEG2TVCO+df2B/Pj4FEPFF5+BmnT6Yw+ebB
- sxdnEc4w0JsjkwSv9h0JHLE7cno=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
- 60c230e1ed59bf69cc0b08ed (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 10 Jun 2021 15:33:53
- GMT
-Sender: jackp=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 7C552C43460; Thu, 10 Jun 2021 15:33:53 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from jackp-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: jackp)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 05BB5C4338A;
-        Thu, 10 Jun 2021 15:33:50 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 05BB5C4338A
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jackp@codeaurora.org
-Date:   Thu, 10 Jun 2021 08:33:46 -0700
-From:   Jack Pham <jackp@codeaurora.org>
-To:     Felipe Balbi <balbi@kernel.org>,
-        Sandeep Maheswaram <sanm@codeaurora.org>
-Cc:     Alexandru Elisei <alexandru.elisei@arm.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        p.zabel@pengutronix.de, linux-usb@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        arm-mail-list <linux-arm-kernel@lists.infradead.org>,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [BUG] usb: dwc3: Kernel NULL pointer dereference in dwc3_remove()
-Message-ID: <20210610153346.GA26872@jackp-linux.qualcomm.com>
-References: <c3c75895-313a-5be7-6421-b32bac741a88@arm.com>
- <87r1hjcvf6.fsf@kernel.org>
- <70be179c-d36b-de6f-6efc-2888055b1312@arm.com>
- <YLi/u9J5f+nQO4Cm@kroah.com>
- <8272121c-ac8a-1565-a047-e3a16dcf13b0@arm.com>
- <877djbc8xq.fsf@kernel.org>
- <20210603173632.GA25299@jackp-linux.qualcomm.com>
- <87mts6avnn.fsf@kernel.org>
- <20210607180023.GA23045@jackp-linux.qualcomm.com>
- <87sg1q1129.fsf@kernel.org>
+        id S231942AbhFJPsL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Jun 2021 11:48:11 -0400
+Received: from mo4-p00-ob.smtp.rzone.de ([81.169.146.162]:34999 "EHLO
+        mo4-p00-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231878AbhFJPrp (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 10 Jun 2021 11:47:45 -0400
+ARC-Seal: i=1; a=rsa-sha256; t=1623339940; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=rH1ttNdAX2fXm76Hh1ZkP8bSOCqS13dNSEBbnhepXfTa1vheOtK9ytClFCEo27qan7
+    0/Vlk+4PRI9t9z4mZjRGm8BHzVS7brnqfX8hlknokEC84ws/jbi29AKxvAeCH2CcTsuM
+    wqn6mNHTppXNHA8CpTfzfYOXaivdpI4xQ5lz1Lgad8E2QbO++ieY3f8DK63m9rlkAI+K
+    trbNtd0YQjdMww5foO6hZkYOuoD90dtP+accf3I/XJ9xkJrXGknmPDUmIP0ppg5DW821
+    Jb4gZQ+lbv6Ria+i8Gw3IYQ9qXjkdQF/0QHWPvGdM+5dNIxJEphibsii2yK8kwwvlfjn
+    PrwA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1623339940;
+    s=strato-dkim-0002; d=strato.com;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=LgNah1Hd5ulVXX6VtdOiftK1WXILSNDtQbgC/NWdrng=;
+    b=ZIi55ydcLvNwKel306g+GM5OOrlF5tKyY/XkejqH/rnL2vuH5Kv5pB8oBD6Qtiss8L
+    Bv2PJWBfnX/+fYAoR61hsFN7j2X54JQ2DZKQREFL6Ida/0ouqgV93op8XaNCIqjY1QcN
+    SBe0Zk6d35trc2Unhb5NOys6pmsQ6Dwc0yYUHEmw3gxbjNFaU+lHHoy90sL15bGA5g7i
+    03KdfRRX6pVzONL1Y6mLdM9NUDiARQo5Bz+I2GTRtFNmEOZJ5KeCZrVze5uUIcwhCLLm
+    ZoR7Cq+2JcVKPG6LSo/mYEuRNmpEBYfVXZuD3Nq1HPQe4BjM84DP/XXh24v26g6xVMeb
+    RN8A==
+ARC-Authentication-Results: i=1; strato.com;
+    dkim=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1623339940;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=LgNah1Hd5ulVXX6VtdOiftK1WXILSNDtQbgC/NWdrng=;
+    b=mush8MvESGlv+Mq2p6C7dDWr6b00TlG7ljv5awrjN/RiIwcXEEPBvLMUotD9Ck68ov
+    DqLcgvJy6UgXB/aYVp8MgtVsp9NVkcjsnU1fo9w05tLl0PV58h+oXUt3onajbXU+c/dW
+    p1ZeKPtLeNFayWo7hN9olA/In63zU57ZNmnhqC+NH6udUyH5rEpu2kt7A8UsSOnZ+Zyz
+    3z6D/oDLHocqQMBK66AxdHAWOZsAfgVSzmKUZbwt2wiIJYCjYnfkBWs0I7bi5py4viqS
+    pewpyau0QIM/VOSyYWkCz9VCCO8p8EpL+1wyZRISXHux+44lWPVcmDlHjM747aPLVJRJ
+    oGtw==
+Authentication-Results: strato.com;
+    dkim=none
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u26zEodhPgRDZ8nxIc/BaYo="
+X-RZG-CLASS-ID: mo00
+Received: from gerhold.net
+    by smtp.strato.de (RZmta 47.27.2 DYNA|AUTH)
+    with ESMTPSA id y01375x5AFjdwZj
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Thu, 10 Jun 2021 17:45:39 +0200 (CEST)
+Date:   Thu, 10 Jun 2021 17:45:34 +0200
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, phone-devel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht
+Subject: Re: [PATCH 1/5] arm64: dts: qcom: msm8916: Add device tree for
+ Huawei Ascend G7
+Message-ID: <YMIznk4scPv1qOzP@gerhold.net>
+References: <20210514104328.18756-1-stephan@gerhold.net>
+ <YMIwovyb9ROfGaET@builder.lan>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <87sg1q1129.fsf@kernel.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+In-Reply-To: <YMIwovyb9ROfGaET@builder.lan>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jun 10, 2021 at 01:11:42PM +0300, Felipe Balbi wrote:
-> Jack Pham <jackp@codeaurora.org> writes:
-> > On Fri, Jun 04, 2021 at 11:20:12AM +0300, Felipe Balbi wrote:
-> >> Jack Pham <jackp@codeaurora.org> writes:
-> >> >> >>>> Alexandru Elisei <alexandru.elisei@arm.com> writes:
-> >> >> >>>>> I've been able to bisect the panic and the offending commit is 568262bf5492 ("usb:
-> >> >> >>>>> dwc3: core: Add shutdown callback for dwc3"). I can provide more diagnostic
-> >> >> >>>>> information if needed and I can help test the fix.
-> >> >> >>>> if you simply revert that commit in HEAD, does the problem really go
-> >> >> >>>> away?
-> >> >> >>> Kernel built from commit 324c92e5e0ee, which is the kernel tip today, the panic is
-> >> >> >>> there. Reverting the offending commit, 568262bf5492, makes the panic disappear.
-> >> >> >> Want to send a revert so I can take it now?
-> >> >> >
-> >> >> > I can send a revert, but Felipe was asking Sandeep (the commit author) for a fix,
-> >> >> > so I'll leave it up to Felipe to decide how to proceed.
-> >> >> 
-> >> >> I'm okay with a revert. Feel free to add my Acked-by: Felipe Balbi
-> >> >> <balbi@kernel.org> or it.
-> >> >> 
-> >> >> Sandeep, please send a new version that doesn't encounter the same
-> >> >> issue. Make sure to test by reloading the driver in a tight loop for
-> >> >> several iterations.
-> >> >
-> >> > This would probably be tricky to test on other "glue" drivers as the
-> >> > problem appears to be specific only to dwc3_of_simple.  It looks like
-> >> > both dwc3_of_simple and the dwc3 core now (due to 568262bf5492) each
-> >> > implement respective .shutdown callbacks. The latter is simply a wrapper
-> >> > around dwc3_remove(). And from the panic call stack above we see that
-> >> > dwc3_of_simple_shutdown() calls of_platform_depopulate() which will 
-> >> > again call dwc3_remove() resulting in the double remove.
-> >> >
-> >> > So would an alternative approach be to protect against dwc3_remove()
-> >> > getting called multiple times? IMO it'd be a bit messy to have to add
-> >> 
-> >> no, I  don't think so. That sounds like a workaround. We should be able
-> >> to guarantee that ->remove() doesn't get called twice using the driver
-> >> model properly.
-> >
-> > Completely fair.  So then having a .shutdown callback that directly calls
-> > dwc3_remove() is probably not the right thing to do as it completely
-> > bypasses the driver model so if and when the driver core does later
-> > release the device from the driver that's how we end up with the double
-> > remove.
+On Thu, Jun 10, 2021 at 10:32:50AM -0500, Bjorn Andersson wrote:
+> On Fri 14 May 05:43 CDT 2021, Stephan Gerhold wrote:
 > 
-> yeah, I would agree with that.
+> > The Huawei Ascend G7 is a smartphone from Huawei based on MSM8916.
+> > It's fairly similar to the other MSM8916 devices, the only notable
+> > exception are the "cd-gpios" for detecting if a SD card was inserted:
+> > It looks like Huawei forgot to re-route this to gpio38, so the correct
+> > GPIO seems to be gpio56 on this device.
+> > 
+> > Note: The original firmware from Huawei can only boot 32-bit kernels.
+> > To boot arm64 kernels it is necessary to flash 64-bit TZ/HYP firmware
+> > with EDL, e.g. taken from the DragonBoard 410c. This works because Huawei
+> > forgot to set up (firmware) secure boot for some reason.
+> > 
+> > Also note that Huawei no longer provides bootloader unlock codes.
+> > This can be bypassed by patching the bootloader from a custom HYP firmware,
+> > making it think the bootloader is unlocked. I use a modified version of
+> > qhypstub [1], that patches a single instruction in the Huawei bootloader.
+> > 
+> > The device tree contains initial support for the Huawei Ascend G7 with:
+> >   - UART (untested, probably available via some test points)
+> >   - eMMC/SD card
+> >   - Buttons
+> >   - Notification LED (combination of 3 GPIO LEDs)
+> >   - Vibrator
+> >   - WiFi/Bluetooth (WCNSS)
+> >   - USB
+> > 
+> > [1]: https://github.com/msm8916-mainline/qhypstub
+> > 
+> > Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+> > ---
+> >  arch/arm64/boot/dts/qcom/Makefile             |   1 +
+> >  .../arm64/boot/dts/qcom/msm8916-huawei-g7.dts | 279 ++++++++++++++++++
+> >  2 files changed, 280 insertions(+)
+> >  create mode 100644 arch/arm64/boot/dts/qcom/msm8916-huawei-g7.dts
+> > 
+> > diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> > index 456502aeee49..c894de19654e 100644
+> > --- a/arch/arm64/boot/dts/qcom/Makefile
+> > +++ b/arch/arm64/boot/dts/qcom/Makefile
+> > @@ -7,6 +7,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= ipq6018-cp01-c1.dtb
+> >  dtb-$(CONFIG_ARCH_QCOM)	+= ipq8074-hk01.dtb
+> >  dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-alcatel-idol347.dtb
+> >  dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-asus-z00l.dtb
+> > +dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-huawei-g7.dtb
+> >  dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-longcheer-l8150.dtb
+> >  dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-longcheer-l8910.dtb
+> >  dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-mtp.dtb
+> > diff --git a/arch/arm64/boot/dts/qcom/msm8916-huawei-g7.dts b/arch/arm64/boot/dts/qcom/msm8916-huawei-g7.dts
+> > new file mode 100644
+> > index 000000000000..d67aa7dd4a21
+> > --- /dev/null
+> > +++ b/arch/arm64/boot/dts/qcom/msm8916-huawei-g7.dts
+> > @@ -0,0 +1,279 @@
+> > +// SPDX-License-Identifier: GPL-2.0-only
 > 
-> >> > additional checks there to know if it had already been called. So maybe
-> >> > avoid it altogether--should dwc3_of_simple_shutdown() just skip calling
-> >> > of_platform_depopulate()?
-> >> 
-> >> I don't know what the idiomatic is nowadays, but at least early on, we
-> >> had to call depopulate.
-> >
-> > So any suggestions on how to fix the original issue Sandeep was trying
-> > to fix with 568262bf5492? Maybe implement .shutdown in dwc3_qcom and have
-> > it follow what dwc3_of_simple does with of_platform_depopulate()? But
-> > then wouldn't other "glues" want/need to follow suit?
+> Would it be possible to change this to BSD license instead?
 > 
-> I think we can implement shutdown in core, but we need to careful with
-> it. Instead of just blindly calling remove, let's extract the common
-> parts to another internal function that both remove and shutdown
-> call. debugfs removal should not be part of that generic method :-)
 
-Hi Sandeep,
+Sorry, I'm not sure I can. :/
 
-Upon re-reading your description in 568262bf5492 it sounds like the
-original intention of your patch is basically to quiesce the HW so that
-it doesn't continue to run after SMMU/IOMMU is disabled right?
+This is derived from the other MSM8916 device trees that are
+GPL-2.0-only, which are again derived from work that was made by many
+other people. I'm not sure I can just put BSD here.
 
-If that is the case, couldn't we simply call only dwc3_core_exit_mode()
-assuming there is no other requirement to do any other cleanup/teardown
-(PHYs, clocks, resets, runtime PM, et al)? This function should do the
-bare minimum of stopping the controller in whatever mode (host or
-peripheral) it is currently operating in.
+Also, would this really change anything? All the common MSM8916 includes
+(msm8916.dtsi, pm8916.dtsi etc) are GPL-2.0-only so the resulting device
+tree will forever stay GPL-2.0-only anyway. I think we can only properly
+apply BSD to new device trees (unless we could somehow get permission
+from all previous contributors).
 
-> Anything in that generic method should, probably, be idempotent.
-
-Yes we'll need to ensure that dwc3_core_exit_mode() can be called
-multiple times without additional side effects. At first glance this
-probably means setting dwc->xhci and dwc->gadget to NULL from
-dwc3_host_exit() and dwc3_gadget_exit(), respectively.
+Personally I would rather have the license consistent for all devices
+based on one SoC, everything else will just be confusing for someone who
+looks only at this particular file and mistakenly assumes it's
+completely available under BSD.
 
 Thanks,
-Jack
--- 
-The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project
+Stephan
