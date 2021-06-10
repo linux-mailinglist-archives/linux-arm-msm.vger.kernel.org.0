@@ -2,39 +2,39 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 358883A331B
+	by mail.lfdr.de (Postfix) with ESMTP id 812A53A331C
 	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jun 2021 20:30:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229963AbhFJScA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S229823AbhFJScA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Thu, 10 Jun 2021 14:32:00 -0400
-Received: from mail.kernel.org ([198.145.29.99]:35764 "EHLO mail.kernel.org"
+Received: from mail.kernel.org ([198.145.29.99]:35768 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229823AbhFJScA (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        id S229935AbhFJScA (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
         Thu, 10 Jun 2021 14:32:00 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPS id E04B9613FE;
+Received: by mail.kernel.org (Postfix) with ESMTPS id F3819613FF;
         Thu, 10 Jun 2021 18:30:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1623349803;
-        bh=PdS+yVTUoazWMm3DBWmo1V9e6MnHG8TjpLUNy714mIY=;
+        s=k20201202; t=1623349804;
+        bh=HNAFL61W9fgyRLK7OPFpzAUkRgjBskhyAWyQTjcfMvU=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=OeuZVBFs5ryhQ/NN7JlLUMIyzQD+KvRim71KsoFZNQ2ZWr2AnW2O1B+BZYRIZM5hi
-         UIb8h+s8oRNCKEbHcPQQAtJAeNqSdz1p+ZEuOKTtrauaBsfqMsi8pKfsFWDjLwpSOo
-         9+dLBO58T1M4/lfGuw7oXjVygN99692epE6tfYbCjFCnvtbS7dPT4GxLvVj7L6Lo+q
-         bZl155uORmxOE0/Oi0WiE4v1Mon3eKiKF2+A3TfIMQ/sZLFicJUR0RvUBdv6Yg7HCF
-         BqZrMcKaH+rQbUi96xbtcDKLoJC2O0dUp0Uy+985UgdmpWKhni1EqgZjhyogQ7/ONU
-         1Jp7XoeGnA9hg==
+        b=QdDoRBPZvnMz9snkh6Z1LjqidRpeiSVJN9hAaOrhnqAy29LCuX4J5v/QGKKekxYK1
+         08Wpoq7AHSSO3ARcjsfmAxBrSNxKF6Dl3BMTkwxf0qz5m1zZgK3lEabUz8pRYyw+NX
+         4EvgD0qAgIabJKjo+nKuD9FDCZWRDX0ORJ4wYWed2XU/gGzOUHkVxkDEmT+28yovto
+         uO8sELc5ONvD12te7i8Jn1eBx9I0Q6oVnwI/McPN+ibdLDgAhbxc6frc3Tbrn5VKS2
+         nxdUEEsb97OPpanMlOsS//LKVnG8kWUG+XrZ1SQLyhmPo39nFozjk26LadtRIkK/QU
+         83pXlCkTA166w==
 Received: from pdx-korg-docbuild-2.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id D3C0060952;
+        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id EBE5B60A6C;
         Thu, 10 Jun 2021 18:30:03 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH] soc: qcom: rpmpd: Add MDM9607 RPM Power Domains
+Subject: Re: [PATCH] firmware: qcom_scm: Add MDM9607 compatible
 From:   patchwork-bot+linux-arm-msm@kernel.org
-Message-Id: <162334980386.1903.15283763357827562528.git-patchwork-notify@kernel.org>
+Message-Id: <162334980396.1903.6097212384082572202.git-patchwork-notify@kernel.org>
 Date:   Thu, 10 Jun 2021 18:30:03 +0000
-References: <20210131013233.54666-1-konrad.dybcio@somainline.org>
-In-Reply-To: <20210131013233.54666-1-konrad.dybcio@somainline.org>
+References: <20210131013058.54299-1-konrad.dybcio@somainline.org>
+In-Reply-To: <20210131013058.54299-1-konrad.dybcio@somainline.org>
 To:     Konrad Dybcio <konrad.dybcio@somainline.org>
 Cc:     linux-arm-msm@vger.kernel.org
 Precedence: bulk
@@ -45,21 +45,19 @@ Hello:
 
 This patch was applied to qcom/linux.git (refs/heads/for-next):
 
-On Sun, 31 Jan 2021 02:32:32 +0100 you wrote:
-> This SoC while being from 8916 era, makes use of the
-> newer-style, floor-level management, instead of the older
-> floor-corner.
+On Sun, 31 Jan 2021 02:30:57 +0100 you wrote:
+> Add a compatible for MDM9607. It uses the "legacy" calling
+> convention.
 > 
 > Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 > ---
->  .../devicetree/bindings/power/qcom,rpmpd.yaml |  1 +
->  drivers/soc/qcom/rpmpd.c                      | 22 +++++++++++++++++++
->  include/dt-bindings/power/qcom-rpmpd.h        |  8 +++++++
->  3 files changed, 31 insertions(+)
+>  Documentation/devicetree/bindings/firmware/qcom,scm.txt | 1 +
+>  drivers/firmware/qcom_scm.c                             | 3 +++
+>  2 files changed, 4 insertions(+)
 
 Here is the summary with links:
-  - soc: qcom: rpmpd: Add MDM9607 RPM Power Domains
-    https://git.kernel.org/qcom/c/af32011f76b7
+  - firmware: qcom_scm: Add MDM9607 compatible
+    https://git.kernel.org/qcom/c/82a6cbf00764
 
 You are awesome, thank you!
 --
