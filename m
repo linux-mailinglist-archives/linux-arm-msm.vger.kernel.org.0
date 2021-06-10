@@ -2,139 +2,219 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 264C43A2D70
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jun 2021 15:49:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 185453A2E81
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Jun 2021 16:45:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231153AbhFJNvK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Jun 2021 09:51:10 -0400
-Received: from mail-lj1-f182.google.com ([209.85.208.182]:44976 "EHLO
-        mail-lj1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230289AbhFJNvK (ORCPT
+        id S230153AbhFJOrZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Jun 2021 10:47:25 -0400
+Received: from mail-ot1-f53.google.com ([209.85.210.53]:39692 "EHLO
+        mail-ot1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231208AbhFJOrX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Jun 2021 09:51:10 -0400
-Received: by mail-lj1-f182.google.com with SMTP id d2so4956703ljj.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Jun 2021 06:49:14 -0700 (PDT)
+        Thu, 10 Jun 2021 10:47:23 -0400
+Received: by mail-ot1-f53.google.com with SMTP id 5-20020a9d01050000b02903c700c45721so26645889otu.6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Jun 2021 07:45:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=subject:from:to:cc:references:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=11Ch0zTg4bYtpXueHaxR43aR9wj+nY2f+mnI1visPCM=;
-        b=p6sA4x678ac8IQLT9xziTdZq+TRG/++h6dI2/3JwzP08t15EgvXPi8f2AEOitzli8q
-         5eyaZK9gP4Ada5VPEUL9gbNzSvSsdZ5bK9TDa5mjNaGnlbEmOFMOvdlNj9/QiVsZDhDZ
-         6ktHQAJ+SS/anBSoh3v2SPrKebwGPKnWbx8R8CdQFkUlUWzxbyVZtdk0MWPA/+AIhjvV
-         xGum1knZriI6JwQVk1ioFLoxwya2uVc4xlkPOnBe/D6imfB3Us1SWQS1ah0LZAY+J6Qs
-         7iSmF4FJFG6zkmDukULyDe5b5V3jG3bsOanWMg4b1nLIf0ig1XZ+k0gGWh9mcHD5rnTs
-         Y+jw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=5r1JUAnf5vqj0yEA5qbVlT9HSVi/kDaJI1P3a5pkfsU=;
+        b=W70cv9kRs5vC91D+5krSiC2wgrRgfcRqDBAvHN6Jz57LjX2QVyZmsMEhHTP67RchNg
+         qOLEMa6gQuxFjFntv/fypYATIKLR/Bdo11s57OcCPfIP5M4k2gXoq7tRYnSsADHUBL61
+         /6/U9NGTqfT0AfqKcIcb0zYJr1y/r0NI/dAfWCMYFiS2Wco5+JOwEof1nQMYLQHIKlHe
+         NASNPYOQ63fs3H4YA94pAv/O8n6F80sT5CuspLWbFS3W9Y5aT2oWbHk9bUmVVtKCU5DI
+         Xb95PoULP6bLz93XftyUEJRHt0V69MydJiwUUJPsCIZRsCVOCXSQowzCAHE22j++5wRa
+         pc2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=11Ch0zTg4bYtpXueHaxR43aR9wj+nY2f+mnI1visPCM=;
-        b=Qe+fAAxWvzcCnHcXvGIsPjV7I8NAdAghOb8oVqWDf0a8Psk8zQQMElUIyMvylpJLYo
-         xvhdOv4396pH2UtKvzw1Iyj98aKJ6q++fmlQAq0s6aTacRTUqxaE84jQ8rfMsUjPWqIx
-         Ll3py4LAKGyrucjlJGTjA9Y4ZKUbOED7fvhk4rvUKeF2tRTG4b4CQ7Y50So/hp7SZeDC
-         PESGu6nM6ns1zLc3zmxctBheoGon5/IdjSBooKzjIAqckWfQ3wn7T01F+lrY58+CGSGq
-         dMpqbuE7nzDf6pQVjC9tfGHNUYJdnHizvfupzkmdCKqH19IsCEAGCuD4oDB6La5ENZU/
-         X1Hw==
-X-Gm-Message-State: AOAM530FP8WpiGU8sraub7cBPtvRnnyeQm8pqQX1Tq+riCM3kupMd1WC
-        imjV1eOtowaXCB3bE5DZExcT6A==
-X-Google-Smtp-Source: ABdhPJwZJzIOkSGhqqb3zGVBIHgRHoDBffm+2prh3DOdKwTImss/wxSYFdKGwgKHyvtT9OscgyAjyw==
-X-Received: by 2002:a2e:9b96:: with SMTP id z22mr2330119lji.164.1623332893362;
-        Thu, 10 Jun 2021 06:48:13 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id a14sm305055lfs.108.2021.06.10.06.48.12
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 10 Jun 2021 06:48:12 -0700 (PDT)
-Subject: Re: [PATCH 0/8] dsi: rework clock parents and timing handling
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <abhinavk@codeaurora.org>
-Cc:     Jonathan Marek <jonathan@marek.ca>,
-        Stephen Boyd <sboyd@kernel.org>,
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=5r1JUAnf5vqj0yEA5qbVlT9HSVi/kDaJI1P3a5pkfsU=;
+        b=LdIYZCo5Qyn+3A99zseYJ4OFa/YtSpBOjNHTLfgXavXx9HdrEojCNRSeWG4ST58nz4
+         smagp8vFOwYwZTsEGbYT3a+NvnxA3ESWMwGM8QhWs84uEodtRtdkdYly8271keCBrV6t
+         PI93mEoyRW/K3HlhZAWMdVzxIAn5dpNIHEd2Efr9lPwudyg8qnPgdZdJLRnRelSc57hq
+         lkflnRaK+fbnFaDUD0+fUVjctCduuxF1VmYpGGwSoqiqMDhVymU07rT8DK0K2uYr5GG9
+         5epc6NtZr0EcCPIqocm5uY9tx0Ne5+qqGoIGuNF5FA+DT0MBPIG37YJBjKaCi4jkAntY
+         V88w==
+X-Gm-Message-State: AOAM530gRHio97pYq3DDR7ARddSq+dxez/+Y93ef2rZxESGV1/j/BIOD
+        zLnoGpAEK4hVh7b/JXk56gCOdQ==
+X-Google-Smtp-Source: ABdhPJyU40SttyHVQTJlyA84enWC1soa+5ksDd5YxGOEO8l6OO67Iv+5BiAGIy1r5b60eDx25QCl9A==
+X-Received: by 2002:a9d:65:: with SMTP id 92mr2691191ota.239.1623336267233;
+        Thu, 10 Jun 2021 07:44:27 -0700 (PDT)
+Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id f2sm562397ooj.22.2021.06.10.07.44.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 10 Jun 2021 07:44:26 -0700 (PDT)
+Date:   Thu, 10 Jun 2021 09:44:24 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-References: <20210515131217.1540412-1-dmitry.baryshkov@linaro.org>
-Message-ID: <71839b49-554c-fcc4-d110-0c8a49905413@linaro.org>
-Date:   Thu, 10 Jun 2021 16:48:12 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.10.0
+        Daniel Vetter <daniel@ffwll.ch>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] drm/msm/dpu: Avoid ABBA deadlock between IRQ modules
+Message-ID: <YMIlSHlRoF4Lhhdb@yoga>
+References: <20210609231507.3031904-1-bjorn.andersson@linaro.org>
+ <faf0dbb2-a219-51fe-5cbd-752848a0286f@linaro.org>
 MIME-Version: 1.0
-In-Reply-To: <20210515131217.1540412-1-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <faf0dbb2-a219-51fe-5cbd-752848a0286f@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 15/05/2021 16:12, Dmitry Baryshkov wrote:
-> This patch series brings back several patches targeting assigning dispcc
-> clock parents, that were removed from the massive dsi rework patchset
-> earlier.
+On Thu 10 Jun 06:46 CDT 2021, Dmitry Baryshkov wrote:
 
-Gracious ping for this series. I'd ask to skip patch 8 for now (as we 
-might bring that back for moving PHY to drivers/phy), but patches 1-7 
-are still valid and pending review/acceptance.
+> On 10/06/2021 02:15, Bjorn Andersson wrote:
+> > Handling of the interrupt callback lists is done in dpu_core_irq.c,
+> > under the "cb_lock" spinlock. When these operations results in the need
+> > for enableing or disabling the IRQ in the hardware the code jumps to
+> > dpu_hw_interrupts.c, which protects its operations with "irq_lock"
+> > spinlock.
+> > 
+> > When an interrupt fires, dpu_hw_intr_dispatch_irq() inspects the
+> > hardware state while holding the "irq_lock" spinlock and jumps to
+> > dpu_core_irq_callback_handler() to invoke the registered handlers, which
+> > traverses the callback list under the "cb_lock" spinlock.
+> > 
+> > As such, in the event that these happens concurrently we'll end up with
+> > a deadlock.
+> > 
+> > Prior to '1c1e7763a6d4 ("drm/msm/dpu: simplify IRQ enabling/disabling")'
+> > the enable/disable of the hardware interrupt was done outside the
+> > "cb_lock" region, optimitically by using an atomic enable-counter for
+> > each interrupt and an warning print if someone changed the list between
+> > the atomic_read and the time the operation concluded.
+> > 
+> > Rather than re-introducing the large array of atomics, serialize the
+> > register/unregister operations under a single mutex.
+> > 
+> > Fixes: 1c1e7763a6d4 ("drm/msm/dpu: simplify IRQ enabling/disabling")
+> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> 
+> I have been thinking about this for quite some time. I'm still not confident
+> about the proposed scheme.
+> 
+> What more intrusive, but more obvious change:
+>  - Drop dpu_kms->irq_obj.cb_lock alltogether. Use hw_intr's irq_lock instead
+> in the register/unregister path and no locks in the callback itself.
 
-> 
-> Few notes:
->   - assign-clock-parents is a mandatory proprety according to the current
->     dsi.txt description.
->   - There is little point in duplicating this functionality with the ad-hoc
->     implementation in the dsi code.
-> 
-> On top of that come few minor cleanups for the DSI PHY drivers.
-> 
-> I'd kindly ask to bring all dts changes also through the drm tree, so
-> that there won't be any breakage of the functionality.
-> 
-> 
-> The following changes since commit f2f46b878777e0d3f885c7ddad48f477b4dea247:
-> 
->    drm/msm/dp: initialize audio_comp when audio starts (2021-05-06 16:26:57 -0700)
-> 
-> are available in the Git repository at:
-> 
->    https://git.linaro.org/people/dmitry.baryshkov/kernel.git dsi-phy-update
-> 
-> for you to fetch changes up to f1fd3b113cbb98febad682fc11ea1c6e717434c2:
-> 
->    drm/msm/dsi: remove msm_dsi_dphy_timing from msm_dsi_phy (2021-05-14 22:55:11 +0300)
-> 
-> ----------------------------------------------------------------
-> Dmitry Baryshkov (8):
->        arm64: dts: qcom: sc7180: assign DSI clock source parents
->        arm64: dts: qcom: sdm845: assign DSI clock source parents
->        arm64: dts: qcom: sdm845-mtp: assign DSI clock source parents
->        arm64: dts: qcom: sm8250: assign DSI clock source parents
->        drm/msm/dsi: stop setting clock parents manually
->        drm/msm/dsi: phy: use of_device_get_match_data
->        drm/msm/dsi: drop msm_dsi_phy_get_shared_timings
->        drm/msm/dsi: remove msm_dsi_dphy_timing from msm_dsi_phy
-> 
->   arch/arm64/boot/dts/qcom/sc7180.dtsi            |  3 ++
->   arch/arm64/boot/dts/qcom/sdm845-mtp.dts         |  3 ++
->   arch/arm64/boot/dts/qcom/sdm845.dtsi            |  6 +++
->   arch/arm64/boot/dts/qcom/sm8250.dtsi            |  6 +++
->   drivers/gpu/drm/msm/dsi/dsi.h                   |  7 +---
->   drivers/gpu/drm/msm/dsi/dsi_host.c              | 51 -------------------------
->   drivers/gpu/drm/msm/dsi/dsi_manager.c           |  8 +---
->   drivers/gpu/drm/msm/dsi/phy/dsi_phy.c           | 46 ++++++++++------------
->   drivers/gpu/drm/msm/dsi/phy/dsi_phy.h           | 10 ++++-
->   drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c      | 11 ++----
->   drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c      | 11 ++----
->   drivers/gpu/drm/msm/dsi/phy/dsi_phy_20nm.c      | 10 +----
->   drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c      | 12 ++----
->   drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c | 10 +----
->   drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c       | 13 ++-----
->   15 files changed, 67 insertions(+), 140 deletions(-)
-> 
+I did consider this as well, but while I certainly don't like the
+current design I think it would be easy to miss the fact that the two
+"different" modules share the lock.
+
+>  - Do not take locks in the dpu_hw_intr_enable_irq/disable_irq (as we are
+> already locked outside).
 > 
 
+This is correct.
 
--- 
-With best wishes
-Dmitry
+> The core_irq is the only user of the hw_intr framework. In fact I'd like to
+> squash them together at some point (if I get some time, I'll send patches
+> during this cycle).
+> 
+
+As we've seen the two modules are tightly coupled, and it's full of slow
+function pointer calls, so I'm definitely in favor of us refactoring
+this into a single thing.
+
+Further more, rather than dealing with the callback lists in
+dpu_core_irq, I think we should explore just implementing this as
+another chained irq handler, and just use the common IRQ code directly -
+it has a known API and is known to work.
+
+
+That said, such redesign will take a little bit of time and we
+definitely need to squash the deadlock, as my laptop only survives 10-15
+minutes with two displays active.
+
+So if we agree that we want to squash the two modules, then your
+suggestion of sharing the lock seems like a reasonable intermediate
+workaround. I'll respin and retest my patch accordingly.
+
+Thanks,
+Bjorn
+
+> 
+> > ---
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.c | 10 +++++++---
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h      |  2 ++
+> >   2 files changed, 9 insertions(+), 3 deletions(-)
+> > 
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.c
+> > index 4f110c428b60..62bbe35eff7b 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.c
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.c
+> > @@ -82,11 +82,13 @@ int dpu_core_irq_register_callback(struct dpu_kms *dpu_kms, int irq_idx,
+> >   	DPU_DEBUG("[%pS] irq_idx=%d\n", __builtin_return_address(0), irq_idx);
+> > +	mutex_lock(&dpu_kms->irq_obj.hw_enable_lock);
+> >   	spin_lock_irqsave(&dpu_kms->irq_obj.cb_lock, irq_flags);
+> >   	trace_dpu_core_irq_register_callback(irq_idx, register_irq_cb);
+> >   	list_del_init(&register_irq_cb->list);
+> >   	list_add_tail(&register_irq_cb->list,
+> >   			&dpu_kms->irq_obj.irq_cb_tbl[irq_idx]);
+> > +	spin_unlock_irqrestore(&dpu_kms->irq_obj.cb_lock, irq_flags);
+> >   	if (list_is_first(&register_irq_cb->list,
+> >   			&dpu_kms->irq_obj.irq_cb_tbl[irq_idx])) {
+> >   		int ret = dpu_kms->hw_intr->ops.enable_irq(
+> > @@ -96,8 +98,7 @@ int dpu_core_irq_register_callback(struct dpu_kms *dpu_kms, int irq_idx,
+> >   			DPU_ERROR("Fail to enable IRQ for irq_idx:%d\n",
+> >   					irq_idx);
+> >   	}
+> > -
+> > -	spin_unlock_irqrestore(&dpu_kms->irq_obj.cb_lock, irq_flags);
+> > +	mutex_unlock(&dpu_kms->irq_obj.hw_enable_lock);
+> >   	return 0;
+> >   }
+> > @@ -127,9 +128,11 @@ int dpu_core_irq_unregister_callback(struct dpu_kms *dpu_kms, int irq_idx,
+> >   	DPU_DEBUG("[%pS] irq_idx=%d\n", __builtin_return_address(0), irq_idx);
+> > +	mutex_lock(&dpu_kms->irq_obj.hw_enable_lock);
+> >   	spin_lock_irqsave(&dpu_kms->irq_obj.cb_lock, irq_flags);
+> >   	trace_dpu_core_irq_unregister_callback(irq_idx, register_irq_cb);
+> >   	list_del_init(&register_irq_cb->list);
+> > +	spin_unlock_irqrestore(&dpu_kms->irq_obj.cb_lock, irq_flags);
+> >   	/* empty callback list but interrupt is still enabled */
+> >   	if (list_empty(&dpu_kms->irq_obj.irq_cb_tbl[irq_idx])) {
+> >   		int ret = dpu_kms->hw_intr->ops.disable_irq(
+> > @@ -140,7 +143,7 @@ int dpu_core_irq_unregister_callback(struct dpu_kms *dpu_kms, int irq_idx,
+> >   					irq_idx);
+> >   		DPU_DEBUG("irq_idx=%d ret=%d\n", irq_idx, ret);
+> >   	}
+> > -	spin_unlock_irqrestore(&dpu_kms->irq_obj.cb_lock, irq_flags);
+> > +	mutex_unlock(&dpu_kms->irq_obj.hw_enable_lock);
+> >   	return 0;
+> >   }
+> > @@ -207,6 +210,7 @@ void dpu_core_irq_preinstall(struct dpu_kms *dpu_kms)
+> >   	dpu_disable_all_irqs(dpu_kms);
+> >   	pm_runtime_put_sync(&dpu_kms->pdev->dev);
+> > +	mutex_init(&dpu_kms->irq_obj.hw_enable_lock);
+> >   	spin_lock_init(&dpu_kms->irq_obj.cb_lock);
+> >   	/* Create irq callbacks for all possible irq_idx */
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+> > index f6840b1af6e4..5a162caea29d 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+> > @@ -83,6 +83,7 @@ struct dpu_irq_callback {
+> >    * @total_irq:    total number of irq_idx obtained from HW interrupts mapping
+> >    * @irq_cb_tbl:   array of IRQ callbacks setting
+> >    * @cb_lock:      callback lock
+> > + * @hw_enable_lock: lock to synchronize callback register and unregister
+> >    * @debugfs_file: debugfs file for irq statistics
+> >    */
+> >   struct dpu_irq {
+> > @@ -90,6 +91,7 @@ struct dpu_irq {
+> >   	struct list_head *irq_cb_tbl;
+> >   	atomic_t *irq_counts;
+> >   	spinlock_t cb_lock;
+> > +	struct mutex hw_enable_lock;
+> >   };
+> >   struct dpu_kms {
+> > 
+> 
+> 
+> -- 
+> With best wishes
+> Dmitry
