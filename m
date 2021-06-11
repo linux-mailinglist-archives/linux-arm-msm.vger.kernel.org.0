@@ -2,120 +2,156 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 218723A3B10
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jun 2021 06:32:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 454313A3B23
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jun 2021 06:44:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229598AbhFKEeE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Jun 2021 00:34:04 -0400
-Received: from mail-oi1-f171.google.com ([209.85.167.171]:46770 "EHLO
-        mail-oi1-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229562AbhFKEeE (ORCPT
+        id S230272AbhFKEqt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Jun 2021 00:46:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37044 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229824AbhFKEqs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Jun 2021 00:34:04 -0400
-Received: by mail-oi1-f171.google.com with SMTP id c13so4552427oib.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Jun 2021 21:31:51 -0700 (PDT)
+        Fri, 11 Jun 2021 00:46:48 -0400
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4054AC061574
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Jun 2021 21:44:38 -0700 (PDT)
+Received: by mail-pj1-x1035.google.com with SMTP id o17-20020a17090a9f91b029015cef5b3c50so5103512pjp.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Jun 2021 21:44:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=59yJqR82P8PjeIAo2ksw8rI9JJM4L86Q1eEwNbgSYHU=;
-        b=Kl8bCREMltCr03jIPej5TOD7cT5xH4W3vfCT4q5Rjg2XBqV4blryNuJCvcaJ3gp5uD
-         MhAXdPFISNS3D7e6ov8FDV2e/+Q1XrMYzGnIVPHPO2LOmqDB4CaMeuKBkc6y77fm4kah
-         I69Qm/epQlBx2RvhVAsDUaU5JGkQVlJO/rSuCWZOI8Wt09RQBlWsq8vjr2guo3cb8RZq
-         z6zjEKgAVhL3Lkdi5/wGxCiX2W8VdwJXudPnD1slyDkZsZWbMEhiiTlnl6PMZUUy6PC5
-         JL43wqsKtT4XCoPtV1N68BWo46NvHxubsna0NuLr88BMumCzcYPAn/VPGJdj+xsGRsrk
-         L6EA==
+        bh=fRxLBozaN4SltyilUViQPuK+PpihOctfxY+FQg2HMuM=;
+        b=Ie7xmferhpcr9Yhmc5415IDEf7zXz7R6ygX4f8Coa/dxeb6OEkqDtCYa1piGT+S4ca
+         rOHGBVQRmKXx9L5V5i7ahqfzUgaJhW0fVzfXkwmJpYmlje7AQrNdhgv4lz+K3n4TA/A+
+         tvR9qo1GRA2COvzwFlTlfJ8oWavvuW08bUEJLdbY7bLBZkZQVOdKFOPTxtRl+Pwk6j93
+         LKuruUUTnqhUe6fs2kBlu57LqZwDLtL44mpnMWji4iBnhRmpwN1BXpOoQqlHly4XCtEL
+         wPTVq/g0XSHsLqJQa4m/AXQHYXIOifhLHD1XXNsX2zlgaZMCwQJ/bMEJ4cCWBGBBsYMz
+         t7nA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=59yJqR82P8PjeIAo2ksw8rI9JJM4L86Q1eEwNbgSYHU=;
-        b=sS981fIfh22l8gT6I7FqIRVSYh1nqv6DyiW1JZwrpWkEejXgM8Ehsk1saecTmfFqLh
-         NiviAjCW7fk4YEl5CiA0FuCZ4/kl4WGNR/RbD/FGO+z0iFnBz+8BWNlHDHe8v1Sndy6R
-         4aodz724n6wb/Ck9pw63lQY2TUBM4g2nbc1lVB9b/A3xmTdnuWs4+5DNImOO+D3f94uX
-         r/5YNZ0ihlqF6OXQxboYSamvoHRKoL8jMJPrmYYnlGluBxR/c02Ht4u24oK5xeiN224R
-         HpeEeZHn6NDdkuZQnIjDj8Z6hi9mteiIxAS+/rS2ADMYJf97dEHnI3/6f4IsrmTODHfw
-         w+lA==
-X-Gm-Message-State: AOAM532lHo/Z/biPhWKyfvt4Ih+9f3FizsqA/QHYoZr7YRM51H4H0x7p
-        EvK0XE5WDw1Gz43RSHzF4lDgaA==
-X-Google-Smtp-Source: ABdhPJzK3cLUWqL5RubRCf5xmI6t1v4JrKd2FvAFggYHnop8AH0i31V1aRw8VN+eZRL5oRqpAvy4rA==
-X-Received: by 2002:aca:b8c2:: with SMTP id i185mr9256904oif.172.1623385850138;
-        Thu, 10 Jun 2021 21:30:50 -0700 (PDT)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id a24sm1063421otr.3.2021.06.10.21.30.48
+        bh=fRxLBozaN4SltyilUViQPuK+PpihOctfxY+FQg2HMuM=;
+        b=FB44y9k5IsvDvwHiqSXO874kAmILzDqYB9Lf/7Aq6FHDiQMswhP8aEowpp/vjXWFO1
+         VvER7W4Y3M5eXyDMOgZFn9NdhtHSkrOzGiEtl7sUv2hU8VQ45Ccq3vp6JgVOU+l+hn1t
+         IxLD7+sbbL5lViPAfXJlHF/GXsTe6wTivZzz1QuP3rPJ78y2KjEz9TLKg19hSWu7GzGM
+         DPcjtDR/Gd1AIQViQ13992oJK3Irbdv5HeK2QtlR07uW3qa87irJrPWFkVOZALLeO+S8
+         MTDou9mTyVn5zruzFTgEcknC30hihwbnq0R6WP1O9eUmhUDzb5oC8d8SjUQnq/nsDg5b
+         Mvpw==
+X-Gm-Message-State: AOAM5318rr2b5585YNA4tiiVPwZyzJ3/DU6Hfo62qWEKPoyzKNwa8J7y
+        WO07RbHS+Ew8hRbmLcdG8hUu
+X-Google-Smtp-Source: ABdhPJyXE5YbnRFjaJKPHPKLkZ0eXnaLHFVXDGyku5AZygmgIdkaC9PWx9cEvRiPPkSF8vurPdsuOA==
+X-Received: by 2002:a17:90a:a481:: with SMTP id z1mr6987736pjp.165.1623386677654;
+        Thu, 10 Jun 2021 21:44:37 -0700 (PDT)
+Received: from thinkpad ([2409:4072:6281:d9a2:40f:351d:828b:fc1a])
+        by smtp.gmail.com with ESMTPSA id h6sm3730181pfk.40.2021.06.10.21.44.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Jun 2021 21:30:49 -0700 (PDT)
-Date:   Thu, 10 Jun 2021 23:30:47 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Shaik Sajida Bhanu <sbhanu@codeaurora.org>
-Cc:     adrian.hunter@intel.com, ulf.hansson@linaro.org,
-        robh+dt@kernel.org, asutoshd@codeaurora.org,
-        stummala@codeaurora.org, vbadigan@codeaurora.org,
-        rampraka@codeaurora.org, sayalil@codeaurora.org,
-        sartgarg@codeaurora.org, rnayak@codeaurora.org,
-        saiprakash.ranjan@codeaurora.org, sibis@codeaurora.org,
-        okukatla@codeaurora.org, djakov@kernel.org, cang@codeaurora.org,
-        pragalla@codeaurora.org, nitirawa@codeaurora.org,
-        linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        agross@kernel.org
-Subject: Re: [PATCH V1] arm64: dts: qcom: sc7180: Added xo clock for eMMC and
- Sd card
-Message-ID: <YMLm96edhIYOJF+E@builder.lan>
-References: <1623309107-27833-1-git-send-email-sbhanu@codeaurora.org>
+        Thu, 10 Jun 2021 21:44:37 -0700 (PDT)
+Date:   Fri, 11 Jun 2021 10:14:28 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     lorenzo.pieralisi@arm.com, robh@kernel.org, bhelgaas@google.com,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Siddartha Mohanadoss <smohanad@codeaurora.org>
+Subject: Re: [PATCH v2 2/3] PCI: dwc: Add Qualcomm PCIe Endpoint controller
+ driver
+Message-ID: <20210611044428.GA6950@thinkpad>
+References: <20210603103814.95177-1-manivannan.sadhasivam@linaro.org>
+ <20210603103814.95177-3-manivannan.sadhasivam@linaro.org>
+ <YLw744UeM6fj/xoS@builder.lan>
+ <20210609085152.GB15118@thinkpad>
+ <YMLmgQ2hWAxj+vuy@builder.lan>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1623309107-27833-1-git-send-email-sbhanu@codeaurora.org>
+In-Reply-To: <YMLmgQ2hWAxj+vuy@builder.lan>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 10 Jun 02:11 CDT 2021, Shaik Sajida Bhanu wrote:
-
-> Added xo clock for eMMC and Sd card.
-
-Was about to push out my branch of patches, but before I do. Can you
-please describe WHY this is needed?
-
-Regards,
-Bjorn
-
+On Thu, Jun 10, 2021 at 11:28:49PM -0500, Bjorn Andersson wrote:
+> On Wed 09 Jun 03:51 CDT 2021, Manivannan Sadhasivam wrote:
+> > On Sat, Jun 05, 2021 at 10:07:15PM -0500, Bjorn Andersson wrote:
+> > > On Thu 03 Jun 05:38 CDT 2021, Manivannan Sadhasivam wrote:
+> > > > diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+> [..]
+> > > > +static irqreturn_t qcom_pcie_ep_perst_threaded_irq(int irq, void *data)
+> > > > +{
+> > > > +	struct qcom_pcie_ep *pcie_ep = data;
+> > > > +	struct dw_pcie *pci = &pcie_ep->pci;
+> > > > +	struct device *dev = pci->dev;
+> > > > +	u32 perst;
+> > > > +
+> > > > +	perst = gpiod_get_value(pcie_ep->reset);
+> > > > +
+> > > > +	if (perst) {
+> > > > +		/* Start link training */
+> > > > +		dev_info(dev, "PERST de-asserted by host. Starting link training!\n");
+> > > > +		qcom_pcie_establish_link(pci);
+> > > > +	} else {
+> > > > +		/* Shutdown the link if the link is already on */
+> > > > +		dev_info(dev, "PERST asserted by host. Shutting down the PCIe link!\n");
+> > > > +		qcom_pcie_disable_link(pci);
+> > > > +	}
+> > > > +
+> > > > +	/* Set trigger type based on the next expected value of perst gpio */
+> > > > +	irq_set_irq_type(gpiod_to_irq(pcie_ep->reset),
+> > > > +			 (perst ? IRQF_TRIGGER_LOW : IRQF_TRIGGER_HIGH));
+> > > 
+> > > Looks like you're manually implementing edge triggering, is there any
+> > > reason for that? EDGE_BOTH seems to do the same thing...
+> > > 
+> > 
+> > PERST is a level based signal, so I don't think we can use EDGE_BOTH here.
+> > 
 > 
-> Signed-off-by: Shaik Sajida Bhanu <sbhanu@codeaurora.org>
-> ---
->  arch/arm64/boot/dts/qcom/sc7180.dtsi | 10 ++++++----
->  1 file changed, 6 insertions(+), 4 deletions(-)
+> Afaict it's just a gpio and you define if the hardware should fire of
+> interrupts given its level or if it should detect transitions.
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> index 295844e..5bb6bd4 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> @@ -701,8 +701,9 @@
->  			interrupt-names = "hc_irq", "pwr_irq";
->  
->  			clocks = <&gcc GCC_SDCC1_APPS_CLK>,
-> -					<&gcc GCC_SDCC1_AHB_CLK>;
-> -			clock-names = "core", "iface";
-> +					<&gcc GCC_SDCC1_AHB_CLK>,
-> +					<&rpmhcc RPMH_CXO_CLK>;
-> +			clock-names = "core", "iface","xo";
->  			interconnects = <&aggre1_noc MASTER_EMMC 0 &mc_virt SLAVE_EBI1 0>,
->  					<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_EMMC_CFG 0>;
->  			interconnect-names = "sdhc-ddr","cpu-sdhc";
-> @@ -2666,8 +2667,9 @@
->  			interrupt-names = "hc_irq", "pwr_irq";
->  
->  			clocks = <&gcc GCC_SDCC2_APPS_CLK>,
-> -					<&gcc GCC_SDCC2_AHB_CLK>;
-> -			clock-names = "core", "iface";
-> +					<&gcc GCC_SDCC2_AHB_CLK>,
-> +					<&rpmhcc RPMH_CXO_CLK>;
-> +			clock-names = "core", "iface", "xo";
->  
->  			interconnects = <&aggre1_noc MASTER_SDCC_2 0 &mc_virt SLAVE_EBI1 0>,
->  					<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_SDCC_2 0>;
-> -- 
-> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
-> of Code Aurora Forum, hosted by The Linux Foundation
+> That said, if the gpio is already high when registering the irq handler
+> there's no transition.
 > 
+
+Right, that's one of the issue with edge triggering. PERST# can be deasserted by
+the host before EP driver probes. So if we wait for edge transition then we'll
+be stuck.
+
+> > > > +
+> > > > +	return IRQ_HANDLED;
+> > > > +}
+> [..]
+> > > > +static struct platform_driver qcom_pcie_ep_driver = {
+> > > > +	.probe	= qcom_pcie_ep_probe,
+> > > > +	.driver	= {
+> > > > +		.name		= "qcom-pcie-ep",
+> > > 
+> > > Skip the indentation of the '='.
+> > > 
+> > > > +		.suppress_bind_attrs = true,
+> > > 
+> > > Why do we suppress_bind_attrs?
+> > > 
+> > 
+> > This driver doesn't support remove() callback and I don't think it is necessary
+> > for this platform driver. So this flag is here to prevent unbind from sysfs.
+> > 
+> 
+> Right, that part makes sense. But do you know why this is, why it's not
+> possible to have the PCI controller built as a module? (GKI should
+> want this).
+> 
+
+For an endpoint, making this driver built-in makes sense since this forms the
+basic functionality of the device and we do want it to probe asap (without
+initramfs dance). But looking at other drivers, most of them (including Qcom RC)
+doesn't support tristate.
+
+But for the GKI requirement, I can add it.
+
+Thanks,
+Mani
+
+> Regards,
+> Bjorn
