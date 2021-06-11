@@ -2,154 +2,413 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2B2753A46FE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jun 2021 18:50:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CD1023A475D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jun 2021 19:02:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230436AbhFKQwB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Jun 2021 12:52:01 -0400
-Received: from mail-dm3nam07on2076.outbound.protection.outlook.com ([40.107.95.76]:10522
-        "EHLO NAM02-DM3-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S230488AbhFKQv5 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Jun 2021 12:51:57 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=a1RHJKOgJ7NjU1doeBtutMZUXVxEQwE0+HpaoYxjOG3tLaudlBEnKSkvlOF98yGpK88pT3yBkiVFgxreX2p6KMaBHHxgpITrUYr36AWczB46vz+ECC+rHByI5ScgzfHGpg4Mg67zEp7c20LctbcXmLQqjaEAoOqXhN9nMtbi0aCX9+YmH650rLyycOLgK++/fzqoTrV16Io5AChy1BdH3Qkmv1PCx6neQB+qPHwNgf6UdYXUYLn9nEPfgUxy2pHL+67EiQDF8WD8yTpHnysEivDgd/i9Al4AtJvO8oPQyGg5nGY5V50Y+Ed58a9r7j8bJlsBWTLhuze25nTnlgqsTw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=6PZDTI5qUxThdwXJWiI+pYByqQElapZETqWdP8UDFuU=;
- b=Ow2zGV34CzltH5T4NGaeoEHpBnZOQjYprXgGcbM+u+Ua+kdpT4WiqWQ6o+xMxlPqYTegCxIxPFNK/etfFNQLojzxDKPDaL6hA4+5Ko4MudnoEA7urTMQ4LLUTt5Pyp1JKSERQ6LpeJ9aUMx/N69wgOF9l2Tui1VTsPXNA6dqLJEc+LDoMypxT8aaj05uuoCKz3nrmjcdOLn+SH984zJsEVtrbOQeV75tPw+VBto5awXxT8ceMdrSwdg69R/wSwtDVjjNJox24dh8cTjP4vhh3iWfv2YZ2cUMtQRKufu0Q1v0nDXP5pGDW6aEul7Sg45+GGKjMMsaf5+jIvjyxFkpkg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=6PZDTI5qUxThdwXJWiI+pYByqQElapZETqWdP8UDFuU=;
- b=PrRb/qxHgtq/63qtHlqfW920KDblj09/sAn4M1fEQ2dm9KBuxm8TG8/YO3H94QRlB9J3sxJHDt0nZELFIPeV+v0i8vByDUM8JzamEHYN7HAKpD8rWiKGLaaEyWnUXSe5/n/iLAuMVC9evUqvvWr1bxWhmWMIVGK4Q90VHsVkcVDtWpSXC8Lsw5/2+VpHcRfpYS2xUwRCwHHKkaw9kywyxxqFib3J9qdlhpaIzok0QNzdVWMjTxQEFU8UU+ooTWnahWFgsJMCJHnaqMxN5CybyeEQL23mVIP+wAgNZACNu+TT1/oWdAXq/z1Sv6+dbamdN5OTJQJSl/2R6cUgAAmHgg==
-Received: from BY5PR12MB3764.namprd12.prod.outlook.com (2603:10b6:a03:1ac::17)
- by BYAPR12MB4744.namprd12.prod.outlook.com (2603:10b6:a03:9e::20) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4219.22; Fri, 11 Jun
- 2021 16:49:55 +0000
-Received: from BY5PR12MB3764.namprd12.prod.outlook.com
- ([fe80::d05:4bca:ea51:15af]) by BY5PR12MB3764.namprd12.prod.outlook.com
- ([fe80::d05:4bca:ea51:15af%6]) with mapi id 15.20.4219.024; Fri, 11 Jun 2021
- 16:49:55 +0000
-From:   Krishna Reddy <vdumpa@nvidia.com>
-To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-CC:     Robin Murphy <robin.murphy@arm.com>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "iommu@lists.linux-foundation.org" <iommu@lists.linux-foundation.org>,
-        Will Deacon <will@kernel.org>,
-        "linux-arm-kernel@lists.infradead.org" 
-        <linux-arm-kernel@lists.infradead.org>,
-        Thierry Reding <treding@nvidia.com>
-Subject: RE: [PATCH] iommu/io-pgtable-arm: Optimize partial walk flush for
- large scatter-gather list
-Thread-Topic: [PATCH] iommu/io-pgtable-arm: Optimize partial walk flush for
- large scatter-gather list
-Thread-Index: AQHXXT84btg0466hEE2rkvq94oyuZasMBHAAgACy+QCAAD6WAIAAB6mAgAAg2ACAAAWcgIAAPESAgACQdxCAAA05AIABAqfQ
-Date:   Fri, 11 Jun 2021 16:49:54 +0000
-Message-ID: <BY5PR12MB376480219C42E5FCE0FE0FFBB3349@BY5PR12MB3764.namprd12.prod.outlook.com>
-References: <20210609145315.25750-1-saiprakash.ranjan@codeaurora.org>
- <dbcd394a-4d85-316c-5dd0-033546a66132@arm.com>
- <c600e9b2534d54082a5272b508a7985f@codeaurora.org>
- <35bfd245-45e2-8083-b620-330d6dbd7bd7@arm.com>
- <12067ffb8243b220cf03e83aaac3e823@codeaurora.org>
- <266f190e-99ae-9175-cf13-7a77730af389@arm.com>
- <dfdabcdec99a4c6e3bf2b3c5eebe067f@codeaurora.org>
- <61c69d23-324a-85d7-2458-dfff8df9280b@arm.com>
- <BY5PR12MB37646698F37C00381EFF7C77B3349@BY5PR12MB3764.namprd12.prod.outlook.com>
- <07001b4ed6c0a491eacce6e4dc13ab5e@codeaurora.org>
-In-Reply-To: <07001b4ed6c0a491eacce6e4dc13ab5e@codeaurora.org>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: codeaurora.org; dkim=none (message not signed)
- header.d=none;codeaurora.org; dmarc=none action=none header.from=nvidia.com;
-x-originating-ip: [216.228.112.22]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 1e148353-9cbe-4fa9-1b21-08d92cf8f0da
-x-ms-traffictypediagnostic: BYAPR12MB4744:
-x-ms-exchange-transport-forked: True
-x-microsoft-antispam-prvs: <BYAPR12MB474413EDF820C74DF038842EB3349@BYAPR12MB4744.namprd12.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:9508;
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: PB5uEPCKEuq6rElYrqmYRXqVlQim4+N62bOU6+mAhFh0w+RukYMYo68Fem0WQQfpUqn6J0ZbQT2vVogKzcoq8xU+YPDVHAECRZHXtbZ2kPiVPvY9UDQmWPPFcrQPGKkEdkBWlvI0fcTwW7gQriKkLaox/oK/EqLpq7AMgYJ+SQXJaNRnSZMFWEyRhod6FCvPtddoRtw4jasRXpN72BPjfb5UXoSSlzilDkfn+teFmW4sG7fgy/x2cmU3X1zUXXO4Ng91xgwgorCT+onsBUY3piU10V9FkCsJR/Xfa6YbtF/Omt6xrVPAyugC+ObcLz8Av/Y3KQJxc1gIQ6Xn7Rgk8Ou6Jp8qWp9GejqWsnWeJ2sVnbt1mr7qphk5pFVI16JTitV5rrCDKNYA4atRUhi4YiHgxTGoHTLUCimTQxbbKacpeeBUrHadmvSa4yfo8nTpO3IbgjWYnZXdFB/PU6l26j0gqXa6hXEWYzb7xDYc+MGUsNFzBQ+BHin8iB+w49kxZ2AU6b9B/hSzlF6Jh23SN3fEJwCD56ZkLeJssgoKE78jyk0MFe4A5xh+LwsFwEVKzXrkUtQoYbVH2G3/X+IiGDaeOlk6V112aHKkguA/8jc=
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BY5PR12MB3764.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(39860400002)(396003)(346002)(376002)(366004)(136003)(76116006)(54906003)(8676002)(8936002)(83380400001)(316002)(71200400001)(107886003)(86362001)(4326008)(9686003)(55016002)(66556008)(66946007)(2906002)(66476007)(66446008)(64756008)(26005)(33656002)(52536014)(6916009)(5660300002)(6506007)(186003)(122000001)(38100700002)(478600001)(7696005);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?J8QMuYNSWp6zXWuQyMMTOPxL49BkmIkJX6TvzN1XUJJRLMOXbi6YWkfWRopu?=
- =?us-ascii?Q?+YbvX7DDu4sG1BhsWXJJOH2tt/i29/fOvi9D+XmwDz7jF5IHqDe6/HItEivh?=
- =?us-ascii?Q?VmRQq7G7tMRaIYChmiJSLJUHnOQxg5t3orlIAuqw0Vq3MEHBRnln2jmjA9sM?=
- =?us-ascii?Q?jmyvrwKfy0S1dHXZbAeD7s6fYnGtLq8G9+kawxHnUPifA5rnrj565NtprFIW?=
- =?us-ascii?Q?KXk7CM5gARmiPDdqQcjjKX7wgjMBYLzJXmQiE8blRczlDSAlME8iyKR+N0El?=
- =?us-ascii?Q?dKpMgReBzAG+C978Bwv+7JdC3cLUFeWA97FdqBGVkCm5PSJCXn0tC4WPuzh+?=
- =?us-ascii?Q?cX6ZdixpK1iXWPwKHw8Fais22LmXc42XK006R0N1ibRax+MJCJ9hUgLdHL4U?=
- =?us-ascii?Q?/SpCDKbYogvtoEEbFeWxewZ/PpnA/Hw2bmon9F/or4mrD9KADs4RCIZEtPs7?=
- =?us-ascii?Q?IBs3u2s75ZwWG2TGB0f2w2VOGx7juNqta5nTYn33tNDuZlFAKP44/LhUbBru?=
- =?us-ascii?Q?wRE4VH9hV3kgPkucPElteDgxJ/srPwdAPWRkibXRy9OXU4y0xWGrCP2Fgf/G?=
- =?us-ascii?Q?gEK1esBou7dYukJoN4G82zcew/7FmMaCWVJJYRJgs0CqIRNt1P72W9AlGj2f?=
- =?us-ascii?Q?i9O1EsdPlSCFhWXOzhuzgIr9/fkHdiH8D4POQFVWeAyznWsBQEyc5AXCzZT4?=
- =?us-ascii?Q?w/rxQk1e9q4QTzaQLTQcUr1yGWLwTDtVxqDyvfGNc0uYRWFoQ/9s+hadXBn/?=
- =?us-ascii?Q?Vrg9bNyTNegNRAYSN/QZYDBHZ32iBbQTKuasHebGEAi0mA0eeAcwlKEgWXpx?=
- =?us-ascii?Q?wW8YLcrhxDRRQnp/1ky4MKRUng6e+Jxjq0TqqfIwp87L6bubGbIvjZto6QCk?=
- =?us-ascii?Q?KTW6+CikRVrqoS0sLjgLFYEwgaIGGqE6zGg9Jiu/j+6uK5N5tM7JH1vTBaAp?=
- =?us-ascii?Q?QCEAQScZFxtKV2jqweA3Guop0HdyWgS7b/ofNHQidOuiAPofPs5e6Gmrhd25?=
- =?us-ascii?Q?+aWxU/eU98+KJ2hV+gqu8r8uQ8iTHxfKrzUmHKe9nS3/pOX5+4RSN9MsMiAo?=
- =?us-ascii?Q?BXZCAAYBChhVxsuXA+xSroXka/AypVwo3pB8jhH2RwyBnqhGt7IK6bE8TPaw?=
- =?us-ascii?Q?uTP8i9o1it1XFPpeVkLAwh+OthMXt0B47WIlqRa/HbwfKF6uLhOp25lb0yVy?=
- =?us-ascii?Q?79Lnp/OfxxnKkwFlpm1MMRxpdPQBmIBdRPaXJ3y5NId+gP5NYchDF1nzFmei?=
- =?us-ascii?Q?F3c0xyeBX2nNCBEuqJWWL97TeG8z/jkMBmVKuAjo5YBiZKP+h/EJK/KLNoHR?=
- =?us-ascii?Q?ZvIvt+aOi5E4XyeVl9A7mtdw?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+        id S231620AbhFKREB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Jun 2021 13:04:01 -0400
+Received: from mail-oi1-f175.google.com ([209.85.167.175]:38902 "EHLO
+        mail-oi1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231612AbhFKRDy (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 11 Jun 2021 13:03:54 -0400
+Received: by mail-oi1-f175.google.com with SMTP id q10so2213518oij.5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Jun 2021 10:01:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=wlmv1eeDkO2pPX/G2UzjbnzL6XKsZ2uz2UEOVRUZHw0=;
+        b=JOlmeybaAiKTguAC8h04H5GPTQztM5r5EkgKz2WeOU5nB5vyrzb88ea6a+QadTGMDA
+         gSksNtjVN/Kkg6t2TQpABVSjkt/10I4zDhDEjYOQDSaeylScvzyHCH0Bg7nS17OhfD3V
+         UsA3J54tChNLCWHHvQuNGnmg3rlj6TlyVwWxgQDINum1oIX1b1bMNUZ4FSvswRak3XSk
+         veWUaOjxlqe99aJxHYbaaMtjpQ0MDtirwDTVOlPgqfTZ2TfXLDrpFRdL8CufkFbTcdEx
+         4aHoe5xXfcjtN8ZFXh4jsdTzK5M1E71z3WvnXB+b3FN32OXhX9nPazwSjvnUXnNjKlRW
+         7Zdg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=wlmv1eeDkO2pPX/G2UzjbnzL6XKsZ2uz2UEOVRUZHw0=;
+        b=snSAwJAECsdqSw357waoPJjXzxdN+OdEcpdLYTgYqewnT0J5xZmOQyqziSsgoArfof
+         r7lu0F5AtXEopfQ8BbODtY71vMPwFiwKqMBOvfQO39RGM7iB4JSAOzHdbY7EC/hanQ1J
+         srNxco4tHVg3UzXiXM6ACec98hGY2SUBIDGlOyScy54z7/6v8Dl/y3R5kL3zmxKl0ou5
+         Z4SWueaZygc5C+Di9RjaCQXZK11jzQSh9IbmUnXz6/hKSkFdSWtOG2c2aAzSpoO1pKix
+         s9XpiHCNovO4vMa2cPXxRrQVX5rJ/anw3+vRg7BKgtZMB5jJG/GrKyNpZb0THVSEVcmO
+         gbBQ==
+X-Gm-Message-State: AOAM5328zddJzSv6/qg5BVHcjMyvIweMc1qU2/ao7+YRndtDg/suN5z7
+        pE7cfvmPZpDuUGRBft68VZW0eg==
+X-Google-Smtp-Source: ABdhPJxqxSQk3fRZ3w8ipJ2ez+mvQj/XlBEwseR+p2o9jOwwAK2/atzy23h4QQEcnR7cizU9Lo8BqQ==
+X-Received: by 2002:aca:3e89:: with SMTP id l131mr2998686oia.34.1623430854245;
+        Fri, 11 Jun 2021 10:00:54 -0700 (PDT)
+Received: from localhost.localdomain (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id p5sm1256302oip.35.2021.06.11.10.00.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 11 Jun 2021 10:00:53 -0700 (PDT)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v2] drm/msm/dpu: Avoid ABBA deadlock between IRQ modules
+Date:   Fri, 11 Jun 2021 10:00:03 -0700
+Message-Id: <20210611170003.3539059-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.29.2
 MIME-Version: 1.0
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: BY5PR12MB3764.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1e148353-9cbe-4fa9-1b21-08d92cf8f0da
-X-MS-Exchange-CrossTenant-originalarrivaltime: 11 Jun 2021 16:49:55.2144
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: OKRDVM9JdY620BWzdf2TshCKxIJT7Jy2rlcOfar5qJXfRWIqeYk6XiTTc3bfOCerWPx2yoBw9RVqmiMiJDxQtw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BYAPR12MB4744
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Sai,
-> >> > No, the unmap latency is not just in some test case written, the
-> >> > issue is very real and we have workloads where camera is reporting
-> >> > frame drops because of this unmap latency in the order of 100s of
-> milliseconds.
+Handling of the interrupt callback lists is done in dpu_core_irq.c,
+under the "cb_lock" spinlock. When these operations results in the need
+for enableing or disabling the IRQ in the hardware the code jumps to
+dpu_hw_interrupts.c, which protects its operations with "irq_lock"
+spinlock.
 
-> Not exactly, this issue is not specific to camera. If you look at the num=
-bers in the
-> commit text, even for the test device its the same observation. It depend=
-s on
-> the buffer size we are unmapping which affects the number of TLBIs issue.=
- I am
-> not aware of any such HW side bw issues for camera specifically on QCOM
-> devices.
+When an interrupt fires, dpu_hw_intr_dispatch_irq() inspects the
+hardware state while holding the "irq_lock" spinlock and jumps to
+dpu_core_irq_callback_handler() to invoke the registered handlers, which
+traverses the callback list under the "cb_lock" spinlock.
 
-It is clear that reducing number of TLBIs  reduces the umap API latency. Bu=
-t, It is
-at the expense of throwing away valid tlb entries.=20
-Quantifying the impact of arbitrary invalidation of valid tlb entries at co=
-ntext level is not straight forward and
-use case dependent. The side-effects might be rare or won't be known until =
-they are noticed.
-Can you provide more details on How the unmap latency is causing camera to =
-drop frames?
-Is unmap performed in the perf path?
-If unmap is queued and performed on a back ground thread, would it resolve =
-the frame drops?
+As such, in the event that these happens concurrently we'll end up with
+a deadlock.
 
--KR
+Prior to '1c1e7763a6d4 ("drm/msm/dpu: simplify IRQ enabling/disabling")'
+the enable/disable of the hardware interrupt was done outside the
+"cb_lock" region, optimitically by using an atomic enable-counter for
+each interrupt and an warning print if someone changed the list between
+the atomic_read and the time the operation concluded.
+
+Rather than re-introducing the large array of atomics, this change
+embraces the fact that dpu_core_irq and dpu_hw_interrupts are deeply
+entangled and make them share the single "irq_lock".
+
+Following this step it's suggested that we squash the two parts into a
+single irq handling thing.
+
+Fixes: 1c1e7763a6d4 ("drm/msm/dpu: simplify IRQ enabling/disabling")
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+---
+
+Changes since v1:
+- Make dpu_core_irq use dpu_hw_interrupts' irq_lock instead of adding another
+  mutex.
+
+ drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.c  | 27 ++++-----
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c | 60 +++++++++++--------
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h | 20 ++++++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h       |  2 -
+ 4 files changed, 63 insertions(+), 46 deletions(-)
+
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.c
+index 4f110c428b60..18557b9713b6 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.c
+@@ -22,7 +22,6 @@ static void dpu_core_irq_callback_handler(void *arg, int irq_idx)
+ 	struct dpu_kms *dpu_kms = arg;
+ 	struct dpu_irq *irq_obj = &dpu_kms->irq_obj;
+ 	struct dpu_irq_callback *cb;
+-	unsigned long irq_flags;
+ 
+ 	pr_debug("irq_idx=%d\n", irq_idx);
+ 
+@@ -34,11 +33,9 @@ static void dpu_core_irq_callback_handler(void *arg, int irq_idx)
+ 	/*
+ 	 * Perform registered function callback
+ 	 */
+-	spin_lock_irqsave(&dpu_kms->irq_obj.cb_lock, irq_flags);
+ 	list_for_each_entry(cb, &irq_obj->irq_cb_tbl[irq_idx], list)
+ 		if (cb->func)
+ 			cb->func(cb->arg, irq_idx);
+-	spin_unlock_irqrestore(&dpu_kms->irq_obj.cb_lock, irq_flags);
+ }
+ 
+ u32 dpu_core_irq_read(struct dpu_kms *dpu_kms, int irq_idx, bool clear)
+@@ -82,22 +79,21 @@ int dpu_core_irq_register_callback(struct dpu_kms *dpu_kms, int irq_idx,
+ 
+ 	DPU_DEBUG("[%pS] irq_idx=%d\n", __builtin_return_address(0), irq_idx);
+ 
+-	spin_lock_irqsave(&dpu_kms->irq_obj.cb_lock, irq_flags);
++	irq_flags = dpu_kms->hw_intr->ops.lock(dpu_kms->hw_intr);
+ 	trace_dpu_core_irq_register_callback(irq_idx, register_irq_cb);
+ 	list_del_init(&register_irq_cb->list);
+ 	list_add_tail(&register_irq_cb->list,
+ 			&dpu_kms->irq_obj.irq_cb_tbl[irq_idx]);
+ 	if (list_is_first(&register_irq_cb->list,
+ 			&dpu_kms->irq_obj.irq_cb_tbl[irq_idx])) {
+-		int ret = dpu_kms->hw_intr->ops.enable_irq(
++		int ret = dpu_kms->hw_intr->ops.enable_irq_locked(
+ 				dpu_kms->hw_intr,
+ 				irq_idx);
+ 		if (ret)
+ 			DPU_ERROR("Fail to enable IRQ for irq_idx:%d\n",
+ 					irq_idx);
+ 	}
+-
+-	spin_unlock_irqrestore(&dpu_kms->irq_obj.cb_lock, irq_flags);
++	dpu_kms->hw_intr->ops.unlock(dpu_kms->hw_intr, irq_flags);
+ 
+ 	return 0;
+ }
+@@ -127,12 +123,12 @@ int dpu_core_irq_unregister_callback(struct dpu_kms *dpu_kms, int irq_idx,
+ 
+ 	DPU_DEBUG("[%pS] irq_idx=%d\n", __builtin_return_address(0), irq_idx);
+ 
+-	spin_lock_irqsave(&dpu_kms->irq_obj.cb_lock, irq_flags);
++	irq_flags = dpu_kms->hw_intr->ops.lock(dpu_kms->hw_intr);
+ 	trace_dpu_core_irq_unregister_callback(irq_idx, register_irq_cb);
+ 	list_del_init(&register_irq_cb->list);
+ 	/* empty callback list but interrupt is still enabled */
+ 	if (list_empty(&dpu_kms->irq_obj.irq_cb_tbl[irq_idx])) {
+-		int ret = dpu_kms->hw_intr->ops.disable_irq(
++		int ret = dpu_kms->hw_intr->ops.disable_irq_locked(
+ 				dpu_kms->hw_intr,
+ 				irq_idx);
+ 		if (ret)
+@@ -140,7 +136,7 @@ int dpu_core_irq_unregister_callback(struct dpu_kms *dpu_kms, int irq_idx,
+ 					irq_idx);
+ 		DPU_DEBUG("irq_idx=%d ret=%d\n", irq_idx, ret);
+ 	}
+-	spin_unlock_irqrestore(&dpu_kms->irq_obj.cb_lock, irq_flags);
++	dpu_kms->hw_intr->ops.unlock(dpu_kms->hw_intr, irq_flags);
+ 
+ 	return 0;
+ }
+@@ -164,7 +160,8 @@ static void dpu_disable_all_irqs(struct dpu_kms *dpu_kms)
+ #ifdef CONFIG_DEBUG_FS
+ static int dpu_debugfs_core_irq_show(struct seq_file *s, void *v)
+ {
+-	struct dpu_irq *irq_obj = s->private;
++	struct dpu_kms *dpu_kms = s->private;
++	struct dpu_irq *irq_obj = &dpu_kms->irq_obj;
+ 	struct dpu_irq_callback *cb;
+ 	unsigned long irq_flags;
+ 	int i, irq_count, cb_count;
+@@ -173,12 +170,12 @@ static int dpu_debugfs_core_irq_show(struct seq_file *s, void *v)
+ 		return 0;
+ 
+ 	for (i = 0; i < irq_obj->total_irqs; i++) {
+-		spin_lock_irqsave(&irq_obj->cb_lock, irq_flags);
++		irq_flags = dpu_kms->hw_intr->ops.lock(dpu_kms->hw_intr);
+ 		cb_count = 0;
+ 		irq_count = atomic_read(&irq_obj->irq_counts[i]);
+ 		list_for_each_entry(cb, &irq_obj->irq_cb_tbl[i], list)
+ 			cb_count++;
+-		spin_unlock_irqrestore(&irq_obj->cb_lock, irq_flags);
++		dpu_kms->hw_intr->ops.unlock(dpu_kms->hw_intr, irq_flags);
+ 
+ 		if (irq_count || cb_count)
+ 			seq_printf(s, "idx:%d irq:%d cb:%d\n",
+@@ -193,7 +190,7 @@ DEFINE_SHOW_ATTRIBUTE(dpu_debugfs_core_irq);
+ void dpu_debugfs_core_irq_init(struct dpu_kms *dpu_kms,
+ 		struct dentry *parent)
+ {
+-	debugfs_create_file("core_irq", 0600, parent, &dpu_kms->irq_obj,
++	debugfs_create_file("core_irq", 0600, parent, dpu_kms,
+ 		&dpu_debugfs_core_irq_fops);
+ }
+ #endif
+@@ -207,8 +204,6 @@ void dpu_core_irq_preinstall(struct dpu_kms *dpu_kms)
+ 	dpu_disable_all_irqs(dpu_kms);
+ 	pm_runtime_put_sync(&dpu_kms->pdev->dev);
+ 
+-	spin_lock_init(&dpu_kms->irq_obj.cb_lock);
+-
+ 	/* Create irq callbacks for all possible irq_idx */
+ 	dpu_kms->irq_obj.total_irqs = dpu_kms->hw_intr->total_irqs;
+ 	dpu_kms->irq_obj.irq_cb_tbl = kcalloc(dpu_kms->irq_obj.total_irqs,
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
+index bf9a147ac245..996011e356f7 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
+@@ -211,10 +211,9 @@ static void dpu_hw_intr_dispatch_irq(struct dpu_hw_intr *intr,
+ 	spin_unlock_irqrestore(&intr->irq_lock, irq_flags);
+ }
+ 
+-static int dpu_hw_intr_enable_irq(struct dpu_hw_intr *intr, int irq_idx)
++static int dpu_hw_intr_enable_irq_locked(struct dpu_hw_intr *intr, int irq_idx)
+ {
+ 	int reg_idx;
+-	unsigned long irq_flags;
+ 	const struct dpu_intr_reg *reg;
+ 	const char *dbgstr = NULL;
+ 	uint32_t cache_irq_mask;
+@@ -227,10 +226,16 @@ static int dpu_hw_intr_enable_irq(struct dpu_hw_intr *intr, int irq_idx)
+ 		return -EINVAL;
+ 	}
+ 
++	/*
++	 * The cache_irq_mask and hardware RMW operations needs to be done
++	 * under irq_lock and it's the caller's responsibility to ensure that's
++	 * held.
++	 */
++	assert_spin_locked(&intr->irq_lock);
++
+ 	reg_idx = DPU_IRQ_REG(irq_idx);
+ 	reg = &dpu_intr_set[reg_idx];
+ 
+-	spin_lock_irqsave(&intr->irq_lock, irq_flags);
+ 	cache_irq_mask = intr->cache_irq_mask[reg_idx];
+ 	if (cache_irq_mask & DPU_IRQ_MASK(irq_idx)) {
+ 		dbgstr = "DPU IRQ already set:";
+@@ -248,7 +253,6 @@ static int dpu_hw_intr_enable_irq(struct dpu_hw_intr *intr, int irq_idx)
+ 
+ 		intr->cache_irq_mask[reg_idx] = cache_irq_mask;
+ 	}
+-	spin_unlock_irqrestore(&intr->irq_lock, irq_flags);
+ 
+ 	pr_debug("%s MASK:0x%.8lx, CACHE-MASK:0x%.8x\n", dbgstr,
+ 			DPU_IRQ_MASK(irq_idx), cache_irq_mask);
+@@ -256,7 +260,7 @@ static int dpu_hw_intr_enable_irq(struct dpu_hw_intr *intr, int irq_idx)
+ 	return 0;
+ }
+ 
+-static int dpu_hw_intr_disable_irq_nolock(struct dpu_hw_intr *intr, int irq_idx)
++static int dpu_hw_intr_disable_irq_locked(struct dpu_hw_intr *intr, int irq_idx)
+ {
+ 	int reg_idx;
+ 	const struct dpu_intr_reg *reg;
+@@ -271,6 +275,13 @@ static int dpu_hw_intr_disable_irq_nolock(struct dpu_hw_intr *intr, int irq_idx)
+ 		return -EINVAL;
+ 	}
+ 
++	/*
++	 * The cache_irq_mask and hardware RMW operations needs to be done
++	 * under irq_lock and it's the caller's responsibility to ensure that's
++	 * held.
++	 */
++	assert_spin_locked(&intr->irq_lock);
++
+ 	reg_idx = DPU_IRQ_REG(irq_idx);
+ 	reg = &dpu_intr_set[reg_idx];
+ 
+@@ -298,25 +309,6 @@ static int dpu_hw_intr_disable_irq_nolock(struct dpu_hw_intr *intr, int irq_idx)
+ 	return 0;
+ }
+ 
+-static int dpu_hw_intr_disable_irq(struct dpu_hw_intr *intr, int irq_idx)
+-{
+-	unsigned long irq_flags;
+-
+-	if (!intr)
+-		return -EINVAL;
+-
+-	if (irq_idx < 0 || irq_idx >= intr->total_irqs) {
+-		pr_err("invalid IRQ index: [%d]\n", irq_idx);
+-		return -EINVAL;
+-	}
+-
+-	spin_lock_irqsave(&intr->irq_lock, irq_flags);
+-	dpu_hw_intr_disable_irq_nolock(intr, irq_idx);
+-	spin_unlock_irqrestore(&intr->irq_lock, irq_flags);
+-
+-	return 0;
+-}
+-
+ static int dpu_hw_intr_clear_irqs(struct dpu_hw_intr *intr)
+ {
+ 	int i;
+@@ -388,14 +380,30 @@ static u32 dpu_hw_intr_get_interrupt_status(struct dpu_hw_intr *intr,
+ 	return intr_status;
+ }
+ 
++static unsigned long dpu_hw_intr_lock(struct dpu_hw_intr *intr)
++{
++	unsigned long irq_flags;
++
++	spin_lock_irqsave(&intr->irq_lock, irq_flags);
++
++	return irq_flags;
++}
++
++static void dpu_hw_intr_unlock(struct dpu_hw_intr *intr, unsigned long irq_flags)
++{
++	spin_unlock_irqrestore(&intr->irq_lock, irq_flags);
++}
++
+ static void __setup_intr_ops(struct dpu_hw_intr_ops *ops)
+ {
+-	ops->enable_irq = dpu_hw_intr_enable_irq;
+-	ops->disable_irq = dpu_hw_intr_disable_irq;
++	ops->enable_irq_locked = dpu_hw_intr_enable_irq_locked;
++	ops->disable_irq_locked = dpu_hw_intr_disable_irq_locked;
+ 	ops->dispatch_irqs = dpu_hw_intr_dispatch_irq;
+ 	ops->clear_all_irqs = dpu_hw_intr_clear_irqs;
+ 	ops->disable_all_irqs = dpu_hw_intr_disable_irqs;
+ 	ops->get_interrupt_status = dpu_hw_intr_get_interrupt_status;
++	ops->lock = dpu_hw_intr_lock;
++	ops->unlock = dpu_hw_intr_unlock;
+ }
+ 
+ static void __intr_offset(struct dpu_mdss_cfg *m,
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h
+index 0073d32effc5..d90dac77c26f 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h
+@@ -46,7 +46,7 @@ struct dpu_hw_intr_ops {
+ 	 * @irq_idx:	Lookup irq index return from irq_idx_lookup
+ 	 * @return:	0 for success, otherwise failure
+ 	 */
+-	int (*enable_irq)(
++	int (*enable_irq_locked)(
+ 			struct dpu_hw_intr *intr,
+ 			int irq_idx);
+ 
+@@ -56,7 +56,7 @@ struct dpu_hw_intr_ops {
+ 	 * @irq_idx:	Lookup irq index return from irq_idx_lookup
+ 	 * @return:	0 for success, otherwise failure
+ 	 */
+-	int (*disable_irq)(
++	int (*disable_irq_locked)(
+ 			struct dpu_hw_intr *intr,
+ 			int irq_idx);
+ 
+@@ -101,6 +101,22 @@ struct dpu_hw_intr_ops {
+ 			struct dpu_hw_intr *intr,
+ 			int irq_idx,
+ 			bool clear);
++
++	/**
++	 * lock - take the IRQ lock
++	 * @intr:	HW interrupt handle
++	 * @return:	irq_flags for the taken spinlock
++	 */
++	unsigned long (*lock)(
++			struct dpu_hw_intr *intr);
++
++	/**
++	 * unlock - take the IRQ lock
++	 * @intr:	HW interrupt handle
++	 * @irq_flags:  the irq_flags returned from lock
++	 */
++	void (*unlock)(
++			struct dpu_hw_intr *intr, unsigned long irq_flags);
+ };
+ 
+ /**
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+index f6840b1af6e4..3034da1d2977 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+@@ -82,14 +82,12 @@ struct dpu_irq_callback {
+  * struct dpu_irq: IRQ structure contains callback registration info
+  * @total_irq:    total number of irq_idx obtained from HW interrupts mapping
+  * @irq_cb_tbl:   array of IRQ callbacks setting
+- * @cb_lock:      callback lock
+  * @debugfs_file: debugfs file for irq statistics
+  */
+ struct dpu_irq {
+ 	u32 total_irqs;
+ 	struct list_head *irq_cb_tbl;
+ 	atomic_t *irq_counts;
+-	spinlock_t cb_lock;
+ };
+ 
+ struct dpu_kms {
+-- 
+2.29.2
 
