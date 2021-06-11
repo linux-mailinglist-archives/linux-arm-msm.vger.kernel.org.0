@@ -2,552 +2,596 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 634073A435A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jun 2021 15:50:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2D1413A46F8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jun 2021 18:48:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231393AbhFKNwu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Jun 2021 09:52:50 -0400
-Received: from mail-il1-f177.google.com ([209.85.166.177]:34463 "EHLO
-        mail-il1-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231488AbhFKNwt (ORCPT
+        id S230281AbhFKQuo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Jun 2021 12:50:44 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124]:58674 "EHLO
+        us-smtp-delivery-124.mimecast.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S230465AbhFKQuS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Jun 2021 09:52:49 -0400
-Received: by mail-il1-f177.google.com with SMTP id w14so5215677ilv.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Jun 2021 06:50:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=cosmicpenguin-net.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=ZhoRpq2tGh0PIsHKlm5VaqY0SAKlvS+nVTXnYSKGEDs=;
-        b=GugNJqVjoLF3Izp2SGWds/vzEkmFuPlBxiXYM/o3fjrrrNiolxMU4Mvpe7BtdO0iOJ
-         n4+fu+vaerB5MRMdFFjy5QVcEriiAJ/PsiRv8S5M9AZ6YhJ6GJbLwRBIf4T7NKY65jxi
-         a1QqOCnKjMpl2E9OK1Un6fOF5ZJPZ2HlmEQcQv41t2rGNYTNS5rdozWfwXgck5y/hnQQ
-         8CAt6eDto66V9wIIMz3zDqqZuurGl3cUQxKwrNJGOlAaPNriP3YTBhlZIVYOD2TlrxO9
-         WB9MhYVptiGmQdnJhLALXouVaY7Rh/1mM63GrWTHGpHAbd5P75755qLYQCHMpd8uHTEk
-         ZNuQ==
+        Fri, 11 Jun 2021 12:50:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1623430099;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=O9zapKI3rBYR8fBrMwtZ2rITcC3GeHzyGjbRGxp6OKU=;
+        b=i6E/v86VpFS+tI2KZ1BHSgP6ASW5ovs6fcJqFh+uyWMUbtbPNtJ2PqN8qYJG+IKBqvH70v
+        mGbNhFLPhJVznxjQh9z98bWgIz6FnxnYG5ch6hXiybZGVLWfOBGraMLy1+6C4T+tqV70Jj
+        +bhFr/4WOJxC4H1KyTUT+pz5Ti1sVH0=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-446-D-OEjBWUNHSEbmO50kHhvw-1; Fri, 11 Jun 2021 12:48:18 -0400
+X-MC-Unique: D-OEjBWUNHSEbmO50kHhvw-1
+Received: by mail-qv1-f69.google.com with SMTP id i16-20020a0cf4900000b029022023514900so18432739qvm.11
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Jun 2021 09:48:17 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-disposition
-         :in-reply-to;
-        bh=ZhoRpq2tGh0PIsHKlm5VaqY0SAKlvS+nVTXnYSKGEDs=;
-        b=HLn3nBSYyWZsvYqN6VbLLLoMs56Kbuves8bCzVxT7F6qB2Pn+AjtgjR+llcWVFN2mB
-         qRr9SKF3m/qBygAYl47M5qQYcAT/szh183mDOWC6HpIpiVvwO9ZE8p5G25P16gi5QALD
-         TLXY6A5FEK56fumjWCk43qLGM1oWojvKw5ogErAIkjo3JGHXf3EikEKBH352YZBsCNW+
-         xDnwcPpRQlHQMcd0Xekkd9aSviGver/fvoBJr/R9xF/ZJB3Djf5cyGqyzbflh3Zao4HA
-         LxKRFg2x8xCBuvFZ7L8doKvX8Fpridmaqiy1dnwh2dggwJ6ZRjf8aMN6RigCvqW24w4C
-         HdjA==
-X-Gm-Message-State: AOAM531ImTh5XwiJUM6fgkY4UiDn9Cg7h5pVClnK8FGaWeFBSVKH4xlI
-        DqEDtqWftCC9dq4yQ4wD1ko8JQ==
-X-Google-Smtp-Source: ABdhPJyIFins4zk9hNxuyXkWl3ji/2833BLJC84OgcgS2MeoFmn655hdtONnwTFaBK3R0XWBImQKGA==
-X-Received: by 2002:a92:c808:: with SMTP id v8mr3342187iln.280.1623419390748;
-        Fri, 11 Jun 2021 06:49:50 -0700 (PDT)
-Received: from cosmicpenguin.net (c-71-237-100-236.hsd1.co.comcast.net. [71.237.100.236])
-        by smtp.gmail.com with ESMTPSA id w11sm3258114ilc.8.2021.06.11.06.49.49
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:organization:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=O9zapKI3rBYR8fBrMwtZ2rITcC3GeHzyGjbRGxp6OKU=;
+        b=nhcYX2M7FYsyfBzbFtU0Hjc6XXCSe4UvF09aKgfX/Mq+XQBanRMZr8N+19r/y7M8dZ
+         TU/EFf+jBltpTt83ESi7+eJAHymT5pD9DuFrlKJhLrd2J+xxRfMOMLZUi7A1ahngdh+3
+         HAHRO5wpACJdzmH5icD4FvWtUbIKa2WYWIrqaacn3u40VpcPxNr8l7qT6qwa3trF7gWT
+         QHYw16REodqVwv9eyraojb1w1FUWvGZ1rq2m6N9kmYXXcr4Zad/wi22atEtb7jEzMDZY
+         8Qz/mcuF+B7wUPGkf6bE1uEgUnOtQJUPz43aQk5dfoOQKH9Nm50Hnr1XvopHIZYAusfT
+         fxUg==
+X-Gm-Message-State: AOAM530tUapUA51H8z6/2cGZso5STfADdK5j6fmcBlh6zWm8nLzWunXl
+        sTzhf3hOjv88ltBcm7sLN2RFwFOiOQKSC+wCqq/TiJGIa0/pYo34c3yb4faEiiioNbo71/WApAH
+        KBjPFTanlEQ7R4f++71S9kEvsZQ==
+X-Received: by 2002:a05:620a:4101:: with SMTP id j1mr4756439qko.473.1623430097457;
+        Fri, 11 Jun 2021 09:48:17 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJwskZ1YoR/kHzHOD8dkP3Px7rv1rUjfWY3sTdIQBoGpXWpMjTcw+UDVO7lYIht39btQURwMKQ==
+X-Received: by 2002:a05:620a:4101:: with SMTP id j1mr4756405qko.473.1623430097183;
+        Fri, 11 Jun 2021 09:48:17 -0700 (PDT)
+Received: from Ruby.lyude.net (pool-108-49-102-102.bstnma.fios.verizon.net. [108.49.102.102])
+        by smtp.gmail.com with ESMTPSA id c26sm4565760qtj.41.2021.06.11.09.48.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Jun 2021 06:49:50 -0700 (PDT)
-Date:   Fri, 11 Jun 2021 07:49:48 -0600
-From:   Jordan Crouse <jordan@cosmicpenguin.net>
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     dri-devel@lists.freedesktop.org, iommu@lists.linux-foundation.org,
-        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Rob Clark <robdclark@chromium.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Fri, 11 Jun 2021 09:48:16 -0700 (PDT)
+Message-ID: <3f29f7302fe009f20b1dff964fbc4f94ab814048.camel@redhat.com>
+Subject: Re: [PATCH v9 04/11] drm: Introduce the DP AUX bus
+From:   Lyude Paul <lyude@redhat.com>
+To:     Douglas Anderson <dianders@chromium.org>,
+        Andrzej Hajda <a.hajda@samsung.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Sam Ravnborg <sam@ravnborg.org>
+Cc:     Linus W <linus.walleij@linaro.org>, robdclark@chromium.org,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>,
+        Steev Klimaszewski <steev@kali.org>,
+        linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Thierry Reding <treding@nvidia.com>,
+        dri-devel@lists.freedesktop.org,
+        Stephen Boyd <swboyd@chromium.org>,
+        Rajeev Nandan <rajeevny@codeaurora.org>,
         Daniel Vetter <daniel@ffwll.ch>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        "Kristian H. Kristensen" <hoegsberg@google.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Akhil P Oommen <akhilpo@codeaurora.org>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Eric Anholt <eric@anholt.net>,
-        Sharat Masetty <smasetty@codeaurora.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Lee Jones <lee.jones@linaro.org>,
-        Zhenzhong Duan <zhenzhong.duan@gmail.com>,
-        Dave Airlie <airlied@redhat.com>,
-        open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v5 5/5] drm/msm: devcoredump iommu fault support
-Message-ID: <20210611134948.oin6wy2omkaitlq2@cosmicpenguin.net>
-Mail-Followup-To: Rob Clark <robdclark@gmail.com>,
-        dri-devel@lists.freedesktop.org, iommu@lists.linux-foundation.org,
-        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Rob Clark <robdclark@chromium.org>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
-        AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        "Kristian H. Kristensen" <hoegsberg@google.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Akhil P Oommen <akhilpo@codeaurora.org>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Eric Anholt <eric@anholt.net>,
-        Sharat Masetty <smasetty@codeaurora.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Lee Jones <lee.jones@linaro.org>,
-        Zhenzhong Duan <zhenzhong.duan@gmail.com>,
-        Dave Airlie <airlied@redhat.com>,
-        open list <linux-kernel@vger.kernel.org>
-References: <20210610214431.539029-1-robdclark@gmail.com>
- <20210610214431.539029-6-robdclark@gmail.com>
+        David Airlie <airlied@linux.ie>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        linux-kernel@vger.kernel.org
+Date:   Fri, 11 Jun 2021 12:48:14 -0400
+In-Reply-To: <20210607100234.v9.4.I787c9ba09ed5ce12500326ded73a4f7c9265b1b3@changeid>
+References: <20210607170555.4006050-1-dianders@chromium.org>
+         <20210607100234.v9.4.I787c9ba09ed5ce12500326ded73a4f7c9265b1b3@changeid>
+Organization: Red Hat
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.38.4 (3.38.4-1.fc33) 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210610214431.539029-6-robdclark@gmail.com>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jun 10, 2021 at 02:44:13PM -0700, Rob Clark wrote:
-> From: Rob Clark <robdclark@chromium.org>
-> 
-> Wire up support to stall the SMMU on iova fault, and collect a devcore-
-> dump snapshot for easier debugging of faults.
-> 
-> Currently this is a6xx-only, but mostly only because so far it is the
-> only one using adreno-smmu-priv.
+Some comments down below:
 
-Acked-by: Jordan Crouse <jordan@cosmicpenguin.net>
- 
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
-> ---
->  drivers/gpu/drm/msm/adreno/a5xx_gpu.c       | 19 +++++++-
->  drivers/gpu/drm/msm/adreno/a6xx_gpu.c       | 38 +++++++++++++++-
->  drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c | 42 ++++++++++++++----
->  drivers/gpu/drm/msm/adreno/adreno_gpu.c     | 15 +++++++
->  drivers/gpu/drm/msm/msm_gem.h               |  1 +
->  drivers/gpu/drm/msm/msm_gem_submit.c        |  1 +
->  drivers/gpu/drm/msm/msm_gpu.c               | 48 +++++++++++++++++++++
->  drivers/gpu/drm/msm/msm_gpu.h               | 17 ++++++++
->  drivers/gpu/drm/msm/msm_gpummu.c            |  5 +++
->  drivers/gpu/drm/msm/msm_iommu.c             | 11 +++++
->  drivers/gpu/drm/msm/msm_mmu.h               |  1 +
->  11 files changed, 186 insertions(+), 12 deletions(-)
+On Mon, 2021-06-07 at 10:05 -0700, Douglas Anderson wrote:
+> Historically "simple" eDP panels have been handled by panel-simple
+> which is a basic platform_device. In the device tree, the panel node
+> was at the top level and not connected to anything else.
 > 
-> diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-> index eb030b00bff4..7a271de9a212 100644
-> --- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-> +++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-> @@ -1200,6 +1200,15 @@ static void a5xx_fault_detect_irq(struct msm_gpu *gpu)
->  	struct drm_device *dev = gpu->dev;
->  	struct msm_ringbuffer *ring = gpu->funcs->active_ring(gpu);
->  
-> +	/*
-> +	 * If stalled on SMMU fault, we could trip the GPU's hang detection,
-> +	 * but the fault handler will trigger the devcore dump, and we want
-> +	 * to otherwise resume normally rather than killing the submit, so
-> +	 * just bail.
-> +	 */
-> +	if (gpu_read(gpu, REG_A5XX_RBBM_STATUS3) & BIT(24))
-> +		return;
+> Let's change it so that, instead, panels can be represented as being
+> children of the "DP AUX bus". Essentially we're saying that the
+> hierarchy that we're going to represent is the "control" connections
+> between devices. The DP AUX bus is a control bus provided by an eDP
+> controller (the parent) and consumed by a device like a panel (the
+> child).
+> 
+> The primary incentive here is to cleanly provide the panel driver the
+> ability to communicate over the AUX bus while handling lifetime issues
+> properly. The panel driver may want the AUX bus for controlling the
+> backlight or querying the panel's EDID.
+> 
+> The idea for this bus's design was hashed out over IRC [1].
+> 
+> [1]
+> https://people.freedesktop.org/~cbrill/dri-log/?channel=dri-devel&date=2021-05-11
+> 
+> Cc: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+> Cc: Lyude Paul <lyude@redhat.com>
+> Cc: Rajeev Nandan <rajeevny@codeaurora.org>
+> Suggested-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> Acked-by: Linus Walleij <linus.walleij@linaro.org>
+> ---
+> There's a whole lot of boilerplate code here. I've tried my best to
+> grok what all of it should be, drawing inspiration from other similar
+> bus drivers (auxiliary, i2c, serdev, platform) and I've tried to test
+> several of the corner cases, but I can't actually believe that I've
+> touched every code path. Please yell if you see something dumb.
+> 
+> (no changes since v8)
+> 
+> Changes in v8:
+> - Allow dp-aux-bus to be a module to fix allmodconfig builds
+> 
+> Changes in v7:
+> - Patch introducing the DP AUX bus is new for v7.
+> 
+>  drivers/gpu/drm/Kconfig          |   5 +
+>  drivers/gpu/drm/Makefile         |   2 +
+>  drivers/gpu/drm/drm_dp_aux_bus.c | 326 +++++++++++++++++++++++++++++++
+>  include/drm/drm_dp_aux_bus.h     |  57 ++++++
+>  4 files changed, 390 insertions(+)
+>  create mode 100644 drivers/gpu/drm/drm_dp_aux_bus.c
+>  create mode 100644 include/drm/drm_dp_aux_bus.h
+> 
+> diff --git a/drivers/gpu/drm/Kconfig b/drivers/gpu/drm/Kconfig
+> index 7ff89690a976..1366d8d4610a 100644
+> --- a/drivers/gpu/drm/Kconfig
+> +++ b/drivers/gpu/drm/Kconfig
+> @@ -35,6 +35,11 @@ config DRM_MIPI_DSI
+>         bool
+>         depends on DRM
+>  
+> +config DRM_DP_AUX_BUS
+> +       tristate
+> +       depends on DRM
+> +       depends on OF
 > +
->  	DRM_DEV_ERROR(dev->dev, "gpu fault ring %d fence %x status %8.8X rb %4.4x/%4.4x ib1 %16.16llX/%4.4x ib2 %16.16llX/%4.4x\n",
->  		ring ? ring->id : -1, ring ? ring->seqno : 0,
->  		gpu_read(gpu, REG_A5XX_RBBM_STATUS),
-> @@ -1523,6 +1532,7 @@ static struct msm_gpu_state *a5xx_gpu_state_get(struct msm_gpu *gpu)
->  {
->  	struct a5xx_gpu_state *a5xx_state = kzalloc(sizeof(*a5xx_state),
->  			GFP_KERNEL);
-> +	bool stalled = !!(gpu_read(gpu, REG_A5XX_RBBM_STATUS3) & BIT(24));
->  
->  	if (!a5xx_state)
->  		return ERR_PTR(-ENOMEM);
-> @@ -1535,8 +1545,13 @@ static struct msm_gpu_state *a5xx_gpu_state_get(struct msm_gpu *gpu)
->  
->  	a5xx_state->base.rbbm_status = gpu_read(gpu, REG_A5XX_RBBM_STATUS);
->  
-> -	/* Get the HLSQ regs with the help of the crashdumper */
-> -	a5xx_gpu_state_get_hlsq_regs(gpu, a5xx_state);
-> +	/*
-> +	 * Get the HLSQ regs with the help of the crashdumper, but only if
-> +	 * we are not stalled in an iommu fault (in which case the crashdumper
-> +	 * would not have access to memory)
-> +	 */
-> +	if (!stalled)
-> +		a5xx_gpu_state_get_hlsq_regs(gpu, a5xx_state);
->  
->  	a5xx_set_hwcg(gpu, true);
->  
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> index fc19db10bff1..c3699408bd1f 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> @@ -1081,6 +1081,16 @@ static int a6xx_fault_handler(void *arg, unsigned long iova, int flags, void *da
->  	struct msm_gpu *gpu = arg;
->  	struct adreno_smmu_fault_info *info = data;
->  	const char *type = "UNKNOWN";
-> +	const char *block;
-> +	bool do_devcoredump = info && !READ_ONCE(gpu->crashstate);
+>  config DRM_DP_AUX_CHARDEV
+>         bool "DRM DP AUX Interface"
+>         depends on DRM
+> diff --git a/drivers/gpu/drm/Makefile b/drivers/gpu/drm/Makefile
+> index a118692a6df7..12e6f4e485ed 100644
+> --- a/drivers/gpu/drm/Makefile
+> +++ b/drivers/gpu/drm/Makefile
+> @@ -33,6 +33,8 @@ drm-$(CONFIG_PCI) += drm_pci.o
+>  drm-$(CONFIG_DEBUG_FS) += drm_debugfs.o drm_debugfs_crc.o
+>  drm-$(CONFIG_DRM_LOAD_EDID_FIRMWARE) += drm_edid_load.o
+>  
+> +obj-$(CONFIG_DRM_DP_AUX_BUS) += drm_dp_aux_bus.o
 > +
-> +	/*
-> +	 * If we aren't going to be resuming later from fault_worker, then do
-> +	 * it now.
-> +	 */
-> +	if (!do_devcoredump) {
-> +		gpu->aspace->mmu->funcs->resume_translation(gpu->aspace->mmu);
-> +	}
->  
->  	/*
->  	 * Print a default message if we couldn't get the data from the
-> @@ -1104,15 +1114,30 @@ static int a6xx_fault_handler(void *arg, unsigned long iova, int flags, void *da
->  	else if (info->fsr & ARM_SMMU_FSR_EF)
->  		type = "EXTERNAL";
->  
-> +	block = a6xx_fault_block(gpu, info->fsynr1 & 0xff);
+>  drm_vram_helper-y := drm_gem_vram_helper.o
+>  obj-$(CONFIG_DRM_VRAM_HELPER) += drm_vram_helper.o
+>  
+> diff --git a/drivers/gpu/drm/drm_dp_aux_bus.c
+> b/drivers/gpu/drm/drm_dp_aux_bus.c
+> new file mode 100644
+> index 000000000000..d0e44de287d4
+> --- /dev/null
+> +++ b/drivers/gpu/drm/drm_dp_aux_bus.c
+> @@ -0,0 +1,326 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +/*
+> + * Copyright 2021 Google Inc.
+> + *
+> + * The DP AUX bus is used for devices that are connected over a DisplayPort
+> + * AUX bus. The devices on the far side of the bus are referred to as
+> + * endpoints in this code.
+> + *
+> + * Commonly there is only one device connected to the DP AUX bus: a panel.
+> + * Though historically panels (even DP panels) have been modeled as simple
+> + * platform devices, putting them under the DP AUX bus allows the panel
+> driver
+> + * to perform transactions on that bus.
+> + */
 > +
->  	pr_warn_ratelimited("*** gpu fault: ttbr0=%.16llx iova=%.16lx dir=%s type=%s source=%s (%u,%u,%u,%u)\n",
->  			info->ttbr0, iova,
-> -			flags & IOMMU_FAULT_WRITE ? "WRITE" : "READ", type,
-> -			a6xx_fault_block(gpu, info->fsynr1 & 0xff),
-> +			flags & IOMMU_FAULT_WRITE ? "WRITE" : "READ",
-> +			type, block,
->  			gpu_read(gpu, REG_A6XX_CP_SCRATCH_REG(4)),
->  			gpu_read(gpu, REG_A6XX_CP_SCRATCH_REG(5)),
->  			gpu_read(gpu, REG_A6XX_CP_SCRATCH_REG(6)),
->  			gpu_read(gpu, REG_A6XX_CP_SCRATCH_REG(7)));
->  
-> +	if (do_devcoredump) {
-> +		/* Turn off the hangcheck timer to keep it from bothering us */
-> +		del_timer(&gpu->hangcheck_timer);
+> +#include <linux/init.h>
+> +#include <linux/kernel.h>
+> +#include <linux/module.h>
+> +#include <linux/of_device.h>
+> +#include <linux/pm_domain.h>
+> +#include <linux/pm_runtime.h>
 > +
-> +		gpu->fault_info.ttbr0 = info->ttbr0;
-> +		gpu->fault_info.iova  = iova;
-> +		gpu->fault_info.flags = flags;
-> +		gpu->fault_info.type  = type;
-> +		gpu->fault_info.block = block;
+> +#include <drm/drm_dp_aux_bus.h>
+> +#include <drm/drm_dp_helper.h>
 > +
-> +		kthread_queue_work(gpu->worker, &gpu->fault_work);
-> +	}
 > +
->  	return 0;
->  }
->  
-> @@ -1164,6 +1189,15 @@ static void a6xx_fault_detect_irq(struct msm_gpu *gpu)
->  	struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
->  	struct msm_ringbuffer *ring = gpu->funcs->active_ring(gpu);
->  
-> +	/*
-> +	 * If stalled on SMMU fault, we could trip the GPU's hang detection,
-> +	 * but the fault handler will trigger the devcore dump, and we want
-> +	 * to otherwise resume normally rather than killing the submit, so
-> +	 * just bail.
-> +	 */
-> +	if (gpu_read(gpu, REG_A6XX_RBBM_STATUS3) & A6XX_RBBM_STATUS3_SMMU_STALLED_ON_FAULT)
-> +		return;
-> +
->  	/*
->  	 * Force the GPU to stay on until after we finish
->  	 * collecting information
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-> index 21c49c5b4519..ad4ea0ed5d99 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-> @@ -832,6 +832,20 @@ static void a6xx_get_registers(struct msm_gpu *gpu,
->  		a6xx_get_ahb_gpu_registers(gpu,
->  				a6xx_state, &a6xx_vbif_reglist,
->  				&a6xx_state->registers[index++]);
-> +	if (!dumper) {
-> +		/*
-> +		 * We can't use the crashdumper when the SMMU is stalled,
-> +		 * because the GPU has no memory access until we resume
-> +		 * translation (but we don't want to do that until after
-> +		 * we have captured as much useful GPU state as possible).
-> +		 * So instead collect registers via the CPU:
-> +		 */
-> +		for (i = 0; i < ARRAY_SIZE(a6xx_reglist); i++)
-> +			a6xx_get_ahb_gpu_registers(gpu,
-> +				a6xx_state, &a6xx_reglist[i],
-> +				&a6xx_state->registers[index++]);
-> +		return;
-> +	}
->  
->  	for (i = 0; i < ARRAY_SIZE(a6xx_reglist); i++)
->  		a6xx_get_crashdumper_registers(gpu,
-> @@ -905,11 +919,13 @@ static void a6xx_get_indexed_registers(struct msm_gpu *gpu,
->  
->  struct msm_gpu_state *a6xx_gpu_state_get(struct msm_gpu *gpu)
->  {
-> -	struct a6xx_crashdumper dumper = { 0 };
-> +	struct a6xx_crashdumper _dumper = { 0 }, *dumper = NULL;
->  	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
->  	struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
->  	struct a6xx_gpu_state *a6xx_state = kzalloc(sizeof(*a6xx_state),
->  		GFP_KERNEL);
-> +	bool stalled = !!(gpu_read(gpu, REG_A6XX_RBBM_STATUS3) &
-> +			A6XX_RBBM_STATUS3_SMMU_STALLED_ON_FAULT);
->  
->  	if (!a6xx_state)
->  		return ERR_PTR(-ENOMEM);
-> @@ -928,14 +944,24 @@ struct msm_gpu_state *a6xx_gpu_state_get(struct msm_gpu *gpu)
->  	/* Get the banks of indexed registers */
->  	a6xx_get_indexed_registers(gpu, a6xx_state);
->  
-> -	/* Try to initialize the crashdumper */
-> -	if (!a6xx_crashdumper_init(gpu, &dumper)) {
-> -		a6xx_get_registers(gpu, a6xx_state, &dumper);
-> -		a6xx_get_shaders(gpu, a6xx_state, &dumper);
-> -		a6xx_get_clusters(gpu, a6xx_state, &dumper);
-> -		a6xx_get_dbgahb_clusters(gpu, a6xx_state, &dumper);
-> +	/*
-> +	 * Try to initialize the crashdumper, if we are not dumping state
-> +	 * with the SMMU stalled.  The crashdumper needs memory access to
-> +	 * write out GPU state, so we need to skip this when the SMMU is
-> +	 * stalled in response to an iova fault
-> +	 */
-> +	if (!stalled && !a6xx_crashdumper_init(gpu, &_dumper)) {
-> +		dumper = &_dumper;
-> +	}
-> +
-> +	a6xx_get_registers(gpu, a6xx_state, dumper);
-> +
-> +	if (dumper) {
-> +		a6xx_get_shaders(gpu, a6xx_state, dumper);
-> +		a6xx_get_clusters(gpu, a6xx_state, dumper);
-> +		a6xx_get_dbgahb_clusters(gpu, a6xx_state, dumper);
->  
-> -		msm_gem_kernel_put(dumper.bo, gpu->aspace, true);
-> +		msm_gem_kernel_put(dumper->bo, gpu->aspace, true);
->  	}
->  
->  	if (snapshot_debugbus)
-> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> index c1b02f790804..2bfe014995c7 100644
-> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> @@ -684,6 +684,21 @@ void adreno_show(struct msm_gpu *gpu, struct msm_gpu_state *state,
->  			adreno_gpu->info->revn, adreno_gpu->rev.core,
->  			adreno_gpu->rev.major, adreno_gpu->rev.minor,
->  			adreno_gpu->rev.patchid);
-> +	/*
-> +	 * If this is state collected due to iova fault, so fault related info
-> +	 *
-> +	 * TTBR0 would not be zero, so this is a good way to distinguish
-> +	 */
-> +	if (state->fault_info.ttbr0) {
-> +		const struct msm_gpu_fault_info *info = &state->fault_info;
-> +
-> +		drm_puts(p, "fault-info:\n");
-> +		drm_printf(p, "  - ttbr0=%.16llx\n", info->ttbr0);
-> +		drm_printf(p, "  - iova=%.16lx\n", info->iova);
-> +		drm_printf(p, "  - dir=%s\n", info->flags & IOMMU_FAULT_WRITE ? "WRITE" : "READ");
-> +		drm_printf(p, "  - type=%s\n", info->type);
-> +		drm_printf(p, "  - source=%s\n", info->block);
-> +	}
->  
->  	drm_printf(p, "rbbm-status: 0x%08x\n", state->rbbm_status);
->  
-> diff --git a/drivers/gpu/drm/msm/msm_gem.h b/drivers/gpu/drm/msm/msm_gem.h
-> index 03e2cc2a2ce1..405f8411e395 100644
-> --- a/drivers/gpu/drm/msm/msm_gem.h
-> +++ b/drivers/gpu/drm/msm/msm_gem.h
-> @@ -328,6 +328,7 @@ struct msm_gem_submit {
->  	struct dma_fence *fence;
->  	struct msm_gpu_submitqueue *queue;
->  	struct pid *pid;    /* submitting process */
-> +	bool fault_dumped;  /* Limit devcoredump dumping to one per submit */
->  	bool valid;         /* true if no cmdstream patching needed */
->  	bool in_rb;         /* "sudo" mode, copy cmds into RB */
->  	struct msm_ringbuffer *ring;
-> diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
-> index 5480852bdeda..44f84bfd0c0e 100644
-> --- a/drivers/gpu/drm/msm/msm_gem_submit.c
-> +++ b/drivers/gpu/drm/msm/msm_gem_submit.c
-> @@ -50,6 +50,7 @@ static struct msm_gem_submit *submit_create(struct drm_device *dev,
->  	submit->cmd = (void *)&submit->bos[nr_bos];
->  	submit->queue = queue;
->  	submit->ring = gpu->rb[queue->prio];
-> +	submit->fault_dumped = false;
->  
->  	/* initially, until copy_from_user() and bo lookup succeeds: */
->  	submit->nr_bos = 0;
-> diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
-> index fa7691cb4614..414ba2dd34e5 100644
-> --- a/drivers/gpu/drm/msm/msm_gpu.c
-> +++ b/drivers/gpu/drm/msm/msm_gpu.c
-> @@ -400,6 +400,7 @@ static void msm_gpu_crashstate_capture(struct msm_gpu *gpu,
->  	/* Fill in the additional crash state information */
->  	state->comm = kstrdup(comm, GFP_KERNEL);
->  	state->cmd = kstrdup(cmd, GFP_KERNEL);
-> +	state->fault_info = gpu->fault_info;
->  
->  	if (submit) {
->  		int i, nr = 0;
-> @@ -572,6 +573,52 @@ static void recover_worker(struct kthread_work *work)
->  	msm_gpu_retire(gpu);
->  }
->  
-> +static void fault_worker(struct kthread_work *work)
+> +/**
+> + * dp_aux_ep_match() - The match function for the dp_aux_bus.
+> + * @dev: The device to match.
+> + * @drv: The driver to try to match against.
+> + *
+> + * At the moment, we just match on device tree.
+> + *
+> + * Return: True if this driver matches this device; false otherwise.
+> + */
+> +static int dp_aux_ep_match(struct device *dev, struct device_driver *drv)
 > +{
-> +	struct msm_gpu *gpu = container_of(work, struct msm_gpu, fault_work);
-> +	struct drm_device *dev = gpu->dev;
-> +	struct msm_gem_submit *submit;
-> +	struct msm_ringbuffer *cur_ring = gpu->funcs->active_ring(gpu);
-> +	char *comm = NULL, *cmd = NULL;
-> +
-> +	mutex_lock(&dev->struct_mutex);
-> +
-> +	submit = find_submit(cur_ring, cur_ring->memptrs->fence + 1);
-> +	if (submit && submit->fault_dumped)
-> +		goto resume_smmu;
-> +
-> +	if (submit) {
-> +		struct task_struct *task;
-> +
-> +		task = get_pid_task(submit->pid, PIDTYPE_PID);
-> +		if (task) {
-> +			comm = kstrdup(task->comm, GFP_KERNEL);
-> +			cmd = kstrdup_quotable_cmdline(task, GFP_KERNEL);
-> +			put_task_struct(task);
-> +		}
-> +
-> +		/*
-> +		 * When we get GPU iova faults, we can get 1000s of them,
-> +		 * but we really only want to log the first one.
-> +		 */
-> +		submit->fault_dumped = true;
-> +	}
-> +
-> +	/* Record the crash state */
-> +	pm_runtime_get_sync(&gpu->pdev->dev);
-> +	msm_gpu_crashstate_capture(gpu, submit, comm, cmd);
-> +	pm_runtime_put_sync(&gpu->pdev->dev);
-> +
-> +	kfree(cmd);
-> +	kfree(comm);
-> +
-> +resume_smmu:
-> +	memset(&gpu->fault_info, 0, sizeof(gpu->fault_info));
-> +	gpu->aspace->mmu->funcs->resume_translation(gpu->aspace->mmu);
-> +
-> +	mutex_unlock(&dev->struct_mutex);
+> +       return !!of_match_device(drv->of_match_table, dev);
 > +}
 > +
->  static void hangcheck_timer_reset(struct msm_gpu *gpu)
->  {
->  	mod_timer(&gpu->hangcheck_timer,
-> @@ -948,6 +995,7 @@ int msm_gpu_init(struct drm_device *drm, struct platform_device *pdev,
->  	INIT_LIST_HEAD(&gpu->active_list);
->  	kthread_init_work(&gpu->retire_work, retire_worker);
->  	kthread_init_work(&gpu->recover_work, recover_worker);
-> +	kthread_init_work(&gpu->fault_work, fault_worker);
->  
->  	timer_setup(&gpu->hangcheck_timer, hangcheck_handler, 0);
->  
-> diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.h
-> index 7a082a12d98f..8eefb3aeca10 100644
-> --- a/drivers/gpu/drm/msm/msm_gpu.h
-> +++ b/drivers/gpu/drm/msm/msm_gpu.h
-> @@ -71,6 +71,15 @@ struct msm_gpu_funcs {
->  	uint32_t (*get_rptr)(struct msm_gpu *gpu, struct msm_ringbuffer *ring);
->  };
->  
-> +/* Additional state for iommu faults: */
-> +struct msm_gpu_fault_info {
-> +	u64 ttbr0;
-> +	unsigned long iova;
-> +	int flags;
-> +	const char *type;
-> +	const char *block;
+> +/**
+> + * dp_aux_ep_probe() - The probe function for the dp_aux_bus.
+> + * @dev: The device to probe.
+> + *
+> + * Calls through to the endpoint driver probe.
+> + *
+> + * Return: 0 if no error or negative error code.
+> + */
+> +static int dp_aux_ep_probe(struct device *dev)
+> +{
+> +       struct dp_aux_ep_driver *aux_ep_drv = to_dp_aux_ep_drv(dev->driver);
+> +       struct dp_aux_ep_device *aux_ep = to_dp_aux_ep_dev(dev);
+> +       int ret;
+> +
+> +       ret = dev_pm_domain_attach(dev, true);
+> +       if (ret)
+> +               return dev_err_probe(dev, ret, "Failed to attach to PM
+> Domain\n");
+> +
+> +       ret = aux_ep_drv->probe(aux_ep);
+> +       if (ret)
+> +               dev_pm_domain_detach(dev, true);
+> +
+> +       return ret;
+> +}
+> +
+> +/**
+> + * dp_aux_ep_remove() - The remove function for the dp_aux_bus.
+> + * @dev: The device to remove.
+> + *
+> + * Calls through to the endpoint driver remove.
+> + *
+> + * Return: 0 if no error or negative error code.
+> + */
+> +static int dp_aux_ep_remove(struct device *dev)
+> +{
+> +       struct dp_aux_ep_driver *aux_ep_drv = to_dp_aux_ep_drv(dev->driver);
+> +       struct dp_aux_ep_device *aux_ep = to_dp_aux_ep_dev(dev);
+> +
+> +       if (aux_ep_drv->remove)
+> +               aux_ep_drv->remove(aux_ep);
+> +       dev_pm_domain_detach(dev, true);
+> +
+> +       return 0;
+> +}
+> +
+> +/**
+> + * dp_aux_ep_shutdown() - The shutdown function for the dp_aux_bus.
+> + * @dev: The device to shutdown.
+> + *
+> + * Calls through to the endpoint driver shutdown.
+> + */
+> +static void dp_aux_ep_shutdown(struct device *dev)
+> +{
+> +       struct dp_aux_ep_driver *aux_ep_drv;
+> +
+> +       if (!dev->driver)
+> +               return;
+> +
+> +       aux_ep_drv = to_dp_aux_ep_drv(dev->driver);
+> +       if (aux_ep_drv->shutdown)
+> +               aux_ep_drv->shutdown(to_dp_aux_ep_dev(dev));
+> +}
+> +
+> +static struct bus_type dp_aux_bus_type = {
+> +       .name           = "dp-aux",
+> +       .match          = dp_aux_ep_match,
+> +       .probe          = dp_aux_ep_probe,
+> +       .remove         = dp_aux_ep_remove,
+> +       .shutdown       = dp_aux_ep_shutdown,
 > +};
 > +
->  struct msm_gpu {
->  	const char *name;
->  	struct drm_device *dev;
-> @@ -135,6 +144,12 @@ struct msm_gpu {
->  #define DRM_MSM_HANGCHECK_JIFFIES msecs_to_jiffies(DRM_MSM_HANGCHECK_PERIOD)
->  	struct timer_list hangcheck_timer;
->  
-> +	/* Fault info for most recent iova fault: */
-> +	struct msm_gpu_fault_info fault_info;
-> +
-> +	/* work for handling GPU ioval faults: */
-> +	struct kthread_work fault_work;
-> +
->  	/* work for handling GPU recovery: */
->  	struct kthread_work recover_work;
->  
-> @@ -243,6 +258,8 @@ struct msm_gpu_state {
->  	char *comm;
->  	char *cmd;
->  
-> +	struct msm_gpu_fault_info fault_info;
-> +
->  	int nr_bos;
->  	struct msm_gpu_state_bo *bos;
->  };
-> diff --git a/drivers/gpu/drm/msm/msm_gpummu.c b/drivers/gpu/drm/msm/msm_gpummu.c
-> index 379496186c7f..f7d1945e0c9f 100644
-> --- a/drivers/gpu/drm/msm/msm_gpummu.c
-> +++ b/drivers/gpu/drm/msm/msm_gpummu.c
-> @@ -68,6 +68,10 @@ static int msm_gpummu_unmap(struct msm_mmu *mmu, uint64_t iova, size_t len)
->  	return 0;
->  }
->  
-> +static void msm_gpummu_resume_translation(struct msm_mmu *mmu)
+> +static ssize_t modalias_show(struct device *dev,
+> +                            struct device_attribute *attr, char *buf)
 > +{
+> +       return of_device_modalias(dev, buf, PAGE_SIZE);
+> +}
+> +static DEVICE_ATTR_RO(modalias);
+> +
+> +static struct attribute *dp_aux_ep_dev_attrs[] = {
+> +       &dev_attr_modalias.attr,
+> +       NULL,
+> +};
+> +ATTRIBUTE_GROUPS(dp_aux_ep_dev);
+> +
+> +/**
+> + * dp_aux_ep_dev_release() - Free memory for the dp_aux_ep device
+> + * @dev: The device to free.
+> + *
+> + * Return: 0 if no error or negative error code.
+> + */
+> +static void dp_aux_ep_dev_release(struct device *dev)
+> +{
+> +       kfree(to_dp_aux_ep_dev(dev));
 > +}
 > +
->  static void msm_gpummu_destroy(struct msm_mmu *mmu)
->  {
->  	struct msm_gpummu *gpummu = to_msm_gpummu(mmu);
-> @@ -83,6 +87,7 @@ static const struct msm_mmu_funcs funcs = {
->  		.map = msm_gpummu_map,
->  		.unmap = msm_gpummu_unmap,
->  		.destroy = msm_gpummu_destroy,
-> +		.resume_translation = msm_gpummu_resume_translation,
->  };
->  
->  struct msm_mmu *msm_gpummu_new(struct device *dev, struct msm_gpu *gpu)
-> diff --git a/drivers/gpu/drm/msm/msm_iommu.c b/drivers/gpu/drm/msm/msm_iommu.c
-> index 6975b95c3c29..eed2a762e9dd 100644
-> --- a/drivers/gpu/drm/msm/msm_iommu.c
-> +++ b/drivers/gpu/drm/msm/msm_iommu.c
-> @@ -184,6 +184,9 @@ struct msm_mmu *msm_iommu_pagetable_create(struct msm_mmu *parent)
->  	 * the arm-smmu driver as a trigger to set up TTBR0
->  	 */
->  	if (atomic_inc_return(&iommu->pagetables) == 1) {
-> +		/* Enable stall on iommu fault: */
-> +		adreno_smmu->set_stall(adreno_smmu->cookie, true);
+> +static struct device_type dp_aux_device_type_type = {
+> +       .groups         = dp_aux_ep_dev_groups,
+> +       .uevent         = of_device_uevent_modalias,
+> +       .release        = dp_aux_ep_dev_release,
+> +};
 > +
->  		ret = adreno_smmu->set_ttbr0_cfg(adreno_smmu->cookie, &ttbr0_cfg);
->  		if (ret) {
->  			free_io_pgtable_ops(pagetable->pgtbl_ops);
-> @@ -226,6 +229,13 @@ static int msm_fault_handler(struct iommu_domain *domain, struct device *dev,
->  	return 0;
->  }
->  
-> +static void msm_iommu_resume_translation(struct msm_mmu *mmu)
+> +/**
+> + * of_dp_aux_ep_destroy() - Destroy an DP AUX endpoint device
+> + * @dev: The device to destroy.
+> + * @data: Not used
+> + *
+> + * This is just used as a callback by of_dp_aux_depopulate_ep_devices() and
+> + * is called for _all_ of the child devices of the device providing the AUX
+> bus.
+> + * We'll only act on those that are of type "dp_aux_bus_type".
+> + *
+> + * This function is effectively an inverse of what's in the loop
+> + * in of_dp_aux_populate_ep_devices().
+> + *
+> + * Return: 0 if no error or negative error code.
+> + */
+> +static int of_dp_aux_ep_destroy(struct device *dev, void *data)
 > +{
-> +	struct adreno_smmu_priv *adreno_smmu = dev_get_drvdata(mmu->dev);
+> +       struct device_node *np = dev->of_node;
 > +
-> +	adreno_smmu->resume_translation(adreno_smmu->cookie, true);
+> +       if (dev->bus != &dp_aux_bus_type)
+> +               return 0;
+> +
+> +       if (!of_node_check_flag(np, OF_POPULATED))
+> +               return 0;
+> +
+> +       of_node_clear_flag(np, OF_POPULATED);
+> +       of_node_put(np);
+> +
+> +       device_unregister(dev);
+> +
+> +       return 0;
 > +}
 > +
->  static void msm_iommu_detach(struct msm_mmu *mmu)
->  {
->  	struct msm_iommu *iommu = to_msm_iommu(mmu);
-> @@ -273,6 +283,7 @@ static const struct msm_mmu_funcs funcs = {
->  		.map = msm_iommu_map,
->  		.unmap = msm_iommu_unmap,
->  		.destroy = msm_iommu_destroy,
-> +		.resume_translation = msm_iommu_resume_translation,
->  };
->  
->  struct msm_mmu *msm_iommu_new(struct device *dev, struct iommu_domain *domain)
-> diff --git a/drivers/gpu/drm/msm/msm_mmu.h b/drivers/gpu/drm/msm/msm_mmu.h
-> index a88f44c3268d..de158e1bf765 100644
-> --- a/drivers/gpu/drm/msm/msm_mmu.h
-> +++ b/drivers/gpu/drm/msm/msm_mmu.h
-> @@ -15,6 +15,7 @@ struct msm_mmu_funcs {
->  			size_t len, int prot);
->  	int (*unmap)(struct msm_mmu *mmu, uint64_t iova, size_t len);
->  	void (*destroy)(struct msm_mmu *mmu);
-> +	void (*resume_translation)(struct msm_mmu *mmu);
->  };
->  
->  enum msm_mmu_type {
-> -- 
-> 2.31.1
-> 
+> +/**
+> + * of_dp_aux_depopulate_ep_devices() - Undo of_dp_aux_populate_ep_devices
+> + * @aux: The AUX channel whose devices we want to depopulate
+> + *
+> + * This will destroy all devices that were created
+> + * by of_dp_aux_populate_ep_devices().
+> + */
+> +void of_dp_aux_depopulate_ep_devices(struct drm_dp_aux *aux)
+> +{
+> +       device_for_each_child_reverse(aux->dev, NULL, of_dp_aux_ep_destroy);
+> +}
+> +EXPORT_SYMBOL_GPL(of_dp_aux_depopulate_ep_devices);
+> +
+> +/**
+> + * of_dp_aux_populate_ep_devices() - Populate the endpoint devices on the
+> DP AUX
+> + * @aux: The AUX channel whose devices we want to populate. It is required
+> that
+> + *       drm_dp_aux_init() has already been called for this AUX channel.
+> + *
+> + * This will populate all the devices under the "aux-bus" node of the
+> device
+> + * providing the AUX channel (AKA aux->dev).
+> + *
+> + * When this function finishes, it is _possible_ (but not guaranteed) that
+> + * our sub-devices will have finished probing. It should be noted that if
+> our
+> + * sub-devices return -EPROBE_DEFER that we will not return any error codes
+> + * ourselves but our sub-devices will _not_ have actually probed
+> successfully
+> + * yet. There may be other cases (maybe added in the future?) where sub-
+> devices
+> + * won't have been probed yet when this function returns, so it's best not
+> to
+> + * rely on that.
+> + *
+> + * If this function succeeds you should later make sure you call
+> + * of_dp_aux_depopulate_ep_devices() to undo it, or just use the devm
+> version
+> + * of this function.
+> + *
+> + * Return: 0 if no error or negative error code.
+> + */
+> +int of_dp_aux_populate_ep_devices(struct drm_dp_aux *aux)
+> +{
+> +       struct device_node *bus, *np;
+> +       struct dp_aux_ep_device *aux_ep;
+> +       int ret;
+> +
+> +       /* drm_dp_aux_init() should have been called already; warn if not */
+> +       WARN_ON_ONCE(!aux->ddc.algo);
+> +
+> +       if (!aux->dev->of_node)
+> +               return 0;
+> +
+> +       bus = of_get_child_by_name(aux->dev->of_node, "aux-bus");
+> +       if (!bus)
+> +               return 0;
+> +
+> +       for_each_available_child_of_node(bus, np) {
+> +               if (of_node_test_and_set_flag(np, OF_POPULATED))
+> +                       continue;
+> +
+> +               aux_ep = kzalloc(sizeof(*aux_ep), GFP_KERNEL);
+
+Don't forget to add some error handling for if we fail to alloc aux_ep.
+Everything else lgtm though
+
+> +               aux_ep->aux = aux;
+> +
+> +               aux_ep->dev.parent = aux->dev;
+> +               aux_ep->dev.bus = &dp_aux_bus_type;
+> +               aux_ep->dev.type = &dp_aux_device_type_type;
+> +               aux_ep->dev.of_node = of_node_get(np);
+> +               dev_set_name(&aux_ep->dev, "aux-%s", dev_name(aux->dev));
+> +
+> +               ret = device_register(&aux_ep->dev);
+> +               if (ret) {
+> +                       dev_err(aux->dev, "Failed to create AUX EP for %pOF:
+> %d\n", np, ret);
+> +                       of_node_clear_flag(np, OF_POPULATED);
+> +                       of_node_put(np);
+> +
+> +                       /*
+> +                        * As per docs of device_register(), call this
+> instead
+> +                        * of kfree() directly for error cases.
+> +                        */
+> +                       put_device(&aux_ep->dev);
+> +
+> +                       /*
+> +                        * Following in the footsteps of
+> of_i2c_register_devices(),
+> +                        * we won't fail the whole function here--we'll just
+> +                        * continue registering any other devices we find.
+> +                        */
+> +               }
+> +       }
+> +
+> +       of_node_put(bus);
+> +
+> +       return 0;
+> +}
+> +
+> +static void of_dp_aux_depopulate_ep_devices_void(void *data)
+> +{
+> +       of_dp_aux_depopulate_ep_devices(data);
+> +}
+> +
+> +/**
+> + * devm_of_dp_aux_populate_ep_devices() - devm wrapper for
+> of_dp_aux_populate_ep_devices()
+> + * @aux: The AUX channel whose devices we want to populate
+> + *
+> + * Handles freeing w/ devm on the device "aux->dev".
+> + *
+> + * Return: 0 if no error or negative error code.
+> + */
+> +int devm_of_dp_aux_populate_ep_devices(struct drm_dp_aux *aux)
+> +{
+> +       int ret;
+> +
+> +       ret = of_dp_aux_populate_ep_devices(aux);
+> +       if (ret)
+> +               return ret;
+> +
+> +       return devm_add_action_or_reset(aux->dev,
+> +                                       of_dp_aux_depopulate_ep_devices_void
+> ,
+> +                                       aux);
+> +}
+> +EXPORT_SYMBOL_GPL(devm_of_dp_aux_populate_ep_devices);
+> +
+> +int __dp_aux_dp_driver_register(struct dp_aux_ep_driver *drv, struct module
+> *owner)
+> +{
+> +       drv->driver.owner = owner;
+> +       drv->driver.bus = &dp_aux_bus_type;
+> +
+> +       return driver_register(&drv->driver);
+> +
+> +}
+> +EXPORT_SYMBOL_GPL(__dp_aux_dp_driver_register);
+> +
+> +void dp_aux_dp_driver_unregister(struct dp_aux_ep_driver *drv)
+> +{
+> +       driver_unregister(&drv->driver);
+> +}
+> +EXPORT_SYMBOL_GPL(dp_aux_dp_driver_unregister);
+> +
+> +static int __init dp_aux_bus_init(void)
+> +{
+> +       int ret;
+> +
+> +       ret = bus_register(&dp_aux_bus_type);
+> +       if (ret)
+> +               return ret;
+> +
+> +       return 0;
+> +}
+> +
+> +static void __exit dp_aux_bus_exit(void)
+> +{
+> +       bus_unregister(&dp_aux_bus_type);
+> +}
+> +
+> +subsys_initcall(dp_aux_bus_init);
+> +module_exit(dp_aux_bus_exit);
+> +
+> +MODULE_AUTHOR("Douglas Anderson <dianders@chromium.org>");
+> +MODULE_DESCRIPTION("DRM DisplayPort AUX bus");
+> +MODULE_LICENSE("GPL v2");
+> diff --git a/include/drm/drm_dp_aux_bus.h b/include/drm/drm_dp_aux_bus.h
+> new file mode 100644
+> index 000000000000..4f19b20b1dd6
+> --- /dev/null
+> +++ b/include/drm/drm_dp_aux_bus.h
+> @@ -0,0 +1,57 @@
+> +/* SPDX-License-Identifier: GPL-2.0 */
+> +/*
+> + * Copyright 2021 Google Inc.
+> + *
+> + * The DP AUX bus is used for devices that are connected over a DisplayPort
+> + * AUX bus. The devices on the far side of the bus are referred to as
+> + * endpoints in this code.
+> + */
+> +
+> +#ifndef _DP_AUX_BUS_H_
+> +#define _DP_AUX_BUS_H_
+> +
+> +#include <linux/device.h>
+> +#include <linux/mod_devicetable.h>
+> +
+> +/**
+> + * struct dp_aux_ep_device - Main dev structure for DP AUX endpoints
+> + *
+> + * This is used to instantiate devices that are connected via a DP AUX
+> + * bus. Usually the device is a panel, but conceivable other devices could
+> + * be hooked up there.
+> + */
+> +struct dp_aux_ep_device {
+> +       /** @dev: The normal dev pointer */
+> +       struct device dev;
+> +       /** @aux: Pointer to the aux bus */
+> +       struct drm_dp_aux *aux;
+> +};
+> +
+> +struct dp_aux_ep_driver {
+> +       int (*probe)(struct dp_aux_ep_device *aux_ep);
+> +       void (*remove)(struct dp_aux_ep_device *aux_ep);
+> +       void (*shutdown)(struct dp_aux_ep_device *aux_ep);
+> +       struct device_driver driver;
+> +};
+> +
+> +static inline struct dp_aux_ep_device *to_dp_aux_ep_dev(struct device *dev)
+> +{
+> +       return container_of(dev, struct dp_aux_ep_device, dev);
+> +}
+> +
+> +static inline struct dp_aux_ep_driver *to_dp_aux_ep_drv(struct
+> device_driver *drv)
+> +{
+> +       return container_of(drv, struct dp_aux_ep_driver, driver);
+> +}
+> +
+> +int of_dp_aux_populate_ep_devices(struct drm_dp_aux *aux);
+> +void of_dp_aux_depopulate_ep_devices(struct drm_dp_aux *aux);
+> +int devm_of_dp_aux_populate_ep_devices(struct drm_dp_aux *aux);
+> +
+> +#define dp_aux_dp_driver_register(aux_ep_drv) \
+> +       __dp_aux_dp_driver_register(aux_ep_drv, THIS_MODULE)
+> +int __dp_aux_dp_driver_register(struct dp_aux_ep_driver *aux_ep_drv,
+> +                               struct module *owner);
+> +void dp_aux_dp_driver_unregister(struct dp_aux_ep_driver *aux_ep_drv);
+> +
+> +#endif /* _DP_AUX_BUS_H_ */
+
+-- 
+Cheers,
+ Lyude Paul (she/her)
+ Software Engineer at Red Hat
+
