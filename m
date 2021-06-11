@@ -2,49 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8B6FD3A47B0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jun 2021 19:18:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7F4763A47B8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jun 2021 19:18:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231368AbhFKRUS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Jun 2021 13:20:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35584 "EHLO
+        id S231482AbhFKRUn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Jun 2021 13:20:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35652 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231209AbhFKRUS (ORCPT
+        with ESMTP id S231490AbhFKRUg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Jun 2021 13:20:18 -0400
-Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1AED5C0613A2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Jun 2021 10:18:20 -0700 (PDT)
-Received: by mail-pf1-x431.google.com with SMTP id y15so4978804pfl.4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Jun 2021 10:18:20 -0700 (PDT)
+        Fri, 11 Jun 2021 13:20:36 -0400
+Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13DE7C0613A4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Jun 2021 10:18:22 -0700 (PDT)
+Received: by mail-pl1-x634.google.com with SMTP id b12so3153373plg.11
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Jun 2021 10:18:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=MxHhk0AJID3+7I6yHlvZtpvbI+6drKtSVd3mPYCYE2M=;
-        b=A313UfQaZbAGU0tmFpflQnRsubsorsT1R5wRZGGGspt60UTi149yLVED0Wmw8W5dih
-         o7GyOfqwthSBTPT3bedP1VA3xD0YdRu9+1RHlOTmrDMZZaOGmGrLTzPHkza7pkytnJHc
-         q3jWwThBzNeHNwcuMk9IE95Z1K1YZkbXgf+Ow=
+        bh=0FnRhgbzvrNrBAhrrpm4mRSS8nZ4/48rxijSMAVgSnU=;
+        b=RrKdUaTvEIdAnFdjJL5/eAsIpXtRpVQnIVM1mIgMX/UCDsQf/TfZZGOF1MYRqs2uRc
+         rNDgCsnrNMq7PTmj/Z1KJDoj/Azhm1X0fetF0y9O2EsinynWGsGRM1JYEx42CZ8ONTZL
+         o+81bbV0j0mFOtqvlKrO8xn7wEXnFwwhY3bcg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=MxHhk0AJID3+7I6yHlvZtpvbI+6drKtSVd3mPYCYE2M=;
-        b=Of0K2UydWxDsgqv/KQya6voNXBwmFcPLcJVQfLUC3bhGK5fGZ3sPRdnyOPdeoxtD2K
-         5hGO+MHBluQvVbggFXCzL/b8olSHw0kSRX39SH24bbsf2xMJQNt3xkCVLZSxF0/m8ucL
-         YhsU3BiWTKbQFqMF692u971C9OS7Ej9ikWLubKstIvtTaZoxV9RF5+1JtzleYq2owCz5
-         3j4k/VkJQsVql5Ycv/eR27FBpxcvrkK6YpGzhO5Pe2SUkGlIl1nsjvmS/7610jLrQVIh
-         oW51GQldhK4ZZFm5PF1UpuVdaTF+THKAL6hQrOnumtLGQ4LMke3Q2x32cCdMBm8Tiip6
-         8sBQ==
-X-Gm-Message-State: AOAM530Lm5kfGEnVRautL1rVRUSQXFm263HoNSyxqT9QamN7iL+Kw5cP
-        88+B0bOECSoVSLxuH96pRo0xLw==
-X-Google-Smtp-Source: ABdhPJw61Eqdi05nA4ZLp9ufWDTGiTpEWmqClhf+ojzQe8xNLvQlrC0sxacoxBFlKtgKvrHpb+D4Uw==
-X-Received: by 2002:a63:9f19:: with SMTP id g25mr4634379pge.265.1623431899689;
-        Fri, 11 Jun 2021 10:18:19 -0700 (PDT)
+        bh=0FnRhgbzvrNrBAhrrpm4mRSS8nZ4/48rxijSMAVgSnU=;
+        b=mCP7oA4bgdZb7YNMP3EOYm162q8DzXhByAqhEEjMWEQs6E/UeuvnMzv84wHCpUeRq6
+         94yVBl0lay4rFdN08YF3039/GVsTQU62aH+Y7U4TZQ55MlRQf5BGAG8XoHu4HwFmVKgI
+         lAi83Gg5d9M8ABRlF5XZ1gQ8DeNx04nH+CJ1MCbcannqIo7zAZvF3FgG+sDG5oXNSGgR
+         BYr8n3nZDisJ8ZXrmQ2Pili6L0NVDi+umwZIm2JN57sfQ8fOcNTre8sp8R7KjwtQJ7Bj
+         BVcPX0d89t4UV+tY+aHIT4rWn4SpnwhBb1RoMUP5y26mMt07yzFecSikTEghkFDzVoDI
+         DhCA==
+X-Gm-Message-State: AOAM533MWePiF4WLiwhifwk0UsElk8VvlFUEVMnIMFdjKyv8CYNXREJr
+        HqLmeQw4V2Po/qoj7/FoCwTT0w==
+X-Google-Smtp-Source: ABdhPJzZBrXiXq6lBifXIxC1zOkFuo04PFe24xgvIvwOJp1SAjHXiSP+FoqTnalGVZC4w00lsIVz5w==
+X-Received: by 2002:a17:90a:8589:: with SMTP id m9mr9913846pjn.168.1623431901584;
+        Fri, 11 Jun 2021 10:18:21 -0700 (PDT)
 Received: from tictac2.mtv.corp.google.com ([2620:15c:202:201:4128:5428:5cd0:cfa5])
-        by smtp.gmail.com with ESMTPSA id f17sm5837850pgm.37.2021.06.11.10.18.18
+        by smtp.gmail.com with ESMTPSA id f17sm5837850pgm.37.2021.06.11.10.18.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Jun 2021 10:18:19 -0700 (PDT)
+        Fri, 11 Jun 2021 10:18:21 -0700 (PDT)
 From:   Douglas Anderson <dianders@chromium.org>
 To:     Andrzej Hajda <a.hajda@samsung.com>,
         Neil Armstrong <narmstrong@baylibre.com>,
@@ -67,9 +67,9 @@ Cc:     Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
         Jernej Skrabec <jernej.skrabec@gmail.com>,
         Robert Foss <robert.foss@linaro.org>,
         linux-kernel@vger.kernel.org
-Subject: [PATCH v10 09/11] drm/bridge: ti-sn65dsi86: Don't read EDID blob over DDC
-Date:   Fri, 11 Jun 2021 10:17:45 -0700
-Message-Id: <20210611101711.v10.9.I9330684c25f65bb318eff57f0616500f83eac3cc@changeid>
+Subject: [PATCH v10 10/11] drm/bridge: ti-sn65dsi86: Improve probe errors with dev_err_probe()
+Date:   Fri, 11 Jun 2021 10:17:46 -0700
+Message-Id: <20210611101711.v10.10.I24bba069e63b1eea84443eef0c8535fd032a6311@changeid>
 X-Mailer: git-send-email 2.32.0.272.g935e593368-goog
 In-Reply-To: <20210611171747.1263039-1-dianders@chromium.org>
 References: <20210611171747.1263039-1-dianders@chromium.org>
@@ -79,113 +79,83 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This is really just a revert of commit 58074b08c04a ("drm/bridge:
-ti-sn65dsi86: Read EDID blob over DDC"), resolving conflicts.
+As I was testing to make sure that the DEFER path worked well with my
+patch series, I got tired of seeing this scary message in my logs just
+because the panel needed to defer:
+  [drm:ti_sn_bridge_probe] *ERROR* could not find any panel node
 
-The old code failed to read the EDID properly in a very important
-case: before the bridge's pre_enable() was called. The way things need
-to work:
-1. Read the EDID.
-2. Based on the EDID, decide on video settings and pixel clock.
-3. Enable the bridge w/ the desired settings.
+Let's use dev_err_probe() which nicely quiets this error and also
+simplifies the code a tiny bit. We'll also update other places in the
+file which can use dev_err_probe().
 
-The way things were working:
-1. Try to read the EDID but fail; fall back to hardcoded values.
-2. Based on hardcoded values, decide on video settings and pixel clock.
-3. Enable the bridge w/ the desired settings.
-4. Try again to read the EDID, it works now!
-5. Realize that the hardcoded settings weren't quite right.
-6. Disable / reenable the bridge w/ the right settings.
-
-The reasons for the failures were twofold:
-a) Since we never ran the bridge chip's pre-enable then we never set
-   the bit to ignore HPD. This meant the bridge chip didn't even _try_
-   to go out on the bus and communicate with the panel.
-b) Even if we fixed things to ignore HPD, the EDID still wouldn't read
-   if the panel wasn't on.
-
-Instead of reverting the code, we could fix it to set the HPD bit and
-also power on the panel. However, it also works nicely to just let the
-panel code read the EDID. Now that we've split the driver up we can
-expose the DDC AUX channel bus to the panel node. The panel can take
-charge of reading the EDID.
-
-NOTE: in order for things to work, anyone that needs to read the EDID
-will need to instantiate their panel using the new DP AUX bus (AKA by
-listing their panel under the "aux-bus" node of the bridge chip in the
-device tree).
-
-In the future if we want to use the bridge chip to provide a full
-external DP port (which won't have a panel) then we will have to
-conditinally add EDID reading back in.
-
-Suggested-by: Andrzej Hajda <a.hajda@samsung.com>
 Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
 ---
 
-(no changes since v7)
+(no changes since v9)
 
-Changes in v7:
-- Adjusted commit message to talk about DP AUX bus.
+Changes in v9:
+- ("Improve probe errors") patch new for v9.
 
- drivers/gpu/drm/bridge/ti-sn65dsi86.c | 22 ----------------------
- 1 file changed, 22 deletions(-)
+ drivers/gpu/drm/bridge/ti-sn65dsi86.c | 31 +++++++++++----------------
+ 1 file changed, 13 insertions(+), 18 deletions(-)
 
 diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-index 32bd35c98d95..b544cbce7fdd 100644
+index b544cbce7fdd..5d712c8c3c3b 100644
 --- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
 +++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-@@ -126,7 +126,6 @@
-  * @connector:    Our connector.
-  * @host_node:    Remote DSI node.
-  * @dsi:          Our MIPI DSI source.
-- * @edid:         Detected EDID of eDP panel.
-  * @refclk:       Our reference clock.
-  * @panel:        Our panel.
-  * @enable_gpio:  The GPIO we toggle to enable the bridge.
-@@ -157,7 +156,6 @@ struct ti_sn65dsi86 {
- 	struct drm_dp_aux		aux;
- 	struct drm_bridge		bridge;
- 	struct drm_connector		connector;
--	struct edid			*edid;
- 	struct device_node		*host_node;
- 	struct mipi_dsi_device		*dsi;
- 	struct clk			*refclk;
-@@ -406,24 +404,6 @@ connector_to_ti_sn65dsi86(struct drm_connector *connector)
- static int ti_sn_bridge_connector_get_modes(struct drm_connector *connector)
- {
- 	struct ti_sn65dsi86 *pdata = connector_to_ti_sn65dsi86(connector);
--	struct edid *edid = pdata->edid;
--	int num, ret;
--
--	if (!edid) {
--		pm_runtime_get_sync(pdata->dev);
--		edid = pdata->edid = drm_get_edid(connector, &pdata->aux.ddc);
--		pm_runtime_put_autosuspend(pdata->dev);
+@@ -1305,10 +1305,9 @@ static int ti_sn_bridge_probe(struct auxiliary_device *adev,
+ 	int ret;
+ 
+ 	ret = drm_of_find_panel_or_bridge(np, 1, 0, &pdata->panel, NULL);
+-	if (ret) {
+-		DRM_ERROR("could not find any panel node\n");
+-		return ret;
 -	}
--
--	if (edid && drm_edid_is_valid(edid)) {
--		ret = drm_connector_update_edid_property(connector, edid);
--		if (!ret) {
--			num = drm_add_edid_modes(connector, edid);
--			if (num)
--				return num;
--		}
++	if (ret)
++		return dev_err_probe(&adev->dev, ret,
++				     "could not find any panel node\n");
+ 
+ 	ti_sn_bridge_parse_lanes(pdata, np);
+ 
+@@ -1456,27 +1455,23 @@ static int ti_sn65dsi86_probe(struct i2c_client *client,
+ 
+ 	pdata->regmap = devm_regmap_init_i2c(client,
+ 					     &ti_sn65dsi86_regmap_config);
+-	if (IS_ERR(pdata->regmap)) {
+-		DRM_ERROR("regmap i2c init failed\n");
+-		return PTR_ERR(pdata->regmap);
 -	}
--
- 	return drm_panel_get_modes(pdata->panel, connector);
- }
++	if (IS_ERR(pdata->regmap))
++		return dev_err_probe(dev, PTR_ERR(pdata->regmap),
++				     "regmap i2c init failed\n");
  
-@@ -1356,8 +1336,6 @@ static void ti_sn_bridge_remove(struct auxiliary_device *adev)
- 		mipi_dsi_device_unregister(pdata->dsi);
- 	}
+ 	pdata->enable_gpio = devm_gpiod_get(dev, "enable", GPIOD_OUT_LOW);
+-	if (IS_ERR(pdata->enable_gpio)) {
+-		DRM_ERROR("failed to get enable gpio from DT\n");
+-		ret = PTR_ERR(pdata->enable_gpio);
+-		return ret;
+-	}
++	if (IS_ERR(pdata->enable_gpio))
++		return dev_err_probe(dev, PTR_ERR(pdata->enable_gpio),
++				     "failed to get enable gpio from DT\n");
  
--	kfree(pdata->edid);
--
- 	drm_bridge_remove(&pdata->bridge);
+ 	ret = ti_sn65dsi86_parse_regulators(pdata);
+-	if (ret) {
+-		DRM_ERROR("failed to parse regulators\n");
+-		return ret;
+-	}
++	if (ret)
++		return dev_err_probe(dev, ret, "failed to parse regulators\n");
  
- 	of_node_put(pdata->host_node);
+ 	pdata->refclk = devm_clk_get_optional(dev, "refclk");
+ 	if (IS_ERR(pdata->refclk))
+-		return PTR_ERR(pdata->refclk);
++		return dev_err_probe(dev, PTR_ERR(pdata->refclk),
++				     "failed to get reference clock\n");
+ 
+ 	pm_runtime_enable(dev);
+ 	ret = devm_add_action_or_reset(dev, ti_sn65dsi86_runtime_disable, dev);
 -- 
 2.32.0.272.g935e593368-goog
 
