@@ -2,234 +2,155 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C409B3A3C4A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jun 2021 08:52:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 41A2F3A3C9F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jun 2021 09:08:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230392AbhFKGyU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Jun 2021 02:54:20 -0400
-Received: from mail-pj1-f52.google.com ([209.85.216.52]:45791 "EHLO
-        mail-pj1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229530AbhFKGyU (ORCPT
+        id S231175AbhFKHKL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Jun 2021 03:10:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40280 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230504AbhFKHKL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Jun 2021 02:54:20 -0400
-Received: by mail-pj1-f52.google.com with SMTP id z3-20020a17090a3983b029016bc232e40bso5430038pjb.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Jun 2021 23:52:10 -0700 (PDT)
+        Fri, 11 Jun 2021 03:10:11 -0400
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D003C061574
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Jun 2021 00:07:57 -0700 (PDT)
+Received: by mail-lj1-x236.google.com with SMTP id z22so8261607ljh.8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Jun 2021 00:07:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=S+sO2TB+8ApB3Zq0zPb7psqJ1i4EPBkuIPaEmOxjGjI=;
-        b=dlNeKwDssqBPaJAwegfW+kmR2XlHzotK9yUPLpJkhyifvQ8yrwTVphQ/z96zy9Vf9H
-         FdII0Bb0GeYh3Q2rOTqIXlUwQ3HopeJSxGYrSKh2vdS+p5CdesO8UIiiscX0Bt+WZKFU
-         kHXlaUp7IsduWrYKsFiDPbgoI1hDrracfSCuRYrQZ2VT507+yGi1uaBn9rtoOWdeu/kd
-         SecOwNAeOEPrSp0UCwTSYCpKSeJ9hkkL8GezSgHYYz+9mpb9FLEgtMv/RVT5YoZrWVWA
-         HV+xGbsY6ZcnYjFv72n0GChE+30cnbJ6IP+PyP3fw6Ou+S/vVVf3z3v7VnETM79Mj0mw
-         GUhg==
+        bh=PxFpUiTBSOnltlTTuoxtE/MZoSbFjI/MZKxUVQgI8q8=;
+        b=ZYjT8dDPO05s4Nxd0AQ8STha22n4BnZxWmH2oTD39tbjqjVmK9jaa59HgGtvtx5Xlx
+         5A7R9NJgwOVRZfdBStumOB+V94O+S3A5+3grjEPKwKvfCmz8ewwVht8m1wNcETwSW/EE
+         UftYmQneWlIOfFdvOmbP4xmNCBHaJXeYbowMINh5elwBKSyjF9T+ahWBHjFSeyMBi8+E
+         QyNZDc6j35P9lqWxJm3U3uzCIZozJGZ/cfIWm3o33wVZifwgn5nJt8MJJBAyMftjuUhv
+         IEXh1/UetcTm0YviYPJdXQMQuFopSaLSFQmmyBvmWwIB+RIDGh9H6fPyFKQhxmR4qVpQ
+         SV4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=S+sO2TB+8ApB3Zq0zPb7psqJ1i4EPBkuIPaEmOxjGjI=;
-        b=kIpNzYY3o+fYSJMcyJuCT+OhPBz+rZg79ZpvqjJVLotD5TNpGzPND461noTDl9q15z
-         cRsc7R73+Ibd0YtqRc3P7Tp5PGFppWH9VKDh/IxHwysmCPcDYJuzlBwVoahMU9mhx41C
-         DGTOTHAgfXL3CjCyoEE6qN6X4gqh6BB44QfxPozwf9IQ4kuHcjljWTEPLMb6CQk3BxeC
-         h74zYnlo2fGfiv4EZ/pN4U231sbz++u2aUwVdj8GNWFQMwAJSwrgJVfFYJQ9xj8VvpV/
-         SpUagaoHWMaTGM6bq7PsHZ9PaOTOVENW4RooEwb5fMTcsDXIvD79TTwyIc8df/G8AhhI
-         CN4Q==
-X-Gm-Message-State: AOAM531N6B5mdimG0RtME/vL8QLtH//RPCvrvei+PNFNqfqRvdrCD4/L
-        AjEWDgp3NB5FdHZk1+uDOH502IoSgYCyQuhjrn02RQ==
-X-Google-Smtp-Source: ABdhPJy5BioolQbVIKu/Do/YaIRrPujKR+V3jzJeOclywGXL/3Q/bZMdYh3WJHPQWEt2IRWvbiWjsJePoMtSvBPu0HM=
-X-Received: by 2002:a17:90b:1bc4:: with SMTP id oa4mr3126091pjb.18.1623394269767;
- Thu, 10 Jun 2021 23:51:09 -0700 (PDT)
+        bh=PxFpUiTBSOnltlTTuoxtE/MZoSbFjI/MZKxUVQgI8q8=;
+        b=EAC/iRPOifDsv9CJBfBQdVhebe0VCCqNIDDPv3UTmm0WlV043kc3pzTwZxGc0JpSnB
+         wpk/6RVEfUYaiDx/8LiEC3nown4STzjC/zUSBBwMYFOPWJQN2p8ctS/m2ahWOv5BpO94
+         hvX+AIGJeinkl+92QediXNd/cluDxDs32SggVuaHQB3zngegp8u6Wld/ddJ7VnvBgBE0
+         BoQGQmhQC+pVt7Fi6HlDjzsGjtTpHbukXDIYsfttcNCQEHKKdsYLbRfCW37Xrq2ylTqV
+         PB6XNAvypkIKjah0RRuR0Y4GzmqkH+TlAtLnZi51cxg30mvqDX9rHlr0hgpyhsES2RDi
+         5vuw==
+X-Gm-Message-State: AOAM533+PauoP5M4f3KdtwXNfVZaOkcFCIHzUK1CbTxf+q1rO/TeBxUw
+        g2TQToHhSeJAeN2KnkDKSWXyZ/sZWbyz7dzZ7oqnaw==
+X-Google-Smtp-Source: ABdhPJxFdVSnUksX286DvG4PTdewZfKAGkEQVnOslur2gbzC6wjjtNh1/CxiWSBsTLkGewkmusNA+12IaT8xHtxGgXk=
+X-Received: by 2002:a2e:a605:: with SMTP id v5mr1871284ljp.128.1623395273072;
+ Fri, 11 Jun 2021 00:07:53 -0700 (PDT)
 MIME-Version: 1.0
-References: <1621603519-16773-1-git-send-email-loic.poulain@linaro.org> <20210521163530.GO70095@thinkpad>
-In-Reply-To: <20210521163530.GO70095@thinkpad>
-From:   Loic Poulain <loic.poulain@linaro.org>
-Date:   Fri, 11 Jun 2021 09:00:16 +0200
-Message-ID: <CAMZdPi8FVWRhU69z6JygsqoqMCOJTKGfo6vTWtv35kT-Ap8Drg@mail.gmail.com>
-Subject: Re: [PATCH v2] bus: mhi: Add inbound buffers allocation flag
-To:     Manivannan Sadhasivam <mani@kernel.org>,
-        Jakub Kicinski <kuba@kernel.org>,
-        David Miller <davem@davemloft.net>
-Cc:     Hemant Kumar <hemantk@codeaurora.org>,
+References: <20210331105735.3690009-1-dmitry.baryshkov@linaro.org> <20210331105735.3690009-23-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20210331105735.3690009-23-dmitry.baryshkov@linaro.org>
+From:   John Stultz <john.stultz@linaro.org>
+Date:   Fri, 11 Jun 2021 00:07:41 -0700
+Message-ID: <CALAqxLVwpLOsvjBVi+xb5S2VQNuGKgeOzrSqwZe5FN6RSeEEWA@mail.gmail.com>
+Subject: Re: [PATCH v4 22/24] drm/msm/dsi: remove temp data from global pll structure
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Bhaumik Bhatt <bbhatt@codeaurora.org>,
-        Network Development <netdev@vger.kernel.org>
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <freedreno@lists.freedesktop.org>, linux-clk@vger.kernel.org,
+        Peter Collingbourne <pcc@google.com>,
+        Amit Pundir <amit.pundir@linaro.org>,
+        Vinod Koul <vinod.koul@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Jakub, Dave,
-
-On Fri, 21 May 2021 at 18:35, Manivannan Sadhasivam <mani@kernel.org> wrote:
+On Wed, Mar 31, 2021 at 3:58 AM Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
 >
-> + netdev, Dave, Jakub
+> The 7nm, 10nm and 14nm drivers would store interim data used during
+> VCO/PLL rate setting in the global dsi_pll_Nnm structure. Move this data
+> structures to the onstack storage. While we are at it, drop
+> unused/static 'config' data, unused config fields, etc.
 >
-> On Fri, May 21, 2021 at 03:25:19PM +0200, Loic Poulain wrote:
-> > Currently, the MHI controller driver defines which channels should
-> > have their inbound buffers allocated and queued. But ideally, this is
-> > something that should be decided by the MHI device driver instead,
-> > which actually deals with that buffers.
-> >
-> > Add a flag parameter to mhi_prepare_for_transfer allowing to specify
-> > if buffers have to be allocated and queued by the MHI stack.
-> >
-> > Keep auto_queue flag for now, but should be removed at some point.
-> >
-> > Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
-> > Tested-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
-> > Reviewed-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
-> > Reviewed-by: Hemant Kumar <hemantk@codeaurora.org>
-> > Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > ---
-> >  v2: Update API in mhi_wwan_ctrl driver
-> >
-> >  drivers/bus/mhi/core/internal.h  |  2 +-
-> >  drivers/bus/mhi/core/main.c      | 11 ++++++++---
-> >  drivers/net/mhi/net.c            |  2 +-
-> >  drivers/net/wwan/mhi_wwan_ctrl.c |  2 +-
->
-> Since this patch touches the drivers under net/, I need an Ack from Dave or
-> Jakub to take it via MHI tree.
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Reviewed-by: Abhinav Kumar <abhinavk@codeaurora.org>
+> Tested-by: Stephen Boyd <swboyd@chromium.org> # on sc7180 lazor
 
-Could you please ack|nack this patch?
+Hey Dmitry,
+  Just wanted to give you a heads up.  Peter Collingbourne reported
+today that his db845c wasn't booting to display for him on his 4k
+monitor. It works fine on a 1080p screen, and while 4k isn't supported
+(yet?),  normally the board should fall back to 1080p when connected
+to a 4k monitor.  I was able to reproduce this myself and I see the
+errors below[1].
 
-Thanks,
-Loic
+I dug back and found that things were working ok on v5.12 w/ the
+recently merged commit d1a97648ae028 ("drm/bridge: lt9611: Fix
+handling of 4k panels"), and started digging around.
 
+Seeing a bunch of changes to the
+drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c file, I tried reverting a
+chunk of the changes since 5.12 to that, and that got it working
+again. I've narrowed it down to this change -
+001d8dc33875 ("drm/msm/dsi: remove temp data from global pll
+structure") upstream (also reverting following 6e2ad9c3bfca and
+36c5dde5fdf0 first - but its reverting this change that actually makes
+it work again).
 
->
-> >  include/linux/mhi.h              | 12 +++++++++++-
-> >  net/qrtr/mhi.c                   |  2 +-
-> >  6 files changed, 23 insertions(+), 8 deletions(-)
-> >
-> > diff --git a/drivers/bus/mhi/core/internal.h b/drivers/bus/mhi/core/internal.h
-> > index 5b9ea66..672052f 100644
-> > --- a/drivers/bus/mhi/core/internal.h
-> > +++ b/drivers/bus/mhi/core/internal.h
-> > @@ -682,7 +682,7 @@ void mhi_rddm_prepare(struct mhi_controller *mhi_cntrl,
-> >                     struct image_info *img_info);
-> >  void mhi_fw_load_handler(struct mhi_controller *mhi_cntrl);
-> >  int mhi_prepare_channel(struct mhi_controller *mhi_cntrl,
-> > -                     struct mhi_chan *mhi_chan);
-> > +                     struct mhi_chan *mhi_chan, enum mhi_chan_flags flags);
-> >  int mhi_init_chan_ctxt(struct mhi_controller *mhi_cntrl,
-> >                      struct mhi_chan *mhi_chan);
-> >  void mhi_deinit_chan_ctxt(struct mhi_controller *mhi_cntrl,
-> > diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
-> > index 0f1febf..432b53b 100644
-> > --- a/drivers/bus/mhi/core/main.c
-> > +++ b/drivers/bus/mhi/core/main.c
-> > @@ -1384,7 +1384,8 @@ static void mhi_unprepare_channel(struct mhi_controller *mhi_cntrl,
-> >  }
-> >
-> >  int mhi_prepare_channel(struct mhi_controller *mhi_cntrl,
-> > -                     struct mhi_chan *mhi_chan)
-> > +                     struct mhi_chan *mhi_chan,
-> > +                     enum mhi_chan_flags flags)
-> >  {
-> >       int ret = 0;
-> >       struct device *dev = &mhi_chan->mhi_dev->dev;
-> > @@ -1409,6 +1410,9 @@ int mhi_prepare_channel(struct mhi_controller *mhi_cntrl,
-> >       if (ret)
-> >               goto error_pm_state;
-> >
-> > +     if (mhi_chan->dir == DMA_FROM_DEVICE)
-> > +             mhi_chan->pre_alloc = !!(flags & MHI_CH_INBOUND_ALLOC_BUFS);
-> > +
-> >       /* Pre-allocate buffer for xfer ring */
-> >       if (mhi_chan->pre_alloc) {
-> >               int nr_el = get_nr_avail_ring_elements(mhi_cntrl,
-> > @@ -1555,7 +1559,8 @@ void mhi_reset_chan(struct mhi_controller *mhi_cntrl, struct mhi_chan *mhi_chan)
-> >  }
-> >
-> >  /* Move channel to start state */
-> > -int mhi_prepare_for_transfer(struct mhi_device *mhi_dev)
-> > +int mhi_prepare_for_transfer(struct mhi_device *mhi_dev,
-> > +                          enum mhi_chan_flags flags)
-> >  {
-> >       int ret, dir;
-> >       struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
-> > @@ -1566,7 +1571,7 @@ int mhi_prepare_for_transfer(struct mhi_device *mhi_dev)
-> >               if (!mhi_chan)
-> >                       continue;
-> >
-> > -             ret = mhi_prepare_channel(mhi_cntrl, mhi_chan);
-> > +             ret = mhi_prepare_channel(mhi_cntrl, mhi_chan, flags);
-> >               if (ret)
-> >                       goto error_open_chan;
-> >       }
-> > diff --git a/drivers/net/mhi/net.c b/drivers/net/mhi/net.c
-> > index 6b5bf23..3ddfb72 100644
-> > --- a/drivers/net/mhi/net.c
-> > +++ b/drivers/net/mhi/net.c
-> > @@ -323,7 +323,7 @@ static int mhi_net_probe(struct mhi_device *mhi_dev,
-> >       u64_stats_init(&mhi_netdev->stats.tx_syncp);
-> >
-> >       /* Start MHI channels */
-> > -     err = mhi_prepare_for_transfer(mhi_dev);
-> > +     err = mhi_prepare_for_transfer(mhi_dev, 0);
-> >       if (err)
-> >               goto out_err;
-> >
-> > diff --git a/drivers/net/wwan/mhi_wwan_ctrl.c b/drivers/net/wwan/mhi_wwan_ctrl.c
-> > index 3a44b22..84e75e4 100644
-> > --- a/drivers/net/wwan/mhi_wwan_ctrl.c
-> > +++ b/drivers/net/wwan/mhi_wwan_ctrl.c
-> > @@ -110,7 +110,7 @@ static int mhi_wwan_ctrl_start(struct wwan_port *port)
-> >       int ret;
-> >
-> >       /* Start mhi device's channel(s) */
-> > -     ret = mhi_prepare_for_transfer(mhiwwan->mhi_dev);
-> > +     ret = mhi_prepare_for_transfer(mhiwwan->mhi_dev, 0);
-> >       if (ret)
-> >               return ret;
-> >
-> > diff --git a/include/linux/mhi.h b/include/linux/mhi.h
-> > index d095fba..9372acf 100644
-> > --- a/include/linux/mhi.h
-> > +++ b/include/linux/mhi.h
-> > @@ -60,6 +60,14 @@ enum mhi_flags {
-> >  };
-> >
-> >  /**
-> > + * enum mhi_chan_flags - MHI channel flags
-> > + * @MHI_CH_INBOUND_ALLOC_BUFS: Automatically allocate and queue inbound buffers
-> > + */
-> > +enum mhi_chan_flags {
-> > +     MHI_CH_INBOUND_ALLOC_BUFS = BIT(0),
-> > +};
-> > +
-> > +/**
-> >   * enum mhi_device_type - Device types
-> >   * @MHI_DEVICE_XFER: Handles data transfer
-> >   * @MHI_DEVICE_CONTROLLER: Control device
-> > @@ -719,8 +727,10 @@ void mhi_device_put(struct mhi_device *mhi_dev);
-> >   *                            host and device execution environments match and
-> >   *                            channels are in a DISABLED state.
-> >   * @mhi_dev: Device associated with the channels
-> > + * @flags: MHI channel flags
-> >   */
-> > -int mhi_prepare_for_transfer(struct mhi_device *mhi_dev);
-> > +int mhi_prepare_for_transfer(struct mhi_device *mhi_dev,
-> > +                          enum mhi_chan_flags flags);
-> >
-> >  /**
-> >   * mhi_unprepare_from_transfer - Reset UL and DL channels for data transfer.
-> > diff --git a/net/qrtr/mhi.c b/net/qrtr/mhi.c
-> > index 2bf2b19..47afded 100644
-> > --- a/net/qrtr/mhi.c
-> > +++ b/net/qrtr/mhi.c
-> > @@ -77,7 +77,7 @@ static int qcom_mhi_qrtr_probe(struct mhi_device *mhi_dev,
-> >       int rc;
-> >
-> >       /* start channels */
-> > -     rc = mhi_prepare_for_transfer(mhi_dev);
-> > +     rc = mhi_prepare_for_transfer(mhi_dev, MHI_CH_INBOUND_ALLOC_BUFS);
-> >       if (rc)
-> >               return rc;
-> >
-> > --
-> > 2.7.4
-> >
+I've not managed to really look into the change to see what might be
+going wrong yet (its late and I'm about to crash), but I wanted to
+give you a heads up. If you have any ideas for me to try I'm happy to
+give them a go.
+
+thanks
+-john
+
+[1]:
+[   19.846857] msm_dsi_phy ae94400.dsi-phy:
+[drm:dsi_pll_10nm_vco_prepare] *ERROR* DSI PLL(0) lock failed,
+status=0x00000000
+[   19.857925] msm_dsi_phy ae94400.dsi-phy:
+[drm:dsi_pll_10nm_vco_prepare] *ERROR* PLL(0) lock failed
+[   19.866978] dsi_link_clk_enable_6g: Failed to enable dsi byte clk
+[   19.873124] msm_dsi_host_power_on: failed to enable link clocks. ret=-110
+[   19.879987] dsi_mgr_bridge_pre_enable: power on host 0 failed, -110
+[   19.886309] Turning OFF PHY while PLL is on
+[   20.415019] lt9611 10-003b: video check: hactive_a=0, hactive_b=0,
+vactive=0, v_total=0, h_total_sysclk=0
+[   20.481062] [drm:dpu_encoder_phys_vid_wait_for_commit_done:528]
+[dpu error]vblank timeout
+[   20.489306] [drm:dpu_kms_wait_for_commit_done:453] [dpu error]wait
+for commit done returned -110
+[   20.513031] [drm:dpu_encoder_frame_done_timeout:2161] [dpu
+error]enc31 frame done timeout
+[   20.553059] [drm:dpu_encoder_phys_vid_wait_for_commit_done:528]
+[dpu error]vblank timeout
+[   20.561300] [drm:dpu_kms_wait_for_commit_done:453] [dpu error]wait
+for commit done returned -110
+[   20.625054] [drm:dpu_encoder_phys_vid_wait_for_commit_done:528]
+[dpu error]vblank timeout
+[   20.633299] [drm:dpu_kms_wait_for_commit_done:453] [dpu error]wait
+for commit done returned -110
+[   20.657033] [drm:dpu_encoder_frame_done_timeout:2161] [dpu
+error]enc31 frame done timeout
+[   20.697065] [drm:dpu_encoder_phys_vid_wait_for_commit_done:528]
+[dpu error]vblank timeout
+[   20.705316] [drm:dpu_kms_wait_for_commit_done:453] [dpu error]wait
+for commit done returned -110
+[   20.769066] [drm:dpu_encoder_phys_vid_wait_for_commit_done:528]
+[dpu error]vblank timeout
+[   20.777330] [drm:dpu_kms_wait_for_commit_done:453] [dpu error]wait
+for commit done returned -110
+[   20.801035] [drm:dpu_encoder_frame_done_timeout:2161] [dpu
+error]enc31 frame done timeout
+[   20.845049] [drm:dpu_encoder_phys_vid_wait_for_commit_done:528]
+[dpu error]vblank timeout
+...
