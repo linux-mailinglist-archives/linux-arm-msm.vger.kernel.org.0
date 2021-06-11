@@ -2,314 +2,376 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C27453A3A81
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jun 2021 05:50:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 22ECC3A3AC0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jun 2021 06:10:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231419AbhFKDwA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Jun 2021 23:52:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53192 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231403AbhFKDv7 (ORCPT
+        id S229530AbhFKEME (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Jun 2021 00:12:04 -0400
+Received: from mail-oi1-f182.google.com ([209.85.167.182]:47080 "EHLO
+        mail-oi1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230517AbhFKEMD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Jun 2021 23:51:59 -0400
-Received: from mail-oo1-xc33.google.com (mail-oo1-xc33.google.com [IPv6:2607:f8b0:4864:20::c33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3C89C061574
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Jun 2021 20:49:51 -0700 (PDT)
-Received: by mail-oo1-xc33.google.com with SMTP id e27-20020a056820061bb029020da48eed5cso401727oow.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Jun 2021 20:49:51 -0700 (PDT)
+        Fri, 11 Jun 2021 00:12:03 -0400
+Received: by mail-oi1-f182.google.com with SMTP id c13so4508321oib.13
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Jun 2021 21:09:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=qT8MmbssqwjjQy/dKsbd4ZG4G3VdYCwzB+a8OBRE14E=;
-        b=ghUtbPQTxBqrpD7B2uYe0PnzoeYicmVcanTih/ataUoqWXctVJmYXKG1m8N0SeIHjX
-         veZ74P/XX3DcjVprGpywqlDZjWITyinQ35ybhPjzIYu4wCLxooK1JNP1zfnXINeUybix
-         t88I5QR9U+wo6iOfT/8tP5hQWY3jT6fFk5tXEc7d8LPQesQpt/v9e/ix+jdVN1+hELI/
-         QrOpyV6e7oBX01byqvv6KSvk8Fps4cu3/IJbjlWhl8PryF9lEYnpAOBRcYXNLZka36qb
-         ipNmRpwnExSX1NEP3UalmAvj/clYZs0llE5ymuVtb8MtLqhfGffZn0BOb4TqrTwVSZ8B
-         TK3w==
+        bh=Np3k6CK9NjalVZtaexn2XbHqvBfeGTYroieMiT0qCqE=;
+        b=o2V9o9YdQb6tLPXwkx7DQI31/snWFD/wNJg6E3+jdN5/4R/Y7AKaZvo3QZ+XjHRrng
+         h1aVwNLMlPvuLjT2n/21DhCigvWK+p+hB0y+EpSxOLxhtESv12pb6GwwWrkEBU2UXUh/
+         ATpC1W+iPebELDOkgZaWBsJkOI9ct5jAvWOsYUijf8zn3Pq5z2UGDrjZ9OqsLtc6p1zT
+         pdAHUZbecdzk+/fwQZvR4jTN74hCDZmJcEk6vRsUfRqbIY1vxIn3Dia61HCbvieTbSAv
+         QxGnWDP3gtMgDD+BwDdSR5DEHV57z1W0ytC9lLruVcJSiSl6399jvjo8+Q9gNQN+cKgU
+         oVSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=qT8MmbssqwjjQy/dKsbd4ZG4G3VdYCwzB+a8OBRE14E=;
-        b=b8tfiyqR0a5DphWJe475T369gsWt/zeGMsvg5CZqLDZRfKrezM5oOvTN+er2SZ4lvo
-         2FGGrxKddYvVv1ZfDhSP6lM0a/YdBHOi0lVPvuJ3HgQ3mVlzeiAhc1g7DEjXM9Z9vMpi
-         dvRIH7cGPBPFWQ1wQV852rp8WKBgB2pzPwt77awm0j4QsZq2FrRM/V/mqN72M+Z714ZN
-         w8CDnqD3DtuLIYnKWnAu+sCHE4lL4DSbRfqcQWqvBlKRJbjZXZR5W+expDrYX1z2u5kw
-         9K0EWtn/du/Er4/SQv4Q91jJNH/ZcjB6D7X+QyCLqHxr7uClxBxII0CARfL+30xHgO7u
-         8IdQ==
-X-Gm-Message-State: AOAM531NNQPMYdb5hZtQrMPs3ucrYzrS1G36b/1JVPMA9dmXyqwMnFW+
-        BD4QKMoe4VNEUu6nykxgjsYlrWLLxG84Zg==
-X-Google-Smtp-Source: ABdhPJySl/0xQ4SdDaKxtXic4a22b5TUXp7slntxsx3IgTEyWNgw7Lc9ZCtpf3ZpIxOpoBl9QvZPDA==
-X-Received: by 2002:a4a:e9b1:: with SMTP id t17mr1369674ood.0.1623383391153;
-        Thu, 10 Jun 2021 20:49:51 -0700 (PDT)
+        bh=Np3k6CK9NjalVZtaexn2XbHqvBfeGTYroieMiT0qCqE=;
+        b=MgRA77Zi5oqRzaznjt5feuucl+6Ypmr9EeifvbP4fvy8eu8G8rOwlMm+03O1VfHROv
+         JyR3vcMe3orxZGL4f7E7NgKMRVQlKc5iFzG2aYXAkzcpHrONMKWm1tB4LzE3u3IYbrkZ
+         YIVBNsAg4ePiFP7fs6ychI2AiF+iekciLwUJozqw55B1C9q/ZjCddmLsF2N7SLEq4ii6
+         mlfcdfIZSQO7u1Thqb9qMqkqrUgfKcSJNGerBmXh5JujzTJz3YA99Ee6iZh1mxZQKaCN
+         zQwF9uGBRQKSB/o8CQqIrD3WE4tAvuIjGTiCLLI5XjXinK/P7yP7YXJE7gW13rOYY7EJ
+         kOHA==
+X-Gm-Message-State: AOAM532vUWH/nqiz92Gd+MMHvQhHtH6r8qSjMu+98NFsNIQVq8URjx55
+        9FCtZ885FppgYwYjChY4y1JhTg==
+X-Google-Smtp-Source: ABdhPJzWEjcBbx8kFeB+uFJXKM84tlfmpPgMIWKdCWOMQeFiq69vKBN7Dq/fjfBm+lievXEBVtLqow==
+X-Received: by 2002:aca:ab15:: with SMTP id u21mr12474126oie.155.1623384529975;
+        Thu, 10 Jun 2021 21:08:49 -0700 (PDT)
 Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id l128sm970094oif.16.2021.06.10.20.49.50
+        by smtp.gmail.com with ESMTPSA id d12sm1040897otf.65.2021.06.10.21.08.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Jun 2021 20:49:50 -0700 (PDT)
-Date:   Thu, 10 Jun 2021 22:49:48 -0500
+        Thu, 10 Jun 2021 21:08:49 -0700 (PDT)
+Date:   Thu, 10 Jun 2021 23:08:47 -0500
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, martin.botka@somainline.org,
-        angelogioacchino.delregno@somainline.org,
-        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
-        Andy Gross <agross@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
+To:     satya priya <skakit@codeaurora.org>
+Cc:     Linus Walleij <linus.walleij@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/2] pinctrl: qcom: Add MDM9607 pinctrl driver
-Message-ID: <YMLdXFNBhkYF3goe@builder.lan>
-References: <20210602080518.1589889-1-konrad.dybcio@somainline.org>
- <20210602080518.1589889-2-konrad.dybcio@somainline.org>
+        Andy Gross <agross@kernel.org>, kgunda@codeaurora.org,
+        linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH V4] dt-bindings: pinctrl: qcom-pmic-gpio: Convert qcom
+ pmic gpio bindings to YAML
+Message-ID: <YMLhzxMpbSRQac+P@builder.lan>
+References: <1621578615-4613-1-git-send-email-skakit@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20210602080518.1589889-2-konrad.dybcio@somainline.org>
+In-Reply-To: <1621578615-4613-1-git-send-email-skakit@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 02 Jun 03:05 CDT 2021, Konrad Dybcio wrote:
+On Fri 21 May 01:30 CDT 2021, satya priya wrote:
 
-> Add a pinctrl driver to allow for managing SoC pins.
+> Convert Qualcomm PMIC GPIO bindings from .txt to .yaml format.
 > 
 
-This looks really good, just a few of small things below.
+While the structure of the binding is a proper binding, the definition
+of the pinctrl states doesn't properly represent what we need to be able
+to describe with this binding; see below.
 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-> ---
->  drivers/pinctrl/qcom/Kconfig           |    8 +
->  drivers/pinctrl/qcom/Makefile          |    1 +
->  drivers/pinctrl/qcom/pinctrl-mdm9607.c | 1124 ++++++++++++++++++++++++
->  3 files changed, 1133 insertions(+)
->  create mode 100644 drivers/pinctrl/qcom/pinctrl-mdm9607.c
-> 
-> diff --git a/drivers/pinctrl/qcom/Kconfig b/drivers/pinctrl/qcom/Kconfig
-> index 6853a896c476..34a7b9322b9b 100644
-> --- a/drivers/pinctrl/qcom/Kconfig
-> +++ b/drivers/pinctrl/qcom/Kconfig
-> @@ -88,6 +88,14 @@ config PINCTRL_MSM8960
->  	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
->  	  Qualcomm TLMM block found in the Qualcomm 8960 platform.
->  
-> +config PINCTRL_MDM9607
-> +	tristate "Qualcomm 9607 pin controller driver"
-> +	depends on GPIOLIB && OF
-> +	depends on PINCTRL_MSM
-> +	help
-> +	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
-> +	  Qualcomm TLMM block found in the Qualcomm 9607 platform.
-> +
->  config PINCTRL_MDM9615
->  	tristate "Qualcomm 9615 pin controller driver"
->  	depends on GPIOLIB && OF
-> diff --git a/drivers/pinctrl/qcom/Makefile b/drivers/pinctrl/qcom/Makefile
-> index d4301fbb7274..a60b075b3054 100644
-> --- a/drivers/pinctrl/qcom/Makefile
-> +++ b/drivers/pinctrl/qcom/Makefile
-> @@ -19,6 +19,7 @@ obj-$(CONFIG_PINCTRL_MSM8996)   += pinctrl-msm8996.o
->  obj-$(CONFIG_PINCTRL_MSM8998)   += pinctrl-msm8998.o
->  obj-$(CONFIG_PINCTRL_QCS404)	+= pinctrl-qcs404.o
->  obj-$(CONFIG_PINCTRL_QDF2XXX)	+= pinctrl-qdf2xxx.o
-> +obj-$(CONFIG_PINCTRL_MDM9607)	+= pinctrl-mdm9607.o
->  obj-$(CONFIG_PINCTRL_MDM9615)	+= pinctrl-mdm9615.o
->  obj-$(CONFIG_PINCTRL_QCOM_SPMI_PMIC) += pinctrl-spmi-gpio.o
->  obj-$(CONFIG_PINCTRL_QCOM_SPMI_PMIC) += pinctrl-spmi-mpp.o
-> diff --git a/drivers/pinctrl/qcom/pinctrl-mdm9607.c b/drivers/pinctrl/qcom/pinctrl-mdm9607.c
 [..]
-> +enum mdm9607_functions {
-> +	msm_mux_blsp_spi3,
-
-The order of these doesn't matter, so please sort them alphabetically.
-
-> +	msm_mux_gpio,
-> +	msm_mux_blsp_uart3,
-> +	msm_mux_qdss_tracedata_a,
-> +	msm_mux_bimc_dte1,
-> +	msm_mux_blsp_i2c3,
-> +	msm_mux_qdss_traceclk_a,
-> +	msm_mux_bimc_dte0,
-> +	msm_mux_qdss_cti_trig_in_a1,
-> +	msm_mux_blsp_spi2,
-> +	msm_mux_blsp_uart2,
-> +	msm_mux_blsp_uim2,
-> +	msm_mux_blsp_i2c2,
-> +	msm_mux_qdss_tracectl_a,
-> +	msm_mux_sensor_int2,
-> +	msm_mux_blsp_spi5,
-> +	msm_mux_blsp_uart5,
-> +	msm_mux_ebi2_lcd,
-> +	msm_mux_m_voc,
-> +	msm_mux_sensor_int3,
-> +	msm_mux_sensor_en,
-> +	msm_mux_blsp_i2c5,
-> +	msm_mux_ebi2_a,
-> +	msm_mux_qdss_tracedata_b,
-> +	msm_mux_sensor_rst,
-> +	msm_mux_blsp2_spi,
-> +	msm_mux_blsp_spi1,
-> +	msm_mux_blsp_uart1,
-> +	msm_mux_blsp_uim1,
-> +	msm_mux_blsp3_spi,
-> +	msm_mux_gcc_gp2_clk_b,
-> +	msm_mux_gcc_gp3_clk_b,
-> +	msm_mux_blsp_i2c1,
-> +	msm_mux_gcc_gp1_clk_b,
-> +	msm_mux_blsp_spi4,
-> +	msm_mux_blsp_uart4,
-> +	msm_mux_rcm_marker1,
-> +	msm_mux_blsp_i2c4,
-> +	msm_mux_qdss_cti_trig_out_a1,
-> +	msm_mux_rcm_marker2,
-> +	msm_mux_qdss_cti_trig_out_a0,
-> +	msm_mux_blsp_spi6,
-> +	msm_mux_blsp_uart6,
-> +	msm_mux_pri_mi2s_ws_a,
-> +	msm_mux_ebi2_lcd_te_b,
-> +	msm_mux_blsp1_spi,
-> +	msm_mux_backlight_en_b,
-> +	msm_mux_pri_mi2s_data0_a,
-> +	msm_mux_pri_mi2s_data1_a,
-> +	msm_mux_blsp_i2c6,
-> +	msm_mux_ebi2_a_d_8_b,
-> +	msm_mux_pri_mi2s_sck_a,
-> +	msm_mux_ebi2_lcd_cs_n_b,
-> +	msm_mux_touch_rst,
-> +	msm_mux_pri_mi2s_mclk_a,
-> +	msm_mux_pwr_nav_enabled_a,
-> +	msm_mux_ts_int,
-> +	msm_mux_sd_write,
-> +	msm_mux_pwr_crypto_enabled_a,
-> +	msm_mux_codec_rst,
-> +	msm_mux_adsp_ext,
-> +	msm_mux_atest_combodac_to_gpio_native,
-> +	msm_mux_uim2_data,
-> +	msm_mux_gmac_mdio,
-> +	msm_mux_gcc_gp1_clk_a,
-> +	msm_mux_uim2_clk,
-> +	msm_mux_gcc_gp2_clk_a,
-> +	msm_mux_eth_irq,
-> +	msm_mux_uim2_reset,
-> +	msm_mux_gcc_gp3_clk_a,
-> +	msm_mux_eth_rst,
-> +	msm_mux_uim2_present,
-> +	msm_mux_prng_rosc,
-> +	msm_mux_uim1_data,
-> +	msm_mux_uim1_clk,
-> +	msm_mux_uim1_reset,
-> +	msm_mux_uim1_present,
-> +	msm_mux_gcc_plltest,
-> +	msm_mux_uim_batt,
-> +	msm_mux_coex_uart,
-> +	msm_mux_codec_int,
-> +	msm_mux_qdss_cti_trig_in_a0,
-> +	msm_mux_atest_bbrx1,
-> +	msm_mux_cri_trng0,
-> +	msm_mux_atest_bbrx0,
-> +	msm_mux_cri_trng,
-> +	msm_mux_qdss_cti_trig_in_b0,
-> +	msm_mux_atest_gpsadc_dtest0_native,
-> +	msm_mux_qdss_cti_trig_out_b0,
-> +	msm_mux_qdss_tracectl_b,
-> +	msm_mux_qdss_traceclk_b,
-> +	msm_mux_pa_indicator,
-> +	msm_mux_modem_tsync,
-> +	msm_mux_nav_tsync_out_a,
-> +	msm_mux_nav_ptp_pps_in_a,
-> +	msm_mux_ptp_pps_out_a,
-> +	msm_mux_gsm0_tx,
-> +	msm_mux_qdss_cti_trig_in_b1,
-> +	msm_mux_cri_trng1,
-> +	msm_mux_qdss_cti_trig_out_b1,
-> +	msm_mux_ssbi1,
-> +	msm_mux_atest_gpsadc_dtest1_native,
-> +	msm_mux_ssbi2,
-> +	msm_mux_atest_char3,
-> +	msm_mux_atest_char2,
-> +	msm_mux_atest_char1,
-> +	msm_mux_atest_char0,
-> +	msm_mux_atest_char,
-> +	msm_mux_ebi0_wrcdc,
-> +	msm_mux_ldo_update,
-> +	msm_mux_gcc_tlmm,
-> +	msm_mux_ldo_en,
-> +	msm_mux_dbg_out,
-> +	msm_mux_atest_tsens,
-> +	msm_mux_lcd_rst,
-> +	msm_mux_wlan_en1,
-> +	msm_mux_nav_tsync_out_b,
-> +	msm_mux_nav_ptp_pps_in_b,
-> +	msm_mux_ptp_pps_out_b,
-> +	msm_mux_pbs0,
-> +	msm_mux_sec_mi2s,
-> +	msm_mux_pwr_modem_enabled_a,
-> +	msm_mux_pbs1,
-> +	msm_mux_pwr_modem_enabled_b,
-> +	msm_mux_pbs2,
-> +	msm_mux_pwr_nav_enabled_b,
-> +	msm_mux_pwr_crypto_enabled_b,
-> +	msm_mux_NA,
-> +};
-[..]
-> +static const struct msm_pingroup mdm9607_groups[] = {
-> +	PINGROUP(0, blsp_uart3, blsp_spi3, NA, NA, NA, NA, NA,
-> +		 qdss_tracedata_a, NA),
-
-After doing a few platforms I realized that replacing NA with _ makes
-this easier to read.
-
-And please avoid breaking these lines.
-
-> +	PINGROUP(1, blsp_uart3, blsp_spi3, NA, NA, NA, NA, NA,
-> +		 qdss_tracedata_a, bimc_dte1),
-[..]
-> +	PINGROUP(79, sec_mi2s, NA, pwr_crypto_enabled_b, NA, qdss_tracedata_a,
-> +		 NA, NA, NA, NA),
-> +	SDC_PINGROUP(sdc1_clk, 0x10a000, 13, 6),
-> +	SDC_PINGROUP(sdc1_cmd, 0x10a000, 11, 3),
-> +	SDC_PINGROUP(sdc1_data, 0x10a000, 9, 0),
-> +	SDC_PINGROUP(sdc2_clk, 0x109000, 14, 6),
-> +	SDC_PINGROUP(sdc2_cmd, 0x109000, 11, 3),
-> +	SDC_PINGROUP(sdc2_data, 0x109000, 9, 0),
-> +	SDC_PINGROUP(qdsd_clk, 0x19c000, 3, 0),
-> +	SDC_PINGROUP(qdsd_cmd, 0x19c000, 8, 5),
-> +	SDC_PINGROUP(qdsd_data0, 0x19c000, 13, 10),
-> +	SDC_PINGROUP(qdsd_data1, 0x19c000, 18, 15),
-> +	SDC_PINGROUP(qdsd_data2, 0x19c000, 23, 20),
-> +	SDC_PINGROUP(qdsd_data3, 0x19c000, 28, 25),
-> +};
+> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.yaml
+> new file mode 100644
+> index 0000000..d9024eb
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.yaml
+> @@ -0,0 +1,256 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/pinctrl/qcom,pmic-gpio.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
 > +
-> +#define NUM_GPIO_PINGROUPS	92
+> +title: Qualcomm PMIC GPIO block
+> +
+> +maintainers:
+> +  - Bjorn Andersson <bjorn.andersson@sonymobile.com>
 
-Only 80 of these makes sense to poke through the gpio framework, so this
-should be 80...
+Please make that bjorn.andersson@linaro.org
 
 > +
-> +static const struct msm_pinctrl_soc_data mdm9607_pinctrl = {
-> +	.pins = mdm9607_pins,
-> +	.npins = ARRAY_SIZE(mdm9607_pins),
-> +	.functions = mdm9607_functions,
-> +	.nfunctions = ARRAY_SIZE(mdm9607_functions),
-> +	.groups = mdm9607_groups,
-> +	.ngroups = ARRAY_SIZE(mdm9607_groups),
-> +	.ngpios = NUM_GPIO_PINGROUPS,
-> +};
+> +description: |
+
+I don't think you need this defined in literal style, so omit the '|'
+
+> +  This binding describes the GPIO block(s) found in the 8xxx series of
+> +  PMIC's from Qualcomm.
 > +
-> +static int mdm9607_pinctrl_probe(struct platform_device *pdev)
-> +{
-> +	return msm_pinctrl_probe(pdev, &mdm9607_pinctrl);
-> +}
+> +properties:
+> +  compatible:
+> +    items:
+> +      - enum:
+> +          - qcom,pm8005-gpio
+> +          - qcom,pm8018-gpio
+> +          - qcom,pm8038-gpio
+> +          - qcom,pm8058-gpio
+> +          - qcom,pm8916-gpio
+> +          - qcom,pm8917-gpio
+> +          - qcom,pm8921-gpio
+> +          - qcom,pm8941-gpio
+> +          - qcom,pm8950-gpio
+> +          - qcom,pm8994-gpio
+> +          - qcom,pm8998-gpio
+> +          - qcom,pma8084-gpio
+> +          - qcom,pmi8950-gpio
+> +          - qcom,pmi8994-gpio
+> +          - qcom,pmi8998-gpio
+> +          - qcom,pms405-gpio
+> +          - qcom,pm660-gpio
+
+Please keep these sorted alphabetically.
+
+> +          - qcom,pm660l-gpio
+> +          - qcom,pm8150-gpio
+> +          - qcom,pm8150b-gpio
+> +          - qcom,pm8350-gpio
+> +          - qcom,pm8350b-gpio
+> +          - qcom,pm8350c-gpio
+> +          - qcom,pmk8350-gpio
+> +          - qcom,pm6150-gpio
+> +          - qcom,pm6150l-gpio
+> +          - qcom,pm7325-gpio
+> +          - qcom,pmr735a-gpio
+> +          - qcom,pmr735b-gpio
+> +          - qcom,pm8008-gpio
+> +          - qcom,pmx55-gpio
 > +
-> +static const struct of_device_id mdm9607_pinctrl_of_match[] = {
-> +	{ .compatible = "qcom,mdm9607-pinctrl", },
+> +      - enum:
+> +          - qcom,spmi-gpio
+> +          - qcom,ssbi-gpio
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  interrupts:
+> +    minItems: 1
+> +    maxItems: 44
+> +    description: |
+> +        Must contain an array of encoded interrupt specifiers for
+> +        each available GPIO
 
-qcom,mdm9607-tlmm
+We no longer specify "interrupts" but it seems we forgot to update the
+binding. So perhaps it's the right thing to keep it as part of the
+conversion and add a second patch that removes this.
 
-> +	{ },
+> +
+> +  '#interrupt-cells':
+> +    const: 2
+> +
+> +  interrupt-controller: true
+> +
+> +  gpio-controller: true
+> +
+> +  gpio-ranges:
+> +    maxItems: 1
+> +
+> +  '#gpio-cells':
+> +    const: 2
+> +    description: |
+> +        The first cell will be used to define gpio number and the
+> +        second denotes the flags for this gpio
+> +
+> +  gpio-keys:
 
-No need to this comma.
+This is the name of the pinctrl state defined in the example, as defined
+here we will only ever be able to describe the volume keys.
+
+You need to describe all valid states - and you need to support the two
+different nesting of the properties.
+
+See qcom,tlmm-common.yaml and how we use that in the various bindings.
+
+> +    type: object
+> +    properties:
+> +      volume-keys:
+> +        type: object
+> +        anyOf:
+> +          - $ref: "pinmux-node.yaml"
+> +          - $ref: "pincfg-node.yaml"
+> +        properties:
+> +          pins:
+> +            description: |
+> +                List of gpio pins affected by the properties specified in
+> +                this subnode.  Valid pins are
+> +                     - gpio1-gpio4 for pm8005
+> +                     - gpio1-gpio6 for pm8018
+> +                     - gpio1-gpio12 for pm8038
+> +                     - gpio1-gpio40 for pm8058
+> +                     - gpio1-gpio4 for pm8916
+> +                     - gpio1-gpio38 for pm8917
+> +                     - gpio1-gpio44 for pm8921
+> +                     - gpio1-gpio36 for pm8941
+> +                     - gpio1-gpio8 for pm8950 (hole on gpio3)
+> +                     - gpio1-gpio22 for pm8994
+> +                     - gpio1-gpio26 for pm8998
+> +                     - gpio1-gpio22 for pma8084
+> +                     - gpio1-gpio2 for pmi8950
+> +                     - gpio1-gpio10 for pmi8994
+> +                     - gpio1-gpio12 for pms405 (holes on gpio1, gpio9
+> +                                                and gpio10)
+> +                     - gpio1-gpio10 for pm8150 (holes on gpio2, gpio5,
+> +                                                gpio7 and gpio8)
+> +                     - gpio1-gpio12 for pm8150b (holes on gpio3, gpio4
+> +                                                 and gpio7)
+> +                     - gpio1-gpio12 for pm8150l (hole on gpio7)
+> +                     - gpio1-gpio10 for pm8350
+> +                     - gpio1-gpio8 for pm8350b
+> +                     - gpio1-gpio9 for pm8350c
+> +                     - gpio1-gpio4 for pmk8350
+> +                     - gpio1-gpio10 for pm6150
+> +                     - gpio1-gpio12 for pm6150l
+> +                     - gpio1-gpio10 for pm7325
+> +                     - gpio1-gpio4 for pmr735a
+> +                     - gpio1-gpio4 for pmr735b
+> +                     - gpio1-gpio2 for pm8008
+> +                     - gpio1-gpio11 for pmx55 (holes on gpio3, gpio7, gpio10
+> +                                                and gpio11)
+> +
+> +            items:
+> +              pattern: "^gpio([0-9]+)$"
+> +
+> +          function:
+> +            items:
+> +              - enum:
+> +                  - normal
+> +                  - paired
+> +                  - func1
+> +                  - func2
+> +                  - dtest1
+> +                  - dtest2
+> +                  - dtest3
+> +                  - dtest4
+> +                  - func3  # supported by LV/MV GPIO subtypes
+> +                  - func4  # supported by LV/MV GPIO subtypes
+> +
+> +          bias-disable: true
+> +
+> +          bias-pull-down: true
+> +
+> +          bias-pull-up: true
+> +
+> +          qcom,pull-up-strength:
+> +            $ref: /schemas/types.yaml#/definitions/uint32
+> +            description: |
+> +                Specifies the strength to use for pull up, if selected.
+> +                Valid values are defined in
+> +                <dt-bindings/pinctrl/qcom,pmic-gpio.h>
+> +                If this property is omitted 30uA strength will be used
+> +                if pull up is selected
+> +
+> +          bias-high-impedance: true
+> +
+> +          input-enable: true
+> +
+> +          output-high: true
+> +
+> +          output-low: true
+> +
+> +          power-source: true
+> +
+> +          qcom,drive-strength:
+> +            $ref: /schemas/types.yaml#/definitions/uint32
+> +            description: |
+> +                Selects the drive strength for the specified pins
+> +                Valid drive strength values are defined in
+> +                <dt-bindings/pinctrl/qcom,pmic-gpio.h>
+> +            enum: [0, 1, 2, 3]
+> +
+> +          drive-push-pull: true
+> +
+> +          drive-open-drain: true
+> +
+> +          drive-open-source: true
+> +
+> +          qcom,analog-pass:
+> +            $ref: /schemas/types.yaml#/definitions/flag
+> +            description: |
+> +                The specified pins are configured in
+> +                analog-pass-through mode.
+> +
+> +          qcom,atest:
+> +            $ref: /schemas/types.yaml#/definitions/uint32
+> +            description: |
+> +                Selects ATEST rail to route to GPIO when it's
+> +                configured in analog-pass-through mode.
+> +            enum: [1, 2, 3, 4]
+> +
+> +          qcom,dtest-buffer:
+> +            $ref: /schemas/types.yaml#/definitions/uint32
+> +            description: |
+> +                Selects DTEST rail to route to GPIO when it's
+> +                configured as digital input.
+> +            enum: [1, 2, 3, 4]
+> +
+> +        required:
+> +          - pins
+> +          - function
+> +
+> +        additionalProperties: false
+> +
+> +additionalProperties: false
+> +
+> +required:
+> +  - compatible
+> +  - reg
+
+I think it makes sense to require gpio-controller, '#gpio-cells',
+gpio-ranges and interrupt-controller as well.
+
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
+> +
+> +    pm8921_gpio: gpio@150 {
+> +      compatible = "qcom,pm8921-gpio", "qcom,ssbi-gpio";
+> +      reg = <0x150 0x160>;
+> +      interrupts = <192 1>, <193 1>, <194 1>,
+> +                   <195 1>, <196 1>, <197 1>,
+> +                   <198 1>, <199 1>, <200 1>,
+> +                   <201 1>, <202 1>, <203 1>,
+> +                   <204 1>, <205 1>, <206 1>,
+> +                   <207 1>, <208 1>, <209 1>,
+> +                   <210 1>, <211 1>, <212 1>,
+> +                   <213 1>, <214 1>, <215 1>,
+> +                   <216 1>, <217 1>, <218 1>,
+> +                   <219 1>, <220 1>, <221 1>,
+> +                   <222 1>, <223 1>, <224 1>,
+> +                   <225 1>, <226 1>, <227 1>,
+> +                   <228 1>, <229 1>, <230 1>,
+> +                   <231 1>, <232 1>, <233 1>,
+> +                   <234 1>, <235 1>;
+
+As noted above, this list of interrupts should be omitted from the
+example - but better done separate from the conversion patch.
 
 Thanks,
 Bjorn
+
+> +
+> +      gpio-controller;
+> +      #gpio-cells = <2>;
+> +
+> +      pm8921_gpio_keys: gpio-keys {
+> +        volume-keys {
+> +          pins = "gpio20", "gpio21";
+> +          function = "normal";
+> +
+> +          input-enable;
+> +          bias-pull-up;
+> +          drive-push-pull;
+> +          qcom,drive-strength = <PMIC_GPIO_STRENGTH_NO>;
+> +          power-source = <PM8921_GPIO_S4>;
+> +        };
+> +      };
+> +    };
+> +...
+> -- 
+> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
+> of Code Aurora Forum, hosted by The Linux Foundation
+> 
