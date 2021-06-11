@@ -2,413 +2,224 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CD1023A475D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jun 2021 19:02:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0A3153A47BB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jun 2021 19:19:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231620AbhFKREB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Jun 2021 13:04:01 -0400
-Received: from mail-oi1-f175.google.com ([209.85.167.175]:38902 "EHLO
-        mail-oi1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231612AbhFKRDy (ORCPT
+        id S231497AbhFKRVB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Jun 2021 13:21:01 -0400
+Received: from mail-pg1-f176.google.com ([209.85.215.176]:41888 "EHLO
+        mail-pg1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231477AbhFKRVA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Jun 2021 13:03:54 -0400
-Received: by mail-oi1-f175.google.com with SMTP id q10so2213518oij.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Jun 2021 10:01:54 -0700 (PDT)
+        Fri, 11 Jun 2021 13:21:00 -0400
+Received: by mail-pg1-f176.google.com with SMTP id l184so2992244pgd.8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Jun 2021 10:19:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
+        d=chromium.org; s=google;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=wlmv1eeDkO2pPX/G2UzjbnzL6XKsZ2uz2UEOVRUZHw0=;
-        b=JOlmeybaAiKTguAC8h04H5GPTQztM5r5EkgKz2WeOU5nB5vyrzb88ea6a+QadTGMDA
-         gSksNtjVN/Kkg6t2TQpABVSjkt/10I4zDhDEjYOQDSaeylScvzyHCH0Bg7nS17OhfD3V
-         UsA3J54tChNLCWHHvQuNGnmg3rlj6TlyVwWxgQDINum1oIX1b1bMNUZ4FSvswRak3XSk
-         veWUaOjxlqe99aJxHYbaaMtjpQ0MDtirwDTVOlPgqfTZ2TfXLDrpFRdL8CufkFbTcdEx
-         4aHoe5xXfcjtN8ZFXh4jsdTzK5M1E71z3WvnXB+b3FN32OXhX9nPazwSjvnUXnNjKlRW
-         7Zdg==
+        bh=bGqrawxUpsnqnh4lvD03Kq0OsyoqtDN583sHe0giglI=;
+        b=D1M2GGqtwm+VzRKIqGGY/8NQjRldlVFMiQ1F4JG16K6FZXnKFxmqP8Y+crBI1UPTJI
+         2f483ECDJoMCFc29Ez0wYjkNMxzMP8pkVoUx4viiwNn0Mm5W3+urmqjTHE6o/L4mmshw
+         fwFMH1+cgcq5exG9KevZZjG50Q0nLHT8VZILc=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=wlmv1eeDkO2pPX/G2UzjbnzL6XKsZ2uz2UEOVRUZHw0=;
-        b=snSAwJAECsdqSw357waoPJjXzxdN+OdEcpdLYTgYqewnT0J5xZmOQyqziSsgoArfof
-         r7lu0F5AtXEopfQ8BbODtY71vMPwFiwKqMBOvfQO39RGM7iB4JSAOzHdbY7EC/hanQ1J
-         srNxco4tHVg3UzXiXM6ACec98hGY2SUBIDGlOyScy54z7/6v8Dl/y3R5kL3zmxKl0ou5
-         Z4SWueaZygc5C+Di9RjaCQXZK11jzQSh9IbmUnXz6/hKSkFdSWtOG2c2aAzSpoO1pKix
-         s9XpiHCNovO4vMa2cPXxRrQVX5rJ/anw3+vRg7BKgtZMB5jJG/GrKyNpZb0THVSEVcmO
-         gbBQ==
-X-Gm-Message-State: AOAM5328zddJzSv6/qg5BVHcjMyvIweMc1qU2/ao7+YRndtDg/suN5z7
-        pE7cfvmPZpDuUGRBft68VZW0eg==
-X-Google-Smtp-Source: ABdhPJxqxSQk3fRZ3w8ipJ2ez+mvQj/XlBEwseR+p2o9jOwwAK2/atzy23h4QQEcnR7cizU9Lo8BqQ==
-X-Received: by 2002:aca:3e89:: with SMTP id l131mr2998686oia.34.1623430854245;
-        Fri, 11 Jun 2021 10:00:54 -0700 (PDT)
-Received: from localhost.localdomain (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id p5sm1256302oip.35.2021.06.11.10.00.53
+        bh=bGqrawxUpsnqnh4lvD03Kq0OsyoqtDN583sHe0giglI=;
+        b=KFREIH2i1lMUYjAdaG03q9Q3CMQEpPyCSPMli5iuwUOykaMDK3j4amFhDMpjlhuL94
+         eLS2YHxWwxj/rMLHqzKj6ss4OAU042qq1xaeH4gTvt6woHEhKgykBZu5zkKtggUkEBw2
+         BVXu5aV7DO3FZgxEsJl/qX3KR+OM1f0D3YYCs5fWKkB2BVCekrg14gvEtiPyWlYiLFEV
+         AZvFWlOeDyt1KCuFfjpQTRkEygKpEuJD4wV1Bm//PYh28klLj69uJHwxDEMSKHGhmmc0
+         6Lvur1TgFq6YyDdOBVWsAHmsB3B3/8q60pp3hECRXgZOi8B9LQ/zPxWmGHZ3FNweEWco
+         /z0Q==
+X-Gm-Message-State: AOAM5339F0Xv6LFPyVwKKKC4cc8HfN50yLAvgwyyT9MS3sH0p3/XGOGK
+        afF8H/+i7l6bKJr8M32mCCJj9A==
+X-Google-Smtp-Source: ABdhPJyhK3UFVap6SNAmjYmqRvjoBHfJJ66xZGyfYe0VhgPy4vUp9L1xg+eY3XkovoqhJodL3yqj4g==
+X-Received: by 2002:a63:7404:: with SMTP id p4mr4608929pgc.405.1623431882034;
+        Fri, 11 Jun 2021 10:18:02 -0700 (PDT)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:202:201:4128:5428:5cd0:cfa5])
+        by smtp.gmail.com with ESMTPSA id f17sm5837850pgm.37.2021.06.11.10.18.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Jun 2021 10:00:53 -0700 (PDT)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
+        Fri, 11 Jun 2021 10:18:01 -0700 (PDT)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     Andrzej Hajda <a.hajda@samsung.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Sam Ravnborg <sam@ravnborg.org>
+Cc:     Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Thierry Reding <treding@nvidia.com>,
+        Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>,
+        Lyude Paul <lyude@redhat.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Steev Klimaszewski <steev@kali.org>,
+        Linus W <linus.walleij@linaro.org>, robdclark@chromium.org,
+        dri-devel@lists.freedesktop.org,
+        Douglas Anderson <dianders@chromium.org>,
+        Andy Gross <agross@kernel.org>,
         Daniel Vetter <daniel@ffwll.ch>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v2] drm/msm/dpu: Avoid ABBA deadlock between IRQ modules
-Date:   Fri, 11 Jun 2021 10:00:03 -0700
-Message-Id: <20210611170003.3539059-1-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.29.2
+        David Airlie <airlied@linux.ie>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Robert Foss <robert.foss@linaro.org>,
+        Sandeep Panda <spanda@codeaurora.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v10 00/11] drm: Fix EDID reading on ti-sn65dsi86 by introducing the DP AUX bus
+Date:   Fri, 11 Jun 2021 10:17:36 -0700
+Message-Id: <20210611171747.1263039-1-dianders@chromium.org>
+X-Mailer: git-send-email 2.32.0.272.g935e593368-goog
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Handling of the interrupt callback lists is done in dpu_core_irq.c,
-under the "cb_lock" spinlock. When these operations results in the need
-for enableing or disabling the IRQ in the hardware the code jumps to
-dpu_hw_interrupts.c, which protects its operations with "irq_lock"
-spinlock.
+The primary goal of this series is to try to properly fix EDID reading
+for eDP panels using the ti-sn65dsi86 bridge.
 
-When an interrupt fires, dpu_hw_intr_dispatch_irq() inspects the
-hardware state while holding the "irq_lock" spinlock and jumps to
-dpu_core_irq_callback_handler() to invoke the registered handlers, which
-traverses the callback list under the "cb_lock" spinlock.
+Previously we had a patch that added EDID reading but it turned out
+not to work at bootup. This caused some extra churn at bootup as we
+tried (and failed) to read the EDID several times and also ended up
+forcing us to use the hardcoded mode at boot. With this patch series I
+believe EDID reading is reliable at boot now and we never use the
+hardcoded mode.
 
-As such, in the event that these happens concurrently we'll end up with
-a deadlock.
+High level note: in this series the EDID reading is driven by the
+panel driver, not by the bridge chip driver. I believe this makes a
+reasonable amount of sense since the panel driver already _could_
+drive reading the EDID if provided with the DDC bus and in future
+planned work we'll want to give the panel driver the DDC bus (to make
+decisions based on EDID) and the AUX bus (to control the
+backlight). There are also planned patches from Laurent to make
+ti-sn65dsi86 able to drive full DP monitors. In that case the bridge
+chip will still be in charge of reading the EDID, but it's not hard to
+make this dynamic.
 
-Prior to '1c1e7763a6d4 ("drm/msm/dpu: simplify IRQ enabling/disabling")'
-the enable/disable of the hardware interrupt was done outside the
-"cb_lock" region, optimitically by using an atomic enable-counter for
-each interrupt and an warning print if someone changed the list between
-the atomic_read and the time the operation concluded.
+This series is the logical successor to the 3-part series containing
+the patch ("drm/bridge: ti-sn65dsi86: Properly get the EDID, but only
+if refclk") [1].
 
-Rather than re-introducing the large array of atomics, this change
-embraces the fact that dpu_core_irq and dpu_hw_interrupts are deeply
-entangled and make them share the single "irq_lock".
+This patch was tested against drm-misc-next commit f42498705965
+("drm/panfrost: Fix missing clk_disable_unprepare() on error in
+panfrost_clk_init()") on a sc7180-trogdor-lazor device.
 
-Following this step it's suggested that we squash the two parts into a
-single irq handling thing.
+At v10 now, this is ready to land and I plan to commit it shortly. All
+patches have reviews and Laurent has said over IRC he doesn't object
+it it landing.
 
-Fixes: 1c1e7763a6d4 ("drm/msm/dpu: simplify IRQ enabling/disabling")
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
+Between v2 and v3, high-level view of changes:
+- stop doing the EDID caching in the core.
 
-Changes since v1:
-- Make dpu_core_irq use dpu_hw_interrupts' irq_lock instead of adding another
-  mutex.
+Between v3 and v4, high-level view of changes:
+- EDID reading is actually driven by the panel driver now. See above.
+- Lots of chicken-and-egg problems solved w/ sub-devices.
 
- drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.c  | 27 ++++-----
- .../gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c | 60 +++++++++++--------
- .../gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h | 20 ++++++-
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h       |  2 -
- 4 files changed, 63 insertions(+), 46 deletions(-)
+Between v4 and v5, high-level view of changes.
+- Some of the early patches landed, so dropped from series.
+- New pm_runtime_disable() fix (fixed a patch that already landed).
+- Added Bjorn's tags to most patches
+- Fixed problems when building as a module.
+- Reordered debugfs patch and fixed error handling there.
+- Dropped last patch. I'm not convinced it's safe w/out more work.
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.c
-index 4f110c428b60..18557b9713b6 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.c
-@@ -22,7 +22,6 @@ static void dpu_core_irq_callback_handler(void *arg, int irq_idx)
- 	struct dpu_kms *dpu_kms = arg;
- 	struct dpu_irq *irq_obj = &dpu_kms->irq_obj;
- 	struct dpu_irq_callback *cb;
--	unsigned long irq_flags;
- 
- 	pr_debug("irq_idx=%d\n", irq_idx);
- 
-@@ -34,11 +33,9 @@ static void dpu_core_irq_callback_handler(void *arg, int irq_idx)
- 	/*
- 	 * Perform registered function callback
- 	 */
--	spin_lock_irqsave(&dpu_kms->irq_obj.cb_lock, irq_flags);
- 	list_for_each_entry(cb, &irq_obj->irq_cb_tbl[irq_idx], list)
- 		if (cb->func)
- 			cb->func(cb->arg, irq_idx);
--	spin_unlock_irqrestore(&dpu_kms->irq_obj.cb_lock, irq_flags);
- }
- 
- u32 dpu_core_irq_read(struct dpu_kms *dpu_kms, int irq_idx, bool clear)
-@@ -82,22 +79,21 @@ int dpu_core_irq_register_callback(struct dpu_kms *dpu_kms, int irq_idx,
- 
- 	DPU_DEBUG("[%pS] irq_idx=%d\n", __builtin_return_address(0), irq_idx);
- 
--	spin_lock_irqsave(&dpu_kms->irq_obj.cb_lock, irq_flags);
-+	irq_flags = dpu_kms->hw_intr->ops.lock(dpu_kms->hw_intr);
- 	trace_dpu_core_irq_register_callback(irq_idx, register_irq_cb);
- 	list_del_init(&register_irq_cb->list);
- 	list_add_tail(&register_irq_cb->list,
- 			&dpu_kms->irq_obj.irq_cb_tbl[irq_idx]);
- 	if (list_is_first(&register_irq_cb->list,
- 			&dpu_kms->irq_obj.irq_cb_tbl[irq_idx])) {
--		int ret = dpu_kms->hw_intr->ops.enable_irq(
-+		int ret = dpu_kms->hw_intr->ops.enable_irq_locked(
- 				dpu_kms->hw_intr,
- 				irq_idx);
- 		if (ret)
- 			DPU_ERROR("Fail to enable IRQ for irq_idx:%d\n",
- 					irq_idx);
- 	}
--
--	spin_unlock_irqrestore(&dpu_kms->irq_obj.cb_lock, irq_flags);
-+	dpu_kms->hw_intr->ops.unlock(dpu_kms->hw_intr, irq_flags);
- 
- 	return 0;
- }
-@@ -127,12 +123,12 @@ int dpu_core_irq_unregister_callback(struct dpu_kms *dpu_kms, int irq_idx,
- 
- 	DPU_DEBUG("[%pS] irq_idx=%d\n", __builtin_return_address(0), irq_idx);
- 
--	spin_lock_irqsave(&dpu_kms->irq_obj.cb_lock, irq_flags);
-+	irq_flags = dpu_kms->hw_intr->ops.lock(dpu_kms->hw_intr);
- 	trace_dpu_core_irq_unregister_callback(irq_idx, register_irq_cb);
- 	list_del_init(&register_irq_cb->list);
- 	/* empty callback list but interrupt is still enabled */
- 	if (list_empty(&dpu_kms->irq_obj.irq_cb_tbl[irq_idx])) {
--		int ret = dpu_kms->hw_intr->ops.disable_irq(
-+		int ret = dpu_kms->hw_intr->ops.disable_irq_locked(
- 				dpu_kms->hw_intr,
- 				irq_idx);
- 		if (ret)
-@@ -140,7 +136,7 @@ int dpu_core_irq_unregister_callback(struct dpu_kms *dpu_kms, int irq_idx,
- 					irq_idx);
- 		DPU_DEBUG("irq_idx=%d ret=%d\n", irq_idx, ret);
- 	}
--	spin_unlock_irqrestore(&dpu_kms->irq_obj.cb_lock, irq_flags);
-+	dpu_kms->hw_intr->ops.unlock(dpu_kms->hw_intr, irq_flags);
- 
- 	return 0;
- }
-@@ -164,7 +160,8 @@ static void dpu_disable_all_irqs(struct dpu_kms *dpu_kms)
- #ifdef CONFIG_DEBUG_FS
- static int dpu_debugfs_core_irq_show(struct seq_file *s, void *v)
- {
--	struct dpu_irq *irq_obj = s->private;
-+	struct dpu_kms *dpu_kms = s->private;
-+	struct dpu_irq *irq_obj = &dpu_kms->irq_obj;
- 	struct dpu_irq_callback *cb;
- 	unsigned long irq_flags;
- 	int i, irq_count, cb_count;
-@@ -173,12 +170,12 @@ static int dpu_debugfs_core_irq_show(struct seq_file *s, void *v)
- 		return 0;
- 
- 	for (i = 0; i < irq_obj->total_irqs; i++) {
--		spin_lock_irqsave(&irq_obj->cb_lock, irq_flags);
-+		irq_flags = dpu_kms->hw_intr->ops.lock(dpu_kms->hw_intr);
- 		cb_count = 0;
- 		irq_count = atomic_read(&irq_obj->irq_counts[i]);
- 		list_for_each_entry(cb, &irq_obj->irq_cb_tbl[i], list)
- 			cb_count++;
--		spin_unlock_irqrestore(&irq_obj->cb_lock, irq_flags);
-+		dpu_kms->hw_intr->ops.unlock(dpu_kms->hw_intr, irq_flags);
- 
- 		if (irq_count || cb_count)
- 			seq_printf(s, "idx:%d irq:%d cb:%d\n",
-@@ -193,7 +190,7 @@ DEFINE_SHOW_ATTRIBUTE(dpu_debugfs_core_irq);
- void dpu_debugfs_core_irq_init(struct dpu_kms *dpu_kms,
- 		struct dentry *parent)
- {
--	debugfs_create_file("core_irq", 0600, parent, &dpu_kms->irq_obj,
-+	debugfs_create_file("core_irq", 0600, parent, dpu_kms,
- 		&dpu_debugfs_core_irq_fops);
- }
- #endif
-@@ -207,8 +204,6 @@ void dpu_core_irq_preinstall(struct dpu_kms *dpu_kms)
- 	dpu_disable_all_irqs(dpu_kms);
- 	pm_runtime_put_sync(&dpu_kms->pdev->dev);
- 
--	spin_lock_init(&dpu_kms->irq_obj.cb_lock);
--
- 	/* Create irq callbacks for all possible irq_idx */
- 	dpu_kms->irq_obj.total_irqs = dpu_kms->hw_intr->total_irqs;
- 	dpu_kms->irq_obj.irq_cb_tbl = kcalloc(dpu_kms->irq_obj.total_irqs,
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
-index bf9a147ac245..996011e356f7 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
-@@ -211,10 +211,9 @@ static void dpu_hw_intr_dispatch_irq(struct dpu_hw_intr *intr,
- 	spin_unlock_irqrestore(&intr->irq_lock, irq_flags);
- }
- 
--static int dpu_hw_intr_enable_irq(struct dpu_hw_intr *intr, int irq_idx)
-+static int dpu_hw_intr_enable_irq_locked(struct dpu_hw_intr *intr, int irq_idx)
- {
- 	int reg_idx;
--	unsigned long irq_flags;
- 	const struct dpu_intr_reg *reg;
- 	const char *dbgstr = NULL;
- 	uint32_t cache_irq_mask;
-@@ -227,10 +226,16 @@ static int dpu_hw_intr_enable_irq(struct dpu_hw_intr *intr, int irq_idx)
- 		return -EINVAL;
- 	}
- 
-+	/*
-+	 * The cache_irq_mask and hardware RMW operations needs to be done
-+	 * under irq_lock and it's the caller's responsibility to ensure that's
-+	 * held.
-+	 */
-+	assert_spin_locked(&intr->irq_lock);
-+
- 	reg_idx = DPU_IRQ_REG(irq_idx);
- 	reg = &dpu_intr_set[reg_idx];
- 
--	spin_lock_irqsave(&intr->irq_lock, irq_flags);
- 	cache_irq_mask = intr->cache_irq_mask[reg_idx];
- 	if (cache_irq_mask & DPU_IRQ_MASK(irq_idx)) {
- 		dbgstr = "DPU IRQ already set:";
-@@ -248,7 +253,6 @@ static int dpu_hw_intr_enable_irq(struct dpu_hw_intr *intr, int irq_idx)
- 
- 		intr->cache_irq_mask[reg_idx] = cache_irq_mask;
- 	}
--	spin_unlock_irqrestore(&intr->irq_lock, irq_flags);
- 
- 	pr_debug("%s MASK:0x%.8lx, CACHE-MASK:0x%.8x\n", dbgstr,
- 			DPU_IRQ_MASK(irq_idx), cache_irq_mask);
-@@ -256,7 +260,7 @@ static int dpu_hw_intr_enable_irq(struct dpu_hw_intr *intr, int irq_idx)
- 	return 0;
- }
- 
--static int dpu_hw_intr_disable_irq_nolock(struct dpu_hw_intr *intr, int irq_idx)
-+static int dpu_hw_intr_disable_irq_locked(struct dpu_hw_intr *intr, int irq_idx)
- {
- 	int reg_idx;
- 	const struct dpu_intr_reg *reg;
-@@ -271,6 +275,13 @@ static int dpu_hw_intr_disable_irq_nolock(struct dpu_hw_intr *intr, int irq_idx)
- 		return -EINVAL;
- 	}
- 
-+	/*
-+	 * The cache_irq_mask and hardware RMW operations needs to be done
-+	 * under irq_lock and it's the caller's responsibility to ensure that's
-+	 * held.
-+	 */
-+	assert_spin_locked(&intr->irq_lock);
-+
- 	reg_idx = DPU_IRQ_REG(irq_idx);
- 	reg = &dpu_intr_set[reg_idx];
- 
-@@ -298,25 +309,6 @@ static int dpu_hw_intr_disable_irq_nolock(struct dpu_hw_intr *intr, int irq_idx)
- 	return 0;
- }
- 
--static int dpu_hw_intr_disable_irq(struct dpu_hw_intr *intr, int irq_idx)
--{
--	unsigned long irq_flags;
--
--	if (!intr)
--		return -EINVAL;
--
--	if (irq_idx < 0 || irq_idx >= intr->total_irqs) {
--		pr_err("invalid IRQ index: [%d]\n", irq_idx);
--		return -EINVAL;
--	}
--
--	spin_lock_irqsave(&intr->irq_lock, irq_flags);
--	dpu_hw_intr_disable_irq_nolock(intr, irq_idx);
--	spin_unlock_irqrestore(&intr->irq_lock, irq_flags);
--
--	return 0;
--}
--
- static int dpu_hw_intr_clear_irqs(struct dpu_hw_intr *intr)
- {
- 	int i;
-@@ -388,14 +380,30 @@ static u32 dpu_hw_intr_get_interrupt_status(struct dpu_hw_intr *intr,
- 	return intr_status;
- }
- 
-+static unsigned long dpu_hw_intr_lock(struct dpu_hw_intr *intr)
-+{
-+	unsigned long irq_flags;
-+
-+	spin_lock_irqsave(&intr->irq_lock, irq_flags);
-+
-+	return irq_flags;
-+}
-+
-+static void dpu_hw_intr_unlock(struct dpu_hw_intr *intr, unsigned long irq_flags)
-+{
-+	spin_unlock_irqrestore(&intr->irq_lock, irq_flags);
-+}
-+
- static void __setup_intr_ops(struct dpu_hw_intr_ops *ops)
- {
--	ops->enable_irq = dpu_hw_intr_enable_irq;
--	ops->disable_irq = dpu_hw_intr_disable_irq;
-+	ops->enable_irq_locked = dpu_hw_intr_enable_irq_locked;
-+	ops->disable_irq_locked = dpu_hw_intr_disable_irq_locked;
- 	ops->dispatch_irqs = dpu_hw_intr_dispatch_irq;
- 	ops->clear_all_irqs = dpu_hw_intr_clear_irqs;
- 	ops->disable_all_irqs = dpu_hw_intr_disable_irqs;
- 	ops->get_interrupt_status = dpu_hw_intr_get_interrupt_status;
-+	ops->lock = dpu_hw_intr_lock;
-+	ops->unlock = dpu_hw_intr_unlock;
- }
- 
- static void __intr_offset(struct dpu_mdss_cfg *m,
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h
-index 0073d32effc5..d90dac77c26f 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h
-@@ -46,7 +46,7 @@ struct dpu_hw_intr_ops {
- 	 * @irq_idx:	Lookup irq index return from irq_idx_lookup
- 	 * @return:	0 for success, otherwise failure
- 	 */
--	int (*enable_irq)(
-+	int (*enable_irq_locked)(
- 			struct dpu_hw_intr *intr,
- 			int irq_idx);
- 
-@@ -56,7 +56,7 @@ struct dpu_hw_intr_ops {
- 	 * @irq_idx:	Lookup irq index return from irq_idx_lookup
- 	 * @return:	0 for success, otherwise failure
- 	 */
--	int (*disable_irq)(
-+	int (*disable_irq_locked)(
- 			struct dpu_hw_intr *intr,
- 			int irq_idx);
- 
-@@ -101,6 +101,22 @@ struct dpu_hw_intr_ops {
- 			struct dpu_hw_intr *intr,
- 			int irq_idx,
- 			bool clear);
-+
-+	/**
-+	 * lock - take the IRQ lock
-+	 * @intr:	HW interrupt handle
-+	 * @return:	irq_flags for the taken spinlock
-+	 */
-+	unsigned long (*lock)(
-+			struct dpu_hw_intr *intr);
-+
-+	/**
-+	 * unlock - take the IRQ lock
-+	 * @intr:	HW interrupt handle
-+	 * @irq_flags:  the irq_flags returned from lock
-+	 */
-+	void (*unlock)(
-+			struct dpu_hw_intr *intr, unsigned long irq_flags);
- };
- 
- /**
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
-index f6840b1af6e4..3034da1d2977 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
-@@ -82,14 +82,12 @@ struct dpu_irq_callback {
-  * struct dpu_irq: IRQ structure contains callback registration info
-  * @total_irq:    total number of irq_idx obtained from HW interrupts mapping
-  * @irq_cb_tbl:   array of IRQ callbacks setting
-- * @cb_lock:      callback lock
-  * @debugfs_file: debugfs file for irq statistics
-  */
- struct dpu_irq {
- 	u32 total_irqs;
- 	struct list_head *irq_cb_tbl;
- 	atomic_t *irq_counts;
--	spinlock_t cb_lock;
- };
- 
- struct dpu_kms {
+Between v5 and v6, high-level view of changes:
+- Added the patch ("drm/dp: Allow an early call to register DDC i2c
+  bus")
+- Many patches had been landed, so only a few "controversial" ones
+  left.
+
+Between v6 and v7, high-level view of changes:
+- New AUX DP bus!
+
+Between v7 and v8, high-level view of changes:
+- More bindings work.
+- Fixed allmodconfig.
+
+Between v8 and v9, high-level view of changes:
+- Fixed error/remove in panel.
+- Properly handle of_node in sub-devices in sn65dsi86.
+- Tiny bindings touchup including dropping "Example" patch.
+- Added review tags.
+- Added error message cleanup patch at the end.
+- First patch (bugfix) dropped (it landed).
+
+Between v9 and v10, high-level view of changes:
+- Review/Ack tags added.
+- Check memory allocation result.
+
+[1] https://lore.kernel.org/r/20210304155144.3.I60a7fb23ce4589006bc95c64ab8d15c74b876e68@changeid/
+
+Changes in v10:
+- Error-check kzalloc
+
+Changes in v9:
+- ("Improve probe errors") patch new for v9.
+- Commit message now notes aux-bus yaml won't have an "Example".
+- Fix error handling / remove case when using AUX bus for DDC.
+- Properly set the of_node of sn65dsi86 auxbus devices now.
+- Rebased atop v9 ("Promote the AUX channel") patch.
+- Use an absolute path to refer to aux-bus schema.
+
+Changes in v8:
+- Allow dp-aux-bus to be a module to fix allmodconfig builds
+- Explain better why HPD needs to be in panel-simple in commit msg.
+- Separate DP AUX bus binding is new for v8.
+- ti-sn65dsi86 references the new aux bus bindings.
+
+Changes in v7:
+- Adjusted commit message to talk about DP AUX bus.
+- Beefed up commit message in context of the DP AUX bus.
+- List hpd properties bindings patch new for v7.
+- Panel now under bridge chip instead of getting a link to ddc-i2c
+- Patch introducing the DP AUX bus is new for v7.
+- Patch to allow panel-simple to be DP AUX EP new for v7.
+- Patch to support for DP AUX bus on ti-sn65dsi86 new for v7.
+- Patch using the DP AUX for DDC new for v7.
+- Remove use of now-dropped drm_dp_aux_register_ddc() call.
+- Set the proper sub-device "dev" pointer in the AUX structure.
+- ti-sn65dsi86: Add aux-bus child patch new for v7.
+
+Changes in v6:
+- Use new drm_dp_aux_register_ddc() calls.
+
+Douglas Anderson (11):
+  dt-bindings: display: simple: List hpd properties in panel-simple
+  dt-bindings: drm: Introduce the DP AUX bus
+  dt-bindings: drm/bridge: ti-sn65dsi86: Add aux-bus child
+  drm: Introduce the DP AUX bus
+  drm/panel: panel-simple: Allow panel-simple be a DP AUX endpoint
+    device
+  drm/panel: panel-simple: Stash DP AUX bus; allow using it for DDC
+  drm/bridge: ti-sn65dsi86: Promote the AUX channel to its own sub-dev
+  drm/bridge: ti-sn65dsi86: Add support for the DP AUX bus
+  drm/bridge: ti-sn65dsi86: Don't read EDID blob over DDC
+  drm/bridge: ti-sn65dsi86: Improve probe errors with dev_err_probe()
+  arm64: dts: qcom: sc7180-trogdor: Move panel under the bridge chip
+
+ .../bindings/display/bridge/ti,sn65dsi86.yaml |  20 +-
+ .../bindings/display/dp-aux-bus.yaml          |  37 ++
+ .../bindings/display/panel/panel-simple.yaml  |   2 +
+ arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi  |  30 +-
+ drivers/gpu/drm/Kconfig                       |   5 +
+ drivers/gpu/drm/Makefile                      |   2 +
+ drivers/gpu/drm/bridge/Kconfig                |   1 +
+ drivers/gpu/drm/bridge/ti-sn65dsi86.c         | 129 +++----
+ drivers/gpu/drm/drm_dp_aux_bus.c              | 328 ++++++++++++++++++
+ drivers/gpu/drm/panel/Kconfig                 |   1 +
+ drivers/gpu/drm/panel/panel-simple.c          |  68 +++-
+ include/drm/drm_dp_aux_bus.h                  |  57 +++
+ 12 files changed, 596 insertions(+), 84 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/display/dp-aux-bus.yaml
+ create mode 100644 drivers/gpu/drm/drm_dp_aux_bus.c
+ create mode 100644 include/drm/drm_dp_aux_bus.h
+
 -- 
-2.29.2
+2.32.0.272.g935e593368-goog
 
