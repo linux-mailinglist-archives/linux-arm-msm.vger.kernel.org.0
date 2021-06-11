@@ -2,123 +2,248 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A3A5E3A390A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jun 2021 02:54:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0E7BB3A39B5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jun 2021 04:26:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231140AbhFKA42 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Jun 2021 20:56:28 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:32015 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231192AbhFKA42 (ORCPT
+        id S231491AbhFKC2I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Jun 2021 22:28:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34824 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231447AbhFKC2H (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Jun 2021 20:56:28 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1623372871; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=dcfJebiUK44kAjvGVha7ugPfEUhpoyAPBqW17zs14Co=;
- b=RUzeZI8uduZGWl1MeLgveqgSa6V/r9h48oGULm+6WUiKkYQK0WZIi01Db4zqa5Z8yMl2+cgK
- 4OR8TQ6wOlpt5YpTVSmP47IlxaERPqRXpMGUPusyyK+475O/l2PyktbnZorsZGX0UZdNzCBh
- 5fIaoc5L4bWgJ0kR//cBxkTHv5U=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
- 60c2b42fabfd22a3dca34415 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 11 Jun 2021 00:54:07
- GMT
-Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 142B1C4360C; Fri, 11 Jun 2021 00:54:07 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5D9D1C4338A;
-        Fri, 11 Jun 2021 00:54:06 +0000 (UTC)
+        Thu, 10 Jun 2021 22:28:07 -0400
+Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com [IPv6:2607:f8b0:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FEF7C061574
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Jun 2021 19:25:57 -0700 (PDT)
+Received: by mail-ot1-x32c.google.com with SMTP id 102-20020a9d0eef0000b02903fccc5b733fso1740208otj.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Jun 2021 19:25:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=IjaHeZmvkpeFh6CIfGhXwuSQrGCOdALjcUAdiW8WWjU=;
+        b=E25Jh+rCQJyItREai2cRgb2J7R0Ev1dQp5dFjeAHzXlTacCQbjNGk0qfn7EPM0nlBk
+         hgfQqzTqhtG0XnL4gQjZah4JG8VQF8LAtppcLhE6cn2YNIahQbArzjF7wRJ3J2UsfXme
+         T9pSVFzQZoIbu0V+FOqYWwoKTsv13aBxM12vnm4+8pua8IEBAZQRM0i8n6flrHrik92H
+         2T0monIFdXDRe8t0z+KaBLLY2mmk1o268DMLjuLqUcAGeqS63pMVfA5Pujg+Nf/ehNpR
+         BydTl3tiSCrvruHINMwLtZRLoyhg0CqlOk+3/amD0xnEXPEpKRHGTAh/Ybm+nC6G3sZr
+         Stzg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=IjaHeZmvkpeFh6CIfGhXwuSQrGCOdALjcUAdiW8WWjU=;
+        b=FgxJUU8QVgcAT5MFxOBItXRKZWX4NUKA5axSnDBiH3RgAt7PTLm0EafP0sI06AODZn
+         2FZO9x83F6URsHVzwHgXA6aozpmEUxzNI8wIyIg2z+oRkmq3L+VqkCm60RnbdHvwXECm
+         xhm209QOHt6azscIWgVdEqFV7FJzbIhOD+nuudm4idJJBJt7MibdRiwFOXam4CN/4TRk
+         rDQa/L/aX5cKVxqpcWHT/chUVr0JSmZcpq5GsMKwVeHX+3m2fDbyZv+Br6ZmhsmY+tjr
+         iK8DhGQv6vsWkY46LNFLGLDB3oGgZL5MpK0n1WOIJNZCyBdUxHPwjLxH5rlgfvdWaM3x
+         GcWw==
+X-Gm-Message-State: AOAM5337DeotNFN72f6v3PuwbCEKsdni3DzEPaMTzpRxvfGjppxXfJyl
+        /J2doo2HsBni8s7iDoqcuGHs1g==
+X-Google-Smtp-Source: ABdhPJyH9UXs091VevqePZMC9ooFDYkYXbSPKywR4X4SSB7g9iwor+mOFv6s8k0fSAczLDFlO7F+fg==
+X-Received: by 2002:a9d:589:: with SMTP id 9mr1051074otd.65.1623378356510;
+        Thu, 10 Jun 2021 19:25:56 -0700 (PDT)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id x2sm878974oog.10.2021.06.10.19.25.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 10 Jun 2021 19:25:56 -0700 (PDT)
+Date:   Thu, 10 Jun 2021 21:25:54 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
+        bhupesh.linux@gmail.com
+Subject: Re: [PATCH 8/8] arm64: dts: qcom: sa8155p-adp: Add base dts file
+Message-ID: <YMLJsieGd+G+/kxK@builder.lan>
+References: <20210607113840.15435-1-bhupesh.sharma@linaro.org>
+ <20210607113840.15435-9-bhupesh.sharma@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Fri, 11 Jun 2021 06:24:06 +0530
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Krishna Reddy <vdumpa@nvidia.com>
-Cc:     Robin Murphy <robin.murphy@arm.com>, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, iommu@lists.linux-foundation.org,
-        Will Deacon <will@kernel.org>,
-        linux-arm-kernel@lists.infradead.org,
-        Thierry Reding <treding@nvidia.com>
-Subject: Re: [PATCH] iommu/io-pgtable-arm: Optimize partial walk flush for
- large scatter-gather list
-In-Reply-To: <BY5PR12MB37646698F37C00381EFF7C77B3349@BY5PR12MB3764.namprd12.prod.outlook.com>
-References: <20210609145315.25750-1-saiprakash.ranjan@codeaurora.org>
- <dbcd394a-4d85-316c-5dd0-033546a66132@arm.com>
- <c600e9b2534d54082a5272b508a7985f@codeaurora.org>
- <35bfd245-45e2-8083-b620-330d6dbd7bd7@arm.com>
- <12067ffb8243b220cf03e83aaac3e823@codeaurora.org>
- <266f190e-99ae-9175-cf13-7a77730af389@arm.com>
- <dfdabcdec99a4c6e3bf2b3c5eebe067f@codeaurora.org>
- <61c69d23-324a-85d7-2458-dfff8df9280b@arm.com>
- <BY5PR12MB37646698F37C00381EFF7C77B3349@BY5PR12MB3764.namprd12.prod.outlook.com>
-Message-ID: <07001b4ed6c0a491eacce6e4dc13ab5e@codeaurora.org>
-X-Sender: saiprakash.ranjan@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210607113840.15435-9-bhupesh.sharma@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Krishna,
+On Mon 07 Jun 06:38 CDT 2021, Bhupesh Sharma wrote:
 
-On 2021-06-11 06:07, Krishna Reddy wrote:
->> > No, the unmap latency is not just in some test case written, the issue
->> > is very real and we have workloads where camera is reporting frame
->> > drops because of this unmap latency in the order of 100s of milliseconds.
->> > And hardware team recommends using ASID based invalidations for
->> > anything larger than 128 TLB entries. So yes, we have taken note of
->> > impacts here before going this way and hence feel more inclined to
->> > make this qcom specific if required.
+> Add base DTS file for sa8155p-adp and enable boot to console,
+
+Please spell out "sa8155-adp", i.e. "Add base DTS for SA8155p Automotive
+Development Platform."
+
+> tlmm reserved range and also include pmic file(s).
 > 
-> Seems like the real issue here is not the unmap API latency.
-> It should be the high number of back to back SMMU TLB invalidate
-> register writes that is resulting
-> in lower ISO BW to Camera and overflow. Isn't it?
-> Even Tegra186 SoC has similar issue and HW team recommended to rate
-> limit the number of
-> back to back SMMU tlb invalidate registers writes. The subsequent
-> Tegra194 SoC has a dedicated SMMU for
-> ISO clients to avoid the impact of TLB invalidates from NISO clients on 
-> ISO BW.
+> SA8155p-adp board is based on sm8150 Qualcomm Snapdragon SoC.
 > 
 
-Not exactly, this issue is not specific to camera. If you look at
-the numbers in the commit text, even for the test device its the
-same observation. It depends on the buffer size we are unmapping
-which affects the number of TLBIs issue. I am not aware of any
-such HW side bw issues for camera specifically on QCOM devices.
+It's not based on sm8150, it's based on sa8155p, so let's express this
+as "The SA8155p platform is similar to the SM8150, so use this as base
+for now", to document why we decided to do this.
+
+> Cc: Linus Walleij <linus.walleij@linaro.org>
+> Cc: Liam Girdwood <lgirdwood@gmail.com>
+> Cc: Mark Brown <broonie@kernel.org>
+> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Cc: Vinod Koul <vkoul@kernel.org>
+> Cc: Rob Herring <robh+dt@kernel.org>
+> Cc: Andy Gross <agross@kernel.org>
+> Cc: devicetree@vger.kernel.org
+> Cc: linux-kernel@vger.kernel.org
+> Cc: linux-gpio@vger.kernel.org
+> Cc: bhupesh.linux@gmail.com
+
+This would go into the git history as "I specifically asked for input
+from these people", so please keep this list shorter (but for a change
+like this it's probably better to omit it completely)
+
+> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+> ---
+>  arch/arm64/boot/dts/qcom/Makefile        |   1 +
+>  arch/arm64/boot/dts/qcom/sa8155p-adp.dts | 363 +++++++++++++++++++++++
+>  2 files changed, 364 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/sa8155p-adp.dts
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> index 456502aeee49..38d3a4728871 100644
+> --- a/arch/arm64/boot/dts/qcom/Makefile
+> +++ b/arch/arm64/boot/dts/qcom/Makefile
+> @@ -71,6 +71,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-xiaomi-beryllium.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sdm850-lenovo-yoga-c630.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sm8150-hdk.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sm8150-mtp.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)	+= sa8155p-adp.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sm8250-hdk.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sm8250-mtp.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sm8350-hdk.dtb
+> diff --git a/arch/arm64/boot/dts/qcom/sa8155p-adp.dts b/arch/arm64/boot/dts/qcom/sa8155p-adp.dts
+> new file mode 100644
+> index 000000000000..470d740e060a
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/sa8155p-adp.dts
+> @@ -0,0 +1,363 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * Copyright (c) 2021, Linaro Limited
+> + */
+> +
+> +/dts-v1/;
+> +
+> +#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+> +#include <dt-bindings/gpio/gpio.h>
+> +#include "sm8150.dtsi"
+> +#include "pmm8155au_1.dtsi"
+> +#include "pmm8155au_2.dtsi"
+> +
+> +/ {
+> +	model = "Qualcomm Technologies, Inc. SA8155P ADP";
+> +	compatible = "qcom,sa8155p-adp";
+> +
+> +	aliases {
+> +		serial0 = &uart2;
+> +	};
+> +
+> +	chosen {
+> +		stdout-path = "serial0:115200n8";
+> +	};
+> +
+> +	vreg_3p3: vreg_3p3_regulator {
+> +		compatible = "regulator-fixed";
+> +		regulator-name = "vreg_3p3";
+> +		regulator-min-microvolt = <3300000>;
+> +		regulator-max-microvolt = <3300000>;
+> +	};
+> +
+> +	/*
+> +	 * Apparently RPMh does not provide support for PM8150 S4 because it
+> +	 * is always-on; model it as a fixed regulator.
+> +	 */
+
+You can reduce this to
+
+	/* S4A is always on and not controllable through RPMh */
+
+> +	vreg_s4a_1p8: smps4 {
+> +		compatible = "regulator-fixed";
+> +		regulator-name = "vreg_s4a_1p8";
+> +
+> +		regulator-min-microvolt = <1800000>;
+> +		regulator-max-microvolt = <1800000>;
+> +
+> +		regulator-always-on;
+> +		regulator-boot-on;
+> +
+> +		vin-supply = <&vreg_3p3>;
+> +	};
+> +};
+> +
+> +&apps_rsc {
+> +	pmm8155au-1-rpmh-regulators {
+> +		compatible = "qcom,pmm8155au-1-rpmh-regulators";
+> +		qcom,pmic-id = "a";
+> +
+> +		vdd-s1-supply = <&vreg_3p3>;
+> +		vdd-s2-supply = <&vreg_3p3>;
+> +		vdd-s3-supply = <&vreg_3p3>;
+> +		vdd-s4-supply = <&vreg_3p3>;
+> +		vdd-s5-supply = <&vreg_3p3>;
+> +		vdd-s6-supply = <&vreg_3p3>;
+> +		vdd-s7-supply = <&vreg_3p3>;
+> +		vdd-s8-supply = <&vreg_3p3>;
+> +		vdd-s9-supply = <&vreg_3p3>;
+> +		vdd-s10-supply = <&vreg_3p3>;
+> +
+> +		vdd-l1-l8-l11-supply = <&vreg_s6a_0p92>;
+> +		vdd-l2-l10-supply = <&vreg_3p3>;
+> +		vdd-l3-l4-l5-l18-supply = <&vreg_s6a_0p92>;
+> +		vdd-l6-l9-supply = <&vreg_s6a_0p92>;
+> +		vdd-l7-l12-l14-l15-supply = <&vreg_s5a_2p04>;
+> +		vdd-l13-l16-l17-supply = <&vreg_3p3>;
+> +
+> +		vreg_s5a_2p04: smps5 {
+> +			regulator-min-microvolt = <1904000>;
+> +			regulator-max-microvolt = <2000000>;
+> +		};
+> +
+> +		vreg_s6a_0p92: smps6 {
+> +			regulator-min-microvolt = <920000>;
+> +			regulator-max-microvolt = <1128000>;
+> +		};
+> +
+> +		vdda_wcss_pll:
+
+This is the "label" of the pad which the regulator typically is
+connected to (rather than a denotion of which regulator it is). So even
+though we have these in some of the other boards, I would prefer if you
+skip them and only use the vreg_xyz_abc variant.
+
+> +		vreg_l1a_0p752: ldo1 {
+> +			regulator-min-microvolt = <752000>;
+> +			regulator-max-microvolt = <752000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+[..]
+> +&usb_1_dwc3 {
+> +	dr_mode = "peripheral";
+
+We have enough pieces to handle mode switching on this platform, but as
+discussed, lets leave it as "peripheral" until your local setup is back
+online.
 
 Thanks,
-Sai
+Bjorn
 
->>> Thinking some more, I
->>> wonder if the Tegra folks might have an opinion to add here, given
->>> that their multiple-SMMU solution was seemingly about trying to get
->>> enough TLB and pagetable walk bandwidth in the first place?
+> +};
+> +
+> +&qupv3_id_1 {
+> +	status = "okay";
+> +};
+> -- 
+> 2.31.1
 > 
-> While it is good to reduce the number of tlb register writes, Flushing
-> all TLB entries at context granularity arbitrarily
-> can have negative impact on active traffic and BW. I don't have much
-> data on possible impact at this point.
-> Can the flushing at context granularity be made a quirk than
-> performing it as default?
-> 
-> -KR
-
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
-member
-of Code Aurora Forum, hosted by The Linux Foundation
