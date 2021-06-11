@@ -2,89 +2,234 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5D9E13A3C09
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jun 2021 08:31:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C409B3A3C4A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Jun 2021 08:52:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230406AbhFKGdS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Jun 2021 02:33:18 -0400
-Received: from mail.kernel.org ([198.145.29.99]:56116 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229584AbhFKGdS (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Jun 2021 02:33:18 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 511E761285;
-        Fri, 11 Jun 2021 06:31:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1623393081;
-        bh=PfVeZdUzqyZAR9tvZcZMZCoLd7mr/+lgF4tzHnZz75A=;
-        h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
-        b=CLNlkAF9ElMfjXC2ffx+zqz2KN1seF2OP+wocbO4/hd6/GU6tDSmXZg5B6l1vcpco
-         sYrJ5xQ7KCZvs7d4OAa1T5qgW37KILlgETMZjphZvawdF352114lFkFryW7XpShplP
-         LhaJl6tM7qWfMusY9qoXqo5VdxZ40RzDizjil2WfLYAg8L8b/bwSJdYxDmE9zrMgQU
-         ZLCMW94HVa07XaWPzOLROIH2fimuVng6JrRx6FOMR1aQ6Bq5rKoIZEe5g2VPHlvZ7f
-         G/qvFJ5nBBqq00fRgsJGoVSDQaT6dIsFgA/SZvog4a6rqunoPa+bUVQ+8DVL0OXOIO
-         3SYOjj79ECoug==
-From:   Felipe Balbi <balbi@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Felipe Balbi <felipe.balbi@microsoft.com>
-Subject: Re: [PATCH v2] arm64: dts: qcom: add initial device-tree for
- Microsoft Surface Duo
-In-Reply-To: <YMI5F5cskjXuCcwm@builder.lan>
-References: <20210603122923.1919624-1-balbi@kernel.org>
- <875yyl28bp.fsf@kernel.org> <YMI5F5cskjXuCcwm@builder.lan>
-Date:   Fri, 11 Jun 2021 09:30:38 +0300
-Message-ID: <87zgvwzze9.fsf@kernel.org>
+        id S230392AbhFKGyU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Jun 2021 02:54:20 -0400
+Received: from mail-pj1-f52.google.com ([209.85.216.52]:45791 "EHLO
+        mail-pj1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229530AbhFKGyU (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 11 Jun 2021 02:54:20 -0400
+Received: by mail-pj1-f52.google.com with SMTP id z3-20020a17090a3983b029016bc232e40bso5430038pjb.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Jun 2021 23:52:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=S+sO2TB+8ApB3Zq0zPb7psqJ1i4EPBkuIPaEmOxjGjI=;
+        b=dlNeKwDssqBPaJAwegfW+kmR2XlHzotK9yUPLpJkhyifvQ8yrwTVphQ/z96zy9Vf9H
+         FdII0Bb0GeYh3Q2rOTqIXlUwQ3HopeJSxGYrSKh2vdS+p5CdesO8UIiiscX0Bt+WZKFU
+         kHXlaUp7IsduWrYKsFiDPbgoI1hDrracfSCuRYrQZ2VT507+yGi1uaBn9rtoOWdeu/kd
+         SecOwNAeOEPrSp0UCwTSYCpKSeJ9hkkL8GezSgHYYz+9mpb9FLEgtMv/RVT5YoZrWVWA
+         HV+xGbsY6ZcnYjFv72n0GChE+30cnbJ6IP+PyP3fw6Ou+S/vVVf3z3v7VnETM79Mj0mw
+         GUhg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=S+sO2TB+8ApB3Zq0zPb7psqJ1i4EPBkuIPaEmOxjGjI=;
+        b=kIpNzYY3o+fYSJMcyJuCT+OhPBz+rZg79ZpvqjJVLotD5TNpGzPND461noTDl9q15z
+         cRsc7R73+Ibd0YtqRc3P7Tp5PGFppWH9VKDh/IxHwysmCPcDYJuzlBwVoahMU9mhx41C
+         DGTOTHAgfXL3CjCyoEE6qN6X4gqh6BB44QfxPozwf9IQ4kuHcjljWTEPLMb6CQk3BxeC
+         h74zYnlo2fGfiv4EZ/pN4U231sbz++u2aUwVdj8GNWFQMwAJSwrgJVfFYJQ9xj8VvpV/
+         SpUagaoHWMaTGM6bq7PsHZ9PaOTOVENW4RooEwb5fMTcsDXIvD79TTwyIc8df/G8AhhI
+         CN4Q==
+X-Gm-Message-State: AOAM531N6B5mdimG0RtME/vL8QLtH//RPCvrvei+PNFNqfqRvdrCD4/L
+        AjEWDgp3NB5FdHZk1+uDOH502IoSgYCyQuhjrn02RQ==
+X-Google-Smtp-Source: ABdhPJy5BioolQbVIKu/Do/YaIRrPujKR+V3jzJeOclywGXL/3Q/bZMdYh3WJHPQWEt2IRWvbiWjsJePoMtSvBPu0HM=
+X-Received: by 2002:a17:90b:1bc4:: with SMTP id oa4mr3126091pjb.18.1623394269767;
+ Thu, 10 Jun 2021 23:51:09 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
-        micalg=pgp-sha256; protocol="application/pgp-signature"
+References: <1621603519-16773-1-git-send-email-loic.poulain@linaro.org> <20210521163530.GO70095@thinkpad>
+In-Reply-To: <20210521163530.GO70095@thinkpad>
+From:   Loic Poulain <loic.poulain@linaro.org>
+Date:   Fri, 11 Jun 2021 09:00:16 +0200
+Message-ID: <CAMZdPi8FVWRhU69z6JygsqoqMCOJTKGfo6vTWtv35kT-Ap8Drg@mail.gmail.com>
+Subject: Re: [PATCH v2] bus: mhi: Add inbound buffers allocation flag
+To:     Manivannan Sadhasivam <mani@kernel.org>,
+        Jakub Kicinski <kuba@kernel.org>,
+        David Miller <davem@davemloft.net>
+Cc:     Hemant Kumar <hemantk@codeaurora.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Bhaumik Bhatt <bbhatt@codeaurora.org>,
+        Network Development <netdev@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
---=-=-=
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
+Hi Jakub, Dave,
 
-
-Hi,
-
-Bjorn Andersson <bjorn.andersson@linaro.org> writes:
-> On Thu 10 Jun 07:49 CDT 2021, Felipe Balbi wrote:
+On Fri, 21 May 2021 at 18:35, Manivannan Sadhasivam <mani@kernel.org> wrote:
 >
->> Felipe Balbi <balbi@kernel.org> writes:
->>=20
->> > From: Felipe Balbi <felipe.balbi@microsoft.com>
->> >
->> > Microsoft Surface Duo is based on SM8150 chipset. This new Device Tree
->> > is a copy of sm8150-mtp with a the addition of the volume up key and
->> > relevant i2c nodes.
->> >
->> > Signed-off-by: Felipe Balbi <felipe.balbi@microsoft.com>
->>=20
->> Gentle reminder here.
->>=20
+> + netdev, Dave, Jakub
 >
-> Sorry, it's been sitting in my local tree for a few days, but now it's
-> pushed out.
+> On Fri, May 21, 2021 at 03:25:19PM +0200, Loic Poulain wrote:
+> > Currently, the MHI controller driver defines which channels should
+> > have their inbound buffers allocated and queued. But ideally, this is
+> > something that should be decided by the MHI device driver instead,
+> > which actually deals with that buffers.
+> >
+> > Add a flag parameter to mhi_prepare_for_transfer allowing to specify
+> > if buffers have to be allocated and queued by the MHI stack.
+> >
+> > Keep auto_queue flag for now, but should be removed at some point.
+> >
+> > Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+> > Tested-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+> > Reviewed-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+> > Reviewed-by: Hemant Kumar <hemantk@codeaurora.org>
+> > Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > ---
+> >  v2: Update API in mhi_wwan_ctrl driver
+> >
+> >  drivers/bus/mhi/core/internal.h  |  2 +-
+> >  drivers/bus/mhi/core/main.c      | 11 ++++++++---
+> >  drivers/net/mhi/net.c            |  2 +-
+> >  drivers/net/wwan/mhi_wwan_ctrl.c |  2 +-
+>
+> Since this patch touches the drivers under net/, I need an Ack from Dave or
+> Jakub to take it via MHI tree.
 
-awesome, thank you
+Could you please ack|nack this patch?
 
-=2D-=20
-balbi
+Thanks,
+Loic
 
---=-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
 
------BEGIN PGP SIGNATURE-----
-
-iQFFBAEBCAAvFiEE9DumQ60WEZ09LIErzlfNM9wDzUgFAmDDAw4RHGJhbGJpQGtl
-cm5lbC5vcmcACgkQzlfNM9wDzUg+nQf/ew361XEAkicS1SWrdRpbcZv+e3wSxHu0
-VwLEGodXIyny0hoC4XbkU93vuOVWS/zqYtSS64uPfkKdm8gvACdOS1QmwrfN1vFn
-cdNJYOzLbkdriHm3dxgxBv3m4FDYbTYuo3rc08ZnKZrHGA1yUsqXrJipI+PzrlsI
-TI03fEancJiTo0k0eik1sBIkXHqnqcC4xglmvyeE85dTaJQYp0ezeVwGcbRiwyhn
-mrpoUebHwlUdFgc7CR1bnVAZGnQ1V6T2fQi3qh8JOr2TpUMLqpjAoPPgexy/mumf
-Kle0VWBlyXcCxIEp6O3ZFkVQqUgZA7aehrl6YYm1PyTwmci7WQHfuQ==
-=Q8jJ
------END PGP SIGNATURE-----
---=-=-=--
+>
+> >  include/linux/mhi.h              | 12 +++++++++++-
+> >  net/qrtr/mhi.c                   |  2 +-
+> >  6 files changed, 23 insertions(+), 8 deletions(-)
+> >
+> > diff --git a/drivers/bus/mhi/core/internal.h b/drivers/bus/mhi/core/internal.h
+> > index 5b9ea66..672052f 100644
+> > --- a/drivers/bus/mhi/core/internal.h
+> > +++ b/drivers/bus/mhi/core/internal.h
+> > @@ -682,7 +682,7 @@ void mhi_rddm_prepare(struct mhi_controller *mhi_cntrl,
+> >                     struct image_info *img_info);
+> >  void mhi_fw_load_handler(struct mhi_controller *mhi_cntrl);
+> >  int mhi_prepare_channel(struct mhi_controller *mhi_cntrl,
+> > -                     struct mhi_chan *mhi_chan);
+> > +                     struct mhi_chan *mhi_chan, enum mhi_chan_flags flags);
+> >  int mhi_init_chan_ctxt(struct mhi_controller *mhi_cntrl,
+> >                      struct mhi_chan *mhi_chan);
+> >  void mhi_deinit_chan_ctxt(struct mhi_controller *mhi_cntrl,
+> > diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
+> > index 0f1febf..432b53b 100644
+> > --- a/drivers/bus/mhi/core/main.c
+> > +++ b/drivers/bus/mhi/core/main.c
+> > @@ -1384,7 +1384,8 @@ static void mhi_unprepare_channel(struct mhi_controller *mhi_cntrl,
+> >  }
+> >
+> >  int mhi_prepare_channel(struct mhi_controller *mhi_cntrl,
+> > -                     struct mhi_chan *mhi_chan)
+> > +                     struct mhi_chan *mhi_chan,
+> > +                     enum mhi_chan_flags flags)
+> >  {
+> >       int ret = 0;
+> >       struct device *dev = &mhi_chan->mhi_dev->dev;
+> > @@ -1409,6 +1410,9 @@ int mhi_prepare_channel(struct mhi_controller *mhi_cntrl,
+> >       if (ret)
+> >               goto error_pm_state;
+> >
+> > +     if (mhi_chan->dir == DMA_FROM_DEVICE)
+> > +             mhi_chan->pre_alloc = !!(flags & MHI_CH_INBOUND_ALLOC_BUFS);
+> > +
+> >       /* Pre-allocate buffer for xfer ring */
+> >       if (mhi_chan->pre_alloc) {
+> >               int nr_el = get_nr_avail_ring_elements(mhi_cntrl,
+> > @@ -1555,7 +1559,8 @@ void mhi_reset_chan(struct mhi_controller *mhi_cntrl, struct mhi_chan *mhi_chan)
+> >  }
+> >
+> >  /* Move channel to start state */
+> > -int mhi_prepare_for_transfer(struct mhi_device *mhi_dev)
+> > +int mhi_prepare_for_transfer(struct mhi_device *mhi_dev,
+> > +                          enum mhi_chan_flags flags)
+> >  {
+> >       int ret, dir;
+> >       struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
+> > @@ -1566,7 +1571,7 @@ int mhi_prepare_for_transfer(struct mhi_device *mhi_dev)
+> >               if (!mhi_chan)
+> >                       continue;
+> >
+> > -             ret = mhi_prepare_channel(mhi_cntrl, mhi_chan);
+> > +             ret = mhi_prepare_channel(mhi_cntrl, mhi_chan, flags);
+> >               if (ret)
+> >                       goto error_open_chan;
+> >       }
+> > diff --git a/drivers/net/mhi/net.c b/drivers/net/mhi/net.c
+> > index 6b5bf23..3ddfb72 100644
+> > --- a/drivers/net/mhi/net.c
+> > +++ b/drivers/net/mhi/net.c
+> > @@ -323,7 +323,7 @@ static int mhi_net_probe(struct mhi_device *mhi_dev,
+> >       u64_stats_init(&mhi_netdev->stats.tx_syncp);
+> >
+> >       /* Start MHI channels */
+> > -     err = mhi_prepare_for_transfer(mhi_dev);
+> > +     err = mhi_prepare_for_transfer(mhi_dev, 0);
+> >       if (err)
+> >               goto out_err;
+> >
+> > diff --git a/drivers/net/wwan/mhi_wwan_ctrl.c b/drivers/net/wwan/mhi_wwan_ctrl.c
+> > index 3a44b22..84e75e4 100644
+> > --- a/drivers/net/wwan/mhi_wwan_ctrl.c
+> > +++ b/drivers/net/wwan/mhi_wwan_ctrl.c
+> > @@ -110,7 +110,7 @@ static int mhi_wwan_ctrl_start(struct wwan_port *port)
+> >       int ret;
+> >
+> >       /* Start mhi device's channel(s) */
+> > -     ret = mhi_prepare_for_transfer(mhiwwan->mhi_dev);
+> > +     ret = mhi_prepare_for_transfer(mhiwwan->mhi_dev, 0);
+> >       if (ret)
+> >               return ret;
+> >
+> > diff --git a/include/linux/mhi.h b/include/linux/mhi.h
+> > index d095fba..9372acf 100644
+> > --- a/include/linux/mhi.h
+> > +++ b/include/linux/mhi.h
+> > @@ -60,6 +60,14 @@ enum mhi_flags {
+> >  };
+> >
+> >  /**
+> > + * enum mhi_chan_flags - MHI channel flags
+> > + * @MHI_CH_INBOUND_ALLOC_BUFS: Automatically allocate and queue inbound buffers
+> > + */
+> > +enum mhi_chan_flags {
+> > +     MHI_CH_INBOUND_ALLOC_BUFS = BIT(0),
+> > +};
+> > +
+> > +/**
+> >   * enum mhi_device_type - Device types
+> >   * @MHI_DEVICE_XFER: Handles data transfer
+> >   * @MHI_DEVICE_CONTROLLER: Control device
+> > @@ -719,8 +727,10 @@ void mhi_device_put(struct mhi_device *mhi_dev);
+> >   *                            host and device execution environments match and
+> >   *                            channels are in a DISABLED state.
+> >   * @mhi_dev: Device associated with the channels
+> > + * @flags: MHI channel flags
+> >   */
+> > -int mhi_prepare_for_transfer(struct mhi_device *mhi_dev);
+> > +int mhi_prepare_for_transfer(struct mhi_device *mhi_dev,
+> > +                          enum mhi_chan_flags flags);
+> >
+> >  /**
+> >   * mhi_unprepare_from_transfer - Reset UL and DL channels for data transfer.
+> > diff --git a/net/qrtr/mhi.c b/net/qrtr/mhi.c
+> > index 2bf2b19..47afded 100644
+> > --- a/net/qrtr/mhi.c
+> > +++ b/net/qrtr/mhi.c
+> > @@ -77,7 +77,7 @@ static int qcom_mhi_qrtr_probe(struct mhi_device *mhi_dev,
+> >       int rc;
+> >
+> >       /* start channels */
+> > -     rc = mhi_prepare_for_transfer(mhi_dev);
+> > +     rc = mhi_prepare_for_transfer(mhi_dev, MHI_CH_INBOUND_ALLOC_BUFS);
+> >       if (rc)
+> >               return rc;
+> >
+> > --
+> > 2.7.4
+> >
