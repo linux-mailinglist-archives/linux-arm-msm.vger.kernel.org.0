@@ -2,186 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6EADA3A4E08
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Jun 2021 11:47:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A47613A4E36
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Jun 2021 12:36:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231307AbhFLJtH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 12 Jun 2021 05:49:07 -0400
-Received: from m-r2.th.seeweb.it ([5.144.164.171]:58639 "EHLO
-        m-r2.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231302AbhFLJtD (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 12 Jun 2021 05:49:03 -0400
-Received: from localhost.localdomain (bband-dyn73.178-41-129.t-com.sk [178.41.129.73])
-        by m-r2.th.seeweb.it (Postfix) with ESMTPA id 7BE3A3F483;
-        Sat, 12 Jun 2021 11:47:01 +0200 (CEST)
-From:   Martin Botka <martin.botka@somainline.org>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht,
-        konrad.dybcio@somainline.org,
-        angelogioacchino.delregno@somainline.org,
-        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
-        Martin Botka <martin.botka@somainline.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Kees Cook <keescook@chromium.org>,
-        Anton Vorontsov <anton@enomsg.org>,
-        Colin Cross <ccross@android.com>,
-        Tony Luck <tony.luck@intel.com>
-Subject: [PATCH 2/2] arch: arm64: dts: qcom: Add support for Sony Xperia 10II
-Date:   Sat, 12 Jun 2021 11:46:51 +0200
-Message-Id: <20210612094652.90354-2-martin.botka@somainline.org>
-X-Mailer: git-send-email 2.31.1
-In-Reply-To: <20210612094652.90354-1-martin.botka@somainline.org>
-References: <20210612094652.90354-1-martin.botka@somainline.org>
+        id S231187AbhFLKil (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 12 Jun 2021 06:38:41 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:59144 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230511AbhFLKik (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 12 Jun 2021 06:38:40 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1623494201; h=Date: Message-Id: Cc: To: References:
+ In-Reply-To: From: Subject: Content-Transfer-Encoding: MIME-Version:
+ Content-Type: Sender; bh=brVC1m2uQ7jacnf+j+PhnRqs+Cy6+AllMm/70hQRjPg=;
+ b=xWsZw7lL+v4s/gGWwEKPkgxLsmNLG1Q+7y9/AaElWWYZcgr1v8etz3HYctOaGTRdFN5yAsuA
+ oWjfigxjf08cj3dvBGyR+BsgmnDpFR2KOHJ/xYPitDtD6gIOJ27ge45V+uU2gWYmq/ttjm/d
+ C+d8YCSjPc5C3GxRTmXRFhrq22Y=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
+ 60c48e38f726fa41884fba39 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Sat, 12 Jun 2021 10:36:40
+ GMT
+Sender: kvalo=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 2FD93C433F1; Sat, 12 Jun 2021 10:36:40 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        MISSING_DATE,MISSING_MID,SPF_FAIL,URIBL_BLOCKED autolearn=no
+        autolearn_force=no version=3.4.0
+Received: from tykki.adurom.net (tynnyri.adurom.net [51.15.11.48])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: kvalo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id EEF44C433F1;
+        Sat, 12 Jun 2021 10:36:36 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org EEF44C433F1
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=kvalo@codeaurora.org
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-To:     unlisted-recipients:; (no To-header on input)
+Content-Transfer-Encoding: 7bit
+Subject: Re: [PATCH] ath10k: demote chan info without scan request warning
+From:   Kalle Valo <kvalo@codeaurora.org>
+In-Reply-To: <20210522171609.299611-1-caleb@connolly.tech>
+References: <20210522171609.299611-1-caleb@connolly.tech>
+To:     Caleb Connolly <caleb@connolly.tech>
+Cc:     caleb@connolly.tech, "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, ath10k@lists.infradead.org,
+        linux-wireless@vger.kernel.org, netdev@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+User-Agent: pwcli/0.1.0-git (https://github.com/kvalo/pwcli/) Python/3.7.3
+Message-Id: <20210612103640.2FD93C433F1@smtp.codeaurora.org>
+Date:   Sat, 12 Jun 2021 10:36:40 +0000 (UTC)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This commits add support for Sony Xperia 10II based on the SM6125 SoC.
+Caleb Connolly <caleb@connolly.tech> wrote:
 
-Currently working features:
-- dmesg output to bootloader preconfigured display
-- USB
-- eMMC
-- Volume down button
+> Some devices/firmwares cause this to be printed every 5-15 seconds,
+> though it has no impact on functionality. Demote this to a debug
+> message.
+> 
+> Signed-off-by: Caleb Connolly <caleb@connolly.tech>
+> Signed-off-by: Kalle Valo <kvalo@codeaurora.org>
 
-Signed-off-by: Martin Botka <martin.botka@somainline.org>
----
-Changes in v2:
-None
- arch/arm64/boot/dts/qcom/Makefile             |   1 +
- .../qcom/sm6125-sony-xperia-seine-pdx201.dts  | 105 ++++++++++++++++++
- 2 files changed, 106 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/sm6125-sony-xperia-seine-pdx201.dts
+On what hardware and firmware version do you see this?
 
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 456502aeee49..5a70dd9593c2 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -69,6 +69,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-oneplus-enchilada.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-oneplus-fajita.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-xiaomi-beryllium.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm850-lenovo-yoga-c630.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sm6125-sony-xperia-seine-pdx201.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8150-hdk.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8150-mtp.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8250-hdk.dtb
-diff --git a/arch/arm64/boot/dts/qcom/sm6125-sony-xperia-seine-pdx201.dts b/arch/arm64/boot/dts/qcom/sm6125-sony-xperia-seine-pdx201.dts
-new file mode 100644
-index 000000000000..b1d6de430273
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sm6125-sony-xperia-seine-pdx201.dts
-@@ -0,0 +1,105 @@
-+// SPDX-License-Identifier: BSD-3-Clause
-+/*
-+ * Copyright (c) 2021, Martin Botka <martin.botka@somainline.org>
-+ */
-+
-+/dts-v1/;
-+
-+#include "sm6125.dtsi"
-+#include <dt-bindings/gpio/gpio.h>
-+#include <dt-bindings/input/input.h>
-+#include <dt-bindings/input/gpio-keys.h>
-+
-+/ {
-+	/* required for bootloader to select correct board */
-+	qcom,msm-id = <394 0x10000>; /* sm6125 v1 */
-+	qcom,board-id = <34 0>;
-+
-+	model = "Sony Xperia 10 II";
-+	compatible = "sony,pdx201", "qcom,sm6125";
-+
-+	chosen {
-+		#address-cells = <2>;
-+		#size-cells = <2>;
-+		ranges;
-+
-+		framebuffer0: framebuffer@5c000000 {
-+			compatible = "simple-framebuffer";
-+			reg = <0 0x5c000000 0 (2520 * 1080 * 4)>;
-+			width = <1080>;
-+			height = <2520>;
-+			stride = <(1080 * 4)>;
-+			format = "a8r8g8b8";
-+		};
-+	};
-+
-+	extcon_usb: extcon-usb {
-+		compatible = "linux,extcon-usb-gpio";
-+		id-gpio = <&tlmm 102 GPIO_ACTIVE_HIGH>;
-+	};
-+
-+	gpio_keys {
-+		status = "okay";
-+		compatible = "gpio-keys";
-+		input-name = "gpio-keys";
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+		autorepeat;
-+
-+		vol_dn {
-+			label = "Volume Down";
-+			gpios = <&tlmm 47 GPIO_ACTIVE_LOW>;
-+			linux,input-type = <1>;
-+			linux,code = <KEY_VOLUMEDOWN>;
-+			gpio-key,wakeup;
-+			debounce-interval = <15>;
-+		};
-+	};
-+	
-+	reserved_memory {
-+		#address-cells = <2>;
-+		#size-cells = <2>;
-+		debug_mem: memory@ffb00000 {
-+			reg = <0x0 0xffb00000 0x0 0xc0000>;
-+			no-map;
-+		};
-+
-+		last_log_mem: memory@ffbc0000 {
-+			reg = <0x0 0xffbc0000 0x0 0x80000>;
-+			no-map;
-+		};
-+
-+		pstore_mem: ramoops@ffc00000 {
-+			compatible = "ramoops";
-+			reg = <0x0 0xffc40000 0x0 0xc0000>;
-+			record-size = <0x1000>;
-+			console-size = <0x40000>;
-+			msg-size = <0x20000 0x20000>;
-+		};
-+
-+		cmdline_mem: memory@ffd00000 {
-+			reg = <0x0 0xffd40000 0x0 0x1000>;
-+			no-map;
-+		};
-+	};
-+};
-+
-+&hsusb_phy1 {
-+	status = "okay";
-+};
-+
-+&sdhc_1 {
-+	status = "okay";
-+};
-+
-+&tlmm {
-+	gpio-reserved-ranges = <22 2>, <28 6>;
-+};
-+
-+&usb3 {
-+	status = "okay";
-+};
-+
-+&usb3_dwc3 {
-+	extcon = <&extcon_usb>;
-+};
 -- 
-2.31.1
+https://patchwork.kernel.org/project/linux-wireless/patch/20210522171609.299611-1-caleb@connolly.tech/
+
+https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
 
