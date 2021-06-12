@@ -2,95 +2,429 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0BA1F3A4D46
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Jun 2021 09:09:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8B8633A4D8B
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Jun 2021 10:28:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230460AbhFLHLX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 12 Jun 2021 03:11:23 -0400
-Received: from mail.kernel.org ([198.145.29.99]:48538 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229898AbhFLHLW (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 12 Jun 2021 03:11:22 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 35D3A61249;
-        Sat, 12 Jun 2021 07:09:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1623481763;
-        bh=qpopxrhB7/n8po7l7amxHfzs4lB/k5A/1bGo3DagKVs=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Q3kDxCmWWliMocij9xAnRmaz4aeiBWsXeGAitQ+mtTcXUZvzQ3tvbypCLrJ4R+U8c
-         et29162Yqdal1B+4gJ3PwmHCoHBRQUsTr+x+KYfo2gaUw3pDU0AtoxlMaUO307SUzK
-         AVZlhBnnZoDAydSmEAKD2k3unCMXEtZ7DA/N35WFCA+VyR6Et0pXDMBBtkVK9t9LlJ
-         hW476C09luQmT7O9mDuaJKrSAhqEe4xP3GFqfoQ/79BCmAG/ZIhefH3EUVke9w8doS
-         6OYDvEc8ocKChuBxihbxrzejeBmh3+NrUJ2cUc6rFh65Kgv4n5i+bICiiDHwWDoHBD
-         UfJbvsZu053LQ==
-Date:   Sat, 12 Jun 2021 12:39:14 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Cc:     hemantk@codeaurora.org, loic.poulain@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        kernel-janitors@vger.kernel.org
-Subject: Re: [PATCH] bus: mhi: pci-generic: Add missing
- 'pci_disable_pcie_error_reporting()' calls
-Message-ID: <20210612070914.GD22149@thinkpad>
-References: <f70c14701f4922d67e717633c91b6c481b59f298.1623445348.git.christophe.jaillet@wanadoo.fr>
+        id S230361AbhFLIac (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 12 Jun 2021 04:30:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35282 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229584AbhFLIac (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 12 Jun 2021 04:30:32 -0400
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6CB1C061574
+        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Jun 2021 01:28:32 -0700 (PDT)
+Received: by mail-lf1-x136.google.com with SMTP id x24so6599123lfr.10
+        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Jun 2021 01:28:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=P6vmfemwMNsSih0OnUPf6PfWrkGLcUz2WQYo41uvFkw=;
+        b=UH1jt32XcvNjV8bgwjH8EILY1U8SUxLKKxyS1RH1n/dehtBPoOwktLDB6P1RnOrESz
+         FVbeDGx2SxM0Pw9842dC0mMAGcGgEtZoytYd6cpST2d5X9hZKBMpwfTgW04YgB1v8GRm
+         ZxKiQM1Gnfczorg9kwTyqCmceJu+EWckMb3BWvzKQiNAneelAbr2q5PCufH3OjkWv6gH
+         R/0OSsWNr2Jk447wFyfNQ3TCuUhiqJE+10W8Ordx0ibZg030qK4xMYxArqjhFATO8lC2
+         6lpJsNUsWRwr59+syu+45XHo9ikmmOPlHejjWdQMLV030cW3a9cmOYY2L+YWcv03gbFx
+         biRg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=P6vmfemwMNsSih0OnUPf6PfWrkGLcUz2WQYo41uvFkw=;
+        b=TQAjLJufA0x02IDeFpv4QzyrGo3XxQSIxnH/lFJDfMyjM3yFi9CXtNZqZimlji+981
+         zn6zMAwygHGFaKqRA0VMLwRpp2hvyBzd1j6S1Lho7JsADqf5DLKwoWGjInmB7S5sYF9e
+         gTQKNpOtcDo8w5DIjB5xy7vTrV3a6f1gGQvqU34TGP4G4iI0pFaGIVE1+/xzj1fsbVsY
+         EmeNnJtvRLa0CsQ0vjTYTsXpI7/ekKzkVxmfVTvDlzEblHds8fCOK7Kpv1JtSrAZcZLQ
+         sRprP74uGlCxi9ADgFoTDkioPlVPg7Kjd5hXI1+yj2QSFxH85damdRi1XpnzKBNPuONP
+         ivkA==
+X-Gm-Message-State: AOAM530J/Ts4YUN0iowNDK/vjEvbmjL/Ed12QDvFghZjwSGJ0GnxDYIu
+        uh5ZaGgbt760Ot0XKNjSp+YwfQ==
+X-Google-Smtp-Source: ABdhPJyAepadShN3jmGhfwoB0vWj7gr49to080fX8+Z7FzOn8Jps6ERsnzSjbMmmqXX1oaNomTcVBg==
+X-Received: by 2002:ac2:5d4c:: with SMTP id w12mr5485896lfd.494.1623486511008;
+        Sat, 12 Jun 2021 01:28:31 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id m3sm839463lfg.241.2021.06.12.01.28.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 12 Jun 2021 01:28:30 -0700 (PDT)
+Subject: Re: [PATCH v2] drm/msm/dpu: Avoid ABBA deadlock between IRQ modules
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Abhinav Kumar <abhinavk@codeaurora.org>
+Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+References: <20210611170003.3539059-1-bjorn.andersson@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Message-ID: <6ad84f60-92c5-be79-1d17-f38608c70f7b@linaro.org>
+Date:   Sat, 12 Jun 2021 11:28:29 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <f70c14701f4922d67e717633c91b6c481b59f298.1623445348.git.christophe.jaillet@wanadoo.fr>
+In-Reply-To: <20210611170003.3539059-1-bjorn.andersson@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jun 11, 2021 at 11:03:50PM +0200, Christophe JAILLET wrote:
-> If an error occurs after a 'pci_enable_pcie_error_reporting()' call, it
-> must be undone by a corresponding 'pci_disable_pcie_error_reporting()'
-> call
+On 11/06/2021 20:00, Bjorn Andersson wrote:
+> Handling of the interrupt callback lists is done in dpu_core_irq.c,
+> under the "cb_lock" spinlock. When these operations results in the need
+> for enableing or disabling the IRQ in the hardware the code jumps to
+> dpu_hw_interrupts.c, which protects its operations with "irq_lock"
+> spinlock.
 > 
-> Add the missing call in the error handling path of the probe and in the
-> remove function.
+> When an interrupt fires, dpu_hw_intr_dispatch_irq() inspects the
+> hardware state while holding the "irq_lock" spinlock and jumps to
+> dpu_core_irq_callback_handler() to invoke the registered handlers, which
+> traverses the callback list under the "cb_lock" spinlock.
 > 
-> Fixes: b012ee6bfe2a ("mhi: pci_generic: Add PCI error handlers")
-> Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+> As such, in the event that these happens concurrently we'll end up with
+> a deadlock.
+> 
+> Prior to '1c1e7763a6d4 ("drm/msm/dpu: simplify IRQ enabling/disabling")'
+> the enable/disable of the hardware interrupt was done outside the
+> "cb_lock" region, optimitically by using an atomic enable-counter for
+> each interrupt and an warning print if someone changed the list between
+> the atomic_read and the time the operation concluded.
+> 
+> Rather than re-introducing the large array of atomics, this change
+> embraces the fact that dpu_core_irq and dpu_hw_interrupts are deeply
+> entangled and make them share the single "irq_lock".
+> 
+> Following this step it's suggested that we squash the two parts into a
+> single irq handling thing.
+> 
+> Fixes: 1c1e7763a6d4 ("drm/msm/dpu: simplify IRQ enabling/disabling")
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-Cced stable and applied to mhi-next!
-
-Thanks,
-Mani
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
 > ---
->  drivers/bus/mhi/pci_generic.c | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
 > 
-> diff --git a/drivers/bus/mhi/pci_generic.c b/drivers/bus/mhi/pci_generic.c
-> index 7c810f02a2ef..d84b74396c6a 100644
-> --- a/drivers/bus/mhi/pci_generic.c
-> +++ b/drivers/bus/mhi/pci_generic.c
-> @@ -665,7 +665,7 @@ static int mhi_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
->  
->  	err = mhi_register_controller(mhi_cntrl, mhi_cntrl_config);
->  	if (err)
-> -		return err;
-> +		goto err_disable_reporting;
->  
->  	/* MHI bus does not power up the controller by default */
->  	err = mhi_prepare_for_power_up(mhi_cntrl);
-> @@ -699,6 +699,8 @@ static int mhi_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
->  	mhi_unprepare_after_power_down(mhi_cntrl);
->  err_unregister:
->  	mhi_unregister_controller(mhi_cntrl);
-> +err_disable_reporting:
-> +	pci_disable_pcie_error_reporting(pdev);
->  
->  	return err;
->  }
-> @@ -721,6 +723,7 @@ static void mhi_pci_remove(struct pci_dev *pdev)
->  		pm_runtime_get_noresume(&pdev->dev);
->  
->  	mhi_unregister_controller(mhi_cntrl);
-> +	pci_disable_pcie_error_reporting(pdev);
->  }
->  
->  static void mhi_pci_shutdown(struct pci_dev *pdev)
-> -- 
-> 2.30.2
+> Changes since v1:
+> - Make dpu_core_irq use dpu_hw_interrupts' irq_lock instead of adding another
+>    mutex.
 > 
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.c  | 27 ++++-----
+>   .../gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c | 60 +++++++++++--------
+>   .../gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h | 20 ++++++-
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h       |  2 -
+>   4 files changed, 63 insertions(+), 46 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.c
+> index 4f110c428b60..18557b9713b6 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.c
+> @@ -22,7 +22,6 @@ static void dpu_core_irq_callback_handler(void *arg, int irq_idx)
+>   	struct dpu_kms *dpu_kms = arg;
+>   	struct dpu_irq *irq_obj = &dpu_kms->irq_obj;
+>   	struct dpu_irq_callback *cb;
+> -	unsigned long irq_flags;
+>   
+>   	pr_debug("irq_idx=%d\n", irq_idx);
+>   
+> @@ -34,11 +33,9 @@ static void dpu_core_irq_callback_handler(void *arg, int irq_idx)
+>   	/*
+>   	 * Perform registered function callback
+>   	 */
+> -	spin_lock_irqsave(&dpu_kms->irq_obj.cb_lock, irq_flags);
+>   	list_for_each_entry(cb, &irq_obj->irq_cb_tbl[irq_idx], list)
+>   		if (cb->func)
+>   			cb->func(cb->arg, irq_idx);
+> -	spin_unlock_irqrestore(&dpu_kms->irq_obj.cb_lock, irq_flags);
+>   }
+>   
+>   u32 dpu_core_irq_read(struct dpu_kms *dpu_kms, int irq_idx, bool clear)
+> @@ -82,22 +79,21 @@ int dpu_core_irq_register_callback(struct dpu_kms *dpu_kms, int irq_idx,
+>   
+>   	DPU_DEBUG("[%pS] irq_idx=%d\n", __builtin_return_address(0), irq_idx);
+>   
+> -	spin_lock_irqsave(&dpu_kms->irq_obj.cb_lock, irq_flags);
+> +	irq_flags = dpu_kms->hw_intr->ops.lock(dpu_kms->hw_intr);
+>   	trace_dpu_core_irq_register_callback(irq_idx, register_irq_cb);
+>   	list_del_init(&register_irq_cb->list);
+>   	list_add_tail(&register_irq_cb->list,
+>   			&dpu_kms->irq_obj.irq_cb_tbl[irq_idx]);
+>   	if (list_is_first(&register_irq_cb->list,
+>   			&dpu_kms->irq_obj.irq_cb_tbl[irq_idx])) {
+> -		int ret = dpu_kms->hw_intr->ops.enable_irq(
+> +		int ret = dpu_kms->hw_intr->ops.enable_irq_locked(
+>   				dpu_kms->hw_intr,
+>   				irq_idx);
+>   		if (ret)
+>   			DPU_ERROR("Fail to enable IRQ for irq_idx:%d\n",
+>   					irq_idx);
+>   	}
+> -
+> -	spin_unlock_irqrestore(&dpu_kms->irq_obj.cb_lock, irq_flags);
+> +	dpu_kms->hw_intr->ops.unlock(dpu_kms->hw_intr, irq_flags);
+>   
+>   	return 0;
+>   }
+> @@ -127,12 +123,12 @@ int dpu_core_irq_unregister_callback(struct dpu_kms *dpu_kms, int irq_idx,
+>   
+>   	DPU_DEBUG("[%pS] irq_idx=%d\n", __builtin_return_address(0), irq_idx);
+>   
+> -	spin_lock_irqsave(&dpu_kms->irq_obj.cb_lock, irq_flags);
+> +	irq_flags = dpu_kms->hw_intr->ops.lock(dpu_kms->hw_intr);
+>   	trace_dpu_core_irq_unregister_callback(irq_idx, register_irq_cb);
+>   	list_del_init(&register_irq_cb->list);
+>   	/* empty callback list but interrupt is still enabled */
+>   	if (list_empty(&dpu_kms->irq_obj.irq_cb_tbl[irq_idx])) {
+> -		int ret = dpu_kms->hw_intr->ops.disable_irq(
+> +		int ret = dpu_kms->hw_intr->ops.disable_irq_locked(
+>   				dpu_kms->hw_intr,
+>   				irq_idx);
+>   		if (ret)
+> @@ -140,7 +136,7 @@ int dpu_core_irq_unregister_callback(struct dpu_kms *dpu_kms, int irq_idx,
+>   					irq_idx);
+>   		DPU_DEBUG("irq_idx=%d ret=%d\n", irq_idx, ret);
+>   	}
+> -	spin_unlock_irqrestore(&dpu_kms->irq_obj.cb_lock, irq_flags);
+> +	dpu_kms->hw_intr->ops.unlock(dpu_kms->hw_intr, irq_flags);
+>   
+>   	return 0;
+>   }
+> @@ -164,7 +160,8 @@ static void dpu_disable_all_irqs(struct dpu_kms *dpu_kms)
+>   #ifdef CONFIG_DEBUG_FS
+>   static int dpu_debugfs_core_irq_show(struct seq_file *s, void *v)
+>   {
+> -	struct dpu_irq *irq_obj = s->private;
+> +	struct dpu_kms *dpu_kms = s->private;
+> +	struct dpu_irq *irq_obj = &dpu_kms->irq_obj;
+>   	struct dpu_irq_callback *cb;
+>   	unsigned long irq_flags;
+>   	int i, irq_count, cb_count;
+> @@ -173,12 +170,12 @@ static int dpu_debugfs_core_irq_show(struct seq_file *s, void *v)
+>   		return 0;
+>   
+>   	for (i = 0; i < irq_obj->total_irqs; i++) {
+> -		spin_lock_irqsave(&irq_obj->cb_lock, irq_flags);
+> +		irq_flags = dpu_kms->hw_intr->ops.lock(dpu_kms->hw_intr);
+>   		cb_count = 0;
+>   		irq_count = atomic_read(&irq_obj->irq_counts[i]);
+>   		list_for_each_entry(cb, &irq_obj->irq_cb_tbl[i], list)
+>   			cb_count++;
+> -		spin_unlock_irqrestore(&irq_obj->cb_lock, irq_flags);
+> +		dpu_kms->hw_intr->ops.unlock(dpu_kms->hw_intr, irq_flags);
+>   
+>   		if (irq_count || cb_count)
+>   			seq_printf(s, "idx:%d irq:%d cb:%d\n",
+> @@ -193,7 +190,7 @@ DEFINE_SHOW_ATTRIBUTE(dpu_debugfs_core_irq);
+>   void dpu_debugfs_core_irq_init(struct dpu_kms *dpu_kms,
+>   		struct dentry *parent)
+>   {
+> -	debugfs_create_file("core_irq", 0600, parent, &dpu_kms->irq_obj,
+> +	debugfs_create_file("core_irq", 0600, parent, dpu_kms,
+>   		&dpu_debugfs_core_irq_fops);
+>   }
+>   #endif
+> @@ -207,8 +204,6 @@ void dpu_core_irq_preinstall(struct dpu_kms *dpu_kms)
+>   	dpu_disable_all_irqs(dpu_kms);
+>   	pm_runtime_put_sync(&dpu_kms->pdev->dev);
+>   
+> -	spin_lock_init(&dpu_kms->irq_obj.cb_lock);
+> -
+>   	/* Create irq callbacks for all possible irq_idx */
+>   	dpu_kms->irq_obj.total_irqs = dpu_kms->hw_intr->total_irqs;
+>   	dpu_kms->irq_obj.irq_cb_tbl = kcalloc(dpu_kms->irq_obj.total_irqs,
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
+> index bf9a147ac245..996011e356f7 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
+> @@ -211,10 +211,9 @@ static void dpu_hw_intr_dispatch_irq(struct dpu_hw_intr *intr,
+>   	spin_unlock_irqrestore(&intr->irq_lock, irq_flags);
+>   }
+>   
+> -static int dpu_hw_intr_enable_irq(struct dpu_hw_intr *intr, int irq_idx)
+> +static int dpu_hw_intr_enable_irq_locked(struct dpu_hw_intr *intr, int irq_idx)
+>   {
+>   	int reg_idx;
+> -	unsigned long irq_flags;
+>   	const struct dpu_intr_reg *reg;
+>   	const char *dbgstr = NULL;
+>   	uint32_t cache_irq_mask;
+> @@ -227,10 +226,16 @@ static int dpu_hw_intr_enable_irq(struct dpu_hw_intr *intr, int irq_idx)
+>   		return -EINVAL;
+>   	}
+>   
+> +	/*
+> +	 * The cache_irq_mask and hardware RMW operations needs to be done
+> +	 * under irq_lock and it's the caller's responsibility to ensure that's
+> +	 * held.
+> +	 */
+> +	assert_spin_locked(&intr->irq_lock);
+> +
+>   	reg_idx = DPU_IRQ_REG(irq_idx);
+>   	reg = &dpu_intr_set[reg_idx];
+>   
+> -	spin_lock_irqsave(&intr->irq_lock, irq_flags);
+>   	cache_irq_mask = intr->cache_irq_mask[reg_idx];
+>   	if (cache_irq_mask & DPU_IRQ_MASK(irq_idx)) {
+>   		dbgstr = "DPU IRQ already set:";
+> @@ -248,7 +253,6 @@ static int dpu_hw_intr_enable_irq(struct dpu_hw_intr *intr, int irq_idx)
+>   
+>   		intr->cache_irq_mask[reg_idx] = cache_irq_mask;
+>   	}
+> -	spin_unlock_irqrestore(&intr->irq_lock, irq_flags);
+>   
+>   	pr_debug("%s MASK:0x%.8lx, CACHE-MASK:0x%.8x\n", dbgstr,
+>   			DPU_IRQ_MASK(irq_idx), cache_irq_mask);
+> @@ -256,7 +260,7 @@ static int dpu_hw_intr_enable_irq(struct dpu_hw_intr *intr, int irq_idx)
+>   	return 0;
+>   }
+>   
+> -static int dpu_hw_intr_disable_irq_nolock(struct dpu_hw_intr *intr, int irq_idx)
+> +static int dpu_hw_intr_disable_irq_locked(struct dpu_hw_intr *intr, int irq_idx)
+>   {
+>   	int reg_idx;
+>   	const struct dpu_intr_reg *reg;
+> @@ -271,6 +275,13 @@ static int dpu_hw_intr_disable_irq_nolock(struct dpu_hw_intr *intr, int irq_idx)
+>   		return -EINVAL;
+>   	}
+>   
+> +	/*
+> +	 * The cache_irq_mask and hardware RMW operations needs to be done
+> +	 * under irq_lock and it's the caller's responsibility to ensure that's
+> +	 * held.
+> +	 */
+> +	assert_spin_locked(&intr->irq_lock);
+> +
+>   	reg_idx = DPU_IRQ_REG(irq_idx);
+>   	reg = &dpu_intr_set[reg_idx];
+>   
+> @@ -298,25 +309,6 @@ static int dpu_hw_intr_disable_irq_nolock(struct dpu_hw_intr *intr, int irq_idx)
+>   	return 0;
+>   }
+>   
+> -static int dpu_hw_intr_disable_irq(struct dpu_hw_intr *intr, int irq_idx)
+> -{
+> -	unsigned long irq_flags;
+> -
+> -	if (!intr)
+> -		return -EINVAL;
+> -
+> -	if (irq_idx < 0 || irq_idx >= intr->total_irqs) {
+> -		pr_err("invalid IRQ index: [%d]\n", irq_idx);
+> -		return -EINVAL;
+> -	}
+> -
+> -	spin_lock_irqsave(&intr->irq_lock, irq_flags);
+> -	dpu_hw_intr_disable_irq_nolock(intr, irq_idx);
+> -	spin_unlock_irqrestore(&intr->irq_lock, irq_flags);
+> -
+> -	return 0;
+> -}
+> -
+>   static int dpu_hw_intr_clear_irqs(struct dpu_hw_intr *intr)
+>   {
+>   	int i;
+> @@ -388,14 +380,30 @@ static u32 dpu_hw_intr_get_interrupt_status(struct dpu_hw_intr *intr,
+>   	return intr_status;
+>   }
+>   
+> +static unsigned long dpu_hw_intr_lock(struct dpu_hw_intr *intr)
+> +{
+> +	unsigned long irq_flags;
+> +
+> +	spin_lock_irqsave(&intr->irq_lock, irq_flags);
+> +
+> +	return irq_flags;
+> +}
+> +
+> +static void dpu_hw_intr_unlock(struct dpu_hw_intr *intr, unsigned long irq_flags)
+> +{
+> +	spin_unlock_irqrestore(&intr->irq_lock, irq_flags);
+> +}
+> +
+>   static void __setup_intr_ops(struct dpu_hw_intr_ops *ops)
+>   {
+> -	ops->enable_irq = dpu_hw_intr_enable_irq;
+> -	ops->disable_irq = dpu_hw_intr_disable_irq;
+> +	ops->enable_irq_locked = dpu_hw_intr_enable_irq_locked;
+> +	ops->disable_irq_locked = dpu_hw_intr_disable_irq_locked;
+>   	ops->dispatch_irqs = dpu_hw_intr_dispatch_irq;
+>   	ops->clear_all_irqs = dpu_hw_intr_clear_irqs;
+>   	ops->disable_all_irqs = dpu_hw_intr_disable_irqs;
+>   	ops->get_interrupt_status = dpu_hw_intr_get_interrupt_status;
+> +	ops->lock = dpu_hw_intr_lock;
+> +	ops->unlock = dpu_hw_intr_unlock;
+>   }
+>   
+>   static void __intr_offset(struct dpu_mdss_cfg *m,
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h
+> index 0073d32effc5..d90dac77c26f 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h
+> @@ -46,7 +46,7 @@ struct dpu_hw_intr_ops {
+>   	 * @irq_idx:	Lookup irq index return from irq_idx_lookup
+>   	 * @return:	0 for success, otherwise failure
+>   	 */
+> -	int (*enable_irq)(
+> +	int (*enable_irq_locked)(
+>   			struct dpu_hw_intr *intr,
+>   			int irq_idx);
+>   
+> @@ -56,7 +56,7 @@ struct dpu_hw_intr_ops {
+>   	 * @irq_idx:	Lookup irq index return from irq_idx_lookup
+>   	 * @return:	0 for success, otherwise failure
+>   	 */
+> -	int (*disable_irq)(
+> +	int (*disable_irq_locked)(
+>   			struct dpu_hw_intr *intr,
+>   			int irq_idx);
+>   
+> @@ -101,6 +101,22 @@ struct dpu_hw_intr_ops {
+>   			struct dpu_hw_intr *intr,
+>   			int irq_idx,
+>   			bool clear);
+> +
+> +	/**
+> +	 * lock - take the IRQ lock
+> +	 * @intr:	HW interrupt handle
+> +	 * @return:	irq_flags for the taken spinlock
+> +	 */
+> +	unsigned long (*lock)(
+> +			struct dpu_hw_intr *intr);
+> +
+> +	/**
+> +	 * unlock - take the IRQ lock
+> +	 * @intr:	HW interrupt handle
+> +	 * @irq_flags:  the irq_flags returned from lock
+> +	 */
+> +	void (*unlock)(
+> +			struct dpu_hw_intr *intr, unsigned long irq_flags);
+>   };
+>   
+>   /**
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+> index f6840b1af6e4..3034da1d2977 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+> @@ -82,14 +82,12 @@ struct dpu_irq_callback {
+>    * struct dpu_irq: IRQ structure contains callback registration info
+>    * @total_irq:    total number of irq_idx obtained from HW interrupts mapping
+>    * @irq_cb_tbl:   array of IRQ callbacks setting
+> - * @cb_lock:      callback lock
+>    * @debugfs_file: debugfs file for irq statistics
+>    */
+>   struct dpu_irq {
+>   	u32 total_irqs;
+>   	struct list_head *irq_cb_tbl;
+>   	atomic_t *irq_counts;
+> -	spinlock_t cb_lock;
+>   };
+>   
+>   struct dpu_kms {
+> 
+
+
+-- 
+With best wishes
+Dmitry
