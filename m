@@ -2,72 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 95D1A3A50B3
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Jun 2021 22:55:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 65A083A50F1
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Jun 2021 23:21:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231622AbhFLU5P (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 12 Jun 2021 16:57:15 -0400
-Received: from mail-40131.protonmail.ch ([185.70.40.131]:49056 "EHLO
-        mail-40131.protonmail.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231616AbhFLU5P (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 12 Jun 2021 16:57:15 -0400
-Date:   Sat, 12 Jun 2021 20:55:06 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=connolly.tech;
-        s=protonmail; t=1623531313;
-        bh=puLXJ4n083iJD3qDod7BfN5xz30VVQhbboLf6Tp5nzo=;
-        h=Date:To:From:Cc:Reply-To:Subject:From;
-        b=hg2M6/UxMiGseyPXABHG0Gcej1ahGGoKSZZSvSx4JvExBQ87xh9FL3a/+uvkRJrpw
-         emKBYW3MgB1MDgkxbIg9vKLAEq7lOQsW2Y/+ZdnIht4iCtMxT8Q+0krdjBT8Snt/4Y
-         izyWKGJzRjuD2lx6ir76zh6L9v8Z9w3IkGgjTdaU=
-To:     caleb@connolly.tech, Andy Gross <agross@kernel.org>,
+        id S229777AbhFLVXB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 12 Jun 2021 17:23:01 -0400
+Received: from vps5.brixit.nl ([192.81.221.234]:46338 "EHLO vps5.brixit.nl"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229753AbhFLVXA (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 12 Jun 2021 17:23:00 -0400
+Received: from [192.168.20.2] (unknown [77.239.252.99])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by vps5.brixit.nl (Postfix) with ESMTPSA id AF46F607EB;
+        Sat, 12 Jun 2021 21:20:56 +0000 (UTC)
+Subject: Re: [PATCH v2 1/2] arch: arm64: dts: qcom: Add support for SM6125
+To:     Martin Botka <martin.botka@somainline.org>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        konrad.dybcio@somainline.org,
+        angelogioacchino.delregno@somainline.org,
+        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-From:   Caleb Connolly <caleb@connolly.tech>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Reply-To: Caleb Connolly <caleb@connolly.tech>
-Subject: [PATCH 4/4] arm64: dts: qcom: sdm845-oneplus-common: add haptics
-Message-ID: <20210612205405.1233588-5-caleb@connolly.tech>
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org,
+        Iskren Chernev <iskren.chernev@gmail.com>
+References: <20210612094652.90354-1-martin.botka@somainline.org>
+From:   Alexey Minnekhanov <alexeymin@postmarketos.org>
+Message-ID: <d98a8361-5ee5-cde3-03e0-8f61af6686cd@postmarketos.org>
+Date:   Sun, 13 Jun 2021 00:20:53 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-1.2 required=10.0 tests=ALL_TRUSTED,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF shortcircuit=no
-        autolearn=disabled version=3.4.4
-X-Spam-Checker-Version: SpamAssassin 3.4.4 (2020-01-24) on
-        mailout.protonmail.ch
+In-Reply-To: <20210612094652.90354-1-martin.botka@somainline.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable the qpnp haptics driver and configure the play rate for the
-hardware.
+> +		sdhc_1: sdhci@4744000 {
+> +			compatible = "qcom,sm6125-sdhci", "qcom,sdhci-msm-v5";
+> +			reg = <0x04744000 0x1000>, <0x04744000 0x1000>;
+> +			reg-names = "hc_mem", "core_mem";
 
-Signed-off-by: Caleb Connolly <caleb@connolly.tech>
----
- arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi | 5 +++++
- 1 file changed, 5 insertions(+)
+ichernev: reg-names should be "hc" and "cqhci" and the 2 values you've 
+supplied should be different maybe?
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi b/arch/arm=
-64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-index 8f617f7b6d34..d614bfae5c6d 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-@@ -423,6 +423,11 @@ pinconf {
- =09};
- };
+> +
+> +		sdhc_2: sdhci@4784000 {
+> +			compatible = "qcom,sm6125-sdhci", "qcom,sdhci-msm-v5";
+> +			reg = <0x04784000 0x1000>;
+> +			reg-names = "hc_mem";
 
-+&qpnp_haptics {
-+=09status =3D "okay";
-+=09qcom,wave-play-rate-us =3D <4255>;
-+};
-+
- &qupv3_id_1 {
- =09status =3D "okay";
- };
---
-2.31.1
+Wrong reg names again?
 
-
+-- 
+Regards
+Alexey Minnekhanov
