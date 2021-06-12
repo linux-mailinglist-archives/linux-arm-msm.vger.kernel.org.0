@@ -2,638 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3C66B3A5051
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Jun 2021 21:24:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D8DBE3A5064
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Jun 2021 21:39:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231417AbhFLT0O (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 12 Jun 2021 15:26:14 -0400
-Received: from relay01.th.seeweb.it ([5.144.164.162]:36711 "EHLO
-        relay01.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231314AbhFLT0N (ORCPT
+        id S231557AbhFLTl2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 12 Jun 2021 15:41:28 -0400
+Received: from relay07.th.seeweb.it ([5.144.164.168]:45283 "EHLO
+        relay07.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231417AbhFLTl0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 12 Jun 2021 15:26:13 -0400
-Received: from localhost.localdomain (83.6.168.161.neoplus.adsl.tpnet.pl [83.6.168.161])
-        by m-r1.th.seeweb.it (Postfix) with ESMTPA id 9C9AB1F502;
-        Sat, 12 Jun 2021 21:24:09 +0200 (CEST)
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-To:     ~postmarketos/upstreaming@lists.sr.ht
-Cc:     martin.botka@somainline.org,
-        angelogioacchino.delregno@somainline.org,
-        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Andy Gross <agross@kernel.org>,
+        Sat, 12 Jun 2021 15:41:26 -0400
+Received: from [192.168.1.101] (83.6.168.161.neoplus.adsl.tpnet.pl [83.6.168.161])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 2C9873F356;
+        Sat, 12 Jun 2021 21:39:24 +0200 (CEST)
+Subject: Re: [PATCH 1/2] arm64: dts: qcom: sm8250: Disable Adreno and Venus by
+ default
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        Martin Botka <martin.botka@somainline.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        jamipkettunen@somainline.org, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Kees Cook <keescook@chromium.org>,
-        Anton Vorontsov <anton@enomsg.org>,
-        Colin Cross <ccross@android.com>,
-        Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v2 3/3] arm64: dts: qcom: Add support for SONY Xperia 1 II / 5 II (Edo platform)
-Date:   Sat, 12 Jun 2021 21:23:58 +0200
-Message-Id: <20210612192358.62602-3-konrad.dybcio@somainline.org>
-X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20210612192358.62602-1-konrad.dybcio@somainline.org>
-References: <20210612192358.62602-1-konrad.dybcio@somainline.org>
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+References: <20210611113514.27173-1-konrad.dybcio@somainline.org>
+ <CAF6AEGv3UivqUKb8wkCgzpApORV=ucswOzUh7BQMWRiif5ZJdw@mail.gmail.com>
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+Message-ID: <94bf5d73-6939-75dc-46da-ddb8d6ae017a@somainline.org>
+Date:   Sat, 12 Jun 2021 21:39:23 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAF6AEGv3UivqUKb8wkCgzpApORV=ucswOzUh7BQMWRiif5ZJdw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for SONY Xperia 1 II and 5 II smartphones (read one/five mark two).
-They are based on the Qualcomm SM8250 chipset and both feature 5G modems. There
-also exists a third Edo board, namely the Xperia PRO (PDX204), but it's $2500
-and no developers have obtained it so far (to my knowledge).
 
-The devices are affected by a scary UFS behaviour where sending a certain UFS
-command (which is worked around on downstream) renders the device unbootable,
-by effectively erasing the bootloader. Therefore UFS AND UFSPHY are strictly
-disabled for now.
+On 11.06.2021 20:54, Rob Clark wrote:
+> On Fri, Jun 11, 2021 at 4:35 AM Konrad Dybcio
+> <konrad.dybcio@somainline.org> wrote:
+>> Components that rely on proprietary (not to mention signed!) firmware should
+>> not be enabled by default, as lack of the aforementioned firmware could cause
+>> various issues, from random errors to straight-up failing to boot.
+> I admit I probably don't test much without fw, but I think maybe
+> *that* is the issue to solve instead.
+>
+> Taking a guess, I think the situation is that you have *some* of the
+> fw (ie. the unsigned parts coming from linux-firmware) but not
+> specifically the zap fw.  So adreno_zap_shader_load() returns -ENODEV,
+> which is interpreted to mean "this is a platform that doesn't need zap
+> to take GPU out of secure mode", and then things go boom when we try
+> to write RBBM_SECVID_TRUST_CNTL ?
 
-Downstream workaround:
-https://github.com/kholk/kernel/commit/2e7a9ee1c91a016baa0b826a7752ec45663a0561
+While we're not yet there to test that out on A6xx-equipped platforms,
 
-Tested-by: Marijn Suijten <marijn.suijten@somainline.org>
-Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
----
-Changes since v1:
-- Separate the sdhci2 pinctrl part
-- Fix up some regulator settings and comments
-- Add Marijn's t-b
+my experience with lack ofAdreno firmware so far has been like so:
 
- arch/arm64/boot/dts/qcom/Makefile             |   2 +
- .../qcom/sm8250-sony-xperia-edo-pdx203.dts    |  15 +
- .../qcom/sm8250-sony-xperia-edo-pdx206.dts    |  24 +
- .../boot/dts/qcom/sm8250-sony-xperia-edo.dtsi | 494 ++++++++++++++++++
- 4 files changed, 535 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx203.dts
- create mode 100644 arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx206.dts
- create mode 100644 arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
 
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 456502aeee49..a3b832d9fc0c 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -73,5 +73,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sm8150-hdk.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8150-mtp.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8250-hdk.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8250-mtp.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sm8250-sony-xperia-edo-pdx203.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sm8250-sony-xperia-edo-pdx206.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8350-hdk.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8350-mtp.dtb
-diff --git a/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx203.dts b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx203.dts
-new file mode 100644
-index 000000000000..79afeb07f4a2
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx203.dts
-@@ -0,0 +1,15 @@
-+// SPDX-License-Identifier: BSD-3-Clause
-+/*
-+ * Copyright (c) 2021, Konrad Dybcio <konrad.dybcio@somainline.org>
-+ */
-+
-+/dts-v1/;
-+
-+#include "sm8250-sony-xperia-edo.dtsi"
-+
-+/ {
-+	model = "Sony Xperia 1 II";
-+	compatible = "sony,pdx203-generic", "qcom,sm8250";
-+};
-+
-+/delete-node/ &vreg_l7f_1p8;
-diff --git a/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx206.dts b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx206.dts
-new file mode 100644
-index 000000000000..999b662f4679
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx206.dts
-@@ -0,0 +1,24 @@
-+// SPDX-License-Identifier: BSD-3-Clause
-+/*
-+ * Copyright (c) 2021, Konrad Dybcio <konrad.dybcio@somainline.org>
-+ */
-+
-+/dts-v1/;
-+
-+#include "sm8250-sony-xperia-edo.dtsi"
-+
-+/ {
-+	model = "Sony Xperia 5 II";
-+	compatible = "sony,pdx206-generic", "qcom,sm8250";
-+};
-+
-+&framebuffer {
-+	width = <1080>;
-+	height = <2520>;
-+	stride = <(1080 * 4)>;
-+};
-+
-+&vreg_l2f_1p3 {
-+	regulator-min-microvolt = <1200000>;
-+	regulator-max-microvolt = <1200000>;
-+};
-diff --git a/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
-new file mode 100644
-index 000000000000..df251b51b106
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
-@@ -0,0 +1,494 @@
-+// SPDX-License-Identifier: BSD-3-Clause
-+/*
-+ * Copyright (c) 2021, Konrad Dybcio <konrad.dybcio@somainline.org>
-+ */
-+
-+#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
-+#include "sm8250.dtsi"
-+#include "pm8150.dtsi"
-+#include "pm8150b.dtsi"
-+#include "pm8150l.dtsi"
-+#include "pm8009.dtsi"
-+
-+/delete-node/ &adsp_mem;
-+/delete-node/ &spss_mem;
-+/delete-node/ &cdsp_secure_heap;
-+
-+/ {
-+	qcom,msm-id = <356 0x20001>; /* SM8250 v2.1 */
-+	qcom,board-id = <0x10008 0>;
-+
-+	chosen {
-+		#address-cells = <2>;
-+		#size-cells = <2>;
-+		ranges;
-+
-+		framebuffer: framebuffer@9c000000 {
-+			compatible = "simple-framebuffer";
-+			reg = <0 0x9c000000 0 0x2300000>;
-+			width = <1644>;
-+			height = <3840>;
-+			stride = <(1644 * 4)>;
-+			format = "a8r8g8b8";
-+			/*
-+			 * That's a lot of clocks, but it's necessary due
-+			 * to unused clk cleanup & no panel driver yet..
-+			 */
-+			clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
-+				 <&gcc GCC_DISP_HF_AXI_CLK>,
-+				 <&gcc GCC_DISP_SF_AXI_CLK>,
-+				 <&dispcc DISP_CC_MDSS_VSYNC_CLK>,
-+				 <&dispcc DISP_CC_MDSS_MDP_CLK>,
-+				 <&dispcc DISP_CC_MDSS_BYTE0_CLK>,
-+				 <&dispcc DISP_CC_MDSS_BYTE0_INTF_CLK>,
-+				 <&dispcc DISP_CC_MDSS_PCLK0_CLK>,
-+				 <&dispcc DISP_CC_MDSS_ESC0_CLK>;
-+			power-domains = <&dispcc MDSS_GDSC>;
-+		};
-+	};
-+
-+	vph_pwr: vph-pwr-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vph_pwr";
-+		regulator-min-microvolt = <3700000>;
-+		regulator-max-microvolt = <3700000>;
-+	};
-+
-+	/* S6c is really ebi.lvl but it's there for supply map completeness sake. */
-+	vreg_s6c_0p88: smpc6-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vreg_s6c_0p88";
-+
-+		regulator-min-microvolt = <880000>;
-+		regulator-max-microvolt = <880000>;
-+		regulator-always-on;
-+		vin-supply = <&vph_pwr>;
-+	};
-+
-+	reserved-memory {
-+		adsp_mem: memory@8a100000 {
-+			reg = <0x0 0x8a100000 0x0 0x2500000>;
-+			no-map;
-+		};
-+
-+		spss_mem: memory@8c600000 {
-+			reg = <0x0 0x8c600000 0x0 0x100000>;
-+			no-map;
-+		};
-+
-+		cdsp_secure_heap: memory@8c700000 {
-+			reg = <0x0 0x8c700000 0x0 0x4600000>;
-+			no-map;
-+		};
-+
-+		cont_splash_mem: memory@9c000000 {
-+			reg = <0x0 0x9c000000 0x0 0x2300000>;
-+			no-map;
-+		};
-+
-+		ramoops@ffc00000 {
-+			compatible = "ramoops";
-+			reg = <0x0 0xffc00000 0x0 0x100000>;
-+			record-size = <0x1000>;
-+			console-size = <0x40000>;
-+			msg-size = <0x20000 0x20000>;
-+			ecc-size = <16>;
-+			no-map;
-+		};
-+	};
-+};
-+
-+&apps_rsc {
-+	pm8150-rpmh-regulators {
-+		compatible = "qcom,pm8150-rpmh-regulators";
-+		qcom,pmic-id = "a";
-+
-+		vdd-s1-supply = <&vph_pwr>;
-+		vdd-s2-supply = <&vph_pwr>;
-+		vdd-s3-supply = <&vph_pwr>;
-+		vdd-s4-supply = <&vph_pwr>;
-+		vdd-s5-supply = <&vph_pwr>;
-+		vdd-s6-supply = <&vph_pwr>;
-+		vdd-s7-supply = <&vph_pwr>;
-+		vdd-s8-supply = <&vph_pwr>;
-+		vdd-s9-supply = <&vph_pwr>;
-+		vdd-s10-supply = <&vph_pwr>;
-+		vdd-l1-l8-l11-supply = <&vreg_s6c_0p88>;
-+		vdd-l2-l10-supply = <&vreg_bob>;
-+		vdd-l3-l4-l5-l18-supply = <&vreg_s6a_0p6>;
-+		vdd-l6-l9-supply = <&vreg_s8c_1p2>;
-+		vdd-l7-l12-l14-l15-supply = <&vreg_s5a_1p9>;
-+		vdd-l13-l16-l17-supply = <&vreg_bob>;
-+
-+		/* (S1+S2+S3) - cx.lvl (ARC) */
-+
-+		vreg_s4a_1p8: smps4 {
-+			regulator-name = "vreg_s4a_1p8";
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1920000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_s5a_1p9: smps5 {
-+			regulator-name = "vreg_s5a_1p9";
-+			regulator-min-microvolt = <1824000>;
-+			regulator-max-microvolt = <2040000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_s6a_0p6: smps6 {
-+			regulator-name = "vreg_s6a_0p6";
-+			regulator-min-microvolt = <600000>;
-+			regulator-max-microvolt = <1128000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l2a_3p1: ldo2 {
-+			regulator-name = "vreg_l2a_3p1";
-+			regulator-min-microvolt = <3072000>;
-+			regulator-max-microvolt = <3072000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l3a_0p9: ldo3 {
-+			regulator-name = "vreg_l3a_0p9";
-+			regulator-min-microvolt = <928000>;
-+			regulator-max-microvolt = <932000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		/* L4 - lmx.lvl (ARC) */
-+
-+		vreg_l5a_0p88: ldo5 {
-+			regulator-name = "vreg_l5a_0p88";
-+			regulator-min-microvolt = <880000>;
-+			regulator-max-microvolt = <880000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l6a_1p2: ldo6 {
-+			regulator-name = "vreg_l6a_1p2";
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		/* L7 is unused. */
-+
-+		vreg_l9a_1p2: ldo9 {
-+			regulator-name = "vreg_l9a_1p2";
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		/* L10 is unused, L11 - lcx.lvl (ARC) */
-+
-+		vreg_l12a_1p8: ldo12 {
-+			regulator-name = "vreg_l12a_1p8";
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		/* L13 is unused. */
-+
-+		vreg_l14a_1p8: ldo14 {
-+			regulator-name = "vreg_l14a_1p8";
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1880000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		/* L15 & L16 are unused. */
-+
-+		vreg_l17a_3p0: ldo17 {
-+			regulator-name = "vreg_l17a_3p0";
-+			regulator-min-microvolt = <2496000>;
-+			regulator-max-microvolt = <3008000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l18a_0p9: ldo18 {
-+			regulator-name = "vreg_l18a_0p9";
-+			regulator-min-microvolt = <800000>;
-+			regulator-max-microvolt = <920000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+	};
-+
-+	/*
-+	 * Remaining regulators that are not yet supported:
-+	 * OLEDB: 4925000-8100000
-+	 * ab: 4600000-6100000
-+	 * ibb: 800000-5400000
-+	 */
-+	pm8150l-rpmh-regulators {
-+		compatible = "qcom,pm8150l-rpmh-regulators";
-+		qcom,pmic-id = "c";
-+
-+		vdd-s1-supply = <&vph_pwr>;
-+		vdd-s2-supply = <&vph_pwr>;
-+		vdd-s3-supply = <&vph_pwr>;
-+		vdd-s4-supply = <&vph_pwr>;
-+		vdd-s5-supply = <&vph_pwr>;
-+		vdd-s6-supply = <&vph_pwr>;
-+		vdd-s7-supply = <&vph_pwr>;
-+		vdd-s8-supply = <&vph_pwr>;
-+		vdd-l1-l8-supply = <&vreg_s4a_1p8>;
-+		vdd-l2-l3-supply = <&vreg_s8c_1p2>;
-+		vdd-l4-l5-l6-supply = <&vreg_bob>;
-+		vdd-l7-l11-supply = <&vreg_bob>;
-+		vdd-l9-l10-supply = <&vreg_bob>;
-+		vdd-bob-supply = <&vph_pwr>;
-+
-+		vreg_bob: bob {
-+			regulator-name = "vreg_bob";
-+			regulator-min-microvolt = <3350000>;
-+			regulator-max-microvolt = <3960000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_AUTO>;
-+		};
-+
-+		/*
-+		 * S1-S6 are ARCs:
-+		 * (S1+S2) - gfx.lvl,
-+		 * S3 - mx.lvl,
-+		 * (S4+S5) - mmcx.lvl,
-+		 * S6 - ebi.lvl
-+		 */
-+
-+		vreg_s7c_0p35: smps7 {
-+			regulator-name = "vreg_s7c_0p35";
-+			regulator-min-microvolt = <348000>;
-+			regulator-max-microvolt = <1000000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_s8c_1p2: smps8 {
-+			regulator-name = "vreg_s8c_1p2";
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1400000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l1c_1p8: ldo1 {
-+			regulator-name = "vreg_l1c_1p8";
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		/* L2-4 are unused. */
-+
-+		vreg_l5c_1p8: ldo5 {
-+			regulator-name = "vreg_l5c_1p8";
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <2800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l6c_2p9: ldo6 {
-+			regulator-name = "vreg_l6c_2p9";
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <2960000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-allow-set-load;
-+		};
-+
-+		vreg_l7c_2p85: ldo7 {
-+			regulator-name = "vreg_l7c_2p85";
-+			regulator-min-microvolt = <2856000>;
-+			regulator-max-microvolt = <3104000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l8c_1p8: ldo8 {
-+			regulator-name = "vreg_l8c_1p8";
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l9c_2p9: ldo9 {
-+			regulator-name = "vreg_l9c_2p9";
-+			regulator-min-microvolt = <2704000>;
-+			regulator-max-microvolt = <2960000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-allow-set-load;
-+		};
-+
-+		vreg_l10c_3p3: ldo10 {
-+			regulator-name = "vreg_l10c_3p3";
-+			regulator-min-microvolt = <3296000>;
-+			regulator-max-microvolt = <3296000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l11c_3p0: ldo11 {
-+			regulator-name = "vreg_l11c_3p0";
-+			regulator-min-microvolt = <3000000>;
-+			regulator-max-microvolt = <3000000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+	};
-+
-+	pm8009-rpmh-regulators {
-+		compatible = "qcom,pm8009-rpmh-regulators";
-+		qcom,pmic-id = "f";
-+
-+		vdd-s1-supply = <&vph_pwr>;
-+		vdd-s2-supply = <&vreg_bob>;
-+		vdd-l2-supply = <&vreg_s8c_1p2>;
-+		vdd-l5-l6-supply = <&vreg_bob>;
-+		vdd-l7-supply = <&vreg_s4a_1p8>;
-+
-+		vreg_s1f_1p2: smps1 {
-+			regulator-name = "vreg_s1f_1p2";
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_s2f_0p5: smps2 {
-+			regulator-name = "vreg_s2f_0p5";
-+			regulator-min-microvolt = <512000>;
-+			regulator-max-microvolt = <1100000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		/* L1 is unused. */
-+
-+		vreg_l2f_1p3: ldo2 {
-+			regulator-name = "vreg_l2f_1p3";
-+			regulator-min-microvolt = <1304000>;
-+			regulator-max-microvolt = <1304000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		/* L3 & L4 are unused. */
-+
-+		vreg_l5f_2p8: ldo5 {
-+			regulator-name = "vreg_l5f_2p85";
-+			regulator-min-microvolt = <2800000>;
-+			regulator-max-microvolt = <2800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l6f_2p8: ldo6 {
-+			regulator-name = "vreg_l6f_2p8";
-+			regulator-min-microvolt = <2800000>;
-+			regulator-max-microvolt = <2800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l7f_1p8: ldo7 {
-+			regulator-name = "vreg_l7f_1p8";
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+	};
-+};
-+
-+&i2c1 {
-+	status = "okay";
-+	clock-frequency = <400000>;
-+
-+	/* NXP PN553 NFC @ 28 */
-+};
-+
-+&i2c2 {
-+	status = "okay";
-+	clock-frequency = <1000000>;
-+
-+	/* Dual Cirrus Logic CS35L41 amps @ 40, 41 */
-+};
-+
-+&i2c5 {
-+	status = "okay";
-+	clock-frequency = <400000>;
-+
-+	/* Dialog SLG51000 CMIC @ 75 */
-+};
-+
-+&i2c9 {
-+	status = "okay";
-+	clock-frequency = <400000>;
-+
-+	/* AMS TCS3490 RGB+IR color sensor @ 72 */
-+};
-+
-+&i2c13 {
-+	status = "okay";
-+	clock-frequency = <400000>;
-+
-+	/* Samsung touchscreen @ 48 */
-+};
-+
-+&i2c15 {
-+	status = "okay";
-+	clock-frequency = <400000>;
-+
-+	/* Qcom SMB1390 @ 10 */
-+	/* Silicon Labs SI4704 FM Radio Receiver @ 11 */
-+	/* Qcom SMB1390_slave @ 18 */
-+	/* HALO HL6111R Qi charger @ 25 */
-+	/* Richwave RTC6226 FM Radio Receiver @ 64 */
-+};
-+
-+&qupv3_id_0 {
-+	status = "okay";
-+};
-+
-+&qupv3_id_1 {
-+	status = "okay";
-+};
-+
-+&qupv3_id_2 {
-+	status = "okay";
-+};
-+
-+&sdhc_2 {
-+	status = "okay";
-+
-+	vmmc-supply = <&vreg_l9c_2p9>;
-+	vqmmc-supply = <&vreg_l6c_2p9>;
-+	bus-width = <4>;
-+	no-sdio;
-+	no-emmc;
-+};
-+
-+&tlmm {
-+	gpio-reserved-ranges = <40 4>, <52 4>;
-+};
-+
-+&uart12 {
-+	status = "okay";
-+};
-+
-+/* BIG WARNING! DO NOT TOUCH UFS, YOUR DEVICE WILL DIE! */
-+&ufs_mem_hc { status = "disabled"; };
-+&ufs_mem_phy { status = "disabled"; };
-+
-+&usb_1 {
-+	status = "okay";
-+};
-+
-+&usb_1_dwc3 {
-+	dr_mode = "peripheral";
-+};
-+
-+&usb_1_hsphy {
-+	status = "okay";
-+
-+	vdda-pll-supply = <&vreg_l5a_0p88>;
-+	vdda18-supply = <&vreg_l12a_1p8>;
-+	vdda33-supply = <&vreg_l2a_3p1>;
-+};
-+
-+&usb_1_qmpphy {
-+	status = "okay";
-+
-+	vdda-phy-supply = <&vreg_l9a_1p2>;
-+	vdda-pll-supply = <&vreg_l18a_0p9>;
-+};
--- 
-2.32.0
+no ZAP, wrong ZAP address in the DT, bad ZAP - either a lockup or a reboot
+
+
+no pm4/pfp - mostly a sane failing route with GPU just not activating after all,
+
+yet still I can recall having some problems that I probably won't be able to
+
+reproduce right now
+
+
+no GMU fw - as stated before, can't really test properly just yet
+
+
+
+Konrad
 
