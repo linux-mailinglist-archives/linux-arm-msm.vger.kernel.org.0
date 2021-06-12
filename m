@@ -2,91 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 120B93A4F09
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Jun 2021 15:01:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A415D3A5032
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Jun 2021 21:08:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231334AbhFLNDH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 12 Jun 2021 09:03:07 -0400
-Received: from mail-0301.mail-europe.com ([188.165.51.139]:43116 "EHLO
-        mail-03.mail-europe.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S230470AbhFLNDF (ORCPT
+        id S231165AbhFLTKJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 12 Jun 2021 15:10:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60368 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229753AbhFLTKJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 12 Jun 2021 09:03:05 -0400
-Date:   Sat, 12 Jun 2021 13:00:57 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=connolly.tech;
-        s=protonmail; t=1623502861;
-        bh=pgwY2LSzrTH3x6cddXIr2d/PpxKxnWBnWbNdx+MeaIo=;
-        h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:From;
-        b=R3EfeI/qLvB3XtNMyPPJGZ2lfAlWHHeOIMHnuhmolSn1ZjiPG9nmQbfF0qZ6QC0OO
-         CjaEG9Z2rFmvy096uZGobcgSpGKvJw7Igs1lZFJ4U6qek2wPmXw9njdu4yMnPYH1uk
-         /ztfBzM9NLGgXrDy1VQXgMcJuXOeUXbjz3ihwbDI=
-To:     Kalle Valo <kvalo@codeaurora.org>
-From:   Caleb Connolly <caleb@connolly.tech>
-Cc:     "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, ath10k@lists.infradead.org,
-        linux-wireless@vger.kernel.org, netdev@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Reply-To: Caleb Connolly <caleb@connolly.tech>
-Subject: Re: [PATCH] ath10k: demote chan info without scan request warning
-Message-ID: <f39034ea-f4da-1564-e22f-398e4a1ae077@connolly.tech>
-In-Reply-To: <20210612103640.2FD93C433F1@smtp.codeaurora.org>
-References: <20210522171609.299611-1-caleb@connolly.tech> <20210612103640.2FD93C433F1@smtp.codeaurora.org>
+        Sat, 12 Jun 2021 15:10:09 -0400
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0D4EC061574
+        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Jun 2021 12:07:56 -0700 (PDT)
+Received: by mail-wm1-x32b.google.com with SMTP id l9so9804759wms.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Jun 2021 12:07:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=BB8JUk0gwOcSxW/GKLMC0NWk2t05q2bfE76haF6J3Uo=;
+        b=o0usK3QAxuMZK/rVefuHHGWcinLsWk2ORSuWGqkbpvKNPirUZwHB0IX1vBVsGc1m2q
+         CXODO5OyslNMhb0byegXAdCtsQhI5sf43fRZe4bnHneuWFDsHUKR4ju/vvP3d4KuqNhq
+         WmUzU7I1Vq6e6r/OJP/kHXT3/GOMyHRDUpGs37RF2AhT+UzTfYv6yp2xm373zI9nSeHF
+         MJCgHJkwUnWg+JyfiwGAjyPG2H6Ac/XFERVX0vl6f2Jcn1H1jPxiVW5KOxX3mvpjKx3w
+         BirBvxX1YMVQPleRAlwNumjxpidN4lchJ68kDc2LZRihahAwdQ+Xaw4saFwbQmKBo9Mk
+         8Z3A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=BB8JUk0gwOcSxW/GKLMC0NWk2t05q2bfE76haF6J3Uo=;
+        b=Pl6zATNLp/kUzyX3OpsomqVW6xsz0lyoo4xKjoETvYyVHMAq11JYgLghLKOj4ZWLi7
+         60jN5bzu50EeH4hxOqAtwmhO+DrIw14lEPHnv0Rc/t0esGwHVeGUrGa1V9vAQ+y1alWJ
+         p6OzJdvNruKeoPbhJc36auV37ktR30wa3FIg7ZxKkqzxI1uhVxvdBbAcG5hsvNiOV8CS
+         fLReHHn0T5eATGij/Hwwfmpu4LSqG74NkluViFSAaWtKkODSCI/5V2oWY4HlAqZvRrJS
+         wSzU7N97luO7FjwG5KqZQSrPZXBRoDvTz7pdEqrwd/qreVq0BmBXzcDc3CQb8lODybjU
+         Ngow==
+X-Gm-Message-State: AOAM530u0poCpJV48UmgKs+5czBobBtZDXZTFpshIgrNdl9taYOVzd5k
+        Vyb9/+62hE4bng1fX2eH+ikWJ19UYehHBqub
+X-Google-Smtp-Source: ABdhPJz9Cv27r1lmZZb4uNwMHuG9pbRW72eCDdcMkHadZWJDxkgeHQdiuL6Zx6X5A5hk6iPmc4LKew==
+X-Received: by 2002:a7b:c110:: with SMTP id w16mr9449399wmi.4.1623524874956;
+        Sat, 12 Jun 2021 12:07:54 -0700 (PDT)
+Received: from ?IPv6:2a01:e34:ed2f:f020:15bb:2e33:aa66:1b44? ([2a01:e34:ed2f:f020:15bb:2e33:aa66:1b44])
+        by smtp.googlemail.com with ESMTPSA id w23sm16170888wmi.0.2021.06.12.12.07.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 12 Jun 2021 12:07:54 -0700 (PDT)
+Subject: Re: [PATCH V4 1/3] dt-bindings: thermal: tsens: Add compatible string
+ to TSENS binding for SC7280
+To:     Rajeshwari Ravindra Kamble <rkambl@codeaurora.org>,
+        amitk@kernel.org, thara.gopinath@linaro.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, rui.zhang@intel.com, robh+dt@kernel.org
+Cc:     linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        sanm@codeaurora.org, manafm@codeaurora.org
+References: <1620367641-23383-1-git-send-email-rkambl@codeaurora.org>
+ <1620367641-23383-2-git-send-email-rkambl@codeaurora.org>
+From:   Daniel Lezcano <daniel.lezcano@linaro.org>
+Message-ID: <9a8f0d40-5368-580b-b037-9d9637cc0861@linaro.org>
+Date:   Sat, 12 Jun 2021 21:07:52 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.8.1
 MIME-Version: 1.0
+In-Reply-To: <1620367641-23383-2-git-send-email-rkambl@codeaurora.org>
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-1.2 required=10.0 tests=ALL_TRUSTED,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF shortcircuit=no
-        autolearn=disabled version=3.4.4
-X-Spam-Checker-Version: SpamAssassin 3.4.4 (2020-01-24) on
-        mailout.protonmail.ch
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Kalle,
+On 07/05/2021 08:07, Rajeshwari Ravindra Kamble wrote:
+> Adding compatible string in TSENS dt-bindings for SC7280.
+> 
+> Signed-off-by: Rajeshwari Ravindra Kamble <rkambl@codeaurora.org>
+> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+> ---
 
-On 12/06/2021 11:36 am, Kalle Valo wrote:
-> Caleb Connolly <caleb@connolly.tech> wrote:
->
->> Some devices/firmwares cause this to be printed every 5-15 seconds,
->> though it has no impact on functionality. Demote this to a debug
->> message.
->>
->> Signed-off-by: Caleb Connolly <caleb@connolly.tech>
->> Signed-off-by: Kalle Valo <kvalo@codeaurora.org>
-Is this meant to be an Ack?
->
-> On what hardware and firmware version do you see this?
-I see this on SDM845 and MSM8998 platforms, specifically the OnePlus 6
-devices, PocoPhone F1 and OnePlus 5.
-On the OnePlus 6 (SDM845) we are stuck with the following signed vendor fw:
+Applied, thanks
 
-[    9.339873] ath10k_snoc 18800000.wifi: qmi chip_id 0x30214
-chip_family 0x4001 board_id 0xff soc_id 0x40030001
-[    9.339897] ath10k_snoc 18800000.wifi: qmi fw_version 0x20060029
-fw_build_timestamp 2019-07-12 02:14 fw_build_id
-QC_IMAGE_VERSION_STRING=3DWLAN.HL.2.0.c8-00041-QCAHLSWMTPLZ-1
 
-The OnePlus 5 (MSM8998) is using firmware:
+-- 
+<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
 
-[ 6096.956799] ath10k_snoc 18800000.wifi: qmi chip_id 0x30214
-chip_family 0x4001 board_id 0xff soc_id 0x40010002
-[ 6096.956824] ath10k_snoc 18800000.wifi: qmi fw_version 0x1007007e
-fw_build_timestamp 2020-04-14 22:45 fw_build_id
-QC_IMAGE_VERSION_STRING=3DWLAN.HL.1.0.c6-00126-QCAHLSWMTPLZ-1.211883.1.2786=
-48.
->
-> --
-> https://patchwork.kernel.org/project/linux-wireless/patch/20210522171609.=
-299611-1-caleb@connolly.tech/
->
-> https://wireless.wiki.kernel.org/en/developers/documentation/submittingpa=
-tches
->
-
---
-Kind Regards,
-Caleb
-
+Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
+<http://twitter.com/#!/linaroorg> Twitter |
+<http://www.linaro.org/linaro-blog/> Blog
