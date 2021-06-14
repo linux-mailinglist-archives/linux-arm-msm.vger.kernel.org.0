@@ -2,107 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3716E3A70DD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jun 2021 22:59:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0FBC43A719E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jun 2021 23:56:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234749AbhFNVBY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Jun 2021 17:01:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57596 "EHLO
+        id S230095AbhFNV65 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Jun 2021 17:58:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41778 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234935AbhFNVBX (ORCPT
+        with ESMTP id S229895AbhFNV6R (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Jun 2021 17:01:23 -0400
-Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9D27C061767
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Jun 2021 13:59:19 -0700 (PDT)
-Received: by mail-oi1-x229.google.com with SMTP id d19so11782244oic.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Jun 2021 13:59:19 -0700 (PDT)
+        Mon, 14 Jun 2021 17:58:17 -0400
+Received: from mail-oo1-xc29.google.com (mail-oo1-xc29.google.com [IPv6:2607:f8b0:4864:20::c29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D14DC061574
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Jun 2021 14:55:54 -0700 (PDT)
+Received: by mail-oo1-xc29.google.com with SMTP id j17-20020a0568200231b029024900620310so3016737oob.7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Jun 2021 14:55:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=/6pKbYj2ed0f0UaEFoaaIUYpFQjvxwrfEa8r7ccecLg=;
-        b=VUcpHcO5+69x+UmFhBX81AvNnV4yZG99MUIPNECFwsScWTK9TaiV0hoCkGfUU7392i
-         IdO3v0bqNtQ1pwOSOr5vbmkySR/9FlzDmozXlGeRfxcECdSsPUtEdGP3mmVqo+gbFuSx
-         I/hgEmF4rADrAYt7llABIPizW00BM03GI/jxEkEFQMC+ceuxqkSY3x0i97Kt4IXrHsd4
-         i7QlXM1QDPv+NcO410O/yjq72NZY5qV2iCblFogQg9l3bPUMsde5DdeS/BiL7PNGRux8
-         woxP/GxKqD7irINk0gd14N5PWdLSw9pnWtKhqYVsYiQzD1BvT2DSP5aLiqSVf7hdMCDs
-         yR7g==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=kf+ubk5dO3qWw7TN9/qRwxXr2oNPOTNaRKSsNGShNAA=;
+        b=GDqbFuweeTGZ2a1SSvdb2YxqmPw22uySKFenjY118WSwDgtend8M/LDZYCO+EW8lNk
+         9WQWvr33aABEtxB+jhvAR1guKvaWaSn87URRr1Kb3HFJaYMgSzHlX/6BMD6FdfzEuRt1
+         G2uCVV/zmkISVT+PNPdagwrfKLV9ewWQNZah4d9a7P5LMbIm3ig8FwGUeDBKBykO//5y
+         M0wZkhw80DM124JUnmIHTpOXIEMF4GIuoqx7xYFDnlXS+hhF2pRGCK13Vj9VcQ2q9C8X
+         J2zCl4XEvB0iEDONZOE4gfur+jcGqfFNHyQy6L8ZbWKRWOLAA796+RxPAGWRBFruKuiD
+         lJsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=/6pKbYj2ed0f0UaEFoaaIUYpFQjvxwrfEa8r7ccecLg=;
-        b=g06O0x+7jfLqSCgNFEO8CMZqUZuXpdo7VxekMpzcB3aSQxfxi33J8kf4LJ19DGEEzi
-         VoB2eyJ9Tn+TCPkvu20SOFHmnzCG1Y+lWERn9eEzmWwDFuUIOH2xKAvKzt2LJ+RmX7ZG
-         vO6PG6RF5rfKUf33wLIAub2oYr2EcBEIRfthVyMhxMEhuNTX/z/C89Mrwxo0t8ImNnmE
-         Xx3Ku0ySa0oVm234EmXnfCMSGX9D80HmXhHWRgHomV3DPHMObgkaLu1n6IkvTA5VVLwt
-         lSmZk0jzgofX9oXXBKFZd7r+h1UHOvHwb2k/I9zpxjfMUyTGpLml27RWEBUN+/grxKDd
-         pQzA==
-X-Gm-Message-State: AOAM531IKDNjKlJvxGw6gkDRdngGERHuE6VTlqypuUngIueUQq0AOfwx
-        VnWN3AaspQ55nOpHx71m4fS26w==
-X-Google-Smtp-Source: ABdhPJyGwTQzDPCtsM1dRKOQR3lJJwgBKHzl/HwiNMhRIvnaoQC31Qzw/GHpYHI9LCZcyYFGlq/1kg==
-X-Received: by 2002:a05:6808:352:: with SMTP id j18mr672718oie.122.1623704356727;
-        Mon, 14 Jun 2021 13:59:16 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=kf+ubk5dO3qWw7TN9/qRwxXr2oNPOTNaRKSsNGShNAA=;
+        b=TWsvxu3ZxI4OhLNpv4PXWPhaEtHrgV0hW8+holyMkiITvmQLLpWcDFO54PxShhYonp
+         VuK1OOttHblsPvc4JqZ5QyzSfYDdXDkje5MaYJra/e6LKnEwvinZcq5vrr76OwZ1dNlB
+         9gSRkTulNSM7BnvoX+d/3WGFzJLPIbxtdYJqM04UsTZ7PF66ER5vXPMoDEqEgcpD/3/T
+         RQ6DWhWqSAhwBnKaKAM5S9yGv9xEvVVJP4117oPM3ZoFF9sIz+HUxYsPpBKBIfAUGwpq
+         isOAcKozy9ByJy3FiNj7ga6MQr/j/MTMMwbWbUerLcXN10WEGFwWbJHdvctqvCT6myhZ
+         yT/A==
+X-Gm-Message-State: AOAM532V90ueB1OQi7CR47qz2o4K1f2FTAeiXqoMoGmZ7oMdVkjYmM6d
+        +KlU4iLXyq4SAMqBK2CEXsOeiQ==
+X-Google-Smtp-Source: ABdhPJze60kY0BnVIC/EqWz/84ZLD/HN9a08aQnVqGtT9Kobfrdym6lfnyDs9jYH3P0ec10qMMDv4w==
+X-Received: by 2002:a4a:a744:: with SMTP id h4mr14827938oom.26.1623707753931;
+        Mon, 14 Jun 2021 14:55:53 -0700 (PDT)
 Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id h1sm3583245otq.59.2021.06.14.13.59.15
+        by smtp.gmail.com with ESMTPSA id 3sm3362790oob.1.2021.06.14.14.55.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Jun 2021 13:59:16 -0700 (PDT)
-Date:   Mon, 14 Jun 2021 15:59:14 -0500
+        Mon, 14 Jun 2021 14:55:53 -0700 (PDT)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Siddharth Gupta <sidgup@codeaurora.org>
-Cc:     ohad@wizery.com, linux-remoteproc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, psodagud@codeaurora.org,
-        stable@vger.kernel.org
-Subject: Re: [PATCH v2 0/4] remoteproc: core: Fixes for rproc cdev and add
-Message-ID: <YMfDItBIwGtyqAEd@builder.lan>
-References: <1623703244-26814-1-git-send-email-sidgup@codeaurora.org>
+To:     arm@kernel.org, soc@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        Andy Gross <agross@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
+        Olof Johansson <olof@lixom.net>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Manivannan Sadhasivam <mani@kernel.org>
+Subject: [GIT PULL] Qualcomm DTS fixes for v5.13
+Date:   Mon, 14 Jun 2021 16:55:52 -0500
+Message-Id: <20210614215552.391887-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.31.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1623703244-26814-1-git-send-email-sidgup@codeaurora.org>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 14 Jun 15:40 CDT 2021, Siddharth Gupta wrote:
+The following changes since commit 6efb943b8616ec53a5e444193dccf1af9ad627b5:
 
-> This patch series contains stability fixes and error handling for remoteproc.
-> 
+  Linux 5.13-rc1 (2021-05-09 14:17:44 -0700)
 
-Thanks for respinning this Sid, I think patch 3 looks good now as well,
-but it seems you accidentally got an additional file in the same patch.
+are available in the Git repository at:
 
-Can you please fix that up and resend the patches?
+  https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-dts-fixes-for-5.13
 
-Regards,
-Bjorn
+for you to fetch changes up to 0fa1baeedf06765ec6b441692ba2a2e83b7d17dc:
 
-> The changes included in this series do the following:
-> Patch 1: Fixes the creation of the rproc character device.
-> Patch 2: Validates rproc as the first step of rproc_add().
-> Patch 3: Fixes the rproc cdev remove and the order of dev_del() and cdev_del().
-> Patch 4: Adds error handling in rproc_add().
-> 
-> v1 -> v2:
-> - Added extra patch which addresses Bjorn's comments on patch 3
->   from v1.
-> - Fixed commit text for patch 2 (s/calling making/making).
-> 
-> Siddharth Gupta (4):
->   remoteproc: core: Move cdev add before device add
->   remoteproc: core: Move validate before device add
->   remoteproc: core: Fix cdev remove and rproc del
->   remoteproc: core: Cleanup device in case of failure
-> 
->  0000-cover-letter.patch.backup       | 26 ++++++++++++++++++++++++++
->  drivers/remoteproc/remoteproc_cdev.c |  2 +-
->  drivers/remoteproc/remoteproc_core.c | 27 ++++++++++++++++++---------
->  3 files changed, 45 insertions(+), 10 deletions(-)
->  create mode 100644 0000-cover-letter.patch.backup
-> 
-> -- 
-> Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
-> 
+  ARM: dts: qcom: sdx55-telit: Represent secure-regions as 64-bit elements (2021-05-29 11:24:27 -0500)
+
+----------------------------------------------------------------
+Qualcomm DTS fixes for v5.13
+
+Failure to properly define "secure-regions" as 64-bit ranges prevents
+the two SDX55 boards from booting, so correct this.
+
+----------------------------------------------------------------
+Manivannan Sadhasivam (2):
+      ARM: dts: qcom: sdx55-t55: Represent secure-regions as 64-bit elements
+      ARM: dts: qcom: sdx55-telit: Represent secure-regions as 64-bit elements
+
+ arch/arm/boot/dts/qcom-sdx55-t55.dts             | 2 +-
+ arch/arm/boot/dts/qcom-sdx55-telit-fn980-tlb.dts | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
