@@ -2,153 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E54DC3A5CB2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jun 2021 08:00:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5B4673A5D0C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jun 2021 08:26:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231949AbhFNGCW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Jun 2021 02:02:22 -0400
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:6371 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229696AbhFNGCV (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Jun 2021 02:02:21 -0400
-Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
-  by alexa-out.qualcomm.com with ESMTP; 13 Jun 2021 23:00:19 -0700
-X-QCInternal: smtphost
-Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 13 Jun 2021 23:00:17 -0700
-X-QCInternal: smtphost
-Received: from dikshita-linux.qualcomm.com ([10.204.65.237])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 14 Jun 2021 11:29:55 +0530
-Received: by dikshita-linux.qualcomm.com (Postfix, from userid 347544)
-        id 9CC5B21AFC; Mon, 14 Jun 2021 11:29:54 +0530 (IST)
-From:   Dikshita Agarwal <dikshita@codeaurora.org>
-To:     david.brown@linaro.org, robh+dt@kernel.org, mark.rutland@arm.com,
-        devicetree@vger.kernel.org, stanimir.varbanov@linaro.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        vgarodia@codeaurora.org, Dikshita Agarwal <dikshita@codeaurora.org>
-Subject: [PATCH v4] arm64: dts: qcom: sc7280: Add venus DT node
-Date:   Mon, 14 Jun 2021 11:29:51 +0530
-Message-Id: <1623650391-28144-1-git-send-email-dikshita@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        id S232482AbhFNG2B (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Jun 2021 02:28:01 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:56324 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232480AbhFNG2A (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 14 Jun 2021 02:28:00 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1623651958; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=DXckBJ5VYEYcYrhr8smIMHoGQcSFlkNdhRmfr1PB77k=;
+ b=mC3ar6vBzK/lTxQCyatWsOVL+IIlcXZChVjjzrBiFqx7Fpvh3l+VRVutYeN+l00hf4hi6K5a
+ GwOV1kZazYF57HdYO1i8ZnyqV5vrNu6kFWNUvDfNOIzAYGAgd9BsvtlL9ger8PfXMIjtnyuA
+ KkgwLY2dDWQoUWjHWbe9UYINsfk=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
+ 60c6f656ed59bf69cc3cdeed (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 14 Jun 2021 06:25:26
+ GMT
+Sender: mansur=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id E78B6C43460; Mon, 14 Jun 2021 06:25:25 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: mansur)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 2D177C433D3;
+        Mon, 14 Jun 2021 06:25:25 +0000 (UTC)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 8bit
+Date:   Mon, 14 Jun 2021 11:55:25 +0530
+From:   mansur@codeaurora.org
+To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Cc:     Bryan O'Donoghue <pure.logic@nexus-software.ie>,
+        linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, vgarodia@codeaurora.org,
+        dikshita@codeaurora.org
+Subject: Re: [PATCH] venus: helper: do not set constrained format for UBWC
+In-Reply-To: <17aaec56-bfad-63a6-b1c4-7562dedb3137@linaro.org>
+References: <1622195288-18541-1-git-send-email-mansur@codeaurora.org>
+ <a66e00f2-af3a-9550-0779-625152cc2719@nexus-software.ie>
+ <17aaec56-bfad-63a6-b1c4-7562dedb3137@linaro.org>
+Message-ID: <b649a7ecb3feb1fdf6d0743135814840@codeaurora.org>
+X-Sender: mansur@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add DT entries for the sc7280 venus encoder/decoder.
+On 2021-06-02 15:23, Stanimir Varbanov wrote:
+> Mansur, could you answer to Bryan's comments?
+> 
+>> On 5/28/21 8:23 PM, Bryan O'Donoghue wrote:
+>>> On 28/05/2021 10:48, Mansur Alisha Shaik wrote:
+>>>> Do not set constrained format explicitly for UBWC
+>>>> 
+>>>> Signed-off-by: Mansur Alisha Shaik <mansur@codeaurora.org>
+>>> 
+>>> Could you give a little bit more detail on why, what the side effects 
+>>> are ?
+>>> 
+	Sorry for late response, by default for NV12_UBWC is 128x32
 
-Co-developed-by: Mansur Alisha Shaik <mansur@codeaurora.org>
-Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
-
-change since v3:
- - added firmware node back.
-change since v2:
- - removed firmware node.
-change since v1:
- - added rpmh power domain and opp table.
-
-this patch depends on [1],[2] & [3].
-
-[1] https://patchwork.kernel.org/project/linux-clk/list/?series=449621
-[2] https://lkml.org/lkml/2021/4/9/812
-[3] https://lore.kernel.org/patchwork/project/lkml/list/?series=488429#
----
- arch/arm64/boot/dts/qcom/sc7280.dtsi | 75 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 75 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index 4c44a52..4982f96 100644
---- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -60,6 +60,11 @@
- 			no-map;
- 			reg = <0x0 0x80b00000 0x0 0x100000>;
- 		};
-+
-+		video_mem: memory@8b200000 {
-+			reg = <0x0 0x8b200000 0x0 0x500000>;
-+			no-map;
-+		};
- 	};
- 
- 	cpus {
-@@ -850,6 +855,76 @@
- 			interrupts = <GIC_SPI 582 IRQ_TYPE_LEVEL_HIGH>;
- 		};
- 
-+		venus: video-codec@0aa00000 {
-+			compatible = "qcom,sc7280-venus";
-+			reg = <0 0x0aa00000 0 0xd0600>;
-+			interrupts = <GIC_SPI 174 IRQ_TYPE_LEVEL_HIGH>;
-+
-+			clocks = <&videocc VIDEO_CC_MVSC_CORE_CLK>,
-+				 <&videocc VIDEO_CC_MVSC_CTL_AXI_CLK>,
-+				 <&videocc VIDEO_CC_VENUS_AHB_CLK>,
-+				 <&videocc VIDEO_CC_MVS0_CORE_CLK>,
-+				 <&videocc VIDEO_CC_MVS0_AXI_CLK>;
-+			clock-names = "core", "bus", "iface",
-+				      "vcodec_core", "vcodec_bus";
-+
-+			power-domains = <&videocc MVSC_GDSC>,
-+					<&videocc MVS0_GDSC>;
-+					<&rpmhpd SC7280_CX>;
-+			power-domain-names = "venus", "vcodec0", "cx";
-+			operating-points-v2 = <&venus_opp_table>;
-+
-+			interconnects = <&gem_noc MASTER_APPSS_PROC 0 &cnoc2 SLAVE_VENUS_CFG 0>,
-+					<&mmss_noc MASTER_VIDEO_P0 0 &mc_virt SLAVE_EBI1 0>;
-+			interconnect-names = "cpu-cfg", "video-mem";
-+
-+			iommus = <&apps_smmu 0x2180 0x20>,
-+				 <&apps_smmu 0x2184 0x20>;
-+			memory-region = <&video_mem>;
-+
-+			video-decoder {
-+				compatible = "venus-decoder";
-+			};
-+
-+			video-encoder {
-+				compatible = "venus-encoder";
-+			};
-+
-+			video-firmware {
-+				iommus = <&apps_smmu 0x21a2 0x0>;
-+			};
-+
-+			venus_opp_table: venus-opp-table {
-+				compatible = "operating-points-v2";
-+
-+				opp-133330000 {
-+					opp-hz = /bits/ 64 <133330000>;
-+					required-opps = <&rpmhpd_opp_low_svs>;
-+				};
-+
-+				opp-240000000 {
-+					opp-hz = /bits/ 64 <240000000>;
-+					required-opps = <&rpmhpd_opp_svs>;
-+				};
-+
-+				opp-335000000 {
-+					opp-hz = /bits/ 64 <335000000>;
-+					required-opps = <&rpmhpd_opp_svs_l1>;
-+				};
-+
-+				opp-424000000 {
-+					opp-hz = /bits/ 64 <424000000>;
-+					required-opps = <&rpmhpd_opp_nom>;
-+				};
-+
-+				opp-460000000 {
-+					opp-hz = /bits/ 64 <460000000>;
-+					required-opps = <&rpmhpd_opp_turbo>;
-+				};
-+			};
-+
-+		};
-+
- 		videocc: clock-controller@aaf0000 {
- 			compatible = "qcom,sc7280-videocc";
- 			reg = <0 0xaaf0000 0 0x10000>;
--- 
-2.7.4
-
+>>> Should this be a Fixes: ?
+>>> 
+	without this fix on V6, firmware throws below SFR
+	qcom-venus aa00000.video-codec: SFR message from FW: 
+QC_IMAGE_VERSION_STRING=video-firmware.1.0-df9cb37cf8e507a4468265658702247652351a49
+	Err_Fatal - 
+/local/mnt/workspace/pkg/builds/dynamic_timely/tree2/vendor/qcom/proprietary/video-firmware-noship/venus_proc/venus/decoders/common/src/video_decoder.c:6644:2fef3
+	which result in playback happens through Software codec.
+>>>> ---
+>>>>   drivers/media/platform/qcom/venus/helpers.c | 4 ++++
+>>>>   1 file changed, 4 insertions(+)
+>>>> 
+>>>> diff --git a/drivers/media/platform/qcom/venus/helpers.c
+>>>> b/drivers/media/platform/qcom/venus/helpers.c
+>>>> index b813d6dba..e4b8a2a 100644
+>>>> --- a/drivers/media/platform/qcom/venus/helpers.c
+>>>> +++ b/drivers/media/platform/qcom/venus/helpers.c
+>>>> @@ -1138,8 +1138,12 @@ int 
+>>>> venus_helper_set_format_constraints(struct
+>>>> venus_inst *inst)
+>>>>       if (!IS_V6(inst->core))
+>>>>           return 0;
+>>>>   +    if (inst->opb_fmt == HFI_COLOR_FORMAT_NV12_UBWC)
+>>>> +        return 0;
+>>>> +
+>>>>       pconstraint.buffer_type = HFI_BUFFER_OUTPUT2;
+>>>>       pconstraint.num_planes = 2;
+>>>> +
+>>> 
+>>> Additional newline should be removed.
+>>> 
+>>>>       pconstraint.plane_format[0].stride_multiples = 128;
+>>>>       pconstraint.plane_format[0].max_stride = 8192;
+>>>>       pconstraint.plane_format[0].min_plane_buffer_height_multiple = 
+>>>> 32;
+>>>> 
+>>> 
+>>> ---
+>>> bod
