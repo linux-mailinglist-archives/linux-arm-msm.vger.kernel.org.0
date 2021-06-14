@@ -2,44 +2,44 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 057BB3A6F8D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jun 2021 21:55:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BB0553A6FA3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jun 2021 21:57:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235534AbhFNT4y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Jun 2021 15:56:54 -0400
-Received: from mail.kernel.org ([198.145.29.99]:52984 "EHLO mail.kernel.org"
+        id S235716AbhFNT5c (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Jun 2021 15:57:32 -0400
+Received: from mail.kernel.org ([198.145.29.99]:53690 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S235518AbhFNT4v (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Jun 2021 15:56:51 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 2B6D3611EE;
-        Mon, 14 Jun 2021 19:54:48 +0000 (UTC)
+        id S235679AbhFNT5a (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 14 Jun 2021 15:57:30 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 64C236134F;
+        Mon, 14 Jun 2021 19:55:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1623700488;
-        bh=YzulUFMFki/iYiWjf8Var0pCv66AUmtnxzcZgz7kSHc=;
+        s=k20201202; t=1623700526;
+        bh=NWfwBAl37uZr0GzMxOWdBMjl8COCgIrfBVJda3rqPoY=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=A19LLbD3NvVDOSHJTkzTIi1NZHF26MsG7BJ6+awHPVUtnnWmTYE8FEhNB/lrxMV4U
-         EMKMWqWP5y+6AvTPKbN7fZpGm3t0FVaQbVTv4cfSoV2pFBqTae/6ekMy+o9V4NdNsc
-         UzGat7jDYk4+L6kkGNaxU9t+bgGmgHfni2IJZV422GDdo/8p5xQjbpYizvAM4XGT0D
-         uwVFUR7JXAynpwxVy4lW0uF4m/F4uupRY/Eqgb+z83qDFR6uIWpnE81SwDG+Yv8kfV
-         y4AX9LlZbQQTc0NPMAGiQ+ivRxAAh/VDREch9Uw63KyNNpXkBc7QAB1tETmKKdbSB0
-         O9ntoBlQpODpg==
+        b=rWKkz30eXbWepa4X39gBPY5Oc/8LEHE2qHSC5TnegqqsDZt2CmSTIn+a+caQFvvVC
+         1pSBvO0749Uxq2dgXKoPRdOhijbHDLeMu1HuA88391XR68/D/rIOwsL88wUPTFoWG6
+         FrziAAtZ4N8DvRCxbPhiXZpGEDcrtPHblIAoPXDtignI258IVvZBDFd2c9HP/DjMg5
+         XsNejABziWzewG2APjpka5O6NUW3kTVDbrCQTSYMSpQa1LB2A6RxSuoYW+udv8cR+/
+         o0FWrhmOvr7noVgGkgf6sJCmowF+8e3PVK6xhQ3Y/hTncUgSXfvgNOvONxHXatulrc
+         CT61/f6R+SLxw==
 From:   Mark Brown <broonie@kernel.org>
-To:     agross@kernel.org, srinivas.kandagatla@linaro.org,
-        rohitkr@codeaurora.org, perex@perex.cz,
+To:     agross@kernel.org, rohitkr@codeaurora.org,
+        srinivas.kandagatla@linaro.org,
         Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
-        plai@codeaurora.org, linux-kernel@vger.kernel.org, tiwai@suse.com,
+        plai@codeaurora.org, tiwai@suse.com, linux-kernel@vger.kernel.org,
         robh+dt@kernel.org, swboyd@chromium.org,
         linux-arm-msm@vger.kernel.org, lgirdwood@gmail.com,
-        devicetree@vger.kernel.org, bjorn.andersson@linaro.org,
-        judyhsiao@chromium.org, alsa-devel@alsa-project.org,
-        bgoswami@codeaurora.org
+        devicetree@vger.kernel.org, bgoswami@codeaurora.org,
+        bjorn.andersson@linaro.org, judyhsiao@chromium.org,
+        alsa-devel@alsa-project.org, perex@perex.cz
 Cc:     Mark Brown <broonie@kernel.org>
-Subject: Re: [PATCH v3] ASoC: qcom: Add four speaker support on MI2S secondary
-Date:   Mon, 14 Jun 2021 20:53:42 +0100
-Message-Id: <162369994008.34524.16929754677790147790.b4-ty@kernel.org>
+Subject: Re: [PATCH v3] ASoC: qcom: Fix for DMA interrupt clear reg overwriting
+Date:   Mon, 14 Jun 2021 20:53:55 +0100
+Message-Id: <162369994007.34524.2234994672815898510.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20210609133039.4648-1-srivasam@codeaurora.org>
-References: <20210609133039.4648-1-srivasam@codeaurora.org>
+In-Reply-To: <20210609072310.26099-1-srivasam@codeaurora.org>
+References: <20210609072310.26099-1-srivasam@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -47,10 +47,15 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 9 Jun 2021 19:00:39 +0530, Srinivasa Rao Mandadapu wrote:
-> Add four speaker support on MI2S secondary block
-> by using I2S SD1 line on gpio52 pin, and add channel map
-> control support in the lpass-cpu audio driver.
+On Wed, 9 Jun 2021 12:53:10 +0530, Srinivasa Rao Mandadapu wrote:
+> The DMA interrupt clear register overwritten during
+> simultaneous playback and capture in lpass platform
+> interrupt handler. It's causing playback or capture stuck
+> in similtaneous plaback on speaker and capture on dmic test.
+> Update appropriate reg fields of corresponding channel instead
+> of entire register write.
+> 
+> [...]
 
 Applied to
 
@@ -58,8 +63,8 @@ Applied to
 
 Thanks!
 
-[1/1] ASoC: qcom: Add four speaker support on MI2S secondary
-      commit: c223f41c1a52bfe10f1d3311679b1d1f9813e500
+[1/1] ASoC: qcom: Fix for DMA interrupt clear reg overwriting
+      commit: da0363f7bfd3c32f8d5918e40bfddb9905c86ee1
 
 All being well this means that it will be integrated into the linux-next
 tree (usually sometime in the next 24 hours) and sent to Linus during
