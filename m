@@ -2,110 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 20F1D3A6B1D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jun 2021 17:58:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AD0FA3A6B37
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jun 2021 18:04:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233135AbhFNQA6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Jun 2021 12:00:58 -0400
-Received: from mail-oi1-f171.google.com ([209.85.167.171]:36699 "EHLO
-        mail-oi1-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233006AbhFNQA6 (ORCPT
+        id S234547AbhFNQGB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Jun 2021 12:06:01 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:28508 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233135AbhFNQF7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Jun 2021 12:00:58 -0400
-Received: by mail-oi1-f171.google.com with SMTP id r16so14443852oiw.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Jun 2021 08:58:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=94iIJWdnufdLWAXQdWLP9tyvdsiAcGYzNeNNwgwJVDg=;
-        b=IqTXgIT+Cl8Wo9ps3519Xaw5nP9M00zvUCAESiMwX2JltCyvmClzopQPyd/gV29uYU
-         AJgedo2DeLfn5nx9CzA4y/kbAtunlZgY1BjhfVljwo74gbDn4JxvRLFLMLgZ3hdatGLG
-         QZmBMuqmSDIvKsmaDy9i4xx4pSHccwXsHrWZPbol306BOxH2iV6qgRLIEoMHSalJ7KM2
-         J6mB8jxB9tWItV6w9t7QsTnWQy9is97/eaCy2kbWhE6esMZx/PmnnHamYfcDh0aOzUjk
-         d/PRWj0+VPRespIVqfRDKmIQxAyEgdwEL+Qil9EoLlOy/gQuazuROa7qaJO/kFebP+LD
-         qpRw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=94iIJWdnufdLWAXQdWLP9tyvdsiAcGYzNeNNwgwJVDg=;
-        b=jX2AfxHIvi6f6zBLJgCzbJgj0g/l4LN9GrjpzcMa+Nhnul/P/hzII5rPPzTTH2ruSj
-         A/l6lHVVCisoXNenFzUgQ1m/SVYCVnUFkM0dRIuRt4ekbbcqGTSGqLvWDJk3Tm9cneFC
-         fd9Rw70k14jFBNhJm8u14FnxUcXH340+WjGx9Y6EsQMP5Nk0O/g8XaAzPbe2RYwwD+Nx
-         DKc/Cxsa7mBGaIOYy6zGJvkOd/bIP1dP3+JUXNCiTqBns6MZz3HaBSc8WNcSjAOGdI/p
-         vXY4zDUpsjk0oUO4NsoLSXQf3qeP9H6bA+j3g8nnB51VDX40Mz9fzavmvK8t5VNQrLJi
-         ATpQ==
-X-Gm-Message-State: AOAM530cD8XI1xgUm4dMFJDydgSeq6msC7hplKXihlE9Hm5JQ7LkvNl0
-        KtrSybUp8M3D0iUO36HZbVleQw==
-X-Google-Smtp-Source: ABdhPJxl00X8N39+K/fL/lQtc3Y9cNUIlK/sTxo5x7SmvJMEDgs+x/NARXztwoamyE8n6s/bhqicGA==
-X-Received: by 2002:aca:b609:: with SMTP id g9mr22032540oif.141.1623686267640;
-        Mon, 14 Jun 2021 08:57:47 -0700 (PDT)
-Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id c205sm3137575oob.38.2021.06.14.08.57.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Jun 2021 08:57:47 -0700 (PDT)
-Date:   Mon, 14 Jun 2021 10:57:45 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Pavel Skripkin <paskripkin@gmail.com>
-Cc:     mani@kernel.org, davem@davemloft.net,
-        linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        syzbot+1917d778024161609247@syzkaller.appspotmail.com
-Subject: Re: [PATCH] net: qrtr: fix OOB Read in qrtr_endpoint_post
-Message-ID: <YMd8eb/yu1Ds4oVV@yoga>
-References: <20210614120650.2731-1-paskripkin@gmail.com>
+        Mon, 14 Jun 2021 12:05:59 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1623686637; h=Content-Type: MIME-Version: Message-ID:
+ In-Reply-To: Date: References: Subject: Cc: To: From: Sender;
+ bh=h/MYTAGzh1yqIwqzV/V7jJRRMLxM6iJicH91XeZOxsI=; b=lK6tfkLuHV7FzTTx6a73GpcejF+sLGH0/FzyqgzCJWp5SmSEFdAlztEw4h5RGBJqCfuWWjwU
+ DJMkenN+kCwTsjcusY/AIGYDQKXSZbuc7ItPgbrziGMlMu6nOEGQMu0M/HYZDPSB4ucDIcJ6
+ 5Cwz3a9nyFQLuAsjTX+nCH8vgZ4=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
+ 60c77db2e27c0cc77f903b99 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 14 Jun 2021 16:02:58
+ GMT
+Sender: kvalo=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 9B563C433D3; Mon, 14 Jun 2021 16:02:57 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from tykki (tynnyri.adurom.net [51.15.11.48])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: kvalo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id F07B8C43460;
+        Mon, 14 Jun 2021 16:02:54 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org F07B8C43460
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=kvalo@codeaurora.org
+From:   Kalle Valo <kvalo@codeaurora.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     Bhaumik Bhatt <bbhatt@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
+        jhugo@codeaurora.org, linux-kernel@vger.kernel.org,
+        loic.poulain@linaro.org, linux-wireless@vger.kernel.org,
+        ath11k@lists.infradead.org
+Subject: Re: [PATCH v4 4/6] ath11k: set register access length for MHI driver
+References: <1620330705-40192-1-git-send-email-bbhatt@codeaurora.org>
+        <1620330705-40192-5-git-send-email-bbhatt@codeaurora.org>
+        <20210521135152.GL70095@thinkpad>
+Date:   Mon, 14 Jun 2021 19:02:38 +0300
+In-Reply-To: <20210521135152.GL70095@thinkpad> (Manivannan Sadhasivam's
+        message of "Fri, 21 May 2021 19:21:52 +0530")
+Message-ID: <87h7i0juxt.fsf@codeaurora.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210614120650.2731-1-paskripkin@gmail.com>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 14 Jun 07:06 CDT 2021, Pavel Skripkin wrote:
+Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> writes:
 
-> Syzbot reported slab-out-of-bounds Read in
-> qrtr_endpoint_post. The problem was in wrong
-> _size_ type:
-> 
-> 	if (len != ALIGN(size, 4) + hdrlen)
-> 		goto err;
-> 
-> If size from qrtr_hdr is 4294967293 (0xfffffffd), the result of
-> ALIGN(size, 4) will be 0. In case of len == hdrlen and size == 4294967293
-> in header this check won't fail and
-> 
-> 	skb_put_data(skb, data + hdrlen, size);
-> 
-> will read out of bound from data, which is hdrlen allocated block.
-> 
-> Fixes: 194ccc88297a ("net: qrtr: Support decoding incoming v2 packets")
-> Reported-and-tested-by: syzbot+1917d778024161609247@syzkaller.appspotmail.com
-> Signed-off-by: Pavel Skripkin <paskripkin@gmail.com>
+> On Thu, May 06, 2021 at 12:51:43PM -0700, Bhaumik Bhatt wrote:
+>> MHI driver requires register space length to add range checks and
+>> prevent memory region accesses outside of that for MMIO space.
+>> Set it before registering the MHI controller.
+>> 
+>> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+>> Reviewed-by: Hemant Kumar <hemantk@codeaurora.org>
+>
+> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+>
+> Kalle, should we do immutable branch for this patch or I can pick it up via MHI
+> tree (if there are no other patches expected from ath11k for this controller)?
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+I'm not expecting any conflicts with this, and if there are, they should
+be easy for Stephen or Linus to fix. So it's easiest to route this via
+your tree. But I'm not giving my ack yet, see below.
 
-Regards,
-Bjorn
+I'm worried that this patchset breaks bisect. Every patch in the
+patchset should not break existing functionality, what if only patches
+1-3 are included in the tree but not patch 4? Wouldn't ath11k be broken
+then? I didn't review the whole patchset, but I suspect the fix is to
+include the ath11k change in the actual mhi patch which changes the
+functionality. So that way we would not have a separate ath11k patch at
+all.
 
-> ---
->  net/qrtr/qrtr.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/net/qrtr/qrtr.c b/net/qrtr/qrtr.c
-> index c0477bec09bd..f2efaa4225f9 100644
-> --- a/net/qrtr/qrtr.c
-> +++ b/net/qrtr/qrtr.c
-> @@ -436,7 +436,7 @@ int qrtr_endpoint_post(struct qrtr_endpoint *ep, const void *data, size_t len)
->  	struct qrtr_sock *ipc;
->  	struct sk_buff *skb;
->  	struct qrtr_cb *cb;
-> -	unsigned int size;
-> +	size_t size;
->  	unsigned int ver;
->  	size_t hdrlen;
->  
-> -- 
-> 2.32.0
-> 
+Also I'm not able to test this patchset at the moment. Can someone else
+help and do a quick test with QCA6390 to verify these doesn't break
+ath11k?
+
+-- 
+https://patchwork.kernel.org/project/linux-wireless/list/
+
+https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
