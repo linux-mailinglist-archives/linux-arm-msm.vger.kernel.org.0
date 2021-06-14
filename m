@@ -2,101 +2,165 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AD0FA3A6B37
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jun 2021 18:04:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9ED123A6B51
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jun 2021 18:10:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234547AbhFNQGB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Jun 2021 12:06:01 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:28508 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233135AbhFNQF7 (ORCPT
+        id S233640AbhFNQMh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Jun 2021 12:12:37 -0400
+Received: from mail-oo1-f47.google.com ([209.85.161.47]:37412 "EHLO
+        mail-oo1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233968AbhFNQMf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Jun 2021 12:05:59 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1623686637; h=Content-Type: MIME-Version: Message-ID:
- In-Reply-To: Date: References: Subject: Cc: To: From: Sender;
- bh=h/MYTAGzh1yqIwqzV/V7jJRRMLxM6iJicH91XeZOxsI=; b=lK6tfkLuHV7FzTTx6a73GpcejF+sLGH0/FzyqgzCJWp5SmSEFdAlztEw4h5RGBJqCfuWWjwU
- DJMkenN+kCwTsjcusY/AIGYDQKXSZbuc7ItPgbrziGMlMu6nOEGQMu0M/HYZDPSB4ucDIcJ6
- 5Cwz3a9nyFQLuAsjTX+nCH8vgZ4=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
- 60c77db2e27c0cc77f903b99 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 14 Jun 2021 16:02:58
- GMT
-Sender: kvalo=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 9B563C433D3; Mon, 14 Jun 2021 16:02:57 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from tykki (tynnyri.adurom.net [51.15.11.48])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: kvalo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id F07B8C43460;
-        Mon, 14 Jun 2021 16:02:54 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org F07B8C43460
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=kvalo@codeaurora.org
-From:   Kalle Valo <kvalo@codeaurora.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     Bhaumik Bhatt <bbhatt@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
-        jhugo@codeaurora.org, linux-kernel@vger.kernel.org,
-        loic.poulain@linaro.org, linux-wireless@vger.kernel.org,
-        ath11k@lists.infradead.org
-Subject: Re: [PATCH v4 4/6] ath11k: set register access length for MHI driver
-References: <1620330705-40192-1-git-send-email-bbhatt@codeaurora.org>
-        <1620330705-40192-5-git-send-email-bbhatt@codeaurora.org>
-        <20210521135152.GL70095@thinkpad>
-Date:   Mon, 14 Jun 2021 19:02:38 +0300
-In-Reply-To: <20210521135152.GL70095@thinkpad> (Manivannan Sadhasivam's
-        message of "Fri, 21 May 2021 19:21:52 +0530")
-Message-ID: <87h7i0juxt.fsf@codeaurora.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        Mon, 14 Jun 2021 12:12:35 -0400
+Received: by mail-oo1-f47.google.com with SMTP id w13-20020a4ad02d0000b029024a98209c35so1942726oor.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Jun 2021 09:10:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=WxkwNm6ZYNWIa0Lk9ntav/xspFP7K0YWVjmpKlkqGHM=;
+        b=MWIRhnftb8ptws/gw00LvdIp2qhm1pyKeix9DxnZhFxe/rLAFyLuhnb38KFxVFY21U
+         3qLBPzwgtR/Zmw7YzqRBONHujLPBW4+yapefexTWW0MVYi2rQOyDaqUjbQN7jKkb1zdR
+         r23kkH0xw1v2vJk+VmHiPi9exwOB/LvoNC7Ak0VjKQFTo51DdmHO137vb6gHMMnQE0d0
+         UHbtQT79HZg+zxRbowzUu+UtJliuRU1cDeKNYxQzP9J9ThSy/+fF5Hlvkp77e3BjnVgl
+         mG8FAT0sZNXqf9eBKUJMORz6vQvy8P6biOO8WI2jV3NWqs5S76l3Ctu1k/w71JWtukmn
+         jByA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=WxkwNm6ZYNWIa0Lk9ntav/xspFP7K0YWVjmpKlkqGHM=;
+        b=qy/b0YjZFrUI4FWvPK4CBnddGteXM6Gcx/L6LQR/xOpJfNrI1W3q94XcFmH+JG41ZH
+         cpDPY4vgzoFpYAYzsgYoKvsES+GinXX0Clv/qfAUqemMV01TAHDpgyRQYgpOCLLdVCAs
+         +riZnx2B2PFKz3aPU/wKNIf783GCXGPxHwUrME05WDRL9G11flFIqZRPwF9FqWC8pbiV
+         +QDfPtjZGpPKjG4RotqO6BruBBPsGogGeBTCqcOdmO06hcHphvkazGWh8Q/yhBKOePbH
+         mTyzu+3s8HBlb+5QEoYs/LWoH8DfgQn0K96XiL9vvp6G/V6I1ez1BCUnb+n0eZAA94ny
+         aZLg==
+X-Gm-Message-State: AOAM533RnMlsnpSYn7AYJFM/YyRd0RxrJp/jdhxRS5TfgeA6znVj2HUH
+        c0S9WprfIjyWjQezNrMtJleNoQ==
+X-Google-Smtp-Source: ABdhPJyKjW8ZTmKRNbtA7KEhYwH5Q70ndZULWrCYGmo8BGF/gqf4pAvVS2xZT8D5iVtAzeG7g/aryQ==
+X-Received: by 2002:a4a:9210:: with SMTP id f16mr13429698ooh.17.1623686960994;
+        Mon, 14 Jun 2021 09:09:20 -0700 (PDT)
+Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id g25sm3433972otn.81.2021.06.14.09.09.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 14 Jun 2021 09:09:20 -0700 (PDT)
+Date:   Mon, 14 Jun 2021 11:09:18 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        devicetree <devicetree@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        bhupesh.linux@gmail.com
+Subject: Re: [PATCH 2/8] dt-bindings: pinctrl: qcom,pmic-gpio: Add compatible
+ for SA8155p-adp
+Message-ID: <YMd/LqGVbC+F/Qsm@yoga>
+References: <20210607113840.15435-1-bhupesh.sharma@linaro.org>
+ <20210607113840.15435-3-bhupesh.sharma@linaro.org>
+ <YMLPvrVVdx0MZJlO@builder.lan>
+ <CAH=2Nty=VB2G6_eEAna8ZAysSCt9mMydR0cXLyTa=jrZ7nQO5A@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAH=2Nty=VB2G6_eEAna8ZAysSCt9mMydR0cXLyTa=jrZ7nQO5A@mail.gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> writes:
+On Mon 14 Jun 03:13 CDT 2021, Bhupesh Sharma wrote:
 
-> On Thu, May 06, 2021 at 12:51:43PM -0700, Bhaumik Bhatt wrote:
->> MHI driver requires register space length to add range checks and
->> prevent memory region accesses outside of that for MMIO space.
->> Set it before registering the MHI controller.
->> 
->> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
->> Reviewed-by: Hemant Kumar <hemantk@codeaurora.org>
->
-> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
->
-> Kalle, should we do immutable branch for this patch or I can pick it up via MHI
-> tree (if there are no other patches expected from ath11k for this controller)?
+> Hi Bjorn,
+> 
+> On Fri, 11 Jun 2021 at 08:21, Bjorn Andersson
+> <bjorn.andersson@linaro.org> wrote:
+> >
+> > On Mon 07 Jun 06:38 CDT 2021, Bhupesh Sharma wrote:
+> >
+> > > Add pmic-gpio compatible strings for pmm8155au_1 and pmm8155au_2 pmics
+> > > found on SA8155p-adp board.
+> > >
+> > > Cc: Linus Walleij <linus.walleij@linaro.org>
+> > > Cc: Liam Girdwood <lgirdwood@gmail.com>
+> > > Cc: Mark Brown <broonie@kernel.org>
+> > > Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > > Cc: Vinod Koul <vkoul@kernel.org>
+> > > Cc: Rob Herring <robh+dt@kernel.org>
+> > > Cc: Andy Gross <agross@kernel.org>
+> > > Cc: devicetree@vger.kernel.org
+> > > Cc: linux-kernel@vger.kernel.org
+> > > Cc: linux-gpio@vger.kernel.org
+> > > Cc: bhupesh.linux@gmail.com
+> > > Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+> > > ---
+> > >  Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt | 5 +++++
+> > >  1 file changed, 5 insertions(+)
+> > >
+> > > diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt b/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt
+> > > index f6a9760558a6..ee4721f1c477 100644
+> > > --- a/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt
+> > > +++ b/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt
+> > > @@ -27,6 +27,8 @@ PMIC's from Qualcomm.
+> > >                   "qcom,pm660l-gpio"
+> > >                   "qcom,pm8150-gpio"
+> > >                   "qcom,pm8150b-gpio"
+> > > +                 "qcom,pmm8155au-1-gpio"
+> > > +                 "qcom,pmm8155au-2-gpio"
+> >
+> > As with the regulator this seems to be a single component.
+> >
+> > >                   "qcom,pm8350-gpio"
+> > >                   "qcom,pm8350b-gpio"
+> > >                   "qcom,pm8350c-gpio"
+> > > @@ -116,6 +118,9 @@ to specify in a pin configuration subnode:
+> > >                                            and gpio8)
+> > >                   gpio1-gpio12 for pm8150b (holes on gpio3, gpio4, gpio7)
+> > >                   gpio1-gpio12 for pm8150l (hole on gpio7)
+> > > +                 gpio1-gpio10 for pmm8155au-1 (holes on gpio2, gpio5, gpio7
+> > > +                                               and gpio8)
+> > > +                 gpio1-gpio10 for pmm8155au-2 (holes on gpio2, gpio5, gpio7)
+> >
+> > In the schematics all 10 pins are wired on both of these PMICs, so I
+> > don't think there are holes. Please omit the comment.
+> 
+> But if we look at the downstream dts (see [1]), we clearly have holes
+> on gpio 2, 5 and 7 on PMM8155AU_2 whereas if we see [2], we can see
+> PMM8155AU_1 has holes on gpio 2, 5, 7 and 8.
+> 
+> As I understand, the schematics mention some optional configurations
+> as well which might not be available depending on the default board
+> configuration.
+> 
+> [1]. https://source.codeaurora.org/quic/la/kernel/msm-4.14/tree/arch/arm64/boot/dts/qcom/sa8155-pmic-overlay.dtsi?h=LV.AU.0.1.0.r1-15900-gen3meta.0#n92
+> [2]. https://source.codeaurora.org/quic/la/kernel/msm-4.14/tree/arch/arm64/boot/dts/qcom/sa8155-pmic-overlay.dtsi?h=LV.AU.0.1.0.r1-15900-gen3meta.0#n36
+> 
 
-I'm not expecting any conflicts with this, and if there are, they should
-be easy for Stephen or Linus to fix. So it's easiest to route this via
-your tree. But I'm not giving my ack yet, see below.
+Perhaps these "holes" means that they are reserved for use by one of the
+other subsystems in the SoC - similar to how we have
+gpio-reserved-ranges in the TLMM. Because according to the PMS8155AU
+documentation and the schematics, there's no physical holes there.
 
-I'm worried that this patchset breaks bisect. Every patch in the
-patchset should not break existing functionality, what if only patches
-1-3 are included in the tree but not patch 4? Wouldn't ath11k be broken
-then? I didn't review the whole patchset, but I suspect the fix is to
-include the ath11k change in the actual mhi patch which changes the
-functionality. So that way we would not have a separate ath11k patch at
-all.
+As such, the binding and driver should not describe these "holes". If
+they aren't used by Linux, then the DT won't reference them - and if
+there's reasons for prohibiting Linux from touching the registers we
+should use gpio-reserved-ranges, as this will depend on firmware
+configuration.
 
-Also I'm not able to test this patchset at the moment. Can someone else
-help and do a quick test with QCA6390 to verify these doesn't break
-ath11k?
+Regards,
+Bjorn
 
--- 
-https://patchwork.kernel.org/project/linux-wireless/list/
-
-https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
+> Regards,
+> Bhupesh
+> 
+> >
+> > >                   gpio1-gpio10 for pm8350
+> > >                   gpio1-gpio8 for pm8350b
+> > >                   gpio1-gpio9 for pm8350c
+> > > --
+> > > 2.31.1
+> > >
