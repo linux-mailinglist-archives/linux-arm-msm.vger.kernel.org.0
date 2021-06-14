@@ -2,90 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 615EC3A6DBB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jun 2021 19:55:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8A0673A6E14
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jun 2021 20:14:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233757AbhFNR5D (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Jun 2021 13:57:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45334 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233199AbhFNR5C (ORCPT
+        id S232966AbhFNSQ7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Jun 2021 14:16:59 -0400
+Received: from mail-ot1-f44.google.com ([209.85.210.44]:45723 "EHLO
+        mail-ot1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233455AbhFNSQ6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Jun 2021 13:57:02 -0400
-Received: from mail-oo1-xc2d.google.com (mail-oo1-xc2d.google.com [IPv6:2607:f8b0:4864:20::c2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3B18C061574
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Jun 2021 10:54:59 -0700 (PDT)
-Received: by mail-oo1-xc2d.google.com with SMTP id k21-20020a4a2a150000b029024955603642so2849279oof.8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Jun 2021 10:54:59 -0700 (PDT)
+        Mon, 14 Jun 2021 14:16:58 -0400
+Received: by mail-ot1-f44.google.com with SMTP id 6-20020a9d07860000b02903e83bf8f8fcso11689218oto.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Jun 2021 11:14:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=RZlshWzShRr/1bxvI5qOhZ1dQlVIKovO57VSbDQdZFU=;
-        b=Mg3/SfBqtNf7mgH1NsaYekPfohhc46bBdfe4bze5h9yw87oo0g6Tubo8ceS0mU4lbS
-         YrOJFVzXaEREnDk6QfLMegA5sA6jXbkra30Y973xYjAvkOLGCa3A3XLBTjbArGSWzcRu
-         ZLZHp7MrBMIAw/rtyRje/sdFpR7oFAH9f4PXGR+eNGrUt1rwBipxF+U8qVJy01+Z2ctI
-         35RAPRCWroEBmT6zTirlKX3h/6nh5vLfRKkt3FYFZ4W7bnVbJ8wK2sfwV4nH4s9AZN4J
-         MUSi42oyIsBS+fWSQTZ13sb55pNj3zjUfChF3o6gwZDXfPr4at+lupCH2JUBCkpb5G3/
-         r+XA==
+        bh=KZcI66KL4lUhqfIFr7hbANO1TAmLEs4hR8w3wCiBRWY=;
+        b=XUiXOd3te7lw0QLcaVsO3oxZTbl2Mm58M8pzLBLdfb1dj6S027RBO+LUxcbixkaTaj
+         jLTtF5FfESIXMr2AUFZEx9HjbRmv+AJ0OvguausTfDzXVSavPkfqFJqEJ0fVy9dHONmh
+         7aYalR5fNJe/Ba5x+a0R54JBCh26v5aAR+qJ09r4QuAfQaX0MkVYqohsoDIQz/KP3G8b
+         GRjB4JCAHI/kLPDFsfZmgPdXLLPqXGsczxPoUSbzmCYD9sf3Xe7vaFgfgC7nwa5lp2e7
+         oO+kz2FqGE0JTwO2vunIURRLvW5shebJi5DsC+RFS9QbQGse7H0xdFMCnF8hWe3SpMYL
+         jkUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=RZlshWzShRr/1bxvI5qOhZ1dQlVIKovO57VSbDQdZFU=;
-        b=VtzCjKP4pOZoMVVQIe7Zr49w1JV17gCYg+1Gt4gL/HiYjkbUSiU9Iq5cNbYcId3t5h
-         ZKf+drL21E4w2VaBlydnRaVrcFEStO4gcUsRUWjdA8XsKIgRu8WX9LIMlT6b7qYJUSM3
-         kcNIkBqTXZQUaZ2FjekYffuHk5+lMvK8cKT3/Z8AJrCnLwr4IwdrtlpOjTXEhQopITYR
-         2lK+3GUZygaqoBDx3x0Cz9/0sBXY6Z0zeEGX4lQw+74XPRf5bVPqoxJDDuHfZe8opOwS
-         MmI+D4Xf5FZuhx1fQRSe+2PusWiEwBdK91aM0L2/KBe+N9DQdjNarT4bXVCf/0cpQhd7
-         MW6g==
-X-Gm-Message-State: AOAM531RfptPb/kAxKYH+3lVTIeEexsvhJ12OjCrnqMSKzPhzSJNNOJn
-        8Vk4eEvrCYHtzrCcifa4fegH7w==
-X-Google-Smtp-Source: ABdhPJz1bHjlWmc11NEr6kmjCyfD8umeBOwZX3ymRU4S8kgueYx+/o5al/nmOVkubv+jft5vHI4vzQ==
-X-Received: by 2002:a05:6820:29b:: with SMTP id q27mr14003988ood.32.1623693299312;
-        Mon, 14 Jun 2021 10:54:59 -0700 (PDT)
+        bh=KZcI66KL4lUhqfIFr7hbANO1TAmLEs4hR8w3wCiBRWY=;
+        b=POi47MvKcSy3/68JeH2oR3jrejdMgDpSqqGzPESVoTF8abR/lkPhUM98cFfq4/Dk7M
+         GmbC0i7CARrj4r1Q2NlHrf3qlRHXScQL+2C56x3Ub09n9EV8BpjJIVF0STuMgbtZ+Wdp
+         fjsUlnfstWG70JWtUXWzmppxc8fpiSIARviiWDxbcGOc3bUpBh/by9aDFfbYWHqb88WK
+         AkH7PbkzCPMtUthK6AUjJLlj6aNh0dUg9PZsQhxDtz/bJs8sCw5TrMSl/eesnPxkcdzY
+         4OjYAsNIVXcLX3SKXX0dqxvgwZ6dYCHnwvqZb3pGYN9Tr/ps6S/cvVsiD/ngIkSz5fX3
+         6adQ==
+X-Gm-Message-State: AOAM532S+XnsRRsR2/EruXbSXxNvx0yVyQkxHpawwWrSHbZ65NgkYrCe
+        RcIYpyh2id+Fv6JnejX9sPqbcg==
+X-Google-Smtp-Source: ABdhPJzZED/JII+jDYq37ukybZgc2XEeI3z1G7ZyIW6hwwHcBOXUnbVQWq/qD3F0VaLGwk2qN0BNgg==
+X-Received: by 2002:a9d:65cf:: with SMTP id z15mr14722316oth.250.1623694435290;
+        Mon, 14 Jun 2021 11:13:55 -0700 (PDT)
 Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id 2sm3400587ota.58.2021.06.14.10.54.57
+        by smtp.gmail.com with ESMTPSA id m18sm3460119otr.61.2021.06.14.11.13.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Jun 2021 10:54:58 -0700 (PDT)
-Date:   Mon, 14 Jun 2021 12:54:56 -0500
+        Mon, 14 Jun 2021 11:13:54 -0700 (PDT)
+Date:   Mon, 14 Jun 2021 13:13:52 -0500
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     dri-devel@lists.freedesktop.org, iommu@lists.linux-foundation.org,
-        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
-        Rob Clark <robdclark@chromium.org>,
-        Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        "Isaac J. Manjarres" <isaacm@codeaurora.org>,
-        "moderated list:ARM SMMU DRIVERS" 
-        <linux-arm-kernel@lists.infradead.org>,
-        open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v5 4/5] iommu/arm-smmu-qcom: Add stall support
-Message-ID: <YMeX8NnVw80b9Qpe@yoga>
-References: <20210610214431.539029-1-robdclark@gmail.com>
- <20210610214431.539029-5-robdclark@gmail.com>
+To:     Martin Botka <martin.botka@somainline.org>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        konrad.dybcio@somainline.org,
+        angelogioacchino.delregno@somainline.org,
+        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
+        Andy Gross <agross@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH V5 1/2] dt-bindings: pinctrl: qcom: sm6125: Document
+ SM6125 pinctrl driver
+Message-ID: <YMecYELkzbAYGuSk@yoga>
+References: <20210614172713.558192-1-martin.botka@somainline.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20210610214431.539029-5-robdclark@gmail.com>
+In-Reply-To: <20210614172713.558192-1-martin.botka@somainline.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 10 Jun 16:44 CDT 2021, Rob Clark wrote:
+On Mon 14 Jun 12:27 CDT 2021, Martin Botka wrote:
 
-> From: Rob Clark <robdclark@chromium.org>
+> Document the newly added SM6125 pinctrl driver
 > 
-> Add, via the adreno-smmu-priv interface, a way for the GPU to request
-> the SMMU to stall translation on faults, and then later resume the
-> translation, either retrying or terminating the current translation.
-> 
-> This will be used on the GPU side to "freeze" the GPU while we snapshot
-> useful state for devcoredump.
-> 
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
+> Signed-off-by: Martin Botka <martin.botka@somainline.org>
 
 Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
@@ -93,106 +81,161 @@ Regards,
 Bjorn
 
 > ---
->  drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 33 ++++++++++++++++++++++
->  include/linux/adreno-smmu-priv.h           |  7 +++++
->  2 files changed, 40 insertions(+)
+> Changes in V2:
+> Add commit description
+> Changes in V3:
+> Fix syntax errors
+> Remove not needed state from example
+> Changes in V4:
+> maxItems set to 3
+> Correct the pattern
+> Remove deleted enums
+> Fix the compatible
+> Changes in V5:
+> Add reg-names and make them required
+> Add minItems to reg
+>  .../bindings/pinctrl/qcom,sm6125-pinctrl.yaml | 132 ++++++++++++++++++
+>  1 file changed, 132 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sm6125-pinctrl.yaml
 > 
-> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> index b2e31ea84128..61fc645c1325 100644
-> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> @@ -13,6 +13,7 @@ struct qcom_smmu {
->  	struct arm_smmu_device smmu;
->  	bool bypass_quirk;
->  	u8 bypass_cbndx;
-> +	u32 stall_enabled;
->  };
->  
->  static struct qcom_smmu *to_qcom_smmu(struct arm_smmu_device *smmu)
-> @@ -23,12 +24,17 @@ static struct qcom_smmu *to_qcom_smmu(struct arm_smmu_device *smmu)
->  static void qcom_adreno_smmu_write_sctlr(struct arm_smmu_device *smmu, int idx,
->  		u32 reg)
->  {
-> +	struct qcom_smmu *qsmmu = to_qcom_smmu(smmu);
+> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sm6125-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sm6125-pinctrl.yaml
+> new file mode 100644
+> index 000000000000..5f7adaa81f83
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,sm6125-pinctrl.yaml
+> @@ -0,0 +1,132 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/pinctrl/qcom,sm6125-pinctrl.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +title: Qualcomm Technologies, Inc. SM6125 TLMM block
 > +
->  	/*
->  	 * On the GPU device we want to process subsequent transactions after a
->  	 * fault to keep the GPU from hanging
->  	 */
->  	reg |= ARM_SMMU_SCTLR_HUPCF;
->  
-> +	if (qsmmu->stall_enabled & BIT(idx))
-> +		reg |= ARM_SMMU_SCTLR_CFCFG;
+> +maintainers:
+> +  - Martin Botka <martin.botka@somainline.org>
 > +
->  	arm_smmu_cb_write(smmu, idx, ARM_SMMU_CB_SCTLR, reg);
->  }
->  
-> @@ -48,6 +54,31 @@ static void qcom_adreno_smmu_get_fault_info(const void *cookie,
->  	info->contextidr = arm_smmu_cb_read(smmu, cfg->cbndx, ARM_SMMU_CB_CONTEXTIDR);
->  }
->  
-> +static void qcom_adreno_smmu_set_stall(const void *cookie, bool enabled)
-> +{
-> +	struct arm_smmu_domain *smmu_domain = (void *)cookie;
-> +	struct arm_smmu_cfg *cfg = &smmu_domain->cfg;
-> +	struct qcom_smmu *qsmmu = to_qcom_smmu(smmu_domain->smmu);
+> +description: |
+> +  This binding describes the Top Level Mode Multiplexer (TLMM) block found
+> +  in the SM6125 platform.
 > +
-> +	if (enabled)
-> +		qsmmu->stall_enabled |= BIT(cfg->cbndx);
-> +	else
-> +		qsmmu->stall_enabled &= ~BIT(cfg->cbndx);
-> +}
+> +allOf:
+> +  - $ref: /schemas/pinctrl/qcom,tlmm-common.yaml#
 > +
-> +static void qcom_adreno_smmu_resume_translation(const void *cookie, bool terminate)
-> +{
-> +	struct arm_smmu_domain *smmu_domain = (void *)cookie;
-> +	struct arm_smmu_cfg *cfg = &smmu_domain->cfg;
-> +	struct arm_smmu_device *smmu = smmu_domain->smmu;
-> +	u32 reg = 0;
+> +properties:
+> +  compatible:
+> +    const: qcom,sm6125-tlmm
 > +
-> +	if (terminate)
-> +		reg |= ARM_SMMU_RESUME_TERMINATE;
+> +  reg:
+> +    minItems: 3
+> +    maxItems: 3
 > +
-> +	arm_smmu_cb_write(smmu, cfg->cbndx, ARM_SMMU_CB_RESUME, reg);
-> +}
+> +  reg-names:
+> +    items:
+> +      - const: "west"
+> +      - const: "south"
+> +      - const: "east"
 > +
->  #define QCOM_ADRENO_SMMU_GPU_SID 0
->  
->  static bool qcom_adreno_smmu_is_gpu_device(struct device *dev)
-> @@ -173,6 +204,8 @@ static int qcom_adreno_smmu_init_context(struct arm_smmu_domain *smmu_domain,
->  	priv->get_ttbr1_cfg = qcom_adreno_smmu_get_ttbr1_cfg;
->  	priv->set_ttbr0_cfg = qcom_adreno_smmu_set_ttbr0_cfg;
->  	priv->get_fault_info = qcom_adreno_smmu_get_fault_info;
-> +	priv->set_stall = qcom_adreno_smmu_set_stall;
-> +	priv->resume_translation = qcom_adreno_smmu_resume_translation;
->  
->  	return 0;
->  }
-> diff --git a/include/linux/adreno-smmu-priv.h b/include/linux/adreno-smmu-priv.h
-> index 53fe32fb9214..c637e0997f6d 100644
-> --- a/include/linux/adreno-smmu-priv.h
-> +++ b/include/linux/adreno-smmu-priv.h
-> @@ -45,6 +45,11 @@ struct adreno_smmu_fault_info {
->   *                 TTBR0 translation is enabled with the specified cfg
->   * @get_fault_info: Called by the GPU fault handler to get information about
->   *                  the fault
-> + * @set_stall:     Configure whether stall on fault (CFCFG) is enabled.  Call
-> + *                 before set_ttbr0_cfg().  If stalling on fault is enabled,
-> + *                 the GPU driver must call resume_translation()
-> + * @resume_translation: Resume translation after a fault
-> + *
->   *
->   * The GPU driver (drm/msm) and adreno-smmu work together for controlling
->   * the GPU's SMMU instance.  This is by necessity, as the GPU is directly
-> @@ -60,6 +65,8 @@ struct adreno_smmu_priv {
->      const struct io_pgtable_cfg *(*get_ttbr1_cfg)(const void *cookie);
->      int (*set_ttbr0_cfg)(const void *cookie, const struct io_pgtable_cfg *cfg);
->      void (*get_fault_info)(const void *cookie, struct adreno_smmu_fault_info *info);
-> +    void (*set_stall)(const void *cookie, bool enabled);
-> +    void (*resume_translation)(const void *cookie, bool terminate);
->  };
->  
->  #endif /* __ADRENO_SMMU_PRIV_H */
+> +  interrupts: true
+> +  interrupt-controller: true
+> +  '#interrupt-cells': true
+> +  gpio-controller: true
+> +  gpio-reserved-ranges: true
+> +  '#gpio-cells': true
+> +  gpio-ranges: true
+> +  wakeup-parent: true
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - reg-names
+> +
+> +additionalProperties: false
+> +
+> +patternProperties:
+> +  '-state$':
+> +    oneOf:
+> +      - $ref: "#/$defs/qcom-sm6125-tlmm-state"
+> +      - patternProperties:
+> +          ".*":
+> +            $ref: "#/$defs/qcom-sm6125-tlmm-state"
+> +
+> +$defs:
+> +  qcom-sm6125-tlmm-state:
+> +    type: object
+> +    description:
+> +      Pinctrl node's client devices use subnodes for desired pin configuration.
+> +      Client device subnodes use below standard properties.
+> +    $ref: "qcom,tlmm-common.yaml#/$defs/qcom-tlmm-state"
+> +
+> +    properties:
+> +      pins:
+> +        description:
+> +          List of gpio pins affected by the properties specified in this
+> +          subnode.
+> +        items:
+> +          oneOf:
+> +            - pattern: "^gpio[0-9]|[1-9][0-9]|1[0-2][0-9]|13[0-2]$"
+> +            - enum: [ sdc1_clk, sdc1_cmd, sdc1_data, sdc2_clk, sdc2_cmd, sdc2_data ]
+> +        minItems: 1
+> +        maxItems: 36
+> +
+> +      function:
+> +        description:
+> +          Specify the alternative function to be configured for the specified
+> +          pins.
+> +
+> +        enum: [ adsp_ext, agera_pll, atest_char, atest_char0, atest_char1,
+> +                atest_char2, atest_char3, atest_tsens, atest_tsens2, atest_usb1,
+> +                atest_usb10, atest_usb11, atest_usb12, atest_usb13, atest_usb2,
+> +                atest_usb20, atest_usb21, atest_usb22, atest_usb23, aud_sb,
+> +                audio_ref, cam_mclk, cci_async, cci_i2c, cci_timer0, cci_timer1,
+> +                cci_timer2, cci_timer3, cci_timer4, copy_gp, copy_phase, cri_trng,
+> +                cri_trng0, cri_trng1, dbg_out, ddr_bist, ddr_pxi0, ddr_pxi1,
+> +                ddr_pxi2, ddr_pxi3, debug_hot, dmic0_clk, dmic0_data, dmic1_clk,
+> +                dmic1_data, dp_hot, edp_hot, edp_lcd, gcc_gp1, gcc_gp2, gcc_gp3,
+> +                gp_pdm0, gp_pdm1, gp_pdm2, gpio, gps_tx, jitter_bist, ldo_en,
+> +                ldo_update, m_voc, mclk1, mclk2, mdp_vsync, mdp_vsync0, mdp_vsync1,
+> +                mdp_vsync2, mdp_vsync3, mdp_vsync4, mdp_vsync5, mpm_pwr, mss_lte,
+> +                nav_pps, pa_indicator, phase_flag, pll_bist, pll_bypassnl, pll_reset,
+> +                pri_mi2s, pri_mi2s_ws, prng_rosc, qca_sb, qdss_cti, qdss, qlink_enable,
+> +                qlink_request, qua_mi2s, qui_mi2s, qup00, qup01, qup02, qup03, qup04,
+> +                qup10, qup11, qup12, qup13, qup14, sd_write, sec_mi2s, sp_cmu, swr_rx,
+> +                swr_tx, ter_mi2s, tgu_ch0, tgu_ch1, tgu_ch2, tgu_ch3, tsense_pwm,
+> +                uim1_clk, uim1_data, uim1_present, uim1_reset, uim2_clk, uim2_data,
+> +                uim2_present, uim2_reset, unused1, unused2, usb_phy, vfr_1, vsense_trigger,
+> +                wlan1_adc0, wlan1_adc1, wlan2_adc0, wlan2_adc1, wsa_clk, wsa_data ]
+> +
+> +
+> +      bias-disable: true
+> +      bias-pull-down: true
+> +      bias-pull-up: true
+> +      drive-strength: true
+> +      input-enable: true
+> +      output-high: true
+> +      output-low: true
+> +
+> +    required:
+> +      - pins
+> +      - function
+> +
+> +    additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +        #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +        pinctrl@500000 {
+> +                compatible = "qcom,sm6125-tlmm";
+> +                reg = <0x00500000 0x400000>,
+> +                    <0x00900000 0x400000>,
+> +                    <0x00d00000 0x400000>;
+> +                reg-names = "west", "south", "east";
+> +                interrupts = <GIC_SPI 227 IRQ_TYPE_LEVEL_HIGH>;
+> +                gpio-controller;
+> +                gpio-ranges = <&tlmm 0 0 134>;
+> +                #gpio-cells = <2>;
+> +                interrupt-controller;
+> +                #interrupt-cells = <2>;
+> +        };
 > -- 
 > 2.31.1
 > 
