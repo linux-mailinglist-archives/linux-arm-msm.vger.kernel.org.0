@@ -2,131 +2,153 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 63A9A3A5A4F
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 13 Jun 2021 22:18:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E54DC3A5CB2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jun 2021 08:00:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232099AbhFMUUK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 13 Jun 2021 16:20:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45174 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232094AbhFMUUH (ORCPT
+        id S231949AbhFNGCW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Jun 2021 02:02:22 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:6371 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229696AbhFNGCV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 13 Jun 2021 16:20:07 -0400
-Received: from relay03.th.seeweb.it (relay03.th.seeweb.it [IPv6:2001:4b7a:2000:18::164])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07AFAC061767;
-        Sun, 13 Jun 2021 13:18:04 -0700 (PDT)
-Received: from localhost.localdomain (83.6.168.161.neoplus.adsl.tpnet.pl [83.6.168.161])
-        by m-r1.th.seeweb.it (Postfix) with ESMTPA id D49761F87F;
-        Sun, 13 Jun 2021 22:18:01 +0200 (CEST)
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-To:     ~postmarketos/upstreaming@lists.sr.ht
-Cc:     martin.botka@somainline.org,
-        angelogioacchino.delregno@somainline.org,
-        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] arm64: dts: qcom: qrb5165-rb5: Fix up pins
-Date:   Sun, 13 Jun 2021 22:17:54 +0200
-Message-Id: <20210613201754.346440-1-konrad.dybcio@somainline.org>
-X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20210612192358.62602-2-konrad.dybcio@somainline.org>
-References: 
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Mon, 14 Jun 2021 02:02:21 -0400
+Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
+  by alexa-out.qualcomm.com with ESMTP; 13 Jun 2021 23:00:19 -0700
+X-QCInternal: smtphost
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 13 Jun 2021 23:00:17 -0700
+X-QCInternal: smtphost
+Received: from dikshita-linux.qualcomm.com ([10.204.65.237])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 14 Jun 2021 11:29:55 +0530
+Received: by dikshita-linux.qualcomm.com (Postfix, from userid 347544)
+        id 9CC5B21AFC; Mon, 14 Jun 2021 11:29:54 +0530 (IST)
+From:   Dikshita Agarwal <dikshita@codeaurora.org>
+To:     david.brown@linaro.org, robh+dt@kernel.org, mark.rutland@arm.com,
+        devicetree@vger.kernel.org, stanimir.varbanov@linaro.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        vgarodia@codeaurora.org, Dikshita Agarwal <dikshita@codeaurora.org>
+Subject: [PATCH v4] arm64: dts: qcom: sc7280: Add venus DT node
+Date:   Mon, 14 Jun 2021 11:29:51 +0530
+Message-Id: <1623650391-28144-1-git-send-email-dikshita@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In the SDHCI pin commonization commit I overlooked the fact that this
-board had the pins defined in its own DT. Revert their settings to the
-original values.
+Add DT entries for the sc7280 venus encoder/decoder.
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+Co-developed-by: Mansur Alisha Shaik <mansur@codeaurora.org>
+Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
+
+change since v3:
+ - added firmware node back.
+change since v2:
+ - removed firmware node.
+change since v1:
+ - added rpmh power domain and opp table.
+
+this patch depends on [1],[2] & [3].
+
+[1] https://patchwork.kernel.org/project/linux-clk/list/?series=449621
+[2] https://lkml.org/lkml/2021/4/9/812
+[3] https://lore.kernel.org/patchwork/project/lkml/list/?series=488429#
 ---
- arch/arm64/boot/dts/qcom/qrb5165-rb5.dts | 38 ++++++++----------------
- arch/arm64/boot/dts/qcom/sm8250.dtsi     |  4 +--
- 2 files changed, 14 insertions(+), 28 deletions(-)
+ arch/arm64/boot/dts/qcom/sc7280.dtsi | 75 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 75 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-index a5b742325261..bf05328f3901 100644
---- a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-+++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-@@ -858,6 +858,18 @@ dai@2 {
- 	};
- };
- 
-+&sdc2_card_det_n {
-+	/delete-property/ drive-strength;
-+};
-+
-+&sdc2_cmd_default {
-+	drive-strength = <10>;
-+};
-+
-+&sdc2_data_default {
-+	drive-strength = <10>;
-+};
-+
- &sdhc_2 {
- 	status = "okay";
- 	pinctrl-names = "default";
-@@ -1253,32 +1265,6 @@ wake-n {
- 			bias-pull-up;
+diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+index 4c44a52..4982f96 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+@@ -60,6 +60,11 @@
+ 			no-map;
+ 			reg = <0x0 0x80b00000 0x0 0x100000>;
  		};
++
++		video_mem: memory@8b200000 {
++			reg = <0x0 0x8b200000 0x0 0x500000>;
++			no-map;
++		};
  	};
--
--	sdc2_default_state: sdc2-default {
--		clk {
--			pins = "sdc2_clk";
--			bias-disable;
--			drive-strength = <16>;
--		};
--
--		cmd {
--			pins = "sdc2_cmd";
--			bias-pull-up;
--			drive-strength = <10>;
--		};
--
--		data {
--			pins = "sdc2_data";
--			bias-pull-up;
--			drive-strength = <10>;
--		};
--	};
--
--	sdc2_card_det_n: sd-card-det-n {
--		pins = "gpio77";
--		function = "gpio";
--		bias-pull-up;
--	};
- };
  
- &uart12 {
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index fe858abbff5d..fab5d83f4496 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -3414,13 +3414,13 @@ clk {
- 					bias-disable;
- 				};
+ 	cpus {
+@@ -850,6 +855,76 @@
+ 			interrupts = <GIC_SPI 582 IRQ_TYPE_LEVEL_HIGH>;
+ 		};
  
--				cmd {
-+				sdc2_cmd_default: cmd {
- 					pins = "sdc2_cmd";
- 					drive-strength = <16>;
- 					bias-pull-up;
- 				};
- 
--				data {
-+				sdc2_data_default: data {
- 					pins = "sdc2_data";
- 					drive-strength = <16>;
- 					bias-pull-up;
++		venus: video-codec@0aa00000 {
++			compatible = "qcom,sc7280-venus";
++			reg = <0 0x0aa00000 0 0xd0600>;
++			interrupts = <GIC_SPI 174 IRQ_TYPE_LEVEL_HIGH>;
++
++			clocks = <&videocc VIDEO_CC_MVSC_CORE_CLK>,
++				 <&videocc VIDEO_CC_MVSC_CTL_AXI_CLK>,
++				 <&videocc VIDEO_CC_VENUS_AHB_CLK>,
++				 <&videocc VIDEO_CC_MVS0_CORE_CLK>,
++				 <&videocc VIDEO_CC_MVS0_AXI_CLK>;
++			clock-names = "core", "bus", "iface",
++				      "vcodec_core", "vcodec_bus";
++
++			power-domains = <&videocc MVSC_GDSC>,
++					<&videocc MVS0_GDSC>;
++					<&rpmhpd SC7280_CX>;
++			power-domain-names = "venus", "vcodec0", "cx";
++			operating-points-v2 = <&venus_opp_table>;
++
++			interconnects = <&gem_noc MASTER_APPSS_PROC 0 &cnoc2 SLAVE_VENUS_CFG 0>,
++					<&mmss_noc MASTER_VIDEO_P0 0 &mc_virt SLAVE_EBI1 0>;
++			interconnect-names = "cpu-cfg", "video-mem";
++
++			iommus = <&apps_smmu 0x2180 0x20>,
++				 <&apps_smmu 0x2184 0x20>;
++			memory-region = <&video_mem>;
++
++			video-decoder {
++				compatible = "venus-decoder";
++			};
++
++			video-encoder {
++				compatible = "venus-encoder";
++			};
++
++			video-firmware {
++				iommus = <&apps_smmu 0x21a2 0x0>;
++			};
++
++			venus_opp_table: venus-opp-table {
++				compatible = "operating-points-v2";
++
++				opp-133330000 {
++					opp-hz = /bits/ 64 <133330000>;
++					required-opps = <&rpmhpd_opp_low_svs>;
++				};
++
++				opp-240000000 {
++					opp-hz = /bits/ 64 <240000000>;
++					required-opps = <&rpmhpd_opp_svs>;
++				};
++
++				opp-335000000 {
++					opp-hz = /bits/ 64 <335000000>;
++					required-opps = <&rpmhpd_opp_svs_l1>;
++				};
++
++				opp-424000000 {
++					opp-hz = /bits/ 64 <424000000>;
++					required-opps = <&rpmhpd_opp_nom>;
++				};
++
++				opp-460000000 {
++					opp-hz = /bits/ 64 <460000000>;
++					required-opps = <&rpmhpd_opp_turbo>;
++				};
++			};
++
++		};
++
+ 		videocc: clock-controller@aaf0000 {
+ 			compatible = "qcom,sc7280-videocc";
+ 			reg = <0 0xaaf0000 0 0x10000>;
 -- 
-2.32.0
+2.7.4
 
