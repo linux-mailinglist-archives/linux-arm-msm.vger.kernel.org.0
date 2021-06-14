@@ -2,93 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0FBC43A719E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jun 2021 23:56:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0D4F93A71C5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jun 2021 00:10:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230095AbhFNV65 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Jun 2021 17:58:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41778 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229895AbhFNV6R (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Jun 2021 17:58:17 -0400
-Received: from mail-oo1-xc29.google.com (mail-oo1-xc29.google.com [IPv6:2607:f8b0:4864:20::c29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D14DC061574
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Jun 2021 14:55:54 -0700 (PDT)
-Received: by mail-oo1-xc29.google.com with SMTP id j17-20020a0568200231b029024900620310so3016737oob.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Jun 2021 14:55:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=kf+ubk5dO3qWw7TN9/qRwxXr2oNPOTNaRKSsNGShNAA=;
-        b=GDqbFuweeTGZ2a1SSvdb2YxqmPw22uySKFenjY118WSwDgtend8M/LDZYCO+EW8lNk
-         9WQWvr33aABEtxB+jhvAR1guKvaWaSn87URRr1Kb3HFJaYMgSzHlX/6BMD6FdfzEuRt1
-         G2uCVV/zmkISVT+PNPdagwrfKLV9ewWQNZah4d9a7P5LMbIm3ig8FwGUeDBKBykO//5y
-         M0wZkhw80DM124JUnmIHTpOXIEMF4GIuoqx7xYFDnlXS+hhF2pRGCK13Vj9VcQ2q9C8X
-         J2zCl4XEvB0iEDONZOE4gfur+jcGqfFNHyQy6L8ZbWKRWOLAA796+RxPAGWRBFruKuiD
-         lJsA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=kf+ubk5dO3qWw7TN9/qRwxXr2oNPOTNaRKSsNGShNAA=;
-        b=TWsvxu3ZxI4OhLNpv4PXWPhaEtHrgV0hW8+holyMkiITvmQLLpWcDFO54PxShhYonp
-         VuK1OOttHblsPvc4JqZ5QyzSfYDdXDkje5MaYJra/e6LKnEwvinZcq5vrr76OwZ1dNlB
-         9gSRkTulNSM7BnvoX+d/3WGFzJLPIbxtdYJqM04UsTZ7PF66ER5vXPMoDEqEgcpD/3/T
-         RQ6DWhWqSAhwBnKaKAM5S9yGv9xEvVVJP4117oPM3ZoFF9sIz+HUxYsPpBKBIfAUGwpq
-         isOAcKozy9ByJy3FiNj7ga6MQr/j/MTMMwbWbUerLcXN10WEGFwWbJHdvctqvCT6myhZ
-         yT/A==
-X-Gm-Message-State: AOAM532V90ueB1OQi7CR47qz2o4K1f2FTAeiXqoMoGmZ7oMdVkjYmM6d
-        +KlU4iLXyq4SAMqBK2CEXsOeiQ==
-X-Google-Smtp-Source: ABdhPJze60kY0BnVIC/EqWz/84ZLD/HN9a08aQnVqGtT9Kobfrdym6lfnyDs9jYH3P0ec10qMMDv4w==
-X-Received: by 2002:a4a:a744:: with SMTP id h4mr14827938oom.26.1623707753931;
-        Mon, 14 Jun 2021 14:55:53 -0700 (PDT)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id 3sm3362790oob.1.2021.06.14.14.55.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Jun 2021 14:55:53 -0700 (PDT)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     arm@kernel.org, soc@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        Andy Gross <agross@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
-        Olof Johansson <olof@lixom.net>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Manivannan Sadhasivam <mani@kernel.org>
-Subject: [GIT PULL] Qualcomm DTS fixes for v5.13
-Date:   Mon, 14 Jun 2021 16:55:52 -0500
-Message-Id: <20210614215552.391887-1-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.31.0
+        id S229760AbhFNWMH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Jun 2021 18:12:07 -0400
+Received: from mail.kernel.org ([198.145.29.99]:47602 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229696AbhFNWMG (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 14 Jun 2021 18:12:06 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPS id 3FFD761185;
+        Mon, 14 Jun 2021 22:10:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1623708603;
+        bh=DMVbftagxBLSQKDRJDcPoZ9yaY9TGsR5gK3yQNpj64g=;
+        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+        b=M5Oc7TjoVKoSARbkHQwBcc84bUAICtA0QAgApiqw3IBGEvZjsi9ngrYVj8a1sAXUr
+         Aue3AdsPQ2Q0juJ3O/+7W5gDvtVSy0tKNnt5f+eGDTgMTkY4IeCpgmRFPsDiWKNF9w
+         9GcR79Y60XtuGrH4S0azXPTv6+OQm+tgTmsOFIg/8zK6O8AmZuPOY2bz4qOseiR+OD
+         9c4R1sV3+RdrLpbrjWNzrqWOM1szCDYc2ILyEeEo+paIDPn8OjT0kATVrLuobZ17sW
+         Cv1KN/g31xVfnPH6cczmdap4HRJbPGJuqNxg+u6tgTOvo89vuAUBM26qKHqhgBbg8G
+         b4OZoquQ06utQ==
+Received: from pdx-korg-docbuild-2.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id 2E91A609D8;
+        Mon, 14 Jun 2021 22:10:03 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH] arm64: defconfig: add drivers needed for DragonBoard410c
+From:   patchwork-bot+linux-arm-msm@kernel.org
+Message-Id: <162370860318.14727.13097958978027602445.git-patchwork-notify@kernel.org>
+Date:   Mon, 14 Jun 2021 22:10:03 +0000
+References: <20210528140625.6972-1-m.szyprowski@samsung.com>
+In-Reply-To: <20210528140625.6972-1-m.szyprowski@samsung.com>
+To:     Marek Szyprowski <m.szyprowski@samsung.com>
+Cc:     linux-arm-msm@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The following changes since commit 6efb943b8616ec53a5e444193dccf1af9ad627b5:
+Hello:
 
-  Linux 5.13-rc1 (2021-05-09 14:17:44 -0700)
+This patch was applied to qcom/linux.git (refs/heads/for-next):
 
-are available in the Git repository at:
+On Fri, 28 May 2021 16:06:25 +0200 you wrote:
+> Add modules with drivers needed for DragonBoard410c board
+> (arch/arm64/boot/dts/qcom/apq8016-sbc.dts).
+> 
+> Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+> ---
+>  arch/arm64/configs/defconfig | 4 ++++
+>  1 file changed, 4 insertions(+)
 
-  https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-dts-fixes-for-5.13
+Here is the summary with links:
+  - arm64: defconfig: add drivers needed for DragonBoard410c
+    https://git.kernel.org/qcom/c/e9cd414c1136
 
-for you to fetch changes up to 0fa1baeedf06765ec6b441692ba2a2e83b7d17dc:
+You are awesome, thank you!
+--
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
 
-  ARM: dts: qcom: sdx55-telit: Represent secure-regions as 64-bit elements (2021-05-29 11:24:27 -0500)
 
-----------------------------------------------------------------
-Qualcomm DTS fixes for v5.13
-
-Failure to properly define "secure-regions" as 64-bit ranges prevents
-the two SDX55 boards from booting, so correct this.
-
-----------------------------------------------------------------
-Manivannan Sadhasivam (2):
-      ARM: dts: qcom: sdx55-t55: Represent secure-regions as 64-bit elements
-      ARM: dts: qcom: sdx55-telit: Represent secure-regions as 64-bit elements
-
- arch/arm/boot/dts/qcom-sdx55-t55.dts             | 2 +-
- arch/arm/boot/dts/qcom-sdx55-telit-fn980-tlb.dts | 4 ++--
- 2 files changed, 3 insertions(+), 3 deletions(-)
