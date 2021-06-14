@@ -2,272 +2,197 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5741A3A6D96
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jun 2021 19:47:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 859173A6DA3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jun 2021 19:48:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233975AbhFNRtY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Jun 2021 13:49:24 -0400
-Received: from mail-oi1-f176.google.com ([209.85.167.176]:40538 "EHLO
-        mail-oi1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233430AbhFNRtX (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Jun 2021 13:49:23 -0400
-Received: by mail-oi1-f176.google.com with SMTP id d19so11153127oic.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Jun 2021 10:47:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=rXKjNT2DEQ+IjQBlthoE18k+nd+0vhAfMPZEBbyfCC8=;
-        b=RUAS26ksqnGrksv0ADjeHmswCRZGzsWMeghWKsPORY5CnhcxC6j651IJyHCpXlfxh8
-         M0IKJ5SawnPUoJePIW1SEfim06ZK/jUnkCyOvAzwVGYHwEdax4GlGHotOfNo9Uz/dUxm
-         4nfPk6g4aK7tJ5Ralc4+WT6yrBvYunYVdH1WsUm9BpLM6pZ70zdUiPGkXbcCK3lCYdXN
-         QHGv+0HG8+nRGclzxvKuCS+uEbez+1/HPYddxOZ1/I5GDgQ6C904ZOs2qC0/GYbhEC80
-         gN4R14z0R2Kk0cB5Cq9dlSycia18TnLomiwTXtPf9WlZ/UnqRPvATqv0LBMFiDQK+7e0
-         Rfsw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=rXKjNT2DEQ+IjQBlthoE18k+nd+0vhAfMPZEBbyfCC8=;
-        b=izOAsnsRnLpA1V/N3qIreFo1J6nhzvOCnM2Eql7tOLXilpeEeBN133fIDVRiDdax2j
-         iF3qpoyLH0nUpMCLyHwJa12dz7yFsq2jnWoG3mw33OCDsRtl2WoIrlHLDsssUQkwWZCG
-         Q5zdlnj3O5h+cgjqAtvfKVknbMWAk+dCQNr8179nVMDU6EhCwYXTNtGqHuTRYW33OlxG
-         FsclPv7Lxl13JodbUeqWWlp6Yjr6BtCS+8jNRCtmxYMa+/3hxUuJ2Z27IcM0S6DhPpcv
-         AuHZoNRLXmy/qFQcNcL6Y1qbmksdQmO1P2xJ8xlKOlnXCq2l5vxB/SCSNpwLtTYK1a32
-         5GTg==
-X-Gm-Message-State: AOAM53312QdUckVdfILPm5+g0f3akRvqBmRNO4nAi2KEWJSMWS1xXVfD
-        P3czQDY+CgaHyBVhakHhRVeMpg==
-X-Google-Smtp-Source: ABdhPJzjix9ubs+vvMy13RtCwO8rWq1+FOxT0/leOq0IYpn/f3BoQpF2UMUWAQIXErl205viOPXo5Q==
-X-Received: by 2002:aca:c441:: with SMTP id u62mr172892oif.31.1623692780015;
-        Mon, 14 Jun 2021 10:46:20 -0700 (PDT)
-Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id v203sm1578401oib.37.2021.06.14.10.46.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Jun 2021 10:46:19 -0700 (PDT)
-Date:   Mon, 14 Jun 2021 12:46:17 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     dri-devel@lists.freedesktop.org, iommu@lists.linux-foundation.org,
-        Rob Clark <robdclark@chromium.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Akhil P Oommen <akhilpo@codeaurora.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Eric Anholt <eric@anholt.net>, David Airlie <airlied@linux.ie>,
-        linux-arm-msm@vger.kernel.org,
-        Sharat Masetty <smasetty@codeaurora.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Sean Paul <sean@poorly.run>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        "Kristian H. Kristensen" <hoegsberg@google.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        freedreno@lists.freedesktop.org,
-        open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v5 3/5] drm/msm: Improve the a6xx page fault handler
-Message-ID: <YMeV6XzSxQp/Tmr1@yoga>
-References: <20210610214431.539029-1-robdclark@gmail.com>
- <20210610214431.539029-4-robdclark@gmail.com>
+        id S233358AbhFNRun (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Jun 2021 13:50:43 -0400
+Received: from mail-dm6nam12on2044.outbound.protection.outlook.com ([40.107.243.44]:44321
+        "EHLO NAM12-DM6-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S232776AbhFNRul (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 14 Jun 2021 13:50:41 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=L4AJhguKr9/RixO4G0sgqiu0Yk3ng/qTiUZekOlX79ZFkoS5DR0aDorYORIqiteXoA1jB+IFeongRB2N55wtvaCLNJxmtdRH7eD8usKH49XSOLAJXYRSA4xwWZ96JLgmzDcXZSI3SlwY2Ljku0BXg1E/dqp9DV1B0cCdGVQCy4H6aZaDQg1xfDFE54AdIkH9voPAhXOqoo9L2D05pAbFEK+bTeD2pG52Tcsyl1A4gLAhLshJjAT60COrh3EEK2/Eb8hH2XFXEH82AhVPmRCyLXBzkS9bPQFBWMro5ERGBZ6FspRoHYbmEUOzBdpoHCiIunJikgmeEb4Z5pDQWMahcw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=RhMMvc01uX/35SO1tOaAzQGw9UPcdROtnIqsro2sFQE=;
+ b=KsMIiWVP3QiVLvvzx6GliOMuyvWtayyy20VNXmEklqAhnWhplN/JSrNPRTs/NmwweN/OtOmsAniit+JHHpuBThl4i+FpoXab4R+KDAuefWVz4RvULOougXa9rSI+1TbLRxF2T2Ee6u5yp1IDi/4W9UZGKYED0t+FY7y2+Y4M6OJhmy4GC5Wxv434IfUZZPi3Iny6vV9rd2QjBsToRDTRFj0PVBrutymY/QDc+Y4wjKH4ysf9kqG1IJEolgdwtFI8CCSP37J19r09mM97capQxHghTB3ij+Mhi9Hgq7eoXwKT+iQKu/79RjIC3NveLCsFKCf0KXpgFz5qEUi3XEbWFA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=RhMMvc01uX/35SO1tOaAzQGw9UPcdROtnIqsro2sFQE=;
+ b=k61by21//++CDR4LmxhLrISuxL1YYT2g1s1EnNSTREnxtYKzg9W2RRF3SFj7TDdK05PiPRrfo5am5ZYsZtRl8I9ECfur0yj4Ut7Ks/00e3eclJYtv/tPq57p6gQBLeSlacBNaOEFtCG1s+/Ozev7ze2aTWGHLKmPX4lK05L48yWj8tGFzPHt1gYi8pG2B6YeoGhEBSbu//PsuaXxHjtVdlN6ll8TeMYKcg81eeFuv5/Tt9F99pXuMve3WT9Yuf3f8noHsrLC81qDebt/FlX1Y47PTsWIOpTq2Rh1fh+11UPCkzqJLNi8EJ0gWJzgObvM1i7bpFrxC+rshLMqWJ05tg==
+Received: from BY5PR12MB3764.namprd12.prod.outlook.com (2603:10b6:a03:1ac::17)
+ by BYAPR12MB3077.namprd12.prod.outlook.com (2603:10b6:a03:db::10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4219.21; Mon, 14 Jun
+ 2021 17:48:36 +0000
+Received: from BY5PR12MB3764.namprd12.prod.outlook.com
+ ([fe80::d05:4bca:ea51:15af]) by BY5PR12MB3764.namprd12.prod.outlook.com
+ ([fe80::d05:4bca:ea51:15af%6]) with mapi id 15.20.4219.025; Mon, 14 Jun 2021
+ 17:48:36 +0000
+From:   Krishna Reddy <vdumpa@nvidia.com>
+To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Robin Murphy <robin.murphy@arm.com>
+CC:     "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "iommu@lists.linux-foundation.org" <iommu@lists.linux-foundation.org>,
+        Will Deacon <will@kernel.org>,
+        "linux-arm-kernel@lists.infradead.org" 
+        <linux-arm-kernel@lists.infradead.org>,
+        Thierry Reding <treding@nvidia.com>
+Subject: RE: [PATCH] iommu/io-pgtable-arm: Optimize partial walk flush for
+ large scatter-gather list
+Thread-Topic: [PATCH] iommu/io-pgtable-arm: Optimize partial walk flush for
+ large scatter-gather list
+Thread-Index: AQHXXT84btg0466hEE2rkvq94oyuZasMBHAAgACy+QCAAD6WAIAAB6mAgAAg2ACAAAWcgIAAPESAgACQdxCAAA05AIABAqfQgACvFQCABA+AcA==
+Date:   Mon, 14 Jun 2021 17:48:36 +0000
+Message-ID: <BY5PR12MB376433B3FD0A59EF57C4522DB3319@BY5PR12MB3764.namprd12.prod.outlook.com>
+References: <20210609145315.25750-1-saiprakash.ranjan@codeaurora.org>
+ <dbcd394a-4d85-316c-5dd0-033546a66132@arm.com>
+ <c600e9b2534d54082a5272b508a7985f@codeaurora.org>
+ <35bfd245-45e2-8083-b620-330d6dbd7bd7@arm.com>
+ <12067ffb8243b220cf03e83aaac3e823@codeaurora.org>
+ <266f190e-99ae-9175-cf13-7a77730af389@arm.com>
+ <dfdabcdec99a4c6e3bf2b3c5eebe067f@codeaurora.org>
+ <61c69d23-324a-85d7-2458-dfff8df9280b@arm.com>
+ <BY5PR12MB37646698F37C00381EFF7C77B3349@BY5PR12MB3764.namprd12.prod.outlook.com>
+ <07001b4ed6c0a491eacce6e4dc13ab5e@codeaurora.org>
+ <BY5PR12MB376480219C42E5FCE0FE0FFBB3349@BY5PR12MB3764.namprd12.prod.outlook.com>
+ <f749ba0957b516ab5f0ea57033d308c7@codeaurora.org>
+In-Reply-To: <f749ba0957b516ab5f0ea57033d308c7@codeaurora.org>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: codeaurora.org; dkim=none (message not signed)
+ header.d=none;codeaurora.org; dmarc=none action=none header.from=nvidia.com;
+x-originating-ip: [216.228.112.22]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: d243624d-1bd2-47de-3da1-08d92f5ca2ee
+x-ms-traffictypediagnostic: BYAPR12MB3077:
+x-ms-exchange-transport-forked: True
+x-microsoft-antispam-prvs: <BYAPR12MB3077D98CC9D8118F223BE893B3319@BYAPR12MB3077.namprd12.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:10000;
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: Ld1bwtNirxXOkBKyqVTO8nKkkBqyR25ae7r52fVppZbzpQ468CRsUavoPb4PMCHNPx1l0gHZZ7Ydg81kbwa5sx9nLh/j5YXS0jzUXPPRQ7Bt5FX/tlKl+XcFWa7xNoSB53zjOlwKPxDuvcA+feNYZF+98Fi6wm/yjLiq8h63nxrSe6ckAMzDECqTkJcj/Bpb7HzzS5bU2K7ja2rkuwLZwqPvQs7CV9C+VSKb1SWC8Z+CKwZ3L8CyoCF7HwnwkhcjwkYKGKTeQ98cNuzii7H8zSsKZ1LyGBJui7LamfM6Gcrl6vGjDgLMKPM9fBOCTpiLYkXBMPLya+Q77FL+TmR1eQpCAo5hXq0XjpIZdPmThZBEt/SUnf8KoJXEwCKPZtVtgUCRUbg/3dxCZQd91UPUf4QP/8xsj4IekNlebLJczNXinXH8++M5HKyGZnm1Odh9ylhN6thvcKa9IdqBj2Z/CH0wQTizIKpb9V9VEn0p1e509KW3sm0VGLIAEArwAxTZJvWsjwm5MaAZJlA56Ckbdb+E7yTkFdShYG9E+bUlfaa0/iohjmrh87daWZzD+xicgArXOqi9m1sv3pJwSJwDfmJMDmDNjL+kfTUftEiOIe8=
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BY5PR12MB3764.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(396003)(39860400002)(136003)(366004)(346002)(376002)(4326008)(2906002)(52536014)(33656002)(54906003)(186003)(76116006)(5660300002)(8936002)(8676002)(83380400001)(110136005)(26005)(71200400001)(38100700002)(122000001)(6506007)(55016002)(9686003)(7696005)(64756008)(66446008)(66476007)(66556008)(478600001)(107886003)(316002)(66946007)(86362001);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?fsK7q6nWPaFK6tMDkv18bFSpUPNSltGdZrBDLBmtd+VaWy4mlIAgJf6XNhsd?=
+ =?us-ascii?Q?p6ywU9lzGHnMLp/ny6x509F5AdJLg//HImuR7GG0pj+QITwBRshEyns2cVN/?=
+ =?us-ascii?Q?aHNc7hOGUAJJLg0/QGeTQwX0zKNshslQktzYsE9bxVunEyvokLtGfimhNiPT?=
+ =?us-ascii?Q?m9Of6hQjI6h/Cq/nVzZ57ThiER7q3TuS5biOHHNCSH3t/oa957eCZXcx/EUB?=
+ =?us-ascii?Q?XXvIBtzn6v257CrPyWDraGuoeoNy7ecp+2uDRBgMpcrr8fB/mN4Pt/UiqXDV?=
+ =?us-ascii?Q?+FdHK78jkhhj5JCfKyF6LJgok0h75G4xLFVDckxeTPHmq2J87iVVQe5fk/sD?=
+ =?us-ascii?Q?vodsFoY1ku1wVg8aQKQOc/jJJ66IFoKamP06CtIhkpYBw2BEkd9pdBSghUhT?=
+ =?us-ascii?Q?gcw8YClt4l2XbAWYSppycMndH/Z/yu9U91bRjX/CIqDADo132bgD5ApqfJYb?=
+ =?us-ascii?Q?fJDZh+eDD3V2P+w5Wyic4YLdOxIFT7jxA3b/UEQTC7qOXHEPNxqQNEPRdCfS?=
+ =?us-ascii?Q?skia5c0VRJ1ZWL+3n8XEGTIhL5LPY3RzMEt10w5cGHt4RlMBk/pIAosvkEnN?=
+ =?us-ascii?Q?OjdES098PKM1IpgorJLXI9hBROKwCGl7Tmz5HK+U6heVMelJMhEaQumv0Q96?=
+ =?us-ascii?Q?KqLCw9rGGYF9YUW7vT62nW6nfWSkIl/FRtqAY/n95WhIAiuyk8kBWTKf0WbO?=
+ =?us-ascii?Q?COzsC8D0nfd322mMIrToH6CZVzInyBrmzbTabOWVR6H8caqZVO6Hlqw3MSPZ?=
+ =?us-ascii?Q?30SVAlQlfkozb3tN9e0du2wnfZVfrO8ZtG/v25LMErx0Qq5q316bK9kb9mvP?=
+ =?us-ascii?Q?gTyqm6PIQDE/sJCE+UAnLgVE0fhJ1USpUIe8MRCbdLqd8P/5zoGQVXLWhJW7?=
+ =?us-ascii?Q?NQHPQz5HpsE5l0vm4l4+PNeN2QS74U+iFDYoSgmUckRf3YXVWeY1eHpZME8z?=
+ =?us-ascii?Q?eA+kQY4K/Xk7A+qyBkTQi7oKoSQQdLO2EEBDopUAW/p7vjFAW/wSN+kkndE5?=
+ =?us-ascii?Q?bmJRa29WNfMK1R7AMhFleebp+zQIANSyDXxfUs9zmdy+Rw70+wtb7V78BVJX?=
+ =?us-ascii?Q?vXxldBEBI3g3bG9VtNMoWtXlmM0PxjhbCLt9DEQWZ3zH0jd3mwLhrKmOs3b+?=
+ =?us-ascii?Q?+K/H1zXINC0/QHtpi7adPVQD2VUbyoBkhjbgP4ZAo2UkuC0f/RYDu1o3vGUK?=
+ =?us-ascii?Q?jDe9cgy0SyUholiVqCbgY3/aWHIjSfUsRikTvfPVqKmwS7efMZsuxAH/7rq8?=
+ =?us-ascii?Q?T8iu2lfkVcQZGdTG6wE/JzvPcUslNd1qAQDc9cQp3HVSkvYDSCb5dasPM6B9?=
+ =?us-ascii?Q?8HQ9rLAD3+WOAKXMX9656/nv?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210610214431.539029-4-robdclark@gmail.com>
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: BY5PR12MB3764.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: d243624d-1bd2-47de-3da1-08d92f5ca2ee
+X-MS-Exchange-CrossTenant-originalarrivaltime: 14 Jun 2021 17:48:36.5055
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: SeXKMeWw3I0Cszd3zBKVhSjtAvsjiYvd0C/nrRcsS9VrQjeEEcdRz02iJb5198l9NdxjvsEXeX2e5Dy+oYVL2g==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BYAPR12MB3077
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 10 Jun 16:44 CDT 2021, Rob Clark wrote:
+> Right but we won't know until we profile the specific usecases or try the=
+m in
+> generic workload to see if they affect the performance. Sure, over invali=
+dation is
+> a concern where multiple buffers can be mapped to same context and the ca=
+che
+> is not usable at the time for lookup and such but we don't do it for smal=
+l buffers
+> and only for large buffers which means thousands of TLB entry mappings in
+> which case TLBIASID is preferred (note: I mentioned the HW team
+> recommendation to use it for anything greater than 128 TLB entries) in my
+> earlier reply. And also note that we do this only for partial walk flush,=
+ we are not
+> arbitrarily changing all the TLBIs to ASID based.
 
-> From: Jordan Crouse <jcrouse@codeaurora.org>
-> 
-> Use the new adreno-smmu-priv fault info function to get more SMMU
-> debug registers and print the current TTBR0 to debug per-instance
-> pagetables and figure out which GPU block generated the request.
-> 
+Most of the heavy bw use cases does involve processing larger buffers.
+When the physical memory is allocated dis-contiguously at page_size (let's =
+use 4KB here)
+granularity, each aligned 2MB chunks IOVA unmap would involve performing a =
+TLBIASID
+as 2MB is not a leaf. Essentially, It happens all the time during large buf=
+fer unmaps and
+potentially impact active traffic on other large buffers. Depending on how =
+much
+latency HW engines can absorb, the overflow/underflow issues for ISO engine=
+s can be
+sporadic and vendor specific.=20
+Performing TLBIASID as default for all SoCs is not a safe operation.
 
-Acked-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-Regards,
-Bjorn
+> I am no camera expert but from what the camera team mentioned is that the=
+re
+> is a thread which frees memory(large unused memory buffers) periodically =
+which
+> ends up taking around 100+ms and causing some camera test failures with
+> frame drops. Parallel efforts are already being made to optimize this usa=
+ge of
+> thread but as I mentioned previously, this is *not a camera specific*, le=
+ts say
+> someone else invokes such large unmaps, it's going to face the same issue=
+.
 
-> Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
-> ---
->  drivers/gpu/drm/msm/adreno/a5xx_gpu.c |  4 +-
->  drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 76 +++++++++++++++++++++++++--
->  drivers/gpu/drm/msm/msm_iommu.c       | 11 +++-
->  drivers/gpu/drm/msm/msm_mmu.h         |  4 +-
->  4 files changed, 87 insertions(+), 8 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-> index f46562c12022..eb030b00bff4 100644
-> --- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-> +++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-> @@ -1075,7 +1075,7 @@ bool a5xx_idle(struct msm_gpu *gpu, struct msm_ringbuffer *ring)
->  	return true;
->  }
->  
-> -static int a5xx_fault_handler(void *arg, unsigned long iova, int flags)
-> +static int a5xx_fault_handler(void *arg, unsigned long iova, int flags, void *data)
->  {
->  	struct msm_gpu *gpu = arg;
->  	pr_warn_ratelimited("*** gpu fault: iova=%08lx, flags=%d (%u,%u,%u,%u)\n",
-> @@ -1085,7 +1085,7 @@ static int a5xx_fault_handler(void *arg, unsigned long iova, int flags)
->  			gpu_read(gpu, REG_A5XX_CP_SCRATCH_REG(6)),
->  			gpu_read(gpu, REG_A5XX_CP_SCRATCH_REG(7)));
->  
-> -	return -EFAULT;
-> +	return 0;
->  }
->  
->  static void a5xx_cp_err_irq(struct msm_gpu *gpu)
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> index c7f0ddb12d8f..fc19db10bff1 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> @@ -1032,18 +1032,88 @@ static void a6xx_recover(struct msm_gpu *gpu)
->  	msm_gpu_hw_init(gpu);
->  }
->  
-> -static int a6xx_fault_handler(void *arg, unsigned long iova, int flags)
-> +static const char *a6xx_uche_fault_block(struct msm_gpu *gpu, u32 mid)
-> +{
-> +	static const char *uche_clients[7] = {
-> +		"VFD", "SP", "VSC", "VPC", "HLSQ", "PC", "LRZ",
-> +	};
-> +	u32 val;
-> +
-> +	if (mid < 1 || mid > 3)
-> +		return "UNKNOWN";
-> +
-> +	/*
-> +	 * The source of the data depends on the mid ID read from FSYNR1.
-> +	 * and the client ID read from the UCHE block
-> +	 */
-> +	val = gpu_read(gpu, REG_A6XX_UCHE_CLIENT_PF);
-> +
-> +	/* mid = 3 is most precise and refers to only one block per client */
-> +	if (mid == 3)
-> +		return uche_clients[val & 7];
-> +
-> +	/* For mid=2 the source is TP or VFD except when the client id is 0 */
-> +	if (mid == 2)
-> +		return ((val & 7) == 0) ? "TP" : "TP|VFD";
-> +
-> +	/* For mid=1 just return "UCHE" as a catchall for everything else */
-> +	return "UCHE";
-> +}
-> +
-> +static const char *a6xx_fault_block(struct msm_gpu *gpu, u32 id)
-> +{
-> +	if (id == 0)
-> +		return "CP";
-> +	else if (id == 4)
-> +		return "CCU";
-> +	else if (id == 6)
-> +		return "CDP Prefetch";
-> +
-> +	return a6xx_uche_fault_block(gpu, id);
-> +}
-> +
-> +#define ARM_SMMU_FSR_TF                 BIT(1)
-> +#define ARM_SMMU_FSR_PF			BIT(3)
-> +#define ARM_SMMU_FSR_EF			BIT(4)
-> +
-> +static int a6xx_fault_handler(void *arg, unsigned long iova, int flags, void *data)
->  {
->  	struct msm_gpu *gpu = arg;
-> +	struct adreno_smmu_fault_info *info = data;
-> +	const char *type = "UNKNOWN";
->  
-> -	pr_warn_ratelimited("*** gpu fault: iova=%08lx, flags=%d (%u,%u,%u,%u)\n",
-> +	/*
-> +	 * Print a default message if we couldn't get the data from the
-> +	 * adreno-smmu-priv
-> +	 */
-> +	if (!info) {
-> +		pr_warn_ratelimited("*** gpu fault: iova=%.16lx flags=%d (%u,%u,%u,%u)\n",
->  			iova, flags,
->  			gpu_read(gpu, REG_A6XX_CP_SCRATCH_REG(4)),
->  			gpu_read(gpu, REG_A6XX_CP_SCRATCH_REG(5)),
->  			gpu_read(gpu, REG_A6XX_CP_SCRATCH_REG(6)),
->  			gpu_read(gpu, REG_A6XX_CP_SCRATCH_REG(7)));
->  
-> -	return -EFAULT;
-> +		return 0;
-> +	}
-> +
-> +	if (info->fsr & ARM_SMMU_FSR_TF)
-> +		type = "TRANSLATION";
-> +	else if (info->fsr & ARM_SMMU_FSR_PF)
-> +		type = "PERMISSION";
-> +	else if (info->fsr & ARM_SMMU_FSR_EF)
-> +		type = "EXTERNAL";
-> +
-> +	pr_warn_ratelimited("*** gpu fault: ttbr0=%.16llx iova=%.16lx dir=%s type=%s source=%s (%u,%u,%u,%u)\n",
-> +			info->ttbr0, iova,
-> +			flags & IOMMU_FAULT_WRITE ? "WRITE" : "READ", type,
-> +			a6xx_fault_block(gpu, info->fsynr1 & 0xff),
-> +			gpu_read(gpu, REG_A6XX_CP_SCRATCH_REG(4)),
-> +			gpu_read(gpu, REG_A6XX_CP_SCRATCH_REG(5)),
-> +			gpu_read(gpu, REG_A6XX_CP_SCRATCH_REG(6)),
-> +			gpu_read(gpu, REG_A6XX_CP_SCRATCH_REG(7)));
-> +
-> +	return 0;
->  }
->  
->  static void a6xx_cp_hw_err_irq(struct msm_gpu *gpu)
-> diff --git a/drivers/gpu/drm/msm/msm_iommu.c b/drivers/gpu/drm/msm/msm_iommu.c
-> index 50d881794758..6975b95c3c29 100644
-> --- a/drivers/gpu/drm/msm/msm_iommu.c
-> +++ b/drivers/gpu/drm/msm/msm_iommu.c
-> @@ -211,8 +211,17 @@ static int msm_fault_handler(struct iommu_domain *domain, struct device *dev,
->  		unsigned long iova, int flags, void *arg)
->  {
->  	struct msm_iommu *iommu = arg;
-> +	struct adreno_smmu_priv *adreno_smmu = dev_get_drvdata(iommu->base.dev);
-> +	struct adreno_smmu_fault_info info, *ptr = NULL;
-> +
-> +	if (adreno_smmu->get_fault_info) {
-> +		adreno_smmu->get_fault_info(adreno_smmu->cookie, &info);
-> +		ptr = &info;
-> +	}
-> +
->  	if (iommu->base.handler)
-> -		return iommu->base.handler(iommu->base.arg, iova, flags);
-> +		return iommu->base.handler(iommu->base.arg, iova, flags, ptr);
-> +
->  	pr_warn_ratelimited("*** fault: iova=%16lx, flags=%d\n", iova, flags);
->  	return 0;
->  }
-> diff --git a/drivers/gpu/drm/msm/msm_mmu.h b/drivers/gpu/drm/msm/msm_mmu.h
-> index 61ade89d9e48..a88f44c3268d 100644
-> --- a/drivers/gpu/drm/msm/msm_mmu.h
-> +++ b/drivers/gpu/drm/msm/msm_mmu.h
-> @@ -26,7 +26,7 @@ enum msm_mmu_type {
->  struct msm_mmu {
->  	const struct msm_mmu_funcs *funcs;
->  	struct device *dev;
-> -	int (*handler)(void *arg, unsigned long iova, int flags);
-> +	int (*handler)(void *arg, unsigned long iova, int flags, void *data);
->  	void *arg;
->  	enum msm_mmu_type type;
->  };
-> @@ -43,7 +43,7 @@ struct msm_mmu *msm_iommu_new(struct device *dev, struct iommu_domain *domain);
->  struct msm_mmu *msm_gpummu_new(struct device *dev, struct msm_gpu *gpu);
->  
->  static inline void msm_mmu_set_fault_handler(struct msm_mmu *mmu, void *arg,
-> -		int (*handler)(void *arg, unsigned long iova, int flags))
-> +		int (*handler)(void *arg, unsigned long iova, int flags, void *data))
->  {
->  	mmu->arg = arg;
->  	mmu->handler = handler;
-> -- 
-> 2.31.1
-> 
-> _______________________________________________
-> iommu mailing list
-> iommu@lists.linux-foundation.org
-> https://lists.linuxfoundation.org/mailman/listinfo/iommu
+From the above, It doesn't look like the root cause of frame drops is fully=
+ understood.
+Why is 100+ms delay causing camera frame drop?  Is the same thread submitti=
+ng the buffers
+to camera after unmap is complete? If not, how is the unmap latency causing=
+ issue here?
+=20
+
+> > If unmap is queued and performed on a back ground thread, would it
+> > resolve the frame drops?
+>=20
+> Not sure I understand what you mean by queuing on background thread but w=
+ith
+> that or not, we still do the same number of TLBIs and hop through
+> iommu->io-pgtable->arm-smmu to perform the the unmap, so how will that
+> help?
+
+I mean adding the unmap requests into a queue and processing them from a di=
+fferent thread.
+It is not to reduce the TLBIs. But, not to block subsequent buffer allocati=
+on, IOVA map requests, if they
+are being requested from same thread that is performing unmap. If unmap is =
+already performed from
+a different thread, then the issue still need to be root caused to understa=
+nd it fully. Check for any
+serialization issues.=20
+
+
+-KR
