@@ -2,130 +2,197 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A517B3A6DA6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jun 2021 19:49:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 615EC3A6DBB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Jun 2021 19:55:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233757AbhFNRv5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Jun 2021 13:51:57 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:63642 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233179AbhFNRv4 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Jun 2021 13:51:56 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1623692994; h=Message-ID: References: In-Reply-To: Reply-To:
- Subject: Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=KEdYtHQyiUtt7ZlGjdInmYZxYY3b99OgSBMH10I1Gwk=;
- b=m3Es+LktXPp17htWZitk5uAkzWqzc+w2qDHZ8COBlkrHOQFPFILDYl0iNqaqXEG9nEWl7xpZ
- CWERTvfIxBfEKY676YgjulBj15wJbs+us1L0IqIE2WnY9jSBvwOwwstxRvZ8mFfGx8Jhi1xF
- 57wNh9hZd41MeUwwLo+ebemimNE=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
- 60c796c02eaeb98b5e56864a (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 14 Jun 2021 17:49:52
- GMT
-Sender: bbhatt=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 757D2C4323A; Mon, 14 Jun 2021 17:49:52 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: bbhatt)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 837CFC4338A;
-        Mon, 14 Jun 2021 17:49:51 +0000 (UTC)
+        id S233757AbhFNR5D (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Jun 2021 13:57:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45334 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233199AbhFNR5C (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 14 Jun 2021 13:57:02 -0400
+Received: from mail-oo1-xc2d.google.com (mail-oo1-xc2d.google.com [IPv6:2607:f8b0:4864:20::c2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3B18C061574
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Jun 2021 10:54:59 -0700 (PDT)
+Received: by mail-oo1-xc2d.google.com with SMTP id k21-20020a4a2a150000b029024955603642so2849279oof.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Jun 2021 10:54:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=RZlshWzShRr/1bxvI5qOhZ1dQlVIKovO57VSbDQdZFU=;
+        b=Mg3/SfBqtNf7mgH1NsaYekPfohhc46bBdfe4bze5h9yw87oo0g6Tubo8ceS0mU4lbS
+         YrOJFVzXaEREnDk6QfLMegA5sA6jXbkra30Y973xYjAvkOLGCa3A3XLBTjbArGSWzcRu
+         ZLZHp7MrBMIAw/rtyRje/sdFpR7oFAH9f4PXGR+eNGrUt1rwBipxF+U8qVJy01+Z2ctI
+         35RAPRCWroEBmT6zTirlKX3h/6nh5vLfRKkt3FYFZ4W7bnVbJ8wK2sfwV4nH4s9AZN4J
+         MUSi42oyIsBS+fWSQTZ13sb55pNj3zjUfChF3o6gwZDXfPr4at+lupCH2JUBCkpb5G3/
+         r+XA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=RZlshWzShRr/1bxvI5qOhZ1dQlVIKovO57VSbDQdZFU=;
+        b=VtzCjKP4pOZoMVVQIe7Zr49w1JV17gCYg+1Gt4gL/HiYjkbUSiU9Iq5cNbYcId3t5h
+         ZKf+drL21E4w2VaBlydnRaVrcFEStO4gcUsRUWjdA8XsKIgRu8WX9LIMlT6b7qYJUSM3
+         kcNIkBqTXZQUaZ2FjekYffuHk5+lMvK8cKT3/Z8AJrCnLwr4IwdrtlpOjTXEhQopITYR
+         2lK+3GUZygaqoBDx3x0Cz9/0sBXY6Z0zeEGX4lQw+74XPRf5bVPqoxJDDuHfZe8opOwS
+         MmI+D4Xf5FZuhx1fQRSe+2PusWiEwBdK91aM0L2/KBe+N9DQdjNarT4bXVCf/0cpQhd7
+         MW6g==
+X-Gm-Message-State: AOAM531RfptPb/kAxKYH+3lVTIeEexsvhJ12OjCrnqMSKzPhzSJNNOJn
+        8Vk4eEvrCYHtzrCcifa4fegH7w==
+X-Google-Smtp-Source: ABdhPJz1bHjlWmc11NEr6kmjCyfD8umeBOwZX3ymRU4S8kgueYx+/o5al/nmOVkubv+jft5vHI4vzQ==
+X-Received: by 2002:a05:6820:29b:: with SMTP id q27mr14003988ood.32.1623693299312;
+        Mon, 14 Jun 2021 10:54:59 -0700 (PDT)
+Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id 2sm3400587ota.58.2021.06.14.10.54.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 14 Jun 2021 10:54:58 -0700 (PDT)
+Date:   Mon, 14 Jun 2021 12:54:56 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     dri-devel@lists.freedesktop.org, iommu@lists.linux-foundation.org,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Rob Clark <robdclark@chromium.org>,
+        Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        "Isaac J. Manjarres" <isaacm@codeaurora.org>,
+        "moderated list:ARM SMMU DRIVERS" 
+        <linux-arm-kernel@lists.infradead.org>,
+        open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v5 4/5] iommu/arm-smmu-qcom: Add stall support
+Message-ID: <YMeX8NnVw80b9Qpe@yoga>
+References: <20210610214431.539029-1-robdclark@gmail.com>
+ <20210610214431.539029-5-robdclark@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Mon, 14 Jun 2021 10:49:51 -0700
-From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
-To:     Kalle Valo <kvalo@codeaurora.org>
-Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
-        jhugo@codeaurora.org, linux-kernel@vger.kernel.org,
-        loic.poulain@linaro.org, linux-wireless@vger.kernel.org,
-        ath11k@lists.infradead.org
-Subject: Re: [PATCH v4 4/6] ath11k: set register access length for MHI driver
-Organization: Qualcomm Innovation Center, Inc.
-Reply-To: bbhatt@codeaurora.org
-Mail-Reply-To: bbhatt@codeaurora.org
-In-Reply-To: <87h7i0juxt.fsf@codeaurora.org>
-References: <1620330705-40192-1-git-send-email-bbhatt@codeaurora.org>
- <1620330705-40192-5-git-send-email-bbhatt@codeaurora.org>
- <20210521135152.GL70095@thinkpad> <87h7i0juxt.fsf@codeaurora.org>
-Message-ID: <37184e28dcc952ba9ad5ed0dc2c1a6da@codeaurora.org>
-X-Sender: bbhatt@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210610214431.539029-5-robdclark@gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Kalle,
+On Thu 10 Jun 16:44 CDT 2021, Rob Clark wrote:
 
-On 2021-06-14 09:02 AM, Kalle Valo wrote:
-> Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> writes:
+> From: Rob Clark <robdclark@chromium.org>
 > 
->> On Thu, May 06, 2021 at 12:51:43PM -0700, Bhaumik Bhatt wrote:
->>> MHI driver requires register space length to add range checks and
->>> prevent memory region accesses outside of that for MMIO space.
->>> Set it before registering the MHI controller.
->>> 
->>> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
->>> Reviewed-by: Hemant Kumar <hemantk@codeaurora.org>
->> 
->> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
->> 
->> Kalle, should we do immutable branch for this patch or I can pick it 
->> up via MHI
->> tree (if there are no other patches expected from ath11k for this 
->> controller)?
+> Add, via the adreno-smmu-priv interface, a way for the GPU to request
+> the SMMU to stall translation on faults, and then later resume the
+> translation, either retrying or terminating the current translation.
 > 
-> I'm not expecting any conflicts with this, and if there are, they 
-> should
-> be easy for Stephen or Linus to fix. So it's easiest to route this via
-> your tree. But I'm not giving my ack yet, see below.
+> This will be used on the GPU side to "freeze" the GPU while we snapshot
+> useful state for devcoredump.
 > 
-> I'm worried that this patchset breaks bisect. Every patch in the
-> patchset should not break existing functionality, what if only patches
-> 1-3 are included in the tree but not patch 4? Wouldn't ath11k be broken
-> then? I didn't review the whole patchset, but I suspect the fix is to
-> include the ath11k change in the actual mhi patch which changes the
-> functionality. So that way we would not have a separate ath11k patch at
-> all.
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
+
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+
+Regards,
+Bjorn
+
+> ---
+>  drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 33 ++++++++++++++++++++++
+>  include/linux/adreno-smmu-priv.h           |  7 +++++
+>  2 files changed, 40 insertions(+)
 > 
-> Also I'm not able to test this patchset at the moment. Can someone else
-> help and do a quick test with QCA6390 to verify these doesn't break
-> ath11k?
-
-I have requested someone to try and test this patch series with QCA6390.
-
-I or the testers will get back to you with the test results when they 
-are
-available.
-
-As far as your concerns go, you can choose to pick patches 1-3 and that 
-would
-be just fine.
-
-Things will break if patchset 4 is _not_ in place with patchset 6 being 
-part of
-the tree.
-
-It would, however, be nice to pick the whole series instead and ensure 
-that
-the functionality MHI introduces for boot-up sanity is in place for any
-controllers such as ath11k.
-
-Thanks,
-Bhaumik
----
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
-Forum,
-a Linux Foundation Collaborative Project
+> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> index b2e31ea84128..61fc645c1325 100644
+> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> @@ -13,6 +13,7 @@ struct qcom_smmu {
+>  	struct arm_smmu_device smmu;
+>  	bool bypass_quirk;
+>  	u8 bypass_cbndx;
+> +	u32 stall_enabled;
+>  };
+>  
+>  static struct qcom_smmu *to_qcom_smmu(struct arm_smmu_device *smmu)
+> @@ -23,12 +24,17 @@ static struct qcom_smmu *to_qcom_smmu(struct arm_smmu_device *smmu)
+>  static void qcom_adreno_smmu_write_sctlr(struct arm_smmu_device *smmu, int idx,
+>  		u32 reg)
+>  {
+> +	struct qcom_smmu *qsmmu = to_qcom_smmu(smmu);
+> +
+>  	/*
+>  	 * On the GPU device we want to process subsequent transactions after a
+>  	 * fault to keep the GPU from hanging
+>  	 */
+>  	reg |= ARM_SMMU_SCTLR_HUPCF;
+>  
+> +	if (qsmmu->stall_enabled & BIT(idx))
+> +		reg |= ARM_SMMU_SCTLR_CFCFG;
+> +
+>  	arm_smmu_cb_write(smmu, idx, ARM_SMMU_CB_SCTLR, reg);
+>  }
+>  
+> @@ -48,6 +54,31 @@ static void qcom_adreno_smmu_get_fault_info(const void *cookie,
+>  	info->contextidr = arm_smmu_cb_read(smmu, cfg->cbndx, ARM_SMMU_CB_CONTEXTIDR);
+>  }
+>  
+> +static void qcom_adreno_smmu_set_stall(const void *cookie, bool enabled)
+> +{
+> +	struct arm_smmu_domain *smmu_domain = (void *)cookie;
+> +	struct arm_smmu_cfg *cfg = &smmu_domain->cfg;
+> +	struct qcom_smmu *qsmmu = to_qcom_smmu(smmu_domain->smmu);
+> +
+> +	if (enabled)
+> +		qsmmu->stall_enabled |= BIT(cfg->cbndx);
+> +	else
+> +		qsmmu->stall_enabled &= ~BIT(cfg->cbndx);
+> +}
+> +
+> +static void qcom_adreno_smmu_resume_translation(const void *cookie, bool terminate)
+> +{
+> +	struct arm_smmu_domain *smmu_domain = (void *)cookie;
+> +	struct arm_smmu_cfg *cfg = &smmu_domain->cfg;
+> +	struct arm_smmu_device *smmu = smmu_domain->smmu;
+> +	u32 reg = 0;
+> +
+> +	if (terminate)
+> +		reg |= ARM_SMMU_RESUME_TERMINATE;
+> +
+> +	arm_smmu_cb_write(smmu, cfg->cbndx, ARM_SMMU_CB_RESUME, reg);
+> +}
+> +
+>  #define QCOM_ADRENO_SMMU_GPU_SID 0
+>  
+>  static bool qcom_adreno_smmu_is_gpu_device(struct device *dev)
+> @@ -173,6 +204,8 @@ static int qcom_adreno_smmu_init_context(struct arm_smmu_domain *smmu_domain,
+>  	priv->get_ttbr1_cfg = qcom_adreno_smmu_get_ttbr1_cfg;
+>  	priv->set_ttbr0_cfg = qcom_adreno_smmu_set_ttbr0_cfg;
+>  	priv->get_fault_info = qcom_adreno_smmu_get_fault_info;
+> +	priv->set_stall = qcom_adreno_smmu_set_stall;
+> +	priv->resume_translation = qcom_adreno_smmu_resume_translation;
+>  
+>  	return 0;
+>  }
+> diff --git a/include/linux/adreno-smmu-priv.h b/include/linux/adreno-smmu-priv.h
+> index 53fe32fb9214..c637e0997f6d 100644
+> --- a/include/linux/adreno-smmu-priv.h
+> +++ b/include/linux/adreno-smmu-priv.h
+> @@ -45,6 +45,11 @@ struct adreno_smmu_fault_info {
+>   *                 TTBR0 translation is enabled with the specified cfg
+>   * @get_fault_info: Called by the GPU fault handler to get information about
+>   *                  the fault
+> + * @set_stall:     Configure whether stall on fault (CFCFG) is enabled.  Call
+> + *                 before set_ttbr0_cfg().  If stalling on fault is enabled,
+> + *                 the GPU driver must call resume_translation()
+> + * @resume_translation: Resume translation after a fault
+> + *
+>   *
+>   * The GPU driver (drm/msm) and adreno-smmu work together for controlling
+>   * the GPU's SMMU instance.  This is by necessity, as the GPU is directly
+> @@ -60,6 +65,8 @@ struct adreno_smmu_priv {
+>      const struct io_pgtable_cfg *(*get_ttbr1_cfg)(const void *cookie);
+>      int (*set_ttbr0_cfg)(const void *cookie, const struct io_pgtable_cfg *cfg);
+>      void (*get_fault_info)(const void *cookie, struct adreno_smmu_fault_info *info);
+> +    void (*set_stall)(const void *cookie, bool enabled);
+> +    void (*resume_translation)(const void *cookie, bool terminate);
+>  };
+>  
+>  #endif /* __ADRENO_SMMU_PRIV_H */
+> -- 
+> 2.31.1
+> 
