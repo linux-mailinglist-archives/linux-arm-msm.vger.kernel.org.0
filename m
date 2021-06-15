@@ -2,480 +2,266 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 123863A8ACA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jun 2021 23:13:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1C3D53A8AE2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jun 2021 23:15:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229931AbhFOVPZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Jun 2021 17:15:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46544 "EHLO
+        id S231390AbhFOVRp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Jun 2021 17:17:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47074 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230238AbhFOVPY (ORCPT
+        with ESMTP id S229898AbhFOVRp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Jun 2021 17:15:24 -0400
-Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com [IPv6:2607:f8b0:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 056A6C061760
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jun 2021 14:13:18 -0700 (PDT)
-Received: by mail-oi1-x233.google.com with SMTP id q10so60422oij.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jun 2021 14:13:18 -0700 (PDT)
+        Tue, 15 Jun 2021 17:17:45 -0400
+Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 709E6C06175F
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jun 2021 14:15:40 -0700 (PDT)
+Received: by mail-pl1-x62e.google.com with SMTP id v12so9119241plo.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jun 2021 14:15:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=iC6RXm/Qahte4XrMG2YsCeTJiMNyyXot3t+H7B1dbsM=;
-        b=zS3QB/UGlGHcJmNr0eJ13Q5X3k1+c7Z8Q68ezzP8qK2P4zw+XBXczNP2iF5EGoE1es
-         eYubnziJmblBo6ZDrBOzavH0Pu/uiHbu0fxtLExWlajRdH7EkKhIg2GKu9AHlrv9gpW8
-         rGk0P2IB8myCmz5g+JTlrd8RcCX+cG4tGsLOvMs1ztbgy3S/Bc+WKqywSpIIEJ95Rjy/
-         5FaKy4DtFmw2fU7wrl69vPItt/VtEULyXnWys/1Aw0mpwFCwokguGgK2USWjmEehRw8z
-         Qw8zgUcJIhLgFrksIUgJfXcivbb2ws8jNgIqyjhnhZZwpkB7K4Tvc4nmOIccFlu1QGSK
-         iNRw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=3Awujr/Y6+41OzNXavuItFD+FkpQLXtfnUO7aKQrUyQ=;
+        b=vCqncKYL64Z3hdL1T/RremxZ/laqN4mZ1Xq01ai0PehoiSc72IBK66XLU3mh+asdzl
+         zGmN1ZFs+BfygglD7iWme0kObzmQGVbw2vzqY/HzvuHGFoa9l27UgLkOVVnuaZWoWLYM
+         26QTN4oS38B7KZBVbmgcj3otPU+XV4T5NNOohJnGUVfS7olFLQNTyXgQ0IoZOUDpYxVY
+         I73HGM/ntPoVSnAB9F0uyYZqkvC4t+4YAP9vL6WabHmmwL42X5VpjOCUkBWKjx38KFw6
+         UdYD7TpneUDoNRrzZsmZAl49FEfFlgz9axyElHyDXUm7kNYnzy+bjOxqqhnw4OKvqPh+
+         NS+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=iC6RXm/Qahte4XrMG2YsCeTJiMNyyXot3t+H7B1dbsM=;
-        b=QpqT6EZ1cBAAawulgl5yuQbHNZvvO8X8/NdnulKPVS0U1m0ChjDVMVxygRNdw/eDeG
-         4V+PWiliyAoMNJjmLKmKPF+hhS+aIYzZl2AZzMs7WbbHqBUkoY7EXq13Bnk7rvP/MXxt
-         rFPCw5Ig0mMol9FYjOCP/9W9kwbqFe+tat886GkCV2WmJ5SjFUdRZzJvrJupgHnO2xP/
-         TYDRoKvEjbHaOMITPum1d07D0zcd0a+nWr3tzuhz8yDC1xpmF/4HiFRNWCgFI7Z3iv6G
-         cngnBaE0EYp9QQK8QnC1RANeenxUyPkDapiNeA3XrGWqCJGO61iRcouVFtOK89kzlB7D
-         9/rw==
-X-Gm-Message-State: AOAM5327HITRM/fmT+fHxVoOKuFPCVtJ26MvgrUM1JKEXg+4f3+Qsfl1
-        qrTwZ6seEuSGWkBKSrQi3nZPnw==
-X-Google-Smtp-Source: ABdhPJxoSuVBYBOuuVUqi6aVQmEUuOpXTGRn8L8an3iW+GXJzdRaF6FqRwrIqkbTH8nEN13ZwdecMQ==
-X-Received: by 2002:aca:618a:: with SMTP id v132mr4568903oib.144.1623791598214;
-        Tue, 15 Jun 2021 14:13:18 -0700 (PDT)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id h8sm10847oie.41.2021.06.15.14.13.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Jun 2021 14:13:17 -0700 (PDT)
-Date:   Tue, 15 Jun 2021 16:13:15 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, bhupesh.linux@gmail.com,
-        linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>
-Subject: Re: [PATCH v2 10/10] arm64: dts: qcom: sa8155p-adp: Add base dts file
-Message-ID: <YMkX63OuCW66RKek@builder.lan>
-References: <20210615074543.26700-1-bhupesh.sharma@linaro.org>
- <20210615074543.26700-11-bhupesh.sharma@linaro.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=3Awujr/Y6+41OzNXavuItFD+FkpQLXtfnUO7aKQrUyQ=;
+        b=DGlJrpHV32txcDLtJ3B3Ib3YvBkWZfOOSTeEEocEcHInR2bJWgfES7aUYpUAodwWCY
+         Ehuce2z17prDJ3wUpspAthAj5skNpMfNsrm9CLaLwlQ+xE1DoNmBGO0bHJ83l2HCxoBj
+         Gh1ArH5gWsmkAWF1f8kIhtjNmDxRwG2zvtqwHLBe9v5ZrRpI62O+4tlHqV8fnvcus6Vl
+         wSUg3Jx6DRFHdo4BnEgGjAmC8q++Dheablf4UEVRLk/yxfRVzts21WL2WtcebHuYkgIJ
+         8D8Fc4W2kmjk4swzdBsq+m7hQsORZ1R79Xr2HhWs66O9dsqBJOsdfsq0G7GDOyswXyHy
+         Ne7A==
+X-Gm-Message-State: AOAM533HdFwRNVKBBSjzToYmdt1byEtrQqRAcKwhIpyEGz/D485GwnRc
+        cGsSVtVB/EFaMRZ225fSjKXS633gi7Ur0oDcdDutSQ==
+X-Google-Smtp-Source: ABdhPJxSzZS+wrIPhY+5NnQUhoVVzdwp3Dc4ASKWYsDBYDqysYzUUVvKNTfWgmLVaUS+sHOA0/gLohfuFbOTj/UCfzI=
+X-Received: by 2002:a17:90a:d590:: with SMTP id v16mr1205348pju.205.1623791739791;
+ Tue, 15 Jun 2021 14:15:39 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210615074543.26700-11-bhupesh.sharma@linaro.org>
+References: <20210615133229.213064-1-stephan@gerhold.net> <20210615133229.213064-4-stephan@gerhold.net>
+In-Reply-To: <20210615133229.213064-4-stephan@gerhold.net>
+From:   Loic Poulain <loic.poulain@linaro.org>
+Date:   Tue, 15 Jun 2021 23:24:41 +0200
+Message-ID: <CAMZdPi8JuyqoF3GwJHcdXhdn0e7ks_f2WiUFpmn3E8HH7T_Gng@mail.gmail.com>
+Subject: Re: [PATCH net-next 3/3] net: wwan: Allow WWAN drivers to provide
+ blocking tx and poll function
+To:     Stephan Gerhold <stephan@gerhold.net>
+Cc:     "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Aleksander Morgado <aleksander@aleksander.es>,
+        Sergey Ryazanov <ryazanov.s.a@gmail.com>,
+        Johannes Berg <johannes.berg@intel.com>,
+        M Chetan Kumar <m.chetan.kumar@intel.com>,
+        Ohad Ben-Cohen <ohad@wizery.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Network Development <netdev@vger.kernel.org>,
+        linux-remoteproc@vger.kernel.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        phone-devel@vger.kernel.org,
+        open list <linux-kernel@vger.kernel.org>,
+        ~postmarketos/upstreaming@lists.sr.ht
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 15 Jun 02:45 CDT 2021, Bhupesh Sharma wrote:
+Hi Stephan,
 
-> Add base DTS file for SA8155p Automotive Development Platform.
-> It enables boot to console, adds tlmm reserved range and ufs flash.
-> It also includes pmic file.
-> 
-> SA8155p-adp board is based on sa8155p Qualcomm Snapdragon SoC.
-> SA8155p platform is similar to the SM8150, so use this as base
-> for now.
-> 
-> Cc: Linus Walleij <linus.walleij@linaro.org>
-> Cc: Liam Girdwood <lgirdwood@gmail.com>
-> Cc: Mark Brown <broonie@kernel.org>
-> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Cc: Vinod Koul <vkoul@kernel.org>
-> Cc: Rob Herring <robh+dt@kernel.org>
-> Cc: Andy Gross <agross@kernel.org>
+On Tue, 15 Jun 2021 at 15:34, Stephan Gerhold <stephan@gerhold.net> wrote:
+>
+> At the moment, the WWAN core provides wwan_port_txon/off() to implement
+> blocking writes. The tx() port operation should not block, instead
+> wwan_port_txon/off() should be called when the TX queue is full or has
+> free space again.
+>
+> However, in some cases it is not straightforward to make use of that
+> functionality. For example, the RPMSG API used by rpmsg_wwan_ctrl.c
+> does not provide any way to be notified when the TX queue has space
+> again. Instead, it only provides the following operations:
+>
+>   - rpmsg_send(): blocking write (wait until there is space)
+>   - rpmsg_trysend(): non-blocking write (return error if no space)
+>   - rpmsg_poll(): set poll flags depending on TX queue state
+>
+> Generally that's totally sufficient for implementing a char device,
+> but it does not fit well to the currently provided WWAN port ops.
+>
+> Most of the time, using the non-blocking rpmsg_trysend() in the
+> WWAN tx() port operation works just fine. However, with high-frequent
+> writes to the char device it is possible to trigger a situation
+> where this causes issues. For example, consider the following
+> (somewhat unrealistic) example:
+>
+>  # dd if=/dev/zero bs=1000 of=/dev/wwan0p2QMI
+>  dd: error writing '/dev/wwan0p2QMI': Resource temporarily unavailable
+>  1+0 records out
+>
+> This fails immediately after writing the first record. It's likely
+> only a matter of time until this triggers issues for some real application
+> (e.g. ModemManager sending a lot of large QMI packets).
+>
+> The rpmsg_char device does not have this problem, because it uses
+> rpmsg_trysend() and rpmsg_poll() to support non-blocking operations.
+> Make it possible to use the same in the RPMSG WWAN driver by extending
+> the tx() operation with a "nonblock" parameter and adding an optional
+> poll() callback. This integrates nicely with the RPMSG API and does
+> not break other WWAN drivers.
+>
+> With these changes, the dd example above blocks instead of exiting
+> with an error.
+>
+> Cc: Loic Poulain <loic.poulain@linaro.org>
+> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+> ---
+> Note that rpmsg_poll() is an optional callback currently only implemented
+> by the qcom_smd RPMSG provider. However, it should be easy to implement
+> this for other RPMSG providers when needed.
+>
+> Another potential solution suggested by Loic Poulain in [1] is to always
+> use the blocking rpmsg_send() from a workqueue/kthread and disable TX
+> until it is done. I think this could also work (perhaps a bit more
+> difficult to implement) but the main disadvantage is that I don't see
+> a way to return any kind of error to the client with this approach.
+> I assume we return immediately from the write() to the char device
+> after scheduling the rpmsg_send(), so we already reported success
+> when rpmsg_send() returns.
+>
+> At the end all that matters to me is that it works properly, so I'm
+> open for any other suggestions. :)
+>
+> [1]: https://lore.kernel.org/linux-arm-msm/CAMZdPi_-Qa=JnThHs_h-144dAfSAjF5s+QdBawdXZ3kk8Mx8ng@mail.gmail.com/
+> ---
+>  drivers/net/wwan/iosm/iosm_ipc_port.c |  3 ++-
+>  drivers/net/wwan/mhi_wwan_ctrl.c      |  3 ++-
+>  drivers/net/wwan/rpmsg_wwan_ctrl.c    | 17 +++++++++++++++--
+>  drivers/net/wwan/wwan_core.c          |  9 ++++++---
+>  drivers/net/wwan/wwan_hwsim.c         |  3 ++-
+>  include/linux/wwan.h                  | 13 +++++++++----
+>  6 files changed, 36 insertions(+), 12 deletions(-)
+>
+> diff --git a/drivers/net/wwan/iosm/iosm_ipc_port.c b/drivers/net/wwan/iosm/iosm_ipc_port.c
+> index beb944847398..2f874e41ceff 100644
+> --- a/drivers/net/wwan/iosm/iosm_ipc_port.c
+> +++ b/drivers/net/wwan/iosm/iosm_ipc_port.c
+> @@ -31,7 +31,8 @@ static void ipc_port_ctrl_stop(struct wwan_port *port)
+>  }
+>
+>  /* transfer control data to modem */
+> -static int ipc_port_ctrl_tx(struct wwan_port *port, struct sk_buff *skb)
+> +static int ipc_port_ctrl_tx(struct wwan_port *port, struct sk_buff *skb,
+> +                           bool nonblock)
+>  {
+>         struct iosm_cdev *ipc_port = wwan_port_get_drvdata(port);
+>
+> diff --git a/drivers/net/wwan/mhi_wwan_ctrl.c b/drivers/net/wwan/mhi_wwan_ctrl.c
+> index 1bc6b69aa530..9754f014d348 100644
+> --- a/drivers/net/wwan/mhi_wwan_ctrl.c
+> +++ b/drivers/net/wwan/mhi_wwan_ctrl.c
+> @@ -139,7 +139,8 @@ static void mhi_wwan_ctrl_stop(struct wwan_port *port)
+>         mhi_unprepare_from_transfer(mhiwwan->mhi_dev);
+>  }
+>
+> -static int mhi_wwan_ctrl_tx(struct wwan_port *port, struct sk_buff *skb)
+> +static int mhi_wwan_ctrl_tx(struct wwan_port *port, struct sk_buff *skb,
+> +                           bool nonblock)
+>  {
+>         struct mhi_wwan_dev *mhiwwan = wwan_port_get_drvdata(port);
+>         int ret;
+> diff --git a/drivers/net/wwan/rpmsg_wwan_ctrl.c b/drivers/net/wwan/rpmsg_wwan_ctrl.c
+> index de226cdb69fd..63f431eada39 100644
+> --- a/drivers/net/wwan/rpmsg_wwan_ctrl.c
+> +++ b/drivers/net/wwan/rpmsg_wwan_ctrl.c
+> @@ -54,12 +54,16 @@ static void rpmsg_wwan_ctrl_stop(struct wwan_port *port)
+>         rpwwan->ept = NULL;
+>  }
+>
+> -static int rpmsg_wwan_ctrl_tx(struct wwan_port *port, struct sk_buff *skb)
+> +static int rpmsg_wwan_ctrl_tx(struct wwan_port *port, struct sk_buff *skb,
+> +                             bool nonblock)
+>  {
+>         struct rpmsg_wwan_dev *rpwwan = wwan_port_get_drvdata(port);
+>         int ret;
+>
+> -       ret = rpmsg_trysend(rpwwan->ept, skb->data, skb->len);
+> +       if (nonblock)
+> +               ret = rpmsg_trysend(rpwwan->ept, skb->data, skb->len);
+> +       else
+> +               ret = rpmsg_send(rpwwan->ept, skb->data, skb->len);
+>         if (ret)
+>                 return ret;
+>
+> @@ -67,10 +71,19 @@ static int rpmsg_wwan_ctrl_tx(struct wwan_port *port, struct sk_buff *skb)
+>         return 0;
+>  }
+>
+> +static __poll_t rpmsg_wwan_ctrl_poll(struct wwan_port *port, struct file *filp,
+> +                                    poll_table *wait)
+> +{
+> +       struct rpmsg_wwan_dev *rpwwan = wwan_port_get_drvdata(port);
+> +
+> +       return rpmsg_poll(rpwwan->ept, filp, wait);
+> +}
+> +
+>  static const struct wwan_port_ops rpmsg_wwan_pops = {
+>         .start = rpmsg_wwan_ctrl_start,
+>         .stop = rpmsg_wwan_ctrl_stop,
+>         .tx = rpmsg_wwan_ctrl_tx,
+> +       .poll = rpmsg_wwan_ctrl_poll,
+>  };
+>
+>  static struct device *rpmsg_wwan_find_parent(struct device *dev)
+> diff --git a/drivers/net/wwan/wwan_core.c b/drivers/net/wwan/wwan_core.c
+> index 7e728042fc41..c7fd0b897f87 100644
+> --- a/drivers/net/wwan/wwan_core.c
+> +++ b/drivers/net/wwan/wwan_core.c
+> @@ -500,7 +500,8 @@ static void wwan_port_op_stop(struct wwan_port *port)
+>         mutex_unlock(&port->ops_lock);
+>  }
+>
+> -static int wwan_port_op_tx(struct wwan_port *port, struct sk_buff *skb)
+> +static int wwan_port_op_tx(struct wwan_port *port, struct sk_buff *skb,
+> +                          bool nonblock)
+>  {
+>         int ret;
+>
+> @@ -510,7 +511,7 @@ static int wwan_port_op_tx(struct wwan_port *port, struct sk_buff *skb)
+>                 goto out_unlock;
+>         }
+>
+> -       ret = port->ops->tx(port, skb);
+> +       ret = port->ops->tx(port, skb, nonblock);
+>
+>  out_unlock:
+>         mutex_unlock(&port->ops_lock);
+> @@ -637,7 +638,7 @@ static ssize_t wwan_port_fops_write(struct file *filp, const char __user *buf,
+>                 return -EFAULT;
+>         }
+>
+> -       ret = wwan_port_op_tx(port, skb);
+> +       ret = wwan_port_op_tx(port, skb, !!(filp->f_flags & O_NONBLOCK));
+>         if (ret) {
+>                 kfree_skb(skb);
+>                 return ret;
+> @@ -659,6 +660,8 @@ static __poll_t wwan_port_fops_poll(struct file *filp, poll_table *wait)
+>                 mask |= EPOLLIN | EPOLLRDNORM;
+>         if (!port->ops)
+>                 mask |= EPOLLHUP | EPOLLERR;
+> +       else if (port->ops->poll)
+> +               mask |= port->ops->poll(port, filp, wait);
 
-With the feedback of regulator-allow-set-load addressed this looks good!
+I'm not sure it useful here because EPOLLOUT flag is already set above, right?
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+>
+>         return mask;
+>  }
 
 Regards,
-Bjorn
-
-> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/Makefile        |   1 +
->  arch/arm64/boot/dts/qcom/sa8155p-adp.dts | 355 +++++++++++++++++++++++
->  2 files changed, 356 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/sa8155p-adp.dts
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index 456502aeee49..666f3528697d 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -32,6 +32,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= msm8998-oneplus-dumpling.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-1000.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-4000.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= qrb5165-rb5.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= sa8155p-adp.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-idp.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-coachz-r1.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-coachz-r1-lte.dtb
-> diff --git a/arch/arm64/boot/dts/qcom/sa8155p-adp.dts b/arch/arm64/boot/dts/qcom/sa8155p-adp.dts
-> new file mode 100644
-> index 000000000000..95e0a6612e6b
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/sa8155p-adp.dts
-> @@ -0,0 +1,355 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +/*
-> + * Copyright (c) 2021, Linaro Limited
-> + */
-> +
-> +/dts-v1/;
-> +
-> +#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
-> +#include <dt-bindings/gpio/gpio.h>
-> +#include "sm8150.dtsi"
-> +#include "pmm8155au_1.dtsi"
-> +#include "pmm8155au_2.dtsi"
-> +
-> +/ {
-> +	model = "Qualcomm Technologies, Inc. SA8155P ADP";
-> +	compatible = "qcom,sa8155p-adp", "qcom,sa8155p";
-> +
-> +	aliases {
-> +		serial0 = &uart2;
-> +	};
-> +
-> +	chosen {
-> +		stdout-path = "serial0:115200n8";
-> +	};
-> +
-> +	vreg_3p3: vreg_3p3_regulator {
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "vreg_3p3";
-> +		regulator-min-microvolt = <3300000>;
-> +		regulator-max-microvolt = <3300000>;
-> +	};
-> +
-> +	/*
-> +	 * S4A is always on and not controllable through RPMh.
-> +	 * So model it as a fixed regulator.
-> +	 */
-> +	vreg_s4a_1p8: smps4 {
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "vreg_s4a_1p8";
-> +
-> +		regulator-min-microvolt = <1800000>;
-> +		regulator-max-microvolt = <1800000>;
-> +
-> +		regulator-always-on;
-> +		regulator-boot-on;
-> +
-> +		vin-supply = <&vreg_3p3>;
-> +	};
-> +};
-> +
-> +&apps_rsc {
-> +	pmm8155au-1-rpmh-regulators {
-> +		compatible = "qcom,pmm8155au-rpmh-regulators";
-> +		qcom,pmic-id = "a";
-> +
-> +		vdd-s1-supply = <&vreg_3p3>;
-> +		vdd-s2-supply = <&vreg_3p3>;
-> +		vdd-s3-supply = <&vreg_3p3>;
-> +		vdd-s4-supply = <&vreg_3p3>;
-> +		vdd-s5-supply = <&vreg_3p3>;
-> +		vdd-s6-supply = <&vreg_3p3>;
-> +		vdd-s7-supply = <&vreg_3p3>;
-> +		vdd-s8-supply = <&vreg_3p3>;
-> +		vdd-s9-supply = <&vreg_3p3>;
-> +		vdd-s10-supply = <&vreg_3p3>;
-> +
-> +		vdd-l1-l8-l11-supply = <&vreg_s6a_0p92>;
-> +		vdd-l2-l10-supply = <&vreg_3p3>;
-> +		vdd-l3-l4-l5-l18-supply = <&vreg_s6a_0p92>;
-> +		vdd-l6-l9-supply = <&vreg_s6a_0p92>;
-> +		vdd-l7-l12-l14-l15-supply = <&vreg_s5a_2p04>;
-> +		vdd-l13-l16-l17-supply = <&vreg_3p3>;
-> +
-> +		vreg_s5a_2p04: smps5 {
-> +			regulator-name = "vreg_s5a_2p04";
-> +			regulator-min-microvolt = <1904000>;
-> +			regulator-max-microvolt = <2000000>;
-> +		};
-> +
-> +		vreg_s6a_0p92: smps6 {
-> +			regulator-name = "vreg_s6a_0p92";
-> +			regulator-min-microvolt = <920000>;
-> +			regulator-max-microvolt = <1128000>;
-> +		};
-> +
-> +		vreg_l1a_0p752: ldo1 {
-> +			regulator-name = "vreg_l1a_0p752";
-> +			regulator-min-microvolt = <752000>;
-> +			regulator-max-microvolt = <752000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vdda_usb_hs_3p1:
-> +		vreg_l2a_3p072: ldo2 {
-> +			regulator-name = "vreg_l2a_3p072";
-> +			regulator-min-microvolt = <3072000>;
-> +			regulator-max-microvolt = <3072000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l3a_0p8: ldo3 {
-> +			regulator-name = "vreg_l3a_0p8";
-> +			regulator-min-microvolt = <800000>;
-> +			regulator-max-microvolt = <800000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vdd_usb_hs_core:
-> +		vdda_usb_ss_dp_core_1:
-> +		vreg_l5a_0p88: ldo5 {
-> +			regulator-name = "vreg_l5a_0p88";
-> +			regulator-min-microvolt = <880000>;
-> +			regulator-max-microvolt = <880000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l7a_1p8: ldo7 {
-> +			regulator-name = "vreg_l7a_1p8";
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <1800000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l10a_2p96: ldo10 {
-> +			regulator-name = "vreg_l10a_2p96";
-> +			regulator-min-microvolt = <2504000>;
-> +			regulator-max-microvolt = <2960000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l11a_0p8: ldo11 {
-> +			regulator-name = "vreg_l11a_0p8";
-> +			regulator-min-microvolt = <800000>;
-> +			regulator-max-microvolt = <800000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vdda_usb_hs_1p8:
-> +		vreg_l12a_1p8: ldo12 {
-> +			regulator-name = "vreg_l12a_1p8";
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <1800000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l13a_2p7: ldo13 {
-> +			regulator-name = "vreg_l13a_2p7";
-> +			regulator-min-microvolt = <2704000>;
-> +			regulator-max-microvolt = <2704000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l15a_1p7: ldo15 {
-> +			regulator-name = "vreg_l15a_1p7";
-> +			regulator-min-microvolt = <1704000>;
-> +			regulator-max-microvolt = <1704000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l16a_2p7: ldo16 {
-> +			regulator-name = "vreg_l16a_2p7";
-> +			regulator-min-microvolt = <2704000>;
-> +			regulator-max-microvolt = <2960000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l17a_2p96: ldo17 {
-> +			regulator-name = "vreg_l17a_2p96";
-> +			regulator-min-microvolt = <2504000>;
-> +			regulator-max-microvolt = <2960000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +	};
-> +
-> +	pmm8155au-2-rpmh-regulators {
-> +		compatible = "qcom,pmm8155au-rpmh-regulators";
-> +		qcom,pmic-id = "c";
-> +
-> +		vdd-s1-supply = <&vreg_3p3>;
-> +		vdd-s2-supply = <&vreg_3p3>;
-> +		vdd-s3-supply = <&vreg_3p3>;
-> +		vdd-s4-supply = <&vreg_3p3>;
-> +		vdd-s5-supply = <&vreg_3p3>;
-> +		vdd-s6-supply = <&vreg_3p3>;
-> +		vdd-s7-supply = <&vreg_3p3>;
-> +		vdd-s8-supply = <&vreg_3p3>;
-> +		vdd-s9-supply = <&vreg_3p3>;
-> +		vdd-s10-supply = <&vreg_3p3>;
-> +
-> +		vdd-l1-l8-l11-supply = <&vreg_s4c_1p352>;
-> +		vdd-l2-l10-supply = <&vreg_3p3>;
-> +		vdd-l3-l4-l5-l18-supply = <&vreg_s4c_1p352>;
-> +		vdd-l6-l9-supply = <&vreg_s6c_1p128>;
-> +		vdd-l7-l12-l14-l15-supply = <&vreg_s5c_2p04>;
-> +		vdd-l13-l16-l17-supply = <&vreg_3p3>;
-> +
-> +		vreg_s4c_1p352: smps4 {
-> +			regulator-name = "vreg_s4c_1p352";
-> +			regulator-min-microvolt = <1352000>;
-> +			regulator-max-microvolt = <1352000>;
-> +		};
-> +
-> +		vreg_s5c_2p04: smps5 {
-> +			regulator-name = "vreg_s5c_2p04";
-> +			regulator-min-microvolt = <1904000>;
-> +			regulator-max-microvolt = <2000000>;
-> +		};
-> +
-> +		vreg_s6c_1p128: smps6 {
-> +			regulator-name = "vreg_s6c_1p128";
-> +			regulator-min-microvolt = <1128000>;
-> +			regulator-max-microvolt = <1128000>;
-> +		};
-> +
-> +		vreg_l1c_1p304: ldo1 {
-> +			regulator-name = "vreg_l1c_1p304";
-> +			regulator-min-microvolt = <1304000>;
-> +			regulator-max-microvolt = <1304000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l2c_1p808: ldo2 {
-> +			regulator-name = "vreg_l2c_1p808";
-> +			regulator-min-microvolt = <1704000>;
-> +			regulator-max-microvolt = <2928000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l5c_1p2: ldo5 {
-> +			regulator-name = "vreg_l5c_1p2";
-> +			regulator-min-microvolt = <1200000>;
-> +			regulator-max-microvolt = <1200000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l7c_1p8: ldo7 {
-> +			regulator-name = "vreg_l7c_1p8";
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <1800000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l8c_1p2: ldo8 {
-> +			regulator-name = "vreg_l8c_1p2";
-> +			regulator-min-microvolt = <1200000>;
-> +			regulator-max-microvolt = <1200000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l10c_3p3: ldo10 {
-> +			regulator-name = "vreg_l10c_3p3";
-> +			regulator-min-microvolt = <3000000>;
-> +			regulator-max-microvolt = <3312000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l11c_0p8: ldo11 {
-> +			regulator-name = "vreg_l11c_0p8";
-> +			regulator-min-microvolt = <800000>;
-> +			regulator-max-microvolt = <800000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l12c_1p808: ldo12 {
-> +			regulator-name = "vreg_l12c_1p808";
-> +			regulator-min-microvolt = <1704000>;
-> +			regulator-max-microvolt = <2928000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l13c_2p96: ldo13 {
-> +			regulator-name = "vreg_l13c_2p96";
-> +			regulator-min-microvolt = <2504000>;
-> +			regulator-max-microvolt = <2960000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l15c_1p9: ldo15 {
-> +			regulator-name = "vreg_l15c_1p9";
-> +			regulator-min-microvolt = <1704000>;
-> +			regulator-max-microvolt = <2928000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l16c_3p008: ldo16 {
-> +			regulator-name = "vreg_l16c_3p008";
-> +			regulator-min-microvolt = <3008000>;
-> +			regulator-max-microvolt = <3008000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l18c_0p88: ldo18 {
-> +			regulator-name = "vreg_l18c_0p88";
-> +			regulator-min-microvolt = <880000>;
-> +			regulator-max-microvolt = <880000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +	};
-> +};
-> +
-> +&tlmm {
-> +	gpio-reserved-ranges = <0 4>;
-> +};
-> +
-> +&uart2 {
-> +	status = "okay";
-> +};
-> +
-> +&ufs_mem_hc {
-> +	status = "okay";
-> +
-> +	reset-gpios = <&tlmm 175 GPIO_ACTIVE_LOW>;
-> +
-> +	vcc-supply = <&vreg_l10a_2p96>;
-> +	vcc-max-microamp = <750000>;
-> +	vccq-supply = <&vreg_l5c_1p2>;
-> +	vccq-max-microamp = <700000>;
-> +	vccq2-supply = <&vreg_s4a_1p8>;
-> +	vccq2-max-microamp = <750000>;
-> +};
-> +
-> +&ufs_mem_phy {
-> +	status = "okay";
-> +
-> +	vdda-phy-supply = <&vreg_l8c_1p2>;
-> +	vdda-max-microamp = <87100>;
-> +	vdda-pll-supply = <&vreg_l5a_0p88>;
-> +	vdda-pll-max-microamp = <18300>;
-> +};
-> +
-> +
-> +&usb_1_hsphy {
-> +	status = "okay";
-> +	vdda-pll-supply = <&vdd_usb_hs_core>;
-> +	vdda33-supply = <&vdda_usb_hs_3p1>;
-> +	vdda18-supply = <&vdda_usb_hs_1p8>;
-> +};
-> +
-> +&usb_1_qmpphy {
-> +	status = "okay";
-> +	vdda-phy-supply = <&vreg_l8c_1p2>;
-> +	vdda-pll-supply = <&vdda_usb_ss_dp_core_1>;
-> +};
-> +
-> +&usb_1 {
-> +	status = "okay";
-> +};
-> +
-> +&usb_1_dwc3 {
-> +	dr_mode = "peripheral";
-> +};
-> +
-> +&qupv3_id_1 {
-> +	status = "okay";
-> +};
-> -- 
-> 2.31.1
-> 
+Loic
