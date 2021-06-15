@@ -2,134 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AAF7E3A8C79
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jun 2021 01:28:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 624AD3A8C94
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jun 2021 01:34:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231165AbhFOXa0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Jun 2021 19:30:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48380 "EHLO
+        id S231603AbhFOXgX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Jun 2021 19:36:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49782 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231492AbhFOXaZ (ORCPT
+        with ESMTP id S231582AbhFOXgX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Jun 2021 19:30:25 -0400
-Received: from mail-oo1-xc31.google.com (mail-oo1-xc31.google.com [IPv6:2607:f8b0:4864:20::c31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BCD72C061760
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jun 2021 16:28:19 -0700 (PDT)
-Received: by mail-oo1-xc31.google.com with SMTP id y18-20020a4ae7120000b02902496b7708cfso209072oou.9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jun 2021 16:28:19 -0700 (PDT)
+        Tue, 15 Jun 2021 19:36:23 -0400
+Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com [IPv6:2607:f8b0:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3F40C061760
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jun 2021 16:34:16 -0700 (PDT)
+Received: by mail-ot1-x334.google.com with SMTP id l15-20020a05683016cfb02903fca0eacd15so634705otr.7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jun 2021 16:34:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=tzSchQZe56MMqq1z2RSbotrCopwwSz+YGTJ5s6h3T1w=;
-        b=P7gJ+yJcok8zyjrDvS5CFSBSmeNfbSk1IpzfHrvvdoRYYTLGsUuELq6pCHSTzt+Ygk
-         mmuKyJ8j2tSDgud2KnpeCcRjTLPRMALdTwtodETeGdylwmZ8uBmA8TlnNJJZdeyeOMqD
-         SZojpi4ngEdVFybx1dZvnZLyQi1WV1HQD56GCkfLxSy/lUbje43nY7u0WwZSd9j5GZDj
-         lOv/M+XJPYFdqmTLnnRDEbHLZx+1tFO/gbS6Ziieqo0yKGmkUiGOabUD2vv65+Jv+cLD
-         d/OL41uF0Z6GOMpbNfelqVGKwo2sWATapabrYLtzMxfjGUoxYvwiMkKycb76Gd4YP3wS
-         qKhQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=hxB6H8+aCeSUiBG1hifYHdZhYWkj0hk7sQxa3V/kpLg=;
+        b=oqYQ+Aa6KfsGyCXv/4GfHLloW6n1iYOM58VSQSlxcux9dXPsWCqL9A5m1MD79d5HfK
+         SI/9op63b0fYQrLDPT7WfehF+7UQEu+SAZ8v85wLD5HMwxYZ5R945ocA6QwJjcd6hjME
+         AWiH7dgiP56ZG0mpDaNtk9EQZCglWsV2aYz6CiqAJc7erz7svMz4v1wO5PvybdJjYIgA
+         kMjuzFIKDdLkZWoCZ/9Z33QTiC00CNrib0p2M4b5QOF0dGHKMJZPDAOmiyMkndK+LqaJ
+         YSSU3l+PzQpmmaaC+PAe7VcwVq6ylbnMpBMkvM0AVyc9d2hagJiPIw5PHQRPuR62ltdi
+         N6+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=tzSchQZe56MMqq1z2RSbotrCopwwSz+YGTJ5s6h3T1w=;
-        b=KFi1zhhS6VIqiTBKvjvIoxIbwZ1Eg2B4YLtipnrY8wr2t/KET0Zkc8GumMz4LsBtcR
-         9lg2jv+yhIiGMjyQB6jO7bRp7eG4K6Lokp4NVz2V0YLsYE+mhSB3mYYnfnNkd35cUfMp
-         xjf7qGGlqDnoUV2og6WdhZhNRyrRes49WEHlMkPOmdQ+RAyGCsihS36yRsYnK5m4WPJb
-         hejD3c2BC39//QPzNU4jAnwUZ//owtabd5dm77Nuh7Q+w2Dbk1aQpuQpNF0VlFvy/adE
-         Oev4mgqyd/boJYYZElHW2gfh9eDra2FyhC62aPgg7Y52pFQFTFDpLr1xQIkN9N01yB7V
-         JSTg==
-X-Gm-Message-State: AOAM532VL7DGBx9Xe76zhqouGPaVzJ+XmEHO6xzOCDSF70oIjS9yY5H+
-        nNN2voL6cDFn7B/AVDDaScDoAw==
-X-Google-Smtp-Source: ABdhPJykHIn7Udmj5j6l9ma1FDlBT7jKA40R6uo3S1ZfKJmsKdglv5gl2ebMdgL/RTatJSre1WOgZg==
-X-Received: by 2002:a4a:ea2b:: with SMTP id y11mr1311357ood.77.1623799697973;
-        Tue, 15 Jun 2021 16:28:17 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=hxB6H8+aCeSUiBG1hifYHdZhYWkj0hk7sQxa3V/kpLg=;
+        b=HwW1/qo/7UdIFrOi860q4vSsMuc5++rKUsMsg6Aipad82Qrm80Siwg+xujF7onGzyV
+         sNTVSOTC4daYhBr5qnpc+sMD69C/VTXMLu1zoYiPdl6UXxXjUk2cZd6/OXcge8HGl4Y+
+         6MAFx+ET9JTcLrJdUsJwxoClW+z93+dfNgbVyk+Q7s5O6l12C+q+MO3CcHDxjld6nbyL
+         h4p1Kud24k/OoFlrVhg6FqmEC9Vq2jHpHFnsVsKOc6+JQj52e/SsnenBo7bl2PIo5Qoy
+         ePR2MDbZme49PWPbmG4xYyObD1XaE7JsYYX2NU6mmEvqxkEMSakyr9/eG4DHBUvGO9VY
+         p7MA==
+X-Gm-Message-State: AOAM533laElAP/ypTsC5xo7W58iOdYfspFJ6+led3mgFF1cBzyGuP8/N
+        OpTY87oGspG7ni2yLrShh4yjicFM07pBbQ==
+X-Google-Smtp-Source: ABdhPJxJuEmlFW1DQj0HWiLK6p7P5TX62qHB17KKKwUlZ+JyyEyuSs5idLJAall5Elt35b3sxV6fNg==
+X-Received: by 2002:a05:6830:245c:: with SMTP id x28mr1377082otr.169.1623800056132;
+        Tue, 15 Jun 2021 16:34:16 -0700 (PDT)
 Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id u1sm89926ooo.18.2021.06.15.16.28.17
+        by smtp.gmail.com with ESMTPSA id x31sm111764ota.24.2021.06.15.16.34.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Jun 2021 16:28:17 -0700 (PDT)
+        Tue, 15 Jun 2021 16:34:15 -0700 (PDT)
+Date:   Tue, 15 Jun 2021 18:34:13 -0500
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, Alex Elder <elder@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] arm64: dts: qcom: sdm850-yoga: Enable IPA
-Date:   Tue, 15 Jun 2021 18:28:16 -0500
-Message-Id: <20210615232816.835325-1-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.31.0
+To:     Konrad Dybcio <konrad.dybcio@somainline.org>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, martin.botka@somainline.org,
+        angelogioacchino.delregno@somainline.org,
+        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
+        Andy Gross <agross@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/3] dt-bindings: dmaengine: qcom: gpi: add compatible
+ for sm8250
+Message-ID: <YMk49VN4CgEa41w8@builder.lan>
+References: <20210614235358.444834-1-konrad.dybcio@somainline.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210614235358.444834-1-konrad.dybcio@somainline.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Shuffle memory regions to make firmware loading succeed and then enable
-the ipa device.
+On Mon 14 Jun 18:53 CDT 2021, Konrad Dybcio wrote:
 
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
- arch/arm64/boot/dts/qcom/sdm845.dtsi          | 21 +++++++------------
- .../boot/dts/qcom/sdm850-lenovo-yoga-c630.dts |  5 +++++
- 2 files changed, 13 insertions(+), 13 deletions(-)
+> No functional changes, just adding a new compatible for a different
+> SoC.
+> 
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-index 1796ae8372be..49624eadce84 100644
---- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-@@ -128,28 +128,23 @@ camera_mem: memory@8bf00000 {
- 			no-map;
- 		};
- 
--		ipa_fw_mem: memory@8c400000 {
--			reg = <0 0x8c400000 0 0x10000>;
-+		wlan_msa_mem: memory@8c400000 {
-+			reg = <0 0x8c400000 0 0x100000>;
- 			no-map;
- 		};
- 
--		ipa_gsi_mem: memory@8c410000 {
--			reg = <0 0x8c410000 0 0x5000>;
-+		gpu_mem: memory@8c515000 {
-+			reg = <0 0x8c515000 0 0x2000>;
- 			no-map;
- 		};
- 
--		gpu_mem: memory@8c415000 {
--			reg = <0 0x8c415000 0 0x2000>;
-+		ipa_fw_mem: memory@8c517000 {
-+			reg = <0 0x8c517000 0 0x5a000>;
- 			no-map;
- 		};
- 
--		adsp_mem: memory@8c500000 {
--			reg = <0 0x8c500000 0 0x1a00000>;
--			no-map;
--		};
--
--		wlan_msa_mem: memory@8df00000 {
--			reg = <0 0x8df00000 0 0x100000>;
-+		adsp_mem: memory@8c600000 {
-+			reg = <0 0x8c600000 0 0x1a00000>;
- 			no-map;
- 		};
- 
-diff --git a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-index c2a709a384e9..3eaa42dc3794 100644
---- a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-@@ -415,6 +415,11 @@ ecsh: hid@5c {
- 	};
- };
- 
-+&ipa {
-+	status = "okay";
-+	memory-region = <&ipa_fw_mem>;
-+};
-+
- &mdss {
- 	status = "okay";
- };
--- 
-2.31.0
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
+Regards,
+Bjorn
+
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+> ---
+>  Documentation/devicetree/bindings/dma/qcom,gpi.yaml | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/dma/qcom,gpi.yaml b/Documentation/devicetree/bindings/dma/qcom,gpi.yaml
+> index e302147e53c6..e614fe3187bb 100644
+> --- a/Documentation/devicetree/bindings/dma/qcom,gpi.yaml
+> +++ b/Documentation/devicetree/bindings/dma/qcom,gpi.yaml
+> @@ -21,6 +21,7 @@ properties:
+>      enum:
+>        - qcom,sdm845-gpi-dma
+>        - qcom,sm8150-gpi-dma
+> +      - qcom,sm8250-gpi-dma
+>  
+>    reg:
+>      maxItems: 1
+> -- 
+> 2.32.0
+> 
