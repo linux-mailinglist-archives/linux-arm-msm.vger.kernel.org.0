@@ -2,104 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 42B523A85E2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jun 2021 18:00:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 530913A8704
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jun 2021 19:00:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232146AbhFOQCj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Jun 2021 12:02:39 -0400
-Received: from mga14.intel.com ([192.55.52.115]:40062 "EHLO mga14.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231971AbhFOQC3 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Jun 2021 12:02:29 -0400
-IronPort-SDR: 9qtBS4XVWneRtHMPoVPg4kP1W5XRznlzKHznjKAw0Ud6P+oBKt1Bh5CwKWlaICCroD/v6Mf81s
- WgKxX6q3vOrA==
-X-IronPort-AV: E=McAfee;i="6200,9189,10016"; a="205836964"
-X-IronPort-AV: E=Sophos;i="5.83,275,1616482800"; 
-   d="scan'208";a="205836964"
-Received: from fmsmga002.fm.intel.com ([10.253.24.26])
-  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Jun 2021 09:00:13 -0700
-IronPort-SDR: VuzC0kwC5Gd7fL4dcEBxLlwVKjbOSfVaWfYUJJcNryXABhVaEK7CES8NVtdky/X2ZqPP4QFqfA
- bw9EeubIQywg==
-X-IronPort-AV: E=Sophos;i="5.83,275,1616482800"; 
-   d="scan'208";a="487823401"
-Received: from bgeagarc-mobl1.amr.corp.intel.com (HELO [10.209.128.67]) ([10.209.128.67])
-  by fmsmga002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Jun 2021 09:00:11 -0700
-Subject: Re: [PATCH] ASoC: max98357a: set channels_max to 4
-To:     Cheng-yi Chiang <cychiang@chromium.org>,
-        Tzung-Bi Shih <tzungbi@google.com>
-Cc:     Taniya Das <tdas@codeaurora.org>,
-        ALSA development <alsa-devel@alsa-project.org>,
-        Banajit Goswami <bgoswami@codeaurora.org>,
-        Takashi Iwai <tiwai@suse.com>,
-        Rohit kumar <rohitkr@codeaurora.org>,
-        Patrick Lai <plai@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        Dylan Reid <dgreid@chromium.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, Tzung-Bi Shih <tzungbi@chromium.org>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "moderated list:ARM/Mediatek SoC support" 
-        <linux-arm-kernel@lists.infradead.org>,
-        Douglas Anderson <dianders@chromium.org>,
+        id S230459AbhFORC4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Jun 2021 13:02:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46594 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230346AbhFORC4 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 15 Jun 2021 13:02:56 -0400
+Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDC52C06175F
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jun 2021 10:00:51 -0700 (PDT)
+Received: by mail-oi1-x22c.google.com with SMTP id d19so14898215oic.7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jun 2021 10:00:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=OrHpiQTn+IqOBIYO5Pq4UHsLozqCibN36fNoW8gNRD0=;
+        b=w4V+qXiieefOcxwFgrf2VCnoMsgBVXMXyzgY8AURZ60wzDRJPA5ZnwPqtLaoxik+Bm
+         8fnW4ktgfh9cmf77AhchNONIO460nlmJi998joD1MZiXXz+lBlSKrWuuh6cWa0VNUaKt
+         cJo9nMufzTPQtClv0yJ6GGnfXW+Lvgf7eA+50GrQ9RaFKRB8CcvWvPGfrimQZMjCvIpg
+         nd6LJ7BRNrhnS5LCuSvMmbkFwQpdZ0fqcKsMrJpENRAsYEXBvTZOfcFmIb9PlkTLLznc
+         QtEQLqmr1Ywhf6CfQPYZt5aTGvs4fUbh+RRzbexCiMePG6hm9X+TzZoqJ93FFwndXj49
+         HNzw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=OrHpiQTn+IqOBIYO5Pq4UHsLozqCibN36fNoW8gNRD0=;
+        b=niVFjuAeZPrteg6oFj/bY67rBg/XkWfzSHjUAOmekbiALhhhsz28CtGZyE/DUh7Ggu
+         Xd6IPATOl1GodyADgcxKfXBZCxLLJScu65V7hS0HVaCLVhE6WFuaov3+P8SKxe+0S+ly
+         uVOeZ+JUoN2AAG6alIImuRFrkD0mYgnov5JdNWujJ5ZUZuyOhEhJGwBgwVvr+BdwYCDc
+         4JVplOU3BGm0GBH2vImvHg70VRWAZ9E3Ay2P8EGgdXuZ8pNrQNE9g798w6Eb5bFl7K4L
+         AzJYDgmKAdMQQ1pstjiNPkitWwO9kw8Abycb/AtmEQwLnL7X64fwe0Uji8iR2OTmh9G9
+         d+Vg==
+X-Gm-Message-State: AOAM533Gi33XYBH+k9JAinOMiYbc6ku/IkUpWiqFZwlMfoYNZb9o+6tN
+        L0Hq7j8nqdz2eO+drGBNjlSVUidTkarxxjY/CW6kxw==
+X-Google-Smtp-Source: ABdhPJxCnnNnCWSfH0VDaXkPF/u1L+nchxayekHp7hO0jMhZ49QfQK6sS4x7wI7zPaj50rP+V4rbyDHzeAJ3rdd9dHA=
+X-Received: by 2002:aca:4bd7:: with SMTP id y206mr117111oia.40.1623776450766;
+ Tue, 15 Jun 2021 10:00:50 -0700 (PDT)
+MIME-Version: 1.0
+References: <20210615074543.26700-1-bhupesh.sharma@linaro.org>
+ <20210615074543.26700-11-bhupesh.sharma@linaro.org> <0b012d77-8d61-f852-f455-8b6cceb03ebf@somainline.org>
+In-Reply-To: <0b012d77-8d61-f852-f455-8b6cceb03ebf@somainline.org>
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Date:   Tue, 15 Jun 2021 22:30:39 +0530
+Message-ID: <CAH=2NtzOzA9HmxFUUuhX9Vy=KW3iRSx5HiuD9Cf11v+eijEWsQ@mail.gmail.com>
+Subject: Re: [PATCH v2 10/10] arm64: dts: qcom: sa8155p-adp: Add base dts file
+To:     Konrad Dybcio <konrad.dybcio@somainline.org>
+Cc:     linux-arm-msm@vger.kernel.org, bhupesh.linux@gmail.com,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        devicetree <devicetree@vger.kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
         Liam Girdwood <lgirdwood@gmail.com>,
         Mark Brown <broonie@kernel.org>,
-        Judy Hsiao <judyhsiao@chromium.org>
-References: <20210526154704.114957-1-judyhsiao@chromium.org>
- <CA+Px+wXGjZCOhhAVh9eRw6L-g8g7Qi7Rf_3YHpHSCB2o=XQ+4g@mail.gmail.com>
- <CAFv8NwKkfGnpw_5PBwJSjVXsuw3L8=1RyEJ4PWdRX5-J75bk6A@mail.gmail.com>
-From:   Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Message-ID: <3501e398-dfba-43b1-4638-325a158e860d@linux.intel.com>
-Date:   Tue, 15 Jun 2021 11:00:10 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.8.1
-MIME-Version: 1.0
-In-Reply-To: <CAFv8NwKkfGnpw_5PBwJSjVXsuw3L8=1RyEJ4PWdRX5-J75bk6A@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Konrad,
 
+Thanks for the review.
 
-On 6/15/21 10:47 AM, Cheng-yi Chiang wrote:
-> Hi Tzung-Bi,
-> 
-> On a platform, the four max98357a amps will be controlled by only one
-> codec device, as GPIO for SD_MODE is shared by all amps and is the
-> only thing to be controlled.
-> In this sense, I think we can treat max98357a DAI as if it supports
-> four channels.
-> I understand that this solution is not scalable, because one can
-> control as many amps as they want.
-> Theoretically, the number of supported channels by this codec device
-> is unlimited.
-> I found that rt1015.c has similar usage.
-> Do you have a better suggestion to support this kind of use case ?
-> Thanks!
+On Tue, 15 Jun 2021 at 20:23, Konrad Dybcio
+<konrad.dybcio@somainline.org> wrote:
+>
+> Hi,
+>
+>
+> > +
+> > +     reset-gpios = <&tlmm 175 GPIO_ACTIVE_LOW>;
+> > +
+> > +     vcc-supply = <&vreg_l10a_2p96>;
+> > +     vcc-max-microamp = <750000>;
+> > +     vccq-supply = <&vreg_l5c_1p2>;
+> > +     vccq-max-microamp = <700000>;
+> > +     vccq2-supply = <&vreg_s4a_1p8>;
+> > +     vccq2-max-microamp = <750000>;
+>
+> You need to add "regulator-allow-set-load;" to the mentioned supplies,
+>
+> as you're controlling the amperage here.
 
-please don't top-post...
+Ok, I will fix this in v3.
 
-I don't think it's correct to declare 4-channel support at the 
-individual codec DAI level when in practice each device will be provided 
-with a TDM mask that selects two slots.
+> > +};
+> > +
+> > +&ufs_mem_phy {
+> > +     status = "okay";
+> > +
+> > +     vdda-phy-supply = <&vreg_l8c_1p2>;
+> > +     vdda-max-microamp = <87100>;
+> > +     vdda-pll-supply = <&vreg_l5a_0p88>;
+> > +     vdda-pll-max-microamp = <18300>;
+>
+> Ditto
 
-This is confusing device capabilities and TDM link configuration.
+Sure, I will fix it in v3.
 
-> On Tue, Jun 1, 2021 at 2:20 PM Tzung-Bi Shih <tzungbi@google.com> wrote:
->>
->> On Wed, May 26, 2021 at 11:47 PM Judy Hsiao <judyhsiao@chromium.org> wrote:
->>> Sets channels_max to 4 to support QUAD channel.
->>
->> Could you point out probably the up-to-date MAX98357A datasheet for
->> 4-channel support?
->>
->> On a related note, from the public datasheet I could find[1], "Table
->> 5" only shows 2 channel's configuration.
->>
->> [1]: https://pdf1.alldatasheet.com/datasheet-pdf/view/623796/MAXIM/MAX98357A.html
+Thanks,
+Bhupesh
