@@ -2,94 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A32E53A830B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jun 2021 16:38:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6BC1C3A8348
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jun 2021 16:53:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231159AbhFOOk4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Jun 2021 10:40:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42476 "EHLO
+        id S230462AbhFOOzv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Jun 2021 10:55:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45808 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230487AbhFOOky (ORCPT
+        with ESMTP id S230314AbhFOOzt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Jun 2021 10:40:54 -0400
-Received: from mail-oo1-xc2f.google.com (mail-oo1-xc2f.google.com [IPv6:2607:f8b0:4864:20::c2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29F7EC0617AF
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jun 2021 07:38:50 -0700 (PDT)
-Received: by mail-oo1-xc2f.google.com with SMTP id d27-20020a4a3c1b0000b029024983ef66dbso3574865ooa.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jun 2021 07:38:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=gML0gNeUY9KZnMu0icpe+Ao14v4Mv0uhd+YE7NtLepk=;
-        b=m3B/jCJ4NIK9+VC+M0jt2+0xz8y8z8M7ue7AOVKicMnwJXLOJe+TboMi8SP3Ai03cz
-         8J0Ej09umI3lO3xI6c46Lf3vmX9oCXJz4iYlKwTIyCcuoEjLVuKQGPq/L0/KrdxTeSOb
-         fcpkQButmCY8qdHOqpd89BV2I26Wg898fMnD3bJLimYnh2GQ9yFNivXeex+/xduBHeRX
-         Gj99T1THHkZH2cCnGnmGEcE1Dtl9IDNP9BGtST09RlyuaI6SWxCAq+C/DKyyhQxHN5Oq
-         MEjaSbCfkqDD+0CrS4zqSvpEgNLOhRuPgfN4QXygeJYhU+RA+ENoR57QQYGUFqs4OSJ0
-         JBGQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=gML0gNeUY9KZnMu0icpe+Ao14v4Mv0uhd+YE7NtLepk=;
-        b=Yq0KJJWHXaFZnXRBlggbTl6efdbO1MB6NMNVIportGvOa20TGj+t1tjAE+ri+s+PMl
-         oMHDaZPWp+0jOCTU4+VoXTYPUGMvBtm4ACeDdGdgN1sYdlFXCOC8ePyBPZmAZOvaL/8O
-         rVLe05m8yKXwCb0ereAV/VG3IDWhM0wufbhXxny1mcxr0X8jRVRr849aZRU0/LO0JPLO
-         N9KfncNeBGfXVhU/amnUN3JLr9JJ3vIAAEXAr3LapJOkKqtrx6cW0rllS6Qd001M3Ah+
-         B6H7YYMux5elzaqRC5qUFEXfQVpMMEsFrAwhcCYnBW05fabl+6CwFAZo/WCpHtlAelEL
-         mX7Q==
-X-Gm-Message-State: AOAM530BffIRhbU+lz/DR+Wfdby85eR+KPniS2SC5JeWNPHply1BLg2D
-        GmjW3i24Vq6Yw43OyLq6lysvrZRH6rC0kl6dCj6jufy3r+XNtw==
-X-Google-Smtp-Source: ABdhPJwwl+jPtnsMwBAGXx43iRP2lffKwywPRf97DhDFHyLh7bJr2kCnaZRGmAPrN54NYfZwIJS7Cbh1a/rf+tzGTxI=
-X-Received: by 2002:a4a:e4c1:: with SMTP id w1mr17875364oov.81.1623767929348;
- Tue, 15 Jun 2021 07:38:49 -0700 (PDT)
-MIME-Version: 1.0
-References: <20210615074543.26700-1-bhupesh.sharma@linaro.org>
- <20210615074543.26700-7-bhupesh.sharma@linaro.org> <20210615111228.GB5149@sirena.org.uk>
-In-Reply-To: <20210615111228.GB5149@sirena.org.uk>
-From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Date:   Tue, 15 Jun 2021 20:08:38 +0530
-Message-ID: <CAH=2NtwAsvU9x3pTKdf2e5YAG7N9=uT4EQZ9aPWp26THXntdNw@mail.gmail.com>
-Subject: Re: [PATCH v2 06/10] regulator: qcom-rpmh: Add new regulator found on
- SA8155p adp board
-To:     Mark Brown <broonie@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, bhupesh.linux@gmail.com,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        devicetree <devicetree@vger.kernel.org>,
+        Tue, 15 Jun 2021 10:55:49 -0400
+Received: from relay08.th.seeweb.it (relay08.th.seeweb.it [IPv6:2001:4b7a:2000:18::169])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76A40C06175F
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jun 2021 07:53:45 -0700 (PDT)
+Received: from [192.168.1.101] (83.6.168.161.neoplus.adsl.tpnet.pl [83.6.168.161])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 2D2733F43E;
+        Tue, 15 Jun 2021 16:53:42 +0200 (CEST)
+Subject: Re: [PATCH v2 10/10] arm64: dts: qcom: sa8155p-adp: Add base dts file
+To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        linux-arm-msm@vger.kernel.org
+Cc:     bhupesh.linux@gmail.com, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
         Linus Walleij <linus.walleij@linaro.org>,
         Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Vinod Koul <vkoul@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Andy Gross <agross@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+References: <20210615074543.26700-1-bhupesh.sharma@linaro.org>
+ <20210615074543.26700-11-bhupesh.sharma@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+Message-ID: <0b012d77-8d61-f852-f455-8b6cceb03ebf@somainline.org>
+Date:   Tue, 15 Jun 2021 16:53:41 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
+MIME-Version: 1.0
+In-Reply-To: <20210615074543.26700-11-bhupesh.sharma@linaro.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello Mark,
+Hi,
 
-Thanks for your review.
 
-On Tue, 15 Jun 2021 at 16:42, Mark Brown <broonie@kernel.org> wrote:
->
-> On Tue, Jun 15, 2021 at 01:15:39PM +0530, Bhupesh Sharma wrote:
->
-> > +     {
-> > +             .compatible = "qcom,pmm8155au-rpmh-regulators",
-> > +             .data = pmm8155au_vreg_data,
-> > +     },
->
-> This is adding a new compatible so it needs a matching update to the DT
-> binding.
+> +
+> +	reset-gpios = <&tlmm 175 GPIO_ACTIVE_LOW>;
+> +
+> +	vcc-supply = <&vreg_l10a_2p96>;
+> +	vcc-max-microamp = <750000>;
+> +	vccq-supply = <&vreg_l5c_1p2>;
+> +	vccq-max-microamp = <700000>;
+> +	vccq2-supply = <&vreg_s4a_1p8>;
+> +	vccq2-max-microamp = <750000>;
 
-Yes, [PATCH v2 01/10] from this series 'dt-bindings: qcom:
-rpmh-regulator: Add compatible for SA8155p-adp board pmic', updates
-the dt-binding with the new compatible.
+You need to add "regulator-allow-set-load;" to the mentioned supplies,
 
-Please let me know if I am missing something here.
+as you're controlling the amperage here.
 
-Thanks,
-Bhupesh
+
+> +};
+> +
+> +&ufs_mem_phy {
+> +	status = "okay";
+> +
+> +	vdda-phy-supply = <&vreg_l8c_1p2>;
+> +	vdda-max-microamp = <87100>;
+> +	vdda-pll-supply = <&vreg_l5a_0p88>;
+> +	vdda-pll-max-microamp = <18300>;
+
+Ditto
+
+
+Konrad
