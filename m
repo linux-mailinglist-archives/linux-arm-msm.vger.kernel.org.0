@@ -2,181 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 078133A83B5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jun 2021 17:12:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 11A9A3A8411
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jun 2021 17:35:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230431AbhFOPOM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Jun 2021 11:14:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50084 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230079AbhFOPOL (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Jun 2021 11:14:11 -0400
-Received: from mail-pg1-x52a.google.com (mail-pg1-x52a.google.com [IPv6:2607:f8b0:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1CD05C06175F
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jun 2021 08:12:07 -0700 (PDT)
-Received: by mail-pg1-x52a.google.com with SMTP id t17so11721207pga.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jun 2021 08:12:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=Eu/8Z6gF7JMgCtFuTXnnRycRhPLQbvQUaq3zZY+wYG0=;
-        b=SJZxKifR/KdssaCl7Xuxy5Wc63x9pUUuC12pTPG9yZtMaOC5+YB3WDTtjSWcC5GLxF
-         Ba6TXcDveT+Kl+TCdNFiIHc6tYsS+8RO9U9Txk08A/lHzBHZkihoLcjvYIToJglwpyP+
-         S19Lwq0NuSlgcYC87JkPJ1a0xyGKJotYJ7YGooXrs74kaewDmb8t36+oSAkrg/03+iKD
-         9mE5PTA7Le/RQQsm9SbgPcKy+3eYyIPBAufm4H1yfX5YJgbrPVod+04ktbg+cgObHDgy
-         EAvbDf/BgDgjBwMiglN0b/v7EzzGJl7Fv72qc9Lu/Uuk8+q5SvNT//+Vbd2zXNNhNoJ0
-         CH6g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Eu/8Z6gF7JMgCtFuTXnnRycRhPLQbvQUaq3zZY+wYG0=;
-        b=IFM8et+YykXFWIvavUtdRSo7BPzWHHctGAbO/lqntsiKesDdGU5kto36UkfmAQTMI0
-         gQDQmFDLJ1T2v1lFKdhjTyZW8pwNs1CMC3y/qCkMmmsk7OE275JQW3VE6Jp9GjE+UgTr
-         BreAdqsfMUghed3OaYLA3hHjqzM9+GtxvPDBZm37eUiGwENaIOhvVl7w0HjcyLJeOkVq
-         AWU28VSOdfX2TLSQRtIpErk3P79i9RV4+fOdglaai7Hb46Q37N4ywfCT+pg8B2rJlFPT
-         GlVx6CWMJmkMx17XvFN9jhSEa5qw3hC4DRZeyPK4EFoh6h5DzHsfWdCBZ8Jq9LY+UkyX
-         M7TA==
-X-Gm-Message-State: AOAM530Xmhkew8da3yxF0Utp8EAQYXE30n//VtEuz7kkDZHy1Su9ciKs
-        VmFvLLS+pb7B/vaen0wZn3lH
-X-Google-Smtp-Source: ABdhPJwbVbM/owpKFGfN2MXaqBf7f5OdgZx94yrXHbdl1FI8U+Ee4yH5VVInD44kx6K5Jh90apl7dQ==
-X-Received: by 2002:a62:5b41:0:b029:2cb:70a7:a8ce with SMTP id p62-20020a625b410000b02902cb70a7a8cemr4921093pfb.77.1623769926326;
-        Tue, 15 Jun 2021 08:12:06 -0700 (PDT)
-Received: from thinkpad ([2409:4072:85:d63b:767d:943:faf7:b89d])
-        by smtp.gmail.com with ESMTPSA id h8sm2376683pgc.60.2021.06.15.08.12.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Jun 2021 08:12:05 -0700 (PDT)
-Date:   Tue, 15 Jun 2021 20:41:58 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Kishon Vijay Abraham I <kishon@ti.com>
-Cc:     lorenzo.pieralisi@arm.com, bhelgaas@google.com,
-        linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
-        smohanad@codeaurora.org
-Subject: Re: [PATCH] PCI: endpoint: Add custom notifier support
-Message-ID: <20210615151158.GA93671@thinkpad>
-References: <20210615133704.88169-1-manivannan.sadhasivam@linaro.org>
- <9021212f-aa5d-770d-c455-c632dd79e7f8@ti.com>
+        id S231556AbhFOPhZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Jun 2021 11:37:25 -0400
+Received: from mail.kernel.org ([198.145.29.99]:40940 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230487AbhFOPhY (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 15 Jun 2021 11:37:24 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id CF32161628;
+        Tue, 15 Jun 2021 15:35:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1623771320;
+        bh=bdX3AMbWyhVXruwbjaE34McyzOJL3Jr1GERY0z/RZPc=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=ujZRxkUwNxdzF/KNfASkyHO1e+H5Uz79J4oyEmegDARkcl5tofoaqTxfYyHFo/Wx5
+         UHPDwxKWflhSY2zWNCq9IaPGZsR3yI8HmJU4T1W2ChraltN2nryH0FYTbkoeNHhb/C
+         QYfx4xgi6WovLBGxFWoHPMT/VBdYk42F1A3dTd0zRP2FjsrqUhl0BUQa7mmKfBZJFF
+         XhtcaHvdI0tZcTxuvCpnj30yPXeDy0Ffc8bHuAr4TQsL/7YZCd/H3HdWCzkqOeVGk3
+         CksOX0csLNvG83ogAAeqLDQ+pM3WPopARszbL2jAr5fgs27pwPeNcJBpSj3xNKFcaQ
+         xYX91CtocSb7Q==
+Date:   Tue, 15 Jun 2021 16:35:01 +0100
+From:   Mark Brown <broonie@kernel.org>
+To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, bhupesh.linux@gmail.com,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        devicetree <devicetree@vger.kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>
+Subject: Re: [PATCH v2 06/10] regulator: qcom-rpmh: Add new regulator found
+ on SA8155p adp board
+Message-ID: <20210615153501.GK5149@sirena.org.uk>
+References: <20210615074543.26700-1-bhupesh.sharma@linaro.org>
+ <20210615074543.26700-7-bhupesh.sharma@linaro.org>
+ <20210615111228.GB5149@sirena.org.uk>
+ <CAH=2NtwAsvU9x3pTKdf2e5YAG7N9=uT4EQZ9aPWp26THXntdNw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="1y1tiN5hVw5cPBDe"
 Content-Disposition: inline
-In-Reply-To: <9021212f-aa5d-770d-c455-c632dd79e7f8@ti.com>
+In-Reply-To: <CAH=2NtwAsvU9x3pTKdf2e5YAG7N9=uT4EQZ9aPWp26THXntdNw@mail.gmail.com>
+X-Cookie: See store for details.
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Kishon,
 
-On Tue, Jun 15, 2021 at 08:31:48PM +0530, Kishon Vijay Abraham I wrote:
-> Hi Manivannan,
-> 
-> On 15/06/21 7:07 pm, Manivannan Sadhasivam wrote:
-> > Add support for passing the custom notifications between the endpoint
-> > controller and the function driver. This helps in passing the
-> > notifications that are more specific to the controller and corresponding
-> > function driver. The opaque `data` arugument in pci_epc_custom_notify()
-> > function can be used to carry the event specific data that helps in
-> > differentiating the events.
-> > 
-> > For instance, the Qcom EPC device generates specific events such as
-> > MHI_A7, BME, DSTATE_CHANGE, PM_TURNOFF etc... These events needs to be
-> > passed to the function driver for proper handling. Hence, this custom
-> > notifier can be used to pass these events.
-> 
-> Bus master enable and PME events sounds generic events and not QCOM
-> specific.
+--1y1tiN5hVw5cPBDe
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Yes, that's correct! I thought about adding the notifiers for them but not sure
-about the convetion in EP stack. So went with an opaque notifier but I don't
-have any issue in adding them.
+On Tue, Jun 15, 2021 at 08:08:38PM +0530, Bhupesh Sharma wrote:
+> On Tue, 15 Jun 2021 at 16:42, Mark Brown <broonie@kernel.org> wrote:
 
-> Also this patch should be sent along with how it's going to be
-> used in function driver.
-> 
+> > This is adding a new compatible so it needs a matching update to the DT
+> > binding.
 
-The function driver which is going to use this notifier is under development but
-I can share a snippet if that helps.
+> Yes, [PATCH v2 01/10] from this series 'dt-bindings: qcom:
+> rpmh-regulator: Add compatible for SA8155p-adp board pmic', updates
+> the dt-binding with the new compatible.
 
-> In general my preference would be to add only well defined notifiers
-> given that the endpoint function drivers are generic.
-> 
+> Please let me know if I am missing something here.
 
-Not all functions are generic ones. For example, on Qcom modems there is a MHI
-function driver which transports the IP packets to the host and talks to the
-MHI host stack[1].
+Please submit patches using subject lines reflecting the style for the
+subsystem, this makes it easier for people to identify relevant patches.
+Look at what existing commits in the area you're changing are doing and
+make sure your subject lines visually resemble what they're doing.
+There's no need to resubmit to fix this alone.
 
-So for sure we need to have a custom notifier for vendor specific events.
+--1y1tiN5hVw5cPBDe
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Thanks,
-Mani
+-----BEGIN PGP SIGNATURE-----
 
-[1] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/bus/mhi
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmDIyKUACgkQJNaLcl1U
+h9CG0gf7BGrgHg/iW6D07GqPzhY1z1FAk1LIWWMOa8ljQTOxEVfYStEA0o24Jm6u
+YspeL71jHas7z5tG/tt0OkeynuVl2E/KoS7Dsea3rPcXOVAlA0hqi/pgyss5EwMv
+YFascZLDFcLLrGH9lqsf98XH4TV04dG129M0SremQYo6dYqBXTiiUhO8NDFca2Ik
+nH7czC8zijyGudCgkTJnFtuzghszMZ/GVoxgQt0wZtG5sLdgH4BxVtD+GM0Cly0s
+uxSNISYqna5CaDutBbudjyi3lumRZYIHM+CQqWTVeFBKMysbcghj6Mh7eQuHNcfP
+AUfbTM5GtQBRGcuhoC01fUXT+N1mgw==
+=4ZR0
+-----END PGP SIGNATURE-----
 
-> Thanks
-> Kishon
-> 
-> > 
-> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > ---
-> >  drivers/pci/endpoint/pci-epc-core.c | 19 +++++++++++++++++++
-> >  include/linux/pci-epc.h             |  1 +
-> >  include/linux/pci-epf.h             |  1 +
-> >  3 files changed, 21 insertions(+)
-> > 
-> > diff --git a/drivers/pci/endpoint/pci-epc-core.c b/drivers/pci/endpoint/pci-epc-core.c
-> > index adec9bee72cf..86b6934c6297 100644
-> > --- a/drivers/pci/endpoint/pci-epc-core.c
-> > +++ b/drivers/pci/endpoint/pci-epc-core.c
-> > @@ -658,6 +658,25 @@ void pci_epc_init_notify(struct pci_epc *epc)
-> >  }
-> >  EXPORT_SYMBOL_GPL(pci_epc_init_notify);
-> >  
-> > +/**
-> > + * pci_epc_custom_notify() - Notify the EPF device about the custom events
-> > + *			     in the EPC device
-> > + * @epc: EPC device that generates the custom notification
-> > + * @data: Data for the custom notifier
-> > + *
-> > + * Invoke to notify the EPF device about the custom events in the EPC device.
-> > + * This notifier can be used to pass the EPC specific custom events that are
-> > + * shared with the EPF device.
-> > + */
-> > +void pci_epc_custom_notify(struct pci_epc *epc, void *data)
-> > +{
-> > +	if (!epc || IS_ERR(epc))
-> > +		return;
-> > +
-> > +	atomic_notifier_call_chain(&epc->notifier, CUSTOM, data);
-> > +}
-> > +EXPORT_SYMBOL_GPL(pci_epc_custom_notify);
-> > +
-> >  /**
-> >   * pci_epc_destroy() - destroy the EPC device
-> >   * @epc: the EPC device that has to be destroyed
-> > diff --git a/include/linux/pci-epc.h b/include/linux/pci-epc.h
-> > index b82c9b100e97..13140fdbcdf6 100644
-> > --- a/include/linux/pci-epc.h
-> > +++ b/include/linux/pci-epc.h
-> > @@ -203,6 +203,7 @@ int pci_epc_add_epf(struct pci_epc *epc, struct pci_epf *epf,
-> >  		    enum pci_epc_interface_type type);
-> >  void pci_epc_linkup(struct pci_epc *epc);
-> >  void pci_epc_init_notify(struct pci_epc *epc);
-> > +void pci_epc_custom_notify(struct pci_epc *epc, void *data);
-> >  void pci_epc_remove_epf(struct pci_epc *epc, struct pci_epf *epf,
-> >  			enum pci_epc_interface_type type);
-> >  int pci_epc_write_header(struct pci_epc *epc, u8 func_no,
-> > diff --git a/include/linux/pci-epf.h b/include/linux/pci-epf.h
-> > index 6833e2160ef1..8d740c5cf0e3 100644
-> > --- a/include/linux/pci-epf.h
-> > +++ b/include/linux/pci-epf.h
-> > @@ -20,6 +20,7 @@ enum pci_epc_interface_type;
-> >  enum pci_notify_event {
-> >  	CORE_INIT,
-> >  	LINK_UP,
-> > +	CUSTOM,
-> >  };
-> >  
-> >  enum pci_barno {
-> > 
+--1y1tiN5hVw5cPBDe--
