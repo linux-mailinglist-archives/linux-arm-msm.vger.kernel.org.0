@@ -2,33 +2,32 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A8B963A8918
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jun 2021 21:04:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 304773A891F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jun 2021 21:04:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231189AbhFOTGF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Jun 2021 15:06:05 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:36206 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229749AbhFOTGE (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Jun 2021 15:06:04 -0400
+        id S231466AbhFOTGI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Jun 2021 15:06:08 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:16089 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231280AbhFOTGH (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 15 Jun 2021 15:06:07 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1623783839; h=References: In-Reply-To: Message-Id: Date:
+ s=smtp; t=1623783842; h=References: In-Reply-To: Message-Id: Date:
  Subject: Cc: To: From: Sender;
- bh=XLDXlbBf1RkYvs69WN6jCHKwvNyh18c2GNsG4IDrBqs=; b=LDLhBlW1k6DqTsSvTyoleiKmozVc0suAMTRXdAM31BIscmiIboEUODmiXMweQ1YwRvfccrk5
- N8c3ZZtvxRTdOGikp3HLaYh/N+d4/FdYZUuwwrayPABrFCvwejpp7ugoX6fZZT1Es34HXlis
- W6E3S/EQj/9EyS77P4BK8NL5p0k=
-X-Mailgun-Sending-Ip: 198.61.254.9
+ bh=s4MbUn0A7BsUXdZ1lWtEQK9g1U4XtYOuBoPX4WRDNVI=; b=WT4PC01i3//t3xtgWo0B9P+jDa882M9+E96hJ4ogNs0sgRyeiQVg5/ETwseySFmfWrZ7T6Xf
+ EHIMAv/SK0xdTcD7id/n5CRFRwVkfI7CRMhb+IsDzGtMsW+dmmwCfuWHjSipSwlLbgF0vwHB
+ p8jmoXETBirR3AQBGwyAcJVS338=
+X-Mailgun-Sending-Ip: 69.72.43.7
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
  smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
- 60c8f99be570c05619ff2c5d (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 15 Jun 2021 19:03:55
+ 60c8f99ce570c05619ff2e63 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 15 Jun 2021 19:03:56
  GMT
 Sender: sidgup=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 8D110C433D3; Tue, 15 Jun 2021 19:03:55 +0000 (UTC)
+        id 15703C43217; Tue, 15 Jun 2021 19:03:55 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -38,9 +37,9 @@ Received: from sidgup-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: sidgup)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 50AD1C433D3;
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id ECCB1C433F1;
         Tue, 15 Jun 2021 19:03:53 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 50AD1C433D3
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org ECCB1C433F1
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=sidgup@codeaurora.org
 From:   Siddharth Gupta <sidgup@codeaurora.org>
@@ -50,9 +49,9 @@ Cc:     Siddharth Gupta <sidgup@codeaurora.org>,
         linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org, psodagud@codeaurora.org,
         stable@vger.kernel.org
-Subject: [PATCH v4 1/4] remoteproc: core: Move cdev add before device add
-Date:   Tue, 15 Jun 2021 12:03:41 -0700
-Message-Id: <1623783824-13395-2-git-send-email-sidgup@codeaurora.org>
+Subject: [PATCH v4 2/4] remoteproc: core: Move validate before device add
+Date:   Tue, 15 Jun 2021 12:03:42 -0700
+Message-Id: <1623783824-13395-3-git-send-email-sidgup@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1623783824-13395-1-git-send-email-sidgup@codeaurora.org>
 References: <1623783824-13395-1-git-send-email-sidgup@codeaurora.org>
@@ -60,53 +59,42 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-When cdev_add is called after device_add has been called there is no
-way for the userspace to know about the addition of a cdev as cdev_add
-itself doesn't trigger a uevent notification, or for the kernel to
-know about the change to devt. This results in two problems:
- - mknod is never called for the cdev and hence no cdev appears on
-   devtmpfs.
- - sysfs links to the new cdev are not established.
-
-The cdev needs to be added and devt assigned before device_add() is
-called in order for the relevant sysfs and devtmpfs entries to be
-created and the uevent to be properly populated.
+We can validate whether the remoteproc is correctly setup before
+making the cdev_add and device_add calls. This saves us the
+trouble of cleaning up later on.
 
 Signed-off-by: Siddharth Gupta <sidgup@codeaurora.org>
 Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 Cc: stable@vger.kernel.org
 ---
- drivers/remoteproc/remoteproc_core.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/remoteproc/remoteproc_core.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
-index 6348aaa..9ad8c5f 100644
+index 9ad8c5f..b65fce3 100644
 --- a/drivers/remoteproc/remoteproc_core.c
 +++ b/drivers/remoteproc/remoteproc_core.c
-@@ -2333,6 +2333,11 @@ int rproc_add(struct rproc *rproc)
+@@ -2333,16 +2333,16 @@ int rproc_add(struct rproc *rproc)
  	struct device *dev = &rproc->dev;
  	int ret;
  
-+	/* add char device for this remoteproc */
-+	ret = rproc_char_device_add(rproc);
-+	if (ret < 0)
-+		return ret;
-+
- 	ret = device_add(dev);
- 	if (ret < 0)
- 		return ret;
-@@ -2346,11 +2351,6 @@ int rproc_add(struct rproc *rproc)
- 	/* create debugfs entries */
- 	rproc_create_debug_dir(rproc);
- 
 -	/* add char device for this remoteproc */
 -	ret = rproc_char_device_add(rproc);
--	if (ret < 0)
--		return ret;
--
- 	/* if rproc is marked always-on, request it to boot */
- 	if (rproc->auto_boot) {
- 		ret = rproc_trigger_auto_boot(rproc);
++	ret = rproc_validate(rproc);
+ 	if (ret < 0)
+ 		return ret;
+ 
+-	ret = device_add(dev);
++	/* add char device for this remoteproc */
++	ret = rproc_char_device_add(rproc);
+ 	if (ret < 0)
+ 		return ret;
+ 
+-	ret = rproc_validate(rproc);
++	ret = device_add(dev);
+ 	if (ret < 0)
+ 		return ret;
+ 
 -- 
 Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
 a Linux Foundation Collaborative Project
