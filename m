@@ -2,94 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 11A9A3A8411
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jun 2021 17:35:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D84153A8455
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jun 2021 17:48:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231556AbhFOPhZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Jun 2021 11:37:25 -0400
-Received: from mail.kernel.org ([198.145.29.99]:40940 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230487AbhFOPhY (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Jun 2021 11:37:24 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id CF32161628;
-        Tue, 15 Jun 2021 15:35:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1623771320;
-        bh=bdX3AMbWyhVXruwbjaE34McyzOJL3Jr1GERY0z/RZPc=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=ujZRxkUwNxdzF/KNfASkyHO1e+H5Uz79J4oyEmegDARkcl5tofoaqTxfYyHFo/Wx5
-         UHPDwxKWflhSY2zWNCq9IaPGZsR3yI8HmJU4T1W2ChraltN2nryH0FYTbkoeNHhb/C
-         QYfx4xgi6WovLBGxFWoHPMT/VBdYk42F1A3dTd0zRP2FjsrqUhl0BUQa7mmKfBZJFF
-         XhtcaHvdI0tZcTxuvCpnj30yPXeDy0Ffc8bHuAr4TQsL/7YZCd/H3HdWCzkqOeVGk3
-         CksOX0csLNvG83ogAAeqLDQ+pM3WPopARszbL2jAr5fgs27pwPeNcJBpSj3xNKFcaQ
-         xYX91CtocSb7Q==
-Date:   Tue, 15 Jun 2021 16:35:01 +0100
-From:   Mark Brown <broonie@kernel.org>
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, bhupesh.linux@gmail.com,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        devicetree <devicetree@vger.kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>
-Subject: Re: [PATCH v2 06/10] regulator: qcom-rpmh: Add new regulator found
- on SA8155p adp board
-Message-ID: <20210615153501.GK5149@sirena.org.uk>
-References: <20210615074543.26700-1-bhupesh.sharma@linaro.org>
- <20210615074543.26700-7-bhupesh.sharma@linaro.org>
- <20210615111228.GB5149@sirena.org.uk>
- <CAH=2NtwAsvU9x3pTKdf2e5YAG7N9=uT4EQZ9aPWp26THXntdNw@mail.gmail.com>
+        id S231694AbhFOPuF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Jun 2021 11:50:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58090 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231366AbhFOPuE (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 15 Jun 2021 11:50:04 -0400
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF255C06175F
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jun 2021 08:47:59 -0700 (PDT)
+Received: by mail-wm1-x32b.google.com with SMTP id t11-20020a1cc30b0000b02901cec841b6a0so1136446wmf.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jun 2021 08:47:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=GBinx4Fgo45gvNb6Q+VwiPy/5uxor4+wH/XjaU7vEwU=;
+        b=fKBLKEpGGji1pJ8Chsxfvqljab6qo00YqyYLcs9KAIRVzcPyZyRS/9kYae9BQhnPkS
+         ZnpNaP5a2XEdbNdJeZViHbkyiIYIIILUexJwCWeSWF8fDuQSgpoe7MuUHFy0z4UazS32
+         sDdFgLVdGm9mG/b/9FD+ArxbRhqK74pHM2kr8=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=GBinx4Fgo45gvNb6Q+VwiPy/5uxor4+wH/XjaU7vEwU=;
+        b=My8WjSa9QSih/FSZb/P0QSVFw4ICgSEYueAowmUtygyMtgRtZ57ixwFb6m4+Sek/SS
+         XbnTUAmr19nRosQ3GJApViEoKASYzzUC8/n/Zt31w0ARcPBLKNPyvX5V+4XvgJSgQklL
+         0Mxjmtl/obBupw7O7nXRbVleHinbvr2I4Tr5QAitMv0uNVE8dfIc24I3HE77vyJrI5f7
+         jJXBhK8IlCCVQhW2BsO/JsGeKVxjNXEniit5zY7abN0iWjAdB1ujYryQ//FsdimJQoVh
+         7DFm6cnim19xeuEwz9G2dSn5mrZqvW1n2B+akEFDDgAc833xWD8lsAU0ZFuIoQ+zh2tA
+         KQSQ==
+X-Gm-Message-State: AOAM533dmEe7L9LDorYTlbjiRG7q8Ns7jj1h2icalm/OgZfOduP2j5zn
+        0rrsmfBZi40ILivVimJW7Wg1mkXMvJtsZMXNDAjlJw==
+X-Google-Smtp-Source: ABdhPJwUoEVW6kMYZC606PnYCEczrljMALiN96zNLd0kS0EL2UX5TDso3su7xUx2lhZdDpzedPnxBwH3c8Nmho87MO0=
+X-Received: by 2002:a7b:c5d2:: with SMTP id n18mr6083880wmk.97.1623772078396;
+ Tue, 15 Jun 2021 08:47:58 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="1y1tiN5hVw5cPBDe"
-Content-Disposition: inline
-In-Reply-To: <CAH=2NtwAsvU9x3pTKdf2e5YAG7N9=uT4EQZ9aPWp26THXntdNw@mail.gmail.com>
-X-Cookie: See store for details.
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <20210526154704.114957-1-judyhsiao@chromium.org> <CA+Px+wXGjZCOhhAVh9eRw6L-g8g7Qi7Rf_3YHpHSCB2o=XQ+4g@mail.gmail.com>
+In-Reply-To: <CA+Px+wXGjZCOhhAVh9eRw6L-g8g7Qi7Rf_3YHpHSCB2o=XQ+4g@mail.gmail.com>
+From:   Cheng-yi Chiang <cychiang@chromium.org>
+Date:   Tue, 15 Jun 2021 23:47:30 +0800
+Message-ID: <CAFv8NwKkfGnpw_5PBwJSjVXsuw3L8=1RyEJ4PWdRX5-J75bk6A@mail.gmail.com>
+Subject: Re: [PATCH] ASoC: max98357a: set channels_max to 4
+To:     Tzung-Bi Shih <tzungbi@google.com>
+Cc:     Judy Hsiao <judyhsiao@chromium.org>,
+        Mark Brown <broonie@kernel.org>,
+        Taniya Das <tdas@codeaurora.org>,
+        Rohit kumar <rohitkr@codeaurora.org>,
+        Banajit Goswami <bgoswami@codeaurora.org>,
+        Patrick Lai <plai@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Takashi Iwai <tiwai@suse.com>,
+        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Douglas Anderson <dianders@chromium.org>,
+        Dylan Reid <dgreid@chromium.org>,
+        Tzung-Bi Shih <tzungbi@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        "moderated list:ARM/Mediatek SoC support" 
+        <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        ALSA development <alsa-devel@alsa-project.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Tzung-Bi,
 
---1y1tiN5hVw5cPBDe
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+On a platform, the four max98357a amps will be controlled by only one
+codec device, as GPIO for SD_MODE is shared by all amps and is the
+only thing to be controlled.
+In this sense, I think we can treat max98357a DAI as if it supports
+four channels.
+I understand that this solution is not scalable, because one can
+control as many amps as they want.
+Theoretically, the number of supported channels by this codec device
+is unlimited.
+I found that rt1015.c has similar usage.
+Do you have a better suggestion to support this kind of use case ?
+Thanks!
 
-On Tue, Jun 15, 2021 at 08:08:38PM +0530, Bhupesh Sharma wrote:
-> On Tue, 15 Jun 2021 at 16:42, Mark Brown <broonie@kernel.org> wrote:
 
-> > This is adding a new compatible so it needs a matching update to the DT
-> > binding.
 
-> Yes, [PATCH v2 01/10] from this series 'dt-bindings: qcom:
-> rpmh-regulator: Add compatible for SA8155p-adp board pmic', updates
-> the dt-binding with the new compatible.
 
-> Please let me know if I am missing something here.
-
-Please submit patches using subject lines reflecting the style for the
-subsystem, this makes it easier for people to identify relevant patches.
-Look at what existing commits in the area you're changing are doing and
-make sure your subject lines visually resemble what they're doing.
-There's no need to resubmit to fix this alone.
-
---1y1tiN5hVw5cPBDe
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmDIyKUACgkQJNaLcl1U
-h9CG0gf7BGrgHg/iW6D07GqPzhY1z1FAk1LIWWMOa8ljQTOxEVfYStEA0o24Jm6u
-YspeL71jHas7z5tG/tt0OkeynuVl2E/KoS7Dsea3rPcXOVAlA0hqi/pgyss5EwMv
-YFascZLDFcLLrGH9lqsf98XH4TV04dG129M0SremQYo6dYqBXTiiUhO8NDFca2Ik
-nH7czC8zijyGudCgkTJnFtuzghszMZ/GVoxgQt0wZtG5sLdgH4BxVtD+GM0Cly0s
-uxSNISYqna5CaDutBbudjyi3lumRZYIHM+CQqWTVeFBKMysbcghj6Mh7eQuHNcfP
-AUfbTM5GtQBRGcuhoC01fUXT+N1mgw==
-=4ZR0
------END PGP SIGNATURE-----
-
---1y1tiN5hVw5cPBDe--
+On Tue, Jun 1, 2021 at 2:20 PM Tzung-Bi Shih <tzungbi@google.com> wrote:
+>
+> On Wed, May 26, 2021 at 11:47 PM Judy Hsiao <judyhsiao@chromium.org> wrote:
+> > Sets channels_max to 4 to support QUAD channel.
+>
+> Could you point out probably the up-to-date MAX98357A datasheet for
+> 4-channel support?
+>
+> On a related note, from the public datasheet I could find[1], "Table
+> 5" only shows 2 channel's configuration.
+>
+> [1]: https://pdf1.alldatasheet.com/datasheet-pdf/view/623796/MAXIM/MAX98357A.html
