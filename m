@@ -2,113 +2,331 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6E3A03A73BA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jun 2021 04:24:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 72D183A7437
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jun 2021 04:42:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229919AbhFOC0E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Jun 2021 22:26:04 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:35960 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231793AbhFOCZz (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Jun 2021 22:25:55 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1623723830; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=5kbW/WbGQ5vlvRQKgWyutzmdItpsAX8FhZZHChGUKuo=; b=omoBDnXsP+lW+onIbznFp0zN8ay2LssnNc5E6HKuJ4v0KlcgNS4J8APNNltlweFEarfNVDsx
- 7n6+V99Q6xkEmW1yjopOFODEp+Ec3Zj+6nmk/qgYYOtv1j9u8oTlYqsoWpccq3fvzY5hYbvO
- 5EUNJTexrS4PlAoJzWrxfyCMCtg=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
- 60c80ea28491191eb3f5dbcc (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 15 Jun 2021 02:21:22
- GMT
-Sender: sidgup=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id B8293C433F1; Tue, 15 Jun 2021 02:21:22 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
-Received: from sidgup-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: sidgup)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id C8217C4338A;
-        Tue, 15 Jun 2021 02:21:21 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org C8217C4338A
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=sidgup@codeaurora.org
-From:   Siddharth Gupta <sidgup@codeaurora.org>
-To:     bjorn.andersson@linaro.org, ohad@wizery.com,
-        linux-remoteproc@vger.kernel.org
-Cc:     Siddharth Gupta <sidgup@codeaurora.org>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, psodagud@codeaurora.org,
-        stable@vger.kernel.org
-Subject: [PATCH v3 4/4] remoteproc: core: Cleanup device in case of failure
-Date:   Mon, 14 Jun 2021 19:21:11 -0700
-Message-Id: <1623723671-5517-5-git-send-email-sidgup@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1623723671-5517-1-git-send-email-sidgup@codeaurora.org>
-References: <1623723671-5517-1-git-send-email-sidgup@codeaurora.org>
+        id S229760AbhFOCok (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Jun 2021 22:44:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47892 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229734AbhFOCok (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 14 Jun 2021 22:44:40 -0400
+Received: from mail-qt1-x82b.google.com (mail-qt1-x82b.google.com [IPv6:2607:f8b0:4864:20::82b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09F4FC061574
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Jun 2021 19:42:37 -0700 (PDT)
+Received: by mail-qt1-x82b.google.com with SMTP id u20so10194572qtx.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Jun 2021 19:42:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=O53gEWfH2MVe6PVxXbAaaJkGomJpiUiI0nzOZi1VeT4=;
+        b=ari/JPtxcjD1356HIyGGATsHHtSWUL83yblzZ1qQXrzE9aKC4qdmVYBcEAduXsg65w
+         iH3R3XRzVzGaaA8JHGP913q/bTcysYsnPfgic4E5JxnEJiP2gEi5KM5SaUsYp4pO3aWC
+         UCM6bRQbie3/GERjzCywogJOsYWAjY2PkZheMDuKZ1cftUfXjLtiDqJUv4N0sbb8h/EE
+         m/nhCAdnAjMPclKKExB6pKf8uFPsfyEKw/tvDWmBA0mLEy9CkrZsJui/7RaXLYH0h25Q
+         YzOSd+UF2+LRHmqa8Vqg3Yx589H2gTNpbeqryUiQtnN/RtsNzdecVPRyy8LUA0bdpFJo
+         M/jA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=O53gEWfH2MVe6PVxXbAaaJkGomJpiUiI0nzOZi1VeT4=;
+        b=uaCsTcVYHg0he09Vj0ZBH2fIlIBE14Xdq60ay7VYEWAUpuk4HEnBJIfQXihwAnt1+H
+         XBgV4HO22nZtvG/+X5QDUTOit0AVHGnvEgfRJAb0ujEUXFXHvQb7lJ4DIR2wgQ24qfiN
+         u+/YH88LSxzbYIcMsVQL7dTEnVlksoYasHCN9SHQigEkch8FldkHUXmXsWDQnfigF/3B
+         zEcLcYIK7gUVCWjgz+2pVLMA5m8FKKps686XOPf8v8NZ0drxsKYuHxXjetZdUjJAJEzK
+         YWa2YJrAYElW1eQ4fM2IvRDN10vAfWdFxtMBHzxUtmHtsy5IscLkvEGf28XEroxSPnTS
+         oEcg==
+X-Gm-Message-State: AOAM532PIuoxwowsA6SJVGQHbVOfMi0XkZpUOId1xycERi/pabZNN98V
+        pbHThJnyvWGYmsNiwlzGsEGPMCQYFn4gOw==
+X-Google-Smtp-Source: ABdhPJykLVHgEcNXRGmsiw+Gghaj3UFAO/+ACWLcRb5LGGkrwYT07tHo8yVXU4dF7o02rriG13mIbg==
+X-Received: by 2002:ac8:41d3:: with SMTP id o19mr19449923qtm.90.1623721081609;
+        Mon, 14 Jun 2021 18:38:01 -0700 (PDT)
+Received: from [192.168.1.93] (pool-71-163-245-5.washdc.fios.verizon.net. [71.163.245.5])
+        by smtp.gmail.com with ESMTPSA id y15sm708630qto.90.2021.06.14.18.38.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 14 Jun 2021 18:38:01 -0700 (PDT)
+Subject: Re: [PATCH 2/5] thermal: qcom: Add support for LMh driver
+To:     Randy Dunlap <rdunlap@infradead.org>, agross@kernel.org,
+        bjorn.andersson@linaro.org, rui.zhang@intel.com,
+        daniel.lezcano@linaro.org, viresh.kumar@linaro.org,
+        rjw@rjwysocki.net, robh+dt@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+References: <20210608222926.2707768-1-thara.gopinath@linaro.org>
+ <20210608222926.2707768-3-thara.gopinath@linaro.org>
+ <531fae77-f037-5e4a-be1e-ce21618fbd9d@infradead.org>
+From:   Thara Gopinath <thara.gopinath@linaro.org>
+Message-ID: <7917d02c-034b-6bd9-0f65-f4c5009a313f@linaro.org>
+Date:   Mon, 14 Jun 2021 21:37:59 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
+MIME-Version: 1.0
+In-Reply-To: <531fae77-f037-5e4a-be1e-ce21618fbd9d@infradead.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-When a failure occurs in rproc_add() it returns an error, but does
-not cleanup after itself. This change adds the failure path in such
-cases.
+Hi Randy,
 
-Signed-off-by: Siddharth Gupta <sidgup@codeaurora.org>
----
- drivers/remoteproc/remoteproc_core.c | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+Thanks for the review. I somehow did not see your review earlier. I 
+noticed it today morning when Bjorn replied to this patch. Apologies for 
+the delay
 
-diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
-index b874280..d823f70 100644
---- a/drivers/remoteproc/remoteproc_core.c
-+++ b/drivers/remoteproc/remoteproc_core.c
-@@ -2343,8 +2343,10 @@ int rproc_add(struct rproc *rproc)
- 		return ret;
- 
- 	ret = device_add(dev);
--	if (ret < 0)
--		return ret;
-+	if (ret < 0) {
-+		put_device(dev);
-+		goto rproc_remove_cdev;
-+	}
- 
- 	dev_info(dev, "%s is available\n", rproc->name);
- 
-@@ -2355,7 +2357,7 @@ int rproc_add(struct rproc *rproc)
- 	if (rproc->auto_boot) {
- 		ret = rproc_trigger_auto_boot(rproc);
- 		if (ret < 0)
--			return ret;
-+			goto rproc_remove_dev;
- 	}
- 
- 	/* expose to rproc_get_by_phandle users */
-@@ -2364,6 +2366,13 @@ int rproc_add(struct rproc *rproc)
- 	mutex_unlock(&rproc_list_mutex);
- 
- 	return 0;
-+
-+rproc_remove_dev:
-+	rproc_delete_debug_dir(rproc);
-+	device_del(dev);
-+rproc_remove_cdev:
-+	rproc_char_device_remove(rproc);
-+	return ret;
- }
- EXPORT_SYMBOL(rproc_add);
- 
+On 6/8/21 10:25 PM, Randy Dunlap wrote:
+> On 6/8/21 3:29 PM, Thara Gopinath wrote:
+>> Driver enabling various pieces of Limits Management Hardware(LMh) for cpu
+>> cluster0 and cpu cluster1 namely kick starting monitoring of temperature,
+>> current, battery current violations, enabling reliability algorithm and
+>> setting up various temperature limits.
+>>
+>> The following has been explained in the cover letter. I am including this
+>> here so that this remains in the commit message as well.
+>>
+>> LMh is a hardware infrastructure on some Qualcomm SoCs that can enforce
+>> temperature and current limits as programmed by software for certain IPs
+>> like CPU. On many newer SoCs LMh is configured by firmware/TZ and no
+>> programming is needed from the kernel side. But on certain SoCs like sdm845
+>> the firmware does not do a complete programming of the h/w. On such SoCs
+>> kernel software has to explicitly set up the temperature limits and turn on
+>> various monitoring and enforcing algorithms on the hardware.
+>>
+>> Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
+>> ---
+>>   drivers/thermal/qcom/Kconfig  |  10 ++
+>>   drivers/thermal/qcom/Makefile |   1 +
+>>   drivers/thermal/qcom/lmh.c    | 244 ++++++++++++++++++++++++++++++++++
+>>   3 files changed, 255 insertions(+)
+>>   create mode 100644 drivers/thermal/qcom/lmh.c
+>>
+>> diff --git a/drivers/thermal/qcom/Kconfig b/drivers/thermal/qcom/Kconfig
+>> index 8d5ac2df26dc..c95b95e254d7 100644
+>> --- a/drivers/thermal/qcom/Kconfig
+>> +++ b/drivers/thermal/qcom/Kconfig
+>> @@ -31,3 +31,13 @@ config QCOM_SPMI_TEMP_ALARM
+>>   	  trip points. The temperature reported by the thermal sensor reflects the
+>>   	  real time die temperature if an ADC is present or an estimate of the
+>>   	  temperature based upon the over temperature stage value.
+>> +
+>> +config QCOM_LMH
+>> +	tristate "Qualcomm Limits Management Hardware"
+>> +	depends on ARCH_QCOM
+>> +	help
+>> +	  This enables initialization of Qualcomm limits management
+>> +	  hardware(LMh). LMh allows for h/w enforced mitigation for cpus based on
+> 
+> 	                                hardware-enforced           CPUs
+> 
+>> +	  input from temperature and current sensors.  On many newer Qualcomm SoCs
+>> +	  LMH is configure in the firmware and this feature need not be enabled.
+> 
+> 	  LMh
+> 
+>> +	  However, on certain SoCs like sdm845 LMH has to be configured from HLOS.
+> 
+> 	                                       LMh
+> 
+> What is HLOS?
+
+High Level Operating System. But I will change it to Linux kernel.
+> 
+> 
+>> diff --git a/drivers/thermal/qcom/lmh.c b/drivers/thermal/qcom/lmh.c
+>> new file mode 100644
+>> index 000000000000..8741a36cb674
+>> --- /dev/null
+>> +++ b/drivers/thermal/qcom/lmh.c
+>> @@ -0,0 +1,244 @@
+>> +// SPDX-License-Identifier: GPL-2.0-only
+>> +
+>> +/*
+>> + * Copyright (C) 2021, Linaro Limited. All rights reserved.
+>> + */
+> 
+> [snip]
+> 
+>> +static int lmh_probe(struct platform_device *pdev)
+>> +{
+>> +	struct device *dev;
+>> +	struct device_node *np;
+>> +	struct lmh_hw_data *lmh_data;
+>> +	u32 node_id;
+>> +	int ret;
+>> +
+>> +	dev = &pdev->dev;
+>> +	np = dev->of_node;
+>> +	if (!np)
+>> +		return -EINVAL;
+>> +
+>> +	lmh_data = devm_kzalloc(dev, sizeof(*lmh_data), GFP_KERNEL);
+>> +	if (!lmh_data)
+>> +		return -ENOMEM;
+>> +
+>> +	lmh_data->base = devm_platform_ioremap_resource(pdev, 0);
+>> +	if (IS_ERR(lmh_data->base))
+>> +		return PTR_ERR(lmh_data->base);
+>> +
+>> +	ret = of_property_read_u32(np, "qcom,lmh-cpu-id", &lmh_data->cpu_id);
+>> +	if (ret)
+>> +		return -ENODEV;
+>> +
+>> +	/*
+>> +	 * Only sdm845 has lmh hardware currently enabled from hlos. If this is needed
+>> +	 * for other platforms, revisit this to check if the <cpu-id, node-id> should be part
+>> +	 * of a dt match table.
+>> +	 */
+>> +	if (lmh_data->cpu_id == 0) {
+>> +		node_id = LMH_CLUSTER0_NODE_ID;
+>> +	} else if (lmh_data->cpu_id == 4) {
+>> +		node_id = LMH_CLUSTER1_NODE_ID;
+>> +	} else {
+>> +		dev_err(dev, "Wrong cpu id associated with lmh node\n");
+> 
+> 		                    CPU                    LMh
+
+will fix it. Also will fix all the typos you have caught below.
+
+> 
+>> +		return -EINVAL;
+>> +	}
+>> +
+>> +	/* Payload size is five bytes for now */
+>> +	lmh_data->payload_size = 5 * sizeof(u32);
+>> +
+>> +	platform_set_drvdata(pdev, lmh_data);
+>> +
+>> +	if (!qcom_scm_lmh_dcvsh_available())
+>> +		return -EINVAL;
+>> +
+>> +	/* Enable Thermal Algorithm */
+>> +	update_payload(lmh_data, LMH_SUB_FN_THERMAL, LMH_ALGO_MODE_ENABLE, 1);
+>> +	ret = qcom_scm_lmh_dcvsh(lmh_data->payload, lmh_data->payload_size,
+>> +				 LMH_NODE_DCVS, node_id, 0);
+>> +	if (ret) {
+>> +		dev_err(dev, "Error %d enabling thermal subfunction\n", ret);
+>> +		return ret;
+>> +	}
+>> +
+>> +	/* Enable Current Sensing Algorithm */
+>> +	update_payload(lmh_data, LMH_SUB_FN_CRNT, LMH_ALGO_MODE_ENABLE, 1);
+>> +	ret = qcom_scm_lmh_dcvsh(lmh_data->payload, lmh_data->payload_size,
+>> +				 LMH_NODE_DCVS, node_id, 0);
+>> +	if (ret) {
+>> +		dev_err(dev, "Error %d enabling current subfunction\n", ret);
+>> +		return ret;
+>> +	}
+>> +
+>> +	/* Enable Reliability Algorithm */
+>> +	update_payload(lmh_data, LMH_SUB_FN_REL, LMH_ALGO_MODE_ENABLE, 1);
+>> +	ret = qcom_scm_lmh_dcvsh(lmh_data->payload, lmh_data->payload_size,
+>> +				 LMH_NODE_DCVS, node_id, 0);
+>> +	if (ret) {
+>> +		dev_err(dev, "Error %d enabling reliability subfunction\n", ret);
+>> +		return ret;
+>> +	}
+>> +
+>> +	/* Enable BCL Algorithm */
+>> +	update_payload(lmh_data, LMH_SUB_FN_BCL, LMH_ALGO_MODE_ENABLE, 1);
+>> +	ret = qcom_scm_lmh_dcvsh(lmh_data->payload, lmh_data->payload_size,
+>> +				 LMH_NODE_DCVS, node_id, 0);
+>> +	if (ret) {
+>> +		dev_err(dev, "Error %d enabling BCL subfunction\n", ret);
+> 
+> What is BCL?
+
+Battery Current Limits
+
 -- 
-Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+Warm Regards
+Thara
+> 
+>> +		return ret;
+>> +	}
+>> +
+>> +	ret = qcom_scm_lmh_profile_change(0x1);
+>> +	if (ret) {
+>> +		dev_err(dev, "Error %d changing profile\n", ret);
+>> +		return ret;
+>> +	}
+>> +
+>> +	/* Set default thermal trips */
+>> +	update_payload(lmh_data, LMH_SUB_FN_THERMAL, LMH_TH_ARM_THRESHOLD, LMH_TH_ARM_TEMP);
+>> +	ret = qcom_scm_lmh_dcvsh(lmh_data->payload, lmh_data->payload_size,
+>> +				 LMH_NODE_DCVS, node_id, 0);
+>> +	if (ret) {
+>> +		dev_err(dev, "Error setting thermal ARM thershold%d\n", ret);
+> 
+> 		                                        threshold
+> 
+>> +		return ret;
+>> +	}
+>> +
+>> +	update_payload(lmh_data, LMH_SUB_FN_THERMAL, LMH_TH_HI_THRESHOLD, LMH_TH_HI_TEMP);
+>> +	ret = qcom_scm_lmh_dcvsh(lmh_data->payload, lmh_data->payload_size,
+>> +				 LMH_NODE_DCVS, node_id, 0);
+>> +	if (ret) {
+>> +		dev_err(dev, "Error setting thermal HI thershold%d\n", ret);
+> 
+> 		                                       threshold
+> 
+>> +		return ret;
+>> +	}
+>> +	update_payload(lmh_data, LMH_SUB_FN_THERMAL, LMH_TH_LOW_THRESHOLD, LMH_TH_LOW_TEMP);
+>> +	ret = qcom_scm_lmh_dcvsh(lmh_data->payload, lmh_data->payload_size,
+>> +				 LMH_NODE_DCVS, node_id, 0);
+>> +	if (ret) {
+>> +		dev_err(dev, "Error setting thermal ARM thershold%d\n", ret);
+> 
+> 		                                        threshold
+> 
+>> +		return ret;
+>> +	}
+>> +
+>> +	lmh_data->irq = platform_get_irq(pdev, 0);
+>> +	lmh_data->domain = irq_domain_add_linear(np, 1, &lmh_irq_ops, lmh_data);
+>> +	if (!lmh_data->domain) {
+>> +		dev_err(dev, "Error adding irq_domain\n");
+>> +		return -EINVAL;
+>> +	}
+>> +
+>> +	ret = devm_request_irq(dev, lmh_data->irq, lmh_handle_irq,
+>> +			       IRQF_TRIGGER_HIGH | IRQF_ONESHOT | IRQF_NO_SUSPEND,
+>> +			       "lmh-irq", lmh_data);
+>> +	if (ret) {
+>> +		dev_err(dev, "Error %d registering irq %x\n", ret, lmh_data->irq);
+>> +		irq_domain_remove(lmh_data->domain);
+>> +		return ret;
+>> +	}
+>> +	return 0;
+>> +}
+>> +
+>> +static const struct of_device_id lmh_table[] = {
+>> +	{ .compatible = "qcom,msm-hw-limits", },
+>> +	{},
+>> +};
+>> +
+>> +static struct platform_driver lmh_driver = {
+>> +	.probe = lmh_probe,
+>> +	.driver = {
+>> +		.name = "qcom-lmh",
+>> +		.of_match_table = lmh_table,
+>> +	},
+>> +};
+>> +module_platform_driver(lmh_driver);
+>> +
+>> +MODULE_LICENSE("GPL v2");
+>> +MODULE_DESCRIPTION("QCOM LMH driver");
+> 
+>                              LMh
+> 
+> 
+> thanks.
+> 
+
 
