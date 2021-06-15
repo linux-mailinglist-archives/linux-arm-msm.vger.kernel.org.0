@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CE4393A7853
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jun 2021 09:49:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8FC013A7857
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jun 2021 09:49:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230414AbhFOHvd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Jun 2021 03:51:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59650 "EHLO
+        id S230450AbhFOHvj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Jun 2021 03:51:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59696 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230448AbhFOHv1 (ORCPT
+        with ESMTP id S230043AbhFOHvf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Jun 2021 03:51:27 -0400
-Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD250C06121D
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jun 2021 00:49:22 -0700 (PDT)
-Received: by mail-pj1-x102c.google.com with SMTP id h12-20020a17090aa88cb029016400fd8ad8so1703829pjq.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jun 2021 00:49:22 -0700 (PDT)
+        Tue, 15 Jun 2021 03:51:35 -0400
+Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B12C3C06124C
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jun 2021 00:49:28 -0700 (PDT)
+Received: by mail-pl1-x636.google.com with SMTP id o21so231307pll.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jun 2021 00:49:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=kToQoYGMVDwEP081PrugIKt6rs2IgkM3tpJJ4Oi9CQ8=;
-        b=bdX2tgiSRbG3C/0M+dK3VoZJ9yu82exbbYqn+vqve8pHvA7wz64EudJoOJ4r2JrOHJ
-         piPnOI/Hk30BTFp5shTse4ClOwAfjd5Aubgf8me24vlWIdBTODuki766Fby8N4kF/IJD
-         88cePNEQSZKHggU52A1/yp52oUpYLM0mEheiqghCniOKl2N6QsjEduf0uBATE6wCmC1r
-         zFLm4WOhGKXfd8bn/KJD5WPQZn4EfZNRenLHFTDfTiDc7yHZa4a3CogTpAIUifXzTa49
-         ZIdvF8YO1l3YOp8BV7PjfFO0aBCPSrHgqPMy9X80HvdFyX95AxnsEw2dSeK80J4puWEP
-         ipDA==
+        bh=YZn3e3VBEAR8TZlTha9G2vnyP+heLgxEDY2GiRmVtgY=;
+        b=B1hk7G36M9L9mzPmvi/0zZOYdOWp4UUbhTJ5hfeoE8vXl6DcL9/zH4a+kiEXIpBcgx
+         2K2dX5sf9IAPMvFxugyCJEv8fSYMWcVRNOWOahODwlN5A3ijm6e++ZR2ueSZu8T/PJQJ
+         AG+8TWxCvGOzygA9cTJ8FdolJELhO/cse7LJzlHbBPYp32yQna0VVX1FjKTmlNDnxT6I
+         W9CbDtLGdustnBviLhYhFZ6yD1hgqoZOSK0UEiB/Dlh0K9sV3qNG4q4aLXPuGNOJKUGT
+         4RkiXDMX9E9LAreE4ri9+xvDgMjCE9428pNacwlcLYDGkz4e9TcrX7uDgFTBhdT7R686
+         qslA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=kToQoYGMVDwEP081PrugIKt6rs2IgkM3tpJJ4Oi9CQ8=;
-        b=ZCYwoqf5LcxdVLdZRCzXfO0Dr9GkP9yWnLEtaNvwFU9HnJGif0Tm1dRFGpO5h8GZ2s
-         902FJ09Atu+NnCKzMfsZbQapky/p+NTKZ7z9qdPb7jU7BRE7WqPkoI3+K9nlIg+6AhiI
-         jx0rj7k2uSKFqf7XLGspH866ppU10NrQET6iyGChuH0Ad88yA2ieut7cw5lwKpe/Rl0/
-         WO5IL5ajRxGHd8brZLHFEGawlziEexzkngjVIgEHMB4isdQk9BHK/yjcEN8Si7dOOKKe
-         kUSKNwjiXiMtml5eOLyGCGKHsioNB01Q2BaXjFR7GXgoRJoB1vAzkMuf8TJY3hpyLYRM
-         3PHQ==
-X-Gm-Message-State: AOAM533ITYeF5li1rx5FoZPEDylPfUrEf6bTyTAHehGZ8AdX3Onrzh4o
-        z/Edg2JKIRe1XLouIWdjPethqITwfMsSkw==
-X-Google-Smtp-Source: ABdhPJyy4wXKXepB9EppesnsK2i+Om3ZzoI46sCTcbwYfC9Qqk+hmdRFDM3HprWQ9pU/nxT7olvFCw==
-X-Received: by 2002:a17:90a:d102:: with SMTP id l2mr23511799pju.225.1623743362288;
-        Tue, 15 Jun 2021 00:49:22 -0700 (PDT)
+        bh=YZn3e3VBEAR8TZlTha9G2vnyP+heLgxEDY2GiRmVtgY=;
+        b=M8KHqUhvBhmnJFZfMO811y1SUCojQj6rbcnRYGBj65NZJzUOdiqHac3rnowtBp5HrT
+         r43wBo6oMlyVK14tSdocThZ0QYgxlV/6RTFmSOBTl+Mg3T5EtpjvlorB6PngggAFzMVL
+         eR0smbNcUEEhhG8t1TZmsGxxGXZtRv+o6hO4Yx4sTAywmJYNfV2+BMRHrTkSgzXFFIF2
+         TtZ4wc+6fWGXQv5b8Y7NPOGo4VT6HpEm5jaVrH5HG/ccp+YHMNQrvfuTV2w5lB0/os+k
+         bk+BOi6WER34Mqjs/kCQCHZ7F+vmpdc0OMQ5Q6BMZclptNFIEGmd6JBZn9wbOLOLbvfC
+         PDWg==
+X-Gm-Message-State: AOAM532sNq6qGhPhKU+Hk4NACuPagz56OsKJ778egn2vZZ8Ib/uLx0Pb
+        3EuhA1v3YkHVryuwnwBNdJk39li9GnaFVQ==
+X-Google-Smtp-Source: ABdhPJyv4N52Xre0AtC09GOaWoR1wPnQqqQVEanp9uraemty79/MntOaGaj1HwQAbYMg8jA7dsrYYA==
+X-Received: by 2002:a17:90a:17ad:: with SMTP id q42mr3698577pja.181.1623743368103;
+        Tue, 15 Jun 2021 00:49:28 -0700 (PDT)
 Received: from localhost.localdomain.name ([122.177.197.114])
-        by smtp.gmail.com with ESMTPSA id c25sm14273097pfo.130.2021.06.15.00.49.17
+        by smtp.gmail.com with ESMTPSA id c25sm14273097pfo.130.2021.06.15.00.49.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Jun 2021 00:49:22 -0700 (PDT)
+        Tue, 15 Jun 2021 00:49:27 -0700 (PDT)
 From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
 To:     linux-arm-msm@vger.kernel.org
 Cc:     bhupesh.sharma@linaro.org, bhupesh.linux@gmail.com,
@@ -60,9 +60,9 @@ Cc:     bhupesh.sharma@linaro.org, bhupesh.linux@gmail.com,
         Vinod Koul <vkoul@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Andy Gross <agross@kernel.org>
-Subject: [PATCH v2 02/10] dt-bindings: pinctrl: qcom,pmic-gpio: Add compatible for SA8155p-adp
-Date:   Tue, 15 Jun 2021 13:15:35 +0530
-Message-Id: <20210615074543.26700-3-bhupesh.sharma@linaro.org>
+Subject: [PATCH v2 03/10] dt-bindings: arm: qcom: Add compatible for sm8150-mtp board
+Date:   Tue, 15 Jun 2021 13:15:36 +0530
+Message-Id: <20210615074543.26700-4-bhupesh.sharma@linaro.org>
 X-Mailer: git-send-email 2.31.1
 In-Reply-To: <20210615074543.26700-1-bhupesh.sharma@linaro.org>
 References: <20210615074543.26700-1-bhupesh.sharma@linaro.org>
@@ -72,8 +72,10 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add pmic-gpio compatible string for pmm8155au pmic
-found on the SA8155p-adp board.
+sm8150-mtp board is based on Qualcomm Snapdragon sm8150
+SoC.
+
+Add support for the same in dt-bindings.
 
 Cc: Linus Walleij <linus.walleij@linaro.org>
 Cc: Liam Girdwood <lgirdwood@gmail.com>
@@ -84,29 +86,33 @@ Cc: Rob Herring <robh+dt@kernel.org>
 Cc: Andy Gross <agross@kernel.org>
 Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
 ---
- Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt | 2 ++
- 1 file changed, 2 insertions(+)
+ Documentation/devicetree/bindings/arm/qcom.yaml | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt b/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt
-index f6a9760558a6..80b8a66e29d8 100644
---- a/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt
-+++ b/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt
-@@ -27,6 +27,7 @@ PMIC's from Qualcomm.
- 		    "qcom,pm660l-gpio"
- 		    "qcom,pm8150-gpio"
- 		    "qcom,pm8150b-gpio"
-+		    "qcom,pmm8155au-gpio"
- 		    "qcom,pm8350-gpio"
- 		    "qcom,pm8350b-gpio"
- 		    "qcom,pm8350c-gpio"
-@@ -116,6 +117,7 @@ to specify in a pin configuration subnode:
- 					     and gpio8)
- 		    gpio1-gpio12 for pm8150b (holes on gpio3, gpio4, gpio7)
- 		    gpio1-gpio12 for pm8150l (hole on gpio7)
-+		    gpio1-gpio10 for pmm8155au
- 		    gpio1-gpio10 for pm8350
- 		    gpio1-gpio8 for pm8350b
- 		    gpio1-gpio9 for pm8350c
+diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+index 9b27e991bddc..d7bb90e5082c 100644
+--- a/Documentation/devicetree/bindings/arm/qcom.yaml
++++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+@@ -42,6 +42,7 @@ description: |
+         sdm660
+         sdm845
+         sdx55
++        sm8150
+         sm8250
+         sm8350
+ 
+@@ -198,6 +199,11 @@ properties:
+               - qcom,ipq6018-cp01-c1
+           - const: qcom,ipq6018
+ 
++      - items:
++          - enum:
++              - qcom,sm8150-mtp
++          - const: qcom,sm8150
++
+       - items:
+           - enum:
+               - qcom,qrb5165-rb5
 -- 
 2.31.1
 
