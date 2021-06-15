@@ -2,112 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 530913A8704
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jun 2021 19:00:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B6FF83A8919
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jun 2021 21:04:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230459AbhFORC4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Jun 2021 13:02:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46594 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230346AbhFORC4 (ORCPT
+        id S231310AbhFOTGE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Jun 2021 15:06:04 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:35945 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231189AbhFOTGD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Jun 2021 13:02:56 -0400
-Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDC52C06175F
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jun 2021 10:00:51 -0700 (PDT)
-Received: by mail-oi1-x22c.google.com with SMTP id d19so14898215oic.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jun 2021 10:00:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=OrHpiQTn+IqOBIYO5Pq4UHsLozqCibN36fNoW8gNRD0=;
-        b=w4V+qXiieefOcxwFgrf2VCnoMsgBVXMXyzgY8AURZ60wzDRJPA5ZnwPqtLaoxik+Bm
-         8fnW4ktgfh9cmf77AhchNONIO460nlmJi998joD1MZiXXz+lBlSKrWuuh6cWa0VNUaKt
-         cJo9nMufzTPQtClv0yJ6GGnfXW+Lvgf7eA+50GrQ9RaFKRB8CcvWvPGfrimQZMjCvIpg
-         nd6LJ7BRNrhnS5LCuSvMmbkFwQpdZ0fqcKsMrJpENRAsYEXBvTZOfcFmIb9PlkTLLznc
-         QtEQLqmr1Ywhf6CfQPYZt5aTGvs4fUbh+RRzbexCiMePG6hm9X+TzZoqJ93FFwndXj49
-         HNzw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=OrHpiQTn+IqOBIYO5Pq4UHsLozqCibN36fNoW8gNRD0=;
-        b=niVFjuAeZPrteg6oFj/bY67rBg/XkWfzSHjUAOmekbiALhhhsz28CtGZyE/DUh7Ggu
-         Xd6IPATOl1GodyADgcxKfXBZCxLLJScu65V7hS0HVaCLVhE6WFuaov3+P8SKxe+0S+ly
-         uVOeZ+JUoN2AAG6alIImuRFrkD0mYgnov5JdNWujJ5ZUZuyOhEhJGwBgwVvr+BdwYCDc
-         4JVplOU3BGm0GBH2vImvHg70VRWAZ9E3Ay2P8EGgdXuZ8pNrQNE9g798w6Eb5bFl7K4L
-         AzJYDgmKAdMQQ1pstjiNPkitWwO9kw8Abycb/AtmEQwLnL7X64fwe0Uji8iR2OTmh9G9
-         d+Vg==
-X-Gm-Message-State: AOAM533Gi33XYBH+k9JAinOMiYbc6ku/IkUpWiqFZwlMfoYNZb9o+6tN
-        L0Hq7j8nqdz2eO+drGBNjlSVUidTkarxxjY/CW6kxw==
-X-Google-Smtp-Source: ABdhPJxCnnNnCWSfH0VDaXkPF/u1L+nchxayekHp7hO0jMhZ49QfQK6sS4x7wI7zPaj50rP+V4rbyDHzeAJ3rdd9dHA=
-X-Received: by 2002:aca:4bd7:: with SMTP id y206mr117111oia.40.1623776450766;
- Tue, 15 Jun 2021 10:00:50 -0700 (PDT)
+        Tue, 15 Jun 2021 15:06:03 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1623783839; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=zyP2fQXFjwwDeB2EvHRFt1B8KSq55Tn5N6T3MM9RaWw=; b=xSTaQEf6krwH27DkTHpAg79ZYmymn1yxWeZTxJxbP6gfmaN5bG4Ms0d+l4tEGj6DhNDA8AFV
+ DUWjyVRlKh6PwVFadSP+75fMZILTfvRxXOeNzu71h4IO0q4FqBHDpmanQqnsWVLiQxXdSWJv
+ c8/CXt8uwWo4R85aQggeRv15svQ=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
+ 60c8f982e27c0cc77f412c7c (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 15 Jun 2021 19:03:30
+ GMT
+Sender: sidgup=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id E53F6C4360C; Tue, 15 Jun 2021 19:03:28 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-3.0 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
+Received: from [192.168.1.10] (cpe-75-83-25-192.socal.res.rr.com [75.83.25.192])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: sidgup)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id BED07C4338A;
+        Tue, 15 Jun 2021 19:03:27 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org BED07C4338A
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=sidgup@codeaurora.org
+Subject: Re: [PATCH v3 1/4] remoteproc: core: Move cdev add before device add
+To:     Greg KH <gregkh@linuxfoundation.org>
+Cc:     bjorn.andersson@linaro.org, ohad@wizery.com,
+        linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, psodagud@codeaurora.org,
+        stable@vger.kernel.org
+References: <1623723671-5517-1-git-send-email-sidgup@codeaurora.org>
+ <1623723671-5517-2-git-send-email-sidgup@codeaurora.org>
+ <YMgy7eg3wde0eVfe@kroah.com>
+From:   Siddharth Gupta <sidgup@codeaurora.org>
+Message-ID: <0a196786-f624-d9bb-8ef9-55c04ed57497@codeaurora.org>
+Date:   Tue, 15 Jun 2021 12:03:26 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-References: <20210615074543.26700-1-bhupesh.sharma@linaro.org>
- <20210615074543.26700-11-bhupesh.sharma@linaro.org> <0b012d77-8d61-f852-f455-8b6cceb03ebf@somainline.org>
-In-Reply-To: <0b012d77-8d61-f852-f455-8b6cceb03ebf@somainline.org>
-From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Date:   Tue, 15 Jun 2021 22:30:39 +0530
-Message-ID: <CAH=2NtzOzA9HmxFUUuhX9Vy=KW3iRSx5HiuD9Cf11v+eijEWsQ@mail.gmail.com>
-Subject: Re: [PATCH v2 10/10] arm64: dts: qcom: sa8155p-adp: Add base dts file
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     linux-arm-msm@vger.kernel.org, bhupesh.linux@gmail.com,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        devicetree <devicetree@vger.kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <YMgy7eg3wde0eVfe@kroah.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Konrad,
 
-Thanks for the review.
-
-On Tue, 15 Jun 2021 at 20:23, Konrad Dybcio
-<konrad.dybcio@somainline.org> wrote:
+On 6/14/2021 9:56 PM, Greg KH wrote:
+> On Mon, Jun 14, 2021 at 07:21:08PM -0700, Siddharth Gupta wrote:
+>> When cdev_add is called after device_add has been called there is no
+>> way for the userspace to know about the addition of a cdev as cdev_add
+>> itself doesn't trigger a uevent notification, or for the kernel to
+>> know about the change to devt. This results in two problems:
+>>   - mknod is never called for the cdev and hence no cdev appears on
+>>     devtmpfs.
+>>   - sysfs links to the new cdev are not established.
+>>
+>> The cdev needs to be added and devt assigned before device_add() is
+>> called in order for the relevant sysfs and devtmpfs entries to be
+>> created and the uevent to be properly populated.
+> So this means no one ever ran this code on a system that used devtmpfs?
 >
-> Hi,
->
->
-> > +
-> > +     reset-gpios = <&tlmm 175 GPIO_ACTIVE_LOW>;
-> > +
-> > +     vcc-supply = <&vreg_l10a_2p96>;
-> > +     vcc-max-microamp = <750000>;
-> > +     vccq-supply = <&vreg_l5c_1p2>;
-> > +     vccq-max-microamp = <700000>;
-> > +     vccq2-supply = <&vreg_s4a_1p8>;
-> > +     vccq2-max-microamp = <750000>;
->
-> You need to add "regulator-allow-set-load;" to the mentioned supplies,
->
-> as you're controlling the amperage here.
-
-Ok, I will fix this in v3.
-
-> > +};
-> > +
-> > +&ufs_mem_phy {
-> > +     status = "okay";
-> > +
-> > +     vdda-phy-supply = <&vreg_l8c_1p2>;
-> > +     vdda-max-microamp = <87100>;
-> > +     vdda-pll-supply = <&vreg_l5a_0p88>;
-> > +     vdda-pll-max-microamp = <18300>;
->
-> Ditto
-
-Sure, I will fix it in v3.
+> How was it ever tested?
+My testing was done with toybox + Android's ueventd ramdisk.
+As I mentioned in the discussion, the race became evident
+recently. I will make sure to test all such changes without
+systemd/ueventd in the future.
 
 Thanks,
-Bhupesh
+Sid
