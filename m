@@ -2,53 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 98C973A8A86
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jun 2021 23:00:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 591153A8A9C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jun 2021 23:06:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229992AbhFOVCz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Jun 2021 17:02:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43688 "EHLO
+        id S229898AbhFOVIv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Jun 2021 17:08:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45006 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229898AbhFOVCz (ORCPT
+        with ESMTP id S231216AbhFOVIv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Jun 2021 17:02:55 -0400
-Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com [IPv6:2607:f8b0:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3309EC061574
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jun 2021 14:00:50 -0700 (PDT)
-Received: by mail-ot1-x32c.google.com with SMTP id 5-20020a9d01050000b02903c700c45721so272908otu.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jun 2021 14:00:50 -0700 (PDT)
+        Tue, 15 Jun 2021 17:08:51 -0400
+Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8807BC061767
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jun 2021 14:06:45 -0700 (PDT)
+Received: by mail-oi1-x229.google.com with SMTP id c13so19662808oib.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jun 2021 14:06:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=OYGGlIWb3kY9x1lzGQMOd6l6sb+pbsVrXGcDRj4yGrI=;
-        b=avqdtNpys1Iz7VcQCRWIokQpzmS0yyjycXWQPgSd55uELE9XymduvF0gJfsFBds00W
-         15DzQcWjEdyp2+LLCTwKAUw3qNL0ytmeRgaO3J1JL90fny/SP4pfcVbElvzXSaaR6SfP
-         oEq+EWRTjwIV3N8+ewzGJo2SC6GfRvj1J3Xufvl8LmtrOAnP6+lXQir4Es8YuEo7ReSB
-         waANpofTS6NETS8sVr2GGB5O0Ta62qOC1yquzxjW76RrUX/X8YCqi41TkMpwN9CLwMPf
-         gf2Lum4EmuJkA0x6yXj3ZvbA046Z/G7ld1HwXhcwHqZMMsy3Z9aa3rhc9SQRwrSDNuLK
-         TkLg==
+        bh=gXO9eB5fahpZxebB81kgmu3FiItJh+tZXgWUfrGSFSs=;
+        b=D7EI5bwvKftbjo/TlMed7v9USmCw6INQJZSE4p6MplPtrvTmI4mc+EX9WB2nilQrwh
+         HQkzxANoZCBQjKs1Q7FJBdamLAyw3H9cngxOLoiDqaWaBICwv1safhs+ObTdZSeqI8xt
+         wEIzWTFz7JESbyCXxarfYr9dxVuNmtmH9+IdijDXsDZx9HME8Gwvku/c4udoS7kyGFj9
+         zN1EHLZVaO3Wb7Ap7/9s1IbkfGRVJ8IbEVzXrwjVK8quztUOtObUBVoijG6oUdiamJUu
+         NdDrHvMYvbGPXTkDr2LWTeFbOLlQsdgDvBOJYdZbaq9TbJuwjbnLALNnusi7+Y46ozgy
+         78xg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=OYGGlIWb3kY9x1lzGQMOd6l6sb+pbsVrXGcDRj4yGrI=;
-        b=j52H6Pk5gmXbpy2bYPaI35GHUyL+WbAC9BKM54kRCfcfFMXexZwBInoE+o+xqPN59R
-         AR/y58ckS21AsBY+Pqsz7I0QV3JrARJTkUD/qqZ/OSgNRqJMSyCSDunGrwaVQCCEdU4C
-         YEnRMZOzVlFC/jLnff4ODiu2pWVg5uNSByB4sprH4yb3AD2sOuLzeGbSgfHOBhlS8jnj
-         0e87jAQxtMc8eGcftVGLOspZWv2RQ9PDJZy2+VyKtz2AIjwKSvjh90frwj2IOsFIqVuO
-         ciXmob+TOronO3jx0kPbnk6AV/PF8HPgWeF1nIuCA1wiwG6i9n6w8wKs13XU5cec8o2t
-         BPBA==
-X-Gm-Message-State: AOAM532qXXBN5iKodUoh3MBzUsnj91QF5qWaq+ycCOuuV22pJjRc6RxX
-        pV2cJxNBgp7YJm9rfsVG5+/ZAw==
-X-Google-Smtp-Source: ABdhPJxchkcrrFycThcnHsitDoyfWfzwZ8r3Ur3gKBhQZM8fNHBQpFUomJAOuZa5Iimo2IF88rQjlQ==
-X-Received: by 2002:a9d:7f0f:: with SMTP id j15mr985202otq.14.1623790849436;
-        Tue, 15 Jun 2021 14:00:49 -0700 (PDT)
-Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id w4sm23734otm.31.2021.06.15.14.00.48
+        bh=gXO9eB5fahpZxebB81kgmu3FiItJh+tZXgWUfrGSFSs=;
+        b=TcKeFQvSo5WIYCOGp2+voRM96zqZ4BcBf4yjj5Y3HR7OeWSxiwNbA0se9u4tdv34QJ
+         j6qw9YSa2JeDhzv5c8gQ4lN26LT5awpqXTusWlQ7P7Q3J2m6Domad9tuoJUelzsIo3jc
+         CBUjrw5nY/Ex0x3vk8zIUBe0R8J416IFC56nrAi/vRvNcsyArskXBxe/aclYdLdVaGlh
+         4DcmtruJofaYef1ekS3azfbvwvIzUcx3z79i72VwhpUGRySArLb5aNnTBNq4ZNCGri3a
+         TXbxat0LUlN/8P2ZPqOd/OFpSYxR2IvnF6XZSm9nYSZoqCmjr1YudsbwcWx9l+IXfKWm
+         MvXw==
+X-Gm-Message-State: AOAM533qTXgUh4RjCIKcdZnQGqp2tk8LMEAIxnfyw0rqRWi6Z/jyy+fh
+        vM/fRFvH3ApjvfGEp8RlWYpHbQ==
+X-Google-Smtp-Source: ABdhPJxG/vVTBa+LwuR6IRQ2qq3ncRTBPUo0AQ3qeK+b2EMjEG2uK3yDTjNwzvrr2vu9LIAjoLU69g==
+X-Received: by 2002:a54:4609:: with SMTP id p9mr697812oip.107.1623791204795;
+        Tue, 15 Jun 2021 14:06:44 -0700 (PDT)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id q11sm13844ooc.27.2021.06.15.14.06.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Jun 2021 14:00:49 -0700 (PDT)
-Date:   Tue, 15 Jun 2021 16:00:46 -0500
+        Tue, 15 Jun 2021 14:06:44 -0700 (PDT)
+Date:   Tue, 15 Jun 2021 16:06:42 -0500
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
 Cc:     linux-arm-msm@vger.kernel.org, bhupesh.linux@gmail.com,
@@ -59,23 +59,32 @@ Cc:     linux-arm-msm@vger.kernel.org, bhupesh.linux@gmail.com,
         Mark Brown <broonie@kernel.org>, Vinod Koul <vkoul@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Andy Gross <agross@kernel.org>
-Subject: Re: [PATCH v2 02/10] dt-bindings: pinctrl: qcom,pmic-gpio: Add
- compatible for SA8155p-adp
-Message-ID: <YMkU/on5e92vgIll@yoga>
+Subject: Re: [PATCH v2 05/10] regulator: qcom-rpmh: Cleanup terminator line
+ commas
+Message-ID: <YMkWYkrwHilEX0ck@builder.lan>
 References: <20210615074543.26700-1-bhupesh.sharma@linaro.org>
- <20210615074543.26700-3-bhupesh.sharma@linaro.org>
+ <20210615074543.26700-6-bhupesh.sharma@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20210615074543.26700-3-bhupesh.sharma@linaro.org>
+In-Reply-To: <20210615074543.26700-6-bhupesh.sharma@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Tue 15 Jun 02:45 CDT 2021, Bhupesh Sharma wrote:
 
-> Add pmic-gpio compatible string for pmm8155au pmic
-> found on the SA8155p-adp board.
+> Cleanup the qcom-rpmh regulator driver:
+> - remove comma(s) at the end of the terminator line.
+> - add missing terminator in instances of
+>   pm7325x_vreg_data[] arrays.
+
+This second part needs a:
+
+Fixes: c4e5aa3dbee5 ("regulator: qcom-rpmh: Add PM7325/PMR735A regulator support")
+
+So it's up to Mark if he wants both parts in a single patch.
+
 > 
 > Cc: Linus Walleij <linus.walleij@linaro.org>
 > Cc: Liam Girdwood <lgirdwood@gmail.com>
@@ -85,40 +94,144 @@ On Tue 15 Jun 02:45 CDT 2021, Bhupesh Sharma wrote:
 > Cc: Rob Herring <robh+dt@kernel.org>
 > Cc: Andy Gross <agross@kernel.org>
 
-I still don't think these Cc tags should be merged. The patch looks good
-now though.
+I don't think these Cc tags serves a purpose here. The patch itself
+looks good though
 
-> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> ---
->  Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt | 2 ++
->  1 file changed, 2 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt b/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt
-> index f6a9760558a6..80b8a66e29d8 100644
-> --- a/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt
-> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt
-> @@ -27,6 +27,7 @@ PMIC's from Qualcomm.
->  		    "qcom,pm660l-gpio"
->  		    "qcom,pm8150-gpio"
->  		    "qcom,pm8150b-gpio"
-> +		    "qcom,pmm8155au-gpio"
-
-Please keep these sorted alphabetically.
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
 Regards,
 Bjorn
 
->  		    "qcom,pm8350-gpio"
->  		    "qcom,pm8350b-gpio"
->  		    "qcom,pm8350c-gpio"
-> @@ -116,6 +117,7 @@ to specify in a pin configuration subnode:
->  					     and gpio8)
->  		    gpio1-gpio12 for pm8150b (holes on gpio3, gpio4, gpio7)
->  		    gpio1-gpio12 for pm8150l (hole on gpio7)
-> +		    gpio1-gpio10 for pmm8155au
->  		    gpio1-gpio10 for pm8350
->  		    gpio1-gpio8 for pm8350b
->  		    gpio1-gpio9 for pm8350c
+> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+> ---
+>  drivers/regulator/qcom-rpmh-regulator.c | 26 +++++++++++++------------
+>  1 file changed, 14 insertions(+), 12 deletions(-)
+> 
+> diff --git a/drivers/regulator/qcom-rpmh-regulator.c b/drivers/regulator/qcom-rpmh-regulator.c
+> index 22fec370fa61..af41a517da99 100644
+> --- a/drivers/regulator/qcom-rpmh-regulator.c
+> +++ b/drivers/regulator/qcom-rpmh-regulator.c
+> @@ -811,12 +811,12 @@ static const struct rpmh_vreg_init_data pm8998_vreg_data[] = {
+>  	RPMH_VREG("ldo28",  "ldo%s28", &pmic4_pldo,      "vdd-l16-l28"),
+>  	RPMH_VREG("lvs1",   "vs%s1",   &pmic4_lvs,       "vin-lvs-1-2"),
+>  	RPMH_VREG("lvs2",   "vs%s2",   &pmic4_lvs,       "vin-lvs-1-2"),
+> -	{},
+> +	{}
+>  };
+>  
+>  static const struct rpmh_vreg_init_data pmi8998_vreg_data[] = {
+>  	RPMH_VREG("bob",    "bob%s1",  &pmic4_bob,       "vdd-bob"),
+> -	{},
+> +	{}
+>  };
+>  
+>  static const struct rpmh_vreg_init_data pm8005_vreg_data[] = {
+> @@ -824,7 +824,7 @@ static const struct rpmh_vreg_init_data pm8005_vreg_data[] = {
+>  	RPMH_VREG("smps2",  "smp%s2",  &pmic4_ftsmps426, "vdd-s2"),
+>  	RPMH_VREG("smps3",  "smp%s3",  &pmic4_ftsmps426, "vdd-s3"),
+>  	RPMH_VREG("smps4",  "smp%s4",  &pmic4_ftsmps426, "vdd-s4"),
+> -	{},
+> +	{}
+>  };
+>  
+>  static const struct rpmh_vreg_init_data pm8150_vreg_data[] = {
+> @@ -856,7 +856,7 @@ static const struct rpmh_vreg_init_data pm8150_vreg_data[] = {
+>  	RPMH_VREG("ldo16",  "ldo%s16", &pmic5_pldo,      "vdd-l13-l16-l17"),
+>  	RPMH_VREG("ldo17",  "ldo%s17", &pmic5_pldo,      "vdd-l13-l16-l17"),
+>  	RPMH_VREG("ldo18",  "ldo%s18", &pmic5_nldo,      "vdd-l3-l4-l5-l18"),
+> -	{},
+> +	{}
+>  };
+>  
+>  static const struct rpmh_vreg_init_data pm8150l_vreg_data[] = {
+> @@ -880,7 +880,7 @@ static const struct rpmh_vreg_init_data pm8150l_vreg_data[] = {
+>  	RPMH_VREG("ldo10",  "ldo%s10", &pmic5_pldo,      "vdd-l9-l10"),
+>  	RPMH_VREG("ldo11",  "ldo%s11", &pmic5_pldo,      "vdd-l7-l11"),
+>  	RPMH_VREG("bob",    "bob%s1",  &pmic5_bob,       "vdd-bob"),
+> -	{},
+> +	{}
+>  };
+>  
+>  static const struct rpmh_vreg_init_data pm8350_vreg_data[] = {
+> @@ -906,7 +906,7 @@ static const struct rpmh_vreg_init_data pm8350_vreg_data[] = {
+>  	RPMH_VREG("ldo8",   "ldo%s8",  &pmic5_nldo,      "vdd-l8"),
+>  	RPMH_VREG("ldo9",   "ldo%s9",  &pmic5_nldo,      "vdd-l6-l9-l10"),
+>  	RPMH_VREG("ldo10",  "ldo%s10", &pmic5_nldo,      "vdd-l6-l9-l10"),
+> -	{},
+> +	{}
+>  };
+>  
+>  static const struct rpmh_vreg_init_data pm8350c_vreg_data[] = {
+> @@ -934,7 +934,7 @@ static const struct rpmh_vreg_init_data pm8350c_vreg_data[] = {
+>  	RPMH_VREG("ldo12",  "ldo%s12", &pmic5_pldo_lv,   "vdd-l1-l12"),
+>  	RPMH_VREG("ldo13",  "ldo%s13", &pmic5_pldo,      "vdd-l3-l4-l5-l7-l13"),
+>  	RPMH_VREG("bob",    "bob%s1",  &pmic5_bob,       "vdd-bob"),
+> -	{},
+> +	{}
+>  };
+>  
+>  static const struct rpmh_vreg_init_data pm8009_vreg_data[] = {
+> @@ -947,7 +947,7 @@ static const struct rpmh_vreg_init_data pm8009_vreg_data[] = {
+>  	RPMH_VREG("ldo5",   "ldo%s5",  &pmic5_pldo,      "vdd-l5-l6"),
+>  	RPMH_VREG("ldo6",   "ldo%s6",  &pmic5_pldo,      "vdd-l5-l6"),
+>  	RPMH_VREG("ldo7",   "ldo%s7",  &pmic5_pldo_lv,   "vdd-l7"),
+> -	{},
+> +	{}
+>  };
+>  
+>  static const struct rpmh_vreg_init_data pm8009_1_vreg_data[] = {
+> @@ -960,7 +960,7 @@ static const struct rpmh_vreg_init_data pm8009_1_vreg_data[] = {
+>  	RPMH_VREG("ldo5",   "ldo%s5",  &pmic5_pldo,      "vdd-l5-l6"),
+>  	RPMH_VREG("ldo6",   "ldo%s6",  &pmic5_pldo,      "vdd-l5-l6"),
+>  	RPMH_VREG("ldo7",   "ldo%s6",  &pmic5_pldo_lv,   "vdd-l7"),
+> -	{},
+> +	{}
+>  };
+>  
+>  static const struct rpmh_vreg_init_data pm6150_vreg_data[] = {
+> @@ -988,7 +988,7 @@ static const struct rpmh_vreg_init_data pm6150_vreg_data[] = {
+>  	RPMH_VREG("ldo17",  "ldo%s17", &pmic5_pldo,   "vdd-l5-l16-l17-l18-l19"),
+>  	RPMH_VREG("ldo18",  "ldo%s18", &pmic5_pldo,   "vdd-l5-l16-l17-l18-l19"),
+>  	RPMH_VREG("ldo19",  "ldo%s19", &pmic5_pldo,   "vdd-l5-l16-l17-l18-l19"),
+> -	{},
+> +	{}
+>  };
+>  
+>  static const struct rpmh_vreg_init_data pm6150l_vreg_data[] = {
+> @@ -1012,7 +1012,7 @@ static const struct rpmh_vreg_init_data pm6150l_vreg_data[] = {
+>  	RPMH_VREG("ldo10",  "ldo%s10", &pmic5_pldo,      "vdd-l9-l10"),
+>  	RPMH_VREG("ldo11",  "ldo%s11", &pmic5_pldo,      "vdd-l7-l11"),
+>  	RPMH_VREG("bob",    "bob%s1",  &pmic5_bob,       "vdd-bob"),
+> -	{},
+> +	{}
+>  };
+>  
+>  static const struct rpmh_vreg_init_data pmx55_vreg_data[] = {
+> @@ -1039,7 +1039,7 @@ static const struct rpmh_vreg_init_data pmx55_vreg_data[] = {
+>  	RPMH_VREG("ldo14",   "ldo%s14",   &pmic5_nldo,      "vdd-l14"),
+>  	RPMH_VREG("ldo15",   "ldo%s15",   &pmic5_nldo,      "vdd-l15"),
+>  	RPMH_VREG("ldo16",   "ldo%s16",   &pmic5_pldo,      "vdd-l16"),
+> -	{},
+> +	{}
+>  };
+>  
+>  static const struct rpmh_vreg_init_data pm7325_vreg_data[] = {
+> @@ -1070,6 +1070,7 @@ static const struct rpmh_vreg_init_data pm7325_vreg_data[] = {
+>  	RPMH_VREG("ldo17",  "ldo%s17", &pmic5_pldo_lv,   "vdd-l11-l17-l18-l19"),
+>  	RPMH_VREG("ldo18",  "ldo%s18", &pmic5_pldo_lv,   "vdd-l11-l17-l18-l19"),
+>  	RPMH_VREG("ldo19",  "ldo%s19", &pmic5_pldo_lv,   "vdd-l11-l17-l18-l19"),
+> +	{}
+>  };
+>  
+>  static const struct rpmh_vreg_init_data pmr735a_vreg_data[] = {
+> @@ -1083,6 +1084,7 @@ static const struct rpmh_vreg_init_data pmr735a_vreg_data[] = {
+>  	RPMH_VREG("ldo5",   "ldo%s5",  &pmic5_nldo,      "vdd-l5-l6"),
+>  	RPMH_VREG("ldo6",   "ldo%s6",  &pmic5_nldo,      "vdd-l5-l6"),
+>  	RPMH_VREG("ldo7",   "ldo%s7",  &pmic5_pldo,      "vdd-l7-bob"),
+> +	{}
+>  };
+>  
+>  static int rpmh_regulator_probe(struct platform_device *pdev)
 > -- 
 > 2.31.1
 > 
