@@ -2,174 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5C0893A8C1E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jun 2021 00:58:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AAF7E3A8C79
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jun 2021 01:28:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231143AbhFOXAf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Jun 2021 19:00:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41656 "EHLO
+        id S231165AbhFOXa0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Jun 2021 19:30:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48380 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230186AbhFOXAf (ORCPT
+        with ESMTP id S231492AbhFOXaZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Jun 2021 19:00:35 -0400
-Received: from mail-oo1-xc32.google.com (mail-oo1-xc32.google.com [IPv6:2607:f8b0:4864:20::c32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FF69C061760
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jun 2021 15:58:29 -0700 (PDT)
-Received: by mail-oo1-xc32.google.com with SMTP id s20-20020a4ae9940000b02902072d5df239so205698ood.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jun 2021 15:58:28 -0700 (PDT)
+        Tue, 15 Jun 2021 19:30:25 -0400
+Received: from mail-oo1-xc31.google.com (mail-oo1-xc31.google.com [IPv6:2607:f8b0:4864:20::c31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BCD72C061760
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jun 2021 16:28:19 -0700 (PDT)
+Received: by mail-oo1-xc31.google.com with SMTP id y18-20020a4ae7120000b02902496b7708cfso209072oou.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jun 2021 16:28:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=qlTKAUDpgW/aVWFcl6ZYQV6zmV889oxnPc1k40CzH84=;
-        b=Y6j48dWS8Zjp45eyuaVvc0GXsT4HSvTzjnwjt2i2u6VxfEW89ci8iej3A0gCIHnJWT
-         FCsZOhR/ES6yKJf5EMZJsf2KTVi4Iq+nXutr8yjIvmB6WcfmM6ySC5eVLBvvSVVuGsXo
-         ttNdErqUXVU5XjNR5m/d7Qx0y23KmQ0sup2dOe1pDcSMoOUVLdJMCHXoH38wl7QHiP8q
-         aD8ntmJVizuLBlzapNXiuv6WNamAClcJSop5/H5p6vL4YtOFuO+CrVAl627kglXjUT7d
-         o6q+sw/pG1gF78eT2INat9qTwBIU4GXNDMbykJOOOf1a0/yDzsbCzYZGNQMyaRZrYJcs
-         QbbQ==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=tzSchQZe56MMqq1z2RSbotrCopwwSz+YGTJ5s6h3T1w=;
+        b=P7gJ+yJcok8zyjrDvS5CFSBSmeNfbSk1IpzfHrvvdoRYYTLGsUuELq6pCHSTzt+Ygk
+         mmuKyJ8j2tSDgud2KnpeCcRjTLPRMALdTwtodETeGdylwmZ8uBmA8TlnNJJZdeyeOMqD
+         SZojpi4ngEdVFybx1dZvnZLyQi1WV1HQD56GCkfLxSy/lUbje43nY7u0WwZSd9j5GZDj
+         lOv/M+XJPYFdqmTLnnRDEbHLZx+1tFO/gbS6Ziieqo0yKGmkUiGOabUD2vv65+Jv+cLD
+         d/OL41uF0Z6GOMpbNfelqVGKwo2sWATapabrYLtzMxfjGUoxYvwiMkKycb76Gd4YP3wS
+         qKhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=qlTKAUDpgW/aVWFcl6ZYQV6zmV889oxnPc1k40CzH84=;
-        b=kTkLdtU5HjNsXmoeD4NEjpf3xwiMGvIHi0tQyyrCsa949tulWnAhXwsp7AAYIOSf+g
-         GeWezwBc63r8BxH3lEOYQ1V9OR1dmZUgjyd+a2fzkdTXoGuKMOcDgZnQsdSq7VTNRxwp
-         Ozm3+d1s0/+oUB5pR8+UjJwS9esiQdeJRl5Fo04toQdvFWD6nZknvkeDEUaTWKQW2Kc8
-         5yuQ6eBzedbLAkQPk2TN1NURWyWVXl4Xbp/01XNMa8QfXOjKBJqeWB7qQYh97gjehcZv
-         he5sfaP0meendoZZ9lnRtPPX8BAsVobYXsucjxQSad7YYsBlUNRr0FzPKMywUFTmu3V/
-         1Kxg==
-X-Gm-Message-State: AOAM530T/3RmSf8Gp8CTqa8mKLxJrFYMUDHxLuzRon03ZzPXwS6fPPi2
-        RmM3JFIGPque63/JbCWnwlxqXQ==
-X-Google-Smtp-Source: ABdhPJzsASLVvopE8vOr0VonM+OooP+sHNYzO7esb5ydXavQ1wdSoOLNsUUfn4SN2ly84/e86IuQBw==
-X-Received: by 2002:a4a:b1c2:: with SMTP id j2mr1249731ooo.78.1623797908009;
-        Tue, 15 Jun 2021 15:58:28 -0700 (PDT)
-Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id f63sm95341otb.36.2021.06.15.15.58.26
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=tzSchQZe56MMqq1z2RSbotrCopwwSz+YGTJ5s6h3T1w=;
+        b=KFi1zhhS6VIqiTBKvjvIoxIbwZ1Eg2B4YLtipnrY8wr2t/KET0Zkc8GumMz4LsBtcR
+         9lg2jv+yhIiGMjyQB6jO7bRp7eG4K6Lokp4NVz2V0YLsYE+mhSB3mYYnfnNkd35cUfMp
+         xjf7qGGlqDnoUV2og6WdhZhNRyrRes49WEHlMkPOmdQ+RAyGCsihS36yRsYnK5m4WPJb
+         hejD3c2BC39//QPzNU4jAnwUZ//owtabd5dm77Nuh7Q+w2Dbk1aQpuQpNF0VlFvy/adE
+         Oev4mgqyd/boJYYZElHW2gfh9eDra2FyhC62aPgg7Y52pFQFTFDpLr1xQIkN9N01yB7V
+         JSTg==
+X-Gm-Message-State: AOAM532VL7DGBx9Xe76zhqouGPaVzJ+XmEHO6xzOCDSF70oIjS9yY5H+
+        nNN2voL6cDFn7B/AVDDaScDoAw==
+X-Google-Smtp-Source: ABdhPJykHIn7Udmj5j6l9ma1FDlBT7jKA40R6uo3S1ZfKJmsKdglv5gl2ebMdgL/RTatJSre1WOgZg==
+X-Received: by 2002:a4a:ea2b:: with SMTP id y11mr1311357ood.77.1623799697973;
+        Tue, 15 Jun 2021 16:28:17 -0700 (PDT)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id u1sm89926ooo.18.2021.06.15.16.28.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Jun 2021 15:58:27 -0700 (PDT)
-Date:   Tue, 15 Jun 2021 17:58:25 -0500
+        Tue, 15 Jun 2021 16:28:17 -0700 (PDT)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Rob Herring <robh@kernel.org>
-Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        PCI <linux-pci@vger.kernel.org>, devicetree@vger.kernel.org,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        Siddartha Mohanadoss <smohanad@codeaurora.org>
-Subject: Re: [PATCH v2 2/3] PCI: dwc: Add Qualcomm PCIe Endpoint controller
- driver
-Message-ID: <YMkwkTBa7y1jEeG5@yoga>
-References: <20210603103814.95177-1-manivannan.sadhasivam@linaro.org>
- <20210603103814.95177-3-manivannan.sadhasivam@linaro.org>
- <YLw744UeM6fj/xoS@builder.lan>
- <CAL_Jsq++bSPiKcgWUr6AJbJfidPNpUSFCtarRGEV4GP7fb8yPw@mail.gmail.com>
- <YMkiSDxOhD7jun3x@builder.lan>
- <CAL_Jsq+jbOkQ0png89XsJEg7HNmkefPFOG1fypmsH=tvs=B_3A@mail.gmail.com>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, Alex Elder <elder@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] arm64: dts: qcom: sdm850-yoga: Enable IPA
+Date:   Tue, 15 Jun 2021 18:28:16 -0500
+Message-Id: <20210615232816.835325-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.31.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAL_Jsq+jbOkQ0png89XsJEg7HNmkefPFOG1fypmsH=tvs=B_3A@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 15 Jun 17:20 CDT 2021, Rob Herring wrote:
+Shuffle memory regions to make firmware loading succeed and then enable
+the ipa device.
 
->  On Tue, Jun 15, 2021 at 3:57 PM Bjorn Andersson
-> <bjorn.andersson@linaro.org> wrote:
-> >
-> > On Tue 15 Jun 16:40 CDT 2021, Rob Herring wrote:
-> >
-> > > On Sat, Jun 5, 2021 at 9:07 PM Bjorn Andersson
-> > > <bjorn.andersson@linaro.org> wrote:
-> > > >
-> > > > On Thu 03 Jun 05:38 CDT 2021, Manivannan Sadhasivam wrote:
-> > > >
-> > > > > Add driver support for Qualcomm PCIe Endpoint controller driver based on
-> > > > > the Designware core with added Qualcomm specific wrapper around the
-> > > > > core. The driver support is very basic such that it supports only
-> > > > > enumeration, PCIe read/write, and MSI. There is no ASPM and PM support
-> > > > > for now but these will be added later.
-> > > > >
-> > > > > The driver is capable of using the PERST# and WAKE# side-band GPIOs for
-> > > > > operation and written on top of the DWC PCI framework.
-> > > > >
-> > > > > Co-developed-by: Siddartha Mohanadoss <smohanad@codeaurora.org>
-> > > > > Signed-off-by: Siddartha Mohanadoss <smohanad@codeaurora.org>
-> > > > > [mani: restructured the driver and fixed several bugs for upstream]
-> > > > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > > >
-> > > > Really nice to see this working!
-> > >
-> > > [...]
-> > >
-> > > > > +static void qcom_pcie_ep_configure_tcsr(struct qcom_pcie_ep *pcie_ep)
-> > > > > +{
-> > > > > +     writel_relaxed(0x0, pcie_ep->tcsr + TCSR_PCIE_PERST_EN);
-> > > >
-> > > > Please avoid _relaxed accessor unless there's a strong reason, and if so
-> > > > document it.
-> > >
-> > > Uhhh, what!? That's the wrong way around from what I've ever seen
-> > > anyone say. Have you ever looked at the resulting code on arm32 with
-> > > OMAP enabled? It's just a memory barrier and an indirect function call
-> > > on every access.
-> > >
-> > > Use readl/writel if you have an ordering requirement WRT DMA,
-> > > otherwise use relaxed variants.
-> > >
-> >
-> > That does make sense. Unfortunately I don't know where this started, but
-> > I would guess it might have been a reaction to the fact that people
-> > where just sprinkling wmb() all over the place to be on the safe side...
-> 
-> I think you could write a book on it. In the beginning, there was x86
-> and it was strongly ordered...
-> 
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/sdm845.dtsi          | 21 +++++++------------
+ .../boot/dts/qcom/sdm850-lenovo-yoga-c630.dts |  5 +++++
+ 2 files changed, 13 insertions(+), 13 deletions(-)
 
-I guess it would allow me to ask people to RTFM (RTFB) instead then :)
+diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+index 1796ae8372be..49624eadce84 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+@@ -128,28 +128,23 @@ camera_mem: memory@8bf00000 {
+ 			no-map;
+ 		};
+ 
+-		ipa_fw_mem: memory@8c400000 {
+-			reg = <0 0x8c400000 0 0x10000>;
++		wlan_msa_mem: memory@8c400000 {
++			reg = <0 0x8c400000 0 0x100000>;
+ 			no-map;
+ 		};
+ 
+-		ipa_gsi_mem: memory@8c410000 {
+-			reg = <0 0x8c410000 0 0x5000>;
++		gpu_mem: memory@8c515000 {
++			reg = <0 0x8c515000 0 0x2000>;
+ 			no-map;
+ 		};
+ 
+-		gpu_mem: memory@8c415000 {
+-			reg = <0 0x8c415000 0 0x2000>;
++		ipa_fw_mem: memory@8c517000 {
++			reg = <0 0x8c517000 0 0x5a000>;
+ 			no-map;
+ 		};
+ 
+-		adsp_mem: memory@8c500000 {
+-			reg = <0 0x8c500000 0 0x1a00000>;
+-			no-map;
+-		};
+-
+-		wlan_msa_mem: memory@8df00000 {
+-			reg = <0 0x8df00000 0 0x100000>;
++		adsp_mem: memory@8c600000 {
++			reg = <0 0x8c600000 0 0x1a00000>;
+ 			no-map;
+ 		};
+ 
+diff --git a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
+index c2a709a384e9..3eaa42dc3794 100644
+--- a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
++++ b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
+@@ -415,6 +415,11 @@ ecsh: hid@5c {
+ 	};
+ };
+ 
++&ipa {
++	status = "okay";
++	memory-region = <&ipa_fw_mem>;
++};
++
+ &mdss {
+ 	status = "okay";
+ };
+-- 
+2.31.0
 
-Jokes aside, I think we came to the conclusion that writel() was better
-than incorrect use of writel_relaxed() followed by wmb(). And in this
-particular case it's definitely not happening in a hot code path...
-
-> >
-> > > > > +     writel_relaxed(0x0, pcie_ep->tcsr + TCSR_PERST_SEPARATION_ENABLE);
-> > > > > +}
-> > > > > +
-> > >
-> > > [...]
-> > >
-> > > > > +static struct platform_driver qcom_pcie_ep_driver = {
-> > > > > +     .probe  = qcom_pcie_ep_probe,
-> > > > > +     .driver = {
-> > > > > +             .name           = "qcom-pcie-ep",
-> > > >
-> > > > Skip the indentation of the '='.
-> > > >
-> > > > > +             .suppress_bind_attrs = true,
-> > > >
-> > > > Why do we suppress_bind_attrs?
-> > >
-> > > Because remove is not handled.
-> > >
-> >
-> > Not handled in Mani's driver, or is this a PCI thing?
-> 
-> Only a PCI thing in the sense all the drivers happen to copy-n-paste
-> it and are mostly built-in. The Android modules thing doesn't seem to
-> have quite hit PCI yet. On the flipside, I'm sure there's lots of
-> drivers we can unbind and fun will ensue.
-> 
-> There is some work needed as the remove() implementations that we do
-> have are all unique (such as do we need a lock or not). I keep nudging
-> people to look into it.
-> 
-
-Thanks, that confirms that my expectation. I would prefer to see this
-tackled in a separate step then :)
-
-Regards,
-Bjorn
