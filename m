@@ -2,32 +2,33 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E98673A8929
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jun 2021 21:04:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3109D3A8927
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jun 2021 21:04:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231389AbhFOTGj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Jun 2021 15:06:39 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:16089 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230387AbhFOTGg (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Jun 2021 15:06:36 -0400
+        id S231513AbhFOTGY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Jun 2021 15:06:24 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:59061 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231593AbhFOTGX (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 15 Jun 2021 15:06:23 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1623783872; h=References: In-Reply-To: Message-Id: Date:
+ s=smtp; t=1623783859; h=References: In-Reply-To: Message-Id: Date:
  Subject: Cc: To: From: Sender;
- bh=eKY402JPghQTP8i/7xNa0odQHantb7kPAjB6HNOLT7s=; b=vBjHoPkskcTUnsTRVwfUO8BdwHHAJUfjKsJTHjO5tA2rzrYXCaTwfYvWsVod7mKnXGrNtZNm
- 6Zg8Q4oXZO+hUAHkxha5Z0cR/Gp9G0Frc/ZK3+WsHq27ne5a4YtgR5SavrPQxXC9cglJZNsI
- kTp0k3fgYm71s5blXgeKC3MKJfk=
-X-Mailgun-Sending-Ip: 69.72.43.7
+ bh=riF6d6Q4yLk4RZAW9+GHFcJXuStA+4z//vIUajgofVU=; b=Sif4ZlFrcisJyxhyfcZ/OL5oXu1UVZXEkTSucpGT3SqLRm4byF7VvgSiln0Vd3RJZkeI1Acd
+ wGBqgooMkhZd38cxtO42/1zGOXuNF/aI06X8g5USnHYs4Ss4lU+2HRNgdidlrPq79AsaLW5b
+ sgG3BaVWD0I3BU5R88+n/dWQHE8=
+X-Mailgun-Sending-Ip: 198.61.254.9
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
- 60c8f9a2f726fa418839d881 (version=TLS1.2,
+ smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
+ 60c8f9a2e27c0cc77f42a15d (version=TLS1.2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 15 Jun 2021 19:04:02
  GMT
 Sender: sidgup=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 8DBE9C433D3; Tue, 15 Jun 2021 19:04:01 +0000 (UTC)
+        id C24B8C4360C; Tue, 15 Jun 2021 19:04:01 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -37,9 +38,9 @@ Received: from sidgup-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: sidgup)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 903F6C4323A;
-        Tue, 15 Jun 2021 19:03:54 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 903F6C4323A
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 338DDC43460;
+        Tue, 15 Jun 2021 19:03:55 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 338DDC43460
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=sidgup@codeaurora.org
 From:   Siddharth Gupta <sidgup@codeaurora.org>
@@ -49,9 +50,9 @@ Cc:     Siddharth Gupta <sidgup@codeaurora.org>,
         linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org, psodagud@codeaurora.org,
         stable@vger.kernel.org
-Subject: [PATCH v4 3/4] remoteproc: core: Fix cdev remove and rproc del
-Date:   Tue, 15 Jun 2021 12:03:43 -0700
-Message-Id: <1623783824-13395-4-git-send-email-sidgup@codeaurora.org>
+Subject: [PATCH v4 4/4] remoteproc: core: Cleanup device in case of failure
+Date:   Tue, 15 Jun 2021 12:03:44 -0700
+Message-Id: <1623783824-13395-5-git-send-email-sidgup@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1623783824-13395-1-git-send-email-sidgup@codeaurora.org>
 References: <1623783824-13395-1-git-send-email-sidgup@codeaurora.org>
@@ -59,52 +60,56 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The rproc_char_device_remove() call currently unmaps the cdev
-region instead of simply deleting the cdev that was added as a
-part of the rproc_char_device_add() call. This change fixes that
-behaviour, and also fixes the order in which device_del() and
-cdev_del() need to be called.
+When a failure occurs in rproc_add() it returns an error, but does
+not cleanup after itself. This change adds the failure path in such
+cases.
 
 Signed-off-by: Siddharth Gupta <sidgup@codeaurora.org>
 Cc: stable@vger.kernel.org
 ---
- drivers/remoteproc/remoteproc_cdev.c | 2 +-
- drivers/remoteproc/remoteproc_core.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/remoteproc/remoteproc_core.c | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/remoteproc/remoteproc_cdev.c b/drivers/remoteproc/remoteproc_cdev.c
-index 0b8a84c..4ad98b0 100644
---- a/drivers/remoteproc/remoteproc_cdev.c
-+++ b/drivers/remoteproc/remoteproc_cdev.c
-@@ -124,7 +124,7 @@ int rproc_char_device_add(struct rproc *rproc)
- 
- void rproc_char_device_remove(struct rproc *rproc)
- {
--	__unregister_chrdev(MAJOR(rproc->dev.devt), rproc->index, 1, "remoteproc");
-+	cdev_del(&rproc->cdev);
- }
- 
- void __init rproc_init_cdev(void)
 diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
-index b65fce3..b874280 100644
+index b874280..d823f70 100644
 --- a/drivers/remoteproc/remoteproc_core.c
 +++ b/drivers/remoteproc/remoteproc_core.c
-@@ -2619,7 +2619,6 @@ int rproc_del(struct rproc *rproc)
- 	mutex_unlock(&rproc->lock);
+@@ -2343,8 +2343,10 @@ int rproc_add(struct rproc *rproc)
+ 		return ret;
  
- 	rproc_delete_debug_dir(rproc);
--	rproc_char_device_remove(rproc);
+ 	ret = device_add(dev);
+-	if (ret < 0)
+-		return ret;
++	if (ret < 0) {
++		put_device(dev);
++		goto rproc_remove_cdev;
++	}
  
- 	/* the rproc is downref'ed as soon as it's removed from the klist */
- 	mutex_lock(&rproc_list_mutex);
-@@ -2630,6 +2629,7 @@ int rproc_del(struct rproc *rproc)
- 	synchronize_rcu();
+ 	dev_info(dev, "%s is available\n", rproc->name);
  
- 	device_del(&rproc->dev);
-+	rproc_char_device_remove(rproc);
+@@ -2355,7 +2357,7 @@ int rproc_add(struct rproc *rproc)
+ 	if (rproc->auto_boot) {
+ 		ret = rproc_trigger_auto_boot(rproc);
+ 		if (ret < 0)
+-			return ret;
++			goto rproc_remove_dev;
+ 	}
+ 
+ 	/* expose to rproc_get_by_phandle users */
+@@ -2364,6 +2366,13 @@ int rproc_add(struct rproc *rproc)
+ 	mutex_unlock(&rproc_list_mutex);
  
  	return 0;
++
++rproc_remove_dev:
++	rproc_delete_debug_dir(rproc);
++	device_del(dev);
++rproc_remove_cdev:
++	rproc_char_device_remove(rproc);
++	return ret;
  }
+ EXPORT_SYMBOL(rproc_add);
+ 
 -- 
 Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
 a Linux Foundation Collaborative Project
