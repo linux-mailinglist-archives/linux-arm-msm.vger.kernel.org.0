@@ -2,261 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A76DB3A7994
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jun 2021 10:54:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D55903A7B54
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Jun 2021 12:00:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231252AbhFOI4X (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Jun 2021 04:56:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46046 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231224AbhFOI4X (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Jun 2021 04:56:23 -0400
-Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com [IPv6:2607:f8b0:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48D94C061574
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jun 2021 01:54:19 -0700 (PDT)
-Received: by mail-pg1-x52c.google.com with SMTP id n12so10845406pgs.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jun 2021 01:54:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=/aLEC/Eln4giYvsqqyo5tdPZgoWGsWwO6Co3KqLksHg=;
-        b=UuMVRAwrCB55jyTqSFvvvTageaNk0AetF/r0yfJQoXu/8Mrqf1i62nNXarlrV/qEHf
-         BPM97XDgY+dhI5TbjyzsjNhs5tFwvEOShcmOpEL0smav/GRiFunCkbpOodKBNU/Mx9Xo
-         xWdn4nnsBnb5RhLmeVu6GcdeEGzyO/JMtRVyK1gvRmu8wQDMmjY6USf5PcBBGixeWJap
-         vqJUY3erH2rFGUqXfqEXlHp6HR/YjqjodkvsXGEhUWvhsACBj6FsjX3Sd48V2aK7tfKY
-         8RV50Vqc0TLFiNZ4IspsZXLYjHXIeJ+8qGQ4I01OlbaRA6g3SRxpq+LjJz+E2VthG05Q
-         iLAA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=/aLEC/Eln4giYvsqqyo5tdPZgoWGsWwO6Co3KqLksHg=;
-        b=TUfv7zTXX1sXLIbvaR2NTQhMxBMFwfJHbUWHctH8x5FQzOQXaALvY6FRb4rSH2c5zU
-         jpAU48Dz5PgOVDhnSxbugxigUXzJTfo0wYxxXdJufMXoQeZGma3ue+ur5BZibUiHUhL5
-         fSxQTIQA6hgDrRkO4W4Bt1cria5guNtWXS5BUO10gnSUxmLP2FDGcTRxfcpTU3Xv9RlF
-         M2BL6lBiEXAVz1U7gBg/i3jsdvmsJS91DDjOJ+K2642QWe2kSu2nDNZsFwPXDImMmiXt
-         C+5Cx1a+gbb676LnnJ7MsFG9uHMAflEiTlENDUBOpT5ZlKpt2Ry4u6WxtgOOUwaa1JiY
-         T72w==
-X-Gm-Message-State: AOAM5323FlD5biWQ+mzwot7lE6N6RHC7fSW98/FMexFmFNhsCRN8fW8P
-        uHH+RUT1scM2ravH2RimIVP+O/ixm0cmgshngGfd4Q==
-X-Google-Smtp-Source: ABdhPJz21l8uZFSsOqTdlIjSajUk7E1ngZN/73MbuZIeNMJVmNlJP03TlnwuZb8v5DcyAbUDrJIX8HJWhJEeLEpcFek=
-X-Received: by 2002:a63:171d:: with SMTP id x29mr12363221pgl.173.1623747258610;
- Tue, 15 Jun 2021 01:54:18 -0700 (PDT)
+        id S231187AbhFOKCx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Jun 2021 06:02:53 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:36535 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230502AbhFOKCw (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 15 Jun 2021 06:02:52 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1623751248; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=yEtEJbG7Tsld/ZdtEB4tMGLswtoHTcN3VZl3xMrng/8=;
+ b=DC2sOboilk1VV26lt4UDaS4VUAp6hA7md20c9iYZfP8zwrtQzvKHIFwGUa8HXWDvpKBVtm8O
+ tgxqviWhtJT3vOeKKckvLti+4bNvyYH2JZgNejAQvsSHvVVBPV+Z8oBBlgzYpnIXm82KJS93
+ Ih56PVNPZ3kOtMFl9cKQqdnuX88=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
+ 60c87a2ae27c0cc77ff5cd96 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 15 Jun 2021 10:00:10
+ GMT
+Sender: sbhanu=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id B693EC433F1; Tue, 15 Jun 2021 10:00:09 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: sbhanu)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 8478DC433D3;
+        Tue, 15 Jun 2021 10:00:07 +0000 (UTC)
 MIME-Version: 1.0
-References: <YLfL9Q+4860uqS8f@gerhold.net> <CAMZdPi9tcye-4P4i0uXZcECJ-Big5T11JdvdXW6k2mEEi9XwyA@mail.gmail.com>
- <YLtDB2Cz5ttewsFu@gerhold.net> <CAMZdPi_-Qa=JnThHs_h-144dAfSAjF5s+QdBawdXZ3kk8Mx8ng@mail.gmail.com>
- <YL364+xK3mE2FU8a@gerhold.net> <87sg1tvryx.fsf@toke.dk> <YL4GiEEcOQC2XrjP@gerhold.net>
- <CAMZdPi-91y+t1bHb+6NY5Dh-xV_yvJTzG65efaSKzyTNsEGBvA@mail.gmail.com> <YL4Vr0mhiOJp8jkT@gerhold.net>
-In-Reply-To: <YL4Vr0mhiOJp8jkT@gerhold.net>
-From:   Loic Poulain <loic.poulain@linaro.org>
-Date:   Tue, 15 Jun 2021 11:03:20 +0200
-Message-ID: <CAMZdPi9c9=G_ewmUqZuEpyHpL7LBghDH+zkPgAhpPyS=buKvwQ@mail.gmail.com>
-Subject: Re: [RFC] Integrate RPMSG/SMD into WWAN subsystem
-To:     Stephan Gerhold <stephan@gerhold.net>
-Cc:     =?UTF-8?B?VG9rZSBIw7hpbGFuZC1Kw7hyZ2Vuc2Vu?= <toke@redhat.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Aleksander Morgado <aleksander@aleksander.es>,
-        Network Development <netdev@vger.kernel.org>,
-        linux-remoteproc@vger.kernel.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Ohad Ben-Cohen <ohad@wizery.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Tue, 15 Jun 2021 15:30:07 +0530
+From:   sbhanu@codeaurora.org
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     adrian.hunter@intel.com, ulf.hansson@linaro.org,
+        robh+dt@kernel.org, asutoshd@codeaurora.org,
+        stummala@codeaurora.org, vbadigan@codeaurora.org,
+        rampraka@codeaurora.org, sayalil@codeaurora.org,
+        sartgarg@codeaurora.org, rnayak@codeaurora.org,
+        saiprakash.ranjan@codeaurora.org, sibis@codeaurora.org,
+        okukatla@codeaurora.org, djakov@kernel.org, cang@codeaurora.org,
+        pragalla@codeaurora.org, nitirawa@codeaurora.org,
+        linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        agross@kernel.org
+Subject: Re: [PATCH V1] arm64: dts: qcom: sc7180: Added xo clock for eMMC and
+ Sd card
+In-Reply-To: <YMeEPg7EPC5E/MfW@builder.lan>
+References: <1623309107-27833-1-git-send-email-sbhanu@codeaurora.org>
+ <YMLm96edhIYOJF+E@builder.lan>
+ <1230be3c7f350b1f33110df2a9744e15@codeaurora.org>
+ <YMeEPg7EPC5E/MfW@builder.lan>
+Message-ID: <f24b5538fb28595ab1d9353a6a8e429d@codeaurora.org>
+X-Sender: sbhanu@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-HI Stephan,
-
-On Mon, 7 Jun 2021 at 14:49, Stephan Gerhold <stephan@gerhold.net> wrote:
->
-> Hi,
->
-> On Mon, Jun 07, 2021 at 02:16:10PM +0200, Loic Poulain wrote:
-> > On Mon, 7 Jun 2021 at 13:44, Stephan Gerhold <stephan@gerhold.net> wrot=
-e:
-> > >
-> > > On Mon, Jun 07, 2021 at 01:23:18PM +0200, Toke H=C3=B8iland-J=C3=B8rg=
-ensen wrote:
-> > > > Stephan Gerhold <stephan@gerhold.net> writes:
-> > > > > On Mon, Jun 07, 2021 at 11:27:07AM +0200, Loic Poulain wrote:
-> > > > >> On Sat, 5 Jun 2021 at 11:25, Stephan Gerhold <stephan@gerhold.ne=
-t> wrote:
-> > > > >> > On Fri, Jun 04, 2021 at 11:11:45PM +0200, Loic Poulain wrote:
-> > > > >> > > On Wed, 2 Jun 2021 at 20:20, Stephan Gerhold <stephan@gerhol=
-d.net> wrote:
-> > > > >> > > > I've been thinking about creating some sort of "RPMSG" dri=
-ver for the
-> > > > >> > > > new WWAN subsystem; this would be used as a QMI/AT channel=
- to the
-> > > > >> > > > integrated modem on some older Qualcomm SoCs such as MSM89=
-16 and MSM8974.
-> > > > >> > > >
-> > > > >> > > > It's easy to confuse all the different approaches that Qua=
-lcomm has to
-> > > > >> > > > talk to their modems, so I will first try to briefly give =
-an overview
-> > > > >> > > > about those that I'm familiar with:
-> > > > >> > > >
-> > > > >> > > > ---
-> > > > >> > > > There is USB and MHI that are mainly used to talk to "exte=
-rnal" modems.
-> > > > >> > > >
-> > > > >> > > > For the integrated modems in many Qualcomm SoCs there is t=
-ypically
-> > > > >> > > > a separate control and data path. They are not really rela=
-ted to each
-> > > > >> > > > other (e.g. currently no common parent device in sysfs).
-> > > > >> > > >
-> > > > >> > > > For the data path (network interface) there is "IPA" (driv=
-ers/net/ipa)
-> > > > >> > > > on newer SoCs or "BAM-DMUX" on some older SoCs (e.g. MSM89=
-16/MSM8974).
-> > > > >> > > > I have a driver for BAM-DMUX that I hope to finish up and =
-submit soon.
-> > > > >> > > >
-> > > > >> > > > The connection is set up via QMI. The messages are either =
-sent via
-> > > > >> > > > a shared RPMSG channel (net/qrtr sockets in Linux) or via =
-standalone
-> > > > >> > > > SMD/RPMSG channels (e.g. "DATA5_CNTL" for QMI and "DATA1" =
-for AT).
-> > > > >> > > >
-> > > > >> > > > This gives a lot of possible combinations like BAM-DMUX+RP=
-MSG
-> > > > >> > > > (MSM8916, MSM8974), or IPA+QRTR (SDM845) but also other fu=
-nny
-> > > > >> > > > combinations like IPA+RPMSG (MSM8994) or BAM-DMUX+QRTR (MS=
-M8937).
-> > > > >> > > >
-> > > > >> > > > Simply put, supporting all these in userspace like ModemMa=
-nager
-> > > > >> > > > is a mess (Aleksander can probably confirm).
-> > > > >> > > > It would be nice if this could be simplified through the W=
-WAN subsystem.
-> > > > >> > > >
-> > > > >> > > > It's not clear to me if or how well QRTR sockets can be ma=
-pped to a char
-> > > > >> > > > device for the WWAN subsystem, so for now I'm trying to fo=
-cus on the
-> > > > >> > > > standalone RPMSG approach (for MSM8916, MSM8974, ...).
-> > > > >> > > > ---
-> > > > >> > > >
-> > > > >> > > > Currently ModemManager uses the RPMSG channels via the rpm=
-sg-chardev
-> > > > >> > > > (drivers/rpmsg/rpmsg_char.c). It wasn't my idea to use it =
-like this,
-> > > > >> > > > I just took that over from someone else. Realistically spe=
-aking, the
-> > > > >> > > > current approach isn't too different from the UCI "backdoo=
-r interface"
-> > > > >> > > > approach that was rejected for MHI...
-> > > > >> > > >
-> > > > >> > > > I kind of expected that I can just trivially copy some cod=
-e from
-> > > > >> > > > rpmsg_char.c into a WWAN driver since they both end up as =
-a simple char
-> > > > >> > > > device. But it looks like the abstractions in wwan_core ar=
-e kind of
-> > > > >> > > > getting in the way here... As far as I can tell, they don'=
-t really fit
-> > > > >> > > > together with the RPMSG interface.
-> > > > >> > > >
-> > > > >> > > > For example there is rpmsg_send(...) (blocking) and rpmsg_=
-trysend(...)
-> > > > >> > > > (non-blocking) and even a rpmsg_poll(...) [1] but I don't =
-see a way to
-> > > > >> > > > get notified when the TX queue is full or no longer full s=
-o I can call
-> > > > >> > > > wwan_port_txon/off().
-> > > > >> > > >
-> > > > >> > > > Any suggestions or other thoughts?
-> > > > >> > >
-> > > > >> > > It would be indeed nice to get this in the WWAN framework.
-> > > > >> > > I don't know much about rpmsg but I think it is straightforw=
-ard for
-> > > > >> > > the RX path, the ept_cb can simply forward the buffers to
-> > > > >> > > wwan_port_rx.
-> > > > >> >
-> > > > >> > Right, that part should be straightforward.
-> > > > >> >
-> > > > >> > > For tx, simply call rpmsg_trysend() in the wwan tx
-> > > > >> > > callback and don't use the txon/off helpers. In short, keep =
-it simple
-> > > > >> > > and check if you observe any issues.
-> > > > >> > >
-> > > > >> >
-> > > > >> > I'm not sure that's a good idea. This sounds like exactly the =
-kind of
-> > > > >> > thing that might explode later just because I don't manage to =
-get the
-> > > > >> > TX queue full in my tests. In that case, writing to the WWAN c=
-har dev
-> > > > >> > would not block, even if O_NONBLOCK is not set.
-> > > > >>
-> > > > >> Right, if you think it could be a problem, you can always implem=
-ent a
-> > > > >> more complex solution like calling rpmsg_send from a
-> > > > >> workqueue/kthread, and only re-enable tx once rpmsg_send returns=
-.
-> > > > >>
-> > > > >
-> > > > > I did run into trouble when I tried to stream lots of data into t=
-he WWAN
-> > > > > char device (e.g. using dd). However, in practice (with ModemMana=
-ger)
-> > > > > I did not manage to cause such issues yet. Personally, I think it=
-'s
-> > > > > something we should get right, just to avoid trouble later
-> > > > > (like "modem suddenly stops working").
-> > > > >
-> > > > > Right now I extended the WWAN port ops a bit so I tells me if the=
- write
-> > > > > should be non-blocking or blocking and so I can call rpmsg_poll(.=
-..).
-> >
-> > OK, but note that poll seems to be an optional rpmsg ops, rpmsg_poll
-> > can be a no-op and so would not guarantee that EPOLL_OUT will ever be
-> > set.
-> >
->
-> Wouldn't that be more a limitation of the driver that provides the rpmsg
-> ops then? If rpmsg_send(...) may block, it should also be possible to
-> implement rpmsg_poll(...). Right now my implementation basically behaves
-> mostly like the existing rpmsg-char. That's what has been used on
-> several devices for more than a year and it works quite well.
->
-> Granted, so far testing was mostly done with the "qcom_smd" RPMSG driver
-> (which is likely going to be the primary use case for my driver for now).
-> This one also happens to be the only one that implements rpmsg_poll()
-> at the moment...
->
-> I asked some other people to test it for AT messages with "glink" on
-> newer Qualcomm SoCs and that doesn't work that well yet. However, as far
-> as I can tell most of the trouble seems to be caused by various strange
-> bugs in the "glink" driver.
-> (See drivers/rpmsg for the drivers I'm referring to...)
->
-> ---
->
-> One of the main potential problems I see with some kind of workqueue
-> approach is that all writes would seemingly succeed for the client.
-> When the extra thread is done with rpmsg_send(...) we will have already
-> returned from the char dev write(...) syscall, without a way to report
-> the error. Perhaps that's unlikely though and we don't need to worry
-> about that too much?
->
-> I'm not really sure which one of the solution is best at the end.
-> I think it doesn't make too much of a difference at the end, both can
-> work well and both have some advantages/disadvantages in certain fairly
-> unlikely situations.
-
-Yes, feel free to submit the series for review.
-
-Regards,
-Loic
+On 2021-06-14 22:00, Bjorn Andersson wrote:
+> On Mon 14 Jun 06:55 CDT 2021, sbhanu@codeaurora.org wrote:
+> 
+>> On 2021-06-11 10:00, Bjorn Andersson wrote:
+>> > On Thu 10 Jun 02:11 CDT 2021, Shaik Sajida Bhanu wrote:
+>> >
+>> > > Added xo clock for eMMC and Sd card.
+>> >
+>> > Was about to push out my branch of patches, but before I do. Can you
+>> > please describe WHY this is needed?
+>> >
+>> > Regards,
+>> > Bjorn
+>> 
+>> We are making use of this clock in dll register value calculation,
+>> The default PoR value is also same as calculated value for
+>> HS200/HS400/SDR104 modes.
+>> But just not to rely on default register values we need this entry.
+>> 
+> 
+> That is the perfect thing to include in a commit message!
+> 
+> I rewrote yours and applied the change, but please next time do 
+> describe
+> the "why" of your change.
+> 
+> Regards,
+> Bjorn
+Sure
+> 
+>> >
+>> > >
+>> > > Signed-off-by: Shaik Sajida Bhanu <sbhanu@codeaurora.org>
+>> > > ---
+>> > >  arch/arm64/boot/dts/qcom/sc7180.dtsi | 10 ++++++----
+>> > >  1 file changed, 6 insertions(+), 4 deletions(-)
+>> > >
+>> > > diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+>> > > b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+>> > > index 295844e..5bb6bd4 100644
+>> > > --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+>> > > +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+>> > > @@ -701,8 +701,9 @@
+>> > >  			interrupt-names = "hc_irq", "pwr_irq";
+>> > >
+>> > >  			clocks = <&gcc GCC_SDCC1_APPS_CLK>,
+>> > > -					<&gcc GCC_SDCC1_AHB_CLK>;
+>> > > -			clock-names = "core", "iface";
+>> > > +					<&gcc GCC_SDCC1_AHB_CLK>,
+>> > > +					<&rpmhcc RPMH_CXO_CLK>;
+>> > > +			clock-names = "core", "iface","xo";
+>> > >  			interconnects = <&aggre1_noc MASTER_EMMC 0 &mc_virt SLAVE_EBI1 0>,
+>> > >  					<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_EMMC_CFG 0>;
+>> > >  			interconnect-names = "sdhc-ddr","cpu-sdhc";
+>> > > @@ -2666,8 +2667,9 @@
+>> > >  			interrupt-names = "hc_irq", "pwr_irq";
+>> > >
+>> > >  			clocks = <&gcc GCC_SDCC2_APPS_CLK>,
+>> > > -					<&gcc GCC_SDCC2_AHB_CLK>;
+>> > > -			clock-names = "core", "iface";
+>> > > +					<&gcc GCC_SDCC2_AHB_CLK>,
+>> > > +					<&rpmhcc RPMH_CXO_CLK>;
+>> > > +			clock-names = "core", "iface", "xo";
+>> > >
+>> > >  			interconnects = <&aggre1_noc MASTER_SDCC_2 0 &mc_virt SLAVE_EBI1
+>> > > 0>,
+>> > >  					<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_SDCC_2 0>;
+>> > > --
+>> > > QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a
+>> > > member
+>> > > of Code Aurora Forum, hosted by The Linux Foundation
+>> > >
