@@ -2,154 +2,165 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 799583A8D4D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jun 2021 02:18:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A84C43A8D5F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jun 2021 02:23:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231186AbhFPAUe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Jun 2021 20:20:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59662 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231165AbhFPAUd (ORCPT
+        id S231628AbhFPAZd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Jun 2021 20:25:33 -0400
+Received: from relay01.th.seeweb.it ([5.144.164.162]:56177 "EHLO
+        relay01.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230244AbhFPAZd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Jun 2021 20:20:33 -0400
-Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF6B9C06175F
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jun 2021 17:18:27 -0700 (PDT)
-Received: by mail-oi1-x22f.google.com with SMTP id a26so521225oie.11
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jun 2021 17:18:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=63XBS3tQ7Co8IrZoouPuxpj9SbqIb0rD307q2lD5BGg=;
-        b=gVPQH6wQp1cuwJ/lRGAtVaQ+BAeUMRmFyYReDDWEfgxSC0srG325MbdXV04ySQBk38
-         gRdoDGeGv10GUUz3aMmmzbXqiqAvu57R8tE0nTMfuGYIhxf4PE55M9Nl2rEG+KqWa6Nv
-         hpQmKxQ4JRhGIZGCXAkxN1JQ40RqYK8O+Y0DLyd+sG/DBH6UqMUxQxvyGaDHLdh+AnvS
-         uBmM4MFxTXqUnAXOq8CNLlvXvjXHj6QMU1/SuYAhc+1CFPrc/C1kyfQLX6XRykiD2C7k
-         qSz8v1/BBCVWDixkT423SABosi0cYlF+m16SQdXWAVTZBFUq5pk5ga2Zazde5SwSnYmQ
-         jN8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=63XBS3tQ7Co8IrZoouPuxpj9SbqIb0rD307q2lD5BGg=;
-        b=uXAdw+xWMerda4YTgih31FBeXIQ+klCV/SzfojMoihBK6xiKpv1+Ua18TuDOgX86Ds
-         1P3Zn7K6UbXxiibLYF5TrvnU5ny6qwYcKDrtxMVaV2b5WLaPapJBHQnDun70yonWnv4s
-         Wd4XE7frSQdiwyDP4GLdBGS9YBnukQGY9DJFpM1iNefEbMphd01l+usC1yidEN3FIOoJ
-         YLHMw++QMbYs6hGTHyLBo/BXGGs+MWAJCtPO+5/cHSxIzRd54DKDVz7L0SYgXpa/SyNY
-         BSSY+pNHBUVCR/kd+shrsE6OxlhZy56Lw+a2RXv1qUTQC1I+Jkhb2JLXZ3GS2oJMV9dG
-         NrDg==
-X-Gm-Message-State: AOAM532t3FmJboywokMguXdrK7kUSfvFQk09aF7P93EXKknZTX4dAobQ
-        I210KO/Jq2Kk0tyKEzszs8MkzQ==
-X-Google-Smtp-Source: ABdhPJxWsCBp9R9M15ML/sKHyAcMtDeD0qkcLzckEWxSibHmiMatarC6OjHS0ENeOJV7IRUxL1x5Fg==
-X-Received: by 2002:a05:6808:999:: with SMTP id a25mr1141281oic.123.1623802706929;
-        Tue, 15 Jun 2021 17:18:26 -0700 (PDT)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id t14sm112195ooh.39.2021.06.15.17.18.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Jun 2021 17:18:26 -0700 (PDT)
-Date:   Tue, 15 Jun 2021 19:18:24 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Tue, 15 Jun 2021 20:25:33 -0400
+Received: from localhost.localdomain (83.6.168.161.neoplus.adsl.tpnet.pl [83.6.168.161])
+        by m-r1.th.seeweb.it (Postfix) with ESMTPA id 105AA1F91B;
+        Wed, 16 Jun 2021 02:23:26 +0200 (CEST)
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+To:     ~postmarketos/upstreaming@lists.sr.ht
+Cc:     martin.botka@somainline.org,
+        angelogioacchino.delregno@somainline.org,
+        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        John Stultz <john.stultz@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] arm64: dts: qcom: sm8350-mtp: Use mdt files for
- firmware
-Message-ID: <YMlDUNVdSHK50UMO@builder.lan>
-References: <20210615081124.3209637-1-vkoul@kernel.org>
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH v3 1/4] arm64: dts: qcom: sm8250: Disable Adreno and Venus by default
+Date:   Wed, 16 Jun 2021 02:23:18 +0200
+Message-Id: <20210616002321.74155-1-konrad.dybcio@somainline.org>
+X-Mailer: git-send-email 2.32.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210615081124.3209637-1-vkoul@kernel.org>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 15 Jun 03:11 CDT 2021, Vinod Koul wrote:
+Components that rely on proprietary (not to mention signed!) firmware should
+not be enabled by default, as lack of the aforementioned firmware could cause
+various issues, from random errors to straight-up failing to boot.
 
-> As discussed in [1], we should keep one of the file formats for firmware
-> and not change.
-> 
-> So to simplify we chose to use mdt for firmware file. This would enable
-> folks to work with upstream linux-firmware as well as downstream
-> firmwares.
-> 
-> So switch it for SM8350 which is a new platform, so switch can be done
-> safely.
-> 
-> [1]: http://lore.kernel.org/r/CALAqxLXn6wFBAxRkThxWg5RvTuFEX80kHPt8BVja1CpAB-qzGA@mail.gmail.com
-> 
+Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+---
+ arch/arm64/boot/dts/qcom/qrb5165-rb5.dts | 10 ++++++++++
+ arch/arm64/boot/dts/qcom/sm8250-hdk.dts  | 12 ++++++++++++
+ arch/arm64/boot/dts/qcom/sm8250-mtp.dts  | 10 ++++++++++
+ arch/arm64/boot/dts/qcom/sm8250.dtsi     |  6 ++++++
+ 4 files changed, 38 insertions(+)
 
-As mentioned elsewhere, we used to run exclusively with mdt + bNN files
-- as that's what we typically get with Android - and I kept receiving
-reports about people missing individual bNN files, or managing to
-upgrade some but not all of the files etc. Some of these errors tells
-you which file you're missing, others just tells you that the hashes
-didn't match whatever was loaded.
+diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
+index 5f41de20aa22..a5b742325261 100644
+--- a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
++++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
+@@ -552,7 +552,13 @@ &dsi0_phy {
+ 	vdds-supply = <&vreg_l5a_0p88>;
+ };
+ 
++&gmu {
++	status = "okay";
++};
++
+ &gpu {
++	status = "okay";
++
+ 	zap-shader {
+ 		memory-region = <&gpu_mem>;
+ 		firmware-name = "qcom/sm8250/a650_zap.mbn";
+@@ -1352,6 +1358,10 @@ &vamacro {
+ 	qcom,dmic-sample-rate = <600000>;
+ };
+ 
++&venus {
++	status = "okay";
++};
++
+ /* PINCTRL - additions to nodes defined in sm8250.dtsi */
+ &qup_spi0_cs_gpio {
+ 	drive-strength = <6>;
+diff --git a/arch/arm64/boot/dts/qcom/sm8250-hdk.dts b/arch/arm64/boot/dts/qcom/sm8250-hdk.dts
+index c3a2c5aa6fe9..397359ee2f85 100644
+--- a/arch/arm64/boot/dts/qcom/sm8250-hdk.dts
++++ b/arch/arm64/boot/dts/qcom/sm8250-hdk.dts
+@@ -365,6 +365,14 @@ vreg_l7f_1p8: ldo7 {
+ 	};
+ };
+ 
++&gmu {
++	status = "okay";
++};
++
++&gpu {
++	status = "okay";
++};
++
+ &qupv3_id_1 {
+ 	status = "okay";
+ };
+@@ -452,3 +460,7 @@ &usb_1_dwc3 {
+ &usb_2_dwc3 {
+ 	dr_mode = "host";
+ };
++
++&venus {
++	status = "okay";
++};
+diff --git a/arch/arm64/boot/dts/qcom/sm8250-mtp.dts b/arch/arm64/boot/dts/qcom/sm8250-mtp.dts
+index cfc4d1febe0f..062b944be91d 100644
+--- a/arch/arm64/boot/dts/qcom/sm8250-mtp.dts
++++ b/arch/arm64/boot/dts/qcom/sm8250-mtp.dts
+@@ -465,7 +465,13 @@ &cdsp {
+ 	firmware-name = "qcom/sm8250/cdsp.mbn";
+ };
+ 
++&gmu {
++	status = "okay";
++};
++
+ &gpu {
++	status = "okay";
++
+ 	zap-shader {
+ 		memory-region = <&gpu_mem>;
+ 		firmware-name = "qcom/sm8250/a650_zap.mbn";
+@@ -691,3 +697,7 @@ &usb_2_qmpphy {
+ 	vdda-phy-supply = <&vreg_l9a_1p2>;
+ 	vdda-pll-supply = <&vreg_l18a_0p9>;
+ };
++
++&venus {
++	status = "okay";
++};
+diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+index 4c0de12aaba6..fc1049c2bb11 100644
+--- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+@@ -1746,6 +1746,8 @@ gpu: gpu@3d00000 {
+ 
+ 			qcom,gmu = <&gmu>;
+ 
++			status = "disabled";
++
+ 			zap-shader {
+ 				memory-region = <&gpu_mem>;
+ 			};
+@@ -1819,6 +1821,8 @@ gmu: gmu@3d6a000 {
+ 
+ 			operating-points-v2 = <&gmu_opp_table>;
+ 
++			status = "disabled";
++
+ 			gmu_opp_table: opp-table {
+ 				compatible = "operating-points-v2";
+ 
+@@ -2323,6 +2327,8 @@ venus: video-codec@aa00000 {
+ 				 <&videocc VIDEO_CC_MVS0C_CLK_ARES>;
+ 			reset-names = "bus", "core";
+ 
++			status = "disabled";
++
+ 			video-decoder {
+ 				compatible = "venus-decoder";
+ 			};
+-- 
+2.32.0
 
-As such, the move to .mbn files has saved us quite a bit of head ache.
-
-
-That said, the code doesn't care about the suffix per say, it starts
-loading the firmware and detects if it's a combined file or not. So you
-can simply copy or symlink the .mdt to match the given .mbn path.
-
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> ---
-> 
-> Changes in v2:
->  - Add more details about the switch in changelog
-> 
->  arch/arm64/boot/dts/qcom/sm8350-mtp.dts | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8350-mtp.dts b/arch/arm64/boot/dts/qcom/sm8350-mtp.dts
-> index 93740444dd1e..d859305f1f75 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8350-mtp.dts
-> +++ b/arch/arm64/boot/dts/qcom/sm8350-mtp.dts
-> @@ -40,7 +40,7 @@ vph_pwr: vph-pwr-regulator {
->  
->  &adsp {
->  	status = "okay";
-> -	firmware-name = "qcom/sm8350/adsp.mbn";
-> +	irmware-name = "qcom/sm8350/adsp.mdt";
-
-And you're already doing something "non-standard" if your MTP has
-adsp.mdt in this path :)
-
-Regards,
-Bjorn
-
->  };
->  
->  &apps_rsc {
-> @@ -278,12 +278,12 @@ vreg_l13c_3p0: ldo13 {
->  
->  &cdsp {
->  	status = "okay";
-> -	firmware-name = "qcom/sm8350/cdsp.mbn";
-> +	firmware-name = "qcom/sm8350/cdsp.mdt";
->  };
->  
->  &mpss {
->  	status = "okay";
-> -	firmware-name = "qcom/sm8350/modem.mbn";
-> +	firmware-name = "qcom/sm8350/modem.mdt";
->  };
->  
->  &qupv3_id_1 {
-> @@ -292,7 +292,7 @@ &qupv3_id_1 {
->  
->  &slpi {
->  	status = "okay";
-> -	firmware-name = "qcom/sm8350/slpi.mbn";
-> +	firmware-name = "qcom/sm8350/slpi.mdt";
->  };
->  
->  &tlmm {
-> -- 
-> 2.31.1
-> 
