@@ -2,53 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 645A13A8D78
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jun 2021 02:29:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 023F83A8D7D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jun 2021 02:31:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231685AbhFPAb7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Jun 2021 20:31:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34000 "EHLO
+        id S230507AbhFPAdv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Jun 2021 20:33:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34420 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231681AbhFPAb6 (ORCPT
+        with ESMTP id S230244AbhFPAdv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Jun 2021 20:31:58 -0400
-Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64171C061760
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jun 2021 17:29:52 -0700 (PDT)
-Received: by mail-oi1-x235.google.com with SMTP id r16so593557oiw.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jun 2021 17:29:52 -0700 (PDT)
+        Tue, 15 Jun 2021 20:33:51 -0400
+Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com [IPv6:2607:f8b0:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3CE69C06175F
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jun 2021 17:31:46 -0700 (PDT)
+Received: by mail-ot1-x32b.google.com with SMTP id 6-20020a9d07860000b02903e83bf8f8fcso729373oto.12
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jun 2021 17:31:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=EA4PTF58a5WW5Zwb9g/rsTBq/ZeU4jikbc1MhO+pikk=;
-        b=D7S9HfghGhsbR0shzfNj0tKkCrOII9s4Ej4+eujaW44E2L7yB4e5+Mb/WxQWflYIel
-         ov3QJDZobt8rnUCtCp1IbFhUHZB8FMzzSCx6LI879XgOF2WnST9/Bbxy9bO85Hw+mtbg
-         KXCBq3dB/+H/U7IjAXE8kanDpzntqUS2baLp6JFb9BM9SeISfcgNfRsUbyjSbkU0EOZC
-         tMH2bXiMHJuxdz6zNN/5yutYDkp81vga2mFDB9He8kmbZ+v2gE0QuM/gtGJPnX9unK3V
-         JDPaQ0H2YRgt6pZX5GQpDQNK4X4VyaPwiHbR5zZRw2auaIXCLmCuRi2gfRegn8YhxVC8
-         DsqA==
+        bh=QMHdARVwl+IDYkd7VNNhU2Et6yVJrDozO1ga8CSIno0=;
+        b=pAiOg3t3XnlFAlKo9Aadp0BZ3zGRyxRQidsjlA9eWffnB2wjytihEVgwSRuMO+Nrcu
+         wL4wCCEhjucGYpremAnRAyXYHytDYPJnKupmClJNqMMx9/QzwRLg5k4zMRMuQXRMn4kI
+         DfKYUD7DJpChp5FT574jVYwVFNpxcTAz2W0/QHY2CCGxzjhsZTBq1Fa+VBmi9GKzgO1i
+         0hxexfx5F0R3+C4dhRpntJ7ksZegDmhG0gU/yfLSv4/3WstS6BUgmmpT5LYsKOZ4mriY
+         yS3svuvYRZ8RghoEn6DchW2IixI4VEfeMLZQnyRSU1RxWy+0Oifu549cYhUCGpp8y1+B
+         4Zxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=EA4PTF58a5WW5Zwb9g/rsTBq/ZeU4jikbc1MhO+pikk=;
-        b=tMWKqWEaGUG8MkyZsGazgIAb8txPaxJZJpVCij2yieK/Nr/kCbebjrfiJ14FrSpKJa
-         8UyF7SnNhVSyeoZSbENDzOZ4o/oyw8EzyR0V0Laz3MWJSFmBjvWAMG59HTXMuvvkDmhE
-         8GnJVRiKNRef8xjm18fsKfMruH46iqmp2P1zkPIdNk4BKhYc3mrF96b7o9iY66l9Hc9s
-         GEFiKiX79pf3P2acfuGpPwRTizGJYL3G6N40Vdyu6eq+pjTu9fT0+vsvIZW0CAkFb8Uf
-         zs+P3pcI3M+QtON9kZhj5Y3Kc85JSnfeDlDzXr1DIDCHfgPvAeR/+WT6CHaF8TgF1YP5
-         M3eA==
-X-Gm-Message-State: AOAM530jZ6E8LOw4EsIpFN9crj8xKPniJAA+H7av8U1c2V5JT2qXYAhq
-        pSqYq/n42lifPMeHBHzmf9BafA==
-X-Google-Smtp-Source: ABdhPJwNlXvrgI+F5cUFbufFHElN+s9m/lJj4u8oOeqDQXGgDjWxspHqX9jcfMnOKHxJgnngjov/SA==
-X-Received: by 2002:aca:c441:: with SMTP id u62mr4988696oif.31.1623803391689;
-        Tue, 15 Jun 2021 17:29:51 -0700 (PDT)
+        bh=QMHdARVwl+IDYkd7VNNhU2Et6yVJrDozO1ga8CSIno0=;
+        b=M1fpc/DYk20IaxnxkUFo5hlOEqtHvDJXSGXbwD1WfhrQG6vqxBUIFanZXaUYPR7IMQ
+         pDSRMErsWkiR3HMZMUDnqztlOubcH6zmoBfPdznqp6mKZMk5YKzUp/OBYqMulmsUsHwq
+         +v01HS6ItXHi2XVlDKi49chwvqP2IrX8kE+F9EeMzFqbE5j0eV3/acEwg5HSLuHHD6v1
+         K4aHSY6Y+UAmhIKQzKM78qKxNe1TqC4bsuni8MwOvvnnwZ//LgdP8M1WEcwsygFABi58
+         Fu8XP3k9woXcsXjqVOUfim8EBDfucKP2vkqkFVKqwPR13pXiPczbAqJzu5sEFVUT3KLc
+         w+AQ==
+X-Gm-Message-State: AOAM531a+J4abmHzQ602wEajjDrcL24f2cqy4Nynt2fh4dDq7PGMGWmK
+        Jtmd4ff8BvnYs6EKhfEz+pEGMQ==
+X-Google-Smtp-Source: ABdhPJxlCQHDVTx0W9WaTyg2sjAibZypse/HApK6/qMcAFAwx6bGTYr2uXc/g4mS01nhrMHiAQTv7g==
+X-Received: by 2002:a05:6830:cd:: with SMTP id x13mr1563342oto.166.1623803505478;
+        Tue, 15 Jun 2021 17:31:45 -0700 (PDT)
 Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id 26sm124078ooy.46.2021.06.15.17.29.50
+        by smtp.gmail.com with ESMTPSA id i5sm123925oov.21.2021.06.15.17.31.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Jun 2021 17:29:51 -0700 (PDT)
-Date:   Tue, 15 Jun 2021 19:29:49 -0500
+        Tue, 15 Jun 2021 17:31:45 -0700 (PDT)
+Date:   Tue, 15 Jun 2021 19:31:43 -0500
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Martin Botka <martin.botka@somainline.org>
 Cc:     ~postmarketos/upstreaming@lists.sr.ht,
@@ -58,174 +58,177 @@ Cc:     ~postmarketos/upstreaming@lists.sr.ht,
         Andy Gross <agross@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 1/2] arch: arm64: dts: qcom: Add support for SM6125
-Message-ID: <YMlF/aPn+253UIHn@builder.lan>
+        linux-kernel@vger.kernel.org, Kees Cook <keescook@chromium.org>,
+        Anton Vorontsov <anton@enomsg.org>,
+        Colin Cross <ccross@android.com>,
+        Tony Luck <tony.luck@intel.com>
+Subject: Re: [PATCH V3 2/2] arch: arm64: dts: qcom: Add support for Sony
+ Xperia 10II
+Message-ID: <YMlGb4W1c3VyKeCj@builder.lan>
 References: <20210613080522.25230-1-martin.botka@somainline.org>
+ <20210613080522.25230-2-martin.botka@somainline.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20210613080522.25230-1-martin.botka@somainline.org>
+In-Reply-To: <20210613080522.25230-2-martin.botka@somainline.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Sun 13 Jun 03:05 CDT 2021, Martin Botka wrote:
 
-> This commits adds the Device tree file for SM6125 SoC.
+> This commits add support for Sony Xperia 10II based on the SM6125 SoC.
+> 
+> Currently working features:
+> - dmesg output to bootloader preconfigured display
+> - USB
+> - eMMC
+> - Volume down button
 > 
 > Signed-off-by: Martin Botka <martin.botka@somainline.org>
-
-Thanks for your work on this Martin, just spotted a few minor finishing
-touches below.
-
 > ---
-> Changes in V2:
-> Update compatibles for mailbox & pinctrl
-> Changes in V3:
-> Fix reg for sdhci1
-> Replace hc_mem with hc and core_mem with core
->  arch/arm64/boot/dts/qcom/sm6125.dtsi | 603 +++++++++++++++++++++++++++
->  1 file changed, 603 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/sm6125.dtsi
+> Changes in v2, v3:
+> None
+>  arch/arm64/boot/dts/qcom/Makefile             |   1 +
+>  .../qcom/sm6125-sony-xperia-seine-pdx201.dts  | 105 ++++++++++++++++++
+>  2 files changed, 106 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/sm6125-sony-xperia-seine-pdx201.dts
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sm6125.dtsi b/arch/arm64/boot/dts/qcom/sm6125.dtsi
-[..]
-> +	soc {
+> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> index 456502aeee49..5a70dd9593c2 100644
+> --- a/arch/arm64/boot/dts/qcom/Makefile
+> +++ b/arch/arm64/boot/dts/qcom/Makefile
+> @@ -69,6 +69,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-oneplus-enchilada.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-oneplus-fajita.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-xiaomi-beryllium.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sdm850-lenovo-yoga-c630.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)	+= sm6125-sony-xperia-seine-pdx201.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sm8150-hdk.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sm8150-mtp.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sm8250-hdk.dtb
+> diff --git a/arch/arm64/boot/dts/qcom/sm6125-sony-xperia-seine-pdx201.dts b/arch/arm64/boot/dts/qcom/sm6125-sony-xperia-seine-pdx201.dts
+> new file mode 100644
+> index 000000000000..b1d6de430273
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/sm6125-sony-xperia-seine-pdx201.dts
+> @@ -0,0 +1,105 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * Copyright (c) 2021, Martin Botka <martin.botka@somainline.org>
+> + */
+> +
+> +/dts-v1/;
+> +
+> +#include "sm6125.dtsi"
+> +#include <dt-bindings/gpio/gpio.h>
+> +#include <dt-bindings/input/input.h>
+> +#include <dt-bindings/input/gpio-keys.h>
+> +
+> +/ {
+> +	/* required for bootloader to select correct board */
+> +	qcom,msm-id = <394 0x10000>; /* sm6125 v1 */
+> +	qcom,board-id = <34 0>;
+> +
+> +	model = "Sony Xperia 10 II";
+> +	compatible = "sony,pdx201", "qcom,sm6125";
+> +
+> +	chosen {
+> +		#address-cells = <2>;
+> +		#size-cells = <2>;
+> +		ranges;
+> +
+> +		framebuffer0: framebuffer@5c000000 {
+> +			compatible = "simple-framebuffer";
+> +			reg = <0 0x5c000000 0 (2520 * 1080 * 4)>;
+> +			width = <1080>;
+> +			height = <2520>;
+> +			stride = <(1080 * 4)>;
+> +			format = "a8r8g8b8";
+> +		};
+> +	};
+> +
+> +	extcon_usb: extcon-usb {
+> +		compatible = "linux,extcon-usb-gpio";
+> +		id-gpio = <&tlmm 102 GPIO_ACTIVE_HIGH>;
+> +	};
+> +
+> +	gpio_keys {
+
+No '_' in node names, please go '-'.
+
+> +		status = "okay";
+> +		compatible = "gpio-keys";
+> +		input-name = "gpio-keys";
 > +		#address-cells = <1>;
-> +		#size-cells = <1>;
-> +		ranges = <0x00 0x00 0x00 0xffffffff>;
-> +		compatible = "simple-bus";
+> +		#size-cells = <0>;
+> +		autorepeat;
 > +
-> +		tcsr_mutex_regs: syscon@340000 {
+> +		vol_dn {
 
-It's no longer valid to have a stray syscon like this, so please update
-this in accordance with the tcsr mutex binding.
+Ditto.
 
-If this platform needs to poke at the registers at the end of the memory
-region, you can do compatible = "qcom,tcsr-mutex", "syscon"; to make it
-represent both things.
-
-> +			compatible = "syscon";
-> +			reg = <0x00340000 0x20000>;
+> +			label = "Volume Down";
+> +			gpios = <&tlmm 47 GPIO_ACTIVE_LOW>;
+> +			linux,input-type = <1>;
+> +			linux,code = <KEY_VOLUMEDOWN>;
+> +			gpio-key,wakeup;
+> +			debounce-interval = <15>;
 > +		};
-> +
-> +		tlmm: pinctrl@500000 {
-> +			compatible = "qcom,sm6125-tlmm";
-> +			reg = <0x00500000 0x400000>,
-> +				<0x00900000 0x400000>,
-> +				<0x00d00000 0x400000>;
-> +			reg-names = "west", "south", "east";
-> +			interrupts = <GIC_SPI 227 IRQ_TYPE_LEVEL_HIGH>;
-> +			gpio-controller;
-> +			gpio-ranges = <&tlmm 0 0 134>;
-> +			#gpio-cells = <2>;
-> +			interrupt-controller;
-> +			#interrupt-cells = <2>;
-> +
-> +			sdc2_state_on: sdc2-on {
+> +	};
+> +	
 
-As I just forced Konrad to move the on-state definition to the board
-file, can you please do the same?
-
-> +				clk {
-> +					pins = "sdc2_clk";
-> +					bias-disable;
-> +					drive-strength = <16>;
-> +				};
-> +
-> +				cmd {
-> +					pins = "sdc2_cmd";
-> +					bias-pull-up;
-> +					drive-strength = <10>;
-> +				};
-> +
-> +				data {
-> +					pins = "sdc2_data";
-> +					bias-pull-up;
-> +					drive-strength = <10>;
-> +				};
-> +
-> +				sd-cd {
-> +					pins = "gpio98";
-> +					bias-pull-up;
-> +					drive-strength = <2>;
-> +				};
-> +			};
-> +
-> +			sdc2_state_off: sdc2-off {
-
-This should be common between all boards (except possibly the cd line),
-so this is okay to share here.
-
-> +				clk {
-> +					pins = "sdc2_clk";
-> +					bias-disable;
-> +					drive-strength = <2>;
-> +				};
-> +
-> +				cmd {
-> +					pins = "sdc2_cmd";
-> +					bias-pull-up;
-> +					drive-strength = <2>;
-> +				};
-> +
-> +				data {
-> +					pins = "sdc2_data";
-> +					bias-pull-up;
-> +					drive-strength = <2>;
-> +				};
-> +
-> +				sd-cd {
-> +					pins = "gpio98";
-> +					bias-disable;
-> +					drive-strength = <2>;
-> +				};
-> +			};
-> +		};
-> +
-[..]
-> +
-> +		usb3: usb@4ef8800 {
-> +			compatible = "qcom,msm8996-dwc3", "qcom,dwc3";
-> +			reg = <0x04ef8800 0x400>;
-> +			#address-cells = <1>;
-> +			#size-cells = <1>;
-> +			ranges;
-> +
-> +			clocks = <&gcc GCC_USB30_PRIM_MASTER_CLK>,
-> +				<&gcc GCC_SYS_NOC_USB3_PRIM_AXI_CLK>,
-> +				<&gcc GCC_CFG_NOC_USB3_PRIM_AXI_CLK>,
-> +				<&gcc GCC_USB3_PRIM_CLKREF_CLK>,
-> +				<&gcc GCC_USB30_PRIM_SLEEP_CLK>,
-> +				<&gcc GCC_USB30_PRIM_MOCK_UTMI_CLK>;
-> +
-> +			assigned-clocks = <&gcc GCC_USB30_PRIM_MOCK_UTMI_CLK>,
-> +					  <&gcc GCC_USB30_PRIM_MASTER_CLK>;
-> +			assigned-clock-rates = <19200000>, <66666667>;
-> +
-> +			power-domains = <&gcc USB30_PRIM_GDSC>;
-> +			qcom,select-utmi-as-pipe-clk; 
-
-Stray space at the end of this line.
-
-> +			status = "disabled";
-> +
-> +			usb3_dwc3: dwc3@4e00000 {
-
-These should be usb@ now.
-
-> +				compatible = "snps,dwc3";
-> +				reg = <0x04e00000 0xcd00>;
-> +				interrupts = <GIC_SPI 255 IRQ_TYPE_LEVEL_HIGH>;
-> +				phys = <&hsusb_phy1>;
-> +				phy-names = "usb2-phy";
-> +				snps,dis_u2_susphy_quirk;
-> +				snps,dis_enblslpm_quirk;
-> +				maximum-speed = "high-speed";
-> +				dr_mode = "peripheral";
-> +			};
-> +		};
+Stray indentation on this line.
 
 Thanks,
 Bjorn
+
+> +	reserved_memory {
+> +		#address-cells = <2>;
+> +		#size-cells = <2>;
+> +		debug_mem: memory@ffb00000 {
+> +			reg = <0x0 0xffb00000 0x0 0xc0000>;
+> +			no-map;
+> +		};
+> +
+> +		last_log_mem: memory@ffbc0000 {
+> +			reg = <0x0 0xffbc0000 0x0 0x80000>;
+> +			no-map;
+> +		};
+> +
+> +		pstore_mem: ramoops@ffc00000 {
+> +			compatible = "ramoops";
+> +			reg = <0x0 0xffc40000 0x0 0xc0000>;
+> +			record-size = <0x1000>;
+> +			console-size = <0x40000>;
+> +			msg-size = <0x20000 0x20000>;
+> +		};
+> +
+> +		cmdline_mem: memory@ffd00000 {
+> +			reg = <0x0 0xffd40000 0x0 0x1000>;
+> +			no-map;
+> +		};
+> +	};
+> +};
+> +
+> +&hsusb_phy1 {
+> +	status = "okay";
+> +};
+> +
+> +&sdhc_1 {
+> +	status = "okay";
+> +};
+> +
+> +&tlmm {
+> +	gpio-reserved-ranges = <22 2>, <28 6>;
+> +};
+> +
+> +&usb3 {
+> +	status = "okay";
+> +};
+> +
+> +&usb3_dwc3 {
+> +	extcon = <&extcon_usb>;
+> +};
+> -- 
+> 2.31.1
+> 
