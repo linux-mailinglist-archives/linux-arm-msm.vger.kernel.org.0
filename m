@@ -2,123 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A90823A9D38
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jun 2021 16:12:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A430B3A9E9D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jun 2021 17:08:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233908AbhFPOOd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Jun 2021 10:14:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49406 "EHLO
+        id S234428AbhFPPKF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Jun 2021 11:10:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34108 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234045AbhFPOOY (ORCPT
+        with ESMTP id S234011AbhFPPKE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Jun 2021 10:14:24 -0400
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7D19C0619F6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Jun 2021 07:11:36 -0700 (PDT)
-Received: by mail-wm1-x334.google.com with SMTP id n35-20020a05600c3ba3b02901cdecb6bda8so4197439wms.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Jun 2021 07:11:36 -0700 (PDT)
+        Wed, 16 Jun 2021 11:10:04 -0400
+Received: from mail-oo1-xc34.google.com (mail-oo1-xc34.google.com [IPv6:2607:f8b0:4864:20::c34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD6E0C061574
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Jun 2021 08:07:57 -0700 (PDT)
+Received: by mail-oo1-xc34.google.com with SMTP id o5-20020a4a2c050000b0290245d6c7b555so748006ooo.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Jun 2021 08:07:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=HGT2HeGVD/Jr+ubaKRB0o5Xpp+A7fNhogq7R332vnmI=;
-        b=t2mViS9Vtqosgs7daQ2fKKMi/FXdC0XifEJyp0sfJTffXWO2D17cIv+7CfO2bVkq/q
-         mJZcyb6ZaAm7sMilxYKBNW6mex0t+Nluwz+aaECrWK8A3Vn53e0o98pI12FQwjUJpnJE
-         GhMSiVrcEEIF+JHy23Gqouz31tlByRGmAfFnxi55U9HtUNhEvF+JuNN7VpCOf5k0TQ8s
-         lnC0F1yqUCuLyHo5hRdERlwCYapLtL6FTS9GN3BnjAWi+jyXDbTPsc4uZrQYztKd5iZH
-         3wuCFr5COO+7s4hyUxPZtQ1K35mpOVBb6JsMZvrNYvvquqqCJDrBBrEe3f5H56SxO7RH
-         gSPg==
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=j51VtbWEsPmNthXDSqqlA/0JAvr0xhkR2POpSAUOx9c=;
+        b=ZUIi2qzqYGHwJx+79Fc4944r16x9UMQqqYLtcBz8HCOT0nsZkxfGcmRp23lvyNfAP+
+         2knAodSGIE5+PM0wcoqn9rQAvNIbG2+5Sas5+iUH6G+5iioPe8sGy4aqBr4h9MHBFQLA
+         j4DhsbCGODeTQCqVCt1gM8KYJ3xJ2R6oiax+o=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=HGT2HeGVD/Jr+ubaKRB0o5Xpp+A7fNhogq7R332vnmI=;
-        b=fHQxz8XxmLdFwe46aeZIP662jvnoLO2w4c2coW/8J//9HKrCID20jMftg3id1z7C9m
-         XjBFfM2v4uQXYT4Y3rP19NMCxJkW/AVQoUyMKMkveN0CKBb1vCTPxHZD8MIz4Rd0OcrJ
-         KyrWZVy2V8bzPwmHh9z56V2lRvZrV2qPsTAbJ5ht8P9hFbBJf/3JmQFcpXLuzvKKzs+O
-         8a7L11bAjs1JHdffnC0Ux6eiaBXskUjH8IFaPfCSVHn8BvzaGriKy3p0X038FXRjM7mV
-         cAEsOS+f4VvNsFjqsQpOqJccEEuANaLziUchgQDRrqjihwcGDCqqXHw62PyoRc21hUot
-         RZwg==
-X-Gm-Message-State: AOAM532Px+Nnewriln02zLJBxNnUkks5b0u0OiVv80CAdwD1UxI+KyNz
-        U5RbqC71e0R9qS4i+K7GJFs7AA==
-X-Google-Smtp-Source: ABdhPJyFWNyVm+TasYV8cmw/GbIneIqGSrxmWrnoQknXe8WibRp59S0EvU4S/167J/tCvrk05oKmzg==
-X-Received: by 2002:a05:600c:3397:: with SMTP id o23mr163075wmp.10.1623852695334;
-        Wed, 16 Jun 2021 07:11:35 -0700 (PDT)
-Received: from xps7590.fritz.box ([2a02:2454:3e5:b700:9df7:76e5:7e94:bf1e])
-        by smtp.gmail.com with ESMTPSA id g83sm1968375wma.10.2021.06.16.07.11.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Jun 2021 07:11:34 -0700 (PDT)
-From:   Robert Foss <robert.foss@linaro.org>
-To:     agross@kernel.org, bjorn.andersson@linaro.org,
-        mturquette@baylibre.com, sboyd@kernel.org, robh+dt@kernel.org,
-        jonathan@marek.ca, tdas@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Vinod Koul <vinod.koul@linaro.org>
-Cc:     Robert Foss <robert.foss@linaro.org>
-Subject: [RFC v1 11/11] arm64: dts: qcom: sm8350: Add dispcc DT node
-Date:   Wed, 16 Jun 2021 16:11:07 +0200
-Message-Id: <20210616141107.291430-12-robert.foss@linaro.org>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20210616141107.291430-1-robert.foss@linaro.org>
-References: <20210616141107.291430-1-robert.foss@linaro.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=j51VtbWEsPmNthXDSqqlA/0JAvr0xhkR2POpSAUOx9c=;
+        b=aC3QA74bnm+LTJZihEl85UT6jcsBXDAJARuXEjB87Qu/Meqa95yndeL/a1AorG71Wl
+         8l7sXVjQUWuuotrz0zhoY2Z2twrUgo6+9KDLDhWtx1d+KrH7AmahmTT5/QxTTom9/H6W
+         5/S8Bzr62T8UrTCi8LNtNZFGPUIg+ZAfwv0iULS39B0HT56ZLjVKhhL1f1x0053YttN8
+         B7a606MSJmnTBC/PQ0j67sN07nrgC/iwoUZn12jKjmnZt3VcV7WZdrBq616vxzmEqaUC
+         Wk5DeDAWYqzj3NmQxQ+FzqzceaO+ryV3mx4vfzLDcvUx51Bfnxa9KWyeVaDVB0Jotipx
+         MPng==
+X-Gm-Message-State: AOAM531ESErPgSrsqZjxxLKQsmS6052/REkb8/3YB65wph5EE+JrO6DL
+        TDdfgMVK8F5cirl5+mZyLZD8m0ZvXiFxGw==
+X-Google-Smtp-Source: ABdhPJx4IEC74b+AZx7qBkIQtGfSfPTpymFx2MtMXU+YWC/4x0sFfLSn5GlEquaPh0Xh36kP+cjFTw==
+X-Received: by 2002:a4a:d781:: with SMTP id c1mr396631oou.23.1623856076970;
+        Wed, 16 Jun 2021 08:07:56 -0700 (PDT)
+Received: from mail-ot1-f52.google.com (mail-ot1-f52.google.com. [209.85.210.52])
+        by smtp.gmail.com with ESMTPSA id c205sm475263oib.20.2021.06.16.08.07.56
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 16 Jun 2021 08:07:56 -0700 (PDT)
+Received: by mail-ot1-f52.google.com with SMTP id 66-20020a9d02c80000b02903615edf7c1aso2748859otl.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Jun 2021 08:07:56 -0700 (PDT)
+X-Received: by 2002:a5b:54a:: with SMTP id r10mr207252ybp.476.1623855739461;
+ Wed, 16 Jun 2021 08:02:19 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <1623499682-2140-1-git-send-email-rajeevny@codeaurora.org> <1623499682-2140-6-git-send-email-rajeevny@codeaurora.org>
+In-Reply-To: <1623499682-2140-6-git-send-email-rajeevny@codeaurora.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Wed, 16 Jun 2021 08:02:07 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=V2_LJkXX-9v2ArSspKHy6PABn1E-hkCOeT=Dk5R0CQ+Q@mail.gmail.com>
+Message-ID: <CAD=FV=V2_LJkXX-9v2ArSspKHy6PABn1E-hkCOeT=Dk5R0CQ+Q@mail.gmail.com>
+Subject: Re: [v6 5/5] drm/panel-simple: Add Samsung ATNA33XC20
+To:     Rajeev Nandan <rajeevny@codeaurora.org>
+Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Rob Clark <robdclark@gmail.com>, Lyude Paul <lyude@redhat.com>,
+        Jani Nikula <jani.nikula@intel.com>,
+        Rob Herring <robh@kernel.org>,
+        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        Andrzej Hajda <a.hajda@samsung.com>,
+        Daniel Thompson <daniel.thompson@linaro.org>,
+        "Kristian H. Kristensen" <hoegsberg@chromium.org>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Sean Paul <seanpaul@chromium.org>,
+        Kalyan Thota <kalyan_t@codeaurora.org>,
+        Krishna Manikandan <mkrishn@codeaurora.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This commit adds the dispcc DTS node for sm8350.
+Hi,
 
-Signed-off-by: Robert Foss <robert.foss@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8350.dtsi | 25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+On Sat, Jun 12, 2021 at 5:09 AM Rajeev Nandan <rajeevny@codeaurora.org> wrote:
+>
+> +static const struct panel_desc samsung_atna33xc20 = {
+> +       .modes = &samsung_atna33xc20_mode,
+> +       .num_modes = 1,
+> +       .bpc = 10,
+> +       .size = {
+> +               .width = 294,
+> +               .height = 165,
+> +       },
+> +       .delay = {
+> +               .disable_to_power_off = 150,
+> +               .power_to_enable = 150,
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-index b270fb94da8c..76660d84f838 100644
---- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-@@ -3,7 +3,9 @@
-  * Copyright (c) 2020, Linaro Limited
-  */
- 
-+#include <dt-bindings/interconnect/qcom,sm8350.h>
- #include <dt-bindings/interrupt-controller/arm-gic.h>
-+#include <dt-bindings/clock/qcom,dispcc-sm8350.h>
- #include <dt-bindings/clock/qcom,gcc-sm8350.h>
- #include <dt-bindings/clock/qcom,rpmh.h>
- #include <dt-bindings/mailbox/qcom-ipcc.h>
-@@ -1298,6 +1300,29 @@ videocc: qcom,videocc@abf0000 {
- 			#power-domain-cells = <1>;
- 		};
- 
-+		dispcc: clock-controller@af00000 {
-+			compatible = "qcom,sm8350-dispcc";
-+			reg = <0 0x0af00000 0 0x10000>;
-+			mmcx-supply = <&mmcx_reg>;
-+			clocks = <&rpmhcc RPMH_CXO_CLK>,
-+				 <0>,
-+				 <0>,
-+				 <0>,
-+				 <0>,
-+				 <0>,
-+				 <0>;
-+			clock-names = "bi_tcxo",
-+				      "dsi0_phy_pll_out_byteclk",
-+				      "dsi0_phy_pll_out_dsiclk",
-+				      "dsi1_phy_pll_out_byteclk",
-+				      "dsi1_phy_pll_out_dsiclk",
-+				      "dp_phy_pll_link_clk",
-+				      "dp_phy_pll_vco_div_clk";
-+			#clock-cells = <1>;
-+			#reset-cells = <1>;
-+			#power-domain-cells = <1>;
-+		};
-+
- 		adsp: remoteproc@17300000 {
- 			compatible = "qcom,sm8350-adsp-pas";
- 			reg = <0 0x17300000 0 0x100>;
--- 
-2.30.2
+As per <https://crrev.com/c/2966167> it's apparently been discovered
+that these should be:
 
+.disable_to_power_off = 200,
+.power_to_enable = 400,
