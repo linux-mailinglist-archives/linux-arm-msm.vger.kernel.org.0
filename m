@@ -2,92 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 709C23A9A3D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jun 2021 14:27:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 20F4E3A9A72
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jun 2021 14:29:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232933AbhFPM3e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Jun 2021 08:29:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53778 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232893AbhFPM32 (ORCPT
+        id S231179AbhFPMcC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Jun 2021 08:32:02 -0400
+Received: from m-r2.th.seeweb.it ([5.144.164.171]:34019 "EHLO
+        m-r2.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230197AbhFPMcB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Jun 2021 08:29:28 -0400
-Received: from m-r1.th.seeweb.it (m-r1.th.seeweb.it [IPv6:2001:4b7a:2000:18::170])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59D6CC0617AE;
-        Wed, 16 Jun 2021 05:27:20 -0700 (PDT)
-Received: from localhost.localdomain (83.6.168.10.neoplus.adsl.tpnet.pl [83.6.168.10])
-        by m-r1.th.seeweb.it (Postfix) with ESMTPA id C8B4D1FC51;
-        Wed, 16 Jun 2021 14:27:17 +0200 (CEST)
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+        Wed, 16 Jun 2021 08:32:01 -0400
+Received: from [192.168.1.101] (83.6.168.10.neoplus.adsl.tpnet.pl [83.6.168.10])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 7DC893E7E1;
+        Wed, 16 Jun 2021 14:29:53 +0200 (CEST)
+Subject: Re: [PATCH v2 1/6] arm64: dts: qcom: sm8250-edo: Add hardware keys
 To:     ~postmarketos/upstreaming@lists.sr.ht
 Cc:     martin.botka@somainline.org,
         angelogioacchino.delregno@somainline.org,
         marijn.suijten@somainline.org, jamipkettunen@somainline.org,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH v2 6/6] arm64: dts: qcom: sm8250-edo: Add Samsung touchscreen
-Date:   Wed, 16 Jun 2021 14:27:08 +0200
-Message-Id: <20210616122708.144770-6-konrad.dybcio@somainline.org>
-X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20210616122708.144770-1-konrad.dybcio@somainline.org>
 References: <20210616122708.144770-1-konrad.dybcio@somainline.org>
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+Message-ID: <d7584f80-8796-1ebf-0e83-8d63d707f61e@somainline.org>
+Date:   Wed, 16 Jun 2021 14:29:52 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20210616122708.144770-1-konrad.dybcio@somainline.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add Samsung touchscreen node and relevant pin configuration to make the phones
-actually interactable with.
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
----
- .../boot/dts/qcom/sm8250-sony-xperia-edo.dtsi | 21 ++++++++++++++++++-
- 1 file changed, 20 insertions(+), 1 deletion(-)
+On 16.06.2021 14:27, Konrad Dybcio wrote:
+> Volume Down, GAssist (pdx206 only) and camera keys live on PMIC pins,
+> with the latter kind being broken for now.. Add these and PON-connected
+> Volume Up & PWR.
+>
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+> ---
+>  .../qcom/sm8250-sony-xperia-edo-pdx206.dts    | 11 +++++++
+>  .../boot/dts/qcom/sm8250-sony-xperia-edo.dtsi | 30 +++++++++++++++++++
+>  2 files changed, 41 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
-index 3f08802100ca..8f2417db4a99 100644
---- a/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
-@@ -462,7 +462,18 @@ &i2c13 {
- 	status = "okay";
- 	clock-frequency = <400000>;
- 
--	/* Samsung touchscreen @ 48 */
-+	touchscreen@48 {
-+		compatible = "samsung,s6sy761";
-+		reg = <0x48>;
-+		interrupt-parent = <&tlmm>;
-+		interrupts = <39 0x2008>;
-+		/* It's "vddio" downstream but it works anyway! */
-+		vdd-supply = <&vreg_l1c_1p8>;
-+		avdd-supply = <&vreg_l10c_3p3>;
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&ts_int_default>;
-+	};
- };
- 
- &i2c15 {
-@@ -570,6 +581,14 @@ mdm2ap_default: mdm2ap-default {
- 		bias-disable;
- 	};
- 
-+	ts_int_default: ts-int-default {
-+		pins = "gpio39";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disabled;
-+		input-enable;
-+	};
-+
- 	ap2mdm_default: ap2mdm-default {
- 		pins = "gpio56", "gpio57";
- 		function = "gpio";
--- 
-2.32.0
+Forgot to add, still depends on [1].
+
+
+[1] https://patchwork.kernel.org/project/linux-arm-msm/patch/20210613124822.124039-1-konrad.dybcio@somainline.org/
+
+
+Konrad
 
