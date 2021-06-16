@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 604543A9D19
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jun 2021 16:11:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0A3D83A9D22
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jun 2021 16:11:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233892AbhFPONg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Jun 2021 10:13:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49408 "EHLO
+        id S233942AbhFPONp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Jun 2021 10:13:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49428 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233851AbhFPONe (ORCPT
+        with ESMTP id S233893AbhFPONg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Jun 2021 10:13:34 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89FFFC0617AD
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Jun 2021 07:11:27 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id i94so2864995wri.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Jun 2021 07:11:27 -0700 (PDT)
+        Wed, 16 Jun 2021 10:13:36 -0400
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7389C06124A
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Jun 2021 07:11:28 -0700 (PDT)
+Received: by mail-wm1-x335.google.com with SMTP id y13-20020a1c4b0d0000b02901c20173e165so1830461wma.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Jun 2021 07:11:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Xsn7+Lsp9NGdCiqtkjavVEDgvQSXhZBR2aAMSk2h6M4=;
-        b=AnHj7RoSOlzMjAE3O1GUyGBfuS688F5iiC4eV01XSE1Gy+uC5pLxY8uv3b7JlDvLSZ
-         ugznEp0TSBKX3aL0tZ71/34ec/JcffIxcCQxJlvvKrwvt5+Ufq++uTbyfGah9gNUlSlL
-         WT4YNvtfnwLpUlVyLVlPiLgiW/fAhjHcN4P6v3NqQUa3ymWa0h+j1H0l4dFoGl4vkiwF
-         /pIIbUR0H7c3OHOjdBRLNgD4JAnL/QlTNC3d+s3azQNrRY8TDsvBJMoj21oNwsheu/RG
-         l6tw3OiFHk1bIrhWohwSEiCTELJRSOyqOF31MshLuE04PNlqf2gI7MdCa+Qw/WfWFphz
-         VC8w==
+        bh=cxk0+wVQB5HblxQhN+0OZpVOyii+2f7oNmTqsu1uOb8=;
+        b=cVLiTKluo955zKPJew/I26t1QSEvjrtMFJro2u0VrWsFa6aHK1uJZW+iqwYX1RwCQG
+         SHotaF2+WvJ9GPLBm3HmBmx7hjSoCk3dVFKnQodd+s2lpEbpgniQrN0OV5oL0ix++rPM
+         yKDeSyXgd/Z/rvUl8MLuR0aXoeNumKpCxm/3A2WGx8uzEK4xrmB/ysXcSDAfPlNKrDt4
+         1zwwQrf5SdCJwpE2quu/fXT0CQf9wixLnmo0AyUsa5IjIxhVLRfaZYtcmOWTBcUHmJr0
+         QZWKKhwvjlmbT+mCFw58pu3SZixy2a07CHbLWas72bA2qNTjQnRqqKEBChpCFziyWwiM
+         QzCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Xsn7+Lsp9NGdCiqtkjavVEDgvQSXhZBR2aAMSk2h6M4=;
-        b=DzLUK0aC6xsXZAq/xw9FJHwAd0+Vy80NBFlFk4YxcK4mpLfdTls04JvI1UHj2pT6CT
-         MXHw8pmiUoK9C8Q0uSrS+ZWOMUMk799IETBVG1aX32V/1Gw/XEG2zoTO03Mmlucaa8u+
-         a6U+UPqRoVc0gewtdfKXAgHQhnKvrBQfR1LNdhswMQfQmDzY+7vTuHso4OjAS5W5BKVi
-         e2Aep/WSkdItYU76As/70jy6id4D55EwX1gqMHPmoVv0EIhufCMFyYwSnJHmDjDX3Xu8
-         m6/dTm0d6BIn1fTBYipRs+Kv5gmUPv1AsYdIt/++a6SaQkOhlr5yHrSf1Uu+RZlru2rL
-         tjHg==
-X-Gm-Message-State: AOAM531bIMmNOvNrvhBjGaPnDVtqvJJT0IwVfWAYli+HtYM9xnKptWrs
-        aA8gErwouqGGljDZt4VxXysB2Q==
-X-Google-Smtp-Source: ABdhPJzeKOr/2wJKsYjkuqvXZQfV/09Ppyl5Kn6BkkkCEh+gpB2lRge69iJyjFP1rzu8mBE/Wz+UwA==
-X-Received: by 2002:a5d:4f8f:: with SMTP id d15mr5576503wru.85.1623852686174;
-        Wed, 16 Jun 2021 07:11:26 -0700 (PDT)
+        bh=cxk0+wVQB5HblxQhN+0OZpVOyii+2f7oNmTqsu1uOb8=;
+        b=CgleV41gwePHhOzBvkiagzktb5vPI7OMFE8XG7cheUuviAf0ZUMqViw3QfcFHA9Xvh
+         sj6HOIyeJdyqbYiJRO4vbW9Pf0D5BrJDCT9px1GfPEID6VUQAe3V1+wzGSh0dJWlj5k8
+         OrH53c0mbP7ItBPPPqm6XFPLGlUpCvSmMaMk5qdl6vKpciRDTrwMe87FasklNK+PmK5i
+         JhzVxTBLXL0QPQP7thqFgTQpWvzP1/UkbbymbJab57Kcby2e5PRpv8qKAKSe8ocHJ6fm
+         b6eJQE8F95cx6sztbIswQ11VkoTHNUJviM43X9s9JyjRJ2zCrl5/SS1cy3G6ty/pFQWN
+         krwA==
+X-Gm-Message-State: AOAM5301q4p5fZe1xNnQkN4deyZ8D1XOqEwB29fRFt/wr4HFkAbuiDhL
+        hdEaKk3+Li8Dm2xARj9COi1+dg==
+X-Google-Smtp-Source: ABdhPJwntzNaJeX5LVvYLveGJeY0XTHAahbWlsyX+eYGFsw+31WR+M7sFiYkCr63zXqyP/ByWHQfag==
+X-Received: by 2002:a05:600c:4f0c:: with SMTP id l12mr11547307wmq.93.1623852687441;
+        Wed, 16 Jun 2021 07:11:27 -0700 (PDT)
 Received: from xps7590.fritz.box ([2a02:2454:3e5:b700:9df7:76e5:7e94:bf1e])
-        by smtp.gmail.com with ESMTPSA id g83sm1968375wma.10.2021.06.16.07.11.25
+        by smtp.gmail.com with ESMTPSA id g83sm1968375wma.10.2021.06.16.07.11.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Jun 2021 07:11:25 -0700 (PDT)
+        Wed, 16 Jun 2021 07:11:26 -0700 (PDT)
 From:   Robert Foss <robert.foss@linaro.org>
 To:     agross@kernel.org, bjorn.andersson@linaro.org,
         mturquette@baylibre.com, sboyd@kernel.org, robh+dt@kernel.org,
@@ -56,9 +56,9 @@ To:     agross@kernel.org, bjorn.andersson@linaro.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         Vinod Koul <vinod.koul@linaro.org>
 Cc:     Robert Foss <robert.foss@linaro.org>
-Subject: [RFC v1 04/11] clk: qcom: clk-alpha-pll: Add configuration support for LUCID 5LPE
-Date:   Wed, 16 Jun 2021 16:11:00 +0200
-Message-Id: <20210616141107.291430-5-robert.foss@linaro.org>
+Subject: [RFC v1 05/11] dt-bindings: clock: Add QCOM SM8350 display clock bindings
+Date:   Wed, 16 Jun 2021 16:11:01 +0200
+Message-Id: <20210616141107.291430-6-robert.foss@linaro.org>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20210616141107.291430-1-robert.foss@linaro.org>
 References: <20210616141107.291430-1-robert.foss@linaro.org>
@@ -68,52 +68,132 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Ported from the downstream driver. Used on SM8350 for
-DISPCC & VIDEOCC.
+Add device tree bindings for display clock controller for
+Qualcomm Technology Inc's SM8350 SoC.
 
 Signed-off-by: Robert Foss <robert.foss@linaro.org>
 ---
- drivers/clk/qcom/clk-alpha-pll.c | 3 +++
- drivers/clk/qcom/clk-alpha-pll.h | 5 +++++
- 2 files changed, 8 insertions(+)
+ .../bindings/clock/qcom,dispcc-sm8x50.yaml    |  6 +-
+ .../dt-bindings/clock/qcom,dispcc-sm8350.h    | 77 +++++++++++++++++++
+ 2 files changed, 81 insertions(+), 2 deletions(-)
+ create mode 100644 include/dt-bindings/clock/qcom,dispcc-sm8350.h
 
-diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
-index 01090852ea76..71040d53d7d8 100644
---- a/drivers/clk/qcom/clk-alpha-pll.c
-+++ b/drivers/clk/qcom/clk-alpha-pll.c
-@@ -115,6 +115,9 @@ const u8 clk_alpha_pll_regs[][PLL_OFF_MAX_REGS] = {
- 		[PLL_OFF_STATUS] = 0x30,
- 		[PLL_OFF_OPMODE] = 0x38,
- 		[PLL_OFF_ALPHA_VAL] = 0x40,
-+		[PLL_OFF_SSC_DELTA_ALPHA] = 0x48,
-+		[PLL_OFF_SSC_NUM_STEPS] = 0x4c,
-+		[PLL_OFF_SSC_UPDATE_RATE] = 0x50,
- 	},
- 	[CLK_ALPHA_PLL_TYPE_AGERA] =  {
- 		[PLL_OFF_L_VAL] = 0x04,
-diff --git a/drivers/clk/qcom/clk-alpha-pll.h b/drivers/clk/qcom/clk-alpha-pll.h
-index 6943e933be0f..9eb4589b6a02 100644
---- a/drivers/clk/qcom/clk-alpha-pll.h
-+++ b/drivers/clk/qcom/clk-alpha-pll.h
-@@ -37,6 +37,9 @@ enum {
- 	PLL_OFF_OPMODE,
- 	PLL_OFF_FRAC,
- 	PLL_OFF_CAL_VAL,
-+	PLL_OFF_SSC_DELTA_ALPHA,
-+	PLL_OFF_SSC_NUM_STEPS,
-+	PLL_OFF_SSC_UPDATE_RATE,
- 	PLL_OFF_MAX_REGS
- };
+diff --git a/Documentation/devicetree/bindings/clock/qcom,dispcc-sm8x50.yaml b/Documentation/devicetree/bindings/clock/qcom,dispcc-sm8x50.yaml
+index 0cdf53f41f84..c10eefd024f6 100644
+--- a/Documentation/devicetree/bindings/clock/qcom,dispcc-sm8x50.yaml
++++ b/Documentation/devicetree/bindings/clock/qcom,dispcc-sm8x50.yaml
+@@ -4,24 +4,26 @@
+ $id: http://devicetree.org/schemas/clock/qcom,dispcc-sm8x50.yaml#
+ $schema: http://devicetree.org/meta-schemas/core.yaml#
  
-@@ -158,6 +161,8 @@ void clk_agera_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
- 				const struct alpha_pll_config *config);
- #define clk_lucid_pll_configure(pll, regmap, config) \
- 	clk_trion_pll_configure(pll, regmap, config)
-+#define clk_lucid_5lpe_pll_configure(pll, regmap, config) \
-+	clk_trion_pll_configure(pll, regmap, config)
+-title: Qualcomm Display Clock & Reset Controller Binding for SM8150/SM8250
++title: Qualcomm Display Clock & Reset Controller Binding for SM8150/SM8250/SM8350
  
+ maintainers:
+   - Jonathan Marek <jonathan@marek.ca>
  
+ description: |
+   Qualcomm display clock control module which supports the clocks, resets and
+-  power domains on SM8150 and SM8250.
++  power domains on SM8150, SM8250 and SM8350.
  
+   See also:
+     dt-bindings/clock/qcom,dispcc-sm8150.h
+     dt-bindings/clock/qcom,dispcc-sm8250.h
++    dt-bindings/clock/qcom,dispcc-sm8350.h
+ 
+ properties:
+   compatible:
+     enum:
+       - qcom,sm8150-dispcc
+       - qcom,sm8250-dispcc
++      - qcom,sm8350-dispcc
+ 
+   clocks:
+     items:
+diff --git a/include/dt-bindings/clock/qcom,dispcc-sm8350.h b/include/dt-bindings/clock/qcom,dispcc-sm8350.h
+new file mode 100644
+index 000000000000..361ef27de585
+--- /dev/null
++++ b/include/dt-bindings/clock/qcom,dispcc-sm8350.h
+@@ -0,0 +1,77 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++/*
++ * Copyright (c) 2021, Linaro Limited
++ */
++
++#ifndef _DT_BINDINGS_CLK_QCOM_DISP_CC_SM8350_H
++#define _DT_BINDINGS_CLK_QCOM_DISP_CC_SM8350_H
++
++/* DISP_CC clock registers */
++#define DISP_CC_MDSS_AHB_CLK			0
++#define DISP_CC_MDSS_AHB_CLK_SRC		1
++#define DISP_CC_MDSS_BYTE0_CLK			2
++#define DISP_CC_MDSS_BYTE0_CLK_SRC		3
++#define DISP_CC_MDSS_BYTE0_DIV_CLK_SRC		4
++#define DISP_CC_MDSS_BYTE0_INTF_CLK		5
++#define DISP_CC_MDSS_BYTE1_CLK			6
++#define DISP_CC_MDSS_BYTE1_CLK_SRC		7
++#define DISP_CC_MDSS_BYTE1_DIV_CLK_SRC		8
++#define DISP_CC_MDSS_BYTE1_INTF_CLK		9
++#define DISP_CC_MDSS_DP_AUX1_CLK		10
++#define DISP_CC_MDSS_DP_AUX1_CLK_SRC		11
++#define DISP_CC_MDSS_DP_AUX_CLK			12
++#define DISP_CC_MDSS_DP_AUX_CLK_SRC		13
++#define DISP_CC_MDSS_DP_LINK1_CLK		14
++#define DISP_CC_MDSS_DP_LINK1_CLK_SRC		15
++#define DISP_CC_MDSS_DP_LINK1_DIV_CLK_SRC	16
++#define DISP_CC_MDSS_DP_LINK1_INTF_CLK		17
++#define DISP_CC_MDSS_DP_LINK_CLK		18
++#define DISP_CC_MDSS_DP_LINK_CLK_SRC		19
++#define DISP_CC_MDSS_DP_LINK_DIV_CLK_SRC	20
++#define DISP_CC_MDSS_DP_LINK_INTF_CLK		21
++#define DISP_CC_MDSS_DP_PIXEL1_CLK		22
++#define DISP_CC_MDSS_DP_PIXEL1_CLK_SRC		23
++#define DISP_CC_MDSS_DP_PIXEL2_CLK		24
++#define DISP_CC_MDSS_DP_PIXEL2_CLK_SRC		25
++#define DISP_CC_MDSS_DP_PIXEL_CLK		26
++#define DISP_CC_MDSS_DP_PIXEL_CLK_SRC		27
++#define DISP_CC_MDSS_EDP_AUX_CLK		28
++#define DISP_CC_MDSS_EDP_AUX_CLK_SRC		29
++#define DISP_CC_MDSS_EDP_LINK_CLK		30
++#define DISP_CC_MDSS_EDP_LINK_CLK_SRC		31
++#define DISP_CC_MDSS_EDP_LINK_DIV_CLK_SRC	32
++#define DISP_CC_MDSS_EDP_LINK_INTF_CLK		33
++#define DISP_CC_MDSS_EDP_PIXEL_CLK		34
++#define DISP_CC_MDSS_EDP_PIXEL_CLK_SRC		35
++#define DISP_CC_MDSS_ESC0_CLK			36
++#define DISP_CC_MDSS_ESC0_CLK_SRC		37
++#define DISP_CC_MDSS_ESC1_CLK			38
++#define DISP_CC_MDSS_ESC1_CLK_SRC		39
++#define DISP_CC_MDSS_MDP_CLK			40
++#define DISP_CC_MDSS_MDP_CLK_SRC		41
++#define DISP_CC_MDSS_MDP_LUT_CLK		42
++#define DISP_CC_MDSS_NON_GDSC_AHB_CLK		43
++#define DISP_CC_MDSS_PCLK0_CLK			44
++#define DISP_CC_MDSS_PCLK0_CLK_SRC		45
++#define DISP_CC_MDSS_PCLK1_CLK			46
++#define DISP_CC_MDSS_PCLK1_CLK_SRC		47
++#define DISP_CC_MDSS_ROT_CLK			48
++#define DISP_CC_MDSS_ROT_CLK_SRC		49
++#define DISP_CC_MDSS_RSCC_AHB_CLK		50
++#define DISP_CC_MDSS_RSCC_VSYNC_CLK		51
++#define DISP_CC_MDSS_VSYNC_CLK			52
++#define DISP_CC_MDSS_VSYNC_CLK_SRC		53
++#define DISP_CC_PLL0				54
++#define DISP_CC_PLL1				55
++#define DISP_CC_SLEEP_CLK			56
++#define DISP_CC_SLEEP_CLK_SRC			57
++#define DISP_CC_XO_CLK_SRC			58
++
++/* DISP_CC Reset */
++#define DISP_CC_MDSS_CORE_BCR			0
++#define DISP_CC_MDSS_RSCC_BCR			1
++
++/* DISP_CC GDSCR */
++#define MDSS_GDSC				0
++
++#endif
 -- 
 2.30.2
 
