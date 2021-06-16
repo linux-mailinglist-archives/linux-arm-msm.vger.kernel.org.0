@@ -2,63 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E15603A9A0F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jun 2021 14:18:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B92C63A9A2E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jun 2021 14:27:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232684AbhFPMVA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Jun 2021 08:21:00 -0400
-Received: from relay07.th.seeweb.it ([5.144.164.168]:49027 "EHLO
-        relay07.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231808AbhFPMVA (ORCPT
+        id S232599AbhFPM3W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Jun 2021 08:29:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53726 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230087AbhFPM3V (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Jun 2021 08:21:00 -0400
-Received: from [192.168.1.101] (83.6.168.10.neoplus.adsl.tpnet.pl [83.6.168.10])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 6D6763EAD9;
-        Wed, 16 Jun 2021 14:18:52 +0200 (CEST)
-Subject: Re: [PATCH 4/6] arm64: dts: qcom: sm8250-edo: Enable ADSP/CDSP/SLPI
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, martin.botka@somainline.org,
+        Wed, 16 Jun 2021 08:29:21 -0400
+Received: from relay02.th.seeweb.it (relay02.th.seeweb.it [IPv6:2001:4b7a:2000:18::163])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6DAAC061574;
+        Wed, 16 Jun 2021 05:27:14 -0700 (PDT)
+Received: from localhost.localdomain (83.6.168.10.neoplus.adsl.tpnet.pl [83.6.168.10])
+        by m-r1.th.seeweb.it (Postfix) with ESMTPA id 3787E1FC59;
+        Wed, 16 Jun 2021 14:27:12 +0200 (CEST)
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+To:     ~postmarketos/upstreaming@lists.sr.ht
+Cc:     martin.botka@somainline.org,
         angelogioacchino.delregno@somainline.org,
         marijn.suijten@somainline.org, jamipkettunen@somainline.org,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
         Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-References: <20210616005843.79579-1-konrad.dybcio@somainline.org>
- <20210616005843.79579-4-konrad.dybcio@somainline.org>
- <YMllkBcLzrM3vdvM@builder.lan>
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-Message-ID: <68f4ea6e-5bf0-fb1d-6981-02f6151abd2a@somainline.org>
-Date:   Wed, 16 Jun 2021 14:18:51 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+Subject: [PATCH v2 1/6] arm64: dts: qcom: sm8250-edo: Add hardware keys
+Date:   Wed, 16 Jun 2021 14:27:03 +0200
+Message-Id: <20210616122708.144770-1-konrad.dybcio@somainline.org>
+X-Mailer: git-send-email 2.32.0
 MIME-Version: 1.0
-In-Reply-To: <YMllkBcLzrM3vdvM@builder.lan>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Volume Down, GAssist (pdx206 only) and camera keys live on PMIC pins,
+with the latter kind being broken for now.. Add these and PON-connected
+Volume Up & PWR.
 
-> Are you okay with the default firmware paths? Or perhaps would it be
-> better to shove them into qcom/sm8250/sony/<some-identifier>/* to avoid
-> moving them later?
+Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+---
+ .../qcom/sm8250-sony-xperia-edo-pdx206.dts    | 11 +++++++
+ .../boot/dts/qcom/sm8250-sony-xperia-edo.dtsi | 30 +++++++++++++++++++
+ 2 files changed, 41 insertions(+)
 
-Since we have to either symlink or copy the binaries from the device Linux
-
-is running on to stay clear wrt proprietary blobs licensing, the default
-
-path is fine, as there won't be any other firmware there. If it turns out we
-
-have a better way of managing this, one can always send a patch changing
-
-it.
-
-
-Konrad
+diff --git a/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx206.dts b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx206.dts
+index 999b662f4679..16c96e838534 100644
+--- a/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx206.dts
++++ b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx206.dts
+@@ -18,6 +18,17 @@ &framebuffer {
+ 	stride = <(1080 * 4)>;
+ };
+ 
++&gpio_keys {
++	g-assist-key {
++		label = "Google Assistant Key";
++		linux,code = <KEY_LEFTMETA>;
++		gpios = <&pm8150_gpios 6 GPIO_ACTIVE_LOW>;
++		debounce-interval = <15>;
++		linux,can-disable;
++		gpio-key,wakeup;
++	};
++};
++
+ &vreg_l2f_1p3 {
+ 	regulator-min-microvolt = <1200000>;
+ 	regulator-max-microvolt = <1200000>;
+diff --git a/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
+index 0db63eb08c60..52ed4b082bd7 100644
+--- a/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
+@@ -47,6 +47,26 @@ framebuffer: framebuffer@9c000000 {
+ 		};
+ 	};
+ 
++	gpio_keys: gpio-keys {
++		compatible = "gpio-keys";
++
++		/*
++		 * Camera focus (light press) and camera snapshot (full press)
++		 * seem not to work properly.. Adding the former one stalls the CPU
++		 * and the latter kills the volume down key for whatever reason. In any
++		 * case, they are both on &pm8150b_gpios: camera focus(2), camera snapshot(1).
++		 */
++
++		vol-down {
++			label = "Volume Down";
++			linux,code = <KEY_VOLUMEDOWN>;
++			gpios = <&pm8150_gpios 1 GPIO_ACTIVE_LOW>;
++			debounce-interval = <15>;
++			linux,can-disable;
++			gpio-key,wakeup;
++		};
++	};
++
+ 	vph_pwr: vph-pwr-regulator {
+ 		compatible = "regulator-fixed";
+ 		regulator-name = "vph_pwr";
+@@ -436,6 +456,16 @@ &i2c15 {
+ 	/* Richwave RTC6226 FM Radio Receiver @ 64 */
+ };
+ 
++&pon_pwrkey {
++	status = "okay";
++};
++
++&pon_resin {
++	status = "okay";
++
++	linux,code = <KEY_VOLUMEUP>;
++};
++
+ &qupv3_id_0 {
+ 	status = "okay";
+ };
+-- 
+2.32.0
 
