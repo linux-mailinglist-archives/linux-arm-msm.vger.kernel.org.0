@@ -2,76 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 776823A9187
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jun 2021 07:58:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 10CAD3A923C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jun 2021 08:26:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231258AbhFPGA6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Jun 2021 02:00:58 -0400
-Received: from mail.kernel.org ([198.145.29.99]:57486 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231200AbhFPGA5 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Jun 2021 02:00:57 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 750176128C;
-        Wed, 16 Jun 2021 05:58:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1623823132;
-        bh=mbCodwMIm1uO6V8GxochPay+jWIcegWFL544VUVwHXg=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=M5vdOsIe2Zer92PkoDT5IunwubV5UQ1Vs7rNcq2Ea3wSGn7LJIEZLsHqaSeh7Q2wh
-         UYg+Pvtp6gWzOE79brNsTv5CW5vKJV7rMKwVIl6VoHMMs12qrEdR6Sr0L172tju/Fd
-         pPcZ2MXA+slC0xJ12ww6k0enzlONfls4e+4MJJWY=
-Date:   Wed, 16 Jun 2021 07:58:48 +0200
-From:   Greg KH <gregkh@linuxfoundation.org>
-To:     Siddharth Gupta <sidgup@codeaurora.org>
-Cc:     bjorn.andersson@linaro.org, ohad@wizery.com,
-        linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, psodagud@codeaurora.org,
-        stable@vger.kernel.org
-Subject: Re: [PATCH v3 1/4] remoteproc: core: Move cdev add before device add
-Message-ID: <YMmTGD6hAKbpGWMp@kroah.com>
-References: <1623723671-5517-1-git-send-email-sidgup@codeaurora.org>
- <1623723671-5517-2-git-send-email-sidgup@codeaurora.org>
- <YMgy7eg3wde0eVfe@kroah.com>
- <0a196786-f624-d9bb-8ef9-55c04ed57497@codeaurora.org>
+        id S231446AbhFPG2t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Jun 2021 02:28:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56476 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231420AbhFPG2q (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 16 Jun 2021 02:28:46 -0400
+Received: from mail-oi1-x236.google.com (mail-oi1-x236.google.com [IPv6:2607:f8b0:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5481EC061767
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jun 2021 23:26:34 -0700 (PDT)
+Received: by mail-oi1-x236.google.com with SMTP id t40so1388624oiw.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Jun 2021 23:26:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=9zUgDhkJImxfUh9Hmx75RiDhjdI3YARcNQ9gBrGyxCw=;
+        b=XIokmDd7gMh7WJsguRzQznvarxUBTpKC/M0FORL22R5Qkpc7zDDpeDFQZB1QEymigy
+         K6jYHoCO7hXbkG+6SY/Je4CYKQgEuLR1Ih3UDnjiHtivGyT+I/dbp2iILm9vWKhpH8ZH
+         SZvJvU8Qcb/cbAeoks7gJ2aKGN/iKTkI4p93yurQBQnKm9qXJWVVAGGqyfeYD1dWj+uZ
+         ZxlxFm5qsr5r28cNUPdnVR5InzIv3p9uQbJF7r3BkdVXm2LCP+qsfbfoyx80D06q5+I1
+         C156+VdIDmctM27juRqX+DijmwtW1TQVItomtVxpjvMfobG/OEWdYneW5K2OpAE/hgVn
+         He1A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=9zUgDhkJImxfUh9Hmx75RiDhjdI3YARcNQ9gBrGyxCw=;
+        b=UzggB2JcGCEvli2bdRuMvsswtI2GkI4tpfaCm3uscsQMQy+l8H1mxVAuBTKn1MG6nT
+         tDPyXLDFmI+AtuBzR4GMTHHo/RPybBgVJE4CcptjPo3JdQDsn92YqLZGiGnU4qrwhHat
+         jDa/EhcOfbqhZuGPcXQEVoEu9DNtfZJqZprS6R0Wnnuj91Pzs/FGLb9T1LVwu0Efd5u8
+         Zi78n1h5++1sS4xq/WQGc3HxNtxZChGVGclZNgn7PLh4N/8ZLU9lPmooQMW/M0SMO3vq
+         80cCS3zDDkJBldBqZDM5QmyRa3xHjAdX7JON6x3dfVSm+3ZubBb9AHEf9Coj+6noX2kr
+         ++SQ==
+X-Gm-Message-State: AOAM5332tjZIRiNZhvwYHk8JF6o93GwZcbxy4HLWlw9dDBeXj+jX0nmE
+        aVBQI6uOs/QwL2BNN99G7VDAywaHMehjAm0bOf3Opw==
+X-Google-Smtp-Source: ABdhPJxMsqZuCXp/LxfKwhV20rJVZBMQCnCg7j7tmAYQRSo241pj8V+0ieCfOfm6j4VGarto5/XKjCkdGRtP4NgaN9Y=
+X-Received: by 2002:aca:fc91:: with SMTP id a139mr5788266oii.12.1623824793682;
+ Tue, 15 Jun 2021 23:26:33 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <0a196786-f624-d9bb-8ef9-55c04ed57497@codeaurora.org>
+References: <20210615074543.26700-1-bhupesh.sharma@linaro.org>
+ <20210615074543.26700-3-bhupesh.sharma@linaro.org> <YMkU/on5e92vgIll@yoga>
+In-Reply-To: <YMkU/on5e92vgIll@yoga>
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Date:   Wed, 16 Jun 2021 11:56:22 +0530
+Message-ID: <CAH=2Ntx=j3w-yjRm12pqwYGrkfJ5h1cXeY-RNwzEs9tkT25b0Q@mail.gmail.com>
+Subject: Re: [PATCH v2 02/10] dt-bindings: pinctrl: qcom,pmic-gpio: Add
+ compatible for SA8155p-adp
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, bhupesh.linux@gmail.com,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        devicetree <devicetree@vger.kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jun 15, 2021 at 12:03:26PM -0700, Siddharth Gupta wrote:
-> 
-> On 6/14/2021 9:56 PM, Greg KH wrote:
-> > On Mon, Jun 14, 2021 at 07:21:08PM -0700, Siddharth Gupta wrote:
-> > > When cdev_add is called after device_add has been called there is no
-> > > way for the userspace to know about the addition of a cdev as cdev_add
-> > > itself doesn't trigger a uevent notification, or for the kernel to
-> > > know about the change to devt. This results in two problems:
-> > >   - mknod is never called for the cdev and hence no cdev appears on
-> > >     devtmpfs.
-> > >   - sysfs links to the new cdev are not established.
-> > > 
-> > > The cdev needs to be added and devt assigned before device_add() is
-> > > called in order for the relevant sysfs and devtmpfs entries to be
-> > > created and the uevent to be properly populated.
-> > So this means no one ever ran this code on a system that used devtmpfs?
-> > 
-> > How was it ever tested?
-> My testing was done with toybox + Android's ueventd ramdisk.
-> As I mentioned in the discussion, the race became evident
-> recently. I will make sure to test all such changes without
-> systemd/ueventd in the future.
+On Wed, 16 Jun 2021 at 02:30, Bjorn Andersson
+<bjorn.andersson@linaro.org> wrote:
+>
+> On Tue 15 Jun 02:45 CDT 2021, Bhupesh Sharma wrote:
+>
+> > Add pmic-gpio compatible string for pmm8155au pmic
+> > found on the SA8155p-adp board.
+> >
+> > ---
 
-It isn't an issue of systemd/ueventd, those do not control /dev on a
-normal system, that is what devtmpfs is for.
+<..snip..>
 
-And devtmpfs nodes are only created if you create a struct device
-somewhere with a proper major/minor, which you were not doing here, so
-you must have had a static /dev on your test systems, right?
+> >  Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt | 2 ++
+> >  1 file changed, 2 insertions(+)
+> >
+> > diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt b/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt
+> > index f6a9760558a6..80b8a66e29d8 100644
+> > --- a/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt
+> > +++ b/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt
+> > @@ -27,6 +27,7 @@ PMIC's from Qualcomm.
+> >                   "qcom,pm660l-gpio"
+> >                   "qcom,pm8150-gpio"
+> >                   "qcom,pm8150b-gpio"
+> > +                 "qcom,pmm8155au-gpio"
+>
+> Please keep these sorted alphabetically.
 
-thanks,
+Ok, I will fix this in v3.
 
-greg k-h
+Thanks,
+Bhupesh
