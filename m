@@ -2,140 +2,323 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 92B023AA408
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jun 2021 21:12:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 01DFC3AA437
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jun 2021 21:22:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232417AbhFPTO1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Jun 2021 15:14:27 -0400
-Received: from mail-mw2nam10on2063.outbound.protection.outlook.com ([40.107.94.63]:43002
-        "EHLO NAM10-MW2-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S232377AbhFPTO0 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Jun 2021 15:14:26 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=JQTAnSNmICBG+i62ExIq+Qm2icprTGMRnp+UHEagmzEGZy9ND57i6K/tIxeR4nm1AxId5hrjh1y/C6qv3or2NaEuXzjzI2+CI2LuzDT7zgCr25zFHpnmagXvcp4lN4z1fT3NvWnjsaFvIe6/69KYo2qfFyKw+QrR/KvZoUCT37eFYld2Z1eTHUpw+Gt15KZhWE3dZhB+vXxVATTI4mR2mm06LdCW3jXNldLgFVzMFSMc6pkBHT1jfwFLTj4XtnrYZrql7tbG4yL93fzFB8gM3q45lxAesN4PYL9Y7BZvzKP2AR9Y0SWhgBzAHJYczy2gaBivk/Mw5utJsR5KwLg6ZQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=mTtUdOME4ppYDYmHb2xu666NhFukfFKhDR/IvRGjF0A=;
- b=bEmeExRmaLzVu5vYLvibDAhqTr19AT60QIr+gOiVKxb00munhqY8XW+kKYI70h44N2KOjxwax5qcWLK+mG6CJRHttj550DU4s3cRPUzvX4FtzJH/QSyoZLSyAHs3PE1ejfLUBdGPZVg8ZKsv8r4ebwbFpkrN62T1OBiuQBKebEeQcew71pHWF481xXvAV/YM0Gwgfhpwb4dvnwiZEuqB4M9Lt1X4jjgkP24nwJfeB5ZMhBTJbJqliw5OfdDETSxScWH3whYt3+kzon1wERKAyzRq+WjnE1nh5QK3X7jaM/SiUSJ3PjGNnOiQYDScV4jMayhJ12wen3yRcg1dJMIEbw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.112.34) smtp.rcpttodomain=arm.com smtp.mailfrom=nvidia.com;
- dmarc=pass (p=none sp=none pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=mTtUdOME4ppYDYmHb2xu666NhFukfFKhDR/IvRGjF0A=;
- b=l8nXlPHARHpLK9njfKGBF9g5MZuckXmXZdfEzrEjXyoKpPe2OmhqtfPf58JicGboXe4rf4BhXRWpWdsYGQ++91pDOL1EOlIWC/jzASAXPtLZ3TceUWixEYLcExvjVq/eaMqibgSHvswufO1Ufrq3WfbIVUQaiq22HeuvOVZVRnj1kXDDYR1wEU1EG87aSJQ7jEeoQm8JizyF/C9WCEJ4cdww3V77EhpGo/ISKG+n5EMhmF5LNhJD7tZAQ61BHpstF4SOKrVJ4yBf+zQw0oElG28fLiatVwPo4RV14jkIf2FvkmZGGhZtJkthqNzM0RYVZl96XJB6S2ZYA4hPwDxDKw==
-Received: from MWHPR22CA0049.namprd22.prod.outlook.com (2603:10b6:300:12a::11)
- by SA0PR12MB4559.namprd12.prod.outlook.com (2603:10b6:806:9e::23) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4242.16; Wed, 16 Jun
- 2021 19:12:19 +0000
-Received: from CO1NAM11FT018.eop-nam11.prod.protection.outlook.com
- (2603:10b6:300:12a:cafe::37) by MWHPR22CA0049.outlook.office365.com
- (2603:10b6:300:12a::11) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4242.15 via Frontend
- Transport; Wed, 16 Jun 2021 19:12:19 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.112.34)
- smtp.mailfrom=nvidia.com; arm.com; dkim=none (message not signed)
- header.d=none;arm.com; dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.112.34 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.112.34; helo=mail.nvidia.com;
-Received: from mail.nvidia.com (216.228.112.34) by
- CO1NAM11FT018.mail.protection.outlook.com (10.13.175.16) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
- 15.20.4242.16 via Frontend Transport; Wed, 16 Jun 2021 19:12:18 +0000
-Received: from [10.40.203.90] (172.20.187.5) by HQMAIL107.nvidia.com
- (172.20.187.13) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Wed, 16 Jun
- 2021 19:12:12 +0000
-Subject: Re: [PATCH 0/5] PCI: endpoint: Add support for additional notifiers
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        <kishon@ti.com>, <lorenzo.pieralisi@arm.com>, <bhelgaas@google.com>
-CC:     <linux-pci@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <hemantk@codeaurora.org>,
-        <smohanad@codeaurora.org>
-References: <20210616115913.138778-1-manivannan.sadhasivam@linaro.org>
-From:   Om Prakash Singh <omp@nvidia.com>
-Message-ID: <9fd37c43-e2ab-f5b2-13dc-a23bd83d3c7b@nvidia.com>
-Date:   Thu, 17 Jun 2021 00:42:07 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+        id S232519AbhFPTYi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Jun 2021 15:24:38 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124]:49054 "EHLO
+        us-smtp-delivery-124.mimecast.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S232661AbhFPTYh (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 16 Jun 2021 15:24:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1623871350;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=cfPQRSykQydOulCcQ49aAeUEKKM3a3d6+BzEEPE5SV4=;
+        b=eUtCS6tw92x+0cd9YqQkrZ+KoamjASYFYVXFtrkqENz+nrLsgX6UwJx3UAZp6vU3mI16MS
+        Z8s7WXsC9lQCV2uWQjLB2QkyT21LFWLQaJuqJY4jiRl94PnuhiNLXZ5q6JAemxk/D3lnav
+        Bwy+0A9SAArtfpUjkiisz4psYtssqRs=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-574-3M88nT3GPe2154pww8-r2g-1; Wed, 16 Jun 2021 15:22:28 -0400
+X-MC-Unique: 3M88nT3GPe2154pww8-r2g-1
+Received: by mail-qk1-f200.google.com with SMTP id 14-20020a37060e0000b02903aad32851d2so383206qkg.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Jun 2021 12:22:28 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:organization:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=cfPQRSykQydOulCcQ49aAeUEKKM3a3d6+BzEEPE5SV4=;
+        b=hsYa/fok6UgIuSWFjo7yWQoquYZmQ2UMxqF7KE0HeLuqhcW1FkSfmK5Tq9CSiIIIdt
+         h8pO0h5AxvjYrCBvFaOpgOm9hZn8OcMjpO45unI4PDXes/m90RnkeNpqKDr45qjejd4u
+         hIHvaopt26+YkESv5FigX8ztfEalj/L4GTRBzx6GRuBMmMMFnbFS+qyzD2QeYf3iqqo1
+         0kt9b5dvmHPyD7xD+dtbCd1u9iOYqa2g1FCS2Qikf9RkVOKmplNxGT/x+Td+aD483RMl
+         p0gU7a8cEqog3TfbctrVgMjNLYqfBxl0CYcmZPN/iZHsya9ShdNnijhKjpgCOuJU9iKh
+         2ljg==
+X-Gm-Message-State: AOAM531MOZaawn5BPhVmh475tVfjo9Q1OZhp0Kr9+YRGzn64qgzQZexV
+        sCHX+ButEfnikMGbNICSUefTdL+MLj5cOoHD7rWE06KW38nx5N33AIwqaYCTXO9rUeVbAhCBnWC
+        DdLuQ4KloD8nH/PjJpMlpiBSVwg==
+X-Received: by 2002:a05:620a:1129:: with SMTP id p9mr1743842qkk.163.1623871347721;
+        Wed, 16 Jun 2021 12:22:27 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJz8h8pJ527wXO5YR0w/WfuqqYYEriH77nlHFOVvL9eWL0AJ7EELuOrCm3wyxVLlnNbjvIgaNQ==
+X-Received: by 2002:a05:620a:1129:: with SMTP id p9mr1743811qkk.163.1623871347486;
+        Wed, 16 Jun 2021 12:22:27 -0700 (PDT)
+Received: from Ruby.lyude.net (pool-108-49-102-102.bstnma.fios.verizon.net. [108.49.102.102])
+        by smtp.gmail.com with ESMTPSA id s22sm1708411qtx.32.2021.06.16.12.22.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 16 Jun 2021 12:22:27 -0700 (PDT)
+Message-ID: <31f31a0d37e05f71ade68b3452ef471c0c681302.camel@redhat.com>
+Subject: Re: [v6 1/5] drm/panel: add basic DP AUX backlight support
+From:   Lyude Paul <lyude@redhat.com>
+To:     Rajeev Nandan <rajeevny@codeaurora.org>,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
+Cc:     linux-kernel@vger.kernel.org, thierry.reding@gmail.com,
+        sam@ravnborg.org, robdclark@gmail.com, dianders@chromium.org,
+        jani.nikula@intel.com, robh@kernel.org,
+        laurent.pinchart@ideasonboard.com, a.hajda@samsung.com,
+        daniel.thompson@linaro.org, hoegsberg@chromium.org,
+        abhinavk@codeaurora.org, seanpaul@chromium.org,
+        kalyan_t@codeaurora.org, mkrishn@codeaurora.org,
+        lee.jones@linaro.org, jingoohan1@gmail.com,
+        linux-fbdev@vger.kernel.org
+Date:   Wed, 16 Jun 2021 15:22:25 -0400
+In-Reply-To: <1623499682-2140-2-git-send-email-rajeevny@codeaurora.org>
+References: <1623499682-2140-1-git-send-email-rajeevny@codeaurora.org>
+         <1623499682-2140-2-git-send-email-rajeevny@codeaurora.org>
+Organization: Red Hat
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.38.4 (3.38.4-1.fc33) 
 MIME-Version: 1.0
-In-Reply-To: <20210616115913.138778-1-manivannan.sadhasivam@linaro.org>
-Content-Type: text/plain; charset="utf-8"; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [172.20.187.5]
-X-ClientProxiedBy: HQMAIL101.nvidia.com (172.20.187.10) To
- HQMAIL107.nvidia.com (172.20.187.13)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: c6238f9a-b1db-4a17-cb03-08d930faa94f
-X-MS-TrafficTypeDiagnostic: SA0PR12MB4559:
-X-Microsoft-Antispam-PRVS: <SA0PR12MB4559A003666EC1A6959749A0DA0F9@SA0PR12MB4559.namprd12.prod.outlook.com>
-X-MS-Oob-TLC-OOBClassifiers: OLM:6790;
-X-MS-Exchange-SenderADCheck: 1
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: z0+aZCHMhWUkJRKpSHncpybq7viVxHeuU+TR4KwgY53YEyrEOyhXkw9Qs7Fy+/Tf8x9xPag5EbGeJozNM+eLJTV4ZZj2SwlbXvIaib6xMpbhO2I86RC/s7fA029DGBOMgljNbzhtwR1gMuMOaeXq8iWdB8leMRIAYkLAEtx46wLyX5oPBwijuZXp3WTxIDjHoG4eKiUFJ0YsYzJK1rUPyFnAK2sh5+ZecHZzwzV3TIUac37Tof2INgOcHFSsmwWZ4ANrM3ZI809Ks/KnF3JfZnoPEdwQp8ATa2Gc0VERTQSLxh+wKNUibMhKQbh9d5vZYdHfKah9hePLrrN4Rv4zHJMma+ku7fDMP9+R4NLlNPplKj2DBNAHTRtPqkhiPGP9BhsCocicsBYDgokvepa2eVOZvovqb/y6fVnzDLAoWzvZTKlt/vEwSYJvxURDPEFi1LpDoBQPdLaN8jAc+eFvTgDNbcuvIvLa7RHit/Ygiz+g/XIffE2jsEhj5pS8prU+fy4qYqusloaxkljdFvj004+rY61EwQM6qOlT1MaFKRoUPIDAFRRHBaeQT5eNc5fGNQd9MVvhQDhaO7yFiMOMsT9WquBZIS/4RX1R2weSFckSVwwwnZJk2pCDbUWhOpgIocN3W+uPVG/lSPH9sZpF0E4lIk6z9R9toWwmMXK8JuTDF0pKRQXSxxnYYiFIv3Nu
-X-Forefront-Antispam-Report: CIP:216.228.112.34;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:schybrid03.nvidia.com;CAT:NONE;SFS:(4636009)(39860400002)(376002)(396003)(346002)(136003)(36840700001)(46966006)(36756003)(478600001)(8936002)(426003)(47076005)(54906003)(5660300002)(36860700001)(4326008)(8676002)(336012)(82310400003)(16526019)(6666004)(70206006)(70586007)(31686004)(316002)(82740400003)(110136005)(36906005)(53546011)(356005)(16576012)(26005)(86362001)(2906002)(186003)(2616005)(7636003)(31696002)(43740500002);DIR:OUT;SFP:1101;
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Jun 2021 19:12:18.9022
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: c6238f9a-b1db-4a17-cb03-08d930faa94f
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.112.34];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: CO1NAM11FT018.eop-nam11.prod.protection.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA0PR12MB4559
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Mani,
-Adding more notifier types will surely help but I believe the list is 
-not exhaustive. What you are trying here is to pass various 
-vendor-specific epc interrupts to EPF driver. That can be taken care by 
-a single notifier interface as well, "pci_epc_custom_notify" from your 
-implementation. This also requires to have pre-defined values of "data" 
-argument to standardize the interface.
+Reviewed-by: Lyude Paul <lyude@redhat.com>
 
-your thoughts?
+On Sat, 2021-06-12 at 17:37 +0530, Rajeev Nandan wrote:
+> Some panels support backlight control over DP AUX channel using
+> VESA's standard backlight control interface.
+> Using new DRM eDP backlight helpers, add support to create and
+> register a backlight for those panels in drm_panel to simplify
+> the panel drivers.
+> 
+> The panel driver with access to "struct drm_dp_aux" can create and
+> register a backlight device using following code snippet in its
+> probe() function:
+> 
+>         err = drm_panel_dp_aux_backlight(panel, aux);
+>         if (err)
+>                 return err;
+> 
+> Then drm_panel will handle backlight_(enable|disable) calls
+> similar to the case when drm_panel_of_backlight() is used.
+> 
+> Currently, we are not supporting one feature where the source
+> device can combine the backlight brightness levels set through
+> DP AUX and the BL_PWM_DIM eDP connector pin. Since it's not
+> required for the basic backlight controls, it can be added later.
+> 
+> Signed-off-by: Rajeev Nandan <rajeevny@codeaurora.org>
+> Reviewed-by: Douglas Anderson <dianders@chromium.org>
+> ---
+> 
+> Changes in v5:
+> - New
+> 
+> Changes in v6:
+> - Fixed ordering of memory allocation (Douglas)
+> - Updated word wrapping in a comment (Douglas)
+> 
+>  drivers/gpu/drm/drm_panel.c | 108
+> ++++++++++++++++++++++++++++++++++++++++++++
+>  include/drm/drm_panel.h     |  15 ++++--
+>  2 files changed, 119 insertions(+), 4 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/drm_panel.c b/drivers/gpu/drm/drm_panel.c
+> index f634371..9e65342 100644
+> --- a/drivers/gpu/drm/drm_panel.c
+> +++ b/drivers/gpu/drm/drm_panel.c
+> @@ -26,12 +26,20 @@
+>  #include <linux/module.h>
+>  
+>  #include <drm/drm_crtc.h>
+> +#include <drm/drm_dp_helper.h>
+>  #include <drm/drm_panel.h>
+>  #include <drm/drm_print.h>
+>  
+>  static DEFINE_MUTEX(panel_lock);
+>  static LIST_HEAD(panel_list);
+>  
+> +struct dp_aux_backlight {
+> +       struct backlight_device *base;
+> +       struct drm_dp_aux *aux;
+> +       struct drm_edp_backlight_info info;
+> +       bool enabled;
+> +};
+> +
+>  /**
+>   * DOC: drm panel
+>   *
+> @@ -342,6 +350,106 @@ int drm_panel_of_backlight(struct drm_panel *panel)
+>         return 0;
+>  }
+>  EXPORT_SYMBOL(drm_panel_of_backlight);
+> +
+> +static int dp_aux_backlight_update_status(struct backlight_device *bd)
+> +{
+> +       struct dp_aux_backlight *bl = bl_get_data(bd);
+> +       u16 brightness = backlight_get_brightness(bd);
+> +       int ret = 0;
+> +
+> +       if (brightness > 0) {
+> +               if (!bl->enabled) {
+> +                       drm_edp_backlight_enable(bl->aux, &bl->info,
+> brightness);
+> +                       bl->enabled = true;
+> +                       return 0;
+> +               }
+> +               ret = drm_edp_backlight_set_level(bl->aux, &bl->info,
+> brightness);
+> +       } else {
+> +               if (bl->enabled) {
+> +                       drm_edp_backlight_disable(bl->aux, &bl->info);
+> +                       bl->enabled = false;
+> +               }
+> +       }
+> +
+> +       return ret;
+> +}
+> +
+> +static const struct backlight_ops dp_aux_bl_ops = {
+> +       .update_status = dp_aux_backlight_update_status,
+> +};
+> +
+> +/**
+> + * drm_panel_dp_aux_backlight - create and use DP AUX backlight
+> + * @panel: DRM panel
+> + * @aux: The DP AUX channel to use
+> + *
+> + * Use this function to create and handle backlight if your panel
+> + * supports backlight control over DP AUX channel using DPCD
+> + * registers as per VESA's standard backlight control interface.
+> + *
+> + * When the panel is enabled backlight will be enabled after a
+> + * successful call to &drm_panel_funcs.enable()
+> + *
+> + * When the panel is disabled backlight will be disabled before the
+> + * call to &drm_panel_funcs.disable().
+> + *
+> + * A typical implementation for a panel driver supporting backlight
+> + * control over DP AUX will call this function at probe time.
+> + * Backlight will then be handled transparently without requiring
+> + * any intervention from the driver.
+> + *
+> + * drm_panel_dp_aux_backlight() must be called after the call to
+> drm_panel_init().
+> + *
+> + * Return: 0 on success or a negative error code on failure.
+> + */
+> +int drm_panel_dp_aux_backlight(struct drm_panel *panel, struct drm_dp_aux
+> *aux)
+> +{
+> +       struct dp_aux_backlight *bl;
+> +       struct backlight_properties props = { 0 };
+> +       u16 current_level;
+> +       u8 current_mode;
+> +       u8 edp_dpcd[EDP_DISPLAY_CTL_CAP_SIZE];
+> +       int ret;
+> +
+> +       if (!panel || !panel->dev || !aux)
+> +               return -EINVAL;
+> +
+> +       ret = drm_dp_dpcd_read(aux, DP_EDP_DPCD_REV, edp_dpcd,
+> +                              EDP_DISPLAY_CTL_CAP_SIZE);
+> +       if (ret < 0)
+> +               return ret;
+> +
+> +       if (!drm_edp_backlight_supported(edp_dpcd)) {
+> +               DRM_DEV_INFO(panel->dev, "DP AUX backlight is not
+> supported\n");
+> +               return 0;
+> +       }
+> +
+> +       bl = devm_kzalloc(panel->dev, sizeof(*bl), GFP_KERNEL);
+> +       if (!bl)
+> +               return -ENOMEM;
+> +
+> +       bl->aux = aux;
+> +
+> +       ret = drm_edp_backlight_init(aux, &bl->info, 0, edp_dpcd,
+> +                                    &current_level, &current_mode);
+> +       if (ret < 0)
+> +               return ret;
+> +
+> +       props.type = BACKLIGHT_RAW;
+> +       props.brightness = current_level;
+> +       props.max_brightness = bl->info.max;
+> +
+> +       bl->base = devm_backlight_device_register(panel->dev,
+> "dp_aux_backlight",
+> +                                                 panel->dev, bl,
+> +                                                 &dp_aux_bl_ops, &props);
+> +       if (IS_ERR(bl->base))
+> +               return PTR_ERR(bl->base);
+> +
+> +       panel->backlight = bl->base;
+> +
+> +       return 0;
+> +}
+> +EXPORT_SYMBOL(drm_panel_dp_aux_backlight);
+>  #endif
+>  
+>  MODULE_AUTHOR("Thierry Reding <treding@nvidia.com>");
+> diff --git a/include/drm/drm_panel.h b/include/drm/drm_panel.h
+> index 33605c3..3ebfaa6 100644
+> --- a/include/drm/drm_panel.h
+> +++ b/include/drm/drm_panel.h
+> @@ -32,6 +32,7 @@ struct backlight_device;
+>  struct device_node;
+>  struct drm_connector;
+>  struct drm_device;
+> +struct drm_dp_aux;
+>  struct drm_panel;
+>  struct display_timing;
+>  
+> @@ -64,8 +65,8 @@ enum drm_panel_orientation;
+>   * the panel. This is the job of the .unprepare() function.
+>   *
+>   * Backlight can be handled automatically if configured using
+> - * drm_panel_of_backlight(). Then the driver does not need to implement the
+> - * functionality to enable/disable backlight.
+> + * drm_panel_of_backlight() or drm_panel_dp_aux_backlight(). Then the
+> driver
+> + * does not need to implement the functionality to enable/disable
+> backlight.
+>   */
+>  struct drm_panel_funcs {
+>         /**
+> @@ -144,8 +145,8 @@ struct drm_panel {
+>          * Backlight device, used to turn on backlight after the call
+>          * to enable(), and to turn off backlight before the call to
+>          * disable().
+> -        * backlight is set by drm_panel_of_backlight() and drivers
+> -        * shall not assign it.
+> +        * backlight is set by drm_panel_of_backlight() or
+> +        * drm_panel_dp_aux_backlight() and drivers shall not assign it.
+>          */
+>         struct backlight_device *backlight;
+>  
+> @@ -208,11 +209,17 @@ static inline int of_drm_get_panel_orientation(const
+> struct device_node *np,
+>  #if IS_ENABLED(CONFIG_DRM_PANEL) &&
+> (IS_BUILTIN(CONFIG_BACKLIGHT_CLASS_DEVICE) || \
+>         (IS_MODULE(CONFIG_DRM) && IS_MODULE(CONFIG_BACKLIGHT_CLASS_DEVICE)))
+>  int drm_panel_of_backlight(struct drm_panel *panel);
+> +int drm_panel_dp_aux_backlight(struct drm_panel *panel, struct drm_dp_aux
+> *aux);
+>  #else
+>  static inline int drm_panel_of_backlight(struct drm_panel *panel)
+>  {
+>         return 0;
+>  }
+> +static inline int drm_panel_dp_aux_backlight(struct drm_panel *panel,
+> +                                            struct drm_dp_aux *aux)
+> +{
+> +       return 0;
+> +}
+>  #endif
+>  
+>  #endif
 
-Thanks,
-Om
+-- 
+Cheers,
+ Lyude Paul (she/her)
+ Software Engineer at Red Hat
 
-On 6/16/2021 5:29 PM, Manivannan Sadhasivam wrote:
-> External email: Use caution opening links or attachments
-> 
-> 
-> Hello,
-> 
-> This series adds support for additional notifiers in the PCI endpoint
-> framework. The notifiers LINK_DOWN, BME, PME, and D_STATE are generic
-> for all PCI endpoints but there is also a custom notifier (CUSTOM) added
-> to pass the device/vendor specific events to EPF from EPC.
-> 
-> The example usage of all notifiers is provided in the commit description.
-> 
-> Thanks,
-> Mani
-> 
-> Manivannan Sadhasivam (5):
->    PCI: endpoint: Add linkdown notifier support
->    PCI: endpoint: Add BME notifier support
->    PCI: endpoint: Add PME notifier support
->    PCI: endpoint: Add D_STATE notifier support
->    PCI: endpoint: Add custom notifier support
-> 
->   drivers/pci/endpoint/pci-epc-core.c | 89 +++++++++++++++++++++++++++++
->   include/linux/pci-epc.h             |  5 ++
->   include/linux/pci-epf.h             |  5 ++
->   3 files changed, 99 insertions(+)
-> 
-> --
-> 2.25.1
-> 
