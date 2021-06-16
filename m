@@ -2,118 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id ADB383AA547
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jun 2021 22:26:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 092853AA576
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jun 2021 22:40:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233482AbhFPU2s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Jun 2021 16:28:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49234 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233471AbhFPU2s (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Jun 2021 16:28:48 -0400
-Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF282C06175F
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Jun 2021 13:26:40 -0700 (PDT)
-Received: by mail-ot1-x330.google.com with SMTP id j11-20020a9d738b0000b02903ea3c02ded8so3829188otk.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Jun 2021 13:26:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=T6gAZUccFikvtHCOVi1+1qn3JiUL2nu1CR9FCcCl0vw=;
-        b=J/uaZSGnkBHGkMQg/39IxMz3uwjTcFNFFgiHfdL/4cg5SNHXVxYnfsS0ciu3LzKJKV
-         rQCAuNJaO1Y7oLoifjLYWa1AdP14YPjexECYs8Fjc15FmDvEil6DaqQ3DJ3SpM4SA5Fm
-         nbu/8lS3NmZKqOZjbzIp18VXH8tYK0Qr3Cr6QdnBFruCkpN6VOnsM07MXtwBTCJ/goGm
-         VCGjjiEatOMYQW+5nkaxVBu11QWLIGH1DQK0gHLHEnCDEbaVssB8oF2EOzQ52POxe/57
-         /4UsfSYfXHOtQmEFLUutCYn7IXYkaUjtTOoZZHRI0GFH55DDkqqed/6u60qo2+JNGYoq
-         dJ5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=T6gAZUccFikvtHCOVi1+1qn3JiUL2nu1CR9FCcCl0vw=;
-        b=XGeSVTo1f3ZqZKUPYRL0ofDjgD805lGtbjmLZEkBAsPyOmV1r4fbRbSyXa9eV+8376
-         txfAqwJhseTpV5GmGURyyIQnNJhLyLyV5gpJmNyw/pKdRcFMonXOTF0czWL700iGkFUM
-         MB2XfEG1tA7dLteRumkSrB4RkWkymsNXMsRRSKKj+DkGeUwzujFN4YWEbvOC0Uy95UFt
-         mtXv4akoh6BNQ6ToBGohnfPujXyHuANPLBXyCpDHDCIxhGiivjRKIoNB2k4ferEIkTBN
-         +rFY0Rzw3BozgVm4yl4Rj++0mXkbjG3pYaM72K9+fbcodav56xZoW8nxuYki682u+mit
-         EC9Q==
-X-Gm-Message-State: AOAM530k8eBzECkUa5D7z4NCuSurOM11qj6kFpnnu/LWebeWF6BPPKB/
-        7H5w1scNRHPa/y7/QDRCo64tuA==
-X-Google-Smtp-Source: ABdhPJwtJnLmMYb4u0xCB0siYoVRKCx2zq1adGTibu3BIJ45pIRYbWxgJUiCYuJ5TeotUMoowtOdwA==
-X-Received: by 2002:a05:6830:411c:: with SMTP id w28mr1462057ott.196.1623875200030;
-        Wed, 16 Jun 2021 13:26:40 -0700 (PDT)
-Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id v1sm796040ota.22.2021.06.16.13.26.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Jun 2021 13:26:39 -0700 (PDT)
-Date:   Wed, 16 Jun 2021 15:26:37 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Sibi Sankar <sibis@codeaurora.org>
-Cc:     jassisinghbrar@gmail.com, manivannan.sadhasivam@linaro.org,
-        agross@kernel.org, rananta@codeaurora.org, vnkgutta@codeaurora.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        stable@vger.kernel.org
-Subject: Re: [PATCH] mailbox: qcom-ipcc: Fix IPCC mbox channel exhaustion
-Message-ID: <YMpefUyfBhfgsmOh@yoga>
-References: <1623865378-1943-1-git-send-email-sibis@codeaurora.org>
+        id S233610AbhFPUmk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Jun 2021 16:42:40 -0400
+Received: from mail.kernel.org ([198.145.29.99]:36350 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S233560AbhFPUmj (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 16 Jun 2021 16:42:39 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id E09D061076;
+        Wed, 16 Jun 2021 20:40:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1623876033;
+        bh=mhLIWZiGeiG2xrFjpuiGWElCi/uYrQ99Uv8/gqQ5NXk=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=qUajzdGGeCVQE2tR6QDK7HHm3PJpC7IP3CsF2AeFMLxGwLx9Lu4koeza4lUN+j2Re
+         RtBQOUSxrAsTw71Op/fXcJFRzkK0e/6eqElJLtanjxwY0ZYvPdKGDMt93FYLNc4w0j
+         OZ6XVJ0KodJeHZFSDEU9k6GOs/90t1d7yUPmENmgjnWrEPaYPzmjOrwrofRvVRi01k
+         CrxSvL5q9HEfYl236pUogfptpAhUiY+Ayeg+NanQ+jnf8OBgy6Z5OugT1U1Ya2HLI6
+         M0EcsUhfOPBIb98K+WfA6yZYB5Ullzn7kgtHwYH7u6vHw8H6L9d2Rl7c9tPJp/A1qO
+         X7bZgewuVXBEw==
+Date:   Wed, 16 Jun 2021 21:40:12 +0100
+From:   Mark Brown <broonie@kernel.org>
+To:     Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Cc:     Cheng-yi Chiang <cychiang@chromium.org>,
+        Taniya Das <tdas@codeaurora.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        ALSA development <alsa-devel@alsa-project.org>,
+        Banajit Goswami <bgoswami@codeaurora.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Patrick Lai <plai@codeaurora.org>,
+        Takashi Iwai <tiwai@suse.com>,
+        Tzung-Bi Shih <tzungbi@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Tzung-Bi Shih <tzungbi@google.com>,
+        Andy Gross <agross@kernel.org>,
+        Rohit kumar <rohitkr@codeaurora.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Dylan Reid <dgreid@chromium.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Judy Hsiao <judyhsiao@chromium.org>,
+        "moderated list:ARM/Mediatek SoC support" 
+        <linux-arm-kernel@lists.infradead.org>
+Subject: Re: [PATCH] ASoC: max98357a: set channels_max to 4
+Message-ID: <20210616204012.GD6418@sirena.org.uk>
+References: <20210526154704.114957-1-judyhsiao@chromium.org>
+ <CA+Px+wXGjZCOhhAVh9eRw6L-g8g7Qi7Rf_3YHpHSCB2o=XQ+4g@mail.gmail.com>
+ <CAFv8NwKkfGnpw_5PBwJSjVXsuw3L8=1RyEJ4PWdRX5-J75bk6A@mail.gmail.com>
+ <3501e398-dfba-43b1-4638-325a158e860d@linux.intel.com>
+ <CAFv8Nw+FNfmgwadeFMWjRiGbKFuO4JJ=9ggRHxG+Pq_OuHdmeA@mail.gmail.com>
+ <7748e621-ba54-db90-6b56-23e006eb1dbe@linux.intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="F8dlzb82+Fcn6AgP"
 Content-Disposition: inline
-In-Reply-To: <1623865378-1943-1-git-send-email-sibis@codeaurora.org>
+In-Reply-To: <7748e621-ba54-db90-6b56-23e006eb1dbe@linux.intel.com>
+X-Cookie: Revenge is a form of nostalgia.
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 16 Jun 12:42 CDT 2021, Sibi Sankar wrote:
 
-> Fix IPCC (Inter-Processor Communication Controller) channel exhaustion by
-> setting the channel private data to NULL on mbox shutdown.
-> 
-> Err Logs:
-> remoteproc: MBA booted without debug policy, loading mpss
-> remoteproc: glink-edge: failed to acquire IPC channel
-> remoteproc: failed to probe subdevices for remoteproc: -16
-> 
-> Fixes: fa74a0257f45 ("mailbox: Add support for Qualcomm IPCC")
-> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
-> Cc: stable@vger.kernel.org
+--F8dlzb82+Fcn6AgP
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+On Wed, Jun 16, 2021 at 11:23:36AM -0500, Pierre-Louis Bossart wrote:
 
-Regards,
-Bjorn
+> > On this platform there is no TDM support, so there were two I2S data lines.
 
-> ---
->  drivers/mailbox/qcom-ipcc.c | 6 ++++++
->  1 file changed, 6 insertions(+)
-> 
-> diff --git a/drivers/mailbox/qcom-ipcc.c b/drivers/mailbox/qcom-ipcc.c
-> index 2d13c72944c6..584700cd1585 100644
-> --- a/drivers/mailbox/qcom-ipcc.c
-> +++ b/drivers/mailbox/qcom-ipcc.c
-> @@ -155,6 +155,11 @@ static int qcom_ipcc_mbox_send_data(struct mbox_chan *chan, void *data)
->  	return 0;
->  }
->  
-> +static void qcom_ipcc_mbox_shutdown(struct mbox_chan *chan)
-> +{
-> +	chan->con_priv = NULL;
-> +}
-> +
->  static struct mbox_chan *qcom_ipcc_mbox_xlate(struct mbox_controller *mbox,
->  					const struct of_phandle_args *ph)
->  {
-> @@ -184,6 +189,7 @@ static struct mbox_chan *qcom_ipcc_mbox_xlate(struct mbox_controller *mbox,
->  
->  static const struct mbox_chan_ops ipcc_mbox_chan_ops = {
->  	.send_data = qcom_ipcc_mbox_send_data,
-> +	.shutdown = qcom_ipcc_mbox_shutdown,
->  };
->  
->  static int qcom_ipcc_setup_mbox(struct qcom_ipcc *ipcc)
-> -- 
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
-> 
+> Interesting, I haven't seen such 'multi-lane' solutions so far for I2S.
+
+They're moderately common for high end systems (eg, you'll see surround
+sound systems do this) - it makes it easier to find higher performance
+DACs if you can use regular stereo DACs and it helps a bit with layout
+if you can run slower digital signals.  There's controllers upstream
+that do this without needing to tie together multiple stereo controllers
+on the SoC side, one of the variants of the Samsung I2S controllers does
+it for example.
+
+--F8dlzb82+Fcn6AgP
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmDKYasACgkQJNaLcl1U
+h9DJTgf9GVaBIAfl61pF8E56hCwdxoKRTFOYvXMS9Ro1gyi92ejk9latUAcVfHWS
+qyfSyeafsZNSMo4/ZHQ6hesfIikj3o7+WDlBf7f74rjQ/2sF2FKVtzqN0CG0/WQ/
+3lFWBL+U/OzQUyBp4GzjndcxgiArjFZ4FqQ0gLM/X/H+cSTThEULsPK1YVZKrbZo
+2BUv284pzIGcc2+M7eJK/ssifFkGUBkRoBQGb61GKJSFP9JbWCGLN1iDpj+ruCv1
+x6noeMrPikdrtg9bqg2B1xos7vBbi8fgRs/J1T6fynimQ/3G7VwBHJrX50aLoBnH
+1lN8LTDUGFKCoBTiT5AUCd0K1Q1gUg==
+=qHwR
+-----END PGP SIGNATURE-----
+
+--F8dlzb82+Fcn6AgP--
