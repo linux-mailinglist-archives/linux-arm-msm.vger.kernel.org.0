@@ -2,182 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 934E23AA32B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jun 2021 20:30:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2E5A93AA372
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jun 2021 20:47:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231618AbhFPScc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Jun 2021 14:32:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51238 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231351AbhFPScb (ORCPT
+        id S230001AbhFPStO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Jun 2021 14:49:14 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:29659 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232027AbhFPStO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Jun 2021 14:32:31 -0400
-Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A25DFC061574
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Jun 2021 11:30:24 -0700 (PDT)
-Received: by mail-pl1-x629.google.com with SMTP id e7so1552219plj.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Jun 2021 11:30:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=oMmBa/UenZSiz8FWRlUYJ1ApLColqphv5fT0ZtHZkco=;
-        b=WKm6uhmxacLHEonEcSMaA5j3VxH+IMGkGzvLS3a/XOVz+YuDdJpchp0+D4dErQF2N4
-         wonuPp+nUW/aooKV8wk4KPh0EYl+GrrdNV1YOFCiej81yxuvF4yh143YqjOuBaKn6Y+t
-         sON6O3h5g4Hi9HtZBtcb1pOPR4F1/Ti3mSp2D+GhLV9l1nJ+e7W25FX356fw1PYVT+/l
-         4UonLYns+/6oImensYAibJDoZiyOmYTRTiFO2QQQWJjHQNLfHmZeBBIZ+qNzgczk/3xz
-         CLxdlkFimaa70/7+COb05076EcfTGenXgd5zn+C27dIvFgZNIQhiyaNzch7jmwhAlQ7k
-         sGpw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=oMmBa/UenZSiz8FWRlUYJ1ApLColqphv5fT0ZtHZkco=;
-        b=Xws7QRsZDQ+0860iYNM/umfQDT2Og8k/nVoSZArhB2T90dQK6+uU1BoeVEbX71QJe+
-         4cLleUkmouhksktlehQyFtZkmtSxchRvCWtCeQ2VeWfDiLrhWsSRmzlEUe4ZhlvpkS0j
-         3SgvmbkRcKvltHA9UOATeBXgLTRrp8onYXHaP3hK824hABny/qLrSn5SmE6r4dMpgOdb
-         YqTfGO+MRL/rDFZbh6UaVs0thCYFM2L33lRwpfY4n7ET4tkMcM7H2jzJl+pZH02Cvt41
-         FVTOKGnmtqR5IlEKOqhqpzhmpJI/m9uF0yOXC5RR8mFnNRQSH4/ADA85vajaRbnlu3gK
-         /ySQ==
-X-Gm-Message-State: AOAM532b3evFcX+60+pOo+YT+a9zd9mbg7jWgsgh8BekwTW2nXUbJSWM
-        d5FEHas/Wm7pOAD89Akl3HE6
-X-Google-Smtp-Source: ABdhPJyqynxiYazXV5IbplMzPc2VHuctu11Dn+8ZNjUwy+usenSZ+jMti/oBrereusj21n+iGcgFEQ==
-X-Received: by 2002:a17:90a:bd18:: with SMTP id y24mr12297762pjr.83.1623868223982;
-        Wed, 16 Jun 2021 11:30:23 -0700 (PDT)
-Received: from thinkpad ([2409:4072:17:2c05:a14f:78ce:1082:5556])
-        by smtp.gmail.com with ESMTPSA id h4sm2881664pjv.55.2021.06.16.11.30.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Jun 2021 11:30:23 -0700 (PDT)
-Date:   Thu, 17 Jun 2021 00:00:17 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Om Prakash Singh <omp@nvidia.com>
-Cc:     kishon@ti.com, lorenzo.pieralisi@arm.com, bhelgaas@google.com,
-        linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
-        smohanad@codeaurora.org
-Subject: Re: [PATCH 1/5] PCI: endpoint: Add linkdown notifier support
-Message-ID: <20210616183017.GB152639@thinkpad>
-References: <20210616115913.138778-1-manivannan.sadhasivam@linaro.org>
- <20210616115913.138778-2-manivannan.sadhasivam@linaro.org>
- <443ec752-08e2-83dd-2b6f-b5e74c7bd8e5@nvidia.com>
+        Wed, 16 Jun 2021 14:49:14 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1623869228; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=rXxMRiUQCFxWYdeEQMd1dqMz8gjZz4tfzN8B1BwOFjg=; b=ReWeE6pMkVD9sFnGEHYAQo1pYaBxLxPrZhtnnXFQNN+Lx3u6ET7XauJbHFHujHhzcsSxWoLK
+ NvCvrP3X6dLMsa/TKVzxBSv+xSqQuIuB5LVLanokMPQWEib5iwY8rHIaEQxPzJ1pJVLATKpq
+ kApAye2N3K2cyknskpT7ZJu9fI0=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
+ 60ca4728e27c0cc77f77d3d8 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 16 Jun 2021 18:47:04
+ GMT
+Sender: sidgup=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id B1E61C4338A; Wed, 16 Jun 2021 18:47:03 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-3.1 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
+Received: from [192.168.1.10] (cpe-75-83-25-192.socal.res.rr.com [75.83.25.192])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: sidgup)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id CCE98C433D3;
+        Wed, 16 Jun 2021 18:47:01 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org CCE98C433D3
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=sidgup@codeaurora.org
+Subject: Re: [PATCH v3 1/4] remoteproc: core: Move cdev add before device add
+To:     Greg KH <gregkh@linuxfoundation.org>
+Cc:     bjorn.andersson@linaro.org, ohad@wizery.com,
+        linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, psodagud@codeaurora.org,
+        stable@vger.kernel.org
+References: <1623723671-5517-1-git-send-email-sidgup@codeaurora.org>
+ <1623723671-5517-2-git-send-email-sidgup@codeaurora.org>
+ <YMgy7eg3wde0eVfe@kroah.com>
+ <0a196786-f624-d9bb-8ef9-55c04ed57497@codeaurora.org>
+ <YMmTGD6hAKbpGWMp@kroah.com>
+From:   Siddharth Gupta <sidgup@codeaurora.org>
+Message-ID: <f81acd52-fe59-a296-b221-febbf8281606@codeaurora.org>
+Date:   Wed, 16 Jun 2021 11:47:01 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <443ec752-08e2-83dd-2b6f-b5e74c7bd8e5@nvidia.com>
+In-Reply-To: <YMmTGD6hAKbpGWMp@kroah.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jun 16, 2021 at 11:52:28PM +0530, Om Prakash Singh wrote:
-> 
-> 
-> On 6/16/2021 5:29 PM, Manivannan Sadhasivam wrote:
-> > External email: Use caution opening links or attachments
-> > 
-> > 
-> > Add support to notify the EPF device about the linkdown event from the
-> > EPC device.
-> > 
-> > Usage:
-> > ======
-> > 
-> > EPC
-> > ---
-> > 
-> > ```
-> > static irqreturn_t pcie_ep_irq(int irq, void *data)
-> > {
-> > ...
-> >          case PCIE_EP_INT_LINK_DOWN:
-> >                  pci_epc_linkdown(epc);
-> >                  break;
-> Can you provide use case/scenario when epc will get LINK_DOWN interrupt?
-> 
 
-During host shutdown/reboot epc will get LINK_DOWN interrupt. And in our MHI
-function we need to catch that for handling the SYSERR state as per the spec.
+On 6/15/2021 10:58 PM, Greg KH wrote:
+> On Tue, Jun 15, 2021 at 12:03:26PM -0700, Siddharth Gupta wrote:
+>> On 6/14/2021 9:56 PM, Greg KH wrote:
+>>> On Mon, Jun 14, 2021 at 07:21:08PM -0700, Siddharth Gupta wrote:
+>>>> When cdev_add is called after device_add has been called there is no
+>>>> way for the userspace to know about the addition of a cdev as cdev_add
+>>>> itself doesn't trigger a uevent notification, or for the kernel to
+>>>> know about the change to devt. This results in two problems:
+>>>>    - mknod is never called for the cdev and hence no cdev appears on
+>>>>      devtmpfs.
+>>>>    - sysfs links to the new cdev are not established.
+>>>>
+>>>> The cdev needs to be added and devt assigned before device_add() is
+>>>> called in order for the relevant sysfs and devtmpfs entries to be
+>>>> created and the uevent to be properly populated.
+>>> So this means no one ever ran this code on a system that used devtmpfs?
+>>>
+>>> How was it ever tested?
+>> My testing was done with toybox + Android's ueventd ramdisk.
+>> As I mentioned in the discussion, the race became evident
+>> recently. I will make sure to test all such changes without
+>> systemd/ueventd in the future.
+> It isn't an issue of systemd/ueventd, those do not control /dev on a
+> normal system, that is what devtmpfs is for.
+I am not fully aware of when devtmpfs is enabled or not, but in
+case it is not - systemd/ueventd will create these files with
+mknod, right? I was even manually able to call mknod from the
+terminal when some of the remoteproc character device entries
+showed up (using major number from there, and minor number being
+the remoteproc id), and that allowed me to boot up the
+remoteprocs as well.
+>
+> And devtmpfs nodes are only created if you create a struct device
+> somewhere with a proper major/minor, which you were not doing here, so
+> you must have had a static /dev on your test systems, right?
+I am not sure of what you mean by a static /dev? Could you
+explain? In case you mean the character device would be
+non-functional, that is not the case. They have been working
+for us since the beginning.
 
 Thanks,
-Mani
-
-> > ...
-> > }
-> > ```
-> > 
-> > EPF
-> > ---
-> > 
-> > ```
-> > static int pci_epf_notifier(struct notifier_block *nb, unsigned long val,
-> >                              void *data)
-> > {
-> > ...
-> >          case LINK_DOWN:
-> >                  /* Handle link down event */
-> >                  break;
-> > ...
-> > }
-> > ```
-> > 
-> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > ---
-> >   drivers/pci/endpoint/pci-epc-core.c | 17 +++++++++++++++++
-> >   include/linux/pci-epc.h             |  1 +
-> >   include/linux/pci-epf.h             |  1 +
-> >   3 files changed, 19 insertions(+)
-> > 
-> > diff --git a/drivers/pci/endpoint/pci-epc-core.c b/drivers/pci/endpoint/pci-epc-core.c
-> > index adec9bee72cf..f29d78c18438 100644
-> > --- a/drivers/pci/endpoint/pci-epc-core.c
-> > +++ b/drivers/pci/endpoint/pci-epc-core.c
-> > @@ -641,6 +641,23 @@ void pci_epc_linkup(struct pci_epc *epc)
-> >   }
-> >   EXPORT_SYMBOL_GPL(pci_epc_linkup);
-> > 
-> > +/**
-> > + * pci_epc_linkdown() - Notify the EPF device that EPC device has dropped the
-> > + *                     connection with the Root Complex.
-> > + * @epc: the EPC device which has dropped the link with the host
-> > + *
-> > + * Invoke to Notify the EPF device that the EPC device has dropped the
-> > + * connection with the Root Complex.
-> > + */
-> > +void pci_epc_linkdown(struct pci_epc *epc)
-> > +{
-> > +       if (!epc || IS_ERR(epc))
-> > +               return;
-> > +
-> > +       atomic_notifier_call_chain(&epc->notifier, LINK_DOWN, NULL);
-> > +}
-> > +EXPORT_SYMBOL_GPL(pci_epc_linkdown);
-> > +
-> >   /**
-> >    * pci_epc_init_notify() - Notify the EPF device that EPC device's core
-> >    *                        initialization is completed.
-> > diff --git a/include/linux/pci-epc.h b/include/linux/pci-epc.h
-> > index b82c9b100e97..23590efc13e7 100644
-> > --- a/include/linux/pci-epc.h
-> > +++ b/include/linux/pci-epc.h
-> > @@ -202,6 +202,7 @@ void pci_epc_destroy(struct pci_epc *epc);
-> >   int pci_epc_add_epf(struct pci_epc *epc, struct pci_epf *epf,
-> >                      enum pci_epc_interface_type type);
-> >   void pci_epc_linkup(struct pci_epc *epc);
-> > +void pci_epc_linkdown(struct pci_epc *epc);
-> >   void pci_epc_init_notify(struct pci_epc *epc);
-> >   void pci_epc_remove_epf(struct pci_epc *epc, struct pci_epf *epf,
-> >                          enum pci_epc_interface_type type);
-> > diff --git a/include/linux/pci-epf.h b/include/linux/pci-epf.h
-> > index 6833e2160ef1..e9ad634b1575 100644
-> > --- a/include/linux/pci-epf.h
-> > +++ b/include/linux/pci-epf.h
-> > @@ -20,6 +20,7 @@ enum pci_epc_interface_type;
-> >   enum pci_notify_event {
-> >          CORE_INIT,
-> >          LINK_UP,
-> > +       LINK_DOWN,
-> >   };
-> > 
-> >   enum pci_barno {
-> > --
-> > 2.25.1
-> > 
+Sid
+>
+> thanks,
+>
+> greg k-h
