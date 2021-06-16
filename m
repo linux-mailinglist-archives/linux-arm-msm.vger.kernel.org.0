@@ -2,55 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F014E3A979E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jun 2021 12:36:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EF3E83A995B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jun 2021 13:35:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232030AbhFPKio (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Jun 2021 06:38:44 -0400
-Received: from mail.kernel.org ([198.145.29.99]:51024 "EHLO mail.kernel.org"
+        id S230055AbhFPLhc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Jun 2021 07:37:32 -0400
+Received: from mail.kernel.org ([198.145.29.99]:36978 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231922AbhFPKin (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Jun 2021 06:38:43 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id ED88960FF4;
-        Wed, 16 Jun 2021 10:36:36 +0000 (UTC)
+        id S229503AbhFPLhb (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 16 Jun 2021 07:37:31 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 558336128B;
+        Wed, 16 Jun 2021 11:35:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1623839797;
-        bh=3oTb/1+XDcFsTnzsrZvYuutb3J6p97qLHaHtThQAkqc=;
+        s=k20201202; t=1623843325;
+        bh=PzV2MEWSbQ8RK/gPkQQ7OF/Cwl0iVSmSTAcJaSf9HHM=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=IFSOjzgUTgRVG+msUdDw2KENqBmzvBhpu7O5BIhA3opNeq215BrJnOxmlXZMRZ0av
-         7kEGyZsLzKzKy5HCXAzl6+TROnko29I3j2HZ9rA7scbnrIRMlStxTumWl/UnrIKgVY
-         L3oRPnh4SRv/5s258GLwl8hm7DDcBdOHhOfwjEz+dzW6rjuRWfV9BxY2+hsFGvZysu
-         aQsKIDvJEhS4YBlb5puVpz7EgEN4LE2M7dkaQqt84XDN+xzNuFyuEwIT3SelMipH+U
-         /dKshZ/hc6tOYokOCDJiPjri2GgP3WqgLD1vhFP5ku1kqek3nRP53wa2MKsabB10Sc
-         AIz5jQ3fCWlfg==
-Date:   Wed, 16 Jun 2021 16:06:34 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, martin.botka@somainline.org,
-        angelogioacchino.delregno@somainline.org,
-        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
+        b=hcVyna82yqf0QpgsHmlXZCfcqXyqANV2sngCLxXyovF5ec4EpbSaRSBeAZMu3edfq
+         fbp7+WZUexMcF0Dduh4K5dTyGyQln3zx7IF92hUn/hntdLwpHGTN6AvPmSUPeVQUl9
+         Yyhni9Oob8e+ObQ4tGjUd04d+SzJOijbTv/tqL4pJoqk62pQl1RblM7MQqaO/kE78t
+         hSFvjUnso4csJ7qamyHLPszyUu5EykkHjrBHFVQljnc7H1ocRemOaNUmkH78yUZJG8
+         g5mf5Lr/I8ordIfwBAN+CJGkBO/PTXA5NM8Y2E/y1vVCqF/4Ws/syEypQgv0hixOBq
+         5WP7Gv+nDM7Mw==
+Date:   Wed, 16 Jun 2021 12:35:05 +0100
+From:   Mark Brown <broonie@kernel.org>
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Wolfram Sang <wsa@kernel.org>, linux-arm-msm@vger.kernel.org,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/3] dt-bindings: dmaengine: qcom: gpi: add compatible
- for sm8250
-Message-ID: <YMnUMuUahJM/9KTA@vkoul-mobl>
-References: <20210614235358.444834-1-konrad.dybcio@somainline.org>
+        Matthias Kaehlcke <mka@chromium.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        Amit Pundir <amit.pundir@linaro.org>,
+        linux-spi@vger.kernel.org, linux-i2c@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 4/7] spi: spi-geni-qcom: Add support for GPI dma
+Message-ID: <20210616113505.GB6418@sirena.org.uk>
+References: <20210111151651.1616813-1-vkoul@kernel.org>
+ <20210111151651.1616813-5-vkoul@kernel.org>
+ <20210111163504.GD4728@sirena.org.uk>
+ <YMm7ZWXnJyb8QT1u@vkoul-mobl>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="uZ3hkaAS1mZxFaxD"
 Content-Disposition: inline
-In-Reply-To: <20210614235358.444834-1-konrad.dybcio@somainline.org>
+In-Reply-To: <YMm7ZWXnJyb8QT1u@vkoul-mobl>
+X-Cookie: Revenge is a form of nostalgia.
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 15-06-21, 01:53, Konrad Dybcio wrote:
-> No functional changes, just adding a new compatible for a different
-> SoC.
 
-Applied 1 & 2, thanks
+--uZ3hkaAS1mZxFaxD
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
--- 
-~Vinod
+On Wed, Jun 16, 2021 at 02:20:45PM +0530, Vinod Koul wrote:
+
+> Looking at the code, that is ideal case. Only issue I can see is that
+> core DMA mapping device being used is incorrect. The core would use
+> ctlr->dev.parent which is the spi0 device here.
+
+Why would the parent of the controller be a SPI device?
+
+> But in this case, that wont work. We have a parent qup device which is
+> the parent for both spi and dma device and needs to be used for
+> dma-mapping!=20
+
+> If we allow drivers to set dma mapping device and use that, then I can
+> reuse the core. Let me know if that is agreeable to you and I can hack
+> this up. Maybe add a new member in spi_controller which is filled by
+> drivers in can_dma() callback?
+
+Possibly, I'd need to see the code.
+
+--uZ3hkaAS1mZxFaxD
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmDJ4ekACgkQJNaLcl1U
+h9Af1wf/XUOdANnfcSkgc6h7gVWBBmYYK7XBQctlluQOJxB4547Z5GJBEqISj560
+Fn5NhyLDpooG5dGnHVv9434n1mPZiU7SwUbi1fwwauNe9prWjvZnC4NpUbobm1XX
+KFczLzgQZ2QiiVDcry2XQz5+GsmHWDPlcBvN9B2EcM37BUXooUTLoAJmwYbB4kHu
+LmY6Su4yZFynekXxcCuZN+8wlCGQEcX89lppEyRH62cyimARLoh4psPJuLBRNwbD
+xw+FCLQxBkNVWYZD5v3t2KWCIqewSGUS1YTAAJUCiPftepbsH91CragR2sC6AewR
+EXh4LGNP8gNAt38ftvgzwKFGIBC7TA==
+=VcFe
+-----END PGP SIGNATURE-----
+
+--uZ3hkaAS1mZxFaxD--
