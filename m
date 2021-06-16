@@ -2,146 +2,202 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0C6F13AA306
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jun 2021 20:16:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1D99D3AA31C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Jun 2021 20:23:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231739AbhFPSS5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Jun 2021 14:18:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48244 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231613AbhFPSS4 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Jun 2021 14:18:56 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43CB1C06175F
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Jun 2021 11:16:49 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id r5so5828127lfr.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Jun 2021 11:16:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=W2b2jFEehNknJRq+OcnVlifnQjPyUsywazDun11Qz00=;
-        b=RbIa8yy5N57ekFnm44RR4Wz17v63PQuvQ7iuEyEsAzjhP2pXfbm8K1mWUT9rce4TZ/
-         E4KCWV3OWpfaA5Pki/doXwe5mXERlsCV49sfaeOZA7QiVRDQllM1bDlHVUQVwecGkpuB
-         dAzqFbFNzFZRmagp0n0ESxf9CFGvY0lzvVnHHeb85GNZ2ba5Wz8jNOUfna3EKvpNMbPs
-         jqbldkb5/5/1dUvQflwHc/hIHSJmPdAB9JGFjDxTYQQ+i5xCABXBNAJUre80xaUIp2TD
-         Zb+6T1o/qGNN7HC1z+f//GpSaLto9lB1n5U+inX4YE/MiBCLymnLkwW+Vqf0PJnmx4He
-         IKYg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=W2b2jFEehNknJRq+OcnVlifnQjPyUsywazDun11Qz00=;
-        b=lbEPKdjCP3xszTG9VSOWifa49pYWnY9W892xFhVTvGIquu3sbOthOlUfxa98nYfvyw
-         PTThEvHcIKPM/GbQqjCV7JCjRo4AKkGKpkh9erPm5dU/Wh/auIg9aqbGTLtvzB+3QPXf
-         /UMgORG3ZbrwEQk2PsRTbPnGh85YNOLclOs/0aHQ0F26ZQetF0Y1r77c4Le4utPX4b4z
-         JDxBf7ZrpwwWJTS4MBYpp9TD2sZxIDgzD/iFoG2an6X0I/reJ1breGVdEXk2IrR3l+8J
-         cHmYQxFHg+epW458j/Akj/HIYustRhwHK34KFH6ExyjyDlCf35sRILP1dnimLEZcdQR8
-         vlTg==
-X-Gm-Message-State: AOAM533zqsFd0s2FZ46lzOmV2TE0slT9a6NpZFWnYosBvw7bPrCH4yiq
-        Ufy6/Ax40y8UyIRMlNKkVMZ/XQ==
-X-Google-Smtp-Source: ABdhPJyeUC5P2zVYSmtzIgWA4NvoIF5no5BuhXQhyQPVwfntBDU2HrGn40e9WtI3xYkaEMbQa9s24w==
-X-Received: by 2002:a19:8c58:: with SMTP id i24mr709113lfj.121.1623867406491;
-        Wed, 16 Jun 2021 11:16:46 -0700 (PDT)
-Received: from [192.168.88.254] ([85.249.44.185])
-        by smtp.gmail.com with ESMTPSA id s28sm367049ljc.34.2021.06.16.11.16.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 16 Jun 2021 11:16:45 -0700 (PDT)
-Subject: Re: [PATCH 00/17] CAMSS: SM8250 support (and some fixes)
-To:     Jonathan Marek <jonathan@marek.ca>, linux-arm-msm@vger.kernel.org
-Cc:     robert.foss@linaro.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-        open list <linux-kernel@vger.kernel.org>,
-        "open list:QUALCOMM CAMERA SUBSYSTEM DRIVER" 
-        <linux-media@vger.kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Todor Tomov <todor.too@gmail.com>
-References: <20210608223513.23193-1-jonathan@marek.ca>
-From:   Andrey Konovalov <andrey.konovalov@linaro.org>
-Message-ID: <7a9b847c-34b8-c9ca-8232-88b6ecb23ff5@linaro.org>
-Date:   Wed, 16 Jun 2021 21:16:42 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.8.1
+        id S231792AbhFPSZK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Jun 2021 14:25:10 -0400
+Received: from mail-mw2nam12on2043.outbound.protection.outlook.com ([40.107.244.43]:19040
+        "EHLO NAM12-MW2-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S231613AbhFPSZJ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 16 Jun 2021 14:25:09 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=LEoXmaN6j0URYx6cJCAHDF6jvqIwB25iKC5cAl5bPixEZOHNxRxQIPa5eattrYdMcU5KZOPDMOD6lk9fjmKJ+H1pIt1IjE53YlOH8kDn5CsR+Mj47+B8KOvY/2PXNfQzqjTfG/d5xG4z1kRv/IJ0vMSOYLr7TTeVK+RJMMTogtB+dpX75HwaRpk4yRxpa61o9jTcMW4aUo+SaAf4l3/V/6PGHnuP8kum+XgxnR1ygph1GgExTFdpH1/8/G82RPnECOFb32SZHlMnoxG8OI65tnM5lPxn0UzwdugvSf/ewtFeJuQdZq9ZFS3wlNzdWHQOgkts0oyEFQPLCC/vgKDaeA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=zPmcxdY0UU7/u+yMtAPMs6NFk2YYciIJJXNun6jXegM=;
+ b=YR2W1efea/bZtdu0H9cb9A47Edd/1AUTQZJy4syVoKSjaeXZj/LtAdJgwZActstHvgQ5E1uC0LgFABitCQhRppLwhlERAJFRVufyjfC2cSOzbojzZb92KI1JN+YNexfFr97hzuWC/8poySfxBMVC5Mvz/DpGi14rsbKYgQWnG1gRiva8jummiCzdN3P+2ZMebbRiVBHAqj6j464Vb0I5hsNTeeNad/vPtfxPtFx5PimfDaYpNIPnUcEzV6iPbEkTyCDXckk3oivZY6BnSCc21+UH0vEDOjdE/Gnlo4gwxklN0McM1FCS6Q9sLVOe0gMXVGEZIktZouCLma8rBk49tQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.112.34) smtp.rcpttodomain=arm.com smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=none sp=none pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=zPmcxdY0UU7/u+yMtAPMs6NFk2YYciIJJXNun6jXegM=;
+ b=OkvpCWaAGH7+A0uGkshIGoG7Xe167qm1eEsxb3CH501U2fwoap++cTQY9DkNXcZkSzcfXZu65COG4UP20rHsA3Pd1gUY12b1h7OPSCeeDWHr44GpMH0IHv4av4EBIu+KjrtgYPejnfd/gQdq5bbsKpmZQYAkpdN+xRSPQVMJqXZCv1L+D357IZFFPJGebXrYNfkJFyY068vRQdQCKVaIzhg/8fybJ3AhuQl57bj19VpMz/9YTNuMbBCugj0yjc5NVgtHJBbyCF8pPXAZjC3evyG+WmkSLLSi/9i6rVjS/FvFAgFhsmBsF06eEBH2NaQotQ4iGUp8kESW3bAQERPH1w==
+Received: from BN6PR19CA0056.namprd19.prod.outlook.com (2603:10b6:404:e3::18)
+ by DM5PR12MB2488.namprd12.prod.outlook.com (2603:10b6:4:b5::15) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4242.16; Wed, 16 Jun
+ 2021 18:23:01 +0000
+Received: from BN8NAM11FT053.eop-nam11.prod.protection.outlook.com
+ (2603:10b6:404:e3:cafe::8a) by BN6PR19CA0056.outlook.office365.com
+ (2603:10b6:404:e3::18) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4242.16 via Frontend
+ Transport; Wed, 16 Jun 2021 18:23:01 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.112.34)
+ smtp.mailfrom=nvidia.com; arm.com; dkim=none (message not signed)
+ header.d=none;arm.com; dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.112.34 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.112.34; helo=mail.nvidia.com;
+Received: from mail.nvidia.com (216.228.112.34) by
+ BN8NAM11FT053.mail.protection.outlook.com (10.13.177.209) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
+ 15.20.4242.16 via Frontend Transport; Wed, 16 Jun 2021 18:23:01 +0000
+Received: from [10.40.203.90] (172.20.187.6) by HQMAIL107.nvidia.com
+ (172.20.187.13) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Wed, 16 Jun
+ 2021 18:22:57 +0000
+Subject: Re: [PATCH 1/5] PCI: endpoint: Add linkdown notifier support
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        <kishon@ti.com>, <lorenzo.pieralisi@arm.com>, <bhelgaas@google.com>
+CC:     <linux-pci@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <hemantk@codeaurora.org>,
+        <smohanad@codeaurora.org>
+References: <20210616115913.138778-1-manivannan.sadhasivam@linaro.org>
+ <20210616115913.138778-2-manivannan.sadhasivam@linaro.org>
+From:   Om Prakash Singh <omp@nvidia.com>
+Message-ID: <443ec752-08e2-83dd-2b6f-b5e74c7bd8e5@nvidia.com>
+Date:   Wed, 16 Jun 2021 23:52:28 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-In-Reply-To: <20210608223513.23193-1-jonathan@marek.ca>
-Content-Type: text/plain; charset=utf-8; format=flowed
+In-Reply-To: <20210616115913.138778-2-manivannan.sadhasivam@linaro.org>
+Content-Type: text/plain; charset="utf-8"; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
+X-Originating-IP: [172.20.187.6]
+X-ClientProxiedBy: HQMAIL101.nvidia.com (172.20.187.10) To
+ HQMAIL107.nvidia.com (172.20.187.13)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: f37ccc4e-0340-45a2-a796-08d930f3c67d
+X-MS-TrafficTypeDiagnostic: DM5PR12MB2488:
+X-Microsoft-Antispam-PRVS: <DM5PR12MB24886E41A0501A1EC24A2167DA0F9@DM5PR12MB2488.namprd12.prod.outlook.com>
+X-MS-Oob-TLC-OOBClassifiers: OLM:126;
+X-MS-Exchange-SenderADCheck: 1
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: 7/1whZiVcgPuYs2TKgsH7HNVwNeUl4zG7lYhd+XYlaAxvQlRE5IBTeA8Cqojmt9OpCcWOiQVthBm8B+0jARDm8ViVwxYFM5PZJenguM8cExXEMglbYjatazCQuUkAlXht+fqoZk5GAXh2R33aU5helfZLUmOP4YkJit9HJ6ZpqNmuwaCf4vLkH9c0+bBq6iXfbm6vsYgRPxYNORio6MCFeu6Pn8x8BnE7QjaipTLruVWXGmEYpsnPwA6qXd57nDEPhCzea+MzqMPw86CxVvjaVoGYgJh45C6SFyU7utW8vuEmcj5gSeeyEUB+Sk5iUcp8IQtxT479M2oV9bN5SoOKuEPiqeFUYo8c0rJ0TF0C4UIfwb269bFYBOmnXNtlm0xux4FAJdvdwATebgOpFanXAGONvW2L96J6eGvtkDmVp5lhzrQHYqAq4yWT2RvbYafk0Aw/qZnM7HB3iMcm+3Q7vQJD+MAN/2CyzZPm/tsdRzcIqbe/qIJEnPgpw1V9woxZavbDiUc95yAmkKjwtmVVSI3RwqOt4hMQfHqg9685d+INROswBJg7QQ3dmwQozhUuwP5P/6VVCuac2+rHL6rlFQz45SDNZF2yNJTGGOqhvIKKix7oy1MzV+e5m4te8VsZ5r8YLRtqfKm8v1zXgbBC/szbIRqbAC3nTLGcYxsKr+QNRq6DznHEgrOC+4w16f2
+X-Forefront-Antispam-Report: CIP:216.228.112.34;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:schybrid03.nvidia.com;CAT:NONE;SFS:(4636009)(346002)(376002)(136003)(39860400002)(396003)(46966006)(36840700001)(316002)(8676002)(53546011)(86362001)(4326008)(31696002)(36906005)(82310400003)(16576012)(36756003)(5660300002)(110136005)(54906003)(6666004)(8936002)(83380400001)(82740400003)(70206006)(356005)(336012)(26005)(36860700001)(478600001)(186003)(426003)(2906002)(7636003)(2616005)(16526019)(31686004)(47076005)(70586007)(43740500002);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Jun 2021 18:23:01.2946
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: f37ccc4e-0340-45a2-a796-08d930f3c67d
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.112.34];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: BN8NAM11FT053.eop-nam11.prod.protection.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM5PR12MB2488
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Jonathan,
 
-I've given this patchset a try on RB3 board (SDM845) with ov8856 camera sensor - works OK,
-no regressions.
 
-Thanks,
-Andrey
+On 6/16/2021 5:29 PM, Manivannan Sadhasivam wrote:
+> External email: Use caution opening links or attachments
+> 
+> 
+> Add support to notify the EPF device about the linkdown event from the
+> EPC device.
+> 
+> Usage:
+> ======
+> 
+> EPC
+> ---
+> 
+> ```
+> static irqreturn_t pcie_ep_irq(int irq, void *data)
+> {
+> ...
+>          case PCIE_EP_INT_LINK_DOWN:
+>                  pci_epc_linkdown(epc);
+>                  break;
+Can you provide use case/scenario when epc will get LINK_DOWN interrupt?
 
-On 09.06.2021 01:34, Jonathan Marek wrote:
-> This adds initial support for SM8250 and its 4 VFEs and 6 CSIPHYs.
-> The only big change is the added camss-vfe-480.c to support the
-> Titan 480 VFE.
+> ...
+> }
+> ```
 > 
-> v2:
->   - Fixed some typos in commit messages (patches 02 and 08)
->   - patch 03 ("media: camss: csiphy-3ph: add support for SM8250 CSI DPHY"):
->     - moved definition of CAMSS_8250 to this patch,
->     - removed unused lane_enable variable
->     - added a default unreachable case to avoid a warning
->     - added a is_gen2 variable (minor rework)
->   - Undo DECODE_FORMAT_PAYLOAD_ONLY change, add comment instead (patch 04)
->   - "ops" reworks in addition to removing dead code (patch 12)
->   - renamed csid-170 to csid-gen2, added defines for offsets, add missing
->     camnoc_axi clock to sm8250 vfe resources (patch 16/17)
+> EPF
+> ---
 > 
-> Jonathan Marek (17):
->    media: camss: csiphy-3ph: don't print HW version as an error
->    media: camss: csiphy-3ph: disable interrupts
->    media: camss: csiphy-3ph: add support for SM8250 CSI DPHY
->    media: camss: csid-170: fix non-10bit formats
->    media: camss: csid-170: don't enable unused irqs
->    media: camss: csid-170: remove stray comment
->    media: camss: csid-170: support more than one lite vfe
->    media: camss: csid-170: set the right HALT_CMD when disabled
->    media: camss: csid: allow csid to work without a regulator
->    media: camss: remove vdda-csiN from sdm845 resources
->    media: camss: fix VFE irq name
->    media: camss: remove some vfe ops and clean up dead vfe-170 code
->    media: camss: vfe-170: fix "VFE halt timeout" error
->    media: camss: Add initial support for VFE hardware version Titan 480
->    media: camss: add support for V4L2_PIX_FMT_GREY for sdm845 HW
->    media: camss: add support for SM8250 camss
->    media: dt-bindings: media: camss: Add qcom,sm8250-camss binding
+> ```
+> static int pci_epf_notifier(struct notifier_block *nb, unsigned long val,
+>                              void *data)
+> {
+> ...
+>          case LINK_DOWN:
+>                  /* Handle link down event */
+>                  break;
+> ...
+> }
+> ```
 > 
->   .../bindings/media/qcom,sm8250-camss.yaml     | 399 +++++++++++++
->   drivers/media/platform/qcom/camss/Makefile    |   3 +-
->   .../{camss-csid-170.c => camss-csid-gen2.c}   |  32 +-
->   .../media/platform/qcom/camss/camss-csid.c    |  45 +-
->   .../media/platform/qcom/camss/camss-csid.h    |   2 +-
->   .../qcom/camss/camss-csiphy-3ph-1-0.c         | 184 ++++--
->   .../media/platform/qcom/camss/camss-csiphy.c  |   9 +-
->   .../media/platform/qcom/camss/camss-vfe-170.c | 101 +---
->   .../media/platform/qcom/camss/camss-vfe-4-1.c |  25 +-
->   .../media/platform/qcom/camss/camss-vfe-4-7.c |  63 +-
->   .../media/platform/qcom/camss/camss-vfe-4-8.c |  65 +--
->   .../media/platform/qcom/camss/camss-vfe-480.c | 545 ++++++++++++++++++
->   .../platform/qcom/camss/camss-vfe-gen1.c      |  94 +--
->   .../platform/qcom/camss/camss-vfe-gen1.h      |  39 +-
->   drivers/media/platform/qcom/camss/camss-vfe.c |  29 +-
->   drivers/media/platform/qcom/camss/camss-vfe.h |  17 +-
->   .../media/platform/qcom/camss/camss-video.c   |   5 +-
->   drivers/media/platform/qcom/camss/camss.c     | 205 ++++++-
->   drivers/media/platform/qcom/camss/camss.h     |   1 +
->   19 files changed, 1523 insertions(+), 340 deletions(-)
->   create mode 100644 Documentation/devicetree/bindings/media/qcom,sm8250-camss.yaml
->   rename drivers/media/platform/qcom/camss/{camss-csid-170.c => camss-csid-gen2.c} (95%)
->   create mode 100644 drivers/media/platform/qcom/camss/camss-vfe-480.c
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> ---
+>   drivers/pci/endpoint/pci-epc-core.c | 17 +++++++++++++++++
+>   include/linux/pci-epc.h             |  1 +
+>   include/linux/pci-epf.h             |  1 +
+>   3 files changed, 19 insertions(+)
+> 
+> diff --git a/drivers/pci/endpoint/pci-epc-core.c b/drivers/pci/endpoint/pci-epc-core.c
+> index adec9bee72cf..f29d78c18438 100644
+> --- a/drivers/pci/endpoint/pci-epc-core.c
+> +++ b/drivers/pci/endpoint/pci-epc-core.c
+> @@ -641,6 +641,23 @@ void pci_epc_linkup(struct pci_epc *epc)
+>   }
+>   EXPORT_SYMBOL_GPL(pci_epc_linkup);
+> 
+> +/**
+> + * pci_epc_linkdown() - Notify the EPF device that EPC device has dropped the
+> + *                     connection with the Root Complex.
+> + * @epc: the EPC device which has dropped the link with the host
+> + *
+> + * Invoke to Notify the EPF device that the EPC device has dropped the
+> + * connection with the Root Complex.
+> + */
+> +void pci_epc_linkdown(struct pci_epc *epc)
+> +{
+> +       if (!epc || IS_ERR(epc))
+> +               return;
+> +
+> +       atomic_notifier_call_chain(&epc->notifier, LINK_DOWN, NULL);
+> +}
+> +EXPORT_SYMBOL_GPL(pci_epc_linkdown);
+> +
+>   /**
+>    * pci_epc_init_notify() - Notify the EPF device that EPC device's core
+>    *                        initialization is completed.
+> diff --git a/include/linux/pci-epc.h b/include/linux/pci-epc.h
+> index b82c9b100e97..23590efc13e7 100644
+> --- a/include/linux/pci-epc.h
+> +++ b/include/linux/pci-epc.h
+> @@ -202,6 +202,7 @@ void pci_epc_destroy(struct pci_epc *epc);
+>   int pci_epc_add_epf(struct pci_epc *epc, struct pci_epf *epf,
+>                      enum pci_epc_interface_type type);
+>   void pci_epc_linkup(struct pci_epc *epc);
+> +void pci_epc_linkdown(struct pci_epc *epc);
+>   void pci_epc_init_notify(struct pci_epc *epc);
+>   void pci_epc_remove_epf(struct pci_epc *epc, struct pci_epf *epf,
+>                          enum pci_epc_interface_type type);
+> diff --git a/include/linux/pci-epf.h b/include/linux/pci-epf.h
+> index 6833e2160ef1..e9ad634b1575 100644
+> --- a/include/linux/pci-epf.h
+> +++ b/include/linux/pci-epf.h
+> @@ -20,6 +20,7 @@ enum pci_epc_interface_type;
+>   enum pci_notify_event {
+>          CORE_INIT,
+>          LINK_UP,
+> +       LINK_DOWN,
+>   };
+> 
+>   enum pci_barno {
+> --
+> 2.25.1
 > 
