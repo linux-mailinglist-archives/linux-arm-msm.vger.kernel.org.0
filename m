@@ -2,25 +2,25 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7AFA13AB1F9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jun 2021 13:09:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 726343AB204
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jun 2021 13:10:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232332AbhFQLLY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Jun 2021 07:11:24 -0400
-Received: from mail.kernel.org ([198.145.29.99]:52504 "EHLO mail.kernel.org"
+        id S232384AbhFQLMr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Jun 2021 07:12:47 -0400
+Received: from mail.kernel.org ([198.145.29.99]:52864 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229901AbhFQLLU (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Jun 2021 07:11:20 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 8096561209;
-        Thu, 17 Jun 2021 11:09:11 +0000 (UTC)
+        id S232383AbhFQLMr (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 17 Jun 2021 07:12:47 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 7A82F61209;
+        Thu, 17 Jun 2021 11:10:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1623928152;
-        bh=84l+h0maKkmzDzigHHjqNqGTeEXAil0QmCCQktMiKnU=;
+        s=korg; t=1623928239;
+        bh=PMeB3LBuRoII/I325D9/2s+Ps577P3b6ic97qivvTT0=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=OCqCYuFRbPTGiAXnTGZ7lxSgKOK6smXubt5fQQPSGApIFrVXK3YHRVBdyVXyU5Rj1
-         Bneu7FbTwGtCoTO/BLJIWQD3VU1GsoyMnbUh8sHc6R/bnpjA1E/knBPkBkKT9mSHRa
-         QhQf9p+Am13S5RrOdxGNGHXOseLb1Fqw1ld5CvfQ=
-Date:   Thu, 17 Jun 2021 13:09:09 +0200
+        b=ZDgL3tlGpx/x9+gxDv0Jn8OZV88HjcrOL2xyZ/KdkSP1bGLYWhYt7wua3oXvEMUs5
+         eSSkwTYhAI6kjGG3ScJ+IkbkU+q3rrld+95QGvyUhts6U18PF1bPiB1Ic0TaHQJPvW
+         L94tt8hesFhQeMUBN/tTuA3SnaKD5/eM5x98kEbk=
+Date:   Thu, 17 Jun 2021 13:10:36 +0200
 From:   Greg KH <gregkh@linuxfoundation.org>
 To:     Wesley Cheng <wcheng@codeaurora.org>
 Cc:     balbi@kernel.org, robh+dt@kernel.org, agross@kernel.org,
@@ -29,51 +29,41 @@ Cc:     balbi@kernel.org, robh+dt@kernel.org, agross@kernel.org,
         devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         jackp@codeaurora.org, fntoth@gmail.com,
         heikki.krogerus@linux.intel.com, andy.shevchenko@gmail.com
-Subject: Re: [PATCH v10 1/6] usb: gadget: udc: core: Introduce check_config
- to verify USB configuration
-Message-ID: <YMstVXuwAQm5Cea/@kroah.com>
+Subject: Re: [PATCH v10 3/6] usb: dwc3: Resize TX FIFOs to meet EP bursting
+ requirements
+Message-ID: <YMstrL1aQYGe7NB0@kroah.com>
 References: <1623923899-16759-1-git-send-email-wcheng@codeaurora.org>
- <1623923899-16759-2-git-send-email-wcheng@codeaurora.org>
+ <1623923899-16759-4-git-send-email-wcheng@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1623923899-16759-2-git-send-email-wcheng@codeaurora.org>
+In-Reply-To: <1623923899-16759-4-git-send-email-wcheng@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jun 17, 2021 at 02:58:14AM -0700, Wesley Cheng wrote:
-> Some UDCs may have constraints on how many high bandwidth endpoints it can
-> support in a certain configuration.  This API allows for the composite
-> driver to pass down the total number of endpoints to the UDC so it can verify
-> it has the required resources to support the configuration.
-> 
-> Signed-off-by: Wesley Cheng <wcheng@codeaurora.org>
-> ---
->  drivers/usb/gadget/udc/core.c | 25 +++++++++++++++++++++++++
->  include/linux/usb/gadget.h    |  5 +++++
->  2 files changed, 30 insertions(+)
-> 
-> diff --git a/drivers/usb/gadget/udc/core.c b/drivers/usb/gadget/udc/core.c
-> index b7f0b1e..e33ae2d 100644
-> --- a/drivers/usb/gadget/udc/core.c
-> +++ b/drivers/usb/gadget/udc/core.c
-> @@ -1003,6 +1003,31 @@ int usb_gadget_ep_match_desc(struct usb_gadget *gadget,
->  }
->  EXPORT_SYMBOL_GPL(usb_gadget_ep_match_desc);
->  
-> +/**
-> + * usb_gadget_check_config - checks if the UDC can support the number of eps
-> + * @gadget: controller to check the USB configuration
-> + * @ep_map: bitmap of endpoints being requested by a USB configuration
+On Thu, Jun 17, 2021 at 02:58:16AM -0700, Wesley Cheng wrote:
+> +static int dwc3_gadget_check_config(struct usb_gadget *g, unsigned long ep_map)
+> +{
+> +	struct dwc3 *dwc = gadget_to_dwc(g);
+> +	unsigned long in_ep_map;
+> +	int fifo_size = 0;
+> +	int ram1_depth;
+> +	int ep_num;
+> +
+> +	if (!dwc->do_fifo_resize)
+> +		return 0;
+> +
+> +	/* Only interested in the IN endpoints */
+> +	in_ep_map = ep_map >> 16;
 
-Will a u64 really hold all of the possible endpoints?
+Wait, this "map" is split up into 16/16 somehow?  So it's only 32bits
+big?
 
-Why make it odd like this, why not just provide a list like we do in the
-USB core with the structure that USB drivers use?  What can a driver do
-with a bitmap only?
+Where did you document this map structure?  Why is it needed at all, you
+have the gadget, don't you have access to the full list of endpoints
+here as well?
 
-
-thanks,
+confused,
 
 greg k-h
