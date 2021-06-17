@@ -2,202 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 11DD63ABCEF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jun 2021 21:35:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9F14E3ABCF5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jun 2021 21:37:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233668AbhFQThv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Jun 2021 15:37:51 -0400
-Received: from mailout2.w1.samsung.com ([210.118.77.12]:31548 "EHLO
-        mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233679AbhFQThs (ORCPT
+        id S231480AbhFQTja (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Jun 2021 15:39:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48896 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231249AbhFQTj3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Jun 2021 15:37:48 -0400
-Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
-        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20210617193538euoutp02143eb2bbe42a2c005540279860f7dcd8~Jda-MCmZt1993219932euoutp02h
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Jun 2021 19:35:38 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20210617193538euoutp02143eb2bbe42a2c005540279860f7dcd8~Jda-MCmZt1993219932euoutp02h
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1623958538;
-        bh=1uBGtvIj4Fl53/heI+tivIwbHFbFUjdAyoDsN8HU7AU=;
-        h=Subject:To:From:Date:In-Reply-To:References:From;
-        b=vOBgpWQJO5Uvc7wHBO2E49eLkmiCH8oG+m6WtbgmTKiO93v7+01SQ1bCwW5EjqNOy
-         BiiAAWTiW4gIo2npetX7TA9ZbzueJAwaFbxXyC8LFLgasIlsV1hzDNTwpuc0V/7WXg
-         bQdMBEDmDun2iJpo2/ceAAXy5hP5e9WrIeNyfd2c=
-Received: from eusmges1new.samsung.com (unknown [203.254.199.242]) by
-        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
-        20210617193538eucas1p25880900add5677a5b24e765f96cf59f2~Jda_sXNFO1768817688eucas1p2d;
-        Thu, 17 Jun 2021 19:35:38 +0000 (GMT)
-Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
-        eusmges1new.samsung.com (EUCPMTA) with SMTP id DF.1B.09452.904ABC06; Thu, 17
-        Jun 2021 20:35:37 +0100 (BST)
-Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
-        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
-        20210617193537eucas1p217b93d091ae8795581b30931ad8c7467~Jda_HNMXR1770317703eucas1p2l;
-        Thu, 17 Jun 2021 19:35:37 +0000 (GMT)
-Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
-        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
-        20210617193537eusmtrp27e275fd525e9e366420607d6017f9e3e~Jda_GW5AA0769107691eusmtrp2L;
-        Thu, 17 Jun 2021 19:35:37 +0000 (GMT)
-X-AuditID: cbfec7f2-a9fff700000024ec-58-60cba4092751
-Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
-        eusmgms2.samsung.com (EUCPMTA) with SMTP id 87.2B.08696.904ABC06; Thu, 17
-        Jun 2021 20:35:37 +0100 (BST)
-Received: from [106.210.134.192] (unknown [106.210.134.192]) by
-        eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
-        20210617193536eusmtip139d9d96d6e14d089ee2c12c407754f4f~Jda9Gd0Am2888128881eusmtip1J;
-        Thu, 17 Jun 2021 19:35:36 +0000 (GMT)
-Subject: Re: [PATCH v3] ASoC: qcom: Fix for DMA interrupt clear reg
- overwriting
-To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
-        agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
-        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
-        srinivas.kandagatla@linaro.org, rohitkr@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        swboyd@chromium.org, judyhsiao@chromium.org
-From:   Marek Szyprowski <m.szyprowski@samsung.com>
-Message-ID: <5ae06ccb-ffd4-ca9f-5a88-1f8bf8b48d37@samsung.com>
-Date:   Thu, 17 Jun 2021 21:35:36 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0)
-        Gecko/20100101 Thunderbird/78.11.0
+        Thu, 17 Jun 2021 15:39:29 -0400
+Received: from relay04.th.seeweb.it (relay04.th.seeweb.it [IPv6:2001:4b7a:2000:18::165])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1CEAC061760
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Jun 2021 12:37:16 -0700 (PDT)
+Received: from [192.168.1.101] (83.6.168.10.neoplus.adsl.tpnet.pl [83.6.168.10])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 4D5B11F977;
+        Thu, 17 Jun 2021 21:37:13 +0200 (CEST)
+Subject: Re: [RFC v1 06/11] clk: qcom: Add display clock controller driver for
+ SM8350
+To:     Robert Foss <robert.foss@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Taniya Das <tdas@codeaurora.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        "open list:COMMON CLK FRAMEWORK" <linux-clk@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        linux-kernel <linux-kernel@vger.kernel.org>,
+        Vinod Koul <vinod.koul@linaro.org>
+References: <20210616141107.291430-1-robert.foss@linaro.org>
+ <20210616141107.291430-7-robert.foss@linaro.org>
+ <ca6ff020-cd13-e242-ab74-085958e9fc82@somainline.org>
+ <CAG3jFysRuF=xkTaPK3efDW20cQ3hXLqqsT7J5YVgYvO1dmFOvA@mail.gmail.com>
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+Message-ID: <243ab835-bc91-6cc6-a9ce-7be6763dc89e@somainline.org>
+Date:   Thu, 17 Jun 2021 21:37:12 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-In-Reply-To: <20210609072310.26099-1-srivasam@codeaurora.org>
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <CAG3jFysRuF=xkTaPK3efDW20cQ3hXLqqsT7J5YVgYvO1dmFOvA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Content-Language: en-US
-X-Brightmail-Tracker: H4sIAAAAAAAAA02Se0xbVRzHc+6rj6x4uRv2DAkKxsVNxiMad0AkLJnzGv8QHIlRcOMG7ui2
-        wpZeOtFoUkcGrIKDBmLbwdjDPYKyIlQYbF1HQeokNEVoZQLisHUD1yJDrMPho72Z8t/n+z3f
-        X87ve3KkODNHxkr3lZXzmjJOnUjJie6h+66tsk+HC1NnZp5Hrp/+JND4qANDH06eIdGwPUig
-        pls+CrUOukjkbajG0O/jNRhqsI9I0FhfM4WO9R0nUU1LPUBHbYMSdMNaCVDV0BCJQvMjOHJO
-        +THUEWoH2QzbsXSEYk/oRgl27OM6jO01T0vYzrZjFDvlvUqx1wLnKdZi9RDsUmd8juwteWYx
-        r953mNekZBXKVfZzXxGHvoutaLxiADpwKkYPZFJIPwfPX/8M1wO5lKEvAui1+4AofgNwwDYr
-        EcUSgKbK04QeSCMj/SZG9C8A6O/VYaJYBLCrLoSHQ+vpXGjyHQ77G2gvDuc816jwfRSdBvUB
-        fYQVdBZsql8gwkzQT0HT7CIW5hi6CC6cNJJiJhreMPkiGRn9Ipw0GiKM04/DnkAzLrISfu9r
-        jSwBabsM3jneTYrldkBdTwMm8no477RKRI6Df/c+HKgE8JarXSKKWgDHjhiBmHoBTrlWqHAd
-        nN4MLX0por0dWlZrSPEpouBEIFpcIgoauj/BRVsBa6oYMb0Jmp2X/ru23/0tLjIL7TYPWQ8S
-        zGtqmtdUM6+pZv5/h1OAaANKXiuUlvBCWhn/TrLAlQraspLkooOlneDf3zj8l/PeZdAyv5js
-        AJgUOACU4okbFFuFrwsZRTH37nu85uAejVbNCw7wmJRIVCraTny+h6FLuHL+AM8f4jUPTzGp
-        LFaHCbzO1qU3hGYyiJy5M+tKjCOjcbXDXpdrf+343qS3+7urRrhvli7/bGvc/8Sb6Ugiv638
-        KOMAleqf6AnF773kKc5Pn7QmpGefla/435iczsob3J28MYMd/CLYuivp9hZydYHpOJlfsbKr
-        enr7s+qXmwqqPvgy9H5L/Wvcbm3Mr/nbBpKOJtzMjXN7lAN43Usw714Ul+4veKXF4m7cefcP
-        cD33bqmKw39IbX46RXgwk7dZe+7quoJHl8+qgDJozQxuurIzYeFOUXQF8+NGy5PVv8zi7E2H
-        aq78/vID98TK6eLlKsM2yUXmwut+oitv9dWc6vbMbGMguOORWI37GedEvDqREFRc2hZcI3D/
-        AFU5vcr8AwAA
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrHIsWRmVeSWpSXmKPExsVy+t/xu7qcS04nGPybyGtx7vFvFosrFw8x
-        WTTeXsRqcXr/OxaLqQ+fsFnMP3KO1eLaxHYmi29XOpgsJu4/y25xedccNovOXf2sFh1zJzBa
-        tO49wm5xckszo0XbsWOsFt9fnWW2OH7nKZPFhu9rGR2EPDZ8bmLzmN1wkcXjcl8vk8fOWXfZ
-        PTat6mTzuHNtD5vHvrfL2DzWb7nK4vF5k1wAZ5SeTVF+aUmqQkZ+cYmtUrShhZGeoaWFnpGJ
-        pZ6hsXmslZGpkr6dTUpqTmZZapG+XYJexv6lR1kKrktVTNk9ibGBcYFoFyMHh4SAicTBmUJd
-        jFwcQgJLGSU6pvxi7GLkBIrLSJyc1sAKYQtL/LnWxQZR9J5R4vXMkywgzcICgRIzn5SBxEUE
-        rjFLLD78mAmkQUjARuLv+2VsIDabgKFE19suMJtXwE5i6oT3LCA2i4CqxMxHH8HqRQWSJX6u
-        b4eqEZQ4OfMJWA2ngK3E7RmTwGxmATOJeZsfMkPY8hLb386BssUlbj2ZzzSBUXAWkvZZSFpm
-        IWmZhaRlASPLKkaR1NLi3PTcYiO94sTc4tK8dL3k/NxNjMCI33bs55YdjCtffdQ7xMjEwXiI
-        UYKDWUmEV7f4RIIQb0piZVVqUX58UWlOavEhRlOgfyYyS4km5wNTTl5JvKGZgamhiZmlgaml
-        mbGSOK/JkTXxQgLpiSWp2ampBalFMH1MHJxSDUyiut98wv02JDt5Pg2Qj1/Ie9pEVF6vQn7v
-        461b1nyYo7AvbW7Hc9UJ88JWBQm+mvFm1pXOtFvb5/RWbrWofzdBinl1Xuhb8+KWqO7//1p4
-        WwJOJ4bMc1E3LmBarFb85tq16H87PYrX+R/a7/E2csWcLJZ7/zkWf7/K/ex7dINESqYqY9i7
-        H3p20oXVmm9Envunl2y0OLrM6abAavVDwbv2Xtqqk2rnwucY8O+3waWVP7R9pzqnT1SaWZtX
-        bqzwZ+YSPp30ScsX32Pl7VleVK/xTW6Hr2nh1nbDvLcn/93iVZu9pIq1YqHJ3/mTBLeybL9w
-        7p5UuX9X280XTBWazi0BvjJTVr+oe87+49EN8R1KLMUZiYZazEXFiQDqfHfvgQMAAA==
-X-CMS-MailID: 20210617193537eucas1p217b93d091ae8795581b30931ad8c7467
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20210617193537eucas1p217b93d091ae8795581b30931ad8c7467
-X-EPHeader: CA
-CMS-TYPE: 201P
-X-CMS-RootMailID: 20210617193537eucas1p217b93d091ae8795581b30931ad8c7467
-References: <20210609072310.26099-1-srivasam@codeaurora.org>
-        <CGME20210617193537eucas1p217b93d091ae8795581b30931ad8c7467@eucas1p2.samsung.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+>>> +
+>>> +static struct pll_vco vco_table[] = {
+>>> +     { 249600000, 1750000000, 0 },
+>>> +};
+>>> +
+>>> +static const struct alpha_pll_config disp_cc_pll0_config = {
+>>> +     .l = 0x47,
+>> Is the ".cal_l = 0x44," part from downstream not necessary?
+> Yes it is. I went back and forth about  'cal_l', but in the end the
+> only value it is ever set to is 0x44, which is also what the default
+> value is. So there is no need for representing it explicitly at the
+> moment.
 
-On 09.06.2021 09:23, Srinivasa Rao Mandadapu wrote:
-> The DMA interrupt clear register overwritten during
-> simultaneous playback and capture in lpass platform
-> interrupt handler. It's causing playback or capture stuck
-> in similtaneous plaback on speaker and capture on dmic test.
-> Update appropriate reg fields of corresponding channel instead
-> of entire register write.
->
-> Fixes: commit c5c8635a04711 ("ASoC: qcom: Add LPASS platform driver")
->
-> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+Interesting, maybe it'll be required for next SoCs..
 
-This patch landed recently in linux-next as commit da0363f7bfd3 ("ASoC: 
-qcom: Fix for DMA interrupt clear reg overwriting"). It breaks ALSA 
-playback on DragonBoard 410c (arch/arm64/boot/dts/qcom/apq8016-sbc.dts). 
-After applying this patch, running 'speaker-test -l1' never finishes. 
-There is no error nor kernel warning message. Before that commit, the 
-playback worked fine on that board.
 
-> ---
-> Changes since v2:
-> 	-- Removed redundant variables.
-> Changes since v1:
-> 	-- Subject lines changed.
->   sound/soc/qcom/lpass-platform.c | 12 ++++++------
->   1 file changed, 6 insertions(+), 6 deletions(-)
->
-> diff --git a/sound/soc/qcom/lpass-platform.c b/sound/soc/qcom/lpass-platform.c
-> index 0df9481ea4c6..f9df76d37858 100644
-> --- a/sound/soc/qcom/lpass-platform.c
-> +++ b/sound/soc/qcom/lpass-platform.c
-> @@ -526,7 +526,7 @@ static int lpass_platform_pcmops_trigger(struct snd_soc_component *component,
->   			return -EINVAL;
->   		}
->   
-> -		ret = regmap_write(map, reg_irqclr, val_irqclr);
-> +		ret = regmap_update_bits(map, reg_irqclr, val_irqclr, val_irqclr);
->   		if (ret) {
->   			dev_err(soc_runtime->dev, "error writing to irqclear reg: %d\n", ret);
->   			return ret;
-> @@ -650,10 +650,11 @@ static irqreturn_t lpass_dma_interrupt_handler(
->   	struct lpass_variant *v = drvdata->variant;
->   	irqreturn_t ret = IRQ_NONE;
->   	int rv;
-> -	unsigned int reg = 0, val = 0;
-> +	unsigned int reg, val, mask;
->   	struct regmap *map;
->   	unsigned int dai_id = cpu_dai->driver->id;
->   
-> +	mask = LPAIF_IRQ_ALL(chan);
->   	switch (dai_id) {
->   	case LPASS_DP_RX:
->   		map = drvdata->hdmiif_map;
-> @@ -676,8 +677,7 @@ static irqreturn_t lpass_dma_interrupt_handler(
->   	return -EINVAL;
->   	}
->   	if (interrupts & LPAIF_IRQ_PER(chan)) {
-> -
-> -		rv = regmap_write(map, reg, LPAIF_IRQ_PER(chan) | val);
-> +		rv = regmap_update_bits(map, reg, mask, (LPAIF_IRQ_PER(chan) | val));
->   		if (rv) {
->   			dev_err(soc_runtime->dev,
->   				"error writing to irqclear reg: %d\n", rv);
-> @@ -688,7 +688,7 @@ static irqreturn_t lpass_dma_interrupt_handler(
->   	}
->   
->   	if (interrupts & LPAIF_IRQ_XRUN(chan)) {
-> -		rv = regmap_write(map, reg, LPAIF_IRQ_XRUN(chan) | val);
-> +		rv = regmap_update_bits(map, reg, mask, (LPAIF_IRQ_XRUN(chan) | val));
->   		if (rv) {
->   			dev_err(soc_runtime->dev,
->   				"error writing to irqclear reg: %d\n", rv);
-> @@ -700,7 +700,7 @@ static irqreturn_t lpass_dma_interrupt_handler(
->   	}
->   
->   	if (interrupts & LPAIF_IRQ_ERR(chan)) {
-> -		rv = regmap_write(map, reg, LPAIF_IRQ_ERR(chan) | val);
-> +		rv = regmap_update_bits(map, reg, mask, (LPAIF_IRQ_ERR(chan) | val));
->   		if (rv) {
->   			dev_err(soc_runtime->dev,
->   				"error writing to irqclear reg: %d\n", rv);
 
-Best regards
--- 
-Marek Szyprowski, PhD
-Samsung R&D Institute Poland
+>>> +};
+>>> +
+>>> +static const struct alpha_pll_config disp_cc_pll1_config = {
+>>> +     .l = 0x1F,
+>> Ditto
+> Sorry, ditto what?
+
+Aah, sorry I cut out a ".cal_l  = 0x44" line while adding my comments..
+
+
+
+Konrad
 
