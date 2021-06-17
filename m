@@ -2,466 +2,225 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3FD723AAB3F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jun 2021 07:46:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E4AC13AABA5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jun 2021 08:07:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230262AbhFQFst (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Jun 2021 01:48:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59398 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230269AbhFQFsp (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Jun 2021 01:48:45 -0400
-Received: from mail-pg1-x52f.google.com (mail-pg1-x52f.google.com [IPv6:2607:f8b0:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2149C06121D
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Jun 2021 22:46:37 -0700 (PDT)
-Received: by mail-pg1-x52f.google.com with SMTP id n12so3990575pgs.13
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Jun 2021 22:46:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=9udT7I8BfAMQefFS84W19kfaFhVv/R2kkzX0G2YdzLk=;
-        b=VWxLIBB7V8EvMDoaIAzxOqEfJ3k9r1vGh6nsjC855M0IbtgGlL6l3i2NguVY7QSufc
-         WDWmX+JN6SAua2Q/Z+9M9JeLX8jrpgZ6eVYFP2atRtxML+FvHEIPoJG4dNxloGJezqH1
-         UH+frxVeL3yn1GBWOdQ+O3Yc0h/HlYm9FWjd+uOf12Zt7JgGiE9U31XKDrrH2uxUT8VE
-         MkI+QBwLFEX+hAXmscEzo34bnytTL5IyJgz2v7OemUs0chcDT4AYAyq6DyfGgMHZupsh
-         TJ685fnMetFBBdxyft+0UuZ/aL3q6XxlQu4IP7SFB44YrKdboqhdkDEJneyKjzNDBFPz
-         B+sQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=9udT7I8BfAMQefFS84W19kfaFhVv/R2kkzX0G2YdzLk=;
-        b=mg+dgisHOlSS0tsuf351uDrKEp7tY7taweZwG1bkcQpcUmt5Qj0KdeYJstF6n1dl72
-         zEZTAg2GOYKeje7NBjLhXPXh98Q8ganFouoP1iYSC+VyJFCFXQIO3F/ibAUvW/aNiGla
-         GsTNQKEh/kG7ovwLIby00AVo53xJUQm1B+lRDCBacN6TwD/mZ9fpnhMluXTWoMLHhTLP
-         ZiCv5w1ZiELfKY/iJj3Uqnav4VIEgDyvlPAWIe0nRO+o5fPNb2tHIfYo9/2LpOdE3w5S
-         qLLMRK3tSWck1vlPDns2pn5pte882GKjtS4YGqnFEoIM8hZ6EkBOY3bYuLxGIhPSTdTH
-         IsJA==
-X-Gm-Message-State: AOAM531MEHQSP/iuye4dV+Vym53reIpLvtfwyb5LNv4MaFj7WJjZoLZ7
-        7ePB7t3ABzQafo+EJ87t6F3XXGiGl9hD2A==
-X-Google-Smtp-Source: ABdhPJzLojvsg0C1FM/PUqLL04Jwi0B0jgdX08ndywkvtHQD5F0EXYbr8yZX0LZwwsH7ayw0T2MJ8Q==
-X-Received: by 2002:a62:d447:0:b029:291:19f7:ddcd with SMTP id u7-20020a62d4470000b029029119f7ddcdmr3668686pfl.54.1623908797234;
-        Wed, 16 Jun 2021 22:46:37 -0700 (PDT)
-Received: from localhost.name ([122.177.46.2])
-        by smtp.gmail.com with ESMTPSA id y27sm3882700pff.202.2021.06.16.22.46.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Jun 2021 22:46:36 -0700 (PDT)
-From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     bhupesh.sharma@linaro.org, bhupesh.linux@gmail.com,
-        linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, robh+dt@kernel.org, agross@kernel.org,
-        Vinod Koul <vkoul@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Subject: [PATCH v3 5/5] arm64: dts: qcom: sa8155p-adp: Add base dts file
-Date:   Thu, 17 Jun 2021 11:15:48 +0530
-Message-Id: <20210617054548.353293-6-bhupesh.sharma@linaro.org>
-X-Mailer: git-send-email 2.31.1
-In-Reply-To: <20210617054548.353293-1-bhupesh.sharma@linaro.org>
-References: <20210617054548.353293-1-bhupesh.sharma@linaro.org>
+        id S229565AbhFQGJq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Jun 2021 02:09:46 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:58781 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229616AbhFQGJq (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 17 Jun 2021 02:09:46 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1623910059; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=8lksUp1qCJXiBU12bEnLm7XV+ucQTovs88KOZ7ewuHk=;
+ b=ucF31c7eYckuFDsk6cTa6Bvy27JDTSxWzGvkoX+sOwcxPN3H1FPQTLnevibVHbWNMA/7YxVP
+ SZCPWDSitmbE9msdCpY1pCwITYdSP+zo9+mmKilzkbYgd35KC2pVWkzV2+AyqbFmNmErO8n1
+ wJbuoBQY8Jf0QKj/wDMi15EGXnw=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
+ 60cae6a7e27c0cc77fdb1f94 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 17 Jun 2021 06:07:35
+ GMT
+Sender: schowdhu=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 58756C433D3; Thu, 17 Jun 2021 06:07:34 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: schowdhu)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3F905C433F1;
+        Thu, 17 Jun 2021 06:07:33 +0000 (UTC)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Thu, 17 Jun 2021 11:37:33 +0530
+From:   schowdhu@codeaurora.org
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Sibi Sankar <sibis@codeaurora.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>, vkoul@kernel.org
+Subject: Re: [PATCH V4 0/4] Add driver support for Data Capture and Compare
+ Engine(DCC) for SM8150
+In-Reply-To: <cover.1620056206.git.schowdhu@codeaurora.org>
+References: <cover.1620056206.git.schowdhu@codeaurora.org>
+Message-ID: <24c249da2766c7add71ce1ecfb99234e@codeaurora.org>
+X-Sender: schowdhu@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add base DTS file for SA8155p Automotive Development Platform.
-It enables boot to console, adds tlmm reserved range and ufs flash.
-It also includes pmic file.
+On 2021-05-03 21:47, Souradeep Chowdhury wrote:
+> DCC(Data Capture and Compare) is a DMA engine designed for debugging
+> purposes.In case of a system
+> crash or manual software triggers by the user the DCC hardware stores
+> the value at the register
+> addresses which can be used for debugging purposes.The DCC driver
+> provides the user with sysfs
+> interface to configure the register addresses.The options that the DCC
+> hardware provides include
+> reading from registers,writing to registers,first reading and then
+> writing to registers and looping
+> through the values of the same register.
+> 
+> In certain cases a register write needs to be executed for accessing
+> the rest of the registers,
+> also the user might want to record the changing values of a register
+> with time for which he has the
+> option to use the loop feature.
+> 
+> The options mentioned above are exposed to the user by sysfs files
+> once the driver is probed.The
+> details and usage of this sysfs files are documented in
+> Documentation/ABI/testing/sysfs-driver-dcc.
+> 
+> As an example let us consider a couple of debug scenarios where DCC
+> has been proved to be effective
+> for debugging purposes:-
+> 
+> i)TimeStamp Related Issue
+> 
+> On SC7180, there was a coresight timestamp issue where it would
+> occasionally be all 0 instead of proper
+> timestamp values.
+> 
+> Proper timestamp:
+> Idx:3373; ID:10; I_TIMESTAMP : Timestamp.; Updated val =
+> 0x13004d8f5b7aa; CC=0x9e
+> 
+> Zero timestamp:
+> Idx:3387; ID:10; I_TIMESTAMP : Timestamp.; Updated val = 0x0; CC=0xa2
+> 
+> Now this is a non-fatal issue and doesn't need a system reset, but 
+> still needs
+> to be rootcaused and fixed for those who do care about coresight etm 
+> traces.
+> Since this is a timestamp issue, we would be looking for any timestamp 
+> related
+> clocks and such.
+> 
+> o we get all the clk register details from IP documentation and 
+> configure it
+> via DCC config syfs node. Before that we set the current linked list.
+> 
+> /* Set the current linked list */
+> echo 3 > /sys/bus/platform/devices/10a2000.dcc/curr_list
+> 
+> /* Program the linked list with the addresses */
+> echo 0x10c004 > /sys/bus/platform/devices/10a2000.dcc/config
+> echo 0x10c008 > /sys/bus/platform/devices/10a2000.dcc/config
+> echo 0x10c00c > /sys/bus/platform/devices/10a2000.dcc/config
+> echo 0x10c010 > /sys/bus/platform/devices/10a2000.dcc/config
+> ..... and so on for other timestamp related clk registers
+> 
+> /* Other way of specifying is in "addr len" pair, in below case it
+> specifies to capture 4 words starting 0x10C004 */
+> 
+> echo 0x10C004 4 > /sys/bus/platform/devices/10a2000.dcc/config
+> 
+> /* Enable DCC */
+> echo 1 > /sys/bus/platform/devices/10a2000.dcc/enable
+> 
+> /* Run the timestamp test for working case */
+> 
+> /* Send SW trigger */
+> echo 1 > /sys/bus/platform/devices/10a2000.dcc/trigger
+> 
+> /* Read SRAM */
+> cat /dev/dcc_sram > dcc_sram1.bin
+> 
+> /* Run the timestamp test for non-working case */
+> 
+> /* Send SW trigger */
+> echo 1 > /sys/bus/platform/devices/10a2000.dcc/trigger
+> 
+> /* Read SRAM */
+> cat /dev/dcc_sram > dcc_sram2.bin
+> 
+> Get the parser from [1] and checkout the latest branch.
+> 
+> /* Parse the SRAM bin */
+> python dcc_parser.py -s dcc_sram1.bin --v2 -o output/
+> python dcc_parser.py -s dcc_sram2.bin --v2 -o output/
+> 
+> Sample parsed output of dcc_sram1.bin:
+> 
+> <hwioDump version="1">
+>         <timestamp>03/14/21</timestamp>
+>             <generator>Linux DCC Parser</generator>
+>                 <chip name="None" version="None">
+>                 <register address="0x0010c004" value="0x80000000" />
+>                 <register address="0x0010c008" value="0x00000008" />
+>                 <register address="0x0010c00c" value="0x80004220" />
+>                 <register address="0x0010c010" value="0x80000000" />
+>             </chip>
+>     <next_ll_offset>next_ll_offset : 0x1c </next_ll_offset>
+> </hwioDump>
+> 
+> ii)NOC register errors
+> 
+> A particular class of registers called NOC which are functional
+> registers was reporting
+> errors while logging the values.To trace these errors the DCC has been
+> used effectively.
+> The steps followed were similar to the ones mentioned above.
+> In addition to NOC registers a few other dependent registers were
+> configured in DCC to
+> monitor it's values during a crash. A look at the dependent register
+> values revealed that
+> the crash was happening due to a secured access to one of these
+> dependent registers.
+> All these debugging activity and finding the root cause was achieved 
+> using DCC.
+> 
+> DCC parser is available at the following open source location
+> 
+> https://source.codeaurora.org/quic/la/platform/vendor/qcom-opensource/tools/tree/dcc_parser
+> 
+> Changes in v4:
+> 
+> *Implement all the comments on v3 of the patch.
+> *Incorporate code change for handling multiple SoCs.
+> *Incorporate code change for DCC_SRAM content to persist across warm 
+> reboots.
+> *Fixed the issue with the Makefile in v3 of the patch.
+> 
+> Souradeep Chowdhury (4):
+>   dt-bindings: Added the yaml bindings for DCC
+>   soc: qcom: dcc:Add driver support for Data Capture and Compare
+>     unit(DCC)
+>   MAINTAINERS: Add the entry for DCC(Data Capture and Compare) driver
+>     support
+>   arm64: dts: qcom: sm8150: Add Data Capture and Compare(DCC) support
+>     node
+> 
+>  Documentation/ABI/testing/sysfs-driver-dcc         |  114 ++
+>  .../devicetree/bindings/arm/msm/qcom,dcc.yaml      |   40 +
+>  MAINTAINERS                                        |    8 +
+>  arch/arm64/boot/dts/qcom/sm8150.dtsi               |    6 +
+>  drivers/soc/qcom/Kconfig                           |    8 +
+>  drivers/soc/qcom/Makefile                          |    1 +
+>  drivers/soc/qcom/dcc.c                             | 1534 
+> ++++++++++++++++++++
+>  7 files changed, 1711 insertions(+)
+>  create mode 100644 Documentation/ABI/testing/sysfs-driver-dcc
+>  create mode 100644 
+> Documentation/devicetree/bindings/arm/msm/qcom,dcc.yaml
+>  create mode 100644 drivers/soc/qcom/dcc.c
 
-SA8155p-adp board is based on sa8155p Qualcomm Snapdragon SoC.
-SA8155p platform is similar to the SM8150, so use this as base
-for now.
-
-Cc: Vinod Koul <vkoul@kernel.org>
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
----
- arch/arm64/boot/dts/qcom/Makefile        |   1 +
- arch/arm64/boot/dts/qcom/sa8155p-adp.dts | 360 +++++++++++++++++++++++
- 2 files changed, 361 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/sa8155p-adp.dts
-
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 456502aeee49..666f3528697d 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -32,6 +32,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= msm8998-oneplus-dumpling.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-1000.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-4000.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= qrb5165-rb5.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sa8155p-adp.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-idp.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-coachz-r1.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-coachz-r1-lte.dtb
-diff --git a/arch/arm64/boot/dts/qcom/sa8155p-adp.dts b/arch/arm64/boot/dts/qcom/sa8155p-adp.dts
-new file mode 100644
-index 000000000000..86bfbd29cda0
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sa8155p-adp.dts
-@@ -0,0 +1,360 @@
-+// SPDX-License-Identifier: BSD-3-Clause
-+/*
-+ * Copyright (c) 2021, Linaro Limited
-+ */
-+
-+/dts-v1/;
-+
-+#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
-+#include <dt-bindings/gpio/gpio.h>
-+#include "sm8150.dtsi"
-+#include "pmm8155au_1.dtsi"
-+#include "pmm8155au_2.dtsi"
-+
-+/ {
-+	model = "Qualcomm Technologies, Inc. SA8155P ADP";
-+	compatible = "qcom,sa8155p-adp", "qcom,sa8155p";
-+
-+	aliases {
-+		serial0 = &uart2;
-+	};
-+
-+	chosen {
-+		stdout-path = "serial0:115200n8";
-+	};
-+
-+	vreg_3p3: vreg_3p3_regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vreg_3p3";
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
-+	};
-+
-+	/*
-+	 * S4A is always on and not controllable through RPMh.
-+	 * So model it as a fixed regulator.
-+	 */
-+	vreg_s4a_1p8: smps4 {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vreg_s4a_1p8";
-+
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <1800000>;
-+
-+		regulator-always-on;
-+		regulator-boot-on;
-+		regulator-allow-set-load;
-+
-+		vin-supply = <&vreg_3p3>;
-+	};
-+};
-+
-+&apps_rsc {
-+	pmm8155au-1-rpmh-regulators {
-+		compatible = "qcom,pmm8155au-rpmh-regulators";
-+		qcom,pmic-id = "a";
-+
-+		vdd-s1-supply = <&vreg_3p3>;
-+		vdd-s2-supply = <&vreg_3p3>;
-+		vdd-s3-supply = <&vreg_3p3>;
-+		vdd-s4-supply = <&vreg_3p3>;
-+		vdd-s5-supply = <&vreg_3p3>;
-+		vdd-s6-supply = <&vreg_3p3>;
-+		vdd-s7-supply = <&vreg_3p3>;
-+		vdd-s8-supply = <&vreg_3p3>;
-+		vdd-s9-supply = <&vreg_3p3>;
-+		vdd-s10-supply = <&vreg_3p3>;
-+
-+		vdd-l1-l8-l11-supply = <&vreg_s6a_0p92>;
-+		vdd-l2-l10-supply = <&vreg_3p3>;
-+		vdd-l3-l4-l5-l18-supply = <&vreg_s6a_0p92>;
-+		vdd-l6-l9-supply = <&vreg_s6a_0p92>;
-+		vdd-l7-l12-l14-l15-supply = <&vreg_s5a_2p04>;
-+		vdd-l13-l16-l17-supply = <&vreg_3p3>;
-+
-+		vreg_s5a_2p04: smps5 {
-+			regulator-name = "vreg_s5a_2p04";
-+			regulator-min-microvolt = <1904000>;
-+			regulator-max-microvolt = <2000000>;
-+		};
-+
-+		vreg_s6a_0p92: smps6 {
-+			regulator-name = "vreg_s6a_0p92";
-+			regulator-min-microvolt = <920000>;
-+			regulator-max-microvolt = <1128000>;
-+		};
-+
-+		vreg_l1a_0p752: ldo1 {
-+			regulator-name = "vreg_l1a_0p752";
-+			regulator-min-microvolt = <752000>;
-+			regulator-max-microvolt = <752000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vdda_usb_hs_3p1:
-+		vreg_l2a_3p072: ldo2 {
-+			regulator-name = "vreg_l2a_3p072";
-+			regulator-min-microvolt = <3072000>;
-+			regulator-max-microvolt = <3072000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l3a_0p8: ldo3 {
-+			regulator-name = "vreg_l3a_0p8";
-+			regulator-min-microvolt = <800000>;
-+			regulator-max-microvolt = <800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vdd_usb_hs_core:
-+		vdda_usb_ss_dp_core_1:
-+		vreg_l5a_0p88: ldo5 {
-+			regulator-name = "vreg_l5a_0p88";
-+			regulator-min-microvolt = <880000>;
-+			regulator-max-microvolt = <880000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-allow-set-load;
-+		};
-+
-+		vreg_l7a_1p8: ldo7 {
-+			regulator-name = "vreg_l7a_1p8";
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l10a_2p96: ldo10 {
-+			regulator-name = "vreg_l10a_2p96";
-+			regulator-min-microvolt = <2504000>;
-+			regulator-max-microvolt = <2960000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-allow-set-load;
-+		};
-+
-+		vreg_l11a_0p8: ldo11 {
-+			regulator-name = "vreg_l11a_0p8";
-+			regulator-min-microvolt = <800000>;
-+			regulator-max-microvolt = <800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vdda_usb_hs_1p8:
-+		vreg_l12a_1p8: ldo12 {
-+			regulator-name = "vreg_l12a_1p8";
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l13a_2p7: ldo13 {
-+			regulator-name = "vreg_l13a_2p7";
-+			regulator-min-microvolt = <2704000>;
-+			regulator-max-microvolt = <2704000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l15a_1p7: ldo15 {
-+			regulator-name = "vreg_l15a_1p7";
-+			regulator-min-microvolt = <1704000>;
-+			regulator-max-microvolt = <1704000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l16a_2p7: ldo16 {
-+			regulator-name = "vreg_l16a_2p7";
-+			regulator-min-microvolt = <2704000>;
-+			regulator-max-microvolt = <2960000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l17a_2p96: ldo17 {
-+			regulator-name = "vreg_l17a_2p96";
-+			regulator-min-microvolt = <2504000>;
-+			regulator-max-microvolt = <2960000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+	};
-+
-+	pmm8155au-2-rpmh-regulators {
-+		compatible = "qcom,pmm8155au-rpmh-regulators";
-+		qcom,pmic-id = "c";
-+
-+		vdd-s1-supply = <&vreg_3p3>;
-+		vdd-s2-supply = <&vreg_3p3>;
-+		vdd-s3-supply = <&vreg_3p3>;
-+		vdd-s4-supply = <&vreg_3p3>;
-+		vdd-s5-supply = <&vreg_3p3>;
-+		vdd-s6-supply = <&vreg_3p3>;
-+		vdd-s7-supply = <&vreg_3p3>;
-+		vdd-s8-supply = <&vreg_3p3>;
-+		vdd-s9-supply = <&vreg_3p3>;
-+		vdd-s10-supply = <&vreg_3p3>;
-+
-+		vdd-l1-l8-l11-supply = <&vreg_s4c_1p352>;
-+		vdd-l2-l10-supply = <&vreg_3p3>;
-+		vdd-l3-l4-l5-l18-supply = <&vreg_s4c_1p352>;
-+		vdd-l6-l9-supply = <&vreg_s6c_1p128>;
-+		vdd-l7-l12-l14-l15-supply = <&vreg_s5c_2p04>;
-+		vdd-l13-l16-l17-supply = <&vreg_3p3>;
-+
-+		vreg_s4c_1p352: smps4 {
-+			regulator-name = "vreg_s4c_1p352";
-+			regulator-min-microvolt = <1352000>;
-+			regulator-max-microvolt = <1352000>;
-+		};
-+
-+		vreg_s5c_2p04: smps5 {
-+			regulator-name = "vreg_s5c_2p04";
-+			regulator-min-microvolt = <1904000>;
-+			regulator-max-microvolt = <2000000>;
-+		};
-+
-+		vreg_s6c_1p128: smps6 {
-+			regulator-name = "vreg_s6c_1p128";
-+			regulator-min-microvolt = <1128000>;
-+			regulator-max-microvolt = <1128000>;
-+		};
-+
-+		vreg_l1c_1p304: ldo1 {
-+			regulator-name = "vreg_l1c_1p304";
-+			regulator-min-microvolt = <1304000>;
-+			regulator-max-microvolt = <1304000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l2c_1p808: ldo2 {
-+			regulator-name = "vreg_l2c_1p808";
-+			regulator-min-microvolt = <1704000>;
-+			regulator-max-microvolt = <2928000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l5c_1p2: ldo5 {
-+			regulator-name = "vreg_l5c_1p2";
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-allow-set-load;
-+		};
-+
-+		vreg_l7c_1p8: ldo7 {
-+			regulator-name = "vreg_l7c_1p8";
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l8c_1p2: ldo8 {
-+			regulator-name = "vreg_l8c_1p2";
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-allow-set-load;
-+		};
-+
-+		vreg_l10c_3p3: ldo10 {
-+			regulator-name = "vreg_l10c_3p3";
-+			regulator-min-microvolt = <3000000>;
-+			regulator-max-microvolt = <3312000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l11c_0p8: ldo11 {
-+			regulator-name = "vreg_l11c_0p8";
-+			regulator-min-microvolt = <800000>;
-+			regulator-max-microvolt = <800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l12c_1p808: ldo12 {
-+			regulator-name = "vreg_l12c_1p808";
-+			regulator-min-microvolt = <1704000>;
-+			regulator-max-microvolt = <2928000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l13c_2p96: ldo13 {
-+			regulator-name = "vreg_l13c_2p96";
-+			regulator-min-microvolt = <2504000>;
-+			regulator-max-microvolt = <2960000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l15c_1p9: ldo15 {
-+			regulator-name = "vreg_l15c_1p9";
-+			regulator-min-microvolt = <1704000>;
-+			regulator-max-microvolt = <2928000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l16c_3p008: ldo16 {
-+			regulator-name = "vreg_l16c_3p008";
-+			regulator-min-microvolt = <3008000>;
-+			regulator-max-microvolt = <3008000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l18c_0p88: ldo18 {
-+			regulator-name = "vreg_l18c_0p88";
-+			regulator-min-microvolt = <880000>;
-+			regulator-max-microvolt = <880000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+	};
-+};
-+
-+&tlmm {
-+	gpio-reserved-ranges = <0 4>;
-+};
-+
-+&uart2 {
-+	status = "okay";
-+};
-+
-+&ufs_mem_hc {
-+	status = "okay";
-+
-+	reset-gpios = <&tlmm 175 GPIO_ACTIVE_LOW>;
-+
-+	vcc-supply = <&vreg_l10a_2p96>;
-+	vcc-max-microamp = <750000>;
-+	vccq-supply = <&vreg_l5c_1p2>;
-+	vccq-max-microamp = <700000>;
-+	vccq2-supply = <&vreg_s4a_1p8>;
-+	vccq2-max-microamp = <750000>;
-+};
-+
-+&ufs_mem_phy {
-+	status = "okay";
-+
-+	vdda-phy-supply = <&vreg_l8c_1p2>;
-+	vdda-max-microamp = <87100>;
-+	vdda-pll-supply = <&vreg_l5a_0p88>;
-+	vdda-pll-max-microamp = <18300>;
-+};
-+
-+
-+&usb_1_hsphy {
-+	status = "okay";
-+	vdda-pll-supply = <&vdd_usb_hs_core>;
-+	vdda33-supply = <&vdda_usb_hs_3p1>;
-+	vdda18-supply = <&vdda_usb_hs_1p8>;
-+};
-+
-+&usb_1_qmpphy {
-+	status = "okay";
-+	vdda-phy-supply = <&vreg_l8c_1p2>;
-+	vdda-pll-supply = <&vdda_usb_ss_dp_core_1>;
-+};
-+
-+&usb_1 {
-+	status = "okay";
-+};
-+
-+&usb_1_dwc3 {
-+	dr_mode = "peripheral";
-+};
-+
-+&qupv3_id_1 {
-+	status = "okay";
-+};
--- 
-2.31.1
-
+Gentle Ping
