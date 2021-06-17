@@ -2,100 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7233D3AAE69
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jun 2021 10:06:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C118B3AAEA3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jun 2021 10:21:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229773AbhFQIIn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Jun 2021 04:08:43 -0400
-Received: from mail.kernel.org ([198.145.29.99]:49006 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229666AbhFQIIn (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Jun 2021 04:08:43 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id DD8C0610A0;
-        Thu, 17 Jun 2021 08:06:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1623917195;
-        bh=YuScG7SzWSSRa8w1px2qbFZAuK3KvyU2T8TThbFj484=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=KZtZND8jBB1VBzwKJ37okD6sz+7yOm9yfkVXZvMIlMjMbU+/QQz+2xByOFDnV5kBI
-         6efKtbVV9eT5xS4zzlnh8n7ZsNw9HbZ9sDLEp85/CilwlCFxqxCmQTdmDzguDQa7Lp
-         4x2Vb3YyD9PDnbpAeR5LjMTKQ1CrYzZ7y+T6cKTgZhf9ln2FEaUfw4ZsIG57QvUrn+
-         mYwOMefXgMUm+fnsHxN3SSZb5+ntdFmtUv2FZAMaHM6Nw2i3Q4grHbNXZezuo5XuAw
-         2Pb+WKjNG8oat7wV5SyAWARDp1KJqOMhozk0z+QSanSSEdBFilprNmu6ZdBXqQ2fFd
-         yOrn1FJC0gCnw==
-Date:   Thu, 17 Jun 2021 13:36:32 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     abhinavk@codeaurora.org
-Cc:     Rob Clark <robdclark@gmail.com>, DTML <devicetree@vger.kernel.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        David Airlie <airlied@linux.ie>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        lkml <linux-kernel@vger.kernel.org>,
+        id S229915AbhFQIXb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Jun 2021 04:23:31 -0400
+Received: from szxga03-in.huawei.com ([45.249.212.189]:7347 "EHLO
+        szxga03-in.huawei.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229842AbhFQIXb (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 17 Jun 2021 04:23:31 -0400
+Received: from dggemv711-chm.china.huawei.com (unknown [172.30.72.53])
+        by szxga03-in.huawei.com (SkyGuard) with ESMTP id 4G5FKF2wzYz6vxm;
+        Thu, 17 Jun 2021 16:17:21 +0800 (CST)
+Received: from dggpemm500006.china.huawei.com (7.185.36.236) by
+ dggemv711-chm.china.huawei.com (10.1.198.66) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2176.2; Thu, 17 Jun 2021 16:21:21 +0800
+Received: from thunder-town.china.huawei.com (10.174.179.0) by
+ dggpemm500006.china.huawei.com (7.185.36.236) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2176.2; Thu, 17 Jun 2021 16:21:21 +0800
+From:   Zhen Lei <thunder.leizhen@huawei.com>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        freedreno <freedreno@lists.freedesktop.org>
-Subject: Re: [Freedreno] [RFC PATCH 00/13] drm/msm: Add Display Stream
- Compression Support
-Message-ID: <YMsCiOThaPEvHs1S@vkoul-mobl>
-References: <20210521124946.3617862-1-vkoul@kernel.org>
- <CAOCk7Nqep_Db+z3fr5asHZ1u0j8+6fKkPFs2Ai8CbA_zGqV6ZA@mail.gmail.com>
- <YK3gxqXBRupN/N+Q@vkoul-mobl.Dlink>
- <CAOCk7NqvhGvYw8xCBctqj7H+o-Qwp2UuUJK1gatW9EWfXv56xA@mail.gmail.com>
- <CAF6AEGuoyPr8PgfwFX0JCYZ7S_pryn_OXacHBqoMAAPvSq6aRw@mail.gmail.com>
- <YLdlEB3Ea6OWaLw4@vkoul-mobl>
- <a14c18a2545408e8156dcafc846b17a2@codeaurora.org>
+        Vinod Koul <vkoul@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dmaengine <dmaengine@vger.kernel.org>,
+        linux-kernel <linux-kernel@vger.kernel.org>
+CC:     Zhen Lei <thunder.leizhen@huawei.com>
+Subject: [PATCH 1/1] dmaengine: qcom: Fix possible memory leak
+Date:   Thu, 17 Jun 2021 16:20:58 +0800
+Message-ID: <20210617082058.955-1-thunder.leizhen@huawei.com>
+X-Mailer: git-send-email 2.26.0.windows.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <a14c18a2545408e8156dcafc846b17a2@codeaurora.org>
+Content-Transfer-Encoding: 7BIT
+Content-Type:   text/plain; charset=US-ASCII
+X-Originating-IP: [10.174.179.0]
+X-ClientProxiedBy: dggems706-chm.china.huawei.com (10.3.19.183) To
+ dggpemm500006.china.huawei.com (7.185.36.236)
+X-CFilter-Loop: Reflected
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 03-06-21, 16:40, abhinavk@codeaurora.org wrote:
-> On 2021-06-02 04:01, Vinod Koul wrote:
-> > On 27-05-21, 16:30, Rob Clark wrote:
-> > 
-> > yeah that is always a very different world. although it might make sense
-> > to use information in tables and try to deduce information about the
-> > system can be helpful...
-> > 
-> > > I'd worry more about what makes sense in a DT world, when it comes to
-> > > DT bindings.
-> > 
-> > And do you have thoughts on that..?
-> 
-> At the moment, I will comment on the bindings first and my idea on how to
-> proceed.
-> The bindings mentioned here:
-> https://lore.kernel.org/dri-devel/20210521124946.3617862-3-vkoul@kernel.org/
-> seem to be just
-> taken directly from downstream which was not the plan.
-> 
-> I think all of these should be part of the generic panel bindings as none of
-> these are QC specific:
+When krealloc() fails to expand the memory and returns NULL, the original
+memory is not released. In addition, subsequent memcpy() operation will
+overwrite the entire valid memory space, so using krealloc() to preserve
+the old content is not necessary.
 
-Okay so we have discussed this w/ Bjorn and Abhinav and here are the
-conclusions and recommendations for binding
+Change to release the old memory and then apply for new memory.
 
-1. the properties are generic and not msm specific
-2. The host supports multiple formats but the one we choose depends
-mostly upon panel. Notably host runs the config which the panel supports.
+Fixes: 5d0c3533a19f ("dmaengine: qcom: Add GPI dma driver")
+Signed-off-by: Zhen Lei <thunder.leizhen@huawei.com>
+---
+ drivers/dma/qcom/gpi.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-So the recommendations is to add a table of dsc properties in the panel
-driver. No DT binding here.
-
-I should also note that for DP we should be able to calculate these
-values from EDID like the i915 driver seems to do
-
-With this I will drop the binding patch and move dsc properties to panel
-driver
-
-Thanks
-
+diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
+index 43ac3ab23d4c..e24fe64f3b63 100644
+--- a/drivers/dma/qcom/gpi.c
++++ b/drivers/dma/qcom/gpi.c
+@@ -1625,7 +1625,8 @@ gpi_peripheral_config(struct dma_chan *chan, struct dma_slave_config *config)
+ 	if (!config->peripheral_config)
+ 		return -EINVAL;
+ 
+-	gchan->config = krealloc(gchan->config, config->peripheral_size, GFP_NOWAIT);
++	kfree(gchan->config);
++	gchan->config = kmalloc(config->peripheral_size, GFP_NOWAIT);
+ 	if (!gchan->config)
+ 		return -ENOMEM;
+ 
 -- 
-~Vinod
+2.25.1
+
+
