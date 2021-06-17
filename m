@@ -2,120 +2,159 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 311D43ABB32
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jun 2021 20:08:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 20E813ABB88
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jun 2021 20:24:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232024AbhFQSK4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Jun 2021 14:10:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57412 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232339AbhFQSKz (ORCPT
+        id S231867AbhFQS0w (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Jun 2021 14:26:52 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:58182 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233609AbhFQS0S (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Jun 2021 14:10:55 -0400
-Received: from mail-oi1-x22e.google.com (mail-oi1-x22e.google.com [IPv6:2607:f8b0:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1AC43C061574
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Jun 2021 11:08:46 -0700 (PDT)
-Received: by mail-oi1-x22e.google.com with SMTP id m137so7474118oig.6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Jun 2021 11:08:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=ZWAtKejhgz7UVc2zxEARtNZRO1cFJMdr53epcTcnzQU=;
-        b=SmXNfNN2GaeN/N9ZSUYywQZRxGS1n0N3xvZ9k20jD/BQxh/8cpcWPHrfQ4V0PBbsLw
-         7pG7rMJxSCTKe4/c0KWbQzAiQvGRd3P5jTfMElHq8h+N9/XxlzRCeA/li264bWpoulP8
-         W5iq9X83wZjEhb3EMAgTYTszLcWT/wy/qT3anZD7LVMbacfbAdnGyPfSot69Ce0p6uLe
-         JcBS07LfKiLpYxMuW7DbxUnAjVmluJ6l4sETLGuTnkU2VP+esxiJlTejCn5z0pcQkKIi
-         Vnov8GzWZvbXq2/MWj3kI5ZJg2uRnFY2OyJooAGoBQ17cD0aVUR94WMg+dOCpCL69pUm
-         301g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=ZWAtKejhgz7UVc2zxEARtNZRO1cFJMdr53epcTcnzQU=;
-        b=D/WWjIvKk1dsfs9f3NJLfpdFwYyoC2hfO4nXH6j32ZMrQOPfJnfa/dsvn6S7pifIur
-         7EbEt8zHt+WnuQrhoStLJvroRL+TZ5CC0d2fyPzROKfckW6xx5sl4Luj2eQVtMfDj88D
-         bM+dr4p6lXUuoIs9NBAOQfcDJP2wQ/JYMSiatnIPjsrDSbUdkoXTlzMIZ1as8/ssr/S1
-         ArMMO6aCZQfN1L0Ubcvw1c1z+HzaF4G5SioNQAqHpm6+Adl8JB+uvIjR3F6JWthgWo4p
-         X0LG2ffE8hvp8SsUrbOynRVqqcgp52msT2oLkKLupRu3l+Sxy7s2nZ5y89Aa70eomaWi
-         FUmA==
-X-Gm-Message-State: AOAM531ECyJNC4u4Tbtp4Lve9YXiIoszfB7sB/qWLHhvcM1uDhr8VuZl
-        LTWMENZ+lh/vJY4XK+vdia+0CA==
-X-Google-Smtp-Source: ABdhPJxzYhs5dxvu+rAjh/dDCuwN000ZxS95j0d7tuw6JhuGYHb0ckK49VOQdB3Jwk6DvH7y19F7PQ==
-X-Received: by 2002:aca:d54f:: with SMTP id m76mr11073112oig.178.1623953325492;
-        Thu, 17 Jun 2021 11:08:45 -0700 (PDT)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id o20sm371996ook.40.2021.06.17.11.08.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Jun 2021 11:08:44 -0700 (PDT)
-Date:   Thu, 17 Jun 2021 13:08:43 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Martin Botka <martin.botka@somainline.org>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht,
-        konrad.dybcio@somainline.org,
-        angelogioacchino.delregno@somainline.org,
-        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 1/2] arch: arm64: dts: qcom: Add support for SM6125
-Message-ID: <YMuPqwzeG/UgnJAA@builder.lan>
-References: <20210613080522.25230-1-martin.botka@somainline.org>
- <YMlF/aPn+253UIHn@builder.lan>
- <ZIPSUQ.3JME0AID86CV1@somainline.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZIPSUQ.3JME0AID86CV1@somainline.org>
+        Thu, 17 Jun 2021 14:26:18 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1623954249; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=XOkVVyqd8Az2zXdTOo6sO6aCl4Tah5j7RJ/EfOfUj+w=; b=VkEFbxv1e5qVYxC18xqEdoDkvrx1QNSNmHppSEEE2+HGivwGEoRcuZUL7Gne379QKG0GHavG
+ V6ocAP8Uq+SCjY218GW1xAbjCzVM0T8i1B9eugeIsTYMMj2zg452I/vOjlG6vike9nR37p59
+ fSAyCJSNH2rU1uvEf6y9Y+I6UW0=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
+ 60cb9348abfd22a3dc117876 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 17 Jun 2021 18:24:08
+ GMT
+Sender: bbhatt=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id E350AC43143; Thu, 17 Jun 2021 18:24:07 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from malabar-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: bbhatt)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 49519C4360C;
+        Thu, 17 Jun 2021 18:24:06 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 49519C4360C
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=bbhatt@codeaurora.org
+From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
+To:     manivannan.sadhasivam@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
+        jhugo@codeaurora.org, linux-kernel@vger.kernel.org,
+        carl.yin@quectel.com, naveen.kumar@quectel.com,
+        loic.poulain@linaro.org, Bhaumik Bhatt <bbhatt@codeaurora.org>
+Subject: [PATCH] bus: mhi: pci_generic: Apply no-op for wake using inband wake support flag
+Date:   Thu, 17 Jun 2021 11:23:53 -0700
+Message-Id: <1623954233-32092-1-git-send-email-bbhatt@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 16 Jun 08:01 CDT 2021, Martin Botka wrote:
+Devices such as SDX24 do not have the provision for inband wake
+doorbell in the form of channel 127. Newer devices such as SDX55
+or SDX65 have it by default. Ensure the functionality is used
+based on this such that device wake stays held when a client
+driver uses mhi_device_get() API or the equivalent debugfs entry.
 
-> 
-> 
-> On Tue, Jun 15 2021 at 07:29:49 PM -0500, Bjorn Andersson
-> <bjorn.andersson@linaro.org> wrote:
-> > On Sun 13 Jun 03:05 CDT 2021, Martin Botka wrote:
-> > 
-> > >  This commits adds the Device tree file for SM6125 SoC.
-> > > 
-> > >  Signed-off-by: Martin Botka <martin.botka@somainline.org>
-> > 
-> > Thanks for your work on this Martin, just spotted a few minor finishing
-> > touches below.
-> 
-> :)
-> 
-> > 
-> > >  ---
-> > >  Changes in V2:
-> > >  Update compatibles for mailbox & pinctrl
-> > >  Changes in V3:
-> > >  Fix reg for sdhci1
-> > >  Replace hc_mem with hc and core_mem with core
-> > >   arch/arm64/boot/dts/qcom/sm6125.dtsi | 603
-> > > +++++++++++++++++++++++++++
-> > >   1 file changed, 603 insertions(+)
-> > >   create mode 100644 arch/arm64/boot/dts/qcom/sm6125.dtsi
-> > > 
-> > >  diff --git a/arch/arm64/boot/dts/qcom/sm6125.dtsi
-> > > b/arch/arm64/boot/dts/qcom/sm6125.dtsi
-[..]
-> > >  +			sdc2_state_off: sdc2-off {
-> > 
-> > This should be common between all boards (except possibly the cd line),
-> > so this is okay to share here.
-> 
-> Do you want me to move the cd as well or
-> do you want it to stay in here?
-> 
+Fixes: e3e5e6508fc1 ("bus: mhi: pci_generic: No-Op for device_wake operations")
+Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+---
+ drivers/bus/mhi/pci_generic.c | 26 ++++++++++++++++++--------
+ 1 file changed, 18 insertions(+), 8 deletions(-)
 
-While the pin assignment typically follows the reference design, in my
-view it's just any random GPIO and hence better suited to live in the
-board file.
+diff --git a/drivers/bus/mhi/pci_generic.c b/drivers/bus/mhi/pci_generic.c
+index d84b743..31360a2 100644
+--- a/drivers/bus/mhi/pci_generic.c
++++ b/drivers/bus/mhi/pci_generic.c
+@@ -32,6 +32,7 @@
+  * @edl: emergency download mode firmware path (if any)
+  * @bar_num: PCI base address register to use for MHI MMIO register space
+  * @dma_data_width: DMA transfer word size (32 or 64 bits)
++ * @no_inband_wake: Devices without inband wake support (such as sdx24)
+  */
+ struct mhi_pci_dev_info {
+ 	const struct mhi_controller_config *config;
+@@ -40,6 +41,7 @@ struct mhi_pci_dev_info {
+ 	const char *edl;
+ 	unsigned int bar_num;
+ 	unsigned int dma_data_width;
++	bool no_inband_wake;
+ };
+ 
+ #define MHI_CHANNEL_CONFIG_UL(ch_num, ch_name, el_count, ev_ring) \
+@@ -242,7 +244,8 @@ static const struct mhi_pci_dev_info mhi_qcom_sdx65_info = {
+ 	.edl = "qcom/sdx65m/edl.mbn",
+ 	.config = &modem_qcom_v1_mhiv_config,
+ 	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+-	.dma_data_width = 32
++	.dma_data_width = 32,
++	.no_inband_wake = false
+ };
+ 
+ static const struct mhi_pci_dev_info mhi_qcom_sdx55_info = {
+@@ -251,7 +254,8 @@ static const struct mhi_pci_dev_info mhi_qcom_sdx55_info = {
+ 	.edl = "qcom/sdx55m/edl.mbn",
+ 	.config = &modem_qcom_v1_mhiv_config,
+ 	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+-	.dma_data_width = 32
++	.dma_data_width = 32,
++	.no_inband_wake = false
+ };
+ 
+ static const struct mhi_pci_dev_info mhi_qcom_sdx24_info = {
+@@ -259,7 +263,8 @@ static const struct mhi_pci_dev_info mhi_qcom_sdx24_info = {
+ 	.edl = "qcom/prog_firehose_sdx24.mbn",
+ 	.config = &modem_qcom_v1_mhiv_config,
+ 	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+-	.dma_data_width = 32
++	.dma_data_width = 32,
++	.no_inband_wake = true
+ };
+ 
+ static const struct mhi_channel_config mhi_quectel_em1xx_channels[] = {
+@@ -301,7 +306,8 @@ static const struct mhi_pci_dev_info mhi_quectel_em1xx_info = {
+ 	.edl = "qcom/prog_firehose_sdx24.mbn",
+ 	.config = &modem_quectel_em1xx_config,
+ 	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+-	.dma_data_width = 32
++	.dma_data_width = 32,
++	.no_inband_wake = true
+ };
+ 
+ static const struct mhi_channel_config mhi_foxconn_sdx55_channels[] = {
+@@ -339,7 +345,8 @@ static const struct mhi_pci_dev_info mhi_foxconn_sdx55_info = {
+ 	.edl = "qcom/sdx55m/edl.mbn",
+ 	.config = &modem_foxconn_sdx55_config,
+ 	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+-	.dma_data_width = 32
++	.dma_data_width = 32,
++	.no_inband_wake = false
+ };
+ 
+ static const struct pci_device_id mhi_pci_id_table[] = {
+@@ -640,9 +647,12 @@ static int mhi_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ 	mhi_cntrl->status_cb = mhi_pci_status_cb;
+ 	mhi_cntrl->runtime_get = mhi_pci_runtime_get;
+ 	mhi_cntrl->runtime_put = mhi_pci_runtime_put;
+-	mhi_cntrl->wake_get = mhi_pci_wake_get_nop;
+-	mhi_cntrl->wake_put = mhi_pci_wake_put_nop;
+-	mhi_cntrl->wake_toggle = mhi_pci_wake_toggle_nop;
++
++	if (info->no_inband_wake) {
++		mhi_cntrl->wake_get = mhi_pci_wake_get_nop;
++		mhi_cntrl->wake_put = mhi_pci_wake_put_nop;
++		mhi_cntrl->wake_toggle = mhi_pci_wake_toggle_nop;
++	}
+ 
+ 	err = mhi_pci_claim(mhi_cntrl, info->bar_num, DMA_BIT_MASK(info->dma_data_width));
+ 	if (err)
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
-Regards,
-Bjorn
