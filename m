@@ -2,66 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DCCFD3AB6FE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jun 2021 17:09:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 734733AB706
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jun 2021 17:10:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233175AbhFQPL7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Jun 2021 11:11:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45472 "EHLO
+        id S233195AbhFQPMC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Jun 2021 11:12:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45496 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233172AbhFQPL6 (ORCPT
+        with ESMTP id S233189AbhFQPMA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Jun 2021 11:11:58 -0400
-Received: from mail-qv1-xf29.google.com (mail-qv1-xf29.google.com [IPv6:2607:f8b0:4864:20::f29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66379C061574
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Jun 2021 08:09:50 -0700 (PDT)
-Received: by mail-qv1-xf29.google.com with SMTP id if15so1831699qvb.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Jun 2021 08:09:50 -0700 (PDT)
+        Thu, 17 Jun 2021 11:12:00 -0400
+Received: from mail-qv1-xf2c.google.com (mail-qv1-xf2c.google.com [IPv6:2607:f8b0:4864:20::f2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB18DC061767
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Jun 2021 08:09:52 -0700 (PDT)
+Received: by mail-qv1-xf2c.google.com with SMTP id if15so1831794qvb.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Jun 2021 08:09:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=marek-ca.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=6CZoxO79EUCj+uToMmmQ6lVMzE5TA3o7zrKqj4+S9KI=;
-        b=ZrxvbUOIUHyCiVrYQYrgOpLGX9jlC28Ynxxg3p4qz0YhokhE+x9bkteQs6WqGC1hQg
-         7i5bIyDasHmkWLZVP65g3IqUqiNaRB4220pMbWj4+DL+fD9l7/wwf/5eKNyAW0IUxmup
-         53oja1wU6sNp+3+uPTk+Au/Gb83w4ninPOIqQtJgpFZo4Kn8YUj0bVqYEna6SHsG/82U
-         6EVOMr8OeYo5OugWAuaFQHHN37jvTqM/cJd6kJHVD3s1l4hPc4b8fmbGmNPeJphuCpVU
-         kBALGLBZAdUphN6cg2rVtBdn4Fgw8wkoHteU5G8GXu/dEJpTRMEAqMDbmE6mjD5AlOgE
-         GHig==
+        bh=cEGpwhG6p5ve4HkGton1AY3pWTWRxR5OFRUm+6IG0BM=;
+        b=xOFHogCXEUwOHUdEDKDozRhp448e/RJv4gH5fgQt3uM+WNHVNeqW4RXEh0BjTOI9Z1
+         /1Ih6xJ5hbonfI5R6h9/cm20h8UAaL1BjYocAjjxlUSiSV03t/D6d0tlUhqqz4R3F/hT
+         qAOA3PEBj3JGArvQnGFFwbbmw1n1tNGwbZ5Gf6SsUqRZCm8vTHw6d+YJOucH9nmCmnwG
+         0PW1zxFM4D+CfMI4VdX53JrWmDR4DNWkrGEEoz1CSt6Q3+LtQf9k5IppfQledl/Uvcbm
+         lngUFfWQ6m/QCRY/rroLBMjXE1APF7TVGC33tAzfTyhVtfYV3gkw/y/KbRaCzTi7iqgQ
+         rsrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=6CZoxO79EUCj+uToMmmQ6lVMzE5TA3o7zrKqj4+S9KI=;
-        b=b4b1u1d7UhbQFFXlZRe3YxCFGyAuD/v7nXzVKAENEgg7+jDtSPYOKCAo1UkkrWS7jR
-         DHjSVMExyOFIKCFSw9tQMYbIWzmJJPQcy+xVhhaMTa7d7V8GgsOXpQtMTMdu+eM7BqPn
-         QUdM0CjWFrkZ+p4THt5pduY2YPo0VJ1aJMd9hBwR9cTITT+vx3kgUvfWLTPfx/Qlnc56
-         OVjyVO+sOOFMWJenEnBIUMj/AtYihBVa20J2dXh39JUDDG1aO/vOmHGxjg32HVwebE4f
-         Qk8HRcno18jE6gQh0ZPIqKgbpzCaeGgLTuiC+LQlLKcnjKj3C8Fksp5+RoJTXYiv603b
-         pZWQ==
-X-Gm-Message-State: AOAM530rmsZj3gE8qbwQBWG0zDVDpNGM1B4hQIvCbgmCpJXXWytpOAFT
-        YBD5koZK8yyG52dnc4HiHU/bnw==
-X-Google-Smtp-Source: ABdhPJwqlTnyC6ehAuzvmqugicCKmU0UrwJ2sXGVdmGn/AoPR8lWetbs/2NzMSuB8dsbFuyO/q7mzw==
-X-Received: by 2002:a05:6214:80a:: with SMTP id df10mr300267qvb.8.1623942589661;
-        Thu, 17 Jun 2021 08:09:49 -0700 (PDT)
+        bh=cEGpwhG6p5ve4HkGton1AY3pWTWRxR5OFRUm+6IG0BM=;
+        b=SHqi4sCn4GuxXs5cWi48L2iWajhNGS4f4RGvZBSZERiDPucec9/1p42IeqNf+9yi/L
+         MEleJcagRn2Bybul3uGQOfhIQguWOvie9F9ItqKVxFZzFOpwzGY2UGUUPyUqv1W54mY+
+         ijpkSQgQNXR9YBonVJSUbEJ2W/997fIX/rK9AEe0m5+SDfUQ0CY7n2QhCppGP4bnxwo5
+         2jiO7gnrKRn+RbcrM4h7pto+wcmMLmnizazpHmselDCkepQezNy63aXAdcSwoCxOyVEb
+         fSrZp5O1u1rf9p/iyR3485uf7Yimo9dYf3b43MoHQDFSuri1i/WfozcMTtByJuzBKC96
+         RJaQ==
+X-Gm-Message-State: AOAM530b8mBUXpflb8qZdztjqE2FrBEEl5k6IFP+XTmljyq0ZMPSeNOY
+        aUer3q17A6+ugzazKNk0h2qfHKXdL0RK+n+zbnU=
+X-Google-Smtp-Source: ABdhPJwkwzkpMneGJhGYpV8v3Sy02fJEBm5RVWSNvS4VXlzOYBId9bl24tw7PJEscZEom7rxwflAWg==
+X-Received: by 2002:a0c:e84b:: with SMTP id l11mr390498qvo.36.1623942592025;
+        Thu, 17 Jun 2021 08:09:52 -0700 (PDT)
 Received: from localhost.localdomain (modemcable068.184-131-66.mc.videotron.ca. [66.131.184.68])
-        by smtp.gmail.com with ESMTPSA id g82sm1915427qke.119.2021.06.17.08.09.48
+        by smtp.gmail.com with ESMTPSA id g82sm1915427qke.119.2021.06.17.08.09.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Jun 2021 08:09:49 -0700 (PDT)
+        Thu, 17 Jun 2021 08:09:51 -0700 (PDT)
 From:   Jonathan Marek <jonathan@marek.ca>
 To:     freedreno@lists.freedesktop.org
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+Cc:     Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         David Airlie <airlied@linux.ie>,
         Daniel Vetter <daniel@ffwll.ch>,
         Rob Herring <robh+dt@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Anurag Kumar Vulisha <anurag.kumar.vulisha@xilinx.com>,
+        Swapnil Jakhade <sjakhade@cadence.com>,
         linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
         dri-devel@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
         GPU),
         devicetree@vger.kernel.org (open list:OPEN FIRMWARE AND FLATTENED
         DEVICE TREE BINDINGS), linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v4 1/3] dt-bindings: msm: dsi: add missing 7nm bindings
-Date:   Thu, 17 Jun 2021 10:43:33 -0400
-Message-Id: <20210617144349.28448-2-jonathan@marek.ca>
+Subject: [PATCH v4 2/3] dt-bindings: msm: dsi: document phy-type property for 7nm dsi phy
+Date:   Thu, 17 Jun 2021 10:43:34 -0400
+Message-Id: <20210617144349.28448-3-jonathan@marek.ca>
 X-Mailer: git-send-email 2.26.1
 In-Reply-To: <20210617144349.28448-1-jonathan@marek.ca>
 References: <20210617144349.28448-1-jonathan@marek.ca>
@@ -71,86 +75,44 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-These got lost when going from .txt to .yaml bindings, add them back.
+Document a new phy-type property which will be used to determine whether
+the phy should operate in D-PHY or C-PHY mode.
 
 Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 ---
- .../bindings/display/msm/dsi-phy-7nm.yaml     | 66 +++++++++++++++++++
- 1 file changed, 66 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/display/msm/dsi-phy-7nm.yaml
+ .../devicetree/bindings/display/msm/dsi-phy-7nm.yaml         | 5 +++++
+ include/dt-bindings/phy/phy.h                                | 2 ++
+ 2 files changed, 7 insertions(+)
 
 diff --git a/Documentation/devicetree/bindings/display/msm/dsi-phy-7nm.yaml b/Documentation/devicetree/bindings/display/msm/dsi-phy-7nm.yaml
-new file mode 100644
-index 000000000000..c0077ca7e9e7
---- /dev/null
+index c0077ca7e9e7..70809d1cac54 100644
+--- a/Documentation/devicetree/bindings/display/msm/dsi-phy-7nm.yaml
 +++ b/Documentation/devicetree/bindings/display/msm/dsi-phy-7nm.yaml
-@@ -0,0 +1,66 @@
-+# SPDX-License-Identifier: GPL-2.0-only or BSD-2-Clause
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/display/msm/dsi-phy-7nm.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
+@@ -34,6 +34,11 @@ properties:
+     description: |
+       Connected to VDD_A_DSI_PLL_0P9 pin (or VDDA_DSI{0,1}_PLL_0P9 for sm8150)
+ 
++  phy-type:
++    description: D-PHY (default) or C-PHY mode
++    enum: [ 10, 11 ]
++    default: 10
 +
-+title: Qualcomm Display DSI 7nm PHY
-+
-+maintainers:
-+  - Jonathan Marek <jonathan@marek.ca>
-+
-+allOf:
-+  - $ref: dsi-phy-common.yaml#
-+
-+properties:
-+  compatible:
-+    oneOf:
-+      - const: qcom,dsi-phy-7nm
-+      - const: qcom,dsi-phy-7nm-8150
-+
-+  reg:
-+    items:
-+      - description: dsi phy register set
-+      - description: dsi phy lane register set
-+      - description: dsi pll register set
-+
-+  reg-names:
-+    items:
-+      - const: dsi_phy
-+      - const: dsi_phy_lane
-+      - const: dsi_pll
-+
-+  vdds-supply:
-+    description: |
-+      Connected to VDD_A_DSI_PLL_0P9 pin (or VDDA_DSI{0,1}_PLL_0P9 for sm8150)
-+
-+required:
-+  - compatible
-+  - reg
-+  - reg-names
-+  - vdds-supply
-+
-+unevaluatedProperties: false
-+
-+examples:
-+  - |
-+     #include <dt-bindings/clock/qcom,dispcc-sm8250.h>
-+     #include <dt-bindings/clock/qcom,rpmh.h>
-+
-+     dsi-phy@ae94400 {
-+         compatible = "qcom,dsi-phy-7nm";
-+         reg = <0x0ae94400 0x200>,
-+               <0x0ae94600 0x280>,
-+               <0x0ae94900 0x260>;
-+         reg-names = "dsi_phy",
-+                     "dsi_phy_lane",
-+                     "dsi_pll";
-+
-+         #clock-cells = <1>;
-+         #phy-cells = <0>;
-+
-+         vdds-supply = <&vreg_l5a_0p88>;
-+         clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
-+                  <&rpmhcc RPMH_CXO_CLK>;
-+         clock-names = "iface", "ref";
-+     };
+ required:
+   - compatible
+   - reg
+diff --git a/include/dt-bindings/phy/phy.h b/include/dt-bindings/phy/phy.h
+index 887a31b250a8..f48c9acf251e 100644
+--- a/include/dt-bindings/phy/phy.h
++++ b/include/dt-bindings/phy/phy.h
+@@ -20,5 +20,7 @@
+ #define PHY_TYPE_XPCS		7
+ #define PHY_TYPE_SGMII		8
+ #define PHY_TYPE_QSGMII		9
++#define PHY_TYPE_DPHY		10
++#define PHY_TYPE_CPHY		11
+ 
+ #endif /* _DT_BINDINGS_PHY */
 -- 
 2.26.1
 
