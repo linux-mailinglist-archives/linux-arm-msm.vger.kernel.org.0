@@ -2,247 +2,202 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3B1123ABCB7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jun 2021 21:27:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 11DD63ABCEF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jun 2021 21:35:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231626AbhFQT3v (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Jun 2021 15:29:51 -0400
-Received: from relay05.th.seeweb.it ([5.144.164.166]:54839 "EHLO
-        relay05.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231301AbhFQT3u (ORCPT
+        id S233668AbhFQThv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Jun 2021 15:37:51 -0400
+Received: from mailout2.w1.samsung.com ([210.118.77.12]:31548 "EHLO
+        mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233679AbhFQThs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Jun 2021 15:29:50 -0400
-Received: from localhost.localdomain (83.6.168.10.neoplus.adsl.tpnet.pl [83.6.168.10])
-        by m-r2.th.seeweb.it (Postfix) with ESMTPA id A02143F619;
-        Thu, 17 Jun 2021 21:27:34 +0200 (CEST)
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-To:     ~postmarketos/upstreaming@lists.sr.ht
-Cc:     martin.botka@somainline.org,
-        angelogioacchino.delregno@somainline.org,
-        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Jeffrey Hugo <jhugo@codeaurora.org>,
-        Taniya Das <tdas@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v2 3/3] clk: qcom: mmcc-msm8994: Add MSM8992 support
-Date:   Thu, 17 Jun 2021 21:27:25 +0200
-Message-Id: <20210617192725.126743-3-konrad.dybcio@somainline.org>
-X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20210617192725.126743-1-konrad.dybcio@somainline.org>
-References: <20210617192725.126743-1-konrad.dybcio@somainline.org>
+        Thu, 17 Jun 2021 15:37:48 -0400
+Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
+        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20210617193538euoutp02143eb2bbe42a2c005540279860f7dcd8~Jda-MCmZt1993219932euoutp02h
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Jun 2021 19:35:38 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20210617193538euoutp02143eb2bbe42a2c005540279860f7dcd8~Jda-MCmZt1993219932euoutp02h
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1623958538;
+        bh=1uBGtvIj4Fl53/heI+tivIwbHFbFUjdAyoDsN8HU7AU=;
+        h=Subject:To:From:Date:In-Reply-To:References:From;
+        b=vOBgpWQJO5Uvc7wHBO2E49eLkmiCH8oG+m6WtbgmTKiO93v7+01SQ1bCwW5EjqNOy
+         BiiAAWTiW4gIo2npetX7TA9ZbzueJAwaFbxXyC8LFLgasIlsV1hzDNTwpuc0V/7WXg
+         bQdMBEDmDun2iJpo2/ceAAXy5hP5e9WrIeNyfd2c=
+Received: from eusmges1new.samsung.com (unknown [203.254.199.242]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
+        20210617193538eucas1p25880900add5677a5b24e765f96cf59f2~Jda_sXNFO1768817688eucas1p2d;
+        Thu, 17 Jun 2021 19:35:38 +0000 (GMT)
+Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
+        eusmges1new.samsung.com (EUCPMTA) with SMTP id DF.1B.09452.904ABC06; Thu, 17
+        Jun 2021 20:35:37 +0100 (BST)
+Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
+        20210617193537eucas1p217b93d091ae8795581b30931ad8c7467~Jda_HNMXR1770317703eucas1p2l;
+        Thu, 17 Jun 2021 19:35:37 +0000 (GMT)
+Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
+        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
+        20210617193537eusmtrp27e275fd525e9e366420607d6017f9e3e~Jda_GW5AA0769107691eusmtrp2L;
+        Thu, 17 Jun 2021 19:35:37 +0000 (GMT)
+X-AuditID: cbfec7f2-a9fff700000024ec-58-60cba4092751
+Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
+        eusmgms2.samsung.com (EUCPMTA) with SMTP id 87.2B.08696.904ABC06; Thu, 17
+        Jun 2021 20:35:37 +0100 (BST)
+Received: from [106.210.134.192] (unknown [106.210.134.192]) by
+        eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
+        20210617193536eusmtip139d9d96d6e14d089ee2c12c407754f4f~Jda9Gd0Am2888128881eusmtip1J;
+        Thu, 17 Jun 2021 19:35:36 +0000 (GMT)
+Subject: Re: [PATCH v3] ASoC: qcom: Fix for DMA interrupt clear reg
+ overwriting
+To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
+        agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
+        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
+        srinivas.kandagatla@linaro.org, rohitkr@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        swboyd@chromium.org, judyhsiao@chromium.org
+From:   Marek Szyprowski <m.szyprowski@samsung.com>
+Message-ID: <5ae06ccb-ffd4-ca9f-5a88-1f8bf8b48d37@samsung.com>
+Date:   Thu, 17 Jun 2021 21:35:36 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0)
+        Gecko/20100101 Thunderbird/78.11.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20210609072310.26099-1-srivasam@codeaurora.org>
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-Brightmail-Tracker: H4sIAAAAAAAAA02Se0xbVRzHc+6rj6x4uRv2DAkKxsVNxiMad0AkLJnzGv8QHIlRcOMG7ui2
+        wpZeOtFoUkcGrIKDBmLbwdjDPYKyIlQYbF1HQeokNEVoZQLisHUD1yJDrMPho72Z8t/n+z3f
+        X87ve3KkODNHxkr3lZXzmjJOnUjJie6h+66tsk+HC1NnZp5Hrp/+JND4qANDH06eIdGwPUig
+        pls+CrUOukjkbajG0O/jNRhqsI9I0FhfM4WO9R0nUU1LPUBHbYMSdMNaCVDV0BCJQvMjOHJO
+        +THUEWoH2QzbsXSEYk/oRgl27OM6jO01T0vYzrZjFDvlvUqx1wLnKdZi9RDsUmd8juwteWYx
+        r953mNekZBXKVfZzXxGHvoutaLxiADpwKkYPZFJIPwfPX/8M1wO5lKEvAui1+4AofgNwwDYr
+        EcUSgKbK04QeSCMj/SZG9C8A6O/VYaJYBLCrLoSHQ+vpXGjyHQ77G2gvDuc816jwfRSdBvUB
+        fYQVdBZsql8gwkzQT0HT7CIW5hi6CC6cNJJiJhreMPkiGRn9Ipw0GiKM04/DnkAzLrISfu9r
+        jSwBabsM3jneTYrldkBdTwMm8no477RKRI6Df/c+HKgE8JarXSKKWgDHjhiBmHoBTrlWqHAd
+        nN4MLX0por0dWlZrSPEpouBEIFpcIgoauj/BRVsBa6oYMb0Jmp2X/ru23/0tLjIL7TYPWQ8S
+        zGtqmtdUM6+pZv5/h1OAaANKXiuUlvBCWhn/TrLAlQraspLkooOlneDf3zj8l/PeZdAyv5js
+        AJgUOACU4okbFFuFrwsZRTH37nu85uAejVbNCw7wmJRIVCraTny+h6FLuHL+AM8f4jUPTzGp
+        LFaHCbzO1qU3hGYyiJy5M+tKjCOjcbXDXpdrf+343qS3+7urRrhvli7/bGvc/8Sb6Ugiv638
+        KOMAleqf6AnF773kKc5Pn7QmpGefla/435iczsob3J28MYMd/CLYuivp9hZydYHpOJlfsbKr
+        enr7s+qXmwqqPvgy9H5L/Wvcbm3Mr/nbBpKOJtzMjXN7lAN43Usw714Ul+4veKXF4m7cefcP
+        cD33bqmKw39IbX46RXgwk7dZe+7quoJHl8+qgDJozQxuurIzYeFOUXQF8+NGy5PVv8zi7E2H
+        aq78/vID98TK6eLlKsM2yUXmwut+oitv9dWc6vbMbGMguOORWI37GedEvDqREFRc2hZcI3D/
+        AFU5vcr8AwAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrHIsWRmVeSWpSXmKPExsVy+t/xu7qcS04nGPybyGtx7vFvFosrFw8x
+        WTTeXsRqcXr/OxaLqQ+fsFnMP3KO1eLaxHYmi29XOpgsJu4/y25xedccNovOXf2sFh1zJzBa
+        tO49wm5xckszo0XbsWOsFt9fnWW2OH7nKZPFhu9rGR2EPDZ8bmLzmN1wkcXjcl8vk8fOWXfZ
+        PTat6mTzuHNtD5vHvrfL2DzWb7nK4vF5k1wAZ5SeTVF+aUmqQkZ+cYmtUrShhZGeoaWFnpGJ
+        pZ6hsXmslZGpkr6dTUpqTmZZapG+XYJexv6lR1kKrktVTNk9ibGBcYFoFyMHh4SAicTBmUJd
+        jFwcQgJLGSU6pvxi7GLkBIrLSJyc1sAKYQtL/LnWxQZR9J5R4vXMkywgzcICgRIzn5SBxEUE
+        rjFLLD78mAmkQUjARuLv+2VsIDabgKFE19suMJtXwE5i6oT3LCA2i4CqxMxHH8HqRQWSJX6u
+        b4eqEZQ4OfMJWA2ngK3E7RmTwGxmATOJeZsfMkPY8hLb386BssUlbj2ZzzSBUXAWkvZZSFpm
+        IWmZhaRlASPLKkaR1NLi3PTcYiO94sTc4tK8dL3k/NxNjMCI33bs55YdjCtffdQ7xMjEwXiI
+        UYKDWUmEV7f4RIIQb0piZVVqUX58UWlOavEhRlOgfyYyS4km5wNTTl5JvKGZgamhiZmlgaml
+        mbGSOK/JkTXxQgLpiSWp2ampBalFMH1MHJxSDUyiut98wv02JDt5Pg2Qj1/Ie9pEVF6vQn7v
+        461b1nyYo7AvbW7Hc9UJ88JWBQm+mvFm1pXOtFvb5/RWbrWofzdBinl1Xuhb8+KWqO7//1p4
+        WwJOJ4bMc1E3LmBarFb85tq16H87PYrX+R/a7/E2csWcLJZ7/zkWf7/K/ex7dINESqYqY9i7
+        H3p20oXVmm9Envunl2y0OLrM6abAavVDwbv2Xtqqk2rnwucY8O+3waWVP7R9pzqnT1SaWZtX
+        bqzwZ+YSPp30ScsX32Pl7VleVK/xTW6Hr2nh1nbDvLcn/93iVZu9pIq1YqHJ3/mTBLeybL9w
+        7p5UuX9X280XTBWazi0BvjJTVr+oe87+49EN8R1KLMUZiYZazEXFiQDqfHfvgQMAAA==
+X-CMS-MailID: 20210617193537eucas1p217b93d091ae8795581b30931ad8c7467
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-RootMTR: 20210617193537eucas1p217b93d091ae8795581b30931ad8c7467
+X-EPHeader: CA
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20210617193537eucas1p217b93d091ae8795581b30931ad8c7467
+References: <20210609072310.26099-1-srivasam@codeaurora.org>
+        <CGME20210617193537eucas1p217b93d091ae8795581b30931ad8c7467@eucas1p2.samsung.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-MSM8992 features less clocks & GDSCS and has different
-freq tables for some of them.
+Hi,
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
----
- drivers/clk/qcom/mmcc-msm8994.c | 126 ++++++++++++++++++++++++++++++++
- 1 file changed, 126 insertions(+)
+On 09.06.2021 09:23, Srinivasa Rao Mandadapu wrote:
+> The DMA interrupt clear register overwritten during
+> simultaneous playback and capture in lpass platform
+> interrupt handler. It's causing playback or capture stuck
+> in similtaneous plaback on speaker and capture on dmic test.
+> Update appropriate reg fields of corresponding channel instead
+> of entire register write.
+>
+> Fixes: commit c5c8635a04711 ("ASoC: qcom: Add LPASS platform driver")
+>
+> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
 
-diff --git a/drivers/clk/qcom/mmcc-msm8994.c b/drivers/clk/qcom/mmcc-msm8994.c
-index 7f65c0e61908..69f683e949d0 100644
---- a/drivers/clk/qcom/mmcc-msm8994.c
-+++ b/drivers/clk/qcom/mmcc-msm8994.c
-@@ -329,6 +329,14 @@ static const struct freq_tbl ftbl_axi_clk_src[] = {
- 	{ }
- };
- 
-+static const struct freq_tbl ftbl_axi_clk_src_8992[] = {
-+	F(75000000, P_GPLL0, 8, 0, 0),
-+	F(150000000, P_GPLL0, 4, 0, 0),
-+	F(300000000, P_GPLL0, 2, 0, 0),
-+	F(404000000, P_MMPLL1, 2, 0, 0),
-+	{ }
-+};
-+
- static struct clk_rcg2 axi_clk_src = {
- 	.cmd_rcgr = 0x5040,
- 	.hid_width = 5,
-@@ -349,6 +357,12 @@ static const struct freq_tbl ftbl_csi0_1_2_3_clk_src[] = {
- 	{ }
- };
- 
-+static const struct freq_tbl ftbl_csi0_1_2_3_clk_src_8992[] = {
-+	F(100000000, P_GPLL0, 6, 0, 0),
-+	F(266670000, P_MMPLL0, 3, 0, 0),
-+	{ }
-+};
-+
- static struct clk_rcg2 csi0_clk_src = {
- 	.cmd_rcgr = 0x3090,
- 	.hid_width = 5,
-@@ -375,6 +389,16 @@ static const struct freq_tbl ftbl_vcodec0_clk_src[] = {
- 	{ }
- };
- 
-+static const struct freq_tbl ftbl_vcodec0_clk_src_8992[] = {
-+	F(66670000, P_GPLL0, 9, 0, 0),
-+	F(100000000, P_GPLL0, 6, 0, 0),
-+	F(133330000, P_GPLL0, 4.5, 0, 0),
-+	F(200000000, P_MMPLL0, 4, 0, 0),
-+	F(320000000, P_MMPLL0, 2.5, 0, 0),
-+	F(510000000, P_MMPLL3, 2, 0, 0),
-+	{ }
-+};
-+
- static struct clk_rcg2 vcodec0_clk_src = {
- 	.cmd_rcgr = 0x1000,
- 	.mnd_width = 8,
-@@ -440,6 +464,16 @@ static const struct freq_tbl ftbl_vfe0_clk_src[] = {
- 	{ }
- };
- 
-+static const struct freq_tbl ftbl_vfe0_1_clk_src_8992[] = {
-+	F(80000000, P_GPLL0, 7.5, 0, 0),
-+	F(100000000, P_GPLL0, 6, 0, 0),
-+	F(200000000, P_GPLL0, 3, 0, 0),
-+	F(320000000, P_MMPLL0, 2.5, 0, 0),
-+	F(480000000, P_MMPLL4, 2, 0, 0),
-+	F(600000000, P_GPLL0, 1, 0, 0),
-+	{ }
-+};
-+
- static struct clk_rcg2 vfe0_clk_src = {
- 	.cmd_rcgr = 0x3600,
- 	.hid_width = 5,
-@@ -486,6 +520,15 @@ static const struct freq_tbl ftbl_cpp_clk_src[] = {
- 	{ }
- };
- 
-+static const struct freq_tbl ftbl_cpp_clk_src_8992[] = {
-+	F(100000000, P_GPLL0, 6, 0, 0),
-+	F(200000000, P_GPLL0, 3, 0, 0),
-+	F(320000000, P_MMPLL0, 2.5, 0, 0),
-+	F(480000000, P_MMPLL4, 2, 0, 0),
-+	F(640000000, P_MMPLL4, 1.5, 0, 0),
-+	{ }
-+};
-+
- static struct clk_rcg2 cpp_clk_src = {
- 	.cmd_rcgr = 0x3640,
- 	.hid_width = 5,
-@@ -601,6 +644,17 @@ static const struct freq_tbl ftbl_mdp_clk_src[] = {
- 	{ }
- };
- 
-+static const struct freq_tbl ftbl_mdp_clk_src_8992[] = {
-+	F(85710000, P_GPLL0, 7, 0, 0),
-+	F(171430000, P_GPLL0, 3.5, 0, 0),
-+	F(200000000, P_GPLL0, 3, 0, 0),
-+	F(240000000, P_GPLL0, 2.5, 0, 0),
-+	F(266670000, P_MMPLL0, 3, 0, 0),
-+	F(320000000, P_MMPLL0, 2.5, 0, 0),
-+	F(400000000, P_MMPLL0, 2, 0, 0),
-+	{ }
-+};
-+
- static struct clk_rcg2 mdp_clk_src = {
- 	.cmd_rcgr = 0x2040,
- 	.hid_width = 5,
-@@ -654,6 +708,16 @@ static const struct freq_tbl ftbl_ocmemnoc_clk_src[] = {
- 	{ }
- };
- 
-+static const struct freq_tbl ftbl_ocmemnoc_clk_src_8992[] = {
-+	F(19200000, P_XO, 1, 0, 0),
-+	F(75000000, P_GPLL0, 8, 0, 0),
-+	F(100000000, P_GPLL0, 6, 0, 0),
-+	F(150000000, P_GPLL0, 4, 0, 0),
-+	F(320000000, P_MMPLL0, 2.5, 0, 0),
-+	F(400000000, P_MMPLL0, 2, 0, 0),
-+	{ }
-+};
-+
- static struct clk_rcg2 ocmemnoc_clk_src = {
- 	.cmd_rcgr = 0x5090,
- 	.hid_width = 5,
-@@ -767,6 +831,35 @@ static const struct freq_tbl ftbl_mclk0_1_2_3_clk_src[] = {
- 	{ }
- };
- 
-+static const struct freq_tbl ftbl_mclk0_clk_src_8992[] = {
-+	F(4800000, P_XO, 4, 0, 0),
-+	F(6000000, P_MMPLL4, 10, 1, 16),
-+	F(8000000, P_MMPLL4, 10, 1, 12),
-+	F(9600000, P_XO, 2, 0, 0),
-+	F(12000000, P_MMPLL4, 10, 1, 8),
-+	F(16000000, P_MMPLL4, 10, 1, 6),
-+	F(19200000, P_XO, 1, 0, 0),
-+	F(24000000, P_MMPLL4, 10, 1, 4),
-+	F(32000000, P_MMPLL4, 10, 1, 3),
-+	F(48000000, P_MMPLL4, 10, 1, 2),
-+	F(64000000, P_MMPLL4, 15, 0, 0),
-+	{ }
-+};
-+
-+static const struct freq_tbl ftbl_mclk1_2_3_clk_src_8992[] = {
-+	F(4800000, P_XO, 4, 0, 0),
-+	F(6000000, P_MMPLL4, 10, 1, 16),
-+	F(8000000, P_MMPLL4, 10, 1, 12),
-+	F(9600000, P_XO, 2, 0, 0),
-+	F(16000000, P_MMPLL4, 10, 1, 6),
-+	F(19200000, P_XO, 1, 0, 0),
-+	F(24000000, P_MMPLL4, 10, 1, 4),
-+	F(32000000, P_MMPLL4, 10, 1, 3),
-+	F(48000000, P_MMPLL4, 10, 1, 2),
-+	F(64000000, P_MMPLL4, 15, 0, 0),
-+	{ }
-+};
-+
- static struct clk_rcg2 mclk0_clk_src = {
- 	.cmd_rcgr = 0x3360,
- 	.mnd_width = 8,
-@@ -2468,6 +2561,39 @@ static int mmcc_msm8994_probe(struct platform_device *pdev)
- {
- 	struct regmap *regmap;
- 
-+	if (of_device_is_compatible(pdev->dev.of_node, "qcom,mmcc-msm8992")) {
-+		/* MSM8992 features less clocks and some have different freq tables */
-+		mmcc_msm8994_desc.clks[CAMSS_JPEG_JPEG1_CLK] = 0;
-+		mmcc_msm8994_desc.clks[CAMSS_JPEG_JPEG2_CLK] = 0;
-+		mmcc_msm8994_desc.clks[FD_CORE_CLK_SRC] = 0;
-+		mmcc_msm8994_desc.clks[FD_CORE_CLK] = 0;
-+		mmcc_msm8994_desc.clks[FD_CORE_UAR_CLK] = 0;
-+		mmcc_msm8994_desc.clks[FD_AXI_CLK] = 0;
-+		mmcc_msm8994_desc.clks[FD_AHB_CLK] = 0;
-+		mmcc_msm8994_desc.clks[JPEG1_CLK_SRC] = 0;
-+		mmcc_msm8994_desc.clks[JPEG2_CLK_SRC] = 0;
-+		mmcc_msm8994_desc.clks[VENUS0_CORE2_VCODEC_CLK] = 0;
-+
-+		mmcc_msm8994_desc.gdscs[FD_GDSC] = 0;
-+		mmcc_msm8994_desc.gdscs[VENUS_CORE2_GDSC] = 0;
-+
-+		axi_clk_src.freq_tbl = ftbl_axi_clk_src_8992;
-+		cpp_clk_src.freq_tbl = ftbl_cpp_clk_src_8992;
-+		csi0_clk_src.freq_tbl = ftbl_csi0_1_2_3_clk_src_8992;
-+		csi1_clk_src.freq_tbl = ftbl_csi0_1_2_3_clk_src_8992;
-+		csi2_clk_src.freq_tbl = ftbl_csi0_1_2_3_clk_src_8992;
-+		csi3_clk_src.freq_tbl = ftbl_csi0_1_2_3_clk_src_8992;
-+		mclk0_clk_src.freq_tbl = ftbl_mclk0_clk_src_8992;
-+		mclk1_clk_src.freq_tbl = ftbl_mclk1_2_3_clk_src_8992;
-+		mclk2_clk_src.freq_tbl = ftbl_mclk1_2_3_clk_src_8992;
-+		mclk3_clk_src.freq_tbl = ftbl_mclk1_2_3_clk_src_8992;
-+		mdp_clk_src.freq_tbl = ftbl_mdp_clk_src_8992;
-+		ocmemnoc_clk_src.freq_tbl = ftbl_ocmemnoc_clk_src_8992;
-+		vcodec0_clk_src.freq_tbl = ftbl_vcodec0_clk_src_8992;
-+		vfe0_clk_src.freq_tbl = ftbl_vfe0_1_clk_src_8992;
-+		vfe1_clk_src.freq_tbl = ftbl_vfe0_1_clk_src_8992;
-+	}
-+
- 	regmap = qcom_cc_map(pdev, &mmcc_msm8994_desc);
- 	if (IS_ERR(regmap))
- 		return PTR_ERR(regmap);
+This patch landed recently in linux-next as commit da0363f7bfd3 ("ASoC: 
+qcom: Fix for DMA interrupt clear reg overwriting"). It breaks ALSA 
+playback on DragonBoard 410c (arch/arm64/boot/dts/qcom/apq8016-sbc.dts). 
+After applying this patch, running 'speaker-test -l1' never finishes. 
+There is no error nor kernel warning message. Before that commit, the 
+playback worked fine on that board.
+
+> ---
+> Changes since v2:
+> 	-- Removed redundant variables.
+> Changes since v1:
+> 	-- Subject lines changed.
+>   sound/soc/qcom/lpass-platform.c | 12 ++++++------
+>   1 file changed, 6 insertions(+), 6 deletions(-)
+>
+> diff --git a/sound/soc/qcom/lpass-platform.c b/sound/soc/qcom/lpass-platform.c
+> index 0df9481ea4c6..f9df76d37858 100644
+> --- a/sound/soc/qcom/lpass-platform.c
+> +++ b/sound/soc/qcom/lpass-platform.c
+> @@ -526,7 +526,7 @@ static int lpass_platform_pcmops_trigger(struct snd_soc_component *component,
+>   			return -EINVAL;
+>   		}
+>   
+> -		ret = regmap_write(map, reg_irqclr, val_irqclr);
+> +		ret = regmap_update_bits(map, reg_irqclr, val_irqclr, val_irqclr);
+>   		if (ret) {
+>   			dev_err(soc_runtime->dev, "error writing to irqclear reg: %d\n", ret);
+>   			return ret;
+> @@ -650,10 +650,11 @@ static irqreturn_t lpass_dma_interrupt_handler(
+>   	struct lpass_variant *v = drvdata->variant;
+>   	irqreturn_t ret = IRQ_NONE;
+>   	int rv;
+> -	unsigned int reg = 0, val = 0;
+> +	unsigned int reg, val, mask;
+>   	struct regmap *map;
+>   	unsigned int dai_id = cpu_dai->driver->id;
+>   
+> +	mask = LPAIF_IRQ_ALL(chan);
+>   	switch (dai_id) {
+>   	case LPASS_DP_RX:
+>   		map = drvdata->hdmiif_map;
+> @@ -676,8 +677,7 @@ static irqreturn_t lpass_dma_interrupt_handler(
+>   	return -EINVAL;
+>   	}
+>   	if (interrupts & LPAIF_IRQ_PER(chan)) {
+> -
+> -		rv = regmap_write(map, reg, LPAIF_IRQ_PER(chan) | val);
+> +		rv = regmap_update_bits(map, reg, mask, (LPAIF_IRQ_PER(chan) | val));
+>   		if (rv) {
+>   			dev_err(soc_runtime->dev,
+>   				"error writing to irqclear reg: %d\n", rv);
+> @@ -688,7 +688,7 @@ static irqreturn_t lpass_dma_interrupt_handler(
+>   	}
+>   
+>   	if (interrupts & LPAIF_IRQ_XRUN(chan)) {
+> -		rv = regmap_write(map, reg, LPAIF_IRQ_XRUN(chan) | val);
+> +		rv = regmap_update_bits(map, reg, mask, (LPAIF_IRQ_XRUN(chan) | val));
+>   		if (rv) {
+>   			dev_err(soc_runtime->dev,
+>   				"error writing to irqclear reg: %d\n", rv);
+> @@ -700,7 +700,7 @@ static irqreturn_t lpass_dma_interrupt_handler(
+>   	}
+>   
+>   	if (interrupts & LPAIF_IRQ_ERR(chan)) {
+> -		rv = regmap_write(map, reg, LPAIF_IRQ_ERR(chan) | val);
+> +		rv = regmap_update_bits(map, reg, mask, (LPAIF_IRQ_ERR(chan) | val));
+>   		if (rv) {
+>   			dev_err(soc_runtime->dev,
+>   				"error writing to irqclear reg: %d\n", rv);
+
+Best regards
 -- 
-2.32.0
+Marek Szyprowski, PhD
+Samsung R&D Institute Poland
 
