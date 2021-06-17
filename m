@@ -2,216 +2,394 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 335DA3ABEFC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jun 2021 00:34:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 240773ABF22
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jun 2021 00:58:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232528AbhFQWgf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Jun 2021 18:36:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59412 "EHLO
+        id S232817AbhFQXAl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Jun 2021 19:00:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36430 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231438AbhFQWgf (ORCPT
+        with ESMTP id S231623AbhFQXAl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Jun 2021 18:36:35 -0400
-Received: from relay07.th.seeweb.it (relay07.th.seeweb.it [IPv6:2001:4b7a:2000:18::168])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A0FDC061574
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Jun 2021 15:34:27 -0700 (PDT)
-Received: from [192.168.1.101] (83.6.168.10.neoplus.adsl.tpnet.pl [83.6.168.10])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 0D9B63F647;
-        Fri, 18 Jun 2021 00:34:24 +0200 (CEST)
-Subject: Re: [PATCH v3 3/5] arm64: dts: qcom: pmm8155au_1: Add base dts file
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        linux-arm-msm@vger.kernel.org
-Cc:     bhupesh.linux@gmail.com, linux-gpio@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        robh+dt@kernel.org, agross@kernel.org,
-        Mark Brown <broonie@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-References: <20210617054548.353293-1-bhupesh.sharma@linaro.org>
- <20210617054548.353293-4-bhupesh.sharma@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-Message-ID: <cba788c2-f826-94f0-0bcd-bae491ac4189@somainline.org>
-Date:   Fri, 18 Jun 2021 00:34:24 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+        Thu, 17 Jun 2021 19:00:41 -0400
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9995AC061574
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Jun 2021 15:58:32 -0700 (PDT)
+Received: by mail-wm1-x32c.google.com with SMTP id c84so4413331wme.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Jun 2021 15:58:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=Gqg3gSbmk3IS0GZGQhZrtRAFVkCIS4Cid8+to64Eu3s=;
+        b=eGZvDh+b1YEIvy94BvuY3lTLtaEX8ZwyCmhGcGX/igxluXsOy7/ng8gpoXNkf/IRKD
+         3PIxTjvDC7qBF0EidC0hsnCf1XoyXvxbGvNttjcCev4QQfXmhQwVwJWUOW8FsWqalgKm
+         I+vPvqqUT81RjCQZAeEXEO3TfV+HcNWTR7wmpHIlMXZ/c6PPf3HuSvJ4xpqzZ4R57Hiq
+         ltt7pfvjvl897sSogQo6LZck3bzd1scSfwAlCe75SyM8h1MOBIZPk2E2pyyadEk2VtKq
+         W5qNYbcjjq6pjEZ0o4xT5eCzBp9G9XHHtslL0C1NmXOr+14amaielpeT5YPLHmDZzfiq
+         9zaA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=Gqg3gSbmk3IS0GZGQhZrtRAFVkCIS4Cid8+to64Eu3s=;
+        b=gX+vxj7t+mV1MRXMUfl1KLrhbny8DPK5bogaavRLy+ZfNpiqrUHv1R4HhjpBHgSl3X
+         swCEtfhlPXa2YyAKh1AO7FsFc+SHBX46jDezBUxTi+3vjCZg4CRBtkqiMocH3ZPXARWP
+         73oVaH//0g8LE2cYs/RMLIjAjjAih6bKk4NNKbdpx6z55ltbTtbAY6IhSeQkYGaGgoWm
+         gPqzZt+N6IKVKwWAbO8qBNFRbBbcRx1ZLuchCsTNIxgaCCn+lNV1xDLwDfLUe/FmEr/H
+         OwsxTLJMt9uI5SxXI61jxCoFOevbEd14DwdIXyd8zJtzmbf7g5SZu4cFOupzxHiATKRi
+         U/IA==
+X-Gm-Message-State: AOAM533R4XmQ2CruqrqvZOFGjsK0L0lIJUUB77lACMNlGYkB9+JTBiJT
+        xQXqJuZUzdTAIVpD/86hAvkShzl2ejZhuVCvTXM=
+X-Google-Smtp-Source: ABdhPJwQjSQISwME7gJmbWBakyR38GYQ9u6edxIyGQy1O7tSP3HTXWOA/e044+cHDvKqxoEUlT/IgIpavrLzIv+yb6A=
+X-Received: by 2002:a05:600c:1ca6:: with SMTP id k38mr8173778wms.49.1623970711088;
+ Thu, 17 Jun 2021 15:58:31 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20210617054548.353293-4-bhupesh.sharma@linaro.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Thu, 17 Jun 2021 16:02:26 -0700
+Message-ID: <CAF6AEGucXFzZz4k586iURnXJyM6PqBN7-yB5-=Q9ngXrq+fhRw@mail.gmail.com>
+Subject: [pull] drm/msm: drm-msm-next-2021-06-17 for v5.14
+To:     Dave Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
+Cc:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Dave & Daniel,
 
-On 17.06.2021 07:45, Bhupesh Sharma wrote:
-> Add base DTS file for pmm8155au_1 along with GPIOs, power-on, rtc and vadc
-> nodes.
->
-> Cc: Mark Brown <broonie@kernel.org>
-> Cc: Vinod Koul <vkoul@kernel.org>
-> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/pmm8155au_1.dtsi | 134 ++++++++++++++++++++++
->  1 file changed, 134 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/pmm8155au_1.dtsi
->
-> diff --git a/arch/arm64/boot/dts/qcom/pmm8155au_1.dtsi b/arch/arm64/boot/dts/qcom/pmm8155au_1.dtsi
-> new file mode 100644
-> index 000000000000..b04c28e54470
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/pmm8155au_1.dtsi
-> @@ -0,0 +1,134 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +/*
-> + * Copyright (c) 2021, Linaro Limited
-> + */
-> +
-> +#include <dt-bindings/input/input.h>
-> +#include <dt-bindings/interrupt-controller/irq.h>
-> +#include <dt-bindings/spmi/spmi.h>
-> +#include <dt-bindings/iio/qcom,spmi-vadc.h>
-> +
-> +/ {
-> +	thermal-zones {
-> +		pmm8155au-1-thermal {
-> +			polling-delay-passive = <100>;
-> +			polling-delay = <0>;
-> +
-> +			thermal-sensors = <&pmm8155au_1_temp>;
-> +
-> +			trips {
-> +				trip0 {
-> +					temperature = <95000>;
-> +					hysteresis = <0>;
-> +					type = "passive";
-> +				};
-> +
-> +				trip1 {
-> +					temperature = <115000>;
-> +					hysteresis = <0>;
-> +					type = "hot";
-> +				};
-> +
-> +				trip2 {
-> +					temperature = <145000>;
-> +					hysteresis = <0>;
-> +					type = "critical";
-> +				};
-> +			};
-> +		};
-> +	};
-> +};
-> +
-> +&spmi_bus {
-> +	pmic@0 {
-> +		compatible = "qcom,pmm8155au", "qcom,spmi-pmic";
-> +		reg = <0x0 SPMI_USID>;
-> +		#address-cells = <1>;
-> +		#size-cells = <0>;
-> +
-> +		pon: power-on@800 {
-> +			compatible = "qcom,pm8916-pon";
-> +			reg = <0x0800>;
-> +			pwrkey {
-> +				compatible = "qcom,pm8941-pwrkey";
-> +				interrupts = <0x0 0x8 0x0 IRQ_TYPE_EDGE_BOTH>;
-> +				debounce = <15625>;
-> +				bias-pull-up;
-> +				linux,code = <KEY_POWER>;
-> +
-> +				status = "disabled";
-> +			};
+Here is msm-next for v5.14
 
-Oh, okay, so the power key is there, then I withdraw my worries from _2.
+Notable additions this time around:
 
-I'm still interested in the reg situation though.
+* devcoredump support for display errors
+* dpu: irq cleanup/refactor
+* dpu: dt bindings conversion to yaml
+* dsi: dt bindings conversion to yaml
+* mdp5: alpha/blend_mode/zpos support
+* mdp5: dynamic bandwidth management
+* a6xx: cached coherent buffer support
+* a660 support
+* gpu iova fault improvements:
+   - info about which block triggered the fault, etc
+   - generation of gpu devcoredump on fault
+* assortment of other cleanups and fixes
 
+The following changes since commit c4681547bcce777daf576925a966ffa824edd09d:
 
+  Linux 5.13-rc3 (2021-05-23 11:42:48 -1000)
 
-> +		};
-> +
-> +		pmm8155au_1_temp: temp-alarm@2400 {
-> +			compatible = "qcom,spmi-temp-alarm";
-> +			reg = <0x2400>;
-> +			interrupts = <0x0 0x24 0x0 IRQ_TYPE_EDGE_BOTH>;
-> +			io-channels = <&pmm8155au_1_adc ADC5_DIE_TEMP>;
-> +			io-channel-names = "thermal";
-> +			#thermal-sensor-cells = <0>;
-> +		};
-> +
-> +		pmm8155au_1_adc: adc@3100 {
-> +			compatible = "qcom,spmi-adc5";
-> +			reg = <0x3100>;
-> +			#address-cells = <1>;
-> +			#size-cells = <0>;
-> +			#io-channel-cells = <1>;
-> +			interrupts = <0x0 0x31 0x0 IRQ_TYPE_EDGE_RISING>;
-> +
-> +			ref-gnd@0 {
-> +				reg = <ADC5_REF_GND>;
-> +				qcom,pre-scaling = <1 1>;
-> +				label = "ref_gnd";
-> +			};
-> +
-> +			vref-1p25@1 {
-> +				reg = <ADC5_1P25VREF>;
-> +				qcom,pre-scaling = <1 1>;
-> +				label = "vref_1p25";
-> +			};
-> +
-> +			die-temp@6 {
-> +				reg = <ADC5_DIE_TEMP>;
-> +				qcom,pre-scaling = <1 1>;
-> +				label = "die_temp";
-> +			};
-> +		};
-> +
-> +		pmm8155au_1_adc_tm: adc-tm@3500 {
-> +			compatible = "qcom,spmi-adc-tm5";
-> +			reg = <0x3500>;
-> +			interrupts = <0x0 0x35 0x0 IRQ_TYPE_EDGE_RISING>;
-> +			#thermal-sensor-cells = <1>;
-> +			#address-cells = <1>;
-> +			#size-cells = <0>;
-> +			status = "disabled";
-> +		};
-> +
-> +		pmm8155au_1_rtc: rtc@6000 {
-> +			compatible = "qcom,pm8941-rtc";
-> +			reg = <0x6000>;
-> +			reg-names = "rtc", "alarm";
-> +			interrupts = <0x0 0x61 0x1 IRQ_TYPE_NONE>;
-> +
-> +			status = "disabled";
-> +		};
-> +
-> +		pmm8155au_1_gpios: gpio@c000 {
-> +			compatible = "qcom,pmm8155au-gpio";
-> +			reg = <0xc000>;
-> +			gpio-controller;
-> +			#gpio-cells = <2>;
-> +			interrupt-controller;
-> +			#interrupt-cells = <2>;
-> +		};
+are available in the Git repository at:
 
-And the same question about gpio-ranges from _2.
+  https://gitlab.freedesktop.org/drm/msm.git drm-msm-next-2021-06-17
 
+for you to fetch changes up to 7e0230fd096c03e9662e66150f951075dd16e496:
 
+  drm/msm/mdp5: provide dynamic bandwidth management (2021-06-17 09:51:44 -0700)
 
-> +	};
-> +
-> +	pmic@1 {
-> +		compatible = "qcom,pmm8155au", "qcom,spmi-pmic";
-> +		reg = <0x1 SPMI_USID>;
-> +		#address-cells = <1>;
-> +		#size-cells = <0>;
-> +	};
-> +};
->
+----------------------------------------------------------------
+Abhinav Kumar (7):
+      drm: allow drm_atomic_print_state() to accept any drm_printer
+      drm/msm: add support to take dpu snapshot
+      drm/msm/dsi: add API to take DSI register snapshot
+      drm/msm/dp: add API to take DP register snapshot
+      drm/msm/disp/dpu1: add API to take DPU register snapshot
+      drm/msm: add support to take dsi, dp and dpu snapshot
+      drm/msm: add disp snapshot points across dpu driver
 
-Konrad
+Alexey Minnekhanov (1):
+      drm/msm: Init mm_list before accessing it for use_vram path
 
+Arnd Bergmann (1):
+      drm/msm/dsi: fix 32-bit clang warning
+
+Bernard Zhao (1):
+      drm/msm: remove unneeded variable ret
+
+Bhaskar Chowdhury (3):
+      drm/msm/dpu: Fix a typo
+      drm/msm/dpu: Fix a typo
+      drm/msm/dp: Fixed couple of typos
+
+Bjorn Andersson (1):
+      drm/msm/dpu: Avoid ABBA deadlock between IRQ modules
+
+Dmitry Baryshkov (23):
+      drm/msm: pass dump state as a function argument
+      drm/msm: make msm_disp_state transient data struct
+      drm/msm: get rid of msm_iomap_size
+      drm/msm/dsi: add DSI PHY registers to snapshot data
+      drm/msm: fix display snapshotting if DP or DSI is disabled
+      drm/msm/dpu: merge dpu_hw_intr_get_interrupt_statuses into
+dpu_hw_intr_dispatch_irqs
+      drm/msm/dpu: hw_intr: always call dpu_hw_intr_clear_intr_status_nolock
+      drm/msm/dpu: define interrupt register names
+      drm/msm/dpu: replace IRQ lookup with the data in hw catalog
+      drm/msm/dpu: drop remains of old irq lookup subsystem
+      drm/msm/dpu: simplify IRQ enabling/disabling
+      drm/msm/dsi: print error code when MIPI DSI host registration fails
+      drm/msm/dpu: remove unused dpu_hw_blk features
+      drm/msm/dpu: drop dpu_hw_blk_destroy function
+      drm/msm/dpu: use struct dpu_hw_merge_3d in dpu_hw_pingpong
+      drm/msm/dpu: hw_blk: make dpu_hw_blk empty opaque structure
+      drm/msm/dsi: do not enable PHYs when called for the slave DSI interface
+      drm/msm/mdp5: use drm atomic helpers to handle base drm plane state
+      drm/msm/mdp5: use drm_plane_state for storing alpha value
+      drm/msm/mdp5: use drm_plane_state for pixel blend mode
+      drm/msm/mdp5: add support for alpha/blend_mode properties
+      drm/msm/mdp5: switch to standard zpos property
+      drm/msm/mdp5: provide dynamic bandwidth management
+
+Guenter Roeck (2):
+      drm/msm/dp: Drop unnecessary NULL checks after container_of
+      drm/msm/dpu: Drop unnecessary NULL checks after container_of in
+dpu_encoder
+
+James Willcox (1):
+      drm/msm/mdp5: add perf blocks for holding fudge factors
+
+Jonathan Marek (13):
+      drm/msm: remove unnecessary mmap logic for cached BOs
+      drm/msm: replace MSM_BO_UNCACHED with MSM_BO_WC for internal objects
+      drm/msm: use the right pgprot when mapping BOs in the kernel
+      drm/msm: add MSM_BO_CACHED_COHERENT
+      drm/msm: deprecate MSM_BO_UNCACHED (map as writecombine instead)
+      drm/msm/a6xx: update/fix CP_PROTECT initialization
+      drm/msm/a6xx: fix incorrectly set uavflagprd_inv field for A650
+      drm/msm/a6xx: avoid shadow NULL reference in failure path
+      drm/msm: remove unused icc_path/ocmem_icc_path
+      drm/msm/a6xx: use AOP-initialized PDC for a650
+      drm/msm/a6xx: add GMU_CX_GMU_CX_FALNEXT_INTF write for a650
+      drm/msm/a6xx: add missing PC_DBG_ECO_CNTL bit for a640/a650
+      drm/msm/a6xx: add support for Adreno 660 GPU
+
+Jordan Crouse (3):
+      iommu/arm-smmu: Add support for driver IOMMU fault handlers
+      iommu/arm-smmu-qcom: Add an adreno-smmu-priv callback to get
+pagefault info
+      drm/msm: Improve the a6xx page fault handler
+
+Krishna Manikandan (5):
+      dt-bindings: msm: disp: add yaml schemas for DPU bindings
+      dt-bindings: msm: dsi: add yaml schemas for DSI bindings
+      dt-bindings: msm: dsi: add yaml schemas for DSI PHY bindings
+      dt-bindings: msm/dp: Add bindings of MSM DisplayPort controller
+      drm/msm/disp/dpu1: avoid perf update in frame done event
+
+Kuogee Hsieh (2):
+      drm/msm/dp: handle irq_hpd with sink_count = 0 correctly
+      drm/msm/dp: power off DP phy at suspend
+
+Lee Jones (5):
+      drm/msm/dp/dp_display: Remove unused variable 'hpd'
+      drm/msm/disp/dpu1/dpu_plane: Fix a couple of naming issues
+      drm/msm/msm_gem: Demote kernel-doc abuses
+      drm/msm/dp/dp_catalog: Correctly document param 'dp_catalog'
+      drm/msm/dp/dp_link: Fix some potential doc-rot
+
+Rob Clark (5):
+      Merge branch 'msm-fixes-v5.13-rc6' into msm-next
+      drm/msm: Generated register update
+      iommu/arm-smmu-qcom: Add stall support
+      drm/msm: devcoredump iommu fault support
+      drm/msm: Add debugfs to trigger shrinker
+
+Samuel Iglesias Gonsalvez (1):
+      drm/msm: export hangcheck_period in debugfs
+
+Shaokun Zhang (1):
+      drm/msm/dp: remove the repeated declaration
+
+Stephen Boyd (10):
+      drm/msm/dp: Simplify aux irq handling code
+      drm/msm/dp: Shrink locking area of dp_aux_transfer()
+      drm/msm/dp: Handle aux timeouts, nacks, defers
+      drm/msm: Move vblank debug prints to drm_dbg_vbl()
+      drm/msm/dp: Drop malformed debug print
+      drm/msm: Move FB debug prints to drm_dbg_state()
+      drm/msm/disp: Use plane debug print helper
+      drm/msm/disp: Move various debug logs to atomic bucket
+      drm/msm/dsi: Stash away calculated vco frequency on recalc
+      drm/msm: Use VERB() for extra verbose logging
+
+Yangtao Li (1):
+      drm/msm: Convert to use resource-managed OPP API
+
+Zhen Lei (3):
+      drm/msm: Fix error return code in msm_drm_init()
+      drm/msm/dpu: Fix error return code in dpu_mdss_init()
+      drm/msm/dpu: remove unused local variable 'cmd_enc'
+
+zuoqilin (1):
+      drm/msm: Remove unneeded variable: "rc"
+
+ .../bindings/display/msm/dp-controller.yaml        |  146 ++
+ .../bindings/display/msm/dpu-sc7180.yaml           |  228 ++
+ .../bindings/display/msm/dpu-sdm845.yaml           |  212 ++
+ .../devicetree/bindings/display/msm/dpu.txt        |  141 --
+ .../bindings/display/msm/dsi-controller-main.yaml  |  185 ++
+ .../bindings/display/msm/dsi-phy-10nm.yaml         |   68 +
+ .../bindings/display/msm/dsi-phy-14nm.yaml         |   66 +
+ .../bindings/display/msm/dsi-phy-20nm.yaml         |   71 +
+ .../bindings/display/msm/dsi-phy-28nm.yaml         |   68 +
+ .../bindings/display/msm/dsi-phy-common.yaml       |   40 +
+ .../devicetree/bindings/display/msm/dsi.txt        |  249 ---
+ drivers/gpu/drm/drm_atomic.c                       |   28 +-
+ drivers/gpu/drm/drm_atomic_uapi.c                  |    4 +-
+ drivers/gpu/drm/drm_crtc_internal.h                |    4 +-
+ drivers/gpu/drm/msm/Makefile                       |    3 +-
+ drivers/gpu/drm/msm/adreno/a2xx.xml.h              |   60 +-
+ drivers/gpu/drm/msm/adreno/a3xx.xml.h              |   40 +-
+ drivers/gpu/drm/msm/adreno/a4xx.xml.h              |   38 +-
+ drivers/gpu/drm/msm/adreno/a5xx.xml.h              |   95 +-
+ drivers/gpu/drm/msm/adreno/a5xx_gpu.c              |   29 +-
+ drivers/gpu/drm/msm/adreno/a5xx_power.c            |    2 +-
+ drivers/gpu/drm/msm/adreno/a5xx_preempt.c          |    4 +-
+ drivers/gpu/drm/msm/adreno/a6xx.xml.h              | 2201 ++++++++++----------
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c              |   55 +-
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.xml.h          |   34 +-
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c              |  460 +++-
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.h              |    4 +-
+ drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c        |   44 +-
+ drivers/gpu/drm/msm/adreno/a6xx_hfi.c              |   33 +
+ drivers/gpu/drm/msm/adreno/adreno_common.xml.h     |   30 +-
+ drivers/gpu/drm/msm/adreno/adreno_device.c         |   14 +
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c            |   26 +-
+ drivers/gpu/drm/msm/adreno/adreno_gpu.h            |   13 +-
+ drivers/gpu/drm/msm/adreno/adreno_pm4.xml.h        |  119 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.c       |  230 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.h       |   43 -
+ drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c      |   22 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c           |   43 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c        |  110 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h   |    4 -
+ .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c   |   58 +-
+ .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c   |   54 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c        |    6 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_blk.c         |  139 --
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_blk.h         |   22 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c     |  202 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h     |   16 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c         |    6 -
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c        |    7 -
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c  | 1508 +-------------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h  |  132 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c        |    6 -
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c          |    6 -
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h        |    2 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_merge3d.c     |    6 -
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c    |    6 -
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h    |    4 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c        |    6 -
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c         |    6 -
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            |   70 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h            |    8 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c           |    8 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c          |   23 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c             |    4 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_trace.h          |   63 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_vbif.c           |   14 +-
+ drivers/gpu/drm/msm/disp/mdp4/mdp4.xml.h           |   34 +-
+ drivers/gpu/drm/msm/disp/mdp5/mdp5.xml.h           |   38 +-
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c           |   35 +
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.h           |    7 +
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c          |   56 +-
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c           |  119 +-
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.h           |   17 +-
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c         |  177 +-
+ drivers/gpu/drm/msm/disp/mdp_common.xml.h          |   34 +-
+ drivers/gpu/drm/msm/disp/msm_disp_snapshot.c       |  125 ++
+ drivers/gpu/drm/msm/disp/msm_disp_snapshot.h       |  136 ++
+ drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c  |  187 ++
+ drivers/gpu/drm/msm/dp/dp_aux.c                    |  181 +-
+ drivers/gpu/drm/msm/dp/dp_aux.h                    |    8 -
+ drivers/gpu/drm/msm/dp/dp_catalog.c                |   18 +-
+ drivers/gpu/drm/msm/dp/dp_catalog.h                |    7 +-
+ drivers/gpu/drm/msm/dp/dp_ctrl.c                   |   87 +-
+ drivers/gpu/drm/msm/dp/dp_ctrl.h                   |    3 +-
+ drivers/gpu/drm/msm/dp/dp_display.c                |  121 +-
+ drivers/gpu/drm/msm/dp/dp_display.h                |    1 +
+ drivers/gpu/drm/msm/dp/dp_link.c                   |   21 +-
+ drivers/gpu/drm/msm/dp/dp_panel.c                  |    4 +-
+ drivers/gpu/drm/msm/dp/dp_power.h                  |    4 +-
+ drivers/gpu/drm/msm/dsi/dsi.c                      |    6 +
+ drivers/gpu/drm/msm/dsi/dsi.h                      |    4 +-
+ drivers/gpu/drm/msm/dsi/dsi.xml.h                  | 1722 +--------------
+ drivers/gpu/drm/msm/dsi/dsi_host.c                 |   30 +-
+ drivers/gpu/drm/msm/dsi/dsi_manager.c              |   12 +-
+ drivers/gpu/drm/msm/dsi/dsi_phy_10nm.xml.h         |  228 ++
+ drivers/gpu/drm/msm/dsi/dsi_phy_14nm.xml.h         |  310 +++
+ drivers/gpu/drm/msm/dsi/dsi_phy_20nm.xml.h         |  238 +++
+ drivers/gpu/drm/msm/dsi/dsi_phy_28nm.xml.h         |  385 ++++
+ drivers/gpu/drm/msm/dsi/dsi_phy_28nm_8960.xml.h    |  287 +++
+ drivers/gpu/drm/msm/dsi/dsi_phy_5nm.xml.h          |  480 +++++
+ drivers/gpu/drm/msm/dsi/dsi_phy_7nm.xml.h          |  482 +++++
+ drivers/gpu/drm/msm/dsi/mmss_cc.xml.h              |   34 +-
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy.c              |   31 +-
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy.h              |    4 +
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c         |    2 +
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c         |    1 +
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_20nm.c         |    1 +
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c         |    1 +
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c    |    1 +
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c          |    8 +-
+ drivers/gpu/drm/msm/dsi/sfpb.xml.h                 |   34 +-
+ drivers/gpu/drm/msm/edp/edp.xml.h                  |   34 +-
+ drivers/gpu/drm/msm/hdmi/hdmi.xml.h                |   34 +-
+ drivers/gpu/drm/msm/hdmi/qfprom.xml.h              |   34 +-
+ drivers/gpu/drm/msm/msm_debugfs.c                  |   31 +
+ drivers/gpu/drm/msm/msm_drv.c                      |   33 +-
+ drivers/gpu/drm/msm/msm_drv.h                      |   24 +-
+ drivers/gpu/drm/msm/msm_fb.c                       |    8 +-
+ drivers/gpu/drm/msm/msm_gem.c                      |   45 +-
+ drivers/gpu/drm/msm/msm_gem.h                      |    1 +
+ drivers/gpu/drm/msm/msm_gem_shrinker.c             |   18 +
+ drivers/gpu/drm/msm/msm_gem_submit.c               |    1 +
+ drivers/gpu/drm/msm/msm_gpu.c                      |   51 +-
+ drivers/gpu/drm/msm/msm_gpu.h                      |   29 +-
+ drivers/gpu/drm/msm/msm_gpummu.c                   |    5 +
+ drivers/gpu/drm/msm/msm_iommu.c                    |   22 +-
+ drivers/gpu/drm/msm/msm_kms.h                      |    9 +
+ drivers/gpu/drm/msm/msm_mmu.h                      |    5 +-
+ drivers/gpu/drm/selftests/test-drm_framebuffer.c   |    1 +
+ drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c         |   50 +
+ drivers/iommu/arm/arm-smmu/arm-smmu.c              |    9 +-
+ drivers/iommu/arm/arm-smmu/arm-smmu.h              |    2 +
+ include/linux/adreno-smmu-priv.h                   |   38 +-
+ include/uapi/drm/msm_drm.h                         |    7 +-
+ 134 files changed, 7508 insertions(+), 6352 deletions(-)
+ create mode 100644
+Documentation/devicetree/bindings/display/msm/dp-controller.yaml
+ create mode 100644
+Documentation/devicetree/bindings/display/msm/dpu-sc7180.yaml
+ create mode 100644
+Documentation/devicetree/bindings/display/msm/dpu-sdm845.yaml
+ delete mode 100644 Documentation/devicetree/bindings/display/msm/dpu.txt
+ create mode 100644
+Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
+ create mode 100644
+Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml
+ create mode 100644
+Documentation/devicetree/bindings/display/msm/dsi-phy-14nm.yaml
+ create mode 100644
+Documentation/devicetree/bindings/display/msm/dsi-phy-20nm.yaml
+ create mode 100644
+Documentation/devicetree/bindings/display/msm/dsi-phy-28nm.yaml
+ create mode 100644
+Documentation/devicetree/bindings/display/msm/dsi-phy-common.yaml
+ delete mode 100644 Documentation/devicetree/bindings/display/msm/dsi.txt
+ delete mode 100644 drivers/gpu/drm/msm/disp/dpu1/dpu_hw_blk.c
+ create mode 100644 drivers/gpu/drm/msm/disp/msm_disp_snapshot.c
+ create mode 100644 drivers/gpu/drm/msm/disp/msm_disp_snapshot.h
+ create mode 100644 drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c
+ create mode 100644 drivers/gpu/drm/msm/dsi/dsi_phy_10nm.xml.h
+ create mode 100644 drivers/gpu/drm/msm/dsi/dsi_phy_14nm.xml.h
+ create mode 100644 drivers/gpu/drm/msm/dsi/dsi_phy_20nm.xml.h
+ create mode 100644 drivers/gpu/drm/msm/dsi/dsi_phy_28nm.xml.h
+ create mode 100644 drivers/gpu/drm/msm/dsi/dsi_phy_28nm_8960.xml.h
+ create mode 100644 drivers/gpu/drm/msm/dsi/dsi_phy_5nm.xml.h
+ create mode 100644 drivers/gpu/drm/msm/dsi/dsi_phy_7nm.xml.h
