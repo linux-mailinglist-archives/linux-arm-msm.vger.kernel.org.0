@@ -2,158 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D65883AB96F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jun 2021 18:20:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5F6953ABA3F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jun 2021 19:05:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231860AbhFQQWM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Jun 2021 12:22:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33118 "EHLO
+        id S231503AbhFQRIF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Jun 2021 13:08:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43310 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231398AbhFQQWL (ORCPT
+        with ESMTP id S231372AbhFQRIE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Jun 2021 12:22:11 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1999AC061574;
-        Thu, 17 Jun 2021 09:20:03 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id f2so7415114wri.11;
-        Thu, 17 Jun 2021 09:20:03 -0700 (PDT)
+        Thu, 17 Jun 2021 13:08:04 -0400
+Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF9BCC061760
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Jun 2021 10:05:55 -0700 (PDT)
+Received: by mail-pf1-x42f.google.com with SMTP id q25so5509900pfh.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Jun 2021 10:05:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=mxhQgXhjJCcr434tkXcCOzOBhk7EomSUJf4aVJZ0wu0=;
-        b=ZDSVR8M7c9hwiPzVzkhJiROl5H1QooUS4TuFwB42YX8EnKKWr4aqdasm4V7p/kq2Ul
-         p37uiAe/5uuSuqzQume1QfTiTKToSFYMLErGn4deZLc5Jtd5xMJgcQiCNPT1BeQ5T0rL
-         olrEIonYkKBZvFVm3zMhsYfFv58SjXuMaJQedm7LPaa/BhFcIXiq2iwCvDeSu+HOaRT8
-         d9sbrZOrT/i7nPLjV3ErhIcI7hXY8BO2Wg5qqIdkoX3vGXFzmycDc53lODBmI5x7CUja
-         fQoDcO+YVyETYerBoMwnNWbp2BVhCoQZcWtVlqmM3pVT0Q7/ZNEbJmmR7lJ//5lrlR7D
-         j0sQ==
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=spDOLTpTEkP0pQRlVnvSw7EzDBOy7ixf6KlEeu5zAFw=;
+        b=gvFkjdJ8/nWFYJ6eh4eGwDZH3O/FzRYCKAixYJ+bNuEKuwuss5/DVmrjbX+uVysNvs
+         i+qXxnRozSclnhV9Ko6zmIrYMI87h5HmYTek2HI51jvn+xNCD0bg4XrN4Yqp9qib8CR9
+         CUbQjexgtNkQUUYY4uYwd9nqQU44N+MdMqNFnAuiyyvQF/75BrkWVJgcEymLk/Yr4jeG
+         LXwy06acDKVCdG2uCzuuG+EAuw4cXh15bV4ak7aa62CQzu1ula2LAtWnB2igv14GYA4W
+         lXzfTYxIUy2PbsQtOWmWpcG+YtKPZhkz3VQN8S2EtJE6uuvXzzN4PNXTSebZUa2p7xNz
+         g78g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=mxhQgXhjJCcr434tkXcCOzOBhk7EomSUJf4aVJZ0wu0=;
-        b=pIShb3OGqA6cK7UHhKKyRpUQMsN8Jhx28crk8cebk1CJvDqcJoH5C+3wG8TlfTH2Au
-         G0WDZ4j8/f1Mp3JvJ8rqC32rkSkO4m1f+4/JudopCNGzEwqT44l+MXM85OFA7gn4BIIC
-         Qb6nKTs6o4YbXHPTXVeobOQ03P38DSaMZ8TpNzRbkVPrTtCujWPyoFwu+A/zmJSneFtX
-         BpfZjXjexRbEl7cfo689QEcE+CgaFra1fNRCDtUj5cwvEtiboY3NtZP+zgRC9OgoaRRR
-         usDwp04Dd0KXk/KJmxZnT3yR3ggsxZp7Xcqtx3sOCT1AsWA90cZkV+1NgyCLOqmlu1Il
-         ygRQ==
-X-Gm-Message-State: AOAM532753g47xp1HVfpcWuIX5FsADFzGacPBFN54z4tQxcK1WtxfGpk
-        mQIsx6GBe2uIKtp6IVvRM3XSWkPV0XpL3l9vcHE=
-X-Google-Smtp-Source: ABdhPJwH6yGOAV8Zq/2asUXPC7c2rWQDMRFg9nKCg8VonF7EWFPVJkcadbn/fE/Noz0DAZm8/FK7wOed0dxi/3qvrJU=
-X-Received: by 2002:a5d:4203:: with SMTP id n3mr6812885wrq.132.1623946801650;
- Thu, 17 Jun 2021 09:20:01 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=spDOLTpTEkP0pQRlVnvSw7EzDBOy7ixf6KlEeu5zAFw=;
+        b=hV+oIRyMbE+/WPQvzZzzGAu6kiK2my3saPpT/o8S3DGjoFdEB8NEjowqHU74twGRmU
+         MJuijRrA6JDLRcEB1Eddm1/QdIi/qR4kuIb3I9mVyG/LIpNLlq65TVreyGW9AWlWK53+
+         lSflORTT284cBwj3efo9RL4vhKxQgKMlhymn+5zG21k6mq5xPEO/JeBuroexDhslz0mD
+         tJf6SMpGohSzbhDAE6s06ycSs7nZ4H/S9AaCUf0Pudo7dnpnOvI24epqZyht4JrcLKv0
+         0FcBg3huyusqFpYhZnAN9+VlVE2yDBuXIxpzl+6Tg1o5DnPS45+cFAFF3Zf0KxIeGxty
+         nGDA==
+X-Gm-Message-State: AOAM532+ppnX6E8PLp/v1ZV1YEuhnUlE7kbCMi6PNIIJR49BMVSXdtrk
+        YGFdwaWala+xwedAlOQMM7GeFqjbI53F
+X-Google-Smtp-Source: ABdhPJwaG6/j71e6DUZJ1nF3XYcWFet57gwEKHoW0R5fI/eRI2bpxAbaOGhdC3lH0rW9KnnXYL+7tA==
+X-Received: by 2002:a63:d117:: with SMTP id k23mr5831729pgg.60.1623949554810;
+        Thu, 17 Jun 2021 10:05:54 -0700 (PDT)
+Received: from workstation ([120.138.13.64])
+        by smtp.gmail.com with ESMTPSA id nv1sm5562052pjb.43.2021.06.17.10.05.51
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 17 Jun 2021 10:05:54 -0700 (PDT)
+Date:   Thu, 17 Jun 2021 22:35:50 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Om Prakash Singh <omp@nvidia.com>
+Cc:     kishon@ti.com, lorenzo.pieralisi@arm.com, bhelgaas@google.com,
+        linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
+        smohanad@codeaurora.org
+Subject: Re: [PATCH 0/5] PCI: endpoint: Add support for additional notifiers
+Message-ID: <20210617170549.GA3075@workstation>
+References: <20210616115913.138778-1-manivannan.sadhasivam@linaro.org>
+ <9fd37c43-e2ab-f5b2-13dc-a23bd83d3c7b@nvidia.com>
 MIME-Version: 1.0
-References: <20210617144349.28448-1-jonathan@marek.ca> <20210617144349.28448-2-jonathan@marek.ca>
-In-Reply-To: <20210617144349.28448-2-jonathan@marek.ca>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Thu, 17 Jun 2021 09:23:56 -0700
-Message-ID: <CAF6AEGsaPK4mev5o4DoE5R=tbczQB6z+Qem3gpxNW52uwf=71A@mail.gmail.com>
-Subject: Re: [PATCH v4 1/3] dt-bindings: msm: dsi: add missing 7nm bindings
-To:     Jonathan Marek <jonathan@marek.ca>
-Cc:     freedreno <freedreno@lists.freedesktop.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <dri-devel@lists.freedesktop.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <9fd37c43-e2ab-f5b2-13dc-a23bd83d3c7b@nvidia.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jun 17, 2021 at 8:09 AM Jonathan Marek <jonathan@marek.ca> wrote:
->
-> These got lost when going from .txt to .yaml bindings, add them back.
->
+Hi,
 
-Fixes: 8fc939e72ff8 ("dt-bindings: msm: dsi: add yaml schemas for DSI
-PHY bindings")
+On Thu, Jun 17, 2021 at 12:42:07AM +0530, Om Prakash Singh wrote:
+> Hi Mani,
+> Adding more notifier types will surely help but I believe the list is not
+> exhaustive. What you are trying here is to pass various vendor-specific epc
+> interrupts to EPF driver. That can be taken care by a single notifier
+> interface as well, "pci_epc_custom_notify" from your implementation.
 
-> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
-> ---
->  .../bindings/display/msm/dsi-phy-7nm.yaml     | 66 +++++++++++++++++++
->  1 file changed, 66 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/display/msm/dsi-phy-7nm.yaml
->
-> diff --git a/Documentation/devicetree/bindings/display/msm/dsi-phy-7nm.yaml b/Documentation/devicetree/bindings/display/msm/dsi-phy-7nm.yaml
-> new file mode 100644
-> index 000000000000..c0077ca7e9e7
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/display/msm/dsi-phy-7nm.yaml
-> @@ -0,0 +1,66 @@
-> +# SPDX-License-Identifier: GPL-2.0-only or BSD-2-Clause
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/display/msm/dsi-phy-7nm.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm Display DSI 7nm PHY
-> +
-> +maintainers:
-> +  - Jonathan Marek <jonathan@marek.ca>
-> +
-> +allOf:
-> +  - $ref: dsi-phy-common.yaml#
-> +
-> +properties:
-> +  compatible:
-> +    oneOf:
-> +      - const: qcom,dsi-phy-7nm
-> +      - const: qcom,dsi-phy-7nm-8150
-> +
-> +  reg:
-> +    items:
-> +      - description: dsi phy register set
-> +      - description: dsi phy lane register set
-> +      - description: dsi pll register set
-> +
-> +  reg-names:
-> +    items:
-> +      - const: dsi_phy
-> +      - const: dsi_phy_lane
-> +      - const: dsi_pll
-> +
-> +  vdds-supply:
-> +    description: |
-> +      Connected to VDD_A_DSI_PLL_0P9 pin (or VDDA_DSI{0,1}_PLL_0P9 for sm8150)
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - reg-names
-> +  - vdds-supply
-> +
-> +unevaluatedProperties: false
-> +
-> +examples:
-> +  - |
-> +     #include <dt-bindings/clock/qcom,dispcc-sm8250.h>
-> +     #include <dt-bindings/clock/qcom,rpmh.h>
-> +
-> +     dsi-phy@ae94400 {
-> +         compatible = "qcom,dsi-phy-7nm";
-> +         reg = <0x0ae94400 0x200>,
-> +               <0x0ae94600 0x280>,
-> +               <0x0ae94900 0x260>;
-> +         reg-names = "dsi_phy",
-> +                     "dsi_phy_lane",
-> +                     "dsi_pll";
-> +
-> +         #clock-cells = <1>;
-> +         #phy-cells = <0>;
-> +
-> +         vdds-supply = <&vreg_l5a_0p88>;
-> +         clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
-> +                  <&rpmhcc RPMH_CXO_CLK>;
-> +         clock-names = "iface", "ref";
-> +     };
-> --
-> 2.26.1
->
+That's what I initially thought eventhough not all the notifiers are
+vendor specific. But Kishon suggested to add notifiers for generic ones
+such as BME, PME etc... and that sounded reasonable to me.
+
+> This
+> also requires to have pre-defined values of "data" argument to standardize
+> the interface.
+> 
+
+No, I don't think we can standardize the arguments to "custom" notifier.
+The custom notifier is supposed to deal with vendor specific events and
+I don't see any benefit on standardizing it. I see it more like an
+opaque driver_data field where we pass driver specific arguments.
+
+Thanks,
+Mani
+
+> your thoughts?
+> 
+> Thanks,
+> Om
+> 
+> On 6/16/2021 5:29 PM, Manivannan Sadhasivam wrote:
+> > External email: Use caution opening links or attachments
+> > 
+> > 
+> > Hello,
+> > 
+> > This series adds support for additional notifiers in the PCI endpoint
+> > framework. The notifiers LINK_DOWN, BME, PME, and D_STATE are generic
+> > for all PCI endpoints but there is also a custom notifier (CUSTOM) added
+> > to pass the device/vendor specific events to EPF from EPC.
+> > 
+> > The example usage of all notifiers is provided in the commit description.
+> > 
+> > Thanks,
+> > Mani
+> > 
+> > Manivannan Sadhasivam (5):
+> >    PCI: endpoint: Add linkdown notifier support
+> >    PCI: endpoint: Add BME notifier support
+> >    PCI: endpoint: Add PME notifier support
+> >    PCI: endpoint: Add D_STATE notifier support
+> >    PCI: endpoint: Add custom notifier support
+> > 
+> >   drivers/pci/endpoint/pci-epc-core.c | 89 +++++++++++++++++++++++++++++
+> >   include/linux/pci-epc.h             |  5 ++
+> >   include/linux/pci-epf.h             |  5 ++
+> >   3 files changed, 99 insertions(+)
+> > 
+> > --
+> > 2.25.1
+> > 
