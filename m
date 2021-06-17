@@ -2,102 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5335B3AB1B8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jun 2021 12:57:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B44163AB1F0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jun 2021 13:07:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231147AbhFQK7f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Jun 2021 06:59:35 -0400
-Received: from mail.kernel.org ([198.145.29.99]:49232 "EHLO mail.kernel.org"
+        id S231613AbhFQLJc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Jun 2021 07:09:32 -0400
+Received: from mail.kernel.org ([198.145.29.99]:52192 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231279AbhFQK7f (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Jun 2021 06:59:35 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 5136961027;
-        Thu, 17 Jun 2021 10:57:26 +0000 (UTC)
+        id S230291AbhFQLJ2 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 17 Jun 2021 07:09:28 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 2541861209;
+        Thu, 17 Jun 2021 11:07:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1623927447;
-        bh=IOLXRmg80R/OU5e3aquf/aBP/w6TFTssC0a1ZsufaBE=;
+        s=korg; t=1623928040;
+        bh=PeGZ1cLj00k0RPgo/UNeh5ota3U/cIizQo1ijpzwC/k=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=TPlg5Wc/RxKgHEl1up2Fz/iVJ91x7qOxxX4mM+GJ16SvC4RMKwYnw4X3ChgWjl2Fs
-         Uaj6YIViwFXCBIBAlKiNr2D1D/huDd7WzT8lHAV0tMAoJWGyxumolOoDVIMr6xIZUd
-         hmKopnh6JO/rofkgakPk+guzigeSt6MK5BaQ1dC0=
-Date:   Thu, 17 Jun 2021 12:57:24 +0200
+        b=0Xq1mc3q7DJ5UQnfNr3Zh+Xu8FrlLQWpyAo0fDePKavzGfsEq47TDz33O1zvfkFIp
+         bcmgvK4ak4mxsOtOwIjxHjJnCUGo2xDsswdaeWa3o5AFu5Yd6Pqrj9TjdYzzLhczmh
+         nZyr0J1A2x+q7Ftcji7YxcPfRKFJzt21PZxam2Po=
+Date:   Thu, 17 Jun 2021 13:07:18 +0200
 From:   Greg KH <gregkh@linuxfoundation.org>
-To:     Laurentiu Tudor <laurentiu.tudor@nxp.com>
-Cc:     Lee Jones <lee.jones@linaro.org>, linux-kernel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        German Rivera <German.Rivera@freescale.com>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-omap@vger.kernel.org,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Stuart Yoder <stuyoder@gmail.com>,
-        Tony Lindgren <tony@atomide.com>
-Subject: Re: [PATCH 00/10] Rid W=1 warnings from Bus
-Message-ID: <YMsqlAywR2toXd+3@kroah.com>
-References: <20210526081038.544942-1-lee.jones@linaro.org>
- <74eb170b-348b-1bba-432c-52c9541b05fe@nxp.com>
- <YMsajH2uxw4RHPeF@dell>
- <1711c37d-19d3-b923-d02a-433586c951ee@nxp.com>
+To:     Wesley Cheng <wcheng@codeaurora.org>
+Cc:     balbi@kernel.org, robh+dt@kernel.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, frowand.list@gmail.com,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        jackp@codeaurora.org, fntoth@gmail.com,
+        heikki.krogerus@linux.intel.com, andy.shevchenko@gmail.com
+Subject: Re: [PATCH v10 2/6] usb: gadget: configfs: Check USB configuration
+ before adding
+Message-ID: <YMss5tFFBjokk1k6@kroah.com>
+References: <1623923899-16759-1-git-send-email-wcheng@codeaurora.org>
+ <1623923899-16759-3-git-send-email-wcheng@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1711c37d-19d3-b923-d02a-433586c951ee@nxp.com>
+In-Reply-To: <1623923899-16759-3-git-send-email-wcheng@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jun 17, 2021 at 01:11:39PM +0300, Laurentiu Tudor wrote:
+On Thu, Jun 17, 2021 at 02:58:15AM -0700, Wesley Cheng wrote:
+> Ensure that the USB gadget is able to support the configuration being
+> added based on the number of endpoints required from all interfaces.  This
+> is for accounting for any bandwidth or space limitations.
 > 
+> Signed-off-by: Wesley Cheng <wcheng@codeaurora.org>
+> ---
+>  drivers/usb/gadget/configfs.c | 22 ++++++++++++++++++++++
+>  1 file changed, 22 insertions(+)
 > 
-> On 6/17/2021 12:49 PM, Lee Jones wrote:
-> > On Wed, 26 May 2021, Laurentiu Tudor wrote:
-> > 
-> >> Hi Lee,
-> >>
-> >> On 5/26/2021 11:10 AM, Lee Jones wrote:
-> >>> This set is part of a larger effort attempting to clean-up W=1
-> >>> kernel builds, which are currently overwhelmingly riddled with
-> >>> niggly little warnings.
-> >>>
-> >>> Lee Jones (10):
-> >>>   bus: fsl-mc: mc-io: Supply function names for 'fsl_create_mc_io()' and
-> >>>     'fsl_destroy_mc_io()'
-> >>>   bus: fsl-mc: mc-sys: Supply missing function names in kernel-doc
-> >>>     headers
-> >>>   bus: fsl-mc: fsl-mc-bus: Demote a bunch of non-conformant kernel-doc
-> >>>     headers and help others
-> >>>   bus: fsl-mc: dprc: Fix a couple of misspelling and formatting issues
-> >>>   bus: fsl-mc: dprc-driver: Fix some missing/incorrect function
-> >>>     parameter descriptions
-> >>>   bus: fsl-mc: fsl-mc-allocator: Fix misspelling of 'new_mc_adev' and
-> >>>     demote non-kernel-doc headers
-> >>>   bus: qcom-ebi2: Fix incorrect documentation for '{slow,fast}_cfg'
-> >>>   bus: fsl-mc-msi: Fix a little doc-rot pertaining to 'np' to 'fwnode'
-> >>>     conversion
-> >>>   bus: ti-sysc: Correct misdocumentation of 'sysc_ioremap()'
-> >>>   bus: fsl-mc: mc-io: Correct misdocumentation of 'dpmcp_dev' param
-> >>>
-> >>>  drivers/bus/fsl-mc/dprc-driver.c      |  8 +++++---
-> >>>  drivers/bus/fsl-mc/dprc.c             |  4 ++--
-> >>>  drivers/bus/fsl-mc/fsl-mc-allocator.c | 10 +++++-----
-> >>>  drivers/bus/fsl-mc/fsl-mc-bus.c       | 19 ++++++++++---------
-> >>>  drivers/bus/fsl-mc/fsl-mc-msi.c       |  2 +-
-> >>>  drivers/bus/fsl-mc/mc-io.c            |  6 +++---
-> >>>  drivers/bus/fsl-mc/mc-sys.c           | 19 ++++++++++---------
-> >>
-> >> Thanks for this. For drivers/bus/fsl-mc/*:
-> >>
-> >> Reviewed-by: Laurentiu Tudor <laurentiu.tudor@nxp.com>
-> > 
-> > Any idea who will take the 'fsl-mc' patches please?
-> > 
-> 
-> Usually GregKH (added in the thread) picks them up through his char-misc
-> tree.
+> diff --git a/drivers/usb/gadget/configfs.c b/drivers/usb/gadget/configfs.c
+> index 15a607c..76b9983 100644
+> --- a/drivers/usb/gadget/configfs.c
+> +++ b/drivers/usb/gadget/configfs.c
+> @@ -1374,6 +1374,7 @@ static int configfs_composite_bind(struct usb_gadget *gadget,
+>  		struct usb_function *f;
+>  		struct usb_function *tmp;
+>  		struct gadget_config_name *cn;
+> +		unsigned long ep_map = 0;
+>  
+>  		if (gadget_is_otg(gadget))
+>  			c->descriptors = otg_desc;
+> @@ -1403,7 +1404,28 @@ static int configfs_composite_bind(struct usb_gadget *gadget,
+>  				list_add(&f->list, &cfg->func_list);
+>  				goto err_purge_funcs;
+>  			}
+> +			if (f->fs_descriptors) {
+> +				struct usb_descriptor_header **d;
+> +
+> +				d = f->fs_descriptors;
+> +				for (; *d; ++d) {
 
-If you resend just the fsl-mc patches as a series, I can pick them up
-that way.  Otherwise trying to pick out individual ones here is pretty
-much impossible...
+With this check, there really is not a need to check for
+f->fs_descriptors above in the if statement, right?
+
+> +					struct usb_endpoint_descriptor *ep;
+> +					int addr;
+> +
+> +					if ((*d)->bDescriptorType != USB_DT_ENDPOINT)
+> +						continue;
+> +
+> +					ep = (struct usb_endpoint_descriptor *)*d;
+> +					addr = ((ep->bEndpointAddress & 0x80) >> 3) |
+> +						(ep->bEndpointAddress & 0x0f);
+
+Don't we have direction macros for this type of check?
+
+> +					set_bit(addr, &ep_map);
+> +				}
+
+What is this loop trying to do?  Please document it as I can not figure
+it out at all.
 
 thanks,
 
