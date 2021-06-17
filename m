@@ -2,125 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4E9163AAE42
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jun 2021 09:59:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7233D3AAE69
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jun 2021 10:06:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230330AbhFQIBL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Jun 2021 04:01:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60996 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230043AbhFQIBI (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Jun 2021 04:01:08 -0400
-Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com [IPv6:2607:f8b0:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B599C061760
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Jun 2021 00:58:59 -0700 (PDT)
-Received: by mail-pg1-x530.google.com with SMTP id u190so472417pgd.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Jun 2021 00:58:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=hNu6HaeL5nahbHeNWRpYtmzxyhbr1PCpcEAdU1n7Ml4=;
-        b=WXMADGzfWuZUokmX7qH1Wt/igrX9l7ELcu1892oN6yx1WfV3yng9W+FZVtBPX4xS6p
-         TNxTOX2rCVvXG843gFX0yqBYJ6qIFQX0uuBynqEZe+yf6thS/Cru9h/YwkVEj0b8g2Fv
-         itDa97dNOXm+1GD8t9NEkk9ztFqPPUogTYxSG4lx+LHXn6uT09Fnk51+iQsurqjPvB0J
-         nXSy8bkUVtN/tgezW5szoM1cW2GldgjU2I+rL3Jet7zIcnhth0ONbWIeioET3QXqJxpc
-         UA4TQLPCb290UM5VkbgcAslILqZfiBx40YzBCiV2+H+KlnObzV2bHcxU1TFmrEyl+wbV
-         Vuog==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=hNu6HaeL5nahbHeNWRpYtmzxyhbr1PCpcEAdU1n7Ml4=;
-        b=OWcOVAN0Nnq8Schpifk5WCwPCxsOA05cQiJTtwHVoAfcVckEXfNxJdAx8Eq20L14vC
-         8lyjAK3xLko3M6xhu0wNgQXBgsLOKKvSY0c4bCI7UgGm6XAXGyOS9Votq6wBrjWkvr5z
-         EzNTd7kHE0d+djRyHm0bvoT7WK8rGR+e6yioFviOpsJT+HkU+z4LDxX6/dnd1U2yyxXP
-         Fbc6y0CVEYLcCO6d636pUWEA4uryUNPiWFqf3TgQl/GcFrodyPiRMTQFGI/58llcWibF
-         FN+crRgXKw8pRyCuTXOR/eaMDklidowXtHs6K9h+aq96B5eTIf89ah/kZFGlPH86nf3L
-         Gi0A==
-X-Gm-Message-State: AOAM533wfKq405YvZitz07S3z5PP1t0BEWFcjyl3p7nTUBgYxGT9KPsV
-        WtmetQ6COLweqCLQNiYXav+Fxo+MNmterBAPIqaodg==
-X-Google-Smtp-Source: ABdhPJzS968MwriJjtB8A4o5jf5U7wGm+srfciMOwtBfxiJR4VBaTGHofICzjBGjNv61Ss4Qaq23msGUlKDxn7Vu/EE=
-X-Received: by 2002:a63:d47:: with SMTP id 7mr3778974pgn.339.1623916738949;
- Thu, 17 Jun 2021 00:58:58 -0700 (PDT)
-MIME-Version: 1.0
-References: <20210616141107.291430-1-robert.foss@linaro.org>
- <20210616141107.291430-3-robert.foss@linaro.org> <780fd0b4-fffc-5afb-e546-86ba75bad9f9@somainline.org>
-In-Reply-To: <780fd0b4-fffc-5afb-e546-86ba75bad9f9@somainline.org>
-From:   Robert Foss <robert.foss@linaro.org>
-Date:   Thu, 17 Jun 2021 09:58:47 +0200
-Message-ID: <CAG3jFytEYSpUB3nUO2JScqtUGQ_JYLmeA53FOLC6wKA3+ZZe5A@mail.gmail.com>
-Subject: Re: [RFC v1 02/11] clk: qcom: rcg2: Add support for flags
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
+        id S229773AbhFQIIn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Jun 2021 04:08:43 -0400
+Received: from mail.kernel.org ([198.145.29.99]:49006 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229666AbhFQIIn (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 17 Jun 2021 04:08:43 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id DD8C0610A0;
+        Thu, 17 Jun 2021 08:06:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1623917195;
+        bh=YuScG7SzWSSRa8w1px2qbFZAuK3KvyU2T8TThbFj484=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=KZtZND8jBB1VBzwKJ37okD6sz+7yOm9yfkVXZvMIlMjMbU+/QQz+2xByOFDnV5kBI
+         6efKtbVV9eT5xS4zzlnh8n7ZsNw9HbZ9sDLEp85/CilwlCFxqxCmQTdmDzguDQa7Lp
+         4x2Vb3YyD9PDnbpAeR5LjMTKQ1CrYzZ7y+T6cKTgZhf9ln2FEaUfw4ZsIG57QvUrn+
+         mYwOMefXgMUm+fnsHxN3SSZb5+ntdFmtUv2FZAMaHM6Nw2i3Q4grHbNXZezuo5XuAw
+         2Pb+WKjNG8oat7wV5SyAWARDp1KJqOMhozk0z+QSanSSEdBFilprNmu6ZdBXqQ2fFd
+         yOrn1FJC0gCnw==
+Date:   Thu, 17 Jun 2021 13:36:32 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     abhinavk@codeaurora.org
+Cc:     Rob Clark <robdclark@gmail.com>, DTML <devicetree@vger.kernel.org>,
         Jonathan Marek <jonathan@marek.ca>,
-        Taniya Das <tdas@codeaurora.org>,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        David Airlie <airlied@linux.ie>,
         MSM <linux-arm-msm@vger.kernel.org>,
-        "open list:COMMON CLK FRAMEWORK" <linux-clk@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-kernel <linux-kernel@vger.kernel.org>,
-        Vinod Koul <vinod.koul@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+        lkml <linux-kernel@vger.kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        freedreno <freedreno@lists.freedesktop.org>
+Subject: Re: [Freedreno] [RFC PATCH 00/13] drm/msm: Add Display Stream
+ Compression Support
+Message-ID: <YMsCiOThaPEvHs1S@vkoul-mobl>
+References: <20210521124946.3617862-1-vkoul@kernel.org>
+ <CAOCk7Nqep_Db+z3fr5asHZ1u0j8+6fKkPFs2Ai8CbA_zGqV6ZA@mail.gmail.com>
+ <YK3gxqXBRupN/N+Q@vkoul-mobl.Dlink>
+ <CAOCk7NqvhGvYw8xCBctqj7H+o-Qwp2UuUJK1gatW9EWfXv56xA@mail.gmail.com>
+ <CAF6AEGuoyPr8PgfwFX0JCYZ7S_pryn_OXacHBqoMAAPvSq6aRw@mail.gmail.com>
+ <YLdlEB3Ea6OWaLw4@vkoul-mobl>
+ <a14c18a2545408e8156dcafc846b17a2@codeaurora.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <a14c18a2545408e8156dcafc846b17a2@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 16 Jun 2021 at 17:33, Konrad Dybcio
-<konrad.dybcio@somainline.org> wrote:
->
->
-> On 16.06.2021 16:10, Robert Foss wrote:
-> > These changes are ported from the downstream driver, and are used on SM8350
-> > for CAMCC, DISPCC, GCC, GPUCC & VIDEOCC.
-> >
-> > Signed-off-by: Robert Foss <robert.foss@linaro.org>
-> > ---
-> >  drivers/clk/qcom/clk-rcg.h  | 4 ++++
-> >  drivers/clk/qcom/clk-rcg2.c | 3 +++
-> >  2 files changed, 7 insertions(+)
-> >
-> > diff --git a/drivers/clk/qcom/clk-rcg.h b/drivers/clk/qcom/clk-rcg.h
-> > index 99efcc7f8d88..a1f05281d950 100644
-> > --- a/drivers/clk/qcom/clk-rcg.h
-> > +++ b/drivers/clk/qcom/clk-rcg.h
-> > @@ -149,6 +149,10 @@ struct clk_rcg2 {
-> >       const struct freq_tbl   *freq_tbl;
-> >       struct clk_regmap       clkr;
-> >       u8                      cfg_off;
-> > +     u8                      flags;
-> > +#define FORCE_ENABLE_RCG     BIT(0)
-> > +#define HW_CLK_CTRL_MODE     BIT(1)
-> > +#define DFS_SUPPORT          BIT(2)
-> >  };
-> >
-> >  #define to_clk_rcg2(_hw) container_of(to_clk_regmap(_hw), struct clk_rcg2, clkr)
-> > diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
-> > index 42f13a2d1cc1..ed2c9b6659cc 100644
-> > --- a/drivers/clk/qcom/clk-rcg2.c
-> > +++ b/drivers/clk/qcom/clk-rcg2.c
-> > @@ -295,6 +295,9 @@ static int __clk_rcg2_configure(struct clk_rcg2 *rcg, const struct freq_tbl *f)
-> >       cfg |= rcg->parent_map[index].cfg << CFG_SRC_SEL_SHIFT;
-> >       if (rcg->mnd_width && f->n && (f->m != f->n))
-> >               cfg |= CFG_MODE_DUAL_EDGE;
-> > +     if (rcg->flags & HW_CLK_CTRL_MODE)
-> > +             cfg |= CFG_HW_CLK_CTRL_MASK;
-> > +
-> >       return regmap_update_bits(rcg->clkr.regmap, RCG_CFG_OFFSET(rcg),
-> >                                       mask, cfg);
-> >  }
->
-> What about code for handling other flags? If it's not a part of the series,
->
-> I don't think it makes sense to define them. Or perhaps you sent the
->
-> wrong revision?
+On 03-06-21, 16:40, abhinavk@codeaurora.org wrote:
+> On 2021-06-02 04:01, Vinod Koul wrote:
+> > On 27-05-21, 16:30, Rob Clark wrote:
+> > 
+> > yeah that is always a very different world. although it might make sense
+> > to use information in tables and try to deduce information about the
+> > system can be helpful...
+> > 
+> > > I'd worry more about what makes sense in a DT world, when it comes to
+> > > DT bindings.
+> > 
+> > And do you have thoughts on that..?
+> 
+> At the moment, I will comment on the bindings first and my idea on how to
+> proceed.
+> The bindings mentioned here:
+> https://lore.kernel.org/dri-devel/20210521124946.3617862-3-vkoul@kernel.org/
+> seem to be just
+> taken directly from downstream which was not the plan.
+> 
+> I think all of these should be part of the generic panel bindings as none of
+> these are QC specific:
 
-I opted to add all of the flags just to document them existing, but
-only introducing the ones that will immediately be used is the better
-way to go.
+Okay so we have discussed this w/ Bjorn and Abhinav and here are the
+conclusions and recommendations for binding
+
+1. the properties are generic and not msm specific
+2. The host supports multiple formats but the one we choose depends
+mostly upon panel. Notably host runs the config which the panel supports.
+
+So the recommendations is to add a table of dsc properties in the panel
+driver. No DT binding here.
+
+I should also note that for DP we should be able to calculate these
+values from EDID like the i915 driver seems to do
+
+With this I will drop the binding patch and move dsc properties to panel
+driver
+
+Thanks
+
+-- 
+~Vinod
