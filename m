@@ -2,118 +2,155 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3EB9D3AB6FD
+	by mail.lfdr.de (Postfix) with ESMTP id DCCFD3AB6FE
 	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jun 2021 17:09:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233173AbhFQPL6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Jun 2021 11:11:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45462 "EHLO
+        id S233175AbhFQPL7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Jun 2021 11:11:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45472 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233168AbhFQPL5 (ORCPT
+        with ESMTP id S233172AbhFQPL6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Jun 2021 11:11:57 -0400
-Received: from mail-qk1-x734.google.com (mail-qk1-x734.google.com [IPv6:2607:f8b0:4864:20::734])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7DEB9C06175F
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Jun 2021 08:09:48 -0700 (PDT)
-Received: by mail-qk1-x734.google.com with SMTP id c138so3474028qkg.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Jun 2021 08:09:48 -0700 (PDT)
+        Thu, 17 Jun 2021 11:11:58 -0400
+Received: from mail-qv1-xf29.google.com (mail-qv1-xf29.google.com [IPv6:2607:f8b0:4864:20::f29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66379C061574
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Jun 2021 08:09:50 -0700 (PDT)
+Received: by mail-qv1-xf29.google.com with SMTP id if15so1831699qvb.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Jun 2021 08:09:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=marek-ca.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=mv9m1rL1gQr7Cq6u236MxatHLn2/MqViMk2h6WZTmRo=;
-        b=RhAoT19vBPzCi+padM6Q7iUPclE2KxhFlLSP1W5hes8qWZnAztDI26Z4FvXDDMqucP
-         W5JQJ+LluUo4CVKtD8Ou8W9THwUmW9uFmpyN3w2O2DiGqJ9c9w5qOv4G7lMqAWbtPSZp
-         +nyS2rvds2wuW0Ui9tRUgXAuNyit+DxYJ1V15wv1mGoktZaDq1vY71NXD3TfnghhBhbv
-         h+DJXG0YSEZWCrAXmeVKZICdwmo7FfJUXXYVxAW6TJiqNh2N/cumtG8td2dd8ZUuVSEn
-         aUJCPlFNmXTtK6SA3cqG/jqEwAX6jgcpYxIn8IIscqfbcKtHCLut+1uODkwneV6eaqwx
-         DkGA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=6CZoxO79EUCj+uToMmmQ6lVMzE5TA3o7zrKqj4+S9KI=;
+        b=ZrxvbUOIUHyCiVrYQYrgOpLGX9jlC28Ynxxg3p4qz0YhokhE+x9bkteQs6WqGC1hQg
+         7i5bIyDasHmkWLZVP65g3IqUqiNaRB4220pMbWj4+DL+fD9l7/wwf/5eKNyAW0IUxmup
+         53oja1wU6sNp+3+uPTk+Au/Gb83w4ninPOIqQtJgpFZo4Kn8YUj0bVqYEna6SHsG/82U
+         6EVOMr8OeYo5OugWAuaFQHHN37jvTqM/cJd6kJHVD3s1l4hPc4b8fmbGmNPeJphuCpVU
+         kBALGLBZAdUphN6cg2rVtBdn4Fgw8wkoHteU5G8GXu/dEJpTRMEAqMDbmE6mjD5AlOgE
+         GHig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=mv9m1rL1gQr7Cq6u236MxatHLn2/MqViMk2h6WZTmRo=;
-        b=LA0aIM1mpxASUJEsgUglA0GG2kbhj9bJQA05BcrgP05fXS6ztqWUHFjf1pEL0+O/j2
-         HK2/NHF4RskFfPFP+vYcHuQ5v1/yud7XzV5WWccGBcSGhGTtMkb7Hjtaj3I2nA2WhPhV
-         ATyigVsF5nhpfY/byHI8xhhCn2+f7VRX9xNhyCYa6EJGbXChv8FSWt9nvNZ0ZTefC7xi
-         KeqSssciaLVgwcK+uCiGC0UyW0nlrtCmpkFuCqUJngdbQzwS+LZ2FAOGvOBj9RFhCtdu
-         mtUUChzHB9Ym6FUXyLZI5GQcfKLS3KquOU1W8RlyoXv218ytvKIFq7rFXiQrjmfOTpw5
-         zEDA==
-X-Gm-Message-State: AOAM533lxbS4dks3rrC+/rCjMrqt7mML3e+JdOwM12lUQoMx0rMibvDH
-        Kc3nWbLdxSO6xSRe5VeozH2p8w==
-X-Google-Smtp-Source: ABdhPJzglu2BOkfTCvKDZ/8MRUxwg51FjvnIad48oEPHqJArDCQJiVaaZHhuk7PmsZdUyA3nUjVIJw==
-X-Received: by 2002:a05:620a:13c5:: with SMTP id g5mr4349545qkl.464.1623942587689;
-        Thu, 17 Jun 2021 08:09:47 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=6CZoxO79EUCj+uToMmmQ6lVMzE5TA3o7zrKqj4+S9KI=;
+        b=b4b1u1d7UhbQFFXlZRe3YxCFGyAuD/v7nXzVKAENEgg7+jDtSPYOKCAo1UkkrWS7jR
+         DHjSVMExyOFIKCFSw9tQMYbIWzmJJPQcy+xVhhaMTa7d7V8GgsOXpQtMTMdu+eM7BqPn
+         QUdM0CjWFrkZ+p4THt5pduY2YPo0VJ1aJMd9hBwR9cTITT+vx3kgUvfWLTPfx/Qlnc56
+         OVjyVO+sOOFMWJenEnBIUMj/AtYihBVa20J2dXh39JUDDG1aO/vOmHGxjg32HVwebE4f
+         Qk8HRcno18jE6gQh0ZPIqKgbpzCaeGgLTuiC+LQlLKcnjKj3C8Fksp5+RoJTXYiv603b
+         pZWQ==
+X-Gm-Message-State: AOAM530rmsZj3gE8qbwQBWG0zDVDpNGM1B4hQIvCbgmCpJXXWytpOAFT
+        YBD5koZK8yyG52dnc4HiHU/bnw==
+X-Google-Smtp-Source: ABdhPJwqlTnyC6ehAuzvmqugicCKmU0UrwJ2sXGVdmGn/AoPR8lWetbs/2NzMSuB8dsbFuyO/q7mzw==
+X-Received: by 2002:a05:6214:80a:: with SMTP id df10mr300267qvb.8.1623942589661;
+        Thu, 17 Jun 2021 08:09:49 -0700 (PDT)
 Received: from localhost.localdomain (modemcable068.184-131-66.mc.videotron.ca. [66.131.184.68])
-        by smtp.gmail.com with ESMTPSA id g82sm1915427qke.119.2021.06.17.08.09.46
+        by smtp.gmail.com with ESMTPSA id g82sm1915427qke.119.2021.06.17.08.09.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Jun 2021 08:09:47 -0700 (PDT)
+        Thu, 17 Jun 2021 08:09:49 -0700 (PDT)
 From:   Jonathan Marek <jonathan@marek.ca>
 To:     freedreno@lists.freedesktop.org
-Cc:     Abhinav Kumar <abhinavk@codeaurora.org>,
-        Anurag Kumar Vulisha <anurag.kumar.vulisha@xilinx.com>,
-        Bernard Zhao <bernard@vivo.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         David Airlie <airlied@linux.ie>,
-        devicetree@vger.kernel.org (open list:OPEN FIRMWARE AND FLATTENED
-        DEVICE TREE BINDINGS),
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        dri-devel@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
-        GPU), Jordan Crouse <jordan@cosmicpenguin.net>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Herring <robh+dt@kernel.org>,
         linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
-        linux-kernel@vger.kernel.org (open list),
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>, Sean Paul <sean@poorly.run>,
-        Swapnil Jakhade <sjakhade@cadence.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>
-Subject: [PATCH v4 0/3] drm/msm/dsi: support CPHY mode for 7nm pll/phy
-Date:   Thu, 17 Jun 2021 10:43:32 -0400
-Message-Id: <20210617144349.28448-1-jonathan@marek.ca>
+        dri-devel@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
+        GPU),
+        devicetree@vger.kernel.org (open list:OPEN FIRMWARE AND FLATTENED
+        DEVICE TREE BINDINGS), linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH v4 1/3] dt-bindings: msm: dsi: add missing 7nm bindings
+Date:   Thu, 17 Jun 2021 10:43:33 -0400
+Message-Id: <20210617144349.28448-2-jonathan@marek.ca>
 X-Mailer: git-send-email 2.26.1
+In-Reply-To: <20210617144349.28448-1-jonathan@marek.ca>
+References: <20210617144349.28448-1-jonathan@marek.ca>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the required changes to support 7nm pll/phy in CPHY mode.
+These got lost when going from .txt to .yaml bindings, add them back.
 
-This adds a "qcom,dsi-phy-cphy-mode" property for the PHY node to enable
-the CPHY mode.
-
-v2:
- - rebased on DSI PHY reworks
- - reworked getting cphy_mode in dsi_host.c
- - documentation change in separate patch
-
-v3:
- - yaml bindings
- - changed binding to "phy-type = <PHY_TYPE_DSI_CPHY>;"
-
-v4:
- - PHY_TYPE_{DPHY,CPHY} instead of PHY_TYPE_DSI_{DPHY,CPHY}
- - use enum/default for phy-type property
- - remove a stray semicolon in dts example
-
-Jonathan Marek (3):
-  dt-bindings: msm: dsi: add missing 7nm bindings
-  dt-bindings: msm: dsi: document phy-type property for 7nm dsi phy
-  drm/msm/dsi: support CPHY mode for 7nm pll/phy
-
- .../bindings/display/msm/dsi-phy-7nm.yaml     |  71 +++++++++
- drivers/gpu/drm/msm/dsi/dsi.xml.h             |   2 +
- drivers/gpu/drm/msm/dsi/dsi_host.c            |  34 +++-
- drivers/gpu/drm/msm/dsi/phy/dsi_phy.c         |  49 ++++++
- drivers/gpu/drm/msm/dsi/phy/dsi_phy.h         |   3 +
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c     | 145 ++++++++++++------
- include/dt-bindings/phy/phy.h                 |   2 +
- 7 files changed, 259 insertions(+), 47 deletions(-)
+Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+---
+ .../bindings/display/msm/dsi-phy-7nm.yaml     | 66 +++++++++++++++++++
+ 1 file changed, 66 insertions(+)
  create mode 100644 Documentation/devicetree/bindings/display/msm/dsi-phy-7nm.yaml
 
+diff --git a/Documentation/devicetree/bindings/display/msm/dsi-phy-7nm.yaml b/Documentation/devicetree/bindings/display/msm/dsi-phy-7nm.yaml
+new file mode 100644
+index 000000000000..c0077ca7e9e7
+--- /dev/null
++++ b/Documentation/devicetree/bindings/display/msm/dsi-phy-7nm.yaml
+@@ -0,0 +1,66 @@
++# SPDX-License-Identifier: GPL-2.0-only or BSD-2-Clause
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/display/msm/dsi-phy-7nm.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm Display DSI 7nm PHY
++
++maintainers:
++  - Jonathan Marek <jonathan@marek.ca>
++
++allOf:
++  - $ref: dsi-phy-common.yaml#
++
++properties:
++  compatible:
++    oneOf:
++      - const: qcom,dsi-phy-7nm
++      - const: qcom,dsi-phy-7nm-8150
++
++  reg:
++    items:
++      - description: dsi phy register set
++      - description: dsi phy lane register set
++      - description: dsi pll register set
++
++  reg-names:
++    items:
++      - const: dsi_phy
++      - const: dsi_phy_lane
++      - const: dsi_pll
++
++  vdds-supply:
++    description: |
++      Connected to VDD_A_DSI_PLL_0P9 pin (or VDDA_DSI{0,1}_PLL_0P9 for sm8150)
++
++required:
++  - compatible
++  - reg
++  - reg-names
++  - vdds-supply
++
++unevaluatedProperties: false
++
++examples:
++  - |
++     #include <dt-bindings/clock/qcom,dispcc-sm8250.h>
++     #include <dt-bindings/clock/qcom,rpmh.h>
++
++     dsi-phy@ae94400 {
++         compatible = "qcom,dsi-phy-7nm";
++         reg = <0x0ae94400 0x200>,
++               <0x0ae94600 0x280>,
++               <0x0ae94900 0x260>;
++         reg-names = "dsi_phy",
++                     "dsi_phy_lane",
++                     "dsi_pll";
++
++         #clock-cells = <1>;
++         #phy-cells = <0>;
++
++         vdds-supply = <&vreg_l5a_0p88>;
++         clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
++                  <&rpmhcc RPMH_CXO_CLK>;
++         clock-names = "iface", "ref";
++     };
 -- 
 2.26.1
 
