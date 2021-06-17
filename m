@@ -2,90 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DF42E3AB20E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jun 2021 13:12:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DBE333AB3BA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Jun 2021 14:38:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232418AbhFQLOn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Jun 2021 07:14:43 -0400
-Received: from mail.kernel.org ([198.145.29.99]:53260 "EHLO mail.kernel.org"
+        id S230526AbhFQMkG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Jun 2021 08:40:06 -0400
+Received: from mail.kernel.org ([198.145.29.99]:40836 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231501AbhFQLOj (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Jun 2021 07:14:39 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 35B9561369;
-        Thu, 17 Jun 2021 11:12:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1623928351;
-        bh=Ocgp30BnZ8XoWmAPjRUOn8bkwl1ycXvMtwzaDtMaEJ8=;
+        id S230225AbhFQMkG (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 17 Jun 2021 08:40:06 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 252A7610CA;
+        Thu, 17 Jun 2021 12:37:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1623933478;
+        bh=JXZlIvP9Jv7f57Wfb41hYAPLe3/lzlvn9IlwjLKbrf8=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=uCWxl1+Ory823yoEna0SAz0awtcGyw8neh4ehe/wf0i8uU0bF80EgjVsykwxScWer
-         28mx3Yal6+rzR5dcj/9AbQUMnD/wXdicCME9S5uXyhczbM0gUgPslv3kH6B0Iop0Rh
-         yYwanpzA7XUupkvbXrvYkC/yJ1V5GDqLMWZXB7lc=
-Date:   Thu, 17 Jun 2021 13:12:28 +0200
-From:   Greg KH <gregkh@linuxfoundation.org>
-To:     Wesley Cheng <wcheng@codeaurora.org>
-Cc:     balbi@kernel.org, robh+dt@kernel.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, frowand.list@gmail.com,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        jackp@codeaurora.org, fntoth@gmail.com,
-        heikki.krogerus@linux.intel.com, andy.shevchenko@gmail.com
-Subject: Re: [PATCH v10 5/6] usb: dwc3: dwc3-qcom: Enable tx-fifo-resize
- property by default
-Message-ID: <YMsuHDbVb3iFw8uO@kroah.com>
-References: <1623923899-16759-1-git-send-email-wcheng@codeaurora.org>
- <1623923899-16759-6-git-send-email-wcheng@codeaurora.org>
+        b=sLUpejLzm6khVyg99lx39uFIe+3YsyCNZ3x1fBTlmBClMnh7AasKRaTFw0zN3Ph+L
+         UVEBU6qGkRcIiGFZ3WF//KGW5U9ha0cxD8zbFjM7nNBPBUEvTpLjkMdej2B5d5nGOq
+         TvYunvw+D8eyjtjnaNC3Z/KxX5GN4QSscdln2aa2PcDoxJXO49SXw5tSCuNe/y223U
+         us4vSqdmNMTLwYsIy9IQYl9mtcFhkpuiq9JrFcJWekM4zvBRc/kt6jPGkHjX4yYqKZ
+         0L3LQQFeCGz8qp1SySWogVsfCBcVdtAPfPLUpH35shkgvkaRBVtjpzk0bQsrzQpObF
+         g4PoHrqb+poNA==
+Date:   Thu, 17 Jun 2021 13:37:38 +0100
+From:   Mark Brown <broonie@kernel.org>
+To:     Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>
+Cc:     Matti Vaittinen <mazziesaccount@gmail.com>,
+        Kees Cook <keescook@chromium.org>,
+        Andy Shevchenko <andy.shevchenko@gmail.com>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Guenter Roeck <linux@roeck-us.net>,
+        "agross@kernel.org" <agross@kernel.org>,
+        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+        linux-power <linux-power@fi.rohmeurope.com>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "linux-renesas-soc@vger.kernel.org" 
+        <linux-renesas-soc@vger.kernel.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "bjorn.andersson@linaro.org" <bjorn.andersson@linaro.org>,
+        "lgirdwood@gmail.com" <lgirdwood@gmail.com>,
+        "robh+dt@kernel.org" <robh+dt@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Amit Kucheria <amitk@kernel.org>,
+        Matteo Croce <mcroce@microsoft.com>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Petr Mladek <pmladek@suse.com>,
+        "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+        Mike Rapoport <rppt@kernel.org>,
+        Josef Bacik <josef@toxicpanda.com>,
+        Kai-Heng Feng <kai.heng.feng@canonical.com>,
+        linux-pm@vger.kernel.org
+Subject: Re: [PATCH RESEND v10 00/11] Extend regulator notification support
+Message-ID: <20210617123738.GC5067@sirena.org.uk>
+References: <cover.1622628333.git.matti.vaittinen@fi.rohmeurope.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="kVXhAStRUZ/+rrGn"
 Content-Disposition: inline
-In-Reply-To: <1623923899-16759-6-git-send-email-wcheng@codeaurora.org>
+In-Reply-To: <cover.1622628333.git.matti.vaittinen@fi.rohmeurope.com>
+X-Cookie: But it does move!
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jun 17, 2021 at 02:58:18AM -0700, Wesley Cheng wrote:
-> In order to take advantage of the TX fifo resizing logic, manually add
-> these properties to the DWC3 child node by default.  This will allow
-> the DWC3 gadget to resize the TX fifos for the IN endpoints, which
-> help with performance.
-> 
-> Signed-off-by: Wesley Cheng <wcheng@codeaurora.org>
-> ---
->  drivers/usb/dwc3/dwc3-qcom.c | 9 +++++++++
->  1 file changed, 9 insertions(+)
-> 
-> diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-> index 49e6ca9..44e0eaa1 100644
-> --- a/drivers/usb/dwc3/dwc3-qcom.c
-> +++ b/drivers/usb/dwc3/dwc3-qcom.c
-> @@ -645,6 +645,7 @@ static int dwc3_qcom_of_register_core(struct platform_device *pdev)
->  	struct dwc3_qcom	*qcom = platform_get_drvdata(pdev);
->  	struct device_node	*np = pdev->dev.of_node, *dwc3_np;
->  	struct device		*dev = &pdev->dev;
-> +	struct property		*prop;
->  	int			ret;
->  
->  	dwc3_np = of_get_compatible_child(np, "snps,dwc3");
-> @@ -653,6 +654,14 @@ static int dwc3_qcom_of_register_core(struct platform_device *pdev)
->  		return -ENODEV;
->  	}
->  
-> +	prop = devm_kzalloc(dev, sizeof(*prop), GFP_KERNEL);
-> +	if (prop) {
-> +		prop->name = "tx-fifo-resize";
-> +		ret = of_add_property(dwc3_np, prop);
-> +		if (ret < 0)
-> +			dev_info(dev, "unable to add tx-fifo-resize prop\n");
 
-dev_err()?
+--kVXhAStRUZ/+rrGn
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-And you do not error out properly?
+On Thu, Jun 03, 2021 at 08:40:07AM +0300, Matti Vaittinen wrote:
+> Extend regulator notification support
+>=20
+> This series extends the regulator notification and error flag support.
+> Initial discussion on the topic can be found here:
+> https://lore.kernel.org/lkml/6046836e22b8252983f08d5621c35ececb97820d.cam=
+el@fi.rohmeurope.com/
 
+Any thoughts on the reboot or thermal patches?  In the absence of any
+further feedback by the end of the week I might go ahead and apply
+things to the regulator tree if that's OK with people.
 
-> +	}
+--kVXhAStRUZ/+rrGn
+Content-Type: application/pgp-signature; name="signature.asc"
 
-No failure if prop is NULL?  This check looks backwards to me, error
-paths are in the if () statement, not "all is good".
+-----BEGIN PGP SIGNATURE-----
 
-This feels backwards.
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmDLQhEACgkQJNaLcl1U
+h9CFGAf/URUmhopehFCmMlbpAU+UBOk0Mjr8Ko9s6KYYgB+p4HLxz0dSmuS1+iAo
++oMzCCE6wWOR8uFQ0UvnceyS0ixGE7O2QVds0nz+nk5Kl6rAgOFVx/DpWE238ZGi
+r5v5qjX2mo92x8fvYnQGMeH8rJtXhD92r/kN7vdu+E6Dt3+HPTGS4fSxiWwAq1Pg
+46t5I2wArFhOaGCZJ/68jQJg9BZ3+wE2ThPUWy4eWTB4wwqXmoiUKaLO6Tbsuna+
+G+JbnO2md5U205F15CDlppUAl4e9HpxEYpv8I6MaWhdpsmawHLSiS/us3tqGTZE1
+zBNA4Di/Ay7xzS6WIOA0cza2giFBRg==
+=D9Xy
+-----END PGP SIGNATURE-----
 
-greg k-h
+--kVXhAStRUZ/+rrGn--
