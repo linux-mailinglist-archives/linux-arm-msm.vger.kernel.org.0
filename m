@@ -2,150 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D44F03AD1C6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jun 2021 20:06:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D2A6A3AD1C9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jun 2021 20:09:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234891AbhFRSIz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Jun 2021 14:08:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38150 "EHLO
+        id S235410AbhFRSL2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Jun 2021 14:11:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38718 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232763AbhFRSIz (ORCPT
+        with ESMTP id S233181AbhFRSL2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Jun 2021 14:08:55 -0400
-Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3297C061574
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jun 2021 11:06:44 -0700 (PDT)
-Received: by mail-ot1-x331.google.com with SMTP id 66-20020a9d02c80000b02903615edf7c1aso10473192otl.13
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jun 2021 11:06:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=OEKJM9vIqp0HzyKXj3PmRgH2R1YDj6D4MPV9OcuTS9o=;
-        b=a3ckPvSP/3evWGcvch+X4B/q2twhoRag+Kw7B/APoE2ES7pLi52jI/cKMD6xwk7u/S
-         mDVI+JJjy9RfZsbkbFj6iVB6+eOIpDU7hx/FKrTSocLzsy3kKHOBy5dIr1I/Qe9nnksV
-         3mtOXVsLr4dcelH+dWmV+I1jtsgoVZtsDrTDuREIuPv2BVBGYX66QzqP8G/5zC3q7XJC
-         3O4sMyq90iD8cKgbIu8K4KxKFWbLSfIEDX+Ck85+0PUiWJMxNT9yiRcpJNY81VnjDkxD
-         giEmxia8Y7cFk46n7QNqKK3VaJMVg8I+//iRyawfatcPly1WaGG1CRVv0H/a3J0LGkLZ
-         K2Wg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=OEKJM9vIqp0HzyKXj3PmRgH2R1YDj6D4MPV9OcuTS9o=;
-        b=oDpcK3fMuz9dqjFw+h+Jy2YTN/tXcmuomFI6poR6OBBuizUrQvHVqUSSocuWyBuV+J
-         SSSb7HnBj3IAeQ6HOzZynm9mNi78rFdv434nkSpUnz0zvtgQiDyJgsa2kdD2rt+x+HXI
-         wyQ4Qvy0cV2nfTRzHBYxUog/gEw1zhAlbRhD2VO6dRoB9WNvsvKVWKGebT51CLEuTeU3
-         AZwguzuSMmv2zdf734Dl5BsNqEeawTqOvGdv9z4j4+waxEr3SBIp/yo77dmZ/TCZKhwI
-         5chwKkMwXNJAh1VYb0gvoFvBo/EqQYyGaTudG0n+ADMfnzGgmw06QzcCvnzMiRODeYDV
-         8QOg==
-X-Gm-Message-State: AOAM530ththCk8fPlLfUgTj2wLIJCAWbddenwsfYCw/j5b0P5teNKZJ5
-        P9LOI9P/MV4RamGdPyzRrF9imA==
-X-Google-Smtp-Source: ABdhPJzBzlY9T26KUGOr/F4uK6/WOLYLE33cfL2bZqHmXN/Dv/pWim6wpK9xUU+I+wbqFy8X287D9g==
-X-Received: by 2002:a9d:585:: with SMTP id 5mr10634495otd.12.1624039604035;
-        Fri, 18 Jun 2021 11:06:44 -0700 (PDT)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id h11sm1949471otg.43.2021.06.18.11.06.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Jun 2021 11:06:43 -0700 (PDT)
-Date:   Fri, 18 Jun 2021 13:06:41 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, bhupesh.linux@gmail.com,
-        linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, lgirdwood@gmail.com,
-        Mark Brown <broonie@kernel.org>
-Subject: Re: [PATCH v3 5/5] regulator: qcom-rpmh: Add new regulator found on
- SA8155p adp board
-Message-ID: <YMzgsRdrhGZonzd1@builder.lan>
-References: <20210617051712.345372-1-bhupesh.sharma@linaro.org>
- <20210617051712.345372-6-bhupesh.sharma@linaro.org>
+        Fri, 18 Jun 2021 14:11:28 -0400
+Received: from relay01.th.seeweb.it (relay01.th.seeweb.it [IPv6:2001:4b7a:2000:18::162])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C8D3C061574
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jun 2021 11:09:18 -0700 (PDT)
+Received: from IcarusMOD.eternityproject.eu (unknown [2.237.20.237])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 282321F5F9;
+        Fri, 18 Jun 2021 20:09:14 +0200 (CEST)
+From:   AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>
+To:     bjorn.andersson@linaro.org
+Cc:     agross@kernel.org, daniel.lezcano@linaro.org, rjw@rjwysocki.net,
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, phone-devel@vger.kernel.org,
+        konrad.dybcio@somainline.org, marijn.suijten@somainline.org,
+        martin.botka@somainline.org, jeffrey.l.hugo@gmail.com,
+        jamipkettunen@somainline.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>
+Subject: [RESEND PATCH v4 0/3] Implement SPM/SAW for MSM8998 and SDM6xx
+Date:   Fri, 18 Jun 2021 20:09:04 +0200
+Message-Id: <20210618180907.258149-1-angelogioacchino.delregno@somainline.org>
+X-Mailer: git-send-email 2.32.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210617051712.345372-6-bhupesh.sharma@linaro.org>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 17 Jun 00:17 CDT 2021, Bhupesh Sharma wrote:
+Changes in v4:
+- Huge patch series has been split for better reviewability,
+  as suggested by Bjorn
 
-> SA8155p-adp board supports a new regulator - pmm8155au.
-> 
-> The output power management circuits in this regulator include:
-> - FTS510 smps,
-> - HFS510 smps, and
-> - LDO510 linear regulators
-> 
-> Add support for the same.
-> 
-> Cc: Mark Brown <broonie@kernel.org>
-> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Changes in v3:
+- Rebased (no changes - was in previous series' v3)
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Changes in v2:
+- Fixed MSM8998 SAW parameters on SPM driver
 
-Regards,
-Bjorn
+Tested on the following smartphones:
+- Sony Xperia XA2        (SDM630)
+- Sony Xperia XA2 Ultra  (SDM630)
+- Sony Xperia 10         (SDM630)
+- Sony Xperia XZ Premium (MSM8998)
+- F(x)Tec Pro 1          (MSM8998)
 
-> ---
->  drivers/regulator/qcom-rpmh-regulator.c | 36 +++++++++++++++++++++++++
->  1 file changed, 36 insertions(+)
-> 
-> diff --git a/drivers/regulator/qcom-rpmh-regulator.c b/drivers/regulator/qcom-rpmh-regulator.c
-> index af41a517da99..6cca910a76de 100644
-> --- a/drivers/regulator/qcom-rpmh-regulator.c
-> +++ b/drivers/regulator/qcom-rpmh-regulator.c
-> @@ -883,6 +883,38 @@ static const struct rpmh_vreg_init_data pm8150l_vreg_data[] = {
->  	{}
->  };
->  
-> +static const struct rpmh_vreg_init_data pmm8155au_vreg_data[] = {
-> +	RPMH_VREG("smps1",  "smp%s1",  &pmic5_ftsmps510, "vdd-s1"),
-> +	RPMH_VREG("smps2",  "smp%s2",  &pmic5_ftsmps510, "vdd-s2"),
-> +	RPMH_VREG("smps3",  "smp%s3",  &pmic5_ftsmps510, "vdd-s3"),
-> +	RPMH_VREG("smps4",  "smp%s4",  &pmic5_hfsmps510, "vdd-s4"),
-> +	RPMH_VREG("smps5",  "smp%s5",  &pmic5_hfsmps510, "vdd-s5"),
-> +	RPMH_VREG("smps6",  "smp%s6",  &pmic5_ftsmps510, "vdd-s6"),
-> +	RPMH_VREG("smps7",  "smp%s7",  &pmic5_ftsmps510, "vdd-s7"),
-> +	RPMH_VREG("smps8",  "smp%s8",  &pmic5_ftsmps510, "vdd-s8"),
-> +	RPMH_VREG("smps9",  "smp%s9",  &pmic5_ftsmps510, "vdd-s9"),
-> +	RPMH_VREG("smps10", "smp%s10", &pmic5_ftsmps510, "vdd-s10"),
-> +	RPMH_VREG("ldo1",   "ldo%s1",  &pmic5_nldo,      "vdd-l1-l8-l11"),
-> +	RPMH_VREG("ldo2",   "ldo%s2",  &pmic5_pldo,      "vdd-l2-l10"),
-> +	RPMH_VREG("ldo3",   "ldo%s3",  &pmic5_nldo,      "vdd-l3-l4-l5-l18"),
-> +	RPMH_VREG("ldo4",   "ldo%s4",  &pmic5_nldo,      "vdd-l3-l4-l5-l18"),
-> +	RPMH_VREG("ldo5",   "ldo%s5",  &pmic5_nldo,      "vdd-l3-l4-l5-l18"),
-> +	RPMH_VREG("ldo6",   "ldo%s6",  &pmic5_nldo,      "vdd-l6-l9"),
-> +	RPMH_VREG("ldo7",   "ldo%s7",  &pmic5_pldo_lv,   "vdd-l7-l12-l14-l15"),
-> +	RPMH_VREG("ldo8",   "ldo%s8",  &pmic5_nldo,      "vdd-l1-l8-l11"),
-> +	RPMH_VREG("ldo9",   "ldo%s9",  &pmic5_nldo,      "vdd-l6-l9"),
-> +	RPMH_VREG("ldo10",  "ldo%s10", &pmic5_pldo,      "vdd-l2-l10"),
-> +	RPMH_VREG("ldo11",  "ldo%s11", &pmic5_nldo,      "vdd-l1-l8-l11"),
-> +	RPMH_VREG("ldo12",  "ldo%s12", &pmic5_pldo_lv,   "vdd-l7-l12-l14-l15"),
-> +	RPMH_VREG("ldo13",  "ldo%s13", &pmic5_pldo,      "vdd-l13-l16-l17"),
-> +	RPMH_VREG("ldo14",  "ldo%s14", &pmic5_pldo_lv,   "vdd-l7-l12-l14-l15"),
-> +	RPMH_VREG("ldo15",  "ldo%s15", &pmic5_pldo_lv,   "vdd-l7-l12-l14-l15"),
-> +	RPMH_VREG("ldo16",  "ldo%s16", &pmic5_pldo,      "vdd-l13-l16-l17"),
-> +	RPMH_VREG("ldo17",  "ldo%s17", &pmic5_pldo,      "vdd-l13-l16-l17"),
-> +	RPMH_VREG("ldo18",  "ldo%s18", &pmic5_nldo,      "vdd-l3-l4-l5-l18"),
-> +	{}
-> +};
-> +
->  static const struct rpmh_vreg_init_data pm8350_vreg_data[] = {
->  	RPMH_VREG("smps1",  "smp%s1",  &pmic5_ftsmps510, "vdd-s1"),
->  	RPMH_VREG("smps2",  "smp%s2",  &pmic5_ftsmps510, "vdd-s2"),
-> @@ -1177,6 +1209,10 @@ static const struct of_device_id __maybe_unused rpmh_regulator_match_table[] = {
->  		.compatible = "qcom,pmc8180c-rpmh-regulators",
->  		.data = pm8150l_vreg_data,
->  	},
-> +	{
-> +		.compatible = "qcom,pmm8155au-rpmh-regulators",
-> +		.data = pmm8155au_vreg_data,
-> +	},
->  	{
->  		.compatible = "qcom,pmx55-rpmh-regulators",
->  		.data = pmx55_vreg_data,
-> -- 
-> 2.31.1
-> 
+This is a component that we can find on very old
+chips, like MSM8974; there, it has been used to actually do the
+power scaling basically "on its own" - sending the cores in a specific
+sleep mode to save power.
+On the newer ones, including MSM8998, SDM630, 660 and others, it is still
+present! Though, this time, it's being used for the cluster caches and it
+has a different firmware (and maybe it's also slightly different HW),
+implementing the SAWv4.1 set and getting controlled *not by the OS* but
+by other controllers in the SoC (like the OSM).
+
+Contrary from MSM8974 and the like, this new version of the SPM just
+requires us to set the initial parameters for AVS and *nothing else*, as
+its states will be totally managed internally.
+
+AngeloGioacchino Del Regno (3):
+  cpuidle: qcom_spm: Detach state machine from main SPM handling
+  soc: qcom: spm: Implement support for SAWv4.1, SDM630/660 L2 AVS
+  soc: qcom: spm: Add compatible for MSM8998 SAWv4.1 L2
+
+ drivers/cpuidle/Kconfig.arm        |   1 +
+ drivers/cpuidle/cpuidle-qcom-spm.c | 294 ++++++-----------------------
+ drivers/soc/qcom/Kconfig           |   9 +
+ drivers/soc/qcom/Makefile          |   1 +
+ drivers/soc/qcom/spm.c             | 240 +++++++++++++++++++++++
+ include/soc/qcom/spm.h             |  45 +++++
+ 6 files changed, 354 insertions(+), 236 deletions(-)
+ create mode 100644 drivers/soc/qcom/spm.c
+ create mode 100644 include/soc/qcom/spm.h
+
+-- 
+2.30.0
+
