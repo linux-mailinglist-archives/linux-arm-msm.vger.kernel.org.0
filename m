@@ -2,108 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 430423AC5E6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jun 2021 10:21:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 011C43AC609
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jun 2021 10:25:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233549AbhFRIXu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Jun 2021 04:23:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46788 "EHLO
+        id S233745AbhFRI1t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Jun 2021 04:27:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47806 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233035AbhFRIXm (ORCPT
+        with ESMTP id S233742AbhFRI1r (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Jun 2021 04:23:42 -0400
-Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2BEB7C06175F
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jun 2021 01:21:31 -0700 (PDT)
-Received: by mail-oi1-x232.google.com with SMTP id d19so9695226oic.7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jun 2021 01:21:31 -0700 (PDT)
+        Fri, 18 Jun 2021 04:27:47 -0400
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 772C9C0617A8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jun 2021 01:25:35 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id c5so9764488wrq.9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jun 2021 01:25:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=aleksander-es.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Aeo2Ll9Dh+vhj7IwqV3SFri2k03IhO5HyXeMDR5L224=;
-        b=Cioz9S5vInxiqGTxkEkxgvXLvpJ3UCmEuqyKPxf8214RFrevgzdy/RiM8hTaf5TSiW
-         RHqlrU1YsVyvCyBoIjPA1+drIaPqLEI4dLOqiwvyvlsXdguIzIQQKf2xA6sJu0jqT0RB
-         898N3SGQtWtNfSmIaWvxNChaeGCBeHNCrTihl1fBBU9G02I2UyX1gYRRm+BOacb578Qm
-         A0UeWbAVBMwaECf6s+wW5RqXqvQbLjuVn8cU/Rp9W6y3Jd3V25tuU3CN0AS8krEa56fn
-         Fjq7s6TXCR/oFVCTh+ZUeVDo7s4O768HGJ57KbGAoUZ25YX6JKlLf5wdshnjDpW2wSVY
-         WRKQ==
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=4yp7aW76jFlM4QGK/SoDKL6wd3P2t/udl1+SDe7k800=;
+        b=BG0Nfd0nx1VHlxLzdTQQ3ED2RabTSSG48wjdiktWarSyDtWH7wtp8Y1jYIrLy7OMQl
+         /uF5LWaFesJdjieJXeNov6439Vdf77ldaBKjP0JhiQstT4R1KUFcararw3iTBQ8Xk7eQ
+         1mWOi9Qj50S9gcm2aftPRMri//xgOSdQ+cpyuBMTv702gnxQt3JQSYIOPsPFkgioT4RF
+         TK9R+pLbiXomEAZ5gGXFX8nD4EQl44c/2KUw4IBPQnHJe3xbtRHz2qQjqZh43ye+t69V
+         WB0MnQasYrm7AHeQfDJ/QEmnwNJlXq25RvMH3TUk18nZIXpxzneC/e0ESgKf6Ls1QLeh
+         abqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Aeo2Ll9Dh+vhj7IwqV3SFri2k03IhO5HyXeMDR5L224=;
-        b=XEAJpLKCnraGDt+ao2wO6VJ7Zd/6a+OgW//tgzGcalpHSRbuTZSdNSokovxdNabJKc
-         iabLNRblpBbynxU7zp8cK1bijmw+GNItwHTgsLdY1tF06vGCdTC7dLJn6FGHWzsTMSiX
-         DXH2yUkzDfFzZoOxtj17X4E7H5kJHPNFjoLnAimxUcacrl3acvh+V+LMuu9AgZDvPXdk
-         8KrrYIXX4NhLX7VBkqgzF+kSEvwdQ0FlOINTGWZkykkZYLhNJpLi/fI+nqjBbqmJl0tZ
-         F7VlGRNSnbIbbq17ezCjuSen97gSsW9WTrAgJxeAMxLPMfeboWeSq2ZbBAaqCW6q4xDN
-         hheg==
-X-Gm-Message-State: AOAM531kjw3H+24+CXoZjJiYV253AYPfu2cDY6oNDvYtfcARLZjXb9vH
-        Mic8DCfJt+CRAlI/WIlRe3+dKmjtFjXVEVRbga3vUw==
-X-Google-Smtp-Source: ABdhPJyDZlMUREB65qkU6XQ7bycrAzlPqlpeC2tU0I1MqjBXUhZUqKARGbo5s5dURngukXGGW4gwXFSct7ToGKP+h14=
-X-Received: by 2002:a05:6808:13d5:: with SMTP id d21mr14018585oiw.114.1624004489130;
- Fri, 18 Jun 2021 01:21:29 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=4yp7aW76jFlM4QGK/SoDKL6wd3P2t/udl1+SDe7k800=;
+        b=jD/8DE9crLzdMF1+FORHAzkZK10I7sADEgDKgmgAlFfBkTQWVGQIve4JHYWiLZGHZY
+         qy2AFfw/BLx+eZes/b3m/zD4U3OYLAfjtyXtayWRfCBQN+PqvFzrPDQV8Moog+D1ZJDd
+         ALfVppPRp/jzL8MqhnZuS6gdTXFhkXaJ7LCAgRuKnYyR72+3MGtp3TzyHwcJJiSP9aL6
+         CBcMVpmKxePPQA4KLzNgI/t33igfpjBPd/1zaKe9JgcBVI5yv8CJNNfU5lZsGEaou5JV
+         EjKqCqt4eleL13OK+dbgxKYJWKpFZiBF1TpRPcf2AQrCupd6oKICtdWQ+FAQ74uH2nQb
+         TZCw==
+X-Gm-Message-State: AOAM531ICraM7Tn9t9JF6vONS3oy/cLjBGfyqUh6ZhfBZd1BA7SfQUBn
+        nt01blmfMp3NsKbGw9UnGgcy5g==
+X-Google-Smtp-Source: ABdhPJyTirQETOkkN7vwg+3NJQ/zG57MMk4RQWhF6OW951WA7/4o1C6UqRnF1tjfF87SdRedMYT15A==
+X-Received: by 2002:a5d:5683:: with SMTP id f3mr11126026wrv.61.1624004733764;
+        Fri, 18 Jun 2021 01:25:33 -0700 (PDT)
+Received: from ?IPv6:2a01:e34:ed2f:f020:1042:9733:3014:e2b4? ([2a01:e34:ed2f:f020:1042:9733:3014:e2b4])
+        by smtp.googlemail.com with ESMTPSA id r10sm3805289wrq.17.2021.06.18.01.25.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 18 Jun 2021 01:25:33 -0700 (PDT)
+Subject: Re: [PATCH RESEND v10 02/11] reboot: Add hardware protection
+ power-off
+To:     Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>,
+        Matti Vaittinen <mazziesaccount@gmail.com>
+Cc:     Mark Brown <broonie@kernel.org>, Kees Cook <keescook@chromium.org>,
+        Andy Shevchenko <andy.shevchenko@gmail.com>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Guenter Roeck <linux@roeck-us.net>,
+        "agross@kernel.org" <agross@kernel.org>,
+        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+        linux-power <linux-power@fi.rohmeurope.com>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "linux-renesas-soc@vger.kernel.org" 
+        <linux-renesas-soc@vger.kernel.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "bjorn.andersson@linaro.org" <bjorn.andersson@linaro.org>,
+        "lgirdwood@gmail.com" <lgirdwood@gmail.com>,
+        "robh+dt@kernel.org" <robh+dt@kernel.org>,
+        Amit Kucheria <amitk@kernel.org>,
+        Matteo Croce <mcroce@microsoft.com>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Petr Mladek <pmladek@suse.com>,
+        "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+        Mike Rapoport <rppt@kernel.org>,
+        Josef Bacik <josef@toxicpanda.com>,
+        Kai-Heng Feng <kai.heng.feng@canonical.com>,
+        linux-pm@vger.kernel.org
+References: <cover.1622628333.git.matti.vaittinen@fi.rohmeurope.com>
+ <e83ec1ca9408f90c857ea9dcdc57b14d9037b03f.1622628333.git.matti.vaittinen@fi.rohmeurope.com>
+From:   Daniel Lezcano <daniel.lezcano@linaro.org>
+Message-ID: <cb86a545-69d9-9fc0-6fa6-8ed2f786c5ae@linaro.org>
+Date:   Fri, 18 Jun 2021 10:25:30 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.8.1
 MIME-Version: 1.0
-References: <20210618075243.42046-1-stephan@gerhold.net> <20210618075243.42046-3-stephan@gerhold.net>
-In-Reply-To: <20210618075243.42046-3-stephan@gerhold.net>
-From:   Aleksander Morgado <aleksander@aleksander.es>
-Date:   Fri, 18 Jun 2021 10:21:18 +0200
-Message-ID: <CAAP7ucKHXv_Wu7dpSmPpy1utMZV5iXGOjGg87AbcR4j+Xcz=WA@mail.gmail.com>
-Subject: Re: [PATCH net-next v2 2/3] net: wwan: Add RPMSG WWAN CTRL driver
-To:     Stephan Gerhold <stephan@gerhold.net>
-Cc:     "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Sergey Ryazanov <ryazanov.s.a@gmail.com>,
-        Johannes Berg <johannes.berg@intel.com>,
-        Leon Romanovsky <leon@kernel.org>,
-        M Chetan Kumar <m.chetan.kumar@intel.com>,
-        linuxwwan@intel.com, Ohad Ben-Cohen <ohad@wizery.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Network Development <netdev@vger.kernel.org>,
-        linux-remoteproc@vger.kernel.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        phone-devel@vger.kernel.org,
-        open list <linux-kernel@vger.kernel.org>,
-        ~postmarketos/upstreaming@lists.sr.ht
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <e83ec1ca9408f90c857ea9dcdc57b14d9037b03f.1622628333.git.matti.vaittinen@fi.rohmeurope.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hey Stephan,
+On 03/06/2021 07:40, Matti Vaittinen wrote:
+> There can be few cases when we need to shut-down the system in order to
+> protect the hardware. Currently this is done at least by the thermal core
+> when temperature raises over certain limit.
+> 
+> Some PMICs can also generate interrupts for example for over-current or
+> over-voltage, voltage drops, short-circuit, ... etc. On some systems
+> these are a sign of hardware failure and only thing to do is try to
+> protect the rest of the hardware by shutting down the system.
+> 
+> Add shut-down logic which can be used by all subsystems instead of
+> implementing the shutdown in each subsystem. The logic is stolen from
+> thermal_core with difference of using atomic_t instead of a mutex in
+> order to allow calls directly from IRQ context and changing the WARN()
+> to pr_emerg() as discussed here:
+> https://lore.kernel.org/lkml/YJuPwAZroVZ%2Fw633@alley/
+> and here:
+> https://lore.kernel.org/linux-iommu/20210331093104.383705-4-geert+renesas@glider.be/
+> 
+> Signed-off-by: Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>
 
-> +static const struct rpmsg_device_id rpmsg_wwan_ctrl_id_table[] = {
-> +       /* RPMSG channels for Qualcomm SoCs with integrated modem */
-> +       { .name = "DATA5_CNTL", .driver_data = WWAN_PORT_QMI },
-> +       { .name = "DATA4", .driver_data = WWAN_PORT_AT },
-> +       {},
-> +};
+Acked-by: Daniel Lezcano <daniel.lezcano@linaro.org>
 
-If I understand this properly, now these rpmsg backed control ports
-would be automatically exposed without the need of a userspace CLI
-tool to do that (rpmsgexport).
-
-And if I recall correctly, DATA5_CNTL and DATA4 were the only channels
-actively exported with udev actions using rpmsgexport in postmarketos,
-but that didn't mean someone could add additional rules to export
-other channels (i.e. as per the ModemManager port type hint rules,
-DATA[0-9]*_CNTL as QMI and DATA[0-9]* as AT, except for DATA40_CNTL
-and DATA_40 which are the USB tethering related ones).
-
-So, does this mean we're limiting the amount of channels exported to
-only one QMI control port and one AT control port? Not saying that's
-wrong, but maybe it makes sense to add a comment somewhere specifying
-that explicitly.
-
-Also, would it make sense to have some way to trigger the export of
-additional channels somehow via userspace? e.g. something like
-rpmsgexport but using the wwan subsystem. I'm not sure if that's a
-true need anywhere or just over-engineering the solution, truth be
-told.
 
 -- 
-Aleksander
-https://aleksander.es
+<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
+
+Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
+<http://twitter.com/#!/linaroorg> Twitter |
+<http://www.linaro.org/linaro-blog/> Blog
