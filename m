@@ -2,125 +2,150 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 838383AD481
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jun 2021 23:41:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EF3713AD485
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jun 2021 23:41:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234617AbhFRVnw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Jun 2021 17:43:52 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:18367 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232453AbhFRVnw (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Jun 2021 17:43:52 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1624052502; h=Content-Transfer-Encoding: Mime-Version:
- Content-Type: References: In-Reply-To: Date: Cc: To: From: Subject:
- Message-ID: Sender; bh=yXhmmp3HnP6JSHafnSyJemeEbnB6pdcDfRv16as6wsU=; b=bQ6XWuUFgvsswpheMAbugBrFU+MCs2/0rP0x5sESgY/P0DPR5vR6jg5ub0yw6e7+6iNY6YdR
- O1XGb2Jb//z7vjtls6Se1/JdjQDaAYf56RVsVm8qDCcNbyHBMUDngBLwq8F/87a6TGYyGpMk
- blWhG3cBW17+LFhX4o97TODuWkk=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
- 60cd1312e27c0cc77f90a8dc (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 18 Jun 2021 21:41:38
- GMT
-Sender: hemantk=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 1E07AC4338A; Fri, 18 Jun 2021 21:41:37 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from hemantk-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: hemantk)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 09D88C433D3;
-        Fri, 18 Jun 2021 21:41:35 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 09D88C433D3
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=hemantk@codeaurora.org
-Message-ID: <1624052489.10055.12.camel@codeaurora.org>
-Subject: Re: [PATCH 1/2] bus: mhi: Fix pm_state conversion to string
-From:   Hemant Kumar <hemantk@codeaurora.org>
-To:     Paul Davey <paul.davey@alliedtelesis.co.nz>,
-        Manivannan Sadhasivam <mani@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Date:   Fri, 18 Jun 2021 14:41:29 -0700
-In-Reply-To: <20210618033132.24839-2-paul.davey@alliedtelesis.co.nz>
-References: <20210618033132.24839-1-paul.davey@alliedtelesis.co.nz>
-         <20210618033132.24839-2-paul.davey@alliedtelesis.co.nz>
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.18.5.2-0ubuntu3.2 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        id S234635AbhFRVoF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Jun 2021 17:44:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58644 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234615AbhFRVoD (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 18 Jun 2021 17:44:03 -0400
+Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com [IPv6:2607:f8b0:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53FA2C061760
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jun 2021 14:41:53 -0700 (PDT)
+Received: by mail-oi1-x233.google.com with SMTP id q10so12067443oij.5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jun 2021 14:41:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=HEAuigaKYRmeY+WM5XLEktX0+rBVmYO66uMcr8Tpv8k=;
+        b=qKuYzrv6j4NzmU3yjTgh08cBfgpCmtwmdOO7VGZ7x0Wpyin21OENhZDu7wYnqoPHs0
+         HSf75CkxWeZDgoBEaPxChHYUt5+6a/LZp+UQfFNLL72O/1pm3JfnKtHcimfPf1wvGFsK
+         poM9I5TIeRpi+AimpmuU9P+DEjUlJCP5DvFRLmNJ3ohBlA38DBiGpq/qbXooI+RTeqE2
+         QEZBQesKMQb1KSBaVQP/GcKcH5JDJNePOIK0Tjz2UnVD/BrvTieA7bjgoJJ7mSpQILtx
+         pegolu/d0kmopoCrWrq8d+aWTjSm/xsplTaxmVBEc1adWHwRzLxv8kFO639cXh2f2XTX
+         R9Uw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=HEAuigaKYRmeY+WM5XLEktX0+rBVmYO66uMcr8Tpv8k=;
+        b=GApZPWZBw+L2n5cis0lpB4wLLxr3n6cJL1bowPq/yN78rG/GdmPSXm4LNc/HxoddmO
+         yEcD4Jal8XxKt5UHJGnp6alC18jB04V+EBHA2HAQuX6QPp97x4Ca6gd+O7lVzQcKU7Sn
+         eXcRcGmRrOk+UANOM9INbBIQIKebFCaVN/CS8IbdacOKDeMTt2g5qjju4vTFtzAXuega
+         UEeSreMaxgFKtBOSRW6CXZfwgDHRqNpfUnDlIxpEcEZEigL0Cvuasyjq4C2H1Qd34wgM
+         VL3f3RKaqNE0OnnFW7k3dIkOT98s+nKHqWhyqUHfhXI7/f5lLWJaJ3X1uTU0bg0NshCF
+         wySA==
+X-Gm-Message-State: AOAM533Lb8YWXmf6YWR4wcYDZACrNMJX/K9ufKEHyFZadEFjNEIcvq+H
+        AHPLABJj73KFFU3rCKM/pX6sTg==
+X-Google-Smtp-Source: ABdhPJw+EvH62tnCFbU9WxcWHYUQU643zznk/FLKiDJaeLJ8T0g0z4cu85QEzzdO6spdx+DKHd9AHQ==
+X-Received: by 2002:aca:de07:: with SMTP id v7mr15863677oig.8.1624052512628;
+        Fri, 18 Jun 2021 14:41:52 -0700 (PDT)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id 94sm2251023otj.33.2021.06.18.14.41.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 18 Jun 2021 14:41:51 -0700 (PDT)
+Date:   Fri, 18 Jun 2021 16:41:50 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     khsieh@codeaurora.org, robdclark@gmail.com, sean@poorly.run,
+        vkoul@kernel.org, agross@kernel.org, robh+dt@kernel.org,
+        devicetree@vger.kernel.org, abhinavk@codeaurora.org,
+        aravindh@codeaurora.org, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] arm64/dts/qcom/sc7180: Add Display Port dt node
+Message-ID: <YM0THrlJlv7ADW8w@builder.lan>
+References: <ef1879fa7ecfefaf0c70c7a4782240a9@codeaurora.org>
+ <YL6sY/1E5wLzMiP/@yoga>
+ <CAE-0n50-X03sMyJdsw7s=Ue0dWXBo=iHOc0HxDQm5yh2J-uS3A@mail.gmail.com>
+ <YL/uj+t+BFkII1Fh@yoga>
+ <CAE-0n50WP25kRQkWMVdDZGsZWBXwfbVSTFKyBLF7f8Mp3x2Wfg@mail.gmail.com>
+ <YL/wWdRs6e/eECiC@yoga>
+ <CAE-0n51GM65rZVJgXuHy6FerJorHeHKf2W31GijG8sDEhaX_KQ@mail.gmail.com>
+ <YL/41hWz8xB+jSeO@yoga>
+ <21dc5c9fc2efdc1a0ba924354bfd9d75@codeaurora.org>
+ <CAE-0n52J_mLsmXLS+skZn2u3k9dhn+GcHeXi0B2BeQyQxEUL9A@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAE-0n52J_mLsmXLS+skZn2u3k9dhn+GcHeXi0B2BeQyQxEUL9A@mail.gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Paul,
-On Fri, 2021-06-18 at 15:31 +1200, Paul Davey wrote:
-> On big endian architectures the mhi debugfs files which report pm
-> state
-> give "Invalid State" for all states.
+On Fri 18 Jun 15:49 CDT 2021, Stephen Boyd wrote:
+
+> Quoting khsieh@codeaurora.org (2021-06-10 09:54:05)
+> > On 2021-06-08 16:10, Bjorn Andersson wrote:
+> > > On Tue 08 Jun 17:44 CDT 2021, Stephen Boyd wrote:
+> > >
+> > >> Honestly I suspect the DP PHY is _not_ in the CX domain as CX is for
+> > >> digital logic. Probably the PLL is the hardware that has some minimum
+> > >> CX
+> > >> requirement, and that flows down into the various display clks like
+> > >> the
+> > >> link clk that actually clock the DP controller hardware. The mdss_gdsc
+> > >> probably gates CX for the display subsystem (mdss) so if we had proper
+> > >> corner aggregation logic we could indicate that mdss_gdsc is a child
+> > >> of
+> > >> the CX domain and then make requests from the DP driver for particular
+> > >> link frequencies on the mdss_gdsc and then have that bubble up to CX
+> > >> appropriately. I don't think any of that sort of code is in place
+> > >> though, right?
+> > >
+> > > I haven't checked sc7180, but I'm guessing that it's following the
+> > > other
+> > > modern platforms, where all the MDSS related pieces (including e.g.
+> > > dispcc) lives in the MMCX domain, which is separate from CX.
+> > >
+> > > So the parent of MDSS_GDSC should be MMCX, while Kuogee's answer (and
+> > > the dp-opp-table) tells us that the PLL lives in the CX domain.
 > 
-> Fix to_mhi_pm_state_str by using a local unsigned long as an
-> intemediate
-> to pass the state to find_last_bit to avoid endianness issues with
-> cast
-> from enum mhi_pm_state * to unsigned long *.
+> Isn't MMCX a "child" of CX? At least my understanding is that MMCX is
+> basically a GDSC that clamps all of multimedia hardware block power
+> logic so that the leakage is minimized when multimedia isn't in use,
+> i.e. the device is suspended. In terms of bumping up the voltage we have
+> to pin that on CX though as far as I know because that's the only power
+> domain that can actually change voltage, while MMCX merely gates that
+> voltage for multimedia.
 > 
-> Signed-off-by: Paul Davey <paul.davey@alliedtelesis.co.nz>
-> ---
->  drivers/bus/mhi/core/init.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/bus/mhi/core/init.c
-> b/drivers/bus/mhi/core/init.c
-> index c81b377fca8f..87cc0c449078 100644
-> --- a/drivers/bus/mhi/core/init.c
-> +++ b/drivers/bus/mhi/core/init.c
-> @@ -79,7 +79,8 @@ static const char * const mhi_pm_state_str[] = {
->  
->  const char *to_mhi_pm_state_str(enum mhi_pm_state state)
->  {
-> -	int index = find_last_bit((unsigned long *)&state, 32);
-> +	unsigned long tmp = state;
-> +	int index = find_last_bit((unsigned long *)&tmp, 32);
->  
->  	if (index >= ARRAY_SIZE(mhi_pm_state_str))
->  		return "Invalid State";
 
-Considering KASAN bugs reported in the past related to find_next_bit
-https://www.spinics.net/lists/alsa-devel/msg110946.html
+No, MMCX is a separate rail from CX, which powers the display blocks and
+is parent of MDSS_GDSC. But I see in rpmhpd that sc7180 is not one of
+these platforms, so I presume this means that the displayport controller
+thereby sits in MDSS_GDSC parented by CX.
 
-Since you are addressing the BE arch issue, would you please
-use this solution instead :-
+But in line with what you're saying, the naming of the supplies to the
+QMP indicates that the power for the PLLs is static. As such the only
+moving things would be the clock rates in the DP controller and as such
+that's what needs to scale the voltage.
 
-diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
-index 8f4cd4d..744b617 100644
---- a/drivers/bus/mhi/core/init.c
-+++ b/drivers/bus/mhi/core/init.c
-@@ -77,9 +77,12 @@ static const char * const mhi_pm_state_str[] = {
- 
- const char *to_mhi_pm_state_str(enum mhi_pm_state state)
- {
-+	int index;
- 
--	if (index >= ARRAY_SIZE(mhi_pm_state_str))
-+	if (state)
-+		index = __fls(state);
-+
-+	if (!state || index >= ARRAY_SIZE(mhi_pm_state_str))
- 		return "Invalid State";
- 
- 	return mhi_pm_state_str[index];
+So if the resources we're scaling is the clocks in the DP controller
+then the gist of the patch is correct. The only details I see is that
+the DP controller actually sits in MDSS_GDSC - while it should control
+the level of its parent (CX). Not sure if we can describe that in a
+simple way.
 
-Thanks,
-Hemant
 
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, a Linux Foundation Collaborative Project
+PS. Why does the node name of the opp-table have to be globally unique?
 
+Regards,
+Bjorn
+
+> > >
+> > >
+> > > PS. While this goes for the QMPs the DSI and eDP/DP PHYs (and PLLs)
+> > > seems to live in MMCX.
+> > >
+> > > Regards,
+> > > Bjorn
+> >
+> > Dp link clock rate is sourced from phy/pll (vco). However it is possible
+> > that different link clock rate
+> > are sourced from same vco (phy/pll) rate. Therefore I think CX rail
+> > voltage level is more proper to
+> > be decided base on link clock rate.
+> >
