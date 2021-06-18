@@ -2,150 +2,239 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7EB143AD0F9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jun 2021 19:10:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A6B163AD10C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jun 2021 19:18:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232605AbhFRRMu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Jun 2021 13:12:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53756 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231478AbhFRRMu (ORCPT
+        id S233680AbhFRRUa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Jun 2021 13:20:30 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:54363 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232564AbhFRRU3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Jun 2021 13:12:50 -0400
-Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB47FC06175F
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jun 2021 10:10:39 -0700 (PDT)
-Received: by mail-oi1-x22d.google.com with SMTP id s23so11249510oiw.9
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jun 2021 10:10:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=k3dCTAx8gsxYWttzI5w/2kvcBcr5PpHulEpa3/adkDQ=;
-        b=hnQvz5GcAocFRPbIJujGLDG4eBFw0HqJKa5nLawSj00bb7ilY+CXgSEpOVsDaedRSP
-         nvqR+bpdtepuJfc2w8FgKsknrZSuXM+qS60qhfJ8zPrNj/R6r9vV+OMzMONiBmKoCffY
-         Jfmxz/foT3Mz3YVSRyWptX1dxDavjGBpZxQnzIYO113u71JFlidz2qeIBF9Bhvv99PSL
-         lGXab/Wrk6sqw6ClhXyHnzhq4EJo6Dh+hLdSuor8FSTq49vpWerXomxVpX6iWVS8J4Bq
-         bQs+ejtuVOb9iMoGvlNSNuzrhuva7/cqiwDewUXOO50nviHqTfx+P7hd98w+IhXnlDkc
-         78Kw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=k3dCTAx8gsxYWttzI5w/2kvcBcr5PpHulEpa3/adkDQ=;
-        b=XaQVO8rYLwDF3mNveBW8n5H1ww6mx0BaA120H0BzutJDLwXw1T120IoTcLquhvMifU
-         TU8d+sgEzqcIHonhKENmW0UeV21I0hOsWpnRC2w/kEjI7QgkozVKpewvQOZcBtnA5TxD
-         RNKDRMQ0dghYm/h0/Vv+eR7DmZmYBVlwxqBlnmle2C/KSWniou3EEAd608uXqZOkfl1/
-         JVYe3fR6lHXynH+BtPdUPiHAr6Zh8kfdJHsdClj1axXCEIstaIHdmNO+0NQndE0AiRU7
-         mOoOhbW4oTZTBBEnhvaTlukBWRFcWa2L7+rBeTEKTOPNEgNYb8U3W/yfDWgwLZnY0WHg
-         H3Jw==
-X-Gm-Message-State: AOAM530hbHQnWCe8LOP9ucF5uwp6/pzMHYDsqMBzDeznML/L9nfuqt8e
-        dhlxQuHffV082CmlNFdhziShDw4jaWMGdg==
-X-Google-Smtp-Source: ABdhPJz2JqjVInbgOzS0fbJn/rC7XmTTYrZWwJ7ACJfaK4TzHnn0J4ERNDokznMNi1r4F8DruMQclw==
-X-Received: by 2002:aca:53ca:: with SMTP id h193mr15030468oib.69.1624036239039;
-        Fri, 18 Jun 2021 10:10:39 -0700 (PDT)
-Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id x29sm2066218ott.68.2021.06.18.10.10.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Jun 2021 10:10:38 -0700 (PDT)
-Date:   Fri, 18 Jun 2021 12:10:36 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 2/3] soc: qcom: geni: move struct geni_wrapper to
- header
-Message-ID: <YMzTjMNNCR9bsvfu@yoga>
-References: <20210618141839.3777270-1-vkoul@kernel.org>
- <20210618141839.3777270-3-vkoul@kernel.org>
+        Fri, 18 Jun 2021 13:20:29 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1624036700; h=Message-ID: References: In-Reply-To: Reply-To:
+ Subject: Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=tsDQ/x476xQMg+i6U9LMmZaf12qtvL+ZvKD0j04iFt4=;
+ b=EmqTCabH7rU0Dwb/4N5p4+IRV1CbifGrkaNnZywpiAnjksHeAhp0dpg8TYiGIDVFhVl/68Ou
+ JIBikqS7ULG4RCjoxhsbpHAI+CYW4jWnix4c2CSp+K7epqC7rWmLmYi/q9dLsYSFtvz/g2wu
+ 7ZCkE/3lrRZvxuUlB9FrlOfuYfg=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
+ 60ccd54ae27c0cc77f6aa01d (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 18 Jun 2021 17:18:02
+ GMT
+Sender: bbhatt=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 1F97DC433D3; Fri, 18 Jun 2021 17:18:01 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: bbhatt)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0FC43C433F1;
+        Fri, 18 Jun 2021 17:17:59 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210618141839.3777270-3-vkoul@kernel.org>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Fri, 18 Jun 2021 10:17:59 -0700
+From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
+        jhugo@codeaurora.org, linux-kernel@vger.kernel.org,
+        carl.yin@quectel.com, naveen.kumar@quectel.com,
+        loic.poulain@linaro.org
+Subject: Re: [PATCH v1 1/4] bus: mhi: core: Add support for processing
+ priority of event ring
+Organization: Qualcomm Innovation Center, Inc.
+Reply-To: bbhatt@codeaurora.org
+Mail-Reply-To: bbhatt@codeaurora.org
+In-Reply-To: <20210618070322.GO3682@workstation>
+References: <1623965435-30224-1-git-send-email-bbhatt@codeaurora.org>
+ <1623965435-30224-2-git-send-email-bbhatt@codeaurora.org>
+ <20210618070322.GO3682@workstation>
+Message-ID: <df7c735f0caeb449bbaa8a6e040ae556@codeaurora.org>
+X-Sender: bbhatt@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri 18 Jun 09:18 CDT 2021, Vinod Koul wrote:
+Hi Mani,
 
-> SPI & I2C geni driver needs to access struct geni_wrapper, so move it to
-> header. The drivers needs this header to find the geni device and use it
-> in dma mapping.
+On 2021-06-18 12:03 AM, Manivannan Sadhasivam wrote:
+> On Thu, Jun 17, 2021 at 02:30:32PM -0700, Bhaumik Bhatt wrote:
+>> From: Hemant Kumar <hemantk@codeaurora.org>
+>> 
+>> Event ring priorities are currently set to 1 and are unused.
+>> Default processing priority for event rings is set to regular
+>> tasklet. Controllers can choose to use high priority tasklet
+>> scheduling for certain event rings critical for processing such
+>> as ones transporting control information if they wish to avoid
+>> with system scheduling delays for those packets. In order to
+>> support these use cases, allow controllers to set event ring
+>> priority to high. This patch only adds support and does not
+>> enable usage of these priorities.
+>> 
+>> Signed-off-by: Hemant Kumar <hemantk@codeaurora.org>
+>> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+>> ---
+>>  drivers/bus/mhi/core/internal.h |  2 +-
+>>  drivers/bus/mhi/core/main.c     | 19 ++++++++++++++++---
+>>  include/linux/mhi.h             | 14 ++++++++++++--
+>>  3 files changed, 29 insertions(+), 6 deletions(-)
+>> 
+>> diff --git a/drivers/bus/mhi/core/internal.h 
+>> b/drivers/bus/mhi/core/internal.h
+>> index 672052f..666e102 100644
+>> --- a/drivers/bus/mhi/core/internal.h
+>> +++ b/drivers/bus/mhi/core/internal.h
+>> @@ -535,7 +535,7 @@ struct mhi_event {
+>>  	u32 intmod;
+>>  	u32 irq;
+>>  	int chan; /* this event ring is dedicated to a channel (optional) */
+>> -	u32 priority;
+>> +	enum mhi_er_priority priority;
 > 
-
-How does this differ from engine->dev->parent?
-
-> Using this method works for both DT and ACPI systems
+> Instead of using enum for priorities, can we just make use of the
+> existing "priority" field? Since the existing controllers set it to 
+> "1",
+> can we use "0" as the high priority?
 > 
-
-I was under the impression that the wrapper and engines are describe
-completely independently in ACPI, so we don't have a link between them.
-
-If that's not the case, then I guess that answers the above question
-about ->parent.
-
-Regards,
-Bjorn
-
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> ---
->  drivers/soc/qcom/qcom-geni-se.c | 14 --------------
->  include/linux/qcom-geni-se.h    | 14 ++++++++++++++
->  2 files changed, 14 insertions(+), 14 deletions(-)
+> This way we don't need to change the controller drivers.
 > 
-> diff --git a/drivers/soc/qcom/qcom-geni-se.c b/drivers/soc/qcom/qcom-geni-se.c
-> index fe666ea0c487..08d645b90ed3 100644
-> --- a/drivers/soc/qcom/qcom-geni-se.c
-> +++ b/drivers/soc/qcom/qcom-geni-se.c
-> @@ -78,20 +78,6 @@
->   */
->  
->  #define MAX_CLK_PERF_LEVEL 32
-> -#define NUM_AHB_CLKS 2
-> -
-> -/**
-> - * struct geni_wrapper - Data structure to represent the QUP Wrapper Core
-> - * @dev:		Device pointer of the QUP wrapper core
-> - * @base:		Base address of this instance of QUP wrapper core
-> - * @ahb_clks:		Handle to the primary & secondary AHB clocks
-> - * @to_core:		Core ICC path
-> - */
-> -struct geni_wrapper {
-> -	struct device *dev;
-> -	void __iomem *base;
-> -	struct clk_bulk_data ahb_clks[NUM_AHB_CLKS];
-> -};
->  
->  static const char * const icc_path_names[] = {"qup-core", "qup-config",
->  						"qup-memory"};
-> diff --git a/include/linux/qcom-geni-se.h b/include/linux/qcom-geni-se.h
-> index 5114e2144b17..5fda675c5cfe 100644
-> --- a/include/linux/qcom-geni-se.h
-> +++ b/include/linux/qcom-geni-se.h
-> @@ -38,6 +38,20 @@ struct geni_icc_path {
->  	unsigned int avg_bw;
->  };
->  
-> +#define NUM_AHB_CLKS 2
-> +
-> +/**
-> + * @struct geni_wrapper - Data structure to represent the QUP Wrapper Core
-> + * @dev:		Device pointer of the QUP wrapper core
-> + * @base:		Base address of this instance of QUP wrapper core
-> + * @ahb_clks:		Handle to the primary & secondary AHB clocks
-> + */
-> +struct geni_wrapper {
-> +	struct device *dev;
-> +	void __iomem *base;
-> +	struct clk_bulk_data ahb_clks[NUM_AHB_CLKS];
-> +};
-> +
->  /**
->   * struct geni_se - GENI Serial Engine
->   * @base:		Base Address of the Serial Engine's register block
-> -- 
-> 2.31.1
+I agree but the reasons to do the enum approach was to allow for future
+expansion of the handling if it becomes necessary and provide clarity 
+for
+the field.
+
+I can always do it this way for now and we can have the enum for another
+time but would prefer updating what we have now.
+>>  	enum mhi_er_data_type data_type;
+>>  	struct mhi_ring ring;
+>>  	struct db_cfg db_cfg;
+>> diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
+>> index 8ac73f9..bfc9776 100644
+>> --- a/drivers/bus/mhi/core/main.c
+>> +++ b/drivers/bus/mhi/core/main.c
+>> @@ -425,10 +425,11 @@ void mhi_create_devices(struct mhi_controller 
+>> *mhi_cntrl)
+>>  	}
+>>  }
+>> 
+>> -irqreturn_t mhi_irq_handler(int irq_number, void *dev)
+>> +irqreturn_t mhi_irq_handler(int irq_number, void *priv)
+>>  {
+>> -	struct mhi_event *mhi_event = dev;
+>> +	struct mhi_event *mhi_event = priv;
+>>  	struct mhi_controller *mhi_cntrl = mhi_event->mhi_cntrl;
+>> +	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+>>  	struct mhi_event_ctxt *er_ctxt =
+>>  		&mhi_cntrl->mhi_ctxt->er_ctxt[mhi_event->er_index];
+>>  	struct mhi_ring *ev_ring = &mhi_event->ring;
+>> @@ -454,8 +455,20 @@ irqreturn_t mhi_irq_handler(int irq_number, void 
+>> *dev)
+>> 
+>>  		if (mhi_dev)
+>>  			mhi_notify(mhi_dev, MHI_CB_PENDING_DATA);
+>> -	} else {
+>> +
+>> +		return IRQ_HANDLED;
+>> +	}
+>> +
+>> +	switch (mhi_event->priority) {
+>> +	case MHI_ER_PRIORITY_HI:
 > 
+> This could be,
+> 
+> 	/* Use high priority tasklet for high priority event ring */
+> 	if (!mhi_event->priority)
+> 		tasklet_hi_schedule(&mhi_event->task);
+> 	else
+> 		tasklet_schedule(&mhi_event->task);
+> 
+> Thanks,
+> Mani
+> 
+Yes, this works too if we keep the current non-enum approach.
+>> +		tasklet_hi_schedule(&mhi_event->task);
+>> +		break;
+>> +	case MHI_ER_PRIORITY_DEFAULT:
+>>  		tasklet_schedule(&mhi_event->task);
+>> +		break;
+>> +	default:
+>> +		dev_err(dev, "Skip event of unknown priority\n");
+>> +		break;
+>>  	}
+>> 
+>>  	return IRQ_HANDLED;
+>> diff --git a/include/linux/mhi.h b/include/linux/mhi.h
+>> index 86cea52..25ee312 100644
+>> --- a/include/linux/mhi.h
+>> +++ b/include/linux/mhi.h
+>> @@ -198,6 +198,16 @@ enum mhi_er_data_type {
+>>  };
+>> 
+>>  /**
+>> + * enum mhi_er_priority - Event ring processing priority
+>> + * @MHI_ER_PRIORITY_HI: processed by hi-priority tasklet
+>> + * @MHI_ER_PRIORITY_DEFAULT: processed by regular tasklet
+>> + */
+>> +enum mhi_er_priority {
+>> +	MHI_ER_PRIORITY_HI,
+>> +	MHI_ER_PRIORITY_DEFAULT,
+>> +};
+>> +
+>> +/**
+>>   * enum mhi_db_brst_mode - Doorbell mode
+>>   * @MHI_DB_BRST_DISABLE: Burst mode disable
+>>   * @MHI_DB_BRST_ENABLE: Burst mode enable
+>> @@ -250,7 +260,7 @@ struct mhi_channel_config {
+>>   * @irq_moderation_ms: Delay irq for additional events to be 
+>> aggregated
+>>   * @irq: IRQ associated with this ring
+>>   * @channel: Dedicated channel number. U32_MAX indicates a 
+>> non-dedicated ring
+>> - * @priority: Priority of this ring. Use 1 for now
+>> + * @priority: Processing priority of this ring.
+>>   * @mode: Doorbell mode
+>>   * @data_type: Type of data this ring will process
+>>   * @hardware_event: This ring is associated with hardware channels
+>> @@ -262,7 +272,7 @@ struct mhi_event_config {
+>>  	u32 irq_moderation_ms;
+>>  	u32 irq;
+>>  	u32 channel;
+>> -	u32 priority;
+>> +	enum mhi_er_priority priority;
+>>  	enum mhi_db_brst_mode mode;
+>>  	enum mhi_er_data_type data_type;
+>>  	bool hardware_event;
+>> --
+>> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
+>> Forum,
+>> a Linux Foundation Collaborative Project
+>> 
+Existing controllers would be fine.
+
+Do you think we have a problem if a new controller blindly inputs a "0" 
+in
+the priority not knowing the impact of it?
+
+If you give me a go ahead, I can make these changes in v2 and leave the 
+enum
+stuff out.
+
+Thanks,
+Bhaumik
+---
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
+Forum,
+a Linux Foundation Collaborative Project
