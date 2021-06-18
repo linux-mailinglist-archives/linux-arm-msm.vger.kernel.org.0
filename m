@@ -2,156 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 198003ACABF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jun 2021 14:24:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B14573ACB8C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jun 2021 15:00:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234011AbhFRM0n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Jun 2021 08:26:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45030 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232180AbhFRM0i (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Jun 2021 08:26:38 -0400
-Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 149D1C061760
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jun 2021 05:24:29 -0700 (PDT)
-Received: by mail-oi1-x234.google.com with SMTP id t40so10348539oiw.8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jun 2021 05:24:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=aleksander-es.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=zGMiRyRq//Dmyu1IU2B9k28pLofo2fcJNcRGLdmdXBI=;
-        b=QuJaZ1Jp0HJIGh8YZnu6ydU2L5dX6HOhfRdu9kDddNub/w55cjtKHA13sJUmZgiofz
-         GpLkWMkct9iFtf0ZUNsbaS3dqiRXl27SsCj6K69SitBlTCMauEaCPk+ZmuZCQVv202UG
-         nB2a/wI0WstcN/b2dvdjxoW1Uclz5jLN7LcARfwhywqO9uUu98j46bV11Yu6ZKIZNl+8
-         yGEtMKbXk+lAUBO4JS0deDefM02fwy6DiWyKOtqxePzwuIkV+8pPeEi9n8reQesDZvoj
-         N/igwfDpz1gGQcPfnXAmjc03cI5dAysuScVpPljRqMTo8j7Glq2cedV+19tAjZWkubyU
-         9ymw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=zGMiRyRq//Dmyu1IU2B9k28pLofo2fcJNcRGLdmdXBI=;
-        b=HrPpt+6CUeFtVXLOMQvej4j+qahTGQYRB5E2bMfs39asFWOTYs0Nj1FAdJXGIgGzBM
-         DYL350gayhiOHonOxUTg4OrrzH3fwZCHzZD5pbEu5yQSWkT0N9mNONrMPAWcmAXiP3ML
-         Ez47uCWsc0+6nHj+Udi14ye/zZAIkDxQSzm4Wsvl0ZB6OLvhHcQmPO/lU7MK4877dl9b
-         E/3PlnDO6G6/jHP5AJD7bsjGmeahZZjfTrGvMI4sUyj5DeXYhpZhhKY6eWkHpgzIEonp
-         wA3ZPFbYn5LdLLMsQOIZVJDcEbsJXMhacX4TlSCXX/8wn7k/2c/niteTbV1Hgatelc4S
-         Va8w==
-X-Gm-Message-State: AOAM532UHYJlhqowA3UBobb5p1b7I5/NypRaCbje2VHOWUfLAjFaf5YN
-        7YAPvfccm52EthcEjPhEzn1rc5daI9SPQSZFoZHx7g==
-X-Google-Smtp-Source: ABdhPJzbrSc8Z7nx9BQg7dqAKn++bJoithUarzQuKATTzxcv+74R8gd6Gfk/gduBg7VKKUuI1FMPDLFKHnZaFG3O5i0=
-X-Received: by 2002:a05:6808:13d5:: with SMTP id d21mr14723893oiw.114.1624019068209;
- Fri, 18 Jun 2021 05:24:28 -0700 (PDT)
+        id S231445AbhFRNCe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Jun 2021 09:02:34 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:22913 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230315AbhFRNCc (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 18 Jun 2021 09:02:32 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1624021223; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=tD4U/RzNqFGWpjdS5wnIrcWZDQlWRWp1xuR2I5dn0+o=;
+ b=Sq8cjU4qwP1Mr/QxLaKRe9PjnYeZzL+RF1DJkhYYWRl0LO6g2KbVVm40CwT0kqV5LvNV3Cbr
+ eJLnIB51ICrXgV2KdxXT9+t2EkVyTiwI6zCDd4aDzF2MXMWdo0rVqMlQRfVLczTPbcDWPBO+
+ anf8tM2jJZEkIopKv9S16Fx9Obs=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
+ 60cc98d3e27c0cc77f72ae58 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 18 Jun 2021 13:00:03
+ GMT
+Sender: pmaliset=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id A2BF0C43217; Fri, 18 Jun 2021 13:00:02 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: pmaliset)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id F3DDDC4338A;
+        Fri, 18 Jun 2021 13:00:01 +0000 (UTC)
 MIME-Version: 1.0
-References: <20210618075243.42046-1-stephan@gerhold.net> <20210618075243.42046-3-stephan@gerhold.net>
- <CAAP7ucKHXv_Wu7dpSmPpy1utMZV5iXGOjGg87AbcR4j+Xcz=WA@mail.gmail.com> <YMxx0XimZAEHmeUx@gerhold.net>
-In-Reply-To: <YMxx0XimZAEHmeUx@gerhold.net>
-From:   Aleksander Morgado <aleksander@aleksander.es>
-Date:   Fri, 18 Jun 2021 14:24:17 +0200
-Message-ID: <CAAP7uc+ckHLdMis0WQpuJSCJ0Ln7zBddEa-w3itRGykXsUiF2Q@mail.gmail.com>
-Subject: Re: [PATCH net-next v2 2/3] net: wwan: Add RPMSG WWAN CTRL driver
-To:     Stephan Gerhold <stephan@gerhold.net>
-Cc:     "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Sergey Ryazanov <ryazanov.s.a@gmail.com>,
-        Johannes Berg <johannes.berg@intel.com>,
-        Leon Romanovsky <leon@kernel.org>,
-        M Chetan Kumar <m.chetan.kumar@intel.com>,
-        linuxwwan@intel.com, Ohad Ben-Cohen <ohad@wizery.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Network Development <netdev@vger.kernel.org>,
-        linux-remoteproc@vger.kernel.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        phone-devel@vger.kernel.org,
-        open list <linux-kernel@vger.kernel.org>,
-        ~postmarketos/upstreaming@lists.sr.ht
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Fri, 18 Jun 2021 18:30:01 +0530
+From:   Prasad Malisetty <pmaliset@codeaurora.org>
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     agross@kernel.org, bhelgaas@google.com, bjorn.andersson@linaro.org,
+        lorenzo.pieralisi@arm.com, robh+dt@kernel.org,
+        svarbanov@mm-sol.com, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org, mgautam@codeaurora.org,
+        dianders@chromium.org, mka@chromium.org, sanm@codeaurora.org
+Subject: Re: [PATCH v2 3/4] PCIe: qcom: Add support to control pipe clk mux
+In-Reply-To: <CAE-0n50WxF_S7Zo4MhFqppjSELTFo7nOEtmCXJ4DoqvhF7kMQw@mail.gmail.com>
+References: <1622904059-21244-1-git-send-email-pmaliset@codeaurora.org>
+ <1622904059-21244-4-git-send-email-pmaliset@codeaurora.org>
+ <CAE-0n50WxF_S7Zo4MhFqppjSELTFo7nOEtmCXJ4DoqvhF7kMQw@mail.gmail.com>
+Message-ID: <915d51888c2577cc3266370bfda603e8@codeaurora.org>
+X-Sender: pmaliset@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hey,
+On 2021-06-06 02:56, Stephen Boyd wrote:
+> Quoting Prasad Malisetty (2021-06-05 07:40:58)
+>> In PCIe driver pipe-clk mux needs to switch between pipe_clk
+>> and XO for GDSC enable. This is done by setting pipe_clk mux
+>> as parent of pipe_clk after phy init.
+> 
+> Just to confirm, we can't set this parent via assigned-clock-parents
+> property in DT?
+> 
+>> 
+This clock setting need be done after phy init.
 
-> > So, does this mean we're limiting the amount of channels exported to
-> > only one QMI control port and one AT control port?
->
-> Yep, but I think:
->   - It's easy to extend this with additional ports later
->     if someone has a real use case for that.
->   - It's still possible to export via rpmsgexport.
->
+>> Signed-off-by: Prasad Malisetty <pmaliset@codeaurora.org>
+>> ---
+>>  drivers/pci/controller/dwc/pcie-qcom.c | 22 ++++++++++++++++++++++
+>>  1 file changed, 22 insertions(+)
+>> 
+>> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c 
+>> b/drivers/pci/controller/dwc/pcie-qcom.c
+>> index 8a7a300..5cbbea4 100644
+>> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+>> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+>> @@ -166,6 +166,9 @@ struct qcom_pcie_resources_2_7_0 {
+>>         struct regulator_bulk_data supplies[2];
+>>         struct reset_control *pci_reset;
+>>         struct clk *pipe_clk;
+>> +       struct clk *pipe_clk_mux;
+>> +       struct clk *pipe_ext_src;
+>> +       struct clk *ref_clk_src;
+>>  };
+>> 
+>>  union qcom_pcie_resources {
+>> @@ -1167,6 +1170,20 @@ static int qcom_pcie_get_resources_2_7_0(struct 
+>> qcom_pcie *pcie)
+>>         if (ret < 0)
+>>                 return ret;
+>> 
+>> +       if (of_device_is_compatible(dev->of_node, "qcom,pcie-sc7280")) 
+>> {
+>> +               res->pipe_clk_mux = devm_clk_get(dev, "pipe_src");
+>> +               if (IS_ERR(res->pipe_clk_mux))
+>> +                       return PTR_ERR(res->pipe_clk_mux);
+>> +
+>> +               res->pipe_ext_src = devm_clk_get(dev, "pipe_ext");
+>> +               if (IS_ERR(res->pipe_ext_src))
+>> +                       return PTR_ERR(res->pipe_ext_src);
+>> +
+>> +               res->ref_clk_src = devm_clk_get(dev, "ref");
+> 
+> Is this going to be used by any code?
+> 
+Yes, ref clock will be used in system suspend case. currently system 
+suspend changes are in under validation.
 
-Ah, that's good then, if we can have the rpmsgexport fallback, there
-shouldn't be any issue.
-
-> > Not saying that's wrong, but maybe it makes sense to add a comment
-> > somewhere specifying that explicitly.
->
-> Given that these channels were only found through reverse engineering,
-> saying that DATA*_CNTL/DATA* are fully equivalent QMI/AT ports is just
-> a theory, I have no proof for this. Generally these channels had some
-> fixed use case on the original Android system, for example DATA1 (AT)
-> seems to have been often used for Bluetooth Dial-Up Networking (DUN)
-> while DATA4 was often more general purpose.
->
-> Perhaps DATA* are all fully equivalent, independent AT channels at the
-> end, or perhaps DATA1/DATA4 behave slightly differently because there
-> were some special requirements for Bluetooth DUN. I have no way to tell.
-> And it can vary from device to device since we're stuck with
-> device-specific (and usually signed) firmware.
->
-> Another example: I have seen DATA11 on some devices, but it does not
-> seem to work as AT port for some reason, there is no reply at all
-> from the modem on that channel. Perhaps it needs to be activated
-> somehow, perhaps it's not an AT channel at all, I have no way to tell.
->
-> My point is: Here I'm only enabling what is proven to work on all
-> devices (used in postmarketOS for more than a year). I have insufficient
-> data to vouch for the reliability of any other channel. I cannot say if
-> the channels are really independent, or influence each other somehow.
->
-
-Fair enough; I think your approach is the correct one, just enable
-what's known to work.
-
-> As far as I understand, we currently do not have any use case for having
-> multiple QMI/AT ports exposed for ModemManager, right? And if someone
-> does have a use case, perhaps exposing them through the WWAN subsystem
-> is not even what they want, perhaps they want to forward them through
-> USB or something.
->
-
-There is no such usecase in MM; having one single QMI port in MM is
-more than enough, and having the extra AT port gives some
-functionalities that we don't yet support in QMI (e.g. voice call
-management). We don't gain anything extra by having more QMI or more
-AT ports at this moment.
-
-> > Also, would it make sense to have some way to trigger the export of
-> > additional channels somehow via userspace? e.g. something like
-> > rpmsgexport but using the wwan subsystem. I'm not sure if that's a
-> > true need anywhere or just over-engineering the solution, truth be
-> > told.
->
-> So personally I think we should keep this simple and limited to existing
-> use cases. If someone shows up with different requirements we can
-> investigate this further.
->
-
-Yes, I think I'm on that same boat.
-
-> If I send a v3 I will check if I can clarify this in the commit
-> message somewhat. I actually had something related in there but removed
-> it shortly before submitting the patch because I thought it's mostly
-> just speculation and the message was already quite long. Oh well :)
->
-
-Heh :) Thanks!
-
--- 
-Aleksander
-https://aleksander.es
+>> +               if (IS_ERR(res->ref_clk_src))
+>> +                       return PTR_ERR(res->ref_clk_src);
+>> +       }
+>> +
+>>         res->pipe_clk = devm_clk_get(dev, "pipe");
+>>         return PTR_ERR_OR_ZERO(res->pipe_clk);
+>>  }
+>> @@ -1255,6 +1272,11 @@ static void qcom_pcie_deinit_2_7_0(struct 
+>> qcom_pcie *pcie)
+>>  static int qcom_pcie_post_init_2_7_0(struct qcom_pcie *pcie)
+>>  {
+>>         struct qcom_pcie_resources_2_7_0 *res = &pcie->res.v2_7_0;
+>> +       struct dw_pcie *pci = pcie->pci;
+>> +       struct device *dev = pci->dev;
+>> +
+>> +       if (of_device_is_compatible(dev->of_node, "qcom,pcie-sc7280"))
+>> +               clk_set_parent(res->pipe_clk_mux, res->pipe_ext_src);
+>> 
+>>         return clk_prepare_enable(res->pipe_clk);
+>>  }
+>> --
+>> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
+>> Forum,
+>> a Linux Foundation Collaborative Project
+>> 
