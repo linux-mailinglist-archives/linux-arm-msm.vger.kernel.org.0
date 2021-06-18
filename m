@@ -2,165 +2,179 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 534213AC41E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jun 2021 08:45:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 032723AC449
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jun 2021 08:52:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232598AbhFRGr3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Jun 2021 02:47:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53602 "EHLO
+        id S230076AbhFRGzD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Jun 2021 02:55:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55242 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232519AbhFRGr3 (ORCPT
+        with ESMTP id S229816AbhFRGzD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Jun 2021 02:47:29 -0400
-Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63B8EC06175F
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Jun 2021 23:45:20 -0700 (PDT)
-Received: by mail-pl1-x632.google.com with SMTP id v12so4176760plo.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Jun 2021 23:45:20 -0700 (PDT)
+        Fri, 18 Jun 2021 02:55:03 -0400
+Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0616AC061574
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Jun 2021 23:52:55 -0700 (PDT)
+Received: by mail-pf1-x42b.google.com with SMTP id t8so2281384pfe.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Jun 2021 23:52:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=okAyK8M7Z6Ptw0beX4Y2yCnZuEPisK0I1+muMAhoiXg=;
-        b=zvf795snOW2u51TXtNSz7v4xK9goLJUViwWj0aEGNbsut7dP75ADSDlQh6oE7mcJ2S
-         KQxOAl4vPgYZpTfVuyt6MAnzP/7BgRrJu2/GVYEyZJwUT5IRHxkdr7Isvudt85dQ9zzh
-         xHAjB4fCPwghogU+JREfrotPHVsyLiXqyXfaCgPnWBYoF6vwyzckE1Odm7FiE+eEXMzO
-         TlsmJskTiSwW8U36LJKco/Ex63OSmZa/KZ5/IVsFNdhIdsGZdtLBTPaWEuUmPlyrW4Gc
-         X9XjDC3nw93l03ofs0zegJI5k8Wc2bWf1ivyX0i4zRjgUB7CVKGOqekAYHqlj3hFr3NL
-         PlRg==
+        bh=C/E72wXwfFfCRapC2zN330q2NYUTi5jcqbX7wM1lPbs=;
+        b=hrIK/8sEZPKx3gXLHqvVj/8/iomNH5D2w1BCs6t6xUMSCzJmPkP1pbKoI8CoAUSvLp
+         EsQyhbFub3t9nuw+w4wLpWWXSdYQ9yh/5LB+h6BSI7MKItymkFxb2tBUh7EmVaR5xSAV
+         G1G0xKU/dt+E1TbsvSnfy0+tXjIB0TfCYUr200W4Ek3qvELGppatJtMnjJ9hZgwo8gLz
+         DrVXOJFgBOQirqvZnqK1Gro9HK8z9qC3dWxnGrQaL9VwhqRiabLHTV911HHCr166e/81
+         tKTQB95nspJqZGBcMI/vjyHjlHrADrHCoyXNrI9Aw9wFJZLeEUueW+miI0R/7sQe0WVl
+         AnvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=okAyK8M7Z6Ptw0beX4Y2yCnZuEPisK0I1+muMAhoiXg=;
-        b=eJ3EG8f0MxVhQKjcNm8gT43Vzg4TpUEHyeNSFNSY/fTsYpslG7L7ge+dfY+ixudqid
-         0sNjVfdyeMX+55KQLxNqVnEbRQjRO9lBpFKJxIOt3d5RRddmpzmTNMXwJFhUUGLJdf6v
-         /hmD568U4CmWs51sxu80rVO/icWhPSxBOF22VJsw5yZqBdsA+CKsYEYuwcww9rv+4gOI
-         OBrIUNnfUHlSc192E/9Q1m4PUjRA2NX2+WdgTgoTgAIaHl1fM16YwKeRFe29YsSrZ89H
-         bPUdcxmuFtyqCtPhhrqAb4sMDy21g7Wfci7/bSrdSHBeBQRzNXanEFzLfeC+ZNyrq0R0
-         tcyQ==
-X-Gm-Message-State: AOAM532QAz656zUwM1FiYOTRrb0DTZJ6oQyT+ZLM4NFYu1shDFolOTAo
-        47GbDKggBBC1jYJF698gVGyi
-X-Google-Smtp-Source: ABdhPJw7hiGjytMs5xdZLxzGMXIBTPSrji65dpHP37DcFsR16C6/rcqV4IZNtVQLqLewkCrdfqATzw==
-X-Received: by 2002:a17:902:b188:b029:11b:1549:da31 with SMTP id s8-20020a170902b188b029011b1549da31mr3431833plr.7.1623998719794;
-        Thu, 17 Jun 2021 23:45:19 -0700 (PDT)
+        bh=C/E72wXwfFfCRapC2zN330q2NYUTi5jcqbX7wM1lPbs=;
+        b=B6gKBIMRMjJLzWJDzu1SiR5X/mS/hVv+F0u/SLqQCJkU7L//ugRiuOXV8BNI24qFZE
+         +LyZhXskMCkC4hWoTzW6ZIlcRLXzAEyPMQ86d9kd7InG/j/rduNvmg6cqwCjvrS8sMkD
+         oTzHtefOlwFON1fmMqYrJg6uZNzyo1bS7v3ylS8ZJKWqidZJI3Fp8m+//I09GDVf34/H
+         cUsefCYrJi7WABLZdH04I05+fh32SUvs8sePc82y2nvwEyTk/5o9u3CtXCqMHJrHgFtW
+         9hwhX3vhy5h0N6bNkXNd6l23g1KeMvmLGDz4fZFBw5WKkJ+PCtIQrLJCN2czdwEhtR/j
+         kTAw==
+X-Gm-Message-State: AOAM531ctt2XKeadBySnBFAItMmbihO249jao8sFqd9LBqU4OBPOqrw5
+        Uxqs14fxNMXkbtTdQ3Lo8j/x
+X-Google-Smtp-Source: ABdhPJw1yU0i0iPRw4ldFXv1xCcHN43Fn7awBcaXH2PKBfhuUGT6GMsoqYvAajmigKGQHwzX/domsQ==
+X-Received: by 2002:a05:6a00:1a88:b029:2ea:548:5ed4 with SMTP id e8-20020a056a001a88b02902ea05485ed4mr3710151pfv.47.1623999174440;
+        Thu, 17 Jun 2021 23:52:54 -0700 (PDT)
 Received: from workstation ([120.138.13.11])
-        by smtp.gmail.com with ESMTPSA id b18sm7026451pfb.131.2021.06.17.23.45.16
+        by smtp.gmail.com with ESMTPSA id v21sm7117303pfu.77.2021.06.17.23.52.51
         (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 17 Jun 2021 23:45:19 -0700 (PDT)
-Date:   Fri, 18 Jun 2021 12:15:14 +0530
+        Thu, 17 Jun 2021 23:52:53 -0700 (PDT)
+Date:   Fri, 18 Jun 2021 12:22:49 +0530
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     Bhaumik Bhatt <bbhatt@codeaurora.org>
-Cc:     Kalle Valo <kvalo@codeaurora.org>, linux-arm-msm@vger.kernel.org,
-        hemantk@codeaurora.org, jhugo@codeaurora.org,
-        linux-kernel@vger.kernel.org, loic.poulain@linaro.org,
-        linux-wireless@vger.kernel.org, ath11k@lists.infradead.org,
-        bbhatt=codeaurora.org@codeaurora.org, lilic@codeaurora.org,
-        kangxu@codeaurora.org
-Subject: Re: [PATCH v4 4/6] ath11k: set register access length for MHI driver
-Message-ID: <20210618064514.GM3682@workstation>
-References: <1620330705-40192-1-git-send-email-bbhatt@codeaurora.org>
- <1620330705-40192-5-git-send-email-bbhatt@codeaurora.org>
- <20210521135152.GL70095@thinkpad>
- <87h7i0juxt.fsf@codeaurora.org>
- <37184e28dcc952ba9ad5ed0dc2c1a6da@codeaurora.org>
- <6ed9fe90f40e5f8151d3a028abf0acd1@codeaurora.org>
+Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
+        jhugo@codeaurora.org, linux-kernel@vger.kernel.org,
+        carl.yin@quectel.com, naveen.kumar@quectel.com,
+        loic.poulain@linaro.org
+Subject: Re: [PATCH] bus: mhi: pci_generic: Apply no-op for wake using inband
+ wake support flag
+Message-ID: <20210618065249.GN3682@workstation>
+References: <1623954233-32092-1-git-send-email-bbhatt@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <6ed9fe90f40e5f8151d3a028abf0acd1@codeaurora.org>
+In-Reply-To: <1623954233-32092-1-git-send-email-bbhatt@codeaurora.org>
 User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jun 16, 2021 at 10:38:01AM -0700, Bhaumik Bhatt wrote:
-> Hi Kalle/Mani,
+On Thu, Jun 17, 2021 at 11:23:53AM -0700, Bhaumik Bhatt wrote:
+> Devices such as SDX24 do not have the provision for inband wake
+> doorbell in the form of channel 127. Newer devices such as SDX55
+> or SDX65 have it by default. Ensure the functionality is used
+> based on this such that device wake stays held when a client
+> driver uses mhi_device_get() API or the equivalent debugfs entry.
 > 
-> On 2021-06-14 10:49 AM, Bhaumik Bhatt wrote:
-> > Hi Kalle,
-> > 
-> > On 2021-06-14 09:02 AM, Kalle Valo wrote:
-> > > Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> writes:
-> > > 
-> > > > On Thu, May 06, 2021 at 12:51:43PM -0700, Bhaumik Bhatt wrote:
-> > > > > MHI driver requires register space length to add range checks and
-> > > > > prevent memory region accesses outside of that for MMIO space.
-> > > > > Set it before registering the MHI controller.
-> > > > > 
-> > > > > Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
-> > > > > Reviewed-by: Hemant Kumar <hemantk@codeaurora.org>
-> > > > 
-> > > > Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > > > 
-> > > > Kalle, should we do immutable branch for this patch or I can
-> > > > pick it up via MHI
-> > > > tree (if there are no other patches expected from ath11k for
-> > > > this controller)?
-> > > 
-> > > I'm not expecting any conflicts with this, and if there are, they
-> > > should
-> > > be easy for Stephen or Linus to fix. So it's easiest to route this via
-> > > your tree. But I'm not giving my ack yet, see below.
-> > > 
-> > > I'm worried that this patchset breaks bisect. Every patch in the
-> > > patchset should not break existing functionality, what if only patches
-> > > 1-3 are included in the tree but not patch 4? Wouldn't ath11k be
-> > > broken
-> > > then? I didn't review the whole patchset, but I suspect the fix is to
-> > > include the ath11k change in the actual mhi patch which changes the
-> > > functionality. So that way we would not have a separate ath11k patch
-> > > at
-> > > all.
-> > > 
-> > > Also I'm not able to test this patchset at the moment. Can someone
-> > > else
-> > > help and do a quick test with QCA6390 to verify these doesn't break
-> > > ath11k?
-> > 
-> > I have requested someone to try and test this patch series with QCA6390.
-> > 
-> > I or the testers will get back to you with the test results when they
-> > are
-> > available.
-> > 
-> > As far as your concerns go, you can choose to pick patches 1-3 and that
-> > would
-> > be just fine.
-> > 
-> > Things will break if patchset 4 is _not_ in place with patchset 6 being
-> > part of
-> > the tree.
-> > 
-> > It would, however, be nice to pick the whole series instead and ensure
-> > that
-> > the functionality MHI introduces for boot-up sanity is in place for any
-> > controllers such as ath11k.
-> > 
-> > Thanks,
-> > Bhaumik
-> > ---
-> > The Qualcomm Innovation Center, Inc. is a member of the Code Aurora
-> > Forum,
-> > a Linux Foundation Collaborative Project
+> Fixes: e3e5e6508fc1 ("bus: mhi: pci_generic: No-Op for device_wake operations")
+> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+> ---
+>  drivers/bus/mhi/pci_generic.c | 26 ++++++++++++++++++--------
+>  1 file changed, 18 insertions(+), 8 deletions(-)
 > 
-> Just got confirmation that the whole patch series was tested for functional
-> sanity on
-> Dell E7590 + QCA6390 with Ubuntu18.04 and patch 4/6 is also good to go.
-> 
-> Can you please ACK and pick up this series?
-> 
+> diff --git a/drivers/bus/mhi/pci_generic.c b/drivers/bus/mhi/pci_generic.c
+> index d84b743..31360a2 100644
+> --- a/drivers/bus/mhi/pci_generic.c
+> +++ b/drivers/bus/mhi/pci_generic.c
+> @@ -32,6 +32,7 @@
+>   * @edl: emergency download mode firmware path (if any)
+>   * @bar_num: PCI base address register to use for MHI MMIO register space
+>   * @dma_data_width: DMA transfer word size (32 or 64 bits)
+> + * @no_inband_wake: Devices without inband wake support (such as sdx24)
 
-I can pick the series but I need an Ack from Kalle since it contains
-ath11k changes. Kalle, can you please Ack this patch?
-
-I'm planning to send the PR by this weekend.
+I'd rather like this field to be "inband_wake" and set to false/true
+based on the capability of the devices. Rest looks good.
 
 Thanks,
 Mani
 
-> Thanks,
-> Bhaumik
-> ---
+>   */
+>  struct mhi_pci_dev_info {
+>  	const struct mhi_controller_config *config;
+> @@ -40,6 +41,7 @@ struct mhi_pci_dev_info {
+>  	const char *edl;
+>  	unsigned int bar_num;
+>  	unsigned int dma_data_width;
+> +	bool no_inband_wake;
+>  };
+>  
+>  #define MHI_CHANNEL_CONFIG_UL(ch_num, ch_name, el_count, ev_ring) \
+> @@ -242,7 +244,8 @@ static const struct mhi_pci_dev_info mhi_qcom_sdx65_info = {
+>  	.edl = "qcom/sdx65m/edl.mbn",
+>  	.config = &modem_qcom_v1_mhiv_config,
+>  	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+> -	.dma_data_width = 32
+> +	.dma_data_width = 32,
+> +	.no_inband_wake = false
+>  };
+>  
+>  static const struct mhi_pci_dev_info mhi_qcom_sdx55_info = {
+> @@ -251,7 +254,8 @@ static const struct mhi_pci_dev_info mhi_qcom_sdx55_info = {
+>  	.edl = "qcom/sdx55m/edl.mbn",
+>  	.config = &modem_qcom_v1_mhiv_config,
+>  	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+> -	.dma_data_width = 32
+> +	.dma_data_width = 32,
+> +	.no_inband_wake = false
+>  };
+>  
+>  static const struct mhi_pci_dev_info mhi_qcom_sdx24_info = {
+> @@ -259,7 +263,8 @@ static const struct mhi_pci_dev_info mhi_qcom_sdx24_info = {
+>  	.edl = "qcom/prog_firehose_sdx24.mbn",
+>  	.config = &modem_qcom_v1_mhiv_config,
+>  	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+> -	.dma_data_width = 32
+> +	.dma_data_width = 32,
+> +	.no_inband_wake = true
+>  };
+>  
+>  static const struct mhi_channel_config mhi_quectel_em1xx_channels[] = {
+> @@ -301,7 +306,8 @@ static const struct mhi_pci_dev_info mhi_quectel_em1xx_info = {
+>  	.edl = "qcom/prog_firehose_sdx24.mbn",
+>  	.config = &modem_quectel_em1xx_config,
+>  	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+> -	.dma_data_width = 32
+> +	.dma_data_width = 32,
+> +	.no_inband_wake = true
+>  };
+>  
+>  static const struct mhi_channel_config mhi_foxconn_sdx55_channels[] = {
+> @@ -339,7 +345,8 @@ static const struct mhi_pci_dev_info mhi_foxconn_sdx55_info = {
+>  	.edl = "qcom/sdx55m/edl.mbn",
+>  	.config = &modem_foxconn_sdx55_config,
+>  	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+> -	.dma_data_width = 32
+> +	.dma_data_width = 32,
+> +	.no_inband_wake = false
+>  };
+>  
+>  static const struct pci_device_id mhi_pci_id_table[] = {
+> @@ -640,9 +647,12 @@ static int mhi_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+>  	mhi_cntrl->status_cb = mhi_pci_status_cb;
+>  	mhi_cntrl->runtime_get = mhi_pci_runtime_get;
+>  	mhi_cntrl->runtime_put = mhi_pci_runtime_put;
+> -	mhi_cntrl->wake_get = mhi_pci_wake_get_nop;
+> -	mhi_cntrl->wake_put = mhi_pci_wake_put_nop;
+> -	mhi_cntrl->wake_toggle = mhi_pci_wake_toggle_nop;
+> +
+> +	if (info->no_inband_wake) {
+> +		mhi_cntrl->wake_get = mhi_pci_wake_get_nop;
+> +		mhi_cntrl->wake_put = mhi_pci_wake_put_nop;
+> +		mhi_cntrl->wake_toggle = mhi_pci_wake_toggle_nop;
+> +	}
+>  
+>  	err = mhi_pci_claim(mhi_cntrl, info->bar_num, DMA_BIT_MASK(info->dma_data_width));
+>  	if (err)
+> -- 
 > The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
 > a Linux Foundation Collaborative Project
+> 
