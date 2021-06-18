@@ -2,69 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 415CA3AD394
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jun 2021 22:25:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 166733AD3DE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jun 2021 22:49:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233005AbhFRU1x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Jun 2021 16:27:53 -0400
-Received: from mail-oi1-f180.google.com ([209.85.167.180]:36709 "EHLO
-        mail-oi1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230430AbhFRU1w (ORCPT
+        id S234112AbhFRUvr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Jun 2021 16:51:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46798 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233461AbhFRUvq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Jun 2021 16:27:52 -0400
-Received: by mail-oi1-f180.google.com with SMTP id r16so11887359oiw.3;
-        Fri, 18 Jun 2021 13:25:42 -0700 (PDT)
+        Fri, 18 Jun 2021 16:51:46 -0400
+Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBB38C061574
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jun 2021 13:49:36 -0700 (PDT)
+Received: by mail-ot1-x32e.google.com with SMTP id i12-20020a05683033ecb02903346fa0f74dso10958845otu.10
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jun 2021 13:49:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=+oLF+0y8D03kq1ljHTaiFTX3oW0ul23QTjCdRgRqCow=;
+        b=CeAachcWpT6uB+4FTIdJRCj9tyRHmQWcuzvtygJGAiFVjW1uv5cFOsgffy7cvhCZyM
+         4v3Pn2Zv4lsYe6XG4fjdrDtFDwgQ4MnMlT+6QreBF/Cs4F3M/yiPjPPktq7KcqBX6cdR
+         D7dqGEP3/Ved9TXnS0JDwkxtpItWZO+HXK/kw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=WVZFxq0uwab/s1SzBZaz7rJYhU+TMH4wQVGntZpYwYw=;
-        b=T5ObHyUloSllXMRsOZg8bOOQ6+1Xg6YVC3e90a0taQeYgj7CuAbyY61IVnPGJeTDPA
-         bWMjdn4I0xLJUBkOa97omtfwPeihAskdBB1KNtlXuMOTP+ehraFA+lXCC8z1hpBSjLMD
-         er1OfitWK96VPNtntwzoEpBCXNPnECAzhOi8Wq1Luh845+9qmsjIWAniULA5ypUfutpb
-         WWE1iqWfo2R0k4icuacEwvE1AXqdVnrUoLlxrqAfyzX+cxHeQB2nmeUJzbw1b3K9edMB
-         jB3jZz096ktlNMmOFdhyhOKrun6gSpVAB4XUNcxfWMK+WrK+Be5iAbGyFkxzmA4FnQOw
-         v1ZQ==
-X-Gm-Message-State: AOAM5301Fr/bpa7np/32y9tChoBvegqO9aWYn5wT5es3Vgakxztsz37A
-        QyB40wHEdZUZQvI4nYr/sw==
-X-Google-Smtp-Source: ABdhPJxFKFsQb927hYOCKVZGkpQgWv9cj77tBwO/Ytkk9skPRgKEjJO81E0tgzUBO0Djq6r6Drc1ew==
-X-Received: by 2002:a05:6808:141:: with SMTP id h1mr8789395oie.15.1624047941887;
-        Fri, 18 Jun 2021 13:25:41 -0700 (PDT)
-Received: from robh.at.kernel.org ([64.188.179.248])
-        by smtp.gmail.com with ESMTPSA id p65sm2037712oop.0.2021.06.18.13.25.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Jun 2021 13:25:41 -0700 (PDT)
-Received: (nullmailer pid 2819508 invoked by uid 1000);
-        Fri, 18 Jun 2021 20:25:35 -0000
-Date:   Fri, 18 Jun 2021 14:25:35 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Sibi Sankar <sibis@codeaurora.org>
-Cc:     ulf.hansson@linaro.org, rjw@rjwysocki.net,
-        linux-kernel@vger.kernel.org, swboyd@chromium.org, ohad@wizery.com,
-        mathieu.poirier@linaro.org, rishabhb@codeaurora.org,
-        dianders@chromium.org, sidgup@codeaurora.org, agross@kernel.org,
-        devicetree@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        bjorn.andersson@linaro.org, robh+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2 12/13] dt-bindings: msm/dp: Remove aoss-qmp header
-Message-ID: <20210618202535.GA2819457@robh.at.kernel.org>
-References: <1623080372-13521-1-git-send-email-sibis@codeaurora.org>
- <1623080372-13521-13-git-send-email-sibis@codeaurora.org>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=+oLF+0y8D03kq1ljHTaiFTX3oW0ul23QTjCdRgRqCow=;
+        b=JtHg0ha3Dd6Dkynm6Gx8Pmk/KEUY3c9FaUj8wIXWqM40uBKJKPAK8tpU66m+pj9IJj
+         l+2BCv/Ny6QTkBiKcQLsKyxXhVrIdgGKYGz0WUCWD+MSaLAqZbDsX2dmYeckmCxLIl9R
+         LtJ0nVSr0DABKcpcgTTGT0T4bFKcTO4BcFjSNdrKfeoLXLqpbu+aXjv+qg3oivUHY2sA
+         0RNunNDGFj+zGl34Vjn6HRBqkOOwxUiAGChrbw0ihzEkmxdOWVGFkpK85VHALuadD7p6
+         swPbAk+9at1zBKGodPFMWRqJQeXrurA9yayQPcVn2Fpy8q2JOXmT3srYhTx5g+Pcetyg
+         4Ysg==
+X-Gm-Message-State: AOAM5317I0l5PBgVctE/uVmprSUPqm0NXi+cF6u2jUSaVcwA86DQJPCG
+        VuvtlhLiTneqpOGIjlv7G4i2XAhuds7eb15eBQOYbw==
+X-Google-Smtp-Source: ABdhPJwtCvyzMkiK+AZo4n1VYcARAx9a6C/WjhtCuramvnKscLd3N8c0IF0P9iekwu92e+H3BDn7CiYlbM4Xev4cSEo=
+X-Received: by 2002:a9d:624d:: with SMTP id i13mr2752232otk.34.1624049376379;
+ Fri, 18 Jun 2021 13:49:36 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 18 Jun 2021 13:49:35 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1623080372-13521-13-git-send-email-sibis@codeaurora.org>
+In-Reply-To: <21dc5c9fc2efdc1a0ba924354bfd9d75@codeaurora.org>
+References: <YLkI/6ItCz+SbbuJ@yoga> <ef1879fa7ecfefaf0c70c7a4782240a9@codeaurora.org>
+ <YL6sY/1E5wLzMiP/@yoga> <CAE-0n50-X03sMyJdsw7s=Ue0dWXBo=iHOc0HxDQm5yh2J-uS3A@mail.gmail.com>
+ <YL/uj+t+BFkII1Fh@yoga> <CAE-0n50WP25kRQkWMVdDZGsZWBXwfbVSTFKyBLF7f8Mp3x2Wfg@mail.gmail.com>
+ <YL/wWdRs6e/eECiC@yoga> <CAE-0n51GM65rZVJgXuHy6FerJorHeHKf2W31GijG8sDEhaX_KQ@mail.gmail.com>
+ <YL/41hWz8xB+jSeO@yoga> <21dc5c9fc2efdc1a0ba924354bfd9d75@codeaurora.org>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.9.1
+Date:   Fri, 18 Jun 2021 13:49:35 -0700
+Message-ID: <CAE-0n52J_mLsmXLS+skZn2u3k9dhn+GcHeXi0B2BeQyQxEUL9A@mail.gmail.com>
+Subject: Re: [PATCH v2] arm64/dts/qcom/sc7180: Add Display Port dt node
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>, khsieh@codeaurora.org
+Cc:     robdclark@gmail.com, sean@poorly.run, vkoul@kernel.org,
+        agross@kernel.org, robh+dt@kernel.org, devicetree@vger.kernel.org,
+        abhinavk@codeaurora.org, aravindh@codeaurora.org,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 07 Jun 2021 21:09:31 +0530, Sibi Sankar wrote:
-> Remove the unused aoss-qmp header from the list of includes.
-> 
-> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
-> ---
->  Documentation/devicetree/bindings/display/msm/dp-controller.yaml | 1 -
->  1 file changed, 1 deletion(-)
-> 
+Quoting khsieh@codeaurora.org (2021-06-10 09:54:05)
+> On 2021-06-08 16:10, Bjorn Andersson wrote:
+> > On Tue 08 Jun 17:44 CDT 2021, Stephen Boyd wrote:
+> >
+> >> Honestly I suspect the DP PHY is _not_ in the CX domain as CX is for
+> >> digital logic. Probably the PLL is the hardware that has some minimum
+> >> CX
+> >> requirement, and that flows down into the various display clks like
+> >> the
+> >> link clk that actually clock the DP controller hardware. The mdss_gdsc
+> >> probably gates CX for the display subsystem (mdss) so if we had proper
+> >> corner aggregation logic we could indicate that mdss_gdsc is a child
+> >> of
+> >> the CX domain and then make requests from the DP driver for particular
+> >> link frequencies on the mdss_gdsc and then have that bubble up to CX
+> >> appropriately. I don't think any of that sort of code is in place
+> >> though, right?
+> >
+> > I haven't checked sc7180, but I'm guessing that it's following the
+> > other
+> > modern platforms, where all the MDSS related pieces (including e.g.
+> > dispcc) lives in the MMCX domain, which is separate from CX.
+> >
+> > So the parent of MDSS_GDSC should be MMCX, while Kuogee's answer (and
+> > the dp-opp-table) tells us that the PLL lives in the CX domain.
 
-Acked-by: Rob Herring <robh@kernel.org>
+Isn't MMCX a "child" of CX? At least my understanding is that MMCX is
+basically a GDSC that clamps all of multimedia hardware block power
+logic so that the leakage is minimized when multimedia isn't in use,
+i.e. the device is suspended. In terms of bumping up the voltage we have
+to pin that on CX though as far as I know because that's the only power
+domain that can actually change voltage, while MMCX merely gates that
+voltage for multimedia.
+
+> >
+> >
+> > PS. While this goes for the QMPs the DSI and eDP/DP PHYs (and PLLs)
+> > seems to live in MMCX.
+> >
+> > Regards,
+> > Bjorn
+>
+> Dp link clock rate is sourced from phy/pll (vco). However it is possible
+> that different link clock rate
+> are sourced from same vco (phy/pll) rate. Therefore I think CX rail
+> voltage level is more proper to
+> be decided base on link clock rate.
+>
