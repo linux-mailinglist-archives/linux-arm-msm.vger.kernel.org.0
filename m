@@ -2,142 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B3DCB3AC1C2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jun 2021 06:05:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4CC6C3AC1E6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jun 2021 06:18:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229877AbhFREHj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Jun 2021 00:07:39 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:19731 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229466AbhFREHj (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Jun 2021 00:07:39 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1623989130; h=Content-Transfer-Encoding: MIME-Version:
- References: In-Reply-To: Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=k4HKuaL//VdF5gQIL9VhYemVHmDBvisX1u+MgvW5TN4=; b=OaiAm464chI6fiUWd+BoMSTtK/ENZsTEPsl3nNvv0p+T3We7SZUK3ViTv12e5yen5gSmr5w+
- iWUtHMg4LuBl+pxq0KuAvwxgs5KQs4SAAqw6QAla4iQgRyvrCFFyGgOK3uvrVanAJFq6DMVR
- uX/BZ6dq3d29QY56dOCfkMgnxcE=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
- 60cc1b6fb6ccaab753fad1d6 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 18 Jun 2021 04:05:03
- GMT
-Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 9B415C43217; Fri, 18 Jun 2021 04:05:03 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
-Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id D7F05C433D3;
-        Fri, 18 Jun 2021 04:04:59 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org D7F05C433D3
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=saiprakash.ranjan@codeaurora.org
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     saiprakash.ranjan@codeaurora.org, vdumpa@nvidia.com
-Cc:     iommu@lists.linux-foundation.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        robin.murphy@arm.com, treding@nvidia.com, will@kernel.org
-Subject: Re: [PATCH] iommu/io-pgtable-arm: Optimize partial walk flush for large scatter-gather list
-Date:   Fri, 18 Jun 2021 09:34:44 +0530
-Message-Id: <20210618040444.17270-1-saiprakash.ranjan@codeaurora.org>
-X-Mailer: git-send-email 2.29.0
-In-Reply-To: <5eb5146ab51a8fe0b558680d479a26cd@codeaurora.org>
-References: <5eb5146ab51a8fe0b558680d479a26cd@codeaurora.org>
+        id S230447AbhFREUs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Jun 2021 00:20:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49668 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230419AbhFREUr (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 18 Jun 2021 00:20:47 -0400
+Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE14EC061760
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Jun 2021 21:18:37 -0700 (PDT)
+Received: by mail-pf1-x436.google.com with SMTP id t8so2025193pfe.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Jun 2021 21:18:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=A7veP2+rvJhREGxZ7bA2MKokj7fOMWmnWBdu22Gjixs=;
+        b=plDYr7URR38B4jGYMsxSURthpcFrTWdDpgkJZiOYCuF4iliXpJ56Mn3TIhtq6Hj3Ko
+         DcJqLB0QmDx+XU5q97EHRY8Z+3l44WgV8KsrWl60QLCgykxwjoenpSzt8r2PsJABEnbV
+         jnUqsGTAemSR2cNPF1fsD5PWJxUjOSGKN7tNFoyi8QHGOfI8Oe9DhyP6lplAOsox9rYM
+         ToHvttUNsT80qTybhX19aohlNodJS1Z9II5W3Ul1On1PDhnZ8W8YRoo7Uz+uitlVLP7s
+         NQ8zh9QQXrgGvYeR/5Vu3hiRaPODOYGYDR6en/M34Md65klj78jhxoKpPolvM3Pjk9BT
+         KtZQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=A7veP2+rvJhREGxZ7bA2MKokj7fOMWmnWBdu22Gjixs=;
+        b=c7PZ83I5hh/RxrV4/QPkk3l6XdzAqmcM1uWV3XuLeddW928GoZTk/YF7Rsz0rvmZ4X
+         cs5f3tqfURZa8lqLDjv/aZTUy1YmMgj6hAejK1GrrEVCG/NVTRp+7ILXdTLo5MJUHG4u
+         BsHUs00MWVeHOGtszz7d5ZxW99iKKfUn53Q4wN7A3U5XFW0YasCZDJSkVuqBkX9ycnnw
+         CMM61w7qAwWk+mgL0rDmS/OZ/MCPME6zAoNXdCmQpdxBRexQRLSY04cU26wSCzrAcCPB
+         TZ4P+XncyjmJm0pmTIGQzofzQJYQZVwao+mmOOkAAFP0jnVXJwKpvYYpaQYqbcVZ3QWu
+         e2XA==
+X-Gm-Message-State: AOAM5302lh2yCUllsf24GKY/esbHK/5HE1FdxCLOSY3RvJ5uRZRwRvjS
+        FJDSCejxTne1yVw/sRn2J9CG
+X-Google-Smtp-Source: ABdhPJz5nIO0obUzGfQWU2OY7LlyNmGKp7Hy07h54AzlLuFHm3eedis+rYyTYKWqhR+BwvY3pYmALw==
+X-Received: by 2002:a63:3246:: with SMTP id y67mr8193050pgy.244.1623989917247;
+        Thu, 17 Jun 2021 21:18:37 -0700 (PDT)
+Received: from workstation ([120.138.13.238])
+        by smtp.gmail.com with ESMTPSA id s13sm6431308pjm.34.2021.06.17.21.18.33
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 17 Jun 2021 21:18:35 -0700 (PDT)
+Date:   Fri, 18 Jun 2021 09:48:31 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Sibi Sankar <sibis@codeaurora.org>
+Cc:     bjorn.andersson@linaro.org, jassisinghbrar@gmail.com,
+        agross@kernel.org, rananta@codeaurora.org, vnkgutta@codeaurora.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        stable@vger.kernel.org
+Subject: Re: [PATCH] mailbox: qcom-ipcc: Fix IPCC mbox channel exhaustion
+Message-ID: <20210618041831.GA3682@workstation>
+References: <1623865378-1943-1-git-send-email-sibis@codeaurora.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1623865378-1943-1-git-send-email-sibis@codeaurora.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-06-15 17:21, Sai Prakash Ranjan wrote:
-> Hi Krishna,
+On Wed, Jun 16, 2021 at 11:12:58PM +0530, Sibi Sankar wrote:
+> Fix IPCC (Inter-Processor Communication Controller) channel exhaustion by
+> setting the channel private data to NULL on mbox shutdown.
 > 
-> On 2021-06-14 23:18, Krishna Reddy wrote:
->>> Right but we won't know until we profile the specific usecases or try them in
->>> generic workload to see if they affect the performance. Sure, over invalidation is
->>> a concern where multiple buffers can be mapped to same context and the cache
->>> is not usable at the time for lookup and such but we don't do it for small buffers
->>> and only for large buffers which means thousands of TLB entry mappings in
->>> which case TLBIASID is preferred (note: I mentioned the HW team
->>> recommendation to use it for anything greater than 128 TLB entries) in my
->>> earlier reply. And also note that we do this only for partial walk flush, we are not
->>> arbitrarily changing all the TLBIs to ASID based.
->>
->> Most of the heavy bw use cases does involve processing larger buffers.
->> When the physical memory is allocated dis-contiguously at page_size
->> (let's use 4KB here)
->> granularity, each aligned 2MB chunks IOVA unmap would involve
->> performing a TLBIASID
->> as 2MB is not a leaf. Essentially, It happens all the time during
->> large buffer unmaps and
->> potentially impact active traffic on other large buffers. Depending on how much
->> latency HW engines can absorb, the overflow/underflow issues for ISO
->> engines can be
->> sporadic and vendor specific.
->> Performing TLBIASID as default for all SoCs is not a safe operation.
->>
+> Err Logs:
+> remoteproc: MBA booted without debug policy, loading mpss
+> remoteproc: glink-edge: failed to acquire IPC channel
+> remoteproc: failed to probe subdevices for remoteproc: -16
 > 
-> Ok so from what I gather from this is that its not easy to test for the
-> negative impact and you don't have data on such yet and the behaviour is
-> very vendor specific. To add on qcom impl, we have several performance
-> improvements for TLB cache invalidations in HW like wait-for-safe(for realtime
-> clients such as camera and display) and few others to allow for cache
-> lookups/updates when TLBI is in progress for the same context bank, so atleast
-> we are good here.
-> 
->>
->>> I am no camera expert but from what the camera team mentioned is that there
->>> is a thread which frees memory(large unused memory buffers) periodically which
->>> ends up taking around 100+ms and causing some camera test failures with
->>> frame drops. Parallel efforts are already being made to optimize this usage of
->>> thread but as I mentioned previously, this is *not a camera specific*, lets say
->>> someone else invokes such large unmaps, it's going to face the same issue.
->>
->> From the above, It doesn't look like the root cause of frame drops is
->> fully understood.
->> Why is 100+ms delay causing camera frame drop?  Is the same thread
->> submitting the buffers
->> to camera after unmap is complete? If not, how is the unmap latency
->> causing issue here?
->>
-> 
-> Ok since you are interested in camera usecase, I have requested for more details
-> from the camera team and will give it once they comeback. However I don't think
-> its good to have unmap latency at all and that is being addressed by this patch.
-> 
+> Fixes: fa74a0257f45 ("mailbox: Add support for Qualcomm IPCC")
+> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
 
-As promised, here are some more details shared by camera team:
-
-Mapping of a framework buffer happens at the time of process request and unmapping
-of a framework buffer happens once the buffer is available from hardware and result
-will be notified to camera framework.
- * When there is a delay in unmapping of a buffer, result notification to framework
-   will be delayed and based on pipeline delay depth, new requests from framework
-   will be delayed.
- * Camera stack uses internal buffer managers for internal and framework buffers.
-   While mapping and unmapping these managers will be accessed, so uses common lock
-   and hence is a blocking call. So unmapping delay will cause the delay for mapping
-   of a new request and leads to framedrop.
-
-Map and unmap happens in the camera service process context. There is no separate perf
-path to perform unmapping.
-
-In Camera stack along with map/unmap delay, additional delays are due to HW. So HW should
-be able to get the requests in time from SW to avoid frame drops.
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
 Thanks,
-Sai
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+Mani
+
+> Cc: stable@vger.kernel.org
+> ---
+>  drivers/mailbox/qcom-ipcc.c | 6 ++++++
+>  1 file changed, 6 insertions(+)
+> 
+> diff --git a/drivers/mailbox/qcom-ipcc.c b/drivers/mailbox/qcom-ipcc.c
+> index 2d13c72944c6..584700cd1585 100644
+> --- a/drivers/mailbox/qcom-ipcc.c
+> +++ b/drivers/mailbox/qcom-ipcc.c
+> @@ -155,6 +155,11 @@ static int qcom_ipcc_mbox_send_data(struct mbox_chan *chan, void *data)
+>  	return 0;
+>  }
+>  
+> +static void qcom_ipcc_mbox_shutdown(struct mbox_chan *chan)
+> +{
+> +	chan->con_priv = NULL;
+> +}
+> +
+>  static struct mbox_chan *qcom_ipcc_mbox_xlate(struct mbox_controller *mbox,
+>  					const struct of_phandle_args *ph)
+>  {
+> @@ -184,6 +189,7 @@ static struct mbox_chan *qcom_ipcc_mbox_xlate(struct mbox_controller *mbox,
+>  
+>  static const struct mbox_chan_ops ipcc_mbox_chan_ops = {
+>  	.send_data = qcom_ipcc_mbox_send_data,
+> +	.shutdown = qcom_ipcc_mbox_shutdown,
+>  };
+>  
+>  static int qcom_ipcc_setup_mbox(struct qcom_ipcc *ipcc)
+> -- 
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
+> 
