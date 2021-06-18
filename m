@@ -2,239 +2,194 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A6B163AD10C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jun 2021 19:18:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7ABAC3AD11C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jun 2021 19:23:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233680AbhFRRUa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Jun 2021 13:20:30 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:54363 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232564AbhFRRU3 (ORCPT
+        id S233944AbhFRR0B (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Jun 2021 13:26:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56680 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233840AbhFRR0B (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Jun 2021 13:20:29 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1624036700; h=Message-ID: References: In-Reply-To: Reply-To:
- Subject: Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=tsDQ/x476xQMg+i6U9LMmZaf12qtvL+ZvKD0j04iFt4=;
- b=EmqTCabH7rU0Dwb/4N5p4+IRV1CbifGrkaNnZywpiAnjksHeAhp0dpg8TYiGIDVFhVl/68Ou
- JIBikqS7ULG4RCjoxhsbpHAI+CYW4jWnix4c2CSp+K7epqC7rWmLmYi/q9dLsYSFtvz/g2wu
- 7ZCkE/3lrRZvxuUlB9FrlOfuYfg=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
- 60ccd54ae27c0cc77f6aa01d (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 18 Jun 2021 17:18:02
- GMT
-Sender: bbhatt=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 1F97DC433D3; Fri, 18 Jun 2021 17:18:01 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: bbhatt)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0FC43C433F1;
-        Fri, 18 Jun 2021 17:17:59 +0000 (UTC)
+        Fri, 18 Jun 2021 13:26:01 -0400
+Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BAE09C06175F
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jun 2021 10:23:51 -0700 (PDT)
+Received: by mail-ot1-x32a.google.com with SMTP id h24-20020a9d64180000b029036edcf8f9a6so10414029otl.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jun 2021 10:23:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=dpGFkaHJZF+IqmupQdbq1kX0hUGiA31okox4xpJXrIk=;
+        b=u8rxZhaq6Z24u7VGfpZE8Rf38hY5YrHI8U6v1Jr/x/Gi6K6hPzD9yfNgqijQzuRqGn
+         X50Pk5UnK/PMM98TKkjE9jIlDUDp5EldVLs+5H0W/lIE47Bk7N2uOmG6eqku+7A97is4
+         DRRf39RL1mQEoMgnhWkJU1dYLub3GCMhITBpCCxLZSOaM9VxhibpEI90gRI6ql9bu5Ek
+         xz2mn5WPNECDJ8idv8GtRnrxrJKHpjXGyitldre5gZ5+E/ewj8I6v8xop29P0airOmSt
+         /JUHjLiURaWk/yG7q8oeNxvH/td7793AQoCsHOpAcIEDv1CY4tDhJrAM9GZ1zL09qZla
+         fLNQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=dpGFkaHJZF+IqmupQdbq1kX0hUGiA31okox4xpJXrIk=;
+        b=kEYEH0VG4oMHcvXvHKiQL2prkmseZk12gxC34Dk5xm/QIdwgufSPwPnPMCnkhrW9Db
+         KjlTujtK3t+ZfBEuh4DwLyV+aqbFYvIz50rB0M0YK8o9uAOXJYMkV2ASLSrdK7gml574
+         oKXdFQc+1F1EfusM9oErE2K5Ieq0/0iAb1chYIxIwvxhohr2yBKAPPrDK/VKAuQNHQDO
+         uBMKWQZk8EC4aYby2mtWOlhkie24MgWZukrv6HYPnejuBB6zUWT0Pd62japFK+RlSg88
+         ZEsTxCi/0XTGEtgaMCgnsL1DXWUO5laaPS7VdlrgjMEyJIHw0AAq+zSl0piQ27zpAa9S
+         EulQ==
+X-Gm-Message-State: AOAM533PGVDUUqVvA02dos3z4tIhIg9mczUwy6X7hZKMMBpufDqi6YyG
+        eMthsCV41TbfjKTCLrexjBtDfA==
+X-Google-Smtp-Source: ABdhPJyVk4csBhAqgltbQb+qQ0EyQgcJARVf1IzOXOpZP210ow6MNvz+q34/u8Iab7myVwU/ZqWPvQ==
+X-Received: by 2002:a05:6830:1208:: with SMTP id r8mr10489566otp.155.1624037031076;
+        Fri, 18 Jun 2021 10:23:51 -0700 (PDT)
+Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id v82sm1953237oia.27.2021.06.18.10.23.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 18 Jun 2021 10:23:50 -0700 (PDT)
+Date:   Fri, 18 Jun 2021 12:23:48 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 3/3] soc: qcom: geni: Add support for gpi dma
+Message-ID: <YMzWpPnfczMBsZ2x@yoga>
+References: <20210618141839.3777270-1-vkoul@kernel.org>
+ <20210618141839.3777270-4-vkoul@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Fri, 18 Jun 2021 10:17:59 -0700
-From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
-        jhugo@codeaurora.org, linux-kernel@vger.kernel.org,
-        carl.yin@quectel.com, naveen.kumar@quectel.com,
-        loic.poulain@linaro.org
-Subject: Re: [PATCH v1 1/4] bus: mhi: core: Add support for processing
- priority of event ring
-Organization: Qualcomm Innovation Center, Inc.
-Reply-To: bbhatt@codeaurora.org
-Mail-Reply-To: bbhatt@codeaurora.org
-In-Reply-To: <20210618070322.GO3682@workstation>
-References: <1623965435-30224-1-git-send-email-bbhatt@codeaurora.org>
- <1623965435-30224-2-git-send-email-bbhatt@codeaurora.org>
- <20210618070322.GO3682@workstation>
-Message-ID: <df7c735f0caeb449bbaa8a6e040ae556@codeaurora.org>
-X-Sender: bbhatt@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210618141839.3777270-4-vkoul@kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Mani,
+On Fri 18 Jun 09:18 CDT 2021, Vinod Koul wrote:
 
-On 2021-06-18 12:03 AM, Manivannan Sadhasivam wrote:
-> On Thu, Jun 17, 2021 at 02:30:32PM -0700, Bhaumik Bhatt wrote:
->> From: Hemant Kumar <hemantk@codeaurora.org>
->> 
->> Event ring priorities are currently set to 1 and are unused.
->> Default processing priority for event rings is set to regular
->> tasklet. Controllers can choose to use high priority tasklet
->> scheduling for certain event rings critical for processing such
->> as ones transporting control information if they wish to avoid
->> with system scheduling delays for those packets. In order to
->> support these use cases, allow controllers to set event ring
->> priority to high. This patch only adds support and does not
->> enable usage of these priorities.
->> 
->> Signed-off-by: Hemant Kumar <hemantk@codeaurora.org>
->> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
->> ---
->>  drivers/bus/mhi/core/internal.h |  2 +-
->>  drivers/bus/mhi/core/main.c     | 19 ++++++++++++++++---
->>  include/linux/mhi.h             | 14 ++++++++++++--
->>  3 files changed, 29 insertions(+), 6 deletions(-)
->> 
->> diff --git a/drivers/bus/mhi/core/internal.h 
->> b/drivers/bus/mhi/core/internal.h
->> index 672052f..666e102 100644
->> --- a/drivers/bus/mhi/core/internal.h
->> +++ b/drivers/bus/mhi/core/internal.h
->> @@ -535,7 +535,7 @@ struct mhi_event {
->>  	u32 intmod;
->>  	u32 irq;
->>  	int chan; /* this event ring is dedicated to a channel (optional) */
->> -	u32 priority;
->> +	enum mhi_er_priority priority;
-> 
-> Instead of using enum for priorities, can we just make use of the
-> existing "priority" field? Since the existing controllers set it to 
-> "1",
-> can we use "0" as the high priority?
-> 
-> This way we don't need to change the controller drivers.
-> 
-I agree but the reasons to do the enum approach was to allow for future
-expansion of the handling if it becomes necessary and provide clarity 
-for
-the field.
+> GPI DMA is one of the DMA modes supported on geni, this adds support to
+> enable that mode
 
-I can always do it this way for now and we can have the enum for another
-time but would prefer updating what we have now.
->>  	enum mhi_er_data_type data_type;
->>  	struct mhi_ring ring;
->>  	struct db_cfg db_cfg;
->> diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
->> index 8ac73f9..bfc9776 100644
->> --- a/drivers/bus/mhi/core/main.c
->> +++ b/drivers/bus/mhi/core/main.c
->> @@ -425,10 +425,11 @@ void mhi_create_devices(struct mhi_controller 
->> *mhi_cntrl)
->>  	}
->>  }
->> 
->> -irqreturn_t mhi_irq_handler(int irq_number, void *dev)
->> +irqreturn_t mhi_irq_handler(int irq_number, void *priv)
->>  {
->> -	struct mhi_event *mhi_event = dev;
->> +	struct mhi_event *mhi_event = priv;
->>  	struct mhi_controller *mhi_cntrl = mhi_event->mhi_cntrl;
->> +	struct device *dev = &mhi_cntrl->mhi_dev->dev;
->>  	struct mhi_event_ctxt *er_ctxt =
->>  		&mhi_cntrl->mhi_ctxt->er_ctxt[mhi_event->er_index];
->>  	struct mhi_ring *ev_ring = &mhi_event->ring;
->> @@ -454,8 +455,20 @@ irqreturn_t mhi_irq_handler(int irq_number, void 
->> *dev)
->> 
->>  		if (mhi_dev)
->>  			mhi_notify(mhi_dev, MHI_CB_PENDING_DATA);
->> -	} else {
->> +
->> +		return IRQ_HANDLED;
->> +	}
->> +
->> +	switch (mhi_event->priority) {
->> +	case MHI_ER_PRIORITY_HI:
-> 
-> This could be,
-> 
-> 	/* Use high priority tasklet for high priority event ring */
-> 	if (!mhi_event->priority)
-> 		tasklet_hi_schedule(&mhi_event->task);
-> 	else
-> 		tasklet_schedule(&mhi_event->task);
-> 
-> Thanks,
-> Mani
-> 
-Yes, this works too if we keep the current non-enum approach.
->> +		tasklet_hi_schedule(&mhi_event->task);
->> +		break;
->> +	case MHI_ER_PRIORITY_DEFAULT:
->>  		tasklet_schedule(&mhi_event->task);
->> +		break;
->> +	default:
->> +		dev_err(dev, "Skip event of unknown priority\n");
->> +		break;
->>  	}
->> 
->>  	return IRQ_HANDLED;
->> diff --git a/include/linux/mhi.h b/include/linux/mhi.h
->> index 86cea52..25ee312 100644
->> --- a/include/linux/mhi.h
->> +++ b/include/linux/mhi.h
->> @@ -198,6 +198,16 @@ enum mhi_er_data_type {
->>  };
->> 
->>  /**
->> + * enum mhi_er_priority - Event ring processing priority
->> + * @MHI_ER_PRIORITY_HI: processed by hi-priority tasklet
->> + * @MHI_ER_PRIORITY_DEFAULT: processed by regular tasklet
->> + */
->> +enum mhi_er_priority {
->> +	MHI_ER_PRIORITY_HI,
->> +	MHI_ER_PRIORITY_DEFAULT,
->> +};
->> +
->> +/**
->>   * enum mhi_db_brst_mode - Doorbell mode
->>   * @MHI_DB_BRST_DISABLE: Burst mode disable
->>   * @MHI_DB_BRST_ENABLE: Burst mode enable
->> @@ -250,7 +260,7 @@ struct mhi_channel_config {
->>   * @irq_moderation_ms: Delay irq for additional events to be 
->> aggregated
->>   * @irq: IRQ associated with this ring
->>   * @channel: Dedicated channel number. U32_MAX indicates a 
->> non-dedicated ring
->> - * @priority: Priority of this ring. Use 1 for now
->> + * @priority: Processing priority of this ring.
->>   * @mode: Doorbell mode
->>   * @data_type: Type of data this ring will process
->>   * @hardware_event: This ring is associated with hardware channels
->> @@ -262,7 +272,7 @@ struct mhi_event_config {
->>  	u32 irq_moderation_ms;
->>  	u32 irq;
->>  	u32 channel;
->> -	u32 priority;
->> +	enum mhi_er_priority priority;
->>  	enum mhi_db_brst_mode mode;
->>  	enum mhi_er_data_type data_type;
->>  	bool hardware_event;
->> --
->> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
->> Forum,
->> a Linux Foundation Collaborative Project
->> 
-Existing controllers would be fine.
+I think you're missing an opportunity to describe what GPI DMA is.
+Perhaps something like:
 
-Do you think we have a problem if a new controller blindly inputs a "0" 
-in
-the priority not knowing the impact of it?
+In GPI DMA mode the serial engine uses the DMA controller found in the
+associated wrapper to perform its transaction, add support for enabling
+this mode in the engine.
 
-If you give me a go ahead, I can make these changes in v2 and leave the 
-enum
-stuff out.
+> 
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> ---
+>  drivers/soc/qcom/qcom-geni-se.c | 32 +++++++++++++++++++++++++++++++-
+>  include/linux/qcom-geni-se.h    |  5 +++--
+>  2 files changed, 34 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/soc/qcom/qcom-geni-se.c b/drivers/soc/qcom/qcom-geni-se.c
+> index 08d645b90ed3..40a0a1f88070 100644
+> --- a/drivers/soc/qcom/qcom-geni-se.c
+> +++ b/drivers/soc/qcom/qcom-geni-se.c
+> @@ -307,6 +307,32 @@ static void geni_se_select_dma_mode(struct geni_se *se)
+>  		writel_relaxed(val, se->base + SE_GENI_DMA_MODE_EN);
+>  }
+>  
+> +static void geni_se_select_gpi_mode(struct geni_se *se)
+> +{
+> +	unsigned int gpi_event_en;
+> +	unsigned int m_irq_en;
+> +	unsigned int s_irq_en;
 
-Thanks,
-Bhaumik
----
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
-Forum,
-a Linux Foundation Collaborative Project
+readl and writel operates on u32, so better to use that.
+
+> +
+> +	geni_se_irq_clear(se);
+> +	writel(0, se->base + SE_IRQ_EN);
+> +
+> +	s_irq_en = readl_relaxed(se->base + SE_GENI_S_IRQ_EN);
+
+I don't mind this being _relaxed if done on purpose, but as it's the
+only one (and there's no comment) I get the feeling that it's a mistake.
+
+> +	s_irq_en &= ~S_CMD_DONE_EN;
+> +	writel(s_irq_en, se->base + SE_GENI_S_IRQ_EN);
+
+The use of 3 different variables (gpi_event_en, m_irq_en, s_irq_en)
+forced me to really look if the three sets of operations somehow reused
+previous results.
+
+To clarify that this isn't the case I would suggest that you use a
+single variable ("val"?) instead.
+
+> +
+> +	m_irq_en = readl(se->base + SE_GENI_M_IRQ_EN);
+> +	m_irq_en &= ~(M_CMD_DONE_EN | M_TX_FIFO_WATERMARK_EN |
+> +		      M_RX_FIFO_WATERMARK_EN | M_RX_FIFO_LAST_EN);
+> +	writel(m_irq_en, se->base + SE_GENI_M_IRQ_EN);
+> +
+> +	writel(GENI_DMA_MODE_EN, se->base + SE_GENI_DMA_MODE_EN);
+> +
+> +	gpi_event_en = readl(se->base + SE_GSI_EVENT_EN);
+> +	gpi_event_en |= (DMA_RX_EVENT_EN | DMA_TX_EVENT_EN |
+> +			 GENI_M_EVENT_EN | GENI_S_EVENT_EN);
+> +	writel(gpi_event_en, se->base + SE_GSI_EVENT_EN);
+> +}
+> +
+>  /**
+>   * geni_se_select_mode() - Select the serial engine transfer mode
+>   * @se:		Pointer to the concerned serial engine.
+> @@ -314,7 +340,8 @@ static void geni_se_select_dma_mode(struct geni_se *se)
+>   */
+>  void geni_se_select_mode(struct geni_se *se, enum geni_se_xfer_mode mode)
+>  {
+> -	WARN_ON(mode != GENI_SE_FIFO && mode != GENI_SE_DMA);
+> +	WARN_ON(mode != GENI_SE_FIFO && mode != GENI_SE_DMA &&
+> +		mode != GENI_GPI_DMA);
+
+This line can be left unbroken.
+
+>  
+>  	switch (mode) {
+>  	case GENI_SE_FIFO:
+> @@ -323,6 +350,9 @@ void geni_se_select_mode(struct geni_se *se, enum geni_se_xfer_mode mode)
+>  	case GENI_SE_DMA:
+>  		geni_se_select_dma_mode(se);
+>  		break;
+> +	case GENI_GPI_DMA:
+> +		geni_se_select_gpi_mode(se);
+> +		break;
+>  	case GENI_SE_INVALID:
+>  	default:
+>  		break;
+> diff --git a/include/linux/qcom-geni-se.h b/include/linux/qcom-geni-se.h
+> index 5fda675c5cfe..336b682392b1 100644
+> --- a/include/linux/qcom-geni-se.h
+> +++ b/include/linux/qcom-geni-se.h
+> @@ -11,8 +11,9 @@
+>  /* Transfer mode supported by GENI Serial Engines */
+>  enum geni_se_xfer_mode {
+>  	GENI_SE_INVALID,
+> -	GENI_SE_FIFO,
+> -	GENI_SE_DMA,
+
+Is the order significant? Is there a reason why SE_DMA ended up last?
+
+> +	GENI_SE_FIFO, /* FIFO mode */
+> +	GENI_GPI_DMA, /* GSI aka GPI DMA mode */
+
+If the TLA soup is too soupy, then perhaps we should just document it as
+"external DMA" or "Use wrapper's DMA controller"?
+
+And perhaps use kernel-doc instead?
+
+Regards,
+Bjorn
+
+> +	GENI_SE_DMA,  /* SE DMA mode */
+>  };
+>  
+>  /* Protocols supported by GENI Serial Engines */
+> -- 
+> 2.31.1
+> 
