@@ -2,27 +2,27 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EDAB03ACD60
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jun 2021 16:18:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5403D3ACD62
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jun 2021 16:18:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234454AbhFROVA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Jun 2021 10:21:00 -0400
-Received: from mail.kernel.org ([198.145.29.99]:58534 "EHLO mail.kernel.org"
+        id S234400AbhFROVE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Jun 2021 10:21:04 -0400
+Received: from mail.kernel.org ([198.145.29.99]:58610 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232052AbhFROU7 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Jun 2021 10:20:59 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id CC299611B0;
-        Fri, 18 Jun 2021 14:18:47 +0000 (UTC)
+        id S234385AbhFROVD (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 18 Jun 2021 10:21:03 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 29DA061222;
+        Fri, 18 Jun 2021 14:18:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1624025930;
-        bh=9NWfv8SOUC1sTwGhgAi0WHOSRqQ3iXjIBLnpzw0VwZU=;
-        h=From:To:Cc:Subject:Date:From;
-        b=XA+zDEs0VtHzmx23V2+tC57dn+LnJUeFmIFAILIbXrBBZrBiW5OLvIVLwrWbK/Puy
-         GAL0yLrzcjDIDn3Rh1NpwnZuGYxIvkX8fJeFWRdqiCN2wNtsTaKTIlFAhFc0qw2wuN
-         Sq4Y+/2qQ4nE6rXxnjXpk9EPEJkP1SSTF9Bg60OYWMOuqKXi4SoI/iaWUMHLHrNXnx
-         ZFjBLJx6FFVVdsyQj/2FeitFRPUiI49XP27dMAPB+4B0LDyAPWbwdYStI94JxZ88ty
-         ohEbxvn9u/u8QdXUK0YsMmJXuWA6Sgi4ZLb4bdXR8Zcz5A/ulu3y/SXNzV8jK2tJld
-         LdF9k1fdOPVtQ==
+        s=k20201202; t=1624025933;
+        bh=6a9wcBqh2xCp1n07Nk+C27uAXtGZHswKD0RQYiHlEpk=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=UAjF/7OMb9oUg2UVHy3HEXnU3+GaAxIeW3wMuhSE5ZP0RK57jTJkaoAmlRR7kqTLl
+         kCTgXHpFxU6zraMaQxp86IPWrQYLSxu+09CTdp3t7hDu4t+70gXp5Ammn09xEVzyBT
+         tMsKj2ujBz3unjCx+5dSjBhIgVyJkh1yQ6yOA9xqcNEwotLkJXyLswfsHjEkAf/SjD
+         hcn1fJ+XGQkDlT6hCUVM2Cw4uXSq2cEVFrB38vRifRpv6Vfd3ukqBO1PuP68Iecf+l
+         YUSXsuoaPJsHZ0BLyHCYBryONt4QFQyHyyeUvUS2qOZkRgZPc8DFXj0NeWSAg2HHtC
+         SAiZ6FkLhAWgw==
 From:   Vinod Koul <vkoul@kernel.org>
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>
 Cc:     linux-arm-msm@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
@@ -31,42 +31,64 @@ Cc:     linux-arm-msm@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
         Douglas Anderson <dianders@chromium.org>,
         Sumit Semwal <sumit.semwal@linaro.org>,
         linux-kernel@vger.kernel.org
-Subject: [PATCH v2 0/3] soc: qcom: geni: add support for gpi dma
-Date:   Fri, 18 Jun 2021 19:48:36 +0530
-Message-Id: <20210618141839.3777270-1-vkoul@kernel.org>
+Subject: [PATCH v2 1/3] soc: qcom: geni: move GENI_IF_DISABLE_RO to common header
+Date:   Fri, 18 Jun 2021 19:48:37 +0530
+Message-Id: <20210618141839.3777270-2-vkoul@kernel.org>
 X-Mailer: git-send-email 2.31.1
+In-Reply-To: <20210618141839.3777270-1-vkoul@kernel.org>
+References: <20210618141839.3777270-1-vkoul@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This is version 2 of the GPI dma series [1]
+GENI_IF_DISABLE_RO is used by geni spi driver as well to check the
+status if GENI, so move this to common header qcom-geni-se.h
 
-This series add the GPI DMA in qcom geni drivers. For this we
-first need to move GENI_IF_DISABLE_RO and struct geni_wrapper to common
-headers and then add support in the gpi dma in geni driver.
+Also, add FIFO_IF_DISABLE define.
 
-The SPI and I2C driver changes shall follow shortly
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+---
+ drivers/soc/qcom/qcom-geni-se.c | 1 -
+ include/linux/qcom-geni-se.h    | 4 ++++
+ 2 files changed, 4 insertions(+), 1 deletion(-)
 
-[1]: http://lore.kernel.org/r/20210111151651.1616813-1-vkoul@kernel.org
-
-Changes in v2:
- - add r-b from Bjorn on patch 1
- - add more details in log for patch 2
- - Fix the comments from Doug and Bjorn for patch3, notable use read, modify
-   update for irq registers, use geni_se_irq_clear() for irq, dont update
-   single bit registers, add a bit more description for gpi dma etc
-
-Vinod Koul (3):
-  soc: qcom: geni: move GENI_IF_DISABLE_RO to common header
-  soc: qcom: geni: move struct geni_wrapper to header
-  soc: qcom: geni: Add support for gpi dma
-
- drivers/soc/qcom/qcom-geni-se.c | 47 ++++++++++++++++++++++-----------
- include/linux/qcom-geni-se.h    | 23 ++++++++++++++--
- 2 files changed, 52 insertions(+), 18 deletions(-)
-
+diff --git a/drivers/soc/qcom/qcom-geni-se.c b/drivers/soc/qcom/qcom-geni-se.c
+index 5bdfb1565c14..fe666ea0c487 100644
+--- a/drivers/soc/qcom/qcom-geni-se.c
++++ b/drivers/soc/qcom/qcom-geni-se.c
+@@ -104,7 +104,6 @@ static const char * const icc_path_names[] = {"qup-core", "qup-config",
+ #define GENI_OUTPUT_CTRL		0x24
+ #define GENI_CGC_CTRL			0x28
+ #define GENI_CLK_CTRL_RO		0x60
+-#define GENI_IF_DISABLE_RO		0x64
+ #define GENI_FW_S_REVISION_RO		0x6c
+ #define SE_GENI_BYTE_GRAN		0x254
+ #define SE_GENI_TX_PACKING_CFG0		0x260
+diff --git a/include/linux/qcom-geni-se.h b/include/linux/qcom-geni-se.h
+index 7c811eebcaab..5114e2144b17 100644
+--- a/include/linux/qcom-geni-se.h
++++ b/include/linux/qcom-geni-se.h
+@@ -63,6 +63,7 @@ struct geni_se {
+ #define SE_GENI_STATUS			0x40
+ #define GENI_SER_M_CLK_CFG		0x48
+ #define GENI_SER_S_CLK_CFG		0x4c
++#define GENI_IF_DISABLE_RO		0x64
+ #define GENI_FW_REVISION_RO		0x68
+ #define SE_GENI_CLK_SEL			0x7c
+ #define SE_GENI_DMA_MODE_EN		0x258
+@@ -105,6 +106,9 @@ struct geni_se {
+ #define CLK_DIV_MSK			GENMASK(15, 4)
+ #define CLK_DIV_SHFT			4
+ 
++/* GENI_IF_DISABLE_RO fields */
++#define FIFO_IF_DISABLE			(BIT(0))
++
+ /* GENI_FW_REVISION_RO fields */
+ #define FW_REV_PROTOCOL_MSK		GENMASK(15, 8)
+ #define FW_REV_PROTOCOL_SHFT		8
 -- 
 2.31.1
 
