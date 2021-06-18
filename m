@@ -2,145 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B14573ACB8C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jun 2021 15:00:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EDAB03ACD60
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jun 2021 16:18:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231445AbhFRNCe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Jun 2021 09:02:34 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:22913 "EHLO m43-7.mailgun.net"
+        id S234454AbhFROVA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Jun 2021 10:21:00 -0400
+Received: from mail.kernel.org ([198.145.29.99]:58534 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230315AbhFRNCc (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Jun 2021 09:02:32 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1624021223; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=tD4U/RzNqFGWpjdS5wnIrcWZDQlWRWp1xuR2I5dn0+o=;
- b=Sq8cjU4qwP1Mr/QxLaKRe9PjnYeZzL+RF1DJkhYYWRl0LO6g2KbVVm40CwT0kqV5LvNV3Cbr
- eJLnIB51ICrXgV2KdxXT9+t2EkVyTiwI6zCDd4aDzF2MXMWdo0rVqMlQRfVLczTPbcDWPBO+
- anf8tM2jJZEkIopKv9S16Fx9Obs=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
- 60cc98d3e27c0cc77f72ae58 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 18 Jun 2021 13:00:03
- GMT
-Sender: pmaliset=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id A2BF0C43217; Fri, 18 Jun 2021 13:00:02 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: pmaliset)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id F3DDDC4338A;
-        Fri, 18 Jun 2021 13:00:01 +0000 (UTC)
+        id S232052AbhFROU7 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 18 Jun 2021 10:20:59 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id CC299611B0;
+        Fri, 18 Jun 2021 14:18:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1624025930;
+        bh=9NWfv8SOUC1sTwGhgAi0WHOSRqQ3iXjIBLnpzw0VwZU=;
+        h=From:To:Cc:Subject:Date:From;
+        b=XA+zDEs0VtHzmx23V2+tC57dn+LnJUeFmIFAILIbXrBBZrBiW5OLvIVLwrWbK/Puy
+         GAL0yLrzcjDIDn3Rh1NpwnZuGYxIvkX8fJeFWRdqiCN2wNtsTaKTIlFAhFc0qw2wuN
+         Sq4Y+/2qQ4nE6rXxnjXpk9EPEJkP1SSTF9Bg60OYWMOuqKXi4SoI/iaWUMHLHrNXnx
+         ZFjBLJx6FFVVdsyQj/2FeitFRPUiI49XP27dMAPB+4B0LDyAPWbwdYStI94JxZ88ty
+         ohEbxvn9u/u8QdXUK0YsMmJXuWA6Sgi4ZLb4bdXR8Zcz5A/ulu3y/SXNzV8jK2tJld
+         LdF9k1fdOPVtQ==
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH v2 0/3] soc: qcom: geni: add support for gpi dma
+Date:   Fri, 18 Jun 2021 19:48:36 +0530
+Message-Id: <20210618141839.3777270-1-vkoul@kernel.org>
+X-Mailer: git-send-email 2.31.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Fri, 18 Jun 2021 18:30:01 +0530
-From:   Prasad Malisetty <pmaliset@codeaurora.org>
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     agross@kernel.org, bhelgaas@google.com, bjorn.andersson@linaro.org,
-        lorenzo.pieralisi@arm.com, robh+dt@kernel.org,
-        svarbanov@mm-sol.com, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org, mgautam@codeaurora.org,
-        dianders@chromium.org, mka@chromium.org, sanm@codeaurora.org
-Subject: Re: [PATCH v2 3/4] PCIe: qcom: Add support to control pipe clk mux
-In-Reply-To: <CAE-0n50WxF_S7Zo4MhFqppjSELTFo7nOEtmCXJ4DoqvhF7kMQw@mail.gmail.com>
-References: <1622904059-21244-1-git-send-email-pmaliset@codeaurora.org>
- <1622904059-21244-4-git-send-email-pmaliset@codeaurora.org>
- <CAE-0n50WxF_S7Zo4MhFqppjSELTFo7nOEtmCXJ4DoqvhF7kMQw@mail.gmail.com>
-Message-ID: <915d51888c2577cc3266370bfda603e8@codeaurora.org>
-X-Sender: pmaliset@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-06-06 02:56, Stephen Boyd wrote:
-> Quoting Prasad Malisetty (2021-06-05 07:40:58)
->> In PCIe driver pipe-clk mux needs to switch between pipe_clk
->> and XO for GDSC enable. This is done by setting pipe_clk mux
->> as parent of pipe_clk after phy init.
-> 
-> Just to confirm, we can't set this parent via assigned-clock-parents
-> property in DT?
-> 
->> 
-This clock setting need be done after phy init.
+This is version 2 of the GPI dma series [1]
 
->> Signed-off-by: Prasad Malisetty <pmaliset@codeaurora.org>
->> ---
->>  drivers/pci/controller/dwc/pcie-qcom.c | 22 ++++++++++++++++++++++
->>  1 file changed, 22 insertions(+)
->> 
->> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c 
->> b/drivers/pci/controller/dwc/pcie-qcom.c
->> index 8a7a300..5cbbea4 100644
->> --- a/drivers/pci/controller/dwc/pcie-qcom.c
->> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
->> @@ -166,6 +166,9 @@ struct qcom_pcie_resources_2_7_0 {
->>         struct regulator_bulk_data supplies[2];
->>         struct reset_control *pci_reset;
->>         struct clk *pipe_clk;
->> +       struct clk *pipe_clk_mux;
->> +       struct clk *pipe_ext_src;
->> +       struct clk *ref_clk_src;
->>  };
->> 
->>  union qcom_pcie_resources {
->> @@ -1167,6 +1170,20 @@ static int qcom_pcie_get_resources_2_7_0(struct 
->> qcom_pcie *pcie)
->>         if (ret < 0)
->>                 return ret;
->> 
->> +       if (of_device_is_compatible(dev->of_node, "qcom,pcie-sc7280")) 
->> {
->> +               res->pipe_clk_mux = devm_clk_get(dev, "pipe_src");
->> +               if (IS_ERR(res->pipe_clk_mux))
->> +                       return PTR_ERR(res->pipe_clk_mux);
->> +
->> +               res->pipe_ext_src = devm_clk_get(dev, "pipe_ext");
->> +               if (IS_ERR(res->pipe_ext_src))
->> +                       return PTR_ERR(res->pipe_ext_src);
->> +
->> +               res->ref_clk_src = devm_clk_get(dev, "ref");
-> 
-> Is this going to be used by any code?
-> 
-Yes, ref clock will be used in system suspend case. currently system 
-suspend changes are in under validation.
+This series add the GPI DMA in qcom geni drivers. For this we
+first need to move GENI_IF_DISABLE_RO and struct geni_wrapper to common
+headers and then add support in the gpi dma in geni driver.
 
->> +               if (IS_ERR(res->ref_clk_src))
->> +                       return PTR_ERR(res->ref_clk_src);
->> +       }
->> +
->>         res->pipe_clk = devm_clk_get(dev, "pipe");
->>         return PTR_ERR_OR_ZERO(res->pipe_clk);
->>  }
->> @@ -1255,6 +1272,11 @@ static void qcom_pcie_deinit_2_7_0(struct 
->> qcom_pcie *pcie)
->>  static int qcom_pcie_post_init_2_7_0(struct qcom_pcie *pcie)
->>  {
->>         struct qcom_pcie_resources_2_7_0 *res = &pcie->res.v2_7_0;
->> +       struct dw_pcie *pci = pcie->pci;
->> +       struct device *dev = pci->dev;
->> +
->> +       if (of_device_is_compatible(dev->of_node, "qcom,pcie-sc7280"))
->> +               clk_set_parent(res->pipe_clk_mux, res->pipe_ext_src);
->> 
->>         return clk_prepare_enable(res->pipe_clk);
->>  }
->> --
->> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
->> Forum,
->> a Linux Foundation Collaborative Project
->> 
+The SPI and I2C driver changes shall follow shortly
+
+[1]: http://lore.kernel.org/r/20210111151651.1616813-1-vkoul@kernel.org
+
+Changes in v2:
+ - add r-b from Bjorn on patch 1
+ - add more details in log for patch 2
+ - Fix the comments from Doug and Bjorn for patch3, notable use read, modify
+   update for irq registers, use geni_se_irq_clear() for irq, dont update
+   single bit registers, add a bit more description for gpi dma etc
+
+Vinod Koul (3):
+  soc: qcom: geni: move GENI_IF_DISABLE_RO to common header
+  soc: qcom: geni: move struct geni_wrapper to header
+  soc: qcom: geni: Add support for gpi dma
+
+ drivers/soc/qcom/qcom-geni-se.c | 47 ++++++++++++++++++++++-----------
+ include/linux/qcom-geni-se.h    | 23 ++++++++++++++--
+ 2 files changed, 52 insertions(+), 18 deletions(-)
+
+-- 
+2.31.1
+
