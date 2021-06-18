@@ -2,118 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4CC6C3AC1E6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jun 2021 06:18:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 345CE3AC266
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jun 2021 06:35:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230447AbhFREUs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Jun 2021 00:20:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49668 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230419AbhFREUr (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Jun 2021 00:20:47 -0400
-Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE14EC061760
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Jun 2021 21:18:37 -0700 (PDT)
-Received: by mail-pf1-x436.google.com with SMTP id t8so2025193pfe.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Jun 2021 21:18:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=A7veP2+rvJhREGxZ7bA2MKokj7fOMWmnWBdu22Gjixs=;
-        b=plDYr7URR38B4jGYMsxSURthpcFrTWdDpgkJZiOYCuF4iliXpJ56Mn3TIhtq6Hj3Ko
-         DcJqLB0QmDx+XU5q97EHRY8Z+3l44WgV8KsrWl60QLCgykxwjoenpSzt8r2PsJABEnbV
-         jnUqsGTAemSR2cNPF1fsD5PWJxUjOSGKN7tNFoyi8QHGOfI8Oe9DhyP6lplAOsox9rYM
-         ToHvttUNsT80qTybhX19aohlNodJS1Z9II5W3Ul1On1PDhnZ8W8YRoo7Uz+uitlVLP7s
-         NQ8zh9QQXrgGvYeR/5Vu3hiRaPODOYGYDR6en/M34Md65klj78jhxoKpPolvM3Pjk9BT
-         KtZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=A7veP2+rvJhREGxZ7bA2MKokj7fOMWmnWBdu22Gjixs=;
-        b=c7PZ83I5hh/RxrV4/QPkk3l6XdzAqmcM1uWV3XuLeddW928GoZTk/YF7Rsz0rvmZ4X
-         cs5f3tqfURZa8lqLDjv/aZTUy1YmMgj6hAejK1GrrEVCG/NVTRp+7ILXdTLo5MJUHG4u
-         BsHUs00MWVeHOGtszz7d5ZxW99iKKfUn53Q4wN7A3U5XFW0YasCZDJSkVuqBkX9ycnnw
-         CMM61w7qAwWk+mgL0rDmS/OZ/MCPME6zAoNXdCmQpdxBRexQRLSY04cU26wSCzrAcCPB
-         TZ4P+XncyjmJm0pmTIGQzofzQJYQZVwao+mmOOkAAFP0jnVXJwKpvYYpaQYqbcVZ3QWu
-         e2XA==
-X-Gm-Message-State: AOAM5302lh2yCUllsf24GKY/esbHK/5HE1FdxCLOSY3RvJ5uRZRwRvjS
-        FJDSCejxTne1yVw/sRn2J9CG
-X-Google-Smtp-Source: ABdhPJz5nIO0obUzGfQWU2OY7LlyNmGKp7Hy07h54AzlLuFHm3eedis+rYyTYKWqhR+BwvY3pYmALw==
-X-Received: by 2002:a63:3246:: with SMTP id y67mr8193050pgy.244.1623989917247;
-        Thu, 17 Jun 2021 21:18:37 -0700 (PDT)
-Received: from workstation ([120.138.13.238])
-        by smtp.gmail.com with ESMTPSA id s13sm6431308pjm.34.2021.06.17.21.18.33
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 17 Jun 2021 21:18:35 -0700 (PDT)
-Date:   Fri, 18 Jun 2021 09:48:31 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Sibi Sankar <sibis@codeaurora.org>
-Cc:     bjorn.andersson@linaro.org, jassisinghbrar@gmail.com,
-        agross@kernel.org, rananta@codeaurora.org, vnkgutta@codeaurora.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        stable@vger.kernel.org
-Subject: Re: [PATCH] mailbox: qcom-ipcc: Fix IPCC mbox channel exhaustion
-Message-ID: <20210618041831.GA3682@workstation>
-References: <1623865378-1943-1-git-send-email-sibis@codeaurora.org>
+        id S231877AbhFREhz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Jun 2021 00:37:55 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:16904 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231852AbhFREhy (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 18 Jun 2021 00:37:54 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1623990946; h=In-Reply-To: Content-Type: MIME-Version:
+ References: Message-ID: Subject: Cc: To: From: Date: Sender;
+ bh=VS50oBO1Adu4g9icjdy9gPt5cwaT+R969SEWKsp0mcY=; b=DTha6zkM+aT7u4S/PtKLvHajfnqZjGj6jsiKwwTK43imShiTGtZ9aiYb73hBQVGaLwsCMteP
+ NHQ48bgRVmNBAaiRHK+ENSakEzA28WwGSICVg75oB5QUmOp/N7bD098NhGQeaPgxoXm9Rg7t
+ 7y3aBKfPDzXQKhulsUjsf0m/R7A=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
+ 60cc22a1b6ccaab75306dc10 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 18 Jun 2021 04:35:45
+ GMT
+Sender: jackp=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 0C512C4338A; Fri, 18 Jun 2021 04:35:45 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from jackp-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: jackp)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6DDF3C433D3;
+        Fri, 18 Jun 2021 04:35:42 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 6DDF3C433D3
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jackp@codeaurora.org
+Date:   Thu, 17 Jun 2021 21:35:38 -0700
+From:   Jack Pham <jackp@codeaurora.org>
+To:     Wesley Cheng <wcheng@codeaurora.org>
+Cc:     kernel test robot <lkp@intel.com>, balbi@kernel.org,
+        gregkh@linuxfoundation.org, robh+dt@kernel.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, frowand.list@gmail.com,
+        kbuild-all@lists.01.org, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v10 5/6] usb: dwc3: dwc3-qcom: Enable tx-fifo-resize
+ property by default
+Message-ID: <20210618043538.GD25299@jackp-linux.qualcomm.com>
+References: <1623923899-16759-6-git-send-email-wcheng@codeaurora.org>
+ <202106180154.U0by7POV-lkp@intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1623865378-1943-1-git-send-email-sibis@codeaurora.org>
+In-Reply-To: <202106180154.U0by7POV-lkp@intel.com>
 User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jun 16, 2021 at 11:12:58PM +0530, Sibi Sankar wrote:
-> Fix IPCC (Inter-Processor Communication Controller) channel exhaustion by
-> setting the channel private data to NULL on mbox shutdown.
-> 
-> Err Logs:
-> remoteproc: MBA booted without debug policy, loading mpss
-> remoteproc: glink-edge: failed to acquire IPC channel
-> remoteproc: failed to probe subdevices for remoteproc: -16
-> 
-> Fixes: fa74a0257f45 ("mailbox: Add support for Qualcomm IPCC")
-> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+Hi Wesley,
 
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-
-Thanks,
-Mani
-
-> Cc: stable@vger.kernel.org
-> ---
->  drivers/mailbox/qcom-ipcc.c | 6 ++++++
->  1 file changed, 6 insertions(+)
+On Fri, Jun 18, 2021 at 02:04:40AM +0800, kernel test robot wrote:
+> Hi Wesley,
 > 
-> diff --git a/drivers/mailbox/qcom-ipcc.c b/drivers/mailbox/qcom-ipcc.c
-> index 2d13c72944c6..584700cd1585 100644
-> --- a/drivers/mailbox/qcom-ipcc.c
-> +++ b/drivers/mailbox/qcom-ipcc.c
-> @@ -155,6 +155,11 @@ static int qcom_ipcc_mbox_send_data(struct mbox_chan *chan, void *data)
->  	return 0;
->  }
->  
-> +static void qcom_ipcc_mbox_shutdown(struct mbox_chan *chan)
-> +{
-> +	chan->con_priv = NULL;
-> +}
-> +
->  static struct mbox_chan *qcom_ipcc_mbox_xlate(struct mbox_controller *mbox,
->  					const struct of_phandle_args *ph)
->  {
-> @@ -184,6 +189,7 @@ static struct mbox_chan *qcom_ipcc_mbox_xlate(struct mbox_controller *mbox,
->  
->  static const struct mbox_chan_ops ipcc_mbox_chan_ops = {
->  	.send_data = qcom_ipcc_mbox_send_data,
-> +	.shutdown = qcom_ipcc_mbox_shutdown,
->  };
->  
->  static int qcom_ipcc_setup_mbox(struct qcom_ipcc *ipcc)
-> -- 
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
+> Thank you for the patch! Yet something to improve:
 > 
+> [auto build test ERROR on usb/usb-testing]
+> [also build test ERROR on robh/for-next v5.13-rc6 next-20210617]
+> [cannot apply to balbi-usb/testing/next]
+> [If your patch is applied to the wrong git tree, kindly drop us a note.
+> And when submitting patch, we suggest to use '--base' as documented in
+> https://git-scm.com/docs/git-format-patch]
+> 
+> url:    https://github.com/0day-ci/linux/commits/Wesley-Cheng/Re-introduce-TX-FIFO-resize-for-larger-EP-bursting/20210617-180037
+> base:   https://git.kernel.org/pub/scm/linux/kernel/git/gregkh/usb.git usb-testing
+> config: csky-randconfig-s031-20210617 (attached as .config)
+> compiler: csky-linux-gcc (GCC) 9.3.0
+> reproduce:
+>         wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+>         chmod +x ~/bin/make.cross
+>         # apt-get install sparse
+>         # sparse version: v0.6.3-341-g8af24329-dirty
+>         # https://github.com/0day-ci/linux/commit/54b6eb3d44464c519a4546e9a2c3041eeced1009
+>         git remote add linux-review https://github.com/0day-ci/linux
+>         git fetch --no-tags linux-review Wesley-Cheng/Re-introduce-TX-FIFO-resize-for-larger-EP-bursting/20210617-180037
+>         git checkout 54b6eb3d44464c519a4546e9a2c3041eeced1009
+>         # save the attached .config to linux build tree
+>         COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-9.3.0 make.cross C=1 CF='-fdiagnostic-prefix -D__CHECK_ENDIAN__' W=1 ARCH=csky 
+> 
+> If you fix the issue, kindly add following tag as appropriate
+> Reported-by: kernel test robot <lkp@intel.com>
+> 
+> All errors (new ones prefixed by >>, old ones prefixed by <<):
+> 
+> >> ERROR: modpost: "of_add_property" [drivers/usb/dwc3/dwc3-qcom.ko] undefined!
+
+*sigh* this symbol is not EXPORTed...so you can't call it from a module.
+
+Actually couldn't we just use device_add_properties() instead? And drop
+patch 4/6 as well.
+
+Jack
+-- 
+The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project
