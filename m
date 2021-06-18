@@ -2,231 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0FED03AD13B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jun 2021 19:35:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D2EF73AD149
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jun 2021 19:37:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236128AbhFRRhp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Jun 2021 13:37:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59276 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236118AbhFRRho (ORCPT
+        id S233930AbhFRRjz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Jun 2021 13:39:55 -0400
+Received: from mo4-p01-ob.smtp.rzone.de ([85.215.255.52]:11934 "EHLO
+        mo4-p01-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232482AbhFRRjy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Jun 2021 13:37:44 -0400
-Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 994EDC061760
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jun 2021 10:35:33 -0700 (PDT)
-Received: by mail-ot1-x329.google.com with SMTP id 102-20020a9d0eef0000b02903fccc5b733fso10427238otj.4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jun 2021 10:35:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=fx3kAbwEvEOTX6FliobkUrTxK4zPxQiLCSVz1xbbXBA=;
-        b=Pb5TiMEuuzfemaRgrnrGCMVQCYbjCK2XpiaE5hhj4CVKa0JMMskLn8os7NeqZZ0ftd
-         Zh9/YcAO9yBKWWiocMnz93u9oap1TY4IeTuIS4edU2Br/UA8EXYdi6yhV7gD9wq4xmXv
-         q38QpDzadeA5l9yEY3+PB6QjEJAByTLL5jA8aDJ09bl48/0c60fX9g/ZElGXxRQsF8Xe
-         DFlsql9jSXzQgTr0+Oc3/O2siOlU0OvIL3eTos8D+DoUyVTVUolsozvVLFRHFsiRqqtD
-         Fwlw/CSTsW4gDFJUNpEoGPxvja7bao2xDph9g0y8hNbQs89lm009PXl8oZ9mJGJUGKtO
-         Wgug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=fx3kAbwEvEOTX6FliobkUrTxK4zPxQiLCSVz1xbbXBA=;
-        b=hN4CQ4dEHEPenTASwbtgXYkpKqnAJsrWgddODOxuGAQp2b2kic50pO9IB6v1bQD69m
-         skI0dMR+db1263OXsnxfGARkwUhxRLWKa4ZSGv0Gfpf69N8F/b8j7VJ9uzq5QV1Nu3x0
-         +oQ0MnO6YuvWWkmeQHRK62rTcv/zstUSOPJd+E4XSSZqGV1QEbX3dIWED6eLi3ngCQmF
-         x9LCA88mFcuqy6tI8ehILWs7Quaxh2V9SUfLBTltB2Oan1yvQDulkx22grsuqMI17bZM
-         hno1OebMacLHAxgEYbBfa9alYcA0EXmkPgQrS8ZkMbj5w6E+WnMFodgzwFtUVq06YCGb
-         eloQ==
-X-Gm-Message-State: AOAM530dgmiI7GBc1PvqwW1D89G8DZwNZfiswhfRl/xbPE1bAe9DRnIc
-        Ca3yHnUpqXaEIlcx4KlIhbQukg==
-X-Google-Smtp-Source: ABdhPJyxsUeYYfrTVK0RT0tpr+P5j2eQ+cw+8IBJplE8eigPihuQAn8EKA/fwLFOFULo7Z7Rb1BjEg==
-X-Received: by 2002:a9d:1ad:: with SMTP id e42mr10401359ote.115.1624037732809;
-        Fri, 18 Jun 2021 10:35:32 -0700 (PDT)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id v20sm1884581ooe.47.2021.06.18.10.35.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Jun 2021 10:35:32 -0700 (PDT)
-Date:   Fri, 18 Jun 2021 12:35:30 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        linux-arm-msm@vger.kernel.org, bhupesh.linux@gmail.com,
-        linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, robh+dt@kernel.org, agross@kernel.org,
-        Mark Brown <broonie@kernel.org>, Vinod Koul <vkoul@kernel.org>
-Subject: Re: [PATCH v3 4/5] arm64: dts: qcom: pmm8155au_2: Add base dts file
-Message-ID: <YMzZYqb5UL8DIk8a@builder.lan>
-References: <20210617054548.353293-1-bhupesh.sharma@linaro.org>
- <20210617054548.353293-5-bhupesh.sharma@linaro.org>
- <6011130d-8ce8-420b-6e55-5d168fef0347@somainline.org>
+        Fri, 18 Jun 2021 13:39:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1624037859;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=Message-Id:Date:Subject:Cc:To:From:Cc:Date:From:Subject:Sender;
+    bh=+4ntWc9603isbf7HF0EFcpYAxugIlsDXx622CtPyy68=;
+    b=Ncfo2Gm6HPO+5lNWhuTodoe5GNDCFiGsu1KXebBMQ1E6MdIgWrzijeAQn1Yc7Bx+Jp
+    +IG194OFB/PkJH9aYGU0DwwaP0LOePamiqlUuVN42kz9R3ySNnplSzdnqh/ZnZ5+vpbm
+    2DokPROFXGVnkN3p4QPfoQ5qZYT+iaK3mhcbAUyOum+BLsBcflRL0+877U2QLqIoT0n0
+    PkbG4qHg0ZJTuPbvcPTsl1rphCben6IFPUvKozPmdgc6y8Y81IKsNn/77FELV6+WVDaw
+    y74PcNBQfh5OMryRVDFuXZz1hLl6NqF2H9dhMfSIt0CwpplgBN5XFWoOr4AhV9G3z1VQ
+    zA9A==
+Authentication-Results: strato.com;
+    dkim=none
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVORvLd4SsytBXS7IYBkLahKxO426OllE="
+X-RZG-CLASS-ID: mo00
+Received: from droid..
+    by smtp.strato.de (RZmta 47.27.3 DYNA|AUTH)
+    with ESMTPSA id 000885x5IHbb6bb
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Fri, 18 Jun 2021 19:37:37 +0200 (CEST)
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>
+Cc:     Loic Poulain <loic.poulain@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Aleksander Morgado <aleksander@aleksander.es>,
+        Sergey Ryazanov <ryazanov.s.a@gmail.com>,
+        Johannes Berg <johannes.berg@intel.com>,
+        Leon Romanovsky <leon@kernel.org>,
+        M Chetan Kumar <m.chetan.kumar@intel.com>,
+        Ohad Ben-Cohen <ohad@wizery.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        netdev@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, phone-devel@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Stephan Gerhold <stephan@gerhold.net>
+Subject: [PATCH net-next v3 0/3] net: wwan: Add RPMSG WWAN CTRL driver
+Date:   Fri, 18 Jun 2021 19:36:08 +0200
+Message-Id: <20210618173611.134685-1-stephan@gerhold.net>
+X-Mailer: git-send-email 2.32.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <6011130d-8ce8-420b-6e55-5d168fef0347@somainline.org>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 17 Jun 17:32 CDT 2021, Konrad Dybcio wrote:
+This patch series adds a WWAN "control" driver for the remote processor
+messaging (rpmsg) subsystem. This subsystem allows communicating with
+an integrated modem DSP on many Qualcomm SoCs, e.g. MSM8916 or MSM8974.
 
-> 
-> > Add base DTS file for pmm8155au_2 along with GPIOs, power-on, rtc and vadc
-> > nodes.
-> >
-> > Cc: Mark Brown <broonie@kernel.org>
-> > Cc: Vinod Koul <vkoul@kernel.org>
-> > Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> > ---
-> >  arch/arm64/boot/dts/qcom/pmm8155au_2.dtsi | 107 ++++++++++++++++++++++
-> >  1 file changed, 107 insertions(+)
-> >  create mode 100644 arch/arm64/boot/dts/qcom/pmm8155au_2.dtsi
-> >
-> > diff --git a/arch/arm64/boot/dts/qcom/pmm8155au_2.dtsi b/arch/arm64/boot/dts/qcom/pmm8155au_2.dtsi
-> > new file mode 100644
-> > index 000000000000..0c7d7a66c0b5
-> > --- /dev/null
-> > +++ b/arch/arm64/boot/dts/qcom/pmm8155au_2.dtsi
-> > @@ -0,0 +1,107 @@
-> > +// SPDX-License-Identifier: BSD-3-Clause
-> > +/*
-> > + * Copyright (c) 2021, Linaro Limited
-> > + */
-> > +
-> > +#include <dt-bindings/input/input.h>
-> > +#include <dt-bindings/interrupt-controller/irq.h>
-> > +#include <dt-bindings/spmi/spmi.h>
-> > +
-> > +/ {
-> > +	thermal-zones {
-> > +		pmm8155au-2-thermal {
-> > +			polling-delay-passive = <100>;
-> > +			polling-delay = <0>;
-> > +
-> > +			thermal-sensors = <&pmm8155au_2_temp>;
-> > +
-> > +			trips {
-> > +				trip0 {
-> > +					temperature = <95000>;
-> > +					hysteresis = <0>;
-> > +					type = "passive";
-> > +				};
-> > +
-> > +				trip1 {
-> > +					temperature = <115000>;
-> > +					hysteresis = <0>;
-> > +					type = "hot";
-> > +				};
-> > +
-> > +				trip2 {
-> > +					temperature = <145000>;
-> > +					hysteresis = <0>;
-> > +					type = "critical";
-> > +				};
-> > +			};
-> > +		};
-> > +	};
-> > +};
-> > +
-> > +&spmi_bus {
-> > +	pmic@4 {
-> > +		compatible = "qcom,pmm8155au", "qcom,spmi-pmic";
-> > +		reg = <0x4 SPMI_USID>;
-> > +		#address-cells = <1>;
-> > +		#size-cells = <0>;
-> > +
-> > +		power-on@800 {
-> > +			compatible = "qcom,pm8916-pon";
-> > +			reg = <0x0800>;
-> 
-> No common debounce, interrupts, bias- property or pwrkey key code?
-> 
-> Besides, (as a question to Bjorn and others) do we pad reg to 4 digits in PMIC DTs now?
-> 
+The driver is a fairly simple glue layer between WWAN and RPMSG
+and is mostly based on the existing mhi_wwan_ctrl.c and rpmsg_char.c.
 
-We want the regs to be padded to the address width to make it easier for
-humans to sort the nodes. At least for me it's easy to compare a 3-digit
-address with a 4-digit one, so I haven't felt the need to enforce it
-here.
+For more information, see commit message in PATCH 2/3.
 
-But I certainly don't mind.
+I already posted a RFC for this a while ago:
+https://lore.kernel.org/linux-arm-msm/YLfL9Q+4860uqS8f@gerhold.net/
+and now I'm looking for some feedback for the actual changes. :)
 
-> 
-> 
-> > +
-> > +			status = "disabled";
-> > +		};
-> > +
-> > +		pmm8155au_2_temp: temp-alarm@2400 {
-> > +			compatible = "qcom,spmi-temp-alarm";
-> > +			reg = <0x2400>;
-> > +			interrupts = <0x4 0x24 0x0 IRQ_TYPE_EDGE_BOTH>;
-> > +			io-channels = <&pmm8155au_2_adc ADC5_DIE_TEMP>;
-> > +			io-channel-names = "thermal";
-> > +			#thermal-sensor-cells = <0>;
-> > +		};
-> > +
-> > +		pmm8155au_2_adc: adc@3100 {
-> > +			compatible = "qcom,spmi-adc5";
-> > +			reg = <0x3100>;
-> > +			#address-cells = <1>;
-> > +			#size-cells = <0>;
-> > +			#io-channel-cells = <1>;
-> > +			interrupts = <0x4 0x31 0x0 IRQ_TYPE_EDGE_RISING>;
-> > +
-> > +			ref-gnd@0 {
-> > +				reg = <ADC5_REF_GND>;
-> > +				qcom,pre-scaling = <1 1>;
-> > +				label = "ref_gnd";
-> > +			};
-> > +
-> > +			vref-1p25@1 {
-> > +				reg = <ADC5_1P25VREF>;
-> > +				qcom,pre-scaling = <1 1>;
-> > +				label = "vref_1p25";
-> > +			};
-> > +
-> > +			die-temp@6 {
-> > +				reg = <ADC5_DIE_TEMP>;
-> > +				qcom,pre-scaling = <1 1>;
-> > +				label = "die_temp";
-> > +			};
-> > +		};
-> > +
-> > +		pmm8155au_2_gpios: gpio@c000 {
-> > +			compatible = "qcom,pmm8155au-gpio";
-> > +			reg = <0xc000>;
-> > +			gpio-controller;
-> > +			#gpio-cells = <2>;
-> > +			interrupt-controller;
-> > +			#interrupt-cells = <2>;
-> > +		};
-> 
-> Don't we do gpio-ranges anymore?
-> 
+Changes in v3:
+  - PATCH 2/3: Clarify commit message
+  - PATCH 3/3: Fix build error for cdc-wdm.c, use extra tx_blocking() op instead
+v2: https://lore.kernel.org/netdev/20210618075243.42046-1-stephan@gerhold.net/
 
-Yes, that is required by the binding.
+Changes in v2: Only in PATCH 3/3
+  - Fix EPOLLOUT being always set even if poll op is defined
+  - Rename poll() op -> tx_poll() since it should be only used for TX
+v1: https://lore.kernel.org/netdev/20210615133229.213064-1-stephan@gerhold.net/
 
-I added that and picked up the 3 patches. Thanks for reviewing Konrad,
-and thanks for the patches Bhupesh.
+Stephan Gerhold (3):
+  rpmsg: core: Add driver_data for rpmsg_device_id
+  net: wwan: Add RPMSG WWAN CTRL driver
+  net: wwan: Allow WWAN drivers to provide blocking tx and poll function
 
-Regards,
-Bjorn
+ MAINTAINERS                        |   7 ++
+ drivers/net/wwan/Kconfig           |  18 ++++
+ drivers/net/wwan/Makefile          |   1 +
+ drivers/net/wwan/rpmsg_wwan_ctrl.c | 166 +++++++++++++++++++++++++++++
+ drivers/net/wwan/wwan_core.c       |  16 ++-
+ drivers/rpmsg/rpmsg_core.c         |   4 +-
+ include/linux/mod_devicetable.h    |   1 +
+ include/linux/wwan.h               |  13 ++-
+ 8 files changed, 219 insertions(+), 7 deletions(-)
+ create mode 100644 drivers/net/wwan/rpmsg_wwan_ctrl.c
 
-> 
-> 
-> > +	};
-> > +
-> > +	pmic@5 {
-> > +		compatible = "qcom,pmm8155au", "qcom,spmi-pmic";
-> > +		reg = <0x5 SPMI_USID>;
-> > +		#address-cells = <1>;
-> > +		#size-cells = <0>;
-> > +	};
-> > +};
-> 
-> 
-> Konrad
-> 
+-- 
+2.32.0
+
