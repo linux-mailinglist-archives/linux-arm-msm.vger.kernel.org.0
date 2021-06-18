@@ -2,250 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BD4673AC99A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jun 2021 13:14:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8C7BE3AC9A8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jun 2021 13:17:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233967AbhFRLRC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Jun 2021 07:17:02 -0400
-Received: from relay08.th.seeweb.it ([5.144.164.169]:42603 "EHLO
-        relay08.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233552AbhFRLQ4 (ORCPT
+        id S231350AbhFRLTM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Jun 2021 07:19:12 -0400
+Received: from mo4-p01-ob.smtp.rzone.de ([85.215.255.52]:9544 "EHLO
+        mo4-p01-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229523AbhFRLTM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Jun 2021 07:16:56 -0400
-Received: from localhost.localdomain (83.6.168.10.neoplus.adsl.tpnet.pl [83.6.168.10])
-        by m-r2.th.seeweb.it (Postfix) with ESMTPA id 8BA783EE72;
-        Fri, 18 Jun 2021 13:14:44 +0200 (CEST)
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-To:     ~postmarketos/upstreaming@lists.sr.ht
-Cc:     martin.botka@somainline.org,
-        angelogioacchino.delregno@somainline.org,
-        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Jeffrey Hugo <jhugo@codeaurora.org>,
-        Taniya Das <tdas@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v3 3/3] clk: qcom: mmcc-msm8994: Add MSM8992 support
-Date:   Fri, 18 Jun 2021 13:14:34 +0200
-Message-Id: <20210618111435.595689-3-konrad.dybcio@somainline.org>
+        Fri, 18 Jun 2021 07:19:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1624015020;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=Message-Id:Date:Subject:Cc:To:From:Cc:Date:From:Subject:Sender;
+    bh=2IEraGzNWXmVYdeSeEGKrT4Xkx/HJOG80MAY09qwzKU=;
+    b=MhNpCRSVeiykPgc+vZZ4PyWh2hpCLJfiJdRDeHv6NjGfqhrEjC0GVkvPysJ3IQtrP2
+    z+SvB8yDvmfaqM/eAGzwlwxX6Zd5LLb1vyk2CI46v23FobqKoCPwO1ErzgFSSQym/K3F
+    UECZKSXYM9Qav/Uv8vc286lowUrWOqQj09azCHSy9QGrngNZ7gHS2dFEd3x60UaIPKf2
+    BBvAij1NWNxvqnyZS+RCb3y1wSw4KhBqoyXdO16FOJrwwLB/rd+ygcr1ETDaj89GpLhV
+    EKMjCu4gWVJtx8J7v+vKiuoQBuVsNTuxZwriEx+pwBqM8d4KAwrysjkVVWZwgOV+0osQ
+    FJvg==
+Authentication-Results: strato.com;
+    dkim=none
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVORvLd4SsytBXS7IYBkLahKxA626EOg=="
+X-RZG-CLASS-ID: mo00
+Received: from droid..
+    by smtp.strato.de (RZmta 47.27.3 DYNA|AUTH)
+    with ESMTPSA id 000885x5IBGx5MN
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Fri, 18 Jun 2021 13:16:59 +0200 (CEST)
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, Ohad Ben-Cohen <ohad@wizery.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Stephan Gerhold <stephan@gerhold.net>
+Subject: [PATCH 1/3] soc: qcom: smem_state: Add devm_qcom_smem_state_get()
+Date:   Fri, 18 Jun 2021 13:15:54 +0200
+Message-Id: <20210618111556.53416-1-stephan@gerhold.net>
 X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20210618111435.595689-1-konrad.dybcio@somainline.org>
-References: <20210618111435.595689-1-konrad.dybcio@somainline.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-MSM8992 features less clocks & GDSCS and has different
-freq tables for some of them.
+It is easy to forget to call qcom_smem_state_put() after
+a qcom_smem_state_get(). Introduce a devm_qcom_smem_state_get()
+helper function that automates this so that qcom_smem_state_put()
+is automatically called when a device is removed.
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
 ---
-Changes since v2:
-- Use NULL instead of 0 for disabled clocks
+I use this in my WIP bam-dmux driver, so it might simplify coordination
+later if we can somehow get this in for 5.14 (if it isn't too late yet).
 
- drivers/clk/qcom/mmcc-msm8994.c | 126 ++++++++++++++++++++++++++++++++
- 1 file changed, 126 insertions(+)
+Similar code can be found in clk-devres.c for example:
+https://elixir.bootlin.com/linux/v5.13-rc6/source/drivers/clk/clk-devres.c#L7
+---
+ drivers/soc/qcom/smem_state.c       | 36 +++++++++++++++++++++++++++++
+ include/linux/soc/qcom/smem_state.h |  7 ++++++
+ 2 files changed, 43 insertions(+)
 
-diff --git a/drivers/clk/qcom/mmcc-msm8994.c b/drivers/clk/qcom/mmcc-msm8994.c
-index 7f65c0e61908..89c5f5fa7d9a 100644
---- a/drivers/clk/qcom/mmcc-msm8994.c
-+++ b/drivers/clk/qcom/mmcc-msm8994.c
-@@ -329,6 +329,14 @@ static const struct freq_tbl ftbl_axi_clk_src[] = {
- 	{ }
- };
+diff --git a/drivers/soc/qcom/smem_state.c b/drivers/soc/qcom/smem_state.c
+index d2b558438deb..31faf4aa868e 100644
+--- a/drivers/soc/qcom/smem_state.c
++++ b/drivers/soc/qcom/smem_state.c
+@@ -151,6 +151,42 @@ void qcom_smem_state_put(struct qcom_smem_state *state)
+ }
+ EXPORT_SYMBOL_GPL(qcom_smem_state_put);
  
-+static const struct freq_tbl ftbl_axi_clk_src_8992[] = {
-+	F(75000000, P_GPLL0, 8, 0, 0),
-+	F(150000000, P_GPLL0, 4, 0, 0),
-+	F(300000000, P_GPLL0, 2, 0, 0),
-+	F(404000000, P_MMPLL1, 2, 0, 0),
-+	{ }
-+};
++static void devm_qcom_smem_state_release(struct device *dev, void *res)
++{
++	qcom_smem_state_put(*(struct qcom_smem_state **)res);
++}
 +
- static struct clk_rcg2 axi_clk_src = {
- 	.cmd_rcgr = 0x5040,
- 	.hid_width = 5,
-@@ -349,6 +357,12 @@ static const struct freq_tbl ftbl_csi0_1_2_3_clk_src[] = {
- 	{ }
- };
- 
-+static const struct freq_tbl ftbl_csi0_1_2_3_clk_src_8992[] = {
-+	F(100000000, P_GPLL0, 6, 0, 0),
-+	F(266670000, P_MMPLL0, 3, 0, 0),
-+	{ }
-+};
++/**
++ * devm_qcom_smem_state_get() - acquire handle to a devres managed state
++ * @dev:	client device pointer
++ * @con_id:	name of the state to lookup
++ * @bit:	flags from the state reference, indicating which bit's affected
++ *
++ * Returns handle to the state, or ERR_PTR(). qcom_smem_state_put() is called
++ * automatically when @dev is removed.
++ */
++struct qcom_smem_state *devm_qcom_smem_state_get(struct device *dev,
++						 const char *con_id,
++						 unsigned *bit)
++{
++	struct qcom_smem_state **ptr, *state;
 +
- static struct clk_rcg2 csi0_clk_src = {
- 	.cmd_rcgr = 0x3090,
- 	.hid_width = 5,
-@@ -375,6 +389,16 @@ static const struct freq_tbl ftbl_vcodec0_clk_src[] = {
- 	{ }
- };
- 
-+static const struct freq_tbl ftbl_vcodec0_clk_src_8992[] = {
-+	F(66670000, P_GPLL0, 9, 0, 0),
-+	F(100000000, P_GPLL0, 6, 0, 0),
-+	F(133330000, P_GPLL0, 4.5, 0, 0),
-+	F(200000000, P_MMPLL0, 4, 0, 0),
-+	F(320000000, P_MMPLL0, 2.5, 0, 0),
-+	F(510000000, P_MMPLL3, 2, 0, 0),
-+	{ }
-+};
++	ptr = devres_alloc(devm_qcom_smem_state_release, sizeof(*ptr), GFP_KERNEL);
++	if (!ptr)
++		return ERR_PTR(-ENOMEM);
 +
- static struct clk_rcg2 vcodec0_clk_src = {
- 	.cmd_rcgr = 0x1000,
- 	.mnd_width = 8,
-@@ -440,6 +464,16 @@ static const struct freq_tbl ftbl_vfe0_clk_src[] = {
- 	{ }
- };
- 
-+static const struct freq_tbl ftbl_vfe0_1_clk_src_8992[] = {
-+	F(80000000, P_GPLL0, 7.5, 0, 0),
-+	F(100000000, P_GPLL0, 6, 0, 0),
-+	F(200000000, P_GPLL0, 3, 0, 0),
-+	F(320000000, P_MMPLL0, 2.5, 0, 0),
-+	F(480000000, P_MMPLL4, 2, 0, 0),
-+	F(600000000, P_GPLL0, 1, 0, 0),
-+	{ }
-+};
-+
- static struct clk_rcg2 vfe0_clk_src = {
- 	.cmd_rcgr = 0x3600,
- 	.hid_width = 5,
-@@ -486,6 +520,15 @@ static const struct freq_tbl ftbl_cpp_clk_src[] = {
- 	{ }
- };
- 
-+static const struct freq_tbl ftbl_cpp_clk_src_8992[] = {
-+	F(100000000, P_GPLL0, 6, 0, 0),
-+	F(200000000, P_GPLL0, 3, 0, 0),
-+	F(320000000, P_MMPLL0, 2.5, 0, 0),
-+	F(480000000, P_MMPLL4, 2, 0, 0),
-+	F(640000000, P_MMPLL4, 1.5, 0, 0),
-+	{ }
-+};
-+
- static struct clk_rcg2 cpp_clk_src = {
- 	.cmd_rcgr = 0x3640,
- 	.hid_width = 5,
-@@ -601,6 +644,17 @@ static const struct freq_tbl ftbl_mdp_clk_src[] = {
- 	{ }
- };
- 
-+static const struct freq_tbl ftbl_mdp_clk_src_8992[] = {
-+	F(85710000, P_GPLL0, 7, 0, 0),
-+	F(171430000, P_GPLL0, 3.5, 0, 0),
-+	F(200000000, P_GPLL0, 3, 0, 0),
-+	F(240000000, P_GPLL0, 2.5, 0, 0),
-+	F(266670000, P_MMPLL0, 3, 0, 0),
-+	F(320000000, P_MMPLL0, 2.5, 0, 0),
-+	F(400000000, P_MMPLL0, 2, 0, 0),
-+	{ }
-+};
-+
- static struct clk_rcg2 mdp_clk_src = {
- 	.cmd_rcgr = 0x2040,
- 	.hid_width = 5,
-@@ -654,6 +708,16 @@ static const struct freq_tbl ftbl_ocmemnoc_clk_src[] = {
- 	{ }
- };
- 
-+static const struct freq_tbl ftbl_ocmemnoc_clk_src_8992[] = {
-+	F(19200000, P_XO, 1, 0, 0),
-+	F(75000000, P_GPLL0, 8, 0, 0),
-+	F(100000000, P_GPLL0, 6, 0, 0),
-+	F(150000000, P_GPLL0, 4, 0, 0),
-+	F(320000000, P_MMPLL0, 2.5, 0, 0),
-+	F(400000000, P_MMPLL0, 2, 0, 0),
-+	{ }
-+};
-+
- static struct clk_rcg2 ocmemnoc_clk_src = {
- 	.cmd_rcgr = 0x5090,
- 	.hid_width = 5,
-@@ -767,6 +831,35 @@ static const struct freq_tbl ftbl_mclk0_1_2_3_clk_src[] = {
- 	{ }
- };
- 
-+static const struct freq_tbl ftbl_mclk0_clk_src_8992[] = {
-+	F(4800000, P_XO, 4, 0, 0),
-+	F(6000000, P_MMPLL4, 10, 1, 16),
-+	F(8000000, P_MMPLL4, 10, 1, 12),
-+	F(9600000, P_XO, 2, 0, 0),
-+	F(12000000, P_MMPLL4, 10, 1, 8),
-+	F(16000000, P_MMPLL4, 10, 1, 6),
-+	F(19200000, P_XO, 1, 0, 0),
-+	F(24000000, P_MMPLL4, 10, 1, 4),
-+	F(32000000, P_MMPLL4, 10, 1, 3),
-+	F(48000000, P_MMPLL4, 10, 1, 2),
-+	F(64000000, P_MMPLL4, 15, 0, 0),
-+	{ }
-+};
-+
-+static const struct freq_tbl ftbl_mclk1_2_3_clk_src_8992[] = {
-+	F(4800000, P_XO, 4, 0, 0),
-+	F(6000000, P_MMPLL4, 10, 1, 16),
-+	F(8000000, P_MMPLL4, 10, 1, 12),
-+	F(9600000, P_XO, 2, 0, 0),
-+	F(16000000, P_MMPLL4, 10, 1, 6),
-+	F(19200000, P_XO, 1, 0, 0),
-+	F(24000000, P_MMPLL4, 10, 1, 4),
-+	F(32000000, P_MMPLL4, 10, 1, 3),
-+	F(48000000, P_MMPLL4, 10, 1, 2),
-+	F(64000000, P_MMPLL4, 15, 0, 0),
-+	{ }
-+};
-+
- static struct clk_rcg2 mclk0_clk_src = {
- 	.cmd_rcgr = 0x3360,
- 	.mnd_width = 8,
-@@ -2468,6 +2561,39 @@ static int mmcc_msm8994_probe(struct platform_device *pdev)
- {
- 	struct regmap *regmap;
- 
-+	if (of_device_is_compatible(pdev->dev.of_node, "qcom,mmcc-msm8992")) {
-+		/* MSM8992 features less clocks and some have different freq tables */
-+		mmcc_msm8994_desc.clks[CAMSS_JPEG_JPEG1_CLK] = NULL;
-+		mmcc_msm8994_desc.clks[CAMSS_JPEG_JPEG2_CLK] = NULL;
-+		mmcc_msm8994_desc.clks[FD_CORE_CLK_SRC] = NULL;
-+		mmcc_msm8994_desc.clks[FD_CORE_CLK] = NULL;
-+		mmcc_msm8994_desc.clks[FD_CORE_UAR_CLK] = NULL;
-+		mmcc_msm8994_desc.clks[FD_AXI_CLK] = NULL;
-+		mmcc_msm8994_desc.clks[FD_AHB_CLK] = NULL;
-+		mmcc_msm8994_desc.clks[JPEG1_CLK_SRC] = NULL;
-+		mmcc_msm8994_desc.clks[JPEG2_CLK_SRC] = NULL;
-+		mmcc_msm8994_desc.clks[VENUS0_CORE2_VCODEC_CLK] = NULL;
-+
-+		mmcc_msm8994_desc.gdscs[FD_GDSC] = NULL;
-+		mmcc_msm8994_desc.gdscs[VENUS_CORE2_GDSC] = NULL;
-+
-+		axi_clk_src.freq_tbl = ftbl_axi_clk_src_8992;
-+		cpp_clk_src.freq_tbl = ftbl_cpp_clk_src_8992;
-+		csi0_clk_src.freq_tbl = ftbl_csi0_1_2_3_clk_src_8992;
-+		csi1_clk_src.freq_tbl = ftbl_csi0_1_2_3_clk_src_8992;
-+		csi2_clk_src.freq_tbl = ftbl_csi0_1_2_3_clk_src_8992;
-+		csi3_clk_src.freq_tbl = ftbl_csi0_1_2_3_clk_src_8992;
-+		mclk0_clk_src.freq_tbl = ftbl_mclk0_clk_src_8992;
-+		mclk1_clk_src.freq_tbl = ftbl_mclk1_2_3_clk_src_8992;
-+		mclk2_clk_src.freq_tbl = ftbl_mclk1_2_3_clk_src_8992;
-+		mclk3_clk_src.freq_tbl = ftbl_mclk1_2_3_clk_src_8992;
-+		mdp_clk_src.freq_tbl = ftbl_mdp_clk_src_8992;
-+		ocmemnoc_clk_src.freq_tbl = ftbl_ocmemnoc_clk_src_8992;
-+		vcodec0_clk_src.freq_tbl = ftbl_vcodec0_clk_src_8992;
-+		vfe0_clk_src.freq_tbl = ftbl_vfe0_1_clk_src_8992;
-+		vfe1_clk_src.freq_tbl = ftbl_vfe0_1_clk_src_8992;
++	state = qcom_smem_state_get(dev, con_id, bit);
++	if (!IS_ERR(state)) {
++		*ptr = state;
++		devres_add(dev, ptr);
++	} else {
++		devres_free(ptr);
 +	}
 +
- 	regmap = qcom_cc_map(pdev, &mmcc_msm8994_desc);
- 	if (IS_ERR(regmap))
- 		return PTR_ERR(regmap);
++	return state;
++}
++EXPORT_SYMBOL_GPL(devm_qcom_smem_state_get);
++
+ /**
+  * qcom_smem_state_register() - register a new state
+  * @of_node:	of_node used for matching client lookups
+diff --git a/include/linux/soc/qcom/smem_state.h b/include/linux/soc/qcom/smem_state.h
+index 63ad8cddad14..17c56a50302f 100644
+--- a/include/linux/soc/qcom/smem_state.h
++++ b/include/linux/soc/qcom/smem_state.h
+@@ -14,6 +14,7 @@ struct qcom_smem_state_ops {
+ #ifdef CONFIG_QCOM_SMEM_STATE
+ 
+ struct qcom_smem_state *qcom_smem_state_get(struct device *dev, const char *con_id, unsigned *bit);
++struct qcom_smem_state *devm_qcom_smem_state_get(struct device *dev, const char *con_id, unsigned *bit);
+ void qcom_smem_state_put(struct qcom_smem_state *);
+ 
+ int qcom_smem_state_update_bits(struct qcom_smem_state *state, u32 mask, u32 value);
+@@ -29,6 +30,12 @@ static inline struct qcom_smem_state *qcom_smem_state_get(struct device *dev,
+ 	return ERR_PTR(-EINVAL);
+ }
+ 
++static inline struct qcom_smem_state *devm_qcom_smem_state_get(struct device *dev,
++	const char *con_id, unsigned *bit)
++{
++	return ERR_PTR(-EINVAL);
++}
++
+ static inline void qcom_smem_state_put(struct qcom_smem_state *state)
+ {
+ }
 -- 
 2.32.0
 
