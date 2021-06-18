@@ -2,34 +2,34 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6392A3AD161
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jun 2021 19:41:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 134B33AD165
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Jun 2021 19:43:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234209AbhFRRoE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Jun 2021 13:44:04 -0400
+        id S234242AbhFRRp0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Jun 2021 13:45:26 -0400
 Received: from so254-9.mailgun.net ([198.61.254.9]:28127 "EHLO
         so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234197AbhFRRoD (ORCPT
+        with ESMTP id S233934AbhFRRpZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Jun 2021 13:44:03 -0400
+        Fri, 18 Jun 2021 13:45:25 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1624038114; h=Message-ID: References: In-Reply-To: Reply-To:
+ s=smtp; t=1624038196; h=Message-ID: References: In-Reply-To: Reply-To:
  Subject: Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=sU5sgKcZ96Cn66e0czyDGcy1KU+KfvULcO3v9tIfoSY=;
- b=LTPeKd5n6jgpwOMr+LgG/BY50qOYdaqO6aDGSqMp8rzIchTxwFzhNCFUg2C6qcPLKWwSiP5k
- VM5knvTdqJIYh+mHfqNkdSM73yz3IJesI7Gze+Br4h86/pfERE59QKZumo+tvrWJzkg5NBJi
- zj1PhUyn+sYnpUJBtIbYWiTp9sY=
+ MIME-Version: Sender; bh=WgLS2/3NtLjKkjEgDI5ory+8H10ZKBPmMZF6FlD9dMQ=;
+ b=XwZpteruADBwmVoRyUYEEvP+cEZkWezQjtZXM+xctsLS6YIBZHLWHy4wGTRJXHbYDcKg4tTX
+ XMgrIGDWZaj7P2+ffEC61hyiw9AOXGU13b454RRZOQVRoxiDDiYAMuUc/DFGt3v/JcPLO3j4
+ FQVbenTHRraKYuuGcyyNgBJIENU=
 X-Mailgun-Sending-Ip: 198.61.254.9
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
- 60ccdad0abfd22a3dcea0dc3 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 18 Jun 2021 17:41:36
+ smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
+ 60ccdb2eea2aacd72903a8a2 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 18 Jun 2021 17:43:10
  GMT
 Sender: bbhatt=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id CCA16C433F1; Fri, 18 Jun 2021 17:41:35 +0000 (UTC)
+        id 464BCC43460; Fri, 18 Jun 2021 17:43:10 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -39,197 +39,129 @@ Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
         (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
         (Authenticated sender: bbhatt)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id BC8B3C433D3;
-        Fri, 18 Jun 2021 17:41:34 +0000 (UTC)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 25348C4338A;
+        Fri, 18 Jun 2021 17:43:09 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII;
  format=flowed
 Content-Transfer-Encoding: 7bit
-Date:   Fri, 18 Jun 2021 10:41:34 -0700
+Date:   Fri, 18 Jun 2021 10:43:09 -0700
 From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
 To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
         jhugo@codeaurora.org, linux-kernel@vger.kernel.org,
         carl.yin@quectel.com, naveen.kumar@quectel.com,
         loic.poulain@linaro.org
-Subject: Re: [PATCH] bus: mhi: pci_generic: Apply no-op for wake using inband
- wake support flag
+Subject: Re: [PATCH v1 1/4] bus: mhi: core: Add support for processing
+ priority of event ring
 Organization: Qualcomm Innovation Center, Inc.
 Reply-To: bbhatt@codeaurora.org
 Mail-Reply-To: bbhatt@codeaurora.org
-In-Reply-To: <20210618172746.GA30140@workstation>
-References: <1623954233-32092-1-git-send-email-bbhatt@codeaurora.org>
- <20210618065249.GN3682@workstation>
- <83d12d5cc46ef7fda12caf7e3bdfddd1@codeaurora.org>
- <20210618172746.GA30140@workstation>
-Message-ID: <e568a1f1db7325800b6e43f3526be2fd@codeaurora.org>
+In-Reply-To: <20210618173102.GB30140@workstation>
+References: <1623965435-30224-1-git-send-email-bbhatt@codeaurora.org>
+ <1623965435-30224-2-git-send-email-bbhatt@codeaurora.org>
+ <20210618070322.GO3682@workstation>
+ <df7c735f0caeb449bbaa8a6e040ae556@codeaurora.org>
+ <20210618173102.GB30140@workstation>
+Message-ID: <a7dabe81a269af96638389854294d0ae@codeaurora.org>
 X-Sender: bbhatt@codeaurora.org
 User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-06-18 10:27 AM, Manivannan Sadhasivam wrote:
-> On Fri, Jun 18, 2021 at 10:06:28AM -0700, Bhaumik Bhatt wrote:
+Hi Mani,
+On 2021-06-18 10:31 AM, Manivannan Sadhasivam wrote:
+> On Fri, Jun 18, 2021 at 10:17:59AM -0700, Bhaumik Bhatt wrote:
 >> Hi Mani,
->> On 2021-06-17 11:52 PM, Manivannan Sadhasivam wrote:
->> > On Thu, Jun 17, 2021 at 11:23:53AM -0700, Bhaumik Bhatt wrote:
->> > > Devices such as SDX24 do not have the provision for inband wake
->> > > doorbell in the form of channel 127. Newer devices such as SDX55
->> > > or SDX65 have it by default. Ensure the functionality is used
->> > > based on this such that device wake stays held when a client
->> > > driver uses mhi_device_get() API or the equivalent debugfs entry.
+>> 
+>> On 2021-06-18 12:03 AM, Manivannan Sadhasivam wrote:
+>> > On Thu, Jun 17, 2021 at 02:30:32PM -0700, Bhaumik Bhatt wrote:
+>> > > From: Hemant Kumar <hemantk@codeaurora.org>
 >> > >
->> > > Fixes: e3e5e6508fc1 ("bus: mhi: pci_generic: No-Op for device_wake
->> > > operations")
+>> > > Event ring priorities are currently set to 1 and are unused.
+>> > > Default processing priority for event rings is set to regular
+>> > > tasklet. Controllers can choose to use high priority tasklet
+>> > > scheduling for certain event rings critical for processing such
+>> > > as ones transporting control information if they wish to avoid
+>> > > with system scheduling delays for those packets. In order to
+>> > > support these use cases, allow controllers to set event ring
+>> > > priority to high. This patch only adds support and does not
+>> > > enable usage of these priorities.
+>> > >
+>> > > Signed-off-by: Hemant Kumar <hemantk@codeaurora.org>
 >> > > Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
 >> > > ---
->> > >  drivers/bus/mhi/pci_generic.c | 26 ++++++++++++++++++--------
->> > >  1 file changed, 18 insertions(+), 8 deletions(-)
+>> > >  drivers/bus/mhi/core/internal.h |  2 +-
+>> > >  drivers/bus/mhi/core/main.c     | 19 ++++++++++++++++---
+>> > >  include/linux/mhi.h             | 14 ++++++++++++--
+>> > >  3 files changed, 29 insertions(+), 6 deletions(-)
 >> > >
->> > > diff --git a/drivers/bus/mhi/pci_generic.c
->> > > b/drivers/bus/mhi/pci_generic.c
->> > > index d84b743..31360a2 100644
->> > > --- a/drivers/bus/mhi/pci_generic.c
->> > > +++ b/drivers/bus/mhi/pci_generic.c
->> > > @@ -32,6 +32,7 @@
->> > >   * @edl: emergency download mode firmware path (if any)
->> > >   * @bar_num: PCI base address register to use for MHI MMIO register
->> > > space
->> > >   * @dma_data_width: DMA transfer word size (32 or 64 bits)
->> > > + * @no_inband_wake: Devices without inband wake support (such as
->> > > sdx24)
+>> > > diff --git a/drivers/bus/mhi/core/internal.h
+>> > > b/drivers/bus/mhi/core/internal.h
+>> > > index 672052f..666e102 100644
+>> > > --- a/drivers/bus/mhi/core/internal.h
+>> > > +++ b/drivers/bus/mhi/core/internal.h
+>> > > @@ -535,7 +535,7 @@ struct mhi_event {
+>> > >  	u32 intmod;
+>> > >  	u32 irq;
+>> > >  	int chan; /* this event ring is dedicated to a channel (optional) */
+>> > > -	u32 priority;
+>> > > +	enum mhi_er_priority priority;
 >> >
->> > I'd rather like this field to be "inband_wake" and set to false/true
->> > based on the capability of the devices. Rest looks good.
+>> > Instead of using enum for priorities, can we just make use of the
+>> > existing "priority" field? Since the existing controllers set it to "1",
+>> > can we use "0" as the high priority?
 >> >
->> > Thanks,
->> > Mani
+>> > This way we don't need to change the controller drivers.
 >> >
->> I should have known this was coming :)
+>> I agree but the reasons to do the enum approach was to allow for 
+>> future
+>> expansion of the handling if it becomes necessary and provide clarity 
+>> for
+>> the field.
 >> 
->> Can I use sideband_wake instead of no_inband_wake and leave the 
->> booleans as
->> is?
+>> I can always do it this way for now and we can have the enum for 
+>> another
+>> time but would prefer updating what we have now.
 > 
-> Do you mean, the older devices uses a dedicated sideband GPIO for
-> controlling the wakeup? If so, what is it?
+> Yeah, let's deal with it later once the necessity arises.
 > 
- From what I know, this used to be the DEVICE_WAKE GPIO for SDX24. We 
-moved to use
-the channel 127 doorbell as WAKE doorbell for this purpose SDX55 onwards 
-for ease
-of deployment.
+Sure. I will make the v2.
 
->> By default, inband_wake will have to be true for any and all devices 
->> moving
->> forward.
+>> > >  	enum mhi_er_data_type data_type;
+>> > >  	struct mhi_ring ring;
+>> > >  	struct db_cfg db_cfg;
+>> > > diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
+>> > > index 8ac73f9..bfc9776 100644
+>> > > --- a/drivers/bus/mhi/core/main.c
+>> > > +++ b/drivers/bus/mhi/core/main.c
+>> > > @@ -425,10 +425,11 @@ void mhi_create_devices(struct mhi_controller
+>> > > *mhi_cntrl)
+>> > >  	}
+>> > >  }
+>> > >
+> 
+> [...]
+> 
+>> Existing controllers would be fine.
+>> 
+>> Do you think we have a problem if a new controller blindly inputs a 
+>> "0" in
+>> the priority not knowing the impact of it?
 >> 
 > 
-> Right but still the functionality is not present in older devices. So I
-> think it makes sense to stay with "inband_wake".
+> We should document it in the kernel doc for the struct field and that
+> should be enough. We can't do much if people doesn't read the doc ;)
 > 
 > Thanks,
 > Mani
 > 
-So, by default we would not have to add explicit "true" for inband_wake 
-as
-newer devices will have the feature and controller drivers do not need 
-to
-populate the entry for a static const struct.
+Totally agree :)
 
->> Please let me know your preference.
->> > >   */
->> > >  struct mhi_pci_dev_info {
->> > >  	const struct mhi_controller_config *config;
->> > > @@ -40,6 +41,7 @@ struct mhi_pci_dev_info {
->> > >  	const char *edl;
->> > >  	unsigned int bar_num;
->> > >  	unsigned int dma_data_width;
->> > > +	bool no_inband_wake;
->> > >  };
->> > >
->> > >  #define MHI_CHANNEL_CONFIG_UL(ch_num, ch_name, el_count, ev_ring) \
->> > > @@ -242,7 +244,8 @@ static const struct mhi_pci_dev_info
->> > > mhi_qcom_sdx65_info = {
->> > >  	.edl = "qcom/sdx65m/edl.mbn",
->> > >  	.config = &modem_qcom_v1_mhiv_config,
->> > >  	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
->> > > -	.dma_data_width = 32
->> > > +	.dma_data_width = 32,
->> > > +	.no_inband_wake = false
->> > >  };
->> > >
->> > >  static const struct mhi_pci_dev_info mhi_qcom_sdx55_info = {
->> > > @@ -251,7 +254,8 @@ static const struct mhi_pci_dev_info
->> > > mhi_qcom_sdx55_info = {
->> > >  	.edl = "qcom/sdx55m/edl.mbn",
->> > >  	.config = &modem_qcom_v1_mhiv_config,
->> > >  	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
->> > > -	.dma_data_width = 32
->> > > +	.dma_data_width = 32,
->> > > +	.no_inband_wake = false
->> > >  };
->> > >
->> > >  static const struct mhi_pci_dev_info mhi_qcom_sdx24_info = {
->> > > @@ -259,7 +263,8 @@ static const struct mhi_pci_dev_info
->> > > mhi_qcom_sdx24_info = {
->> > >  	.edl = "qcom/prog_firehose_sdx24.mbn",
->> > >  	.config = &modem_qcom_v1_mhiv_config,
->> > >  	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
->> > > -	.dma_data_width = 32
->> > > +	.dma_data_width = 32,
->> > > +	.no_inband_wake = true
->> > >  };
->> > >
->> > >  static const struct mhi_channel_config mhi_quectel_em1xx_channels[]
->> > > = {
->> > > @@ -301,7 +306,8 @@ static const struct mhi_pci_dev_info
->> > > mhi_quectel_em1xx_info = {
->> > >  	.edl = "qcom/prog_firehose_sdx24.mbn",
->> > >  	.config = &modem_quectel_em1xx_config,
->> > >  	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
->> > > -	.dma_data_width = 32
->> > > +	.dma_data_width = 32,
->> > > +	.no_inband_wake = true
->> > >  };
->> > >
->> > >  static const struct mhi_channel_config mhi_foxconn_sdx55_channels[]
->> > > = {
->> > > @@ -339,7 +345,8 @@ static const struct mhi_pci_dev_info
->> > > mhi_foxconn_sdx55_info = {
->> > >  	.edl = "qcom/sdx55m/edl.mbn",
->> > >  	.config = &modem_foxconn_sdx55_config,
->> > >  	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
->> > > -	.dma_data_width = 32
->> > > +	.dma_data_width = 32,
->> > > +	.no_inband_wake = false
->> > >  };
->> > >
->> > >  static const struct pci_device_id mhi_pci_id_table[] = {
->> > > @@ -640,9 +647,12 @@ static int mhi_pci_probe(struct pci_dev *pdev,
->> > > const struct pci_device_id *id)
->> > >  	mhi_cntrl->status_cb = mhi_pci_status_cb;
->> > >  	mhi_cntrl->runtime_get = mhi_pci_runtime_get;
->> > >  	mhi_cntrl->runtime_put = mhi_pci_runtime_put;
->> > > -	mhi_cntrl->wake_get = mhi_pci_wake_get_nop;
->> > > -	mhi_cntrl->wake_put = mhi_pci_wake_put_nop;
->> > > -	mhi_cntrl->wake_toggle = mhi_pci_wake_toggle_nop;
->> > > +
->> > > +	if (info->no_inband_wake) {
->> > > +		mhi_cntrl->wake_get = mhi_pci_wake_get_nop;
->> > > +		mhi_cntrl->wake_put = mhi_pci_wake_put_nop;
->> > > +		mhi_cntrl->wake_toggle = mhi_pci_wake_toggle_nop;
->> > > +	}
->> > >
->> > >  	err = mhi_pci_claim(mhi_cntrl, info->bar_num,
->> > > DMA_BIT_MASK(info->dma_data_width));
->> > >  	if (err)
->> > > --
->> > > The Qualcomm Innovation Center, Inc. is a member of the Code Aurora
->> > > Forum,
->> > > a Linux Foundation Collaborative Project
->> > >
+>> If you give me a go ahead, I can make these changes in v2 and leave 
+>> the enum
+>> stuff out.
 >> 
 >> Thanks,
 >> Bhaumik
