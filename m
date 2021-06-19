@@ -2,189 +2,156 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D14203AD7E1
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Jun 2021 06:41:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1248A3AD801
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Jun 2021 08:02:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229971AbhFSEnZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 19 Jun 2021 00:43:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37674 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232965AbhFSEnY (ORCPT
+        id S231952AbhFSFy5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 19 Jun 2021 01:54:57 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:61310 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233674AbhFSFy4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 19 Jun 2021 00:43:24 -0400
-Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F7C1C061574
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jun 2021 21:41:12 -0700 (PDT)
-Received: by mail-pf1-x42a.google.com with SMTP id y4so2302875pfi.9
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Jun 2021 21:41:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=L+FkwuKoKiTPSoSjVlEsRP6H4c6gq5WUFtj0/g0L8iw=;
-        b=BPKaVlyFFNrMbLIyT5/ssBznlQHvvlhArZbGZcAQdZp1hDyZoeP1C1tb0+DplIcY9i
-         HUP9GK9CRVLyM+EaFUv+iIZAUbrKNvdpLwj7QeaKFWlRDRYGdqZH6OVHBcMoVZEuLwuW
-         y8ZZfi2AqfytK0uIXfEfWmD8THwl25h6nsP3V6/2T8By/zkrmH8qb5LI7NgFdUG4lnCT
-         Fb/lEnkuhfVg7OoVevrGhNwr+vH7GhdJygFvPtFpCq9TP4SyoPCtRgtDlW1R8tKliFf5
-         Ok3ryGFiMA5EZExlj6IppDpDRxnxTlo1R4ibuZWVUdhGIOe8ukQhYqQUoj9nxwuS+11t
-         TrXg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=L+FkwuKoKiTPSoSjVlEsRP6H4c6gq5WUFtj0/g0L8iw=;
-        b=aQ4ZTGr6NWJYN+6Nv5XhxLqVDQ8ZyOZaj13lHX4tMHM6h1BSt1Xx3js86TxBfYN7oB
-         56hddJRfX4omXx+Evmk/OfLwPKe3Dzmf4kJbRcR2/WfZRVyT3Jhs71/8LyZyixjrXw4r
-         lfXleUvHFPecG/ZDLoe3hzU8JzZV8+IwYrTfL/M2Dki+ElJv3PsIOhjNevsJDd+4QKuO
-         0t+4zle0m8Rxgo715rTJMtQfxFQVNnqWbOFiHGXLqNohj4aGoB2/VOwKMzD91nEAtlVW
-         tzCvH7ns59AqzsBqnEDQetX51BDRSsboP2KH1bWMn47YCyGA5aA6nGPWQzWosuWXqbBQ
-         RvXA==
-X-Gm-Message-State: AOAM5303H0ueDGWiNoarR1pdYej+Y3X4kmvtwy0CnU8EYM/R4pGFRdjq
-        hGihhUPHVdWq/PtbyOwHT4eI
-X-Google-Smtp-Source: ABdhPJxSTRhdopdhslvzxn3+uPeYSgdTaw/74YCyMv9DhLc9/WvHi67mBrWQDGiot26tNlJ5Y2LhuA==
-X-Received: by 2002:a05:6a00:1146:b029:2fe:d681:fbcc with SMTP id b6-20020a056a001146b02902fed681fbccmr8592085pfm.31.1624077671932;
-        Fri, 18 Jun 2021 21:41:11 -0700 (PDT)
-Received: from workstation ([120.138.12.53])
-        by smtp.gmail.com with ESMTPSA id q4sm9487870pfg.3.2021.06.18.21.41.09
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 18 Jun 2021 21:41:11 -0700 (PDT)
-Date:   Sat, 19 Jun 2021 10:11:07 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Bhaumik Bhatt <bbhatt@codeaurora.org>
-Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
-        jhugo@codeaurora.org, linux-kernel@vger.kernel.org,
-        carl.yin@quectel.com, naveen.kumar@quectel.com,
-        loic.poulain@linaro.org
-Subject: Re: [PATCH v2] bus: mhi: pci_generic: Apply no-op for wake using
- sideband wake boolean
-Message-ID: <20210619044107.GB4889@workstation>
-References: <1624053302-22470-1-git-send-email-bbhatt@codeaurora.org>
+        Sat, 19 Jun 2021 01:54:56 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1624081966; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=Q/juTnKCxiBQQdyEvtKPoStE1ioIgeHfyaGfZObCiA0=;
+ b=Ig8CdKc6I1yJLiYZWXB4iQ7bn/mLNSLE3d8bYNlv8H/tzkU6bD+USmRIrp6J1xnAMaLLYuk+
+ cwW63+K6iCQFs2mVMXGFA1n6RcckuQvqbIAhicJyuurstFDzuY3IRba60CCCDADFhRqRqlt5
+ LUd6nYR1T+FKmnrOHK+m3kdE7+E=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
+ 60cd862b51f29e6bae2a4dca (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Sat, 19 Jun 2021 05:52:43
+ GMT
+Sender: vgarodia=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 67CC7C433F1; Sat, 19 Jun 2021 05:52:42 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: vgarodia)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 9061CC433D3;
+        Sat, 19 Jun 2021 05:52:41 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1624053302-22470-1-git-send-email-bbhatt@codeaurora.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 8bit
+Date:   Sat, 19 Jun 2021 11:22:41 +0530
+From:   vgarodia@codeaurora.org
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc:     mansur@codeaurora.org,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, dikshita@codeaurora.org
+Subject: Re: [PATCH] venus: helper: do not set constrained format for UBWC
+In-Reply-To: <28ab2706-2a0c-e9d6-c02c-8ede6fa01efb@linaro.org>
+References: <1622195288-18541-1-git-send-email-mansur@codeaurora.org>
+ <a66e00f2-af3a-9550-0779-625152cc2719@nexus-software.ie>
+ <17aaec56-bfad-63a6-b1c4-7562dedb3137@linaro.org>
+ <b649a7ecb3feb1fdf6d0743135814840@codeaurora.org>
+ <28ab2706-2a0c-e9d6-c02c-8ede6fa01efb@linaro.org>
+Message-ID: <05db22230b573c47376c95b624dcf23c@codeaurora.org>
+X-Sender: vgarodia@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jun 18, 2021 at 02:55:02PM -0700, Bhaumik Bhatt wrote:
-> Devices such as SDX24 do not have the provision for inband wake
-> doorbell in the form of channel 127 and instead have a sideband
-> GPIO for it. Newer devices such as SDX55 or SDX65 support inband
-> wake method by default. Ensure the functionality is used based on
-> this such that device wake stays held when a client driver uses
-> mhi_device_get() API or the equivalent debugfs entry.
+Hi Bryan,
+
+On 2021-06-14 17:26, Bryan O'Donoghue wrote:
+> On 14/06/2021 07:25, mansur@codeaurora.org wrote:
+>> On 2021-06-02 15:23, Stanimir Varbanov wrote:
+>>> Mansur, could you answer to Bryan's comments?
+>>> 
+>>>> On 5/28/21 8:23 PM, Bryan O'Donoghue wrote:
+>>>>> On 28/05/2021 10:48, Mansur Alisha Shaik wrote:
+>>>>>> Do not set constrained format explicitly for UBWC
+>>>>>> 
+>>>>>> Signed-off-by: Mansur Alisha Shaik <mansur@codeaurora.org>
+>>>>> 
+>>>>> Could you give a little bit more detail on why, what the side 
+>>>>> effects are ?
+>>>>> 
+>>      Sorry for late response, by default for NV12_UBWC is 128x32
+>> 
 > 
-> Fixes: e3e5e6508fc1 ("bus: mhi: pci_generic: No-Op for device_wake operations")
-> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+> Right so we have
+> 
+> pconstraint.plane_format[0].stride_multiples = 128;
+> pconstraint.plane_format[0].min_plane_buffer_height_multiple = 32;
+> 
+> and
+> 
+> pconstraint.plane_format[1].stride_multiples = 128;
+> pconstraint.plane_format[1].min_plane_buffer_height_multiple = 16;
+> 
+> and your patch says if opb_fmt == HFI_COLOR_FORMAT_NV12_UBWC then the
+> we shouldn't do hfi_session_set_property()
+> 
+> I'm sure that's a fix that works but, I wonder would it be possible to
+> fix this routine to continue to do hfi_session_set_property() with
+> updated parameters for opb_fmt == HFI_COLOR_FORMAT_NV12_UBWC ?
 
-One minor nit below but I'll fix it while applying.
+Venus hardware would always go with alignments as 128x32 for WxH 
+irrespective
+of color formats. It happened so (historically) that for NV12 (linear) 
+format,
+usecase started demanding for alignments as 256(interlace) and 
+512(HEIF), and
+hence NV12 was defaulted to align as 512x512 in firmware. This was done 
+to avoid
+carrying multiple alignments for different usecases, since aligning with 
+512x512
+would also align it with 128x32 and 256x256 as well.
+For UBWC, there is no need to override the default alignment of 128x32, 
+hence
+the api was added to override default alignments for applicable formats, 
+in
+this case NV12(Linear).
 
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> Could you drill down into the detail in the commit log a little bit
+> maybe giving a description of why returning for opb_fmt ==
+> HFI_COLOR_FORMAT_NV12_UBWC is the right thing to-do instead of adding
+> a new case to the routine for HFI_COLOR_FORMAT_NV12_UBWC and calling
+> hfi_session_set_property() ?
+
+Above details should provide info on the need to set this only for NV12 
+(linear)
+and skip for NV12 (UBWC).
+
+> Its more for my own education on this topic :) but, also helps
+> somebody else reading the log to understand what the fix is, why it is
+> done this way.
+> 
+>>>>> Should this be a Fixes: ?
+>>>>> 
+>>      without this fix on V6, firmware throws below SFR
+>>      qcom-venus aa00000.video-codec: SFR message from FW: 
+>> QC_IMAGE_VERSION_STRING=video-firmware.1.0-df9cb37cf8e507a4468265658702247652351a49 
+>>      Err_Fatal - 
+>> /local/mnt/workspace/pkg/builds/dynamic_timely/tree2/vendor/qcom/proprietary/video-firmware-noship/venus_proc/venus/decoders/common/src/video_decoder.c:6644:2fef3 
+>>      which result in playback happens through Software codec.
+> OK, I think I can answer my own question here.
+> 
+> Technically no since 6XX isn't in the long-term-support kernel but,
+> I'd suggest adding a "Fixes" anyway, so that other users know to apply
+> this patch to their trees.
+> 
+> Fixes: bc28936bbba9 ("media: venus: helpers, hfi, vdec: Set actual
+> plane constraints to FW")
+
+Yes, it should go as "Fixes" tag to above patch which we made for 6xx 
+recently.
 
 Thanks,
-Mani
-
-> ---
-> v2: Use sideband instead of no_inband_wake and update description
-> Tested on: X86_64 architecture with SDX65 device on Ubuntu 18.04
-> 
->  drivers/bus/mhi/pci_generic.c | 26 ++++++++++++++++++--------
->  1 file changed, 18 insertions(+), 8 deletions(-)
-> 
-> diff --git a/drivers/bus/mhi/pci_generic.c b/drivers/bus/mhi/pci_generic.c
-> index d84b743..56f7107 100644
-> --- a/drivers/bus/mhi/pci_generic.c
-> +++ b/drivers/bus/mhi/pci_generic.c
-> @@ -32,6 +32,7 @@
->   * @edl: emergency download mode firmware path (if any)
->   * @bar_num: PCI base address register to use for MHI MMIO register space
->   * @dma_data_width: DMA transfer word size (32 or 64 bits)
-> + * @sideband_wake: Devices without inband wake support (such as sdx24)
-
-Will change to:
-@sideband_wake: Devices using dedicated sideband GPIO for wakeup instead
-		of inband wake support (such as sdx24)
-
->   */
->  struct mhi_pci_dev_info {
->  	const struct mhi_controller_config *config;
-> @@ -40,6 +41,7 @@ struct mhi_pci_dev_info {
->  	const char *edl;
->  	unsigned int bar_num;
->  	unsigned int dma_data_width;
-> +	bool sideband_wake;
->  };
->  
->  #define MHI_CHANNEL_CONFIG_UL(ch_num, ch_name, el_count, ev_ring) \
-> @@ -242,7 +244,8 @@ static const struct mhi_pci_dev_info mhi_qcom_sdx65_info = {
->  	.edl = "qcom/sdx65m/edl.mbn",
->  	.config = &modem_qcom_v1_mhiv_config,
->  	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
-> -	.dma_data_width = 32
-> +	.dma_data_width = 32,
-> +	.sideband_wake = false
->  };
->  
->  static const struct mhi_pci_dev_info mhi_qcom_sdx55_info = {
-> @@ -251,7 +254,8 @@ static const struct mhi_pci_dev_info mhi_qcom_sdx55_info = {
->  	.edl = "qcom/sdx55m/edl.mbn",
->  	.config = &modem_qcom_v1_mhiv_config,
->  	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
-> -	.dma_data_width = 32
-> +	.dma_data_width = 32,
-> +	.sideband_wake = false
->  };
->  
->  static const struct mhi_pci_dev_info mhi_qcom_sdx24_info = {
-> @@ -259,7 +263,8 @@ static const struct mhi_pci_dev_info mhi_qcom_sdx24_info = {
->  	.edl = "qcom/prog_firehose_sdx24.mbn",
->  	.config = &modem_qcom_v1_mhiv_config,
->  	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
-> -	.dma_data_width = 32
-> +	.dma_data_width = 32,
-> +	.sideband_wake = true
->  };
->  
->  static const struct mhi_channel_config mhi_quectel_em1xx_channels[] = {
-> @@ -301,7 +306,8 @@ static const struct mhi_pci_dev_info mhi_quectel_em1xx_info = {
->  	.edl = "qcom/prog_firehose_sdx24.mbn",
->  	.config = &modem_quectel_em1xx_config,
->  	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
-> -	.dma_data_width = 32
-> +	.dma_data_width = 32,
-> +	.sideband_wake = true
->  };
->  
->  static const struct mhi_channel_config mhi_foxconn_sdx55_channels[] = {
-> @@ -339,7 +345,8 @@ static const struct mhi_pci_dev_info mhi_foxconn_sdx55_info = {
->  	.edl = "qcom/sdx55m/edl.mbn",
->  	.config = &modem_foxconn_sdx55_config,
->  	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
-> -	.dma_data_width = 32
-> +	.dma_data_width = 32,
-> +	.sideband_wake = false
->  };
->  
->  static const struct pci_device_id mhi_pci_id_table[] = {
-> @@ -640,9 +647,12 @@ static int mhi_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
->  	mhi_cntrl->status_cb = mhi_pci_status_cb;
->  	mhi_cntrl->runtime_get = mhi_pci_runtime_get;
->  	mhi_cntrl->runtime_put = mhi_pci_runtime_put;
-> -	mhi_cntrl->wake_get = mhi_pci_wake_get_nop;
-> -	mhi_cntrl->wake_put = mhi_pci_wake_put_nop;
-> -	mhi_cntrl->wake_toggle = mhi_pci_wake_toggle_nop;
-> +
-> +	if (info->sideband_wake) {
-> +		mhi_cntrl->wake_get = mhi_pci_wake_get_nop;
-> +		mhi_cntrl->wake_put = mhi_pci_wake_put_nop;
-> +		mhi_cntrl->wake_toggle = mhi_pci_wake_toggle_nop;
-> +	}
->  
->  	err = mhi_pci_claim(mhi_cntrl, info->bar_num, DMA_BIT_MASK(info->dma_data_width));
->  	if (err)
-> -- 
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
-> 
+Vikash
