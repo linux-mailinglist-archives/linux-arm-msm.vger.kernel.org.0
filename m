@@ -2,84 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7CC513AD87F
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Jun 2021 09:44:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 96F0B3AD884
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Jun 2021 09:48:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231465AbhFSHrA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 19 Jun 2021 03:47:00 -0400
-Received: from mail.kernel.org ([198.145.29.99]:38960 "EHLO mail.kernel.org"
+        id S231834AbhFSHux (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 19 Jun 2021 03:50:53 -0400
+Received: from mail.kernel.org ([198.145.29.99]:39794 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229466AbhFSHq7 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 19 Jun 2021 03:46:59 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 416A26102A;
-        Sat, 19 Jun 2021 07:44:46 +0000 (UTC)
-Date:   Sat, 19 Jun 2021 13:14:42 +0530
+        id S229466AbhFSHux (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 19 Jun 2021 03:50:53 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 2423460FEE;
+        Sat, 19 Jun 2021 07:48:39 +0000 (UTC)
+Date:   Sat, 19 Jun 2021 13:18:36 +0530
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     Bhaumik Bhatt <bbhatt@codeaurora.org>
 Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
         jhugo@codeaurora.org, linux-kernel@vger.kernel.org,
         loic.poulain@linaro.org
-Subject: Re: [PATCH] bus: mhi: core: Disable pre-emption for data events
- tasklet processing
-Message-ID: <20210619074442.GC4889@workstation>
-References: <1624054985-31365-1-git-send-email-bbhatt@codeaurora.org>
+Subject: Re: [PATCH v2] bus: mhi: core: Add support for processing priority
+ of event ring
+Message-ID: <20210619074836.GD4889@workstation>
+References: <1624053903-24653-1-git-send-email-bbhatt@codeaurora.org>
+ <1624053903-24653-2-git-send-email-bbhatt@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1624054985-31365-1-git-send-email-bbhatt@codeaurora.org>
+In-Reply-To: <1624053903-24653-2-git-send-email-bbhatt@codeaurora.org>
 User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jun 18, 2021 at 03:23:05PM -0700, Bhaumik Bhatt wrote:
-> With spin_lock_bh(), it is possible that a tasklet processing data
-> events gets scheduled out if another higher priority tasklet is
-> ready to run. While the tasklet is sleeping, it can hold the event
-> ring spinlock and block another tasklet, for example, one processing
-> an M0 state change event, from acquiring it. This can starve the
-> core which blocks in an attempt to acquire the spinlock until it
-> gets released. Fix this issue by disabling pre-emption on the core
-> processing data events and allow it to run to completion such that
-> other tasklets do not block for long periods.
+On Fri, Jun 18, 2021 at 03:05:03PM -0700, Bhaumik Bhatt wrote:
+> From: Hemant Kumar <hemantk@codeaurora.org>
 > 
+> Event ring priorities are currently set to 1 and are unused.
+> Default processing priority for event rings is set to regular
+> tasklet. Controllers can choose to use high priority tasklet
+> scheduling for certain event rings critical for processing such
+> as ones transporting control information if they wish to avoid
+> system scheduling delays for those packets. In order to support
+> these use cases, allow controllers to set event ring priority to
+> high.
+> 
+> Signed-off-by: Hemant Kumar <hemantk@codeaurora.org>
+> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
 
-Are you sure?
-
-IIUC, the tasklets priority is only used while trying to schedule the
-next pending tasklet. But I don't think a high priority tasklet can
-preempt the low priority one.
-
-Please correct me if I'm wrong.
+Applied to mhi-next!
 
 Thanks,
 Mani
 
-> Fixes: 1d3173a3bae7 ("bus: mhi: core: Add support for processing events from client device")
-> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
 > ---
->  drivers/bus/mhi/core/main.c | 5 +++--
->  1 file changed, 3 insertions(+), 2 deletions(-)
+>  drivers/bus/mhi/core/init.c | 3 +--
+>  drivers/bus/mhi/core/main.c | 9 +++++++--
+>  include/linux/mhi.h         | 2 +-
+>  3 files changed, 9 insertions(+), 5 deletions(-)
 > 
+> diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
+> index c81b377..4446760 100644
+> --- a/drivers/bus/mhi/core/init.c
+> +++ b/drivers/bus/mhi/core/init.c
+> @@ -673,8 +673,7 @@ static int parse_ev_cfg(struct mhi_controller *mhi_cntrl,
+>  				&mhi_cntrl->mhi_chan[mhi_event->chan];
+>  		}
+>  
+> -		/* Priority is fixed to 1 for now */
+> -		mhi_event->priority = 1;
+> +		mhi_event->priority = event_cfg->priority;
+>  
+>  		mhi_event->db_cfg.brstmode = event_cfg->mode;
+>  		if (MHI_INVALID_BRSTMODE(mhi_event->db_cfg.brstmode))
 > diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
-> index 3775c77..02c8c09 100644
+> index 8ac73f9..3775c77 100644
 > --- a/drivers/bus/mhi/core/main.c
 > +++ b/drivers/bus/mhi/core/main.c
-> @@ -1036,11 +1036,12 @@ void mhi_ev_task(unsigned long data)
->  {
->  	struct mhi_event *mhi_event = (struct mhi_event *)data;
->  	struct mhi_controller *mhi_cntrl = mhi_event->mhi_cntrl;
-> +	unsigned long flags;
+> @@ -454,10 +454,15 @@ irqreturn_t mhi_irq_handler(int irq_number, void *dev)
 >  
->  	/* process all pending events */
-> -	spin_lock_bh(&mhi_event->lock);
-> +	spin_lock_irqsave(&mhi_event->lock, flags);
->  	mhi_event->process_event(mhi_cntrl, mhi_event, U32_MAX);
-> -	spin_unlock_bh(&mhi_event->lock);
-> +	spin_unlock_irqrestore(&mhi_event->lock, flags);
+>  		if (mhi_dev)
+>  			mhi_notify(mhi_dev, MHI_CB_PENDING_DATA);
+> -	} else {
+> -		tasklet_schedule(&mhi_event->task);
+> +
+> +		return IRQ_HANDLED;
+>  	}
+>  
+> +	if (!mhi_event->priority)
+> +		tasklet_hi_schedule(&mhi_event->task);
+> +	else
+> +		tasklet_schedule(&mhi_event->task);
+> +
+>  	return IRQ_HANDLED;
 >  }
 >  
->  void mhi_ctrl_ev_task(unsigned long data)
+> diff --git a/include/linux/mhi.h b/include/linux/mhi.h
+> index 86cea52..bf23c21 100644
+> --- a/include/linux/mhi.h
+> +++ b/include/linux/mhi.h
+> @@ -250,7 +250,7 @@ struct mhi_channel_config {
+>   * @irq_moderation_ms: Delay irq for additional events to be aggregated
+>   * @irq: IRQ associated with this ring
+>   * @channel: Dedicated channel number. U32_MAX indicates a non-dedicated ring
+> - * @priority: Priority of this ring. Use 1 for now
+> + * @priority: Processing priority of this ring. 0 is high and 1 is regular
+>   * @mode: Doorbell mode
+>   * @data_type: Type of data this ring will process
+>   * @hardware_event: This ring is associated with hardware channels
 > -- 
 > The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
 > a Linux Foundation Collaborative Project
