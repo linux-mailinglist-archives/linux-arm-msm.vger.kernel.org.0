@@ -2,67 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 503BC3ADFEE
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 20 Jun 2021 21:31:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 480DA3AE06E
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 20 Jun 2021 22:46:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229877AbhFTTd2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 20 Jun 2021 15:33:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60568 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229708AbhFTTd1 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 20 Jun 2021 15:33:27 -0400
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60A35C061574
-        for <linux-arm-msm@vger.kernel.org>; Sun, 20 Jun 2021 12:31:14 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id i13so26366723lfc.7
-        for <linux-arm-msm@vger.kernel.org>; Sun, 20 Jun 2021 12:31:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:reply-to:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=a2zlJLb2cHVJ/vhYiwd0h6Ss03bH4wa1SiOeNNr1qqA=;
-        b=sGNxSEzTe3lM18ghhBrYte1cyID3zgB/+zcBJ1qkOjj6nENXnw6gczAwH9pGc27/IP
-         AYmB9Vfsm7CU4mFnkv3Pc0Mhk5fhJ+7y21dSGdYCrU16IkKdItmkVFZuaqIyGZGVK8Ip
-         cSfiwscB18hUwstZEHQ/uOyfNKzCjTDh/9pYwz0W/4MCkz4GT8Vo+plZzTD9RrFx4qI1
-         EJ0Nc82GBzCc7mb3VEaLFAigTgpPYj10mphmlS8yVMLKAhOhByUFCnPybO8XDdnAtIxc
-         cMIFll5v6r8SM8KesUBMrzEzcOV7icIdhWuOke0YPVG7IYNf+Frc8fNuQpUWUS2kUWzD
-         BCaQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to:content-transfer-encoding;
-        bh=a2zlJLb2cHVJ/vhYiwd0h6Ss03bH4wa1SiOeNNr1qqA=;
-        b=uJVABfomiGBOr8Qeh2vcYKbyNoV5bBS/JLF1npYDY6t4KtQEBh45Mg3ty01vL3GBzF
-         yejoyzs++qbelPrvVStBP6yQlQFQ9TpxtGSv/BZXX1iwcjBakwmzLwjEulvoJRJjxK+E
-         vtc/RiIZIvGLp8ECE9mMh/M8BUugjognVqpqHZZCJFT3eySdxwMlb04ICeZyV6/SdjuK
-         nW7dvsNtzLBup1jyNTz5xtwOEdj6xLW4F+4Tpc18OIatONRmlQI9SN2aEkFgcz0mW9A1
-         Zdsq0jn1+5qwP/DWpiX/RlXpxDkDwA3HiL7k+hoEIx56up/Qeud8T0FLMbAylDwazsnY
-         lNiw==
-X-Gm-Message-State: AOAM531p8vpd75/Iaz1qWBigWQiuQwOUQR5sZMA7D44zPi6clxU72pcg
-        7D4r0A2UJdn8r4zzfkEkM1WYJMoWWkEhdEyjy+s=
-X-Google-Smtp-Source: ABdhPJydiXAjiWRRfRKkE6cjZ22caaoTAUIaiMw8gatLOa/mlsGUwqR9psDlbY3dZ0D9qCd+QTz7eYk5yP4HuE0WRP4=
-X-Received: by 2002:a05:6512:30b:: with SMTP id t11mr11942418lfp.661.1624217472769;
- Sun, 20 Jun 2021 12:31:12 -0700 (PDT)
+        id S230057AbhFTUsr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 20 Jun 2021 16:48:47 -0400
+Received: from mail.kernel.org ([198.145.29.99]:57680 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229905AbhFTUsp (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 20 Jun 2021 16:48:45 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 454E36109F;
+        Sun, 20 Jun 2021 20:46:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1624221992;
+        bh=Ld8DsLuN9uxyfxOIjiJtuRFKzCbOVD9P45An2hX0fLE=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=ODlAsUemSl9Qu5lwmSdExvzujHRyL8qYs0KcT1NZD2TVMZy4sPGkHZji/Qm/bZooU
+         vtrjcqdkU9TSRV+emzAJSXMO3QeVcsntW7b+iurlHdgt3OPzVGBtNybbwO0ok1w7Et
+         FkVuEggFhY+E+aAq0QvPP3eWqz5SzhGxj1i+nhlkUvKHlkdJn/xkAE3uX4Ahj51HLc
+         7egyRuzRjYEApoFHWAZrygIjEWXUa5HTlnxwbpz/Mr1FCRkOnP4DWbEFEwDtFkxcvs
+         aIXSqGv+O3LNFqR+wdnZb5fOc7t4aQNaJS5h6IWWrU4/nk9Ck31fqaj6OEqfiMnblw
+         y2YSjtRnCJNnw==
+Date:   Sun, 20 Jun 2021 22:46:29 +0200
+From:   Wolfram Sang <wsa@kernel.org>
+To:     Jonathan Marek <jonathan@marek.ca>
+Cc:     linux-arm-msm@vger.kernel.org, robert.foss@linaro.org,
+        andrey.konovalov@linaro.org,
+        Loic Poulain <loic.poulain@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        "open list:QUALCOMM I2C CCI DRIVER" <linux-i2c@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH] i2c: qcom-cci: add sm8250 compatible
+Message-ID: <YM+pJSOULPmlITIc@kunai>
+Mail-Followup-To: Wolfram Sang <wsa@kernel.org>,
+        Jonathan Marek <jonathan@marek.ca>, linux-arm-msm@vger.kernel.org,
+        robert.foss@linaro.org, andrey.konovalov@linaro.org,
+        Loic Poulain <loic.poulain@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        "open list:QUALCOMM I2C CCI DRIVER" <linux-i2c@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" <devicetree@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
+References: <20210513175518.6023-1-jonathan@marek.ca>
 MIME-Version: 1.0
-Received: by 2002:aa6:da47:0:b029:fa:6d7d:24c with HTTP; Sun, 20 Jun 2021
- 12:31:12 -0700 (PDT)
-Reply-To: contactcenter@gnbinvestorsb.com
-From:   Gnb Investors Bank <sandraquntoo@gmail.com>
-Date:   Sun, 20 Jun 2021 22:31:12 +0300
-Message-ID: <CAPu=tC6LghNW-EG0_b_zTZNRwF=O9d28K9+F0+-DCZ5EqNPj8A@mail.gmail.com>
-Subject: Brauchen Sie einen Kredit?
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="QiJGXfUyvzMgjqNF"
+Content-Disposition: inline
+In-Reply-To: <20210513175518.6023-1-jonathan@marek.ca>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
---=20
-Brauchen Sie einen Kredit? Unsere Bank vergibt Kredite zu einem Zinssatz vo=
-n 2%
 
-Melden Sie sich f=C3=BCr weitere Informationen bei uns.
+--QiJGXfUyvzMgjqNF
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-E-Mail: contactcenter@gnbinvestorsb.com
+On Thu, May 13, 2021 at 01:55:17PM -0400, Jonathan Marek wrote:
+> SM8250 CCI is the same as SDM845, add an equivalent compatible for SM8250.
+>=20
+> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+
+For the record: Applied to for-next on 2021-05-21, thanks!
+
+
+--QiJGXfUyvzMgjqNF
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmDPqSQACgkQFA3kzBSg
+KbaJVA/+PYq/2WzJj/80zSo/kaLH08GAfxSYvoch0h7HPkkufpYjzeBzkdVF19Qd
+dPhzOxDqy9Z8zDP05ttEAtPPtKPHXUOxP7B5Sx3fXJ+ypv5OJznpMmFdvT6P9KpH
+XHzxokK5PYg4J7feHKBS9hbM5gvq97WiYtD7xPb+iBDc1S4LSL38J0fdWHB19PWw
+mpeA6Ummb4/jkhxHYMl0hay2NijxndTPBKa+uNvwRvOl++gV9bVM6KGDWZbv6dVI
+/sbtT2Id+U0XYEijj8+eroEAGaCfJdWRYIPknCc0/aUU0nETwK1qLmE+KQ01Kbf3
+ieiloxHmF95WdrNy5pnAu29sEAIvLPMdGqi8NCdP5UV4hepA5tzhmTYIUDqck6UC
+Gpw0swi/nsR9NtcimJUVdICkVrSeLtler57PGJm1pOB9L7+2f585yl3USc9TM+qa
+4JO+Be2ECa8VpSudcSOHC9DDkMIchKWCm0WUFoW07rxSEHUtiB3uyjAW+JX2cZG3
+RdBwby5JNzSEzPHXg3IMGJVgmGsjv7m72+4V5IkDIRYMlLHrMvmtvqNIolIsKr3g
+X4oaWDVTPWEcUzqPQXYo7VwsyWKdT9ehK7vnUKZrvAb+OfvhN26fESQ4VkiCX/H6
+d/yMK77dKJfn6DB+fsgZIH2vfmWZCrid6Tmv65mFvVL7x6n2tbo=
+=mqe+
+-----END PGP SIGNATURE-----
+
+--QiJGXfUyvzMgjqNF--
