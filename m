@@ -2,110 +2,304 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AD3F33AECBA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jun 2021 17:46:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6D9203AED2E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jun 2021 18:12:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230028AbhFUPsN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Jun 2021 11:48:13 -0400
-Received: from foss.arm.com ([217.140.110.172]:36386 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229837AbhFUPsM (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Jun 2021 11:48:12 -0400
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id A4C051042;
-        Mon, 21 Jun 2021 08:45:57 -0700 (PDT)
-Received: from [10.57.9.136] (unknown [10.57.9.136])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 44A4D3F694;
-        Mon, 21 Jun 2021 08:45:56 -0700 (PDT)
-Subject: Re: [PATCHv2 1/3] iommu/io-pgtable: Add a quirk to use
- tlb_flush_all() for partial walk flush
-To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Will Deacon <will@kernel.org>, Joerg Roedel <joro@8bytes.org>
-Cc:     Thierry Reding <treding@nvidia.com>, linux-arm-msm@vger.kernel.org,
-        Douglas Anderson <dianders@chromium.org>,
-        linux-kernel@vger.kernel.org, iommu@lists.linux-foundation.org,
-        linux-arm-kernel@lists.infradead.org
-References: <cover.1623981933.git.saiprakash.ranjan@codeaurora.org>
- <b099af10926b34249f4a30262db37f50491bebe7.1623981933.git.saiprakash.ranjan@codeaurora.org>
-From:   Robin Murphy <robin.murphy@arm.com>
-Message-ID: <904f283c-f8b1-ba84-d010-eacc87bb53c5@arm.com>
-Date:   Mon, 21 Jun 2021 16:45:50 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:78.0) Gecko/20100101
- Thunderbird/78.10.1
+        id S230047AbhFUQOY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Jun 2021 12:14:24 -0400
+Received: from relay01.th.seeweb.it ([5.144.164.162]:46233 "EHLO
+        relay01.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229915AbhFUQOX (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 21 Jun 2021 12:14:23 -0400
+Received: from IcarusMOD.eternityproject.eu (unknown [2.237.20.237])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 110E81F4AF;
+        Mon, 21 Jun 2021 18:12:07 +0200 (CEST)
+Subject: Re: [PATCH v5 1/3] cpuidle: qcom_spm: Detach state machine from main
+ SPM handling
+To:     Stephan Gerhold <stephan@gerhold.net>
+Cc:     bjorn.andersson@linaro.org, agross@kernel.org,
+        daniel.lezcano@linaro.org, rjw@rjwysocki.net,
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, phone-devel@vger.kernel.org,
+        konrad.dybcio@somainline.org, marijn.suijten@somainline.org,
+        martin.botka@somainline.org, jeffrey.l.hugo@gmail.com,
+        jamipkettunen@somainline.org, ~postmarketos/upstreaming@lists.sr.ht
+References: <20210618225620.623359-1-angelogioacchino.delregno@somainline.org>
+ <20210618225620.623359-2-angelogioacchino.delregno@somainline.org>
+ <YNB92Dkx5MNg64m+@gerhold.net>
+From:   AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>
+Message-ID: <08c80c7d-638f-23e9-e580-bced3648a635@somainline.org>
+Date:   Mon, 21 Jun 2021 18:12:06 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.9.0
 MIME-Version: 1.0
-In-Reply-To: <b099af10926b34249f4a30262db37f50491bebe7.1623981933.git.saiprakash.ranjan@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
+In-Reply-To: <YNB92Dkx5MNg64m+@gerhold.net>
+Content-Type: text/plain; charset=iso-8859-15; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-06-18 03:51, Sai Prakash Ranjan wrote:
-> Add a quirk IO_PGTABLE_QUIRK_TLB_INV_ALL to invalidate entire context
-> with tlb_flush_all() callback in partial walk flush to improve unmap
-> performance on select few platforms where the cost of over-invalidation
-> is less than the unmap latency.
-
-I still think this doesn't belong anywhere near io-pgtable at all. It's 
-a driver-internal decision how exactly it implements a non-leaf 
-invalidation, and that may be more complex than a predetermined boolean 
-decision. For example, I've just realised for SMMUv3 we can't invalidate 
-multiple levels of table at once with a range command, since if we 
-assume the whole thing is mapped at worst-case page granularity we may 
-fail to invalidate any parts which are mapped as intermediate-level 
-blocks. If invalidating a 1GB region (with 4KB granule) means having to 
-fall back to 256K non-range commands, we may not want to invalidate by 
-VA then, even though doing so for a 2MB region is still optimal.
-
-It's also quite feasible that drivers might want to do this for leaf 
-invalidations too - if you don't like issuing 512 commands to invalidate 
-2MB, do you like issuing 511 commands to invalidate 2044KB? - and at 
-that point the logic really has to be in the driver anyway.
-
-Robin.
-
-> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-> ---
->   drivers/iommu/io-pgtable-arm.c | 3 ++-
->   include/linux/io-pgtable.h     | 5 +++++
->   2 files changed, 7 insertions(+), 1 deletion(-)
+Il 21/06/21 13:54, Stephan Gerhold ha scritto:
+> On Sat, Jun 19, 2021 at 12:56:18AM +0200, AngeloGioacchino Del Regno wrote:
+>> In commit a871be6b8eee ("cpuidle: Convert Qualcomm SPM driver to a generic
+>> CPUidle driver") the SPM driver has been converted to a
+>> generic CPUidle driver: that was mainly made to simplify the
+>> driver and that was a great accomplishment;
+>> Though, it was ignored that the SPM driver is not used only
+>> on the ARM architecture.
+>>
 > 
-> diff --git a/drivers/iommu/io-pgtable-arm.c b/drivers/iommu/io-pgtable-arm.c
-> index 87def58e79b5..5d362f2214bd 100644
-> --- a/drivers/iommu/io-pgtable-arm.c
-> +++ b/drivers/iommu/io-pgtable-arm.c
-> @@ -768,7 +768,8 @@ arm_64_lpae_alloc_pgtable_s1(struct io_pgtable_cfg *cfg, void *cookie)
->   	if (cfg->quirks & ~(IO_PGTABLE_QUIRK_ARM_NS |
->   			    IO_PGTABLE_QUIRK_NON_STRICT |
->   			    IO_PGTABLE_QUIRK_ARM_TTBR1 |
-> -			    IO_PGTABLE_QUIRK_ARM_OUTER_WBWA))
-> +			    IO_PGTABLE_QUIRK_ARM_OUTER_WBWA |
-> +			    IO_PGTABLE_QUIRK_TLB_INV_ALL))
->   		return NULL;
->   
->   	data = arm_lpae_alloc_pgtable(cfg);
-> diff --git a/include/linux/io-pgtable.h b/include/linux/io-pgtable.h
-> index 4d40dfa75b55..45441592a0e6 100644
-> --- a/include/linux/io-pgtable.h
-> +++ b/include/linux/io-pgtable.h
-> @@ -82,6 +82,10 @@ struct io_pgtable_cfg {
->   	 *
->   	 * IO_PGTABLE_QUIRK_ARM_OUTER_WBWA: Override the outer-cacheability
->   	 *	attributes set in the TCR for a non-coherent page-table walker.
-> +	 *
-> +	 * IO_PGTABLE_QUIRK_TLB_INV_ALL: Use TLBIALL/TLBIASID to invalidate
-> +	 *	entire context for partial walk flush to increase unmap
-> +	 *	performance on select few platforms.
->   	 */
->   	#define IO_PGTABLE_QUIRK_ARM_NS		BIT(0)
->   	#define IO_PGTABLE_QUIRK_NO_PERMS	BIT(1)
-> @@ -89,6 +93,7 @@ struct io_pgtable_cfg {
->   	#define IO_PGTABLE_QUIRK_NON_STRICT	BIT(4)
->   	#define IO_PGTABLE_QUIRK_ARM_TTBR1	BIT(5)
->   	#define IO_PGTABLE_QUIRK_ARM_OUTER_WBWA	BIT(6)
-> +	#define IO_PGTABLE_QUIRK_TLB_INV_ALL	BIT(7)
->   	unsigned long			quirks;
->   	unsigned long			pgsize_bitmap;
->   	unsigned int			ias;
+> Can you please reword this sentence like I suggested in v4? The way you
+> write it at the moment it sounds like this fixes a regression, but
+> actually it extends the driver to cover more use cases.
 > 
+
+I don't see any regression implied: I'm explaining the reason of this
+change just one line after that and .. besides that, I haven't put any
+"Fixes:" tag to this commit.
+When you fix regressions, bad behavior, or anything else relative to a
+patch, you add that tag to say that you're fixing something.
+
+Moreover, I can't see anything wrong in the description for this change,
+nor anything to clarify about it and that as long as you read it in full
+
+>> In preparation for the enablement of SPM features on AArch64/ARM64,
+>> split the cpuidle-qcom-spm driver in two: the CPUIdle related
+>> state machine (currently used only on ARM SoCs) stays there, while
+>> the SPM communication handling lands back in soc/qcom/spm.c and
+>> also making sure to not discard the simplifications that were
+>> introduced in the aforementioned commit.
+>>
+>> Since now the "two drivers" are split, the SCM dependency in the
+>> main SPM handling is gone and for this reason it was also possible
+>> to move the SPM initialization early: this will also make sure that
+>> whenever the SAW CPUIdle driver is getting initialized, the SPM
+>> driver will be ready to do the job.
+>>
+>> Please note that the anticipation of the SPM initialization was
+>> also done to optimize the boot times on platforms that have their
+>> CPU/L2 idle states managed by other means (such as PSCI), while
+>> needing SAW initialization for other purposes, like AVS control.
+>>
+>> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+>> ---
+>>   drivers/cpuidle/Kconfig.arm        |   1 +
+>>   drivers/cpuidle/cpuidle-qcom-spm.c | 295 ++++++-----------------------
+>>   drivers/soc/qcom/Kconfig           |   9 +
+>>   drivers/soc/qcom/Makefile          |   1 +
+>>   drivers/soc/qcom/spm.c             | 198 +++++++++++++++++++
+>>   include/soc/qcom/spm.h             |  43 +++++
+>>   6 files changed, 311 insertions(+), 236 deletions(-)
+>>   create mode 100644 drivers/soc/qcom/spm.c
+>>   create mode 100644 include/soc/qcom/spm.h
+>>
+>> [...]
+>> diff --git a/drivers/cpuidle/cpuidle-qcom-spm.c b/drivers/cpuidle/cpuidle-qcom-spm.c
+>> [...]
+>> @@ -213,132 +80,88 @@ static const struct of_device_id qcom_idle_state_match[] = {
+>>   	{ },
+>>   };
+>>   
+>> -static int spm_cpuidle_init(struct cpuidle_driver *drv, int cpu)
+>> +static int spm_cpuidle_register(int cpu)
+>>   {
+>> +	struct platform_device *pdev = NULL;
+>> +	struct spm_driver_data *spm = NULL;
+>> +	struct device_node *cpu_node, *saw_node;
+>>   	int ret;
+>>   
+>> -	memcpy(drv, &qcom_spm_idle_driver, sizeof(*drv));
+>> -	drv->cpumask = (struct cpumask *)cpumask_of(cpu);
+>> +	cpu_node = of_cpu_device_node_get(cpu);
+>> +	if (!cpu_node)
+>> +		return -ENODEV;
+>>   
+>> -	/* Parse idle states from device tree */
+>> -	ret = dt_init_idle_driver(drv, qcom_idle_state_match, 1);
+>> -	if (ret <= 0)
+>> -		return ret ? : -ENODEV;
+>> +	saw_node = of_parse_phandle(cpu_node, "qcom,saw", 0);
+>> +	if (!saw_node)
+>> +		return -ENODEV;
+>>   
+>> -	/* We have atleast one power down mode */
+>> -	return qcom_scm_set_warm_boot_addr(cpu_resume_arm, drv->cpumask);
+>> -}
+>> +	pdev = of_find_device_by_node(saw_node);
+>> +	of_node_put(saw_node);
+>> +	of_node_put(cpu_node);
+>> +	if (!pdev)
+>> +		return -ENODEV;
+>>   
+>> -static struct spm_driver_data *spm_get_drv(struct platform_device *pdev,
+>> -		int *spm_cpu)
+>> -{
+>> -	struct spm_driver_data *drv = NULL;
+>> -	struct device_node *cpu_node, *saw_node;
+>> -	int cpu;
+>> -	bool found = 0;
+>> +	spm = dev_get_drvdata(&pdev->dev);
+>> +	if (!spm)
+>> +		return -EINVAL;
+>>   
+>> -	for_each_possible_cpu(cpu) {
+>> -		cpu_node = of_cpu_device_node_get(cpu);
+>> -		if (!cpu_node)
+>> -			continue;
+>> -		saw_node = of_parse_phandle(cpu_node, "qcom,saw", 0);
+>> -		found = (saw_node == pdev->dev.of_node);
+>> -		of_node_put(saw_node);
+>> -		of_node_put(cpu_node);
+>> -		if (found)
+>> -			break;
+>> -	}
+>> +	spm->cpuidle_driver.cpumask = (struct cpumask *)cpumask_of(cpu);
+>> +	spm->cpuidle_driver = qcom_spm_idle_driver;
+> 
+> This should be in opposite order.
+> 
+
+That was a bad overlook, sorry.
+
+> It's still freezing with this patch version. I used the chance to
+> investigate why it freezes, and it's actually not some bug of my
+> platform like you mentioned:
+> 
+>> So you have discovered a bug for which your platform dies when SPM
+>> does not probe, probably due to something else being dependant on this.
+>> In this case, I would encourage you to produce a fix for your platform
+>> to not unexpectedly just hang forever if *some driver* doesn't probe:
+>> that's definitely not right.
+> 
+> There is a simple reason why this happens: If "cpumask" is not set,
+> the cpuidle_driver applies to *all* CPUs. This means that as soon as
+> CPU1/2/3 go into standalone power collapse the SPM for CPU0 (rather than
+> the one for CPU1/2/3!) is re-configured. Eventually CPU0 will execute WFI
+> (without saving the CPU state) and ends up in power collapse (CPU state
+> destroyed) rather than standby (CPU state preserved).
+> 
+
+That's a big relief!
+
+>> [...]
+>> diff --git a/drivers/soc/qcom/spm.c b/drivers/soc/qcom/spm.c
+>> [...]
+>> +static const u16 spm_reg_offset_v2_1[SPM_REG_NR] = {
+> 
+> This should be still u8 in this patch.
+> 
+
+Ack.
+
+> drivers/soc/qcom/spm.c:47:16: error: initialization of 'const u8 *' {aka 'const unsigned char *'} from incompatible pointer type 'const u16 *' {aka 'const short unsigned int *'} [-Werror=incompatible-pointer-types]
+>     47 |  .reg_offset = spm_reg_offset_v2_1,
+>        |                ^~~~~~~~~~~~~~~~~~~
+> drivers/soc/qcom/spm.c:47:16: note: (near initialization for 'spm_reg_8974_8084_cpu.reg_offset')
+> 
+>> [...]
+>> +static const u16 spm_reg_offset_v1_1[SPM_REG_NR] = {
+> 
+> drivers/soc/qcom/spm.c:68:16: error: initialization of 'const u8 *' {aka 'const unsigned char *'} from incompatible pointer type 'const u16 *' {aka 'const short unsigned int *'} [-Werror=incompatible-pointer-types]
+>     68 |  .reg_offset = spm_reg_offset_v1_1,
+>        |                ^~~~~~~~~~~~~~~~~~~
+> drivers/soc/qcom/spm.c:68:16: note: (near initialization for 'spm_reg_8064_cpu.reg_offset')
+> 
+>> [...]
+>> diff --git a/include/soc/qcom/spm.h b/include/soc/qcom/spm.h
+>> new file mode 100644
+>> index 000000000000..719c604a8402
+>> --- /dev/null
+>> +++ b/include/soc/qcom/spm.h
+>> @@ -0,0 +1,43 @@
+>> +/* SPDX-License-Identifier: GPL-2.0-only */
+>> +/*
+>> + * Copyright (c) 2011-2014, The Linux Foundation. All rights reserved.
+>> + * Copyright (c) 2014,2015, Linaro Ltd.
+>> + * Copyright (C) 2021, AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+>> + */
+>> +
+>> +#ifndef __SPM_H__
+>> +#define __SPM_H__
+>> +
+>> +#include <linux/cpuidle.h>
+>> +
+>> +#define MAX_PMIC_DATA		2
+>> +#define MAX_SEQ_DATA		64
+>> +
+>> +enum pm_sleep_mode {
+>> +	PM_SLEEP_MODE_STBY,
+>> +	PM_SLEEP_MODE_RET,
+>> +	PM_SLEEP_MODE_SPC,
+>> +	PM_SLEEP_MODE_PC,
+>> +	PM_SLEEP_MODE_NR,
+>> +};
+>> +
+>> +struct spm_reg_data {
+>> +	const u8 *reg_offset;
+>> +	u32 spm_cfg;
+>> +	u32 spm_dly;
+>> +	u32 pmic_dly;
+>> +	u32 pmic_data[MAX_PMIC_DATA];
+>> +	u8 seq[MAX_SEQ_DATA];
+>> +	u8 start_index[PM_SLEEP_MODE_NR];
+>> +};
+>> +
+>> +struct spm_driver_data {
+>> +	struct cpuidle_driver cpuidle_driver;
+> 
+> Given that the SPM hardware seems to have several different uses,
+> not just CPUidle, wouldn't it be better to allocate the memory for the
+> cpuidle_driver from cpuidle-qcom-spm.c? Just devm_kzalloc() something
+> like:
+> 
+> struct spm_cpuidle_driver {
+> 	struct cpuidle_driver cpuidle_driver;
+> 	struct spm_driver_data *spm;
+> };
+> 
+> in cpuidle-qcom-spm.c.
+> 
+> And then there wouldn't be a need to have the implementation details of
+> the SPM driver in the spm.h header, all that cpuidle-qcom-spm needs is
+> 
+> struct spm_driver_data;
+> 
+> enum pm_sleep_mode {
+> 	PM_SLEEP_MODE_STBY,
+> 	PM_SLEEP_MODE_RET,
+> 	PM_SLEEP_MODE_SPC,
+> 	PM_SLEEP_MODE_PC,
+> 	PM_SLEEP_MODE_NR,
+> };
+> 
+> void spm_set_low_power_mode(struct spm_driver_data *drv,
+> 			    enum pm_sleep_mode mode);
+> 
+> Everything else can remain private to the spm.c driver,
+> like it was before.
+> 
+
+I don't completely dislike the approach but I honestly think that this
+would put some cognitive strain: having a header included in two files
+using "things" defined in there gives people an easy path to follow
+when looking at one of the two files.
+
+Regarding the addition of that one more structure... I am seriously
+undecided on the matter: wasting this kind of amount of memory on a
+ARM64 platform (usually having more than 1GB RAM) is completely
+unnoticeable but, on the other hand, it's still a waste of memory,
+even if it's minimal that much.
+
+I will think about it.
+
+> Thanks,
+> Stephan
+> 
+
