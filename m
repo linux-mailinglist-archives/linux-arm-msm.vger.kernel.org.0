@@ -2,92 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C2A663AF151
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jun 2021 19:05:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0BA1A3AF169
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jun 2021 19:07:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231319AbhFURHW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Jun 2021 13:07:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37000 "EHLO
+        id S231404AbhFURJt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Jun 2021 13:09:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38152 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230451AbhFURHR (ORCPT
+        with ESMTP id S230436AbhFURJm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Jun 2021 13:07:17 -0400
-Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03634C0580FC
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jun 2021 09:50:17 -0700 (PDT)
-Received: by mail-ot1-x329.google.com with SMTP id g19-20020a9d12930000b0290457fde18ad0so4494058otg.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jun 2021 09:50:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=9JCax5gzpRXFjKOT7fUvz8rzc/IG8uAiWNtIkm2nNbY=;
-        b=Rn08BY9/tYgwbs9DDd8jLwNfj2gQyf4LDzySwhwTWXAbeKIP+wo18+4NObUz/okt6s
-         NV/KlHs6rGvDguY4LJjdbXfskE6WEsFQR/XsX7r/KhOvz2pk+oS5FRnCpnICGmj3G1hV
-         x2FY8fqhOJ/4m7S2os8EJw67MD9yvxveBcXngBNjSHzNU6g/Z6dRp1rEQoc0jLutvXeH
-         g9R7sIlIbcH3flzX0bsGtHA33dwnUEeR6cwP/3lkVgH/AjvyH3NpJ+ljH0ajwLDz/KPp
-         7f/qunNM0hserXrYdNjXrwxF0RyNN1EXCS4dk+iOOHnxvbk3JyVln2ceeR3njHfZRR1Y
-         hxOg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=9JCax5gzpRXFjKOT7fUvz8rzc/IG8uAiWNtIkm2nNbY=;
-        b=fgDI4X8pstdjEC9iW5RwngbZyoe8dVIFya9dm6bB6N1kkdfKBmQlb/t8OQf1dUGTWC
-         h2kt5nJB82pGVMl66XYSHstXlX1ejk4aZXGZUfPQw/yEepLFPn2GuSMWxH5i0DaPmuri
-         05jnQ5jcYVjX8gWe8jjgFcCsUbqAHr7Vmhj7CrUa7VR8dIKDdHW8et5LTflQgE3LdeNN
-         Hw0EQSrCENeQSOcsbRfo5mGxnc/TRjj/QXPthkEdfrINY5/Yrt8hXfZSLnnMtT854knw
-         GIOOqFbvTuVNm/3MmCnU6dk4HxeGYLiH4/6w3BL3ApXG6h/86AGtL1rkEUebFMigcJwI
-         GKJQ==
-X-Gm-Message-State: AOAM531us5e7FhZULZmCJa7ga1rq1ZgdNF0Q3opR+0zhd5vHEOru+/x2
-        aJ/2WV2DtsY7StzPgW57E0I/tA==
-X-Google-Smtp-Source: ABdhPJyvKQhJHOmA0cSNzv4OzqARvZ+VxAzloXXJh95f6t6nKTRaotVwmPFGPRaJkBxjih1bg71zhw==
-X-Received: by 2002:a9d:346:: with SMTP id 64mr21834506otv.320.1624294216372;
-        Mon, 21 Jun 2021 09:50:16 -0700 (PDT)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id o6sm3115098ote.81.2021.06.21.09.50.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Jun 2021 09:50:16 -0700 (PDT)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     arm@kernel.org, soc@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        Andy Gross <agross@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
-        Olof Johansson <olof@lixom.net>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Vinod Koul <vkoul@kernel.org>
-Subject: [GIT PULL] Additional Qualcomm ARM64 defconfig udpate for v5.14
-Date:   Mon, 21 Jun 2021 11:50:15 -0500
-Message-Id: <20210621165015.943060-1-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.31.0
+        Mon, 21 Jun 2021 13:09:42 -0400
+Received: from relay01.th.seeweb.it (relay01.th.seeweb.it [IPv6:2001:4b7a:2000:18::162])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6125CC06114C
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jun 2021 10:02:58 -0700 (PDT)
+Received: from [192.168.1.101] (bband-dyn238.178-41-213.t-com.sk [178.41.213.238])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 7B8DC1F46C;
+        Mon, 21 Jun 2021 19:02:55 +0200 (CEST)
+Date:   Mon, 21 Jun 2021 19:02:49 +0200
+From:   Martin Botka <martin.botka@somainline.org>
+Subject: Re: [PATCH V3 3/3] mailbox: qcom-apcs: Add SM6125 compatible
+To:     Jassi Brar <jassisinghbrar@gmail.com>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        konrad.dybcio@somainline.org,
+        angelogioacchino.delregno@somainline.org,
+        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Rob Herring <robh+dt@kernel.org>
+Message-Id: <P0A2VQ.Z2SRD0005J6R3@somainline.org>
+In-Reply-To: <CABb+yY3BYYC2na8EFunEeu0XCfLXrUQon=hF3q5p=+FUoigoyw@mail.gmail.com>
+References: <20210612094631.89980-1-martin.botka@somainline.org>
+        <20210612094631.89980-3-martin.botka@somainline.org>
+        <CABb+yY3BYYC2na8EFunEeu0XCfLXrUQon=hF3q5p=+FUoigoyw@mail.gmail.com>
+X-Mailer: geary/40.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii; format=flowed
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The following changes since commit e9cd414c1136aa31d34acc04c175bfaca4662f89:
 
-  arm64: defconfig: add drivers needed for DragonBoard410c (2021-06-14 16:59:27 -0500)
 
-are available in the Git repository at:
+On Sun, Jun 20 2021 at 11:03:04 PM -0500, Jassi Brar 
+<jassisinghbrar@gmail.com> wrote:
+> On Sat, Jun 12, 2021 at 4:46 AM Martin Botka
+> <martin.botka@somainline.org> wrote:
+>> 
+>>  This commit adds compatible for the SM6125 SoC
+>> 
+>>  Signed-off-by: Martin Botka <martin.botka@somainline.org>
+>>  ---
+>>  Changes in V2:
+>>  None
+>>  Changes in V3:
+>>  Change compatible to apcs-hmss-global
+>>   drivers/mailbox/qcom-apcs-ipc-mailbox.c | 5 +++++
+>>   1 file changed, 5 insertions(+)
+>> 
+>>  diff --git a/drivers/mailbox/qcom-apcs-ipc-mailbox.c 
+>> b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
+>>  index f25324d03842..f24c5ad8d658 100644
+>>  --- a/drivers/mailbox/qcom-apcs-ipc-mailbox.c
+>>  +++ b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
+>>  @@ -57,6 +57,10 @@ static const struct qcom_apcs_ipc_data 
+>> sdm660_apcs_data = {
+>>          .offset = 8, .clk_name = NULL
+>>   };
+>> 
+>>  +static const struct qcom_apcs_ipc_data sm6125_apcs_data = {
+>>  +       .offset = 8, .clk_name = NULL
+>>  +};
+>>  +
+>>   static const struct qcom_apcs_ipc_data apps_shared_apcs_data = {
+>>          .offset = 12, .clk_name = NULL
+>>   };
+>>  @@ -166,6 +170,7 @@ static const struct of_device_id 
+>> qcom_apcs_ipc_of_match[] = {
+>>          { .compatible = "qcom,sc8180x-apss-shared", .data = 
+>> &apps_shared_apcs_data },
+>>          { .compatible = "qcom,sdm660-apcs-hmss-global", .data = 
+>> &sdm660_apcs_data },
+>>          { .compatible = "qcom,sdm845-apss-shared", .data = 
+>> &apps_shared_apcs_data },
+>>  +       { .compatible = "qcom,sm6125-apcs-hmss-global", .data = 
+>> &sm6125_apcs_data },
+>>          { .compatible = "qcom,sm8150-apss-shared", .data = 
+>> &apps_shared_apcs_data },
+>>          { .compatible = "qcom,sdx55-apcs-gcc", .data = 
+>> &sdx55_apcs_data },
+>>          {}
+>> 
+> These all are basically different names for the same controller.
+> The 'offset' is a configuration parameter and the 'clock', when NULL,
+> is basically some "always-on" clock.
+> I am sure we wouldn't be doing it, if the controller was third-party.
+> 
+> -Jassi
 
-  https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-arm64-defconfig-for-5.14-1
+I'm aware that its not great to duplicate but i just followed
+how it was done previously.
 
-for you to fetch changes up to 8ae030c34dce4f5764e945b325e8dc4d2adef044:
+I will probably send a patch to lump the common conf together.
 
-  arm64: defconfig: Enable renesas usb xhci pci host controller (2021-06-15 19:19:58 -0500)
+Best Regards,
+Martin
 
-----------------------------------------------------------------
-Additional Qualcomm ARM64 defconfig udpate for v5.14
 
-The Qualcomm Robotics RB3 Development Kit has a Renesas USB HUB on one
-of the PCIe busses, which requires the releated driver to be enabled to
-provide functional Ethernet and additional USB host ports.
-
-----------------------------------------------------------------
-Vinod Koul (1):
-      arm64: defconfig: Enable renesas usb xhci pci host controller
-
- arch/arm64/configs/defconfig | 2 ++
- 1 file changed, 2 insertions(+)
