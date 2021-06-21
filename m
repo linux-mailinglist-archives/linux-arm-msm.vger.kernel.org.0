@@ -2,266 +2,295 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6759C3AEA50
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jun 2021 15:47:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 74BD73AEB72
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jun 2021 16:34:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229876AbhFUNtp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Jun 2021 09:49:45 -0400
-Received: from mailout2.w1.samsung.com ([210.118.77.12]:25636 "EHLO
-        mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229890AbhFUNtk (ORCPT
+        id S230306AbhFUOgl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Jun 2021 10:36:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59826 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229765AbhFUOgj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Jun 2021 09:49:40 -0400
-Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
-        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20210621134724euoutp02cd5f84dc83d6df94e076043c9d7c8cea~KnQFS1Ove1314013140euoutp02E
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jun 2021 13:47:24 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20210621134724euoutp02cd5f84dc83d6df94e076043c9d7c8cea~KnQFS1Ove1314013140euoutp02E
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1624283244;
-        bh=WBGmiRk36mDUrOliQVAlmO4y07enstu/5D4iQkLvX/M=;
-        h=Subject:To:From:Date:In-Reply-To:References:From;
-        b=qhFRnE+rGPLp/bGBNqiPpmV4MnV4In63WvH5jbp5wAwMWdvQj1q5ivU2uAwrri+6j
-         VaAMm3vPOVjZBfcM7d1L2FC8eL06mVUdolXIRdFAFons7qFtUQnKWqUnjw7QfajQs9
-         DI+xG9FFjyUD40l8t2WHcSpbtb+BfinwCMXj0qpw=
-Received: from eusmges2new.samsung.com (unknown [203.254.199.244]) by
-        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
-        20210621134724eucas1p2899419d20b04f726caab86c236f75932~KnQE9dAbw1083610836eucas1p2Y;
-        Mon, 21 Jun 2021 13:47:24 +0000 (GMT)
-Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
-        eusmges2new.samsung.com (EUCPMTA) with SMTP id EB.4F.42068.C6890D06; Mon, 21
-        Jun 2021 14:47:24 +0100 (BST)
-Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
-        eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
-        20210621134723eucas1p15155c018d83a6cc8f58e8b235a5fe964~KnQEVbWJW1095010950eucas1p1O;
-        Mon, 21 Jun 2021 13:47:23 +0000 (GMT)
-Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
-        eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
-        20210621134723eusmtrp1b907cbe0396d95965509cc3bed52df3a~KnQEUi1Sr1681616816eusmtrp11;
-        Mon, 21 Jun 2021 13:47:23 +0000 (GMT)
-X-AuditID: cbfec7f4-c71ff7000002a454-8d-60d0986cc113
-Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
-        eusmgms1.samsung.com (EUCPMTA) with SMTP id 56.FB.31287.B6890D06; Mon, 21
-        Jun 2021 14:47:23 +0100 (BST)
-Received: from [106.210.134.192] (unknown [106.210.134.192]) by
-        eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
-        20210621134722eusmtip2edd869dc85c0c59c448fc878e343f2d2~KnQDR6AMc2887228872eusmtip20;
-        Mon, 21 Jun 2021 13:47:22 +0000 (GMT)
-Subject: Re: [PATCH v3] ASoC: qcom: Fix for DMA interrupt clear reg
- overwriting
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
-        agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
-        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
-        rohitkr@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, swboyd@chromium.org,
-        judyhsiao@chromium.org
-From:   Marek Szyprowski <m.szyprowski@samsung.com>
-Message-ID: <f12445cc-53ad-4ebe-c0f7-c0d86b369164@samsung.com>
-Date:   Mon, 21 Jun 2021 15:47:21 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0)
-        Gecko/20100101 Thunderbird/78.11.0
+        Mon, 21 Jun 2021 10:36:39 -0400
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57F75C061756
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jun 2021 07:34:25 -0700 (PDT)
+Received: by mail-wm1-x333.google.com with SMTP id j10so3895420wms.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jun 2021 07:34:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=ZMqlY+Opiy9e5r7ONByBh1Tft3bA4sYDzsNlt1lPrOs=;
+        b=DmayG4hlCAbRlus1NTyZsmpy2IRkmUaG0624p1FI/yfRRYcp7yxZeo+RvAqD94PX9B
+         5g4wl/xkeaNViXA5ANb/uHXdmhVi2JksF11g0eXlfcDdBDXRb3nTPXFLAsMlgoAbnATG
+         lJLB/qNgFSSJlHRiQG6dDDOcUxdGg0VInan9V40nBe4EmpG0kDKQpyYKPmQgO3xhngkX
+         fLH0aRc9AhZUGbcfHijo0gQN2ZOD1voUhNjTQCkM1ZIrXjf1r0ZjG2HEMtSXDWQ5YCYf
+         uBfeHvhnheljFSLjOwBrrXZKt9QA9g8AgH35he+Mirv+Ak3JDcxPjsLPP98PLC1nf+M0
+         AxzA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=ZMqlY+Opiy9e5r7ONByBh1Tft3bA4sYDzsNlt1lPrOs=;
+        b=khn9+zsUZ0LzgIyJ3KqxFl6/XOl9Vdvgh4wKaWZWbuMTWGzopLaRzIVFr5EuSeRVlV
+         8f6eTXQ8+X2wPkMnuEW4Y+v6jvEFrcs/Ezfjfxb54RegvYXrOn8HUt/Fzf1MqBECJ4D6
+         v4wQEYyycIDrHQgoTb13YqdsCnJMsamDERlRGYF4czt1jB6prl9yK7Vg+pgWU/BcwD43
+         F5H2C2xaJ3VwZ4Rhgk4d2+Bb6h1956hTfMfARFpXMYRk2MZKo7vJxlwwM3bU/xBO9cq9
+         yqIWtV3wYerIs4kjE9RkHQcVKmqKQ3khcrPdT8YgGaDoe+0z3wIxm84tdP8S1dj5cnU0
+         /MKA==
+X-Gm-Message-State: AOAM5321/8P9ySqVGDTkpb4bEwqqRiIO8KuJPX+EITu1Nn/TN3eOGdMU
+        2a53EAPGIuRXkUxkUR7x1HmOT1OYuIcjuQC6
+X-Google-Smtp-Source: ABdhPJyx5C+eZv7C6XmYqM2hHGJ6eGQ428xrSQ40aZ1ROYYkBDWOZMN8IatGzKARHci8QpvmW7wNqg==
+X-Received: by 2002:a1c:4c16:: with SMTP id z22mr11623184wmf.34.1624286063780;
+        Mon, 21 Jun 2021 07:34:23 -0700 (PDT)
+Received: from ?IPv6:2a01:e34:ed2f:f020:5ebd:8bd9:d549:4211? ([2a01:e34:ed2f:f020:5ebd:8bd9:d549:4211])
+        by smtp.googlemail.com with ESMTPSA id a9sm17596124wrv.37.2021.06.21.07.34.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 21 Jun 2021 07:34:23 -0700 (PDT)
+Subject: Re: [PATCH RFC 1/2] thermal: qcom: tsens-v1: Add support for MSM8994
+ TSENS
+To:     Konrad Dybcio <konrad.dybcio@somainline.org>,
+        phone-devel@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, martin.botka@somainline.org,
+        angelogioacchino.delregno@somainline.org,
+        marijn.suijten@somainline.org, Amit Kucheria <amitk@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Rob Herring <robh+dt@kernel.org>, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20210209195346.457803-1-konrad.dybcio@somainline.org>
+ <a4b76d12-a659-da87-7d97-9b34e3cf7edf@linaro.org>
+ <ce5cac52-473c-a30a-104d-0a175e8848db@somainline.org>
+From:   Daniel Lezcano <daniel.lezcano@linaro.org>
+Message-ID: <35799629-607a-bad2-cdf2-b74a044dd0b6@linaro.org>
+Date:   Mon, 21 Jun 2021 16:34:21 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.8.1
 MIME-Version: 1.0
-In-Reply-To: <ec4f3faf-2169-3cd2-7471-976f20f77110@linaro.org>
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <ce5cac52-473c-a30a-104d-0a175e8848db@somainline.org>
+Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrBKsWRmVeSWpSXmKPExsWy7djP87o5My4kGLT8ZLU49/g3i8WVi4eY
-        LBpvL2K1OL3/HYvF1IdP2CzmHznHanFtYjuTxbcrHUwWE/efZbe4vGsOm0Xnrn5Wi465Exgt
-        WvceYbc4uaWZ0aLt2DFWi++vzjJbHL/zlMliw/e1jA5CHhs+N7F5zG64yOJxua+XyWPnrLvs
-        HptWdbJ53Lm2h81j39tlbB7rt1xl8fi8SS6AM4rLJiU1J7MstUjfLoEr49yzBawFh0wqmv5c
-        YGpgbNTtYuTkkBAwkfjc38fcxcjFISSwglHiz5kXUM4XRokt856wQjifGSVWtXxhgmk5vHoF
-        VNVyRomeD12MIAkhgY+MEkf/sXcxcnAICwRKzHxSBhIWEXjHLPFjkjmIzSZgKNH1tosNxOYV
-        sJM42HsezGYRUJVou/EGbIyoQLLE+3kzWCFqBCVOznzCAmJzAtXf37cYzGYWkJdo3jqbGcIW
-        l7j1ZD4TyD0SArs5JQ7vaGOHONRFYtHM6WwQtrDEq+NboOIyEqcn97BANDQzSjw8t5Ydwulh
-        lLjcNIMRospa4s65X2wg3zALaEqs36UPEXaUWP+3gxUkLCHAJ3HjrSDEEXwSk7ZNZ4YI80p0
-        tAlBVKtJzDq+Dm7twQuXmCFsD4n9e6+yTmBUnIXkzVlIXpuF5LVZCDcsYGRZxSieWlqcm55a
-        bJSXWq5XnJhbXJqXrpecn7uJEZgYT/87/mUH4/JXH/UOMTJxMB5ilOBgVhLhvZlyIUGINyWx
-        siq1KD++qDQntfgQozQHi5I4b9KWNfFCAumJJanZqakFqUUwWSYOTqkGJhXPST58S2q2Pd+v
-        O7X3jfaNHz/FvfZ67P52dK3LHfGkXL/K7Xv/fvkj84aJ1ejs4sKvXE0uvTXvpvcWKag+qea4
-        dU7l8Ow+3zMFSapuEhsWT/90gT8nRPDDBr30G6n32HbWLb7dGZZ9l4NPYjrXU+ZHQg2Tjxa+
-        8v67v1jX3F5oGU9G1fe1k4R1lJIsmhi+TmE+te1G1GLuD2YXCrjnvPLY9PvY/rUPVFkrOq/L
-        sRRNvGncpyNiuHzic//obdoF76dmLP2//dJJoZ2zZh5iCRZgSQxe9rNBKt7ywenHq/L6Iv0P
-        V262mmBj+aRKbfVzTd9Hj95G7BaO1/Li4mmUVuz+mbj3S3/R2sfHbik4VSixFGckGmoxFxUn
-        AgCjBkZM+wMAAA==
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrHIsWRmVeSWpSXmKPExsVy+t/xe7rZMy4kGEy4Im1x7vFvFosrFw8x
-        WTTeXsRqcXr/OxaLqQ+fsFnMP3KO1eLaxHYmi29XOpgsJu4/y25xedccNovOXf2sFh1zJzBa
-        tO49wm5xckszo0XbsWOsFt9fnWW2OH7nKZPFhu9rGR2EPDZ8bmLzmN1wkcXjcl8vk8fOWXfZ
-        PTat6mTzuHNtD5vHvrfL2DzWb7nK4vF5k1wAZ5SeTVF+aUmqQkZ+cYmtUrShhZGeoaWFnpGJ
-        pZ6hsXmslZGpkr6dTUpqTmZZapG+XYJexrlnC1gLDplUNP25wNTA2KjbxcjJISFgInF49Qrm
-        LkYuDiGBpYwSFw6dYIdIyEicnNbACmELS/y51sUGUfSeUeLfhLNAHRwcwgKBEjOflIHUiAi8
-        Y5b42JwPYgsJ/GSU+HYzB8RmEzCU6HoL0svJwStgJ3Gw9zyYzSKgKtF24w0jiC0qkCzxc307
-        VI2gxMmZT1hAbE6g+vv7FoPZzAJmEvM2P2SGsOUlmrfOhrLFJW49mc80gVFwFpL2WUhaZiFp
-        mYWkZQEjyypGkdTS4tz03GJDveLE3OLSvHS95PzcTYzAiN927OfmHYzzXn3UO8TIxMF4iFGC
-        g1lJhPdmyoUEId6UxMqq1KL8+KLSnNTiQ4ymQP9MZJYSTc4Hppy8knhDMwNTQxMzSwNTSzNj
-        JXHerXPXxAsJpCeWpGanphakFsH0MXFwSjUwCZf9vHCkSb1r09fFU16Inxae674lVfiZxb8P
-        dgHOtgeKnpWLiK6X6FnveJhdIq751hLfm5PN3WXC59rf/1Vl+HUR98xp9iUmZ4VP8P7LOs2z
-        WvTMdV9v608bjoaWnHvLkeZwmn96Zltj2kOJTQaL2pLzO2LK88IbE2b4Laz23Ncsq8MsaMd9
-        SenEK4++n+ccJ7TPmm/z8NPm836Tzz+Z/nT3m1urN+/2PdSiZLDA8dRphe6KvUtb28XSP1at
-        /BF6qaeH8cwbw2vsl14Fx81Yp/ukcMrRdeF7D1gJrJPXu96aJxE21V/akr2sJVMh1EU9+Pw6
-        vgPyxfsmps/9fMCO3f1yovGfUO9FR9eINPnXK7EUZyQaajEXFScCAD2Jg6OBAwAA
-X-CMS-MailID: 20210621134723eucas1p15155c018d83a6cc8f58e8b235a5fe964
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20210617193537eucas1p217b93d091ae8795581b30931ad8c7467
-X-EPHeader: CA
-CMS-TYPE: 201P
-X-CMS-RootMailID: 20210617193537eucas1p217b93d091ae8795581b30931ad8c7467
-References: <20210609072310.26099-1-srivasam@codeaurora.org>
-        <CGME20210617193537eucas1p217b93d091ae8795581b30931ad8c7467@eucas1p2.samsung.com>
-        <5ae06ccb-ffd4-ca9f-5a88-1f8bf8b48d37@samsung.com>
-        <ec4f3faf-2169-3cd2-7471-976f20f77110@linaro.org>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On 09/06/2021 15:31, Konrad Dybcio wrote:
+> Hi,
+> 
+> 
+>> Please split binding and code into two separate patches.
+> 
+> It's a oneliner, but I might as well.
+> 
+>  
+> 
+>> That deserves a cartdrige with a good explanation of why this function
+>> is doing all this. Without enough details, it is hard to review the code.
+> 
+> I don't really know *why* it's doing all of this. Qualcomm doesn't share any documentation.
+> 
+> It' just based on the freely-available msm-3.10 kernel driver. Probably just a HW specific.
 
-On 21.06.2021 14:52, Srinivas Kandagatla wrote:
->
-> On 17/06/2021 20:35, Marek Szyprowski wrote:
->>
->> On 09.06.2021 09:23, Srinivasa Rao Mandadapu wrote:
->>> The DMA interrupt clear register overwritten during
->>> simultaneous playback and capture in lpass platform
->>> interrupt handler. It's causing playback or capture stuck
->>> in similtaneous plaback on speaker and capture on dmic test.
->>> Update appropriate reg fields of corresponding channel instead
->>> of entire register write.
->>>
->>> Fixes: commit c5c8635a04711 ("ASoC: qcom: Add LPASS platform driver")
->>>
->>> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
->>
-> Can you please try this patch and let us know if this fixes the issue
->
-> ------------------------->cut<-------------------------------
-> Author: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-> Date:   Mon Jun 21 12:38:43 2021 +0100
->
->     ASoC: qcom: lpass-cpu: mark IRQ_CLEAR register as volatile and 
-> readable
->
->     Currently IRQ_CLEAR register is marked as write-only, however using
->     regmap_update_bits on this register will have some side effects.
->     so mark IRQ_CLEAR register appropriately as readable and volatile.
->
->     Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Oh, ok. Let's assume we are in hacking mode then. Hopefully Bjorn can
+give some inputs.
 
-This fixes the issue observed on DragonBoard410c. Feel free to add:
+>>> +static void compute_intercept_slope_8994(struct tsens_priv *priv,
+>>> +			      u32 *base0, u32 *base1, u32 *p, u32 mode)
+>>> +{
+>>> +	int adc_code_of_tempx, i, num, den;
+>>> +
+>>> +	for (i = 0; i < priv->num_sensors; i++) {
+>>> +		dev_dbg(priv->dev,
+>>> +			"%s: sensor%d - data_point1:%#x data_point2:%#x\n",
+>>> +			__func__, i, base0[i], base1[i]);
+>>> +
+>>> +		priv->sensor[i].slope = SLOPE_DEFAULT;
+>>> +		if (mode == TWO_PT_CALIB) {
+>>> +			/*
+>>> +			 * slope (m) = adc_code2 - adc_code1 (y2 - y1)/
+>>> +			 *	temp_120_degc - temp_30_degc (x2 - x1)
+>>> +			 */
+>>> +			num = base1[i] - base0[i];
+>> As the caller of the function is copying the value of base[0] to the
+>> entire array, whatever 'i', base[i] == base[0], so the parameters can be
+>> replaced by a single int.
+>>
+>> Then the code becomes:
+>>
+>> 	num = base1 - base0;
+>> 	num *= SLOPE_FACTOR;
+>> 	den = CAL_DEGC_PT2 - CAL_DEGC_PT1;
+>> 	slope = num / den;
+>>
+>> There is no change in the values, so 'slope' can be precomputed before
+>> the loop. We end up with:
+>>
+>> 	int adc_code_of_tempx, i, num, den;
+>> 	int slope;
+>>
+>> 	/*
+>> 	 * slope (m) = adc_code2 - adc_code1 (y2 - y1)/
+>> 	 *	temp_120_degc - temp_30_degc (x2 - x1)
+>> 	 */
+>> 	num = base1 - base0;
+>> 	num *= SLOPE_FACTOR;
+>> 	den = CAL_DEGC_PT2 - CAL_DEGC_PT1;
+>> 	slope = num / den;
+>>
+>> 	for (i = 0; i < priv->num_sensors; i++) {
+>>
+>> 		priv->sensor[i].slope = mode == TWO_PT_CALIB ? slope :
+>> 			SLOPE_DEFAULT;
+> 
+> That's sounds very good. I did not think of this approach, but I will incorporate it
+> 
+> into the next revision.
+> 
+> 
+> 
+>>> +		adc_code_of_tempx = base0[i] + p[i];
+>>> +
+>>> +		priv->sensor[i].offset = (adc_code_of_tempx * SLOPE_FACTOR) -
+>>> +				(CAL_DEGC_PT1 *	priv->sensor[i].slope);
+>>> +		dev_dbg(priv->dev, "%s: offset:%d\n", __func__,
+>>> +			priv->sensor[i].offset);
+>>> +	}
+>>> +}
+>>> +
+>>>  static int calibrate_v1(struct tsens_priv *priv)
+>>>  {
+>>>  	u32 base0 = 0, base1 = 0;
+>>> @@ -297,14 +421,143 @@ static int calibrate_8976(struct tsens_priv *priv)
+>>>  	return 0;
+>>>  }
+>> Same comment as above. The more the details, the easier for the people
+>> to review the code.
+> 
+> Sorry, I am not sure what you're referring to, the calibrate_8976 function?
 
-Reported-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
-> diff --git a/sound/soc/qcom/lpass-cpu.c b/sound/soc/qcom/lpass-cpu.c
-> index 0b9cbf2ce505..8998697cd1e1 100644
-> --- a/sound/soc/qcom/lpass-cpu.c
-> +++ b/sound/soc/qcom/lpass-cpu.c
-> @@ -525,6 +525,8 @@ static bool lpass_cpu_regmap_readable(struct 
-> device *dev, unsigned int reg)
->                         return true;
->
->         for (i = 0; i < v->irq_ports; ++i) {
-> +               if (reg == LPAIF_IRQCLEAR_REG(v, i))
-> +                       return true;
->                 if (reg == LPAIF_IRQEN_REG(v, i))
->                         return true;
->                 if (reg == LPAIF_IRQSTAT_REG(v, i))
-> @@ -566,9 +568,12 @@ static bool lpass_cpu_regmap_volatile(struct 
-> device *dev, unsigned int reg)
->         struct lpass_variant *v = drvdata->variant;
->         int i;
->
-> -       for (i = 0; i < v->irq_ports; ++i)
-> +       for (i = 0; i < v->irq_ports; ++i) {
-> +               if (reg == LPAIF_IRQCLEAR_REG(v, i))
-> +                       return true;
->                 if (reg == LPAIF_IRQSTAT_REG(v, i))
->                         return true;
-> +       }
->
->         for (i = 0; i < v->rdma_channels; ++i)
->                 if (reg == LPAIF_RDMACURR_REG(v, i))
->
-> ------------------------->cut<-------------------------------
->
-> --srini
->
->> This patch landed recently in linux-next as commit da0363f7bfd3 ("ASoC:
->> qcom: Fix for DMA interrupt clear reg overwriting"). It breaks ALSA
->> playback on DragonBoard 410c (arch/arm64/boot/dts/qcom/apq8016-sbc.dts).
->> After applying this patch, running 'speaker-test -l1' never finishes.
->> There is no error nor kernel warning message. Before that commit, the
->> playback worked fine on that board.
+I was referring to explaining a bit more the code but a comment saying
+it is a verbatim translation of the msm downstream driver should be ok.
+
+>>> -/* v1.x: msm8956,8976,qcs404,405 */
+>>> +static int calibrate_8994(struct tsens_priv *priv)
+>>> +{
+>>> +	int base0[16] = { 0 }, base1[16] = { 0 }, i;
+>>> +	u32 p[16];
+>> p stands for ?
+> 
+> No idea, but judging by the line:
+> 
+> " adc_code_of_tempx = base0[i] + p[i]; "
+> 
+> it's probably some hw-specific offset value.
+> 
+> 
+> 
+>>> +	int mode = 0;
+>>> +	u32 *calib0, *calib1, *calib2, *calib_mode, *calib_rsel;
+>>> +	u32 calib_redun_sel;
+>>> +
+>>> +	/* 0x40d0-0x40dc */
+>>> +	calib0 = (u32 *)qfprom_read(priv->dev, "calib");
+>> Fix qfprom_read, by returning an int and using nvmem_cell_read_u32
+>> (separate series).
 >>
->>> ---
->>> Changes since v2:
->>>     -- Removed redundant variables.
->>> Changes since v1:
->>>     -- Subject lines changed.
->>>    sound/soc/qcom/lpass-platform.c | 12 ++++++------
->>>    1 file changed, 6 insertions(+), 6 deletions(-)
->>>
->>> diff --git a/sound/soc/qcom/lpass-platform.c 
->>> b/sound/soc/qcom/lpass-platform.c
->>> index 0df9481ea4c6..f9df76d37858 100644
->>> --- a/sound/soc/qcom/lpass-platform.c
->>> +++ b/sound/soc/qcom/lpass-platform.c
->>> @@ -526,7 +526,7 @@ static int lpass_platform_pcmops_trigger(struct 
->>> snd_soc_component *component,
->>>                return -EINVAL;
->>>            }
->>>    -        ret = regmap_write(map, reg_irqclr, val_irqclr);
->>> +        ret = regmap_update_bits(map, reg_irqclr, val_irqclr, 
->>> val_irqclr);
->>>            if (ret) {
->>>                dev_err(soc_runtime->dev, "error writing to irqclear 
->>> reg: %d\n", ret);
->>>                return ret;
->>> @@ -650,10 +650,11 @@ static irqreturn_t lpass_dma_interrupt_handler(
->>>        struct lpass_variant *v = drvdata->variant;
->>>        irqreturn_t ret = IRQ_NONE;
->>>        int rv;
->>> -    unsigned int reg = 0, val = 0;
->>> +    unsigned int reg, val, mask;
->>>        struct regmap *map;
->>>        unsigned int dai_id = cpu_dai->driver->id;
->>>    +    mask = LPAIF_IRQ_ALL(chan);
->>>        switch (dai_id) {
->>>        case LPASS_DP_RX:
->>>            map = drvdata->hdmiif_map;
->>> @@ -676,8 +677,7 @@ static irqreturn_t lpass_dma_interrupt_handler(
->>>        return -EINVAL;
->>>        }
->>>        if (interrupts & LPAIF_IRQ_PER(chan)) {
->>> -
->>> -        rv = regmap_write(map, reg, LPAIF_IRQ_PER(chan) | val);
->>> +        rv = regmap_update_bits(map, reg, mask, 
->>> (LPAIF_IRQ_PER(chan) | val));
->>>            if (rv) {
->>>                dev_err(soc_runtime->dev,
->>>                    "error writing to irqclear reg: %d\n", rv);
->>> @@ -688,7 +688,7 @@ static irqreturn_t lpass_dma_interrupt_handler(
->>>        }
->>>           if (interrupts & LPAIF_IRQ_XRUN(chan)) {
->>> -        rv = regmap_write(map, reg, LPAIF_IRQ_XRUN(chan) | val);
->>> +        rv = regmap_update_bits(map, reg, mask, 
->>> (LPAIF_IRQ_XRUN(chan) | val));
->>>            if (rv) {
->>>                dev_err(soc_runtime->dev,
->>>                    "error writing to irqclear reg: %d\n", rv);
->>> @@ -700,7 +700,7 @@ static irqreturn_t lpass_dma_interrupt_handler(
->>>        }
->>>           if (interrupts & LPAIF_IRQ_ERR(chan)) {
->>> -        rv = regmap_write(map, reg, LPAIF_IRQ_ERR(chan) | val);
->>> +        rv = regmap_update_bits(map, reg, mask, 
->>> (LPAIF_IRQ_ERR(chan) | val));
->>>            if (rv) {
->>>                dev_err(soc_runtime->dev,
->>>                    "error writing to irqclear reg: %d\n", rv);
+>> It seems like all call sites are expecting an int.
+> 
+> Weird. I did not get slope calculation issues even with this, but perhaps
+> 
+> I was just lucky.
+> 
+> 
+> 
+>>> +			p[9] = (calib2[0] & MSM8994_S9_REDUN_MASK) >> MSM8994_S9_REDUN_SHIFT;
+>>> +			p[10] = (calib2[0] & MSM8994_S10_REDUN_MASK) >> MSM8994_S10_REDUN_SHIFT;
+>>> +			p[11] = (calib2[0] & MSM8994_S11_REDUN_MASK) >> MSM8994_S11_REDUN_SHIFT;
+>>> +			p[12] = (calib2[0] & MSM8994_S12_REDUN_MASK) >> MSM8994_S12_REDUN_SHIFT;
+>>> +			p[13] = (calib2[0] & MSM8994_S13_REDUN_MASK) >> MSM8994_S13_REDUN_SHIFT;
+>>> +			p[14] = (calib2[0] & MSM8994_S14_REDUN_MASK) >> MSM8994_S14_REDUN_SHIFT;
+>>> +			p[15] = (calib2[0] & MSM8994_S15_REDUN_MASK) >> MSM8994_S15_REDUN_SHIFT;
+>> IMO, it is possible to do something simpler (probably bits.h could have
+>> interesting helpers).
+> 
+> All TSENS consumers had this style, probably to make it easier to compare with the
+> 
+> downstream driver should there arise any human errors.
+> 
+> 
+> 
+>>> +		} else {
+>>> +			dev_dbg(priv->dev, "%s: REDUN NON-TWO_PT mode, mode = %i",
+>>> +			__func__, mode);
+>>> +			for (i = 0; i < 16; i++)
+>>> +				p[i] = 532;
+>> No litterals, macros please
+> 
+> Does MSM8994_NON_TWOPT_DEFAULT_VALUE sound good? It doesn't exactly
+> 
+> roll of the tongue but I don't have many better ideas..
+
+Is this driver msm8994 specific ?
+
+
+>> And it would be simpler to iniatialize the array with the value.
 >>
->
-Best regards
+>> u32 p[16] = { [ 0 ... 15 ] = MY_532_MACRO };
+> 
+>> So no need to use this loop and the other one beliw.
+> 
+> Thanks, didn't know about this.
+> 
+> 
+> 
+>> What about replacing 16 by TSENS_SENSOR_MAX ?
+> 
+> If you mean this 8994-specific function exactly, then it'd probably cause
+> 
+> more confusion than help as we might find out that some SoC using TSENSv1
+> 
+> has even more sensors.
+> 
+> 
+> 
+>>>  static struct tsens_features tsens_v1_feat = {
+>>>  	.ver_major	= VER_1_X,
+>>>  	.crit_int	= 0,
+>>>  	.adc		= 1,
+>>>  	.srot_split	= 1,
+>>> -	.max_sensors	= 11,
+>>> +	.max_sensors	= 16,
+> 
+> Here TSENS_SENSOR_MAX does make sense.
+> 
+> 
+> 
+>>> +
+>>> +struct tsens_plat_data data_8994 = {
+>>> +	.num_sensors	= 16,
+>>> +	.ops		= &ops_8994,
+>>> +	.hw_ids		= (unsigned int []){ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 },
+>> If you have time, in another series, replace this by a single int used
+>> as a bitmask and fix the hw_id loop in tsens.c.
+> 
+> I will add this to my to-do list, but no promises on this landing anytime soon :/
+> 
+> 
+> 
+> Thanks for the thorough review,
+> 
+> Konrad
+> 
+
+
 -- 
-Marek Szyprowski, PhD
-Samsung R&D Institute Poland
+<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
 
+Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
+<http://twitter.com/#!/linaroorg> Twitter |
+<http://www.linaro.org/linaro-blog/> Blog
