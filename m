@@ -2,90 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 480DA3AE06E
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 20 Jun 2021 22:46:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 31B4B3AE217
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jun 2021 06:12:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230057AbhFTUsr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 20 Jun 2021 16:48:47 -0400
-Received: from mail.kernel.org ([198.145.29.99]:57680 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229905AbhFTUsp (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 20 Jun 2021 16:48:45 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 454E36109F;
-        Sun, 20 Jun 2021 20:46:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1624221992;
-        bh=Ld8DsLuN9uxyfxOIjiJtuRFKzCbOVD9P45An2hX0fLE=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=ODlAsUemSl9Qu5lwmSdExvzujHRyL8qYs0KcT1NZD2TVMZy4sPGkHZji/Qm/bZooU
-         vtrjcqdkU9TSRV+emzAJSXMO3QeVcsntW7b+iurlHdgt3OPzVGBtNybbwO0ok1w7Et
-         FkVuEggFhY+E+aAq0QvPP3eWqz5SzhGxj1i+nhlkUvKHlkdJn/xkAE3uX4Ahj51HLc
-         7egyRuzRjYEApoFHWAZrygIjEWXUa5HTlnxwbpz/Mr1FCRkOnP4DWbEFEwDtFkxcvs
-         aIXSqGv+O3LNFqR+wdnZb5fOc7t4aQNaJS5h6IWWrU4/nk9Ck31fqaj6OEqfiMnblw
-         y2YSjtRnCJNnw==
-Date:   Sun, 20 Jun 2021 22:46:29 +0200
-From:   Wolfram Sang <wsa@kernel.org>
-To:     Jonathan Marek <jonathan@marek.ca>
-Cc:     linux-arm-msm@vger.kernel.org, robert.foss@linaro.org,
-        andrey.konovalov@linaro.org,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "open list:QUALCOMM I2C CCI DRIVER" <linux-i2c@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH] i2c: qcom-cci: add sm8250 compatible
-Message-ID: <YM+pJSOULPmlITIc@kunai>
-Mail-Followup-To: Wolfram Sang <wsa@kernel.org>,
-        Jonathan Marek <jonathan@marek.ca>, linux-arm-msm@vger.kernel.org,
-        robert.foss@linaro.org, andrey.konovalov@linaro.org,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "open list:QUALCOMM I2C CCI DRIVER" <linux-i2c@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" <devicetree@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-References: <20210513175518.6023-1-jonathan@marek.ca>
+        id S229736AbhFUEPB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Jun 2021 00:15:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60632 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229641AbhFUEOu (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 21 Jun 2021 00:14:50 -0400
+Received: from mail-il1-x130.google.com (mail-il1-x130.google.com [IPv6:2607:f8b0:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41F5BC061574;
+        Sun, 20 Jun 2021 21:03:16 -0700 (PDT)
+Received: by mail-il1-x130.google.com with SMTP id s19so7305737ilj.1;
+        Sun, 20 Jun 2021 21:03:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=p5UDpfgo5AOHCaX0JpdGKP9xzPLEPt9T/y03N0fRCY4=;
+        b=OKkVl4teqRhhXxqcimH2zxCDycQ76+S+dawezbfPtGtQUIrXeRuMaw78L5ZOypI8y1
+         KgtSCVVuPK9I5pqB1q/ynBzH7aPG9I78ws77f/v1q715UgUgrr0zstQavSOSTakJx322
+         wsEuWo3CwxFClq6+7AKBZVryXHa7bJYlQTt1duwXNCzFZN/N8z8+Wi8BOiE31tiknNf+
+         g2fgYLOXJHx1Uf158iLhT+jKun7/xVdocu03oDdt/L+whV2N5phxxxSRtQFtjVm9Stad
+         PCHJDSF3ZVHjty0cCkAMG7MOYZjo3SWLufz9117JFWoOjpeNHo60UTuj2JD5pFdCs06u
+         +o3A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=p5UDpfgo5AOHCaX0JpdGKP9xzPLEPt9T/y03N0fRCY4=;
+        b=UVNoDwwN1vgxjjuFLaO976t7CF7X1Y1XzGNAsolHYFlyum97A5DQB+sYh0tdb28QhP
+         mi0FMCC/cDseh87t2YXhJtZLQiskqjDWiz+987PZp9ioODYtNnsEE7dRhiss6qcixRr+
+         WjZkZraqhleH0oDtEmnfXolJsFesJeUsOqX1F+RL94PPLJpFKivkZwIcwsmwtenf/PJy
+         H4musJIStl4xiuMOpW9zZpaDlLeL6y6ym1MShIaVGH6tD3ytboXa3q+lJ3EMVEK6+Vy7
+         Q1Pl1V5hfDP9MVWVNWKfArhmuhJ7uvlBsm0/h6AyYm8TAFBgnCRP7d/OsFCJh8Ng0yhj
+         VWIA==
+X-Gm-Message-State: AOAM533/wCAKgJxmv7q9XprpxWt2eKUrjPWCvMSfqZxjK6qbhZGlkjhZ
+        WWB0kF/71xu/RcxEogCGlr6GB0ar7XfuC5IUDsPvDMW+E2o=
+X-Google-Smtp-Source: ABdhPJx82zEJKWuu/YOeqVSNgybYGrfy6xikBlOfVE8L1pPAKxWlvZZIJ3ln8yeS4PYziDhMe4H5MjQaPpgPMoHKotw=
+X-Received: by 2002:a05:6e02:1d97:: with SMTP id h23mr3880075ila.108.1624248195557;
+ Sun, 20 Jun 2021 21:03:15 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="QiJGXfUyvzMgjqNF"
-Content-Disposition: inline
-In-Reply-To: <20210513175518.6023-1-jonathan@marek.ca>
+References: <20210612094631.89980-1-martin.botka@somainline.org> <20210612094631.89980-3-martin.botka@somainline.org>
+In-Reply-To: <20210612094631.89980-3-martin.botka@somainline.org>
+From:   Jassi Brar <jassisinghbrar@gmail.com>
+Date:   Sun, 20 Jun 2021 23:03:04 -0500
+Message-ID: <CABb+yY3BYYC2na8EFunEeu0XCfLXrUQon=hF3q5p=+FUoigoyw@mail.gmail.com>
+Subject: Re: [PATCH V3 3/3] mailbox: qcom-apcs: Add SM6125 compatible
+To:     Martin Botka <martin.botka@somainline.org>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        konrad.dybcio@somainline.org,
+        angelogioacchino.delregno@somainline.org,
+        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Rob Herring <robh+dt@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Sat, Jun 12, 2021 at 4:46 AM Martin Botka
+<martin.botka@somainline.org> wrote:
+>
+> This commit adds compatible for the SM6125 SoC
+>
+> Signed-off-by: Martin Botka <martin.botka@somainline.org>
+> ---
+> Changes in V2:
+> None
+> Changes in V3:
+> Change compatible to apcs-hmss-global
+>  drivers/mailbox/qcom-apcs-ipc-mailbox.c | 5 +++++
+>  1 file changed, 5 insertions(+)
+>
+> diff --git a/drivers/mailbox/qcom-apcs-ipc-mailbox.c b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
+> index f25324d03842..f24c5ad8d658 100644
+> --- a/drivers/mailbox/qcom-apcs-ipc-mailbox.c
+> +++ b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
+> @@ -57,6 +57,10 @@ static const struct qcom_apcs_ipc_data sdm660_apcs_data = {
+>         .offset = 8, .clk_name = NULL
+>  };
+>
+> +static const struct qcom_apcs_ipc_data sm6125_apcs_data = {
+> +       .offset = 8, .clk_name = NULL
+> +};
+> +
+>  static const struct qcom_apcs_ipc_data apps_shared_apcs_data = {
+>         .offset = 12, .clk_name = NULL
+>  };
+> @@ -166,6 +170,7 @@ static const struct of_device_id qcom_apcs_ipc_of_match[] = {
+>         { .compatible = "qcom,sc8180x-apss-shared", .data = &apps_shared_apcs_data },
+>         { .compatible = "qcom,sdm660-apcs-hmss-global", .data = &sdm660_apcs_data },
+>         { .compatible = "qcom,sdm845-apss-shared", .data = &apps_shared_apcs_data },
+> +       { .compatible = "qcom,sm6125-apcs-hmss-global", .data = &sm6125_apcs_data },
+>         { .compatible = "qcom,sm8150-apss-shared", .data = &apps_shared_apcs_data },
+>         { .compatible = "qcom,sdx55-apcs-gcc", .data = &sdx55_apcs_data },
+>         {}
+>
+These all are basically different names for the same controller.
+The 'offset' is a configuration parameter and the 'clock', when NULL,
+is basically some "always-on" clock.
+I am sure we wouldn't be doing it, if the controller was third-party.
 
---QiJGXfUyvzMgjqNF
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Thu, May 13, 2021 at 01:55:17PM -0400, Jonathan Marek wrote:
-> SM8250 CCI is the same as SDM845, add an equivalent compatible for SM8250.
->=20
-> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
-
-For the record: Applied to for-next on 2021-05-21, thanks!
-
-
---QiJGXfUyvzMgjqNF
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmDPqSQACgkQFA3kzBSg
-KbaJVA/+PYq/2WzJj/80zSo/kaLH08GAfxSYvoch0h7HPkkufpYjzeBzkdVF19Qd
-dPhzOxDqy9Z8zDP05ttEAtPPtKPHXUOxP7B5Sx3fXJ+ypv5OJznpMmFdvT6P9KpH
-XHzxokK5PYg4J7feHKBS9hbM5gvq97WiYtD7xPb+iBDc1S4LSL38J0fdWHB19PWw
-mpeA6Ummb4/jkhxHYMl0hay2NijxndTPBKa+uNvwRvOl++gV9bVM6KGDWZbv6dVI
-/sbtT2Id+U0XYEijj8+eroEAGaCfJdWRYIPknCc0/aUU0nETwK1qLmE+KQ01Kbf3
-ieiloxHmF95WdrNy5pnAu29sEAIvLPMdGqi8NCdP5UV4hepA5tzhmTYIUDqck6UC
-Gpw0swi/nsR9NtcimJUVdICkVrSeLtler57PGJm1pOB9L7+2f585yl3USc9TM+qa
-4JO+Be2ECa8VpSudcSOHC9DDkMIchKWCm0WUFoW07rxSEHUtiB3uyjAW+JX2cZG3
-RdBwby5JNzSEzPHXg3IMGJVgmGsjv7m72+4V5IkDIRYMlLHrMvmtvqNIolIsKr3g
-X4oaWDVTPWEcUzqPQXYo7VwsyWKdT9ehK7vnUKZrvAb+OfvhN26fESQ4VkiCX/H6
-d/yMK77dKJfn6DB+fsgZIH2vfmWZCrid6Tmv65mFvVL7x6n2tbo=
-=mqe+
------END PGP SIGNATURE-----
-
---QiJGXfUyvzMgjqNF--
+-Jassi
