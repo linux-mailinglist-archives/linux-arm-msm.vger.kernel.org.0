@@ -2,98 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 836253AF494
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jun 2021 20:13:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 83D343AF530
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jun 2021 20:40:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233809AbhFUSP1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Jun 2021 14:15:27 -0400
-Received: from relay06.th.seeweb.it ([5.144.164.167]:32869 "EHLO
-        relay06.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233956AbhFUSMu (ORCPT
+        id S229887AbhFUSnC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Jun 2021 14:43:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59544 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229790AbhFUSnB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Jun 2021 14:12:50 -0400
+        Mon, 21 Jun 2021 14:43:01 -0400
+Received: from m-r1.th.seeweb.it (m-r1.th.seeweb.it [IPv6:2001:4b7a:2000:18::170])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6AE5C061574
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jun 2021 11:40:46 -0700 (PDT)
 Received: from IcarusMOD.eternityproject.eu (unknown [2.237.20.237])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 71BF03ED53;
-        Mon, 21 Jun 2021 20:10:20 +0200 (CEST)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 129841F535;
+        Mon, 21 Jun 2021 20:40:44 +0200 (CEST)
+Subject: Re: [PATCH net-next 3/6] net: ipa: disable misc clock gating for IPA
+ v3.1
+To:     Alex Elder <elder@linaro.org>, davem@davemloft.net, kuba@kernel.org
+Cc:     robh+dt@kernel.org, jamipkettunen@gmail.com,
+        bjorn.andersson@linaro.org, agross@kernel.org, elder@kernel.org,
+        linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20210621175627.238474-1-elder@linaro.org>
+ <20210621175627.238474-4-elder@linaro.org>
 From:   AngeloGioacchino Del Regno 
         <angelogioacchino.delregno@somainline.org>
-To:     bjorn.andersson@linaro.org
-Cc:     agross@kernel.org, daniel.lezcano@linaro.org, rjw@rjwysocki.net,
-        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, phone-devel@vger.kernel.org,
-        konrad.dybcio@somainline.org, marijn.suijten@somainline.org,
-        martin.botka@somainline.org, jeffrey.l.hugo@gmail.com,
-        jami.kettunen@somainline.org,
-        ~postmarketos/upstreaming@lists.sr.ht, devicetree@vger.kernel.org,
-        robh+dt@kernel.org,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>
-Subject: [PATCH v6 5/5] dt-bindings: soc: qcom: spm: Document SDM660 and MSM8998 compatibles
-Date:   Mon, 21 Jun 2021 20:10:16 +0200
-Message-Id: <20210621181016.365009-6-angelogioacchino.delregno@somainline.org>
-X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20210621181016.365009-1-angelogioacchino.delregno@somainline.org>
-References: <20210621181016.365009-1-angelogioacchino.delregno@somainline.org>
+Message-ID: <fc8beed5-e1ca-330b-7db4-c1364c48f532@somainline.org>
+Date:   Mon, 21 Jun 2021 20:40:43 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.9.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20210621175627.238474-4-elder@linaro.org>
+Content-Type: text/plain; charset=iso-8859-15; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The driver was updated to add SAW2 v4.1 support for new SoCs: document
-the new compatibles.
----
- .../bindings/soc/qcom/qcom,spm.yaml           | 22 +++++++++++++++++++
- 1 file changed, 22 insertions(+)
+Il 21/06/21 19:56, Alex Elder ha scritto:
+> For IPA v3.1, a workaround is needed to disable gating on a MISC
+> clock.  I have no further explanation, but this is what the
+> downstream code (msm-4.4) does.
+> 
+> This was suggested in a patch from AngeloGioacchino Del Regno.
+> 
+> Link: https://lore.kernel.org/netdev/20210211175015.200772-2-angelogioacchino.delregno@somainline.org
+> Signed-off-by: Alex Elder <elder@linaro.org>
 
-diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,spm.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,spm.yaml
-index 4aaa319b2932..a1dffde9b168 100644
---- a/Documentation/devicetree/bindings/soc/qcom/qcom,spm.yaml
-+++ b/Documentation/devicetree/bindings/soc/qcom/qcom,spm.yaml
-@@ -17,6 +17,11 @@ description: |
- properties:
-   compatible:
-     enum:
-+      - qcom,sdm660-gold-saw2-v4.1-l2
-+      - qcom,sdm660-silver-saw2-v4.1-l2
-+      - qcom,msm8998-silver-saw2-v4.1-l2
-+      - qcom,msm8998-gold-saw2-v4.1-l2
-+      - qcom,msm8998-silver-saw2-v4.1-l2
-       - qcom,msm8974-saw2-v2.1-cpu
-       - qcom,apq8084-saw2-v2.1-cpu
-       - qcom,apq8064-saw2-v1.1-cpu
-@@ -33,6 +38,8 @@ additionalProperties: false
- 
- examples:
-   - |
-+
-+    /* Example 1: SoC using SAW2 and kpss-acc-v2 CPUIdle */
-     cpus {
-         #address-cells = <1>;
-         #size-cells = <0>;
-@@ -52,4 +59,19 @@ examples:
-         reg = <0xf9089000 0x1000>;
-     };
- 
-+  - |
-+
-+    /* Example 2: New-gen multi cluster SoC using SAW only for L2;
-+     * This does not require any cpuidle driver, nor any cpu phandle.
-+     */
-+    power-controller@17812000 {
-+        compatible = "qcom,msm8998-gold-saw2-v4.1-l2", "qcom,saw2";
-+        reg = <0x17812000 0x1000>;
-+    };
-+
-+    power-controller@17912000 {
-+        compatible = "qcom,msm8998-silver-saw2-v4.1-l2", "qcom,saw2";
-+        reg = <0x17912000 0x1000>;
-+    };
-+
- ...
--- 
-2.32.0
-
+Acked-by: AngeloGioacchino Del Regno 
+<angelogioacchino.delregno@somainline.org>
