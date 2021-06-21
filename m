@@ -2,161 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F139C3AF976
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jun 2021 01:35:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F1D7B3AF9D1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jun 2021 01:53:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231486AbhFUXiD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Jun 2021 19:38:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41340 "EHLO
+        id S232263AbhFUXz3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Jun 2021 19:55:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45332 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231268AbhFUXiD (ORCPT
+        with ESMTP id S232282AbhFUXz1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Jun 2021 19:38:03 -0400
-Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8AEB2C061574
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jun 2021 16:35:48 -0700 (PDT)
-Received: by mail-ot1-x32a.google.com with SMTP id n99-20020a9d206c0000b029045d4f996e62so707407ota.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jun 2021 16:35:48 -0700 (PDT)
+        Mon, 21 Jun 2021 19:55:27 -0400
+Received: from mail-pg1-x52f.google.com (mail-pg1-x52f.google.com [IPv6:2607:f8b0:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 113A0C06175F
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jun 2021 16:53:09 -0700 (PDT)
+Received: by mail-pg1-x52f.google.com with SMTP id e20so15491550pgg.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jun 2021 16:53:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=AXhLaNRlItV846H2J1h+pbbqWtyd8CdKwFzlrXFypk4=;
-        b=vvX+3l5Iko5F5wawiBO2oOulWbnrWs/EuReLSqZd2mbbkLKe8RelP36ZHfTveJH05P
-         QC/lDKAN69gONbAmSOO8q2KwLJS2E42g51BDbocUcWiFfI9KHbY/EerPwfVDZ9HwgsMg
-         GNZUTtFtY7DFeiwBBCUcgEv/n1BNNN9s9YONKr+m6lpXqKnfxI0d2Ygf3s8MAiJh8VKZ
-         qdnx3xfbV3KI/BuHNMHtSI+buAbTTGui6WBd8vdhtS2fJPNsQ7fYyiMyyp54cmF0vWkV
-         XSRGPl/dqom3nL5l7rF1ghp5Ru3KCEjcPqSC4DBqgRw6DjYMGXKVsVia22fnzsdSgpP6
-         iX+A==
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=n91GfziZ5syAC28F6UjBolJ+M+YVU4V/73A7TE0XUb0=;
+        b=SUyoFV/+KdCNo/00LCnOAUpTOHYgzf0cSORstuKQbNiRU4V1vUrGu4QetCpbQBYc1W
+         GAxBENYZAxru0gINenfaFo3ipVEzhLwv0U2eNgFcJ2cPC7dG4++rrl8IkdEXEecTnwhe
+         LSHANxMj999/UFOJcme3BmijnH7TMuu4qQkCY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=AXhLaNRlItV846H2J1h+pbbqWtyd8CdKwFzlrXFypk4=;
-        b=Q7Es+jN+EZ/5UIByRD+AhUiePI5S8zuWYIDSJfL/9kQTC6YWD8gKhJanuTAq+UvwgC
-         FWYGnzWZu4RB8vhruJczVI5Tvr5kKWN3unVVsIGit2yXF74pxDdeeafRCOgm/mFPUOdh
-         Vbr/4FPOyVjhGkBG6MKSM2iQRobMQGu/+F2PHxKyOrph/M1eStY6nP15w3c6+SvnTNG2
-         Cz3OV34kJiZr6H6YtVQRsVnrx3Ibef5qvtRSKvFLXqdKHzeSK3/eqzrfa0K9uU18v9ql
-         aZsRQSEX6LP+M1dKSCSfqMyzN48IalC5g3/Cv4Qy6T2V6rWgcEx41VpwgNvDGeg/NM7r
-         VU1w==
-X-Gm-Message-State: AOAM533WBaZwowrhawuiklPUgolei2/HqZOlaehrAl4ceWaJ+5wHN2Ja
-        Z1tXW2KLDMg2RHn1rdvIz/J27A==
-X-Google-Smtp-Source: ABdhPJwbgQBwTmzxN8A2Pyo1XyUa/E+pwItXExwq/V3hdrGj2dPjnmw3yUMqCY8jNO69G8h7xQ7yRA==
-X-Received: by 2002:a05:6830:2244:: with SMTP id t4mr483428otd.336.1624318547911;
-        Mon, 21 Jun 2021 16:35:47 -0700 (PDT)
-Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id 24sm2292069oiz.26.2021.06.21.16.35.46
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=n91GfziZ5syAC28F6UjBolJ+M+YVU4V/73A7TE0XUb0=;
+        b=Y9Kk45yWv4SoatMjz3TxCfZb4yQLd5eovoleh5WUj2eQAUnFUYjq56sBkhjyQV7akc
+         MS9WRokx9WNDBQwX0rRZDEiopaE4v6tGSYjxmaK1SsoXPwY21FB771zMvbnwmNJcSO6u
+         07wLdUV9eri8vdgaHPWiwygmWF6bug+yGVMx14RX3JmHwrsCkvZbnvSRB5Vh8li3ckXi
+         qg93SvYrOd9pClSQKzu/umUuUeWo3I0QA5BJNxdEDXu4ei32tblq0ikgyp/p7ngDX7GS
+         6UluVUv8nQy10xho7/LoNQWsxjpRL1YgeN5JkE8Aush90MhLjwtPQQVUz6z5JTTw0s1T
+         e53A==
+X-Gm-Message-State: AOAM532RW5ONe029U1NjxksEGT6VqZYSfKo7KwaZC5wFGeNSLoDfJ+LF
+        Zi8hJ7WoRJNTwfB0f4LLnyG4TQ==
+X-Google-Smtp-Source: ABdhPJxZEK+bTs68KqckxQkGsSx8yLSwQ1E3xNiGaYMPOkRx7NyxIeuHTI/Mz9yWdTNtGbeL+DqgvQ==
+X-Received: by 2002:a62:2601:0:b029:300:bd5a:9268 with SMTP id m1-20020a6226010000b0290300bd5a9268mr718024pfm.1.1624319588586;
+        Mon, 21 Jun 2021 16:53:08 -0700 (PDT)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:202:201:bdc1:a4b1:b06e:91d1])
+        by smtp.gmail.com with ESMTPSA id s27sm4339663pfg.169.2021.06.21.16.53.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Jun 2021 16:35:47 -0700 (PDT)
-Date:   Mon, 21 Jun 2021 18:35:44 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Rob Herring <robh+dt@kernel.org>
-Cc:     Jassi Brar <jassisinghbrar@gmail.com>,
-        Martin Botka <martin.botka@somainline.org>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        jamipkettunen@somainline.org, Andy Gross <agross@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH V3 3/3] mailbox: qcom-apcs: Add SM6125 compatible
-Message-ID: <YNEiUMBqGAx1zLVX@yoga>
-References: <20210612094631.89980-1-martin.botka@somainline.org>
- <20210612094631.89980-3-martin.botka@somainline.org>
- <CABb+yY3BYYC2na8EFunEeu0XCfLXrUQon=hF3q5p=+FUoigoyw@mail.gmail.com>
- <CAL_JsqLWqtAtqLRF-MAnq80NMfD0a+CfWPv8JWjjNTJFgMjCxg@mail.gmail.com>
- <CABb+yY0sdSinTm788pMFrqEZ6QMC2OwCP7Kkto+pG9h1aGMzwQ@mail.gmail.com>
- <CAL_JsqKdoMwpL_tYC7VQRAG2AC5nR4diShMQCgDseObcgU+egQ@mail.gmail.com>
+        Mon, 21 Jun 2021 16:53:08 -0700 (PDT)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     gregkh@linuxfoundation.org, rafael@kernel.org,
+        rafael.j.wysocki@intel.com, will@kernel.org, robin.murphy@arm.com,
+        joro@8bytes.org, bjorn.andersson@linaro.org,
+        ulf.hansson@linaro.org, adrian.hunter@intel.com,
+        bhelgaas@google.com
+Cc:     robdclark@chromium.org, linux-arm-msm@vger.kernel.org,
+        linux-pci@vger.kernel.org, quic_c_gdjako@quicinc.com,
+        iommu@lists.linux-foundation.org, sonnyrao@chromium.org,
+        saiprakash.ranjan@codeaurora.org, linux-mmc@vger.kernel.org,
+        vbadigan@codeaurora.org, rajatja@google.com, saravanak@google.com,
+        joel@joelfernandes.org, Douglas Anderson <dianders@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        Bartosz Golaszewski <bgolaszewski@baylibre.com>,
+        Dan Williams <dan.j.williams@intel.com>,
+        Geert Uytterhoeven <geert@linux-m68k.org>,
+        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+        Randy Dunlap <rdunlap@infradead.org>,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH 0/6] iommu: Enable devices to request non-strict DMA, starting with QCom SD/MMC
+Date:   Mon, 21 Jun 2021 16:52:42 -0700
+Message-Id: <20210621235248.2521620-1-dianders@chromium.org>
+X-Mailer: git-send-email 2.32.0.288.g62a8d224e6-goog
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAL_JsqKdoMwpL_tYC7VQRAG2AC5nR4diShMQCgDseObcgU+egQ@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 21 Jun 18:19 CDT 2021, Rob Herring wrote:
 
-> On Mon, Jun 21, 2021 at 5:10 PM Jassi Brar <jassisinghbrar@gmail.com> wrote:
-> >
-> > On Mon, Jun 21, 2021 at 2:46 PM Rob Herring <robh+dt@kernel.org> wrote:
-> > >
-> > > On Sun, Jun 20, 2021 at 10:03 PM Jassi Brar <jassisinghbrar@gmail.com> wrote:
-> > > >
-> > > > On Sat, Jun 12, 2021 at 4:46 AM Martin Botka
-> > > > <martin.botka@somainline.org> wrote:
-> > > > >
-> > > > > This commit adds compatible for the SM6125 SoC
-> > > > >
-> > > > > Signed-off-by: Martin Botka <martin.botka@somainline.org>
-> > > > > ---
-> > > > > Changes in V2:
-> > > > > None
-> > > > > Changes in V3:
-> > > > > Change compatible to apcs-hmss-global
-> > > > >  drivers/mailbox/qcom-apcs-ipc-mailbox.c | 5 +++++
-> > > > >  1 file changed, 5 insertions(+)
-> > > > >
-> > > > > diff --git a/drivers/mailbox/qcom-apcs-ipc-mailbox.c b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
-> > > > > index f25324d03842..f24c5ad8d658 100644
-> > > > > --- a/drivers/mailbox/qcom-apcs-ipc-mailbox.c
-> > > > > +++ b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
-> > > > > @@ -57,6 +57,10 @@ static const struct qcom_apcs_ipc_data sdm660_apcs_data = {
-> > > > >         .offset = 8, .clk_name = NULL
-> > > > >  };
-> > > > >
-> > > > > +static const struct qcom_apcs_ipc_data sm6125_apcs_data = {
-> > > > > +       .offset = 8, .clk_name = NULL
-> > > > > +};
-> > > > > +
-> > > > >  static const struct qcom_apcs_ipc_data apps_shared_apcs_data = {
-> > > > >         .offset = 12, .clk_name = NULL
-> > > > >  };
-> > > > > @@ -166,6 +170,7 @@ static const struct of_device_id qcom_apcs_ipc_of_match[] = {
-> > > > >         { .compatible = "qcom,sc8180x-apss-shared", .data = &apps_shared_apcs_data },
-> > > > >         { .compatible = "qcom,sdm660-apcs-hmss-global", .data = &sdm660_apcs_data },
-> > > > >         { .compatible = "qcom,sdm845-apss-shared", .data = &apps_shared_apcs_data },
-> > > > > +       { .compatible = "qcom,sm6125-apcs-hmss-global", .data = &sm6125_apcs_data },
-> > > > >         { .compatible = "qcom,sm8150-apss-shared", .data = &apps_shared_apcs_data },
-> > > > >         { .compatible = "qcom,sdx55-apcs-gcc", .data = &sdx55_apcs_data },
-> > > > >         {}
-> > > > >
-> > > > These all are basically different names for the same controller.
-> > > > The 'offset' is a configuration parameter and the 'clock', when NULL,
-> > > > is basically some "always-on" clock.
-> > > > I am sure we wouldn't be doing it, if the controller was third-party.
-> > >
-> > > If newer implementations are 'the same', then they should have a
-> > > fallback compatible to the existing one that is the same and no driver
-> > > change is needed. If the differences are board or instance (within an
-> > > SoC) specific, then a DT property would be appropriate.
-> > >
-> > The controllers (13 now) only differ by the 'offset' where the
-> > registers are mapped. Clock-name is a pure s/w artifact.
-> > So, maybe we could push all these in DT.
-> 
-> Why is 'reg' not used for the offset?
-> 
+This patch attempts to put forward a proposal for enabling non-strict
+DMA on a device-by-device basis. The patch series requests non-strict
+DMA for the Qualcomm SDHCI controller as a first device to enable,
+getting a nice bump in performance with what's believed to be a very
+small drop in security / safety (see the patch for the full argument).
 
-The DT node and its "reg" describes the whole IP block.
+As part of this patch series I am end up slightly cleaning up some of
+the interactions between the PCI subsystem and the IOMMU subsystem but
+I don't go all the way to fully remove all the tentacles. Specifically
+this patch series only concerns itself with a single aspect: strict
+vs. non-strict mode for the IOMMU. I'm hoping that this will be easier
+to talk about / reason about for more subsystems compared to overall
+deciding what it means for a device to be "external" or "untrusted".
 
-The particular register that we care of has, as you can see, moved
-around during the various platforms and some incarnations of this IP
-block provides controls for CPU-related clocks as well.
+If something like this patch series ends up being landable, it will
+undoubtedly need coordination between many maintainers to land. I
+believe it's fully bisectable but later patches in the series
+definitely depend on earlier ones. Sorry for the long CC list. :(
 
-We can certainly have the multiple compatible points to the same
-apcs_data, but I'm not able to spot a reasonable "catch-all compatible"
-given that I don't see any natural groupings.
 
-> In any case, we can't really get rid of the first 13 instances though...
-> 
+Douglas Anderson (6):
+  drivers: base: Add the concept of "pre_probe" to drivers
+  drivers: base: Add bits to struct device to control iommu strictness
+  PCI: Indicate that we want to force strict DMA for untrusted devices
+  iommu: Combine device strictness requests with the global default
+  iommu: Stop reaching into PCIe devices to decide strict vs. non-strict
+  mmc: sdhci-msm: Request non-strict IOMMU mode
 
-Right, we have the problem that we have DTBs out there that relies on
-these compatibles, but as Jassi requests we'd have to start describing
-the internal register layout in DT - which this binding purposefully
-avoids.
+ drivers/base/dd.c             | 10 +++++--
+ drivers/iommu/dma-iommu.c     |  2 +-
+ drivers/iommu/iommu.c         | 56 +++++++++++++++++++++++++++--------
+ drivers/mmc/host/sdhci-msm.c  |  8 +++++
+ drivers/pci/probe.c           |  4 ++-
+ include/linux/device.h        | 11 +++++++
+ include/linux/device/driver.h |  9 ++++++
+ include/linux/iommu.h         |  2 ++
+ 8 files changed, 85 insertions(+), 17 deletions(-)
 
-Regards,
-Bjorn
+-- 
+2.32.0.288.g62a8d224e6-goog
+
