@@ -2,111 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 00C0F3AEBB8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jun 2021 16:49:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5334B3AEC23
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jun 2021 17:16:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230013AbhFUOwI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Jun 2021 10:52:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35172 "EHLO
+        id S230052AbhFUPSt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Jun 2021 11:18:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41338 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229890AbhFUOwH (ORCPT
+        with ESMTP id S230061AbhFUPSs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Jun 2021 10:52:07 -0400
-Received: from mail-io1-xd32.google.com (mail-io1-xd32.google.com [IPv6:2607:f8b0:4864:20::d32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B4D4C061760;
-        Mon, 21 Jun 2021 07:49:51 -0700 (PDT)
-Received: by mail-io1-xd32.google.com with SMTP id k16so16067869ios.10;
-        Mon, 21 Jun 2021 07:49:51 -0700 (PDT)
+        Mon, 21 Jun 2021 11:18:48 -0400
+Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBB09C061766
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jun 2021 08:16:33 -0700 (PDT)
+Received: by mail-pj1-x1032.google.com with SMTP id o10-20020a17090aac0ab029016e92770073so186658pjq.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jun 2021 08:16:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=KWerBli4ZjJRwrbEo97Cp5HhRgHSf15dtXn9Sfu0Hv4=;
-        b=HFnXl+FdFZ8V0Dw4aJXqgtMls6s5Z+pcKkBs9rm32pJNa1omPENtYomfG9S9UWlkFe
-         JZtGOpaHmrbi2c6IWh+uDJfqJ/v5Y3W7e+GzJNdcWswTo3fTByCUMYRZHcg0oqvv0SSV
-         4LAUVcRg2mQW4TGbXfIni9wv53OJOhTkZCUvAhYwZ1Vsc6wXwOk25uQUrSJWQlcsBacS
-         OotUUtFjBIym+oCfW9sqfoVuo0zuModcyUjlQ1AdQlz75HdIczXWxusR+lworS8D2B6C
-         b1Slq76+ekknvhon7sDZQjCw2ctmkLgLUTgT7HC4xvuSt977HZaQW+ZRI2T9FGkWoIM3
-         S/hQ==
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=QdIEcecP8MgcC134NoXHjKf/BoPNuoUxbduClrOGatU=;
+        b=O/OplEcbZxMFGnP0y4z2BOUwpnTc6uvaUDrLvM6tcX5+8dA0cTtAxNTjiwTJR9/94e
+         FxDGM+mpRZ+XOd8HAaDKUDfq2vUGBz3QYZm5+Cs4Gt3AVEnaNdQKLRxhmLe+l0EF+6n9
+         TL9bZQj+0Q9oGiYaVBG2+GRHRsiCLC3oLfp1uorkvrsc3+JgHw/pU8cuv7aCQCLFmtNr
+         r0u9wMTtPqrFhpwuifXknF7W65wg6AI0CvQxoyEsTo6AikDogC8cITOACG7pd0Zzy/rJ
+         h7tnbBdgfcy5hMG8cet13HYge1lzLB27NjZqXke6GfO6tmW1RMjGD1WYMfC2axgFh63V
+         7Z6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=KWerBli4ZjJRwrbEo97Cp5HhRgHSf15dtXn9Sfu0Hv4=;
-        b=eK8l8MqO71i9yuGNegUCMkuxPC7jUHSQPWE0feMYgfdmfbk8OkY0ixER8jfCkQTpFv
-         3qCo50oAEQzsl3B/T+4ZfMKgzF+GBJN/n/jr9TVWXCPhepTYktPNSnRqE9talxUMt1ad
-         oU7uQZsi+MEDKdNa+VFeIg58NXYKf8e4tbKsnFIjWc2yJkJ1ir/A3ZFW7oDOonqaXD5u
-         0aiVcqoDhundOhF5SkbpcG/hYyDSNlamfjYaVYXxqncaFwiOHR8cuWK/waH1OwSQyvIC
-         oTbQOurjRv212oIsTxWX06VWmQWoD+zG56x0Phe9mvzXltVkHY15J6YbD9cfLOARneNl
-         HxiQ==
-X-Gm-Message-State: AOAM5329aJ4o/vaUIOsbonMsWTZ/Y8BtB5gPQWkXrVR+4ciMJnm79Fc8
-        lV96sG5LNft411cUNHTZF9iTHrFlhDBofzzv1mA=
-X-Google-Smtp-Source: ABdhPJzjkcw1agZaLbr1f1Dclm4JHyoVvH794DFFZD1kGSKXtTFEHrJNTk6oW26RPU53Rt41dBE1FKZF+nRXJ+GHITc=
-X-Received: by 2002:a05:6638:33a2:: with SMTP id h34mr17713039jav.60.1624286990945;
- Mon, 21 Jun 2021 07:49:50 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=QdIEcecP8MgcC134NoXHjKf/BoPNuoUxbduClrOGatU=;
+        b=HdNRwPWdRdaB6IDp1S7kygUTSLHeahqn1/5zUI5ZQb7PiQHe0HLXnT+ZB8tMiqk3X/
+         bBwQn4athA+HmIdTQhrzv88Qeto2f7vNvmAkTZtm0mmZxXmG+buxsg+Wkp/Pnq1u0ar5
+         TqB8OJa8IDs+HpZARDxyQkyKUM2zNecppbItJF+6m0JpmMhVEmJKn2s/4nZdYe7PC0g/
+         /oOpLab09OwVpL88qhrohYw0Y5S05H3jk5uhApMJUvWMP9gkSi3prt8ZakXiNFN0Hyhb
+         HNBP8aYtmJ0UUnUti74u3NhsAYmvuJ7ojadY5bUWbqT/LUlujLJ8BJeVMQUKr4Awl/rv
+         /QSQ==
+X-Gm-Message-State: AOAM533gOEjmjZX5HnKz57CNkC2U0UFmmLrR/zqoVOuUEQNdWgLXntf7
+        Egr7Fo9l6wKwtyQYeb6Cp6t6
+X-Google-Smtp-Source: ABdhPJyRv/f2iDpIa77VKpng6GR8lUQo97pb0tWgF7GslQuqXZ/4A3r6GF9lhNHCvfi94uZU/R2tUg==
+X-Received: by 2002:a17:90a:c595:: with SMTP id l21mr2586636pjt.145.1624288593219;
+        Mon, 21 Jun 2021 08:16:33 -0700 (PDT)
+Received: from workstation ([120.138.13.116])
+        by smtp.gmail.com with ESMTPSA id g5sm10290672pfb.191.2021.06.21.08.16.31
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 21 Jun 2021 08:16:32 -0700 (PDT)
+Date:   Mon, 21 Jun 2021 20:46:29 +0530
+From:   "manivannan.sadhasivam@linaro.org" <manivannan.sadhasivam@linaro.org>
+To:     ULRICH Thomas <thomas.ulrich@thalesgroup.com>
+Cc:     "hemantk@codeaurora.org" <hemantk@codeaurora.org>,
+        SCHEMMEL Hans-Christoph <hans-christoph.schemmel@thalesgroup.com>,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] Add Cinterion MV31-W PCIe to MHI
+Message-ID: <20210621151629.GA20545@workstation>
+References: <PAZP264MB284690134DA010698E6B3BDDE60A9@PAZP264MB2846.FRAP264.PROD.OUTLOOK.COM>
 MIME-Version: 1.0
-References: <20210503081334.17143-1-shawn.guo@linaro.org> <20210503081334.17143-3-shawn.guo@linaro.org>
- <20210523060009.GA29015@dragon> <CABb+yY3CA+gvRJi7nyA4wxwP3-XtbfDhq51eP8Q+vL7TbMncUQ@mail.gmail.com>
- <20210621063309.GA8666@dragon>
-In-Reply-To: <20210621063309.GA8666@dragon>
-From:   Jassi Brar <jassisinghbrar@gmail.com>
-Date:   Mon, 21 Jun 2021 09:49:40 -0500
-Message-ID: <CABb+yY3T=LkcjarGbZ4KEY_JS5R9iV-X_21gX_VheqsWBUHGDg@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] mailbox: qcom: Add MSM8939 APCS support
-To:     Shawn Guo <shawn.guo@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Sivaprakash Murugesan <sivaprak@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Benjamin Li <benl@squareup.com>,
-        Devicetree List <devicetree@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <PAZP264MB284690134DA010698E6B3BDDE60A9@PAZP264MB2846.FRAP264.PROD.OUTLOOK.COM>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jun 21, 2021 at 1:33 AM Shawn Guo <shawn.guo@linaro.org> wrote:
->
-> On Sun, Jun 20, 2021 at 11:27:49PM -0500, Jassi Brar wrote:
-> > On Sun, May 23, 2021 at 1:00 AM Shawn Guo <shawn.guo@linaro.org> wrote:
-> > >
-> > > On Mon, May 03, 2021 at 04:13:34PM +0800, Shawn Guo wrote:
-> > > > MSM8939 has 3 APCS instances for Cluster0 (little cores), Cluster1 (big
-> > > > cores) and CCI (Cache Coherent Interconnect).  Although only APCS of
-> > > > Cluster0 and Cluster1 have IPC bits, each of 3 APCS has A53PLL clock
-> > > > control bits.  That said, we need to register 3 'qcom-apcs-msm8916-clk'
-> > > > devices to instantiate all 3 clocks.  Let's use PLATFORM_DEVID_AUTO
-> > > > rather than PLATFORM_DEVID_NONE for platform_device_register_data()
-> > > > call.  Otherwise, the second A53PLL clock registration will fail due
-> > > > to duplicate device name.
-> > > >
-> > > > [    0.519657] sysfs: cannot create duplicate filename '/bus/platform/devices/qcom-apcs-msm8916-clk'
-> > > > ...
-> > > > [    0.661158] qcom_apcs_ipc b111000.mailbox: failed to register APCS clk
-> > > >
-> > > > Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
-> > > > Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > >
-> > > Hi Jassi,
-> > >
-> > > Any comment on this patch?
-> > >
-> > 1)  I was not on the CC list, so I don't have this patch in my mbox.
->
-> That's strange.  The patch series was sent with your address
-> <jassisinghbrar@gmail.com> on "To:" field.  And that can be seen on
-> patch archive [1].
->
-Sorry, yes you are right. But I still can't find it in my inbox (and
-neither in spam).... perhaps I nuked it by mistake. anyways...
++ linux-arm-msm
 
-> > 2)  Shouldn't this patch be broken into a fix and an enablement patch?
->
-> MSM8939 is the only platform that I know has multiple clusters and uses
-> APCS driver.  So the change becomes a fix only when MSM8939 is enabled.
-> But if you prefer to separate the change, I will do so.
->
-Yes, please.
+On Mon, Jun 21, 2021 at 09:04:17AM +0000, ULRICH Thomas wrote:
+> This patch adds VendorID/ProductID and MBIM Channel Definitions for M.2 Modem Card (PCIe Variant) to MHI:
+> Cinterion MV31-W (by Thales)
+> Additional information on such Modem Card (USB or PCIe variant) is e.g. available at:
+> https://www.thalesgroup.com/en/markets/digital-identity-and-security/iot/iot-connectivity/products/iot-products/mv31-w-ultra-high
+> 
+> Signed-off-by: Thomas Ulrich <thomas.ulrich@thalesgroup.com>
 
-thanks.
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+
+> 
+> ---
+>  drivers/bus/mhi/pci_generic.c | 37 +++++++++++++++++++++++++++++++++++
+>  1 file changed, 37 insertions(+)
+> 
+> diff --git a/drivers/bus/mhi/pci_generic.c b/drivers/bus/mhi/pci_generic.c
+> index 56f710763e36..5e263794d4c5 100644
+> --- a/drivers/bus/mhi/pci_generic.c
+> +++ b/drivers/bus/mhi/pci_generic.c
+
+[...]
+
+> +static const struct mhi_pci_dev_info mhi_mv31_info = {
+> +        .name = "cinterion-mv31",
+> +        .config = &modem_mv31_config,
+> +        .bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+> +        .dma_data_width = 32
+
+As per 704d98540e55, there needs to be:
+
+	.sideband_wake = false,
+
+I'll add it while applying.
+
+Thanks,
+Mani
+
+> +};
+> +
+>  static const struct pci_device_id mhi_pci_id_table[] = {
+>  	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0306),
+>  		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx55_info },
+> @@ -369,6 +403,9 @@ static const struct pci_device_id mhi_pci_id_table[] = {
+>  	/* DW5930e (sdx55), Non-eSIM, It's also T99W175 */
+>  	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0b1),
+>  		.driver_data = (kernel_ulong_t) &mhi_foxconn_sdx55_info },
+> +        /* MV31-W (Cinterion) */
+> +        { PCI_DEVICE(0x1269, 0x00b3),
+> +                .driver_data = (kernel_ulong_t) &mhi_mv31_info },
+>  	{  }
+>  };
+>  MODULE_DEVICE_TABLE(pci, mhi_pci_id_table);
+> -- 
+> 2.20.1
+> 
