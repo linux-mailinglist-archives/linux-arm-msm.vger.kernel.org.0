@@ -2,96 +2,143 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 595B73AE34E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jun 2021 08:38:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E7B233AE451
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jun 2021 09:42:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229583AbhFUGkN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Jun 2021 02:40:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36118 "EHLO
+        id S229789AbhFUHoY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Jun 2021 03:44:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50522 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229576AbhFUGkN (ORCPT
+        with ESMTP id S230161AbhFUHoW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Jun 2021 02:40:13 -0400
-Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com [IPv6:2607:f8b0:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE4C8C06175F
-        for <linux-arm-msm@vger.kernel.org>; Sun, 20 Jun 2021 23:37:58 -0700 (PDT)
-Received: by mail-pg1-x530.google.com with SMTP id n12so4599052pgs.13
-        for <linux-arm-msm@vger.kernel.org>; Sun, 20 Jun 2021 23:37:58 -0700 (PDT)
+        Mon, 21 Jun 2021 03:44:22 -0400
+Received: from mail-pg1-x52b.google.com (mail-pg1-x52b.google.com [IPv6:2607:f8b0:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D458BC061756
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jun 2021 00:42:00 -0700 (PDT)
+Received: by mail-pg1-x52b.google.com with SMTP id e33so13468126pgm.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jun 2021 00:42:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=SdHCWHmqfliDzlV9ZOK2KuWxyewxQ9Y5zNRLDj7+lE4=;
-        b=MeQZQmVrHod7mNQDewlaXFTyiYmIsl033nKWBNc0WtwaZFVcBU9zVZOqZy8u9gHJKu
-         l4K6zCqO0gxwys0LnVTGQTk4X0lxbUyMsKGiLDJ6qblZ7gt30oDurcJhRNv0Rsz8Z5G3
-         doIb4NefOV48/SIyjGjbH/N9WAbHXSI7S3SNMYjX2jslF5ICOANAS/59Z/WPEpCc9KSp
-         g8Kzf4USuVCkFBC2rHLID0Yr086ZKIH+vA/FQWsXh2klih/RtqedhBXFlnSrquFQA5OC
-         izBZxCRArORroI3pYl+qAmcVgEEkdpcn1e1bRvl8W9No73xF02NiOSfV5XaAKKfXVC12
-         SpaA==
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=PcRAvrQip+1WJuNclasUdgOdAuaWVTSb28lQVa+Hq0U=;
+        b=PW1xTA2/2xO4PqExn5V1DOomUzRaLUlMK7VPvDZAnglAjgj3HF0HR4tTvM1Jyq4Xo/
+         lbz8+BPcBz3r6RVcMPnk5m2CUnlfe6Y1yZGbO3GZ9ucEhXHnuWrpQe9DBX2P9BN4xpy/
+         k0U3/0P/720ja+nHXJ775gb7N3AE3nuCG4Z3E=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=SdHCWHmqfliDzlV9ZOK2KuWxyewxQ9Y5zNRLDj7+lE4=;
-        b=Gm72KOuWMpT/Te4136ODVfYGfzMJkIENHEgczUO40rlrtrYty5qEOQg2NUi0FsODuJ
-         fDZyu64FxHVxdsqerU9NkoWy4oYQXz456Iie/JN6tNsM1i4/H3vLOHlTqgl6r/Li2Cc/
-         Ksqwvp8QPIDST187WlaX+Q6hN0OsYc1zrbCY385fFHe93d0anwfDW/MRKUSk+Z9hPQm7
-         7YhvO2mVf0PUpARhsb8MAGOJr1RDYKjLSAo4nBDQWJqpydWkgJ+5JWozlMG7DZz28i3t
-         7C0dwsJNEh6tIojLzkbMQiFOITNd4+yfAa6KlzIxq2vyQsswrLltwllNxmjNI7ZTqYjG
-         QPLQ==
-X-Gm-Message-State: AOAM53128eUYdAtPSsyRDn9hC83S7YsfLvS4Zl+qkSL5HIbUOMdNrWX8
-        tz2EP+ay0XRp+HGCGEUPsMBtfg==
-X-Google-Smtp-Source: ABdhPJwMLC4F9jwSAm8Hcb7YBqwOeprhCOojsTRC0R49gO+EaApiBs8Mqs2fYaKHuS709r4a9V6vFQ==
-X-Received: by 2002:a62:7b0b:0:b029:301:40a6:9e64 with SMTP id w11-20020a627b0b0000b029030140a69e64mr11326692pfc.33.1624257478203;
-        Sun, 20 Jun 2021 23:37:58 -0700 (PDT)
-Received: from dragon (80.251.214.228.16clouds.com. [80.251.214.228])
-        by smtp.gmail.com with ESMTPSA id v6sm16343060pgk.33.2021.06.20.23.37.56
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 20 Jun 2021 23:37:57 -0700 (PDT)
-Date:   Mon, 21 Jun 2021 14:37:52 +0800
-From:   Shawn Guo <shawn.guo@linaro.org>
-To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=PcRAvrQip+1WJuNclasUdgOdAuaWVTSb28lQVa+Hq0U=;
+        b=ZAdWvaL2MhEuhDCP4eJ4ZjNyeuWcA5Fu/h3yh/fuNd0BoWzQT66QxAbRby4j43XHam
+         EBzi8YplsywqYLjRdVh6dj5c6SoTUtaZFXVGydvk2VzZE/hVhpK1NJ9nA6RBJuHiAssD
+         cQLJL1ruMf2pVi60+V31ClLt/2ysb+4AVmKArvAbCxmfG34rQZfNlISTTXr4ON/nC3rE
+         Ig240MHvT+KUqIzg9g4Su56BP+C66N1K1t3AakKWBGxXDhkKpH4rHDU2I5VNjg4F++fr
+         aRn7JY0T5QHKVd5kCu3UPIzyEnCiSopktedO0URUujvxwVz/L2evIOU9TXuo+MPNw3Vj
+         T2Qg==
+X-Gm-Message-State: AOAM531cP3wyUTRQCTEzwWYN9I9pqiTmjlQwoPAwKntTssH+3EVKrro5
+        SYDDa7XXUgDifqkb6JWOo8oTDQ==
+X-Google-Smtp-Source: ABdhPJxkwpEFihejVk1nobo1GrlcMvMr+6qs8f9VpwqRVo8xZY9eo8LzrK9zu5A5PICZlxCe0KZu7w==
+X-Received: by 2002:a63:e245:: with SMTP id y5mr22455461pgj.171.1624261320340;
+        Mon, 21 Jun 2021 00:42:00 -0700 (PDT)
+Received: from judyhsiao-p920.tpe.corp.google.com ([2401:fa00:1:10:5a92:9d6d:3875:d2ba])
+        by smtp.gmail.com with ESMTPSA id 10sm11954195pfh.174.2021.06.21.00.41.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 21 Jun 2021 00:41:59 -0700 (PDT)
+From:   Judy Hsiao <judyhsiao@chromium.org>
+To:     broonie@kernel.org
+Cc:     Taniya Das <tdas@codeaurora.org>,
+        Rohit kumar <rohitkr@codeaurora.org>,
+        Banajit Goswami <bgoswami@codeaurora.org>,
+        Patrick Lai <plai@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
         Rob Herring <robh+dt@kernel.org>,
-        Sivaprakash Murugesan <sivaprak@codeaurora.org>,
-        Benjamin Li <benl@squareup.com>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
-Subject: Re: [PATCH 0/5] Add MSM8939 APCS/A53PLL clock support
-Message-ID: <20210621063751.GB8666@dragon>
-References: <20210504052844.21096-1-shawn.guo@linaro.org>
+        Jaroslav Kysela <perex@perex.cz>,
+        Takashi Iwai <tiwai@suse.com>,
+        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+        Stephan Gerhold <stephan@gerhold.net>, dianders@chromium.org,
+        dgreid@chromium.org, cychiang@google.com, judyhsiao@google.com,
+        tzungbi@chromium.org, swboyd@chromium.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        alsa-devel@alsa-project.org, Judy Hsiao <judyhsiao@chromium.org>
+Subject: [PATCH] ASoC: snd-soc-dummy: add Device Tree support
+Date:   Mon, 21 Jun 2021 15:41:52 +0800
+Message-Id: <20210621074152.306362-1-judyhsiao@chromium.org>
+X-Mailer: git-send-email 2.31.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210504052844.21096-1-shawn.guo@linaro.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, May 04, 2021 at 01:28:39PM +0800, Shawn Guo wrote:
-> This series adds MSM8939 APCS/A53PLL clock support.  Most outstanding
-> thing about MSM8939 is that it integrates 3 APCS instances, for Cluster0
-> (little cores), Cluster1 (big cores) and CCI (Cache Coherent Interconnect)
-> respectively.
-> 
-> Note: the first one is a small improvement which is not specific to
-> MSM8939 support.
-> 
-> 
-> Shawn Guo (5):
->   clk: qcom: apcs-msm8916: Flag a53mux instead of a53pll as critical
->   dt-bindings: clock: update qcom,a53pll bindings for MSM8939 support
->   clk: qcom: apcs-msm8916: Retrieve clock name from DT
->   clk: qcom: a53-pll: Pass freq_tbl via match data
->   clk: qcom: a53-pll: Add MSM8939 a53pll clocks
-> 
->  .../bindings/clock/qcom,a53pll.yaml           | 34 +++++++++++
->  drivers/clk/qcom/a53-pll.c                    | 59 +++++++++++++++++--
->  drivers/clk/qcom/apcs-msm8916.c               |  7 ++-
->  3 files changed, 93 insertions(+), 7 deletions(-)
+Support for loading the snd-soc-dummy via DeviceTree.
+This is useful to create dummy codec devices where we need to have some
+DAI links without a real Codec.
 
-Hi Stephen,
+Signed-off-by: Judy Hsiao <judyhsiao@chromium.org>
+---
+ .../devicetree/bindings/sound/snd-soc-dummy.txt  | 16 ++++++++++++++++
+ sound/soc/soc-utils.c                            | 11 +++++++++++
+ 2 files changed, 27 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/sound/snd-soc-dummy.txt
 
-Did you get a chance to look at the series?
+diff --git a/Documentation/devicetree/bindings/sound/snd-soc-dummy.txt b/Documentation/devicetree/bindings/sound/snd-soc-dummy.txt
+new file mode 100644
+index 000000000000..7fa8c5751e62
+--- /dev/null
++++ b/Documentation/devicetree/bindings/sound/snd-soc-dummy.txt
+@@ -0,0 +1,16 @@
++* snd-soc-dummy
++
++This node models the snd-soc-dummy.
++This is useful to create dummy codec devices where we need to have
++some DAI links without a real Codec.
++
++Required properties:
++- compatible   : "asoc,snd-soc-dummy"
++
++
++Example:
++
++dummy_codec {
++	compatible = "asoc,snd-soc-dummy";
++	#sound-dai-cells = <0>;
++};
+diff --git a/sound/soc/soc-utils.c b/sound/soc/soc-utils.c
+index 299b5d6ebfd1..def2cc687415 100644
+--- a/sound/soc/soc-utils.c
++++ b/sound/soc/soc-utils.c
+@@ -7,6 +7,8 @@
+ // Author: Mark Brown <broonie@opensource.wolfsonmicro.com>
+ //         Liam Girdwood <lrg@slimlogic.co.uk>
+ 
++#include <linux/module.h>
++#include <linux/of.h>
+ #include <linux/platform_device.h>
+ #include <linux/export.h>
+ #include <sound/core.h>
+@@ -181,9 +183,18 @@ static int snd_soc_dummy_probe(struct platform_device *pdev)
+ 	return ret;
+ }
+ 
++#ifdef CONFIG_OF
++static const struct of_device_id soc_dummy_device_id[] = {
++	{ .compatible = "asoc,snd-soc-dummy" },
++	{}
++};
++MODULE_DEVICE_TABLE(of, soc_dummy_device_id);
++#endif
++
+ static struct platform_driver soc_dummy_driver = {
+ 	.driver = {
+ 		.name = "snd-soc-dummy",
++		.of_match_table = of_match_ptr(soc_dummy_device_id),
+ 	},
+ 	.probe = snd_soc_dummy_probe,
+ };
+-- 
+2.31.0
 
-Shawn
