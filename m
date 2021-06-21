@@ -2,295 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 74BD73AEB72
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jun 2021 16:34:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 00C0F3AEBB8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jun 2021 16:49:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230306AbhFUOgl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Jun 2021 10:36:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59826 "EHLO
+        id S230013AbhFUOwI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Jun 2021 10:52:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35172 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229765AbhFUOgj (ORCPT
+        with ESMTP id S229890AbhFUOwH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Jun 2021 10:36:39 -0400
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57F75C061756
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jun 2021 07:34:25 -0700 (PDT)
-Received: by mail-wm1-x333.google.com with SMTP id j10so3895420wms.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jun 2021 07:34:25 -0700 (PDT)
+        Mon, 21 Jun 2021 10:52:07 -0400
+Received: from mail-io1-xd32.google.com (mail-io1-xd32.google.com [IPv6:2607:f8b0:4864:20::d32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B4D4C061760;
+        Mon, 21 Jun 2021 07:49:51 -0700 (PDT)
+Received: by mail-io1-xd32.google.com with SMTP id k16so16067869ios.10;
+        Mon, 21 Jun 2021 07:49:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=ZMqlY+Opiy9e5r7ONByBh1Tft3bA4sYDzsNlt1lPrOs=;
-        b=DmayG4hlCAbRlus1NTyZsmpy2IRkmUaG0624p1FI/yfRRYcp7yxZeo+RvAqD94PX9B
-         5g4wl/xkeaNViXA5ANb/uHXdmhVi2JksF11g0eXlfcDdBDXRb3nTPXFLAsMlgoAbnATG
-         lJLB/qNgFSSJlHRiQG6dDDOcUxdGg0VInan9V40nBe4EmpG0kDKQpyYKPmQgO3xhngkX
-         fLH0aRc9AhZUGbcfHijo0gQN2ZOD1voUhNjTQCkM1ZIrXjf1r0ZjG2HEMtSXDWQ5YCYf
-         uBfeHvhnheljFSLjOwBrrXZKt9QA9g8AgH35he+Mirv+Ak3JDcxPjsLPP98PLC1nf+M0
-         AxzA==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=KWerBli4ZjJRwrbEo97Cp5HhRgHSf15dtXn9Sfu0Hv4=;
+        b=HFnXl+FdFZ8V0Dw4aJXqgtMls6s5Z+pcKkBs9rm32pJNa1omPENtYomfG9S9UWlkFe
+         JZtGOpaHmrbi2c6IWh+uDJfqJ/v5Y3W7e+GzJNdcWswTo3fTByCUMYRZHcg0oqvv0SSV
+         4LAUVcRg2mQW4TGbXfIni9wv53OJOhTkZCUvAhYwZ1Vsc6wXwOk25uQUrSJWQlcsBacS
+         OotUUtFjBIym+oCfW9sqfoVuo0zuModcyUjlQ1AdQlz75HdIczXWxusR+lworS8D2B6C
+         b1Slq76+ekknvhon7sDZQjCw2ctmkLgLUTgT7HC4xvuSt977HZaQW+ZRI2T9FGkWoIM3
+         S/hQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=ZMqlY+Opiy9e5r7ONByBh1Tft3bA4sYDzsNlt1lPrOs=;
-        b=khn9+zsUZ0LzgIyJ3KqxFl6/XOl9Vdvgh4wKaWZWbuMTWGzopLaRzIVFr5EuSeRVlV
-         8f6eTXQ8+X2wPkMnuEW4Y+v6jvEFrcs/Ezfjfxb54RegvYXrOn8HUt/Fzf1MqBECJ4D6
-         v4wQEYyycIDrHQgoTb13YqdsCnJMsamDERlRGYF4czt1jB6prl9yK7Vg+pgWU/BcwD43
-         F5H2C2xaJ3VwZ4Rhgk4d2+Bb6h1956hTfMfARFpXMYRk2MZKo7vJxlwwM3bU/xBO9cq9
-         yqIWtV3wYerIs4kjE9RkHQcVKmqKQ3khcrPdT8YgGaDoe+0z3wIxm84tdP8S1dj5cnU0
-         /MKA==
-X-Gm-Message-State: AOAM5321/8P9ySqVGDTkpb4bEwqqRiIO8KuJPX+EITu1Nn/TN3eOGdMU
-        2a53EAPGIuRXkUxkUR7x1HmOT1OYuIcjuQC6
-X-Google-Smtp-Source: ABdhPJyx5C+eZv7C6XmYqM2hHGJ6eGQ428xrSQ40aZ1ROYYkBDWOZMN8IatGzKARHci8QpvmW7wNqg==
-X-Received: by 2002:a1c:4c16:: with SMTP id z22mr11623184wmf.34.1624286063780;
-        Mon, 21 Jun 2021 07:34:23 -0700 (PDT)
-Received: from ?IPv6:2a01:e34:ed2f:f020:5ebd:8bd9:d549:4211? ([2a01:e34:ed2f:f020:5ebd:8bd9:d549:4211])
-        by smtp.googlemail.com with ESMTPSA id a9sm17596124wrv.37.2021.06.21.07.34.22
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 21 Jun 2021 07:34:23 -0700 (PDT)
-Subject: Re: [PATCH RFC 1/2] thermal: qcom: tsens-v1: Add support for MSM8994
- TSENS
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>,
-        phone-devel@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, martin.botka@somainline.org,
-        angelogioacchino.delregno@somainline.org,
-        marijn.suijten@somainline.org, Amit Kucheria <amitk@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Rob Herring <robh+dt@kernel.org>, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20210209195346.457803-1-konrad.dybcio@somainline.org>
- <a4b76d12-a659-da87-7d97-9b34e3cf7edf@linaro.org>
- <ce5cac52-473c-a30a-104d-0a175e8848db@somainline.org>
-From:   Daniel Lezcano <daniel.lezcano@linaro.org>
-Message-ID: <35799629-607a-bad2-cdf2-b74a044dd0b6@linaro.org>
-Date:   Mon, 21 Jun 2021 16:34:21 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.8.1
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=KWerBli4ZjJRwrbEo97Cp5HhRgHSf15dtXn9Sfu0Hv4=;
+        b=eK8l8MqO71i9yuGNegUCMkuxPC7jUHSQPWE0feMYgfdmfbk8OkY0ixER8jfCkQTpFv
+         3qCo50oAEQzsl3B/T+4ZfMKgzF+GBJN/n/jr9TVWXCPhepTYktPNSnRqE9talxUMt1ad
+         oU7uQZsi+MEDKdNa+VFeIg58NXYKf8e4tbKsnFIjWc2yJkJ1ir/A3ZFW7oDOonqaXD5u
+         0aiVcqoDhundOhF5SkbpcG/hYyDSNlamfjYaVYXxqncaFwiOHR8cuWK/waH1OwSQyvIC
+         oTbQOurjRv212oIsTxWX06VWmQWoD+zG56x0Phe9mvzXltVkHY15J6YbD9cfLOARneNl
+         HxiQ==
+X-Gm-Message-State: AOAM5329aJ4o/vaUIOsbonMsWTZ/Y8BtB5gPQWkXrVR+4ciMJnm79Fc8
+        lV96sG5LNft411cUNHTZF9iTHrFlhDBofzzv1mA=
+X-Google-Smtp-Source: ABdhPJzjkcw1agZaLbr1f1Dclm4JHyoVvH794DFFZD1kGSKXtTFEHrJNTk6oW26RPU53Rt41dBE1FKZF+nRXJ+GHITc=
+X-Received: by 2002:a05:6638:33a2:: with SMTP id h34mr17713039jav.60.1624286990945;
+ Mon, 21 Jun 2021 07:49:50 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <ce5cac52-473c-a30a-104d-0a175e8848db@somainline.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+References: <20210503081334.17143-1-shawn.guo@linaro.org> <20210503081334.17143-3-shawn.guo@linaro.org>
+ <20210523060009.GA29015@dragon> <CABb+yY3CA+gvRJi7nyA4wxwP3-XtbfDhq51eP8Q+vL7TbMncUQ@mail.gmail.com>
+ <20210621063309.GA8666@dragon>
+In-Reply-To: <20210621063309.GA8666@dragon>
+From:   Jassi Brar <jassisinghbrar@gmail.com>
+Date:   Mon, 21 Jun 2021 09:49:40 -0500
+Message-ID: <CABb+yY3T=LkcjarGbZ4KEY_JS5R9iV-X_21gX_VheqsWBUHGDg@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] mailbox: qcom: Add MSM8939 APCS support
+To:     Shawn Guo <shawn.guo@linaro.org>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Sivaprakash Murugesan <sivaprak@codeaurora.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Benjamin Li <benl@squareup.com>,
+        Devicetree List <devicetree@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 09/06/2021 15:31, Konrad Dybcio wrote:
-> Hi,
-> 
-> 
->> Please split binding and code into two separate patches.
-> 
-> It's a oneliner, but I might as well.
-> 
->  
-> 
->> That deserves a cartdrige with a good explanation of why this function
->> is doing all this. Without enough details, it is hard to review the code.
-> 
-> I don't really know *why* it's doing all of this. Qualcomm doesn't share any documentation.
-> 
-> It' just based on the freely-available msm-3.10 kernel driver. Probably just a HW specific.
+On Mon, Jun 21, 2021 at 1:33 AM Shawn Guo <shawn.guo@linaro.org> wrote:
+>
+> On Sun, Jun 20, 2021 at 11:27:49PM -0500, Jassi Brar wrote:
+> > On Sun, May 23, 2021 at 1:00 AM Shawn Guo <shawn.guo@linaro.org> wrote:
+> > >
+> > > On Mon, May 03, 2021 at 04:13:34PM +0800, Shawn Guo wrote:
+> > > > MSM8939 has 3 APCS instances for Cluster0 (little cores), Cluster1 (big
+> > > > cores) and CCI (Cache Coherent Interconnect).  Although only APCS of
+> > > > Cluster0 and Cluster1 have IPC bits, each of 3 APCS has A53PLL clock
+> > > > control bits.  That said, we need to register 3 'qcom-apcs-msm8916-clk'
+> > > > devices to instantiate all 3 clocks.  Let's use PLATFORM_DEVID_AUTO
+> > > > rather than PLATFORM_DEVID_NONE for platform_device_register_data()
+> > > > call.  Otherwise, the second A53PLL clock registration will fail due
+> > > > to duplicate device name.
+> > > >
+> > > > [    0.519657] sysfs: cannot create duplicate filename '/bus/platform/devices/qcom-apcs-msm8916-clk'
+> > > > ...
+> > > > [    0.661158] qcom_apcs_ipc b111000.mailbox: failed to register APCS clk
+> > > >
+> > > > Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+> > > > Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > >
+> > > Hi Jassi,
+> > >
+> > > Any comment on this patch?
+> > >
+> > 1)  I was not on the CC list, so I don't have this patch in my mbox.
+>
+> That's strange.  The patch series was sent with your address
+> <jassisinghbrar@gmail.com> on "To:" field.  And that can be seen on
+> patch archive [1].
+>
+Sorry, yes you are right. But I still can't find it in my inbox (and
+neither in spam).... perhaps I nuked it by mistake. anyways...
 
-Oh, ok. Let's assume we are in hacking mode then. Hopefully Bjorn can
-give some inputs.
+> > 2)  Shouldn't this patch be broken into a fix and an enablement patch?
+>
+> MSM8939 is the only platform that I know has multiple clusters and uses
+> APCS driver.  So the change becomes a fix only when MSM8939 is enabled.
+> But if you prefer to separate the change, I will do so.
+>
+Yes, please.
 
->>> +static void compute_intercept_slope_8994(struct tsens_priv *priv,
->>> +			      u32 *base0, u32 *base1, u32 *p, u32 mode)
->>> +{
->>> +	int adc_code_of_tempx, i, num, den;
->>> +
->>> +	for (i = 0; i < priv->num_sensors; i++) {
->>> +		dev_dbg(priv->dev,
->>> +			"%s: sensor%d - data_point1:%#x data_point2:%#x\n",
->>> +			__func__, i, base0[i], base1[i]);
->>> +
->>> +		priv->sensor[i].slope = SLOPE_DEFAULT;
->>> +		if (mode == TWO_PT_CALIB) {
->>> +			/*
->>> +			 * slope (m) = adc_code2 - adc_code1 (y2 - y1)/
->>> +			 *	temp_120_degc - temp_30_degc (x2 - x1)
->>> +			 */
->>> +			num = base1[i] - base0[i];
->> As the caller of the function is copying the value of base[0] to the
->> entire array, whatever 'i', base[i] == base[0], so the parameters can be
->> replaced by a single int.
->>
->> Then the code becomes:
->>
->> 	num = base1 - base0;
->> 	num *= SLOPE_FACTOR;
->> 	den = CAL_DEGC_PT2 - CAL_DEGC_PT1;
->> 	slope = num / den;
->>
->> There is no change in the values, so 'slope' can be precomputed before
->> the loop. We end up with:
->>
->> 	int adc_code_of_tempx, i, num, den;
->> 	int slope;
->>
->> 	/*
->> 	 * slope (m) = adc_code2 - adc_code1 (y2 - y1)/
->> 	 *	temp_120_degc - temp_30_degc (x2 - x1)
->> 	 */
->> 	num = base1 - base0;
->> 	num *= SLOPE_FACTOR;
->> 	den = CAL_DEGC_PT2 - CAL_DEGC_PT1;
->> 	slope = num / den;
->>
->> 	for (i = 0; i < priv->num_sensors; i++) {
->>
->> 		priv->sensor[i].slope = mode == TWO_PT_CALIB ? slope :
->> 			SLOPE_DEFAULT;
-> 
-> That's sounds very good. I did not think of this approach, but I will incorporate it
-> 
-> into the next revision.
-> 
-> 
-> 
->>> +		adc_code_of_tempx = base0[i] + p[i];
->>> +
->>> +		priv->sensor[i].offset = (adc_code_of_tempx * SLOPE_FACTOR) -
->>> +				(CAL_DEGC_PT1 *	priv->sensor[i].slope);
->>> +		dev_dbg(priv->dev, "%s: offset:%d\n", __func__,
->>> +			priv->sensor[i].offset);
->>> +	}
->>> +}
->>> +
->>>  static int calibrate_v1(struct tsens_priv *priv)
->>>  {
->>>  	u32 base0 = 0, base1 = 0;
->>> @@ -297,14 +421,143 @@ static int calibrate_8976(struct tsens_priv *priv)
->>>  	return 0;
->>>  }
->> Same comment as above. The more the details, the easier for the people
->> to review the code.
-> 
-> Sorry, I am not sure what you're referring to, the calibrate_8976 function?
-
-I was referring to explaining a bit more the code but a comment saying
-it is a verbatim translation of the msm downstream driver should be ok.
-
->>> -/* v1.x: msm8956,8976,qcs404,405 */
->>> +static int calibrate_8994(struct tsens_priv *priv)
->>> +{
->>> +	int base0[16] = { 0 }, base1[16] = { 0 }, i;
->>> +	u32 p[16];
->> p stands for ?
-> 
-> No idea, but judging by the line:
-> 
-> " adc_code_of_tempx = base0[i] + p[i]; "
-> 
-> it's probably some hw-specific offset value.
-> 
-> 
-> 
->>> +	int mode = 0;
->>> +	u32 *calib0, *calib1, *calib2, *calib_mode, *calib_rsel;
->>> +	u32 calib_redun_sel;
->>> +
->>> +	/* 0x40d0-0x40dc */
->>> +	calib0 = (u32 *)qfprom_read(priv->dev, "calib");
->> Fix qfprom_read, by returning an int and using nvmem_cell_read_u32
->> (separate series).
->>
->> It seems like all call sites are expecting an int.
-> 
-> Weird. I did not get slope calculation issues even with this, but perhaps
-> 
-> I was just lucky.
-> 
-> 
-> 
->>> +			p[9] = (calib2[0] & MSM8994_S9_REDUN_MASK) >> MSM8994_S9_REDUN_SHIFT;
->>> +			p[10] = (calib2[0] & MSM8994_S10_REDUN_MASK) >> MSM8994_S10_REDUN_SHIFT;
->>> +			p[11] = (calib2[0] & MSM8994_S11_REDUN_MASK) >> MSM8994_S11_REDUN_SHIFT;
->>> +			p[12] = (calib2[0] & MSM8994_S12_REDUN_MASK) >> MSM8994_S12_REDUN_SHIFT;
->>> +			p[13] = (calib2[0] & MSM8994_S13_REDUN_MASK) >> MSM8994_S13_REDUN_SHIFT;
->>> +			p[14] = (calib2[0] & MSM8994_S14_REDUN_MASK) >> MSM8994_S14_REDUN_SHIFT;
->>> +			p[15] = (calib2[0] & MSM8994_S15_REDUN_MASK) >> MSM8994_S15_REDUN_SHIFT;
->> IMO, it is possible to do something simpler (probably bits.h could have
->> interesting helpers).
-> 
-> All TSENS consumers had this style, probably to make it easier to compare with the
-> 
-> downstream driver should there arise any human errors.
-> 
-> 
-> 
->>> +		} else {
->>> +			dev_dbg(priv->dev, "%s: REDUN NON-TWO_PT mode, mode = %i",
->>> +			__func__, mode);
->>> +			for (i = 0; i < 16; i++)
->>> +				p[i] = 532;
->> No litterals, macros please
-> 
-> Does MSM8994_NON_TWOPT_DEFAULT_VALUE sound good? It doesn't exactly
-> 
-> roll of the tongue but I don't have many better ideas..
-
-Is this driver msm8994 specific ?
-
-
->> And it would be simpler to iniatialize the array with the value.
->>
->> u32 p[16] = { [ 0 ... 15 ] = MY_532_MACRO };
-> 
->> So no need to use this loop and the other one beliw.
-> 
-> Thanks, didn't know about this.
-> 
-> 
-> 
->> What about replacing 16 by TSENS_SENSOR_MAX ?
-> 
-> If you mean this 8994-specific function exactly, then it'd probably cause
-> 
-> more confusion than help as we might find out that some SoC using TSENSv1
-> 
-> has even more sensors.
-> 
-> 
-> 
->>>  static struct tsens_features tsens_v1_feat = {
->>>  	.ver_major	= VER_1_X,
->>>  	.crit_int	= 0,
->>>  	.adc		= 1,
->>>  	.srot_split	= 1,
->>> -	.max_sensors	= 11,
->>> +	.max_sensors	= 16,
-> 
-> Here TSENS_SENSOR_MAX does make sense.
-> 
-> 
-> 
->>> +
->>> +struct tsens_plat_data data_8994 = {
->>> +	.num_sensors	= 16,
->>> +	.ops		= &ops_8994,
->>> +	.hw_ids		= (unsigned int []){ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 },
->> If you have time, in another series, replace this by a single int used
->> as a bitmask and fix the hw_id loop in tsens.c.
-> 
-> I will add this to my to-do list, but no promises on this landing anytime soon :/
-> 
-> 
-> 
-> Thanks for the thorough review,
-> 
-> Konrad
-> 
-
-
--- 
-<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
-
-Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
-<http://twitter.com/#!/linaroorg> Twitter |
-<http://www.linaro.org/linaro-blog/> Blog
+thanks.
