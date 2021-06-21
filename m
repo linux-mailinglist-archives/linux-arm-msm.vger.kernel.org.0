@@ -2,107 +2,146 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9454B3AF79D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Jun 2021 23:44:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 414083AF833
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jun 2021 00:02:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231460AbhFUVqm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Jun 2021 17:46:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44252 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230263AbhFUVqm (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Jun 2021 17:46:42 -0400
-Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0299C061756
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jun 2021 14:44:26 -0700 (PDT)
-Received: by mail-oi1-x230.google.com with SMTP id w127so21540643oig.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jun 2021 14:44:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=LQSQLsbU1k/DyH0v6dn2m/gWT8qIlpUZpsIbjBaYE5w=;
-        b=fxUMo5xt2LO0NwqKooOZdVzGR8tQRpnw1YNIxP2A2HY/fFYXbkIkGwCko2edjNw/Yr
-         VDghk1Lm5WbS7sbrwgprcozeFZLTTN3q0/1UAd8sO9p+fCErTa8jYPzIUpsnV4Pup2c+
-         B4aNeLKFYJAPUV1AMmCMxjFIohm47sHcmZYJNiGmzMZ+y1396Nd5BBV+MazYUnEdm6Ia
-         aTICxFEAGYfricTEXxX2JeiAtJdWKjYYgFE+w/DYTXo2DvAsKVx7ReqeU7o+dy1hdCTG
-         4wi4gDwqSSJJ+0IVbNY9UqhSQk1JmTh/WCqG9lbphUQJofnt0Cfw8mpXbwWjRM3/7FaV
-         CTGQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=LQSQLsbU1k/DyH0v6dn2m/gWT8qIlpUZpsIbjBaYE5w=;
-        b=NCbyyvbVJOr1iBAwvlGMf1MrDHEj1DMk359OXi5SfAkzYB0V7iLBcNnnHWxtYd/UJU
-         bXAP7aYzqRAKhTRe/HfBFcC2TV+YgNWnl4OGDwZFv1nxw+XXgjaY2iRfX4TVqK597zOK
-         Lt3EBL+GBCCvMy9aD8cZckYwxzNsOUNk/SUn4tLw+I1kLJbGdgpv2FqSPszCL951VTzz
-         cvIMhh7+ciRvoybTsVGSOZzFX2uRj1xjGsoE2AGcuCiU01/zdysTiFuspIGTEpXVF5lE
-         lW0M+z2MS27TI4GbnSdEWUi/pQShhbYRLYm0Fc2H5VN+rTqyRLUFSio5Km1xOCkAT4hj
-         eQfA==
-X-Gm-Message-State: AOAM5334rP2NtvWCOuHFLeVkI7aO1jD/wnjZlUGAY5jpDZmHmILf/0cg
-        M4UBVzSk9N7WrGMkkg7QJGNoMA==
-X-Google-Smtp-Source: ABdhPJxvYszHkbewbuCMsZuaCb0tu00QkdTkmqmIa/tlDp41W9XCj/I1dfXxDmYlQ54lVbFkyJhDMg==
-X-Received: by 2002:a54:460a:: with SMTP id p10mr421190oip.47.1624311866147;
-        Mon, 21 Jun 2021 14:44:26 -0700 (PDT)
-Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id v203sm3889046oib.37.2021.06.21.14.44.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Jun 2021 14:44:25 -0700 (PDT)
-Date:   Mon, 21 Jun 2021 16:44:23 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-serial@vger.kernel.org, Jiri Slaby <jirislaby@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>
-Subject: Re: [PATCH] serial: qcom_geni_serial: use DT aliases according to DT
- bindings
-Message-ID: <YNEINzRmyn6bBQ9n@yoga>
-References: <20210621211528.1607516-1-dmitry.baryshkov@linaro.org>
+        id S229789AbhFUWEW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Jun 2021 18:04:22 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:59919 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230283AbhFUWEV (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 21 Jun 2021 18:04:21 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1624312927; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=mKdPiX5ceufqkEx8Nci/j3NszUX+oF1c+HY50pFYGus=;
+ b=hFYWEmVzIa6b5at/hWEJEW7uxtgeCgWzuhl3AItchua26tlDrNT4Oz9227Y93W0vnR31zATx
+ y4EwqZ1uRFyJLIV+sWwyNwIa+ZAJhI65IQ+giS8dXMF62Z5R7j+HxuMbUqMTEMIHsMdLVmIj
+ oXwLc6g3cMiTpf9lbJov9legxVU=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
+ 60d10c38e27c0cc77f0b46e7 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 21 Jun 2021 22:01:28
+ GMT
+Sender: abhinavk=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 82A3DC4338A; Mon, 21 Jun 2021 22:01:27 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: abhinavk)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 8895CC433F1;
+        Mon, 21 Jun 2021 22:01:26 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210621211528.1607516-1-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Mon, 21 Jun 2021 15:01:26 -0700
+From:   abhinavk@codeaurora.org
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        freedreno@lists.freedesktop.org
+Subject: Re: [Freedreno] [PATCH 0/8] dsi: rework clock parents and timing
+ handling
+In-Reply-To: <20210515131217.1540412-1-dmitry.baryshkov@linaro.org>
+References: <20210515131217.1540412-1-dmitry.baryshkov@linaro.org>
+Message-ID: <5156aeb320b5625959fff8364e216c2f@codeaurora.org>
+X-Sender: abhinavk@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 21 Jun 16:15 CDT 2021, Dmitry Baryshkov wrote:
-
-> Device tree bindings do not specify "hsuart" aliases, instead all serial
-> ports should use "serial" alias name as noted by Rob Herring [1].
-> Make qcom_geni_serial driver use "serial" alias and fallback to "hsuart"
-> if one is not found.
+On 2021-05-15 06:12, Dmitry Baryshkov wrote:
+> This patch series brings back several patches targeting assigning 
+> dispcc
+> clock parents, that were removed from the massive dsi rework patchset
+> earlier.
 > 
-> [1] https://lore.kernel.org/linux-arm-msm/6dd1f5cd-03c7-5945-9fa2-1c2698405110@linaro.org/
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Cc: Rob Herring <robh+dt@kernel.org>
+> Few notes:
+>  - assign-clock-parents is a mandatory proprety according to the 
+> current
+>    dsi.txt description.
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Is this comment still right? dsi.txt has now moved to YAML format, but 
+even before
+that I am not able to see that this was a mandatory property. With these 
+changes yes,
+it becomes a mandatory property and hence needs to be documented that 
+way.
 
-Regards,
-Bjorn
-
-> ---
->  drivers/tty/serial/qcom_geni_serial.c | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
+>  - There is little point in duplicating this functionality with the 
+> ad-hoc
+>    implementation in the dsi code.
 > 
-> diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
-> index 23d729ed3bf6..85f1c1f96597 100644
-> --- a/drivers/tty/serial/qcom_geni_serial.c
-> +++ b/drivers/tty/serial/qcom_geni_serial.c
-> @@ -1354,7 +1354,9 @@ static int qcom_geni_serial_probe(struct platform_device *pdev)
->  		line = of_alias_get_id(pdev->dev.of_node, "serial");
->  	} else {
->  		drv = &qcom_geni_uart_driver;
-> -		line = of_alias_get_id(pdev->dev.of_node, "hsuart");
-> +		line = of_alias_get_id(pdev->dev.of_node, "serial");
-> +		if (line == -ENODEV) /* compat with non-standard aliases */
-> +			line = of_alias_get_id(pdev->dev.of_node, "hsuart");
->  	}
->  
->  	port = get_port_from_line(line, console);
-> -- 
-> 2.30.2
+> On top of that come few minor cleanups for the DSI PHY drivers.
 > 
+> I'd kindly ask to bring all dts changes also through the drm tree, so
+> that there won't be any breakage of the functionality.
+> 
+> 
+> The following changes since commit 
+> f2f46b878777e0d3f885c7ddad48f477b4dea247:
+> 
+>   drm/msm/dp: initialize audio_comp when audio starts (2021-05-06
+> 16:26:57 -0700)
+> 
+> are available in the Git repository at:
+> 
+>   https://git.linaro.org/people/dmitry.baryshkov/kernel.git 
+> dsi-phy-update
+> 
+> for you to fetch changes up to 
+> f1fd3b113cbb98febad682fc11ea1c6e717434c2:
+> 
+>   drm/msm/dsi: remove msm_dsi_dphy_timing from msm_dsi_phy (2021-05-14
+> 22:55:11 +0300)
+> 
+> ----------------------------------------------------------------
+> Dmitry Baryshkov (8):
+>       arm64: dts: qcom: sc7180: assign DSI clock source parents
+>       arm64: dts: qcom: sdm845: assign DSI clock source parents
+>       arm64: dts: qcom: sdm845-mtp: assign DSI clock source parents
+>       arm64: dts: qcom: sm8250: assign DSI clock source parents
+>       drm/msm/dsi: stop setting clock parents manually
+>       drm/msm/dsi: phy: use of_device_get_match_data
+>       drm/msm/dsi: drop msm_dsi_phy_get_shared_timings
+>       drm/msm/dsi: remove msm_dsi_dphy_timing from msm_dsi_phy
+> 
+>  arch/arm64/boot/dts/qcom/sc7180.dtsi            |  3 ++
+>  arch/arm64/boot/dts/qcom/sdm845-mtp.dts         |  3 ++
+>  arch/arm64/boot/dts/qcom/sdm845.dtsi            |  6 +++
+>  arch/arm64/boot/dts/qcom/sm8250.dtsi            |  6 +++
+>  drivers/gpu/drm/msm/dsi/dsi.h                   |  7 +---
+>  drivers/gpu/drm/msm/dsi/dsi_host.c              | 51 
+> -------------------------
+>  drivers/gpu/drm/msm/dsi/dsi_manager.c           |  8 +---
+>  drivers/gpu/drm/msm/dsi/phy/dsi_phy.c           | 46 
+> ++++++++++------------
+>  drivers/gpu/drm/msm/dsi/phy/dsi_phy.h           | 10 ++++-
+>  drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c      | 11 ++----
+>  drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c      | 11 ++----
+>  drivers/gpu/drm/msm/dsi/phy/dsi_phy_20nm.c      | 10 +----
+>  drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c      | 12 ++----
+>  drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c | 10 +----
+>  drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c       | 13 ++-----
+>  15 files changed, 67 insertions(+), 140 deletions(-)
+> 
+> 
+> _______________________________________________
+> Freedreno mailing list
+> Freedreno@lists.freedesktop.org
+> https://lists.freedesktop.org/mailman/listinfo/freedreno
