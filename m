@@ -2,99 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A7F9B3B0B24
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jun 2021 19:08:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 32B8E3B0BCB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jun 2021 19:46:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231326AbhFVRLC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Jun 2021 13:11:02 -0400
-Received: from mail.kernel.org ([198.145.29.99]:37420 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230076AbhFVRLC (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Jun 2021 13:11:02 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 6DA5A61360;
-        Tue, 22 Jun 2021 17:08:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1624381726;
-        bh=c8HGlAjch/gVhdi7JaBrw2jhwA9rmnpGC/Hcq+DPDdg=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=MqQktpEn56WA/G+vQRSUUQhb6eXMNQ9sMzwGcpbdNN67bMefV2mvku6nYqVArMaI4
-         2+zzqnRaWG/+lLqsZ+xaPje1lzJCrsy7EltBUyNgLfY5/+Rk8mtTGz52OvFCloayvr
-         sBTKGBR01iTgmPvp2J/2DLEkuv3LYWqD6P70XiLKWM6xJvON7h4Xf6SKdVlIFEVVDb
-         GMWWls/1dTTLCMEIMgxpGZ8BCyx5neqQdkhMBv27xf67+dqTVUZK2BFrQn4uOuUPKQ
-         G6sUSkEy46GqC5Pw3EJSgVc+cFBxRf4H7K3TmKs98AroQlrx/udari8FpOwucysh0x
-         8PJoVkziDTFOg==
-Date:   Tue, 22 Jun 2021 18:08:22 +0100
-From:   Mark Brown <broonie@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        linux-bluetooth@vger.kernel.org
-Subject: Re: [PATCH v3 2/7] regulator: qca6390: add support for QCA639x
- powerup sequence
-Message-ID: <20210622170822.GI4574@sirena.org.uk>
-References: <20210621223141.1638189-1-dmitry.baryshkov@linaro.org>
- <20210621223141.1638189-3-dmitry.baryshkov@linaro.org>
- <20210622112843.GB4574@sirena.org.uk>
- <CAA8EJpoTdg3O6dzpTaNS5fJRbtb1Fndv0mEuO+e4b6XCmuvzhQ@mail.gmail.com>
- <20210622143812.GE4574@sirena.org.uk>
- <CAA8EJpoeYUOPLKca5oJNKdyOvOmoLX6FvsTbdmC7W9mLsyyVmw@mail.gmail.com>
+        id S232279AbhFVRss (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Jun 2021 13:48:48 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56]:3301 "EHLO
+        frasgout.his.huawei.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232454AbhFVRsi (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 22 Jun 2021 13:48:38 -0400
+Received: from fraeml701-chm.china.huawei.com (unknown [172.18.147.201])
+        by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4G8YTv621Sz6H7Gp;
+        Wed, 23 Jun 2021 01:36:19 +0800 (CST)
+Received: from lhreml724-chm.china.huawei.com (10.201.108.75) by
+ fraeml701-chm.china.huawei.com (10.206.15.50) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id
+ 15.1.2176.2; Tue, 22 Jun 2021 19:46:19 +0200
+Received: from [10.47.89.126] (10.47.89.126) by lhreml724-chm.china.huawei.com
+ (10.201.108.75) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2176.2; Tue, 22 Jun
+ 2021 18:46:18 +0100
+Subject: Re: [PATCH 0/6] iommu: Enable devices to request non-strict DMA,
+ starting with QCom SD/MMC
+To:     Douglas Anderson <dianders@chromium.org>,
+        <gregkh@linuxfoundation.org>, <rafael@kernel.org>,
+        <rafael.j.wysocki@intel.com>, <will@kernel.org>,
+        <robin.murphy@arm.com>, <joro@8bytes.org>,
+        <bjorn.andersson@linaro.org>, <ulf.hansson@linaro.org>,
+        <adrian.hunter@intel.com>, <bhelgaas@google.com>
+CC:     <robdclark@chromium.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-pci@vger.kernel.org>, <quic_c_gdjako@quicinc.com>,
+        <iommu@lists.linux-foundation.org>, <sonnyrao@chromium.org>,
+        <saiprakash.ranjan@codeaurora.org>, <linux-mmc@vger.kernel.org>,
+        <vbadigan@codeaurora.org>, <rajatja@google.com>,
+        <saravanak@google.com>, <joel@joelfernandes.org>,
+        Andy Gross <agross@kernel.org>,
+        Bartosz Golaszewski <bgolaszewski@baylibre.com>,
+        Dan Williams <dan.j.williams@intel.com>,
+        "Geert Uytterhoeven" <geert@linux-m68k.org>,
+        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+        Randy Dunlap <rdunlap@infradead.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20210621235248.2521620-1-dianders@chromium.org>
+From:   John Garry <john.garry@huawei.com>
+Message-ID: <f3078ff2-97a6-6029-b584-1589ed184579@huawei.com>
+Date:   Tue, 22 Jun 2021 18:39:50 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.1.2
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="k9xkV0rc9XGsukaG"
-Content-Disposition: inline
-In-Reply-To: <CAA8EJpoeYUOPLKca5oJNKdyOvOmoLX6FvsTbdmC7W9mLsyyVmw@mail.gmail.com>
-X-Cookie: fortune: not found
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <20210621235248.2521620-1-dianders@chromium.org>
+Content-Type: text/plain; charset="utf-8"; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.47.89.126]
+X-ClientProxiedBy: lhreml721-chm.china.huawei.com (10.201.108.72) To
+ lhreml724-chm.china.huawei.com (10.201.108.75)
+X-CFilter-Loop: Reflected
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 22/06/2021 00:52, Douglas Anderson wrote:
+> 
+> This patch attempts to put forward a proposal for enabling non-strict
+> DMA on a device-by-device basis. The patch series requests non-strict
+> DMA for the Qualcomm SDHCI controller as a first device to enable,
+> getting a nice bump in performance with what's believed to be a very
+> small drop in security / safety (see the patch for the full argument).
+> 
+> As part of this patch series I am end up slightly cleaning up some of
+> the interactions between the PCI subsystem and the IOMMU subsystem but
+> I don't go all the way to fully remove all the tentacles. Specifically
+> this patch series only concerns itself with a single aspect: strict
+> vs. non-strict mode for the IOMMU. I'm hoping that this will be easier
+> to talk about / reason about for more subsystems compared to overall
+> deciding what it means for a device to be "external" or "untrusted".
+> 
+> If something like this patch series ends up being landable, it will
+> undoubtedly need coordination between many maintainers to land. I
+> believe it's fully bisectable but later patches in the series
+> definitely depend on earlier ones. Sorry for the long CC list. :(
+> 
 
---k9xkV0rc9XGsukaG
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+JFYI, In case to missed it, and I know it's not the same thing as you 
+want, above, but the following series will allow you to build the kernel 
+to default to lazy mode:
 
-On Tue, Jun 22, 2021 at 07:46:08PM +0300, Dmitry Baryshkov wrote:
-> On Tue, 22 Jun 2021 at 17:38, Mark Brown <broonie@kernel.org> wrote:
+https://lore.kernel.org/linux-iommu/1624016058-189713-1-git-send-email-john.garry@huawei.com/T/#m21bc07b9353b3ba85f2a40557645c2bcc13cbb3e
 
-> > Well, perhaps it should do one of those things then?
+So iommu.strict=0 would be no longer always required for arm64.
 
-> I don't think so. BT part is just a serdev sitting on top of UART,
-> WiFi is PCIe device (for qca6390). So using MFD API (which primarily
-> targets platform devices) does not seem logical and feasible.
+Thanks,
+John
 
-That really does sound like a MFD - AIUI it's a single chip with
-multiple interfaces that needs some glue logic to hold it together.  It
-doesn't fit well with the current framework that MFD offers but it's
-definitely the same sort of one chip in multiple Linux frameworks sort
-of thing.  The only other thing I can think might fit is handling it
-like a plug in module for a development board (eg, RPi hats) but we've
-not been doing so great at getting them supported upstream.
 
---k9xkV0rc9XGsukaG
-Content-Type: application/pgp-signature; name="signature.asc"
+> 
+> Douglas Anderson (6):
+>    drivers: base: Add the concept of "pre_probe" to drivers
+>    drivers: base: Add bits to struct device to control iommu strictness
+>    PCI: Indicate that we want to force strict DMA for untrusted devices
+>    iommu: Combine device strictness requests with the global default
+>    iommu: Stop reaching into PCIe devices to decide strict vs. non-strict
+>    mmc: sdhci-msm: Request non-strict IOMMU mode
+> 
+>   drivers/base/dd.c             | 10 +++++--
+>   drivers/iommu/dma-iommu.c     |  2 +-
+>   drivers/iommu/iommu.c         | 56 +++++++++++++++++++++++++++--------
+>   drivers/mmc/host/sdhci-msm.c  |  8 +++++
+>   drivers/pci/probe.c           |  4 ++-
+>   include/linux/device.h        | 11 +++++++
+>   include/linux/device/driver.h |  9 ++++++
+>   include/linux/iommu.h         |  2 ++
+>   8 files changed, 85 insertions(+), 17 deletions(-)
+> 
 
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmDSGQUACgkQJNaLcl1U
-h9BJwQf/S9os6LnqYb2q1/RMKcv1FwE6Jze9TX0xNc3AXqXxIIxK4VAQ4mhBf1ne
-7j63Gq/t3jtZ1lqGlXj0Tso7CjQgH/UxdqmhzBYRRwDmMKrL6Vr5ON3JvHjjjQoF
-N7k2CARqOEAAVMjLkhMWhTblaRuhfLjAe68vR0ZXTttY2ES8n2+Csa5AbEHvOxdl
-lHJsSz2C2ZR7nsl0KhmO17w0H3KcHxupzCbh6IqJllXZBy985FDCl8UllCYFL8hC
-nqSfXuTXfUNrWnaAlwWAIss69Et/PqtbuGFAUsP6U+OCRSMsQJ2QBAFQavwkHEip
-ooGQW6CJaf3Es4RU8JmTEMWiRhiaEw==
-=staA
------END PGP SIGNATURE-----
-
---k9xkV0rc9XGsukaG--
