@@ -2,94 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F33863B0CE3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jun 2021 20:29:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 843003B0CF3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jun 2021 20:33:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232452AbhFVSbx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Jun 2021 14:31:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44824 "EHLO
+        id S232386AbhFVSfp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Jun 2021 14:35:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45710 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232376AbhFVSbx (ORCPT
+        with ESMTP id S232487AbhFVSfo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Jun 2021 14:31:53 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EAF29C061574;
-        Tue, 22 Jun 2021 11:29:35 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id a11so24468965lfg.11;
-        Tue, 22 Jun 2021 11:29:35 -0700 (PDT)
+        Tue, 22 Jun 2021 14:35:44 -0400
+Received: from mail-qk1-x72e.google.com (mail-qk1-x72e.google.com [IPv6:2607:f8b0:4864:20::72e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6667C061574
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jun 2021 11:33:27 -0700 (PDT)
+Received: by mail-qk1-x72e.google.com with SMTP id q190so39386844qkd.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jun 2021 11:33:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=XZGZlZ6KGqASvVxpzUDTpMytysWT2/lYk8Yby81Wb20=;
-        b=jEtiIHw3LSJaQYEHaRFWOWEWWy4hTfspjh0ZQA0oVcOF1s6+N6q1a4At6R7C3ikhXv
-         NDQ2SB3DrSdagZYZUUauv/26bG2W4aOjXWoEeZLHjTn5DGTuoBvO8DqjAYnMLrfLr72t
-         UJ7MIsAePtN5frqCs7zv29RQTIVagOvTjnHmifNEnL1B8ECYUGlJvK5vLsnZrPKdZjUd
-         i9lqBxtCEg/qQ5svdJomcTj+gsycHLtyK2628Oy/kAveIAEYLf/43gs03tszh0ZNf6RB
-         T31Fw2J3uQ7SgJKZu5auUhl5bMNm3YHTsIQ8J9wefE+rRDR8qrc2XTUB/j2+4DlAx2Nx
-         n0Zg==
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=pumBvi+qi7d1sRM6cwo7R1W/BHxp1boGJK8L9dh8S7I=;
+        b=Gnb/8JfrLJ+yvZfpmSoMuJKpnj9MskU5T49YYM3w8+ZW9IypPBpCVKfYBZ02l5sZS0
+         52RS8k1paGyZM5BA6bltHp9N0Sq2IWSZwbT/ojCUlljFvnkTkQmcIHt74VxA+KVyV8lY
+         wiVJcA1DfdRMryKyocv7WRfaVD9tANv1RWGyU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=XZGZlZ6KGqASvVxpzUDTpMytysWT2/lYk8Yby81Wb20=;
-        b=dS6MoBtqb2i7XE4PVRuaADBJ1rUKglDi3nZsxvVVJKRBnszdo47MUVoJSZ56BJgpI+
-         jU5/f7QmGGVw1bEPI75O0iGPBmSTzpoUXCadYovzfwTdXqxWFKaDcCvFOaDMcowz3e+2
-         c7hKd9TcpvCqt2pMC/8CT49EtIpgeal81SZqra1UOi4uar12b20NVgHynNM6zzeCJUTt
-         aAKce7ecEf+/H9Bpho5JcDoh/OTcdhXXGEL6Ib7sn5nrJSZMAB1j0JJ5Dl8vK5Pxg+jN
-         OsRPLcQiktfR5L4zdgaGaCe9fEHe4MVbdN1XcsvrKGrkiC2NiKuZLmff6zeyApPw+pKm
-         81zQ==
-X-Gm-Message-State: AOAM533w2W8dWe6tnPEhr7ocKw7/plwlv2Wk3Q+mci/SOHELhvdc8364
-        gZ1jZi9ttWE+SzyQcBO1nKObf+avKvg=
-X-Google-Smtp-Source: ABdhPJzQFgUJ0cb2q45Hj57a3OvRCU2RvHl72IhAfi0zdEFskG6YYrFeHONVrA5JcKtlgjwzFOiCdw==
-X-Received: by 2002:a05:6512:388f:: with SMTP id n15mr4209845lft.280.1624386574292;
-        Tue, 22 Jun 2021 11:29:34 -0700 (PDT)
-Received: from [192.168.1.101] (83.6.168.10.neoplus.adsl.tpnet.pl. [83.6.168.10])
-        by smtp.gmail.com with ESMTPSA id b16sm2505763lff.210.2021.06.22.11.29.33
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=pumBvi+qi7d1sRM6cwo7R1W/BHxp1boGJK8L9dh8S7I=;
+        b=VdDWZ6sPScYXdLhLYRpghQDEWYb3n5//5AkvRUn7rvpkbFJQk7Hl6FSZg/OxO65uK/
+         pjBrwllOl8VYJsWobkEeXkQm4vSKdxDmupVuQ0tMg+Jw/HVSpkvsPTXpRPCmCCmNvjQk
+         jXuj7BnE/94jL5BfWs53UG9nFSGOc0nflEhRitxn77vsjHjj9f2thn8PT87KaxYYO/Ab
+         fxgSFWUEFGeycpk+QFgEm7PjMn5DGDGRtvruANfzUOwAOrujJhhNEjYb2f8/BkmYEEPe
+         wvUmoYaF0v6NNCw8xs3AJ15i0hFJ46kGiQFj+rvTcBCmPTidmLk+8i90d0pnpdCSMzoo
+         TdLw==
+X-Gm-Message-State: AOAM531ABdlcOO2pUx0FTvGJ2bdJX5Y0QXmfqNKtw9aCHFYwUIulRdfC
+        5spnR0xcAtMGbhLezQ+p6wToqiH0S9PqUQ==
+X-Google-Smtp-Source: ABdhPJy+pcFa1uTmkqWP1A3YDJhFxOlctbninze7cy1auhI6MASXSPQaUHLk4pQqNcNv9xa2AzOPmg==
+X-Received: by 2002:a37:7d83:: with SMTP id y125mr5945279qkc.7.1624386806747;
+        Tue, 22 Jun 2021 11:33:26 -0700 (PDT)
+Received: from mail-qk1-f179.google.com (mail-qk1-f179.google.com. [209.85.222.179])
+        by smtp.gmail.com with ESMTPSA id 4sm13566943qkv.134.2021.06.22.11.33.25
+        for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 22 Jun 2021 11:29:33 -0700 (PDT)
-Subject: Re: [PATCH v2 1/1] arm64: dts: qcom: msm8994-angler: Fix
- cont_splash_mem
-To:     Petr Vorel <petr.vorel@gmail.com>, linux-arm-msm@vger.kernel.org
-Cc:     Alexey Minnekhanov <alexeymin@postmarketos.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org
-References: <20210622181056.27632-1-petr.vorel@gmail.com>
-From:   Konrad Dybcio <konradybcio@gmail.com>
-Message-ID: <de10e844-b4c1-b3d4-cdd7-1491335285d9@gmail.com>
-Date:   Tue, 22 Jun 2021 20:29:32 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+        Tue, 22 Jun 2021 11:33:25 -0700 (PDT)
+Received: by mail-qk1-f179.google.com with SMTP id w21so28239657qkb.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jun 2021 11:33:25 -0700 (PDT)
+X-Received: by 2002:a5b:54a:: with SMTP id r10mr6520278ybp.476.1624386805037;
+ Tue, 22 Jun 2021 11:33:25 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20210622181056.27632-1-petr.vorel@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <1624099230-20899-1-git-send-email-rajeevny@codeaurora.org>
+ <1624099230-20899-2-git-send-email-rajeevny@codeaurora.org>
+ <20210620093141.GA703072@ravnborg.org> <ebf5581759daee9596c2f092ca836ecb@codeaurora.org>
+ <20210621183828.GA918146@ravnborg.org>
+In-Reply-To: <20210621183828.GA918146@ravnborg.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Tue, 22 Jun 2021 11:33:13 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=WJiA+RxaQA9xt7Tik_2pCEJo0+6b39Di8cfnSWGuKkJQ@mail.gmail.com>
+Message-ID: <CAD=FV=WJiA+RxaQA9xt7Tik_2pCEJo0+6b39Di8cfnSWGuKkJQ@mail.gmail.com>
+Subject: Re: [v7 1/5] drm/panel: add basic DP AUX backlight support
+To:     Sam Ravnborg <sam@ravnborg.org>
+Cc:     Rajeev Nandan <rajeevny@codeaurora.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Rob Clark <robdclark@gmail.com>, Lyude Paul <lyude@redhat.com>,
+        Jani Nikula <jani.nikula@intel.com>,
+        Rob Herring <robh@kernel.org>,
+        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        Andrzej Hajda <a.hajda@samsung.com>,
+        Daniel Thompson <daniel.thompson@linaro.org>,
+        "Kristian H. Kristensen" <hoegsberg@chromium.org>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Sean Paul <seanpaul@chromium.org>,
+        Kalyan Thota <kalyan_t@codeaurora.org>,
+        Krishna Manikandan <mkrishn@codeaurora.org>,
+        Lee Jones <lee.jones@linaro.org>,
+        Jingoo Han <jingoohan1@gmail.com>, linux-fbdev@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Ah yes, I think I know the issue..
+Hi,
 
+On Mon, Jun 21, 2021 at 11:38 AM Sam Ravnborg <sam@ravnborg.org> wrote:
+>
+> > > I cannot see why you need the extra check on ->enabled?
+> > > Would it be sufficient to check backlight_is_blank() only?
+> >
+> > This extra check on bl->enabled flag is added to avoid enabling/disabling
+> > backlight again if it is already enabled/disabled.
+> > Using this flag way can know the transition between backlight blank and
+> > un-blank, and decide when to enable/disable the backlight.
+>
+> My point is that this should really not be needed, as it would cover up
+> for some other bug whaere we try to do something twice that is not
+> needed. But I am less certain here so if you think it is needed, keep
+> it as is.
 
-Angler's firmware (probably Huawei's job, but unsure) seems to make IOMMUs (another guesstimate)
-not report where the memory is allocated. If it's an issue only on these boards, I reckon
-it would be better to just add
+I haven't tested this myself, but I believe that it is needed. I don't
+think the backlight update_status() function is like an enable/disable
+function. I believe it can be called more than one time even while the
+backlight is disabled. For instance, you can see that
+backlight_update_status() just blindly calls through to update the
+status. That function can be called for a number of reasons. Perhaps
+Rajeev can put some printouts to confirm but I think that if the
+backlight is "blanked" for whatever reason and you write to sysfs and
+change the backlight level you'll still get called again even though
+the backlight is still "disabled".
 
-
-"/delete-node/ &cont_splash_mem;"
-
-
-in angler/bullhead DTSI, as other 8992/4 devices seem to not have this issue. But as I've said, bullhead could
-
-probably work anyway, but if it doesn't, it's probably Google's job after all..
-
-
-P.S
-I did not suggest redefining the node, as the memory@0 is reserved for SoC registers
-and your firmware is just playing tricks on you. Your RAM starts @ 0x80000000.
-
-
-Konrad
+-Doug
