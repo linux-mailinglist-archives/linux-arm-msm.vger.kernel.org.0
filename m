@@ -2,113 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A02D53B078E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jun 2021 16:38:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 543313B0792
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jun 2021 16:38:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231847AbhFVOkY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Jun 2021 10:40:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47494 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231478AbhFVOkX (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Jun 2021 10:40:23 -0400
-Received: from mail-io1-xd36.google.com (mail-io1-xd36.google.com [IPv6:2607:f8b0:4864:20::d36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13806C061574;
-        Tue, 22 Jun 2021 07:38:06 -0700 (PDT)
-Received: by mail-io1-xd36.google.com with SMTP id r12so327333ioa.7;
-        Tue, 22 Jun 2021 07:38:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=DzzkeguR/nrxazN/TGnT3TfflLlbT2VClQmTxoJCeAA=;
-        b=ic/vMrEyPRjHpxQqxJjYPe0hHUf0zJQCxbPrM23RAzyTMjUC3ObuYjzX/PuB7zfm5C
-         ry9oJDsbeOubGjhcnnK8dx5+33aM+JOhQBnkX/2/2gMz0ehlxFTBmzzTpVNbqQToqlih
-         runRl8eWBfxkRVXSCthqg3m4jXLktI+R7wA0jQTF1jl0+ffNQWjqcDnVqWrFhYwU590q
-         RhxGFkXDWdpkAtmLkb8WgQWtTnm6zZiiq1XiCHwnmFTdxtvfPcN0ThDaqmcgYecabPoM
-         OHC9xZX20qx775MuqIR7xyBbLcSBxmSEvLoErHOd84vhPDAtE/M2yXmWVjQ7b9B8h11R
-         BD2g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=DzzkeguR/nrxazN/TGnT3TfflLlbT2VClQmTxoJCeAA=;
-        b=b4++Z9WbA7BteTuxYbAe5JBQStFhcSkaQ0bHSaEEwkYNdeZJiU9+KrdVhrcBOYPjes
-         /O0FJCx9+uRU4tumNELmTbqaaqX83C2cbpDuHiDFe1TPc2lt3wQ5Ch2fTUTN6W63WtcR
-         aA/kN1PoVOtu0kjvL+lFU9eXQgylJUW2vtf8enyzgpiL1mW23zN4G5ULogHDp+hXGnVW
-         TPR2aqRJwDYMk0WLdBuERDoY9dui03roVpmacGqfBLhIwTUezfocrufyOdHYmF+GWepG
-         uF0aVDU1N4069mosznYYGeZvKl9D8tsV10kBGxgcU6mgCNYt1ntSlXxx03kk6LumVjZm
-         ehvQ==
-X-Gm-Message-State: AOAM530cDP0j7d/KnRYIhS5Qa+kN3ixQ2bwp3B7OTm7mgeplOlN5UgRI
-        sftxB/z0SVJRfucrSe3DIyeLU78csARpLFU/K1vYev5Y
-X-Google-Smtp-Source: ABdhPJxz5Fo9nOW024fve0al2gRl+3QICrg9pstMFkpPNjG+10GR6yw5ri47cJjJ0tc+cJipcSgqP4P1xbnuahiTUrM=
-X-Received: by 2002:a05:6638:1446:: with SMTP id l6mr3810822jad.14.1624372685555;
- Tue, 22 Jun 2021 07:38:05 -0700 (PDT)
+        id S231897AbhFVOkw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Jun 2021 10:40:52 -0400
+Received: from mail.kernel.org ([198.145.29.99]:52674 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230047AbhFVOkv (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 22 Jun 2021 10:40:51 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 1CA2461378;
+        Tue, 22 Jun 2021 14:38:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1624372715;
+        bh=MyhNL+c9sQXrWYKNAjOcAvrFWHv6tfoPr73JTbBBYCc=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=C02DTrauRo62YzP44ABo7c0pzCl4EsyYfOE/OEXOr5EtyROY6obZKYheMpCJxGKBA
+         UD9eAap2mHtoqFjVu+WFBUUvgqu/Km0Nth+WRcEfyQSA1XYGIIU7uODy6VtRlJkt6j
+         1pnO3njuqtG8Q/40453JmY79piYWfbNm9O3HdCnLnHPVFz7A0z49rtTS5DEa5XLBVL
+         q9Q0gk6bzJV5MhXf4cUJgzoeJILNjthrtfuz2WneP+xo0XsYQdInWt4bcCMBnPmfVT
+         raca3KcSbKuefLfuaSVmdTBDOBb9FD8sJfCeXbKqgngOA48pLnQbcKefW8H0rEHKQ2
+         ptQtG68JBrvLg==
+Date:   Tue, 22 Jun 2021 15:38:12 +0100
+From:   Mark Brown <broonie@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        linux-bluetooth@vger.kernel.org
+Subject: Re: [PATCH v3 2/7] regulator: qca6390: add support for QCA639x
+ powerup sequence
+Message-ID: <20210622143812.GE4574@sirena.org.uk>
+References: <20210621223141.1638189-1-dmitry.baryshkov@linaro.org>
+ <20210621223141.1638189-3-dmitry.baryshkov@linaro.org>
+ <20210622112843.GB4574@sirena.org.uk>
+ <CAA8EJpoTdg3O6dzpTaNS5fJRbtb1Fndv0mEuO+e4b6XCmuvzhQ@mail.gmail.com>
 MIME-Version: 1.0
-References: <20210612094631.89980-1-martin.botka@somainline.org>
- <20210612094631.89980-3-martin.botka@somainline.org> <CABb+yY3BYYC2na8EFunEeu0XCfLXrUQon=hF3q5p=+FUoigoyw@mail.gmail.com>
- <CAL_JsqLWqtAtqLRF-MAnq80NMfD0a+CfWPv8JWjjNTJFgMjCxg@mail.gmail.com>
- <CABb+yY0sdSinTm788pMFrqEZ6QMC2OwCP7Kkto+pG9h1aGMzwQ@mail.gmail.com>
- <CAL_JsqKdoMwpL_tYC7VQRAG2AC5nR4diShMQCgDseObcgU+egQ@mail.gmail.com>
- <YNEiUMBqGAx1zLVX@yoga> <CABb+yY2wy4iSKjn+SihQ=FE=YwcEzUNOpGw_CV22Anzgbba8hA@mail.gmail.com>
- <YNFKpvhXyZbs8RE1@yoga> <CABb+yY3RpQYvNBHvpwZearpBPph0uj8YQwX2qu=TX=QAO6OFBw@mail.gmail.com>
- <YNFegmmCzk6JUTN+@yoga>
-In-Reply-To: <YNFegmmCzk6JUTN+@yoga>
-From:   Jassi Brar <jassisinghbrar@gmail.com>
-Date:   Tue, 22 Jun 2021 09:37:54 -0500
-Message-ID: <CABb+yY1PB+AqjGkRP3rgDbN6Sy4HUCh3gME2+aQTA4oeO01F6w@mail.gmail.com>
-Subject: Re: [PATCH V3 3/3] mailbox: qcom-apcs: Add SM6125 compatible
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        jamipkettunen@somainline.org, Andy Gross <agross@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="0H629O+sVkh21xTi"
+Content-Disposition: inline
+In-Reply-To: <CAA8EJpoTdg3O6dzpTaNS5fJRbtb1Fndv0mEuO+e4b6XCmuvzhQ@mail.gmail.com>
+X-Cookie: fortune: not found
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jun 21, 2021 at 10:52 PM Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
 
+--0H629O+sVkh21xTi
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-> > > > > > In any case, we can't really get rid of the first 13 instances though...
-> > > > > >
-> > > > >
-> > > > > Right, we have the problem that we have DTBs out there that relies on
-> > > > > these compatibles, but as Jassi requests we'd have to start describing
-> > > > > the internal register layout in DT - which this binding purposefully
-> > > > > avoids.
-> > > > >
-> > > > Not these strings, but 'offset' and 'clock-name' as optional
-> > > > properties that new platforms can use.
-> > > >
-> > >
-> > > Relying on completely generic compatibles to match the driver and then
-> > > distinguish each platform using additional properties is exactly what
-> > > Qualcomm does downstream.  The community has clarified countless times
-> > > that this is not the way to write DT bindings.
-> > >
-> > Yes, and I don't suggest it otherwise. For h/w quirks and
-> > extra/missing features, it does make sense to have different
-> > compatibles.
-> >
->
-> But what you're suggesting assumes that they are the same and that we're
-> done implementing all the software for this block. The platform specific
-> compatible allows us to postpone that question.
->
-It has been 4yrs and 13 platforms. The compatible strings are used
-only to match the hardcoded 'offset' values. Maybe we cross the bridge
-when we get to it.
-I think, when the drivers are enhanced and the kernel binary needs to
-be updated, we could update the dtb as well? Or is it too hard on
-these platforms?
+On Tue, Jun 22, 2021 at 05:17:28PM +0300, Dmitry Baryshkov wrote:
+> On Tue, 22 Jun 2021 at 14:29, Mark Brown <broonie@kernel.org> wrote:
+> > On Tue, Jun 22, 2021 at 01:31:36AM +0300, Dmitry Baryshkov wrote:
 
-cheers.
+> > > Qualcomm QCA6390/1 is a family of WiFi + Bluetooth SoCs, with BT part
+> > > being controlled through the UART and WiFi being present on PCIe
+> > > bus. Both blocks share common power sources. Add device driver handling
+> > > power sequencing of QCA6390/1.
+
+> > Are you sure this is a regulator and not a MFD?  It appears to be a
+> > consumer driver that turns on and off a bunch of regulators en masse
+> > which for some reason exposes that on/off control as a single supply.
+> > This looks like it'd be much more appropriate to implement as a MFD or
+> > possibly power domain with the subdevices using runtime PM, it's clearly
+> > not a regulator.
+
+> First attempt was designed to be an MFD. And Lee clearly stated that
+> this is wrong:
+> "This is not an MFD, since it utilised neither the MFD API nor
+> of_platform_populate() to register child devices." [1]
+
+Well, perhaps it should do one of those things then?  Like I say this is
+very clearly not a regulator, it looks like a consumer of some kind.
+The regulator API isn't there just to absorb things that need reference
+counting, it's there to represent things providing supplies.  This seems
+to be very clearly not a supply given that it's grouping together a
+bunch of other supplies and switching them on and off together without
+providing a clear output supply.
+
+> I've tried following Rob's suggestions on implementing things clearly,
+> but doing so results in too big restructure just for a single device.
+
+I don't know what that suggestion was?  If there's only one device that
+uses this why is it not implemented as part of that device?
+
+> > > +static int qca6390_enable(struct regulator_dev *rdev)
+> > > +{
+> > > +     struct qca6390_data *data = rdev_get_drvdata(rdev);
+> > > +     int ret;
+
+> > > +     ret = regulator_bulk_enable(data->num_vregs, data->regulators);
+> > > +     if (ret) {
+> > > +             dev_err(data->dev, "Failed to enable regulators");
+> > > +             return ret;
+> > > +     }
+
+> > The regulator API is *not* recursive, I am astonished this works.
+
+> It does, even with lockdep enabled. Moreover BT regularly does disable
+> and enable this regulator, so both enable and disable paths were well
+> tested.
+> Should I change this into some internal call to remove API recursiveness?
+
+You should not be implementing this as a regulator at all.
+
+--0H629O+sVkh21xTi
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmDR9dMACgkQJNaLcl1U
+h9B2Hwf/X35x6Prj+oZAglRHpnyQgOLNQJQckoFKWi7U7UMLqoQa8sFfKYgY53gK
+JsoduanV5yqSrjSC/BGK2LNnz5wN0kDvD95QSbLxqchC6jPIAu2ZLy5/Pr/EI1VM
+nqsM0GmiJbWfDREnpANqjEnXJkDuxEZyS6niP8o8MqvNWmLEtj6tQiSUQG1xAlzk
+5IDiZn4fkE+JchdmX7yYViglpvZJ9qM4QsDitbUSD9DmfJg5xwk2t5ZPbi8aOKgV
+XSfQzYPxoTMM9r4vXHc9Eav1M1O/NU1+Jv6HYR1FrsNMePSmc0U5FamJMiPWhQTf
++uvsq4/+X5hXZ3frFLglZk9PUnTfjQ==
+=Nwo6
+-----END PGP SIGNATURE-----
+
+--0H629O+sVkh21xTi--
