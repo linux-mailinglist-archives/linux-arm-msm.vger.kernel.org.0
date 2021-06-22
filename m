@@ -2,65 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7AD683B0DB8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jun 2021 21:42:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 37B663B0DE0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jun 2021 21:56:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232464AbhFVToS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Jun 2021 15:44:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60946 "EHLO
+        id S232741AbhFVT6o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Jun 2021 15:58:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36054 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232582AbhFVToN (ORCPT
+        with ESMTP id S232755AbhFVT6n (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Jun 2021 15:44:13 -0400
-Received: from mail-qt1-x833.google.com (mail-qt1-x833.google.com [IPv6:2607:f8b0:4864:20::833])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88D5CC061574
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jun 2021 12:35:15 -0700 (PDT)
-Received: by mail-qt1-x833.google.com with SMTP id l2so306096qtq.10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jun 2021 12:35:15 -0700 (PDT)
+        Tue, 22 Jun 2021 15:58:43 -0400
+Received: from mail-qt1-x836.google.com (mail-qt1-x836.google.com [IPv6:2607:f8b0:4864:20::836])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62C59C061766
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jun 2021 12:56:27 -0700 (PDT)
+Received: by mail-qt1-x836.google.com with SMTP id d9so360301qtx.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jun 2021 12:56:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=KbphWW+YCq0HiY8JKMK80s61y/VI/u5uRCvjvuYgRvo=;
-        b=B0KKMBDv6mmc1lnaI4uPkAm6cPTmdb7TIXjhicSbGznIFUVv9JjjbjCqNCaOd7EpYM
-         pnnEU8sbe0AVpMJXATFzGWXRlVkOSlojtJ9YUkl0HamHxDkd3CMgYIcUaibp/wBrGa39
-         arNtBQL0FAKJSiCk0bIOZEIS47O+vz6l2FCAk=
+        bh=N93FQS54KNMw/RWZd3sdd1/c5zsgaKSRIH5cGtG3wLQ=;
+        b=nKSDq/oCJcM6qZHdPsZIzNgBCyluw3srCscilwpHd/8GiydqZY43q/T3vv2Nn2jbKD
+         jegHEFKq7oKJUZmrnbp2L6fkE3vgH2JXF/RfOrax19gy3NpN1urkxXl0RO3exPK9Eg/i
+         cQzl2nnV7iu4Ug4cNN87vHMj6sK4LHNEdz+OI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=KbphWW+YCq0HiY8JKMK80s61y/VI/u5uRCvjvuYgRvo=;
-        b=EQzEm5fNISFirzfnnXUuwEBjXf5vIkC8dpY5ciNgPLnqa+t60kmJff2DjVGR4cyDz+
-         oTKujvBsNWV5OdLH6UJdrvKTfhrQLvpFsC7vkMZzBYdjRWS3F2IsS1BUHGPEcKeA6j3O
-         qwBPqWEV2HV65fWuIEMFTiqh336Q/CMVnQF9k2IdGmRsbXXnWtmYjx+/yFCXVeQemmyK
-         uB+Gv9+L2w4UoDFKL+/eWHzKRYygeJd5hUfrH42mThITR00PQ2QiLCPE0nSt+jQH8PKY
-         QSAE/UNAbRjbahn38erQtcS8dtqLJwAeMuJ1vCT6l+ZbM0onrYifeqIdi+8SMl8mqZh9
-         /2kQ==
-X-Gm-Message-State: AOAM532ROPJtOHZdDFODvJ4ZUJtE7jZgwoPoTBJapuAxtaY4k5UTPxWX
-        1mRpKb92y9gaZEDg2Iy0wCQJ3tu+IU7zgw==
-X-Google-Smtp-Source: ABdhPJwjWBPHijAmRvDFflCZF8GzXjOnWwWS1yPD+azCXKbisBRKeyonzL4eVgES2xUqauZPYbiNtQ==
-X-Received: by 2002:a05:622a:15:: with SMTP id x21mr384862qtw.236.1624390514451;
-        Tue, 22 Jun 2021 12:35:14 -0700 (PDT)
-Received: from mail-qk1-f176.google.com (mail-qk1-f176.google.com. [209.85.222.176])
-        by smtp.gmail.com with ESMTPSA id i67sm13842341qkd.90.2021.06.22.12.35.12
+        bh=N93FQS54KNMw/RWZd3sdd1/c5zsgaKSRIH5cGtG3wLQ=;
+        b=WxDh4sg81G7PWgk0GZFdMWELvuvgsAU3JY8jbVU+DiTLtpb9DB5NZmn3WW3XiXeUrV
+         S3SlVT+IBfObuGUbiTFc0Xf1SbcTs8soGB3H5jcyFrJopip24ramHWQ+7TUdmM7z8RH8
+         BpAGhfBh86KDy69XKqUQE+t5ZADnGvrq52kQrF69Y8cQSkpydU61+XsHKx6aOKKLsqZD
+         dAxHUcKCT2I6n74HhPeM8V7hx769hAI/A/FdrLM8LYe0SsGu5tqEI4eI+KXiGs7QgIrK
+         aBTaj703kJ86OQjJ5gTe1/VVVW5B3LCtIs7CWKw79yziJxwzClxvDgRJNZh3IhNBxMY3
+         16PA==
+X-Gm-Message-State: AOAM530siNA7ECkkdWi2yt8HSqW5CtvqqcjBoTKK73bDGRR2mI846DVH
+        7s9wnkQfwXLA004tilsqm12n85XiNymvYw==
+X-Google-Smtp-Source: ABdhPJz5jRIJ5Y3KqetmAFk2kwAEiK/W1idRezxptrxxOSWoZ32Z1SOZmtci8kO2YE6q/89rrnTOrA==
+X-Received: by 2002:ac8:5e12:: with SMTP id h18mr414349qtx.253.1624391786437;
+        Tue, 22 Jun 2021 12:56:26 -0700 (PDT)
+Received: from mail-qk1-f178.google.com (mail-qk1-f178.google.com. [209.85.222.178])
+        by smtp.gmail.com with ESMTPSA id c20sm2543822qtm.52.2021.06.22.12.56.26
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 22 Jun 2021 12:35:13 -0700 (PDT)
-Received: by mail-qk1-f176.google.com with SMTP id q190so39870923qkd.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jun 2021 12:35:12 -0700 (PDT)
-X-Received: by 2002:a25:2405:: with SMTP id k5mr6758869ybk.405.1624390512166;
- Tue, 22 Jun 2021 12:35:12 -0700 (PDT)
+        Tue, 22 Jun 2021 12:56:26 -0700 (PDT)
+Received: by mail-qk1-f178.google.com with SMTP id o6so7334164qkh.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jun 2021 12:56:26 -0700 (PDT)
+X-Received: by 2002:a25:2405:: with SMTP id k5mr6836288ybk.405.1624391426495;
+ Tue, 22 Jun 2021 12:50:26 -0700 (PDT)
 MIME-Version: 1.0
-References: <20210621235248.2521620-1-dianders@chromium.org>
- <20210621165230.4.Id84a954e705fcad3fdb35beb2bc372e4bf2108c7@changeid> <CACK8Z6EVmnMx4X8ZF7QSm58KCMMAkgSa+S9YkH+mC5RfmeyYoA@mail.gmail.com>
-In-Reply-To: <CACK8Z6EVmnMx4X8ZF7QSm58KCMMAkgSa+S9YkH+mC5RfmeyYoA@mail.gmail.com>
+References: <20210621235248.2521620-1-dianders@chromium.org> <f3078ff2-97a6-6029-b584-1589ed184579@huawei.com>
+In-Reply-To: <f3078ff2-97a6-6029-b584-1589ed184579@huawei.com>
 From:   Doug Anderson <dianders@chromium.org>
-Date:   Tue, 22 Jun 2021 12:35:00 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=U9WqEKVgX6p1Eaf5hvpXet0e_rqKKS4YRNsDrLW5R5zg@mail.gmail.com>
-Message-ID: <CAD=FV=U9WqEKVgX6p1Eaf5hvpXet0e_rqKKS4YRNsDrLW5R5zg@mail.gmail.com>
-Subject: Re: [PATCH 4/6] iommu: Combine device strictness requests with the
- global default
-To:     Rajat Jain <rajatja@google.com>
+Date:   Tue, 22 Jun 2021 12:50:15 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=WyicdP+czVyMPFpuSDHcB_jF3ikjSjqu_X0qVsUReiOA@mail.gmail.com>
+Message-ID: <CAD=FV=WyicdP+czVyMPFpuSDHcB_jF3ikjSjqu_X0qVsUReiOA@mail.gmail.com>
+Subject: Re: [PATCH 0/6] iommu: Enable devices to request non-strict DMA,
+ starting with QCom SD/MMC
+To:     John Garry <john.garry@huawei.com>
 Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         "Rafael J. Wysocki" <rafael@kernel.org>,
         "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
@@ -80,8 +79,15 @@ Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
         Linux MMC List <linux-mmc@vger.kernel.org>,
         Veerabhadrarao Badiganti <vbadigan@codeaurora.org>,
+        Rajat Jain <rajatja@google.com>,
         Saravana Kannan <saravanak@google.com>,
         Joel Fernandes <joel@joelfernandes.org>,
+        Andy Gross <agross@kernel.org>,
+        Bartosz Golaszewski <bgolaszewski@baylibre.com>,
+        Dan Williams <dan.j.williams@intel.com>,
+        Geert Uytterhoeven <geert@linux-m68k.org>,
+        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+        Randy Dunlap <rdunlap@infradead.org>,
         LKML <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
@@ -90,77 +96,52 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hi,
 
-On Tue, Jun 22, 2021 at 11:45 AM Rajat Jain <rajatja@google.com> wrote:
+On Tue, Jun 22, 2021 at 10:46 AM John Garry <john.garry@huawei.com> wrote:
 >
-> On Mon, Jun 21, 2021 at 4:53 PM Douglas Anderson <dianders@chromium.org> wrote:
+> On 22/06/2021 00:52, Douglas Anderson wrote:
 > >
-> > In the patch ("drivers: base: Add bits to struct device to control
-> > iommu strictness") we add the ability for devices to tell us about
-> > their IOMMU strictness requirements. Let's now take that into account
-> > in the IOMMU layer.
+> > This patch attempts to put forward a proposal for enabling non-strict
+> > DMA on a device-by-device basis. The patch series requests non-strict
+> > DMA for the Qualcomm SDHCI controller as a first device to enable,
+> > getting a nice bump in performance with what's believed to be a very
+> > small drop in security / safety (see the patch for the full argument).
 > >
-> > A few notes here:
-> > * Presumably this is always how iommu_get_dma_strict() was intended to
-> >   behave. Had this not been the intention then it never would have
-> >   taken a domain as a parameter.
-> > * The iommu_set_dma_strict() feels awfully non-symmetric now. That
-> >   function sets the _default_ strictness globally in the system
-> >   whereas iommu_get_dma_strict() returns the value for a given domain
-> >   (falling back to the default). Presumably, at least, the fact that
-> >   iommu_set_dma_strict() doesn't take a domain makes this obvious.
+> > As part of this patch series I am end up slightly cleaning up some of
+> > the interactions between the PCI subsystem and the IOMMU subsystem but
+> > I don't go all the way to fully remove all the tentacles. Specifically
+> > this patch series only concerns itself with a single aspect: strict
+> > vs. non-strict mode for the IOMMU. I'm hoping that this will be easier
+> > to talk about / reason about for more subsystems compared to overall
+> > deciding what it means for a device to be "external" or "untrusted".
 > >
-> > The function iommu_get_dma_strict() should now make it super obvious
-> > where strictness comes from and who overides who. Though the function
-> > changed a bunch to make the logic clearer, the only two new rules
-> > should be:
-> > * Devices can force strictness for themselves, overriding the cmdline
-> >   "iommu.strict=0" or a call to iommu_set_dma_strict(false)).
-> > * Devices can request non-strictness for themselves, assuming there
-> >   was no cmdline "iommu.strict=1" or a call to
-> >   iommu_set_dma_strict(true).
+> > If something like this patch series ends up being landable, it will
+> > undoubtedly need coordination between many maintainers to land. I
+> > believe it's fully bisectable but later patches in the series
+> > definitely depend on earlier ones. Sorry for the long CC list. :(
+> >
 >
-> Along the same lines, I believe a platform (device tree / ACPI) should
-> also be able to have a say in this. I assume in your proposal, a
-> platform would expose a property in device tree which the device
-> driver would need to parse and then use it to set these bits in the
-> "struct device"?
+> JFYI, In case to missed it, and I know it's not the same thing as you
+> want, above, but the following series will allow you to build the kernel
+> to default to lazy mode:
+>
+> https://lore.kernel.org/linux-iommu/1624016058-189713-1-git-send-email-john.garry@huawei.com/T/#m21bc07b9353b3ba85f2a40557645c2bcc13cbb3e
+>
+> So iommu.strict=0 would be no longer always required for arm64.
 
-Nothing would prevent creating a device tree or ACPI property that
-caused either "force-strict" or "request-non-strict" from being set if
-everyone agrees that it's a good idea. I wouldn't reject the idea
-myself, but I do worry that we'd devolve into the usual bikeshed for
-exactly how this should look. I talked about this a bit in my response
-to Saravana, but basically:
+Excellent! I'm never a fan of command line parameters as a replacement
+for Kconfig. They are great for debugging or for cases where the user
+of the kernel and the person compiling the kernel are not the same
+(like with off-the-shelf Linux distros) but aren't great for setting a
+default for embedded environments.
 
-* If there was some generic property, would we call it "untrusted",
-"external", or something else?
+I actually think that something like my patchset may be even more
+important atop yours. Do you agree? If the default is non-strict it
+could be extra important to be able to mark a certain device to be in
+"strict" mode.
 
-* How do you describe "trust" in a generic "objective" way? It's not
-really boolean and trying to describe exactly how trustworthy
-something should be considered is hard.
-
-* At least for the device tree there's a general requirement that it
-describes the hardware and not so much how the software should
-configure the hardware. As I understand it there is _some_ leeway here
-where it's OK to describe how the hardware was designed for the OS to
-configure it, but it's a pretty high bar and a hard sell. In general
-the device tree isn't supposed to be used to describe "policy". In
-other words: if one OS might decide on one setting and another OS on
-another then it doesn't really belong in the device tree.
-
-* In general the kernel is also not really supposed to have policy
-hardcoded in either, though it feels like we can get away with having
-a good default/sane policy and allowing overriding the policy with
-command line parameters (like iommu.strict). In the case where
-something has to be configured at bootup there's not many ways to do
-better.
-
-
-tl;dr: I have no plans to try to make an overarching property, but my
-patch series does allow subsystems to come up with and easily
-implement their own rules as it makes sense. While this might seem
-hodgepodge I prefer to see it as "flexible" since I'm not convinced
-that we're going to be able to come up with an overarching trust
-framework.
+...also, unfortunately I probably won't be able to use your patchest
+for my use case. I think we want the extra level of paranoia by
+default and really only want to allow non-strict mode for devices that
+we're really convinced are safe.
 
 -Doug
