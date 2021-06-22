@@ -2,275 +2,200 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5DBA73AFB36
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jun 2021 04:56:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C352C3AFB69
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jun 2021 05:34:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231232AbhFVC6s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Jun 2021 22:58:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57558 "EHLO
+        id S230118AbhFVDhH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Jun 2021 23:37:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37708 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231196AbhFVC6s (ORCPT
+        with ESMTP id S230039AbhFVDhF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Jun 2021 22:58:48 -0400
-Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com [IPv6:2607:f8b0:4864:20::730])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13A77C061756
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jun 2021 19:56:31 -0700 (PDT)
-Received: by mail-qk1-x730.google.com with SMTP id j184so35862347qkd.6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jun 2021 19:56:31 -0700 (PDT)
+        Mon, 21 Jun 2021 23:37:05 -0400
+Received: from mail-io1-xd2b.google.com (mail-io1-xd2b.google.com [IPv6:2607:f8b0:4864:20::d2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81B85C061574;
+        Mon, 21 Jun 2021 20:34:49 -0700 (PDT)
+Received: by mail-io1-xd2b.google.com with SMTP id p66so18275889iod.8;
+        Mon, 21 Jun 2021 20:34:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
+        d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=o7WniBxc7u8I3jtLWFb2QyQubQrJgur3uSaTIY2hHpY=;
-        b=IlhIu8fFZb/00DISAJcThl4zsHWxZQu1Oa/M3ahKUhWaxlkRjELVIGBWjVa/lOqm5w
-         R8ijcCQtXUjJKTXjsyL8XC9IeSNYcoE/hXhy0707xoE6Bp7mwCrtqvMSIwg7XRSkNIE+
-         41oC8qsSXK/w+ICTlHHEk6csKeMmNkBnGKqC4mrBOzIjGGVZUX6Nspzkfc0P0dg2TAX0
-         qGjTjgj9xBimf62Siz9ycYnskVpQcN4f68bXYa47M7lrcmqv9sUfStAIPZ+oYS0gQPSS
-         axREBBohkOyHxdZVxh0tmhTQ6DCvRJCFxRlsELoVQjr6rZofiDiCLzoIC+fkMke5eZXb
-         KOyg==
+        bh=M2NaquTKuiz0EtWzypNaQWZLSls8Yk6MZXai61lQt+Y=;
+        b=tVs4bSO38oyllXMEsSD4z//Kvx65zApEFUUuE4gaZglS2+FmvD2LeAeNP+Z4xtuyVx
+         WHe1lxMJxjRkmG4TV4T2Db5PROvx5L00a214fTJsOKdRZQl5J4qvPbhCEqySCj/wrwks
+         Tm9MFY6PHtCpvisKgjaRp49leBoI20s1pfHc4aAb7SZz5H2Izk+j5GCLm3xyAEwTJoKf
+         lRje1is95bqB1wr/avUu1zYnwIJ2TJzONDhh/iapJcxOMOF8j/aGKvtcjbGgxJOhCyMk
+         VXJ+X+flZa6Rp9QxuTCo/VC6X1Lakpo2X0eGEFDiaS9s0AGr79YXYn8+ZfwUEQ9Sxsbu
+         S4cw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=o7WniBxc7u8I3jtLWFb2QyQubQrJgur3uSaTIY2hHpY=;
-        b=f/HJgAGM9sw3BohxwaiVS/QRLdcokwoDEzzBMdwHkvICHkEG3L+qzboG+Hi3Elx1Yk
-         R6n6dWDsIweMaCOqNsMwk7oRSxgOl9XR3THowiWv2iSy9u3iA20Q0YACM5xZ/cbViOCC
-         +BPrAxUHwhw+zXHvERlqWOAuLKjQFm3smszmAoDapP5JiC7j7llLPA9Jx/0ZxSLF1Aib
-         OAoZhII5OFWkMBy2Qnh5nyLoAKhEtHchIuz4mHNVGNKlVODqyjY2Xr4DYJXzgYO7NOjE
-         Qdi4f8djgkPs/hIW7XkCdj8DONjP/eJYgjSAKkWv3JnErmygOco9pGhAwQBwU+RXKrLo
-         0cTw==
-X-Gm-Message-State: AOAM532NJu8u6abZpLRs3srvvnkPKBqXc2KKPy3eeAhukwDqammMKm99
-        nD2GGMaI3cAHO/M8zRr/7kl8pv4eWWwi/zcNrgHH7Q==
-X-Google-Smtp-Source: ABdhPJyQjeT6WzR5lehTnPxseq2wdji+PgNfDU28Fwy5MqjJ3yxJk8R8kSGnjCwg/Kmk7+Pz3hc0ucfFrwGQ91Xpnkk=
-X-Received: by 2002:a25:bcb:: with SMTP id 194mr1812975ybl.32.1624330590627;
- Mon, 21 Jun 2021 19:56:30 -0700 (PDT)
+        bh=M2NaquTKuiz0EtWzypNaQWZLSls8Yk6MZXai61lQt+Y=;
+        b=cX36VIaGTg9PkGwZXk42W7RLG0/C3qtNZbOWYUEOCUe2cSWxTjEpDLAQo5IxdeLsoE
+         UU+qGwnqqajC7Yr216SncI0zt17OeN5pv4Eqjq8hHn4SAoe6vbsNFN8pSHQePtfqCjAa
+         tTQM7D3JsbGtF5izLVIIkwnExbl7qEDWBU9E4NicdkVsP6LVnx0DEm7wxJwBnTcKM37u
+         QOn5gmbqJz1EZYN7TKMmfaKe/CiJroQfL0TAfNm2Ptj1eG1ZKYOVqVpBGrpvD9myV1r2
+         rwk9QRqcmz4ho7KqEOKwPd/txPW27jI1hBWig0xDV/1kV6HrhPqs+88X2diOBMZAVQ+g
+         ecPA==
+X-Gm-Message-State: AOAM530JHMeNcJd3xiSOGZrtQnUA54BMOWQ+1mSdxP97lEFHHNJQPCFK
+        QVLlHkOznzdw+eHaJVfv+ohVnQqj4nH+4nMNiGY=
+X-Google-Smtp-Source: ABdhPJwK1JnYPVa04262EkEXiWjBJ62p+pdNYhvd2eNBJAeN6n5OAE8nuYsjtVAO/UMPx0bNFhsDxmTVFvDH8l7RAec=
+X-Received: by 2002:a02:7348:: with SMTP id a8mr1742382jae.116.1624332888844;
+ Mon, 21 Jun 2021 20:34:48 -0700 (PDT)
 MIME-Version: 1.0
-References: <20210621235248.2521620-1-dianders@chromium.org> <20210621165230.4.Id84a954e705fcad3fdb35beb2bc372e4bf2108c7@changeid>
-In-Reply-To: <20210621165230.4.Id84a954e705fcad3fdb35beb2bc372e4bf2108c7@changeid>
-From:   Saravana Kannan <saravanak@google.com>
-Date:   Mon, 21 Jun 2021 19:55:52 -0700
-Message-ID: <CAGETcx-dZ_Wwjafk+5akWJwbrFx2rYNKZAU8tWhFUunEyn8sqQ@mail.gmail.com>
-Subject: Re: [PATCH 4/6] iommu: Combine device strictness requests with the
- global default
-To:     Douglas Anderson <dianders@chromium.org>
-Cc:     gregkh@linuxfoundation.org, rafael@kernel.org,
-        rafael.j.wysocki@intel.com, will@kernel.org, robin.murphy@arm.com,
-        joro@8bytes.org, bjorn.andersson@linaro.org,
-        ulf.hansson@linaro.org, adrian.hunter@intel.com,
-        bhelgaas@google.com, robdclark@chromium.org,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        quic_c_gdjako@quicinc.com, iommu@lists.linux-foundation.org,
-        sonnyrao@chromium.org, saiprakash.ranjan@codeaurora.org,
-        linux-mmc@vger.kernel.org, vbadigan@codeaurora.org,
-        rajatja@google.com, joel@joelfernandes.org,
-        linux-kernel@vger.kernel.org
+References: <20210612094631.89980-1-martin.botka@somainline.org>
+ <20210612094631.89980-3-martin.botka@somainline.org> <CABb+yY3BYYC2na8EFunEeu0XCfLXrUQon=hF3q5p=+FUoigoyw@mail.gmail.com>
+ <CAL_JsqLWqtAtqLRF-MAnq80NMfD0a+CfWPv8JWjjNTJFgMjCxg@mail.gmail.com>
+ <CABb+yY0sdSinTm788pMFrqEZ6QMC2OwCP7Kkto+pG9h1aGMzwQ@mail.gmail.com>
+ <CAL_JsqKdoMwpL_tYC7VQRAG2AC5nR4diShMQCgDseObcgU+egQ@mail.gmail.com>
+ <YNEiUMBqGAx1zLVX@yoga> <CABb+yY2wy4iSKjn+SihQ=FE=YwcEzUNOpGw_CV22Anzgbba8hA@mail.gmail.com>
+ <YNFKpvhXyZbs8RE1@yoga>
+In-Reply-To: <YNFKpvhXyZbs8RE1@yoga>
+From:   Jassi Brar <jassisinghbrar@gmail.com>
+Date:   Mon, 21 Jun 2021 22:34:37 -0500
+Message-ID: <CABb+yY3RpQYvNBHvpwZearpBPph0uj8YQwX2qu=TX=QAO6OFBw@mail.gmail.com>
+Subject: Re: [PATCH V3 3/3] mailbox: qcom-apcs: Add SM6125 compatible
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        jamipkettunen@somainline.org, Andy Gross <agross@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jun 21, 2021 at 4:53 PM Douglas Anderson <dianders@chromium.org> wrote:
+On Mon, Jun 21, 2021 at 9:27 PM Bjorn Andersson
+<bjorn.andersson@linaro.org> wrote:
 >
-> In the patch ("drivers: base: Add bits to struct device to control
-> iommu strictness") we add the ability for devices to tell us about
-> their IOMMU strictness requirements. Let's now take that into account
-> in the IOMMU layer.
+> On Mon 21 Jun 20:00 CDT 2021, Jassi Brar wrote:
 >
-> A few notes here:
-> * Presumably this is always how iommu_get_dma_strict() was intended to
->   behave. Had this not been the intention then it never would have
->   taken a domain as a parameter.
-> * The iommu_set_dma_strict() feels awfully non-symmetric now. That
->   function sets the _default_ strictness globally in the system
->   whereas iommu_get_dma_strict() returns the value for a given domain
->   (falling back to the default). Presumably, at least, the fact that
->   iommu_set_dma_strict() doesn't take a domain makes this obvious.
+> > On Mon, Jun 21, 2021 at 6:35 PM Bjorn Andersson
+> > <bjorn.andersson@linaro.org> wrote:
+> > >
+> > > On Mon 21 Jun 18:19 CDT 2021, Rob Herring wrote:
+> > >
+> > > > On Mon, Jun 21, 2021 at 5:10 PM Jassi Brar <jassisinghbrar@gmail.com> wrote:
+> > > > >
+> > > > > On Mon, Jun 21, 2021 at 2:46 PM Rob Herring <robh+dt@kernel.org> wrote:
+> > > > > >
+> > > > > > On Sun, Jun 20, 2021 at 10:03 PM Jassi Brar <jassisinghbrar@gmail.com> wrote:
+> > > > > > >
+> > > > > > > On Sat, Jun 12, 2021 at 4:46 AM Martin Botka
+> > > > > > > <martin.botka@somainline.org> wrote:
+> > > > > > > >
+> > > > > > > > This commit adds compatible for the SM6125 SoC
+> > > > > > > >
+> > > > > > > > Signed-off-by: Martin Botka <martin.botka@somainline.org>
+> > > > > > > > ---
+> > > > > > > > Changes in V2:
+> > > > > > > > None
+> > > > > > > > Changes in V3:
+> > > > > > > > Change compatible to apcs-hmss-global
+> > > > > > > >  drivers/mailbox/qcom-apcs-ipc-mailbox.c | 5 +++++
+> > > > > > > >  1 file changed, 5 insertions(+)
+> > > > > > > >
+> > > > > > > > diff --git a/drivers/mailbox/qcom-apcs-ipc-mailbox.c b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
+> > > > > > > > index f25324d03842..f24c5ad8d658 100644
+> > > > > > > > --- a/drivers/mailbox/qcom-apcs-ipc-mailbox.c
+> > > > > > > > +++ b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
+> > > > > > > > @@ -57,6 +57,10 @@ static const struct qcom_apcs_ipc_data sdm660_apcs_data = {
+> > > > > > > >         .offset = 8, .clk_name = NULL
+> > > > > > > >  };
+> > > > > > > >
+> > > > > > > > +static const struct qcom_apcs_ipc_data sm6125_apcs_data = {
+> > > > > > > > +       .offset = 8, .clk_name = NULL
+> > > > > > > > +};
+> > > > > > > > +
+> > > > > > > >  static const struct qcom_apcs_ipc_data apps_shared_apcs_data = {
+> > > > > > > >         .offset = 12, .clk_name = NULL
+> > > > > > > >  };
+> > > > > > > > @@ -166,6 +170,7 @@ static const struct of_device_id qcom_apcs_ipc_of_match[] = {
+> > > > > > > >         { .compatible = "qcom,sc8180x-apss-shared", .data = &apps_shared_apcs_data },
+> > > > > > > >         { .compatible = "qcom,sdm660-apcs-hmss-global", .data = &sdm660_apcs_data },
+> > > > > > > >         { .compatible = "qcom,sdm845-apss-shared", .data = &apps_shared_apcs_data },
+> > > > > > > > +       { .compatible = "qcom,sm6125-apcs-hmss-global", .data = &sm6125_apcs_data },
+> > > > > > > >         { .compatible = "qcom,sm8150-apss-shared", .data = &apps_shared_apcs_data },
+> > > > > > > >         { .compatible = "qcom,sdx55-apcs-gcc", .data = &sdx55_apcs_data },
+> > > > > > > >         {}
+> > > > > > > >
+> > > > > > > These all are basically different names for the same controller.
+> > > > > > > The 'offset' is a configuration parameter and the 'clock', when NULL,
+> > > > > > > is basically some "always-on" clock.
+> > > > > > > I am sure we wouldn't be doing it, if the controller was third-party.
+> > > > > >
+> > > > > > If newer implementations are 'the same', then they should have a
+> > > > > > fallback compatible to the existing one that is the same and no driver
+> > > > > > change is needed. If the differences are board or instance (within an
+> > > > > > SoC) specific, then a DT property would be appropriate.
+> > > > > >
+> > > > > The controllers (13 now) only differ by the 'offset' where the
+> > > > > registers are mapped. Clock-name is a pure s/w artifact.
+> > > > > So, maybe we could push all these in DT.
+> > > >
+> > > > Why is 'reg' not used for the offset?
+> > > >
+> > >
+> > > The DT node and its "reg" describes the whole IP block.
+> > >
+> > > The particular register that we care of has, as you can see, moved
+> > > around during the various platforms and some incarnations of this IP
+> > > block provides controls for CPU-related clocks as well.
+> > >
+> > > We can certainly have the multiple compatible points to the same
+> > > apcs_data, but I'm not able to spot a reasonable "catch-all compatible"
+> > > given that I don't see any natural groupings.
+> > >
+> > Any platform that comes later may reuse the already available compatible.
+> > For example drop this patch and reuse "qcom,sdm660-apcs-hmss-global" ?
+> >
 >
-> The function iommu_get_dma_strict() should now make it super obvious
-> where strictness comes from and who overides who. Though the function
-> changed a bunch to make the logic clearer, the only two new rules
-> should be:
-> * Devices can force strictness for themselves, overriding the cmdline
->   "iommu.strict=0" or a call to iommu_set_dma_strict(false)).
-> * Devices can request non-strictness for themselves, assuming there
->   was no cmdline "iommu.strict=1" or a call to
->   iommu_set_dma_strict(true).
+> The problem is that this would change the meaning of
+> "qcom,sdm660-apcs-hmss-global" from meaning "The apcs hmss global block
+> _in_ sdm660" to "any random apcs block with the mailbox register at
+> offset 8".
 >
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> ---
->
->  drivers/iommu/iommu.c | 56 +++++++++++++++++++++++++++++++++----------
->  include/linux/iommu.h |  2 ++
->  2 files changed, 45 insertions(+), 13 deletions(-)
->
-> diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
-> index 808ab70d5df5..0c84a4c06110 100644
-> --- a/drivers/iommu/iommu.c
-> +++ b/drivers/iommu/iommu.c
-> @@ -28,8 +28,19 @@
->  static struct kset *iommu_group_kset;
->  static DEFINE_IDA(iommu_group_ida);
->
-> +enum iommu_strictness {
-> +       IOMMU_DEFAULT_STRICTNESS = -1,
-> +       IOMMU_NOT_STRICT = 0,
-> +       IOMMU_STRICT = 1,
-> +};
-> +static inline enum iommu_strictness bool_to_strictness(bool strictness)
-> +{
-> +       return (enum iommu_strictness)strictness;
-> +}
-> +
->  static unsigned int iommu_def_domain_type __read_mostly;
-> -static bool iommu_dma_strict __read_mostly = true;
-> +static enum iommu_strictness cmdline_dma_strict __read_mostly = IOMMU_DEFAULT_STRICTNESS;
-> +static enum iommu_strictness driver_dma_strict __read_mostly = IOMMU_DEFAULT_STRICTNESS;
->  static u32 iommu_cmd_line __read_mostly;
->
->  struct iommu_group {
-> @@ -69,7 +80,6 @@ static const char * const iommu_group_resv_type_string[] = {
->  };
->
->  #define IOMMU_CMD_LINE_DMA_API         BIT(0)
-> -#define IOMMU_CMD_LINE_STRICT          BIT(1)
->
->  static int iommu_alloc_default_domain(struct iommu_group *group,
->                                       struct device *dev);
-> @@ -336,25 +346,38 @@ early_param("iommu.passthrough", iommu_set_def_domain_type);
->
->  static int __init iommu_dma_setup(char *str)
->  {
-> -       int ret = kstrtobool(str, &iommu_dma_strict);
-> +       bool strict;
-> +       int ret = kstrtobool(str, &strict);
->
->         if (!ret)
-> -               iommu_cmd_line |= IOMMU_CMD_LINE_STRICT;
-> +               cmdline_dma_strict = bool_to_strictness(strict);
->         return ret;
->  }
->  early_param("iommu.strict", iommu_dma_setup);
->
->  void iommu_set_dma_strict(bool strict)
->  {
-> -       if (strict || !(iommu_cmd_line & IOMMU_CMD_LINE_STRICT))
-> -               iommu_dma_strict = strict;
-> +       /* A driver can request strictness but not the other way around */
-> +       if (driver_dma_strict != IOMMU_STRICT)
-> +               driver_dma_strict = bool_to_strictness(strict);
->  }
->
->  bool iommu_get_dma_strict(struct iommu_domain *domain)
->  {
-> -       /* only allow lazy flushing for DMA domains */
-> -       if (domain->type == IOMMU_DOMAIN_DMA)
-> -               return iommu_dma_strict;
-> +       /* Non-DMA domains or anyone forcing it to strict makes it strict */
-> +       if (domain->type != IOMMU_DOMAIN_DMA ||
-> +           cmdline_dma_strict == IOMMU_STRICT ||
-> +           driver_dma_strict == IOMMU_STRICT ||
-> +           domain->force_strict)
-> +               return true;
-> +
-> +       /* Anyone requesting non-strict (if no forces) makes it non-strict */
-> +       if (cmdline_dma_strict == IOMMU_NOT_STRICT ||
-> +           driver_dma_strict == IOMMU_NOT_STRICT ||
-> +           domain->request_non_strict)
-> +               return false;
-> +
-> +       /* Nobody said anything, so it's strict by default */
+To me, the deeper problem seems to be naming a controller "The apcs
+hmss global block _in_ sdm660" just because the h/w manual hasn't
+given a name to it.  But that is okay too, if we name the subsequent
+controllers as "the same as one in sdm660" and provide the h/w
+configuration 'offset' via a DT property.
 
-If iommu.strict is not set in the command line, upstream treats it as
-iommu.strict=1. Meaning, no drivers can override it.
+> > > > In any case, we can't really get rid of the first 13 instances though...
+> > > >
+> > >
+> > > Right, we have the problem that we have DTBs out there that relies on
+> > > these compatibles, but as Jassi requests we'd have to start describing
+> > > the internal register layout in DT - which this binding purposefully
+> > > avoids.
+> > >
+> > Not these strings, but 'offset' and 'clock-name' as optional
+> > properties that new platforms can use.
+> >
+>
+> Relying on completely generic compatibles to match the driver and then
+> distinguish each platform using additional properties is exactly what
+> Qualcomm does downstream.  The community has clarified countless times
+> that this is not the way to write DT bindings.
+>
+Yes, and I don't suggest it otherwise. For h/w quirks and
+extra/missing features, it does make sense to have different
+compatibles.
 
-If I understand it correctly, with your series, if iommu.strict=1 is
-not set, drivers can override the "default strict mode" and ask for
-non-strict mode for their domain. So if this series gets in and future
-driver changes start asking for non-strict mode, systems that are
-expected to operate in fully strict mode will now have devices
-operating in non-strict mode.
+However, for _trivial_ variations let us get that value from DT.
+'offset' is anyway a h/w property.
+That way we won't be distinguishing platforms using dt properties, but
+only support different platforms seamlessly.
 
-That's breaking backward compatibility for the kernel command line
-param. It looks like what you really need is to change iommu.strict
-from 0/1 to lazy (previously 0), strict preferred, strict enforced
-(previously 1) and you need to default it to "enforced".
+On second thought, we have grown from 2 to 13 aliases in 4 yrs. I only
+have to ignore 3 times/annum to lead a peaceful life ;)
 
-Alternately (and potentially a better option?), you really should be
-changing/extending dev_is_untrusted() so that it applies for any
-struct device (not just PCI device) and then have this overridden in
-DT (or ACPI or any firmware) to indicate a specific device is safe to
-use non-strict mode on. What you are trying to capture (if the device
-safe enough) really isn't a function of the DMA device's driver, but a
-function of the DMA device.
-
-
-
->         return true;
->  }
->  EXPORT_SYMBOL_GPL(iommu_get_dma_strict);
-> @@ -1519,7 +1542,8 @@ static int iommu_get_def_domain_type(struct device *dev)
->
->  static int iommu_group_alloc_default_domain(struct bus_type *bus,
->                                             struct iommu_group *group,
-> -                                           unsigned int type)
-> +                                           unsigned int type,
-> +                                           struct device *dev)
->  {
->         struct iommu_domain *dom;
->
-> @@ -1534,6 +1558,12 @@ static int iommu_group_alloc_default_domain(struct bus_type *bus,
->         if (!dom)
->                 return -ENOMEM;
->
-> +       /* Save the strictness requests from the device */
-> +       if (dev && type == IOMMU_DOMAIN_DMA) {
-> +               dom->request_non_strict = dev->request_non_strict_iommu;
-> +               dom->force_strict = dev->force_strict_iommu;
-> +       }
-> +
->         group->default_domain = dom;
->         if (!group->domain)
->                 group->domain = dom;
-> @@ -1550,7 +1580,7 @@ static int iommu_alloc_default_domain(struct iommu_group *group,
->
->         type = iommu_get_def_domain_type(dev) ? : iommu_def_domain_type;
->
-> -       return iommu_group_alloc_default_domain(dev->bus, group, type);
-> +       return iommu_group_alloc_default_domain(dev->bus, group, type, dev);
->  }
->
->  /**
-> @@ -1721,7 +1751,7 @@ static void probe_alloc_default_domain(struct bus_type *bus,
->         if (!gtype.type)
->                 gtype.type = iommu_def_domain_type;
->
-> -       iommu_group_alloc_default_domain(bus, group, gtype.type);
-> +       iommu_group_alloc_default_domain(bus, group, gtype.type, NULL);
->
->  }
->
-> @@ -3130,7 +3160,7 @@ static int iommu_change_dev_def_domain(struct iommu_group *group,
->         }
->
->         /* Sets group->default_domain to the newly allocated domain */
-> -       ret = iommu_group_alloc_default_domain(dev->bus, group, type);
-> +       ret = iommu_group_alloc_default_domain(dev->bus, group, type, dev);
->         if (ret)
->                 goto out;
->
-> diff --git a/include/linux/iommu.h b/include/linux/iommu.h
-> index 32d448050bf7..0bddef77f415 100644
-> --- a/include/linux/iommu.h
-> +++ b/include/linux/iommu.h
-> @@ -81,6 +81,8 @@ struct iommu_domain_geometry {
->
->  struct iommu_domain {
->         unsigned type;
-> +       bool force_strict:1;
-> +       bool request_non_strict:1;
->         const struct iommu_ops *ops;
->         unsigned long pgsize_bitmap;    /* Bitmap of page sizes in use */
->         iommu_fault_handler_t handler;
-> --
-> 2.32.0.288.g62a8d224e6-goog
->
+thnx.
