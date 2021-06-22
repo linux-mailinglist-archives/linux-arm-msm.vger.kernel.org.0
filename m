@@ -2,137 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6A1C33B0EA4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jun 2021 22:23:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 337603B0ECF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jun 2021 22:32:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229928AbhFVUZX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Jun 2021 16:25:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42300 "EHLO
+        id S229769AbhFVUfD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Jun 2021 16:35:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44490 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229667AbhFVUZX (ORCPT
+        with ESMTP id S229629AbhFVUfD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Jun 2021 16:25:23 -0400
-Received: from mail-oo1-xc2d.google.com (mail-oo1-xc2d.google.com [IPv6:2607:f8b0:4864:20::c2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4ED9C06175F
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jun 2021 13:23:06 -0700 (PDT)
-Received: by mail-oo1-xc2d.google.com with SMTP id x22-20020a4a62160000b0290245cf6b7feeso161474ooc.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jun 2021 13:23:06 -0700 (PDT)
+        Tue, 22 Jun 2021 16:35:03 -0400
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3716CC061574;
+        Tue, 22 Jun 2021 13:32:46 -0700 (PDT)
+Received: by mail-ed1-x529.google.com with SMTP id s6so467409edu.10;
+        Tue, 22 Jun 2021 13:32:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=Ggw6fsmku27vHRmfMQszrNre4+RfK7j3PrPkaoOAI5s=;
-        b=LJm/LbiFVvPJuS0y9W0doPgLlkncwZmOFafIU9v/PAm8m/8KHPwJT3Y5cbnkV4BXJu
-         pibvHYmUPrUE/wlr8jvGDlSstXPVAb7sWUjUQ4VBX8iMDC18VCuC4nu1eYJFnvVrDNar
-         z2oeL/qVTksu5CgRvcn+b9dGIc1UkJ/B/CICM=
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=hJ3e9mokzvcYFf2RFFI+m+L0p65e4PGAuykS5ZlYTVY=;
+        b=u/0Zrba8rWZh50fzgKbTkUXafR/0mXWtFhGYU2DfzdVhVCRggN6ZN8VO1b81bPOSrZ
+         KNMvxDfFWVJ/KLZvGVNQ8tB+I5KtQBxAj+E/1jGsi94qTD8smxxBQfkmri96oeoI2WCF
+         uZo9D6BaP20sZBZLTwau5gZqOuZazqWgfXRlhbGq7Y/mVPxLMWxNizLQIwF2uwT+NPE3
+         +ETaVtqLeTyo1YBeY9vaLP45lfhcTkdK4kTfyNbLFG2ltm0PXXprqvXGF4RKJrUK3jMx
+         PfRXNJHF7uTEexXaJZsXv95UeNxtcZ/Kqona3HvlNoM7LDOqoLAbH+cRclh+WA4+GlQ6
+         SD/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=Ggw6fsmku27vHRmfMQszrNre4+RfK7j3PrPkaoOAI5s=;
-        b=pE5emkJ4D3bbLNd8qNxP53Kvsp5DNZZdV7T50cbUYvyc1lPbfW5/nQr4Tj+5W8CSdx
-         SWawLzpmDCGBeG4wUUQJWBFYXmSxvZEOqIUYuGrFoqD4N+MWGySLDvAhUPR3eMi5/a7S
-         dX+SnKKReY3uEHxfLq4kIdxp47Hgvaz3DLSsDaQkeyH99pwbF2SEg3GLt14TLZOToCOT
-         ed3/8GMeudtB8H0oDuukTESMzR81iXFUX1aFxLFrBHZtSzSZYIwRytRGSc5qhfYLYYAL
-         vJ/svwJicKkX86pORhpByOUy7wMcQYTwxsYxBN5nTUhOFQGn1LTvGwCXj6pTSGOMcr3L
-         mmgg==
-X-Gm-Message-State: AOAM533Ra9InWT/3haRJYrzrYS2BWN3e/IzoFrGpHrW8Cs4vHC8rDl4z
-        lWgqvV5PhsqHMe9IHQbiXO3IrFwEpfYTd70329ooFw==
-X-Google-Smtp-Source: ABdhPJy5r3CCQB5ei2dsC6e+iDjGtLoVXl+JauwqFRFFC7KOLNaQ916rDZGbyoUW22i3iQ7L95AFS3Jj4//ujS57zu4=
-X-Received: by 2002:a4a:e2d0:: with SMTP id l16mr4771864oot.80.1624393384760;
- Tue, 22 Jun 2021 13:23:04 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 22 Jun 2021 13:23:04 -0700
-MIME-Version: 1.0
-In-Reply-To: <YM0THrlJlv7ADW8w@builder.lan>
-References: <ef1879fa7ecfefaf0c70c7a4782240a9@codeaurora.org>
- <CAE-0n50-X03sMyJdsw7s=Ue0dWXBo=iHOc0HxDQm5yh2J-uS3A@mail.gmail.com>
- <YL/uj+t+BFkII1Fh@yoga> <CAE-0n50WP25kRQkWMVdDZGsZWBXwfbVSTFKyBLF7f8Mp3x2Wfg@mail.gmail.com>
- <YL/wWdRs6e/eECiC@yoga> <CAE-0n51GM65rZVJgXuHy6FerJorHeHKf2W31GijG8sDEhaX_KQ@mail.gmail.com>
- <YL/41hWz8xB+jSeO@yoga> <21dc5c9fc2efdc1a0ba924354bfd9d75@codeaurora.org>
- <CAE-0n52J_mLsmXLS+skZn2u3k9dhn+GcHeXi0B2BeQyQxEUL9A@mail.gmail.com> <YM0THrlJlv7ADW8w@builder.lan>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.9.1
-Date:   Tue, 22 Jun 2021 13:23:04 -0700
-Message-ID: <CAE-0n53Zr-w5m-eFhLM2BVmphcYb_M4=s5je3Y7Lg6=onNo=uA@mail.gmail.com>
-Subject: Re: [PATCH v2] arm64/dts/qcom/sc7180: Add Display Port dt node
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=hJ3e9mokzvcYFf2RFFI+m+L0p65e4PGAuykS5ZlYTVY=;
+        b=ZUFKZf0+Ktgqc5UjmiawGXLl3PfZaz3vA8cWnmnLlAFx05YpO7w66A3KMEq7vmE36T
+         uqMwdGznG7O66d/Dpb6iye3Qi6HSM8IfveHiK++Yv64PhewBuXhEVyOjIum3x45JaQPO
+         jUtDOvdV3QdndM1iZigbdjwtSG4mfeKtIKRBbIyRW7O2TTI6XS63oBe7AH+/OrIaYqz5
+         Y/mScRgVRGy33ZHx3iaLUZo2+GsVoK4KVXeVUWtpORWZly1h0onVeSZuwGoxDJjTSBtK
+         idx3MwoF6xl7QAid+fzaA7b7HNXDe+g0qDmbURXJe3Sq1EjH/2irETTr+HvI2bfmFjLF
+         yFcQ==
+X-Gm-Message-State: AOAM531zVfxc2dhpLzeXu4KvQk8uiizNbZIEau1tKnYpl4akkTpo5Q1j
+        HGGW1UoAgPxJPqY4pPkeyeccBVdZoSI9Tw==
+X-Google-Smtp-Source: ABdhPJxA445qpE2sE2EuJP9nMCYUDNR/+2aGTVa7n4kX0JBTcgRaJwkHQWqgcV/oFmgYlIPOdnAOyA==
+X-Received: by 2002:aa7:db03:: with SMTP id t3mr7590601eds.153.1624393964833;
+        Tue, 22 Jun 2021 13:32:44 -0700 (PDT)
+Received: from localhost (178-169-161-196.razgrad.ddns.bulsat.com. [178.169.161.196])
+        by smtp.gmail.com with ESMTPSA id o5sm732979edt.44.2021.06.22.13.32.43
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 22 Jun 2021 13:32:44 -0700 (PDT)
+From:   Iskren Chernev <iskren.chernev@gmail.com>
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     khsieh@codeaurora.org, robdclark@gmail.com, sean@poorly.run,
-        vkoul@kernel.org, agross@kernel.org, robh+dt@kernel.org,
-        devicetree@vger.kernel.org, abhinavk@codeaurora.org,
-        aravindh@codeaurora.org, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Cc:     Andy Gross <agross@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Manu Gautam <mgautam@codeaurora.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-phy@lists.infradead.org, linux-usb@vger.kernel.org,
+        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        Iskren Chernev <iskren.chernev@gmail.com>
+Subject: [PATCH v1 0/3] Add USB HS support for SM4250/6115
+Date:   Tue, 22 Jun 2021 23:32:37 +0300
+Message-Id: <20210622203240.559979-1-iskren.chernev@gmail.com>
+X-Mailer: git-send-email 2.31.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Bjorn Andersson (2021-06-18 14:41:50)
-> On Fri 18 Jun 15:49 CDT 2021, Stephen Boyd wrote:
->
-> > Quoting khsieh@codeaurora.org (2021-06-10 09:54:05)
-> > > On 2021-06-08 16:10, Bjorn Andersson wrote:
-> > > > On Tue 08 Jun 17:44 CDT 2021, Stephen Boyd wrote:
-> > > >
-> > > >> Honestly I suspect the DP PHY is _not_ in the CX domain as CX is for
-> > > >> digital logic. Probably the PLL is the hardware that has some minimum
-> > > >> CX
-> > > >> requirement, and that flows down into the various display clks like
-> > > >> the
-> > > >> link clk that actually clock the DP controller hardware. The mdss_gdsc
-> > > >> probably gates CX for the display subsystem (mdss) so if we had proper
-> > > >> corner aggregation logic we could indicate that mdss_gdsc is a child
-> > > >> of
-> > > >> the CX domain and then make requests from the DP driver for particular
-> > > >> link frequencies on the mdss_gdsc and then have that bubble up to CX
-> > > >> appropriately. I don't think any of that sort of code is in place
-> > > >> though, right?
-> > > >
-> > > > I haven't checked sc7180, but I'm guessing that it's following the
-> > > > other
-> > > > modern platforms, where all the MDSS related pieces (including e.g.
-> > > > dispcc) lives in the MMCX domain, which is separate from CX.
-> > > >
-> > > > So the parent of MDSS_GDSC should be MMCX, while Kuogee's answer (and
-> > > > the dp-opp-table) tells us that the PLL lives in the CX domain.
-> >
-> > Isn't MMCX a "child" of CX? At least my understanding is that MMCX is
-> > basically a GDSC that clamps all of multimedia hardware block power
-> > logic so that the leakage is minimized when multimedia isn't in use,
-> > i.e. the device is suspended. In terms of bumping up the voltage we have
-> > to pin that on CX though as far as I know because that's the only power
-> > domain that can actually change voltage, while MMCX merely gates that
-> > voltage for multimedia.
-> >
->
-> No, MMCX is a separate rail from CX, which powers the display blocks and
-> is parent of MDSS_GDSC. But I see in rpmhpd that sc7180 is not one of
-> these platforms, so I presume this means that the displayport controller
-> thereby sits in MDSS_GDSC parented by CX.
->
-> But in line with what you're saying, the naming of the supplies to the
-> QMP indicates that the power for the PLLs is static. As such the only
-> moving things would be the clock rates in the DP controller and as such
-> that's what needs to scale the voltage.
->
-> So if the resources we're scaling is the clocks in the DP controller
-> then the gist of the patch is correct. The only details I see is that
-> the DP controller actually sits in MDSS_GDSC - while it should control
-> the level of its parent (CX). Not sure if we can describe that in a
-> simple way.
+The USB controller found on SM4250/6115 is dwc3 (phy v1), very similar to
+existing supported phys (like msm8996), with slighly different tune seq.
 
-Right. I'm not sure things could be described any better right now. If
-we need to change this to be MDSS_GDSC power domain and control the
-level of the parent then I suppose we'll have to make some sort of DT
-change and pair that with a driver change. Maybe if that happens we can
-just pick a new compatible and leave the old code in place.
+Iskren Chernev (3):
+  dt-bindings: usb: qcom,dwc3: Add bindings for sm6115/4250
+  dt-bindings: phy: qcom,qusb2: document sm4250/6115 compatible
+  phy: qcom-qusb2: Add configuration for SM4250 and SM6115
 
-Are you happy enough with this current patch?
+ .../bindings/phy/qcom,qusb2-phy.yaml          |  2 ++
+ .../devicetree/bindings/usb/qcom,dwc3.yaml    |  2 ++
+ drivers/phy/qualcomm/phy-qcom-qusb2.c         | 34 +++++++++++++++++++
+ 3 files changed, 38 insertions(+)
 
->
->
-> PS. Why does the node name of the opp-table have to be globally unique?
 
-Presumably the opp table node name can be 'opp-table' as long as it
-lives under the node that's using it. If the opp table is at / or /soc
-then it will need to be unique. I'd prefer just 'opp-table' if possible.
+base-commit: e71e3a48a7e89fa71fb70bf4602367528864d2ff
+--
+2.31.1
+
