@@ -2,118 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 32B8E3B0BCB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jun 2021 19:46:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A85E23B0C9B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jun 2021 20:11:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232279AbhFVRss (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Jun 2021 13:48:48 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56]:3301 "EHLO
-        frasgout.his.huawei.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232454AbhFVRsi (ORCPT
+        id S231297AbhFVSN3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Jun 2021 14:13:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40592 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230146AbhFVSN3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Jun 2021 13:48:38 -0400
-Received: from fraeml701-chm.china.huawei.com (unknown [172.18.147.201])
-        by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4G8YTv621Sz6H7Gp;
-        Wed, 23 Jun 2021 01:36:19 +0800 (CST)
-Received: from lhreml724-chm.china.huawei.com (10.201.108.75) by
- fraeml701-chm.china.huawei.com (10.206.15.50) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id
- 15.1.2176.2; Tue, 22 Jun 2021 19:46:19 +0200
-Received: from [10.47.89.126] (10.47.89.126) by lhreml724-chm.china.huawei.com
- (10.201.108.75) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2176.2; Tue, 22 Jun
- 2021 18:46:18 +0100
-Subject: Re: [PATCH 0/6] iommu: Enable devices to request non-strict DMA,
- starting with QCom SD/MMC
-To:     Douglas Anderson <dianders@chromium.org>,
-        <gregkh@linuxfoundation.org>, <rafael@kernel.org>,
-        <rafael.j.wysocki@intel.com>, <will@kernel.org>,
-        <robin.murphy@arm.com>, <joro@8bytes.org>,
-        <bjorn.andersson@linaro.org>, <ulf.hansson@linaro.org>,
-        <adrian.hunter@intel.com>, <bhelgaas@google.com>
-CC:     <robdclark@chromium.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-pci@vger.kernel.org>, <quic_c_gdjako@quicinc.com>,
-        <iommu@lists.linux-foundation.org>, <sonnyrao@chromium.org>,
-        <saiprakash.ranjan@codeaurora.org>, <linux-mmc@vger.kernel.org>,
-        <vbadigan@codeaurora.org>, <rajatja@google.com>,
-        <saravanak@google.com>, <joel@joelfernandes.org>,
+        Tue, 22 Jun 2021 14:13:29 -0400
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4FAC3C061574;
+        Tue, 22 Jun 2021 11:11:12 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id a11so24725263wrt.13;
+        Tue, 22 Jun 2021 11:11:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=mRsBA0uRgRgTVs3k/X6tNJ3otxf/okSIPDMgMCIvWuM=;
+        b=hDTH528GEBKhaiY+kO+AX56J/lFypAYDhPjI5NCgTvUO2JtcyhygC6HypDNC/tfbTX
+         k2oI9dGuWfFcA6XbFW1Ouq0vgZ1GsyKUUeqR9ZySNGWG3zH7A2MLLkY/cL2fvNn/G1Oe
+         XqiHS3qYe64K4oO3DrjEPYLzON1MY2F4s/igERXuE/krwFAFMxTvKNDoUNP1VFtfyC/7
+         5CPmAxIRMhC3HdajrcNkHGAnbmh9qogEP5g+UExydm45W9n+ROfSNQfsVQbPXwQ4exu5
+         raDi6JYn61GtTmIOHsc0Os4Wb8qTMXwjFtvM6ifuYZPBYKbYYyRFOegR+e7kWX8aD5g3
+         3wDQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=mRsBA0uRgRgTVs3k/X6tNJ3otxf/okSIPDMgMCIvWuM=;
+        b=U/oY957uzgoI0Zjk1I9GBRDfaOPPe6q+ieXwe7pdSYSmKZiypKzwn+6rIzoXN9e/Hi
+         Nf91ixSuB72oqzR0ZI2YM7ooaxQmG0Cq0CD+T++6spuGEUTPsO0tixMaaElLoI/r9l9y
+         dkXVCfLNwdJVD9+2ObrBMekQEPRE9NslhCS0rExHygdB+xRwMunhtLbylZDbGaYdeEBZ
+         H+G9YjrZze5yqbh3oEryIF0qEfie2kFtsOo+Fy7fMu9LzjUvYMacsvCu6MxKGBDOL3/2
+         wr0O5pZY5nsbSBkz4ZPv+XiRlFisiZ3v9CGX6/AITvVFocRWo90HYL754dxLt03j7V6E
+         DCwA==
+X-Gm-Message-State: AOAM530Qyh85dwsqqOcRmblzSrR5B440rilxio25lR3DtuZ2Cp1wAOrB
+        zvdgIQ41sVjurisCY8jszpjHA5oRioHOzw==
+X-Google-Smtp-Source: ABdhPJyUmGdxien2QJ0hTCW0croLndpvZtRZ91FwDmGD2WVQ6b0m80HAqFFkF9CvZZJcCyyEDXdXlg==
+X-Received: by 2002:a5d:5181:: with SMTP id k1mr6240404wrv.415.1624385470745;
+        Tue, 22 Jun 2021 11:11:10 -0700 (PDT)
+Received: from dell5510.suse.de (gw.ms-free.net. [95.85.240.250])
+        by smtp.gmail.com with ESMTPSA id o2sm109974wrx.59.2021.06.22.11.11.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 22 Jun 2021 11:11:10 -0700 (PDT)
+From:   Petr Vorel <petr.vorel@gmail.com>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     Petr Vorel <petr.vorel@gmail.com>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        Alexey Minnekhanov <alexeymin@postmarketos.org>,
         Andy Gross <agross@kernel.org>,
-        Bartosz Golaszewski <bgolaszewski@baylibre.com>,
-        Dan Williams <dan.j.williams@intel.com>,
-        "Geert Uytterhoeven" <geert@linux-m68k.org>,
-        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-        Randy Dunlap <rdunlap@infradead.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20210621235248.2521620-1-dianders@chromium.org>
-From:   John Garry <john.garry@huawei.com>
-Message-ID: <f3078ff2-97a6-6029-b584-1589ed184579@huawei.com>
-Date:   Tue, 22 Jun 2021 18:39:50 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.1.2
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org
+Subject: [PATCH v2 1/1] arm64: dts: qcom: msm8994-angler: Fix cont_splash_mem
+Date:   Tue, 22 Jun 2021 20:10:56 +0200
+Message-Id: <20210622181056.27632-1-petr.vorel@gmail.com>
+X-Mailer: git-send-email 2.32.0
 MIME-Version: 1.0
-In-Reply-To: <20210621235248.2521620-1-dianders@chromium.org>
-Content-Type: text/plain; charset="utf-8"; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.47.89.126]
-X-ClientProxiedBy: lhreml721-chm.china.huawei.com (10.201.108.72) To
- lhreml724-chm.china.huawei.com (10.201.108.75)
-X-CFilter-Loop: Reflected
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22/06/2021 00:52, Douglas Anderson wrote:
-> 
-> This patch attempts to put forward a proposal for enabling non-strict
-> DMA on a device-by-device basis. The patch series requests non-strict
-> DMA for the Qualcomm SDHCI controller as a first device to enable,
-> getting a nice bump in performance with what's believed to be a very
-> small drop in security / safety (see the patch for the full argument).
-> 
-> As part of this patch series I am end up slightly cleaning up some of
-> the interactions between the PCI subsystem and the IOMMU subsystem but
-> I don't go all the way to fully remove all the tentacles. Specifically
-> this patch series only concerns itself with a single aspect: strict
-> vs. non-strict mode for the IOMMU. I'm hoping that this will be easier
-> to talk about / reason about for more subsystems compared to overall
-> deciding what it means for a device to be "external" or "untrusted".
-> 
-> If something like this patch series ends up being landable, it will
-> undoubtedly need coordination between many maintainers to land. I
-> believe it's fully bisectable but later patches in the series
-> definitely depend on earlier ones. Sorry for the long CC list. :(
-> 
+As the default definition breaks booting angler:
 
-JFYI, In case to missed it, and I know it's not the same thing as you 
-want, above, but the following series will allow you to build the kernel 
-to default to lazy mode:
+[    1.862561] printk: console [ttyMSM0] enabled
+[    1.872260] msm_serial: driver initialized
+D -     15524 - pm_driver_init, Delta
 
-https://lore.kernel.org/linux-iommu/1624016058-189713-1-git-send-email-john.garry@huawei.com/T/#m21bc07b9353b3ba85f2a40557645c2bcc13cbb3e
+cont_splash_mem was introduced in 74d6d0a145835, but the problem
+manifested after 86588296acbf ("fdt: Properly handle "no-map" field
+in the memory region").
 
-So iommu.strict=0 would be no longer always required for arm64.
+Using new definition from downstream kernel:
+[    0.000000] cma: Found cont_splash_mem@0, memory base 0x0000000000000000, size 16 MiB, limit 0x0000000000000000
+[    0.000000] cma: CMA: reserved 16 MiB at 0x0000000000000000 for cont_splash_mem
 
-Thanks,
-John
+Fixes: 74d6d0a145835 ("arm64: dts: qcom: msm8994/8994-kitakami: Fix up
+the memory map")
 
+Signed-off-by: Petr Vorel <petr.vorel@gmail.com>
+---
+Changes v1->v2:
+* redefine address instead of deleting it (as suggested by Konrad)
 
-> 
-> Douglas Anderson (6):
->    drivers: base: Add the concept of "pre_probe" to drivers
->    drivers: base: Add bits to struct device to control iommu strictness
->    PCI: Indicate that we want to force strict DMA for untrusted devices
->    iommu: Combine device strictness requests with the global default
->    iommu: Stop reaching into PCIe devices to decide strict vs. non-strict
->    mmc: sdhci-msm: Request non-strict IOMMU mode
-> 
->   drivers/base/dd.c             | 10 +++++--
->   drivers/iommu/dma-iommu.c     |  2 +-
->   drivers/iommu/iommu.c         | 56 +++++++++++++++++++++++++++--------
->   drivers/mmc/host/sdhci-msm.c  |  8 +++++
->   drivers/pci/probe.c           |  4 ++-
->   include/linux/device.h        | 11 +++++++
->   include/linux/device/driver.h |  9 ++++++
->   include/linux/iommu.h         |  2 ++
->   8 files changed, 85 insertions(+), 17 deletions(-)
-> 
+Kind regards,
+Petr
+
+[1] https://wiki.postmarketos.org/wiki/Google_Nexus_5X_(lg-bullhead)
+
+ arch/arm64/boot/dts/qcom/msm8994-angler-rev-101.dts | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/qcom/msm8994-angler-rev-101.dts b/arch/arm64/boot/dts/qcom/msm8994-angler-rev-101.dts
+index ffe1a9bd8f70..4f8a5f5cbbaa 100644
+--- a/arch/arm64/boot/dts/qcom/msm8994-angler-rev-101.dts
++++ b/arch/arm64/boot/dts/qcom/msm8994-angler-rev-101.dts
+@@ -1,6 +1,7 @@
+ // SPDX-License-Identifier: GPL-2.0-only
+ /* Copyright (c) 2015, Huawei Inc. All rights reserved.
+  * Copyright (c) 2016, The Linux Foundation. All rights reserved.
++ * Copyright (c) 2021, Petr Vorel <petr.vorel@gmail.com>
+  */
+ 
+ /dts-v1/;
+@@ -31,6 +32,15 @@ serial@f991e000 {
+ 			pinctrl-1 = <&blsp1_uart2_sleep>;
+ 		};
+ 	};
++
++	reserved-memory {
++		/delete-node/ memory@3800000;
++
++		cont_splash_mem: memory@0 {
++			reg = <0 0 0 0x1600000>;
++			no-map;
++		};
++	};
+ };
+ 
+ &tlmm {
+-- 
+2.32.0
 
