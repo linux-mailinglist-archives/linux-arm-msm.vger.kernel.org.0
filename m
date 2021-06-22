@@ -2,238 +2,166 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D5BFF3B0336
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jun 2021 13:49:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BC7173B03A1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jun 2021 14:04:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230232AbhFVLvg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Jun 2021 07:51:36 -0400
-Received: from foss.arm.com ([217.140.110.172]:47822 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229831AbhFVLvf (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Jun 2021 07:51:35 -0400
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 602D231B;
-        Tue, 22 Jun 2021 04:49:19 -0700 (PDT)
-Received: from [10.57.9.136] (unknown [10.57.9.136])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 178F33F694;
-        Tue, 22 Jun 2021 04:49:15 -0700 (PDT)
-Subject: Re: [PATCH 4/6] iommu: Combine device strictness requests with the
- global default
-To:     Douglas Anderson <dianders@chromium.org>,
-        gregkh@linuxfoundation.org, rafael@kernel.org,
-        rafael.j.wysocki@intel.com, will@kernel.org, joro@8bytes.org,
-        bjorn.andersson@linaro.org, ulf.hansson@linaro.org,
-        adrian.hunter@intel.com, bhelgaas@google.com
-Cc:     robdclark@chromium.org, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org, quic_c_gdjako@quicinc.com,
-        iommu@lists.linux-foundation.org, sonnyrao@chromium.org,
-        saiprakash.ranjan@codeaurora.org, linux-mmc@vger.kernel.org,
-        vbadigan@codeaurora.org, rajatja@google.com, saravanak@google.com,
-        joel@joelfernandes.org, linux-kernel@vger.kernel.org
-References: <20210621235248.2521620-1-dianders@chromium.org>
- <20210621165230.4.Id84a954e705fcad3fdb35beb2bc372e4bf2108c7@changeid>
-From:   Robin Murphy <robin.murphy@arm.com>
-Message-ID: <a023af85-5060-0a3c-4648-b00f8b8c0430@arm.com>
-Date:   Tue, 22 Jun 2021 12:49:10 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:78.0) Gecko/20100101
- Thunderbird/78.10.1
+        id S229912AbhFVMHO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Jun 2021 08:07:14 -0400
+Received: from mo4-p01-ob.smtp.rzone.de ([85.215.255.51]:18561 "EHLO
+        mo4-p01-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230273AbhFVMHN (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 22 Jun 2021 08:07:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1624363491;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=tFlCvlkIHmrMp6fkyKDmE4jn+KF6IFD94B6cmiuttD0=;
+    b=YDXDKeFRGDF+GVyGcDAOWPBbWNeVUIO7C+WOtz5EjsVF5ASgEmBFbLTTqlgvqmRgKR
+    VwucomFs/3Rk9pjX06wzuIesGYCyglUruh/ilYD4vXSDogVUvW1bTZrqqbpzqiFQhFO1
+    /1+TOmaRCBY1CnM5/cLF/jnAEv086qLLKy2QTZXHtsuS7iejdDwx3LYgiech9XLqNjI7
+    YLdju+wEK+QmjOMKOFW8bC5vL5wj0rEG1ngPK7idjYmB0MwXkLUVjU/unaT60d9xmqkQ
+    +NAmMyxCXk5jlwyGub+AEPsmhytnEPGC0huw0kawIOF5wC8/OqYYDsNUP2sHdJUkFJut
+    QEdg==
+Authentication-Results: strato.com;
+    dkim=none
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u26zEodhPgRDZ8f6Ic3FBg=="
+X-RZG-CLASS-ID: mo00
+Received: from gerhold.net
+    by smtp.strato.de (RZmta 47.27.3 DYNA|AUTH)
+    with ESMTPSA id 000885x5MC4oQ9L
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Tue, 22 Jun 2021 14:04:50 +0200 (CEST)
+Date:   Tue, 22 Jun 2021 14:04:46 +0200
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>
+Cc:     bjorn.andersson@linaro.org, agross@kernel.org,
+        daniel.lezcano@linaro.org, rjw@rjwysocki.net,
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, phone-devel@vger.kernel.org,
+        konrad.dybcio@somainline.org, marijn.suijten@somainline.org,
+        martin.botka@somainline.org, jeffrey.l.hugo@gmail.com,
+        jami.kettunen@somainline.org,
+        ~postmarketos/upstreaming@lists.sr.ht, devicetree@vger.kernel.org,
+        robh+dt@kernel.org
+Subject: Re: [PATCH v6 1/5] cpuidle: qcom_spm: Detach state machine from main
+ SPM handling
+Message-ID: <YNHR3hvoKsQe5mq8@gerhold.net>
+References: <20210621181016.365009-1-angelogioacchino.delregno@somainline.org>
+ <20210621181016.365009-2-angelogioacchino.delregno@somainline.org>
+ <YND/2qJhUB1Iwk1X@gerhold.net>
+ <229488fe-00ef-ea7e-27d4-6f24fdea1383@somainline.org>
 MIME-Version: 1.0
-In-Reply-To: <20210621165230.4.Id84a954e705fcad3fdb35beb2bc372e4bf2108c7@changeid>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <229488fe-00ef-ea7e-27d4-6f24fdea1383@somainline.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-06-22 00:52, Douglas Anderson wrote:
-> In the patch ("drivers: base: Add bits to struct device to control
-> iommu strictness") we add the ability for devices to tell us about
-> their IOMMU strictness requirements. Let's now take that into account
-> in the IOMMU layer.
+On Tue, Jun 22, 2021 at 01:39:15PM +0200, AngeloGioacchino Del Regno wrote:
+> Il 21/06/21 23:08, Stephan Gerhold ha scritto:
+> > On Mon, Jun 21, 2021 at 08:10:12PM +0200, AngeloGioacchino Del Regno wrote:
+> > > In commit a871be6b8eee ("cpuidle: Convert Qualcomm SPM driver to a generic
+> > > CPUidle driver") the SPM driver has been converted to a
+> > > generic CPUidle driver: that was mainly made to simplify the
+> > > driver and that was a great accomplishment;
+> > > Though, it was ignored that the SPM driver is not used only
+> > > on the ARM architecture.
+> > > 
+> > 
+> > I don't really understand why you insist on writing that I deliberately
+> > "ignored" your use case when converting the driver. This is not true.
+> > Perhaps that's not actually what you meant but that's how it sounds to
+> > me.
+> > 
 > 
-> A few notes here:
-> * Presumably this is always how iommu_get_dma_strict() was intended to
->    behave. Had this not been the intention then it never would have
->    taken a domain as a parameter.
-
-FWIW strictness does have the semantic of being a per-domain property, 
-but mostly in the sense that it's only relevant to IOMMU_DOMAIN_DMA 
-domains, so the main thing was encapsulating that check rather than 
-duplicating it all over callsites.
-
-> * The iommu_set_dma_strict() feels awfully non-symmetric now. That
->    function sets the _default_ strictness globally in the system
->    whereas iommu_get_dma_strict() returns the value for a given domain
->    (falling back to the default). Presumably, at least, the fact that
->    iommu_set_dma_strict() doesn't take a domain makes this obvious.
-
-It *is* asymmetric - one is for IOMMU core code and individual driver 
-internals to know whether they need to do whatever bits of setting up a 
-flush queue for a given domain they are responsible for, while the other 
-is specifically for two drivers to force the global default in order to 
-preserve legacy driver-specific behaviour. Maybe that should have been 
-called something like iommu_set_dma_default_strict instead... :/
-
-Robin.
-
-> The function iommu_get_dma_strict() should now make it super obvious
-> where strictness comes from and who overides who. Though the function
-> changed a bunch to make the logic clearer, the only two new rules
-> should be:
-> * Devices can force strictness for themselves, overriding the cmdline
->    "iommu.strict=0" or a call to iommu_set_dma_strict(false)).
-> * Devices can request non-strictness for themselves, assuming there
->    was no cmdline "iommu.strict=1" or a call to
->    iommu_set_dma_strict(true).
+> So much noise for one single word. I will change it since it seems to be
+> that much of a deal, and I'm sorry if that hurt you in any way.
 > 
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> ---
+> For the records, though, I really don't see anything offensive in that,
+> and anyway I didn't mean to be offensive in any way.
 > 
->   drivers/iommu/iommu.c | 56 +++++++++++++++++++++++++++++++++----------
->   include/linux/iommu.h |  2 ++
->   2 files changed, 45 insertions(+), 13 deletions(-)
+
+I try to put a lot of thought into my patches to make sure I don't
+accidentally break some other use cases. Having that sentence in the
+commit log does indeed hurt me a bit since I would never deliberately
+disregard other use cases without making it absolutely clear in the
+patch.
+
+By using the word "ignored" ("deliberately not listen or pay attention
+to") [1] you say that I did, and that's why I would prefer if you
+reword this slightly. :)
+
+[1] https://en.wiktionary.org/wiki/ignore
+
+> > > In preparation for the enablement of SPM features on AArch64/ARM64,
+> > > split the cpuidle-qcom-spm driver in two: the CPUIdle related
+> > > state machine (currently used only on ARM SoCs) stays there, while
+> > > the SPM communication handling lands back in soc/qcom/spm.c and
+> > > also making sure to not discard the simplifications that were
+> > > introduced in the aforementioned commit.
+> > > 
+> > > Since now the "two drivers" are split, the SCM dependency in the
+> > > main SPM handling is gone and for this reason it was also possible
+> > > to move the SPM initialization early: this will also make sure that
+> > > whenever the SAW CPUIdle driver is getting initialized, the SPM
+> > > driver will be ready to do the job.
+> > > 
+> > > Please note that the anticipation of the SPM initialization was
+> > > also done to optimize the boot times on platforms that have their
+> > > CPU/L2 idle states managed by other means (such as PSCI), while
+> > > needing SAW initialization for other purposes, like AVS control.
+> > > 
+> > > Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+> > > ---
+> > >   drivers/cpuidle/Kconfig.arm        |   1 +
+> > >   drivers/cpuidle/cpuidle-qcom-spm.c | 324 +++++++----------------------
+> > >   drivers/soc/qcom/Kconfig           |   9 +
+> > >   drivers/soc/qcom/Makefile          |   1 +
+> > >   drivers/soc/qcom/spm.c             | 198 ++++++++++++++++++
+> > >   include/soc/qcom/spm.h             |  41 ++++
+> > >   6 files changed, 325 insertions(+), 249 deletions(-)
+> > >   create mode 100644 drivers/soc/qcom/spm.c
+> > >   create mode 100644 include/soc/qcom/spm.h
+> > > 
+> > > diff --git a/drivers/cpuidle/cpuidle-qcom-spm.c b/drivers/cpuidle/cpuidle-qcom-spm.c
+> > > index adf91a6e4d7d..091453135ea6 100644
+> > > --- a/drivers/cpuidle/cpuidle-qcom-spm.c
+> > > +++ b/drivers/cpuidle/cpuidle-qcom-spm.c
+> > > [...]
+> > > +static int spm_cpuidle_register(int cpu)
+> > >   {
+> > > +	struct platform_device *pdev = NULL;
+> > > +	struct device_node *cpu_node, *saw_node;
+> > > +	struct cpuidle_qcom_spm_data data = {
+> > > +		.cpuidle_driver = {
+> > > +			.name = "qcom_spm",
+> > > +			.owner = THIS_MODULE,
+> > > +			.cpumask = (struct cpumask *)cpumask_of(cpu),
+> > > +			.states[0] = {
+> > > +				.enter			= spm_enter_idle_state,
+> > > +				.exit_latency		= 1,
+> > > +				.target_residency	= 1,
+> > > +				.power_usage		= UINT_MAX,
+> > > +				.name			= "WFI",
+> > > +				.desc			= "ARM WFI",
+> > > +			}
+> > > +		}
+> > > +	};
+> > 
+> > The stack is gone after the function returns.
+> > 
 > 
-> diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
-> index 808ab70d5df5..0c84a4c06110 100644
-> --- a/drivers/iommu/iommu.c
-> +++ b/drivers/iommu/iommu.c
-> @@ -28,8 +28,19 @@
->   static struct kset *iommu_group_kset;
->   static DEFINE_IDA(iommu_group_ida);
->   
-> +enum iommu_strictness {
-> +	IOMMU_DEFAULT_STRICTNESS = -1,
-> +	IOMMU_NOT_STRICT = 0,
-> +	IOMMU_STRICT = 1,
-> +};
-> +static inline enum iommu_strictness bool_to_strictness(bool strictness)
-> +{
-> +	return (enum iommu_strictness)strictness;
-> +}
-> +
->   static unsigned int iommu_def_domain_type __read_mostly;
-> -static bool iommu_dma_strict __read_mostly = true;
-> +static enum iommu_strictness cmdline_dma_strict __read_mostly = IOMMU_DEFAULT_STRICTNESS;
-> +static enum iommu_strictness driver_dma_strict __read_mostly = IOMMU_DEFAULT_STRICTNESS;
->   static u32 iommu_cmd_line __read_mostly;
->   
->   struct iommu_group {
-> @@ -69,7 +80,6 @@ static const char * const iommu_group_resv_type_string[] = {
->   };
->   
->   #define IOMMU_CMD_LINE_DMA_API		BIT(0)
-> -#define IOMMU_CMD_LINE_STRICT		BIT(1)
->   
->   static int iommu_alloc_default_domain(struct iommu_group *group,
->   				      struct device *dev);
-> @@ -336,25 +346,38 @@ early_param("iommu.passthrough", iommu_set_def_domain_type);
->   
->   static int __init iommu_dma_setup(char *str)
->   {
-> -	int ret = kstrtobool(str, &iommu_dma_strict);
-> +	bool strict;
-> +	int ret = kstrtobool(str, &strict);
->   
->   	if (!ret)
-> -		iommu_cmd_line |= IOMMU_CMD_LINE_STRICT;
-> +		cmdline_dma_strict = bool_to_strictness(strict);
->   	return ret;
->   }
->   early_param("iommu.strict", iommu_dma_setup);
->   
->   void iommu_set_dma_strict(bool strict)
->   {
-> -	if (strict || !(iommu_cmd_line & IOMMU_CMD_LINE_STRICT))
-> -		iommu_dma_strict = strict;
-> +	/* A driver can request strictness but not the other way around */
-> +	if (driver_dma_strict != IOMMU_STRICT)
-> +		driver_dma_strict = bool_to_strictness(strict);
->   }
->   
->   bool iommu_get_dma_strict(struct iommu_domain *domain)
->   {
-> -	/* only allow lazy flushing for DMA domains */
-> -	if (domain->type == IOMMU_DOMAIN_DMA)
-> -		return iommu_dma_strict;
-> +	/* Non-DMA domains or anyone forcing it to strict makes it strict */
-> +	if (domain->type != IOMMU_DOMAIN_DMA ||
-> +	    cmdline_dma_strict == IOMMU_STRICT ||
-> +	    driver_dma_strict == IOMMU_STRICT ||
-> +	    domain->force_strict)
-> +		return true;
-> +
-> +	/* Anyone requesting non-strict (if no forces) makes it non-strict */
-> +	if (cmdline_dma_strict == IOMMU_NOT_STRICT ||
-> +	    driver_dma_strict == IOMMU_NOT_STRICT ||
-> +	    domain->request_non_strict)
-> +		return false;
-> +
-> +	/* Nobody said anything, so it's strict by default */
->   	return true;
->   }
->   EXPORT_SYMBOL_GPL(iommu_get_dma_strict);
-> @@ -1519,7 +1542,8 @@ static int iommu_get_def_domain_type(struct device *dev)
->   
->   static int iommu_group_alloc_default_domain(struct bus_type *bus,
->   					    struct iommu_group *group,
-> -					    unsigned int type)
-> +					    unsigned int type,
-> +					    struct device *dev)
->   {
->   	struct iommu_domain *dom;
->   
-> @@ -1534,6 +1558,12 @@ static int iommu_group_alloc_default_domain(struct bus_type *bus,
->   	if (!dom)
->   		return -ENOMEM;
->   
-> +	/* Save the strictness requests from the device */
-> +	if (dev && type == IOMMU_DOMAIN_DMA) {
-> +		dom->request_non_strict = dev->request_non_strict_iommu;
-> +		dom->force_strict = dev->force_strict_iommu;
-> +	}
-> +
->   	group->default_domain = dom;
->   	if (!group->domain)
->   		group->domain = dom;
-> @@ -1550,7 +1580,7 @@ static int iommu_alloc_default_domain(struct iommu_group *group,
->   
->   	type = iommu_get_def_domain_type(dev) ? : iommu_def_domain_type;
->   
-> -	return iommu_group_alloc_default_domain(dev->bus, group, type);
-> +	return iommu_group_alloc_default_domain(dev->bus, group, type, dev);
->   }
->   
->   /**
-> @@ -1721,7 +1751,7 @@ static void probe_alloc_default_domain(struct bus_type *bus,
->   	if (!gtype.type)
->   		gtype.type = iommu_def_domain_type;
->   
-> -	iommu_group_alloc_default_domain(bus, group, gtype.type);
-> +	iommu_group_alloc_default_domain(bus, group, gtype.type, NULL);
->   
->   }
->   
-> @@ -3130,7 +3160,7 @@ static int iommu_change_dev_def_domain(struct iommu_group *group,
->   	}
->   
->   	/* Sets group->default_domain to the newly allocated domain */
-> -	ret = iommu_group_alloc_default_domain(dev->bus, group, type);
-> +	ret = iommu_group_alloc_default_domain(dev->bus, group, type, dev);
->   	if (ret)
->   		goto out;
->   
-> diff --git a/include/linux/iommu.h b/include/linux/iommu.h
-> index 32d448050bf7..0bddef77f415 100644
-> --- a/include/linux/iommu.h
-> +++ b/include/linux/iommu.h
-> @@ -81,6 +81,8 @@ struct iommu_domain_geometry {
->   
->   struct iommu_domain {
->   	unsigned type;
-> +	bool force_strict:1;
-> +	bool request_non_strict:1;
->   	const struct iommu_ops *ops;
->   	unsigned long pgsize_bitmap;	/* Bitmap of page sizes in use */
->   	iommu_fault_handler_t handler;
-> 
+> Argh, I wrongly assumed that cpuidle was actually copying this locally.
+> Okay, let's see what else looking clean I can come up with.
+
+I guess you could just use a devm_kzalloc() and then have code similar
+to the previous one (data->cpuidle_driver = <template>). You could
+alternatively use devm_kmalloc() without zero-initialization but the
+advantages of that should be negligible.
+
+Thanks!
+Stephan
