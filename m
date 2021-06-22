@@ -2,118 +2,272 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 528863B088C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jun 2021 17:18:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CD62F3B09B4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jun 2021 17:58:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232066AbhFVPU0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Jun 2021 11:20:26 -0400
-Received: from mo4-p02-ob.smtp.rzone.de ([85.215.255.80]:31004 "EHLO
-        mo4-p02-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230047AbhFVPU0 (ORCPT
+        id S232143AbhFVQA7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Jun 2021 12:00:59 -0400
+Received: from mail-il1-f175.google.com ([209.85.166.175]:37531 "EHLO
+        mail-il1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231936AbhFVQA6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Jun 2021 11:20:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1624375087;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=wOC9VDfBrCSExkPhJ90oEqNmTHI7WSS64pU4XiCEAh4=;
-    b=PynXijrYaj1nzA71DBptg/QANm0T64hxKbDZOIT0PdwxdK4IpbsBb5Vr+vByJzTou+
-    gJFLDBoYutk8MOpBlrdWD3sMG7f2T6CyE4DVVK98idm8YomXrO4yFRfANSRuVT0m4Ulc
-    9DAthZIORO93X8VZZsOj0Lh2H15/u8mx/cLR+GEst2cQOwI+pGQ06JL1OyfjA9N+xii2
-    DD0nhRK7YwllV3c70wXbytjLWbcaBiDYFFga0z43K8f6NPqGzJLrckGvFDtQDlkPzqiI
-    4fWmRhYChAMUBpzUYgGE63EjbiSUeVRGm+ib44Q7ebqfUWZ4+Kq7BEqUhIq5mRsXAiyw
-    8WQQ==
-Authentication-Results: strato.com;
-    dkim=none
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u26zEodhPgRDZ8f6Ic3CBg=="
-X-RZG-CLASS-ID: mo00
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 47.27.3 DYNA|AUTH)
-    with ESMTPSA id 000885x5MFI6SsX
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Tue, 22 Jun 2021 17:18:06 +0200 (CEST)
-Date:   Tue, 22 Jun 2021 17:18:05 +0200
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>
-Cc:     bjorn.andersson@linaro.org, agross@kernel.org,
-        daniel.lezcano@linaro.org, rjw@rjwysocki.net,
-        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, phone-devel@vger.kernel.org,
-        konrad.dybcio@somainline.org, marijn.suijten@somainline.org,
-        martin.botka@somainline.org, jeffrey.l.hugo@gmail.com,
-        jami.kettunen@somainline.org,
-        ~postmarketos/upstreaming@lists.sr.ht, devicetree@vger.kernel.org,
-        robh+dt@kernel.org
-Subject: Re: [PATCH v7 4/5] soc: qcom: spm: Add compatible for MSM8998
- SAWv4.1 L2
-Message-ID: <YNH/LREbpP4ycT7l@gerhold.net>
-References: <20210622141117.358893-1-angelogioacchino.delregno@somainline.org>
- <20210622141117.358893-5-angelogioacchino.delregno@somainline.org>
+        Tue, 22 Jun 2021 12:00:58 -0400
+Received: by mail-il1-f175.google.com with SMTP id x12so18890922ill.4;
+        Tue, 22 Jun 2021 08:58:41 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=VR4qkGDWYtdjfgziGh5tyR/mzFAynXqFUJLLjnq0V20=;
+        b=p8DEwFWwcZpNjvV8MomlZvRiDs0y8/u9PeLVn+VoiuJyfdK7TzJ5JPnevyTQUmYLcV
+         1nPnCXr70incadxptnu97pOY1LmMljIe2nvjaJ3LMSXh1SzKT23R3D5100P0L67Y1tC3
+         7bQztl31JftaaHBnkBuHZPAnrx9euO6/CiqxhjXbQBYwyWBRugOsdrtv3lBr4vIoK/mP
+         JIN5Ri/nqpQbGJOt1+vhwOdFzGXllHJzJks7M90XEpbV1hpM4Vv3tanW3MRHyHZjFK7Z
+         3BRPaDSTe/2L3vyorkD7ldtWEyWkGpRo5AHNw2J0w/T/F5uZ25ZLzVD1XAC5OGuExEkN
+         pnMQ==
+X-Gm-Message-State: AOAM532Z9SYWkt9lgQTyN0VnJDBfdVmeobyRQADlNgvEc/rKgMqqHuRQ
+        aj4KFn/vdD7/jYJIVHQCmg==
+X-Google-Smtp-Source: ABdhPJzhwE6GGWNHAo4/uOYQ52b7LZ0FbGdFFI/udfP+fCqx80BFtyeMtlZlfl2czEZpqOLCiinO6Q==
+X-Received: by 2002:a92:b004:: with SMTP id x4mr3209935ilh.121.1624377521556;
+        Tue, 22 Jun 2021 08:58:41 -0700 (PDT)
+Received: from robh.at.kernel.org ([64.188.179.248])
+        by smtp.gmail.com with ESMTPSA id x11sm8247636ilg.59.2021.06.22.08.58.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 22 Jun 2021 08:58:40 -0700 (PDT)
+Received: (nullmailer pid 3755885 invoked by uid 1000);
+        Tue, 22 Jun 2021 15:58:37 -0000
+Date:   Tue, 22 Jun 2021 09:58:37 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Caleb Connolly <caleb@connolly.tech>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, jami.kettunen@somainline.org,
+        jo@jsfamily.in, linux-input@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [RESEND PATCH v2 1/6] dt-bindings: input: add Qualcomm SPMI
+ haptics driver
+Message-ID: <20210622155837.GA3746854@robh.at.kernel.org>
+References: <20210618175041.323495-1-caleb@connolly.tech>
+ <20210618175041.323495-2-caleb@connolly.tech>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20210622141117.358893-5-angelogioacchino.delregno@somainline.org>
+In-Reply-To: <20210618175041.323495-2-caleb@connolly.tech>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jun 22, 2021 at 04:11:16PM +0200, AngeloGioacchino Del Regno wrote:
-> Add the SAWv4.1 parameters for MSM8998's Gold and Silver clusters.
+On Fri, Jun 18, 2021 at 05:51:03PM +0000, Caleb Connolly wrote:
+> Add bindings for qcom PMIC SPMI haptics driver.
 > 
-> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
-
-I can't say much about this platform but I trust that Angelo
-knows what he is doing. :) I found the values used here in
-
-https://source.codeaurora.org/quic/la/kernel/msm-4.4/tree/arch/arm/boot/dts/qcom/msm8998-pm.dtsi?h=994e5922a0c225b877a4b3790830b7edc7b7807b
-https://source.codeaurora.org/quic/la/kernel/msm-4.4/tree/arch/arm/boot/dts/qcom/msm8998-v2.dtsi?h=994e5922a0c225b877a4b3790830b7edc7b7807b#n1186
-
-(From what I heard from other people only msm8998-v2 is used in
- production devices?)
-
-So I think it's okay to provide a (somewhat limited)
-Reviewed-by: Stephan Gerhold <stephan@gerhold.net>
-
+> Signed-off-by: Caleb Connolly <caleb@connolly.tech>
 > ---
->  drivers/soc/qcom/spm.c | 16 ++++++++++++++++
->  1 file changed, 16 insertions(+)
+>  .../bindings/input/qcom,spmi-haptics.yaml     | 128 ++++++++++++++++++
+>  include/dt-bindings/input/qcom,spmi-haptics.h |  32 +++++
+>  2 files changed, 160 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/input/qcom,spmi-haptics.yaml
+>  create mode 100644 include/dt-bindings/input/qcom,spmi-haptics.h
 > 
-> diff --git a/drivers/soc/qcom/spm.c b/drivers/soc/qcom/spm.c
-> index 1401db8373dd..8077e337ee7e 100644
-> --- a/drivers/soc/qcom/spm.c
-> +++ b/drivers/soc/qcom/spm.c
-> @@ -54,6 +54,18 @@ static const struct spm_reg_data spm_reg_660_silver_l2  = {
->  	.avs_limit = 0x4580458,
->  };
->  
-> +static const struct spm_reg_data spm_reg_8998_gold_l2  = {
-> +	.reg_offset = spm_reg_offset_v4_1,
-> +	.avs_ctl = 0x1010031,
-> +	.avs_limit = 0x4700470,
-> +};
+> diff --git a/Documentation/devicetree/bindings/input/qcom,spmi-haptics.yaml b/Documentation/devicetree/bindings/input/qcom,spmi-haptics.yaml
+> new file mode 100644
+> index 000000000000..8ef9b4ec3a07
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/input/qcom,spmi-haptics.yaml
+> @@ -0,0 +1,128 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +# Copyright 2020 Unisoc Inc.
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/input/qcom,spmi-haptics.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
 > +
-> +static const struct spm_reg_data spm_reg_8998_silver_l2  = {
-> +	.reg_offset = spm_reg_offset_v4_1,
-> +	.avs_ctl = 0x1010031,
-> +	.avs_limit = 0x4200420,
-> +};
+> +title: Qualcomm Technologies Inc PMI8998 spmi haptics
 > +
->  static const u16 spm_reg_offset_v2_1[SPM_REG_NR] = {
->  	[SPM_REG_CFG]		= 0x08,
->  	[SPM_REG_SPM_CTL]	= 0x30,
-> @@ -149,6 +161,10 @@ static const struct of_device_id spm_match_table[] = {
->  	  .data = &spm_reg_660_gold_l2 },
->  	{ .compatible = "qcom,sdm660-silver-saw2-v4.1-l2",
->  	  .data = &spm_reg_660_silver_l2 },
-> +	{ .compatible = "qcom,msm8998-gold-saw2-v4.1-l2",
-> +	  .data = &spm_reg_8998_gold_l2 },
-> +	{ .compatible = "qcom,msm8998-silver-saw2-v4.1-l2",
-> +	  .data = &spm_reg_8998_silver_l2 },
->  	{ .compatible = "qcom,msm8974-saw2-v2.1-cpu",
->  	  .data = &spm_reg_8974_8084_cpu },
->  	{ .compatible = "qcom,apq8084-saw2-v2.1-cpu",
-> -- 
-> 2.32.0
+> +maintainers:
+> +  - Caleb Connolly <caleb@connolly.tech>
+> +
+> +description: |
+> +  Qualcomm SPMI haptics is a peripheral on some QTI PMICs. It supports linear resonant
+> +  actuators and eccentric rotating mass type haptics commonly found in mobile devices.
+> +  It supports multiple sources of wave data such as an internal buffer, direct play
+> +  (from kernel or userspace) as well as an audio output mode.
+> +
+> +properties:
+> +  compatible:
+> +    items:
+> +      - enum:
+> +        - qcom,pmi8998-haptics
+> +        - qcom,pmi8996-haptics
+> +        - qcom,pmi8941-haptics
+> +      - const: qcom,spmi-haptics
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  interrupts:
+> +    items:
+> +      - description: short circuit interrupt
+> +      - description: play interrupt
+> +
+> +  interrupt-names:
+> +    items:
+> +      - const: short
+> +      - const: play
+> +
+> +  qcom,actuator-type:
+> +    description: |
+> +      The type of actuator attached to the hardware.
+> +      Allowed values are,
+> +        0 - HAP_TYPE_LRA
+> +        1 - HAP_TYPE_ERM
+> +    $ref: /schemas/types.yaml#/definitions/uint32
+> +    enum: [ 0, 1 ]
+> +    default: 0
+> +
+> +  qcom,wave-shape:
+> +    description: |
+> +      Selects the wave shape to use.
+> +      Allowed values are,
+> +        0 - HAP_WAVE_SINE
+> +        1 - HAP_WAVE_SQUARE
+> +    $ref: /schemas/types.yaml#/definitions/uint32
+> +    enum: [ 0, 1 ]
+> +    default: 0
+> +
+> +  qcom,play-mode:
+> +    description: |
+> +      Selects the play mode to use.
+> +      Allowed values are,
+> +        0 - HAP_PLAY_DIRECT
+> +        1 - HAP_PLAY_BUFFER
+> +        2 - HAP_PLAY_AUDIO
+> +        3 - HAP_PLAY_PWM
+> +    $ref: /schemas/types.yaml#/definitions/uint32
+> +    enum: [ 0, 1, 2, 3 ]
+> +    default: 2
+> +
+> +  qcom,wave-play-rate-us:
+> +    description: |
+> +      Wave sample durection in microseconds, 1/f where f
+> +      is the resonant frequency of the actuator.
+> +    $ref: /schemas/types.yaml#/definitions/uint32
+
+Don't need a type for standard units.
+
+> +    minimum: 0
+> +    maximum: 20475
+> +
+> +  qcom,brake-pattern:
+> +    minItems: 4
+> +    maxItems: 4
+> +    description: |
+> +      The brake pattern are the strengths of the pattern
+> +      used to brake the haptics. Allowed values are,
+> +        0 - 0V
+> +        1 - Vmax/4
+> +        2 - Vmax/2
+> +        3 - Vmax
+> +    $ref: /schemas/types.yaml#/definitions/uint32-array
+> +    default: [0x3, 0x3, 0x2, 0x1]
+
+To express the constraints on all items:
+
+items:
+  enum: [ 0, 1, 2, 3 ]
+
+(items is a schema here rather than a list)
+
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - interrupts
+> +  - qcom,wave-play-rate-us
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/spmi/spmi.h>
+> +    #include <dt-bindings/interrupt-controller/irq.h>
+> +    #include <dt-bindings/input/qcom,spmi-haptics.h>
+> +
+> +    pmi8998_lsid1: pmic@3 {
+
+Drop unused labels.
+
+> +      compatible = "qcom,pmi8998", "qcom,spmi-pmic";
+
+Really, this needs to be converted to schema first so we're not adding 
+warnings.
+
+> +      reg = <0x3 SPMI_USID>;
+> +      #address-cells = <1>;
+> +      #size-cells = <0>;
+> +
+> +      pmi8998_haptics: haptics@c000 {
+> +        compatible = "qcom,pmi8998-haptics", "qcom,spmi-haptics";
+> +        reg = <0xc000>;
+> +
+> +        interrupts = <0x3 0xc0 0x0 IRQ_TYPE_EDGE_BOTH>,
+> +                     <0x3 0xc0 0x1 IRQ_TYPE_EDGE_BOTH>;
+> +        interrupt-names = "short", "play";
+> +
+> +        qcom,wave-shape = <HAP_WAVE_SINE>;
+> +        qcom,play-mode = <HAP_PLAY_BUFFER>;
+> +        qcom,brake-pattern = <0x3 0x3 0x2 0x1>;
+> +
+> +        status = "disabled";
+
+Don't show status in examples. 
+
+> +      };
+> +    };
+> diff --git a/include/dt-bindings/input/qcom,spmi-haptics.h b/include/dt-bindings/input/qcom,spmi-haptics.h
+> new file mode 100644
+> index 000000000000..14a7e7d1471e
+> --- /dev/null
+> +++ b/include/dt-bindings/input/qcom,spmi-haptics.h
+> @@ -0,0 +1,32 @@
+> +/* SPDX-License-Identifier: GPL-2.0-only */
+
+Dual license please. DT files are used elsewhere.
+
+> +/*
+> + * This header provides constants for pmi8998 SPMI haptics options.
+> + */
+> +
+> +#ifndef _DT_BINDINGS_QCOM_PMIC_SPMI_HAPTICS_
+> +#define _DT_BINDINGS_QCOM_PMIC_SPMI_HAPTICS_
+> +
+> +// Actuator types
+> +#define HAP_TYPE_LRA		0
+> +#define HAP_TYPE_ERM		1
+> +
+> +// LRA Wave type
+> +#define HAP_WAVE_SINE		0
+> +#define HAP_WAVE_SQUARE		1
+> +
+> +// Play modes
+> +#define HAP_PLAY_DIRECT		0
+> +#define HAP_PLAY_BUFFER		1
+> +#define HAP_PLAY_AUDIO		2
+> +#define HAP_PLAY_PWM		3
+> +
+> +#define HAP_PLAY_MAX		HAP_PLAY_PWM
+> +
+> +// Auto resonance type
+> +#define HAP_AUTO_RES_NONE	0
+> +#define HAP_AUTO_RES_ZXD	1
+> +#define HAP_AUTO_RES_QWD	2
+> +#define HAP_AUTO_RES_MAX_QWD	3
+> +#define HAP_AUTO_RES_ZXD_EOP	4
+> +
+> +#endif /* _DT_BINDINGS_QCOM_PMIC_SPMI_HAPTICS_ */
+> --
+> 2.31.1
+> 
+> 
 > 
