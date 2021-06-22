@@ -2,149 +2,150 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0CD113B073A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jun 2021 16:17:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8255F3B0760
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jun 2021 16:28:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231592AbhFVOUA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Jun 2021 10:20:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42856 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231704AbhFVOT5 (ORCPT
+        id S231246AbhFVOa3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Jun 2021 10:30:29 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:55876 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230047AbhFVOa3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Jun 2021 10:19:57 -0400
-Received: from mail-qt1-x82f.google.com (mail-qt1-x82f.google.com [IPv6:2607:f8b0:4864:20::82f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66706C061760
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jun 2021 07:17:41 -0700 (PDT)
-Received: by mail-qt1-x82f.google.com with SMTP id x21so6960058qtq.9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jun 2021 07:17:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=lI1CGYho/79qaVk4ajAhdU3sl6kD5lr0csW+7Y9UryM=;
-        b=KE0AlCEEZ1+U8kg+l418asb139t/GShpu5pbfYsvxp8pFAyL2ltzjEkEZL3ECmXkmx
-         ZBONjF0IjYgMZzB4KhuXzwtahLr2XjImP9IuyOz/N+mMV/Gul8uByxaTCp03OISZoolG
-         JfOHgADpGV663PWMgfI8do2gKB0QBJOvFifZ3m4hdXuI1cngGwNOCQaRYprYSr0nzhG2
-         eiIy0J7sEzOT3VD+kp2TWd4Ed3U7Q8/lOPHuQYfP6Sk0vf2eUPRjKzwMfyBLcH+wAKrj
-         qBHSMX5QiXzE3nZfdKDPCR5qfxovl+X4InOewCdtbQSt0L9lFgi+jwyIXxnH1T89ikzO
-         idYw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=lI1CGYho/79qaVk4ajAhdU3sl6kD5lr0csW+7Y9UryM=;
-        b=Yadxds4MgzpX+3zPnStvXlfQTd5yBpYnCskHoEtRMx00iP8VNRdrTxb/eDymt3yNq4
-         2yGlOicYbo+1gW5ZVYKsKZaC6g0P4wo4OISfX3ijiaOAFJgW/HEDKpXJA0UfP/UoF5Co
-         5I5I0V/LmzHneI2afP9Xvb/hjBc0DMxstsdAIMsbhNYefctbhtM/stCD89yBtLkXzedD
-         2IjouV2ZG7bwN2pVHdPrOFdCSwszdcuf2eFsKlBa8D9cr3vx057eZymkEryqtznWyqCs
-         ETTpblMAhZK6iTB7pAImVuF+/LUNwKr2aEDLzPN/4twuxVFoPFWegyHyF7A76/CJCr5N
-         VwZA==
-X-Gm-Message-State: AOAM5326FIUzYyRsIo/LYzM61H462kKI8WRc55TQYp9/O+BEo1GfTOhm
-        K6goN2V1KWJjd5HHLeeRHSsH5PT5UQwYHcqzFfi+tw==
-X-Google-Smtp-Source: ABdhPJxtA2MrKV6nOcIRw7RyX7tXe4SI4vNTSA8HWvzEVkasMro+kyUnsPgYGorj3GwFAXHE4yczHQMn+iDjFsqnsQk=
-X-Received: by 2002:ac8:59c8:: with SMTP id f8mr3647160qtf.238.1624371460518;
- Tue, 22 Jun 2021 07:17:40 -0700 (PDT)
+        Tue, 22 Jun 2021 10:30:29 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1624372093; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=GwlPniao3J7tcSGfx042pEI6HKO5H285thPuoFh/a74=;
+ b=WvGoq1doqIOmay7C3lnkFnWUO9YBNLzV+7uFO6zazBsrqbgJ0kTuNqVqB4wht4QfQ3iFJAZ4
+ 12Tu9dgKUbXpcpSxrXOgfVsSe1zVI+cwsefmLaOhDWOuTdCvwj7lW0gIliego0c4y2F8FQi9
+ vclr9XeSlvB1+EaqvOl7fRJN+0Y=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
+ 60d1f36912003202418d170f (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 22 Jun 2021 14:27:53
+ GMT
+Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 6D224C43143; Tue, 22 Jun 2021 14:27:52 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 84E5FC433D3;
+        Tue, 22 Jun 2021 14:27:51 +0000 (UTC)
 MIME-Version: 1.0
-References: <20210621223141.1638189-1-dmitry.baryshkov@linaro.org>
- <20210621223141.1638189-3-dmitry.baryshkov@linaro.org> <20210622112843.GB4574@sirena.org.uk>
-In-Reply-To: <20210622112843.GB4574@sirena.org.uk>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 22 Jun 2021 17:17:28 +0300
-Message-ID: <CAA8EJpoTdg3O6dzpTaNS5fJRbtb1Fndv0mEuO+e4b6XCmuvzhQ@mail.gmail.com>
-Subject: Re: [PATCH v3 2/7] regulator: qca6390: add support for QCA639x
- powerup sequence
-To:     Mark Brown <broonie@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        linux-bluetooth@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Tue, 22 Jun 2021 19:57:51 +0530
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Robin Murphy <robin.murphy@arm.com>
+Cc:     Will Deacon <will@kernel.org>, Joerg Roedel <joro@8bytes.org>,
+        Thierry Reding <treding@nvidia.com>,
+        linux-arm-msm@vger.kernel.org,
+        Douglas Anderson <dianders@chromium.org>,
+        linux-kernel@vger.kernel.org, iommu@lists.linux-foundation.org,
+        linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCHv2 1/3] iommu/io-pgtable: Add a quirk to use
+ tlb_flush_all() for partial walk flush
+In-Reply-To: <2b093b93-7fab-be35-59d8-4463c199719a@arm.com>
+References: <cover.1623981933.git.saiprakash.ranjan@codeaurora.org>
+ <b099af10926b34249f4a30262db37f50491bebe7.1623981933.git.saiprakash.ranjan@codeaurora.org>
+ <904f283c-f8b1-ba84-d010-eacc87bb53c5@arm.com>
+ <a110e58e36af207be2bed04d1331832a@codeaurora.org>
+ <2b093b93-7fab-be35-59d8-4463c199719a@arm.com>
+Message-ID: <c0329da89bee9b51b88d907875608877@codeaurora.org>
+X-Sender: saiprakash.ranjan@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 22 Jun 2021 at 14:29, Mark Brown <broonie@kernel.org> wrote:
->
-> On Tue, Jun 22, 2021 at 01:31:36AM +0300, Dmitry Baryshkov wrote:
->
-> > Qualcomm QCA6390/1 is a family of WiFi + Bluetooth SoCs, with BT part
-> > being controlled through the UART and WiFi being present on PCIe
-> > bus. Both blocks share common power sources. Add device driver handling
-> > power sequencing of QCA6390/1.
->
-> Are you sure this is a regulator and not a MFD?  It appears to be a
-> consumer driver that turns on and off a bunch of regulators en masse
-> which for some reason exposes that on/off control as a single supply.
-> This looks like it'd be much more appropriate to implement as a MFD or
-> possibly power domain with the subdevices using runtime PM, it's clearly
-> not a regulator.
+Hi Robin,
 
-First attempt was designed to be an MFD. And Lee clearly stated that
-this is wrong:
-"This is not an MFD, since it utilised neither the MFD API nor
-of_platform_populate() to register child devices." [1]
+On 2021-06-22 17:41, Robin Murphy wrote:
+> On 2021-06-22 08:11, Sai Prakash Ranjan wrote:
+>> Hi Robin,
+>> 
+>> On 2021-06-21 21:15, Robin Murphy wrote:
+>>> On 2021-06-18 03:51, Sai Prakash Ranjan wrote:
+>>>> Add a quirk IO_PGTABLE_QUIRK_TLB_INV_ALL to invalidate entire 
+>>>> context
+>>>> with tlb_flush_all() callback in partial walk flush to improve unmap
+>>>> performance on select few platforms where the cost of 
+>>>> over-invalidation
+>>>> is less than the unmap latency.
+>>> 
+>>> I still think this doesn't belong anywhere near io-pgtable at all.
+>>> It's a driver-internal decision how exactly it implements a non-leaf
+>>> invalidation, and that may be more complex than a predetermined
+>>> boolean decision. For example, I've just realised for SMMUv3 we can't
+>>> invalidate multiple levels of table at once with a range command,
+>>> since if we assume the whole thing is mapped at worst-case page
+>>> granularity we may fail to invalidate any parts which are mapped as
+>>> intermediate-level blocks. If invalidating a 1GB region (with 4KB
+>>> granule) means having to fall back to 256K non-range commands, we may
+>>> not want to invalidate by VA then, even though doing so for a 2MB
+>>> region is still optimal.
+>>> 
+>>> It's also quite feasible that drivers might want to do this for leaf
+>>> invalidations too - if you don't like issuing 512 commands to
+>>> invalidate 2MB, do you like issuing 511 commands to invalidate 
+>>> 2044KB?
+>>> - and at that point the logic really has to be in the driver anyway.
+>>> 
+>> 
+>> Ok I will move this to tlb_flush_walk() functions in the drivers. In 
+>> the previous
+>> v1 thread, you suggested to make the choice in iommu_get_dma_strict() 
+>> test,
+>> I assume you meant the test in iommu_dma_init_domain() with a flag or 
+>> was it
+>> the leaf driver(ex:arm-smmu.c) test of iommu_get_dma_strict() in 
+>> init_domain?
+> 
+> Yes, I meant literally inside the same condition where we currently
+> set "pgtbl_cfg.quirks |= IO_PGTABLE_QUIRK_NON_STRICT;" in
+> arm_smmu_init_domain_context().
+> 
 
-I've attempted implementing that as a genpd (in previous iterations),
-but it results in worse design. PCIe controllers are not expected to
-handle power domains for EP devices, especially in cases when the PD
-must come up before the controller does link training and bus probe.
-I've tried following Rob's suggestions on implementing things clearly,
-but doing so results in too big restructure just for a single device.
+Ok got it, thanks.
 
-> > +// SPDX-License-Identifier: GPL-2.0-only
-> > +/*
-> > + * Copyright (c) 2021, Linaro Limited
-> > + */
->
-> Please make the entire comment a C++ one so things look more
-> intentional.
+>> I am still a bit confused on where this flag would be? Should this be 
+>> a part
+>> of struct iommu_domain?
+> 
+> Well, if you were to rewrite the config with an alternative set of
+> flush_ops at that point it would be implicit. For a flag, probably
+> either in arm_smmu_domain or arm_smmu_impl. Maybe a flag would be less
+> useful than generalising straight to a "maximum number of by-VA
+> invalidations it's worth sending individually" threshold value?
 
-Ack.
+But then we would still need some flag to make this implementation
+specific (qcom specific for now) and this threshold would just be
+another condition although it would have been useful if this was
+generic enough.
 
->
-> > +static int qca6390_enable(struct regulator_dev *rdev)
-> > +{
-> > +     struct qca6390_data *data = rdev_get_drvdata(rdev);
-> > +     int ret;
-> > +
-> > +     ret = regulator_bulk_enable(data->num_vregs, data->regulators);
-> > +     if (ret) {
-> > +             dev_err(data->dev, "Failed to enable regulators");
-> > +             return ret;
-> > +     }
->
-> The regulator API is *not* recursive, I am astonished this works.
+> It's clear to me what overall shape and separation of responsibility is
+> most logical, but beyond that I don't have a particularly strong
+> opinion on the exact implementation; I've just been chucking ideas
+> around :)
+> 
 
-It does, even with lockdep enabled. Moreover BT regularly does disable
-and enable this regulator, so both enable and disable paths were well
-tested.
-Should I change this into some internal call to remove API recursiveness?
+Your ideas are very informative and useful :)
 
->
-> > +     /* Wait for 1ms before toggling enable pins. */
-> > +     usleep_range(1000, 2000);
->
-> There's core support for delays after power on, better to use it.
+Thanks,
+Sai
 
-Ack.
-
->
-> > +     data->enable_counter++;
->
-> You shouldn't assume that enable and disable calls are matched.
-
-Ack.
-
---
-With best wishes
-Dmitry
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member
+of Code Aurora Forum, hosted by The Linux Foundation
