@@ -2,107 +2,153 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1CC053B0A01
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jun 2021 18:11:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D5CE33B0A2E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jun 2021 18:20:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229826AbhFVQNX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Jun 2021 12:13:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41330 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229674AbhFVQNW (ORCPT
+        id S229501AbhFVQWu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Jun 2021 12:22:50 -0400
+Received: from mail-40135.protonmail.ch ([185.70.40.135]:37463 "EHLO
+        mail-40135.protonmail.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229704AbhFVQWu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Jun 2021 12:13:22 -0400
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55811C061574
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jun 2021 09:11:05 -0700 (PDT)
-Received: by mail-ej1-x629.google.com with SMTP id ho18so35372331ejc.8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jun 2021 09:11:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=vUaa49+IpptNOMLBet5loWbWxua8vz3pz9+hJM0DysA=;
-        b=JoWO76bSpdLeQy5raImQZVy8kWIlBu223s0LgU66ck+jTTwwNklVp9QexxIMkCOWnd
-         zvYlt55snx4xFt5fFueb8Vor4fraGnMaFhbg6eT4Xif+PZPct8BBxwAGi1Wf8XYUTV8z
-         +bSYQeHCU97YONUY2McqcSAiC+lEmyuxvtPg8=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=vUaa49+IpptNOMLBet5loWbWxua8vz3pz9+hJM0DysA=;
-        b=pxPFiqsJoBubCRNIXzMX7L8kZy/FFE67G80M+86RAf0YIJlsFLOZactIdHKLzmPEyk
-         kAky+QYGGEMxgyK6LdEP5EsRxOeuUPoxGp8ZPutxZAtMJpW0Bpsy176ogcYXwF+1YlMm
-         fgRKANsOMeCMeaXXOM3rqn2+SmKX1dQsK+E21jAyHk2kyi8XKymOTJTc7gx7cTagAQS7
-         lEhn1pjTEN2kTPbMS24utazwSyfyLKujyVuZcjplmxrPesHDCyUMPHDSqev6UP3iv62g
-         FZkICjT11M5UX0wG1szR/z3wrSGOk7PtnI0/rE+/9u6DHewxu8A8Q1r6Tk4l9tWe4MXr
-         jIDg==
-X-Gm-Message-State: AOAM532fxMB2vxzi/UndkFiAmHzE6qqvibZ7g5iqqyeCUlWxnHfpDllw
-        4zjUCXqbQEbGF3WCC7JMaQgfsQ+Sf6yWJT8xU5j9aw==
-X-Google-Smtp-Source: ABdhPJyRoaQ6qHQfdem8pZzXTW1Ky+LtLjfwVmIzRD47hgaShM+PfsaM9EDnomrcW5hRGbdsO5lon4HAy7wpYxgvQV4=
-X-Received: by 2002:a17:906:8041:: with SMTP id x1mr4713697ejw.81.1624378263922;
- Tue, 22 Jun 2021 09:11:03 -0700 (PDT)
+        Tue, 22 Jun 2021 12:22:50 -0400
+Date:   Tue, 22 Jun 2021 16:20:24 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+        s=protonmail; t=1624378832;
+        bh=kHclmWIAffgA/kXrGLvvaaT+S8kN4U+u6KviPAVzP3w=;
+        h=Date:To:From:Cc:Reply-To:Subject:From;
+        b=cLw4LHAPTPdDOnVC0pkmO4Cw5hYjxBtjrWSpQNPk+HW+opQVov201Cx5tnMFQHy6O
+         oNQrek1qAvSI8EiHnfcqz0xPqBSEXAMJYs6QT2sdaF6pf4Xri7DXDMSwvJt912Hsv+
+         rRnbo4oVMaFsrNs93k0M6gJfWH9vPjfDy3FeRdPQ=
+To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org
+From:   Yassine Oudjana <y.oudjana@protonmail.com>
+Cc:     Yassine Oudjana <y.oudjana@protonmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+        linux-kernel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
+Reply-To: Yassine Oudjana <y.oudjana@protonmail.com>
+Subject: (No Subject)
+Message-ID: <p79aCzsVmgW6eKQZNSlglPvO40ulVy4id6jcm7aTk@cp7-web-044.plabs.ch>
 MIME-Version: 1.0
-References: <20210621074152.306362-1-judyhsiao@chromium.org> <20210621114546.GD4094@sirena.org.uk>
-In-Reply-To: <20210621114546.GD4094@sirena.org.uk>
-From:   Judy Hsiao <judyhsiao@chromium.org>
-Date:   Wed, 23 Jun 2021 00:10:53 +0800
-Message-ID: <CAJXt+b-eRLKORqPOX1cJM3xzEyJhdeuj+w9-btpZSmy7v4U6Sw@mail.gmail.com>
-Subject: Re: [PATCH] ASoC: snd-soc-dummy: add Device Tree support
-To:     Mark Brown <broonie@kernel.org>
-Cc:     Liam Girdwood <lgirdwood@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Jaroslav Kysela <perex@perex.cz>,
-        Takashi Iwai <tiwai@suse.com>,
-        Douglas Anderson <dianders@chromium.org>,
-        Dylan Reid <dgreid@chromium.org>,
-        Jimmy Cheng-Yi Chiang <cychiang@google.com>,
-        Judy Hsiao <judyhsiao@google.com>,
-        Tzung-Bi Shih <tzungbi@chromium.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        alsa-devel@alsa-project.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-1.2 required=10.0 tests=ALL_TRUSTED,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM shortcircuit=no
+        autolearn=disabled version=3.4.4
+X-Spam-Checker-Version: SpamAssassin 3.4.4 (2020-01-24) on
+        mailout.protonmail.ch
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jun 21, 2021 at 7:46 PM Mark Brown <broonie@kernel.org> wrote:
->
-> On Mon, Jun 21, 2021 at 03:41:52PM +0800, Judy Hsiao wrote:
->
-> > Support for loading the snd-soc-dummy via DeviceTree.
-> > This is useful to create dummy codec devices where we need to have some
-> > DAI links without a real Codec.
->
-> Why would it be useful to create DAI links to a dummy device that has
-> no properties?  If you've got a device with no software control it's
-> still going to have some limits on things like what formats and sample
-> rates it can accept so you should describe that in DT.
+Date: Tue, 22 Jun 2021 20:08:25 +0400
+Subject: [PATCH] media: dt-bindings: media: venus: Add firmware-name
 
-Thanks for your review comment.
-This patch is used to support multi-channel where we want one codec to
-control the only GPIO shared by 4 amps.
-(Please refer to
-:https://patchwork.kernel.org/project/alsa-devel/patch/20210526154704.11495=
-7-1-judyhsiao@chromium.org/)
+Support for parsing the firmware-name property was added a while ago [1],
+but the dt-bindings were never updated with the new property. This patch
+adds it to all venus dt-bindings.
 
-In snd_soc_runtime_calc_hw(), by creating dummy codecs that share a
-DAI link with a real codec:
-  1. The min/ max channel of  CPU DAI will be directly adopted.
-  2. The formats and sample rates of the DAI link will be determined
-by the real codec unless the real codec supports the rate
-      and format that do not intersect with the rate and format of
-snd-soc-dummy.
-That is the reason why we don=E2=80=99t specify the format and sample rates=
- of
-the dummy codec with the real codec determining the properties .
+Signed-off-by: Yassine Oudjana <y.oudjana@protonmail.com>
 
-Does reposting a new patch with  a more clear commit message to
-describe the use case sound good to you?
->
-> Please try to keep the CC lists for patches you are submitting relevant
-> to the patch, people get a lot of mail and reviews for irrelevant
-> patches add to the noise.
-Sorry about that. I have adjusted the CC lists.
+[1]: https://lore.kernel.org/linux-arm-msm/20210126084252.238078-1-stanimir=
+.varbanov@linaro.org/
+---
+ .../devicetree/bindings/media/qcom,msm8916-venus.yaml        | 5 +++++
+ .../devicetree/bindings/media/qcom,msm8996-venus.yaml        | 5 +++++
+ .../devicetree/bindings/media/qcom,sc7180-venus.yaml         | 5 +++++
+ .../devicetree/bindings/media/qcom,sdm845-venus-v2.yaml      | 5 +++++
+ .../devicetree/bindings/media/qcom,sdm845-venus.yaml         | 5 +++++
+ 5 files changed, 25 insertions(+)
+
+diff --git a/Documentation/devicetree/bindings/media/qcom,msm8916-venus.yam=
+l b/Documentation/devicetree/bindings/media/qcom,msm8916-venus.yaml
+index 59ab16ad12f1..cb1b866d9c37 100644
+--- a/Documentation/devicetree/bindings/media/qcom,msm8916-venus.yaml
++++ b/Documentation/devicetree/bindings/media/qcom,msm8916-venus.yaml
+@@ -80,6 +80,11 @@ properties:
+     required:
+       - iommus
+=20
++  firmware-name:
++    maxItems: 1
++    description: |
++      Relative firmware image path for venus.
++
+ required:
+   - compatible
+   - reg
+diff --git a/Documentation/devicetree/bindings/media/qcom,msm8996-venus.yam=
+l b/Documentation/devicetree/bindings/media/qcom,msm8996-venus.yaml
+index 199f45217b4a..b8809325138f 100644
+--- a/Documentation/devicetree/bindings/media/qcom,msm8996-venus.yaml
++++ b/Documentation/devicetree/bindings/media/qcom,msm8996-venus.yaml
+@@ -107,6 +107,11 @@ properties:
+     required:
+       - iommus
+=20
++  firmware-name:
++    maxItems: 1
++    description: |
++      Relative firmware image path for venus.
++
+ required:
+   - compatible
+   - reg
+diff --git a/Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml=
+ b/Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml
+index 04013e5dd044..ffd3e2850366 100644
+--- a/Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml
++++ b/Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml
+@@ -99,6 +99,11 @@ properties:
+     required:
+       - iommus
+=20
++  firmware-name:
++    maxItems: 1
++    description: |
++      Relative firmware image path for venus.
++
+ required:
+   - compatible
+   - reg
+diff --git a/Documentation/devicetree/bindings/media/qcom,sdm845-venus-v2.y=
+aml b/Documentation/devicetree/bindings/media/qcom,sdm845-venus-v2.yaml
+index 04b9af4db191..cd7a5e1374ce 100644
+--- a/Documentation/devicetree/bindings/media/qcom,sdm845-venus-v2.yaml
++++ b/Documentation/devicetree/bindings/media/qcom,sdm845-venus-v2.yaml
+@@ -94,6 +94,11 @@ properties:
+     required:
+       - iommus
+=20
++  firmware-name:
++    maxItems: 1
++    description: |
++      Relative firmware image path for venus.
++
+ required:
+   - compatible
+   - reg
+diff --git a/Documentation/devicetree/bindings/media/qcom,sdm845-venus.yaml=
+ b/Documentation/devicetree/bindings/media/qcom,sdm845-venus.yaml
+index 680f37726fdf..ae256238a637 100644
+--- a/Documentation/devicetree/bindings/media/qcom,sdm845-venus.yaml
++++ b/Documentation/devicetree/bindings/media/qcom,sdm845-venus.yaml
+@@ -108,6 +108,11 @@ properties:
+     required:
+       - iommus
+=20
++  firmware-name:
++    maxItems: 1
++    description: |
++      Relative firmware image path for venus.
++
+ required:
+   - compatible
+   - reg
+--=20
+2.32.0
+
+
