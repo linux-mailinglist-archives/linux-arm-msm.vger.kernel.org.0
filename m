@@ -2,56 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CBADB3B05EB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jun 2021 15:36:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2B8543B0706
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jun 2021 16:11:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229988AbhFVNjB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Jun 2021 09:39:01 -0400
-Received: from m-r2.th.seeweb.it ([5.144.164.171]:56853 "EHLO
-        m-r2.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229907AbhFVNjB (ORCPT
+        id S231681AbhFVONr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Jun 2021 10:13:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41334 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231489AbhFVONq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Jun 2021 09:39:01 -0400
-Received: from [192.168.1.101] (83.6.168.10.neoplus.adsl.tpnet.pl [83.6.168.10])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+        Tue, 22 Jun 2021 10:13:46 -0400
+Received: from m-r1.th.seeweb.it (m-r1.th.seeweb.it [IPv6:2001:4b7a:2000:18::170])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E5C2C061574
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jun 2021 07:11:28 -0700 (PDT)
+Received: from IcarusMOD.eternityproject.eu (unknown [2.237.20.237])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 2E7D33E84E;
-        Tue, 22 Jun 2021 15:36:43 +0200 (CEST)
-Subject: Re: [PATCH 1/1] arm64: dts: qcom: msm8994-angler: Disable
- memory@3800000
-To:     Petr Vorel <petr.vorel@gmail.com>, linux-arm-msm@vger.kernel.org
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org
-References: <20210622034408.24904-1-petr.vorel@gmail.com>
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-Message-ID: <0cc0b88a-4a38-f74c-313d-e44d9ce1b815@somainline.org>
-Date:   Tue, 22 Jun 2021 15:36:42 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 1E9991F9C8;
+        Tue, 22 Jun 2021 16:11:26 +0200 (CEST)
+From:   AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>
+To:     bjorn.andersson@linaro.org
+Cc:     agross@kernel.org, daniel.lezcano@linaro.org, rjw@rjwysocki.net,
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, phone-devel@vger.kernel.org,
+        konrad.dybcio@somainline.org, marijn.suijten@somainline.org,
+        martin.botka@somainline.org, jeffrey.l.hugo@gmail.com,
+        jami.kettunen@somainline.org,
+        ~postmarketos/upstreaming@lists.sr.ht, devicetree@vger.kernel.org,
+        robh+dt@kernel.org, stephan@gerhold.net,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>
+Subject: [PATCH v7 0/5] Implement SPM/SAW for MSM8998 and SDM6xx
+Date:   Tue, 22 Jun 2021 16:11:12 +0200
+Message-Id: <20210622141117.358893-1-angelogioacchino.delregno@somainline.org>
+X-Mailer: git-send-email 2.32.0
 MIME-Version: 1.0
-In-Reply-To: <20210622034408.24904-1-petr.vorel@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Changes in v7:
+- Fixed functionality breakage on ARM for cpuidle-qcom-spm... now it works :))
+- Reworded description of patch 1/5
 
-I see no reason why reserving memory would make your phone unbootable.
+Changes in v6:
+- Moved cpuidle_driver to be private to cpuidle-qcom-spm (unused in spm.c),
+  now we are assigning the cpuidle_driver structure fields inside of the
+  spm_cpuidle_register function; this also fixes the cpumask assignment
+  issue from v5
+- Fixed another contamination from 2/3 in 1/3 (argh!! :])
+- Added dt-bindings documentation for the SPM driver
 
-With that, please check your downstream dmesg and look for a line like this:
+Changes in v5:
+- Fixed contamination from patch 2/3 in patch 1/3
+- Fixed missing bits in cpuidle-qcom-spm (thanks Stephan)
 
+Changes in v4:
+- Huge patch series has been split for better reviewability,
+  as suggested by Bjorn
 
-"<6>[    0.000000] cma: CMA: reserved 36 MiB at 0x0000000003800000 for cont_splash_mem"
+Changes in v3:
+- Rebased (no changes - was in previous series' v3)
 
+Changes in v2:
+- Fixed MSM8998 SAW parameters on SPM driver
 
-This is there for me on both 8994-kitakami and 8992-xiaomi-libra.
+Tested on the following smartphones:
+- Sony Xperia XA2        (SDM630)
+- Sony Xperia XA2 Ultra  (SDM630)
+- Sony Xperia 10         (SDM630)
+- Sony Xperia XZ Premium (MSM8998)
+- F(x)Tec Pro 1          (MSM8998)
 
-Qualcomm devices tend to map "dynamically-allocated" regions to the same addresses every time.
+This is a component that we can find on very old
+chips, like MSM8974; there, it has been used to actually do the
+power scaling basically "on its own" - sending the cores in a specific
+sleep mode to save power.
+On the newer ones, including MSM8998, SDM630, 660 and others, it is still
+present! Though, this time, it's being used for the cluster caches and it
+has a different firmware (and maybe it's also slightly different HW),
+implementing the SAWv4.1 set and getting controlled *not by the OS* but
+by other controllers in the SoC (like the OSM).
 
+Contrary from MSM8974 and the like, this new version of the SPM just
+requires us to set the initial parameters for AVS and *nothing else*, as
+its states will be totally managed internally.
 
-Konrad
+AngeloGioacchino Del Regno (5):
+  cpuidle: qcom_spm: Detach state machine from main SPM handling
+  dt-bindings: soc: qcom: Add devicetree binding for QCOM SPM
+  soc: qcom: spm: Implement support for SAWv4.1, SDM630/660 L2 AVS
+  soc: qcom: spm: Add compatible for MSM8998 SAWv4.1 L2
+  dt-bindings: soc: qcom: spm: Document SDM660 and MSM8998 compatibles
+
+ .../bindings/soc/qcom/qcom,spm.yaml           |  76 +++++
+ drivers/cpuidle/Kconfig.arm                   |   1 +
+ drivers/cpuidle/cpuidle-qcom-spm.c            | 304 ++++--------------
+ drivers/soc/qcom/Kconfig                      |   9 +
+ drivers/soc/qcom/Makefile                     |   1 +
+ drivers/soc/qcom/spm.c                        | 240 ++++++++++++++
+ include/soc/qcom/spm.h                        |  43 +++
+ 7 files changed, 438 insertions(+), 236 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,spm.yaml
+ create mode 100644 drivers/soc/qcom/spm.c
+ create mode 100644 include/soc/qcom/spm.h
+
+-- 
+2.32.0
+
