@@ -2,123 +2,165 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 94DB83B0D7A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jun 2021 21:10:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6101F3B0DC5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jun 2021 21:45:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230330AbhFVTMv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Jun 2021 15:12:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54160 "EHLO
+        id S232021AbhFVTrx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Jun 2021 15:47:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33628 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229786AbhFVTMv (ORCPT
+        with ESMTP id S230330AbhFVTrx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Jun 2021 15:12:51 -0400
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E9B4C061574;
-        Tue, 22 Jun 2021 12:10:34 -0700 (PDT)
-Received: by mail-wr1-x432.google.com with SMTP id a13so3107733wrf.10;
-        Tue, 22 Jun 2021 12:10:33 -0700 (PDT)
+        Tue, 22 Jun 2021 15:47:53 -0400
+Received: from mail-qk1-x729.google.com (mail-qk1-x729.google.com [IPv6:2607:f8b0:4864:20::729])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31379C061574
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jun 2021 12:45:36 -0700 (PDT)
+Received: by mail-qk1-x729.google.com with SMTP id c23so7105624qkc.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jun 2021 12:45:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=rX6KIvYnLjrPDo/eaefN8OjY3RSfelT8qPY3zziO7bo=;
-        b=a1WX3f6TzwkauIrHoo2NMwjXcBeQe7WmRfhuIJVvrgRKzuismp1I/+qEUmC7//lqte
-         90u6gKGt60Ps0iYVijXYAbVPMhxFW6GjwI4ztaaLhucXj+CtU51BxYlBm2CyfPBsilGO
-         eS4ZQz2gU92GKweNDJaDDo12nr9i093XI+GnjwnCUttJvpe0ISLOdURqAm6ls52pzh2l
-         A2SRYqNurjDClsNGjHDgLTvB3+TdtokLZcYz+7KG9FAQPmWGuDoldNM0hZixB595Qm0M
-         WhUNWzMuiQOt4u7zMlDTwL/gy93LpMJWUOtJElYluFrIj9p8EgB0cOo4XtV71wfxYv1t
-         fv7A==
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=KbphWW+YCq0HiY8JKMK80s61y/VI/u5uRCvjvuYgRvo=;
+        b=B0KKMBDv6mmc1lnaI4uPkAm6cPTmdb7TIXjhicSbGznIFUVv9JjjbjCqNCaOd7EpYM
+         pnnEU8sbe0AVpMJXATFzGWXRlVkOSlojtJ9YUkl0HamHxDkd3CMgYIcUaibp/wBrGa39
+         arNtBQL0FAKJSiCk0bIOZEIS47O+vz6l2FCAk=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=rX6KIvYnLjrPDo/eaefN8OjY3RSfelT8qPY3zziO7bo=;
-        b=kg+HLJWE0SfawC5roawfTlqP4eVBO1T1rAaiNfe5Rgd6np6M0wC427dZSBDom8zxNs
-         yNIOQ8NIneQxb8wrZc5PUWVXrwd9EPjJCjhIgI4i8CLwVh0n8cIGKyv6w6ZSX0f/1dLa
-         yzacj5OxCORKfuMDDsrUwZ+GcchYS85LDKOiEdU1dihncDpBT4L7PEVYVFdmSPQqozOn
-         jBMicOFmob+ARnb1haLjmv+iqT6YJCEzKN8Z0qNTJ3pi4wp3s/7KT/7YVlHGzr6wm0Nx
-         okBlQ5x6wkNmHANlpnI9WHPJf9yH/ulr+eMReRCBSpE9/R4Xg6aK85FZj33+MzjfMbL8
-         WVyQ==
-X-Gm-Message-State: AOAM532X1LbuPa8Qb4KRTickxDz9jZz2ppDXN2QVdX8DXPPz9+0VvCfE
-        T0fOWFBPC1krmHRkMJLgFqdgTctPsCKJHA==
-X-Google-Smtp-Source: ABdhPJxjJMJF51K+qxzDXc7DqHgtetS7uVmcOQez8ncBMjmjk2b2b0Ds0L5XCR23eEfcmUvZgJ54dw==
-X-Received: by 2002:a5d:6daf:: with SMTP id u15mr6720139wrs.400.1624389032596;
-        Tue, 22 Jun 2021 12:10:32 -0700 (PDT)
-Received: from dell5510.suse.de (gw.ms-free.net. [95.85.240.250])
-        by smtp.gmail.com with ESMTPSA id f12sm284021wru.81.2021.06.22.12.10.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Jun 2021 12:10:32 -0700 (PDT)
-From:   Petr Vorel <petr.vorel@gmail.com>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     Petr Vorel <petr.vorel@gmail.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Alexey Minnekhanov <alexeymin@postmarketos.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org
-Subject: [PATCH v4 1/1] arm64: dts: qcom: msm8994-angler: Disable cont_splash_mem
-Date:   Tue, 22 Jun 2021 21:10:19 +0200
-Message-Id: <20210622191019.23771-1-petr.vorel@gmail.com>
-X-Mailer: git-send-email 2.32.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=KbphWW+YCq0HiY8JKMK80s61y/VI/u5uRCvjvuYgRvo=;
+        b=N0QRjqi+nOGpUPMV62MmJF7AyaqbT8MOSXU4NA0WIt/BwyZ1BTnCJnncvGDN87LtIi
+         fI96AEjVNuwXsvaJ/j7pCKidmQniWV8o3TH4hsiUHgjmAuTWO6SyFzlpPMzD5a0h79tK
+         hWQaHYW+mU74kokF3YPtVoy0KPkaWi1MpvJ3Q5ivfELZ5uiA8J5Coh8Qch75S0RlRMas
+         3xkk10WYaxn3gxcDV67HGRxcTs7QzMXrjusXRDq4qouCMkR3yaE2BqVP7+/6/BkSofoF
+         RtglqSON85os4Fqh/aJzEesLBktz3xNnqGLpUCTS+y4oFKsXlfzrRE2iVhxq6R9UWgSd
+         6eWQ==
+X-Gm-Message-State: AOAM53148vEZo2V2/QNT3vAl5j7Q4mjEt+hjpfqFKpJmHgPSSztnmrwH
+        07hknGjbqv7aOoN+yFVlSLteAv4Npf9rWw==
+X-Google-Smtp-Source: ABdhPJwjWBPHijAmRvDFflCZF8GzXjOnWwWS1yPD+azCXKbisBRKeyonzL4eVgES2xUqauZPYbiNtQ==
+X-Received: by 2002:a05:622a:15:: with SMTP id x21mr384862qtw.236.1624390514451;
+        Tue, 22 Jun 2021 12:35:14 -0700 (PDT)
+Received: from mail-qk1-f176.google.com (mail-qk1-f176.google.com. [209.85.222.176])
+        by smtp.gmail.com with ESMTPSA id i67sm13842341qkd.90.2021.06.22.12.35.12
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 22 Jun 2021 12:35:13 -0700 (PDT)
+Received: by mail-qk1-f176.google.com with SMTP id q190so39870923qkd.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jun 2021 12:35:12 -0700 (PDT)
+X-Received: by 2002:a25:2405:: with SMTP id k5mr6758869ybk.405.1624390512166;
+ Tue, 22 Jun 2021 12:35:12 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20210621235248.2521620-1-dianders@chromium.org>
+ <20210621165230.4.Id84a954e705fcad3fdb35beb2bc372e4bf2108c7@changeid> <CACK8Z6EVmnMx4X8ZF7QSm58KCMMAkgSa+S9YkH+mC5RfmeyYoA@mail.gmail.com>
+In-Reply-To: <CACK8Z6EVmnMx4X8ZF7QSm58KCMMAkgSa+S9YkH+mC5RfmeyYoA@mail.gmail.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Tue, 22 Jun 2021 12:35:00 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=U9WqEKVgX6p1Eaf5hvpXet0e_rqKKS4YRNsDrLW5R5zg@mail.gmail.com>
+Message-ID: <CAD=FV=U9WqEKVgX6p1Eaf5hvpXet0e_rqKKS4YRNsDrLW5R5zg@mail.gmail.com>
+Subject: Re: [PATCH 4/6] iommu: Combine device strictness requests with the
+ global default
+To:     Rajat Jain <rajatja@google.com>
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+        Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Adrian Hunter <adrian.hunter@intel.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Rob Clark <robdclark@chromium.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-pci@vger.kernel.org, quic_c_gdjako@quicinc.com,
+        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
+        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
+        Sonny Rao <sonnyrao@chromium.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Linux MMC List <linux-mmc@vger.kernel.org>,
+        Veerabhadrarao Badiganti <vbadigan@codeaurora.org>,
+        Saravana Kannan <saravanak@google.com>,
+        Joel Fernandes <joel@joelfernandes.org>,
+        LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-As the default definition breaks booting angler:
-[    1.862561] printk: console [ttyMSM0] enabled
-[    1.872260] msm_serial: driver initialized
-D -     15524 - pm_driver_init, Delta
+Hi,
 
-cont_splash_mem was introduced in 74d6d0a145835, but the problem
-manifested after 86588296acbf ("fdt: Properly handle "no-map" field
-in the memory region").
+On Tue, Jun 22, 2021 at 11:45 AM Rajat Jain <rajatja@google.com> wrote:
+>
+> On Mon, Jun 21, 2021 at 4:53 PM Douglas Anderson <dianders@chromium.org> wrote:
+> >
+> > In the patch ("drivers: base: Add bits to struct device to control
+> > iommu strictness") we add the ability for devices to tell us about
+> > their IOMMU strictness requirements. Let's now take that into account
+> > in the IOMMU layer.
+> >
+> > A few notes here:
+> > * Presumably this is always how iommu_get_dma_strict() was intended to
+> >   behave. Had this not been the intention then it never would have
+> >   taken a domain as a parameter.
+> > * The iommu_set_dma_strict() feels awfully non-symmetric now. That
+> >   function sets the _default_ strictness globally in the system
+> >   whereas iommu_get_dma_strict() returns the value for a given domain
+> >   (falling back to the default). Presumably, at least, the fact that
+> >   iommu_set_dma_strict() doesn't take a domain makes this obvious.
+> >
+> > The function iommu_get_dma_strict() should now make it super obvious
+> > where strictness comes from and who overides who. Though the function
+> > changed a bunch to make the logic clearer, the only two new rules
+> > should be:
+> > * Devices can force strictness for themselves, overriding the cmdline
+> >   "iommu.strict=0" or a call to iommu_set_dma_strict(false)).
+> > * Devices can request non-strictness for themselves, assuming there
+> >   was no cmdline "iommu.strict=1" or a call to
+> >   iommu_set_dma_strict(true).
+>
+> Along the same lines, I believe a platform (device tree / ACPI) should
+> also be able to have a say in this. I assume in your proposal, a
+> platform would expose a property in device tree which the device
+> driver would need to parse and then use it to set these bits in the
+> "struct device"?
 
-Disabling it because Angler's firmware does not report where the memory
-is allocated (dmesg from downstream kernel):
-[    0.000000] cma: Found cont_splash_mem@0, memory base 0x0000000000000000, size 16 MiB, limit 0x0000000000000000
-[    0.000000] cma: CMA: reserved 16 MiB at 0x0000000000000000 for cont_splash_mem
+Nothing would prevent creating a device tree or ACPI property that
+caused either "force-strict" or "request-non-strict" from being set if
+everyone agrees that it's a good idea. I wouldn't reject the idea
+myself, but I do worry that we'd devolve into the usual bikeshed for
+exactly how this should look. I talked about this a bit in my response
+to Saravana, but basically:
 
-Similar issue might be on Google Nexus 5X (lg-bullhead). Other MSM8992/4
-are known to report correct address.
+* If there was some generic property, would we call it "untrusted",
+"external", or something else?
 
-Fixes: 74d6d0a145835 ("arm64: dts: qcom: msm8994/8994-kitakami: Fix up
-the memory map")
+* How do you describe "trust" in a generic "objective" way? It's not
+really boolean and trying to describe exactly how trustworthy
+something should be considered is hard.
 
-Suggested-by: Konrad Dybcio <konradybcio@gmail.com>
-Signed-off-by: Petr Vorel <petr.vorel@gmail.com>
----
-Changes v3->v4:
-* add a comment in dts (asked by Konrad)
+* At least for the device tree there's a general requirement that it
+describes the hardware and not so much how the software should
+configure the hardware. As I understand it there is _some_ leeway here
+where it's OK to describe how the hardware was designed for the OS to
+configure it, but it's a pretty high bar and a hard sell. In general
+the device tree isn't supposed to be used to describe "policy". In
+other words: if one OS might decide on one setting and another OS on
+another then it doesn't really belong in the device tree.
 
-Kind regards,
-Petr
+* In general the kernel is also not really supposed to have policy
+hardcoded in either, though it feels like we can get away with having
+a good default/sane policy and allowing overriding the policy with
+command line parameters (like iommu.strict). In the case where
+something has to be configured at bootup there's not many ways to do
+better.
 
- arch/arm64/boot/dts/qcom/msm8994-angler-rev-101.dts | 4 ++++
- 1 file changed, 4 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8994-angler-rev-101.dts b/arch/arm64/boot/dts/qcom/msm8994-angler-rev-101.dts
-index ffe1a9bd8f70..c096b7758aa0 100644
---- a/arch/arm64/boot/dts/qcom/msm8994-angler-rev-101.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8994-angler-rev-101.dts
-@@ -1,12 +1,16 @@
- // SPDX-License-Identifier: GPL-2.0-only
- /* Copyright (c) 2015, Huawei Inc. All rights reserved.
-  * Copyright (c) 2016, The Linux Foundation. All rights reserved.
-+ * Copyright (c) 2021, Petr Vorel <petr.vorel@gmail.com>
-  */
- 
- /dts-v1/;
- 
- #include "msm8994.dtsi"
- 
-+/* Angler's firmware does not report where the memory is allocated */
-+/delete-node/ &cont_splash_mem;
-+
- / {
- 	model = "Huawei Nexus 6P";
- 	compatible = "huawei,angler", "qcom,msm8994";
--- 
-2.32.0
+tl;dr: I have no plans to try to make an overarching property, but my
+patch series does allow subsystems to come up with and easily
+implement their own rules as it makes sense. While this might seem
+hodgepodge I prefer to see it as "flexible" since I'm not convinced
+that we're going to be able to come up with an overarching trust
+framework.
 
+-Doug
