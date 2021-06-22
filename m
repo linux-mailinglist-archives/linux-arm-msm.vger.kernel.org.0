@@ -2,101 +2,262 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A21793B0D1D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jun 2021 20:43:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B5D913B0D29
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jun 2021 20:45:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232400AbhFVSqG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Jun 2021 14:46:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48114 "EHLO
+        id S232634AbhFVSsE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Jun 2021 14:48:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48576 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230146AbhFVSqG (ORCPT
+        with ESMTP id S232616AbhFVSsD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Jun 2021 14:46:06 -0400
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 217F7C061574;
-        Tue, 22 Jun 2021 11:43:50 -0700 (PDT)
-Received: by mail-wm1-x32b.google.com with SMTP id p10-20020a05600c430ab02901df57d735f7so2408172wme.3;
-        Tue, 22 Jun 2021 11:43:50 -0700 (PDT)
+        Tue, 22 Jun 2021 14:48:03 -0400
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58259C06175F
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jun 2021 11:45:46 -0700 (PDT)
+Received: by mail-lf1-x132.google.com with SMTP id i13so37513792lfc.7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jun 2021 11:45:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:reply-to:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=ij57y9QyVqsVZQZ9EmdKCd4tPPR9xvNugibrUiD2Ezg=;
-        b=Y4rQxoyxHm9Dku7wvmmKcJxmF4PD70ImFadzO06BwY+3YiBDBj1sSpuNHFtNPVtlnL
-         3Mda7mCX/XVcvnz2oQpt41nhzN04PDtfySprgCT8EFaWQXyrzRV/TLYYQjGZ6JRRMJbn
-         b68/7hjhDWaTKUsNmA0RSbHDSlZu64fy6j55wE81NnUiO42lpY07QKBeb7t0YxtFdrBC
-         H+QM1yu8ca1mILKsxv+vRw90ZsLC7DAqMZW66KrCF7ylCeCnNmQ1LGsEjKjfTyqSfhQE
-         2OREFbzoN6izXe6Z/c72t7Jnd8hYJBV5xuNhv2FlU2ewkyeP89rg/odUFpdu7+xt33cS
-         P4zg==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=UmuRYxjET5EALM+FCT07y3AoMfWe7cxAE7p3HDo8x9A=;
+        b=VzmzR6LCQB9s+J6u+Ao3+LmOdty+YPR7YmBp3X2hI8TbwEEk/ar3YTRCx9B/LT66Pf
+         jBxcuU7PBhl/9joavTTcEIv0KIjyX8MgzBrWkO9OfbjTAjtVXBoq/WACzgfo8D7VRNVU
+         GJpB+HdujoRkwmeLlmN3Hika9QSoTAoUhnxau2GtMI4ec0KLiNYWSIyfepWt9b2VdCgY
+         lwDvQXxHH5v24ck7fvHS4cFrGgCKG192xepc9KRUfqp6dTOPrbKIj5XeBjR0LGo1JaOQ
+         hVNDP5DWzygmDKqUgUnGB5dbYAhKOH4lCEEOrJZKF6+fPmqNS0Gj7tsS5l2mYSnoaSv4
+         /1ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:reply-to
-         :references:mime-version:content-disposition:in-reply-to;
-        bh=ij57y9QyVqsVZQZ9EmdKCd4tPPR9xvNugibrUiD2Ezg=;
-        b=a7pal9KGFcZrNxswi4teVWM+h8XjEIBmCwrx5AGv9sAKbsnvZ9l/ndAo+DsiC9DEou
-         7ch3GiJEcRgODA+kZJ5laf0HhZQGEsI/V+0T/1lCPocQTLMzlsrItHRLbEZi9PDOlMPl
-         l9RKVFOt/rbaiuSsVerNVBs8EowPGZzMhgrcTCz7RuB7C5/8YwGX9Z2wWTItlefuySbZ
-         otAhG3iyR6QjHEMUL8yTzYMbb9xUZuAn63BDpQAMxTsZ+6oWnPpZagmn/4smp+MFCJXJ
-         KJF7L+U4vzBnjt8vtuAvnBv/tfSSFmu0WgQ5iBVmnHkFeRQBfbFgvjP9Gd3WgpmTEJpH
-         7Tlg==
-X-Gm-Message-State: AOAM533fwpoM8s/JCzZjt6tuopfb2M0MqauW00Ve4RI1noMf0t/tBHQl
-        K45m7AHXFCjgYduZ3ssJhX4=
-X-Google-Smtp-Source: ABdhPJwjJSDRBScEE6dQC00xM4RUvb1vZW8ttmfYbsu3P0B9YpoFFLHZnMyptDQaGavR+KLL5eyg9g==
-X-Received: by 2002:a1c:5413:: with SMTP id i19mr6459260wmb.12.1624387428745;
-        Tue, 22 Jun 2021 11:43:48 -0700 (PDT)
-Received: from pevik (gw.ms-free.net. [95.85.240.250])
-        by smtp.gmail.com with ESMTPSA id x18sm202418wrw.19.2021.06.22.11.43.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Jun 2021 11:43:48 -0700 (PDT)
-Date:   Tue, 22 Jun 2021 20:43:44 +0200
-From:   Petr Vorel <petr.vorel@gmail.com>
-To:     Konrad Dybcio <konradybcio@gmail.com>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Alexey Minnekhanov <alexeymin@postmarketos.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org
-Subject: Re: [PATCH v2 1/1] arm64: dts: qcom: msm8994-angler: Fix
- cont_splash_mem
-Message-ID: <YNIvYJpxpuXOr22R@pevik>
-Reply-To: Petr Vorel <petr.vorel@gmail.com>
-References: <20210622181056.27632-1-petr.vorel@gmail.com>
- <de10e844-b4c1-b3d4-cdd7-1491335285d9@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=UmuRYxjET5EALM+FCT07y3AoMfWe7cxAE7p3HDo8x9A=;
+        b=Qz0/wRJMosybpUsrrcxZ24K2mIeI1Rqcu25jD2CEi5sgYUSJ7Lq/FvN+PIbxNu0Guv
+         zOYfe5Y5fTz4LFNivbZYHOVVpyCqXA/74/FiF0+NSRCPlZm1UtIUFVtpGo+jmJVgrMRg
+         mD7rL5F3HxTcjn01J6B+O2rNscWzg2NQoZyMk6cICjBGrr22CUv81BUKPEzGWOcXWA+Y
+         13fTALxPZFOcc4r2gstQne58BXT79WwRygmEVlXqjAhEVmHB9Sb4whqRXmgiooA7RiA2
+         71WCNtIjNLjB/VsqnSUWPhy0LPsqYxPMeNUcZeHZexnglJR94WAzdwLoP4p0QgNXkaU6
+         FeoQ==
+X-Gm-Message-State: AOAM532VRasS3FLg0teExK0A6s9zizLzTgc4tXo0uj+24gPFCVUb/4BU
+        j41wZa1ZWXDADVZk03idkg06audfkmtllYVaV1smYw==
+X-Google-Smtp-Source: ABdhPJz3y5Lck2F4f7THKOpZIcz1XSUJ+0RoljLMYdPiKKLuwBXCT/AqNHBFGoy6ZFXZQT9TlUO8qDUNhaWEm+sp2DE=
+X-Received: by 2002:a05:6512:baa:: with SMTP id b42mr3799463lfv.487.1624387544227;
+ Tue, 22 Jun 2021 11:45:44 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <de10e844-b4c1-b3d4-cdd7-1491335285d9@gmail.com>
+References: <20210621235248.2521620-1-dianders@chromium.org> <20210621165230.4.Id84a954e705fcad3fdb35beb2bc372e4bf2108c7@changeid>
+In-Reply-To: <20210621165230.4.Id84a954e705fcad3fdb35beb2bc372e4bf2108c7@changeid>
+From:   Rajat Jain <rajatja@google.com>
+Date:   Tue, 22 Jun 2021 11:45:03 -0700
+Message-ID: <CACK8Z6EVmnMx4X8ZF7QSm58KCMMAkgSa+S9YkH+mC5RfmeyYoA@mail.gmail.com>
+Subject: Re: [PATCH 4/6] iommu: Combine device strictness requests with the
+ global default
+To:     Douglas Anderson <dianders@chromium.org>
+Cc:     gregkh@linuxfoundation.org, rafael@kernel.org,
+        rafael.j.wysocki@intel.com, will@kernel.org, robin.murphy@arm.com,
+        joro@8bytes.org, bjorn.andersson@linaro.org,
+        ulf.hansson@linaro.org, adrian.hunter@intel.com,
+        bhelgaas@google.com, robdclark@chromium.org,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        quic_c_gdjako@quicinc.com, iommu@lists.linux-foundation.org,
+        sonnyrao@chromium.org, saiprakash.ranjan@codeaurora.org,
+        linux-mmc@vger.kernel.org, vbadigan@codeaurora.org,
+        saravanak@google.com, joel@joelfernandes.org,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Konrad,
+On Mon, Jun 21, 2021 at 4:53 PM Douglas Anderson <dianders@chromium.org> wrote:
+>
+> In the patch ("drivers: base: Add bits to struct device to control
+> iommu strictness") we add the ability for devices to tell us about
+> their IOMMU strictness requirements. Let's now take that into account
+> in the IOMMU layer.
+>
+> A few notes here:
+> * Presumably this is always how iommu_get_dma_strict() was intended to
+>   behave. Had this not been the intention then it never would have
+>   taken a domain as a parameter.
+> * The iommu_set_dma_strict() feels awfully non-symmetric now. That
+>   function sets the _default_ strictness globally in the system
+>   whereas iommu_get_dma_strict() returns the value for a given domain
+>   (falling back to the default). Presumably, at least, the fact that
+>   iommu_set_dma_strict() doesn't take a domain makes this obvious.
+>
+> The function iommu_get_dma_strict() should now make it super obvious
+> where strictness comes from and who overides who. Though the function
+> changed a bunch to make the logic clearer, the only two new rules
+> should be:
+> * Devices can force strictness for themselves, overriding the cmdline
+>   "iommu.strict=0" or a call to iommu_set_dma_strict(false)).
+> * Devices can request non-strictness for themselves, assuming there
+>   was no cmdline "iommu.strict=1" or a call to
+>   iommu_set_dma_strict(true).
 
-> Ah yes, I think I know the issue..
+Along the same lines, I believe a platform (device tree / ACPI) should
+also be able to have a say in this. I assume in your proposal, a
+platform would expose a property in device tree which the device
+driver would need to parse and then use it to set these bits in the
+"struct device"?
+
+Thanks,
+
+Rajat
 
 
-> Angler's firmware (probably Huawei's job, but unsure) seems to make IOMMUs (another guesstimate)
-> not report where the memory is allocated. If it's an issue only on these boards, I reckon
-> it would be better to just add
 
-
-> "/delete-node/ &cont_splash_mem;"
-Makes sense, I'll send v3. I didn't know proper syntax, that's why used
-memory@3800000 instead of alias.
-
-> in angler/bullhead DTSI, as other 8992/4 devices seem to not have this issue. But as I've said, bullhead could
-
-> probably work anyway, but if it doesn't, it's probably Google's job after all..
-Although bullhead is from LG, it might be affected as well.
-Hope somebody with this device test it and send patch if needed.
-
-
-> P.S
-> I did not suggest redefining the node, as the memory@0 is reserved for SoC registers
-> and your firmware is just playing tricks on you. Your RAM starts @ 0x80000000.
-Thanks for an explanation.
-
-> Konrad
-
-Kind regards,
-Petr
+>
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> ---
+>
+>  drivers/iommu/iommu.c | 56 +++++++++++++++++++++++++++++++++----------
+>  include/linux/iommu.h |  2 ++
+>  2 files changed, 45 insertions(+), 13 deletions(-)
+>
+> diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
+> index 808ab70d5df5..0c84a4c06110 100644
+> --- a/drivers/iommu/iommu.c
+> +++ b/drivers/iommu/iommu.c
+> @@ -28,8 +28,19 @@
+>  static struct kset *iommu_group_kset;
+>  static DEFINE_IDA(iommu_group_ida);
+>
+> +enum iommu_strictness {
+> +       IOMMU_DEFAULT_STRICTNESS = -1,
+> +       IOMMU_NOT_STRICT = 0,
+> +       IOMMU_STRICT = 1,
+> +};
+> +static inline enum iommu_strictness bool_to_strictness(bool strictness)
+> +{
+> +       return (enum iommu_strictness)strictness;
+> +}
+> +
+>  static unsigned int iommu_def_domain_type __read_mostly;
+> -static bool iommu_dma_strict __read_mostly = true;
+> +static enum iommu_strictness cmdline_dma_strict __read_mostly = IOMMU_DEFAULT_STRICTNESS;
+> +static enum iommu_strictness driver_dma_strict __read_mostly = IOMMU_DEFAULT_STRICTNESS;
+>  static u32 iommu_cmd_line __read_mostly;
+>
+>  struct iommu_group {
+> @@ -69,7 +80,6 @@ static const char * const iommu_group_resv_type_string[] = {
+>  };
+>
+>  #define IOMMU_CMD_LINE_DMA_API         BIT(0)
+> -#define IOMMU_CMD_LINE_STRICT          BIT(1)
+>
+>  static int iommu_alloc_default_domain(struct iommu_group *group,
+>                                       struct device *dev);
+> @@ -336,25 +346,38 @@ early_param("iommu.passthrough", iommu_set_def_domain_type);
+>
+>  static int __init iommu_dma_setup(char *str)
+>  {
+> -       int ret = kstrtobool(str, &iommu_dma_strict);
+> +       bool strict;
+> +       int ret = kstrtobool(str, &strict);
+>
+>         if (!ret)
+> -               iommu_cmd_line |= IOMMU_CMD_LINE_STRICT;
+> +               cmdline_dma_strict = bool_to_strictness(strict);
+>         return ret;
+>  }
+>  early_param("iommu.strict", iommu_dma_setup);
+>
+>  void iommu_set_dma_strict(bool strict)
+>  {
+> -       if (strict || !(iommu_cmd_line & IOMMU_CMD_LINE_STRICT))
+> -               iommu_dma_strict = strict;
+> +       /* A driver can request strictness but not the other way around */
+> +       if (driver_dma_strict != IOMMU_STRICT)
+> +               driver_dma_strict = bool_to_strictness(strict);
+>  }
+>
+>  bool iommu_get_dma_strict(struct iommu_domain *domain)
+>  {
+> -       /* only allow lazy flushing for DMA domains */
+> -       if (domain->type == IOMMU_DOMAIN_DMA)
+> -               return iommu_dma_strict;
+> +       /* Non-DMA domains or anyone forcing it to strict makes it strict */
+> +       if (domain->type != IOMMU_DOMAIN_DMA ||
+> +           cmdline_dma_strict == IOMMU_STRICT ||
+> +           driver_dma_strict == IOMMU_STRICT ||
+> +           domain->force_strict)
+> +               return true;
+> +
+> +       /* Anyone requesting non-strict (if no forces) makes it non-strict */
+> +       if (cmdline_dma_strict == IOMMU_NOT_STRICT ||
+> +           driver_dma_strict == IOMMU_NOT_STRICT ||
+> +           domain->request_non_strict)
+> +               return false;
+> +
+> +       /* Nobody said anything, so it's strict by default */
+>         return true;
+>  }
+>  EXPORT_SYMBOL_GPL(iommu_get_dma_strict);
+> @@ -1519,7 +1542,8 @@ static int iommu_get_def_domain_type(struct device *dev)
+>
+>  static int iommu_group_alloc_default_domain(struct bus_type *bus,
+>                                             struct iommu_group *group,
+> -                                           unsigned int type)
+> +                                           unsigned int type,
+> +                                           struct device *dev)
+>  {
+>         struct iommu_domain *dom;
+>
+> @@ -1534,6 +1558,12 @@ static int iommu_group_alloc_default_domain(struct bus_type *bus,
+>         if (!dom)
+>                 return -ENOMEM;
+>
+> +       /* Save the strictness requests from the device */
+> +       if (dev && type == IOMMU_DOMAIN_DMA) {
+> +               dom->request_non_strict = dev->request_non_strict_iommu;
+> +               dom->force_strict = dev->force_strict_iommu;
+> +       }
+> +
+>         group->default_domain = dom;
+>         if (!group->domain)
+>                 group->domain = dom;
+> @@ -1550,7 +1580,7 @@ static int iommu_alloc_default_domain(struct iommu_group *group,
+>
+>         type = iommu_get_def_domain_type(dev) ? : iommu_def_domain_type;
+>
+> -       return iommu_group_alloc_default_domain(dev->bus, group, type);
+> +       return iommu_group_alloc_default_domain(dev->bus, group, type, dev);
+>  }
+>
+>  /**
+> @@ -1721,7 +1751,7 @@ static void probe_alloc_default_domain(struct bus_type *bus,
+>         if (!gtype.type)
+>                 gtype.type = iommu_def_domain_type;
+>
+> -       iommu_group_alloc_default_domain(bus, group, gtype.type);
+> +       iommu_group_alloc_default_domain(bus, group, gtype.type, NULL);
+>
+>  }
+>
+> @@ -3130,7 +3160,7 @@ static int iommu_change_dev_def_domain(struct iommu_group *group,
+>         }
+>
+>         /* Sets group->default_domain to the newly allocated domain */
+> -       ret = iommu_group_alloc_default_domain(dev->bus, group, type);
+> +       ret = iommu_group_alloc_default_domain(dev->bus, group, type, dev);
+>         if (ret)
+>                 goto out;
+>
+> diff --git a/include/linux/iommu.h b/include/linux/iommu.h
+> index 32d448050bf7..0bddef77f415 100644
+> --- a/include/linux/iommu.h
+> +++ b/include/linux/iommu.h
+> @@ -81,6 +81,8 @@ struct iommu_domain_geometry {
+>
+>  struct iommu_domain {
+>         unsigned type;
+> +       bool force_strict:1;
+> +       bool request_non_strict:1;
+>         const struct iommu_ops *ops;
+>         unsigned long pgsize_bitmap;    /* Bitmap of page sizes in use */
+>         iommu_fault_handler_t handler;
+> --
+> 2.32.0.288.g62a8d224e6-goog
+>
