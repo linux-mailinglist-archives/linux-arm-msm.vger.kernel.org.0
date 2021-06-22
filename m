@@ -2,98 +2,275 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C60B43AFB19
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jun 2021 04:35:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5DBA73AFB36
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jun 2021 04:56:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231218AbhFVChn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Jun 2021 22:37:43 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:27268 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230495AbhFVChm (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Jun 2021 22:37:42 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1624329328; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=IG4TSyrksizFymZrnKCgKZ+EJpwEDN3w0qluXMi0ZD8=; b=OMe/mLsshUwBKsJJfT3WIRQmTxAwi4SbbKJWPMzwSKUOYb1rFa2FBuyfAlbooVqpNdW8fUCS
- F6QJE75Hs9dG7otLdij1nRe/tfJZMlIJVxb+dbgv6+UP6dHTLLF+oZbvcyAibvGyauazSZMz
- sxeIk6ulsCELg9tmoR4JYU5Ogo0=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
- 60d14c5c8491191eb30a0791 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 22 Jun 2021 02:35:08
- GMT
-Sender: bbhatt=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 9891EC43217; Tue, 22 Jun 2021 02:35:08 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from malabar-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: bbhatt)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 79A33C433F1;
-        Tue, 22 Jun 2021 02:35:07 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 79A33C433F1
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=bbhatt@codeaurora.org
-From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
-To:     manivannan.sadhasivam@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
-        jhugo@codeaurora.org, linux-kernel@vger.kernel.org,
-        loic.poulain@linaro.org, Bhaumik Bhatt <bbhatt@codeaurora.org>
-Subject: [PATCH v2] bus: mhi: core: Disable pre-emption for events tasklet processing
-Date:   Mon, 21 Jun 2021 19:34:52 -0700
-Message-Id: <1624329292-27092-1-git-send-email-bbhatt@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        id S231232AbhFVC6s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Jun 2021 22:58:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57558 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231196AbhFVC6s (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 21 Jun 2021 22:58:48 -0400
+Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com [IPv6:2607:f8b0:4864:20::730])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13A77C061756
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jun 2021 19:56:31 -0700 (PDT)
+Received: by mail-qk1-x730.google.com with SMTP id j184so35862347qkd.6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Jun 2021 19:56:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=o7WniBxc7u8I3jtLWFb2QyQubQrJgur3uSaTIY2hHpY=;
+        b=IlhIu8fFZb/00DISAJcThl4zsHWxZQu1Oa/M3ahKUhWaxlkRjELVIGBWjVa/lOqm5w
+         R8ijcCQtXUjJKTXjsyL8XC9IeSNYcoE/hXhy0707xoE6Bp7mwCrtqvMSIwg7XRSkNIE+
+         41oC8qsSXK/w+ICTlHHEk6csKeMmNkBnGKqC4mrBOzIjGGVZUX6Nspzkfc0P0dg2TAX0
+         qGjTjgj9xBimf62Siz9ycYnskVpQcN4f68bXYa47M7lrcmqv9sUfStAIPZ+oYS0gQPSS
+         axREBBohkOyHxdZVxh0tmhTQ6DCvRJCFxRlsELoVQjr6rZofiDiCLzoIC+fkMke5eZXb
+         KOyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=o7WniBxc7u8I3jtLWFb2QyQubQrJgur3uSaTIY2hHpY=;
+        b=f/HJgAGM9sw3BohxwaiVS/QRLdcokwoDEzzBMdwHkvICHkEG3L+qzboG+Hi3Elx1Yk
+         R6n6dWDsIweMaCOqNsMwk7oRSxgOl9XR3THowiWv2iSy9u3iA20Q0YACM5xZ/cbViOCC
+         +BPrAxUHwhw+zXHvERlqWOAuLKjQFm3smszmAoDapP5JiC7j7llLPA9Jx/0ZxSLF1Aib
+         OAoZhII5OFWkMBy2Qnh5nyLoAKhEtHchIuz4mHNVGNKlVODqyjY2Xr4DYJXzgYO7NOjE
+         Qdi4f8djgkPs/hIW7XkCdj8DONjP/eJYgjSAKkWv3JnErmygOco9pGhAwQBwU+RXKrLo
+         0cTw==
+X-Gm-Message-State: AOAM532NJu8u6abZpLRs3srvvnkPKBqXc2KKPy3eeAhukwDqammMKm99
+        nD2GGMaI3cAHO/M8zRr/7kl8pv4eWWwi/zcNrgHH7Q==
+X-Google-Smtp-Source: ABdhPJyQjeT6WzR5lehTnPxseq2wdji+PgNfDU28Fwy5MqjJ3yxJk8R8kSGnjCwg/Kmk7+Pz3hc0ucfFrwGQ91Xpnkk=
+X-Received: by 2002:a25:bcb:: with SMTP id 194mr1812975ybl.32.1624330590627;
+ Mon, 21 Jun 2021 19:56:30 -0700 (PDT)
+MIME-Version: 1.0
+References: <20210621235248.2521620-1-dianders@chromium.org> <20210621165230.4.Id84a954e705fcad3fdb35beb2bc372e4bf2108c7@changeid>
+In-Reply-To: <20210621165230.4.Id84a954e705fcad3fdb35beb2bc372e4bf2108c7@changeid>
+From:   Saravana Kannan <saravanak@google.com>
+Date:   Mon, 21 Jun 2021 19:55:52 -0700
+Message-ID: <CAGETcx-dZ_Wwjafk+5akWJwbrFx2rYNKZAU8tWhFUunEyn8sqQ@mail.gmail.com>
+Subject: Re: [PATCH 4/6] iommu: Combine device strictness requests with the
+ global default
+To:     Douglas Anderson <dianders@chromium.org>
+Cc:     gregkh@linuxfoundation.org, rafael@kernel.org,
+        rafael.j.wysocki@intel.com, will@kernel.org, robin.murphy@arm.com,
+        joro@8bytes.org, bjorn.andersson@linaro.org,
+        ulf.hansson@linaro.org, adrian.hunter@intel.com,
+        bhelgaas@google.com, robdclark@chromium.org,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        quic_c_gdjako@quicinc.com, iommu@lists.linux-foundation.org,
+        sonnyrao@chromium.org, saiprakash.ranjan@codeaurora.org,
+        linux-mmc@vger.kernel.org, vbadigan@codeaurora.org,
+        rajatja@google.com, joel@joelfernandes.org,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-With spin_lock_bh(), it is possible that a tasklet processing data
-events gets pre-empted by RT tasks or a storm of threaded interrupt
-handlers ready to run on that core. While the tasklet gets
-scheduled out, it can hold the event ring spinlock and block
-another tasklet, for example, one processing an M0 state change
-event, from acquiring it. This can starve the core which blocks in
-an attempt to acquire the spinlock until it gets released. Fix the
-issue by disabling pre-emption on the core processing data events
-and allow the tasklet to run to completion such that other tasklets
-do not block on it for long periods.
+On Mon, Jun 21, 2021 at 4:53 PM Douglas Anderson <dianders@chromium.org> wrote:
+>
+> In the patch ("drivers: base: Add bits to struct device to control
+> iommu strictness") we add the ability for devices to tell us about
+> their IOMMU strictness requirements. Let's now take that into account
+> in the IOMMU layer.
+>
+> A few notes here:
+> * Presumably this is always how iommu_get_dma_strict() was intended to
+>   behave. Had this not been the intention then it never would have
+>   taken a domain as a parameter.
+> * The iommu_set_dma_strict() feels awfully non-symmetric now. That
+>   function sets the _default_ strictness globally in the system
+>   whereas iommu_get_dma_strict() returns the value for a given domain
+>   (falling back to the default). Presumably, at least, the fact that
+>   iommu_set_dma_strict() doesn't take a domain makes this obvious.
+>
+> The function iommu_get_dma_strict() should now make it super obvious
+> where strictness comes from and who overides who. Though the function
+> changed a bunch to make the logic clearer, the only two new rules
+> should be:
+> * Devices can force strictness for themselves, overriding the cmdline
+>   "iommu.strict=0" or a call to iommu_set_dma_strict(false)).
+> * Devices can request non-strictness for themselves, assuming there
+>   was no cmdline "iommu.strict=1" or a call to
+>   iommu_set_dma_strict(true).
+>
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> ---
+>
+>  drivers/iommu/iommu.c | 56 +++++++++++++++++++++++++++++++++----------
+>  include/linux/iommu.h |  2 ++
+>  2 files changed, 45 insertions(+), 13 deletions(-)
+>
+> diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
+> index 808ab70d5df5..0c84a4c06110 100644
+> --- a/drivers/iommu/iommu.c
+> +++ b/drivers/iommu/iommu.c
+> @@ -28,8 +28,19 @@
+>  static struct kset *iommu_group_kset;
+>  static DEFINE_IDA(iommu_group_ida);
+>
+> +enum iommu_strictness {
+> +       IOMMU_DEFAULT_STRICTNESS = -1,
+> +       IOMMU_NOT_STRICT = 0,
+> +       IOMMU_STRICT = 1,
+> +};
+> +static inline enum iommu_strictness bool_to_strictness(bool strictness)
+> +{
+> +       return (enum iommu_strictness)strictness;
+> +}
+> +
+>  static unsigned int iommu_def_domain_type __read_mostly;
+> -static bool iommu_dma_strict __read_mostly = true;
+> +static enum iommu_strictness cmdline_dma_strict __read_mostly = IOMMU_DEFAULT_STRICTNESS;
+> +static enum iommu_strictness driver_dma_strict __read_mostly = IOMMU_DEFAULT_STRICTNESS;
+>  static u32 iommu_cmd_line __read_mostly;
+>
+>  struct iommu_group {
+> @@ -69,7 +80,6 @@ static const char * const iommu_group_resv_type_string[] = {
+>  };
+>
+>  #define IOMMU_CMD_LINE_DMA_API         BIT(0)
+> -#define IOMMU_CMD_LINE_STRICT          BIT(1)
+>
+>  static int iommu_alloc_default_domain(struct iommu_group *group,
+>                                       struct device *dev);
+> @@ -336,25 +346,38 @@ early_param("iommu.passthrough", iommu_set_def_domain_type);
+>
+>  static int __init iommu_dma_setup(char *str)
+>  {
+> -       int ret = kstrtobool(str, &iommu_dma_strict);
+> +       bool strict;
+> +       int ret = kstrtobool(str, &strict);
+>
+>         if (!ret)
+> -               iommu_cmd_line |= IOMMU_CMD_LINE_STRICT;
+> +               cmdline_dma_strict = bool_to_strictness(strict);
+>         return ret;
+>  }
+>  early_param("iommu.strict", iommu_dma_setup);
+>
+>  void iommu_set_dma_strict(bool strict)
+>  {
+> -       if (strict || !(iommu_cmd_line & IOMMU_CMD_LINE_STRICT))
+> -               iommu_dma_strict = strict;
+> +       /* A driver can request strictness but not the other way around */
+> +       if (driver_dma_strict != IOMMU_STRICT)
+> +               driver_dma_strict = bool_to_strictness(strict);
+>  }
+>
+>  bool iommu_get_dma_strict(struct iommu_domain *domain)
+>  {
+> -       /* only allow lazy flushing for DMA domains */
+> -       if (domain->type == IOMMU_DOMAIN_DMA)
+> -               return iommu_dma_strict;
+> +       /* Non-DMA domains or anyone forcing it to strict makes it strict */
+> +       if (domain->type != IOMMU_DOMAIN_DMA ||
+> +           cmdline_dma_strict == IOMMU_STRICT ||
+> +           driver_dma_strict == IOMMU_STRICT ||
+> +           domain->force_strict)
+> +               return true;
+> +
+> +       /* Anyone requesting non-strict (if no forces) makes it non-strict */
+> +       if (cmdline_dma_strict == IOMMU_NOT_STRICT ||
+> +           driver_dma_strict == IOMMU_NOT_STRICT ||
+> +           domain->request_non_strict)
+> +               return false;
+> +
+> +       /* Nobody said anything, so it's strict by default */
 
-Fixes: 1d3173a3bae7 ("bus: mhi: core: Add support for processing events from client device")
-Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
----
-v2:
--Updated description to clarify the scenario
+If iommu.strict is not set in the command line, upstream treats it as
+iommu.strict=1. Meaning, no drivers can override it.
 
- drivers/bus/mhi/core/main.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+If I understand it correctly, with your series, if iommu.strict=1 is
+not set, drivers can override the "default strict mode" and ask for
+non-strict mode for their domain. So if this series gets in and future
+driver changes start asking for non-strict mode, systems that are
+expected to operate in fully strict mode will now have devices
+operating in non-strict mode.
 
-diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
-index 3775c77..02c8c09 100644
---- a/drivers/bus/mhi/core/main.c
-+++ b/drivers/bus/mhi/core/main.c
-@@ -1036,11 +1036,12 @@ void mhi_ev_task(unsigned long data)
- {
- 	struct mhi_event *mhi_event = (struct mhi_event *)data;
- 	struct mhi_controller *mhi_cntrl = mhi_event->mhi_cntrl;
-+	unsigned long flags;
- 
- 	/* process all pending events */
--	spin_lock_bh(&mhi_event->lock);
-+	spin_lock_irqsave(&mhi_event->lock, flags);
- 	mhi_event->process_event(mhi_cntrl, mhi_event, U32_MAX);
--	spin_unlock_bh(&mhi_event->lock);
-+	spin_unlock_irqrestore(&mhi_event->lock, flags);
- }
- 
- void mhi_ctrl_ev_task(unsigned long data)
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+That's breaking backward compatibility for the kernel command line
+param. It looks like what you really need is to change iommu.strict
+from 0/1 to lazy (previously 0), strict preferred, strict enforced
+(previously 1) and you need to default it to "enforced".
 
+Alternately (and potentially a better option?), you really should be
+changing/extending dev_is_untrusted() so that it applies for any
+struct device (not just PCI device) and then have this overridden in
+DT (or ACPI or any firmware) to indicate a specific device is safe to
+use non-strict mode on. What you are trying to capture (if the device
+safe enough) really isn't a function of the DMA device's driver, but a
+function of the DMA device.
+
+
+
+>         return true;
+>  }
+>  EXPORT_SYMBOL_GPL(iommu_get_dma_strict);
+> @@ -1519,7 +1542,8 @@ static int iommu_get_def_domain_type(struct device *dev)
+>
+>  static int iommu_group_alloc_default_domain(struct bus_type *bus,
+>                                             struct iommu_group *group,
+> -                                           unsigned int type)
+> +                                           unsigned int type,
+> +                                           struct device *dev)
+>  {
+>         struct iommu_domain *dom;
+>
+> @@ -1534,6 +1558,12 @@ static int iommu_group_alloc_default_domain(struct bus_type *bus,
+>         if (!dom)
+>                 return -ENOMEM;
+>
+> +       /* Save the strictness requests from the device */
+> +       if (dev && type == IOMMU_DOMAIN_DMA) {
+> +               dom->request_non_strict = dev->request_non_strict_iommu;
+> +               dom->force_strict = dev->force_strict_iommu;
+> +       }
+> +
+>         group->default_domain = dom;
+>         if (!group->domain)
+>                 group->domain = dom;
+> @@ -1550,7 +1580,7 @@ static int iommu_alloc_default_domain(struct iommu_group *group,
+>
+>         type = iommu_get_def_domain_type(dev) ? : iommu_def_domain_type;
+>
+> -       return iommu_group_alloc_default_domain(dev->bus, group, type);
+> +       return iommu_group_alloc_default_domain(dev->bus, group, type, dev);
+>  }
+>
+>  /**
+> @@ -1721,7 +1751,7 @@ static void probe_alloc_default_domain(struct bus_type *bus,
+>         if (!gtype.type)
+>                 gtype.type = iommu_def_domain_type;
+>
+> -       iommu_group_alloc_default_domain(bus, group, gtype.type);
+> +       iommu_group_alloc_default_domain(bus, group, gtype.type, NULL);
+>
+>  }
+>
+> @@ -3130,7 +3160,7 @@ static int iommu_change_dev_def_domain(struct iommu_group *group,
+>         }
+>
+>         /* Sets group->default_domain to the newly allocated domain */
+> -       ret = iommu_group_alloc_default_domain(dev->bus, group, type);
+> +       ret = iommu_group_alloc_default_domain(dev->bus, group, type, dev);
+>         if (ret)
+>                 goto out;
+>
+> diff --git a/include/linux/iommu.h b/include/linux/iommu.h
+> index 32d448050bf7..0bddef77f415 100644
+> --- a/include/linux/iommu.h
+> +++ b/include/linux/iommu.h
+> @@ -81,6 +81,8 @@ struct iommu_domain_geometry {
+>
+>  struct iommu_domain {
+>         unsigned type;
+> +       bool force_strict:1;
+> +       bool request_non_strict:1;
+>         const struct iommu_ops *ops;
+>         unsigned long pgsize_bitmap;    /* Bitmap of page sizes in use */
+>         iommu_fault_handler_t handler;
+> --
+> 2.32.0.288.g62a8d224e6-goog
+>
