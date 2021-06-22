@@ -2,131 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 53CB33B02EC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jun 2021 13:39:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4B0413B02F6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jun 2021 13:40:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230072AbhFVLlh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Jun 2021 07:41:37 -0400
-Received: from relay07.th.seeweb.it ([5.144.164.168]:60237 "EHLO
-        relay07.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229849AbhFVLlg (ORCPT
+        id S230257AbhFVLmi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Jun 2021 07:42:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34122 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229900AbhFVLmg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Jun 2021 07:41:36 -0400
-Received: from IcarusMOD.eternityproject.eu (unknown [2.237.20.237])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 634BF3E7C0;
-        Tue, 22 Jun 2021 13:39:16 +0200 (CEST)
-Subject: Re: [PATCH v6 1/5] cpuidle: qcom_spm: Detach state machine from main
- SPM handling
-To:     Stephan Gerhold <stephan@gerhold.net>
-Cc:     bjorn.andersson@linaro.org, agross@kernel.org,
-        daniel.lezcano@linaro.org, rjw@rjwysocki.net,
-        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, phone-devel@vger.kernel.org,
-        konrad.dybcio@somainline.org, marijn.suijten@somainline.org,
-        martin.botka@somainline.org, jeffrey.l.hugo@gmail.com,
-        jami.kettunen@somainline.org,
-        ~postmarketos/upstreaming@lists.sr.ht, devicetree@vger.kernel.org,
-        robh+dt@kernel.org
-References: <20210621181016.365009-1-angelogioacchino.delregno@somainline.org>
- <20210621181016.365009-2-angelogioacchino.delregno@somainline.org>
- <YND/2qJhUB1Iwk1X@gerhold.net>
-From:   AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>
-Message-ID: <229488fe-00ef-ea7e-27d4-6f24fdea1383@somainline.org>
-Date:   Tue, 22 Jun 2021 13:39:15 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.9.0
+        Tue, 22 Jun 2021 07:42:36 -0400
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B10A0C061574
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jun 2021 04:40:19 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id f15so7814151wro.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jun 2021 04:40:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=C0aq1qh95ctgvcUXr4Bj8aynIoN78yoRJfafxVAPBBU=;
+        b=sSdCAWEffmE2e0tZ1H56DIvvSWMFIf4tz5NUmbpwNG2UIzQxEcFTu1pPPbwC6+NL1o
+         Wxgvk7oqhtjVWq1OULccLcBvDnl5whUaH39P9rcKdMxMb5VefYMzs48kn/s/BdgTAwPT
+         lSrCurRDP2pXIMH5EpSP30Gn2Ygc6F87OdYinkkTr1Ko7ggYxCqhisFmcc071McN2e1n
+         49g4vJmcZLpoB5DqnL/O/9UTG4Ane6g3nJkdifoKZ9OtojbrVMGBNCM+Ht3Q+dunMuQa
+         NN69jcUBT4WMpDkrYg8jHhBZrAOlCljs2+i040+QsQCX+mvzbdVIPbJEiQIEzaoVCL1S
+         Ab9g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=C0aq1qh95ctgvcUXr4Bj8aynIoN78yoRJfafxVAPBBU=;
+        b=IK2lhvtJBmMs5ywLI6v8xqRsTlFgjHvFawrNWkLVKW7yuhkjplUa7Qi0pwgCgZ5FAj
+         tpvBU1+HdXkck75R8iFcklZZ3eCv7DQofDY3gaesuYvCDzzukhy2nDxsDmXTtsdv/EoC
+         CzpdPorguU+sxGr7PasXYnZsPBE6g5tKWvnW9a3V4lUcfNGQp/0ljOHP3qU1yLPx+T4B
+         4+Y/GYIbwZC/Foz0S3WEaQO7Z1SEMpm94cUjHAw4PMZ7dKnVhJhksDpkPrWpl5UAtqEz
+         ZmFfMxfZIOOlMkvugE3/jSYPjkRBZCG+Kd1YBPkBDHvnRlqtcAFb4dJifG17aBQPx0Dm
+         n6ow==
+X-Gm-Message-State: AOAM533GMlWE9z/eyPOOmYPr/sLS3CXIUs2d/xLNITQwgkhL9TAB0U+X
+        Lf2fSsPLOIczTh36FYApzWqqew==
+X-Google-Smtp-Source: ABdhPJyGeTIibtfHXRV8vN4DEzUqDTtYnjXeuJDJ4TlewMHEmSr/fbhF3gtYAwtI+iCG8fbk1nvwSQ==
+X-Received: by 2002:adf:f40d:: with SMTP id g13mr4273800wro.413.1624362018351;
+        Tue, 22 Jun 2021 04:40:18 -0700 (PDT)
+Received: from localhost.localdomain (hst-221-32.medicom.bg. [84.238.221.32])
+        by smtp.gmail.com with ESMTPSA id k2sm20690929wrw.93.2021.06.22.04.40.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 22 Jun 2021 04:40:17 -0700 (PDT)
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+To:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Cc:     Ezequiel Garcia <ezequiel@collabora.com>,
+        nicolas.dufresne@collabora.com,
+        Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Subject: [PATCH v5 0/3] Intra-refresh period control
+Date:   Tue, 22 Jun 2021 14:39:55 +0300
+Message-Id: <20210622113958.809173-1-stanimir.varbanov@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-In-Reply-To: <YND/2qJhUB1Iwk1X@gerhold.net>
-Content-Type: text/plain; charset=iso-8859-15; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Il 21/06/21 23:08, Stephan Gerhold ha scritto:
-> On Mon, Jun 21, 2021 at 08:10:12PM +0200, AngeloGioacchino Del Regno wrote:
->> In commit a871be6b8eee ("cpuidle: Convert Qualcomm SPM driver to a generic
->> CPUidle driver") the SPM driver has been converted to a
->> generic CPUidle driver: that was mainly made to simplify the
->> driver and that was a great accomplishment;
->> Though, it was ignored that the SPM driver is not used only
->> on the ARM architecture.
->>
-> 
-> I don't really understand why you insist on writing that I deliberately
-> "ignored" your use case when converting the driver. This is not true.
-> Perhaps that's not actually what you meant but that's how it sounds to
-> me.
-> 
+Changes since v4:
+ * added new patch to document control zero value meaning (1/3)
+ * updated document for intra-refresh period (2/3)
 
-So much noise for one single word. I will change it since it seems to be
-that much of a deal, and I'm sorry if that hurt you in any way.
+regards,
+Stan
 
-For the records, though, I really don't see anything offensive in that,
-and anyway I didn't mean to be offensive in any way.
+Stanimir Varbanov (3):
+  docs: ext-ctrls-codec: Document cyclic intra-refresh zero control
+    value
+  media: v4l2-ctrls: Add intra-refresh period control
+  venus: venc: Add support for intra-refresh period
 
->> In preparation for the enablement of SPM features on AArch64/ARM64,
->> split the cpuidle-qcom-spm driver in two: the CPUIdle related
->> state machine (currently used only on ARM SoCs) stays there, while
->> the SPM communication handling lands back in soc/qcom/spm.c and
->> also making sure to not discard the simplifications that were
->> introduced in the aforementioned commit.
->>
->> Since now the "two drivers" are split, the SCM dependency in the
->> main SPM handling is gone and for this reason it was also possible
->> to move the SPM initialization early: this will also make sure that
->> whenever the SAW CPUIdle driver is getting initialized, the SPM
->> driver will be ready to do the job.
->>
->> Please note that the anticipation of the SPM initialization was
->> also done to optimize the boot times on platforms that have their
->> CPU/L2 idle states managed by other means (such as PSCI), while
->> needing SAW initialization for other purposes, like AVS control.
->>
->> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
->> ---
->>   drivers/cpuidle/Kconfig.arm        |   1 +
->>   drivers/cpuidle/cpuidle-qcom-spm.c | 324 +++++++----------------------
->>   drivers/soc/qcom/Kconfig           |   9 +
->>   drivers/soc/qcom/Makefile          |   1 +
->>   drivers/soc/qcom/spm.c             | 198 ++++++++++++++++++
->>   include/soc/qcom/spm.h             |  41 ++++
->>   6 files changed, 325 insertions(+), 249 deletions(-)
->>   create mode 100644 drivers/soc/qcom/spm.c
->>   create mode 100644 include/soc/qcom/spm.h
->>
->> diff --git a/drivers/cpuidle/cpuidle-qcom-spm.c b/drivers/cpuidle/cpuidle-qcom-spm.c
->> index adf91a6e4d7d..091453135ea6 100644
->> --- a/drivers/cpuidle/cpuidle-qcom-spm.c
->> +++ b/drivers/cpuidle/cpuidle-qcom-spm.c
->> [...]
->> +static int spm_cpuidle_register(int cpu)
->>   {
->> +	struct platform_device *pdev = NULL;
->> +	struct device_node *cpu_node, *saw_node;
->> +	struct cpuidle_qcom_spm_data data = {
->> +		.cpuidle_driver = {
->> +			.name = "qcom_spm",
->> +			.owner = THIS_MODULE,
->> +			.cpumask = (struct cpumask *)cpumask_of(cpu),
->> +			.states[0] = {
->> +				.enter			= spm_enter_idle_state,
->> +				.exit_latency		= 1,
->> +				.target_residency	= 1,
->> +				.power_usage		= UINT_MAX,
->> +				.name			= "WFI",
->> +				.desc			= "ARM WFI",
->> +			}
->> +		}
->> +	};
-> 
-> The stack is gone after the function returns.
-> 
+ .../media/v4l/ext-ctrls-codec.rst             | 19 +++++++++++++-
+ drivers/media/platform/qcom/venus/core.h      |  1 +
+ drivers/media/platform/qcom/venus/venc.c      | 26 +++++++++++++++++++
+ .../media/platform/qcom/venus/venc_ctrls.c    | 14 +++++-----
+ drivers/media/v4l2-core/v4l2-ctrls-defs.c     |  2 ++
+ include/uapi/linux/v4l2-controls.h            |  1 +
+ 6 files changed, 55 insertions(+), 8 deletions(-)
 
-Argh, I wrongly assumed that cpuidle was actually copying this locally.
-Okay, let's see what else looking clean I can come up with.
+-- 
+2.25.1
+
