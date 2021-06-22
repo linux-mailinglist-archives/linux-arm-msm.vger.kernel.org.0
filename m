@@ -2,293 +2,150 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 310DB3B0A9B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jun 2021 18:47:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EF75E3B0A95
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Jun 2021 18:46:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230102AbhFVQuC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Jun 2021 12:50:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49728 "EHLO
+        id S229826AbhFVQsh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Jun 2021 12:48:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49412 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229751AbhFVQuC (ORCPT
+        with ESMTP id S229718AbhFVQsg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Jun 2021 12:50:02 -0400
-Received: from mail-vs1-xe2d.google.com (mail-vs1-xe2d.google.com [IPv6:2607:f8b0:4864:20::e2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F0B4C061574
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jun 2021 09:47:45 -0700 (PDT)
-Received: by mail-vs1-xe2d.google.com with SMTP id x13so11601559vsf.11
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jun 2021 09:47:45 -0700 (PDT)
+        Tue, 22 Jun 2021 12:48:36 -0400
+Received: from mail-qv1-xf2d.google.com (mail-qv1-xf2d.google.com [IPv6:2607:f8b0:4864:20::f2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3CC7C061760
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jun 2021 09:46:20 -0700 (PDT)
+Received: by mail-qv1-xf2d.google.com with SMTP id u2so3123938qvp.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jun 2021 09:46:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
+        d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=cnIT4Uu6v7OErIw/h3MHSRjA8siJIWWdRBRj8QBPlgw=;
-        b=TdfJPlJ2SdcEgU78Q5teRSDl0nj+gX7ShrwD+p+EUe1jbMCKiZz6IWSde2kIMCuGbk
-         s2ZibuUr/AvviD8Z9vJcmWBR3ZXPAyIsLRVvtJLIx5CIwfCEuvftXqZBKCxyIQ3JUjW4
-         zY94UAAq7PdYvRB09/WPx5cR4lSyh9TgZLz2c=
+        bh=cX1+N3znKheAWMZ/uIaQ9Wu1I4c8xfSCdEid5XXgYUU=;
+        b=YOPMkgmgYEaJx78lKXGLKjEtNH7hC+lgi844pNliJkG4ti5vrqjMc+oYAqOQD7H2jS
+         2qqrRzjl9eiZPl3/CUfCvP3bVN4outKo6a1WsV8JSRjLD6PAeSIZDztM7Khj3cxdCfUR
+         p4PY5N5SmT98GRvCrjoWP2IhcR9X54oRBzFtZo7yU7KpcGXTDGBCgT8U5Q8nDCvkcL4f
+         6GbkWOcfKD4uaLMwk1sYQhUHbquWuh76GcYII+D/ew4UZBKFK7T3YXQcj7bP5hirphRr
+         woN0x87w5h9RppF3feOaRx2qlmXznUkTQwOi6hGFBXBK1pENgf1bTy7VU2Y8rcRZSYMs
+         TeVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=cnIT4Uu6v7OErIw/h3MHSRjA8siJIWWdRBRj8QBPlgw=;
-        b=q/94tG0zCvmrHom2p6L68391sWbynDsRDlhApo6oDBmi4pOMjz1nsrNDbHZ6ZE7Eo+
-         hrH1KivYzBvRAXnn4XqNKSEuHtGm0U8m2P8n4zr0Eq01PQsUVL5C3iPL0ibzhyrJlfA5
-         oHWzzcW6hO8Zo/71N0zb8OZUkrvrzaT5F7jPvyXuY7/o5wNN3G7CCFhH86iDvx55PKv+
-         yRYtLtOhCyze7aWo48j/pWts0IiA9NVCGOVY75ZNeQgNGVdZbb3MS+Kch0WLSAqKYz7L
-         bTvtuFemtfyX0yigpIYKFUM2cfVIE7d4BE4NBPhYjEw+XGsMVbPqtcq/OBZoXm7jVqa2
-         16SQ==
-X-Gm-Message-State: AOAM530M4e12Uft3E2umryg6faSZ4i9GgDp+E+JUDHJtuJoejxk3vUtE
-        R551YaTk4LzbURYHYSN1EDUFQk/dcjK7zw==
-X-Google-Smtp-Source: ABdhPJzZA0TzUFTdFWGmiWPEm2oynMz8wV+tZaY6aufZTjETd/aolOQmlOQk9oY8ZJrwBRZCZcX+6Q==
-X-Received: by 2002:a67:67c1:: with SMTP id b184mr23483697vsc.28.1624380464340;
-        Tue, 22 Jun 2021 09:47:44 -0700 (PDT)
-Received: from mail-ua1-f48.google.com (mail-ua1-f48.google.com. [209.85.222.48])
-        by smtp.gmail.com with ESMTPSA id z35sm452163uac.4.2021.06.22.09.47.44
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 22 Jun 2021 09:47:44 -0700 (PDT)
-Received: by mail-ua1-f48.google.com with SMTP id r9so6546517ual.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Jun 2021 09:47:44 -0700 (PDT)
-X-Received: by 2002:a25:80d4:: with SMTP id c20mr6016912ybm.345.1624380041368;
- Tue, 22 Jun 2021 09:40:41 -0700 (PDT)
+        bh=cX1+N3znKheAWMZ/uIaQ9Wu1I4c8xfSCdEid5XXgYUU=;
+        b=gGcTetoJJNS1TPEiP52v7zyLJzF+ems0FLZKLeezlGx2H9dpuPbJqLegAoQav5/509
+         4jRKb4iTRTb1V0/gsa7E4l3TBnOnR2S77Mya30myZ8xi3x8bS3GIZZLJBOKk+6C7p+Nx
+         siw7zcB2OyO3yD7LvEQJV9ga742rdFS6YEH7Fay8Wc/4ptajIRNOdabEhtGegI5o1CPI
+         Y9SyLMORdYdodAl1yyMAVbl6TK8y2OedLUO9pU1x8FJVdkWr7zC1HcrtHlzU83+PmBuI
+         ImsI9Ko/JeodrC9Azl1+r05jl4Ks99nMyeB1HGRf9SKwZigQeWvwMwcncA6OfgOH3IS6
+         YGMA==
+X-Gm-Message-State: AOAM532z+K/vN4KhOTCmHld0uwUo+D1PuHmaVrhOdvZD8fZ52t4RLzHT
+        AcNNz/rfdfO/rw+OBOiIAn2EHHAs1fWRRsQBGBtAwA==
+X-Google-Smtp-Source: ABdhPJzISR/1moqz9T2VFK0No/teqAwV9c5ubfc0VsheSSZ5WjW1a7WkGDxsHNNpv4HDu3/B1wo2UFlinPyOenYwBYo=
+X-Received: by 2002:ad4:55eb:: with SMTP id bu11mr26378298qvb.2.1624380379836;
+ Tue, 22 Jun 2021 09:46:19 -0700 (PDT)
 MIME-Version: 1.0
-References: <20210621235248.2521620-1-dianders@chromium.org>
- <20210621165230.4.Id84a954e705fcad3fdb35beb2bc372e4bf2108c7@changeid> <CAGETcx-dZ_Wwjafk+5akWJwbrFx2rYNKZAU8tWhFUunEyn8sqQ@mail.gmail.com>
-In-Reply-To: <CAGETcx-dZ_Wwjafk+5akWJwbrFx2rYNKZAU8tWhFUunEyn8sqQ@mail.gmail.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Tue, 22 Jun 2021 09:40:28 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=VCgugY6veyqs09Owc72FSeuCJkNZEb93Or1Ud2jmfExw@mail.gmail.com>
-Message-ID: <CAD=FV=VCgugY6veyqs09Owc72FSeuCJkNZEb93Or1Ud2jmfExw@mail.gmail.com>
-Subject: Re: [PATCH 4/6] iommu: Combine device strictness requests with the
- global default
-To:     Saravana Kannan <saravanak@google.com>
-Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-        Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
+References: <20210621223141.1638189-1-dmitry.baryshkov@linaro.org>
+ <20210621223141.1638189-3-dmitry.baryshkov@linaro.org> <20210622112843.GB4574@sirena.org.uk>
+ <CAA8EJpoTdg3O6dzpTaNS5fJRbtb1Fndv0mEuO+e4b6XCmuvzhQ@mail.gmail.com> <20210622143812.GE4574@sirena.org.uk>
+In-Reply-To: <20210622143812.GE4574@sirena.org.uk>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Tue, 22 Jun 2021 19:46:08 +0300
+Message-ID: <CAA8EJpoeYUOPLKca5oJNKdyOvOmoLX6FvsTbdmC7W9mLsyyVmw@mail.gmail.com>
+Subject: Re: [PATCH v3 2/7] regulator: qca6390: add support for QCA639x
+ powerup sequence
+To:     Mark Brown <broonie@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Adrian Hunter <adrian.hunter@intel.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Rob Clark <robdclark@chromium.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-pci@vger.kernel.org, quic_c_gdjako@quicinc.com,
-        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
-        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
-        Sonny Rao <sonnyrao@chromium.org>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Linux MMC List <linux-mmc@vger.kernel.org>,
-        Veerabhadrarao Badiganti <vbadigan@codeaurora.org>,
-        Rajat Jain <rajatja@google.com>,
-        Joel Fernandes <joel@joelfernandes.org>,
-        LKML <linux-kernel@vger.kernel.org>
+        Rob Herring <robh+dt@kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        linux-bluetooth@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
-
-On Mon, Jun 21, 2021 at 7:56 PM Saravana Kannan <saravanak@google.com> wrote:
+On Tue, 22 Jun 2021 at 17:38, Mark Brown <broonie@kernel.org> wrote:
 >
-> On Mon, Jun 21, 2021 at 4:53 PM Douglas Anderson <dianders@chromium.org> wrote:
-> >
-> > In the patch ("drivers: base: Add bits to struct device to control
-> > iommu strictness") we add the ability for devices to tell us about
-> > their IOMMU strictness requirements. Let's now take that into account
-> > in the IOMMU layer.
-> >
-> > A few notes here:
-> > * Presumably this is always how iommu_get_dma_strict() was intended to
-> >   behave. Had this not been the intention then it never would have
-> >   taken a domain as a parameter.
-> > * The iommu_set_dma_strict() feels awfully non-symmetric now. That
-> >   function sets the _default_ strictness globally in the system
-> >   whereas iommu_get_dma_strict() returns the value for a given domain
-> >   (falling back to the default). Presumably, at least, the fact that
-> >   iommu_set_dma_strict() doesn't take a domain makes this obvious.
-> >
-> > The function iommu_get_dma_strict() should now make it super obvious
-> > where strictness comes from and who overides who. Though the function
-> > changed a bunch to make the logic clearer, the only two new rules
-> > should be:
-> > * Devices can force strictness for themselves, overriding the cmdline
-> >   "iommu.strict=0" or a call to iommu_set_dma_strict(false)).
-> > * Devices can request non-strictness for themselves, assuming there
-> >   was no cmdline "iommu.strict=1" or a call to
-> >   iommu_set_dma_strict(true).
-> >
-> > Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> > ---
-> >
-> >  drivers/iommu/iommu.c | 56 +++++++++++++++++++++++++++++++++----------
-> >  include/linux/iommu.h |  2 ++
-> >  2 files changed, 45 insertions(+), 13 deletions(-)
-> >
-> > diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
-> > index 808ab70d5df5..0c84a4c06110 100644
-> > --- a/drivers/iommu/iommu.c
-> > +++ b/drivers/iommu/iommu.c
-> > @@ -28,8 +28,19 @@
-> >  static struct kset *iommu_group_kset;
-> >  static DEFINE_IDA(iommu_group_ida);
-> >
-> > +enum iommu_strictness {
-> > +       IOMMU_DEFAULT_STRICTNESS = -1,
-> > +       IOMMU_NOT_STRICT = 0,
-> > +       IOMMU_STRICT = 1,
-> > +};
-> > +static inline enum iommu_strictness bool_to_strictness(bool strictness)
-> > +{
-> > +       return (enum iommu_strictness)strictness;
-> > +}
-> > +
-> >  static unsigned int iommu_def_domain_type __read_mostly;
-> > -static bool iommu_dma_strict __read_mostly = true;
-> > +static enum iommu_strictness cmdline_dma_strict __read_mostly = IOMMU_DEFAULT_STRICTNESS;
-> > +static enum iommu_strictness driver_dma_strict __read_mostly = IOMMU_DEFAULT_STRICTNESS;
-> >  static u32 iommu_cmd_line __read_mostly;
-> >
-> >  struct iommu_group {
-> > @@ -69,7 +80,6 @@ static const char * const iommu_group_resv_type_string[] = {
-> >  };
-> >
-> >  #define IOMMU_CMD_LINE_DMA_API         BIT(0)
-> > -#define IOMMU_CMD_LINE_STRICT          BIT(1)
-> >
-> >  static int iommu_alloc_default_domain(struct iommu_group *group,
-> >                                       struct device *dev);
-> > @@ -336,25 +346,38 @@ early_param("iommu.passthrough", iommu_set_def_domain_type);
-> >
-> >  static int __init iommu_dma_setup(char *str)
-> >  {
-> > -       int ret = kstrtobool(str, &iommu_dma_strict);
-> > +       bool strict;
-> > +       int ret = kstrtobool(str, &strict);
-> >
-> >         if (!ret)
-> > -               iommu_cmd_line |= IOMMU_CMD_LINE_STRICT;
-> > +               cmdline_dma_strict = bool_to_strictness(strict);
-> >         return ret;
-> >  }
-> >  early_param("iommu.strict", iommu_dma_setup);
-> >
-> >  void iommu_set_dma_strict(bool strict)
-> >  {
-> > -       if (strict || !(iommu_cmd_line & IOMMU_CMD_LINE_STRICT))
-> > -               iommu_dma_strict = strict;
-> > +       /* A driver can request strictness but not the other way around */
-> > +       if (driver_dma_strict != IOMMU_STRICT)
-> > +               driver_dma_strict = bool_to_strictness(strict);
-> >  }
-> >
-> >  bool iommu_get_dma_strict(struct iommu_domain *domain)
-> >  {
-> > -       /* only allow lazy flushing for DMA domains */
-> > -       if (domain->type == IOMMU_DOMAIN_DMA)
-> > -               return iommu_dma_strict;
-> > +       /* Non-DMA domains or anyone forcing it to strict makes it strict */
-> > +       if (domain->type != IOMMU_DOMAIN_DMA ||
-> > +           cmdline_dma_strict == IOMMU_STRICT ||
-> > +           driver_dma_strict == IOMMU_STRICT ||
-> > +           domain->force_strict)
-> > +               return true;
-> > +
-> > +       /* Anyone requesting non-strict (if no forces) makes it non-strict */
-> > +       if (cmdline_dma_strict == IOMMU_NOT_STRICT ||
-> > +           driver_dma_strict == IOMMU_NOT_STRICT ||
-> > +           domain->request_non_strict)
-> > +               return false;
-> > +
-> > +       /* Nobody said anything, so it's strict by default */
+> On Tue, Jun 22, 2021 at 05:17:28PM +0300, Dmitry Baryshkov wrote:
+> > On Tue, 22 Jun 2021 at 14:29, Mark Brown <broonie@kernel.org> wrote:
+> > > On Tue, Jun 22, 2021 at 01:31:36AM +0300, Dmitry Baryshkov wrote:
 >
-> If iommu.strict is not set in the command line, upstream treats it as
-> iommu.strict=1. Meaning, no drivers can override it.
+> > > > Qualcomm QCA6390/1 is a family of WiFi + Bluetooth SoCs, with BT part
+> > > > being controlled through the UART and WiFi being present on PCIe
+> > > > bus. Both blocks share common power sources. Add device driver handling
+> > > > power sequencing of QCA6390/1.
 >
-> If I understand it correctly, with your series, if iommu.strict=1 is
-> not set, drivers can override the "default strict mode" and ask for
-> non-strict mode for their domain. So if this series gets in and future
-> driver changes start asking for non-strict mode, systems that are
-> expected to operate in fully strict mode will now have devices
-> operating in non-strict mode.
+> > > Are you sure this is a regulator and not a MFD?  It appears to be a
+> > > consumer driver that turns on and off a bunch of regulators en masse
+> > > which for some reason exposes that on/off control as a single supply.
+> > > This looks like it'd be much more appropriate to implement as a MFD or
+> > > possibly power domain with the subdevices using runtime PM, it's clearly
+> > > not a regulator.
 >
-> That's breaking backward compatibility for the kernel command line
-> param. It looks like what you really need is to change iommu.strict
-> from 0/1 to lazy (previously 0), strict preferred, strict enforced
-> (previously 1) and you need to default it to "enforced".
+> > First attempt was designed to be an MFD. And Lee clearly stated that
+> > this is wrong:
+> > "This is not an MFD, since it utilised neither the MFD API nor
+> > of_platform_populate() to register child devices." [1]
+>
+> Well, perhaps it should do one of those things then?
 
-I'm not quite sure I'd agree, but certainly it could be up for debate.
-I think I'm keeping full compatibility with the kernel command line
-parameter, specifically:
+I don't think so. BT part is just a serdev sitting on top of UART,
+WiFi is PCIe device (for qca6390). So using MFD API (which primarily
+targets platform devices) does not seem logical and feasible.
 
-* iommu.strict=0: default to non-strict mode unless a driver overrides
+> Like I say this is
+> very clearly not a regulator, it looks like a consumer of some kind.
+> The regulator API isn't there just to absorb things that need reference
+> counting, it's there to represent things providing supplies.  This seems
+> to be very clearly not a supply given that it's grouping together a
+> bunch of other supplies and switching them on and off together without
+> providing a clear output supply.
 
-* iommu.strict=1: force everything to strict no matter what
+Ack.
 
-...both of those two things are the same before and after my patchset.
+> > I've tried following Rob's suggestions on implementing things clearly,
+> > but doing so results in too big restructure just for a single device.
+>
+> I don't know what that suggestion was?  If there's only one device that
+> uses this why is it not implemented as part of that device?
 
-You're arguing that I'm changing the behavior of the system when no
-command line parameter is present. To me this seems a little bit of a
-stretch. If no command line parameter is present I'd assert that the
-kernel should do some sort of sane behavior and that we don't have to
-force 100% strictness if the command line parameter isn't present at
-all.
+One device = qca6390 (or 91). Because it is still a device sitting on
+a PCI bus which is typically discoverable, while adding power
+sequencer to the device driver would demand making the bus fully
+descibiable (like PCI bus is on Spark).
 
-I would also note that your assertion that the system is 100% strict
-under the "no command line parameter" case isn't actually true as far
-as I can tell. The code in mainline is a little hard to follow (for me
-the code after my patch is easier to follow), but you can see that
-even before my patch a call to iommu_set_dma_strict() could be used to
-make the system non-strict if no command-line parameter was passed.
+> > > > +static int qca6390_enable(struct regulator_dev *rdev)
+> > > > +{
+> > > > +     struct qca6390_data *data = rdev_get_drvdata(rdev);
+> > > > +     int ret;
+>
+> > > > +     ret = regulator_bulk_enable(data->num_vregs, data->regulators);
+> > > > +     if (ret) {
+> > > > +             dev_err(data->dev, "Failed to enable regulators");
+> > > > +             return ret;
+> > > > +     }
+>
+> > > The regulator API is *not* recursive, I am astonished this works.
+>
+> > It does, even with lockdep enabled. Moreover BT regularly does disable
+> > and enable this regulator, so both enable and disable paths were well
+> > tested.
+> > Should I change this into some internal call to remove API recursiveness?
+>
+> You should not be implementing this as a regulator at all.
 
+Ack
 
-> Alternately (and potentially a better option?), you really should be
-> changing/extending dev_is_untrusted() so that it applies for any
-> struct device (not just PCI device) and then have this overridden in
-> DT (or ACPI or any firmware) to indicate a specific device is safe to
-> use non-strict mode on.
-
-I was really trying _not_ to do that. I believe this has been talked
-about several times, including at last year's Linux Plumbers
-conference. As far as I can tell it always ends in a shouting match w/
-no forward progress. There are a bunch of problems here, namely:
-
-* Trust isn't necessarily binary. There might be peripherals that you
-sort-of trust, others that you really trust, and others that you don't
-trust at all. For the ones you sort-of trust there may be some things
-you trust about them and other things you don't trust about them.
-
-* The firmware isn't necessarily the best arbitrar of trust. For
-instance, if the company that employs me (Google) compiled their own
-firmware for a given peripheral device and they were convinced that
-the peripheral firmware couldn't be compromised any more easily than
-code running in the kernel itself, they might assert that the
-peripheral device should be "trusted". An individual Linux hacker,
-however, might not really trust the firmware blob that Google provides
-and might want the device to be "untrusted".
-
-* In the PCI subsystem I believe that "trusted" vs "untrusted" is
-generally associated with whether a device is soldered down onto the
-board or in some type of slot (the "external" concept). That's been
-working OK for them, I think, but I'm not convinced it'd be easy to
-apply everywhere. One example problem: what do you do about SD cards?
-The thing doing the DMA (the SDHCI controller) is certainly "internal"
-but the cards are "external". I'm making the argument in my series
-that SDHCI should be considered at least trusted enough to use
-non-strict DMA, but it's still technically "external" and you wouldn't
-necessarily, for instance, trust the filesystem structure not to be
-crafted in a malicious way so as to exploit the kernel.
-
-> What you are trying to capture (if the device
-> safe enough) really isn't a function of the DMA device's driver, but a
-> function of the DMA device.
-
-It's a function of the DMA device, but the entity in the kernel with
-the most knowledge about this is the device's driver. The driver also
-has the best ability to make informed decisions, perhaps looking at
-the device's properties (like the "non-removable" one for SD/MMC) to
-help make decisions without us having to create a new property to
-describe trust and then argue about who sets it and when.
-
--Doug
+-- 
+With best wishes
+Dmitry
