@@ -2,69 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D66EB3B1C44
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jun 2021 16:19:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AE9113B1C4A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jun 2021 16:20:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231159AbhFWOWI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Jun 2021 10:22:08 -0400
-Received: from mail-io1-f41.google.com ([209.85.166.41]:46713 "EHLO
-        mail-io1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231139AbhFWOWH (ORCPT
+        id S231282AbhFWOWN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Jun 2021 10:22:13 -0400
+Received: from mail-io1-f52.google.com ([209.85.166.52]:35621 "EHLO
+        mail-io1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231139AbhFWOWL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Jun 2021 10:22:07 -0400
-Received: by mail-io1-f41.google.com with SMTP id b14so3576748iow.13;
-        Wed, 23 Jun 2021 07:19:49 -0700 (PDT)
+        Wed, 23 Jun 2021 10:22:11 -0400
+Received: by mail-io1-f52.google.com with SMTP id d9so3645990ioo.2;
+        Wed, 23 Jun 2021 07:19:54 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
          :message-id;
-        bh=UVPpaHH49R7LNxnAOOyz/+Z+U9in8qUPXgYTVhm4QcQ=;
-        b=oQWepna8lJCzTEvPfQlBJJJylyUXGIUju+1SQ/vU5aqOTiauf2dwnCCkbltAHQkMWX
-         CwAo7afuieM21nhgC0KXwLUWKjgC5GjzESDaWeMSzaYlG956MAJfdFkzux+KjGwShGna
-         dS3i9NjvzLHbIwaXjvq+tJCNbHXDJBKvpdINoipTWOkIa+HxXQu240REznVCTfxqc9tf
-         7dwQ22hxlkfNsTDYd4PBs6H3/O5bjt5ESix/LM0Gl3/99yIjf/wpigG981IW360Gcq12
-         D+O6tmrUmi6hEd/LTEHFheZ+24kti8SPXiA+n8VAfbo5eeoOFRZKUgpeV2kmkx/aGh/n
-         +jNA==
-X-Gm-Message-State: AOAM532uF8ykde8qzMuCo2lyldYwbTmDqTZCvYqAh0EU90dQxkfbn+Yj
-        FUGaJKE4HG95i7+6fkmtIA==
-X-Google-Smtp-Source: ABdhPJz3N/ThOA76tJQ73yqswaHvSdGjLeeftaHD5GTFNgF5LKgxk7CtY3xm6x0CBp18Z/iiHWbmNA==
-X-Received: by 2002:a02:620a:: with SMTP id d10mr9480381jac.22.1624457989188;
-        Wed, 23 Jun 2021 07:19:49 -0700 (PDT)
+        bh=lwKnYqnTj9urrJtngBA+D6WD7PR7Tx6Uogg2oTqP4N0=;
+        b=DgWhqIHFOlddFmQ0xaoFyVpj22li85T/CJZSt73mOso4TWZIFj/YjRxgpIaRFaReNP
+         c3uLPNmGETuzuiXryIWXFdxBtMpJPoB0OL44zvIMCCeUKb/l9CLugFAE9RD+3ZXhzjVp
+         ggOe/m5hd6eMVlGMzTRnOm3ftfhSL/cXlFdmBxoK7jPHOFutcBPHKjetPGy8RaCTCOE4
+         2xTUJ7KUlqSNPtaj7qJzsFYYh1w6NP5panOsIT/2ZYzd9s3BuJSNI+gROQeSDDxLknI2
+         F9g2xZTAw9l7eocq4UIfWdMMWGQt7IhsknN+9ZIcnf7VZHi4SIr1Sdps4UOLP49+eUxj
+         ayfw==
+X-Gm-Message-State: AOAM5332KfcKFnZwhfN0IMmKdLWMVgRrAh+SoPQkKy304zzTZ1ZAVNnO
+        1V8ONL+bpqGdDS9Eow0d2g==
+X-Google-Smtp-Source: ABdhPJw0OGW/d0endmXhaOcHhduijirWfmjcDfa1lb1HWOs7ZJ1L2rg7Ci4gyPp7hMJbk430hIxj/Q==
+X-Received: by 2002:a5d:8254:: with SMTP id n20mr7481435ioo.85.1624457993743;
+        Wed, 23 Jun 2021 07:19:53 -0700 (PDT)
 Received: from robh.at.kernel.org ([64.188.179.248])
-        by smtp.gmail.com with ESMTPSA id p19sm13843487iob.7.2021.06.23.07.19.47
+        by smtp.gmail.com with ESMTPSA id x11sm25457ilc.40.2021.06.23.07.19.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Jun 2021 07:19:48 -0700 (PDT)
-Received: (nullmailer pid 2339996 invoked by uid 1000);
+        Wed, 23 Jun 2021 07:19:53 -0700 (PDT)
+Received: (nullmailer pid 2339999 invoked by uid 1000);
         Wed, 23 Jun 2021 14:19:45 -0000
 From:   Rob Herring <robh@kernel.org>
-To:     AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>
-Cc:     bjorn.andersson@linaro.org, martin.botka@somainline.org,
-        devicetree@vger.kernel.org, jami.kettunen@somainline.org,
-        linux-arm-msm@vger.kernel.org, konrad.dybcio@somainline.org,
-        daniel.lezcano@linaro.org, phone-devel@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, linux-pm@vger.kernel.org,
-        marijn.suijten@somainline.org, robh+dt@kernel.org,
-        rjw@rjwysocki.net, stephan@gerhold.net, agross@kernel.org,
-        jeffrey.l.hugo@gmail.com
-In-Reply-To: <20210622141117.358893-3-angelogioacchino.delregno@somainline.org>
-References: <20210622141117.358893-1-angelogioacchino.delregno@somainline.org> <20210622141117.358893-3-angelogioacchino.delregno@somainline.org>
-Subject: Re: [PATCH v7 2/5] dt-bindings: soc: qcom: Add devicetree binding for QCOM SPM
+To:     Iskren Chernev <iskren.chernev@gmail.com>
+Cc:     linux-gpio@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        devicetree@vger.kernel.org,
+        Linus Walleij <linus.walleij@linaro.org>,
+        phone-devel@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>
+In-Reply-To: <20210622201054.532979-2-iskren.chernev@gmail.com>
+References: <20210622201054.532979-1-iskren.chernev@gmail.com> <20210622201054.532979-2-iskren.chernev@gmail.com>
+Subject: Re: [PATCH v1 1/2] dt-bindings: pinctrl: qcom: Add SM6115 pinctrl bindings
 Date:   Wed, 23 Jun 2021 08:19:45 -0600
-Message-Id: <1624457985.973822.2339995.nullmailer@robh.at.kernel.org>
+Message-Id: <1624457985.989752.2339998.nullmailer@robh.at.kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 22 Jun 2021 16:11:14 +0200, AngeloGioacchino Del Regno wrote:
-> Add devicetree binding for Qualcomm Subsystem Power Manager (SPM).
+On Tue, 22 Jun 2021 23:10:53 +0300, Iskren Chernev wrote:
+> Add device tree binding Documentation details for Qualcomm SM6115 and
+> SM4250 pinctrl.
 > 
-> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+> Signed-off-by: Iskren Chernev <iskren.chernev@gmail.com>
 > ---
->  .../bindings/soc/qcom/qcom,spm.yaml           | 55 +++++++++++++++++++
->  1 file changed, 55 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,spm.yaml
+>  .../bindings/pinctrl/qcom,sm6115-pinctrl.yaml | 172 ++++++++++++++++++
+>  1 file changed, 172 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sm6115-pinctrl.yaml
 > 
 
 My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
@@ -73,16 +71,14 @@ on your patch (DT_CHECKER_FLAGS is new in v5.13):
 yamllint warnings/errors:
 
 dtschema/dtc warnings/errors:
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/soc/qcom/qcom,spm.example.dt.yaml: power-controller@f9089000: compatible: ['qcom,msm8974-saw2-v2.1-cpu', 'qcom,saw2'] is too long
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/soc/qcom/qcom,spm.yaml
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/soc/qcom/qcom,spm.example.dt.yaml: power-controller@f9089000: compatible: Additional items are not allowed ('qcom,saw2' was unexpected)
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/soc/qcom/qcom,spm.yaml
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/soc/qcom/qcom,spm.example.dt.yaml: power-controller@f9089000: '#power-domain-cells' is a required property
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/power/power-domain.yaml
-Documentation/devicetree/bindings/soc/qcom/qcom,spm.example.dt.yaml:0:0: /example-0/power-controller@f9089000: failed to match any schema with compatible: ['qcom,msm8974-saw2-v2.1-cpu', 'qcom,saw2']
+Error: Documentation/devicetree/bindings/pinctrl/qcom,sm6115-pinctrl.example.dts:35.5-6 syntax error
+FATAL ERROR: Unable to parse input tree
+make[1]: *** [scripts/Makefile.lib:380: Documentation/devicetree/bindings/pinctrl/qcom,sm6115-pinctrl.example.dt.yaml] Error 1
+make[1]: *** Waiting for unfinished jobs....
+make: *** [Makefile:1416: dt_binding_check] Error 2
 \ndoc reference errors (make refcheckdocs):
 
-See https://patchwork.ozlabs.org/patch/1495727
+See https://patchwork.ozlabs.org/patch/1495840
 
 This check can fail if there are any dependencies. The base for a patch
 series is generally the most recent rc1.
