@@ -2,238 +2,179 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5C8D63B1B5D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jun 2021 15:42:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BF1563B1B62
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jun 2021 15:43:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230225AbhFWNom (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Jun 2021 09:44:42 -0400
+        id S230509AbhFWNp0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Jun 2021 09:45:26 -0400
 Received: from m43-7.mailgun.net ([69.72.43.7]:63761 "EHLO m43-7.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230206AbhFWNom (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Jun 2021 09:44:42 -0400
+        id S230061AbhFWNpZ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 23 Jun 2021 09:45:25 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1624455744; h=Content-Transfer-Encoding: MIME-Version:
- Message-Id: Date: Subject: Cc: To: From: Sender;
- bh=e19j/1XoyCNIaWhrPNV1lzM0QrlGIxcqH0ZQJMkma/E=; b=u4h9BKVePqNgrJ0Z7X9N4T//pjcKHdrBtTxRwQT2Guh1/yd9uyZjcSKrtYbiQEfy+qE2DUed
- Wy2y1eIkBae/anzpDq/UiC2ydDYvSjfHwkylvI8TO1la4BNpfWc4VFxD3lNkk4AnyAwIvYEh
- s2sh87bYq2XNLjtIczb1i8crAMo=
+ s=smtp; t=1624455788; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=wV+nd+kMY0rKltOol5zVxgEq9lFFAYRlvZph3teCol0=;
+ b=hYJHJqbMhkb26dYRCBqd8UdPhDFZI2mq9yyUvnwn2Fh+lqWf6rCp0q6+S/lOoVVKAXMRyY4+
+ rgJ3bJ74PwS6WXOjbO0J94JpAeb0FdxyVqd1i3qD0HKY47X5L/K0RATg0SeLmZs/OchT6a+5
+ NMYk6sAJChfjBVYZOqrjVv5Gia4=
 X-Mailgun-Sending-Ip: 69.72.43.7
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
- 60d33a40dc4628fe7e2af37e (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 23 Jun 2021 13:42:24
+ smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
+ 60d33a67ec0b18a745f1b036 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 23 Jun 2021 13:43:03
  GMT
 Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 5125FC43145; Wed, 23 Jun 2021 13:42:23 +0000 (UTC)
+        id AE96EC4360C; Wed, 23 Jun 2021 13:43:02 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
-Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
         (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 88443C43145;
-        Wed, 23 Jun 2021 13:42:17 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 88443C43145
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=saiprakash.ranjan@codeaurora.org
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>
-Cc:     iommu@lists.linux-foundation.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Doug Anderson <dianders@chromium.org>,
-        Krishna Reddy <vdumpa@nvidia.com>,
-        Thierry Reding <treding@nvidia.com>,
-        Tomasz Figa <tfiga@chromium.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Subject: [PATCHv3] iommu/arm-smmu: Optimize ->tlb_flush_walk() for qcom implementation
-Date:   Wed, 23 Jun 2021 19:12:01 +0530
-Message-Id: <20210623134201.16140-1-saiprakash.ranjan@codeaurora.org>
-X-Mailer: git-send-email 2.29.0
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 763E6C433F1;
+        Wed, 23 Jun 2021 13:43:01 +0000 (UTC)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Wed, 23 Jun 2021 19:13:01 +0530
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Robin Murphy <robin.murphy@arm.com>
+Cc:     Will Deacon <will@kernel.org>, Joerg Roedel <joro@8bytes.org>,
+        Thierry Reding <treding@nvidia.com>,
+        linux-arm-msm@vger.kernel.org,
+        Douglas Anderson <dianders@chromium.org>,
+        linux-kernel@vger.kernel.org, iommu@lists.linux-foundation.org,
+        linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCHv2 1/3] iommu/io-pgtable: Add a quirk to use
+ tlb_flush_all() for partial walk flush
+In-Reply-To: <015e1274-d28e-f5e3-7f96-b79cf3d56a8e@arm.com>
+References: <cover.1623981933.git.saiprakash.ranjan@codeaurora.org>
+ <b099af10926b34249f4a30262db37f50491bebe7.1623981933.git.saiprakash.ranjan@codeaurora.org>
+ <904f283c-f8b1-ba84-d010-eacc87bb53c5@arm.com>
+ <a110e58e36af207be2bed04d1331832a@codeaurora.org>
+ <2b093b93-7fab-be35-59d8-4463c199719a@arm.com>
+ <c0329da89bee9b51b88d907875608877@codeaurora.org>
+ <015e1274-d28e-f5e3-7f96-b79cf3d56a8e@arm.com>
+Message-ID: <7f2d853b9d6cf5b4781810ce86dc8ceb@codeaurora.org>
+X-Sender: saiprakash.ranjan@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Currently for iommu_unmap() of large scatter-gather list with page size
-elements, the majority of time is spent in flushing of partial walks in
-__arm_lpae_unmap() which is a VA based TLB invalidation invalidating
-page-by-page on iommus like arm-smmu-v2 (TLBIVA).
+Hi Robin,
 
-For example: to unmap a 32MB scatter-gather list with page size elements
-(8192 entries), there are 16->2MB buffer unmaps based on the pgsize (2MB
-for 4K granule) and each of 2MB will further result in 512 TLBIVAs (2MB/4K)
-resulting in a total of 8192 TLBIVAs (512*16) for 16->2MB causing a huge
-overhead.
+On 2021-06-23 00:07, Robin Murphy wrote:
+> On 2021-06-22 15:27, Sai Prakash Ranjan wrote:
+>> Hi Robin,
+>> 
+>> On 2021-06-22 17:41, Robin Murphy wrote:
+>>> On 2021-06-22 08:11, Sai Prakash Ranjan wrote:
+>>>> Hi Robin,
+>>>> 
+>>>> On 2021-06-21 21:15, Robin Murphy wrote:
+>>>>> On 2021-06-18 03:51, Sai Prakash Ranjan wrote:
+>>>>>> Add a quirk IO_PGTABLE_QUIRK_TLB_INV_ALL to invalidate entire 
+>>>>>> context
+>>>>>> with tlb_flush_all() callback in partial walk flush to improve 
+>>>>>> unmap
+>>>>>> performance on select few platforms where the cost of 
+>>>>>> over-invalidation
+>>>>>> is less than the unmap latency.
+>>>>> 
+>>>>> I still think this doesn't belong anywhere near io-pgtable at all.
+>>>>> It's a driver-internal decision how exactly it implements a 
+>>>>> non-leaf
+>>>>> invalidation, and that may be more complex than a predetermined
+>>>>> boolean decision. For example, I've just realised for SMMUv3 we 
+>>>>> can't
+>>>>> invalidate multiple levels of table at once with a range command,
+>>>>> since if we assume the whole thing is mapped at worst-case page
+>>>>> granularity we may fail to invalidate any parts which are mapped as
+>>>>> intermediate-level blocks. If invalidating a 1GB region (with 4KB
+>>>>> granule) means having to fall back to 256K non-range commands, we 
+>>>>> may
+>>>>> not want to invalidate by VA then, even though doing so for a 2MB
+>>>>> region is still optimal.
+>>>>> 
+>>>>> It's also quite feasible that drivers might want to do this for 
+>>>>> leaf
+>>>>> invalidations too - if you don't like issuing 512 commands to
+>>>>> invalidate 2MB, do you like issuing 511 commands to invalidate 
+>>>>> 2044KB?
+>>>>> - and at that point the logic really has to be in the driver 
+>>>>> anyway.
+>>>>> 
+>>>> 
+>>>> Ok I will move this to tlb_flush_walk() functions in the drivers. In 
+>>>> the previous
+>>>> v1 thread, you suggested to make the choice in 
+>>>> iommu_get_dma_strict() test,
+>>>> I assume you meant the test in iommu_dma_init_domain() with a flag 
+>>>> or was it
+>>>> the leaf driver(ex:arm-smmu.c) test of iommu_get_dma_strict() in 
+>>>> init_domain?
+>>> 
+>>> Yes, I meant literally inside the same condition where we currently
+>>> set "pgtbl_cfg.quirks |= IO_PGTABLE_QUIRK_NON_STRICT;" in
+>>> arm_smmu_init_domain_context().
+>>> 
+>> 
+>> Ok got it, thanks.
+>> 
+>>>> I am still a bit confused on where this flag would be? Should this 
+>>>> be a part
+>>>> of struct iommu_domain?
+>>> 
+>>> Well, if you were to rewrite the config with an alternative set of
+>>> flush_ops at that point it would be implicit. For a flag, probably
+>>> either in arm_smmu_domain or arm_smmu_impl. Maybe a flag would be 
+>>> less
+>>> useful than generalising straight to a "maximum number of by-VA
+>>> invalidations it's worth sending individually" threshold value?
+>> 
+>> But then we would still need some flag to make this implementation
+>> specific (qcom specific for now) and this threshold would just be
+>> another condition although it would have been useful if this was
+>> generic enough.
+> 
+> Well, for that approach I assume we could do something like
+> special-case 0, or if it's a mutable per-domain value maybe just
+> initialise it to SIZE_MAX or whatever such that it would never be
+> reached in practice. Whichever way, it was meant to be implied that
+> anything at the domain level would still be subject to final
+> adjustment by the init_context hook.
+> 
 
-On qcom implementation, there are several performance improvements for
-TLB cache invalidations in HW like wait-for-safe (for realtime clients
-such as camera and display) and few others to allow for cache
-lookups/updates when TLBI is in progress for the same context bank.
-So the cost of over-invalidation is less compared to the unmap latency
-on several usecases like camera which deals with large buffers. So,
-ASID based TLB invalidations (TLBIASID) can be used to invalidate the
-entire context for partial walk flush thereby improving the unmap
-latency.
+Ok that should work, so I went ahead with another set of flush_ops
+and posted out v3.
 
-Non-strict mode can use this by default for all platforms given its
-all about over-invalidation saving time on individual unmaps and
-non-deterministic generally.
+Thanks,
+Sai
 
-For this example of 32MB scatter-gather list unmap, this change results
-in just 16 ASID based TLB invalidations (TLBIASIDs) as opposed to 8192
-TLBIVAs thereby increasing the performance of unmaps drastically.
+> 
+>>> It's clear to me what overall shape and separation of responsibility 
+>>> is
+>>> most logical, but beyond that I don't have a particularly strong
+>>> opinion on the exact implementation; I've just been chucking ideas
+>>> around :)
+>>> 
+>> 
+>> Your ideas are very informative and useful :)
+>> 
+>> Thanks,
+>> Sai
+>> 
 
-Test on QTI SM8150 SoC for 10 iterations of iommu_{map_sg}/unmap:
-(average over 10 iterations)
-
-Before this optimization:
-
-    size        iommu_map_sg      iommu_unmap
-      4K            2.067 us         1.854 us
-     64K            9.598 us         8.802 us
-      1M          148.890 us       130.718 us
-      2M          305.864 us        67.291 us
-     12M         1793.604 us       390.838 us
-     16M         2386.848 us       518.187 us
-     24M         3563.296 us       775.989 us
-     32M         4747.171 us      1033.364 us
-
-After this optimization:
-
-    size        iommu_map_sg      iommu_unmap
-      4K            1.723 us         1.765 us
-     64K            9.880 us         8.869 us
-      1M          155.364 us       135.223 us
-      2M          303.906 us         5.385 us
-     12M         1786.557 us        21.250 us
-     16M         2391.890 us        27.437 us
-     24M         3570.895 us        39.937 us
-     32M         4755.234 us        51.797 us
-
-This is further reduced once the map/unmap_pages() support gets in which
-will result in just 1 TLBIASID as compared to 16 TLBIASIDs.
-
-Real world data also shows big difference in unmap performance as below:
-
-There were reports of camera frame drops because of high overhead in
-iommu unmap without this optimization because of frequent unmaps issued
-by camera of about 100MB/s taking more than 100ms thereby causing frame
-drops.
-
-Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
----
-
-Changes in v3:
- * Move the logic to arm-smmu driver from io-pgtable (Robin)
- * Use a new set of iommu_flush_ops->arm_smmu_s1_tlb_impl_ops and use it for qcom impl
-
-Changes in v2:
- * Add a quirk to choose tlb_flush_all in partial walk flush
- * Set the quirk for QTI SoC implementation
-
----
- drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 13 +++++++++++++
- drivers/iommu/arm/arm-smmu/arm-smmu.c      | 17 ++++++++++++++++-
- 2 files changed, 29 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-index 7771d40176de..218c71465819 100644
---- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-+++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-@@ -10,6 +10,8 @@
- 
- #include "arm-smmu.h"
- 
-+extern const struct iommu_flush_ops arm_smmu_s1_tlb_impl_ops;
-+
- struct qcom_smmu {
- 	struct arm_smmu_device smmu;
- 	bool bypass_quirk;
-@@ -146,6 +148,8 @@ static int qcom_adreno_smmu_init_context(struct arm_smmu_domain *smmu_domain,
- {
- 	struct adreno_smmu_priv *priv;
- 
-+	pgtbl_cfg->tlb = &arm_smmu_s1_tlb_impl_ops;
-+
- 	/* Only enable split pagetables for the GPU device (SID 0) */
- 	if (!qcom_adreno_smmu_is_gpu_device(dev))
- 		return 0;
-@@ -185,6 +189,14 @@ static const struct of_device_id qcom_smmu_client_of_match[] __maybe_unused = {
- 	{ }
- };
- 
-+static int qcom_smmu_init_context(struct arm_smmu_domain *smmu_domain,
-+		struct io_pgtable_cfg *pgtbl_cfg, struct device *dev)
-+{
-+	pgtbl_cfg->tlb = &arm_smmu_s1_tlb_impl_ops;
-+
-+	return 0;
-+}
-+
- static int qcom_smmu_cfg_probe(struct arm_smmu_device *smmu)
- {
- 	unsigned int last_s2cr = ARM_SMMU_GR0_S2CR(smmu->num_mapping_groups - 1);
-@@ -308,6 +320,7 @@ static int qcom_smmu500_reset(struct arm_smmu_device *smmu)
- }
- 
- static const struct arm_smmu_impl qcom_smmu_impl = {
-+	.init_context = qcom_smmu_init_context,
- 	.cfg_probe = qcom_smmu_cfg_probe,
- 	.def_domain_type = qcom_smmu_def_domain_type,
- 	.reset = qcom_smmu500_reset,
-diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c b/drivers/iommu/arm/arm-smmu/arm-smmu.c
-index d3c6f54110a5..f3845e822565 100644
---- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
-+++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
-@@ -341,6 +341,12 @@ static void arm_smmu_tlb_add_page_s1(struct iommu_iotlb_gather *gather,
- 				  ARM_SMMU_CB_S1_TLBIVAL);
- }
- 
-+static void arm_smmu_tlb_inv_walk_impl_s1(unsigned long iova, size_t size,
-+				     size_t granule, void *cookie)
-+{
-+	arm_smmu_tlb_inv_context_s1(cookie);
-+}
-+
- static void arm_smmu_tlb_inv_walk_s2(unsigned long iova, size_t size,
- 				     size_t granule, void *cookie)
- {
-@@ -388,6 +394,12 @@ static const struct iommu_flush_ops arm_smmu_s1_tlb_ops = {
- 	.tlb_add_page	= arm_smmu_tlb_add_page_s1,
- };
- 
-+const struct iommu_flush_ops arm_smmu_s1_tlb_impl_ops = {
-+	.tlb_flush_all	= arm_smmu_tlb_inv_context_s1,
-+	.tlb_flush_walk	= arm_smmu_tlb_inv_walk_impl_s1,
-+	.tlb_add_page	= arm_smmu_tlb_add_page_s1,
-+};
-+
- static const struct iommu_flush_ops arm_smmu_s2_tlb_ops_v2 = {
- 	.tlb_flush_all	= arm_smmu_tlb_inv_context_s2,
- 	.tlb_flush_walk	= arm_smmu_tlb_inv_walk_s2,
-@@ -703,7 +715,10 @@ static int arm_smmu_init_domain_context(struct iommu_domain *domain,
- 			ias = min(ias, 32UL);
- 			oas = min(oas, 32UL);
- 		}
--		smmu_domain->flush_ops = &arm_smmu_s1_tlb_ops;
-+		if (!iommu_get_dma_strict(domain))
-+			smmu_domain->flush_ops = &arm_smmu_s1_tlb_impl_ops;
-+		else
-+			smmu_domain->flush_ops = &arm_smmu_s1_tlb_ops;
- 		break;
- 	case ARM_SMMU_DOMAIN_NESTED:
- 		/*
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member
 of Code Aurora Forum, hosted by The Linux Foundation
-
