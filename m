@@ -2,240 +2,549 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9E4F13B1502
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jun 2021 09:42:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 01E353B1521
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jun 2021 09:50:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229987AbhFWHpL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Jun 2021 03:45:11 -0400
-Received: from labrats.qualcomm.com ([199.106.110.90]:11986 "EHLO
-        labrats.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229938AbhFWHpK (ORCPT
+        id S230157AbhFWHwj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Jun 2021 03:52:39 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:14521 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230151AbhFWHwg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Jun 2021 03:45:10 -0400
-X-Greylist: delayed 366 seconds by postgrey-1.27 at vger.kernel.org; Wed, 23 Jun 2021 03:45:10 EDT
-IronPort-SDR: ctEM4QSLoXvC/Zv1StDrWtEWkPnvsFBmb/9zZU6Xl2S0Nhnd3UEOOWuXBcVa6AhbfQo+pe/vzj
- Al/wPoQBIE70ChFg8ySnnXGcexOBTRCzGsClzqdyy9LX6AEJK4S/ZxFeQP29iBnFC9rx9B1r6B
- 6a/ZW8AzdjERiATCscvEUvRO7/XvWET9hbI44xzweRILO4B56VuTGIOeIhmW4QowbAKzqZerbP
- CZhBIukh7BIUvyAMUhoB72LfISMlm1hZDGKYToYlqGEkbWYxXqTpC126SmRoSZvzNiPRKx29SW
- Jis=
-X-IronPort-AV: E=Sophos;i="5.83,293,1616482800"; 
-   d="scan'208";a="29780818"
-Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
-  by labrats.qualcomm.com with ESMTP; 23 Jun 2021 00:36:47 -0700
-X-QCInternal: smtphost
-Received: from stor-presley.qualcomm.com ([192.168.140.85])
-  by ironmsg03-sd.qualcomm.com with ESMTP; 23 Jun 2021 00:36:46 -0700
-Received: by stor-presley.qualcomm.com (Postfix, from userid 359480)
-        id A374A21BC1; Wed, 23 Jun 2021 00:36:46 -0700 (PDT)
-From:   Can Guo <cang@codeaurora.org>
-To:     asutoshd@codeaurora.org, nguyenb@codeaurora.org,
-        hongwus@codeaurora.org, ziqichen@codeaurora.org,
-        linux-scsi@vger.kernel.org, kernel-team@android.com,
-        cang@codeaurora.org
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        "Martin K. Petersen" <martin.petersen@oracle.com>,
-        Stanley Chu <stanley.chu@mediatek.com>,
-        Bean Huo <beanhuo@micron.com>,
-        Jaegeuk Kim <jaegeuk@kernel.org>,
-        Adrian Hunter <adrian.hunter@intel.com>,
-        Kiwoong Kim <kwmad.kim@samsung.com>,
-        Satya Tangirala <satyat@google.com>,
-        Bart Van Assche <bvanassche@acm.org>,
-        linux-arm-msm@vger.kernel.org (open list:ARM/QUALCOMM SUPPORT),
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v4 01/10] scsi: ufs: Rename flags pm_op_in_progress and is_sys_suspended
-Date:   Wed, 23 Jun 2021 00:35:00 -0700
-Message-Id: <1624433711-9339-2-git-send-email-cang@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1624433711-9339-1-git-send-email-cang@codeaurora.org>
-References: <1624433711-9339-1-git-send-email-cang@codeaurora.org>
+        Wed, 23 Jun 2021 03:52:36 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1624434619; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=Sp+/NhNqhxoE6+EEAMzhfQJrBA5k5r2iyKpjOxOGp+g=; b=w+80FaeZTIt94OxdGRJ16eValsAKGLJTP8xW8godKyJ6ytYJ50uwlnDdqkWAvZSb7AUgVU1+
+ fL7/QVfZrnDinkCWlJHA7lTPVtCRyLn8pnjruk9dp5nTuuuXsGslmbH4Be3YxZaIA0IwPinF
+ K4u4pqaeiw7E62sg+nRPRaGUxxQ=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
+ 60d2e7b2638039e99765e2a4 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 23 Jun 2021 07:50:10
+ GMT
+Sender: wcheng=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 663EAC4360C; Wed, 23 Jun 2021 07:50:10 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
+Received: from [10.110.11.224] (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: wcheng)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 43741C43460;
+        Wed, 23 Jun 2021 07:50:06 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 43741C43460
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=wcheng@codeaurora.org
+Subject: Re: [PATCH v10 0/6] Re-introduce TX FIFO resize for larger EP
+ bursting
+To:     Ferry Toth <fntoth@gmail.com>, balbi@kernel.org,
+        gregkh@linuxfoundation.org, robh+dt@kernel.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, frowand.list@gmail.com
+Cc:     linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        jackp@codeaurora.org, heikki.krogerus@linux.intel.com,
+        andy.shevchenko@gmail.com
+References: <1623923899-16759-1-git-send-email-wcheng@codeaurora.org>
+ <cfb83fe4-369c-ec72-7887-3bcb0f20fe15@gmail.com>
+ <ec8050c5-c013-4af6-b39e-69779c009a9c@codeaurora.org>
+ <f5ed0ee7-e333-681f-0f1a-d0227562204b@gmail.com>
+ <2e01c435-9ecc-4e3b-f55c-612a86667020@codeaurora.org>
+ <2ae9fa6a-3bb1-3742-0dd3-59678bdd8643@gmail.com>
+ <ebea75fe-5334-197b-f67a-cb6e1e30b39e@codeaurora.org>
+ <4e5fbcdb-765a-895d-7723-a87feed6eed5@gmail.com>
+ <d9441227-b494-ccb5-fc72-e59d3a7d2c72@codeaurora.org>
+ <89af9004-9867-6c0a-a709-6c71817efa81@gmail.com>
+From:   Wesley Cheng <wcheng@codeaurora.org>
+Message-ID: <d870b5c9-f553-3448-c69e-f1e32e23feb9@codeaurora.org>
+Date:   Wed, 23 Jun 2021 00:50:05 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
+MIME-Version: 1.0
+In-Reply-To: <89af9004-9867-6c0a-a709-6c71817efa81@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Rename pm_op_in_progress and is_sys_suspended to wlu_pm_op_in_progress and
-is_wlu_sys_suspended accordingly.
 
-Signed-off-by: Can Guo <cang@codeaurora.org>
----
- drivers/scsi/ufs/ufs-qcom.c |  2 +-
- drivers/scsi/ufs/ufshcd.c   | 30 +++++++++++++++---------------
- drivers/scsi/ufs/ufshcd.h   |  6 ++++--
- 3 files changed, 20 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/scsi/ufs/ufs-qcom.c b/drivers/scsi/ufs/ufs-qcom.c
-index 9b1d18d..fbe21e0 100644
---- a/drivers/scsi/ufs/ufs-qcom.c
-+++ b/drivers/scsi/ufs/ufs-qcom.c
-@@ -641,7 +641,7 @@ static int ufs_qcom_resume(struct ufs_hba *hba, enum ufs_pm_op pm_op)
- 	if (err)
- 		return err;
- 
--	hba->is_sys_suspended = false;
-+	hba->is_wlu_sys_suspended = false;
- 	return 0;
- }
- 
-diff --git a/drivers/scsi/ufs/ufshcd.c b/drivers/scsi/ufs/ufshcd.c
-index 25fe18a..c40ba1d 100644
---- a/drivers/scsi/ufs/ufshcd.c
-+++ b/drivers/scsi/ufs/ufshcd.c
-@@ -549,8 +549,8 @@ static void ufshcd_print_host_state(struct ufs_hba *hba)
- 		hba->saved_err, hba->saved_uic_err);
- 	dev_err(hba->dev, "Device power mode=%d, UIC link state=%d\n",
- 		hba->curr_dev_pwr_mode, hba->uic_link_state);
--	dev_err(hba->dev, "PM in progress=%d, sys. suspended=%d\n",
--		hba->pm_op_in_progress, hba->is_sys_suspended);
-+	dev_err(hba->dev, "wlu_pm_op_in_progress=%d, is_wlu_sys_suspended=%d\n",
-+		hba->wlu_pm_op_in_progress, hba->is_wlu_sys_suspended);
- 	dev_err(hba->dev, "Auto BKOPS=%d, Host self-block=%d\n",
- 		hba->auto_bkops_enabled, hba->host->host_self_blocked);
- 	dev_err(hba->dev, "Clk gate=%d\n", hba->clk_gating.state);
-@@ -1999,7 +1999,7 @@ static void ufshcd_clk_scaling_start_busy(struct ufs_hba *hba)
- 	if (!hba->clk_scaling.active_reqs++)
- 		queue_resume_work = true;
- 
--	if (!hba->clk_scaling.is_enabled || hba->pm_op_in_progress) {
-+	if (!hba->clk_scaling.is_enabled || hba->wlu_pm_op_in_progress) {
- 		spin_unlock_irqrestore(hba->host->host_lock, flags);
- 		return;
- 	}
-@@ -2734,7 +2734,7 @@ static int ufshcd_queuecommand(struct Scsi_Host *host, struct scsi_cmnd *cmd)
- 		 * err handler blocked for too long. So, just fail the scsi cmd
- 		 * sent from PM ops, err handler can recover PM error anyways.
- 		 */
--		if (hba->pm_op_in_progress) {
-+		if (hba->wlu_pm_op_in_progress) {
- 			hba->force_reset = true;
- 			set_host_byte(cmd, DID_BAD_TARGET);
- 			cmd->scsi_done(cmd);
-@@ -2767,7 +2767,7 @@ static int ufshcd_queuecommand(struct Scsi_Host *host, struct scsi_cmnd *cmd)
- 		(hba->clk_gating.state != CLKS_ON));
- 
- 	if (unlikely(test_bit(tag, &hba->outstanding_reqs))) {
--		if (hba->pm_op_in_progress)
-+		if (hba->wlu_pm_op_in_progress)
- 			set_host_byte(cmd, DID_BAD_TARGET);
- 		else
- 			err = SCSI_MLQUEUE_HOST_BUSY;
-@@ -5116,7 +5116,7 @@ ufshcd_transfer_rsp_status(struct ufs_hba *hba, struct ufshcd_lrb *lrbp)
- 			 * solution could be to abort the system suspend if
- 			 * UFS device needs urgent BKOPs.
- 			 */
--			if (!hba->pm_op_in_progress &&
-+			if (!hba->wlu_pm_op_in_progress &&
- 			    !ufshcd_eh_in_progress(hba) &&
- 			    ufshcd_is_exception_event(lrbp->ucd_rsp_ptr))
- 				/* Flushed in suspend */
-@@ -5916,7 +5916,7 @@ static void ufshcd_err_handling_prepare(struct ufs_hba *hba)
- {
- 	ufshcd_rpm_get_sync(hba);
- 	if (pm_runtime_status_suspended(&hba->sdev_ufs_device->sdev_gendev) ||
--	    hba->is_sys_suspended) {
-+	    hba->is_wlu_sys_suspended) {
- 		enum ufs_pm_op pm_op;
- 
- 		/*
-@@ -5933,7 +5933,7 @@ static void ufshcd_err_handling_prepare(struct ufs_hba *hba)
- 		if (!ufshcd_is_clkgating_allowed(hba))
- 			ufshcd_setup_clocks(hba, true);
- 		ufshcd_release(hba);
--		pm_op = hba->is_sys_suspended ? UFS_SYSTEM_PM : UFS_RUNTIME_PM;
-+		pm_op = hba->is_wlu_sys_suspended ? UFS_SYSTEM_PM : UFS_RUNTIME_PM;
- 		ufshcd_vops_resume(hba, pm_op);
- 	} else {
- 		ufshcd_hold(hba, false);
-@@ -5976,7 +5976,7 @@ static void ufshcd_recover_pm_error(struct ufs_hba *hba)
- 	struct request_queue *q;
- 	int ret;
- 
--	hba->is_sys_suspended = false;
-+	hba->is_wlu_sys_suspended = false;
- 	/*
- 	 * Set RPM status of wlun device to RPM_ACTIVE,
- 	 * this also clears its runtime error.
-@@ -8784,7 +8784,7 @@ static int __ufshcd_wl_suspend(struct ufs_hba *hba, enum ufs_pm_op pm_op)
- 	enum ufs_dev_pwr_mode req_dev_pwr_mode;
- 	enum uic_link_state req_link_state;
- 
--	hba->pm_op_in_progress = true;
-+	hba->wlu_pm_op_in_progress = true;
- 	if (pm_op != UFS_SHUTDOWN_PM) {
- 		pm_lvl = pm_op == UFS_RUNTIME_PM ?
- 			 hba->rpm_lvl : hba->spm_lvl;
-@@ -8919,7 +8919,7 @@ static int __ufshcd_wl_suspend(struct ufs_hba *hba, enum ufs_pm_op pm_op)
- 		hba->clk_gating.is_suspended = false;
- 		ufshcd_release(hba);
- 	}
--	hba->pm_op_in_progress = false;
-+	hba->wlu_pm_op_in_progress = false;
- 	return ret;
- }
- 
-@@ -8928,7 +8928,7 @@ static int __ufshcd_wl_resume(struct ufs_hba *hba, enum ufs_pm_op pm_op)
- 	int ret;
- 	enum uic_link_state old_link_state = hba->uic_link_state;
- 
--	hba->pm_op_in_progress = true;
-+	hba->wlu_pm_op_in_progress = true;
- 
- 	/*
- 	 * Call vendor specific resume callback. As these callbacks may access
-@@ -9006,7 +9006,7 @@ static int __ufshcd_wl_resume(struct ufs_hba *hba, enum ufs_pm_op pm_op)
- 		ufshcd_update_evt_hist(hba, UFS_EVT_WL_RES_ERR, (u32)ret);
- 	hba->clk_gating.is_suspended = false;
- 	ufshcd_release(hba);
--	hba->pm_op_in_progress = false;
-+	hba->wlu_pm_op_in_progress = false;
- 	return ret;
- }
- 
-@@ -9072,7 +9072,7 @@ static int ufshcd_wl_suspend(struct device *dev)
- 
- out:
- 	if (!ret)
--		hba->is_sys_suspended = true;
-+		hba->is_wlu_sys_suspended = true;
- 	trace_ufshcd_wl_suspend(dev_name(dev), ret,
- 		ktime_to_us(ktime_sub(ktime_get(), start)),
- 		hba->curr_dev_pwr_mode, hba->uic_link_state);
-@@ -9100,7 +9100,7 @@ static int ufshcd_wl_resume(struct device *dev)
- 		ktime_to_us(ktime_sub(ktime_get(), start)),
- 		hba->curr_dev_pwr_mode, hba->uic_link_state);
- 	if (!ret)
--		hba->is_sys_suspended = false;
-+		hba->is_wlu_sys_suspended = false;
- 	up(&hba->host_sem);
- 	return ret;
- }
-diff --git a/drivers/scsi/ufs/ufshcd.h b/drivers/scsi/ufs/ufshcd.h
-index c98d540..93aeeb3 100644
---- a/drivers/scsi/ufs/ufshcd.h
-+++ b/drivers/scsi/ufs/ufshcd.h
-@@ -752,7 +752,8 @@ struct ufs_hba {
- 	enum ufs_pm_level spm_lvl;
- 	struct device_attribute rpm_lvl_attr;
- 	struct device_attribute spm_lvl_attr;
--	int pm_op_in_progress;
-+	/* A flag to tell whether __ufshcd_wl_suspend/resume() is in progress */
-+	bool wlu_pm_op_in_progress;
- 
- 	/* Auto-Hibernate Idle Timer register value */
- 	u32 ahit;
-@@ -838,7 +839,8 @@ struct ufs_hba {
- 
- 	struct devfreq *devfreq;
- 	struct ufs_clk_scaling clk_scaling;
--	bool is_sys_suspended;
-+	/* A flag to tell whether the UFS device W-LU is system suspended */
-+	bool is_wlu_sys_suspended;
- 
- 	enum bkops_status urgent_bkops_lvl;
- 	bool is_urgent_bkops_lvl_checked;
+On 6/22/2021 3:12 PM, Ferry Toth wrote:
+> Hi
+> 
+> Op 23-06-2021 om 00:00 schreef Wesley Cheng:
+>>
+>> On 6/22/2021 1:09 PM, Ferry Toth wrote:
+>>> Hi
+>>>
+>>> Op 22-06-2021 om 20:38 schreef Wesley Cheng:
+>>>> On 6/19/2021 5:40 AM, Ferry Toth wrote:
+>>>>> Hi
+>>>>>
+>>>>> Op 18-06-2021 om 00:25 schreef Wesley Cheng:
+>>>>>> Hi,
+>>>>>>
+>>>>>> On 6/17/2021 2:55 PM, Ferry Toth wrote:
+>>>>>>> Hi
+>>>>>>>
+>>>>>>> Op 17-06-2021 om 23:48 schreef Wesley Cheng:
+>>>>>>>> Hi,
+>>>>>>>>
+>>>>>>>> On 6/17/2021 2:01 PM, Ferry Toth wrote:
+>>>>>>>>> Hi
+>>>>>>>>>
+>>>>>>>>> Op 17-06-2021 om 11:58 schreef Wesley Cheng:
+>>>>>>>>>> Changes in V10:
+>>>>>>>>>>      - Fixed compilation errors in config where OF is not used
+>>>>>>>>>> (error due to
+>>>>>>>>>>        unknown symbol for of_add_property()).  Add
+>>>>>>>>>> of_add_property()
+>>>>>>>>>> stub.
+>>>>>>>>>>      - Fixed compilation warning for incorrect argument being
+>>>>>>>>>> passed to
+>>>>>>>>>> dwc3_mdwidth
+>>>>>>>>> This fixes the OOPS I had in V9. I do not see any change in
+>>>>>>>>> performance
+>>>>>>>>> on Merrifield though.
+>>>>>>>> I see...thanks Ferry! With your testing, are you writing to the
+>>>>>>>> device's
+>>>>>>>> internal storage (ie UFS, eMMC, etc...), or did you use a
+>>>>>>>> ramdisk as
+>>>>>>>> well?
+>>>>>>> In this case I just tested the EEM path using iperf3.
+>>>>>>>
+>>>>>> Got it.  I don't believe f_eem will use a high enough (if at all)
+>>>>>> bMaxBurst value to change the TXFIFO size.
+>>>>>>
+>>>>>>>> If not with a ramdisk, we might want to give that a try to avoid
+>>>>>>>> the
+>>>>>>>> storage path being the bottleneck.  You can use "dd" to create an
+>>>>>>>> empty
+>>>>>>>> file, and then just use that as the LUN's backing file.
+>>>>>>>>
+>>>>>>>> echo ramdisk.img >
+>>>>>>>> /sys/kernel/config/usb_gadget/g1/functions/mass_storage.0/lun.0/file
+>>>>>>>>
+>>>>>>> Ah, why didn't I think of that. I have currently mass storage setup
+>>>>>>> with
+>>>>>>> eMMC but it seems that is indeed the bottleneck.
+>>>>>>>
+>>>>> I created a 64MB disk following the instructions here
+>>>>> http://www.linux-usb.org/gadget/file_storage.html (that seems a little
+>>>>> outdated, at least I can not start the first partition at sector 8,
+>>>>> but
+>>>>> minimum 2048), and added a test file on it.
+>>>>>
+>>>>> I then copy the file to /dev/shm prior to setting configfs (composite
+>>>>> device gser/eem/mass_storage/uac2).
+>>>>>
+>>>>> journal shows:
+>>>>>
+>>>>> kernel: Mass Storage Function, version: 2009/09/11
+>>>>> kernel: LUN: removable file: (no medium)
+>>>>>
+>>>>> I don't know what that means, because I see the test file on the
+>>>>> ramdisk.
+>>>>>
+>>>>> Then I again used gnome disks to benchmark (read/write 10MB):
+>>>>>
+>>>>> With V10 on top v5.13.0-rc5:
+>>>>>
+>>>>> R/W speed = 35.6/35.8MB/s, access time 0.35ms
+>>>>>
+>>>>> With no patches on top v5.12.0:
+>>>>>
+>>>>> R/W speed = 35.7/36.1MB/s, access time 0.35ms
+>>>> Hi Ferry,
+>>>>
+>>>>> I see no speed difference (and it's about the same as with the eMMC
+>>>>> backed disk). But the patches are causing a new call trace
+>>>>>
+>>>> Would you happen to know what DWC3 controller revision the device is
+>>>> using?  The callstack print occurs, because it looks like it ran out of
+>>>> internal memory, although there should be logic present for making sure
+>>>> that at least there is enough room for 1 FIFO per endpoint.  (possibly
+>>>> the logic/math depends on the controller revision)
+>> Hi Ferry,
+>>
+>>> Do you know where I could find that in a file on the device?
+>>>
+>> Maybe you can just dump the DWC3 registers?
+>> cat /sys/kernel/debug/usb/<controller name>/regdump
+> 
+> This isin host mode:
+> 
+> ~# cat /sys/kernel/debug/usb/dwc3.0.auto/regdump
+> GSBUSCFG0 = 0x00000006
+> GSBUSCFG1 = 0x00000f00
+> GTXTHRCFG = 0x230a0000
+> GRXTHRCFG = 0x22800000
+> GCTL = 0x45801002
+> GEVTEN = 0x00000000
+> GSTS = 0x3e800001
+> GUCTL1 = 0x00000000
+> GSNPSID = 0x5533250a
+> GGPIO = 0x00000000
+> GUID = 0x00050d00
+> GUCTL = 0x0200ce00
+> GBUSERRADDR0 = 0x00000000
+> GBUSERRADDR1 = 0x00000000
+...
+> 
+
+Hi Ferry,
+
+Great!  Thanks, that got me the information regarding the DWC3 revision
+you're using. (its version 2.50a)  I checked the DWC3 databook and looks
+like certain versions have some different math to calculate the TXFIFO
+size.  I have taken this into account and factored that in in the next
+revision.
+
+Is there a way you could collect the regdump in device mode w/ mass
+storage only composition after enumerating with the PC?  That would help
+confirm how the TXFIFO resizing logic is working on your platform.
+
+Thanks
+Wesley Cheng
+
+>> Was going to ask for the same to confirm the TXFIFO sizes from your
+>> results below :).
+>>
+>>> Otherwise, I'm hoping Andy will know?
+>>>
+>>>> Also, is there a way to use just a mass storage only composition? 
+>>>> Based
+>>>> on the above observation, that probably means that the mass storage
+>>>> interface wasn't resized at all, because the configuration took up a
+>>>> lot
+>>>> of the internal FIFO space.
+>>> Sure, it's configured through configfs. With only mass_storage I have:
+>>>
+>>> With V10 on top v5.13.0-rc5:
+>>>
+>>> R/W speed = 41,6/39,3MB/s, access time 0.33ms
+>>>
+>>> With no patches on top v5.12.0:
+>>>
+>>> R/W speed = 41,1/38,7MB/s, access time 0.38ms
+>>>
+>> Thanks Ferry!  Could you collect the regdump, so I can confirm the two
+>> things mentioned?
+>>
+>> Thanks
+>> Wesley Cheng
+>>
+>>>> Thanks
+>>>> Wesley Cheng
+>>>>
+>>>>> kernel: using random self ethernet address
+>>>>> kernel: using random host ethernet address
+>>>>> kernel: Mass Storage Function, version: 2009/09/11
+>>>>> kernel: LUN: removable file: (no medium)
+>>>>> kernel: usb0: HOST MAC aa:bb:cc:dd:ee:f2
+>>>>> kernel: usb0: MAC aa:bb:cc:dd:ee:f1
+>>>>> kernel: IPv6: ADDRCONF(NETDEV_CHANGE): usb0: link becomes ready
+>>>>> kernel: dwc3 dwc3.0.auto: Fifosize(2154) > RAM size(2022) ep5in
+>>>>> depth:115540359
+>>>>> kernel: ------------[ cut here ]------------
+>>>>> kernel: WARNING: CPU: 0 PID: 594 at drivers/usb/gadget/udc/core.c:278
+>>>>> usb_ep_queue+0x75/0x80
+>>>>> kernel: Modules linked in: usb_f_uac2 u_audio usb_f_mass_storage
+>>>>> usb_f_eem u_ether usb_f_serial u_serial libcomposite rfcomm
+>>>>> iptable_nat
+>>>>> bnep snd_sof_nocodec spi_pxa2>
+>>>>> kernel: CPU: 0 PID: 594 Comm: irq/14-dwc3 Not tainted
+>>>>> 5.13.0-rc5-edison-acpi-standard #1
+>>>>> kernel: Hardware name: Intel Corporation Merrifield/BODEGA BAY,
+>>>>> BIOS 542
+>>>>> 2015.01.21:18.19.48
+>>>>> kernel: RIP: 0010:usb_ep_queue+0x75/0x80
+>>>>> kernel: Code: 01 73 e4 48 8b 05 fb 63 06 01 48 85 c0 74 12 48 8b 78 08
+>>>>> 44 89 e9 4c 89 e2 48 89 ee e8 74 05 00 00 44 89 e8 5d 41 5c 41 5d c3
+>>>>> <0f> 0b 41 bd 94 ff ff ff >
+>>>>> kernel: RSP: 0000:ffff91eec083fc98 EFLAGS: 00010082
+>>>>> kernel: RAX: ffff8af20357d960 RBX: 0000000000000000 RCX:
+>>>>> ffff8af202f06400
+>>>>> kernel: RDX: 0000000000000a20 RSI: ffff8af208785780 RDI:
+>>>>> ffff8af202e9ae00
+>>>>> kernel: RBP: ffff8af202e9ae00 R08: 00000000000000c0 R09:
+>>>>> ffff8af208785780
+>>>>> kernel: R10: 00000000ffffe000 R11: 3fffffffffffffff R12:
+>>>>> ffff8af208785780
+>>>>> kernel: R13: 0000000000000000 R14: ffff8af202e9ae00 R15:
+>>>>> ffff8af203e26cc0
+>>>>> kernel: FS:  0000000000000000(0000) GS:ffff8af23e200000(0000)
+>>>>> knlGS:0000000000000000
+>>>>> kernel: CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+>>>>> kernel: CR2: 000055e2c21f2100 CR3: 0000000003b38000 CR4:
+>>>>> 00000000001006f0
+>>>>> kernel: Call Trace:
+>>>>> kernel:  u_audio_start_playback+0x107/0x1a0 [u_audio]
+>>>>> kernel:  composite_setup+0x224/0x1ba0 [libcomposite]
+>>>>> kernel:  ? dwc3_gadget_ep_queue+0xf6/0x1a0
+>>>>> kernel:  ? usb_ep_queue+0x2a/0x80
+>>>>> kernel:  ? configfs_composite_setup+0x6b/0x90 [libcomposite]
+>>>>> kernel:  configfs_composite_setup+0x6b/0x90 [libcomposite]
+>>>>> kernel:  dwc3_ep0_interrupt+0x469/0xa80
+>>>>> kernel:  dwc3_thread_interrupt+0x8ee/0xf40
+>>>>> kernel:  ? __wake_up_common_lock+0x85/0xb0
+>>>>> kernel:  ? disable_irq_nosync+0x10/0x10
+>>>>> kernel:  irq_thread_fn+0x1b/0x60
+>>>>> kernel:  irq_thread+0xd6/0x170
+>>>>> kernel:  ? irq_thread_check_affinity+0x70/0x70
+>>>>> kernel:  ? irq_forced_thread_fn+0x70/0x70
+>>>>> kernel:  kthread+0x116/0x130
+>>>>> kernel:  ? kthread_create_worker_on_cpu+0x60/0x60
+>>>>> kernel:  ret_from_fork+0x22/0x30
+>>>>> kernel: ---[ end trace e5b9e28058c53584 ]---
+>>>>> kernel: configfs-gadget gadget: u_audio_start_playback:451 Error!
+>>>>> kernel: configfs-gadget gadget: u_audio_start_playback:451 Error!
+>>>>> kernel: dwc3 dwc3.0.auto: request 000000003c32dcc5 was not queued to
+>>>>> ep5in
+>>>>> kernel: dwc3 dwc3.0.auto: request 00000000b2512aa9 was not queued to
+>>>>> ep5in
+>>>>> kernel: dwc3 dwc3.0.auto: Fifosize(2154) > RAM size(2022) ep5in
+>>>>> depth:115540359
+>>>>> kernel: configfs-gadget gadget: u_audio_start_playback:451 Error!
+>>>>> kernel: configfs-gadget gadget: u_audio_start_playback:451 Error!
+>>>>> kernel: dwc3 dwc3.0.auto: request 00000000b2512aa9 was not queued to
+>>>>> ep5in
+>>>>> kernel: dwc3 dwc3.0.auto: request 00000000036ac129 was not queued to
+>>>>> ep5in
+>>>>> kernel: dwc3 dwc3.0.auto: Fifosize(2154) > RAM size(2022) ep5in
+>>>>> depth:115540359
+>>>>> kernel: configfs-gadget gadget: u_audio_start_playback:451 Error!
+>>>>> kernel: configfs-gadget gadget: u_audio_start_playback:451 Error!
+>>>>> kernel: dwc3 dwc3.0.auto: request 00000000ad1b8c18 was not queued to
+>>>>> ep5in
+>>>>> kernel: dwc3 dwc3.0.auto: request 00000000fbc71244 was not queued to
+>>>>> ep5in
+>>>>> kernel: dwc3 dwc3.0.auto: Fifosize(2154) > RAM size(2022) ep5in
+>>>>> depth:115540359
+>>>>> kernel: configfs-gadget gadget: u_audio_start_playback:451 Error!
+>>>>> kernel: configfs-gadget gadget: u_audio_start_playback:451 Error!
+>>>>> kernel: dwc3 dwc3.0.auto: request 00000000fbc71244 was not queued to
+>>>>> ep5in
+>>>>> kernel: dwc3 dwc3.0.auto: request 00000000ad1b8c18 was not queued to
+>>>>> ep5in
+>>>>> kernel: dwc3 dwc3.0.auto: Fifosize(2154) > RAM size(2022) ep5in
+>>>>> depth:115540359
+>>>>> kernel: configfs-gadget gadget: u_audio_start_playback:451 Error!
+>>>>> kernel: configfs-gadget gadget: u_audio_start_playback:451 Error!
+>>>>> kernel: dwc3 dwc3.0.auto: request 000000003c32dcc5 was not queued to
+>>>>> ep5in
+>>>>> kernel: dwc3 dwc3.0.auto: request 00000000b2512aa9 was not queued to
+>>>>> ep5in
+>>>>>
+>>>>> Removing uac2 from the config makes the call trace go away, but the
+>>>>> R/W
+>>>>> speed does not change.
+>>>>>
+>>>>>> :), not a problem...I've been working on getting the ideal set up for
+>>>>>> the performance profiling for awhile, so anything I can do to make
+>>>>>> sure
+>>>>>> we get some good results.
+>>>>>>
+>>>>>>> I'll try with a ramdisk and let you know.
+>>>>>>>
+>>>>>> Thanks again for the testing, Ferry.
+>>>>>>
+>>>>>> Thanks
+>>>>>> Wesley Cheng
+>>>>>>
+>>>>>>>> Thanks
+>>>>>>>> Wesley Cheng
+>>>>>>>>
+>>>>>>>>>> Changes in V9:
+>>>>>>>>>>      - Fixed incorrect patch in series.  Removed changes in
+>>>>>>>>>> DTSI, as
+>>>>>>>>>> dwc3-qcom will
+>>>>>>>>>>        add the property by default from the kernel.
+>>>>>>>>>>
+>>>>>>>>>> Changes in V8:
+>>>>>>>>>>      - Rebased to usb-testing
+>>>>>>>>>>      - Using devm_kzalloc for adding txfifo property in dwc3-qcom
+>>>>>>>>>>      - Removed DWC3 QCOM ACPI property for enabling the txfifo
+>>>>>>>>>> resize
+>>>>>>>>>>
+>>>>>>>>>> Changes in V7:
+>>>>>>>>>>      - Added a new property tx-fifo-max-num for limiting how much
+>>>>>>>>>> fifo
+>>>>>>>>>> space the
+>>>>>>>>>>        resizing logic can allocate for endpoints with large burst
+>>>>>>>>>> values.  This
+>>>>>>>>>>        can differ across platforms, and tie in closely with
+>>>>>>>>>> overall
+>>>>>>>>>> system latency.
+>>>>>>>>>>      - Added recommended checks for DWC32.
+>>>>>>>>>>      - Added changes to set the tx-fifo-resize property from
+>>>>>>>>>> dwc3-qcom by
+>>>>>>>>>> default
+>>>>>>>>>>        instead of modifying the current DTSI files.
+>>>>>>>>>>      - Added comments on all APIs/variables introduced.
+>>>>>>>>>>      - Updated the DWC3 YAML to include a better description
+>>>>>>>>>> of the
+>>>>>>>>>> tx-fifo-resize
+>>>>>>>>>>        property and added an entry for tx-fifo-max-num.
+>>>>>>>>>>
+>>>>>>>>>> Changes in V6:
+>>>>>>>>>>      - Rebased patches to usb-testing.
+>>>>>>>>>>      - Renamed to PATCH series instead of RFC.
+>>>>>>>>>>      - Checking for fs_descriptors instead of ss_descriptors for
+>>>>>>>>>> determining the
+>>>>>>>>>>        endpoint count for a particular configuration.
+>>>>>>>>>>      - Re-ordered patch series to fix patch dependencies.
+>>>>>>>>>>
+>>>>>>>>>> Changes in V5:
+>>>>>>>>>>      - Added check_config() logic, which is used to
+>>>>>>>>>> communicate the
+>>>>>>>>>> number of EPs
+>>>>>>>>>>        used in a particular configuration.  Based on this, the
+>>>>>>>>>> DWC3
+>>>>>>>>>> gadget driver
+>>>>>>>>>>        has the ability to know the maximum number of eps
+>>>>>>>>>> utilized in
+>>>>>>>>>> all
+>>>>>>>>>> configs.
+>>>>>>>>>>        This helps reduce unnecessary allocation to unused eps,
+>>>>>>>>>> and will
+>>>>>>>>>> catch fifo
+>>>>>>>>>>        allocation issues at bind() time.
+>>>>>>>>>>      - Fixed variable declaration to single line per variable,
+>>>>>>>>>> and
+>>>>>>>>>> reverse xmas.
+>>>>>>>>>>      - Created a helper for fifo clearing, which is used by ep0.c
+>>>>>>>>>>
+>>>>>>>>>> Changes in V4:
+>>>>>>>>>>      - Removed struct dwc3* as an argument for
+>>>>>>>>>> dwc3_gadget_resize_tx_fifos()
+>>>>>>>>>>      - Removed WARN_ON(1) in case we run out of fifo space
+>>>>>>>>>>      Changes in V3:
+>>>>>>>>>>      - Removed "Reviewed-by" tags
+>>>>>>>>>>      - Renamed series back to RFC
+>>>>>>>>>>      - Modified logic to ensure that fifo_size is reset if we
+>>>>>>>>>> pass the
+>>>>>>>>>> minimum
+>>>>>>>>>>        threshold.  Tested with binding multiple FDs requesting 6
+>>>>>>>>>> FIFOs.
+>>>>>>>>>>
+>>>>>>>>>> Changes in V2:
+>>>>>>>>>>      - Modified TXFIFO resizing logic to ensure that each EP is
+>>>>>>>>>> reserved a
+>>>>>>>>>>        FIFO.
+>>>>>>>>>>      - Removed dev_dbg() prints and fixed typos from patches
+>>>>>>>>>>      - Added some more description on the dt-bindings commit
+>>>>>>>>>> message
+>>>>>>>>>>
+>>>>>>>>>> Currently, there is no functionality to allow for resizing the
+>>>>>>>>>> TXFIFOs, and
+>>>>>>>>>> relying on the HW default setting for the TXFIFO depth.  In most
+>>>>>>>>>> cases, the
+>>>>>>>>>> HW default is probably sufficient, but for USB compositions that
+>>>>>>>>>> contain
+>>>>>>>>>> multiple functions that require EP bursting, the default settings
+>>>>>>>>>> might not be enough.  Also to note, the current SW will assign an
+>>>>>>>>>> EP to a
+>>>>>>>>>> function driver w/o checking to see if the TXFIFO size for that
+>>>>>>>>>> particular
+>>>>>>>>>> EP is large enough. (this is a problem if there are multiple HW
+>>>>>>>>>> defined
+>>>>>>>>>> values for the TXFIFO size)
+>>>>>>>>>>
+>>>>>>>>>> It is mentioned in the SNPS databook that a minimum of TX FIFO
+>>>>>>>>>> depth = 3
+>>>>>>>>>> is required for an EP that supports bursting.  Otherwise, there
+>>>>>>>>>> may be
+>>>>>>>>>> frequent occurences of bursts ending.  For high bandwidth
+>>>>>>>>>> functions,
+>>>>>>>>>> such as data tethering (protocols that support data aggregation),
+>>>>>>>>>> mass
+>>>>>>>>>> storage, and media transfer protocol (over FFS), the bMaxBurst
+>>>>>>>>>> value
+>>>>>>>>>> can be
+>>>>>>>>>> large, and a bigger TXFIFO depth may prove to be beneficial in
+>>>>>>>>>> terms
+>>>>>>>>>> of USB
+>>>>>>>>>> throughput. (which can be associated to system access latency,
+>>>>>>>>>> etc...)  It
+>>>>>>>>>> allows for a more consistent burst of traffic, w/o any
+>>>>>>>>>> interruptions, as
+>>>>>>>>>> data is readily available in the FIFO.
+>>>>>>>>>>
+>>>>>>>>>> With testing done using the mass storage function driver, the
+>>>>>>>>>> results
+>>>>>>>>>> show
+>>>>>>>>>> that with a larger TXFIFO depth, the bandwidth increased
+>>>>>>>>>> significantly.
+>>>>>>>>>>
+>>>>>>>>>> Test Parameters:
+>>>>>>>>>>      - Platform: Qualcomm SM8150
+>>>>>>>>>>      - bMaxBurst = 6
+>>>>>>>>>>      - USB req size = 256kB
+>>>>>>>>>>      - Num of USB reqs = 16
+>>>>>>>>>>      - USB Speed = Super-Speed
+>>>>>>>>>>      - Function Driver: Mass Storage (w/ ramdisk)
+>>>>>>>>>>      - Test Application: CrystalDiskMark
+>>>>>>>>>>
+>>>>>>>>>> Results:
+>>>>>>>>>>
+>>>>>>>>>> TXFIFO Depth = 3 max packets
+>>>>>>>>>>
+>>>>>>>>>> Test Case | Data Size | AVG tput (in MB/s)
+>>>>>>>>>> -------------------------------------------
+>>>>>>>>>> Sequential|1 GB x     |
+>>>>>>>>>> Read      |9 loops    | 193.60
+>>>>>>>>>>          |           | 195.86
+>>>>>>>>>>               |           | 184.77
+>>>>>>>>>>               |           | 193.60
+>>>>>>>>>> -------------------------------------------
+>>>>>>>>>>
+>>>>>>>>>> TXFIFO Depth = 6 max packets
+>>>>>>>>>>
+>>>>>>>>>> Test Case | Data Size | AVG tput (in MB/s)
+>>>>>>>>>> -------------------------------------------
+>>>>>>>>>> Sequential|1 GB x     |
+>>>>>>>>>> Read      |9 loops    | 287.35
+>>>>>>>>>>          |           | 304.94
+>>>>>>>>>>               |           | 289.64
+>>>>>>>>>>               |           | 293.61
+>>>>>>>>>> -------------------------------------------
+>>>>>>>>>>
+>>>>>>>>>> Wesley Cheng (6):
+>>>>>>>>>>       usb: gadget: udc: core: Introduce check_config to verify
+>>>>>>>>>> USB
+>>>>>>>>>>         configuration
+>>>>>>>>>>       usb: gadget: configfs: Check USB configuration before
+>>>>>>>>>> adding
+>>>>>>>>>>       usb: dwc3: Resize TX FIFOs to meet EP bursting requirements
+>>>>>>>>>>       of: Add stub for of_add_property()
+>>>>>>>>>>       usb: dwc3: dwc3-qcom: Enable tx-fifo-resize property by
+>>>>>>>>>> default
+>>>>>>>>>>       dt-bindings: usb: dwc3: Update dwc3 TX fifo properties
+>>>>>>>>>>
+>>>>>>>>>>      .../devicetree/bindings/usb/snps,dwc3.yaml         |  15 +-
+>>>>>>>>>>      drivers/usb/dwc3/core.c                            |   9 +
+>>>>>>>>>>      drivers/usb/dwc3/core.h                            |  15 ++
+>>>>>>>>>>      drivers/usb/dwc3/dwc3-qcom.c                       |   9 +
+>>>>>>>>>>      drivers/usb/dwc3/ep0.c                             |   2 +
+>>>>>>>>>>      drivers/usb/dwc3/gadget.c                          | 212
+>>>>>>>>>> +++++++++++++++++++++
+>>>>>>>>>>      drivers/usb/gadget/configfs.c                      |  22 +++
+>>>>>>>>>>      drivers/usb/gadget/udc/core.c                      |  25 +++
+>>>>>>>>>>      include/linux/of.h                                 |   5 +
+>>>>>>>>>>      include/linux/usb/gadget.h                         |   5 +
+>>>>>>>>>>      10 files changed, 317 insertions(+), 2 deletions(-)
+>>>>>>>>>>
+
 -- 
-Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
-
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
