@@ -2,134 +2,191 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F3C1B3B1F9A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jun 2021 19:34:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 081593B1FE9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jun 2021 19:54:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229924AbhFWRhD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Jun 2021 13:37:03 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:62839 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229759AbhFWRhC (ORCPT
+        id S229758AbhFWR4U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Jun 2021 13:56:20 -0400
+Received: from relay04.th.seeweb.it ([5.144.164.165]:48649 "EHLO
+        relay04.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229660AbhFWR4T (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Jun 2021 13:37:02 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1624469684; h=Content-Type: MIME-Version: Message-ID:
- In-Reply-To: Date: References: Subject: Cc: To: From: Sender;
- bh=IIQCwdK7TFh8FgtUV+3MnvrVYUHcl6vu82d9dovgdYY=; b=XYrENfd1P2S+FGXIVPDbdpCiqkPSxhYIk1JOCd59iyu9qhFJzf/KjS/3QxtCvcGVt9RBchde
- 4vGnPXOd8sfuFPR84fJo8MfAQYTOsgjcru/sg7864IzKGGk4pyrZG8LE3devOv9jFpHacBX0
- d/IKMST5b9hrXefEN5UAt0oKie4=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
- 60d3708fd2559fe392e00864 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 23 Jun 2021 17:34:07
- GMT
-Sender: kvalo=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 88512C43145; Wed, 23 Jun 2021 17:34:07 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
-Received: from tykki (tynnyri.adurom.net [51.15.11.48])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: kvalo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6E217C43217;
-        Wed, 23 Jun 2021 17:34:04 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 6E217C43217
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=kvalo@codeaurora.org
-From:   Kalle Valo <kvalo@codeaurora.org>
-To:     Bhaumik Bhatt <bbhatt@codeaurora.org>
-Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
-        jhugo@codeaurora.org, linux-kernel@vger.kernel.org,
-        loic.poulain@linaro.org, linux-wireless@vger.kernel.org,
-        ath11k@lists.infradead.org
-Subject: Re: [PATCH v4 4/6] ath11k: set register access length for MHI driver
-References: <1620330705-40192-1-git-send-email-bbhatt@codeaurora.org>
-        <1620330705-40192-5-git-send-email-bbhatt@codeaurora.org>
-        <20210521135152.GL70095@thinkpad> <87h7i0juxt.fsf@codeaurora.org>
-        <37184e28dcc952ba9ad5ed0dc2c1a6da@codeaurora.org>
-Date:   Wed, 23 Jun 2021 20:34:02 +0300
-In-Reply-To: <37184e28dcc952ba9ad5ed0dc2c1a6da@codeaurora.org> (Bhaumik
-        Bhatt's message of "Mon, 14 Jun 2021 10:49:51 -0700")
-Message-ID: <87fsx8h4dx.fsf@codeaurora.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        Wed, 23 Jun 2021 13:56:19 -0400
+Received: from localhost.localdomain (83.6.168.10.neoplus.adsl.tpnet.pl [83.6.168.10])
+        by m-r1.th.seeweb.it (Postfix) with ESMTPA id 11FBD1F3FD;
+        Wed, 23 Jun 2021 19:53:59 +0200 (CEST)
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+To:     ~postmarketos/upstreaming@lists.sr.ht
+Cc:     martin.botka@somainline.org,
+        angelogioacchino.delregno@somainline.org,
+        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v3 1/2] dt-bindings: pinctrl: qcom: Add bindings for MDM9607
+Date:   Wed, 23 Jun 2021 19:53:51 +0200
+Message-Id: <20210623175354.248103-1-konrad.dybcio@somainline.org>
+X-Mailer: git-send-email 2.32.0
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Bhaumik Bhatt <bbhatt@codeaurora.org> writes:
+Document the newly added MDM9607 pinctrl driver.
 
-> Hi Kalle,
->
-> On 2021-06-14 09:02 AM, Kalle Valo wrote:
->> Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> writes:
->>
->>> On Thu, May 06, 2021 at 12:51:43PM -0700, Bhaumik Bhatt wrote:
->>>> MHI driver requires register space length to add range checks and
->>>> prevent memory region accesses outside of that for MMIO space.
->>>> Set it before registering the MHI controller.
->>>>
->>>> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
->>>> Reviewed-by: Hemant Kumar <hemantk@codeaurora.org>
->>>
->>> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
->>>
->>> Kalle, should we do immutable branch for this patch or I can pick
->>> it up via MHI
->>> tree (if there are no other patches expected from ath11k for this
->>> controller)?
->>
->> I'm not expecting any conflicts with this, and if there are, they
->> should
->> be easy for Stephen or Linus to fix. So it's easiest to route this via
->> your tree. But I'm not giving my ack yet, see below.
->>
->> I'm worried that this patchset breaks bisect. Every patch in the
->> patchset should not break existing functionality, what if only patches
->> 1-3 are included in the tree but not patch 4? Wouldn't ath11k be broken
->> then? I didn't review the whole patchset, but I suspect the fix is to
->> include the ath11k change in the actual mhi patch which changes the
->> functionality. So that way we would not have a separate ath11k patch at
->> all.
->>
->> Also I'm not able to test this patchset at the moment. Can someone else
->> help and do a quick test with QCA6390 to verify these doesn't break
->> ath11k?
->
-> I have requested someone to try and test this patch series with QCA6390.
->
-> I or the testers will get back to you with the test results when they
-> are available.
->
-> As far as your concerns go, you can choose to pick patches 1-3 and
-> that would be just fine.
->
-> Things will break if patchset 4 is _not_ in place with patchset 6
-> being part of the tree.
->
-> It would, however, be nice to pick the whole series instead and ensure
-> that the functionality MHI introduces for boot-up sanity is in place
-> for any controllers such as ath11k.
+Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+---
+Changes since v2:
+- Fixed up to use qcom,tlmm-common.yaml as per Bjorn's request
+- NOT added Rob Herring's r-b as the yaml changed somewhat significantly
+ .../pinctrl/qcom,mdm9607-pinctrl.yaml         | 133 ++++++++++++++++++
+ 1 file changed, 133 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,mdm9607-pinctrl.yaml
 
-Just to be clear, this is not about me picking up any patches
-separately. I was instead making sure git-bisect works correctly, as it
-can randomly choose to test any commit in the tree. But based on your
-description everything seems to be in order in this patchset and bisect
-will work correctly.
-
-git-bisect is an important tool for me when I'm searching the root cause
-for ath11k regressions, that's why I'm so careful to make sure it works.
-
+diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,mdm9607-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,mdm9607-pinctrl.yaml
+new file mode 100644
+index 000000000000..e20aaa233c23
+--- /dev/null
++++ b/Documentation/devicetree/bindings/pinctrl/qcom,mdm9607-pinctrl.yaml
+@@ -0,0 +1,133 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/pinctrl/qcom,mdm9607-pinctrl.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm Technologies, Inc. MDM9607 TLMM block
++
++maintainers:
++  - Konrad Dybcio <konrad.dybcio@somainline.org>
++
++description: |
++  This binding describes the Top Level Mode Multiplexer block found in the
++  MDM9607 platform.
++
++allOf:
++  - $ref: /schemas/pinctrl/qcom,tlmm-common.yaml#
++
++properties:
++  compatible:
++    const: qcom,mdm9607-tlmm
++
++  reg:
++    maxItems: 1
++
++  interrupts: true
++  interrupt-controller: true
++  '#interrupt-cells': true
++  gpio-controller: true
++  gpio-reserved-ranges: true
++  '#gpio-cells': true
++  gpio-ranges: true
++  wakeup-parent: true
++
++required:
++  - compatible
++  - reg
++
++additionalProperties: false
++
++patternProperties:
++  '-state$':
++    oneOf:
++      - $ref: "#/$defs/qcom-mdm9607-tlmm-state"
++      - patternProperties:
++          ".*":
++            $ref: "#/$defs/qcom-mdm9607-tlmm-state"
++
++'$defs':
++  qcom-mdm9607-tlmm-state:
++    type: object
++    description:
++      Pinctrl node's client devices use subnodes for desired pin configuration.
++      Client device subnodes use below standard properties.
++    $ref: "qcom,tlmm-common.yaml#/$defs/qcom-tlmm-state"
++
++    properties:
++      pins:
++        description:
++          List of gpio pins affected by the properties specified in this
++          subnode.
++        items:
++          oneOf:
++            - pattern: "^gpio([1-9]|[1-7][0-9]|80)$"
++            - enum: [ sdc1_clk, sdc1_cmd, sdc1_data, sdc2_clk, sdc2_cmd,
++                      sdc2_data, qdsd_cmd, qdsd_data0, qdsd_data1, qdsd_data2,
++                      qdsd_data3 ]
++        minItems: 1
++        maxItems: 16
++
++      function:
++        description:
++          Specify the alternative function to be configured for the specified
++          pins.
++
++        enum: [ adsp_ext, atest_bbrx0, atest_bbrx1, atest_char, atest_char0,
++                atest_char1, atest_char2, atest_char3,
++                atest_combodac_to_gpio_native, atest_gpsadc_dtest0_native,
++                atest_gpsadc_dtest1_native, atest_tsens, backlight_en_b,
++                bimc_dte0, bimc_dte1, blsp1_spi, blsp2_spi, blsp3_spi,
++                blsp_i2c1, blsp_i2c2, blsp_i2c3, blsp_i2c4, blsp_i2c5,
++                blsp_i2c6, blsp_spi1, blsp_spi2, blsp_spi3, blsp_spi4,
++                blsp_spi5, blsp_spi6, blsp_uart1, blsp_uart2, blsp_uart3,
++                blsp_uart4, blsp_uart5, blsp_uart6, blsp_uim1, blsp_uim2,
++                codec_int, codec_rst, coex_uart, cri_trng, cri_trng0,
++                cri_trng1, dbg_out, ebi0_wrcdc, ebi2_a, ebi2_a_d_8_b,
++                ebi2_lcd, ebi2_lcd_cs_n_b, ebi2_lcd_te_b, eth_irq, eth_rst,
++                gcc_gp1_clk_a, gcc_gp1_clk_b, gcc_gp2_clk_a, gcc_gp2_clk_b,
++                gcc_gp3_clk_a, gcc_gp3_clk_b, gcc_plltest, gcc_tlmm, gmac_mdio,
++                gpio, gsm0_tx, lcd_rst, ldo_en, ldo_update, m_voc, modem_tsync,
++                nav_ptp_pps_in_a, nav_ptp_pps_in_b, nav_tsync_out_a,
++                nav_tsync_out_b, pa_indicator, pbs0, pbs1, pbs2,
++                pri_mi2s_data0_a, pri_mi2s_data1_a, pri_mi2s_mclk_a,
++                pri_mi2s_sck_a, pri_mi2s_ws_a, prng_rosc, ptp_pps_out_a,
++                ptp_pps_out_b, pwr_crypto_enabled_a, pwr_crypto_enabled_b,
++                pwr_modem_enabled_a, pwr_modem_enabled_b, pwr_nav_enabled_a,
++                pwr_nav_enabled_b, qdss_cti_trig_in_a0, qdss_cti_trig_in_a1,
++                qdss_cti_trig_in_b0, qdss_cti_trig_in_b1, qdss_cti_trig_out_a0,
++                qdss_cti_trig_out_a1, qdss_cti_trig_out_b0, qdss_cti_trig_out_b1,
++                qdss_traceclk_a, qdss_traceclk_b, qdss_tracectl_a,
++                qdss_tracectl_b, qdss_tracedata_a, qdss_tracedata_b, rcm_marker1,
++                rcm_marker2, sd_write, sec_mi2s, sensor_en, sensor_int2,
++                sensor_int3, sensor_rst, ssbi1, ssbi2, touch_rst, ts_int,
++                uim1_clk, uim1_data, uim1_present, uim1_reset, uim2_clk,
++                uim2_data, uim2_present, uim2_reset, uim_batt, wlan_en1, ]
++
++      bias-disable: true
++      bias-pull-down: true
++      bias-pull-up: true
++      drive-strength: true
++      input-enable: true
++      output-high: true
++      output-low: true
++
++    required:
++      - pins
++      - function
++
++    additionalProperties: false
++
++examples:
++  - |
++        #include <dt-bindings/interrupt-controller/arm-gic.h>
++        tlmm: pinctrl@1000000 {
++          compatible = "qcom,mdm9607-pinctrl";
++          reg = <0x01000000 0x300000>;
++          interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
++          gpio-controller;
++          gpio-ranges = <&msmgpio 0 0 80>;
++          #gpio-cells = <2>;
++          interrupt-controller;
++          #interrupt-cells = <2>;
++        };
 -- 
-https://patchwork.kernel.org/project/linux-wireless/list/
+2.32.0
 
-https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
