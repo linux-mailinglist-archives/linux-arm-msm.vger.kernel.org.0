@@ -2,96 +2,333 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7800C3B1F77
+	by mail.lfdr.de (Postfix) with ESMTP id 58D183B1F76
 	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jun 2021 19:30:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229759AbhFWRcS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Jun 2021 13:32:18 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:24514 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229755AbhFWRcR (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        id S229886AbhFWRcR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Wed, 23 Jun 2021 13:32:17 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1624469386; h=Content-Type: MIME-Version: Message-ID:
- In-Reply-To: Date: References: Subject: Cc: To: From: Sender;
- bh=s5Bz0eZCymv18Oj3WyVC1yQjpxs4Dm1dYfaMS7UGc5M=; b=hEOdwAnqx00lFrbLAov/Ec/mmy1rfhPLQiyF8We+p9TATT48OVcH6x8hrVgGCBMF/PJm/rY5
- /oUen1tkeeYAlDUEp5djyEZu33txqG4ns38ZkG47cqCNOLTyYgNMcBN8azkhHXxk772dgAjR
- RUJfe1ElA8NPL9oWv28mToRIrz8=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
- 60d36f86dc4628fe7e629aa5 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 23 Jun 2021 17:29:42
- GMT
-Sender: kvalo=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 64760C43460; Wed, 23 Jun 2021 17:29:41 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
-Received: from tykki (tynnyri.adurom.net [51.15.11.48])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: kvalo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id C26C3C433D3;
-        Wed, 23 Jun 2021 17:29:37 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org C26C3C433D3
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=kvalo@codeaurora.org
-From:   Kalle Valo <kvalo@codeaurora.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     Bhaumik Bhatt <bbhatt@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
-        jhugo@codeaurora.org, linux-kernel@vger.kernel.org,
-        loic.poulain@linaro.org, linux-wireless@vger.kernel.org,
-        ath11k@lists.infradead.org, bbhatt=codeaurora.org@codeaurora.org,
-        lilic@codeaurora.org, kangxu@codeaurora.org
-Subject: Re: [PATCH v4 4/6] ath11k: set register access length for MHI driver
-References: <1620330705-40192-1-git-send-email-bbhatt@codeaurora.org>
-        <1620330705-40192-5-git-send-email-bbhatt@codeaurora.org>
-        <20210521135152.GL70095@thinkpad> <87h7i0juxt.fsf@codeaurora.org>
-        <37184e28dcc952ba9ad5ed0dc2c1a6da@codeaurora.org>
-        <6ed9fe90f40e5f8151d3a028abf0acd1@codeaurora.org>
-        <20210618064514.GM3682@workstation>
-Date:   Wed, 23 Jun 2021 20:29:26 +0300
-In-Reply-To: <20210618064514.GM3682@workstation> (Manivannan Sadhasivam's
-        message of "Fri, 18 Jun 2021 12:15:14 +0530")
-Message-ID: <87k0mkh4ll.fsf@codeaurora.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44006 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229759AbhFWRcR (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 23 Jun 2021 13:32:17 -0400
+Received: from mail-qk1-x72b.google.com (mail-qk1-x72b.google.com [IPv6:2607:f8b0:4864:20::72b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6539C061756
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jun 2021 10:29:56 -0700 (PDT)
+Received: by mail-qk1-x72b.google.com with SMTP id o6so7202480qkh.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jun 2021 10:29:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=+ydUWrmEdj6nDidfKX+/eYYcUGvXa+c1FifMacfsvQU=;
+        b=HhichcHb3lYg8f6A1A6f+TM9tCumTcNG/WqCjLQ0w5/X1cgDGILBlnABMVIYQSC4hX
+         5FGPtqKGADHe5SnWI/x0Lm+MHT7Uz/XShpjncKA513+Ao3e7DYNryEeIrJMdt5ciOLXx
+         upL7oGdwMLLkqwKofk0EjHmwgo/PwFb9E9Bco=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=+ydUWrmEdj6nDidfKX+/eYYcUGvXa+c1FifMacfsvQU=;
+        b=exsCGBj2uRLbqcQjwXVVvAcMSOsPWZ6bmwy+TFMgPdx6nni0UBZT5fcKZnioYBO2c6
+         n8q1gMJ1PU0p/z+7gWEFcKUDFd+rPlEltEt5l6v3vdSqWpdCKSZvOZA8Hafl7jY0D75g
+         FyXHEqgXSZX7PahR4+jMD7eHSWZbylqfCEQT78d9wiTib6qxb+ObX4x5nXORVRX+/SOG
+         w9quLlSG7Xti+b8h+v1tgCQX5W6GVg6285WMZXv3/tyBhwBqJYPXDMJSX3Jiy5Rddv/B
+         pNxtYUcksFqfctfE1gnV9EINYoST7PUWIv59oVYeY0dbcMy7LZWcD8oCGpMEXWeUMfDI
+         NGyw==
+X-Gm-Message-State: AOAM531pSxtNJtaaKN4ZJGm64eFq5OLVCaEGr51nwBBFgPjm14oHT/W0
+        MCkhdJL3an8oCfFf5S84V6vPTbpd+rUKpg==
+X-Google-Smtp-Source: ABdhPJzJgTxjlfkERZz9C+NC2yIS3wB5gEmxqwDoC7Y6DKldDBfY9VZCNnb1woBQTILdCjflqTLG7Q==
+X-Received: by 2002:a37:814:: with SMTP id 20mr1177288qki.243.1624469395293;
+        Wed, 23 Jun 2021 10:29:55 -0700 (PDT)
+Received: from mail-qk1-f175.google.com (mail-qk1-f175.google.com. [209.85.222.175])
+        by smtp.gmail.com with ESMTPSA id b8sm375785qtr.77.2021.06.23.10.29.53
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 23 Jun 2021 10:29:53 -0700 (PDT)
+Received: by mail-qk1-f175.google.com with SMTP id y29so5623979qky.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Jun 2021 10:29:53 -0700 (PDT)
+X-Received: by 2002:a25:80d4:: with SMTP id c20mr688032ybm.345.1624469392601;
+ Wed, 23 Jun 2021 10:29:52 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20210621235248.2521620-1-dianders@chromium.org>
+ <067dd86d-da7f-ac83-6ce6-b8fd5aba0b6f@arm.com> <CAD=FV=Vg7kqhgxZppHXwMPMc0xATZ+MqbrXx-FB0eg7pHhNE8w@mail.gmail.com>
+ <498f3184-99fe-c21b-0eb0-a199f2615ceb@arm.com>
+In-Reply-To: <498f3184-99fe-c21b-0eb0-a199f2615ceb@arm.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Wed, 23 Jun 2021 10:29:40 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=UQBRY4hobBWVWtC8y07NLRLhpejdvUAD+7UWw-jqP2UA@mail.gmail.com>
+Message-ID: <CAD=FV=UQBRY4hobBWVWtC8y07NLRLhpejdvUAD+7UWw-jqP2UA@mail.gmail.com>
+Subject: Re: [PATCH 0/6] iommu: Enable devices to request non-strict DMA,
+ starting with QCom SD/MMC
+To:     Robin Murphy <robin.murphy@arm.com>
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+        Will Deacon <will@kernel.org>, Joerg Roedel <joro@8bytes.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Adrian Hunter <adrian.hunter@intel.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Rob Clark <robdclark@chromium.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-pci@vger.kernel.org, quic_c_gdjako@quicinc.com,
+        "list@263.net:IOMMU DRIVERS" <iommu@lists.linux-foundation.org>,
+        Sonny Rao <sonnyrao@chromium.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Linux MMC List <linux-mmc@vger.kernel.org>,
+        Veerabhadrarao Badiganti <vbadigan@codeaurora.org>,
+        Rajat Jain <rajatja@google.com>,
+        Saravana Kannan <saravanak@google.com>,
+        Joel Fernandes <joel@joelfernandes.org>,
+        Andy Gross <agross@kernel.org>,
+        Bartosz Golaszewski <bgolaszewski@baylibre.com>,
+        Dan Williams <dan.j.williams@intel.com>,
+        Geert Uytterhoeven <geert@linux-m68k.org>,
+        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+        Randy Dunlap <rdunlap@infradead.org>,
+        LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> writes:
+Hi,
 
-> On Wed, Jun 16, 2021 at 10:38:01AM -0700, Bhaumik Bhatt wrote:
->> Hi Kalle/Mani,
->> 
->> On 2021-06-14 10:49 AM, Bhaumik Bhatt wrote:
->> Just got confirmation that the whole patch series was tested for functional
->> sanity on
->> Dell E7590 + QCA6390 with Ubuntu18.04 and patch 4/6 is also good to go.
->> 
->> Can you please ACK and pick up this series?
->> 
+On Tue, Jun 22, 2021 at 3:10 PM Robin Murphy <robin.murphy@arm.com> wrote:
 >
-> I can pick the series but I need an Ack from Kalle since it contains
-> ath11k changes. Kalle, can you please Ack this patch?
+> On 2021-06-22 17:06, Doug Anderson wrote:
+> > Hi,
+> >
+> > On Tue, Jun 22, 2021 at 4:35 AM Robin Murphy <robin.murphy@arm.com> wrote:
+> >>
+> >> Hi Doug,
+> >>
+> >> On 2021-06-22 00:52, Douglas Anderson wrote:
+> >>>
+> >>> This patch attempts to put forward a proposal for enabling non-strict
+> >>> DMA on a device-by-device basis. The patch series requests non-strict
+> >>> DMA for the Qualcomm SDHCI controller as a first device to enable,
+> >>> getting a nice bump in performance with what's believed to be a very
+> >>> small drop in security / safety (see the patch for the full argument).
+> >>>
+> >>> As part of this patch series I am end up slightly cleaning up some of
+> >>> the interactions between the PCI subsystem and the IOMMU subsystem but
+> >>> I don't go all the way to fully remove all the tentacles. Specifically
+> >>> this patch series only concerns itself with a single aspect: strict
+> >>> vs. non-strict mode for the IOMMU. I'm hoping that this will be easier
+> >>> to talk about / reason about for more subsystems compared to overall
+> >>> deciding what it means for a device to be "external" or "untrusted".
+> >>>
+> >>> If something like this patch series ends up being landable, it will
+> >>> undoubtedly need coordination between many maintainers to land. I
+> >>> believe it's fully bisectable but later patches in the series
+> >>> definitely depend on earlier ones. Sorry for the long CC list. :(
+> >>
+> >> Unfortunately, this doesn't work. In normal operation, the default
+> >> domains should be established long before individual drivers are even
+> >> loaded (if they are modules), let alone anywhere near probing. The fact
+> >> that iommu_probe_device() sometimes gets called far too late off the
+> >> back of driver probe is an unfortunate artefact of the original
+> >> probe-deferral scheme, and causes other problems like potentially
+> >> malformed groups - I've been forming a plan to fix that for a while now,
+> >> so I for one really can't condone anything trying to rely on it.
+> >> Non-deterministic behaviour based on driver probe order for multi-device
+> >> groups is part of the existing problem, and your proposal seems equally
+> >> vulnerable to that too.
+> >
+> > Doh! :( I definitely can't say I understand the iommu subsystem
+> > amazingly well. It was working for me, but I could believe that I was
+> > somehow violating a rule somewhere.
+> >
+> > I'm having a bit of a hard time understanding where the problem is
+> > though. Is there any chance that you missed the part of my series
+> > where I introduced a "pre_probe" step? Specifically, I see this:
+> >
+> > * really_probe() is called w/ a driver and a device.
+> > * -> calls dev->bus->dma_configure() w/ a "struct device *"
+> > * -> eventually calls iommu_probe_device() w/ the device.
 >
-> I'm planning to send the PR by this weekend.
+> This...
+>
+> > * -> calls iommu_alloc_default_domain() w/ the device
+> > * -> calls iommu_group_alloc_default_domain()
+> > * -> always allocates a new domain
+> >
+> > ...so we always have a "struct device" when a domain is allocated if
+> > that domain is going to be associated with a device.
+> >
+> > I will agree that iommu_probe_device() is called before the driver
+> > probe, but unless I missed something it's after the device driver is
+> > loaded.  ...and assuming something like patch #1 in this series looks
+> > OK then iommu_probe_device() will be called after "pre_probe".
+> >
+> > So assuming I'm not missing something, I'm not actually relying the
+> > IOMMU getting init off the back of driver probe.
+>
+> ...is implicitly that. Sorry that it's not obvious.
+>
+> The "proper" flow is that iommu_probe_device() is called for everything
+> which already exists during the IOMMU driver's own probe when it calls
+> bus_set_iommu(), then at BUS_NOTIFY_ADD_DEVICE time for everything which
+> appears subsequently. The only trouble is, to observe it in action on a
+> DT-based system you'd currently have to go back at least 4 years, before
+> 09515ef5ddad...
+>
+> Basically there were two issues: firstly we need the of_xlate step
+> before add_device (now probe_device) for a DT-based IOMMU driver to know
+> whether it should care about the given device or not. When -EPROBE_DEFER
+> was the only tool we had to ensure probe ordering, and resolving the
+> "iommus" DT property the only place to decide that, delaying it all
+> until driver probe time was the only reasonable option, however ugly.
+> The iommu_probe_device() "replay" in {of,acpi}_iommu_configure() is
+> merely doing its best to fake up the previous behaviour. Try binding a
+> dummy driver to your device first, then unbind it and bind the real one,
+> and you'll see that iommu_probe_device() doesn't run the second or
+> subsequent times. Now that we have fw_devlink to take care of ordering,
 
-Sorry for the late reply. Yes, as this now tested with ath11k driver
-please take this ath11k patch via the mhi tree:
+I probably haven't been following fw_devlink as closely as I should,
+but does it completely replace -EPROBE_DEFER? From what I can tell
+right now it helps optimize the boot ordering but it's not mandatory
+(AKA Linux should boot/work fine with fw_devlink=off)?
 
-Acked-by: Kalle Valo <kvalo@codeaurora.org>
 
--- 
-https://patchwork.kernel.org/project/linux-wireless/list/
+> the main reason for this weirdness is largely gone, so I'm keen to start
+> getting rid of the divergence again as far as possible. Fundamentally,
+> IOMMU drivers are supposed to be aware of all devices which the kernel
+> knows about, regardless of whether they have a driver available or not.
+>
+> The second issue is that when we have multiple IOMMU instances, the
+> initial bus_set_iommu() "replay" is only useful for the first instance,
+> so devices managed by other instances which aren't up and running yet
+> will be glossed over. Currently this ends up being papered over by the
+> solution to the first point on DT systems, while the x86 drivers hide
+> their individual IOMMU units behind a single IOMMU API "instance", so
+> it's been having little impact in practice. However, improving the core
+> API's multi-instance support is an increasingly pressing issue now that
+> new more varied systems are showing up, and it's that which is really
+> going to be driving the aforementioned changes. FWIW the plan I
+> currently have is to hang things off iommu_device_register() instead.
 
-https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
+I tried to follow all the above the best I can and hopefully
+understood some of it. ;-)
+
+OK, so what do you think about these points?
+
+* I think you are arguing that IOMMU strictness requirements needs to
+be known regardless of whether we have a driver for a given device or
+not. So the whole pre_probe stuff is just not right.
+
+* One thing that's been proposed is putting strictness info in the
+device tree. In theory on device-tree systems you could still put
+strictness info in the per-device nodes assuming that all devices are
+actually described in the device tree. That sounds nice, but I can
+believe it would be pretty hard to parse backward like this. AKA when
+the IOMMU probes it would need to find all the device tree nodes that
+would end up grouped together parse their details to find out if they
+should be non-strict.
+
+* Instead of putting the details in per-device nodes, maybe it makes
+sense to accept that we should be specifying these things at the IOMMU
+level? If specifying things at the device tree level then the
+device-tree node of the IOMMU itself would just have a list of things
+that should be strict/non-strict. ...this could potentially be merged
+with a hardcoded list of things in the IOMMU driver based on the IOMMU
+compatible string.
+
+Do those sound right?
+
+I still haven't totally grokked the ideal way to identify devices. I
+guess on Qualcomm systems each device is in its own group and so could
+have its own strictness levels? ...or would it be better to list by
+"stream ID" or something like that?
+
+If we do something like this then maybe that's a solution that could
+land short-ish term? We would know right at init time whether a given
+domain should be strict or non-strict and there'd be no requirements
+to transition it.
+
+
+> >> FWIW we already have a go-faster knob for people who want to tweak the
+> >> security/performance compromise for specific devices, namely the sysfs
+> >> interface for changing a group's domain type before binding the relevant
+> >> driver(s). Is that something you could use in your application, say from
+> >> an initramfs script?
+> >
+> > We've never had an initramfs script in Chrome OS. I don't know all the
+> > history of why (I'm trying to check), but I'm nearly certain it was a
+> > conscious decision. Probably it has to do with the fact that we're not
+> > trying to build a generic distribution where a single boot source can
+> > boot a huge variety of hardware. We generally have one kernel for a
+> > class of devices. I believe avoiding the initramfs just keeps things
+> > simpler.
+> >
+> > I think trying to revamp Chrome OS to switch to an initramfs type
+> > system would be a pretty big undertaking since (as I understand it)
+> > you can't just run a little command and then return to the normal boot
+> > flow. Once you switch to initramfs you're committing to finding /
+> > setting up the rootfs yourself and on Chrome OS I believe that means a
+> > whole bunch of dm-verity work.
+> >
+> >
+> > ...so probably the initramfs is a no-go for me, but I'm still crossing
+> > my fingers that the pre_probe() might be legit if you take a second
+> > look at it?
+>
+> That's fair enough - TBH the current sysfs interface is a pretty
+> specialist sport primarily for datacentre folks who can afford to take
+> down their 40GBE NIC or whatever momentarily for a longer-term payoff,
+> but it was worth exploring - I'm assuming the SDHCI holds your root
+> filesystem so you wouldn't be able to do the unbinding dance from real
+> userspace. As I said, the idea of embedding any sort of data in
+> individual client drivers is a non-starter in general since it only has
+> any hope of working on DT platforms (maybe arm64 ACPI too?), and only
+> for very much the wrong reasons.
+>
+> If this is something primarily demanded by QCom platforms in the short
+> term,
+
+At the moment I'm mostly focused on QCom platforms, but that's mostly
+because they're the first board that I've dealt with that has iommus
+on pretty much every peripheral under the sun. That's a _good_ thing,
+but it also means it's where we're hitting all these performance
+issues. I believe that the usage of "iommus everywhere" is about to
+become a lot more widespread across the SoC ecosystem, especially as
+they are important for virtualization and that seems to be a hot-topic
+these days.
+
+Basically: I could land a short-term hack a solution for me (and
+probably this is the right thing for me to do?), but I'm very much
+interested in finding a better solution, ideally something that we
+could achieve in something less than a year? Am I dreaming?
+
+
+> I'm tempted to say just try it with more device-matching magic in
+> arm-smmu-qcom.
+
+Yeah, I had this working (at least as far as my testing went)
+downstream in the chromeos-5.4 tree. I basically just implemented
+"init_context" for the arm-smmu-qcom driver and then if the "struct
+device *" passed in matched the SDMMC compatible string I just ORed in
+"IO_PGTABLE_QUIRK_NON_STRICT". That actually seemed to work fine in
+the downstream kernel tree but not upstream. I believe it broke in
+commit a250c23f15c2 ("iommu: remove DOMAIN_ATTR_DMA_USE_FLUSH_QUEUE")
+because the flush queue stopped getting initted.
+
+I think I could revamp my patch series to continue to have the
+strictness attributes in the "struct iommu_domain" but just get rid of
+the bits in the "struct device" and obviously get rid of the
+"pre_probe" patch. Would something like that be acceptable?
+
+
+> Otherwise, the idea of growing the sysfs interface to
+> allow switching a DMA domain from default-strict to non-strict is
+> certainly an interesting prospect. Going a step beyond that to bring up
+> a flush queue 'live' without rebuilding the whole group and domain could
+> get ugly when it comes to drivers' interaction with io-pgtable, but I
+> think it might be *technically* feasible...
+
+It seems like it would be nice, but maybe with the above we could get
+by without having to do this?
+
+-Doug
