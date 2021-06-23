@@ -2,233 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 268A63B13CD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jun 2021 08:15:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D07A33B1492
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jun 2021 09:27:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229864AbhFWGSF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Jun 2021 02:18:05 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:48904 "EHLO m43-7.mailgun.net"
+        id S229896AbhFWHaC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Jun 2021 03:30:02 -0400
+Received: from mail.kernel.org ([198.145.29.99]:59654 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229801AbhFWGSD (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Jun 2021 02:18:03 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1624428946; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=YgXZ6VNhDITS6yDaGx56LtlJqbhq7xTELt1tz8y6TYM=;
- b=L8uDHvsVTSBBO5yxeEk2FcNdxCQlLcuHSd3uMhIj2Y2xiLXMtfTpCm6NG8skjaO1NO2QHJfh
- Usq7EyZZjqQAqW7vlhjNSAlrgmRvuwho/ixnxQDz+64ctRYnAYKx6tlF9VG1xRiKtNEM84px
- BUj0+0w2DphVh8qSX3EGtEN27Xo=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
- 60d2d17f638039e997219932 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 23 Jun 2021 06:15:27
- GMT
-Sender: rajeevny=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id AD7C9C433F1; Wed, 23 Jun 2021 06:15:27 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: rajeevny)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 93D9CC433D3;
-        Wed, 23 Jun 2021 06:15:24 +0000 (UTC)
+        id S229660AbhFWHaC (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 23 Jun 2021 03:30:02 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 7FC0D61076;
+        Wed, 23 Jun 2021 07:27:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+        s=korg; t=1624433264;
+        bh=MfGpAhkgNAsV4Gs6J3HXShXQ6oCjPOD50RyhMvI5TIg=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=VL3P8zhD1J20JIY2+okRVn52pWiyX0awT2ZEVB1iqKyPEBYhY9PaQjYqUQzPkriup
+         d9d1+2/QNqASXUYg+5eheF++kEPxPVMbHSwrOsoBQbv/e3FSK+pudi4Plpyu9fxbpe
+         GV+0b11T757IsJ8cMWyS/7IkjBHHTatjN+TCeVsw=
+Date:   Wed, 23 Jun 2021 09:27:41 +0200
+From:   Greg KH <gregkh@linuxfoundation.org>
+To:     Siddharth Gupta <sidgup@codeaurora.org>
+Cc:     bjorn.andersson@linaro.org, ohad@wizery.com,
+        linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, psodagud@codeaurora.org,
+        stable@vger.kernel.org
+Subject: Re: [PATCH v3 1/4] remoteproc: core: Move cdev add before device add
+Message-ID: <YNLibU0/kMfZ3Hio@kroah.com>
+References: <1623723671-5517-1-git-send-email-sidgup@codeaurora.org>
+ <1623723671-5517-2-git-send-email-sidgup@codeaurora.org>
+ <YMgy7eg3wde0eVfe@kroah.com>
+ <0a196786-f624-d9bb-8ef9-55c04ed57497@codeaurora.org>
+ <YMmTGD6hAKbpGWMp@kroah.com>
+ <f81acd52-fe59-a296-b221-febbf8281606@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Wed, 23 Jun 2021 11:45:24 +0530
-From:   rajeevny@codeaurora.org
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Sam Ravnborg <sam@ravnborg.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Rob Clark <robdclark@gmail.com>, Lyude Paul <lyude@redhat.com>,
-        Jani Nikula <jani.nikula@intel.com>,
-        Rob Herring <robh@kernel.org>,
-        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-        Andrzej Hajda <a.hajda@samsung.com>,
-        Daniel Thompson <daniel.thompson@linaro.org>,
-        "Kristian H. Kristensen" <hoegsberg@chromium.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Sean Paul <seanpaul@chromium.org>,
-        Kalyan Thota <kalyan_t@codeaurora.org>,
-        Krishna Manikandan <mkrishn@codeaurora.org>,
-        Lee Jones <lee.jones@linaro.org>,
-        Jingoo Han <jingoohan1@gmail.com>, linux-fbdev@vger.kernel.org
-Subject: Re: [v7 1/5] drm/panel: add basic DP AUX backlight support
-In-Reply-To: <CAD=FV=WJiA+RxaQA9xt7Tik_2pCEJo0+6b39Di8cfnSWGuKkJQ@mail.gmail.com>
-References: <1624099230-20899-1-git-send-email-rajeevny@codeaurora.org>
- <1624099230-20899-2-git-send-email-rajeevny@codeaurora.org>
- <20210620093141.GA703072@ravnborg.org>
- <ebf5581759daee9596c2f092ca836ecb@codeaurora.org>
- <20210621183828.GA918146@ravnborg.org>
- <CAD=FV=WJiA+RxaQA9xt7Tik_2pCEJo0+6b39Di8cfnSWGuKkJQ@mail.gmail.com>
-Message-ID: <c15947bb1566f176a2f534c52a7c3183@codeaurora.org>
-X-Sender: rajeevny@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <f81acd52-fe59-a296-b221-febbf8281606@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
-
-On 23-06-2021 00:03, Doug Anderson wrote:
-> Hi,
+On Wed, Jun 16, 2021 at 11:47:01AM -0700, Siddharth Gupta wrote:
 > 
-> On Mon, Jun 21, 2021 at 11:38 AM Sam Ravnborg <sam@ravnborg.org> wrote:
->> 
->> > > I cannot see why you need the extra check on ->enabled?
->> > > Would it be sufficient to check backlight_is_blank() only?
->> >
->> > This extra check on bl->enabled flag is added to avoid enabling/disabling
->> > backlight again if it is already enabled/disabled.
->> > Using this flag way can know the transition between backlight blank and
->> > un-blank, and decide when to enable/disable the backlight.
->> 
->> My point is that this should really not be needed, as it would cover 
->> up
->> for some other bug whaere we try to do something twice that is not
->> needed. But I am less certain here so if you think it is needed, keep
->> it as is.
-> 
-> I haven't tested this myself, but I believe that it is needed. I don't
-> think the backlight update_status() function is like an enable/disable
-> function. I believe it can be called more than one time even while the
-> backlight is disabled. For instance, you can see that
-> backlight_update_status() just blindly calls through to update the
-> status. That function can be called for a number of reasons. Perhaps
-> Rajeev can put some printouts to confirm but I think that if the
-> backlight is "blanked" for whatever reason and you write to sysfs and
-> change the backlight level you'll still get called again even though
-> the backlight is still "disabled".
-> 
-Yes, sysfs write will always try to update the backlight even though the 
-backlight is "blanked".
+> On 6/15/2021 10:58 PM, Greg KH wrote:
+> > On Tue, Jun 15, 2021 at 12:03:26PM -0700, Siddharth Gupta wrote:
+> > > On 6/14/2021 9:56 PM, Greg KH wrote:
+> > > > On Mon, Jun 14, 2021 at 07:21:08PM -0700, Siddharth Gupta wrote:
+> > > > > When cdev_add is called after device_add has been called there is no
+> > > > > way for the userspace to know about the addition of a cdev as cdev_add
+> > > > > itself doesn't trigger a uevent notification, or for the kernel to
+> > > > > know about the change to devt. This results in two problems:
+> > > > >    - mknod is never called for the cdev and hence no cdev appears on
+> > > > >      devtmpfs.
+> > > > >    - sysfs links to the new cdev are not established.
+> > > > > 
+> > > > > The cdev needs to be added and devt assigned before device_add() is
+> > > > > called in order for the relevant sysfs and devtmpfs entries to be
+> > > > > created and the uevent to be properly populated.
+> > > > So this means no one ever ran this code on a system that used devtmpfs?
+> > > > 
+> > > > How was it ever tested?
+> > > My testing was done with toybox + Android's ueventd ramdisk.
+> > > As I mentioned in the discussion, the race became evident
+> > > recently. I will make sure to test all such changes without
+> > > systemd/ueventd in the future.
+> > It isn't an issue of systemd/ueventd, those do not control /dev on a
+> > normal system, that is what devtmpfs is for.
+> I am not fully aware of when devtmpfs is enabled or not, but in
+> case it is not - systemd/ueventd will create these files with
+> mknod, right?
 
-The "bl->enabled" check is also required to prevent unnecessary calls to 
-drm_edp_backlight_enable() during every backlight level change.
+No, systemd does not create device nodes, and neither does udev.  Hasn't
+done so for well over 10 years now.
 
-To confirm this, I have added few prints in 
-dp_aux_backlight_update_status() function and collected the logs.
-(Copying the code here to make the review easy)
+> I was even manually able to call mknod from the
+> terminal when some of the remoteproc character device entries
+> showed up (using major number from there, and minor number being
+> the remoteproc id), and that allowed me to boot up the
+> remoteprocs as well.
 
+Yes, that is fine, but that also means that this was not working from
+the very beginning :(
 
-static int dp_aux_backlight_update_status(struct backlight_device *bd)
-{
-         struct dp_aux_backlight *bl = bl_get_data(bd);
-         u16 brightness = backlight_get_brightness(bd);
-         int ret = 0;
+> > And devtmpfs nodes are only created if you create a struct device
+> > somewhere with a proper major/minor, which you were not doing here, so
+> > you must have had a static /dev on your test systems, right?
+> I am not sure of what you mean by a static /dev? Could you
+> explain? In case you mean the character device would be
+> non-functional, that is not the case. They have been working
+> for us since the beginning.
 
-+        pr_err("%s: brightness %d, _is_blank %d, bl->enabled %d\n", 
-__func__,
-+                brightness, backlight_is_blank(bd), bl->enabled);
+/dev on modern systems is managed by devtmpfs, which knows to create the
+device nodes when you properly register the device with the driver core.
+A "static" /dev is managed by mknod from userspace, like you did "by
+hand", and that is usually only done by older systems.
 
-         if (!backlight_is_blank(bd)) {
-                 if (!bl->enabled) {
-+                        pr_err("%s: enabling backlight\n", __func__);
-                         drm_edp_backlight_enable(bl->aux, &bl->info, 
-brightness);
-                         bl->enabled = true;
-                         return 0;
-                 }
-                 ret = drm_edp_backlight_set_level(bl->aux, &bl->info, 
-brightness);
-         } else {
-                 if (bl->enabled) {
-+                       pr_err("%s: disabling backlight\n", __func__);
-                         drm_edp_backlight_disable(bl->aux, &bl->info);
-                         bl->enabled = false;
-                 }
-         }
+thanks,
 
-         return ret;
-}
-
-
-LOGS
-====
-
-During boot
------------
-[    4.752188] dp_aux_backlight_update_status: brightness 102, _is_blank 
-0, bl->enabled 0
-[    4.760447] dp_aux_backlight_update_status: enabling backlight
-[    5.503866] dp_aux_backlight_update_status: brightness 102, _is_blank 
-0, bl->enabled 1
-[    6.897355] dp_aux_backlight_update_status: brightness 103, _is_blank 
-0, bl->enabled 1
-[    6.938617] dp_aux_backlight_update_status: brightness 104, _is_blank 
-0, bl->enabled 1
-[    6.980634] dp_aux_backlight_update_status: brightness 105, _is_blank 
-0, bl->enabled 1
-
-
-Turning Panel OFF
------------------
-localhost ~ # set_power_policy --ac_screen_dim_delay=5 
---ac_screen_off_delay=10
-localhost ~ #
-
-[  106.555140] dp_aux_backlight_update_status: brightness 145, _is_blank 
-0, bl->enabled 1
-...
-...
-[  111.679407] dp_aux_backlight_update_status: brightness 7, _is_blank 
-0, bl->enabled 1
-[  111.700302] dp_aux_backlight_update_status: brightness 4, _is_blank 
-0, bl->enabled 1
-[  111.720805] dp_aux_backlight_update_status: brightness 2, _is_blank 
-0, bl->enabled 1
-[  111.747486] dp_aux_backlight_update_status: brightness 0, _is_blank 
-1, bl->enabled 1
-[  111.755580] dp_aux_backlight_update_status: disabling backlight
-[  111.792344] dp_aux_backlight_update_status: brightness 0, _is_blank 
-1, bl->enabled 0
-
-
-Changing brightness from sysfs while panel is off
---------------------------------------------------
-(it will do nothing)
-
-localhost ~ # echo 100 > 
-/sys/class/backlight/dp_aux_backlight/brightness
-[  352.754963] dp_aux_backlight_update_status: brightness 0, _is_blank 
-1, bl->enabled 0
-
-localhost ~ # echo 200 > 
-/sys/class/backlight/dp_aux_backlight/brightness
-[  364.708048] dp_aux_backlight_update_status: brightness 0, _is_blank 
-1, bl->enabled 0
-
-localhost ~ # echo 0 > /sys/class/backlight/dp_aux_backlight/brightness
-[  378.850978] dp_aux_backlight_update_status: brightness 0, _is_blank 
-1, bl->enabled 0
-
-
-Turning Panel ON
-----------------
-[  553.381745] dp_aux_backlight_update_status: brightness 0, _is_blank 
-0, bl->enabled 0
-[  553.418133] dp_aux_backlight_update_status: enabling backlight
-[  553.426397] dp_aux_backlight_update_status: brightness 159, _is_blank 
-0, bl->enabled 1
-
-====
-
-
-
-Thanks,
-Rajeev
-
+greg k-h
