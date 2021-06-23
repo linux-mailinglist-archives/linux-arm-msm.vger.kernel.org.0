@@ -2,80 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EEC1B3B11D9
+	by mail.lfdr.de (Postfix) with ESMTP id 755573B11D7
 	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jun 2021 04:43:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229786AbhFWCpu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Jun 2021 22:45:50 -0400
-Received: from gate2.alliedtelesis.co.nz ([202.36.163.20]:44270 "EHLO
+        id S229934AbhFWCpt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Jun 2021 22:45:49 -0400
+Received: from gate2.alliedtelesis.co.nz ([202.36.163.20]:44267 "EHLO
         gate2.alliedtelesis.co.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229890AbhFWCpt (ORCPT
+        with ESMTP id S229786AbhFWCpt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Tue, 22 Jun 2021 22:45:49 -0400
 Received: from svr-chch-seg1.atlnz.lc (mmarshal3.atlnz.lc [10.32.18.43])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (Client did not present a certificate)
-        by gate2.alliedtelesis.co.nz (Postfix) with ESMTPS id 2E99C83640;
+        by gate2.alliedtelesis.co.nz (Postfix) with ESMTPS id 297D480719;
         Wed, 23 Jun 2021 14:43:31 +1200 (NZST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alliedtelesis.co.nz;
         s=mail181024; t=1624416211;
-        bh=4ANcvU3lC5BGWHjxkVIkmbYgvoY+suJ5u/sfb2nuHQU=;
-        h=From:To:Cc:Subject:Date;
-        b=LktYzxaQ/t4yG4JKAya0iC8sks7zJd3wczWE7UKRkDwqlPGrUSWcsqBf5ZutVsU7R
-         2ZcUkis3bZFGun5+v64zJa67E7P4FPOKuw1Xw5rXW7rX3YjhLzUDQt2/zo5d2QTJtq
-         4OY1DBNDfPl/PkYnG2G+4g3azq96hPimS/u2U76otbQjgN85gV3aTV8IJJ5nv7+/qe
-         eWdaOFqdBUItZ5bFcNYqxKFz2EZBzOXNqaqJH4ddT9S4ljudBGSjnpqaf+FqshaM0Q
-         l5ZboxRB9uDvkD1gLZM2ILaJlWdRAOlIZUHst6datv5CG2B88MDL+TAavHVhWDrPrq
-         KVyb3hGaLXgVQ==
+        bh=6m75k33uLkoEGCsnXHFsQuSUeJtVMSaMAYRp55SjWOo=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References;
+        b=yGP9CCV5YXeNFYbpHK5sR6rxAR+cT1tIgmtu4NpafVLIOimvL7loJykgaWYolEMsW
+         5xN+j2k1/WSr16zMnRPevimX+JRHvTsjX+ir5d/Xk8Xi/zJ65i6f+tU/Krl3gRmCeK
+         Oq6ezvGoEXKhQMXdGj002WeJXvn/JSVdtG3wl0atg8STV/6OfXDVmKPP8+h+GEOzB1
+         4iq8lgG4apYlJWZwVsVBd2BCAKQbwjWs5rjI698WO3WA5jPkLCgv98XdEk7A4CCL/I
+         4tnir93Abb0mumrSjdXScdxpsYcC+9g+IDR2l54RVNVzEbnP/pqnN0+wgy5OE5Gxn6
+         R5xcYVNNp3VLg==
 Received: from pat.atlnz.lc (Not Verified[10.32.16.33]) by svr-chch-seg1.atlnz.lc with Trustwave SEG (v8,2,6,11305)
-        id <B60d29fd20000>; Wed, 23 Jun 2021 14:43:30 +1200
+        id <B60d29fd20002>; Wed, 23 Jun 2021 14:43:30 +1200
 Received: from pauld-dl.ws.atlnz.lc (pauld-dl.ws.atlnz.lc [10.33.23.37])
-        by pat.atlnz.lc (Postfix) with ESMTP id D71DA13EE59;
+        by pat.atlnz.lc (Postfix) with ESMTP id D9EEF13EEB4;
         Wed, 23 Jun 2021 14:43:30 +1200 (NZST)
 Received: by pauld-dl.ws.atlnz.lc (Postfix, from userid 1684)
-        id CD0CC1E056F; Wed, 23 Jun 2021 14:43:30 +1200 (NZST)
+        id D631D1E0560; Wed, 23 Jun 2021 14:43:30 +1200 (NZST)
 From:   Paul Davey <paul.davey@alliedtelesis.co.nz>
 To:     Manivannan Sadhasivam <mani@kernel.org>
 Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         Bhaumik Bhatt <bbhatt@codeaurora.org>,
         Hemant Kumar <hemantk@codeaurora.org>,
         Paul Davey <paul.davey@alliedtelesis.co.nz>
-Subject: [PATCH v2 0/2] bus: mhi: Fix MHI on big endian architectures
-Date:   Wed, 23 Jun 2021 14:43:25 +1200
-Message-Id: <20210623024327.15029-1-paul.davey@alliedtelesis.co.nz>
+Subject: [PATCH v2 1/2] bus: mhi: Fix pm_state conversion to string
+Date:   Wed, 23 Jun 2021 14:43:26 +1200
+Message-Id: <20210623024327.15029-2-paul.davey@alliedtelesis.co.nz>
 X-Mailer: git-send-email 2.32.0
+In-Reply-To: <20210623024327.15029-1-paul.davey@alliedtelesis.co.nz>
+References: <20210623024327.15029-1-paul.davey@alliedtelesis.co.nz>
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-X-SEG-SpamProfiler-Analysis: v=2.3 cv=IOh89TnG c=1 sm=1 tr=0 a=KLBiSEs5mFS1a/PbTCJxuA==:117 a=r6YtysWOX24A:10 a=LpQP-O61AAAA:8 a=FyegsYdXSWPfw3ArC9gA:9 a=pioyyrs4ZptJ924tMmac:22
+X-SEG-SpamProfiler-Analysis: v=2.3 cv=IOh89TnG c=1 sm=1 tr=0 a=KLBiSEs5mFS1a/PbTCJxuA==:117 a=r6YtysWOX24A:10 a=xDYxNL215i3Ysd8OqoQA:9
 X-SEG-SpamProfiler-Score: 0
 x-atlnz-ls: pat
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-I encountered some problems getting the MHI driver to work on an Octeon
-3 platform these seem to all be related to endianness issues.  The modem
-interface appears to require the DMA structures to be in little endian,
-however the MHI core driver was assembling them in native endianness.
+On big endian architectures the mhi debugfs files which report pm state
+give "Invalid State" for all states.  This is caused by using
+find_last_bit which takes an unsigned long* while the state is passed in
+as an enum mhi_pm_state which will be of int size.
 
-Using little endian explicitly allows the interface to function as
-expected.
+Fix by using __fls to pass the value of state instead of find_last_bit.
 
-Changes in v2:
-  - use __fls instead of find_last_bit in pm_state conversion patch as
-    requested by Hemant Kumar <hemantk@codeaurora.org>
+Signed-off-by: Paul Davey <paul.davey@alliedtelesis.co.nz>
+---
+Not adding Tested-by or Reviewed-by tags as this patch has changed
+substantially from v1.
 
-Paul Davey (2):
-  bus: mhi: Fix pm_state conversion to string
-  bus: mhi: Fix MHI DMA structure endianness
+ drivers/bus/mhi/core/init.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
- drivers/bus/mhi/core/debugfs.c  |  26 +++----
- drivers/bus/mhi/core/init.c     |  43 ++++++-----
- drivers/bus/mhi/core/internal.h | 129 ++++++++++++++++----------------
- drivers/bus/mhi/core/main.c     |  36 ++++-----
- drivers/bus/mhi/core/pm.c       |   8 +-
- 5 files changed, 124 insertions(+), 118 deletions(-)
-
+diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
+index c81b377fca8f..0706eb046f2a 100644
+--- a/drivers/bus/mhi/core/init.c
++++ b/drivers/bus/mhi/core/init.c
+@@ -79,9 +79,12 @@ static const char * const mhi_pm_state_str[] =3D {
+=20
+ const char *to_mhi_pm_state_str(enum mhi_pm_state state)
+ {
+-	int index =3D find_last_bit((unsigned long *)&state, 32);
++	int index;
+=20
+-	if (index >=3D ARRAY_SIZE(mhi_pm_state_str))
++	if (state)
++		index =3D __fls(state);
++
++	if (!state || index >=3D ARRAY_SIZE(mhi_pm_state_str))
+ 		return "Invalid State";
+=20
+ 	return mhi_pm_state_str[index];
 --=20
 2.32.0
 
