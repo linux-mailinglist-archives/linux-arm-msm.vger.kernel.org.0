@@ -2,149 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 599013B190C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jun 2021 13:36:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 96EC23B1955
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Jun 2021 13:52:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230157AbhFWLiR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Jun 2021 07:38:17 -0400
-Received: from mail.kernel.org ([198.145.29.99]:43504 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230031AbhFWLiQ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Jun 2021 07:38:16 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id DC5E76102A;
-        Wed, 23 Jun 2021 11:35:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1624448159;
-        bh=ULWB5KI+zjDyMD0EzoZpOHi/DdRro5AI6tgZ+h/zzr4=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=JFYjYfsPgBYnn1bWADVLquINtLQ7FoXgseSi7z3HTLd4K4CDj+iL8tSv/mQJrTaws
-         yKSow+w65tKtGKLQ8LrPzMS/TVpeS8CzW8TSpZkekpRaTvw4TdT/OVbDymMUJLES+4
-         s7Kwy6tcihIqEsuGy4wlGrZxVYKM9svzywvhaSRY=
-Date:   Wed, 23 Jun 2021 13:35:56 +0200
-From:   Greg KH <gregkh@linuxfoundation.org>
-To:     Wesley Cheng <wcheng@codeaurora.org>
-Cc:     balbi@kernel.org, robh+dt@kernel.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, frowand.list@gmail.com,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        jackp@codeaurora.org, fntoth@gmail.com,
-        heikki.krogerus@linux.intel.com, andy.shevchenko@gmail.com
-Subject: Re: [PATCH v10 2/6] usb: gadget: configfs: Check USB configuration
- before adding
-Message-ID: <YNMcnISDv2e7bze1@kroah.com>
-References: <1623923899-16759-1-git-send-email-wcheng@codeaurora.org>
- <1623923899-16759-3-git-send-email-wcheng@codeaurora.org>
- <YMss5tFFBjokk1k6@kroah.com>
- <012b0264-107a-5596-d73f-3a2fd20470cf@codeaurora.org>
- <YNF9kv0kWAz6Pp00@kroah.com>
- <afe0c718-1c16-1b20-4b0c-d8592a13af42@codeaurora.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <afe0c718-1c16-1b20-4b0c-d8592a13af42@codeaurora.org>
+        id S230157AbhFWLy0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Jun 2021 07:54:26 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:13350 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230019AbhFWLy0 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 23 Jun 2021 07:54:26 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1624449129; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=AHMt0GzCvHn4hyYD7cdhM7SJoQ7X95tIMSwPoZD5d7s=; b=xIIIHlG3AP9htFkIRNjbRv32wu4RE5ZmIa6ttDQH9MXPDU/x2Nw5u+n1z/wR1K5C3K/6UMXK
+ GscxJhWNWy4VFqLg+DD4yfgYUVX5Y7wkBkZfvgi5eI3/lTBiT3nXMKzvfoOdmPdxQ072Fb4W
+ 0HCEE0EyWvAD84eJk6Vr1IFK92E=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
+ 60d32066638039e9972c830b (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 23 Jun 2021 11:52:06
+ GMT
+Sender: tdas=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id AA944C43144; Wed, 23 Jun 2021 11:52:06 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from tdas-linux.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: tdas)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 30CB6C433F1;
+        Wed, 23 Jun 2021 11:52:02 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 30CB6C433F1
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=tdas@codeaurora.org
+From:   Taniya Das <tdas@codeaurora.org>
+To:     Rob Herring <robh+dt@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Douglas Anderson <dianders@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Taniya Das <tdas@codeaurora.org>
+Subject: [PATCH v2] clk: qcom: gcc: Add support for a new frequency for SC7280
+Date:   Wed, 23 Jun 2021 17:21:56 +0530
+Message-Id: <1624449116-9497-1-git-send-email-tdas@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jun 23, 2021 at 02:38:55AM -0700, Wesley Cheng wrote:
-> 
-> 
-> On 6/21/2021 11:05 PM, Greg KH wrote:
-> > On Mon, Jun 21, 2021 at 10:27:09PM -0700, Wesley Cheng wrote:
-> >>
-> >>
-> >> On 6/17/2021 4:07 AM, Greg KH wrote:
-> >>> On Thu, Jun 17, 2021 at 02:58:15AM -0700, Wesley Cheng wrote:
-> >>>> Ensure that the USB gadget is able to support the configuration being
-> >>>> added based on the number of endpoints required from all interfaces.  This
-> >>>> is for accounting for any bandwidth or space limitations.
-> >>>>
-> >>>> Signed-off-by: Wesley Cheng <wcheng@codeaurora.org>
-> >>>> ---
-> >>>>  drivers/usb/gadget/configfs.c | 22 ++++++++++++++++++++++
-> >>>>  1 file changed, 22 insertions(+)
-> >>>>
-> >>>> diff --git a/drivers/usb/gadget/configfs.c b/drivers/usb/gadget/configfs.c
-> >>>> index 15a607c..76b9983 100644
-> >>>> --- a/drivers/usb/gadget/configfs.c
-> >>>> +++ b/drivers/usb/gadget/configfs.c
-> >>>> @@ -1374,6 +1374,7 @@ static int configfs_composite_bind(struct usb_gadget *gadget,
-> >>>>  		struct usb_function *f;
-> >>>>  		struct usb_function *tmp;
-> >>>>  		struct gadget_config_name *cn;
-> >>>> +		unsigned long ep_map = 0;
-> >>>>  
-> >>>>  		if (gadget_is_otg(gadget))
-> >>>>  			c->descriptors = otg_desc;
-> >>>> @@ -1403,7 +1404,28 @@ static int configfs_composite_bind(struct usb_gadget *gadget,
-> >>>>  				list_add(&f->list, &cfg->func_list);
-> >>>>  				goto err_purge_funcs;
-> >>>>  			}
-> >>>> +			if (f->fs_descriptors) {
-> >>>> +				struct usb_descriptor_header **d;
-> >>>> +
-> >>>> +				d = f->fs_descriptors;
-> >>>> +				for (; *d; ++d) {
-> >>
-> >> Hi Greg,
-> >>
-> >> Thanks for the review and feedback.
-> >>
-> >>>
-> >>> With this check, there really is not a need to check for
-> >>> f->fs_descriptors above in the if statement, right?
-> >>>
-> >>
-> >> f->fs_descriptor will carry the table of descriptors that a particular
-> >> function driver has assigned to it.  The for loop here, will dereference
-> >> the individual descriptors within that descriptor array, so we need to
-> >> first ensure the descriptor array is present before traversing through
-> >> the individual entries/elements.
-> > 
-> > Ah, it's a dereference of an array element.  Subtle.  Tricky.  Messy :(
-> > 
-> >>>> +					struct usb_endpoint_descriptor *ep;
-> >>>> +					int addr;
-> >>>> +
-> >>>> +					if ((*d)->bDescriptorType != USB_DT_ENDPOINT)
-> >>>> +						continue;
-> >>>> +
-> >>>> +					ep = (struct usb_endpoint_descriptor *)*d;
-> >>>> +					addr = ((ep->bEndpointAddress & 0x80) >> 3) |
-> >>>> +						(ep->bEndpointAddress & 0x0f);
-> >>>
-> >>> Don't we have direction macros for this type of check?
-> >>>
-> >>
-> >> I don't believe we have a macro which would be able to convert the
-> >> bEndpointAddress field into the bit which needs to be set, assuming that
-> >> the 32bit ep_map has the lower 16bits carrying OUT EPs, and the upper
-> >> 16bits carrying the IN EPs.
-> 
-> Hi Greg,
-> 
-> > 
-> > We have macros to tell if an endpoint is IN or OUT, please use those.
-> > 
-> > And this "cram the whole thing into 64 bits" is not obvious at all.
-> > Just pass around the original pointer to the descriptors if someone
-> > wants to use it or not, don't make up yet-another-data-structure here
-> > for no good reason.  We aren't so memory constrained we need to pack
-> > stuff into bits here.
-> > 
-> 
-> Hmm ok, what I can do is to move this logic into the check_config()
-> callback itself, which is implemented by the UDC driver.  So now, the
-> DWC3 will have to do something similar to what is done here, ie loop the
-> EP descriptors for each function to determine the number of IN endpoints
-> being used.
+There is a requirement to support 52MHz for qup clocks for bluetooth
+usecase, thus update the frequency table to support the frequency.
 
-We have common USB core functions for this, why can't you just use them?
+Fixes: a3cc092196ef ("clk: qcom: Add Global Clock controller (GCC) driver for SC7280")
+Signed-off-by: Taniya Das <tdas@codeaurora.org>
+---
+[v2]
+ * Update commit message and subject "Add"/"bluetooth".
 
-Please do not take data that we already have in one format, and convert
-it to another one just for a single driver to consume.  That's
-pointless.
+ drivers/clk/qcom/gcc-sc7280.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-thanks,
+diff --git a/drivers/clk/qcom/gcc-sc7280.c b/drivers/clk/qcom/gcc-sc7280.c
+index ef734db..6cefcdc 100644
+--- a/drivers/clk/qcom/gcc-sc7280.c
++++ b/drivers/clk/qcom/gcc-sc7280.c
+@@ -716,6 +716,7 @@ static const struct freq_tbl ftbl_gcc_qupv3_wrap0_s2_clk_src[] = {
+ 	F(29491200, P_GCC_GPLL0_OUT_EVEN, 1, 1536, 15625),
+ 	F(32000000, P_GCC_GPLL0_OUT_EVEN, 1, 8, 75),
+ 	F(48000000, P_GCC_GPLL0_OUT_EVEN, 1, 4, 25),
++	F(52174000, P_GCC_GPLL0_OUT_MAIN, 1, 2, 23),
+ 	F(64000000, P_GCC_GPLL0_OUT_EVEN, 1, 16, 75),
+ 	F(75000000, P_GCC_GPLL0_OUT_EVEN, 4, 0, 0),
+ 	F(80000000, P_GCC_GPLL0_OUT_EVEN, 1, 4, 15),
+--
+Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc.is a member
+of the Code Aurora Forum, hosted by the  Linux Foundation.
 
-greg k-h
