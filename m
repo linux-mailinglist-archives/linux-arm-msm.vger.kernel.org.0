@@ -2,136 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E79383B31C2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jun 2021 16:50:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6629B3B31E3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jun 2021 16:57:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232053AbhFXOw3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 24 Jun 2021 10:52:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49236 "EHLO
+        id S231487AbhFXPAA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 24 Jun 2021 11:00:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50916 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231608AbhFXOw3 (ORCPT
+        with ESMTP id S230170AbhFXO77 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 24 Jun 2021 10:52:29 -0400
-Received: from mail-pg1-x529.google.com (mail-pg1-x529.google.com [IPv6:2607:f8b0:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8DB74C061756
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Jun 2021 07:50:10 -0700 (PDT)
-Received: by mail-pg1-x529.google.com with SMTP id m2so4913826pgk.7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Jun 2021 07:50:10 -0700 (PDT)
+        Thu, 24 Jun 2021 10:59:59 -0400
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4A1AC061574
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Jun 2021 07:57:39 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id r5so10825243lfr.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Jun 2021 07:57:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=6gRbND3XlnFRjxaAFjazt4t2CTzeQHjH9Rv+KQ2khaQ=;
-        b=CN5a8joLkzaqbmkYg56qrlGLFVf//X5GU2u3nXsLilDK0o9UwUxDsjPfHaiUrylnYL
-         LVkpGs+tG0w3i2+pxdoBC3hn37adQF3+PUoLENdcSbAR9Sy2NPwSjiR7NXqobp7zzupJ
-         d0rkicbffZnYLXFVQ/YEQqxiqeJjdZFea0XP0NstQdI29GcNnGery+czH40BXP7v68ql
-         RBEmAq2C7wyp96U+HaIZANcOLxTSb2g/TPV8yQCc9npS+6q6zUq1JsEyV5lKd4+lw8I2
-         LCjP0S+0XzvaKqkIIgbuxF6YNu9sgsCE142m7ziZ0wiGZOsOREpdAtUCCJIi00c1KRC/
-         vB8w==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ia9jH+C7md2MacvtUXiDMLbc784RQr0SQ8WvwoL6eCw=;
+        b=W9jyfgYCw/a2GAnolWq8YqIz6ASKOYbmlJcHMBWQQxDOFPROyy6LgTDSKkYbPCUH61
+         y/PQE7gx0S7DTAfeuslnsveKq0lXTaElVuxJi09XOuV1biGOngmRbMnN3MMHK3MvyQnm
+         3J5E4Zze9JkZHBR31YnYJSQvBSil+Aj4vlNewOfgAYSxZtvEDAcqEbP5d45fK+4rKsVi
+         HQpo4cXdkJirZIlrPde7vrPPyXn+CCt++FupdGkNBSNU2gXN8Xe2bTXYteYlzLkcLp5o
+         FC6MzDctap4/kG1GtkJ54CJB2cIb+85Y3L9lUruCvuDC2Uc/MyiLrpQokTusV+9WoCtf
+         7hww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=6gRbND3XlnFRjxaAFjazt4t2CTzeQHjH9Rv+KQ2khaQ=;
-        b=I5m7JIL/wlC/EHhczY1ssjBxWMmJRp7WrCEMrwwHdt6U8b6gIvJea+kPJVHMGhpqVY
-         NNtdgZnk6ghMYsjOUznk3aegzupwUzr1YidHJ+TfxpJZRN/G0W/K0Y/eRBzkcBnTin3+
-         Bivdrur/mRu22ocpuVXMQ3j1GFXrEVPC+WCFTsIUE0IkvPeBkv4J7ZcABoeNQVfxfI2/
-         rbUqrJiom+2v4afts354DnBOgzkiM/VAYjg6IxDNgQ5YgyKD1y5Yf3iqA8Ik32q3WB5D
-         jefG6alESdv2mwzxscJ96krALSS8m3NEblcx0nPFVRH618jydk7FKZims6zNRur/F1rJ
-         HfgQ==
-X-Gm-Message-State: AOAM533dFheTu5CtTERJF/2j7oa1v1zu8cd0TWwHlURkg7v1RaX4SoE2
-        14YEzbx0d4dK4cdkVIlLVk+/
-X-Google-Smtp-Source: ABdhPJxGK1UjuX/vighv2ORISjGThUrb8ytgGnsIeZ62mStFW21XjjolJzYWV54+ToUH7EwAQpqzAQ==
-X-Received: by 2002:aa7:82cb:0:b029:2e6:f397:d248 with SMTP id f11-20020aa782cb0000b02902e6f397d248mr5551594pfn.52.1624546209966;
-        Thu, 24 Jun 2021 07:50:09 -0700 (PDT)
-Received: from workstation ([120.138.12.173])
-        by smtp.gmail.com with ESMTPSA id g38sm2616315pgg.63.2021.06.24.07.50.07
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 24 Jun 2021 07:50:09 -0700 (PDT)
-Date:   Thu, 24 Jun 2021 20:20:06 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Greg KH <gregkh@linuxfoundation.org>
-Cc:     hemantk@codeaurora.org, bbhatt@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        loic.poulain@linaro.org
-Subject: Re: [PATCH 6/8] bus: mhi: core: Add support for processing priority
- of event ring
-Message-ID: <20210624145006.GE6108@workstation>
-References: <20210621161616.77524-1-manivannan.sadhasivam@linaro.org>
- <20210621161616.77524-7-manivannan.sadhasivam@linaro.org>
- <YNSOXaWt3YX3yDQC@kroah.com>
- <20210624142453.GB6108@workstation>
- <YNSZZhGSZ0lFgS+U@kroah.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ia9jH+C7md2MacvtUXiDMLbc784RQr0SQ8WvwoL6eCw=;
+        b=NvNYbH8GGzj9jFIVgZRsPUVnNtO8mL0BT0ihtfJvGaaNAp7LkBcsHnO6cUTpng89gO
+         oJwoF0O/fBoMD/oTEmBbDVXSUMNyTncdmbYcgr7/opZJAi1YpyE+RNYDOQLQ4VRykjtH
+         bI34U90ORHHpg7xlRBbyhZ1af73eEETguzOUUI04EdmjJHj0w9dtjqYNEgYmKXNogjk6
+         GScoahh1MGB0qxvGxDoH4l9cw8qhZ7PiqzhG6L5vl4oVhwiRRB+tpwqpqwSbm+eSewsA
+         cv2YivoWmEozvSFY4zJpR4iSg6rOdRxJ/djj4qATwJdvCMVj2iEmqKZqfBws9u0FfRhk
+         UrPQ==
+X-Gm-Message-State: AOAM530zJVmfkcGHB1sWfbxwndguAw7ihRuk4EOmBUFOjtpo0EsE4QYN
+        syKvJH9NBa7kPlEfxp+k+bht9Q==
+X-Google-Smtp-Source: ABdhPJy9pvB8R4NLyfB0BMG79NbtPH7wQCg6nzDbsIR5DeQsPRjGffDtH2N8SuGtJa1gyTE9YJ/4lA==
+X-Received: by 2002:a05:6512:33c8:: with SMTP id d8mr4034338lfg.21.1624546658106;
+        Thu, 24 Jun 2021 07:57:38 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id e17sm306329ljn.125.2021.06.24.07.57.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 24 Jun 2021 07:57:37 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <abhinavk@codeaurora.org>
+Cc:     Jonathan Marek <jonathan@marek.ca>,
+        Stephen Boyd <sboyd@kernel.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+Subject: [PATCH 00/17] drm/msm/dpu: switch dpu_plane to be virtual
+Date:   Thu, 24 Jun 2021 17:57:16 +0300
+Message-Id: <20210624145733.2561992-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <YNSZZhGSZ0lFgS+U@kroah.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jun 24, 2021 at 04:40:38PM +0200, Greg KH wrote:
-> On Thu, Jun 24, 2021 at 07:54:53PM +0530, Manivannan Sadhasivam wrote:
-> > On Thu, Jun 24, 2021 at 03:53:33PM +0200, Greg KH wrote:
-> > > On Mon, Jun 21, 2021 at 09:46:14PM +0530, Manivannan Sadhasivam wrote:
-> > > > From: Hemant Kumar <hemantk@codeaurora.org>
-> > > > 
-> > > > Event ring priorities are currently set to 1 and are unused.
-> > > > Default processing priority for event rings is set to regular
-> > > > tasklet. Controllers can choose to use high priority tasklet
-> > > > scheduling for certain event rings critical for processing such
-> > > > as ones transporting control information if they wish to avoid
-> > > > system scheduling delays for those packets. In order to support
-> > > > these use cases, allow controllers to set event ring priority to
-> > > > high.
-> > > > 
-> > > > Signed-off-by: Hemant Kumar <hemantk@codeaurora.org>
-> > > > Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
-> > > > Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > > > Link: https://lore.kernel.org/r/1624053903-24653-2-git-send-email-bbhatt@codeaurora.org
-> > > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > > > ---
-> > > >  drivers/bus/mhi/core/init.c | 3 +--
-> > > >  drivers/bus/mhi/core/main.c | 9 +++++++--
-> > > >  include/linux/mhi.h         | 2 +-
-> > > >  3 files changed, 9 insertions(+), 5 deletions(-)
-> > > > 
-> > > > diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
-> > > > index c81b377fca8f..444676034bf0 100644
-> > > > --- a/drivers/bus/mhi/core/init.c
-> > > > +++ b/drivers/bus/mhi/core/init.c
+As discussed on IRC, change dpu_plane implementation to be virtual:
+register unified planes and select backing SSPP block at runtime. In
+future this would allow implementing multirect (or wide planes) in a
+proper way, without requiring zpos hacks or additional userspace
+handling.
 
-[...]
+The last patch adds a compile time #if to select between virtual planes
+or traditional planes. It is implemented this way to ease testing of
+this patchset. In the next versions it is going to be morphed into
+the proper module parameter.
 
-> > That's because, "1" was used from the beginning by the controller drivers
-> > as the regular priority. And I thought of using "0" as high priority so
-> > that we can leave the controller drivers unmodified.
-> 
-> There's no problem modifying everyone, how much work is that?
-> 
+The following changes since commit e88bbc91849b2bf57683119c339e52916d34433f:
 
-I thought of minimizing the diff if we can avoid...err
+  Revert "drm/msm/mdp5: provide dynamic bandwidth management" (2021-06-23 14:06:20 -0700)
 
-> > > Shouldn't this be a boolean, or if not, an enumerated type so that
-> > > people can read the code over time?
-> > > 
-> > 
-> > Bhaumik proposed an enum but I wanted 0/1 so that the controller drivers
-> > can be untouched. Also, I don't see any immediate requirement for other
-> > priorities.
-> > 
-> > Will make it a bool then.
-> 
-> Rename it when you change it so that you know you catch all existing
-> users.
-> 
+are available in the Git repository at:
 
-Okay. Bhaumik, can you please use the enum (as you did)?
+  https://git.linaro.org/people/dmitry.baryshkov/kernel.git dpu-virtual-planes
 
-Thanks,
-Mani
+for you to fetch changes up to c0b20040e9b265e77cbf02c5b5312090b3677f81:
 
-> thanks,
-> 
-> greg k-h
+  drm/msm/dpu: switch into using virtual planes (2021-06-24 17:50:54 +0300)
+
+----------------------------------------------------------------
+Dmitry Baryshkov (17):
+      drm/msm/dpu: move LUT levels out of QOS config
+      drm/msm/dpu: remove pipe_qos_cfg from struct dpu_plane
+      drm/msm/dpu: drop pipe_name from struct dpu_plane
+      drm/msm/dpu: remove stage_cfg from struct dpu_crtc
+      drm/msm/dpu: rip out master planes support
+      drm/msm/dpu: move dpu_hw_pipe_cfg out of struct dpu_plane
+      drm/msm/dpu: don't cache pipe->cap->features in dpu_plane
+      drm/msm/dpu: don't cache pipe->cap->sblk in dpu_plane
+      drm/msm/dpu: rip out debugfs support from dpu_plane
+      drm/msm/dpu: simplify colorspace conversion setup
+      drm/msm/dpu: drop src_split and multirect check from dpu_crtc_atomic_check
+      drm/msm/dpu: add list of supported formats to the DPU caps
+      drm/msm/dpu: simplify DPU_SSPP features checks
+      drm/msm/dpu: do not limit the zpos property
+      drm/msm/dpu: add support for SSPP allocation to RM
+      drm/msm/dpu: add support for virtualized planes
+      drm/msm/dpu: switch into using virtual planes
+
+ drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c       | 215 ++------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h       |   2 -
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c |  10 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h |   4 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c    |  17 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h    |  44 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c    |   2 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h    |   2 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c        | 139 ++---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h        |  70 +--
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c      | 709 ++++++++++---------------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h      |  42 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c         |  81 +++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h         |   6 +
+ 14 files changed, 560 insertions(+), 783 deletions(-)
+
+
