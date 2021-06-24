@@ -2,47 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 195883B23A0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jun 2021 00:41:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 000633B24B1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jun 2021 04:03:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229759AbhFWWn4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Jun 2021 18:43:56 -0400
-Received: from mail-pl1-f173.google.com ([209.85.214.173]:43695 "EHLO
-        mail-pl1-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229758AbhFWWnz (ORCPT
+        id S229850AbhFXCF3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Jun 2021 22:05:29 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:22737 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229774AbhFXCF3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Jun 2021 18:43:55 -0400
-Received: by mail-pl1-f173.google.com with SMTP id v12so1909494plo.10;
-        Wed, 23 Jun 2021 15:41:36 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=5O5xNxcANEBivHk9zm1gSgKOACRuoRtqCAHhhwLRszM=;
-        b=RuApEn+vj0C4k6AJLolNaifapjyUACiGtQxP0EjDzJcaULCMwPl1QPhdsad2O+X2Oh
-         wGr7xDz1KpEn6RD3Pmxa4pIGwjPwcZTgVQFAsIWh7HcJQJUhUSDIvupRu8IFIpaUwLcu
-         wvOMpTUeck9zIFfzhhvCllNRUeUoPcnp2JFOT+8cOFvMWlTBdrYESjjKMuslcymgWwdz
-         6X4oDVwofYWQHVPa60iL28pyn9mFwYmHKb8LmSWsRitmGC8mYKNyB+aL9gV90HeEAD7B
-         2lqu2HDMxybi4ir56uqVKzDhB3BkPrf/pIRAI98bPlasuWREyC7D39qEoVNlElenQIqj
-         wRtA==
-X-Gm-Message-State: AOAM530T79ATp2lUJHOCKGqWyRSRz7LwrDx+I+VDTGqyFbAcatK2vxXh
-        1Iurwub6lGl1cWzmxNhQyarv9a0LXpX+9Q==
-X-Google-Smtp-Source: ABdhPJxpAhi0VXu1cQO0rXJS617rgaA7KTySsnIS5Qjqee5bXYu6O5vtr73k9ly0SRC/iQSWUMjUHg==
-X-Received: by 2002:a17:90b:1946:: with SMTP id nk6mr1987445pjb.86.1624488095627;
-        Wed, 23 Jun 2021 15:41:35 -0700 (PDT)
-Received: from [192.168.3.217] (c-73-241-217-19.hsd1.ca.comcast.net. [73.241.217.19])
-        by smtp.gmail.com with ESMTPSA id o72sm860706pfg.102.2021.06.23.15.41.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 23 Jun 2021 15:41:34 -0700 (PDT)
-Subject: Re: [PATCH v4 01/10] scsi: ufs: Rename flags pm_op_in_progress and
- is_sys_suspended
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Can Guo <cang@codeaurora.org>
+        Wed, 23 Jun 2021 22:05:29 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1624500191; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=1YslBV6zwqXGoo89CZFNs7iiJ19vamy07dhhq7zxnvY=;
+ b=wki1zQT/vMxUlc9nr/C0aLYu2szOHgUmwOcMGM+ThlI3/FI4r1wRmwV0ctG2Len06MEKq2QX
+ k29W8xyvEEkFC2e3DcScsCTvyneaidBxCQfi7iItqlc2zNvM+lFKZyjfAK/l72KBnQwyRUST
+ SCl/ZNRRgf+PuTdM58W2XcHNfMw=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
+ 60d3e7c85d0d101e383ed425 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 24 Jun 2021 02:02:48
+ GMT
+Sender: cang=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 0FF24C43145; Thu, 24 Jun 2021 02:02:47 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: cang)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id E3E42C433D3;
+        Thu, 24 Jun 2021 02:02:46 +0000 (UTC)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Thu, 24 Jun 2021 10:02:46 +0800
+From:   Can Guo <cang@codeaurora.org>
+To:     Bart Van Assche <bvanassche@acm.org>
 Cc:     asutoshd@codeaurora.org, nguyenb@codeaurora.org,
         hongwus@codeaurora.org, ziqichen@codeaurora.org,
         linux-scsi@vger.kernel.org, kernel-team@android.com,
         Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         Alim Akhtar <alim.akhtar@samsung.com>,
         Avri Altman <avri.altman@wdc.com>,
         "James E.J. Bottomley" <jejb@linux.ibm.com>,
@@ -55,35 +65,85 @@ Cc:     asutoshd@codeaurora.org, nguyenb@codeaurora.org,
         Satya Tangirala <satyat@google.com>,
         "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
         open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v4 01/10] scsi: ufs: Rename flags pm_op_in_progress and
+ is_sys_suspended
+In-Reply-To: <c7c5d95e-8a69-dfef-44ea-bfcadd6ea5d5@acm.org>
 References: <1624433711-9339-1-git-send-email-cang@codeaurora.org>
  <1624433711-9339-2-git-send-email-cang@codeaurora.org>
- <YNOctRTGYZaSe6lw@yoga>
-From:   Bart Van Assche <bvanassche@acm.org>
-Message-ID: <b8d08321-b965-8273-408d-3987b8d88f9d@acm.org>
-Date:   Wed, 23 Jun 2021 15:41:32 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
-MIME-Version: 1.0
-In-Reply-To: <YNOctRTGYZaSe6lw@yoga>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+ <1c5db457-ee87-2308-15f5-5dad49508f10@acm.org>
+ <c7c5d95e-8a69-dfef-44ea-bfcadd6ea5d5@acm.org>
+Message-ID: <932ce816be805e4cca2c5beee8627918@codeaurora.org>
+X-Sender: cang@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 6/23/21 1:42 PM, Bjorn Andersson wrote:
-> On Wed 23 Jun 02:35 CDT 2021, Can Guo wrote:
->> Rename pm_op_in_progress and is_sys_suspended to wlu_pm_op_in_progress and
->> is_wlu_sys_suspended accordingly.
-> 
-> This reflects what the change does, but the commit message is supposed
-> to capture "why".
+Hi Bart,
 
-What's even better is to describe both: what has been changed and also
-why a change has been made. See also
-https://www.kernel.org/doc/html/latest/process/submitting-patches.html#describe-your-changes.
+On 2021-06-24 04:57, Bart Van Assche wrote:
+> On 6/23/21 1:05 PM, Bart Van Assche wrote:
+>> On 6/23/21 12:35 AM, Can Guo wrote:
+>>> Rename pm_op_in_progress and is_sys_suspended to 
+>>> wlu_pm_op_in_progress and
+>>> is_wlu_sys_suspended accordingly.
+>> 
+>> My understanding is that power management operations must be submitted
+>> to one particular UFS WLUN (hba->sdev_ufs_device). That makes the 
+>> "wlu_"
+>> part of the new names redundant. In other words, I like the current
+>> names better than the new names. Unless if I missed something, 
+>> consider
+>> dropping this patch.
+> 
+> Hi Can,
+> 
+> Reviewing later patches in this series made me realize that there are
+> two families of suspend/resume functions. One family of functions
+> operates at the platform level while the other family operates at the
+> SCSI LUN level. My comments about the suspend/resume functions are as
+> follows:
+> - It seems redundant to me to have system suspend support at the SCSI
+>   LUN level (__ufshcd_wl_suspend(hba, UFS_SYSTEM_PM)) and also at the
+>   platform level. Since the platform device is a parent of the SCSI
+>   WLUN, can system suspend/resume support be left out from
+>   ufshcd_wl_pm_ops (or in other words, remove the .freeze and .thaw
+>   callbacks)? Do we really need two calls from the power management
+>   subsystem into the UFS driver for every system suspend and every
+>   system resume?
+
+Asutosh and Adrian should be the right persons to answer this, since
+they've been working together on that huge change for 4 months -
+
+https://lore.kernel.org/patchwork/patch/1417696/
+
+In short, we need a dedicated suspend/resume ops for the UFS device
+W-LU because one cannot send requests (not even PM requests) after the
+device is runtime suspended - sending SSU cmds in hba suspend/resume
+cannot pass through blk_queue_enter() as SSU cmd is sent to the UFS
+device W-LU scsi device (by now it is runtime suspended) but not the
+hba device.
+
+Of course we can keep the old way and send the SSU cmd through a
+request queue without block layer PM initialized (hba->cmd_queue for
+example, by pointing cmd_queue->dev to the UFS device W-LU scsi device),
+but that would look like a hack.
+
+> - Because of the device links (device_link_add()), the ufschd_wl_*()
+>   RPM callbacks are invoked after all LUNs have been suspended. I would
+>   appreciate it if the "ufshcd_wl_" prefix would be changed into
+>   "ufshcd_lun_" since that would make it more clear that these 
+> callbacks
+>   are associated with all LUNs and not only with the WLUN through which
+>   power management commands are submitted.
+> 
+
+Sure, we will do that later.
 
 Thanks,
 
-Bart.
+Can Guo.
+
+> Thanks,
+> 
+> Bart.
