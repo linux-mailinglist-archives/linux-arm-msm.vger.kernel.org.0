@@ -2,79 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 032453B3823
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jun 2021 22:47:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7DD6D3B3841
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jun 2021 23:00:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232614AbhFXUtk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 24 Jun 2021 16:49:40 -0400
-Received: from mail-io1-f54.google.com ([209.85.166.54]:46071 "EHLO
-        mail-io1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229525AbhFXUtj (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 24 Jun 2021 16:49:39 -0400
-Received: by mail-io1-f54.google.com with SMTP id b7so9908049ioq.12;
-        Thu, 24 Jun 2021 13:47:19 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=F0DM3/whjo1QUGn5QeSRsdPpAyvRUkqg+cmiUQ/A8CI=;
-        b=c028ezR7qIfWyd8dGeneNEwIm77vldX5MeTm+wiLSFCwMUiqTVgrtwvEfKCRL07JyM
-         jERvcF0nO3N90hzTCH8VdXKqK/DwkbVDdK565CAYZ+SUdeu5Db1F+DRcZczrDnuSUicW
-         McsbyY6MZEFCq9GO0ZMPBBVbhFlVdKDVYvp4Lj70VeV1q3gJEHZ3gbM+B9RLmBiXE9Ht
-         R6E/MczHGnMTBCJae7acA5IckIqbSBznI58HKajsOOc4wxwUcyZ1u7edT8VDYwOrJCXd
-         aH15PzOjXilVbMeg5o0Z9nCi5Tr6Wkg2+Fsq8RX1FmCXrum7NGT33oVo8NnbbXDykBJi
-         JI/Q==
-X-Gm-Message-State: AOAM530Qlsmmwc4S8wEbtkBBcNB4sqbVVo7K28ZeO8vEctUVnF/1jpDE
-        dF43TG+sN0z8Jzz42cpUgw==
-X-Google-Smtp-Source: ABdhPJyo+VknNtW7hyFaEwhsaq2IWVPZwEIsJEKawEvFtWCJUVshAn6pJ1BPu4jGxkMBP2aessW+cw==
-X-Received: by 2002:a5d:9c02:: with SMTP id 2mr5616637ioe.195.1624567638969;
-        Thu, 24 Jun 2021 13:47:18 -0700 (PDT)
-Received: from robh.at.kernel.org ([64.188.179.248])
-        by smtp.gmail.com with ESMTPSA id l5sm1889744ion.44.2021.06.24.13.47.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Jun 2021 13:47:18 -0700 (PDT)
-Received: (nullmailer pid 1961320 invoked by uid 1000);
-        Thu, 24 Jun 2021 20:47:13 -0000
-Date:   Thu, 24 Jun 2021 14:47:13 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Cc:     linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
-        linux-gpio@vger.kernel.org, Mark Brown <broonie@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Vinod Koul <vkoul@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>, bhupesh.linux@gmail.com
-Subject: Re: [PATCH v2 01/10] dt-bindings: qcom: rpmh-regulator: Add
- compatible for SA8155p-adp board pmic
-Message-ID: <20210624204713.GA1961271@robh.at.kernel.org>
-References: <20210615074543.26700-1-bhupesh.sharma@linaro.org>
- <20210615074543.26700-2-bhupesh.sharma@linaro.org>
+        id S232163AbhFXVDK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 24 Jun 2021 17:03:10 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:26499 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230116AbhFXVDK (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 24 Jun 2021 17:03:10 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1624568450; h=Message-ID: References: In-Reply-To: Reply-To:
+ Subject: Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=VMDA1hdRC/vxz4nifn3ni0YEzSVND3IOiIt1Qw7Iopc=;
+ b=aoJTDx/4dWQpWCJ6wNLamNq7pH6zRI1Wdlq/XUBVDT6e79NmK2XD+h5lyn2uz/a63BLBADUA
+ fWJ+G9tnYr4Sd9Vf/ivzSC2qZdqrEz4+CPi5s93cAsRFyPUWJKYu02lKDkMtlFm2UOOArm34
+ b+rPSeDaBQA95JEzxNi2XcDCKhM=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
+ 60d4f2700090905e1640c786 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 24 Jun 2021 21:00:32
+ GMT
+Sender: bbhatt=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id B530DC43460; Thu, 24 Jun 2021 21:00:31 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: bbhatt)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id E17BDC433D3;
+        Thu, 24 Jun 2021 21:00:30 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210615074543.26700-2-bhupesh.sharma@linaro.org>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Thu, 24 Jun 2021 14:00:30 -0700
+From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
+To:     Loic Poulain <loic.poulain@linaro.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        clew@codeaurora.org
+Subject: Re: [PATCH v3] bus: mhi: Add inbound buffers allocation flag
+Organization: Qualcomm Innovation Center, Inc.
+Reply-To: bbhatt@codeaurora.org
+Mail-Reply-To: bbhatt@codeaurora.org
+In-Reply-To: <CAMZdPi_wKHQszTaJH8neHHGWJzRO9P7Zr3XTq0nSRku4EKnhuQ@mail.gmail.com>
+References: <1624566520-20406-1-git-send-email-loic.poulain@linaro.org>
+ <YNTrePQQ3scDzAhe@builder.lan>
+ <CAMZdPi_wKHQszTaJH8neHHGWJzRO9P7Zr3XTq0nSRku4EKnhuQ@mail.gmail.com>
+Message-ID: <7c9cd043ed4a5e0bd0d82d8c6ca1b212@codeaurora.org>
+X-Sender: bbhatt@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 15 Jun 2021 13:15:34 +0530, Bhupesh Sharma wrote:
-> Add compatible string for pmm8155au pmic found on
-> the SA8155p-adp board.
+On 2021-06-24 03:45 PM, Loic Poulain wrote:
+> Hi Bjorn,
 > 
-> Cc: Linus Walleij <linus.walleij@linaro.org>
-> Cc: Liam Girdwood <lgirdwood@gmail.com>
-> Cc: Mark Brown <broonie@kernel.org>
-> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Cc: Vinod Koul <vkoul@kernel.org>
-> Cc: Rob Herring <robh+dt@kernel.org>
-> Cc: Andy Gross <agross@kernel.org>
-> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> ---
->  .../devicetree/bindings/regulator/qcom,rpmh-regulator.yaml       | 1 +
->  1 file changed, 1 insertion(+)
+> On Thu, 24 Jun 2021 at 22:30, Bjorn Andersson
+> <bjorn.andersson@linaro.org> wrote:
+>> 
+>> On Thu 24 Jun 15:28 CDT 2021, Loic Poulain wrote:
+>> 
+>> > Currently, the MHI controller driver defines which channels should
+>> > have their inbound buffers allocated and queued. But ideally, this is
+>> > something that should be decided by the MHI device driver instead,
+>> > which actually deals with that buffers.
+>> >
+>> > Add a flag parameter to mhi_prepare_for_transfer allowing to specify
+>> > if buffers have to be allocated and queued by the MHI stack.
+>> >
+>> > Keep auto_queue flag for now, but should be removed at some point.
+>> >
+>> > Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+>> > Tested-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+>> > Reviewed-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+>> > Reviewed-by: Hemant Kumar <hemantk@codeaurora.org>
+>> > Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+>> > Acked-by: Jakub Kicinski <kuba@kernel.org>
+>> > Link: https://lore.kernel.org/r/1621603519-16773-1-git-send-email-loic.poulain@linaro.org
+>> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+>> 
+>> What's the intention with this patch? Why is Mani the last S-o-b when
+>> you're the one sending it and why is it sent only to linux-arm-msm@?
 > 
+> Actually the previous version of that patch has already been applied
+> to mhi-next, but has been nacked as part of Mani's PR, so it's a quick
+> follow-up fix to address the issue.
+> 
+>> And completely separate of the practical matters, is it true that qrtr
+>> is the only client that use this pre-allocation feature?
+> 
+> yes.
+> 
+>> Would it be a net gain to simplify the core and add buffer allocation 
+>> to qrtr instead?
+> 
+> Yes, I 100% agree, but I however would prefer to keep that for a
+> follow-up series since this patch fixes a real issue for MHI/PCI
+> modems (no inbound QRTR buffers allocated).
+> 
+> Regards,
+> Loic
+I had discussed this with Chris Lew a while ago and he also agreed qrtr 
+can
+queue inbound buffers.
 
-Acked-by: Rob Herring <robh@kernel.org>
+This patch is good and we can continue to have flexibility for clients 
+since
+this allows MHI controller to not have to bother about some of the 
+unnecessary
+plugins/booleans we maintain on behalf of clients.
+
+They can have more control this way and less headache for us.
+
+Thanks,
+Bhaumik
+---
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
+Forum,
+a Linux Foundation Collaborative Project
