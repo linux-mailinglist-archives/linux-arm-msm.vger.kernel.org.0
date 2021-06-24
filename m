@@ -2,116 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8A6253B328F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jun 2021 17:27:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8798B3B3299
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jun 2021 17:30:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232427AbhFXP3l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 24 Jun 2021 11:29:41 -0400
-Received: from mail.kernel.org ([198.145.29.99]:52406 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231819AbhFXP3i (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 24 Jun 2021 11:29:38 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 50CB3613DA;
-        Thu, 24 Jun 2021 15:27:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1624548439;
-        bh=9oXNZ4LONOItdd4Iwzgt2g0W7nQL9dFt8yuG4eI83PA=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=pimteVpqN76owi61qo8qtVG82hSx2tn1YevOIFbJLVwp1O0djvB3U2OUUd1o9W+X+
-         vcqDkjUk9nEkym/BIzsjNGXb2m1uGm0NR6avAC8C/ASvfDyMS50COYsiLxtLZM4fuM
-         0Br5GrSP3B1/S9F+JJxcjUs+TBiEbJDxiGbtmLBQ=
-Date:   Thu, 24 Jun 2021 17:27:17 +0200
-From:   Greg KH <gregkh@linuxfoundation.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     hemantk@codeaurora.org, bbhatt@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        loic.poulain@linaro.org, stable@vger.kernel.org,
-        Jeffrey Hugo <quic_jhugo@quicinc.com>
-Subject: Re: [PATCH 1/8] bus: mhi: core: Validate channel ID when processing
- command completions
-Message-ID: <YNSkVZ4PzkDqX/g+@kroah.com>
-References: <20210621161616.77524-1-manivannan.sadhasivam@linaro.org>
- <20210621161616.77524-2-manivannan.sadhasivam@linaro.org>
- <YNSNtQxVaegArG2f@kroah.com>
- <20210624143248.GC6108@workstation>
- <YNSZNxMjX/vNvae+@kroah.com>
- <20210624144752.GD6108@workstation>
+        id S232109AbhFXPct (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 24 Jun 2021 11:32:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58352 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230267AbhFXPcs (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 24 Jun 2021 11:32:48 -0400
+Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BDA8AC061574
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Jun 2021 08:30:28 -0700 (PDT)
+Received: by mail-pj1-x1036.google.com with SMTP id s17-20020a17090a8811b029016e89654f93so6153189pjn.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Jun 2021 08:30:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=GKu79Jy0wP/pVLbay2WCl0HQlTcf+F7A2KNkIRNIJy4=;
+        b=Fyky1i94qfhy+kdxE5taKryG8XZa+NEyCr/pmvB1UvjRhgxQ5anKy+S/BMvAF+/Z23
+         W1+VH7Q1K80RYPmz8sYHF70V4Lmz9tDCOoh+pi6oae8vHOLj9ul80KCyrJn+MmdL3c40
+         lzJ8Jy520/8FvCYxQJgE6WNiBO1te5XzJT7V9Mi3dx6SazdsPEspuX5U4l0DHcSgYGOv
+         zv/91rGmkvwGYZeNHydZqrsKuYYR1q1CDPt0pkjiMXzxBLKs+0Iwd+9fI+wC5+8gau/N
+         H3c/rijIC5sh5XwBHvZHhLdZH8JsYVtqycxO6gmj0jC8OvuYIYe/nUnK2RGXmfIm05TH
+         YHVA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=GKu79Jy0wP/pVLbay2WCl0HQlTcf+F7A2KNkIRNIJy4=;
+        b=FnIapn6tpc/E2XDzsfG53f7IKs9kXz5sc0XYvQ5dutVktvjD/K9lq8AwfY6JdrDiRZ
+         WUToNaAiJgsu5H4erXsU4dqybQrtZaENA4n/crTtZUo0mw60vzCDJpu8KzIB9RAYupNv
+         gr61de4eznNY7imKRk0OlenRkgSdqvUS0lrYKAvEtYtGlhJzHQ10j6D4dABcR/bzp7c+
+         lgjMCEIDLtETUUmuoCUQQlF7Ig4uGmXhiA4WOLc52Sdai31J2+YQOqbM8nOc5n0Ins+n
+         K9eOHA2Ej1HjRC+6D8fbvE+WeLW51azHbeXTcDnBpQa3vPu8wxlwPrTU4hOXNALUjQGi
+         2qlw==
+X-Gm-Message-State: AOAM5324K4bKwx44m8EtRn1/P4vraELC+N9HvkTuGsA7e/+lTu5agsuK
+        /SjiWutu/6L+2rQl+VXjZdbCyHJRUxKhiAkY5v6bow==
+X-Google-Smtp-Source: ABdhPJyuUEdd3ounqqk/N9c8OldDL7cnuqef1j4apMAbjh4tkOrLl8eDwvYu7gh3xfYp0RkvOYlNT9O4FCc0aYAczeE=
+X-Received: by 2002:a17:90a:640b:: with SMTP id g11mr6201944pjj.18.1624548628083;
+ Thu, 24 Jun 2021 08:30:28 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210624144752.GD6108@workstation>
+References: <20210621161616.77524-1-manivannan.sadhasivam@linaro.org>
+ <20210621161616.77524-5-manivannan.sadhasivam@linaro.org> <YNSN6Yjk/P05ql8G@kroah.com>
+In-Reply-To: <YNSN6Yjk/P05ql8G@kroah.com>
+From:   Loic Poulain <loic.poulain@linaro.org>
+Date:   Thu, 24 Jun 2021 17:39:58 +0200
+Message-ID: <CAMZdPi9=F0agD=5eSmVngmDRXNhb7TstQzgMSXFoJzkuRVFtjQ@mail.gmail.com>
+Subject: Re: [PATCH 4/8] bus: mhi: Add inbound buffers allocation flag
+To:     Greg KH <gregkh@linuxfoundation.org>
+Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Hemant Kumar <hemantk@codeaurora.org>,
+        Bhaumik Bhatt <bbhatt@codeaurora.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        Jakub Kicinski <kuba@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jun 24, 2021 at 08:17:52PM +0530, Manivannan Sadhasivam wrote:
-> On Thu, Jun 24, 2021 at 04:39:51PM +0200, Greg KH wrote:
-> > On Thu, Jun 24, 2021 at 08:02:48PM +0530, Manivannan Sadhasivam wrote:
-> > > On Thu, Jun 24, 2021 at 03:50:45PM +0200, Greg KH wrote:
-> > > > On Mon, Jun 21, 2021 at 09:46:09PM +0530, Manivannan Sadhasivam wrote:
-> > > > > From: Bhaumik Bhatt <bbhatt@codeaurora.org>
-> > > > > 
-> > > > > MHI reads the channel ID from the event ring element sent by the
-> > > > > device which can be any value between 0 and 255. In order to
-> > > > > prevent any out of bound accesses, add a check against the maximum
-> > > > > number of channels supported by the controller and those channels
-> > > > > not configured yet so as to skip processing of that event ring
-> > > > > element.
-> > > > > 
-> > > > > Cc: stable@vger.kernel.org
-> > > > > Fixes: 1d3173a3bae7 ("bus: mhi: core: Add support for processing events from client device")
-> > > > > Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
-> > > > > Reviewed-by: Hemant Kumar <hemantk@codeaurora.org>
-> > > > > Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > > > > Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-> > > > > Link: https://lore.kernel.org/r/1619481538-4435-1-git-send-email-bbhatt@codeaurora.org
-> > > > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > > > > ---
-> > > > >  drivers/bus/mhi/core/main.c | 15 ++++++++++-----
-> > > > >  1 file changed, 10 insertions(+), 5 deletions(-)
-> > > > > 
-> > > > > diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
-> > > > > index 22acde118bc3..ed07421c4870 100644
-> > > > > --- a/drivers/bus/mhi/core/main.c
-> > > > > +++ b/drivers/bus/mhi/core/main.c
-> > > > > @@ -773,11 +773,16 @@ static void mhi_process_cmd_completion(struct mhi_controller *mhi_cntrl,
-> > > > >  	cmd_pkt = mhi_to_virtual(mhi_ring, ptr);
-> > > > >  
-> > > > >  	chan = MHI_TRE_GET_CMD_CHID(cmd_pkt);
-> > > > > -	mhi_chan = &mhi_cntrl->mhi_chan[chan];
-> > > > > -	write_lock_bh(&mhi_chan->lock);
-> > > > > -	mhi_chan->ccs = MHI_TRE_GET_EV_CODE(tre);
-> > > > > -	complete(&mhi_chan->completion);
-> > > > > -	write_unlock_bh(&mhi_chan->lock);
-> > > > > +	WARN_ON(chan >= mhi_cntrl->max_chan);
-> > > > 
-> > > > What can ever trigger this WARN_ON()?  Do you mean to reboot a machine
-> > > > if panic-on-warn is set?
-> > > > 
-> > > > If this can actually happen, then check for it and recover properly,
-> > > > don't just blindly warn and then keep on going.
-> > > > 
-> > > 
-> > > We can't do much here other than warning the user and dropping the
-> > > command.
-> > 
-> > But you didn't warn anyone.  Well, you rebooted the machine, is that ok?
-> > If this can be triggered by a user, this should never happen.
-> > 
-> > Do not use WARN_ON() ever please.
-> > 
-> > > There is no recovery possible because, the device has sent the command
-> > > completion event on a wrong channel. It can't happen usually unless a
-> > > malcious device sits on the other end.
-> > 
-> > Then just eat the message and move on, please do not crash the box.
-> > 
-> 
-> Okay. We'll spit an error message and drop the event.
+Hi Greg,
 
-If this can be triggered by a user, don't provide a way to DoS the
-kernel error log.
+On Thu, 24 Jun 2021 at 15:51, Greg KH <gregkh@linuxfoundation.org> wrote:
+>
+> On Mon, Jun 21, 2021 at 09:46:12PM +0530, Manivannan Sadhasivam wrote:
+> > From: Loic Poulain <loic.poulain@linaro.org>
+> >
+> > Currently, the MHI controller driver defines which channels should
+> > have their inbound buffers allocated and queued. But ideally, this is
+> > something that should be decided by the MHI device driver instead,
+> > which actually deals with that buffers.
+> >
+> > Add a flag parameter to mhi_prepare_for_transfer allowing to specify
+> > if buffers have to be allocated and queued by the MHI stack.
+> >
+> > Keep auto_queue flag for now, but should be removed at some point.
+> >
+> > Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+> > Tested-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+> > Reviewed-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+> > Reviewed-by: Hemant Kumar <hemantk@codeaurora.org>
+> > Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > Acked-by: Jakub Kicinski <kuba@kernel.org>
+> > Link: https://lore.kernel.org/r/1621603519-16773-1-git-send-email-loic.poulain@linaro.org
+> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+[...]
+> > +/**
+> > + * enum mhi_chan_flags - MHI channel flags
+> > + * @MHI_CH_INBOUND_ALLOC_BUFS: Automatically allocate and queue inbound buffers
+> > + */
+> > +enum mhi_chan_flags {
+> > +     MHI_CH_INBOUND_ALLOC_BUFS = BIT(0),
+>
+> Why is an enumerated type a bitfield?
+>
+> Please just use integers for enumerated types.
 
-thanks,
+This 'trick' for listing flags is used in other places like drm,
+mac80211, etc...: grep -r "BIT(0)," ./include/
 
-greg k-h
+I don't understand why it would not be right? should we simply use
+a list of defines for this?
+
+Regards,
+Loic
