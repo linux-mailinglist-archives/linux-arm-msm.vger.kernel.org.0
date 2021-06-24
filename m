@@ -2,106 +2,139 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 614213B3195
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jun 2021 16:39:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DEEF83B31A2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jun 2021 16:40:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232088AbhFXOmN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 24 Jun 2021 10:42:13 -0400
-Received: from mail.kernel.org ([198.145.29.99]:41506 "EHLO mail.kernel.org"
+        id S232248AbhFXOnC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 24 Jun 2021 10:43:02 -0400
+Received: from mail.kernel.org ([198.145.29.99]:42296 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231417AbhFXOmM (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 24 Jun 2021 10:42:12 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 2A4BA6135C;
-        Thu, 24 Jun 2021 14:39:52 +0000 (UTC)
+        id S232355AbhFXOnB (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 24 Jun 2021 10:43:01 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 4A490613DA;
+        Thu, 24 Jun 2021 14:40:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1624545593;
-        bh=pMRnwvoIS1e5BivijFha9T8FYVAO5v7/AYxohTHqENg=;
+        s=korg; t=1624545641;
+        bh=8Q/siINOJ+SbEMrV41GPkA6KGpvNdDIcQcpvV5TfjzA=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=y8V3yf0wriSw/Jt1qFmepOKPeyfFV5X0/ylWl8ja7jjBY8lM/n5soBWfJoUM8hlVy
-         NAt/jrezypTFZFyGSXFvTfoWWoUgzyJyNL8lcPQeoT4+98aKR/GNCBSl94x6E2Cwto
-         +MiJLsoR99Xf0TL4fIXIrJLOhvEgPL577Pw3SjAo=
-Date:   Thu, 24 Jun 2021 16:39:51 +0200
+        b=MdKVAUxXXPbbdvo84gc7YYjWwkTuruINJ/BaLVXFBVrVgCepQr61eJaVJCPSgv7b6
+         eqCBhvGUDRD+bjE93n3LcvCaEPRWWm+zmM+uEEat5AIhOeR66D1/dodV5zryjqVRLV
+         ePQzzQ87otbVs7LfIdJfiVFg1r7sG4Pdv614bKPw=
+Date:   Thu, 24 Jun 2021 16:40:38 +0200
 From:   Greg KH <gregkh@linuxfoundation.org>
 To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Cc:     hemantk@codeaurora.org, bbhatt@codeaurora.org,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        loic.poulain@linaro.org, stable@vger.kernel.org,
-        Jeffrey Hugo <quic_jhugo@quicinc.com>
-Subject: Re: [PATCH 1/8] bus: mhi: core: Validate channel ID when processing
- command completions
-Message-ID: <YNSZNxMjX/vNvae+@kroah.com>
+        loic.poulain@linaro.org
+Subject: Re: [PATCH 6/8] bus: mhi: core: Add support for processing priority
+ of event ring
+Message-ID: <YNSZZhGSZ0lFgS+U@kroah.com>
 References: <20210621161616.77524-1-manivannan.sadhasivam@linaro.org>
- <20210621161616.77524-2-manivannan.sadhasivam@linaro.org>
- <YNSNtQxVaegArG2f@kroah.com>
- <20210624143248.GC6108@workstation>
+ <20210621161616.77524-7-manivannan.sadhasivam@linaro.org>
+ <YNSOXaWt3YX3yDQC@kroah.com>
+ <20210624142453.GB6108@workstation>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20210624143248.GC6108@workstation>
+In-Reply-To: <20210624142453.GB6108@workstation>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jun 24, 2021 at 08:02:48PM +0530, Manivannan Sadhasivam wrote:
-> On Thu, Jun 24, 2021 at 03:50:45PM +0200, Greg KH wrote:
-> > On Mon, Jun 21, 2021 at 09:46:09PM +0530, Manivannan Sadhasivam wrote:
-> > > From: Bhaumik Bhatt <bbhatt@codeaurora.org>
+On Thu, Jun 24, 2021 at 07:54:53PM +0530, Manivannan Sadhasivam wrote:
+> On Thu, Jun 24, 2021 at 03:53:33PM +0200, Greg KH wrote:
+> > On Mon, Jun 21, 2021 at 09:46:14PM +0530, Manivannan Sadhasivam wrote:
+> > > From: Hemant Kumar <hemantk@codeaurora.org>
 > > > 
-> > > MHI reads the channel ID from the event ring element sent by the
-> > > device which can be any value between 0 and 255. In order to
-> > > prevent any out of bound accesses, add a check against the maximum
-> > > number of channels supported by the controller and those channels
-> > > not configured yet so as to skip processing of that event ring
-> > > element.
+> > > Event ring priorities are currently set to 1 and are unused.
+> > > Default processing priority for event rings is set to regular
+> > > tasklet. Controllers can choose to use high priority tasklet
+> > > scheduling for certain event rings critical for processing such
+> > > as ones transporting control information if they wish to avoid
+> > > system scheduling delays for those packets. In order to support
+> > > these use cases, allow controllers to set event ring priority to
+> > > high.
 > > > 
-> > > Cc: stable@vger.kernel.org
-> > > Fixes: 1d3173a3bae7 ("bus: mhi: core: Add support for processing events from client device")
+> > > Signed-off-by: Hemant Kumar <hemantk@codeaurora.org>
 > > > Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
-> > > Reviewed-by: Hemant Kumar <hemantk@codeaurora.org>
 > > > Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > > Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-> > > Link: https://lore.kernel.org/r/1619481538-4435-1-git-send-email-bbhatt@codeaurora.org
+> > > Link: https://lore.kernel.org/r/1624053903-24653-2-git-send-email-bbhatt@codeaurora.org
 > > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 > > > ---
-> > >  drivers/bus/mhi/core/main.c | 15 ++++++++++-----
-> > >  1 file changed, 10 insertions(+), 5 deletions(-)
+> > >  drivers/bus/mhi/core/init.c | 3 +--
+> > >  drivers/bus/mhi/core/main.c | 9 +++++++--
+> > >  include/linux/mhi.h         | 2 +-
+> > >  3 files changed, 9 insertions(+), 5 deletions(-)
 > > > 
+> > > diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
+> > > index c81b377fca8f..444676034bf0 100644
+> > > --- a/drivers/bus/mhi/core/init.c
+> > > +++ b/drivers/bus/mhi/core/init.c
+> > > @@ -673,8 +673,7 @@ static int parse_ev_cfg(struct mhi_controller *mhi_cntrl,
+> > >  				&mhi_cntrl->mhi_chan[mhi_event->chan];
+> > >  		}
+> > >  
+> > > -		/* Priority is fixed to 1 for now */
+> > > -		mhi_event->priority = 1;
+> > > +		mhi_event->priority = event_cfg->priority;
+> > >  
+> > >  		mhi_event->db_cfg.brstmode = event_cfg->mode;
+> > >  		if (MHI_INVALID_BRSTMODE(mhi_event->db_cfg.brstmode))
 > > > diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
-> > > index 22acde118bc3..ed07421c4870 100644
+> > > index 8ac73f9e92a6..3775c77dec63 100644
 > > > --- a/drivers/bus/mhi/core/main.c
 > > > +++ b/drivers/bus/mhi/core/main.c
-> > > @@ -773,11 +773,16 @@ static void mhi_process_cmd_completion(struct mhi_controller *mhi_cntrl,
-> > >  	cmd_pkt = mhi_to_virtual(mhi_ring, ptr);
+> > > @@ -454,10 +454,15 @@ irqreturn_t mhi_irq_handler(int irq_number, void *dev)
 > > >  
-> > >  	chan = MHI_TRE_GET_CMD_CHID(cmd_pkt);
-> > > -	mhi_chan = &mhi_cntrl->mhi_chan[chan];
-> > > -	write_lock_bh(&mhi_chan->lock);
-> > > -	mhi_chan->ccs = MHI_TRE_GET_EV_CODE(tre);
-> > > -	complete(&mhi_chan->completion);
-> > > -	write_unlock_bh(&mhi_chan->lock);
-> > > +	WARN_ON(chan >= mhi_cntrl->max_chan);
+> > >  		if (mhi_dev)
+> > >  			mhi_notify(mhi_dev, MHI_CB_PENDING_DATA);
+> > > -	} else {
+> > > -		tasklet_schedule(&mhi_event->task);
+> > > +
+> > > +		return IRQ_HANDLED;
+> > >  	}
+> > >  
+> > > +	if (!mhi_event->priority)
+> > > +		tasklet_hi_schedule(&mhi_event->task);
+> > > +	else
+> > > +		tasklet_schedule(&mhi_event->task);
+> > > +
+> > >  	return IRQ_HANDLED;
+> > >  }
+> > >  
+> > > diff --git a/include/linux/mhi.h b/include/linux/mhi.h
+> > > index 86cea5256e3c..bf23c213429c 100644
+> > > --- a/include/linux/mhi.h
+> > > +++ b/include/linux/mhi.h
+> > > @@ -250,7 +250,7 @@ struct mhi_channel_config {
+> > >   * @irq_moderation_ms: Delay irq for additional events to be aggregated
+> > >   * @irq: IRQ associated with this ring
+> > >   * @channel: Dedicated channel number. U32_MAX indicates a non-dedicated ring
+> > > - * @priority: Priority of this ring. Use 1 for now
+> > > + * @priority: Processing priority of this ring. 0 is high and 1 is regular
 > > 
-> > What can ever trigger this WARN_ON()?  Do you mean to reboot a machine
-> > if panic-on-warn is set?
-> > 
-> > If this can actually happen, then check for it and recover properly,
-> > don't just blindly warn and then keep on going.
+> > Why is 0 high and 1 low?  Does that feel backwards?
 > > 
 > 
-> We can't do much here other than warning the user and dropping the
-> command.
+> That's because, "1" was used from the beginning by the controller drivers
+> as the regular priority. And I thought of using "0" as high priority so
+> that we can leave the controller drivers unmodified.
 
-But you didn't warn anyone.  Well, you rebooted the machine, is that ok?
-If this can be triggered by a user, this should never happen.
+There's no problem modifying everyone, how much work is that?
 
-Do not use WARN_ON() ever please.
+> > Shouldn't this be a boolean, or if not, an enumerated type so that
+> > people can read the code over time?
+> > 
+> 
+> Bhaumik proposed an enum but I wanted 0/1 so that the controller drivers
+> can be untouched. Also, I don't see any immediate requirement for other
+> priorities.
+> 
+> Will make it a bool then.
 
-> There is no recovery possible because, the device has sent the command
-> completion event on a wrong channel. It can't happen usually unless a
-> malcious device sits on the other end.
-
-Then just eat the message and move on, please do not crash the box.
+Rename it when you change it so that you know you catch all existing
+users.
 
 thanks,
 
-gre k-h
+greg k-h
