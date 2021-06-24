@@ -2,107 +2,156 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 70E293B329C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jun 2021 17:32:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 29F533B32FF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jun 2021 17:56:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231817AbhFXPeh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 24 Jun 2021 11:34:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58754 "EHLO
+        id S232508AbhFXP6a (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 24 Jun 2021 11:58:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35914 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230008AbhFXPeg (ORCPT
+        with ESMTP id S232499AbhFXP62 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 24 Jun 2021 11:34:36 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 764CFC061574
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Jun 2021 08:32:17 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id x24so10927154lfr.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Jun 2021 08:32:17 -0700 (PDT)
+        Thu, 24 Jun 2021 11:58:28 -0400
+Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD87FC061574
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Jun 2021 08:56:08 -0700 (PDT)
+Received: by mail-pj1-x102a.google.com with SMTP id k5so3751838pjj.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Jun 2021 08:56:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=04JLKQO/fFyUkOGcPqBL7gujdp8kkZAbX0MtPTll5vk=;
-        b=JArqNkSlZaSXwPoifYE4gZ1v0dG7zlhwLa8GNdYgG+9JRwcLa1pU5tNBwDuwJmzQWt
-         D9u5zRUOEIPiVOX640qgnHBqK+HGjwyX44j3FIceBSs4RuYZ+JIwjdhlyxBfTbqFXjmX
-         mGDOmzAQUXO8Q4IPRfejKbSV4RYj3lZkLY9nxn9BdwYwAC5Y4A/XPZGL/Gt4vaOBsBtq
-         EBQbsz76PUgzhqjQ2VcfwHHjcaS4nv3kN8OQDUcdbVW4ItIjpAuqkLuDOgu4IRp7R9wY
-         dP63H3Y4ug8hi+z/mP0t/OzKfXenKK0Kqx00dJkzTgY7KylvnMTKTUh00JQOV6KzRyz+
-         TFZg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=uIiql1BdK0KN1vEcz6LaOBJV1Hbz8F0F5x5kSRn1/hQ=;
+        b=myi4BcePr2SxyvO6FD/KI7+94QoXAUpid+fsm3JZMGUD7H+UqppJ0hbcrhs00aA5ZL
+         MRF1IXoaQEFarG+k4XjIg+znZlEYeE5hLVYh6wZFUcRwnaFju0+kSwnGyU3u0XxU1fZ0
+         eaxPIfBKD/OiiJ2U4keU8e2zvMJHxEArcfnr/RPbY0lotE2VdU1fu0Kn7LutxGntKft5
+         wRyb5NxdYjJTSPQuut65YO7SFNgwDDlP3e3FACfEK/I0MZ3H5VsytNUvfT6YI3hmCnHA
+         e57+/bXttqwWizqxEvxbXTeTOZqVIjCa2/I7BoJE3AkTOFPq4STse8RCBkwyny3l97yp
+         WBzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=04JLKQO/fFyUkOGcPqBL7gujdp8kkZAbX0MtPTll5vk=;
-        b=mttKUYelPmu+WnswOkjSDK6fb0+vchKbeIoaycLe0mqLww9/XOF5K1uhUa2SO0jEHk
-         PTRmCmDQEvU+vMiINRx8Zd72UcZn/DO9nVT8fcZV23RC6lUUaaBvRorpyaol/zIWApfe
-         FSqIQSCyTtoLJm6T6C6VcB/JFQMXpn69enTHt8bK/pKzDLTuoN+P0g3pvRJX66GfhK/U
-         3FgWa9467B/rDLL02ht8wg9RT75rUP2fjIjj5sYREk90Q1YaeCZ9cw9Y3AUGXE4THGkL
-         4jZAuwHRVYHF1MnjTh1I8ly7lL4C/j1W5uz0ch7WaIWTOZuXBo10SiUz0XON94EW7SmF
-         xQ5g==
-X-Gm-Message-State: AOAM533maoddFjgNpwtc91E9Qo0OTZYb7li93pZDzz+its3Q1tnjHh+T
-        NhoIbWiCq6hkAWq92bDpVyLkPAcPX4BvEzQWDWYQRQ==
-X-Google-Smtp-Source: ABdhPJxs7rnOO/BgTWo9qd7jVgTTntGtpEBOuLOjuElmlZzwGEGI4e1z1SM7AgDZqF2e7uG2v5GyqhsTn1JVO9E0HUg=
-X-Received: by 2002:a19:6e44:: with SMTP id q4mr4362200lfk.586.1624548735768;
- Thu, 24 Jun 2021 08:32:15 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=uIiql1BdK0KN1vEcz6LaOBJV1Hbz8F0F5x5kSRn1/hQ=;
+        b=Oszxj1v6fkHX8QkJGaDcnoGfBm3X2wwMw+tMUb9HnGFQ4BmbykGWXZW8/yXnk/fv1I
+         clhGC54KrJpq9r2r8MH6ZnepphJhfAcinZmopHYZUe27cxI/49ApHcnRlyeAOJ6/STlt
+         xW1QngFAB0X0wpTh9j+KU1JmRO7aPzBK5qjYDzzm85Z5uS3kBlejQKTuafKS9mOapjUy
+         fyJ10WhFRJTeMVTWANm3KxIGs5yzpwv7VGDUuxKVZTOAakvBhBk3EZx98w8OekXcR8mx
+         kUFbJHnGfq1PzlRZ8jJp0Jnk6A6+mY/6OC50FrpYajpA/f1fWEGCOirS8KAai+Sdd0do
+         +TqQ==
+X-Gm-Message-State: AOAM531NqvqIQDG2wbXGQeGb+/nYdWeyfvzc2KVojD90r7UeFHffQeB1
+        MEXtEAEAEoBI12jYya1wUgFi
+X-Google-Smtp-Source: ABdhPJxK8+gLbRAwn8nUuwGDGWzpweVrlt/7Sd2UCgvVr2knMTD4eGISuidKKzripm40ueO627udIA==
+X-Received: by 2002:a17:90a:5312:: with SMTP id x18mr15699217pjh.25.1624550168335;
+        Thu, 24 Jun 2021 08:56:08 -0700 (PDT)
+Received: from thinkpad ([120.138.12.173])
+        by smtp.gmail.com with ESMTPSA id b5sm2880023pgh.41.2021.06.24.08.56.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 24 Jun 2021 08:56:07 -0700 (PDT)
+Date:   Thu, 24 Jun 2021 21:26:02 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Greg KH <gregkh@linuxfoundation.org>
+Cc:     hemantk@codeaurora.org, bbhatt@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        loic.poulain@linaro.org, stable@vger.kernel.org,
+        Jeffrey Hugo <quic_jhugo@quicinc.com>
+Subject: Re: [PATCH 1/8] bus: mhi: core: Validate channel ID when processing
+ command completions
+Message-ID: <20210624155602.GA28535@thinkpad>
+References: <20210621161616.77524-1-manivannan.sadhasivam@linaro.org>
+ <20210621161616.77524-2-manivannan.sadhasivam@linaro.org>
+ <YNSNtQxVaegArG2f@kroah.com>
+ <20210624143248.GC6108@workstation>
+ <YNSZNxMjX/vNvae+@kroah.com>
+ <20210624144752.GD6108@workstation>
+ <YNSkVZ4PzkDqX/g+@kroah.com>
 MIME-Version: 1.0
-References: <20210502014146.85642-1-caleb@connolly.tech> <20210502014146.85642-3-caleb@connolly.tech>
-In-Reply-To: <20210502014146.85642-3-caleb@connolly.tech>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Thu, 24 Jun 2021 17:32:04 +0200
-Message-ID: <CACRpkdb8tduLtQAmQWT3L3cwi470kuvhHKnzNs4VqGOCbWAxbA@mail.gmail.com>
-Subject: Re: [PATCH 2/4] drm: panel: sofef00: remove reset GPIO handling
-To:     Caleb Connolly <caleb@connolly.tech>
-Cc:     Thierry Reding <thierry.reding@gmail.com>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS
-        <devicetree@vger.kernel.org>, Hans de Goede <hdegoede@redhat.com>, Andy
-        Shevchenko <andy.shevchenko@gmail.com>," 
-        <~postmarketos/upstreaming@lists.sr.ht>,
-        phone-devel@vger.kernel.org, MSM <linux-arm-msm@vger.kernel.org>,
-        "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
-        linux-kernel <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <YNSkVZ4PzkDqX/g+@kroah.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, May 2, 2021 at 3:43 AM Caleb Connolly <caleb@connolly.tech> wrote:
+On Thu, Jun 24, 2021 at 05:27:17PM +0200, Greg KH wrote:
+> On Thu, Jun 24, 2021 at 08:17:52PM +0530, Manivannan Sadhasivam wrote:
+> > On Thu, Jun 24, 2021 at 04:39:51PM +0200, Greg KH wrote:
+> > > On Thu, Jun 24, 2021 at 08:02:48PM +0530, Manivannan Sadhasivam wrote:
+> > > > On Thu, Jun 24, 2021 at 03:50:45PM +0200, Greg KH wrote:
+> > > > > On Mon, Jun 21, 2021 at 09:46:09PM +0530, Manivannan Sadhasivam wrote:
+> > > > > > From: Bhaumik Bhatt <bbhatt@codeaurora.org>
+> > > > > > 
+> > > > > > MHI reads the channel ID from the event ring element sent by the
+> > > > > > device which can be any value between 0 and 255. In order to
+> > > > > > prevent any out of bound accesses, add a check against the maximum
+> > > > > > number of channels supported by the controller and those channels
+> > > > > > not configured yet so as to skip processing of that event ring
+> > > > > > element.
+> > > > > > 
+> > > > > > Cc: stable@vger.kernel.org
+> > > > > > Fixes: 1d3173a3bae7 ("bus: mhi: core: Add support for processing events from client device")
+> > > > > > Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+> > > > > > Reviewed-by: Hemant Kumar <hemantk@codeaurora.org>
+> > > > > > Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > > > > > Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+> > > > > > Link: https://lore.kernel.org/r/1619481538-4435-1-git-send-email-bbhatt@codeaurora.org
+> > > > > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > > > > > ---
+> > > > > >  drivers/bus/mhi/core/main.c | 15 ++++++++++-----
+> > > > > >  1 file changed, 10 insertions(+), 5 deletions(-)
+> > > > > > 
+> > > > > > diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
+> > > > > > index 22acde118bc3..ed07421c4870 100644
+> > > > > > --- a/drivers/bus/mhi/core/main.c
+> > > > > > +++ b/drivers/bus/mhi/core/main.c
+> > > > > > @@ -773,11 +773,16 @@ static void mhi_process_cmd_completion(struct mhi_controller *mhi_cntrl,
+> > > > > >  	cmd_pkt = mhi_to_virtual(mhi_ring, ptr);
+> > > > > >  
+> > > > > >  	chan = MHI_TRE_GET_CMD_CHID(cmd_pkt);
+> > > > > > -	mhi_chan = &mhi_cntrl->mhi_chan[chan];
+> > > > > > -	write_lock_bh(&mhi_chan->lock);
+> > > > > > -	mhi_chan->ccs = MHI_TRE_GET_EV_CODE(tre);
+> > > > > > -	complete(&mhi_chan->completion);
+> > > > > > -	write_unlock_bh(&mhi_chan->lock);
+> > > > > > +	WARN_ON(chan >= mhi_cntrl->max_chan);
+> > > > > 
+> > > > > What can ever trigger this WARN_ON()?  Do you mean to reboot a machine
+> > > > > if panic-on-warn is set?
+> > > > > 
+> > > > > If this can actually happen, then check for it and recover properly,
+> > > > > don't just blindly warn and then keep on going.
+> > > > > 
+> > > > 
+> > > > We can't do much here other than warning the user and dropping the
+> > > > command.
+> > > 
+> > > But you didn't warn anyone.  Well, you rebooted the machine, is that ok?
+> > > If this can be triggered by a user, this should never happen.
+> > > 
+> > > Do not use WARN_ON() ever please.
+> > > 
+> > > > There is no recovery possible because, the device has sent the command
+> > > > completion event on a wrong channel. It can't happen usually unless a
+> > > > malcious device sits on the other end.
+> > > 
+> > > Then just eat the message and move on, please do not crash the box.
+> > > 
+> > 
+> > Okay. We'll spit an error message and drop the event.
+> 
+> If this can be triggered by a user, don't provide a way to DoS the
+> kernel error log.
+> 
 
-> Resetting the panel on fajita causes it to never come back, we aren't
-> quite sure why this is so for now lets remove reset handling as it is
-> effectively broken. It is also not needed on enchilada.
+The term "user" is a bit vague here. Only a malcious device sits on the PCIe
+bus that claims a defined VID/PID can trigger this error. And we do need to tell
+the user of the host machine that the device tried to do something wrong.
 
-Where are the device trees for these platforms?
+So I guess the error log is fine here?
 
-Are there schematics so we/someone with access to the schematics
-can figure it out?
+Thanks,
+Mani
 
-It's not something trivial like forgotten to put GPIO_ACTIVE_LOW
-on the gpio phandle?
-
-> -static void sofef00_panel_reset(struct sofef00_panel *ctx)
-> -{
-> -       gpiod_set_value_cansleep(ctx->reset_gpio, 0);
-> -       usleep_range(5000, 6000);
-> -       gpiod_set_value_cansleep(ctx->reset_gpio, 1);
-> -       usleep_range(2000, 3000);
-> -       gpiod_set_value_cansleep(ctx->reset_gpio, 0);
-> -       usleep_range(12000, 13000);
-> -}
-
-This code looks a bit weird to begin with, I don't see the point
-with the first setting the gpiod low, either it was low already or
-high already neither matters, driving it asserted will assert it
-either way.
-
-No big deal though.
-
-> -       ctx->reset_gpio = devm_gpiod_get(dev, "reset", GPIOD_OUT_HIGH);
-
-As Bjorn says: just use *_optional and comment the line out in the
-device tree if there is a problem.
-
-Yours,
-Linus Walleij
+> thanks,
+> 
+> greg k-h
