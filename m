@@ -2,117 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 02E9B3B308A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jun 2021 15:53:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C81563B308C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jun 2021 15:54:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229995AbhFXNz4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 24 Jun 2021 09:55:56 -0400
-Received: from mail.kernel.org ([198.145.29.99]:39462 "EHLO mail.kernel.org"
+        id S231294AbhFXN4b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 24 Jun 2021 09:56:31 -0400
+Received: from mail.kernel.org ([198.145.29.99]:39822 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229878AbhFXNzz (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 24 Jun 2021 09:55:55 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 6F24C613ED;
-        Thu, 24 Jun 2021 13:53:35 +0000 (UTC)
+        id S229878AbhFXN4a (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 24 Jun 2021 09:56:30 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 5400E613ED;
+        Thu, 24 Jun 2021 13:54:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1624542815;
-        bh=WuGclsAxOiYq/aCZOLJGuJCShfXRC5h/rYQlt1bwn4E=;
+        s=korg; t=1624542851;
+        bh=t3/lMbrZi8JwpFf/iREZw2AVExACR+FpzzvHglGYIT0=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=te5oQlEds6nbZ9Wx4nJf7eOu16XxBbeYfAPYhWrk2+DAEKH5GXaZMZLPV06iazGf8
-         GbOPmnJVpIRMtZk8wFbTR2itW7WXPWLnCLiTO6NYKnVwalPeOYbGAXVpJcqh99F3Kr
-         xGHoV++Utns99LPkffOYzd+u/ZTYS7n8U9uWmROw=
-Date:   Thu, 24 Jun 2021 15:53:33 +0200
+        b=hc6PE9s33prcn1skxwTm/GXPPV91JhEo1cwgo/N6xsI0ujWg7Fu9R44yWWoOAEEsH
+         Zz/eVLJB7LdSxCYIRtgnTdIjV7PEjmSDgs7VOB3Kj7N0K27Jg1HYaVeWA9uFM+LUMv
+         yT+3wEZLV9zi0MeVz+I/6LFF0fTIkPkvcHQ4FQ2Y=
+Date:   Thu, 24 Jun 2021 15:54:09 +0200
 From:   Greg KH <gregkh@linuxfoundation.org>
 To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Cc:     hemantk@codeaurora.org, bbhatt@codeaurora.org,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        loic.poulain@linaro.org
-Subject: Re: [PATCH 6/8] bus: mhi: core: Add support for processing priority
- of event ring
-Message-ID: <YNSOXaWt3YX3yDQC@kroah.com>
+        loic.poulain@linaro.org, stable@vger.kernel.org
+Subject: Re: [PATCH 7/8] bus: mhi: pci_generic: Apply no-op for wake using
+ sideband wake boolean
+Message-ID: <YNSOgSQ/K3Aavyjx@kroah.com>
 References: <20210621161616.77524-1-manivannan.sadhasivam@linaro.org>
- <20210621161616.77524-7-manivannan.sadhasivam@linaro.org>
+ <20210621161616.77524-8-manivannan.sadhasivam@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20210621161616.77524-7-manivannan.sadhasivam@linaro.org>
+In-Reply-To: <20210621161616.77524-8-manivannan.sadhasivam@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jun 21, 2021 at 09:46:14PM +0530, Manivannan Sadhasivam wrote:
-> From: Hemant Kumar <hemantk@codeaurora.org>
+On Mon, Jun 21, 2021 at 09:46:15PM +0530, Manivannan Sadhasivam wrote:
+> From: Bhaumik Bhatt <bbhatt@codeaurora.org>
 > 
-> Event ring priorities are currently set to 1 and are unused.
-> Default processing priority for event rings is set to regular
-> tasklet. Controllers can choose to use high priority tasklet
-> scheduling for certain event rings critical for processing such
-> as ones transporting control information if they wish to avoid
-> system scheduling delays for those packets. In order to support
-> these use cases, allow controllers to set event ring priority to
-> high.
+> Devices such as SDX24 do not have the provision for inband wake
+> doorbell in the form of channel 127 and instead have a sideband
+> GPIO for it. Newer devices such as SDX55 or SDX65 support inband
+> wake method by default. Ensure the functionality is used based on
+> this such that device wake stays held when a client driver uses
+> mhi_device_get() API or the equivalent debugfs entry.
 > 
-> Signed-off-by: Hemant Kumar <hemantk@codeaurora.org>
+> Cc: stable@vger.kernel.org
+> Fixes: e3e5e6508fc1 ("bus: mhi: pci_generic: No-Op for device_wake operations")
 > Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
 > Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> Link: https://lore.kernel.org/r/1624053903-24653-2-git-send-email-bbhatt@codeaurora.org
+> Link: https://lore.kernel.org/r/1624053302-22470-1-git-send-email-bbhatt@codeaurora.org
 > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 > ---
->  drivers/bus/mhi/core/init.c | 3 +--
->  drivers/bus/mhi/core/main.c | 9 +++++++--
->  include/linux/mhi.h         | 2 +-
->  3 files changed, 9 insertions(+), 5 deletions(-)
+>  drivers/bus/mhi/pci_generic.c | 27 +++++++++++++++++++--------
+>  1 file changed, 19 insertions(+), 8 deletions(-)
 > 
-> diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
-> index c81b377fca8f..444676034bf0 100644
-> --- a/drivers/bus/mhi/core/init.c
-> +++ b/drivers/bus/mhi/core/init.c
-> @@ -673,8 +673,7 @@ static int parse_ev_cfg(struct mhi_controller *mhi_cntrl,
->  				&mhi_cntrl->mhi_chan[mhi_event->chan];
->  		}
+> diff --git a/drivers/bus/mhi/pci_generic.c b/drivers/bus/mhi/pci_generic.c
+> index d84b74396c6a..eb9263bd1bd8 100644
+> --- a/drivers/bus/mhi/pci_generic.c
+> +++ b/drivers/bus/mhi/pci_generic.c
+> @@ -32,6 +32,8 @@
+>   * @edl: emergency download mode firmware path (if any)
+>   * @bar_num: PCI base address register to use for MHI MMIO register space
+>   * @dma_data_width: DMA transfer word size (32 or 64 bits)
+> + * @sideband_wake: Devices using dedicated sideband GPIO for wakeup instead
+> + *                 of inband wake support (such as sdx24)
+>   */
+>  struct mhi_pci_dev_info {
+>  	const struct mhi_controller_config *config;
+> @@ -40,6 +42,7 @@ struct mhi_pci_dev_info {
+>  	const char *edl;
+>  	unsigned int bar_num;
+>  	unsigned int dma_data_width;
+> +	bool sideband_wake;
+>  };
 >  
-> -		/* Priority is fixed to 1 for now */
-> -		mhi_event->priority = 1;
-> +		mhi_event->priority = event_cfg->priority;
->  
->  		mhi_event->db_cfg.brstmode = event_cfg->mode;
->  		if (MHI_INVALID_BRSTMODE(mhi_event->db_cfg.brstmode))
-> diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
-> index 8ac73f9e92a6..3775c77dec63 100644
-> --- a/drivers/bus/mhi/core/main.c
-> +++ b/drivers/bus/mhi/core/main.c
-> @@ -454,10 +454,15 @@ irqreturn_t mhi_irq_handler(int irq_number, void *dev)
->  
->  		if (mhi_dev)
->  			mhi_notify(mhi_dev, MHI_CB_PENDING_DATA);
-> -	} else {
-> -		tasklet_schedule(&mhi_event->task);
-> +
-> +		return IRQ_HANDLED;
->  	}
->  
-> +	if (!mhi_event->priority)
-> +		tasklet_hi_schedule(&mhi_event->task);
-> +	else
-> +		tasklet_schedule(&mhi_event->task);
-> +
->  	return IRQ_HANDLED;
->  }
->  
-> diff --git a/include/linux/mhi.h b/include/linux/mhi.h
-> index 86cea5256e3c..bf23c213429c 100644
-> --- a/include/linux/mhi.h
-> +++ b/include/linux/mhi.h
-> @@ -250,7 +250,7 @@ struct mhi_channel_config {
->   * @irq_moderation_ms: Delay irq for additional events to be aggregated
->   * @irq: IRQ associated with this ring
->   * @channel: Dedicated channel number. U32_MAX indicates a non-dedicated ring
-> - * @priority: Priority of this ring. Use 1 for now
-> + * @priority: Processing priority of this ring. 0 is high and 1 is regular
+>  #define MHI_CHANNEL_CONFIG_UL(ch_num, ch_name, el_count, ev_ring) \
+> @@ -242,7 +245,8 @@ static const struct mhi_pci_dev_info mhi_qcom_sdx65_info = {
+>  	.edl = "qcom/sdx65m/edl.mbn",
+>  	.config = &modem_qcom_v1_mhiv_config,
+>  	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+> -	.dma_data_width = 32
+> +	.dma_data_width = 32,
+> +	.sideband_wake = false
 
-Why is 0 high and 1 low?  Does that feel backwards?
-
-Shouldn't this be a boolean, or if not, an enumerated type so that
-people can read the code over time?
+Please put a trailing , here and for the other definitions, so in the
+future you will not have to modify the previous line, like you had to do
+here.
 
 thanks,
 
