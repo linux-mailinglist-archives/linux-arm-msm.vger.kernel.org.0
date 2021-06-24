@@ -2,198 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 350AA3B2EA3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jun 2021 14:09:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 506143B3026
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jun 2021 15:35:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230149AbhFXML1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 24 Jun 2021 08:11:27 -0400
-Received: from mail.kernel.org ([198.145.29.99]:57278 "EHLO mail.kernel.org"
+        id S231225AbhFXNh6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 24 Jun 2021 09:37:58 -0400
+Received: from mail.kernel.org ([198.145.29.99]:58458 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229448AbhFXML1 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 24 Jun 2021 08:11:27 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id CDF17613DC;
-        Thu, 24 Jun 2021 12:09:07 +0000 (UTC)
+        id S232017AbhFXNhq (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 24 Jun 2021 09:37:46 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 4C60B613DC;
+        Thu, 24 Jun 2021 13:35:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1624536548;
-        bh=1bF9//mc403rZp5trgsGdpRFYX2hU8FOa310qh23jGY=;
+        s=korg; t=1624541726;
+        bh=Im8AJ/xzLG5igrCZBPvx/X/s8SqGh6KWTqyck17cCoQ=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=KYIxQGUyGdfM8HoY4AH6QsFG1376JJICmqb/HnTqaFxi3yrl0yENFg7Ccz702SAAs
-         xLvrr9sQ4DhEqa8gU1Uq6WriFDMR1Hpwb7Zt+abMP2R6RmUGMt7Zs5WLNJ3dNK+P73
-         cNIUoBkoyw8LGbP9MGmiMkI1NCKmzFqRf0SZCYUI=
-Date:   Thu, 24 Jun 2021 14:09:05 +0200
+        b=JMLHRQ28OMZLW0wpvUm9Xlwqyt9Io+/duHqoiOloEkUkX/Z+6wqU/OyjDHWs6Lntt
+         5QIdEoOiCKJecySIuqaNnTytjdIkfTjeATJDukQ/7TLjS1RN5+KZWhulco76hoOX9F
+         U6o29EcMkWGSpT+pTyVkK77jJjZVWw2k/R93MySk=
+Date:   Thu, 24 Jun 2021 15:35:24 +0200
 From:   Greg KH <gregkh@linuxfoundation.org>
-To:     Wesley Cheng <wcheng@codeaurora.org>
-Cc:     balbi@kernel.org, robh+dt@kernel.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, frowand.list@gmail.com,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        jackp@codeaurora.org, fntoth@gmail.com,
-        heikki.krogerus@linux.intel.com, andy.shevchenko@gmail.com
-Subject: Re: [PATCH v10 2/6] usb: gadget: configfs: Check USB configuration
- before adding
-Message-ID: <YNR14X77hZ+SDJeV@kroah.com>
-References: <1623923899-16759-1-git-send-email-wcheng@codeaurora.org>
- <1623923899-16759-3-git-send-email-wcheng@codeaurora.org>
- <YMss5tFFBjokk1k6@kroah.com>
- <012b0264-107a-5596-d73f-3a2fd20470cf@codeaurora.org>
- <YNF9kv0kWAz6Pp00@kroah.com>
- <afe0c718-1c16-1b20-4b0c-d8592a13af42@codeaurora.org>
- <YNMcnISDv2e7bze1@kroah.com>
- <e7d70e8c-4574-808c-80f6-ae469937f35d@codeaurora.org>
+To:     Douglas Anderson <dianders@chromium.org>
+Cc:     rafael@kernel.org, rafael.j.wysocki@intel.com, will@kernel.org,
+        robin.murphy@arm.com, joro@8bytes.org, bjorn.andersson@linaro.org,
+        ulf.hansson@linaro.org, adrian.hunter@intel.com,
+        bhelgaas@google.com, robdclark@chromium.org,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        quic_c_gdjako@quicinc.com, iommu@lists.linux-foundation.org,
+        sonnyrao@chromium.org, saiprakash.ranjan@codeaurora.org,
+        linux-mmc@vger.kernel.org, vbadigan@codeaurora.org,
+        rajatja@google.com, saravanak@google.com, joel@joelfernandes.org,
+        Geert Uytterhoeven <geert@linux-m68k.org>,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/6] drivers: base: Add the concept of "pre_probe" to
+ drivers
+Message-ID: <YNSKHAiS3qIOwDVA@kroah.com>
+References: <20210621235248.2521620-1-dianders@chromium.org>
+ <20210621165230.1.Id4ee5788c993294f66542721fca7719c00a5d8f3@changeid>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <e7d70e8c-4574-808c-80f6-ae469937f35d@codeaurora.org>
+In-Reply-To: <20210621165230.1.Id4ee5788c993294f66542721fca7719c00a5d8f3@changeid>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jun 23, 2021 at 02:44:31PM -0700, Wesley Cheng wrote:
+On Mon, Jun 21, 2021 at 04:52:43PM -0700, Douglas Anderson wrote:
+> Right now things are a bit awkward if a driver would like a chance to
+> run before some of the more "automatic" things (pinctrl, DMA, IOMMUs,
+> ...) happen to a device. This patch aims to fix that problem by
+> introducing the concept of a "pre_probe" function that drivers can
+> implement to run before the "automatic" stuff.
 > 
+> Why would you want to run before the "automatic" stuff? The incentive
+> in my case is that I want to be able to fill in some boolean flags in
+> the "struct device" before the IOMMU init runs. It appears that the
+> strictness vs. non-strictness of a device's iommu config is determined
+> once at init time and can't be changed afterwards. However, I would
+> like to avoid hardcoding the rules for strictness in the IOMMU
+> driver. Instead I'd like to let individual drivers be able to make
+> informed decisions about the appropriateness of strictness
+> vs. non-strictness.
 > 
-> On 6/23/2021 4:35 AM, Greg KH wrote:
-> > On Wed, Jun 23, 2021 at 02:38:55AM -0700, Wesley Cheng wrote:
-> >>
-> >>
-> >> On 6/21/2021 11:05 PM, Greg KH wrote:
-> >>> On Mon, Jun 21, 2021 at 10:27:09PM -0700, Wesley Cheng wrote:
-> >>>>
-> >>>>
-> >>>> On 6/17/2021 4:07 AM, Greg KH wrote:
-> >>>>> On Thu, Jun 17, 2021 at 02:58:15AM -0700, Wesley Cheng wrote:
-> >>>>>> Ensure that the USB gadget is able to support the configuration being
-> >>>>>> added based on the number of endpoints required from all interfaces.  This
-> >>>>>> is for accounting for any bandwidth or space limitations.
-> >>>>>>
-> >>>>>> Signed-off-by: Wesley Cheng <wcheng@codeaurora.org>
-> >>>>>> ---
-> >>>>>>  drivers/usb/gadget/configfs.c | 22 ++++++++++++++++++++++
-> >>>>>>  1 file changed, 22 insertions(+)
-> >>>>>>
-> >>>>>> diff --git a/drivers/usb/gadget/configfs.c b/drivers/usb/gadget/configfs.c
-> >>>>>> index 15a607c..76b9983 100644
-> >>>>>> --- a/drivers/usb/gadget/configfs.c
-> >>>>>> +++ b/drivers/usb/gadget/configfs.c
-> >>>>>> @@ -1374,6 +1374,7 @@ static int configfs_composite_bind(struct usb_gadget *gadget,
-> >>>>>>  		struct usb_function *f;
-> >>>>>>  		struct usb_function *tmp;
-> >>>>>>  		struct gadget_config_name *cn;
-> >>>>>> +		unsigned long ep_map = 0;
-> >>>>>>  
-> >>>>>>  		if (gadget_is_otg(gadget))
-> >>>>>>  			c->descriptors = otg_desc;
-> >>>>>> @@ -1403,7 +1404,28 @@ static int configfs_composite_bind(struct usb_gadget *gadget,
-> >>>>>>  				list_add(&f->list, &cfg->func_list);
-> >>>>>>  				goto err_purge_funcs;
-> >>>>>>  			}
-> >>>>>> +			if (f->fs_descriptors) {
-> >>>>>> +				struct usb_descriptor_header **d;
-> >>>>>> +
-> >>>>>> +				d = f->fs_descriptors;
-> >>>>>> +				for (; *d; ++d) {
-> >>>>
-> >>>> Hi Greg,
-> >>>>
-> >>>> Thanks for the review and feedback.
-> >>>>
-> >>>>>
-> >>>>> With this check, there really is not a need to check for
-> >>>>> f->fs_descriptors above in the if statement, right?
-> >>>>>
-> >>>>
-> >>>> f->fs_descriptor will carry the table of descriptors that a particular
-> >>>> function driver has assigned to it.  The for loop here, will dereference
-> >>>> the individual descriptors within that descriptor array, so we need to
-> >>>> first ensure the descriptor array is present before traversing through
-> >>>> the individual entries/elements.
-> >>>
-> >>> Ah, it's a dereference of an array element.  Subtle.  Tricky.  Messy :(
-> >>>
-> >>>>>> +					struct usb_endpoint_descriptor *ep;
-> >>>>>> +					int addr;
-> >>>>>> +
-> >>>>>> +					if ((*d)->bDescriptorType != USB_DT_ENDPOINT)
-> >>>>>> +						continue;
-> >>>>>> +
-> >>>>>> +					ep = (struct usb_endpoint_descriptor *)*d;
-> >>>>>> +					addr = ((ep->bEndpointAddress & 0x80) >> 3) |
-> >>>>>> +						(ep->bEndpointAddress & 0x0f);
-> >>>>>
-> >>>>> Don't we have direction macros for this type of check?
-> >>>>>
-> >>>>
-> >>>> I don't believe we have a macro which would be able to convert the
-> >>>> bEndpointAddress field into the bit which needs to be set, assuming that
-> >>>> the 32bit ep_map has the lower 16bits carrying OUT EPs, and the upper
-> >>>> 16bits carrying the IN EPs.
-> >>
-> >> Hi Greg,
-> >>
-> >>>
-> >>> We have macros to tell if an endpoint is IN or OUT, please use those.
-> >>>
-> >>> And this "cram the whole thing into 64 bits" is not obvious at all.
-> >>> Just pass around the original pointer to the descriptors if someone
-> >>> wants to use it or not, don't make up yet-another-data-structure here
-> >>> for no good reason.  We aren't so memory constrained we need to pack
-> >>> stuff into bits here.
-> >>>
-> >>
-> >> Hmm ok, what I can do is to move this logic into the check_config()
-> >> callback itself, which is implemented by the UDC driver.  So now, the
-> >> DWC3 will have to do something similar to what is done here, ie loop the
-> >> EP descriptors for each function to determine the number of IN endpoints
-> >> being used.
+> The desire for running code pre_probe is likely not limited to my use
+> case. I believe that the list "qcom_smmu_client_of_match" is hacked
+> into the iommu driver specifically because there was no real good
+> framework for this. For the existing list it wasn't _quite_ as ugly as
+> my needs since the decision could be made solely on compatible string,
+> but it still feels like it would have been better for individual
+> drivers to run code and setup some state rather than coding up a big
+> list in the IOMMU driver.
 > 
-> Hi Greg,
+> Even without this patch, I believe it is possible for a driver to run
+> before the "automatic" things by registering for
+> "BUS_NOTIFY_BIND_DRIVER" in its init call, though I haven't personally
+> tested this. Using the notifier is a bit awkward, though, and I'd
+> rather avoid it. Also, using "BUS_NOTIFY_BIND_DRIVER" would require
+> drivers to stop using the convenience module_platform_driver() helper
+> and roll a bunch of boilerplate code.
 > 
-> > 
-> > We have common USB core functions for this, why can't you just use them?
-> > 
-> 
-> So, I've tried to use pre-existing mechanisms there in the USB core, but
-> they are not populated correctly at the time of function binding.  I
-> will highlight some of the things I've tried, and why they do not work.
->  If possible, if you could point which core functions can achieve what
-> we are trying to do here, that would help as well.
+> NOTE: the pre_probe here is listed in the driver structure. As a side
+> effect of this it will be passed a "struct device *" rather than the
+> more specific device type (like the "struct platform_device *" that
+> most platform devices get passed to their probe). Presumably this
+> won't cause trouble and it's a lot less code to write but if we need
+> to make it more symmetric that's also possible by touching more files.
 
-We have functions to detect the IN/OUT of an endpoint, use them.
+No, please please no.
 
-We also have functions that determine how many endpoints of each type
-that a device has, why can you not use them as well?  Are they only
-valid for driver structures, not gadget ones?
+If a bus really wants to do crud like this, it can do it in it's own
+probe callback, the driver core doesn't need to mess with this.
 
->   - f->endpoints - This is a bitmap which carries the endpoints used by
-> a particular function driver.  This does not work, as this is set during
-> receiving the SET_CONFIG packet.  (we need this during the function
-> driver binding stage)
-> 
->   - gadget->in_epnum/gadget->out_epnum - This carries the count of
-> endpoints used per configuration.  This would be perfect, but this count
-> is only incremented when we are not matching EPs using the EP name.  So
-> in designs where the EP name is used to match, it can not be used.
-> 
->  - gadget->ep_list - I can use this now in the check_config() to iterate
-> through the list of eps to see which ones have been claimed for a
-> particular configuration.
-> 
-> So just to re-iterate, the TXFIFO resize logic kicks in when the host
-> sends the SET_CONFIG packet, which is the "end" of USB enumeration.  We
-> had discussed a concern previously where, what if we run the resize
-> logic, and there is not enough internal memory.  We'd end up with an
-> enumerated device w/ certain functions broken.
+If you need to mess with iommu values in struct device, again, do that
+in the bus core for the devices on that specific bus, that's where those
+values are supposed to be set anyway, right?
 
-Where are you running out of memory?  In the gadget kernel?  Or
-somewhere else?
+If the iommu drivers need to be run before a specific bus is
+initialized, then fix that there, the driver core does not need to care
+about this at all.
 
-> This is where the check_config() comes into the picture.  It uses the
-> number of endpoints collected during the bind() stage, and checks to
-> make sure the resize logic can at least allocate 1 TXFIFO per endpoint.
->  If it can not, then it will fail the bind sequence.
-
-That's fine, I am just worried about your crazy "pack all the bits into
-a u64 for no good reason" logic here.
-
-thanks,
+so a big NACK on this one, sorry.
 
 greg k-h
