@@ -2,50 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9D44D3B31E8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jun 2021 16:57:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0D6013B31EA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jun 2021 16:57:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232227AbhFXPAD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 24 Jun 2021 11:00:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50934 "EHLO
+        id S232245AbhFXPAE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 24 Jun 2021 11:00:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50940 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231194AbhFXPAC (ORCPT
+        with ESMTP id S232196AbhFXPAD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 24 Jun 2021 11:00:02 -0400
+        Thu, 24 Jun 2021 11:00:03 -0400
 Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2E84C061574
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Jun 2021 07:57:42 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id j4so10766419lfc.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Jun 2021 07:57:42 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8FC7C061574
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Jun 2021 07:57:43 -0700 (PDT)
+Received: by mail-lf1-x130.google.com with SMTP id u13so10832125lfk.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Jun 2021 07:57:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=uKeS2D6NI+nwzdlSN/CbA1/E6G9yn+fxXMAvAL8n5i8=;
-        b=o9bVyES50Ubdsxjce6p6kTTu/gOMLly8CXc6aOBPz7wGJ2jN8y2fkJnVPlormj0sTU
-         U0ekDTCG1+5y8lfPulYiMSccHQqmK8Nbt4cW3cLAcNn+2ZRUQ4ZeYmwjlh5im20UKncp
-         IaWjRSbp2IIKtHf1M18AYTMQbSCIn1d8st923bf6bCh+cvT4hmDw0YYtUXxHWJJUzGJZ
-         USQvvVyV54bNQCgQmE/4C68mqx20uInkLZfXhH6EozUMhHWVRcBd7jqCEz13ZmzfoGAt
-         IwvXp9ezgLaoiXKWrJjmtHFPjngjkfptS8fH3vTdavQEYg644Pg9MkgerYqjgkaU6nua
-         pAbw==
+        bh=KwCX2sP+0U2a5GatYHIEUMkfFfS/xQl+/uAE4M8pDy8=;
+        b=tmZ1vTA641TI4vw7sfeY4oAwZ4Eels1YbTwRcopFvzA6Ygb9t35FS/NnVRXm8IKaaX
+         fqxVqn2ytn2ZQ5ijD44CsGp4bfkzzslBj62MLl0ra1vq4PqiPTntMC8Gs361YSD5LZog
+         o/e/PZgEVcs7K1q1D5jK9E2dsD0cZrRVM4Zwc1a6hORdLAK9KsnWVglV7P45c12VXnfQ
+         oR2GbkB7soTD2vtr4evOyQUsayA7/Dc4hkhg4nVge/7Es34EDiu5ATDB122EWsMB2LCs
+         Um9W8BdAzL2+5Gg5BIbhxGCUjjlsy+nxtF6Rdt/qadjwq6UE0VjvoPAaC+QT5nJY9Kcq
+         /CMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=uKeS2D6NI+nwzdlSN/CbA1/E6G9yn+fxXMAvAL8n5i8=;
-        b=W7TIN68yy5JruG8zxoHizKkrnae2mMR1SX/5ycDYtDkfJcNyzaNITq9Drj0iPtFX2y
-         /iVgVsTq08KiGSKayS/+jpcXy9EttDCG9nec1En82Di5Ws+xBxxV6JFcbICgUlRzpPqb
-         7Bv9OzQtlJ72QUa/Qol9K1yqS+kiko+UUzUD1PJ0d69a5u1SX7eayoHHhBMtY/bQ4ZC5
-         M6wZY+lgsHIxqCW4RPkTezA+gNZFbMSmEHM8RSzAoWxbdEwLqQlERjM21Z+TViQA2G0f
-         /6HoeL9kE46i8g3c/eFdvdkX1tSQM9ui34h8+/QdewVsHLZ0aSmYUQYkchBswvJ9m65C
-         1eYQ==
-X-Gm-Message-State: AOAM530s76UWKTqfvV/x4zEmUwsoOMmJ7hPkX6qJ3z1b6qv7q4TQQsK6
-        t6OTyYg1h2Z1uBWbsK1yfVOr/g==
-X-Google-Smtp-Source: ABdhPJzm4uqElRmIAF8FN+Bez+JF+dq0zfRQ7JPMLw2cLqg1xdhR4M89APu46nKT3Mb7fDp1/2knsQ==
-X-Received: by 2002:a05:6512:2208:: with SMTP id h8mr4201904lfu.113.1624546661359;
-        Thu, 24 Jun 2021 07:57:41 -0700 (PDT)
+        bh=KwCX2sP+0U2a5GatYHIEUMkfFfS/xQl+/uAE4M8pDy8=;
+        b=def9Vwi1z2Nd76mDz+gnwMh/X53IQvgEzY64aHvIdwQz7zHnZdwPLlzr8bV7uvpGF0
+         pxfZZEWknDohutt37Ujt9Uqk7fSizAbr8l3ADwsYP4mWOnYPcGJTjIYo3ksUB+o7j0MF
+         OsF8FDX1uhLNt7bKVxoAJqdC8GPdsWMKGwBteNtGbHlFjkH0Fx91WR9l8XnJ54q2Faxv
+         skybLSyUaSh9GaQCgrPJB5Ot+0RkEdqG33r0a5YK+6LI0Nb04lAWRwUwBXlZeJPJuxdU
+         9i0YJGIkpwffBiUfO9k1W6n0Yy4/fB5Q5bMIc2VS3t0Xlm/b8QXwMaywaO2p5DDXgq9a
+         uFXQ==
+X-Gm-Message-State: AOAM533h5wyCWjt4HwlU7yC2eKklqug7nTbIXpUcK3FNDZlrM3ZDOX9I
+        ss0KtWBo3nhCIATyXalJyuTOtg==
+X-Google-Smtp-Source: ABdhPJxlZLA7exN7CfAuqbdb9KN0K3ohLiUFlslt0AWxUi1BexpAMRwb8RDhUWoUIUL8D4AZdbG8Bg==
+X-Received: by 2002:a05:6512:36d8:: with SMTP id e24mr4242055lfs.8.1624546662113;
+        Thu, 24 Jun 2021 07:57:42 -0700 (PDT)
 Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id e17sm306329ljn.125.2021.06.24.07.57.40
+        by smtp.gmail.com with ESMTPSA id e17sm306329ljn.125.2021.06.24.07.57.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Thu, 24 Jun 2021 07:57:41 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
@@ -57,9 +57,9 @@ Cc:     Jonathan Marek <jonathan@marek.ca>,
         David Airlie <airlied@linux.ie>,
         Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
         dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: [PATCH 04/17] drm/msm/dpu: remove stage_cfg from struct dpu_crtc
-Date:   Thu, 24 Jun 2021 17:57:20 +0300
-Message-Id: <20210624145733.2561992-5-dmitry.baryshkov@linaro.org>
+Subject: [PATCH 05/17] drm/msm/dpu: rip out master planes support
+Date:   Thu, 24 Jun 2021 17:57:21 +0300
+Message-Id: <20210624145733.2561992-6-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20210624145733.2561992-1-dmitry.baryshkov@linaro.org>
 References: <20210624145733.2561992-1-dmitry.baryshkov@linaro.org>
@@ -69,86 +69,242 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The stage_cfg is not used outside of _dpu_crtc_blend_setup(), so remove
-the temporary config from global struct.
+Master/virtual planes were used for multirect support. In preparation to
+reworking DPU planes, drop support for master planes (which was not used
+anyway).
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c | 11 ++++++-----
- drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h |  2 --
- 2 files changed, 6 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c  | 11 +---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c   |  2 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 67 ++++-------------------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h | 13 +----
+ 4 files changed, 15 insertions(+), 78 deletions(-)
 
 diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-index 9a5c70c87cc8..ea678ddd4589 100644
+index ea678ddd4589..6fe0af9ffc23 100644
 --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
 +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-@@ -190,7 +190,8 @@ static void _dpu_crtc_program_lm_output_roi(struct drm_crtc *crtc)
- }
+@@ -974,17 +974,8 @@ static int dpu_crtc_atomic_check(struct drm_crtc *crtc,
+ 	}
  
- static void _dpu_crtc_blend_setup_mixer(struct drm_crtc *crtc,
--	struct dpu_crtc *dpu_crtc, struct dpu_crtc_mixer *mixer)
-+	struct dpu_crtc *dpu_crtc, struct dpu_crtc_mixer *mixer,
-+	struct dpu_hw_stage_cfg *stage_cfg)
+ 	for (i = 1; i < SSPP_MAX; i++) {
+-		if (pipe_staged[i]) {
++		if (pipe_staged[i])
+ 			dpu_plane_clear_multirect(pipe_staged[i]);
+-
+-			if (is_dpu_plane_virtual(pipe_staged[i]->plane)) {
+-				DPU_ERROR(
+-					"r1 only virt plane:%d not supported\n",
+-					pipe_staged[i]->plane->base.id);
+-				rc  = -EINVAL;
+-				goto end;
+-			}
+-		}
+ 	}
+ 
+ 	z_pos = -1;
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+index 1d3a4f395e74..b7b73d0de6f8 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+@@ -623,7 +623,7 @@ static int _dpu_kms_drm_obj_init(struct dpu_kms *dpu_kms)
+ 			  catalog->sspp[i].features & BIT(DPU_SSPP_CURSOR));
+ 
+ 		plane = dpu_plane_init(dev, catalog->sspp[i].id, type,
+-				       (1UL << max_crtc_count) - 1, 0);
++				       (1UL << max_crtc_count) - 1);
+ 		if (IS_ERR(plane)) {
+ 			DPU_ERROR("dpu_plane_init failed\n");
+ 			ret = PTR_ERR(plane);
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+index 97507e25f4f3..dbc9c2c28ae0 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+@@ -91,7 +91,6 @@ enum dpu_plane_qos {
+  * struct dpu_plane - local dpu plane structure
+  * @aspace: address space pointer
+  * @csc_ptr: Points to dpu_csc_cfg structure to use for current
+- * @mplane_list: List of multirect planes of the same pipe
+  * @catalog: Points to dpu catalog structure
+  * @revalidate: force revalidation of all the plane properties
+  */
+@@ -108,8 +107,6 @@ struct dpu_plane {
+ 	uint32_t color_fill;
+ 	bool is_error;
+ 	bool is_rt_pipe;
+-	bool is_virtual;
+-	struct list_head mplane_list;
+ 	struct dpu_mdss_cfg *catalog;
+ 
+ 	struct dpu_csc_cfg *csc_ptr;
+@@ -237,7 +234,7 @@ static void _dpu_plane_calc_clk(struct drm_plane *plane)
+ static int _dpu_plane_calc_fill_level(struct drm_plane *plane,
+ 		const struct dpu_format *fmt, u32 src_width)
  {
- 	struct drm_plane *plane;
- 	struct drm_framebuffer *fb;
-@@ -199,7 +200,6 @@ static void _dpu_crtc_blend_setup_mixer(struct drm_crtc *crtc,
- 	struct dpu_plane_state *pstate = NULL;
- 	struct dpu_format *format;
- 	struct dpu_hw_ctl *ctl = mixer->lm_ctl;
--	struct dpu_hw_stage_cfg *stage_cfg = &dpu_crtc->stage_cfg;
+-	struct dpu_plane *pdpu, *tmp;
++	struct dpu_plane *pdpu;
+ 	struct dpu_plane_state *pstate;
+ 	u32 fixed_buff_size;
+ 	u32 total_fl;
+@@ -251,16 +248,7 @@ static int _dpu_plane_calc_fill_level(struct drm_plane *plane,
+ 	pstate = to_dpu_plane_state(plane->state);
+ 	fixed_buff_size = pdpu->catalog->caps->pixel_ram_size;
  
- 	u32 flush_mask;
- 	uint32_t stage_idx, lm_idx;
-@@ -275,6 +275,7 @@ static void _dpu_crtc_blend_setup(struct drm_crtc *crtc)
- 	struct dpu_crtc_mixer *mixer = cstate->mixers;
- 	struct dpu_hw_ctl *ctl;
- 	struct dpu_hw_mixer *lm;
-+	struct dpu_hw_stage_cfg stage_cfg;
- 	int i;
+-	list_for_each_entry(tmp, &pdpu->mplane_list, mplane_list) {
+-		if (!tmp->base.state->visible)
+-			continue;
+-		DPU_DEBUG("plane%d/%d src_width:%d/%d\n",
+-				pdpu->base.base.id, tmp->base.base.id,
+-				src_width,
+-				drm_rect_width(&tmp->pipe_cfg.src_rect));
+-		src_width = max_t(u32, src_width,
+-				  drm_rect_width(&tmp->pipe_cfg.src_rect));
+-	}
++	/* FIXME: in multirect case account for the src_width of all the planes */
  
- 	DRM_DEBUG_ATOMIC("%s\n", dpu_crtc->name);
-@@ -288,9 +289,9 @@ static void _dpu_crtc_blend_setup(struct drm_crtc *crtc)
+ 	if (fmt->fetch_planes == DPU_PLANE_PSEUDO_PLANAR) {
+ 		if (fmt->chroma_sample == DPU_CHROMA_420) {
+@@ -836,13 +824,8 @@ int dpu_plane_validate_multirect_v2(struct dpu_multirect_plane_states *plane)
  	}
  
- 	/* initialize stage cfg */
--	memset(&dpu_crtc->stage_cfg, 0, sizeof(struct dpu_hw_stage_cfg));
-+	memset(&stage_cfg, 0, sizeof(struct dpu_hw_stage_cfg));
+ done:
+-	if (dpu_plane[R0]->is_virtual) {
+-		pstate[R0]->multirect_index = DPU_SSPP_RECT_1;
+-		pstate[R1]->multirect_index = DPU_SSPP_RECT_0;
+-	} else {
+-		pstate[R0]->multirect_index = DPU_SSPP_RECT_0;
+-		pstate[R1]->multirect_index = DPU_SSPP_RECT_1;
+-	}
++	pstate[R0]->multirect_index = DPU_SSPP_RECT_0;
++	pstate[R1]->multirect_index = DPU_SSPP_RECT_1;
  
--	_dpu_crtc_blend_setup_mixer(crtc, dpu_crtc, mixer);
-+	_dpu_crtc_blend_setup_mixer(crtc, dpu_crtc, mixer, &stage_cfg);
+ 	DPU_DEBUG_PLANE(dpu_plane[R0], "R0: %d - %d\n",
+ 		pstate[R0]->multirect_mode, pstate[R0]->multirect_index);
+@@ -1218,19 +1201,13 @@ static void dpu_plane_sspp_atomic_update(struct drm_plane *plane)
  
- 	for (i = 0; i < cstate->num_mixers; i++) {
- 		ctl = mixer[i].lm_ctl;
-@@ -311,7 +312,7 @@ static void _dpu_crtc_blend_setup(struct drm_crtc *crtc)
- 			mixer[i].flush_mask);
+ static void _dpu_plane_atomic_disable(struct drm_plane *plane)
+ {
+-	struct dpu_plane *pdpu = to_dpu_plane(plane);
+ 	struct drm_plane_state *state = plane->state;
+ 	struct dpu_plane_state *pstate = to_dpu_plane_state(state);
  
- 		ctl->ops.setup_blendstage(ctl, mixer[i].hw_lm->idx,
--			&dpu_crtc->stage_cfg);
-+			&stage_cfg);
- 	}
+-	trace_dpu_plane_disable(DRMID(plane), is_dpu_plane_virtual(plane),
++	trace_dpu_plane_disable(DRMID(plane), false,
+ 				pstate->multirect_mode);
+ 
+ 	pstate->pending = true;
+-
+-	if (is_dpu_plane_virtual(plane) &&
+-			pdpu->pipe_hw && pdpu->pipe_hw->ops.setup_multirect)
+-		pdpu->pipe_hw->ops.setup_multirect(pdpu->pipe_hw,
+-				DPU_SSPP_RECT_SOLO, DPU_SSPP_MULTIRECT_NONE);
  }
  
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
-index cec3474340e8..30535acec670 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
-@@ -116,7 +116,6 @@ struct dpu_crtc_frame_event {
-  * @drm_requested_vblank : Whether vblanks have been enabled in the encoder
-  * @property_info : Opaque structure for generic property support
-  * @property_defaults : Array of default values for generic property support
-- * @stage_cfg     : H/w mixer stage configuration
-  * @debugfs_root  : Parent of debugfs node
-  * @vblank_cb_count : count of vblank callback since last reset
-  * @play_count    : frame count between crtc enable and disable
-@@ -147,7 +146,6 @@ struct dpu_crtc {
- 	struct drm_pending_vblank_event *event;
- 	u32 vsync_count;
+ static void dpu_plane_atomic_update(struct drm_plane *plane,
+@@ -1556,17 +1533,12 @@ enum dpu_sspp dpu_plane_pipe(struct drm_plane *plane)
+ 	return plane ? to_dpu_plane(plane)->pipe : SSPP_NONE;
+ }
  
--	struct dpu_hw_stage_cfg stage_cfg;
- 	struct dentry *debugfs_root;
+-bool is_dpu_plane_virtual(struct drm_plane *plane)
+-{
+-	return plane ? to_dpu_plane(plane)->is_virtual : false;
+-}
+-
+ /* initialize plane */
+ struct drm_plane *dpu_plane_init(struct drm_device *dev,
+ 		uint32_t pipe, enum drm_plane_type type,
+-		unsigned long possible_crtcs, u32 master_plane_id)
++		unsigned long possible_crtcs)
+ {
+-	struct drm_plane *plane = NULL, *master_plane = NULL;
++	struct drm_plane *plane = NULL;
+ 	const uint32_t *format_list;
+ 	struct dpu_plane *pdpu;
+ 	struct msm_drm_private *priv = dev->dev_private;
+@@ -1586,18 +1558,9 @@ struct drm_plane *dpu_plane_init(struct drm_device *dev,
+ 	/* cache local stuff for later */
+ 	plane = &pdpu->base;
+ 	pdpu->pipe = pipe;
+-	pdpu->is_virtual = (master_plane_id != 0);
+-	INIT_LIST_HEAD(&pdpu->mplane_list);
+-	master_plane = drm_plane_find(dev, NULL, master_plane_id);
+-	if (master_plane) {
+-		struct dpu_plane *mpdpu = to_dpu_plane(master_plane);
+-
+-		list_add_tail(&pdpu->mplane_list, &mpdpu->mplane_list);
+-	}
  
- 	u32 vblank_cb_count;
+ 	/* initialize underlying h/w driver */
+-	pdpu->pipe_hw = dpu_hw_sspp_init(pipe, kms->mmio, kms->catalog,
+-							master_plane_id != 0);
++	pdpu->pipe_hw = dpu_hw_sspp_init(pipe, kms->mmio, kms->catalog, false);
+ 	if (IS_ERR(pdpu->pipe_hw)) {
+ 		DPU_ERROR("[%u]SSPP init failed\n", pipe);
+ 		ret = PTR_ERR(pdpu->pipe_hw);
+@@ -1615,14 +1578,8 @@ struct drm_plane *dpu_plane_init(struct drm_device *dev,
+ 		goto clean_sspp;
+ 	}
+ 
+-	if (pdpu->is_virtual) {
+-		format_list = pdpu->pipe_sblk->virt_format_list;
+-		num_formats = pdpu->pipe_sblk->virt_num_formats;
+-	}
+-	else {
+-		format_list = pdpu->pipe_sblk->format_list;
+-		num_formats = pdpu->pipe_sblk->num_formats;
+-	}
++	format_list = pdpu->pipe_sblk->format_list;
++	num_formats = pdpu->pipe_sblk->num_formats;
+ 
+ 	ret = drm_universal_plane_init(dev, plane, 0xff, &dpu_plane_funcs,
+ 				format_list, num_formats,
+@@ -1657,8 +1614,8 @@ struct drm_plane *dpu_plane_init(struct drm_device *dev,
+ 
+ 	mutex_init(&pdpu->lock);
+ 
+-	DPU_DEBUG("%s created for pipe:%u id:%u virtual:%u\n", plane->name,
+-					pipe, plane->base.id, master_plane_id);
++	DPU_DEBUG("%s created for pipe:%u id:%u\n", plane->name,
++					pipe, plane->base.id);
+ 	return plane;
+ 
+ clean_sspp:
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
+index 34e03ac05f4a..d5b7f5876e64 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
+@@ -67,14 +67,6 @@ struct dpu_multirect_plane_states {
+  */
+ enum dpu_sspp dpu_plane_pipe(struct drm_plane *plane);
+ 
+-/**
+- * is_dpu_plane_virtual - check for virtual plane
+- * @plane: Pointer to DRM plane object
+- * returns: true - if the plane is virtual
+- *          false - if the plane is primary
+- */
+-bool is_dpu_plane_virtual(struct drm_plane *plane);
+-
+ /**
+  * dpu_plane_get_ctl_flush - get control flush mask
+  * @plane:   Pointer to DRM plane object
+@@ -102,14 +94,11 @@ void dpu_plane_set_error(struct drm_plane *plane, bool error);
+  * @pipe:  dpu hardware pipe identifier
+  * @type:  Plane type - PRIMARY/OVERLAY/CURSOR
+  * @possible_crtcs: bitmask of crtc that can be attached to the given pipe
+- * @master_plane_id: primary plane id of a multirect pipe. 0 value passed for
+- *                   a regular plane initialization. A non-zero primary plane
+- *                   id will be passed for a virtual pipe initialization.
+  *
+  */
+ struct drm_plane *dpu_plane_init(struct drm_device *dev,
+ 		uint32_t pipe, enum drm_plane_type type,
+-		unsigned long possible_crtcs, u32 master_plane_id);
++		unsigned long possible_crtcs);
+ 
+ /**
+  * dpu_plane_validate_multirecti_v2 - validate the multirect planes
 -- 
 2.30.2
 
