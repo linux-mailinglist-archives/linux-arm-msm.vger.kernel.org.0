@@ -2,82 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0999A3B39CA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Jun 2021 01:42:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 35F4C3B39D0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Jun 2021 01:45:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232614AbhFXXos (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 24 Jun 2021 19:44:48 -0400
-Received: from mail-pg1-f172.google.com ([209.85.215.172]:41611 "EHLO
-        mail-pg1-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229521AbhFXXor (ORCPT
+        id S232729AbhFXXrS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 24 Jun 2021 19:47:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57314 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229712AbhFXXrS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 24 Jun 2021 19:44:47 -0400
-Received: by mail-pg1-f172.google.com with SMTP id u190so6062967pgd.8;
-        Thu, 24 Jun 2021 16:42:27 -0700 (PDT)
+        Thu, 24 Jun 2021 19:47:18 -0400
+Received: from mail-oo1-xc30.google.com (mail-oo1-xc30.google.com [IPv6:2607:f8b0:4864:20::c30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5617FC061756
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Jun 2021 16:44:58 -0700 (PDT)
+Received: by mail-oo1-xc30.google.com with SMTP id b17-20020a4aba110000b029024c219a3d83so913149oop.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Jun 2021 16:44:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=/IZo+xMlntd1OPotYsAVSJXAdOf8XBCFm8hpgOD3AFg=;
+        b=AfbC8GUOrGiQ8wmQ44iEw4DbrAILKvySD0JZd8pYtbCZY+ekpRhYJmeY9a9vlLZO0W
+         TLhSAmN2KJ0v5+kL3d5oSjkPIhRsBHoa5yjedwB/iE2GW3V5jiQR5yQTNGNKt45aj0IX
+         RhaZfVSTvkWIPxrDVNYG0iuatUSYpf8ZEfSyLoo7rxPEMXkex0D6LI/ZKthaqXsZ7T9/
+         iAS5EbMp+vVOVpPSd6pjrYRihgMaPAc6kP1kZX/LgKh/6YwUa+U4+neU88eOL72zNn30
+         BUMICqoJfoLnHIxAXKooFmy5UK1eIMFjMLE6EdXkN91pao8KfVTcPkfQNE6Dq/wlPjyl
+         i6kQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=Q4KvsDRCAo0bmbM75TlWBAKQaF/UlLGslOyWVCtR9PY=;
-        b=LzoLVUuJkJqMV3aP66SH6rdtNsRzRkS8+Byt97nyaadlvtUmX80TCgK402NMzbHVxH
-         djGVhkFFMG7OdbzmSU+d4HX5GpN6cESU0ry8xVQyoBhX4AXuTsMxW37NZlcB2uDrcdjn
-         xfz4EguhfJ7Ty7jDP+V5+tHU8ReGhemY7yCubU+yJWav8lCGorzUwoPgezXmkRGIfEhh
-         tA4/uWBW09t9WDZIsTdhjr0Dbv1WmlZMy5YbrkvU3XKjPGLls1FyviMTT0phAExYyB0U
-         QFYt4387D90hYTf6gIz7ANKtf1AgaU7clyymKW3PFekcqMJ+JitGVgc5HfBX/+l+k/ir
-         HU3g==
-X-Gm-Message-State: AOAM532aPm2mvSTtc+Z4ePCuBcMLERdx5BE7rAMvGuieu4ZyMMHWQlmF
-        UWJzQqGVvVZPnXqaNbYjwvKR3jfJ/JqEQQ==
-X-Google-Smtp-Source: ABdhPJwnsnFl9ZagfiALgc+cYcg05o/+hOblazqtfmyqQDTIJBW4DbXSCmxOpnf8C2bCPebs3J1TMw==
-X-Received: by 2002:a05:6a00:1146:b029:2fe:d681:fbcc with SMTP id b6-20020a056a001146b02902fed681fbccmr7665994pfm.31.1624578146818;
-        Thu, 24 Jun 2021 16:42:26 -0700 (PDT)
-Received: from [192.168.3.217] (c-73-241-217-19.hsd1.ca.comcast.net. [73.241.217.19])
-        by smtp.gmail.com with ESMTPSA id n33sm3343362pgm.55.2021.06.24.16.42.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 24 Jun 2021 16:42:25 -0700 (PDT)
-Subject: Re: [PATCH v4 01/10] scsi: ufs: Rename flags pm_op_in_progress and
- is_sys_suspended
-To:     Can Guo <cang@codeaurora.org>, asutoshd@codeaurora.org,
-        nguyenb@codeaurora.org, hongwus@codeaurora.org,
-        ziqichen@codeaurora.org, linux-scsi@vger.kernel.org,
-        kernel-team@android.com
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        "Martin K. Petersen" <martin.petersen@oracle.com>,
-        Stanley Chu <stanley.chu@mediatek.com>,
-        Bean Huo <beanhuo@micron.com>,
-        Jaegeuk Kim <jaegeuk@kernel.org>,
-        Adrian Hunter <adrian.hunter@intel.com>,
-        Kiwoong Kim <kwmad.kim@samsung.com>,
-        Satya Tangirala <satyat@google.com>,
-        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-References: <1624433711-9339-1-git-send-email-cang@codeaurora.org>
- <1624433711-9339-2-git-send-email-cang@codeaurora.org>
-From:   Bart Van Assche <bvanassche@acm.org>
-Message-ID: <cb39c5d7-c21d-66b1-0a86-f9154f73a94e@acm.org>
-Date:   Thu, 24 Jun 2021 16:42:23 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=/IZo+xMlntd1OPotYsAVSJXAdOf8XBCFm8hpgOD3AFg=;
+        b=GeXMvN2IYjbwd75H0+iGZPWlNoiB3xGwRgd7hcNtPqe6RdcAXxbdXbGIkqLAxG2HQn
+         T9V6vhdrI8Mz7wXIFTYaVhXBmOvD7dAMSKQatF/ovAdZgDmDmgND5JlXBcucDDEu9c6P
+         dkcflfCb9LXtKylBM5kw9Esr+dbdGnzBlQfwEVM8lZxAyUK0nRtJoMbz02IHf6ZTmlxC
+         epLuglkG+Fuf20H7xbztspxFlzaM/B7NCJOvxbnfrwSrvdSnkcQYfquAtA6+74pn8UEJ
+         /hPKwmhR4/+mx8wP81JUzhYyrFkv0KWqeVEkdV94bw+pcuMeYEMJt3IeZDa5TYZ36xD1
+         J47A==
+X-Gm-Message-State: AOAM531dw2cF/4+z7D6Zyy/sayZpzhPdjvWFufrEe/DPJQgXCz9IEyuL
+        ZsgvSdYdGYJGItEPngKnMRb5Sw==
+X-Google-Smtp-Source: ABdhPJwMXtC7tWjEChYW9HirB1ul2n/Er3ur/GzHXRcQfV3ZScePSyTVNBRmWl7SHAjdME54L0HrIA==
+X-Received: by 2002:a4a:cb06:: with SMTP id r6mr6597797ooq.15.1624578297522;
+        Thu, 24 Jun 2021 16:44:57 -0700 (PDT)
+Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id 35sm980557oti.65.2021.06.24.16.44.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 24 Jun 2021 16:44:57 -0700 (PDT)
+Date:   Thu, 24 Jun 2021 18:44:54 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Marek Behun <marek.behun@nic.cz>
+Cc:     Pavel Machek <pavel@ucw.cz>, Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Uwe Kleine-K?nig <u.kleine-koenig@pengutronix.de>,
+        Lee Jones <lee.jones@linaro.org>, linux-leds@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-pwm@vger.kernel.org,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Yassine Oudjana <y.oudjana@protonmail.com>,
+        Luca Weiss <luca@z3ntu.xyz>,
+        Subbaraman Narayanamurthy <subbaram@codeaurora.org>
+Subject: Re: [PATCH v9 1/2] dt-bindings: leds: Add Qualcomm Light Pulse
+ Generator binding
+Message-ID: <YNUY9ncs34E6aJMe@yoga>
+References: <20210623035039.772660-1-bjorn.andersson@linaro.org>
+ <20210625011932.6354e397@thinkpad>
 MIME-Version: 1.0
-In-Reply-To: <1624433711-9339-2-git-send-email-cang@codeaurora.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210625011932.6354e397@thinkpad>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 6/23/21 12:35 AM, Can Guo wrote:
-> Rename pm_op_in_progress and is_sys_suspended to wlu_pm_op_in_progress and
-> is_wlu_sys_suspended accordingly.
+On Thu 24 Jun 18:19 CDT 2021, Marek Behun wrote:
 
-Can the is_wlu_sys_suspended member variable be removed by checking
-dev->power.is_suspended where dev represents the WLUN?
+> On Tue, 22 Jun 2021 20:50:38 -0700
+> Bjorn Andersson <bjorn.andersson@linaro.org> wrote:
+> 
+> > +++ b/Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml
+> 
+> The file name should be based on one of the compatible strings, for
+> example the first one:
+>   qcom,pm8150b-lpg.yaml
+> 
 
-Thanks,
+The majority of the files in leds/ are named leds-*.yaml, is this a new
+scheme for LED bindings?
 
-Bart.
+> > +      led@1 {
+> > +        reg = <1>;
+> > +        label = "green:user1";
+> > +      };
+> 
+> `label` is deprecated,
+
+Sorry, I missed the comment in the middle of the description about this.
+Is there any particular reason why this isn't marked deprecated: true?
+
+> please don't use in new bindings in examples.
+> Instead use color, function and function-enumerator, i.e.
+> 
+>   color = <LED_COLOR_ID_GREEN>;
+>   function = LED_FUNCTION_xxx;
+>   function-enumerator = <N>;
+> 
+
+Can you point me to something helping me regarding what "function" to
+use?
+
+For this particular devboard that the example comes from I have 4 LEDs
+that are named "user1", "user2", "user3" and "user4" in the board
+documentation. I can make up whatever for the example, but I would like
+to get the following dts additions follow the expected guidelines.
+
+Regards,
+Bjorn
