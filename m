@@ -2,144 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 925643B34FE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jun 2021 19:48:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ADCE53B354F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Jun 2021 20:09:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232324AbhFXRu7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 24 Jun 2021 13:50:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33416 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229721AbhFXRu6 (ORCPT
+        id S232348AbhFXSLi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 24 Jun 2021 14:11:38 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:37370 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231969AbhFXSLh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 24 Jun 2021 13:50:58 -0400
-Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BEFE4C061760
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Jun 2021 10:48:38 -0700 (PDT)
-Received: by mail-pl1-x62e.google.com with SMTP id h1so3356143plt.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Jun 2021 10:48:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=J4PJUucpibDnG3QpPqzDVfqLhw0sdHSMYuZQn4I2GAw=;
-        b=WcJUtvqFiotpP7LSYJMlPARdJr+vmPdZmJ3Cp/Vlgpu+MbvlDBEScPrY1fBz5rPVlP
-         1+1xwug16fD5GxLSoUgeWG3S2qMKjf7ZEWdHxad7R9iN7dynCxnVkDbxl0cXfqjnq+yw
-         RFOCK8qMu3zCam96waIjGa/FuusCTKO7/umt4=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=J4PJUucpibDnG3QpPqzDVfqLhw0sdHSMYuZQn4I2GAw=;
-        b=mi4GYd2/uXtOzRGplyFXEWWRxOrEbs4Md+OtwZ/VQPTiMk3DldkbHaIZlFYe8JRZfV
-         vMF4b7jvmJ0Ho9xRo+aEygrcUZekcyn88lKxjmTbjxMF37N0DYy+rf5OV1oQOWj53amw
-         yyOXNODFETWbk0bsTRgZH1MoN9yqgMjD2maJusT4aaYWL9OGPCFaWuF7GeVnDDlwcBD0
-         60iZ+Fm4pIcUZ32D28o6vR6VftpH548hwpB/bmkSt8Fb9Gz350p9ub3ge2iyIlrqVcpo
-         HpYtGIKEc68qxTUkaWtIc2XWHo6NNg6dUaRgLjMIJQnSkOmwoGv5FavRMRyEmCiHFrBb
-         bXEA==
-X-Gm-Message-State: AOAM533KKvMR7LFt4UoNO7hX3OckUEtjbLOtosabAxJcA0NK7fJBz2Bd
-        pAvEUAl/tuefO1rAhYapbMSwXA==
-X-Google-Smtp-Source: ABdhPJwbCIN0ZvlG+tQkq/dvIkKiYPYS0aOC9zWeDxW8HFtqFmKMWbBv9bJobmoKq/Z/fJz4UQQy2w==
-X-Received: by 2002:a17:902:e850:b029:127:a2ed:9924 with SMTP id t16-20020a170902e850b0290127a2ed9924mr1868196plg.57.1624556918156;
-        Thu, 24 Jun 2021 10:48:38 -0700 (PDT)
-Received: from localhost ([2620:15c:202:201:dda9:4015:5d1f:23fe])
-        by smtp.gmail.com with UTF8SMTPSA id g13sm3591017pfv.65.2021.06.24.10.48.37
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 24 Jun 2021 10:48:37 -0700 (PDT)
-Date:   Thu, 24 Jun 2021 10:48:36 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Thara Gopinath <thara.gopinath@linaro.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, rui.zhang@intel.com,
-        daniel.lezcano@linaro.org, viresh.kumar@linaro.org,
-        rjw@rjwysocki.net, robh+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [Patch v2 1/5] firmware: qcom_scm: Introduce SCM calls to access
- LMh
-Message-ID: <YNTFdCPU2saMCT/y@google.com>
-References: <20210624115813.3613290-1-thara.gopinath@linaro.org>
- <20210624115813.3613290-2-thara.gopinath@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20210624115813.3613290-2-thara.gopinath@linaro.org>
+        Thu, 24 Jun 2021 14:11:37 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1624558158; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=xE/iw3qwpbKMnbru32s7FNfIC2TavsZqELacSeLKDlU=; b=fv+Pg5nlPDDRYxhdTd62BCQBKzOGZ5Ea7p8NC5QWd3AhVyjmvq+VVf4/M1uqendENh6RY+zu
+ 24Z9yd1CrJ8qSQ0ZAF42rFpVdaMQDBxecqdh0eL62ugGpf517tgL8fkDryVKXLQWyrwPn36b
+ YTGyw+AH8kdDwumPWhPylOaRYJ0=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
+ 60d4ca44d2559fe39213d1cd (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 24 Jun 2021 18:09:08
+ GMT
+Sender: bbhatt=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 7FE5EC4338A; Thu, 24 Jun 2021 18:09:08 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from malabar-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: bbhatt)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 73DE9C433F1;
+        Thu, 24 Jun 2021 18:09:07 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 73DE9C433F1
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=bbhatt@codeaurora.org
+From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
+To:     manivannan.sadhasivam@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
+        linux-kernel@vger.kernel.org, Bhaumik Bhatt <bbhatt@codeaurora.org>
+Subject: [PATCH] bus: mhi: core: Validate channel ID when processing command completions
+Date:   Thu, 24 Jun 2021 11:09:01 -0700
+Message-Id: <1624558141-11045-1-git-send-email-bbhatt@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jun 24, 2021 at 07:58:09AM -0400, Thara Gopinath wrote:
-> Introduce SCM calls to access/configure limits management hardware(LMH).
-> 
-> Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
-> ---
-> 
-> v1->v2:
-> 	Changed the input parameters in qcom_scm_lmh_dcvsh from payload_buf and
-> 	payload_size to payload_fn, payload_reg, payload_val as per Bjorn's review
-> 	comments.
-> 
->  drivers/firmware/qcom_scm.c | 54 +++++++++++++++++++++++++++++++++++++
->  drivers/firmware/qcom_scm.h |  4 +++
->  include/linux/qcom_scm.h    | 14 ++++++++++
->  3 files changed, 72 insertions(+)
-> 
-> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
-> index ee9cb545e73b..19e9fb91d084 100644
-> --- a/drivers/firmware/qcom_scm.c
-> +++ b/drivers/firmware/qcom_scm.c
-> @@ -1147,6 +1147,60 @@ int qcom_scm_qsmmu500_wait_safe_toggle(bool en)
->  }
->  EXPORT_SYMBOL(qcom_scm_qsmmu500_wait_safe_toggle);
->  
-> +bool qcom_scm_lmh_dcvsh_available(void)
-> +{
-> +	return __qcom_scm_is_call_available(__scm->dev, QCOM_SCM_SVC_LMH, QCOM_SCM_LMH_LIMIT_DCVSH);
-> +}
-> +EXPORT_SYMBOL(qcom_scm_lmh_dcvsh_available);
-> +
-> +int qcom_scm_lmh_profile_change(u32 profile_id)
-> +{
-> +	struct qcom_scm_desc desc = {
-> +		.svc = QCOM_SCM_SVC_LMH,
-> +		.cmd = QCOM_SCM_LMH_LIMIT_PROFILE_CHANGE,
-> +		.arginfo = QCOM_SCM_ARGS(1, QCOM_SCM_VAL),
-> +		.args[0] = profile_id,
-> +		.owner = ARM_SMCCC_OWNER_SIP,
-> +	};
-> +
-> +	return qcom_scm_call(__scm->dev, &desc, NULL);
-> +}
-> +EXPORT_SYMBOL(qcom_scm_lmh_profile_change);
-> +
-> +int qcom_scm_lmh_dcvsh(u32 payload_fn, u32 payload_reg, u32 payload_val,
-> +		       u64 limit_node, u32 node_id, u64 version)
-> +{
-> +	dma_addr_t payload_phys;
-> +	u32 *payload_buf;
-> +	int payload_size = 5 * sizeof(u32);
-> +
-> +	struct qcom_scm_desc desc = {
-> +		.svc = QCOM_SCM_SVC_LMH,
-> +		.cmd = QCOM_SCM_LMH_LIMIT_DCVSH,
-> +		.arginfo = QCOM_SCM_ARGS(5, QCOM_SCM_RO, QCOM_SCM_VAL, QCOM_SCM_VAL,
-> +					QCOM_SCM_VAL, QCOM_SCM_VAL),
-> +		.args[1] = payload_size,
-> +		.args[2] = limit_node,
-> +		.args[3] = node_id,
-> +		.args[4] = version,
-> +		.owner = ARM_SMCCC_OWNER_SIP,
-> +	};
-> +
-> +	payload_buf = dma_alloc_coherent(__scm->dev, payload_size, &payload_phys, GFP_KERNEL);
-> +	if (!payload_buf)
-> +		return -ENOMEM;
-> +
-> +	payload_buf[0] = payload_fn;
-> +	payload_buf[1] = 0;
-> +	payload_buf[2] = payload_reg;
-> +	payload_buf[3] = 1;
-> +	payload_buf[4] = payload_val;
-> +
-> +	desc.args[0] = payload_phys;
-> +	return qcom_scm_call(__scm->dev, &desc, NULL);
+MHI reads the channel ID from the event ring element sent by the
+device which can be any value between 0 and 255. In order to
+prevent any out of bound accesses, add a check against the maximum
+number of channels supported by the controller and those channels
+not configured yet so as to skip processing of that event ring
+element.
 
-dma_free_coherent()?
+Fixes: 1d3173a3bae7 ("bus: mhi: core: Add support for processing events from client device")
+Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+Reviewed-by: Hemant Kumar <hemantk@codeaurora.org>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Link: https://lore.kernel.org/r/1619481538-4435-1-git-send-email-bbhatt@codeaurora.org
+---
+ drivers/bus/mhi/core/main.c | 17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
+
+diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
+index 22acde1..fc9196f 100644
+--- a/drivers/bus/mhi/core/main.c
++++ b/drivers/bus/mhi/core/main.c
+@@ -773,11 +773,18 @@ static void mhi_process_cmd_completion(struct mhi_controller *mhi_cntrl,
+ 	cmd_pkt = mhi_to_virtual(mhi_ring, ptr);
+ 
+ 	chan = MHI_TRE_GET_CMD_CHID(cmd_pkt);
+-	mhi_chan = &mhi_cntrl->mhi_chan[chan];
+-	write_lock_bh(&mhi_chan->lock);
+-	mhi_chan->ccs = MHI_TRE_GET_EV_CODE(tre);
+-	complete(&mhi_chan->completion);
+-	write_unlock_bh(&mhi_chan->lock);
++
++	if (chan < mhi_cntrl->max_chan &&
++	    mhi_cntrl->mhi_chan[chan].configured) {
++		mhi_chan = &mhi_cntrl->mhi_chan[chan];
++		write_lock_bh(&mhi_chan->lock);
++		mhi_chan->ccs = MHI_TRE_GET_EV_CODE(tre);
++		complete(&mhi_chan->completion);
++		write_unlock_bh(&mhi_chan->lock);
++	} else {
++		dev_err(&mhi_cntrl->mhi_dev->dev,
++			"Completion packet for invalid channel ID: %d\n", chan);
++	}
+ 
+ 	mhi_del_ring_element(mhi_cntrl, mhi_ring);
+ }
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
