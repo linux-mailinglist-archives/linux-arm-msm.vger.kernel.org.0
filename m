@@ -2,303 +2,303 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 780FB3B3997
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Jun 2021 00:59:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AF00F3B39A8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Jun 2021 01:12:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229521AbhFXXBf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 24 Jun 2021 19:01:35 -0400
-Received: from m-r2.th.seeweb.it ([5.144.164.171]:33455 "EHLO
-        m-r2.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232300AbhFXXBe (ORCPT
+        id S232695AbhFXXOz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 24 Jun 2021 19:14:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50220 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232614AbhFXXOz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 24 Jun 2021 19:01:34 -0400
-Received: from IcarusMOD.eternityproject.eu (unknown [2.237.20.237])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id A56BE3F4E6;
-        Fri, 25 Jun 2021 00:59:13 +0200 (CEST)
-Subject: Re: [PATCH V3 3/3] mailbox: qcom-apcs: Add SM6125 compatible
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Jassi Brar <jassisinghbrar@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        jamipkettunen@somainline.org, Andy Gross <agross@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-References: <CABb+yY3BYYC2na8EFunEeu0XCfLXrUQon=hF3q5p=+FUoigoyw@mail.gmail.com>
- <CAL_JsqLWqtAtqLRF-MAnq80NMfD0a+CfWPv8JWjjNTJFgMjCxg@mail.gmail.com>
- <CABb+yY0sdSinTm788pMFrqEZ6QMC2OwCP7Kkto+pG9h1aGMzwQ@mail.gmail.com>
- <CAL_JsqKdoMwpL_tYC7VQRAG2AC5nR4diShMQCgDseObcgU+egQ@mail.gmail.com>
- <YNEiUMBqGAx1zLVX@yoga>
- <CABb+yY2wy4iSKjn+SihQ=FE=YwcEzUNOpGw_CV22Anzgbba8hA@mail.gmail.com>
- <YNFKpvhXyZbs8RE1@yoga>
- <CABb+yY3RpQYvNBHvpwZearpBPph0uj8YQwX2qu=TX=QAO6OFBw@mail.gmail.com>
- <YNFegmmCzk6JUTN+@yoga> <9aae3092-2e2b-9261-f4e7-864b873eb2d4@somainline.org>
- <YNT0HPOJEoJYipyE@yoga>
-From:   AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>
-Message-ID: <b0ed9294-e4e1-3185-d81f-63e6e8d45692@somainline.org>
-Date:   Fri, 25 Jun 2021 00:59:13 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.9.0
+        Thu, 24 Jun 2021 19:14:55 -0400
+Received: from mail-oi1-x236.google.com (mail-oi1-x236.google.com [IPv6:2607:f8b0:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A51DC061574
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Jun 2021 16:12:34 -0700 (PDT)
+Received: by mail-oi1-x236.google.com with SMTP id 22so3243159oix.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Jun 2021 16:12:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=OVGe70VQ7Bofs1GsJDbN4DH060Z/5/8km4zQo9PX9Z0=;
+        b=MJhioia1IT1d05V8QLP3QAmMcl+n8b0r3nyXI6yDlQGvUP4e4uWfsLU9g1lixGxL3Z
+         kErmOg59tZQv9l36Vky1BEm/+e9ro4cQkf8kOWUVvdZ7eB4ypM9aK3Ej15JburBfyZH6
+         qOSnyreGroIMvqSgeVo0p2f02c4xlHSOHXvIo=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=OVGe70VQ7Bofs1GsJDbN4DH060Z/5/8km4zQo9PX9Z0=;
+        b=Sn8u/BvWOE9d5K1Y3xnrqA8mj6RpYWEjB6Wxij3WxVoU080mJbNgeEHY0dzSuv/WC9
+         HprQHYAvaOBqIqnikQtch8nmmlnlngefFRDavW/SFbdzE96KTX3VeSEhfTSJRollqudL
+         cpYQawv3/w3u5NkQ/gH1Zgj7h9I9BmhsBr/AXUXnNWNXoGaxs7PFzg+VN6swwBnfEdoK
+         dg0opI+Tlke5O2rN6EhDMX+VYcuWb+jIC/j/syD7OwTR6LMqiSUaZFRvEcshQm+Y9Kuc
+         RqXZgLDj2Y0ip/2Lm5+p/mlRRwHC1ozjzZKlC7bcGWdUI8HTGa4+oKo8TyueyWe9aRPt
+         OQvw==
+X-Gm-Message-State: AOAM530PyJzu47jmXHy0mLcKUJ5dgCANjT2MJMTcpnuNLfXRXtNlV280
+        gQwzFkAcla8o0/b08CMbXGZ/gw9a399PuA==
+X-Google-Smtp-Source: ABdhPJyOsIhckJzpBt4mO+7bmxz2CiAzK5m9f23gjooTq5sjWxdMxa+KC6mESr6dHd7lvrtFBS0MKA==
+X-Received: by 2002:a05:6808:610:: with SMTP id y16mr6004906oih.96.1624576353952;
+        Thu, 24 Jun 2021 16:12:33 -0700 (PDT)
+Received: from mail-ot1-f50.google.com (mail-ot1-f50.google.com. [209.85.210.50])
+        by smtp.gmail.com with ESMTPSA id m30sm1017770otj.22.2021.06.24.16.12.33
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 24 Jun 2021 16:12:33 -0700 (PDT)
+Received: by mail-ot1-f50.google.com with SMTP id o17-20020a9d76510000b02903eabfc221a9so7450022otl.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Jun 2021 16:12:33 -0700 (PDT)
+X-Received: by 2002:a25:8082:: with SMTP id n2mr8357075ybk.79.1624575952073;
+ Thu, 24 Jun 2021 16:05:52 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <YNT0HPOJEoJYipyE@yoga>
-Content-Type: text/plain; charset=iso-8859-15; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <20210624171759.4125094-1-dianders@chromium.org> <20210624101557.v2.3.Icde6be7601a5939960caf802056c88cd5132eb4e@changeid>
+In-Reply-To: <20210624101557.v2.3.Icde6be7601a5939960caf802056c88cd5132eb4e@changeid>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Thu, 24 Jun 2021 16:05:39 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=Uf3U-kC5j_g7FB6U6_Qf2PVwKJfEsB-b+bVydW4eLymg@mail.gmail.com>
+Message-ID: <CAD=FV=Uf3U-kC5j_g7FB6U6_Qf2PVwKJfEsB-b+bVydW4eLymg@mail.gmail.com>
+Subject: Re: [PATCH v2 3/3] mmc: sdhci-msm: Request non-strict IOMMU mode
+To:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Adrian Hunter <adrian.hunter@intel.com>,
+        Bjorn Helgaas <bhelgaas@google.com>
+Cc:     John Garry <john.garry@huawei.com>,
+        Rob Clark <robdclark@chromium.org>, quic_c_gdjako@quicinc.com,
+        Saravana Kannan <saravanak@google.com>,
+        Rajat Jain <rajatja@google.com>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Veerabhadrarao Badiganti <vbadigan@codeaurora.org>,
+        Linux MMC List <linux-mmc@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-pci@vger.kernel.org,
+        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
+        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
+        Sonny Rao <sonnyrao@chromium.org>,
+        Joel Fernandes <joel@joelfernandes.org>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Il 24/06/21 23:07, Bjorn Andersson ha scritto:
-> On Tue 22 Jun 09:36 CDT 2021, AngeloGioacchino Del Regno wrote:
-> 
->> Il 22/06/21 05:52, Bjorn Andersson ha scritto:
->>> On Mon 21 Jun 22:34 CDT 2021, Jassi Brar wrote:
->>>
->>>> On Mon, Jun 21, 2021 at 9:27 PM Bjorn Andersson
->>>> <bjorn.andersson@linaro.org> wrote:
->>>>>
->>>>> On Mon 21 Jun 20:00 CDT 2021, Jassi Brar wrote:
->>>>>
->>>>>> On Mon, Jun 21, 2021 at 6:35 PM Bjorn Andersson
->>>>>> <bjorn.andersson@linaro.org> wrote:
->>>>>>>
->>>>>>> On Mon 21 Jun 18:19 CDT 2021, Rob Herring wrote:
->>>>>>>
->>>>>>>> On Mon, Jun 21, 2021 at 5:10 PM Jassi Brar <jassisinghbrar@gmail.com> wrote:
->>>>>>>>>
->>>>>>>>> On Mon, Jun 21, 2021 at 2:46 PM Rob Herring <robh+dt@kernel.org> wrote:
->>>>>>>>>>
->>>>>>>>>> On Sun, Jun 20, 2021 at 10:03 PM Jassi Brar <jassisinghbrar@gmail.com> wrote:
->>>>>>>>>>>
->>>>>>>>>>> On Sat, Jun 12, 2021 at 4:46 AM Martin Botka
->>>>>>>>>>> <martin.botka@somainline.org> wrote:
->>>>>>>>>>>>
->>>>>>>>>>>> This commit adds compatible for the SM6125 SoC
->>>>>>>>>>>>
->>>>>>>>>>>> Signed-off-by: Martin Botka <martin.botka@somainline.org>
->>>>>>>>>>>> ---
->>>>>>>>>>>> Changes in V2:
->>>>>>>>>>>> None
->>>>>>>>>>>> Changes in V3:
->>>>>>>>>>>> Change compatible to apcs-hmss-global
->>>>>>>>>>>>    drivers/mailbox/qcom-apcs-ipc-mailbox.c | 5 +++++
->>>>>>>>>>>>    1 file changed, 5 insertions(+)
->>>>>>>>>>>>
->>>>>>>>>>>> diff --git a/drivers/mailbox/qcom-apcs-ipc-mailbox.c b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
->>>>>>>>>>>> index f25324d03842..f24c5ad8d658 100644
->>>>>>>>>>>> --- a/drivers/mailbox/qcom-apcs-ipc-mailbox.c
->>>>>>>>>>>> +++ b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
->>>>>>>>>>>> @@ -57,6 +57,10 @@ static const struct qcom_apcs_ipc_data sdm660_apcs_data = {
->>>>>>>>>>>>           .offset = 8, .clk_name = NULL
->>>>>>>>>>>>    };
->>>>>>>>>>>>
->>>>>>>>>>>> +static const struct qcom_apcs_ipc_data sm6125_apcs_data = {
->>>>>>>>>>>> +       .offset = 8, .clk_name = NULL
->>>>>>>>>>>> +};
->>>>>>>>>>>> +
->>>>>>>>>>>>    static const struct qcom_apcs_ipc_data apps_shared_apcs_data = {
->>>>>>>>>>>>           .offset = 12, .clk_name = NULL
->>>>>>>>>>>>    };
->>>>>>>>>>>> @@ -166,6 +170,7 @@ static const struct of_device_id qcom_apcs_ipc_of_match[] = {
->>>>>>>>>>>>           { .compatible = "qcom,sc8180x-apss-shared", .data = &apps_shared_apcs_data },
->>>>>>>>>>>>           { .compatible = "qcom,sdm660-apcs-hmss-global", .data = &sdm660_apcs_data },
->>>>>>>>>>>>           { .compatible = "qcom,sdm845-apss-shared", .data = &apps_shared_apcs_data },
->>>>>>>>>>>> +       { .compatible = "qcom,sm6125-apcs-hmss-global", .data = &sm6125_apcs_data },
->>>>>>>>>>>>           { .compatible = "qcom,sm8150-apss-shared", .data = &apps_shared_apcs_data },
->>>>>>>>>>>>           { .compatible = "qcom,sdx55-apcs-gcc", .data = &sdx55_apcs_data },
->>>>>>>>>>>>           {}
->>>>>>>>>>>>
->>>>>>>>>>> These all are basically different names for the same controller.
->>>>>>>>>>> The 'offset' is a configuration parameter and the 'clock', when NULL,
->>>>>>>>>>> is basically some "always-on" clock.
->>>>>>>>>>> I am sure we wouldn't be doing it, if the controller was third-party.
->>>>>>>>>>
->>>>>>>>>> If newer implementations are 'the same', then they should have a
->>>>>>>>>> fallback compatible to the existing one that is the same and no driver
->>>>>>>>>> change is needed. If the differences are board or instance (within an
->>>>>>>>>> SoC) specific, then a DT property would be appropriate.
->>>>>>>>>>
->>>>>>>>> The controllers (13 now) only differ by the 'offset' where the
->>>>>>>>> registers are mapped. Clock-name is a pure s/w artifact.
->>>>>>>>> So, maybe we could push all these in DT.
->>>>>>>>
->>>>>>>> Why is 'reg' not used for the offset?
->>>>>>>>
->>>>>>>
->>>>>>> The DT node and its "reg" describes the whole IP block.
->>>>>>>
->>>>>>> The particular register that we care of has, as you can see, moved
->>>>>>> around during the various platforms and some incarnations of this IP
->>>>>>> block provides controls for CPU-related clocks as well.
->>>>>>>
->>>>>>> We can certainly have the multiple compatible points to the same
->>>>>>> apcs_data, but I'm not able to spot a reasonable "catch-all compatible"
->>>>>>> given that I don't see any natural groupings.
->>>>>>>
->>>>>> Any platform that comes later may reuse the already available compatible.
->>>>>> For example drop this patch and reuse "qcom,sdm660-apcs-hmss-global" ?
->>>>>>
->>>>>
->>>>> The problem is that this would change the meaning of
->>>>> "qcom,sdm660-apcs-hmss-global" from meaning "The apcs hmss global block
->>>>> _in_ sdm660" to "any random apcs block with the mailbox register at
->>>>> offset 8".
->>>>>
->>>> To me, the deeper problem seems to be naming a controller "The apcs
->>>> hmss global block _in_ sdm660" just because the h/w manual hasn't
->>>> given a name to it.  But that is okay too, if we name the subsequent
->>>> controllers as "the same as one in sdm660" and provide the h/w
->>>> configuration 'offset' via a DT property.
->>>>
->>>
->>> As I said, I'd need to dig through the hardware documentation for the
->>> various platforms to see if I can find what the common denominators are.
->>> We've always seen this as "the apcs hmss global block _in_ <platform>".
->>>
->>>>>>>> In any case, we can't really get rid of the first 13 instances though...
->>>>>>>>
->>>>>>>
->>>>>>> Right, we have the problem that we have DTBs out there that relies on
->>>>>>> these compatibles, but as Jassi requests we'd have to start describing
->>>>>>> the internal register layout in DT - which this binding purposefully
->>>>>>> avoids.
->>>>>>>
->>>>>> Not these strings, but 'offset' and 'clock-name' as optional
->>>>>> properties that new platforms can use.
->>>>>>
->>>>>
->>>>> Relying on completely generic compatibles to match the driver and then
->>>>> distinguish each platform using additional properties is exactly what
->>>>> Qualcomm does downstream.  The community has clarified countless times
->>>>> that this is not the way to write DT bindings.
->>>>>
->>>> Yes, and I don't suggest it otherwise. For h/w quirks and
->>>> extra/missing features, it does make sense to have different
->>>> compatibles.
->>>>
->>>
->>> But what you're suggesting assumes that they are the same and that we're
->>> done implementing all the software for this block. The platform specific
->>> compatible allows us to postpone that question.
->>>
->>>> However, for _trivial_ variations let us get that value from DT.
->>>> 'offset' is anyway a h/w property.
->>>> That way we won't be distinguishing platforms using dt properties, but
->>>> only support different platforms seamlessly.
->>>>
->>>
->>> As I said previously, this goes against the direction provided by the DT
->>> maintainers. If a property is platform specific this should be expressed
->>> by the compatible.
->>>
->>>> On second thought, we have grown from 2 to 13 aliases in 4 yrs. I only
->>>> have to ignore 3 times/annum to lead a peaceful life ;)
->>>>
->>>
->>> True, but I'll try to find some time to see if we have some reuse of the
->>> IP block to allow us to use some generic compatible.
->>>
->>> We'd still need a patch in the DT binding for every single platform, but
->>> we should be able to avoid the compatible additions in the driver.
->>>
->>
->> Hello Jassi, Bjorn
->>
->> I've read the entire thread and I can't say that Jassi is entirely wrong
->> but I also agree with Bjorn on this matter.
->>
->> This driver is here to "simply" manage the register offset in the APCS
->> IP, which is a pretty straightforward operation.
->> If you check in this driver, you will see that there's not much
->> duplication between the various qcom_apcs_ipc_data that we have for
->> all the different SoCs.
->>
->> Checking further, we can effectively reduce the amount of compatibles
->> in this driver by simply removing some "duplicated" instances and in
->> particular:
->> ipq6018, ipq8074, msm8916, msm8994, msm8998, sdm660
->>
->> and eventually replacing them with either of:
->> - 8bits_apcs_data    qcom,apcs-apps-global-8bit
->>                       qcom,apcs-kpss-global-8bit
-> 
-> I don't like those compatibles, simply because the binding is supposed
-> to describe the hardware block, not the fact that Linux _currently_ only
-> pokes this one register.
-> 
+Hi,
 
-Since you've immediately misunderstood my naming, yeah, that wouldn't be
-the best thing to use as a compatible.
+On Thu, Jun 24, 2021 at 10:18 AM Douglas Anderson <dianders@chromium.org> wrote:
+>
+> The concept of IOMMUs being in strict vs. non-strict mode is a
+> pre-existing Linux concept. I've included a rough summary here to help
+> evaluate this patch.
+>
+> IOMMUs can be run in "strict" mode or in "non-strict" mode. The
+> quick-summary difference between the two is that in "strict" mode we
+> wait until everything is flushed out when we unmap DMA memory. In
+> "non-strict" we don't.
+>
+> Using the IOMMU in "strict" mode is more secure/safer but slower
+> because we have to sit and wait for flushes while we're unmapping. To
+> explain a bit why "non-strict" mode is unsafe, let's imagine two
+> examples.
+>
+> An example of "non-strict" being insecure when reading from a device:
+> a) Linux driver maps memory for DMA.
+> b) Linux driver starts DMA on the device.
+> c) Device write to RAM subject to bounds checking done by IOMMU.
+> d) Device finishes writing to RAM and signals transfer is finished.
+> e) Linux driver starts unmapping DMA memory but doesn't wait for the
+>    unmap to finish (the definition of non-strict). At this point,
+>    though, the Linux APIs say that the driver owns the memory and
+>    shouldn't expect any more scribbling from the DMA device.
+> f) Linux driver validates that the data in memory looks sane and that
+>    accessing it won't cause the driver to, for instance, overflow a
+>    buffer.
+> g) Device takes advantage of knowledge of how the Linux driver works
+>    and sneaks in a modification to the data after the validation but
+>    before the IOMMU unmap flush finishes.
+> h) Device has now caused the Linux driver to access memory it
+>    shouldn't.
+>
+> An example of "non-strict" being insecure when writing to a device:
+> a) Linux driver writes data intended for the device to RAM.
+> b) Linux driver maps memory for DMA.
+> c) Linux driver starts DMA on the device.
+> d) Device reads from RAM subject to bounds checking done by IOMMU.
+> e) Device finishes reading from RAM and signals transfer is finished.
+> f) Linux driver starts unmapping DMA memory but doesn't wait for the
+>    unmap to finish (the definition of non-strict)
+> g) Linux driver frees memory and returns it to the pool of memory
+>    available for other users to allocate.
+> h) Memory is allocated for another purpose since it was free memory.
+> i) Device takes advantage of the period of time before IOMMU flush to
+>    read memory that it shouldn't have had access to. What exactly the
+>    memory could contain depends on the randomness of who allocated
+>    next, though exploits have been built on flimisier holes.
+>
+> As you can see from the above examples, using the iommu in
+> "non-strict" mode might not sound _too_ scary (the window of badness
+> is small and the exposed memory is small) but there is certainly
+> risk. Let's evaluate the risk by breaking it down into two problems
+> that IOMMUs are supposed to be protecting us against:
+>
+> Case 1: IOMMUs prevent malicious code running on the peripheral (maybe
+> a malicious peripheral or maybe someone exploited a benign peripheral)
+> from turning into an exploit of the Linux kernel. This is particularly
+> important if the peripheral has loadable / updatable firmware or if
+> the peripheral has some type of general purpose processor and is
+> processing untrusted inputs. It's also important if the device is
+> something that can be easily plugged into the host and the device has
+> direct DMA access itself, like a PCIe device.
+>
+> Case 2: IOMMUs limit the severity of a class of software bugs in the
+> kernel. If we misconfigure a peripheral by accident then instead of
+> the peripheral clobbering random memory due to a bug we might get an
+> IOMMU error.
+>
+> Now that we understand the issue and the risks, let's evaluate whether
+> we really need "strict" mode for the Qualcomm SDHCI controllers. I
+> will make the argument that we don't _need_ strict mode for them. Why?
+> * The SDHCI controller on Qualcomm SoCs doesn't appear to have
+>   loadable / updatable firmware and, assuming it's got some firmware
+>   baked into it, I see no evidence that the firmware could be
+>   compromised.
+> * Even though, for external SD cards in particular, the controller is
+>   dealing with "untrusted" inputs, it's dealing with them in a very
+>   controlled way.  It seems unlikely that a rogue SD card would be
+>   able to present something to the SDHCI controller that would cause
+>   it to DMA to/from an address other than one the kernel told it
+>   about.
+> * Although it would be nice to catch more software bugs, once the
+>   Linux driver has been debugged and stressed the value is not very
+>   high. If the IOMMU caught something like this the system would be in
+>   a pretty bad shape anyway (we don't really recover from IOMMU
+>   errors) and the only benefit would be a better spotlight on what
+>   went wrong.
+>
+> Now we have a good understanding of the benefits of "strict" mode for
+> our SDHCI controllers, let's look at some performance numbers. I used
+> "dd" to measure read speeds from eMMC on a sc7180-trogdor-lazor
+> board. Basic test command (while booted from USB):
+>   echo 3 > /proc/sys/vm/drop_caches
+>   dd if=/dev/mmcblk1 of=/dev/null bs=4M count=512
+>
+> I attempted to run my tests for enough iterations that results
+> stabilized and weren't too noisy. Tests were run with patches picked
+> to the chromeos-5.4 tree (sanity checked against v5.13-rc7). I also
+> attempted to compare to other attempts to address IOMMU problems
+> and/or attempts to bump the cpufreq up to solve this problem:
+> - eMMC datasheet spec: 300 MB/s "Typical Sequential Performance"
+>   NOTE: we're driving the bus at 192 MHz instead of 200 Mhz so we might
+>   not be able to achieve the full 300 MB/s.
+> - Baseline: 210.9 MB/s
+> - Baseline + peg cpufreq to max: 284.3 MB/s
+> - This patch: 279.6 MB/s
+> - This patch + peg cpufreq to max: 288.1 MB/s
+> - Joel's IO Wait fix [1]: 258.4 MB/s
+> - Joel's IO Wait fix [1] + peg cpufreq to max: 287.8 MB/s
+> - TLBIVA patches [2] + [3]: 214.7 MB/s
+> - TLBIVA patches [2] + [3] + peg cpufreq to max: 285.7 MB/s
+> - This patch plus Joel's [1]: 280.2 MB/s
+> - This patch plus Joel's [1] + peg...: 279.0 MB/s
+>   NOTE: I suspect something in the system was thermal throttling since
+>   there's a heat wave right now.
+>
+> I also spent a little bit of time trying to see if I could get the
+> IOMMU flush for MMC out of the critical path but was unable to figure
+> out how to do this and get good performance.
+>
+> Overall I'd say that the performance results above show:
+> * It's really not straightforward to point at "one thing" that is
+>   making our eMMC performance bad.
+> * It's certainly possible to get pretty good eMMC performance even
+>   without this patch.
+> * This patch makes it much easier to get good eMMC performance.
+> * No other solutions that I found resulted in quite as good eMMC
+>   performance as having this patch.
+>
+> Given all the above (security safety concerns are minimal and it's a
+> nice performance win), I'm proposing that running SDHCI on Qualcomm
+> SoCs in non-strict mode is the right thing to do until such point in
+> time as someone can come up with a better solution to get good SD/eMMC
+> performance without it.
+>
+> Now that we've decided we want the SD/MMC controller in non-strict
+> mode, we need to figure out how to make it happen. We will take
+> advantage of the fact that on Qualcomm IOMMUs we know that SD/MMC
+> controllers are in a domain by themselves and hook in when initting
+> the domain context. In response to a previous version of this series
+> there had been discussion [4] of having this driven from a device tree
+> property and this solution doesn't preclude that but is a good jumping
+> off point.
+>
+> NOTES:
+> * It's likely that arguments similar to the above can be made for
+>   other SDHCI controllers. However, given that this is something that
+>   can have an impact on security it feels like we want each SDHCI
+>   controller to opt-in. I believe it is conceivable, for instance,
+>   that some SDHCI controllers might have loadable or updatable
+>   firmware.
+> * It's also likely other peripherals will want this to get the quick
+>   performance win. That also should be fine, though anyone landing a
+>   similar patch should be very careful that it is low risk for all
+>   users of a given peripheral.
+> * Conceivably if even this patch is considered too "high risk", we
+>   could limit this to just non-removable cards (like eMMC) by just
+>   checking the device tree. This is one nice advantage of using the
+>   pre_probe() to set this.
+>
+> [1] https://lore.kernel.org/r/20210618040639.3113489-1-joel@joelfernandes.org
+> [2] https://lore.kernel.org/r/1623850736-389584-1-git-send-email-quic_c_gdjako@quicinc.com/
+> [3] https://lore.kernel.org/r/cover.1623981933.git.saiprakash.ranjan@codeaurora.org/
+> [4] https://lore.kernel.org/r/20210621235248.2521620-1-dianders@chromium.org
+>
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> ---
+>
+> Changes in v2:
+> - Now accomplish the goal by putting rules in the IOMMU driver.
+> - Reworded commit message to clarify things pointed out by Greg.
+>
+>  drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 19 +++++++++++++++++++
+>  1 file changed, 19 insertions(+)
 
-> We could probably "qcom,apss-global" as a catch-all for at least sc7180,
-> sc7280, sdm845, sm8150, sm8250 and sm8350.
-> 
+Ugh, I really miffed up ${SUBJECT}. I thought I had fixed it to the
+proper iommu prefix but clearly I didn't. :(
 
-Doesn't look like a bad idea, but if we want to *enforce* writing also
-the platform-specific compatible, I can see patch series going back
-and forth and getting refused because this will not be really understood
-by everyone, I think.
-In this case, if writing the platform compatible is something mandatory,
-the only way to really make sure to avoid losing time with reviews like
-"[...] here you have to write also the platform compatible", is to just
-keep the thing as it is.
 
-> But look at 8996 and 8998, both named "something-hmss-something", with
-> different register layout. And a quick glance seems to indicate that
-> sdm660 isn't a hmss after all :/
-> 
+> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> index 98b3a1c2a181..bd66376d21ce 100644
+> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> @@ -172,6 +172,24 @@ static const struct of_device_id qcom_smmu_client_of_match[] __maybe_unused = {
+>         { }
+>  };
+>
+> +static const struct of_device_id qcom_smmu_nonstrict_of_match[] __maybe_unused = {
+> +       { .compatible = "qcom,sdhci-msm-v4" },
+> +       { .compatible = "qcom,sdhci-msm-v5" },
+> +       { }
+> +};
 
-Starting from the fact that I don't clearly remember what-when-why of
-my research done more than one year ago, I do remember that conclusion
-was that, in this regard, SDM630/660 were "mostly the same" as MSM8998.
-In any case, this is something that, at this point, is better get
-verified, maybe.
+I will note that I've done more testing and I've also found that I get
+a really nice USB performance win with a similar change there. I have
+run as many variety of tests there, but atop the patches that are
+already in the chromeos-5.4 tree (which includes Joel's io wait patch)
+I saw an "dd" from a USB 3.0 SD card reader (with a fast card) go from
+~74 MB/s to ~86 MB/s by adding "snps,dwc3".
 
-> But introducing qcom,apss-global should catch a bunch of the newer
-> platforms.
-> 
-> 
-> On the DT binding side we still need the platform-specific ones and we
-> need each one to be added to the binding regardless of the catch-all in
-> the driver.
-> 
-> Regards,
-> Bjorn
-> 
->> - more_appropriate_name_apcs_data qcom,(...blah)
->>
->> This would mean that we would have to use a generic "qcom,apcs-clk" as
->> the clk_name, but no other modifications would be done, apart checking
->> the return value to choose whether to print or not the dev_err when the
->> clock name is specified but not present in dt, since the driver is
->> already actually covering this case.
->>
->> That would make us able to reduce the compatibles from 6 to 2, relative
->> to the aforementioned SoC specific bindings.
->> I'm positive that, through time, when new SoCs arrive, we would avoid
->> getting this compatible list to be megabytes long...
->>
->> Right now it's not an issue, but since Qualcomm SoCs are now being very
->> actively upstreamed, I can see this coming in the future, somehow.
->>
->>
->> Of course this means that we're getting some fair amount of patch-noise
->> in the mailing lists, since all qcom dtsi files will have to be changed,
->> but that shouldn't really be a problem, I guess.
->>
->> I'm sure that I'm not the only one with such a "wow-idea" in mind :)
->>
->> Yours,
->> - Angelo
->>
->>> Regards,
->>> Bjorn
->>>
->>
+I believe that the USB controller is a more complicated beast than the
+SDHCI controller so perhaps it's harder to have quite as much
+confidence in it, but it still does technically fulfil the
+requirements above.
 
+I'd also say that since it appears that both Intel and AMD IOMMU
+drivers appear to default to non-strict for anything that's not an
+external PCI device that we could probably default to non-secure for
+dwc3 as well. I'll include a 4th patch in the next version of this
+series assuming that the series as a whole isn't NAKed.
+
+-Doug
