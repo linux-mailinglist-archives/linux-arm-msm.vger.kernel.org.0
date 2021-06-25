@@ -2,199 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8F8C23B3B0A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Jun 2021 05:06:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3A02A3B3B41
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Jun 2021 05:39:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232917AbhFYDJA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 24 Jun 2021 23:09:00 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:11483 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233041AbhFYDI7 (ORCPT
+        id S233079AbhFYDls (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 24 Jun 2021 23:41:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52336 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232996AbhFYDlq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 24 Jun 2021 23:08:59 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1624590400; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=xfGgurIpwSu27EL1saU4CIi4CGBgN5thvMAw704wMaA=; b=BlkZteIrCyryo61E4uF8tIcEIo75Hmwzfg0NTSboo/1uJHcGPtVYUMg02+x5tUIuSQj6D3/h
- w/9EkVGaabTJPSb6jR7T6rxR9HbiyA/nMn73AAm36kxqOp0uZ2guDzIQdoySEMjwbt8F6l33
- odxWE5xab8D2LuHJNvlcXQA08ZI=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
- 60d548351938941955d1f850 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 25 Jun 2021 03:06:29
- GMT
-Sender: bbhatt=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id B9628C43460; Fri, 25 Jun 2021 03:06:28 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
-Received: from malabar-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: bbhatt)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 67A46C433F1;
-        Fri, 25 Jun 2021 03:06:27 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 67A46C433F1
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=bbhatt@codeaurora.org
-From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
-To:     manivannan.sadhasivam@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
-        linux-kernel@vger.kernel.org, Bhaumik Bhatt <bbhatt@codeaurora.org>
-Subject: [PATCH v4] bus: mhi: core: Add support for processing priority of event ring
-Date:   Thu, 24 Jun 2021 20:06:19 -0700
-Message-Id: <1624590379-12319-1-git-send-email-bbhatt@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        Thu, 24 Jun 2021 23:41:46 -0400
+Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9A46C061574
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Jun 2021 20:39:25 -0700 (PDT)
+Received: by mail-ot1-x331.google.com with SMTP id o17-20020a9d76510000b02903eabfc221a9so7991560otl.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Jun 2021 20:39:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=NgBcYRoIlctACD+L2YYbad3iw3ek5NyZ4dgv7eQ3Lxs=;
+        b=d5Z7R72WbYSoShvKXvQHAJXVwL9hbpA/qb5R/LJlrIh+pVPidB5zbsT9XIsS2eBFAt
+         UJ47Eqc334KXUncOythdccWWcpLa66oC85s02pMEYC9A54iPhc3Mhix+k6aEAP+K9W2R
+         nxQhXV4ZJJ4+gf11TL6cIq92u+Cc0itFy6GYLedkbkJpC9JU32x6vKXlKxK/HsF+iL0o
+         Spw5qiiteoNzA7/ruwNUEyNFWsZOnWjDCh7F/JIiLGmvk8bRAmXhOBcMvC6vOPwi5WbT
+         SnJzGZ1JwYqdDihOS3zBQevpoQ+h9uJPXUg3PpaYmnpR+LohY+sA6d0IvlDkWMkGYOpc
+         vxyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=NgBcYRoIlctACD+L2YYbad3iw3ek5NyZ4dgv7eQ3Lxs=;
+        b=noqYWCDPPa6rh/J5JXpYKAUSKmlnNQi12buqwnAApy30Hof+wI7iiPEL/tt7KFlbv1
+         ywpt68/om/5fYThcnu6kVgWf46K8Wvv9jkAtuSZPNulbVGpXg90JaVJEisSHI61Xdp01
+         VkhfN/DhsibVgrha9pE/dGgFeuIXsleXnpxt2ctnGTUrg2pQt9Xruke2ABIfdnU7lr+R
+         jQ1CucO8CJIY1MwxUs4MsWgb6bBMgp0B8dLaEyEogQavjLyAyvzlONRwYeqLgECJPiKN
+         kJ4HWgTjrpt/1V26ulOT1Ul3iC1TrR0r/Rsy5uMBrYBd8voGOku3qfKvWFe904Pr3pyi
+         UDGg==
+X-Gm-Message-State: AOAM532omuaAfIR+hvHTFQO2fVhqDAVMHCj/4qZlK4TdoYaITnhEcvU5
+        IshdqugNn1ERyH3RXghiqR+3kw==
+X-Google-Smtp-Source: ABdhPJxICvy4DH/gmlYi4aOPrUOcJ+WDYuzwO6ESj2tt39upXIdEx5yfKOxDmtDKbeC3lx3i+SQnUg==
+X-Received: by 2002:a9d:1e5:: with SMTP id e92mr5472028ote.353.1624592365276;
+        Thu, 24 Jun 2021 20:39:25 -0700 (PDT)
+Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id t21sm1140288otd.35.2021.06.24.20.39.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 24 Jun 2021 20:39:24 -0700 (PDT)
+Date:   Thu, 24 Jun 2021 22:39:22 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     dri-devel@lists.freedesktop.org, iommu@lists.linux-foundation.org,
+        Rob Clark <robdclark@chromium.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Akhil P Oommen <akhilpo@codeaurora.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Eric Anholt <eric@anholt.net>, David Airlie <airlied@linux.ie>,
+        linux-arm-msm@vger.kernel.org,
+        Sharat Masetty <smasetty@codeaurora.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Sean Paul <sean@poorly.run>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        "Kristian H. Kristensen" <hoegsberg@google.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        freedreno@lists.freedesktop.org,
+        open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v5 3/5] drm/msm: Improve the a6xx page fault handler
+Message-ID: <YNVP6rfQ699BejsI@yoga>
+References: <20210610214431.539029-1-robdclark@gmail.com>
+ <20210610214431.539029-4-robdclark@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210610214431.539029-4-robdclark@gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Hemant Kumar <hemantk@codeaurora.org>
+On Thu 10 Jun 16:44 CDT 2021, Rob Clark wrote:
+[..]
+> diff --git a/drivers/gpu/drm/msm/msm_iommu.c b/drivers/gpu/drm/msm/msm_iommu.c
+> index 50d881794758..6975b95c3c29 100644
+> --- a/drivers/gpu/drm/msm/msm_iommu.c
+> +++ b/drivers/gpu/drm/msm/msm_iommu.c
+> @@ -211,8 +211,17 @@ static int msm_fault_handler(struct iommu_domain *domain, struct device *dev,
+>  		unsigned long iova, int flags, void *arg)
+>  {
+>  	struct msm_iommu *iommu = arg;
+> +	struct adreno_smmu_priv *adreno_smmu = dev_get_drvdata(iommu->base.dev);
+> +	struct adreno_smmu_fault_info info, *ptr = NULL;
+> +
+> +	if (adreno_smmu->get_fault_info) {
 
-Event ring priorities are currently set to 1 and are unused.
-Default processing priority for event rings is set to regular
-tasklet. Controllers can choose to use high priority tasklet
-scheduling for certain event rings critical for processing such
-as ones transporting control information if they wish to avoid
-system scheduling delays for those packets. In order to support
-these use cases, allow controllers to set event ring priority to
-high. This patch only adds support and does not enable usage of
-these priorities.
+This seemed reasonable when I read it last time, but I didn't realize
+that the msm_fault_handler() is installed for all msm_iommu instances.
 
-Signed-off-by: Hemant Kumar <hemantk@codeaurora.org>
-Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
----
-v4:
--Update fixed priority for all events to default to fix bug in v3
--Supply changelog
+So while we're trying to recover from the boot splash and setup the new
+framebuffer we end up here with iommu->base.dev being the mdss device.
+Naturally drvdata of mdss is not a struct adreno_smmu_priv.
 
-v3:
--Revert to enum approach
--Use 0 as default and 1 as high in enum
--Do not use config values for event rings
+> +		adreno_smmu->get_fault_info(adreno_smmu->cookie, &info);
 
-v2:
--Use boolean approach for easy maintenance as controllers do not need updates
+So here we just jump straight out into hyperspace, never to return.
 
- drivers/bus/mhi/core/init.c     |  4 ++--
- drivers/bus/mhi/core/internal.h |  2 +-
- drivers/bus/mhi/core/main.c     | 19 ++++++++++++++++---
- include/linux/mhi.h             | 14 ++++++++++++--
- 4 files changed, 31 insertions(+), 8 deletions(-)
+Not sure how to wire this up to avoid the problem, but right now I don't
+think we can boot any device with a boot splash.
 
-diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
-index c81b377..23386b8 100644
---- a/drivers/bus/mhi/core/init.c
-+++ b/drivers/bus/mhi/core/init.c
-@@ -673,8 +673,8 @@ static int parse_ev_cfg(struct mhi_controller *mhi_cntrl,
- 				&mhi_cntrl->mhi_chan[mhi_event->chan];
- 		}
- 
--		/* Priority is fixed to 1 for now */
--		mhi_event->priority = 1;
-+		/* Priority is fixed to deafult for now */
-+		mhi_event->priority = MHI_ER_PRIORITY_DEFAULT;
- 
- 		mhi_event->db_cfg.brstmode = event_cfg->mode;
- 		if (MHI_INVALID_BRSTMODE(mhi_event->db_cfg.brstmode))
-diff --git a/drivers/bus/mhi/core/internal.h b/drivers/bus/mhi/core/internal.h
-index 672052f..666e102 100644
---- a/drivers/bus/mhi/core/internal.h
-+++ b/drivers/bus/mhi/core/internal.h
-@@ -535,7 +535,7 @@ struct mhi_event {
- 	u32 intmod;
- 	u32 irq;
- 	int chan; /* this event ring is dedicated to a channel (optional) */
--	u32 priority;
-+	enum mhi_er_priority priority;
- 	enum mhi_er_data_type data_type;
- 	struct mhi_ring ring;
- 	struct db_cfg db_cfg;
-diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
-index 8ac73f9..bfc9776 100644
---- a/drivers/bus/mhi/core/main.c
-+++ b/drivers/bus/mhi/core/main.c
-@@ -425,10 +425,11 @@ void mhi_create_devices(struct mhi_controller *mhi_cntrl)
- 	}
- }
- 
--irqreturn_t mhi_irq_handler(int irq_number, void *dev)
-+irqreturn_t mhi_irq_handler(int irq_number, void *priv)
- {
--	struct mhi_event *mhi_event = dev;
-+	struct mhi_event *mhi_event = priv;
- 	struct mhi_controller *mhi_cntrl = mhi_event->mhi_cntrl;
-+	struct device *dev = &mhi_cntrl->mhi_dev->dev;
- 	struct mhi_event_ctxt *er_ctxt =
- 		&mhi_cntrl->mhi_ctxt->er_ctxt[mhi_event->er_index];
- 	struct mhi_ring *ev_ring = &mhi_event->ring;
-@@ -454,8 +455,20 @@ irqreturn_t mhi_irq_handler(int irq_number, void *dev)
- 
- 		if (mhi_dev)
- 			mhi_notify(mhi_dev, MHI_CB_PENDING_DATA);
--	} else {
-+
-+		return IRQ_HANDLED;
-+	}
-+
-+	switch (mhi_event->priority) {
-+	case MHI_ER_PRIORITY_HI:
-+		tasklet_hi_schedule(&mhi_event->task);
-+		break;
-+	case MHI_ER_PRIORITY_DEFAULT:
- 		tasklet_schedule(&mhi_event->task);
-+		break;
-+	default:
-+		dev_err(dev, "Skip event of unknown priority\n");
-+		break;
- 	}
- 
- 	return IRQ_HANDLED;
-diff --git a/include/linux/mhi.h b/include/linux/mhi.h
-index 86cea52..62ddead 100644
---- a/include/linux/mhi.h
-+++ b/include/linux/mhi.h
-@@ -198,6 +198,16 @@ enum mhi_er_data_type {
- };
- 
- /**
-+ * enum mhi_er_priority - Event ring processing priority
-+ * @MHI_ER_PRIORITY_DEFAULT: processed by regular tasklet
-+ * @MHI_ER_PRIORITY_HI: processed by hi-priority tasklet
-+ */
-+enum mhi_er_priority {
-+	MHI_ER_PRIORITY_DEFAULT,
-+	MHI_ER_PRIORITY_HI,
-+};
-+
-+/**
-  * enum mhi_db_brst_mode - Doorbell mode
-  * @MHI_DB_BRST_DISABLE: Burst mode disable
-  * @MHI_DB_BRST_ENABLE: Burst mode enable
-@@ -250,7 +260,7 @@ struct mhi_channel_config {
-  * @irq_moderation_ms: Delay irq for additional events to be aggregated
-  * @irq: IRQ associated with this ring
-  * @channel: Dedicated channel number. U32_MAX indicates a non-dedicated ring
-- * @priority: Priority of this ring. Use 1 for now
-+ * @priority: Processing priority of this ring.
-  * @mode: Doorbell mode
-  * @data_type: Type of data this ring will process
-  * @hardware_event: This ring is associated with hardware channels
-@@ -262,7 +272,7 @@ struct mhi_event_config {
- 	u32 irq_moderation_ms;
- 	u32 irq;
- 	u32 channel;
--	u32 priority;
-+	enum mhi_er_priority priority;
- 	enum mhi_db_brst_mode mode;
- 	enum mhi_er_data_type data_type;
- 	bool hardware_event;
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+Regards,
+Bjorn
 
+> +		ptr = &info;
+> +	}
+> +
+>  	if (iommu->base.handler)
+> -		return iommu->base.handler(iommu->base.arg, iova, flags);
+> +		return iommu->base.handler(iommu->base.arg, iova, flags, ptr);
+> +
+>  	pr_warn_ratelimited("*** fault: iova=%16lx, flags=%d\n", iova, flags);
+>  	return 0;
+>  }
