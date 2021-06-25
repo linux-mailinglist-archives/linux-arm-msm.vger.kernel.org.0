@@ -2,50 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F0F963B4AFF
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Jun 2021 01:41:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9D50F3B4B03
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Jun 2021 01:41:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229844AbhFYXnt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Jun 2021 19:43:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38824 "EHLO
+        id S229934AbhFYXnv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Jun 2021 19:43:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38830 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229853AbhFYXnt (ORCPT
+        with ESMTP id S229873AbhFYXnv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Jun 2021 19:43:49 -0400
-Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2563FC061574
+        Fri, 25 Jun 2021 19:43:51 -0400
+Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C839FC061574
         for <linux-arm-msm@vger.kernel.org>; Fri, 25 Jun 2021 16:41:28 -0700 (PDT)
-Received: by mail-ot1-x331.google.com with SMTP id v5-20020a0568301bc5b029045c06b14f83so11086647ota.13
+Received: by mail-oi1-x234.google.com with SMTP id 22so7221685oix.10
         for <linux-arm-msm@vger.kernel.org>; Fri, 25 Jun 2021 16:41:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=GB43Qv83etCrKhaYAdgawkvJOs7wqZSQJ+UfnnZLdPo=;
-        b=uTO1yVoVNcktt7bgfLq0f+fRrm7sjF5n+hXSrMw/aT70/s4AaNhnhKiPoLhm9SaY1I
-         ANsEIMab0nXCdUSPO/gNrGGv6CMao1JENpcVUdvKCOsTn0oWl2qav9uwSmWL+4QMn9kE
-         UWOoycv6aYo9rA6nqHLuY2WeEAKRJKS4XBm+kbGfEHT/sRJgnqEXbm6WT9+fQy3xQkf4
-         LymvMjcFMyObIs3EOOv0ZhjEcZuDO0BSXBJrmK5MNkk/VKBOIapnn/Cd4Nw3IX1VAsF+
-         Lax473IhB97hZtclnCtNYW5cPHQtedJo5oV48vF8TR+oOU2hI92zB7YtZVKZmsBgoxd7
-         +chg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=ofzH3xCdn8SrueV2vGSvcq48Y8LFduBq0EUJ5hbpNyY=;
+        b=vMt9w/cDvgI4OS7EJf7Eamp4L4Kx46UNe9SYE8fL5Ai2fHeIfBnz+RdTLUB3LIEnAS
+         A4u352DKsdCA9Jj8ZD+UonFtAppaEexRSRyILNNQMQnWEBieYEXsNUczcfD9KO6+0RiG
+         h/rKywh7oRonXojbiF+PZK5Q4t5wJAqrT/YK8YVh9Nd4Gsx6rXWGDyEG1Kbc0yHKiN9x
+         gnHUFtV4SKBAaZErHS+dDB4TcuHvVszbP80jR8zjZ/3GYVkmLNFHIuEZuQGChRH1vQZH
+         bM2a/f6RSXoZrjs8oeExCFF+to1uyIe3486LepkxFcdd1Yx7X/mE7K0wud0KnsAB0oGj
+         jWYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=GB43Qv83etCrKhaYAdgawkvJOs7wqZSQJ+UfnnZLdPo=;
-        b=Gzzd4XPEdMJO0ObkDdg9CewQb0Z3lQ9t+dnHfnjwE/GrSwrGzPMzczs4zaMTmYu/OW
-         g7P45RYJ1aVQaAFkAZivd4zoi1O5+nyH3gbwntalIDojgdc7EMiU05C0tUzTgsM6g0gw
-         3vAyNo+v66/QG6mysuMPuwhI1hk90qZV25xTzlVlVXi/SPZyk1YEyRb5TecXEwKGhzMx
-         nqPANPoOvH3vXobh5Ot75d/xDulAg0uvq2yP+FW/hK4RzTbeXJUj30tMBEg2yaf8h8tS
-         Re+FnWvjXhVSaH/YuuPdqxNRWzQyRqVIzErU0ELJHeRiosROi3gQ4iWsqJZxf5M6uop2
-         7V+A==
-X-Gm-Message-State: AOAM531ZEgr6OnY4i3AM9A0/yzCKXxdgkVh31nm5yKdS+10RIn3INjV9
-        JH2W31jjZ0KfyOxcEa8ETB5d/w==
-X-Google-Smtp-Source: ABdhPJxPKnfqmBkQi88yaGWabFD8gHr8dDzEuEX8c+aWyEZg2lACabJ27XMX5YJZJChV8zgKjkbH0A==
-X-Received: by 2002:a9d:6642:: with SMTP id q2mr12012175otm.256.1624664487436;
-        Fri, 25 Jun 2021 16:41:27 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=ofzH3xCdn8SrueV2vGSvcq48Y8LFduBq0EUJ5hbpNyY=;
+        b=MkhefuveGclKiJxipYpPWi9u14I3cB+ScjFXWeEhr0Ct+DEDM6w7qUiOrVHiINp7OB
+         EC3aPpu69g7CR5+4dPmLVX7pepte22vbfPQ/wqylwhsAFRgkOnuZY67juu0TV8s3tbc5
+         EZEToTauicEwlYGXIUeqVO1hH3XKRurpe+25ITK7BiyvP4wU57KAX0CggImbSQAdND7e
+         v0Bkt8zIzRUn5STle4EzcCgh5BFbCtDqfTauQcnQOg0NYaxKZbyUaYnqfc9Tbbglcrs0
+         N9eaTrsvuYKsdHzlxm6zIZ+hC05mKp5afQlEpPq4idYxTXgML4Nhn6YM9LVxvl0pXH3G
+         DJQA==
+X-Gm-Message-State: AOAM531gIWILzErzrX/lIzF84uwUVv/gIpWRUuWCOMjdc0lyn3ekswT2
+        SZIVDF53FjdED26Ne8V+GEkXVg==
+X-Google-Smtp-Source: ABdhPJyalttO3x/hpFThz9m6Aqspgsme3u7L8RMd87iVcymsHqnEKd676JnV8omKq2EEQzEGZdS8TQ==
+X-Received: by 2002:a54:4612:: with SMTP id p18mr13814919oip.87.1624664488158;
+        Fri, 25 Jun 2021 16:41:28 -0700 (PDT)
 Received: from localhost.localdomain (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id u10sm1844267otj.75.2021.06.25.16.41.26
+        by smtp.gmail.com with ESMTPSA id u10sm1844267otj.75.2021.06.25.16.41.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Fri, 25 Jun 2021 16:41:27 -0700 (PDT)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
@@ -54,31 +54,53 @@ To:     Andy Gross <agross@kernel.org>,
         Rob Herring <robh+dt@kernel.org>, Sibi S <sibis@codeaurora.org>
 Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH 0/3] dt-bindings: soc: qcom: aoss: Support sc8180x and convert to YAML
-Date:   Fri, 25 Jun 2021 16:40:15 -0700
-Message-Id: <20210625234018.1324681-1-bjorn.andersson@linaro.org>
+Subject: [PATCH 1/3] dt-bindings: soc: qcom: aoss: Add SC8180X compatible
+Date:   Fri, 25 Jun 2021 16:40:16 -0700
+Message-Id: <20210625234018.1324681-2-bjorn.andersson@linaro.org>
 X-Mailer: git-send-email 2.29.2
+In-Reply-To: <20210625234018.1324681-1-bjorn.andersson@linaro.org>
+References: <20210625234018.1324681-1-bjorn.andersson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Introduce generic and sc8180x specific compatible for the aoss QMP binding and
-add the generic to the implementation. Then convert the binding to YAML.
+Add compatible for the Qualcomm SC8180x platform to the AOSS QMP
+binding.
 
-Bjorn Andersson (3):
-  dt-bindings: soc: qcom: aoss: Add SC8180X compatible
-  dt-bindings: soc: qcom: aoss: Convert to YAML
-  soc: qcom: aoss: Add generic compatible
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+---
+ Documentation/devicetree/bindings/soc/qcom/qcom,aoss-qmp.txt | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
- .../bindings/soc/qcom/qcom,aoss-qmp.txt       |  87 -------------
- .../bindings/soc/qcom/qcom,aoss-qmp.yaml      | 115 ++++++++++++++++++
- drivers/soc/qcom/qcom_aoss.c                  |   1 +
- 3 files changed, 116 insertions(+), 87 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,aoss-qmp.txt
- create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,aoss-qmp.yaml
-
+diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,aoss-qmp.txt b/Documentation/devicetree/bindings/soc/qcom/qcom,aoss-qmp.txt
+index 783dc81b0f26..3747032311a4 100644
+--- a/Documentation/devicetree/bindings/soc/qcom/qcom,aoss-qmp.txt
++++ b/Documentation/devicetree/bindings/soc/qcom/qcom,aoss-qmp.txt
+@@ -18,10 +18,13 @@ power-domains.
+ 	Definition: must be one of:
+ 		    "qcom,sc7180-aoss-qmp"
+ 		    "qcom,sc7280-aoss-qmp"
++		    "qcom,sc8180x-aoss-qmp"
+ 		    "qcom,sdm845-aoss-qmp"
+ 		    "qcom,sm8150-aoss-qmp"
+ 		    "qcom,sm8250-aoss-qmp"
+ 		    "qcom,sm8350-aoss-qmp"
++		    and:
++		    "qcom,aoss-qmp"
+ 
+ - reg:
+ 	Usage: required
+@@ -70,7 +73,7 @@ The following example represents the AOSS side-channel message RAM and the
+ mechanism exposing the power-domains, as found in SDM845.
+ 
+   aoss_qmp: qmp@c300000 {
+-	  compatible = "qcom,sdm845-aoss-qmp";
++	  compatible = "qcom,sdm845-aoss-qmp", "qcom,aoss-qmp";
+ 	  reg = <0x0c300000 0x100000>;
+ 	  interrupts = <GIC_SPI 389 IRQ_TYPE_EDGE_RISING>;
+ 	  mboxes = <&apss_shared 0>;
 -- 
 2.29.2
 
