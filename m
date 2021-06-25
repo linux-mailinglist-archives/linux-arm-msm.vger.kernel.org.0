@@ -2,113 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F39C83B4AC6
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Jun 2021 00:55:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E14C53B4AD8
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Jun 2021 01:20:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229871AbhFYW5r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Jun 2021 18:57:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56974 "EHLO
+        id S229844AbhFYXWZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Jun 2021 19:22:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34076 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229850AbhFYW5r (ORCPT
+        with ESMTP id S229826AbhFYXWZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Jun 2021 18:57:47 -0400
-Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC978C061766
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Jun 2021 15:55:24 -0700 (PDT)
-Received: by mail-ot1-x32f.google.com with SMTP id i12-20020a05683033ecb02903346fa0f74dso11007182otu.10
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Jun 2021 15:55:24 -0700 (PDT)
+        Fri, 25 Jun 2021 19:22:25 -0400
+Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D00B8C061766
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Jun 2021 16:20:03 -0700 (PDT)
+Received: by mail-pl1-x630.google.com with SMTP id y13so5479654plc.8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Jun 2021 16:20:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=luOPyFo3L01zOr2qtu2eBJWxs2yeN+/Vdrodh5iollo=;
-        b=mJh25ztmvFCyH/W7nUNGj+2z4f2AS5pMEcCtLdpkIz3FZUmG28wxqomX9SpHT3Mt87
-         fW5Sf/kTK9V2CIKz5rbS1vfkZTnk/NY/g3uuKHSHc2M7VjnU+Ui6LSWuSQTc/5jANbJm
-         VHx3dNIxXVrQaHzmJVxdwM2WqhGR7TnDke6YXw/9Og6Uggsd1QPOtTaf+eE4ARfWkwR+
-         HTl/F6SLnoAbsOYJTy7PYIvqwIywJD2cAZ1GzU3lJuV3IMwt8GWBWwVeIlHAH+giF/w9
-         Oa2ZrLoCcb1BpKXb1/l147l2tkaEUTsHH880jRo33dmA0gEHZBNUb7MlTl1GZGPEjkOU
-         kRbw==
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=WW8u/s/RwN9LA/+V7EDlUcg5hd+g4HfKjzv3HZqNazI=;
+        b=XCmBVfN1F8v5/kQ+C5gaJ57Hc4hCPmBNddwkH7ybxfw05KXFtpn/pWo7h5i51+ovdp
+         QDhkgAqpIuvEXC/ha/LBYeLHDnd8lDTe7f05fxFel6VjagTVnJQ3UzKxFiDaZYrIlIzW
+         StzYLS6bqmqkSionlUJVOxWtJEizjyHFAlyyc=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=luOPyFo3L01zOr2qtu2eBJWxs2yeN+/Vdrodh5iollo=;
-        b=kpFSYmf8e2CwJ/afFlOgyEN9V260P1HRBMITZ2cMusUapY0llTxLo4BRAJNCv2A164
-         YFspQ89fhFDyDyK7/UBkQGLWoMpeWqAAiwFXKftdes7Y1TAyip51FxNDD52BTofbEC8P
-         FkNiTdQ5tipu7TjaOfh+SSM67FTO6ANnBtTBMy8ARxhHS/pcRmjxi0aaMF+fOuXwP/Le
-         NNW2mRhbNqLJgjGeye0YT/1THP1bRDwKDVuT512jKZyaY7enuadW/bQ34P6c503rc7iw
-         4i0okl6deVQp/UJIDwvSTqUkqW7GoN2gJq7yLSXOlcqWVML2d3b729XVHU12jmD3waut
-         8wLg==
-X-Gm-Message-State: AOAM533+ITefi9s1XI+HdrJc/caTOWV7SzA/msHrIJrMtI6eRyuLRM2T
-        zlV4pfRnoqd1Pt3vuWOTeZupIw==
-X-Google-Smtp-Source: ABdhPJwiJynOzvN6yh3Vh7xbiLJtDZrSq3jgQsBh55iOSBxetLaVl9zxb1FS3c7rwCCJBapHH8IC+g==
-X-Received: by 2002:a9d:c23:: with SMTP id 32mr11451076otr.182.1624661724139;
-        Fri, 25 Jun 2021 15:55:24 -0700 (PDT)
-Received: from localhost.localdomain (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id w11sm1516557oov.19.2021.06.25.15.55.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Jun 2021 15:55:23 -0700 (PDT)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        dmitry.baryshkov@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Subject: [PATCH] clk: qcom: gdsc: Ensure regulator init state matches GDSC state
-Date:   Fri, 25 Jun 2021 15:54:14 -0700
-Message-Id: <20210625225414.1318338-1-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.29.2
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=WW8u/s/RwN9LA/+V7EDlUcg5hd+g4HfKjzv3HZqNazI=;
+        b=sgX0fowGhidbBCJgy5k5YWt0QUqPUsYWbj9Et383QlOQh8t1ZKwisogShcgZ2YZUYc
+         oQoGM58rszmijQE9vLmTYUBy6YQRil85wHc1R+1IFO/ai6i267oPkkof3yViZKEgZaVS
+         ESTlmDMxtVy0QbkGD01kpa6sHxzHr7tviGsCOq1/+mEpLmwQ7xkCp+HxMaEGUbE3PvYo
+         iRQJkAaNprJO2vU0L67wC1/suscgS4/kVMq/MEzfzorLLaLYtvk2xyurAUodAMvFEDk/
+         x4Kx7q0Hdn3jUEc1gAWVl0Xt8cWCsdCRINEl1lArBOG585ad3iRBpvi09Zp1WdSVfBpn
+         QZkw==
+X-Gm-Message-State: AOAM53022AF1YWHGX0YU8UUAInrptfRo+KCLZ5M5YXpODEc6vZrqdVYo
+        zlilvvF4lEDICnmH4fRWO2qiczchNlWrpA==
+X-Google-Smtp-Source: ABdhPJxWeDUCoSLRK9FE/s31h1zNNeTdYapRWfF+gc13a8LbRk/gK4Ju1R1BU4tOcNkwRazh8HB3DQ==
+X-Received: by 2002:a17:90a:9308:: with SMTP id p8mr13750390pjo.119.1624663203356;
+        Fri, 25 Jun 2021 16:20:03 -0700 (PDT)
+Received: from localhost ([2620:15c:202:201:cc13:a7dd:f4b5:2160])
+        by smtp.gmail.com with UTF8SMTPSA id x27sm699132pgl.74.2021.06.25.16.20.01
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 25 Jun 2021 16:20:02 -0700 (PDT)
+Date:   Fri, 25 Jun 2021 16:20:00 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Sibi Sankar <sibis@codeaurora.org>
+Cc:     bjorn.andersson@linaro.org, robh+dt@kernel.org, will@kernel.org,
+        saiprakash.ranjan@codeaurora.org, ohad@wizery.com,
+        agross@kernel.org, mathieu.poirier@linaro.org,
+        robin.murphy@arm.com, joro@8bytes.org, p.zabel@pengutronix.de,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, evgreen@chromium.org,
+        dianders@chromium.org, swboyd@chromium.org
+Subject: Re: [PATCH 1/9] dt-bindings: remoteproc: qcom: pas: Add SC7280 MPSS
+ support
+Message-ID: <YNZkoMIFJXOlSI6t@google.com>
+References: <1624564058-24095-1-git-send-email-sibis@codeaurora.org>
+ <1624564058-24095-2-git-send-email-sibis@codeaurora.org>
+ <YNYOkmja0kfuzLpF@google.com>
+ <ca7ca4df465f50c6db03a4642102c636@codeaurora.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <ca7ca4df465f50c6db03a4642102c636@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-As GDSCs are registered and found to be already enabled
-gdsc_toggle_logic() will be invoked for votable GDSCs and ensure that
-the vote is matching the hardware state. Part of this the related
-regulator will be enabled.
+On Fri, Jun 25, 2021 at 10:58:45PM +0530, Sibi Sankar wrote:
+> On 2021-06-25 22:42, Matthias Kaehlcke wrote:
+> > On Fri, Jun 25, 2021 at 01:17:30AM +0530, Sibi Sankar wrote:
+> > > Add MPSS PAS support for SC7280 SoCs.
+> > > 
+> > > Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+> > 
+> > On which tree is this series based? I guess it must be the remoteproc
+> > tree
+> > since the conversion of the binding to YAML isn't in Linus' tree yet,
+> > however the patch doesn't apply cleanly against remoteproc/for-next:
+> > 
+> >   patching file
+> > Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml
+> >   Hunk #2 succeeded at 144 (offset -4 lines).
+> >   Hunk #3 succeeded at 285 (offset -4 lines).
+> >   Hunk #4 succeeded at 416 with fuzz 2 (offset 23 lines).
+> >   Hunk #5 succeeded at 492 (offset 25 lines).
+> >   Hunk #6 FAILED at 485.
+> 
+> https://patchwork.kernel.org/project/linux-arm-msm/cover/1624560727-6870-1-git-send-email-sibis@codeaurora.org/
+> 
+> sry for wasting your time I missed
+> mentioning that it was dependent on
+> ^^ series.
 
-But for non-votable GDSCs the regulator and GDSC status will be out of
-sync and as the GDSC is later disabled regulator_disable() will face an
-unbalanced enable-count, or something might turn off the supply under
-the feet of the GDSC.
+Ah, thanks!
 
-So ensure that the regulator is enabled even for non-votable GDSCs.
-
-Cc: stable@vger.kernel.org
-Fixes: 37416e554961 ("clk: qcom: gdsc: Handle GDSC regulator supplies")
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
- drivers/clk/qcom/gdsc.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
-index 51ed640e527b..f7e7759cdb90 100644
---- a/drivers/clk/qcom/gdsc.c
-+++ b/drivers/clk/qcom/gdsc.c
-@@ -359,10 +359,17 @@ static int gdsc_init(struct gdsc *sc)
- 
- 	/*
- 	 * Votable GDSCs can be ON due to Vote from other masters.
--	 * If a Votable GDSC is ON, make sure we have a Vote.
-+	 * If a Votable GDSC is ON, make sure we have a Vote. If
-+	 * non-votable, ensure that the supply is kept enabled (as
-+	 * is done by gdsc_enable).
- 	 */
--	if ((sc->flags & VOTABLE) && on)
-+	if ((sc->flags & VOTABLE) && on) {
- 		gdsc_enable(&sc->pd);
-+	} else if (on) {
-+		ret = regulator_enable(sc->rsupply);
-+		if (ret < 0)
-+			return ret;
-+	}
- 
- 	/*
- 	 * Make sure the retain bit is set if the GDSC is already on, otherwise
--- 
-2.29.2
-
+Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
