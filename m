@@ -2,100 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 066683B3BAA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Jun 2021 06:27:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8F53D3B3BBE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Jun 2021 06:47:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230193AbhFYEaI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Jun 2021 00:30:08 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:26824 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229458AbhFYEaH (ORCPT
+        id S230228AbhFYEuD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Jun 2021 00:50:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38992 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230128AbhFYEuC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Jun 2021 00:30:07 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1624595267; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=FyAYtbaok2H9V9sa1YDKM09HjyZfcS10U+iEyrt8ZqU=;
- b=VX2agA43RM8owgma+M9Vfi3223iNviJxNRvwZwHwtbGWqhbR+ebc7ql0dS69/zNZXQDhhn3J
- fimsbcfa10A9k5P5Dqd3WSA7kzSS/Cxye+c0ry9rguBBq2KtoaMBMSUMVOXXISz6/HjRFywi
- 9PCVwnM14iR5x7UMMZ78o00n/R0=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
- 60d55b3a7b2963a282f721fa (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 25 Jun 2021 04:27:38
- GMT
-Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id B9480C4338A; Fri, 25 Jun 2021 04:27:37 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id D32A2C433D3;
-        Fri, 25 Jun 2021 04:27:36 +0000 (UTC)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Fri, 25 Jun 2021 09:57:36 +0530
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Sibi Sankar <sibis@codeaurora.org>
-Cc:     bjorn.andersson@linaro.org, robh+dt@kernel.org, will@kernel.org,
-        ohad@wizery.com, agross@kernel.org, mathieu.poirier@linaro.org,
-        robin.murphy@arm.com, joro@8bytes.org, p.zabel@pengutronix.de,
+        Fri, 25 Jun 2021 00:50:02 -0400
+Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1174C06175F
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Jun 2021 21:47:41 -0700 (PDT)
+Received: by mail-pf1-x434.google.com with SMTP id 21so7081170pfp.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Jun 2021 21:47:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=AtTk+6QGKLof6Gu7Ev3cepmH8O53Op63rhLICrg+Eb8=;
+        b=Ypvg0mxaCTrsJqr5D08KpxEGYnjPnrEGE5Lh4jwDezc7RcM4boEj6VNfkBWXT6s2RG
+         cjVNCpIWtse8LclIVCXFHfO2ti1XDt1uetqT5HrM7mGwNdWweyQLrMh7YcG3i/W2581W
+         6FbDNYtQnoNtDWink9Se4Uyk8MeRqzmTWaavQx4XGEYLgXBbPhTVyDerI9rk26H7X3zC
+         wMEq9P7FRsayfNklJM1ThVWFB9eArF6yf57HXFgd6fE3NrKmhPyAoJ3Hez0/Lh4w8u8l
+         bZ9GNhZYZ8wDl45+l9hZExGj6jg1lLcFLjRW9VVKXkIuUmPJ39vMdQmEk2Y5CAHb3e9M
+         n5YQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=AtTk+6QGKLof6Gu7Ev3cepmH8O53Op63rhLICrg+Eb8=;
+        b=giXCXzrLFk1hKmgjMC/cYtCBKrwG79ASlc8ZRcXY9M6Xsa/S8525mscaQiM2MSNBaD
+         dqPNgSovVanFQ5iyfMHqgEF1MLQgE3llzQqgPqFAKCh5vm1bdJ2JCpu2U901s1WUmUs0
+         655+VEBPvSJfqP/s2JmtVBDvRCmxBlcNet2EZF/wr4H+qeTZXT1p9S78H+Q+TQXOL2Sy
+         RQm5BCObE132hAaUwKKdpQ49pIjDgPwn2W+OqvGdQf8EVBf/OysHeHzg9m/CoFGxUatE
+         1u8AO503g6PJnNCp81hOUW11OzG5Fqba0JdzZkFGFXL1KXBA49esnuJdri/X1oU4FCrR
+         tVvA==
+X-Gm-Message-State: AOAM532wPXPEnCw6lm6/J3fwOadcsGA+ayAywbhkTaWonmfe2ymuEHBB
+        PGmw9QqBun20OPusycUrfxUs
+X-Google-Smtp-Source: ABdhPJwUiAiC28y9PI+2/abF+jcevjyqTqZv/OpN1QqH+yTCJOdS3d6tJgjgTSSUsBqDDHj0sKZVPA==
+X-Received: by 2002:a63:5d66:: with SMTP id o38mr7961955pgm.444.1624596460826;
+        Thu, 24 Jun 2021 21:47:40 -0700 (PDT)
+Received: from workstation ([120.138.13.204])
+        by smtp.gmail.com with ESMTPSA id y7sm4487159pfy.153.2021.06.24.21.47.37
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 24 Jun 2021 21:47:40 -0700 (PDT)
+Date:   Fri, 25 Jun 2021 10:17:36 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, Ohad Ben-Cohen <ohad@wizery.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
         linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, evgreen@chromium.org,
-        dianders@chromium.org, swboyd@chromium.org
-Subject: Re: [PATCH 4/9] iommu/arm-smmu-qcom: Request direct mapping for modem
- device
-In-Reply-To: <1624564058-24095-5-git-send-email-sibis@codeaurora.org>
-References: <1624564058-24095-1-git-send-email-sibis@codeaurora.org>
- <1624564058-24095-5-git-send-email-sibis@codeaurora.org>
-Message-ID: <dd64ccda508175b6b276314bb0798e89@codeaurora.org>
-X-Sender: saiprakash.ranjan@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 2/2] remoteproc: qcom: pas: Add SC8180X adsp, cdsp and
+ mpss
+Message-ID: <20210625044736.GA4974@workstation>
+References: <20210608174944.2045215-1-bjorn.andersson@linaro.org>
+ <20210608174944.2045215-2-bjorn.andersson@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210608174944.2045215-2-bjorn.andersson@linaro.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-06-25 01:17, Sibi Sankar wrote:
-> The SID configuration requirement for Modem on SC7280 is similar to the
-> ones found on SC7180/SDM845 SoCs. So, add the SC7280 modem compatible 
-> to
-> the list to defer the programming of the modem SIDs to the kernel.
+On Tue, Jun 08, 2021 at 10:49:44AM -0700, Bjorn Andersson wrote:
+> The Qualcomm SC8180X has the typical ADSP, CDSP and MPSS remote
+> processors operated using the PAS interface, add support for these.
 > 
-> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+> Attempts to configuring mss.lvl is failing, so a new adsp_data is
+> provided that skips this resource, for now.
+> 
+
+What is the impact of this skipped resource? I guess it is enabled by
+the bootloader so we can't change it in runtime?
+
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+
+Given that adsp remoteproc works without configuring mss power domain,
+
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+
+Thanks,
+Mani
+
 > ---
->  drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 1 +
->  1 file changed, 1 insertion(+)
 > 
-> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> index 7771d40176de..90d471a387bf 100644
-> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> @@ -179,6 +179,7 @@ static const struct of_device_id
-> qcom_smmu_client_of_match[] __maybe_unused = {
->  	{ .compatible = "qcom,sc7180-mdss" },
->  	{ .compatible = "qcom,sc7180-mss-pil" },
->  	{ .compatible = "qcom,sc7280-mdss" },
-> +	{ .compatible = "qcom,sc7280-mss-pil" },
->  	{ .compatible = "qcom,sc8180x-mdss" },
->  	{ .compatible = "qcom,sdm845-mdss" },
->  	{ .compatible = "qcom,sdm845-mss-pil" },
-
-Reviewed-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
-member
-of Code Aurora Forum, hosted by The Linux Foundation
+> Changes since v1:
+> - None
+> 
+>  drivers/remoteproc/qcom_q6v5_pas.c | 22 ++++++++++++++++++++++
+>  1 file changed, 22 insertions(+)
+> 
+> diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
+> index b921fc26cd04..a79bee901e9b 100644
+> --- a/drivers/remoteproc/qcom_q6v5_pas.c
+> +++ b/drivers/remoteproc/qcom_q6v5_pas.c
+> @@ -689,6 +689,25 @@ static const struct adsp_data mpss_resource_init = {
+>  	.ssctl_id = 0x12,
+>  };
+>  
+> +static const struct adsp_data sc8180x_mpss_resource = {
+> +	.crash_reason_smem = 421,
+> +	.firmware_name = "modem.mdt",
+> +	.pas_id = 4,
+> +	.has_aggre2_clk = false,
+> +	.auto_boot = false,
+> +	.active_pd_names = (char*[]){
+> +		"load_state",
+> +		NULL
+> +	},
+> +	.proxy_pd_names = (char*[]){
+> +		"cx",
+> +		NULL
+> +	},
+> +	.ssr_name = "mpss",
+> +	.sysmon_name = "modem",
+> +	.ssctl_id = 0x12,
+> +};
+> +
+>  static const struct adsp_data slpi_resource_init = {
+>  		.crash_reason_smem = 424,
+>  		.firmware_name = "slpi.mdt",
+> @@ -811,6 +830,9 @@ static const struct of_device_id adsp_of_match[] = {
+>  	{ .compatible = "qcom,qcs404-cdsp-pas", .data = &cdsp_resource_init },
+>  	{ .compatible = "qcom,qcs404-wcss-pas", .data = &wcss_resource_init },
+>  	{ .compatible = "qcom,sc7180-mpss-pas", .data = &mpss_resource_init},
+> +	{ .compatible = "qcom,sc8180x-adsp-pas", .data = &sm8150_adsp_resource},
+> +	{ .compatible = "qcom,sc8180x-cdsp-pas", .data = &sm8150_cdsp_resource},
+> +	{ .compatible = "qcom,sc8180x-mpss-pas", .data = &sc8180x_mpss_resource},
+>  	{ .compatible = "qcom,sdm845-adsp-pas", .data = &adsp_resource_init},
+>  	{ .compatible = "qcom,sdm845-cdsp-pas", .data = &cdsp_resource_init},
+>  	{ .compatible = "qcom,sdx55-mpss-pas", .data = &sdx55_mpss_resource},
+> -- 
+> 2.29.2
+> 
