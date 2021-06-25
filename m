@@ -2,163 +2,167 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9DF8C3B46D9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Jun 2021 17:45:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7C42B3B470F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Jun 2021 17:55:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229994AbhFYPsJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Jun 2021 11:48:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46578 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229873AbhFYPsJ (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Jun 2021 11:48:09 -0400
-Received: from mail-qk1-x734.google.com (mail-qk1-x734.google.com [IPv6:2607:f8b0:4864:20::734])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74E2EC061766
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Jun 2021 08:45:47 -0700 (PDT)
-Received: by mail-qk1-x734.google.com with SMTP id y29so18005417qky.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Jun 2021 08:45:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=mwj/CahjscU+y04bpHECBUvebi/V1MfEC2fzu395QLo=;
-        b=nGN4vMQZ8P1icKs0xdH3WkkvUZPThVxP/td0QdTl39qQJOP6NhKPS3e9RK+pI4LHdI
-         a2dGLPdCebQ+VeD0V/jh4Im7m46MIeigsGvBjy27GgG8SjVOPd5CYbtHw/86Fuegahfu
-         bXsWZDt7oTfEtuHt0FwS+6OS5EtwpT4QDzW4mBvC9IJeN3L+rPP9lRWeHKB0ww7eFHGx
-         681j/vv0uF6uiKG5FzsFC9hoMRqsUCpf2zmHWadlm/SUeUsuo/TX7+U1sThnPRH+9wKP
-         HESKor79vVfbqqfmzqJP7qFeNN0zL9YYJAK98R83MaIf4fqTQGLSOTS3FSwgK+w1+pMO
-         qopA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=mwj/CahjscU+y04bpHECBUvebi/V1MfEC2fzu395QLo=;
-        b=Dhus+G9B6AyBAFobM80WZi8anLbdGAlPMkX7dBVkkhu2qzGmJmBtPtPYFcOv1+hHlM
-         EXJhWoI4hHTQKGU0tBCjYSBpY43e3cftgp+U6brfiiQ6wqKzxUvBq7vwN19U/0qiJfIu
-         grbn1jxd2BehKcI7sq/jcg2BnOapDrTayZOA/XVBghGicDig1UUSVLJ7o4gr/RZ2gHIM
-         BHNXyj3wdXvVUS4EGRgcrhXZS+/uEGztwVAkKnBU1QXrQ/eN1UOLy7ZLDeFoE9Wk2Eh6
-         Yr429A+QGnNHigAwwsN/BROHBfpzltafs/DoqbbL2U7Nzz8AYGKETmHbzwRdF9/NYIn1
-         0OuQ==
-X-Gm-Message-State: AOAM531yNaFONV4wcbG8JJ6hbs6Kos4vJtB+1QAMxaktYO27Uj+giNm9
-        l59lnFKfg1fJqemMzvmFZ/4YsQ==
-X-Google-Smtp-Source: ABdhPJwWTpsA8qfT4xts8nRvl/v0ZS30IZkHdZR0u40CfAR/R+mZvZlElQB5EgtIN1cIYBwALUmv8Q==
-X-Received: by 2002:a37:a254:: with SMTP id l81mr11818502qke.90.1624635946664;
-        Fri, 25 Jun 2021 08:45:46 -0700 (PDT)
-Received: from [192.168.1.93] (pool-71-163-245-5.washdc.fios.verizon.net. [71.163.245.5])
-        by smtp.gmail.com with ESMTPSA id s8sm3805562qtk.96.2021.06.25.08.45.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 25 Jun 2021 08:45:46 -0700 (PDT)
-Subject: Re: [Patch v2 1/5] firmware: qcom_scm: Introduce SCM calls to access
- LMh
-To:     Matthias Kaehlcke <mka@chromium.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, rui.zhang@intel.com,
-        daniel.lezcano@linaro.org, viresh.kumar@linaro.org,
-        rjw@rjwysocki.net, robh+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-References: <20210624115813.3613290-1-thara.gopinath@linaro.org>
- <20210624115813.3613290-2-thara.gopinath@linaro.org>
- <YNTFdCPU2saMCT/y@google.com>
-From:   Thara Gopinath <thara.gopinath@linaro.org>
-Message-ID: <9f302951-e65b-8b4f-7608-8b96e8d341a6@linaro.org>
-Date:   Fri, 25 Jun 2021 11:45:43 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        id S229996AbhFYP6L (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Jun 2021 11:58:11 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:46912 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229738AbhFYP6I (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 25 Jun 2021 11:58:08 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1624636548; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=k+52SBszcH483ZRUtcU+yiloL+pyVt9AUiozgNhX+3M=;
+ b=AETq64HupZhUGf52nZarF/VM8WDuCKVVMls8bjujcVQLV6D1+A9FrbRSjEpcbQBkd1k+sdPI
+ z0Lz+qIyfHTNZyJapF15K8iHzdm50JOXx0kuFIc7Urq+e2CM8DeAyM9/jvMC4QRjITFQKzj8
+ eF4KD0YZ15B4p9Iu/czP9X4CGrM=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
+ 60d5fc7ed2559fe392b4bc21 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 25 Jun 2021 15:55:42
+ GMT
+Sender: khsieh=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 6D9EAC43460; Fri, 25 Jun 2021 15:55:42 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: khsieh)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 2765CC433F1;
+        Fri, 25 Jun 2021 15:55:41 +0000 (UTC)
 MIME-Version: 1.0
-In-Reply-To: <YNTFdCPU2saMCT/y@google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
 Content-Transfer-Encoding: 7bit
+Date:   Fri, 25 Jun 2021 08:55:41 -0700
+From:   khsieh@codeaurora.org
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>, robdclark@gmail.com,
+        sean@poorly.run, vkoul@kernel.org, agross@kernel.org,
+        robh+dt@kernel.org, devicetree@vger.kernel.org,
+        abhinavk@codeaurora.org, aravindh@codeaurora.org,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] arm64/dts/qcom/sc7180: Add Display Port dt node
+In-Reply-To: <YNKiB3ZEtOQ+T/MX@yoga>
+References: <CAE-0n50-X03sMyJdsw7s=Ue0dWXBo=iHOc0HxDQm5yh2J-uS3A@mail.gmail.com>
+ <YL/uj+t+BFkII1Fh@yoga>
+ <CAE-0n50WP25kRQkWMVdDZGsZWBXwfbVSTFKyBLF7f8Mp3x2Wfg@mail.gmail.com>
+ <YL/wWdRs6e/eECiC@yoga>
+ <CAE-0n51GM65rZVJgXuHy6FerJorHeHKf2W31GijG8sDEhaX_KQ@mail.gmail.com>
+ <YL/41hWz8xB+jSeO@yoga> <21dc5c9fc2efdc1a0ba924354bfd9d75@codeaurora.org>
+ <CAE-0n52J_mLsmXLS+skZn2u3k9dhn+GcHeXi0B2BeQyQxEUL9A@mail.gmail.com>
+ <YM0THrlJlv7ADW8w@builder.lan>
+ <CAE-0n53Zr-w5m-eFhLM2BVmphcYb_M4=s5je3Y7Lg6=onNo=uA@mail.gmail.com>
+ <YNKiB3ZEtOQ+T/MX@yoga>
+Message-ID: <b157a691a1cb8f860219ca3b2c335411@codeaurora.org>
+X-Sender: khsieh@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 6/24/21 1:48 PM, Matthias Kaehlcke wrote:
-> On Thu, Jun 24, 2021 at 07:58:09AM -0400, Thara Gopinath wrote:
->> Introduce SCM calls to access/configure limits management hardware(LMH).
->>
->> Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
->> ---
->>
->> v1->v2:
->> 	Changed the input parameters in qcom_scm_lmh_dcvsh from payload_buf and
->> 	payload_size to payload_fn, payload_reg, payload_val as per Bjorn's review
->> 	comments.
->>
->>   drivers/firmware/qcom_scm.c | 54 +++++++++++++++++++++++++++++++++++++
->>   drivers/firmware/qcom_scm.h |  4 +++
->>   include/linux/qcom_scm.h    | 14 ++++++++++
->>   3 files changed, 72 insertions(+)
->>
->> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
->> index ee9cb545e73b..19e9fb91d084 100644
->> --- a/drivers/firmware/qcom_scm.c
->> +++ b/drivers/firmware/qcom_scm.c
->> @@ -1147,6 +1147,60 @@ int qcom_scm_qsmmu500_wait_safe_toggle(bool en)
->>   }
->>   EXPORT_SYMBOL(qcom_scm_qsmmu500_wait_safe_toggle);
->>   
->> +bool qcom_scm_lmh_dcvsh_available(void)
->> +{
->> +	return __qcom_scm_is_call_available(__scm->dev, QCOM_SCM_SVC_LMH, QCOM_SCM_LMH_LIMIT_DCVSH);
->> +}
->> +EXPORT_SYMBOL(qcom_scm_lmh_dcvsh_available);
->> +
->> +int qcom_scm_lmh_profile_change(u32 profile_id)
->> +{
->> +	struct qcom_scm_desc desc = {
->> +		.svc = QCOM_SCM_SVC_LMH,
->> +		.cmd = QCOM_SCM_LMH_LIMIT_PROFILE_CHANGE,
->> +		.arginfo = QCOM_SCM_ARGS(1, QCOM_SCM_VAL),
->> +		.args[0] = profile_id,
->> +		.owner = ARM_SMCCC_OWNER_SIP,
->> +	};
->> +
->> +	return qcom_scm_call(__scm->dev, &desc, NULL);
->> +}
->> +EXPORT_SYMBOL(qcom_scm_lmh_profile_change);
->> +
->> +int qcom_scm_lmh_dcvsh(u32 payload_fn, u32 payload_reg, u32 payload_val,
->> +		       u64 limit_node, u32 node_id, u64 version)
->> +{
->> +	dma_addr_t payload_phys;
->> +	u32 *payload_buf;
->> +	int payload_size = 5 * sizeof(u32);
->> +
->> +	struct qcom_scm_desc desc = {
->> +		.svc = QCOM_SCM_SVC_LMH,
->> +		.cmd = QCOM_SCM_LMH_LIMIT_DCVSH,
->> +		.arginfo = QCOM_SCM_ARGS(5, QCOM_SCM_RO, QCOM_SCM_VAL, QCOM_SCM_VAL,
->> +					QCOM_SCM_VAL, QCOM_SCM_VAL),
->> +		.args[1] = payload_size,
->> +		.args[2] = limit_node,
->> +		.args[3] = node_id,
->> +		.args[4] = version,
->> +		.owner = ARM_SMCCC_OWNER_SIP,
->> +	};
->> +
->> +	payload_buf = dma_alloc_coherent(__scm->dev, payload_size, &payload_phys, GFP_KERNEL);
->> +	if (!payload_buf)
->> +		return -ENOMEM;
->> +
->> +	payload_buf[0] = payload_fn;
->> +	payload_buf[1] = 0;
->> +	payload_buf[2] = payload_reg;
->> +	payload_buf[3] = 1;
->> +	payload_buf[4] = payload_val;
->> +
->> +	desc.args[0] = payload_phys;
->> +	return qcom_scm_call(__scm->dev, &desc, NULL);
+On 2021-06-22 19:52, Bjorn Andersson wrote:
+> On Tue 22 Jun 15:23 CDT 2021, Stephen Boyd wrote:
 > 
-> dma_free_coherent()?
-
-yep.. A free should be done here. Will fix it
-
+>> Quoting Bjorn Andersson (2021-06-18 14:41:50)
+>> > On Fri 18 Jun 15:49 CDT 2021, Stephen Boyd wrote:
+>> >
+>> > > Quoting khsieh@codeaurora.org (2021-06-10 09:54:05)
+>> > > > On 2021-06-08 16:10, Bjorn Andersson wrote:
+>> > > > > On Tue 08 Jun 17:44 CDT 2021, Stephen Boyd wrote:
+>> > > > >
+>> > > > >> Honestly I suspect the DP PHY is _not_ in the CX domain as CX is for
+>> > > > >> digital logic. Probably the PLL is the hardware that has some minimum
+>> > > > >> CX
+>> > > > >> requirement, and that flows down into the various display clks like
+>> > > > >> the
+>> > > > >> link clk that actually clock the DP controller hardware. The mdss_gdsc
+>> > > > >> probably gates CX for the display subsystem (mdss) so if we had proper
+>> > > > >> corner aggregation logic we could indicate that mdss_gdsc is a child
+>> > > > >> of
+>> > > > >> the CX domain and then make requests from the DP driver for particular
+>> > > > >> link frequencies on the mdss_gdsc and then have that bubble up to CX
+>> > > > >> appropriately. I don't think any of that sort of code is in place
+>> > > > >> though, right?
+>> > > > >
+>> > > > > I haven't checked sc7180, but I'm guessing that it's following the
+>> > > > > other
+>> > > > > modern platforms, where all the MDSS related pieces (including e.g.
+>> > > > > dispcc) lives in the MMCX domain, which is separate from CX.
+>> > > > >
+>> > > > > So the parent of MDSS_GDSC should be MMCX, while Kuogee's answer (and
+>> > > > > the dp-opp-table) tells us that the PLL lives in the CX domain.
+>> > >
+>> > > Isn't MMCX a "child" of CX? At least my understanding is that MMCX is
+>> > > basically a GDSC that clamps all of multimedia hardware block power
+>> > > logic so that the leakage is minimized when multimedia isn't in use,
+>> > > i.e. the device is suspended. In terms of bumping up the voltage we have
+>> > > to pin that on CX though as far as I know because that's the only power
+>> > > domain that can actually change voltage, while MMCX merely gates that
+>> > > voltage for multimedia.
+>> > >
+>> >
+>> > No, MMCX is a separate rail from CX, which powers the display blocks and
+>> > is parent of MDSS_GDSC. But I see in rpmhpd that sc7180 is not one of
+>> > these platforms, so I presume this means that the displayport controller
+>> > thereby sits in MDSS_GDSC parented by CX.
+>> >
+>> > But in line with what you're saying, the naming of the supplies to the
+>> > QMP indicates that the power for the PLLs is static. As such the only
+>> > moving things would be the clock rates in the DP controller and as such
+>> > that's what needs to scale the voltage.
+>> >
+>> > So if the resources we're scaling is the clocks in the DP controller
+>> > then the gist of the patch is correct. The only details I see is that
+>> > the DP controller actually sits in MDSS_GDSC - while it should control
+>> > the level of its parent (CX). Not sure if we can describe that in a
+>> > simple way.
+>> 
+>> Right. I'm not sure things could be described any better right now. If
+>> we need to change this to be MDSS_GDSC power domain and control the
+>> level of the parent then I suppose we'll have to make some sort of DT
+>> change and pair that with a driver change. Maybe if that happens we 
+>> can
+>> just pick a new compatible and leave the old code in place.
+>> 
 > 
-
--- 
-Warm Regards
-Thara (She/Her/Hers)
+> I would prefer that we stay away from making up a new compatible for
+> that, but let's see when we get there.
+> 
+>> Are you happy enough with this current patch?
+>> 
+> 
+> Yes, I think this looks good.
+> 
+>> >
+>> >
+>> > PS. Why does the node name of the opp-table have to be globally unique?
+>> 
+>> Presumably the opp table node name can be 'opp-table' as long as it
+>> lives under the node that's using it. If the opp table is at / or /soc
+>> then it will need to be unique. I'd prefer just 'opp-table' if 
+>> possible.
+> 
+> I asked the same question (if it has to be globally unique) in the 
+> patch
+> adding sdhci nodes for sc7280 and I didn't get a sufficient answer...
+> 
+> So now I do want to know why "opp-table" wouldn't be sufficient name 
+> for
+> these device-internal nodes.
+> 
+my opinion is dp_opp_table is more consistency with mdp and dsi.
+Either one is fine. Please let me know asap.
+> Regards,
+> Bjorn
