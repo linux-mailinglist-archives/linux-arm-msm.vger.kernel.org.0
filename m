@@ -2,50 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 57F973B4A3C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Jun 2021 23:35:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9F0443B4A5A
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Jun 2021 00:01:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229796AbhFYVht (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Jun 2021 17:37:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39400 "EHLO
+        id S229812AbhFYWDy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Jun 2021 18:03:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45086 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229531AbhFYVht (ORCPT
+        with ESMTP id S229531AbhFYWDw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Jun 2021 17:37:49 -0400
-Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D491EC061767
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Jun 2021 14:35:27 -0700 (PDT)
-Received: by mail-pj1-x102e.google.com with SMTP id b5-20020a17090a9905b029016fc06f6c5bso6303562pjp.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Jun 2021 14:35:27 -0700 (PDT)
+        Fri, 25 Jun 2021 18:03:52 -0400
+Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6C90C061767
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Jun 2021 15:01:31 -0700 (PDT)
+Received: by mail-pj1-x1029.google.com with SMTP id p4-20020a17090a9304b029016f3020d867so6340638pjo.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Jun 2021 15:01:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=uHfokonYY4IsHJIZe45nbhfdfmpS+hT7ERJ530OGkgA=;
-        b=c+swM+bTpTsn863tPWig6yNcflU00kaWoBe6ho4se3LIMJM64/3IrVmVF9n9wy1RRn
-         Ody/OPTuiky+oBUK/GTgcEgj1XJ70DzUow5zcjpMzFUFxEdCu+huRS2+Id3aJFAziRQd
-         nBm7o+8j9nU0A3w/4ShYqeCY/g0MPAdehbDHo=
+        bh=SMD41VYFXQVqp0cPLtj6+yt8JTpkYNMg+rAFqmHCirw=;
+        b=VP/Vzb6qs7JTdj4hwNxwy0c1Khz5Xixvj0w2gKxikp8MlWvpEBFrNb+Wvd6Zd7GXSq
+         5ItkFoUcGwTO6nJ79jj1ZzRqnAkM4TK6e5YWwgMbx1ZwYva+O8wcpVqFRkNfrZ7nWB6g
+         DzPC4/6Bhw4+olLR5/pm/3T9PvccSH8pGjcqk=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=uHfokonYY4IsHJIZe45nbhfdfmpS+hT7ERJ530OGkgA=;
-        b=U8/sWEJaxU2QZWXZiON9zySPHZEFd5R9SUqv5xdWnuLq8e/IgJnSefZ4HxySN3ZaZi
-         NQTNSyFdvUep0/tny33+N47ENQJ4fbgx9niypUlh1JhNFpqLPx3TwLTkPHmFY82j9xEQ
-         D9Vc1AqhrtXMXxcEuzXvxdge1n+WiBXYR6I/9uoUs0kUTuMi/j1FVVtj9BihRYSI5O+d
-         sTryLJdRCOm/gQ1b3cz0UlzFJqyCbng/sbxGEls0o24OCJ6CYSZmOqqENY+iYuARWLfl
-         wA3EkFzmayUCy7oTgpiquko+FB1cMHeZACs0uiT6UorXlwaEwCYXtdoHBIHy6sczDcnd
-         CKXA==
-X-Gm-Message-State: AOAM533rw7heKOTfLFP8QB+C+YyikJyNnaARMRtNeae8ebEcobrolD1i
-        WeCIVXpQi1dQxaON4Oq+wNZIug==
-X-Google-Smtp-Source: ABdhPJwVJBb+HmRxybcQnH4mKaYXB5HATNb3IfW8BKVznv3WmHh4gQSSYZGN81p1sygiIjJPYlUqMw==
-X-Received: by 2002:a17:902:6b04:b029:10d:8c9e:5f56 with SMTP id o4-20020a1709026b04b029010d8c9e5f56mr11270840plk.8.1624656927332;
-        Fri, 25 Jun 2021 14:35:27 -0700 (PDT)
+        bh=SMD41VYFXQVqp0cPLtj6+yt8JTpkYNMg+rAFqmHCirw=;
+        b=VTuHa/oOaIJDCh2yRbcvG5uMVVTac0kggba+D8q9DzT/8ZzhHBa/Sn96YcnlARzT94
+         4gHV+lAMWKoZVWTEKK2LnGTC1ncbHpmLWLUBnci9JOFjHVMsYqdCJYWMxJiAcibaAkb4
+         7IdB8emtOy7gL+0gvyupOvaOJaOAueYAwb6mnF4/4kuJklyt//vJgX6xjg7BBet8qKnf
+         j/XC9AUQsxK74NY3M9W1FaXFzErTNdonvrM5uNBG0tsV9IdhEE+zNuX99XS91ZRiK+vT
+         XZLbmp/77FhRVTkCT68wgVnaa73iMFzgGS3lkcYJ+r1oHXOuCjQrbyOGGKRBewy3hIro
+         wm/w==
+X-Gm-Message-State: AOAM530rh4//hmU4zCiIMQEpMy49KRuvu8BjjnoDgxnBERmgb+sLI4XW
+        fYt6qr3sNtkcQj/tqfxsIdjnjg==
+X-Google-Smtp-Source: ABdhPJzParOOHJNvX2jGfbfqx7imK+dVIIvvB890LsT4DrwRRGE0klwbfmo7d7J5Jpcf4y/1b+CJPw==
+X-Received: by 2002:a17:90a:194a:: with SMTP id 10mr22962696pjh.188.1624658490746;
+        Fri, 25 Jun 2021 15:01:30 -0700 (PDT)
 Received: from localhost ([2620:15c:202:201:cc13:a7dd:f4b5:2160])
-        by smtp.gmail.com with UTF8SMTPSA id z6sm6313346pgs.24.2021.06.25.14.35.25
+        by smtp.gmail.com with UTF8SMTPSA id c5sm6823468pfn.144.2021.06.25.15.01.29
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 25 Jun 2021 14:35:26 -0700 (PDT)
-Date:   Fri, 25 Jun 2021 14:35:24 -0700
+        Fri, 25 Jun 2021 15:01:30 -0700 (PDT)
+Date:   Fri, 25 Jun 2021 15:01:27 -0700
 From:   Matthias Kaehlcke <mka@chromium.org>
 To:     Sibi Sankar <sibis@codeaurora.org>
 Cc:     bjorn.andersson@linaro.org, robh+dt@kernel.org,
@@ -55,34 +55,60 @@ Cc:     bjorn.andersson@linaro.org, robh+dt@kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         dianders@chromium.org, rishabhb@codeaurora.org,
         sidgup@codeaurora.org
-Subject: Re: [PATCH v3 05/13] arm64: dts: qcom: sc7180: Use QMP binding to
- control load state
-Message-ID: <YNZMHGYTXV5oJLI7@google.com>
+Subject: Re: [PATCH v3 11/13] soc: qcom: aoss: Drop power domain support
+Message-ID: <YNZSN2wXomiZHsz4@google.com>
 References: <1624560727-6870-1-git-send-email-sibis@codeaurora.org>
- <1624560727-6870-6-git-send-email-sibis@codeaurora.org>
+ <1624560727-6870-12-git-send-email-sibis@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <1624560727-6870-6-git-send-email-sibis@codeaurora.org>
+In-Reply-To: <1624560727-6870-12-git-send-email-sibis@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jun 25, 2021 at 12:21:59AM +0530, Sibi Sankar wrote:
-> Subject: arm64: dts: qcom: sc7180: Use QMP binding to control load state
+On Fri, Jun 25, 2021 at 12:22:05AM +0530, Sibi Sankar wrote:
+> The load state resources are expected to follow the life cycle of the
+> remote processor it tracks. However, modeling load state resources as
+> power-domains result in them getting turned off during system suspend
+> and thereby falling out of sync with the remote processors that are still
+> on. Fix this by replacing load state resource control through the generic
+> qmp message send interface instead.
 
-nit: s/binding //
+nit: the above sounds as if this patch does all of that, when it only
+removes power domain support. Instead you could start with saying what
+the patch actually does (remove power domain support), followed by why
+PD support isn't needed anymore (now done by sending QMP messages directly).
 
-> Use the Qualcomm Mailbox Protocol (QMP) binding to control the load
-
-ditto
-
-same for other DT patches if you re-spin
-
-> state resources on SC7180 SoCs and drop deprecated power-domains exposed
-> by AOSS QMP node.
-> 
 > Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
-> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+> ---
+>  drivers/soc/qcom/qcom_aoss.c | 109 ++-----------------------------------------
+>  1 file changed, 3 insertions(+), 106 deletions(-)
+> 
+> diff --git a/drivers/soc/qcom/qcom_aoss.c b/drivers/soc/qcom/qcom_aoss.c
+> index 998ee7605eb2..f0c3726e8c46 100644
+> --- a/drivers/soc/qcom/qcom_aoss.c
+> +++ b/drivers/soc/qcom/qcom_aoss.c
+>
+> ...
+>
+> @@ -650,13 +550,11 @@ static int qmp_probe(struct platform_device *pdev)
+>  	if (ret)
+>  		goto err_close_qmp;
+>  
+> -	ret = qmp_pd_add(qmp);
+> -	if (ret)
+> -		goto err_remove_qdss_clk;
+> -
+>  	ret = qmp_cooling_devices_register(qmp);
+> -	if (ret)
+> +	if (ret) {
+>  		dev_err(&pdev->dev, "failed to register aoss cooling devices\n");
+> +		goto err_remove_qdss_clk;
 
-Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+This isn't really related with the PD removal, right? I wonder if it was
+intentional to have _probe() succeed even when the cooling device
+registration failed, since the cooling devices aren't essential.
+
+If it is still desirable to fail the change should be done in a separate
+patch, unless it is actually related with removing PD support.
