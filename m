@@ -2,95 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E6DBE3B3F76
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Jun 2021 10:39:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C67733B4182
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Jun 2021 12:21:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230050AbhFYImG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Jun 2021 04:42:06 -0400
-Received: from mail.thorsis.com ([92.198.35.195]:44139 "EHLO mail.thorsis.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229902AbhFYImF (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Jun 2021 04:42:05 -0400
-Received: from localhost (localhost [127.0.0.1])
-        by mail.thorsis.com (Postfix) with ESMTP id C61C23593;
-        Fri, 25 Jun 2021 10:39:43 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at mail.thorsis.com
-Received: from mail.thorsis.com ([127.0.0.1])
-        by localhost (mail.thorsis.com [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id 1foNQkjRn8tw; Fri, 25 Jun 2021 10:39:43 +0200 (CEST)
-Received: by mail.thorsis.com (Postfix, from userid 109)
-        id 4118435C5; Fri, 25 Jun 2021 10:39:42 +0200 (CEST)
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,NO_RECEIVED,
-        NO_RELAYS autolearn=unavailable autolearn_force=no version=3.4.2
-X-Spam-Report: * -1.9 BAYES_00 BODY: Bayes spam probability is 0 to 1%
-        *      [score: 0.0000]
-        * -0.0 NO_RELAYS Informational: message was not relayed via SMTP
-        * -0.0 NO_RECEIVED Informational: message has no Received headers
-Date:   Fri, 25 Jun 2021 10:39:32 +0200
-From:   Alexander Dahl <ada@thorsis.com>
+        id S231386AbhFYKYP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Jun 2021 06:24:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58082 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231182AbhFYKYO (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 25 Jun 2021 06:24:14 -0400
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D982C061574;
+        Fri, 25 Jun 2021 03:21:53 -0700 (PDT)
+Received: by mail-ed1-x52e.google.com with SMTP id s6so12649144edu.10;
+        Fri, 25 Jun 2021 03:21:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=1f5PfyIGOazp+4XQe+W5WTgmVXLCa6NWwYJmG2wqXmc=;
+        b=RUS/TESyXiq8i2HWAQsJvNzUSUEzLUbEzCyUGrJuAxgqehII2+/akcPCTDeu7wu9Gs
+         u5+O6Lw2+b+JZ2JSo1C4VGmTWC4cFGVuR4cmqXxMX1ekl03kofKicg1EHfUa4mxOr190
+         23epN7VaHiaWsu5UQhET2MdQT+nFe7rYnT3jXVUo5g6kgYfjFJ6M8sALBU2dcH5i9baH
+         7FrrJ+YjjJqfI3YGtrTbblodMILpnh93V9DxIhTnpi4XtHSgedMOyPYTSvZkMEtxHw2f
+         Bvvs/aWEVlaPebnJ8znaKYfxjJswcRH9aQhmuQTNmR1obGSCQ4hHbY66utAvaZyVmm/M
+         Uc9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=1f5PfyIGOazp+4XQe+W5WTgmVXLCa6NWwYJmG2wqXmc=;
+        b=pUcbnqxHBNXM4yJ5chXyRwdfsUd/EQ2rhpHmCL1ka9ec7tO6vzi4h7upK2pih1XCxk
+         Il9Nklg++Px+QXmAeW6olygV7BHU0/RSPU6jyK8XdXQtrcO4G29SHOSGq9IMixKwFEaP
+         KmB12YMKTdkTR92+UbKPnTcvEjLPZ0p/ijbL20BVdU9uJiQCsO68xbueSSu+CVQ1j+Kc
+         PENZWvoWZwq2jwt/9pe4QJW/oRkbtEjPlSuwMY9a8NXPT1TOHD7l66hmNzbSixwFvsBH
+         ac5FLapuZrMh9Ic4vonSjuGZWAbvT9oTCr2vPqt+GuQ0mGYZ+97sgj1O2brA2DuldoPe
+         dg/Q==
+X-Gm-Message-State: AOAM533KXOpbKb9NptZ0nhC0CSqAxhu9/EhHseShSe+aFlVDXScbKwmy
+        WttaMVG9nR+yC5HvyzU1pwQ=
+X-Google-Smtp-Source: ABdhPJwbZqc3uwNIS3Qj2TPwlCHpzl+Q2U1a2z0pBRAkLszen3zfGnNhO/SCcd73DNVm+d1im37WtA==
+X-Received: by 2002:a50:b2c5:: with SMTP id p63mr13393399edd.5.1624616511891;
+        Fri, 25 Jun 2021 03:21:51 -0700 (PDT)
+Received: from localhost (178-169-161-196.razgrad.ddns.bulsat.com. [178.169.161.196])
+        by smtp.gmail.com with ESMTPSA id s3sm2586519ejm.49.2021.06.25.03.21.50
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 25 Jun 2021 03:21:51 -0700 (PDT)
+From:   Iskren Chernev <iskren.chernev@gmail.com>
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Marek Behun <marek.behun@nic.cz>, Pavel Machek <pavel@ucw.cz>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Uwe Kleine-K?nig <u.kleine-koenig@pengutronix.de>,
-        Lee Jones <lee.jones@linaro.org>, linux-leds@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-pwm@vger.kernel.org,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Yassine Oudjana <y.oudjana@protonmail.com>,
-        Luca Weiss <luca@z3ntu.xyz>,
-        Subbaraman Narayanamurthy <subbaram@codeaurora.org>
-Subject: Re: [PATCH v9 1/2] dt-bindings: leds: Add Qualcomm Light Pulse
- Generator binding
-Message-ID: <YNWWRM+6p/lgJ28W@ada.ifak-system.com>
-Mail-Followup-To: Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Marek Behun <marek.behun@nic.cz>, Pavel Machek <pavel@ucw.cz>,
-        Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Uwe Kleine-K?nig <u.kleine-koenig@pengutronix.de>,
-        Lee Jones <lee.jones@linaro.org>, linux-leds@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-pwm@vger.kernel.org,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Yassine Oudjana <y.oudjana@protonmail.com>,
-        Luca Weiss <luca@z3ntu.xyz>,
-        Subbaraman Narayanamurthy <subbaram@codeaurora.org>
-References: <20210623035039.772660-1-bjorn.andersson@linaro.org>
- <20210625011932.6354e397@thinkpad>
- <YNUY9ncs34E6aJMe@yoga>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <YNUY9ncs34E6aJMe@yoga>
+Cc:     Andy Gross <agross@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Iskren Chernev <iskren.chernev@gmail.com>
+Subject: [PATCH v4 0/2] Add Pinctrl for SM4250 and SM6115
+Date:   Fri, 25 Jun 2021 13:21:45 +0300
+Message-Id: <20210625102147.51162-1-iskren.chernev@gmail.com>
+X-Mailer: git-send-email 2.32.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello Bjorn,
+This patch adds support for the TLMM block on QCom SM4250 and SM6115, codename
+bengal. The code is taken from OnePlus repo [1], and the keyword bengal
+corresponds to sm4250 and sm6115, so I'm adding both compat strings.
 
-Am Thu, Jun 24, 2021 at 06:44:54PM -0500 schrieb Bjorn Andersson:
-> On Thu 24 Jun 18:19 CDT 2021, Marek Behun wrote:
-> > please don't use in new bindings in examples.
-> > Instead use color, function and function-enumerator, i.e.
-> > 
-> >   color = <LED_COLOR_ID_GREEN>;
-> >   function = LED_FUNCTION_xxx;
-> >   function-enumerator = <N>;
-> > 
-> 
-> Can you point me to something helping me regarding what "function" to
-> use?
-> 
-> For this particular devboard that the example comes from I have 4 LEDs
-> that are named "user1", "user2", "user3" and "user4" in the board
-> documentation. I can make up whatever for the example, but I would like
-> to get the following dts additions follow the expected guidelines.
+[1]: https://github.com/OnePlusOSS/android_kernel_oneplus_sm4250
 
-I asked myself the same question in the past.  The wohle list is in
-'include/dt-bindings/leds/common.h' and I in my personal project I
-opted for LED_FUNCTION_INDICATOR, but yes, the confusion is real.
+v1: https://lkml.org/lkml/2021/6/22/1163
+v2: https://lkml.org/lkml/2021/6/25/28
+v3: https://lkml.org/lkml/2021/6/25/72
 
-Greets
-Alex
+Changes from v3:
+- driver suggestions from Bjorn
+ - merge similarly named functions
+ - sort functions alphabetically
+ - move ufs-reset to 113
+
+Changes from v2:
+- suggestions from Rob:
+ - remove quotes around reg-names
+ - use -state$ subnode regex
+- suggestions from Bjorn
+ - remove '|' from description field
+ - use state def to allow arbitrary nesting
+ - fix gpio pattern to allow valid pin numbers
+ - fix number of gpio pins
+ - add tlmm label to example
+ - remove wakeup parent
+- other
+ - add some pins in example
+ - removed required function
+
+Changes from v1:
+- fix binding example
+- fix cover letter text
+
+Iskren Chernev (2):
+  dt-bindings: pinctrl: qcom: Add SM6115 pinctrl bindings
+  drivers: qcom: pinctrl: Add pinctrl driver for sm6115
+
+ .../bindings/pinctrl/qcom,sm6115-pinctrl.yaml | 182 ++++
+ drivers/pinctrl/qcom/Kconfig                  |   9 +
+ drivers/pinctrl/qcom/Makefile                 |   1 +
+ drivers/pinctrl/qcom/pinctrl-sm6115.c         | 924 ++++++++++++++++++
+ 4 files changed, 1116 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sm6115-pinctrl.yaml
+ create mode 100644 drivers/pinctrl/qcom/pinctrl-sm6115.c
+
+
+base-commit: e71e3a48a7e89fa71fb70bf4602367528864d2ff
+prerequisite-patch-id: 0949ba2e2f20cd3acfeff8be80dc78c7a02962fc
+prerequisite-patch-id: f72aa823fffe9b245a924a6da8a14a473fffa5a2
+-- 
+2.32.0
 
