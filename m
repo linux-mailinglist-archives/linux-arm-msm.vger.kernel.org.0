@@ -2,267 +2,199 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AC50C3B3A2D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Jun 2021 02:35:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8F8C23B3B0A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Jun 2021 05:06:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232663AbhFYAhi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 24 Jun 2021 20:37:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40270 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229712AbhFYAhh (ORCPT
+        id S232917AbhFYDJA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 24 Jun 2021 23:09:00 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:11483 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233041AbhFYDI7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 24 Jun 2021 20:37:37 -0400
-Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com [IPv6:2607:f8b0:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 312B1C061760
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Jun 2021 17:35:18 -0700 (PDT)
-Received: by mail-pl1-x633.google.com with SMTP id u2so3853603plf.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Jun 2021 17:35:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=vzM/YuYA5HAl0qi6INvSLkDVGXJszfsmpGFUTovFkMs=;
-        b=N5nqq3T71OFF0YBFKrcJfFbV+tFsUjM0Mq0UUDv0V01C2hBShUbkIAEUhjcHZ4g1Zw
-         P0GsUrH4Od58QXj8ihKsJUHXS7xrd7IjgM15oTxHMgGqvuiJhbgaiS/TZUkxQj65raVq
-         9YU//ze+BqQhyVmNCjK+I5hvgTacdJlkwq77s=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=vzM/YuYA5HAl0qi6INvSLkDVGXJszfsmpGFUTovFkMs=;
-        b=XqA1qwbMyPC5zlLLm6QrXoKZfOF2d3xa4yAOb8fwIc46tsYVgV3w0H24KWlOTYmqQu
-         etNQvghwfc4LwFun/Q+5W3uqWVGwBqjessDA/g3wRYIYGS4XEz+7Wl2yDZRgXGX/M6X2
-         M867E6iRnLl63/mqSJah4ylEALLNvahTvb3BG3zOQedw3DV0UrmUzqCkC4cGsJ3E3mcb
-         bHx3Xg/g4Py0emuMen5UkW9Jtlf93idEBd3lxb7ruHfYduzgZvs5OKwmsIY56ZFcqghj
-         54nY95cjis3+RDLFT2Z2741fyay+CaSIfbl/BTL7wna450uCXIYcNNMLw0bLAU2VQctJ
-         bUSA==
-X-Gm-Message-State: AOAM531Oql30NQ3PS5dM6oGA+06FAuFAkAYHCNygMx3lph7jrvZBOQR1
-        o25DLlM8VBRtTQrM59JKOhz6+A==
-X-Google-Smtp-Source: ABdhPJwbnLLhX48jzgpepOpjf4kZ0Kx3ZHfqES5ET8h16Kzt7XY1cPjXRIo5YxgqxU9zcQdX5n22mQ==
-X-Received: by 2002:a17:90a:b795:: with SMTP id m21mr8132565pjr.143.1624581317514;
-        Thu, 24 Jun 2021 17:35:17 -0700 (PDT)
-Received: from localhost ([2620:15c:202:201:dda9:4015:5d1f:23fe])
-        by smtp.gmail.com with UTF8SMTPSA id i128sm3957660pfc.142.2021.06.24.17.35.15
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 24 Jun 2021 17:35:17 -0700 (PDT)
-Date:   Thu, 24 Jun 2021 17:35:15 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Sibi Sankar <sibis@codeaurora.org>
-Cc:     bjorn.andersson@linaro.org, robh+dt@kernel.org, will@kernel.org,
-        saiprakash.ranjan@codeaurora.org, ohad@wizery.com,
-        agross@kernel.org, mathieu.poirier@linaro.org,
-        robin.murphy@arm.com, joro@8bytes.org, p.zabel@pengutronix.de,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, evgreen@chromium.org,
-        dianders@chromium.org, swboyd@chromium.org
-Subject: Re: [PATCH 5/9] remoteproc: mss: q6v5-mss: Add modem support on
- SC7280
-Message-ID: <YNUkw5GDrHwTVcC5@google.com>
-References: <1624564058-24095-1-git-send-email-sibis@codeaurora.org>
- <1624564058-24095-6-git-send-email-sibis@codeaurora.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1624564058-24095-6-git-send-email-sibis@codeaurora.org>
+        Thu, 24 Jun 2021 23:08:59 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1624590400; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=xfGgurIpwSu27EL1saU4CIi4CGBgN5thvMAw704wMaA=; b=BlkZteIrCyryo61E4uF8tIcEIo75Hmwzfg0NTSboo/1uJHcGPtVYUMg02+x5tUIuSQj6D3/h
+ w/9EkVGaabTJPSb6jR7T6rxR9HbiyA/nMn73AAm36kxqOp0uZ2guDzIQdoySEMjwbt8F6l33
+ odxWE5xab8D2LuHJNvlcXQA08ZI=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
+ 60d548351938941955d1f850 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 25 Jun 2021 03:06:29
+ GMT
+Sender: bbhatt=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id B9628C43460; Fri, 25 Jun 2021 03:06:28 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from malabar-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: bbhatt)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 67A46C433F1;
+        Fri, 25 Jun 2021 03:06:27 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 67A46C433F1
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=bbhatt@codeaurora.org
+From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
+To:     manivannan.sadhasivam@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
+        linux-kernel@vger.kernel.org, Bhaumik Bhatt <bbhatt@codeaurora.org>
+Subject: [PATCH v4] bus: mhi: core: Add support for processing priority of event ring
+Date:   Thu, 24 Jun 2021 20:06:19 -0700
+Message-Id: <1624590379-12319-1-git-send-email-bbhatt@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Sibi,
+From: Hemant Kumar <hemantk@codeaurora.org>
 
-On Fri, Jun 25, 2021 at 01:17:34AM +0530, Sibi Sankar wrote:
-> Add out of reset sequence support for modem sub-system on SC7280 SoCs.
-> It requires access to an additional set of qaccept registers, external
-> power/clk control registers and halt vq6 register to put the modem back
-> into reset.
-> 
-> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
-> ---
->  drivers/remoteproc/qcom_q6v5_mss.c | 245 ++++++++++++++++++++++++++++++++++++-
->  1 file changed, 241 insertions(+), 4 deletions(-)
-> 
-> diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
-> index 5d21084004cb..4e32811e0025 100644
-> --- a/drivers/remoteproc/qcom_q6v5_mss.c
-> +++ b/drivers/remoteproc/qcom_q6v5_mss.c
-> @@ -77,6 +77,14 @@
->  
->  #define HALT_ACK_TIMEOUT_US		100000
->  
-> +/* QACCEPT Register Offsets */
-> +#define QACCEPT_ACCEPT_REG		0x0
-> +#define QACCEPT_ACTIVE_REG		0x4
-> +#define QACCEPT_DENY_REG		0x8
-> +#define QACCEPT_REQ_REG			0xC
-> +
-> +#define QACCEPT_TIMEOUT_US		50
-> +
->  /* QDSP6SS_RESET */
->  #define Q6SS_STOP_CORE			BIT(0)
->  #define Q6SS_CORE_ARES			BIT(1)
-> @@ -143,6 +151,9 @@ struct rproc_hexagon_res {
->  	bool has_alt_reset;
->  	bool has_mba_logs;
->  	bool has_spare_reg;
-> +	bool has_qaccept_regs;
-> +	bool has_ext_cntl_regs;
-> +	bool has_vq6;
->  };
->  
->  struct q6v5 {
-> @@ -158,8 +169,18 @@ struct q6v5 {
->  	u32 halt_q6;
->  	u32 halt_modem;
->  	u32 halt_nc;
-> +	u32 halt_vq6;
->  	u32 conn_box;
->  
-> +	u32 qaccept_mdm;
-> +	u32 qaccept_cx;
-> +	u32 qaccept_axi;
-> +
-> +	u32 axim1_clk_off;
-> +	u32 crypto_clk_off;
-> +	u32 force_clk_on;
-> +	u32 rscc_disable;
-> +
->  	struct reset_control *mss_restart;
->  	struct reset_control *pdc_reset;
->  
-> @@ -201,6 +222,9 @@ struct q6v5 {
->  	bool has_alt_reset;
->  	bool has_mba_logs;
->  	bool has_spare_reg;
-> +	bool has_qaccept_regs;
-> +	bool has_ext_cntl_regs;
-> +	bool has_vq6;
->  	int mpss_perm;
->  	int mba_perm;
->  	const char *hexagon_mdt_image;
-> @@ -213,6 +237,7 @@ enum {
->  	MSS_MSM8996,
->  	MSS_MSM8998,
->  	MSS_SC7180,
-> +	MSS_SC7280,
->  	MSS_SDM845,
->  };
->  
-> @@ -473,6 +498,12 @@ static int q6v5_reset_assert(struct q6v5 *qproc)
->  		regmap_update_bits(qproc->conn_map, qproc->conn_box,
->  				   AXI_GATING_VALID_OVERRIDE, 0);
->  		ret = reset_control_deassert(qproc->mss_restart);
-> +	} else if (qproc->has_ext_cntl_regs) {
-> +		regmap_write(qproc->conn_map, qproc->rscc_disable, 0);
-> +		reset_control_assert(qproc->pdc_reset);
-> +		reset_control_assert(qproc->mss_restart);
-> +		reset_control_deassert(qproc->pdc_reset);
-> +		ret = reset_control_deassert(qproc->mss_restart);
->  	} else {
->  		ret = reset_control_assert(qproc->mss_restart);
->  	}
-> @@ -490,7 +521,7 @@ static int q6v5_reset_deassert(struct q6v5 *qproc)
->  		ret = reset_control_reset(qproc->mss_restart);
->  		writel(0, qproc->rmb_base + RMB_MBA_ALT_RESET);
->  		reset_control_deassert(qproc->pdc_reset);
-> -	} else if (qproc->has_spare_reg) {
-> +	} else if (qproc->has_spare_reg || qproc->has_ext_cntl_regs) {
->  		ret = reset_control_reset(qproc->mss_restart);
->  	} else {
->  		ret = reset_control_deassert(qproc->mss_restart);
-> @@ -604,7 +635,7 @@ static int q6v5proc_reset(struct q6v5 *qproc)
->  		}
->  
->  		goto pbl_wait;
-> -	} else if (qproc->version == MSS_SC7180) {
-> +	} else if (qproc->version == MSS_SC7180 || qproc->version == MSS_SC7280) {
->  		val = readl(qproc->reg_base + QDSP6SS_SLEEP);
->  		val |= Q6SS_CBCR_CLKEN;
->  		writel(val, qproc->reg_base + QDSP6SS_SLEEP);
-> @@ -787,6 +818,82 @@ static int q6v5proc_reset(struct q6v5 *qproc)
->  	return ret;
->  }
->  
-> +static int q6v5proc_enable_qchannel(struct q6v5 *qproc, struct regmap *map, u32 offset)
-> +{
-> +	unsigned int val;
-> +	int ret;
-> +
-> +	if (!qproc->has_qaccept_regs)
-> +		return 0;
-> +
-> +	if (qproc->has_ext_cntl_regs) {
-> +		regmap_write(qproc->conn_map, qproc->rscc_disable, 0);
-> +		regmap_write(qproc->conn_map, qproc->force_clk_on, 1);
-> +
-> +		ret = regmap_read_poll_timeout(qproc->halt_map, qproc->axim1_clk_off, val,
-> +					       !val, 1, Q6SS_CBCR_TIMEOUT_US);
-> +		if (ret) {
-> +			dev_err(qproc->dev, "failed to enable axim1 clock\n");
-> +			return -ETIMEDOUT;
-> +		}
-> +	}
-> +
-> +	regmap_write(map, offset + QACCEPT_REQ_REG, 1);
-> +
-> +	/* Wait for accept */
-> +	ret = regmap_read_poll_timeout(map, offset + QACCEPT_ACCEPT_REG, val, val, 5,
-> +				       QACCEPT_TIMEOUT_US);
-> +	if (ret) {
-> +		dev_err(qproc->dev, "qchannel enable failed\n");
-> +		return -ETIMEDOUT;
-> +	}
-> +
-> +	return 0;
-> +}
-> +
-> +static void q6v5proc_disable_qchannel(struct q6v5 *qproc, struct regmap *map, u32 offset)
-> +{
-> +	int ret;
-> +	unsigned int val, retry;
-> +	unsigned int nretry = 10;
-> +	bool takedown_complete = false;
-> +
-> +	if (!qproc->has_qaccept_regs)
-> +		return;
-> +
-> +	while (!takedown_complete && nretry) {
-> +		nretry--;
-> +
-> +		regmap_read_poll_timeout(map, offset + QACCEPT_ACTIVE_REG, val, !val, 5,
-> +					 QACCEPT_TIMEOUT_US);
-> +
-> +		regmap_write(map, offset + QACCEPT_REQ_REG, 0);
-> +
-> +		retry = 10;
-> +		while (retry) {
-> +			usleep_range(5, 10);
-> +			retry--;
-> +			ret = regmap_read(map, offset + QACCEPT_DENY_REG, &val);
-> +			if (!ret && val) {
-> +				regmap_write(map, offset + QACCEPT_REQ_REG, 1);
-> +				break;
-> +			}
-> +
-> +			ret = regmap_read(map, offset + QACCEPT_ACCEPT_REG, &val);
-> +			if (!ret && !val) {
-> +				takedown_complete = true;
-> +				break;
-> +			}
+Event ring priorities are currently set to 1 and are unused.
+Default processing priority for event rings is set to regular
+tasklet. Controllers can choose to use high priority tasklet
+scheduling for certain event rings critical for processing such
+as ones transporting control information if they wish to avoid
+system scheduling delays for those packets. In order to support
+these use cases, allow controllers to set event ring priority to
+high. This patch only adds support and does not enable usage of
+these priorities.
 
-A bit of commentary in this branch would do no harm. From the code flow
-I can guess that disabling the channel failed when QACCEPT_DENY_REG != 0,
-and hence the channel is re-enabled (?) for the next try, and apparently
-things are fine when QACCEPT_ACCEPT_REG is 0 after disabling the channel.
-Would be good to be a bit more explicit about what all that actually
-means.
+Signed-off-by: Hemant Kumar <hemantk@codeaurora.org>
+Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+---
+v4:
+-Update fixed priority for all events to default to fix bug in v3
+-Supply changelog
 
-> +		}
-> +
-> +		if (!retry)
-> +			break;
-> +	}
-> +
-> +	if (!takedown_complete)
-> +		dev_err(qproc->dev, "qchannel takedown failed\n");
-> +}
+v3:
+-Revert to enum approach
+-Use 0 as default and 1 as high in enum
+-Do not use config values for event rings
+
+v2:
+-Use boolean approach for easy maintenance as controllers do not need updates
+
+ drivers/bus/mhi/core/init.c     |  4 ++--
+ drivers/bus/mhi/core/internal.h |  2 +-
+ drivers/bus/mhi/core/main.c     | 19 ++++++++++++++++---
+ include/linux/mhi.h             | 14 ++++++++++++--
+ 4 files changed, 31 insertions(+), 8 deletions(-)
+
+diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
+index c81b377..23386b8 100644
+--- a/drivers/bus/mhi/core/init.c
++++ b/drivers/bus/mhi/core/init.c
+@@ -673,8 +673,8 @@ static int parse_ev_cfg(struct mhi_controller *mhi_cntrl,
+ 				&mhi_cntrl->mhi_chan[mhi_event->chan];
+ 		}
+ 
+-		/* Priority is fixed to 1 for now */
+-		mhi_event->priority = 1;
++		/* Priority is fixed to deafult for now */
++		mhi_event->priority = MHI_ER_PRIORITY_DEFAULT;
+ 
+ 		mhi_event->db_cfg.brstmode = event_cfg->mode;
+ 		if (MHI_INVALID_BRSTMODE(mhi_event->db_cfg.brstmode))
+diff --git a/drivers/bus/mhi/core/internal.h b/drivers/bus/mhi/core/internal.h
+index 672052f..666e102 100644
+--- a/drivers/bus/mhi/core/internal.h
++++ b/drivers/bus/mhi/core/internal.h
+@@ -535,7 +535,7 @@ struct mhi_event {
+ 	u32 intmod;
+ 	u32 irq;
+ 	int chan; /* this event ring is dedicated to a channel (optional) */
+-	u32 priority;
++	enum mhi_er_priority priority;
+ 	enum mhi_er_data_type data_type;
+ 	struct mhi_ring ring;
+ 	struct db_cfg db_cfg;
+diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
+index 8ac73f9..bfc9776 100644
+--- a/drivers/bus/mhi/core/main.c
++++ b/drivers/bus/mhi/core/main.c
+@@ -425,10 +425,11 @@ void mhi_create_devices(struct mhi_controller *mhi_cntrl)
+ 	}
+ }
+ 
+-irqreturn_t mhi_irq_handler(int irq_number, void *dev)
++irqreturn_t mhi_irq_handler(int irq_number, void *priv)
+ {
+-	struct mhi_event *mhi_event = dev;
++	struct mhi_event *mhi_event = priv;
+ 	struct mhi_controller *mhi_cntrl = mhi_event->mhi_cntrl;
++	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+ 	struct mhi_event_ctxt *er_ctxt =
+ 		&mhi_cntrl->mhi_ctxt->er_ctxt[mhi_event->er_index];
+ 	struct mhi_ring *ev_ring = &mhi_event->ring;
+@@ -454,8 +455,20 @@ irqreturn_t mhi_irq_handler(int irq_number, void *dev)
+ 
+ 		if (mhi_dev)
+ 			mhi_notify(mhi_dev, MHI_CB_PENDING_DATA);
+-	} else {
++
++		return IRQ_HANDLED;
++	}
++
++	switch (mhi_event->priority) {
++	case MHI_ER_PRIORITY_HI:
++		tasklet_hi_schedule(&mhi_event->task);
++		break;
++	case MHI_ER_PRIORITY_DEFAULT:
+ 		tasklet_schedule(&mhi_event->task);
++		break;
++	default:
++		dev_err(dev, "Skip event of unknown priority\n");
++		break;
+ 	}
+ 
+ 	return IRQ_HANDLED;
+diff --git a/include/linux/mhi.h b/include/linux/mhi.h
+index 86cea52..62ddead 100644
+--- a/include/linux/mhi.h
++++ b/include/linux/mhi.h
+@@ -198,6 +198,16 @@ enum mhi_er_data_type {
+ };
+ 
+ /**
++ * enum mhi_er_priority - Event ring processing priority
++ * @MHI_ER_PRIORITY_DEFAULT: processed by regular tasklet
++ * @MHI_ER_PRIORITY_HI: processed by hi-priority tasklet
++ */
++enum mhi_er_priority {
++	MHI_ER_PRIORITY_DEFAULT,
++	MHI_ER_PRIORITY_HI,
++};
++
++/**
+  * enum mhi_db_brst_mode - Doorbell mode
+  * @MHI_DB_BRST_DISABLE: Burst mode disable
+  * @MHI_DB_BRST_ENABLE: Burst mode enable
+@@ -250,7 +260,7 @@ struct mhi_channel_config {
+  * @irq_moderation_ms: Delay irq for additional events to be aggregated
+  * @irq: IRQ associated with this ring
+  * @channel: Dedicated channel number. U32_MAX indicates a non-dedicated ring
+- * @priority: Priority of this ring. Use 1 for now
++ * @priority: Processing priority of this ring.
+  * @mode: Doorbell mode
+  * @data_type: Type of data this ring will process
+  * @hardware_event: This ring is associated with hardware channels
+@@ -262,7 +272,7 @@ struct mhi_event_config {
+ 	u32 irq_moderation_ms;
+ 	u32 irq;
+ 	u32 channel;
+-	u32 priority;
++	enum mhi_er_priority priority;
+ 	enum mhi_db_brst_mode mode;
+ 	enum mhi_er_data_type data_type;
+ 	bool hardware_event;
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
