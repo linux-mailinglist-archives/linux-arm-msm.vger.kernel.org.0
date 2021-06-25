@@ -2,85 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9C7713B4A60
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Jun 2021 00:03:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B27643B4A66
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Jun 2021 00:03:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229630AbhFYWFr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Jun 2021 18:05:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45498 "EHLO
+        id S229978AbhFYWFz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Jun 2021 18:05:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45526 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229531AbhFYWFq (ORCPT
+        with ESMTP id S230003AbhFYWFy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Jun 2021 18:05:46 -0400
-Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE3CEC061766
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Jun 2021 15:03:25 -0700 (PDT)
-Received: by mail-pj1-x1034.google.com with SMTP id 22-20020a17090a0c16b0290164a5354ad0so8788166pjs.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Jun 2021 15:03:25 -0700 (PDT)
+        Fri, 25 Jun 2021 18:05:54 -0400
+Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E398C061767
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Jun 2021 15:03:29 -0700 (PDT)
+Received: by mail-pf1-x433.google.com with SMTP id a127so8504975pfa.10
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Jun 2021 15:03:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=l1RnRkRZpqgaaMNcuAwV2p52P2QAGdOgzYxbw1QRorI=;
-        b=GZcaTHtQ5jxsRPK9zYSwUL0Uy6N2XwFBwgoXb4ILppc6/R+0Sh7hVs/xdf4ULlHQrb
-         AD7U+jZSjUyi1TpGAoucCU6uFdj3tgVejRn7LpaJEcWlHknZeG8unRMOcGYsB0O/0eSb
-         tml0eoRiuePCAmFpXy/cytYZSR6oQJmKdHudP4EpV3xNe4/ZvG8thpOTpgHQ0p2LdOJw
-         WXl0CcSY2w1fAtwVP/mX4WhEhyww0C0qmv3itNc8Xz9vfqzQNvVmorNXQD1sQ5EPnOnK
-         lu8Sn3ZL2l0eU149E2Ud7d0ZMwve9qxOiL4fUDgeR1zgGLqh1t8m8TtJKIutxT6h/5y9
-         hXNg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=prINlRYKbu6XDrHyKyHoo1qSGCIglO6qKAztYX5cZo8=;
+        b=xWYLw2khe8It1X9JVjVczrT6j1lvc6UnQfSriGM7pNd7BLvSkliyqGOCZWqN9KMcyp
+         mRcmMhFK0NMZhQzJE60KmRV8NL5d0S3E4an+hK6VaGHSoRkfOBR7ICP+FDOKs3N16KWu
+         aJ/J2Bk2jDgV+Gdpo3PkSP+rhmXgl/vb5VuhpeqVf4G7qZ3C3/8Ku6d+epb7Z3mQvb4t
+         IrjUR4DIPQdC+4bTAYpMWsZvOeRBGpFwfZS9fcnQhsYwmwf8e8MOYjfteSpmy3x9QI10
+         UVhQXRhnUapJO5Rby7U7nwT/Tw+k7cC39gydGp/QonQ4R/Cg4SW7b2HVaHY34QZoWN9d
+         JpmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=l1RnRkRZpqgaaMNcuAwV2p52P2QAGdOgzYxbw1QRorI=;
-        b=YJxCA5horYnznKIxkpj2uR9t9tF1eZJyNNp9oT3bwIBEGFLXQRIcYxC1F9qzmwRLM+
-         txXK3vvRaYzYYcdsD7f7DLpDMPqYCPoEb7CI5Tnj41X8Kur7OMaKhrsb9ytwt0ewwGZa
-         cbdv4CgF7bP4alTNWv/8dRkLRlly0vxp7e1vKwvvhbMisgoR6NYvR+P9eTOib7gk1ca2
-         /y3UKisbd2DU8ngyln/o23RTFcqd14A3v5yG+FXC9mwBPE7PFgkLT6H/KL6dKCF0BRAu
-         d0Z6sy5//Lsr0EC8z8+MDwXqgle99Vs3Q5nBjPyRLBi2ZMs3yndurmYeFi3Teyl28hvg
-         0uQQ==
-X-Gm-Message-State: AOAM533/l8uGXzJcr+AOfvU65YafPZXz3ypMKu8ykG+q7hriS4zE6XL2
-        aB+rzJ6pPz91kBCtz4EB7ROmlBI3jzxCfw==
-X-Google-Smtp-Source: ABdhPJy/yIkRxBX8RRlakoK1p3LDTXdw84kxPUgI7I+XCC/0U/NrsRbOEGZJLb9I9D6U0hPWp5xt9Q==
-X-Received: by 2002:a17:90a:7e18:: with SMTP id i24mr12939843pjl.130.1624658604920;
-        Fri, 25 Jun 2021 15:03:24 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=prINlRYKbu6XDrHyKyHoo1qSGCIglO6qKAztYX5cZo8=;
+        b=MK3ksw7aPTJhWKqOHqwrc7Cbr29CbFJ2aIX8yTBHjwBvzKyXnQzS4Juek8wz9xOo1P
+         0uweFi0FykGBZ4nYLNF3lGBjw3PvP+MVItBuHZnViAW5TbXHikfX3yyYsOMqXW3JXPFB
+         vTx9FPwsJxImWmJE/00B73uCcADQ5768Oo/2obeAv6WNxPYPandVN45khWc/KJGwAUqc
+         CrOn+4IzihYJlRQ+tTbLtFJIZ67tcJGlCQitneOnXnv3k1BRhhd0eK96z5EinQanE+KO
+         T3F4iPBFGCn1eehCs7q6bSBAE97jB5TviWniQMf55yUPLVi4ZMGt+3qofQY5RMjvD37w
+         1iKg==
+X-Gm-Message-State: AOAM532esPCbmKnyTtMjapEw/2NG8icniIqddHpmUtSXpIYliNxT1CVj
+        9bm1Kn60crLn5rQJ7+vokiGmBCAJ+adRrA==
+X-Google-Smtp-Source: ABdhPJxZO3k/nQXbhjX97GIBb6th8H2ZXhtM0Fh3aHIl12oh/+QEX7VYYDn6W+xd0rrqmBdKZwLDbg==
+X-Received: by 2002:a63:5809:: with SMTP id m9mr7251692pgb.170.1624658608772;
+        Fri, 25 Jun 2021 15:03:28 -0700 (PDT)
 Received: from localhost.name ([122.177.20.255])
-        by smtp.gmail.com with ESMTPSA id d9sm6374040pjx.13.2021.06.25.15.03.21
+        by smtp.gmail.com with ESMTPSA id d9sm6374040pjx.13.2021.06.25.15.03.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Jun 2021 15:03:24 -0700 (PDT)
+        Fri, 25 Jun 2021 15:03:28 -0700 (PDT)
 From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
 To:     linux-arm-msm@vger.kernel.org
 Cc:     bhupesh.sharma@linaro.org, bhupesh.linux@gmail.com,
         balbi@kernel.org, linux-kernel@vger.kernel.org,
         devicetree@vger.kernel.org, robh+dt@kernel.org, agross@kernel.org,
         Bjorn Andersson <bjorn.andersson@linaro.org>
-Subject: [PATCH 0/2] arm64: dts: qcom: Fix usb entries for SA8155p-adp board
-Date:   Sat, 26 Jun 2021 03:33:09 +0530
-Message-Id: <20210625220311.527549-1-bhupesh.sharma@linaro.org>
+Subject: [PATCH 1/2] arm64: dts: qcom: Use consistent naming for dwc3 usb nodes for sm8150
+Date:   Sat, 26 Jun 2021 03:33:10 +0530
+Message-Id: <20210625220311.527549-2-bhupesh.sharma@linaro.org>
 X-Mailer: git-send-email 2.31.1
+In-Reply-To: <20210625220311.527549-1-bhupesh.sharma@linaro.org>
+References: <20210625220311.527549-1-bhupesh.sharma@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This series enables the support for two USB ports (named portB and
-portC) found on the SA8155p-adp board which are connected to USB Type A
-connectors.
+The dwc3 usb nodes in sm8150.dtsi are currently named differently,
+leading to some confusion when one sees the entries in sysfs or
+dmesg:
+[    1.943482] dwc3 a600000.usb: Adding to iommu group 1
+[    2.266127] dwc3 a800000.dwc3: Adding to iommu group 2
 
-It also contains a minor naming related fix for dwc3 usb nodes found
-on sm8150 SoC.
+Name both the nodes as dwc3@<addr> for consistency.
+
+While at it also arrange the two usb controller, hs-phy and
+ss-phy nodes closer in the dts for better readability.
 
 Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/sm8150.dtsi | 30 ++++++++++++++--------------
+ 1 file changed, 15 insertions(+), 15 deletions(-)
 
-Bhupesh Sharma (2):
-  arm64: dts: qcom: Use consistent naming for dwc3 usb nodes for sm8150
-  arm64: dts: qcom: Fix usb entries for SA8155p adp board
-
- arch/arm64/boot/dts/qcom/sa8155p-adp.dts | 60 ++++++++++++++++++++----
- arch/arm64/boot/dts/qcom/sm8150.dtsi     | 30 ++++++------
- 2 files changed, 66 insertions(+), 24 deletions(-)
-
+diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+index 612dda0fef43..3be6d093a99b 100644
+--- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+@@ -2205,6 +2205,20 @@ glink-edge {
+ 			};
+ 		};
+ 
++		dc_noc: interconnect@9160000 {
++			compatible = "qcom,sm8150-dc-noc";
++			reg = <0 0x09160000 0 0x3200>;
++			#interconnect-cells = <1>;
++			qcom,bcm-voters = <&apps_bcm_voter>;
++		};
++
++		gem_noc: interconnect@9680000 {
++			compatible = "qcom,sm8150-gem-noc";
++			reg = <0 0x09680000 0 0x3e200>;
++			#interconnect-cells = <1>;
++			qcom,bcm-voters = <&apps_bcm_voter>;
++		};
++
+ 		usb_1_hsphy: phy@88e2000 {
+ 			compatible = "qcom,sm8150-usb-hs-phy",
+ 				     "qcom,usb-snps-hs-7nm-phy";
+@@ -2266,20 +2280,6 @@ usb_1_ssphy: lanes@88e9200 {
+ 			};
+ 		};
+ 
+-		dc_noc: interconnect@9160000 {
+-			compatible = "qcom,sm8150-dc-noc";
+-			reg = <0 0x09160000 0 0x3200>;
+-			#interconnect-cells = <1>;
+-			qcom,bcm-voters = <&apps_bcm_voter>;
+-		};
+-
+-		gem_noc: interconnect@9680000 {
+-			compatible = "qcom,sm8150-gem-noc";
+-			reg = <0 0x09680000 0 0x3e200>;
+-			#interconnect-cells = <1>;
+-			qcom,bcm-voters = <&apps_bcm_voter>;
+-		};
+-
+ 		usb_2_qmpphy: phy@88eb000 {
+ 			compatible = "qcom,sm8150-qmp-usb3-uni-phy";
+ 			reg = <0 0x088eb000 0 0x200>;
+@@ -2344,7 +2344,7 @@ usb_1: usb@a6f8800 {
+ 
+ 			resets = <&gcc GCC_USB30_PRIM_BCR>;
+ 
+-			usb_1_dwc3: usb@a600000 {
++			usb_1_dwc3: dwc3@a600000 {
+ 				compatible = "snps,dwc3";
+ 				reg = <0 0x0a600000 0 0xcd00>;
+ 				interrupts = <GIC_SPI 133 IRQ_TYPE_LEVEL_HIGH>;
 -- 
 2.31.1
 
