@@ -2,86 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E60CE3B4F85
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Jun 2021 18:50:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EF07C3B4F93
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Jun 2021 18:52:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229952AbhFZQxM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 26 Jun 2021 12:53:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35620 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229916AbhFZQxM (ORCPT
+        id S230334AbhFZQyd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 26 Jun 2021 12:54:33 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:44926 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230257AbhFZQya (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 26 Jun 2021 12:53:12 -0400
-Received: from mail-io1-xd34.google.com (mail-io1-xd34.google.com [IPv6:2607:f8b0:4864:20::d34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 226B7C061574;
-        Sat, 26 Jun 2021 09:50:49 -0700 (PDT)
-Received: by mail-io1-xd34.google.com with SMTP id h2so16409412iob.11;
-        Sat, 26 Jun 2021 09:50:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=xy3lC+V75F3LEy2qe6vlvEgmNM61OmT+282ss8aUIRc=;
-        b=BUrFm2FGfAEOtYJn+IkvwU2pAP/yu0MU2fYSkUNmE6kjcQWR4MmK1mnKcRzwKMSau3
-         vFxO+UWVyUGIMO6D3qXsnkn70nnHvEIjorjCCHU4EAKAUPa7tzkFw9KAY2Ipq7gjcXUu
-         uOU1tHeVo7JpGGvTpw1tu8s2Yo0ub4SiCtEis66AGEJtcfVTptpxKerfDiWWkM5+CRBD
-         PyDi/eYtL+otbtRZwfXh/PaXKn7XlRdbpeaTBf/3wrIX3o0WuHuYgSYlsHv9LUWxihhy
-         F5LjtywH0Yi9PnJ212G0zp7/rSAQ/7NGMr3wmiXfgUfD4h3M4Q1PRgvk3XtbAXH81HuN
-         wDkg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=xy3lC+V75F3LEy2qe6vlvEgmNM61OmT+282ss8aUIRc=;
-        b=SFUvrlGcElhiBrqB+9bv24eiwpmoBZgUOCytShcT6JcpUg/k2254PJ7zxXVxryvUd4
-         5HCPNUvki69/xKUCFD6i412jdh0PBBkhP66lG+sN8bypI3MjTcmVsz30E3WPGg31iobe
-         KjVBY7slxtG1HZIsJxoYf1PkgPYpfX405V/SDaQnLlQlL9vvfW46R5uz/gIwUw3PbmUS
-         bLG38rnU2jebSJue4WVcPnZAL+l8nSOAH/xfQFRKbsqD8OaoG6/XOUeoCOR4KeCuYWC8
-         j1ulEfJ9GSoOrlxfMJUw4EuZmezw0JcOt2ONZMDHe22yGxOOsgSYvQ/oEt3q2numiDDF
-         0LQA==
-X-Gm-Message-State: AOAM532FTts+WJ5m7Hwd4JKZIKACnRLbkcAAirMVSjNBWbls5z6V02GA
-        RFKHVPFtdE6BSU6EKhxTh9CBD1vHW6mHAUoGlmM=
-X-Google-Smtp-Source: ABdhPJxpo+yKN+1W2sT4n/Ehljt8L3bKaKuHOvgSUXGTOFjzO2vyyyDUzw8f2I6pNnuacLngfgmpFToeZ/LJZuln7Vo=
-X-Received: by 2002:a5d:8242:: with SMTP id n2mr13545566ioo.198.1624726248533;
- Sat, 26 Jun 2021 09:50:48 -0700 (PDT)
-MIME-Version: 1.0
-References: <CABb+yY0sdSinTm788pMFrqEZ6QMC2OwCP7Kkto+pG9h1aGMzwQ@mail.gmail.com>
- <CAL_JsqKdoMwpL_tYC7VQRAG2AC5nR4diShMQCgDseObcgU+egQ@mail.gmail.com>
- <YNEiUMBqGAx1zLVX@yoga> <CABb+yY2wy4iSKjn+SihQ=FE=YwcEzUNOpGw_CV22Anzgbba8hA@mail.gmail.com>
- <YNFKpvhXyZbs8RE1@yoga> <CABb+yY3RpQYvNBHvpwZearpBPph0uj8YQwX2qu=TX=QAO6OFBw@mail.gmail.com>
- <YNFegmmCzk6JUTN+@yoga> <9aae3092-2e2b-9261-f4e7-864b873eb2d4@somainline.org>
- <YNT0HPOJEoJYipyE@yoga> <b0ed9294-e4e1-3185-d81f-63e6e8d45692@somainline.org> <YNUdJC1y8lWHg114@yoga>
-In-Reply-To: <YNUdJC1y8lWHg114@yoga>
-From:   Jassi Brar <jassisinghbrar@gmail.com>
-Date:   Sat, 26 Jun 2021 11:50:37 -0500
-Message-ID: <CABb+yY0S+msZ0J_sjPVXpEcifcBbsGBtu_KMpmcMaB6ki0OLSw@mail.gmail.com>
-Subject: Re: [PATCH V3 3/3] mailbox: qcom-apcs: Add SM6125 compatible
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        jamipkettunen@somainline.org, Andy Gross <agross@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Sat, 26 Jun 2021 12:54:30 -0400
+Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
+  by alexa-out.qualcomm.com with ESMTP; 26 Jun 2021 09:52:07 -0700
+X-QCInternal: smtphost
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/AES256-SHA; 26 Jun 2021 09:52:05 -0700
+X-QCInternal: smtphost
+Received: from rajeevny-linux.qualcomm.com ([10.204.66.121])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 26 Jun 2021 22:21:15 +0530
+Received: by rajeevny-linux.qualcomm.com (Postfix, from userid 2363605)
+        id 9423D21478; Sat, 26 Jun 2021 22:21:13 +0530 (IST)
+From:   Rajeev Nandan <rajeevny@codeaurora.org>
+To:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
+Cc:     Rajeev Nandan <rajeevny@codeaurora.org>,
+        linux-kernel@vger.kernel.org, thierry.reding@gmail.com,
+        sam@ravnborg.org, robdclark@gmail.com, dianders@chromium.org,
+        lyude@redhat.com, jani.nikula@intel.com, robh@kernel.org,
+        laurent.pinchart@ideasonboard.com, a.hajda@samsung.com,
+        daniel.thompson@linaro.org, hoegsberg@chromium.org,
+        abhinavk@codeaurora.org, seanpaul@chromium.org,
+        kalyan_t@codeaurora.org, mkrishn@codeaurora.org,
+        lee.jones@linaro.org, jingoohan1@gmail.com,
+        linux-fbdev@vger.kernel.org
+Subject: [v8 0/6] drm: Support basic DPCD backlight in panel-simple and add a new panel ATNA33XC20
+Date:   Sat, 26 Jun 2021 22:21:02 +0530
+Message-Id: <1624726268-14869-1-git-send-email-rajeevny@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jun 24, 2021 at 7:02 PM Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
-.....
->
-> But just to clarify, I find it annoying having to sprinkle compatibles
-> all over the place every time I try to get a new board up. So I am not
-> against us trying to figure this out.
->
-Rob has acked the dt-bindings. So I guess I have to pick this patch
-(and eventually the more recent patch adding another 2 compatibles).
-Bring it on.
+This series adds the support for the eDP panel that needs the backlight
+controlling over the DP AUX channel using DPCD registers of the panel
+as per the VESA's standard.
 
-Cheers!
+This series also adds support for the Samsung eDP AMOLED panel that
+needs DP AUX to control the backlight, and introduces new delays in the
+@panel_desc.delay to support this panel.
+
+This patch series depends on the following two series:
+- Doug's series [1], exposed the DP AUX channel to the panel-simple.
+- Lyude's series [2], introduced new drm helper functions for DPCD
+  backlight.
+
+This series is the logical successor to the series [3].
+
+Changes in v1:
+- Created dpcd backlight helper with very basic functionality, added
+  backlight registration in the ti-sn65dsi86 bridge driver.
+
+Changes in v2:
+- Created a new DisplayPort aux backlight driver and moved the code from
+  drm_dp_aux_backlight.c (v1) to the new driver.
+
+Changes in v3:
+- Fixed module compilation (kernel test bot).
+
+Changes in v4:
+- Added basic DPCD backlight support in panel-simple.
+- Added support for a new Samsung panel ATNA33XC20 that needs DPCD
+  backlight controlling and has a requirement of delays between enable
+  GPIO and regulator.
+
+Changes in v5:
+Addressed review suggestions from Douglas:
+- Created a new API drm_panel_dp_aux_backlight() in drm_panel.c
+- Moved DP AUX backlight functions from panel-simple.c to drm_panel.c
+- panel-simple probe() calls drm_panel_dp_aux_backlight() to create
+  backlight when the backlight phandle is not specified in panel DT
+  and DP AUX channel is present.
+- Added check for drm_edp_backlight_supported() before registering.
+- Removed the @uses_dpcd_backlight flag from panel_desc as this
+  should be auto-detected.
+- Updated comments/descriptions.
+
+Changes in v6:
+- Rebased
+- Updated wanrning messages, fixed word wrapping in comments.
+- Fixed ordering of memory allocation
+
+Changes in v7:
+- Updated the disable_to_power_off and power_to_enable panel delays
+as discovered at <https://crrev.com/c/2966167> (Douglas)
+
+Changes in v8:
+- Now using backlight_is_blank() to get the backlight blank status (Sam Ravnborg)
+- Added a new patch #4 to fix the warnings for eDP panel description (Sam Ravnborg)
+
+[1] https://lore.kernel.org/dri-devel/20210525000159.3384921-1-dianders@chromium.org/
+[2] https://lore.kernel.org/dri-devel/20210514181504.565252-1-lyude@redhat.com/
+[3] https://lore.kernel.org/dri-devel/1619416756-3533-1-git-send-email-rajeevny@codeaurora.org/
+
+Rajeev Nandan (6):
+  drm/panel: add basic DP AUX backlight support
+  drm/panel-simple: Support DP AUX backlight
+  drm/panel-simple: Support for delays between GPIO & regulator
+  drm/panel-simple: Update validation warnings for eDP panel description
+  dt-bindings: display: simple: Add Samsung ATNA33XC20
+  drm/panel-simple: Add Samsung ATNA33XC20
+
+ .../bindings/display/panel/panel-simple.yaml       |   2 +
+ drivers/gpu/drm/drm_panel.c                        | 108 +++++++++++++++++++++
+ drivers/gpu/drm/panel/panel-simple.c               |  73 +++++++++++++-
+ include/drm/drm_panel.h                            |  15 ++-
+ 4 files changed, 190 insertions(+), 8 deletions(-)
+
+-- 
+2.7.4
+
