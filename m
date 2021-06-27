@@ -2,55 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6C7C83B55EC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Jun 2021 01:46:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 97B8E3B55F3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Jun 2021 01:54:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231678AbhF0Xsm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 27 Jun 2021 19:48:42 -0400
-Received: from mail.kernel.org ([198.145.29.99]:55654 "EHLO mail.kernel.org"
+        id S231702AbhF0X4g (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 27 Jun 2021 19:56:36 -0400
+Received: from mail.kernel.org ([198.145.29.99]:60554 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231508AbhF0Xsm (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 27 Jun 2021 19:48:42 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 4ED7960FEF;
-        Sun, 27 Jun 2021 23:46:17 +0000 (UTC)
+        id S231508AbhF0X4f (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 27 Jun 2021 19:56:35 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id E1590619C4;
+        Sun, 27 Jun 2021 23:54:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1624837577;
-        bh=+nT0mJER1hBQ1oFK+9lqRvtBnr1c3IDijt7DiiL+dgo=;
+        s=k20201202; t=1624838051;
+        bh=IOn3iHgDjgZ/kdQLn+m9AeAqUY81RhpOmvka5mirtUg=;
         h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=tOYVv9a/dFAYjoIF9QmL8ELvSIaocp8NVF8LbXSnc+ZvWrXYhoQWBk4qRIobOMFFS
-         Lq4kYj3kSsoKHGmWkvG3yQxHpWeDpzsMNndM1IgX5Kj3hU+Lz2QoLsXMBE70f9Leax
-         c89fsL8ik0lh0SYaLencJiwMfc0hV8pJWiVyLTEACCwrqQ7ni4JVKjArVrQuJqiGba
-         onQJkJyfulPymd64pA4OYtayuO/CzO75ybVyvCbfGgyUzo94WbL59kLCnQjzIvOYxr
-         kIX88TX0LObzVe8JJvlhNqRChTtDX4fbiiQBzlMbzaR/InzeQPfEVwUBrgSi8QMpIN
-         5xwoG2xiM2skQ==
+        b=tlPE26+BvitNu7ceXhUniJ+4YVwiyg1VyEaBlkr4+tK2zH0RQvAVnlIAa7WhQ3sZR
+         Coq0xbd8zel4IAkuQRZ3YHWrfiSyszaocjOTkOb2BnQYgCIB0gssx6azz4Y0yAt2ww
+         5mgngRVigEyS6ryTfYhMtHNYOngaEIiaaWQ9rPjJGGuWj3bn5pufPPzTtt3lCTj7Ud
+         NSveH86muvrl8CK0Is60vZpjHw1SGtj2fXDdodL4U/buEaCeWjffZ8iYxX1+1SzAaJ
+         lUQmaVgVCRq3r5/Vvbx542iXxQocvN9j5VjS/VBhPN8xVFhO0juyo7uv3yty86uWpv
+         L7UdJfGPw1xTA==
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <1624449471-9984-1-git-send-email-tdas@codeaurora.org>
-References: <1624449471-9984-1-git-send-email-tdas@codeaurora.org>
-Subject: Re: [PATCH v2] clk: qcom: gcc: Add support for a new frequency for SC7280
+In-Reply-To: <20210605121040.282053-1-martin.botka@somainline.org>
+References: <20210605121040.282053-1-martin.botka@somainline.org>
+Subject: Re: [PATCH v4 1/2] dt-bindings: clk: qcom: gcc-sm6125: Document SM6125 GCC driver
 From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, robh@kernel.org, robh+dt@kernel.org,
-        Taniya Das <tdas@codeaurora.org>
-To:     Michael Turquette <mturquette@baylibre.com>,
-        Taniya Das <tdas@codeaurora.org>
-Date:   Sun, 27 Jun 2021 16:46:16 -0700
-Message-ID: <162483757601.3259633.7788849421892603556@swboyd.mtv.corp.google.com>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        konrad.dybcio@somainline.org,
+        angelogioacchino.delregno@somainline.org,
+        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
+        Martin Botka <martin.botka@somainline.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+To:     Martin Botka <martin.botka@somainline.org>
+Date:   Sun, 27 Jun 2021 16:54:09 -0700
+Message-ID: <162483804969.3259633.12130694864125127567@swboyd.mtv.corp.google.com>
 User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Taniya Das (2021-06-23 04:57:51)
-> There is a requirement to support 52MHz for qup clocks for bluetooth
-> usecase, thus update the frequency table to support the frequency.
+Quoting Martin Botka (2021-06-05 05:10:37)
+> Document the newly added SM6125 GCC driver.
 >=20
-> Fixes: a3cc092196ef ("clk: qcom: Add Global Clock controller (GCC) driver=
- for SC7280")
-> Signed-off-by: Taniya Das <tdas@codeaurora.org>
+> Signed-off-by: Martin Botka <martin.botka@somainline.org>
 > ---
 
 Applied to clk-next
