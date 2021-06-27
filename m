@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A07573B54F3
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 27 Jun 2021 20:59:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 984A43B54F6
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 27 Jun 2021 20:59:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231666AbhF0TCH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 27 Jun 2021 15:02:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33726 "EHLO
+        id S231700AbhF0TCJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 27 Jun 2021 15:02:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33728 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231335AbhF0TCF (ORCPT
+        with ESMTP id S231667AbhF0TCH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 27 Jun 2021 15:02:05 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07DFAC061787;
-        Sun, 27 Jun 2021 11:59:40 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id m18so17886881wrv.2;
-        Sun, 27 Jun 2021 11:59:39 -0700 (PDT)
+        Sun, 27 Jun 2021 15:02:07 -0400
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23C93C061574;
+        Sun, 27 Jun 2021 11:59:42 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id u8so4618176wrq.8;
+        Sun, 27 Jun 2021 11:59:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=O6JYXbVuCIOutPpaNLYL0e3H2M/HftG19CnHo95qjg8=;
-        b=lTZtwT0fVcaj8NYQv/0KtdOYI9fSnm2LzrEyvxqq3NxW51OX//VOxXk8WmY6jFqKbn
-         jmzqYEzUOOmDKa29S9mlTojORGhw1v/jjNv8Av6k9/NvYF9HnW+QW1WZyfNs1IHa4oXp
-         am48yMBlzDfxPw9aQ04Lv7l6JSfVfEjeM3MxCNx4Ta4jyn8OhzB3KCeDHc35pvjRfv0x
-         lPs/4P92A+NrnF2rhhb1gaFEaY7neIayXDl+GgQNBtoPx7VGnAk0i5o5dXq7rLTNYWph
-         /mhu0NO1ELGCLyulDzLRcHiDVBNtTED2fja0E3hL7AhwhFWXtSbbkurDlfRKeZViC0CQ
-         M0nA==
+        bh=KnnXMNSnCQFUApM8UzwSAzj60/BQdxg5lHcpdV/aFz8=;
+        b=kEg1z5gWa7pXTahuHHV5bjVvQly6SlLrWW2gyrB9+umJZPXleboR5PF8F49kn2p6qz
+         PnWhrtUrMkms15RNOsrZOM3Yit5gsbqaOy7vE8L7DUGc2oQUTwFj856opxe7XtL+0grG
+         pjS+9FUcJeV2Iurhz4xPSg9G2oQLeyxRo5hMnh0fIw5Cu4jJ7XHBDJIe+WBR3MkLiofd
+         JnqZIGOKsDV4nD0qXGGzEer2vXZuJIoQ/4gFyYfwsUSG1J0eaNAJSi4uBxHcT2CAzEDj
+         VW6gNA/2OIAamtm1RzQC0TeDT6ubCUMK7fDhEu4HhPVjHLlw6RQ4a2NbRdv5woD7YhWI
+         M8ZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=O6JYXbVuCIOutPpaNLYL0e3H2M/HftG19CnHo95qjg8=;
-        b=fBgVduk1yb0Fm0KkN2le46rcwNfO47eHgzLGusSzyGrm/rV8CXkZaQxAhQvSLUiC+j
-         frSVo8Nu0dIBTLr+oFO8c/NvTXVZ7lof2sDLepQy82zGh6uxdMxt9Ei7ebY2HozSXqQh
-         yRz1ExyK6rj5wNbl1Tubb7oTJkDDRuGdPrNhT34l/9O7krGE7qu7UEyF2Pdy5nLt9JMN
-         EK0OaWlQRilLqzAZsLVGy33kDcRkyzJO68Mv+EZAH7zLjTo+wFj4RI8sLSGA7V4sVjgI
-         tq5+nJf0Jm2Q+fjNAnnXUk2icT+7oqcYZqhmYHTF8LAgJ7Paymkyhz0IEJzIOqcIpJJB
-         xxOw==
-X-Gm-Message-State: AOAM53265dptwjk8IuJTPAAn9DPGiG5AuV4oFev31MZkShsed/NQ4Hog
-        fc+u6tLjxOadgpq/wt+LPlU=
-X-Google-Smtp-Source: ABdhPJwCJk3evkjv67TSD8Wz/FGSA8Ar72+PXrEdkR1rsL5mWQHK2QW4tPc/WiwS56lj/tiqUG+6cw==
-X-Received: by 2002:a5d:4983:: with SMTP id r3mr22698421wrq.184.1624820378676;
-        Sun, 27 Jun 2021 11:59:38 -0700 (PDT)
+        bh=KnnXMNSnCQFUApM8UzwSAzj60/BQdxg5lHcpdV/aFz8=;
+        b=m4qAJEvCdp2xZRZEDVwtcHAzJTnv9hk4kWkXu9c8EV1wffNxZzPWbPq1pkcU3hO8b/
+         8QcePSHzy67oyopMLTeUQi7qp9OcR5sDMBMaKhNPrN+AyRonqcyxe6FMrmaVamtKRmZo
+         MwM+xAUjjZSZbtnMMwz5axDD7AVkaWRJkmFR8JzFWJZkHbBPvoNbJZ33+TKGT3RwcYWF
+         LZZ0eea1Ph7aPo3VLZxLLC8eWsO8NByUgC5JLeG5sym4RJTwt9Sa1jJxTfukGS+WBJ4A
+         QJBuqwKq37oL/5/49hrSEq1Nv9d3E9tN6P8v4v3FHpERR0EQwWXWMaGbQ0N83n2ciQMy
+         ljMg==
+X-Gm-Message-State: AOAM530QH7FCOOunj6qJPFwRCjMec8fUcZ0/PFPHdcNvgB0+qpCGEHsW
+        IebDSaO0jns081Kq8Ez80us=
+X-Google-Smtp-Source: ABdhPJwnCX+kkMYiigu3NyEa2TjiBgYjLk+R4TNWEa1tjyLI+2QJezS549G5rHAMl9xz4lLgnp2iaA==
+X-Received: by 2002:a05:6000:10c8:: with SMTP id b8mr22416445wrx.383.1624820380781;
+        Sun, 27 Jun 2021 11:59:40 -0700 (PDT)
 Received: from localhost (178-169-161-196.razgrad.ddns.bulsat.com. [178.169.161.196])
-        by smtp.gmail.com with ESMTPSA id g7sm8759855wmq.27.2021.06.27.11.59.37
+        by smtp.gmail.com with ESMTPSA id t9sm4629168wrq.92.2021.06.27.11.59.39
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 27 Jun 2021 11:59:38 -0700 (PDT)
+        Sun, 27 Jun 2021 11:59:40 -0700 (PDT)
 From:   Iskren Chernev <iskren.chernev@gmail.com>
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>
 Cc:     Andy Gross <agross@kernel.org>,
@@ -60,9 +60,9 @@ Cc:     Andy Gross <agross@kernel.org>,
         linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org,
         ~postmarketos/upstreaming@lists.sr.ht,
         Iskren Chernev <iskren.chernev@gmail.com>
-Subject: [PATCH v2 4/5] dt-bindings: power: rpmpd: Add SM6115 to rpmpd binding
-Date:   Sun, 27 Jun 2021 21:59:26 +0300
-Message-Id: <20210627185927.695411-5-iskren.chernev@gmail.com>
+Subject: [PATCH v2 5/5] drivers: soc: qcom: rpmpd: Add SM6115 RPM Power Domains
+Date:   Sun, 27 Jun 2021 21:59:27 +0300
+Message-Id: <20210627185927.695411-6-iskren.chernev@gmail.com>
 X-Mailer: git-send-email 2.32.0
 In-Reply-To: <20210627185927.695411-1-iskren.chernev@gmail.com>
 References: <20210627185927.695411-1-iskren.chernev@gmail.com>
@@ -72,48 +72,59 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add compatible and constants for the power domains exposed by the RPM
-in the Qualcomm SM4250/6115 platforms.
+The SM4250/6115 have 4 rpm power domains, ported from downstream DT.
 
 Signed-off-by: Iskren Chernev <iskren.chernev@gmail.com>
 ---
- .../devicetree/bindings/power/qcom,rpmpd.yaml          |  1 +
- include/dt-bindings/power/qcom-rpmpd.h                 | 10 ++++++++++
- 2 files changed, 11 insertions(+)
+ drivers/soc/qcom/rpmpd.c | 28 ++++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/power/qcom,rpmpd.yaml b/Documentation/devicetree/bindings/power/qcom,rpmpd.yaml
-index 4807b560f00d..239f37881cae 100644
---- a/Documentation/devicetree/bindings/power/qcom,rpmpd.yaml
-+++ b/Documentation/devicetree/bindings/power/qcom,rpmpd.yaml
-@@ -30,6 +30,7 @@ properties:
-       - qcom,sc8180x-rpmhpd
-       - qcom,sdm845-rpmhpd
-       - qcom,sdx55-rpmhpd
-+      - qcom,sm6115-rpmpd
-       - qcom,sm8150-rpmhpd
-       - qcom,sm8250-rpmhpd
-       - qcom,sm8350-rpmhpd
-diff --git a/include/dt-bindings/power/qcom-rpmpd.h b/include/dt-bindings/power/qcom-rpmpd.h
-index 8b5708bb9671..4533dbbf9937 100644
---- a/include/dt-bindings/power/qcom-rpmpd.h
-+++ b/include/dt-bindings/power/qcom-rpmpd.h
-@@ -192,6 +192,16 @@
- #define SDM660_SSCMX		8
- #define SDM660_SSCMX_VFL	9
+diff --git a/drivers/soc/qcom/rpmpd.c b/drivers/soc/qcom/rpmpd.c
+index 0b532a892d60..dbf494e92574 100644
+--- a/drivers/soc/qcom/rpmpd.c
++++ b/drivers/soc/qcom/rpmpd.c
+@@ -346,6 +346,33 @@ static const struct rpmpd_desc sdm660_desc = {
+ 	.max_state = RPM_SMD_LEVEL_TURBO,
+ };
  
-+/* SM6115 Power Domains */
-+#define SM6115_VDDCX		0
-+#define SM6115_VDDCX_AO		1
-+#define SM6115_VDDCX_VFL	2
-+#define SM6115_VDDMX		3
-+#define SM6115_VDDMX_AO		4
-+#define SM6115_VDDMX_VFL	5
-+#define SM6115_VDD_LPI_CX	6
-+#define SM6115_VDD_LPI_MX	7
++/* sm4250/6115 RPM Power domains */
++DEFINE_RPMPD_PAIR(sm6115, vddcx, vddcx_ao, RWCX, LEVEL, 0);
++DEFINE_RPMPD_VFL(sm6115, vddcx_vfl, RWCX, 0);
 +
- /* RPM SMD Power Domain performance levels */
- #define RPM_SMD_LEVEL_RETENTION       16
- #define RPM_SMD_LEVEL_RETENTION_PLUS  32
++DEFINE_RPMPD_PAIR(sm6115, vddmx, vddmx_ao, RWMX, LEVEL, 0);
++DEFINE_RPMPD_VFL(sm6115, vddmx_vfl, RWMX, 0);
++
++DEFINE_RPMPD_LEVEL(sm6115, vdd_lpi_cx, RWLC, 0);
++DEFINE_RPMPD_LEVEL(sm6115, vdd_lpi_mx, RWLM, 0);
++
++static struct rpmpd *sm6115_rpmpds[] = {
++	[SM6115_VDDCX] =		&sm6115_vddcx,
++	[SM6115_VDDCX_AO] =		&sm6115_vddcx_ao,
++	[SM6115_VDDCX_VFL] =		&sm6115_vddcx_vfl,
++	[SM6115_VDDMX] =		&sm6115_vddmx,
++	[SM6115_VDDMX_AO] =		&sm6115_vddmx_ao,
++	[SM6115_VDDMX_VFL] =		&sm6115_vddmx_vfl,
++	[SM6115_VDD_LPI_CX] =		&sm6115_vdd_lpi_cx,
++	[SM6115_VDD_LPI_MX] =		&sm6115_vdd_lpi_mx,
++};
++
++static const struct rpmpd_desc sm6115_desc = {
++	.rpmpds = sm6115_rpmpds,
++	.num_pds = ARRAY_SIZE(sm6115_rpmpds),
++	.max_state = RPM_SMD_LEVEL_TURBO_NO_CPR,
++};
++
+ static const struct of_device_id rpmpd_match_table[] = {
+ 	{ .compatible = "qcom,mdm9607-rpmpd", .data = &mdm9607_desc },
+ 	{ .compatible = "qcom,msm8916-rpmpd", .data = &msm8916_desc },
+@@ -356,6 +383,7 @@ static const struct of_device_id rpmpd_match_table[] = {
+ 	{ .compatible = "qcom,msm8998-rpmpd", .data = &msm8998_desc },
+ 	{ .compatible = "qcom,qcs404-rpmpd", .data = &qcs404_desc },
+ 	{ .compatible = "qcom,sdm660-rpmpd", .data = &sdm660_desc },
++	{ .compatible = "qcom,sm6115-rpmpd", .data = &sm6115_desc },
+ 	{ }
+ };
+ MODULE_DEVICE_TABLE(of, rpmpd_match_table);
 -- 
 2.32.0
 
