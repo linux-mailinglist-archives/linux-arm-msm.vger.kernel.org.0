@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4C95A3B54CE
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 27 Jun 2021 20:58:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5970B3B54D1
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 27 Jun 2021 20:58:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231461AbhF0TAU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 27 Jun 2021 15:00:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33242 "EHLO
+        id S231489AbhF0TAX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 27 Jun 2021 15:00:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33252 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231298AbhF0TAU (ORCPT
+        with ESMTP id S231298AbhF0TAW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 27 Jun 2021 15:00:20 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8C5DC061574;
-        Sun, 27 Jun 2021 11:57:54 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id d11so17968057wrm.0;
-        Sun, 27 Jun 2021 11:57:54 -0700 (PDT)
+        Sun, 27 Jun 2021 15:00:22 -0400
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6CB4C061574;
+        Sun, 27 Jun 2021 11:57:56 -0700 (PDT)
+Received: by mail-wm1-x333.google.com with SMTP id u20so4580791wmq.4;
+        Sun, 27 Jun 2021 11:57:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=M/3/joTnhRd17fCBvR7XJw02bsdVZrFj5dA6ttjMmdo=;
-        b=L7wp89raLmw2Qhvg8cJyD+vjhtQp9x60n5BoouREW91gbZqyVqpX2yJd8YNlrF0FpK
-         fY7Zy1yZhMUk8D21USjI+XjmPFkXVCEgvJ7APRKoeCMk3WYX4krWXvo0NMwJTIyVzkuh
-         6xM6RVzM5duxFlEb+f7fYZqrJpAjtLVWL2VDgLybOflPcPTFqqFH4Q83q9Cs4SOYDA6J
-         okRlWL5Jb5+AysEfv98Re033KkkkY/MCjPKl68xfewRoDPLrvXZn8WiXF1oKgvNpVaLe
-         4548stdjNIV/yn5w/v3uPpuoIvvaxtDimQusO/JovK8fMybBGwL8YqKuzK7xDtTmYOLt
-         pe7g==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=hbU5C53by8ndXGtDEtCLVhoqtGIcQT0Y5XrfcYaPR5U=;
+        b=XjbWv8UNt42p5A0Ph1knmvdygMxaAn/0g7apE32zRAGtCJ6jnfpBY3FMJOW/cYse9G
+         9JqccMrWywt7QkNDMNiupj0MLtOSD7MOG7L+XeOrsSPouSpsuRsNPzdecg+x113BFUIV
+         yrR3FoJ4xRg+2YNePg4gmbRy9iobLHkmcCvvHSK7wuL0zzbbjiKnPykJcaRP3Owy9DpL
+         tijine4/Bd1BDcYyxfFnlzVmG8fkWRwLd4KFdfdo8hXRRCaIS9BtOl8zj/ebqUo1WfA5
+         3EwtoFHVm9GnC679/nVA/Cgh97zeHJr2mWx8+bqGYnA+kgiWBtYqODrWb7gn6l5lEJAw
+         zAQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=M/3/joTnhRd17fCBvR7XJw02bsdVZrFj5dA6ttjMmdo=;
-        b=BsiumquqABMCj9F6J98AJrheqI3ZNxPWESjOeeZ9T4c/KcOpD6sDamctshyVkjWIVi
-         EDLfpNQ1IHvvTyv1ylyqTiFnCCi9AvURb3sMYYB3d5+Bg8gLXQlHdM4rSYRaFQNO1S0C
-         mvkpTrh5ROfPzYrKjXFeSpWY2yKebAlsdBy59DtqC2GJierFTnJC7SeWRGo1QQ0rscHe
-         C4YzzDrcKwb1eS4ZcnkGgR5CrHBuP2UIYXiA4W9FoTgjRJ4sJPhPbSX/K9VKihFMrt8i
-         rp/AcLqtbU8H+Mvb1ppg/oKYmF8EQFsdowUAv8kokU7B6eGHi/YgNIBP/V7fxAft9zqA
-         +2sQ==
-X-Gm-Message-State: AOAM531pPS2W0GSvQeEss/m2RVa7LNf4N/+BHyhIn40QZEFjgeQiNN5E
-        E1x6iKBcP1JKAUJfVhDbYIA=
-X-Google-Smtp-Source: ABdhPJykFvXVZYIxBISkFs/2/ZDJTHrGDO7IOLNgjL/04Qhbm/69bPZ322YUI3TVd5AwaTBZyGtdTA==
-X-Received: by 2002:a5d:5685:: with SMTP id f5mr15391725wrv.101.1624820273454;
-        Sun, 27 Jun 2021 11:57:53 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=hbU5C53by8ndXGtDEtCLVhoqtGIcQT0Y5XrfcYaPR5U=;
+        b=ThBIl2i3gTCmRWLG9FPX1s+61NDUh4JW1ZhSIqUfG7f4j/2iT3YlWbNr8tYn1qIchJ
+         laQeQmKJ3Bo0HLg1ow22SffyiaWTNI6sRg751TWFIFmhVXa6kJMoz96FnpKhtG6sX91H
+         qK3R4885Le1HwhJOCOtdqkRAjJit/S2Yq4pa9tLg7nlxul6/sWmyoVgBl5dgHVYRNS8a
+         zyNAf7akxvmiLwIYSSCeaxmUFjoVX0Ah1oEvMDRIrCCUtjJ0MLqWKALZWgzgg+DfBIXw
+         FDwpX5XFqvn/zTt4AAYjlHDB/rfbEvvOu66Pta2YaOKEvy0pH70ZJwJlW6KxjkGfk/ci
+         vJDw==
+X-Gm-Message-State: AOAM532/NqGtcakkocq/butwNRwX7hgDCWsz3nxzbnn3TG9qm5Qytjsh
+        lKyMNp0QN2DxnQlXAOQ9PTA=
+X-Google-Smtp-Source: ABdhPJytfeyRGXE5YzR0zAsxyOTXEKP5cpkjgw0SUEWYEw3BnHQyhWkoHAtaXKSC0/4czYQMCh41Ag==
+X-Received: by 2002:a1c:4d10:: with SMTP id o16mr468366wmh.160.1624820275513;
+        Sun, 27 Jun 2021 11:57:55 -0700 (PDT)
 Received: from localhost (178-169-161-196.razgrad.ddns.bulsat.com. [178.169.161.196])
-        by smtp.gmail.com with ESMTPSA id a4sm4022812wru.55.2021.06.27.11.57.52
+        by smtp.gmail.com with ESMTPSA id e17sm13615158wre.79.2021.06.27.11.57.54
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 27 Jun 2021 11:57:52 -0700 (PDT)
+        Sun, 27 Jun 2021 11:57:55 -0700 (PDT)
 From:   Iskren Chernev <iskren.chernev@gmail.com>
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>
 Cc:     Andy Gross <agross@kernel.org>,
@@ -60,43 +60,38 @@ Cc:     Andy Gross <agross@kernel.org>,
         linux-phy@lists.infradead.org, linux-usb@vger.kernel.org,
         phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
         Iskren Chernev <iskren.chernev@gmail.com>
-Subject: [PATCH v2 0/3] Add USB HS support for SM4250/6115
-Date:   Sun, 27 Jun 2021 21:57:47 +0300
-Message-Id: <20210627185750.693222-1-iskren.chernev@gmail.com>
+Subject: [PATCH v2 1/3] dt-bindings: usb: qcom,dwc3: Add bindings for sm6115
+Date:   Sun, 27 Jun 2021 21:57:48 +0300
+Message-Id: <20210627185750.693222-2-iskren.chernev@gmail.com>
 X-Mailer: git-send-email 2.32.0
+In-Reply-To: <20210627185750.693222-1-iskren.chernev@gmail.com>
+References: <20210627185750.693222-1-iskren.chernev@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The USB controller found on SM4250/6115 is dwc3 (phy v1), very similar to
-existing supported phys (like msm8996), with slighly different tune seq.
+Add the compatible string for SM4250/6115 SoC from Qualcomm.
 
-PS1: I know the series is already in usb-next, I can make a new series that
-will remove the 4250 compat from the existing code (but it would be 3 commits
-as well), let me know how to proceed.
+Signed-off-by: Iskren Chernev <iskren.chernev@gmail.com>
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+---
+ Documentation/devicetree/bindings/usb/qcom,dwc3.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
-PS2: I kept the Bjorn Reviewed-by, because I'm only removing the compat string,
-which he agreed to, in a similar setting https://lkml.org/lkml/2021/6/25/351
-
-v1: https://lkml.org/lkml/2021/6/22/1183
-
-Changes from v1:
-- remove 4250 compat, both platforms will share one dtsi
-
-Iskren Chernev (3):
-  dt-bindings: usb: qcom,dwc3: Add bindings for sm6115
-  dt-bindings: phy: qcom,qusb2: document sm6115 compatible
-  phy: qcom-qusb2: Add configuration for SM6115
-
- .../bindings/phy/qcom,qusb2-phy.yaml          |  1 +
- .../devicetree/bindings/usb/qcom,dwc3.yaml    |  1 +
- drivers/phy/qualcomm/phy-qcom-qusb2.c         | 31 +++++++++++++++++++
- 3 files changed, 33 insertions(+)
-
-
-base-commit: e71e3a48a7e89fa71fb70bf4602367528864d2ff
+diff --git a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+index 413299b5fe2b..938b1137fac0 100644
+--- a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
++++ b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+@@ -19,6 +19,7 @@ properties:
+           - qcom,sc7280-dwc3
+           - qcom,sdm845-dwc3
+           - qcom,sdx55-dwc3
++          - qcom,sm6115-dwc3
+           - qcom,sm8150-dwc3
+           - qcom,sm8250-dwc3
+           - qcom,sm8350-dwc3
 -- 
 2.32.0
 
