@@ -2,92 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0E9F23B549D
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 27 Jun 2021 20:19:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8C1D03B54B6
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 27 Jun 2021 20:55:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231359AbhF0SVc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 27 Jun 2021 14:21:32 -0400
-Received: from perceval.ideasonboard.com ([213.167.242.64]:41100 "EHLO
-        perceval.ideasonboard.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231288AbhF0SVc (ORCPT
+        id S231352AbhF0S6K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 27 Jun 2021 14:58:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60928 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231288AbhF0S6J (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 27 Jun 2021 14:21:32 -0400
-Received: from pendragon.ideasonboard.com (62-78-145-57.bb.dnainternet.fi [62.78.145.57])
-        by perceval.ideasonboard.com (Postfix) with ESMTPSA id 3EAB029A;
-        Sun, 27 Jun 2021 20:19:06 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-        s=mail; t=1624817946;
-        bh=wK+nrVwjt4OX8y71ZMQNFIWNMUXMqLqQiij/WmjWfnc=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=DNBuwmC7I/0peKCcsI23heE5BEUc3uq5lbUNBGL4nPDJTkM9RWpqInfdWZMvvvfNS
-         2hzBZhTR7tPMq92wpwFNh/jj5ZdTASPJ8Hv/sOyGaTHxba2Mhnia4DLhsSuHNVOVSa
-         XUUuiknu/EVpC6z+qi8nL8DXL8Y/j9wjbLJOLE4M=
-Date:   Sun, 27 Jun 2021 21:18:34 +0300
-From:   Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-To:     Rajeev Nandan <rajeevny@codeaurora.org>
-Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, thierry.reding@gmail.com,
-        sam@ravnborg.org, robdclark@gmail.com, dianders@chromium.org,
-        lyude@redhat.com, jani.nikula@intel.com, robh@kernel.org,
-        a.hajda@samsung.com, daniel.thompson@linaro.org,
-        hoegsberg@chromium.org, abhinavk@codeaurora.org,
-        seanpaul@chromium.org, kalyan_t@codeaurora.org,
-        mkrishn@codeaurora.org
-Subject: Re: [v8 4/6] drm/panel-simple: Update validation warnings for eDP
- panel description
-Message-ID: <YNjA+jg9Khn+a9K+@pendragon.ideasonboard.com>
-References: <1624726268-14869-1-git-send-email-rajeevny@codeaurora.org>
- <1624726268-14869-5-git-send-email-rajeevny@codeaurora.org>
+        Sun, 27 Jun 2021 14:58:09 -0400
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7777AC061574;
+        Sun, 27 Jun 2021 11:55:44 -0700 (PDT)
+Received: by mail-wm1-x32d.google.com with SMTP id a5-20020a7bc1c50000b02901e3bbe0939bso9518943wmj.0;
+        Sun, 27 Jun 2021 11:55:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=gAa5Undjg/T4By4J3ChgR8S1R2CwQn5rJM130hj+4IU=;
+        b=XemtwnJbPpP0NOMZzTrA3shACUa65X54mPuEkDUh8iaDyMRSFHyhbxXSjrMDcxiIv+
+         o1cAJngN7q5x2XRCk5vOHaCzR6ak2Sc/q8rIIpndyoTOy936Cm5a8rvZSZChrHHv2rlk
+         3CIKhnSYQFCQAOBKqcObHIUJ+am/EaF17wwMhaJm61TMo2tQeudJEw61VBEIR8wVlAo2
+         b/7/tKwdDv/5e01//eUV2Iigkd8nlXrYdSzkxWkJljRsEGxlE8uuUOZQ73KoCNvTmpKo
+         rDup3Jp9ZQzbuZjxdGRRUZ1oSkUEr6HM3jI7D31y5YY2Qgway4Q+pnBBBz5g7wn0z4VB
+         LR0w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=gAa5Undjg/T4By4J3ChgR8S1R2CwQn5rJM130hj+4IU=;
+        b=tm3f943Mi2WPYqfq6rbXmJNMeSD9I5QgpOrk19VKyk8oCSOmQqIyX5dw7VpXgKKgyf
+         SOYd5Gj4zSkU6nRpWy4LMnp6pnB9cGrHYzBo6uZouB7tyXY5P8NSgFwEwaOz7ifqntGJ
+         yqG+yVgPqpuqJgj8DfnZl4mDIxDs5GfxnN85Tds6/f9ty2APMEDloy2Ylm9o6aS1vlLA
+         9yfKUcI8fYvISLcjRQWaWegMOsFXNzqAV4HjuDzZATLqdIwy6bJSjfBwZvXxZ5aBoroU
+         tGAGCXGSqEoe62Ul1lct4dEw1yYPMH/HbMAaoecODKHia/bVz+nhd5P0j0RLnP/4Re4z
+         Pkeg==
+X-Gm-Message-State: AOAM530xlUyVeytEZ7xLV6M2e7FeRmo+dmynOJKYgGTqtBW8K0N20d12
+        +AN+d91UHyRlLN2oLn2M6qw=
+X-Google-Smtp-Source: ABdhPJwCOasxxJ/1Eing5sMd4n9+hul0QWT3erZJKRhPWVyx8HuMQDZzLJVf0bEVIe8l8TyC5952uw==
+X-Received: by 2002:a7b:cb55:: with SMTP id v21mr21489340wmj.19.1624820143108;
+        Sun, 27 Jun 2021 11:55:43 -0700 (PDT)
+Received: from localhost (178-169-161-196.razgrad.ddns.bulsat.com. [178.169.161.196])
+        by smtp.gmail.com with ESMTPSA id r6sm5931826wmq.37.2021.06.27.11.55.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 27 Jun 2021 11:55:42 -0700 (PDT)
+From:   Iskren Chernev <iskren.chernev@gmail.com>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Iskren Chernev <iskren.chernev@gmail.com>
+Subject: [PATCH v2 0/2] Add GCC for SM4250/6115
+Date:   Sun, 27 Jun 2021 21:55:36 +0300
+Message-Id: <20210627185538.690277-1-iskren.chernev@gmail.com>
+X-Mailer: git-send-email 2.32.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1624726268-14869-5-git-send-email-rajeevny@codeaurora.org>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rajeev,
+This patch adds support for the Global Clock Controller on QCom SM4250 and
+SM6115, codename bengal. The code is taken from OnePlus repo [1]. The two
+platforms are identical so there is only one compat string.
 
-On Sat, Jun 26, 2021 at 10:21:06PM +0530, Rajeev Nandan wrote:
-> Do not give a warning for the eDP panels if the "bus_format" is
-> not specified, since most eDP panels can support more than one
-> bus formats and this can be auto-detected.
-> Also, update the check to include bpc=10 for the eDP panel.
-> 
-> Signed-off-by: Rajeev Nandan <rajeevny@codeaurora.org>
-> ---
-> 
-> Changes in v8:
-> - New patch, to address the review comments of Sam Ravnborg [1]
-> 
-> [1] https://lore.kernel.org/dri-devel/20210621184157.GB918146@ravnborg.org/
-> 
->  drivers/gpu/drm/panel/panel-simple.c | 6 ++----
->  1 file changed, 2 insertions(+), 4 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
-> index 86e5a45..f966b562 100644
-> --- a/drivers/gpu/drm/panel/panel-simple.c
-> +++ b/drivers/gpu/drm/panel/panel-simple.c
-> @@ -772,10 +772,8 @@ static int panel_simple_probe(struct device *dev, const struct panel_desc *desc,
->  			desc->bpc != 8);
->  		break;
->  	case DRM_MODE_CONNECTOR_eDP:
-> -		if (desc->bus_format == 0)
-> -			dev_warn(dev, "Specify missing bus_format\n");
-> -		if (desc->bpc != 6 && desc->bpc != 8)
-> -			dev_warn(dev, "Expected bpc in {6,8} but got: %u\n", desc->bpc);
-> +		if (desc->bpc != 6 && desc->bpc != 8 && desc->bpc != 10)
-> +			dev_warn(dev, "Expected bpc in {6,8,10} but got: %u\n", desc->bpc);
+[1]: https://github.com/OnePlusOSS/android_kernel_oneplus_sm4250
 
-You'll still get a warning is bpc == 0, is that intentional ?
+v1: https://lkml.org/lkml/2021/6/22/1131
 
->  		break;
->  	case DRM_MODE_CONNECTOR_DSI:
->  		if (desc->bpc != 6 && desc->bpc != 8)
+Changes from v1:
+- remove sm4250 compat, there will be a single sm6115.dtsi for both platforms
 
--- 
-Regards,
+Iskren Chernev (2):
+  dt-bindings: clk: qcom: gcc-sm6115: Document SM6115 GCC
+  clk: qcom: Add Global Clock controller (GCC) driver for SM6115
 
-Laurent Pinchart
+ .../bindings/clock/qcom,gcc-sm6115.yaml       |   72 +
+ drivers/clk/qcom/Kconfig                      |    7 +
+ drivers/clk/qcom/Makefile                     |    1 +
+ drivers/clk/qcom/gcc-sm6115.c                 | 3623 +++++++++++++++++
+ include/dt-bindings/clock/qcom,gcc-sm6115.h   |  201 +
+ 5 files changed, 3904 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-sm6115.yaml
+ create mode 100644 drivers/clk/qcom/gcc-sm6115.c
+ create mode 100644 include/dt-bindings/clock/qcom,gcc-sm6115.h
+
+
+base-commit: e71e3a48a7e89fa71fb70bf4602367528864d2ff
+--
+2.32.0
+
