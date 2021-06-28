@@ -2,137 +2,176 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1425E3B68CE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Jun 2021 21:05:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A7A683B68FB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Jun 2021 21:20:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236005AbhF1THq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Jun 2021 15:07:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41812 "EHLO
+        id S236363AbhF1TW3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Jun 2021 15:22:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45162 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233161AbhF1THo (ORCPT
+        with ESMTP id S236356AbhF1TW2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Jun 2021 15:07:44 -0400
-Received: from mail-pg1-x534.google.com (mail-pg1-x534.google.com [IPv6:2607:f8b0:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51514C061760
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Jun 2021 12:05:17 -0700 (PDT)
-Received: by mail-pg1-x534.google.com with SMTP id h4so16262212pgp.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Jun 2021 12:05:17 -0700 (PDT)
+        Mon, 28 Jun 2021 15:22:28 -0400
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D2B6C061574
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Jun 2021 12:20:02 -0700 (PDT)
+Received: by mail-lf1-x132.google.com with SMTP id q16so20404447lfr.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Jun 2021 12:20:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=UuLWWmnvZt1Eact5E5zQvx40z47gJJnUBnaxQPWrxTo=;
-        b=AC1Pf6F2FnAnQz0fGMrj75w/nMyYp0qr4+QQ3bn8kV0Y4xcy0kSbGmGHTtvYY2nQUP
-         pzisKJXdkx3dVoHgrmy60jo1+oCRrQ1RaahFguj4q/uz7koXr6re8qrx5tC9FWYa0K41
-         mVxkrNdC0PcouiMQPDAnBH08fgAkPD870V2QI=
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Z4PQd+vXqHbOkJOfTvhkdMDFsyjL9DZBFjLZj+37g1g=;
+        b=G3gXlhGHpTfgbNbj474Gyg+uCm39rJXHb/qC+hYXB/57E0w+gi5VVp2+jUoVsr3m6h
+         AQVRpgZIsEgAx5ODYge8e61QyKRtpiR8oq+0CR+ul+dQVjaBaHRS9/0x3uqm1yMv9oEq
+         lPG58DNDN7A3/B+b28yYvZNiquRPSlZSN2ijIERhMZSkvVXgt+Z+XxKlT2h+/fVeAwQ4
+         E2YgLiuf+adZwAJUeHuPPnh4YILkrbc5ZYYOn10P31r8ayDGZdU/BBhSiQ/PFn0aHqKE
+         MCBFMA1061DGqRp1qzPE1gq01xxHtvbVxTpenn8th/+gP77vlPY4HcWFSRPXmY1mQSv7
+         5TPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=UuLWWmnvZt1Eact5E5zQvx40z47gJJnUBnaxQPWrxTo=;
-        b=FCQbHd1sBWA+mUHSvrIx3i4T3g4NPQ/iopcRi32hXgWsC9FpbCFGceYgZnjWjj8DnI
-         LKiLD7rY6oelUOrSdKNPKpZZt73D0U8ui8Ic5YLnzcbZUBAH2IAvnC6g/ULBaQLvqwzF
-         UV1M8MXOpCY2DBfpPI+4sqGiP9vVHlHEbb/ayQfL0Sa7J4v8/jbtD4/pI9QgCHf1L30U
-         KK0PcNi01SpEubnh2M3FiQ2SOXL73Vne9Lwva023TTl+f4AbCshXcOhgCw9Hs/iWt+wg
-         bzWfpK8BVJa0bEG/noWOB62QT2/F6qGK1DzMMiKbh/ZS+YvAzhR8mcsH15ayrIXRk6uB
-         3S0w==
-X-Gm-Message-State: AOAM533q7AyOteHl/W1pFMTV776YinbqkDlmZr8s1h3/0gaX3wvnrZVN
-        1gYizv1gwpW/4qhvFxgNL1PdaQ==
-X-Google-Smtp-Source: ABdhPJwL7reP7lAruztnf+bjjxn2ijxUR1B0eGZgtokgGCAeZnkfQcn7emRJZqXYg3AtdmC6WtP+ug==
-X-Received: by 2002:a63:1215:: with SMTP id h21mr24262501pgl.173.1624907116892;
-        Mon, 28 Jun 2021 12:05:16 -0700 (PDT)
-Received: from localhost ([2620:15c:202:201:df70:d2d8:b384:35cf])
-        by smtp.gmail.com with UTF8SMTPSA id i3sm16606319pgc.92.2021.06.28.12.05.15
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 28 Jun 2021 12:05:16 -0700 (PDT)
-Date:   Mon, 28 Jun 2021 12:05:14 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Sibi Sankar <sibis@codeaurora.org>
-Cc:     bjorn.andersson@linaro.org, robh+dt@kernel.org, will@kernel.org,
-        saiprakash.ranjan@codeaurora.org, ohad@wizery.com,
-        agross@kernel.org, mathieu.poirier@linaro.org,
-        robin.murphy@arm.com, joro@8bytes.org, p.zabel@pengutronix.de,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, evgreen@chromium.org,
-        dianders@chromium.org, swboyd@chromium.org
-Subject: Re: [PATCH 9/9] arm64: dts: qcom: sc7280: Update Q6V5 MSS node
-Message-ID: <YNodaqE9n9+sQUFq@google.com>
-References: <1624564058-24095-1-git-send-email-sibis@codeaurora.org>
- <1624564058-24095-10-git-send-email-sibis@codeaurora.org>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Z4PQd+vXqHbOkJOfTvhkdMDFsyjL9DZBFjLZj+37g1g=;
+        b=Cy9P0VuyJNkjo1vq7wH1PKtYjVlX6syCfVXLiRnDQjSCTwpaqyDQpMAL5Cc4g7emjl
+         jfAmggAyaZG/fTyCBKxs9Gl7kKAqUqgYuG2IQmfX8Z6s0mXP96ON1/Dok0QTIRseedmA
+         lDSi5Jow4lekF3hc1tc8ah4ZiOI04sk6NTi3toVCVnxOsjRHyBMQD0PTLNBLPC/Idapv
+         JCP0W+3c9MvOnCtlkyx4I0yYKvgOxFoIrxx2Qt0Ge8BGsnhzCprba1Q9Xqtqs6Ir0558
+         JeO2oEqIIJ2wPqQc9PuTDNBk7SeNi3cJ/1e2Eh0hl/+8vPt4f3PProYnkdH/ErZYtOdn
+         Lemw==
+X-Gm-Message-State: AOAM533UEvAdAnc8aYJAwCojuNOB/LJsiJFpQvdulTgjrf1enCj5OfJJ
+        w4ngsvP6dr4iVlYQamVk9zt8Gg==
+X-Google-Smtp-Source: ABdhPJxzv5a7i6tA7s53JhRK5iuieau3p2c4ao2+64vENRc5CWdfvEL/e1MMPpnWSbUxb39WKbStWA==
+X-Received: by 2002:ac2:4e98:: with SMTP id o24mr19528579lfr.604.1624908000785;
+        Mon, 28 Jun 2021 12:20:00 -0700 (PDT)
+Received: from eriador.lumag.spb.ru ([188.162.64.209])
+        by smtp.gmail.com with ESMTPSA id x3sm1099728ljm.43.2021.06.28.12.19.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 28 Jun 2021 12:20:00 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <abhinavk@codeaurora.org>
+Cc:     Jonathan Marek <jonathan@marek.ca>,
+        Stephen Boyd <sboyd@kernel.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+Subject: [PATCH] drm/msm/dpu: add support for alpha blending properties
+Date:   Mon, 28 Jun 2021 22:19:58 +0300
+Message-Id: <20210628191958.2754731-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1624564058-24095-10-git-send-email-sibis@codeaurora.org>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jun 25, 2021 at 01:17:38AM +0530, Sibi Sankar wrote:
-> Update MSS node to support MSA based modem boot on SC7280 SoCs.
-> 
-> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
-> ---
->  arch/arm64/boot/dts/qcom/sc7280-idp.dts |  7 +++++++
->  arch/arm64/boot/dts/qcom/sc7280.dtsi    | 19 ++++++++++++++++---
->  2 files changed, 23 insertions(+), 3 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dts b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
-> index 191e8a92d153..d66e3ca42ad5 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dts
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
-> @@ -343,3 +343,10 @@
->  		bias-pull-up;
->  	};
->  };
-> +
-> +&remoteproc_mpss {
-> +	status = "okay";
-> +	compatible = "qcom,sc7280-mss-pil";
-> +	iommus = <&apps_smmu 0x124 0x0>, <&apps_smmu 0x488 0x7>;
-> +	memory-region = <&mba_mem &mpss_mem>;
-> +};
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> index 56ea172f641f..6d3687744440 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> @@ -586,7 +586,8 @@
->  
->  		remoteproc_mpss: remoteproc@4080000 {
->  			compatible = "qcom,sc7280-mpss-pas";
-> -			reg = <0 0x04080000 0 0x10000>;
-> +			reg = <0 0x04080000 0 0x10000>, <0 0x04180000 0 0x48>;
-> +			reg-names = "qdsp6", "rmb";
+Add support for alpha blending properties. Setup the plane blend state
+according to those properties.
 
-Binding needs update?
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c  | 43 ++++++++++++++++-------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 10 ++++--
+ 2 files changed, 37 insertions(+), 16 deletions(-)
 
-Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml:
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+index 9a5c70c87cc8..768012243b44 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+@@ -30,12 +30,6 @@
+ #include "dpu_core_perf.h"
+ #include "dpu_trace.h"
+ 
+-#define DPU_DRM_BLEND_OP_NOT_DEFINED    0
+-#define DPU_DRM_BLEND_OP_OPAQUE         1
+-#define DPU_DRM_BLEND_OP_PREMULTIPLIED  2
+-#define DPU_DRM_BLEND_OP_COVERAGE       3
+-#define DPU_DRM_BLEND_OP_MAX            4
+-
+ /* layer mixer index on dpu_crtc */
+ #define LEFT_MIXER 0
+ #define RIGHT_MIXER 1
+@@ -146,20 +140,43 @@ static void _dpu_crtc_setup_blend_cfg(struct dpu_crtc_mixer *mixer,
+ {
+ 	struct dpu_hw_mixer *lm = mixer->hw_lm;
+ 	uint32_t blend_op;
++	uint32_t fg_alpha, bg_alpha;
+ 
+-	/* default to opaque blending */
+-	blend_op = DPU_BLEND_FG_ALPHA_FG_CONST |
+-		DPU_BLEND_BG_ALPHA_BG_CONST;
++	fg_alpha = pstate->base.alpha >> 8;
++	bg_alpha = 0xff - fg_alpha;
+ 
+-	if (format->alpha_enable) {
++	/* default to opaque blending */
++	if (pstate->base.pixel_blend_mode == DRM_MODE_BLEND_PIXEL_NONE ||
++	    !format->alpha_enable) {
++		blend_op = DPU_BLEND_FG_ALPHA_FG_CONST |
++			DPU_BLEND_BG_ALPHA_BG_CONST;
++	} else if (pstate->base.pixel_blend_mode == DRM_MODE_BLEND_PREMULTI) {
++		blend_op = DPU_BLEND_FG_ALPHA_FG_CONST |
++			DPU_BLEND_BG_ALPHA_FG_PIXEL;
++		if (fg_alpha != 0xff) {
++			bg_alpha = fg_alpha;
++			blend_op |= DPU_BLEND_BG_MOD_ALPHA |
++				    DPU_BLEND_BG_INV_MOD_ALPHA;
++		} else {
++			blend_op |= DPU_BLEND_BG_INV_ALPHA;
++		}
++	} else {
+ 		/* coverage blending */
+ 		blend_op = DPU_BLEND_FG_ALPHA_FG_PIXEL |
+-			DPU_BLEND_BG_ALPHA_FG_PIXEL |
+-			DPU_BLEND_BG_INV_ALPHA;
++			DPU_BLEND_BG_ALPHA_FG_PIXEL;
++		if (fg_alpha != 0xff) {
++			bg_alpha = fg_alpha;
++			blend_op |= DPU_BLEND_FG_MOD_ALPHA |
++				    DPU_BLEND_FG_INV_MOD_ALPHA |
++				    DPU_BLEND_BG_MOD_ALPHA |
++				    DPU_BLEND_BG_INV_MOD_ALPHA;
++		} else {
++			blend_op |= DPU_BLEND_BG_INV_ALPHA;
++		}
+ 	}
+ 
+ 	lm->ops.setup_blend_config(lm, pstate->stage,
+-				0xFF, 0, blend_op);
++				fg_alpha, bg_alpha, blend_op);
+ 
+ 	DRM_DEBUG_ATOMIC("format:%p4cc, alpha_en:%u blend_op:0x%x\n",
+ 		  &format->base.pixel_format, format->alpha_enable, blend_op);
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+index ec4a6f04394a..c989621209aa 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+@@ -1339,9 +1339,7 @@ static void dpu_plane_reset(struct drm_plane *plane)
+ 		return;
+ 	}
+ 
+-	pstate->base.plane = plane;
+-
+-	plane->state = &pstate->base;
++	__drm_atomic_helper_plane_reset(plane, &pstate->base);
+ }
+ 
+ #ifdef CONFIG_DEBUG_FS
+@@ -1647,6 +1645,12 @@ struct drm_plane *dpu_plane_init(struct drm_device *dev,
+ 	if (ret)
+ 		DPU_ERROR("failed to install zpos property, rc = %d\n", ret);
+ 
++	drm_plane_create_alpha_property(plane);
++	drm_plane_create_blend_mode_property(plane,
++			BIT(DRM_MODE_BLEND_PIXEL_NONE) |
++			BIT(DRM_MODE_BLEND_PREMULTI) |
++			BIT(DRM_MODE_BLEND_COVERAGE));
++
+ 	drm_plane_create_rotation_property(plane,
+ 			DRM_MODE_ROTATE_0,
+ 			DRM_MODE_ROTATE_0 |
+-- 
+2.30.2
 
-  reg:
-      maxItems: 1
-
->  
->  			interrupts-extended = <&intc GIC_SPI 264 IRQ_TYPE_EDGE_RISING>,
->  					      <&modem_smp2p_in 0 IRQ_TYPE_EDGE_RISING>,
-> @@ -597,8 +598,11 @@
->  			interrupt-names = "wdog", "fatal", "ready", "handover",
->  					  "stop-ack", "shutdown-ack";
->  
-> -			clocks = <&rpmhcc RPMH_CXO_CLK>;
-> -			clock-names = "xo";
-> +			clocks = <&gcc GCC_MSS_CFG_AHB_CLK>,
-> +				 <&gcc GCC_MSS_OFFLINE_AXI_CLK>,
-> +				 <&gcc GCC_MSS_SNOC_AXI_CLK>,
-> +				 <&rpmhcc RPMH_CXO_CLK>;
-> +			clock-names = "iface", "offline", "snoc_axi", "xo";
-
-Binding needs update?
-
-Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml:
-
-  clocks:
-    items:
-      - description: XO clock
-  clock-names:
-    items:
-      - const: xo
