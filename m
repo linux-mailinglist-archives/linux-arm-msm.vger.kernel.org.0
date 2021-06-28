@@ -2,98 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7E6493B5746
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Jun 2021 04:39:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BE6F73B5795
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Jun 2021 05:01:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231958AbhF1CmI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 27 Jun 2021 22:42:08 -0400
-Received: from mail.kernel.org ([198.145.29.99]:53994 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231678AbhF1CmI (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 27 Jun 2021 22:42:08 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 3EFB4619C4;
-        Mon, 28 Jun 2021 02:39:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1624847983;
-        bh=SoCGeNG9HsDyxEtp2GU2WZmjAAPuhOGmCHPhhj60muU=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=JKIEBR2oQ9Uw+5+bfI1dRTWaB6ZUaiPcjiM+R1JnW5iWgLzXii3r0qdYEMoGCKVbQ
-         Z6zHPO1HRGvE9t8h6WAiAxvfs1llnO5STQhj5wxIZ3gsE/FuRE3yhl7aPg9cJ0zaWA
-         K4lm5rKgALzdaW0zO0iy/7swammUSOK5H5dhEJ/plzMkxVUVyrA55j5sNgdhzE5bnu
-         Vf9N+zBOhkTEd3ilJyQYF5iYuR2zWtTmUFwnnF+brjWadYyLQ90lj5mj6d4bsX6CDJ
-         buDcY2PbucRx0Y09LG1Donz/cBC1tozXuN4se0s8lTRHsQFhwpwiTvgLyee248n5qU
-         DAd0bUCLz+yWw==
-Content-Type: text/plain; charset="utf-8"
+        id S231978AbhF1DET (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 27 Jun 2021 23:04:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53030 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231678AbhF1DES (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 27 Jun 2021 23:04:18 -0400
+Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB5B3C061574
+        for <linux-arm-msm@vger.kernel.org>; Sun, 27 Jun 2021 20:01:52 -0700 (PDT)
+Received: by mail-pl1-x630.google.com with SMTP id v13so8085325ple.9
+        for <linux-arm-msm@vger.kernel.org>; Sun, 27 Jun 2021 20:01:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=A9eGVF5ZNz8nQeXOqwWeAB+AFal3aZItv05+YuTQaR4=;
+        b=nAi3a2vSS3U0bc4SPlN0MeGoGJ5skB8/jiP0cUp7hL7SVubHtY0acuBzgh/hj9z3uU
+         cBJzakJJmH437/QKg1eTECVq4uu30q9cAHBd0v37R4y2iIvH5som7IPkonShv1mim7Ey
+         vjntw4HJEJ9Qcd9e42fdycxQoRLLQkKcimV1k=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=A9eGVF5ZNz8nQeXOqwWeAB+AFal3aZItv05+YuTQaR4=;
+        b=Vvbe5aIt4C7Sjn48eyI7Po1S+XStSwVd7zz9Z7P731QXXIFRxkDSHNnLtqQ0enCidm
+         EObz1n2rQECbowK8umGP5gQkPoMcs6OouZwIeHNUHYoX+i6UbPZWQPtW6hIsS7QhNyTo
+         35rW2GIPNWDxrRksUntZJ8/+J7wlEdnJc24JV5GzxNAf0LlcjUgx2uaSV9Yde+JQg8L2
+         nGOUVMOd8GjWSq+8kTIHme9gg+K4VnWQS+FWiamlob2ubxL+zeGcuVs1CjZeJVUxD8at
+         a7zAaykABbLu1yIkd7L+KdMxsZi5qijnb9z7w+5dWpm91GExtpNxhSvlCEjBXIWvetFk
+         G4XA==
+X-Gm-Message-State: AOAM531E9o/2DVeb+11YnmoiA3s73N36sieGIqR83DM/dAIHV/28GoEK
+        a7pg0H3Y25SGaukZtRSmkeR6Ew==
+X-Google-Smtp-Source: ABdhPJx2xtmUqV+tD6KqHckTPhUWLlJQEovBbaSe6z2oXTu5eswEQZDx1Ix82ra3LV0hiqRc52DNQQ==
+X-Received: by 2002:a17:902:ab8e:b029:125:e6a0:fea2 with SMTP id f14-20020a170902ab8eb0290125e6a0fea2mr14269615plr.41.1624849312526;
+        Sun, 27 Jun 2021 20:01:52 -0700 (PDT)
+Received: from smtp.gmail.com ([2620:15c:202:201:6882:938a:8fcb:25e1])
+        by smtp.gmail.com with ESMTPSA id c5sm12513720pfi.81.2021.06.27.20.01.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 27 Jun 2021 20:01:52 -0700 (PDT)
+From:   Stephen Boyd <swboyd@chromium.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: [PATCH/RESEND] soc: qcom: socinfo: Don't print anything if nothing found
+Date:   Sun, 27 Jun 2021 20:01:50 -0700
+Message-Id: <20210628030150.2627905-1-swboyd@chromium.org>
+X-Mailer: git-send-email 2.32.0.93.g670b81a890-goog
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <56f3b0bd-5dd7-80d4-041a-0fd2daf4b1f2@marek.ca>
-References: <20210519001802.1863-1-jonathan@marek.ca> <20210519001802.1863-2-jonathan@marek.ca> <162266925581.4130789.10178141366818328902@swboyd.mtv.corp.google.com> <56f3b0bd-5dd7-80d4-041a-0fd2daf4b1f2@marek.ca>
-Subject: Re: [PATCH v2 2/2] dt-bindings: clock: add QCOM SM8350 display clock bindings
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     Rob Herring <robh@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-To:     Jonathan Marek <jonathan@marek.ca>, linux-arm-msm@vger.kernel.org
-Date:   Sun, 27 Jun 2021 19:39:41 -0700
-Message-ID: <162484798199.3259633.9009940760433821881@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Jonathan Marek (2021-06-04 10:25:41)
-> On 6/2/21 5:27 PM, Stephen Boyd wrote:
-> > Quoting Jonathan Marek (2021-05-18 17:18:02)
-> >> Add sm8350 DISPCC bindings, which are simply a symlink to the sm8250
-> >> bindings. Update the documentation with the new compatible.
-> >>
-> >> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
-> >> Reviewed-by: Rob Herring <robh@kernel.org>
-> >> ---
-> >>   .../devicetree/bindings/clock/qcom,dispcc-sm8x50.yaml       | 6 ++++=
---
-> >>   include/dt-bindings/clock/qcom,dispcc-sm8350.h              | 1 +
-> >=20
-> >>   2 files changed, 5 insertions(+), 2 deletions(-)
-> >>   create mode 120000 include/dt-bindings/clock/qcom,dispcc-sm8350.h
-> >=20
-> > Why the symlink? Can we have the dt authors use the existing header file
-> > instead?
-> >=20
->=20
-> It would be strange to include bindings with the name of a different=20
-> SoC. I guess it is a matter a preference, is there any good reason to=20
-> *not* do it like this?
+Let's skip printing anything if there's nothing to see. This makes it so
+the file length is 0 instead of 1, for the newline, and helps scripts
+figure out if there's anything to see in these files.
 
- $ find include/dt-bindings -type l
- include/dt-bindings/input/linux-event-codes.h
- include/dt-bindings/clock/qcom,dispcc-sm8150.h
+Cc: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Cc: Douglas Anderson <dianders@chromium.org>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+---
+ drivers/soc/qcom/socinfo.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-It seems to not be common at all.
+diff --git a/drivers/soc/qcom/socinfo.c b/drivers/soc/qcom/socinfo.c
+index f6cfb79338f0..152f3e0e3c6c 100644
+--- a/drivers/soc/qcom/socinfo.c
++++ b/drivers/soc/qcom/socinfo.c
+@@ -373,8 +373,8 @@ QCOM_OPEN(chip_id, qcom_show_chip_id);
+ static int show_image_##type(struct seq_file *seq, void *p)		  \
+ {								  \
+ 	struct smem_image_version *image_version = seq->private;  \
+-	seq_puts(seq, image_version->type);			  \
+-	seq_putc(seq, '\n');					  \
++	if (image_version->type[0] != '\0')			  \
++		seq_printf(seq, "%s\n", image_version->type);	  \
+ 	return 0;						  \
+ }								  \
+ static int open_image_##type(struct inode *inode, struct file *file)	  \
+-- 
+https://chromeos.dev
 
->=20
-> >>
-> >> diff --git a/Documentation/devicetree/bindings/clock/qcom,dispcc-sm8x5=
-0.yaml b/Documentation/devicetree/bindings/clock/qcom,dispcc-sm8x50.yaml
-> >> index 0cdf53f41f84..8f414642445e 100644
-> >> --- a/Documentation/devicetree/bindings/clock/qcom,dispcc-sm8x50.yaml
-> >> +++ b/Documentation/devicetree/bindings/clock/qcom,dispcc-sm8x50.yaml
-> >> @@ -4,24 +4,26 @@
-> >>   $id: http://devicetree.org/schemas/clock/qcom,dispcc-sm8x50.yaml#
-> >>   $schema: http://devicetree.org/meta-schemas/core.yaml#
-> >>  =20
-> >> -title: Qualcomm Display Clock & Reset Controller Binding for SM8150/S=
-M8250
-> >> +title: Qualcomm Display Clock & Reset Controller Binding for SM8150/S=
-M8250/SM8350
-> >=20
-> > Maybe just "Binding for SM8x50 SoCs"
-> >=20
->=20
-> Its likely these bindings won't be compatible with future "SM8x50" SoCs, =
-
-> listing supported SoCs explicitly will avoid confusion in the future.
-
-The yaml file has sm8x50 in the name. What's the plan there?
