@@ -2,114 +2,157 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3DBC23B669D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Jun 2021 18:21:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9170D3B66B2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Jun 2021 18:25:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233317AbhF1QYG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Jun 2021 12:24:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32988 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233368AbhF1QYF (ORCPT
+        id S233194AbhF1Q1n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Jun 2021 12:27:43 -0400
+Received: from perceval.ideasonboard.com ([213.167.242.64]:59984 "EHLO
+        perceval.ideasonboard.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233176AbhF1Q1l (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Jun 2021 12:24:05 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0295FC061760
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Jun 2021 09:21:39 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id y3so2562910wrq.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Jun 2021 09:21:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=1pcR5tMU/VIx6xCSCNVqJYXpFrepEwplXarGUNlayJw=;
-        b=PUEajlAOMSfNEQVGHHBZi+GBuWnQVbPZ7UZHguWB2qCTQpxAuFWjp0S7JcZu0giexj
-         sLywXW4nvrhvt/KJsA+oHrmJuR53Pw4wLMf3jebhgcICm7K0s14ma3lx3FWI8OAKoeZf
-         iBIoceYxvLDYouTEKAeMRpNdSYhZKqv21bZ84vAoOSwYdtLZML5QdTYj5sRYf6bYDJ07
-         e7rHJPqwxO3BsESgiYupz3tragCon1NK32HY34kJR/yeQ+am1gG6ka+DUCs69Cp+JTgY
-         9FdDQ62E/696rTSGKyal2/ZO4cfq7GlAeO4sE8MJsXpV6g0KJleTOqdMrWencJDOiqdo
-         GNdg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=1pcR5tMU/VIx6xCSCNVqJYXpFrepEwplXarGUNlayJw=;
-        b=IrOJjHwUNAQeEZ5n9CrzEm5sjnDVFlj7+BcZPwyJ0MI4lwMpCS1p5BrWABTGWQyylz
-         mgrTAjXta4P3aEXFh5zjdn6mh8oPuJmOuc7Y04Po3uAzklx3S90//3IiJsKktCDqWVAh
-         ngebf7nHoENnjygDhilVFUKpFDc3n+urSpyPBLY+EpqrXAdap1P0w/4kbG/mFfQZFK2V
-         0yOHgYFr+E5Md0AHO7THhgFjbE/rrKrEeiokMys6gEXpTMb5/Uqyv4oPH4dD/SCbp9df
-         Q7jkmOlv9ueCvYqM5IHd/DY+d0EfsRhmkEYvjXYcQevlafiTBFoO2vtl0oAJqLULOCyz
-         cQnA==
-X-Gm-Message-State: AOAM533dOE8FqYL6JXCjVzvthc1PbcvIF8jdKefkWsEbqR4VYfwI8LrP
-        aQUQssy/4P7T0URL/Z4V+9XESw==
-X-Google-Smtp-Source: ABdhPJyPkJWaD8OYx/+J8u3zOEVq+8krO8Fpd/gooB7bX5eBrHqxq+n7zVOLfSP0nsFg0PRX7Qx+Rw==
-X-Received: by 2002:a5d:4e8a:: with SMTP id e10mr28326002wru.199.1624897297651;
-        Mon, 28 Jun 2021 09:21:37 -0700 (PDT)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id t16sm835175wrx.89.2021.06.28.09.21.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 28 Jun 2021 09:21:37 -0700 (PDT)
-Subject: Re: [V2] venus: helper: do not set constrained parameters for UBWC
-To:     Mansur Alisha Shaik <mansur@codeaurora.org>,
-        linux-media@vger.kernel.org, stanimir.varbanov@linaro.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        vgarodia@codeaurora.org, dikshita@codeaurora.org
-References: <1624896105-26852-1-git-send-email-mansur@codeaurora.org>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Message-ID: <ae9dcc09-4628-d9b3-788e-90c49085e2da@linaro.org>
-Date:   Mon, 28 Jun 2021 17:23:26 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.7.1
+        Mon, 28 Jun 2021 12:27:41 -0400
+Received: from pendragon.ideasonboard.com (62-78-145-57.bb.dnainternet.fi [62.78.145.57])
+        by perceval.ideasonboard.com (Postfix) with ESMTPSA id B70B0B8A;
+        Mon, 28 Jun 2021 18:25:13 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
+        s=mail; t=1624897513;
+        bh=PTVouAjir6usC63yLGX1KM3ZF+0S4PlEQNTD7pbjgjQ=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=wN6Asf9EI2bthREFOQyceNmJ2tgepCv9DalpxhQD+eY5r8eeEareeXyaEx7lyZweQ
+         5xRo3GH7/hpnoHyulgJFbTpOgGqOUEWpJRWbfWQLx0NH1ON/wzTSPPSIySVrEeGP/e
+         P82BV1y03TGcjfAqsDhcR3YNQZichEUqoxvMI/QY=
+Date:   Mon, 28 Jun 2021 19:25:12 +0300
+From:   Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Rajeev Nandan <rajeevny@codeaurora.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Rob Clark <robdclark@gmail.com>, Lyude Paul <lyude@redhat.com>,
+        Jani Nikula <jani.nikula@intel.com>,
+        Rob Herring <robh@kernel.org>,
+        Andrzej Hajda <a.hajda@samsung.com>,
+        Daniel Thompson <daniel.thompson@linaro.org>,
+        "Kristian H. Kristensen" <hoegsberg@chromium.org>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Sean Paul <seanpaul@chromium.org>,
+        Kalyan Thota <kalyan_t@codeaurora.org>,
+        Krishna Manikandan <mkrishn@codeaurora.org>
+Subject: Re: [v8 4/6] drm/panel-simple: Update validation warnings for eDP
+ panel description
+Message-ID: <YNn36Bnc3MkhMC7L@pendragon.ideasonboard.com>
+References: <1624726268-14869-1-git-send-email-rajeevny@codeaurora.org>
+ <1624726268-14869-5-git-send-email-rajeevny@codeaurora.org>
+ <YNjA+jg9Khn+a9K+@pendragon.ideasonboard.com>
+ <d75afefac48229657d36e12b6bac0e9f@codeaurora.org>
+ <YNnPqYjaZjmmrQTA@pendragon.ideasonboard.com>
+ <CAD=FV=WTuexwn8gWR8-VV_-5Frb-NCNHA7m0xhxdsc_riRUC8g@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <1624896105-26852-1-git-send-email-mansur@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAD=FV=WTuexwn8gWR8-VV_-5Frb-NCNHA7m0xhxdsc_riRUC8g@mail.gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 28/06/2021 17:01, Mansur Alisha Shaik wrote:
-> onstrained parameters are to override the default alignment for
-> a given color format. By default venus hardware has alignments as
-> 128x32, but NV12 was defined differently to meet various usecases.
-> Compressed NV12 has always been aligned as 128x32, hence not needed
-> to override the default alignment.
-> 
-> Fixes: bc28936bbba9 ("media: venus: helpers, hfi, vdec: Set actual plane
-> constraints to FW")
-> Signed-off-by: Mansur Alisha Shaik <mansur@codeaurora.org>
-> 
-> Changes in V2:
-> - Elaborated commit message as per comments by Bryan
-> ---
->   drivers/media/platform/qcom/venus/helpers.c | 4 ++++
->   1 file changed, 4 insertions(+)
-> 
-> diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/platform/qcom/venus/helpers.c
-> index 1fe6d46..601ee3e 100644
-> --- a/drivers/media/platform/qcom/venus/helpers.c
-> +++ b/drivers/media/platform/qcom/venus/helpers.c
-> @@ -1137,8 +1137,12 @@ int venus_helper_set_format_constraints(struct venus_inst *inst)
->   	if (!IS_V6(inst->core))
->   		return 0;
->   
-> +	if (inst->opb_fmt == HFI_COLOR_FORMAT_NV12_UBWC)
-> +		return 0;
-> +
->   	pconstraint.buffer_type = HFI_BUFFER_OUTPUT2;
->   	pconstraint.num_planes = 2;
-> +
->   	pconstraint.plane_format[0].stride_multiples = 128;
->   	pconstraint.plane_format[0].max_stride = 8192;
->   	pconstraint.plane_format[0].min_plane_buffer_height_multiple = 32;
-> 
+Hi Doug,
 
-Looks better to me on the commit log thanks.
+On Mon, Jun 28, 2021 at 08:34:04AM -0700, Doug Anderson wrote:
+> On Mon, Jun 28, 2021 at 6:33 AM Laurent Pinchart wrote:
+> > On Mon, Jun 28, 2021 at 05:46:24PM +0530, rajeevny@codeaurora.org wrote:
+> > > On 27-06-2021 23:48, Laurent Pinchart wrote:
+> > > > On Sat, Jun 26, 2021 at 10:21:06PM +0530, Rajeev Nandan wrote:
+> > > >> Do not give a warning for the eDP panels if the "bus_format" is
+> > > >> not specified, since most eDP panels can support more than one
+> > > >> bus formats and this can be auto-detected.
+> > > >> Also, update the check to include bpc=10 for the eDP panel.
+> > > >>
+> > > >> Signed-off-by: Rajeev Nandan <rajeevny@codeaurora.org>
+> > > >> ---
+> > > >>
+> > > >> Changes in v8:
+> > > >> - New patch, to address the review comments of Sam Ravnborg [1]
+> > > >>
+> > > >> [1]
+> > > >> https://lore.kernel.org/dri-devel/20210621184157.GB918146@ravnborg.org/
+> > > >>
+> > > >>  drivers/gpu/drm/panel/panel-simple.c | 6 ++----
+> > > >>  1 file changed, 2 insertions(+), 4 deletions(-)
+> > > >>
+> > > >> diff --git a/drivers/gpu/drm/panel/panel-simple.c
+> > > >> b/drivers/gpu/drm/panel/panel-simple.c
+> > > >> index 86e5a45..f966b562 100644
+> > > >> --- a/drivers/gpu/drm/panel/panel-simple.c
+> > > >> +++ b/drivers/gpu/drm/panel/panel-simple.c
+> > > >> @@ -772,10 +772,8 @@ static int panel_simple_probe(struct device *dev,
+> > > >> const struct panel_desc *desc,
+> > > >>                    desc->bpc != 8);
+> > > >>            break;
+> > > >>    case DRM_MODE_CONNECTOR_eDP:
+> > > >> -          if (desc->bus_format == 0)
+> > > >> -                  dev_warn(dev, "Specify missing bus_format\n");
+> > > >> -          if (desc->bpc != 6 && desc->bpc != 8)
+> > > >> -                  dev_warn(dev, "Expected bpc in {6,8} but got: %u\n", desc->bpc);
+> > > >> +          if (desc->bpc != 6 && desc->bpc != 8 && desc->bpc != 10)
+> > > >> +                  dev_warn(dev, "Expected bpc in {6,8,10} but got: %u\n", desc->bpc);
+> > > >
+> > > > You'll still get a warning is bpc == 0, is that intentional ?
+> > >
+> > > This was not intentional, I missed considering bpc=0 case. As we are
+> > > removing the warning for bus_format=0 then a similar thing can be done
+> > > for the bpc=0 also. The bpc value should be a valid one if it is
+> > > specified. Unlike the bus_format, bpc has few possible values that can
+> > > be checked here along with 0. Please correct me if I misunderstood the
+> > > concept.
+> > > I will fix this.
+> >
+> > What's the point of specifying bpc if it's optional though ? Users of
+> > the panel will need to support the case where bpc is set to 0. Have you
+> > ensured that they all do ? Can they meaningfully use the bpc value if
+> > they need to be ready to support bpc == 0 ?
+> 
+> I must be missing something, but to me it seems like Rajeev's patch is
+> fine as-is. From my reading of the code:
+> 
+> * Removes the warning if bus_format == 0. This is correct since I
+> don't think specifying bus format for eDP panels makes lots of sense.
 
-You've missed the "C" from "Constrained parameters" though, also I don't 
-know if its my mail client or not but "Fixes: xxx ("thing fixed") should 
-all be on the one line even if it exceeds the 75 character limit.
+This is embarassing, I've been reading it as desc->bpc == 0 from the
+beginning :-( My bad. The bpc change is correct.
 
----
-bod
+> * Removes the warning if bpc == 10. This is correct since we've seen
+> eDP panels with 10bpc.
+> 
+> * Keeps the warning if bpc == 0. IMO we can/should still require
+> panels to specify their BPC. I guess I'm treating this as a "max BPC".
+> I know that we use this field in the sn65dsi86 driver, so if it's OK
+> for this to be 0 then we'll have to change that driver to handle it.
+> 
+> Does that sound right to you Laurent? So since I think Rajeev's patch
+> is OK, I'm happy with:
+> 
+> Reviewed-by: Douglas Anderson <dianders@chromium.org>
+> 
+> Unless I missed something and this patch needs to change then it feels
+> like Rajeev's patch series is in pretty good shape to land. I'm happy
+> to commit it but since Sam made comments on the previous version I'd
+> plan to wait a bit to make sure he has a chance for another look if he
+> wants to. I've also only got 2 days left before I vanish for 1 week of
+> vacation. ...so my plan is:
+> * If Sam / Laurent come back before tomorrow and say they're happy
+> then I'll commit.
+> * If I hear nothing then I'll check back after my vacation. If someone
+> else has committed then I'll be happy. If not and there has just been
+> silence then I'll commit it myself.
+> 
+> Please yell if that's not OK. :-)
+
+-- 
+Regards,
+
+Laurent Pinchart
