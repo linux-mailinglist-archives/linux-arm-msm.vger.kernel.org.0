@@ -2,157 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9170D3B66B2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Jun 2021 18:25:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 33F843B6749
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Jun 2021 19:07:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233194AbhF1Q1n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Jun 2021 12:27:43 -0400
-Received: from perceval.ideasonboard.com ([213.167.242.64]:59984 "EHLO
-        perceval.ideasonboard.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233176AbhF1Q1l (ORCPT
+        id S232880AbhF1RKP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Jun 2021 13:10:15 -0400
+Received: from mail-pl1-f173.google.com ([209.85.214.173]:45986 "EHLO
+        mail-pl1-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233015AbhF1RKK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Jun 2021 12:27:41 -0400
-Received: from pendragon.ideasonboard.com (62-78-145-57.bb.dnainternet.fi [62.78.145.57])
-        by perceval.ideasonboard.com (Postfix) with ESMTPSA id B70B0B8A;
-        Mon, 28 Jun 2021 18:25:13 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-        s=mail; t=1624897513;
-        bh=PTVouAjir6usC63yLGX1KM3ZF+0S4PlEQNTD7pbjgjQ=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=wN6Asf9EI2bthREFOQyceNmJ2tgepCv9DalpxhQD+eY5r8eeEareeXyaEx7lyZweQ
-         5xRo3GH7/hpnoHyulgJFbTpOgGqOUEWpJRWbfWQLx0NH1ON/wzTSPPSIySVrEeGP/e
-         P82BV1y03TGcjfAqsDhcR3YNQZichEUqoxvMI/QY=
-Date:   Mon, 28 Jun 2021 19:25:12 +0300
-From:   Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Rajeev Nandan <rajeevny@codeaurora.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Rob Clark <robdclark@gmail.com>, Lyude Paul <lyude@redhat.com>,
-        Jani Nikula <jani.nikula@intel.com>,
-        Rob Herring <robh@kernel.org>,
-        Andrzej Hajda <a.hajda@samsung.com>,
-        Daniel Thompson <daniel.thompson@linaro.org>,
-        "Kristian H. Kristensen" <hoegsberg@chromium.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Sean Paul <seanpaul@chromium.org>,
-        Kalyan Thota <kalyan_t@codeaurora.org>,
-        Krishna Manikandan <mkrishn@codeaurora.org>
-Subject: Re: [v8 4/6] drm/panel-simple: Update validation warnings for eDP
- panel description
-Message-ID: <YNn36Bnc3MkhMC7L@pendragon.ideasonboard.com>
-References: <1624726268-14869-1-git-send-email-rajeevny@codeaurora.org>
- <1624726268-14869-5-git-send-email-rajeevny@codeaurora.org>
- <YNjA+jg9Khn+a9K+@pendragon.ideasonboard.com>
- <d75afefac48229657d36e12b6bac0e9f@codeaurora.org>
- <YNnPqYjaZjmmrQTA@pendragon.ideasonboard.com>
- <CAD=FV=WTuexwn8gWR8-VV_-5Frb-NCNHA7m0xhxdsc_riRUC8g@mail.gmail.com>
+        Mon, 28 Jun 2021 13:10:10 -0400
+Received: by mail-pl1-f173.google.com with SMTP id i4so9283758plt.12;
+        Mon, 28 Jun 2021 10:07:45 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=5cLxTwDsCSrtdWkFMbm5QuhzGbb4I7nKkvY0D1dGHlY=;
+        b=AJBJ3mfSjL64Qqz2CblyDXlAvB6NAh/WN9jGvW8MLpb5HMe/HZV26LaRMaR3FJ0co4
+         SsaoyEASviUEjdU2lVF9h32EIjiLvknQ8A8GcDJIJkuYPeg3QwzvXyENPN0uFwTKs/2X
+         NX3PC/7rexJBT73ho+EeUejp7pHyboNv9IQNhz2Gx4dNqsso46UPjebnmzvuqGg0EoDV
+         lzG4cVXMuJDmJXtsn24iEGH8/oEY1sOKmo+s6/NkOiI5cgMKb5UEx8+MEu0zJJaiFSyg
+         MOt+B2sfLr/vKb2WtkA9FA2m5bFjOVSvRtAorQvMJaeadXjYuvIuhMqZcEG1p9kuhirM
+         CKJA==
+X-Gm-Message-State: AOAM532ESK0HPWGiYLa3J8x+GMBRYT7SBeKRryfIvw6Sn/4iYxh5eMEd
+        3Af9HNozU0zpN84v0Ogn5HcS+KrjzqQ=
+X-Google-Smtp-Source: ABdhPJzftsh0Nqv/HqgGTQbkic+FQnrxH2nrmHfzLcH8UeToPUbzrrLGPV9EGzpZWjBv9BAGAhkAJw==
+X-Received: by 2002:a17:90a:ea88:: with SMTP id h8mr7952693pjz.147.1624900064200;
+        Mon, 28 Jun 2021 10:07:44 -0700 (PDT)
+Received: from [192.168.3.217] (c-73-241-217-19.hsd1.ca.comcast.net. [73.241.217.19])
+        by smtp.gmail.com with ESMTPSA id v9sm14732437pfn.22.2021.06.28.10.07.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 28 Jun 2021 10:07:43 -0700 (PDT)
+Subject: Re: [PATCH v4 01/10] scsi: ufs: Rename flags pm_op_in_progress and
+ is_sys_suspended
+To:     "Rafael J. Wysocki" <rafael@kernel.org>
+Cc:     Can Guo <cang@codeaurora.org>, asutoshd@codeaurora.org,
+        nguyenb@codeaurora.org, hongwus@codeaurora.org,
+        ziqichen@codeaurora.org, linux-scsi@vger.kernel.org,
+        kernel-team@android.com, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        Stanley Chu <stanley.chu@mediatek.com>,
+        Bean Huo <beanhuo@micron.com>,
+        Jaegeuk Kim <jaegeuk@kernel.org>,
+        Adrian Hunter <adrian.hunter@intel.com>,
+        Kiwoong Kim <kwmad.kim@samsung.com>,
+        Satya Tangirala <satyat@google.com>,
+        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
+References: <1624433711-9339-1-git-send-email-cang@codeaurora.org>
+ <1624433711-9339-2-git-send-email-cang@codeaurora.org>
+ <cb39c5d7-c21d-66b1-0a86-f9154f73a94e@acm.org>
+ <b7562bc820fc712196104a5eae30e2e4@codeaurora.org>
+From:   Bart Van Assche <bvanassche@acm.org>
+Message-ID: <50023fb6-7b61-e5dd-9fac-e0be3adbbadc@acm.org>
+Date:   Mon, 28 Jun 2021 10:07:40 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
+In-Reply-To: <b7562bc820fc712196104a5eae30e2e4@codeaurora.org>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAD=FV=WTuexwn8gWR8-VV_-5Frb-NCNHA7m0xhxdsc_riRUC8g@mail.gmail.com>
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Doug,
+On 6/28/21 12:01 AM, Can Guo wrote:
+> On 2021-06-25 07:42, Bart Van Assche wrote:
+>> On 6/23/21 12:35 AM, Can Guo wrote:
+>>> Rename pm_op_in_progress and is_sys_suspended to
+>>> wlu_pm_op_in_progress and
+>>> is_wlu_sys_suspended accordingly.
+>>
+>> Can the is_wlu_sys_suspended member variable be removed by checking
+>> dev->power.is_suspended where dev represents the WLUN?
+>>
+> 
+> No, PM set dev->power.is_suspended to "false" even the device failed
+> resuming,
+> while is_wlu_sys_suspended can be used to tell that.
 
-On Mon, Jun 28, 2021 at 08:34:04AM -0700, Doug Anderson wrote:
-> On Mon, Jun 28, 2021 at 6:33 AM Laurent Pinchart wrote:
-> > On Mon, Jun 28, 2021 at 05:46:24PM +0530, rajeevny@codeaurora.org wrote:
-> > > On 27-06-2021 23:48, Laurent Pinchart wrote:
-> > > > On Sat, Jun 26, 2021 at 10:21:06PM +0530, Rajeev Nandan wrote:
-> > > >> Do not give a warning for the eDP panels if the "bus_format" is
-> > > >> not specified, since most eDP panels can support more than one
-> > > >> bus formats and this can be auto-detected.
-> > > >> Also, update the check to include bpc=10 for the eDP panel.
-> > > >>
-> > > >> Signed-off-by: Rajeev Nandan <rajeevny@codeaurora.org>
-> > > >> ---
-> > > >>
-> > > >> Changes in v8:
-> > > >> - New patch, to address the review comments of Sam Ravnborg [1]
-> > > >>
-> > > >> [1]
-> > > >> https://lore.kernel.org/dri-devel/20210621184157.GB918146@ravnborg.org/
-> > > >>
-> > > >>  drivers/gpu/drm/panel/panel-simple.c | 6 ++----
-> > > >>  1 file changed, 2 insertions(+), 4 deletions(-)
-> > > >>
-> > > >> diff --git a/drivers/gpu/drm/panel/panel-simple.c
-> > > >> b/drivers/gpu/drm/panel/panel-simple.c
-> > > >> index 86e5a45..f966b562 100644
-> > > >> --- a/drivers/gpu/drm/panel/panel-simple.c
-> > > >> +++ b/drivers/gpu/drm/panel/panel-simple.c
-> > > >> @@ -772,10 +772,8 @@ static int panel_simple_probe(struct device *dev,
-> > > >> const struct panel_desc *desc,
-> > > >>                    desc->bpc != 8);
-> > > >>            break;
-> > > >>    case DRM_MODE_CONNECTOR_eDP:
-> > > >> -          if (desc->bus_format == 0)
-> > > >> -                  dev_warn(dev, "Specify missing bus_format\n");
-> > > >> -          if (desc->bpc != 6 && desc->bpc != 8)
-> > > >> -                  dev_warn(dev, "Expected bpc in {6,8} but got: %u\n", desc->bpc);
-> > > >> +          if (desc->bpc != 6 && desc->bpc != 8 && desc->bpc != 10)
-> > > >> +                  dev_warn(dev, "Expected bpc in {6,8,10} but got: %u\n", desc->bpc);
-> > > >
-> > > > You'll still get a warning is bpc == 0, is that intentional ?
-> > >
-> > > This was not intentional, I missed considering bpc=0 case. As we are
-> > > removing the warning for bus_format=0 then a similar thing can be done
-> > > for the bpc=0 also. The bpc value should be a valid one if it is
-> > > specified. Unlike the bus_format, bpc has few possible values that can
-> > > be checked here along with 0. Please correct me if I misunderstood the
-> > > concept.
-> > > I will fix this.
-> >
-> > What's the point of specifying bpc if it's optional though ? Users of
-> > the panel will need to support the case where bpc is set to 0. Have you
-> > ensured that they all do ? Can they meaningfully use the bpc value if
-> > they need to be ready to support bpc == 0 ?
-> 
-> I must be missing something, but to me it seems like Rajeev's patch is
-> fine as-is. From my reading of the code:
-> 
-> * Removes the warning if bus_format == 0. This is correct since I
-> don't think specifying bus format for eDP panels makes lots of sense.
+(+Rafael)
 
-This is embarassing, I've been reading it as desc->bpc == 0 from the
-beginning :-( My bad. The bpc change is correct.
+Hi Rafael,
 
-> * Removes the warning if bpc == 10. This is correct since we've seen
-> eDP panels with 10bpc.
-> 
-> * Keeps the warning if bpc == 0. IMO we can/should still require
-> panels to specify their BPC. I guess I'm treating this as a "max BPC".
-> I know that we use this field in the sn65dsi86 driver, so if it's OK
-> for this to be 0 then we'll have to change that driver to handle it.
-> 
-> Does that sound right to you Laurent? So since I think Rajeev's patch
-> is OK, I'm happy with:
-> 
-> Reviewed-by: Douglas Anderson <dianders@chromium.org>
-> 
-> Unless I missed something and this patch needs to change then it feels
-> like Rajeev's patch series is in pretty good shape to land. I'm happy
-> to commit it but since Sam made comments on the previous version I'd
-> plan to wait a bit to make sure he has a chance for another look if he
-> wants to. I've also only got 2 days left before I vanish for 1 week of
-> vacation. ...so my plan is:
-> * If Sam / Laurent come back before tomorrow and say they're happy
-> then I'll commit.
-> * If I hear nothing then I'll check back after my vacation. If someone
-> else has committed then I'll be happy. If not and there has just been
-> silence then I'll commit it myself.
-> 
-> Please yell if that's not OK. :-)
+In drivers/base/power/main.c we found the following code:
 
--- 
-Regards,
+ End:
+	error = dpm_run_callback(callback, dev, state, info);
+	dev->power.is_suspended = false;
 
-Laurent Pinchart
+Is it a bug or a feature that dev->power.is_suspended is set to false if
+dpm_run_callback() fails? I'm asking this because only clearing
+dev->power.is_suspended if dpm_run_callback() returns 0 would allow to
+simplify the UFS driver. It can happen for UFS devices that runtime
+resume fails and if this fails we need to track this.
+
+Thanks,
+
+Bart.
