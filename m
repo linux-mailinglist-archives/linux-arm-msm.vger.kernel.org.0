@@ -2,61 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 02EBF3B58AA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Jun 2021 07:42:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D34653B5968
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Jun 2021 09:02:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229692AbhF1Foq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Jun 2021 01:44:46 -0400
-Received: from mail.kernel.org ([198.145.29.99]:59048 "EHLO mail.kernel.org"
+        id S232326AbhF1HEy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Jun 2021 03:04:54 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:52453 "EHLO m43-7.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232132AbhF1Foq (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Jun 2021 01:44:46 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 3B02A61C17;
-        Mon, 28 Jun 2021 05:42:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1624858941;
-        bh=8kPsxiKplIOG09PMS3o+imfXElGS2OAMUTIFSFHl+bQ=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=JZfEtWKPjkYgMZ782UBxpDRZlxYzzttgNA0UB/9kRluRXTKWkRiNKM7uiNxJ1plVT
-         oTwVczFMi3LCRB4obGsID7LVHRh91dG+nSoSeUnrh8CNirqP2fUykRUYx7AE4rioze
-         OKpTKrbWRoIfM/7I0NJNQFHy9vrUUB800k9n5rcKbxSeBr3PDUXHLp3hL8eU9bmGqf
-         SsfX+HY4712dlylqiRFLd9RQKF4Tq8NS82lhNjcTbtdyriAPYQZiOVi3Hib5h/HF51
-         e0khV/aOYhN+AU8KDHwLyYXB3LSBJadLvI66z30jls4wd9KAlv7/NLRnYuOHhpJSoz
-         xde4A/PoZGHCg==
-Date:   Mon, 28 Jun 2021 11:12:17 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, dmitry.baryshkov@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Subject: Re: [PATCH] clk: qcom: gdsc: Ensure regulator init state matches
- GDSC state
-Message-ID: <YNlhOelUfJwfbHCd@matsya>
-References: <20210625225414.1318338-1-bjorn.andersson@linaro.org>
+        id S232333AbhF1HEx (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 28 Jun 2021 03:04:53 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1624863748; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=g8AXCTj9BiQLyJnLLdipxuqkcsPu5WGjWgb8TFrd67Q=;
+ b=LqMO2k9DVSjuD0C+d/OK/0xj4g1+QYeN/RN3UfBh9K3QFDCnsJmOk8NZGF7rwi4mPl7WUo1z
+ JdntmwU52iJJGxKO2WrqMiRtKCy7KfAKmZSso8+ZUHp2kjwgIg+eDSA8z4UdDn91gGZ1QCoV
+ JVs929+3QkExD1l36sutQUyZxME=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
+ 60d973e3d2559fe392579ef0 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 28 Jun 2021 07:01:55
+ GMT
+Sender: cang=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 06B07C43460; Mon, 28 Jun 2021 07:01:54 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: cang)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3035BC433F1;
+        Mon, 28 Jun 2021 07:01:54 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210625225414.1318338-1-bjorn.andersson@linaro.org>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Mon, 28 Jun 2021 15:01:54 +0800
+From:   Can Guo <cang@codeaurora.org>
+To:     Bart Van Assche <bvanassche@acm.org>
+Cc:     asutoshd@codeaurora.org, nguyenb@codeaurora.org,
+        hongwus@codeaurora.org, ziqichen@codeaurora.org,
+        linux-scsi@vger.kernel.org, kernel-team@android.com,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        Stanley Chu <stanley.chu@mediatek.com>,
+        Bean Huo <beanhuo@micron.com>,
+        Jaegeuk Kim <jaegeuk@kernel.org>,
+        Adrian Hunter <adrian.hunter@intel.com>,
+        Kiwoong Kim <kwmad.kim@samsung.com>,
+        Satya Tangirala <satyat@google.com>,
+        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v4 01/10] scsi: ufs: Rename flags pm_op_in_progress and
+ is_sys_suspended
+In-Reply-To: <cb39c5d7-c21d-66b1-0a86-f9154f73a94e@acm.org>
+References: <1624433711-9339-1-git-send-email-cang@codeaurora.org>
+ <1624433711-9339-2-git-send-email-cang@codeaurora.org>
+ <cb39c5d7-c21d-66b1-0a86-f9154f73a94e@acm.org>
+Message-ID: <b7562bc820fc712196104a5eae30e2e4@codeaurora.org>
+X-Sender: cang@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 25-06-21, 15:54, Bjorn Andersson wrote:
-> As GDSCs are registered and found to be already enabled
-> gdsc_toggle_logic() will be invoked for votable GDSCs and ensure that
-> the vote is matching the hardware state. Part of this the related
-> regulator will be enabled.
+On 2021-06-25 07:42, Bart Van Assche wrote:
+> On 6/23/21 12:35 AM, Can Guo wrote:
+>> Rename pm_op_in_progress and is_sys_suspended to wlu_pm_op_in_progress 
+>> and
+>> is_wlu_sys_suspended accordingly.
 > 
-> But for non-votable GDSCs the regulator and GDSC status will be out of
-> sync and as the GDSC is later disabled regulator_disable() will face an
-> unbalanced enable-count, or something might turn off the supply under
-> the feet of the GDSC.
+> Can the is_wlu_sys_suspended member variable be removed by checking
+> dev->power.is_suspended where dev represents the WLUN?
 > 
-> So ensure that the regulator is enabled even for non-votable GDSCs.
 
-Reviewed-by: Vinod Koul <vkoul@kernel.org>
+No, PM set dev->power.is_suspended to "false" even the device failed 
+resuming,
+while is_wlu_sys_suspended can be used to tell that.
 
--- 
-~Vinod
+Thanks,
+
+Can Guo.
+
+> Thanks,
+> 
+> Bart.
