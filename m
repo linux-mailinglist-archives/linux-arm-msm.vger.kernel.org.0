@@ -2,92 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 527CE3B6D9C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Jun 2021 06:26:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 541773B6E4B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Jun 2021 08:34:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230026AbhF2E2b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Jun 2021 00:28:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52854 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229598AbhF2E2a (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Jun 2021 00:28:30 -0400
-Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17C3FC061760
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Jun 2021 21:26:03 -0700 (PDT)
-Received: by mail-pj1-x102e.google.com with SMTP id bb10-20020a17090b008ab029016eef083425so1008518pjb.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Jun 2021 21:26:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=9Mv1hXNnZzD23y7DKDXFCUL2Q/g72yLCDWXSEXlIRgc=;
-        b=Esp829CCH1PuwpOymHn7E7OTRNjAZHod05d0GEqXe863S7ReRl2zFVtBoPfr2EzYGu
-         51Sqi1hoA/OEPCCyNsRxhQ2WcElHLzjbwPJgyu8ycT4w4rvbgoLIyy5BoJSLvl86rv9g
-         Fvz/bx14EFJvNkUAVb74kBkPKDddHQzImmzUdMNrC2o1faYniyQLsL31t8Y5pBmT1hr2
-         UufSy+Vil0tOhNbZmOc04vOrKD8C7EtGSGSmoS05ECfH15JwP1cbfRZi3ab/UlBwLxTe
-         Dpq32HtuxiTXkBtBul/t2LnIYW3Kd77t8M4TMk15cIrTgNHqCHdLY3zGvj35VbEfC/QD
-         7Sdw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=9Mv1hXNnZzD23y7DKDXFCUL2Q/g72yLCDWXSEXlIRgc=;
-        b=Fgg9Sl+eFY6QNCszFrF2jmVAJakvOsYXEP2sZjUcKEyXe0xgEgF/dg2WUjCl8yM1i7
-         SmWRVo9EhFCvru/yYQu9Qyv6VKjaB8S/2X5OM+EKCWgIKoxe/Sw3Px8w7qKd5gG4DnNu
-         zi0+n4QeHho/fT7++BetwOF3RTdQQDiPJ1RAs2sFWbvp7499Nsj1xTznJ17KvZrGP9ZD
-         xxOZsC29ErYFV0u73FSVT0ASKnWBP51YCITKMI8TZwLC91KCbLiIEnnXoKCQbfieR85H
-         VSuUSeuHrESwhJKLW9qUqqFlYiCY0FE6be2FRdnLIrmP+NjRZsOzyJK8TlTyd8URh/du
-         ACXg==
-X-Gm-Message-State: AOAM531VdgTwI20xXBLfnBo0+kbcJTKVi1ghYAl5EmNLahqIaYIpaLAG
-        md/Mu1zE2/6y+W1XViss6ouP
-X-Google-Smtp-Source: ABdhPJwk6bQ+0eUyJC0EO3pZiT41ajJqG7DFEtayr7QChFiJLZJPlVPRzjvoNsJGY4/56R1ygHEx6Q==
-X-Received: by 2002:a17:90a:5406:: with SMTP id z6mr41126480pjh.61.1624940762599;
-        Mon, 28 Jun 2021 21:26:02 -0700 (PDT)
-Received: from workstation ([120.138.12.32])
-        by smtp.gmail.com with ESMTPSA id u13sm3341334pfi.54.2021.06.28.21.26.00
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 28 Jun 2021 21:26:02 -0700 (PDT)
-Date:   Tue, 29 Jun 2021 09:55:58 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Matthias Kaehlcke <mka@chromium.org>
-Cc:     bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, thara.gopinath@linaro.org,
-        stable@vger.kernel.org
-Subject: Re: [PATCH] soc: qcom: aoss: Fix the out of bound usage of
- cooling_devs
-Message-ID: <20210629042558.GA3580@workstation>
-References: <20210628172741.16894-1-manivannan.sadhasivam@linaro.org>
- <YNpVMvhEfrz9EqyO@google.com>
+        id S232094AbhF2GhV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Jun 2021 02:37:21 -0400
+Received: from mail.kernel.org ([198.145.29.99]:37096 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231881AbhF2GhU (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 29 Jun 2021 02:37:20 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 121CE61D6C;
+        Tue, 29 Jun 2021 06:34:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1624948494;
+        bh=1wm++hlHTVukb+VtFq7EOvTZHLGCKQZBOWjLY6ItRcc=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=M20bEs6wMM/pZeO435Hna09xr8H1RtIw+lLR9t5YVrvKtAjKbWd1WZjGP5gq5wuBZ
+         bbhhSJquwXSd03d6n80E7O71mSdDwcG7TCT5QAFBWZSKLRMQDUX44Sj2Rud5nWD4PS
+         8QtPeWmR3hdj8WoPKNWwqUReBatfBfqqr4Wrcyq2J2aVcXv5UmkVXRcAcFgNMchide
+         pAN1Yjpq6+T1p9F6D+uhosqThNcdsUS4SrfR3Aq9RRBMaGGCazeHN4aa1sq0YFyA5M
+         qQBY54W2PEQaPo1l1y9fn53qBJdJOOqTfuSDSt97QsbmhJwjt3Ek6LAp8pURBOeR6W
+         1N7M7buK9aLEA==
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <YNpVMvhEfrz9EqyO@google.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20210625225414.1318338-1-bjorn.andersson@linaro.org>
+References: <20210625225414.1318338-1-bjorn.andersson@linaro.org>
+Subject: Re: [PATCH] clk: qcom: gdsc: Ensure regulator init state matches GDSC state
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, stable@vger.kernel.org
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Vinod Koul <vkoul@kernel.org>, dmitry.baryshkov@linaro.org
+Date:   Mon, 28 Jun 2021 23:34:52 -0700
+Message-ID: <162494849279.2516444.9302337933628102536@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jun 28, 2021 at 04:03:14PM -0700, Matthias Kaehlcke wrote:
+Quoting Bjorn Andersson (2021-06-25 15:54:14)
+> As GDSCs are registered and found to be already enabled
+> gdsc_toggle_logic() will be invoked for votable GDSCs and ensure that
+> the vote is matching the hardware state. Part of this the related
+> regulator will be enabled.
+>=20
+> But for non-votable GDSCs the regulator and GDSC status will be out of
+> sync and as the GDSC is later disabled regulator_disable() will face an
+> unbalanced enable-count, or something might turn off the supply under
+> the feet of the GDSC.
+>=20
+> So ensure that the regulator is enabled even for non-votable GDSCs.
+>=20
+> Cc: stable@vger.kernel.org
+> Fixes: 37416e554961 ("clk: qcom: gdsc: Handle GDSC regulator supplies")
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
+>  drivers/clk/qcom/gdsc.c | 11 +++++++++--
+>  1 file changed, 9 insertions(+), 2 deletions(-)
+>=20
+> diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
+> index 51ed640e527b..f7e7759cdb90 100644
+> --- a/drivers/clk/qcom/gdsc.c
+> +++ b/drivers/clk/qcom/gdsc.c
+> @@ -359,10 +359,17 @@ static int gdsc_init(struct gdsc *sc)
+> =20
+>         /*
+>          * Votable GDSCs can be ON due to Vote from other masters.
+> -        * If a Votable GDSC is ON, make sure we have a Vote.
+> +        * If a Votable GDSC is ON, make sure we have a Vote. If
+> +        * non-votable, ensure that the supply is kept enabled (as
+> +        * is done by gdsc_enable).
+>          */
+> -       if ((sc->flags & VOTABLE) && on)
+> +       if ((sc->flags & VOTABLE) && on) {
+>                 gdsc_enable(&sc->pd);
+> +       } else if (on) {
+> +               ret =3D regulator_enable(sc->rsupply);
+> +               if (ret < 0)
+> +                       return ret;
 
-[...]
+Looking at this makes me think we've messed something up with
+gdsc_enable() being called or cherry-picking the regulator enable (and
+other stuff in this gdsc_init()) out of the enable path. Maybe we should
+have a followup patch that replaces the gdsc_enable() with
+gdsc_toggle_logic(sc, GDSC_ON) so that we know it isn't doing anything
+else during init like asserting a reset when presumably all we want to
+do is toggle the enable bit to assert our vote.
 
-> 
-> 
-> A few more previous lines of code for context:
-> 
->   int count = QMP_NUM_COOLING_RESOURCES;
-> 
->   qmp->cooling_devs = devm_kcalloc(qmp->dev, count,
->                                    sizeof(*qmp->cooling_devs),
->                                    GFP_KERNEL);
-> 
-> I would suggest to initialize 'count' to 0 from the start and pass
-> QMP_NUM_COOLING_RESOURCES to devm_kcalloc() rather than 'count',
-> instead of resetting 'count' afterwards.
+And I notice that we already call gdsc_toggle_logic() in gdsc_init(), so
+then we'll have a double regulator_enable() in the case of PWRSTS_ON?
+And then if the flag is ALWAYS_ON we'll call regulator_enable() yet
+again, but luckily only if it isn't on initially, phew! This code is
+quite twisted.
 
-Yeah, I thought about it but the actual bug in the code is not resetting
-the count value to 0. So fixing this way seems a better option.
+It would be super nice to make it more like
 
-Thanks,
-Mani
+	if (on) {
+		/* It was on in hardware, sync kernel state */
+		regulator_enable();
+
+		if (votable)
+			write bit, why do any wait?
+
+		if (retain ff)
+			write bit
+	} else if (always_on) {
+		/* Force on */
+		gdsc_enable();
+		on =3D true;
+	}
+
+	if (on || ...)
+
+> +       }
+> =20
+>         /*
+>          * Make sure the retain bit is set if the GDSC is already on, oth=
+erwise
