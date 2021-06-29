@@ -2,96 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1D9BE3B7933
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Jun 2021 22:14:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 083263B7938
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Jun 2021 22:18:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234188AbhF2URS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Jun 2021 16:17:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38584 "EHLO
+        id S233801AbhF2UUe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Jun 2021 16:20:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39304 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235271AbhF2URS (ORCPT
+        with ESMTP id S233487AbhF2UUd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Jun 2021 16:17:18 -0400
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11819C061767
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Jun 2021 13:14:50 -0700 (PDT)
-Received: by mail-wm1-x331.google.com with SMTP id p10-20020a05600c430ab02901df57d735f7so2658747wme.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Jun 2021 13:14:49 -0700 (PDT)
+        Tue, 29 Jun 2021 16:20:33 -0400
+Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43D1AC061760
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Jun 2021 13:18:06 -0700 (PDT)
+Received: by mail-oi1-x232.google.com with SMTP id w127so174209oig.12
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Jun 2021 13:18:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=k+EFgZQkWxD7BGwPQ4ao+/XMZhybV8mEbFAgsBYJPt0=;
-        b=CBFOC0/FwRuDBorBLr1uAVgXwoj0/HH/ssWbR7+6KKMj3pWgLrmS0z21rn4ZMS1hkj
-         wE/y2GDUxi51zcyB2bR7X217MNsE48wjPyAZQerdWg8KJja1DsqClYYDaRUR4dOyO67Z
-         KOnz5Z8IK/I3cZyo6gz18hH77MGQcWLPQWxAAe/VKfLmcX62sgfHNftjABb7qP840vte
-         bX9u5hXplHirF7txR9/P18ZihntUMXUJ7V+/2fgAkZ28IEQ48B8soRl8btP0IsjFQJMW
-         gLTjioKrkSAF4sndy4A3w4IikmmVbQvxbOwBOGuZbO4Uh/qdOw8MPU+fEMeF7tBJ/Jxm
-         v1Lw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=OMPfNJAe/qqe5Xpzm9vVbKrJ6GxGvnxyCwP6HHf4Axo=;
+        b=soLdk9LK4La9dHppHKfw+XoncIPdb5S7iHatZTsparvVIyD1yuvz9eH9yknWmBWd7p
+         LI0gTrlLKuuaScD8tiPo3PAEAnWCLs4FpsNrKnb/nd8mSud5jVsRJfRM1G6qcNiyUikn
+         NIz7a1iZRbSBcLdr9RbRQilE+e+EpJkzI53d5w6aJlAibeN5uvc21IiVhle7oC78PYTr
+         xheG1BMKV9fMn2ocQoeZKTIy5J8tYD0PVK+44rtAhW8jO+D9j75aIiovCAMWZaQjnj29
+         7fNM1hg4Dg34QqOE/gF8rjYRfI8ubbZqSiTt7YIzz3/wHE7Dw5evmFTQG2JNXLsEayNw
+         H9uA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=k+EFgZQkWxD7BGwPQ4ao+/XMZhybV8mEbFAgsBYJPt0=;
-        b=nYX2hqkmIj8PGDhY75NRk7+OOyw7LVh1kz0PcMOcCp5bES+8da8ImnPN6q06kEF6J1
-         ga0VjVzd+/inVTs712dYl8ICmQU5RLGCQEgpfPayryxCe0ui5H9lPj53py3cBSOe/rOA
-         5LleQOObEAga8y0elH0jqNIU3qEvbDLEgn+P/GsqrvuIy+rUOUSUgbAom3SZlUK9951o
-         lIEMy9TUwOrCHA35GKKyJsO56wxiFWdiaYmeauqchhgUWYnL4mGSVIt2JcYP7HzmGdX4
-         DO9gdR/+AHjsstTplfmh7lfTSbG0LciWnDPfm4ZjM8SOEHP2PlPrx0ePoXHM6s8MgPQp
-         lThQ==
-X-Gm-Message-State: AOAM531b4scRAGVihf1jfg3TDsGSJpr01iDrYjxn0hWaJcQaXJL3eGnT
-        9Xs2ropN00pPN+CY9MI5CIyBag==
-X-Google-Smtp-Source: ABdhPJxX6GJhFGRqH4RZBbeMemBrOHpCtS0VcohCJsXu4eo7o4av1NS0Dfu+dOJEx+LK5oHASm5BRA==
-X-Received: by 2002:a7b:cc09:: with SMTP id f9mr34008548wmh.104.1624997688711;
-        Tue, 29 Jun 2021 13:14:48 -0700 (PDT)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id r16sm10330769wrx.63.2021.06.29.13.14.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 29 Jun 2021 13:14:48 -0700 (PDT)
-Subject: Re: [PATCH 1/2] usb: dwc3: dwc3-qcom: Find USB connector and register
- role switch
-To:     Jack Pham <jackp@codeaurora.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>, balbi@kernel.org,
-        gregkh@linuxfoundation.org, agross@kernel.org,
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=OMPfNJAe/qqe5Xpzm9vVbKrJ6GxGvnxyCwP6HHf4Axo=;
+        b=gheSFIc5bTsmw1jsovETeWo1w4g8zG6KCz3P/hJBW2KdoEW976JgbduPOjoWvM+8G4
+         2i4MzJ2r+reFxnehhoo1m48Pt9AbQeD4NI8AehDmhuCjYq0bwdbCh20JUDE9XYvjSXHu
+         vcsYsPNNdJWU/X/Q4LWuK9j+rOcAvPWOHYVn0JhpyRJqB02nbn3xp5xsW2/pDnJsxcQ2
+         lch+vb0OPzbDhkTphhkNRw1iIeB8NSK0rWcrGpgT9NtZ5DkNuC3P3r7CCDdhmOK3CTKr
+         CwmC5Vfa/z+Qg2Yw5DSrMqBfCjl/9NdOS+Dp14Bk4bASKhDJkXuIWTZffJuSpD0bf3WG
+         tUaA==
+X-Gm-Message-State: AOAM531NaKLNVGBkxT3Db2Ci/60evENlfd/0TGjgpy5HEZuwx3sNekb5
+        Dpo0prpbAdp5nvkkRbPQlrtnHmhEVqa7iw==
+X-Google-Smtp-Source: ABdhPJy10+VdOuNHh8N9zfOKYRx2mNF6XWjzFIRhxEo0nEI8YQuzPpfBM7Fv2mXUsTm6v/ZWxcv2xg==
+X-Received: by 2002:aca:c4cd:: with SMTP id u196mr12298422oif.62.1624997885480;
+        Tue, 29 Jun 2021 13:18:05 -0700 (PDT)
+Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id z6sm4106010oiz.39.2021.06.29.13.18.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 29 Jun 2021 13:18:04 -0700 (PDT)
+Date:   Tue, 29 Jun 2021 15:18:02 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc:     balbi@kernel.org, gregkh@linuxfoundation.org, agross@kernel.org,
         linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         wcheng@codeaurora.org
+Subject: Re: [PATCH 1/2] usb: dwc3: dwc3-qcom: Find USB connector and
+ register role switch
+Message-ID: <YNt/+q/vbXeIa4A2@yoga>
 References: <20210629144449.2550737-1-bryan.odonoghue@linaro.org>
- <20210629144449.2550737-2-bryan.odonoghue@linaro.org> <YNtAt3dCGGyj5DU/@yoga>
+ <20210629144449.2550737-2-bryan.odonoghue@linaro.org>
+ <YNtAt3dCGGyj5DU/@yoga>
  <c63c286a-f7c0-0874-59ad-e9ee43660a33@linaro.org>
- <20210629200228.GE25299@jackp-linux.qualcomm.com>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Message-ID: <b55ea2b8-b9a2-2a02-56f1-77345a04adcb@linaro.org>
-Date:   Tue, 29 Jun 2021 21:16:37 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.7.1
 MIME-Version: 1.0
-In-Reply-To: <20210629200228.GE25299@jackp-linux.qualcomm.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <c63c286a-f7c0-0874-59ad-e9ee43660a33@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 29/06/2021 21:02, Jack Pham wrote:
-> IIRC there had been an alternate proposal to keep the role switch
-> connection only at the dwc3 core but in order to handle the vbus
-> override business an additional notification would have needed to be
-> done either from the usb_role_switch class driver or as an "upcall" from
-> dwc3 core -> glue. (found it, it was by you Bryan [1])
+On Tue 29 Jun 14:23 CDT 2021, Bryan O'Donoghue wrote:
+
+> On 29/06/2021 16:48, Bjorn Andersson wrote:
+> > What's wrong with the switch that dwc3_setup_role_switch() sets up?
+> > 
+> > That's what I've been using in my UCSI hacking on Snapdragon 888 and it
+> > seems to work...
+> > 
+> > Regards,
+> > Bjorn
 > 
-> [1]https://lore.kernel.org/linux-usb/20200311191501.8165-7-bryan.odonoghue@linaro.org/
+> A good question, which as soon as you asked it made me completely doubt if
+> I'd tested the tree without the patch applied.
+> 
+> I reverted both on my working tree and indeed it breaks role-switch
+> detection.
+> 
+> In TCPM the connector is a child node of TCPM
+> 
+> https://git.linaro.org/people/bryan.odonoghue/kernel.git/tree/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts?h=usb-next-5.13.rcx-rb5-tcpm
+> line 1396
+> 
+> We use a remote endpoint inside of TCPM to hook up into &usb_1 line 1303
+> 
 
-Which had a bug :( Bjorn found
+That's expected, because the dwc3 role switching logic registers on
+&usb_1_dwc3 instead of &usb_1.
 
-My excuse for not following up is I had to hand back my hardware and got 
-sucked into doing something else.
+> Not entirely sure what the graph tree looks like in your USCI case but I
+> guess the connector is a child node of the controller ?
+> 
 
-I think Wesley's approach here is a good one so, that's also why I'm 
-re-posting.
+No, the connector currently a child of a completely different rpmsg
+device, i.e. in system terms it's the same as your design. One thing
+detecting the change in parameters and then invoking the change on the
+dwc3 controller (not the qcom variant thereof).
 
-I don't have a functional qcs405 setup but, I have validated it on sm8250.
+> But I think your question is why bother with the role-switch in dwc3-qcom
+> 
+> dwc3_qcom_vbus_override_enable(){} is switching bits that probably ought to
+> be in the PHY but for whatever reason ended up being buried in the qcom-dwc3
+> wrapper.
+> 
 
----
-bod
+I missed this part when I wired up my role switcher and things works
+fine, but I presume there's a good reason for the vbus override and it's
+not unlikely that I missed something in my testing.
+
+I do however think that it would be appropriate to use the generic dwc3
+role switcher and then make that somehow poke the vbus_override in the
+qcom instance.
+
+> Certainly we want that for qcs405 if you remember - I'm assuming for the
+> sm8x50 too.
+> 
+> Even if we shouldn't twiddle these bits on sm8x50 I believe its wanted on
+> qcs405.
+> 
+
+Can you remind me about the purpose of these bits?
+
+Regards,
+Bjorn
+
+> I'm open to correction on that one though
+> 
+> ---
+> bod
