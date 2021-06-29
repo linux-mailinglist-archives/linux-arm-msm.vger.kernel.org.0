@@ -2,129 +2,189 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 75E983B748D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Jun 2021 16:43:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7C9F93B749C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Jun 2021 16:46:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234498AbhF2Opc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Jun 2021 10:45:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49076 "EHLO
+        id S234550AbhF2Osg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Jun 2021 10:48:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49760 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234480AbhF2Opb (ORCPT
+        with ESMTP id S234470AbhF2Osf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Jun 2021 10:45:31 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47B84C061760
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Jun 2021 07:43:04 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id v5so471993wrt.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Jun 2021 07:43:04 -0700 (PDT)
+        Tue, 29 Jun 2021 10:48:35 -0400
+Received: from mail-oo1-xc34.google.com (mail-oo1-xc34.google.com [IPv6:2607:f8b0:4864:20::c34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B19CBC061760
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Jun 2021 07:46:07 -0700 (PDT)
+Received: by mail-oo1-xc34.google.com with SMTP id r14-20020a4ad4ce0000b029024b4146e2f5so5744382oos.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Jun 2021 07:46:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=UeZyBgOCC8jTdK5dxJUnoASqLw0aXvTqd4hglX6p1ZM=;
-        b=hqfGLoH1PPX/dR2C4weT86PBNGIVvFbMbcxV6DStSFLOqLEP82uegommw7fNCCSXwo
-         4V8dSDl2CT4jWyN1NK7u0i5AF0GSPh0R7dR5MMA9Pm/odaFmp09sdhcjWbPMrfEc0FFR
-         v5QtiIJ09gRlxa7tUXyVo6IvlrzXAuKS/UDGeFCQSyqYcZZszCuhSbj1ufqC6NF8/UR8
-         0f+WwWjTzyMn4XmmL5M/mnkvG534ie3VFA8jxvOzcq/IMTOGAkRZSp+Pnf5xTsIc+LjY
-         3kMsZkTPmTCdMo2bE7zY0emqIWCZVNHoTeuZgf6Je9M+SNCZcWs0FMKfuGRgIy7heq1A
-         kf/Q==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=W2Ntt0LT4z/1elLySVWMmlMXipsIpCl6r1V3lH3DwEE=;
+        b=EGeSkS7JW6EtUMDXLA6LoUTd4e7U32ADZX6Y27+Hrm66f0S58vWf/N1ztWMSPRRS3H
+         33jFMo7nq5GUQoz0kojUxM6JtTngYeG+Ni9DY5IcWIX0F0jwvfZJiWkNvbY1CZR/Ncpf
+         Xy179mvbppePNBKx4BUPycvQaaewZ/nOO+VF+/492iI4rdTtAxknFKCOJnjpDnIezAsX
+         zolRBUqdfOSy2nQJm+lqFHFabChODfct7fYoAucnkm42vDGaOGtEODELZ8TZv/d7cmlA
+         6DPqzVLPQO+KUMh2ZrvTxVBAFLFhQ5/y87GbvebTLrt62/GhZu3iE2OT0NMM/sNGjvOg
+         fhsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=UeZyBgOCC8jTdK5dxJUnoASqLw0aXvTqd4hglX6p1ZM=;
-        b=n2nMb0xH5bRrVHZ988tM9WbhLyTtiEMkNcir4wf/RnrvE9k4R1Wq3pM+FrIalZ5tNM
-         VJnWd2OEDmdRyajVMer8EbLTiG/JeNuJWM8dIgY6C2OCNAO1HiauGhVAS6jfh2ST1/ge
-         ROJlK4QVR6ZAojdR0VqeGBldH24honm7s2kRBU9PROEgt2SUgx0hnZycvkmv0HLDvHuz
-         BfwDLpVelOlH9Ep86YQaNUiMyFGUVIiWx6lUpC5UTM0DlxpFWHuNwPuXSsbso/WJDHnT
-         FMwH/TZxS8kICKZ/WEQ+y7/kelhfmnLs3SDF2UUKqJT9NLl1blAZ04P49B9PoEdAcur1
-         0HBw==
-X-Gm-Message-State: AOAM532++yb8se0+3hOmGmjLvrs0oLY0D+ppy+JOjVBe7MXcDbKAmUuh
-        GVbmLBJIP4VGVX8h38KernTRWw==
-X-Google-Smtp-Source: ABdhPJxI0QnzFoepzOQ/sHAUNG/T1RRNDfdJ8gYg2aMbVAwg6ijFzIhEFxpTBfJ2u7VSJPBhwQDaZQ==
-X-Received: by 2002:adf:f40d:: with SMTP id g13mr34713211wro.413.1624977782975;
-        Tue, 29 Jun 2021 07:43:02 -0700 (PDT)
-Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id u15sm2832266wmq.1.2021.06.29.07.43.02
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=W2Ntt0LT4z/1elLySVWMmlMXipsIpCl6r1V3lH3DwEE=;
+        b=l9insQ2u7xkjml4Lq81K0d0lbJpgb8GPjZadQhOswdDBHcXa/AAKZNHirPmd3tBo4x
+         0FMCZ7QhBbCSjAQyJp3B29muy24xqpnBmVQ35zvAy6aMfffUNcrKCivNfzbj4Zz1hJLA
+         uJ2YQXAS+4j/v0+7FmB3LVy7/DjGuDC3syO4dQistMPnGpgIlufgXv+dqQi/Cdlzhthn
+         JswtuYnPfT8vLnNNNa0d2dNuKNRo/Gaak2dZlYkg6KpEmIQKh625mztAW3uwzJ5gNbb6
+         C7utDwXlmqkYdtbLjhXsEGwNiEfAfpHoDmXI4DjST9hKDGcIA5DS5SVtsphbz+/lshED
+         +z4Q==
+X-Gm-Message-State: AOAM533XXa45Y6Q51MHHK7MzBt1rwBoKZ6eMIu1qOLPk14TFeyKijL4Q
+        q8ACim/V0t/BM5DWA+1A2XXDBw==
+X-Google-Smtp-Source: ABdhPJwuPka4W9yOMDvrX6GUrWsbedu8EBEiJblO9SsbN8jZivaLELaiLeHMRVIpdlT/EvGXh8p5kw==
+X-Received: by 2002:a4a:ae8c:: with SMTP id u12mr4341303oon.3.1624977966886;
+        Tue, 29 Jun 2021 07:46:06 -0700 (PDT)
+Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id c4sm904642ots.15.2021.06.29.07.46.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Jun 2021 07:43:02 -0700 (PDT)
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-To:     balbi@kernel.org, gregkh@linuxfoundation.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, linux-usb@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Cc:     wcheng@codeaurora.org, bryan.odonoghue@linaro.org
-Subject: [PATCH 2/2] usb: dwc3: dwc3-qcom: Fix typo in the dwc3 vbus override API
-Date:   Tue, 29 Jun 2021 15:44:49 +0100
-Message-Id: <20210629144449.2550737-3-bryan.odonoghue@linaro.org>
-X-Mailer: git-send-email 2.30.1
-In-Reply-To: <20210629144449.2550737-1-bryan.odonoghue@linaro.org>
-References: <20210629144449.2550737-1-bryan.odonoghue@linaro.org>
+        Tue, 29 Jun 2021 07:46:06 -0700 (PDT)
+Date:   Tue, 29 Jun 2021 09:46:04 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     abhinavk@codeaurora.org
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Stephen Boyd <swboyd@chromium.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] drm/msm/dp: Make it possible to enable the test pattern
+Message-ID: <YNsyLNeSvQlEQLcw@yoga>
+References: <20210629002234.1787149-1-bjorn.andersson@linaro.org>
+ <b3456d3e4376ae1e9776f03e14513a35@codeaurora.org>
+ <YNpvf8rpWoMFTcBt@yoga>
+ <2d922441927d1c2a757b5b197f496906@codeaurora.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2d922441927d1c2a757b5b197f496906@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Wesley Cheng <wcheng@codeaurora.org>
+On Mon 28 Jun 20:07 CDT 2021, abhinavk@codeaurora.org wrote:
 
-There was an extra character in the dwc3_qcom_vbus_override_enable()
-function.  Removed the extra character.
+> On 2021-06-28 17:55, Bjorn Andersson wrote:
+> > On Mon 28 Jun 19:31 CDT 2021, abhinavk@codeaurora.org wrote:
+> > 
+> > > Hi Bjorn
+> > > 
+> > > On 2021-06-28 17:22, Bjorn Andersson wrote:
+> > > > The debugfs interface contains the knobs to make the DisplayPort
+> > > > controller output a test pattern, unfortunately there's nothing
+> > > > currently that actually enables the defined test pattern.
+> > > >
+> > > > Fixes: de3ee25473ba ("drm/msm/dp: add debugfs nodes for video pattern
+> > > > tests")
+> > > > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > > 
+> > > This is not how this debugfs node works. This is meant to be used
+> > > while
+> > > running
+> > > DP compliance video pattern test.
+> > > 
+> > > https://gitlab.freedesktop.org/drm/igt-gpu-tools/-/blob/master/tools/msm_dp_compliance.c
+> > > 
+> > > While the compliance test is being run with this msm_dp_compliance app
+> > > running,
+> > > it will draw the test pattern when it gets the "test_active" from the
+> > > driver.
+> > > 
+> > > The test pattern which this app draws is as per the requirements of
+> > > the
+> > > compliance test
+> > > as the test equipment will match the CRC of the pattern which is
+> > > drawn.
+> > > 
+> > > The API dp_panel_tpg_config() which you are trying to call here
+> > > draws the DP
+> > > test pattern
+> > > from the DP controller hardware but not the pattern which the
+> > > compliance
+> > > test expects.
+> > > 
+> > 
+> > So clearly not an oversight, but rather me not understanding how to use
+> > the test pattern.
+> > 
+> > You say that I should run msm_dp_compliance while the test is running,
+> > so how do I run the test?
+> 
+> There are two test patterns with different purposes. The one which the
+> msm_dp_compliance
+> draws is strictly for the DP compliance test and it needs even the DPU to
+> draw the frame because
+> it sets up the display pipeline and just draws the buffer.
+> 
+> That is not what you are looking for here.
+> 
+> So rather than trying to run msm_dp_compliance on your setup, just try
+> calling dp_panel_tpg_config().
+> We typically just call this API, right after the link training is done.
+> But if you really need a debugfs node for this, you can write up a separate
+> debugfs for it
+> Something like:
+> 
+> echo 1 > dp/tpg/en
+> 
 
-Signed-off-by: Wesley Cheng <wcheng@codeaurora.org>
-Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
----
- drivers/usb/dwc3/dwc3-qcom.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+Having the ability to turn on the test pattern was very useful to me and
+I would use this next time I'm adding DP support on a new platform. So
+adding some way of invoking that API without a lot of extra effort seems
+useful.
 
-diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-index 4491704503ab..541e2626294a 100644
---- a/drivers/usb/dwc3/dwc3-qcom.c
-+++ b/drivers/usb/dwc3/dwc3-qcom.c
-@@ -120,7 +120,7 @@ static inline void dwc3_qcom_clrbits(void __iomem *base, u32 offset, u32 val)
- 	readl(base + offset);
- }
- 
--static void dwc3_qcom_vbus_overrride_enable(struct dwc3_qcom *qcom, bool enable)
-+static void dwc3_qcom_vbus_override_enable(struct dwc3_qcom *qcom, bool enable)
- {
- 	if (enable) {
- 		dwc3_qcom_setbits(qcom->qscratch_base, QSCRATCH_SS_PHY_CTRL,
-@@ -141,7 +141,7 @@ static int dwc3_qcom_vbus_notifier(struct notifier_block *nb,
- 	struct dwc3_qcom *qcom = container_of(nb, struct dwc3_qcom, vbus_nb);
- 
- 	/* enable vbus override for device mode */
--	dwc3_qcom_vbus_overrride_enable(qcom, event);
-+	dwc3_qcom_vbus_override_enable(qcom, event);
- 	qcom->mode = event ? USB_DR_MODE_PERIPHERAL : USB_DR_MODE_HOST;
- 
- 	return NOTIFY_DONE;
-@@ -153,7 +153,7 @@ static int dwc3_qcom_host_notifier(struct notifier_block *nb,
- 	struct dwc3_qcom *qcom = container_of(nb, struct dwc3_qcom, host_nb);
- 
- 	/* disable vbus override in host mode */
--	dwc3_qcom_vbus_overrride_enable(qcom, !event);
-+	dwc3_qcom_vbus_override_enable(qcom, !event);
- 	qcom->mode = event ? USB_DR_MODE_HOST : USB_DR_MODE_PERIPHERAL;
- 
- 	return NOTIFY_DONE;
-@@ -329,7 +329,7 @@ static int dwc3_qcom_usb_role_switch_set(struct usb_role_switch *sw,
- 
- 	qcom->mode = (role == USB_ROLE_HOST) ? USB_DR_MODE_HOST :
- 					       USB_DR_MODE_PERIPHERAL;
--	dwc3_qcom_vbus_overrride_enable(qcom, enable);
-+	dwc3_qcom_vbus_override_enable(qcom, enable);
- 	return 0;
- }
- 
-@@ -917,7 +917,7 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
- 
- 	/* enable vbus override for device mode */
- 	if (qcom->mode == USB_DR_MODE_PERIPHERAL)
--		dwc3_qcom_vbus_overrride_enable(qcom, true);
-+		dwc3_qcom_vbus_override_enable(qcom, true);
- 
- 	if (dwc3_qcom_find_usb_connector(pdev)) {
- 		ret = dwc3_qcom_setup_role_switch(qcom);
--- 
-2.30.1
+> Lets not disturb this one.
+> 
 
+Agreed.
+
+Thanks,
+Bjorn
+
+> > 
+> > > Its just a debug API to call when required during bringup/debug
+> > > purposes.
+> > > 
+> > 
+> > Yes, I was trying to isolate the DP code from some misconfiguration in
+> > the DPU during bringup and with this fix the debugfs interface became
+> > useful.
+> 
+> > 
+> > Regards,
+> > Bjorn
+> > 
+> > > Hence this is not the place to call it as it will end up breaking CTS.
+> > > 
+> > > Thanks
+> > > 
+> > > Abhinav
+> > > 
+> > > > ---
+> > > >  drivers/gpu/drm/msm/dp/dp_debug.c | 2 ++
+> > > >  1 file changed, 2 insertions(+)
+> > > >
+> > > > diff --git a/drivers/gpu/drm/msm/dp/dp_debug.c
+> > > > b/drivers/gpu/drm/msm/dp/dp_debug.c
+> > > > index 2f6247e80e9d..82911af44905 100644
+> > > > --- a/drivers/gpu/drm/msm/dp/dp_debug.c
+> > > > +++ b/drivers/gpu/drm/msm/dp/dp_debug.c
+> > > > @@ -305,6 +305,8 @@ static ssize_t dp_test_active_write(struct file
+> > > > *file,
+> > > >  				debug->panel->video_test = true;
+> > > >  			else
+> > > >  				debug->panel->video_test = false;
+> > > > +
+> > > > +			dp_panel_tpg_config(debug->panel, debug->panel->video_test);
+> > > >  		}
+> > > >  	}
+> > > >  	drm_connector_list_iter_end(&conn_iter);
