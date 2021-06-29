@@ -2,114 +2,191 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0EE6A3B7218
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Jun 2021 14:34:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 683633B7220
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Jun 2021 14:34:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233577AbhF2Mg4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Jun 2021 08:36:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47796 "EHLO
+        id S233710AbhF2MhH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Jun 2021 08:37:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47844 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233384AbhF2Mg4 (ORCPT
+        with ESMTP id S233721AbhF2MhF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Jun 2021 08:36:56 -0400
-Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4069BC061766
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Jun 2021 05:34:29 -0700 (PDT)
-Received: by mail-pl1-x635.google.com with SMTP id z4so1508169plg.8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Jun 2021 05:34:29 -0700 (PDT)
+        Tue, 29 Jun 2021 08:37:05 -0400
+Received: from mail-pg1-x529.google.com (mail-pg1-x529.google.com [IPv6:2607:f8b0:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46F8BC0617AE
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Jun 2021 05:34:34 -0700 (PDT)
+Received: by mail-pg1-x529.google.com with SMTP id g22so77747pgl.7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Jun 2021 05:34:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=08olEo+l7lc9p8Mmtezyj9w90KFJHlqPp1LZ0fIu3/U=;
-        b=OeEpzZRnI1w/aTKv6sCy3gps1Y9gCNWvEzou3m3bJ0D4h8rodQ5FLuyvcUaLGs/ot1
-         2ReB3/V6G69mmhBQQr0IrN1GqhLHpSg/0sz/4ozLWXaIQmqsh+T98cYdh2B3XJ6Np1cs
-         69MQshW3YVSdOGK6J2R6bquH20zfpCWqE0dGVhX9zk38uRRvFFoz1dRzQdHUI2sPsgbN
-         5UT6anUhNbxc6hXm7AB/ZHMRrmxTa94qaomexNcSTnbu7sPJmI/zCy7twMr5H3ThfUIy
-         EBMhWTI171XjYFz7+PsmuAR8PYeqyLPa6bIqqygNbkvG+kUwV7BPWZ9mtNQErVbqW5hw
-         93dA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=v9DYlWSWic1b68MEKNTSvKWtqRdyWA1mD3gX3M18m2w=;
+        b=LFiFoi136IysUwzZESYIY+zVaVM3jxao0XpXOZ66W2JxOhTUXRobwI0mZG9B8ntBon
+         fsO4+FESgF9+LibMYGpX1XnDMsd/zWHfcyds+jrpoYAe7L8jhOenS/Fm0sOAHIsNhqyQ
+         HjyKGyfZyemtUCNoHSmeccWNX4+7fuxiT9z43znracKHan76oVexnuuRI8U/InxONGgQ
+         4ypG6/998bPtjWoFWbo0gmcziQjdmyrEo+KIhcVkevs1RnCi+Fc9jriHGfPw50MEp6l0
+         7MEX3VXs5uNbSvI8oXX4VAr00dUmzwmzyQLH8whjcQA9SACnkSZ5mvBmwbYCxsrSOibd
+         p1IQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=08olEo+l7lc9p8Mmtezyj9w90KFJHlqPp1LZ0fIu3/U=;
-        b=OyUjhEg2YaymOVXewzdwrS7iqaNrOwNyyFjWjQR1r2+ElwTZ6SvP7HcBsO5Penk2m/
-         cyeANMkjBs8jybBOemsdivUkwNZnI3JPJSpfe0ZypQS6HX4kkWDT9rmfnVOU8SQyTvMX
-         1ABz66jwRgcUDZ1UUNl/Vw834flBE/GE5SAhw3Hca+m/Xdp8IfEJ4l0Z5mDBIRgQJAl+
-         QrVnUIeHSN3Q//UYwE8bQCVbezFwVTP++tc5SCJR4tej723KRCaewUmG2+Atg8942WfS
-         dxhU8oMzeX96LoBPjI6oMxvN4A1h/uhRvPZIx+CeJkfjjDZjhU2Mxu72tYGE9aD2CtK9
-         fAtA==
-X-Gm-Message-State: AOAM531qoWY92FrE9QrcLvddlhxORhWH6q93AGhYtt8NIvIVDE5QWHhZ
-        BmF9C+b9tUlgg/wDdobRhKD63C1rCy6lWg==
-X-Google-Smtp-Source: ABdhPJxNB26ussGz4q7Tzio0I7waWW1w6fmF3q8wj3QpLf39crjBOIQ/UKHI6ouiBexJl1JVYb9fSQ==
-X-Received: by 2002:a17:90a:bc89:: with SMTP id x9mr33858494pjr.228.1624970068126;
-        Tue, 29 Jun 2021 05:34:28 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=v9DYlWSWic1b68MEKNTSvKWtqRdyWA1mD3gX3M18m2w=;
+        b=g5qCIfawFk9eh1LAOllBvB6prftbL/9erAjAHKpcxx2mQ3ETJsM9/RHHSpZyrmQ/bo
+         zCTfUitiIDkml9UUJqD1WiJU1nsMzWw9QxSdJ5j5FObfS57mwqG2if11nKTH6oyL0qYv
+         PYBLznGNKyTWA0VgZPAd/Op0KyJ97VhG7M9IqYFl76j2jrM6PGnJdOTm2w5B6bWxHlAQ
+         O8kw6LxcoMKNIDaKjSc3rp5yXiPjeCRHohZ1ztk0Ul5m3/1JyDUq5pEaFp5DwVregj57
+         0K7J/ctDjgj34+v/N/jx5MNdHzbGHme1vFNFp00QbJ8poJDZ+3GsL9Zu959WbUh8XqFF
+         zrWA==
+X-Gm-Message-State: AOAM5324Am53D4rCnBnQ/YQ5qzqdiATAHRUO2WX9lhyDBHoRI2O+g4/r
+        QGT2xY9l5ih3lGyiPD0cZBlMlpMhevHljg==
+X-Google-Smtp-Source: ABdhPJwUGm+TPzInvCxfXZfDS0j6yozQ+HyOvr4MNSz6JFKKbNSiEA/j8+oQf10bWXX/s/JRpBKsIg==
+X-Received: by 2002:a63:f65:: with SMTP id 37mr17583270pgp.367.1624970073332;
+        Tue, 29 Jun 2021 05:34:33 -0700 (PDT)
 Received: from localhost.name ([182.69.252.226])
-        by smtp.gmail.com with ESMTPSA id 143sm16176692pfx.46.2021.06.29.05.34.23
+        by smtp.gmail.com with ESMTPSA id 143sm16176692pfx.46.2021.06.29.05.34.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Jun 2021 05:34:27 -0700 (PDT)
+        Tue, 29 Jun 2021 05:34:32 -0700 (PDT)
 From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
 To:     linux-arm-msm@vger.kernel.org
 Cc:     bhupesh.sharma@linaro.org, bhupesh.linux@gmail.com,
         linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
         devicetree@vger.kernel.org, lgirdwood@gmail.com,
         robh+dt@kernel.org, Linus Walleij <linus.walleij@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Subject: [PATCH v4 0/4] pinctrl: qcom/pinctrl-spmi-gpio: Add support for pmic-gpio on SA8155p-adp
-Date:   Tue, 29 Jun 2021 18:04:03 +0530
-Message-Id: <20210629123407.82561-1-bhupesh.sharma@linaro.org>
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh@kernel.org>
+Subject: [PATCH v4 1/4] dt-bindings: pinctrl: qcom,pmic-gpio: Arrange compatibles alphabetically
+Date:   Tue, 29 Jun 2021 18:04:04 +0530
+Message-Id: <20210629123407.82561-2-bhupesh.sharma@linaro.org>
 X-Mailer: git-send-email 2.31.1
+In-Reply-To: <20210629123407.82561-1-bhupesh.sharma@linaro.org>
+References: <20210629123407.82561-1-bhupesh.sharma@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Changes since v3:
------------------
-- v3 series can be found here: https://lore.kernel.org/linux-arm-msm/20210617053432.350486-1-bhupesh.sharma@linaro.org/T/#m2b1bf2d32dfdde3196dc5342722e356ee1f87456 
-- Rebased patchset on pinctrl/devel branch.
-- Added Reviewed-by from Bjorn for patches 1 to 4 and Ack from Rob for
-  patches 1 and 2.
+Arrange the compatibles inside qcom-pmic gpio device tree
+bindings alphabetically.
 
-Changes since v2:
------------------
-- v2 series can be found here: https://lore.kernel.org/linux-arm-msm/20210615074543.26700-1-bhupesh.sharma@linaro.org/T/#m8303d27d561b30133992da88198abb78ea833e21 
-- Addressed review comments from Bjorn and Mark.
-- As per suggestion from Bjorn, separated the patches in different
-  patchsets (specific to each subsystem) to ease review and patch application.
-
-Changes since v1:
------------------
-- v1 series can be found here: https://lore.kernel.org/linux-arm-msm/20210607113840.15435-1-bhupesh.sharma@linaro.org/T/#mc524fe82798d4c4fb75dd0333318955e0406ad18
-- Addressed review comments from Bjorn and Vinod received on the v1
-  series.
-
-This series adds the pmic-gpio support code for SA8155p-adp board
-which is based on Qualcomm snapdragon sa8155p SoC which in turn is
-simiar to the sm8150 SoC. 
-
-This board supports a new PMIC -> PMM8155AU.
-
-While at it, also make some cosmetic changes to the qcom pinctrl-spmi-gpio
-driver and dt-bindings to make sure the compatibles are 
-in alphabetical order.
+While at it, also make some minor cosmetic changes to allow
+future compatible addition to the bindings simpler.
 
 Cc: Linus Walleij <linus.walleij@linaro.org>
 Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Acked-by: Rob Herring <robh@kernel.org>
+Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+---
+ .../bindings/pinctrl/qcom,pmic-gpio.txt       | 62 +++++++++----------
+ 1 file changed, 31 insertions(+), 31 deletions(-)
 
-Bhupesh Sharma (4):
-  dt-bindings: pinctrl: qcom,pmic-gpio: Arrange compatibles
-    alphabetically
-  dt-bindings: pinctrl: qcom,pmic-gpio: Add compatible for SA8155p-adp
-  pinctrl: qcom/pinctrl-spmi-gpio: Arrange compatibles alphabetically
-  pinctrl: qcom/pinctrl-spmi-gpio: Add compatible for pmic-gpio on
-    SA8155p-adp
-
- .../bindings/pinctrl/qcom,pmic-gpio.txt       | 64 ++++++++++---------
- drivers/pinctrl/qcom/pinctrl-spmi-gpio.c      | 35 +++++-----
- 2 files changed, 51 insertions(+), 48 deletions(-)
-
+diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt b/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt
+index 161216daf463..c9f02062774a 100644
+--- a/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt
++++ b/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt
+@@ -7,10 +7,21 @@ PMIC's from Qualcomm.
+ 	Usage: required
+ 	Value type: <string>
+ 	Definition: must be one of:
++		    "qcom,pm660-gpio"
++		    "qcom,pm660l-gpio"
++		    "qcom,pm6150-gpio"
++		    "qcom,pm6150l-gpio"
++		    "qcom,pm7325-gpio"
+ 		    "qcom,pm8005-gpio"
++		    "qcom,pm8008-gpio"
+ 		    "qcom,pm8018-gpio"
+ 		    "qcom,pm8038-gpio"
+ 		    "qcom,pm8058-gpio"
++		    "qcom,pm8150-gpio"
++		    "qcom,pm8150b-gpio"
++		    "qcom,pm8350-gpio"
++		    "qcom,pm8350b-gpio"
++		    "qcom,pm8350c-gpio"
+ 		    "qcom,pm8916-gpio"
+ 		    "qcom,pm8917-gpio"
+ 		    "qcom,pm8921-gpio"
+@@ -22,21 +33,10 @@ PMIC's from Qualcomm.
+ 		    "qcom,pmi8950-gpio"
+ 		    "qcom,pmi8994-gpio"
+ 		    "qcom,pmi8998-gpio"
+-		    "qcom,pms405-gpio"
+-		    "qcom,pm660-gpio"
+-		    "qcom,pm660l-gpio"
+-		    "qcom,pm8150-gpio"
+-		    "qcom,pm8150b-gpio"
+-		    "qcom,pm8350-gpio"
+-		    "qcom,pm8350b-gpio"
+-		    "qcom,pm8350c-gpio"
+ 		    "qcom,pmk8350-gpio"
+-		    "qcom,pm7325-gpio"
+ 		    "qcom,pmr735a-gpio"
+ 		    "qcom,pmr735b-gpio"
+-		    "qcom,pm6150-gpio"
+-		    "qcom,pm6150l-gpio"
+-		    "qcom,pm8008-gpio"
++		    "qcom,pms405-gpio"
+ 		    "qcom,pmx55-gpio"
+ 
+ 		    And must contain either "qcom,spmi-gpio" or "qcom,ssbi-gpio"
+@@ -98,35 +98,35 @@ to specify in a pin configuration subnode:
+ 	Value type: <string-array>
+ 	Definition: List of gpio pins affected by the properties specified in
+ 		    this subnode.  Valid pins are:
+-		    gpio1-gpio4 for pm8005
+-		    gpio1-gpio6 for pm8018
++		    gpio1-gpio10 for pm6150
++		    gpio1-gpio12 for pm6150l
++		    gpio1-gpio10 for pm7325
++		    gpio1-gpio4  for pm8005
++		    gpio1-gpio2  for pm8008
++		    gpio1-gpio6  for pm8018
+ 		    gpio1-gpio12 for pm8038
+ 		    gpio1-gpio40 for pm8058
+-		    gpio1-gpio4 for pm8916
++		    gpio1-gpio10 for pm8150 (holes on gpio2, gpio5, gpio7
++					     and gpio8)
++		    gpio1-gpio12 for pm8150b (holes on gpio3, gpio4, gpio7)
++		    gpio1-gpio12 for pm8150l (hole on gpio7)
++		    gpio1-gpio10 for pm8350
++		    gpio1-gpio8  for pm8350b
++		    gpio1-gpio9  for pm8350c
++		    gpio1-gpio4  for pm8916
+ 		    gpio1-gpio38 for pm8917
+ 		    gpio1-gpio44 for pm8921
+ 		    gpio1-gpio36 for pm8941
+-		    gpio1-gpio8 for pm8950 (hole on gpio3)
++		    gpio1-gpio8  for pm8950 (hole on gpio3)
+ 		    gpio1-gpio22 for pm8994
+ 		    gpio1-gpio26 for pm8998
+ 		    gpio1-gpio22 for pma8084
+-		    gpio1-gpio2 for pmi8950
++		    gpio1-gpio2  for pmi8950
+ 		    gpio1-gpio10 for pmi8994
++		    gpio1-gpio4  for pmk8350
++		    gpio1-gpio4  for pmr735a
++		    gpio1-gpio4  for pmr735b
+ 		    gpio1-gpio12 for pms405 (holes on gpio1, gpio9 and gpio10)
+-		    gpio1-gpio10 for pm8150 (holes on gpio2, gpio5, gpio7
+-					     and gpio8)
+-		    gpio1-gpio12 for pm8150b (holes on gpio3, gpio4, gpio7)
+-		    gpio1-gpio12 for pm8150l (hole on gpio7)
+-		    gpio1-gpio10 for pm8350
+-		    gpio1-gpio8 for pm8350b
+-		    gpio1-gpio9 for pm8350c
+-		    gpio1-gpio4 for pmk8350
+-		    gpio1-gpio10 for pm7325
+-		    gpio1-gpio4 for pmr735a
+-		    gpio1-gpio4 for pmr735b
+-		    gpio1-gpio10 for pm6150
+-		    gpio1-gpio12 for pm6150l
+-		    gpio1-gpio2 for pm8008
+ 		    gpio1-gpio11 for pmx55 (holes on gpio3, gpio7, gpio10
+ 					    and gpio11)
+ 
 -- 
 2.31.1
 
