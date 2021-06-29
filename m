@@ -2,168 +2,274 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C72BD3B6BED
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Jun 2021 03:07:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 026B73B6C8C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Jun 2021 04:36:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232020AbhF2BKK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Jun 2021 21:10:10 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:29192 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232000AbhF2BKJ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Jun 2021 21:10:09 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1624928863; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=DniW7efyyS7ES8PwQW5VveHX361k3FnVCGW5YegW91I=;
- b=uKEBlDReudJ4oGWOvZnNYOuVnyG0/qZwyQkCKayjQXsai0bg3Bc+uZo8e2XKbEIrHHWEKbHJ
- oy0bDP2TUftEp4I2fs+fKTtjxMv7Lfm02Rf5BpZAS/ahPx2wr4KvbL1xOO356NR4CWYf7YG1
- hlyF/G3TpCQXQqnyLEAm5zx9UZ8=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
- 60da725e5e3e57240baac883 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 29 Jun 2021 01:07:42
- GMT
-Sender: abhinavk=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id D57E2C43217; Tue, 29 Jun 2021 01:07:41 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: abhinavk)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 7597BC433D3;
-        Tue, 29 Jun 2021 01:07:39 +0000 (UTC)
+        id S231883AbhF2Ci2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Jun 2021 22:38:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56758 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231856AbhF2Ci2 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 28 Jun 2021 22:38:28 -0400
+Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB3D1C061766
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Jun 2021 19:36:00 -0700 (PDT)
+Received: by mail-pj1-x102f.google.com with SMTP id pf4-20020a17090b1d84b029016f6699c3f2so910170pjb.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Jun 2021 19:36:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=UyYne+kQlvBcMgHYpgAvm2fSPT35KfuDzyzvtjgZuk8=;
+        b=CXxrtg6cMeWqyqJ54Vy77Wa/C/fUxwulT6VNUy/DghCOEPNudSp3EwxXfsucjaphl8
+         h7b8oDwlARAxSmPZsDZJNpwwFw9TIGc03lzaGSa47+Hh6IMyIrWytvRUMe+z7KiQD8K+
+         2w2vlwmo785g0bvD8RUmcjF1iCgbHyCVEdAYK69hmGhOr55eKlHebAhaq5/HeBknckYD
+         fmbvqdoGcptHmQLQkB7a1TQ3u38TNd1zVlLhVwkrUcRZXLvstONRWA48x1Oj0zWvuxqO
+         t7a0RdkxyDUVbl9ajYMGTN296aktKucyK4g99Th1wwy1zYIDM0PixCSzvGzgCkCsbVo0
+         Ecrw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=UyYne+kQlvBcMgHYpgAvm2fSPT35KfuDzyzvtjgZuk8=;
+        b=bPPwBFPT2ZTeZ0RFhuJgG7byY/eenRkrmZUjbBhlvX0oowrWr3LkRQBaLDhkKfUZca
+         EQ3ofuirs+Ft1KxEaY+JOkkSIRAV7ItuCOGFZPLXlhaqzkacANIiWdE5CoJNa6UrfiKH
+         j8n3jSwkTwBG2U5ulnWgIMod4aFF8L902/UrgviiDaMXUyR5WQ4WXJiLm3hD1bY/xxf6
+         m+ucoWD7MKpx4IlPgav7kaxjsrlFxATqwbj3xVcpaUCe35afsyeDTmp12rmaH3X7GJNS
+         VnbrIYang6gfDzEJ6qHNfJrwOJI4rBDEYh2/EMM3YiRNJv7tLiJHqUdR061BSNs23Bka
+         H/Jg==
+X-Gm-Message-State: AOAM530GtE5DNdliyOWzBrXIjIlchupvKLuaR3yGSpA/NwvUZStjW6x7
+        0rRm6YWrhPVmfet7oTsUlyjBXw==
+X-Google-Smtp-Source: ABdhPJxFUGku1o/uY4QNMWQpOdU6952+p2RBUnZTs6bCOm6duDSu05RImz4hRzzNKsRZ6m2zSI1W6w==
+X-Received: by 2002:a17:90a:e7c7:: with SMTP id kb7mr26070368pjb.96.1624934160204;
+        Mon, 28 Jun 2021 19:36:00 -0700 (PDT)
+Received: from localhost ([136.185.134.182])
+        by smtp.gmail.com with ESMTPSA id e1sm15994946pfd.16.2021.06.28.19.35.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 28 Jun 2021 19:35:59 -0700 (PDT)
+Date:   Tue, 29 Jun 2021 08:05:56 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Thara Gopinath <thara.gopinath@linaro.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, rui.zhang@intel.com,
+        daniel.lezcano@linaro.org, rjw@rjwysocki.net, robh+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [Patch v2 3/5] cpufreq: qcom-cpufreq-hw: Add dcvs interrupt
+ support
+Message-ID: <20210629023556.v3u4hdye5ojolubq@vireshk-i7>
+References: <20210624115813.3613290-1-thara.gopinath@linaro.org>
+ <20210624115813.3613290-4-thara.gopinath@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Mon, 28 Jun 2021 18:07:39 -0700
-From:   abhinavk@codeaurora.org
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Stephen Boyd <swboyd@chromium.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] drm/msm/dp: Make it possible to enable the test pattern
-In-Reply-To: <YNpvf8rpWoMFTcBt@yoga>
-References: <20210629002234.1787149-1-bjorn.andersson@linaro.org>
- <b3456d3e4376ae1e9776f03e14513a35@codeaurora.org> <YNpvf8rpWoMFTcBt@yoga>
-Message-ID: <2d922441927d1c2a757b5b197f496906@codeaurora.org>
-X-Sender: abhinavk@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210624115813.3613290-4-thara.gopinath@linaro.org>
+User-Agent: NeoMutt/20180716-391-311a52
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-06-28 17:55, Bjorn Andersson wrote:
-> On Mon 28 Jun 19:31 CDT 2021, abhinavk@codeaurora.org wrote:
+On 24-06-21, 07:58, Thara Gopinath wrote:
+> Add interrupt support to notify the kernel of h/w initiated frequency
+> throttling by LMh. Convey this to scheduler via thermal presssure
+> interface.
 > 
->> Hi Bjorn
->> 
->> On 2021-06-28 17:22, Bjorn Andersson wrote:
->> > The debugfs interface contains the knobs to make the DisplayPort
->> > controller output a test pattern, unfortunately there's nothing
->> > currently that actually enables the defined test pattern.
->> >
->> > Fixes: de3ee25473ba ("drm/msm/dp: add debugfs nodes for video pattern
->> > tests")
->> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
->> 
->> This is not how this debugfs node works. This is meant to be used 
->> while
->> running
->> DP compliance video pattern test.
->> 
->> https://gitlab.freedesktop.org/drm/igt-gpu-tools/-/blob/master/tools/msm_dp_compliance.c
->> 
->> While the compliance test is being run with this msm_dp_compliance app
->> running,
->> it will draw the test pattern when it gets the "test_active" from the
->> driver.
->> 
->> The test pattern which this app draws is as per the requirements of 
->> the
->> compliance test
->> as the test equipment will match the CRC of the pattern which is 
->> drawn.
->> 
->> The API dp_panel_tpg_config() which you are trying to call here draws 
->> the DP
->> test pattern
->> from the DP controller hardware but not the pattern which the 
->> compliance
->> test expects.
->> 
+> Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
+> ---
 > 
-> So clearly not an oversight, but rather me not understanding how to use
-> the test pattern.
+> v1->v2:
+> 	- Introduced qcom_cpufreq_hw_lmh_init to consolidate LMh related initializations
+> 	  as per Viresh's review comment.
+> 	- Moved the piece of code restarting polling/re-enabling LMh interrupt to
+> 	  qcom_lmh_dcvs_notify therby simplifying isr and timer callback as per Viresh's
+> 	  suggestion.
+> 	- Droped cpus from qcom_cpufreq_data and instead using cpus from cpufreq_policy in
+> 	  qcom_lmh_dcvs_notify as per Viresh's review comment.
+> 	- Dropped dt property qcom,support-lmh as per Bjorn's suggestion.
+> 	- Other minor/cosmetic fixes
 > 
-> You say that I should run msm_dp_compliance while the test is running,
-> so how do I run the test?
-
-There are two test patterns with different purposes. The one which the 
-msm_dp_compliance
-draws is strictly for the DP compliance test and it needs even the DPU 
-to draw the frame because
-it sets up the display pipeline and just draws the buffer.
-
-That is not what you are looking for here.
-
-So rather than trying to run msm_dp_compliance on your setup, just try 
-calling dp_panel_tpg_config().
-We typically just call this API, right after the link training is done.
-But if you really need a debugfs node for this, you can write up a 
-separate debugfs for it
-Something like:
-
-echo 1 > dp/tpg/en
-
-Lets not disturb this one.
-
+>  drivers/cpufreq/qcom-cpufreq-hw.c | 103 ++++++++++++++++++++++++++++++
+>  1 file changed, 103 insertions(+)
 > 
->> Its just a debug API to call when required during bringup/debug 
->> purposes.
->> 
-> 
-> Yes, I was trying to isolate the DP code from some misconfiguration in
-> the DPU during bringup and with this fix the debugfs interface became
-> useful.
+> diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
+> index f86859bf76f1..241f6f2b441f 100644
+> --- a/drivers/cpufreq/qcom-cpufreq-hw.c
+> +++ b/drivers/cpufreq/qcom-cpufreq-hw.c
+> @@ -13,6 +13,7 @@
+>  #include <linux/of_platform.h>
+>  #include <linux/pm_opp.h>
+>  #include <linux/slab.h>
+> +#include <linux/interrupt.h>
 
-> 
-> Regards,
-> Bjorn
-> 
->> Hence this is not the place to call it as it will end up breaking CTS.
->> 
->> Thanks
->> 
->> Abhinav
->> 
->> > ---
->> >  drivers/gpu/drm/msm/dp/dp_debug.c | 2 ++
->> >  1 file changed, 2 insertions(+)
->> >
->> > diff --git a/drivers/gpu/drm/msm/dp/dp_debug.c
->> > b/drivers/gpu/drm/msm/dp/dp_debug.c
->> > index 2f6247e80e9d..82911af44905 100644
->> > --- a/drivers/gpu/drm/msm/dp/dp_debug.c
->> > +++ b/drivers/gpu/drm/msm/dp/dp_debug.c
->> > @@ -305,6 +305,8 @@ static ssize_t dp_test_active_write(struct file
->> > *file,
->> >  				debug->panel->video_test = true;
->> >  			else
->> >  				debug->panel->video_test = false;
->> > +
->> > +			dp_panel_tpg_config(debug->panel, debug->panel->video_test);
->> >  		}
->> >  	}
->> >  	drm_connector_list_iter_end(&conn_iter);
+Please don't break the alphabetical order here.
+
+>  #define LUT_MAX_ENTRIES			40U
+>  #define LUT_SRC				GENMASK(31, 30)
+> @@ -22,10 +23,13 @@
+>  #define CLK_HW_DIV			2
+>  #define LUT_TURBO_IND			1
+>  
+> +#define HZ_PER_KHZ			1000
+>
+>  struct qcom_cpufreq_soc_data {
+>  	u32 reg_enable;
+>  	u32 reg_freq_lut;
+>  	u32 reg_volt_lut;
+> +	u32 reg_current_vote;
+>  	u32 reg_perf_state;
+>  	u8 lut_row_size;
+>  };
+> @@ -33,7 +37,10 @@ struct qcom_cpufreq_soc_data {
+>  struct qcom_cpufreq_data {
+>  	void __iomem *base;
+>  	struct resource *res;
+> +	struct delayed_work lmh_dcvs_poll_work;
+>  	const struct qcom_cpufreq_soc_data *soc_data;
+> +	struct cpufreq_policy *policy;
+> +	int lmh_dcvs_irq;
+>  };
+>  
+>  static unsigned long cpu_hw_rate, xo_rate;
+> @@ -251,10 +258,79 @@ static void qcom_get_related_cpus(int index, struct cpumask *m)
+>  	}
+>  }
+>  
+> +static inline unsigned long qcom_lmh_vote_to_freq(u32 val)
+> +{
+> +	return (val & 0x3FF) * 19200;
+> +}
+> +
+> +static void qcom_lmh_dcvs_notify(struct qcom_cpufreq_data *data)
+> +{
+> +	struct cpufreq_policy *policy = data->policy;
+> +	struct dev_pm_opp *opp;
+> +	struct device *dev;
+> +	unsigned long max_capacity, capacity, freq_hz, throttled_freq;
+> +	unsigned int val, freq;
+> +
+> +	/*
+> +	 * Get the h/w throttled frequency, normalize it using the
+> +	 * registered opp table and use it to calculate thermal pressure.
+> +	 */
+> +	val = readl_relaxed(data->base + data->soc_data->reg_current_vote);
+> +	freq = qcom_lmh_vote_to_freq(val);
+> +	freq_hz = freq * HZ_PER_KHZ;
+> +
+> +	dev = get_cpu_device(cpumask_first(policy->cpus));
+> +	opp = dev_pm_opp_find_freq_floor(dev, &freq_hz);
+> +	if (IS_ERR(opp) && PTR_ERR(opp) == -ERANGE)
+> +		opp = dev_pm_opp_find_freq_ceil(dev, &freq_hz);
+> +
+> +	throttled_freq = freq_hz / HZ_PER_KHZ;
+> +
+> +	/* Update thermal pressure */
+> +	max_capacity = arch_scale_cpu_capacity(cpumask_first(policy->cpus));
+> +	capacity = throttled_freq * max_capacity;
+> +	capacity /= policy->cpuinfo.max_freq;
+> +	/* Don't pass boost capacity to scheduler */
+> +	if (capacity > max_capacity)
+> +		capacity = max_capacity;
+
+I wonder why this check isn't present for cpufreq_cooling.c .
+
+> +	arch_set_thermal_pressure(policy->cpus, max_capacity - capacity);
+> +	/*
+
+Whenever you mix code and comments, please separate them with a blank
+line, else it becomes a bit messy and harder to read.
+
+> +	 * If h/w throttled frequency is higher than what cpufreq has requested for, stop
+> +	 * polling and switch back to interrupt mechanism
+> +	 */
+> +	if (throttled_freq >= qcom_cpufreq_hw_get(cpumask_first(policy->cpus)))
+> +		/* Clear the existing interrupts and enable it back */
+> +		enable_irq(data->lmh_dcvs_irq);
+> +	else
+> +		mod_delayed_work(system_highpri_wq, &data->lmh_dcvs_poll_work,
+> +				 msecs_to_jiffies(10));
+> +}
+> +
+> +static void qcom_lmh_dcvs_poll(struct work_struct *work)
+> +{
+> +	struct qcom_cpufreq_data *data;
+> +
+> +	data = container_of(work, struct qcom_cpufreq_data, lmh_dcvs_poll_work.work);
+> +
+> +	qcom_lmh_dcvs_notify(data);
+> +}
+> +
+> +static irqreturn_t qcom_lmh_dcvs_handle_irq(int irq, void *data)
+> +{
+> +	struct qcom_cpufreq_data *c_data = data;
+> +
+> +	/* Disable interrupt and enable polling */
+> +	disable_irq_nosync(c_data->lmh_dcvs_irq);
+> +	qcom_lmh_dcvs_notify(c_data);
+> +
+> +	return 0;
+> +}
+> +
+>  static const struct qcom_cpufreq_soc_data qcom_soc_data = {
+>  	.reg_enable = 0x0,
+>  	.reg_freq_lut = 0x110,
+>  	.reg_volt_lut = 0x114,
+> +	.reg_current_vote = 0x704,
+>  	.reg_perf_state = 0x920,
+>  	.lut_row_size = 32,
+>  };
+> @@ -274,6 +350,23 @@ static const struct of_device_id qcom_cpufreq_hw_match[] = {
+>  };
+>  MODULE_DEVICE_TABLE(of, qcom_cpufreq_hw_match);
+>  
+> +static void qcom_cpufreq_hw_lmh_init(struct cpufreq_policy *policy)
+> +{
+> +	struct qcom_cpufreq_data *data = policy->driver_data;
+> +	struct platform_device *pdev = cpufreq_get_driver_data();
+> +	struct device *dev = &pdev->dev;
+> +	int ret;
+> +
+> +	ret = devm_request_irq(dev, data->lmh_dcvs_irq, qcom_lmh_dcvs_handle_irq,
+> +			       0, "dcvsh-irq", data);
+> +	if (ret) {
+> +		dev_err(dev, "Error %d registering irq %x\n", ret, data->lmh_dcvs_irq);
+> +		return;
+> +	}
+> +	data->policy = policy;
+> +	INIT_DEFERRABLE_WORK(&data->lmh_dcvs_poll_work, qcom_lmh_dcvs_poll);
+> +}
+> +
+>  static int qcom_cpufreq_hw_cpu_init(struct cpufreq_policy *policy)
+>  {
+>  	struct platform_device *pdev = cpufreq_get_driver_data();
+> @@ -370,6 +463,16 @@ static int qcom_cpufreq_hw_cpu_init(struct cpufreq_policy *policy)
+>  			dev_warn(cpu_dev, "failed to enable boost: %d\n", ret);
+>  	}
+>  
+> +	/* Look for LMh interrupt. If no interrupt line is specified /
+> +	 * if there is an error, allow cpufreq to be enabled as usual.
+> +	 */
+
+Proper comment style please..
+
+> +	data->lmh_dcvs_irq = platform_get_irq(pdev, index);
+> +	if (data->lmh_dcvs_irq > 0) {
+> +		qcom_cpufreq_hw_lmh_init(policy);
+> +	} else if (data->lmh_dcvs_irq != -ENXIO) {
+> +		ret = data->lmh_dcvs_irq;
+> +		goto error;
+> +	}
+
+Move all of this to qcom_cpufreq_hw_lmh_init().
+
+And I don't see any cleanup for this stuff. There is no guarantee that
+the irq won't fire and queue up a work right after cpufreq driver is
+unregistered and before the devm_ stuff gets released.
+
+>  	return 0;
+>  error:
+>  	kfree(data);
+> -- 
+> 2.25.1
+
+-- 
+viresh
