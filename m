@@ -2,95 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 10B283B82D5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Jun 2021 15:26:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E6B373B831B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Jun 2021 15:32:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234723AbhF3N21 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Jun 2021 09:28:27 -0400
-Received: from mail.kernel.org ([198.145.29.99]:57532 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S234718AbhF3N21 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Jun 2021 09:28:27 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 0CEF461356;
-        Wed, 30 Jun 2021 13:25:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1625059557;
-        bh=pRhoVxlakzjKTDZATJX0RBmkzXc/Et5u5tXuaooYvmE=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=TtS1IQVYWhlv5akhEgO1oz7Ti4RAmmmQ/cZVK9hPwByYRFeFKJyMRwlor3jLEdk6f
-         7YMC8RYS4YLMEQQ7LoviuJbLbXc3URJrqN0nTeVGHFPZ1AjUV5hSmCIj1dYQhFGrU0
-         BL/qXPWm5N4icmsjOLnA54MCN4pkgN9six8kcTgw=
-Date:   Wed, 30 Jun 2021 15:25:55 +0200
-From:   Greg KH <gregkh@linuxfoundation.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     hemantk@codeaurora.org, bbhatt@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, jhugo@codeaurora.org,
-        linux-kernel@vger.kernel.org, loic.poulain@linaro.org,
-        kvalo@codeaurora.org, ath11k@lists.infradead.org
-Subject: Re: [PATCH 00/10] MHI patches for v5.14 - Take 2
-Message-ID: <YNxw4wc1nvwMnaS6@kroah.com>
-References: <20210625123355.11578-1-manivannan.sadhasivam@linaro.org>
- <20210630131656.GA18484@workstation>
+        id S234978AbhF3Ne0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Jun 2021 09:34:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41922 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234901AbhF3NeX (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 30 Jun 2021 09:34:23 -0400
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 569F3C061756
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Jun 2021 06:31:53 -0700 (PDT)
+Received: by mail-lj1-x231.google.com with SMTP id u20so3260410ljo.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Jun 2021 06:31:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=pUIlKUb2VNsBMxEGshGZSTgSUZ/+y9exbQnL3jxdY4Q=;
+        b=m8/ZyOw8UIZzA4U6zFtgtKJQrhzLglN5hzj06KtI0x4gEO9vac+4oPc/JIJCmxe1g/
+         QGSGUeOaRPeT72vSXYEIAjj5bvORV6EPdLMaJhlz48AXCXKzAa7bXRaZv/nfS6Id1tFM
+         y9lzzXwODdpPYlOzvHXecQBkIcBbOjZ5+4pCH7z6viMObyJFfbVNA1Sgh9xDh7TvClMW
+         I0dIl0V1K1tBWgYXMtd42a9XsLfpk2I517EQg9mtP7AFQVdB5gVDhCaD9leKliJnfsnR
+         zakCs+7l+lwFPVmT6kAycgRR2ZyoRqWfHKZlkxdDV+emmNqUUQ7nrRMwAsWTOSKN2SwY
+         EJVw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=pUIlKUb2VNsBMxEGshGZSTgSUZ/+y9exbQnL3jxdY4Q=;
+        b=ianehfk12rSUtnzxmK7D/KIssuA1uwtToYb94QHedBhs8LsVp98tvAU13aOrEwwP+H
+         Q7JGXlZ0UMEOTzNd1PMLG8kqLlMnLPHk5Caf2AfYpyvRpaXieNvc7sfEbfl3N0XZLWNb
+         gDNb03N5FoLd1pER4WnSnFuFd+uMYEuiXfVOodUM4m3vYMyoINJ/k3rON7922ctUR7/g
+         7LLYDXkNO4Scl4ClTnjpc45sewgUIiOUELK2lCSeLm4+L1kuX9awpTjtSTXZ5J4Ydcpl
+         6n009vPpefkBXgPplXGY3yuAwdgEZw/+XW8H1WBE1LZrIhYczujxxKVVpyQ+/m1dTZYo
+         d+oA==
+X-Gm-Message-State: AOAM5318zFbEC6kUcOumA6WfIs78Nk2KX5iIZrGorkbXjxcmkcTxaTHp
+        NloshkCMtssql7zkR/TBigIbRA==
+X-Google-Smtp-Source: ABdhPJzxy9lUaymj8qAVoABsxa20Jd6Ayfz1FEKoQipeBMEocruZ1StfMZia5UMaSaMSQORRW9HWqQ==
+X-Received: by 2002:a2e:9e8e:: with SMTP id f14mr7967443ljk.468.1625059911561;
+        Wed, 30 Jun 2021 06:31:51 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id x20sm1578098lfd.128.2021.06.30.06.31.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 30 Jun 2021 06:31:50 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Taniya Das <tdas@codeaurora.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Michael Turquette <mturquette@baylibre.com>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-clk@vger.kernel.org,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Mark Brown <broonie@kernel.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH 0/6] clk: qcom: use power-domain for sm8250's clock controllers
+Date:   Wed, 30 Jun 2021 16:31:43 +0300
+Message-Id: <20210630133149.3204290-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210630131656.GA18484@workstation>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jun 30, 2021 at 06:46:56PM +0530, Manivannan Sadhasivam wrote:
-> Hi Greg,
-> 
-> On Fri, Jun 25, 2021 at 06:03:45PM +0530, Manivannan Sadhasivam wrote:
-> > Hi Greg,
-> > 
-> > Please find the remaining MHI patches for v5.14. This series has the left over
-> > patches from the previous patchset and one new series that was reviewed a
-> > while ago and put on hold for Ack from Kalle Valo for ath11k.
-> > 
-> > Summary:
-> > 
-> > 1. Added validation for the channel ID read from event ring. If we get events
-> > from an invalid channel, we throw an error message and skip the event.
-> > 
-> > 2. Fixed the MHI wake routines used for the newer modems such as SDX55 and
-> > SDX65 by using no-op routines only for the older modems and then relying on
-> > the default routines provided by MHI stack for newer ones.
-> > 
-> > 3. Added support for processing the events based on the priorities. Earlier
-> > a fixed priority was used for all events.
-> > 
-> > 4. Added a dedicated flag to the MHI client transfer APIs for inbound
-> > buffer allocation by the MHI stack. Since this patch modifies the MHI
-> > client drivers under "net/", Ack has been collected from the netdev
-> > maintainer.
-> > 
-> > 5. Added support for Cinterion MV31-W modem in pci_generic controller:
-> > https://www.thalesgroup.com/en/markets/digital-identity-and-security/iot/iot-connectivity/products/iot-products/mv31-w-ultra-high
-> > 
-> > 6. Rearranged the setting of BHI/BHIe offsets for better validation of the
-> > register values read from MMIO
-> > 
-> > 7. Cleanup of the BHI/BHIe pointers by setting them to NULL to prevent access
-> > after power down.
-> > 
-> > 8. Added support for getting the MMIO register length from the controller
-> > drivers. This helps in validation of the read offsets from MMIO registers.
-> > Since this patch touches ath11k, Ack has been collected from Kalle Valo.
-> > 
-> > 9. With the help of above register length, added check for BHI/BHIe offsets.
-> > 
-> 
-> Is this series on your queue for 5.14?
+On SM8250 both the display and video clock controllers are powered up by
+the MMCX power domain. Handle this link in GDSC code by using
+pm_runtime_get/put to enable and disable the MMCX power domain.
 
-It's too late for 5.14-rc1, patches had to be in linux-next way before
-5.13-final was out.
+----------------------------------------------------------------
+Dmitry Baryshkov (6):
+      dt-bindings: clock: qcom,dispcc-sm8x50: add mmcx power domain
+      dt-bindings: clock: qcom,videocc: add mmcx power domain
+      clk: qcom: gdsc: enable optional power domain support
+      arm64: dts: qcom: sm8250: remove mmcx regulator
+      clk: qcom: dispcc-sm8250: stop using mmcx regulator
+      clk: qcom: videocc-sm8250: stop using mmcx regulator
 
-I can take these after 5.14-rc1 is out for 5.15-rc1, or you can split
-them up into bugfixes and features and resend two series, one for
-5.14-final and one for 5.15-rc1, which ever you want.
+ .../bindings/clock/qcom,dispcc-sm8x50.yaml         | 19 ++++++++
+ .../devicetree/bindings/clock/qcom,videocc.yaml    | 19 ++++++++
+ arch/arm64/boot/dts/qcom/sm8250.dtsi               | 13 ++---
+ drivers/clk/qcom/common.c                          | 55 +++++++++++++++++++---
+ drivers/clk/qcom/dispcc-sm8250.c                   |  1 -
+ drivers/clk/qcom/gdsc.c                            |  6 +++
+ drivers/clk/qcom/videocc-sm8250.c                  |  4 --
+ 7 files changed, 97 insertions(+), 20 deletions(-)
 
-thanks,
 
-greg k-h
