@@ -2,85 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D4FC23B87EB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Jun 2021 19:46:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 33B893B880E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Jun 2021 19:51:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232420AbhF3RtZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Jun 2021 13:49:25 -0400
-Received: from ixit.cz ([94.230.151.217]:45168 "EHLO ixit.cz"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229852AbhF3RtZ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Jun 2021 13:49:25 -0400
-X-Greylist: delayed 470 seconds by postgrey-1.27 at vger.kernel.org; Wed, 30 Jun 2021 13:49:24 EDT
-Received: from [192.168.1.138] (ixit.cz [94.230.151.217])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by ixit.cz (Postfix) with ESMTPSA id BB65D23B1D;
-        Wed, 30 Jun 2021 19:39:03 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-        t=1625074744;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type;
-        bh=XcYnCM/vBMKcw+LIcx+RAmXLSgw7/fRGxOoIkWaORd0=;
-        b=mapOVZuRunzs5qG73++dG5+DjAxmYM6PXf7/NXT24hb75Wgkh0KzVom9QQEkdHxN3mGQaX
-        pxwys+Ka4C6CC7x0lqm2scQvvrvknIzpfKvWxRuZOPnnXKh7j+xa4GxeX5ahvfylHA5PIf
-        WYl6h7/DwrA0O5elwbGbHag69wdFiK4=
-Date:   Wed, 30 Jun 2021 19:38:17 +0200
-From:   David Heidelberg <david@ixit.cz>
-Subject: "soc: qcom: mdt_loader: Support loading non-split images" breaks
- wcnss fw loading on Nexus 7
-To:     bjorn.andersson@linaro.org, jeffrey.l.hugo@gmail.com,
-        agross@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, David Heidelberg <david@ixit.cz>
-Message-Id: <TNZIVQ.NUOZ8IPZF0UA1@ixit.cz>
-X-Mailer: geary/40.0
+        id S232937AbhF3RyO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Jun 2021 13:54:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44120 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232409AbhF3RyN (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 30 Jun 2021 13:54:13 -0400
+Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D464C0617AD
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Jun 2021 10:51:44 -0700 (PDT)
+Received: by mail-oi1-x229.google.com with SMTP id a133so3948378oib.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Jun 2021 10:51:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=/TpbbonyK5cx17STCT313YsMTZEN2Fa3252nyd5WAKY=;
+        b=jZqjlYVOYTUdCBUwZYbUuN6kEGJHaE+01/l3M/0kh7APq5t1yDwuo+++hYoCABGFz0
+         x9g5o3Rjpx8HY7ff7/QyNQLNZHhXOBBrSX0v+/uXUmUrzI4JO046LWlbpgwdq8pEOMqJ
+         tHznXazHFvqaC2AaPQr5lZ+yZNbFgB+d5+Gus=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=/TpbbonyK5cx17STCT313YsMTZEN2Fa3252nyd5WAKY=;
+        b=uTJUXeKqftfxM8uoGHCPDXAXmZUTLA8C682zaVB2cGYl3AB8MKoiLi9sVAAK4BaBf4
+         OErZs3qNNwNj1cjIRgcsBy2lEqMfJsNDKRcD/K7fPyNRrThwGd/MK1fP68KGAcsRKfZP
+         WlU9cKj01lJuldJimdAXvoj7beJ/iXzLnCw7ZfWYgfXN0JZj1sYs7Z42pQ7Yj/phwR3Z
+         L/LbvVbGY4Y64YgMhkRHQwu6AMx1hJ3XPQs3+L0b8ghXhn972IqHux3GecRIJoERUsvy
+         0Z2yMv6k6GyEOEj6zQEwgiG/5xX9BhD084sJ9ci4CbN+Il/dGd5z+2qZXCGbx/RHTe9O
+         Qtbg==
+X-Gm-Message-State: AOAM53199ugLKynH3tVclpqdoCVnx+ezvMfmYOfzTGYUpMNdD4VPlJsY
+        ZH+0XdmclzI8yZAbzNaYOFkn/ofYii3IKOowpCFt7A==
+X-Google-Smtp-Source: ABdhPJyt1BT0yyy26ZENhSRgNlnZIfJxRS8zE0C7/7zupBgcDtyelBnghwpsMShvQXBW5bgL8j5LBbgVPi78511rLKY=
+X-Received: by 2002:aca:5390:: with SMTP id h138mr3968714oib.125.1625075503995;
+ Wed, 30 Jun 2021 10:51:43 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 30 Jun 2021 10:51:43 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
+In-Reply-To: <YNYAuaBrGgdtToph@builder.lan>
+References: <1622758940-13485-1-git-send-email-khsieh@codeaurora.org> <YNYAuaBrGgdtToph@builder.lan>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.9.1
+Date:   Wed, 30 Jun 2021 10:51:43 -0700
+Message-ID: <CAE-0n500g=KuOsRgHe2vpL2JOuq+LRFEWEdEovMg8BJF4cKD1A@mail.gmail.com>
+Subject: Re: [PATCH v4] arm64: dts: qcom: sc7180: Add DisplayPort node
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Kuogee Hsieh <khsieh@codeaurora.org>
+Cc:     robdclark@gmail.com, sean@poorly.run, vkoul@kernel.org,
+        agross@kernel.org, robh+dt@kernel.org, devicetree@vger.kernel.org,
+        abhinavk@codeaurora.org, aravindh@codeaurora.org,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Kernel: stable-5.10.y
-HW: chipset APQ8064, Nexus 7 2013 (codename flo or deb)
-Problem first occured when I was porting Nexus from 4.19 to 5.4 LTS.
+Quoting Bjorn Andersson (2021-06-25 09:13:45)
+> On Thu 03 Jun 17:22 CDT 2021, Kuogee Hsieh wrote:
+> > +                                             dp_out: endpoint { };
+> > +                                     };
+> > +                             };
+> > +
+> > +                             dp_opp_table: dp-opp-table {
+>
+> I forgot that our discussion about the node name here was on the
+> previous revision, _this_ is the patch I will drop the "dp-" from and
+> apply.
+>
+> And as I've looked at this quite a bit now:
+>
+> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+>
 
-Hello,
+With that node name fixed
 
-after reverting this particular commit ( 
-498b98e939007f8bb65094dfa229e84b6bf30e62 ), I'm able do
-
-echo 'start' > 
-/sys/devices/platform/soc/3200800.riva-pil/remoteproc/remoteproc0/state
-
-[ 64.271634] remoteproc remoteproc0: powering up 3200800.riva-pil
-[ 64.276210] remoteproc remoteproc0: Booting fw image wcnss.mdt, size 
-6804
-[ 70.087107] remoteproc remoteproc0: remote processor 3200800.riva-pil 
-is now up
-[ 70.100817] qcom_wcnss_ctrl remoteproc0:smd-edge.WCNSS_CTRL.-1.-1: 
-WCNSS Version 1.4 1.2
-[ 70.124279] wcn36xx: mac address: 18:00:2d:88:9c:a9
-[ 95.357907] wcn36xx: firmware WLAN version 'WCN v2.0 RadioPhy 
-vIris_TSMC_2.0 with 48MHz XO' and CRM version '201080'
-[ 95.357938] wcn36xx: firmware API 1.4.1.2, 41 stations, 2 bssids
-
-with current stable-5.4.y - stable-5.10.y (cannot test later since it 
-crashes without saving pstore dmesg):
-
-[ 50.972560] remoteproc remoteproc0: powering up 3200800.riva-pil
-[ 50.977121] remoteproc remoteproc0: Booting fw image wcnss.mdt, size 
-6804
-[ 50.977166] remoteproc remoteproc0: Failed to load program segments: 
--22
-[ 50.977225] remoteproc remoteproc0: Boot failed: -22
-
-These logs are from 5.10 LTS. Firmware files are untouched between 
-kernel versions.
-
-I'll be very grateful for any tips or patches to test (best against 
-5.10, I haven't been able to fix and run later versions yet)
-Best regards
-David Heidelberg
-
-
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
