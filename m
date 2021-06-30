@@ -2,209 +2,307 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C34D93B80A1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Jun 2021 12:09:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D2F973B8266
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Jun 2021 14:48:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233954AbhF3KLc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Jun 2021 06:11:32 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:62142 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S234057AbhF3KLb (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Jun 2021 06:11:31 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1625047743; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=V2ANtGMjJP031vwtea0cvuT0DcS61OO8FRdPjBQ676g=;
- b=jV5D0Be/3n5euYWYx1y3y8ill2L6GXA3ITFuWfUNW0MSc40TsKhNleMxEXRL4bjfnNaHQV4X
- SGhnmOUsN/PorRvIIL+Hw35d2tw+3B5tgXdhkbqciFElnSFlFQqMnFIp0GMqznlwQXMPc7YM
- TDymtK9a3TzlawWLzbaWrTv/UkI=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
- 60dc42803a8b6d0a45791530 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 30 Jun 2021 10:08:00
- GMT
-Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id A0543C43143; Wed, 30 Jun 2021 10:08:00 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 17A87C433D3;
-        Wed, 30 Jun 2021 10:07:59 +0000 (UTC)
+        id S234664AbhF3Mus (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Jun 2021 08:50:48 -0400
+Received: from mailout1.w1.samsung.com ([210.118.77.11]:36015 "EHLO
+        mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234622AbhF3Mur (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 30 Jun 2021 08:50:47 -0400
+Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
+        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20210630124817euoutp019ee799eb6649c8265f3fface554d47c7~NXQCbKGG52958529585euoutp01a
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Jun 2021 12:48:17 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20210630124817euoutp019ee799eb6649c8265f3fface554d47c7~NXQCbKGG52958529585euoutp01a
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1625057297;
+        bh=LS326IHcmThfGZLvyS6l7wE9Us45WReO7ABvmSg1Q7Q=;
+        h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
+        b=fKSpEFxXqFPFjjIcdGVx5OxCLVq3sPOhm4k88FLF4DOR8Mw7mxZYmvackYGZrne9o
+         VtuQOjqIdn5QuQpWUj16VuwDUbyRbgn4hUpyLXfLWWYwg9eGWlTWlWKBQkBQEDUdZq
+         CGA56TLMAaDQU0Zay5LhGy05WrP0rEPiEKijfwVo=
+Received: from eusmges2new.samsung.com (unknown [203.254.199.244]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
+        20210630124817eucas1p21efef28e445b9f796bf4b257d8b1b18b~NXQB_wcWV2866528665eucas1p2L;
+        Wed, 30 Jun 2021 12:48:17 +0000 (GMT)
+Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
+        eusmges2new.samsung.com (EUCPMTA) with SMTP id 89.FE.42068.1186CD06; Wed, 30
+        Jun 2021 13:48:17 +0100 (BST)
+Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
+        20210630124816eucas1p27563f0a456c0196e20937619aa2f8d26~NXQBcUOo11121111211eucas1p21;
+        Wed, 30 Jun 2021 12:48:16 +0000 (GMT)
+Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
+        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
+        20210630124816eusmtrp2e5b941e017519c5ce3446209c7ac01c6~NXQBbJT2-0449304493eusmtrp2G;
+        Wed, 30 Jun 2021 12:48:16 +0000 (GMT)
+X-AuditID: cbfec7f4-c89ff7000002a454-a9-60dc6811b3c7
+Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
+        eusmgms2.samsung.com (EUCPMTA) with SMTP id B3.C6.20981.0186CD06; Wed, 30
+        Jun 2021 13:48:16 +0100 (BST)
+Received: from [106.210.134.192] (unknown [106.210.134.192]) by
+        eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
+        20210630124815eusmtip166c7fa03f59754ba0c91ac0064408db1~NXQAj9ie52302923029eusmtip1B;
+        Wed, 30 Jun 2021 12:48:15 +0000 (GMT)
+Subject: Re: [PATCH] iommu/arm: Cleanup resources in case of probe error
+ path
+To:     Amey Narkhede <ameynarkhede03@gmail.com>,
+        Rob Clark <robdclark@gmail.com>
+Cc:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        iommu@lists.linux-foundation.org, linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        Jon Hunter <jonathanh@nvidia.com>,
+        Krishna Reddy <vdumpa@nvidia.com>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Jean-Philippe Brucker <jean-philippe@linaro.org>,
+        Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+        Barry Song <song.bao.hua@hisilicon.com>,
+        Zenghui Yu <yuzenghui@huawei.com>
+From:   Marek Szyprowski <m.szyprowski@samsung.com>
+Message-ID: <26f6a765-37c8-d63a-a779-384f095d5770@samsung.com>
+Date:   Wed, 30 Jun 2021 14:48:15 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0)
+        Gecko/20100101 Thunderbird/78.11.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Wed, 30 Jun 2021 15:37:59 +0530
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Will Deacon <will@kernel.org>
-Cc:     "Isaac J. Manjarres" <isaacm@codeaurora.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        David Airlie <airlied@linux.ie>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        "list@263.net:IOMMU DRIVERS , Joerg Roedel <joro@8bytes.org>," 
-        <iommu@lists.linux-foundation.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        Akhil P Oommen <akhilpo@codeaurora.org>,
-        Sean Paul <sean@poorly.run>,
-        Kristian H Kristensen <hoegsberg@google.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH 2/3] iommu/io-pgtable-arm: Add IOMMU_LLC page protection
- flag
-In-Reply-To: <20210325173311.GA15504@willie-the-truck>
-References: <3f589e7de3f9fa93e84c83420c5270c546a0c368.1610372717.git.saiprakash.ranjan@codeaurora.org>
- <20210129090516.GB3998@willie-the-truck>
- <5d23fce629323bcda71594010824aad0@codeaurora.org>
- <20210201111556.GA7172@willie-the-truck>
- <CAF6AEGsARmkAFsjaQLfa2miMgeijo183MWDKGtW_ti-UCpzBqA@mail.gmail.com>
- <20210201182016.GA21629@jcrouse1-lnx.qualcomm.com>
- <7e9aade14d0b7f69285852ade4a5a9f4@codeaurora.org>
- <20210203214612.GB19847@willie-the-truck>
- <4988e2ef35f76a0c2f1fe3f66f023a3b@codeaurora.org>
- <9362873a3bcf37cdd073a6128f29c683@codeaurora.org>
- <20210325173311.GA15504@willie-the-truck>
-Message-ID: <21239ba603d0bdc4e4c696588a905f88@codeaurora.org>
-X-Sender: saiprakash.ranjan@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+In-Reply-To: <20210608164559.204023-1-ameynarkhede03@gmail.com>
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrNKsWRmVeSWpSXmKPExsWy7djPc7qCGXcSDM5O4LK4tH0Zq8WC/dYW
+        DasvsFqsWniNzaJl1iIWi87ZG9gtNj2+xmoxcf9ZdovLu+awWTxf+IPZ4uCHJ6wWS6YeZLOY
+        fO0bq0Xf3iCLljumFjeXbmB3EPB4cnAek8eaeWsYPS739TJ57Jx1l93j8dyN7B4tR96yemxa
+        1cnmcefaHjaPzUvqPSbfWM7o0dv8js3j8ya5AJ4oLpuU1JzMstQifbsErow//88wFkw3q7jZ
+        NYW1gXG3bhcjB4eEgInEsx7ZLkYuDiGBFYwSx++eYYFwvjBKTN03hw3C+cwocfJOP1CGE6xj
+        esM+qMRyRonbt84zQzgfGSX2XOkCqxIW8Jfo/PabEcQWAbK/vZjMCFLELLCEReLNvPdgCTYB
+        Q4mut11sIDavgJ3EudNd7CA2i4CqREvnf1YQW1QgWeL9vBmsEDWCEidnPgFbwClgL7Hu/Euw
+        OLOAvETz1tnMELa4xK0n85lAlkkI7OeUWLL2BhvE3S4SBy88ZYewhSVeHd8CZctI/N8J09DM
+        KPHw3Fp2CKeHUeJy0wxGiCpriTvnfrGBwoxZQFNi/S59iLCjxJL+ucyQoOSTuPFWEOIIPolJ
+        26ZDhXklOtqEIKrVJGYdXwe39uCFS8wTGJVmIXltFpJ3ZiF5ZxbC3gWMLKsYxVNLi3PTU4uN
+        8lLL9YoTc4tL89L1kvNzNzEC0+Ppf8e/7GBc/uqj3iFGJg7GQ4wSHMxKIrxRO28nCPGmJFZW
+        pRblxxeV5qQWH2KU5mBREudN2rImXkggPbEkNTs1tSC1CCbLxMEp1cC0/oaEkuesmdwNdcdm
+        TVp5j0ue+cNbxwmFDz663Tg5fe3S5qi/alvVvHqXd3xyPSI+p4B7mrKVSNjT+01ajlO2Bhfv
+        5X18qbJvizE75/zC3ocqOxa9cTjbvEno3iYGtsmyceHORmu82LKniF783h436Z2Arcmkd1rb
+        jCXnl0/zfuQhY8X7ZNWqnLwPvt8cip4E+Uv/uG93bva18/4hcyNWffnFeCj138Q/UtpK9XE8
+        dQzxEU1cWV2rX/t/E9jyxanDMoPlXM9ZX6P+KfUPlHfdFJG+ctij9abc/nves74zPmg6ruPB
+        WT3TykH3ftjCi6Emupq2DytrNkosPFg154iTaw7THBvpSbmOrw/IpqcqsRRnJBpqMRcVJwIA
+        pxdzOP4DAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrDIsWRmVeSWpSXmKPExsVy+t/xu7oCGXcSDPqXKllc2r6M1WLBfmuL
+        htUXWC1WLbzGZtEyaxGLRefsDewWmx5fY7WYuP8su8XlXXPYLJ4v/MFscfDDE1aLJVMPsllM
+        vvaN1aJvb5BFyx1Ti5tLN7A7CHg8OTiPyWPNvDWMHpf7epk8ds66y+7xeO5Gdo+WI29ZPTat
+        6mTzuHNtD5vH5iX1HpNvLGf06G1+x+bxeZNcAE+Unk1RfmlJqkJGfnGJrVK0oYWRnqGlhZ6R
+        iaWeobF5rJWRqZK+nU1Kak5mWWqRvl2CXsaf/2cYC6abVdzsmsLawLhbt4uRk0NCwERiesM+
+        NhBbSGApo8SqjYoQcRmJk9MaWCFsYYk/17qAariAat4zSjw7swgsISzgK7HwyD5GEFsEyL55
+        +Q8rSBGzwDIWib1tM9khptpJLFn2CcxmEzCU6HrbBbaNFyh+7nQXWJxFQFWipfM/2FBRgWSJ
+        n+vboWoEJU7OfMICYnMK2EusO/8SrIZZwExi3uaHzBC2vETz1tlQtrjErSfzmSYwCs1C0j4L
+        ScssJC2zkLQsYGRZxSiSWlqcm55bbKRXnJhbXJqXrpecn7uJEZgMth37uWUH48pXH/UOMTJx
+        MB5ilOBgVhLhjdp5O0GINyWxsiq1KD++qDQntfgQoynQPxOZpUST84HpKK8k3tDMwNTQxMzS
+        wNTSzFhJnNfkyJp4IYH0xJLU7NTUgtQimD4mDk6pBib29s/W86Yqrz+49uZsa5md7y/H5sif
+        mTNPws3IvVNEcV1yQ4Qst0Bb19y8tX5/y69odUzfx1IffL1415HaF+dKd02buZsl77eqSaC+
+        Y12q9Ynir9Nem/0zmud/ndHXw2919HaHE+nOPAkn/twRUFeR4dlpsDGpznyddkLTarujXvPO
+        Hp+1vyo8gHV/rOeNE04t54+qJO33mr3j156+l2esHI5vsXaNnFzsk6t31fSkkN7mejMdRuYF
+        Ea2r74a03zt454jHrseaksmGh5PstqUrG39x4gvljFBYfJ47KSpQeuKvgN0ZixT/sO58obbf
+        7ulKBwuWTHZJn8MCTY0+X3+w6MrXC3+8qbTGQvFpiBJLcUaioRZzUXEiAG5LloOPAwAA
+X-CMS-MailID: 20210630124816eucas1p27563f0a456c0196e20937619aa2f8d26
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-RootMTR: 20210630124816eucas1p27563f0a456c0196e20937619aa2f8d26
+X-EPHeader: CA
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20210630124816eucas1p27563f0a456c0196e20937619aa2f8d26
+References: <20210608164559.204023-1-ameynarkhede03@gmail.com>
+        <CGME20210630124816eucas1p27563f0a456c0196e20937619aa2f8d26@eucas1p2.samsung.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Will,
+Hi,
 
-On 2021-03-25 23:03, Will Deacon wrote:
-> On Tue, Mar 09, 2021 at 12:10:44PM +0530, Sai Prakash Ranjan wrote:
->> On 2021-02-05 17:38, Sai Prakash Ranjan wrote:
->> > On 2021-02-04 03:16, Will Deacon wrote:
->> > > On Tue, Feb 02, 2021 at 11:56:27AM +0530, Sai Prakash Ranjan wrote:
->> > > > On 2021-02-01 23:50, Jordan Crouse wrote:
->> > > > > On Mon, Feb 01, 2021 at 08:20:44AM -0800, Rob Clark wrote:
->> > > > > > On Mon, Feb 1, 2021 at 3:16 AM Will Deacon <will@kernel.org> wrote:
->> > > > > > > On Fri, Jan 29, 2021 at 03:12:59PM +0530, Sai Prakash Ranjan wrote:
->> > > > > > > > On 2021-01-29 14:35, Will Deacon wrote:
->> > > > > > > > > On Mon, Jan 11, 2021 at 07:45:04PM +0530, Sai Prakash Ranjan wrote:
->> > > > > > > > > > +#define IOMMU_LLC        (1 << 6)
->> > > > > > > > >
->> > > > > > > > > On reflection, I'm a bit worried about exposing this because I think it
->> > > > > > > > > will
->> > > > > > > > > introduce a mismatched virtual alias with the CPU (we don't even have a
->> > > > > > > > > MAIR
->> > > > > > > > > set up for this memory type). Now, we also have that issue for the PTW,
->> > > > > > > > > but
->> > > > > > > > > since we always use cache maintenance (i.e. the streaming API) for
->> > > > > > > > > publishing the page-tables to a non-coheren walker, it works out.
->> > > > > > > > > However,
->> > > > > > > > > if somebody expects IOMMU_LLC to be coherent with a DMA API coherent
->> > > > > > > > > allocation, then they're potentially in for a nasty surprise due to the
->> > > > > > > > > mismatched outer-cacheability attributes.
->> > > > > > > > >
->> > > > > > > >
->> > > > > > > > Can't we add the syscached memory type similar to what is done on android?
->> > > > > > >
->> > > > > > > Maybe. How does the GPU driver map these things on the CPU side?
->> > > > > >
->> > > > > > Currently we use writecombine mappings for everything, although there
->> > > > > > are some cases that we'd like to use cached (but have not merged
->> > > > > > patches that would give userspace a way to flush/invalidate)
->> > > > > >
->> > > > >
->> > > > > LLC/system cache doesn't have a relationship with the CPU cache.  Its
->> > > > > just a
->> > > > > little accelerator that sits on the connection from the GPU to DDR and
->> > > > > caches
->> > > > > accesses. The hint that Sai is suggesting is used to mark the buffers as
->> > > > > 'no-write-allocate' to prevent GPU write operations from being cached in
->> > > > > the LLC
->> > > > > which a) isn't interesting and b) takes up cache space for read
->> > > > > operations.
->> > > > >
->> > > > > Its easiest to think of the LLC as a bonus accelerator that has no cost
->> > > > > for
->> > > > > us to use outside of the unfortunate per buffer hint.
->> > > > >
->> > > > > We do have to worry about the CPU cache w.r.t I/O coherency (which is a
->> > > > > different hint) and in that case we have all of concerns that Will
->> > > > > identified.
->> > > > >
->> > > >
->> > > > For mismatched outer cacheability attributes which Will
->> > > > mentioned, I was
->> > > > referring to [1] in android kernel.
->> > >
->> > > I've lost track of the conversation here :/
->> > >
->> > > When the GPU has a buffer mapped with IOMMU_LLC, is the buffer also
->> > > mapped
->> > > into the CPU and with what attributes? Rob said "writecombine for
->> > > everything" -- does that mean ioremap_wc() / MEMREMAP_WC?
->> > >
->> >
->> > Rob answered this.
->> >
->> > > Finally, we need to be careful when we use the word "hint" as
->> > > "allocation
->> > > hint" has a specific meaning in the architecture, and if we only
->> > > mismatch on
->> > > those then we're actually ok. But I think IOMMU_LLC is more than
->> > > just a
->> > > hint, since it actually drives eviction policy (i.e. it enables
->> > > writeback).
->> > >
->> > > Sorry for the pedantry, but I just want to make sure we're all talking
->> > > about the same things!
->> > >
->> >
->> > Sorry for the confusion which probably was caused by my mentioning of
->> > android, NWA(no write allocate) is an allocation hint which we can
->> > ignore
->> > for now as it is not introduced yet in upstream.
->> >
->> 
->> Any chance of taking this forward? We do not want to miss out on small 
->> fps
->> gain when the product gets released.
-> 
-> Do we have a solution to the mismatched virtual alias?
-> 
+On 08.06.2021 18:45, Amey Narkhede wrote:
+> If device registration fails, remove sysfs attribute
+> and if setting bus callbacks fails, unregister the device
+> and cleanup the sysfs attribute.
+>
+> Signed-off-by: Amey Narkhede <ameynarkhede03@gmail.com>
 
-Sorry for the long delay on this thread.
+This patch landed in linux-next some time ago as commit 249c9dc6aa0d 
+("iommu/arm: Cleanup resources in case of probe error path"). After 
+bisecting and some manual searching I finally found that it is 
+responsible for breaking s2idle on DragonBoard 410c. Here is the log 
+(captured with no_console_suspend):
 
-For mismatched virtual alias question, wasn't this already discussed in 
-stretch
-when initial support for system cache [1] (which was reverted by you) 
-was added?
+# time rtcwake -s10 -mmem
+rtcwake: wakeup from "mem" using /dev/rtc0 at Thu Jan  1 00:02:13 1970
+PM: suspend entry (s2idle)
+Filesystems sync: 0.002 seconds
+Freezing user space processes ... (elapsed 0.006 seconds) done.
+OOM killer disabled.
+Freezing remaining freezable tasks ... (elapsed 0.004 seconds) done.
+Unable to handle kernel NULL pointer dereference at virtual address 
+0000000000000070
+Mem abort info:
+   ESR = 0x96000006
+   EC = 0x25: DABT (current EL), IL = 32 bits
+   SET = 0, FnV = 0
+   EA = 0, S1PTW = 0
+   FSC = 0x06: level 2 translation fault
+Data abort info:
+   ISV = 0, ISS = 0x00000006
+   CM = 0, WnR = 0
+user pgtable: 4k pages, 48-bit VAs, pgdp=000000008ad08000
+[0000000000000070] pgd=0800000085c3c003, p4d=0800000085c3c003, 
+pud=0800000088dcf003, pmd=0000000000000000
+Internal error: Oops: 96000006 [#1] PREEMPT SMP
+Modules linked in: bluetooth ecdh_generic ecc rfkill ipv6 ax88796b 
+venus_enc venus_dec videobuf2_dma_contig asix crct10dif_ce adv7511 
+snd_soc_msm8916_analog qcom_spmi_temp_alarm rtc_pm8xxx qcom_pon 
+qcom_camss qcom_spmi_vadc videobuf2_dma_sg qcom_vadc_common msm 
+venus_core v4l2_fwnode v4l2_async snd_soc_msm8916_digital 
+videobuf2_memops snd_soc_lpass_apq8016 snd_soc_lpass_cpu v4l2_mem2mem 
+snd_soc_lpass_platform snd_soc_apq8016_sbc videobuf2_v4l2 
+snd_soc_qcom_common qcom_rng videobuf2_common i2c_qcom_cci qnoc_msm8916 
+videodev mc icc_smd_rpm mdt_loader socinfo display_connector rmtfs_mem
+CPU: 1 PID: 1522 Comm: rtcwake Not tainted 5.13.0-next-20210629 #3592
+Hardware name: Qualcomm Technologies, Inc. APQ 8016 SBC (DT)
+pstate: 80000005 (Nzcv daif -PAN -UAO -TCO BTYPE=--)
+pc : msm_runtime_suspend+0x1c/0x60 [msm]
+lr : msm_pm_suspend+0x18/0x38 [msm]
+...
+Call trace:
+  msm_runtime_suspend+0x1c/0x60 [msm]
+  msm_pm_suspend+0x18/0x38 [msm]
+  dpm_run_callback+0x84/0x378
+  __device_suspend+0x118/0x680
+  dpm_suspend+0x150/0x4f0
+  dpm_suspend_start+0x98/0xa0
+  suspend_devices_and_enter+0xfc/0xaf0
+  pm_suspend+0x2b0/0x3d0
+  state_store+0x84/0x108
+  kobj_attr_store+0x14/0x28
+  sysfs_kf_write+0x60/0x70
+  kernfs_fop_write_iter+0x124/0x1a8
+  new_sync_write+0xe8/0x1b0
+  vfs_write+0x1e8/0x450
+  ksys_write+0x64/0xf0
+  __arm64_sys_write+0x14/0x20
+  invoke_syscall+0x40/0xf8
+  el0_svc_common+0x60/0x100
+  do_el0_svc_compat+0x1c/0x48
+  el0_svc_compat+0x20/0x30
+  el0t_32_sync_handler+0xec/0x140
+  el0t_32_sync+0x168/0x16c
+Code: 910003fd f9000bf3 f9403c02 52800040 (f9403842)
+---[ end trace 215b72fcd7026947 ]---
 
-Excerpt from there,
+Reverting it on top of linux-next fixes s2idle oepration on that board.
 
-"As seen in downstream kernels there are few non-coherent devices which
-would not want to allocate in system cache, and therefore would want
-Inner/Outer non-cached memory. So, we may want to either override the
-attributes per-device, or as you suggested we may want to introduce
-another memory type 'sys-cached' that can be added with its separate
-infra."
-
-As for DMA API usage, we do not have any upstream users (video will be
-one if they decide to upstream that).
-
-[1] 
-https://patchwork.kernel.org/project/linux-arm-msm/patch/20180615105329.26800-1-vivek.gautam@codeaurora.org/
-
-Thanks,
-Sai
-
+> ---
+>   drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 14 ++++++++++++--
+>   drivers/iommu/arm/arm-smmu/arm-smmu.c       | 15 ++++++++++++---
+>   drivers/iommu/arm/arm-smmu/qcom_iommu.c     | 13 +++++++++++--
+>   3 files changed, 35 insertions(+), 7 deletions(-)
+>
+> diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+> index 54b2f27b81d4..de2499754025 100644
+> --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+> +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+> @@ -3669,10 +3669,20 @@ static int arm_smmu_device_probe(struct platform_device *pdev)
+>   	ret = iommu_device_register(&smmu->iommu, &arm_smmu_ops, dev);
+>   	if (ret) {
+>   		dev_err(dev, "Failed to register iommu\n");
+> -		return ret;
+> +		goto err_sysfs_remove;
+>   	}
+>
+> -	return arm_smmu_set_bus_ops(&arm_smmu_ops);
+> +	ret = arm_smmu_set_bus_ops(&arm_smmu_ops);
+> +	if (ret)
+> +		goto err_unregister_device;
+> +
+> +	return 0;
+> +
+> +err_unregister_device:
+> +	iommu_device_unregister(&smmu->iommu);
+> +err_sysfs_remove:
+> +	iommu_device_sysfs_remove(&smmu->iommu);
+> +	return ret;
+>   }
+>
+>   static int arm_smmu_device_remove(struct platform_device *pdev)
+> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+> index 6f72c4d208ca..88a3023676ce 100644
+> --- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
+> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+> @@ -2164,7 +2164,7 @@ static int arm_smmu_device_probe(struct platform_device *pdev)
+>   	err = iommu_device_register(&smmu->iommu, &arm_smmu_ops, dev);
+>   	if (err) {
+>   		dev_err(dev, "Failed to register iommu\n");
+> -		return err;
+> +		goto err_sysfs_remove;
+>   	}
+>
+>   	platform_set_drvdata(pdev, smmu);
+> @@ -2187,10 +2187,19 @@ static int arm_smmu_device_probe(struct platform_device *pdev)
+>   	 * any device which might need it, so we want the bus ops in place
+>   	 * ready to handle default domain setup as soon as any SMMU exists.
+>   	 */
+> -	if (!using_legacy_binding)
+> -		return arm_smmu_bus_init(&arm_smmu_ops);
+> +	if (!using_legacy_binding) {
+> +		err = arm_smmu_bus_init(&arm_smmu_ops);
+> +		if (err)
+> +			goto err_unregister_device;
+> +	}
+>
+>   	return 0;
+> +
+> +err_unregister_device:
+> +	iommu_device_unregister(&smmu->iommu);
+> +err_sysfs_remove:
+> +	iommu_device_sysfs_remove(&smmu->iommu);
+> +	return err;
+>   }
+>
+>   static int arm_smmu_device_remove(struct platform_device *pdev)
+> diff --git a/drivers/iommu/arm/arm-smmu/qcom_iommu.c b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+> index 4294abe389b2..b785d9fb7602 100644
+> --- a/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+> +++ b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+> @@ -850,10 +850,12 @@ static int qcom_iommu_device_probe(struct platform_device *pdev)
+>   	ret = iommu_device_register(&qcom_iommu->iommu, &qcom_iommu_ops, dev);
+>   	if (ret) {
+>   		dev_err(dev, "Failed to register iommu\n");
+> -		return ret;
+> +		goto err_sysfs_remove;
+>   	}
+>
+> -	bus_set_iommu(&platform_bus_type, &qcom_iommu_ops);
+> +	ret = bus_set_iommu(&platform_bus_type, &qcom_iommu_ops);
+> +	if (ret)
+> +		goto err_unregister_device;
+>
+>   	if (qcom_iommu->local_base) {
+>   		pm_runtime_get_sync(dev);
+> @@ -862,6 +864,13 @@ static int qcom_iommu_device_probe(struct platform_device *pdev)
+>   	}
+>
+>   	return 0;
+> +
+> +err_unregister_device:
+> +	iommu_device_unregister(&qcom_iommu->iommu);
+> +
+> +err_sysfs_remove:
+> +	iommu_device_sysfs_remove(&qcom_iommu->iommu);
+> +	return ret;
+>   }
+>
+>   static int qcom_iommu_device_remove(struct platform_device *pdev)
+> --
+> 2.31.1
+>
+Best regards
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
-member
-of Code Aurora Forum, hosted by The Linux Foundation
+Marek Szyprowski, PhD
+Samsung R&D Institute Poland
+
