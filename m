@@ -2,133 +2,172 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8E94D3B84BE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Jun 2021 16:08:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B01543B853A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Jun 2021 16:46:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234855AbhF3OLJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Jun 2021 10:11:09 -0400
-Received: from mga04.intel.com ([192.55.52.120]:34140 "EHLO mga04.intel.com"
+        id S235396AbhF3OtD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Jun 2021 10:49:03 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:18087 "EHLO m43-7.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S234851AbhF3OLI (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Jun 2021 10:11:08 -0400
-X-IronPort-AV: E=McAfee;i="6200,9189,10030"; a="206532524"
-X-IronPort-AV: E=Sophos;i="5.83,312,1616482800"; 
-   d="scan'208";a="206532524"
-Received: from fmsmga007.fm.intel.com ([10.253.24.52])
-  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Jun 2021 07:08:39 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.83,312,1616482800"; 
-   d="scan'208";a="419999203"
-Received: from ahunter-desktop.fi.intel.com (HELO [10.237.72.79]) ([10.237.72.79])
-  by fmsmga007.fm.intel.com with ESMTP; 30 Jun 2021 07:08:35 -0700
-Subject: Re: [PATCH V2] mmc: sdhci: Update the software timeout value for sdhc
-To:     Shaik Sajida Bhanu <sbhanu@codeaurora.org>, ulf.hansson@linaro.org
-Cc:     asutoshd@codeaurora.org, stummala@codeaurora.org,
-        vbadigan@codeaurora.org, rampraka@codeaurora.org,
-        sayalil@codeaurora.org, sartgarg@codeaurora.org,
-        rnayak@codeaurora.org, cang@codeaurora.org,
-        pragalla@codeaurora.org, nitirawa@codeaurora.org,
-        linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, robh+dt@kernel.org
-References: <1624804840-3479-1-git-send-email-sbhanu@codeaurora.org>
-From:   Adrian Hunter <adrian.hunter@intel.com>
-Organization: Intel Finland Oy, Registered Address: PL 281, 00181 Helsinki,
- Business Identity Code: 0357606 - 4, Domiciled in Helsinki
-Message-ID: <3217c101-534b-bfcb-7ba9-5749d73cf242@intel.com>
-Date:   Wed, 30 Jun 2021 17:08:53 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+        id S235215AbhF3Os5 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 30 Jun 2021 10:48:57 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1625064388; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=XyKDiODvliERgv50vKj1x6QF0TJ/5j1C/p7t9fvUQXU=;
+ b=P7gOWQSsXYKEqiqNhjsqAmU+dElW6h/tcgMPNPupCZlxyolZGlO93bTVrBrXK/YJ+oMbqwdV
+ QTIqJQlYZEofUcmVW9wwfbvNYtLdCGGvx6EliW9Xm1VYF8NfWamK5QshlkQQr8OAkGMq2xCa
+ v0VelhcMU5oWtCOUciGLCYERagg=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
+ 60dc83bfad0600eede5b20d0 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 30 Jun 2021 14:46:23
+ GMT
+Sender: kathirav=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 6E7C9C4338A; Wed, 30 Jun 2021 14:46:23 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: kathirav)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 71476C433D3;
+        Wed, 30 Jun 2021 14:46:20 +0000 (UTC)
 MIME-Version: 1.0
-In-Reply-To: <1624804840-3479-1-git-send-email-sbhanu@codeaurora.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
 Content-Transfer-Encoding: 7bit
+Date:   Wed, 30 Jun 2021 20:16:20 +0530
+From:   Kathiravan T <kathirav@codeaurora.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Baruch Siach <baruch@tkos.co.il>, Rob Herring <robh+dt@kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Uwe Kleine-K?nig <u.kleine-koenig@pengutronix.de>,
+        Lee Jones <lee.jones@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Balaji Prakash J <bjagadee@codeaurora.org>,
+        Robert Marko <robert.marko@sartura.hr>,
+        linux-pwm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH v2 2/3] dt-bindings: pwm: add IPQ6018 binding
+In-Reply-To: <YLgO0Aj1d4w9EcPv@yoga>
+References: <ea071bbcab92d4a296c7aee5d72de0427676847a.1621851644.git.baruch@tkos.co.il>
+ <249bddc521b15e992d0846edf1813aeb577458b9.1621851644.git.baruch@tkos.co.il>
+ <YLgO0Aj1d4w9EcPv@yoga>
+Message-ID: <5d1bb3b8b0eeedd82a3a6fb02ff5794d@codeaurora.org>
+X-Sender: kathirav@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 27/06/21 5:40 pm, Shaik Sajida Bhanu wrote:
-> Whenever SDHC run at clock rate 50MHZ or below, the hardware data
-> timeout value will be 21.47secs, which is approx. 22secs and we have
-> a current software timeout value as 10secs. We have to set software
-> timeout value more than the hardware data timeout value to avioid seeing
-> the below register dumps.
+On 2021-06-03 04:35, Bjorn Andersson wrote:
+> On Mon 24 May 05:20 CDT 2021, Baruch Siach wrote:
 > 
-> [  332.953670] mmc2: Timeout waiting for hardware interrupt.
-> [  332.959608] mmc2: sdhci: ============ SDHCI REGISTER DUMP ===========
-> [  332.966450] mmc2: sdhci: Sys addr:  0x00000000 | Version:  0x00007202
-> [  332.973256] mmc2: sdhci: Blk size:  0x00000200 | Blk cnt:  0x00000001
-> [  332.980054] mmc2: sdhci: Argument:  0x00000000 | Trn mode: 0x00000027
-> [  332.986864] mmc2: sdhci: Present:   0x01f801f6 | Host ctl: 0x0000001f
-> [  332.993671] mmc2: sdhci: Power:     0x00000001 | Blk gap:  0x00000000
-> [  333.000583] mmc2: sdhci: Wake-up:   0x00000000 | Clock:    0x00000007
-> [  333.007386] mmc2: sdhci: Timeout:   0x0000000e | Int stat: 0x00000000
-> [  333.014182] mmc2: sdhci: Int enab:  0x03ff100b | Sig enab: 0x03ff100b
-> [  333.020976] mmc2: sdhci: ACmd stat: 0x00000000 | Slot int: 0x00000000
-> [  333.027771] mmc2: sdhci: Caps:      0x322dc8b2 | Caps_1:   0x0000808f
-> [  333.034561] mmc2: sdhci: Cmd:       0x0000183a | Max curr: 0x00000000
-> [  333.041359] mmc2: sdhci: Resp[0]:   0x00000900 | Resp[1]:  0x00000000
-> [  333.048157] mmc2: sdhci: Resp[2]:   0x00000000 | Resp[3]:  0x00000000
-> [  333.054945] mmc2: sdhci: Host ctl2: 0x00000000
-> [  333.059657] mmc2: sdhci: ADMA Err:  0x00000000 | ADMA Ptr:
-> 0x0000000ffffff218
-> [  333.067178] mmc2: sdhci_msm: ----------- VENDOR REGISTER DUMP
-> -----------
-> [  333.074343] mmc2: sdhci_msm: DLL sts: 0x00000000 | DLL cfg:
-> 0x6000642c | DLL cfg2: 0x0020a000
-> [  333.083417] mmc2: sdhci_msm: DLL cfg3: 0x00000000 | DLL usr ctl:
-> 0x00000000 | DDR cfg: 0x80040873
-> [  333.092850] mmc2: sdhci_msm: Vndr func: 0x00008a9c | Vndr func2 :
-> 0xf88218a8 Vndr func3: 0x02626040
-> [  333.102371] mmc2: sdhci: ============================================
+>> DT binding for the PWM block in Qualcomm IPQ6018 SoC.
+>> 
+>> Signed-off-by: Baruch Siach <baruch@tkos.co.il>
+>> ---
+>> v2: Make #pwm-cells const (Rob Herring)
+>> ---
+>>  .../devicetree/bindings/pwm/ipq-pwm.yaml      | 52 
+>> +++++++++++++++++++
+>>  1 file changed, 52 insertions(+)
+>>  create mode 100644 Documentation/devicetree/bindings/pwm/ipq-pwm.yaml
+>> 
+>> diff --git a/Documentation/devicetree/bindings/pwm/ipq-pwm.yaml 
+>> b/Documentation/devicetree/bindings/pwm/ipq-pwm.yaml
+>> new file mode 100644
+>> index 000000000000..f85ce808a14e
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/pwm/ipq-pwm.yaml
+>> @@ -0,0 +1,52 @@
+>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+>> +%YAML 1.2
+>> +---
+>> +$id: http://devicetree.org/schemas/pwm/ipq-pwm.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: Qualcomm IPQ6018 PWM controller
+>> +
+>> +maintainers:
+>> +  - Baruch Siach <baruch@tkos.co.il>
+>> +
+>> +properties:
+>> +  "#pwm-cells":
+>> +    const: 2
+>> +
+>> +  compatible:
+>> +    const: qcom,pwm-ipq6018
+>> +
+>> +  reg:
+>> +    maxItems: 1
+>> +
+>> +  clocks:
+>> +    maxItems: 1
+>> +
+>> +  clock-names:
+>> +    const: core
+>> +
+>> +required:
+>> +  - "#pwm-cells"
+>> +  - compatible
+>> +  - reg
+>> +  - clocks
+>> +  - clock-names
+>> +
+>> +additionalProperties: false
+>> +
+>> +examples:
+>> +  - |
+>> +    #include <dt-bindings/clock/qcom,gcc-ipq6018.h>
+>> +
+>> +    soc {
+>> +        #address-cells = <2>;
+>> +        #size-cells = <2>;
+>> +
+>> +        pwm@1941010 {
+>> +            #pwm-cells = <2>;
+>> +            compatible = "qcom,pwm-ipq6018";
+>> +            reg = <0x0 0x1941010 0x0 0x20>;
 > 
-> So, set software timeout value more than hardware timeout value.
+> These 32 bytes are in the middle of the TCSR block, which is already
+> partially described by the &tcsr_q6 node, which is described as only
+> compatible = "syscon" - something no longer accepted by the DT
+> maintainers.
 > 
-> Signed-off-by: Shaik Sajida Bhanu <sbhanu@codeaurora.org>
-> ---
-> 
-> Changes since V1:
-> 	- Moved software data timeout update part to qcom specific file as
-> 	  suggested by Veerabhadrarao Badiganti.
-> ---
->  drivers/mmc/host/sdhci-msm.c | 9 +++++++++
->  1 file changed, 9 insertions(+)
-> 
-> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-> index e44b7a6..58e651e 100644
-> --- a/drivers/mmc/host/sdhci-msm.c
-> +++ b/drivers/mmc/host/sdhci-msm.c
-> @@ -2089,6 +2089,14 @@ static void sdhci_msm_cqe_disable(struct mmc_host *mmc, bool recovery)
->  	sdhci_cqe_disable(mmc, recovery);
->  }
->  
-> +static void sdhci_msm_set_timeout(struct sdhci_host *host, struct mmc_command *cmd)
-> +{
-> +
-> +	__sdhci_set_timeout(host, cmd);
-> +	if (cmd && (cmd->data) && (host->clock > 400000) && (host->clock <= 50000000))
-
-There are some redundant parenthesis there and cmd is never NULL i.e. could be:
-
-	if (cmd->data && host->clock > 400000 && host->clock <= 50000000)
-
-> +		host->data_timeout = 22 * NSEC_PER_SEC;
-
-That needs to be 22LL to make the compiler warning go away
-
-> +}
-> +
->  static const struct cqhci_host_ops sdhci_msm_cqhci_ops = {
->  	.enable		= sdhci_msm_cqe_enable,
->  	.disable	= sdhci_msm_cqe_disable,
-> @@ -2438,6 +2446,7 @@ static const struct sdhci_ops sdhci_msm_ops = {
->  	.irq	= sdhci_msm_cqe_irq,
->  	.dump_vendor_regs = sdhci_msm_dump_vendor_regs,
->  	.set_power = sdhci_set_power_noreg,
-> +	.set_timeout = sdhci_msm_set_timeout,
->  };
->  
->  static const struct sdhci_pltfm_data sdhci_msm_pdata = {
+> As such, I think we should adjust the &tcsr_q6 definition to cover the
+> entire TCSR: 0x01937000 of size 0x21000.
 > 
 
+To my knowledge, we can cover the entire TCSR region, so that we can use 
+it
+for the other features like qcom,dload-mode as well.
+
+> 
+> @Rob, should we represent the entire tcsr as a simple-mfd and then have
+> the pwm and q6 region as children of that? Or can we make the whole
+> thing as a simple-mfd and a syscon and only describe the pwm as a 
+> child?
+> 
+> Regards,
+> Bjorn
+> 
+>> +            clocks = <&gcc GCC_ADSS_PWM_CLK>;
+>> +            clock-names = "core";
+>> +        };
+>> +    };
+>> --
+>> 2.30.2
+>> 
+
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member of Code Aurora Forum, hosted by The Linux Foundation
