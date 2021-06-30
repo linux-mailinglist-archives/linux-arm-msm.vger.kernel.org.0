@@ -2,90 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DD6DB3B7A77
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Jun 2021 00:34:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CBF1C3B7B0D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Jun 2021 02:36:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233329AbhF2WhG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Jun 2021 18:37:06 -0400
-Received: from mail.kernel.org ([198.145.29.99]:49344 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233056AbhF2WhG (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Jun 2021 18:37:06 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 7B77C61D2E;
-        Tue, 29 Jun 2021 22:34:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1625006078;
-        bh=HshZ+39IdwahaJkmfBB0YzLsh2aQB532mmuwkEx2MHI=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=Kjj2heGt3fCxpkjXvGXejuGqWZhZBL2PIfu/WVkHR9hd/5ySioHesiJpS5turkoRr
-         /UKFm7rm/Yc3Q5EsLLQw5/VQ8DgNJHNHwkmzPZALGzhUgRyDHGOpqDtsLEGLo88iTs
-         GZpBeduZNazQZOADfOiuknW9aAqIupP1hoOgFK/w400Qn29DVRzDT+eEOgDlfad3ha
-         4c9OdGLk2dYWlYBX2/FRoUptnWRz/8pX8SDaqVAiHmhDkYaajLCk9oQ73/L8lTvrMj
-         0FO3CeSEjf80RE21Xrl1qIlGRckuUK8BTcnUbAgBuDrjPdG/og5B/kkGbBy3C+jmFa
-         2gr/rae+XqFEg==
-Content-Type: text/plain; charset="utf-8"
+        id S235695AbhF3AjK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Jun 2021 20:39:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39300 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235637AbhF3AjK (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 29 Jun 2021 20:39:10 -0400
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B65DCC061767
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Jun 2021 17:36:41 -0700 (PDT)
+Received: by mail-lf1-x136.google.com with SMTP id a18so1653626lfs.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Jun 2021 17:36:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=jtVW5NMocB6oVI0WMovmBROwRBfdKl6IUOMqibW9evQ=;
+        b=PfDwdfd658Y+9K8gvsYqLkb06cvO9vPX5vmZFKpgJfEU1JV8IJOHOPB/fT9gQgKia4
+         CkwaR7y+3Y3sRHa1Ei3aG16+gGPQ8ellOWAofRnxXTxEphjDYqv1CvVWGiY1H2QyxJlO
+         LNN65ZIV4H4+qPr/vzxELakfbfrYCNxdUuw8FlW01wdyTO9QgR55wE2WFhtmfVqmraX1
+         6dsMXQqqoSbmasHFViuFkp9x9AiAQBLFBuy8aCFxO5dfncSXXyX55TVezt+pCUhXsQ8J
+         9lI0d6qy92Ma9mvUYjuBxQjQw4ace0MWZURMPTZr0T5fK/9N6n3m5y70GsyXUxOFlmCr
+         SukQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=jtVW5NMocB6oVI0WMovmBROwRBfdKl6IUOMqibW9evQ=;
+        b=NFo6xOD5WFywTWcT538A3/UBstAIOQcqI6aVZWwGKMeCdf2UxpMQwkmPfhtUpkDdOU
+         RAo81ulK9mFCp9I0aSDNQ4/OMpoD8S28eqPBnQM1mO5J2DlBJmNKFKIcpUJ9tzvZVIRb
+         9Zb7+aAAYgzxGKdsZTrVnR744gXvkV0RGQcvuqE7u8Ryu8/iP00v6lcpvNUR88/5SY2u
+         eeg/k8TI3zPG5HYtD9N7l8Pg/SVaY4bk9X63jtYpIiN/fQjvBPUWBjdPzUTcjDFOiUSw
+         Z90ndP6l2vKVUqyVAwRdc0wYy82WYlzlff6NQ26Q31MO6vOfNDavnrP9m1tDOJSfiUWM
+         mYnw==
+X-Gm-Message-State: AOAM5315qHTTPpVGs1KR5f3cIMT34mHaci/iEglRxGtmjIrU7I6jjVAa
+        2c4s82SvhmFuUzdeICBgeDyR0dH8vDPfkW5Z8p7OMQ==
+X-Google-Smtp-Source: ABdhPJz8oylr1QBk4wbq+S09hbJVugu5jPx8c6IPCGHmiauvztZvUu2BOO8drcRIghnbm2IY/6t/MC8MygbdQHfkED4=
+X-Received: by 2002:a05:6512:3c9f:: with SMTP id h31mr15414133lfv.465.1625013399992;
+ Tue, 29 Jun 2021 17:36:39 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20210629203919.2956918-2-dmitry.baryshkov@linaro.org>
-References: <20210629203919.2956918-1-dmitry.baryshkov@linaro.org> <20210629203919.2956918-2-dmitry.baryshkov@linaro.org>
-Subject: Re: [PATCH 2/2] clk: qcom: fix domains cleanup in gdsc_unregister
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
+References: <20210629074703.v2.1.I629b2366a6591410359c7fcf6d385b474b705ca2@changeid>
+In-Reply-To: <20210629074703.v2.1.I629b2366a6591410359c7fcf6d385b474b705ca2@changeid>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Wed, 30 Jun 2021 02:36:28 +0200
+Message-ID: <CACRpkdbRjg1PMMWPc_5fW+PKG4SQGkaesK4++MHUWTw0MdMkxg@mail.gmail.com>
+Subject: Re: [PATCH v2] drm/dsi: Add _NO_ to MIPI_DSI_* flags disabling features
+To:     Nicolas Boichat <drinkcat@chromium.org>
+Cc:     Andrzej Hajda <a.hajda@samsung.com>,
+        Robert Foss <robert.foss@linaro.org>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Adrien Grassein <adrien.grassein@gmail.com>,
+        Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>
-Date:   Tue, 29 Jun 2021 15:34:37 -0700
-Message-ID: <162500607734.3331010.12498813187207407633@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+        Hsin-Yi Wang <hsinyi@chromium.org>,
+        Inki Dae <inki.dae@samsung.com>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Joonyoung Shim <jy0922.shim@samsung.com>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Pi-Hsun Shih <pihsun@chromium.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Sam Ravnborg <sam@ravnborg.org>, Sean Paul <sean@poorly.run>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Tzung-Bi Shih <tzungbi@google.com>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Xin Ji <xji@analogixsemi.com>,
+        Yangtao Li <tiny.windzz@gmail.com>,
+        "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        linux-kernel <linux-kernel@vger.kernel.org>,
+        "moderated list:ARM/Mediatek SoC support" 
+        <linux-mediatek@lists.infradead.org>,
+        linux-samsung-soc <linux-samsung-soc@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Dmitry Baryshkov (2021-06-29 13:39:19)
-> Properly remove registered genpds. Also remove the provider before
-> breaking parent/child links, so that the system is consistent at remove
-> time.
->=20
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  drivers/clk/qcom/gdsc.c | 11 ++++++++++-
->  1 file changed, 10 insertions(+), 1 deletion(-)
->=20
-> diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
-> index 241186d9d08c..4b211dd1764d 100644
-> --- a/drivers/clk/qcom/gdsc.c
-> +++ b/drivers/clk/qcom/gdsc.c
-> @@ -475,6 +475,9 @@ void gdsc_unregister(struct gdsc_desc *desc)
->         struct gdsc **scs =3D desc->scs;
->         size_t num =3D desc->num;
-> =20
-> +       /* Remove provider first */
+On Tue, Jun 29, 2021 at 1:47 AM Nicolas Boichat <drinkcat@chromium.org> wrote:
 
-but why? A better comment would be
+> Many of the DSI flags have names opposite to their actual effects,
+> e.g. MIPI_DSI_MODE_EOT_PACKET means that EoT packets will actually
+> be disabled. Fix this by including _NO_ in the flag names, e.g.
+> MIPI_DSI_MODE_NO_EOT_PACKET.
+>
+> Signed-off-by: Nicolas Boichat <drinkcat@chromium.org>
 
-	/*
-	 * Remove provider first so that we can remove the genpds
-	 * without worrying about consumers getting them during the
-	 * removal process.
-	 */
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
 
-> +       of_genpd_del_provider(dev->of_node);
-> +
->         /* Remove subdomains */
->         for (i =3D 0; i < num; i++) {
->                 if (!scs[i])
-> @@ -482,7 +485,13 @@ void gdsc_unregister(struct gdsc_desc *desc)
->                 if (scs[i]->parent)
->                         pm_genpd_remove_subdomain(scs[i]->parent, &scs[i]=
-->pd);
->         }
-> -       of_genpd_del_provider(dev->of_node);
-> +
-> +       /* Remove domains themselves */
-> +       for (i =3D 0; i < num; i++) {
-> +               if (!scs[i])
-> +                       continue;
-> +               pm_genpd_remove(&scs[i]->pd);
-> +       }
->  }
+Yours,
+Linus Walleij
