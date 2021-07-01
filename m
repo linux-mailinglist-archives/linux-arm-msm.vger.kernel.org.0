@@ -2,89 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 044753B92AD
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jul 2021 16:03:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7D1F13B93E0
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jul 2021 17:25:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232966AbhGAOFq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Jul 2021 10:05:46 -0400
-Received: from mail-il1-f180.google.com ([209.85.166.180]:45717 "EHLO
-        mail-il1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232937AbhGAOFq (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Jul 2021 10:05:46 -0400
-Received: by mail-il1-f180.google.com with SMTP id b5so6430045ilc.12;
-        Thu, 01 Jul 2021 07:03:15 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
-         :message-id;
-        bh=34pditdGAnkmOoWQm+ofV1mGsalRsMGBBDjdbXOmEes=;
-        b=Cv2JvEXhmiF7Q6xcIlDCPuFDz5JAdT/03VrtXW7NEWUl+vIO1rcyxn/nm7qZ0W77V2
-         H0M4ysxvm+umhf0x0b1cm2BQFWVFYa4r298zjK0RhYsaRWxjIEe3izwk/wkrs2Dnxlq2
-         Yx8ObC83ZzirKhyt01ZZIpTl4c+NhksayH0JnugyRUnW0Ww0EfDxBMIlQhIamvU0rGsb
-         F2uPfKk9W/gZZyTKOxzRi4H7ti/vrq4ro/+vvmGtAKoaMcBKrHtQWnXfB/Z82HX+3hor
-         MjAbiBnZiK0n2kcfnBty6gWVRQ5uc9kZ078lcPz74GPGjo/XXUi0h3UKttFyeqm7XIpf
-         p7LQ==
-X-Gm-Message-State: AOAM533fhZWbdhHUoIAxTeHWFVK4eeEJrO5bu/tpSVDVxDOGIrJ2jCy6
-        oI41POZvf5WpyafVt8IuDjAa0IFN2A==
-X-Google-Smtp-Source: ABdhPJwC7NMLRfHWNQ8AaqlAY9dCRLK5L1h8nMWNBTSc/DgyiB2LGSdA4v3aEPQWf8EYA8dvoeC6YA==
-X-Received: by 2002:a05:6e02:1a02:: with SMTP id s2mr11414787ild.76.1625148194770;
-        Thu, 01 Jul 2021 07:03:14 -0700 (PDT)
-Received: from robh.at.kernel.org ([64.188.179.248])
-        by smtp.gmail.com with ESMTPSA id l5sm14245907ion.44.2021.07.01.07.03.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Jul 2021 07:03:13 -0700 (PDT)
-Received: (nullmailer pid 2278694 invoked by uid 1000);
-        Thu, 01 Jul 2021 14:02:43 -0000
+        id S233477AbhGAP1p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Jul 2021 11:27:45 -0400
+Received: from mail.kernel.org ([198.145.29.99]:46892 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S233064AbhGAP1p (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 1 Jul 2021 11:27:45 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id E12A96140A;
+        Thu,  1 Jul 2021 15:25:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1625153114;
+        bh=+xwpidjwxHnbYP8ChZRNxTaoNpy++W26pPBlNiZG1Es=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=YE1gmcnGC9g80E48RRI74yVfqEgwwBB2bKAeTy4DSkuQhlA9/8EOdAK+quQe0R/fZ
+         QZGdA60OQIAmf8X54geE76/5GIhw2kc8aPAkegkan+nwD+yYdnrOEtLGHngCzXszMi
+         z/8iYsXxwzLtyuUWHEHaNgvnIaIqwYcbmg3uLh+9ukbLGgk8D9/d+WsfqdzShslDRC
+         4E8DyJ+UVGFQSXByxm0ESUjpqZIfzPhXLbe5XTP4BzMppZXitZ5m/4k6rLQCPs31zX
+         8eOwQWjYoLw2uXyx+edD60Yd9zlQEUdA8T2OksazGEWz2WvimcIHL1CKGuKlMRx0Y2
+         h9ro5wQDaYH3g==
+Received: by mail-ej1-f45.google.com with SMTP id bg14so11020110ejb.9;
+        Thu, 01 Jul 2021 08:25:14 -0700 (PDT)
+X-Gm-Message-State: AOAM5321ZNxX9mQ30BQBya0tz6yj0neSExHS0EUuFz0/u+toUPQdhbk4
+        dogHXhxWwkmCMCoVLYOAOrViU96aaOxzBkEY8w==
+X-Google-Smtp-Source: ABdhPJzUEsTvx8EteF/IK3c/gYkviXw1F7trsPeasxSHv8iu+ZIaHLTIVsLiLpAQlbHQOTQVV45g91QrmyohrBAw17o=
+X-Received: by 2002:a17:907:3e8a:: with SMTP id hs10mr372288ejc.359.1625153113214;
+ Thu, 01 Jul 2021 08:25:13 -0700 (PDT)
+MIME-Version: 1.0
+References: <20210630034653.10260-1-manivannan.sadhasivam@linaro.org>
+In-Reply-To: <20210630034653.10260-1-manivannan.sadhasivam@linaro.org>
 From:   Rob Herring <robh@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>, linux-kernel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>, Sibi S <sibis@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-In-Reply-To: <20210625234018.1324681-3-bjorn.andersson@linaro.org>
-References: <20210625234018.1324681-1-bjorn.andersson@linaro.org> <20210625234018.1324681-3-bjorn.andersson@linaro.org>
-Subject: Re: [PATCH 2/3] dt-bindings: soc: qcom: aoss: Convert to YAML
-Date:   Thu, 01 Jul 2021 08:02:43 -0600
-Message-Id: <1625148163.508920.2278693.nullmailer@robh.at.kernel.org>
+Date:   Thu, 1 Jul 2021 09:25:01 -0600
+X-Gmail-Original-Message-ID: <CAL_JsqLHp3kBc1VtGVRxVr_k69GqSC_JX88jo3stdM4W9Qq6AQ@mail.gmail.com>
+Message-ID: <CAL_JsqLHp3kBc1VtGVRxVr_k69GqSC_JX88jo3stdM4W9Qq6AQ@mail.gmail.com>
+Subject: Re: [PATCH v5 0/3] Add Qualcomm PCIe Endpoint driver support
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     Kishon Vijay Abraham I <kishon@ti.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        devicetree@vger.kernel.org, PCI <linux-pci@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        hemantk@codeaurora.org,
+        Siddartha Mohanadoss <smohanad@codeaurora.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Sriharsha Allenki <sallenki@codeaurora.org>,
+        skananth@codeaurora.org, vpernami@codeaurora.org,
+        Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 25 Jun 2021 16:40:17 -0700, Bjorn Andersson wrote:
-> Convert to YAML in order to allow validation.
-> 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
-> 
-> I'm aware that this conflicts with Sibi's removal of '#power-domain-cells', but
-> that's a trivial change regardless of which of the two patches gets in first.
-> 
->  .../bindings/soc/qcom/qcom,aoss-qmp.txt       |  90 --------------
->  .../bindings/soc/qcom/qcom,aoss-qmp.yaml      | 115 ++++++++++++++++++
->  2 files changed, 115 insertions(+), 90 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,aoss-qmp.txt
->  create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,aoss-qmp.yaml
-> 
+On Tue, Jun 29, 2021 at 9:47 PM Manivannan Sadhasivam
+<manivannan.sadhasivam@linaro.org> wrote:
+>
+> Hello,
+>
+> This series adds support for Qualcomm PCIe Endpoint controller found
+> in platforms like SDX55. The Endpoint controller is based on the designware
+> core with additional Qualcomm wrappers around the core.
+>
+> The driver is added separately unlike other Designware based drivers that
+> combine RC and EP in a single driver. This is done to avoid complexity and
+> to maintain this driver autonomously.
+>
+> The driver has been validated with an out of tree MHI function driver on
+> SDX55 based Telit FN980 EVB connected to x86 host machine over PCIe.
+>
+> Thanks,
+> Mani
+>
+> Changes in v5:
+>
+> * Removed the DBI register settings that are not needed
+> * Used the standard definitions available in pci_regs.h
+> * Added defines for all the register fields
+> * Removed the left over code from previous iteration
+>
+> Changes in v4:
+>
+> * Removed the active_config settings needed for IPA integration
+> * Switched to writel for couple of relaxed versions that sneaked in
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+I thought we resolved this discussion. Use _relaxed variants unless
+you need the stronger ones.
 
-yamllint warnings/errors:
-./Documentation/devicetree/bindings/soc/qcom/qcom,aoss-qmp.yaml:29:9: [warning] wrong indentation: expected 10 but found 8 (indentation)
+Rob
 
-dtschema/dtc warnings/errors:
-\ndoc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/patch/1497468
-
-This check can fail if there are any dependencies. The base for a patch
-series is generally the most recent rc1.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit.
-
+>
+> Changes in v3:
+>
+> * Lot of minor cleanups to the driver patch based on review from Bjorn and Stan.
+> * Noticeable changes are:
+>   - Got rid of _relaxed calls and used readl/writel
+>   - Got rid of separate TCSR memory region and used syscon for getting the
+>     register offsets for Perst registers
+>   - Changed the wake gpio handling logic
+>   - Added remove() callback and removed "suppress_bind_attrs"
+>   - stop_link() callback now just disables PERST IRQ
+> * Added MMIO region and doorbell interrupt to the binding
+> * Added logic to write MMIO physicall address to MHI base address as it is
+>   for the function driver to work
+>
+> Changes in v2:
+>
+> * Addressed the comments from Rob on bindings patch
+> * Modified the driver as per binding change
+> * Fixed the warnings reported by Kbuild bot
+> * Removed the PERST# "enable_irq" call from probe()
+>
+> Manivannan Sadhasivam (3):
+>   dt-bindings: pci: Add devicetree binding for Qualcomm PCIe EP
+>     controller
+>   PCI: dwc: Add Qualcomm PCIe Endpoint controller driver
+>   MAINTAINERS: Add entry for Qualcomm PCIe Endpoint driver and binding
+>
+>  .../devicetree/bindings/pci/qcom,pcie-ep.yaml | 160 ++++
+>  MAINTAINERS                                   |  10 +-
+>  drivers/pci/controller/dwc/Kconfig            |  10 +
+>  drivers/pci/controller/dwc/Makefile           |   1 +
+>  drivers/pci/controller/dwc/pcie-qcom-ep.c     | 742 ++++++++++++++++++
+>  5 files changed, 922 insertions(+), 1 deletion(-)
+>  create mode 100644 Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
+>  create mode 100644 drivers/pci/controller/dwc/pcie-qcom-ep.c
+>
+> --
+> 2.25.1
+>
