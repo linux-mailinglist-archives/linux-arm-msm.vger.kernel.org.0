@@ -2,77 +2,297 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5BA3F3B97E6
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jul 2021 23:00:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 030173B9803
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jul 2021 23:12:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234323AbhGAVCg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Jul 2021 17:02:36 -0400
-Received: from mail.kernel.org ([198.145.29.99]:43498 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232114AbhGAVCf (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Jul 2021 17:02:35 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPS id BE54161402;
-        Thu,  1 Jul 2021 21:00:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1625173204;
-        bh=2sG8v97RtOFMgZV5K7unFKwFTNwaFUnDyGQfLtuHp4E=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=BYBO3PssfqxCFYs0/+iy+2X0rJPKvCfSmUHgXHvIUjb1Y96G8vXr4JL7RTHGKFCHE
-         ZStQTgiY9kTy1iJZwAqwBER+g0+LW9l2uUEIslCyrKZkrcnkdztd3BcMnwGRC3qM0t
-         wTGQMTfjFdAQ2FJ9E7hPKGyT7xHW6TC+unvWIAnRwrE9FXcbMJ0JOAJqHf+GLbjs2/
-         GSAmnGQZQwLSQ3AYvFJwzJVgbdd7u9CLYXCEtZVNO/xOUaPdXpZdjWvqwdB6b/jdHf
-         ZoG0I+vtfmiYzxDw3a4R7IScTFXxvUmHliRHTdPYFGLvGtkEHG1QdlOyIMm2TWnuig
-         gWtUQxJiv7w3A==
-Received: from pdx-korg-docbuild-2.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id ABA63609B2;
-        Thu,  1 Jul 2021 21:00:04 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+        id S233910AbhGAVPO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Jul 2021 17:15:14 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:30080 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233916AbhGAVPN (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 1 Jul 2021 17:15:13 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1625173963; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=H8ePaAPjm3Qye4c0a0COw/Ct7+Jugg9ITfv5eW+aqI4=;
+ b=Y4GTZUdcTmiK2EjezSGL3xJr//wayq8ABatT0E6h1SrGjfC474FHpAXVkl4p91hQNIlF6DcB
+ HuZ32daus46l8a5MBpLDIqDCV3taIyHW/bIubuljOsUA8CYO809qY+RxCNPSVDaTlwk/nEIE
+ bhqfvw8ijtkLfzj6uCiZxcEq7K8=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
+ 60de2fbe2a2a9a9761ffd66d (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 01 Jul 2021 21:12:30
+ GMT
+Sender: abhinavk=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id C8370C433F1; Thu,  1 Jul 2021 21:12:29 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: abhinavk)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 33143C433D3;
+        Thu,  1 Jul 2021 21:12:28 +0000 (UTC)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v2 0/2] sms911x: DTS fixes and DT binding to json-schema
- conversion
-From:   patchwork-bot+netdevbpf@kernel.org
-Message-Id: <162517320469.16051.953604245859525784.git-patchwork-notify@kernel.org>
-Date:   Thu, 01 Jul 2021 21:00:04 +0000
-References: <cover.1625140615.git.geert+renesas@glider.be>
-In-Reply-To: <cover.1625140615.git.geert+renesas@glider.be>
-To:     Geert Uytterhoeven <geert+renesas@glider.be>
-Cc:     davem@davemloft.net, kuba@kernel.org, robh+dt@kernel.org,
-        agross@kernel.org, bjorn.andersson@linaro.org,
-        netdev@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Thu, 01 Jul 2021 14:12:28 -0700
+From:   abhinavk@codeaurora.org
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        freedreno@lists.freedesktop.org
+Subject: Re: [Freedreno] [RFC 2/6] drm/msm/dpu: support setting up two
+ independent DSI connectors
+In-Reply-To: <20210609211723.2565105-3-dmitry.baryshkov@linaro.org>
+References: <20210609211723.2565105-1-dmitry.baryshkov@linaro.org>
+ <20210609211723.2565105-3-dmitry.baryshkov@linaro.org>
+Message-ID: <73c474d067bd1f63e6d3457b01de4e2c@codeaurora.org>
+X-Sender: abhinavk@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello:
-
-This series was applied to netdev/net.git (refs/heads/master):
-
-On Thu,  1 Jul 2021 14:02:19 +0200 you wrote:
-> Hi all,
+On 2021-06-09 14:17, Dmitry Baryshkov wrote:
+> Move setting up encoders from set_encoder_mode to
+> _dpu_kms_initialize_dsi() / _dpu_kms_initialize_displayport(). This
+> allows us to support not only "single DSI" and "dual DSI" but also "two
+> independent DSI" configurations. In future this would also help adding
+> support for multiple DP connectors.
 > 
-> This patch series converts the Smart Mixed-Signal Connectivity (SMSC)
-> LAN911x/912x Controller Device Tree binding documentation to
-> json-schema, after fixing a few issues in DTS files.
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+I will have to see Bjorn's changes to check why it was dependent on this 
+cleanup.
+Is the plan to call _dpu_kms_initialize_displayport() twice?
+But still I am not able to put together where is the dependency on that 
+series
+with this one. Can you please elaborate on that a little bit?
+
+> ---
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 89 ++++++++++++-------------
+>  1 file changed, 44 insertions(+), 45 deletions(-)
 > 
-> Changed compared to v1[1]:
->   - Dropped applied patches,
->   - Add Reviewed-by,
->   - Drop bogus double quotes in compatible values,
->   - Add comment explaining why "additionalProperties: true" is needed.
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> index 1d3a4f395e74..b63e1c948ff2 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> @@ -471,30 +471,55 @@ static int _dpu_kms_initialize_dsi(struct 
+> drm_device *dev,
+>  				    struct dpu_kms *dpu_kms)
+>  {
+>  	struct drm_encoder *encoder = NULL;
+> +	struct msm_display_info info;
+>  	int i, rc = 0;
 > 
-> [...]
+>  	if (!(priv->dsi[0] || priv->dsi[1]))
+>  		return rc;
+> 
+> -	/*TODO: Support two independent DSI connectors */
+> -	encoder = dpu_encoder_init(dev, DRM_MODE_ENCODER_DSI);
+> -	if (IS_ERR(encoder)) {
+> -		DPU_ERROR("encoder init failed for dsi display\n");
+> -		return PTR_ERR(encoder);
+> -	}
+> -
+> -	priv->encoders[priv->num_encoders++] = encoder;
+> -
+>  	for (i = 0; i < ARRAY_SIZE(priv->dsi); i++) {
+>  		if (!priv->dsi[i])
+>  			continue;
+> 
+> +		if (!encoder) {
+> +			encoder = dpu_encoder_init(dev, DRM_MODE_ENCODER_DSI);
+> +			if (IS_ERR(encoder)) {
+> +				DPU_ERROR("encoder init failed for dsi display\n");
+> +				return PTR_ERR(encoder);
+> +			}
+> +
+> +			priv->encoders[priv->num_encoders++] = encoder;
+> +
+> +			memset(&info, 0, sizeof(info));
+> +			info.intf_type = encoder->encoder_type;
+> +			info.capabilities = msm_dsi_is_cmd_mode(priv->dsi[i]) ?
+> +				MSM_DISPLAY_CAP_CMD_MODE :
+> +				MSM_DISPLAY_CAP_VID_MODE;
+> +		}
+> +
+>  		rc = msm_dsi_modeset_init(priv->dsi[i], dev, encoder);
+>  		if (rc) {
+>  			DPU_ERROR("modeset_init failed for dsi[%d], rc = %d\n",
+>  				i, rc);
+>  			break;
+>  		}
+> +
+> +		info.h_tile_instance[info.num_of_h_tiles++] = i;
+> +
+> +		if (!msm_dsi_is_dual_dsi(priv->dsi[i])) {
 
-Here is the summary with links:
-  - [v2,1/2] ARM: dts: qcom-apq8060: Correct Ethernet node name and drop bogus irq property
-    https://git.kernel.org/netdev/net/c/b6c880103823
-  - [v2,2/2] dt-bindings: net: sms911x: Convert to json-schema
-    https://git.kernel.org/netdev/net/c/19373d0233d0
+I would like to clarify the terminology of dual_dsi in the current DSI 
+driver before the rest of the reviews.
+Today IS_DUAL_DSI() means that two DSIs are driving the same display and 
+the two DSIs are operating in master-slave mode
+and are being driven by the same PLL.
+Usually, dual independent DSI means two DSIs driving two separate panels 
+using two separate PLLs ( DSI0 with PLL0 and DSI1 with PLL1)
+I assume thats happening due to the foll logic and both DSI PHYs are 
+operating in STANDALONE mode:
 
-You are awesome, thank you!
---
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+     if (!IS_DUAL_DSI()) {
+         ret = msm_dsi_host_register(msm_dsi->host, true);
+         if (ret)
+             return ret;
 
+         msm_dsi_phy_set_usecase(msm_dsi->phy, MSM_DSI_PHY_STANDALONE);
+         ret = msm_dsi_host_set_src_pll(msm_dsi->host, msm_dsi->phy);
 
+> +			rc = dpu_encoder_setup(dev, encoder, &info);
+> +			if (rc)
+> +				DPU_ERROR("failed to setup DPU encoder %d: rc:%d\n",
+> +						encoder->base.id, rc);
+> +			encoder = NULL;
+> +		}
+> +	}
+> +
+> +	if (encoder) {
+
+We will hit this case only for split-DSI right? ( that is two DSIs 
+driving the same panel ).
+Even single DSI will be created in the above loop now. So this looks a 
+bit confusing at the moment.
+
+I think we need to be more clear on dual-DSI Vs split-DSI to avoid 
+confusion in the code about which one means what and the one
+which we are currently using. So what about having IS_DUAL_DSI() and 
+IS_SPLIT_DSI() to distinguish the terminologies and chaging
+DSI driver accordingly.
+
+> +		rc = dpu_encoder_setup(dev, encoder, &info);
+> +		if (rc)
+> +			DPU_ERROR("failed to setup DPU encoder %d: rc:%d\n",
+> +					encoder->base.id, rc);
+>  	}
+> 
+>  	return rc;
+> @@ -505,6 +530,7 @@ static int _dpu_kms_initialize_displayport(struct
+> drm_device *dev,
+>  					    struct dpu_kms *dpu_kms)
+>  {
+>  	struct drm_encoder *encoder = NULL;
+> +	struct msm_display_info info;
+>  	int rc = 0;
+> 
+>  	if (!priv->dp)
+> @@ -516,6 +542,7 @@ static int _dpu_kms_initialize_displayport(struct
+> drm_device *dev,
+>  		return PTR_ERR(encoder);
+>  	}
+> 
+> +	memset(&info, 0, sizeof(info));
+>  	rc = msm_dp_modeset_init(priv->dp, dev, encoder);
+>  	if (rc) {
+>  		DPU_ERROR("modeset_init failed for DP, rc = %d\n", rc);
+> @@ -524,6 +551,14 @@ static int _dpu_kms_initialize_displayport(struct
+> drm_device *dev,
+>  	}
+> 
+>  	priv->encoders[priv->num_encoders++] = encoder;
+> +
+> +	info.num_of_h_tiles = 1;
+> +	info.capabilities = MSM_DISPLAY_CAP_VID_MODE;
+> +	info.intf_type = encoder->encoder_type;
+> +	rc = dpu_encoder_setup(dev, encoder, &info);
+> +	if (rc)
+> +		DPU_ERROR("failed to setup DPU encoder %d: rc:%d\n",
+> +			encoder->base.id, rc);
+>  	return rc;
+>  }
+> 
+> @@ -726,41 +761,6 @@ static void dpu_kms_destroy(struct msm_kms *kms)
+>  	msm_kms_destroy(&dpu_kms->base);
+>  }
+> 
+> -static void _dpu_kms_set_encoder_mode(struct msm_kms *kms,
+> -				 struct drm_encoder *encoder,
+> -				 bool cmd_mode)
+> -{
+> -	struct msm_display_info info;
+> -	struct msm_drm_private *priv = encoder->dev->dev_private;
+> -	int i, rc = 0;
+> -
+> -	memset(&info, 0, sizeof(info));
+> -
+> -	info.intf_type = encoder->encoder_type;
+> -	info.capabilities = cmd_mode ? MSM_DISPLAY_CAP_CMD_MODE :
+> -			MSM_DISPLAY_CAP_VID_MODE;
+> -
+> -	switch (info.intf_type) {
+> -	case DRM_MODE_ENCODER_DSI:
+> -		/* TODO: No support for DSI swap */
+> -		for (i = 0; i < ARRAY_SIZE(priv->dsi); i++) {
+> -			if (priv->dsi[i]) {
+> -				info.h_tile_instance[info.num_of_h_tiles] = i;
+> -				info.num_of_h_tiles++;
+> -			}
+> -		}
+> -		break;
+> -	case DRM_MODE_ENCODER_TMDS:
+> -		info.num_of_h_tiles = 1;
+> -		break;
+> -	}
+> -
+> -	rc = dpu_encoder_setup(encoder->dev, encoder, &info);
+> -	if (rc)
+> -		DPU_ERROR("failed to setup DPU encoder %d: rc:%d\n",
+> -			encoder->base.id, rc);
+> -}
+> -
+It seems we can get rid of set_encoder_mode for DP because the way we 
+are using it today seems not right.
+Ideally, the purpose was that once we read the EDID, the information we 
+read like the tile group etc
+can be used when we are setting up the encoder. But today, we are just 
+hard-coding the number of tiles.
+But I just think whether looking ahead, we should still have some 
+callback which can be called after
+EDID has been read instead of doing it in 
+_dpu_kms_initialize_displayport. Perhaps that can be a separate patch.
+
+>  static irqreturn_t dpu_irq(struct msm_kms *kms)
+>  {
+>  	struct dpu_kms *dpu_kms = to_dpu_kms(kms);
+> @@ -863,7 +863,6 @@ static const struct msm_kms_funcs kms_funcs = {
+>  	.get_format      = dpu_get_msm_format,
+>  	.round_pixclk    = dpu_kms_round_pixclk,
+>  	.destroy         = dpu_kms_destroy,
+> -	.set_encoder_mode = _dpu_kms_set_encoder_mode,
+I would like to get Rob's comment on why we had set_encoder_mode in the 
+first place. Its there even in mdp5.
+
+in current msm dsi, the dsi bind will happen only after the panel has 
+attached
+and the msm_drv's bind will happen only after that since its the 
+component master
+in that case what was the need for set_encoder_mode  because we will 
+know the panel's video/cmd mode in the dsi_bind call
+am i missing something about why mdp5 had this?
+
+ From the dpu perspective, since dsi_bind() happens only once panel has 
+attached.
+>  	.snapshot        = dpu_kms_mdp_snapshot,
+>  #ifdef CONFIG_DEBUG_FS
+>  	.debugfs_init    = dpu_kms_debugfs_init,
