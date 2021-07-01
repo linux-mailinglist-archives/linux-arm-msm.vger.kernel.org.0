@@ -2,91 +2,144 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C85633B94FA
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jul 2021 18:56:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3045D3B9516
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jul 2021 18:59:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232827AbhGAQ7H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Jul 2021 12:59:07 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:16199 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230213AbhGAQ7H (ORCPT
+        id S232969AbhGARBc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Jul 2021 13:01:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38758 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232516AbhGARBc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Jul 2021 12:59:07 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1625158597; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=a6Y+UJzX51hrFbNp2BhxTJQy4FwK+otdQWbFQJKCVAo=;
- b=AHCRdOAAfyJSgVcufHsP7T5KSSGspxWtivOVktWVNZnwqGBp34jHk9u8gieyIMqy15d8pLWl
- GAEK0xD5fqG3Twoe2Xqw6uv2XohZ4dzaSYJKxiqQyV47TfaqXKCuwaGjigMgXJdIdA2f1ANv
- md3Vfg060gIFbuxkBLguZsjA4Ls=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
- 60ddf3c3f3042986149733b4 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 01 Jul 2021 16:56:35
- GMT
-Sender: okukatla=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 5525CC433D3; Thu,  1 Jul 2021 16:56:34 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: okukatla)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id B7763C433F1;
-        Thu,  1 Jul 2021 16:56:33 +0000 (UTC)
+        Thu, 1 Jul 2021 13:01:32 -0400
+Received: from mail-vs1-xe2c.google.com (mail-vs1-xe2c.google.com [IPv6:2607:f8b0:4864:20::e2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A2A5C061762
+        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Jul 2021 09:59:01 -0700 (PDT)
+Received: by mail-vs1-xe2c.google.com with SMTP id h5so2464635vsg.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Jul 2021 09:59:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Immfemhnpfwa8Nxg8YlJJPBmhUahLWtVsprTcnwHwPk=;
+        b=fosP1pivS/V7/7q1YVbmKOVzAiaVlm7zVcVZXe75oDTpnLQk/JKjyghVLBOJVFuoV3
+         HE3hPij/Y20fQDt6VeHfZvDLHTpLW3jPrwm4wyS7idrW9V4tmk++PdK8IjtEnRKXzvdZ
+         ZlagxBpjFbDf5GySfn9hAqblBML6XGQXPxbC+gb4Z8Nrj1ae4rS+814Zk81lR2ppJFSk
+         pRVxoVpBm2X4pnBqPLo/l8fEIxVRUJCBwumltoa5T/urpYAgqTCLy6ayZxz8lNEKiKSl
+         d9LHZd4OC61Dj9vw3HPRsXC7mlQJi7ZD5aakDa9hqqemjxNnjj3tKs7gVaMPkHOkCkax
+         zGiw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Immfemhnpfwa8Nxg8YlJJPBmhUahLWtVsprTcnwHwPk=;
+        b=cUrNnkwlfWSHQikxLfcMMY+eq0OBwStDDfQMRRZ0X2hQDW5dxt94cdvocGGBZcli3R
+         rUFsBvrqeVgwv5D/8NhafZNqwJ6/G6zBAsB8iwhKcNKalbfJ9yZH6Z28nHX7Hg7EPhoN
+         50E5W70oLyDnEOnJ2tspjWGy7vf7guNie8iykTf7rjlhNJzFEoGMmhPFyOfDSsUZgBwt
+         JpVK6yhmI+9hQwO4oi8s/5uBmMqxAY9JRPXtOvv/8VHtELm3fBP2dC2WPlrvJmFieZ5H
+         FIG/E/F//g4dCb9f/KMoaHXXkuGjXAuN9mI/04gy4HhSrsG/BsaY/CrSMGiIDWZ/J9cQ
+         k1Ag==
+X-Gm-Message-State: AOAM531uNoiF0+GkTeJ3ZZZjbqMUo7nDzJKpL2FVgwvzjyveglyftnq1
+        6v2ypl56sFplnsSivE1jQc8VQ/Z0xthy+pbzyJUuhw==
+X-Google-Smtp-Source: ABdhPJwb80n64AujBuKAB/6m8FZX3ULekcDZrX7rK4uDzligl8QBq8854MayUQyqde2ZRzptR9AszDxPsDj/QYmH4XI=
+X-Received: by 2002:a05:6102:502:: with SMTP id l2mr1354578vsa.19.1625158740105;
+ Thu, 01 Jul 2021 09:59:00 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Thu, 01 Jul 2021 22:26:33 +0530
-From:   okukatla@codeaurora.org
-To:     Mike Tipton <mdtipton@codeaurora.org>
-Cc:     djakov@kernel.org, bjorn.andersson@linaro.org, agross@kernel.org,
-        saravanak@google.com, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        mdtipton=codeaurora.org@codeaurora.org
-Subject: Re: [PATCH 1/4] interconnect: Zero initial BW after sync-state
-In-Reply-To: <20210625212839.24155-2-mdtipton@codeaurora.org>
-References: <20210625212839.24155-1-mdtipton@codeaurora.org>
- <20210625212839.24155-2-mdtipton@codeaurora.org>
-Message-ID: <14c52b496918900c9cb3bef662a9e833@codeaurora.org>
-X-Sender: okukatla@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+References: <20210630133149.3204290-1-dmitry.baryshkov@linaro.org>
+ <20210630133149.3204290-2-dmitry.baryshkov@linaro.org> <CAPDyKFpXD3rCmp53LFFYky_xQv9ucofvTezG5qWyDZt427chNQ@mail.gmail.com>
+ <CAA8EJpob=TpXiJozac-5sKJzE71ddWRFDj7D2-F=W=a2mgKvxA@mail.gmail.com>
+In-Reply-To: <CAA8EJpob=TpXiJozac-5sKJzE71ddWRFDj7D2-F=W=a2mgKvxA@mail.gmail.com>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Thu, 1 Jul 2021 18:58:22 +0200
+Message-ID: <CAPDyKFq-vwMchLFb3JvK7B9ZQ9=z-TXzGHUij6CocTR+VmAOqQ@mail.gmail.com>
+Subject: Re: [PATCH 1/6] dt-bindings: clock: qcom,dispcc-sm8x50: add mmcx
+ power domain
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Taniya Das <tdas@codeaurora.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Michael Turquette <mturquette@baylibre.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        DTML <devicetree@vger.kernel.org>,
+        linux-clk <linux-clk@vger.kernel.org>,
+        "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
+        Mark Brown <broonie@kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-06-26 02:58, Mike Tipton wrote:
-> The initial BW values may be used by providers to enforce floors. Zero
-> these values after sync-state so that providers know when to stop
-> enforcing them.
-> 
-> Fixes: b1d681d8d324 ("interconnect: Add sync state support")
-> Signed-off-by: Mike Tipton <mdtipton@codeaurora.org>
-> ---
->  drivers/interconnect/core.c | 2 ++
->  1 file changed, 2 insertions(+)
-> 
-> diff --git a/drivers/interconnect/core.c b/drivers/interconnect/core.c
-> index 8a1e70e00876..945121e18b5c 100644
-> --- a/drivers/interconnect/core.c
-> +++ b/drivers/interconnect/core.c
-> @@ -1106,6 +1106,8 @@ void icc_sync_state(struct device *dev)
->  		dev_dbg(p->dev, "interconnect provider is in synced state\n");
->  		list_for_each_entry(n, &p->nodes, node_list) {
->  			if (n->init_avg || n->init_peak) {
-> +				n->init_avg = 0;
-> +				n->init_peak = 0;
-nit: It is good to reset init/floor levels back to zero, but we don't 
-need to do this as we have sync_state flag to let providers know when to 
-stop enforcing.
->  				aggregate_requests(n);
->  				p->set(n, n);
->  			}
+On Thu, 1 Jul 2021 at 18:39, Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
+>
+> On Thu, 1 Jul 2021 at 19:17, Ulf Hansson <ulf.hansson@linaro.org> wrote:
+> >
+> > On Wed, 30 Jun 2021 at 15:31, Dmitry Baryshkov
+> > <dmitry.baryshkov@linaro.org> wrote:
+> > >
+> > > On sm8250 dispcc requires MMCX power domain to be powered up before
+> > > clock controller's registers become available. For now sm8250 was using
+> > > external regulator driven by the power domain to describe this
+> > > relationship. Switch into specifying power-domain and required opp-state
+> > > directly.
+> > >
+> > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > > ---
+> > >  .../bindings/clock/qcom,dispcc-sm8x50.yaml    | 19 +++++++++++++++++++
+> > >  1 file changed, 19 insertions(+)
+> > >
+> > > diff --git a/Documentation/devicetree/bindings/clock/qcom,dispcc-sm8x50.yaml b/Documentation/devicetree/bindings/clock/qcom,dispcc-sm8x50.yaml
+> > > index 0cdf53f41f84..48d86fb34fa7 100644
+> > > --- a/Documentation/devicetree/bindings/clock/qcom,dispcc-sm8x50.yaml
+> > > +++ b/Documentation/devicetree/bindings/clock/qcom,dispcc-sm8x50.yaml
+> > > @@ -55,6 +55,16 @@ properties:
+> > >    reg:
+> > >      maxItems: 1
+> > >
+> > > +  power-domains:
+> > > +    description:
+> > > +      A phandle and PM domain specifier for the MMCX power domain.
+> > > +    maxItems: 1
+> > > +
+> >
+> > Should you perhaps state that this is a parent domain? Or it isn't?
+> >
+> > Related to this and because this is a power domain provider, you
+> > should probably reference the common power-domain bindings somewhere
+> > here. Along the lines of this:
+> >
+> > - $ref: power-domain.yaml#
+> >
+> > As an example, you could have a look at
+> > Documentation/devicetree/bindings/power/pd-samsung.yaml.
+>
+> I'll take a look.
+>
+> >
+> > > +  required-opps:
+> > > +    description:
+> > > +      Performance state to use for MMCX to enable register access.
+> > > +    maxItems: 1
+> >
+> > According to the previous discussions, I was under the assumption that
+> > this property belongs to a consumer node rather than in the provider
+> > node, no?
+>
+> It is both a consumer and a provider. It consumes SM8250_MMCX from
+> rpmhpd and provides MMSC_GDSC.
+
+That sounds a bit weird to me.
+
+In my view and per the common power domain bindings (as pointed to
+above): If a power domain provider is a consumer of another power
+domain, that per definition means that there is a parent domain
+specified.
+
+[...]
+
+Kind regards
+Uffe
