@@ -2,98 +2,180 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8C2FD3B9659
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jul 2021 21:04:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 480D83B968C
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jul 2021 21:28:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232333AbhGATGg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Jul 2021 15:06:36 -0400
-Received: from mail-io1-f45.google.com ([209.85.166.45]:38826 "EHLO
-        mail-io1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232971AbhGATGf (ORCPT
+        id S232704AbhGATav (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Jul 2021 15:30:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43526 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234407AbhGAT3P (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Jul 2021 15:06:35 -0400
-Received: by mail-io1-f45.google.com with SMTP id k11so8833297ioa.5;
-        Thu, 01 Jul 2021 12:04:04 -0700 (PDT)
+        Thu, 1 Jul 2021 15:29:15 -0400
+Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9DB8C061765
+        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Jul 2021 12:26:41 -0700 (PDT)
+Received: by mail-oi1-x22c.google.com with SMTP id t3so8575814oic.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Jul 2021 12:26:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=kgry+NHhIXRto0lihG09dvKrpOIpSuRCcDkQYUAh4RI=;
+        b=aizhnnYOcdskMEQ6r7sUhkeD59cflOqSzk9alJZHPv3y5LbR1/JWMIX51EAoC3Q6ya
+         T/1dJ9/FcXOXLZC9bgH1vVyLDDXla90OgKB4eygUvPEaddF7R/i311qvgRyaCIj3mH/D
+         UU1CdRZiiz8/tnHaMJQqP7qTCNTmp+cqjQBBqCiv6j5RpkjuLeNjfCYFeR5GoHElPWhF
+         u72S5BFduhL0HeBtjtkrN5E15Kt4cZH+d8HtNNB1CHW9w0yqkEteCl6REChwMY+rgDWj
+         SjUs9dSJpxkkFAEP1yvxhhjyyQlyZG1BrGdyH7Ms6GzJgo0wPAryxK1ZGl+4f2W/+lIY
+         mezQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=zxe6icUK9dg2zwl2+kOjeVvFVYbjyW2nckiV9CTtI7w=;
-        b=QC/Zzroz3Jk2oY/CLOgjxt2yoBnEFCWHPN/xQJGq2HN+kiEo3hie0FX/m/r1ccTo1q
-         pR7/Ial9sqMeqJURNBsRcAMQ5ruEh6FdiXnF6NYheAurBMOxAkjN+zslkelArDUqec8D
-         Yn6Mw+ZtvPElWD5uMo+q8VcEyrwzxN+xaIAc21jpGrIPNmaIX7S26jkznPoiyEXuDHjF
-         PJgyFBEjUmRqDfFWaiXUm8c2GTp0UumoEvHfa4RA15JpKvAW7La3r4fMF5EOzhOH/tJq
-         FqRT5Cc5jSuSNbeM7qDQwA10kTK9vO1b22eevXgyBibDryOfacKd0uX5xhaN7A7Zrnmf
-         hHOQ==
-X-Gm-Message-State: AOAM533jMUmbm2A2+IA1yKfe8b2swA0jKpljSyD7JCCLo8utIn9JqzFz
-        6x0TgZRhOJmBbXdBrEAVnw==
-X-Google-Smtp-Source: ABdhPJzaGG+aYDhjSbVXo8hz+gZPHFEs4M+dIQlCfUSUgKl7xRMnwYRX52RQ3/KVV/+Osw9UC0L/oQ==
-X-Received: by 2002:a02:3c17:: with SMTP id m23mr874544jaa.84.1625166244191;
-        Thu, 01 Jul 2021 12:04:04 -0700 (PDT)
-Received: from robh.at.kernel.org ([64.188.179.248])
-        by smtp.gmail.com with ESMTPSA id j4sm322379iom.28.2021.07.01.12.04.01
+        bh=kgry+NHhIXRto0lihG09dvKrpOIpSuRCcDkQYUAh4RI=;
+        b=QVjQaseYfOTTHD2fhE8N0iMU/8Uy3zYCVS/R7ixIoCRlIFyJeBijk4tS8UaTwiXbxJ
+         I40pz7vl7HcTxVhqQHQW0A86dP/FJ/i50LsOC9jm0u7XMfHpOZhreBNfHJ/pgPecyIqj
+         DXueUIpIWQX/H2ZtdDa/amMfoS8blishKTf62Uv0rJR/hvYSBF2ISWHdDHY1fsGbSPCw
+         ALk/Afh4uKF2XaEgDxViBv43+aYPzF7As6uuNP4+rxLNRwfPa3X3NbaU8dJYObTNOIxy
+         IcZuyuiKqkCGHRitmcUty4c2XwYQQZHa59TKyiiidFRYGxmKBREZzK43cosQp7dMDS3z
+         9+dQ==
+X-Gm-Message-State: AOAM530JLPaMpGjP1B0bMYV50T3m0CY3PrIg4MOOlAR0R4Hftfjp9MQN
+        txIlJfNoy/BDqWdsNQ3PAy5PLA==
+X-Google-Smtp-Source: ABdhPJw8dFMNFHOqRpqbt6qTcwP5OdglQZTYNAI/4mcxv9pX4SSp3kexHozFx6rQg5fYNi9NVdJGOw==
+X-Received: by 2002:aca:d0c:: with SMTP id 12mr2441231oin.62.1625167601087;
+        Thu, 01 Jul 2021 12:26:41 -0700 (PDT)
+Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id n65sm129311ota.37.2021.07.01.12.26.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Jul 2021 12:04:03 -0700 (PDT)
-Received: (nullmailer pid 2742755 invoked by uid 1000);
-        Thu, 01 Jul 2021 19:03:59 -0000
-Date:   Thu, 1 Jul 2021 13:03:59 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, Sibi S <sibis@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/3] dt-bindings: soc: qcom: aoss: Add SC8180X compatible
-Message-ID: <20210701190359.GB2736150@robh.at.kernel.org>
-References: <20210625234018.1324681-1-bjorn.andersson@linaro.org>
- <20210625234018.1324681-2-bjorn.andersson@linaro.org>
+        Thu, 01 Jul 2021 12:26:40 -0700 (PDT)
+Date:   Thu, 1 Jul 2021 14:26:38 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Ulf Hansson <ulf.hansson@linaro.org>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Taniya Das <tdas@codeaurora.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Michael Turquette <mturquette@baylibre.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        DTML <devicetree@vger.kernel.org>,
+        linux-clk <linux-clk@vger.kernel.org>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Mark Brown <broonie@kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 1/6] dt-bindings: clock: qcom,dispcc-sm8x50: add mmcx
+ power domain
+Message-ID: <YN4W7vd3Yep+DX3N@yoga>
+References: <20210630133149.3204290-1-dmitry.baryshkov@linaro.org>
+ <20210630133149.3204290-2-dmitry.baryshkov@linaro.org>
+ <CAPDyKFpXD3rCmp53LFFYky_xQv9ucofvTezG5qWyDZt427chNQ@mail.gmail.com>
+ <CAA8EJpob=TpXiJozac-5sKJzE71ddWRFDj7D2-F=W=a2mgKvxA@mail.gmail.com>
+ <CAPDyKFq-vwMchLFb3JvK7B9ZQ9=z-TXzGHUij6CocTR+VmAOqQ@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20210625234018.1324681-2-bjorn.andersson@linaro.org>
+In-Reply-To: <CAPDyKFq-vwMchLFb3JvK7B9ZQ9=z-TXzGHUij6CocTR+VmAOqQ@mail.gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jun 25, 2021 at 04:40:16PM -0700, Bjorn Andersson wrote:
-> Add compatible for the Qualcomm SC8180x platform to the AOSS QMP
-> binding.
-> 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
->  Documentation/devicetree/bindings/soc/qcom/qcom,aoss-qmp.txt | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,aoss-qmp.txt b/Documentation/devicetree/bindings/soc/qcom/qcom,aoss-qmp.txt
-> index 783dc81b0f26..3747032311a4 100644
-> --- a/Documentation/devicetree/bindings/soc/qcom/qcom,aoss-qmp.txt
-> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,aoss-qmp.txt
-> @@ -18,10 +18,13 @@ power-domains.
->  	Definition: must be one of:
->  		    "qcom,sc7180-aoss-qmp"
->  		    "qcom,sc7280-aoss-qmp"
-> +		    "qcom,sc8180x-aoss-qmp"
->  		    "qcom,sdm845-aoss-qmp"
->  		    "qcom,sm8150-aoss-qmp"
->  		    "qcom,sm8250-aoss-qmp"
->  		    "qcom,sm8350-aoss-qmp"
-> +		    and:
-> +		    "qcom,aoss-qmp"
+On Thu 01 Jul 11:58 CDT 2021, Ulf Hansson wrote:
 
-This was missing from all the existing ones or is an addition?
+> On Thu, 1 Jul 2021 at 18:39, Dmitry Baryshkov
+> <dmitry.baryshkov@linaro.org> wrote:
+> >
+> > On Thu, 1 Jul 2021 at 19:17, Ulf Hansson <ulf.hansson@linaro.org> wrote:
+> > >
+> > > On Wed, 30 Jun 2021 at 15:31, Dmitry Baryshkov
+> > > <dmitry.baryshkov@linaro.org> wrote:
+> > > >
+> > > > On sm8250 dispcc requires MMCX power domain to be powered up before
+> > > > clock controller's registers become available. For now sm8250 was using
+> > > > external regulator driven by the power domain to describe this
+> > > > relationship. Switch into specifying power-domain and required opp-state
+> > > > directly.
+> > > >
+> > > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > > > ---
+> > > >  .../bindings/clock/qcom,dispcc-sm8x50.yaml    | 19 +++++++++++++++++++
+> > > >  1 file changed, 19 insertions(+)
+> > > >
+> > > > diff --git a/Documentation/devicetree/bindings/clock/qcom,dispcc-sm8x50.yaml b/Documentation/devicetree/bindings/clock/qcom,dispcc-sm8x50.yaml
+> > > > index 0cdf53f41f84..48d86fb34fa7 100644
+> > > > --- a/Documentation/devicetree/bindings/clock/qcom,dispcc-sm8x50.yaml
+> > > > +++ b/Documentation/devicetree/bindings/clock/qcom,dispcc-sm8x50.yaml
+> > > > @@ -55,6 +55,16 @@ properties:
+> > > >    reg:
+> > > >      maxItems: 1
+> > > >
+> > > > +  power-domains:
+> > > > +    description:
+> > > > +      A phandle and PM domain specifier for the MMCX power domain.
+> > > > +    maxItems: 1
+> > > > +
+> > >
+> > > Should you perhaps state that this is a parent domain? Or it isn't?
+> > >
+> > > Related to this and because this is a power domain provider, you
+> > > should probably reference the common power-domain bindings somewhere
+> > > here. Along the lines of this:
+> > >
+> > > - $ref: power-domain.yaml#
+> > >
+> > > As an example, you could have a look at
+> > > Documentation/devicetree/bindings/power/pd-samsung.yaml.
+> >
+> > I'll take a look.
+> >
+> > >
+> > > > +  required-opps:
+> > > > +    description:
+> > > > +      Performance state to use for MMCX to enable register access.
+> > > > +    maxItems: 1
+> > >
+> > > According to the previous discussions, I was under the assumption that
+> > > this property belongs to a consumer node rather than in the provider
+> > > node, no?
+> >
+> > It is both a consumer and a provider. It consumes SM8250_MMCX from
+> > rpmhpd and provides MMSC_GDSC.
+> 
+> That sounds a bit weird to me.
+> 
 
->  
->  - reg:
->  	Usage: required
-> @@ -70,7 +73,7 @@ The following example represents the AOSS side-channel message RAM and the
->  mechanism exposing the power-domains, as found in SDM845.
->  
->    aoss_qmp: qmp@c300000 {
-> -	  compatible = "qcom,sdm845-aoss-qmp";
-> +	  compatible = "qcom,sdm845-aoss-qmp", "qcom,aoss-qmp";
->  	  reg = <0x0c300000 0x100000>;
->  	  interrupts = <GIC_SPI 389 IRQ_TYPE_EDGE_RISING>;
->  	  mboxes = <&apss_shared 0>;
-> -- 
-> 2.29.2
+dispcc is a hardware block powered by MMCX, so it is a consumer of it
+and needs to control MMCX.
+
+> In my view and per the common power domain bindings (as pointed to
+> above): If a power domain provider is a consumer of another power
+> domain, that per definition means that there is a parent domain
+> specified.
 > 
-> 
+
+And in addition to needing MMCX to access the dispcc, the exposed
+power-domain "MDSS_GDSC" is powered by the same MMCX and as such
+MDSS_GDSC should be a subdomain of MMCX.
+
+
+But what I was trying to say yesterday is that the power-domain property
+should be sufficient and that we shouldn't need to drive MMCX to a
+particular performance_state in order to access the registers.
+
+Then as clients make votes on clock rates that requires higher
+performance_state, they would describe this in their opp-tables etc.
+
+
+But without any performance_state requests, pd->corner will in
+rpmhpd_power_on() be 0 and as such powering on the power-domain won't
+actually do anything. Similarly dev_pm_genpd_set_performance_state(dev,
+0) on an active power-domain from rpmhpd will turn it off.
+
+
+So the reason why Dmitry is adding the required-opps to the binding is
+to get rpmhpd to actually tell the hardware to turn on the power domain.
+And I don't think this is in accordance with the framework's
+expectations.
+
+Regards,
+Bjorn
