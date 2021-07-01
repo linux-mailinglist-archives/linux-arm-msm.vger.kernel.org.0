@@ -2,303 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 619A93B90B7
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jul 2021 12:54:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 382B63B916F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jul 2021 14:02:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236141AbhGAK5X (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Jul 2021 06:57:23 -0400
-Received: from relay05.th.seeweb.it ([5.144.164.166]:34463 "EHLO
-        relay05.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236131AbhGAK5W (ORCPT
+        id S236388AbhGAME5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Jul 2021 08:04:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57002 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236306AbhGAME4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Jul 2021 06:57:22 -0400
-Received: from IcarusMOD.eternityproject.eu (unknown [2.237.20.237])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id C61783F62A;
-        Thu,  1 Jul 2021 12:54:50 +0200 (CEST)
-From:   AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>
-To:     bjorn.andersson@linaro.org
-Cc:     agross@kernel.org, robh+dt@kernel.org, lgirdwood@gmail.com,
-        broonie@kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        phone-devel@vger.kernel.org, konrad.dybcio@somainline.org,
-        marijn.suijten@somainline.org, jami.kettunen@somainline.org,
-        paul.bouchara@somainline.org, martin.botka@somainline.org,
-        ~postmarketos/upstreaming@lists.sr.ht, jeffrey.l.hugo@gmail.com,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Rob Herring <robh@kernel.org>
-Subject: [PATCH v6 6/6] dt-bindings: soc: qcom: cpr3: Add bindings for CPR3 driver
-Date:   Thu,  1 Jul 2021 12:54:41 +0200
-Message-Id: <20210701105441.319572-7-angelogioacchino.delregno@somainline.org>
-X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20210701105441.319572-1-angelogioacchino.delregno@somainline.org>
-References: <20210701105441.319572-1-angelogioacchino.delregno@somainline.org>
+        Thu, 1 Jul 2021 08:04:56 -0400
+Received: from michel.telenet-ops.be (michel.telenet-ops.be [IPv6:2a02:1800:110:4::f00:18])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8AE3C0617AD
+        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Jul 2021 05:02:25 -0700 (PDT)
+Received: from ramsan.of.borg ([IPv6:2a02:1810:ac12:ed20:445e:1c3:be41:9e10])
+        by michel.telenet-ops.be with bizsmtp
+        id Po2P2500a474TTe06o2PAE; Thu, 01 Jul 2021 14:02:24 +0200
+Received: from rox.of.borg ([192.168.97.57])
+        by ramsan.of.borg with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.93)
+        (envelope-from <geert@linux-m68k.org>)
+        id 1lyvOh-005MHS-6G; Thu, 01 Jul 2021 14:02:23 +0200
+Received: from geert by rox.of.borg with local (Exim 4.93)
+        (envelope-from <geert@linux-m68k.org>)
+        id 1lyvOg-00EXS9-KF; Thu, 01 Jul 2021 14:02:22 +0200
+From:   Geert Uytterhoeven <geert+renesas@glider.be>
+To:     "David S . Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     netdev@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
+        Geert Uytterhoeven <geert+renesas@glider.be>
+Subject: [PATCH v2 0/2] sms911x: DTS fixes and DT binding to json-schema conversion
+Date:   Thu,  1 Jul 2021 14:02:19 +0200
+Message-Id: <cover.1625140615.git.geert+renesas@glider.be>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the bindings for the CPR3 driver to the documentation.
+	Hi all,
 
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
-Reviewed-by: Rob Herring <robh@kernel.org>
----
- .../bindings/soc/qcom/qcom,cpr3.yaml          | 241 ++++++++++++++++++
- 1 file changed, 241 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,cpr3.yaml
+This patch series converts the Smart Mixed-Signal Connectivity (SMSC)
+LAN911x/912x Controller Device Tree binding documentation to
+json-schema, after fixing a few issues in DTS files.
 
-diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,cpr3.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,cpr3.yaml
-new file mode 100644
-index 000000000000..e2753740c86b
---- /dev/null
-+++ b/Documentation/devicetree/bindings/soc/qcom/qcom,cpr3.yaml
-@@ -0,0 +1,241 @@
-+# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: "http://devicetree.org/schemas/soc/qcom/qcom,cpr3.yaml#"
-+$schema: "http://devicetree.org/meta-schemas/core.yaml#"
-+
-+title: Qualcomm Core Power Reduction v3/v4/Hardened (CPR3, CPR4, CPRh)
-+
-+description: |
-+  CPR (Core Power Reduction) is a technology to reduce core power on a CPU
-+  or other device. Each OPP of a device corresponds to a "corner" that has
-+  a range of valid voltages for a particular frequency. While the device is
-+  running at a particular frequency, CPR monitors dynamic factors such as
-+  temperature, etc. and suggests or, in the CPR-Hardened case performs,
-+  adjustments to the voltage to save power and meet silicon characteristic
-+  requirements.
-+
-+maintainers:
-+  - AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
-+
-+properties:
-+  compatible:
-+    oneOf:
-+      - description: CPRv3 controller
-+        items:
-+          - const: qcom,cpr3
-+      - description: CPRv4 controller
-+        items:
-+          - const: qcom,cpr4
-+      - description: CPRv4-Hardened controller
-+        items:
-+          - enum:
-+              - qcom,msm8998-cprh
-+              - qcom,sdm630-cprh
-+          - const: qcom,cprh
-+
-+  reg:
-+    description: Base address and size of the CPR controller(s)
-+    minItems: 1
-+    maxItems: 2
-+
-+  interrupts:
-+    maxItems: 1
-+
-+  clock-names:
-+    items:
-+      - const: "ref"
-+
-+  clocks:
-+    items:
-+      - description: CPR reference clock
-+
-+  vdd-supply:
-+    description: Autonomous Phase Control (APC) or other power supply
-+
-+  '#power-domain-cells':
-+    const: 1
-+
-+  acc-syscon:
-+    description: phandle to syscon for writing ACC settings
-+
-+  nvmem-cells:
-+    description: Cells containing the fuse corners and revision data
-+    minItems: 10
-+    maxItems: 32
-+
-+  nvmem-cell-names:
-+    minItems: 10
-+    maxItems: 32
-+
-+  operating-points-v2: true
-+
-+required:
-+  - compatible
-+  - reg
-+  - clock-names
-+  - clocks
-+  - "#power-domain-cells"
-+  - nvmem-cells
-+  - nvmem-cell-names
-+  - operating-points-v2
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/clock/qcom,gcc-msm8998.h>
-+    #include <dt-bindings/interrupt-controller/irq.h>
-+
-+    cpus {
-+        #address-cells = <2>;
-+        #size-cells = <0>;
-+
-+        cpu@0 {
-+            compatible = "qcom,kryo280";
-+            device_type = "cpu";
-+            reg = <0x0 0x0>;
-+            operating-points-v2 = <&cpu_gold_opp_table>;
-+            power-domains = <&apc_cprh 0>;
-+            power-domain-names = "cprh";
-+        };
-+
-+        cpu@100 {
-+            compatible = "qcom,kryo280";
-+            device_type = "cpu";
-+            reg = <0x0 0x0>;
-+            operating-points-v2 = <&cpu_silver_opp_table>;
-+            power-domains = <&apc_cprh 1>;
-+            power-domain-names = "cprh";
-+        };
-+    };
-+
-+    cpu_silver_opp_table: cpu-silver-opp-table {
-+        compatible = "operating-points-v2";
-+        opp-shared;
-+
-+        opp-1843200000 {
-+            opp-hz = /bits/ 64 <1843200000>;
-+            required-opps = <&cprh_opp3>;
-+        };
-+        opp-1094400000 {
-+            opp-hz = /bits/ 64 <1094400000>;
-+            required-opps = <&cprh_opp2>;
-+        };
-+        opp-300000000 {
-+            opp-hz = /bits/ 64 <300000000>;
-+            required-opps = <&cprh_opp1>;
-+        };
-+    };
-+
-+    cpu_gold_opp_table: cpu-gold-opp-table {
-+        compatible = "operating-points-v2";
-+        opp-shared;
-+
-+        opp-2208000000 {
-+            opp-hz = /bits/ 64 <2208000000>;
-+            required-opps = <&cprh_opp3>;
-+        };
-+        opp-1113600000 {
-+            opp-hz = /bits/ 64 <1113600000>;
-+            required-opps = <&cprh_opp2>;
-+        };
-+        opp-300000000 {
-+            opp-hz = /bits/ 64 <300000000>;
-+            required-opps = <&cprh_opp1>;
-+        };
-+    };
-+
-+    cprh_opp_table: cpr-hardened-opp-table {
-+        compatible = "operating-points-v2-qcom-level";
-+
-+        cprh_opp1: opp1 {
-+            opp-level = <1>;
-+            qcom,opp-fuse-level = <1>;
-+        };
-+        cprh_opp2: opp2 {
-+            opp-level = <2>;
-+            qcom,opp-fuse-level = <2>;
-+        };
-+        cprh_opp3: opp3 {
-+            opp-level = <3>;
-+            qcom,opp-fuse-level = <2 3>;
-+        };
-+    };
-+
-+    apc_cprh: power-controller@179c8000 {
-+        compatible = "qcom,msm8998-cprh", "qcom,cprh";
-+        reg = <0x0179c8000 0x4000>, <0x0179c4000 0x4000>;
-+        clocks = <&gcc GCC_HMSS_RBCPR_CLK>;
-+        clock-names = "ref";
-+
-+        #power-domain-cells = <1>;
-+        operating-points-v2 = <&cprh_opp_table>;
-+
-+        nvmem-cells = <&cpr_efuse_speedbin>,
-+                      <&cpr_fuse_revision>,
-+                      <&cpr_quot0_pwrcl>,
-+                      <&cpr_quot1_pwrcl>,
-+                      <&cpr_quot2_pwrcl>,
-+                      <&cpr_quot3_pwrcl>,
-+                      <&cpr_quot_offset1_pwrcl>,
-+                      <&cpr_quot_offset2_pwrcl>,
-+                      <&cpr_quot_offset3_pwrcl>,
-+                      <&cpr_init_voltage0_pwrcl>,
-+                      <&cpr_init_voltage1_pwrcl>,
-+                      <&cpr_init_voltage2_pwrcl>,
-+                      <&cpr_init_voltage3_pwrcl>,
-+                      <&cpr_ro_sel0_pwrcl>,
-+                      <&cpr_ro_sel1_pwrcl>,
-+                      <&cpr_ro_sel2_pwrcl>,
-+                      <&cpr_ro_sel3_pwrcl>,
-+                      <&cpr_quot0_perfcl>,
-+                      <&cpr_quot1_perfcl>,
-+                      <&cpr_quot2_perfcl>,
-+                      <&cpr_quot3_perfcl>,
-+                      <&cpr_quot_offset1_perfcl>,
-+                      <&cpr_quot_offset2_perfcl>,
-+                      <&cpr_quot_offset3_perfcl>,
-+                      <&cpr_init_voltage0_perfcl>,
-+                      <&cpr_init_voltage1_perfcl>,
-+                      <&cpr_init_voltage2_perfcl>,
-+                      <&cpr_init_voltage3_perfcl>,
-+                      <&cpr_ro_sel0_perfcl>,
-+                      <&cpr_ro_sel1_perfcl>,
-+                      <&cpr_ro_sel2_perfcl>,
-+                      <&cpr_ro_sel3_perfcl>;
-+
-+        nvmem-cell-names = "cpr_speed_bin",
-+                           "cpr_fuse_revision",
-+                           "cpr0_quotient1",
-+                           "cpr0_quotient2",
-+                           "cpr0_quotient3",
-+                           "cpr0_quotient4",
-+                           "cpr0_quotient_offset2",
-+                           "cpr0_quotient_offset3",
-+                           "cpr0_quotient_offset4",
-+                           "cpr0_init_voltage1",
-+                           "cpr0_init_voltage2",
-+                           "cpr0_init_voltage3",
-+                           "cpr0_init_voltage4",
-+                           "cpr0_ring_osc1",
-+                           "cpr0_ring_osc2",
-+                           "cpr0_ring_osc3",
-+                           "cpr0_ring_osc4",
-+                           "cpr1_quotient1",
-+                           "cpr1_quotient2",
-+                           "cpr1_quotient3",
-+                           "cpr1_quotient4",
-+                           "cpr1_quotient_offset2",
-+                           "cpr1_quotient_offset3",
-+                           "cpr1_quotient_offset4",
-+                           "cpr1_init_voltage1",
-+                           "cpr1_init_voltage2",
-+                           "cpr1_init_voltage3",
-+                           "cpr1_init_voltage4",
-+                           "cpr1_ring_osc1",
-+                           "cpr1_ring_osc2",
-+                           "cpr1_ring_osc3",
-+                           "cpr1_ring_osc4";
-+    };
-+...
+Changed compared to v1[1]:
+  - Dropped applied patches,
+  - Add Reviewed-by,
+  - Drop bogus double quotes in compatible values,
+  - Add comment explaining why "additionalProperties: true" is needed.
+
+Thanks!
+
+[1] [PATCH 0/5] sms911x: DTS fixes and DT binding to json-schema conversion
+    https://lore.kernel.org/r/cover.1621518686.git.geert+renesas@glider.be
+
+Geert Uytterhoeven (2):
+  ARM: dts: qcom-apq8060: Correct Ethernet node name and drop bogus irq
+    property
+  dt-bindings: net: sms911x: Convert to json-schema
+
+ .../devicetree/bindings/net/gpmc-eth.txt      |   2 +-
+ .../devicetree/bindings/net/smsc,lan9115.yaml | 110 ++++++++++++++++++
+ .../devicetree/bindings/net/smsc911x.txt      |  43 -------
+ .../arm/boot/dts/qcom-apq8060-dragonboard.dts |   4 +-
+ 4 files changed, 112 insertions(+), 47 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/net/smsc,lan9115.yaml
+ delete mode 100644 Documentation/devicetree/bindings/net/smsc911x.txt
+
 -- 
-2.32.0
+2.25.1
 
+Gr{oetje,eeting}s,
+
+						Geert
+
+--
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
+
+In personal conversations with technical people, I call myself a hacker. But
+when I'm talking to journalists I just say "programmer" or something like that.
+							    -- Linus Torvalds
