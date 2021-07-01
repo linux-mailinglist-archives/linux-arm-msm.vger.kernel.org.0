@@ -2,133 +2,146 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7D1F13B93E0
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jul 2021 17:25:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8C63F3B9498
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jul 2021 18:17:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233477AbhGAP1p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Jul 2021 11:27:45 -0400
-Received: from mail.kernel.org ([198.145.29.99]:46892 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233064AbhGAP1p (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Jul 2021 11:27:45 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id E12A96140A;
-        Thu,  1 Jul 2021 15:25:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1625153114;
-        bh=+xwpidjwxHnbYP8ChZRNxTaoNpy++W26pPBlNiZG1Es=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=YE1gmcnGC9g80E48RRI74yVfqEgwwBB2bKAeTy4DSkuQhlA9/8EOdAK+quQe0R/fZ
-         QZGdA60OQIAmf8X54geE76/5GIhw2kc8aPAkegkan+nwD+yYdnrOEtLGHngCzXszMi
-         z/8iYsXxwzLtyuUWHEHaNgvnIaIqwYcbmg3uLh+9ukbLGgk8D9/d+WsfqdzShslDRC
-         4E8DyJ+UVGFQSXByxm0ESUjpqZIfzPhXLbe5XTP4BzMppZXitZ5m/4k6rLQCPs31zX
-         8eOwQWjYoLw2uXyx+edD60Yd9zlQEUdA8T2OksazGEWz2WvimcIHL1CKGuKlMRx0Y2
-         h9ro5wQDaYH3g==
-Received: by mail-ej1-f45.google.com with SMTP id bg14so11020110ejb.9;
-        Thu, 01 Jul 2021 08:25:14 -0700 (PDT)
-X-Gm-Message-State: AOAM5321ZNxX9mQ30BQBya0tz6yj0neSExHS0EUuFz0/u+toUPQdhbk4
-        dogHXhxWwkmCMCoVLYOAOrViU96aaOxzBkEY8w==
-X-Google-Smtp-Source: ABdhPJzUEsTvx8EteF/IK3c/gYkviXw1F7trsPeasxSHv8iu+ZIaHLTIVsLiLpAQlbHQOTQVV45g91QrmyohrBAw17o=
-X-Received: by 2002:a17:907:3e8a:: with SMTP id hs10mr372288ejc.359.1625153113214;
- Thu, 01 Jul 2021 08:25:13 -0700 (PDT)
+        id S232114AbhGAQUD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Jul 2021 12:20:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57654 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229884AbhGAQUC (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 1 Jul 2021 12:20:02 -0400
+Received: from mail-ua1-x92c.google.com (mail-ua1-x92c.google.com [IPv6:2607:f8b0:4864:20::92c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22711C061764
+        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Jul 2021 09:17:31 -0700 (PDT)
+Received: by mail-ua1-x92c.google.com with SMTP id e7so2640007uaj.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Jul 2021 09:17:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=kSutTWtKn3LC21+SCDRY5AQt3qGlpQzYvBUsBO0I13s=;
+        b=Cz/Z4KysJpHmOr6ibCjk08qQ/efufrjBBkmz4eh0ueWMETfIZA/IBv7vVXKq68RJve
+         IOygIBObuwk7hTTlRQrkJpz/1y/2VO47FbT+g9p26kcpMLZ7RFQMn+HSG8XIM2EUlQuq
+         +2U3N1PTxEkq5dfYkUgvjBFi8AV6vHNuU6XtH5D1hIP2tTqdQNfiNSkMCDqQ7ruLglIw
+         Yv9P9pn5uI3+7isevo3uyqQxHorzARSjIDcbhjFeoYkPycaIXa92T8PM0/YFQItvYiMF
+         0Pl2KZQP5fgvGFxFL9ecM3129Kb2zNq1TvXJik7G03SepUiy5fZ91m+6NQ6daJFewKzz
+         fBDA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=kSutTWtKn3LC21+SCDRY5AQt3qGlpQzYvBUsBO0I13s=;
+        b=KQihFUwti+BsqZBzd4WqCL/n0FFv2/T63zIxlD6bE6aYVGHsqC2V6fM5Gt3VaDqlMF
+         Nn0MPcTgn5fBXp1y/uZXfh/HZDfRBt1qTj+WzBAEPbXG2UGeJXYEgjtPQAZNsqMPTpuF
+         8Kqi0IEkuFuIDlIFwAZ08qhDFIbxtNCJPdrEBt1YZa6Xzsr+DEMipwwXnG0Y5M4JFl3V
+         X3V42Z7U9CFxp+wzXebUh1C/1BqhDWcpk1pCGKn3twy5Rsm92qFDtOxzgPYWhU1nR0Ii
+         8wR8BIdrp/ilub2wBaZwgFJ8gf7WoZso35vWLB4UPZGMcfPUMkKsmRNQkrrrOSdhBj6Z
+         nwag==
+X-Gm-Message-State: AOAM531m/YSZDeHaLqYcYjr9dVntabRxPV6d6nLcsmHtUljZfgR8KNa9
+        etjKEZcq/wNFSTSxSZTvFj7sVIVczlFj6iAKBZpqVw==
+X-Google-Smtp-Source: ABdhPJyTRNUhFUu4nIiksCC4rq4CAg/HgWOpjZqRE3xtf2lCc4YLyyWXsz+vp/A0H8R9TwWUqwxE/SaVoY6h/wvKXWk=
+X-Received: by 2002:ab0:484b:: with SMTP id c11mr1059123uad.100.1625156250168;
+ Thu, 01 Jul 2021 09:17:30 -0700 (PDT)
 MIME-Version: 1.0
-References: <20210630034653.10260-1-manivannan.sadhasivam@linaro.org>
-In-Reply-To: <20210630034653.10260-1-manivannan.sadhasivam@linaro.org>
-From:   Rob Herring <robh@kernel.org>
-Date:   Thu, 1 Jul 2021 09:25:01 -0600
-X-Gmail-Original-Message-ID: <CAL_JsqLHp3kBc1VtGVRxVr_k69GqSC_JX88jo3stdM4W9Qq6AQ@mail.gmail.com>
-Message-ID: <CAL_JsqLHp3kBc1VtGVRxVr_k69GqSC_JX88jo3stdM4W9Qq6AQ@mail.gmail.com>
-Subject: Re: [PATCH v5 0/3] Add Qualcomm PCIe Endpoint driver support
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     Kishon Vijay Abraham I <kishon@ti.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        devicetree@vger.kernel.org, PCI <linux-pci@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        hemantk@codeaurora.org,
-        Siddartha Mohanadoss <smohanad@codeaurora.org>,
+References: <20210630133149.3204290-1-dmitry.baryshkov@linaro.org> <20210630133149.3204290-2-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20210630133149.3204290-2-dmitry.baryshkov@linaro.org>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Thu, 1 Jul 2021 18:16:53 +0200
+Message-ID: <CAPDyKFpXD3rCmp53LFFYky_xQv9ucofvTezG5qWyDZt427chNQ@mail.gmail.com>
+Subject: Re: [PATCH 1/6] dt-bindings: clock: qcom,dispcc-sm8x50: add mmcx
+ power domain
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Sriharsha Allenki <sallenki@codeaurora.org>,
-        skananth@codeaurora.org, vpernami@codeaurora.org,
-        Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
+        Rob Herring <robh+dt@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Taniya Das <tdas@codeaurora.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Michael Turquette <mturquette@baylibre.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        DTML <devicetree@vger.kernel.org>,
+        linux-clk <linux-clk@vger.kernel.org>,
+        "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
+        Mark Brown <broonie@kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jun 29, 2021 at 9:47 PM Manivannan Sadhasivam
-<manivannan.sadhasivam@linaro.org> wrote:
+On Wed, 30 Jun 2021 at 15:31, Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
 >
-> Hello,
+> On sm8250 dispcc requires MMCX power domain to be powered up before
+> clock controller's registers become available. For now sm8250 was using
+> external regulator driven by the power domain to describe this
+> relationship. Switch into specifying power-domain and required opp-state
+> directly.
 >
-> This series adds support for Qualcomm PCIe Endpoint controller found
-> in platforms like SDX55. The Endpoint controller is based on the designware
-> core with additional Qualcomm wrappers around the core.
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  .../bindings/clock/qcom,dispcc-sm8x50.yaml    | 19 +++++++++++++++++++
+>  1 file changed, 19 insertions(+)
 >
-> The driver is added separately unlike other Designware based drivers that
-> combine RC and EP in a single driver. This is done to avoid complexity and
-> to maintain this driver autonomously.
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,dispcc-sm8x50.yaml b/Documentation/devicetree/bindings/clock/qcom,dispcc-sm8x50.yaml
+> index 0cdf53f41f84..48d86fb34fa7 100644
+> --- a/Documentation/devicetree/bindings/clock/qcom,dispcc-sm8x50.yaml
+> +++ b/Documentation/devicetree/bindings/clock/qcom,dispcc-sm8x50.yaml
+> @@ -55,6 +55,16 @@ properties:
+>    reg:
+>      maxItems: 1
 >
-> The driver has been validated with an out of tree MHI function driver on
-> SDX55 based Telit FN980 EVB connected to x86 host machine over PCIe.
->
-> Thanks,
-> Mani
->
-> Changes in v5:
->
-> * Removed the DBI register settings that are not needed
-> * Used the standard definitions available in pci_regs.h
-> * Added defines for all the register fields
-> * Removed the left over code from previous iteration
->
-> Changes in v4:
->
-> * Removed the active_config settings needed for IPA integration
-> * Switched to writel for couple of relaxed versions that sneaked in
+> +  power-domains:
+> +    description:
+> +      A phandle and PM domain specifier for the MMCX power domain.
+> +    maxItems: 1
+> +
 
-I thought we resolved this discussion. Use _relaxed variants unless
-you need the stronger ones.
+Should you perhaps state that this is a parent domain? Or it isn't?
 
-Rob
+Related to this and because this is a power domain provider, you
+should probably reference the common power-domain bindings somewhere
+here. Along the lines of this:
 
+- $ref: power-domain.yaml#
+
+As an example, you could have a look at
+Documentation/devicetree/bindings/power/pd-samsung.yaml.
+
+> +  required-opps:
+> +    description:
+> +      Performance state to use for MMCX to enable register access.
+> +    maxItems: 1
+
+According to the previous discussions, I was under the assumption that
+this property belongs to a consumer node rather than in the provider
+node, no?
+
+> +
+>  required:
+>    - compatible
+>    - reg
+> @@ -64,6 +74,15 @@ required:
+>    - '#reset-cells'
+>    - '#power-domain-cells'
 >
-> Changes in v3:
+> +# Either both properties are present or both are absent
+> +dependencies:
+> +  power-domains:
+> +    required:
+> +      - required-opps
+> +  required-opps:
+> +    required:
+> +      - power-domains
+> +
+>  additionalProperties: false
 >
-> * Lot of minor cleanups to the driver patch based on review from Bjorn and Stan.
-> * Noticeable changes are:
->   - Got rid of _relaxed calls and used readl/writel
->   - Got rid of separate TCSR memory region and used syscon for getting the
->     register offsets for Perst registers
->   - Changed the wake gpio handling logic
->   - Added remove() callback and removed "suppress_bind_attrs"
->   - stop_link() callback now just disables PERST IRQ
-> * Added MMIO region and doorbell interrupt to the binding
-> * Added logic to write MMIO physicall address to MHI base address as it is
->   for the function driver to work
->
-> Changes in v2:
->
-> * Addressed the comments from Rob on bindings patch
-> * Modified the driver as per binding change
-> * Fixed the warnings reported by Kbuild bot
-> * Removed the PERST# "enable_irq" call from probe()
->
-> Manivannan Sadhasivam (3):
->   dt-bindings: pci: Add devicetree binding for Qualcomm PCIe EP
->     controller
->   PCI: dwc: Add Qualcomm PCIe Endpoint controller driver
->   MAINTAINERS: Add entry for Qualcomm PCIe Endpoint driver and binding
->
->  .../devicetree/bindings/pci/qcom,pcie-ep.yaml | 160 ++++
->  MAINTAINERS                                   |  10 +-
->  drivers/pci/controller/dwc/Kconfig            |  10 +
->  drivers/pci/controller/dwc/Makefile           |   1 +
->  drivers/pci/controller/dwc/pcie-qcom-ep.c     | 742 ++++++++++++++++++
->  5 files changed, 922 insertions(+), 1 deletion(-)
->  create mode 100644 Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
->  create mode 100644 drivers/pci/controller/dwc/pcie-qcom-ep.c
->
+>  examples:
 > --
-> 2.25.1
+> 2.30.2
 >
+
+Kind regards
+Uffe
