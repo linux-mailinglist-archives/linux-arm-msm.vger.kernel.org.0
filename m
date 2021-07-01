@@ -2,92 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 16E573B8BD7
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jul 2021 03:53:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D12FA3B8BE5
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jul 2021 04:06:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238499AbhGABzd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Jun 2021 21:55:33 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:56409 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238416AbhGABzc (ORCPT
+        id S238507AbhGACIp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Jun 2021 22:08:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39204 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237937AbhGACIo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Jun 2021 21:55:32 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1625104383; h=Content-Transfer-Encoding: Mime-Version:
- Content-Type: References: In-Reply-To: Date: Cc: To: From: Subject:
- Message-ID: Sender; bh=GfsJyQhj+sUiLq2l9kHCkcJApYLVCP2VhlOanwPbPpw=; b=Qfv1UcJXAs3DL2UGnIp7V3ZZJrBrWyePvjZJUinvjdAJr1HNFLgOCop1WaMAlMlXNLKaYIyj
- bbpGVz7OQ3x3En9yWJj2+Yp0AVkdlDQHgQcbiieA3eDY51At0lcl/3EynqIIvpfvsvzwAmGK
- KonQVUtc6kJAJms/jdwu5+vIS4w=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
- 60dd1ff95d0d101e38f0df51 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 01 Jul 2021 01:52:57
- GMT
-Sender: hemantk=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 5287CC433D3; Thu,  1 Jul 2021 01:52:57 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
-Received: from hemantk-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: hemantk)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 00837C4323A;
-        Thu,  1 Jul 2021 01:52:55 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 00837C4323A
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=hemantk@codeaurora.org
-Message-ID: <1625104371.10055.21.camel@codeaurora.org>
-Subject: Re: [PATCH v3 2/2] bus: mhi: Fix MHI DMA structure endianness
-From:   Hemant Kumar <hemantk@codeaurora.org>
-To:     Paul Davey <paul.davey@alliedtelesis.co.nz>,
-        Manivannan Sadhasivam <mani@kernel.org>
-Cc:     Bhaumik Bhatt <bbhatt@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Date:   Wed, 30 Jun 2021 18:52:51 -0700
-In-Reply-To: <20210629035357.11091-3-paul.davey@alliedtelesis.co.nz>
-References: <20210629035357.11091-1-paul.davey@alliedtelesis.co.nz>
-         <20210629035357.11091-3-paul.davey@alliedtelesis.co.nz>
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.18.5.2-0ubuntu3.2 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Wed, 30 Jun 2021 22:08:44 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A15DC061756
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Jun 2021 19:06:14 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id j1so6010988wrn.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Jun 2021 19:06:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=rCnIWuA91Y7q+in2ZETAzHkZMmw0aFfjdiM1y2bTeDU=;
+        b=DUXJBxFkkLGQdSK6f+3sTLV79wMBKrls4BqbvHSBNyAXnwIIRiYEBJ8NvyPBeIbmEx
+         QYvmb/iyMiBA23ePsuoeYv7G3ifc1ha5UhxIBSktTHx2lpJzWaAbQexZG2cX5SdXmCZf
+         J/gw0HxsoMElbirfPdyWkAPnVE011460fc/QsQopgp9+Iz8vEunAQhW+W0iJpVQCoz0i
+         3DxSKK2qyOiDefWGWyfR/QwlAxznrz6/I1T4Ghl36dCxedCscCSKpoHNE7qvziNZXK4X
+         1Be0gIw3HMmda0kFWCMAd+bqWBku9b80XLnZwGbRtw2i98ugy2M0UiIGIt5E53UIWGsh
+         AOEA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=rCnIWuA91Y7q+in2ZETAzHkZMmw0aFfjdiM1y2bTeDU=;
+        b=gqFyzNdnmczW53KoCqXGj5zhohLl6dAhfdGKM/+7q8yFhYP0BhJJuj/lrDK7CcOxLr
+         NlWbqRKHlsQrn4B9i3BtNiNRgz5h0CtAZZ0/gWJxk9jBFRpWfDoIiMWNXCJMB212J9H/
+         +hpNRuE4UknjUOiX9mQMLixLOLzsJC4kUZUQ+FofxWVHVy3fX1QDIXMVJWG41kX4ZUmT
+         P/UPo+zX5O3CdbWg73D7pyijMFFf8VD/KXYubjmQABYBcsFRu8GCHqiFSxYyEiLKnkK+
+         UHm2x/Q39jKLKvd1KLWwze7Ju8t3cEv8cMFyo9l4tEtPEN02BCCnKYZPLJ9WDahR8DAR
+         FhyQ==
+X-Gm-Message-State: AOAM530ko2dNCcIv+CqHXg26hy7sDncEovdjYBRhNfuuoQSCHLIGnwxF
+        J5ElXSliXwvNKuvOao4qjlUGEw==
+X-Google-Smtp-Source: ABdhPJwhcV1ryOgRLBPgEg4AVc9LbYT6OqexvPLdsJRbJqNgueaKc6LwLWgIOg2K7AHZnzYjUNaYLA==
+X-Received: by 2002:a05:6000:18ab:: with SMTP id b11mr43332508wri.42.1625105172871;
+        Wed, 30 Jun 2021 19:06:12 -0700 (PDT)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id u10sm22200257wmm.21.2021.06.30.19.06.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 30 Jun 2021 19:06:12 -0700 (PDT)
+Subject: Re: [PATCH 1/2] usb: dwc3: dwc3-qcom: Find USB connector and register
+ role switch
+To:     Jack Pham <jackp@codeaurora.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>, balbi@kernel.org,
+        gregkh@linuxfoundation.org, agross@kernel.org,
+        linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        wcheng@codeaurora.org
+References: <20210629144449.2550737-1-bryan.odonoghue@linaro.org>
+ <20210629144449.2550737-2-bryan.odonoghue@linaro.org> <YNtAt3dCGGyj5DU/@yoga>
+ <c63c286a-f7c0-0874-59ad-e9ee43660a33@linaro.org>
+ <20210629200228.GE25299@jackp-linux.qualcomm.com> <YNuC0Njwr4B1Q1xZ@yoga>
+ <0f112cf5-1f71-f189-5a3a-2ff4dbcaa8e8@linaro.org>
+ <d8902c0d-ae51-644d-f33b-19f452308097@linaro.org>
+ <20210701011153.GF25299@jackp-linux.qualcomm.com>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Message-ID: <85110545-0369-f7b3-724f-866d3ce1438b@linaro.org>
+Date:   Thu, 1 Jul 2021 03:08:01 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.7.1
+MIME-Version: 1.0
+In-Reply-To: <20210701011153.GF25299@jackp-linux.qualcomm.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Paul,
-On Tue, 2021-06-29 at 15:53 +1200, Paul Davey wrote:
-> The MHI driver does not work on big endian architectures.  The
-> controller never transitions into mission mode.  This appears to be
-> due
-> to the modem device expecting the various contexts and transfer rings
-> to
-> have fields in little endian order in memory, but the driver
-> constructs
-> them in native endianness.
-> 
-> Fix MHI event, channel and command contexts and TRE handling macros
-> to
-> use explicit conversion to little endian.  Mark fields in relevant
-> structures as little endian to document this requirement.
-> 
-> Signed-off-by: Paul Davey <paul.davey@alliedtelesis.co.nz>
-> ---
-> Removed Tested-by as patch has changed somewhat from v2.
-Bhaumik is going to help testing V2 on x86 platform. Change looks good
-to me. Will ack it once testing is done.
-> [..]
-> 
+On 01/07/2021 02:12, Jack Pham wrote:
+> I'm afraid I'm not too familiar with weak symbols. Would that still work
+> if dwc3 & dwc3-qcom are built as modules? Also is it supported with
+> Clang/LLVM?
 
-Thanks,
-Hemant
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, a Linux Foundation Collaborative Project
+__weak would work fine, until you tried to have two strong implementations.
 
+Your linker should choke if dwc3-meson-g12a, dwc3-qcom and dwc3-drd 
+linked together with both wrappers implementing normal linkage.
+
+However, I do think its possible to use role switching to have dwc3-drd 
+trigger dwc3-qcom.
+
+The role switch code is resilient to deferral so we don't have to solve 
+the problem we had with get_drvdata() in the notifier solution and it 
+gets us out of the business of having dwc3-qcom relay the role-switch 
+onto the core - or indeed care about what sort of connector is attached.
+
+dwc3-qcom shouldn't have to know or care what sort of connector is 
+attached to it, ecros, gpio-typec, tcpm or a raw type-c driver and like 
+Bjorn said, it shouldn't be the case that the wrapper relays onto the core.
+
+Anyway I'm playing with that prototype now
