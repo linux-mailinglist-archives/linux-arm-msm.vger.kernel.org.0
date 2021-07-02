@@ -2,85 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4A0333B9BE1
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Jul 2021 07:09:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 64F223B9BE9
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Jul 2021 07:16:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235001AbhGBFJa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 2 Jul 2021 01:09:30 -0400
-Received: from mail.kernel.org ([198.145.29.99]:35338 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S234791AbhGBFJa (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 2 Jul 2021 01:09:30 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id C2278613CD;
-        Fri,  2 Jul 2021 05:06:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1625202418;
-        bh=6jOck3IDNnAka4Y2nPhVKvfxYF7mCEWowFbLzPZzxNQ=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=MFoumE/MfVpzIMhhLm6bt7ojBm0KKhgT3aQU+4EPxUyguwguUcSLYBzZV/I2MeruA
-         DPIwEhcL4N+2gtqrnpsiDGZz8N7xoyaAtYXA3jiCxufjOYrn4HEW0F6ZgOpZIYz3eQ
-         YwKLk17fb4zqlKX6MjA2cBqLklUMR3VveKLHSFX4=
-Date:   Fri, 2 Jul 2021 07:06:56 +0200
-From:   Greg KH <gregkh@linuxfoundation.org>
-To:     Wesley Cheng <wcheng@codeaurora.org>
-Cc:     robh+dt@kernel.org, agross@kernel.org, bjorn.andersson@linaro.org,
-        balbi@kernel.org, linux-usb@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, jackp@codeaurora.org,
-        fntoth@gmail.com
-Subject: Re: [PATCH v11 4/5] usb: dwc3: dwc3-qcom: Enable tx-fifo-resize
- property by default
-Message-ID: <YN6e8G1e9cZBBMr7@kroah.com>
-References: <1625043642-29822-1-git-send-email-wcheng@codeaurora.org>
- <1625043642-29822-5-git-send-email-wcheng@codeaurora.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1625043642-29822-5-git-send-email-wcheng@codeaurora.org>
+        id S229809AbhGBFTR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 2 Jul 2021 01:19:17 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:34213 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229676AbhGBFTR (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 2 Jul 2021 01:19:17 -0400
+Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
+  by alexa-out.qualcomm.com with ESMTP; 01 Jul 2021 22:16:46 -0700
+X-QCInternal: smtphost
+Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
+  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/AES256-SHA; 01 Jul 2021 22:16:43 -0700
+X-QCInternal: smtphost
+Received: from c-mansur-linux.qualcomm.com ([10.204.90.208])
+  by ironmsg02-blr.qualcomm.com with ESMTP; 02 Jul 2021 10:46:25 +0530
+Received: by c-mansur-linux.qualcomm.com (Postfix, from userid 461723)
+        id 7F795224DC; Fri,  2 Jul 2021 10:46:24 +0530 (IST)
+From:   Mansur Alisha Shaik <mansur@codeaurora.org>
+To:     bryan.odonoghue@linaro.org, linux-media@vger.kernel.org,
+        stanimir.varbanov@linaro.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        vgarodia@codeaurora.org, dikshita@codeaurora.org,
+        Mansur Alisha Shaik <mansur@codeaurora.org>
+Subject: [V3] venus: helper: do not set constrained parameters for UBWC
+Date:   Fri,  2 Jul 2021 10:46:19 +0530
+Message-Id: <1625202979-23232-1-git-send-email-mansur@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jun 30, 2021 at 02:00:41AM -0700, Wesley Cheng wrote:
-> In order to take advantage of the TX fifo resizing logic, manually add
-> these properties to the DWC3 child node by default.  This will allow
-> the DWC3 gadget to resize the TX fifos for the IN endpoints, which
-> help with performance.
-> 
-> Signed-off-by: Wesley Cheng <wcheng@codeaurora.org>
-> ---
->  drivers/usb/dwc3/dwc3-qcom.c | 21 +++++++++++++++++++++
->  1 file changed, 21 insertions(+)
-> 
-> diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-> index 49e6ca9..cec4f4a 100644
-> --- a/drivers/usb/dwc3/dwc3-qcom.c
-> +++ b/drivers/usb/dwc3/dwc3-qcom.c
-> @@ -640,6 +640,25 @@ static int dwc3_qcom_acpi_register_core(struct platform_device *pdev)
->  	return ret;
->  }
->  
-> +#ifdef CONFIG_OF
-> +static void dwc3_qcom_add_dt_props(struct device *dev, struct device_node *np)
-> +{
-> +	struct property		*prop;
-> +	int ret;
-> +
-> +	prop = devm_kzalloc(dev, sizeof(*prop), GFP_KERNEL);
-> +	if (prop) {
-> +		prop->name = "tx-fifo-resize";
-> +		ret = of_add_property(np, prop);
-> +		if (ret < 0)
-> +			dev_info(dev, "unable to add tx-fifo-resize prop\n");
+plane constraints firmware interface is to override the default
+alignment for a given color format. By default venus hardware has
+alignments as 128x32, but NV12 was defined differently to meet
+various usecases. Compressed NV12 has always been aligned as 128x32,
+hence not needed to override the default alignment.
 
-Is that really an "informational" error?  :(
+Fixes: bc28936bbba9 ("media: venus: helpers, hfi, vdec: Set actual plane constraints to FW")
+Signed-off-by: Mansur Alisha Shaik <mansur@codeaurora.org>
 
+Changes in V3:
+- Elaborated commit message as per comments by Bryan
+- As per Bryan comment alligned fixes in single line.
+---
+ drivers/media/platform/qcom/venus/helpers.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-> +	}
+diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/platform/qcom/venus/helpers.c
+index 1fe6d46..601ee3e 100644
+--- a/drivers/media/platform/qcom/venus/helpers.c
++++ b/drivers/media/platform/qcom/venus/helpers.c
+@@ -1137,8 +1137,12 @@ int venus_helper_set_format_constraints(struct venus_inst *inst)
+ 	if (!IS_V6(inst->core))
+ 		return 0;
+ 
++	if (inst->opb_fmt == HFI_COLOR_FORMAT_NV12_UBWC)
++		return 0;
++
+ 	pconstraint.buffer_type = HFI_BUFFER_OUTPUT2;
+ 	pconstraint.num_planes = 2;
++
+ 	pconstraint.plane_format[0].stride_multiples = 128;
+ 	pconstraint.plane_format[0].max_stride = 8192;
+ 	pconstraint.plane_format[0].min_plane_buffer_height_multiple = 32;
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
+of Code Aurora Forum, hosted by The Linux Foundation
 
-So if you can not allocate memory, you just fail quietly?  Are you sure
-that is ok?
-
-Please properly handle errors.
-
-greg k-h
