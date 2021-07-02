@@ -2,297 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 030173B9803
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jul 2021 23:12:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 261B83B9BBE
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Jul 2021 07:00:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233910AbhGAVPO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Jul 2021 17:15:14 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:30080 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233916AbhGAVPN (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Jul 2021 17:15:13 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1625173963; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=H8ePaAPjm3Qye4c0a0COw/Ct7+Jugg9ITfv5eW+aqI4=;
- b=Y4GTZUdcTmiK2EjezSGL3xJr//wayq8ABatT0E6h1SrGjfC474FHpAXVkl4p91hQNIlF6DcB
- HuZ32daus46l8a5MBpLDIqDCV3taIyHW/bIubuljOsUA8CYO809qY+RxCNPSVDaTlwk/nEIE
- bhqfvw8ijtkLfzj6uCiZxcEq7K8=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
- 60de2fbe2a2a9a9761ffd66d (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 01 Jul 2021 21:12:30
- GMT
-Sender: abhinavk=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id C8370C433F1; Thu,  1 Jul 2021 21:12:29 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: abhinavk)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 33143C433D3;
-        Thu,  1 Jul 2021 21:12:28 +0000 (UTC)
+        id S232461AbhGBFCx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 2 Jul 2021 01:02:53 -0400
+Received: from mail.kernel.org ([198.145.29.99]:34454 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229527AbhGBFCx (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 2 Jul 2021 01:02:53 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 6FDE761413;
+        Fri,  2 Jul 2021 05:00:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+        s=korg; t=1625202021;
+        bh=t2qyD3sHMTfsanlf2Ca59gxsFV/p6nqhM45H10N8ELk=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=b3QQh4ifIgFmVEXnr7OSqfOiwNHzkC/Xi88eZ/6PTSL2q772nrfTuoTDMBm05+V0S
+         vjCD6yzn+HkvR52h4crxuS4xguYAC3JlA8Ul1srpDZbWFBXiwkRNOi6stY0E/Onlww
+         fZCfr1vMcOqq1iu7Jb6XuqBjelUVRKDQ7vo5NiVA=
+Date:   Fri, 2 Jul 2021 07:00:19 +0200
+From:   Greg KH <gregkh@linuxfoundation.org>
+To:     Wesley Cheng <wcheng@codeaurora.org>
+Cc:     robh+dt@kernel.org, agross@kernel.org, bjorn.andersson@linaro.org,
+        balbi@kernel.org, linux-usb@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, jackp@codeaurora.org,
+        fntoth@gmail.com
+Subject: Re: [PATCH v11 1/5] usb: gadget: udc: core: Introduce check_config
+ to verify USB configuration
+Message-ID: <YN6dY8RBXRN4BW3n@kroah.com>
+References: <1625043642-29822-1-git-send-email-wcheng@codeaurora.org>
+ <1625043642-29822-2-git-send-email-wcheng@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Thu, 01 Jul 2021 14:12:28 -0700
-From:   abhinavk@codeaurora.org
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        freedreno@lists.freedesktop.org
-Subject: Re: [Freedreno] [RFC 2/6] drm/msm/dpu: support setting up two
- independent DSI connectors
-In-Reply-To: <20210609211723.2565105-3-dmitry.baryshkov@linaro.org>
-References: <20210609211723.2565105-1-dmitry.baryshkov@linaro.org>
- <20210609211723.2565105-3-dmitry.baryshkov@linaro.org>
-Message-ID: <73c474d067bd1f63e6d3457b01de4e2c@codeaurora.org>
-X-Sender: abhinavk@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1625043642-29822-2-git-send-email-wcheng@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-06-09 14:17, Dmitry Baryshkov wrote:
-> Move setting up encoders from set_encoder_mode to
-> _dpu_kms_initialize_dsi() / _dpu_kms_initialize_displayport(). This
-> allows us to support not only "single DSI" and "dual DSI" but also "two
-> independent DSI" configurations. In future this would also help adding
-> support for multiple DP connectors.
+On Wed, Jun 30, 2021 at 02:00:38AM -0700, Wesley Cheng wrote:
+> Some UDCs may have constraints on how many high bandwidth endpoints it can
+> support in a certain configuration.  This API allows for the composite
+> driver to pass down the total number of endpoints to the UDC so it can verify
+> it has the required resources to support the configuration.
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-I will have to see Bjorn's changes to check why it was dependent on this 
-cleanup.
-Is the plan to call _dpu_kms_initialize_displayport() twice?
-But still I am not able to put together where is the dependency on that 
-series
-with this one. Can you please elaborate on that a little bit?
-
+> Signed-off-by: Wesley Cheng <wcheng@codeaurora.org>
 > ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 89 ++++++++++++-------------
->  1 file changed, 44 insertions(+), 45 deletions(-)
+>  drivers/usb/gadget/udc/core.c | 25 +++++++++++++++++++++++++
+>  include/linux/usb/gadget.h    |  4 ++++
+>  2 files changed, 29 insertions(+)
 > 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> index 1d3a4f395e74..b63e1c948ff2 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> @@ -471,30 +471,55 @@ static int _dpu_kms_initialize_dsi(struct 
-> drm_device *dev,
->  				    struct dpu_kms *dpu_kms)
->  {
->  	struct drm_encoder *encoder = NULL;
-> +	struct msm_display_info info;
->  	int i, rc = 0;
-> 
->  	if (!(priv->dsi[0] || priv->dsi[1]))
->  		return rc;
-> 
-> -	/*TODO: Support two independent DSI connectors */
-> -	encoder = dpu_encoder_init(dev, DRM_MODE_ENCODER_DSI);
-> -	if (IS_ERR(encoder)) {
-> -		DPU_ERROR("encoder init failed for dsi display\n");
-> -		return PTR_ERR(encoder);
-> -	}
-> -
-> -	priv->encoders[priv->num_encoders++] = encoder;
-> -
->  	for (i = 0; i < ARRAY_SIZE(priv->dsi); i++) {
->  		if (!priv->dsi[i])
->  			continue;
-> 
-> +		if (!encoder) {
-> +			encoder = dpu_encoder_init(dev, DRM_MODE_ENCODER_DSI);
-> +			if (IS_ERR(encoder)) {
-> +				DPU_ERROR("encoder init failed for dsi display\n");
-> +				return PTR_ERR(encoder);
-> +			}
-> +
-> +			priv->encoders[priv->num_encoders++] = encoder;
-> +
-> +			memset(&info, 0, sizeof(info));
-> +			info.intf_type = encoder->encoder_type;
-> +			info.capabilities = msm_dsi_is_cmd_mode(priv->dsi[i]) ?
-> +				MSM_DISPLAY_CAP_CMD_MODE :
-> +				MSM_DISPLAY_CAP_VID_MODE;
-> +		}
-> +
->  		rc = msm_dsi_modeset_init(priv->dsi[i], dev, encoder);
->  		if (rc) {
->  			DPU_ERROR("modeset_init failed for dsi[%d], rc = %d\n",
->  				i, rc);
->  			break;
->  		}
-> +
-> +		info.h_tile_instance[info.num_of_h_tiles++] = i;
-> +
-> +		if (!msm_dsi_is_dual_dsi(priv->dsi[i])) {
-
-I would like to clarify the terminology of dual_dsi in the current DSI 
-driver before the rest of the reviews.
-Today IS_DUAL_DSI() means that two DSIs are driving the same display and 
-the two DSIs are operating in master-slave mode
-and are being driven by the same PLL.
-Usually, dual independent DSI means two DSIs driving two separate panels 
-using two separate PLLs ( DSI0 with PLL0 and DSI1 with PLL1)
-I assume thats happening due to the foll logic and both DSI PHYs are 
-operating in STANDALONE mode:
-
-     if (!IS_DUAL_DSI()) {
-         ret = msm_dsi_host_register(msm_dsi->host, true);
-         if (ret)
-             return ret;
-
-         msm_dsi_phy_set_usecase(msm_dsi->phy, MSM_DSI_PHY_STANDALONE);
-         ret = msm_dsi_host_set_src_pll(msm_dsi->host, msm_dsi->phy);
-
-> +			rc = dpu_encoder_setup(dev, encoder, &info);
-> +			if (rc)
-> +				DPU_ERROR("failed to setup DPU encoder %d: rc:%d\n",
-> +						encoder->base.id, rc);
-> +			encoder = NULL;
-> +		}
-> +	}
-> +
-> +	if (encoder) {
-
-We will hit this case only for split-DSI right? ( that is two DSIs 
-driving the same panel ).
-Even single DSI will be created in the above loop now. So this looks a 
-bit confusing at the moment.
-
-I think we need to be more clear on dual-DSI Vs split-DSI to avoid 
-confusion in the code about which one means what and the one
-which we are currently using. So what about having IS_DUAL_DSI() and 
-IS_SPLIT_DSI() to distinguish the terminologies and chaging
-DSI driver accordingly.
-
-> +		rc = dpu_encoder_setup(dev, encoder, &info);
-> +		if (rc)
-> +			DPU_ERROR("failed to setup DPU encoder %d: rc:%d\n",
-> +					encoder->base.id, rc);
->  	}
-> 
->  	return rc;
-> @@ -505,6 +530,7 @@ static int _dpu_kms_initialize_displayport(struct
-> drm_device *dev,
->  					    struct dpu_kms *dpu_kms)
->  {
->  	struct drm_encoder *encoder = NULL;
-> +	struct msm_display_info info;
->  	int rc = 0;
-> 
->  	if (!priv->dp)
-> @@ -516,6 +542,7 @@ static int _dpu_kms_initialize_displayport(struct
-> drm_device *dev,
->  		return PTR_ERR(encoder);
->  	}
-> 
-> +	memset(&info, 0, sizeof(info));
->  	rc = msm_dp_modeset_init(priv->dp, dev, encoder);
->  	if (rc) {
->  		DPU_ERROR("modeset_init failed for DP, rc = %d\n", rc);
-> @@ -524,6 +551,14 @@ static int _dpu_kms_initialize_displayport(struct
-> drm_device *dev,
->  	}
-> 
->  	priv->encoders[priv->num_encoders++] = encoder;
-> +
-> +	info.num_of_h_tiles = 1;
-> +	info.capabilities = MSM_DISPLAY_CAP_VID_MODE;
-> +	info.intf_type = encoder->encoder_type;
-> +	rc = dpu_encoder_setup(dev, encoder, &info);
-> +	if (rc)
-> +		DPU_ERROR("failed to setup DPU encoder %d: rc:%d\n",
-> +			encoder->base.id, rc);
->  	return rc;
+> diff --git a/drivers/usb/gadget/udc/core.c b/drivers/usb/gadget/udc/core.c
+> index b7f0b1e..f1f44a6 100644
+> --- a/drivers/usb/gadget/udc/core.c
+> +++ b/drivers/usb/gadget/udc/core.c
+> @@ -1003,6 +1003,31 @@ int usb_gadget_ep_match_desc(struct usb_gadget *gadget,
 >  }
-> 
-> @@ -726,41 +761,6 @@ static void dpu_kms_destroy(struct msm_kms *kms)
->  	msm_kms_destroy(&dpu_kms->base);
->  }
-> 
-> -static void _dpu_kms_set_encoder_mode(struct msm_kms *kms,
-> -				 struct drm_encoder *encoder,
-> -				 bool cmd_mode)
-> -{
-> -	struct msm_display_info info;
-> -	struct msm_drm_private *priv = encoder->dev->dev_private;
-> -	int i, rc = 0;
-> -
-> -	memset(&info, 0, sizeof(info));
-> -
-> -	info.intf_type = encoder->encoder_type;
-> -	info.capabilities = cmd_mode ? MSM_DISPLAY_CAP_CMD_MODE :
-> -			MSM_DISPLAY_CAP_VID_MODE;
-> -
-> -	switch (info.intf_type) {
-> -	case DRM_MODE_ENCODER_DSI:
-> -		/* TODO: No support for DSI swap */
-> -		for (i = 0; i < ARRAY_SIZE(priv->dsi); i++) {
-> -			if (priv->dsi[i]) {
-> -				info.h_tile_instance[info.num_of_h_tiles] = i;
-> -				info.num_of_h_tiles++;
-> -			}
-> -		}
-> -		break;
-> -	case DRM_MODE_ENCODER_TMDS:
-> -		info.num_of_h_tiles = 1;
-> -		break;
-> -	}
-> -
-> -	rc = dpu_encoder_setup(encoder->dev, encoder, &info);
-> -	if (rc)
-> -		DPU_ERROR("failed to setup DPU encoder %d: rc:%d\n",
-> -			encoder->base.id, rc);
-> -}
-> -
-It seems we can get rid of set_encoder_mode for DP because the way we 
-are using it today seems not right.
-Ideally, the purpose was that once we read the EDID, the information we 
-read like the tile group etc
-can be used when we are setting up the encoder. But today, we are just 
-hard-coding the number of tiles.
-But I just think whether looking ahead, we should still have some 
-callback which can be called after
-EDID has been read instead of doing it in 
-_dpu_kms_initialize_displayport. Perhaps that can be a separate patch.
+>  EXPORT_SYMBOL_GPL(usb_gadget_ep_match_desc);
+>  
+> +/**
+> + * usb_gadget_check_config - checks if the UDC can support the number of eps
 
->  static irqreturn_t dpu_irq(struct msm_kms *kms)
->  {
->  	struct dpu_kms *dpu_kms = to_dpu_kms(kms);
-> @@ -863,7 +863,6 @@ static const struct msm_kms_funcs kms_funcs = {
->  	.get_format      = dpu_get_msm_format,
->  	.round_pixclk    = dpu_kms_round_pixclk,
->  	.destroy         = dpu_kms_destroy,
-> -	.set_encoder_mode = _dpu_kms_set_encoder_mode,
-I would like to get Rob's comment on why we had set_encoder_mode in the 
-first place. Its there even in mdp5.
+"eps"?  What is that?
 
-in current msm dsi, the dsi bind will happen only after the panel has 
-attached
-and the msm_drv's bind will happen only after that since its the 
-component master
-in that case what was the need for set_encoder_mode  because we will 
-know the panel's video/cmd mode in the dsi_bind call
-am i missing something about why mdp5 had this?
+> + * @gadget: controller to check the USB configuration
+> + * @ep_map: bitmap of endpoints being requested by a USB configuration
 
- From the dpu perspective, since dsi_bind() happens only once panel has 
-attached.
->  	.snapshot        = dpu_kms_mdp_snapshot,
->  #ifdef CONFIG_DEBUG_FS
->  	.debugfs_init    = dpu_kms_debugfs_init,
+There is no such option in this function, did you run 'make htmldocs'
+and see that this adds a warning?
+
+> + *
+> + * Ensure that a UDC is able to support the number of endpoints within a USB
+> + * configuration, and that there are no resource limitations to support all
+> + * requested eps.
+> + *
+> + * Returns zero on success, else a negative errno.
+> + */
+> +int usb_gadget_check_config(struct usb_gadget *gadget)
+> +{
+> +	int ret = 0;
+> +
+> +	if (!gadget->ops->check_config)
+> +		goto out;
+> +
+> +	ret = gadget->ops->check_config(gadget);
+> +
+> +out:
+> +	return ret;
+> +}
+> +EXPORT_SYMBOL_GPL(usb_gadget_check_config);
+
+This can be written in the much simpler form:
+{
+	if (gadget->ops->check_config)
+		return gadget->ops->check_config(gadget);
+	return 0;
+}
+
+But where are the endpoints that need to be checked???
+
+How is this working?
+
+thanks,
+
+greg k-h
