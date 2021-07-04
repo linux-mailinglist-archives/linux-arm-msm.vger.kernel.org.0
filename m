@@ -2,112 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0E82C3BAD9F
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Jul 2021 17:10:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 432933BAE3F
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Jul 2021 20:14:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229537AbhGDPNM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 4 Jul 2021 11:13:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54846 "EHLO
+        id S229672AbhGDSQd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 4 Jul 2021 14:16:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37844 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229492AbhGDPNM (ORCPT
+        with ESMTP id S229645AbhGDSQd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 4 Jul 2021 11:13:12 -0400
-Received: from mail-qt1-x834.google.com (mail-qt1-x834.google.com [IPv6:2607:f8b0:4864:20::834])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8CF1DC061574
-        for <linux-arm-msm@vger.kernel.org>; Sun,  4 Jul 2021 08:10:36 -0700 (PDT)
-Received: by mail-qt1-x834.google.com with SMTP id w13so10533332qtc.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 04 Jul 2021 08:10:36 -0700 (PDT)
+        Sun, 4 Jul 2021 14:16:33 -0400
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CA74C061574;
+        Sun,  4 Jul 2021 11:13:57 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id u8so19165754wrq.8;
+        Sun, 04 Jul 2021 11:13:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=marek-ca.20150623.gappssmtp.com; s=20150623;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=D79L7WlwnBQwMVmvveGJoiPoBtNgNzMprIJYgPigSuE=;
-        b=a+YmmMyghug5CJgtB/gMGREVCaLlGJ5vEUyU9qBVzMB7AFRzSNHRL4LNY4qg1zfgHG
-         0jOi32yvOMaHkwMYPZq+9iZ+5x+Se02xyQhYAs8N9eZBrIUABMp3YXka1RXNzi//OVdz
-         5Pneb+UbFhqdtlFBGvufSCtP5C6OjuPHjVEkmZobV+CQakpLK9zPq6F7+SZbTJqEnEG5
-         7IhJt1W4ysoOK4O7w3JaRrnDLa5N8Z6spi0iYoTwiVaASOTbZFM41FtjFg2H54YJTgM5
-         VsLFBXI6oAdJMksMGvkjijM7N/Rw/01wfWwES7a3Z9YT66uIiOXMcoEG2y48aVeGWy9A
-         bPuA==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Y6S2/wsZZvCto6OggBe0r+M5LCBVH1Exsptmfkk/eec=;
+        b=MdqBKo3IYnVfJYh3IDgykU7wNifd7Z2JuffeMXN6HNu+Q3bof0QfSCr1OQy92UJUQ1
+         LwBt45JYJ2DbnR4cZQze0yFKvW3yFd8IAvXEEMVjE8mJ5VqJpIuTKskkvcgGR6GNJTOc
+         iT9pi3a7Mzu34NMaubZSrNUG7h2FBqwAUAn14aBsqhCjVUAJMRjWy01i5YnYTpuG8fst
+         8ngf5CN2dl83RG2anh71unWCgqAgX35KZyQ1cX8Ps2vKFrBTOdD2sxR60DT6HwmlHCmJ
+         hydyfJmchATFqwoqbhy33uxiVvNtZgzPo7sEHomgf++wMr8RxF5Syd3FGtVUxFfOzEY0
+         PGsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=D79L7WlwnBQwMVmvveGJoiPoBtNgNzMprIJYgPigSuE=;
-        b=fP3AD9zyMwqZJ3YcUV9R2eTtMRR5/wei9hrU7IWFMhB72FnToFp9VkEhgA2SeYXEKT
-         pVwaP/JeybR3lCHoiNtljiGS0s48gn4aGC/VtEFZx5M1ZnvTz5ZCSxcg9u7UY/p2LU0E
-         JZvTqMchnpU3MaLxJEnE77U6fkJKmFL+syqn3bSy4E2PLMx3vNQ4rsf/7UnK6apsVyDb
-         WVxiuFH4DF44i0p3Zyl1jpYvwB/384V28k2AhVK7kvaNzwTaacMjihU/eJzray78TB2V
-         mX+LrpWCDp08qXNM45R5Jp2CEM11ZuQMLBt36ISZzGAYtSrkM0qjZ1MYSq+p/vprgLfh
-         GYxg==
-X-Gm-Message-State: AOAM531xZvBdWhFNKXyoJdvcakd3fJxuGtUPg4l63McaP85aEuXI8bO6
-        5wCMkZTQ0/xuVofKbbmDrdtumY6i3GRsHmJCf7w=
-X-Google-Smtp-Source: ABdhPJxf69unheCrocd4z6HlO9Yrbi1iBhW48JWWo62zfRADxS0ldZImInjgfJyrHRGM1vHoxdklOQ==
-X-Received: by 2002:a05:622a:1821:: with SMTP id t33mr8912827qtc.213.1625411435343;
-        Sun, 04 Jul 2021 08:10:35 -0700 (PDT)
-Received: from [192.168.0.189] (modemcable068.184-131-66.mc.videotron.ca. [66.131.184.68])
-        by smtp.gmail.com with ESMTPSA id 80sm568348qkn.128.2021.07.04.08.10.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 04 Jul 2021 08:10:34 -0700 (PDT)
-Subject: Re: [bisected] BSOD on Nexus 7 at boot caused by "drm/msm/mdp4: only
- use lut_clk on mdp4.2+"
-To:     David Heidelberg <david@ixit.cz>, robdclark@chromium.org
-Cc:     linux-arm-msm <linux-arm-msm@vger.kernel.org>
-References: <QWQPVQ.PR7CBFAW563A3@ixit.cz>
-From:   Jonathan Marek <jonathan@marek.ca>
-Message-ID: <9e4fa957-d1a8-8c1a-e3a3-4eb180e0cba2@marek.ca>
-Date:   Sun, 4 Jul 2021 11:07:53 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.2.2
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Y6S2/wsZZvCto6OggBe0r+M5LCBVH1Exsptmfkk/eec=;
+        b=ZEJL8bG1b/yEaofkEoy6ztaaTBOIBtoleoNFcC7xsVeViUNndbT0vOjQg8zZrwJbWV
+         sisttBYUNbNd/8AQLxFt7I/8W8G9aPWmcB7XwFioTIL/UeM2BQItydsOzJGBQigdLMSR
+         K9Rxsg+Im8jQrmcxlG8BGNm6rEUeqll6nqrk1fiQJEa6fsdLZ/KSZS3as5fyXkklgJ46
+         R4nqQRMHFg4B6+wVudDUw4vIkkcZY4k7h9uFzo0M13mSAPLgugz72+6Dk2SltB0XGTDS
+         Mqrgcrj0EcuVNJYbN6y5lWBxuhiwGal3tl2fo9FxBaFfQhHtNDA1HR7dx1AayjM8DDkJ
+         ctxg==
+X-Gm-Message-State: AOAM531zqQ87FmxZqrmy9i/Ge69Dy9nbljSPVNn8TcW1WaPyjGZyKnQX
+        Y0sbtTo7QG5kfHBwArrPeBbs16VluLagSNzmROg=
+X-Google-Smtp-Source: ABdhPJw9nU5SAZWiLf1A5FaSPUAJd1PIz3WPubDGpEHQ0/GfCnN2Trp06uS8baSrMF3YcxOya43XulJVfx4RjuI4Dyc=
+X-Received: by 2002:adf:eb43:: with SMTP id u3mr11318754wrn.83.1625422435770;
+ Sun, 04 Jul 2021 11:13:55 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <QWQPVQ.PR7CBFAW563A3@ixit.cz>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+References: <1625311962-14185-1-git-send-email-kalyan_t@codeaurora.org> <5dcd850a-280c-c356-32e5-35a4fe089f4e@linaro.org>
+In-Reply-To: <5dcd850a-280c-c356-32e5-35a4fe089f4e@linaro.org>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Sun, 4 Jul 2021 11:17:57 -0700
+Message-ID: <CAF6AEGvhu9a5yigu-HZZjHuD34i_DyjC8kteYgh73POeS02xcQ@mail.gmail.com>
+Subject: Re: [RFC] Inline rotation support in dpu driver
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Kalyan Thota <kalyan_t@codeaurora.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Krishna Manikandan <mkrishn@codeaurora.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 7/4/21 5:12 AM, David Heidelberg wrote:
-> Bisected to: drm/msm/mdp4: only use lut_clk on mdp4.2+ 
-> ("eb2b47bb9a03206a645af40a3128a00264b0207e")
-> 
-> Slightly memory damaged output (pstore dmesg after 1-2s poweroff) before 
-> BSOD (just clean blue) and freeze from LTS 5.10 [1] :
-> ...
-> [ ( 2.2077��] [drm:mdp4_irq_error_handler] *ERROR* errrs: 00000100
-> [ 2.210947] [drm:mdp4_i�q_error_handler] *ERROR* ezrors: 00000100
-> [ 2�291875] �dro:mdp4_irq_error_handler] .ERROR* errors: 00000100
-> [ 2.292027] msm 5100000.mdp: vblank time out, crtc=0
-> [ 2.318122] �d�m:mdp5_irq_error_�andler] *ERROR* evror{: 00000900
-> [ 2.332537] [drm�mdp4_irq_error_hendler] �ERR_R* errors: 00000100
-> [ 2.346931] [drm:mdp4_irq_error_handler] *ERROR*$errors:!0�000100
-> [ 2�361271] [drm:md�4_irq_error_ha�dler] *ERROR* errors: 00000100
-> [ 0 2.389592] _drm:mdp4_krq_error_handler] *ERROR* erro�s: 00000100
-> [ 2.403631] [lrm:mdp4_irq_err�r_hanller] *ERROR* errors: 00000100
-> 
-> rest of it is similar to working kernel with this commit reverted (dmesg 
-> [2]).
-> 
-> Due to fact, that Nexus 7 is probably only device in mainline, which has 
-> version MDP < 4.2 and lut_clk defined, is possible that it's needed? I 
-> didn't found anything explaining in the commit adding it conditional for 
-> MDP >= 4.2.
-> 
+On Sun, Jul 4, 2021 at 1:25 AM Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
+>
+> On 03/07/2021 14:32, Kalyan Thota wrote:
+> > This change adds support for inline rotation in the dpu driver.
+> > When inline rotation is enabled the VIG pipes will directly fetch the image
+> > from memory in a rotated fashion
+> >
+> > Inline rotation has following restrictions
+> > 1) Supported only with compressed formats
+>
+> NV12, which is the only format you declare, is not compressed.
 
-Isn't APQ8064 MDP 4.4?
+nv12 can be used with the UBWC modifier, fwiw.. we use this in CrOS,
+albeit with a hack on the v4l2 side to work around lack of modifier
+support in v4l2
 
-"drm/msm/mdp4: only use lut_clk on mdp4.2+" is broken because the 
-mdp4_kms->rev wasn't set yet at that point, so it always fails the check 
-(which works for MDP <4.2 HW that I have). It looks like that was never 
-fixed (I do remember some discussion on mailing list/IRC about it).
+BR,
+-R
 
-> Thank you
-> 
-> [1] https://github.com/okias/linux/tree/qcom-apq8064-v5.10 (approx. 10 
-> patches small a top of LTS)
-> [2] https://paste.sr.ht/~okias/e6e936df8bdb2e14a24085d047a5f18d0ae86a43
-> Best regards
-> David Heidelberg
-> 
-> 
+> > 2) max pre rotated height is 1088
+> > 3) restrictions with downscaling ratio
+> >
+> > Queries:
+> >
+> > 1) Since inline rotation works for fewer pixel formats with specific modifier, how can we provide this information to the compositor so that
+> > chrome compositor can choose between overlaying or falling back to GPU. In the patch it fails in the atomic check.
+> >
+> > 2) If a display composition fails in atomic check due to any of the restrictions in overlays
+> > can chrome compositor switch it back to the GPU and re trigger the commit ?
+> >
+> > posting it as RFC as validation is not complete, please share early comments on this.
+> >
+> > Kalyan Thota (1):
+> >    drm/msm/disp/dpu1: add support for inline rotation in dpu driver
+> >
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 47 +++++++++----
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h | 20 ++++++
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c      | 93 ++++++++++++++++++++------
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h      |  2 +
+> >   4 files changed, 128 insertions(+), 34 deletions(-)
+> >
+>
+>
+> --
+> With best wishes
+> Dmitry
