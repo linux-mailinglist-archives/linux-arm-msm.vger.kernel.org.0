@@ -2,53 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 01EE43BACA4
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Jul 2021 11:59:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B72FA3BACD6
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Jul 2021 13:20:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229649AbhGDKBq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 4 Jul 2021 06:01:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43746 "EHLO
+        id S229492AbhGDLXO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 4 Jul 2021 07:23:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33444 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229614AbhGDKBq (ORCPT
+        with ESMTP id S229575AbhGDLXM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 4 Jul 2021 06:01:46 -0400
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C52C0C061765
-        for <linux-arm-msm@vger.kernel.org>; Sun,  4 Jul 2021 02:59:10 -0700 (PDT)
-Received: by mail-lj1-x22e.google.com with SMTP id w11so20415429ljh.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 04 Jul 2021 02:59:10 -0700 (PDT)
+        Sun, 4 Jul 2021 07:23:12 -0400
+Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3443CC061762
+        for <linux-arm-msm@vger.kernel.org>; Sun,  4 Jul 2021 04:20:36 -0700 (PDT)
+Received: by mail-lj1-x232.google.com with SMTP id r20so5875678ljd.10
+        for <linux-arm-msm@vger.kernel.org>; Sun, 04 Jul 2021 04:20:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=FWPLe2/OM2IENHKPoBrqu7PtiOEL103XE8n0jA1mbRk=;
-        b=fDOwGP32PsGLmvVhSviUKv0/iha5ySQLNlAos+vRYMnIZQ/NEjQbIPyEQme2293OS0
-         nEHELQScqJ4zKhZOueEB7O925CxhQe+QJrLgUtlP7S1jbZpdOXe7eY424VKWm07vapxE
-         rvuoXEpLCJEqkkJ5t+Rolj5rJkPU2RgZ+6qJ/Zcd2bpRB6u2KGYMI2IvSXQ9KDHaoxRb
-         uVWe7JHQPGQHBa4T5N1PUPaP4cL+2hDEfRar1GezuQXm8T+j8Zx4tz5rTXNNrO0FIL05
-         a2GBn3LsDk1pQJgUBTDC+1RTW5RQD5fl6+kGPR2LiK8N8YwMPSvhw8Uz8CvSdRewlwt/
-         b/Dw==
+        bh=seAgOoU8LPGtpTxTwpmp1FR4yyop7y2SFuZwT46eJwc=;
+        b=Z+nDpUnEt6sz33EsA0R3Z5EzNfS/oAvRoHu01elFOiPeu8WBtCEVa5H8zWAhc6046g
+         JdpVkEYBdb7CBfoBqJQjlknHZbz2UClZphbhLePhI1eiB5HNm3hK6Dbe12JelEpqtXe2
+         S8e3Kyk1JwAiRMIFaZE/38SyHdvzjqOs0+n+1T2dGuOcCIQQ2mndsuzIA19vKiMNBrBx
+         FZICUpUjhv7zTS2qnnkBOxb8sQCCxMVfLdeV6daAwdvIsrA3kn1F4Wa2IToCUxIPJYxU
+         yg92yOERN7YAvCRS+mpbgN+tWJU66//J6v1P4X4tXqbp0q0VZAt+dRZAw5Q08zNur9l0
+         M7ZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=FWPLe2/OM2IENHKPoBrqu7PtiOEL103XE8n0jA1mbRk=;
-        b=dRKNxZ0qaimXXdOOJS7Ftc5wPqHmsQiLC4XMzlDI5a8qA9gOtA8AdYBkIUEuLJj5qS
-         AkFsGaSoKchlhKhuhdcYiS80beGHVtp2BFK6vJ0cOa6fLHcyb73NGmgrO5K6Mrayszep
-         I0Ey4kP8wVgxIIsDinbfMe4MD8+nY2BFAaXnc5AtlDx8Dzn56OLmdkfifJEsULjouVbQ
-         P/pP0cLeYh8zqjYpZUicEKUntP3Ih/8cbJVaf8QoOVl5mIkYBKrg758EscXr6IW4e7qe
-         HhOwbEr+RI+UquV489p1beGx0pHDr9rVUJsD1V4fnfXuRVj49iZXyRBouyNRDe9JGb5/
-         29jw==
-X-Gm-Message-State: AOAM5329nCc+WjeNy7GuzFW+x/SN/qcAGIKQlxhWqBR9U5xEUwNaXJZC
-        7bicT4ApWggd2zK+/RXuZIIQ0A==
-X-Google-Smtp-Source: ABdhPJwKWfAAiGfdQYV712biiEHE4ps06B46uuyn7bBrNROh0KWmkJxUOubKcdqboKHbG8VtafWsqA==
-X-Received: by 2002:a2e:b548:: with SMTP id a8mr6852257ljn.346.1625392748706;
-        Sun, 04 Jul 2021 02:59:08 -0700 (PDT)
+        bh=seAgOoU8LPGtpTxTwpmp1FR4yyop7y2SFuZwT46eJwc=;
+        b=RUrM6/k3pe+MhaX9DGkAovbegfYocfc+wrnOxjsxXS52FD3XWcloK5VtQgtqrVSSuk
+         2/5ffP+wm7gLGNPbOcKDa8XnUhWMZGEkBqM/+AApW3sYownLmQ4FIk2IUCp3l9W8gw1D
+         MaqK2lYpP2d+qOHtWL1ORGYKEApJX9tUW5YR9fjbu/2x6dN00wF+6rEEgtyVhPDyqqiz
+         9fuEyFOx2W/jh5/3pNn0ZpheommXfqqBuuvXyrC4AOqsKc5yir4nWhaw1yOc4JWqKdTi
+         HozT/W2py61FOI2LJa97evlwYpM0OJeWBLGaAJ6k9CSKXVBRHANiTS80NXhj1/eOgpmo
+         XgnA==
+X-Gm-Message-State: AOAM531pc3IzsXaD/Ptf6NnEF53zzqsqZz72BwJxjIl5pCfGkIa0GkLN
+        b5iKiebHYRMR1nIpyZCz5GcFPw==
+X-Google-Smtp-Source: ABdhPJy39hs6FGrpOrWNRZYCy7Py48Bb4XBxTqZkOIbcEz90CgBPa1CTHrhWEe03qD+rKSNEDWQo7g==
+X-Received: by 2002:a2e:9d48:: with SMTP id y8mr6855431ljj.281.1625397633981;
+        Sun, 04 Jul 2021 04:20:33 -0700 (PDT)
 Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id m16sm818493lfj.250.2021.07.04.02.59.07
+        by smtp.gmail.com with ESMTPSA id r15sm1009369ljh.39.2021.07.04.04.20.33
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 04 Jul 2021 02:59:08 -0700 (PDT)
+        Sun, 04 Jul 2021 04:20:33 -0700 (PDT)
 Subject: Re: [RFC] drm/msm/disp/dpu1: add support for inline rotation in dpu
  driver
 To:     Kalyan Thota <kalyan_t@codeaurora.org>,
@@ -58,8 +58,8 @@ Cc:     linux-kernel@vger.kernel.org, robdclark@gmail.com,
         dianders@chromium.org, mkrishn@codeaurora.org
 References: <1625311947-14114-1-git-send-email-kalyan_t@codeaurora.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Message-ID: <082e6a19-ed7b-61f9-be04-a8a2d188b12e@linaro.org>
-Date:   Sun, 4 Jul 2021 12:59:07 +0300
+Message-ID: <850a9dbb-2fec-869c-a87b-fe2261b96e33@linaro.org>
+Date:   Sun, 4 Jul 2021 14:20:32 +0300
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.11.0
 MIME-Version: 1.0
@@ -71,34 +71,11 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
-
-Something is wrong with the threading, since this patch does not contain 
-In-Reply-To header pointing to the cover letter? Could you please 
-correct that? Using git-send-email --compose would allow you to write 
-properly threaded cover letter.
-
 On 03/07/2021 14:32, Kalyan Thota wrote:
 > Add inline rotation support in dpu driver. This change adds
 > rotation config for SC7280 target.
-
-After spending some time reading display techpack, I think I'll ask you 
-to add some summary to the patch summary, describing some bits and 
-pieces. For example:
-
-- Some DPU versions support inline rot90. It is supported only for 
-limited amount of UBWC formats.
-- There are two versions of inline rotators, v1 (present on sm8250 and 
-sm7250) and v2 (sc7280). These versions differ in the list of supported 
-formats and in the scaler possibilities.
-- rot90 options are common to the rotation block version and do not 
-depend on the SoC.
-
 > 
 > Change-Id: I15861dc03422274ffd823fc0fc2c1e47909bb22c
-
-Please remove this
-
 > Signed-off-by: Kalyan Thota <kalyan_t@codeaurora.org>
 > ---
 >   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 47 +++++++++----
@@ -135,9 +112,6 @@ Please remove this
 >   };
 >   
 > +static const uint32_t rotation_formats[] = {
-
-rotation_v2_formats?
-
 > +	DRM_FORMAT_NV12,
 > +	/* TODO add formats after validation */
 > +};
@@ -151,26 +125,9 @@ rotation_v2_formats?
 >   
 > -#define _VIG_SBLK(num, sdma_pri, qseed_ver) \
 > +static const struct dpu_rotation_cfg dpu_rot_cfg = {
-
-dpu_rot_cfg is a bit too broad. dpu_rot_cfg_v2 seem to be more appropriate.
-
-
 > +	.version = INLINE_ROTATOR_V2,
-
-There are no check on the version, so you can drop this field.
-
 > +	.rot_maxdwnscale_ratio_num = 1,
 > +	.rot_maxdwnscale_ratio_dem = 1,
-
-These don't seem to be used in your patch. Was the intent to avoid all 
-the pre-downscale and downscale options? If so I'd suggest just 
-enforcing the scale factor to 1 for now in the rot90 checking code.
-
- From reading the code I had the impression that for v2 downscaling up 
-to 4:1 should be supported, so there is no need for special handling 
-(VIG_SBLK already declared downscaling up to 4:1). V1 is different and 
-will need limiting to 11:5. Is my understanding correct?
-
 > +	.rot_maxheight = 1088,
 > +	.rot_num_formats = ARRAY_SIZE(rotation_formats),
 > +	.rot_format_list = rotation_formats,
@@ -185,11 +142,6 @@ will need limiting to 11:5. Is my understanding correct?
 >   	.virt_format_list = plane_formats, \
 >   	.virt_num_formats = ARRAY_SIZE(plane_formats), \
 > +	.rotation_cfg = rot_cfg, \
-
-At some point I thought about moving rot_cfg contents directly into the 
-sblk config, but now I don't have a strong opinion on that. Let's keep 
-it in the current way for now.
-
 >   	}
 >   
 >   #define _DMA_SBLK(num, sdma_pri) \
@@ -199,9 +151,6 @@ it in the current way for now.
 >   static const struct dpu_sspp_sub_blks sdm845_vig_sblk_0 =
 > -				_VIG_SBLK("0", 5, DPU_SSPP_SCALER_QSEED3);
 > +				_VIG_SBLK("0", 5, DPU_SSPP_SCALER_QSEED3, 0);
-
-NULL, not 0.
-
 >   static const struct dpu_sspp_sub_blks sdm845_vig_sblk_1 =
 > -				_VIG_SBLK("1", 6, DPU_SSPP_SCALER_QSEED3);
 > +				_VIG_SBLK("1", 6, DPU_SSPP_SCALER_QSEED3, 0);
@@ -220,9 +169,6 @@ NULL, not 0.
 >   static const struct dpu_sspp_sub_blks sc7180_vig_sblk_0 =
 > -				_VIG_SBLK("0", 4, DPU_SSPP_SCALER_QSEED4);
 > +				_VIG_SBLK("0", 4, DPU_SSPP_SCALER_QSEED4, 0);
-
-And here.
-
 > +
 > +static const struct dpu_sspp_sub_blks sc7280_vig_sblk_0 =
 > +				_VIG_SBLK("0", 4, DPU_SSPP_SCALER_QSEED4, &dpu_rot_cfg);
@@ -244,9 +190,6 @@ And here.
 >   static const struct dpu_sspp_sub_blks sm8250_vig_sblk_3 =
 > -				_VIG_SBLK("3", 8, DPU_SSPP_SCALER_QSEED3LITE);
 > +				_VIG_SBLK("3", 8, DPU_SSPP_SCALER_QSEED3LITE, 0);
-
-And here
-
 >   
 >   static const struct dpu_sspp_cfg sm8250_sspp[] = {
 >   	SSPP_BLK("sspp_0", SSPP_VIG0, 0x4000, VIG_SM8250_MASK,
@@ -351,14 +294,7 @@ And here
 > +		pstate->pixel_ext.num_ext_pxls_top[i] = inline_rotation ?
 > +			scale_cfg->src_width[i] : scale_cfg->src_height[i];
 > +		pstate->pixel_ext.num_ext_pxls_left[i] = inline_rotation ?
-> +	
-
-Just move pixel_ext setup outside of dpu_setup_scaler3.
-
-Then you can pass different src_w/src_h pairs to pixel_ext setup and 
-scale_cfg setup code.
-
-		scale_cfg->src_height[i] : scale_cfg->src_width[i];
+> +			scale_cfg->src_height[i] : scale_cfg->src_width[i];
 >   	}
 >   	if (!(DPU_FORMAT_IS_YUV(fmt)) && (src_h == dst_h)
 >   		&& (src_w == dst_w))
@@ -402,8 +338,7 @@ scale_cfg setup code.
 > +
 > +		if (src.y2 > pdpu->pipe_sblk->rotation_cfg->rot_maxheight) {
 
-Check that rotation_cfg is not null and that we have 
-DPU_SSPP_INLINE_ROTATION here.
+Another note: drm_rect_width(&src) rather than src.y2 here.
 
 > +			DPU_DEBUG_PLANE(pdpu,
 > +			"invalid height for inline rot:%d max:%d\n",
@@ -413,9 +348,6 @@ DPU_SSPP_INLINE_ROTATION here.
 > +
 > +		/* check for valid formats supported by inline rotation */
 > +		dpu_kms = to_dpu_kms(priv->kms);
-
-Nit: you don't need kms here.
-
 > +		msm_fmt = msm_framebuffer_format(new_plane_state->fb);
 > +		fmt = to_dpu_format(msm_fmt);
 > +		supported_formats = pdpu->pipe_sblk->rotation_cfg->rot_format_list;
@@ -424,9 +356,6 @@ Nit: you don't need kms here.
 > +		for (i = 0; i < num_formats; i++) {
 > +			if (fmt->base.pixel_format == supported_formats[i] &&
 > +				fmt->fetch_mode == DPU_FETCH_UBWC)
-
-I think you'd like to use DPU_FORMAT_IS_UBWC here.
-
 > +				found = true;
 > +		}
 > +
@@ -482,9 +411,6 @@ I think you'd like to use DPU_FORMAT_IS_UBWC here.
 >   
 > +	if (pdpu->features & BIT(DPU_SSPP_INLINE_ROTATION))
 > +		supported_rotations |= DRM_MODE_ROTATE_90;
-
-And ROTATE_270 too please.
-
 > +
 >   	drm_plane_create_rotation_property(plane,
 > -			DRM_MODE_ROTATE_0,
