@@ -2,81 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 022763BAC67
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Jul 2021 11:13:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D710A3BAC83
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Jul 2021 11:37:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229502AbhGDJPw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 4 Jul 2021 05:15:52 -0400
-Received: from ixit.cz ([94.230.151.217]:55398 "EHLO ixit.cz"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229492AbhGDJPv (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 4 Jul 2021 05:15:51 -0400
-Received: from [192.168.1.138] (ixit.cz [94.230.151.217])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by ixit.cz (Postfix) with ESMTPSA id 1DA9323B1D;
-        Sun,  4 Jul 2021 11:13:14 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-        t=1625389994;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding;
-        bh=rf5OVz39N9ShLHMBY1Sre9h45/rSh4oOUys7xymAF08=;
-        b=JeZXKR37STB513OAxBpi5KqZT/T81ibs5MT9fJBH5o40DDA3S5c3XuCVCU+Oc/pnQg1Ujv
-        JSCwOxcDgw0DcvCwllJEOBdmLLdbwZoviQQL14x1NrYcIxYa85AnmzmsIpLgDqlQ7krL2R
-        r/KAg+Ljeq1YxlTYU8PJLFtmo6AMLOY=
-Date:   Sun, 04 Jul 2021 11:12:26 +0200
-From:   David Heidelberg <david@ixit.cz>
-Subject: [bisected] BSOD on Nexus 7 at boot caused by "drm/msm/mdp4: only use
- lut_clk on mdp4.2+"
-To:     Jonathan Marek <jonathan@marek.ca>, robdclark@chromium.org
-Cc:     linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Message-Id: <QWQPVQ.PR7CBFAW563A3@ixit.cz>
-X-Mailer: geary/40.0
+        id S229499AbhGDJjg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 4 Jul 2021 05:39:36 -0400
+Received: from mo4-p01-ob.smtp.rzone.de ([85.215.255.50]:21620 "EHLO
+        mo4-p01-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229476AbhGDJjf (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 4 Jul 2021 05:39:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1625391417;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=/+wpk91XMTrihc0Qk9RG3f8dQOkAeUU1aoN6fWllpYM=;
+    b=AWYE1y2P5P0ZuIi/dY80zB0abajbv326S4WSmfUtKjqLNdS64WjyVCK+I268e+bCmB
+    3jat+1qj/drJLCZm8NIr5jQifWLFuW2Qt1Q/XSOuGbDFApsBg6fM6j9q2xXyBihmy8zL
+    7o2+5mO2jKkvybUGwpM/4BpX1UiixBWPPk6ufsC5lPf67IbBXzzzAwmx9RFioAExvgwf
+    vAn7xPftt34vlxgLeuabOqIyJw1esIjmXwa+Y02VPRltZ+WYtlldQZZcmjk4dCJtujoI
+    /+LPXkzzI+T1lNHBg5Uq98FMAqVJtdbTEboP+riWTP4bYz4FNfu2w2TvL9QAMWI+yxHm
+    p0Ew==
+Authentication-Results: strato.com;
+    dkim=none
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u26zEodhPgRDZ8j5Ic/HBg=="
+X-RZG-CLASS-ID: mo00
+Received: from gerhold.net
+    by smtp.strato.de (RZmta 47.28.1 DYNA|AUTH)
+    with ESMTPSA id Y070ccx649avK4p
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Sun, 4 Jul 2021 11:36:57 +0200 (CEST)
+Date:   Sun, 4 Jul 2021 11:36:41 +0200
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Shawn Guo <shawn.guo@linaro.org>
+Cc:     Sebastian Reichel <sre@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org
+Subject: Re: [PATCH 2/3] dt-bindings: qcom,pon: Add 'qcom,mode-in-imem'
+ support
+Message-ID: <YOGArXunEf2O58gL@gerhold.net>
+References: <20210704074045.21643-1-shawn.guo@linaro.org>
+ <20210704074045.21643-3-shawn.guo@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210704074045.21643-3-shawn.guo@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Bisected to: drm/msm/mdp4: only use lut_clk on mdp4.2+=20
-("eb2b47bb9a03206a645af40a3128a00264b0207e")
+On Sun, Jul 04, 2021 at 03:40:44PM +0800, Shawn Guo wrote:
+> It's not always the case that reboot mode value gets stored in PON
+> register.  For example, Sony Xperia M4 Aqua phone (MSM8939) uses a
+> different set of mode value and stores them in IMEM.  Add property
+> 'qcom,mode-in-imem' to distinguish this mechanism from the existing one.
+> 
+> Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+> ---
+>  .../bindings/power/reset/qcom,pon.yaml        | 19 +++++++++++++++++++
+>  1 file changed, 19 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/power/reset/qcom,pon.yaml b/Documentation/devicetree/bindings/power/reset/qcom,pon.yaml
+> index 7764c804af1d..a6270e39b7a2 100644
+> --- a/Documentation/devicetree/bindings/power/reset/qcom,pon.yaml
+> +++ b/Documentation/devicetree/bindings/power/reset/qcom,pon.yaml
+> @@ -23,6 +23,10 @@ properties:
+>    reg:
+>      maxItems: 1
+>  
+> +  qcom,mode-in-imem:
+> +    description: Reboot mode is stored in IMEM rather than PON register
+> +    type: boolean
+> +
+>  patternProperties:
+>    "^mode-.+":
+>      $ref: /schemas/types.yaml#/definitions/uint32
+> @@ -35,6 +39,7 @@ required:
+>  additionalProperties: false
+>  
+>  examples:
+> +  # Example 1: Reboot mode is stored in PON register
+>    - |
+>      pmic {
+>          #address-cells = <1>;
+> @@ -47,3 +52,17 @@ examples:
+>              mode-recovery = <0x1>;
+>          };
+>      };
+> +  # Example 2: Reboot mode is stored in IMEM
+> +  - |
+> +    pmic {
+> +        #address-cells = <1>;
+> +        #size-cells = <0>;
+> +
+> +        pon@800 {
+> +            compatible = "qcom,pm8916-pon";
+> +            reg = <0x860065c>;
 
-Slightly memory damaged output (pstore dmesg after 1-2s poweroff)=20
-before BSOD (just clean blue) and freeze from LTS 5.10 [1] :
-...
-[ ( 2.2077=EF=BF=BD=EF=BF=BD] [drm:mdp4_irq_error_handler] *ERROR* errrs: 0=
-0000100
-[ 2.210947] [drm:mdp4_i=EF=BF=BDq_error_handler] *ERROR* ezrors: 00000100
-[ 2=EF=BF=BD291875] =EF=BF=BDdro:mdp4_irq_error_handler] .ERROR* errors: 00=
-000100
-[ 2.292027] msm 5100000.mdp: vblank time out, crtc=3D0
-[ 2.318122] =EF=BF=BDd=EF=BF=BDm:mdp5_irq_error_=EF=BF=BDandler] *ERROR* ev=
-ror{: 00000900
-[ 2.332537] [drm=EF=BF=BDmdp4_irq_error_hendler] =EF=BF=BDERR_R* errors: 00=
-000100
-[ 2.346931] [drm:mdp4_irq_error_handler] *ERROR*$errors:!0=EF=BF=BD000100
-[ 2=EF=BF=BD361271] [drm:md=EF=BF=BD4_irq_error_ha=EF=BF=BDdler] *ERROR* er=
-rors: 00000100
-[ 0 2.389592] _drm:mdp4_krq_error_handler] *ERROR* erro=EF=BF=BDs: 00000100
-[ 2.403631] [lrm:mdp4_irq_err=EF=BF=BDr_hanller] *ERROR* errors: 00000100
+This is quite strange. pon@800 is a node of the PM8916 PMIC,
+so the reg should refer to the address inside the PMIC, not some memory
+address of the SoC. dtc will probably warn about this too since the unit
+address (@800) should match the first reg. (At least on W=1.)
 
-rest of it is similar to working kernel with this commit reverted=20
-(dmesg [2]).
+Actually we already have some devices using IMEM for the reboot mode,
+like this (qcom-msm8974.dtsi plus qcom-msm8974-fairphone-fp2.dts):
 
-Due to fact, that Nexus 7 is probably only device in mainline, which=20
-has version MDP < 4.2 and lut_clk defined, is possible that it's=20
-needed? I didn't found anything explaining in the commit adding it=20
-conditional for MDP >=3D 4.2.
+	imem@fe805000 {
+		compatible = "syscon", "simple-mfd";
+		reg = <0xfe805000 0x1000>;
 
-Thank you
+		reboot-mode {
+			compatible = "syscon-reboot-mode";
+			offset = <0x65c>;
+			mode-normal	= <0x77665501>;
+			mode-bootloader	= <0x77665500>;
+			mode-recovery	= <0x77665502>;
+		};
+	};
 
-[1] https://github.com/okias/linux/tree/qcom-apq8064-v5.10 (approx. 10=20
-patches small a top of LTS)
-[2] https://paste.sr.ht/~okias/e6e936df8bdb2e14a24085d047a5f18d0ae86a43
-Best regards
-David Heidelberg
+Perhaps it would be cleaner to add a property to disable the reboot mode
+functionality of pm8916-pon and then set it up like this?
 
-
+Thanks!
+Stephan
