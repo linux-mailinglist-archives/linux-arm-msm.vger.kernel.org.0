@@ -2,514 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A46753BAC17
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Jul 2021 10:18:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 78ACA3BAC1D
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Jul 2021 10:25:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229689AbhGDIVY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 4 Jul 2021 04:21:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49916 "EHLO
+        id S229540AbhGDI2W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 4 Jul 2021 04:28:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51424 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229540AbhGDIVY (ORCPT
+        with ESMTP id S229549AbhGDI2W (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 4 Jul 2021 04:21:24 -0400
-Received: from mail-qv1-xf2b.google.com (mail-qv1-xf2b.google.com [IPv6:2607:f8b0:4864:20::f2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1061CC061762
-        for <linux-arm-msm@vger.kernel.org>; Sun,  4 Jul 2021 01:18:49 -0700 (PDT)
-Received: by mail-qv1-xf2b.google.com with SMTP id x6so6956360qvx.4
-        for <linux-arm-msm@vger.kernel.org>; Sun, 04 Jul 2021 01:18:49 -0700 (PDT)
+        Sun, 4 Jul 2021 04:28:22 -0400
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7324C061764
+        for <linux-arm-msm@vger.kernel.org>; Sun,  4 Jul 2021 01:25:46 -0700 (PDT)
+Received: by mail-lj1-x231.google.com with SMTP id t30so164911ljo.5
+        for <linux-arm-msm@vger.kernel.org>; Sun, 04 Jul 2021 01:25:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=AXAKzB+7V4rmvBC/YTuwa/Oiqizzoa7oFHywVDj7y7A=;
-        b=GqBVXgW5+FT5HETXcgRqZIEW/b8ydTfLKKIpjG8Qt/8/3WCtCpKx5vcXLhW97NRz0j
-         k7hDH7RMyhbwaQHLg92ZT+rHvof/EHpMNKDxJS6au9j/SJZl4EscADIkqpoDmjR43wnH
-         0Ob2gsoDh73zujUF1yCZ0APweBl5eCogc2aMk3BaMGXi8IXBV0yGZ8cAC0y3Q3HqBnZj
-         WLyfDd5G39RQgMHRW4+YtpWyTKce02Ovkj1cYgwry82+t5BOJlK55hqjSkjFIFkLo4Hc
-         maYB7brXeS2JzL9rFNcoirRXaR8pzaM77alxLhaOsEhMnvSrvkXvvP9mSReKcM8kcajs
-         tE8A==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=mem7aDqrdPAoK1Q+h1MiWVWd2rSQrghSbzr5cmPA4tE=;
+        b=T+e0XbVmuv9/j9Fjh+jIKG/WvWOhzEaVLBBiasfflltjEXdbclLUxmZe0Jykii0Awe
+         jTOWnYhIY4OJT+q2po++qNMQ+corj1KESALoloz2MDyWCViHpttTamqGUb7NPbH+pQdC
+         gWOFgtEoHCbknVjR8jx4bW0iUdhm8pGliOJlIJi/aZSh/cHNwvHAh3Rp3pea+MLo3ecN
+         WLX2XuB1g2ZkRX2lCtH3cuyZ6tkNfkSKS2IW8tdVKmHkID57ixsBhnh1XTvZ2j+vehfj
+         eXQiooSLrsJmBHy2vR9GbHy2PQhIlK5hoE+WdFPC46uJEbgYHz4AESQgaBC1gMsgtguM
+         hW3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=AXAKzB+7V4rmvBC/YTuwa/Oiqizzoa7oFHywVDj7y7A=;
-        b=Qy4YQPqE30EK2gw/sfIItq/V2rVsc7shiuufRr6bwAoygdOJgJz06jT2qOP3FPlW6v
-         CTQUwpl2gt12qSj1hA6Op4hDPrZi33bXGkhoei2JYiW5cPV2YnN3FzTdYjPcNB7hC75L
-         7F5sY0N9mPRDOgkwWCg41Gd1QaKn0nLl0K/n0aWjNRL7yxs30fkmMxAUmltvO0191Bvf
-         AToYUAHMkz0JFsmEghYLKcpOx+GIn+7grGhDVk/IzbrWz579M9CkyDbYOlV3mcwx5atM
-         xndBUC3xzxZ29vTRzVH0MdV6WKVisVZ7WbC4DXemY4JloHZ+u1kEH6iIHMnV37koNo1g
-         afng==
-X-Gm-Message-State: AOAM5329BfLSLKeTlWhvW5bYWz/+C3JWp8pM8iwgbNMD6OXWTVLZGb45
-        LF4KSkqPSF2IsWjCt8sJL1xzH7EcVF8vtJKJ6+SMeA==
-X-Google-Smtp-Source: ABdhPJymH78HodMWsIPx0bB+aeC/012l4d5uautfiEt2xnG6/2Yww7y+oTfU0S31A38VBb6/Uj5go8/8lbKqOdtXe3k=
-X-Received: by 2002:ad4:5ca6:: with SMTP id q6mr7727556qvh.23.1625386728044;
- Sun, 04 Jul 2021 01:18:48 -0700 (PDT)
-MIME-Version: 1.0
-References: <20210703151835.171313-1-david@ixit.cz>
-In-Reply-To: <20210703151835.171313-1-david@ixit.cz>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=mem7aDqrdPAoK1Q+h1MiWVWd2rSQrghSbzr5cmPA4tE=;
+        b=Q91KmBUUCdPIqPLRrPS5C0ZLhGb+lnwnVPIE0FDfYcHlDVpCHjvTj+ma/qBlPCNn3r
+         L3sRY6GfTv47p42UmQzBhWDbArzhFxf5QaO8OpYE8U21ti7O7rSKwX2vJm4mh+KERr5r
+         6Wl4vDJfzrbnCresS53e1gtGLYt8zpinxrKwCZ2aAKZ30kfpM2gR/gXoW4vkaT9zP6Gz
+         xJfxOGMEFuxHUbmYunFBGLHDd/Ks/QpuOLB7C9VhfxQ5zobL9d0v1SWeE055EeuSZKS4
+         gy3A/JDNlz9HR+CodTVoXJU0W1BTNIT6iiL20kqXaCINLF7Jx5FFz9y6LJyUaAolx2em
+         hVWg==
+X-Gm-Message-State: AOAM531gqkz+ooYSJFcgFjSNXU5YQBmB37r9ROH8O7jcgN75Q38Dj0Du
+        VTInGfotC35y5uP1AUhC5P9pYw==
+X-Google-Smtp-Source: ABdhPJy4nvOjyXAyQrOq0glZ90aFFBPgm0fiFPwTmBp3srbuOj7LS6n5pX1iTaiwSpzDGPyAnNIQZg==
+X-Received: by 2002:a2e:9e18:: with SMTP id e24mr6692205ljk.336.1625387145132;
+        Sun, 04 Jul 2021 01:25:45 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id f8sm737547lfu.188.2021.07.04.01.25.44
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 04 Jul 2021 01:25:44 -0700 (PDT)
+Subject: Re: [RFC] Inline rotation support in dpu driver
+To:     Kalyan Thota <kalyan_t@codeaurora.org>,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
+Cc:     linux-kernel@vger.kernel.org, robdclark@gmail.com,
+        dianders@chromium.org, mkrishn@codeaurora.org
+References: <1625311962-14185-1-git-send-email-kalyan_t@codeaurora.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Sun, 4 Jul 2021 11:18:36 +0300
-Message-ID: <CAA8EJpqo=5JNVPfoB4QAJnYKEMV2PWgJL0=+8MEV7BVzL2ht=g@mail.gmail.com>
-Subject: Re: [PATCH] RFC: dt-bindings: drm/msm/gpu: convert to YAML
-To:     David Heidelberg <david@ixit.cz>
-Cc:     Sharat Masetty <smasetty@codeaurora.org>, masneyb@onstation.org,
-        Rob Clark <robdclark@chromium.org>,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Message-ID: <5dcd850a-280c-c356-32e5-35a4fe089f4e@linaro.org>
+Date:   Sun, 4 Jul 2021 11:25:44 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
+MIME-Version: 1.0
+In-Reply-To: <1625311962-14185-1-git-send-email-kalyan_t@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 3 Jul 2021 at 18:19, David Heidelberg <david@ixit.cz> wrote:
->
-> This warning cannot be fixed by conversion, since this naming is already used.
-> Documentation/devicetree/bindings/display/msm/gpu.example.dt.yaml: gpu@5000000: interconnect-names: ['gfx-mem'] is too short
+On 03/07/2021 14:32, Kalyan Thota wrote:
+> This change adds support for inline rotation in the dpu driver.
+> When inline rotation is enabled the VIG pipes will directly fetch the image
+> from memory in a rotated fashion
+> 
+> Inline rotation has following restrictions
+> 1) Supported only with compressed formats
 
-It is not a problem of the name length. You've declared that
-interconnect-names would contain two items (gfx-mem and ocmem), but
-add just one.
+NV12, which is the only format you declare, is not compressed.
 
->
-> Signed-off-by: David Heidelberg <david@ixit.cz>
-> ---
->  .../devicetree/bindings/display/msm/gpu.txt   | 157 -----------
->  .../devicetree/bindings/display/msm/gpu.yaml  | 256 ++++++++++++++++++
->  2 files changed, 256 insertions(+), 157 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/display/msm/gpu.txt
->  create mode 100644 Documentation/devicetree/bindings/display/msm/gpu.yaml
->
-> diff --git a/Documentation/devicetree/bindings/display/msm/gpu.txt b/Documentation/devicetree/bindings/display/msm/gpu.txt
-> deleted file mode 100644
-> index 090dcb3fc34d..000000000000
-> --- a/Documentation/devicetree/bindings/display/msm/gpu.txt
-> +++ /dev/null
-> @@ -1,157 +0,0 @@
-> -Qualcomm adreno/snapdragon GPU
-> -
-> -Required properties:
-> -- compatible: "qcom,adreno-XYZ.W", "qcom,adreno" or
-> -             "amd,imageon-XYZ.W", "amd,imageon"
-> -    for example: "qcom,adreno-306.0", "qcom,adreno"
-> -  Note that you need to list the less specific "qcom,adreno" (since this
-> -  is what the device is matched on), in addition to the more specific
-> -  with the chip-id.
-> -  If "amd,imageon" is used, there should be no top level msm device.
-> -- reg: Physical base address and length of the controller's registers.
-> -- interrupts: The interrupt signal from the gpu.
-> -- clocks: device clocks (if applicable)
-> -  See ../clocks/clock-bindings.txt for details.
-> -- clock-names: the following clocks are required by a3xx, a4xx and a5xx
-> -  cores:
-> -  * "core"
-> -  * "iface"
-> -  * "mem_iface"
-> -  For GMU attached devices the GPU clocks are not used and are not required. The
-> -  following devices should not list clocks:
-> -   - qcom,adreno-630.2
-> -- iommus: optional phandle to an adreno iommu instance
-> -- operating-points-v2: optional phandle to the OPP operating points
-> -- interconnects: optional phandle to an interconnect provider.  See
-> -  ../interconnect/interconnect.txt for details. Some A3xx and all A4xx platforms
-> -  will have two paths; all others will have one path.
-> -- interconnect-names: The names of the interconnect paths that correspond to the
-> -  interconnects property. Values must be gfx-mem and ocmem.
-> -- qcom,gmu: For GMU attached devices a phandle to the GMU device that will
-> -  control the power for the GPU. Applicable targets:
-> -    - qcom,adreno-630.2
-> -- zap-shader: For a5xx and a6xx devices this node contains a memory-region that
-> -  points to reserved memory to store the zap shader that can be used to help
-> -  bring the GPU out of secure mode.
-> -- firmware-name: optional property of the 'zap-shader' node, listing the
-> -  relative path of the device specific zap firmware.
-> -- sram: phandle to the On Chip Memory (OCMEM) that's present on some a3xx and
-> -        a4xx Snapdragon SoCs. See
-> -        Documentation/devicetree/bindings/sram/qcom,ocmem.yaml.
-> -
-> -Optional properties:
-> -- #cooling-cells: The value must be 2. For details, please refer
-> -       Documentation/devicetree/bindings/thermal/thermal-cooling-devices.yaml.
-> -
-> -Example 3xx/4xx:
-> -
-> -/ {
-> -       ...
-> -
-> -       gpu: adreno@fdb00000 {
-> -               compatible = "qcom,adreno-330.2",
-> -                            "qcom,adreno";
-> -               reg = <0xfdb00000 0x10000>;
-> -               reg-names = "kgsl_3d0_reg_memory";
-> -               interrupts = <GIC_SPI 33 IRQ_TYPE_LEVEL_HIGH>;
-> -               interrupt-names = "kgsl_3d0_irq";
-> -               clock-names = "core",
-> -                             "iface",
-> -                             "mem_iface";
-> -               clocks = <&mmcc OXILI_GFX3D_CLK>,
-> -                        <&mmcc OXILICX_AHB_CLK>,
-> -                        <&mmcc OXILICX_AXI_CLK>;
-> -               sram = <&gpu_sram>;
-> -               power-domains = <&mmcc OXILICX_GDSC>;
-> -               operating-points-v2 = <&gpu_opp_table>;
-> -               iommus = <&gpu_iommu 0>;
-> -               #cooling-cells = <2>;
-> -       };
-> -
-> -       gpu_sram: ocmem@fdd00000 {
-> -               compatible = "qcom,msm8974-ocmem";
-> -
-> -               reg = <0xfdd00000 0x2000>,
-> -                     <0xfec00000 0x180000>;
-> -               reg-names = "ctrl",
-> -                           "mem";
-> -
-> -               clocks = <&rpmcc RPM_SMD_OCMEMGX_CLK>,
-> -                        <&mmcc OCMEMCX_OCMEMNOC_CLK>;
-> -               clock-names = "core",
-> -                             "iface";
-> -
-> -               #address-cells = <1>;
-> -               #size-cells = <1>;
-> -
-> -               gpu_sram: gpu-sram@0 {
-> -                       reg = <0x0 0x100000>;
-> -                       ranges = <0 0 0xfec00000 0x100000>;
-> -               };
-> -       };
-> -};
-> -
-> -Example a6xx (with GMU):
-> -
-> -/ {
-> -       ...
-> -
-> -       gpu@5000000 {
-> -               compatible = "qcom,adreno-630.2", "qcom,adreno";
-> -               #stream-id-cells = <16>;
-> -
-> -               reg = <0x5000000 0x40000>, <0x509e000 0x10>;
-> -               reg-names = "kgsl_3d0_reg_memory", "cx_mem";
-> -
-> -               #cooling-cells = <2>;
-> -
-> -               /*
-> -                * Look ma, no clocks! The GPU clocks and power are
-> -                * controlled entirely by the GMU
-> -                */
-> -
-> -               interrupts = <GIC_SPI 300 IRQ_TYPE_LEVEL_HIGH>;
-> -
-> -               iommus = <&adreno_smmu 0>;
-> -
-> -               operating-points-v2 = <&gpu_opp_table>;
-> -
-> -               interconnects = <&rsc_hlos MASTER_GFX3D &rsc_hlos SLAVE_EBI1>;
-> -               interconnect-names = "gfx-mem";
-> -
-> -               gpu_opp_table: opp-table {
-> -                       compatible = "operating-points-v2";
-> -
-> -                       opp-430000000 {
-> -                               opp-hz = /bits/ 64 <430000000>;
-> -                               opp-level = <RPMH_REGULATOR_LEVEL_SVS_L1>;
-> -                               opp-peak-kBps = <5412000>;
-> -                       };
-> -
-> -                       opp-355000000 {
-> -                               opp-hz = /bits/ 64 <355000000>;
-> -                               opp-level = <RPMH_REGULATOR_LEVEL_SVS>;
-> -                               opp-peak-kBps = <3072000>;
-> -                       };
-> -
-> -                       opp-267000000 {
-> -                               opp-hz = /bits/ 64 <267000000>;
-> -                               opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS>;
-> -                               opp-peak-kBps = <3072000>;
-> -                       };
-> -
-> -                       opp-180000000 {
-> -                               opp-hz = /bits/ 64 <180000000>;
-> -                               opp-level = <RPMH_REGULATOR_LEVEL_MIN_SVS>;
-> -                               opp-peak-kBps = <1804000>;
-> -                       };
-> -               };
-> -
-> -               qcom,gmu = <&gmu>;
-> -
-> -               zap-shader {
-> -                       memory-region = <&zap_shader_region>;
-> -                       firmware-name = "qcom/LENOVO/81JL/qcdxkmsuc850.mbn"
-> -               };
-> -       };
-> -};
-> diff --git a/Documentation/devicetree/bindings/display/msm/gpu.yaml b/Documentation/devicetree/bindings/display/msm/gpu.yaml
-> new file mode 100644
-> index 000000000000..4315482e0b12
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/display/msm/gpu.yaml
-> @@ -0,0 +1,256 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +
-> +$id: "http://devicetree.org/schemas/display/msm/gpu.yaml#"
-> +$schema: "http://devicetree.org/meta-schemas/core.yaml#"
-> +
-> +title: Devicetree bindings for the Adreno or Snapdragon GPUs
-> +
-> +maintainers:
-> +  - Rob Clark <robdclark@gmail.com>
-> +
-> +description: |
-> +  These bindings describe the GPUs
-> +
-> +properties:
-> +  compatible:
-> +    anyOf:
-> +      - items:
-> +          - pattern: '^qcom,adreno-[3-6][0-9][0-9].[0-9]$'
-> +          - const: qcom,adreno
-> +      - items:
-> +          - pattern: '^amd,imageon-200.[0-1]$'
-> +          - const: amd,imageon
-> +
-> +  clocks:
-> +    maxItems: 3
-> +
-> +  clock-names:
-> +    maxItems: 3
-> +
-> +  reg:
-> +    minItems: 1
-> +    maxItems: 2
-> +    description: Physical base address and length of the controller's registers.
-> +
-> +  reg-names:
-> +    minItems: 1
-> +    maxItems: 2
-> +
-> +  interrupts:
-> +    maxItems: 1
-> +
-> +  interrupt-names:
-> +    maxItems: 1
-> +
-> +  interconnects:
-> +    minItems: 1
-> +    maxItems: 2
-> +    description: |
-> +      optional phandle to an interconnect provider. See
-> +      ../interconnect/interconnect.txt for details.
-> +      Some A3xx and all A4xx platforms will have two paths;
-> +      all others will have one path.
-> +
-> +  interconnect-names:
-> +    items:
-> +      - const: gfx-mem
-> +      - const: ocmem
-> +    description: |
-> +      the names of the interconnect paths that correspond to
-> +      the interconnects property
-> +
-> +  iommus:
-> +    maxItems: 1
-> +
-> +  sram:
-> +    $ref: /schemas/types.yaml#/definitions/phandle-array
-> +    minItems: 1
-> +    maxItems: 4
-> +    description: |
-> +      phandles to one or more reserved on-chip SRAM regions.
-> +      phandle to the On Chip Memory (OCMEM) that's present on some a3xx and
-> +      a4xx Snapdragon SoCs. See
-> +      Documentation/devicetree/bindings/sram/qcom,ocmem.yaml
-> +
-> +  operating-points-v2: true
-> +  opp-table: true
-> +
-> +  power-domains:
-> +    maxItems: 1
-> +
-> +  zap-shader:
-> +    description: |
-> +      For a5xx and a6xx devices this node contains a memory-region that
-> +      points to reserved memory to store the zap shader that can be used to
-> +      help bring the GPU out of secure mode.
-> +
-> +  "#cooling-cells":
-> +    const: 2
-> +    description: |
-> +      For details, please refer
-> +      Documentation/devicetree/bindings/thermal/thermal-cooling-devices.yaml
-> +
-> +  qcom,gmu:
-> +    $ref: /schemas/types.yaml#/definitions/phandle
-> +    description: |
-> +      for GMU attached devices a phandle to the GMU device that will
-> +      control the power for the GPU
-> +
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - interrupts
-> +
-> +additionalProperties: false
-> +
-> +allOf:
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          contains:
-> +            pattern: '^qcom,adreno-[3-5][0-9][0-9].[0-9]$'
-> +
-> +    then:
-> +      properties:
-> +        clocks:
-> +          items:
-> +            - description: GPU Core clock
-> +            - description: GPU Interface clock
-> +            - description: GPU Memory Interface clock
-> +
-> +        clock-names:
-> +          items:
-> +            - const: core
-> +            - const: iface
-> +            - const: mem_iface
-> +      required:
-> +        - clocks
-> +        - clock-names
-> +
-> +examples:
-> +  - |
-> +
-> +    // Example a3xx/4xx:
-> +
-> +    #include <dt-bindings/clock/qcom,mmcc-msm8974.h>
-> +    #include <dt-bindings/clock/qcom,rpmcc.h>
-> +    #include <dt-bindings/interrupt-controller/irq.h>
-> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
-> +
-> +    gpu: adreno@fdb00000 {
-> +        compatible = "qcom,adreno-330.2", "qcom,adreno";
-> +
-> +        reg = <0xfdb00000 0x10000>;
-> +        reg-names = "kgsl_3d0_reg_memory";
-> +
-> +        clock-names = "core", "iface", "mem_iface";
-> +        clocks = <&mmcc OXILI_GFX3D_CLK>,
-> +                 <&mmcc OXILICX_AHB_CLK>,
-> +                 <&mmcc OXILICX_AXI_CLK>;
-> +
-> +        interrupts = <GIC_SPI 33 IRQ_TYPE_LEVEL_HIGH>;
-> +        interrupt-names = "kgsl_3d0_irq";
-> +
-> +        sram = <&gpu_sram>;
-> +        power-domains = <&mmcc OXILICX_GDSC>;
-> +        operating-points-v2 = <&gpu_opp_table>;
-> +        iommus = <&gpu_iommu 0>;
-> +        #cooling-cells = <2>;
-> +    };
-> +
-> +    ocmem@fdd00000 {
-> +        compatible = "qcom,msm8974-ocmem";
-> +
-> +        reg = <0xfdd00000 0x2000>,
-> +              <0xfec00000 0x180000>;
-> +        reg-names = "ctrl", "mem";
-> +
-> +        clocks = <&rpmcc RPM_SMD_OCMEMGX_CLK>,
-> +                 <&mmcc OCMEMCX_OCMEMNOC_CLK>;
-> +        clock-names = "core", "iface";
-> +
-> +        #address-cells = <1>;
-> +        #size-cells = <1>;
-> +        ranges = <0 0xfec00000 0x100000>;
-> +
-> +        gpu_sram: gpu-sram@0 {
-> +            reg = <0x0 0x100000>;
-> +        };
-> +    };
-> +  - |
-> +
-> +    // Example a6xx (with GMU):
-> +
-> +    #include <dt-bindings/clock/qcom,gpucc-sdm845.h>
-> +    #include <dt-bindings/clock/qcom,gcc-sdm845.h>
-> +    #include <dt-bindings/power/qcom-rpmpd.h>
-> +    #include <dt-bindings/interrupt-controller/irq.h>
-> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
-> +    #include <dt-bindings/interconnect/qcom,sdm845.h>
-> +
-> +    reserved-memory {
-> +        #address-cells = <2>;
-> +        #size-cells = <2>;
-> +
-> +        zap_shader_region: gpu@8f200000 {
-> +            compatible = "shared-dma-pool";
-> +            reg = <0x0 0x90b00000 0x0 0xa00000>;
-> +            no-map;
-> +        };
-> +    };
-> +
-> +    gpu@5000000 {
-> +        compatible = "qcom,adreno-630.2", "qcom,adreno";
-> +
-> +        reg = <0x5000000 0x40000>, <0x509e000 0x10>;
-> +        reg-names = "kgsl_3d0_reg_memory", "cx_mem";
-> +
-> +        #cooling-cells = <2>;
-> +
-> +        interrupts = <GIC_SPI 300 IRQ_TYPE_LEVEL_HIGH>;
-> +
-> +        iommus = <&adreno_smmu 0>;
-> +
-> +        operating-points-v2 = <&gpu_opp_table>;
-> +
-> +        interconnects = <&rsc_hlos MASTER_GFX3D &rsc_hlos SLAVE_EBI1>;
-> +        interconnect-names = "gfx-mem";
-> +
-> +        qcom,gmu = <&gmu>;
-> +
-> +        gpu_opp_table: opp-table {
-> +            compatible = "operating-points-v2";
-> +
-> +            opp-430000000 {
-> +                opp-hz = /bits/ 64 <430000000>;
-> +                opp-level = <RPMH_REGULATOR_LEVEL_SVS_L1>;
-> +                opp-peak-kBps = <5412000>;
-> +            };
-> +
-> +            opp-355000000 {
-> +                opp-hz = /bits/ 64 <355000000>;
-> +                opp-level = <RPMH_REGULATOR_LEVEL_SVS>;
-> +                opp-peak-kBps = <3072000>;
-> +            };
-> +
-> +            opp-267000000 {
-> +                opp-hz = /bits/ 64 <267000000>;
-> +                opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS>;
-> +                opp-peak-kBps = <3072000>;
-> +            };
-> +
-> +            opp-180000000 {
-> +                opp-hz = /bits/ 64 <180000000>;
-> +                opp-level = <RPMH_REGULATOR_LEVEL_MIN_SVS>;
-> +                opp-peak-kBps = <1804000>;
-> +            };
-> +        };
-> +
-> +        zap-shader {
-> +            memory-region = <&zap_shader_region>;
-> +            firmware-name = "qcom/LENOVO/81JL/qcdxkmsuc850.mbn";
-> +        };
-> +    };
-> --
-> 2.30.2
->
+> 2) max pre rotated height is 1088
+> 3) restrictions with downscaling ratio
+> 
+> Queries:
+> 
+> 1) Since inline rotation works for fewer pixel formats with specific modifier, how can we provide this information to the compositor so that
+> chrome compositor can choose between overlaying or falling back to GPU. In the patch it fails in the atomic check.
+> 
+> 2) If a display composition fails in atomic check due to any of the restrictions in overlays
+> can chrome compositor switch it back to the GPU and re trigger the commit ?
+> 
+> posting it as RFC as validation is not complete, please share early comments on this.
+> 
+> Kalyan Thota (1):
+>    drm/msm/disp/dpu1: add support for inline rotation in dpu driver
+> 
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 47 +++++++++----
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h | 20 ++++++
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c      | 93 ++++++++++++++++++++------
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h      |  2 +
+>   4 files changed, 128 insertions(+), 34 deletions(-)
+> 
 
 
 -- 
