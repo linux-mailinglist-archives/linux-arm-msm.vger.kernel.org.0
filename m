@@ -2,39 +2,39 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 46AE33BB1C0
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jul 2021 01:11:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 555FD3BB1D4
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jul 2021 01:11:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232328AbhGDXNB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 4 Jul 2021 19:13:01 -0400
-Received: from mail.kernel.org ([198.145.29.99]:48298 "EHLO mail.kernel.org"
+        id S232575AbhGDXNS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 4 Jul 2021 19:13:18 -0400
+Received: from mail.kernel.org ([198.145.29.99]:48840 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231978AbhGDXJn (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 4 Jul 2021 19:09:43 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 060FB61364;
-        Sun,  4 Jul 2021 23:07:01 +0000 (UTC)
+        id S229681AbhGDXMV (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 4 Jul 2021 19:12:21 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id AB6786162A;
+        Sun,  4 Jul 2021 23:08:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1625440022;
+        s=k20201202; t=1625440127;
         bh=6qvfVHz8Ivbu+S8FtkH8bJH6LL/dj1fkRbuXihqrtqk=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=FICfvCr+4Omb76EBhX6cX3Uv2h2GqZNAq/q4isvwyetp4VeHkzeheTUAB7uj5JSnR
-         pYyk+UdcEjTu8OtZ6Oto6qmfaHGQJ+PvZY+5OYq5xF5XVDxSdOQUkGBMX+I/AxQhWb
-         xinkchX0htaZ1SAoiJh42mdtWD2/qfR3XkceJWqUhBB8XgFyPqXeI8EvpQ6xflL/m6
-         +GMIOa6SydtbZtvedVMuogf/JfwCLPWdyyOluVVy66qF6q/4h6HfbDkC6HG58UzgqT
-         ILtkeQhbNw2tQ+nY4Mbax4xYlOUM4AfhEM8VaDa/X3pEyjZzY62piquuHt3w0AUlSt
-         P7wQ4jLAcGlqg==
+        b=f8Bo68t7zPfWk8U+oQVdKVU2/Pbt2+qgdlR/BWUmKM2LMPTKQc1y0/nTihtha7wCX
+         k7ZcpwoyyHUVLup2XelNL5r5J/It0P/XZJ/GL1hKPWtCMOuq7YZtBNc2Oonn9SSZak
+         k+1hO0xi5uEfqU9JW6+8SL35rxUawtfIwXphypWDdX5wVjaxUxI//57OyRhNSjmZqR
+         0RZythKcO2jRoexg1ZzRJTM+Bqz8hx8jiqjk1jSR2FJttl0IQDdv7UKd0ACfWdYCOj
+         M1NDOdc2AYhbjJCKYCgbgzBiz273XAAVsBT9kSDzwCzjzTUiZ01bOZhI7qD4tcdXny
+         fP2p0EFbaHFPA==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Thara Gopinath <thara.gopinath@linaro.org>,
         Herbert Xu <herbert@gondor.apana.org.au>,
         Sasha Levin <sashal@kernel.org>, linux-crypto@vger.kernel.org,
         linux-arm-msm@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.12 33/80] crypto: qce: skcipher: Fix incorrect sg count for dma transfers
-Date:   Sun,  4 Jul 2021 19:05:29 -0400
-Message-Id: <20210704230616.1489200-33-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.10 31/70] crypto: qce: skcipher: Fix incorrect sg count for dma transfers
+Date:   Sun,  4 Jul 2021 19:07:24 -0400
+Message-Id: <20210704230804.1490078-31-sashal@kernel.org>
 X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20210704230616.1489200-1-sashal@kernel.org>
-References: <20210704230616.1489200-1-sashal@kernel.org>
+In-Reply-To: <20210704230804.1490078-1-sashal@kernel.org>
+References: <20210704230804.1490078-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
