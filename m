@@ -2,158 +2,140 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C2BDD3BB6EE
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jul 2021 07:41:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 032943BB71A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jul 2021 08:18:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229781AbhGEFnu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Jul 2021 01:43:50 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:36083 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229744AbhGEFnu (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Jul 2021 01:43:50 -0400
+        id S229817AbhGEGVY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Jul 2021 02:21:24 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:31973 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229797AbhGEGVY (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 5 Jul 2021 02:21:24 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1625463674; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=+oDSSXyT2xhBvBFnw/v2pl9Ou/LSQG1wXgB0Sra79+Y=; b=lflq6XzWAmxzwsvgNA7UsQe5B+fOVgDYxsG2jtMS3rCXX6Fbjlh5BUPhO6XmSC2FJyoyJFQ/
- YD+ywcEobFqteBg7rcW1tMNv/XLWG5ie9GYaOGZcM/1dI+4tHs8LKUpLdSFhEwq05BhbB9oi
- y2xn0C+raUY9ZbnMJySFaJeH/ww=
-X-Mailgun-Sending-Ip: 69.72.43.7
+ s=smtp; t=1625465927; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=yCrPkEAKmaz+cVp5YvGeM+Fn0+vuJCy4/YBCSelI6DE=;
+ b=mf02zcorruy/+aih6dZSzEWPAaqY8HFoKIHW0P4cVo+dB8Eual8WwGW25loddOVMrCPTlRsd
+ Qpz65hUrscOulc0mzn4eZy35QvRpMblIZ1SmtCDJrldKQAYYnIBlNQew7Sde2WifYDpSS/kM
+ Hj2CaQ6NssSV9jhNmTe5E1Yk9LU=
+X-Mailgun-Sending-Ip: 198.61.254.9
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
- 60e29b702a2a9a9761abe394 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 05 Jul 2021 05:41:04
+ smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
+ 60e2a43e3a8b6d0a458b74d7 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 05 Jul 2021 06:18:38
  GMT
-Sender: rnayak=codeaurora.org@mg.codeaurora.org
+Sender: pmaliset=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 39643C433F1; Mon,  5 Jul 2021 05:41:04 +0000 (UTC)
+        id 147B1C4360C; Mon,  5 Jul 2021 06:18:38 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
-Received: from [10.50.35.89] (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: rnayak)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 41505C433D3;
-        Mon,  5 Jul 2021 05:41:00 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 41505C433D3
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=rnayak@codeaurora.org
-Subject: Re: [PATCH 1/2] soc: qcom: rpmhpd: Use corner in power_off
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20210703005416.2668319-1-bjorn.andersson@linaro.org>
- <20210703005416.2668319-2-bjorn.andersson@linaro.org>
- <cacd1a1f-01c8-b913-23e5-538a772cd118@codeaurora.org>
- <CAOCOHw4sufqC3=ixNud8Oz7vO0_ZcO8u5mqNQTKLZX4LGe9aow@mail.gmail.com>
-From:   Rajendra Nayak <rnayak@codeaurora.org>
-Message-ID: <c4440f5e-592c-b849-3ca7-57e812de2df5@codeaurora.org>
-Date:   Mon, 5 Jul 2021 11:10:58 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+        (Authenticated sender: pmaliset)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 2A775C433D3;
+        Mon,  5 Jul 2021 06:18:37 +0000 (UTC)
 MIME-Version: 1.0
-In-Reply-To: <CAOCOHw4sufqC3=ixNud8Oz7vO0_ZcO8u5mqNQTKLZX4LGe9aow@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 8bit
+Date:   Mon, 05 Jul 2021 11:48:37 +0530
+From:   Prasad Malisetty <pmaliset@codeaurora.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, bhelgaas@google.com,
+        robh+dt@kernel.org, swboyd@chromium.org, lorenzo.pieralisi@arm.com,
+        svarbanov@mm-sol.com
+Cc:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        mgautam@codeaurora.org, dianders@chromium.org, mka@chromium.org,
+        sanm@codeaurora.org
+Subject: Re: [PATCH v3 4/4] PCIe: qcom: Add support to control pipe clk mux
+In-Reply-To: <1624377651-30604-5-git-send-email-pmaliset@codeaurora.org>
+References: <1624377651-30604-1-git-send-email-pmaliset@codeaurora.org>
+ <1624377651-30604-5-git-send-email-pmaliset@codeaurora.org>
+Message-ID: <c334a6d11fae5bd135a94ab5c66b3f97@codeaurora.org>
+X-Sender: pmaliset@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 2021-06-22 21:30, Prasad Malisetty wrote:
+> pipe-clk mux needs to switch between pipe_clk
+> and XO as part of LPM squence. This is done by setting
+> pipe_clk mux as parent of pipe_clk after phy init.
+> This is a new requirement for sc7280.
+> For accessing to DBI registers during L23,
+> need to switch the pipe clock with free-running
+> clock (TCXO) using GCC’s registers
+> 
+> Signed-off-by: Prasad Malisetty <pmaliset@codeaurora.org>
+> ---
+>  drivers/pci/controller/dwc/pcie-qcom.c | 22 ++++++++++++++++++++++
+>  1 file changed, 22 insertions(+)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c
+> b/drivers/pci/controller/dwc/pcie-qcom.c
+> index 8a7a300..80e9ee4 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -166,6 +166,9 @@ struct qcom_pcie_resources_2_7_0 {
+>  	struct regulator_bulk_data supplies[2];
+>  	struct reset_control *pci_reset;
+>  	struct clk *pipe_clk;
+> +	struct clk *pipe_clk_mux;
+> +	struct clk *pipe_ext_src;
+> +	struct clk *ref_clk_src;
+>  };
+> 
+>  union qcom_pcie_resources {
+> @@ -1167,6 +1170,20 @@ static int qcom_pcie_get_resources_2_7_0(struct
+> qcom_pcie *pcie)
+>  	if (ret < 0)
+>  		return ret;
+> 
+> +	if (of_device_is_compatible(dev->of_node, "qcom,pcie-sc7280")) {
+> +		res->pipe_clk_mux = devm_clk_get(dev, "pipe_mux");
+> +		if (IS_ERR(res->pipe_clk_mux))
+> +			return PTR_ERR(res->pipe_clk_mux);
+> +
+> +		res->pipe_ext_src = devm_clk_get(dev, "phy_pipe");
+> +		if (IS_ERR(res->pipe_ext_src))
+> +			return PTR_ERR(res->pipe_ext_src);
+> +
+> +		res->ref_clk_src = devm_clk_get(dev, "ref");
+> +		if (IS_ERR(res->ref_clk_src))
+> +			return PTR_ERR(res->ref_clk_src);
+> +	}
+> +
+>  	res->pipe_clk = devm_clk_get(dev, "pipe");
+>  	return PTR_ERR_OR_ZERO(res->pipe_clk);
+>  }
+> @@ -1255,6 +1272,11 @@ static void qcom_pcie_deinit_2_7_0(struct
+> qcom_pcie *pcie)
+>  static int qcom_pcie_post_init_2_7_0(struct qcom_pcie *pcie)
+>  {
+>  	struct qcom_pcie_resources_2_7_0 *res = &pcie->res.v2_7_0;
+> +	struct dw_pcie *pci = pcie->pci;
+> +	struct device *dev = pci->dev;
+> +
+> +	if (of_device_is_compatible(dev->of_node, "qcom,pcie-sc7280"))
+> +		clk_set_parent(res->pipe_clk_mux, res->pipe_ext_src);
+> 
+>  	return clk_prepare_enable(res->pipe_clk);
+>  }
 
 
-On 7/5/2021 10:36 AM, Bjorn Andersson wrote:
-> On Sun, Jul 4, 2021 at 11:27 PM Rajendra Nayak <rnayak@codeaurora.org> wrote:
->>
->>
->>
->> On 7/3/2021 6:24 AM, Bjorn Andersson wrote:
->>> rpmhpd_aggregate_corner() takes a corner as parameter, but in
->>> rpmhpd_power_off() the code requests the level of the first corner
->>> instead.
->>>
->>> In all (known) current cases the first corner has level 0, so this
->>> change should be a nop, but in case that there's a power domain with a
->>> non-zero lowest level this makes sure that rpmhpd_power_off() actually
->>> requests the lowest level - which is the closest to "power off" we can
->>> get.
->>>
->>> While touching the code, also skip the unnecessary zero-initialization
->>> of "ret".
->>>
->>> Fixes: 279b7e8a62cc ("soc: qcom: rpmhpd: Add RPMh power domain driver")
->>> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
->>> ---
->>>    drivers/soc/qcom/rpmhpd.c | 5 ++---
->>>    1 file changed, 2 insertions(+), 3 deletions(-)
->>>
->>> diff --git a/drivers/soc/qcom/rpmhpd.c b/drivers/soc/qcom/rpmhpd.c
->>> index 2daa17ba54a3..fa209b479ab3 100644
->>> --- a/drivers/soc/qcom/rpmhpd.c
->>> +++ b/drivers/soc/qcom/rpmhpd.c
->>> @@ -403,12 +403,11 @@ static int rpmhpd_power_on(struct generic_pm_domain *domain)
->>>    static int rpmhpd_power_off(struct generic_pm_domain *domain)
->>>    {
->>>        struct rpmhpd *pd = domain_to_rpmhpd(domain);
->>> -     int ret = 0;
->>> +     int ret;
->>>
->>>        mutex_lock(&rpmhpd_lock);
->>>
->>> -     ret = rpmhpd_aggregate_corner(pd, pd->level[0]);
->>> -
->>> +     ret = rpmhpd_aggregate_corner(pd, 0);
->>
->> This won't work for cases where pd->level[0] != 0, rpmh would just ignore this and keep the
->> resource at whatever corner it was previously at.
->> (unless command DB tells you a 0 is 'valid' for a resource, sending a 0 is a nop)
->> The right thing to do is to send in whatever command DB tells you is the lowest level that's valid,
->> which is pd->level[0].
->>
-> 
-> I'm afraid this doesn't make sense to me.
-> 
-> In rpmh_power_on() if cmd-db tells us that we have [0, 64, ...] and we
-> request 64 we rpmhpd_aggregate_corner(pd, 1); but in power off, if
-> cmd-db would provide [64, ...] we would end up sending
-> rpmhpd_aggregate_corner(pd, 64);
-> So in power_on we request the corner (i.e. index in the array provided
-> in cmd-db) and in power-off the same function takes the level?
+Hi All,
 
-ah that's right, I did not read the commit log properly and got confused.
-Looks like this bug existed from the day this driver for merged :/, thanks
-for catching it.
-Does it make sense to also mark this fix for stable?
+Greetings of the day !!
 
-> 
-> Can you please help me understand what the actual number we're
-> supposed to send to the RPMh is? Is it numbers in the range [0-15] or
-> is it numbers such as {0, 64, 128, ...}?
-> 
-> Afaict it's the prior (i.e. [0-15]), as this is what we currently do
-> in both power_on and set_performance_state, and it happens to be what
-> we send in power_off as long as the first level from cmd-db is 0.
-> 
-> Regards,
-> Bjorn
-> 
->>
->>>        if (!ret)
->>>                pd->enabled = false;
->>>
->>>
->>
->> --
->> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
->> of Code Aurora Forum, hosted by The Linux Foundation
+Could you please provide your comments on updated change series
 
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+Thanks
+-Prasad
