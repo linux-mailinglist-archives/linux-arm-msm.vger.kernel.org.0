@@ -2,135 +2,161 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 090F93BC13D
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jul 2021 17:51:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3D7F33BC2CD
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jul 2021 20:42:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231857AbhGEPy3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Jul 2021 11:54:29 -0400
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:7084 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231806AbhGEPy3 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Jul 2021 11:54:29 -0400
-Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
-  by alexa-out.qualcomm.com with ESMTP; 05 Jul 2021 08:51:52 -0700
-X-QCInternal: smtphost
-Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 05 Jul 2021 08:51:50 -0700
-X-QCInternal: smtphost
-Received: from c-sbhanu-linux.qualcomm.com ([10.242.50.201])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 05 Jul 2021 21:20:56 +0530
-Received: by c-sbhanu-linux.qualcomm.com (Postfix, from userid 2344807)
-        id 869C0504D; Mon,  5 Jul 2021 21:20:55 +0530 (IST)
-From:   Shaik Sajida Bhanu <sbhanu@codeaurora.org>
-To:     adrian.hunter@intel.com, ulf.hansson@linaro.org
-Cc:     asutoshd@codeaurora.org, stummala@codeaurora.org,
-        vbadigan@codeaurora.org, rampraka@codeaurora.org,
-        sayalil@codeaurora.org, sartgarg@codeaurora.org,
-        rnayak@codeaurora.org, cang@codeaurora.org,
-        pragalla@codeaurora.org, nitirawa@codeaurora.org,
-        linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, robh+dt@kernel.org,
-        Shaik Sajida Bhanu <sbhanu@codeaurora.org>
-Subject: [PATCH V3] mmc: sdhci-msm: Update the software timeout value for sdhc
-Date:   Mon,  5 Jul 2021 21:20:53 +0530
-Message-Id: <1625500253-12815-1-git-send-email-sbhanu@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        id S229898AbhGESo4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Jul 2021 14:44:56 -0400
+Received: from [94.230.151.217] ([94.230.151.217]:57234 "EHLO ixit.cz"
+        rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+        id S229725AbhGESo4 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 5 Jul 2021 14:44:56 -0400
+Received: from [192.168.1.138] (unknown [94.230.151.217])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by ixit.cz (Postfix) with ESMTPSA id 2189D23B1D;
+        Mon,  5 Jul 2021 20:42:17 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
+        t=1625510537;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=Sm4ok18k3JHTrxqnJgqO18ef94s7DhLXE2dESxfzsuM=;
+        b=nPhJGgJxilS1tw6a7FfomF6kCluJas88W1k987Y2MhvT7cMT9SE3hJcqPV95LjQmUPfJgo
+        6jin8V8bRemwTVDnN9GoapHjTIcKDq9wSSeKD9/dY3ou86Zv0kF93oz6mz1Z1n5+GVz2LY
+        ebmwrPypXDsz0AAyfhFCY5sSEHCQ5vU=
+Date:   Mon, 05 Jul 2021 20:41:29 +0200
+From:   David Heidelberg <david@ixit.cz>
+Subject: Re: [bisected] BSOD on Nexus 7 at boot caused by "drm/msm/mdp4: only
+ use lut_clk on mdp4.2+"
+To:     Jonathan Marek <jonathan@marek.ca>
+Cc:     robdclark@chromium.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Message-Id: <5XBSVQ.FHBKUZUJL53S1@ixit.cz>
+In-Reply-To: <9e4fa957-d1a8-8c1a-e3a3-4eb180e0cba2@marek.ca>
+References: <QWQPVQ.PR7CBFAW563A3@ixit.cz>
+        <9e4fa957-d1a8-8c1a-e3a3-4eb180e0cba2@marek.ca>
+X-Mailer: geary/40.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Whenever SDHC run at clock rate 50MHZ or below, the hardware data
-timeout value will be 21.47secs, which is approx. 22secs and we have
-a current software timeout value as 10secs. We have to set software
-timeout value more than the hardware data timeout value to avioid seeing
-the below register dumps.
+right, it's 4.4 as you say.
 
-[  332.953670] mmc2: Timeout waiting for hardware interrupt.
-[  332.959608] mmc2: sdhci: ============ SDHCI REGISTER DUMP ===========
-[  332.966450] mmc2: sdhci: Sys addr:  0x00000000 | Version:  0x00007202
-[  332.973256] mmc2: sdhci: Blk size:  0x00000200 | Blk cnt:  0x00000001
-[  332.980054] mmc2: sdhci: Argument:  0x00000000 | Trn mode: 0x00000027
-[  332.986864] mmc2: sdhci: Present:   0x01f801f6 | Host ctl: 0x0000001f
-[  332.993671] mmc2: sdhci: Power:     0x00000001 | Blk gap:  0x00000000
-[  333.000583] mmc2: sdhci: Wake-up:   0x00000000 | Clock:    0x00000007
-[  333.007386] mmc2: sdhci: Timeout:   0x0000000e | Int stat: 0x00000000
-[  333.014182] mmc2: sdhci: Int enab:  0x03ff100b | Sig enab: 0x03ff100b
-[  333.020976] mmc2: sdhci: ACmd stat: 0x00000000 | Slot int: 0x00000000
-[  333.027771] mmc2: sdhci: Caps:      0x322dc8b2 | Caps_1:   0x0000808f
-[  333.034561] mmc2: sdhci: Cmd:       0x0000183a | Max curr: 0x00000000
-[  333.041359] mmc2: sdhci: Resp[0]:   0x00000900 | Resp[1]:  0x00000000
-[  333.048157] mmc2: sdhci: Resp[2]:   0x00000000 | Resp[3]:  0x00000000
-[  333.054945] mmc2: sdhci: Host ctl2: 0x00000000
-[  333.059657] mmc2: sdhci: ADMA Err:  0x00000000 | ADMA Ptr:
-0x0000000ffffff218
-[  333.067178] mmc2: sdhci_msm: ----------- VENDOR REGISTER DUMP
------------
-[  333.074343] mmc2: sdhci_msm: DLL sts: 0x00000000 | DLL cfg:
-0x6000642c | DLL cfg2: 0x0020a000
-[  333.083417] mmc2: sdhci_msm: DLL cfg3: 0x00000000 | DLL usr ctl:
-0x00000000 | DDR cfg: 0x80040873
-[  333.092850] mmc2: sdhci_msm: Vndr func: 0x00008a9c | Vndr func2 :
-0xf88218a8 Vndr func3: 0x02626040
-[  333.102371] mmc2: sdhci: ============================================
+dmesg snippet with drm.debug=3D2 (and with patch reverted):
+...
+[ 0.852417] [drm:dsi_bind]
+[ 0.852454] [drm:dsi_bind] dsi probed=3D(ptrval)
+[ 0.853459] msm_dsi 4700000.mdss_dsi: supply gdsc not found, using=20
+dummy regulator
+[ 0.853927] [drm:msm_dsi_host_init] dsi_get_config: Version 2:0
 
-So, set software timeout value more than hardware timeout value.
+[ 0.855224] input: Elan Touchscreen as=20
+/devices/platform/soc/16200000.gsbi/16280000.i2c/i2c-1/1-0010/input/input1
+[ 0.855536] [drm:msm_dsi_host_init] Dsi Host 0 initialized
+[ 0.855986] [drm:msm_dsi_runtime_resume] id=3D0
+[ 0.858051] [drm:dsi_host_attach] id=3D0
+[ 0.858250] msm 5100000.mdp: bound 4700000.mdss_dsi (ops dsi_ops)
+[ 0.858372] [drm:adreno_bind] Found GPU: 3.2.0.2
+[ 0.858484] [drm:adreno_gpu_init] fast_rate=3D450000000,=20
+slow_rate=3D27000000
+[ 0.858907] [drm:msm_gpu_init] ebi1_clk: fffffffe
+[ 0.859087] adreno 4300000.adreno-3xx: supply vdd not found, using=20
+dummy regulator
+[ 0.859441] [drm:msm_gpu_init] gpu_reg: (ptrval)
+[ 0.859615] adreno 4300000.adreno-3xx: supply vddcx not found, using=20
+dummy regulator
+[ 0.859760] [drm:msm_gpu_init] gpu_cx: (ptrval)
+[ 0.861653] msm 5100000.mdp: bound 4300000.adreno-3xx (ops a3xx_ops)
+[ 0.862071] msm 5100000.mdp: dummy supplies not allowed for exclusive=20
+requests
+[ 0.862359] [drm:mdp4_enable]
+[ 0.862439] [drm:mdp4_disable]
+[ 0.871375] mmc0: new high speed MMC card at address 0001
+[ 0.873012] mmcblk0: mmc0:0001 HBG4e\x04 29.1 GiB
+[ 0.873605] mmcblk0boot0: mmc0:0001 HBG4e\x04 partition 1 4.00 MiB
+[ 0.874216] mmcblk0boot1: mmc0:0001 HBG4e\x04 partition 2 4.00 MiB
+[ 0.874881] mmcblk0rpmb: mmc0:0001 HBG4e\x04 partition 3 4.00 MiB,=20
+chardev (247:0)
+[ 0.881122] [drm:dsi_host_irq] isr=3D0x2020302, id=3D0
+[ 0.881928] [drm:msm_runtime_resume]
+[ 0.881966] [drm:mdp4_enable]
+[ 0.882114] [drm:mdp4_disable]
+[ 0.882195] [drm:mdp4_hw_init] found MDP4 version v4.4
+[ 0.882230] [drm:mdp4_hw_init] fetch config: dmap=3D47, vg=3D47
+[ 0.882276] [drm:msm_runtime_suspend]
+[ 0.883103] [drm:msm_dsi_runtime_suspend]
+[ 0.886256] [drm:msm_runtime_resume]
+[ 0.886305] [drm:mdp4_enable]
+[ 0.886462] [drm:mdp4_disable]
+[ 0.886685] [drm:msm_runtime_suspend]
+...
+Best regards
+David Heidelberg
 
-Signed-off-by: Shaik Sajida Bhanu <sbhanu@codeaurora.org>
----
+On Sun, Jul 4 2021 at 11:07:53 -0400, Jonathan Marek=20
+<jonathan@marek.ca> wrote:
+> On 7/4/21 5:12 AM, David Heidelberg wrote:
+>> Bisected to: drm/msm/mdp4: only use lut_clk on mdp4.2+=20
+>> =7F("eb2b47bb9a03206a645af40a3128a00264b0207e")
+>>=20
+>> Slightly memory damaged output (pstore dmesg after 1-2s poweroff)=20
+>> before =7FBSOD (just clean blue) and freeze from LTS 5.10 [1] :
+>> ...
+>> [ ( 2.2077=EF=BF=BD=EF=BF=BD] [drm:mdp4_irq_error_handler] *ERROR* errrs=
+:=20
+>> 00000100
+>> [ 2.210947] [drm:mdp4_i=EF=BF=BDq_error_handler] *ERROR* ezrors: 0000010=
+0
+>> [ 2=EF=BF=BD291875] =EF=BF=BDdro:mdp4_irq_error_handler] .ERROR* errors:=
+ 00000100
+>> [ 2.292027] msm 5100000.mdp: vblank time out, crtc=3D0
+>> [ 2.318122] =EF=BF=BDd=EF=BF=BDm:mdp5_irq_error_=EF=BF=BDandler] *ERROR*=
+ evror{:=20
+>> 00000900
+>> [ 2.332537] [drm=EF=BF=BDmdp4_irq_error_hendler] =EF=BF=BDERR_R* errors:=
+ 00000100
+>> [ 2.346931] [drm:mdp4_irq_error_handler] *ERROR*$errors:!0=EF=BF=BD00010=
+0
+>> [ 2=EF=BF=BD361271] [drm:md=EF=BF=BD4_irq_error_ha=EF=BF=BDdler] *ERROR*=
+ errors:=20
+>> 00000100
+>> [ 0 2.389592] _drm:mdp4_krq_error_handler] *ERROR* erro=EF=BF=BDs: 00000=
+100
+>> [ 2.403631] [lrm:mdp4_irq_err=EF=BF=BDr_hanller] *ERROR* errors: 0000010=
+0
+>>=20
+>> rest of it is similar to working kernel with this commit reverted=20
+>> (dmesg =7F[2]).
+>>=20
+>> Due to fact, that Nexus 7 is probably only device in mainline, which=20
+>> has =7Fversion MDP < 4.2 and lut_clk defined, is possible that it's=20
+>> needed? I =7Fdidn't found anything explaining in the commit adding it=20
+>> conditional for =7FMDP >=3D 4.2.
+>>=20
+>=20
+> Isn't APQ8064 MDP 4.4?
+>=20
+> "drm/msm/mdp4: only use lut_clk on mdp4.2+" is broken because the=20
+> mdp4_kms->rev wasn't set yet at that point, so it always fails the=20
+> check (which works for MDP <4.2 HW that I have). It looks like that=20
+> was never fixed (I do remember some discussion on mailing list/IRC=20
+> about it).
+>=20
+>> Thank you
+>>=20
+>> [1] https://github.com/okias/linux/tree/qcom-apq8064-v5.10 (approx.=20
+>> 10 =7Fpatches small a top of LTS)
+>> [2]=20
+>> https://paste.sr.ht/~okias/e6e936df8bdb2e14a24085d047a5f18d0ae86a43
+>> Best regards
+>> David Heidelberg
+>>=20
+>>=20
 
-Changes since V2:
-	- Updated 22 with 22LL to avoid compiler warning as suggested by
-	  Adrian Hunter.
-	- Added a check to update software data timeout value if its value is
-	  less than the calculated hardware data timeout value as suggested
-	  by Veerabhadrarao Badiganti.
-
-Changes since V1:
-	- Moved software data timeout update part to qcom specific file
-	  as suggested by Veerabhadrarao Badiganti.
----
- drivers/mmc/host/sdhci-msm.c | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
-
-diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-index e44b7a6..64fb85e 100644
---- a/drivers/mmc/host/sdhci-msm.c
-+++ b/drivers/mmc/host/sdhci-msm.c
-@@ -2089,6 +2089,23 @@ static void sdhci_msm_cqe_disable(struct mmc_host *mmc, bool recovery)
- 	sdhci_cqe_disable(mmc, recovery);
- }
- 
-+static void sdhci_msm_set_timeout(struct sdhci_host *host, struct mmc_command *cmd)
-+{
-+
-+	u32 count, start = 15;
-+
-+	__sdhci_set_timeout(host, cmd);
-+	count = sdhci_readb(host, SDHCI_TIMEOUT_CONTROL);
-+	/*
-+	 * Update software timeout value if its value is less than hardware data
-+	 * timeout value. Qcom SoC hardware data timeout value was calculated
-+	 * using 4 * MCLK * 2^(count + 13). where MCLK = 1 / host->clock.
-+	 */
-+	if (cmd && cmd->data && host->clock > 400000 && host->clock <= 50000000
-+			&& ((1 << (count + start)) > (10 * host->clock)))
-+		host->data_timeout = 22LL * NSEC_PER_SEC;
-+}
-+
- static const struct cqhci_host_ops sdhci_msm_cqhci_ops = {
- 	.enable		= sdhci_msm_cqe_enable,
- 	.disable	= sdhci_msm_cqe_disable,
-@@ -2438,6 +2455,7 @@ static const struct sdhci_ops sdhci_msm_ops = {
- 	.irq	= sdhci_msm_cqe_irq,
- 	.dump_vendor_regs = sdhci_msm_dump_vendor_regs,
- 	.set_power = sdhci_set_power_noreg,
-+	.set_timeout = sdhci_msm_set_timeout,
- };
- 
- static const struct sdhci_pltfm_data sdhci_msm_pdata = {
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
-of Code Aurora Forum, hosted by The Linux Foundation
 
