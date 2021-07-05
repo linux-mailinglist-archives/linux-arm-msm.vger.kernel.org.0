@@ -2,155 +2,491 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id ADB933BB75B
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jul 2021 08:57:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1F2C43BB7B4
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jul 2021 09:21:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229919AbhGEG7m (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Jul 2021 02:59:42 -0400
-Received: from mailout1.w1.samsung.com ([210.118.77.11]:16430 "EHLO
-        mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229817AbhGEG7m (ORCPT
+        id S229953AbhGEHXq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Jul 2021 03:23:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40662 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229907AbhGEHXp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Jul 2021 02:59:42 -0400
-Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
-        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20210705065704euoutp0127f5e54c3411937d72795dcc47a5ef6f~O0rzzFsB51000310003euoutp01X
-        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Jul 2021 06:57:04 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20210705065704euoutp0127f5e54c3411937d72795dcc47a5ef6f~O0rzzFsB51000310003euoutp01X
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1625468224;
-        bh=Rn6oui8vNSOkba5+SL9hOQCcwE6W7/neAD8+y9vs3gY=;
-        h=From:To:Cc:Subject:Date:References:From;
-        b=ZLp/xms0USWtQpdfN4vwt8eg7e7Vt4Qb9LDuue8r6sGBT5a5ifCwmgSlR6PPtrV4R
-         ojYAtFRslq7MpydzI9OtuxqancFp67IeG2GByKf1Bw7ImvWBctu4oaUlw+VWeVyQM0
-         +bGGMkk/4197CTe6vf5blwa9mYnXHzq3NAlXhT7c=
-Received: from eusmges1new.samsung.com (unknown [203.254.199.242]) by
-        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
-        20210705065703eucas1p24403b2842e74f7d843f8d77ce61aab6e~O0rzFHrJb2770227702eucas1p2g;
-        Mon,  5 Jul 2021 06:57:03 +0000 (GMT)
-Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
-        eusmges1new.samsung.com (EUCPMTA) with SMTP id 07.1F.45756.F3DA2E06; Mon,  5
-        Jul 2021 07:57:03 +0100 (BST)
-Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
-        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
-        20210705065703eucas1p2e89258a2fc286896b755047e06f514cb~O0ryjuym82752127521eucas1p2c;
-        Mon,  5 Jul 2021 06:57:03 +0000 (GMT)
-Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
-        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
-        20210705065703eusmtrp2704ec35040dd29269ebdc309b2f114f3~O0ryi_AuN1229112291eusmtrp2q;
-        Mon,  5 Jul 2021 06:57:03 +0000 (GMT)
-X-AuditID: cbfec7f2-7d5ff7000002b2bc-e7-60e2ad3f3ff7
-Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
-        eusmgms1.samsung.com (EUCPMTA) with SMTP id 70.FC.31287.E3DA2E06; Mon,  5
-        Jul 2021 07:57:02 +0100 (BST)
-Received: from AMDC2765.digital.local (unknown [106.120.51.73]) by
-        eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
-        20210705065702eusmtip15a3d78a6d0c3d1a4c75d47a32eb85aff~O0ryAs9NO0308503085eusmtip1I;
-        Mon,  5 Jul 2021 06:57:02 +0000 (GMT)
-From:   Marek Szyprowski <m.szyprowski@samsung.com>
-To:     iommu@lists.linux-foundation.org,
-        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
-Cc:     Marek Szyprowski <m.szyprowski@samsung.com>,
-        Rob Clark <robdclark@gmail.com>, Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Amey Narkhede <ameynarkhede03@gmail.com>,
-        Krishna Reddy <vdumpa@nvidia.com>
-Subject: [PATCH] iommu: qcom: Revert
- "iommu/arm: Cleanup resources in case of probe error path"
-Date:   Mon,  5 Jul 2021 08:56:57 +0200
-Message-Id: <20210705065657.30356-1-m.szyprowski@samsung.com>
-X-Mailer: git-send-email 2.17.1
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFmpileLIzCtJLcpLzFFi42LZduzneV37tY8SDDYeVrS4tH0Zq8WC/dYW
-        nbM3sFtsenyN1WLi/rPsFmuP3GW3eL7wB7PFwQ9PWC369gZZtNwxdeDyeHJwHpPHmnlrGD12
-        zrrL7rFpVSebx+Yl9R6Tbyxn9Ohtfsfm0bdlFaPH501yAZxRXDYpqTmZZalF+nYJXBldh58z
-        FZzhq1hw5QlLA+MWni5GDg4JAROJl7uFuxi5OIQEVjBKfJx/gRHC+cIosXnqBXYI5zOjxIaF
-        24AcTrCOLd0TWCESyxkl1v76xQLX8mPzdVaQKjYBQ4mut11sILaIQLZEw/FWsFHMAu1MEjem
-        rmUGSQgLJEqsadkAVsQioCox5ctRMJtXwFZi5qrHjBDr5CVWbzjADNIsIbCWQ+L6ikdMEAkX
-        if27LrNA2MISr45vgbpPRuL/zvlMEA3NjBIPz61lh3B6GCUuN82AGmstcefcLzZQGDALaEqs
-        36UPEXaUePV3JxskaPgkbrwVBAkzA5mTtk1nhgjzSnS0CUFUq0nMOr4Obu3BC5eYIWwPiTnP
-        J4GdJiQQK7Hz+CfmCYxysxB2LWBkXMUonlpanJueWmyYl1quV5yYW1yal66XnJ+7iRGYTE7/
-        O/5pB+PcVx/1DjEycTAeYpTgYFYS4RWZ8ihBiDclsbIqtSg/vqg0J7X4EKM0B4uSOO+q2Wvi
-        hQTSE0tSs1NTC1KLYLJMHJxSDUyeOd62vw+IhG9dlrjzaVl9g6j8xhtuNtrJJyKnFMr8rL5w
-        X6KV42eUqq+wxXXOgICGzUIP5UsXcInsUtM72zV/Q0FQS8uUeSqvLIt9fr0QEP+znLXz0U+F
-        ys5Zi0S8LsmquV8O/blv62qFH7e+1lqbKLGv6Yq4u+BRzrKQ9xHBBrd/1XjbOsi+kklkduC+
-        wKUmxP2MTbbgvk+CpfzhpunWawqFvlqz6J+xfWr7jLVBxXLLnsIXalyhu+zLSs0O+5+7+yig
-        dP3uMwqfvkgekyhaazzjzrSFx62mL72mxVKRetR6+c8Okw3BUnkrdt7g36vN+URERyY0UlD5
-        8mbeHtXpfY1bbeYYShhpPts8W4mlOCPRUIu5qDgRAAAccB2VAwAA
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrBLMWRmVeSWpSXmKPExsVy+t/xu7p2ax8lGDxYYmNxafsyVosF+60t
-        OmdvYLfY9Pgaq8XE/WfZLdYeuctu8XzhD2aLgx+esFr07Q2yaLlj6sDl8eTgPCaPNfPWMHrs
-        nHWX3WPTqk42j81L6j0m31jO6NHb/I7No2/LKkaPz5vkAjij9GyK8ktLUhUy8otLbJWiDS2M
-        9AwtLfSMTCz1DI3NY62MTJX07WxSUnMyy1KL9O0S9DK6Dj9nKjjDV7HgyhOWBsYtPF2MnBwS
-        AiYSW7onsHYxcnEICSxllJh17BorREJG4uS0BihbWOLPtS42iKJPjBJvtx9gAUmwCRhKdL0F
-        SXByiAjkShxunsUIUsQs0MsksWPaY7BuYYF4iRNty8EaWARUJaZ8OQrWwCtgKzFz1WNGiA3y
-        Eqs3HGCewMizgJFhFaNIamlxbnpusaFecWJucWleul5yfu4mRmAQbzv2c/MOxnmvPuodYmTi
-        YDzEKMHBrCTCKzLlUYIQb0piZVVqUX58UWlOavEhRlOgfROZpUST84FxlFcSb2hmYGpoYmZp
-        YGppZqwkzrt17pp4IYH0xJLU7NTUgtQimD4mDk6pBqau1ZMv3J7B1z3pxjkPR5HjPT1f+I4+
-        vbR+s5+4v5Fp5rHX7D815J2130etUV8UumzyYflj35XypzS8lmqbvakj9nF0SZRJg29JjIPt
-        Aq+uuyvesLuZ/HA3KA16zcvfZLRY1sB6vtO3/O8vv+9ucJjEvzbvc2H6oz2/Hvp+5l6x5e4t
-        p7jFMzzXzLEuDvx3/H2+8YyXesEaor1xR+3eTtxczLZknluOyff2cMEaCbONW1yD581s1r9T
-        bDrr/z0hkZqOzBN1TuphT92VhPpUkvVCVxgIHGdY0qBRGhI306Ppi8Op3UcW72z4++jG8YBb
-        jFt2dYtpCZQ/Tj3+5/KTpR8nRklxsylPkwuSbnTffleJpTgj0VCLuag4EQC9ltwG6wIAAA==
-X-CMS-MailID: 20210705065703eucas1p2e89258a2fc286896b755047e06f514cb
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20210705065703eucas1p2e89258a2fc286896b755047e06f514cb
-X-EPHeader: CA
-CMS-TYPE: 201P
-X-CMS-RootMailID: 20210705065703eucas1p2e89258a2fc286896b755047e06f514cb
-References: <CGME20210705065703eucas1p2e89258a2fc286896b755047e06f514cb@eucas1p2.samsung.com>
+        Mon, 5 Jul 2021 03:23:45 -0400
+Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47D17C061574
+        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Jul 2021 00:21:09 -0700 (PDT)
+Received: from ptx.hi.pengutronix.de ([2001:67c:670:100:1d::c0])
+        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1m0IuX-0003wC-UY; Mon, 05 Jul 2021 09:20:57 +0200
+Received: from ukl by ptx.hi.pengutronix.de with local (Exim 4.92)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1m0IuV-0006YR-Ia; Mon, 05 Jul 2021 09:20:55 +0200
+Date:   Mon, 5 Jul 2021 09:20:55 +0200
+From:   Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
+To:     Baruch Siach <baruch@tkos.co.il>
+Cc:     Thierry Reding <thierry.reding@gmail.com>,
+        Lee Jones <lee.jones@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Balaji Prakash J <bjagadee@codeaurora.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Robert Marko <robert.marko@sartura.hr>,
+        linux-pwm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH v4 1/3] pwm: driver for qualcomm ipq6018 pwm block
+Message-ID: <20210705072055.5mvux5h6zdewzabz@pengutronix.de>
+References: <305eacc9c57c2404795b6be76a08915808e23108.1624771446.git.baruch@tkos.co.il>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="3r25sk2paghtmnoo"
+Content-Disposition: inline
+In-Reply-To: <305eacc9c57c2404795b6be76a08915808e23108.1624771446.git.baruch@tkos.co.il>
+X-SA-Exim-Connect-IP: 2001:67c:670:100:1d::c0
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-QCOM IOMMU driver calls bus_set_iommu() for every IOMMU device controller,
-what fails for the second and latter IOMMU devices. This is intended and
-must be not fatal to the driver registration process. Also the cleanup
-path should take care of the runtime PM state, what is missing in the
-current patch. Revert relevant changes to the QCOM IOMMU driver until
-a proper fix is prepared.
 
-This partially reverts commit 249c9dc6aa0db74a0f7908efd04acf774e19b155.
+--3r25sk2paghtmnoo
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Fixes: 249c9dc6aa0d ("iommu/arm: Cleanup resources in case of probe error path")
-Suggested-by: Will Deacon <will@kernel.org>
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
----
- drivers/iommu/arm/arm-smmu/qcom_iommu.c | 13 ++-----------
- 1 file changed, 2 insertions(+), 11 deletions(-)
+Hello Baruch,
 
-diff --git a/drivers/iommu/arm/arm-smmu/qcom_iommu.c b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-index 25ed444ff94d..021cf8f65ffc 100644
---- a/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-+++ b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-@@ -849,12 +849,10 @@ static int qcom_iommu_device_probe(struct platform_device *pdev)
- 	ret = iommu_device_register(&qcom_iommu->iommu, &qcom_iommu_ops, dev);
- 	if (ret) {
- 		dev_err(dev, "Failed to register iommu\n");
--		goto err_sysfs_remove;
-+		return ret;
- 	}
- 
--	ret = bus_set_iommu(&platform_bus_type, &qcom_iommu_ops);
--	if (ret)
--		goto err_unregister_device;
-+	bus_set_iommu(&platform_bus_type, &qcom_iommu_ops);
- 
- 	if (qcom_iommu->local_base) {
- 		pm_runtime_get_sync(dev);
-@@ -863,13 +861,6 @@ static int qcom_iommu_device_probe(struct platform_device *pdev)
- 	}
- 
- 	return 0;
--
--err_unregister_device:
--	iommu_device_unregister(&qcom_iommu->iommu);
--
--err_sysfs_remove:
--	iommu_device_sysfs_remove(&qcom_iommu->iommu);
--	return ret;
- }
- 
- static int qcom_iommu_device_remove(struct platform_device *pdev)
--- 
-2.17.1
+On Sun, Jun 27, 2021 at 08:24:04AM +0300, Baruch Siach wrote:
+> Driver for the PWM block in Qualcomm IPQ6018 line of SoCs. Based on
+> driver from downstream Codeaurora kernel tree. Removed support for older
+> (V1) variants because I have no access to that hardware.
+>=20
+> Tested on IPQ6010 based hardware.
+>=20
+> Signed-off-by: Baruch Siach <baruch@tkos.co.il>
+> ---
+> v4:
+>=20
+>   Use div64_u64() to fix link for 32-bit targets ((kernel test robot
+>   <lkp@intel.com>, Uwe Kleine-K=F6nig)
+>=20
+> v3:
+>=20
+>   s/qcom,pwm-ipq6018/qcom,ipq6018-pwm/ (Rob Herring)
+>=20
+>   Fix integer overflow on 32-bit targets (kernel test robot <lkp@intel.co=
+m>)
+>=20
+> v2:
+>=20
+> Address Uwe Kleine-K=F6nig review comments:
+>=20
+>   Fix period calculation when out of range
+>=20
+>   Don't set period larger than requested
+>=20
+>   Remove PWM disable on configuration change
+>=20
+>   Implement .apply instead of non-atomic .config/.enable/.disable
+>=20
+>   Don't modify PWM on .request/.free
+>=20
+>   Check pwm_div underflow
+>=20
+>   Fix various code and comment formatting issues
+>=20
+> Other changes:
+>=20
+>   Use u64 divisor safe division
+>=20
+>   Remove now empty .request/.free
+> ---
+>  drivers/pwm/Kconfig   |  12 +++
+>  drivers/pwm/Makefile  |   1 +
+>  drivers/pwm/pwm-ipq.c | 238 ++++++++++++++++++++++++++++++++++++++++++
+>  3 files changed, 251 insertions(+)
+>  create mode 100644 drivers/pwm/pwm-ipq.c
+>=20
+> diff --git a/drivers/pwm/Kconfig b/drivers/pwm/Kconfig
+> index c76adedd58c9..08add845596f 100644
+> --- a/drivers/pwm/Kconfig
+> +++ b/drivers/pwm/Kconfig
+> @@ -260,6 +260,18 @@ config PWM_INTEL_LGM
+>  	  To compile this driver as a module, choose M here: the module
+>  	  will be called pwm-intel-lgm.
+> =20
+> +config PWM_IPQ
+> +	tristate "IPQ PWM support"
+> +	depends on ARCH_QCOM || COMPILE_TEST
+> +	depends on HAVE_CLK && HAS_IOMEM
+> +	help
+> +	  Generic PWM framework driver for IPQ PWM block which supports
+> +	  4 pwm channels. Each of the these channels can be configured
+> +	  independent of each other.
+> +
+> +	  To compile this driver as a module, choose M here: the module
+> +	  will be called pwm-ipq.
+> +
+>  config PWM_IQS620A
+>  	tristate "Azoteq IQS620A PWM support"
+>  	depends on MFD_IQS62X || COMPILE_TEST
+> diff --git a/drivers/pwm/Makefile b/drivers/pwm/Makefile
+> index 708840b7fba8..7402feae4b36 100644
+> --- a/drivers/pwm/Makefile
+> +++ b/drivers/pwm/Makefile
+> @@ -22,6 +22,7 @@ obj-$(CONFIG_PWM_IMX1)		+=3D pwm-imx1.o
+>  obj-$(CONFIG_PWM_IMX27)		+=3D pwm-imx27.o
+>  obj-$(CONFIG_PWM_IMX_TPM)	+=3D pwm-imx-tpm.o
+>  obj-$(CONFIG_PWM_INTEL_LGM)	+=3D pwm-intel-lgm.o
+> +obj-$(CONFIG_PWM_IPQ)		+=3D pwm-ipq.o
+>  obj-$(CONFIG_PWM_IQS620A)	+=3D pwm-iqs620a.o
+>  obj-$(CONFIG_PWM_JZ4740)	+=3D pwm-jz4740.o
+>  obj-$(CONFIG_PWM_KEEMBAY)	+=3D pwm-keembay.o
+> diff --git a/drivers/pwm/pwm-ipq.c b/drivers/pwm/pwm-ipq.c
+> new file mode 100644
+> index 000000000000..966b051573c8
+> --- /dev/null
+> +++ b/drivers/pwm/pwm-ipq.c
+> @@ -0,0 +1,238 @@
+> +// SPDX-License-Identifier: BSD-3-Clause OR GPL-2.0
+> +/*
+> + * Copyright (c) 2016-2017, 2020 The Linux Foundation. All rights reserv=
+ed.
+> + */
+> +
+> +#include <linux/module.h>
+> +#include <linux/platform_device.h>
+> +#include <linux/pwm.h>
+> +#include <linux/clk.h>
+> +#include <linux/io.h>
+> +#include <linux/math64.h>
+> +#include <linux/of_device.h>
+> +
+> +#define CLK_SRC_FREQ		(100*1000*1000)
+> +#define MAX_PWM_DEVICES		4
 
+MAX_PWM_DEVICES is only used once, in my book this doesn't need a define
+then. (But if you still want to keep it, that's fine for me, too.)
+
+> +/*
+> + * Enable bit is set to enable output toggling in pwm device.
+> + * Update bit is set to reflect the changed divider and high duration
+> + * values in register.
+> + */
+> +#define PWM_ENABLE		0x80000000
+> +#define PWM_UPDATE		0x40000000
+> +
+> +/* The frequency range supported is 1Hz to 100MHz */
+> +#define MIN_PERIOD_NS	10
+> +#define MAX_PERIOD_NS	1000000000
+
+Please use a driver prefix for these defines.
+
+> +
+> +/*
+> + * The max value specified for each field is based on the number of bits
+> + * in the pwm control register for that field
+> + */
+> +#define MAX_PWM_CFG		0xFFFF
+> +
+> +#define PWM_CTRL_HI_SHIFT	16
+> +
+> +#define PWM_CFG_REG0 0 /*PWM_DIV PWM_HI*/
+> +#define PWM_CFG_REG1 1 /*ENABLE UPDATE PWM_PRE_DIV*/
+> +
+> +struct ipq_pwm_chip {
+> +	struct pwm_chip chip;
+> +	struct clk *clk;
+> +	void __iomem *mem;
+> +};
+> +
+> +static struct ipq_pwm_chip *to_ipq_pwm_chip(struct pwm_chip *chip)
+> +{
+> +	return container_of(chip, struct ipq_pwm_chip, chip);
+> +}
+> +
+> +static unsigned ipq_pwm_reg_offset(struct pwm_device *pwm, unsigned reg)
+> +{
+> +	return ((pwm->hwpwm * 2) + reg) * 4;
+> +}
+> +
+> +static void config_div_and_duty(struct pwm_device *pwm, int pre_div,
+> +			unsigned long long pwm_div, unsigned long period_ns,
+> +			unsigned long long duty_ns)
+
+Please also use a consistent prefix for function names.
+
+I suggest to use u64 for some of the parameters. While this doesn't
+change anything, it is cleaner as the caller passes variables of this
+type.
+
+> +{
+> +	unsigned long hi_dur;
+> +	unsigned long long quotient;
+> +	unsigned long val =3D 0;
+> +	struct ipq_pwm_chip *ipq_chip =3D to_ipq_pwm_chip(pwm->chip);
+> +
+> +	/*
+> +	 * high duration =3D pwm duty * (pwm div + 1)
+> +	 * pwm duty =3D duty_ns / period_ns
+> +	 */
+> +	quotient =3D (pwm_div + 1) * duty_ns;
+> +	hi_dur =3D div64_u64(quotient, period_ns);
+> +
+> +	val |=3D ((hi_dur & MAX_PWM_CFG) << PWM_CTRL_HI_SHIFT);
+> +	val |=3D (pwm_div & MAX_PWM_CFG);
+> +	writel(val, ipq_chip->mem + ipq_pwm_reg_offset(pwm, PWM_CFG_REG0));
+
+I consider it a bit irritating that the mask is called ...CFG but the
+shift define is called ..._CTRL_....
+
+I suggest something like:
+
+	#define IPQ_PWM_REG0	...
+	#define IPQ_PWM_REG0_HI		0xffff0000
+	#define IPQ_PWM_REG0_DIV	0x0000ffff
+
+	...
+
+	val =3D FIELD_PREP(IPQ_PWM_REG0_HI, hi_dur) |
+		FIELD_PREP(IPQ_PWM_REG0_DIV, pwm_div);
+
+	ipq_pwm_writel(ipq_chip, val, PWM_CFG_REG0);
+
+> +	val =3D pre_div & MAX_PWM_CFG;
+> +	writel(val, ipq_chip->mem + ipq_pwm_reg_offset(pwm, PWM_CFG_REG1));
+> +}
+> +
+> +static int ipq_pwm_enable(struct pwm_device *pwm)
+
+This is only called once. The caller (ipq_pwm_apply()) just before
+called config_div_and_duty() which already wrote PWM_CFG_REG1. If you
+unroll these calls you might fix a glitch or make it more unlikely.
+
+> +{
+> +	struct ipq_pwm_chip *ipq_chip =3D to_ipq_pwm_chip(pwm->chip);
+> +	unsigned offset =3D ipq_pwm_reg_offset(pwm, PWM_CFG_REG1);
+> +	unsigned long val;
+> +
+> +	val =3D readl(ipq_chip->mem + offset);
+> +	val |=3D PWM_ENABLE | PWM_UPDATE;
+> +	writel(val, ipq_chip->mem + offset);
+> +
+> +	return 0;
+> +}
+> +
+> +static void ipq_pwm_disable(struct pwm_device *pwm)
+> +{
+> +	struct ipq_pwm_chip *ipq_chip =3D to_ipq_pwm_chip(pwm->chip);
+> +	unsigned offset =3D ipq_pwm_reg_offset(pwm, PWM_CFG_REG1);
+> +	unsigned long val;
+> +
+> +	val =3D readl(ipq_chip->mem + offset);
+> +	val |=3D PWM_UPDATE;
+> +	val &=3D ~PWM_ENABLE;
+> +	writel(val, ipq_chip->mem + offset);
+> +}
+> +
+> +static int ipq_pwm_apply(struct pwm_chip *chip, struct pwm_device *pwm,
+> +			 const struct pwm_state *state)
+> +{
+> +	struct ipq_pwm_chip *ipq_chip =3D to_ipq_pwm_chip(chip);
+> +	unsigned long freq;
+> +	int pre_div, close_pre_div, close_pwm_div;
+> +	int pwm_div;
+> +	long long diff;
+> +	unsigned long rate =3D clk_get_rate(ipq_chip->clk);
+> +	unsigned long min_diff =3D rate;
+> +	uint64_t fin_ps;
+> +	u64 period_ns, duty_ns;
+> +
+> +	if (state->period < MIN_PERIOD_NS)
+> +		return -ERANGE;
+
+MIN_PERIOD_NS depends on clk_get_rate(ipq_chip->clk), doesn't it?
+
+> +	period_ns =3D min_t(u64, state->period, MAX_PERIOD_NS);
+> +	duty_ns =3D min_t(u64, state->duty_cycle, period_ns);
+
+If you define MAX_PERIOD_NS as (u64)1000000000 you can just use min().
+
+> +
+> +	/* freq in Hz for period in nano second*/
+
+Space before the closing */ please
+
+> +	freq =3D div64_u64(NSEC_PER_SEC, period_ns);
+> +	fin_ps =3D div64_u64(NSEC_PER_SEC * 1000ULL, rate);
+> +	close_pre_div =3D MAX_PWM_CFG;
+> +	close_pwm_div =3D MAX_PWM_CFG;
+> +
+> +	for (pre_div =3D 0; pre_div <=3D MAX_PWM_CFG; pre_div++) {
+> +		pwm_div =3D DIV64_U64_ROUND_CLOSEST(period_ns * 1000,
+> +						  fin_ps * (pre_div + 1));
+> +		pwm_div--;
+> +		if (pwm_div < 0 || pwm_div > MAX_PWM_CFG)
+> +			continue;
+> +
+> +		diff =3D ((uint64_t)freq * (pre_div + 1) * (pwm_div + 1))
+> +			- (uint64_t)rate;
+> +
+> +		if (diff < 0) /* period larger than requested */
+> +			continue;
+> +		if (diff =3D=3D 0) { /* bingo */
+> +			close_pre_div =3D pre_div;
+> +			close_pwm_div =3D pwm_div;
+> +			break;
+> +		}
+> +		if (diff < min_diff) {
+> +			min_diff =3D diff;
+> +			close_pre_div =3D pre_div;
+> +			close_pwm_div =3D pwm_div;
+> +		}
+
+I didn't check deeply, but I assume this calculation can be done more
+efficiently. Also I wonder if DIV64_U64_ROUND_CLOSEST is right. When you
+implement a .get_state() callback (which usually helps me to understand
+how the hardware works) I'm willing to take a closer look.
+
+> +	}
+> +
+> +	/* config divider values for the closest possible frequency */
+> +	config_div_and_duty(pwm, close_pre_div, close_pwm_div,
+> +			    period_ns, duty_ns);
+> +	if (state->enabled)
+> +		ipq_pwm_enable(pwm);
+> +	else
+> +		ipq_pwm_disable(pwm);
+> +
+> +	return 0;
+> +}
+> +
+> +static struct pwm_ops ipq_pwm_ops =3D {
+> +	.apply =3D ipq_pwm_apply,
+
+Please implement a .get_state() function. (And in general, test your patch
+with PWM_DEBUG enabled.)
+
+> +	.owner =3D THIS_MODULE,
+> +};
+> +
+> +static int ipq_pwm_probe(struct platform_device *pdev)
+> +{
+> +	struct ipq_pwm_chip *pwm;
+> +	struct device *dev;
+> +	int ret;
+> +
+> +	dev =3D &pdev->dev;
+
+This can go to the line declaring dev.
+
+> +	pwm =3D devm_kzalloc(dev, sizeof(*pwm), GFP_KERNEL);
+> +	if (!pwm)
+> +		return -ENOMEM;
+> +
+> +	platform_set_drvdata(pdev, pwm);
+> +
+> +	pwm->mem =3D devm_platform_ioremap_resource(pdev, 0);
+> +	if (IS_ERR(pwm->mem))
+> +		return PTR_ERR(pwm->mem);
+> +
+> +	pwm->clk =3D devm_clk_get(dev, "core");
+> +	if (IS_ERR(pwm->clk))
+
+Error message please. Preferably using dev_err_probe().
+
+> +		return PTR_ERR(pwm->clk);
+> +
+> +	ret =3D clk_set_rate(pwm->clk, CLK_SRC_FREQ);
+> +	if (ret)
+
+ditto.
+
+> +		return ret;
+
+empty line here?
+
+> +	ret =3D clk_prepare_enable(pwm->clk);
+> +	if (ret)
+
+ditto.
+
+> +		return ret;
+> +
+> +	pwm->chip.dev =3D dev;
+> +	pwm->chip.ops =3D &ipq_pwm_ops;
+> +	pwm->chip.npwm =3D MAX_PWM_DEVICES;
+> +
+> +	ret =3D pwmchip_add(&pwm->chip);
+> +	if (ret < 0) {
+> +		dev_err_probe(dev, ret, "pwmchip_add() failed\n");
+> +		clk_disable_unprepare(pwm->clk);
+> +		return ret;
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+> +static int ipq_pwm_remove(struct platform_device *pdev)
+> +{
+> +	struct ipq_pwm_chip *pwm =3D platform_get_drvdata(pdev);
+> +
+> +	pwmchip_remove(&pwm->chip);
+
+clk_disable_unprepare missing here.
+
+> +
+> +	return 0;
+> +}
+> +
+> +static const struct of_device_id pwm_ipq_dt_match[] =3D {
+> +	{ .compatible =3D "qcom,ipq6018-pwm", },
+> +	{}
+> +};
+> +MODULE_DEVICE_TABLE(of, pwm_ipq_dt_match);
+> +
+> +static struct platform_driver ipq_pwm_driver =3D {
+> +	.driver =3D {
+> +		.name =3D "ipq-pwm",
+> +		.owner =3D THIS_MODULE,
+
+Setting owner isn't necessary any more since v3.11 (commit 9447057eaff8
+("platform_device: use a macro instead of platform_driver_register").
+
+> +		.of_match_table =3D pwm_ipq_dt_match,
+> +	},
+> +	.probe =3D ipq_pwm_probe,
+> +	.remove =3D ipq_pwm_remove,
+> +};
+> +
+> +module_platform_driver(ipq_pwm_driver);
+> +
+> +MODULE_LICENSE("Dual BSD/GPL");
+> --=20
+> 2.30.2
+>=20
+>=20
+
+--=20
+Pengutronix e.K.                           | Uwe Kleine-K=F6nig            |
+Industrial Linux Solutions                 | https://www.pengutronix.de/ |
+
+--3r25sk2paghtmnoo
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEfnIqFpAYrP8+dKQLwfwUeK3K7AkFAmDistQACgkQwfwUeK3K
+7AmIfwf/c+s+Q3cnq1VOQMgIICX2BHS7UOXrukPHXbX6wkuAChPD3CGM1BASDKkd
+Fc67pZC/1++O7Kw+iXmamWkkBjt4QSqICe15NbW4ScSx9SBnCpORb2ngpOaLdzl9
+rKKp498T67btim2EE15xwqI5iLMyljlXEQxsFcmA7STe5ctQx3GgvPHY9bbrGau+
+q2wHzgp04U1tmFXlHNxmMWVrec4tndvcW6nKPL1lZAs4h6N1oNHwVykaZDVcvTxl
+/NH9dkWW+3IOiwKFnIeMIBYPvHohRaSZ+yTD8lTTk++yzK2GjaMxHUBTWDadu55J
+VnnsvoHTf+404EsVF8gNhnXu26Vg0w==
+=xkHO
+-----END PGP SIGNATURE-----
+
+--3r25sk2paghtmnoo--
