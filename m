@@ -2,491 +2,189 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1F2C43BB7B4
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jul 2021 09:21:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E4AD63BBA4B
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jul 2021 11:38:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229953AbhGEHXq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Jul 2021 03:23:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40662 "EHLO
+        id S230038AbhGEJlH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Jul 2021 05:41:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43844 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229907AbhGEHXp (ORCPT
+        with ESMTP id S230000AbhGEJlH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Jul 2021 03:23:45 -0400
-Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47D17C061574
-        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Jul 2021 00:21:09 -0700 (PDT)
-Received: from ptx.hi.pengutronix.de ([2001:67c:670:100:1d::c0])
-        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1m0IuX-0003wC-UY; Mon, 05 Jul 2021 09:20:57 +0200
-Received: from ukl by ptx.hi.pengutronix.de with local (Exim 4.92)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1m0IuV-0006YR-Ia; Mon, 05 Jul 2021 09:20:55 +0200
-Date:   Mon, 5 Jul 2021 09:20:55 +0200
-From:   Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-To:     Baruch Siach <baruch@tkos.co.il>
-Cc:     Thierry Reding <thierry.reding@gmail.com>,
-        Lee Jones <lee.jones@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Balaji Prakash J <bjagadee@codeaurora.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Robert Marko <robert.marko@sartura.hr>,
-        linux-pwm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH v4 1/3] pwm: driver for qualcomm ipq6018 pwm block
-Message-ID: <20210705072055.5mvux5h6zdewzabz@pengutronix.de>
-References: <305eacc9c57c2404795b6be76a08915808e23108.1624771446.git.baruch@tkos.co.il>
+        Mon, 5 Jul 2021 05:41:07 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7298DC061762
+        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Jul 2021 02:38:30 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id t6so11354166wrm.9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Jul 2021 02:38:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=LDdjbER3ezDFScKXgmO5TeU2cTUwmoN1ugG4eC/4fRE=;
+        b=F0z7nalwgxiHBebhvwXGMOcu19AjtIyTZ8gOtgUmAecjEzdZ0JR51TdJqdpxokNcg8
+         aATi42Gc+mVeF6ctIyK+AnI++csxpuZsORaSpB1yR4YuJMrD9EUDqvUcw9rsrMPd9xb5
+         beXd5+zvcw0EHShwhNKAG3hBnZ9VZE+Iy5YRDviARu+TxH05NE3iI/517025+IC20RGP
+         xdLCEhkL0nnvibb8AX3UrW4JmfA0kwfKZzNJSuMrh7/P5bDFb2ZIPmR5wrNspvEuOOD0
+         Ka4srlJh74bUe81TROTgUv1DaE3jtze4c6sdINivmPr/5trNWMYR5pDzCgvbcQEYIoVq
+         vybw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=LDdjbER3ezDFScKXgmO5TeU2cTUwmoN1ugG4eC/4fRE=;
+        b=b/Fc2Q25175ywTmfZMPJXkAB/QKQkmBsRLnY3LMfU1JlhTABOSo7GRZqJHmcCT9mt9
+         yE7x/neqvrucvdiJ71ezrsV1sluQnloboAmK+7jr5NHbpJtkslbx0WjD2F98n8bQuaMc
+         1rSqhR6/pMMM85Yy5a95LUWOrOAU8AiB69ZEqWFDMp3DMETjOeiJpk+SkV1751wgL+gl
+         rINP+OaXGPBpTfkJtf/59NZ8vQ7bkG3tymIH405rJ1XJpywcNt+GsE2Ut9n0os4uvMIM
+         n1jyxoKw/h+fuTlBasODdw3dUPmc6MvZv/cAHjqlhdMe6gDK6ssWlh6oMhEwf1EXfk8d
+         IWJw==
+X-Gm-Message-State: AOAM532ryerEgqyOzobl1u5pQhJudAuaRlGNPQALSMTPRXGpvGasIzPj
+        uEdpAotG0cUuPEqS6VEW1e5qNw==
+X-Google-Smtp-Source: ABdhPJwEyzHzFmiT+oW5m+5FMnPGW3fRamXe3P45E/02iLv4nXIRvBryOSt3r+S90wa5tYE9V3D+zg==
+X-Received: by 2002:a5d:5005:: with SMTP id e5mr14541216wrt.138.1625477909068;
+        Mon, 05 Jul 2021 02:38:29 -0700 (PDT)
+Received: from [192.168.1.9] (hst-221-44.medicom.bg. [84.238.221.44])
+        by smtp.googlemail.com with ESMTPSA id u2sm6553637wmc.42.2021.07.05.02.38.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 05 Jul 2021 02:38:28 -0700 (PDT)
+Subject: Re: [PATCH v2 1/7] venus: firmware: enable no tz fw loading for
+ sc7280
+To:     Dikshita Agarwal <dikshita@codeaurora.org>,
+        linux-media@vger.kernel.org, stanimir.varbanov@linaro.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        vgarodia@codeaurora.org
+References: <1625126736-16266-1-git-send-email-dikshita@codeaurora.org>
+ <1625126736-16266-2-git-send-email-dikshita@codeaurora.org>
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Message-ID: <512298bd-f357-d2e6-9b1b-3a8b674cd3f4@linaro.org>
+Date:   Mon, 5 Jul 2021 12:38:27 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="3r25sk2paghtmnoo"
-Content-Disposition: inline
-In-Reply-To: <305eacc9c57c2404795b6be76a08915808e23108.1624771446.git.baruch@tkos.co.il>
-X-SA-Exim-Connect-IP: 2001:67c:670:100:1d::c0
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
+In-Reply-To: <1625126736-16266-2-git-send-email-dikshita@codeaurora.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
---3r25sk2paghtmnoo
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-Hello Baruch,
-
-On Sun, Jun 27, 2021 at 08:24:04AM +0300, Baruch Siach wrote:
-> Driver for the PWM block in Qualcomm IPQ6018 line of SoCs. Based on
-> driver from downstream Codeaurora kernel tree. Removed support for older
-> (V1) variants because I have no access to that hardware.
->=20
-> Tested on IPQ6010 based hardware.
->=20
-> Signed-off-by: Baruch Siach <baruch@tkos.co.il>
+On 7/1/21 11:05 AM, Dikshita Agarwal wrote:
+> - Enable no tz FW loading.
+> - add routine to reset XTSS.
+> 
+> Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
 > ---
-> v4:
->=20
->   Use div64_u64() to fix link for 32-bit targets ((kernel test robot
->   <lkp@intel.com>, Uwe Kleine-K=F6nig)
->=20
-> v3:
->=20
->   s/qcom,pwm-ipq6018/qcom,ipq6018-pwm/ (Rob Herring)
->=20
->   Fix integer overflow on 32-bit targets (kernel test robot <lkp@intel.co=
-m>)
->=20
-> v2:
->=20
-> Address Uwe Kleine-K=F6nig review comments:
->=20
->   Fix period calculation when out of range
->=20
->   Don't set period larger than requested
->=20
->   Remove PWM disable on configuration change
->=20
->   Implement .apply instead of non-atomic .config/.enable/.disable
->=20
->   Don't modify PWM on .request/.free
->=20
->   Check pwm_div underflow
->=20
->   Fix various code and comment formatting issues
->=20
-> Other changes:
->=20
->   Use u64 divisor safe division
->=20
->   Remove now empty .request/.free
-> ---
->  drivers/pwm/Kconfig   |  12 +++
->  drivers/pwm/Makefile  |   1 +
->  drivers/pwm/pwm-ipq.c | 238 ++++++++++++++++++++++++++++++++++++++++++
->  3 files changed, 251 insertions(+)
->  create mode 100644 drivers/pwm/pwm-ipq.c
->=20
-> diff --git a/drivers/pwm/Kconfig b/drivers/pwm/Kconfig
-> index c76adedd58c9..08add845596f 100644
-> --- a/drivers/pwm/Kconfig
-> +++ b/drivers/pwm/Kconfig
-> @@ -260,6 +260,18 @@ config PWM_INTEL_LGM
->  	  To compile this driver as a module, choose M here: the module
->  	  will be called pwm-intel-lgm.
-> =20
-> +config PWM_IPQ
-> +	tristate "IPQ PWM support"
-> +	depends on ARCH_QCOM || COMPILE_TEST
-> +	depends on HAVE_CLK && HAS_IOMEM
-> +	help
-> +	  Generic PWM framework driver for IPQ PWM block which supports
-> +	  4 pwm channels. Each of the these channels can be configured
-> +	  independent of each other.
+>  drivers/media/platform/qcom/venus/firmware.c     | 41 ++++++++++++++++++------
+>  drivers/media/platform/qcom/venus/hfi_venus_io.h |  2 ++
+>  2 files changed, 33 insertions(+), 10 deletions(-)
+> 
+> diff --git a/drivers/media/platform/qcom/venus/firmware.c b/drivers/media/platform/qcom/venus/firmware.c
+> index 227bd3b..d5a4674 100644
+> --- a/drivers/media/platform/qcom/venus/firmware.c
+> +++ b/drivers/media/platform/qcom/venus/firmware.c
+> @@ -27,7 +27,12 @@
+>  static void venus_reset_cpu(struct venus_core *core)
+>  {
+>  	u32 fw_size = core->fw.mapped_mem_size;
+> -	void __iomem *wrapper_base = core->wrapper_base;
+> +	void __iomem *wrapper_base;
 > +
-> +	  To compile this driver as a module, choose M here: the module
-> +	  will be called pwm-ipq.
-> +
->  config PWM_IQS620A
->  	tristate "Azoteq IQS620A PWM support"
->  	depends on MFD_IQS62X || COMPILE_TEST
-> diff --git a/drivers/pwm/Makefile b/drivers/pwm/Makefile
-> index 708840b7fba8..7402feae4b36 100644
-> --- a/drivers/pwm/Makefile
-> +++ b/drivers/pwm/Makefile
-> @@ -22,6 +22,7 @@ obj-$(CONFIG_PWM_IMX1)		+=3D pwm-imx1.o
->  obj-$(CONFIG_PWM_IMX27)		+=3D pwm-imx27.o
->  obj-$(CONFIG_PWM_IMX_TPM)	+=3D pwm-imx-tpm.o
->  obj-$(CONFIG_PWM_INTEL_LGM)	+=3D pwm-intel-lgm.o
-> +obj-$(CONFIG_PWM_IPQ)		+=3D pwm-ipq.o
->  obj-$(CONFIG_PWM_IQS620A)	+=3D pwm-iqs620a.o
->  obj-$(CONFIG_PWM_JZ4740)	+=3D pwm-jz4740.o
->  obj-$(CONFIG_PWM_KEEMBAY)	+=3D pwm-keembay.o
-> diff --git a/drivers/pwm/pwm-ipq.c b/drivers/pwm/pwm-ipq.c
-> new file mode 100644
-> index 000000000000..966b051573c8
-> --- /dev/null
-> +++ b/drivers/pwm/pwm-ipq.c
-> @@ -0,0 +1,238 @@
-> +// SPDX-License-Identifier: BSD-3-Clause OR GPL-2.0
-> +/*
-> + * Copyright (c) 2016-2017, 2020 The Linux Foundation. All rights reserv=
-ed.
-> + */
-> +
-> +#include <linux/module.h>
-> +#include <linux/platform_device.h>
-> +#include <linux/pwm.h>
-> +#include <linux/clk.h>
-> +#include <linux/io.h>
-> +#include <linux/math64.h>
-> +#include <linux/of_device.h>
-> +
-> +#define CLK_SRC_FREQ		(100*1000*1000)
-> +#define MAX_PWM_DEVICES		4
-
-MAX_PWM_DEVICES is only used once, in my book this doesn't need a define
-then. (But if you still want to keep it, that's fine for me, too.)
-
-> +/*
-> + * Enable bit is set to enable output toggling in pwm device.
-> + * Update bit is set to reflect the changed divider and high duration
-> + * values in register.
-> + */
-> +#define PWM_ENABLE		0x80000000
-> +#define PWM_UPDATE		0x40000000
-> +
-> +/* The frequency range supported is 1Hz to 100MHz */
-> +#define MIN_PERIOD_NS	10
-> +#define MAX_PERIOD_NS	1000000000
-
-Please use a driver prefix for these defines.
-
-> +
-> +/*
-> + * The max value specified for each field is based on the number of bits
-> + * in the pwm control register for that field
-> + */
-> +#define MAX_PWM_CFG		0xFFFF
-> +
-> +#define PWM_CTRL_HI_SHIFT	16
-> +
-> +#define PWM_CFG_REG0 0 /*PWM_DIV PWM_HI*/
-> +#define PWM_CFG_REG1 1 /*ENABLE UPDATE PWM_PRE_DIV*/
-> +
-> +struct ipq_pwm_chip {
-> +	struct pwm_chip chip;
-> +	struct clk *clk;
-> +	void __iomem *mem;
-> +};
-> +
-> +static struct ipq_pwm_chip *to_ipq_pwm_chip(struct pwm_chip *chip)
-> +{
-> +	return container_of(chip, struct ipq_pwm_chip, chip);
-> +}
-> +
-> +static unsigned ipq_pwm_reg_offset(struct pwm_device *pwm, unsigned reg)
-> +{
-> +	return ((pwm->hwpwm * 2) + reg) * 4;
-> +}
-> +
-> +static void config_div_and_duty(struct pwm_device *pwm, int pre_div,
-> +			unsigned long long pwm_div, unsigned long period_ns,
-> +			unsigned long long duty_ns)
-
-Please also use a consistent prefix for function names.
-
-I suggest to use u64 for some of the parameters. While this doesn't
-change anything, it is cleaner as the caller passes variables of this
-type.
-
-> +{
-> +	unsigned long hi_dur;
-> +	unsigned long long quotient;
-> +	unsigned long val =3D 0;
-> +	struct ipq_pwm_chip *ipq_chip =3D to_ipq_pwm_chip(pwm->chip);
-> +
-> +	/*
-> +	 * high duration =3D pwm duty * (pwm div + 1)
-> +	 * pwm duty =3D duty_ns / period_ns
-> +	 */
-> +	quotient =3D (pwm_div + 1) * duty_ns;
-> +	hi_dur =3D div64_u64(quotient, period_ns);
-> +
-> +	val |=3D ((hi_dur & MAX_PWM_CFG) << PWM_CTRL_HI_SHIFT);
-> +	val |=3D (pwm_div & MAX_PWM_CFG);
-> +	writel(val, ipq_chip->mem + ipq_pwm_reg_offset(pwm, PWM_CFG_REG0));
-
-I consider it a bit irritating that the mask is called ...CFG but the
-shift define is called ..._CTRL_....
-
-I suggest something like:
-
-	#define IPQ_PWM_REG0	...
-	#define IPQ_PWM_REG0_HI		0xffff0000
-	#define IPQ_PWM_REG0_DIV	0x0000ffff
-
-	...
-
-	val =3D FIELD_PREP(IPQ_PWM_REG0_HI, hi_dur) |
-		FIELD_PREP(IPQ_PWM_REG0_DIV, pwm_div);
-
-	ipq_pwm_writel(ipq_chip, val, PWM_CFG_REG0);
-
-> +	val =3D pre_div & MAX_PWM_CFG;
-> +	writel(val, ipq_chip->mem + ipq_pwm_reg_offset(pwm, PWM_CFG_REG1));
-> +}
-> +
-> +static int ipq_pwm_enable(struct pwm_device *pwm)
-
-This is only called once. The caller (ipq_pwm_apply()) just before
-called config_div_and_duty() which already wrote PWM_CFG_REG1. If you
-unroll these calls you might fix a glitch or make it more unlikely.
-
-> +{
-> +	struct ipq_pwm_chip *ipq_chip =3D to_ipq_pwm_chip(pwm->chip);
-> +	unsigned offset =3D ipq_pwm_reg_offset(pwm, PWM_CFG_REG1);
-> +	unsigned long val;
-> +
-> +	val =3D readl(ipq_chip->mem + offset);
-> +	val |=3D PWM_ENABLE | PWM_UPDATE;
-> +	writel(val, ipq_chip->mem + offset);
-> +
-> +	return 0;
-> +}
-> +
-> +static void ipq_pwm_disable(struct pwm_device *pwm)
-> +{
-> +	struct ipq_pwm_chip *ipq_chip =3D to_ipq_pwm_chip(pwm->chip);
-> +	unsigned offset =3D ipq_pwm_reg_offset(pwm, PWM_CFG_REG1);
-> +	unsigned long val;
-> +
-> +	val =3D readl(ipq_chip->mem + offset);
-> +	val |=3D PWM_UPDATE;
-> +	val &=3D ~PWM_ENABLE;
-> +	writel(val, ipq_chip->mem + offset);
-> +}
-> +
-> +static int ipq_pwm_apply(struct pwm_chip *chip, struct pwm_device *pwm,
-> +			 const struct pwm_state *state)
-> +{
-> +	struct ipq_pwm_chip *ipq_chip =3D to_ipq_pwm_chip(chip);
-> +	unsigned long freq;
-> +	int pre_div, close_pre_div, close_pwm_div;
-> +	int pwm_div;
-> +	long long diff;
-> +	unsigned long rate =3D clk_get_rate(ipq_chip->clk);
-> +	unsigned long min_diff =3D rate;
-> +	uint64_t fin_ps;
-> +	u64 period_ns, duty_ns;
-> +
-> +	if (state->period < MIN_PERIOD_NS)
-> +		return -ERANGE;
-
-MIN_PERIOD_NS depends on clk_get_rate(ipq_chip->clk), doesn't it?
-
-> +	period_ns =3D min_t(u64, state->period, MAX_PERIOD_NS);
-> +	duty_ns =3D min_t(u64, state->duty_cycle, period_ns);
-
-If you define MAX_PERIOD_NS as (u64)1000000000 you can just use min().
-
-> +
-> +	/* freq in Hz for period in nano second*/
-
-Space before the closing */ please
-
-> +	freq =3D div64_u64(NSEC_PER_SEC, period_ns);
-> +	fin_ps =3D div64_u64(NSEC_PER_SEC * 1000ULL, rate);
-> +	close_pre_div =3D MAX_PWM_CFG;
-> +	close_pwm_div =3D MAX_PWM_CFG;
-> +
-> +	for (pre_div =3D 0; pre_div <=3D MAX_PWM_CFG; pre_div++) {
-> +		pwm_div =3D DIV64_U64_ROUND_CLOSEST(period_ns * 1000,
-> +						  fin_ps * (pre_div + 1));
-> +		pwm_div--;
-> +		if (pwm_div < 0 || pwm_div > MAX_PWM_CFG)
-> +			continue;
-> +
-> +		diff =3D ((uint64_t)freq * (pre_div + 1) * (pwm_div + 1))
-> +			- (uint64_t)rate;
-> +
-> +		if (diff < 0) /* period larger than requested */
-> +			continue;
-> +		if (diff =3D=3D 0) { /* bingo */
-> +			close_pre_div =3D pre_div;
-> +			close_pwm_div =3D pwm_div;
-> +			break;
-> +		}
-> +		if (diff < min_diff) {
-> +			min_diff =3D diff;
-> +			close_pre_div =3D pre_div;
-> +			close_pwm_div =3D pwm_div;
-> +		}
-
-I didn't check deeply, but I assume this calculation can be done more
-efficiently. Also I wonder if DIV64_U64_ROUND_CLOSEST is right. When you
-implement a .get_state() callback (which usually helps me to understand
-how the hardware works) I'm willing to take a closer look.
-
-> +	}
-> +
-> +	/* config divider values for the closest possible frequency */
-> +	config_div_and_duty(pwm, close_pre_div, close_pwm_div,
-> +			    period_ns, duty_ns);
-> +	if (state->enabled)
-> +		ipq_pwm_enable(pwm);
+> +	if (IS_V6(core))
+> +		wrapper_base = core->wrapper_tz_base;
 > +	else
-> +		ipq_pwm_disable(pwm);
-> +
-> +	return 0;
-> +}
-> +
-> +static struct pwm_ops ipq_pwm_ops =3D {
-> +	.apply =3D ipq_pwm_apply,
-
-Please implement a .get_state() function. (And in general, test your patch
-with PWM_DEBUG enabled.)
-
-> +	.owner =3D THIS_MODULE,
-> +};
-> +
-> +static int ipq_pwm_probe(struct platform_device *pdev)
-> +{
-> +	struct ipq_pwm_chip *pwm;
-> +	struct device *dev;
-> +	int ret;
-> +
-> +	dev =3D &pdev->dev;
-
-This can go to the line declaring dev.
-
-> +	pwm =3D devm_kzalloc(dev, sizeof(*pwm), GFP_KERNEL);
-> +	if (!pwm)
-> +		return -ENOMEM;
-> +
-> +	platform_set_drvdata(pdev, pwm);
-> +
-> +	pwm->mem =3D devm_platform_ioremap_resource(pdev, 0);
-> +	if (IS_ERR(pwm->mem))
-> +		return PTR_ERR(pwm->mem);
-> +
-> +	pwm->clk =3D devm_clk_get(dev, "core");
-> +	if (IS_ERR(pwm->clk))
-
-Error message please. Preferably using dev_err_probe().
-
-> +		return PTR_ERR(pwm->clk);
-> +
-> +	ret =3D clk_set_rate(pwm->clk, CLK_SRC_FREQ);
-> +	if (ret)
-
-ditto.
-
-> +		return ret;
-
-empty line here?
-
-> +	ret =3D clk_prepare_enable(pwm->clk);
-> +	if (ret)
-
-ditto.
-
-> +		return ret;
-> +
-> +	pwm->chip.dev =3D dev;
-> +	pwm->chip.ops =3D &ipq_pwm_ops;
-> +	pwm->chip.npwm =3D MAX_PWM_DEVICES;
-> +
-> +	ret =3D pwmchip_add(&pwm->chip);
-> +	if (ret < 0) {
-> +		dev_err_probe(dev, ret, "pwmchip_add() failed\n");
-> +		clk_disable_unprepare(pwm->clk);
-> +		return ret;
+> +		wrapper_base = core->wrapper_base;
+>  
+>  	writel(0, wrapper_base + WRAPPER_FW_START_ADDR);
+>  	writel(fw_size, wrapper_base + WRAPPER_FW_END_ADDR);
+> @@ -35,11 +40,18 @@ static void venus_reset_cpu(struct venus_core *core)
+>  	writel(fw_size, wrapper_base + WRAPPER_CPA_END_ADDR);
+>  	writel(fw_size, wrapper_base + WRAPPER_NONPIX_START_ADDR);
+>  	writel(fw_size, wrapper_base + WRAPPER_NONPIX_END_ADDR);
+> -	writel(0x0, wrapper_base + WRAPPER_CPU_CGC_DIS);
+> -	writel(0x0, wrapper_base + WRAPPER_CPU_CLOCK_CONFIG);
+>  
+> -	/* Bring ARM9 out of reset */
+> -	writel(0, wrapper_base + WRAPPER_A9SS_SW_RESET);
+> +	if (IS_V6(core)) {
+> +		/* Bring XTSS out of reset */
+> +		writel(0, wrapper_base + WRAPPER_TZ_XTSS_SW_RESET);
 > +	}
+> +	else {
+
+} else {
+	...
+}
+
+> +		writel(0x0, wrapper_base + WRAPPER_CPU_CGC_DIS);
+> +		writel(0x0, wrapper_base + WRAPPER_CPU_CLOCK_CONFIG);
 > +
-> +	return 0;
-> +}
-> +
-> +static int ipq_pwm_remove(struct platform_device *pdev)
-> +{
-> +	struct ipq_pwm_chip *pwm =3D platform_get_drvdata(pdev);
-> +
-> +	pwmchip_remove(&pwm->chip);
+> +		/* Bring ARM9 out of reset */
+> +		writel(0, wrapper_base + WRAPPER_A9SS_SW_RESET);
+> +	}
+>  }
+>  
+>  int venus_set_hw_state(struct venus_core *core, bool resume)
+> @@ -56,7 +68,9 @@ int venus_set_hw_state(struct venus_core *core, bool resume)
+>  	if (resume) {
+>  		venus_reset_cpu(core);
+>  	} else {
+> -		if (!IS_V6(core))
+> +		if (IS_V6(core))
+> +			writel(1, core->wrapper_tz_base + WRAPPER_TZ_XTSS_SW_RESET);
+> +		else
+>  			writel(1, core->wrapper_base + WRAPPER_A9SS_SW_RESET);
+>  	}
+>  
+> @@ -162,12 +176,19 @@ static int venus_shutdown_no_tz(struct venus_core *core)
+>  	u32 reg;
+>  	struct device *dev = core->fw.dev;
+>  	void __iomem *wrapper_base = core->wrapper_base;
+> +	void __iomem *wrapper_tz_base = core->wrapper_tz_base;
+>  
+> +	if (IS_V6(core)) {
+> +	/* Assert the reset to XTSS */
 
-clk_disable_unprepare missing here.
+insert one tab before comment
 
-> +
-> +	return 0;
-> +}
-> +
-> +static const struct of_device_id pwm_ipq_dt_match[] =3D {
-> +	{ .compatible =3D "qcom,ipq6018-pwm", },
-> +	{}
-> +};
-> +MODULE_DEVICE_TABLE(of, pwm_ipq_dt_match);
-> +
-> +static struct platform_driver ipq_pwm_driver =3D {
-> +	.driver =3D {
-> +		.name =3D "ipq-pwm",
-> +		.owner =3D THIS_MODULE,
+> +		reg = readl_relaxed(wrapper_tz_base + WRAPPER_TZ_XTSS_SW_RESET);
+> +		reg |= WRAPPER_XTSS_SW_RESET_BIT;
+> +		writel_relaxed(reg, wrapper_tz_base + WRAPPER_TZ_XTSS_SW_RESET);
+> +	} else {
+>  	/* Assert the reset to ARM9 */
 
-Setting owner isn't necessary any more since v3.11 (commit 9447057eaff8
-("platform_device: use a macro instead of platform_driver_register").
+insert one tab before comment
 
-> +		.of_match_table =3D pwm_ipq_dt_match,
-> +	},
-> +	.probe =3D ipq_pwm_probe,
-> +	.remove =3D ipq_pwm_remove,
-> +};
-> +
-> +module_platform_driver(ipq_pwm_driver);
-> +
-> +MODULE_LICENSE("Dual BSD/GPL");
-> --=20
-> 2.30.2
->=20
->=20
+> -	reg = readl_relaxed(wrapper_base + WRAPPER_A9SS_SW_RESET);
+> -	reg |= WRAPPER_A9SS_SW_RESET_BIT;
+> -	writel_relaxed(reg, wrapper_base + WRAPPER_A9SS_SW_RESET);
+> -
+> +		reg = readl_relaxed(wrapper_base + WRAPPER_A9SS_SW_RESET);
+> +		reg |= WRAPPER_A9SS_SW_RESET_BIT;
+> +		writel_relaxed(reg, wrapper_base + WRAPPER_A9SS_SW_RESET);
+> +	}
+>  	/* Make sure reset is asserted before the mapping is removed */
+>  	mb();
+>  
+> diff --git a/drivers/media/platform/qcom/venus/hfi_venus_io.h b/drivers/media/platform/qcom/venus/hfi_venus_io.h
+> index 300c6e47..9735a24 100644
+> --- a/drivers/media/platform/qcom/venus/hfi_venus_io.h
+> +++ b/drivers/media/platform/qcom/venus/hfi_venus_io.h
+> @@ -149,6 +149,8 @@
+>  /* Wrapper TZ 6xx */
+>  #define WRAPPER_TZ_BASE_V6			0x000c0000
+>  #define WRAPPER_TZ_CPU_STATUS_V6		0x10
+> +#define WRAPPER_TZ_XTSS_SW_RESET		0x1000
+> +#define WRAPPER_XTSS_SW_RESET_BIT		BIT(0)
+>  
+>  /* Venus AON */
+>  #define AON_BASE_V6				0x000e0000
+> 
 
---=20
-Pengutronix e.K.                           | Uwe Kleine-K=F6nig            |
-Industrial Linux Solutions                 | https://www.pengutronix.de/ |
-
---3r25sk2paghtmnoo
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEfnIqFpAYrP8+dKQLwfwUeK3K7AkFAmDistQACgkQwfwUeK3K
-7AmIfwf/c+s+Q3cnq1VOQMgIICX2BHS7UOXrukPHXbX6wkuAChPD3CGM1BASDKkd
-Fc67pZC/1++O7Kw+iXmamWkkBjt4QSqICe15NbW4ScSx9SBnCpORb2ngpOaLdzl9
-rKKp498T67btim2EE15xwqI5iLMyljlXEQxsFcmA7STe5ctQx3GgvPHY9bbrGau+
-q2wHzgp04U1tmFXlHNxmMWVrec4tndvcW6nKPL1lZAs4h6N1oNHwVykaZDVcvTxl
-/NH9dkWW+3IOiwKFnIeMIBYPvHohRaSZ+yTD8lTTk++yzK2GjaMxHUBTWDadu55J
-VnnsvoHTf+404EsVF8gNhnXu26Vg0w==
-=xkHO
------END PGP SIGNATURE-----
-
---3r25sk2paghtmnoo--
+-- 
+regards,
+Stan
