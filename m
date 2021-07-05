@@ -2,88 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CB2D13BBD2C
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jul 2021 14:56:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 787FD3BBD88
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jul 2021 15:34:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231149AbhGEM6o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Jul 2021 08:58:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60492 "EHLO
+        id S230414AbhGENhb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Jul 2021 09:37:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40712 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230188AbhGEM6o (ORCPT
+        with ESMTP id S230188AbhGENha (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Jul 2021 08:58:44 -0400
-Received: from mail-vk1-xa2a.google.com (mail-vk1-xa2a.google.com [IPv6:2607:f8b0:4864:20::a2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A18BC06175F
-        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Jul 2021 05:56:07 -0700 (PDT)
-Received: by mail-vk1-xa2a.google.com with SMTP id x20so2435438vkd.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Jul 2021 05:56:07 -0700 (PDT)
+        Mon, 5 Jul 2021 09:37:30 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4C56C061574
+        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Jul 2021 06:34:53 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id p21so10785825lfj.13
+        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Jul 2021 06:34:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=3Xao4IS6fmEIHar7eI8fRL7ZOP15I141AqimBPWe3Ks=;
-        b=gL1uVragn99mMDi9QgwGEeSrfqzjqpdaGniriAUkqkaD4103qt1L96XugndqD+k49M
-         qA3fnZWV+O61M5Ctfr8zyiUMOXPUc65+NI3iZTKE9Y+YXEo40zz5aIzHl2EZdfrnmsWU
-         PrIev/XVIQ74w79Vz+HrqBNbOoB7RohmrWypAEAmJxJNSgXH/KYjDH0AtccaQYD/4cT3
-         OtP6J2Lf/weOi/jyA4fRH2ouBQlgotKLGLzFBogub+/UgJp1gQruc6drjiZaig9fec2u
-         uHWhITL0NDMZ5t8FErZUNH947PqX6bgy6avZBsiF28fiqMpcGr6UWPuL2rvVKCPxH43u
-         83ew==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=hTlomlxaU2sZDcUx321lrReHqUzaJljTL1EttP6LrNg=;
+        b=wATVQJOBTwBPm0B91WkEXJvOkVJloSHXKQoNIvaLvL4299yOzDpUCRUthmaoiyz72P
+         H8sOI5Tc18OtIml6K87TOhDCm1EruLas5coOZLshkz8uKpYlzZV1lyjo1CAoWb7R4+fb
+         LD/OlwAOPPxF4xk95pnXK07/hsKD48j4IZ2MCVPa/h8fvZNAWN043plC6HtOXnWLfXQV
+         oiAu9Y7RtnqpzfNZZeXHJC2+YDbLyfBX7MKDz7bWL21coatjiIrw1k+ShsaaTx7g4W6N
+         nmgviV+ruMF6i8gmY3up+NzKg8h4NAMui1zVYCA4l92mckGAJQwofh2k510g0RSO6jyA
+         AmRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=3Xao4IS6fmEIHar7eI8fRL7ZOP15I141AqimBPWe3Ks=;
-        b=tlqagsdKqsYmHe86nE7jL04RG+qCJirlwa5gsUrl4sWvVJ5fm22dw+ds2g9AVVGLVV
-         JaFFUnOgepIy1qMxFqjfd8DvOR5+o7bKgOMrMiTTT+XyyoPMM5KG2sdCDMiy3FUVmjVd
-         90ucfTfMUmBleG4TyyyHtbYqalPQqwV6XoocMnQ/VvDcJd1KiKdzeQDKQd6z93Faj+xY
-         zopVdCEdD2B9WxI3cE9DMQwT77H7c4u4i7ecNMukebWxJ4D9jDac5mnSlFPD2XxnLzlP
-         oxwlHYrEYNYl3aTUQAvn3GpYQsO74dnD89KzoKX0TPa3rHF6aFz44Xq036yfrGY2g/5j
-         ASjw==
-X-Gm-Message-State: AOAM532oGPEd69aIsSmVGNj4/JJQvKJ4NUlNAWKlX5BlMGBzCmm5z+W+
-        01CKGNWIGuxCSJ0i9czn6pV8oXpcRMNQ+l/IxSv6Jg==
-X-Google-Smtp-Source: ABdhPJzRJt3wZmO5Rt140bjaSkbkB7L1nM34Eg6gaQmk1uNGaIlJMS0y8RiiGfdFZ3xf0CJCikYyAB6BI558vSbSkKY=
-X-Received: by 2002:a1f:1d94:: with SMTP id d142mr8388714vkd.6.1625489766413;
- Mon, 05 Jul 2021 05:56:06 -0700 (PDT)
-MIME-Version: 1.0
-References: <20210703005416.2668319-1-bjorn.andersson@linaro.org>
-In-Reply-To: <20210703005416.2668319-1-bjorn.andersson@linaro.org>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=hTlomlxaU2sZDcUx321lrReHqUzaJljTL1EttP6LrNg=;
+        b=TYRZxTKlzwcy+l2OIvlKVElNHHBQy99zZalGB6WS2f35GUVfoH/eP1mgr34FwFB/Sb
+         7UnIK4W+ZWx7HTzHM5x0l8eAMo+fBCv0Pnx8UI9iNDJt7dIjCxF8fjxthEJK8oquw8s7
+         yUvBHPlK0dLpzqheycLkSdc7RiABnt+FQmHEpQD1j4yFqqawdSJC4jLVJN714NwmdjIp
+         aNKPIJ6qWr3of5Fe/LLiLRa+wXz2dnJAS8zAnhSKIVApZHhfh5WIKi+cUKRc6ZWeW1n4
+         l3QwCHsUGLNatdQt8aj04t9Ixeha+YwxgtYEq2W5VfBMbMQ18xd0J/qXnjgHzE8SQ+5a
+         668g==
+X-Gm-Message-State: AOAM533ejpsszeNvhstjI/sd88NZgeYW6o7CMrJCjSCLn6gdp2xXT+d2
+        HtQSryGNm9yd2NoK+87umU/9mw==
+X-Google-Smtp-Source: ABdhPJyGviPHrfmMtlEwyrVqsKtlbk8XSe4QwRB8Mq7TXi+VXzE3hHehjkoeOXMewOH+58O+KB7YMw==
+X-Received: by 2002:a19:f104:: with SMTP id p4mr10381901lfh.630.1625492091905;
+        Mon, 05 Jul 2021 06:34:51 -0700 (PDT)
+Received: from localhost.localdomain (81-227-43-49-no2784.tbcn.telia.com. [81.227.43.49])
+        by smtp.gmail.com with ESMTPSA id a5sm1167860lfj.190.2021.07.05.06.34.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 05 Jul 2021 06:34:50 -0700 (PDT)
 From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Mon, 5 Jul 2021 14:55:30 +0200
-Message-ID: <CAPDyKFosGskXHv8P9WSEpWTBzMD8confq07nWs5fPyNVzUJ7jw@mail.gmail.com>
-Subject: Re: [PATCH 0/2] soc: qcom: rpmhpd: Improve rpmhpd enable handling
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, Stephen Boyd <swboyd@chromium.org>,
+To:     Rob Herring <robh+dt@kernel.org>, Mark Brown <broonie@kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rajendra Nayak <rnayak@codeaurora.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: [PATCH] regulator: fixed: Mark regulator-fixed-domain as deprecated
+Date:   Mon,  5 Jul 2021 15:34:41 +0200
+Message-Id: <20210705133441.11344-1-ulf.hansson@linaro.org>
+X-Mailer: git-send-email 2.25.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 3 Jul 2021 at 02:55, Bjorn Andersson <bjorn.andersson@linaro.org> wrote:
->
-> During the discussion and investigation of [1] it became apparent that
-> enabling a rpmhpd, without requesting a performance state is a nop. This
-> results in a situation where drivers that normally would just describe
-> their dependency on the power-domain and have the core implicitly enable
-> that power domain also needs to make an explicit vote for a performance
-> state - e.g. by a lone required-opp.
->
-> [1] https://lore.kernel.org/linux-arm-msm/20210630133149.3204290-4-dmitry.baryshkov@linaro.org/
->
-> Bjorn Andersson (2):
->   soc: qcom: rpmhpd: Use corner in power_off
->   soc: qcom: rpmhpd: Make power_on actually enable the domain
->
->  drivers/soc/qcom/rpmhpd.c | 19 ++++++++++++-------
->  1 file changed, 12 insertions(+), 7 deletions(-)
->
+A power domain should not be modelled as a regulator, not even for the
+simplest case as recent discussions have concluded around the existing
+regulator-fixed-domain DT binding.
 
-FWIW:
+Fortunately, there is only one user of the binding that was recently added.
+Therefore, let's mark the binding as deprecated to prevent it from being
+further used.
 
-Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+---
+ .../devicetree/bindings/regulator/fixed-regulator.yaml          | 2 ++
+ 1 file changed, 2 insertions(+)
 
-Kind regards
-Uffe
+diff --git a/Documentation/devicetree/bindings/regulator/fixed-regulator.yaml b/Documentation/devicetree/bindings/regulator/fixed-regulator.yaml
+index 8850c01bd470..9b131c6facbc 100644
+--- a/Documentation/devicetree/bindings/regulator/fixed-regulator.yaml
++++ b/Documentation/devicetree/bindings/regulator/fixed-regulator.yaml
+@@ -57,12 +57,14 @@ properties:
+     maxItems: 1
+ 
+   power-domains:
++    deprecated: true
+     description:
+       Power domain to use for enable control. This binding is only
+       available if the compatible is chosen to regulator-fixed-domain.
+     maxItems: 1
+ 
+   required-opps:
++    deprecated: true
+     description:
+       Performance state to use for enable control. This binding is only
+       available if the compatible is chosen to regulator-fixed-domain. The
+-- 
+2.25.1
+
