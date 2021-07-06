@@ -2,87 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A43993BD7D9
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jul 2021 15:33:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 342F73BD7E2
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jul 2021 15:38:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231415AbhGFNf7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Jul 2021 09:35:59 -0400
-Received: from mail.kernel.org ([198.145.29.99]:39962 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231400AbhGFNf6 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Jul 2021 09:35:58 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 61E7461983;
-        Tue,  6 Jul 2021 13:33:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1625578400;
-        bh=WcDD30TViYNS4yatqktO0avnymB6mNK7bjMGHKx69Ss=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=ZnmRvc80v0apIs/ErVix0easCCnnBjRfyj/dv5xuHyBuG2KxowXTGWm4DyR/1ALwq
-         q1Ro7cNCYL7ggvrEKW2r4710VOuYE/Kz80DTmB7tnpmofjyYF///c3IC2c3SD4NXoL
-         ZAvgZ1L9vvlFA55MWSCxw+jCYTMk9PfBaJMkPE4QZbbVyxQ3WfyssQEOEXW8NIxM59
-         RNNl6V3uXlPPK3WsFiTdQGTOGyf+YPx/gFBYcyLo5fGOM7rlb/NMlhlsGl0kqHQjFP
-         C9kVM1C9p3IYIEkKx8mtFOf0t8NyHTNa8jbJlNHxI17omLaM5ShKsc2y2C+FdYzqM/
-         CBfbzC5TIdbiw==
-Date:   Tue, 6 Jul 2021 14:33:14 +0100
-From:   Will Deacon <will@kernel.org>
-To:     Robin Murphy <robin.murphy@arm.com>
-Cc:     Catalin Marinas <catalin.marinas@arm.com>,
-        Yassine Oudjana <y.oudjana@protonmail.com>,
-        "ardb@kernel.org" <ardb@kernel.org>,
-        "arnd@arndb.de" <arnd@arndb.de>,
-        "kernel-team@android.com" <kernel-team@android.com>,
-        "linux-arm-kernel@lists.infradead.org" 
-        <linux-arm-kernel@lists.infradead.org>,
-        "mark.rutland@arm.com" <mark.rutland@arm.com>,
-        "vincent.whitchurch@axis.com" <vincent.whitchurch@axis.com>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH] arm64: cache: Lower ARCH_DMA_MINALIGN to 64
- (L1_CACHE_BYTES)
-Message-ID: <20210706133314.GB20327@willie-the-truck>
-References: <20210527124356.22367-1-will@kernel.org>
- <uHgsRacR8hJ7nW-I-pIcehzg-lNIn7NJvaL7bP9tfAftFsBjsgaY2qTjG9zyBgxHkjNL1WPNrD7YVv2JVD2_Wy-a5VTbcq-1xEi8ZnwrXBo=@protonmail.com>
- <20210706102634.GB24903@arm.com>
- <59800d6c-364a-f4be-e341-c5b531657ba3@arm.com>
+        id S231446AbhGFNlQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Jul 2021 09:41:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48400 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231838AbhGFNlL (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 6 Jul 2021 09:41:11 -0400
+Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F718C061760
+        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Jul 2021 06:38:32 -0700 (PDT)
+Received: by mail-pf1-x42d.google.com with SMTP id f20so11592496pfa.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Jul 2021 06:38:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=TvN5xeV+UnRnXDWJji9LwXoSiVyfNPci3OJpaT2bQnc=;
+        b=axZiDOHWkqwd1MmQx4sF2ihsr8+N7CD0Z6Xi60BOzu4KyR6IRtFKwSObsw/NeD9Dn3
+         kaFudhEDDSZU2JCMQQB0DVI5X6M44Py7VrGqKlHQPWE9IUmyu8EHuIhnvjLdBJuR0xZ2
+         GRbwbQz1bhUxOVYbthjhvajrk/Ttuv4NkE68LqfOxXwAygyHC/1hItem6mgyNJPk5VFT
+         Krgv4yzEaYfVabw5S4T6aoV1e3jf2j9I064kOuF2TXZ7Ee54JR7AIyCri+QEEgqVvkdn
+         WDnGiAG1uM7rR+K/M3NEYPYSYbLl7uqiv0VFWfPW4KJmCuPqL60j79NbwdTpTxKGhV+k
+         sGEw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=TvN5xeV+UnRnXDWJji9LwXoSiVyfNPci3OJpaT2bQnc=;
+        b=DK1N2zliQR6f19eicCzkqZsxv2abAeouSCVLRANIJ+QnPpp405/+scB1fuiLZ7mDOo
+         iKlAkF20liwk9cI6CySx72Wwch0Oo4f79g9FCiGBk2JPggLyAz8apAIy2OF3g1QcrJLW
+         e3Ubyk46LhJ/kxP5PwI3zpJLuJV5KuBeyYT1K6rQPEkdztvCTa8/BRj/I8e7ubpIKl8c
+         WKLQxcGia/57RVsOD11iWSpAOj4lUGuon0NbNNAYcrrqiTdTidWPGPkZ6Z0bxDqS3mir
+         WQ8Wd8pD5l1A8tulXqEiQ7sKyMEdh3vCexG+bd6QFYBdd7lk//r5Wc0PigGbmDXDWDNH
+         22PQ==
+X-Gm-Message-State: AOAM5336DUVrAuZDPWiEamI6vbnF8GaZE0nj6iYeT+blS/j9ZT03+jhG
+        Dnw4VmCVYqdsfzW1KqlTeKxcuzoJLlh1Ww==
+X-Google-Smtp-Source: ABdhPJwxTZE8UdM5HndViMdj91B2Epd1Tq9sl1Ff2m+k49aaUVryhnV7HnXrRQjMFwEU8FoBd3vtGg==
+X-Received: by 2002:a05:6a00:2283:b029:307:5484:dd10 with SMTP id f3-20020a056a002283b02903075484dd10mr20942943pfe.43.1625578711550;
+        Tue, 06 Jul 2021 06:38:31 -0700 (PDT)
+Received: from localhost.name ([122.161.51.128])
+        by smtp.gmail.com with ESMTPSA id q14sm17202260pfh.135.2021.07.06.06.38.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 06 Jul 2021 06:38:31 -0700 (PDT)
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     bhupesh.sharma@linaro.org, bhupesh.linux@gmail.com,
+        herbert@gondor.apana.org.au, linux-kernel@vger.kernel.org,
+        thara.gopinath@linaro.org, linux-crypto@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Eric Biggers <ebiggers@google.com>
+Subject: [PATCH] arm64: dts: qcom/sm8150: Add UFS ICE capability
+Date:   Tue,  6 Jul 2021 19:08:14 +0530
+Message-Id: <20210706133814.621536-1-bhupesh.sharma@linaro.org>
+X-Mailer: git-send-email 2.31.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <59800d6c-364a-f4be-e341-c5b531657ba3@arm.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jul 06, 2021 at 02:29:07PM +0100, Robin Murphy wrote:
-> On 2021-07-06 11:26, Catalin Marinas wrote:
-> > On Tue, Jul 06, 2021 at 09:26:59AM +0000, Yassine Oudjana wrote:
-> > > In-Reply-To: <20210527124356.22367-1-will@kernel.org>
-> > > > Reduce ARCH_DMA_MINALIGN to 64 bytes and allow the warning/taint to
-> > > > indicate if there are machines that unknowingly rely on this.
-> > > 
-> > > The warning is being triggered on Qualcomm MSM8996, as well as the out-of-spec taint:
-> > 
-> > Is this booting with ACPI or DT?
-> > 
-> > > ------------[ cut here ]------------
-> > > rtc-pm8xxx 400f000.qcom,spmi:pmic@0:rtc@6000: ARCH_DMA_MINALIGN smaller than CTR_EL0.CWG (64 < 128)
-> > > WARNING: CPU: 0 PID: 1 at arch/arm64/mm/dma-mapping.c:45 arch_setup_dma_ops+0xf8/0x10c
-> > [...]
-> > > This warning is triggered with nearly every driver probe, not only rtc-pm8xxx.
-> > 
-> > I have a suspicion none of the reported devices actually do any DMA, so
-> > in practice it should be safe but we need to figure out why
-> > arch_setup_dma_ops() gets called.
-> 
-> It gets called because there's no straightforward way to know that a
-> platform device *isn't* DMA-capable, so we have to assume they are.
-> 
-> I would also assume that in a Qcom SoC there really are at least some things
-> doing non-coherent DMA :(
+Add support for UFS ICE (Qualcomm Inline Crypto Engine) in
+sm8150 SoC dts.
 
-Agreed, unless this is a CPU erratum and the line size is being reported for
-a cache beyond the PoC, then I think we're going to have to revert the patch
-reducing ARCH_DMA_MINALIGN after all.
+I tested this on SA8155p-adp board, which is a publicly
+available development board that uses the sa8155p Qualcomm
+Snapdragon SoC. SA8155p platform is similar to the SM8150,
+so use this as base for now.
 
-I can't find much information about the original Kryo core at all...
+I tested the UFS ICE feature using 'fscrypt' test utility.
 
-Will
+Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc: Eric Biggers <ebiggers@google.com>
+Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+---
+Here are some details on how, I tested the UFS ICE feature
+on SA8155p-adp:
+1. Build a kernel with:
+	CONFIG_BLK_INLINE_ENCRYPTION=y
+	CONFIG_FS_ENCRYPTION=y
+	CONFIG_FS_ENCRYPTION_INLINE_CRYPT=y
+	CONFIG_SCSI_UFS_CRYPTO=y
+2. Create a filesystem with 'mkfs.ext4 -O encrypt'
+3. Mount the filesystem with '-o inlinecrypt'
+4. Create an encrypted directory and copy some files into it.
+5. Unmount the filesystem, and mount it *without* '-o inlinecrypt'.
+6. Verify that the files match the originals.
+7. Also test the fscrypt lock / unlock combinations.
+
+ arch/arm64/boot/dts/qcom/sm8150.dtsi | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+index 163eb430eb1e..c4e3939a1cb9 100644
+--- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+@@ -1016,7 +1016,9 @@ system-cache-controller@9200000 {
+ 		ufs_mem_hc: ufshc@1d84000 {
+ 			compatible = "qcom,sm8150-ufshc", "qcom,ufshc",
+ 				     "jedec,ufs-2.0";
+-			reg = <0 0x01d84000 0 0x2500>;
++			reg = <0 0x01d84000 0 0x2500>,
++			      <0 0x01d90000 0 0x8000>;
++			reg-names = "std", "ice";
+ 			interrupts = <GIC_SPI 265 IRQ_TYPE_LEVEL_HIGH>;
+ 			phys = <&ufs_mem_phy_lanes>;
+ 			phy-names = "ufsphy";
+@@ -1035,7 +1037,8 @@ ufs_mem_hc: ufshc@1d84000 {
+ 				"ref_clk",
+ 				"tx_lane0_sync_clk",
+ 				"rx_lane0_sync_clk",
+-				"rx_lane1_sync_clk";
++				"rx_lane1_sync_clk",
++				"ice_core_clk";
+ 			clocks =
+ 				<&gcc GCC_UFS_PHY_AXI_CLK>,
+ 				<&gcc GCC_AGGRE_UFS_PHY_AXI_CLK>,
+@@ -1044,7 +1047,8 @@ ufs_mem_hc: ufshc@1d84000 {
+ 				<&rpmhcc RPMH_CXO_CLK>,
+ 				<&gcc GCC_UFS_PHY_TX_SYMBOL_0_CLK>,
+ 				<&gcc GCC_UFS_PHY_RX_SYMBOL_0_CLK>,
+-				<&gcc GCC_UFS_PHY_RX_SYMBOL_1_CLK>;
++				<&gcc GCC_UFS_PHY_RX_SYMBOL_1_CLK>,
++				<&gcc GCC_UFS_PHY_ICE_CORE_CLK>;
+ 			freq-table-hz =
+ 				<37500000 300000000>,
+ 				<0 0>,
+@@ -1053,7 +1057,8 @@ ufs_mem_hc: ufshc@1d84000 {
+ 				<0 0>,
+ 				<0 0>,
+ 				<0 0>,
+-				<0 0>;
++				<0 0>,
++				<0 300000000>;
+ 
+ 			status = "disabled";
+ 		};
+-- 
+2.31.1
+
