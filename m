@@ -2,108 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AD1893BDFB7
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jul 2021 01:17:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 97BE53BDFC6
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jul 2021 01:26:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230061AbhGFXT5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Jul 2021 19:19:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36486 "EHLO
+        id S229787AbhGFX3A (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Jul 2021 19:29:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38452 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230019AbhGFXT5 (ORCPT
+        with ESMTP id S229753AbhGFX27 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Jul 2021 19:19:57 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24DC3C061574
-        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Jul 2021 16:17:17 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id y42so707982lfa.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Jul 2021 16:17:17 -0700 (PDT)
+        Tue, 6 Jul 2021 19:28:59 -0400
+Received: from mail-qt1-x836.google.com (mail-qt1-x836.google.com [IPv6:2607:f8b0:4864:20::836])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D33DC061574
+        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Jul 2021 16:26:19 -0700 (PDT)
+Received: by mail-qt1-x836.google.com with SMTP id n9so714751qtk.7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Jul 2021 16:26:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=VLzE7VV6mscc+vgGAg4a2KqSEev6fTFF/MgknYbkxfM=;
-        b=CWXJpXRsEpBSy9DnkUMp7UsTDzFZxJ2jA1AbWvWiIkcZDB0rusqpLMfQenTnYWg32/
-         U700PWQ03TOFHDS2hIQchtaUB+bdsDTLBUEb4VbOtdybtaAkKYG6EYVz7HbKuKomw20c
-         wTLYfftXTv/YEr1Kazoe8GsJkXz3KZ1VlLd89aqLSFidD3NYfjv4CiM4y8JQ7M7dPzdS
-         2ycxaQYQ92Z2YmLQ5TDuvfhzC5QE0s8W1UHTP835pzwuYLBDqVpcV8/xKU1xYUmXEiv4
-         YGcHSl4SfE/cWJZIQEV9LBLVUFHhk920EsiBtjW2+xZ/MuwZ70AA+7q7HJViEzCXbsPV
-         AvfQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=b9NAwsJ8xPNo6tBHGAy9B/tfdHedu+gEEwjXYjTIV5A=;
+        b=fx9iG8nNUE/oGeq2ZZ0JrijeZdj7Bq5xLgfN0id4IHt3JEenbFhNscalBbWugnKqL2
+         OedqLjinMRrzHfMbgSeec0aewcR2OCA25zc0dgVatB5BVnlmCDZSjWBKjhOVG7WGA6PE
+         MNVIaPfBhsguodyetnF79nlPWMpKdizqKyPyV5AFAzz+TbUeJO6UZYwA8s/4PEIW+01c
+         2jPNz2rnlaaVHouWF3fNRjh7+33350FpyhxBzwWdfjBmh6bn2HjHVGCtbaKH4LOB58du
+         mf8BraZGzj8GtGxX4ARnxzTGysgrr/Ntykd5hf8+VchEdRo6Sv5WMVwk3a3VZIxSItB+
+         3byg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=VLzE7VV6mscc+vgGAg4a2KqSEev6fTFF/MgknYbkxfM=;
-        b=hk9O4w2ykUMef+oomGrzMnfrMt9eGDhOVRjoub+6efxGASylFNY0bT1/+XpRdPb0P+
-         dB7Ke6fpW2l3EQsOx13zVXt9A+SimtQy43fhSDQ2hfwTUqHGY/OJkWgvUh8vPr9sujEr
-         dyoIEsLtIXOey8cr1FCo0yCuUM23QWhoxXSZG1j28edkPpaXJjGF2RPXFpzQ5DWl+U10
-         /Jl2OUgf4o3gaKz4ntbU4nrF9qna6IzITcwX9mlBzMulJEWBWJbL3yFkVxCSwkrrhz+z
-         gECvxJSCzL0SgN/tx6UCnRXubcmETcq0IzEixeBI8/s0JlQSDxjp2KXxb4wYVW/cowSM
-         WzBg==
-X-Gm-Message-State: AOAM531UTd91uugOQY2qXocWw6paBVowkfI6H11itc5rey4DA3rpjpWm
-        2nzRO6ylS9aUMH595O3MWJWes4PyTcld4Q==
-X-Google-Smtp-Source: ABdhPJzG/Yb3HEzwkvS1k6JudrRwM/zab/4paZXjguAjlBYAleJZkyTBoCg8Xo1ARIVE7974Od3veQ==
-X-Received: by 2002:a05:6512:348f:: with SMTP id v15mr14130797lfr.533.1625613435203;
-        Tue, 06 Jul 2021 16:17:15 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id v5sm325752lfr.299.2021.07.06.16.17.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 06 Jul 2021 16:17:14 -0700 (PDT)
-Subject: Re: [PATCH v2] drm/msm/dsi: do not use uninitialized kms
-To:     David Heidelberg <david@ixit.cz>,
-        Sean Paul <seanpaul@chromium.org>,
-        robdclark <robdclark@gmail.com>
-Cc:     linux-arm-msm@vger.kernel.org
-References: <20210705233639.335951-1-david@ixit.cz>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Message-ID: <4df2c14e-5e59-0faa-48f8-5425f2c26a8f@linaro.org>
-Date:   Wed, 7 Jul 2021 02:17:14 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=b9NAwsJ8xPNo6tBHGAy9B/tfdHedu+gEEwjXYjTIV5A=;
+        b=Bc+B6RifjAm00Qq/AHHZWjJz/NVFJ0pgh4i0z988e3AZvPBlFqob8H4a2M6jFNu6GZ
+         i0Te/TAf5KbJUinNA9WjhhlhpcpOvrzNz+2VFTx5TB0dJHaoj+PTevNCpPc1pGRZJaCn
+         A+lbhbFtPM3bPw4AVQHveTlKD29DUt7R8Dc7SYXDE1rT6ywyxSvCGuFI/YJbn36rrCLp
+         3L9PfNbAmyjseYgRUQqiQgnKpefUgtZvw/OQnzB3vVV942mRMH/pS9i52y2ysoboj/MI
+         pIonqAUFNPBXwQ38uwShZXE2LOdrWSymNZqw7+UXhC2pJklPYphZE7Yse4OwrGOslx2B
+         +Lkg==
+X-Gm-Message-State: AOAM530NgiuZXNyZGEPy4zaucsRrxEcR9gmYSnVappc4OvlbnZXDKcmu
+        O/7ZofBaf9qJnXz7VVobzF7pXUCTvNlMjF20ltLI3g==
+X-Google-Smtp-Source: ABdhPJx5Dmnxv/z5BA2XO1srzzahRumLPcJvkaT4DmcM/8mfzGx0KXUC+7xiDGhICgbxmmjcXDyJsc5M1y5ERg9uuts=
+X-Received: by 2002:ac8:5b0d:: with SMTP id m13mr19600145qtw.364.1625613978231;
+ Tue, 06 Jul 2021 16:26:18 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20210705233639.335951-1-david@ixit.cz>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+References: <20210706230702.299047-1-bryan.odonoghue@linaro.org> <20210706230702.299047-2-bryan.odonoghue@linaro.org>
+In-Reply-To: <20210706230702.299047-2-bryan.odonoghue@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Wed, 7 Jul 2021 02:26:07 +0300
+Message-ID: <CAA8EJpooqgScxnitvBjgofBk3cqEqOsO-sWU8VP07KpB10XT6A@mail.gmail.com>
+Subject: Re: [PATCH 1/2] arm64: dts: qcom: sm8250: fix usb2 qmp phy node
+To:     "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>
+Cc:     Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>, linux-phy@lists.infradead.org,
+        Rob Herring <robh+dt@kernel.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 06/07/2021 02:36, David Heidelberg wrote:
-> Without this patch boot ends at NULL ptr exception at msm_dsi_manager_setup_encoder
-> on devices like Nexus 7 with MDP4 version 4.4.
-> 
-> Fixes: 03436e3ec69c ("drm/msm/dsi: Move setup_encoder to modeset_init")
-> 
-> Signed-off-by: David Heidelberg <david@ixit.cz>
+Him
 
-Being not an expert in the mdp4 sources, I suspect that the fix is not 
-quite correct. I'd suggest setting priv->kms in the mdp4_kms_init() 
-before calling modeset_init().
+On Wed, 7 Jul 2021 at 02:05, Bryan O'Donoghue
+<bryan.odonoghue@linaro.org> wrote:
+>
+> From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>
+> Use 'lanes' as SuperSpeed lanes device node instead of just 'lane' to
+> fix issues with TypeC support.
 
+I think this should not be required anymore, it is a leftover from the
+previous series which used strcmp("lanes") to create phys.
+
+>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Fixes: be0624b99042 ("arm64: dts: qcom: sm8250: Add USB and PHY device nodes")
+> Cc: robh+dt@kernel.org
+> Cc: devicetree@vger.kernel.org
+> Tested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 > ---
-> 
-> v2: typo in Fixes commit reference
-> 
->   drivers/gpu/drm/msm/dsi/dsi_manager.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/dsi/dsi_manager.c b/drivers/gpu/drm/msm/dsi/dsi_manager.c
-> index 4ebfedc4a9ac..8114612b34b0 100644
-> --- a/drivers/gpu/drm/msm/dsi/dsi_manager.c
-> +++ b/drivers/gpu/drm/msm/dsi/dsi_manager.c
-> @@ -230,7 +230,7 @@ void msm_dsi_manager_setup_encoder(int id)
->   	struct msm_kms *kms = priv->kms;
->   	struct drm_encoder *encoder = msm_dsi_get_encoder(msm_dsi);
->   
-> -	if (encoder && kms->funcs->set_encoder_mode)
-> +	if (encoder && kms && kms->funcs->set_encoder_mode)
->   		kms->funcs->set_encoder_mode(kms, encoder,
->   					     dsi_mgr_is_cmd_mode(msm_dsi));
->   }
-> 
+>  arch/arm64/boot/dts/qcom/sm8250.dtsi | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> index 4c0de12aaba6..270d7ff59ec1 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> @@ -2123,7 +2123,7 @@ usb_2_qmpphy: phy@88eb000 {
+>                                  <&gcc GCC_USB3_PHY_SEC_BCR>;
+>                         reset-names = "phy", "common";
+>
+> -                       usb_2_ssphy: lane@88eb200 {
+> +                       usb_2_ssphy: lanes@88eb200 {
+>                                 reg = <0 0x088eb200 0 0x200>,
+>                                       <0 0x088eb400 0 0x200>,
+>                                       <0 0x088eb800 0 0x800>;
+> --
+> 2.30.1
+>
 
 
--- 
+--
 With best wishes
 Dmitry
