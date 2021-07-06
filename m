@@ -2,197 +2,317 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B82F73BC712
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jul 2021 09:24:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4DD0E3BC787
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jul 2021 09:54:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230214AbhGFH1A (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Jul 2021 03:27:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48202 "EHLO
+        id S230356AbhGFH5V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Jul 2021 03:57:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54916 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230239AbhGFH07 (ORCPT
+        with ESMTP id S230371AbhGFH5U (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Jul 2021 03:26:59 -0400
-Received: from mail-vk1-xa36.google.com (mail-vk1-xa36.google.com [IPv6:2607:f8b0:4864:20::a36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 925F1C061760
-        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Jul 2021 00:24:20 -0700 (PDT)
-Received: by mail-vk1-xa36.google.com with SMTP id x20so2941715vkd.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Jul 2021 00:24:20 -0700 (PDT)
+        Tue, 6 Jul 2021 03:57:20 -0400
+Received: from mail-ua1-x933.google.com (mail-ua1-x933.google.com [IPv6:2607:f8b0:4864:20::933])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8272EC061574
+        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Jul 2021 00:54:41 -0700 (PDT)
+Received: by mail-ua1-x933.google.com with SMTP id y20so4377483uap.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Jul 2021 00:54:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=BXh3LzMCPP9L3ynAA0aGj0fxSvyTuYRtJFcDwUyQ7PM=;
-        b=ZIphNHFNEE+seeFzTENuNO09jbaTUpM+qAatBWg9z0OBgpHgSDgYdxW/N8q56+yYjC
-         uFfkpNkI5HG0/PJylwJ99SjyHOUMS7/0SNzBdfl+5gxYPRY5LZu9wDrC/DrNrxI8oHYk
-         h9YxZ4nWUZcRKcPPdkO+43Z3EaDuswEjNlmgrDAZp2h6jPXSVfLLsnQxmaGSN5BxM8dS
-         9dPZPCGZ4SHklmfPXQRNDi2qGu5GVV+icfOyhgKcIk3E/5LFYYekvWLRh/ylqotC+lSw
-         m/oiXlzuHBBJIokhaULIVJnKw64+77TX5fY18Gx014ybnp4b/q7iwFHjLN7we8/jn6ER
-         /t2w==
+        bh=3qVePH9JFi87gONiyEqEdKz88cGEkgKWEUb6Ms2bBU8=;
+        b=XRM9E87jhVyUlS0XtwfZ5x2PTgH5hDP6NQ5u66cYG0oPKzkuDFYWgxKpqOjeVUemWX
+         yp6ze/h8jcInvAKuFuqrN3gw5nEMqK/0z/nd/DkxJigc71FkzP14YJ90oivp2vncKvSB
+         RHQBawnAg5S5EpHEmcmHrKIfBPseJL3z/qsAJnSQAAqiBR+Zgo77DmKobTCIeoEuzvRC
+         jQwBkEc5cfDE/mlOz0JcE763rwsudr3CKHcNntk9D5SLRsbpWgiNsZ/9V3x4X8VzTQqx
+         88GQMa535qU15/xdVecvblRxVXJ6xWoVc6MKKYsEtmUTBc3tV/M+a8iqoLK9N8c8KgoO
+         HS8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=BXh3LzMCPP9L3ynAA0aGj0fxSvyTuYRtJFcDwUyQ7PM=;
-        b=PPq8wmkj+UnJdp3UNXv6FaRo+Ht2hE96XWl06PvmP9jjCoXQnmyjhclnrkp1jbCfx/
-         XcYMqEDXx5x/MYf9CThzoNUsOyHDVrraqE3FGbZf3u5ddW+xDpQxWmic93rOTFy2awyn
-         5urrfYEltQkPYUZfiQXyhywBWrbYb18FsaDgFlZ8gQhsq+6Om7u718WRWeNBPgEEh2t6
-         GhQ9OqeRposomXDXic32hYpfFfGlmBcvrJtBJxEhzCCSPoLDAMLXdssIHqZKhIZzMbCc
-         SZ1lIwdnhLac1ezDrAl38RTBFpSLLMFUlegInLImogJNuijvjpd5NCsmA+Bgb4iDP532
-         DSpQ==
-X-Gm-Message-State: AOAM532AVkZzNXiygXbOn2g43XPuLlt3ZtOw+3999B9q43jrom0BwPFC
-        i9oGWxKymuKouaIY2uWdy9KXvPZQyu5WOzFhv+pX2g==
-X-Google-Smtp-Source: ABdhPJyZeMUXryowDLyT5UVj1MHKnIf7P7os2mdRoNlHRDoSTvU/zN5waPK5F8cB2dqXSY/D/fBD96r1SW3yJTF2u+U=
-X-Received: by 2002:a05:6122:588:: with SMTP id i8mr1747116vko.6.1625556259411;
- Tue, 06 Jul 2021 00:24:19 -0700 (PDT)
+        bh=3qVePH9JFi87gONiyEqEdKz88cGEkgKWEUb6Ms2bBU8=;
+        b=YHGrhIkQ91hOXB7GmMtn/rgNBgn/itjvou2KMhp6Bow5z6ZbR6tmxLuucDLffILf1p
+         TH7Pfpbs7LooleMju8tijVsaTMOql+HHBlO9I342MOjHbogrKRsAKv8ilpNeZI7y51p8
+         8J+lN0fE95ErTRvcPP1WNR9kqyzjQPmH+nPtkMHPTN74iNRfbTFQbt/7nFQG5XbQ9yDD
+         LvskdzRAHZ9gZP80siVhOcMwy+i+22DQOLqlY6a27WMOjZdjd3JCX8L7Y9bIJNF2l5b6
+         vUB01ITmvlie6ftZP3wJeJ9eUxp1ZY7+QYk0xPp2op3yn61w6Pn3BmXAImOBfnXGhmAn
+         OBIQ==
+X-Gm-Message-State: AOAM531fFW3J31GkcmRcgB1SBRAdHbkjtuksFz4R1srqn1wsoiztxlQQ
+        LHMB/CnQLNpUNDPNU8yjIc+NjbNsNORg8b3lAQSs+w==
+X-Google-Smtp-Source: ABdhPJxEZnuXd+n69XMyNsgZarr+p438MNk52aNKyWibfsJUb8OZKm+m9/Gkou1JtUbyJlcMGha3wNxb2AkejdiHRxU=
+X-Received: by 2002:ab0:42a6:: with SMTP id j35mr11625376uaj.129.1625558080121;
+ Tue, 06 Jul 2021 00:54:40 -0700 (PDT)
 MIME-Version: 1.0
-References: <20210630133149.3204290-1-dmitry.baryshkov@linaro.org>
- <20210630133149.3204290-2-dmitry.baryshkov@linaro.org> <CAPDyKFpXD3rCmp53LFFYky_xQv9ucofvTezG5qWyDZt427chNQ@mail.gmail.com>
- <CAA8EJpob=TpXiJozac-5sKJzE71ddWRFDj7D2-F=W=a2mgKvxA@mail.gmail.com>
- <CAPDyKFq-vwMchLFb3JvK7B9ZQ9=z-TXzGHUij6CocTR+VmAOqQ@mail.gmail.com> <YN4W7vd3Yep+DX3N@yoga>
-In-Reply-To: <YN4W7vd3Yep+DX3N@yoga>
+References: <20210621223141.1638189-1-dmitry.baryshkov@linaro.org> <20210621223141.1638189-3-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20210621223141.1638189-3-dmitry.baryshkov@linaro.org>
 From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Tue, 6 Jul 2021 09:23:42 +0200
-Message-ID: <CAPDyKFrPyu6dT_+G3-ivPTLGS0G1kd9Tph_Pi2VP7ycEn3R5AQ@mail.gmail.com>
-Subject: Re: [PATCH 1/6] dt-bindings: clock: qcom,dispcc-sm8x50: add mmcx
- power domain
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+Date:   Tue, 6 Jul 2021 09:54:03 +0200
+Message-ID: <CAPDyKFo6dmjw0TnaK7=35dq5Si_6YYpeeSa=gU++1od7WkQZ7A@mail.gmail.com>
+Subject: Re: [PATCH v3 2/7] regulator: qca6390: add support for QCA639x
+ powerup sequence
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Peter Chen <peter.chen@nxp.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Taniya Das <tdas@codeaurora.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Michael Turquette <mturquette@baylibre.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        DTML <devicetree@vger.kernel.org>,
-        linux-clk <linux-clk@vger.kernel.org>,
-        "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
         Mark Brown <broonie@kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+        Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        DTML <devicetree@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-bluetooth@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 1 Jul 2021 at 21:26, Bjorn Andersson <bjorn.andersson@linaro.org> wrote:
->
-> On Thu 01 Jul 11:58 CDT 2021, Ulf Hansson wrote:
->
-> > On Thu, 1 Jul 2021 at 18:39, Dmitry Baryshkov
-> > <dmitry.baryshkov@linaro.org> wrote:
-> > >
-> > > On Thu, 1 Jul 2021 at 19:17, Ulf Hansson <ulf.hansson@linaro.org> wrote:
-> > > >
-> > > > On Wed, 30 Jun 2021 at 15:31, Dmitry Baryshkov
-> > > > <dmitry.baryshkov@linaro.org> wrote:
-> > > > >
-> > > > > On sm8250 dispcc requires MMCX power domain to be powered up before
-> > > > > clock controller's registers become available. For now sm8250 was using
-> > > > > external regulator driven by the power domain to describe this
-> > > > > relationship. Switch into specifying power-domain and required opp-state
-> > > > > directly.
-> > > > >
-> > > > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > > > ---
-> > > > >  .../bindings/clock/qcom,dispcc-sm8x50.yaml    | 19 +++++++++++++++++++
-> > > > >  1 file changed, 19 insertions(+)
-> > > > >
-> > > > > diff --git a/Documentation/devicetree/bindings/clock/qcom,dispcc-sm8x50.yaml b/Documentation/devicetree/bindings/clock/qcom,dispcc-sm8x50.yaml
-> > > > > index 0cdf53f41f84..48d86fb34fa7 100644
-> > > > > --- a/Documentation/devicetree/bindings/clock/qcom,dispcc-sm8x50.yaml
-> > > > > +++ b/Documentation/devicetree/bindings/clock/qcom,dispcc-sm8x50.yaml
-> > > > > @@ -55,6 +55,16 @@ properties:
-> > > > >    reg:
-> > > > >      maxItems: 1
-> > > > >
-> > > > > +  power-domains:
-> > > > > +    description:
-> > > > > +      A phandle and PM domain specifier for the MMCX power domain.
-> > > > > +    maxItems: 1
-> > > > > +
-> > > >
-> > > > Should you perhaps state that this is a parent domain? Or it isn't?
-> > > >
-> > > > Related to this and because this is a power domain provider, you
-> > > > should probably reference the common power-domain bindings somewhere
-> > > > here. Along the lines of this:
-> > > >
-> > > > - $ref: power-domain.yaml#
-> > > >
-> > > > As an example, you could have a look at
-> > > > Documentation/devicetree/bindings/power/pd-samsung.yaml.
-> > >
-> > > I'll take a look.
-> > >
-> > > >
-> > > > > +  required-opps:
-> > > > > +    description:
-> > > > > +      Performance state to use for MMCX to enable register access.
-> > > > > +    maxItems: 1
-> > > >
-> > > > According to the previous discussions, I was under the assumption that
-> > > > this property belongs to a consumer node rather than in the provider
-> > > > node, no?
-> > >
-> > > It is both a consumer and a provider. It consumes SM8250_MMCX from
-> > > rpmhpd and provides MMSC_GDSC.
-> >
-> > That sounds a bit weird to me.
-> >
->
-> dispcc is a hardware block powered by MMCX, so it is a consumer of it
-> and needs to control MMCX.
++ Peter
 
-Right, that sounds reasonable.
+On Tue, 22 Jun 2021 at 00:32, Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
+>
+> Qualcomm QCA6390/1 is a family of WiFi + Bluetooth SoCs, with BT part
+> being controlled through the UART and WiFi being present on PCIe
+> bus. Both blocks share common power sources. Add device driver handling
+> power sequencing of QCA6390/1.
+>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
->
-> > In my view and per the common power domain bindings (as pointed to
-> > above): If a power domain provider is a consumer of another power
-> > domain, that per definition means that there is a parent domain
-> > specified.
-> >
->
-> And in addition to needing MMCX to access the dispcc, the exposed
-> power-domain "MDSS_GDSC" is powered by the same MMCX and as such
-> MDSS_GDSC should be a subdomain of MMCX.
+Power sequencing of discoverable buses have been discussed several
+times before at LKML. The last attempt [1] I am aware of, was in 2017
+from Peter Chen. I don't think there is a common solution, yet.
 
-What do you mean by "exposed"? It sounds like you are saying that
-"MDSS_GDSC" is an artificial power domain, no?
+Note that, this isn't specific to the PCIe bus, but rather to all
+buses that may have discoverable devices attached and which need some
+kind of pre-power-sequence before they can be discovered/probed.  USB,
+PCIe, SDIO, etc.
 
-If that's the case, more exactly, why is it like this?
+Long time ago, we fixed the problem for SDIO (that also can have WiFi,
+UART, bluetooth chips attached), but unfortunately through an MMC
+subsystem specific implementation, that can't be re-used in a generic
+way.
 
-My apologies if I bother you with details, but as a maintainer of
-genpd, it is very useful to me to have the complete picture.
-
->
->
-> But what I was trying to say yesterday is that the power-domain property
-> should be sufficient and that we shouldn't need to drive MMCX to a
-> particular performance_state in order to access the registers.
->
-> Then as clients make votes on clock rates that requires higher
-> performance_state, they would describe this in their opp-tables etc.
->
->
-> But without any performance_state requests, pd->corner will in
-> rpmhpd_power_on() be 0 and as such powering on the power-domain won't
-> actually do anything. Similarly dev_pm_genpd_set_performance_state(dev,
-> 0) on an active power-domain from rpmhpd will turn it off.
-
-Yes, I noticed the patches you posted. Thanks for helping out here!
-
->
->
-> So the reason why Dmitry is adding the required-opps to the binding is
-> to get rpmhpd to actually tell the hardware to turn on the power domain.
-> And I don't think this is in accordance with the framework's
-> expectations.
-
-I agree!
-
->
-> Regards,
-> Bjorn
+In any case, I have looped in Peter Chen, maybe he can provide us with
+a better update on how things have moved forward, if at all.
 
 Kind regards
 Uffe
+
+[1]
+https://www.spinics.net/lists/linux-usb/msg158451.html
+
+> ---
+>  drivers/regulator/Kconfig        |  13 +++
+>  drivers/regulator/Makefile       |   1 +
+>  drivers/regulator/qcom-qca639x.c | 157 +++++++++++++++++++++++++++++++
+>  3 files changed, 171 insertions(+)
+>  create mode 100644 drivers/regulator/qcom-qca639x.c
+>
+> diff --git a/drivers/regulator/Kconfig b/drivers/regulator/Kconfig
+> index 3e7a38525cb3..7a560cddea7a 100644
+> --- a/drivers/regulator/Kconfig
+> +++ b/drivers/regulator/Kconfig
+> @@ -909,6 +909,19 @@ config REGULATOR_PWM
+>           This driver supports PWM controlled voltage regulators. PWM
+>           duty cycle can increase or decrease the voltage.
+>
+> +config REGULATOR_QCOM_QCA639X
+> +       tristate "Qualcomm QCA639x WiFi/Bluetooth module support"
+> +       help
+> +         If you say yes to this option, support will be included for Qualcomm
+> +         QCA639x family of WiFi and Bluetooth SoCs. Note, this driver supports
+> +         only power control for this SoC, you still have to enable individual
+> +         Bluetooth and WiFi drivers. This driver is only necessary on ARM
+> +         platforms with this chip. PCIe cards handle power sequencing on their
+> +         own.
+> +
+> +         Say M here if you want to include support for QCA639x chips as a
+> +         module. This will build a module called "qcom-qca639x".
+> +
+>  config REGULATOR_QCOM_RPM
+>         tristate "Qualcomm RPM regulator driver"
+>         depends on MFD_QCOM_RPM
+> diff --git a/drivers/regulator/Makefile b/drivers/regulator/Makefile
+> index 580b015296ea..129c2110b78d 100644
+> --- a/drivers/regulator/Makefile
+> +++ b/drivers/regulator/Makefile
+> @@ -99,6 +99,7 @@ obj-$(CONFIG_REGULATOR_MT6380)        += mt6380-regulator.o
+>  obj-$(CONFIG_REGULATOR_MT6397) += mt6397-regulator.o
+>  obj-$(CONFIG_REGULATOR_MTK_DVFSRC) += mtk-dvfsrc-regulator.o
+>  obj-$(CONFIG_REGULATOR_QCOM_LABIBB) += qcom-labibb-regulator.o
+> +obj-$(CONFIG_REGULATOR_QCOM_QCA639X) += qcom-qca639x.o
+>  obj-$(CONFIG_REGULATOR_QCOM_RPM) += qcom_rpm-regulator.o
+>  obj-$(CONFIG_REGULATOR_QCOM_RPMH) += qcom-rpmh-regulator.o
+>  obj-$(CONFIG_REGULATOR_QCOM_SMD_RPM) += qcom_smd-regulator.o
+> diff --git a/drivers/regulator/qcom-qca639x.c b/drivers/regulator/qcom-qca639x.c
+> new file mode 100644
+> index 000000000000..a2c78c0f8baa
+> --- /dev/null
+> +++ b/drivers/regulator/qcom-qca639x.c
+> @@ -0,0 +1,157 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (c) 2021, Linaro Limited
+> + */
+> +#include <linux/delay.h>
+> +#include <linux/of.h>
+> +#include <linux/platform_device.h>
+> +#include <linux/regulator/consumer.h>
+> +#include <linux/regulator/driver.h>
+> +#include <linux/regulator/of_regulator.h>
+> +#include <linux/slab.h>
+> +
+> +#define MAX_NUM_REGULATORS     8
+> +
+> +static struct vreg {
+> +       const char *name;
+> +       unsigned int load_uA;
+> +} vregs[MAX_NUM_REGULATORS] = {
+> +       /* 2.0 V */
+> +       { "vddpcie2", 15000 },
+> +       { "vddrfa3", 400000 },
+> +
+> +       /* 0.95 V */
+> +       { "vddaon", 100000 },
+> +       { "vddpmu", 1250000 },
+> +       { "vddrfa1", 200000 },
+> +
+> +       /* 1.35 V */
+> +       { "vddrfa2", 400000 },
+> +       { "vddpcie1", 35000 },
+> +
+> +       /* 1.8 V */
+> +       { "vddio", 20000 },
+> +};
+> +
+> +struct qca6390_data {
+> +       struct device *dev;
+> +       struct regulator_bulk_data regulators[MAX_NUM_REGULATORS];
+> +       size_t num_vregs;
+> +
+> +       struct regulator_desc desc;
+> +       struct regulator_dev *regulator_dev;
+> +       unsigned int enable_counter;
+> +};
+> +
+> +#define domain_to_data(domain) container_of(domain, struct qca6390_data, pd)
+> +
+> +static int qca6390_enable(struct regulator_dev *rdev)
+> +{
+> +       struct qca6390_data *data = rdev_get_drvdata(rdev);
+> +       int ret;
+> +
+> +       ret = regulator_bulk_enable(data->num_vregs, data->regulators);
+> +       if (ret) {
+> +               dev_err(data->dev, "Failed to enable regulators");
+> +               return ret;
+> +       }
+> +
+> +       /* Wait for 1ms before toggling enable pins. */
+> +       usleep_range(1000, 2000);
+> +
+> +       data->enable_counter++;
+> +
+> +       return 0;
+> +}
+> +
+> +static int qca6390_disable(struct regulator_dev *rdev)
+> +{
+> +       struct qca6390_data *data = rdev_get_drvdata(rdev);
+> +
+> +       regulator_bulk_disable(data->num_vregs, data->regulators);
+> +
+> +       data->enable_counter--;
+> +
+> +       return 0;
+> +}
+> +
+> +static int qca6390_is_enabled(struct regulator_dev *rdev)
+> +{
+> +       struct qca6390_data *data = rdev_get_drvdata(rdev);
+> +
+> +       return data->enable_counter > 0;
+> +}
+> +
+> +static const struct regulator_ops qca6390_ops = {
+> +       .enable = qca6390_enable,
+> +       .disable = qca6390_disable,
+> +       .is_enabled = qca6390_is_enabled,
+> +};
+> +
+> +static int qca6390_probe(struct platform_device *pdev)
+> +{
+> +       struct qca6390_data *data;
+> +       struct device *dev = &pdev->dev;
+> +       struct regulator_config cfg = { };
+> +       int i, ret;
+> +
+> +       data = devm_kzalloc(dev, sizeof(*data), GFP_KERNEL);
+> +       if (!data)
+> +               return -ENOMEM;
+> +
+> +       data->dev = dev;
+> +       data->num_vregs = ARRAY_SIZE(vregs);
+> +
+> +       for (i = 0; i < data->num_vregs; i++)
+> +               data->regulators[i].supply = vregs[i].name;
+> +
+> +       ret = devm_regulator_bulk_get(dev, data->num_vregs, data->regulators);
+> +       if (ret < 0)
+> +               return ret;
+> +
+> +       for (i = 0; i < data->num_vregs; i++) {
+> +               ret = regulator_set_load(data->regulators[i].consumer, vregs[i].load_uA);
+> +               if (ret)
+> +                       return ret;
+> +       }
+> +
+> +       data->desc.name = devm_kstrdup(dev, dev_name(dev), GFP_KERNEL);
+> +       if (!data->desc.name)
+> +               return -ENOMEM;
+> +
+> +       data->desc.type = REGULATOR_VOLTAGE;
+> +       data->desc.owner = THIS_MODULE;
+> +       data->desc.ops = &qca6390_ops;
+> +
+> +       cfg.dev = dev;
+> +       cfg.of_node = dev->of_node;
+> +       cfg.driver_data = data;
+> +       cfg.init_data = of_get_regulator_init_data(dev, dev->of_node, &data->desc);
+> +
+> +       data->regulator_dev = devm_regulator_register(dev, &data->desc, &cfg);
+> +       if (IS_ERR(data->regulator_dev)) {
+> +               ret = PTR_ERR(data->regulator_dev);
+> +               return ret;
+> +       }
+> +
+> +       platform_set_drvdata(pdev, data);
+> +
+> +       return 0;
+> +}
+> +
+> +static const struct of_device_id qca6390_of_match[] = {
+> +       { .compatible = "qcom,qca6390" },
+> +};
+> +
+> +static struct platform_driver qca6390_driver = {
+> +       .probe = qca6390_probe,
+> +       .driver = {
+> +               .name = "qca6390",
+> +               .of_match_table = qca6390_of_match,
+> +       },
+> +};
+> +
+> +module_platform_driver(qca6390_driver);
+> +MODULE_AUTHOR("Dmitry Baryshkov <dmitry.baryshkov@linaro.org>");
+> +MODULE_DESCRIPTION("Power control for Qualcomm QCA6390/1 BT/WiFi chip");
+> +MODULE_LICENSE("GPL v2");
+> --
+> 2.30.2
+>
