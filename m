@@ -2,261 +2,207 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0F1993BC813
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jul 2021 10:47:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 769533BC86D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jul 2021 11:19:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230333AbhGFIuf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Jul 2021 04:50:35 -0400
-Received: from smtp-out2.suse.de ([195.135.220.29]:39646 "EHLO
-        smtp-out2.suse.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230295AbhGFIue (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Jul 2021 04:50:34 -0400
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        id S230472AbhGFJWY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Jul 2021 05:22:24 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:23822 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231190AbhGFJWY (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 6 Jul 2021 05:22:24 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1625563186; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=tVNox5UxH1mduv7g7ycIOmhCnRCLc2A4EM1ABCiryh8=;
+ b=rNH8jSctzmSgWp6PnYx3k89sH86/EnvY1Irh7BhPDDIctyb8SMArqFqkIwVRgp/p4sXAQ0MV
+ AQXFaSUrrch8VggkqKMrYAL6+bPsIiG9uxqQA++JfcQMPN6CudahT8ucOwSle+E/QmehYFM/
+ LCdhjZjuyxnx8i3VpxNjH3w9KNU=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
+ 60e42020c4cc543602c3521d (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 06 Jul 2021 09:19:28
+ GMT
+Sender: rojay=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id D5EF9C433D3; Tue,  6 Jul 2021 09:19:27 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        by smtp-out2.suse.de (Postfix) with ESMTPS id 745E31FF34;
-        Tue,  6 Jul 2021 08:47:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-        t=1625561275; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
-        bh=jhBCujPABZPNUH3fBBFSxVuzrudipOZC/VeSlBUNZGs=;
-        b=tCSAPs0SnB2OiPsJETed+5QRiaW6k4ag2fZFC4OSut+GaHlGFJao2B9MShfG/GhXNLE0Bj
-        NVteb7TVd93d2tM5pJqiHf5jcul1I00n0oegdvklHVOhynNOrSzrX6VmJSfOU+wykKkija
-        1F9LC2PVW4QuuaBZIs4aozzztnqg+8s=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-        s=susede2_ed25519; t=1625561275;
-        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
-        bh=jhBCujPABZPNUH3fBBFSxVuzrudipOZC/VeSlBUNZGs=;
-        b=QPeY/90fe2QVkyBl6oYrUDDWzt/dJkc21IhOjzeNp+0lC5eabr4oF6iVGeXSS6KEE/7yJE
-        Ios9YN9NPnK2ruDA==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-        (No client certificate requested)
-        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 24B7A13A70;
-        Tue,  6 Jul 2021 08:47:55 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-        by imap2.suse-dmz.suse.de with ESMTPSA
-        id lhv1B7sY5GCYfQAAMHmgww
-        (envelope-from <tzimmermann@suse.de>); Tue, 06 Jul 2021 08:47:55 +0000
-From:   Thomas Zimmermann <tzimmermann@suse.de>
-To:     robdclark@gmail.com, sean@poorly.run, airlied@linux.ie,
-        daniel@ffwll.ch, jonathan@marek.ca, jordan@cosmicpenguin.net
-Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org,
-        Thomas Zimmermann <tzimmermann@suse.de>
-Subject: [PATCH v2] drm/msm: Implement mmap as GEM object function
-Date:   Tue,  6 Jul 2021 10:47:53 +0200
-Message-Id: <20210706084753.8194-1-tzimmermann@suse.de>
-X-Mailer: git-send-email 2.32.0
+        (Authenticated sender: rojay)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5C752C433F1;
+        Tue,  6 Jul 2021 09:19:27 +0000 (UTC)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Tue, 06 Jul 2021 14:49:27 +0530
+From:   rojay@codeaurora.org
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     agross@kernel.org, robh+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        saiprakash.ranjan@codeaurora.org, msavaliy@qti.qualcomm.com
+Subject: Re: [PATCH V3 1/3] arm64: dts: sc7280: Add QSPI node
+In-Reply-To: <98befc79fc039496b0c12d7983319c92@codeaurora.org>
+References: <20210604135439.19119-1-rojay@codeaurora.org>
+ <20210604135439.19119-2-rojay@codeaurora.org> <YLxHTDxVcSvVxsd5@builder.lan>
+ <98befc79fc039496b0c12d7983319c92@codeaurora.org>
+Message-ID: <2ad7a00924b5065bf61c47e8b6d24339@codeaurora.org>
+X-Sender: rojay@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Moving the driver-specific mmap code into a GEM object function allows
-for using DRM helpers for various mmap callbacks.
+On 2021-06-08 13:37, rojay@codeaurora.org wrote:
+> On 2021-06-06 09:25, Bjorn Andersson wrote:
+>> On Fri 04 Jun 08:54 CDT 2021, Roja Rani Yarubandi wrote:
+>> 
+>>> Add QSPI DT node for SC7280 SoC.
+>>> 
+>>> Signed-off-by: Roja Rani Yarubandi <rojay@codeaurora.org>
+>>> ---
+>>> Changes in V3:
+>>>  - Broken the huge V2 patch into 3 smaller patches.
+>>>    1. QSPI DT nodes
+>>>    2. QUP wrapper_0 DT nodes
+>>>    3. QUP wrapper_1 DT nodes
+>>> 
+>>> Changes in V2:
+>>>  - As per Doug's comments removed pinmux/pinconf subnodes.
+>>>  - As per Doug's comments split of SPI, UART nodes has been done.
+>>>  - Moved QSPI node before aps_smmu as per the order.
+>>> 
+>>>  arch/arm64/boot/dts/qcom/sc7280-idp.dts | 29 ++++++++++++
+>>>  arch/arm64/boot/dts/qcom/sc7280.dtsi    | 61 
+>>> +++++++++++++++++++++++++
+>>>  2 files changed, 90 insertions(+)
+>>> 
+>>> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dts 
+>>> b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
+>>> index 3900cfc09562..d0edffc15736 100644
+>>> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dts
+>>> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
+>>> @@ -268,6 +268,22 @@ pmr735b_die_temp {
+>>>  		};
+>>>  };
+>>> 
+>>> +&qspi {
+>>> +	status = "okay";
+>>> +	pinctrl-names = "default";
+>>> +	pinctrl-0 = <&qspi_clk>, <&qspi_cs0>, <&qspi_data01>;
+>>> +
+>>> +	flash@0 {
+>>> +		compatible = "jedec,spi-nor";
+>>> +		reg = <0>;
+>>> +
+>>> +		/* TODO: Increase frequency after testing */
+>>> +		spi-max-frequency = <25000000>;
+>>> +		spi-tx-bus-width = <2>;
+>>> +		spi-rx-bus-width = <2>;
+>>> +	};
+>>> +};
+>>> +
+>>>  &qupv3_id_0 {
+>>>  	status = "okay";
+>>>  };
+>>> @@ -278,6 +294,19 @@ &uart5 {
+>>> 
+>>>  /* PINCTRL - additions to nodes defined in sc7280.dtsi */
+>>> 
+>>> +&qspi_cs0 {
+>>> +	bias-disable;
+>>> +};
+>>> +
+>>> +&qspi_clk {
+>>> +	bias-disable;
+>>> +};
+>>> +
+>>> +&qspi_data01 {
+>>> +	/* High-Z when no transfers; nice to park the lines */
+>>> +	bias-pull-up;
+>>> +};
+>>> +
+>>>  &qup_uart5_default {
+>>>  	tx {
+>>>  		pins = "gpio46";
+>>> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi 
+>>> b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>>> index 6c9d5eb93f93..3047ab802cd2 100644
+>>> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>>> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>>> @@ -1061,6 +1061,42 @@ apss_merge_funnel_in: endpoint {
+>>>  			};
+>>>  		};
+>>> 
+>>> +		qspi_opp_table: qspi-opp-table {
+>> 
+>> This node doesn't represents anything on the mmio bus, so it shouldn't
+>> live in in /soc. Can't you move it into &qspi?
+>> 
+>> Regards,
+>> Bjorn
+>> 
+> 
+> Sure, will move it into qspi node.
+> 
+> Thanks,
+> Roja
+> 
 
-The respective msm functions are being removed. The file_operations
-structure fops is now being created by the helper macro
-DEFINE_DRM_GEM_FOPS().
+Hi Bjorn,
 
-v2:
-	* rebase onto latest upstream
-	* remove declaration of msm_gem_mmap_obj() from msm_fbdev.c
+Moving "qspi_opp_table" inside &qspi node causing this warning:
+arch/arm64/boot/dts/qcom/sc7280.dtsi:1055.35-1072.6: Warning 
+(spi_bus_reg): /soc@0/spi@88dc000/qspi-opp-table: missing or empty reg 
+property
 
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
----
- drivers/gpu/drm/msm/msm_drv.c       | 14 ++---------
- drivers/gpu/drm/msm/msm_drv.h       |  1 -
- drivers/gpu/drm/msm/msm_fbdev.c     | 12 ++--------
- drivers/gpu/drm/msm/msm_gem.c       | 37 ++++++++++-------------------
- drivers/gpu/drm/msm/msm_gem.h       |  3 ---
- drivers/gpu/drm/msm/msm_gem_prime.c | 11 ---------
- 6 files changed, 16 insertions(+), 62 deletions(-)
+Shall I keep the qspi-opp-table out of &qspi node?
 
-diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-index 9b8fa2ad0d84..a4d238e8d377 100644
---- a/drivers/gpu/drm/msm/msm_drv.c
-+++ b/drivers/gpu/drm/msm/msm_drv.c
-@@ -1004,17 +1004,7 @@ static const struct drm_ioctl_desc msm_ioctls[] = {
- 	DRM_IOCTL_DEF_DRV(MSM_SUBMITQUEUE_QUERY, msm_ioctl_submitqueue_query, DRM_RENDER_ALLOW),
- };
+Thanks,
+Roja
 
--static const struct file_operations fops = {
--	.owner              = THIS_MODULE,
--	.open               = drm_open,
--	.release            = drm_release,
--	.unlocked_ioctl     = drm_ioctl,
--	.compat_ioctl       = drm_compat_ioctl,
--	.poll               = drm_poll,
--	.read               = drm_read,
--	.llseek             = no_llseek,
--	.mmap               = msm_gem_mmap,
--};
-+DEFINE_DRM_GEM_FOPS(fops);
-
- static const struct drm_driver msm_driver = {
- 	.driver_features    = DRIVER_GEM |
-@@ -1034,7 +1024,7 @@ static const struct drm_driver msm_driver = {
- 	.prime_handle_to_fd = drm_gem_prime_handle_to_fd,
- 	.prime_fd_to_handle = drm_gem_prime_fd_to_handle,
- 	.gem_prime_import_sg_table = msm_gem_prime_import_sg_table,
--	.gem_prime_mmap     = msm_gem_prime_mmap,
-+	.gem_prime_mmap     = drm_gem_prime_mmap,
- #ifdef CONFIG_DEBUG_FS
- 	.debugfs_init       = msm_debugfs_init,
- #endif
-diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
-index 1a48a709ffb3..1a42903db347 100644
---- a/drivers/gpu/drm/msm/msm_drv.h
-+++ b/drivers/gpu/drm/msm/msm_drv.h
-@@ -309,7 +309,6 @@ void msm_gem_shrinker_cleanup(struct drm_device *dev);
- struct sg_table *msm_gem_prime_get_sg_table(struct drm_gem_object *obj);
- int msm_gem_prime_vmap(struct drm_gem_object *obj, struct dma_buf_map *map);
- void msm_gem_prime_vunmap(struct drm_gem_object *obj, struct dma_buf_map *map);
--int msm_gem_prime_mmap(struct drm_gem_object *obj, struct vm_area_struct *vma);
- struct drm_gem_object *msm_gem_prime_import_sg_table(struct drm_device *dev,
- 		struct dma_buf_attachment *attach, struct sg_table *sg);
- int msm_gem_prime_pin(struct drm_gem_object *obj);
-diff --git a/drivers/gpu/drm/msm/msm_fbdev.c b/drivers/gpu/drm/msm/msm_fbdev.c
-index 67fae60f2fa5..0daaeb54ff6f 100644
---- a/drivers/gpu/drm/msm/msm_fbdev.c
-+++ b/drivers/gpu/drm/msm/msm_fbdev.c
-@@ -8,13 +8,12 @@
- #include <drm/drm_crtc.h>
- #include <drm/drm_fb_helper.h>
- #include <drm/drm_fourcc.h>
-+#include <drm/drm_prime.h>
-
- #include "msm_drv.h"
- #include "msm_gem.h"
- #include "msm_kms.h"
-
--extern int msm_gem_mmap_obj(struct drm_gem_object *obj,
--					struct vm_area_struct *vma);
- static int msm_fbdev_mmap(struct fb_info *info, struct vm_area_struct *vma);
-
- /*
-@@ -48,15 +47,8 @@ static int msm_fbdev_mmap(struct fb_info *info, struct vm_area_struct *vma)
- 	struct drm_fb_helper *helper = (struct drm_fb_helper *)info->par;
- 	struct msm_fbdev *fbdev = to_msm_fbdev(helper);
- 	struct drm_gem_object *bo = msm_framebuffer_bo(fbdev->fb, 0);
--	int ret = 0;
-
--	ret = drm_gem_mmap_obj(bo, bo->size, vma);
--	if (ret) {
--		pr_err("%s:drm_gem_mmap_obj fail\n", __func__);
--		return ret;
--	}
--
--	return msm_gem_mmap_obj(bo, vma);
-+	return drm_gem_prime_mmap(bo, vma);
- }
-
- static int msm_fbdev_create(struct drm_fb_helper *helper,
-diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
-index 141178754231..519a9601b219 100644
---- a/drivers/gpu/drm/msm/msm_gem.c
-+++ b/drivers/gpu/drm/msm/msm_gem.c
-@@ -218,31 +218,6 @@ static pgprot_t msm_gem_pgprot(struct msm_gem_object *msm_obj, pgprot_t prot)
- 	return prot;
- }
-
--int msm_gem_mmap_obj(struct drm_gem_object *obj,
--		struct vm_area_struct *vma)
--{
--	struct msm_gem_object *msm_obj = to_msm_bo(obj);
--
--	vma->vm_flags &= ~VM_PFNMAP;
--	vma->vm_flags |= VM_MIXEDMAP;
--	vma->vm_page_prot = msm_gem_pgprot(msm_obj, vm_get_page_prot(vma->vm_flags));
--
--	return 0;
--}
--
--int msm_gem_mmap(struct file *filp, struct vm_area_struct *vma)
--{
--	int ret;
--
--	ret = drm_gem_mmap(filp, vma);
--	if (ret) {
--		DBG("mmap failed: %d", ret);
--		return ret;
--	}
--
--	return msm_gem_mmap_obj(vma->vm_private_data, vma);
--}
--
- static vm_fault_t msm_gem_fault(struct vm_fault *vmf)
- {
- 	struct vm_area_struct *vma = vmf->vma;
-@@ -1114,6 +1089,17 @@ void msm_gem_free_object(struct drm_gem_object *obj)
- 	kfree(msm_obj);
- }
-
-+static int msm_gem_object_mmap(struct drm_gem_object *obj, struct vm_area_struct *vma)
-+{
-+	struct msm_gem_object *msm_obj = to_msm_bo(obj);
-+
-+	vma->vm_flags &= ~VM_PFNMAP;
-+	vma->vm_flags |= VM_MIXEDMAP;
-+	vma->vm_page_prot = msm_gem_pgprot(msm_obj, vm_get_page_prot(vma->vm_flags));
-+
-+	return 0;
-+}
-+
- /* convenience method to construct a GEM buffer object, and userspace handle */
- int msm_gem_new_handle(struct drm_device *dev, struct drm_file *file,
- 		uint32_t size, uint32_t flags, uint32_t *handle,
-@@ -1151,6 +1137,7 @@ static const struct drm_gem_object_funcs msm_gem_object_funcs = {
- 	.get_sg_table = msm_gem_prime_get_sg_table,
- 	.vmap = msm_gem_prime_vmap,
- 	.vunmap = msm_gem_prime_vunmap,
-+	.mmap = msm_gem_object_mmap,
- 	.vm_ops = &vm_ops,
- };
-
-diff --git a/drivers/gpu/drm/msm/msm_gem.h b/drivers/gpu/drm/msm/msm_gem.h
-index 405f8411e395..aab548720bee 100644
---- a/drivers/gpu/drm/msm/msm_gem.h
-+++ b/drivers/gpu/drm/msm/msm_gem.h
-@@ -112,9 +112,6 @@ struct msm_gem_object {
- };
- #define to_msm_bo(x) container_of(x, struct msm_gem_object, base)
-
--int msm_gem_mmap_obj(struct drm_gem_object *obj,
--			struct vm_area_struct *vma);
--int msm_gem_mmap(struct file *filp, struct vm_area_struct *vma);
- uint64_t msm_gem_mmap_offset(struct drm_gem_object *obj);
- int msm_gem_get_iova(struct drm_gem_object *obj,
- 		struct msm_gem_address_space *aspace, uint64_t *iova);
-diff --git a/drivers/gpu/drm/msm/msm_gem_prime.c b/drivers/gpu/drm/msm/msm_gem_prime.c
-index 9880348a4dc7..fc94e061d6a7 100644
---- a/drivers/gpu/drm/msm/msm_gem_prime.c
-+++ b/drivers/gpu/drm/msm/msm_gem_prime.c
-@@ -39,17 +39,6 @@ void msm_gem_prime_vunmap(struct drm_gem_object *obj, struct dma_buf_map *map)
- 	msm_gem_put_vaddr(obj);
- }
-
--int msm_gem_prime_mmap(struct drm_gem_object *obj, struct vm_area_struct *vma)
--{
--	int ret;
--
--	ret = drm_gem_mmap_obj(obj, obj->size, vma);
--	if (ret < 0)
--		return ret;
--
--	return msm_gem_mmap_obj(vma->vm_private_data, vma);
--}
--
- struct drm_gem_object *msm_gem_prime_import_sg_table(struct drm_device *dev,
- 		struct dma_buf_attachment *attach, struct sg_table *sg)
- {
---
-2.32.0
-
+>>> +			compatible = "operating-points-v2";
+>>> +
+>>> +			opp-75000000 {
+>>> +				opp-hz = /bits/ 64 <75000000>;
+>>> +				required-opps = <&rpmhpd_opp_low_svs>;
+>>> +			};
+>>> +
+>>> +			opp-150000000 {
+>>> +				opp-hz = /bits/ 64 <150000000>;
+>>> +				required-opps = <&rpmhpd_opp_svs>;
+>>> +			};
+>>> +
+>>> +			opp-300000000 {
+>>> +				opp-hz = /bits/ 64 <300000000>;
+>>> +				required-opps = <&rpmhpd_opp_nom>;
+>>> +			};
+>>> +		};
+>>> +
+>>> +		qspi: spi@88dc000 {
+>>> +			compatible = "qcom,qspi-v1";
+>>> +			reg = <0 0x088dc000 0 0x1000>;
+>>> +			#address-cells = <1>;
+>>> +			#size-cells = <0>;
+>>> +			interrupts = <GIC_SPI 82 IRQ_TYPE_LEVEL_HIGH>;
+>>> +			clocks = <&gcc GCC_QSPI_CNOC_PERIPH_AHB_CLK>,
+>>> +				 <&gcc GCC_QSPI_CORE_CLK>;
+>>> +			clock-names = "iface", "core";
+>>> +			interconnects = <&gem_noc MASTER_APPSS_PROC 0
+>>> +					&cnoc2 SLAVE_QSPI_0 0>;
+>>> +			interconnect-names = "qspi-config";
+>>> +			power-domains = <&rpmhpd SC7280_CX>;
+>>> +			operating-points-v2 = <&qspi_opp_table>;
+>>> +			status = "disabled";
+>>> +		};
