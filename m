@@ -2,105 +2,261 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7A1AB3BC7E9
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jul 2021 10:35:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0F1993BC813
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jul 2021 10:47:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230398AbhGFIiH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Jul 2021 04:38:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35624 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230356AbhGFIiH (ORCPT
+        id S230333AbhGFIuf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Jul 2021 04:50:35 -0400
+Received: from smtp-out2.suse.de ([195.135.220.29]:39646 "EHLO
+        smtp-out2.suse.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230295AbhGFIue (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Jul 2021 04:38:07 -0400
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E9F3C061574
-        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Jul 2021 01:35:29 -0700 (PDT)
-Received: by mail-wm1-x331.google.com with SMTP id i2-20020a05600c3542b02902058529ea07so1643096wmq.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Jul 2021 01:35:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=U29Y6gKeEJ/TOx94H/sMKCVR9hUDyqP/L3iEJdAYqrs=;
-        b=CVRjvDnphK8OIOr+WSbxlBLysMoOQmGuvVzSNiA5YpA8aulbXuqSVbxSkKbGIRpzsp
-         CNToQ+8lo0wfmYDz/amG0/MENZU/jjJW3QOst3+6s3Etu/A/KXLCFAiQ0P9SPLb/Wo2I
-         pGxpEIiujVVLF5WlxRza3BVPsy0NOewsratezVzPprOGTHmazPp4CP25ACyduwsRgYEn
-         ikrn7oU7VeLTBD/xgQrcxzUdjyQJ0oTdyqoCBG14AZ6xPUjx0te0Za5dxUdUNJd1bizu
-         GrNa3kwits5aTEgz1jTl5haUGWKuIiOVkOZvfhDENXLK7mhIxFGZ5EgqYMo6htRbQ4as
-         fouw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=U29Y6gKeEJ/TOx94H/sMKCVR9hUDyqP/L3iEJdAYqrs=;
-        b=Ygak+bFtaEDs/fDW55+GcQSabcG38cRR3avbyEsy5R1SGI1Z/7Ef2BtbIScfnJ9g7j
-         cB50Y9mPN1mL3+Qmi1AkHqYmxDx7dmKgSg3EQx30XiZqlKbX7a12I8Qlme/JWhFc+oXK
-         wtDNBbf1Mte3xppRr/N8r3H+PWvYusUeHDgzOLovzLggD6NfxYzdfpOFiSykceFwe/et
-         hU3J+0HnzstKecbeX7XPQj3LNHXeJfS9Ht6s7TJ82NLngbmzCyBoGokiObvSh6Ylg2Lw
-         /37AQEW9FO4/du9FSkhj9h/YRHiVsEJ4k98V1D1TjML0C6Z919Mw66c5UVQnPfMS33an
-         uG7g==
-X-Gm-Message-State: AOAM530/tmod1mRzoK3+Jrav/GIfHbzerb5CvTc/iOfk+GwGybBZsFVN
-        yLyzSREDk/ad9eqg51BCwgL1VA==
-X-Google-Smtp-Source: ABdhPJxEEOBF97iGp273zrFwZLYeKJjeHZ05+Y4nRIhToCETllcGM0uusreYOQChi7yXJghwHWM+EQ==
-X-Received: by 2002:a7b:cb03:: with SMTP id u3mr19925721wmj.119.1625560527911;
-        Tue, 06 Jul 2021 01:35:27 -0700 (PDT)
-Received: from srini-hackbox.lan (cpc86377-aztw32-2-0-cust226.18-1.cable.virginm.net. [92.233.226.227])
-        by smtp.gmail.com with ESMTPSA id r13sm5451111wrt.38.2021.07.06.01.35.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 Jul 2021 01:35:27 -0700 (PDT)
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-To:     bjorn.andersson@linaro.org, agross@kernel.org
-Cc:     robh+dt@kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Shawn Guo <shawnguo@kernel.org>
-Subject: [PATCH] arm64: dts: qcom: c630: fix correct powerdown pin for WSA881x
-Date:   Tue,  6 Jul 2021 09:35:23 +0100
-Message-Id: <20210706083523.10601-1-srinivas.kandagatla@linaro.org>
-X-Mailer: git-send-email 2.21.0
+        Tue, 6 Jul 2021 04:50:34 -0400
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        (No client certificate requested)
+        by smtp-out2.suse.de (Postfix) with ESMTPS id 745E31FF34;
+        Tue,  6 Jul 2021 08:47:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+        t=1625561275; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+        bh=jhBCujPABZPNUH3fBBFSxVuzrudipOZC/VeSlBUNZGs=;
+        b=tCSAPs0SnB2OiPsJETed+5QRiaW6k4ag2fZFC4OSut+GaHlGFJao2B9MShfG/GhXNLE0Bj
+        NVteb7TVd93d2tM5pJqiHf5jcul1I00n0oegdvklHVOhynNOrSzrX6VmJSfOU+wykKkija
+        1F9LC2PVW4QuuaBZIs4aozzztnqg+8s=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+        s=susede2_ed25519; t=1625561275;
+        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+        bh=jhBCujPABZPNUH3fBBFSxVuzrudipOZC/VeSlBUNZGs=;
+        b=QPeY/90fe2QVkyBl6oYrUDDWzt/dJkc21IhOjzeNp+0lC5eabr4oF6iVGeXSS6KEE/7yJE
+        Ios9YN9NPnK2ruDA==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        (No client certificate requested)
+        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 24B7A13A70;
+        Tue,  6 Jul 2021 08:47:55 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+        by imap2.suse-dmz.suse.de with ESMTPSA
+        id lhv1B7sY5GCYfQAAMHmgww
+        (envelope-from <tzimmermann@suse.de>); Tue, 06 Jul 2021 08:47:55 +0000
+From:   Thomas Zimmermann <tzimmermann@suse.de>
+To:     robdclark@gmail.com, sean@poorly.run, airlied@linux.ie,
+        daniel@ffwll.ch, jonathan@marek.ca, jordan@cosmicpenguin.net
+Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org,
+        Thomas Zimmermann <tzimmermann@suse.de>
+Subject: [PATCH v2] drm/msm: Implement mmap as GEM object function
+Date:   Tue,  6 Jul 2021 10:47:53 +0200
+Message-Id: <20210706084753.8194-1-tzimmermann@suse.de>
+X-Mailer: git-send-email 2.32.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-WSA881x powerdown pin is connected to GPIO1, GPIO2 not GPIO2 and GPIO3,
-so correct this. This was working so far due to a shift bug in gpio driver,
-however once that is fixed this will stop working, so fix this!
+Moving the driver-specific mmap code into a GEM object function allows
+for using DRM helpers for various mmap callbacks.
 
-For some reason we forgot to add this dts change in last merge cycle so
-currently audio is broken in 5.13 as the gpio driver fix already landed
-in 5.13.
+The respective msm functions are being removed. The file_operations
+structure fops is now being created by the helper macro
+DEFINE_DRM_GEM_FOPS().
 
-Reported-by: Shawn Guo <shawnguo@kernel.org>
-Fixes: 45021d35fcb2 ("arm64: dts: qcom: c630: Enable audio support")
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+v2:
+	* rebase onto latest upstream
+	* remove declaration of msm_gem_mmap_obj() from msm_fbdev.c
+
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
 ---
- arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/msm/msm_drv.c       | 14 ++---------
+ drivers/gpu/drm/msm/msm_drv.h       |  1 -
+ drivers/gpu/drm/msm/msm_fbdev.c     | 12 ++--------
+ drivers/gpu/drm/msm/msm_gem.c       | 37 ++++++++++-------------------
+ drivers/gpu/drm/msm/msm_gem.h       |  3 ---
+ drivers/gpu/drm/msm/msm_gem_prime.c | 11 ---------
+ 6 files changed, 16 insertions(+), 62 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-index 140db2d5ba31..cf01d3f2ed8a 100644
---- a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-@@ -698,7 +698,7 @@
- 		left_spkr: wsa8810-left{
- 			compatible = "sdw10217211000";
- 			reg = <0 3>;
--			powerdown-gpios = <&wcdgpio 2 GPIO_ACTIVE_HIGH>;
-+			powerdown-gpios = <&wcdgpio 1 GPIO_ACTIVE_HIGH>;
- 			#thermal-sensor-cells = <0>;
- 			sound-name-prefix = "SpkrLeft";
- 			#sound-dai-cells = <0>;
-@@ -706,7 +706,7 @@
- 
- 		right_spkr: wsa8810-right{
- 			compatible = "sdw10217211000";
--			powerdown-gpios = <&wcdgpio 3 GPIO_ACTIVE_HIGH>;
-+			powerdown-gpios = <&wcdgpio 2 GPIO_ACTIVE_HIGH>;
- 			reg = <0 4>;
- 			#thermal-sensor-cells = <0>;
- 			sound-name-prefix = "SpkrRight";
--- 
-2.21.0
+diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+index 9b8fa2ad0d84..a4d238e8d377 100644
+--- a/drivers/gpu/drm/msm/msm_drv.c
++++ b/drivers/gpu/drm/msm/msm_drv.c
+@@ -1004,17 +1004,7 @@ static const struct drm_ioctl_desc msm_ioctls[] = {
+ 	DRM_IOCTL_DEF_DRV(MSM_SUBMITQUEUE_QUERY, msm_ioctl_submitqueue_query, DRM_RENDER_ALLOW),
+ };
+
+-static const struct file_operations fops = {
+-	.owner              = THIS_MODULE,
+-	.open               = drm_open,
+-	.release            = drm_release,
+-	.unlocked_ioctl     = drm_ioctl,
+-	.compat_ioctl       = drm_compat_ioctl,
+-	.poll               = drm_poll,
+-	.read               = drm_read,
+-	.llseek             = no_llseek,
+-	.mmap               = msm_gem_mmap,
+-};
++DEFINE_DRM_GEM_FOPS(fops);
+
+ static const struct drm_driver msm_driver = {
+ 	.driver_features    = DRIVER_GEM |
+@@ -1034,7 +1024,7 @@ static const struct drm_driver msm_driver = {
+ 	.prime_handle_to_fd = drm_gem_prime_handle_to_fd,
+ 	.prime_fd_to_handle = drm_gem_prime_fd_to_handle,
+ 	.gem_prime_import_sg_table = msm_gem_prime_import_sg_table,
+-	.gem_prime_mmap     = msm_gem_prime_mmap,
++	.gem_prime_mmap     = drm_gem_prime_mmap,
+ #ifdef CONFIG_DEBUG_FS
+ 	.debugfs_init       = msm_debugfs_init,
+ #endif
+diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
+index 1a48a709ffb3..1a42903db347 100644
+--- a/drivers/gpu/drm/msm/msm_drv.h
++++ b/drivers/gpu/drm/msm/msm_drv.h
+@@ -309,7 +309,6 @@ void msm_gem_shrinker_cleanup(struct drm_device *dev);
+ struct sg_table *msm_gem_prime_get_sg_table(struct drm_gem_object *obj);
+ int msm_gem_prime_vmap(struct drm_gem_object *obj, struct dma_buf_map *map);
+ void msm_gem_prime_vunmap(struct drm_gem_object *obj, struct dma_buf_map *map);
+-int msm_gem_prime_mmap(struct drm_gem_object *obj, struct vm_area_struct *vma);
+ struct drm_gem_object *msm_gem_prime_import_sg_table(struct drm_device *dev,
+ 		struct dma_buf_attachment *attach, struct sg_table *sg);
+ int msm_gem_prime_pin(struct drm_gem_object *obj);
+diff --git a/drivers/gpu/drm/msm/msm_fbdev.c b/drivers/gpu/drm/msm/msm_fbdev.c
+index 67fae60f2fa5..0daaeb54ff6f 100644
+--- a/drivers/gpu/drm/msm/msm_fbdev.c
++++ b/drivers/gpu/drm/msm/msm_fbdev.c
+@@ -8,13 +8,12 @@
+ #include <drm/drm_crtc.h>
+ #include <drm/drm_fb_helper.h>
+ #include <drm/drm_fourcc.h>
++#include <drm/drm_prime.h>
+
+ #include "msm_drv.h"
+ #include "msm_gem.h"
+ #include "msm_kms.h"
+
+-extern int msm_gem_mmap_obj(struct drm_gem_object *obj,
+-					struct vm_area_struct *vma);
+ static int msm_fbdev_mmap(struct fb_info *info, struct vm_area_struct *vma);
+
+ /*
+@@ -48,15 +47,8 @@ static int msm_fbdev_mmap(struct fb_info *info, struct vm_area_struct *vma)
+ 	struct drm_fb_helper *helper = (struct drm_fb_helper *)info->par;
+ 	struct msm_fbdev *fbdev = to_msm_fbdev(helper);
+ 	struct drm_gem_object *bo = msm_framebuffer_bo(fbdev->fb, 0);
+-	int ret = 0;
+
+-	ret = drm_gem_mmap_obj(bo, bo->size, vma);
+-	if (ret) {
+-		pr_err("%s:drm_gem_mmap_obj fail\n", __func__);
+-		return ret;
+-	}
+-
+-	return msm_gem_mmap_obj(bo, vma);
++	return drm_gem_prime_mmap(bo, vma);
+ }
+
+ static int msm_fbdev_create(struct drm_fb_helper *helper,
+diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
+index 141178754231..519a9601b219 100644
+--- a/drivers/gpu/drm/msm/msm_gem.c
++++ b/drivers/gpu/drm/msm/msm_gem.c
+@@ -218,31 +218,6 @@ static pgprot_t msm_gem_pgprot(struct msm_gem_object *msm_obj, pgprot_t prot)
+ 	return prot;
+ }
+
+-int msm_gem_mmap_obj(struct drm_gem_object *obj,
+-		struct vm_area_struct *vma)
+-{
+-	struct msm_gem_object *msm_obj = to_msm_bo(obj);
+-
+-	vma->vm_flags &= ~VM_PFNMAP;
+-	vma->vm_flags |= VM_MIXEDMAP;
+-	vma->vm_page_prot = msm_gem_pgprot(msm_obj, vm_get_page_prot(vma->vm_flags));
+-
+-	return 0;
+-}
+-
+-int msm_gem_mmap(struct file *filp, struct vm_area_struct *vma)
+-{
+-	int ret;
+-
+-	ret = drm_gem_mmap(filp, vma);
+-	if (ret) {
+-		DBG("mmap failed: %d", ret);
+-		return ret;
+-	}
+-
+-	return msm_gem_mmap_obj(vma->vm_private_data, vma);
+-}
+-
+ static vm_fault_t msm_gem_fault(struct vm_fault *vmf)
+ {
+ 	struct vm_area_struct *vma = vmf->vma;
+@@ -1114,6 +1089,17 @@ void msm_gem_free_object(struct drm_gem_object *obj)
+ 	kfree(msm_obj);
+ }
+
++static int msm_gem_object_mmap(struct drm_gem_object *obj, struct vm_area_struct *vma)
++{
++	struct msm_gem_object *msm_obj = to_msm_bo(obj);
++
++	vma->vm_flags &= ~VM_PFNMAP;
++	vma->vm_flags |= VM_MIXEDMAP;
++	vma->vm_page_prot = msm_gem_pgprot(msm_obj, vm_get_page_prot(vma->vm_flags));
++
++	return 0;
++}
++
+ /* convenience method to construct a GEM buffer object, and userspace handle */
+ int msm_gem_new_handle(struct drm_device *dev, struct drm_file *file,
+ 		uint32_t size, uint32_t flags, uint32_t *handle,
+@@ -1151,6 +1137,7 @@ static const struct drm_gem_object_funcs msm_gem_object_funcs = {
+ 	.get_sg_table = msm_gem_prime_get_sg_table,
+ 	.vmap = msm_gem_prime_vmap,
+ 	.vunmap = msm_gem_prime_vunmap,
++	.mmap = msm_gem_object_mmap,
+ 	.vm_ops = &vm_ops,
+ };
+
+diff --git a/drivers/gpu/drm/msm/msm_gem.h b/drivers/gpu/drm/msm/msm_gem.h
+index 405f8411e395..aab548720bee 100644
+--- a/drivers/gpu/drm/msm/msm_gem.h
++++ b/drivers/gpu/drm/msm/msm_gem.h
+@@ -112,9 +112,6 @@ struct msm_gem_object {
+ };
+ #define to_msm_bo(x) container_of(x, struct msm_gem_object, base)
+
+-int msm_gem_mmap_obj(struct drm_gem_object *obj,
+-			struct vm_area_struct *vma);
+-int msm_gem_mmap(struct file *filp, struct vm_area_struct *vma);
+ uint64_t msm_gem_mmap_offset(struct drm_gem_object *obj);
+ int msm_gem_get_iova(struct drm_gem_object *obj,
+ 		struct msm_gem_address_space *aspace, uint64_t *iova);
+diff --git a/drivers/gpu/drm/msm/msm_gem_prime.c b/drivers/gpu/drm/msm/msm_gem_prime.c
+index 9880348a4dc7..fc94e061d6a7 100644
+--- a/drivers/gpu/drm/msm/msm_gem_prime.c
++++ b/drivers/gpu/drm/msm/msm_gem_prime.c
+@@ -39,17 +39,6 @@ void msm_gem_prime_vunmap(struct drm_gem_object *obj, struct dma_buf_map *map)
+ 	msm_gem_put_vaddr(obj);
+ }
+
+-int msm_gem_prime_mmap(struct drm_gem_object *obj, struct vm_area_struct *vma)
+-{
+-	int ret;
+-
+-	ret = drm_gem_mmap_obj(obj, obj->size, vma);
+-	if (ret < 0)
+-		return ret;
+-
+-	return msm_gem_mmap_obj(vma->vm_private_data, vma);
+-}
+-
+ struct drm_gem_object *msm_gem_prime_import_sg_table(struct drm_device *dev,
+ 		struct dma_buf_attachment *attach, struct sg_table *sg)
+ {
+--
+2.32.0
 
