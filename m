@@ -2,157 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 541D63BDE64
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jul 2021 22:19:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0B9993BDE75
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jul 2021 22:34:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229812AbhGFUW1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Jul 2021 16:22:27 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:17187 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229963AbhGFUW1 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Jul 2021 16:22:27 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1625602788; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=bVsxEM7GBkgihUbSf5tSkkwxcoMoVHENciajGKiwiQA=; b=FftymLY8DZBXAhJKJU3FhBEFDpa0D3wjA6ztG4dE9XtpfIvurxi++TvavF3WvcGVf80Q3o9L
- v9VUzL0GIDe4qYMlzSOIUruO7cF2XGSAWcQNb3OwzXQb3Qy5HBMs3Uxoi16CTVoJ+I3vqDhY
- 6F9JRC0PSvpXQaekPYK9b0yKLVo=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
- 60e4bae0f30429861410fb7c (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 06 Jul 2021 20:19:44
- GMT
-Sender: wcheng=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 2ED16C4360C; Tue,  6 Jul 2021 20:19:43 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [10.110.78.185] (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: wcheng)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id C4A73C4360C;
-        Tue,  6 Jul 2021 20:19:39 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org C4A73C4360C
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=wcheng@codeaurora.org
-Subject: Re: [PATCH v12 3/6] usb: dwc3: Resize TX FIFOs to meet EP bursting
- requirements
-To:     Greg KH <gregkh@linuxfoundation.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, balbi@kernel.org,
-        robh+dt@kernel.org, frowand.list@gmail.com,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        jackp@codeaurora.org, fntoth@gmail.com
-References: <1625218655-14180-1-git-send-email-wcheng@codeaurora.org>
- <1625218655-14180-4-git-send-email-wcheng@codeaurora.org>
- <YOSdRKTy3+CdV/UF@kroah.com>
-From:   Wesley Cheng <wcheng@codeaurora.org>
-Message-ID: <2ee71465-d921-8904-2009-1e46ad1a988b@codeaurora.org>
-Date:   Tue, 6 Jul 2021 13:19:38 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+        id S229834AbhGFUgy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Jul 2021 16:36:54 -0400
+Received: from mout.kundenserver.de ([217.72.192.75]:48975 "EHLO
+        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229781AbhGFUgw (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 6 Jul 2021 16:36:52 -0400
+Received: from mail-wr1-f52.google.com ([209.85.221.52]) by
+ mrelayeu.kundenserver.de (mreue107 [213.165.67.113]) with ESMTPSA (Nemesis)
+ id 1MkYsS-1lKKh02Qko-00m6u0 for <linux-arm-msm@vger.kernel.org>; Tue, 06 Jul
+ 2021 22:34:12 +0200
+Received: by mail-wr1-f52.google.com with SMTP id i8so413426wrp.12
+        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Jul 2021 13:34:12 -0700 (PDT)
+X-Gm-Message-State: AOAM5330XiKzO8LyuiwkZ2kWIL+0h92Gl795EpN45//d5TFXLWTVAcGj
+        7MEMorJoi+froCZNuDJeKAElVTkHsbUMZQxZOvE=
+X-Google-Smtp-Source: ABdhPJxr8Z9KUUIthRbx8NWpyZJ4RwE3JYLin40N5YqfPo6mCGWEH4smcwk5s62sDCLsLS/J9Ru0N0IBCTiscuPA7Sg=
+X-Received: by 2002:adf:e107:: with SMTP id t7mr23967237wrz.165.1625603652293;
+ Tue, 06 Jul 2021 13:34:12 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <YOSdRKTy3+CdV/UF@kroah.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <20210527124356.22367-1-will@kernel.org> <uHgsRacR8hJ7nW-I-pIcehzg-lNIn7NJvaL7bP9tfAftFsBjsgaY2qTjG9zyBgxHkjNL1WPNrD7YVv2JVD2_Wy-a5VTbcq-1xEi8ZnwrXBo=@protonmail.com>
+ <20210706102634.GB24903@arm.com> <59800d6c-364a-f4be-e341-c5b531657ba3@arm.com>
+ <20210706133314.GB20327@willie-the-truck> <f136da2ea91fc22334c552b8c524f6e7@kernel.org>
+ <CAK8P3a2xWTvj6HjsC6gH44Ad13adKjK0wR7UxFFQ1i=XYixvQA@mail.gmail.com>
+ <87zguz7b6b.wl-maz@kernel.org> <CAK8P3a2eFDSdkAUgapGuANQJsO=Arsp4uxoiLRXL-ah0ttc6Fg@mail.gmail.com>
+ <m-pFOMXMXSwpPq7H8syJd3qyVkuhGYjVEOgk-iiezAFhr8ApjWX8eIMkcL3updRXOOeOClx88ekyeOvEsNYp_HrY54W4iCSYl8yT03Tykv4=@protonmail.com>
+In-Reply-To: <m-pFOMXMXSwpPq7H8syJd3qyVkuhGYjVEOgk-iiezAFhr8ApjWX8eIMkcL3updRXOOeOClx88ekyeOvEsNYp_HrY54W4iCSYl8yT03Tykv4=@protonmail.com>
+From:   Arnd Bergmann <arnd@arndb.de>
+Date:   Tue, 6 Jul 2021 22:33:56 +0200
+X-Gmail-Original-Message-ID: <CAK8P3a1rtXTtGQ_Q7eg2SOrYa_OhSWPWFiS8m=oSb_GU1uUNXQ@mail.gmail.com>
+Message-ID: <CAK8P3a1rtXTtGQ_Q7eg2SOrYa_OhSWPWFiS8m=oSb_GU1uUNXQ@mail.gmail.com>
+Subject: Re: [PATCH] arm64: cache: Lower ARCH_DMA_MINALIGN to 64 (L1_CACHE_BYTES)
+To:     Yassine Oudjana <y.oudjana@protonmail.com>
+Cc:     Marc Zyngier <maz@kernel.org>, Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Ard Biesheuvel <ardb@kernel.org>,
+        Android Kernel Team <kernel-team@android.com>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Vincent Whitchurch <vincent.whitchurch@axis.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Provags-ID: V03:K1:ZqDrh4W/x+ErXRApfdKflKkI0AyRw4gQ/i55sDZ1tPYRuwIt0YD
+ O+Dhp0WQXs0j/HjN0V3xuxfm1/uwYB/o4X56HGN4udR7t3EqTlZZCbx2bQ1EBqfn2A5k35j
+ PD0XheaTtO6/nkdtSDzP29cckFb7C9UYt2xNG/aK+QVshaMgm9aKIKTZ2RkqUJlfFYmQhxX
+ 2uEn9LqvOdeoDs+QenAug==
+X-Spam-Flag: NO
+X-UI-Out-Filterresults: notjunk:1;V03:K0:6+xdlNhDPo0=:AOZfeQzRGMDhxgHmcWqrm6
+ ZLdoEtS9q3YGwFVt10T18QMsVfZYpIU50rHzd2MBTxuZAIHWUfxpU3lxaYPglVkJauJvEZiLh
+ Fk70xOvlN25gHGqFdFv2Vmt5hta0OtdaTTMAhz8LToPl9sjYp9W6NDPHiQyFt7bAEtKBQlcHE
+ VRRAVqxSbhLqY/UFHX0C7ZaMDDagya+2ul5y+YGkM/pquRlqENGBJah3CwsXPicMxsA/tZQRi
+ WHxgo2/FfEwP4gm26k+L3IITnUP+p6Qbxt1WtNM1sXr5ncU7FLONmjcuqr3dvbe93y6DkL2Yi
+ FHvNv0z1oE8WxQBIyteGJe6RFkYV+pdmkl4QATsIx4Yxej6rYxneuKIu/BiGaNT7R2MHnaWWz
+ ILyMU1fTZEuh1uBcSyJuQnSFgx2Ch5oZJcBfpWcngORZci/GAs5u0lCfxAIeUfXDxdn9yBxSy
+ VNNHpSrM5VF+Bp79ZDRO+JjMf4rNGe8AbMsqVqB/PTUCzd19FAoEo4CpPT/VBaM9jfOUQ5Grc
+ WjHsPP3AZi3BwgwHzg673X77x+L/b2cYmssH9eLbypmkGqplCZsG4agJX/KuH6qgM7Tr6J7dI
+ zdoWIcrKOYuqdhg0VjAdzxpfixJsRsfMffTQ9GklCXNcjp9Ooier5LMKbbNYBFeFz8nyg18hx
+ wdFasEHjZx6w+P2fMn2Y3jI29UNkmuHMGA0H5WcQ1/IEK+y6l2yUZXCCikjtfAx0xiDU8e1ZG
+ lLPx0eBbaYj4rhC47rnFY2w3TnkESj+tzNXpYlJSghTjiF80Ku4GgGbvlXibqtL7sHbcbfGII
+ O6mdvAInPkajkCDpNQNb/c3Fhh5WIqhGSn7IOvozX/hohhGd7ayl+4+YNDruEC+8a9NTIxc
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 7/6/2021 11:13 AM, Greg KH wrote:
-> On Fri, Jul 02, 2021 at 02:37:32AM -0700, Wesley Cheng wrote:
->> Some devices have USB compositions which may require multiple endpoints
->> that support EP bursting.  HW defined TX FIFO sizes may not always be
->> sufficient for these compositions.  By utilizing flexible TX FIFO
->> allocation, this allows for endpoints to request the required FIFO depth to
->> achieve higher bandwidth.  With some higher bMaxBurst configurations, using
->> a larger TX FIFO size results in better TX throughput.
->>
->> By introducing the check_config() callback, the resizing logic can fetch
->> the maximum number of endpoints used in the USB composition (can contain
->> multiple configurations), which helps ensure that the resizing logic can
->> fulfill the configuration(s), or return an error to the gadget layer
->> otherwise during bind time.
->>
->> Signed-off-by: Wesley Cheng <wcheng@codeaurora.org>
->> ---
->>  drivers/usb/dwc3/core.c   |   9 ++
->>  drivers/usb/dwc3/core.h   |  15 ++++
->>  drivers/usb/dwc3/ep0.c    |   2 +
->>  drivers/usb/dwc3/gadget.c | 221 ++++++++++++++++++++++++++++++++++++++++++++++
->>  4 files changed, 247 insertions(+)
->>
->> diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
->> index e0a8e79..a7bcdb9d 100644
->> --- a/drivers/usb/dwc3/core.c
->> +++ b/drivers/usb/dwc3/core.c
->> @@ -1267,6 +1267,7 @@ static void dwc3_get_properties(struct dwc3 *dwc)
->>  	u8			rx_max_burst_prd;
->>  	u8			tx_thr_num_pkt_prd;
->>  	u8			tx_max_burst_prd;
->> +	u8			tx_fifo_resize_max_num;
->>  	const char		*usb_psy_name;
->>  	int			ret;
->>  
->> @@ -1282,6 +1283,8 @@ static void dwc3_get_properties(struct dwc3 *dwc)
->>  	 */
->>  	hird_threshold = 12;
->>  
->> +	tx_fifo_resize_max_num = 6;
->> +
-
-Hi Greg,
-> 
-> No comment as to why 6 was picked, like the other defaults in this
-> function?
-> 
-> Why was 6 picked?
-> 
-> 
-Talked with Thinh about this sometime back about why 6 was picked.  It
-was just an arbitrary setting we decided on throughout our testing, as
-that was what provided the best tput numbers for our system.  Hence why
-it was suggested to have a separate property, so other vendors can set
-this to accommodate their difference in HW latencies.
-
->>  	dwc->maximum_speed = usb_get_maximum_speed(dev);
->>  	dwc->max_ssp_rate = usb_get_maximum_ssp_rate(dev);
->>  	dwc->dr_mode = usb_get_dr_mode(dev);
->> @@ -1325,6 +1328,10 @@ static void dwc3_get_properties(struct dwc3 *dwc)
->>  				&tx_thr_num_pkt_prd);
->>  	device_property_read_u8(dev, "snps,tx-max-burst-prd",
->>  				&tx_max_burst_prd);
->> +	dwc->do_fifo_resize = device_property_read_bool(dev,
->> +							"tx-fifo-resize");
->> +	device_property_read_u8(dev, "tx-fifo-max-num",
->> +				&tx_fifo_resize_max_num);
-> 
-> So you overwrite the "max" with whatever is given to you?  What if
-> tx-fifo-resize is not enabled?
+On Tue, Jul 6, 2021 at 7:15 PM Yassine Oudjana <y.oudjana@protonmail.com> wrote:
+> > (the numactl command helps run this both on the 'big' and 'little'
+> > cores without running into migration)
+> >
+> > Arnd
 >
-If tx-fifo-resize is not enabled, then there shouldn't be anything that
-will reference this property.  As mentioned in the previous comment, HW
-vendors may not need a FIFO size of 6 max packets for their particular
-system, so they should be able to program this to their needs.
+> Here are the results:
 
-If someone programs to this a large number, the logic works where it
-will allocate based off the space left after ensuring enough space for 1
-FIFO per ep.
+Thanks, that was quick
 
-Thanks
-Wesley Cheng
+> $ numactl -C 0 line -M 1M
+> 128
+> $ numactl -C 3 line -M 1M
+> 128
+> $ numactl -C 0 cache
+> L1 cache: 512 bytes 1.37 nanoseconds 64 linesize -1.00 parallelism
+> L2 cache: 24576 bytes 2.75 nanoseconds 64 linesize 5.06 parallelism
+> L3 cache: 131072 bytes 7.89 nanoseconds 64 linesize 3.85 parallelism
+> L4 cache: 524288 bytes 15.86 nanoseconds 128 linesize 3.48 parallelism
+> Memory latency: 145.93 nanoseconds 4.88 parallelism
+> $ numactl -C 3 cache
+> L1 cache: 24576 bytes 1.29 nanoseconds 64 linesize 5.00 parallelism
+> L2 cache: 1048576 bytes 8.60 nanoseconds 128 linesize 3.07 parallelism
+> Memory latency: 143.29 nanoseconds 5.37 parallelism
 
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+This is still somewhat inconclusive, but it does give some hope. The data that
+I found on random web sites was
+
+- 32KB L1, 2MB/1MB L2 [1][2]
+- 16KB L1, 1.5MB L2 [3]
+- 32KB L1, 1MB/512KB L2 [4]
+
+so none of the sizes really line up. My best guess is that the actual hierarchy
+
+1MB per-core L2 cache on the two big CPU, 512KB per-core L2 cache on
+the two little ones, but no shared L2 or L3. The older Krait had a 4KB L0
+cache, which could explain the 512-byte L1 output.
+
+Can you rerun the the 'line' test with '-M 128K' to see if that confirms the 64
+byte L1 line size that the 'cache' test reported?
+      Arnd
+
+[1] https://en.wikipedia.org/wiki/List_of_Qualcomm_Snapdragon_processors#Snapdragon_820_and_821_(2016)
+[2] https://en.wikipedia.org/wiki/Kryo
+[3] https://www.geektopia.es/es/product/qualcomm/snapdragon-820/
+[4] https://www.anandtech.com/show/9837/snapdragon-820-preview/2
