@@ -2,134 +2,197 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 926923BC6B9
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jul 2021 08:40:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B82F73BC712
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jul 2021 09:24:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230132AbhGFGnP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Jul 2021 02:43:15 -0400
-Received: from mailout2.w1.samsung.com ([210.118.77.12]:12655 "EHLO
-        mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230086AbhGFGnO (ORCPT
+        id S230214AbhGFH1A (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Jul 2021 03:27:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48202 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230239AbhGFH07 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Jul 2021 02:43:14 -0400
-Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
-        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20210706064035euoutp02be4d28a47dfa211cc10d0a670e0e00b8~PIGs_wT-23203532035euoutp02g
-        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Jul 2021 06:40:35 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20210706064035euoutp02be4d28a47dfa211cc10d0a670e0e00b8~PIGs_wT-23203532035euoutp02g
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1625553635;
-        bh=/FABSd7h+/aNCApA9rE7hWI30dZ59mhJinjTD6hB7CA=;
-        h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
-        b=mw/uNbJ7p1edrGnszgtpngkES8iSYpe1MsV4USxGvyC5iyXC3oyl8gwSVs5jj7COh
-         beM8bTl9NU4Dg2FOKjeXFpA6f+gHXk10MHAMzrApgofRf2wdeZRc+BBFZWYSOCHJ/O
-         bUtVT3kd//PBjmZhP/sFWAwRdVd2kdS1L1OBS1qU=
-Received: from eusmges3new.samsung.com (unknown [203.254.199.245]) by
-        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
-        20210706064035eucas1p24281895a290f144da55d106c266d640d~PIGssoy6J0361803618eucas1p2m;
-        Tue,  6 Jul 2021 06:40:35 +0000 (GMT)
-Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
-        eusmges3new.samsung.com (EUCPMTA) with SMTP id F3.DA.56448.3EAF3E06; Tue,  6
-        Jul 2021 07:40:35 +0100 (BST)
-Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
-        eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
-        20210706064034eucas1p1e4bd9281a5badb012c1a65f0dbf8169a~PIGsOCGgD1739017390eucas1p1d;
-        Tue,  6 Jul 2021 06:40:34 +0000 (GMT)
-Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
-        eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
-        20210706064034eusmtrp1afc12f722a94dcc8e36e702650db4e17~PIGsNL00w1015410154eusmtrp1t;
-        Tue,  6 Jul 2021 06:40:34 +0000 (GMT)
-X-AuditID: cbfec7f5-d3bff7000002dc80-ee-60e3fae37e8d
-Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
-        eusmgms2.samsung.com (EUCPMTA) with SMTP id 07.B6.20981.2EAF3E06; Tue,  6
-        Jul 2021 07:40:34 +0100 (BST)
-Received: from [106.210.134.192] (unknown [106.210.134.192]) by
-        eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
-        20210706064034eusmtip28242c78fef63937cdba889b3821b449b~PIGrnZo003174931749eusmtip2H;
-        Tue,  6 Jul 2021 06:40:33 +0000 (GMT)
-Subject: Re: [PATCH] iommu: qcom: Revert
- "iommu/arm: Cleanup resources in case of probe error path"
-To:     Amey Narkhede <ameynarkhede03@gmail.com>
-Cc:     iommu@lists.linux-foundation.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, Rob Clark <robdclark@gmail.com>,
-        Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Krishna Reddy <vdumpa@nvidia.com>
-From:   Marek Szyprowski <m.szyprowski@samsung.com>
-Message-ID: <71106cbb-ff6d-02cb-7743-dfbd27bdaddf@samsung.com>
-Date:   Tue, 6 Jul 2021 08:40:33 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0)
-        Gecko/20100101 Thunderbird/78.11.0
+        Tue, 6 Jul 2021 03:26:59 -0400
+Received: from mail-vk1-xa36.google.com (mail-vk1-xa36.google.com [IPv6:2607:f8b0:4864:20::a36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 925F1C061760
+        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Jul 2021 00:24:20 -0700 (PDT)
+Received: by mail-vk1-xa36.google.com with SMTP id x20so2941715vkd.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Jul 2021 00:24:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=BXh3LzMCPP9L3ynAA0aGj0fxSvyTuYRtJFcDwUyQ7PM=;
+        b=ZIphNHFNEE+seeFzTENuNO09jbaTUpM+qAatBWg9z0OBgpHgSDgYdxW/N8q56+yYjC
+         uFfkpNkI5HG0/PJylwJ99SjyHOUMS7/0SNzBdfl+5gxYPRY5LZu9wDrC/DrNrxI8oHYk
+         h9YxZ4nWUZcRKcPPdkO+43Z3EaDuswEjNlmgrDAZp2h6jPXSVfLLsnQxmaGSN5BxM8dS
+         9dPZPCGZ4SHklmfPXQRNDi2qGu5GVV+icfOyhgKcIk3E/5LFYYekvWLRh/ylqotC+lSw
+         m/oiXlzuHBBJIokhaULIVJnKw64+77TX5fY18Gx014ybnp4b/q7iwFHjLN7we8/jn6ER
+         /t2w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=BXh3LzMCPP9L3ynAA0aGj0fxSvyTuYRtJFcDwUyQ7PM=;
+        b=PPq8wmkj+UnJdp3UNXv6FaRo+Ht2hE96XWl06PvmP9jjCoXQnmyjhclnrkp1jbCfx/
+         XcYMqEDXx5x/MYf9CThzoNUsOyHDVrraqE3FGbZf3u5ddW+xDpQxWmic93rOTFy2awyn
+         5urrfYEltQkPYUZfiQXyhywBWrbYb18FsaDgFlZ8gQhsq+6Om7u718WRWeNBPgEEh2t6
+         GhQ9OqeRposomXDXic32hYpfFfGlmBcvrJtBJxEhzCCSPoLDAMLXdssIHqZKhIZzMbCc
+         SZ1lIwdnhLac1ezDrAl38RTBFpSLLMFUlegInLImogJNuijvjpd5NCsmA+Bgb4iDP532
+         DSpQ==
+X-Gm-Message-State: AOAM532AVkZzNXiygXbOn2g43XPuLlt3ZtOw+3999B9q43jrom0BwPFC
+        i9oGWxKymuKouaIY2uWdy9KXvPZQyu5WOzFhv+pX2g==
+X-Google-Smtp-Source: ABdhPJyZeMUXryowDLyT5UVj1MHKnIf7P7os2mdRoNlHRDoSTvU/zN5waPK5F8cB2dqXSY/D/fBD96r1SW3yJTF2u+U=
+X-Received: by 2002:a05:6122:588:: with SMTP id i8mr1747116vko.6.1625556259411;
+ Tue, 06 Jul 2021 00:24:19 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20210705143054.nxy4ii6t6npj22ov@archlinux>
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrEKsWRmVeSWpSXmKPExsWy7djPc7qPfz1OMJiyjs3i0vZlrBYL9ltb
-        dM7ewG6x6fE1VouJ+8+yWzxf+IPZ4uCHJ6wWfXuDLFrumDpwejw5OI/JY828NYweO2fdZffY
-        tKqTzWPzknqPyTeWM3r0Nr9j8/i8SS6AI4rLJiU1J7MstUjfLoErY/PZY+wFW9kq7s5Yw9jA
-        2M/axcjJISFgIrH6fRtTFyMXh5DACkaJXxcvMUM4Xxgl7q2bBuV8ZpRY0rGCBaZl98JrUInl
-        jBI/pp1mBkkICXxklGhbJgliCwukSjSsngS2Q0RAR+LRxoVsIA3MAtOZJA4/XQ2WYBMwlOh6
-        2wWU4ODgFbCTWPvXGsRkEVCR+PS5HqRCVCBZ4v28GWDVvAKCEidnPgG7gVPAQuLltonsIDaz
-        gLzE9rdzmCFscYlbT+aDvSMh8J9D4sqHZVB/ukjsWvmeCcIWlnh1fAs7hC0jcXpyDwtEQzOj
-        xMNza9khnB5GictNMxghqqwl7pz7BXYos4CmxPpd+hBhR4lXf3eChSUE+CRuvBWEOIJPYtK2
-        6cwQYV6JjjYhiGo1iVnH18GtPXjhEvMERqVZSF6bheSdWUjemYWwdwEjyypG8dTS4tz01GLj
-        vNRyveLE3OLSvHS95PzcTYzAZHX63/GvOxhXvPqod4iRiYPxEKMEB7OSCK/IlEcJQrwpiZVV
-        qUX58UWlOanFhxilOViUxHl3bV0TLySQnliSmp2aWpBaBJNl4uCUamAKN9fc01Vq+Y4j6J9p
-        /TeFqE//hHK+rcmWc1R/Ip/x9ENA3Z1vcRGzM/ZLLkmssnz6pun9gjhWXlmluW0zP3xwsk43
-        DvO9MsHuqvDaPvefH2/6rZJ+89Jp3pmSXM3b9+8WNP3cYsWs2755qefsLWXCvhNWljt53r2q
-        m/6m8gb35OUvIi4d03E3vFKczv0gzzqqnNEtb/q06s8mM08d6jo7w7TwQNPHb78zL760ERBi
-        KQ3/0XBsEi8rp3F16vGPWY5HmsXfTP+Xo2BXcrV5m4TbxK/Tlhlf3G/ANa/7eseEnFcLLyxs
-        F1ryU+TSk2MT5u3WFF0rOSNMtOBgd81eF+nFDDXvpjc+bX/TPTfQNmWDEktxRqKhFnNRcSIA
-        OZINCcUDAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrKIsWRmVeSWpSXmKPExsVy+t/xe7qPfj1OMLj6Vcni0vZlrBYL9ltb
-        dM7ewG6x6fE1VouJ+8+yWzxf+IPZ4uCHJ6wWfXuDLFrumDpwejw5OI/JY828NYweO2fdZffY
-        tKqTzWPzknqPyTeWM3r0Nr9j8/i8SS6AI0rPpii/tCRVISO/uMRWKdrQwkjP0NJCz8jEUs/Q
-        2DzWyshUSd/OJiU1J7MstUjfLkEvY/PZY+wFW9kq7s5Yw9jA2M/axcjJISFgIrF74TXmLkYu
-        DiGBpYwSX1/NYIFIyEicnNYAVSQs8edaFxtE0XtGiZ5F65lBEsICqRJHn54EaxAR0JF4tHEh
-        WBGzwHQmieuvP7JAdOxnlDg8+zQTSBWbgKFE11uQURwcvAJ2Emv/WoOYLAIqEp8+14NUiAok
-        S/xc384GYvMKCEqcnPkEbD6ngIXEy20T2UFsZgEziXmbHzJD2PIS29/OgbLFJW49mc80gVFo
-        FpL2WUhaZiFpmYWkZQEjyypGkdTS4tz03GIjveLE3OLSvHS95PzcTYzA+Nx27OeWHYwrX33U
-        O8TIxMF4iFGCg1lJhFdkyqMEId6UxMqq1KL8+KLSnNTiQ4ymQO9MZJYSTc4HJoi8knhDMwNT
-        QxMzSwNTSzNjJXFekyNr4oUE0hNLUrNTUwtSi2D6mDg4pRqYOjf23PuwY9+sRKEJ3mtrBORC
-        mfU7jqn0Tf0qynes/Icxd/iEI51u90ySlR4yf/9v4C0S5TixP+LaOouie8uS7u5Z+P6pksYi
-        6z6uQ1sd/0REXDddEHOiRO5+ap5g2jHT344P3YN/FyxP5T3nqT1F0el4cObCtNP3JCbpvZfX
-        +dyYLtAstezDZRb+IHcr9yuCUzqXeG854HL+5UnnM/GhbMuWx7ZKzDvwT4dVy9Fx8aldl4S7
-        jjPVVNck313pdPy1mUYHzxUGrTOiHzK/xiTsZ9fom7nsXmTw2SviS6sd+O/mLt14wfWfgN3h
-        Vbf8OyVUZrSm8U/86XL9//Gdb87UloZPuv7LxPirq7Oei8opJZbijERDLeai4kQAt9mzc1gD
-        AAA=
-X-CMS-MailID: 20210706064034eucas1p1e4bd9281a5badb012c1a65f0dbf8169a
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20210705065703eucas1p2e89258a2fc286896b755047e06f514cb
-X-EPHeader: CA
-CMS-TYPE: 201P
-X-CMS-RootMailID: 20210705065703eucas1p2e89258a2fc286896b755047e06f514cb
-References: <CGME20210705065703eucas1p2e89258a2fc286896b755047e06f514cb@eucas1p2.samsung.com>
-        <20210705065657.30356-1-m.szyprowski@samsung.com>
-        <20210705143054.nxy4ii6t6npj22ov@archlinux>
+References: <20210630133149.3204290-1-dmitry.baryshkov@linaro.org>
+ <20210630133149.3204290-2-dmitry.baryshkov@linaro.org> <CAPDyKFpXD3rCmp53LFFYky_xQv9ucofvTezG5qWyDZt427chNQ@mail.gmail.com>
+ <CAA8EJpob=TpXiJozac-5sKJzE71ddWRFDj7D2-F=W=a2mgKvxA@mail.gmail.com>
+ <CAPDyKFq-vwMchLFb3JvK7B9ZQ9=z-TXzGHUij6CocTR+VmAOqQ@mail.gmail.com> <YN4W7vd3Yep+DX3N@yoga>
+In-Reply-To: <YN4W7vd3Yep+DX3N@yoga>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Tue, 6 Jul 2021 09:23:42 +0200
+Message-ID: <CAPDyKFrPyu6dT_+G3-ivPTLGS0G1kd9Tph_Pi2VP7ycEn3R5AQ@mail.gmail.com>
+Subject: Re: [PATCH 1/6] dt-bindings: clock: qcom,dispcc-sm8x50: add mmcx
+ power domain
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Taniya Das <tdas@codeaurora.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Michael Turquette <mturquette@baylibre.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        DTML <devicetree@vger.kernel.org>,
+        linux-clk <linux-clk@vger.kernel.org>,
+        "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
+        Mark Brown <broonie@kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 05.07.2021 16:30, Amey Narkhede wrote:
-> On 21/07/05 08:56AM, Marek Szyprowski wrote:
->> QCOM IOMMU driver calls bus_set_iommu() for every IOMMU device controller,
->> what fails for the second and latter IOMMU devices. This is intended and
->> must be not fatal to the driver registration process. Also the cleanup
->> path should take care of the runtime PM state, what is missing in the
->> current patch. Revert relevant changes to the QCOM IOMMU driver until
->> a proper fix is prepared.
->>
-> Apologies for the broken patch I don't have any arm machine to test the
-> patches. Is this bug unique to qcom iommu?
+On Thu, 1 Jul 2021 at 21:26, Bjorn Andersson <bjorn.andersson@linaro.org> wrote:
+>
+> On Thu 01 Jul 11:58 CDT 2021, Ulf Hansson wrote:
+>
+> > On Thu, 1 Jul 2021 at 18:39, Dmitry Baryshkov
+> > <dmitry.baryshkov@linaro.org> wrote:
+> > >
+> > > On Thu, 1 Jul 2021 at 19:17, Ulf Hansson <ulf.hansson@linaro.org> wrote:
+> > > >
+> > > > On Wed, 30 Jun 2021 at 15:31, Dmitry Baryshkov
+> > > > <dmitry.baryshkov@linaro.org> wrote:
+> > > > >
+> > > > > On sm8250 dispcc requires MMCX power domain to be powered up before
+> > > > > clock controller's registers become available. For now sm8250 was using
+> > > > > external regulator driven by the power domain to describe this
+> > > > > relationship. Switch into specifying power-domain and required opp-state
+> > > > > directly.
+> > > > >
+> > > > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > > > > ---
+> > > > >  .../bindings/clock/qcom,dispcc-sm8x50.yaml    | 19 +++++++++++++++++++
+> > > > >  1 file changed, 19 insertions(+)
+> > > > >
+> > > > > diff --git a/Documentation/devicetree/bindings/clock/qcom,dispcc-sm8x50.yaml b/Documentation/devicetree/bindings/clock/qcom,dispcc-sm8x50.yaml
+> > > > > index 0cdf53f41f84..48d86fb34fa7 100644
+> > > > > --- a/Documentation/devicetree/bindings/clock/qcom,dispcc-sm8x50.yaml
+> > > > > +++ b/Documentation/devicetree/bindings/clock/qcom,dispcc-sm8x50.yaml
+> > > > > @@ -55,6 +55,16 @@ properties:
+> > > > >    reg:
+> > > > >      maxItems: 1
+> > > > >
+> > > > > +  power-domains:
+> > > > > +    description:
+> > > > > +      A phandle and PM domain specifier for the MMCX power domain.
+> > > > > +    maxItems: 1
+> > > > > +
+> > > >
+> > > > Should you perhaps state that this is a parent domain? Or it isn't?
+> > > >
+> > > > Related to this and because this is a power domain provider, you
+> > > > should probably reference the common power-domain bindings somewhere
+> > > > here. Along the lines of this:
+> > > >
+> > > > - $ref: power-domain.yaml#
+> > > >
+> > > > As an example, you could have a look at
+> > > > Documentation/devicetree/bindings/power/pd-samsung.yaml.
+> > >
+> > > I'll take a look.
+> > >
+> > > >
+> > > > > +  required-opps:
+> > > > > +    description:
+> > > > > +      Performance state to use for MMCX to enable register access.
+> > > > > +    maxItems: 1
+> > > >
+> > > > According to the previous discussions, I was under the assumption that
+> > > > this property belongs to a consumer node rather than in the provider
+> > > > node, no?
+> > >
+> > > It is both a consumer and a provider. It consumes SM8250_MMCX from
+> > > rpmhpd and provides MMSC_GDSC.
+> >
+> > That sounds a bit weird to me.
+> >
+>
+> dispcc is a hardware block powered by MMCX, so it is a consumer of it
+> and needs to control MMCX.
 
-Frankly, I have no idea. Just grep for bus_set_iommu() and check if the 
-caller might be executed more than once.
+Right, that sounds reasonable.
 
-Best regards
+>
+> > In my view and per the common power domain bindings (as pointed to
+> > above): If a power domain provider is a consumer of another power
+> > domain, that per definition means that there is a parent domain
+> > specified.
+> >
+>
+> And in addition to needing MMCX to access the dispcc, the exposed
+> power-domain "MDSS_GDSC" is powered by the same MMCX and as such
+> MDSS_GDSC should be a subdomain of MMCX.
 
--- 
-Marek Szyprowski, PhD
-Samsung R&D Institute Poland
+What do you mean by "exposed"? It sounds like you are saying that
+"MDSS_GDSC" is an artificial power domain, no?
 
+If that's the case, more exactly, why is it like this?
+
+My apologies if I bother you with details, but as a maintainer of
+genpd, it is very useful to me to have the complete picture.
+
+>
+>
+> But what I was trying to say yesterday is that the power-domain property
+> should be sufficient and that we shouldn't need to drive MMCX to a
+> particular performance_state in order to access the registers.
+>
+> Then as clients make votes on clock rates that requires higher
+> performance_state, they would describe this in their opp-tables etc.
+>
+>
+> But without any performance_state requests, pd->corner will in
+> rpmhpd_power_on() be 0 and as such powering on the power-domain won't
+> actually do anything. Similarly dev_pm_genpd_set_performance_state(dev,
+> 0) on an active power-domain from rpmhpd will turn it off.
+
+Yes, I noticed the patches you posted. Thanks for helping out here!
+
+>
+>
+> So the reason why Dmitry is adding the required-opps to the binding is
+> to get rpmhpd to actually tell the hardware to turn on the power domain.
+> And I don't think this is in accordance with the framework's
+> expectations.
+
+I agree!
+
+>
+> Regards,
+> Bjorn
+
+Kind regards
+Uffe
