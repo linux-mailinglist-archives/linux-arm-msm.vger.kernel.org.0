@@ -2,133 +2,190 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A82BF3BE9EC
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jul 2021 16:41:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E585D3BEB94
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jul 2021 17:49:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232020AbhGGOoI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Jul 2021 10:44:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43260 "EHLO
+        id S231925AbhGGPvn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Jul 2021 11:51:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58526 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232056AbhGGOoI (ORCPT
+        with ESMTP id S231883AbhGGPvn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Jul 2021 10:44:08 -0400
-Received: from mail-il1-x134.google.com (mail-il1-x134.google.com [IPv6:2607:f8b0:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E7F6C061574
-        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Jul 2021 07:41:26 -0700 (PDT)
-Received: by mail-il1-x134.google.com with SMTP id g3so2997692ilj.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Jul 2021 07:41:26 -0700 (PDT)
+        Wed, 7 Jul 2021 11:51:43 -0400
+Received: from mail-oo1-xc34.google.com (mail-oo1-xc34.google.com [IPv6:2607:f8b0:4864:20::c34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD889C061760
+        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Jul 2021 08:49:01 -0700 (PDT)
+Received: by mail-oo1-xc34.google.com with SMTP id 128-20020a4a11860000b029024b19a4d98eso603082ooc.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Jul 2021 08:49:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=nIwflScCI6Icjj1cWTTKEy9uQqC1wMtDQ5W0AmkNq+g=;
-        b=qSsUSkhUDDeNTKV9IlCEbm5Hj4XmuLwhiJaM0jY4sL1uhWUMhgpGglFL3S092uXiDj
-         /XMSg5ef6TxisfLtL4rp/0CVFyFA3VMjGerBWdJFKyRc95JI/pwk4RNsms4ev8lTdzdT
-         kmf/HHtLD6sZKM5ba4zPBnhrt5oBNwIzA0pOchC937ROImjrDpTL07S8cHX+Smh0XuLi
-         Rz6rT31y3iaIrs2yvFzo21OEssbLwi6J8IMdWQ9fwWcRYahQqSl3jOXj9IRtNUDh0hev
-         2zfVoVZWn8ERMpvpvBudbyfGW86s/+treNOC7kHqDEWtwbMfrbkEZdsFHyesocfgw5Va
-         /HOw==
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=TRjwdSb4Zqrnk9xOXwD41+qNRE3CXecz0OfnXbeAS58=;
+        b=RlxKToVJlQHGox7LiMYJ/J5S2rsQpAtoZzbwH3VdDiieI2G5jdTAe2OABpXhcrSQBe
+         5rAw5cSFy+pbQ66jGlIboASoKg/94B39xmKg/+JvEU7EMk9lwzijritJ566nGWZeR5Dk
+         Scq3ogMBtiIXvAvE6hzhr+j0bYF2Ci7DOmi7g/zePXFzl1eHUqi6xH2OpsyBOZ3QYSEb
+         dPQViJkpQs03q59hJGEKm4acRcBH9DefUzFZe8Knnz0A62JyGrD7pgRNx32PHkNr9HHt
+         4ibqYrEmdqqTYmcNJT12s19EDbfmyR6aOH5BQbuRb32aSNOZmNSNWfycu83Yi9usWjfp
+         4BsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=nIwflScCI6Icjj1cWTTKEy9uQqC1wMtDQ5W0AmkNq+g=;
-        b=l7Sx7TIiCqi3qI5ISCRIYxYqoOLnceV7mckmlRAo6dq3EjGJeMpz2E8xBMHRzfuaGH
-         snClzNWtn8RO4o+l9FhDAFIccuDGmnNKoW2m3lZwFhSDCQ9W0dHzOA1h10/2+7fPPEWr
-         AVNE0Wah7EdpPhZ0rLT9NOgh0MJIWKjFCOQv8VCsCiYNv0mcHPqoT3wOVq5zi7tE78AZ
-         v1NnXLQNXqH35RdH5xHkuidUiqMuD2qsvSSgj7hXktZT6Ognt+iDIHWk8NFDMJUqJT8t
-         oZVgHXoqsBytBUx2MhzizFDzS7AWiy8rbeHmz+QX4io51E+6h8X6Brss4otrOMq1PWOf
-         aD4w==
-X-Gm-Message-State: AOAM533JAI1KPc1j/6EJQ9yossICBzly0JntqzCBMVd4orns5Xa6VXdl
-        9ghqqQLtiXhTfMfn5koZ4V2NxsbQIODIDROWnO4=
-X-Google-Smtp-Source: ABdhPJwQQMe3S+AM4KYV3Xo0/ehcLXF/J7ADlwe9sG4QkGCGpF1PS07nGxT96XXQEqLf3PdAJZC9KF8DNC5jsbg0epk=
-X-Received: by 2002:a05:6e02:58f:: with SMTP id c15mr18436980ils.102.1625668886115;
- Wed, 07 Jul 2021 07:41:26 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=TRjwdSb4Zqrnk9xOXwD41+qNRE3CXecz0OfnXbeAS58=;
+        b=OwOwY1tJOSqcyM35Kd0js3KAfbb7Jucu3GHshKXoeG6TnsXKzjXy9t1QufffcQyfjq
+         n4uhXZz+6mUTP1N8MZcc859hcBmT2JFwfarjxlA3z4VEhFS0CAKn/R7/dcoyUnauzCnL
+         cCrvuiBQQIkuDK5xLnUhbEivx5jqKwIHD0Q7rUiuSFNUPv6Rd34UIeF0x2jBNXYieJry
+         cVIAmEKkviv2/9yfQPWrXkbXPKhGwOyVor/4z1HwgcjOir8aJsvJ8W9HA9FUMcCl9I7A
+         GNAsvtdi0twKcE2CVsOM7HeU4SSJZ5QezpWMB9xvT9kI+CgSzVGiS3uxjB20Kih5F2lW
+         VaBw==
+X-Gm-Message-State: AOAM533XFsvhxKHHlf+xPYx1/jgQdYw93dwygrH2ppULR8NnMikcSVMe
+        oW+PRatGFmKgHSnvAt2dYKdvog==
+X-Google-Smtp-Source: ABdhPJykJA4pq2CnNOGWottG6Gryv3lJXePlFoXG+hYkMXyop2gLq+jBTQ9RFWuTu8wN22KVv5ByQQ==
+X-Received: by 2002:a4a:ae8c:: with SMTP id u12mr18699977oon.3.1625672940853;
+        Wed, 07 Jul 2021 08:49:00 -0700 (PDT)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id c14sm4254420oic.50.2021.07.07.08.49.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 07 Jul 2021 08:49:00 -0700 (PDT)
+Date:   Wed, 7 Jul 2021 10:48:58 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Rajendra Nayak <rnayak@codeaurora.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/2] soc: qcom: rpmhpd: Use corner in power_off
+Message-ID: <YOXM6l0oRhpMKr+9@builder.lan>
+References: <20210703005416.2668319-1-bjorn.andersson@linaro.org>
+ <20210703005416.2668319-2-bjorn.andersson@linaro.org>
+ <cacd1a1f-01c8-b913-23e5-538a772cd118@codeaurora.org>
+ <CAOCOHw4sufqC3=ixNud8Oz7vO0_ZcO8u5mqNQTKLZX4LGe9aow@mail.gmail.com>
+ <c4440f5e-592c-b849-3ca7-57e812de2df5@codeaurora.org>
+ <YOUyRrvdPLkbTqUp@yoga>
+ <534fca70-d277-4154-b932-a4d6ab3b0b66@codeaurora.org>
 MIME-Version: 1.0
-References: <20210527124356.22367-1-will@kernel.org> <59800d6c-364a-f4be-e341-c5b531657ba3@arm.com>
- <20210706133314.GB20327@willie-the-truck> <f136da2ea91fc22334c552b8c524f6e7@kernel.org>
- <CAK8P3a2xWTvj6HjsC6gH44Ad13adKjK0wR7UxFFQ1i=XYixvQA@mail.gmail.com>
- <87zguz7b6b.wl-maz@kernel.org> <CAK8P3a2eFDSdkAUgapGuANQJsO=Arsp4uxoiLRXL-ah0ttc6Fg@mail.gmail.com>
- <m-pFOMXMXSwpPq7H8syJd3qyVkuhGYjVEOgk-iiezAFhr8ApjWX8eIMkcL3updRXOOeOClx88ekyeOvEsNYp_HrY54W4iCSYl8yT03Tykv4=@protonmail.com>
- <CAK8P3a1rtXTtGQ_Q7eg2SOrYa_OhSWPWFiS8m=oSb_GU1uUNXQ@mail.gmail.com>
- <M0wGhzKTDUUYQPjRdiabG3xuKLx8p19uB1iqdkwfa8Op45i4zBGm4mpcHIxpYzWkJLiUM6JtQIDuBVyLlXtPhrlPyycbhZ2GO1ldLymA40g=@protonmail.com>
- <CAK8P3a33ZD6uLntmuvp_Rgfj1VYEV3YxP6+BxSDAQLon-q2hGw@mail.gmail.com>
-In-Reply-To: <CAK8P3a33ZD6uLntmuvp_Rgfj1VYEV3YxP6+BxSDAQLon-q2hGw@mail.gmail.com>
-From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Date:   Wed, 7 Jul 2021 08:41:15 -0600
-Message-ID: <CAOCk7Np_2Mk481g-7KTf=Jk-i9ZHiAgX40pKBYckAAReEQbGyA@mail.gmail.com>
-Subject: Re: [PATCH] arm64: cache: Lower ARCH_DMA_MINALIGN to 64 (L1_CACHE_BYTES)
-To:     Arnd Bergmann <arnd@arndb.de>
-Cc:     Yassine Oudjana <y.oudjana@protonmail.com>,
-        Marc Zyngier <maz@kernel.org>, Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Ard Biesheuvel <ardb@kernel.org>,
-        Android Kernel Team <kernel-team@android.com>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Vincent Whitchurch <vincent.whitchurch@axis.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <534fca70-d277-4154-b932-a4d6ab3b0b66@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jul 7, 2021 at 3:30 AM Arnd Bergmann <arnd@arndb.de> wrote:
->
-> On Tue, Jul 6, 2021 at 6:20 PM Will Deacon <will@kernel.org> wrote:
-> >
-> > I think the million dollar question is whether the 128-byte cache-lines
-> > live in a cache above the PoC or not. If it's just a system level cache
-> > through which all DMA is "coherent", then it doesn't matter.
->
-> On Wed, Jul 7, 2021 at 10:24 AM Yassine Oudjana
-> <y.oudjana@protonmail.com> wrote:
-> >
-> > On Wednesday, July 7th, 2021 at 12:33 AM, Arnd Bergmann <arnd@arndb.de> wrote:
-> > > On Tue, Jul 6, 2021 at 7:15 PM Yassine Oudjana y.oudjana@protonmail.com wrote:
-> > > >
-> > > > $ numactl -C 0 line -M 1M
-> > > > 128
-> > > > $ numactl -C 3 line -M 1M
-> > > > 128
-> > >
-> > >     Can you rerun the the 'line' test with '-M 128K' to see if that confirms the 64
-> > >     byte L1 line size that the 'cache' test reported?
-> >
-> > $ numactl -C 0 line -M 128K
-> > 64
-> > $ numactl -C 3 line -M 128K
-> > 64
->
-> Ok, so this seems to confirm that the L1 uses 64 byte lines, while the L2 (or
-> possibly L3) uses 128 byte lines.
->
-> On Wed, Jul 7, 2021 at 12:27 AM Bjorn Andersson
-> <bjorn.andersson@linaro.org> wrote:
-> >
-> > I can confirm that MSM8996, and a few derivatives, has 128 byte cache lines.
->
-> Ok, thanks. Assuming this is an outer cache and the L1 indeed has a smaller line
-> size, can you also confirm that this 128 byte lines are north of the point of
-> coherency?
+On Wed 07 Jul 01:31 CDT 2021, Rajendra Nayak wrote:
 
-Finding this old documentation has been painful  :)
+> 
+> 
+> On 7/7/2021 10:19 AM, Bjorn Andersson wrote:
+> > On Mon 05 Jul 00:40 CDT 2021, Rajendra Nayak wrote:
+> > > On 7/5/2021 10:36 AM, Bjorn Andersson wrote:
+> > > > On Sun, Jul 4, 2021 at 11:27 PM Rajendra Nayak <rnayak@codeaurora.org> wrote:
+> > > > > 
+> > > > > 
+> > > > > 
+> > > > > On 7/3/2021 6:24 AM, Bjorn Andersson wrote:
+> > > > > > rpmhpd_aggregate_corner() takes a corner as parameter, but in
+> > > > > > rpmhpd_power_off() the code requests the level of the first corner
+> > > > > > instead.
+> > > > > > 
+> > > > > > In all (known) current cases the first corner has level 0, so this
+> > > > > > change should be a nop, but in case that there's a power domain with a
+> > > > > > non-zero lowest level this makes sure that rpmhpd_power_off() actually
+> > > > > > requests the lowest level - which is the closest to "power off" we can
+> > > > > > get.
+> > > > > > 
+> > > > > > While touching the code, also skip the unnecessary zero-initialization
+> > > > > > of "ret".
+> > > > > > 
+> > > > > > Fixes: 279b7e8a62cc ("soc: qcom: rpmhpd: Add RPMh power domain driver")
+> > > > > > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > > > > > ---
+> > > > > >     drivers/soc/qcom/rpmhpd.c | 5 ++---
+> > > > > >     1 file changed, 2 insertions(+), 3 deletions(-)
+> > > > > > 
+> > > > > > diff --git a/drivers/soc/qcom/rpmhpd.c b/drivers/soc/qcom/rpmhpd.c
+> > > > > > index 2daa17ba54a3..fa209b479ab3 100644
+> > > > > > --- a/drivers/soc/qcom/rpmhpd.c
+> > > > > > +++ b/drivers/soc/qcom/rpmhpd.c
+> > > > > > @@ -403,12 +403,11 @@ static int rpmhpd_power_on(struct generic_pm_domain *domain)
+> > > > > >     static int rpmhpd_power_off(struct generic_pm_domain *domain)
+> > > > > >     {
+> > > > > >         struct rpmhpd *pd = domain_to_rpmhpd(domain);
+> > > > > > -     int ret = 0;
+> > > > > > +     int ret;
+> > > > > > 
+> > > > > >         mutex_lock(&rpmhpd_lock);
+> > > > > > 
+> > > > > > -     ret = rpmhpd_aggregate_corner(pd, pd->level[0]);
+> > > > > > -
+> > > > > > +     ret = rpmhpd_aggregate_corner(pd, 0);
+> > > > > 
+> > > > > This won't work for cases where pd->level[0] != 0, rpmh would just ignore this and keep the
+> > > > > resource at whatever corner it was previously at.
+> > > > > (unless command DB tells you a 0 is 'valid' for a resource, sending a 0 is a nop)
+> > > > > The right thing to do is to send in whatever command DB tells you is the lowest level that's valid,
+> > > > > which is pd->level[0].
+> > > > > 
+> > > > 
+> > > > I'm afraid this doesn't make sense to me.
+> > > > 
+> > > > In rpmh_power_on() if cmd-db tells us that we have [0, 64, ...] and we
+> > > > request 64 we rpmhpd_aggregate_corner(pd, 1); but in power off, if
+> > > > cmd-db would provide [64, ...] we would end up sending
+> > > > rpmhpd_aggregate_corner(pd, 64);
+> > > > So in power_on we request the corner (i.e. index in the array provided
+> > > > in cmd-db) and in power-off the same function takes the level?
+> > > 
+> > > ah that's right, I did not read the commit log properly and got confused.
+> > 
+> > Thanks for confirming my understanding.
+> > 
+> > > Looks like this bug existed from the day this driver for merged :/, thanks
+> > > for catching it.
+> > > Does it make sense to also mark this fix for stable?
+> > > 
+> > 
+> > I can certainly add a Cc: stable@ as I'm applying this.
+> 
+> sure, sounds good
+> > May I have your R-b?
+> 
+> Reviewed-by: Rajendra Nayak <rnayak@codeaurora.org>
+> 
 
-L0 I 64 byte cacheline
-L1 I 64
-L1 D 64
-L2 unified 128 (shared between the CPUs of a duplex)
+Thank you.
 
-I believe L2 is within the POC, but I'm trying to dig up the old
-documentation to confirm.
+> > 
+> > PS. Do you have any input on patch 2/2? That actually solves a practical
+> > problem we're seeing. Would it perhaps aid in your need for the new
+> > "assigned-opp-level" property?
+> 
+> We would perhaps still need the 'assigned-opp-level' or equivalent since
+> the default requirement of devices is not always the least level supported,
+> in some cases it might be slightly higher corner which would then need to
+> be set explicitly.
+> 
 
->
-> In other words, does the CTR_EL0.DminLine field also show 128 bytes
-> (in which case
-> it seems we already lost)? And if not, does a CPU store to the second half of a
-> 128 byte L2 line cause DMA data in the first half to be clobbered?
+Right, for situations where we use assign-clock-rates to drive up the
+clock rate this mechanism might be needed in order to keep things
+stable.
 
-Per the documentation I'm seeing, CTR_EL0.DminLine should show 128
-bytes.  I don't have hardware handy to confirm.
+But I presume as soon as you have some sort of dynamic nature to that
+you'll be back to an opp-table and the means we already have.
+
+> I was hoping on getting some more testing done with that patch especially for
+> any regression on the sc7180 and sc7280 devices, which I haven't got to yet.
+> Are you getting these patches ready for merge for the -rc cycle or for the
+> next merge window?
+> 
+
+That would be much appreciated, I've not done extensive testing myself,
+mostly just booted a few different boards.
+
+But I would like to see us correct the MDSS_GDSC->MMCX setup in time for
+v5.15, in particular since we have a few new users of the mmcx
+power-domain-regulator arriving in this cycle.
+
+Regards,
+Bjorn
