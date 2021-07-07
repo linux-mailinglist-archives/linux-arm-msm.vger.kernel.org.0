@@ -2,170 +2,226 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9F1E53BE246
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jul 2021 06:58:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DE4773BE250
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jul 2021 07:04:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230197AbhGGFAp convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-arm-msm@lfdr.de>); Wed, 7 Jul 2021 01:00:45 -0400
-Received: from guitar.tcltek.co.il ([192.115.133.116]:33273 "EHLO
-        mx.tkos.co.il" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229883AbhGGFAp (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Jul 2021 01:00:45 -0400
-Received: from tarshish (unknown [10.0.8.2])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mx.tkos.co.il (Postfix) with ESMTPS id D7B5344029B;
-        Wed,  7 Jul 2021 07:58:01 +0300 (IDT)
-References: <305eacc9c57c2404795b6be76a08915808e23108.1624771446.git.baruch@tkos.co.il>
- <20210705072055.5mvux5h6zdewzabz@pengutronix.de>
-User-agent: mu4e 1.4.15; emacs 27.1
-From:   Baruch Siach <baruch@tkos.co.il>
-To:     Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-Cc:     Thierry Reding <thierry.reding@gmail.com>,
-        Lee Jones <lee.jones@linaro.org>,
+        id S230157AbhGGFGu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Jul 2021 01:06:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55222 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230120AbhGGFGs (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 7 Jul 2021 01:06:48 -0400
+Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E128C06175F
+        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Jul 2021 22:04:02 -0700 (PDT)
+Received: by mail-oi1-x230.google.com with SMTP id w74so2009352oiw.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Jul 2021 22:04:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=ZwJ6LzMYt92aA7ipQ1QaHUSOYNKd4HK3usxDJ6K7NKM=;
+        b=PGN9NdUnXnCAdb8kuPDg2/8BBx3g2U09UWEkOuU3CoaeWRP2zV9wavZF+QlJHnjCWK
+         7HLqF4HNg71I5OGbiu9dLgiu0i8/zjXgOATD3gf8YD8G1vSsat8s7UKoIEq9A1fOAO54
+         Sm9M8PbYlkiVOXEC1yQCaW1UpO7ZSUpZ7KDt55DFT03M5jLcvy5pYR4bfU3pMhIb0w/W
+         oMTlA97aDAUjTs93SdusWlCB6Uu16surdUd/MIut0z56PbmGlAcy6d8yJYMEDMfpbdp0
+         OLv6VJt/T1SyHT9HgxNmgjuSE9LolYJDGSyq3QylDdCsqSEbvRPpWRjGfsRF2+PhKjSY
+         cM+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=ZwJ6LzMYt92aA7ipQ1QaHUSOYNKd4HK3usxDJ6K7NKM=;
+        b=qvA6t6DeAgRmHHpbaUCw/rez/29JheootgY4EYNWb3OJ0TwhOQbi0BFU2Y/7fHn6Am
+         z8NQYpV/WqAeF6FFonZ7qCMVH43wcZf+uisc42wmAaw/6s8L2wnk3zQtXgwlww01Jo6W
+         CwJ14MH5tgJwl/EgHxfkooIrMOU+9rAOFlr5YzE+SBJfvJEsC36RyWbmeBTYnyCSv0/O
+         5UCuDHZHohJppXNp2Ld54BTaSVh7mQKk4bQ8iDNH1wFmbVJBU4RAcH+5czhFGWvcnRjZ
+         TQP+FV+tMQzmw6RyCNjs3ynz+FuJIt6Z8USrru6wnChNTnhzWPDGRXE8Z0bjGjrQKQjD
+         iCDQ==
+X-Gm-Message-State: AOAM530iehqGo6C2hkmDO56VxRtBQDekSfFW0YLhvMbEHWyUlkQCVDq6
+        kOs4PQtCbMO314OByF0StW4iRQ==
+X-Google-Smtp-Source: ABdhPJyX3o3IfKJMEmv3UDHct1fG27sWu3pT+IFd99WMQOQwlG2vBE3hZFGg3IT7WSO/FOJ7DDmq7w==
+X-Received: by 2002:aca:4b43:: with SMTP id y64mr2905391oia.176.1625634241482;
+        Tue, 06 Jul 2021 22:04:01 -0700 (PDT)
+Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id r186sm3899058oia.6.2021.07.06.22.03.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 06 Jul 2021 22:04:00 -0700 (PDT)
+Date:   Wed, 7 Jul 2021 00:03:58 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Ulf Hansson <ulf.hansson@linaro.org>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Balaji Prakash J <bjagadee@codeaurora.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Robert Marko <robert.marko@sartura.hr>,
-        linux-pwm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH v4 1/3] pwm: driver for qualcomm ipq6018 pwm block
-In-reply-to: <20210705072055.5mvux5h6zdewzabz@pengutronix.de>
-Date:   Wed, 07 Jul 2021 07:58:01 +0300
-Message-ID: <875yxmg1pi.fsf@tarshish>
+        Stephen Boyd <sboyd@kernel.org>,
+        Taniya Das <tdas@codeaurora.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Michael Turquette <mturquette@baylibre.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        DTML <devicetree@vger.kernel.org>,
+        linux-clk <linux-clk@vger.kernel.org>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Mark Brown <broonie@kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 1/6] dt-bindings: clock: qcom,dispcc-sm8x50: add mmcx
+ power domain
+Message-ID: <YOU1vv4zSWfe0P7Y@yoga>
+References: <20210630133149.3204290-1-dmitry.baryshkov@linaro.org>
+ <20210630133149.3204290-2-dmitry.baryshkov@linaro.org>
+ <CAPDyKFpXD3rCmp53LFFYky_xQv9ucofvTezG5qWyDZt427chNQ@mail.gmail.com>
+ <CAA8EJpob=TpXiJozac-5sKJzE71ddWRFDj7D2-F=W=a2mgKvxA@mail.gmail.com>
+ <CAPDyKFq-vwMchLFb3JvK7B9ZQ9=z-TXzGHUij6CocTR+VmAOqQ@mail.gmail.com>
+ <YN4W7vd3Yep+DX3N@yoga>
+ <CAPDyKFrPyu6dT_+G3-ivPTLGS0G1kd9Tph_Pi2VP7ycEn3R5AQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAPDyKFrPyu6dT_+G3-ivPTLGS0G1kd9Tph_Pi2VP7ycEn3R5AQ@mail.gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Uwe,
+On Tue 06 Jul 02:23 CDT 2021, Ulf Hansson wrote:
 
-Thanks for taking the time to review this patch. I have a few comment
-below.
+> On Thu, 1 Jul 2021 at 21:26, Bjorn Andersson <bjorn.andersson@linaro.org> wrote:
+> >
+> > On Thu 01 Jul 11:58 CDT 2021, Ulf Hansson wrote:
+> >
+> > > On Thu, 1 Jul 2021 at 18:39, Dmitry Baryshkov
+> > > <dmitry.baryshkov@linaro.org> wrote:
+> > > >
+> > > > On Thu, 1 Jul 2021 at 19:17, Ulf Hansson <ulf.hansson@linaro.org> wrote:
+> > > > >
+> > > > > On Wed, 30 Jun 2021 at 15:31, Dmitry Baryshkov
+> > > > > <dmitry.baryshkov@linaro.org> wrote:
+> > > > > >
+> > > > > > On sm8250 dispcc requires MMCX power domain to be powered up before
+> > > > > > clock controller's registers become available. For now sm8250 was using
+> > > > > > external regulator driven by the power domain to describe this
+> > > > > > relationship. Switch into specifying power-domain and required opp-state
+> > > > > > directly.
+> > > > > >
+> > > > > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > > > > > ---
+> > > > > >  .../bindings/clock/qcom,dispcc-sm8x50.yaml    | 19 +++++++++++++++++++
+> > > > > >  1 file changed, 19 insertions(+)
+> > > > > >
+> > > > > > diff --git a/Documentation/devicetree/bindings/clock/qcom,dispcc-sm8x50.yaml b/Documentation/devicetree/bindings/clock/qcom,dispcc-sm8x50.yaml
+> > > > > > index 0cdf53f41f84..48d86fb34fa7 100644
+> > > > > > --- a/Documentation/devicetree/bindings/clock/qcom,dispcc-sm8x50.yaml
+> > > > > > +++ b/Documentation/devicetree/bindings/clock/qcom,dispcc-sm8x50.yaml
+> > > > > > @@ -55,6 +55,16 @@ properties:
+> > > > > >    reg:
+> > > > > >      maxItems: 1
+> > > > > >
+> > > > > > +  power-domains:
+> > > > > > +    description:
+> > > > > > +      A phandle and PM domain specifier for the MMCX power domain.
+> > > > > > +    maxItems: 1
+> > > > > > +
+> > > > >
+> > > > > Should you perhaps state that this is a parent domain? Or it isn't?
+> > > > >
+> > > > > Related to this and because this is a power domain provider, you
+> > > > > should probably reference the common power-domain bindings somewhere
+> > > > > here. Along the lines of this:
+> > > > >
+> > > > > - $ref: power-domain.yaml#
+> > > > >
+> > > > > As an example, you could have a look at
+> > > > > Documentation/devicetree/bindings/power/pd-samsung.yaml.
+> > > >
+> > > > I'll take a look.
+> > > >
+> > > > >
+> > > > > > +  required-opps:
+> > > > > > +    description:
+> > > > > > +      Performance state to use for MMCX to enable register access.
+> > > > > > +    maxItems: 1
+> > > > >
+> > > > > According to the previous discussions, I was under the assumption that
+> > > > > this property belongs to a consumer node rather than in the provider
+> > > > > node, no?
+> > > >
+> > > > It is both a consumer and a provider. It consumes SM8250_MMCX from
+> > > > rpmhpd and provides MMSC_GDSC.
+> > >
+> > > That sounds a bit weird to me.
+> > >
+> >
+> > dispcc is a hardware block powered by MMCX, so it is a consumer of it
+> > and needs to control MMCX.
+> 
+> Right, that sounds reasonable.
+> 
+> >
+> > > In my view and per the common power domain bindings (as pointed to
+> > > above): If a power domain provider is a consumer of another power
+> > > domain, that per definition means that there is a parent domain
+> > > specified.
+> > >
+> >
+> > And in addition to needing MMCX to access the dispcc, the exposed
+> > power-domain "MDSS_GDSC" is powered by the same MMCX and as such
+> > MDSS_GDSC should be a subdomain of MMCX.
+> 
+> What do you mean by "exposed"? It sounds like you are saying that
+> "MDSS_GDSC" is an artificial power domain, no?
+> 
+> If that's the case, more exactly, why is it like this?
+> 
+> My apologies if I bother you with details, but as a maintainer of
+> genpd, it is very useful to me to have the complete picture.
+> 
 
-On Mon, Jul 05 2021, Uwe Kleine-König wrote:
-> On Sun, Jun 27, 2021 at 08:24:04AM +0300, Baruch Siach wrote:
->> +/*
->> + * Enable bit is set to enable output toggling in pwm device.
->> + * Update bit is set to reflect the changed divider and high duration
->> + * values in register.
->> + */
->> +#define PWM_ENABLE		0x80000000
->> +#define PWM_UPDATE		0x40000000
->> +
->> +/* The frequency range supported is 1Hz to 100MHz */
->> +#define MIN_PERIOD_NS	10
->> +#define MAX_PERIOD_NS	1000000000
->
-> Please use a driver prefix for these defines.
+The display hardware blocks are powered by the MDSS_GDSC power-domain,
+which is a subdomain to the MMCX power domain.
 
-I take this to refer also to the defines below, right?
+MDSS_GDSC is controlled by registers in the display clock controller
+block, which is also powered by the MMCX power domain.
 
->> +
->> +/*
->> + * The max value specified for each field is based on the number of bits
->> + * in the pwm control register for that field
->> + */
->> +#define MAX_PWM_CFG		0xFFFF
->> +
->> +#define PWM_CTRL_HI_SHIFT	16
->> +
->> +#define PWM_CFG_REG0 0 /*PWM_DIV PWM_HI*/
->> +#define PWM_CFG_REG1 1 /*ENABLE UPDATE PWM_PRE_DIV*/
+Lastly the MMCX power domain is controlled through the RPMh, using the
+rpmhpd driver.
 
-...
 
->> +static void config_div_and_duty(struct pwm_device *pwm, int pre_div,
->> +			unsigned long long pwm_div, unsigned long period_ns,
->> +			unsigned long long duty_ns)
->
-> Please also use a consistent prefix for function names.
->
-> I suggest to use u64 for some of the parameters. While this doesn't
-> change anything, it is cleaner as the caller passes variables of this
-> type.
 
-Actually for pre_div and pwm_div the caller passes int values. I agree
-this is inconsistent.
+As such, specifying MMCX as the power-domain for the dispcc block and
+making the dispcc driver use that same power-domain as parent for the
+MDSS_GDSC seems to accurately depict these relationships.
 
-...
+Regards,
+Bjorn
 
->> +static int ipq_pwm_apply(struct pwm_chip *chip, struct pwm_device *pwm,
->> +			 const struct pwm_state *state)
->> +{
->> +	struct ipq_pwm_chip *ipq_chip = to_ipq_pwm_chip(chip);
->> +	unsigned long freq;
->> +	int pre_div, close_pre_div, close_pwm_div;
->> +	int pwm_div;
->> +	long long diff;
->> +	unsigned long rate = clk_get_rate(ipq_chip->clk);
->> +	unsigned long min_diff = rate;
->> +	uint64_t fin_ps;
->> +	u64 period_ns, duty_ns;
->> +
->> +	if (state->period < MIN_PERIOD_NS)
->> +		return -ERANGE;
->
-> MIN_PERIOD_NS depends on clk_get_rate(ipq_chip->clk), doesn't it?
-
-probe sets this clock to the fixed 100MHz rate (CLK_SRC_FREQ). Would you
-prefer to derive MIN_PERIOD_NS from CLK_SRC_FREQ?
-
->> +	period_ns = min_t(u64, state->period, MAX_PERIOD_NS);
->> +	duty_ns = min_t(u64, state->duty_cycle, period_ns);
->
-> If you define MAX_PERIOD_NS as (u64)1000000000 you can just use min().
->
->> +
->> +	/* freq in Hz for period in nano second*/
->
-> Space before the closing */ please
->
->> +	freq = div64_u64(NSEC_PER_SEC, period_ns);
->> +	fin_ps = div64_u64(NSEC_PER_SEC * 1000ULL, rate);
->> +	close_pre_div = MAX_PWM_CFG;
->> +	close_pwm_div = MAX_PWM_CFG;
->> +
->> +	for (pre_div = 0; pre_div <= MAX_PWM_CFG; pre_div++) {
->> +		pwm_div = DIV64_U64_ROUND_CLOSEST(period_ns * 1000,
->> +						  fin_ps * (pre_div + 1));
->> +		pwm_div--;
->> +		if (pwm_div < 0 || pwm_div > MAX_PWM_CFG)
->> +			continue;
->> +
->> +		diff = ((uint64_t)freq * (pre_div + 1) * (pwm_div + 1))
->> +			- (uint64_t)rate;
->> +
->> +		if (diff < 0) /* period larger than requested */
->> +			continue;
->> +		if (diff == 0) { /* bingo */
->> +			close_pre_div = pre_div;
->> +			close_pwm_div = pwm_div;
->> +			break;
->> +		}
->> +		if (diff < min_diff) {
->> +			min_diff = diff;
->> +			close_pre_div = pre_div;
->> +			close_pwm_div = pwm_div;
->> +		}
->
-> I didn't check deeply, but I assume this calculation can be done more
-> efficiently.
-
-The thing is that we have two dividers to play with. I can't think of a
-cleaner way to find the best match for a given target frequency.
-
-> Also I wonder if DIV64_U64_ROUND_CLOSEST is right. When you implement
-> a .get_state() callback (which usually helps me to understand how the
-> hardware works) I'm willing to take a closer look.
-
-Thanks,
-baruch
-
--- 
-                                                     ~. .~   Tk Open Systems
-=}------------------------------------------------ooO--U--Ooo------------{=
-   - baruch@tkos.co.il - tel: +972.52.368.4656, http://www.tkos.co.il -
+> >
+> >
+> > But what I was trying to say yesterday is that the power-domain property
+> > should be sufficient and that we shouldn't need to drive MMCX to a
+> > particular performance_state in order to access the registers.
+> >
+> > Then as clients make votes on clock rates that requires higher
+> > performance_state, they would describe this in their opp-tables etc.
+> >
+> >
+> > But without any performance_state requests, pd->corner will in
+> > rpmhpd_power_on() be 0 and as such powering on the power-domain won't
+> > actually do anything. Similarly dev_pm_genpd_set_performance_state(dev,
+> > 0) on an active power-domain from rpmhpd will turn it off.
+> 
+> Yes, I noticed the patches you posted. Thanks for helping out here!
+> 
+> >
+> >
+> > So the reason why Dmitry is adding the required-opps to the binding is
+> > to get rpmhpd to actually tell the hardware to turn on the power domain.
+> > And I don't think this is in accordance with the framework's
+> > expectations.
+> 
+> I agree!
+> 
+> >
+> > Regards,
+> > Bjorn
+> 
+> Kind regards
+> Uffe
