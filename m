@@ -2,274 +2,238 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C9F0E3BEFFE
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jul 2021 21:03:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1597B3BF098
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jul 2021 22:05:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230513AbhGGTGE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Jul 2021 15:06:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46212 "EHLO
+        id S231357AbhGGUIR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Jul 2021 16:08:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59942 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230432AbhGGTGD (ORCPT
+        with ESMTP id S230296AbhGGUIQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Jul 2021 15:06:03 -0400
-Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE5B5C061574
-        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Jul 2021 12:03:22 -0700 (PDT)
-Received: by mail-oi1-x232.google.com with SMTP id l21so4619686oig.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Jul 2021 12:03:22 -0700 (PDT)
+        Wed, 7 Jul 2021 16:08:16 -0400
+Received: from mail-qv1-xf33.google.com (mail-qv1-xf33.google.com [IPv6:2607:f8b0:4864:20::f33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36529C061574
+        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Jul 2021 13:05:36 -0700 (PDT)
+Received: by mail-qv1-xf33.google.com with SMTP id h18so1683248qve.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Jul 2021 13:05:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=KaPa84ygk+ZcA+IJ9wP//R6Sdf66KLaVmf1OOXt+eKw=;
-        b=EaMA37B8VTcVuwQu4Z9R//TNXKuPEFYvn9v63yOFjkiJJohvwjdmiOXDCULD5UoAtk
-         7Kalmal7q9ccJcHax5+vk2t4yQO/kY4A3rdXVz9YWodlWW0/VW58Tp+241AK5jspCHmU
-         gP0xDqGraXLDXxRFY/CwW81JApodt/k28dWrN3m/lHrah0dznplAXjwIeB5VpWosGPbh
-         w9q1OX1x/D5KbaUiyBGbzuNgdcPaeXDsiPUORTkzWK4SUetYNiz4IWRCJpmEtp6IwS2/
-         Xg1DaXZYV4N3gUj7geYF4d2mjMbZaNyaINKe5ZvTN4gmL8obuFpRobWlH2sre5g2FUUH
-         Jfyg==
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=96jWry9WOsdwKu+G0dTVRx+JdimFiJ2QAYFEbiH3H34=;
+        b=RGANX0PGc0mFZu9cqrNOVbTfGn0v+kokDFQAPwfrxJwtPODfB/7BgVckPJVrWeW3aX
+         Zq/e9LoJ0785EJh+wDzA6h31JQ0sQKhf5OC8+6825AOXSTrCQRvNmjr00Qv4QYBChNR1
+         yEToxoe8pidstwnQJpDD7tRYOzkEa8SGd8UWQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=KaPa84ygk+ZcA+IJ9wP//R6Sdf66KLaVmf1OOXt+eKw=;
-        b=pPR9shLWt2S/L3eMArD73I670w5lNVGUexVwZFyNobno0t4uM/0DUHE0LCeJSPBFOO
-         ZIguenXX1prhTj7AFfCscatFyjjlYdl0EFHHwomAdR6/6zCGyJ10/LvtWd7g0HctFDdz
-         O5787ua6gw5snl4twI4AsqEy6GONaDevO8CXPYh/oWG4ENE9i/j/lHn/deAZSiyMAAUI
-         rY9nc1FkAFHBRXEA0n5tMfIInJbY9cRa+FAME1he7/TNS6a1U2kLsVWcyPF1BxMRWcyz
-         eVjLkOxFLeqnIG7EBmeJ8aTr5DywKgfwkyLglEAX5ErRNm4AtHHAON8PDXyKnV5IObef
-         YXQA==
-X-Gm-Message-State: AOAM533F0uPlT91eoI08eC7/LWSYydD6kFdEwUmBWHs6yj1em4gWZEMX
-        XHX4e/T/i7KMXqZSUfwR3kFoPA==
-X-Google-Smtp-Source: ABdhPJxSexRgy/TYKYqFmb8UjONCN7q/tdJupQ0Un9NIoyq8OMGPfaE1CWUFJSKXfysd0oOEa4DUZg==
-X-Received: by 2002:a05:6808:200d:: with SMTP id q13mr20086393oiw.24.1625684602159;
-        Wed, 07 Jul 2021 12:03:22 -0700 (PDT)
-Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id m21sm3668547ooe.36.2021.07.07.12.03.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Jul 2021 12:03:21 -0700 (PDT)
-Date:   Wed, 7 Jul 2021 14:03:19 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Peter Chen <peter.chen@kernel.org>
-Cc:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, balbi@kernel.org,
-        agross@kernel.org, gregkh@linuxfoundation.org,
-        jackp@codeaurora.org, wcheng@codeaurora.org,
-        linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 0/3] Implement role-switch notifications from dwc3-drd to
- dwc3-qcom
-Message-ID: <YOX6d+sBEJMP4V3q@yoga>
-References: <20210704013314.200951-1-bryan.odonoghue@linaro.org>
- <20210707015704.GA28125@nchen>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=96jWry9WOsdwKu+G0dTVRx+JdimFiJ2QAYFEbiH3H34=;
+        b=XSohtnfMmT0nFBbzxfUAggB0fCoYTkz3S1OiKhMsFeW+uy7NQGYccVmbkKkRizJLKc
+         J0e46bq2gxh1a1KB+mTyXELgzpdgFHb5LGUO/IUb2jHz0mFxJ68OBzHouo+AQOGIJFww
+         ORrEIgT08dMedzzYfW0eGrL5ZJogU+yUncVPwIYqrNYrRmZRu+6IZBMOiLiGBsZe/mYY
+         BukzoAW8mG1TUBZSpFL953ibqpHPFKGLV+S2C0n+50CM/Kpoib3hKztdie53rXLdfRqN
+         0fECWKxgU/Ge7dKASPLWzE3/4LO+TTJgt9rk8cMv9Cci87UL9AfRdhzdfM1o6R0j2C8Z
+         kE0w==
+X-Gm-Message-State: AOAM532ti38KvY9j9Vt6pNJ11f8y4RxdsJiE2NcYSmOJA31s0qKZN237
+        MRTItQg3ftzcWPsAnCeMMtD9Dxj5HRyupA==
+X-Google-Smtp-Source: ABdhPJzuoyHXi216L114TTHFf3n0qIIjkf0Rjr2IJbNp88c8ng9u5NA158fKBvJee/Bclh2bgh14oQ==
+X-Received: by 2002:a05:6214:c49:: with SMTP id r9mr5429792qvj.10.1625688335096;
+        Wed, 07 Jul 2021 13:05:35 -0700 (PDT)
+Received: from mail-yb1-f178.google.com (mail-yb1-f178.google.com. [209.85.219.178])
+        by smtp.gmail.com with ESMTPSA id i10sm42942qtx.80.2021.07.07.13.05.34
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 07 Jul 2021 13:05:34 -0700 (PDT)
+Received: by mail-yb1-f178.google.com with SMTP id b13so5128582ybk.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Jul 2021 13:05:34 -0700 (PDT)
+X-Received: by 2002:a25:d97:: with SMTP id 145mr35869561ybn.276.1625688024885;
+ Wed, 07 Jul 2021 13:00:24 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210707015704.GA28125@nchen>
+References: <20210624171759.4125094-1-dianders@chromium.org>
+ <YNXXwvuErVnlHt+s@8bytes.org> <CAD=FV=UFxZH7g8gH5+M=Fv4Y-e1bsLkNkPGJhNwhvVychcGQcQ@mail.gmail.com>
+In-Reply-To: <CAD=FV=UFxZH7g8gH5+M=Fv4Y-e1bsLkNkPGJhNwhvVychcGQcQ@mail.gmail.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Wed, 7 Jul 2021 13:00:13 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=W=HmgH3O3z+nThWL6U+X4Oh37COe-uTzVB9SanP2n86w@mail.gmail.com>
+Message-ID: <CAD=FV=W=HmgH3O3z+nThWL6U+X4Oh37COe-uTzVB9SanP2n86w@mail.gmail.com>
+Subject: Re: [PATCH v2 0/3] iommu: Enable non-strict DMA on QCom SD/MMC
+To:     Joerg Roedel <joro@8bytes.org>
+Cc:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Adrian Hunter <adrian.hunter@intel.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        John Garry <john.garry@huawei.com>,
+        Rob Clark <robdclark@chromium.org>, quic_c_gdjako@quicinc.com,
+        Saravana Kannan <saravanak@google.com>,
+        Rajat Jain <rajatja@google.com>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Veerabhadrarao Badiganti <vbadigan@codeaurora.org>,
+        Linux MMC List <linux-mmc@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-pci@vger.kernel.org,
+        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
+        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
+        Sonny Rao <sonnyrao@chromium.org>,
+        Joel Fernandes <joel@joelfernandes.org>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Jonathan Corbet <corbet@lwn.net>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krishna Reddy <vdumpa@nvidia.com>,
+        "Maciej W. Rozycki" <macro@orcam.me.uk>,
+        Nicolin Chen <nicoleotsuka@gmail.com>,
+        "Paul E. McKenney" <paulmck@kernel.org>,
+        Peter Zijlstra <peterz@infradead.org>,
+        Randy Dunlap <rdunlap@infradead.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Vlastimil Babka <vbabka@suse.cz>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        Linux Doc Mailing List <linux-doc@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 06 Jul 20:57 CDT 2021, Peter Chen wrote:
+Hi,
 
-> On 21-07-04 02:33:11, Bryan O'Donoghue wrote:
-> > This is a topic we have been discussing for some time, initially in the
-> > context of gpio usb-c-connector role-switching.
-> > 
-> > https://lore.kernel.org/linux-usb/20200311191501.8165-1-bryan.odonoghue@linaro.org
-> > 
-> > Hardware availability constraints limited scope to finish that off.
-> > 
-> > Thankfully Wesley Cheng made a new set of USB role-switch related patches
-> > for dwc3-qcom, this time in conjunction with the qcom pm8150b type-c
-> > silicon.
-> > 
-> > https://lore.kernel.org/linux-usb/20201009082843.28503-1-wcheng@codeaurora.org
-> > 
-> > For the RB5 project we picked Wesley's changes and developed them further,
-> > around a type-c port manager.
-> > 
-> > As a precursor to that TCPM I reposted Wesley's patches
-> > https://lore.kernel.org/linux-usb/20210629144449.2550737-1-bryan.odonoghue@linaro.org
-> > 
-> > Bjorn pointed out that having the role-switch triggered from dwc3-qcom to
-> > dwc3-drd is not the right way around, indicating a preference for the
-> > original notifier from dwc3-drd to dwc3-qcom.
-> > 
-> > There are two approaches I considred and prototyped to accomplish the
-> > desired dwc3-drd -> dwc3-qcom messaging.
-> > 
-> > #1 Using a notifier in dwc3-drd to trigger dwc3-qcom
-> > 
-> >    This would be nice since it would accomplish the desired layering
-> >    dwc3-drd -> dwc3-qcom.
-> > 
-> >    However:
-> >    a) It would be a real mess as dwc3-qcom is the parent device of
-> >       dwc3-core so, if the child-device dwc3-core deferred probing for
-> >       whatever reason we would have to detect this and retry the parent's
-> >       probe again.
-> 
+On Fri, Jun 25, 2021 at 7:42 AM Doug Anderson <dianders@chromium.org> wrote:
+>
+> Hi,
+>
+> On Fri, Jun 25, 2021 at 6:19 AM Joerg Roedel <joro@8bytes.org> wrote:
+> >
+> > Hi Douglas,
+> >
+> > On Thu, Jun 24, 2021 at 10:17:56AM -0700, Douglas Anderson wrote:
+> > > The goal of this patch series is to get better SD/MMC performance on
+> > > Qualcomm eMMC controllers and in generally nudge us forward on the
+> > > path of allowing some devices to be in strict mode and others to be in
+> > > non-strict mode.
+> >
+> > So if I understand it right, this patch-set wants a per-device decision
+> > about setting dma-mode to strict vs. non-strict.
+> >
+> > I think we should get to the reason why strict mode is used by default
+> > first. Is the default on ARM platforms to use iommu-strict mode by
+> > default and if so, why?
+> >
+> > The x86 IOMMUs use non-strict mode by default (yes, it is a security
+> > trade-off).
+>
+> It is certainly a good question. I will say that, as per usual, I'm
+> fumbling around trying to solve problems in subsystems I'm not an
+> expert at, so if something I'm saying sounds like nonsense it probably
+> is. Please correct me.
+>
+> I guess I'd start out by thinking about what devices I think need to
+> be in "strict" mode. Most of my thoughts on this are in the 3rd patch
+> in the series. I think devices where it's important to be in strict
+> mode fall into "Case 1" from that patch description, copied here:
+>
+> Case 1: IOMMUs prevent malicious code running on the peripheral (maybe
+> a malicious peripheral or maybe someone exploited a benign peripheral)
+> from turning into an exploit of the Linux kernel. This is particularly
+> important if the peripheral has loadable / updatable firmware or if
+> the peripheral has some type of general purpose processor and is
+> processing untrusted inputs. It's also important if the device is
+> something that can be easily plugged into the host and the device has
+> direct DMA access itself, like a PCIe device.
+>
+>
+> Using sc7180 as an example (searching for iommus in sc7180.dtsi), I'd
+> expect these peripherals to be in strict mode:
+>
+> * WiFi / LTE - I'm almost certain we want this in "strict" mode. Both
+> have loadable / updatable firmware and both do complex processing on
+> untrusted inputs. Both have a history of being compromised over the
+> air just by being near an attacker. Note that on sc7180 these are
+> _not_ connected over PCI so we can't leverage any PCI mechanism for
+> deciding strict / non-strict.
+>
+> * Video decode / encode - pretty sure we want this in strict. It's got
+> loadable / updatable firmware and processing complex / untrusted
+> inputs.
+>
+> * LPASS (low power audio subsystem) - I don't know a ton and I think
+> we don't use this much on our designs, but I believe it meets the
+> definitions for needing "strict".
+>
+> * The QUPs (handles UART, SPI, and i2c) - I'm not as sure here. These
+> are much "smarter" than you'd expect. They have loadable / updatable
+> firmware and certainly have a sort of general purpose processor in
+> them. They also might be processing untrusted inputs, but presumably
+> in a pretty simple way. At the moment we don't use a ton of DMA here
+> anyway and these are pretty low speed, so I would tend to leave them
+> as strict just to be on the safe side.
+>
+>
+> I'd expect these to be non-strict:
+>
+> * SD/MMC - as described in this patch series.
+>
+> * USB - As far as I know firmware isn't updatable and has no history
+> of being compromised.
+>
+>
+> Special:
+>
+> * GPU - This already has a bunch of special cases, so we probably
+> don't need to discuss here.
+>
+>
+> As far as I can tell everything in sc7180.dtsi that has an "iommus"
+> property is classified above. So, unless I'm wrong and it's totally
+> fine to run LTE / WiFi / Video / LPASS in non-strict mode then:
+>
+> * We still need some way to pick strict vs. non-strict.
+>
+> * Since I've only identified two peripherals that I think should be
+> non-strict, having "strict" the default seems like fewer special
+> cases. It's also safer.
+>
+>
+> In terms of thinking about x86 / AMD where the default is non-strict,
+> I don't have any historical knowledge there. I guess the use of PCI
+> for connecting WiFi is more common (so you can use the PCI special
+> cases) and I'd sorta hope that WiFi is running in strict mode. For
+> video encode / decode, perhaps x86 / AMD are just accepting the risk
+> here because there was no kernel infrastructure for doing better? I'd
+> also expect that x86/AMD don't have something quite as crazy as the
+> QUPs for UART/I2C/SPI, but even if they do I wouldn't be terribly
+> upset if they were in non-strict mode.
+>
+> ...so I guess maybe the super short answer to everything above is that
+> I believe that at least WiFi ought to be in "strict" mode and it's not
+> on PCI so we need to come up with some type of per-device solution.
 
-Allow me to reorder your two questions:
+I guess this thread has been silent for a bit of time now. Given that
+my previous version generated a whole bunch of traffic, I guess I'm
+assuming this:
 
-> And why using a notifier need to concern core's deferral probe?
+a) Nothing is inherently broken with my current approach.
 
-The problem at hand calls for the core for somehow invoking
-dwc3_qcom_vbus_overrride_enable() with a pointer to dwc3_qcom passed.
+b) My current approach doesn't make anybody terribly upset even if
+nobody is totally in love with it.
 
-This means that dwc3-qcom somehow needs to inform the dwc3-core about
-this (and stash the pointer). And this can't be done until dwc3-core
-actually exist, which it won't until dwc3_probe() has completed
-successfully (or in particular allocated struct dwc).
+c) Nobody has any other bright ideas for ways to solve this that would
+make my patch series obsolete.
 
-> Why do you think we need to retry the parent's probe again?
+I guess I'll take that as a good sign and hope that it means that this
+approach has a path forward. I suppose it could just be that everyone
+is busy and/or on vacation, but I've always been an optimist!
 
-There's four options here:
+My plan continues to be to send a v3 of my patch series atop Sai's
+patch [1] and John's series [2]. I'll plan to wait a bit longer before
+posting my v3 to allow for more feedback/thoughts and also to see if
+either Sai's patches or John's patches land and/or have newer versions
+posted. :-)
 
-0) Hope that of_platform_populate() always succeeds in invoking
-dwc3_probe() on the first attempt, so that it is available when
-of_find_device_by_node() is invoked in dwc3_qcom_probe() (and a few of
-the other platform's drivers).
+-Doug
 
-1) Ensure that the operations performed by dwc3_probe() happens
-synchronously and return a failure to dwc3-qcom, which depending on how
-dwc3_probe() failed can propagate that failure - i.e. either probe defer
-or clean up its resources if the failure from dwc3-core is permanent.
-
-2) Register the dwc3-core and then return from dwc3_qcom_probe() in some
-half-initialized state and through some yet to be invented notification
-mechanism continue the tail of dwc3_qcom_probe() once dwc3_probe() has
-finished. But I know of no such notification mechanism in place today
-and we can just register a callback, because of 1).
-Furthermore we'd leave dwc3-qcom half-initialized until the dwc3-core is
-done probing - which might never happen.
-
-3) Make drvdata of all the platform drivers be some known struct that
-dwc3-core can retrieve and dereference - containing the optional
-callback to the role_switch callback.
-
-
-We've tried the option 0) for a few years now. Option 2) is a variant of
-what we have today, where we patch one problem up and hope that nothing
-unexpected happens until things has fully probed. We're doing 3) in
-various other places, but in my view it's abusing a void * and has to be
-kept synchronized between all the possible parent drivers.
-
-Left is 1), which will take some refactoring, but will leave the
-interaction between the two drivers in a state that's very easy to
-reason about.
-
-> I know there are some downstream code which using this way, I would
-> like to know the shortcoming for it.
-> 
-
-The shortcoming of having dwc3_qcom_probe() invoke dwc3_probe()
-"manually" and then returning -EPROBE_DEFER if the dwc3-core's resources
-aren't yet available is that we're wasting some time tearing down the
-dwc3-qcom state and then re-initialize it next time this is attempted.
-
-But as this is the idiomatic way to deal with the problem of "resources
-not yet ready" there are mitigation being put in place to reduce the
-number of such attempts being made.
-
-Regards,
-Bjorn
-
-> Peter
-> 
-> >	The point in time that dwc3-qcom could potentially parse
-> >       such a deferral in the child device is late. It would also be weird
-> >       and messy to try to roll back the parent's probe because of a child
-> >       device deferral.
-> > 
-> >       I considered making some sort of worker in the parent to check for
-> >       child device probe but, again this seemed like an atrocious hack so,
-> >       I didn't even try to prototype that.
-> > 
-> >    b) One potential solution was using "__weak" linkage in a function
-> >       provided by dwc3-drd that a wrapper such as dwc3-qcom could then
-> >       over-ride.
-> > 
-> >       If a wrapper such as dwc3-qcom then implemented a function with
-> >       regular linkage it would over-ride the __weak function and provide a
-> >       method for the dwc3-drd code to call into dwc3-qcom when probing was
-> >       complete, thus allowing registration of the notifier when the child
-> >       was ready.
-> > 
-> >       This would work up until the point that you tried to compile two
-> >       implementations of a dwc3 wrapper into the one kernel module or the
-> >       one kernel image say dwc3-qcom and a similar implementation in
-> >       dwc3-meson. At that point you would get linker breakage.
-> > 
-> > #2 Using USB role switching for the notification
-> > 
-> >    Wesley's implementation took the approach dwc3-qcom -> dwc3-drd, whereas
-> >    the approach I'm proposing here is dwc3-drd -> dwc3-qcom, which is also
-> >    what we discussed on the list.
-> > 
-> >    Having implemented it, I think USB role-switching in the direction
-> >    dwc3-drd -> dwc3-qcom is also a much cleaner solution for several
-> >    reasons.
-> > 
-> >    a) Handling probe deferral is built into Linux' USB role switching today
-> >       so we don't have to re-invent that wheel, unlike with the original
-> >       notifier model.
-> > 
-> >    b) There is no "wiring up" or traversing the graph tree for the wrapper
-> >       layer to determine if the parent device has a compliant type-c
-> >       connector associated with it, unlike in the dwc3-qcom -> dwc3-drd
-> >       model.
-> > 
-> >       All that has to happen is "usb-role-switch" is declared in the parent
-> >       dwc3-qcom node and the role-switch API takes care of the rest.
-> > 
-> >       That means its possible to use a usb-c-connector, qcom type-c pm8150b
-> >       driver, a USCI, a tps659x, a fusb302 or something like ChromeOS
-> >       cros_ec to notify dwc3-drd without dwc3-qcom having to have
-> >       the slighest clue which type of device is sending the signal.
-> > 
-> >       All dwc3-qcom needs to do is waggle UTMI signals in a register when a
-> >       role-switch happens.
-> > 
-> >    c) It "feels" like a layering violation to have the dwc3-qcom SoC
-> >       wrapper receive the event and trigger the dwc3-drd core.
-> > 
-> >       The standard model of parent/child role switching or remote-endpoint
-> >       traversal that USB role switching already has works just fine for
-> >       dwc3-drd, we just need to trigger dwc3-qcom for the role-switch in a
-> >       non-vendor and non-SoC specific way.
-> > 
-> >    d) Less code. It turns out there's less code implementing as a
-> >       role-switch interface in the direction dwc3-drd -> dwc3-qcom.
-> > 
-> >    e) Portability. The mechanism used for dwc3-drd -> dwc3 qcom can be
-> >       reused for any other similar wrapper which models the wrapper as a
-> >       parent of the dwc3-drd.
-> > 
-> > For all of those reasons I've opted to use USB role-switch notification
-> > from dwc3-drd to dwc3-qcom.
-> > 
-> > git add bod git://git.linaro.org/people/bryan.odonoghue/kernel.git
-> > git fetch bod
-> > git diff usb-next-5.13.rcx-rb5-tcpm..usb-next-5.13.rcx-rb5-tcpm-v2
-> > 
-> > Bryan O'Donoghue (2):
-> >   usb: dwc3: Add role switch relay support
-> >   usb: dwc3: dwc3-qcom: Make dwc3-qcom a role-switch signal recipient
-> > 
-> > Wesley Cheng (1):
-> >   usb: dwc3: dwc3-qcom: Fix typo in the dwc3 vbus override API
-> > 
-> >  drivers/usb/dwc3/core.h      |  2 +
-> >  drivers/usb/dwc3/drd.c       | 10 +++++
-> >  drivers/usb/dwc3/dwc3-qcom.c | 77 ++++++++++++++++++++++++++++++++++--
-> >  3 files changed, 85 insertions(+), 4 deletions(-)
-> > 
-> > -- 
-> > 2.30.1
-> > 
-> 
-> -- 
-> 
-> Thanks,
-> Peter Chen
-> 
+[1] https://lore.kernel.org/r/20210623134201.16140-1-saiprakash.ranjan@codeaurora.org
+[2] https://lore.kernel.org/linux-doc/1624016058-189713-1-git-send-email-john.garry@huawei.com
