@@ -2,209 +2,170 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 116E73BE23B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jul 2021 06:53:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9F1E53BE246
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jul 2021 06:58:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230197AbhGGE4E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Jul 2021 00:56:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52920 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230099AbhGGE4E (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Jul 2021 00:56:04 -0400
-Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81AB7C06175F
-        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Jul 2021 21:53:24 -0700 (PDT)
-Received: by mail-pl1-x629.google.com with SMTP id m15so380591plx.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Jul 2021 21:53:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=b7KlGzb3TmhwFXRRdHyMSPZ+oFfClo2RvfzkKVOqRIE=;
-        b=MR+Kh5re0say7uKj97Qo57vfgE0O45SK2VtGHoqBLcjZIoJBtIbISX5W5hIIx8H3lY
-         dRn/Ne8zsaSC/gcCsbbERFe8wzQD84ABydKcNPOFSql3Wfutz7zQ85mpl8GvGTNBwSPf
-         uHZL72RK2shnnvQo8K9MQ4qZuPG2WtZylcn8e7yPND67iLpwMUs2LXLeHjRq/2A9k/xv
-         5nErrKmdNJsJUPZSR1DBJbsSRGzw1FkPNAuXMtPGP0fS5dseuE+wu6fif8M7QiBgb8J/
-         S1D1B4piuUY3yvWjqnNhLTpGVsKZ1utJ7FhmlIhwcWHZIhwWDctcaEuH2CFcqLUBaNFF
-         SnyQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=b7KlGzb3TmhwFXRRdHyMSPZ+oFfClo2RvfzkKVOqRIE=;
-        b=IoXE3xV2DOC8I8ljxdH9aWAYgBL1Fd3bPRyKRnhPJLqaNRaf9ZYQT7ONMCs6C281T0
-         YY9iJ+ZX4w1eQki9TuzRoB/YIYVEP8q0E31aTrr4Vq6wiSr04+nrU7cHIvShqNrcV+Uc
-         Z7l2GFO1c2kzJtGtxvYNDwqKIB+yN5RkIysA3mRv0JyfcAYq799PjkwipgomILZNVK09
-         koNdlJkdkbe5F6lLg2MdafSmBi60ios6Hqk1MoPPe/RXL6GqYeetBdXRGWNidvyfEYi8
-         JQNiX28phS38sEr5Qnz+UlBOv6i0hwkyDkxU0HEYX+T6XHYcavmX0tOOw1jesbd4mXdr
-         V1tw==
-X-Gm-Message-State: AOAM530Qq6V3PdCEpzS9Z9FAoxkcFo+hg8Wgg9H1km7YBSzPYmYMapBA
-        OdtgOceLg4kfTlTr2aMa1x8FvA==
-X-Google-Smtp-Source: ABdhPJxmfXN0Zq6/BLURJHxCQrZ6A0dwbe0zi7IiRX2YuJNASsDDixB+OSWdXdmuZwA0cc4XIX+mgQ==
-X-Received: by 2002:a17:90b:1403:: with SMTP id jo3mr4164988pjb.160.1625633604031;
-        Tue, 06 Jul 2021 21:53:24 -0700 (PDT)
-Received: from localhost.localdomain ([2601:1c2:680:1319:692:26ff:feda:3a81])
-        by smtp.gmail.com with ESMTPSA id t185sm14007101pfc.1.2021.07.06.21.53.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 Jul 2021 21:53:23 -0700 (PDT)
-From:   John Stultz <john.stultz@linaro.org>
-To:     lkml <linux-kernel@vger.kernel.org>
-Cc:     John Stultz <john.stultz@linaro.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>, Andy Gross <agross@kernel.org>,
+        id S230197AbhGGFAp convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-arm-msm@lfdr.de>); Wed, 7 Jul 2021 01:00:45 -0400
+Received: from guitar.tcltek.co.il ([192.115.133.116]:33273 "EHLO
+        mx.tkos.co.il" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229883AbhGGFAp (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 7 Jul 2021 01:00:45 -0400
+Received: from tarshish (unknown [10.0.8.2])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mx.tkos.co.il (Postfix) with ESMTPS id D7B5344029B;
+        Wed,  7 Jul 2021 07:58:01 +0300 (IDT)
+References: <305eacc9c57c2404795b6be76a08915808e23108.1624771446.git.baruch@tkos.co.il>
+ <20210705072055.5mvux5h6zdewzabz@pengutronix.de>
+User-agent: mu4e 1.4.15; emacs 27.1
+From:   Baruch Siach <baruch@tkos.co.il>
+To:     Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
+Cc:     Thierry Reding <thierry.reding@gmail.com>,
+        Lee Jones <lee.jones@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Joerg Roedel <joro@8bytes.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Marc Zyngier <maz@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kalle Valo <kvalo@codeaurora.org>,
-        Maulik Shah <mkshah@codeaurora.org>,
-        Saravana Kannan <saravanak@google.com>,
-        Todd Kjos <tkjos@google.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-arm-msm@vger.kernel.org, iommu@lists.linux-foundation.org,
-        linux-gpio@vger.kernel.org
-Subject: [PATCH] firmware: QCOM_SCM: Allow qcom_scm driver to be loadable as a permenent module
-Date:   Wed,  7 Jul 2021 04:53:20 +0000
-Message-Id: <20210707045320.529186-1-john.stultz@linaro.org>
-X-Mailer: git-send-email 2.25.1
+        Balaji Prakash J <bjagadee@codeaurora.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Robert Marko <robert.marko@sartura.hr>,
+        linux-pwm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH v4 1/3] pwm: driver for qualcomm ipq6018 pwm block
+In-reply-to: <20210705072055.5mvux5h6zdewzabz@pengutronix.de>
+Date:   Wed, 07 Jul 2021 07:58:01 +0300
+Message-ID: <875yxmg1pi.fsf@tarshish>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Allow the qcom_scm driver to be loadable as a permenent module.
+Hi Uwe,
 
-This still uses the "depends on QCOM_SCM || !QCOM_SCM" bit to
-ensure that drivers that call into the qcom_scm driver are
-also built as modules. While not ideal in some cases its the
-only safe way I can find to avoid build errors without having
-those drivers select QCOM_SCM and have to force it on (as
-QCOM_SCM=n can be valid for those drivers).
+Thanks for taking the time to review this patch. I have a few comment
+below.
 
-Reviving this now that Saravana's fw_devlink defaults to on,
-which should avoid loading troubles seen before.
+On Mon, Jul 05 2021, Uwe Kleine-König wrote:
+> On Sun, Jun 27, 2021 at 08:24:04AM +0300, Baruch Siach wrote:
+>> +/*
+>> + * Enable bit is set to enable output toggling in pwm device.
+>> + * Update bit is set to reflect the changed divider and high duration
+>> + * values in register.
+>> + */
+>> +#define PWM_ENABLE		0x80000000
+>> +#define PWM_UPDATE		0x40000000
+>> +
+>> +/* The frequency range supported is 1Hz to 100MHz */
+>> +#define MIN_PERIOD_NS	10
+>> +#define MAX_PERIOD_NS	1000000000
+>
+> Please use a driver prefix for these defines.
 
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Will Deacon <will@kernel.org>
-Cc: Andy Gross <agross@kernel.org>
-Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc: Joerg Roedel <joro@8bytes.org>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Cc: Marc Zyngier <maz@kernel.org>
-Cc: Linus Walleij <linus.walleij@linaro.org>
-Cc: Vinod Koul <vkoul@kernel.org>
-Cc: Kalle Valo <kvalo@codeaurora.org>
-Cc: Maulik Shah <mkshah@codeaurora.org>
-Cc: Saravana Kannan <saravanak@google.com>
-Cc: Todd Kjos <tkjos@google.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: linux-arm-msm@vger.kernel.org
-Cc: iommu@lists.linux-foundation.org
-Cc: linux-gpio@vger.kernel.org
-Acked-by: Kalle Valo <kvalo@codeaurora.org>
-Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Acked-by: Will Deacon <will@kernel.org>
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Signed-off-by: John Stultz <john.stultz@linaro.org>
----
-v3:
-* Fix __arm_smccc_smc build issue reported by
-  kernel test robot <lkp@intel.com>
-v4:
-* Add "depends on QCOM_SCM || !QCOM_SCM" bit to ath10k
-  config that requires it.
-v5:
-* Fix QCOM_QCM typo in Kconfig, it should be QCOM_SCM
----
- drivers/firmware/Kconfig                | 2 +-
- drivers/firmware/Makefile               | 3 ++-
- drivers/firmware/qcom_scm.c             | 4 ++++
- drivers/iommu/Kconfig                   | 2 ++
- drivers/net/wireless/ath/ath10k/Kconfig | 1 +
- 5 files changed, 10 insertions(+), 2 deletions(-)
+I take this to refer also to the defines below, right?
 
-diff --git a/drivers/firmware/Kconfig b/drivers/firmware/Kconfig
-index db0ea2d2d75a..af53778edc7e 100644
---- a/drivers/firmware/Kconfig
-+++ b/drivers/firmware/Kconfig
-@@ -235,7 +235,7 @@ config INTEL_STRATIX10_RSU
- 	  Say Y here if you want Intel RSU support.
- 
- config QCOM_SCM
--	bool
-+	tristate "Qcom SCM driver"
- 	depends on ARM || ARM64
- 	depends on HAVE_ARM_SMCCC
- 	select RESET_CONTROLLER
-diff --git a/drivers/firmware/Makefile b/drivers/firmware/Makefile
-index 5e013b6a3692..523173cbff33 100644
---- a/drivers/firmware/Makefile
-+++ b/drivers/firmware/Makefile
-@@ -17,7 +17,8 @@ obj-$(CONFIG_ISCSI_IBFT)	+= iscsi_ibft.o
- obj-$(CONFIG_FIRMWARE_MEMMAP)	+= memmap.o
- obj-$(CONFIG_RASPBERRYPI_FIRMWARE) += raspberrypi.o
- obj-$(CONFIG_FW_CFG_SYSFS)	+= qemu_fw_cfg.o
--obj-$(CONFIG_QCOM_SCM)		+= qcom_scm.o qcom_scm-smc.o qcom_scm-legacy.o
-+obj-$(CONFIG_QCOM_SCM)		+= qcom-scm.o
-+qcom-scm-objs += qcom_scm.o qcom_scm-smc.o qcom_scm-legacy.o
- obj-$(CONFIG_TI_SCI_PROTOCOL)	+= ti_sci.o
- obj-$(CONFIG_TRUSTED_FOUNDATIONS) += trusted_foundations.o
- obj-$(CONFIG_TURRIS_MOX_RWTM)	+= turris-mox-rwtm.o
-diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
-index ee9cb545e73b..bb9ce3f92931 100644
---- a/drivers/firmware/qcom_scm.c
-+++ b/drivers/firmware/qcom_scm.c
-@@ -1296,6 +1296,7 @@ static const struct of_device_id qcom_scm_dt_match[] = {
- 	{ .compatible = "qcom,scm" },
- 	{}
- };
-+MODULE_DEVICE_TABLE(of, qcom_scm_dt_match);
- 
- static struct platform_driver qcom_scm_driver = {
- 	.driver = {
-@@ -1312,3 +1313,6 @@ static int __init qcom_scm_init(void)
- 	return platform_driver_register(&qcom_scm_driver);
- }
- subsys_initcall(qcom_scm_init);
-+
-+MODULE_DESCRIPTION("Qualcomm Technologies, Inc. SCM driver");
-+MODULE_LICENSE("GPL v2");
-diff --git a/drivers/iommu/Kconfig b/drivers/iommu/Kconfig
-index 07b7c25cbed8..f61516c17589 100644
---- a/drivers/iommu/Kconfig
-+++ b/drivers/iommu/Kconfig
-@@ -253,6 +253,7 @@ config SPAPR_TCE_IOMMU
- config ARM_SMMU
- 	tristate "ARM Ltd. System MMU (SMMU) Support"
- 	depends on ARM64 || ARM || (COMPILE_TEST && !GENERIC_ATOMIC64)
-+	depends on QCOM_SCM || !QCOM_SCM #if QCOM_SCM=m this can't be =y
- 	select IOMMU_API
- 	select IOMMU_IO_PGTABLE_LPAE
- 	select ARM_DMA_USE_IOMMU if ARM
-@@ -382,6 +383,7 @@ config QCOM_IOMMU
- 	# Note: iommu drivers cannot (yet?) be built as modules
- 	bool "Qualcomm IOMMU Support"
- 	depends on ARCH_QCOM || (COMPILE_TEST && !GENERIC_ATOMIC64)
-+	depends on QCOM_SCM=y
- 	select IOMMU_API
- 	select IOMMU_IO_PGTABLE_LPAE
- 	select ARM_DMA_USE_IOMMU
-diff --git a/drivers/net/wireless/ath/ath10k/Kconfig b/drivers/net/wireless/ath/ath10k/Kconfig
-index 40f91bc8514d..741289e385d5 100644
---- a/drivers/net/wireless/ath/ath10k/Kconfig
-+++ b/drivers/net/wireless/ath/ath10k/Kconfig
-@@ -44,6 +44,7 @@ config ATH10K_SNOC
- 	tristate "Qualcomm ath10k SNOC support"
- 	depends on ATH10K
- 	depends on ARCH_QCOM || COMPILE_TEST
-+	depends on QCOM_SCM || !QCOM_SCM #if QCOM_SCM=m this can't be =y
- 	select QCOM_QMI_HELPERS
- 	help
- 	  This module adds support for integrated WCN3990 chip connected
+>> +
+>> +/*
+>> + * The max value specified for each field is based on the number of bits
+>> + * in the pwm control register for that field
+>> + */
+>> +#define MAX_PWM_CFG		0xFFFF
+>> +
+>> +#define PWM_CTRL_HI_SHIFT	16
+>> +
+>> +#define PWM_CFG_REG0 0 /*PWM_DIV PWM_HI*/
+>> +#define PWM_CFG_REG1 1 /*ENABLE UPDATE PWM_PRE_DIV*/
+
+...
+
+>> +static void config_div_and_duty(struct pwm_device *pwm, int pre_div,
+>> +			unsigned long long pwm_div, unsigned long period_ns,
+>> +			unsigned long long duty_ns)
+>
+> Please also use a consistent prefix for function names.
+>
+> I suggest to use u64 for some of the parameters. While this doesn't
+> change anything, it is cleaner as the caller passes variables of this
+> type.
+
+Actually for pre_div and pwm_div the caller passes int values. I agree
+this is inconsistent.
+
+...
+
+>> +static int ipq_pwm_apply(struct pwm_chip *chip, struct pwm_device *pwm,
+>> +			 const struct pwm_state *state)
+>> +{
+>> +	struct ipq_pwm_chip *ipq_chip = to_ipq_pwm_chip(chip);
+>> +	unsigned long freq;
+>> +	int pre_div, close_pre_div, close_pwm_div;
+>> +	int pwm_div;
+>> +	long long diff;
+>> +	unsigned long rate = clk_get_rate(ipq_chip->clk);
+>> +	unsigned long min_diff = rate;
+>> +	uint64_t fin_ps;
+>> +	u64 period_ns, duty_ns;
+>> +
+>> +	if (state->period < MIN_PERIOD_NS)
+>> +		return -ERANGE;
+>
+> MIN_PERIOD_NS depends on clk_get_rate(ipq_chip->clk), doesn't it?
+
+probe sets this clock to the fixed 100MHz rate (CLK_SRC_FREQ). Would you
+prefer to derive MIN_PERIOD_NS from CLK_SRC_FREQ?
+
+>> +	period_ns = min_t(u64, state->period, MAX_PERIOD_NS);
+>> +	duty_ns = min_t(u64, state->duty_cycle, period_ns);
+>
+> If you define MAX_PERIOD_NS as (u64)1000000000 you can just use min().
+>
+>> +
+>> +	/* freq in Hz for period in nano second*/
+>
+> Space before the closing */ please
+>
+>> +	freq = div64_u64(NSEC_PER_SEC, period_ns);
+>> +	fin_ps = div64_u64(NSEC_PER_SEC * 1000ULL, rate);
+>> +	close_pre_div = MAX_PWM_CFG;
+>> +	close_pwm_div = MAX_PWM_CFG;
+>> +
+>> +	for (pre_div = 0; pre_div <= MAX_PWM_CFG; pre_div++) {
+>> +		pwm_div = DIV64_U64_ROUND_CLOSEST(period_ns * 1000,
+>> +						  fin_ps * (pre_div + 1));
+>> +		pwm_div--;
+>> +		if (pwm_div < 0 || pwm_div > MAX_PWM_CFG)
+>> +			continue;
+>> +
+>> +		diff = ((uint64_t)freq * (pre_div + 1) * (pwm_div + 1))
+>> +			- (uint64_t)rate;
+>> +
+>> +		if (diff < 0) /* period larger than requested */
+>> +			continue;
+>> +		if (diff == 0) { /* bingo */
+>> +			close_pre_div = pre_div;
+>> +			close_pwm_div = pwm_div;
+>> +			break;
+>> +		}
+>> +		if (diff < min_diff) {
+>> +			min_diff = diff;
+>> +			close_pre_div = pre_div;
+>> +			close_pwm_div = pwm_div;
+>> +		}
+>
+> I didn't check deeply, but I assume this calculation can be done more
+> efficiently.
+
+The thing is that we have two dividers to play with. I can't think of a
+cleaner way to find the best match for a given target frequency.
+
+> Also I wonder if DIV64_U64_ROUND_CLOSEST is right. When you implement
+> a .get_state() callback (which usually helps me to understand how the
+> hardware works) I'm willing to take a closer look.
+
+Thanks,
+baruch
+
 -- 
-2.25.1
-
+                                                     ~. .~   Tk Open Systems
+=}------------------------------------------------ooO--U--Ooo------------{=
+   - baruch@tkos.co.il - tel: +972.52.368.4656, http://www.tkos.co.il -
