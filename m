@@ -2,124 +2,199 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8BEA03BEBB1
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jul 2021 17:56:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7265D3BECB1
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jul 2021 18:58:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232066AbhGGP7W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Jul 2021 11:59:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60228 "EHLO
+        id S230406AbhGGRB3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Jul 2021 13:01:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46048 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232069AbhGGP7W (ORCPT
+        with ESMTP id S230146AbhGGRB3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Jul 2021 11:59:22 -0400
-Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com [IPv6:2607:f8b0:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C047EC061574
-        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Jul 2021 08:56:40 -0700 (PDT)
-Received: by mail-ot1-x334.google.com with SMTP id h24-20020a9d64180000b029036edcf8f9a6so2691968otl.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Jul 2021 08:56:40 -0700 (PDT)
+        Wed, 7 Jul 2021 13:01:29 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 755A8C061574
+        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Jul 2021 09:58:47 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id p1so5516285lfr.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Jul 2021 09:58:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=WClwSt7qahvqLc8S6VDs1WktQFeBcnd4I5Z/KAvSJ6Q=;
-        b=GyPnJFzj+FIqG12dqeMSz1D9H82hgXeeY6o8amJ/3QfGWrTW4vSslOfhmU4s265og4
-         4a/phVm7uLymyPOgZEKrAo2pPTxZY6KiABRTT2K2Oe5eBRkr13AjCK0pJbiCNf1mxUf8
-         K11PfK+ll5Wy5zOuGyUA2tNVUdswfBDDzCPMVy7clx4q4/HT71MYtctP1wx116Lr/mbS
-         1RLYuxFd7FEDvT1nfoSi6tSYf/KSTz/skS0EUZtfgnXMIva00UiLerPqpuCV+IuHeDyU
-         +OzLVycLqe0kBai9Lyf3DoVqTJ/eNbhNzlenLDXJWml9pZb6MlCatuNQ63CG2liw/PLe
-         RhSQ==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=zoUO7eAuNknTm44uKEkARyjaj036gjlBlWwYCrLOnCc=;
+        b=vyhKJbV63g91lCVS1iYAKZQYD+753NHiMCozu3thfqgZ05AaUHS9UYq/QHp+onjVIj
+         6aiwPDOVk8KWrQkJje88lkxhbsPiOMqUBYZKAIt8fseyk6+9GJv8eFpZKGc8h+rcFPAw
+         ZOeCd2eh5al6WRLEn5N4Em65OEuq55Qhv/NP5lawh1VWGo01khL08PSNu7/iDVd6oemi
+         w00o7hX6AHWor6KyrK1TtepTZ9zgNoKDg8hpZJA0IbnfUvGa0FHazmBBNrVTfNaa6u5D
+         p29tjt7OEuboEeUmJLD0aG+h8FwE/NQ0ldQgxA4niGv+eCGiKnHo8rmw5C+ZWvSQtpCr
+         LI1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=WClwSt7qahvqLc8S6VDs1WktQFeBcnd4I5Z/KAvSJ6Q=;
-        b=Cki4AnexvLD2xTkxRrc//cOlvuvriNWfpX2FrOU7CCp4jg/1RaII4ueblt+lDtr2ro
-         yFKzRJ5HcVnBbGvgNZffrOmLiKd0jjCRZv4VvMyReJowjlCj7YA30qxkOnti5y6EsM0/
-         3le40apJnLK0G7ScQXzwS8HMNZAqsl6vehms9oNcPbT2WWMHLzOhUhZDE2HsZ9IKvW4X
-         xKyTof5mu9is1Kd3KzvCq3NEV3RQ35MiCSDmQ1O+f7HrLYh1a3W6c38Qx3vpXOMFjSGf
-         vQh+rNuhPL4fHU5FjGtHP9R/FYsV7f3zOjeT8Lw0VRQE5JjQW++i8gEpRvHJITq13BnZ
-         C9Xw==
-X-Gm-Message-State: AOAM532qZrocTR/AJX0TpTwpMbJMfaw24JyfWE6PNvlSQ5tg7HjJtYi6
-        aITZxbP14l+dTb7j6RPA7jwTJQ==
-X-Google-Smtp-Source: ABdhPJw0G2ZxbJQpJmRGIvwWpv4+5espexq+AeG21C4eJk5hnEYITZ0VBJFViyGAMDy2IV7iwV+cwQ==
-X-Received: by 2002:a9d:6c07:: with SMTP id f7mr14025619otq.50.1625673400158;
-        Wed, 07 Jul 2021 08:56:40 -0700 (PDT)
-Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id o20sm3504649ook.40.2021.07.07.08.56.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Jul 2021 08:56:39 -0700 (PDT)
-Date:   Wed, 7 Jul 2021 10:56:37 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Lee Jones <lee.jones@linaro.org>
-Cc:     Deepak Kumar Singh <deesin@codeaurora.org>,
-        Chris Lew <clew@codeaurora.org>,
-        Mathieu <mathieu.poirier@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-remoteproc@vger.kernel.org,
-        open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH V7 0/4] Signaling api support in glink/rpmsg clients
-Message-ID: <YOXOtRSpKO5WdlHZ@yoga>
-References: <1599063847-2347-1-git-send-email-deesin@codeaurora.org>
- <CAF2Aj3gAqjVbcMayR7yYBb6UxY5ekC9gdhpmNdz1-zLwo10yLw@mail.gmail.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=zoUO7eAuNknTm44uKEkARyjaj036gjlBlWwYCrLOnCc=;
+        b=YsIQ7b03p+9QW5597jNMYtBVxyrezbxIxpVSX8MdRrdeBlfWGyClLF5Unqmc9Y+jNb
+         NpTyzUrtUvDexmN6s7wqbC5UrLS3IQcXQ+V/qwhKng2pwi+qCDsmpVtL4rZSXLaCIfyF
+         AYZMndA1bDvIFPK7XYJiuur3rmujyD818hnc58ftDa3dGPq0JWmuhsXpd7gPAODlawf+
+         3nyStC32llciQd88zZXi5+kC6ntuNQPN71hpcWk+ovKLAZJ1UGlwqX+wsgHrNCAlaU63
+         1n+bOje4x2yrCUZdp0L1pNzj5dnKg6nFhJmgRXKc6s1engJoNQX3UKe9nRqQWR+p29/b
+         EebQ==
+X-Gm-Message-State: AOAM5337fyKv+yfxF2ndGE+M6/LMJCNmVtCHA0C/j3k9pANQ9V9nP2Jk
+        wT8+Ymt6nWuIOYqfyZbkU6NQvA==
+X-Google-Smtp-Source: ABdhPJy3VvAVrZVPQrLwGCwzbFGeEg5PbEu3Ebt0mmjibnHOGSvVB7eyEtG/aiQ8c23krFIlsBn41g==
+X-Received: by 2002:a19:505a:: with SMTP id z26mr18795696lfj.470.1625677124305;
+        Wed, 07 Jul 2021 09:58:44 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id bp15sm1501780lfb.141.2021.07.07.09.58.43
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 07 Jul 2021 09:58:43 -0700 (PDT)
+Subject: Re: [PATCH 1/2] soc: qcom: rpmhpd: Use corner in power_off
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20210703005416.2668319-1-bjorn.andersson@linaro.org>
+ <20210703005416.2668319-2-bjorn.andersson@linaro.org>
+ <cacd1a1f-01c8-b913-23e5-538a772cd118@codeaurora.org>
+ <CAOCOHw4sufqC3=ixNud8Oz7vO0_ZcO8u5mqNQTKLZX4LGe9aow@mail.gmail.com>
+ <c4440f5e-592c-b849-3ca7-57e812de2df5@codeaurora.org> <YOUyRrvdPLkbTqUp@yoga>
+ <534fca70-d277-4154-b932-a4d6ab3b0b66@codeaurora.org>
+ <YOXM6l0oRhpMKr+9@builder.lan>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Message-ID: <d0022d1a-d45a-838e-222c-15a828051f7f@linaro.org>
+Date:   Wed, 7 Jul 2021 19:58:42 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAF2Aj3gAqjVbcMayR7yYBb6UxY5ekC9gdhpmNdz1-zLwo10yLw@mail.gmail.com>
+In-Reply-To: <YOXM6l0oRhpMKr+9@builder.lan>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 06 Jul 10:27 CDT 2021, Lee Jones wrote:
-
-> On Wed, 2 Sept 2020 at 17:25, Deepak Kumar Singh <deesin@codeaurora.org>
-> wrote:
+On 07/07/2021 18:48, Bjorn Andersson wrote:
+> On Wed 07 Jul 01:31 CDT 2021, Rajendra Nayak wrote:
 > 
-> > Change from version 6
-> > In last series(v6) i had put wrong version(v5) for cover note.
-> > Which led to confusion for patch set series.
-> >
-> > In this series i have updated the label for cover letter(v7).
-> > There is no change in patches. Only cover note label is updated.
-> >
-> > Change from version 5
-> > [V6,4/4] rpmsg: char: Add signal callback and POLLPRI support
-> > Updated for sparse warning. Replaced POLLPRI => EPOLLPRI to fix
-> > warning.
-> >
-> > Change from version 4
-> > I am taking over these patches from aneela@codeaurora.org
-> > Fixed all the trivial review comments.
-> >
-> > Signal conversion to and from native signal as done in patch V4,2/4
-> > is intentional.
-> >
-> > Arun Kumar Neelakantam (3):
-> >   rpmsg: glink: Add support to handle signals command
-> >   rpmsg: char: Add TIOCMGET/TIOCMSET ioctl support
-> >   rpmsg: char: Add signal callback and POLLPRI support
-> >
-> > Deepak Kumar Singh (1):
-> >   rpmsg: core: Add signal API support
-> >
-> >  drivers/rpmsg/qcom_glink_native.c | 125
-> > ++++++++++++++++++++++++++++++++++++++
-> >  drivers/rpmsg/rpmsg_char.c        |  76 ++++++++++++++++++++++-
-> >  drivers/rpmsg/rpmsg_core.c        |  40 ++++++++++++
-> >  drivers/rpmsg/rpmsg_internal.h    |   5 ++
-> >  include/linux/rpmsg.h             |  27 ++++++++
-> >  5 files changed, 270 insertions(+), 3 deletions(-)
-> >
-> > --
-> > The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> > a Linux Foundation Collaborative Project
-> >
-> >
-> Any idea why this died at v7?
+>>
+>>
+>> On 7/7/2021 10:19 AM, Bjorn Andersson wrote:
+>>> On Mon 05 Jul 00:40 CDT 2021, Rajendra Nayak wrote:
+>>>> On 7/5/2021 10:36 AM, Bjorn Andersson wrote:
+>>>>> On Sun, Jul 4, 2021 at 11:27 PM Rajendra Nayak <rnayak@codeaurora.org> wrote:
+>>>>>>
+>>>>>>
+>>>>>>
+>>>>>> On 7/3/2021 6:24 AM, Bjorn Andersson wrote:
+>>>>>>> rpmhpd_aggregate_corner() takes a corner as parameter, but in
+>>>>>>> rpmhpd_power_off() the code requests the level of the first corner
+>>>>>>> instead.
+>>>>>>>
+>>>>>>> In all (known) current cases the first corner has level 0, so this
+>>>>>>> change should be a nop, but in case that there's a power domain with a
+>>>>>>> non-zero lowest level this makes sure that rpmhpd_power_off() actually
+>>>>>>> requests the lowest level - which is the closest to "power off" we can
+>>>>>>> get.
+>>>>>>>
+>>>>>>> While touching the code, also skip the unnecessary zero-initialization
+>>>>>>> of "ret".
+>>>>>>>
+>>>>>>> Fixes: 279b7e8a62cc ("soc: qcom: rpmhpd: Add RPMh power domain driver")
+>>>>>>> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+>>>>>>> ---
+>>>>>>>      drivers/soc/qcom/rpmhpd.c | 5 ++---
+>>>>>>>      1 file changed, 2 insertions(+), 3 deletions(-)
+>>>>>>>
+>>>>>>> diff --git a/drivers/soc/qcom/rpmhpd.c b/drivers/soc/qcom/rpmhpd.c
+>>>>>>> index 2daa17ba54a3..fa209b479ab3 100644
+>>>>>>> --- a/drivers/soc/qcom/rpmhpd.c
+>>>>>>> +++ b/drivers/soc/qcom/rpmhpd.c
+>>>>>>> @@ -403,12 +403,11 @@ static int rpmhpd_power_on(struct generic_pm_domain *domain)
+>>>>>>>      static int rpmhpd_power_off(struct generic_pm_domain *domain)
+>>>>>>>      {
+>>>>>>>          struct rpmhpd *pd = domain_to_rpmhpd(domain);
+>>>>>>> -     int ret = 0;
+>>>>>>> +     int ret;
+>>>>>>>
+>>>>>>>          mutex_lock(&rpmhpd_lock);
+>>>>>>>
+>>>>>>> -     ret = rpmhpd_aggregate_corner(pd, pd->level[0]);
+>>>>>>> -
+>>>>>>> +     ret = rpmhpd_aggregate_corner(pd, 0);
+>>>>>>
+>>>>>> This won't work for cases where pd->level[0] != 0, rpmh would just ignore this and keep the
+>>>>>> resource at whatever corner it was previously at.
+>>>>>> (unless command DB tells you a 0 is 'valid' for a resource, sending a 0 is a nop)
+>>>>>> The right thing to do is to send in whatever command DB tells you is the lowest level that's valid,
+>>>>>> which is pd->level[0].
+>>>>>>
+>>>>>
+>>>>> I'm afraid this doesn't make sense to me.
+>>>>>
+>>>>> In rpmh_power_on() if cmd-db tells us that we have [0, 64, ...] and we
+>>>>> request 64 we rpmhpd_aggregate_corner(pd, 1); but in power off, if
+>>>>> cmd-db would provide [64, ...] we would end up sending
+>>>>> rpmhpd_aggregate_corner(pd, 64);
+>>>>> So in power_on we request the corner (i.e. index in the array provided
+>>>>> in cmd-db) and in power-off the same function takes the level?
+>>>>
+>>>> ah that's right, I did not read the commit log properly and got confused.
+>>>
+>>> Thanks for confirming my understanding.
+>>>
+>>>> Looks like this bug existed from the day this driver for merged :/, thanks
+>>>> for catching it.
+>>>> Does it make sense to also mark this fix for stable?
+>>>>
+>>>
+>>> I can certainly add a Cc: stable@ as I'm applying this.
+>>
+>> sure, sounds good
+>>> May I have your R-b?
+>>
+>> Reviewed-by: Rajendra Nayak <rnayak@codeaurora.org>
+>>
 > 
+> Thank you.
+> 
+>>>
+>>> PS. Do you have any input on patch 2/2? That actually solves a practical
+>>> problem we're seeing. Would it perhaps aid in your need for the new
+>>> "assigned-opp-level" property?
+>>
+>> We would perhaps still need the 'assigned-opp-level' or equivalent since
+>> the default requirement of devices is not always the least level supported,
+>> in some cases it might be slightly higher corner which would then need to
+>> be set explicitly.
+>>
+> 
+> Right, for situations where we use assign-clock-rates to drive up the
+> clock rate this mechanism might be needed in order to keep things
+> stable.
+> 
+> But I presume as soon as you have some sort of dynamic nature to that
+> you'll be back to an opp-table and the means we already have.
+> 
+>> I was hoping on getting some more testing done with that patch especially for
+>> any regression on the sc7180 and sc7280 devices, which I haven't got to yet.
+>> Are you getting these patches ready for merge for the -rc cycle or for the
+>> next merge window?
+>>
+> 
+> That would be much appreciated, I've not done extensive testing myself,
+> mostly just booted a few different boards.
+> 
+> But I would like to see us correct the MDSS_GDSC->MMCX setup in time for
+> v5.15, in particular since we have a few new users of the mmcx
+> power-domain-regulator arriving in this cycle.
 
-I had some concerns about the actual users of this and wanted the API to
-be more generic. Deepak brought this up again recently and I think we
-have a common understanding of how v8 should look like.
+I will rebase my patches on top of this patch series and submit soon.
 
-Regards,
-Bjorn
+
+-- 
+With best wishes
+Dmitry
