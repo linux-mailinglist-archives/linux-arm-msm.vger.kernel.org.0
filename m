@@ -2,205 +2,167 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 997C53BE2C2
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jul 2021 07:42:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6F9713BE32F
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jul 2021 08:31:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230326AbhGGFpc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Jul 2021 01:45:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35652 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230297AbhGGFpc (ORCPT
+        id S230284AbhGGGea (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Jul 2021 02:34:30 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:41010 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230273AbhGGGe3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Jul 2021 01:45:32 -0400
-Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3325C061574
-        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Jul 2021 22:42:52 -0700 (PDT)
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1m10KX-0004jT-PC; Wed, 07 Jul 2021 07:42:41 +0200
-Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
-        by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.92)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1m10KU-0002Jb-Ow; Wed, 07 Jul 2021 07:42:38 +0200
-Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.92)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1m10KU-0005MY-Nk; Wed, 07 Jul 2021 07:42:38 +0200
-Date:   Wed, 7 Jul 2021 07:42:36 +0200
-From:   Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-To:     Baruch Siach <baruch@tkos.co.il>
-Cc:     Thierry Reding <thierry.reding@gmail.com>,
-        Lee Jones <lee.jones@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Balaji Prakash J <bjagadee@codeaurora.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Robert Marko <robert.marko@sartura.hr>,
-        linux-pwm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH v4 1/3] pwm: driver for qualcomm ipq6018 pwm block
-Message-ID: <20210707054236.rn6fjivsozuxecgv@pengutronix.de>
-References: <305eacc9c57c2404795b6be76a08915808e23108.1624771446.git.baruch@tkos.co.il>
- <20210705072055.5mvux5h6zdewzabz@pengutronix.de>
- <875yxmg1pi.fsf@tarshish>
+        Wed, 7 Jul 2021 02:34:29 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1625639510; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=ORSL9Q/hfYBNgLWGbd3sA9EpU/yVvo+awtIkSaX2qWw=; b=rdAJHMrFmOEMEOh7qICBw0gPZizPsXXR8ceMXZT1P0LjluD8F/9jH2eb//OLjL2DjqFnRMS4
+ nO/WA8fcLeuTyaJucafkn/9EbFmCMpYfzqon7f4zaDNQ4zMdo8QnLFHV3nxelPakxoLi7Zwr
+ VQVGefAXr8mwLEmu7N1GYDnVHFo=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
+ 60e54a50ad0600eedefdff56 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 07 Jul 2021 06:31:44
+ GMT
+Sender: rnayak=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 9262FC433F1; Wed,  7 Jul 2021 06:31:44 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
+Received: from [10.50.35.89] (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: rnayak)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 9B36BC433F1;
+        Wed,  7 Jul 2021 06:31:41 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 9B36BC433F1
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=rnayak@codeaurora.org
+Subject: Re: [PATCH 1/2] soc: qcom: rpmhpd: Use corner in power_off
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20210703005416.2668319-1-bjorn.andersson@linaro.org>
+ <20210703005416.2668319-2-bjorn.andersson@linaro.org>
+ <cacd1a1f-01c8-b913-23e5-538a772cd118@codeaurora.org>
+ <CAOCOHw4sufqC3=ixNud8Oz7vO0_ZcO8u5mqNQTKLZX4LGe9aow@mail.gmail.com>
+ <c4440f5e-592c-b849-3ca7-57e812de2df5@codeaurora.org> <YOUyRrvdPLkbTqUp@yoga>
+From:   Rajendra Nayak <rnayak@codeaurora.org>
+Message-ID: <534fca70-d277-4154-b932-a4d6ab3b0b66@codeaurora.org>
+Date:   Wed, 7 Jul 2021 12:01:39 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="toaf4l6z656y72vb"
-Content-Disposition: inline
-In-Reply-To: <875yxmg1pi.fsf@tarshish>
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
+In-Reply-To: <YOUyRrvdPLkbTqUp@yoga>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
---toaf4l6z656y72vb
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-Hello Baruch,
+On 7/7/2021 10:19 AM, Bjorn Andersson wrote:
+> On Mon 05 Jul 00:40 CDT 2021, Rajendra Nayak wrote:
+>> On 7/5/2021 10:36 AM, Bjorn Andersson wrote:
+>>> On Sun, Jul 4, 2021 at 11:27 PM Rajendra Nayak <rnayak@codeaurora.org> wrote:
+>>>>
+>>>>
+>>>>
+>>>> On 7/3/2021 6:24 AM, Bjorn Andersson wrote:
+>>>>> rpmhpd_aggregate_corner() takes a corner as parameter, but in
+>>>>> rpmhpd_power_off() the code requests the level of the first corner
+>>>>> instead.
+>>>>>
+>>>>> In all (known) current cases the first corner has level 0, so this
+>>>>> change should be a nop, but in case that there's a power domain with a
+>>>>> non-zero lowest level this makes sure that rpmhpd_power_off() actually
+>>>>> requests the lowest level - which is the closest to "power off" we can
+>>>>> get.
+>>>>>
+>>>>> While touching the code, also skip the unnecessary zero-initialization
+>>>>> of "ret".
+>>>>>
+>>>>> Fixes: 279b7e8a62cc ("soc: qcom: rpmhpd: Add RPMh power domain driver")
+>>>>> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+>>>>> ---
+>>>>>     drivers/soc/qcom/rpmhpd.c | 5 ++---
+>>>>>     1 file changed, 2 insertions(+), 3 deletions(-)
+>>>>>
+>>>>> diff --git a/drivers/soc/qcom/rpmhpd.c b/drivers/soc/qcom/rpmhpd.c
+>>>>> index 2daa17ba54a3..fa209b479ab3 100644
+>>>>> --- a/drivers/soc/qcom/rpmhpd.c
+>>>>> +++ b/drivers/soc/qcom/rpmhpd.c
+>>>>> @@ -403,12 +403,11 @@ static int rpmhpd_power_on(struct generic_pm_domain *domain)
+>>>>>     static int rpmhpd_power_off(struct generic_pm_domain *domain)
+>>>>>     {
+>>>>>         struct rpmhpd *pd = domain_to_rpmhpd(domain);
+>>>>> -     int ret = 0;
+>>>>> +     int ret;
+>>>>>
+>>>>>         mutex_lock(&rpmhpd_lock);
+>>>>>
+>>>>> -     ret = rpmhpd_aggregate_corner(pd, pd->level[0]);
+>>>>> -
+>>>>> +     ret = rpmhpd_aggregate_corner(pd, 0);
+>>>>
+>>>> This won't work for cases where pd->level[0] != 0, rpmh would just ignore this and keep the
+>>>> resource at whatever corner it was previously at.
+>>>> (unless command DB tells you a 0 is 'valid' for a resource, sending a 0 is a nop)
+>>>> The right thing to do is to send in whatever command DB tells you is the lowest level that's valid,
+>>>> which is pd->level[0].
+>>>>
+>>>
+>>> I'm afraid this doesn't make sense to me.
+>>>
+>>> In rpmh_power_on() if cmd-db tells us that we have [0, 64, ...] and we
+>>> request 64 we rpmhpd_aggregate_corner(pd, 1); but in power off, if
+>>> cmd-db would provide [64, ...] we would end up sending
+>>> rpmhpd_aggregate_corner(pd, 64);
+>>> So in power_on we request the corner (i.e. index in the array provided
+>>> in cmd-db) and in power-off the same function takes the level?
+>>
+>> ah that's right, I did not read the commit log properly and got confused.
+> 
+> Thanks for confirming my understanding.
+> 
+>> Looks like this bug existed from the day this driver for merged :/, thanks
+>> for catching it.
+>> Does it make sense to also mark this fix for stable?
+>>
+> 
+> I can certainly add a Cc: stable@ as I'm applying this.
 
-On Wed, Jul 07, 2021 at 07:58:01AM +0300, Baruch Siach wrote:
-> On Mon, Jul 05 2021, Uwe Kleine-K=F6nig wrote:
-> > On Sun, Jun 27, 2021 at 08:24:04AM +0300, Baruch Siach wrote:
-> >> +/*
-> >> + * Enable bit is set to enable output toggling in pwm device.
-> >> + * Update bit is set to reflect the changed divider and high duration
-> >> + * values in register.
-> >> + */
-> >> +#define PWM_ENABLE		0x80000000
-> >> +#define PWM_UPDATE		0x40000000
-> >> +
-> >> +/* The frequency range supported is 1Hz to 100MHz */
-> >> +#define MIN_PERIOD_NS	10
-> >> +#define MAX_PERIOD_NS	1000000000
-> >
-> > Please use a driver prefix for these defines.
->=20
-> I take this to refer also to the defines below, right?
+sure, sounds good
+  
+> May I have your R-b?
 
-right.
+Reviewed-by: Rajendra Nayak <rnayak@codeaurora.org>
 
-> >> +
-> >> +/*
-> >> + * The max value specified for each field is based on the number of b=
-its
-> >> + * in the pwm control register for that field
-> >> + */
-> >> +#define MAX_PWM_CFG		0xFFFF
-> >> +
-> >> +#define PWM_CTRL_HI_SHIFT	16
-> >> +
-> >> +#define PWM_CFG_REG0 0 /*PWM_DIV PWM_HI*/
-> >> +#define PWM_CFG_REG1 1 /*ENABLE UPDATE PWM_PRE_DIV*/
->=20
-> ...
->=20
-> >> +static void config_div_and_duty(struct pwm_device *pwm, int pre_div,
-> >> +			unsigned long long pwm_div, unsigned long period_ns,
-> >> +			unsigned long long duty_ns)
-> >
-> > Please also use a consistent prefix for function names.
-> >
-> > I suggest to use u64 for some of the parameters. While this doesn't
-> > change anything, it is cleaner as the caller passes variables of this
-> > type.
->=20
-> Actually for pre_div and pwm_div the caller passes int values. I agree
-> this is inconsistent.
->=20
-> ...
->=20
-> >> +static int ipq_pwm_apply(struct pwm_chip *chip, struct pwm_device *pw=
-m,
-> >> +			 const struct pwm_state *state)
-> >> +{
-> >> +	struct ipq_pwm_chip *ipq_chip =3D to_ipq_pwm_chip(chip);
-> >> +	unsigned long freq;
-> >> +	int pre_div, close_pre_div, close_pwm_div;
-> >> +	int pwm_div;
-> >> +	long long diff;
-> >> +	unsigned long rate =3D clk_get_rate(ipq_chip->clk);
-> >> +	unsigned long min_diff =3D rate;
-> >> +	uint64_t fin_ps;
-> >> +	u64 period_ns, duty_ns;
-> >> +
-> >> +	if (state->period < MIN_PERIOD_NS)
-> >> +		return -ERANGE;
-> >
-> > MIN_PERIOD_NS depends on clk_get_rate(ipq_chip->clk), doesn't it?
->=20
-> probe sets this clock to the fixed 100MHz rate (CLK_SRC_FREQ). Would you
-> prefer to derive MIN_PERIOD_NS from CLK_SRC_FREQ?
+> 
+> PS. Do you have any input on patch 2/2? That actually solves a practical
+> problem we're seeing. Would it perhaps aid in your need for the new
+> "assigned-opp-level" property?
 
-I'd like to either have all of ipq_pwm_apply use this information that
-the clock rate is 100MHz or nothing, but having MIN_PERIOD_NS hardcoding
-that information and use clk_get_rate(ipq_chip->clk) for calculating
-fin_ps is strange.
+We would perhaps still need the 'assigned-opp-level' or equivalent since
+the default requirement of devices is not always the least level supported,
+in some cases it might be slightly higher corner which would then need to
+be set explicitly.
 
-> >> +	freq =3D div64_u64(NSEC_PER_SEC, period_ns);
-> >> +	fin_ps =3D div64_u64(NSEC_PER_SEC * 1000ULL, rate);
-> >> +	close_pre_div =3D MAX_PWM_CFG;
-> >> +	close_pwm_div =3D MAX_PWM_CFG;
-> >> +
-> >> +	for (pre_div =3D 0; pre_div <=3D MAX_PWM_CFG; pre_div++) {
-> >> +		pwm_div =3D DIV64_U64_ROUND_CLOSEST(period_ns * 1000,
-> >> +						  fin_ps * (pre_div + 1));
-> >> +		pwm_div--;
-> >> +		if (pwm_div < 0 || pwm_div > MAX_PWM_CFG)
-> >> +			continue;
-> >> +
-> >> +		diff =3D ((uint64_t)freq * (pre_div + 1) * (pwm_div + 1))
-> >> +			- (uint64_t)rate;
-> >> +
-> >> +		if (diff < 0) /* period larger than requested */
-> >> +			continue;
-> >> +		if (diff =3D=3D 0) { /* bingo */
-> >> +			close_pre_div =3D pre_div;
-> >> +			close_pwm_div =3D pwm_div;
-> >> +			break;
-> >> +		}
-> >> +		if (diff < min_diff) {
-> >> +			min_diff =3D diff;
-> >> +			close_pre_div =3D pre_div;
-> >> +			close_pwm_div =3D pwm_div;
-> >> +		}
-> >
-> > I didn't check deeply, but I assume this calculation can be done more
-> > efficiently.
->=20
-> The thing is that we have two dividers to play with. I can't think of a
-> cleaner way to find the best match for a given target frequency.
+I was hoping on getting some more testing done with that patch especially for
+any regression on the sc7180 and sc7280 devices, which I haven't got to yet.
+Are you getting these patches ready for merge for the -rc cycle or for the
+next merge window?
 
-OK, with two equal dividers it might indeed be necessary to do it this
-way. After seeing a get_state implemententation I will think about this
-some more.
-
-Best regards
-Uwe
-
---=20
-Pengutronix e.K.                           | Uwe Kleine-K=F6nig            |
-Industrial Linux Solutions                 | https://www.pengutronix.de/ |
-
---toaf4l6z656y72vb
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEfnIqFpAYrP8+dKQLwfwUeK3K7AkFAmDlPsgACgkQwfwUeK3K
-7Am+owgAlZ57tEF7uYb8WHDBMeqO3L/l2O+Zn4bj5BolgsNZ5Buk9VZKh04Hivu4
-M5DHSX0vVucXLLb8PhsTYJmtBohr7ENSSkqtYnUozoT1uDJ48QQ450NZqlA2+HeA
-gQ+Sj5o3sD55AoA3egVXbzIkHivw9dId1aMLYSlhAVDcPpyHbDRsAiRuaTLH5X0v
-SSShDZRJKZxkxkQpgr1tRSZs7FHdDjRj9XcesD1hKQ+Z+ifY+jW2uB3YIq8vCAHe
-imNKUTWXUhhA1lvzgC6hJSg5qcFd+rP9/ZhetjNF1LxqbUrgwxHnp4iqUsy4+3fV
-qG5ROhFAFBlZ+evWkJNG+k+s0OJVnA==
-=6Fzw
------END PGP SIGNATURE-----
-
---toaf4l6z656y72vb--
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
