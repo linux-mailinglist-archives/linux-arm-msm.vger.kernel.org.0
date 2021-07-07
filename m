@@ -2,69 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 44CB83BE00F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jul 2021 02:08:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 762B93BE04A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jul 2021 02:33:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229876AbhGGALc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Jul 2021 20:11:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47642 "EHLO
+        id S229873AbhGGAgg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Jul 2021 20:36:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53060 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229834AbhGGALc (ORCPT
+        with ESMTP id S229834AbhGGAgf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Jul 2021 20:11:32 -0400
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B52E6C061574
-        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Jul 2021 17:08:52 -0700 (PDT)
-Received: by mail-wm1-x332.google.com with SMTP id j34so623169wms.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Jul 2021 17:08:52 -0700 (PDT)
+        Tue, 6 Jul 2021 20:36:35 -0400
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 753C6C061574
+        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Jul 2021 17:33:55 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id d12so355139wre.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Jul 2021 17:33:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=Gla55/jHPuxQwImkvjfsRobqklhAZ+qfkkqKLknVHRo=;
-        b=mOQgWePcC1K56tlv2aEBFfh91IJFrNCWRU5jA91FKOOzI74PclEHtryhKZPa6uIdmo
-         yT+vytXiCu07rIgdx8zH9U7+pdoBVFfTyfXmL8sNceS1OhNNraOLbA7w7nhqgUPqrsut
-         2IcnWwzTxT126zlekMje9cG1jJGVEL03HrZmQr5bQTM8YbLC/8RNdTjYg+4dk+HOYjZn
-         a178qzfcrWfzoiJdof2Xs4qInKIse/cP4g16ZqRY13DB7WBJrs/xosOYXqOIxWeIo3m9
-         OgGZTolqLqEyU07FSoL4Vaf4lUxGo97CbOjMg1394AiCJziHUZmhTMObXAxgfTnD5kzh
-         zwsQ==
+        bh=H0ivj7GfRsLfasbZPxiuQPzWhfXlN5upxFwfrb/o5wA=;
+        b=cPNFR/uTUf0ZmG1E//I2Bgjrc6eA0TVeoEEc2vJ91w7PJ9J5OJMcycA1nVXqGeYb7o
+         zLTxduTW9LN3KXZk+M8mDJzhHUGZPc5OXgDUOUzO+XCKgt4mpep/ItMxF2ZKnjHAQmqo
+         +SLZesv3oqewv1n2QVZMzrY0hq8psaENNTUubD3rso+BeJMW8hwvBmY3gUpTT6SYWVe7
+         o0GVT7XZ+nBuUjWbsfdX386RWXbOmb9gKMc9ytTL5jvnd3+Z3Xk05EkuKVTxyCkNVus/
+         TQI6VBwiwKqJEOIKySmGfWrkKH3BHCCeDvMVMiK3LERZwHNFlUN2f7kXGTzD6sSw6OkA
+         fZSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=Gla55/jHPuxQwImkvjfsRobqklhAZ+qfkkqKLknVHRo=;
-        b=VwHcWLVkRLUI/Ox2Zu7t6hdKPZifAyZLjGhNz9/1vKsk1Om+mNtb8UtAAhPepEmWZy
-         TsEWEnFDyZtg8ok29rILuc3R01i++9WjXNM/9HGw/0GM6HTGYggFkcxTumfp7myNpNtF
-         yHsWnLYDkHEDKAxUAAmIMPNzUkahsg/OAq5n6mrBhNoMbCj/KMwyG+yWyZJO+DxFz2PD
-         5qEF/17QmKKPM3cf2DiukuaK/UZCFlCpIRfW9OItMYnWSb1ypL3hWT1SlQMTgYeswVZA
-         yHcSJ8Qh9dT8EFkeSs7JYW9zdj99AyYs33frkmQ6sDQFfnHWrQU4Skx9uSFtIRKvVhgQ
-         83uA==
-X-Gm-Message-State: AOAM533GIM51CUKGhDjWepiCRPJ/qSIHabIccMIkxAaPGWdt87zadx0J
-        m/Mvpr0v9JvZaOQzBgUflQPecA==
-X-Google-Smtp-Source: ABdhPJymF6fddc5+UbMYl591O+U+Nqqo0im0csyGJ7lPELRs2/bTi63/t82It4FkQWLVPrtmrdv0Yg==
-X-Received: by 2002:a1c:771a:: with SMTP id t26mr23123755wmi.107.1625616531204;
-        Tue, 06 Jul 2021 17:08:51 -0700 (PDT)
+        bh=H0ivj7GfRsLfasbZPxiuQPzWhfXlN5upxFwfrb/o5wA=;
+        b=jz0enA0XSrt7vuu5sl+aNm01PTdurb9C2kv5degmuCBcjY4GRJ25O+kq+h/P1/iUNh
+         JbUo5gLg1dL4OwxLOukM1/s2PZ8n8C4kwbRNVONreKdHszFypKYOW7aelaxAe5xwN2Wf
+         I60DZVJbl0idPmdqvmwDDTgWRgIc1tHuH9dtmvPUfryA743T4+82Xn60AYkopKe4LGsw
+         Kd72D2punNwPyxc8139Y1vlwBjR5Vtgk6tdM/BLRi0ut/68P9iNH/U5DE/veVQgeI8Uh
+         38jE6cw0SXsLWC1/CT7OM6rSSaYUTiy6THScm31YfrtoB4km7eOc8sqCmdZuFmXSHZBN
+         ORqQ==
+X-Gm-Message-State: AOAM530riyHiLvjkjrANqDnoztOx37on1qMWOJ4nel5kM15be4LOryvZ
+        GLS80D9TVHSD9Xw1iz9BenjXBw==
+X-Google-Smtp-Source: ABdhPJzzL9QXYAvHIs/H00tMy8lwzYzpbah7e4csorMCKStP9dp4xg69Fl2RfbBLWDrfyxqrWPBqJA==
+X-Received: by 2002:a5d:548a:: with SMTP id h10mr24250272wrv.273.1625618034109;
+        Tue, 06 Jul 2021 17:33:54 -0700 (PDT)
 Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id z7sm4319909wmi.1.2021.07.06.17.08.50
+        by smtp.gmail.com with ESMTPSA id f18sm18963800wru.53.2021.07.06.17.33.52
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 06 Jul 2021 17:08:50 -0700 (PDT)
-Subject: Re: [PATCH 1/2] arm64: dts: qcom: sm8250: fix usb2 qmp phy node
+        Tue, 06 Jul 2021 17:33:53 -0700 (PDT)
+Subject: Re: [PATCH 2/2] phy: qcom-qmp: Register as a typec switch for
+ orientation detection
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>
 Cc:     vkoul@kernel.org, kishon@ti.com, agross@kernel.org,
         linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
         robh+dt@kernel.org, jonathan@marek.ca,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        devicetree@vger.kernel.org
+        Wesley Cheng <wcheng@codeaurora.org>
 References: <20210706230702.299047-1-bryan.odonoghue@linaro.org>
- <20210706230702.299047-2-bryan.odonoghue@linaro.org> <YOTvcWnHFkbMHg6K@yoga>
+ <20210706230702.299047-3-bryan.odonoghue@linaro.org> <YOTuh2hYp7IC+4rt@yoga>
 From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Message-ID: <701dfb98-b876-b5f9-cd55-c90d557e64de@linaro.org>
-Date:   Wed, 7 Jul 2021 01:10:41 +0100
+Message-ID: <9f213505-c118-b6fd-676b-1bafd83d8380@linaro.org>
+Date:   Wed, 7 Jul 2021 01:35:43 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.7.1
 MIME-Version: 1.0
-In-Reply-To: <YOTvcWnHFkbMHg6K@yoga>
+In-Reply-To: <YOTuh2hYp7IC+4rt@yoga>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -72,9 +73,23 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 07/07/2021 01:04, Bjorn Andersson wrote:
-> So while Dmitry is right about the logic in the driver, it would be nice
-> if you would spin this patch to make us pass the dt-binding check -
-> which can be sent independently from the driver patch.
+On 07/07/2021 01:00, Bjorn Andersson wrote:
+> In order to perform link training on 4 lanes we need to reset the
+> PHY_MODE_CTRL with only DP_MODE.
 
-ok
+We're only the two lanes for USB on sm8250 and at the moment only USB 
+works - not dp on 8250.
+
+Perhaps you've discovered why the DP times out on 8250..
+
+> In my efforts on sc8180x I skipped the disable/enable in switch_set() (I
+> believe because I didn't have the init_count check...) and then in
+> qcom_qmp_phy_configure_dp_mode() I issue a reset when we're heading to 4
+> lanes. Perhaps we can do the disable/enable and achieve the same thing,
+> but as written here you won't get 4 lanes...
+> 
+> I will do some more testing.
+
+Do you have a commit I can cherry pick ? Might be worth testing out with 
+tcpm + dp on the sm8250 if its working for you on sc8180x
+
