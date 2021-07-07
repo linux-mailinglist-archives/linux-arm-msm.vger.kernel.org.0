@@ -2,162 +2,205 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9FB3A3BE26F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jul 2021 07:15:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 997C53BE2C2
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jul 2021 07:42:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230160AbhGGFRl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Jul 2021 01:17:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57612 "EHLO
+        id S230326AbhGGFpc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Jul 2021 01:45:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35652 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230108AbhGGFRi (ORCPT
+        with ESMTP id S230297AbhGGFpc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Jul 2021 01:17:38 -0400
-Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04190C061574
-        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Jul 2021 22:14:58 -0700 (PDT)
-Received: by mail-oi1-x230.google.com with SMTP id z3so1193214oib.9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Jul 2021 22:14:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=sWI0MwVL7tUjizAU6sPQDWKC1BUe31htMOlyqwAiNeI=;
-        b=MWAHDWDSvpucsScuTxVSMXWQGGRYtgUt9KQB1CgRtRA0N1UDW2eT4k4b6Nthf4iVfZ
-         opwQyqPVKpl0YPF2aOW2hO0oYfSdYPybJgupNiuJzUOG949ImjbGBit725Hi+N+JqRYN
-         qRgrHwmNVu/9uOcrd5P0efP0rkC5jW3p8sTlYs7UbYFxmMTXJ973WfdZMXVkwOnAeWpz
-         cSdSdtUBz/cXPrMnB1T/Bn+KeTWa9iJqbG9r6t7t2ksHS0loS0S7IGG9hzBl1neNihTX
-         vsNZ2ACO1ZiM+LAm58uzS4EZEvtw6taQD/wPGyfWbZ/9KZJuczufTByCUB30tHIHw1yD
-         MMcQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=sWI0MwVL7tUjizAU6sPQDWKC1BUe31htMOlyqwAiNeI=;
-        b=CBUQ2sQH7aGg40HHqCz5REMxW3UQeJvXcbU3vHhkke/4XI7WNFgNyIpephSTftT05x
-         CTFxvB6jV/g3hoZ4wMK0Mg9lodVj04KQgwyWH5DtgpZrPJyGfvzxTEvpIde2yxf2Jes5
-         VoOEqmaAn55wsUm838e1u1otB/dJ8xAEZxeQlSRj5/tYXqIz4HjaLU/B/1fBYZpbjiux
-         hnKArb8jqdAFTWNqQAnwVxfKens38EIL3qiEmlT18hb4isfkw6v0351Oj4T5PBc44w/f
-         FJ7wTAX5MAtfU5+sOVVeQNJPADOcqlTLUXo7SLtzjElz8mjqAsLcpDxz5r71M2R5Dec0
-         0hUQ==
-X-Gm-Message-State: AOAM533u+zYkkdQCjeqG59xsjyNHdSs4eAwXzLIeMCc41XqfUY/neyF5
-        kNwTDhroSyhFBMC0grhSJJSdQg==
-X-Google-Smtp-Source: ABdhPJxxizfsvdUiQk+Rg8PWA2ZuOHCOthQlVNPl/d1C8odCiQp9nibhk+ivZkXluGBbqlpuP1+/jQ==
-X-Received: by 2002:aca:3017:: with SMTP id w23mr1663077oiw.141.1625634897348;
-        Tue, 06 Jul 2021 22:14:57 -0700 (PDT)
-Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id m126sm3860034oib.55.2021.07.06.22.14.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 Jul 2021 22:14:56 -0700 (PDT)
-Date:   Wed, 7 Jul 2021 00:14:54 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc:     balbi@kernel.org, agross@kernel.org, gregkh@linuxfoundation.org,
-        jackp@codeaurora.org, wcheng@codeaurora.org,
-        linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 2/3] usb: dwc3: Add role switch relay support
-Message-ID: <YOU4Tqol/CPzHNwM@yoga>
-References: <20210704013314.200951-1-bryan.odonoghue@linaro.org>
- <20210704013314.200951-3-bryan.odonoghue@linaro.org>
+        Wed, 7 Jul 2021 01:45:32 -0400
+Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3325C061574
+        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Jul 2021 22:42:52 -0700 (PDT)
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1m10KX-0004jT-PC; Wed, 07 Jul 2021 07:42:41 +0200
+Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
+        by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.92)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1m10KU-0002Jb-Ow; Wed, 07 Jul 2021 07:42:38 +0200
+Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.92)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1m10KU-0005MY-Nk; Wed, 07 Jul 2021 07:42:38 +0200
+Date:   Wed, 7 Jul 2021 07:42:36 +0200
+From:   Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
+To:     Baruch Siach <baruch@tkos.co.il>
+Cc:     Thierry Reding <thierry.reding@gmail.com>,
+        Lee Jones <lee.jones@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Balaji Prakash J <bjagadee@codeaurora.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Robert Marko <robert.marko@sartura.hr>,
+        linux-pwm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH v4 1/3] pwm: driver for qualcomm ipq6018 pwm block
+Message-ID: <20210707054236.rn6fjivsozuxecgv@pengutronix.de>
+References: <305eacc9c57c2404795b6be76a08915808e23108.1624771446.git.baruch@tkos.co.il>
+ <20210705072055.5mvux5h6zdewzabz@pengutronix.de>
+ <875yxmg1pi.fsf@tarshish>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="toaf4l6z656y72vb"
 Content-Disposition: inline
-In-Reply-To: <20210704013314.200951-3-bryan.odonoghue@linaro.org>
+In-Reply-To: <875yxmg1pi.fsf@tarshish>
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat 03 Jul 20:33 CDT 2021, Bryan O'Donoghue wrote:
 
-> Add the ability to relay a role switch message from the core to the parent
-> device of the controller.
-> 
-> This is useful for the qcom-dwc3 wrapper which wants to receive role-switch
-> notifications in order to waggle internal SoC UTMI signals.
-> 
-> Having the core trigger the parent wrapper has the advantage of keeping the
-> connector mechanism agnostic from dwc3 wrapper code and means that any
-> other wrapper implementation on any other SoC or architecture need not
-> write custom code to find various types of Type-C role switch mechanisms.
-> 
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> ---
->  drivers/usb/dwc3/core.h |  2 ++
->  drivers/usb/dwc3/drd.c  | 10 ++++++++++
->  2 files changed, 12 insertions(+)
-> 
-> diff --git a/drivers/usb/dwc3/core.h b/drivers/usb/dwc3/core.h
-> index dccdf13b5f9e..974104cc16f7 100644
-> --- a/drivers/usb/dwc3/core.h
-> +++ b/drivers/usb/dwc3/core.h
-> @@ -993,6 +993,7 @@ struct dwc3_scratchpad_array {
->   *		- USBPHY_INTERFACE_MODE_UTMI
->   *		- USBPHY_INTERFACE_MODE_UTMIW
->   * @role_sw: usb_role_switch handle
-> + * @role_sw_relay: usb_role_switch relay handle
->   * @role_switch_default_mode: default operation mode of controller while
->   *			usb role is USB_ROLE_NONE.
->   * @usb_psy: pointer to power supply interface.
-> @@ -1136,6 +1137,7 @@ struct dwc3 {
->  	struct notifier_block	edev_nb;
->  	enum usb_phy_interface	hsphy_mode;
->  	struct usb_role_switch	*role_sw;
-> +	struct usb_role_switch	*role_sw_relay;
->  	enum usb_dr_mode	role_switch_default_mode;
->  
->  	struct power_supply	*usb_psy;
-> diff --git a/drivers/usb/dwc3/drd.c b/drivers/usb/dwc3/drd.c
-> index 8fcbac10510c..74293861bd8f 100644
-> --- a/drivers/usb/dwc3/drd.c
-> +++ b/drivers/usb/dwc3/drd.c
-> @@ -507,6 +507,9 @@ static int dwc3_usb_role_switch_set(struct usb_role_switch *sw,
->  	}
->  
->  	dwc3_set_mode(dwc, mode);
-> +	if (dwc->role_sw_relay)
-> +		usb_role_switch_set_role(dwc->role_sw_relay, role);
-> +
->  	return 0;
->  }
->  
-> @@ -563,6 +566,10 @@ static int dwc3_setup_role_switch(struct dwc3 *dwc)
->  	if (IS_ERR(dwc->role_sw))
->  		return PTR_ERR(dwc->role_sw);
->  
-> +	dwc->role_sw_relay = usb_role_switch_get(dwc->dev);
+--toaf4l6z656y72vb
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-So you're going to rely on DT to create a role-switch link between the
-dwc3 core driver and the qcom wrapper?
+Hello Baruch,
 
-As I said the other day, this is just a hack to get around the fact that
-of_platform_populate() may return before the dwc3 core has probed.
+On Wed, Jul 07, 2021 at 07:58:01AM +0300, Baruch Siach wrote:
+> On Mon, Jul 05 2021, Uwe Kleine-K=F6nig wrote:
+> > On Sun, Jun 27, 2021 at 08:24:04AM +0300, Baruch Siach wrote:
+> >> +/*
+> >> + * Enable bit is set to enable output toggling in pwm device.
+> >> + * Update bit is set to reflect the changed divider and high duration
+> >> + * values in register.
+> >> + */
+> >> +#define PWM_ENABLE		0x80000000
+> >> +#define PWM_UPDATE		0x40000000
+> >> +
+> >> +/* The frequency range supported is 1Hz to 100MHz */
+> >> +#define MIN_PERIOD_NS	10
+> >> +#define MAX_PERIOD_NS	1000000000
+> >
+> > Please use a driver prefix for these defines.
+>=20
+> I take this to refer also to the defines below, right?
 
-Another such case can be seen in [1], where Wesley is patching the DT
-node in runtime in order to pass a boolean parameter between the two
-driver parts.
+right.
 
-If we fix that we don't need these kinds of workarounds.
+> >> +
+> >> +/*
+> >> + * The max value specified for each field is based on the number of b=
+its
+> >> + * in the pwm control register for that field
+> >> + */
+> >> +#define MAX_PWM_CFG		0xFFFF
+> >> +
+> >> +#define PWM_CTRL_HI_SHIFT	16
+> >> +
+> >> +#define PWM_CFG_REG0 0 /*PWM_DIV PWM_HI*/
+> >> +#define PWM_CFG_REG1 1 /*ENABLE UPDATE PWM_PRE_DIV*/
+>=20
+> ...
+>=20
+> >> +static void config_div_and_duty(struct pwm_device *pwm, int pre_div,
+> >> +			unsigned long long pwm_div, unsigned long period_ns,
+> >> +			unsigned long long duty_ns)
+> >
+> > Please also use a consistent prefix for function names.
+> >
+> > I suggest to use u64 for some of the parameters. While this doesn't
+> > change anything, it is cleaner as the caller passes variables of this
+> > type.
+>=20
+> Actually for pre_div and pwm_div the caller passes int values. I agree
+> this is inconsistent.
+>=20
+> ...
+>=20
+> >> +static int ipq_pwm_apply(struct pwm_chip *chip, struct pwm_device *pw=
+m,
+> >> +			 const struct pwm_state *state)
+> >> +{
+> >> +	struct ipq_pwm_chip *ipq_chip =3D to_ipq_pwm_chip(chip);
+> >> +	unsigned long freq;
+> >> +	int pre_div, close_pre_div, close_pwm_div;
+> >> +	int pwm_div;
+> >> +	long long diff;
+> >> +	unsigned long rate =3D clk_get_rate(ipq_chip->clk);
+> >> +	unsigned long min_diff =3D rate;
+> >> +	uint64_t fin_ps;
+> >> +	u64 period_ns, duty_ns;
+> >> +
+> >> +	if (state->period < MIN_PERIOD_NS)
+> >> +		return -ERANGE;
+> >
+> > MIN_PERIOD_NS depends on clk_get_rate(ipq_chip->clk), doesn't it?
+>=20
+> probe sets this clock to the fixed 100MHz rate (CLK_SRC_FREQ). Would you
+> prefer to derive MIN_PERIOD_NS from CLK_SRC_FREQ?
 
-[1] https://lore.kernel.org/linux-arm-msm/1625218655-14180-6-git-send-email-wcheng@codeaurora.org/
+I'd like to either have all of ipq_pwm_apply use this information that
+the clock rate is 100MHz or nothing, but having MIN_PERIOD_NS hardcoding
+that information and use clk_get_rate(ipq_chip->clk) for calculating
+fin_ps is strange.
 
-Regards,
-Bjorn
+> >> +	freq =3D div64_u64(NSEC_PER_SEC, period_ns);
+> >> +	fin_ps =3D div64_u64(NSEC_PER_SEC * 1000ULL, rate);
+> >> +	close_pre_div =3D MAX_PWM_CFG;
+> >> +	close_pwm_div =3D MAX_PWM_CFG;
+> >> +
+> >> +	for (pre_div =3D 0; pre_div <=3D MAX_PWM_CFG; pre_div++) {
+> >> +		pwm_div =3D DIV64_U64_ROUND_CLOSEST(period_ns * 1000,
+> >> +						  fin_ps * (pre_div + 1));
+> >> +		pwm_div--;
+> >> +		if (pwm_div < 0 || pwm_div > MAX_PWM_CFG)
+> >> +			continue;
+> >> +
+> >> +		diff =3D ((uint64_t)freq * (pre_div + 1) * (pwm_div + 1))
+> >> +			- (uint64_t)rate;
+> >> +
+> >> +		if (diff < 0) /* period larger than requested */
+> >> +			continue;
+> >> +		if (diff =3D=3D 0) { /* bingo */
+> >> +			close_pre_div =3D pre_div;
+> >> +			close_pwm_div =3D pwm_div;
+> >> +			break;
+> >> +		}
+> >> +		if (diff < min_diff) {
+> >> +			min_diff =3D diff;
+> >> +			close_pre_div =3D pre_div;
+> >> +			close_pwm_div =3D pwm_div;
+> >> +		}
+> >
+> > I didn't check deeply, but I assume this calculation can be done more
+> > efficiently.
+>=20
+> The thing is that we have two dividers to play with. I can't think of a
+> cleaner way to find the best match for a given target frequency.
 
-> +	if (IS_ERR(dwc->role_sw_relay))
-> +		return PTR_ERR(dwc->role_sw_relay);
-> +
->  	dwc3_set_mode(dwc, mode);
->  	return 0;
->  }
-> @@ -630,6 +637,9 @@ void dwc3_drd_exit(struct dwc3 *dwc)
->  {
->  	unsigned long flags;
->  
-> +	if (dwc->role_sw_relay)
-> +		usb_role_switch_put(dwc->role_sw_relay);
-> +
->  	if (dwc->role_sw)
->  		usb_role_switch_unregister(dwc->role_sw);
->  
-> -- 
-> 2.30.1
-> 
+OK, with two equal dividers it might indeed be necessary to do it this
+way. After seeing a get_state implemententation I will think about this
+some more.
+
+Best regards
+Uwe
+
+--=20
+Pengutronix e.K.                           | Uwe Kleine-K=F6nig            |
+Industrial Linux Solutions                 | https://www.pengutronix.de/ |
+
+--toaf4l6z656y72vb
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEfnIqFpAYrP8+dKQLwfwUeK3K7AkFAmDlPsgACgkQwfwUeK3K
+7Am+owgAlZ57tEF7uYb8WHDBMeqO3L/l2O+Zn4bj5BolgsNZ5Buk9VZKh04Hivu4
+M5DHSX0vVucXLLb8PhsTYJmtBohr7ENSSkqtYnUozoT1uDJ48QQ450NZqlA2+HeA
+gQ+Sj5o3sD55AoA3egVXbzIkHivw9dId1aMLYSlhAVDcPpyHbDRsAiRuaTLH5X0v
+SSShDZRJKZxkxkQpgr1tRSZs7FHdDjRj9XcesD1hKQ+Z+ifY+jW2uB3YIq8vCAHe
+imNKUTWXUhhA1lvzgC6hJSg5qcFd+rP9/ZhetjNF1LxqbUrgwxHnp4iqUsy4+3fV
+qG5ROhFAFBlZ+evWkJNG+k+s0OJVnA==
+=6Fzw
+-----END PGP SIGNATURE-----
+
+--toaf4l6z656y72vb--
