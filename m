@@ -2,114 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1A9F53BE59B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jul 2021 11:29:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EEE6A3BE5D2
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jul 2021 11:48:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231253AbhGGJcR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Jul 2021 05:32:17 -0400
-Received: from mout.kundenserver.de ([212.227.126.133]:42409 "EHLO
-        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230429AbhGGJcR (ORCPT
+        id S231252AbhGGJug (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Jul 2021 05:50:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33884 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231195AbhGGJug (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Jul 2021 05:32:17 -0400
-Received: from mail-wm1-f48.google.com ([209.85.128.48]) by
- mrelayeu.kundenserver.de (mreue009 [213.165.67.97]) with ESMTPSA (Nemesis) id
- 1N0G5n-1lDtIt1jfz-00xLlZ for <linux-arm-msm@vger.kernel.org>; Wed, 07 Jul
- 2021 11:29:36 +0200
-Received: by mail-wm1-f48.google.com with SMTP id o22so1407694wms.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Jul 2021 02:29:36 -0700 (PDT)
-X-Gm-Message-State: AOAM530BhtKenoPebIJwqT/10AS3bVrsrs2yC3ecNgfrw6ix3ci8yUjW
-        48MAuHU5DAVwy8NerCOQosSGnY3Z/+vKvh7YK40=
-X-Google-Smtp-Source: ABdhPJxy9VGMkJsQ2xLLoHD9KhuY49v75rKOXdVcERo4CB/SzAd5LgjZYkH+UrCI7NzD7/EpMdgZQ2cNpiSkwbT9ERU=
-X-Received: by 2002:a05:600c:3205:: with SMTP id r5mr5526288wmp.75.1625650176018;
- Wed, 07 Jul 2021 02:29:36 -0700 (PDT)
+        Wed, 7 Jul 2021 05:50:36 -0400
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6515AC06175F
+        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Jul 2021 02:47:56 -0700 (PDT)
+Received: by mail-wm1-x333.google.com with SMTP id l1so1401927wme.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Jul 2021 02:47:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=Dm2rBXOWQDYbyq7hq3px23+lQhiHxAKM1oygtO8cTVM=;
+        b=S5978gsp1zz5G1304knfRBzraXCAg7QVZwfWiw8VImnRLUFqcI3BeIvhEPsGAIX2Zg
+         /o1PLYpQGDxUthu2FEs5NQuXLqq/q1ZXjBaX1iL2GoZzLOu6mQw6iEoVMJ85z7WTT8/W
+         aQk/VpJCAV/WCt06QMXSxlqoo64ox21IMCPbkNcCe2bAD1hVM0D1GEWgUpVqwnl0sUIc
+         XtqDdoZutmIzPBGwahYWioCgfQr3VAE22PKtJ2hhGFzPloI1OI1kfBRA6ScvkIblKIgK
+         KZnUurvuO85tWcxzYFp74OxStJ+DudDfrO9R8skvqb6CIXB27cF81qlPXFoEAlqZ5QUN
+         JABw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=Dm2rBXOWQDYbyq7hq3px23+lQhiHxAKM1oygtO8cTVM=;
+        b=R1PyLhjgg2GQAAvIUMYkjdoOyXYjCDszBQ/EpTqO9DUmUkCS3toq0lMUY/ZYONn87X
+         wJAo6I7iAerFA/eZrm1W/CelGNl2trIZtkqQrxOCukRrwlFhotb5GS/6lFb0xIxolK0G
+         xzIciBtD53GbjQKDruoT3Wtj6uhrMPw+c5n9AErU1h5I9i1xX8fqhHGzEGBux4XyGK67
+         HZhc85Vz3dJLHuw3gqBgiUM966U+wfsNbuG3pbpA4DfwGSqooL+yr2lJrXFcS4euCsCW
+         ws5EuKXBDxPRGByshtedELZt4vDEBeCPQ6YUFXDAcw9x/93tYOJgTczrriU2AypalmH3
+         0xOA==
+X-Gm-Message-State: AOAM530EffUKkVLNtqKDJ63+fLjuKkVobO+tGDhFyxZAVyrR+Q5nb92d
+        1G6akmSx/q3wJJcnodpJlfJlX1HpyMMLtg==
+X-Google-Smtp-Source: ABdhPJxIy1zv1VqCVrkP1G6sHNsRESEieiJSMFLIb4KpC98Ngg9XW1tSJcU0PUj+n5PtysZdHBU7hA==
+X-Received: by 2002:a05:600c:48aa:: with SMTP id j42mr25648022wmp.93.1625651274701;
+        Wed, 07 Jul 2021 02:47:54 -0700 (PDT)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id x17sm24330582wrn.62.2021.07.07.02.47.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 07 Jul 2021 02:47:53 -0700 (PDT)
+Subject: Re: [PATCH 2/3] usb: dwc3: Add role switch relay support
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     balbi@kernel.org, agross@kernel.org, gregkh@linuxfoundation.org,
+        jackp@codeaurora.org, wcheng@codeaurora.org,
+        linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <20210704013314.200951-1-bryan.odonoghue@linaro.org>
+ <20210704013314.200951-3-bryan.odonoghue@linaro.org> <YOU4Tqol/CPzHNwM@yoga>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Message-ID: <51a11204-cd59-e18f-7dc3-f78632e77bde@linaro.org>
+Date:   Wed, 7 Jul 2021 10:49:45 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.7.1
 MIME-Version: 1.0
-References: <20210527124356.22367-1-will@kernel.org> <59800d6c-364a-f4be-e341-c5b531657ba3@arm.com>
- <20210706133314.GB20327@willie-the-truck> <f136da2ea91fc22334c552b8c524f6e7@kernel.org>
- <CAK8P3a2xWTvj6HjsC6gH44Ad13adKjK0wR7UxFFQ1i=XYixvQA@mail.gmail.com>
- <87zguz7b6b.wl-maz@kernel.org> <CAK8P3a2eFDSdkAUgapGuANQJsO=Arsp4uxoiLRXL-ah0ttc6Fg@mail.gmail.com>
- <m-pFOMXMXSwpPq7H8syJd3qyVkuhGYjVEOgk-iiezAFhr8ApjWX8eIMkcL3updRXOOeOClx88ekyeOvEsNYp_HrY54W4iCSYl8yT03Tykv4=@protonmail.com>
- <CAK8P3a1rtXTtGQ_Q7eg2SOrYa_OhSWPWFiS8m=oSb_GU1uUNXQ@mail.gmail.com> <M0wGhzKTDUUYQPjRdiabG3xuKLx8p19uB1iqdkwfa8Op45i4zBGm4mpcHIxpYzWkJLiUM6JtQIDuBVyLlXtPhrlPyycbhZ2GO1ldLymA40g=@protonmail.com>
-In-Reply-To: <M0wGhzKTDUUYQPjRdiabG3xuKLx8p19uB1iqdkwfa8Op45i4zBGm4mpcHIxpYzWkJLiUM6JtQIDuBVyLlXtPhrlPyycbhZ2GO1ldLymA40g=@protonmail.com>
-From:   Arnd Bergmann <arnd@arndb.de>
-Date:   Wed, 7 Jul 2021 11:29:20 +0200
-X-Gmail-Original-Message-ID: <CAK8P3a33ZD6uLntmuvp_Rgfj1VYEV3YxP6+BxSDAQLon-q2hGw@mail.gmail.com>
-Message-ID: <CAK8P3a33ZD6uLntmuvp_Rgfj1VYEV3YxP6+BxSDAQLon-q2hGw@mail.gmail.com>
-Subject: Re: [PATCH] arm64: cache: Lower ARCH_DMA_MINALIGN to 64 (L1_CACHE_BYTES)
-To:     Yassine Oudjana <y.oudjana@protonmail.com>
-Cc:     Marc Zyngier <maz@kernel.org>, Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Ard Biesheuvel <ardb@kernel.org>,
-        Android Kernel Team <kernel-team@android.com>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Vincent Whitchurch <vincent.whitchurch@axis.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Provags-ID: V03:K1:Wzx7QP6bv5PCoUZoj1gFSeZAfY07iI6Arm3y7dQgYSxFOulLmhG
- Dubs5KpwkJOYowj30SOpVcaGvA0OQSm58OHduJwz1vX9bKDy7gsgkeFmRn+EsYcu7PHoyIY
- Vlvgc2S21xLfb/mI6R7B69wQHoKS8ltpX5oGpaMflc/p3Tc6iYdOJ04KDs0TDI4bbSGRVfF
- rU6mFvAB2+p5if9JdT6Gw==
-X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:f7pEn5TD5ks=:/PELfdULn2BQ9fKaAoZ0Rp
- pWyVyLSdErJdw6+mVlTeiXVY9quVPKqVhToIC/ggg82u2cGu01/ssJ8S4K+gsnqaS9fSvZU86
- 6NMXUXLg4tzdZoAQYwPmcS/EJNzHNaH10wXK1DHiGxvA/4rdc+k/Sm5zZQQ+ILeKhnIZBIDpz
- L0bLWoHfXs/Qgy1LqFcLIDr1ndxZAakHH008QkRhMPmsw+okIHg4LCUO3gJ9UUQXyr4UtgIZN
- 7x8vusOffxwGjlcnvYmllei8UUciHhZ73GULiuxB6fWR5c9kWKlW/lNKzJOZpAEEOuDnDLt8Y
- BtfpOm6SKZS0U9rN+XP4OxzYnCIa0uzHSWm98LRyeOHJFdOtqOpOhiFAUYy/5Zse2XgwbLFr3
- yBpW7e/nBjLiM9L5uNjS2vyrp+y5TOwK79lCd88GKmUSrTiLUJ6NsEVcxHTB2fhYZ+XWg++2F
- xgcRWFCSOS4d2rZopxBws2Zh0g6JpBU70UjBniX5Vs37igovBN9f4sBGsS5EsGLMp8TYQsf1/
- I6a7ZYPdf9cyq3yI2cW9/60amK9hMgZjJSqyHf7RhCq7Wf4PkQD4XFPMzXv/TxA/6gBzx5wU/
- NKvWlOqAGXN46FOIs46FT001ITqA0uL97jXMOISpYH0ldgFcmO3YOQUfi0wi4H/T4eg0T0F1n
- xY+d50zIkDxihKuGudv2IX/ipS+2Z49m7RXQjy/DXfNBGah+Ug4hmxJp3cBZjjspbW+pK3WZY
- qgcikYKBK5GmC6vVbG3N9P2b2+quo3kwP9fESav46jjL0JYN/37KDLVZoyJw2Th0s7J61RMru
- ILJMWeBB8A6R0km+Bbvl2rG54brb/y7LP03W1nQbRhYs14JW2slmY4oAZ5mZVBkzN4OTBLS
+In-Reply-To: <YOU4Tqol/CPzHNwM@yoga>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jul 6, 2021 at 6:20 PM Will Deacon <will@kernel.org> wrote:
->
-> I think the million dollar question is whether the 128-byte cache-lines
-> live in a cache above the PoC or not. If it's just a system level cache
-> through which all DMA is "coherent", then it doesn't matter.
+On 07/07/2021 06:14, Bjorn Andersson wrote:
+> So you're going to rely on DT to create a role-switch link between the
+> dwc3 core driver and the qcom wrapper?
+> 
+> As I said the other day, this is just a hack to get around the fact that
+> of_platform_populate() may return before the dwc3 core has probed.
 
-On Wed, Jul 7, 2021 at 10:24 AM Yassine Oudjana
-<y.oudjana@protonmail.com> wrote:
->
-> On Wednesday, July 7th, 2021 at 12:33 AM, Arnd Bergmann <arnd@arndb.de> wrote:
-> > On Tue, Jul 6, 2021 at 7:15 PM Yassine Oudjana y.oudjana@protonmail.com wrote:
-> > >
-> > > $ numactl -C 0 line -M 1M
-> > > 128
-> > > $ numactl -C 3 line -M 1M
-> > > 128
-> >
-> >     Can you rerun the the 'line' test with '-M 128K' to see if that confirms the 64
-> >     byte L1 line size that the 'cache' test reported?
->
-> $ numactl -C 0 line -M 128K
-> 64
-> $ numactl -C 3 line -M 128K
-> 64
+A beautiful hack though
 
-Ok, so this seems to confirm that the L1 uses 64 byte lines, while the L2 (or
-possibly L3) uses 128 byte lines.
+> Another such case can be seen in [1], where Wesley is patching the DT
+> node in runtime in order to pass a boolean parameter between the two
+> driver parts.
+> 
+> If we fix that we don't need these kinds of workarounds.
 
-On Wed, Jul 7, 2021 at 12:27 AM Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
->
-> I can confirm that MSM8996, and a few derivatives, has 128 byte cache lines.
+OK, I understand/agree
 
-Ok, thanks. Assuming this is an outer cache and the L1 indeed has a smaller line
-size, can you also confirm that this 128 byte lines are north of the point of
-coherency?
+Lets look at changing the way dwc3-qcom launches dwc3-core and make it that
 
-In other words, does the CTR_EL0.DminLine field also show 128 bytes
-(in which case
-it seems we already lost)? And if not, does a CPU store to the second half of a
-128 byte L2 line cause DMA data in the first half to be clobbered?
+1. Probe deferral in dwc3-core either defers the dwc3-qcom code
+2. Or that the dwc3-qcom code waits for dwc3-core
 
-       Arnd
+either way instead of avoiding the fact that dwc3-core can defer we 
+should make it that dwc3-qcom::probe() exits only when the dwc3-core is done
+
+---
+bod
