@@ -2,132 +2,186 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6B1A23BE060
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jul 2021 02:51:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D776E3BE0AE
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jul 2021 03:57:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229876AbhGGAy0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Jul 2021 20:54:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56908 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229834AbhGGAy0 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Jul 2021 20:54:26 -0400
-Received: from mail-oi1-x231.google.com (mail-oi1-x231.google.com [IPv6:2607:f8b0:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF4AFC061574
-        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Jul 2021 17:51:46 -0700 (PDT)
-Received: by mail-oi1-x231.google.com with SMTP id t3so1453076oic.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Jul 2021 17:51:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=s1ffWoDxY3VEBE1q35gustTBk0aEjDRruN7MtUPHf+s=;
-        b=Ra+wCD0SHtYTko26/J1Cue0W0aDrFn9aSunhan4jY+Ku4VPvSN9WRXcMbnD4rhZnSK
-         2QthozXeQcedU9GrmFB43j/jrN0Yjq4HftOf6+yzt+f/zGbx0dyhzSd3tWUdv7JTdBDF
-         JzKV+Wwmrvusajw20DvOwGvBXYlZX0YHiojWzy/Q5dgdAG5cGWx3u2koM/EQsJrjcGZf
-         Z+w+R2NM5WOr7inBdRWwVg4npDKnw7TAa0YLPv+dwNjlJ2GBJcCvl24SgjfrAmBeKE0p
-         NuHc5VZ3iIFXyEW7emO3v17J7GAWUueRKgYUse/4iNJLtUeqyooAfzPdiWCbsD8SuYFp
-         pqfQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=s1ffWoDxY3VEBE1q35gustTBk0aEjDRruN7MtUPHf+s=;
-        b=kjXANj9qZOPg23RYk4vexaERKyjLVHVM/U+vehqMXwCMYKVSixPS9fOp0nHtTp/ITH
-         qUC8pNWsQOVt9WtV3h//ruzJ9IYxaHQC+auL/HrlO9PMqNJtrBokfzcH74dirGrln2Q4
-         VBcHS0tGh8FqY89biUUaRQNl/VXvErG30jSIyqE1PrQhu4mGu+gYCRjlPt7R6m0rMeLT
-         sz2yhkI1bM+EwTIFzylVXM/8WX0hTktTiK0dyD6nC92YjB0AgQnU+rhCcIahNhUHp9x0
-         tQfh6prcrEjjCFIRmwbRdlVtt34k6Ofz7ZbXjN7pcFs28bbgleWByOy98r7Lf3fyRb3v
-         G+bw==
-X-Gm-Message-State: AOAM531tdn4/0dv71ZEu9QCsTuU66mnE1CqWzw+jnCSg5m2DhM4iQwEt
-        YUq4J670nQ29QlXBXda3MkNLHA==
-X-Google-Smtp-Source: ABdhPJyNJiVNErijMnayY3hae/x4q3f+pLPIXDHbJM0FyfNJpF2vVd7vubXKnUQzaS4QdbPu0Hl1pg==
-X-Received: by 2002:aca:3a55:: with SMTP id h82mr2706375oia.59.1625619106268;
-        Tue, 06 Jul 2021 17:51:46 -0700 (PDT)
-Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id s131sm3745306oib.52.2021.07.06.17.51.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 Jul 2021 17:51:45 -0700 (PDT)
-Date:   Tue, 6 Jul 2021 17:50:23 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+        id S229950AbhGGB7s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Jul 2021 21:59:48 -0400
+Received: from mail.kernel.org ([198.145.29.99]:58610 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229949AbhGGB7s (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 6 Jul 2021 21:59:48 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 37A7761CB6;
+        Wed,  7 Jul 2021 01:57:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1625623029;
+        bh=dm/9asNINHO/sAl70bjbmQrc++My3HTNxoleWdGVjSE=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=cLScf8TLfrGRv5zvFiuBVuApHH/X0a97Ylkelc9tDUc7HjJrru1ByJYKlJD8JJMuE
+         7DJdl18OxspA7c0r8OBLHCDbfeeXn1SB4F0bj1Ie3wcjDunGJZTO2IF5mHzm82eFDx
+         GBUW6qwPZ5GtCMlmAPv4kL04e4eb6OjL8zZGGK8POvCAGLsfOmjjeerd8wB6MlQ2QZ
+         EuzL908Cdk6veo7YssNlMEXlR/wrefmFsq6k2D0mx5MuGEVjOyhW243/3qDofDZYmb
+         PrnCdHSC8QX91Aim2ccMDrdDwvsn5+MYCnffUoJ6vk4N1xBnViOdOPwdezB4A250TV
+         4AHphu+CiVcCQ==
+Date:   Wed, 7 Jul 2021 09:57:04 +0800
+From:   Peter Chen <peter.chen@kernel.org>
 To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc:     vkoul@kernel.org, kishon@ti.com, agross@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        robh+dt@kernel.org, jonathan@marek.ca,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Wesley Cheng <wcheng@codeaurora.org>
-Subject: Re: [PATCH 2/2] phy: qcom-qmp: Register as a typec switch for
- orientation detection
-Message-ID: <YOT6T3YZSz1EysuO@ripper>
-References: <20210706230702.299047-1-bryan.odonoghue@linaro.org>
- <20210706230702.299047-3-bryan.odonoghue@linaro.org>
- <YOTuh2hYp7IC+4rt@yoga>
- <9f213505-c118-b6fd-676b-1bafd83d8380@linaro.org>
+Cc:     balbi@kernel.org, bjorn.andersson@linaro.org, agross@kernel.org,
+        gregkh@linuxfoundation.org, jackp@codeaurora.org,
+        wcheng@codeaurora.org, linux-usb@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 0/3] Implement role-switch notifications from dwc3-drd to
+ dwc3-qcom
+Message-ID: <20210707015704.GA28125@nchen>
+References: <20210704013314.200951-1-bryan.odonoghue@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <9f213505-c118-b6fd-676b-1bafd83d8380@linaro.org>
+In-Reply-To: <20210704013314.200951-1-bryan.odonoghue@linaro.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 06 Jul 17:35 PDT 2021, Bryan O'Donoghue wrote:
-
-> On 07/07/2021 01:00, Bjorn Andersson wrote:
-> > In order to perform link training on 4 lanes we need to reset the
-> > PHY_MODE_CTRL with only DP_MODE.
+On 21-07-04 02:33:11, Bryan O'Donoghue wrote:
+> This is a topic we have been discussing for some time, initially in the
+> context of gpio usb-c-connector role-switching.
 > 
-> We're only the two lanes for USB on sm8250 and at the moment only USB works
-> - not dp on 8250.
+> https://lore.kernel.org/linux-usb/20200311191501.8165-1-bryan.odonoghue@linaro.org
 > 
-> Perhaps you've discovered why the DP times out on 8250..
+> Hardware availability constraints limited scope to finish that off.
+> 
+> Thankfully Wesley Cheng made a new set of USB role-switch related patches
+> for dwc3-qcom, this time in conjunction with the qcom pm8150b type-c
+> silicon.
+> 
+> https://lore.kernel.org/linux-usb/20201009082843.28503-1-wcheng@codeaurora.org
+> 
+> For the RB5 project we picked Wesley's changes and developed them further,
+> around a type-c port manager.
+> 
+> As a precursor to that TCPM I reposted Wesley's patches
+> https://lore.kernel.org/linux-usb/20210629144449.2550737-1-bryan.odonoghue@linaro.org
+> 
+> Bjorn pointed out that having the role-switch triggered from dwc3-qcom to
+> dwc3-drd is not the right way around, indicating a preference for the
+> original notifier from dwc3-drd to dwc3-qcom.
+> 
+> There are two approaches I considred and prototyped to accomplish the
+> desired dwc3-drd -> dwc3-qcom messaging.
+> 
+> #1 Using a notifier in dwc3-drd to trigger dwc3-qcom
+> 
+>    This would be nice since it would accomplish the desired layering
+>    dwc3-drd -> dwc3-qcom.
+> 
+>    However:
+>    a) It would be a real mess as dwc3-qcom is the parent device of
+>       dwc3-core so, if the child-device dwc3-core deferred probing for
+>       whatever reason we would have to detect this and retry the parent's
+>       probe again.
+
+Why do you think we need to retry the parent's probe again? And why using
+a notifier need to concern core's deferral probe? I know there are some
+downstream code which using this way, I would like to know the shortcoming
+for it.
+
+Peter
+
+>	The point in time that dwc3-qcom could potentially parse
+>       such a deferral in the child device is late. It would also be weird
+>       and messy to try to roll back the parent's probe because of a child
+>       device deferral.
+> 
+>       I considered making some sort of worker in the parent to check for
+>       child device probe but, again this seemed like an atrocious hack so,
+>       I didn't even try to prototype that.
+> 
+>    b) One potential solution was using "__weak" linkage in a function
+>       provided by dwc3-drd that a wrapper such as dwc3-qcom could then
+>       over-ride.
+> 
+>       If a wrapper such as dwc3-qcom then implemented a function with
+>       regular linkage it would over-ride the __weak function and provide a
+>       method for the dwc3-drd code to call into dwc3-qcom when probing was
+>       complete, thus allowing registration of the notifier when the child
+>       was ready.
+> 
+>       This would work up until the point that you tried to compile two
+>       implementations of a dwc3 wrapper into the one kernel module or the
+>       one kernel image say dwc3-qcom and a similar implementation in
+>       dwc3-meson. At that point you would get linker breakage.
+> 
+> #2 Using USB role switching for the notification
+> 
+>    Wesley's implementation took the approach dwc3-qcom -> dwc3-drd, whereas
+>    the approach I'm proposing here is dwc3-drd -> dwc3-qcom, which is also
+>    what we discussed on the list.
+> 
+>    Having implemented it, I think USB role-switching in the direction
+>    dwc3-drd -> dwc3-qcom is also a much cleaner solution for several
+>    reasons.
+> 
+>    a) Handling probe deferral is built into Linux' USB role switching today
+>       so we don't have to re-invent that wheel, unlike with the original
+>       notifier model.
+> 
+>    b) There is no "wiring up" or traversing the graph tree for the wrapper
+>       layer to determine if the parent device has a compliant type-c
+>       connector associated with it, unlike in the dwc3-qcom -> dwc3-drd
+>       model.
+> 
+>       All that has to happen is "usb-role-switch" is declared in the parent
+>       dwc3-qcom node and the role-switch API takes care of the rest.
+> 
+>       That means its possible to use a usb-c-connector, qcom type-c pm8150b
+>       driver, a USCI, a tps659x, a fusb302 or something like ChromeOS
+>       cros_ec to notify dwc3-drd without dwc3-qcom having to have
+>       the slighest clue which type of device is sending the signal.
+> 
+>       All dwc3-qcom needs to do is waggle UTMI signals in a register when a
+>       role-switch happens.
+> 
+>    c) It "feels" like a layering violation to have the dwc3-qcom SoC
+>       wrapper receive the event and trigger the dwc3-drd core.
+> 
+>       The standard model of parent/child role switching or remote-endpoint
+>       traversal that USB role switching already has works just fine for
+>       dwc3-drd, we just need to trigger dwc3-qcom for the role-switch in a
+>       non-vendor and non-SoC specific way.
+> 
+>    d) Less code. It turns out there's less code implementing as a
+>       role-switch interface in the direction dwc3-drd -> dwc3-qcom.
+> 
+>    e) Portability. The mechanism used for dwc3-drd -> dwc3 qcom can be
+>       reused for any other similar wrapper which models the wrapper as a
+>       parent of the dwc3-drd.
+> 
+> For all of those reasons I've opted to use USB role-switch notification
+> from dwc3-drd to dwc3-qcom.
+> 
+> git add bod git://git.linaro.org/people/bryan.odonoghue/kernel.git
+> git fetch bod
+> git diff usb-next-5.13.rcx-rb5-tcpm..usb-next-5.13.rcx-rb5-tcpm-v2
+> 
+> Bryan O'Donoghue (2):
+>   usb: dwc3: Add role switch relay support
+>   usb: dwc3: dwc3-qcom: Make dwc3-qcom a role-switch signal recipient
+> 
+> Wesley Cheng (1):
+>   usb: dwc3: dwc3-qcom: Fix typo in the dwc3 vbus override API
+> 
+>  drivers/usb/dwc3/core.h      |  2 +
+>  drivers/usb/dwc3/drd.c       | 10 +++++
+>  drivers/usb/dwc3/dwc3-qcom.c | 77 ++++++++++++++++++++++++++++++++++--
+>  3 files changed, 85 insertions(+), 4 deletions(-)
+> 
+> -- 
+> 2.30.1
 > 
 
-The way this problem manifest itself in my testing (on sc8180x) is that
-the 3rd lane fails to complete link training, although it wasn't
-completely obvious from the kernel prints until you look at the
-implementation.
+-- 
 
-I don't know if you're still struggling with the AUX timeout, but if
-you're past that this would be a strong candidate. That said, if you set
-data-lanes = <0 1> in your DP node then it won't attempt to go 4 lanes
-and wouldn't hit this problem.
+Thanks,
+Peter Chen
 
-> > In my efforts on sc8180x I skipped the disable/enable in switch_set() (I
-> > believe because I didn't have the init_count check...) and then in
-> > qcom_qmp_phy_configure_dp_mode() I issue a reset when we're heading to 4
-> > lanes. Perhaps we can do the disable/enable and achieve the same thing,
-> > but as written here you won't get 4 lanes...
-> > 
-> > I will do some more testing.
-> 
-> Do you have a commit I can cherry pick ? Might be worth testing out with
-> tcpm + dp on the sm8250 if its working for you on sc8180x
-> 
-
-I dumped my hack-branch on github a while ago and have been working on
-cleaning this up to get the patches out:
-
-https://github.com/andersson/kernel/commits/wip/sc8180x-edp-dp-nvme-sdx55-dump
-
-Unfortunately I extended my testing and realized that DPMS doesn't work
-reliably.
-
-With my MST hub (and single monitor) I often hit a security violation
-when accessing REG_DP_STATE_CTRL when powering down the display, unless
-I have drm.debug=511 (i.e. changing the timing of things). With the more
-favourable timing DPMS on/off works nicely.
-
-With my direct type-c/dp cable I can reliably power down the display,
-but resuming it generally fails immediately - the monitor is waking up,
-and then goes back to sleep (probably because the software has given up
-on me already).
-
-Trying to debug these two issues currently.
-
-Connecting, disconnecting and reconnecting the cable works reliably
-though, so once upstream boots again I intend to send out most of my
-cleaned up patches.
-
-Regards,
-Bjorn
