@@ -2,79 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D0E403C183F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jul 2021 19:38:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 57BB83C1852
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jul 2021 19:38:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229738AbhGHRko (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Jul 2021 13:40:44 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:41981 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229469AbhGHRko (ORCPT
+        id S229956AbhGHRlG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Jul 2021 13:41:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35428 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229815AbhGHRlG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Jul 2021 13:40:44 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1625765882; h=Content-Transfer-Encoding: Mime-Version:
- Content-Type: References: In-Reply-To: Date: Cc: To: From: Subject:
- Message-ID: Sender; bh=0YPDHu5VHY7aeahdyEoMBMxoMcH/XFFUwidZNslNpqg=; b=uzI+uZ5+PwqcLOAZnQukOY42TN20jG+YeKl0Xyg5qpQuUwqagQOK92ijBrOppdTf4P7fuvo0
- gEClFer+DQ6jhs4B+VJaPmhZG6Yh+OOzt2ouNvaXo1W/BrfFeNFkJFBsMd87GusXm9+GL3Ep
- s7g8zwz6m5IDHmu0x0G8qLkiYQA=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
- 60e737e601dd9a9431546fd7 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 08 Jul 2021 17:37:42
- GMT
-Sender: hemantk=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 67562C4338A; Thu,  8 Jul 2021 17:37:42 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from hemantk-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: hemantk)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 8FBDCC433F1;
-        Thu,  8 Jul 2021 17:37:41 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 8FBDCC433F1
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=hemantk@codeaurora.org
-Message-ID: <1625765856.10055.28.camel@codeaurora.org>
-Subject: Re: [PATCH] mhi: pci_generic: Fix inbound IPCR channel
-From:   Hemant Kumar <hemantk@codeaurora.org>
-To:     Loic Poulain <loic.poulain@linaro.org>, mani@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, stable@vger.kernel.org
-Date:   Thu, 08 Jul 2021 10:37:36 -0700
-In-Reply-To: <1625736749-24947-1-git-send-email-loic.poulain@linaro.org>
-References: <1625736749-24947-1-git-send-email-loic.poulain@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.18.5.2-0ubuntu3.2 
-Mime-Version: 1.0
+        Thu, 8 Jul 2021 13:41:06 -0400
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76371C061574
+        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Jul 2021 10:38:24 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id a13so8505354wrf.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Jul 2021 10:38:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ffwll.ch; s=google;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=InVnPLy1h+Gn4xVBn/fC7AZt6grH88jqC7oOozTIXb8=;
+        b=b9NfiRDV4PWMagsuaIW/0pNvT/uy7ZDQf5JndjvR8JML4iEvYQWZQL7cwk7QnkWdah
+         oBfpqwwuzxFNgBz0aEff+3SB9zAzKpnDR1DMFi43W07iORhzR0ARnRNGrCQ3kjPtlJLd
+         IJh73WUh20UIq5aO+hBu1ga1TfA/5tOncbrXM=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=InVnPLy1h+Gn4xVBn/fC7AZt6grH88jqC7oOozTIXb8=;
+        b=AD/QldTQJ/l4n8pmkj5bKVblFWxhx7DePCnyCDlsC88YfnoG1M05hYZdCfh53UrdX+
+         H0JWGYHSGP+CW9gZMrmPR0kyOQvtETe3y0+KgSwLQcy9DlI/ZHsJFpFJWfhrlRzUVRoe
+         w9aJjRPu6Ml4rSy3+ctK5jV8kqMVJO21Dvu98r2omH0/uI8vmoMReQdOUWhXFpIG6Yez
+         1jh/q5I5iNKFhPDYyfVcDW3KUWpB+xk6Es22Rq3+xnUvkSWZl0fkualbEc7k6l1IzxVh
+         qpiVrY7uJmB0m8bRi1BTHqYWbNchil1DMC4osrfZeXXBL5Xb/rF5+c2mCef9D+t6KgAh
+         0oDg==
+X-Gm-Message-State: AOAM5302Ex5aYtAHcedRfblArddGzikLoiVZLANj7ectb7vVQH9giFwH
+        sFlihM9zA2Wpm4DWmo1KMJcVQw==
+X-Google-Smtp-Source: ABdhPJxD6PJ66owVmAWX8E6gbp7rigz0P4Z2yONzVbgd61fH6Zjzia6NQcSAsJ1vQHjng6a+fpD+Dw==
+X-Received: by 2002:a5d:4912:: with SMTP id x18mr4269311wrq.310.1625765903128;
+        Thu, 08 Jul 2021 10:38:23 -0700 (PDT)
+Received: from phenom.ffwll.local ([2a02:168:57f4:0:efd0:b9e5:5ae6:c2fa])
+        by smtp.gmail.com with ESMTPSA id l4sm2521853wme.26.2021.07.08.10.38.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 08 Jul 2021 10:38:22 -0700 (PDT)
+From:   Daniel Vetter <daniel.vetter@ffwll.ch>
+To:     DRI Development <dri-devel@lists.freedesktop.org>
+Cc:     Intel Graphics Development <intel-gfx@lists.freedesktop.org>,
+        Daniel Vetter <daniel.vetter@ffwll.ch>,
+        Lucas Stach <l.stach@pengutronix.de>,
+        Daniel Vetter <daniel.vetter@intel.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
+Subject: [PATCH v3 15/20] drm/msm: Don't break exclusive fence ordering
+Date:   Thu,  8 Jul 2021 19:37:49 +0200
+Message-Id: <20210708173754.3877540-16-daniel.vetter@ffwll.ch>
+X-Mailer: git-send-email 2.32.0
+In-Reply-To: <20210708173754.3877540-1-daniel.vetter@ffwll.ch>
+References: <20210708173754.3877540-1-daniel.vetter@ffwll.ch>
+MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 2021-07-08 at 11:32 +0200, Loic Poulain wrote:
-> The qrtr-mhi client driver assumes that inbound buffers are
-> automatically allocated and queued by the MHI core, but this
-> no happens for mhi pci devices since IPCR inbound channel is
-does not happen for mhi pci devices since IPCR inbound channel is
-> not flagged with auto_queue, causing unusable IPCR (qrtr)
-> feature. Fix that.
-> 
-> Cc: stable@vger.kernel.org
-> Fixes: 855a70c12021 ("bus: mhi: Add MHI PCI support for WWAN modems")
-> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
-> ---
-With commit text update 
+There's only one exclusive slot, and we must not break the ordering.
 
-Reviewed-by: Hemant kumar <hemantk@codeaurora.org>
-> [..]
+Adding a new exclusive fence drops all previous fences from the
+dma_resv. To avoid violating the signalling order we err on the side of
+over-synchronizing by waiting for the existing fences, even if
+userspace asked us to ignore them.
+
+A better fix would be to us a dma_fence_chain or _array like e.g.
+amdgpu now uses, but
+- msm has a synchronous dma_fence_wait for anything from another
+  context, so doesn't seem to care much,
+- and it probably makes sense to lift this into dma-resv.c code as a
+  proper concept, so that drivers don't have to hack up their own
+  solution each on their own.
+
+v2: Improve commit message per Lucas' suggestion.
+
+Cc: Lucas Stach <l.stach@pengutronix.de>
+Signed-off-by: Daniel Vetter <daniel.vetter@intel.com>
+Cc: Rob Clark <robdclark@gmail.com>
+Cc: Sean Paul <sean@poorly.run>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: freedreno@lists.freedesktop.org
+---
+ drivers/gpu/drm/msm/msm_gem_submit.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
+index b71da71a3dd8..edd0051d849f 100644
+--- a/drivers/gpu/drm/msm/msm_gem_submit.c
++++ b/drivers/gpu/drm/msm/msm_gem_submit.c
+@@ -306,7 +306,8 @@ static int submit_fence_sync(struct msm_gem_submit *submit, bool no_implicit)
+ 				return ret;
+ 		}
+ 
+-		if (no_implicit)
++		/* exclusive fences must be ordered */
++		if (no_implicit && !write)
+ 			continue;
+ 
+ 		ret = msm_gem_sync_object(&msm_obj->base, submit->ring->fctx,
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, a Linux Foundation Collaborative Project
+2.32.0
 
