@@ -2,175 +2,368 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5FCFD3BF95C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jul 2021 13:53:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BC86F3BF9AF
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jul 2021 14:04:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231725AbhGHLz7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Jul 2021 07:55:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42010 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231716AbhGHLz7 (ORCPT
+        id S231376AbhGHMGo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Jul 2021 08:06:44 -0400
+Received: from smtp-out2.suse.de ([195.135.220.29]:58578 "EHLO
+        smtp-out2.suse.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231347AbhGHMGn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Jul 2021 07:55:59 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A99C1C061574
-        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Jul 2021 04:53:17 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id y42so14677335lfa.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Jul 2021 04:53:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:from:to:cc:references:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=wwIauJqG7Gi/hYTEAYFKY+sGSvM6txVRYsX5pyUg7p0=;
-        b=vzyUGNkXJyqp3cmFX/UEoS55BSzhhySMqae6wQADR19j3ldyo1+Hodr0Vcec3z/5xf
-         qfbNt4J8+QEouPpqaEaYNcLM0rA87XnbyZ/WqGU1PfgRfG8jOjSH/aB2XqZEvL+3axiP
-         q8YaQKerSvIuQVTYtnQPL0c27j8z0qQkjeYLDzQIMkCVkvvDFrrGrfEq+UMilFb6FTg0
-         tdL6U5kxseeyyJSOXkf2zD3YPXh+EnQFA4nti63kSfyptKn8ir9nmjf0WcSGPS68wDQ6
-         dh/AlKVZJlv+IWdOeDZnVOIEUUwTXn7BAs1Rn0g09/4HRXLBPGee9df81TWs1arepZh7
-         ta+A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=wwIauJqG7Gi/hYTEAYFKY+sGSvM6txVRYsX5pyUg7p0=;
-        b=b8f13IBtd3lbISsekOjM6onAebeNx0Ua3PC3BfH5anjpM9+i272EkslUihFFyqsOF0
-         YXDxx+OPePmyu/SLIwxtwlPsrZqSL4R0x4kmZZv3ohyv5G0AZ+3ttNfI9bIj0sX2ffag
-         UL0N/2IgOgtvo99KN2s/lJ3GkmzZIRvjsjAGzzZdZ0KjM2tMWFKs7RGlhFa8FLY3HTmL
-         9dXHu3fu2Z9qXc3S6hiJV2Tmjl8fbzrZ/BwCRbCu/C0M64G2nAIWAxUN8lN7CuqkMVb8
-         GbtxuGrLrYgcswmuIp3nUzEzJBqYxLlNDdQUTTa4iyEbi4JTFb/QTpKx3MDKrZ9jQXsh
-         SH5Q==
-X-Gm-Message-State: AOAM5323tKZq2EYeBoZa9xeiOlzCehGtxlE18Y7R35DfPfKCmZWL5+8h
-        1puk8Gk8TlISTvKIkcwXPbWpzA==
-X-Google-Smtp-Source: ABdhPJwi6G52+QBplPSlAE010D60rWMKeJMxYbrPXzlFrjZlA/ij//cKAm8k5rwoCAyrTlb65wribw==
-X-Received: by 2002:a19:858b:: with SMTP id h133mr4514517lfd.656.1625745195941;
-        Thu, 08 Jul 2021 04:53:15 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id u16sm220527ljj.113.2021.07.08.04.53.15
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 08 Jul 2021 04:53:15 -0700 (PDT)
-Subject: Re: [PATCH] drm/msm/mdp5: fix 64-bit division in bandwidth
- calculation
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <abhinavk@codeaurora.org>
-Cc:     Jonathan Marek <jonathan@marek.ca>,
-        Stephen Boyd <sboyd@kernel.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-References: <20210622080348.1679589-1-dmitry.baryshkov@linaro.org>
-Message-ID: <d41cf4c6-0368-75ad-3dcf-561e283a22ec@linaro.org>
-Date:   Thu, 8 Jul 2021 14:53:14 +0300
+        Thu, 8 Jul 2021 08:06:43 -0400
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        (No client certificate requested)
+        by smtp-out2.suse.de (Postfix) with ESMTPS id 559D9201BA;
+        Thu,  8 Jul 2021 12:04:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+        t=1625745841; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=IZMvwLJnwvM+Gg9iQoczaGWGG0dhxSsxtWXgJwtxFuM=;
+        b=S5+4jdVfAXgG8799WbPbmAGe9Rb6myofHjnRHWzSHcIOfjJrLP7QMhi95AdK92iEAKN5z+
+        O5rDvCrz9S6VGx8f05UXufamBl1p9VzKHeksJg4D2dn1TU+KWs1EUQFvKchYW4DM7vStbk
+        kwPGp3j+lRwa4KAE8LDjPemH2T3Bk3g=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+        s=susede2_ed25519; t=1625745841;
+        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=IZMvwLJnwvM+Gg9iQoczaGWGG0dhxSsxtWXgJwtxFuM=;
+        b=Cw9E+6jE4l0PQWB8Q+41heP1GSaBH2rTvJUmAZUYc1bMXf35peQdWdSzFRdeddsSLlGUS+
+        0X27NMRHlkThPoCQ==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        (No client certificate requested)
+        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 29AF913BDF;
+        Thu,  8 Jul 2021 12:04:01 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+        by imap2.suse-dmz.suse.de with ESMTPSA
+        id 4ntECbHp5mDfUAAAMHmgww
+        (envelope-from <tzimmermann@suse.de>); Thu, 08 Jul 2021 12:04:01 +0000
+Subject: Re: [PATCH] drm/msm: Implement mmap as GEM object function
+To:     robdclark@gmail.com, sean@poorly.run, airlied@linux.ie,
+        daniel@ffwll.ch
+Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+References: <20210624090341.8249-1-tzimmermann@suse.de>
+From:   Thomas Zimmermann <tzimmermann@suse.de>
+Message-ID: <6fc2bfe5-2a3a-2e7e-46f9-6c6d400ced0b@suse.de>
+Date:   Thu, 8 Jul 2021 14:04:00 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.11.0
 MIME-Version: 1.0
-In-Reply-To: <20210622080348.1679589-1-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <20210624090341.8249-1-tzimmermann@suse.de>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="KhPh5XvBct89fMnaTP1nGGPGZO7HCTnDy"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22/06/2021 11:03, Dmitry Baryshkov wrote:
-> Fix undefined symbols errors arising from 64-bit division on 32-bit
-> arm targets. Add 64-bit version of mult_frac and use it for calculating
-> bandwidth.
-> 
-> ERROR: modpost: "__aeabi_ldivmod" [drivers/gpu/drm/msm/msm.ko] undefined!
-> ERROR: modpost: "__aeabi_uldivmod" [drivers/gpu/drm/msm/msm.ko] undefined!
-> 
-> Fixes: 7e0230fd096c ("drm/msm/mdp5: provide dynamic bandwidth management")
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--KhPh5XvBct89fMnaTP1nGGPGZO7HCTnDy
+Content-Type: multipart/mixed; boundary="eJhsNnlHF4t7qdAnaXkwstQBhFvoQS69M";
+ protected-headers="v1"
+From: Thomas Zimmermann <tzimmermann@suse.de>
+To: robdclark@gmail.com, sean@poorly.run, airlied@linux.ie, daniel@ffwll.ch
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org
+Message-ID: <6fc2bfe5-2a3a-2e7e-46f9-6c6d400ced0b@suse.de>
+Subject: Re: [PATCH] drm/msm: Implement mmap as GEM object function
+References: <20210624090341.8249-1-tzimmermann@suse.de>
+In-Reply-To: <20210624090341.8249-1-tzimmermann@suse.de>
 
-We are reworking now bandwidth management for mdp5, so both the original 
-patch and the fix can be ignored for now.
+--eJhsNnlHF4t7qdAnaXkwstQBhFvoQS69M
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
 
+ping for review
+
+Am 24.06.21 um 11:03 schrieb Thomas Zimmermann:
+> Moving the driver-specific mmap code into a GEM object function allows
+> for using DRM helpers for various mmap callbacks.
+>=20
+> The respective msm functions are being removed. The file_operations
+> structure fops is now being created by the helper macro
+> DEFINE_DRM_GEM_FOPS().
+>=20
+> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
 > ---
->   drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c  |  2 +-
->   drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c   |  5 ++++-
->   drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c |  2 +-
->   include/linux/math.h                       | 13 +++++++++++++
->   4 files changed, 19 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c
-> index a9332078aa13..52724d0a6fea 100644
-> --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c
-> +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c
-> @@ -755,7 +755,7 @@ static int mdp5_crtc_atomic_check(struct drm_crtc *crtc,
->   	hw_cfg = mdp5_cfg_get_hw_config(mdp5_kms->cfg);
->   
->   	if (hw_cfg->perf.ab_inefficiency)
-> -		crtc_bw = mult_frac(crtc_bw, hw_cfg->perf.ab_inefficiency, 100);
-> +		crtc_bw = mult_frac_ull(crtc_bw, hw_cfg->perf.ab_inefficiency, 100);
->   	mdp5_cstate->new_crtc_bw = crtc_bw;
->   
->   	/*
-> diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-> index 3e1b28d3e41b..85b7093a1218 100644
-> --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-> +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-> @@ -301,6 +301,7 @@ static const struct mdp_kms_funcs kms_funcs = {
->   void mdp5_kms_set_bandwidth(struct mdp5_kms *mdp5_kms)
->   {
->   	int i;
-> +	u64 bw;
->   	u32 full_bw = 0;
->   	struct drm_crtc *tmp_crtc;
->   
-> @@ -311,7 +312,9 @@ void mdp5_kms_set_bandwidth(struct mdp5_kms *mdp5_kms)
->   		if (!tmp_crtc->enabled)
->   			continue;
->   
-> -		full_bw += Bps_to_icc(to_mdp5_crtc_state(tmp_crtc->state)->new_crtc_bw / mdp5_kms->num_paths);
-> +		bw = to_mdp5_crtc_state(tmp_crtc->state)->new_crtc_bw;
-> +		do_div(bw, mdp5_kms->num_paths * 1000); /* Bps_to_icc */
-> +		full_bw += bw;
->   	}
->   
->   	DBG("SET BW to %d\n", full_bw);
-> diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c
-> index 85275665558b..2ede34177a90 100644
-> --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c
-> +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c
-> @@ -191,7 +191,7 @@ static void mdp5_plane_calc_bw(struct drm_plane_state *state, struct drm_crtc_st
->   		prefill_div = vbp + vpw + vfp;
+>   drivers/gpu/drm/msm/msm_drv.c       | 14 +-----
+>   drivers/gpu/drm/msm/msm_drv.h       |  1 -
+>   drivers/gpu/drm/msm/msm_fbdev.c     | 10 +----
+>   drivers/gpu/drm/msm/msm_gem.c       | 67 ++++++++++++----------------=
+-
+>   drivers/gpu/drm/msm/msm_gem.h       |  3 --
+>   drivers/gpu/drm/msm/msm_gem_prime.c | 11 -----
+>   6 files changed, 31 insertions(+), 75 deletions(-)
+>=20
+> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_dr=
+v.c
+> index fe7d17cd35ec..f62eaedfc0d7 100644
+> --- a/drivers/gpu/drm/msm/msm_drv.c
+> +++ b/drivers/gpu/drm/msm/msm_drv.c
+> @@ -985,17 +985,7 @@ static const struct drm_ioctl_desc msm_ioctls[] =3D=
+ {
+>   	DRM_IOCTL_DEF_DRV(MSM_SUBMITQUEUE_QUERY, msm_ioctl_submitqueue_query=
+, DRM_RENDER_ALLOW),
+>   };
+>  =20
+> -static const struct file_operations fops =3D {
+> -	.owner              =3D THIS_MODULE,
+> -	.open               =3D drm_open,
+> -	.release            =3D drm_release,
+> -	.unlocked_ioctl     =3D drm_ioctl,
+> -	.compat_ioctl       =3D drm_compat_ioctl,
+> -	.poll               =3D drm_poll,
+> -	.read               =3D drm_read,
+> -	.llseek             =3D no_llseek,
+> -	.mmap               =3D msm_gem_mmap,
+> -};
+> +DEFINE_DRM_GEM_FOPS(fops);
+>  =20
+>   static const struct drm_driver msm_driver =3D {
+>   	.driver_features    =3D DRIVER_GEM |
+> @@ -1015,7 +1005,7 @@ static const struct drm_driver msm_driver =3D {
+>   	.prime_handle_to_fd =3D drm_gem_prime_handle_to_fd,
+>   	.prime_fd_to_handle =3D drm_gem_prime_fd_to_handle,
+>   	.gem_prime_import_sg_table =3D msm_gem_prime_import_sg_table,
+> -	.gem_prime_mmap     =3D msm_gem_prime_mmap,
+> +	.gem_prime_mmap     =3D drm_gem_prime_mmap,
+>   #ifdef CONFIG_DEBUG_FS
+>   	.debugfs_init       =3D msm_debugfs_init,
 >   #endif
->   
-> -	pstate->plane_bw = max(plane_bw, mult_frac(plane_bw, hw_latency_lines, prefill_div));
-> +	pstate->plane_bw = max(plane_bw, mult_frac_ull(plane_bw, hw_latency_lines, prefill_div));
+> diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_dr=
+v.h
+> index 2668941df529..8f1e0d7c8bbb 100644
+> --- a/drivers/gpu/drm/msm/msm_drv.h
+> +++ b/drivers/gpu/drm/msm/msm_drv.h
+> @@ -300,7 +300,6 @@ void msm_gem_shrinker_cleanup(struct drm_device *de=
+v);
+>   struct sg_table *msm_gem_prime_get_sg_table(struct drm_gem_object *ob=
+j);
+>   int msm_gem_prime_vmap(struct drm_gem_object *obj, struct dma_buf_map=
+ *map);
+>   void msm_gem_prime_vunmap(struct drm_gem_object *obj, struct dma_buf_=
+map *map);
+> -int msm_gem_prime_mmap(struct drm_gem_object *obj, struct vm_area_stru=
+ct *vma);
+>   struct drm_gem_object *msm_gem_prime_import_sg_table(struct drm_devic=
+e *dev,
+>   		struct dma_buf_attachment *attach, struct sg_table *sg);
+>   int msm_gem_prime_pin(struct drm_gem_object *obj);
+> diff --git a/drivers/gpu/drm/msm/msm_fbdev.c b/drivers/gpu/drm/msm/msm_=
+fbdev.c
+> index 227404077e39..07225907fd2d 100644
+> --- a/drivers/gpu/drm/msm/msm_fbdev.c
+> +++ b/drivers/gpu/drm/msm/msm_fbdev.c
+> @@ -8,6 +8,7 @@
+>   #include <drm/drm_crtc.h>
+>   #include <drm/drm_fb_helper.h>
+>   #include <drm/drm_fourcc.h>
+> +#include <drm/drm_prime.h>
+>  =20
+>   #include "msm_drv.h"
+>   #include "msm_gem.h"
+> @@ -48,15 +49,8 @@ static int msm_fbdev_mmap(struct fb_info *info, stru=
+ct vm_area_struct *vma)
+>   	struct drm_fb_helper *helper =3D (struct drm_fb_helper *)info->par;
+>   	struct msm_fbdev *fbdev =3D to_msm_fbdev(helper);
+>   	struct drm_gem_object *bo =3D msm_framebuffer_bo(fbdev->fb, 0);
+> -	int ret =3D 0;
+>  =20
+> -	ret =3D drm_gem_mmap_obj(bo, bo->size, vma);
+> -	if (ret) {
+> -		pr_err("%s:drm_gem_mmap_obj fail\n", __func__);
+> -		return ret;
+> -	}
+> -
+> -	return msm_gem_mmap_obj(bo, vma);
+> +	return drm_gem_prime_mmap(bo, vma);
 >   }
->   
->   static int mdp5_plane_atomic_check_with_state(struct drm_crtc_state *crtc_state,
-> diff --git a/include/linux/math.h b/include/linux/math.h
-> index 53674a327e39..1327385905df 100644
-> --- a/include/linux/math.h
-> +++ b/include/linux/math.h
-> @@ -118,6 +118,19 @@
->   }							\
->   )
->   
-> +#define mult_frac_ull(x, numer, denom)(			\
-> +{							\
-> +	typeof(x) quot = (x);				\
-> +	typeof(x) rem;					\
-> +	do_div(quot, (denom));				\
-> +	rem = (x) - quot * (denom);			\
-> +	rem = (rem * (numer));				\
-> +	do_div(rem, (denom));				\
-> +	(quot * (numer)) + rem;				\
-> +}							\
-> +)
+>  =20
+>   static int msm_fbdev_create(struct drm_fb_helper *helper,
+> diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_ge=
+m.c
+> index b61f5466e522..71d835bc575d 100644
+> --- a/drivers/gpu/drm/msm/msm_gem.c
+> +++ b/drivers/gpu/drm/msm/msm_gem.c
+> @@ -211,46 +211,6 @@ void msm_gem_put_pages(struct drm_gem_object *obj)=
+
+>   	msm_gem_unlock(obj);
+>   }
+>  =20
+> -int msm_gem_mmap_obj(struct drm_gem_object *obj,
+> -		struct vm_area_struct *vma)
+> -{
+> -	struct msm_gem_object *msm_obj =3D to_msm_bo(obj);
+> -
+> -	vma->vm_flags &=3D ~VM_PFNMAP;
+> -	vma->vm_flags |=3D VM_MIXEDMAP;
+> -
+> -	if (msm_obj->flags & MSM_BO_WC) {
+> -		vma->vm_page_prot =3D pgprot_writecombine(vm_get_page_prot(vma->vm_f=
+lags));
+> -	} else if (msm_obj->flags & MSM_BO_UNCACHED) {
+> -		vma->vm_page_prot =3D pgprot_noncached(vm_get_page_prot(vma->vm_flag=
+s));
+> -	} else {
+> -		/*
+> -		 * Shunt off cached objs to shmem file so they have their own
+> -		 * address_space (so unmap_mapping_range does what we want,
+> -		 * in particular in the case of mmap'd dmabufs)
+> -		 */
+> -		vma->vm_pgoff =3D 0;
+> -		vma_set_file(vma, obj->filp);
+> -
+> -		vma->vm_page_prot =3D vm_get_page_prot(vma->vm_flags);
+> -	}
+> -
+> -	return 0;
+> -}
+> -
+> -int msm_gem_mmap(struct file *filp, struct vm_area_struct *vma)
+> -{
+> -	int ret;
+> -
+> -	ret =3D drm_gem_mmap(filp, vma);
+> -	if (ret) {
+> -		DBG("mmap failed: %d", ret);
+> -		return ret;
+> -	}
+> -
+> -	return msm_gem_mmap_obj(vma->vm_private_data, vma);
+> -}
+> -
+>   static vm_fault_t msm_gem_fault(struct vm_fault *vmf)
+>   {
+>   	struct vm_area_struct *vma =3D vmf->vma;
+> @@ -1119,6 +1079,32 @@ void msm_gem_free_object(struct drm_gem_object *=
+obj)
+>   	kfree(msm_obj);
+>   }
+>  =20
+> +static int msm_gem_object_mmap(struct drm_gem_object *obj, struct vm_a=
+rea_struct *vma)
+> +{
+> +	struct msm_gem_object *msm_obj =3D to_msm_bo(obj);
 > +
+> +	vma->vm_flags &=3D ~VM_PFNMAP;
+> +	vma->vm_flags |=3D VM_MIXEDMAP;
 > +
->   #define sector_div(a, b) do_div(a, b)
->   
->   /**
-> 
+> +	if (msm_obj->flags & MSM_BO_WC) {
+> +		vma->vm_page_prot =3D pgprot_writecombine(vm_get_page_prot(vma->vm_f=
+lags));
+> +	} else if (msm_obj->flags & MSM_BO_UNCACHED) {
+> +		vma->vm_page_prot =3D pgprot_noncached(vm_get_page_prot(vma->vm_flag=
+s));
+> +	} else {
+> +		/*
+> +		 * Shunt off cached objs to shmem file so they have their own
+> +		 * address_space (so unmap_mapping_range does what we want,
+> +		 * in particular in the case of mmap'd dmabufs)
+> +		 */
+> +		vma->vm_pgoff =3D 0;
+> +		vma_set_file(vma, obj->filp);
+> +
+> +		vma->vm_page_prot =3D vm_get_page_prot(vma->vm_flags);
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+>   /* convenience method to construct a GEM buffer object, and userspace=
+ handle */
+>   int msm_gem_new_handle(struct drm_device *dev, struct drm_file *file,=
+
+>   		uint32_t size, uint32_t flags, uint32_t *handle,
+> @@ -1156,6 +1142,7 @@ static const struct drm_gem_object_funcs msm_gem_=
+object_funcs =3D {
+>   	.get_sg_table =3D msm_gem_prime_get_sg_table,
+>   	.vmap =3D msm_gem_prime_vmap,
+>   	.vunmap =3D msm_gem_prime_vunmap,
+> +	.mmap =3D msm_gem_object_mmap,
+>   	.vm_ops =3D &vm_ops,
+>   };
+>  =20
+> diff --git a/drivers/gpu/drm/msm/msm_gem.h b/drivers/gpu/drm/msm/msm_ge=
+m.h
+> index 03e2cc2a2ce1..8508163088a9 100644
+> --- a/drivers/gpu/drm/msm/msm_gem.h
+> +++ b/drivers/gpu/drm/msm/msm_gem.h
+> @@ -112,9 +112,6 @@ struct msm_gem_object {
+>   };
+>   #define to_msm_bo(x) container_of(x, struct msm_gem_object, base)
+>  =20
+> -int msm_gem_mmap_obj(struct drm_gem_object *obj,
+> -			struct vm_area_struct *vma);
+> -int msm_gem_mmap(struct file *filp, struct vm_area_struct *vma);
+>   uint64_t msm_gem_mmap_offset(struct drm_gem_object *obj);
+>   int msm_gem_get_iova(struct drm_gem_object *obj,
+>   		struct msm_gem_address_space *aspace, uint64_t *iova);
+> diff --git a/drivers/gpu/drm/msm/msm_gem_prime.c b/drivers/gpu/drm/msm/=
+msm_gem_prime.c
+> index 9880348a4dc7..fc94e061d6a7 100644
+> --- a/drivers/gpu/drm/msm/msm_gem_prime.c
+> +++ b/drivers/gpu/drm/msm/msm_gem_prime.c
+> @@ -39,17 +39,6 @@ void msm_gem_prime_vunmap(struct drm_gem_object *obj=
+, struct dma_buf_map *map)
+>   	msm_gem_put_vaddr(obj);
+>   }
+>  =20
+> -int msm_gem_prime_mmap(struct drm_gem_object *obj, struct vm_area_stru=
+ct *vma)
+> -{
+> -	int ret;
+> -
+> -	ret =3D drm_gem_mmap_obj(obj, obj->size, vma);
+> -	if (ret < 0)
+> -		return ret;
+> -
+> -	return msm_gem_mmap_obj(vma->vm_private_data, vma);
+> -}
+> -
+>   struct drm_gem_object *msm_gem_prime_import_sg_table(struct drm_devic=
+e *dev,
+>   		struct dma_buf_attachment *attach, struct sg_table *sg)
+>   {
+>=20
+
+--=20
+Thomas Zimmermann
+Graphics Driver Developer
+SUSE Software Solutions Germany GmbH
+Maxfeldstr. 5, 90409 N=C3=BCrnberg, Germany
+(HRB 36809, AG N=C3=BCrnberg)
+Gesch=C3=A4ftsf=C3=BChrer: Felix Imend=C3=B6rffer
 
 
--- 
-With best wishes
-Dmitry
+--eJhsNnlHF4t7qdAnaXkwstQBhFvoQS69M--
+
+--KhPh5XvBct89fMnaTP1nGGPGZO7HCTnDy
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature"
+
+-----BEGIN PGP SIGNATURE-----
+
+wsF5BAABCAAjFiEExndm/fpuMUdwYFFolh/E3EQov+AFAmDm6bAFAwAAAAAACgkQlh/E3EQov+BY
+8A/+OuES7Njvd/kUB8duV1EUcExgqt2uH1wjxWYJXkCuw4yJpKdaVOFmhJjQatltXkUv0ZpD/JoL
+gGSYAlBIKheh4lo3pwWuRGV7dZHyNS6YFYvFXNhns+HY+eTb9Z4+Rkw5f3XG1DH8gUwiYAGv+G9b
+5fmxRG47BrTBmtGZQmHRUnKsTYxfM/dr+b2YEZq3PovNvjZuDT7lse/rFMQbkvuR7Ii/nrPyhSRj
+G4NqiHFy+RF3UJs7CIIajyMY50z9dRMpueXc3ezj1Ne13h/9s1Jq/4cs7rxAoEk9f/aZvUtLqc7x
+MkTBQWwNfB/b18QG2J8jLPYzC8A4qdJANy1S76OghmYljXoFjcqvbyNKp4F/zJvMlIMFI4lKEYUA
+EKIMDY95MCD6N0eSC0RIvPrwmKjZQf6zHD6Hoi+PwYVtCDtfa+eYICdri/k8qWctRh5e0t5Rjy62
+PUclF1DQB2NyGCzbvnZQH+vrfrqEJ3rbwlAvUqJVTKBZOBinSI06c4p1P2C5I3IdLKWZvJjZQ5Lu
+NmuSjHK7QHtOrP3LiIjkXK7leF1BNSg5Jai6MUtuUgWsRPlqXzE+uAf6fV1M012g2+cqu8jb9hlW
+VNSa0dfJdjmF50pNZcG7eYws7HmZKo1+iAKEboUE03jTF6oWckdLAVTkeaYAGcvKTnE4xsfkn8rO
+uKY=
+=EqsH
+-----END PGP SIGNATURE-----
+
+--KhPh5XvBct89fMnaTP1nGGPGZO7HCTnDy--
