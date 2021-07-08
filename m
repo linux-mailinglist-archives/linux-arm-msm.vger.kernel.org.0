@@ -2,110 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 57BB83C1852
+	by mail.lfdr.de (Postfix) with ESMTP id C50EE3C1853
 	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jul 2021 19:38:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229956AbhGHRlG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Jul 2021 13:41:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35428 "EHLO
+        id S229986AbhGHRlI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Jul 2021 13:41:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35432 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229815AbhGHRlG (ORCPT
+        with ESMTP id S229815AbhGHRlH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Jul 2021 13:41:06 -0400
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76371C061574
-        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Jul 2021 10:38:24 -0700 (PDT)
-Received: by mail-wr1-x432.google.com with SMTP id a13so8505354wrf.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Jul 2021 10:38:24 -0700 (PDT)
+        Thu, 8 Jul 2021 13:41:07 -0400
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 740BAC061574
+        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Jul 2021 10:38:25 -0700 (PDT)
+Received: by mail-wm1-x332.google.com with SMTP id a5-20020a7bc1c50000b02901e3bbe0939bso4575266wmj.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Jul 2021 10:38:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ffwll.ch; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=InVnPLy1h+Gn4xVBn/fC7AZt6grH88jqC7oOozTIXb8=;
-        b=b9NfiRDV4PWMagsuaIW/0pNvT/uy7ZDQf5JndjvR8JML4iEvYQWZQL7cwk7QnkWdah
-         oBfpqwwuzxFNgBz0aEff+3SB9zAzKpnDR1DMFi43W07iORhzR0ARnRNGrCQ3kjPtlJLd
-         IJh73WUh20UIq5aO+hBu1ga1TfA/5tOncbrXM=
+        bh=QjSmqlbIRb4rQlv/d4Pv/+GvfrOLmD0Jb/5nkyL4HJI=;
+        b=OXWAMqyAm3FBqCmhazvtViPAczIYbDg3o3MhmkkOYXWZo3KasFE7n0nAJn3tBoiheQ
+         Uz11jDhuINyDdsI4jhUSXimf8CsgIs+yJX8P1fVDe1tZR1ck2fHGWEufuZbQ6Hyvcg3Y
+         SBMM8LmNDEAE4LoiP5rbz1j7aL4QlTe7Ad8Y8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=InVnPLy1h+Gn4xVBn/fC7AZt6grH88jqC7oOozTIXb8=;
-        b=AD/QldTQJ/l4n8pmkj5bKVblFWxhx7DePCnyCDlsC88YfnoG1M05hYZdCfh53UrdX+
-         H0JWGYHSGP+CW9gZMrmPR0kyOQvtETe3y0+KgSwLQcy9DlI/ZHsJFpFJWfhrlRzUVRoe
-         w9aJjRPu6Ml4rSy3+ctK5jV8kqMVJO21Dvu98r2omH0/uI8vmoMReQdOUWhXFpIG6Yez
-         1jh/q5I5iNKFhPDYyfVcDW3KUWpB+xk6Es22Rq3+xnUvkSWZl0fkualbEc7k6l1IzxVh
-         qpiVrY7uJmB0m8bRi1BTHqYWbNchil1DMC4osrfZeXXBL5Xb/rF5+c2mCef9D+t6KgAh
-         0oDg==
-X-Gm-Message-State: AOAM5302Ex5aYtAHcedRfblArddGzikLoiVZLANj7ectb7vVQH9giFwH
-        sFlihM9zA2Wpm4DWmo1KMJcVQw==
-X-Google-Smtp-Source: ABdhPJxD6PJ66owVmAWX8E6gbp7rigz0P4Z2yONzVbgd61fH6Zjzia6NQcSAsJ1vQHjng6a+fpD+Dw==
-X-Received: by 2002:a5d:4912:: with SMTP id x18mr4269311wrq.310.1625765903128;
-        Thu, 08 Jul 2021 10:38:23 -0700 (PDT)
+        bh=QjSmqlbIRb4rQlv/d4Pv/+GvfrOLmD0Jb/5nkyL4HJI=;
+        b=ZJGkQgxEXAyhie2DCUfh7S7UkjwJjtJgaxceSLVAmWNJKgCVRCLflWYNBV6RjynxOn
+         5b8YByxVUyKGGjBlh1plLXgWpSDg3Ici/HleXfs9MVlqhh+zYPrEpqGX2EiXDqbhspR+
+         oyGZ3l66jtIwJGUCQQwJvBHRzHA4k4XLx4m6cLPjewSXeOm+u0Y4zX+Zy7+d4jbdKQRd
+         FhxUOP/ldlSAV/SlnaoGG0RYyM75do2MMWhHmFEkIm2Qs7/YyuBTogfEtwEoi85U7V1g
+         mC1Of1GAOlhRojR7N2impkVn0v1F5sapfBoYE5f/y+Iy4exFC/ppVQgpJXQ0b/mhlUGB
+         APlQ==
+X-Gm-Message-State: AOAM5334fsU3+O9bLz9oV7BSOCnj5xCjtRc6Id544Zfsz+ZKe6W5zNgA
+        y+hsd4ELLaLw7RQQBfrDg149Uw==
+X-Google-Smtp-Source: ABdhPJw1jshJuGMwGuQ/le1CCh7zRdTpRm7R19534t5pFRk1PSYScUvtSH1ZQ65X5JqJpvpszXLP4A==
+X-Received: by 2002:a1c:4302:: with SMTP id q2mr6565057wma.37.1625765904147;
+        Thu, 08 Jul 2021 10:38:24 -0700 (PDT)
 Received: from phenom.ffwll.local ([2a02:168:57f4:0:efd0:b9e5:5ae6:c2fa])
-        by smtp.gmail.com with ESMTPSA id l4sm2521853wme.26.2021.07.08.10.38.22
+        by smtp.gmail.com with ESMTPSA id l4sm2521853wme.26.2021.07.08.10.38.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Jul 2021 10:38:22 -0700 (PDT)
+        Thu, 08 Jul 2021 10:38:23 -0700 (PDT)
 From:   Daniel Vetter <daniel.vetter@ffwll.ch>
 To:     DRI Development <dri-devel@lists.freedesktop.org>
 Cc:     Intel Graphics Development <intel-gfx@lists.freedesktop.org>,
+        =?UTF-8?q?Christian=20K=C3=B6nig?= 
+        <ckoenig.leichtzumerken@gmail.com>,
+        =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
         Daniel Vetter <daniel.vetter@ffwll.ch>,
-        Lucas Stach <l.stach@pengutronix.de>,
-        Daniel Vetter <daniel.vetter@intel.com>,
         Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
-Subject: [PATCH v3 15/20] drm/msm: Don't break exclusive fence ordering
-Date:   Thu,  8 Jul 2021 19:37:49 +0200
-Message-Id: <20210708173754.3877540-16-daniel.vetter@ffwll.ch>
+Subject: [PATCH v3 16/20] drm/msm: always wait for the exclusive fence
+Date:   Thu,  8 Jul 2021 19:37:50 +0200
+Message-Id: <20210708173754.3877540-17-daniel.vetter@ffwll.ch>
 X-Mailer: git-send-email 2.32.0
 In-Reply-To: <20210708173754.3877540-1-daniel.vetter@ffwll.ch>
 References: <20210708173754.3877540-1-daniel.vetter@ffwll.ch>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-There's only one exclusive slot, and we must not break the ordering.
+From: Christian König <ckoenig.leichtzumerken@gmail.com>
 
-Adding a new exclusive fence drops all previous fences from the
-dma_resv. To avoid violating the signalling order we err on the side of
-over-synchronizing by waiting for the existing fences, even if
-userspace asked us to ignore them.
+Drivers also need to to sync to the exclusive fence when
+a shared one is present.
 
-A better fix would be to us a dma_fence_chain or _array like e.g.
-amdgpu now uses, but
-- msm has a synchronous dma_fence_wait for anything from another
-  context, so doesn't seem to care much,
-- and it probably makes sense to lift this into dma-resv.c code as a
-  proper concept, so that drivers don't have to hack up their own
-  solution each on their own.
-
-v2: Improve commit message per Lucas' suggestion.
-
-Cc: Lucas Stach <l.stach@pengutronix.de>
-Signed-off-by: Daniel Vetter <daniel.vetter@intel.com>
+Signed-off-by: Christian König <christian.koenig@amd.com>
+[danvet: Not that hard to compile-test on arm ...]
+Signed-off-by: Daniel Vetter <daniel.vetter@ffwll.ch>
 Cc: Rob Clark <robdclark@gmail.com>
 Cc: Sean Paul <sean@poorly.run>
 Cc: linux-arm-msm@vger.kernel.org
 Cc: freedreno@lists.freedesktop.org
 ---
- drivers/gpu/drm/msm/msm_gem_submit.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/msm/msm_gem.c | 16 +++++++---------
+ 1 file changed, 7 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
-index b71da71a3dd8..edd0051d849f 100644
---- a/drivers/gpu/drm/msm/msm_gem_submit.c
-+++ b/drivers/gpu/drm/msm/msm_gem_submit.c
-@@ -306,7 +306,8 @@ static int submit_fence_sync(struct msm_gem_submit *submit, bool no_implicit)
- 				return ret;
- 		}
+diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
+index 141178754231..d9c4f1deeafb 100644
+--- a/drivers/gpu/drm/msm/msm_gem.c
++++ b/drivers/gpu/drm/msm/msm_gem.c
+@@ -812,17 +812,15 @@ int msm_gem_sync_object(struct drm_gem_object *obj,
+ 	struct dma_fence *fence;
+ 	int i, ret;
  
--		if (no_implicit)
-+		/* exclusive fences must be ordered */
-+		if (no_implicit && !write)
- 			continue;
+-	fobj = dma_resv_shared_list(obj->resv);
+-	if (!fobj || (fobj->shared_count == 0)) {
+-		fence = dma_resv_excl_fence(obj->resv);
+-		/* don't need to wait on our own fences, since ring is fifo */
+-		if (fence && (fence->context != fctx->context)) {
+-			ret = dma_fence_wait(fence, true);
+-			if (ret)
+-				return ret;
+-		}
++	fence = dma_resv_excl_fence(obj->resv);
++	/* don't need to wait on our own fences, since ring is fifo */
++	if (fence && (fence->context != fctx->context)) {
++		ret = dma_fence_wait(fence, true);
++		if (ret)
++			return ret;
+ 	}
  
- 		ret = msm_gem_sync_object(&msm_obj->base, submit->ring->fctx,
++	fobj = dma_resv_shared_list(obj->resv);
+ 	if (!exclusive || !fobj)
+ 		return 0;
+ 
 -- 
 2.32.0
 
