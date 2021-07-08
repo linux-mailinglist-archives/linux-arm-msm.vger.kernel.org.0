@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 648333BF9D1
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jul 2021 14:07:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 074273BF9D3
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jul 2021 14:07:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231878AbhGHMJv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Jul 2021 08:09:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45200 "EHLO
+        id S231872AbhGHMJw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Jul 2021 08:09:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45238 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231794AbhGHMJq (ORCPT
+        with ESMTP id S231815AbhGHMJr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Jul 2021 08:09:46 -0400
-Received: from mail-qt1-x834.google.com (mail-qt1-x834.google.com [IPv6:2607:f8b0:4864:20::834])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D36AC06175F
-        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Jul 2021 05:07:03 -0700 (PDT)
-Received: by mail-qt1-x834.google.com with SMTP id x24so4592439qts.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Jul 2021 05:07:03 -0700 (PDT)
+        Thu, 8 Jul 2021 08:09:47 -0400
+Received: from mail-qk1-x731.google.com (mail-qk1-x731.google.com [IPv6:2607:f8b0:4864:20::731])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E7E5C061766
+        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Jul 2021 05:07:04 -0700 (PDT)
+Received: by mail-qk1-x731.google.com with SMTP id q190so5377221qkd.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Jul 2021 05:07:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=2T81iWIL1908Vl2QtcUP1A5GcmnGaJTNEI2g+BHElzU=;
-        b=u11BqaH8MRXzLVIuvlIRzdW+JPL3+AgArt5qNzVS7PkwHhq+QBuEQa5ObO21Q9WUh7
-         oE+qOc+obZKmwb1NkLUGPn2D9NZJfMKckbrC1YKn5lVkUwlGOwFkGFvzeInfIWvTfCVa
-         CQd7UVIwnZtXtGeJsPwNVXjLeqFXPKHpeUP2WIykh04pwilvYYVwdzTQpJv2+QdMJQaz
-         1KOmBTEKUsVDqejN8h9L5EUdnf+iyZ5c/r4jokdEx/ME72DCjxbq6NXzijFcMXck46de
-         l1b8zhl1Di6g4nhNQ2j5VyhB8gsWHAQnZIDYdLzw66jIDQ6itvT+9c6kB3CkEjsjRcch
-         anQQ==
+        bh=yQigZ31K//ojQpU2CgPxfETTC1keDSy5ChKl/mBuEPc=;
+        b=L66cHNHo+i3NRBBDo1LjUaNJUq+ctcE2mc0hZVN6s/bIOIdiKvVZNtrHek4Jph6ruu
+         i7UQyHjstzVCEaOV6dLNPNX8Cxck9xzaVH6tRGSvu3kPm0NzzdsPc+TIxqqIz+U7TmDG
+         ZjY27WUGm0EOzrudOqSusu6UMkTlnZ1T9o8S2b/4TZZKgV4X6TX+j74BbPydJ4rDKk00
+         wUbHwSBLH6HrEKwjaLmVkc2dAImmYnYn99/HtNNnGcXnvvyezrBaHyGTtcYE4hkUm5zp
+         fCLDp9s92Ie6bA5A/p/r9sZEOAd+6Eho8CQk0C8kebEbNXToM8P+AwuzEJL8on6+zNX7
+         VLhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=2T81iWIL1908Vl2QtcUP1A5GcmnGaJTNEI2g+BHElzU=;
-        b=PDp8Ue512qiopdPWCnzT6dzstMjT5hscTfAmvkhnmLmOgEGfB13fUahXT5S0C8kaZv
-         oQQmb1UOaBCEID/VkzQXMxgKkp40cgMW51y1jUdsOIV6ZOHGMZgZ+FeHGJLOsqUrEwr2
-         i/q8wfnbSFVHxV+N9uUWH5RWQGCzD59Ja7CFCCImwFrNah4DA3kHmIKX6EZxfVx5QFZn
-         bpdD8EVECVvjTpeqWSjjTYAIKWhVyIhx4hPpexzelIy7dTC+Lk+g+6n7htsN0ueXfYFw
-         uMc8bx3hCoc8v093yOTvvwGxmNtpS9NVyDmqN8g0M6OtfXk3eNQJz0ujtbYOEXxUaXCX
-         abEA==
-X-Gm-Message-State: AOAM533zoQNXHJUqvzvQk3YZWKSVebBjFswao+pAVvRVL81z5f4K1Gb0
-        NGmmfqcyacaIPkJ0PzSQp5fqEw==
-X-Google-Smtp-Source: ABdhPJyb2Veuess13LTtJ56DljUn27ruByB7Fmqnh8pXjy9DCb+f2ByRMGtw7O19m+STxoCJGRW2KA==
-X-Received: by 2002:ac8:7396:: with SMTP id t22mr24185372qtp.175.1625746022705;
-        Thu, 08 Jul 2021 05:07:02 -0700 (PDT)
+        bh=yQigZ31K//ojQpU2CgPxfETTC1keDSy5ChKl/mBuEPc=;
+        b=CZwWyfeN2P4+B6T6K/WB2jPyUoT47Gr4OwA511eWDJHRQsQRwFdNP6Z7ff2QsYJhVK
+         lub7jkkbCUBX+aBc4CunHGQeu7XxPmtD6gnefadTD3Kj4dfCnlkTmFnqFNYb2Ua694lY
+         crexXTEPwsAxdVxtfrBqwBag/G+a96cXcZ1sv8Cf9LP4pRJP3H2Sq9BaCtbFH6cB6ory
+         N5+CILYhOx5PvtBAQMrIB9IsoOTBrLOb72E8rgwsgf+x9bi6STU7UJD3rq4ImavTXSW1
+         ii0vIybswraEXGtJCySAywncV7nWEcmWTCcQA3T3d3kcXbXYipT6epKHKpbN4iK/7nS1
+         92+A==
+X-Gm-Message-State: AOAM530f9etiiX3BMPwDQWXmNtPkBrcDzgvzMfBklUocP3hLWT4TPL7T
+        WNHbCkqZEDNyDljgGvgOzq4Wzw==
+X-Google-Smtp-Source: ABdhPJy5C5v62Ra0cr8//8lURsSg9ZFvzFDflfgvITU+J/qi6fc/dO90JlZurBhQ7NAWcJGFTE+D7Q==
+X-Received: by 2002:a05:620a:1402:: with SMTP id d2mr19803733qkj.86.1625746023680;
+        Thu, 08 Jul 2021 05:07:03 -0700 (PDT)
 Received: from pop-os.fios-router.home (pool-71-163-245-5.washdc.fios.verizon.net. [71.163.245.5])
-        by smtp.googlemail.com with ESMTPSA id i2sm912541qko.43.2021.07.08.05.07.01
+        by smtp.googlemail.com with ESMTPSA id i2sm912541qko.43.2021.07.08.05.07.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Jul 2021 05:07:02 -0700 (PDT)
+        Thu, 08 Jul 2021 05:07:03 -0700 (PDT)
 From:   Thara Gopinath <thara.gopinath@linaro.org>
 To:     agross@kernel.org, bjorn.andersson@linaro.org, rui.zhang@intel.com,
         daniel.lezcano@linaro.org, viresh.kumar@linaro.org,
@@ -55,9 +55,9 @@ To:     agross@kernel.org, bjorn.andersson@linaro.org, rui.zhang@intel.com,
 Cc:     tdas@codeaurora.org, mka@chromium.org,
         linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
         linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-Subject: [Patch v3 5/6] arm64: boot: dts: qcom: sdm845: Remove cpufreq cooling devices for CPU thermal zones
-Date:   Thu,  8 Jul 2021 08:06:55 -0400
-Message-Id: <20210708120656.663851-6-thara.gopinath@linaro.org>
+Subject: [Patch v3 6/6] dt-bindings: thermal: Add dt binding for QCOM LMh
+Date:   Thu,  8 Jul 2021 08:06:56 -0400
+Message-Id: <20210708120656.663851-7-thara.gopinath@linaro.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20210708120656.663851-1-thara.gopinath@linaro.org>
 References: <20210708120656.663851-1-thara.gopinath@linaro.org>
@@ -67,222 +67,121 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Now that Limits h/w is enabled to monitor thermal events around cpus and
-throttle the cpu frequencies, remove cpufreq cooling device for the CPU
-thermal zones which does software throttling of cpu frequencies.
+Add dt binding documentation to describe Qualcomm
+Limits Management Hardware node.
 
 Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
 ---
+ .../devicetree/bindings/thermal/qcom-lmh.yaml | 100 ++++++++++++++++++
+ 1 file changed, 100 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/thermal/qcom-lmh.yaml
 
-v2->v3:
-	- Improved the subject header and descrption to better reflect the
-	  patch as per Matthias's review comments.
-
-v1->v2:
-	Removing only cooling maps for cpu specific thermal zones keeping the
-	trip point definitions intact as per Daniel's suggestion. This is to
-	ensure that thermal zone temparature and trip violation information is
-	available to any userspace daemon monitoring these zones.
-
- arch/arm64/boot/dts/qcom/sdm845.dtsi | 136 ---------------------------
- 1 file changed, 136 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-index 4da6b8f3dd7b..6185fff8859a 100644
---- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-@@ -4994,23 +4994,6 @@ cpu0_crit: cpu_crit {
- 					type = "critical";
- 				};
- 			};
--
--			cooling-maps {
--				map0 {
--					trip = <&cpu0_alert0>;
--					cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
--							 <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
--							 <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
--							 <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
--				};
--				map1 {
--					trip = <&cpu0_alert1>;
--					cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
--							 <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
--							 <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
--							 <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
--				};
--			};
- 		};
- 
- 		cpu1-thermal {
-@@ -5038,23 +5021,6 @@ cpu1_crit: cpu_crit {
- 					type = "critical";
- 				};
- 			};
--
--			cooling-maps {
--				map0 {
--					trip = <&cpu1_alert0>;
--					cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
--							 <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
--							 <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
--							 <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
--				};
--				map1 {
--					trip = <&cpu1_alert1>;
--					cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
--							 <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
--							 <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
--							 <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
--				};
--			};
- 		};
- 
- 		cpu2-thermal {
-@@ -5082,23 +5048,6 @@ cpu2_crit: cpu_crit {
- 					type = "critical";
- 				};
- 			};
--
--			cooling-maps {
--				map0 {
--					trip = <&cpu2_alert0>;
--					cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
--							 <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
--							 <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
--							 <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
--				};
--				map1 {
--					trip = <&cpu2_alert1>;
--					cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
--							 <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
--							 <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
--							 <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
--				};
--			};
- 		};
- 
- 		cpu3-thermal {
-@@ -5126,23 +5075,6 @@ cpu3_crit: cpu_crit {
- 					type = "critical";
- 				};
- 			};
--
--			cooling-maps {
--				map0 {
--					trip = <&cpu3_alert0>;
--					cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
--							 <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
--							 <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
--							 <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
--				};
--				map1 {
--					trip = <&cpu3_alert1>;
--					cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
--							 <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
--							 <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
--							 <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
--				};
--			};
- 		};
- 
- 		cpu4-thermal {
-@@ -5170,23 +5102,6 @@ cpu4_crit: cpu_crit {
- 					type = "critical";
- 				};
- 			};
--
--			cooling-maps {
--				map0 {
--					trip = <&cpu4_alert0>;
--					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
--							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
--							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
--							 <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
--				};
--				map1 {
--					trip = <&cpu4_alert1>;
--					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
--							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
--							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
--							 <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
--				};
--			};
- 		};
- 
- 		cpu5-thermal {
-@@ -5214,23 +5129,6 @@ cpu5_crit: cpu_crit {
- 					type = "critical";
- 				};
- 			};
--
--			cooling-maps {
--				map0 {
--					trip = <&cpu5_alert0>;
--					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
--							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
--							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
--							 <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
--				};
--				map1 {
--					trip = <&cpu5_alert1>;
--					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
--							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
--							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
--							 <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
--				};
--			};
- 		};
- 
- 		cpu6-thermal {
-@@ -5258,23 +5156,6 @@ cpu6_crit: cpu_crit {
- 					type = "critical";
- 				};
- 			};
--
--			cooling-maps {
--				map0 {
--					trip = <&cpu6_alert0>;
--					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
--							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
--							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
--							 <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
--				};
--				map1 {
--					trip = <&cpu6_alert1>;
--					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
--							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
--							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
--							 <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
--				};
--			};
- 		};
- 
- 		cpu7-thermal {
-@@ -5302,23 +5183,6 @@ cpu7_crit: cpu_crit {
- 					type = "critical";
- 				};
- 			};
--
--			cooling-maps {
--				map0 {
--					trip = <&cpu7_alert0>;
--					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
--							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
--							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
--							 <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
--				};
--				map1 {
--					trip = <&cpu7_alert1>;
--					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
--							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
--							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
--							 <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
--				};
--			};
- 		};
- 
- 		aoss0-thermal {
+diff --git a/Documentation/devicetree/bindings/thermal/qcom-lmh.yaml b/Documentation/devicetree/bindings/thermal/qcom-lmh.yaml
+new file mode 100644
+index 000000000000..7f62bd3d543d
+--- /dev/null
++++ b/Documentation/devicetree/bindings/thermal/qcom-lmh.yaml
+@@ -0,0 +1,100 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++# Copyright 2021 Linaro Ltd.
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/thermal/qcom-lmh.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm Limits Management Hardware(LMh)
++
++maintainers:
++  - Thara Gopinath <thara.gopinath@linaro.org>
++
++description:
++  Limits Management Hardware(LMh) is a hardware infrastructure on some
++  Qualcomm SoCs that can enforce temperature and current limits as
++  programmed by software for certain IPs like CPU.
++
++properties:
++  compatible:
++    enum:
++      - qcom,sdm845-lmh
++
++  reg:
++    items:
++      - description: core registers
++
++  interrupts:
++    maxItems: 1
++
++  '#interrupt-cells':
++    const: 1
++
++  interrupt-controller: true
++
++  qcom,lmh-cpu-id:
++    description:
++      CPU id of the first cpu in the LMh cluster
++    $ref: /schemas/types.yaml#/definitions/uint32
++
++  qcom,lmh-temperature-arm:
++    description:
++      An integer expressing temperature threshold in millicelsius at which
++      the LMh thermal FSM is engaged.
++    $ref: /schemas/types.yaml#/definitions/int32
++
++  qcom,lmh-temperature-low:
++    description:
++      An integer expressing temperature threshold in millicelsius at which
++      the LMh thermal FSM is engaged.
++    $ref: /schemas/types.yaml#/definitions/int32
++
++  qcom,lmh-temperature-high:
++    description:
++      An integer expressing temperature threshold in millicelsius at which
++      the LMh thermal FSM is engaged.
++    $ref: /schemas/types.yaml#/definitions/int32
++
++required:
++  - compatible
++  - reg
++  - interrupts
++  - #interrupt-cells
++  - interrupt-controller
++  - qcom,lmh-cpu-id
++  - qcom,lmh-temperature-arm
++  - qcom,lmh-temperature-low
++  - qcom,lmh-temperature-high
++
++additionalProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/interrupt-controller/arm-gic.h>
++    #include <dt-bindings/clock/qcom,rpmh.h>
++    #include <dt-bindings/interconnect/qcom,sdm845.h>
++
++    lmh_cluster1: lmh@17d70800 {
++      compatible = "qcom,sdm845-lmh";
++      reg = <0 0x17d70800 0 0x401>;
++      interrupts = <GIC_SPI 33 IRQ_TYPE_LEVEL_HIGH>;
++      qcom,lmh-cpu-id = <0x4>;
++      qcom,lmh-temperature-arm = <65000>;
++      qcom,lmh-temperature-low = <94500>;
++      qcom,lmh-temperature-high = <95000>;
++      interrupt-controller;
++      #interrupt-cells = <1>;
++    };
++  - |
++    lmh_cluster0: lmh@17d78800 {
++      compatible = "qcom,sdm845-lmh";
++      reg = <0 0x17d78800 0 0x401>;
++      interrupts = <GIC_SPI 32 IRQ_TYPE_LEVEL_HIGH>;
++      qcom,lmh-cpu-id = <0x0>;
++      qcom,lmh-temperature-arm = <65000>;
++      qcom,lmh-temperature-low = <94500>;
++      qcom,lmh-temperature-high = <95000>;
++      interrupt-controller;
++      #interrupt-cells = <1>;
++    };
++  - |
 -- 
 2.25.1
 
