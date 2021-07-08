@@ -2,217 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2E27E3BF52C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jul 2021 07:39:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4DA893BF5CB
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jul 2021 08:51:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229647AbhGHFlo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Jul 2021 01:41:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43990 "EHLO
+        id S229766AbhGHGyW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Jul 2021 02:54:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59762 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229815AbhGHFln (ORCPT
+        with ESMTP id S229701AbhGHGyW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Jul 2021 01:41:43 -0400
-Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5055AC061765
-        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Jul 2021 22:39:02 -0700 (PDT)
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1m1MkA-0006EE-1O; Thu, 08 Jul 2021 07:38:38 +0200
-Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
-        by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.92)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1m1Mk9-00030H-1D; Thu, 08 Jul 2021 07:38:37 +0200
-Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.92)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1m1Mk8-0007Hx-U3; Thu, 08 Jul 2021 07:38:36 +0200
-Date:   Thu, 8 Jul 2021 07:38:13 +0200
-From:   Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-To:     Sven Van Asbroeck <thesven73@gmail.com>
-Cc:     nvdimm@lists.linux.dev, Alexey Kardashevskiy <aik@ozlabs.ru>,
-        Benjamin Herrenschmidt <benh@kernel.crashing.org>,
-        Samuel Iglesias Gonsalvez <siglesias@igalia.com>,
-        Jens Taprogge <jens.taprogge@taprogge.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Jaroslav Kysela <perex@perex.cz>, linux-fpga@vger.kernel.org,
-        Benjamin Tissoires <benjamin.tissoires@redhat.com>,
-        Paul Mackerras <paulus@samba.org>,
-        Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-        "K. Y. Srinivasan" <kys@microsoft.com>,
-        Mike Christie <michael.christie@oracle.com>,
-        Wei Liu <wei.liu@kernel.org>,
-        Maxim Levitsky <maximlevitsky@gmail.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Michael Ellerman <mpe@ellerman.id.au>,
-        linux-acpi@vger.kernel.org, linux-pci@vger.kernel.org,
-        xen-devel@lists.xenproject.org,
-        Tomas Winkler <tomas.winkler@intel.com>,
-        Julien Grall <jgrall@amazon.com>,
-        Ohad Ben-Cohen <ohad@wizery.com>,
-        Alex Williamson <alex.williamson@redhat.com>,
-        Alex Elder <elder@kernel.org>, linux-parisc@vger.kernel.org,
-        Geoff Levand <geoff@infradead.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-usb@vger.kernel.org, "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-spi <linux-spi@vger.kernel.org>,
-        Thorsten Scherer <t.scherer@eckelmann.de>,
-        Sascha Hauer <kernel@pengutronix.de>,
-        Jon Mason <jdmason@kudzu.us>, linux-ntb@googlegroups.com,
-        Wu Hao <hao.wu@intel.com>, David Woodhouse <dwmw@amazon.co.uk>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Manohar Vanga <manohar.vanga@gmail.com>,
-        linux-wireless@vger.kernel.org,
-        Dominik Brodowski <linux@dominikbrodowski.net>,
-        virtualization@lists.linux-foundation.org,
-        "James E.J. Bottomley" <James.Bottomley@hansenpartnership.com>,
-        target-devel@vger.kernel.org,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        linux-i2c <linux-i2c@vger.kernel.org>,
-        Kai-Heng Feng <kai.heng.feng@canonical.com>,
-        Stefano Stabellini <sstabellini@kernel.org>,
-        Stephen Hemminger <sthemmin@microsoft.com>,
-        Ira Weiny <ira.weiny@intel.com>, Helge Deller <deller@gmx.de>,
-        =?utf-8?B?UmFmYcWCIE1pxYJlY2tp?= <zajec5@gmail.com>,
-        industrypack-devel@lists.sourceforge.net,
-        linux-mips@vger.kernel.org, Len Brown <lenb@kernel.org>,
-        alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org,
-        linux-media <linux-media@vger.kernel.org>,
-        Maxime Ripard <mripard@kernel.org>,
-        Johan Hovold <johan@kernel.org>, greybus-dev@lists.linaro.org,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Dave Jiang <dave.jiang@intel.com>,
-        Boris Ostrovsky <boris.ostrovsky@oracle.com>,
-        Mika Westerberg <mika.westerberg@linux.intel.com>,
-        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
-        <linux-arm-kernel@lists.infradead.org>,
-        Johannes Thumshirn <morbidrsa@gmail.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Cornelia Huck <cohuck@redhat.com>,
-        Wolfram Sang <wsa@kernel.org>,
-        Joey Pabalan <jpabalanb@gmail.com>,
-        Yehezkel Bernat <YehezkelShB@gmail.com>,
-        Pali =?utf-8?B?Um9ow6Fy?= <pali@kernel.org>,
-        Bodo Stroesser <bostroesser@gmail.com>,
-        Alison Schofield <alison.schofield@intel.com>,
-        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-        Tyrel Datwyler <tyreld@linux.ibm.com>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Tom Rix <trix@redhat.com>, Jason Wang <jasowang@redhat.com>,
-        SeongJae Park <sjpark@amazon.de>, linux-hyperv@vger.kernel.org,
-        platform-driver-x86@vger.kernel.org, Frank Li <lznuaa@gmail.com>,
-        netdev <netdev@vger.kernel.org>,
-        Jiri Slaby <jirislaby@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Mark Gross <mgross@linux.intel.com>,
-        linux-staging@lists.linux.dev, Dexuan Cui <decui@microsoft.com>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Chen-Yu Tsai <wens@csie.org>, linux-input@vger.kernel.org,
-        Matt Porter <mporter@kernel.crashing.org>,
-        Allen Hubbe <allenbh@gmail.com>, Alex Dubov <oakad@yahoo.com>,
-        Haiyang Zhang <haiyangz@microsoft.com>,
-        Jiri Kosina <jikos@kernel.org>,
-        Vladimir Zapolskiy <vz@mleia.com>,
-        Ben Widawsky <ben.widawsky@intel.com>,
-        Moritz Fischer <mdf@kernel.org>, linux-cxl@vger.kernel.org,
-        Michael Buesch <m@bues.ch>,
-        Dan Williams <dan.j.williams@intel.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Cristian Marussi <cristian.marussi@arm.com>,
-        Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
-        "Martin K. Petersen" <martin.petersen@oracle.com>,
-        Martyn Welch <martyn@welchs.me.uk>,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        linux-mmc@vger.kernel.org, linux-sunxi@lists.linux.dev,
-        Stefan Richter <stefanr@s5r6.in-berlin.de>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        "David S. Miller" <davem@davemloft.net>, kvm@vger.kernel.org,
-        "Michael S. Tsirkin" <mst@redhat.com>,
-        linux-remoteproc@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Kirti Wankhede <kwankhede@nvidia.com>,
-        Andreas Noever <andreas.noever@gmail.com>,
-        linux-i3c@lists.infradead.org,
-        linux1394-devel@lists.sourceforge.net,
-        Lee Jones <lee.jones@linaro.org>,
-        Arnd Bergmann <arnd@arndb.de>, linux-scsi@vger.kernel.org,
-        Vishal Verma <vishal.l.verma@intel.com>,
-        Russell King <linux@armlinux.org.uk>,
-        Andy Gross <agross@kernel.org>, linux-serial@vger.kernel.org,
-        Jakub Kicinski <kuba@kernel.org>,
-        Michael Jamet <michael.jamet@intel.com>,
-        William Breathitt Gray <vilhelm.gray@gmail.com>,
-        Hans de Goede <hdegoede@redhat.com>,
-        Hannes Reinecke <hare@suse.de>,
-        Adrian Hunter <adrian.hunter@intel.com>,
-        Juergen Gross <jgross@suse.com>, linuxppc-dev@lists.ozlabs.org,
-        Takashi Iwai <tiwai@suse.com>,
-        Alexandre Bounine <alex.bou9@gmail.com>,
-        Vinod Koul <vkoul@kernel.org>, Mark Brown <broonie@kernel.org>,
-        Marc Zyngier <maz@kernel.org>, dmaengine@vger.kernel.org,
-        Johannes Berg <johannes@sipsolutions.net>,
-        Maximilian Luz <luzmaximilian@gmail.com>
-Subject: Re: [PATCH v2 0/4] bus: Make remove callback return void
-Message-ID: <20210708053813.pem2ufjuwkacptv3@pengutronix.de>
-References: <20210706154803.1631813-1-u.kleine-koenig@pengutronix.de>
- <CAGngYiWm4u27o-yy5L5tokMB5G1RUR5uYmKf2oXah2P3J=hK2A@mail.gmail.com>
+        Thu, 8 Jul 2021 02:54:22 -0400
+Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7282C06175F
+        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Jul 2021 23:51:39 -0700 (PDT)
+Received: by mail-ot1-x32a.google.com with SMTP id l17-20020a9d6a910000b029048a51f0bc3cso4853917otq.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Jul 2021 23:51:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=HVD5y86eZda4zsbe0B5h51p+U8LmjsDcgy/cp1cHfiw=;
+        b=maO7t2jNZuoibZMBU8a+fE5saykw+uyETAlE6DBaxuGJWyKbRsLkQniBtfYnTMUpU7
+         soWO4Hzh+XJ2IxeklQU4q2ciYvv2J+reQ+i4U94xFKK5M5BgmU22TTB4jfHqOL8BWHNC
+         FX7Pur7coMrSF3RK2+8c0bOxNdQnwCX7QaN6A=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=HVD5y86eZda4zsbe0B5h51p+U8LmjsDcgy/cp1cHfiw=;
+        b=ClmCdnPg8b6CZ70vQg4JpaXVkRiw8+wKi8Qwow5FzpajPOfTiC3DIIhTQ9W/LLeoAn
+         SL1HpPYY5BQbGLBzrCoqyGxjL7YYtuNIBvY6RJnIeq9A1hczSYlL9IJFIOC+j6dDbmgy
+         Qjfn5k8VxKDWP9QGqbcGInB0nfdoVzNJAn1yKIB05jKZ33JIdqBMQ54gr7x+GLRR2Qk/
+         ysSPeKMg5pH+xuQYlM7lyka9hy7WpQ8dpjqnSxSvXZ9H/8JvPOiDd5n9BzBl/k59HOyi
+         P/HiMMuDgpBzwpBc34rE6Ud5fOSmPly0utUsx05lIaVMWgzu9AkOjNKYRKsL5He4YiL8
+         PAYw==
+X-Gm-Message-State: AOAM532sqPkTaotve/w2cCnJpTUmXjw35QZCH8nmaSB6D76xOZy8PEZ1
+        k1hKBVX8iRNF5NNdN+0Drdi3vd96kVSGLL9+SOAt28nSgHk=
+X-Google-Smtp-Source: ABdhPJzjxc7AbuyTBSxQVRlFe8tgvyY2EhHa2gKQ9gHMn+8kCgwJU6QlGzVsTvjV1C0NxrHMTo3r6RYo4HUQnRkpuX0=
+X-Received: by 2002:a05:6830:1353:: with SMTP id r19mr22942548otq.233.1625727099195;
+ Wed, 07 Jul 2021 23:51:39 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 8 Jul 2021 06:51:38 +0000
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="bpxpm3lcta7ifhrg"
-Content-Disposition: inline
-In-Reply-To: <CAGngYiWm4u27o-yy5L5tokMB5G1RUR5uYmKf2oXah2P3J=hK2A@mail.gmail.com>
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
+In-Reply-To: <8da6e99f-ae80-b9a5-4fe9-6cc467ea65d0@codeaurora.org>
+References: <20210703005416.2668319-1-bjorn.andersson@linaro.org>
+ <20210703005416.2668319-2-bjorn.andersson@linaro.org> <CAE-0n50EvG4qV0n+Ag+dvFxKKasnUzwH=MA+f-jsgDdBqaqziQ@mail.gmail.com>
+ <YOaAqAqldq3Hyiva@yoga> <8da6e99f-ae80-b9a5-4fe9-6cc467ea65d0@codeaurora.org>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.9.1
+Date:   Thu, 8 Jul 2021 06:51:38 +0000
+Message-ID: <CAE-0n50NciURowskkFg2-1emtotdprL_Ns8C_mAFVSAKQ-Dx7g@mail.gmail.com>
+Subject: Re: [PATCH 1/2] soc: qcom: rpmhpd: Use corner in power_off
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
---bpxpm3lcta7ifhrg
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Wed, Jul 07, 2021 at 10:08:53PM -0400, Sven Van Asbroeck wrote:
-> On Tue, Jul 6, 2021 at 11:50 AM Uwe Kleine-K=F6nig
-> <u.kleine-koenig@pengutronix.de> wrote:
+Quoting Rajendra Nayak (2021-07-07 22:03:53)
+>
+>
+> On 7/8/2021 10:05 AM, Bjorn Andersson wrote:
+> > On Wed 07 Jul 19:21 CDT 2021, Stephen Boyd wrote:
 > >
-> >  drivers/staging/fieldbus/anybuss/host.c   | 4 +---
->=20
-> Awesome !
->=20
-> Acked-by: Sven Van Asbroeck <TheSven73@gmail.com>
+> >> Quoting Bjorn Andersson (2021-07-02 17:54:15)
+> >>> rpmhpd_aggregate_corner() takes a corner as parameter, but in
+> >>> rpmhpd_power_off() the code requests the level of the first corner
+> >>> instead.
+> >>>
+> >>> In all (known) current cases the first corner has level 0, so this
+> >>> change should be a nop, but in case that there's a power domain with a
+> >>> non-zero lowest level this makes sure that rpmhpd_power_off() actually
+> >>> requests the lowest level - which is the closest to "power off" we can
+> >>> get.
+> >>>
+> >>> While touching the code, also skip the unnecessary zero-initialization
+> >>> of "ret".
+> >>>
+> >>> Fixes: 279b7e8a62cc ("soc: qcom: rpmhpd: Add RPMh power domain driver")
+> >>> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> >>> ---
+> >>
+> >> I think this is why qcom folks talk about "virtual corner" and "physical
+> >> corner" because there's the one in command DB and the one in hardware.
+> >
+> > I think the driver uses "level" and "corner" to denote the two different
+> > number spaces, so I think we're good...now that we after this patch
+> > don't pass a "level" as "corner" during power_off ;)
 
-I note that as an Ack for patch 4 only, as the others don't touch this
-file.
+Alright then nothing to do. Yay?
 
-Best regards
-Uwe
+> >
+> >> Maybe we should change rpmhpd_aggregate_corner() to call the argument
+> >> 'vcorner'?
+> >
+> > So "virtual corner" is "corner" and "physical corner" is level? I.e. 256
+> > is a "physical corner"?
+>
+> I haven't heard of anything called a 'physical corner'. These were always
+> referred to as virtual corners, on older platforms it was just one contiguous
+> number space, on newer ones we added another higher level sparse number space
+> just for more fun :)
+> Command DB refers to these as hlvl and vlvl, I haven;t yet figured out what their
+> full forms are :/
 
---=20
-Pengutronix e.K.                           | Uwe Kleine-K=F6nig            |
-Industrial Linux Solutions                 | https://www.pengutronix.de/ |
+Ah maybe I'm mixing up CPR terms with this stuff. I suspect hlvl is
+"hardware level" and vlvl is "virtual level", but probably should have
+been "software level".
 
---bpxpm3lcta7ifhrg
-Content-Type: application/pgp-signature; name="signature.asc"
+As far as I remember, the command DB layer was stacked on top so that
+they could insert more levels in between two levels in the hardware
+number space and not have to change all the rpmh clients out there (of
+which there could be many considering all the independent operating
+systems running on the SoC). For example, [0, 128, 256] maps to [0, 1,
+2] and then they realize they need to jam another level between 1 and 2
+so they remap 256 to 3 so everyone keeps considering 256 as the previous
+vlvl to clear the way for 2 to be reused as 198 or something like that.
 
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEfnIqFpAYrP8+dKQLwfwUeK3K7AkFAmDmjzsACgkQwfwUeK3K
-7Alp5wf+LJkpxzkaW2ldAtFhGuqT1XfOqbe9d5vNgqvqupJS1Q+aeie0kH0038ba
-uN3KDJ2V2DAmMf6OIKUFucVxBpCC92myb63zIHRJs5kGzTu41BRp3yt/I650Xzdr
-+MB/xdEr/XFy2f9gDr/QdCojwh44TXqKzZPG6a7r6uQu8/AAUOdVEcfK6o01hN8W
-szxNTR1qtdQMHj9Ji8fo0wADdSPEez1kGe+HEOJVWBZnhdyCqS0jh774r7GsLjqY
-l8S7HhKPoY6/CCbEHKfYA15GUvexTA14O2tn6vuQPtiTTdDoh/Nl0wj0z5/WbWjX
-HF/tKnNb3l18s65PbEmxEKa2XonjFQ==
-=+Y+1
------END PGP SIGNATURE-----
-
---bpxpm3lcta7ifhrg--
+I don't think this ever really changes after the device ships, but it
+lets them decouple rpmh firmware updates from the rest of the system. As
+long as they're kept as far apart in vlvl space as there are numbers in
+hlvl space they can easily do this remap trick and hardware can treat it
+as levels that bounce around physical voltages that are monotonically
+increasing.
