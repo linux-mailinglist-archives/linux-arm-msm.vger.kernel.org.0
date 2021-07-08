@@ -2,368 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BC86F3BF9AF
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jul 2021 14:04:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0CF353BF9BC
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jul 2021 14:07:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231376AbhGHMGo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Jul 2021 08:06:44 -0400
-Received: from smtp-out2.suse.de ([195.135.220.29]:58578 "EHLO
-        smtp-out2.suse.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231347AbhGHMGn (ORCPT
+        id S231544AbhGHMJl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Jul 2021 08:09:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45200 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231486AbhGHMJl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Jul 2021 08:06:43 -0400
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-        (No client certificate requested)
-        by smtp-out2.suse.de (Postfix) with ESMTPS id 559D9201BA;
-        Thu,  8 Jul 2021 12:04:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-        t=1625745841; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=IZMvwLJnwvM+Gg9iQoczaGWGG0dhxSsxtWXgJwtxFuM=;
-        b=S5+4jdVfAXgG8799WbPbmAGe9Rb6myofHjnRHWzSHcIOfjJrLP7QMhi95AdK92iEAKN5z+
-        O5rDvCrz9S6VGx8f05UXufamBl1p9VzKHeksJg4D2dn1TU+KWs1EUQFvKchYW4DM7vStbk
-        kwPGp3j+lRwa4KAE8LDjPemH2T3Bk3g=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-        s=susede2_ed25519; t=1625745841;
-        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=IZMvwLJnwvM+Gg9iQoczaGWGG0dhxSsxtWXgJwtxFuM=;
-        b=Cw9E+6jE4l0PQWB8Q+41heP1GSaBH2rTvJUmAZUYc1bMXf35peQdWdSzFRdeddsSLlGUS+
-        0X27NMRHlkThPoCQ==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-        (No client certificate requested)
-        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 29AF913BDF;
-        Thu,  8 Jul 2021 12:04:01 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-        by imap2.suse-dmz.suse.de with ESMTPSA
-        id 4ntECbHp5mDfUAAAMHmgww
-        (envelope-from <tzimmermann@suse.de>); Thu, 08 Jul 2021 12:04:01 +0000
-Subject: Re: [PATCH] drm/msm: Implement mmap as GEM object function
-To:     robdclark@gmail.com, sean@poorly.run, airlied@linux.ie,
-        daniel@ffwll.ch
-Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-References: <20210624090341.8249-1-tzimmermann@suse.de>
-From:   Thomas Zimmermann <tzimmermann@suse.de>
-Message-ID: <6fc2bfe5-2a3a-2e7e-46f9-6c6d400ced0b@suse.de>
-Date:   Thu, 8 Jul 2021 14:04:00 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+        Thu, 8 Jul 2021 08:09:41 -0400
+Received: from mail-qt1-x82e.google.com (mail-qt1-x82e.google.com [IPv6:2607:f8b0:4864:20::82e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68551C061574
+        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Jul 2021 05:06:59 -0700 (PDT)
+Received: by mail-qt1-x82e.google.com with SMTP id z18so1273578qtq.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Jul 2021 05:06:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=WraCm6k694qyYZdK9xEDzADtbPmoM6wh7ruMF3c9sT0=;
+        b=ooXDU9ur9KqdBlX6bSV3k88fMSWEpbTCC5Kpt1F9uzG3Gzg4wQeTWPXlVVs9CylHHS
+         eEKbJPm21Ur3c6zSEG0znz/VLOPWIK+jp1rF+BSYCuCgC8Bhofc0ILZ4MnTPhxUL2ES0
+         jzxbIwh4RqQLf4KddXHHVO0dEvmL373dxEjwkWbmfaoCQKz7GNengI4yO1Tz+YFITGb0
+         G9xTikM6/8K2mYvPZg8ZHaqxdoguMGdUwOrZRh3RX6EGCY6jQXAbfpzxt+sDfNsf0xfz
+         y3flDutrawBHu0GtBOfyCHQjOPeenB1WZa99D1Xb0vGBGTsr6+xQ/J43WiJksKzZZI8i
+         mhkQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=WraCm6k694qyYZdK9xEDzADtbPmoM6wh7ruMF3c9sT0=;
+        b=eYq5C67mOB9d2sDNlWZjb6Ddjc1GDiK0OtRITqckgea+rjkCfjVjoYUu73NgrVemn+
+         7YG9GI0b54ohN0Uy+p/IMlKVlYHXvDLXkeE3yqvu/GxVnY7ZKwduJggM7f8/bzZ3lY6S
+         Hd/PJCAHPj3GkcWirYrRlOVRKyVLXxY+mTmIpFskFmI+tfwaJVLhYJqFN+U3yuE5Bxpw
+         tn4josE11MpA4tHtuuqMxQEP4Y/un3WGixQp5fxaBvJziWmJ7r+myk4G6MRFxkgIofIC
+         qZsl0tBMTGlv2lqqMLA8vAst9TPEcxYU/iMk4EcEMqp0hOCverQQtZPo8gX8rw0pktEs
+         zvFg==
+X-Gm-Message-State: AOAM530P0yx0N0SeT8Fl/0/8CqeCV27N14MVYRAdXwzB6pk3RFZp9BRu
+        7pwc7vcUrmUIhFTAtbEcOAXrFQ==
+X-Google-Smtp-Source: ABdhPJwpRfkMwjPp9U/1oZkibxvoQP+bjlbHKSCDkFJsNoCT4uIFKSTrQ03gIVxwkC67HJsfh5IQ3w==
+X-Received: by 2002:ac8:5c08:: with SMTP id i8mr28001007qti.129.1625746017582;
+        Thu, 08 Jul 2021 05:06:57 -0700 (PDT)
+Received: from pop-os.fios-router.home (pool-71-163-245-5.washdc.fios.verizon.net. [71.163.245.5])
+        by smtp.googlemail.com with ESMTPSA id i2sm912541qko.43.2021.07.08.05.06.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 08 Jul 2021 05:06:57 -0700 (PDT)
+From:   Thara Gopinath <thara.gopinath@linaro.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, rui.zhang@intel.com,
+        daniel.lezcano@linaro.org, viresh.kumar@linaro.org,
+        rjw@rjwysocki.net, robh+dt@kernel.org
+Cc:     tdas@codeaurora.org, mka@chromium.org,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+Subject: [Patch v3 0/6] Introduce LMh driver for Qualcomm SoCs
+Date:   Thu,  8 Jul 2021 08:06:50 -0400
+Message-Id: <20210708120656.663851-1-thara.gopinath@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-In-Reply-To: <20210624090341.8249-1-tzimmermann@suse.de>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="KhPh5XvBct89fMnaTP1nGGPGZO7HCTnDy"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---KhPh5XvBct89fMnaTP1nGGPGZO7HCTnDy
-Content-Type: multipart/mixed; boundary="eJhsNnlHF4t7qdAnaXkwstQBhFvoQS69M";
- protected-headers="v1"
-From: Thomas Zimmermann <tzimmermann@suse.de>
-To: robdclark@gmail.com, sean@poorly.run, airlied@linux.ie, daniel@ffwll.ch
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org
-Message-ID: <6fc2bfe5-2a3a-2e7e-46f9-6c6d400ced0b@suse.de>
-Subject: Re: [PATCH] drm/msm: Implement mmap as GEM object function
-References: <20210624090341.8249-1-tzimmermann@suse.de>
-In-Reply-To: <20210624090341.8249-1-tzimmermann@suse.de>
+Limits Management Hardware(LMh) is a hardware infrastructure on some
+Qualcomm SoCs that can enforce temperature and current limits as programmed
+by software for certain IPs like CPU. On many newer SoCs LMh is configured
+by firmware/TZ and no programming is needed from the kernel side. But on
+certain SoCs like sdm845 the firmware does not do a complete programming of
+the h/w block. On such SoCs kernel software has to explicitly set up the
+temperature limits and turn on various monitoring and enforcing algorithms
+on the hardware.
 
---eJhsNnlHF4t7qdAnaXkwstQBhFvoQS69M
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
+Introduce support for enabling and programming various limit settings and
+monitoring capabilities of Limits Management Hardware(LMh) associated with
+cpu clusters. Also introduce support in cpufreq hardware driver to monitor
+the interrupt associated with cpu frequency throttling so that this
+information can be conveyed to the schdeuler via thermal pressure
+interface.
 
-ping for review
+With this patch series following cpu performance improvement(30-70%) is
+observed on sdm845. The reasoning here is that without LMh being programmed
+properly from the kernel, the default settings were enabling thermal
+mitigation for CPUs at too low a temperature (around 70-75 degree C).  This
+in turn meant that many a time CPUs were never actually allowed to hit the
+maximum possible/required frequencies.
 
-Am 24.06.21 um 11:03 schrieb Thomas Zimmermann:
-> Moving the driver-specific mmap code into a GEM object function allows
-> for using DRM helpers for various mmap callbacks.
->=20
-> The respective msm functions are being removed. The file_operations
-> structure fops is now being created by the helper macro
-> DEFINE_DRM_GEM_FOPS().
->=20
-> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-> ---
->   drivers/gpu/drm/msm/msm_drv.c       | 14 +-----
->   drivers/gpu/drm/msm/msm_drv.h       |  1 -
->   drivers/gpu/drm/msm/msm_fbdev.c     | 10 +----
->   drivers/gpu/drm/msm/msm_gem.c       | 67 ++++++++++++----------------=
--
->   drivers/gpu/drm/msm/msm_gem.h       |  3 --
->   drivers/gpu/drm/msm/msm_gem_prime.c | 11 -----
->   6 files changed, 31 insertions(+), 75 deletions(-)
->=20
-> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_dr=
-v.c
-> index fe7d17cd35ec..f62eaedfc0d7 100644
-> --- a/drivers/gpu/drm/msm/msm_drv.c
-> +++ b/drivers/gpu/drm/msm/msm_drv.c
-> @@ -985,17 +985,7 @@ static const struct drm_ioctl_desc msm_ioctls[] =3D=
- {
->   	DRM_IOCTL_DEF_DRV(MSM_SUBMITQUEUE_QUERY, msm_ioctl_submitqueue_query=
-, DRM_RENDER_ALLOW),
->   };
->  =20
-> -static const struct file_operations fops =3D {
-> -	.owner              =3D THIS_MODULE,
-> -	.open               =3D drm_open,
-> -	.release            =3D drm_release,
-> -	.unlocked_ioctl     =3D drm_ioctl,
-> -	.compat_ioctl       =3D drm_compat_ioctl,
-> -	.poll               =3D drm_poll,
-> -	.read               =3D drm_read,
-> -	.llseek             =3D no_llseek,
-> -	.mmap               =3D msm_gem_mmap,
-> -};
-> +DEFINE_DRM_GEM_FOPS(fops);
->  =20
->   static const struct drm_driver msm_driver =3D {
->   	.driver_features    =3D DRIVER_GEM |
-> @@ -1015,7 +1005,7 @@ static const struct drm_driver msm_driver =3D {
->   	.prime_handle_to_fd =3D drm_gem_prime_handle_to_fd,
->   	.prime_fd_to_handle =3D drm_gem_prime_fd_to_handle,
->   	.gem_prime_import_sg_table =3D msm_gem_prime_import_sg_table,
-> -	.gem_prime_mmap     =3D msm_gem_prime_mmap,
-> +	.gem_prime_mmap     =3D drm_gem_prime_mmap,
->   #ifdef CONFIG_DEBUG_FS
->   	.debugfs_init       =3D msm_debugfs_init,
->   #endif
-> diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_dr=
-v.h
-> index 2668941df529..8f1e0d7c8bbb 100644
-> --- a/drivers/gpu/drm/msm/msm_drv.h
-> +++ b/drivers/gpu/drm/msm/msm_drv.h
-> @@ -300,7 +300,6 @@ void msm_gem_shrinker_cleanup(struct drm_device *de=
-v);
->   struct sg_table *msm_gem_prime_get_sg_table(struct drm_gem_object *ob=
-j);
->   int msm_gem_prime_vmap(struct drm_gem_object *obj, struct dma_buf_map=
- *map);
->   void msm_gem_prime_vunmap(struct drm_gem_object *obj, struct dma_buf_=
-map *map);
-> -int msm_gem_prime_mmap(struct drm_gem_object *obj, struct vm_area_stru=
-ct *vma);
->   struct drm_gem_object *msm_gem_prime_import_sg_table(struct drm_devic=
-e *dev,
->   		struct dma_buf_attachment *attach, struct sg_table *sg);
->   int msm_gem_prime_pin(struct drm_gem_object *obj);
-> diff --git a/drivers/gpu/drm/msm/msm_fbdev.c b/drivers/gpu/drm/msm/msm_=
-fbdev.c
-> index 227404077e39..07225907fd2d 100644
-> --- a/drivers/gpu/drm/msm/msm_fbdev.c
-> +++ b/drivers/gpu/drm/msm/msm_fbdev.c
-> @@ -8,6 +8,7 @@
->   #include <drm/drm_crtc.h>
->   #include <drm/drm_fb_helper.h>
->   #include <drm/drm_fourcc.h>
-> +#include <drm/drm_prime.h>
->  =20
->   #include "msm_drv.h"
->   #include "msm_gem.h"
-> @@ -48,15 +49,8 @@ static int msm_fbdev_mmap(struct fb_info *info, stru=
-ct vm_area_struct *vma)
->   	struct drm_fb_helper *helper =3D (struct drm_fb_helper *)info->par;
->   	struct msm_fbdev *fbdev =3D to_msm_fbdev(helper);
->   	struct drm_gem_object *bo =3D msm_framebuffer_bo(fbdev->fb, 0);
-> -	int ret =3D 0;
->  =20
-> -	ret =3D drm_gem_mmap_obj(bo, bo->size, vma);
-> -	if (ret) {
-> -		pr_err("%s:drm_gem_mmap_obj fail\n", __func__);
-> -		return ret;
-> -	}
-> -
-> -	return msm_gem_mmap_obj(bo, vma);
-> +	return drm_gem_prime_mmap(bo, vma);
->   }
->  =20
->   static int msm_fbdev_create(struct drm_fb_helper *helper,
-> diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_ge=
-m.c
-> index b61f5466e522..71d835bc575d 100644
-> --- a/drivers/gpu/drm/msm/msm_gem.c
-> +++ b/drivers/gpu/drm/msm/msm_gem.c
-> @@ -211,46 +211,6 @@ void msm_gem_put_pages(struct drm_gem_object *obj)=
+UnixBench whets and dhry (./Run whets dhry)
+System Benchmarks Index Score
 
->   	msm_gem_unlock(obj);
->   }
->  =20
-> -int msm_gem_mmap_obj(struct drm_gem_object *obj,
-> -		struct vm_area_struct *vma)
-> -{
-> -	struct msm_gem_object *msm_obj =3D to_msm_bo(obj);
-> -
-> -	vma->vm_flags &=3D ~VM_PFNMAP;
-> -	vma->vm_flags |=3D VM_MIXEDMAP;
-> -
-> -	if (msm_obj->flags & MSM_BO_WC) {
-> -		vma->vm_page_prot =3D pgprot_writecombine(vm_get_page_prot(vma->vm_f=
-lags));
-> -	} else if (msm_obj->flags & MSM_BO_UNCACHED) {
-> -		vma->vm_page_prot =3D pgprot_noncached(vm_get_page_prot(vma->vm_flag=
-s));
-> -	} else {
-> -		/*
-> -		 * Shunt off cached objs to shmem file so they have their own
-> -		 * address_space (so unmap_mapping_range does what we want,
-> -		 * in particular in the case of mmap'd dmabufs)
-> -		 */
-> -		vma->vm_pgoff =3D 0;
-> -		vma_set_file(vma, obj->filp);
-> -
-> -		vma->vm_page_prot =3D vm_get_page_prot(vma->vm_flags);
-> -	}
-> -
-> -	return 0;
-> -}
-> -
-> -int msm_gem_mmap(struct file *filp, struct vm_area_struct *vma)
-> -{
-> -	int ret;
-> -
-> -	ret =3D drm_gem_mmap(filp, vma);
-> -	if (ret) {
-> -		DBG("mmap failed: %d", ret);
-> -		return ret;
-> -	}
-> -
-> -	return msm_gem_mmap_obj(vma->vm_private_data, vma);
-> -}
-> -
->   static vm_fault_t msm_gem_fault(struct vm_fault *vmf)
->   {
->   	struct vm_area_struct *vma =3D vmf->vma;
-> @@ -1119,6 +1079,32 @@ void msm_gem_free_object(struct drm_gem_object *=
-obj)
->   	kfree(msm_obj);
->   }
->  =20
-> +static int msm_gem_object_mmap(struct drm_gem_object *obj, struct vm_a=
-rea_struct *vma)
-> +{
-> +	struct msm_gem_object *msm_obj =3D to_msm_bo(obj);
-> +
-> +	vma->vm_flags &=3D ~VM_PFNMAP;
-> +	vma->vm_flags |=3D VM_MIXEDMAP;
-> +
-> +	if (msm_obj->flags & MSM_BO_WC) {
-> +		vma->vm_page_prot =3D pgprot_writecombine(vm_get_page_prot(vma->vm_f=
-lags));
-> +	} else if (msm_obj->flags & MSM_BO_UNCACHED) {
-> +		vma->vm_page_prot =3D pgprot_noncached(vm_get_page_prot(vma->vm_flag=
-s));
-> +	} else {
-> +		/*
-> +		 * Shunt off cached objs to shmem file so they have their own
-> +		 * address_space (so unmap_mapping_range does what we want,
-> +		 * in particular in the case of mmap'd dmabufs)
-> +		 */
-> +		vma->vm_pgoff =3D 0;
-> +		vma_set_file(vma, obj->filp);
-> +
-> +		vma->vm_page_prot =3D vm_get_page_prot(vma->vm_flags);
-> +	}
-> +
-> +	return 0;
-> +}
-> +
->   /* convenience method to construct a GEM buffer object, and userspace=
- handle */
->   int msm_gem_new_handle(struct drm_device *dev, struct drm_file *file,=
+                Without LMh Support             With LMh Support
+1 copy test     1353.7                          1773.2
 
->   		uint32_t size, uint32_t flags, uint32_t *handle,
-> @@ -1156,6 +1142,7 @@ static const struct drm_gem_object_funcs msm_gem_=
-object_funcs =3D {
->   	.get_sg_table =3D msm_gem_prime_get_sg_table,
->   	.vmap =3D msm_gem_prime_vmap,
->   	.vunmap =3D msm_gem_prime_vunmap,
-> +	.mmap =3D msm_gem_object_mmap,
->   	.vm_ops =3D &vm_ops,
->   };
->  =20
-> diff --git a/drivers/gpu/drm/msm/msm_gem.h b/drivers/gpu/drm/msm/msm_ge=
-m.h
-> index 03e2cc2a2ce1..8508163088a9 100644
-> --- a/drivers/gpu/drm/msm/msm_gem.h
-> +++ b/drivers/gpu/drm/msm/msm_gem.h
-> @@ -112,9 +112,6 @@ struct msm_gem_object {
->   };
->   #define to_msm_bo(x) container_of(x, struct msm_gem_object, base)
->  =20
-> -int msm_gem_mmap_obj(struct drm_gem_object *obj,
-> -			struct vm_area_struct *vma);
-> -int msm_gem_mmap(struct file *filp, struct vm_area_struct *vma);
->   uint64_t msm_gem_mmap_offset(struct drm_gem_object *obj);
->   int msm_gem_get_iova(struct drm_gem_object *obj,
->   		struct msm_gem_address_space *aspace, uint64_t *iova);
-> diff --git a/drivers/gpu/drm/msm/msm_gem_prime.c b/drivers/gpu/drm/msm/=
-msm_gem_prime.c
-> index 9880348a4dc7..fc94e061d6a7 100644
-> --- a/drivers/gpu/drm/msm/msm_gem_prime.c
-> +++ b/drivers/gpu/drm/msm/msm_gem_prime.c
-> @@ -39,17 +39,6 @@ void msm_gem_prime_vunmap(struct drm_gem_object *obj=
-, struct dma_buf_map *map)
->   	msm_gem_put_vaddr(obj);
->   }
->  =20
-> -int msm_gem_prime_mmap(struct drm_gem_object *obj, struct vm_area_stru=
-ct *vma)
-> -{
-> -	int ret;
-> -
-> -	ret =3D drm_gem_mmap_obj(obj, obj->size, vma);
-> -	if (ret < 0)
-> -		return ret;
-> -
-> -	return msm_gem_mmap_obj(vma->vm_private_data, vma);
-> -}
-> -
->   struct drm_gem_object *msm_gem_prime_import_sg_table(struct drm_devic=
-e *dev,
->   		struct dma_buf_attachment *attach, struct sg_table *sg)
->   {
->=20
+8 copy tests    4473.6                          7402.3
 
---=20
-Thomas Zimmermann
-Graphics Driver Developer
-SUSE Software Solutions Germany GmbH
-Maxfeldstr. 5, 90409 N=C3=BCrnberg, Germany
-(HRB 36809, AG N=C3=BCrnberg)
-Gesch=C3=A4ftsf=C3=BChrer: Felix Imend=C3=B6rffer
+Sysbench cpu
+sysbench cpu --threads=8 --time=60 --cpu-max-prime=100000 run
 
+                Without LMh Support             With LMh Support
+Events per
+second                  355                             614
 
---eJhsNnlHF4t7qdAnaXkwstQBhFvoQS69M--
+Avg Latency(ms)         21.84                           13.02
 
---KhPh5XvBct89fMnaTP1nGGPGZO7HCTnDy
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature"
+v2->v3:
+	- Included patch adding dt binding documentation for LMh nodes.
+	- Rebased to v5.13
 
------BEGIN PGP SIGNATURE-----
+Thara Gopinath (6):
+  firmware: qcom_scm: Introduce SCM calls to access LMh
+  thermal: qcom: Add support for LMh driver
+  cpufreq: qcom-cpufreq-hw: Add dcvs interrupt support
+  arm64: boot: dts: qcom: sdm45: Add support for LMh node
+  arm64: boot: dts: qcom: sdm845: Remove cpufreq cooling devices for CPU
+    thermal zones
+  dt-bindings: thermal: Add dt binding for QCOM LMh
 
-wsF5BAABCAAjFiEExndm/fpuMUdwYFFolh/E3EQov+AFAmDm6bAFAwAAAAAACgkQlh/E3EQov+BY
-8A/+OuES7Njvd/kUB8duV1EUcExgqt2uH1wjxWYJXkCuw4yJpKdaVOFmhJjQatltXkUv0ZpD/JoL
-gGSYAlBIKheh4lo3pwWuRGV7dZHyNS6YFYvFXNhns+HY+eTb9Z4+Rkw5f3XG1DH8gUwiYAGv+G9b
-5fmxRG47BrTBmtGZQmHRUnKsTYxfM/dr+b2YEZq3PovNvjZuDT7lse/rFMQbkvuR7Ii/nrPyhSRj
-G4NqiHFy+RF3UJs7CIIajyMY50z9dRMpueXc3ezj1Ne13h/9s1Jq/4cs7rxAoEk9f/aZvUtLqc7x
-MkTBQWwNfB/b18QG2J8jLPYzC8A4qdJANy1S76OghmYljXoFjcqvbyNKp4F/zJvMlIMFI4lKEYUA
-EKIMDY95MCD6N0eSC0RIvPrwmKjZQf6zHD6Hoi+PwYVtCDtfa+eYICdri/k8qWctRh5e0t5Rjy62
-PUclF1DQB2NyGCzbvnZQH+vrfrqEJ3rbwlAvUqJVTKBZOBinSI06c4p1P2C5I3IdLKWZvJjZQ5Lu
-NmuSjHK7QHtOrP3LiIjkXK7leF1BNSg5Jai6MUtuUgWsRPlqXzE+uAf6fV1M012g2+cqu8jb9hlW
-VNSa0dfJdjmF50pNZcG7eYws7HmZKo1+iAKEboUE03jTF6oWckdLAVTkeaYAGcvKTnE4xsfkn8rO
-uKY=
-=EqsH
------END PGP SIGNATURE-----
+ .../devicetree/bindings/thermal/qcom-lmh.yaml | 100 ++++++++
+ arch/arm64/boot/dts/qcom/sdm845.dtsi          | 162 ++----------
+ drivers/cpufreq/qcom-cpufreq-hw.c             | 118 +++++++++
+ drivers/firmware/qcom_scm.c                   |  58 +++++
+ drivers/firmware/qcom_scm.h                   |   4 +
+ drivers/thermal/qcom/Kconfig                  |  10 +
+ drivers/thermal/qcom/Makefile                 |   1 +
+ drivers/thermal/qcom/lmh.c                    | 239 ++++++++++++++++++
+ include/linux/qcom_scm.h                      |  14 +
+ 9 files changed, 570 insertions(+), 136 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/thermal/qcom-lmh.yaml
+ create mode 100644 drivers/thermal/qcom/lmh.c
 
---KhPh5XvBct89fMnaTP1nGGPGZO7HCTnDy--
+-- 
+2.25.1
+
