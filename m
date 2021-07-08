@@ -2,133 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 044FC3BF8D0
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jul 2021 13:20:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 762B43BF922
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jul 2021 13:37:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231570AbhGHLXX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Jul 2021 07:23:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34710 "EHLO
+        id S231730AbhGHLkj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Jul 2021 07:40:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38598 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231540AbhGHLXX (ORCPT
+        with ESMTP id S231718AbhGHLkj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Jul 2021 07:23:23 -0400
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72F22C061760
-        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Jul 2021 04:20:40 -0700 (PDT)
-Received: by mail-wm1-x32b.google.com with SMTP id k32so633767wms.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Jul 2021 04:20:40 -0700 (PDT)
+        Thu, 8 Jul 2021 07:40:39 -0400
+Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com [IPv6:2607:f8b0:4864:20::730])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D65DC06175F
+        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Jul 2021 04:37:56 -0700 (PDT)
+Received: by mail-qk1-x730.google.com with SMTP id s4so5250994qkm.13
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Jul 2021 04:37:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=rFpDh7TVWZtaM5cs5d5LHXdV3TqKZpl99EHToFRBjzg=;
-        b=Xnx0zHtsBOr98Vo5otxRILu0ikPe61GOmG7rqmRqh6XT1bOJdVJQUkn/kfK5NHZLFj
-         ILsIVMYUoB2BuY9g9N1vz7NeLQdZmo/8dRhc2KmGnt2tPFsdKhR2UhQtCAQ6M3/U66oq
-         3r4gTgizmGVOusPMoP4ysDG8SVE3/Byj0f1XW82bsvdXD32AjSTJ7garNje6lGn+zdRJ
-         XvHgLbHXZJ5NpA0RBUjadOXEZypLMHGHQXzj2TYzJqFoPWs3LQHc8tjnH9ooR2Jd/GH7
-         VdcpEIoZIEUZmshI80KVdwMJ/ldb6QXV/+8hZ5Ej5YcgQpeTreLwsO0dgLy6aRN7CpVs
-         aPBg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=N/qY52HtEnySw8oiOqnCY6Vr04Y1zPZsw52TSvRcqL0=;
+        b=X3Au6Pi/gZuIKEizEtZpkpNYlgIbyi0G/awOjci961zqy8EYfCIrI09IB45E8MZzkn
+         7AVSU1L4UzvADeoHy3cJPWyN+BKIqrka7aQLlq0dTLu0v8Bd4yKSpQyb3T6Vsjf1cqC9
+         pbP9wWK6juYmhotjALZkdmH+dl8zKezlghv4zvCXvk0FunQYEervgRw4wCYkBksuC557
+         JGt2vEAgIUA5PDhK0O0Fhmslq7U4Av3gNG21p9JwL0p0HFzVXt93DVGB8IfThBaAfAFA
+         N49Jy+lJPz3i9tWnQoQk+O0Zv5Y8rD1iMixULgWhqGkhJInmouQgldcAyfIqcTqB44ID
+         9UbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=rFpDh7TVWZtaM5cs5d5LHXdV3TqKZpl99EHToFRBjzg=;
-        b=b7cRfdtXPVYvXBxQLEyikjMj0PaAJSlARznNftnKsS5cbUkynRMBPyvtgVt4CVNc53
-         0/V1QEXdgInYuR0eDMg6nlasTtL5CvULHz26Fy/AxX9IJ0jD1MHQQJHBCv9JUWQBYTxG
-         hAGQBkyGyt6Ym3o3mLPWsXFtQeSLZogL/pj2dNubBQz1vBg2WOGiOQk/ty4ZNViTvlA+
-         X6THl4WSnFFd365Mbeb4o7iTBuo/+1bQGG/ge1FA4vjcXkkyLritXJEXL2aAoogfq1n+
-         gdl9ObrULkHZsOpd1cxS6fJ7deRuwI2odfSwQD6qebwnDNBi6AB7yk3yjwMKPOlxCO31
-         lAOg==
-X-Gm-Message-State: AOAM533Uts83IMolesTwphyKJbTY5yHUmm5Qgylf4NsK5OCW2AdryRz0
-        SPaloLFSIpXA750dGQWLQP9GJA==
-X-Google-Smtp-Source: ABdhPJx6exO8vO9udBHYfA8ebFe4eoju6SLYXTu4Sfdz7wzxhRRjMepfAj0J4wx5/njHb2XblKOFiw==
-X-Received: by 2002:a1c:4603:: with SMTP id t3mr2262634wma.178.1625743238929;
-        Thu, 08 Jul 2021 04:20:38 -0700 (PDT)
-Received: from google.com ([109.180.115.218])
-        by smtp.gmail.com with ESMTPSA id o11sm1711710wmq.1.2021.07.08.04.20.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Jul 2021 04:20:38 -0700 (PDT)
-Date:   Thu, 8 Jul 2021 11:20:36 +0000
-From:   Lee Jones <lee.jones@linaro.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Deepak Kumar Singh <deesin@codeaurora.org>,
-        Chris Lew <clew@codeaurora.org>,
-        Mathieu <mathieu.poirier@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-remoteproc@vger.kernel.org,
-        open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH V7 0/4] Signaling api support in glink/rpmsg clients
-Message-ID: <YObfhBXAu6g5S3ws@google.com>
-References: <1599063847-2347-1-git-send-email-deesin@codeaurora.org>
- <CAF2Aj3gAqjVbcMayR7yYBb6UxY5ekC9gdhpmNdz1-zLwo10yLw@mail.gmail.com>
- <YOXOtRSpKO5WdlHZ@yoga>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=N/qY52HtEnySw8oiOqnCY6Vr04Y1zPZsw52TSvRcqL0=;
+        b=JoCUilFMsfhsqqJEujcXPpvDbo37ARr7o3BiTp38jh0GBgK5nn0m5LFYDnYOpIXFBf
+         K0oaR7Dd5vO4Yza3BmEJoPxcdveG6pua6Xx8REAbmY507UWeYlPFBZqodqqVy/iWudpi
+         niNGerBI4Z3vhmLrxRp8BvPdoDftOKytOhbIpptbW2kpvSBE6D2pMg2eA55yKj08YFnt
+         gtPAJWIcyNaaQ1UApzvlXfNsX9Gnh99pBt5xLGnndv8sYDdQ+Ig/8N//pP/9c4DGxa0K
+         VQImPeTDahc9Uc/J2yChIju07RWOUrma3mj3zC2WlleP7ud0sSM/HO9SsGfYCcJG0aV3
+         W7Rg==
+X-Gm-Message-State: AOAM533iwiwkIZkMQgu2jFxEzY0K4eGPLbTxOBo3WlO76wPw6/vafxLQ
+        IOWXMI11qekvfvxsr31CRD+OUnuBYL33V/ByffgTtA==
+X-Google-Smtp-Source: ABdhPJzLaw+Ocua2+xY6AepEwv2jQPUmOKbSjrNWV4ZgDNgxv4FrDkLyxft2BVw+2yuajvOMGGJpZ4Sga0z4xviKWRM=
+X-Received: by 2002:a05:620a:13ec:: with SMTP id h12mr14862220qkl.217.1625744275692;
+ Thu, 08 Jul 2021 04:37:55 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <YOXOtRSpKO5WdlHZ@yoga>
+References: <20210621223141.1638189-1-dmitry.baryshkov@linaro.org>
+ <20210621223141.1638189-3-dmitry.baryshkov@linaro.org> <CAPDyKFo6dmjw0TnaK7=35dq5Si_6YYpeeSa=gU++1od7WkQZ7A@mail.gmail.com>
+ <20210706115517.GB4529@sirena.org.uk> <CAPDyKFr=8spZBD+bTe3SjS=nATL-ByFu_epnT2Z4chSuQNke2w@mail.gmail.com>
+In-Reply-To: <CAPDyKFr=8spZBD+bTe3SjS=nATL-ByFu_epnT2Z4chSuQNke2w@mail.gmail.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Thu, 8 Jul 2021 14:37:44 +0300
+Message-ID: <CAA8EJppSV--TBjnGxGhaTHeKWdpM6uz70bg7diU3_K7OHoka4g@mail.gmail.com>
+Subject: Re: [PATCH v3 2/7] regulator: qca6390: add support for QCA639x
+ powerup sequence
+To:     Ulf Hansson <ulf.hansson@linaro.org>,
+        Peter Chen <peter.chen@kernel.org>
+Cc:     Mark Brown <broonie@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        DTML <devicetree@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-bluetooth@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 07 Jul 2021, Bjorn Andersson wrote:
+Hi,
 
-> On Tue 06 Jul 10:27 CDT 2021, Lee Jones wrote:
-> 
-> > On Wed, 2 Sept 2020 at 17:25, Deepak Kumar Singh <deesin@codeaurora.org>
-> > wrote:
-> > 
-> > > Change from version 6
-> > > In last series(v6) i had put wrong version(v5) for cover note.
-> > > Which led to confusion for patch set series.
-> > >
-> > > In this series i have updated the label for cover letter(v7).
-> > > There is no change in patches. Only cover note label is updated.
-> > >
-> > > Change from version 5
-> > > [V6,4/4] rpmsg: char: Add signal callback and POLLPRI support
-> > > Updated for sparse warning. Replaced POLLPRI => EPOLLPRI to fix
-> > > warning.
-> > >
-> > > Change from version 4
-> > > I am taking over these patches from aneela@codeaurora.org
-> > > Fixed all the trivial review comments.
-> > >
-> > > Signal conversion to and from native signal as done in patch V4,2/4
-> > > is intentional.
-> > >
-> > > Arun Kumar Neelakantam (3):
-> > >   rpmsg: glink: Add support to handle signals command
-> > >   rpmsg: char: Add TIOCMGET/TIOCMSET ioctl support
-> > >   rpmsg: char: Add signal callback and POLLPRI support
-> > >
-> > > Deepak Kumar Singh (1):
-> > >   rpmsg: core: Add signal API support
-> > >
-> > >  drivers/rpmsg/qcom_glink_native.c | 125
-> > > ++++++++++++++++++++++++++++++++++++++
-> > >  drivers/rpmsg/rpmsg_char.c        |  76 ++++++++++++++++++++++-
-> > >  drivers/rpmsg/rpmsg_core.c        |  40 ++++++++++++
-> > >  drivers/rpmsg/rpmsg_internal.h    |   5 ++
-> > >  include/linux/rpmsg.h             |  27 ++++++++
-> > >  5 files changed, 270 insertions(+), 3 deletions(-)
-> > >
-> > >
-> > >
-> > Any idea why this died at v7?
-> > 
-> 
-> I had some concerns about the actual users of this and wanted the API to
-> be more generic. Deepak brought this up again recently and I think we
-> have a common understanding of how v8 should look like.
+On Thu, 8 Jul 2021 at 13:10, Ulf Hansson <ulf.hansson@linaro.org> wrote:
+>
+> - Peter (the email was bouncing)
 
-Okay, great.
++ Peter's kernel.org address
 
-Deepak, would you be kind enough to Cc me on the next submission please?
+>
+> On Tue, 6 Jul 2021 at 13:55, Mark Brown <broonie@kernel.org> wrote:
+> >
+> > On Tue, Jul 06, 2021 at 09:54:03AM +0200, Ulf Hansson wrote:
+> > > On Tue, 22 Jun 2021 at 00:32, Dmitry Baryshkov
+> >
+> > > > Qualcomm QCA6390/1 is a family of WiFi + Bluetooth SoCs, with BT part
+> > > > being controlled through the UART and WiFi being present on PCIe
+> > > > bus. Both blocks share common power sources. Add device driver handling
+> > > > power sequencing of QCA6390/1.
+> >
+> > > Power sequencing of discoverable buses have been discussed several
+> > > times before at LKML. The last attempt [1] I am aware of, was in 2017
+> > > from Peter Chen. I don't think there is a common solution, yet.
+> >
+> > This feels a bit different to the power sequencing problem - it's not
+> > exposing the individual inputs to the device but rather is a block that
+> > manages everything but needs a bit of a kick to get things going (I'd
+> > guess that with ACPI it'd be triggered via AML).  It's in the same space
+> > but it's not quite the same issue I think, something that can handle
+> > control of the individual resources might still struggle with this.
+>
+> Well, to me it looks very similar to those resouses we could manage
+> with the mmc pwrseq, for SDIO. It's also typically the same kind of
+> combo-chips that moved from supporting SDIO to PCIe, for improved
+> performance I guess. More importantly, the same constraint to
+> pre-power on the device is needed to allow it to be discovered/probed.
+
+In our case we'd definitely use pwrseq for PCIe bus and we can also
+benefit from using pwrseq for serdev and for platform busses also (for
+the same story of WiFi+BT chips).
+
+I can take a look at rewriting pwrseq code to also handle the PCIe
+bus. Rewriting it to be a generic lib seems like an easy task,
+plugging it into PCIe code would be more fun.
+
+Platform and serdev... Definitely even more fun.
+
+> Therefore, I think it would be worth having a common solution for
+> this, rather than a solution per subsystem or even worse, per device.
+>
+> Unfortunately, it looks like Peter's email is bouncing so we can't get
+> an update from him.
+
+Let's see if the kernel.org email will get to him.
 
 -- 
-Lee Jones [李琼斯]
-Senior Technical Lead - Developer Services
-Linaro.org │ Open source software for Arm SoCs
-Follow Linaro: Facebook | Twitter | Blog
+With best wishes
+Dmitry
