@@ -2,76 +2,137 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 203393C1ABD
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jul 2021 22:57:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4DE5F3C1AC5
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jul 2021 22:59:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230466AbhGHU7n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Jul 2021 16:59:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51280 "EHLO
+        id S230442AbhGHVCX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Jul 2021 17:02:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51876 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230238AbhGHU7m (ORCPT
+        with ESMTP id S230425AbhGHVCX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Jul 2021 16:59:42 -0400
-Received: from mail-qt1-x82e.google.com (mail-qt1-x82e.google.com [IPv6:2607:f8b0:4864:20::82e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8A3DC061574
-        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Jul 2021 13:56:59 -0700 (PDT)
-Received: by mail-qt1-x82e.google.com with SMTP id z12so5957549qtj.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Jul 2021 13:56:59 -0700 (PDT)
+        Thu, 8 Jul 2021 17:02:23 -0400
+Received: from mail-il1-x12f.google.com (mail-il1-x12f.google.com [IPv6:2607:f8b0:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17483C061574
+        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Jul 2021 13:59:40 -0700 (PDT)
+Received: by mail-il1-x12f.google.com with SMTP id h3so7970470ilc.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Jul 2021 13:59:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=txIBa7izt4FT4BE1+BkMaR3RCAXYErSxPttMfK5CXlI=;
-        b=faOfPE42FMx2/m3f1QlT02pCHNK9sLreFKyjuOGb3tFGZWwE2u9n8c/m01lIAh4ZOK
-         EnmFa0gKFLxLThifMO9hhFhEQ4otXF6Oz60t2oagtPcqwMmWE6MpBNGY7PQqbM+PnszO
-         57ZF/9M4sfs2AV0fc381Kc/3WufCncVrAupIY=
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=u0nJ5EypAihw/HUezUvxgsNKaLjT3N+h+V7waposDmE=;
+        b=BFRavtR25uNMSAMxy1BrcpGAB6djxvxR1hryroHuucP5XxFeh/zHISP0RskNbjeFBs
+         wnZLi4J33dxeEv+wla/xQi+afchuzSaq+OxnTm2KDrgXAD/qoTQIEt2w+gstQLWd9hKy
+         /I3BN12z3wgGxp6wYOPOy+d2qL2HovXM+VxAyPZ59BeXjjP8uEt1U6LEzqLV+r+vdquM
+         KE7fMicgGE2pyL8AeSD3/eYDE7PF2W9E6l+YrD4koousLqRaGHypdom2akKVPY7pDO6R
+         4Ox69m84V7XwsxkVtcRr6Vy4xZl6nwSYUDMI2gX3w4Hmd2bcublkHHEp280qvguRHknp
+         yUDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=txIBa7izt4FT4BE1+BkMaR3RCAXYErSxPttMfK5CXlI=;
-        b=R7zbiiikr1/8AwHzlPPDbEI+ywYxE6QQPzxj/dj0lpWgpqGuDoXvS45feJn4GhgyWT
-         wBK/f8Qt3dN5fES4WPf/o/3QUUvxudAFE8id5sEbgRU+5z4shGYifCPMZjJfNmw7EpXc
-         bnsElEn/+bFD8KOA/qB1o9iqEeLn4ygeZfXExsYrPXRB8AVPFQzgp9dl0DEVdfoODYhR
-         czRQ2eaOHIOG1BvTGXq9h0T0BOFVPp3e4eavUAHpZExKQYWL6s4PODVBU8rYeFQyTIn1
-         B4rVsMmiSaP6JitUIOqzLv75nR4v4kRO4SFcj4A6ge3/hXDkL/RDCsmTH6lVN+3/5PdY
-         6dhQ==
-X-Gm-Message-State: AOAM530cHVUwxf+/VF68wwGb4KFAW/WshD6Ny5q8uRMo59FsRMEScVIo
-        3yj8Q1F3woP0MpTyT4M/ChI6BNxt3lbydnTJ56mDCg==
-X-Google-Smtp-Source: ABdhPJy01WzZkz2fmE/A+D4JFf/YjrN+FkodfFEoNH/4qM6i1zp4YmjJ7cZ+I4HUiGMQweSEOpnYAwyEvPRnI/WHXdM=
-X-Received: by 2002:a05:622a:1051:: with SMTP id f17mr30357847qte.226.1625777819121;
- Thu, 08 Jul 2021 13:56:59 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 8 Jul 2021 13:56:58 -0700
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=u0nJ5EypAihw/HUezUvxgsNKaLjT3N+h+V7waposDmE=;
+        b=bgyHUlWdxp7ZMNCBurx95qWFp1+BbF4A776TQgdjsoUFwsfSTg3f5Kr5mWZkEBnBYY
+         FNt8SdvD3GRi1DJQn5F1qrTzmi8V9dY03vJnA4z0k5wA3fXwjUtJ9ZBV8BcKTMdf47ih
+         e6velwAsc3CJunTh1J1LoJdjUA5bJ/7gmbZ8lQfJSAifUO7Hbu8NBfl01PKJbGNUta+y
+         LngLLI6DZjG2TADhqAs6nD7TqIbWrbZG7feY44doZeKnLYPU5+g2hjY6Is9oZuCTceRE
+         WdIJHJozKPFGSVem81dJb6TLK/fBHo6nYaAmgUdm1Gz9YFNuJKXT3XnkxHu3TsXmn5Qt
+         FbtA==
+X-Gm-Message-State: AOAM530sJ3xppZTTSpxZnrctf2xRDMFfmKNBzn99ehCTTJsYf5w4gvSe
+        VfXUuLBj0yryjkVtqtO3g/fySkefGdjf6m4rNxE=
+X-Google-Smtp-Source: ABdhPJzy6vsjNz305EeGV0LnSoMUm2tEd1A0t7cwc55gUpsOibEaNF5OzUOv4C+VlyLgm30G01ryHcmlTl1caL2VYSI=
+X-Received: by 2002:a92:d08b:: with SMTP id h11mr8138938ilh.32.1625777979532;
+ Thu, 08 Jul 2021 13:59:39 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <1625592020-22658-5-git-send-email-khsieh@codeaurora.org>
-References: <1625592020-22658-1-git-send-email-khsieh@codeaurora.org> <1625592020-22658-5-git-send-email-khsieh@codeaurora.org>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.9.1
-Date:   Thu, 8 Jul 2021 13:56:58 -0700
-Message-ID: <CAE-0n53EtG=Kd-i+q-Yg-GNNAkXwPnOOgFE_zG249OH5=i-f6w@mail.gmail.com>
-Subject: Re: [PATCH 4/7] drm/msm/dp: replug event is converted into an unplug
- followed by an plug events
-To:     Kuogee Hsieh <khsieh@codeaurora.org>,
-        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
-        sean@poorly.run
-Cc:     abhinavk@codeaurora.org, aravindh@codeaurora.org, airlied@linux.ie,
-        daniel@ffwll.ch, bjorn.andersson@linaro.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
+References: <20210527124356.22367-1-will@kernel.org> <59800d6c-364a-f4be-e341-c5b531657ba3@arm.com>
+ <20210706133314.GB20327@willie-the-truck> <f136da2ea91fc22334c552b8c524f6e7@kernel.org>
+ <CAK8P3a2xWTvj6HjsC6gH44Ad13adKjK0wR7UxFFQ1i=XYixvQA@mail.gmail.com>
+ <87zguz7b6b.wl-maz@kernel.org> <CAK8P3a2eFDSdkAUgapGuANQJsO=Arsp4uxoiLRXL-ah0ttc6Fg@mail.gmail.com>
+ <m-pFOMXMXSwpPq7H8syJd3qyVkuhGYjVEOgk-iiezAFhr8ApjWX8eIMkcL3updRXOOeOClx88ekyeOvEsNYp_HrY54W4iCSYl8yT03Tykv4=@protonmail.com>
+ <CAK8P3a1rtXTtGQ_Q7eg2SOrYa_OhSWPWFiS8m=oSb_GU1uUNXQ@mail.gmail.com>
+ <M0wGhzKTDUUYQPjRdiabG3xuKLx8p19uB1iqdkwfa8Op45i4zBGm4mpcHIxpYzWkJLiUM6JtQIDuBVyLlXtPhrlPyycbhZ2GO1ldLymA40g=@protonmail.com>
+ <CAK8P3a33ZD6uLntmuvp_Rgfj1VYEV3YxP6+BxSDAQLon-q2hGw@mail.gmail.com> <CAOCk7Np_2Mk481g-7KTf=Jk-i9ZHiAgX40pKBYckAAReEQbGyA@mail.gmail.com>
+In-Reply-To: <CAOCk7Np_2Mk481g-7KTf=Jk-i9ZHiAgX40pKBYckAAReEQbGyA@mail.gmail.com>
+From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Date:   Thu, 8 Jul 2021 14:59:28 -0600
+Message-ID: <CAOCk7NqdpUZFMSXfGjw0_1NaSK5gyTLgpS9kSdZn1jmBy-QkfA@mail.gmail.com>
+Subject: Re: [PATCH] arm64: cache: Lower ARCH_DMA_MINALIGN to 64 (L1_CACHE_BYTES)
+To:     Arnd Bergmann <arnd@arndb.de>
+Cc:     Yassine Oudjana <y.oudjana@protonmail.com>,
+        Marc Zyngier <maz@kernel.org>, Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Ard Biesheuvel <ardb@kernel.org>,
+        Android Kernel Team <kernel-team@android.com>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Vincent Whitchurch <vincent.whitchurch@axis.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Kuogee Hsieh (2021-07-06 10:20:17)
-> Remove special handling of replug interrupt and instead treat replug event
-> as a sequential unplug followed by a plugin event. This is needed to meet
-> the requirements of DP Link Layer CTS test case 4.2.1.3.
+On Wed, Jul 7, 2021 at 8:41 AM Jeffrey Hugo <jeffrey.l.hugo@gmail.com> wrote:
 >
-> Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
-> ---
+> On Wed, Jul 7, 2021 at 3:30 AM Arnd Bergmann <arnd@arndb.de> wrote:
+> >
+> > On Tue, Jul 6, 2021 at 6:20 PM Will Deacon <will@kernel.org> wrote:
+> > >
+> > > I think the million dollar question is whether the 128-byte cache-lines
+> > > live in a cache above the PoC or not. If it's just a system level cache
+> > > through which all DMA is "coherent", then it doesn't matter.
+> >
+> > On Wed, Jul 7, 2021 at 10:24 AM Yassine Oudjana
+> > <y.oudjana@protonmail.com> wrote:
+> > >
+> > > On Wednesday, July 7th, 2021 at 12:33 AM, Arnd Bergmann <arnd@arndb.de> wrote:
+> > > > On Tue, Jul 6, 2021 at 7:15 PM Yassine Oudjana y.oudjana@protonmail.com wrote:
+> > > > >
+> > > > > $ numactl -C 0 line -M 1M
+> > > > > 128
+> > > > > $ numactl -C 3 line -M 1M
+> > > > > 128
+> > > >
+> > > >     Can you rerun the the 'line' test with '-M 128K' to see if that confirms the 64
+> > > >     byte L1 line size that the 'cache' test reported?
+> > >
+> > > $ numactl -C 0 line -M 128K
+> > > 64
+> > > $ numactl -C 3 line -M 128K
+> > > 64
+> >
+> > Ok, so this seems to confirm that the L1 uses 64 byte lines, while the L2 (or
+> > possibly L3) uses 128 byte lines.
+> >
+> > On Wed, Jul 7, 2021 at 12:27 AM Bjorn Andersson
+> > <bjorn.andersson@linaro.org> wrote:
+> > >
+> > > I can confirm that MSM8996, and a few derivatives, has 128 byte cache lines.
+> >
+> > Ok, thanks. Assuming this is an outer cache and the L1 indeed has a smaller line
+> > size, can you also confirm that this 128 byte lines are north of the point of
+> > coherency?
+>
+> Finding this old documentation has been painful  :)
+>
+> L0 I 64 byte cacheline
+> L1 I 64
+> L1 D 64
+> L2 unified 128 (shared between the CPUs of a duplex)
+>
+> I believe L2 is within the POC, but I'm trying to dig up the old
+> documentation to confirm.
 
-This needs a Fixes tag of some kind.
+Was able to track down a friendly hardware designer.  The POC lies
+between L2 and L3.  Hope this helps.
 
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+> > In other words, does the CTR_EL0.DminLine field also show 128 bytes
+> > (in which case
+> > it seems we already lost)? And if not, does a CPU store to the second half of a
+> > 128 byte L2 line cause DMA data in the first half to be clobbered?
+>
+> Per the documentation I'm seeing, CTR_EL0.DminLine should show 128
+> bytes.  I don't have hardware handy to confirm.
