@@ -2,137 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4DE5F3C1AC5
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jul 2021 22:59:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 35AED3C1B09
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jul 2021 23:34:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230442AbhGHVCX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Jul 2021 17:02:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51876 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230425AbhGHVCX (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Jul 2021 17:02:23 -0400
-Received: from mail-il1-x12f.google.com (mail-il1-x12f.google.com [IPv6:2607:f8b0:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17483C061574
-        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Jul 2021 13:59:40 -0700 (PDT)
-Received: by mail-il1-x12f.google.com with SMTP id h3so7970470ilc.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Jul 2021 13:59:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=u0nJ5EypAihw/HUezUvxgsNKaLjT3N+h+V7waposDmE=;
-        b=BFRavtR25uNMSAMxy1BrcpGAB6djxvxR1hryroHuucP5XxFeh/zHISP0RskNbjeFBs
-         wnZLi4J33dxeEv+wla/xQi+afchuzSaq+OxnTm2KDrgXAD/qoTQIEt2w+gstQLWd9hKy
-         /I3BN12z3wgGxp6wYOPOy+d2qL2HovXM+VxAyPZ59BeXjjP8uEt1U6LEzqLV+r+vdquM
-         KE7fMicgGE2pyL8AeSD3/eYDE7PF2W9E6l+YrD4koousLqRaGHypdom2akKVPY7pDO6R
-         4Ox69m84V7XwsxkVtcRr6Vy4xZl6nwSYUDMI2gX3w4Hmd2bcublkHHEp280qvguRHknp
-         yUDg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=u0nJ5EypAihw/HUezUvxgsNKaLjT3N+h+V7waposDmE=;
-        b=bgyHUlWdxp7ZMNCBurx95qWFp1+BbF4A776TQgdjsoUFwsfSTg3f5Kr5mWZkEBnBYY
-         FNt8SdvD3GRi1DJQn5F1qrTzmi8V9dY03vJnA4z0k5wA3fXwjUtJ9ZBV8BcKTMdf47ih
-         e6velwAsc3CJunTh1J1LoJdjUA5bJ/7gmbZ8lQfJSAifUO7Hbu8NBfl01PKJbGNUta+y
-         LngLLI6DZjG2TADhqAs6nD7TqIbWrbZG7feY44doZeKnLYPU5+g2hjY6Is9oZuCTceRE
-         WdIJHJozKPFGSVem81dJb6TLK/fBHo6nYaAmgUdm1Gz9YFNuJKXT3XnkxHu3TsXmn5Qt
-         FbtA==
-X-Gm-Message-State: AOAM530sJ3xppZTTSpxZnrctf2xRDMFfmKNBzn99ehCTTJsYf5w4gvSe
-        VfXUuLBj0yryjkVtqtO3g/fySkefGdjf6m4rNxE=
-X-Google-Smtp-Source: ABdhPJzy6vsjNz305EeGV0LnSoMUm2tEd1A0t7cwc55gUpsOibEaNF5OzUOv4C+VlyLgm30G01ryHcmlTl1caL2VYSI=
-X-Received: by 2002:a92:d08b:: with SMTP id h11mr8138938ilh.32.1625777979532;
- Thu, 08 Jul 2021 13:59:39 -0700 (PDT)
+        id S231285AbhGHVgm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Jul 2021 17:36:42 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:56055 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230492AbhGHVgm (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 8 Jul 2021 17:36:42 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1625780040; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=xpgLql9IbuvMj4f8z+D1UneOTXpQth+qs7ZN6prUSAk=;
+ b=U/Xu3QlGKYwg3Exf4n9yGalUJ/wTs1Pjxcmpr69aIJr4nLfg/072Y6dfbSn3rnvu84u9gUBa
+ BJOPWYlR++HvWwZKmCfIU4ZMYjVDWd3SHmIUt2FZ1gCtw/26MzBLExG84Jd8KXrGFpF8bmkj
+ YdtAa5FwGDiThq+zGNUq3QQd+Pg=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
+ 60e76f405d0d101e386de308 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 08 Jul 2021 21:33:52
+ GMT
+Sender: khsieh=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id B5ADBC433F1; Thu,  8 Jul 2021 21:33:52 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: khsieh)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4E930C433D3;
+        Thu,  8 Jul 2021 21:33:51 +0000 (UTC)
 MIME-Version: 1.0
-References: <20210527124356.22367-1-will@kernel.org> <59800d6c-364a-f4be-e341-c5b531657ba3@arm.com>
- <20210706133314.GB20327@willie-the-truck> <f136da2ea91fc22334c552b8c524f6e7@kernel.org>
- <CAK8P3a2xWTvj6HjsC6gH44Ad13adKjK0wR7UxFFQ1i=XYixvQA@mail.gmail.com>
- <87zguz7b6b.wl-maz@kernel.org> <CAK8P3a2eFDSdkAUgapGuANQJsO=Arsp4uxoiLRXL-ah0ttc6Fg@mail.gmail.com>
- <m-pFOMXMXSwpPq7H8syJd3qyVkuhGYjVEOgk-iiezAFhr8ApjWX8eIMkcL3updRXOOeOClx88ekyeOvEsNYp_HrY54W4iCSYl8yT03Tykv4=@protonmail.com>
- <CAK8P3a1rtXTtGQ_Q7eg2SOrYa_OhSWPWFiS8m=oSb_GU1uUNXQ@mail.gmail.com>
- <M0wGhzKTDUUYQPjRdiabG3xuKLx8p19uB1iqdkwfa8Op45i4zBGm4mpcHIxpYzWkJLiUM6JtQIDuBVyLlXtPhrlPyycbhZ2GO1ldLymA40g=@protonmail.com>
- <CAK8P3a33ZD6uLntmuvp_Rgfj1VYEV3YxP6+BxSDAQLon-q2hGw@mail.gmail.com> <CAOCk7Np_2Mk481g-7KTf=Jk-i9ZHiAgX40pKBYckAAReEQbGyA@mail.gmail.com>
-In-Reply-To: <CAOCk7Np_2Mk481g-7KTf=Jk-i9ZHiAgX40pKBYckAAReEQbGyA@mail.gmail.com>
-From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Date:   Thu, 8 Jul 2021 14:59:28 -0600
-Message-ID: <CAOCk7NqdpUZFMSXfGjw0_1NaSK5gyTLgpS9kSdZn1jmBy-QkfA@mail.gmail.com>
-Subject: Re: [PATCH] arm64: cache: Lower ARCH_DMA_MINALIGN to 64 (L1_CACHE_BYTES)
-To:     Arnd Bergmann <arnd@arndb.de>
-Cc:     Yassine Oudjana <y.oudjana@protonmail.com>,
-        Marc Zyngier <maz@kernel.org>, Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Ard Biesheuvel <ardb@kernel.org>,
-        Android Kernel Team <kernel-team@android.com>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Vincent Whitchurch <vincent.whitchurch@axis.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Thu, 08 Jul 2021 14:33:51 -0700
+From:   khsieh@codeaurora.org
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     dri-devel@lists.freedesktop.org, robdclark@gmail.com,
+        sean@poorly.run, abhinavk@codeaurora.org, aravindh@codeaurora.org,
+        airlied@linux.ie, daniel@ffwll.ch, bjorn.andersson@linaro.org,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/7] drm/msm/dp: use dp_ctrl_off_link_stream during PHY
+ compliance test run
+In-Reply-To: <CAE-0n52SxJx8kOwQddWF096PsPy-0f8bDq_ss=u6i-hisD54Hg@mail.gmail.com>
+References: <1625592020-22658-1-git-send-email-khsieh@codeaurora.org>
+ <1625592020-22658-2-git-send-email-khsieh@codeaurora.org>
+ <CAE-0n52SxJx8kOwQddWF096PsPy-0f8bDq_ss=u6i-hisD54Hg@mail.gmail.com>
+Message-ID: <3492b578fdf4e59fe594fb9207782aa1@codeaurora.org>
+X-Sender: khsieh@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jul 7, 2021 at 8:41 AM Jeffrey Hugo <jeffrey.l.hugo@gmail.com> wrote:
->
-> On Wed, Jul 7, 2021 at 3:30 AM Arnd Bergmann <arnd@arndb.de> wrote:
-> >
-> > On Tue, Jul 6, 2021 at 6:20 PM Will Deacon <will@kernel.org> wrote:
-> > >
-> > > I think the million dollar question is whether the 128-byte cache-lines
-> > > live in a cache above the PoC or not. If it's just a system level cache
-> > > through which all DMA is "coherent", then it doesn't matter.
-> >
-> > On Wed, Jul 7, 2021 at 10:24 AM Yassine Oudjana
-> > <y.oudjana@protonmail.com> wrote:
-> > >
-> > > On Wednesday, July 7th, 2021 at 12:33 AM, Arnd Bergmann <arnd@arndb.de> wrote:
-> > > > On Tue, Jul 6, 2021 at 7:15 PM Yassine Oudjana y.oudjana@protonmail.com wrote:
-> > > > >
-> > > > > $ numactl -C 0 line -M 1M
-> > > > > 128
-> > > > > $ numactl -C 3 line -M 1M
-> > > > > 128
-> > > >
-> > > >     Can you rerun the the 'line' test with '-M 128K' to see if that confirms the 64
-> > > >     byte L1 line size that the 'cache' test reported?
-> > >
-> > > $ numactl -C 0 line -M 128K
-> > > 64
-> > > $ numactl -C 3 line -M 128K
-> > > 64
-> >
-> > Ok, so this seems to confirm that the L1 uses 64 byte lines, while the L2 (or
-> > possibly L3) uses 128 byte lines.
-> >
-> > On Wed, Jul 7, 2021 at 12:27 AM Bjorn Andersson
-> > <bjorn.andersson@linaro.org> wrote:
-> > >
-> > > I can confirm that MSM8996, and a few derivatives, has 128 byte cache lines.
-> >
-> > Ok, thanks. Assuming this is an outer cache and the L1 indeed has a smaller line
-> > size, can you also confirm that this 128 byte lines are north of the point of
-> > coherency?
->
-> Finding this old documentation has been painful  :)
->
-> L0 I 64 byte cacheline
-> L1 I 64
-> L1 D 64
-> L2 unified 128 (shared between the CPUs of a duplex)
->
-> I believe L2 is within the POC, but I'm trying to dig up the old
-> documentation to confirm.
+On 2021-07-08 00:03, Stephen Boyd wrote:
+> Quoting Kuogee Hsieh (2021-07-06 10:20:14)
+>> DP cable should always connect to DPU during the entire PHY compliance
+>> testing run. Since DP PHY compliance test is executed at irq_hpd event
+>> context, dp_ctrl_off_link_stream() should be used instead of 
+>> dp_ctrl_off().
+>> dp_ctrl_off() is used for unplug event which is triggered when DP 
+>> cable is
+>> dis connected.
+>> 
+>> Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
+>> ---
+> 
+> Is this
+> 
+> Fixes: f21c8a276c2d ("drm/msm/dp: handle irq_hpd with sink_count = 0 
+> correctly")
+> 
+> or
+> 
+> Fixes: c943b4948b58 ("drm/msm/dp: add displayPort driver support")
 
-Was able to track down a friendly hardware designer.  The POC lies
-between L2 and L3.  Hope this helps.
+should be fixes at f21c8a276c2d ("drm/msm/dp: handle irq_hpd with 
+sink_count = 0 correctly")
 
-> > In other words, does the CTR_EL0.DminLine field also show 128 bytes
-> > (in which case
-> > it seems we already lost)? And if not, does a CPU store to the second half of a
-> > 128 byte L2 line cause DMA data in the first half to be clobbered?
->
-> Per the documentation I'm seeing, CTR_EL0.DminLine should show 128
-> bytes.  I don't have hardware handy to confirm.
+> 
+> ? It's not clear how dp_ctrl_off() was working for compliance tests
+> before commit f21c8a276c2d.
+both dp_ctrl_off() and dp_ctrl_off_link_strea() are work for 
+dp_ctrl_process_phy_test_request()
+The problem is after dp_ctrl_off(), aux channel is down, hence next phy 
+test will failed due to dpcd read failed.
+So that cable unplugged and replug back to required to run next test 
+case.
+dp_ctrl_off_link_stream() will keep aux channel up and other phy test 
+case can be continued.
+
+
+
+>>  drivers/gpu/drm/msm/dp/dp_ctrl.c | 2 +-
+>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>> 
+>> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c 
+>> b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+>> index caf71fa..27fb0f0 100644
+>> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
+>> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+>> @@ -1530,7 +1530,7 @@ static int 
+>> dp_ctrl_process_phy_test_request(struct dp_ctrl_private *ctrl)
+>>          * running. Add the global reset just before disabling the
+>>          * link clocks and core clocks.
+>>          */
+>> -       ret = dp_ctrl_off(&ctrl->dp_ctrl);
+>> +       ret = dp_ctrl_off_link_stream(&ctrl->dp_ctrl);
+>>         if (ret) {
+>>                 DRM_ERROR("failed to disable DP controller\n");
+>>                 return ret;
