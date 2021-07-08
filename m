@@ -2,99 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 10BEC3C19AF
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jul 2021 21:16:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2183B3C1A32
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jul 2021 21:55:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229866AbhGHTTZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Jul 2021 15:19:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57336 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229497AbhGHTTY (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Jul 2021 15:19:24 -0400
-Received: from mail-oo1-xc2a.google.com (mail-oo1-xc2a.google.com [IPv6:2607:f8b0:4864:20::c2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 330A5C061574
-        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Jul 2021 12:16:42 -0700 (PDT)
-Received: by mail-oo1-xc2a.google.com with SMTP id i2-20020a4a2b020000b0290259a8e94329so1645368ooa.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Jul 2021 12:16:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=D5KN5KCtM6Y6+Lvcam1ZdlE3TuTqT7D2J9oLO6I8aQo=;
-        b=I8k13DUrzjT49dELyQh4omr/mUGhHbTp2tAk8+SVxvCWudwrvoJqjMKGAn5dvQhXXl
-         uvdigZU6c2RXZRiCHqYkFWfekc7JJyiO4HBlkuS454j065uVlWBu29d2rl+vvEtYhvT4
-         1LfH2I+148d0VTXzmB/Pu/Ah8G7vrP+Px4rmM=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=D5KN5KCtM6Y6+Lvcam1ZdlE3TuTqT7D2J9oLO6I8aQo=;
-        b=m6O0j2dJIwOn8axg2Dm4UW5PIhguzsbYVGHHvNGcIE4vy02PZGRM730wIHtUVBNPZ6
-         IwlcUGKPF2htWVPkQeSoTszWV5T1+NoOxlclP05ygk+mG53+Du0IWRcEMVQTqw3UQjW4
-         AOROlPUqPbgI0KDupSOxzLXsoOVZAZ6j+At6XcfFkKk/ruEEmWmZMtLv2DpHV4713g2N
-         LmVZdedGQlJovjZLp7WxWORZGD6zZo6V06sRka/2FIJ0lGaKyvhR7s5LyCJS+pGSWajm
-         O9nzF9fakU3FU/oVRKnNk3QOIvOqa5oD5WCfWzRZu/QizcC7Ay+S/kt3M6BcOhSjiksV
-         x2vg==
-X-Gm-Message-State: AOAM533TCWnrk+tGBMt5O7rliWqKONng8bVJpaJc5rL1ECFNDukEL8tT
-        uyo+oRqyRbxAK3ZfLk06wS02MuSIFS3Kla0F94kcjg==
-X-Google-Smtp-Source: ABdhPJzxANdUDNLft5OEBDh87ByS325dcaYfTfU0y4ofQVZISa1NhZqAXecwZWg91NXoj2+oyys5WzUhiSBrUjFaM68=
-X-Received: by 2002:a4a:e206:: with SMTP id b6mr21343518oot.16.1625771801521;
- Thu, 08 Jul 2021 12:16:41 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 8 Jul 2021 19:16:41 +0000
+        id S230155AbhGHT5m (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Jul 2021 15:57:42 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:63947 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229768AbhGHT5l (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 8 Jul 2021 15:57:41 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1625774099; h=Message-ID: References: In-Reply-To: Reply-To:
+ Subject: Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=XmhpdNAlbBG2whMnaimLCcRx1eKYhn6f80bIkt0IMKA=;
+ b=IbTFRIgCTJuHj6dLqT9h4NnM1fH2lDMxb0/ByxASmM6WLP804v6tNL0G14CHi0Jsd2c/A150
+ gAD/y9SVt6JJShM2DYAyDLiztTeqR/MBXPniESDrzmi9wjTFlOFpGS+rYmcazsMXP7RMjTki
+ sW3+GyVghXIn9Ch09OzEShUq6WE=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
+ 60e75808ec0b18a74589a460 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 08 Jul 2021 19:54:48
+ GMT
+Sender: bbhatt=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 7E6ECC4338A; Thu,  8 Jul 2021 19:54:47 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: bbhatt)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id B5DC3C433D3;
+        Thu,  8 Jul 2021 19:54:46 +0000 (UTC)
 MIME-Version: 1.0
-In-Reply-To: <20210708090810.174767-1-judyhsiao@chromium.org>
-References: <20210708090810.174767-1-judyhsiao@chromium.org>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.9.1
-Date:   Thu, 8 Jul 2021 19:16:41 +0000
-Message-ID: <CAE-0n53Jo4LuCeV6s6nubPKgJ+ShPsLOnaHoHTSZOCoULKF05Q@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: qcom: sc7180: Set adau wakeup delay to 80 ms
-To:     Andy Gross <agross@kernel.org>, Judy Hsiao <judyhsiao@chromium.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
-        dianders@chromium.org, dgreid@chromium.org, cychiang@google.com,
-        judyhsiao@google.com, tzungbi@chromium.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Thu, 08 Jul 2021 12:54:46 -0700
+From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
+To:     Loic Poulain <loic.poulain@linaro.org>
+Cc:     mani@kernel.org, hemantk@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, stable@vger.kernel.org
+Subject: Re: [PATCH] mhi: pci_generic: Fix inbound IPCR channel
+Organization: Qualcomm Innovation Center, Inc.
+Reply-To: bbhatt@codeaurora.org
+Mail-Reply-To: bbhatt@codeaurora.org
+In-Reply-To: <1625736749-24947-1-git-send-email-loic.poulain@linaro.org>
+References: <1625736749-24947-1-git-send-email-loic.poulain@linaro.org>
+Message-ID: <107247c48a6991547fa5cedd0f19d63c@codeaurora.org>
+X-Sender: bbhatt@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Judy Hsiao (2021-07-08 02:08:10)
-> Set audu wakeup delay to 80 ms for fixing pop noise during capture begin.
->
-> Signed-off-by: Judy Hsiao <judyhsiao@chromium.org>
+On 2021-07-08 02:32 AM, Loic Poulain wrote:
+> The qrtr-mhi client driver assumes that inbound buffers are
+> automatically allocated and queued by the MHI core, but this
+> no happens for mhi pci devices since IPCR inbound channel is
+> not flagged with auto_queue, causing unusable IPCR (qrtr)
+> feature. Fix that.
+> 
+> Cc: stable@vger.kernel.org
+> Fixes: 855a70c12021 ("bus: mhi: Add MHI PCI support for WWAN modems")
+> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
 > ---
+>  drivers/bus/mhi/pci_generic.c | 18 +++++++++++++++++-
+>  1 file changed, 17 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/bus/mhi/pci_generic.c 
+> b/drivers/bus/mhi/pci_generic.c
+> index 8bc6149..6d2ddec 100644
+> --- a/drivers/bus/mhi/pci_generic.c
+> +++ b/drivers/bus/mhi/pci_generic.c
+> @@ -75,6 +75,22 @@ struct mhi_pci_dev_info {
+>  		.doorbell_mode_switch = false,		\
+>  	}
+> 
+> +#define MHI_CHANNEL_CONFIG_DL_AUTOQUEUE(ch_num, ch_name, el_count, 
+> ev_ring) \
+> +	{						\
+> +		.num = ch_num,				\
+> +		.name = ch_name,			\
+> +		.num_elements = el_count,		\
+> +		.event_ring = ev_ring,			\
+> +		.dir = DMA_FROM_DEVICE,			\
+> +		.ee_mask = BIT(MHI_EE_AMSS),		\
+> +		.pollcfg = 0,				\
+> +		.doorbell = MHI_DB_BRST_DISABLE,	\
+> +		.lpm_notify = false,			\
+> +		.offload_channel = false,		\
+> +		.doorbell_mode_switch = false,		\
+> +		.auto_queue = true,			\
+> +	}
+> +
+>  #define MHI_EVENT_CONFIG_CTRL(ev_ring, el_count) \
+>  	{					\
+>  		.num_elements = el_count,	\
+> @@ -213,7 +229,7 @@ static const struct mhi_channel_config
+> modem_qcom_v1_mhi_channels[] = {
+>  	MHI_CHANNEL_CONFIG_UL(14, "QMI", 4, 0),
+>  	MHI_CHANNEL_CONFIG_DL(15, "QMI", 4, 0),
+>  	MHI_CHANNEL_CONFIG_UL(20, "IPCR", 8, 0),
+> -	MHI_CHANNEL_CONFIG_DL(21, "IPCR", 8, 0),
+> +	MHI_CHANNEL_CONFIG_DL_AUTOQUEUE(21, "IPCR", 8, 0),
+>  	MHI_CHANNEL_CONFIG_UL_FP(34, "FIREHOSE", 32, 0),
+>  	MHI_CHANNEL_CONFIG_DL_FP(35, "FIREHOSE", 32, 0),
+>  	MHI_CHANNEL_CONFIG_HW_UL(100, "IP_HW0", 128, 2),
+Why do we need to make this change when we have your new change being
+picked up that does this from qrtr/mhi.c?
 
-Presumably also
-
-Fixes: ba5f9b5d7ff3 ("arm64: dts: qcom: sc7180: Add wakeup delay for
-adau codec")
-
->  arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-
->
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
-> index 6f9c07147551..a758e4d22612 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
-> @@ -23,7 +23,7 @@ / {
->         adau7002: audio-codec-1 {
->                 compatible = "adi,adau7002";
->                 IOVDD-supply = <&pp1800_l15a>;
-> -               wakeup-delay-ms = <15>;
-> +               wakeup-delay-ms = <80>;
->                 #sound-dai-cells = <0>;
->         };
->
-> --
-> 2.31.0
->
+Thanks,
+Bhaumik
+---
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
+Forum,
+a Linux Foundation Collaborative Project
