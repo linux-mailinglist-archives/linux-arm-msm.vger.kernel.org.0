@@ -2,192 +2,176 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2B8823C24DA
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jul 2021 15:23:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C6BC73C254C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jul 2021 15:54:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232941AbhGINZX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Jul 2021 09:25:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44830 "EHLO
+        id S229499AbhGIN5F (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Jul 2021 09:57:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52256 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232913AbhGINZM (ORCPT
+        with ESMTP id S231785AbhGIN5D (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Jul 2021 09:25:12 -0400
-Received: from mail-qv1-xf30.google.com (mail-qv1-xf30.google.com [IPv6:2607:f8b0:4864:20::f30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46865C0617A7
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Jul 2021 06:22:28 -0700 (PDT)
-Received: by mail-qv1-xf30.google.com with SMTP id f5so4485282qvu.8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Jul 2021 06:22:28 -0700 (PDT)
+        Fri, 9 Jul 2021 09:57:03 -0400
+Received: from mail-qk1-x72a.google.com (mail-qk1-x72a.google.com [IPv6:2607:f8b0:4864:20::72a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4DE21C0613DD
+        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Jul 2021 06:54:19 -0700 (PDT)
+Received: by mail-qk1-x72a.google.com with SMTP id a6so9354264qka.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Jul 2021 06:54:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
+        d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=aUdetFpscS7z5mzy6zDPEGWjEPyrEwCZ6IQKdhH5RqU=;
-        b=f+1d67OBKROioDqaoZP3olVJvJePOGGDY4hvk8uwOWpHh81rQi3F7lWMDqXIMfN9Zi
-         fdeKziL1dyXDjYTe3hQXSjxqdOBDg73SMN0xtwj0FaXUyCjdr+QcfE2Tz8b4E6DzSiB3
-         rIFUTrxkcBLEeLk7HSsMH3nr7rJYfiGfZ5gYzq+jQ3RN+5FVJWzFzC5aZvE0aI1XaqbG
-         EdS9PwNe9S0NYTtJ9q7Ooc9wa+3SMjdfjCHg2t/UUUmhQJ9CYPRbSGnWwoNDJ6A/jybj
-         l9FApuUjfv6J4EOgB1vpgRhFHIp7N1+cGjesePlupAOQfUVQm+AlvDQdIK+vrMJ7kg/L
-         fdEQ==
+        bh=qiOUB7HLvLlvZOpZ/gkN2JlQJ5E4mMeYNLinigOA+9s=;
+        b=T3wAp9DoNvgWy0Ro/pS13nqAvPokAxi8LgstNsyBbwHLqLqINLmtfgoFs/Q+BlwsIj
+         8gvKq/S9P92Ny6t7qSxlsWjHtwZcDtNlGlFjVqIfX3ba00kPul2dqbIUTDiz2sOPMEWj
+         EP/uYiL2UszRtbPSpERLnzSKOQQ6pm2kpZxkI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=aUdetFpscS7z5mzy6zDPEGWjEPyrEwCZ6IQKdhH5RqU=;
-        b=MVijkOoEAFnPqSvt5O4TASP6yPyyDoqGIbbx0jqDa3PQ0E1zPAUyv2rFZxfKVDOtd0
-         G5fSu+p4PjejbZ+HIAcbhJyu1H3Wg4wO2Acb6P3LZddzGLTlTAnzzjnOfApVwrhWvKGh
-         u/sGkrvYVB1yokR3YPxkWuf0TP2Iyxnf5UP8lSEs+uX+/MlTt/4AUiJW4ZFwalHBUJ/k
-         M1uf8KPnq3nMyxyCTRl8sNM3IXQ8w+l/IXgVFD8OsSgHQrbuAhGWjxMFX0CveRwY9whB
-         PRtN5vIly1fSL/ln5qS2NcMTEmXo9pSaQwApaT9zoJ9SkGNcdnybHrhJ2HHj6Ypyh3U0
-         NU/w==
-X-Gm-Message-State: AOAM530RddOiT9gfyUVm8OqJOxwOauMTTFeYKWoRjz6ITL8fQEJcAxBR
-        V6lQFjrzMbQWBfo4vb8ImjolUYOmwdl6q3QpdwMPAw==
-X-Google-Smtp-Source: ABdhPJzdB0FYlrfuu64VS+J5VILBGu9IkUAR2Hrqo8yWahFjCk3lhWfpwC7c5b1gLQOHxPFY72rpDJMVgx2wawg2s40=
-X-Received: by 2002:a05:6214:1cb:: with SMTP id c11mr36374856qvt.47.1625836947110;
- Fri, 09 Jul 2021 06:22:27 -0700 (PDT)
+        bh=qiOUB7HLvLlvZOpZ/gkN2JlQJ5E4mMeYNLinigOA+9s=;
+        b=YTHBECIsv2V+uZpdaLicH4bEwr81WKU47GSFYD+2asytrdjEB+RDveljANmN9OEtKu
+         z1F8sClCcxgKrHBijtX3K3pyAaGGBsrMw2ifzlKd5G/JsrlnQoT6CPfY5I9phvzbPcNl
+         TiVolRmyF2Cbl6ygzyXTeemLJGNxVbmp8Pe35+JOEZVTA550Nrs738VMPECvOND7U6kN
+         QULlEhFF/W+zonyq9aOM7UVnJW7PXyjh4tFWC6ibeyYQHRI4bpOb/Eae6e9CZoNP4lCO
+         3xUkY//J0UlePJ6NMdmmXgLHeR1fy3c7/atg5luMmea/zUv53RNUpMV1l3gU99qyaLlZ
+         NKnA==
+X-Gm-Message-State: AOAM531/Pgnv7s28tG0Ic8YlRSmwTKbrqP7/OWFuYGXsqrtoG36cISvG
+        E+FAypqUo2Oi3HvNnR2VdQngiNs6qp7GWg==
+X-Google-Smtp-Source: ABdhPJzvK2cF1QBHZoqJdmi5b6o/UZo+GMb1CJervp7mstvLOTv4tjM/gksJeaps7WuPxx+sChk+Pg==
+X-Received: by 2002:a05:620a:23d:: with SMTP id u29mr27896463qkm.239.1625838858383;
+        Fri, 09 Jul 2021 06:54:18 -0700 (PDT)
+Received: from mail-yb1-f172.google.com (mail-yb1-f172.google.com. [209.85.219.172])
+        by smtp.gmail.com with ESMTPSA id b25sm2523353qkk.111.2021.07.09.06.54.17
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 09 Jul 2021 06:54:17 -0700 (PDT)
+Received: by mail-yb1-f172.google.com with SMTP id i4so14781379ybe.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Jul 2021 06:54:17 -0700 (PDT)
+X-Received: by 2002:a25:6088:: with SMTP id u130mr49090811ybb.257.1625838856780;
+ Fri, 09 Jul 2021 06:54:16 -0700 (PDT)
 MIME-Version: 1.0
-References: <20210709043136.533205-1-dmitry.baryshkov@linaro.org>
- <20210709043136.533205-5-dmitry.baryshkov@linaro.org> <CAPDyKFprYK8bSk+rdnDt3xRUR9BRNdyRiBdefO+s7qzOwHf7hg@mail.gmail.com>
- <CAA8EJprrjz=o7Ymt1mNBZASzTeX==1ceRTeKA4f3QrVMcpO6xg@mail.gmail.com>
- <CAPDyKFoLcsYLisEiOF66dDsV+759c5k0PD64uxU11jc5VTdNYQ@mail.gmail.com>
- <CAA8EJpr2HEm4R+bGrH6DHA_z8bjN69Zam9UUiAeKAr5vsCKr3A@mail.gmail.com> <CAPDyKFr+-qXbi4z4_wzDRaMMLKSKM7zNr55Kt-AOk97mVKM+8A@mail.gmail.com>
-In-Reply-To: <CAPDyKFr+-qXbi4z4_wzDRaMMLKSKM7zNr55Kt-AOk97mVKM+8A@mail.gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Fri, 9 Jul 2021 16:22:15 +0300
-Message-ID: <CAA8EJpr+N-GwY63SSpqURBrQ=Xmx51MAFZzXqSiD6x89yB-DAQ@mail.gmail.com>
-Subject: Re: [RESEND PATCH v2 4/7] clk: qcom: gdsc: enable optional power
- domain support
-To:     Ulf Hansson <ulf.hansson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Taniya Das <tdas@codeaurora.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Michael Turquette <mturquette@baylibre.com>,
+References: <1624726268-14869-1-git-send-email-rajeevny@codeaurora.org>
+In-Reply-To: <1624726268-14869-1-git-send-email-rajeevny@codeaurora.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Fri, 9 Jul 2021 06:54:05 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=UP9jrS=JG=TuB7+i9QcZv8GOLYdPdb3_KNhEsgapGeww@mail.gmail.com>
+Message-ID: <CAD=FV=UP9jrS=JG=TuB7+i9QcZv8GOLYdPdb3_KNhEsgapGeww@mail.gmail.com>
+Subject: Re: [v8 0/6] drm: Support basic DPCD backlight in panel-simple and
+ add a new panel ATNA33XC20
+To:     Rajeev Nandan <rajeevny@codeaurora.org>
+Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        DTML <devicetree@vger.kernel.org>,
-        linux-clk <linux-clk@vger.kernel.org>,
-        "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
-        Mark Brown <broonie@kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+        freedreno <freedreno@lists.freedesktop.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Rob Clark <robdclark@gmail.com>, Lyude Paul <lyude@redhat.com>,
+        Jani Nikula <jani.nikula@intel.com>,
+        Rob Herring <robh@kernel.org>,
+        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        Andrzej Hajda <a.hajda@samsung.com>,
+        Daniel Thompson <daniel.thompson@linaro.org>,
+        "Kristian H. Kristensen" <hoegsberg@chromium.org>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Sean Paul <seanpaul@chromium.org>,
+        Kalyan Thota <kalyan_t@codeaurora.org>,
+        Krishna Manikandan <mkrishn@codeaurora.org>,
+        Lee Jones <lee.jones@linaro.org>,
+        Jingoo Han <jingoohan1@gmail.com>, linux-fbdev@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 9 Jul 2021 at 16:14, Ulf Hansson <ulf.hansson@linaro.org> wrote:
+Hi,
+
+On Sat, Jun 26, 2021 at 9:52 AM Rajeev Nandan <rajeevny@codeaurora.org> wrote:
 >
-> On Fri, 9 Jul 2021 at 14:59, Dmitry Baryshkov
-> <dmitry.baryshkov@linaro.org> wrote:
-> >
-> > On Fri, 9 Jul 2021 at 15:18, Ulf Hansson <ulf.hansson@linaro.org> wrote:
-> > >
-> > > On Fri, 9 Jul 2021 at 13:46, Dmitry Baryshkov
-> > > <dmitry.baryshkov@linaro.org> wrote:
-> > > >
-> > > > On Fri, 9 Jul 2021 at 12:33, Ulf Hansson <ulf.hansson@linaro.org> wrote:
-> > > > >
-> > > > > On Fri, 9 Jul 2021 at 06:32, Dmitry Baryshkov
-> > > > > <dmitry.baryshkov@linaro.org> wrote:
-> > > > > >
-> > > > > > On sm8250 dispcc and videocc registers are powered up by the MMCX power
-> > > > > > domain. Currently we used a regulator to enable this domain on demand,
-> > > > > > however this has some consequences, as genpd code is not reentrant.
-> > > > > >
-> > > > > > Teach Qualcomm clock controller code about setting up power domains and
-> > > > > > using them for gdsc control.
-> > > > > >
-> > > > > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > > >
-> > > > > [...]
-> > > > >
-> > > > > > diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
-> > > > > > index 51ed640e527b..9401d01533c8 100644
-> > > > > > --- a/drivers/clk/qcom/gdsc.c
-> > > > > > +++ b/drivers/clk/qcom/gdsc.c
-> > > > > > @@ -427,6 +427,7 @@ int gdsc_register(struct gdsc_desc *desc,
-> > > > > >                         continue;
-> > > > > >                 scs[i]->regmap = regmap;
-> > > > > >                 scs[i]->rcdev = rcdev;
-> > > > > > +               scs[i]->pd.dev.parent = desc->dev;
-> > > > > >                 ret = gdsc_init(scs[i]);
-> > > > > >                 if (ret)
-> > > > > >                         return ret;
-> > > > > > @@ -439,6 +440,8 @@ int gdsc_register(struct gdsc_desc *desc,
-> > > > > >                         continue;
-> > > > > >                 if (scs[i]->parent)
-> > > > > >                         pm_genpd_add_subdomain(scs[i]->parent, &scs[i]->pd);
-> > > > > > +               else if (!IS_ERR_OR_NULL(dev->pm_domain))
-> > > > >
-> > > > > So dev_pm_domain_attach() (which calls genpd_dev_pm_attach() is being
-> > > > > called for gdsc platform device from the platform bus', to try to
-> > > > > attach the device to its corresponding PM domain.
-> > > > >
-> > > > > Looking a bit closer to genpd_dev_pm_attach(), I realize that we
-> > > > > shouldn't really try to attach a device to its PM domain, when its OF
-> > > > > node (dev->of_node) contains a "#power-domain-cells" specifier. This
-> > > > > is because it indicates that the device belongs to a genpd provider
-> > > > > itself. In this case, a "power-domains" specifier tells that it has a
-> > > > > parent domain.
-> > > > >
-> > > > > I will post a patch that fixes this asap.
-> > > >
-> > > > I think there is nothing to fix here. The dispcc/videocc drivers
-> > > > provide clocks in addition to the gdsc power domain. And provided
-> > > > clocks would definitely benefit from having the dispcc device being
-> > > > attached to the power domain which governs clock registers (MMCX in
-> > > > our case). Thus I think it is perfectly valid to have:
-> > > >
-> > > > rpmhpd device:
-> > > >  - provides MMCX domain.
-> > > >
-> > > > dispcc device:
-> > > >  - is attached to the MMCX domain,
-> > >
-> > > We don't need this, it's redundant and weird to me.
-> > >
-> > > Also I am kind of worried that you will hit another new path in genpd,
-> > > causing locking issues etc, as it has not been designed to work like
-> > > this (a provider device and a child domain sharing the same "parent").
-> >
-> > So, which domain should the dispcc device belong to? It's registers
-> > are powered by the MMCX domain. I can not attach it to the child
-> > (GDSC) domain either: in the case of videocc there are 4 child
-> > domains.
+> This series adds the support for the eDP panel that needs the backlight
+> controlling over the DP AUX channel using DPCD registers of the panel
+> as per the VESA's standard.
 >
-> The dispcc device should *not* be attached to a PM domain.
+> This series also adds support for the Samsung eDP AMOLED panel that
+> needs DP AUX to control the backlight, and introduces new delays in the
+> @panel_desc.delay to support this panel.
 >
-> Instead it should be registered as a genpd provider and the
-> corresponding PM domains it provides, should be assigned as child
-> domains to the MMCX domain.
+> This patch series depends on the following two series:
+> - Doug's series [1], exposed the DP AUX channel to the panel-simple.
+> - Lyude's series [2], introduced new drm helper functions for DPCD
+>   backlight.
 >
-> This is exactly what the child/parent domain support in genpd is there
-> to help with.
-
-This is done in this patchset. If we stop attaching dispcc to the MMCX
-genpd, I'll have to locate it in a different way, but the idea is
-implemented here.
-
-> > An alternative would be to request that all users of the provided
-> > clocks power on one of the child domains. However this is also not
-> > perfect. If some generic code (e.g. clock framework) calls into
-> > provided clocks (e.g. because of assigned-clock-rates), this can
-> > happen w/o proper power domain being powered up yet.
+> This series is the logical successor to the series [3].
 >
-> Issues with power on/off synchronization during genpd initializations
-> and genpd provider registration, certainly need to be fixed and I am
-> happy to help. However, my point is that I think it's a bad idea to
-> fix it through modelling the PM domain hierarchy in an incorrect way.
+> Changes in v1:
+> - Created dpcd backlight helper with very basic functionality, added
+>   backlight registration in the ti-sn65dsi86 bridge driver.
+>
+> Changes in v2:
+> - Created a new DisplayPort aux backlight driver and moved the code from
+>   drm_dp_aux_backlight.c (v1) to the new driver.
+>
+> Changes in v3:
+> - Fixed module compilation (kernel test bot).
+>
+> Changes in v4:
+> - Added basic DPCD backlight support in panel-simple.
+> - Added support for a new Samsung panel ATNA33XC20 that needs DPCD
+>   backlight controlling and has a requirement of delays between enable
+>   GPIO and regulator.
+>
+> Changes in v5:
+> Addressed review suggestions from Douglas:
+> - Created a new API drm_panel_dp_aux_backlight() in drm_panel.c
+> - Moved DP AUX backlight functions from panel-simple.c to drm_panel.c
+> - panel-simple probe() calls drm_panel_dp_aux_backlight() to create
+>   backlight when the backlight phandle is not specified in panel DT
+>   and DP AUX channel is present.
+> - Added check for drm_edp_backlight_supported() before registering.
+> - Removed the @uses_dpcd_backlight flag from panel_desc as this
+>   should be auto-detected.
+> - Updated comments/descriptions.
+>
+> Changes in v6:
+> - Rebased
+> - Updated wanrning messages, fixed word wrapping in comments.
+> - Fixed ordering of memory allocation
+>
+> Changes in v7:
+> - Updated the disable_to_power_off and power_to_enable panel delays
+> as discovered at <https://crrev.com/c/2966167> (Douglas)
+>
+> Changes in v8:
+> - Now using backlight_is_blank() to get the backlight blank status (Sam Ravnborg)
+> - Added a new patch #4 to fix the warnings for eDP panel description (Sam Ravnborg)
+>
+> [1] https://lore.kernel.org/dri-devel/20210525000159.3384921-1-dianders@chromium.org/
+> [2] https://lore.kernel.org/dri-devel/20210514181504.565252-1-lyude@redhat.com/
+> [3] https://lore.kernel.org/dri-devel/1619416756-3533-1-git-send-email-rajeevny@codeaurora.org/
+>
+> Rajeev Nandan (6):
+>   drm/panel: add basic DP AUX backlight support
+>   drm/panel-simple: Support DP AUX backlight
+>   drm/panel-simple: Support for delays between GPIO & regulator
+>   drm/panel-simple: Update validation warnings for eDP panel description
+>   dt-bindings: display: simple: Add Samsung ATNA33XC20
+>   drm/panel-simple: Add Samsung ATNA33XC20
+>
+>  .../bindings/display/panel/panel-simple.yaml       |   2 +
+>  drivers/gpu/drm/drm_panel.c                        | 108 +++++++++++++++++++++
+>  drivers/gpu/drm/panel/panel-simple.c               |  73 +++++++++++++-
+>  include/drm/drm_panel.h                            |  15 ++-
+>  4 files changed, 190 insertions(+), 8 deletions(-)
 
-So, which device should I pass to clk_register to handle runtime PM
-for the provided clocks? dispcc, should I not?
-Then if the dispcc is not attached, we will have to manually handle
-MMCX from dispcc's runtime pm callbacks. Correct?
+Pushed to drm-misc-next.
 
-Could you please be more specific, why is it so wrong to attach dispcc
-to the MMCX genpd?
+4bfe6c8f7c23 drm/panel-simple: Add Samsung ATNA33XC20
+c20dec193584 dt-bindings: display: simple: Add Samsung ATNA33XC20
+13aceea56fd5 drm/panel-simple: Update validation warnings for eDP
+panel description
+18a1488bf1e1 drm/panel-simple: Support for delays between GPIO & regulator
+bfd451403d70 drm/panel-simple: Support DP AUX backlight
+10f7b40e4f30 drm/panel: add basic DP AUX backlight support
 
-
--- 
-With best wishes
-Dmitry
+-Doug
