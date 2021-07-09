@@ -2,129 +2,205 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B69293C2005
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jul 2021 09:29:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 47AC53C20CA
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jul 2021 10:25:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230269AbhGIHbm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Jul 2021 03:31:42 -0400
-Received: from mail-0201.mail-europe.com ([51.77.79.158]:57989 "EHLO
-        mail-0201.mail-europe.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230121AbhGIHbm (ORCPT
+        id S231556AbhGII2W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Jul 2021 04:28:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33714 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231382AbhGII2W (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Jul 2021 03:31:42 -0400
-Date:   Fri, 09 Jul 2021 07:28:20 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-        s=protonmail; t=1625815705;
-        bh=RkfvnmLdaWZqZxjDUvmzYCOv0xZV2QzxYSVXkQHzzbM=;
-        h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:From;
-        b=WIEBp5X3N39INqaynv4SEqwjar9wa/XWQet0WZeAlFZ25c9ng3WZ/q0o2y/NV3exc
-         NORKsapydxEGEGLq5saeDxHg5xAuxF/ic2EPr0prdJjWT1h6bW315BdRxKwEKxWTwx
-         ZkM6uaw18g5BZZzw/HvNNDDvMUbCYLoI8SHtLOe0=
-To:     Rob Clark <robdclark@gmail.com>
-From:   Yassine Oudjana <y.oudjana@protonmail.com>
-Cc:     dri-devel@lists.freedesktop.org,
-        Rob Clark <robdclark@chromium.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        John Stultz <john.stultz@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
-Reply-To: Yassine Oudjana <y.oudjana@protonmail.com>
-Subject: Re: [PATCH] drm/msm: Fix display fault handling
-Message-ID: <3pFCrTgsGtxAZ1a2xns0dgqCOz61HZr4foJlLOl1l3I@cp4-web-034.plabs.ch>
-In-Reply-To: <20210707180113.840741-1-robdclark@gmail.com>
-References: <20210707180113.840741-1-robdclark@gmail.com>
+        Fri, 9 Jul 2021 04:28:22 -0400
+Received: from mail-ua1-x92b.google.com (mail-ua1-x92b.google.com [IPv6:2607:f8b0:4864:20::92b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C36A8C0613E7
+        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Jul 2021 01:25:37 -0700 (PDT)
+Received: by mail-ua1-x92b.google.com with SMTP id e20so3286944ual.9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Jul 2021 01:25:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=t3RLL9HO+hRks/PkaZVZzTRgr7UF7nIkarU/0lU2gW0=;
+        b=xa8EcFrdSBerofKAu49UyccOsdgMTavqkP72/U4wlhtzAU56H3Rj/hASqT7/iblaWc
+         PbO8qb28TkXHozsJ33GCYE6az0gFPuHBFfxBylnqMfX6TBGzPmBFARb2AtVnjYr2CyYW
+         WI/3eah8ups/diSTfsx7Fb05cOyK1pM1WTarPOWDq1QB3bvNIseuTE7y+RiyVK9bl/fE
+         NFu5Je+z/+mJ61795+jV1DmJR+9q+EfGkuBMxUmaTirZEmxLkVHatsUcZUgZXWk5thzb
+         hyCcxgtcHbWlOZe0vhbrlTTqoqzMyrRWEAoKwAMBwuOc4RjZ50F9w+xIcpP8sUNbhkBL
+         N92w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=t3RLL9HO+hRks/PkaZVZzTRgr7UF7nIkarU/0lU2gW0=;
+        b=uhdEjO+fR6eepUOwbmPPlxxWHBBpTsDAJ8OzJV+YvIO3MdJSkZX5BKWA2Wrbx5xHD5
+         Ig69FFBt1ALl0Obm2CRlWQqGUcN6ciETqYPcWUzDhEncBBnkoy9YqXqdvwAwsseIl4bJ
+         DDbKMDfB+tQi8DUr8kkhqQ5P3fD6Qe+rXw8bLzYEBgn2M9cxMTAQE5FNNFGAkH4X9Jvn
+         ZXNOV8SpqeaCfqjpupMyez3ZO7BNXMdp7dKCe8goQJCdK81bvjlhCZoOe3lKQWCOSfQV
+         ykCquE+BeROpvahNKWiUaGryLNNSy6w9UUcHrFnoVrbrLUpihHTiHSb05B/CbJc4eRZF
+         GlnQ==
+X-Gm-Message-State: AOAM530fM0Ej9KXl4Fva1RM4yL1zDnQdRpCcDqfowDf4Z0Ahu5u4EKVt
+        qBFH5Ch1SGCSBgF1CMidXEV5Okeh74OB3RW6/zRi7g==
+X-Google-Smtp-Source: ABdhPJzMQyl6scM8lSRI3/3VcQLnb3dWbPw/GE5McGGy4qkNZvJw1LohG72KEsgcTXGV4e7TibVDqyBgR2zflxu3At4=
+X-Received: by 2002:a9f:2f14:: with SMTP id x20mr36234489uaj.104.1625819136865;
+ Fri, 09 Jul 2021 01:25:36 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-1.2 required=10.0 tests=ALL_TRUSTED,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM shortcircuit=no
-        autolearn=disabled version=3.4.4
-X-Spam-Checker-Version: SpamAssassin 3.4.4 (2020-01-24) on
-        mailout.protonmail.ch
+References: <20210709043136.533205-1-dmitry.baryshkov@linaro.org> <20210709043136.533205-4-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20210709043136.533205-4-dmitry.baryshkov@linaro.org>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Fri, 9 Jul 2021 10:24:59 +0200
+Message-ID: <CAPDyKFoNPkFqGMvR=JGXNVXp-UfWLUqReZ0DGP8+0PBh+7dCRg@mail.gmail.com>
+Subject: Re: [RESEND PATCH v2 3/7] PM: domains: Add support for runtime PM
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Taniya Das <tdas@codeaurora.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Michael Turquette <mturquette@baylibre.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        DTML <devicetree@vger.kernel.org>,
+        linux-clk <linux-clk@vger.kernel.org>,
+        "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
+        Mark Brown <broonie@kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Fri, 9 Jul 2021 at 06:32, Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
+>
+> Registers for some genpds can be located in the SoC area, powered up by
+> another power domain. To enabled access to those registers, respective
+> domain should be turned on.
+>
+> This patch adds basic infrastructure to the genpd code to allow
+> implementing drivers for such genpd. PM domain can provide the parent
+> device through the genpd->dev.parent pointer. If its provided at the
+> pm_genpd_init() call time and if it is pm-enabled, genpd power_on and
+> power_off operations will call pm_runtime_get_sync() before powering up
+> the domain and pm_runtime_put_sync() after powering it down.
+>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
+Hi Dmitry,
 
-On Wed, Jul 7 2021 at 21:57:05 +0400, Rob Clark <robdclark@gmail.com>=20
-wrote:
-> From: Rob Clark <robdclark@chromium.org>
->=20
-> It turns out that when the display is enabled by the bootloader, we=20
-> can
-> get some transient iommu faults from the display.  Which doesn't go=20
-> over
-> too well when we install a fault handler that is gpu specific.  To=20
-> avoid
-> this, defer installing the fault handler until we get around to=20
-> setting
-> up per-process pgtables (which is adreno_smmu specific).  The arm-smmu
-> fallback error reporting is sufficient for reporting display related
-> faults (and in fact was all we had prior to=20
-> f8f934c180f629bb927a04fd90d)
->=20
-> Reported-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Reported-by: Yassine Oudjana <y.oudjana@protonmail.com>
-> Fixes: 2a574cc05d38 ("drm/msm: Improve the a6xx page fault handler")
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
-> Tested-by: John Stultz <john.stultz@linaro.org>
+Using runtime PM for the genpd provider device, is not the correct
+approach. If the provider domain needs another domain to be powered on
+to work correctly, that per definition means that it has a parent
+domain.
+
+I suggest you try to build the correct PM domain topology, via using
+pm_genpd_add_subdomain() or of_genpd_add_subdomain(), then genpd will
+manages the power on/off for parent/child domain internally.
+
+Kind regards
+Uffe
+
 > ---
->  drivers/gpu/drm/msm/msm_iommu.c | 11 ++++++++++-
->  1 file changed, 10 insertions(+), 1 deletion(-)
->=20
-> diff --git a/drivers/gpu/drm/msm/msm_iommu.c=20
-> b/drivers/gpu/drm/msm/msm_iommu.c
-> index eed2a762e9dd..bcaddbba564d 100644
-> --- a/drivers/gpu/drm/msm/msm_iommu.c
-> +++ b/drivers/gpu/drm/msm/msm_iommu.c
-> @@ -142,6 +142,9 @@ static const struct iommu_flush_ops null_tlb_ops=20
-> =3D {
->  =09.tlb_add_page =3D msm_iommu_tlb_add_page,
->  };
->=20
-> +static int msm_fault_handler(struct iommu_domain *domain, struct=20
-> device *dev,
-> +=09=09unsigned long iova, int flags, void *arg);
+>  drivers/base/power/domain.c | 33 +++++++++++++++++++++++++++++++++
+>  include/linux/pm_domain.h   |  6 ++++++
+>  2 files changed, 39 insertions(+)
+>
+> diff --git a/drivers/base/power/domain.c b/drivers/base/power/domain.c
+> index e5d97174c254..7d49531c9731 100644
+> --- a/drivers/base/power/domain.c
+> +++ b/drivers/base/power/domain.c
+> @@ -482,6 +482,30 @@ void dev_pm_genpd_set_next_wakeup(struct device *dev, ktime_t next)
+>  }
+>  EXPORT_SYMBOL_GPL(dev_pm_genpd_set_next_wakeup);
+>
+> +static int _genpd_pm_runtime_get(struct generic_pm_domain *genpd)
+> +{
+> +       int ret;
 > +
->  struct msm_mmu *msm_iommu_pagetable_create(struct msm_mmu *parent)
+> +       if (!(genpd->flags & _GENPD_FLAG_RPM_ENABLED))
+> +               return 0;
+> +
+> +       ret = pm_runtime_get_sync(genpd->dev.parent);
+> +       if (ret < 0) {
+> +               pm_runtime_put_noidle(genpd->dev.parent);
+> +               return ret;
+> +       }
+> +
+> +       return 0;
+> +}
+> +
+> +static void _genpd_pm_runtime_put(struct generic_pm_domain *genpd)
+> +{
+> +       if (!(genpd->flags & _GENPD_FLAG_RPM_ENABLED))
+> +               return;
+> +
+> +       pm_runtime_put_sync(genpd->dev.parent);
+> +}
+> +
+>  static int _genpd_power_on(struct generic_pm_domain *genpd, bool timed)
 >  {
->  =09struct adreno_smmu_priv *adreno_smmu =3D dev_get_drvdata(parent->dev)=
-;
-> @@ -157,6 +160,13 @@ struct msm_mmu=20
-> *msm_iommu_pagetable_create(struct msm_mmu *parent)
->  =09if (!ttbr1_cfg)
->  =09=09return ERR_PTR(-ENODEV);
->=20
-> +=09/*
-> +=09 * Defer setting the fault handler until we have a valid adreno_smmu
-> +=09 * to avoid accidentially installing a GPU specific fault handler=20
-> for
-> +=09 * the display's iommu
-> +=09 */
-> +=09iommu_set_fault_handler(iommu->domain, msm_fault_handler, iommu);
+>         unsigned int state_idx = genpd->state_idx;
+> @@ -497,6 +521,10 @@ static int _genpd_power_on(struct generic_pm_domain *genpd, bool timed)
+>         if (ret)
+>                 return ret;
+>
+> +       ret = _genpd_pm_runtime_get(genpd);
+> +       if (ret)
+> +               return ret;
 > +
->  =09pagetable =3D kzalloc(sizeof(*pagetable), GFP_KERNEL);
->  =09if (!pagetable)
->  =09=09return ERR_PTR(-ENOMEM);
-> @@ -300,7 +310,6 @@ struct msm_mmu *msm_iommu_new(struct device *dev,=20
-> struct iommu_domain *domain)
->=20
->  =09iommu->domain =3D domain;
->  =09msm_mmu_init(&iommu->base, dev, &funcs, MSM_MMU_IOMMU);
-> -=09iommu_set_fault_handler(domain, msm_fault_handler, iommu);
->=20
->  =09atomic_set(&iommu->pagetables, 0);
->=20
+>         if (!genpd->power_on)
+>                 goto out;
+>
+> @@ -526,6 +554,7 @@ static int _genpd_power_on(struct generic_pm_domain *genpd, bool timed)
+>         raw_notifier_call_chain(&genpd->power_notifiers, GENPD_NOTIFY_ON, NULL);
+>         return 0;
+>  err:
+> +       _genpd_pm_runtime_put(genpd);
+>         raw_notifier_call_chain(&genpd->power_notifiers, GENPD_NOTIFY_OFF,
+>                                 NULL);
+>         return ret;
+> @@ -572,6 +601,7 @@ static int _genpd_power_off(struct generic_pm_domain *genpd, bool timed)
+>                  genpd->name, "off", elapsed_ns);
+>
+>  out:
+> +       _genpd_pm_runtime_put(genpd);
+>         raw_notifier_call_chain(&genpd->power_notifiers, GENPD_NOTIFY_OFF,
+>                                 NULL);
+>         return 0;
+> @@ -1986,6 +2016,9 @@ int pm_genpd_init(struct generic_pm_domain *genpd,
+>         genpd->domain.ops.complete = genpd_complete;
+>         genpd->domain.start = genpd_dev_pm_start;
+>
+> +       if (genpd->dev.parent && pm_runtime_enabled(genpd->dev.parent))
+> +               genpd->flags |= _GENPD_FLAG_RPM_ENABLED;
+> +
+>         if (genpd->flags & GENPD_FLAG_PM_CLK) {
+>                 genpd->dev_ops.stop = pm_clk_suspend;
+>                 genpd->dev_ops.start = pm_clk_resume;
+> diff --git a/include/linux/pm_domain.h b/include/linux/pm_domain.h
+> index 21a0577305ef..e86cd7cfc9ec 100644
+> --- a/include/linux/pm_domain.h
+> +++ b/include/linux/pm_domain.h
+> @@ -60,6 +60,10 @@
+>   * GENPD_FLAG_MIN_RESIDENCY:   Enable the genpd governor to consider its
+>   *                             components' next wakeup when determining the
+>   *                             optimal idle state.
+> + *
+> + * _GENPD_FLAG_RPM_ENABLED:    Use genpd's parent dev for runtime power
+> + *                             management. There is no need to set this flag,
+> + *                             it will be detected automatically.
+>   */
+>  #define GENPD_FLAG_PM_CLK       (1U << 0)
+>  #define GENPD_FLAG_IRQ_SAFE     (1U << 1)
+> @@ -69,6 +73,8 @@
+>  #define GENPD_FLAG_RPM_ALWAYS_ON (1U << 5)
+>  #define GENPD_FLAG_MIN_RESIDENCY (1U << 6)
+>
+> +#define _GENPD_FLAG_RPM_ENABLED         (1U << 31)
+> +
+>  enum gpd_status {
+>         GENPD_STATE_ON = 0,     /* PM domain is on */
+>         GENPD_STATE_OFF,        /* PM domain is off */
 > --
-> 2.31.1
->=20
-
-Tested-by: Yassine Oudjana <y.oudjana@protonmail.com>
-
-
-
+> 2.30.2
+>
