@@ -2,119 +2,243 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9B8233C28E7
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jul 2021 20:16:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C6B373C2919
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jul 2021 20:38:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229542AbhGISTP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Jul 2021 14:19:15 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:13658 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229491AbhGISTO (ORCPT
+        id S229557AbhGISla (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Jul 2021 14:41:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60556 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229506AbhGISl3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Jul 2021 14:19:14 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1625854590; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=G5ORNORu2m0miZo+ihbud4cOAt24qx77FdLGRMOLW/k=;
- b=bznNSp+ElL8x561UWQ54k0WmpcSJw8fP9HLN1owJxBp7sBaA5v5XfUSjxDeIXQ2HH3zfBEq0
- P8evLImholz23JaIOLSIo3KCmPPAhw3s0QgPUyLROlEgqI7bv0wcGENl0kH84Mm2Fy5njE2U
- H3tkG20CK7sypgzyuO7ISdhO6og=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
- 60e8927e5e3e57240b9a2d65 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 09 Jul 2021 18:16:30
- GMT
-Sender: khsieh=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id C72ECC4323A; Fri,  9 Jul 2021 18:16:29 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: khsieh)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0559AC433D3;
-        Fri,  9 Jul 2021 18:16:28 +0000 (UTC)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Fri, 09 Jul 2021 11:16:28 -0700
-From:   khsieh@codeaurora.org
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     dri-devel@lists.freedesktop.org, robdclark@gmail.com,
-        sean@poorly.run, abhinavk@codeaurora.org, aravindh@codeaurora.org,
-        airlied@linux.ie, daniel@ffwll.ch, bjorn.andersson@linaro.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        Fri, 9 Jul 2021 14:41:29 -0400
+Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com [IPv6:2607:f8b0:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2A24C0613E7
+        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Jul 2021 11:38:45 -0700 (PDT)
+Received: by mail-ot1-x32b.google.com with SMTP id h24-20020a9d64180000b029036edcf8f9a6so10422266otl.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Jul 2021 11:38:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=qj3KpcOQKWBzcflU86gjTc8VoKi1gpmdgNDbxJviBI0=;
+        b=A4Cvlv1Fh51k0o0xQWyeFWpAZfb9FXth/pz01DS5kfqkl30l5jBXktepGdqZ0NA76I
+         GKY/zBF6hWK0x8wXurclALF/1ImnhNqh36ZJP5+lKjNF++8h+5rG2XyGP4hiwQXOc4cT
+         OKt/mrKSL1wtzvpGE+MepNetHCVFU2MXmr/pMHlT17SuFnw9iJbL9a/yMx3Hz+lk93iA
+         NeDI1fFIHnXZ5HRO50Hww+ZEWCpxOCt7Q+/WD5shDX2q+/TioKGdFtvdJpWXfYMTERtn
+         QL6n/MEPjsWsd/zgIXgjV3lHhv/b30hxFeuCPode4q9g5Z2tC4vroD4SQxBcto61xfF1
+         3teg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=qj3KpcOQKWBzcflU86gjTc8VoKi1gpmdgNDbxJviBI0=;
+        b=Wu0A1s807cEbA95ZNwTaU1YLo1nN1xIKH7NSVY3dm+0NELvjGNIW1MddBku9A9oxm/
+         dF9mHGAcG4llpXxH5OSha/d2JsIBMirCziUTtnmq14OJBC2RaI0El8ITrgZAO7GhPAF3
+         AwV6jQrcME+zyHXI6CsFlluGYfG6tWH4NV1+SMTkLqvBOdcTAAvM4GxgcU0R6G5/8lMP
+         xkJKgR6zTXW9QFctT3NJxPh8PvNh4aH5jSXlNGdwpMOIrO7r1kC5p/RzV8/eeAnqG7rI
+         Gd4oD9N/ma9davfiSSsWj31qm4rE8yFL9k6rBmNKR5mFhNNyc2KnAY0IrX7JikrP/e5g
+         ma7w==
+X-Gm-Message-State: AOAM533RmbK5FBBqJKkewBewZJ9BtlxigyWXqIKPM638YDsbuEHcqeKO
+        uCVPl1Y0dfMyH0G1ZTmpg/Ad2g==
+X-Google-Smtp-Source: ABdhPJwVD+4DFQQutaGF70jDlFkhLLbo2uu0p7xx8G/lH+KQw0QFWt6ZPfJ8hME6UCVC+jyulPb9mA==
+X-Received: by 2002:a9d:5e17:: with SMTP id d23mr28618905oti.330.1625855924936;
+        Fri, 09 Jul 2021 11:38:44 -0700 (PDT)
+Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id l7sm1277837otu.76.2021.07.09.11.38.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 09 Jul 2021 11:38:44 -0700 (PDT)
+Date:   Fri, 9 Jul 2021 13:38:42 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Taniya Das <tdas@codeaurora.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Michael Turquette <mturquette@baylibre.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-clk@vger.kernel.org,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Mark Brown <broonie@kernel.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
         linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 5/7] drm/msm/dp: return correct edid checksum after
- corrupted edid checksum read
-In-Reply-To: <CAE-0n53BnbjD3QaZ5vynJxw44ANatvvRW3rqytyG4jvjKs7L_g@mail.gmail.com>
-References: <1625592020-22658-1-git-send-email-khsieh@codeaurora.org>
- <1625592020-22658-6-git-send-email-khsieh@codeaurora.org>
- <CAE-0n53BnbjD3QaZ5vynJxw44ANatvvRW3rqytyG4jvjKs7L_g@mail.gmail.com>
-Message-ID: <2b2a191738738993e3bc5796fe676511@codeaurora.org>
-X-Sender: khsieh@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Subject: Re: [PATCH v3 3/7] clk: qcom: gdsc: enable optional power domain
+ support
+Message-ID: <YOiXsnXFKP5qD5qX@yoga>
+References: <20210709173202.667820-1-dmitry.baryshkov@linaro.org>
+ <20210709173202.667820-4-dmitry.baryshkov@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210709173202.667820-4-dmitry.baryshkov@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-07-08 00:14, Stephen Boyd wrote:
-> Quoting Kuogee Hsieh (2021-07-06 10:20:18)
->> Response with correct edid checksum saved at connector after corrupted 
->> edid
->> checksum read. This fixes Link Layer CTS cases 4.2.2.3, 4.2.2.6.
->> 
->> Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
->> ---
->>  drivers/gpu/drm/msm/dp/dp_panel.c | 9 +++++++--
->>  1 file changed, 7 insertions(+), 2 deletions(-)
->> 
->> diff --git a/drivers/gpu/drm/msm/dp/dp_panel.c 
->> b/drivers/gpu/drm/msm/dp/dp_panel.c
->> index 88196f7..0fdb551 100644
->> --- a/drivers/gpu/drm/msm/dp/dp_panel.c
->> +++ b/drivers/gpu/drm/msm/dp/dp_panel.c
->> @@ -271,7 +271,7 @@ static u8 dp_panel_get_edid_checksum(struct edid 
->> *edid)
->>  {
->>         struct edid *last_block;
->>         u8 *raw_edid;
->> -       bool is_edid_corrupt;
->> +       bool is_edid_corrupt = false;
->> 
->>         if (!edid) {
->>                 DRM_ERROR("invalid edid input\n");
->> @@ -303,7 +303,12 @@ void dp_panel_handle_sink_request(struct dp_panel 
->> *dp_panel)
->>         panel = container_of(dp_panel, struct dp_panel_private, 
->> dp_panel);
->> 
->>         if (panel->link->sink_request & DP_TEST_LINK_EDID_READ) {
->> -               u8 checksum = 
->> dp_panel_get_edid_checksum(dp_panel->edid);
->> +               u8 checksum;
->> +
->> +               if (dp_panel->edid)
->> +                       checksum = 
->> dp_panel_get_edid_checksum(dp_panel->edid);
->> +               else
->> +                       checksum = 
->> dp_panel->connector->real_edid_checksum;
->> 
->>                 dp_link_send_edid_checksum(panel->link, checksum);
+On Fri 09 Jul 12:31 CDT 2021, Dmitry Baryshkov wrote:
+
+> On sm8250 dispcc and videocc registers are powered up by the MMCX power
+> domain. Currently we use a regulator to enable this domain on demand,
+> however this has some consequences, as genpd code is not reentrant.
 > 
-> It looks like this can be drm_dp_send_real_edid_checksum()? Then we
-> don't have to look at the connector internals sometimes and can drop
-> dp_panel_get_edid_checksum() entirely?
-you still need to pass read edid checksum into 
-drm_dp_send_real_edid_checksum().
+> Teach Qualcomm clock controller code about setting up runtime PM and
+> using specified for gdsc powerup.
 > 
->>                 dp_link_send_test_response(panel->link);
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  drivers/clk/qcom/common.c | 37 +++++++++++++++++++++++++++++++------
+>  drivers/clk/qcom/gdsc.c   |  4 ++++
+>  2 files changed, 35 insertions(+), 6 deletions(-)
+> 
+> diff --git a/drivers/clk/qcom/common.c b/drivers/clk/qcom/common.c
+> index 60d2a78d1395..43d8f8feeb3c 100644
+> --- a/drivers/clk/qcom/common.c
+> +++ b/drivers/clk/qcom/common.c
+> @@ -10,6 +10,7 @@
+>  #include <linux/clk-provider.h>
+>  #include <linux/reset-controller.h>
+>  #include <linux/of.h>
+> +#include <linux/pm_runtime.h>
+>  
+>  #include "common.h"
+>  #include "clk-rcg.h"
+> @@ -224,6 +225,11 @@ static struct clk_hw *qcom_cc_clk_hw_get(struct of_phandle_args *clkspec,
+>  	return cc->rclks[idx] ? &cc->rclks[idx]->hw : NULL;
+>  }
+>  
+> +static void qcom_cc_pm_runtime_disable(void *data)
+> +{
+> +	pm_runtime_disable(data);
+> +}
+> +
+>  int qcom_cc_really_probe(struct platform_device *pdev,
+>  			 const struct qcom_cc_desc *desc, struct regmap *regmap)
+>  {
+> @@ -241,6 +247,18 @@ int qcom_cc_really_probe(struct platform_device *pdev,
+>  	if (!cc)
+>  		return -ENOMEM;
+>  
+> +	pm_runtime_enable(dev);
+
+In turingcc-qcs404.c I'm using pm_runtime to have the clock framework
+ensure that the iface clock is enabled during clock operations, so this
+will result in a "unbalanced enable" warning.
+
+> +	ret = pm_runtime_get_sync(dev);
+
+I don't think you should wrap the entire initialization in a
+pm_runtime_get_sync()/put() region. Instead follow the clock framework
+and wrap gdsc initialization that needs to touch the hardware in:
+
+	if (pm_runtime_enabled())
+		pm_runtime_get_sync();
+
+I do however think that as of this patch, when probe returns MMCX might
+very well be turned off, as the only user (this driver) has pm_runtime
+enabled and it's idle. So I think you should introduce the
+pm_runtime_get()/put() in the gdsc functions before this patch.
+
+
+To summarize, I think you should rely on the individual clock drivers to
+pm_runtime_enable()/disable().
+
+> +	if (ret < 0) {
+> +		pm_runtime_put(dev);
+> +		pm_runtime_disable(dev);
+> +		return ret;
+> +	}
+> +
+> +	ret = devm_add_action_or_reset(dev, qcom_cc_pm_runtime_disable, dev);
+> +	if (ret)
+> +		goto err;
+> +
+>  	reset = &cc->reset;
+>  	reset->rcdev.of_node = dev->of_node;
+>  	reset->rcdev.ops = &qcom_reset_ops;
+> @@ -251,7 +269,7 @@ int qcom_cc_really_probe(struct platform_device *pdev,
+>  
+>  	ret = devm_reset_controller_register(dev, &reset->rcdev);
+>  	if (ret)
+> -		return ret;
+> +		goto err;
+>  
+>  	if (desc->gdscs && desc->num_gdscs) {
+>  		scd = devm_kzalloc(dev, sizeof(*scd), GFP_KERNEL);
+> @@ -262,11 +280,11 @@ int qcom_cc_really_probe(struct platform_device *pdev,
+>  		scd->num = desc->num_gdscs;
+>  		ret = gdsc_register(scd, &reset->rcdev, regmap);
+>  		if (ret)
+> -			return ret;
+> +			goto err;
+>  		ret = devm_add_action_or_reset(dev, qcom_cc_gdsc_unregister,
+>  					       scd);
+>  		if (ret)
+> -			return ret;
+> +			goto err;
+>  	}
+>  
+>  	cc->rclks = rclks;
+> @@ -277,7 +295,7 @@ int qcom_cc_really_probe(struct platform_device *pdev,
+>  	for (i = 0; i < num_clk_hws; i++) {
+>  		ret = devm_clk_hw_register(dev, clk_hws[i]);
+>  		if (ret)
+> -			return ret;
+> +			goto err;
+>  	}
+>  
+>  	for (i = 0; i < num_clks; i++) {
+> @@ -286,14 +304,21 @@ int qcom_cc_really_probe(struct platform_device *pdev,
+>  
+>  		ret = devm_clk_register_regmap(dev, rclks[i]);
+>  		if (ret)
+> -			return ret;
+> +			goto err;
+>  	}
+>  
+>  	ret = devm_of_clk_add_hw_provider(dev, qcom_cc_clk_hw_get, cc);
+>  	if (ret)
+> -		return ret;
+> +		goto err;
+> +
+> +	pm_runtime_put(dev);
+>  
+>  	return 0;
+> +
+> +err:
+> +	pm_runtime_put(dev);
+> +
+> +	return ret;
+>  }
+>  EXPORT_SYMBOL_GPL(qcom_cc_really_probe);
+>  
+> diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
+> index 51ed640e527b..ccd36617d067 100644
+> --- a/drivers/clk/qcom/gdsc.c
+> +++ b/drivers/clk/qcom/gdsc.c
+> @@ -439,6 +439,8 @@ int gdsc_register(struct gdsc_desc *desc,
+>  			continue;
+>  		if (scs[i]->parent)
+>  			pm_genpd_add_subdomain(scs[i]->parent, &scs[i]->pd);
+> +		else if (!IS_ERR_OR_NULL(dev->pm_domain))
+> +			pm_genpd_add_subdomain(pd_to_genpd(dev->pm_domain), &scs[i]->pd);
+
+Nice, I didn't know that we could fish it out of the dev.
+
+Regards,
+Bjorn
+
+>  	}
+>  
+>  	return of_genpd_add_provider_onecell(dev->of_node, data);
+> @@ -457,6 +459,8 @@ void gdsc_unregister(struct gdsc_desc *desc)
+>  			continue;
+>  		if (scs[i]->parent)
+>  			pm_genpd_remove_subdomain(scs[i]->parent, &scs[i]->pd);
+> +		else if (!IS_ERR_OR_NULL(dev->pm_domain))
+> +			pm_genpd_remove_subdomain(pd_to_genpd(dev->pm_domain), &scs[i]->pd);
+>  	}
+>  	of_genpd_del_provider(dev->of_node);
+>  }
+> -- 
+> 2.30.2
+> 
