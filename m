@@ -2,105 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 642403C1CAC
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jul 2021 02:29:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9A7583C1CC5
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jul 2021 02:35:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230242AbhGIAbB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Jul 2021 20:31:01 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:34359 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230164AbhGIAa7 (ORCPT
+        id S230080AbhGIAiK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Jul 2021 20:38:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42926 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230004AbhGIAiK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Jul 2021 20:30:59 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1625790497; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=nZjdf/YIZuObh/zYQVUmteSyPqAUYoSWQnYeQyM+fME=; b=HNB7U9WtvY6TBNRSXXpHNliOm15XlP+Ulg1Et6MZTKmWmOR+GBYXR/W4MZlm3Dk4tNshj5oY
- 4Kc5NMlI+Ovfbhk7nxgD2CLtawhWNKIEoiqPbm5ghhpr27AwvDoo/f66oQA5dULLhfW9l3SL
- IP2+d6xLyZSoB+3duzl9JK86s98=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
- 60e79814c4cc543602254527 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 09 Jul 2021 00:28:04
- GMT
-Sender: wcheng=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 0C298C433F1; Fri,  9 Jul 2021 00:28:04 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from wcheng-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: wcheng)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id D275FC43217;
-        Fri,  9 Jul 2021 00:28:02 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org D275FC43217
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=wcheng@codeaurora.org
-From:   Wesley Cheng <wcheng@codeaurora.org>
-To:     robh+dt@kernel.org, frowand.list@gmail.com, balbi@kernel.org,
-        gregkh@linuxfoundation.org, agross@kernel.org,
-        bjorn.andersson@linaro.org
-Cc:     devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        jackp@codeaurora.org, fntoth@gmail.com,
-        Wesley Cheng <wcheng@codeaurora.org>
-Subject: [PATCH v13 6/6] dt-bindings: usb: dwc3: Update dwc3 TX fifo properties
-Date:   Thu,  8 Jul 2021 17:27:54 -0700
-Message-Id: <1625790474-8376-7-git-send-email-wcheng@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1625790474-8376-1-git-send-email-wcheng@codeaurora.org>
-References: <1625790474-8376-1-git-send-email-wcheng@codeaurora.org>
+        Thu, 8 Jul 2021 20:38:10 -0400
+Received: from mail-oi1-x231.google.com (mail-oi1-x231.google.com [IPv6:2607:f8b0:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF2E2C061760
+        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Jul 2021 17:35:26 -0700 (PDT)
+Received: by mail-oi1-x231.google.com with SMTP id 65so8144205oie.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Jul 2021 17:35:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=feTmuUZ3YlEtdPQY+U32K276WevJpE+FiuInMlT3biM=;
+        b=kxOFARsh7VuHf7Gbgk6uYnq9+iGD5vIQxZUZa6FqpiEvuq9ectHlbA9j4wF2FrNgKL
+         HRejUsrkUE32G4Kj1gXp0FcxSaw5PuvnY2PHhL9QYEvt+o36gzyzRnibLOkHJwghQMsl
+         bbo/G/lk++UHbfj7dDUfTJO0DMAYdMOSe02JI=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=feTmuUZ3YlEtdPQY+U32K276WevJpE+FiuInMlT3biM=;
+        b=WFwFcH/z57/BWrAIrUejslJ4KWp4lW/DoMY6Lw/KGfR97QryFqY4zjaDhFyqXi12wi
+         iTjHAOWe7NojPTEepCoRQWcjLhnuL/UDAlhnlFxcUtAEBJWTmNpbHStl79AavaQo9w2B
+         ZJSqL+8q5k5HIQhl9ggjev8hKolwVDEJkPoDFR5woaNeqadMvrDjfSOsY7h6ZIK0EnFT
+         +xZQyOhXALz/Z9RzeXZQZvZZOkrfay6oqjm7mHXwJxgPfR+Z5R+jxKRiweRddiD6Q8E7
+         /1LgN3BErIPv0ISxr9fFknVeenIOQLy+XWTiolJmf0rY2Q4wiaNbgufsCI6v0bAjA0wW
+         WK6A==
+X-Gm-Message-State: AOAM531LA72BHUeAk5CxslO7Fpl4GyRYAMMLod+Q1bMRAW/JY3/KdGmr
+        XnTXT148IgkT3GyJT03n/r1zyGGu1Zzf7rgwMdE85A==
+X-Google-Smtp-Source: ABdhPJxIBfTDfbmT1hRD2/wJx94a64VaxjCzvR+Lnx8ng77JFxc4MS7LQ1bcUZ2EhHWpvcjz0sg+NAVbt8qQv3G+nKY=
+X-Received: by 2002:aca:7545:: with SMTP id q66mr6173670oic.19.1625790925910;
+ Thu, 08 Jul 2021 17:35:25 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 9 Jul 2021 00:35:25 +0000
+MIME-Version: 1.0
+In-Reply-To: <1625576413-12324-2-git-send-email-sanm@codeaurora.org>
+References: <1625576413-12324-1-git-send-email-sanm@codeaurora.org> <1625576413-12324-2-git-send-email-sanm@codeaurora.org>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.9.1
+Date:   Fri, 9 Jul 2021 00:35:25 +0000
+Message-ID: <CAE-0n50UtAVYDwDcFrwOWti+BrQvCSf4nZk+1ai53hRcG8mh1g@mail.gmail.com>
+Subject: Re: [PATCH v5 1/3] dt-bindings: phy: qcom,qmp-usb3-dp: Add support
+ for SC7280
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Sandeep Maheswaram <sanm@codeaurora.org>
+Cc:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Pratham Pratap <prathampratap@codeaurora.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Update the tx-fifo-resize property with a better description, while
-adding the tx-fifo-max-num, which is a new parameter allowing
-adjustments for the maximum number of packets the txfifo resizing logic
-can account for while resizing the endpoints.
+Quoting Sandeep Maheswaram (2021-07-06 06:00:11)
+> Add compatible for SC7280 in QMP USB3 DP PHY bindings.
+>
+> Signed-off-by: Sandeep Maheswaram <sanm@codeaurora.org>
+> ---
 
-Reviewed-by: Rob Herring <robh@kernel.org>
-Signed-off-by: Wesley Cheng <wcheng@codeaurora.org>
----
- Documentation/devicetree/bindings/usb/snps,dwc3.yaml | 15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/devicetree/bindings/usb/snps,dwc3.yaml b/Documentation/devicetree/bindings/usb/snps,dwc3.yaml
-index 41416fb..078fb78 100644
---- a/Documentation/devicetree/bindings/usb/snps,dwc3.yaml
-+++ b/Documentation/devicetree/bindings/usb/snps,dwc3.yaml
-@@ -289,10 +289,21 @@ properties:
-     maximum: 16
- 
-   tx-fifo-resize:
--    description: Determines if the FIFO *has* to be reallocated
--    deprecated: true
-+    description: Determines if the TX fifos can be dynamically resized depending
-+      on the number of IN endpoints used and if bursting is supported.  This
-+      may help improve bandwidth on platforms with higher system latencies, as
-+      increased fifo space allows for the controller to prefetch data into its
-+      internal memory.
-     type: boolean
- 
-+  tx-fifo-max-num:
-+    description: Specifies the max number of packets the txfifo resizing logic
-+      can account for when higher endpoint bursting is used. (bMaxBurst > 6) The
-+      higher the number, the more fifo space the txfifo resizing logic will
-+      allocate for that endpoint.
-+    $ref: /schemas/types.yaml#/definitions/uint8
-+    minimum: 3
-+
-   snps,incr-burst-type-adjustment:
-     description:
-       Value for INCR burst type of GSBUSCFG0 register, undefined length INCR
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
-
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
