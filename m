@@ -2,97 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3BA923C1DBE
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jul 2021 05:10:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 85F923C1E55
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jul 2021 06:31:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231124AbhGIDNU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Jul 2021 23:13:20 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:23343 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230347AbhGIDNT (ORCPT
+        id S229905AbhGIEeZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Jul 2021 00:34:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38066 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229707AbhGIEeY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Jul 2021 23:13:19 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1625800237; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=gNgKFi+Rx9humaRZZCWImHDoeRjYG58E4EAJrmsAsoY=;
- b=oxHKm7S8aEVtkYtWuFKYTszLTidkDHdffpx5jW5fmLg+ULsEkTV1VSXMFI9HA2PPlk+1rnHr
- 8RDqEkwxj3iexBxgZecj53YUxNkOWwpaJvWL5xKZFa6Vyld50gGXcaLXggqVb9Zr8zXew4kt
- 7oLvsMdi6pkRZBpJFGAoMRgnGLY=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
- 60e7be1501dd9a94317d7f9e (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 09 Jul 2021 03:10:13
- GMT
-Sender: abhinavk=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id D5B1EC4323A; Fri,  9 Jul 2021 03:10:13 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: abhinavk)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0A96CC433D3;
-        Fri,  9 Jul 2021 03:10:12 +0000 (UTC)
+        Fri, 9 Jul 2021 00:34:24 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F11CC061762
+        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Jul 2021 21:31:40 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id a18so20604155lfs.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Jul 2021 21:31:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=6ZCukB0H7lhNNnQd+1bAW9ZLZj+MDCA+DrfCxB87atU=;
+        b=pUpRSDm2GW5P/FpEgw6wyQiZLxOd2tVKIXzj6A8zjb0KklDHXM+cZOnSDg6v0f7plo
+         W6aUpwu3UTZ9S6WvR/hcx/zHyBuzTN/zWGQRqERxd1u8GSxEYB0hX66gU7Bs/dlQrIjL
+         7YvkVCoKDXheMv7OEC+o/UvYwW6Qp3PZJ5qTdZhU+Y6jdsDVgu7lgzz5U8GhW77i7HZ0
+         4rmlUL47ubhtq5vLjMhoGlKKuGKCiUIN2u8Ds3Kr6Gf2SpqOrfEoi69U+WCaZ3RFoX7f
+         b3NH7o74U0kRayyVa1CbeL7zW4fe/xaxK29GdVedbsjQF88Jnm1iWVMGR1NbekBWLTS0
+         /K7g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=6ZCukB0H7lhNNnQd+1bAW9ZLZj+MDCA+DrfCxB87atU=;
+        b=XFwEGP9gfaWeJI33qkvn7RHdYyScqj+8hwL+P+hGbu/v8khKMufyPeYFjletPJ8OHX
+         ugDoWdwWPUCl2E8lf/t6/7MUy22Q8Wba+yMUshHIfd44BkUZeLUBtf1HV0EHju4rHkYo
+         INxUefZAswqdMNXm2N4mY1Z0OD+prPFzo33qKcCWRCloj0lRT9T94e/rzMBuPVdfhzra
+         ywNLhwydfzipOJJpBhrlIGkRUWCySZhpsCuM+g1u+JB5NuHBn637TxJfyIHg7yWapUjJ
+         eiWT44Mu5jdHvvlQnj09rgl3dlO6Fg5yYYgrejDung9r4h1WSoOspoj5rfR7BQUl7YCL
+         mGyg==
+X-Gm-Message-State: AOAM530WZJkPaHn9qEzweTEbjJsgfUCpjUu1WkJgpqjLNFURVM7VG4Ci
+        UlIm5dsW1+9X+a0fJI5CbbLZQA==
+X-Google-Smtp-Source: ABdhPJycDcRQ51E+yA+HmmtPei7V60DaErQ5rNIFcsWod+olmwaSk4Z1kb/oTEqlMLkqP2IvNB35ig==
+X-Received: by 2002:a05:6512:3606:: with SMTP id f6mr15858081lfs.370.1625805098524;
+        Thu, 08 Jul 2021 21:31:38 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id h1sm13028lft.174.2021.07.08.21.31.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 08 Jul 2021 21:31:38 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Taniya Das <tdas@codeaurora.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Michael Turquette <mturquette@baylibre.com>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-clk@vger.kernel.org,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Mark Brown <broonie@kernel.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        linux-kernel@vger.kernel.org
+Subject: [RESEND PATCH v2 0/7] clk: qcom: use power-domain for sm8250's clock controllers
+Date:   Fri,  9 Jul 2021 07:31:29 +0300
+Message-Id: <20210709043136.533205-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Thu, 08 Jul 2021 20:10:12 -0700
-From:   abhinavk@codeaurora.org
-To:     Souptick Joarder <jrdr.linux@gmail.com>
-Cc:     robdclark@gmail.com, sean@poorly.run, airlied@linux.ie,
-        daniel@ffwll.ch, khsieh@codeaurora.org, swboyd@chromium.org,
-        dmitry.baryshkov@linaro.org, chandanu@codeaurora.org,
-        tanmay@codeaurora.org, kernel test robot <lkp@intel.com>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: Re: [Freedreno] [PATCH] drm/msm/dp: Remove unused variable
-In-Reply-To: <20210709024834.29680-1-jrdr.linux@gmail.com>
-References: <20210709024834.29680-1-jrdr.linux@gmail.com>
-Message-ID: <63f89dfce0b33d16c3f774e2a1962b03@codeaurora.org>
-X-Sender: abhinavk@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-07-08 19:48, Souptick Joarder wrote:
-> Kernel test roobot throws below warning ->
-> 
-> drivers/gpu/drm/msm/dp/dp_display.c:1017:21:
-> warning: variable 'drm' set but not used [-Wunused-but-set-variable]
-> 
-> Removed unused variable drm.
-> 
-> Reported-by: kernel test robot <lkp@intel.com>
-> Signed-off-by: Souptick Joarder <jrdr.linux@gmail.com>
-Reviewed-by: Abhinav Kumar <abhinavk@codeaurora.org>
-> ---
->  drivers/gpu/drm/msm/dp/dp_display.c | 2 --
->  1 file changed, 2 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c
-> b/drivers/gpu/drm/msm/dp/dp_display.c
-> index 051c1be1de7e..d42635a86d20 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_display.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-> @@ -1014,10 +1014,8 @@ int dp_display_get_test_bpp(struct msm_dp *dp)
->  void msm_dp_snapshot(struct msm_disp_state *disp_state, struct msm_dp 
-> *dp)
->  {
->  	struct dp_display_private *dp_display;
-> -	struct drm_device *drm;
-> 
->  	dp_display = container_of(dp, struct dp_display_private, dp_display);
-> -	drm = dp->drm_dev;
-> 
->  	/*
->  	 * if we are reading registers we need the link clocks to be on
+
+On SM8250 both the display and video clock controllers are powered up by
+the MMCX power domain. Handle this by linking clock controllers to the
+proper power domain, and using runtime power management to enable and
+disable the MMCX power domain.
+
+Dependencies:
+- https://lore.kernel.org/linux-pm/20210603093438.138705-1-ulf.hansson@linaro.org/ (merged in 5.14)
+- https://lore.kernel.org/linux-arm-msm/20210703005416.2668319-1-bjorn.andersson@linaro.org/
+  (pending)
+
+Patches resent because I missed one hunk in the PM domains patch, which
+got stuck in the git index. Now the patch is fixed.
+
+Changes since v1:
+ - Rebase on top of Bjorn's patches, removing the need for setting
+   performance state directly.
+ - Move runtime PM calls from GDSC code to generic genpd code.
+ - Always call pm_runtime_enable in the Qualcomm generic clock
+   controller code.
+ - Register GDSC power domains as subdomains of the domain powering the
+   clock controller if there is one.
+
+----------------------------------------------------------------
+Dmitry Baryshkov (7):
+      dt-bindings: clock: qcom,dispcc-sm8x50: add mmcx power domain
+      dt-bindings: clock: qcom,videocc: add mmcx power domain
+      PM: domains: Add support for runtime PM
+      clk: qcom: gdsc: enable optional power domain support
+      arm64: dts: qcom: sm8250: remove mmcx regulator
+      clk: qcom: dispcc-sm8250: stop using mmcx regulator
+      clk: qcom: videocc-sm8250: stop using mmcx regulator
+
+ .../bindings/clock/qcom,dispcc-sm8x50.yaml         |  7 ++++
+ .../devicetree/bindings/clock/qcom,videocc.yaml    |  7 ++++
+ arch/arm64/boot/dts/qcom/sm8250.dtsi               | 11 ++-----
+ drivers/base/power/domain.c                        | 33 +++++++++++++++++++
+ drivers/clk/qcom/common.c                          | 37 ++++++++++++++++++----
+ drivers/clk/qcom/dispcc-sm8250.c                   |  1 -
+ drivers/clk/qcom/gdsc.c                            |  5 +++
+ drivers/clk/qcom/videocc-sm8250.c                  |  4 ---
+ include/linux/pm_domain.h                          |  6 ++++
+ 9 files changed, 91 insertions(+), 20 deletions(-)
+
+
+
+
+
