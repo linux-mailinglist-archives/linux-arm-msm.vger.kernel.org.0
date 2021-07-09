@@ -2,130 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E9CCC3C1F9A
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jul 2021 09:00:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B69293C2005
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jul 2021 09:29:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230420AbhGIGtd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Jul 2021 02:49:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39764 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230345AbhGIGtd (ORCPT
+        id S230269AbhGIHbm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Jul 2021 03:31:42 -0400
+Received: from mail-0201.mail-europe.com ([51.77.79.158]:57989 "EHLO
+        mail-0201.mail-europe.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230121AbhGIHbm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Jul 2021 02:49:33 -0400
-Received: from mail-pf1-x42e.google.com (mail-pf1-x42e.google.com [IPv6:2607:f8b0:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79BE7C0613E5
-        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Jul 2021 23:46:49 -0700 (PDT)
-Received: by mail-pf1-x42e.google.com with SMTP id m83so195598pfd.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Jul 2021 23:46:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=xaT7y+PG7DwjxYqSoSUwIQdL1dKO1pep2OkWSy56kbM=;
-        b=d5blS0UKDt1DBFfpUH8YUVsFUu3RxbvZlJYKp6BG++edlFbJ4tAl+QNPo4S8A/a+pV
-         ouFm4c9mTUFYOt6koEkc648nuL8RKfwUUv2hvolAnfM7rnACSEeebCiYWW44XhW3AiTK
-         o/BzoHT3HmebkOY9tmTaGCclZIgTjf7UsUWMhhhWRpmQgZ2PY+IA/VywWkqiBU4QH4SO
-         HDN17LUfO7CM8K4SOnRk4s7lKl3r/2j7DhNhzj9/Jmv1NfW4J7BLZb0OD/UPwGkK+NhS
-         tNpvX7YcI5LiKdjDVKVN490+uV/E148TR3rQwE6HYxJsK9Jxe6Gmos6rNW6hjUO8ljPv
-         vyPQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=xaT7y+PG7DwjxYqSoSUwIQdL1dKO1pep2OkWSy56kbM=;
-        b=nAYeBdXnRYS7QvuVUvvY2E9QR+LjN5Mo4znJ8EMWoog6l13y4TBYZz/Ff6s2CRcHwA
-         C6kG4TGlL94kmaBRhD+RWgmMI2drRzlr3gj+kAtBoXgre8bfq72MBxYnOYAsVw/k+R89
-         w8wgxk5iRHFlYA5W8PKmBqpbFlF5YN78yNswQIX/QtcZFPOgGzEVckAs/Uto7A6TtWgN
-         erkChAzm2Q1Pn97F/LGAa32piluRkE2nCPf4Fd/7fRmZaxg97U8PEFP8IEzAFHgRtPsC
-         yAuwwwNfoBsv4XmmWH1SrjSVtQHctrBFR0qQjTCl4QfzbTkKAvBzRBP4pjUz39TsHloG
-         RVDA==
-X-Gm-Message-State: AOAM533UZHvj/hLPwzQXk4CUZaMC4C0YiZB7gFk7SR5Y0s7BhmcR7El7
-        XzLyhD0cPP9cV66V3q9NAN/cIQ==
-X-Google-Smtp-Source: ABdhPJyVTVZo24ToIx/xl45xZBXM5V3PkgfTRfpGnXJqHEyvGXd7a+kvj0PE+uAEH9XoX97HcocWOQ==
-X-Received: by 2002:a65:550a:: with SMTP id f10mr11024883pgr.155.1625813209004;
-        Thu, 08 Jul 2021 23:46:49 -0700 (PDT)
-Received: from localhost ([106.201.108.2])
-        by smtp.gmail.com with ESMTPSA id x13sm4283500pjh.30.2021.07.08.23.46.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Jul 2021 23:46:48 -0700 (PDT)
-Date:   Fri, 9 Jul 2021 12:16:46 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Thara Gopinath <thara.gopinath@linaro.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, rui.zhang@intel.com,
-        daniel.lezcano@linaro.org, rjw@rjwysocki.net, robh+dt@kernel.org,
-        tdas@codeaurora.org, mka@chromium.org,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [Patch v3 3/6] cpufreq: qcom-cpufreq-hw: Add dcvs interrupt
- support
-Message-ID: <20210709064646.7vjgiba2o7beudly@vireshk-i7>
-References: <20210708120656.663851-1-thara.gopinath@linaro.org>
- <20210708120656.663851-4-thara.gopinath@linaro.org>
+        Fri, 9 Jul 2021 03:31:42 -0400
+Date:   Fri, 09 Jul 2021 07:28:20 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+        s=protonmail; t=1625815705;
+        bh=RkfvnmLdaWZqZxjDUvmzYCOv0xZV2QzxYSVXkQHzzbM=;
+        h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:From;
+        b=WIEBp5X3N39INqaynv4SEqwjar9wa/XWQet0WZeAlFZ25c9ng3WZ/q0o2y/NV3exc
+         NORKsapydxEGEGLq5saeDxHg5xAuxF/ic2EPr0prdJjWT1h6bW315BdRxKwEKxWTwx
+         ZkM6uaw18g5BZZzw/HvNNDDvMUbCYLoI8SHtLOe0=
+To:     Rob Clark <robdclark@gmail.com>
+From:   Yassine Oudjana <y.oudjana@protonmail.com>
+Cc:     dri-devel@lists.freedesktop.org,
+        Rob Clark <robdclark@chromium.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        John Stultz <john.stultz@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+Reply-To: Yassine Oudjana <y.oudjana@protonmail.com>
+Subject: Re: [PATCH] drm/msm: Fix display fault handling
+Message-ID: <3pFCrTgsGtxAZ1a2xns0dgqCOz61HZr4foJlLOl1l3I@cp4-web-034.plabs.ch>
+In-Reply-To: <20210707180113.840741-1-robdclark@gmail.com>
+References: <20210707180113.840741-1-robdclark@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210708120656.663851-4-thara.gopinath@linaro.org>
-User-Agent: NeoMutt/20180716-391-311a52
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-1.2 required=10.0 tests=ALL_TRUSTED,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM shortcircuit=no
+        autolearn=disabled version=3.4.4
+X-Spam-Checker-Version: SpamAssassin 3.4.4 (2020-01-24) on
+        mailout.protonmail.ch
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 08-07-21, 08:06, Thara Gopinath wrote:
->  static int qcom_cpufreq_hw_cpu_init(struct cpufreq_policy *policy)
->  {
->  	struct platform_device *pdev = cpufreq_get_driver_data();
-> @@ -370,6 +480,10 @@ static int qcom_cpufreq_hw_cpu_init(struct cpufreq_policy *policy)
->  			dev_warn(cpu_dev, "failed to enable boost: %d\n", ret);
->  	}
->  
-> +	ret = qcom_cpufreq_hw_lmh_init(policy, index);
 
-You missed unregistering EM here (which is also missing from exit,
-which you need to fix first in a separate patch).
 
-> +	if (ret)
-> +		goto error;
+On Wed, Jul 7 2021 at 21:57:05 +0400, Rob Clark <robdclark@gmail.com>=20
+wrote:
+> From: Rob Clark <robdclark@chromium.org>
+>=20
+> It turns out that when the display is enabled by the bootloader, we=20
+> can
+> get some transient iommu faults from the display.  Which doesn't go=20
+> over
+> too well when we install a fault handler that is gpu specific.  To=20
+> avoid
+> this, defer installing the fault handler until we get around to=20
+> setting
+> up per-process pgtables (which is adreno_smmu specific).  The arm-smmu
+> fallback error reporting is sufficient for reporting display related
+> faults (and in fact was all we had prior to=20
+> f8f934c180f629bb927a04fd90d)
+>=20
+> Reported-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Reported-by: Yassine Oudjana <y.oudjana@protonmail.com>
+> Fixes: 2a574cc05d38 ("drm/msm: Improve the a6xx page fault handler")
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
+> Tested-by: John Stultz <john.stultz@linaro.org>
+> ---
+>  drivers/gpu/drm/msm/msm_iommu.c | 11 ++++++++++-
+>  1 file changed, 10 insertions(+), 1 deletion(-)
+>=20
+> diff --git a/drivers/gpu/drm/msm/msm_iommu.c=20
+> b/drivers/gpu/drm/msm/msm_iommu.c
+> index eed2a762e9dd..bcaddbba564d 100644
+> --- a/drivers/gpu/drm/msm/msm_iommu.c
+> +++ b/drivers/gpu/drm/msm/msm_iommu.c
+> @@ -142,6 +142,9 @@ static const struct iommu_flush_ops null_tlb_ops=20
+> =3D {
+>  =09.tlb_add_page =3D msm_iommu_tlb_add_page,
+>  };
+>=20
+> +static int msm_fault_handler(struct iommu_domain *domain, struct=20
+> device *dev,
+> +=09=09unsigned long iova, int flags, void *arg);
 > +
->  	return 0;
->  error:
->  	kfree(data);
-> @@ -389,6 +503,10 @@ static int qcom_cpufreq_hw_cpu_exit(struct cpufreq_policy *policy)
->  
->  	dev_pm_opp_remove_all_dynamic(cpu_dev);
->  	dev_pm_opp_of_cpumask_remove_table(policy->related_cpus);
-> +	if (data->lmh_dcvs_irq > 0) {
-> +		devm_free_irq(cpu_dev, data->lmh_dcvs_irq, data);
+>  struct msm_mmu *msm_iommu_pagetable_create(struct msm_mmu *parent)
+>  {
+>  =09struct adreno_smmu_priv *adreno_smmu =3D dev_get_drvdata(parent->dev)=
+;
+> @@ -157,6 +160,13 @@ struct msm_mmu=20
+> *msm_iommu_pagetable_create(struct msm_mmu *parent)
+>  =09if (!ttbr1_cfg)
+>  =09=09return ERR_PTR(-ENODEV);
+>=20
+> +=09/*
+> +=09 * Defer setting the fault handler until we have a valid adreno_smmu
+> +=09 * to avoid accidentially installing a GPU specific fault handler=20
+> for
+> +=09 * the display's iommu
+> +=09 */
+> +=09iommu_set_fault_handler(iommu->domain, msm_fault_handler, iommu);
+> +
+>  =09pagetable =3D kzalloc(sizeof(*pagetable), GFP_KERNEL);
+>  =09if (!pagetable)
+>  =09=09return ERR_PTR(-ENOMEM);
+> @@ -300,7 +310,6 @@ struct msm_mmu *msm_iommu_new(struct device *dev,=20
+> struct iommu_domain *domain)
+>=20
+>  =09iommu->domain =3D domain;
+>  =09msm_mmu_init(&iommu->base, dev, &funcs, MSM_MMU_IOMMU);
+> -=09iommu_set_fault_handler(domain, msm_fault_handler, iommu);
+>=20
+>  =09atomic_set(&iommu->pagetables, 0);
+>=20
+> --
+> 2.31.1
+>=20
 
-Why using devm variants here and while requesting the irq ? 
-
-> +		cancel_delayed_work_sync(&data->lmh_dcvs_poll_work);
-> +	}
-
-Please move this to qcom_cpufreq_hw_lmh_exit() or something.
-
-Now with sequence of disabling interrupt, etc, I see a potential
-problem.
-
-CPU0                                    CPU1
-
-qcom_cpufreq_hw_cpu_exit()
--> devm_free_irq();
-                                        qcom_lmh_dcvs_poll()
-                                        -> qcom_lmh_dcvs_notify()
-                                          -> enable_irq()
-
--> cancel_delayed_work_sync();
+Tested-by: Yassine Oudjana <y.oudjana@protonmail.com>
 
 
-What will happen if enable_irq() gets called after freeing the irq ?
-Not sure, but it looks like you will hit this then from manage.c:
 
-WARN(!desc->irq_data.chip, KERN_ERR "enable_irq before
-                                     setup/request_irq: irq %u\n", irq))
-
-?
-
-You got a chicken n egg problem :)
-
--- 
-viresh
