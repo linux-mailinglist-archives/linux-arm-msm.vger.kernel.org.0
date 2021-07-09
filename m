@@ -2,254 +2,295 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A46703C2B2B
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Jul 2021 00:09:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 867783C2B2F
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Jul 2021 00:10:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229546AbhGIWLt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Jul 2021 18:11:49 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:35635 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229542AbhGIWLt (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Jul 2021 18:11:49 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1625868545; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=o/jFjWugq+Y3q5jHP+QclhXd+7EAvqWj0DwxtPriIE0=;
- b=s4yx54e2SEZTru2Mm0AAeM2DrETR9+p4y0Z+VnJO0425kuUzRrwg8Js0zHycrHfLNnNPInnI
- YpxQv4eS+g8VN8MANnz5oq98Nv/vz3qhd2Upt/pAkSVAMjcRdb2mURUg3Bw+9JY9Br82Aj/j
- PFm+EmmT24Q+U28IKxtSJTQbAEc=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
- 60e8c90001dd9a9431e7ac6e (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 09 Jul 2021 22:09:04
- GMT
-Sender: abhinavk=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 0F4BFC4323A; Fri,  9 Jul 2021 22:09:04 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: abhinavk)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 1D77CC433F1;
-        Fri,  9 Jul 2021 22:09:02 +0000 (UTC)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Fri, 09 Jul 2021 15:09:02 -0700
-From:   abhinavk@codeaurora.org
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        id S229542AbhGIWNV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Jul 2021 18:13:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51538 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229552AbhGIWNV (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 9 Jul 2021 18:13:21 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3CFCBC0613E5
+        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Jul 2021 15:10:37 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id a18so26081322lfs.10
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Jul 2021 15:10:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=uVekkBCXr4urFNfCMQxnITdCN/ES/x/lzFoar5LQqTw=;
+        b=GcJWh0B5u907ldfCF3RPOO/yD60iEF/fCXS6YCJqTvP8mSuZXcSCTXOo+toAA7Ffjn
+         OWfYlXi/ErTPbn8ReCPhHpb8G5EzEpGFxcZTKs3Mb6jWKJuECwze8j8JQT6hlRAEFvhJ
+         yLQODEuFGIk68GW4Im5F13bwukQ0f5tQIajLQoerjqECUv/WjMVWuNuHPRlC4f2NatSs
+         t39ld5Wq3QpXd7FGHaiV8N1QmlbbtVCmgZ2bZtJ4sEQI6ef5LwMle4fJHt/DO2Ju0F7U
+         NHO0o7YX9HzRxMlPx0VZdoGvwNUw5EeupU4zoKwmAuPkE9xiF94jK8N800ETjRammpC6
+         kp1A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=uVekkBCXr4urFNfCMQxnITdCN/ES/x/lzFoar5LQqTw=;
+        b=jyBlmK7UygPWAh7/1aVVqj0e0wLSMvao6YrzH3xd0BztaqpQpmxFSJ2GMXwIFLxlXc
+         ohtcb2+yc2yZHRPiLFcZhWZbJsxsQ3snw1ux2FiNzuYdGjuZuDMhMFaMnn1pljGv+0wG
+         ItOl+PVboBaWD9hW1r6T8IUcp7FL0fWrDnBVDeVW2W0+vqZamNvF+HTl5fdGDxCLF+tb
+         lCijAj8CEcFp3fevQEPdueGKEI6pTGkAlG8yO4LJMQ9vVEM0YoXoPEnxtszYesrd3F/+
+         4aBsp4vb6KxYVgzOa6JuXS1QU0AnjdgVkdM15GITwLTeW/1h08IXjXmitEAdGaEFwZTx
+         b/VQ==
+X-Gm-Message-State: AOAM532/5h5CgmRRyYHZjqE/AoXcejxfJq1VEB1rGkn4B3/yLT3YzbzB
+        rrsortLQ+MWgHHzBO2CDw3enOA==
+X-Google-Smtp-Source: ABdhPJyWQKDoo83HNZLdGACJlz1IfQyi1PreZXjqp6g8VGQEp76C3eaWxPrykp/WIHlLny20ybErqQ==
+X-Received: by 2002:ac2:5e39:: with SMTP id o25mr19305928lfg.504.1625868635334;
+        Fri, 09 Jul 2021 15:10:35 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id t7sm560505lfc.103.2021.07.09.15.10.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 09 Jul 2021 15:10:34 -0700 (PDT)
+Subject: Re: [PATCH v3 4/7] clk: qcom: gdsc: call runtime PM functions for the
+ provider device
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Taniya Das <tdas@codeaurora.org>,
         Jonathan Marek <jonathan@marek.ca>,
-        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        freedreno@lists.freedesktop.org
-Subject: Re: [Freedreno] [PATCH v1 3/7] drm/msm/dpu: support setting up two
- independent DSI connectors
-In-Reply-To: <20210708122833.363451-4-dmitry.baryshkov@linaro.org>
-References: <20210708122833.363451-1-dmitry.baryshkov@linaro.org>
- <20210708122833.363451-4-dmitry.baryshkov@linaro.org>
-Message-ID: <72d95728559ef617a3dc29621cc5a2b5@codeaurora.org>
-X-Sender: abhinavk@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+        Michael Turquette <mturquette@baylibre.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-clk@vger.kernel.org,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Mark Brown <broonie@kernel.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        linux-kernel@vger.kernel.org
+References: <20210709173202.667820-1-dmitry.baryshkov@linaro.org>
+ <20210709173202.667820-5-dmitry.baryshkov@linaro.org> <YOibXCHvnG70ftQ0@yoga>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Message-ID: <613b2f07-ffea-9c65-ebd0-6ad3b4fe10b8@linaro.org>
+Date:   Sat, 10 Jul 2021 01:10:34 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
+MIME-Version: 1.0
+In-Reply-To: <YOibXCHvnG70ftQ0@yoga>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-07-08 05:28, Dmitry Baryshkov wrote:
-> Move setting up encoders from set_encoder_mode to
-> _dpu_kms_initialize_dsi() / _dpu_kms_initialize_displayport(). This
-> allows us to support not only "single DSI" and "bonded DSI" but also 
-> "two
-> independent DSI" configurations. In future this would also help adding
-> support for multiple DP connectors.
+On 09/07/2021 21:54, Bjorn Andersson wrote:
+> On Fri 09 Jul 12:31 CDT 2021, Dmitry Baryshkov wrote:
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 102 +++++++++++++-----------
->  1 file changed, 57 insertions(+), 45 deletions(-)
+>> In order to properly handle runtime PM status of the provider device,
+>> call pm_runtime_get/pm_runtime_put on the clock controller device.
+>>
+>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> ---
+>>   drivers/clk/qcom/gdsc.c | 66 ++++++++++++++++++++++++++++++++++++++---
+>>   drivers/clk/qcom/gdsc.h |  2 ++
+>>   2 files changed, 64 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
+>> index ccd36617d067..6bec31fccb09 100644
+>> --- a/drivers/clk/qcom/gdsc.c
+>> +++ b/drivers/clk/qcom/gdsc.c
+>> @@ -11,6 +11,7 @@
+>>   #include <linux/kernel.h>
+>>   #include <linux/ktime.h>
+>>   #include <linux/pm_domain.h>
+>> +#include <linux/pm_runtime.h>
+>>   #include <linux/regmap.h>
+>>   #include <linux/regulator/consumer.h>
+>>   #include <linux/reset-controller.h>
+>> @@ -50,6 +51,30 @@ enum gdsc_status {
+>>   	GDSC_ON
+>>   };
+>>   
+>> +static int gdsc_pm_runtime_get(struct gdsc *sc)
+>> +{
+>> +	int ret;
+>> +
+>> +	if (!sc->rpm_dev)
+>> +		return 0;
+>> +
+>> +	ret = pm_runtime_get_sync(sc->rpm_dev);
+>> +	if (ret < 0) {
+>> +		pm_runtime_put_noidle(sc->rpm_dev);
+>> +		return ret;
+>> +	}
+>> +
+>> +	return 0;
+>> +}
+>> +
+>> +static int gdsc_pm_runtime_put(struct gdsc *sc)
+>> +{
+>> +	if (!sc->rpm_dev)
+>> +		return 0;
+>> +
+>> +	return pm_runtime_put_sync(sc->rpm_dev);
+>> +}
+>> +
+>>   /* Returns 1 if GDSC status is status, 0 if not, and < 0 on error */
+>>   static int gdsc_check_status(struct gdsc *sc, enum gdsc_status status)
+>>   {
+>> @@ -232,9 +257,8 @@ static void gdsc_retain_ff_on(struct gdsc *sc)
+>>   	regmap_update_bits(sc->regmap, sc->gdscr, mask, mask);
+>>   }
+>>   
+>> -static int gdsc_enable(struct generic_pm_domain *domain)
+>> +static int _gdsc_enable(struct gdsc *sc)
+>>   {
+>> -	struct gdsc *sc = domain_to_gdsc(domain);
+>>   	int ret;
+>>   
+>>   	if (sc->pwrsts == PWRSTS_ON)
+>> @@ -290,11 +314,28 @@ static int gdsc_enable(struct generic_pm_domain *domain)
+>>   	return 0;
+>>   }
+>>   
+>> -static int gdsc_disable(struct generic_pm_domain *domain)
+>> +static int gdsc_enable(struct generic_pm_domain *domain)
+>>   {
+>>   	struct gdsc *sc = domain_to_gdsc(domain);
+>>   	int ret;
+>>   
+>> +	ret = gdsc_pm_runtime_get(sc);
+>> +	if (ret)
+>> +		return ret;
+>> +
+>> +	ret = _gdsc_enable(sc);
+>> +	if (ret) {
+>> +		gdsc_pm_runtime_put(sc);
 > 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> index 1d3a4f395e74..8459da36174e 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> @@ -471,30 +471,68 @@ static int _dpu_kms_initialize_dsi(struct 
-> drm_device *dev,
->  				    struct dpu_kms *dpu_kms)
->  {
->  	struct drm_encoder *encoder = NULL;
-> +	struct msm_display_info info;
->  	int i, rc = 0;
+> I presume what you do here is to leave the pm_runtime state of dispcc
+> active if we succeeded in enabling the gdsc. But the gdsc is a subdomain
+> of the parent domain, so the framework should take case of its
+> dependency.
 > 
->  	if (!(priv->dsi[0] || priv->dsi[1]))
->  		return rc;
+> So the reason for gdsc_pm_runtime_get()/put() in this code path is so
+> that you can access the dispcc registers, i.e. I think you should
+> get()/put() regardless of the return value.
+
+pm domain code will handle enabling MMCX, so this code is not required 
+strictly speaking. Ulf suggested adding it back, so I followed the 
+suggestion. Maybe I misunderstood his suggestion.
+
+putting pm_runtime after gdsc_enable does not sound like a logical case. 
+However it would simplify code a bit. Let me try...
+
 > 
-> -	/*TODO: Support two independent DSI connectors */
-> -	encoder = dpu_encoder_init(dev, DRM_MODE_ENCODER_DSI);
-> -	if (IS_ERR(encoder)) {
-> -		DPU_ERROR("encoder init failed for dsi display\n");
-> -		return PTR_ERR(encoder);
-> -	}
-> -
-> -	priv->encoders[priv->num_encoders++] = encoder;
-> -
-> +	/*
-> +	 * We support following confiurations:
-> +	 * - Single DSI host (dsi0 or dsi1)
-> +	 * - Two independent DSI hosts
-> +	 * - Bonded DSI0 and DSI1 hosts
-> +	 *
-> +	 *   TODO: Support swapping DSI0 and DSI1 in the bonded setup.
-> +	 */
->  	for (i = 0; i < ARRAY_SIZE(priv->dsi); i++) {
->  		if (!priv->dsi[i])
->  			continue;
+>> +		return ret;
+>> +	}
+>> +
+>> +	return 0;
+>> +}
+>> +
+>> +static int _gdsc_disable(struct gdsc *sc)
+>> +{
+>> +	int ret;
+>> +
+>>   	if (sc->pwrsts == PWRSTS_ON)
+>>   		return gdsc_assert_reset(sc);
+>>   
+>> @@ -329,6 +370,18 @@ static int gdsc_disable(struct generic_pm_domain *domain)
+>>   	return 0;
+>>   }
+>>   
+>> +static int gdsc_disable(struct generic_pm_domain *domain)
+>> +{
+>> +	struct gdsc *sc = domain_to_gdsc(domain);
+>> +	int ret;
+>> +
 > 
-> +		if (!encoder) {
-> +			encoder = dpu_encoder_init(dev, DRM_MODE_ENCODER_DSI);
-> +			if (IS_ERR(encoder)) {
-> +				DPU_ERROR("encoder init failed for dsi display\n");
-> +				return PTR_ERR(encoder);
-> +			}
-> +
-> +			priv->encoders[priv->num_encoders++] = encoder;
-> +
-> +			memset(&info, 0, sizeof(info));
-> +			info.intf_type = encoder->encoder_type;
-> +			info.capabilities = msm_dsi_is_cmd_mode(priv->dsi[i]) ?
-> +				MSM_DISPLAY_CAP_CMD_MODE :
-> +				MSM_DISPLAY_CAP_VID_MODE;
-> +		}
-> +
->  		rc = msm_dsi_modeset_init(priv->dsi[i], dev, encoder);
->  		if (rc) {
->  			DPU_ERROR("modeset_init failed for dsi[%d], rc = %d\n",
->  				i, rc);
->  			break;
->  		}
-> +
-> +		info.h_tile_instance[info.num_of_h_tiles++] = i;
-> +
-> +		/* Register non-bonded encoder here. If the encoder is bonded,
-> +		 * it will be registered later, when both DSI hosts are
-> +		 * initialized.
-> +		 */
-> +		if (!msm_dsi_is_bonded_dsi(priv->dsi[i])) {
-> +			rc = dpu_encoder_setup(dev, encoder, &info);
-> +			if (rc)
-> +				DPU_ERROR("failed to setup DPU encoder %d: rc:%d\n",
-> +					  encoder->base.id, rc);
-> +			encoder = NULL;
-Seems like you are using encoder = NULL as a check to distinguish 
-whether this is bonded mode or not.
-> +		}
-> +	}
-> +
-> +	/* Register bonded encoder here, when both DSI hosts are initialized 
-> */
-> +	if (encoder) {
-Why cant we replace this with if (msm_dsi_is_bonded_dsi(priv->dsi[i]) 
-and get rid
-of the encoder = NULL?
-> +		rc = dpu_encoder_setup(dev, encoder, &info);
-> +		if (rc)
-> +			DPU_ERROR("failed to setup DPU encoder %d: rc:%d\n",
-> +				  encoder->base.id, rc);
->  	}
+> If the gdsc is found to be on at initialization, the next operation that
+> will happen is gdsc_disable() and as you didn't activate the pm_runtime
+> state in gdsc_init() you would in theory get here with registers
+> unaccessible.
 > 
->  	return rc;
-> @@ -505,6 +543,7 @@ static int _dpu_kms_initialize_displayport(struct
-> drm_device *dev,
->  					    struct dpu_kms *dpu_kms)
->  {
->  	struct drm_encoder *encoder = NULL;
-> +	struct msm_display_info info;
->  	int rc = 0;
+> In practice though, the active gdsc should through the being a subdomain
+> of the parent domain keep power on for you, so you won't notice this
+> issue.
+
+Nice catch.
+
 > 
->  	if (!priv->dp)
-> @@ -516,6 +555,7 @@ static int _dpu_kms_initialize_displayport(struct
-> drm_device *dev,
->  		return PTR_ERR(encoder);
->  	}
+> But as above, I think you should wrap _gdsc_disable() in a get()/put()
+> pair.
 > 
-> +	memset(&info, 0, sizeof(info));
->  	rc = msm_dp_modeset_init(priv->dp, dev, encoder);
->  	if (rc) {
->  		DPU_ERROR("modeset_init failed for DP, rc = %d\n", rc);
-> @@ -524,6 +564,14 @@ static int _dpu_kms_initialize_displayport(struct
-> drm_device *dev,
->  	}
+>> +	ret = _gdsc_disable(sc);
+>> +	if (ret)
+>> +		return ret;
+>> +
+>> +	return gdsc_pm_runtime_put(sc);
+>> +}
+>> +
+>>   static int gdsc_init(struct gdsc *sc)
+>>   {
+>>   	u32 mask, val;
+>> @@ -425,6 +478,8 @@ int gdsc_register(struct gdsc_desc *desc,
+>>   	for (i = 0; i < num; i++) {
+>>   		if (!scs[i])
+>>   			continue;
+>> +		if (pm_runtime_enabled(dev))
+>> +			scs[i]->rpm_dev = dev;
+>>   		scs[i]->regmap = regmap;
+>>   		scs[i]->rcdev = rcdev;
+>>   		ret = gdsc_init(scs[i]);
+>> @@ -486,7 +541,10 @@ void gdsc_unregister(struct gdsc_desc *desc)
+>>    */
+>>   int gdsc_gx_do_nothing_enable(struct generic_pm_domain *domain)
+>>   {
+>> +	struct gdsc *sc = domain_to_gdsc(domain);
+>> +
+>>   	/* Do nothing but give genpd the impression that we were successful */
+>> -	return 0;
+>> +	/* Get the runtime PM device only */
+>> +	return gdsc_pm_runtime_get(sc);
 > 
->  	priv->encoders[priv->num_encoders++] = encoder;
-> +
-> +	info.num_of_h_tiles = 1;
-> +	info.capabilities = MSM_DISPLAY_CAP_VID_MODE;
-> +	info.intf_type = encoder->encoder_type;
-> +	rc = dpu_encoder_setup(dev, encoder, &info);
-> +	if (rc)
-> +		DPU_ERROR("failed to setup DPU encoder %d: rc:%d\n",
-> +			  encoder->base.id, rc);
->  	return rc;
->  }
+> Per above, if you let the framework deal with the gdsc's dependencies on
+> the parent domain and you only get()/put() for the sake of dispcc then
+> you don't need you don't need to do this to keep the subsequent
+> gdsc_disable() in balance.
 > 
-> @@ -726,41 +774,6 @@ static void dpu_kms_destroy(struct msm_kms *kms)
->  	msm_kms_destroy(&dpu_kms->base);
->  }
+>>   }
+>>   EXPORT_SYMBOL_GPL(gdsc_gx_do_nothing_enable);
+>> diff --git a/drivers/clk/qcom/gdsc.h b/drivers/clk/qcom/gdsc.h
+>> index 5bb396b344d1..a82982df0a55 100644
+>> --- a/drivers/clk/qcom/gdsc.h
+>> +++ b/drivers/clk/qcom/gdsc.h
+>> @@ -25,6 +25,7 @@ struct reset_controller_dev;
+>>    * @resets: ids of resets associated with this gdsc
+>>    * @reset_count: number of @resets
+>>    * @rcdev: reset controller
+>> + * @rpm_dev: runtime PM device
+>>    */
+>>   struct gdsc {
+>>   	struct generic_pm_domain	pd;
+>> @@ -58,6 +59,7 @@ struct gdsc {
+>>   
+>>   	const char 			*supply;
+>>   	struct regulator		*rsupply;
+>> +	struct device 			*rpm_dev;
 > 
-> -static void _dpu_kms_set_encoder_mode(struct msm_kms *kms,
-> -				 struct drm_encoder *encoder,
-> -				 bool cmd_mode)
-> -{
-> -	struct msm_display_info info;
-> -	struct msm_drm_private *priv = encoder->dev->dev_private;
-> -	int i, rc = 0;
-> -
-> -	memset(&info, 0, sizeof(info));
-> -
-> -	info.intf_type = encoder->encoder_type;
-> -	info.capabilities = cmd_mode ? MSM_DISPLAY_CAP_CMD_MODE :
-> -			MSM_DISPLAY_CAP_VID_MODE;
-> -
-> -	switch (info.intf_type) {
-> -	case DRM_MODE_ENCODER_DSI:
-> -		/* TODO: No support for DSI swap */
-> -		for (i = 0; i < ARRAY_SIZE(priv->dsi); i++) {
-> -			if (priv->dsi[i]) {
-> -				info.h_tile_instance[info.num_of_h_tiles] = i;
-> -				info.num_of_h_tiles++;
-> -			}
-> -		}
-> -		break;
-> -	case DRM_MODE_ENCODER_TMDS:
-> -		info.num_of_h_tiles = 1;
-> -		break;
-> -	}
-> -
-> -	rc = dpu_encoder_setup(encoder->dev, encoder, &info);
-> -	if (rc)
-> -		DPU_ERROR("failed to setup DPU encoder %d: rc:%d\n",
-> -			encoder->base.id, rc);
-> -}
-> -
->  static irqreturn_t dpu_irq(struct msm_kms *kms)
->  {
->  	struct dpu_kms *dpu_kms = to_dpu_kms(kms);
-> @@ -863,7 +876,6 @@ static const struct msm_kms_funcs kms_funcs = {
->  	.get_format      = dpu_get_msm_format,
->  	.round_pixclk    = dpu_kms_round_pixclk,
->  	.destroy         = dpu_kms_destroy,
-> -	.set_encoder_mode = _dpu_kms_set_encoder_mode,
->  	.snapshot        = dpu_kms_mdp_snapshot,
->  #ifdef CONFIG_DEBUG_FS
->  	.debugfs_init    = dpu_kms_debugfs_init,
+> This isn't just the "runtime pm device", it's the device this gdsc is
+> associated with. So "dev" sounds sufficient to me, but that requires
+> that you have a separate bool rpm_enabled to remember if
+> pm_runtime_enabled() was true during probe.
+> 
+> So unless we need "dev" for something else this might be sufficient.
+> 
+> Regards,
+> Bjorn
+> 
+>>   };
+>>   
+>>   struct gdsc_desc {
+>> -- 
+>> 2.30.2
+>>
+
+
+-- 
+With best wishes
+Dmitry
