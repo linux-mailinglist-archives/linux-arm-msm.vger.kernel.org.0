@@ -2,24 +2,24 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 10C6B3C27F0
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jul 2021 19:03:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 47A933C27ED
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jul 2021 19:02:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229737AbhGIRFt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Jul 2021 13:05:49 -0400
-Received: from mail-0201.mail-europe.com ([51.77.79.158]:48413 "EHLO
+        id S229592AbhGIRFe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Jul 2021 13:05:34 -0400
+Received: from mail-0201.mail-europe.com ([51.77.79.158]:56502 "EHLO
         mail-0201.mail-europe.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229815AbhGIRFt (ORCPT
+        with ESMTP id S229659AbhGIRFe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Jul 2021 13:05:49 -0400
-Date:   Fri, 09 Jul 2021 17:02:24 +0000
+        Fri, 9 Jul 2021 13:05:34 -0400
+Date:   Fri, 09 Jul 2021 17:02:42 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-        s=protonmail; t=1625850152;
-        bh=5bId7Sm91A3HT+RYYbNOEcA1cu5qpF8J4QRc4xYq4UM=;
+        s=protonmail; t=1625850167;
+        bh=80lmMy862wGV7v35JfsLiPl1/HjheMwvUvIo/8ZENUg=;
         h=Date:To:From:Cc:Reply-To:Subject:From;
-        b=hY3DlirngHr9v6/CRFUUwan6afbkvmkFh1THEefjuTpmxKuV8L6o6Uzufj32blKq6
-         zigvWfnLdNS/8BKP0+43RnoYorH2rPdxfJpLDyC6jaT3P6wLOOSb/OjNJsbTNdNpDM
-         qCHFfv7kCKSNfqd2r14hMEmLitWNa8vRz9sng5Jk=
+        b=Gp24XLw/S5svc20MAO9+IpQBCx3c6mrjZTCzRlWlUCjieRJuRYxVFZ0Co7o3I+wGu
+         LBDJx8et1P+Lc8FkCOP4GEDm12FcdFV0SKrG1xpbSAqH4qILSlAgqvVmSq9I0B4WT2
+         XxGD0+5aVe7fQ/svYVP9/BJIadrW3SBG6ujHjUHA=
 To:     linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org
 From:   Yassine Oudjana <y.oudjana@protonmail.com>
 Cc:     Yassine Oudjana <y.oudjana@protonmail.com>,
@@ -32,8 +32,8 @@ Cc:     Yassine Oudjana <y.oudjana@protonmail.com>,
         "Dr. Git" <drgitx@gmail.com>, Rob Herring <robh+dt@kernel.org>,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 Reply-To: Yassine Oudjana <y.oudjana@protonmail.com>
-Subject: [PATCH 1/5] arm64: dts: qcom: msm8996: Revamp reserved memory
-Message-ID: <fzmn8bdpxO41bpKxyI7aD2zwEqKGGRVC3DhcM9EWY@cp3-web-020.plabs.ch>
+Subject: [PATCH 2/5] arm64: dts: qcom: msm8996: Unify smp2p naming
+Message-ID: <PjoL1JJVMLZRdErmWrNSNtHThaVx4nsyD2sXKMEpQ@cp4-web-038.plabs.ch>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -46,139 +46,110 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Fix a total overlap between zap_shader_region and slpi_region, and rename
-all regions to match the naming convention in other Qualcomm SoC device tre=
-es.
+Rename smp2p-modem to smp2p-mpss, and make the subnode labels of smp2p_adsp
+and smp2p_slpi follow the <name>_smp2p_<out/in> layout.
+Also move smp2p_slpi_out above smp2p_slpi_in to make it match mpss and adsp
+where master-kernel is the first subnode.
+
+This patch brings no functional change.
 
 Signed-off-by: Yassine Oudjana <y.oudjana@protonmail.com>
 ---
- arch/arm64/boot/dts/qcom/msm8996.dtsi | 63 +++++++++++++++------------
- 1 file changed, 34 insertions(+), 29 deletions(-)
+ arch/arm64/boot/dts/qcom/msm8996.dtsi | 33 ++++++++++++++-------------
+ 1 file changed, 17 insertions(+), 16 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qc=
 om/msm8996.dtsi
-index a8811c704604..258be683ad6d 100644
+index 258be683ad6d..559612a3ddeb 100644
 --- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
 +++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-@@ -150,60 +150,65 @@ reserved-memory {
- =09=09#size-cells =3D <2>;
- =09=09ranges;
+@@ -284,12 +284,12 @@ smp2p-adsp {
+ =09=09qcom,local-pid =3D <0>;
+ =09=09qcom,remote-pid =3D <2>;
 =20
--=09=09mba_region: mba@91500000 {
--=09=09=09reg =3D <0x0 0x91500000 0x0 0x200000>;
-+=09=09hyp_mem: memory@85800000 {
-+=09=09=09reg =3D <0x0 0x85800000 0x0 0x600000>;
- =09=09=09no-map;
+-=09=09smp2p_adsp_out: master-kernel {
++=09=09adsp_smp2p_out: master-kernel {
+ =09=09=09qcom,entry-name =3D "master-kernel";
+ =09=09=09#qcom,smem-state-cells =3D <1>;
  =09=09};
 =20
--=09=09slpi_region: slpi@90b00000 {
--=09=09=09reg =3D <0x0 0x90b00000 0x0 0xa00000>;
-+=09=09xbl_mem: memory@85e00000 {
-+=09=09=09reg =3D <0x0 0x85e00000 0x0 0x200000>;
- =09=09=09no-map;
- =09=09};
+-=09=09smp2p_adsp_in: slave-kernel {
++=09=09adsp_smp2p_in: slave-kernel {
+ =09=09=09qcom,entry-name =3D "slave-kernel";
 =20
--=09=09venus_region: venus@90400000 {
--=09=09=09reg =3D <0x0 0x90400000 0x0 0x700000>;
-+=09=09smem_mem: smem-mem@86000000 {
-+=09=09=09reg =3D <0x0 0x86000000 0x0 0x200000>;
- =09=09=09no-map;
- =09=09};
-=20
--=09=09adsp_region: adsp@8ea00000 {
--=09=09=09reg =3D <0x0 0x8ea00000 0x0 0x1a00000>;
-+=09=09tz_mem: memory@86200000 {
-+=09=09=09reg =3D <0x0 0x86200000 0x0 0x2600000>;
- =09=09=09no-map;
- =09=09};
-=20
--=09=09mpss_region: mpss@88800000 {
--=09=09=09reg =3D <0x0 0x88800000 0x0 0x6200000>;
-+=09=09rmtfs_mem: rmtfs {
-+=09=09=09compatible =3D "qcom,rmtfs-mem";
-+
-+=09=09=09size =3D <0x0 0x200000>;
-+=09=09=09alloc-ranges =3D <0x0 0xa0000000 0x0 0x2000000>;
- =09=09=09no-map;
-+
-+=09=09=09qcom,client-id =3D <1>;
-+=09=09=09qcom,vmid =3D <15>;
- =09=09};
-=20
--=09=09smem_mem: smem-mem@86000000 {
--=09=09=09reg =3D <0x0 0x86000000 0x0 0x200000>;
-+=09=09mpss_mem: mpss@88800000 {
-+=09=09=09reg =3D <0x0 0x88800000 0x0 0x6200000>;
- =09=09=09no-map;
- =09=09};
-=20
--=09=09memory@85800000 {
--=09=09=09reg =3D <0x0 0x85800000 0x0 0x800000>;
-+=09=09adsp_mem: adsp@8ea00000 {
-+=09=09=09reg =3D <0x0 0x8ea00000 0x0 0x1b00000>;
- =09=09=09no-map;
- =09=09};
-=20
--=09=09memory@86200000 {
--=09=09=09reg =3D <0x0 0x86200000 0x0 0x2600000>;
-+=09=09slpi_mem: slpi@90500000 {
-+=09=09=09reg =3D <0x0 0x90500000 0x0 0xa00000>;
- =09=09=09no-map;
- =09=09};
-=20
--=09=09rmtfs@86700000 {
--=09=09=09compatible =3D "qcom,rmtfs-mem";
--
--=09=09=09size =3D <0x0 0x200000>;
--=09=09=09alloc-ranges =3D <0x0 0xa0000000 0x0 0x2000000>;
-+=09=09gpu_mem: gpu@90f00000 {
-+=09=09=09compatible =3D "shared-dma-pool";
-+=09=09=09reg =3D <0x0 0x90f00000 0x0 0x100000>;
- =09=09=09no-map;
-+=09=09};
-=20
--=09=09=09qcom,client-id =3D <1>;
--=09=09=09qcom,vmid =3D <15>;
-+=09=09venus_mem: venus@91000000 {
-+=09=09=09reg =3D <0x0 0x91000000 0x0 0x500000>;
-+=09=09=09no-map;
- =09=09};
-=20
--=09=09zap_shader_region: gpu@8f200000 {
--=09=09=09compatible =3D "shared-dma-pool";
--=09=09=09reg =3D <0x0 0x90b00000 0x0 0xa00000>;
-+=09=09mba_mem: mba@91500000 {
-+=09=09=09reg =3D <0x0 0x91500000 0x0 0x200000>;
- =09=09=09no-map;
+ =09=09=09interrupt-controller;
+@@ -297,7 +297,7 @@ smp2p_adsp_in: slave-kernel {
  =09=09};
  =09};
-@@ -690,7 +695,7 @@ opp-133000000 {
- =09=09=09};
 =20
- =09=09=09zap-shader {
--=09=09=09=09memory-region =3D <&zap_shader_region>;
-+=09=09=09=09memory-region =3D <&gpu_mem>;
- =09=09=09};
+-=09smp2p-modem {
++=09smp2p-mpss {
+ =09=09compatible =3D "qcom,smp2p";
+ =09=09qcom,smem =3D <435>, <428>;
+=20
+@@ -308,12 +308,12 @@ smp2p-modem {
+ =09=09qcom,local-pid =3D <0>;
+ =09=09qcom,remote-pid =3D <1>;
+=20
+-=09=09modem_smp2p_out: master-kernel {
++=09=09mpss_smp2p_out: master-kernel {
+ =09=09=09qcom,entry-name =3D "master-kernel";
+ =09=09=09#qcom,smem-state-cells =3D <1>;
  =09=09};
 =20
-@@ -1183,7 +1188,7 @@ video-codec@c00000 {
- =09=09=09=09 <&venus_smmu 0x2c>,
- =09=09=09=09 <&venus_smmu 0x2d>,
- =09=09=09=09 <&venus_smmu 0x31>;
--=09=09=09memory-region =3D <&venus_region>;
-+=09=09=09memory-region =3D <&venus_mem>;
- =09=09=09status =3D "okay";
+-=09=09modem_smp2p_in: slave-kernel {
++=09=09mpss_smp2p_in: slave-kernel {
+ =09=09=09qcom,entry-name =3D "slave-kernel";
 =20
- =09=09=09video-decoder {
-@@ -2063,7 +2068,7 @@ adsp_pil: remoteproc@9300000 {
- =09=09=09clocks =3D <&xo_board>;
- =09=09=09clock-names =3D "xo";
+ =09=09=09interrupt-controller;
+@@ -332,16 +332,17 @@ smp2p-slpi {
+ =09=09qcom,local-pid =3D <0>;
+ =09=09qcom,remote-pid =3D <3>;
 =20
--=09=09=09memory-region =3D <&adsp_region>;
-+=09=09=09memory-region =3D <&adsp_mem>;
+-=09=09smp2p_slpi_in: slave-kernel {
++=09=09slpi_smp2p_out: master-kernel {
++=09=09=09qcom,entry-name =3D "master-kernel";
++=09=09=09#qcom,smem-state-cells =3D <1>;
++=09=09};
++
++=09=09slpi_smp2p_in: slave-kernel {
+ =09=09=09qcom,entry-name =3D "slave-kernel";
++
+ =09=09=09interrupt-controller;
+ =09=09=09#interrupt-cells =3D <2>;
+ =09=09};
+-
+-=09=09smp2p_slpi_out: master-kernel {
+-=09=09=09qcom,entry-name =3D "master-kernel";
+-=09=09=09#qcom,smem-state-cells =3D <1>;
+-=09=09};
+ =09};
 =20
- =09=09=09qcom,smem-states =3D <&smp2p_adsp_out 0>;
+ =09soc: soc {
+@@ -2058,10 +2059,10 @@ adsp_pil: remoteproc@9300000 {
+ =09=09=09reg =3D <0x09300000 0x80000>;
+=20
+ =09=09=09interrupts-extended =3D <&intc 0 162 IRQ_TYPE_EDGE_RISING>,
+-=09=09=09=09=09      <&smp2p_adsp_in 0 IRQ_TYPE_EDGE_RISING>,
+-=09=09=09=09=09      <&smp2p_adsp_in 1 IRQ_TYPE_EDGE_RISING>,
+-=09=09=09=09=09      <&smp2p_adsp_in 2 IRQ_TYPE_EDGE_RISING>,
+-=09=09=09=09=09      <&smp2p_adsp_in 3 IRQ_TYPE_EDGE_RISING>;
++=09=09=09=09=09      <&adsp_smp2p_in 0 IRQ_TYPE_EDGE_RISING>,
++=09=09=09=09=09      <&adsp_smp2p_in 1 IRQ_TYPE_EDGE_RISING>,
++=09=09=09=09=09      <&adsp_smp2p_in 2 IRQ_TYPE_EDGE_RISING>,
++=09=09=09=09=09      <&adsp_smp2p_in 3 IRQ_TYPE_EDGE_RISING>;
+ =09=09=09interrupt-names =3D "wdog", "fatal", "ready",
+ =09=09=09=09=09  "handover", "stop-ack";
+=20
+@@ -2070,7 +2071,7 @@ adsp_pil: remoteproc@9300000 {
+=20
+ =09=09=09memory-region =3D <&adsp_mem>;
+=20
+-=09=09=09qcom,smem-states =3D <&smp2p_adsp_out 0>;
++=09=09=09qcom,smem-states =3D <&adsp_smp2p_out 0>;
  =09=09=09qcom,smem-state-names =3D "stop";
+=20
+ =09=09=09power-domains =3D <&rpmpd MSM8996_VDDCX>;
 --=20
 2.32.0
 
